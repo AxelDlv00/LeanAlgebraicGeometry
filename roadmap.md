@@ -7,15 +7,17 @@ A high-level, mathematical checklist across the scope's member projects.
  * `- [~]` in progress 
  * `- [ ]` not started
 
-**Status snapshot**:
+**Status snapshot** *(open `sorry` = real proof-term `sorry`s in `AlgebraicJacobian/`, docstring mentions excluded; counted 2026-06-17)*:
 
 | Project | Stage | Open `sorry` |
 | --- | --- | --- |
-| Algebraic-Jacobian-Challenge | prover | ~438  |
-| Cech-Cohomology | ✅ polish | 0  |
-| Line-Bundle-Comparison-Iso | prover | ~55 (6 seed lemmas) |
-| Quot-Foundations | prover | ~43 |
-| Related papers | scaffold | -  (blueprint only) |
+| Algebraic-Jacobian-Challenge | prover | 91  |
+| Cech-Cohomology | ✅ complete | 0  |
+| Line-Bundle-Comparison-Iso | prover | 4 |
+| Quot-Foundations | prover | 19 |
+| GR-quot_closure | prover | 11 |
+| FBC-B_SNAP-chain | scaffold | – (extraction skeleton, no Lean yet) |
+| Related papers | scaffold | – (blueprint only, 0 Lean) |
 
 ---
 
@@ -24,13 +26,14 @@ A high-level, mathematical checklist across the scope's member projects.
 
 - `Line-Bundle-Comparison-Iso` → `Algebraic-Jacobian-Challenge` (largest leverage: unblocks the Picard substrate)
 - `Cech-Cohomology` ↔ `Algebraic-Jacobian-Challenge` (the Čech engine is the cohomological substrate; already proved here)
-- `Quot-Foundations` → `MR4213770`
+- `GR-quot_closure`, `FBC-B_SNAP-chain` → `Quot-Foundations` (extracted work packages of the Quot/Picard-representability cone; share the SNAP section-graded-ring foundation)
+- `Quot-Foundations` → `Algebraic-Jacobian-Challenge` (merges back into the Picard-representability cone), `MR4213770`
 - `Algebraic-Jacobian-Challenge` → `MR4228499`, `MR4213770`
 - `MR4199442`, `MR4213770`, `MR4228499` → `MR4665779`
 
 ---
 
-## Algebraic-Jacobian-Challenge  *(core engine — prover stage)*
+## Algebraic-Jacobian-Challenge  *(core engine — prover stage, 91 open `sorry`)*
 
 **Goal:** the Jacobian of a smooth proper geometrically-irreducible curve — smooth of
 relative dimension = genus, proper, geometrically irreducible, and the Albanese variety
@@ -44,12 +47,12 @@ relative dimension = genus, proper, geometrically irreducible, and the Albanese 
 - [~] **Weil divisors & rational maps** — order valuation, degree homomorphism, principal divisors, positive part
 - [~] **Regular stalks & Kähler differentials** — standard-smooth ⇒ Krull dim, cotangent iso, stage-6 regular-stalk assembly
 - [~] **Euler characteristic / Riemann–Roch core** — flasque acyclicity, skyscraper SES, `h⁰ − h¹ = 2` at a closed point
-- [~] **Čech higher-direct-image engine (A.2.c)** — `pushPull` functoriality (`pushPullMap_id` landed); `pushPullMap_comp` blocked on a kernel `eqToHom` transport
+- [~] **Čech higher-direct-image engine (A.2.c)** — `pushPull` functoriality **proved in `Cech-Cohomology`** (`pushPullMap_id`, `pushPullMap_comp`, `pushPullFunctor`, 0 `sorry`); in the AJC tree only `pushPullMap_id` has landed — `pushPullMap_comp` is no longer blocked (the kernel `eqToHom` transport was solved in the extraction), it is pending merge-back
 - [~] **Flatness & generic flatness** — algebraic generic flatness (Nitsure §4) → flat-locus open → Noetherian stratification
 - [ ] **Smooth proper curves** — projectivity, normalization iso, function-field equivalence *(held: classically RR-dependent; Route C paused)*
 - [ ] **Top goal: `Pic_{C/k}` representability + Jacobian = Albanese** *(once the substrate + engine themes close)*
 
-## Cech-Cohomology  *(polish stage — effectively complete)*
+## Cech-Cohomology  *(complete — 0 open `sorry`)*
 
 **Goal:** `cech_computes_higherDirectImage` — for a separated quasi-compact `f : X ⟶ S`,
 a quasi-coherent `F`, and a finite affine open cover, the cohomology of the relative Čech
@@ -64,7 +67,7 @@ complex computes `Rⁱf_* F`. Unconditional (no enough-injectives appeal).
 - [x] **PushPull functoriality** — `pushPullMap` composition, leg coherence, pentagon
 - [x] **Comparison theorem `cech_computes_higherDirectImage`** *(proved iter-079, 0 sorries)*
 
-## Line-Bundle-Comparison-Iso  *(prover stage — extraction hub → Jacobian)*
+## Line-Bundle-Comparison-Iso  *(prover stage — extraction hub → Jacobian, 4 open `sorry`)*
 
 **Goal:** the comparison-isomorphism substrate giving `Pic♯_{C/k}` its abelian-group
 structure (the A.1.c.sub package; merges back into the Jacobian challenge).
@@ -76,10 +79,12 @@ structure (the A.1.c.sub package; merges back into the Jacobian challenge).
 - [ ] **Picard group** `PicGroup` / `picCommGroup` *(once tensor unitors proven)*
 - [ ] **`PicSharp.addCommGroup_via_tensorObj`** (consumer seed) *(once dual + tensor routes close)*
 
-## Quot-Foundations  *(prover stage)*
+## Quot-Foundations  *(prover stage — 19 open `sorry`)*
 
 **Goal:** the Čech-independent (i = 0) leg of FGA Picard representability — flat base
-change, generic flatness, and Quot/Grassmannian foundations.
+change, generic flatness, and Quot/Grassmannian foundations. The Grassmannian-quotient
+representability endgame and the flat-base-change/SNAP legs have since been carved into the
+sibling extractions `GR-quot_closure` and `FBC-B_SNAP-chain` (below); proofs merge back here.
 
 - [~] **Flat base change (degree 0)** — `baseChangeGammaPullbackEquiv`; pushforward Mayer–Vietoris / finite-generation criteria
 - [~] **Generic flatness** — `genericFlatness` and the flat-locus chain *(shared root with the Jacobian engine)*
@@ -89,6 +94,27 @@ change, generic flatness, and Quot/Grassmannian foundations.
 - [~] **Relative tensor coequalizer**
 - [~] **Graded section ring/module** — `sectionGradedRing/Module`, cast coherence (SNAP) → Hilbert polynomial *(χ-semantic; Hilbert-poly node owned by the sibling cohomology leg)*
 - [ ] **RelativeSpec `RepresentableBy` upgrade** + Quot-representability core *(once SNAP-S0 + RelativeSpec land)*
+
+## GR-quot_closure  *(prover stage — 11 open `sorry`)*
+
+**Goal:** representability of the relative Grassmannian — the Čech-independent (H⁰) leg that
+builds `Grass(V, d)` from affine charts via the `GL_d` cocycle and proves it represents the
+rank-`d`-quotient functor. Extracted from `Quot-Foundations`; merges back as a three-way merge.
+
+- [~] **Grassmannian cells & cocycle** — affine charts, transition cocycle, scheme structure, separatedness/properness
+- [~] **Glue/effective descent** — `SheafOfModules` descent over `Scheme.GlueData`
+- [~] **Tautological quotient & representability** — `tautologicalQuotient_overlap`, `represents`, representability endgame *(seeds: `Grassmannian`, `Grassmannian.representable`, `tautologicalQuotient_epi`)*
+- [~] **Section graded ring (SNAP)** — `Γ_*(X,L)` graded-ring/module foundation *(shared with `FBC-B_SNAP-chain`; some nodes held as `sorry` for import from the sibling)*
+- [ ] **χ-blocked nodes** — `QuotFunctor`, `hilbertPolynomial` *(χ-semantic; sourced from the Čech cohomology leg at merge, held as `sorry`)*
+
+## FBC-B_SNAP-chain  *(scaffold — extraction skeleton, no Lean files yet)*
+
+**Goal:** the flat-base-change (FBC-B) leg of the Quot/Picard-representability cone, sharing the
+SNAP section-graded-ring foundation with `GR-quot_closure`. The directory is a placeholder created
+during the iter that split the Quot cone; Lean scaffolding has not yet been generated.
+
+- [ ] **Flat base change (FBC-B)** — pushforward flat base change leg
+- [ ] **Section graded ring (SNAP)** — shared foundation with `GR-quot_closure`
 
 ## Downstream papers  *(scaffold stage — blueprint written, Lean formalization not begun)*
 

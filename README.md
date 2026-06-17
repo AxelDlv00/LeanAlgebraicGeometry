@@ -10,6 +10,8 @@ This project also contains related formalization projects, which may share some 
 
 See the [scope roadmap](roadmap.md) for a high-level overview of the scope's member projects and their dependencies.
 
+To see more details, run `archon dashboard <project-name>` for any project in the scope, and consult the generated dashboard, it renders logs and diffs, which cannot be rendered in static webpages. 
+
 ## Table of Contents
 
 - [Scope Map](#scope-map)
@@ -18,13 +20,18 @@ See the [scope roadmap](roadmap.md) for a high-level overview of the scope's mem
 
 ## Scope Map
 
-| Project | Role in the scope | Main dependency direction | Status |
+Status reflects the real proof-term `sorry` count in each project's `AlgebraicJacobian/` Lean
+source (docstring mentions excluded), measured 2026-06-17.
+
+| Project | Role in the scope | Main dependency direction | Status (open `sorry`) |
 | --- | --- | --- | --- | 
-| `Algebraic-Jacobian-Challenge` | Core Jacobian / Picard / curve geometry engine | Provides infrastructure for most downstream projects | 🔄 In progress |
-| `Cech-Cohomology` | Čech comparison and higher direct image machinery | Feeds back into the Jacobian challenge and related papers | ✅ Complete |
-| `Line-Bundle-Comparison-Iso` | Tensor/dual comparison isomorphisms for relative Picard | Unblocks the Jacobian challenge at large scale | 🔄 In progress |
-| `Quot-Foundations` | Quot, Grassmannian, and flat-base-change foundations | Supports the secant-bundle paper formalization | 🔄 In progress |
-| Related papers | Formalization of related algebraic-geometry papers | Share infrastructure with the Jacobian challenge | 📝 Blueprint in progress |
+| `Algebraic-Jacobian-Challenge` | Core Jacobian / Picard / curve geometry engine | Provides infrastructure for most downstream projects | 🔄 In progress (91) |
+| `Cech-Cohomology` | Čech comparison and higher direct image machinery | Feeds back into the Jacobian challenge and related papers | ✅ Complete (0) |
+| `Line-Bundle-Comparison-Iso` | Tensor/dual comparison isomorphisms for relative Picard | Unblocks the Jacobian challenge at large scale | 🔄 In progress (4) |
+| `Quot-Foundations` | Quot, Grassmannian, and flat-base-change foundations | Supports the secant-bundle paper formalization | 🔄 In progress (19) |
+| `GR-quot_closure` | Grassmannian-quotient representability (H⁰ leg) | Extracted from `Quot-Foundations`; merges back | 🔄 In progress (11) |
+| `FBC-B_SNAP-chain` | Flat-base-change leg + shared SNAP foundation | Extracted from `Quot-Foundations`; merges back | 🌱 Scaffold (no Lean yet) |
+| Related papers | Formalization of related algebraic-geometry papers | Share infrastructure with the Jacobian challenge | 📝 Blueprint only (0 Lean) |
 
 ## Methodology 
 

@@ -2,9 +2,11 @@
 
 This directory contains supporting foundations, comparison machinery, and related paper formalizations that feed into or share infrastructure with the main Jacobian challenge.
 
-- [x] **[Cech-Cohomology](Cech-Cohomology)**: Čech comparison and higher direct image machinery.
-- [~] **[Line-Bundle-Comparison-Iso](Line-Bundle-Comparison-Iso)**: Tensor/dual comparison isomorphisms for relative Picard.
-- [~] **[Quot-Foundations](Quot-Foundations)**: Quot, Grassmannian, and flat base change foundations.
+- [x] **[Cech-Cohomology](Cech-Cohomology)**: Čech comparison and higher direct image machinery. *(0 open `sorry` — complete)*
+- [~] **[Line-Bundle-Comparison-Iso](Line-Bundle-Comparison-Iso)**: Tensor/dual comparison isomorphisms for relative Picard. *(4 open `sorry`)*
+- [~] **[Quot-Foundations](Quot-Foundations)**: Quot, Grassmannian, and flat base change foundations. *(19 open `sorry`)*
+- [~] **[GR-quot_closure](GR-quot_closure)**: Grassmannian-quotient representability (H⁰ leg), extracted from Quot-Foundations. *(11 open `sorry`)*
+- [ ] **[FBC-B_SNAP-chain](FBC-B_SNAP-chain)**: Flat-base-change leg + shared SNAP section-graded-ring foundation, extracted from Quot-Foundations. *(extraction skeleton — no Lean files yet)*
 - [~] **[RelatedPapersFormalisation](RelatedPapersFormalisation)**: Formalization of related algebraic-geometry papers.
   - [~] **[MR4199442](RelatedPapersFormalisation/MR4199442-abelian-fourfolds)**: Standard conjectures for abelian fourfolds
   - [~] **[MR4213770](RelatedPapersFormalisation/MR4213770-secant-syzygies)**: Universal secant bundles and syzygies of canonical curves

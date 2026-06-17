@@ -9,3 +9,7 @@
 
 # Ignore local git-dir databases (large pack files)
 **/git-dir/
+
+# Env files
+
+**/*.env
