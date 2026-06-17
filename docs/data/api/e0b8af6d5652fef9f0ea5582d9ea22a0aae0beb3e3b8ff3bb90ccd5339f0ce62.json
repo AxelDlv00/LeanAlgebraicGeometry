@@ -2,7 +2,7 @@
   "enabled": false,
   "configPresent": false,
   "localConfigPresent": false,
-  "rootPath": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/MainProjects/Algebraic-Jacobian-Challenge/.archon/multilane",
+  "rootPath": "Algebraic-Jacobian-Challenge/.archon/multilane",
   "latestIteration": {
     "iteration": 4,
     "slug": "iter-004",

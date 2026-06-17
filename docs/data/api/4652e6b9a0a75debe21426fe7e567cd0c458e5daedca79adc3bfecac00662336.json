@@ -1,0 +1,12 @@
+{
+  "files": [
+    {
+      "path": "MR4199442StandardConjecturesForAbelianFourfolds.lean",
+      "size": 61
+    },
+    {
+      "path": "MR4199442StandardConjecturesForAbelianFourfolds/Basic.lean",
+      "size": 21
+    }
+  ]
+}

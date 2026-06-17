@@ -1,52 +1,52 @@
 {
   "current": {
     "name": "Algebraic-Jacobian-Challenge",
-    "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/MainProjects/Algebraic-Jacobian-Challenge"
+    "path": "Algebraic-Jacobian-Challenge"
   },
   "peers": [
     {
       "name": "Cech-Cohomology",
-      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/SubProjects/Cech-Cohomology",
+      "path": "Cech-Cohomology",
       "has_dag": true
     },
     {
       "name": "Line-Bundle-Comparison-Iso",
-      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/SubProjects/Line-Bundle-Comparison-Iso",
+      "path": "Line-Bundle-Comparison-Iso",
       "has_dag": true
     },
     {
       "name": "Quot-Foundations",
-      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/SubProjects/Quot-Foundations",
+      "path": "Quot-Foundations",
       "has_dag": true
     },
     {
       "name": "RelatedPapersFormalisation",
-      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/SubProjects/RelatedPapersFormalisation",
+      "path": "RelatedPapersFormalisation",
       "has_dag": true
     },
     {
       "name": "MR4199442-abelian-fourfolds",
-      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/SubProjects/RelatedPapersFormalisation/MR4199442-abelian-fourfolds",
+      "path": "MR4199442-abelian-fourfolds",
       "has_dag": true
     },
     {
       "name": "MR4213770-secant-syzygies",
-      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/SubProjects/RelatedPapersFormalisation/MR4213770-secant-syzygies",
+      "path": "MR4213770-secant-syzygies",
       "has_dag": true
     },
     {
       "name": "MR4228499-perverse-stalk-bounds",
-      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/SubProjects/RelatedPapersFormalisation/MR4228499-perverse-stalk-bounds",
+      "path": "MR4228499-perverse-stalk-bounds",
       "has_dag": true
     },
     {
       "name": "MR4258055-brill-noether-hurwitz",
-      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/SubProjects/RelatedPapersFormalisation/MR4258055-brill-noether-hurwitz",
-      "has_dag": false
+      "path": "MR4258055-brill-noether-hurwitz",
+      "has_dag": true
     },
     {
       "name": "MR4665779-chabauty-surfaces",
-      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/SubProjects/RelatedPapersFormalisation/MR4665779-chabauty-surfaces",
+      "path": "MR4665779-chabauty-surfaces",
       "has_dag": true
     }
   ]

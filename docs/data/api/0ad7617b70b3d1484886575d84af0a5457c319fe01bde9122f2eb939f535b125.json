@@ -1,0 +1,220 @@
+{
+  "files": [
+    {
+      "path": "AlgebraicJacobian.lean",
+      "size": 1817
+    },
+    {
+      "path": "AlgebraicJacobian/AbelianVarietyRigidity.lean",
+      "size": 63095
+    },
+    {
+      "path": "AlgebraicJacobian/AbelJacobi.lean",
+      "size": 3901
+    },
+    {
+      "path": "AlgebraicJacobian/Albanese/AlbaneseUP.lean",
+      "size": 26679
+    },
+    {
+      "path": "AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean",
+      "size": 182629
+    },
+    {
+      "path": "AlgebraicJacobian/Albanese/CodimOneExtension.lean",
+      "size": 105237
+    },
+    {
+      "path": "AlgebraicJacobian/Albanese/CoheightBridge.lean",
+      "size": 10260
+    },
+    {
+      "path": "AlgebraicJacobian/Albanese/Thm32RationalMapExtension.lean",
+      "size": 19142
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean",
+      "size": 39483
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "size": 48874
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/HigherDirectImage.lean",
+      "size": 6905
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/MayerVietorisCore.lean",
+      "size": 34824
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/MayerVietorisCover.lean",
+      "size": 40327
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/SheafCompose.lean",
+      "size": 1828
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/StructureSheafAb.lean",
+      "size": 2372
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "size": 1558
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/StructureSheafModuleK/Carriers.lean",
+      "size": 38141
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/StructureSheafModuleK/Presheaf.lean",
+      "size": 8681
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/StructureSheafModuleK/SheafProperty.lean",
+      "size": 2631
+    },
+    {
+      "path": "AlgebraicJacobian/Cotangent/ChartAlgebra.lean",
+      "size": 24973
+    },
+    {
+      "path": "AlgebraicJacobian/Cotangent/GrpObj.lean",
+      "size": 34760
+    },
+    {
+      "path": "AlgebraicJacobian/Differentials.lean",
+      "size": 6699
+    },
+    {
+      "path": "AlgebraicJacobian/Genus.lean",
+      "size": 1426
+    },
+    {
+      "path": "AlgebraicJacobian/Genus0BaseObjects.lean",
+      "size": 1267
+    },
+    {
+      "path": "AlgebraicJacobian/Genus0BaseObjects/BareScheme.lean",
+      "size": 15176
+    },
+    {
+      "path": "AlgebraicJacobian/Genus0BaseObjects/ChartIso.lean",
+      "size": 25260
+    },
+    {
+      "path": "AlgebraicJacobian/Genus0BaseObjects/Cross01Substrate.lean",
+      "size": 21972
+    },
+    {
+      "path": "AlgebraicJacobian/Genus0BaseObjects/GmScaling.lean",
+      "size": 65563
+    },
+    {
+      "path": "AlgebraicJacobian/Genus0BaseObjects/Points.lean",
+      "size": 29170
+    },
+    {
+      "path": "AlgebraicJacobian/Jacobian.lean",
+      "size": 18826
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/FGAPicRepresentability.lean",
+      "size": 24975
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/FlatteningStratification.lean",
+      "size": 26959
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/IdentityComponent.lean",
+      "size": 46032
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/LineBundleCoherence.lean",
+      "size": 14890
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/LineBundlePullback.lean",
+      "size": 21876
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/Pic0AbelianVariety.lean",
+      "size": 11741
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/QuotScheme.lean",
+      "size": 73879
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/RelativeSpec.lean",
+      "size": 38266
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/RelPicFunctor.lean",
+      "size": 37434
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/SheafOverEquivalence.lean",
+      "size": 20766
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "size": 204720
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "size": 80354
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/PresheafInternalHom.lean",
+      "size": 59871
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/StalkTensor.lean",
+      "size": 30572
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/Vestigial.lean",
+      "size": 39933
+    },
+    {
+      "path": "AlgebraicJacobian/RiemannRoch/H1Vanishing.lean",
+      "size": 60490
+    },
+    {
+      "path": "AlgebraicJacobian/RiemannRoch/OcOfD.lean",
+      "size": 11698
+    },
+    {
+      "path": "AlgebraicJacobian/RiemannRoch/OCofP.lean",
+      "size": 93192
+    },
+    {
+      "path": "AlgebraicJacobian/RiemannRoch/RationalCurveIso.lean",
+      "size": 59701
+    },
+    {
+      "path": "AlgebraicJacobian/RiemannRoch/RRFormula.lean",
+      "size": 37572
+    },
+    {
+      "path": "AlgebraicJacobian/RiemannRoch/WeilDivisor.lean",
+      "size": 88842
+    },
+    {
+      "path": "AlgebraicJacobian/Rigidity.lean",
+      "size": 5896
+    },
+    {
+      "path": "AlgebraicJacobian/RigidityKbar.lean",
+      "size": 3845
+    },
+    {
+      "path": "AlgebraicJacobian/RigidityLemma.lean",
+      "size": 58078
+    }
+  ]
+}

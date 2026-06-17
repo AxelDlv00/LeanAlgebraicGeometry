@@ -1,0 +1,52 @@
+{
+  "files": [
+    {
+      "path": "AlgebraicJacobian.lean",
+      "size": 440
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "size": 180356
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/FlatBaseChangeGlobal.lean",
+      "size": 16165
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/RegroupHelper.lean",
+      "size": 5190
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/FlatteningStratification.lean",
+      "size": 226848
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/GlueDescent.lean",
+      "size": 211213
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/GradedHilbertSerre.lean",
+      "size": 68627
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/GrassmannianCells.lean",
+      "size": 123522
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/GrassmannianQuot.lean",
+      "size": 338701
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/QuotScheme.lean",
+      "size": 172763
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/RelativeSpec.lean",
+      "size": 14687
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "size": 110557
+    }
+  ]
+}

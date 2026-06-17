@@ -1,0 +1,5 @@
+{
+  "path": "AlgebraicJacobian.lean",
+  "size": 440,
+  "content": "import AlgebraicJacobian.Cohomology.FlatBaseChange\nimport AlgebraicJacobian.Picard.RelativeSpec\nimport AlgebraicJacobian.Picard.FlatteningStratification\nimport AlgebraicJacobian.Picard.QuotScheme\nimport AlgebraicJacobian.Picard.GradedHilbertSerre\nimport AlgebraicJacobian.Picard.GrassmannianCells\nimport AlgebraicJacobian.Picard.GlueDescent\nimport AlgebraicJacobian.Picard.GrassmannianQuot\nimport AlgebraicJacobian.Picard.SectionGradedRing\n"
+}

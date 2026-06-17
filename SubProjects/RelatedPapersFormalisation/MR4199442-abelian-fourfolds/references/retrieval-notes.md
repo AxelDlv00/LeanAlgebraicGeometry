@@ -2,6 +2,8 @@
 
 - MR: MR4199442
 - Title: Standard conjectures for abelian fourfolds
-- Status: scaffold created from the roadmap in the root README
-- PDF: not yet retrieved
-- TeX/source: not yet retrieved
+- Status: source retrieved and extracted
+- PDF: `standard-conjectures-abelian-fourfolds.pdf` (present)
+- TeX/source: `source/fourfolds_2020.tex` (extracted from `source.tar`)
+
+See `summary.md` for the per-file inventory and confirmed reading methods.

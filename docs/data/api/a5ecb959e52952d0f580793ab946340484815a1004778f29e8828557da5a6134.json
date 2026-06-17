@@ -1,0 +1,5 @@
+{
+  "path": "MR4199442-abelian-fourfolds/MR4199442StandardConjecturesForAbelianFourfolds/Basic.lean",
+  "size": 21,
+  "content": "def hello := \"world\"\n"
+}
