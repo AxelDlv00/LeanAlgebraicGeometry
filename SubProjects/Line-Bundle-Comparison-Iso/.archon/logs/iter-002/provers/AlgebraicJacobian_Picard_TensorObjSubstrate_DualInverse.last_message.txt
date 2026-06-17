@@ -1,0 +1,9 @@
+Implemented partial progress in [DualInverse.lean](/home/archon/proj/Line-Bundle-Comparison-Iso/AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean:234):
+
+- Added proved helper `Scheme.Modules.dualUnitRingSwap_apply`.
+- Strengthened `sliceDualTransport.naturality` from a bare `sorry` to a typed partial attempt with the induced over-morphism and `φ.naturality` recorded.
+- Wrote the required result file: [task result](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/task_results/AlgebraicJacobian_Picard_TensorObjSubstrate_DualInverse.lean.md:1).
+
+Verification: `lake env lean AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean` succeeds, with expected `sorry` warnings.
+
+Remaining gaps are `sliceDualTransportInv.naturality`, `sliceDualTransport.naturality`, and the two inverse laws.

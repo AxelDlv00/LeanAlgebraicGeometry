@@ -1,0 +1,40 @@
+{
+  "iteration": 54,
+  "stage": "prover  (iteration 053 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **existence-bundled affine \u010cech-acyclic cover carrier + producer for `IsAffineHModuleVanishing`**: append two declarations to `Cohomology/MayerVietoris.lean` `section CoverTotality` (inside `namespace AlgebraicGeometry.Scheme`), after iter-052's `subsingleton_HModule'_of_hasCechToHModuleIso_curve` (currently L1260), before `end CoverTotality` (currently L1262): (1) `class HasAffineCechAcyclicCover` \u2014 `Prop`-class whose single field `exists_cover` asserts that for every affine open `U`, there exists a basic-open cover `\ud835\udcb0 : \u03b9 \u2192 Opens` with `\u2a06\ud835\udcb0 = U` and both `IsCechAcyclicCover F \ud835\udcb0` (iter-048) and `HasCechToHModuleIso F \ud835\udcb0` (iter-050) instances; (2) `instance instIsAffineHModuleVanishing_of_hasAffineCechAcyclicCover` \u2014 producer that under `[HasAffineCechAcyclicCover F]` chains iter-052's generalised rewrite-bridge consumer to fire `[IsAffineHModuleVanishing k C F]` automatically on every affine open. Iter-052 closure verified (this pass): both iter-052 declarations land cleanly at L1231 (`subsingleton_HModule'_of_hasCechToHModuleIso`) and L1251 (`_curve`); sorry count `9 \u2192 9`; file LOC `1213 \u2192 1264` (+51, slight overage from multi-paragraph docstrings vs +30-50 plan band; within tolerance, mirrors iter-045/047/048/050 pattern). Plan-agent `lean_run_code` probe (this pass) confirms both iter-053 declaration bodies compile end-to-end with kernel-only axioms `[propext, Classical.choice, Quot.sound]` \u2014 no new axiom introduced. Iter-053 sorry trajectory `9 \u2192 9` (no transient \u2014 bodies probe-confirmed). Phase A iterations-remaining held at ~4 (iter-053 is a thin scaffolding step packaging the iter-054+ substantive existence obligation as a typeclass; iter-054+ opens the substantive \u010cech-vs-derived comparison + Koszul acyclicity branch that finally instantiates the carrier for the structure sheaf).",
+  "mode": "parallel",
+  "startedAt": "2026-05-10T11:05:01Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1425
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 116
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 602
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "06934ea"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 27
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 5
+    }
+  },
+  "completedAt": "2026-05-10T12:31:07Z",
+  "wallTimeSecs": 5166
+}

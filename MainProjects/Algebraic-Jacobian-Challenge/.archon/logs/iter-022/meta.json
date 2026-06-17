@@ -1,0 +1,9 @@
+{
+  "iteration": 22,
+  "stage": "prover  (iteration 021 \u2014 Path-2 Mayer-Vietoris LES connecting homomorphism: `noncomputable def HModule'_\u03b4` mirroring Mathlib `MayerVietoris.lean` L112\u2013114 for the `ModuleCat k` flavor. The iter-020 prover round closed the short-exact infrastructure cohort cleanly: sorry count `9 \u2192 9` (the prover collapsed refactor + prover sub-phases into a single Edit; the transient `9 \u2192 13 \u2192 9` trajectory was condensed), kernel-only axioms on the three substantive named declarations (`HModule'_shortComplex_g_epi`, `HModule'_shortComplex_exact`, `HModule'_shortComplex_shortExact`), bodies adopted as the probe-confirmed verbatim Mathlib L251\u2013268 substitutions. One harmless deviation: the docstring above the `set_option \u2026 in instance HModule'_shortComplex_f_mono` was demoted to a `--` comment by the prover because Lean's parser does not accept a doc-comment directly above a `set_option \u2026 in <decl>` wrapper (Mathlib L251 has no docstring on the corresponding declaration either; well-precedented). Iter-021 plan-agent has scoped + probe-confirmed the next sub-step: a single new declaration `noncomputable def HModule'_\u03b4` providing the connecting homomorphism of the Mayer-Vietoris LES, with body `AddCommGrpCat.ofHom ((HModule'_shortComplex_shortExact k S).extClass.precomp _ (by omega))`. Direct mirror of Mathlib `MayerVietoris.lean` L112\u2013114; **no new Mathlib gap** (`Ext.precomp` and `AddCommGrpCat.ofHom` are both Mathlib-native and value-category-agnostic). The required `[HasExt (Sheaf J (ModuleCat.{u} k))]` typeclass is load-bearing and matches the iter-016/017/018 LES infrastructure. Iter-021 sorry count `9 \u2192 10 \u2192 9` over the iteration. Refactor agent runs first to scaffold; prover agent then closes.).",
+  "mode": "parallel",
+  "startedAt": "2026-05-08T08:57:52Z",
+  "plan": {
+    "status": "running"
+  }
+}

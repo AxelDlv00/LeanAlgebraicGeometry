@@ -1,0 +1,58 @@
+{
+  "inScope": true,
+  "scopePath": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG",
+  "readme": "# LeanAG Scope\n\nThis repository aims at formalizing a set of related algebraic-geometry projects in Lean 4 / Mathlib. \n\nThe main intent is solving the [Algebraic Jacobian challenge](https://leanprover.zulipchat.com/#narrow/channel/583336-Autoformalization/topic/Jacobian.20challenge/with/603571555) originally proposed by Kevin Buzzard in its Differential Geometry version on Zulip, while we focus on the [algebraic geometry version](https://leanprover.zulipchat.com/#narrow/channel/583336-Autoformalization/topic/Jacobian.20challenge/near/587802685) proposed by Christian Merten. \n\nThis project also contains related formalization projects, which may share some common infrastructure with the Jacobian challenge. \n\nSee the [scope roadmap](roadmap.md) for a high-level overview of the scope's member projects and their dependencies.\n\n## Table of Contents\n\n- [Scope Map](#scope-map)\n- [Methodology](#methodology)\n- [How to Contribute ?](#how-to-contribute-)\n\n## Scope Map\n\n| Project | Role in the scope | Main dependency direction | Status |\n| --- | --- | --- | --- | \n| `Algebraic-Jacobian-Challenge` | Core Jacobian / Picard / curve geometry engine | Provides infrastructure for most downstream projects | 🔄 In progress |\n| `Cech-Cohomology` | Čech comparison and higher direct image machinery | Feeds back into the Jacobian challenge and related papers | ✅ Complete |\n| `Line-Bundle-Comparison-Iso` | Tensor/dual comparison isomorphisms for relative Picard | Unblocks the Jacobian challenge at large scale | 🔄 In progress |\n| `Quot-Foundations` | Quot, Grassmannian, and flat-base-change foundations | Supports the secant-bundle paper formalization | 🔄 In progress |\n| Related papers | Formalization of related algebraic-geometry papers | Share infrastructure with the Jacobian challenge | 📝 Blueprint in progress |\n\n## Methodology \n\nWe use [Archon v0.3.0](https://github.com/frenzymath/Archon) to progress in the formalization, using `Claude Opus 4.8` in the critical steps, and `Claude Sonnet` for routine tasks. \n\nArchon is launched autonomously, human intervention is sometimes used as \"hints\" given occasionally as guidance. Creating subprojects or merging subprojects also requires human intervention, but Archon is used to generate the content of the subprojects and merge them afterwards.\n\nNote that the version of Archon we use makes allows projects to read from each other, therefore avoiding dupplication of work and allowing for a more organic development of the projects.\n\n## How to Contribute ?\n\nContribution is very welcome, and can take various forms. First, you may raise issues to propose subprojects, or hints that should be given to Archon. \n\nYou may also directly contribute to the formalization, in this case you can create pull requests. You may use Archon or your own methods. You may create your own subprojects to avoid dupplicating your contribution with Archon's work, as Archon is currently running in most of these subprojects. \n\n",
+  "roadmap": "",
+  "members": [
+    {
+      "name": "Algebraic-Jacobian-Challenge",
+      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/MainProjects/Algebraic-Jacobian-Challenge",
+      "has_dag": true
+    },
+    {
+      "name": "Cech-Cohomology",
+      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/SubProjects/Cech-Cohomology",
+      "has_dag": true
+    },
+    {
+      "name": "Line-Bundle-Comparison-Iso",
+      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/SubProjects/Line-Bundle-Comparison-Iso",
+      "has_dag": true
+    },
+    {
+      "name": "Quot-Foundations",
+      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/SubProjects/Quot-Foundations",
+      "has_dag": true
+    },
+    {
+      "name": "RelatedPapersFormalisation",
+      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/SubProjects/RelatedPapersFormalisation",
+      "has_dag": true
+    },
+    {
+      "name": "MR4199442-abelian-fourfolds",
+      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/SubProjects/RelatedPapersFormalisation/MR4199442-abelian-fourfolds",
+      "has_dag": true
+    },
+    {
+      "name": "MR4213770-secant-syzygies",
+      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/SubProjects/RelatedPapersFormalisation/MR4213770-secant-syzygies",
+      "has_dag": true
+    },
+    {
+      "name": "MR4228499-perverse-stalk-bounds",
+      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/SubProjects/RelatedPapersFormalisation/MR4228499-perverse-stalk-bounds",
+      "has_dag": true
+    },
+    {
+      "name": "MR4258055-brill-noether-hurwitz",
+      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/SubProjects/RelatedPapersFormalisation/MR4258055-brill-noether-hurwitz",
+      "has_dag": false
+    },
+    {
+      "name": "MR4665779-chabauty-surfaces",
+      "path": "/Users/axeldelaval/Documents/Laboratoire/Professionnel/PKU-Internship/LeanAG/SubProjects/RelatedPapersFormalisation/MR4665779-chabauty-surfaces",
+      "has_dag": true
+    }
+  ]
+}

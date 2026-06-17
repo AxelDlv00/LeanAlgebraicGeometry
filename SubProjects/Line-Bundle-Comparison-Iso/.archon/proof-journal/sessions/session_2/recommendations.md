@@ -1,0 +1,121 @@
+# Session 2 Recommendations
+
+## Must Address
+- Review subagents did not run: wrapper first needed `/home/archon/archon_env/bin` on `PATH`, then Archon failed with `FileNotFoundError: codex`. Fix subagent runtime before relying on review audits.
+- Add blueprint entry for `AlgebraicGeometry.Scheme.Modules.dualUnitRingSwap_apply` (`DualInverse.lean:234`). Depends on `dualUnitRingSwap_comp_dualUnitRingSwapInv`, `dualUnitRingSwapInv`, `ModuleCat.restrictScalars_η`, `ConcreteCategory.bijective_of_isIso`, `Scheme.Hom.appIso.hom_inv_id`.
+
+## Closest Targets
+- `sliceDualTransport.naturality`: factor the isolated elementwise proof into a standalone lemma and call it from the `LinearEquiv` field. Inline proof causes heartbeat spillover into later fields.
+- `sheafificationCompPullback_comp`: continue from committed `hAssocComponent`; prove the mixed comparison via nested `leftAdjointCompNatTrans_assoc`, then simplify associator components.
+
+## Do Not Retry
+- `sliceDualTransport.naturality`: do not retry `cat_disch`/thin-poset close; the real goal is epsilon/appIso naturality.
+- `sheafificationCompPullback_comp_tail`: do not retry `aesop_cat`, raw reassociation, `← Functor.map_comp`, or sectionwise `hom_ext`.
+- `pullbackTensorMap_restrict`: do not assign until `sheafificationCompPullback_comp` closes.
+- `exists_tensorObj_inverse`: keep deferred; direct route remains the import-cycle trap.
+
+## Reusable Patterns
+- `dualUnitRingSwap_apply`: prove a lax-unit swap's underlying function by composing with the inverse appIso map and using injectivity.
+- D3 associativity scaffold: spell `τ012`, `τ013` as identity-shaped forget/pushforward comparisons; `τ123` as `SheafOfModules.pushforwardComp.inv`; `τ023` as forget-whiskered `PresheafOfModules.pushforwardComp.inv`; prove coherence by `ext A; rfl`.
+- Pin module universe as `.{u}` for `SheafOfModules.pushforward` / `PresheafOfModules.pushforward` comparisons in this file.
+
+## Coverage Debt
+- Current unmatched count: 96 lean_aux nodes.
+- New this iter: `AlgebraicGeometry.Scheme.Modules.dualUnitRingSwap_apply`.
+- Full current unmatched list:
+  - `AlgebraicGeometry.Scheme.LineBundle.OnProduct.carrier`
+  - `AlgebraicGeometry.Scheme.LineBundle.OnProduct.isLocallyTrivial`
+  - `AlgebraicGeometry.Scheme.Modules.W_of_isIso_sheafification`
+  - `AlgebraicGeometry.Scheme.Modules.dualUnitRingSwap_apply`
+  - `AlgebraicGeometry.Scheme.Modules.epsilonPresheafToSheafUnit`
+  - `AlgebraicGeometry.Scheme.Modules.homLocalSection`
+  - `AlgebraicGeometry.Scheme.Modules.homMk`
+  - `AlgebraicGeometry.Scheme.Modules.homOfLocalCompat`
+  - `AlgebraicGeometry.Scheme.Modules.isInvertible_unit`
+  - `AlgebraicGeometry.Scheme.Modules.isIso_pullbackTensorMap_unitPair_of_isIso_sheafifyEta`
+  - `AlgebraicGeometry.Scheme.Modules.isIso_sheafifyDelta_unitPair_of_isIso_sheafifyEta`
+  - `AlgebraicGeometry.Scheme.Modules.isIso_sheafifyEta_of_unitSquare`
+  - `AlgebraicGeometry.Scheme.Modules.isIso_ε_restrictScalars_presheafMap`
+  - `AlgebraicGeometry.Scheme.Modules.presheafUnit_comp_map_eta`
+  - `AlgebraicGeometry.Scheme.Modules.pullbackEtaUnitSquare`
+  - `AlgebraicGeometry.Scheme.Modules.pullbackSheafifyUnitEtaTriangle`
+  - `AlgebraicGeometry.Scheme.Modules.restrictIsoUnitOfLE`
+  - `AlgebraicGeometry.Scheme.Modules.sheafifyUnitIso`
+  - `AlgebraicGeometry.Scheme.Modules.topSectionToHom`
+  - `AlgebraicGeometry.Scheme.Modules.topSectionToHom_app`
+  - `AlgebraicGeometry.Scheme.Modules.unitRelabelSwap`
+  - `AlgebraicGeometry.Scheme.PicSharp`
+  - `AlgebraicGeometry.Scheme.PicSharp.isLocallyTrivial_unit`
+  - `AlgebraicGeometry.Scheme.PicSharp.pInverseUnique`
+  - `AlgebraicGeometry.Scheme.PicSharp.presheaf`
+  - `AlgebraicGeometry.Scheme.PicSharp.relAdd`
+  - `AlgebraicGeometry.Scheme.PicSharp.relNeg`
+  - `AlgebraicGeometry.Scheme.PicSharp.relTensorObj`
+  - `PresheafOfModules.InternalHom.globalSMul_add`
+  - `PresheafOfModules.InternalHom.globalSMul_hom_apply`
+  - `PresheafOfModules.InternalHom.globalSMul_mul`
+  - `PresheafOfModules.InternalHom.globalSMul_one`
+  - `PresheafOfModules.InternalHom.globalSMul_zero`
+  - `PresheafOfModules.InternalHom.hom_app_heq`
+  - `PresheafOfModules.InternalHom.internalHomPresheaf`
+  - `PresheafOfModules.InternalHom.restr`
+  - `PresheafOfModules.InternalHom.restrictionMapAddHom`
+  - `PresheafOfModules.InternalHom.restrictionMap_add`
+  - `PresheafOfModules.InternalHom.restrictionMap_comp`
+  - `PresheafOfModules.InternalHom.restrictionMap_comp_hom`
+  - `PresheafOfModules.InternalHom.restrictionMap_globalSMul`
+  - `PresheafOfModules.InternalHom.restrictionMap_id`
+  - `PresheafOfModules.InternalHom.restrictionMap_smul`
+  - `PresheafOfModules.InternalHom.restrictionMap_zero`
+  - `PresheafOfModules.InternalHom.termRingMap_terminal`
+  - `PresheafOfModules.W_whiskerRight_of_W`
+  - `PresheafOfModules.evalLin_add`
+  - `PresheafOfModules.evalLin_smul`
+  - `PresheafOfModules.germ_revBihom`
+  - `PresheafOfModules.germ_revInner`
+  - `PresheafOfModules.germ_stalkTensorDesc`
+  - `PresheafOfModules.germ_tensorObj_map_tmul`
+  - `PresheafOfModules.injective_stalk_of_isLocallyInjective`
+  - `PresheafOfModules.internalHomEvalApp`
+  - `PresheafOfModules.internalHomEvalApp_tmul`
+  - `PresheafOfModules.isIso_of_isIso_app`
+  - `PresheafOfModules.isIso_stalkFunctor_map_of_W`
+  - `PresheafOfModules.isLocallyInjective_of_injective_stalk`
+  - `PresheafOfModules.isLocallySurjective_whiskerLeft`
+  - `PresheafOfModules.pushforwardCongr`
+  - `PresheafOfModules.pushforwardNatTrans`
+  - `PresheafOfModules.pushforwardPushforwardAdj`
+  - `PresheafOfModules.restr_map_homMk`
+  - `PresheafOfModules.restrictScalarsMonoidalOfBijective`
+  - `PresheafOfModules.revBihom`
+  - `PresheafOfModules.revBihom_balanced`
+  - `PresheafOfModules.revBihom_balanced_germ`
+  - `PresheafOfModules.revBihom_germ_tmul`
+  - `PresheafOfModules.revInner`
+  - `PresheafOfModules.revInnerLeg`
+  - `PresheafOfModules.revInnerLeg_apply`
+  - `PresheafOfModules.revInner_germ`
+  - `PresheafOfModules.revOuterLeg`
+  - `PresheafOfModules.revOuterLeg_apply`
+  - `PresheafOfModules.stalkLinearEquivOfIsIso`
+  - `PresheafOfModules.stalkLinearMap_bijective_of_isIso`
+  - `PresheafOfModules.stalkLinearMap_germ`
+  - `PresheafOfModules.stalkTensorBilin`
+  - `PresheafOfModules.stalkTensorBilin_balanced`
+  - `PresheafOfModules.stalkTensorDesc`
+  - `PresheafOfModules.stalkTensorDescU`
+  - `PresheafOfModules.stalkTensorDescU_smul`
+  - `PresheafOfModules.stalkTensorDescU_tmul`
+  - `PresheafOfModules.stalkTensorDesc_germ`
+  - `PresheafOfModules.stalkTensorDesc_germ_tmul`
+  - `PresheafOfModules.stalkTensorLinearMap`
+  - `PresheafOfModules.stalkTensorLinearMap_germ_tmul`
+  - `PresheafOfModules.stalkTensorRev`
+  - `PresheafOfModules.stalkTensorRev_germ_tmul`
+  - `PresheafOfModules.toPresheaf_whiskerLeft_app_tmul`
+  - `restrictScalarsMonoidalOfRingEquiv`
+  - `restrictScalarsRingIsoTensorEquiv_apply_tmul`
+  - `restrictScalars_isIso_ε`
+  - `restrictScalars_isIso_ε_of_bijective`
+  - `restrictScalars_isIso_μ`
+  - `restrictScalars_isIso_μ_of_bijective`

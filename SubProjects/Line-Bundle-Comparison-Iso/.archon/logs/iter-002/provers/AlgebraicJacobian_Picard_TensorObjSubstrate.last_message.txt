@@ -1,0 +1,5 @@
+Implemented partial proof progress in [TensorObjSubstrate.lean](/home/archon/proj/Line-Bundle-Comparison-Iso/AlgebraicJacobian/Picard/TensorObjSubstrate.lean:2625): added a checked non-circular `Adjunction.leftAdjointCompNatTrans_assoc` scaffold inside `sheafificationCompPullback_comp`, including the right-adjoint coherence proof `ext A; rfl` and the component equation `hAssocComponent`.
+
+The remaining gap is still the splice identifying the mixed comparison with `sheafificationCompPullback h` followed by sheafified `PresheafOfModules.pullbackComp.hom`. I documented the attempt and next step in [.archon/task_results/AlgebraicJacobian_Picard_TensorObjSubstrate.lean.md](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/task_results/AlgebraicJacobian_Picard_TensorObjSubstrate.lean.md).
+
+Verification: `lake env lean AlgebraicJacobian/Picard/TensorObjSubstrate.lean` exits 0, with the expected existing warnings/sorries.

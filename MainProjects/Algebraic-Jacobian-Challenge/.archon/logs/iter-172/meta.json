@@ -1,0 +1,63 @@
+{
+  "iteration": 172,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-22T05:46:00Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "e05b980e-f5c9-4b20-8d39-ad4874242321",
+    "durationSecs": 2016
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 4
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 2434
+  },
+  "provers": {
+    "AlgebraicJacobian_Genus0BaseObjects": {
+      "file": "AlgebraicJacobian/Genus0BaseObjects.lean",
+      "status": "done",
+      "sessionId": "4c2ec9f8-1e0f-4020-8913-96ace41a58fc"
+    },
+    "AlgebraicJacobian_Picard_RelativeSpec": {
+      "file": "AlgebraicJacobian/Picard/RelativeSpec.lean",
+      "status": "error",
+      "sessionId": "4d0e41d1-6e5d-4ff1-b780-8fb81a52d672"
+    },
+    "AlgebraicJacobian_RiemannRoch_WeilDivisor": {
+      "file": "AlgebraicJacobian/RiemannRoch/WeilDivisor.lean",
+      "status": "done",
+      "sessionId": "bf272bcb-d307-4e18-ac9b-bc951bd8c5c1"
+    },
+    "AlgebraicJacobian": {
+      "file": "AlgebraicJacobian.lean",
+      "status": "done",
+      "sessionId": "fe8f497c-8fe4-4dec-810d-729e4c0491b1"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "51effb47-d268-4e17-ad15-b85fe68e13a7",
+    "durationSecs": 1357
+  },
+  "sorry_count": 20,
+  "finalize": {
+    "innerGit": {
+      "sha": "3ffd8cd7"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 11
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 3,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-22T07:25:15Z",
+  "wallTimeSecs": 5955
+}

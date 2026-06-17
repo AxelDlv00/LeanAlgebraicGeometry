@@ -1,0 +1,1 @@
+{"type": "summary", "no_prover_lane": true, "iter": 80, "reason": "No prover lane this iter — either an intentional skip (see plan-validate marker / iter sidecar) or the prover phase produced no parsed logs."}

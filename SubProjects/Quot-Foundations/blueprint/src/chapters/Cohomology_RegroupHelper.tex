@@ -1,0 +1,76 @@
+\chapter{Regrouping isomorphism for the affine base-change tensor tower}
+\label{chap:Cohomology_RegroupHelper}
+% This chapter blueprints the standalone, geometry-free helper that lives in
+% AlgebraicJacobian/Cohomology/RegroupHelper.lean (1:1 slug). It is the pure
+% tensor-algebra core of lem:base_change_mate_regroupEquiv in the FlatBaseChange
+% chapter; it is split into its own compilation unit so the object-level
+% ModuleCat iso can be obtained by a single LinearEquiv.toModuleIso application
+% (the separate import normalises the `Module A (A ⊗[R] R')` instance diamond
+% that blocks the same-file construction).
+
+\section{The R'-linear regrouping equivalence}
+
+\begin{lemma}
+
+\leanok
+[Regrouping linear equivalence for the tensor tower]
+  \label{lem:base_change_regroup_linearEquiv}
+  \lean{AlgebraicGeometry.base_change_regroup_linearEquiv}
+  \uses{lem:isPushout_cancelBaseChange_mathlib}
+  % SOURCE: [Stacks Project], Cohomology of Schemes, Lemma
+  % `lemma-affine-base-change' (\S\,Cohomology and base change, I), proof, the
+  % "boils down to the equality" step (read from references/stacks-coherent.tex,
+  % L933--938).
+  % SOURCE QUOTE: "Thus we see that the lemma boils down to the
+  % equality
+  % $$
+  % (R' \otimes_R A) \otimes_A M = R' \otimes_R M
+  % $$
+  % as $R'$-modules."
+  \textit{Source: Stacks Project, Cohomology of Schemes, Lemma ``Affine base
+  change'' (proof, ``boils down to the equality'' step).}
+  Let \(\psi : R \to R'\) and \(\varphi : R \to A\) be ring homomorphisms and \(M\)
+  an \(A\)-module. On the \emph{canonical} Mathlib instances (with \(R'\) acting on
+  \(A \otimes_R R'\) through the \(\texttt{Algebra.TensorProduct.rightAlgebra}\)
+  factor, i.e.\ \(r' \cdot (a \otimes s) = a \otimes (r' s)\)) there is a bundled
+  \(R'\)-linear isomorphism
+  \[
+    \operatorname{regroup} :
+    (A \otimes_R R') \otimes_A M \;\xrightarrow{\ \sim\ }\; R' \otimes_R M ,
+  \]
+  the ``equality as \(R'\)-modules'' of the affine base-change source. On generators
+  it sends \((a \otimes r') \otimes m \mapsto r' \otimes (a \cdot m)\); in
+  particular \((1 \otimes r') \otimes m \mapsto r' \otimes m\), with inverse
+  \(r' \otimes m \mapsto (1 \otimes r') \otimes m\). It carries \emph{no} flatness
+  hypothesis.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:isPushout_cancelBaseChange_mathlib}
+  \leanok
+  This is pure tensor algebra, and it is supplied \emph{directly} by Mathlib's
+  pushout-form base-change cancellation
+  \(\operatorname{Algebra.IsPushout.cancelBaseChange}\)
+  (Lemma~\ref{lem:isPushout_cancelBaseChange_mathlib}), instantiated at \(S = R'\),
+  \(B = A \otimes_R R'\):
+  \[
+    \operatorname{cancelBaseChange} R\,R'\,A\,(A \otimes_R R')\,M :
+    (A \otimes_R R') \otimes_A M \;\xrightarrow{\ \sim\ }\; R' \otimes_R M .
+  \]
+  The required pushout instance \(\operatorname{Algebra.IsPushout} R\,R'\,A\,
+  (A \otimes_R R')\) is supplied for free by \(\operatorname{TensorProduct.isPushout'}\).
+  The decisive structural point is that this equivalence is \emph{natively}
+  \(R'\)-linear: the cancellation is bundled as a \(\operatorname{LinearEquiv}\) over
+  \(R'\) (its base-ring slot is \(S = R'\)), so the \(R'\)-linearity is part of the
+  Mathlib datum with no hand-written scalar-compatibility obligation.
+  On the generator it computes, by \(\texttt{cancelBaseChange\_tmul}\),
+  \[
+    (a \otimes r') \otimes m \;\longmapsto\; r' \otimes (a \cdot m) ,
+  \]
+  with inverse \(r' \otimes m \mapsto (1 \otimes r') \otimes m\)
+  (\(\texttt{cancelBaseChange\_symm\_tmul}\)); the \(R'\)-action enters through the
+  \(A \otimes_R R'\) factor (\(r' \cdot (a \otimes s) = a \otimes (r' s)\)). Being a
+  single bundled Mathlib linear equivalence it is an \(R'\)-linear isomorphism, and it
+  carries no flatness hypothesis.
+
+\end{proof}

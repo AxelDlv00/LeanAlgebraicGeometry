@@ -1,0 +1,40 @@
+{
+  "iteration": 34,
+  "stage": "prover  (iteration 033 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **cover-totality Ext-transport at universe `u`**: append one declaration to `Cohomology/MayerVietoris.lean` inside the existing `section CoverTotality` (after iter-032's `HModule_top_linearEquiv`) \u2014 `noncomputable def Scheme.HModule'_top_linearEquiv` carrying a $k$-linear equivalence `HModule' k F n T \u2243\u2097[k] Abelian.Ext ((constantSheaf J _).obj (ModuleCat.of k k)) F n` for terminal `T`, with both sides at universe `u`. Plan-agent `lean_run_code` probe (this pass) confirms the body \u2014 `LinearEquiv.ofLinear ((mk\u2080 \u03b1.inv).precompOfLinear k F (zero_add n)) ((mk\u2080 \u03b1.hom).precompOfLinear k F (zero_add n))` with round-trip equations closed by the same four-step rewrite chain as iter-032 (`\u2190 Abelian.Ext.comp_assoc_of_second_deg_zero` + `Abelian.Ext.mk\u2080_comp_mk\u2080` + iso identity (`\u03b1.inv_hom_id` / `\u03b1.hom_inv_id`) + `Abelian.Ext.mk\u2080_id_comp`) \u2014 typechecks end-to-end against the post-iter-032 file with `{success: true, diagnostics: []}` and kernel-only axioms `[propext, Classical.choice, Quot.sound]`. The iter-032 prover's one-declaration close lands cleanly: 9 sorries (no change), zero diagnostics, kernel-only axioms, +48 LOC (720 \u2192 768). Iter-033 sorry trajectory `9 \u2192 9 \u2192 9` (no transient scaffold sorries \u2014 body is a probe-confirmed term-mode one-liner with two `by`-block equations).",
+  "mode": "parallel",
+  "startedAt": "2026-05-09T09:43:33Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1273
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 293
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 567
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "ebdae54"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 26
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 4
+    }
+  },
+  "completedAt": "2026-05-09T11:16:32Z",
+  "wallTimeSecs": 5578
+}

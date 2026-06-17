@@ -1,0 +1,40 @@
+{
+  "iteration": 41,
+  "stage": "prover  (iteration 040 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **affine cohomology vanishing carrier predicate + immediate `Module.Finite` consumer**: append two declarations to `Cohomology/StructureSheafModuleK.lean` inside the existing `namespace AlgebraicGeometry.Scheme`, after iter-039's `module_finite_HModule'_zero_curve` (currently ending around L344) and before `end AlgebraicGeometry.Scheme` (around L346). (i) `class IsAffineHModuleVanishing` \u2014 single field `subsingleton_HModule' : \u2200 {U : TopologicalSpace.Opens C.left.toTopCat}, AlgebraicGeometry.IsAffineOpen U \u2192 \u2200 i, 0 < i \u2192 Subsingleton (Scheme.HModule' k F i U)`, packaging Serre-affine-vanishing for the `ModuleCat k`-flavoured cohomology as a hypothesis (Mathlib gap re-probed this pass: still absent \u2014 only abstract `subsingleton_H_of_isZero` available, trivial). (ii) `theorem module_finite_HModule'_of_isAffineHModuleVanishing` \u2014 immediate consumer, hypothesis `[IsAffineHModuleVanishing k C F]`, plus explicit args `(hU : IsAffineOpen U) (i : \u2115) (hi : 0 < i)`, conclusion `Module.Finite k (Scheme.HModule' k F i U)`, body `have : Subsingleton (Scheme.HModule' k F i U) := IsAffineHModuleVanishing.subsingleton_HModule' (F := F) hU i hi; inferInstance`. Plan-agent `lean_run_code` probe (this pass) confirms both bodies typecheck end-to-end against the post-iter-039 file with `{success: true, diagnostics: []}` and kernel-only axioms `[propext, Classical.choice, Quot.sound]`. The iter-039 prover's two-declaration close lands cleanly: 9 sorries (no change), zero diagnostics, kernel-only axioms, +43 LOC (338 \u2192 381). Iter-040 sorry trajectory `9 \u2192 9 \u2192 9` (no transient scaffold sorries \u2014 both bodies probe-confirmed).",
+  "mode": "parallel",
+  "startedAt": "2026-05-09T18:42:21Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 981
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 127
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 488
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "c48a401"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 33
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 4
+    }
+  },
+  "completedAt": "2026-05-09T19:36:25Z",
+  "wallTimeSecs": 3243
+}

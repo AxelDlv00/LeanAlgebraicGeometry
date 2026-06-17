@@ -1,0 +1,113 @@
+\chapter{Line bundles on schemes and the Picard group}
+\label{chap:Picard_LineBundle}
+
+This chapter sets up the foundational Phase~B/C infrastructure: the type of \emph{line bundles} (invertible quasi-coherent sheaves) on a scheme $X$, the abelian-group structure under tensor product, and the pull-back functoriality. It is the smallest self-contained step toward the Picard scheme construction (Theorem~\ref{thm:Pic_representable}) and feeds Steps~2--6 of the Jacobian gap chain.
+
+The chapter introduces no protected declarations: every definition and lemma here is auxiliary, supporting the construction of $\Pic_{C/k}$ in later phases.
+
+\section{Definition}
+
+% NOTE: Iter-003 closed this sorry under a documented first-approximation:
+% LineBundle X := CommRing.Pic Γ(X, ⊤) (the Picard group of the global-sections
+% ring). This agrees with the true Pic(X) on affine schemes (Stacks 0AGS) and is
+% a strict subgroup on non-affine schemes. The bespoke symmetric-monoidal
+% definition below cannot currently be stated because Mathlib b80f227 lacks
+% MonoidalCategory X.Modules. See AlgebraicJacobian/Picard/LineBundle.lean
+% docstring and proof-journal/sessions/session_2/recommendations.md for the
+% deferred-to-iter-004+ refinement plan.
+\begin{definition}[Line bundle on a scheme]
+  \label{def:Scheme_LineBundle}
+  \lean{AlgebraicGeometry.Scheme.LineBundle}
+  \leanok
+  Let $X$ be a scheme. A \emph{line bundle} on $X$ is an invertible quasi-coherent $\mathcal O_X$-module: a sheaf $L \in X.\mathtt{Modules}$ that is quasi-coherent and locally free of rank $1$. Equivalently (Mathlib formulation): an object of $X.\mathtt{Modules}$ that is invertible with respect to the tensor product $- \otimes_{\mathcal O_X} -$ in the symmetric monoidal category $X.\mathtt{Modules}$.
+\end{definition}
+
+\begin{remark}
+  Mathlib has \lstinline{AlgebraicGeometry.Scheme.Modules} (sheaves of $\mathcal O_X$-modules) and the \lstinline{SheafOfModules.QuasicoherentData} typeclass for quasi-coherence. The combination "invertible quasi-coherent sheaf" is not pre-packaged; it is the content of this definition.
+\end{remark}
+
+\section{Group structure under tensor product}
+
+% NOTE: Iter-003 closed this under the global-sections approximation: the Lean
+% instance is `inferInstanceAs (CommGroup (CommRing.Pic _))`. Tensor-product /
+% dual sheaf interpretation is correct on affine schemes; for non-affine schemes
+% the realisation differs from the informal proof below (which describes the
+% sheaf-level construction). See def:Scheme_LineBundle's % NOTE.
+\begin{theorem}[Picard group of a scheme]
+  \label{thm:Scheme_Pic_commGroup}
+  \lean{AlgebraicGeometry.Scheme.instCommGroupLineBundle}
+  \leanok
+  For every scheme $X$, the type of line bundles on $X$ (modulo isomorphism) carries a canonical commutative-group structure. The operation is tensor product over $\mathcal O_X$, the unit is the structure sheaf $\mathcal O_X$ itself, and the inverse of a line bundle $L$ is its $\mathcal O_X$-dual $L^\vee = \mathcal{H}om_{\mathcal O_X}(L, \mathcal O_X)$.
+
+  We denote this group by $\Pic(X)$ and call it the \emph{Picard group} of $X$.
+\end{theorem}
+
+\begin{proof}
+  \uses{def:Scheme_LineBundle}
+  \leanok
+  Tensor product of two invertible quasi-coherent sheaves is invertible quasi-coherent (locally on $X$ this reduces to the corresponding statement for invertible modules over commutative rings, which Mathlib has via \lstinline{Module.Invertible}). The structure sheaf is the tensor unit. The dual sheaf is the inverse: $L \otimes_{\mathcal O_X} L^\vee \cong \mathcal O_X$ canonically. Commutativity and associativity descend from the symmetric monoidal structure on $X.\mathtt{Modules}$.
+\end{proof}
+
+\section{Pull-back functoriality}
+
+% NOTE: Iter-003 closed this under the global-sections approximation, with
+% pull-back realised as `CommRing.Pic.mapRingHom (f.app ⊤).hom` rather than the
+% sheaf-pull-back `f^* L = f^{-1}L ⊗_{f^{-1} O_Y} O_X` of the informal proof.
+% Functoriality (pullback_id, pullback_comp) is fully formalised. See
+% def:Scheme_LineBundle's % NOTE.
+\begin{theorem}[Pull-back of line bundles]
+  \label{thm:Scheme_Pic_pullback}
+  \lean{AlgebraicGeometry.Scheme.Pic.pullback}
+  \leanok
+  Let $f \colon X \to Y$ be a morphism of schemes. Pull-back of $\mathcal O_Y$-modules along $f$ restricts to a group homomorphism
+  \[
+    f^* \colon \Pic(Y) \;\to\; \Pic(X),\qquad L \;\mapsto\; f^* L \;:=\; f^{-1} L \otimes_{f^{-1}\mathcal O_Y} \mathcal O_X.
+  \]
+  Pull-back preserves invertibility, commutes with tensor product, and is functorial: $(\mathrm{id}_X)^* = \mathrm{id}_{\Pic(X)}$ and $(f \circ g)^* = g^* \circ f^*$.
+\end{theorem}
+
+\begin{proof}
+  \uses{thm:Scheme_Pic_commGroup}
+  \leanok
+  Mathlib has \lstinline{ModuleCat.tensorObj} for the tensor product of $\mathcal O_X$-modules and the pullback of sheaves of modules along a scheme morphism. Pull-back commutes with tensor product (\lstinline{Mathlib/CategoryTheory/Monoidal/Functor.lean} for the abstract statement; the geometric instance is the content of the theorem). Functoriality is the standard sheaf-pullback functoriality.
+\end{proof}
+
+\section{Use in the project}
+
+The Picard group $\Pic(X)$ is the underlying \emph{set} (modulo isomorphism) of the Picard \emph{scheme} $\Pic_{C/k}$ in the curve case; the scheme structure adds a $k$-scheme of finite type representing the relative Picard functor $S \mapsto \Pic(C \times_k S) / \Pic(S)$.
+
+This chapter is therefore the gateway to:
+\begin{itemize}
+  \item Definition~\ref{def:Pic_functor} (Picard functor of $C/k$) — quotient by $\Pic(S)$ uses Theorem~\ref{thm:Scheme_Pic_pullback}.
+  \item Theorem~\ref{thm:Pic_representable} (representability of the Picard scheme) — uses the full $\Pic$ machinery built here.
+  \item Definition~\ref{def:ofCurve} (Abel--Jacobi map) — defined via the line bundle $\mathcal O_{C \times C}(\Delta - p_1^* P)$ on $C \times C$, an explicit element of $\Pic(C \times C)$.
+\end{itemize}
+
+\section{Mathlib gap}
+
+Mathlib \texttt{b80f227} has:
+\begin{itemize}
+  \item \lstinline{AlgebraicGeometry.Scheme.Modules} — the abelian category of sheaves of $\mathcal O_X$-modules on a scheme $X$.
+  \item \lstinline{SheafOfModules.QuasicoherentData} — quasi-coherence as data on a sheaf of modules.
+  \item \lstinline{Module.Invertible} — invertibility for modules over a commutative ring.
+  \item \lstinline{Mathlib/RingTheory/PicardGroup.lean} — the Picard group of a commutative ring (\lstinline{CommRing.Pic R}).
+\end{itemize}
+
+What is missing and supplied by this chapter:
+\begin{itemize}
+  \item A scheme-side type of \emph{invertible quasi-coherent} sheaves and the proof that this property is preserved by tensor product.
+  \item A scheme-side \lstinline{CommGroup} instance on the Picard group.
+  \item A scheme-morphism-functorial pull-back homomorphism $\Pic(Y) \to \Pic(X)$.
+\end{itemize}
+
+These are mapped to Phase~B/C step~1 of \texttt{STRATEGY.md}.
+
+\subsection{Discovery objectives for this iteration}
+
+The prover assigned to this chapter should:
+\begin{enumerate}
+  \item Determine whether the Mathlib infrastructure for invertible objects in symmetric monoidal categories (\lstinline{CategoryTheory.Monoidal.Invertible} or analogue) can be applied to $X.\mathtt{Modules}$ to extract Definition~\ref{def:Scheme_LineBundle} essentially for free, or whether a bespoke definition is required.
+  \item Provide a concrete Lean definition of \lstinline{AlgebraicGeometry.Scheme.LineBundle X} (filling the corresponding sorry).
+  \item Provide the \lstinline{CommGroup} instance and the pull-back homomorphism. Use sub-lemmas if a one-shot definition exceeds 40 lines; record each sub-lemma in the task result.
+  \item Confirm \emph{not} to introduce ad-hoc placeholders (e.g.\ \lstinline{LineBundle X := Unit} would compile but is wrong).
+\end{enumerate}

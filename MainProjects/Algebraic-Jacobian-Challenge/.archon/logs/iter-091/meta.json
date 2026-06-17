@@ -1,0 +1,40 @@
+{
+  "iteration": 91,
+  "stage": "prover (iteration 090 \u2014 single substantive prover lane; iter-089 landed S6",
+  "mode": "parallel",
+  "startedAt": "2026-05-14T05:54:21Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "ddb0decf-06f3-4bc2-9985-fc7e63a36a6a",
+    "durationSecs": 491
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 1233
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_BasicOpenCech": {
+      "file": "AlgebraicJacobian/Cohomology/BasicOpenCech.lean",
+      "status": "done",
+      "sessionId": "7f65c339-d08e-4ebf-871b-f30850360115"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "abec58b2-b8e7-4728-b11d-fcf4b2c0a466",
+    "durationSecs": 530
+  },
+  "sorry_count": 3147,
+  "finalize": {
+    "innerGit": {
+      "sha": "e5acada"
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 0,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-14T06:37:03Z",
+  "wallTimeSecs": 2562
+}

@@ -1,0 +1,40 @@
+{
+  "iteration": 38,
+  "stage": "prover  (iteration 037 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **`AffineCoverMVSquare.X\u2084` Module.Finite transport companion**: append two declarations to `Cohomology/MayerVietoris.lean` inside the existing `section CoverTotality`, after iter-036's `finrank_HModule_eq_HModule'_X\u2084_curve`. (i) `AffineCoverMVSquare.module_finite_HModule_of_HModule'_X\u2084` \u2014 hypothesis `[Module.Finite k (HModule' k F n S.toMayerVietorisSquare.toSquare.X\u2084)]`, conclusion `Module.Finite k (HModule k F n)`, body `Module.Finite.equiv (S.HModule'_X\u2084_linearEquiv k F n)` (Mathlib `Module.Finite.equiv`). (ii) `AffineCoverMVSquare.module_finite_HModule_of_HModule'_X\u2084_curve` \u2014 curve specialisation via the dot-notation method-call form `S.module_finite_HModule_of_HModule'_X\u2084 k _ n` for `Scheme.toModuleKSheaf C` with `C : Over (Spec (CommRingCat.of k))`. Plan-agent `lean_run_code` probe (this pass) confirms both bodies typecheck end-to-end against the post-iter-036 file with `{success: true, diagnostics: []}` and kernel-only axioms `[propext, Classical.choice, Quot.sound]`. The iter-036 prover's two-declaration close lands cleanly: 9 sorries (no change), zero diagnostics, kernel-only axioms, +31 LOC (957 \u2192 988). Iter-037 sorry trajectory `9 \u2192 9 \u2192 9` (no transient scaffold sorries \u2014 both bodies probe-confirmed).",
+  "mode": "parallel",
+  "startedAt": "2026-05-09T15:52:34Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1192
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 127
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 616
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "0e7c32f"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 32
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 4
+    }
+  },
+  "completedAt": "2026-05-09T17:01:27Z",
+  "wallTimeSecs": 4132
+}

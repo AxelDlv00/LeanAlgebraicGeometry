@@ -1,0 +1,48 @@
+{
+  "iteration": 124,
+  "stage": "prover (Iter-123: M1.b residual \u2014 Steps 1\u20134 of the",
+  "mode": "parallel",
+  "startedAt": "2026-05-17T07:10:27Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "6f4d4198-6d10-4ac4-ae75-1482a21bd0fb",
+    "durationSecs": 1916
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 1
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 1218
+  },
+  "provers": {
+    "AlgebraicJacobian_Differentials": {
+      "file": "AlgebraicJacobian/Differentials.lean",
+      "status": "done",
+      "sessionId": "04e3ff60-0ebe-46cc-a8b0-15d40edc9abe"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "cd98b8d7-9ce7-4079-b25a-058f21650197",
+    "durationSecs": 855
+  },
+  "sorry_count": 3826,
+  "finalize": {
+    "innerGit": {
+      "sha": "57ae4da"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 9
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 1,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-17T08:19:01Z",
+  "wallTimeSecs": 4114
+}

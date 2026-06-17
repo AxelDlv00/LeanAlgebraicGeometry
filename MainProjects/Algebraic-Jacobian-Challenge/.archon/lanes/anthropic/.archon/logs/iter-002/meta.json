@@ -1,0 +1,52 @@
+{
+  "iteration": 2,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-06T03:43:02Z",
+  "plan": {
+    "status": "skipped",
+    "durationSecs": 489
+  },
+  "refactor": {
+    "status": "done",
+    "durationSecs": 318
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 543
+  },
+  "provers": {
+    "AlgebraicJacobian_Genus": {
+      "file": "AlgebraicJacobian/Genus.lean",
+      "status": "done"
+    },
+    "AlgebraicJacobian_Picard_LineBundle": {
+      "file": "AlgebraicJacobian/Picard/LineBundle.lean",
+      "status": "done"
+    },
+    "AlgebraicJacobian_Rigidity": {
+      "file": "AlgebraicJacobian/Rigidity.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 758
+  },
+  "sorry_count": 44,
+  "finalize": {
+    "innerGit": {
+      "sha": "e1b6868"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 10
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 1
+    }
+  },
+  "completedAt": "2026-05-06T05:54:14Z",
+  "wallTimeSecs": 1313
+}

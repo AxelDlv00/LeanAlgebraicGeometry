@@ -1,0 +1,20 @@
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ───────────────────────────────
+
+[ARCHON] Agent model: opus (blueprint-writer)
+Done. All 8 `math-delim` sites in `Albanese_CoheightBridge.tex` are fixed.
+
+**Summary:**
+- **3 interleaved sites** (the inverted `$MATH\( prose \)MATH$` pattern) at L110–111, L133–134, L144–145 → rewritten to `\(...\)` math + prose outside.
+- **5 plain `$...$` sites** at L196–199 (two formulae), L254–255, L313–314, L413–414 → normalised to `\(...\)` per the directive's "normalise ALL" instruction.
+
+**Verification passed:** zero `$` remain, zero `REF` placeholders, zero interleaved delimiters. No `literal-ref`/`bare-label` defects existed in this chapter. I changed only prose/proof delimiters — no statement text, `\lean{}`, `\label{}`, `\uses{}`, `\leanok`, or block ordering was touched. Report written to `.archon/task_results/blueprint-writer-render-coheight.md`.
+[COST] 1.7min | $0.7816 | in=4292 out=6650 | turns=12
+[ARCHON] ✓ blueprint-writer/render-coheight finished (410s)
+render-coheight: COMPLETE — see /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/task_results/blueprint-writer-render-coheight.md (archived: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/logs/iter-279/blueprint-writer-render-coheight-report.md)

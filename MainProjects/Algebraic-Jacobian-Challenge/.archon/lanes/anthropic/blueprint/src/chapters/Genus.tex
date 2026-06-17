@@ -1,0 +1,49 @@
+\chapter{Genus of a smooth proper curve}
+\label{chap:Genus}
+
+Throughout this chapter, $k$ denotes a field and $C$ a smooth proper geometrically irreducible scheme over $k$ of relative dimension $1$ — that is, $C \to \Spec k$ carries the typeclasses
+\lstinline{[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]}.
+We call such a $C$ a \emph{smooth proper curve over $k$}.
+
+\section{Definition}
+
+\begin{definition}[Genus of a smooth proper curve]
+  \label{def:genus}
+  \lean{AlgebraicGeometry.genus}
+  \leanok
+  The \emph{genus} of a smooth proper curve $C$ over $k$ is the natural number
+  \[
+    g(C) \;=\; \dim_k H^1(C,\, \mathcal O_C),
+  \]
+  the $k$-dimension of the first sheaf-cohomology group of the structure sheaf of $C$.
+\end{definition}
+
+Equivalent reformulations available once Riemann–Roch and Serre duality are formalised:
+\begin{itemize}
+  \item $g(C) = \dim_k H^0(C,\, \Omega^1_{C/k})$ (Serre duality).
+  \item $g(C) = 1 - \chi(\mathcal O_C)$, where $\chi$ is the Euler characteristic.
+  \item For a smooth projective curve over $\mathbb C$, $g(C)$ equals the topological genus of $C(\mathbb C)$.
+\end{itemize}
+Each of these requires Mathlib infrastructure that is currently absent (see Section \ref{sec:Genus_status}).
+
+\section{Mathlib gap}
+\label{sec:Genus_status}
+
+The honest definition $\dim_k H^1(C, \mathcal O_C)$ requires:
+
+\begin{itemize}
+  \item \textbf{Sheaf cohomology of quasi-coherent sheaves on schemes.} Mathlib has the abstract right-derived-functor machinery (\lstinline{CategoryTheory.Functor.RightDerived}) but no instantiation to $\Gamma(X, -) \colon \mathrm{QCoh}(X) \to \mathrm{Mod}_{\mathcal O_X(X)}$. Only étale/$\ell$-adic cohomology exists (\lstinline{AlgebraicGeometry.Scheme.EllAdicCohomology}), which is not what we need.
+  \item \textbf{Finite-dimensionality of $H^i(C, \mathcal F)$ for coherent $\mathcal F$ on a proper scheme over a field} (Serre's theorem). Absent.
+\end{itemize}
+
+\subsection{Discovery objective for this iteration}
+
+The prover should:
+\begin{enumerate}
+  \item Search Mathlib (\texttt{lean\_local\_search}, \texttt{lean\_leansearch}, \texttt{lean\_loogle}) for any existing API that computes $H^1(C, \mathcal O_C)$ as a $k$-vector space, including via Čech cohomology, hypercoverings, or derived functors.
+  \item Document the precise API gap in \lstinline{task_results/Genus.md}: which type or function would have to exist for the definition to typecheck, and what the closest existing Mathlib declaration is.
+  \item \textbf{Do not} introduce a placeholder definition (such as \lstinline{genus := 0} or an opaque \lstinline{Classical.choice}); leave the \lstinline{sorry} in place rather than weakening the mathematical content.
+  \item If — and only if — the cohomology API is found in Mathlib, fill the \lstinline{sorry} with the honest definition.
+\end{enumerate}
+
+The phase-A roadmap in \texttt{STRATEGY.md} tracks how the missing cohomology API is to be built across subsequent iterations.

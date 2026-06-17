@@ -1,0 +1,40 @@
+{
+  "iteration": 30,
+  "stage": "prover  (iteration 029 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding companions: append four `@[simp]` corner-identification lemmas plus a sheaf-parameterised `HModule'_sequence` LES specialisation and its exactness lemma to the iter-028 `AffineCoverMVSquare` cohort in `Cohomology/MayerVietoris.lean`. Plan-agent `lean_run_code` probe (this pass) confirms the six-declaration cohort compiles end-to-end against the post-iter-028 file with `{success: true, diagnostics: []}`. The iter-028 prover's two-declaration close lands cleanly: 9 sorries (no change), zero diagnostics, kernel-only axioms on `toMayerVietorisSquare`, and +41 LOC (559 \u2192 600). Iter-029 sorry trajectory `9 \u2192 9 \u2192 9` (no transient scaffold sorries \u2014 all six bodies are probe-confirmed term-mode one-liners).",
+  "mode": "parallel",
+  "startedAt": "2026-05-08T16:50:05Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 984
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 152
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 689
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "cfee1e4"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 18
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 3
+    }
+  },
+  "completedAt": "2026-05-08T17:20:55Z",
+  "wallTimeSecs": 1850
+}

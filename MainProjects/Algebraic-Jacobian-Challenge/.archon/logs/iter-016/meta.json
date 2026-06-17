@@ -1,0 +1,40 @@
+{
+  "iteration": 16,
+  "stage": "prover  (iteration 015 \u2014 Path-2 `H\u2070` algebraic bridge for `HModule'`, refactor-then-prover phase. The iter-014 prover round closed `AlgebraicGeometry.Scheme.HModule'` cleanly: sorry count 10 \u2192 9, kernel-only axioms, body adopted as the probe-confirmed `Abelian.Ext ((presheafToSheaf _ _).obj ((yoneda \u22d9 (Functor.whiskeringRight _ _ _).obj (ModuleCat.free k)).obj X)) F n` (qualified `Abelian.Ext` spelling for stylistic consistency with iter-009/010). Iter-015 plan-agent has scoped + probe-confirmed the next single-declaration sub-step: `AlgebraicGeometry.Scheme.HModule'_zero_linearEquiv` \u2014 the `H\u2070` algebraic bridge for `HModule'`, mirroring iter-010's `HModule_zero_linearEquiv` for the iter-014 carrier. Closure body: probe-confirmed one-liner `Abelian.Ext.linearEquiv\u2080`. Iter-015 sorry count `9 \u2192 10 \u2192 9` over the iteration. Refactor agent runs first to scaffold; prover agent then closes.)",
+  "mode": "parallel",
+  "startedAt": "2026-05-08T03:14:36Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1202
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 172
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 773
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "77962ba"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 17
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 2
+    }
+  },
+  "completedAt": "2026-05-08T03:50:44Z",
+  "wallTimeSecs": 2168
+}

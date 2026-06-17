@@ -1,0 +1,40 @@
+{
+  "iteration": 48,
+  "stage": "prover  (iteration 047 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **foundational parameterised \u010cech infrastructure**: append four declarations to `Cohomology/StructureSheafModuleK.lean` namespace `AlgebraicGeometry`, after iter-012's `cechCohomology_OC` (around L809), before `end AlgebraicGeometry` (L811): (1) `noncomputable def Scheme.cechCochain k C F \ud835\udcb0` \u2014 parameterised \u010cech cochain complex over any sheaf `F : Sheaf J (ModuleCat k)`, generalising iter-012's specialisation to `F = toModuleKSheaf C`; (2) `noncomputable def Scheme.cechCohomology k C F \ud835\udcb0 n` \u2014 parameterised cohomology; (3) `theorem Scheme.cechCochain_OC_eq` \u2014 `rfl`-bridge stating iter-012's specialisation; (4) `theorem Scheme.cechCohomology_OC_eq` \u2014 analogous for cohomology. Iter-046 closure verified (this pass): all eight iter-046 declarations land cleanly at L40\u201398 (Block A `namespace CategoryTheory`) + L711, L733, L762 (Block B inside `namespace AlgebraicGeometry.Scheme`); sorry count `9 \u2192 9`; file LOC `670 \u2192 811` (+141, within plan estimate band of +120-160). Plan-agent `lean_run_code` probe (this pass) confirms all four iter-047 declarations land cleanly `{success: true, diagnostics: []}` end-to-end with kernel-only axioms `[propext, Classical.choice, Quot.sound]`. Iter-047 sorry trajectory `9 \u2192 9` (no transient \u2014 bodies probe-confirmed). Iter-047 lays foundational \u010cech scaffolding that the substantive iter-048+ \u010cech-vs-derived comparison theorem will build on. The iter-012 specialisations remain unchanged in scope; downstream consumers are not broken. Scope deliberately narrowed from \"produce IsAffineHModuleVanishing carrier\" (multi-iteration substantive; not feasible in one pass) to \"lay foundational parameterised \u010cech infrastructure\" \u2014 see STRATEGY.md and task_pending.md for the iter-048+ decomposition (comparison map \u2192 IsAcyclicCover class \u2192 producer instances). Phase A iterations-remaining estimate revised UP from ~3 to ~6 (STRATEGY.md Estimations table) reflecting the substantive depth of the remaining \u010cech-vs-derived comparison + affine \u010cech vanishing work.",
+  "mode": "parallel",
+  "startedAt": "2026-05-10T03:12:14Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1184
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 129
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 493
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "cb6977a"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 35
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 5
+    }
+  },
+  "completedAt": "2026-05-10T04:29:34Z",
+  "wallTimeSecs": 4640
+}

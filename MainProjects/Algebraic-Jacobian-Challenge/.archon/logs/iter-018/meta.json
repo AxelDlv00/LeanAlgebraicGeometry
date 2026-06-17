@@ -1,0 +1,40 @@
+{
+  "iteration": 18,
+  "stage": "prover  (iteration 017 \u2014 Path-2 Mayer-Vietoris LES building blocks `HModule'_toBiprod` + `HModule'_fromBiprod`, refactor-then-prover phase. The iter-016 prover round closed `AlgebraicGeometry.Scheme.HModule'_cohomologyPresheafFunctor` and `AlgebraicGeometry.Scheme.HModule'_cohomologyPresheaf` cleanly: sorry count `9 \u2192 9` (the prover collapsed the refactor + prover sub-phases into a single Edit; the transient `9 \u2192 11 \u2192 9` trajectory was condensed), kernel-only axioms on both, the per-fiber `rfl` compatibility `((HModule'_cohomologyPresheaf k F n).obj (op X) : Type u) = HModule' k F n X` holds, bodies adopted as the probe-confirmed term-mode one-liners. Iter-017 plan-agent has scoped + probe-confirmed the next two-declaration sub-step: the **first two Mayer-Vietoris LES building blocks** `Scheme.HModule'_toBiprod` (the sum of two restriction maps `(cohomologyPresheaf F n).map S.f\u2082\u2084.op` / `S.f\u2083\u2084.op`, mirror of Mathlib's `MayerVietorisSquare.toBiprod`) and `Scheme.HModule'_fromBiprod` (the difference of `S.f\u2081\u2082.op` / `\u2212S.f\u2081\u2083.op`, mirror of Mathlib's `MayerVietorisSquare.fromBiprod`), both probe-confirmed at one-line `biprod.lift` / `biprod.desc` term-mode forms. These are the first two of three LES building blocks; iter-018 will add the composition-is-zero lemma `toBiprod \u226b fromBiprod = 0` and the connecting hom `\u03b4`; iter-019+ will add the LES sequence and the exactness theorem. Iter-017 sorry count `9 \u2192 11 \u2192 9` over the iteration. Refactor agent runs first to scaffold; prover agent then closes.)",
+  "mode": "parallel",
+  "startedAt": "2026-05-08T04:35:01Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1032
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 170
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 712
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "e2adc8a"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 17
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 2
+    }
+  },
+  "completedAt": "2026-05-08T05:07:17Z",
+  "wallTimeSecs": 1936
+}

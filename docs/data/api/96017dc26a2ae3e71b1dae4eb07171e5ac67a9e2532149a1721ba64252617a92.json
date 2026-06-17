@@ -1,0 +1,325 @@
+[
+  {
+    "timestamp": "2026-06-08T13:16:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "dual_restrict_iso (outer isoMk naturality)"
+    },
+    "session": {
+      "id": "session_1",
+      "model": "claude"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "subsingleton",
+        "PresheafOfModules.isoMk",
+        "sliceDualTransport"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "close outer isoMk naturality square; connecting Hom-space is dual-valued over thin poset Opens Y, hence Subsingleton",
+        "code_tried": "refine PresheafOfModules.isoMk (fun V => sliceDualTransport f M V) ?_; intro V W g; subsingleton",
+        "line_number": "760",
+        "lean_error": null,
+        "goal_before": "((pushforward β).obj M.val.dual).map g ≫ (restrictScalars ...).map (sliceDualTransport f M W).hom = (sliceDualTransport f M V).hom ≫ (M.restrict f).val.dual.map g",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "subsingleton fires on the module-map equality because the codomain Hom-space (maps into the unit / dual-valued) over the thin poset is a Subsingleton. dual_restrict_iso body now sorry-free (inherits sliceDualTransport residual transitively only)."
+      }
+    ],
+    "next_steps": "Verify the subsingleton close is a genuine Subsingleton instance (not sorry-induced) once sliceDualTransport.hom sorries fill; prune the contradictory stale comment at L754-757."
+  },
+  {
+    "timestamp": "2026-06-08T13:16:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "§C tail restoration (homLocalSection, topSectionToHom, topSectionToHom_app, homOfLocalCompat)"
+    },
+    "session": {
+      "id": "session_1",
+      "model": "claude"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "parent repo source-of-truth restore"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "file did not compile on entry (unterminated comment at EOF); extraction truncated entire §C tail mid-docstring. Diagnosed lines 1-849 byte-identical to parent; restored full tail from parent repo.",
+        "code_tried": "cp <parent>/DualInverse.lean <mine>  (after confirming 1-849 identical)",
+        "line_number": "850-1194",
+        "lean_error": "error: unterminated comment, line 888 (on entry)",
+        "goal_before": "N/A (file unbuildable)",
+        "goal_after": "N/A (compiles, 0 errors)",
+        "result": "success",
+        "insight": "Extraction Lean-decl remover truncated §C tail leaving a dangling /-- docstring, breaking the whole downstream cone (incl. RelPicFunctor). Restored tail is sorry-free. Parent repo /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.../DualInverse.lean is the source of truth."
+      }
+    ],
+    "next_steps": "Add blueprint pins for the 4 restored decls (coverage debt). Check other extracted files for similar truncation."
+  },
+  {
+    "timestamp": "2026-06-08T13:16:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport.toFun.naturality"
+    },
+    "session": {
+      "id": "session_1",
+      "model": "claude"
+    },
+    "findings": {
+      "blocker": "subsingleton fails — codomain is a restriction of the unit (not dual-valued), genuinely not a Subsingleton; needs multi-step ε-naturality erw paste (restrictScalarsLaxε + NatTrans.naturality)",
+      "key_lemmas_used": [
+        "ModuleCat.hom_ext",
+        "LinearMap.ext"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "thin-poset subsingleton close",
+        "code_tried": "subsingleton",
+        "line_number": "525",
+        "lean_error": "could not synthesize Subsingleton ((restr V (pushforward β M.val)).obj A ⟶ (restrictScalars …).obj ((restr V 𝟙_).obj B))",
+        "goal_before": "leg-(A)∘(B) family naturality square over W",
+        "goal_after": "unchanged",
+        "result": "failed",
+        "insight": "codomain is restriction-of-unit, not a subsingleton"
+      },
+      {
+        "attempt": 2,
+        "strategy": "reduce to pointwise scalar/ε-commutation",
+        "code_tried": "intro A B f1; apply ModuleCat.hom_ext; refine LinearMap.ext fun z => ?_",
+        "line_number": "525",
+        "lean_error": null,
+        "goal_before": "naturality square",
+        "goal_after": "pointwise scalar/ε-commutation equation",
+        "result": "partial",
+        "insight": "reduces correctly but closing needs the ε-naturality erw paste — not a few-call closure. Frontier open since parent iter-262."
+      }
+    ],
+    "next_steps": "Needs the ε-naturality erw paste (PresheafOfModules.restrictScalarsLaxε + NatTrans.naturality along structure-ring iso). NOT a fine-grain helper round."
+  },
+  {
+    "timestamp": "2026-06-08T13:16:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransportInv.naturality"
+    },
+    "session": {
+      "id": "session_1",
+      "model": "claude"
+    },
+    "findings": {
+      "blocker": "same ε-naturality erw paste as forward leg; subsingleton fails (codomain = restriction of unit)",
+      "key_lemmas_used": [
+        "ModuleCat.hom_ext",
+        "LinearMap.ext"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "thin-poset subsingleton close",
+        "code_tried": "intro A B f1; subsingleton (and: apply ModuleCat.hom_ext; subsingleton)",
+        "line_number": "388",
+        "lean_error": "could not synthesize Subsingleton ((restr fV M.val).obj A ⟶ (restrictScalars …).obj ((restr fV 𝟙_).obj B))",
+        "goal_before": "reverse-component naturality square",
+        "goal_after": "unchanged",
+        "result": "failed",
+        "insight": "mirrors forward leg blocker; app field is axiom-clean (parent iter-303), only naturality remains"
+      },
+      {
+        "attempt": 2,
+        "strategy": "reduce via hom_ext/LinearMap.ext",
+        "code_tried": "apply PresheafOfModules.hom_ext; intro W; apply ModuleCat.hom_ext; refine LinearMap.ext fun z => ?_",
+        "line_number": "388",
+        "lean_error": "apply PresheafOfModules.hom_ext failed: could not unify conclusion ?f = ?g with goal (map g ≫ …) = (… )",
+        "goal_before": "naturality square",
+        "goal_after": "unchanged",
+        "result": "failed",
+        "insight": "PresheafOfModules.hom_ext doesn't unify at the component-level goal; same ε-paste needed"
+      }
+    ],
+    "next_steps": "Same ε-naturality paste as L525. Mirror the forward leg once it lands."
+  },
+  {
+    "timestamp": "2026-06-08T13:16:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport.left_inv"
+    },
+    "session": {
+      "id": "session_1",
+      "model": "claude"
+    },
+    "findings": {
+      "blocker": "requires dualUnitRingSwap/ε round-trip cancellation + down-set bijection (image_preimage_of_le); blocked on sliceDualTransportInv being closed; defeq-delicate",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "confirm goal shape only (per fine-grain budget)",
+        "code_tried": "(goal-shape inspection; no closing tactic attempted)",
+        "line_number": "627",
+        "lean_error": null,
+        "goal_before": "round-trip left_inv via Iso.inv_hom_id of f.appIso + down-set bijection",
+        "goal_after": "unchanged",
+        "result": "partial",
+        "insight": "invFun wired to restored sliceDualTransportInv (L616); round-trip expressible but cancellation is heavily defeq-delicate, blocked on sliceDualTransportInv.naturality"
+      }
+    ],
+    "next_steps": "Defer until sliceDualTransportInv.naturality (L388) closes; then dualUnitRingSwap/ε round-trip + image_preimage_of_le collapse."
+  },
+  {
+    "timestamp": "2026-06-08T13:16:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport.right_inv"
+    },
+    "session": {
+      "id": "session_1",
+      "model": "claude"
+    },
+    "findings": {
+      "blocker": "Iso.hom_inv_id mirror of left_inv; same blocker",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "confirm goal shape only",
+        "code_tried": "(goal-shape inspection; no closing tactic attempted)",
+        "line_number": "629",
+        "lean_error": null,
+        "goal_before": "right_inv via Iso.hom_inv_id mirror",
+        "goal_after": "unchanged",
+        "result": "partial",
+        "insight": "mirror of left_inv (L627); same dependency chain"
+      }
+    ],
+    "next_steps": "Mirror left_inv once it lands."
+  },
+  {
+    "timestamp": "2026-06-08T13:16:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "sheafificationCompPullback_comp_tail"
+    },
+    "session": {
+      "id": "session_1",
+      "model": "claude"
+    },
+    "findings": {
+      "blocker": "composite-adjunction-unit cocycle: R1/R5 comparison factors are (pullback h)-whiskered / forget-wrapped, exposing no homEquiv/conjugate head for leftAdjointUniqUnitEta_app; consuming staged hwr needs whole-equation transposition (leftAdjointCompNatTrans_assoc surjective/injective reduction)",
+      "key_lemmas_used": [
+        "restrictScalarsId_map",
+        "forget_map_pushforward_map",
+        "conjugateEquiv_whiskerRight",
+        "Adjunction.comp_unit_app"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "recover R1 factor as B_f-unit via leftAdjointUniqUnitEta_app",
+        "code_tried": "rw [← Adjunction.comp_unit_app]  /  rw/erw [leftAdjointUniqUnitEta_app f P] (both directions)",
+        "line_number": "2623",
+        "lean_error": "rewrite failed: did not find pattern (A_f.homEquiv (sheafCompPb f).hom.app P term absent — it is (pullback h)-whiskered)",
+        "goal_before": "B_{h≫f}.unit.app P = cocycle",
+        "goal_after": "unchanged",
+        "result": "failed",
+        "insight": "the homEquiv head is consumed by (pullback h).map ∘ forget.map wrapping; hwr (conjugateEquiv_whiskerRight) staged to transpose it"
+      },
+      {
+        "attempt": 2,
+        "strategy": "simp-close via map_comp + unit_naturality",
+        "code_tried": "rw [← Functor.map_comp, ← Functor.map_comp]; erw [leftAdjointUniqUnitEta_app f P]  /  simp only [← Functor.map_comp, Adjunction.unit_naturality, pushforwardComp_hom_app_app]",
+        "line_number": "2623",
+        "lean_error": "no progress (all three simp args reported unused → goal untouched)",
+        "goal_before": "B_{h≫f}.unit.app P = cocycle",
+        "goal_after": "unchanged",
+        "result": "failed",
+        "insight": "matches parent iter-303 finding; consuming hwr needs the non-circular surjective/injective reduction of leftAdjointCompNatTrans_assoc (CompositionIso.lean:155)"
+      }
+    ],
+    "next_steps": "NOT a fine-grain pass. Cross-domain mate-assembly escalation (analogies/d3-mate271.md): build conjugateEquiv_whiskerLeft project-instance / consume hwr via leftAdjointCompNatTrans_assoc surjective/injective reduction, OR re-prove sheafificationCompPullback_comp wholesale (Mathlib's pullback_assoc pattern). ~40-60 LOC."
+  },
+  {
+    "timestamp": "2026-06-08T13:16:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pullbackTensorMap_restrict"
+    },
+    "session": {
+      "id": "session_1",
+      "model": "claude"
+    },
+    "findings": {
+      "blocker": "gated on sheafificationCompPullback_comp_tail (its Sq1 input); not advanced per objective (only to progress if comp_tail closed in-session)",
+      "key_lemmas_used": [
+        "pullbackTensorMap",
+        "tensorObjIsoOfIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "open to paste-ready 4-square form",
+        "code_tried": "simp only [pullbackTensorMap, tensorObjIsoOfIso] + three Functor.map_comp + Category.assoc",
+        "line_number": "2851",
+        "lean_error": null,
+        "goal_before": "pullbackTensorMap restriction-compatibility square",
+        "goal_after": "4-square composition form (paste-ready)",
+        "result": "partial",
+        "insight": "body opened to 4-square form; gated on comp_tail (Sq1), which did not close this session"
+      }
+    ],
+    "next_steps": "Blocked downstream of comp_tail. Do not re-assign until comp_tail lands."
+  },
+  {
+    "timestamp": "2026-06-08T13:16:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "exists_tensorObj_inverse"
+    },
+    "session": {
+      "id": "session_1",
+      "model": "claude"
+    },
+    "findings": {
+      "blocker": "intentionally untouched per objective — its inverse is supplied by the DUAL chain in DualInverse.lean; closing it here would be an import cycle",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "untouched per objective (do NOT touch directive)",
+        "code_tried": "(none — out of scope per PROGRESS.md objective)",
+        "line_number": "712",
+        "lean_error": null,
+        "goal_before": "N/A",
+        "goal_after": "N/A",
+        "result": "partial",
+        "insight": "the inverse L⁻¹ := dual L is built downstream; this seed closes once the DUAL chain (dual_isLocallyTrivial) lands. Not a fill-sorry target this iter."
+      }
+    ],
+    "next_steps": "Closes downstream once DUAL chain lands; do not assign directly."
+  }
+]

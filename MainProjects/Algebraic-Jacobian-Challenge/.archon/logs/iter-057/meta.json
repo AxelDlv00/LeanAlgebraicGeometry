@@ -1,0 +1,40 @@
+{
+  "iteration": 57,
+  "stage": "prover  (iteration 056 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **pairwise basic-open intersection helpers**: append two thin foundational helper declarations to `Cohomology/MayerVietoris.lean` `section CoverTotality` (inside `namespace AlgebraicGeometry.Scheme`), after iter-055's `hasAffineCechAcyclicCover_of_basicOpen_curve` (currently L1421-1425), before `end CoverTotality` (currently L1427): (1) `theorem basicOpenCover_inter_eq_basicOpen_mul` \u2014 pairwise intersection of basic-open cover members equals basic open of product `i.1 * j.1` (direct iteration of Mathlib's `Scheme.basicOpen_mul`); (2) `theorem basicOpenCover_inter_isAffineOpen` \u2014 pairwise intersection on an affine open is itself affine (chains (1) + Mathlib's `IsAffineOpen.basicOpen`). Iter-055 closure verified (this pass): both iter-055 declarations land cleanly at L1397 (`hasAffineCechAcyclicCover_of_basicOpen`) and L1421 (`..._curve`); sorry count `9 \u2192 9`; file LOC `1379 \u2192 1429` (+50, in plan band). Plan-agent `lean_run_code` probe (this pass) confirms both iter-056 declaration bodies compile end-to-end with kernel-only axioms `[propext, Classical.choice, Quot.sound]` \u2014 no new axiom introduced. Iter-056 sorry trajectory `9 \u2192 9` (no transient \u2014 bodies probe-confirmed). Phase A iterations-remaining held at ~5 (iter-056 is a thin scaffolding step; iter-057+ opens the substantive basic-open Koszul acyclicity branch as planned).",
+  "mode": "parallel",
+  "startedAt": "2026-05-10T15:46:24Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1603
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 140
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 693
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "74cb8f4"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 27
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 5
+    }
+  },
+  "completedAt": "2026-05-10T16:56:31Z",
+  "wallTimeSecs": 4206
+}

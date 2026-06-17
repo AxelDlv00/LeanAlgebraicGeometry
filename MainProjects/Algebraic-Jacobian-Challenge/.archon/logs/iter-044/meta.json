@@ -1,0 +1,40 @@
+{
+  "iteration": 44,
+  "stage": "prover  (iteration 043 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **wholespace H\u2070 Hom-finiteness carrier predicate + immediate consumer + curve specialisation**: append three declarations to `Cohomology/StructureSheafModuleK.lean` inside `namespace AlgebraicGeometry.Scheme`, after iter-042's `module_finite_HModule'_of_affine_curve` (currently ending around L456) and before `end AlgebraicGeometry.Scheme` (around L458). (i) `class IsHModuleHomFinite k C F` with single field `module_finite_hom : Module.Finite k ((constantSheaf _).obj (ModuleCat.of k k) \u27f6 F)` \u2014 the **wholespace** correction of iter-041's `IsAffineHModuleHomFinite` (which quantifies over all affine opens and is therefore not instantiable on a proper $k$-curve, since $\\Gamma(U, O_C) = k[t]$ is infinite over $k$ for the standard cover of $\\mathbb{P}^1_k$). The wholespace version captures only the **global** Hom group $((\\mathtt{constantSheaf}).\\mathtt{obj}\\,(\\ModuleCat.\\mathrm{of}\\,k\\,k) \\to F) \\simeq \\Gamma(C, F)$, which on a proper geometrically connected $k$-curve with $F = O_C$ is $k$ (Stein factorization), so this class IS producible. (ii) `theorem module_finite_HModule_zero_of_isHModuleHomFinite` \u2014 immediate consumer chaining via iter-038's `module_finite_HModule_zero`, body `have := IsHModuleHomFinite.module_finite_hom (k := k) (C := C) (F := F); module_finite_HModule_zero k F`. (iii) `theorem module_finite_HModule_zero_of_isHModuleHomFinite_curve` \u2014 curve specialisation for `F := Scheme.toModuleKSheaf C`, body `module_finite_HModule_zero_of_isHModuleHomFinite k C _`. Plan-agent `lean_run_code` probe (this pass) confirms all three bodies typecheck end-to-end against the post-iter-042 file with `{success: true, diagnostics: []}` and kernel-only axioms `[propext, Classical.choice, Quot.sound]`. The iter-042 prover's two-declaration close lands cleanly: 9 sorries (no change), zero diagnostics, kernel-only axioms, +32 LOC (461 \u2192 493). Iter-043 sorry trajectory `9 \u2192 9 \u2192 9` (no transient scaffold sorries \u2014 all three bodies probe-confirmed). Iter-041 + iter-042 stay in scope as user-suppliable hypotheses but are unlikely to be instantiated on a proper curve; iter-044+ LES finite-length transport uses iter-043's wholespace carrier (in conjunction with iter-040's H>0 vanishing) instead.",
+  "mode": "parallel",
+  "startedAt": "2026-05-09T21:47:32Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1899
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 241
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 434
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "d1ab542"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 34
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 4
+    }
+  },
+  "completedAt": "2026-05-09T23:07:09Z",
+  "wallTimeSecs": 4777
+}

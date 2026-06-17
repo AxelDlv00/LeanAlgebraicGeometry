@@ -1,0 +1,67 @@
+# Session 162 — review of iter-162
+
+## Metadata
+- **Session / iter**: 162
+- **Prover lane**: single, `AlgebraicJacobian/AbelianVarietyRigidity.lean` (dispatch MATCHED the plan — 5th consecutive iter)
+- **Global bare-`sorry`**: 7 → **6** (AVR 4 → 3; the Step-1 body `sorry` eliminated)
+- **Targets attempted**: `rigidity_eqAt_closedPoint_of_proper_into_affine` (Step 1, the chain's lone deep residual) + the new helper `isIntegral_of_retract` — **both SOLVED, axiom-clean**
+- **Prover activity** (from `attempts_raw.jsonl`): 23 edits, 4 goal checks, 17 diagnostic checks, 18 lemma searches, 0 `lake build`, 12 total errors traversed. No protected signature touched; no new `axiom`.
+
+## Headline: the Rigidity-Lemma chain is FULLY CLOSED, axiom-clean
+
+The lone deep residual of the whole `rigidity_lemma` chain — `rigidity_eqAt_closedPoint_of_proper_into_affine` (Step 1, Mumford's per-slice constancy) — was **proven**. I independently re-verified with `lean_verify`:
+
+| declaration | axioms |
+|---|---|
+| `AlgebraicGeometry.rigidity_lemma` | `{propext, Classical.choice, Quot.sound}` |
+| `AlgebraicGeometry.rigidity_eqAt_closedPoint_of_proper_into_affine` | `{propext, Classical.choice, Quot.sound}` |
+| `AlgebraicGeometry.isIntegral_of_retract` | `{propext, Classical.choice, Quot.sound}` |
+
+No `sorryAx`. Since the headline `rigidity_lemma` itself carries **no** `sorryAx`, it cannot be laundering through a hidden false `sorry` (a `sorryAx` anywhere in its dependency cone would surface) — the chain is **genuinely** closed. This is the culmination of the iter-157→162 arc (157 unsound→158 repaired→159 hfib→160 Step-2+sig-gap→161 deep-algebra+Step-1-reduced→**162 Step-1 closed**).
+
+The 3 remaining `sorry`s in AVR (`morphism_P1_to_grpScheme_const` L804, `genusZero_curve_iso_P1` L828, `rigidity_genus0_curve_to_grpScheme` L857) are the OFF-LIMITS deferred genus-0 base-case scaffolds (cube / Riemann–Roch / headline assembly), untouched per PROGRESS.
+
+## Target 1 — `rigidity_eqAt_closedPoint_of_proper_into_affine` (Step 1) — SOLVED
+
+**Winning structure** (lean 258–395):
+1. **DEAD END first (do NOT repeat):** proving the slice identities `q = aL ≫ sL` via `pullback.hom_ext` on `(X⊗Y).left`. `Category.assoc` / `simp [Category.assoc]` **cannot match** `(aL ≫ sL) ≫ pullback.fst` — the composite's middle object is syntactically `(X⊗Y).left` while `pullback.fst`'s domain is `pullback X.hom Y.hom` (defeq, not syntactic). `clear_value` did not help. Errors seen: `simp made no progress` (L346/348/352), `rewrite did not find pattern`.
+2. **FIX:** lift `q` to `qhat := Over.homMk q hqsec : 𝟙_ ⟶ X⊗Y` (works because `(𝟙_).left` defeq `Spec k̄`, `(𝟙_).hom` defeq `𝟙`), then do ALL slice algebra in `Over (Spec k̄)`: `xq := qhat ≫ fst X Y`, `yhat := qhat ≫ snd X Y`, `sec := lift (𝟙 X) (toUnit X ≫ yhat)`. Prove `qhat = xq ≫ sec` and `qhat ≫ retract = x₀ ≫ sec` by **`CartesianMonoidalCategory.hom_ext`** (checks after `fst`/`snd`) + `lift_fst`/`lift_snd` + **`toUnit_unique (… ≫ toUnit _) (𝟙 _)`** for the `_ ≫ toUnit = 𝟙` collapse — clean, no pullback mismatch.
+3. **Slice → affine:** `eq_comp_of_isAffine_of_properIntegral X.hom g xq.left x₀.left (Over.w xq) (Over.w x₀)` (the iter-161 deep-algebra helper), with `IsIntegral X.left` supplied by the new `isIntegral_of_retract sec.left (fst X Y).left hsecLfst`, `g := IsOpenImmersion.lift U₀.ι (sec≫f).left hrange`. `[UniversallyClosed]`/`[LocallyOfFiniteType] X.hom` are FREE from `[IsProper X.hom]`.
+4. **Range bound (`hsecU`):** `sec.left` lands in `U` via `pointOfClosedPoint_apply` + `Scheme.Opens.range_ι` + the saturation `_hUV`.
+5. **Assembly:** `hxqf`/`hx₀f` via `simpa only [Over.comp_left, hqhatL] using congrArg Over.Hom.left h…`; bridge `xq.left ≫ (sec≫f).left = x₀.left ≫ (sec≫f).left` via `key` + `hgfac`; chain by `.trans`; fold `px ≫ U.ι → q` with `rw [hq] at hgoalq; simpa only [Category.assoc]`.
+
+**Tooling traps recorded** (both auditors): (a) a big `calc` failed `Trans Eq Eq ?m` synthesis — replaced by an explicit `.trans` chain; (b) `rw [… , last_lemma]` left a syntactically-refl goal UNSOLVED (defeq-not-syntactic middle object) — use `exact congrArg (· ≫ g) h` instead.
+
+## Target 2 — `isIntegral_of_retract` (NEW helper, lean 200–237) — SOLVED
+
+`{S T : Scheme} [IsIntegral T] (r : S ⟶ T) (pr : T ⟶ S) (hrp : r ≫ pr = 𝟙 S) : IsIntegral S`. Stated **generically** (any retract), more general than the `X`/`X×Y`/`p₁` instance it was built for.
+- **Irreducible:** `pr.base` surjective (section `r.base`) ⟹ `(IrreducibleSpace.isIrreducible_univ T).image pr.base …` + `hsurj.range_eq` ⟹ `irreducibleSpace_def`.
+- **Reduced — PER STALK** (NOT global sections): `(r≫pr).stalkMap x` is iso (`Scheme.Hom.stalkMap_congr_hom (r≫pr) (𝟙 S) hrp x` + `stalkMap_id`; residual `IsIso (stalkCongr.hom ≫ 𝟙)` discharged by **`exact inferInstanceAs (IsIso (… ≫ 𝟙 _))`** — bare `infer_instance` + `Category.comp_id` BOTH fail), `stalkMap_comp` ⟹ `pr.stalkMap (r x)` injective ⟹ `isReduced_of_injective` into reduced `T`-stalk.
+- **KEY pin:** `isReduced_of_isReduced_stalk` takes stalk-reducedness as an **instance arg** `[∀ x, IsReduced (stalk x)]` — build `haveI hstalk : ∀ x, …` FIRST, do NOT `apply … ; intro x` (errors otherwise: `failed to synthesize ∀ (x:↥S), IsReduced …`).
+
+## Review-phase subagents (2 dispatched, both COMPLETE)
+
+| Subagent | Slug | must-fix / major / minor | Headline |
+|---|---|---|---|
+| `lean-auditor` | iter162 | **0** / 10 / 3 | Both focus proofs sound, axiom-clean, `sorry`-free, launder nothing; every hypothesis load-bearing. The 10 majors are all **stale status comments** — 7 in AVR still calling the now-closed Step 1 "the lone residual `sorry`" (lean 29-31, 255-257, 408-411, 458, 485-486, 643-645/669-672, 757-759), 3 orphaned in `Cotangent/GrpObj.lean` (L346 `NEEDS_MATHLIB_GAP_FILL` on a proven decl; L428-451 + L465-525 describe iter-145-EXCISED declarations). |
+| `lean-vs-blueprint-checker` | avr-iter162 | **0** (on changed scope) / 1 / 2 | `isIntegral_of_retract` `\lean{}` hint correct; chain verified sorry-free + axiom-clean, **no laundering of the chain**. Major = proof-block `\leanok` laundering on the 3 downstream `:= sorry` scaffold nodes (cube/RR/headline) — `sync_leanok`-owned. Minors = `isIntegral_of_retract` reduced-half prose uses a mathematically-insufficient global-sections argument (Lean correctly uses stalks; NOTE'd) + stale "residual sorry" prose. |
+
+Reports: `logs/iter-162/{lean-auditor-iter162,lean-vs-blueprint-checker-avr-iter162}-report.md`.
+
+## Is this iter-157 laundering again? No.
+The iter-157 failure was a false-as-stated helper laundering a true headline through an unsatisfiable `sorry`. Here the headline `rigidity_lemma` carries **no** `sorryAx` at all — the chain is genuinely closed. Both review subagents explicitly checked the iter-157 anti-pattern and cleared it; every hypothesis of both new proofs is load-bearing and the proofs are constructive (no `False`/`absurd`-from-contradictory-hyps). The remaining laundering finding (proof-`\leanok` on `:= sorry`) concerns the **deferred downstream** cube/RR scaffolds, NOT the chain.
+
+## Notable findings
+- **`isIntegral_of_retract` is stated more generally in Lean than the blueprint prose** (any retract, not just `X`/`X×Y`/`p₁`) — a strict improvement, no parallel API forced.
+- **Blueprint reduced-half proof of `lem:isIntegral_of_retract_of_integral` is mathematically insufficient** (global-sections split-injectivity does NOT imply a reduced scheme — reducedness is local). The Lean correctly proves it per-stalk. I added a `% NOTE` documenting the divergence; the prose should be aligned by the writer.
+- Recurring **proof-`\leanok` laundering** on `:= sorry` scaffolds (also flagged iter-157/160). No marker-sync log exists under `logs/iter-162/` — likely a persistent `sync_leanok` defect. `\leanok` is NOT the review agent's domain; surfaced to the next plan agent + developer feedback.
+
+## Blueprint markers updated (manual)
+- `AbelianVarietyRigidity.tex`, `lem:isIntegral_of_retract_of_integral`: added `\lean{AlgebraicGeometry.isIntegral_of_retract}` (the `\lean{}` was left blank pending this helper) + a `% NOTE: (iter-162 review)` recording the generic-vs-specific statement and the stalk-vs-global-sections proof divergence.
+- `AbelianVarietyRigidity.tex`, `rmk:rigidity_lemma_decomposition`: added a `% NOTE: (iter-162 review)` flagging the now-STALE "single genuinely-deep residual sorry" prose (chain closed iter-162) for the plan/blueprint-writer.
+
+## Blueprint doctor (iter-162)
+Clean — no orphan chapters, no broken `\ref`/`\uses`, no empty annotations, no `axiom` declarations.
+
+## Recommendations for next session
+See `recommendations.md`. Headline: the chain is DONE — iter-163's binding task is the genus-0 base-case route decision (cube vs c-hybrid vs Pic⁰), already scheduled and decoupled. Cleanup of stale docstrings/prose and the proof-`\leanok` laundering should be cleared before any blueprint-graph-trusting decision.

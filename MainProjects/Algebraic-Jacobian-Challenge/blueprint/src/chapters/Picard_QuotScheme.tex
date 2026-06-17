@@ -1,0 +1,1641 @@
+\chapter{The Quot scheme}
+\label{chap:Picard_QuotScheme}
+% archon:covers AlgebraicJacobian/Picard/QuotScheme.lean
+
+% STRATEGY NOTE (iter-174). This chapter is the A.2.b sub-row of Route~A
+% (positive-genus arm of nonempty_jacobianWitness). It packages the
+% Grothendieck--Altman--Kleiman Quot-scheme construction
+% \(\mathrm{Quot}^{\Phi,L}_{E/X/S}\) -- a projective \(S\)-scheme representing the
+% functor of \(T\)-flat coherent quotients of \(E_T\) on \(X_T = X \times_S T\) with
+% Hilbert polynomial \(\Phi\) on every fiber. The Quot construction is the
+% \emph{existence engine} behind the relative Picard functor: A.2.c
+% (\cref{chap:Picard_FGAPicRepresentability}) wires this chapter together with
+% the relative Picard functor (\cref{chap:Picard_RelPicFunctor}, A.1.c)
+% through the Abel map \(\mathrm{Div}_{C/k} \to \Pic^\sharp_{(C/k)\et}\), which factors
+% through the Hilbert scheme \(\Hilb_{C/k} = \Quot_{\mathcal{O}_C/C/k}\) -- the
+% case \(E = \mathcal{O}_X\) of the Quot functor. This chapter is gated on
+% A.2.a (\cref{thm:flattening_stratification_exists}, written this iter) and
+% A.1.a (\cref{chap:Picard_RelativeSpec}, on disk).
+%
+% LOAD-BEARING SUB-PREREQUISITE. The construction embeds Quot as a
+% locally closed subfunctor of a Grassmannian
+% \(\mathrm{Grass}(W \otimes_{\mathcal{O}_S} \mathrm{Sym}^r V, \Phi(r))\).
+% Mathlib (at the pinned commit) carries no Grassmannian \emph{scheme} -- only
+% a linear-algebra Grassmannian as a finite-rank-quotient variety. The
+% scheme-level Grassmannian over an arbitrary noetherian base is therefore an
+% in-project sub-build. This chapter introduces it as
+% \cref{def:grassmannian_scheme} and states its representability; it is a
+% candidate for promotion to its own chapter
+% \texttt{Picard\_GrassmannianScheme.tex} (writer iter-175+) -- see "Notes
+% for Plan Agent" in the writer report.
+
+\section{Setup and motivation}
+\label{sec:quot_setup}
+
+Throughout this chapter, let \(S\) be a noetherian scheme, \(\pi : X \to S\) a
+projective morphism, \(L\) a relatively very ample line bundle on \(X\) over \(S\),
+and \(E\) a coherent sheaf on \(X\). The Quot construction packages the
+\(T\)-flat coherent quotients \(E_T \twoheadrightarrow \mathcal{F}\) of the
+pull-back \(E_T\) to \(X_T = X \times_S T\), modulo the equivalence
+\(\langle \mathcal{F}, q\rangle = \langle \mathcal{F}', q'\rangle\) defined by
+\(\ker(q) = \ker(q')\). Fixing the Hilbert polynomial
+\(\Phi(\lambda) = \chi(\mathcal{F}|_{X_t}(\lambda)) \in \mathbb{Q}[\lambda]\)
+(constant on connected \(T\) by flatness)
+stratifies the Quot functor into pieces \(\Quot^{\Phi,L}_{E/X/S}\), each of
+which Grothendieck proved is representable by a projective \(S\)-scheme.
+
+% SOURCE: [Nitsure], "Construction of Hilbert and Quot Schemes", \S 1 and
+% \S 5; FGA Explained Ch.~5, AMS MSM 123 (read from
+% references/nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex, L287-L500 +
+% L2154-L2542). The Hartshorne reference for the polynomial-eventually
+% property of Euler characteristics is [Hartshorne], III.5.2 (the scanned
+% PDF at references/hartshorne-algebraic-geometry.pdf has no text layer, so
+% the verbatim source-quote in \ is taken from
+% Nitsure \S 1; Hartshorne III.5.2 is cited in prose as the textbook
+% reference).
+
+\section{Hilbert polynomial of a coherent sheaf}
+\label{sec:hilbert_polynomial}
+
+\begin{definition}\leanok
+[Hilbert polynomial]
+  \label{def:hilbert_polynomial}
+  \lean{AlgebraicGeometry.Scheme.hilbertPolynomial}
+  % SOURCE: [Nitsure], \S 1, sub-section "Stratification by Hilbert
+  % Polynomials" (read from
+  % references/nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex, L453-L478).
+  % SOURCE QUOTE:
+  % "Let \(X\) be a finite type scheme over
+  %  a field \(k\), together with a line bundle \(L\).
+  %  Recall that if \(F\) is a coherent sheaf on
+  %  \(X\) whose support is proper over \(k\), then
+  %  the \textbf{Hilbert polynomial} \({\Phi}\in \Q[\lambda]\) of \(F\) is defined by
+  %  the function
+  %  \(\){\Phi}(m) = \chi(F(m)) =
+  %  \sum_{i=0}^n (-1)^i \dim_k H^i(X, F\otimes L^{\otimes m})\(\)
+  %  where the dimensions of the cohomologies are finite because of the
+  %  coherence and properness conditions. The fact that \(\chi(F(m))\)
+  %  is indeed a polynomial in \(m\) under the above assumption is a special
+  %  case of what is known as Snapper's Lemma (see Kleiman [K] for a proof).
+  %
+  %  Let \(X\to S\) be a finite type morphism of noetherian schemes,
+  %  and let \(L\) be a line bundle on \(X\). Let \(\F\)
+  %  be any coherent sheaf on
+  %  \(X\) whose schematic support is proper over \(S\). Then for each \(s\in S\),
+  %  we get a polynomial \({\Phi}_s \in  \Q[\lambda]\)
+  %  which is the Hilbert polynomial of
+  %  the restriction \(\F_s = F|_{X_s}\) of \(\F\) to the fiber \(X_s\) over \(s\),
+  %  calculated with respect to the line bundle \(L_s = L|_{X_s}\).
+  %  If \(\F\) is flat over \(S\) then the function \(s\mapsto {\Phi}_s\)
+  %  from the set of points of \(S\) to the polynomial ring \(\Q[\lambda]\) is
+  %  known to be locally constant on \(S\)."
+  \textit{Source: [Nitsure], \S 1 (FGA Explained Ch.~5); cf.\ [Hartshorne],
+  III.5.2.}
+  Let \(X \to S\) be a finite-type morphism of noetherian schemes and let \(L\)
+  be a line bundle on \(X\). For a coherent sheaf \(\mathcal{F}\) on \(X\) whose
+  schematic support is proper over \(S\) and a point \(s \in S\), the
+  \emph{Hilbert polynomial of \(\mathcal{F}\) at \(s\) relative to \(L\)} is the
+  polynomial \(\Phi_{\mathcal{F},s} \in \mathbb{Q}[\lambda]\) characterised by
+  \[
+    \Phi_{\mathcal{F},s}(m)
+    \;=\; \chi(X_s,\, \mathcal{F}|_{X_s} \otimes L_s^{\otimes m})
+    \;=\; \sum_{i \ge 0} (-1)^i \dim_{\kappa(s)} H^i(X_s,\, \mathcal{F}|_{X_s} \otimes L_s^{\otimes m})
+  \]
+  (a polynomial in \(m\) by Snapper's Lemma; the sum is finite by coherence and
+  properness). When \(\mathcal{F}\) is \(S\)-flat the function
+  \(s \mapsto \Phi_{\mathcal{F},s}\) is locally constant on \(S\), so \(\Phi\) is
+  well-defined on connected components.
+\end{definition}
+
+\section{The Quot functor}
+\label{sec:quot_functor}
+
+\begin{definition}\leanok
+[Quot functor]
+  \label{def:quot_functor}
+  \lean{AlgebraicGeometry.Scheme.QuotFunctor}
+  \uses{def:hilbert_polynomial}
+
+  % SOURCE: [Nitsure], \S 1, sub-section "The Functors \(\Hilb_{X/S}\) and
+  % \(\Quot_{E/X/S}\)" (read from
+  % references/nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex, L394-L433
+  % + L481-L498).
+  % SOURCE QUOTE:
+  % "Let \(S\) be a noetherian scheme and let \(X\to S\) be a finite type
+  %  scheme over it. Let \(E\) be a coherent sheaf on \(X\).
+  %  Let \(Sch_S\) denote the category of all locally noetherian schemes
+  %  over \(S\). For any \(T\to S\) in \(Sch_S\), a \textbf{family of quotients of \(E\)
+  %  parametrised by \(T\)} will mean
+  %  a pair \((\F,q)\) consisting of
+  %
+  %  (i) a coherent sheaf \(\F\) on \(X_T = X\times_ST\)
+  %  such that the schematic support of \(\F\) is proper over \(T\)
+  %  and \(\F\) is flat over \(T\), together with
+  %
+  %  (ii) a surjective \({\mathcal O}_{X_T}\)-linear homomorphism of sheaves
+  %  \(q:E_T  \to \F\) where \(E_T\) is the pull-back of \(E\) under
+  %  the projection \(X_T \to X\).
+  %
+  %  Two such families \((\F,q)\) and \((\F,q)\) parametrised by \(T\) will
+  %  be regarded as equivalent if \(\ker(q) = \ker(q')\)),
+  %  and \(\langle \F, q \rangle\) will denote
+  %  an equivalence class. Then as properness and flatness are preserved
+  %  by base-change, and as tensor-product is right exact,
+  %  the pull-back of \(\langle \F, q \rangle\) under an \(S\)-morphism \(T'\to T\) is
+  %  well-defined, which gives
+  %  a set-valued contravariant functor
+  %  \(\Quot_{E/X/S} : Sch_S \to Sets\) under which
+  %  \(\)T\mapsto  \{\mbox{ All } \langle \F, q \rangle \mbox{ parametrised by }T\}\(\)
+  %  [...]
+  %  This shows that the functor \(\Quot_{E/X/S}\) naturally decomposes
+  %  as a co-product
+  %  \(\)\Quot_{E/X/S} = \coprod_{{\Phi}\in \Q[\lambda]}\, \Quot_{E/X/S}^{\Phi,L}\(\)
+  %  where for any polynomial \({\Phi}\in \Q[\lambda]\), the functor
+  %  \(\Quot_{E/X/S}^{\Phi,L}\) associates
+  %  to any \(T\) the set of all equivalence classes of
+  %  families \(\langle \F,q \rangle\) such that at each \(t\in T\) the
+  %  Hilbert polynomial of the restriction \(\F_t\), calculated
+  %  using the pull-back of \(L\), is \({\Phi}\)."
+  \textit{Source: [Nitsure], \S 1 (FGA Explained Ch.~5).}
+  Let \(S\) be a noetherian scheme, \(\pi : X \to S\) a finite-type morphism,
+  \(L\) a line bundle on \(X\), \(E\) a coherent sheaf on \(X\), and
+  \(\Phi \in \mathbb{Q}[\lambda]\). The \emph{Quot functor with Hilbert
+  polynomial \(\Phi\)}
+  \[
+    \Quot^{\Phi,L}_{E/X/S} : (\mathrm{Sch}/S)^{op} \longrightarrow \mathbf{Set}
+  \]
+  sends an \(S\)-scheme \(T \to S\) to the set of equivalence classes
+  \(\langle \mathcal{F}, q\rangle\) of pairs \((\mathcal{F}, q)\) where
+  \begin{enumerate}
+    \item \(\mathcal{F}\) is a coherent sheaf on \(X_T = X \times_S T\) whose
+      schematic support is proper over \(T\) and which is flat over \(T\);
+    \item \(q : E_T \twoheadrightarrow \mathcal{F}\) is a surjective
+      \(\mathcal{O}_{X_T}\)-linear homomorphism, where \(E_T\) is the pull-back
+      of \(E\) along \(X_T \to X\);
+    \item for every \(t \in T\) the Hilbert polynomial of \(\mathcal{F}|_{X_t}\)
+      with respect to \(L|_{X_t}\) (\cref{def:hilbert_polynomial}) equals
+      \(\Phi\).
+  \end{enumerate}
+  Two pairs \((\mathcal{F}, q)\) and \((\mathcal{F}', q')\) are equivalent iff
+  \(\ker(q) = \ker(q')\). On morphisms \(f : T' \to T\) over \(S\), the functor
+  acts by pulling back the quotient along \(X_{T'} \to X_T\) (well-defined
+  since tensor product is right-exact and preserves both flatness and
+  properness). The Hilbert scheme is the special case
+  \(\Hilb^{\Phi,L}_{X/S} := \Quot^{\Phi,L}_{\mathcal{O}_X/X/S}\).
+\end{definition}
+
+\section{The Grassmannian scheme}
+\label{sec:grassmannian_scheme}
+
+The Quot construction proceeds by embedding \(\Quot^{\Phi,L}_{E/X/S}\) as a
+locally closed subfunctor of a Grassmannian over \(S\). Since Mathlib carries
+no Grassmannian \emph{scheme} (only a finite-rank-quotient variety in
+linear algebra), we package the construction here.
+
+\begin{definition}\leanok
+[Grassmannian scheme]
+  \label{def:grassmannian_scheme}
+  \lean{AlgebraicGeometry.Scheme.Grassmannian}
+  \uses{def:quot_functor}
+  % SOURCE: [Nitsure], \S 1, "Elementary Examples, Exercises~(2)" and
+  % "Construction of Grassmannian" (read from
+  % references/nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex, L546-L599
+  % + L773-L850).
+  % SOURCE QUOTE:
+  % "For any integers \(r\ge d\ge 1\), an explicit construction
+  %  the Grassmannian scheme
+  %  \(\grass(r,d)\) over \(\Z\), together with the tautological
+  %  quotient \(u:\oplus^r\,{\mathcal O}_{\grass(r,d)} \to \U\) where \
+  %  \(\U\) is a rank \(d\) locally free sheaf on \(\grass(r,d)\),
+  %  has been given at the end of this section. [...]
+  %  Show that \(\grass(r,d)\) together with the quotient
+  %  \(u:\oplus^r\,{\mathcal O}_{\grass(r,d)} \to \U\) represents the
+  %  contravariant functor
+  %  \(\)\Grass(r,d) = \Quot_{\oplus^r\,{\mathcal O}_{\Z}/\Z/\Z}^{d, {\mathcal O}_{\Z}}\(\)
+  %  from schemes to sets, which associates to any \(T\) the
+  %  set of all equivalence classes
+  %  \(\langle \F, q\rangle\) of quotients \(q: \oplus^r\,{\mathcal O}_T \to \F\)
+  %  where \(\F\) is a locally free sheaf on \(T\) of rank \(d\).
+  %  [...]
+  %  Using the above show that, more generally, if \(S\) is a scheme and
+  %  \(E\) is a locally free \({\mathcal O}_S\)-module of rank \(r\),
+  %  the functor \(\Grass(E,d)=\Quot_{E/S/S}^{d,{\mathcal O}_S}\)
+  %  on all \(S\)-schemes which
+  %  by definition associates to any \(T\)
+  %  the set of all equivalence classes \(\langle \F, q\rangle\) of quotients
+  %  \(q: E_T \to \F\) where \(\F\) is a locally free sheaf on \(T\) of rank \(d\),
+  %  is representable. The representing scheme
+  %  is denoted by \(\grass(E,d)\) and is called the rank \(d\)
+  %  relative Grassmannian of \(E\) over \(S\)."
+  \textit{Source: [Nitsure], \S 1, Exercise (2) and "Construction of
+  Grassmannian" (FGA Explained Ch.~5).}
+  Let \(S\) be a noetherian scheme and let \(V\) be a locally free
+  \(\mathcal{O}_S\)-module of rank \(r\). For an integer \(1 \le d \le r\), the
+  \emph{Grassmannian of rank-\(d\) quotients of \(V\)} is the functor
+  \[
+    \mathrm{Grass}(V, d) : (\mathrm{Sch}/S)^{op} \longrightarrow \mathbf{Set},
+    \qquad
+    T \longmapsto \{ \langle \mathcal{F}, q\rangle :
+    q : V_T \twoheadrightarrow \mathcal{F},\; \mathcal{F}
+    \text{ locally free of rank } d \}
+  \]
+  with equivalence \(\ker(q) = \ker(q')\). Concretely \(\mathrm{Grass}(V, d) =
+  \Quot^{d,\mathcal{O}_S}_{V/S/S}\) (the Quot functor for \(X = S\), \(E = V\),
+  constant Hilbert polynomial \(\Phi = d\)).
+\end{definition}
+
+\begin{theorem}\leanok
+[Representability of the Grassmannian]
+  \label{thm:grassmannian_representable}
+  \lean{AlgebraicGeometry.Scheme.Grassmannian.representable}
+  \uses{def:grassmannian_scheme, thm:relative_spec_exists, thm:relative_spec_univ}
+
+  % SOURCE: [Nitsure], \S 1, sub-section "Construction by gluing together
+  % affine patches" through "Projective embedding"
+  % (read from references/nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex,
+  % L798-L930).
+  % SOURCE QUOTE:
+  % "For any integers \(r\ge d\ge 1\), the Grassmannian scheme
+  %  \(\grass(r,d)\) over \(\Z\), together with the tautological
+  %  quotient \(u:\oplus^r\,{\mathcal O}_{\grass(r,d)} \to \U\) where \
+  %  \(\U\) is a rank \(d\) locally free sheaf on \(\grass(r,d)\),
+  %  can be explicitly constructed as follows. [...]
+  %  the schemes
+  %  \(U^I\), as \(I\) varies over all the
+  %  \({r\choose d}\) different
+  %  subsets of  \(\{ 1,\ldots, r\}\) of cardinality \(d\),
+  %  can be glued together by the co-cycle \((\theta_{I,J})\) to form a
+  %  finite-type scheme \(\grass(r,d)\) over \(\Z\). As each \(U^I\) is
+  %  isomorphic to \(\AA^{d(r-d)}_{\Z}\), it follows that
+  %  \(\grass(r,d) \to \spec \Z\) is smooth of relative dimension \(d(r-d)\).
+  %  [...]
+  %  We now show that \(\pi : \grass(r,d) \to \spec \Z\) is proper. It is enough to
+  %  verify the valuative criterion of properness for discrete valuation rings.
+  %  [...]
+  %  As \(\U\) is given by the transition functions \(g_{I,J}\) described above,
+  %  the determinant line bundle
+  %  \(\det(\U)\) is given by the transition functions
+  %  \(\det(g_{I,J}) = 1/P^I_J \in GL_1(U^I_J)\).
+  %  [...]
+  %  We leave it to the reader to verify that the sections \(\sigma_I\) form
+  %  a linear system which is base point free and separates points
+  %  relative to \(\spec \Z\), and so gives an embedding of
+  %  \(\grass(r,d)\) into \(\PP^m_{\Z}\) where \(m = {r\choose d}-1\).
+  %  This is a closed embedding by the properness of
+  %  \(\pi:\grass(r,d) \to \spec \Z\). In particular, \(\det(\U)\)
+  %  is a relatively very ample line bundle on \(\grass(r,d)\) over \(\Z\)."
+  \textit{Source: [Nitsure], \S 1, "Construction of Grassmannian" (FGA
+  Explained Ch.~5).}
+  Let \(S\) be a noetherian scheme, \(V\) a locally free \(\mathcal{O}_S\)-module
+  of rank \(r\), and \(1 \le d \le r\). The functor \(\mathrm{Grass}(V,d)\) of
+  \cref{def:grassmannian_scheme} is representable by a smooth projective
+  \(S\)-scheme \(\mathrm{Gr}_S(V, d) \to S\) of relative dimension \(d(r-d)\),
+  equipped with a tautological quotient
+  \(\pi^* V \twoheadrightarrow \mathcal{U}\) of rank \(d\). The determinant
+  line bundle \(\det(\mathcal{U})\) is relatively very ample, and the
+  associated linear system gives a closed embedding
+  \(\mathrm{Gr}_S(V, d) \hookrightarrow
+  \mathbb{P}_S\!\left(\bigwedge^d V\right)\) -- the \emph{Pl\"ucker embedding}.
+\end{theorem}
+
+% SOURCE QUOTE PROOF: see the "Construction of Grassmannian" sub-section of
+% [Nitsure], \S 1 (references/nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex,
+% L773-L930), which gives the construction in five named steps
+% ("Construction by gluing together affine patches", "Separatedness",
+% "Properness", "Universal quotient", "Projective embedding"). The total
+% verbatim text is ~150 lines; it is reproduced piecewise in the
+% SOURCE QUOTE comment of the theorem statement above.
+\begin{proof}
+  
+  Over \(S = \Spec \mathbb{Z}\) and \(V = \mathcal{O}_S^{\oplus r}\) the
+  Grassmannian \(\mathrm{Gr}(r, d)\) is constructed by gluing
+  \(\binom{r}{d}\) affine charts \(U^I = \Spec\mathbb{Z}[X^I]\) indexed by
+  size-\(d\) subsets \(I \subseteq \{1, \dots, r\}\). The chart \(U^I\)
+  carries the matrix \(X^I\) of size \(d \times r\) whose \(I\)-th \(d \times d\)
+  minor is the identity, with the remaining \(d(r-d)\) entries free
+  variables (so \(U^I \cong \mathbb{A}^{d(r-d)}_{\mathbb{Z}}\)). The
+  transition maps \(\theta_{I,J} : U^I \cap U^J \to U^J \cap U^I\) defined
+  by \(X^J \mapsto (X^I_J)^{-1} X^I\) on the locus where \(\det X^I_J\) is
+  invertible satisfy the cocycle condition
+  \(\theta_{I,K} = \theta_{I,J} \circ \theta_{J,K}\). The glued
+  \(\mathrm{Gr}(r,d) \to \Spec\mathbb{Z}\) is smooth of relative dimension
+  \(d(r-d)\). Separatedness is checked from the diagonal
+  \(\Delta_{I,J} \subset U^I \times U^J\) cut out by \(X^J_I X^I - X^J = 0\).
+  Properness follows from the valuative criterion for DVRs: given
+  \(\varphi : \Spec K \to \mathrm{Gr}(r,d)\) over a DVR \(R\) with fraction
+  field \(K\), factoring through some chart \(U^I\) via a ring map
+  \(f : \mathbb{Z}[X^I] \to K\), choose \(J\) minimising the valuation
+  \(\nu(f(P^I_J))\) of the minor; on the chart \(U^J\) all entries have
+  non-negative valuation, so \(f\) extends uniquely to \(\Spec R\).
+
+  The universal quotient \(u : \mathcal{O}_{\mathrm{Gr}(r,d)}^{\oplus r}
+  \twoheadrightarrow \mathcal{U}\) is given on \(U^I\) by the matrix \(X^I\)
+  and glued by \(g_{I,J} = (X^I_J)^{-1} \in GL_d(U^I \cap U^J)\). The
+  determinant line bundle \(\det\mathcal{U}\) has transition functions
+  \(\det g_{I,J} = 1/P^I_J\); the global sections
+  \(\sigma_I \in \Gamma(\mathrm{Gr}(r,d), \det\mathcal{U})\) defined by
+  \(\sigma_I|_{U^J} = P^J_I\) form a base-point-free linear system separating
+  points over \(\Spec\mathbb{Z}\), giving an embedding into
+  \(\mathbb{P}^{\binom{r}{d}-1}_{\mathbb{Z}}\), which is closed by
+  properness. Representability of \(\mathrm{Grass}(r,d)\) is then verified
+  on the universal pair \((\mathrm{Gr}(r,d), u)\): a quotient
+  \(q : \mathcal{O}_T^{\oplus r} \twoheadrightarrow \mathcal{F}\) of
+  rank \(d\) on \(T\) is everywhere locally trivialised; on the locus where
+  the columns indexed by \(I\) are a basis the matrix of \(q\) has the form
+  \(X^I\), defining the classifying morphism \(T \to U^I \subset
+  \mathrm{Gr}(r,d)\). Base change from \(\mathbb{Z}\) to a general noetherian
+  base \(S\) with a vector bundle \(V\) is direct: trivialise \(V\) on an open
+  cover and glue. For non-trivial \(V\) the same construction produces
+  \(\mathrm{Gr}_S(V, d)\) with Pl\"ucker embedding into
+  \(\mathbb{P}_S(\bigwedge^d V)\).
+\end{proof}
+
+\section{Representability of the Quot scheme}
+\label{sec:quot_representable}
+
+\begin{theorem}\leanok
+[Representability of the Quot functor]
+  \label{thm:quot_representable}
+  \lean{AlgebraicGeometry.Scheme.QuotScheme}
+  \uses{def:quot_functor, lem:quot_boundedness, lem:quot_alpha_injective,
+    lem:quot_reduction_to_pi_star_W, lem:quot_valuative_criterion,
+    thm:grassmannian_representable, thm:flattening_stratification_exists,
+    thm:flat_base_change_cohomology}
+
+  % SOURCE: [Nitsure], \S 5, "Main Existence Theorems"
+  % (read from references/nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex,
+  % L2220-L2273); cf.\ Grothendieck, FGA TDTE-IV.
+  % SOURCE QUOTE:
+  % "Let \(S\) be a noetherian scheme, \(\pi: X\to S\) a projective morphism,
+  %  and \(L\) a relatively very ample line bundle on \(X\). Then for any
+  %  coherent \({\mathcal O}_X\)-module \(E\) and any polynomial \(\Phi \in \Q[\lambda]\),
+  %  the functor \(\Quot_{E/X/S}^{\Phi,L}\) is representable
+  %  by a projective \(S\)-scheme \(\quot_{E/X/S}^{\Phi,L}\)."
+  \textit{Source: [Nitsure], \S 5, Theorem (Grothendieck), Theorem
+  (Altman--Kleiman) (FGA Explained Ch.~5); cf.\ Grothendieck, FGA TDTE-IV.}
+  Let \(S\) be a noetherian scheme, \(\pi : X \to S\) a projective morphism,
+  \(L\) a relatively very ample line bundle on \(X\), \(E\) a coherent
+  \(\mathcal{O}_X\)-module, and \(\Phi \in \mathbb{Q}[\lambda]\). Then the
+  functor \(\Quot^{\Phi,L}_{E/X/S}\) of \cref{def:quot_functor} is
+  representable by a projective \(S\)-scheme \(\Quot^{\Phi,L}_{E/X/S}\),
+  equipped with a universal quotient
+  \[
+    q^{\mathrm{univ}} :
+    \pi^*_{\Quot} E \twoheadrightarrow \mathcal{F}^{\mathrm{univ}}
+    \quad \text{on } X \times_S \Quot^{\Phi,L}_{E/X/S},
+  \]
+  flat over \(\Quot^{\Phi,L}_{E/X/S}\) with constant Hilbert polynomial
+  \(\Phi\) on every fiber. The Hilbert scheme is the special case
+  \(E = \mathcal{O}_X\): \(\Hilb^{\Phi,L}_{X/S} = \Quot^{\Phi,L}_{\mathcal{O}_X/X/S}\)
+  represents the functor of \(T\)-flat closed subschemes
+  \(Y \subset X_T\) with fiberwise Hilbert polynomial \(\Phi\).
+\end{theorem}
+
+% SOURCE QUOTE PROOF: this proof is long (~5 named sub-sections in [Nitsure]
+% \S 5). Each sub-step is recorded with its own SOURCE QUOTE in the
+% sub-lemmas below. The structural skeleton of the proof is restated in
+% project notation in the \begin{proof} block.
+\begin{proof}
+  
+  The proof has four steps; each step is a sub-lemma in the next
+  sub-sections.
+  \begin{enumerate}
+    \item \textbf{(Boundedness, \cref{lem:quot_boundedness}.)} Pick the
+      Castelnuovo--Mumford regularity bound \(m = m(\mathrm{rank}\,V,
+      \mathrm{rank}\,W, \Phi)\) uniformly across all fibers (by Mumford's
+      \(m\)-regularity theorem applied to \(E_s\) and to all coherent
+      quotients of \(E_s\) with Hilbert polynomial \(\Phi\)). For \(r \ge m\)
+      and any \(T \to S\) and any \(T\)-flat quotient
+      \(q : E_T \twoheadrightarrow \mathcal{F}\) with Hilbert polynomial
+      \(\Phi\), the higher direct images \(R^i (\pi_T)_* \mathcal{F}(r)\)
+      and \(R^i (\pi_T)_* E_T(r)\) and \(R^i (\pi_T)_* \mathcal{G}(r)\)
+      vanish for \(i \ge 1\) (where \(\mathcal{G} = \ker q\)), and the
+      direct images \((\pi_T)_* \mathcal{F}(r)\), \((\pi_T)_* E_T(r)\),
+      \((\pi_T)_* \mathcal{G}(r)\) are locally free of ranks fixed by the
+      data; the canonical maps \((\pi_T)^* (\pi_T)_*(-)(r) \to (-)(r)\)
+      are surjective. Cohomology-and-base-change (\cref{thm:flat_base_change_cohomology},
+      Stacks tag 02KH) propagates these properties across \(T\)-base change.
+    \item \textbf{(Grassmannian embedding, \cref{lem:quot_alpha_injective}.)}
+      Reduce by \cref{lem:quot_reduction_to_pi_star_W} to the case
+      \(X = \mathbb{P}_S(V)\), \(E = \pi^* W\) with \(V, W\) locally free
+      on \(S\), \(L = \mathcal{O}_{\mathbb{P}(V)}(1)\). Fix \(r \ge m\).
+      The Grassmannian embedding
+      \[
+        \alpha : \Quot^{\Phi,L}_{E/X/S} \longrightarrow
+        \mathrm{Grass}\!\left(
+          W \otimes_{\mathcal{O}_S} \mathrm{Sym}^r V,\; \Phi(r)
+        \right)
+      \]
+      sends \(\langle \mathcal{F}, q\rangle\) on \(T\) to the locally free
+      quotient \((\pi_T)_*(q(r)) : (\pi_T)_* E_T(r) \to (\pi_T)_* \mathcal{F}(r)\).
+      This is injective on \(T\)-valued points: from the map \(T \to
+      \mathrm{Gr}_S(W \otimes \mathrm{Sym}^r V, \Phi(r))\) one recovers
+      the kernel-pull-back \((\pi_T)^* (\pi_T)_* \mathcal{G}(r) \to E_T(r)\),
+      whose cokernel is \(q(r) : E_T(r) \to \mathcal{F}(r)\);
+      twisting back by \(-r\) recovers \(q\).
+    \item \textbf{(Locally closed in the Grassmannian via flattening
+      stratification.)} Let \(T_0 = \mathrm{Gr}_S(W \otimes \mathrm{Sym}^r V,
+      \Phi(r))\) with universal quotient
+      \(f : (W \otimes \mathrm{Sym}^r V)_{T_0} \twoheadrightarrow \mathcal{J}\)
+      and kernel \(\mathcal{K}\). Form the composite
+      \(h : \pi_{T_0}^* \mathcal{K} \hookrightarrow
+      \pi_{T_0}^* (W \otimes \mathrm{Sym}^r V) = \pi_{T_0}^* (\pi_{T_0})_* E_{T_0}
+      \twoheadrightarrow E_{T_0}\)
+      and let \(q := \mathrm{coker}(h) : E_{T_0} \to \mathcal{F}\). By the
+      flattening stratification (\cref{thm:flattening_stratification_exists}
+      of \cref{chap:Picard_FlatteningStratification}) applied to \(\mathcal{F}\)
+      on \(X_{T_0}\), there exists a locally closed subscheme
+      \(T_0^\Phi \subseteq T_0\) such that for any \(\phi : Y \to T_0\), the
+      pulled-back cokernel \(\mathcal{F}_Y\) is \(Y\)-flat with fiberwise
+      Hilbert polynomial \(\Phi\) iff \(\phi\) factors through \(T_0^\Phi\).
+      The pair \((T_0^\Phi, \text{universal cokernel})\) represents
+      \(\Quot^{\Phi,L}_{E/X/S}\).
+    \item \textbf{(Closed, hence projective,
+      \cref{lem:quot_valuative_criterion}.)} The functor
+      \(\Quot^{\Phi,L}_{E/X/S}\) satisfies the valuative criterion of
+      properness with respect to DVRs (Exercise (7) of \S 1, proved
+      using that flatness over a DVR is torsion-freeness). Combined
+      with the locally closed embedding of step 3 into the projective
+      \(\mathrm{Gr}_S \hookrightarrow \mathbb{P}_S(\bigwedge^{\Phi(r)}
+      (W \otimes \mathrm{Sym}^r V))\), this upgrades to a \emph{closed}
+      embedding. Hence \(\Quot^{\Phi,L}_{E/X/S}\) is a projective \(S\)-scheme.
+  \end{enumerate}
+  Finally, by \cref{lem:quot_reduction_to_pi_star_W}, the general case
+  (arbitrary \(X\) projective over \(S\) and arbitrary coherent \(E\)) follows
+  from the case \(X = \mathbb{P}(V)\), \(E = \pi^* W\): pick a closed
+  embedding \(X \subset \mathbb{P}(V)\) and write \(E\) as a coherent quotient
+  of \(\pi^*(W)(\nu)\) for some vector bundle \(W\) on \(S\) and integer \(\nu\);
+  the Quot scheme of the original data is then a closed subscheme of the
+  Quot scheme of the universal data, by the closed-embedding clause of
+  \cref{lem:quot_reduction_to_pi_star_W}.
+\end{proof}
+
+\section{Sub-lemmas of the construction}
+\label{sec:quot_sub_lemmas}
+
+\begin{lemma}[Reduction to the universal case]
+  \label{lem:quot_reduction_to_pi_star_W}
+  \lean{AlgebraicGeometry.TODO.quotReductionToPiStarW}
+  \uses{def:quot_functor}
+
+  % SOURCE: [Nitsure], \S 5, sub-section "Reduction to the case of
+  % \(\Quot_{\pi^*W/\PP(V)/S}^{\Phi,L}\)"
+  % (read from references/nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex,
+  % L2294-L2332).
+  % SOURCE QUOTE:
+  % "It is enough to prove Theorem REF in the special case
+  %  that \(X = \PP(V)\) and
+  %  \(E= \pi^*(W)\) where \(V\) and \(W\) are vector bundles on \(S\), as
+  %  a consequence of the next lemma.
+  %
+  %  \begin{lemma}
+  %  (i) Let \(\nu\) be any integer.
+  %  Then tensoring by \(L^{\nu}\) gives an isomorphism of
+  %  functors from \(\Quot_{E/X/S}^{\Phi,L}\) to
+  %  \(\Quot_{E(\nu)/X/S}^{\Psi,L}\) where the polynomial
+  %  \(\Psi \in \Q[\lambda]\) is defined by \(\Psi(\lambda) = \Phi(\lambda + \nu)\).
+  %
+  %  (ii) Let \(\phi : E \to G\) be a surjective homomorphism of
+  %  coherent sheaves on \(X\). Then the corresponding natural transformation
+  %  \(\Quot_{G/X/S}^{\Phi,L} \to \Quot_{E/X/S}^{\Phi,L}\)
+  %  is a closed embedding.
+  %  \end{lemma}"
+  \textit{Source: [Nitsure], \S 5 (FGA Explained Ch.~5).}
+  Let \(S\), \(X\), \(L\), \(E\), \(\Phi\) be as in \cref{def:quot_functor}.
+  \begin{enumerate}
+    \item (Twist-shift.) For \(\nu \in \mathbb{Z}\), tensoring by
+      \(L^{\otimes \nu}\) gives an isomorphism of functors
+      \(\Quot^{\Phi,L}_{E/X/S} \xrightarrow{\sim}
+      \Quot^{\Psi,L}_{E(\nu)/X/S}\) with \(\Psi(\lambda) = \Phi(\lambda + \nu)\).
+    \item (Surjection induces closed embedding.) Given a surjection
+      \(\phi : E \twoheadrightarrow G\) of coherent sheaves on \(X\), the
+      induced natural transformation
+      \(\Quot^{\Phi,L}_{G/X/S} \to \Quot^{\Phi,L}_{E/X/S}\) is a closed
+      embedding of functors.
+  \end{enumerate}
+  Consequently, if \(\Quot^{\Phi,L}_{\pi^* W / \mathbb{P}(V)/S}\) is
+  representable for all \(V\), \(W\) vector bundles on \(S\), then so is
+  \(\Quot^{\Phi,L}_{E/X/S}\) for every \(X \subset \mathbb{P}(V)\) closed and
+  every coherent \(E\) on \(X\) that is a quotient of \(\pi^*(W)(\nu)|_X\) for
+  some \(W\) and \(\nu\).
+\end{lemma}
+
+% SOURCE QUOTE PROOF: "The statement (i) is obvious. The statement (ii) just
+% says that given any locally noetherian scheme \(T\) and a family
+% \(\langle \F,q\rangle \in \Quot_{E/X/S}^{\Phi,L}(T)\), there exists
+% a closed subscheme \(T' \subset T\) with the following universal property:
+% for any locally noetherian scheme \(U\) and a morphism \(f: U\to T\),
+% the pulled back homomorphism of \({\mathcal O}_{X_U}\)-modules \(q_U : E_U \to \F_U\)
+% factors via the pulled back homomorphism \(\phi_U : E_U \to G_U\)
+% if and only if \(U \to T\) factors via \(T'\hra T\).
+% This is satisfied by taking \(T'\) to be the vanishing scheme
+% for the composite homomorphism \(\ker(\phi) \hra  E \stackrel{q}{\to} \F\)
+% of coherent sheaves on \(X_T\) (see Remark REF),
+% which makes sense here as both \(\ker(\phi)\) and \(\F\) are coherent
+% on \(X_T\) and \(\F\) is flat over \(T\)."
+\begin{proof}
+  
+  (i) is direct from the definitions: tensoring with \(L^{\otimes \nu}\) is
+  an autoequivalence of coherent sheaves on \(X\) (and on every \(X_T\)),
+  preserving surjectivity, \(T\)-flatness, and properness of support, and
+  shifting the Hilbert polynomial by \(\nu\) in the variable.
+
+  (ii) Given a family \(\langle \mathcal{F}, q\rangle\) on \(T\) in
+  \(\Quot^{\Phi,L}_{E/X/S}\), the locus where \(q\) factors through
+  \(\phi : E \twoheadrightarrow G\) is cut out by the vanishing of the
+  composite \(\ker(\phi)|_{X_T} \hookrightarrow E_T \xrightarrow{q}
+  \mathcal{F}\). Because \(\mathcal{F}\) is \(T\)-flat, the schematic image of
+  this composite descends to a closed subscheme \(T' \subset T\) such that
+  \(f : U \to T\) factors through \(T'\) iff \(q_U\) factors through \(\phi_U\).
+  Hence \(\Quot^{\Phi,L}_{G/X/S} \hookrightarrow \Quot^{\Phi,L}_{E/X/S}\)
+  is a closed embedding of subfunctors.
+\end{proof}
+
+\begin{lemma}[Uniform Castelnuovo--Mumford regularity bound]
+  \label{lem:quot_boundedness}
+  \lean{AlgebraicGeometry.TODO.quotBoundedness}
+  \uses{thm:flat_base_change_cohomology}
+
+  % SOURCE: [Nitsure], \S 5, sub-section "Use of \(m\)-Regularity"
+  % (read from references/nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex,
+  % L2346-L2404). Builds on [Nitsure] \S 2 (Castelnuovo--Mumford regularity)
+  % and \S 3 (semi-continuity and base-change), cited internally as
+  % Theorem~"Mumford" and Theorem~"Base-change for flat sheaves".
+  % SOURCE QUOTE:
+  % "We consider the sheaf \(E = \pi^*(W)\) on \(X=\PP(V)\) where
+  %  \(V\) is a vector bundle on \(S\),
+  %  and take \(L = {\mathcal O}_{\PP(V)}(1)\).
+  %  For any field \(k\) and a \(k\)-valued point
+  %  \(s\) of \(S\), we have an isomorphism
+  %  \(\PP(V)_s \simeq \PP^n_k\) where \(n=\rank(V)-1\),
+  %  and the restricted sheaf \(E_s\) on \(\PP(V)_s\) is isomorphic to
+  %  \(\oplus^p{\mathcal O}_{\PP(V)_s}\) where \(p=\rank(W)\).
+  %  It follows from Theorem REF
+  %  that given any \(\Phi \in \Q[\lambda]\), there exists an integer
+  %  \(m\) which depends only on \(\rank(V)\), \(\rank(W)\) and \(\Phi\),
+  %  such that for any field \(k\) and a \(k\)-valued point \(s\) of \(S\),
+  %  the sheaf \(E_s\) on \(\PP(V)_s\) is \(m\)-regular, and for any
+  %  coherent quotient \(q: E_s \to \F\) on \(\PP(V)_s\) with
+  %  Hilbert polynomial \(\Phi\), the sheaf \(\F\) and the kernel sheaf
+  %  \(\G\subset E_s\) of \(q\) are both \(m\)-regular."
+  \textit{Source: [Nitsure], \S 5, "Use of \(m\)-Regularity" (FGA Explained
+  Ch.~5).}
+  Let \(X = \mathbb{P}_S(V)\), \(E = \pi^* W\) with \(V\), \(W\) vector bundles on
+  \(S\) of ranks \(n+1\), \(p\), \(L = \mathcal{O}_{\mathbb{P}(V)}(1)\), and
+  \(\Phi \in \mathbb{Q}[\lambda]\). There exists an integer
+  \(m = m(n, p, \Phi)\), depending only on \(n\), \(p\), and \(\Phi\), such that
+  for every geometric point \(s\) of \(S\) and every coherent quotient
+  \(q : E_s \twoheadrightarrow \mathcal{F}\) with Hilbert polynomial
+  \(\Phi\), the sheaves \(E_s\), \(\mathcal{F}\), and \(\ker q\) on \(X_s\) are all
+  \(m\)-regular in the sense of Castelnuovo--Mumford. Consequently, for
+  every \(T \to S\) and every \(T\)-flat quotient
+  \(q : E_T \twoheadrightarrow \mathcal{F}\) on \(X_T\) with Hilbert
+  polynomial \(\Phi\) and every \(r \ge m\), the conclusions \textbf{(*)} and
+  \textbf{(**)} of \cite[\S 5, "Use of \(m\)-Regularity"]{nitsure-hilbert-quot}
+  hold: the direct images \((\pi_T)_* \mathcal{F}(r)\), \((\pi_T)_* E_T(r)\),
+  \((\pi_T)_* \mathcal{G}(r)\) are locally free of fixed ranks; the
+  canonical surjections \((\pi_T)^* (\pi_T)_*(-)(r) \twoheadrightarrow (-)(r)\)
+  hold; and the higher direct images \(R^i (\pi_T)_* (-)(r)\) vanish for
+  \(i \ge 1\).
+\end{lemma}
+
+% SOURCE QUOTE PROOF: see [Nitsure], \S 5, "Use of \(m\)-Regularity"
+% (references/nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex, L2346-L2404).
+% The proof invokes the m-regularity theorem of [Nitsure] \S 2
+% (Theorem "Mumford") to extract the uniform bound m, and the
+% base-change-for-flat-sheaves theorem of [Nitsure] \S 3 (cited as
+% "Base-change for flat sheaves") to propagate the conclusions across \(T\).
+\begin{proof}
+  
+  Each geometric fiber \(E_s\) is a trivial bundle on \(\mathbb{P}^n_{\kappa(s)}\)
+  of rank \(p\), so \(E_s\) is \(0\)-regular. The Castelnuovo--Mumford
+  \(m\)-regularity theorem of [Nitsure] \S 2 produces, for any fixed Hilbert
+  polynomial \(\Phi\), a uniform integer \(m = m(n, p, \Phi)\) above which
+  every coherent quotient of \(E_s\) with Hilbert polynomial \(\Phi\) -- and
+  its kernel -- is \(m\)-regular. The Castelnuovo Lemma of [Nitsure] \S 2
+  converts \(m\)-regularity into vanishing of \(H^i((-) (r))\) for \(i \ge 1\)
+  and \(r \ge m\), and into global generation of \(H^0((-)(r))\). To
+  propagate the fiber-wise statement to families over \(T\), apply the
+  flat-base-change theorem (\cref{thm:flat_base_change_cohomology}, Stacks
+  tag 02KH) along \(T \to S\): cohomology of flat families commutes with
+  base change, so the direct images \((\pi_T)_*(-)(r)\) are locally free of
+  the rank dictated by the fiber Hilbert polynomials, and the canonical
+  maps \((\pi_T)^* (\pi_T)_*(-)(r) \to (-)(r)\) inherit fiberwise
+  surjectivity.
+\end{proof}
+
+\begin{lemma}[Grassmannian embedding \(\alpha\) is injective]
+  \label{lem:quot_alpha_injective}
+  \lean{AlgebraicGeometry.TODO.quotAlphaInjective}
+  \uses{lem:quot_boundedness}
+
+  % SOURCE: [Nitsure], \S 5, sub-section "Embedding Quot into Grassmannian"
+  % (read from references/nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex,
+  % L2409-L2451).
+  % SOURCE QUOTE:
+  % "We now fix a positive integer \(r\) such that \(r\ge m\).
+  %  Note that the rank of \({\pi_T}_*\F(r)\) is \(\Phi(r)\)
+  %  and \(\pi_*E(r) = W \otimes_{{\mathcal O}_S}\sym^r V\).
+  %  Therefore the surjective homomorphism
+  %  \({\pi_T}_*E_T(r) \to {\pi_T}_*\F(r)\)
+  %  defines an element of the set
+  %  \(\Grass( W \otimes_{{\mathcal O}_S}\sym^r V , \Phi(r))(T)\).
+  %  We thus get a morphism of functors
+  %  \(\)\alpha : \Quot^{\Phi,L}_{E/X/S} \to
+  %  \Grass( W \otimes_{{\mathcal O}_S}\sym^r V, \Phi(r))\(\)
+  %  It associates to \(q: E_T \to \F\) the quotient
+  %  \({\pi_T}_*(q(r)) : {\pi_T}_*E_T(r) \to {\pi_T}_*\F(r)\).
+  %
+  %  The above morphism \(\alpha\) is injective because the quotient
+  %  \(q: E_T \to \F\) can be recovered from
+  %  \({\pi_T}_*(q(r)) : {\pi_T}_*E_T(r) \to {\pi_T}_*\F(r)\)
+  %  as follows."
+  \textit{Source: [Nitsure], \S 5, "Embedding Quot into Grassmannian"
+  (FGA Explained Ch.~5).}
+  In the universal setup \(X = \mathbb{P}_S(V)\), \(E = \pi^* W\), fix
+  \(r \ge m\) from \cref{lem:quot_boundedness}. The natural transformation
+  \[
+    \alpha :
+    \Quot^{\Phi,L}_{E/X/S} \longrightarrow
+    \mathrm{Grass}\!\left(
+      W \otimes_{\mathcal{O}_S} \mathrm{Sym}^r V,\; \Phi(r)
+    \right),
+    \qquad
+    \langle \mathcal{F}, q\rangle \longmapsto
+    \langle (\pi_T)_*\mathcal{F}(r),\, (\pi_T)_*(q(r))\rangle
+  \]
+  is well-defined (the target is locally free of rank \(\Phi(r)\), and the
+  canonical isomorphism \(\pi_* E(r) \cong W \otimes_{\mathcal{O}_S}
+  \mathrm{Sym}^r V\) gives the source) and \emph{injective} on \(T\)-points:
+  the data of the locally free quotient at level \(r\) determines
+  \(q : E_T \to \mathcal{F}\).
+\end{lemma}
+
+\begin{proof}
+  
+  Suppose \(\alpha(T)\) sends both \(\langle \mathcal{F}_1, q_1\rangle\) and
+  \(\langle \mathcal{F}_2, q_2\rangle\) to the same \(T\)-point of the
+  Grassmannian. Then the pulled-back kernel
+  \((\pi_T)^* (\pi_T)_* \mathcal{G}_i(r) \to (\pi_T)^* (\pi_T)_* E_T(r)
+  = \pi_{T_0}^* (W \otimes \mathrm{Sym}^r V)_T\)
+  is the same. The diagram \textbf{(**)} of
+  \cref{lem:quot_boundedness} gives a right-exact sequence
+  \[
+    (\pi_T)^* (\pi_T)_* \mathcal{G}_i(r) \xrightarrow{h}
+    E_T(r) \xrightarrow{q_i(r)} \mathcal{F}_i(r) \to 0,
+  \]
+  so \(q_i(r)\) is recovered as the cokernel of \(h\); twisting by \(-r\)
+  recovers \(q_i\), giving \(q_1 = q_2\) and hence
+  \(\langle \mathcal{F}_1, q_1\rangle = \langle \mathcal{F}_2, q_2\rangle\).
+\end{proof}
+
+\begin{lemma}[Valuative criterion of properness for \(\Quot\)]
+  \label{lem:quot_valuative_criterion}
+  \lean{AlgebraicGeometry.TODO.quotValuativeCriterion}
+  % SOURCE: [Nitsure], \S 5, sub-section "Valuative Criterion for Properness"
+  % (read from references/nitsure-hilbert-quot-src/nitsure-hilbert-quot.tex,
+  % L2510-L2542). Original reference: EGA IV(2) 2.8.1, cited there.
+  % SOURCE QUOTE:
+  % "The functor \(\Quot_{E/X/S}^{\Phi,L}\) satisfies the following valuative
+  %  criterion for properness over \(S\): given any discrete valuation ring
+  %  \(R\) over \(S\) with quotient field \(K\), the restriction map
+  %  \(\)\Quot_{E/X/S}^{\Phi,L}(\spec R) \to \Quot_{E/X/S}^{\Phi,L}(\spec K)\(\)
+  %  is bijective. This can be seen as follows.
+  %  Given any coherent quotient
+  %  \(q: E_K \to \F\) on \(X_R\) which defines an element \(\langle \F, q\rangle\)
+  %  of \(\Quot_{E/X/S}^{\Phi,L}(\spec K)\).
+  %  Let \(\ov{\F}\) be the image of the composite homomorphism
+  %  \(E_R \to j_*(E_K) \to j_*\F\) where \(j : X_K \hra X_R\) is the open
+  %  inclusion. Let \(\ov{q} : E_R\to \ov{\F}\) be the induced surjection.
+  %  Then we leave it to the reader to verify that
+  %  \(\langle \F, q\rangle\) is an element of \(\Quot_{E/X/S}^{\Phi,L}(\spec R)\)
+  %  which maps to \(\langle \F, q\rangle\), and is the unique such element.
+  %  (Use the basic fact that being flat over a dvr
+  %  is the same as being torsion-free.)"
+  \textit{Source: [Nitsure], \S 5, "Valuative Criterion for Properness"
+  (FGA Explained Ch.~5); EGA IV(2) 2.8.1.}
+  The functor \(\Quot^{\Phi,L}_{E/X/S}\) satisfies the valuative criterion
+  for properness over \(S\): for every discrete valuation ring \(R\) with
+  fraction field \(K\) and every morphism \(\Spec R \to S\), the restriction
+  map
+  \[
+    \Quot^{\Phi,L}_{E/X/S}(\Spec R)
+    \longrightarrow
+    \Quot^{\Phi,L}_{E/X/S}(\Spec K)
+  \]
+  is bijective.
+\end{lemma}
+
+\begin{proof}
+  
+  Given a \(\Spec K\)-point \(\langle \mathcal{F}_K, q_K\rangle\) on \(X_K\),
+  let \(j : X_K \hookrightarrow X_R\) be the open inclusion. Define
+  \(\overline{\mathcal{F}}\) as the image of the composite
+  \(E_R \to j_* E_K \to j_* \mathcal{F}_K\), with induced surjection
+  \(\overline{q} : E_R \to \overline{\mathcal{F}}\). The sheaf
+  \(\overline{\mathcal{F}}\) is torsion-free over \(R\) (being a subsheaf of
+  \(j_* \mathcal{F}_K\)), hence \(R\)-flat (flatness over a DVR
+  \(=\) torsion-freeness), and restricts on the generic fiber to
+  \(\mathcal{F}_K\). The pair \((\overline{\mathcal{F}}, \overline{q})\) is
+  the unique extension of \(\langle \mathcal{F}_K, q_K\rangle\) to a
+  \(\Spec R\)-point (uniqueness: any other extension agrees on the dense
+  open \(X_K \subset X_R\) and is torsion-free, hence equals the image
+  construction). The Hilbert polynomial is constant on connected
+  \(\Spec R\) by flatness.
+\end{proof}
+
+\section{Cohomology and base change}
+\label{sec:cohomology_base_change}
+
+The Quot construction uses cohomology-and-base-change in two places: the
+boundedness step (\cref{lem:quot_boundedness}) and the Grassmannian
+embedding (\cref{lem:quot_alpha_injective}). We record the relevant
+statement as a named theorem so the Lean encoding can cite it directly.
+
+\begin{theorem}\leanok
+[Flat base change of cohomology]
+  \label{thm:flat_base_change_cohomology}
+  \lean{AlgebraicGeometry.flatBaseChangeCohomology}
+  \uses{thm:flat_base_change_higher, thm:flat_base_change_pushforward,
+    lem:higher_direct_image_quasi_coherent}
+  % SOURCE: [Stacks Project], tag 02KH (lemma-flat-base-change-cohomology)
+  % (read from references/stacks-coherent.tex, L947-L970).
+  % SOURCE QUOTE:
+  % "Consider a cartesian diagram of schemes
+  %  \(\)
+  %  \xymatrix{
+  %  X' \ar[d]_{f'} \ar[r]_{g'} & X \ar[d]^f \\
+  %  S' \ar[r]^g & S
+  %  }
+  %  \(\)
+  %  Let \(\mathcal{F}\) be a quasi-coherent \(\mathcal{O}_X\)-module
+  %  with pullback \(\mathcal{F}' = (g')^*\mathcal{F}\).
+  %  Assume that \(g\) is flat and that \(f\) is quasi-compact and quasi-separated.
+  %  For any \(i \geq 0\)
+  %  \begin{enumerate}
+  %  \item the base change map of
+  %  Cohomology, Lemma REF
+  %  is an isomorphism
+  %  \(\)
+  %  g^*R^if_*\mathcal{F} \longrightarrow R^if'_*\mathcal{F}',
+  %  \(\)
+  %  \item if \(S = \Spec(A)\) and \(S' = \Spec(B)\), then
+  %  \(H^i(X, \mathcal{F}) \otimes_A B = H^i(X', \mathcal{F}')\).
+  %  \end{enumerate}"
+  \textit{Source: [Stacks Project], tag 02KH (lemma-flat-base-change-cohomology).}
+  Let
+  \[
+    \begin{array}{ccc}
+      X' & \xrightarrow{g'} & X \\
+      \downarrow f' &  & \downarrow f \\
+      S' & \xrightarrow{g} & S
+    \end{array}
+  \]
+  be a cartesian diagram of schemes with \(g\) flat and \(f\) quasi-compact and
+  quasi-separated. Let \(\mathcal{F}\) be a quasi-coherent
+  \(\mathcal{O}_X\)-module with pull-back
+  \(\mathcal{F}' = (g')^* \mathcal{F}\). For every \(i \ge 0\):
+  \begin{enumerate}
+    \item the base-change map
+      \(g^* R^i f_* \mathcal{F} \to R^i f'_* \mathcal{F}'\) is an isomorphism;
+    \item if \(S = \Spec A\) and \(S' = \Spec B\), then \(H^i(X, \mathcal{F})
+      \otimes_A B = H^i(X', \mathcal{F}')\).
+  \end{enumerate}
+\end{theorem}
+
+\subsection{Project-side base-change substrate}
+\label{subsec:quot_project_basechange}
+
+The Lean encoding of \cref{thm:flat_base_change_cohomology} (and the
+Quot construction's iso between pushforward and tensor-pullback for the
+universal section pattern) relies on four project-side declarations
+introduced in \texttt{AlgebraicJacobian/Picard/QuotScheme.lean}. These
+are typed-sorry today: each carries a substantive Lean type that
+encodes the intended mathematical statement, with the body deferred to
+later iters (see \cref{sec:quot_lean_encoding} for the
+phase-by-phase plan).
+
+\begin{definition}\leanok
+[Canonical base-change map on sheaves of modules]
+  \label{def:quot_canonical_basechange_map}
+  \lean{AlgebraicGeometry.canonicalBaseChangeMap}
+  \uses{thm:flat_base_change_cohomology}
+  Given a cartesian square of schemes
+  \(\square = (g' : X' \to X,\ f' : X' \to S',\ f : X \to S,\ g : S' \to S)\)
+  with \(g \circ f' = f \circ g'\) and \(g\) flat, the
+  \emph{canonical base-change map} on sheaves of modules is the natural
+  transformation \(g'^* f^* \mathcal{F} \longrightarrow f'^* g^* \mathcal{F}\)
+  arising from the universal property of pullback. Encoded as a morphism
+  of \(\mathrm{ModuleCat}\)-valued sheaf functors on the pulled-back open
+  cover; this is the morphism whose iso-status discharges
+  \cref{thm:flat_base_change_cohomology}(1) in the present
+  finite-locally-free / quasi-coherent-of-finite-type setting.
+\end{definition}
+
+\begin{theorem}\leanok
+[Stalkwise base-change isomorphism on affines]
+  \label{thm:quot_canonical_basechange_app_app_isIso}
+  \lean{AlgebraicGeometry.canonicalBaseChangeMap_app_app_isIso}
+  \uses{def:quot_canonical_basechange_map, thm:flat_base_change_cohomology, thm:quot_canonical_basechange_app_app_isIso_of_affineCover, thm:quot_canonical_basechange_app_app_isIso_of_isAffineOpen}
+  For every affine open \(V \subseteq S'\) and every affine open
+  \(U \subseteq X\) lying over \(V\), the local component
+  \((\text{canonicalBaseChangeMap}\ \square).\text{app}\ \mathcal{F}.\text{app}\ U\)
+  of \cref{def:quot_canonical_basechange_map} is an isomorphism. Proof
+  reduces (Stacks 02KH(2)) to the affine-base case: \(H^0\) commutes with
+  flat extension of scalars on a quasi-compact quasi-separated affine
+  morphism.
+\end{theorem}
+
+\begin{theorem}
+
+\leanok
+[Affine-base case of the stalkwise base-change isomorphism]
+  \label{thm:quot_canonical_basechange_app_app_isIso_of_isAffineBase}
+  \lean{AlgebraicGeometry.canonicalBaseChangeMap_app_app_isIso_of_isAffineOpen_of_isAffineBase}
+  \uses{def:quot_pullback_app_isoTensor, lem:pushforward_isQuasicoherent, lem:pullback_tildeIso}
+  Assume in addition that the base \(S\) is affine, that \(f\) is
+  quasi-compact and quasi-separated, that \(g\) is flat, and that
+  \(\mathcal{F}\) is quasi-coherent. Then for every affine open
+  \(U \subseteq S'\) the section of the canonical base-change map
+  (\cref{def:quot_canonical_basechange_map}) over \(U\) is an isomorphism.
+  Taking \(V = S\) (affine) as the compatible base open, the statement
+  reduces to the algebraic flat base-change identity: the global sections
+  \(\Gamma(S', U)\) are flat over \(\Gamma(S, S)\), and the
+  tensor-presentation of the pulled-back sections
+  (\cref{def:quot_pullback_app_isoTensor}, applied to the pushforward
+  \((\pi_f)_* \mathcal{F}\), which stays quasi-coherent by
+  \cref{lem:pushforward_isQuasicoherent}) matches the base-change map under
+  the Stacks~01HQ identification of \cref{lem:pullback_tildeIso}.
+\end{theorem}
+\begin{proof} Proved directly in Lean. \end{proof}
+
+\begin{theorem}
+
+\leanok
+[Affine-open case of the stalkwise base-change isomorphism]
+  \label{thm:quot_canonical_basechange_app_app_isIso_of_isAffineOpen}
+  \lean{AlgebraicGeometry.canonicalBaseChangeMap_app_app_isIso_of_isAffineOpen}
+  \uses{thm:quot_canonical_basechange_app_app_isIso_of_isAffineBase, lem:quot_pushforward_pullback_section_eq}
+  With \(f\) quasi-compact and quasi-separated, \(g\) flat, and
+  \(\mathcal{F}\) quasi-coherent (but \(S\) now arbitrary), the section of
+  the canonical base-change map (\cref{def:quot_canonical_basechange_map})
+  over an affine open \(U \subseteq S'\) is an isomorphism. The substantive
+  algebraic content is the affine-base specialization
+  (\cref{thm:quot_canonical_basechange_app_app_isIso_of_isAffineBase}); the
+  passage from a general base \(S\) to the affine case is a base-side
+  Mayer-Vietoris descent along a finite affine cover of \(S\), using the
+  definitional section identity
+  \cref{lem:quot_pushforward_pullback_section_eq} on each piece.
+\end{theorem}
+\begin{proof} Proved directly in Lean. \end{proof}
+
+\begin{theorem}
+
+\leanok
+[Open-cover descent for the stalkwise base-change isomorphism]
+  \label{thm:quot_canonical_basechange_app_app_isIso_of_affineCover}
+  \lean{AlgebraicGeometry.canonicalBaseChangeMap_app_app_isIso_of_affineCover}
+  \uses{def:quot_canonical_basechange_map}
+  Suppose the section of the canonical base-change map
+  (\cref{def:quot_canonical_basechange_map}) is an isomorphism over
+  \emph{every} affine open of \(S'\). Then it is an isomorphism over every
+  open \(U \subseteq S'\). This is the standard Mayer-Vietoris descent for a
+  morphism of quasi-coherent sheaves on the base: cover \(U\) by affine
+  opens, on each of which the section is an isomorphism by hypothesis, and
+  glue along the intersections (quasi-compact because \(f\) is
+  quasi-separated). It is the descent half of the stalkwise statement
+  \cref{thm:quot_canonical_basechange_app_app_isIso}, whose Lean proof feeds
+  the affine-open case
+  \cref{thm:quot_canonical_basechange_app_app_isIso_of_isAffineOpen} as the
+  affine-open hypothesis.
+\end{theorem}
+\begin{proof} Proved directly in Lean. \end{proof}
+
+\begin{lemma}
+
+\leanok
+[Definitional section identity for pushforward of a pullback]
+  \label{lem:quot_pushforward_pullback_section_eq}
+  \lean{AlgebraicGeometry.pushforward_pullback_section_eq_pullback_section}
+  \uses{def:quot_canonical_basechange_map}
+  Let \(f' : X' \to S'\) and \(g' : X' \to X\) be morphisms of schemes,
+  \(\mathcal{F}\) a sheaf of \(\mathcal{O}_X\)-modules, and \(U \subseteq S'\)
+  an open. The sections over \(U\) of the pushforward along \(f'\) of the
+  pullback along \(g'\) of \(\mathcal{F}\) coincide \emph{definitionally}
+  with the sections of the pullback \(g'^* \mathcal{F}\) over the preimage
+  \(f'^{-1}(U)\):
+  \[
+    \Gamma\bigl(U,\ f'_* (g'^* \mathcal{F})\bigr)
+    \;=\;
+    \Gamma\bigl(f'^{-1}(U),\ g'^* \mathcal{F}\bigr).
+  \]
+  This records step~(3) of the affine-open construction
+  (\cref{thm:quot_canonical_basechange_app_app_isIso_of_isAffineOpen}): the
+  target of the canonical base-change map
+  (\cref{def:quot_canonical_basechange_map}) is read through this identity.
+\end{lemma}
+\begin{proof} Proved directly in Lean. \end{proof}
+
+\begin{theorem}\leanok
+[Canonical base-change map is a sheaf isomorphism]
+  \label{thm:quot_canonical_basechange_isIso}
+  \lean{AlgebraicGeometry.canonicalBaseChangeMap_isIso}
+  \uses{thm:quot_canonical_basechange_app_app_isIso}
+  Globalising the stalk-wise statement
+  \cref{thm:quot_canonical_basechange_app_app_isIso}: the natural
+  transformation \(g'^* f^* \mathcal{F} \to f'^* g^* \mathcal{F}\) of
+  \cref{def:quot_canonical_basechange_map} is an isomorphism of
+  quasi-coherent sheaves of modules. This is the sheaf-level form of
+  \cref{thm:flat_base_change_cohomology}(1).
+\end{theorem}
+
+\begin{definition}\leanok
+[Tensor-presentation of the pullback-of-sections functor]
+  \label{def:quot_pullback_app_isoTensor}
+  \lean{AlgebraicGeometry.Scheme.Modules.pullback_app_isoTensor}
+  \uses{def:quot_canonical_basechange_map, thm:quot_pullback_app_isoTensor_isBaseChange}
+  Given a morphism \(g : X \to Y\) of schemes, affine opens
+  \(U \subseteq Y\), \(V \subseteq X\) with \(g(V) \subseteq U\), and a
+  quasi-coherent sheaf of modules \(\mathcal{N}\) on \(Y\), the
+  \emph{tensor-presentation iso} packages the canonical iso
+  \(\Gamma(V,\, g^* \mathcal{N}) \;\cong\;
+   \Gamma(V,\, \mathcal{O}_X) \otimes_{\Gamma(U,\, \mathcal{O}_Y)}
+     \Gamma(U,\, \mathcal{N})\)
+  as a `LinearEquiv`. This is the project-side rfl-bridge used by the
+  consumer \(\text{Quot}\)-functor iso assembly: it discharges the
+  pullback-app step of the Tilde-isoTop route (Stacks tag 01HQ / 01I8)
+  to a base-change-of-scalars identity. The body factors as
+  (Step 1, axiom-clean): the underlying linear map
+  \texttt{pullback\_app\_isoTensor\_unitAtV};
+  (Step 2, project-side typed sorry): the
+  \texttt{IsBaseChange}-packaging step
+  \texttt{pullback\_app\_isoTensor\_isBaseChange} reducing to
+  Stacks 02KE bijectivity of the canonical map.
+\end{definition}
+
+\begin{definition}
+
+\leanok
+[Adjunction-unit base linear map at a section]
+  \label{def:quot_pullback_app_isoTensor_unitAtV}
+  \lean{AlgebraicGeometry.pullback_app_isoTensor_unitAtV}
+  Given a morphism \(g : Y \to X\) of schemes, a sheaf of
+  \(\mathcal{O}_X\)-modules \(\mathcal{N}\), and an open \(V \subseteq X\),
+  the unit of the pullback--pushforward adjunction yields a morphism of
+  \(\mathcal{O}_X\)-modules \(\mathcal{N} \to g_*(g^* \mathcal{N})\).
+  Evaluating its \(V\)-component gives the \(\Gamma(X, V)\)-linear
+  \emph{unit-at-section} map
+  \[
+    \Gamma(\mathcal{N}, V)
+    \;\longrightarrow\;
+    \Gamma\bigl(g_*(g^* \mathcal{N}),\ V\bigr).
+  \]
+  This is the axiom-clean building block (Step~1 of the Tilde-isoTop route)
+  underlying the tensor-presentation iso of
+  \cref{def:quot_pullback_app_isoTensor}.
+\end{definition}
+\begin{proof} Proved directly in Lean. \end{proof}
+
+\begin{definition}
+
+\leanok
+[Section-level base map for the pullback]
+  \label{def:quot_pullback_app_isoTensor_baseMap}
+  \lean{AlgebraicGeometry.pullback_app_isoTensor_baseMap}
+  \uses{def:quot_pullback_app_isoTensor_unitAtV}
+  For a morphism \(g : Y \to X\), a sheaf \(\mathcal{N}\) on \(X\), and
+  compatible affine opens \(U \subseteq Y\), \(V \subseteq X\) with
+  \(g(U) \subseteq V\), composing the unit-at-section map
+  (\cref{def:quot_pullback_app_isoTensor_unitAtV}) with the presheaf
+  restriction from \(g^{-1}(V)\) down to \(U\) produces the
+  \(\Gamma(X, V)\)-linear \emph{base map}
+  \[
+    \Gamma(\mathcal{N}, V)
+    \;\longrightarrow\;
+    \Gamma\bigl(g^* \mathcal{N},\ U\bigr),
+  \]
+  where the \(\Gamma(X, V)\)-action on the target is restriction of scalars
+  along the ring map \(\Gamma(X, V) \to \Gamma(Y, U)\) induced by \(g\). This
+  is the candidate linear map whose base-change property
+  (\cref{thm:quot_pullback_app_isoTensor_baseMap_isBaseChange}) yields the
+  tensor presentation.
+\end{definition}
+\begin{proof} Proved directly in Lean. \end{proof}
+
+\begin{theorem}
+
+\leanok
+[The base map is a base change]
+  \label{thm:quot_pullback_app_isoTensor_baseMap_isBaseChange}
+  \lean{AlgebraicGeometry.pullback_app_isoTensor_baseMap_isBaseChange}
+  \uses{def:quot_pullback_app_isoTensor_baseMap, def:pullback_app_isoTensor_sigma}
+  For compatible affine opens \(U \subseteq Y\), \(V \subseteq X\) of a
+  morphism \(g : Y \to X\) and a quasi-coherent sheaf \(\mathcal{N}\) on
+  \(X\), the base map of \cref{def:quot_pullback_app_isoTensor_baseMap}
+  exhibits \(\Gamma(g^* \mathcal{N}, U)\) as the base change of
+  \(\Gamma(\mathcal{N}, V)\) along the ring map
+  \(\Gamma(X, V) \to \Gamma(Y, U)\); i.e.\ the induced
+  \(\Gamma(Y, U) \otimes_{\Gamma(X, V)} \Gamma(\mathcal{N}, V)
+   \to \Gamma(g^* \mathcal{N}, U)\) is an isomorphism. The proof feeds the
+  packaged section-level linear equivalence and its intertwining property
+  (\cref{def:pullback_app_isoTensor_sigma}) into the universal
+  characterization of a base change.
+\end{theorem}
+\begin{proof} Proved directly in Lean. \end{proof}
+
+\begin{theorem}
+
+\leanok
+[Existence of the tensor-presentation equivalence]
+  \label{thm:quot_pullback_app_isoTensor_isBaseChange}
+  \lean{AlgebraicGeometry.pullback_app_isoTensor_isBaseChange}
+  \uses{thm:quot_pullback_app_isoTensor_baseMap_isBaseChange}
+  In the same affine setup, there exists a \(\Gamma(Y, U)\)-linear
+  isomorphism
+  \[
+    \Gamma\bigl(g^* \mathcal{N},\ U\bigr)
+    \;\cong\;
+    \Gamma(Y, U) \otimes_{\Gamma(X, V)} \Gamma(\mathcal{N}, V),
+  \]
+  obtained from the base-change property
+  (\cref{thm:quot_pullback_app_isoTensor_baseMap_isBaseChange}) by passing to
+  the induced equivalence. This is the existence statement consumed by the
+  tensor-presentation iso \cref{def:quot_pullback_app_isoTensor}.
+\end{theorem}
+\begin{proof} Proved directly in Lean. \end{proof}
+
+\begin{definition}
+
+\leanok
+[\(\Sigma\)-pair packaging: section-level LinearEquiv + intertwining]
+  \label{def:pullback_app_isoTensor_sigma}
+  \lean{AlgebraicGeometry.pullback_app_isoTensor_baseMap_sectionLinearEquiv}
+  % NOTE iter-283: replaced the spurious `def:quot_pullback_app_isoTensor` with
+  % `def:quot_pullback_app_isoTensor_baseMap` to break a dependency cycle that
+  % crashed `leanblueprint web`. In Lean (QuotScheme.lean L867) this Sigma-pair
+  % is built from `tildeIso_of_isQuasicoherent_isAffineOpen`/`pullback_tildeIso`
+  % and its statement references `pullback_app_isoTensor_baseMap`, NOT the
+  % high-level final iso `pullback_app_isoTensor`. The final iso is built FROM
+  % this Sigma-pair (def:quot_pullback_app_isoTensor -> thm:..._isBaseChange ->
+  % thm:..._baseMap_isBaseChange -> def:pullback_app_isoTensor_sigma), so the
+  % former edge was the back-edge closing the cycle. The corrected dependency
+  % (on the lower-level baseMap) is both acyclic and accurate.
+  \uses{def:quot_pullback_app_isoTensor_baseMap, def:quot_canonical_basechange_map,
+        lem:pullback_tildeIso, lem:tildeIso_of_isQuasicoherent_isAffineOpen,
+        lem:pullback_of_openImmersion_iso_restrict, lem:pushforward_isQuasicoherent}
+  Iter-188 Lane F-introduced \(\Sigma\)-pair packaging declaration that
+  bundles BOTH the section-level LinearEquiv
+  \(\Gamma(V,(g^*\mathcal N)) \;\simeq_{\Gamma(Y,U)}\; \Gamma(Y,U) \otimes
+    \Gamma(N,V)\) AND its intertwining property with the canonical
+  base-change map into a single \(\Sigma\)-struct returned via
+  \texttt{Nonempty} for \texttt{IsBaseChange.of\_equiv} consumption.
+  Concretely:
+  \[
+    \exists\, (f : \Gamma(V,(\text{pullback}\, g).\mathrm{obj}\,
+                     \mathcal N) \;\simeq_{\Gamma(Y,U)}\;
+                     \Gamma(X,V) \otimes_{\Gamma(Y,U)} \Gamma(N,V)),\;
+      \forall x,\; f(1\otimes x)\;=\;\text{baseMap}\,g\,\mathcal N\,e\,x.
+  \]
+  This packaging idiom keeps consumer signatures clean and is the project-
+  side bridge into Mathlib's \texttt{IsBaseChange.of\_equiv} consumer.
+  Body is gated on \cref{lem:pullback_tildeIso} (Stacks 01HQ) plus a
+  6-stage Beck-Chevalley intertwining decomposition recorded in
+  \cref{sec:quot_iter195_bc_substrate} and mirroring the in-file
+  comment block at
+  \texttt{AlgebraicJacobian/Picard/QuotScheme.lean:999-1037}:
+  \begin{itemize}
+    \item \textbf{Stage 1} (closed iter-195 via the \(\Sigma\)-pair
+      iso-characterizing identity \texttt{\_step2\_apply} together with
+      \texttt{inv\_hom\_id}): rewrites
+      \((\text{step2}.\mathrm{inv}.\mathrm{app}\,\top)\bigl(\text{tilde.toOpen}\,TR\,\top\,(1 \otimes x)\bigr)\)
+      as
+      \(\text{baseMap}\,(\text{Spec.map}\,\varphi)\,(\widetilde{\Gamma(\mathcal N, V)})\,e_1\,(\text{tilde.toOpen}\,\Gamma(\mathcal N, V)\,\top\,x)\).
+    \item \textbf{Stage 2} (uses (N1) baseMap naturality of
+      \cref{lem:baseMap_pullbackComp_apply} together with the
+      \(\Sigma\)-pair \texttt{\_step1\_apply} identity): transports
+      \(\text{step1}.\mathrm{inv}\) across
+      \(\text{baseMap}\,(\text{Spec.map}\,\varphi)\), producing
+      \(\text{baseMap}\,(\text{Spec.map}\,\varphi)\,((\text{pullback}\,\mathtt{\_hV.fromSpec}).\mathrm{obj}\,\mathcal N)\,e_2\,(\text{baseMap}\,\mathtt{\_hV.fromSpec}\,\mathcal N\,e_3\,x)\).
+    \item \textbf{Stage 3} (uses (N2) baseMap composition via
+      \texttt{pullbackComp} of
+      \cref{lem:baseMap_pullback_comp_apply}): collapses the nested
+      pair of \texttt{baseMap}'s of Stage 2 into a single
+      \(\text{baseMap}\,(\text{Spec.map}\,\varphi \circ \mathtt{\_hV.fromSpec})\,\mathcal N\,e_4\,x\)
+      along the composite morphism.
+    \item \textbf{Stage 4} (uses (N3) baseMap transport via
+      \texttt{pullbackCongr} of
+      \cref{lem:baseMap_pullbackCongr_apply}): transports the
+      composite of Stage 3 along the propositional equality
+      \(\text{Spec.map}\,\varphi \circ \mathtt{\_hV.fromSpec}
+      = \mathtt{\_hU.fromSpec} \circ g\) (which holds by definition of
+      \texttt{Scheme.Hom.appLE} on \(g\) with \(g(V) \subseteq U\)),
+      producing
+      \(\text{baseMap}\,(\mathtt{\_hU.fromSpec} \circ g)\,\mathcal N\,e_5\,x\).
+    \item \textbf{Stage 5} (uses (N2) again,
+      \cref{lem:baseMap_pullback_comp_apply}): re-decomposes the
+      composite of Stage 4 into nested \texttt{baseMap}'s along
+      \(\mathtt{\_hU.fromSpec}\) and \(g\), exposing
+      \(\text{baseMap}\,g\,\mathcal N\,e\,x\) as the inner section.
+    \item \textbf{Stage 6} (uses (N4) \texttt{step3} inversion of
+      \cref{lem:baseMap_inv_step3_open_immersion}): inverts the outer
+      \(\text{baseMap}\,\mathtt{\_hU.fromSpec}\) via \texttt{step3} —
+      the transport iso of
+      \cref{lem:pullback_of_openImmersion_iso_restrict} for the open
+      immersion \(\mathtt{\_hU.fromSpec}\) — leaving
+      \(\text{baseMap}\,g\,\mathcal N\,e\,x\), which matches the RHS
+      of the Σ-pair intertwining property.
+  \end{itemize}
+\end{definition}
+
+\subsection{Iter-187 analogist-licensed named substrate gaps}
+\label{sec:quot_analogist_gaps}
+
+The iter-187 \texttt{mathlib-analogist quotscheme-isbasechange-tilde}
+verdict (see \texttt{analogies/quotscheme-isbasechange-tilde.md})
+identified two distinct Mathlib substrate gaps at the pinned commit
+\texttt{b80f227}. Both are pinned here as named project-side typed
+sorries; closing either is iter-189+ sub-build work.
+
+\begin{lemma}
+
+\leanok
+[Pullback of tilde is tilde of base change (Stacks 01HQ)]
+  \label{lem:pullback_tildeIso}
+  \lean{AlgebraicGeometry.pullback_tildeIso}
+  \uses{def:quot_canonical_basechange_map}
+  \textit{Source: Stacks~\href{https://stacks.math.columbia.edu/tag/01HQ}{01HQ}
+  / \href{https://stacks.math.columbia.edu/tag/0BJ8}{0BJ8} (pullback of
+  quasi-coherent modules along a Spec morphism).}
+  For a ring homomorphism \(\varphi : A \to B\) and an \(A\)-module
+  \(M\), there is a canonical iso between the pullback of the
+  tilde-sheaf and the tilde of the base-changed module:
+  \[
+    (\mathtt{Scheme.Modules.pullback}\, (\mathrm{Spec.map}\, \varphi)).\mathrm{obj}\,
+      (\widetilde{M})
+    \;\cong\;
+    \widetilde{B \otimes_A M}.
+  \]
+  Mathlib \texttt{b80f227} ships
+  \texttt{PullbackFree.lean:122 pullbackObjFreeIso} for \emph{free} sheaves
+  only — the general-module form (Stacks 01HQ) is unowned.
+\end{lemma}
+\begin{proof}
+  \uses{def:quot_canonical_basechange_map}
+  Substantive body (Stacks 01HQ): construct via the
+  \texttt{tilde.adjunction} naturality square; the construction passes
+  through Spec-restriction transport.
+
+  % NOTE (iter-188 plan-phase): body ~115-200 LOC, iter-189+ sub-build.
+  % The iter-188 prover does NOT target this body; the iter-188 Lane F
+  % target is the consumer `pullback_app_isoTensor_baseMap_isBaseChange`
+  % which is closable via `pullback_tildeIso` as a hypothesis-providing
+  % helper.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Pushforward of quasi-coherent modules is quasi-coherent (Stacks 01XJ)]
+  \label{lem:pushforward_isQuasicoherent}
+  \lean{AlgebraicGeometry.pushforward_isQuasicoherent}
+  \textit{Source: Stacks~\href{https://stacks.math.columbia.edu/tag/01XJ}{01XJ}
+  (preservation of quasi-coherence under pushforward).}
+  Let \(f : X \to Y\) be a quasi-compact, quasi-separated morphism of
+  schemes, and let \(\mathcal{F}\) be a quasi-coherent
+  \(\mathcal{O}_X\)-module. Then \(f_* \mathcal{F}\) is a quasi-coherent
+  \(\mathcal{O}_Y\)-module. Mathlib \texttt{b80f227} ships no
+  \texttt{IsQuasicoherent.pushforward} instance at the
+  \texttt{Scheme.Modules} layer.
+\end{lemma}
+\begin{proof}
+  Substantive body (Stacks 01XJ): standard adjoint-functor preservation
+  under qcqs.
+
+  % NOTE (iter-188 plan-phase): body ~30 LOC, iter-189+ sub-build.
+  % Consumer signature `_of_isAffineBase` feeds `(pushforward f).obj F`
+  % into `pullback_app_isoTensor`, which now requires
+  % `[N.IsQuasicoherent]` — this helper is the qcoh-witness producer.
+\end{proof}
+
+\subsection{Iter-189 analogist-licensed unbundle pins}
+\label{sec:quot_iter189_unbundle}
+
+The iter-189 \texttt{mathlib-analogist lane-f-isbasechange} verdict
+(see \texttt{analogies/lane-f-isbasechange.md}) returned verdict (A)
+\emph{STRUCTURAL OK} on the project's use of
+\texttt{IsBaseChange.of\_equiv}. The corrective was to \emph{unbundle}
+the iter-188 \(\Sigma\)-pair helper's three internal Mathlib gaps into
+separately named typed-sorry pins so that each can be targeted
+individually (~30-50 LOC apiece) in subsequent iters. Iter-189 Lane F
+prover landed the unbundle. The two new pins are recorded below
+(parallel to the existing \cref{lem:pullback_tildeIso} pin, which
+remains Step 2 of the 3-step chain).
+
+\begin{lemma}
+
+\leanok
+[Quasi-coherent module on an affine open is \texttt{tilde} of its sections (Stacks 01I8)]
+  \label{lem:tildeIso_of_isQuasicoherent_isAffineOpen}
+  \lean{AlgebraicGeometry.tildeIso_of_isQuasicoherent_isAffineOpen}
+  \uses{def:quot_canonical_basechange_map}
+  \textit{Source: Stacks~\href{https://stacks.math.columbia.edu/tag/01I8}{01I8}
+  (a quasi-coherent module on an affine scheme is \(\widetilde M\) for
+  some module).}
+  Let \(X\) be a scheme, \(\mathcal N\) a quasi-coherent
+  \(\mathcal O_X\)-module, and \(V \subset X\) an affine open. Then the
+  pullback of \(\mathcal N\) along \texttt{hV.fromSpec} is canonically
+  isomorphic to \texttt{tilde} of its sections:
+  \[
+    (\mathtt{Scheme.Modules.pullback}\,\mathtt{hV.fromSpec}).\mathrm{obj}\,
+      \mathcal N
+    \;\cong\;
+    \widetilde{\,\Gamma(\mathcal N, V)\,}
+    \quad\text{(on \(\mathrm{Spec}\,\Gamma(X, V)\)).}
+  \]
+  Mathlib \texttt{b80f227} ships the analog for \emph{free}
+  quasi-coherent modules (\texttt{isIso\_fromTildeΓ\_of\_presentation}
+  partial), but the general statement
+  ``\([N.IsQuasicoherent] \Rightarrow N|_V \cong \widetilde{\Gamma(N,V)}\)
+  on an affine open \(V\)'' (Stacks 01I8 \emph{lemma-affine-qc-module-iff})
+  is unowned at the \texttt{Scheme.Modules} layer.
+\end{lemma}
+\begin{proof}
+  \uses{def:quot_canonical_basechange_map}
+  Substantive body (Stacks 01I8): the QC sheaf on an affine open is
+  determined by its global sections — apply the \texttt{tilde.adjunction}
+  counit at the affine open and use that \texttt{tilde} is fully faithful
+  on quasi-coherent objects.
+
+  % NOTE (iter-189 plan-phase): body ~20-40 LOC, iter-190+ sub-build.
+  % This is Step 1 of the 3-pin unbundle of `_sectionLinearEquiv`. The
+  % iter-190 prover does NOT target this body; the iter-190 Lane F prover
+  % targets Step 3 (`lem:pullback_of_openImmersion_iso_restrict` below),
+  % which is the easiest of the 3 pins per the analogist verdict.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Section-level transport for pullback along an affine open's
+\texttt{fromSpec}]
+  \label{lem:pullback_of_openImmersion_iso_restrict}
+  \lean{AlgebraicGeometry.pullback_of_openImmersion_iso_restrict}
+  \uses{def:quot_canonical_basechange_map}
+  \textit{Source: Project-bespoke transport, formed from
+  Stacks~\href{https://stacks.math.columbia.edu/tag/01HH}{01HH} +
+  \texttt{tilde.isoTop}.}
+  Let \(Y\) be a scheme, \(\mathcal N\) an \(\mathcal O_Y\)-module, and
+  \(U \subset Y\) an affine open. Equip \(\Gamma((\mathrm{Spec}\,\Gamma(Y, U)),
+  \top)\) with the \(\Gamma(Y, U)\)-algebra structure inherited from
+  \texttt{Scheme.ΓSpecIso} (the canonical
+  \(\Gamma(\mathrm{Spec}\,R, \top) \cong R\) for any commutative ring \(R\)),
+  and equip
+  \(\Gamma((\text{pullback}\,\mathtt{hU.fromSpec}).\mathrm{obj}\,\mathcal N,
+  \top)\) with the \(\Gamma(Y, U)\)-module structure inherited via
+  \texttt{Module.compHom}. Then there is a canonical \(\Gamma(Y, U)\)-linear
+  isomorphism between this pullback-section module and the original section
+  module \(\Gamma(\mathcal N, U)\):
+  \[
+    \Gamma((\text{pullback}\,\mathtt{hU.fromSpec}).\mathrm{obj}\,\mathcal N,
+      \top)
+    \;\simeq_{\Gamma(Y, U)}\;
+    \Gamma(\mathcal N, U).
+  \]
+  The map identifies a section of the pulled-back sheaf at \(\top\) of
+  \(\mathrm{Spec}\,\Gamma(Y, U)\) with the corresponding section of
+  \(\mathcal N\) on the affine open \(U \subset Y\). This pin is the
+  iter-190+ prover target as Step 3 of the iter-189 \(\Sigma\)-pair
+  unbundle.
+\end{lemma}
+\begin{proof}
+  \uses{def:quot_canonical_basechange_map}
+  Substantive body: chain \texttt{hU.toSpecΓ\_fromSpec} (identifies
+  \texttt{pullback hU.fromSpec} with \texttt{restrict\_to\_U} up to
+  natural iso) with naturality of \texttt{tilde.isoTop} (extracts the
+  \(\top\)-section of \texttt{tilde} as the input module), then transport
+  the \(\Gamma(Y, U)\)-linear structure through the chain.
+
+  % NOTE (iter-189 plan-phase): body ~30-50 LOC, iter-190+ sub-build.
+  % This is Step 3 of the 3-pin unbundle of `_sectionLinearEquiv`, and
+  % is the LIGHTEST of the 3 pins per the analogist verdict (the chain
+  % `hU.toSpecΓ_fromSpec` + `tilde.isoTop` naturality is a routine but
+  % multi-step compositional transport). The iter-190 Lane F prover
+  % targets this pin axiom-clean.
+\end{proof}
+
+\subsection{Iter-195 Beck-Chevalley 6-stage decomposition + (N1)--(N4) substrate}
+\label{sec:quot_iter195_bc_substrate}
+
+The iter-195 plan-phase refactor \texttt{lane-f-step12-sigma-pair}
+upgraded the helpers \texttt{step1} and \texttt{step2} of the
+Tilde-isoTop route into \(\Sigma\)-pair components carrying
+iso-characterizing identities \texttt{\_step1\_apply} and
+\texttt{\_step2\_apply}. With these identities in hand, the
+Beck-Chevalley intertwining of
+\cref{def:pullback_app_isoTensor_sigma} unfolds into the six named
+stages spelled out in the prose of that definition; mirror copy at
+\texttt{AlgebraicJacobian/Picard/QuotScheme.lean:999-1037}. Stage~1
+is closed axiom-clean by the iter-195 Lane F prover; Stages 2--6 are
+gated on four substrate naturality lemmas (N1)--(N4) for the
+project-side helper \texttt{Scheme.Modules.baseMap}, introduced here
+as the iter-196+ prover targets.
+
+The four substrate lemmas all follow a single logical pattern. The
+project's \texttt{Scheme.Modules.baseMap} is defined from the unit of
+\texttt{pullbackPushforwardAdjunction} (Mathlib
+\texttt{Mathlib.AlgebraicGeometry.Sheaves.Modules.Pullback}), so
+(N1)--(N3) record naturality squares of that adjunction unit at
+triples of morphisms / module homomorphisms / propositional
+equalities, and (N4) records the inversion of the \texttt{step3}
+component built from \texttt{restrictFunctorIsoPullback} (Mathlib
+\texttt{Mathlib.AlgebraicGeometry.OpenImmersion}). Together they
+discharge the Beck-Chevalley sequence stage-by-stage. LOC estimate
+\(\sim\)20--30 LOC per sub-lemma; total \(\sim\)80--120 LOC of
+substrate volume. This is the iter-195 progress-critic-flagged
+``volume gap'' relative to the iter-195 plan-phase estimate
+(\(\sim\)10--30 LOC for the consumer, which did not budget the
+substrate).
+
+\begin{lemma}
+[(N1) baseMap naturality in input sheaf]
+  \label{lem:baseMap_pullbackComp_apply}
+  \lean{AlgebraicGeometry.Scheme.Modules.baseMap_pullbackComp_apply}
+  \uses{def:quot_canonical_basechange_map, lem:pullback_tildeIso}
+  Let \(g : X \to Y\) be a morphism of schemes, let \(\mathcal N\),
+  \(\mathcal N'\) be \(\mathcal O_Y\)-modules, and let
+  \(\eta : \mathcal N \to \mathcal N'\) be a morphism of
+  \(\mathcal O_Y\)-modules. For affine opens \(U \subseteq Y\) and
+  \(V \subseteq X\) with \(g(V) \subseteq U\) and any
+  \(x \in \Gamma(\mathcal N, U)\), the section-level component of
+  \cref{def:quot_canonical_basechange_map} satisfies
+  \[
+    \bigl((\text{pullback}\,g).\mathrm{map}\,\eta\bigr).\mathrm{app}\,V\;
+    \bigl(\text{baseMap}\,g\,\mathcal N\,e\,x\bigr)
+    \;=\;
+    \text{baseMap}\,g\,\mathcal N'\,e\,(\eta.\mathrm{app}\,U\,x),
+  \]
+  i.e.\ \texttt{baseMap} is natural in its module argument. Used in
+  Stage~2 of the \cref{def:pullback_app_isoTensor_sigma}
+  decomposition to transport \(\text{step1}.\mathrm{inv}\) (a
+  morphism of \(\mathcal O_Y\)-modules) across \texttt{baseMap} of
+  \(\text{Spec.map}\,\varphi\).
+\end{lemma}
+\begin{proof}
+  \uses{def:quot_canonical_basechange_map}
+  Direct from the naturality square of
+  \texttt{pullbackPushforwardAdjunction.unit} at the morphism
+  \(\eta : \mathcal N \to \mathcal N'\) in the input category, then
+  passed to the section level via the definitional unfolding of
+  \texttt{Scheme.Modules.baseMap} (which is a section-level reading
+  of the unit composed with the canonical pushforward-section map).
+
+  % NOTE (iter-196 plan-phase): body ~20-30 LOC. (N1) of the iter-195
+  % 6-stage Beck-Chevalley decomposition; iter-196+ Lane F prover target.
+\end{proof}
+
+\begin{lemma}
+[(N2) baseMap composition via pullbackComp]
+  \label{lem:baseMap_pullback_comp_apply}
+  \lean{AlgebraicGeometry.Scheme.Modules.baseMap_pullback_comp_apply}
+  \uses{def:quot_canonical_basechange_map, lem:pullback_tildeIso}
+  Let \(f : X \to Y\) and \(g : Y \to Z\) be morphisms of schemes and
+  let \(\mathcal N\) be an \(\mathcal O_Z\)-module. The
+  Mathlib-canonical iso
+  \(\text{pullbackComp}\,f\,g :
+    (\text{pullback}\,f) \circ (\text{pullback}\,g)
+    \cong \text{pullback}\,(f \circ g)\)
+  intertwines \texttt{baseMap}: for affine opens \(W \subseteq Z\),
+  \(V \subseteq X\) with \(f(g(V)) \subseteq W\) and any
+  \(x \in \Gamma(\mathcal N, W)\),
+  \[
+    ((\text{pullbackComp}\,f\,g)\,\mathcal N).\mathrm{hom}.\mathrm{app}\,V\;
+    \bigl(\text{baseMap}\,f\,((\text{pullback}\,g).\mathrm{obj}\,\mathcal N)\,
+       e_f\,(\text{baseMap}\,g\,\mathcal N\,e_g\,x)\bigr)
+    \;=\;
+    \text{baseMap}\,(f \circ g)\,\mathcal N\,e\,x.
+  \]
+  In words: applying \texttt{baseMap} along \(g\) then along \(f\),
+  routed through the canonical composition iso, yields the
+  \texttt{baseMap} along the composite \(f \circ g\). Used in Stages~3
+  and~5 of the \cref{def:pullback_app_isoTensor_sigma}
+  decomposition.
+\end{lemma}
+\begin{proof}
+  \uses{def:quot_canonical_basechange_map}
+  The unit of a composition of left adjoints
+  \(F \circ G \dashv R \circ R'\) satisfies the canonical composition
+  identity \(\eta_{FG} = R'(\eta_F) \circ \eta_G\) (cf.\ Mathlib
+  \texttt{Adjunction.comp} unit decomposition). Specialised to the
+  pullback-pushforward adjunction at the triple of schemes
+  \(X \xrightarrow{f} Y \xrightarrow{g} Z\) and transported to the
+  section level via \texttt{Scheme.Modules.baseMap}'s definition,
+  this yields the stated formula.
+
+  % NOTE (iter-196 plan-phase): body ~25-35 LOC. (N2) of the iter-195
+  % 6-stage Beck-Chevalley decomposition; iter-196+ Lane F prover target.
+  % Used twice in the decomposition (Stages 3 and 5).
+\end{proof}
+
+\begin{lemma}
+[(N3) baseMap transport via pullbackCongr]
+  \label{lem:baseMap_pullbackCongr_apply}
+  \lean{AlgebraicGeometry.Scheme.Modules.baseMap_pullbackCongr_apply}
+  \uses{def:quot_canonical_basechange_map, lem:pullback_tildeIso}
+  Let \(f_1, f_2 : X \to Y\) be morphisms of schemes with
+  \(f_1 = f_2\) as a propositional equality \(h_{eq}\), and let
+  \(\mathcal N\) be an \(\mathcal O_Y\)-module. The Mathlib-canonical
+  equality-transport iso
+  \(\text{pullbackCongr}\,h_{eq} : \text{pullback}\,f_1
+    \cong \text{pullback}\,f_2\)
+  intertwines \texttt{baseMap}: for affine opens \(U \subseteq Y\),
+  \(V \subseteq X\) with \(f_1(V) \subseteq U\) (equivalently
+  \(f_2(V) \subseteq U\) via \(h_{eq}\)) and any
+  \(x \in \Gamma(\mathcal N, U)\),
+  \[
+    ((\text{pullbackCongr}\,h_{eq})\,\mathcal N).\mathrm{inv}.\mathrm{app}\,V\;
+    \bigl(\text{baseMap}\,f_2\,\mathcal N\,e_2\,x\bigr)
+    \;=\;
+    \text{baseMap}\,f_1\,\mathcal N\,e_1\,x.
+  \]
+  I.e.\ \texttt{baseMap} is invariant under the equality-transport iso
+  of the morphism argument. Used in Stage~4 of the
+  \cref{def:pullback_app_isoTensor_sigma} decomposition to re-associate
+  the composite
+  \(\text{Spec.map}\,\varphi \circ \mathtt{\_hV.fromSpec}
+    = \mathtt{\_hU.fromSpec} \circ g\) under the Σ-pair packaging.
+\end{lemma}
+\begin{proof}
+  \uses{def:quot_canonical_basechange_map}
+  By propositional-equality elimination: write
+  \(\text{pullbackCongr}\,h_{eq}\) as
+  \(\text{eqToIso}\,(\text{congrArg}\,\text{pullback}\,h_{eq})\) and
+  unfold \texttt{eqToIso\_app} to reduce to \texttt{Eq.mpr}; the
+  definition of \texttt{baseMap} depends on the morphism argument only
+  through \texttt{pullbackPushforwardAdjunction.unit}, which is itself
+  definitionally invariant under \texttt{Eq.mpr} along
+  \(h_{eq}\).
+
+  % NOTE (iter-196 plan-phase): body ~15-25 LOC; the easiest of the
+  % four — almost pure equality transport. (N3) of the iter-195 6-stage
+  % Beck-Chevalley decomposition; iter-196+ Lane F prover target.
+\end{proof}
+
+\begin{lemma}
+[(N4) step3 inversion identity for an open immersion]
+  \label{lem:baseMap_inv_step3_open_immersion}
+  \lean{AlgebraicGeometry.Scheme.Modules.baseMap_inv_step3_open_immersion}
+  \uses{def:quot_canonical_basechange_map,
+        lem:pullback_of_openImmersion_iso_restrict}
+  Let \(Y\) be a scheme, \(U \subseteq Y\) an affine open with
+  canonical open immersion
+  \(\mathtt{\_hU.fromSpec} : \text{Spec}\,\Gamma(Y, U) \to Y\), and
+  \(\mathcal N\) an \(\mathcal O_Y\)-module. Then the iter-189
+  Spec-restriction transport iso \texttt{step3} (constructed in
+  \cref{lem:pullback_of_openImmersion_iso_restrict}) is the inverse
+  of \texttt{baseMap} along \(\mathtt{\_hU.fromSpec}\) at the
+  \(\top\)-section:
+  \[
+    \text{step3}\bigl(
+      \text{baseMap}\,\mathtt{\_hU.fromSpec}\,
+        ((\text{pullback}\,g).\mathrm{obj}\,\mathcal N)\,
+        \text{le\_top}'\,y
+    \bigr) \;=\; y
+    \qquad\text{for every } y \in \Gamma(\mathcal N, U).
+  \]
+  This identifies the inverse of \texttt{step3} with the natural
+  \texttt{baseMap} action of the open immersion
+  \(\mathtt{\_hU.fromSpec}\). Used in Stage~6 of the
+  \cref{def:pullback_app_isoTensor_sigma} decomposition, closing the
+  intertwining identity.
+\end{lemma}
+\begin{proof}
+  \uses{def:quot_canonical_basechange_map,
+        lem:pullback_of_openImmersion_iso_restrict}
+  The transport iso \texttt{step3} is built (in
+  \cref{lem:pullback_of_openImmersion_iso_restrict}) from
+  \texttt{restrictFunctorIsoPullback} (Mathlib
+  \texttt{AlgebraicGeometry.OpenImmersion}), which exhibits, for an
+  open immersion \(j\), a natural iso between \(j^*\) and the
+  restriction functor \(\text{restrict}\,j\). At the \(\top\)-section
+  of \(\text{Spec}\,\Gamma(Y, U)\), the inverse of this natural iso is
+  exactly \texttt{baseMap}\,\(\mathtt{\_hU.fromSpec}\), because the
+  adjunction unit for an open-immersion pullback acts at \(\top\) as
+  the canonical restriction-to-section map.
+
+  % NOTE (iter-196 plan-phase): body ~20-30 LOC. (N4) of the iter-195
+  % 6-stage Beck-Chevalley decomposition; iter-196+ Lane F prover target.
+\end{proof}
+
+\section{Lean encoding}
+\label{sec:quot_lean_encoding}
+
+The Lean target file is the new
+\texttt{AlgebraicJacobian/Picard/QuotScheme.lean}. The construction
+proceeds in three phases.
+
+\paragraph{Phase 1: Hilbert polynomial (\cref{def:hilbert_polynomial}).}
+On a finite-type morphism \(\pi : X \to S\) with \(S\) noetherian and a
+coherent \(\mathcal{F}\) on \(X\) with proper support over \(S\), the per-fiber
+Hilbert polynomial is encoded as a function \(s \mapsto
+\Phi_{\mathcal{F},s} \in \mathbb{Q}[\lambda]\). Mathlib provides
+\texttt{CategoryTheory.PolynomialModule} and Euler-characteristic
+infrastructure on coherent sheaves on noetherian schemes; the polynomial
+property of \(m \mapsto \chi(\mathcal{F} \otimes L^{\otimes m})\) requires
+Snapper's Lemma, which is a project-side sub-build on top of the
+graded-Euler-characteristic infrastructure.
+
+\paragraph{Phase 2: Grassmannian scheme (\cref{def:grassmannian_scheme},
+\cref{thm:grassmannian_representable}).} The Grassmannian
+\(\mathrm{Gr}_S(V, d)\) is encoded as the relative gluing of \(\binom{r}{d}\)
+affine charts \(U^I\) (each isomorphic to a relative affine space
+\(\mathbb{A}^{d(r-d)}_S\)) via the Pl\"ucker cocycle \(\theta_{I,J}\). The
+gluing backbone is \texttt{AlgebraicGeometry.Scheme.GlueData}. The
+universal quotient sheaf \(\mathcal{U}\) is glued by the transition cocycle
+\(g_{I,J} = (X^I_J)^{-1}\), and the determinant line bundle
+\(\det \mathcal{U}\) gives the Pl\"ucker closed embedding into
+\(\mathbb{P}_S(\bigwedge^d V)\). The representability statement uses
+\texttt{CategoryTheory.Functor.RepresentableBy} (as in
+\cref{chap:Picard_RelativeSpec}) on the universal pair
+\((\mathrm{Gr}_S(V, d), \mathcal{U})\).
+
+\paragraph{Phase 3: Quot scheme (\cref{thm:quot_representable}).}
+The Quot functor is constructed as a locally closed subfunctor of the
+Grassmannian
+\(\mathrm{Grass}(W \otimes_{\mathcal{O}_S} \mathrm{Sym}^r V, \Phi(r))\), via:
+\begin{enumerate}
+  \item the uniform \(m\)-regularity bound from
+    \cref{lem:quot_boundedness} (input: Castelnuovo--Mumford theorem,
+    \texttt{AlgebraicGeometry.CastelnuovoMumford} -- project-side sub-build);
+  \item the Grassmannian embedding \(\alpha\) from
+    \cref{lem:quot_alpha_injective};
+  \item the flattening stratification (\cref{thm:flattening_stratification_exists}
+    of \cref{chap:Picard_FlatteningStratification}, A.2.a) applied to the
+    universal quotient on the Grassmannian, producing the locally closed
+    stratum \(T_0^\Phi\);
+  \item the valuative-criterion upgrade
+    (\cref{lem:quot_valuative_criterion}) to closed embedding, hence
+    projective \(S\)-scheme.
+\end{enumerate}
+The reduction \cref{lem:quot_reduction_to_pi_star_W} from the universal
+case to the general case is encoded as a closed embedding of representable
+subfunctors via the kernel-vanishing scheme.
+
+\paragraph{Cohomology and base change.}
+\cref{thm:flat_base_change_cohomology} is the Mathlib-equivalent of
+Stacks tag 02KH. Mathlib carries a partial form
+(\texttt{AlgebraicGeometry.flat\_base\_change}) for affine bases; the
+full \(R^i f_*\) statement is a project-side bridge if not present at the
+pinned commit.
+
+\paragraph{Dependencies summary.}
+This file directly consumes
+\cref{chap:Picard_RelativeSpec} (A.1.a, on disk) for relative-spectrum
+gluing infrastructure and
+\cref{thm:flattening_stratification_exists} from
+\cref{chap:Picard_FlatteningStratification} (A.2.a, written this iter)
+for the flattening stratum. Downstream, \cref{chap:Picard_FGAPicRepresentability}
+(A.2.c) consumes \cref{thm:quot_representable} via the special case
+\(E = \mathcal{O}_C\) on a smooth proper curve \(C/k\), giving the Hilbert
+scheme \(\Hilb_{C/k} = \Quot^{\Phi,\mathcal{O}_C(1)}_{\mathcal{O}_C/C/k}\)
+and its open subscheme \(\mathrm{Div}_{C/k}\) of relative effective divisors.
+
+\section{Out of scope}
+\label{sec:quot_out_of_scope}
+
+This chapter packages \emph{only} the Quot-scheme existence statement and
+its proof skeleton via the Grassmannian + flattening-stratification
+route. The following are explicitly out of scope here:
+\begin{itemize}
+  \item \textbf{Flattening stratification} (A.2.a) -- consumed-by, not
+    proved-here. Its blueprint home is the new chapter
+    \texttt{Picard\_FlatteningStratification.tex}.
+  \item \textbf{Hilbert scheme as a separate chapter}. The Hilbert scheme
+    \(\Hilb_{X/S}\) is the special case
+    \(\Hilb_{X/S} = \Quot_{\mathcal{O}_X/X/S}\) of the Quot scheme and is
+    introduced inline (\cref{def:quot_functor}); no separate chapter.
+  \item \textbf{Castelnuovo--Mumford \(m\)-regularity theorem} -- input to
+    \cref{lem:quot_boundedness}, not proved here. The proof lives in
+    Nitsure \S 2; for the Lean encoding it is a project-side sub-build.
+  \item \textbf{Semi-continuity and base change} (Nitsure \S 3) -- the
+    flat-base-change theorem of cohomology (\cref{thm:flat_base_change_cohomology})
+    is stated here as a lemma, but the upstream Mathlib bridge / project-side
+    sub-build is not constructed in this chapter.
+  \item \textbf{Snapper's Lemma} -- the polynomial-eventually property of
+    Euler characteristics, used in \cref{def:hilbert_polynomial}. Cited
+    via Nitsure \S 1 and (textbook reference) Hartshorne III.5.2;
+    project-side sub-build for the Lean encoding.
+  \item \textbf{Identification with \(\mathbb{P}^n\) and relative
+    Grassmannian variants} (Nitsure \S 1, Exercises (1)--(4)) --
+    optional applications, not consumed by Route A.
+  \item \textbf{Hironaka's counterexample to representability of
+    \(\Hilb_{X/\mathbb{C}}\) in the non-projective case} (Nitsure \S 1,
+    Exercise (8)) -- pedagogical only; Route A operates entirely in the
+    projective setting.
+  \item \textbf{Group-scheme structure on \(\Pic_{C/k}\)} (A.2.c) -- the
+    abelian-group-scheme refinement is downstream of the Quot existence
+    statement; its blueprint home is
+    \cref{chap:Picard_FGAPicRepresentability}.
+  \item \textbf{Identity-component \(\Pic^0\) and abelian-variety
+    structure} (A.3) -- a separate Route A sub-row, fed by but not
+    constructed in this chapter.
+\end{itemize}

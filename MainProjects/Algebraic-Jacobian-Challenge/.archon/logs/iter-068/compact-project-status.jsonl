@@ -1,0 +1,3 @@
+{"ts": "2026-05-12T03:23:10.073523Z", "event": "session_start", "model": "haiku", "role": "compact-project-status"}
+{"ts": "2026-05-12T03:23:11.834592Z", "event": "text", "content": "You've hit your limit \u00b7 resets May 16, 5am (UTC)"}
+{"ts": "2026-05-12T03:23:11.835199Z", "event": "session_end", "session_id": "33cd86b9-f64e-4766-832e-ffa16ca1b026", "total_cost_usd": 0, "duration_ms": 596, "duration_api_ms": 0, "num_turns": 1, "input_tokens": 0, "output_tokens": 0, "cache_read_input_tokens": 0, "cache_creation_input_tokens": 0, "model_usage": {}, "summary": "You've hit your limit \u00b7 resets May 16, 5am (UTC)"}

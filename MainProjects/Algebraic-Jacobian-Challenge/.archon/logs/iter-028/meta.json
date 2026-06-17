@@ -1,0 +1,40 @@
+{
+  "iteration": 28,
+  "stage": "prover  (iteration 027 \u2014 refactor-only iteration: file split `Cohomology/StructureSheafModuleK.lean` \u2192 new `Cohomology/MayerVietoris.lean` along the natural iter-016/iter-026 semantic boundary. The iter-026 prover round (closing the LES finalisation: `HModule'_sequence_exact` plus the two `\u03b4`-zero `simp` companions) landed cleanly: sorry count `9 \u2192 9` (collapsed refactor + prover sub-phases into a single Edit, nineteenth consecutive prover round); kernel-only axioms on all three new declarations; bodies adopted as the iter-026 directive's probe-confirmed Mathlib L140\u2013149 substitution. Iter-027 plan-agent (this pass) invokes the `refactor` subagent inline to split the now-812-LOC file: 23 declarations (iter-016 \u2192 iter-026 cohort, ~480 LOC) move verbatim to a new `Cohomology/MayerVietoris.lean`. Sorry count `9 \u2192 9` (mechanical split, no proof bodies altered, no signatures changed). Post-split: `StructureSheafModuleK.lean` ~299 LOC, `MayerVietoris.lean` ~559 LOC. Both files compile clean; `Genus.lean` still kernel-only; `archon-protected.yaml` untouched. **Iter-027 has no prover round** \u2014 the split introduces no `sorry` and the dispatcher should skip the prover phase. Iter-028+ begins the Serre-finiteness work specialised to a 2-affine cover of a proper $k$-curve.",
+  "mode": "parallel",
+  "startedAt": "2026-05-08T15:49:33Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 888
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 158
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 640
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "25dabb3"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 17
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 3
+    }
+  },
+  "completedAt": "2026-05-08T16:18:02Z",
+  "wallTimeSecs": 1709
+}

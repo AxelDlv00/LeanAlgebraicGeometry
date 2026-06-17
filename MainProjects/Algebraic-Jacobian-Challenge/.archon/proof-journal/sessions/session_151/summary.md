@@ -1,0 +1,60 @@
+# Session 151 (iter-151) — review summary
+
+## Metadata
+- **Session / iter**: 151 (review of iter-151).
+- **Sorry count (declaration-level)**: 9 → **9** (NET 0).
+- **Prover lanes**: 1 (single bounded lane on `Cotangent/ChartAlgebra.lean`).
+- **Targets attempted**: 1 (`KaehlerDifferential.mem_range_algebraMap_of_D_eq_zero`, the (C.d) transfer step).
+- **`meta.json`**: `planValidate.status: ok / objectives: 1`; `prover.status: done`; `prover.durationSecs: 511` (~8.5 min).
+- **Code delta**: comment-only (the false-as-stated diagnosis block replaced the prior (C.d) transfer-gap comment); `sorry` retained verbatim. Per `attempts_raw.jsonl`: 2 edits, 0 goal checks, 4 diagnostic checks, 0 builds, 5 lemma searches, 3 errors (all tool-arg/path errors, recovered).
+
+## Headline outcome
+
+The iter-151 prover lane was the progress-critic's **CHURNING convergence test**: a single bounded attempt to close the KDM (C.d) transfer step under the bright-line "no further decomposition" rule. The result is a **confirmed mathematical impossibility**, not a partial:
+
+> `KaehlerDifferential.mem_range_algebraMap_of_D_eq_zero` is **FALSE** even under its iter-149 inflated signature `[Field k] [CharZero k] [Algebra.FiniteType k B] [Algebra.IsStandardSmoothOfRelativeDimension n k B]`.
+
+This **supersedes** the iter-148 Knowledge-Base entry that marked the lemma "RESOLVED iter-149 via signature inflation" — the signature inflation did not fix it.
+
+### The two counterexamples (both satisfy every hypothesis)
+
+- **(CE1) disconnected** — `B = k × k`, `n = 0`, any char-0 `k`. `B ≃ₐ[k] k[x]/(x²−x)`; Jacobian `2x−1` is a unit, so this is a submersive presentation of dimension 0 (finite étale). Étale ⟹ `Ω[B⁄k] = 0` ⟹ `D = 0` ⟹ `hDb` holds for **every** `b`. But `range(algebraMap k B)` = diagonal `{(c,c)}`, and `(1,0) ∉ range`. Kills "add `[connectedness]`".
+- **(CE2) connected, not geometrically connected** — `k = ℚ`, `B = ℚ(√2)`, `n = 0`. Finite separable ⟹ étale ⟹ `Ω = 0` ⟹ `D = 0`. `Spec B` is a single point and `B` is a field (a domain), yet `range(algebraMap ℚ B) = ℚ ⊊ ℚ(√2)`. Kills "add `[IsDomain B]`".
+
+### Diagnosis
+`Algebra.IsStandardSmoothOfRelativeDimension n k B` is *exactly* "∃ submersive presentation of dimension `n`" (`Mathlib/RingTheory/Smooth/StandardSmooth.lean` L88) — it carries **no** connectedness and **no** geometric-connectedness data. The true statement `ker(D_{B⁄k}) = range(algebraMap k B)` needs **`k` algebraically closed in `B`** (≡ `B` geometrically integral / `Spec B` geometrically connected over `k`). This is exactly the `GeometricallyIrreducible`+`IsReduced` content carried at the scheme level by `df_zero_factors_through_constant_on_chart`'s `C` hypotheses — **lost** when the obligation was reduced to this abstract `B`-only algebra lemma.
+
+## Per-target detail
+
+### `KaehlerDifferential.mem_range_algebraMap_of_D_eq_zero` — BLOCKED (impossibility)
+
+Two pre-staged closure paths from the (BR.5′) blueprint prose were attacked and both fail for the same reason (false goal):
+
+- **(S5.a) explicit** — unfold `KaehlerDifferential.ker_map_of_surjective` (kernel = `P.Ring`-submodule gen by `{D r : r ∈ I}` + `I·Ω`), absorb the `D(I)` part by a Leibniz modification of `bTilde`, chase the residual `I·Ω` part via the free structure of `Ω[P.Ring⁄k]`, then apply the closed FREE-CASE helper `_mvPoly_mem_range_C_of_D_eq_zero` + `_hFunct`. **Fails**: the chase's key step "`pderiv_i α₁ ∈ I` ⟹ `α₁` constant mod `I`" is false in CE2 (a domain where the conclusion fails).
+- **(S5.b) abstract** — derive `ker D_B ⊆ range(algebraMap k B)` for FormallySmooth `B` via `Algebra.FormallySmooth.subsingleton_h1Cotangent` + the cotangent-complex exact sequences. **Fails**: H¹ vanishing only splits the conormal sequence; it cannot prove a false statement. The alternative `Differential.ContainConstants.mem_range_of_deriv_eq_zero` (`Derivation/DifferentialRing.lean`) requires a `ContainConstants` instance whose hypothesis is exactly the false kernel-equals-constants fact — relocates, does not solve.
+
+Lemmas inspected (negative): `ker_map_of_surjective`, `ker_map`, `range_mapBaseChange`, `exact_kerCotangentToTensor_mapBaseChange`, `range_kerCotangentToTensor`, `kerCotangentToTensor`, `{Extension,IsStandardSmooth,SubmersivePresentation}.subsingleton_h1Cotangent`, `retractionKerCotangentToTensorEquivSection`, `mem_range_of_deriv_eq_zero`.
+
+The prover correctly retained the `sorry` (not a weakened/tautological body) so the mathematician's signature-correction decision is unobstructed, and recorded the diagnosis inline (`ChartAlgebra.lean:361–422`), in `task_results/`, and in `informal/KaehlerDifferential_mem_range_algebraMap_of_D_eq_zero.md`.
+
+### `constants_integral_over_base_field` (hPI branch, L651) — not started
+Off-limits this iter (user-gated on `[IsAlgClosed kbar]`). Untouched.
+
+## Review-phase subagents (2, both COMPLETE — consistent with the prover finding)
+
+Reports (do not re-summarize in full; read at the paths):
+- `task_results/lean-auditor-chartalgebra-iter151.md` — **2 must-fix**: (1) known-false `sorry` L422 on a load-bearing lemma; (2) **`df_zero_factors_through_constant_on_chart` (L450) launders `sorryAx`** — compiles with no `sorry` warning yet `lean_verify` shows `sorryAx` in its axiom set. Major: orphaned ~110 LOC `_mvPoly_*`/`_finsupp` chain; live WIP `sorry` L651; misleading name `ext_of_diff_zero` (L720). Independently verified both counterexamples.
+- `task_results/lean-vs-blueprint-checker-chartalgebra-iter151.md` — Lean ↔ blueprint now **mutually consistent** (the iter-151 review `% NOTE`s resolve the iter-150 prose-vs-Lean divergence). Major: stale **proof-block `\leanok`** at `RigidityKbar.tex:~2356` falsely marks the sorry-bearing KDM proof as closed (sync_leanok domain — surfaced, not edited). Confirms the missing dedicated `..._ChartAlgebra.tex` chapter is organizational-only, not blocking.
+
+## Key findings / patterns
+1. **`sorryAx` laundering** — a clean-compiling consumer of a `sorry` lemma carries `sorryAx` in its axiom set with NO `sorry` warning. The warning-based "9 sorries" count therefore **undercounts** the unsound surface. Use `lean_verify` on consumers. (New KB pattern.)
+2. **Counterexample-driven impossibility detection** — for any "kernel of a derivation = constants" goal, test `B = k×k` and a non-trivial separable field extension before grinding; if either breaks the conclusion, the lemma needs a geometric hypothesis (architectural change), not another helper. (New KB pattern.)
+3. The bright-line STUCK trigger fired correctly: (C.d) did not net-reduce (9→9), so iter-152's forced corrective is pivot / user-escalation, not decomposition.
+
+## Blueprint markers updated (manual)
+- `RigidityKbar.tex`, `lem:KaehlerDifferential_mem_range_algebraMap_of_D_eq_zero`: added `% NOTE (iter-151, review): THIS LEMMA IS FALSE AS CURRENTLY STATED ...` at the statement block (two counterexamples + missing geometric hypothesis + architectural-fix escalation + pointers to task_result & informal note).
+- `RigidityKbar.tex`, (C.d) bullet: added `% NOTE (iter-151, review): the (C.d) closure ... is UNREACHABLE ...` flagging (S5.a)/(S5.b) as inapplicable to a false goal.
+- No `\leanok` touched. (Flagged the stale proof-block `\leanok` at L~2356 for the sync phase in recommendations — not an agent edit.)
+
+## Recommendations
+See `recommendations.md`. Headline: do NOT re-assign (C.d); iter-152 is an architectural signature change coupled to the `[IsAlgClosed kbar]` decision.

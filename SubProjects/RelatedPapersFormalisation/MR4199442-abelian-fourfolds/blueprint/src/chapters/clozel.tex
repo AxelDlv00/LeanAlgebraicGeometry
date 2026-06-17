@@ -1,0 +1,96 @@
+\chapter{Numerical and homological equivalence (Clozel's theorem)}
+
+The standard conjecture of Hodge type (\cref{thm:scht}) has a striking
+consequence: for an abelian fourfold, numerical equivalence agrees with
+\(\ell\)-adic homological equivalence for infinitely many primes \(\ell\). This
+is Ancona's deduction in \S3, combining \cref{thm:scht} with a theorem of Clozel
+over finite fields and a specialization argument. We transcribe it here.
+
+\begin{theorem}[Clozel, numerical \(=\) homological over finite fields]
+  \label{thm:clozel-finite-field}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.clozelFiniteField}
+  \uses{def:num-cycles, def:num-equiv}
+  % SOURCE: [Ancona], §3, proof of Theorem (thmclozel) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "When $A$ is defined over a finite field, this result is due to Clozel \cite{Clozel}. (Clozel's result actually holds true without the dimensional restriction.) We can reduce to the finite field case by Corollary \ref{thmhomnum}."
+  \textit{Source: Clozel 1999, via Ancona, arXiv:1806.03216, §3.}
+  Let \(A\) be an abelian variety over a finite field. Then numerical equivalence
+  on \(A\) coincides with \(\ell\)-adic homological equivalence on \(A\) for
+  infinitely many prime numbers \(\ell\). (Clozel's result holds without any
+  restriction on the dimension of \(A\).)
+\end{theorem}
+
+\begin{proof}
+  This is the theorem of Clozel cited in Ancona \S3 as \cite{Clozel} (L. Clozel,
+  \emph{Équivalence numérique et équivalence cohomologique pour les variétés
+  abéliennes sur les corps finis}, Annals of Mathematics, 1999); we take it as an
+  external input.
+\end{proof}
+
+\begin{corollary}[Specialization of the homological\,/\,numerical comparison]
+  \label{cor:thmhomnum}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.homNumEquiv_of_specialization}
+  \uses{thm:scht, prop:ker-pairing, conj:lefschetz, def:num-cycles}
+  % SOURCE: [Ancona], §3, Corollary (thmhomnum) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let $A$ and $A_0$ be two   abelian fourfolds and suppose that  $A_0$ is a specialization of $A$. Let us fix a prime number $\ell$. If  $\ell$-adic homological equivalence on $A_0$ coincide with numerical equivalence on $A_0$ then the same holds true for $A$."
+  \textit{Source: Ancona, arXiv:1806.03216, §3.}
+  Let \(A\) and \(A_0\) be abelian fourfolds and suppose that \(A_0\) is a
+  specialization of \(A\). Fix a prime number \(\ell\). If \(\ell\)-adic
+  homological equivalence coincides with numerical equivalence on \(A_0\), then
+  the same holds on \(A\).
+\end{corollary}
+
+% SOURCE QUOTE PROOF: "First, notice that the question whether homological and numerical equivalence coincide only matters for $\mathcal{Z}_{\hom}^{2,\prim}(A)_{\Q}$. Indeed, homological and numerical equivalence coincide for divisors \cite{matsu} (see also \cite[Proposition 3.4.6.1]{Andmot}). This implies   that they coincide also on dimension one cycles,   as the standard conjecture of Lefschetz type holds true for abelian varieties. Finally, consider the decomposition \[\mathcal{Z}_{\hom}^{2 }(A)_{\Q} =\mathcal{Z}_{\hom}^{2,\prim}(A)_{\Q} \oplus L \cdot \mathcal{Z}_{\hom}^{1}(A)_{\Q},\] and notice that on the complement of $\mathcal{Z}_{\hom}^{2,\prim}(A)_{\Q} $ the equivalences again coincide, as a consequence of the case of divisors. Now, by smooth proper base change we have $\mathcal{Z}_{\hom}^{2,\prim}(A)_{\Q}\subset \mathcal{Z}_{\hom}^{2,\prim}(A_0)_{\Q}$. If    homological and numerical equivalence  coincide on $A_0$ then the pairing $\langle \cdot, \cdot \rangle_{2}$ on  $\mathcal{Z}_{\hom}^{2,\prim}(A_0)_{\Q}$ is positive definite by Theorem \ref{thmscht}. Hence it is also positive definite on $\mathcal{Z}_{\hom}^{2,\prim}(A)_{\Q}$.   By  Proposition \ref{kerpairing}, this means that there are no nonzero algebraic classes in $\mathcal{Z}_{\hom}^{2,\prim}(A)_{\Q}$ which are numerically trivial."
+\begin{proof}
+  \uses{thm:scht, prop:ker-pairing, conj:lefschetz, def:num-cycles}
+  Whether homological and numerical equivalence coincide only matters for the
+  primitive codimension-two classes \(\mathcal{Z}_{\hom}^{2,\prim}(A)_{\Q}\).
+  Indeed, the two equivalences coincide for divisors, and hence — since the
+  standard conjecture of Lefschetz type (\cref{conj:lefschetz}) holds for abelian
+  varieties — also for one-dimensional cycles. Using the Lefschetz decomposition
+  \[
+    \mathcal{Z}_{\hom}^{2}(A)_{\Q}
+      = \mathcal{Z}_{\hom}^{2,\prim}(A)_{\Q}
+        \oplus L \cdot \mathcal{Z}_{\hom}^{1}(A)_{\Q},
+  \]
+  the equivalences coincide on the complement \(L \cdot
+  \mathcal{Z}_{\hom}^{1}(A)_{\Q}\) of the primitive part as a consequence of the
+  divisor case. So only \(\mathcal{Z}_{\hom}^{2,\prim}(A)_{\Q}\) remains.
+
+  By smooth proper base change in \(\ell\)-adic cohomology there is an inclusion
+  \(\mathcal{Z}_{\hom}^{2,\prim}(A)_{\Q} \subset
+  \mathcal{Z}_{\hom}^{2,\prim}(A_0)_{\Q}\). If homological and numerical
+  equivalence coincide on \(A_0\), then the pairing \(\langle \cdot, \cdot
+  \rangle_{2}\) on \(\mathcal{Z}_{\hom}^{2,\prim}(A_0)_{\Q}\) is positive definite
+  by \cref{thm:scht}. Restricting to the subspace, it is positive definite on
+  \(\mathcal{Z}_{\hom}^{2,\prim}(A)_{\Q}\) as well; in particular the pairing is
+  nondegenerate there. By \cref{prop:ker-pairing} the kernel of the pairing is
+  exactly the space of numerically-trivial primitive classes, so there are no
+  nonzero algebraic classes in \(\mathcal{Z}_{\hom}^{2,\prim}(A)_{\Q}\) that are
+  numerically trivial. Hence homological and numerical equivalence coincide on
+  \(A\).
+\end{proof}
+
+The following is the second headline result of the project.
+
+\begin{theorem}[Numerical \(=\) homological equivalence for abelian fourfolds]
+  \label{thm:clozel}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.clozelTheorem}
+  \uses{thm:clozel-finite-field, cor:thmhomnum}
+  % SOURCE: [Ancona], §3, Theorem (thmclozel) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let $A$ be an   abelian fourfold. Then numerical equivalence on $A$ coincides with $\ell$-adic homological equivalence on $A$ for infinitely many prime numbers $\ell$."
+  \textit{Source: Ancona, arXiv:1806.03216, §3.}
+  Let \(A\) be an abelian fourfold. Then numerical equivalence on \(A\) coincides
+  with \(\ell\)-adic homological equivalence on \(A\) for infinitely many prime
+  numbers \(\ell\).
+\end{theorem}
+
+% SOURCE QUOTE PROOF: "When $A$ is defined over a finite field, this result is due to Clozel \cite{Clozel}. (Clozel's result actually holds true without the dimensional restriction.) We can reduce to the finite field case by Corollary \ref{thmhomnum}."
+\begin{proof}
+  \uses{thm:clozel-finite-field, cor:thmhomnum}
+  When \(A\) is defined over a finite field this is \cref{thm:clozel-finite-field}
+  (Clozel's theorem). In general, \(A\) is a specialization of an abelian fourfold
+  defined over a finitely generated field, which in turn specializes to an abelian
+  fourfold over a finite field; applying \cref{cor:thmhomnum} along this
+  specialization carries the coincidence of \(\ell\)-adic homological and
+  numerical equivalence from the finite-field case up to \(A\).
+\end{proof}

@@ -1,0 +1,121 @@
+# Recommendations for the next plan-agent iteration (iter-134)
+
+## TL;DR
+
+Iter-133 was plan-only + parallel-writer + parallel-refactor — no prover lane fired. All 6 subagent dispatches returned cleanly. Iter-134 is the **first prover lane on piece (i.b) `mulRight_globalises_cotangent`**, contingent on the iter-134 mandatory blueprint-reviewer confirming `RigidityKbar.tex` flips to `complete: true` / `correct: true` after the iter-133 writer's hardening. The Wave-1 dispatch order is: 3 mandatory critics → confirm green-light → piece (i.b) prover lane.
+
+## CRITICAL / HIGH (must address iter-134)
+
+### HIGH-Z — Iter-133 refactor introduced 8 stale line-number anchors in `Cotangent/GrpObj.lean` (NEW staleness)
+
+`lean-auditor-review133` flagged 8 majors: the iter-133 docstring refresh (`refactor-cotangent-grpobj-docstring-refresh-iter133`) expanded several docstring blocks but did NOT update line-number anchors. Every reference to `cotangentSpaceAtIdentity` at "line 149", `cotangentSpaceAtIdentity_eq_extendScalars` at "line 198", and `cotangentSpaceAtIdentity_finrank_eq` at "line 244" is now off by +12 lines (actual locations: 161, 210, 256). The full list of 8 sites: L28-29, L30, L31-32 (module docstring); L61 (Status block); L107, L146-147, L155, L160 (declaration docstrings).
+
+`lean-vs-blueprint-checker-cotangent-grpobj-review133` separately reports the **same drift category on the blueprint side**: `RigidityKbar.tex` lines 159 and 493 contain stale Lean line references ("`AlgebraicJacobian/Cotangent/GrpObj.lean:198--219`" should be 210–231; "`AlgebraicJacobian/Cotangent/GrpObj.lean:276--282`" should be 285–294). Minor severity in the checker's verdict (cosmetic; doesn't affect mathematical correctness or navigation by the reviewer).
+
+**Mechanical fix**:
+- Lean side: `s/line 149/line 161/g`, `s/line 198/line 210/g`, `s/line 244/line 256/g` inside `Cotangent/GrpObj.lean` docstrings only.
+- Blueprint side: refresh the two cross-references at `RigidityKbar.tex` lines 159 (198→210, 219→231) and 493 (276→285, 282→294).
+
+Both fixes should be bundled into iter-134's first refactor + blueprint-writer cleanup pass.
+
+**Severity rationale (auditor's words)**: "these don't cause compilation issues or mathematical drift, but they actively mislead a reader navigating the file. … The whole point of including line anchors is to provide stable navigation — when they drift, they are worse than absent."
+
+**Recommended action**: iter-134 refactor lane (slug suggestion: `cotangent-grpobj-line-anchor-fixup-iter134`) + small blueprint-writer touch-up (slug suggestion: `rigiditykbar-piecei-line-anchor-refresh-iter134`). Pure docstring + cross-ref edits, ~5–10 LOC total. Alternatively, drop the line-number anchors entirely and replace with name-only references (`cotangentSpaceAtIdentity_finrank_eq` instead of "(line 244 below)") to avoid future drift. Non-blocking but should land iter-134. **Critical lesson for future refactor-agent directives**: when refreshing docstrings that contain line-number anchors, explicitly include in the directive "after editing, re-grep for `line \d\+ below` patterns and verify each anchor's target". The iter-133 refactor agent failed to perform this self-check.
+
+### HIGH-A — Iter-134 mandatory blueprint-reviewer must verify `RigidityKbar.tex` green-light
+
+The iter-133 blueprint-writer (`rigiditykbar-piecei-iterb-prep-iter133`) absorbed all of iter-133 blueprint-reviewer's must-fix items on `lem:GrpObj_mulRight_globalises` (full Lean signature stub at sheaf-level RHS; `mulRight`-vs-σ option (i) explanatory paragraph; 3-step proof structure; 2 new helper sub-lemmas; MED-B/C bundle). Iter-134 mandatory blueprint-reviewer should confirm:
+- `RigidityKbar.tex` flips from `complete: partial` / `correct: partial` → `complete: true` / `correct: true`.
+- All new `\cref{...}` and `\uses{...}` targets resolve.
+- The MED-B `lem:GrpObj_cotangentSpace_extendScalars_witness` block carries `\leanok` (added by the `sync_leanok` phase post-iter-133 close — verified in iter-133 review).
+
+If the reviewer returns `partial/partial` again, **DEFER piece (i.b) prover lane another iter** and dispatch a follow-up writer pass on the specific must-fix items.
+
+### HIGH-B — Iter-134 piece (i.b) `mulRight_globalises_cotangent` prover lane (contingent on HIGH-A green)
+
+The lane's bills-of-materials per the iter-133 blueprint-writer's hardened chapter + the persistent `analogies/mulright-globalises-cotangent.md`:
+
+1. **Shear iso `σ = lift (fst G G) μ : G ⊗ G ≅ G ⊗ G`** (~30–60 LOC). Template: `CategoryTheory.GrpObj.mulRight` + `GrpObj.isPullback` at `Mathlib.CategoryTheory.Monoidal.Grp_.lean:277–281, 293–323`. Mark NEEDS_MATHLIB_GAP_FILL.
+2. **`relativeDifferentialsPresheaf_basechange_along_proj_two`** (~150–300 LOC). The load-bearing helper for `Ω_{(G ×_k G)/G} ≅ pr_2^* Ω_{G/k}`. Mathlib chain: `TopCat.Presheaf.pullback` (`Mathlib.Topology.Sheaves.Pullback`) + `KaehlerDifferential.tensorKaehlerEquiv` (`Mathlib.RingTheory.Kaehler.TensorProduct`) + project-side `relativeDifferentialsPresheaf_obj_kaehler` (`AlgebraicJacobian/Differentials.lean:60–66`). Mark NEEDS_MATHLIB_GAP_FILL.
+3. **`relativeDifferentialsPresheaf_restrict_along_identity_section`** (~30–80 LOC). Applies `PresheafOfModules.pullbackComp` (`Mathlib.Algebra.Category.ModuleCat.Presheaf.Pullback`) to the section identity `pr_2 ∘ s = η_G ∘ π_G`.
+4. **Main lemma body** (~30–60 LOC) composing 1+2+3 at the presheaf-of-modules level.
+
+**Total envelope**: 210–440 LOC.
+
+**Sheaf-level RHS commitment**: per the iter-133 mathlib-analogist (Decision 4), the RHS phrasing must be `PresheafOfModules.pullback` chain — NOT `cotangentSpaceAtIdentity G` (value-level). If the prover lane chooses value-level-stalk RHS, **trigger (a') fires** and the iter-134 plan agent must re-open over-k vs over-`k̄` per the iter-133 STRATEGY.md refinement.
+
+### HIGH-C — Iter-134 mandatory strategy-critic re-verification (5 iter-133 STRATEGY.md edits)
+
+Per the iter-133 plan agent's watch criteria, the iter-134 strategy-critic must:
+- Confirm ground (iv) reinstatement remains SCOPE-NARROW ("iter-132 piece (i.a) tractability evidence" — NOT iter-131; NOT whole-pile / whole-over-k-path validation). Flag any silent upgrade as a fresh CHALLENGE.
+- Confirm the fibre-free 4-axis scorecard decision (STAY ON Replacement (B)) remains valid.
+- Confirm the iter-135–138 schedule advances for the ℙ¹ hedge + higher-Kähler-vanishing analogists are tracked.
+- Confirm the sequencing table updates (piece (i.a) DONE, piece (i.b) 210–440 LOC, piece (i.c) 200–500 LOC).
+- Confirm the gap inventory's 2 new piece-(i.b) sub-pieces.
+
+### HIGH-D — Iter-134 mandatory progress-critic must resolve Route 4 (piece (i.b)) verdict
+
+Route 4 was UNCLEAR iter-133 (fresh, planner correctly analogist-first). Iter-134 prover lane outcome will resolve it to CONVERGING / CHURNING / STUCK. The iter-133 strategy-critic noted a watchpoint: if piece (i.b) slips > 2 iter beyond the 2–4 iter / 210–440 LOC envelope without converging, trigger (a')/(c) must fire — do not silently absorb the slip.
+
+Route 1 stays CONVERGING (piece (i.a) DONE). Routes 2+3 stay UNCLEAR (deferred-by-design).
+
+## MEDIUM
+
+### MED-A — `positiveGenusWitness` scaffold lane (optional iter-134 if budget remains)
+
+Per `strategy-critic-iter132` Minor recommendation + the iter-133 plan agent's iter-134 outlook: a ~20–30 LOC quick refactor lane to scaffold the M3 stub (`positiveGenusWitness` with a `sorry` body) unlocks the genus-stratified body restructure precondition. Optional iter-134 if budget remains after the piece (i.b) main dispatch. Slug suggestion: `positive-genus-witness-scaffold-iter134`.
+
+### MED-B — `Jacobian.tex` C.2.a–C.2.e soft drift cleanup writer (informational)
+
+Per `blueprint-reviewer-iter133`: `Jacobian.tex` C.2.a–C.2.e over-`\bar k` prose drift `correct: partial` (informational; no active prover route consumes the sub-step prose). Deferred iter-134+ soft cleanup writer pass. Slug suggestion: `jacobian-c2-drift-cleanup-iter134+`. Non-blocking.
+
+### MED-C — `Cohomology_MayerVietoris.tex` 3 broken `\ref{...}` cleanup
+
+Per `blueprint-reviewer-iter133`: 3 broken `\ref{...}` cross-refs (lines 769×2 + 917). Surface-rendering bugs only (no `\uses{...}` integrity violation). Deferred iter-134+ as a routine blueprint-cleanup pass.
+
+### MED-D — Iter-135–138 mathlib-analogist consults (already scheduled by iter-133)
+
+Per the iter-133 STRATEGY.md edits (advanced from iter-140+ to iter-135–138):
+- No-Frobenius / higher-Kähler-vanishing alternative consult (feeds piece (iii) iter-144+ scaffolding AND piece (ii) iter-141+).
+- ℙ¹-specific rigidity hedge "weak ℙ¹ identification" consult (feeds piece (ii) iter-141+ AND piece (iii) iter-144+).
+
+Co-scheduled for iter-135–138. Iter-134 plan agent verifies the schedule is still tracked in STRATEGY.md.
+
+### MED-E — `lem:GrpObj_omega_free` and `lem:GrpObj_omega_rank_eq_dim` blueprint hardening (iter-137+)
+
+Per `blueprint-reviewer-iter133`: piece (i.c) lemmas need blueprint hardening before the iter-137+ prover lane. Not on iter-134 critical path; flag in PROGRESS.md for iter-137+ pre-prover hardening dispatch.
+
+## LOW
+
+- The `Cohomology_StructureSheafModuleK.tex` label-prefix asymmetry (causing one of the broken refs in `Cohomology_MayerVietoris.tex`) is informational only.
+- Iter-134's mandatory `lean-auditor` should re-confirm `Cotangent/GrpObj.lean` is now clean after the iter-133 docstring refresh — expectation: 0 majors on this file (iter-132's 5 majors absorbed).
+- Iter-134's mandatory `lean-vs-blueprint-checker` will be triggered on each prover-touched file from the iter-134 prover lane (expected: `Cotangent/GrpObj.lean` if piece (i.b) lands there, or a new file if a new module is introduced for the helper sub-lemmas).
+
+## Do NOT do iter-134
+
+- **Do NOT assign a 4th body reshape on `cotangentSpaceAtIdentity`.** META-PATTERN TRIPWIRE non-promise commitment is binding. The iter-134 prover lane on piece (i.b) adds a *new* declaration (`mulRight_globalises_cotangent`); it does not reshape `cotangentSpaceAtIdentity`.
+- **Do NOT dispatch piece (iii) scheme-level Frobenius prover lanes** before the iter-135–138 scheduled no-Frobenius mathlib-analogist consult returns.
+- **Do NOT choose value-level-stalk RHS for piece (i.b)** without explicitly firing trigger (a') and re-opening over-k vs over-`k̄`. Sheaf-level RHS is the iter-133 analogist-recommended path.
+- **Do NOT dispatch `lean-auditor` again on the iter-133 refactor scope without scope change** — iter-133 already audited that scope (the iter-133 refactor was the cleanup pass for iter-132's findings).
+
+## Closest to completion (priority order for iter-134 prover work)
+
+1. **Piece (i.b) `mulRight_globalises_cotangent`** — staged this iter; HIGH-B above. Contingent on iter-134 blueprint-reviewer green-light.
+2. **`positiveGenusWitness` scaffold** — optional, MED-A above; ~20–30 LOC refactor lane, unblocks M3 precondition.
+
+## Blockers — do not retry
+
+- `nonempty_jacobianWitness` (`Jacobian.lean:213`) — Phase C OFF-LIMITS. Gated on M2 close + M3 scaffolding. Earliest iter-148+.
+- `rigidity_over_kbar` (`RigidityKbar.lean:87`) — M2.a scaffold. Gated on pieces (i.b)+(i.c)+(ii)+(iii). Earliest iter-144+.
+- `genusZeroWitness` (`Jacobian.lean:192`) — gated on the cotangent-vanishing pile closing. Earliest iter-138+.
+
+## Reusable proof patterns discovered iter-133
+
+(None this iter — iter-133 had no prover work. The patterns documented in `session_132/recommendations.md` are still the most recent additions to the Knowledge Base.)
+
+## Reviewer reports landed this iter
+
+- `task_results/lean-auditor-review133.md` — narrow re-audit on `Cotangent/GrpObj.lean` to verify iter-132 stale-framing findings are resolved.
+- `task_results/lean-vs-blueprint-checker-cotangent-grpobj-review133.md` — verifies the new `Cotangent/GrpObj.lean` ↔ `RigidityKbar.tex` § Piece (i) alignment after iter-133 hardening.
+
+(Both folded into HIGH-A and Low-priority notes above; severity classifications applied per descriptor rules.)

@@ -1,0 +1,2 @@
+- Blueprint DAG complete (iter-012): 45 nodes, 96 edges, 0 ∞-effort. Lean phases PAUSED BY USER — unpause when ready for Lean formalization.
+- 5 Mathlib constructions confirmed absent and not in any peer project: AbelianVariety/AbelianScheme, genus-≥-2 Jacobian, surface intersection product, Weil bound (g≥2), n-dim formal group log/exp. Plan is axiom-package-first when Lean phases resume.

@@ -1,0 +1,18 @@
+{
+  "iteration": 114,
+  "stage": "prover (Archon iter-113 \u2014 single Phase B prover lane on",
+  "mode": "parallel",
+  "startedAt": "2026-05-15T23:18:17Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "ed899d4e-998c-4445-a944-777f7d3d4c48",
+    "durationSecs": 2856
+  },
+  "planValidate": {
+    "status": "failed",
+    "objectives": 0
+  },
+  "completedAt": "2026-05-16T00:05:54Z",
+  "wallTimeSecs": 2856,
+  "status": "plan_validate_failed"
+}

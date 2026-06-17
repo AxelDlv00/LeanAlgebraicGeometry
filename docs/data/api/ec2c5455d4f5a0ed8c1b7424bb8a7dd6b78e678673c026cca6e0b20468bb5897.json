@@ -1,0 +1,2171 @@
+{
+  "nodes": [
+    {
+      "id": "def:peer_jacobian",
+      "type": "definition",
+      "title": "Jacobian of a curve anchor",
+      "chapter": "",
+      "statement": "The peer project \\emph{Algebraic-Jacobian-Challenge}, in its chapter on the\n  Jacobian, supplies the Jacobian $J$ of a smooth projective curve $C$ as a\n  group object representing degree-zero divisor classes.  Sawin's §5 works on\n  the Jacobian of a hyperelliptic curve, identifying each component $J^{(n)}$ of\n  degree-$n$ classes with $J$ after fixing a base point, and uses the trivial\n  cotangent bundle $T^*J \\cong J \\times H^0(C,K_C)$.  This anchor is that group\n  object.",
+      "uses": [],
+      "lean_name": "AlgebraicGeometry.Jacobian",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_PeerDependencies.tex",
+      "lean_file": "",
+      "dep_count": 0,
+      "rdep_count": 4,
+      "descendant_count": 14,
+      "proof_size_tex": null,
+      "effort_local": 478,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 478
+    },
+    {
+      "id": "def:peer_weil_divisor",
+      "type": "definition",
+      "title": "Weil divisors and symmetric powers anchor",
+      "chapter": "",
+      "statement": "The peer project \\emph{Algebraic-Jacobian-Challenge}, in its chapter on Weil\n  divisors, supplies effective divisors on a curve and (via prime divisors and\n  their multiplicities) the symmetric power $C^{(n)} = \\Sym^n C$ as a moduli\n  space of degree-$n$ effective divisors, together with the Abel--Jacobi map\n  $\\pi_n : C^{(n)} \\to J$ sending a divisor to its class.  The theta locus\n  $\\Theta_n = \\pi_n(C^{(n)})$ and the maps $\\underline A^{a,b}$, $\\Sigma^{a,b}$\n  of §5 are built from this data.",
+      "uses": [
+        "def:peer_jacobian"
+      ],
+      "lean_name": "AlgebraicGeometry.Scheme.WeilDivisor",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_PeerDependencies.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 4,
+      "descendant_count": 13,
+      "proof_size_tex": null,
+      "effort_local": 498,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 976
+    },
+    {
+      "id": "def:peer_canonical_differentials",
+      "type": "definition",
+      "title": "Canonical differentials anchor",
+      "chapter": "",
+      "statement": "The peer project \\emph{Algebraic-Jacobian-Challenge}, in its chapter on\n  relative differentials, supplies the sheaf of Kähler differentials and hence\n  the canonical bundle $K_C = \\Omega^1_{C/k}$ and its global sections\n  $H^0(C,K_C)$.  Sawin identifies the fibre of $T^*J$ with $H^0(C,K_C)$ and uses\n  Serre duality $T_{D}C^{(n)} \\cong H^0(C,\\cO(D)/\\cO)$,\n  $(T^*)_{D}C^{(n)} \\cong H^0(C, K_C/K_C(-D))$ throughout the\n  characteristic-cycle computation of Lemma~\\ref{lem:sawin_ts_singular}.",
+      "uses": [],
+      "lean_name": "AlgebraicGeometry.Scheme.relativeDifferentialsPresheaf",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_PeerDependencies.tex",
+      "lean_file": "",
+      "dep_count": 0,
+      "rdep_count": 1,
+      "descendant_count": 10,
+      "proof_size_tex": null,
+      "effort_local": 492,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 492
+    },
+    {
+      "id": "def:peer_higher_direct_image",
+      "type": "definition",
+      "title": "Higher direct image / pushforward anchor",
+      "chapter": "",
+      "statement": "The peer project \\emph{Cech-Cohomology}, in its chapter on higher direct\n  images, supplies the derived pushforward $R^i f_* \\cF$ of a sheaf along a\n  morphism.  Sawin's constructible-sheaf operations --- proper pushforward\n  $f_*$, the decomposition $\\pi^n_*\\bQ_\\ell = \\bigoplus_r i^{n+2r}_*\n  \\bQ_\\ell[-2r](-r)$ (Lemma~\\ref{lem:sawin_ts_decomposition}), and proper base\n  change --- specialise this pushforward formalism to the $\\ell$-adic setting.\n  This anchor is the common pushforward interface.",
+      "uses": [],
+      "lean_name": "AlgebraicGeometry.higherDirectImage",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_PeerDependencies.tex",
+      "lean_file": "",
+      "dep_count": 0,
+      "rdep_count": 1,
+      "descendant_count": 6,
+      "proof_size_tex": null,
+      "effort_local": 501,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 501
+    },
+    {
+      "id": "def:sawin_conical",
+      "type": "definition",
+      "title": "Conical subset",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §1, Definition (conical).}\n  A closed subset, or algebraic cycle, on a vector bundle is \\emph{conical} if it\n  is invariant under the $\\bG_m$-action by dilation of vectors.",
+      "uses": [],
+      "lean_name": "MR4228499.IsConical",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Terminology.tex",
+      "lean_file": "",
+      "dep_count": 0,
+      "rdep_count": 2,
+      "descendant_count": 32,
+      "proof_size_tex": null,
+      "effort_local": 195,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 195
+    },
+    {
+      "id": "def:sawin_projectivization",
+      "type": "definition",
+      "title": "Projectivization of a conical cycle",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §1, Definition (projectivization).}\n  For a vector bundle $V$ on a variety $X$, $\\PP(V) = \\Proj(\\Sym^*(V^\\vee))$ is\n  its projectivization, of dimension $\\dim X + \\rank V - 1$, identified with the\n  quotient of $V$ minus its zero section by $\\bG_m$.  For a conical cycle $C$ on\n  $V$, $\\PP(C)$ is the quotient of $C$, minus its intersection with the zero\n  section, by $\\bG_m$.",
+      "uses": [
+        "def:sawin_conical"
+      ],
+      "lean_name": "MR4228499.projectivization",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Terminology.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 3,
+      "descendant_count": 12,
+      "proof_size_tex": null,
+      "effort_local": 400,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 595
+    },
+    {
+      "id": "def:sawin_polar_multiplicity",
+      "type": "definition",
+      "title": "Polar multiplicity, projective form",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §1, Definition polar-multiplicity.}\n  Let $X$ be smooth of dimension $n$, $C$ a conical cycle on $T^*X$ of dimension\n  $n$, and $x\\in X$.  For $0\\le i<n$, let $V$ be a rank-$(i+1)$ sub-bundle of\n  $T^*X$ near $x$ with $V_x$ a general point of the Grassmannian of\n  $(i+1)$-planes in $(T^*X)_x$.  The \\emph{$i$th polar multiplicity}\n  $\\gamma^i_C(x)$ is the multiplicity at $x$ of $\\pi_*(\\PP(C)\\cap\\PP(V))$, where\n  $\\pi:\\PP(T^*X)\\to X$.  The $n$th polar multiplicity is the multiplicity of the\n  zero-section in $C$.  Well-definedness is Lemma~\\ref{lem:sawin_intersection_comparison}.",
+      "uses": [
+        "def:sawin_projectivization"
+      ],
+      "lean_name": "MR4228499.polarMultiplicity",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Terminology.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 5,
+      "descendant_count": 9,
+      "proof_size_tex": null,
+      "effort_local": 607,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 1202
+    },
+    {
+      "id": "def:sawin_C_transversal_map",
+      "type": "definition",
+      "title": "$C$-transversal morphism (to $Y$)",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §2, Definition C-transversal-1.}\n  For $C\\subseteq T^*X$ a closed conical subset and $f:X\\to Y$ a morphism of\n  smooth schemes, $f$ is \\emph{$C$-transversal} if $df^{-1}(C)$, under\n  $X\\times_Y T^*Y \\to T^*X$, lies in the zero-section.",
+      "uses": [],
+      "lean_name": "MR4228499.CTransversalMap",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Terminology.tex",
+      "lean_file": "",
+      "dep_count": 0,
+      "rdep_count": 5,
+      "descendant_count": 26,
+      "proof_size_tex": null,
+      "effort_local": 258,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 258
+    },
+    {
+      "id": "def:sawin_circ_forward",
+      "type": "definition",
+      "title": "Pushforward $f_\\circ C$",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §2, Definition circ-forward.}\n  If $f$ is proper, $f_\\circ C$ is the pushforward from $X\\times_Y T^*Y$ to\n  $T^*Y$ of $df^{-1}(C)$.",
+      "uses": [
+        "def:sawin_C_transversal_map"
+      ],
+      "lean_name": "MR4228499.circForward",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Terminology.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 3,
+      "descendant_count": 9,
+      "proof_size_tex": null,
+      "effort_local": 154,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 412
+    },
+    {
+      "id": "def:sawin_shriek_forward",
+      "type": "definition",
+      "title": "Pushforward $f_! A$ of a cycle",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §2, Definition shriek-forward.}\n  For $A$ a codimension-$\\dim X$ cycle supported on $C$ with $f_\\circ C$ of\n  dimension $\\dim Y$, $f_! A$ is the pushforward to $T^*Y$ of the\n  intersection-theoretic inverse image $df^*A$.",
+      "uses": [
+        "def:sawin_circ_forward"
+      ],
+      "lean_name": "MR4228499.shriekForward",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Terminology.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 2,
+      "descendant_count": 7,
+      "proof_size_tex": null,
+      "effort_local": 244,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 656
+    },
+    {
+      "id": "def:sawin_h_transversal",
+      "type": "definition",
+      "title": "$C$-transversal $h:W\\to X$ and $h^\\circ C$",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §2, Definition (Saito 3.1).}\n  For $h:W\\to X$, let $h^*C\\subseteq W\\times_X T^*X$ be the pullback of $C$ and\n  $K=\\ker(dh:W\\times_X T^*X\\to T^*W)$.  Then $h$ is \\emph{$C$-transversal} if\n  $h^*C\\cap K$ lies in the zero-section, and one sets $h^\\circ C = dh(h^*C)\n  \\subseteq T^*W$ (closed by Saito Lemma 3.1).",
+      "uses": [
+        "def:sawin_conical"
+      ],
+      "lean_name": "MR4228499.HTransversal",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Terminology.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 3,
+      "descendant_count": 25,
+      "proof_size_tex": null,
+      "effort_local": 332,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 527
+    },
+    {
+      "id": "def:sawin_pair_transversal",
+      "type": "definition",
+      "title": "$C$-transversal pair",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §2, Definition (Saito 3.5(2)).}\n  A pair $h:W\\to X$, $f:W\\to Y$ is \\emph{$C$-transversal} if $h$ is\n  $C$-transversal and $f$ is $h^\\circ C$-transversal.",
+      "uses": [
+        "def:sawin_h_transversal",
+        "def:sawin_C_transversal_map"
+      ],
+      "lean_name": "MR4228499.PairTransversal",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Terminology.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 2,
+      "descendant_count": 19,
+      "proof_size_tex": null,
+      "effort_local": 176,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 961
+    },
+    {
+      "id": "def:sawin_local_acyclic",
+      "type": "definition",
+      "title": "Local acyclicity",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §2, Definition (SGA 4.5).}\n  $f:W\\to Y$ is \\emph{locally acyclic} relative to $K\\in D^b_c(W,\\bF_\\ell)$ if for\n  every geometric point $x\\in W$ and geometric point $t\\in Y$ specializing to\n  $f(x)$, the map $H^*(W_x,K)\\to H^*(W_{x,t},K)$ is an isomorphism.  When $Y$ is a\n  smooth curve this is equivalent to the vanishing of $\\RPhi_f K$.",
+      "uses": [],
+      "lean_name": "MR4228499.LocallyAcyclic",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Terminology.tex",
+      "lean_file": "",
+      "dep_count": 0,
+      "rdep_count": 2,
+      "descendant_count": 19,
+      "proof_size_tex": null,
+      "effort_local": 360,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 360
+    },
+    {
+      "id": "def:sawin_singular_support",
+      "type": "definition",
+      "title": "Singular support $SS(K)$",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §2, Definition (Beilinson 1.3).}\n  For $K\\in D^b_c(X,\\bF_\\ell)$, the \\emph{singular support} $\\SSing(K)$ is the\n  smallest closed conical $C\\subseteq T^*X$ such that for every $C$-transversal\n  pair $h:W\\to X$, $f:W\\to Y$, the map $f$ is locally acyclic relative to $h^*K$.\n  Existence, uniqueness, and $\\dim \\SSing(K)=\\dim X$ are Beilinson's\n  Theorem 1.3.",
+      "uses": [
+        "def:sawin_pair_transversal",
+        "def:sawin_local_acyclic"
+      ],
+      "lean_name": "MR4228499.singularSupport",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Terminology.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 6,
+      "descendant_count": 18,
+      "proof_size_tex": null,
+      "effort_local": 380,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 1701
+    },
+    {
+      "id": "def:sawin_properly_transversal",
+      "type": "definition",
+      "title": "Properly $C$-transversal morphism",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §2, Definition (Saito 7.1(1)).}\n  With $C\\subseteq T^*X$ of pure dimension $n=\\dim X$ and $h:W\\to X$ with\n  $\\dim W=m$, $h$ is \\emph{properly $C$-transversal} if it is $C$-transversal and\n  every irreducible component of $h^*C$ has dimension $m$.",
+      "uses": [
+        "def:sawin_h_transversal"
+      ],
+      "lean_name": "MR4228499.ProperlyCTransversal",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Terminology.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 4,
+      "descendant_count": 14,
+      "proof_size_tex": null,
+      "effort_local": 269,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 796
+    },
+    {
+      "id": "def:sawin_shriek_pullback",
+      "type": "definition",
+      "title": "Pullback $h^! A$ of a cycle",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §2, Definition (Saito 7.1(2)).}\n  For $A$ a codimension-$n$ cycle on $T^*X$ with conical support $C$ and $h:W\\to\n  X$ properly $C$-transversal, $h^!A = (-1)^{n-m}$ times the\n  intersection-theoretic pushforward along $dh:W\\times_X T^*X\\to T^*W$ of the\n  pullback along $h$ of $A$ (well-defined since $dh$ is finite on $\\operatorname{supp} h^*A$).",
+      "uses": [
+        "def:sawin_properly_transversal"
+      ],
+      "lean_name": "MR4228499.shriekPullback",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Terminology.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 5,
+      "descendant_count": 11,
+      "proof_size_tex": null,
+      "effort_local": 369,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 1165
+    },
+    {
+      "id": "def:sawin_isolated_char_point",
+      "type": "definition",
+      "title": "Isolated $C$-characteristic point",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §2, Definition (Saito 5.3(1)).}\n  For $f:X\\to Y$ to a smooth curve, a closed point $x$ is \\emph{at most an\n  isolated $C$-characteristic point} if $f$ is $C$-transversal on some punctured\n  neighborhood of $x$; it is an \\emph{isolated $C$-characteristic point} if in\n  addition $f$ is $C$-transversal on no full neighborhood of $x$.",
+      "uses": [
+        "def:sawin_C_transversal_map"
+      ],
+      "lean_name": "MR4228499.IsolatedCharacteristicPoint",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Terminology.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 1,
+      "descendant_count": 17,
+      "proof_size_tex": null,
+      "effort_local": 355,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 613
+    },
+    {
+      "id": "def:sawin_dimtot",
+      "type": "definition",
+      "title": "Total dimension $\\dimtot$",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §2, Definition (dimtot).}\n  For a Galois representation $V$ of a local field over $\\bF_\\ell$,\n  $\\dimtot V = \\dim V + \\Swan V$.  For a complex $W$,\n  $\\dimtot W = \\sum_i (-1)^i \\dimtot \\cH^i(W)$.",
+      "uses": [],
+      "lean_name": "MR4228499.dimtot",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Terminology.tex",
+      "lean_file": "",
+      "dep_count": 0,
+      "rdep_count": 2,
+      "descendant_count": 17,
+      "proof_size_tex": null,
+      "effort_local": 218,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 218
+    },
+    {
+      "id": "def:sawin_characteristic_cycle",
+      "type": "definition",
+      "title": "Characteristic cycle $CC(K)$",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §2, Definition (Saito 5.10).}\n  $\\CCyc(K)$ is the unique $\\bZ$-linear combination of irreducible components of\n  $\\SSing(K)$ such that for every étale $j:W\\to X$, every $f:W\\to Y$ to a smooth\n  curve, and every at most isolated $h^\\circ \\SSing(\\cF)$-characteristic point\n  $u\\in W$ of $f$,\n  \\[ -\\dimtot\\bigl(\\RPhi_f(j^*K)\\bigr)_u = (j^*\\CCyc(K),(df)^*\\omega)_{T^*W,u}, \\]\n  for $\\omega$ a meromorphic one-form without zero or pole at $f(u)$.  Existence\n  and uniqueness are Saito Theorem 5.9; integrality (Beilinson--Deligne) is Saito\n  Theorem 5.18.  By Saito Proposition 5.14(2), $\\SSing(K) = \\operatorname{supp}\\CCyc(K)$.",
+      "uses": [
+        "def:sawin_singular_support",
+        "def:sawin_dimtot",
+        "def:sawin_isolated_char_point"
+      ],
+      "lean_name": "MR4228499.characteristicCycle",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Terminology.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 10,
+      "descendant_count": 16,
+      "proof_size_tex": null,
+      "effort_local": 648,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 2922
+    },
+    {
+      "id": "def:nearby_cycles",
+      "type": "definition",
+      "title": "Nearby-cycles functor $R\\Psi_f$",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §2 (SGA~$4\\tfrac{1}{2}$, Th.\\ Finitude; Illusie 1994).}\n  Let $f:X\\to Y$ be a morphism to a smooth curve $Y$ over a perfect field $k$, let\n  $\\eta$ denote the generic point of $Y$, and let $s\\in Y$ be a closed point.  The\n  \\emph{nearby-cycles functor}\n  \\[ R\\Psi_f : D^b_c(X,\\bF_\\ell) \\longrightarrow D^b_c(f^{-1}(\\eta),\\bF_\\ell) \\]\n  sends $K$ to the restriction of $K$ to the geometric generic fibre $f^{-1}(\\eta)$,\n  equipped with the continuous action of the fundamental group of $Y$ at $\\eta$.  Its\n  stalk at a geometric point $x\\in f^{-1}(s)$ is $H^*(W_{x,\\eta},K)$, where\n  $W_{x,\\eta}$ is the henselization of the fibre of $f$ over $s$ at $x$.",
+      "uses": [],
+      "lean_name": "MR4228499.nearbyCycles",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  Axiomatized: this result is assumed without proof; the Lean formalization will use\n  an \\texttt{opaque} declaration.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Axioms.tex",
+      "lean_file": "",
+      "dep_count": 0,
+      "rdep_count": 2,
+      "descendant_count": 2,
+      "proof_size_tex": 116,
+      "effort_local": 676,
+      "proof_size_tex_total": 116,
+      "proof_size_lean_total": null,
+      "effort_total": 676
+    },
+    {
+      "id": "def:vanishing_cycles",
+      "type": "definition",
+      "title": "Vanishing-cycles functor $R\\Phi_f$",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §2 (SGA~$4\\tfrac{1}{2}$, Th.\\ Finitude; Illusie 1994).}\n  In the same setting as \\cref{def:nearby_cycles}, the \\emph{vanishing-cycles\n  functor}\n  \\[ R\\Phi_f : D^b_c(X,\\bF_\\ell) \\longrightarrow D^b_c(f^{-1}(s),\\bF_\\ell) \\]\n  is defined by the exact triangle $K|_{f^{-1}(s)} \\to R\\Psi_f K \\to R\\Phi_f K \\to\n  \\cdots$ (with the arrow from $K|_{f^{-1}(s)}$ to $R\\Psi_f K$ being the\n  specialization map).  When $Y$ is a smooth curve, local acyclicity of $f$ relative\n  to $K$ (see \\cref{def:sawin_local_acyclic}) is equivalent to $R\\Phi_f K = 0$, since\n  the mapping cone $R(\\Phi_f K)_x$ vanishes exactly when the stalk map\n  $H^*(W_x,K)\\to H^*(W_{x,t},K)$ is an isomorphism.",
+      "uses": [],
+      "lean_name": "MR4228499.vanishingCycles",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  Axiomatized: this result is assumed without proof; the Lean formalization will use\n  an \\texttt{opaque} declaration.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Axioms.tex",
+      "lean_file": "",
+      "dep_count": 0,
+      "rdep_count": 2,
+      "descendant_count": 3,
+      "proof_size_tex": 116,
+      "effort_local": 695,
+      "proof_size_tex_total": 116,
+      "proof_size_lean_total": null,
+      "effort_total": 695
+    },
+    {
+      "id": "thm:beilinson_ss",
+      "type": "theorem",
+      "title": "Existence of the singular support (Beilinson)",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §2, after Definition (Beilinson 1.3); Beilinson,\n  \\emph{Constructible sheaves are holonomic}, Selecta Math.\\ 22 (2016) 1797--1819.}\n  For $K\\in D^b_c(X,\\bF_\\ell)$ on a smooth variety $X$ of dimension $n$ over a\n  perfect field $k$, the singular support $\\SSing(K)$ exists and is unique: it is the\n  smallest closed conical subset $C\\subseteq T^*X$ such that for every $C$-transversal\n  pair $h:W\\to X$, $f:W\\to Y$, the map $f$ is locally acyclic relative to $h^*K$.\n  Moreover, $\\dim\\SSing(K)=n$.",
+      "uses": [
+        "def:sawin_pair_transversal",
+        "def:sawin_local_acyclic",
+        "def:sawin_singular_support"
+      ],
+      "lean_name": "MR4228499.singularSupport_exists",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  Axiomatized: this result is assumed without proof; the Lean formalization will use\n  an \\texttt{opaque} declaration.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Axioms.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 0,
+      "descendant_count": 0,
+      "proof_size_tex": 116,
+      "effort_local": 116,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 1817
+    },
+    {
+      "id": "thm:saito_cc_exists",
+      "type": "theorem",
+      "title": "Existence and integrality of the characteristic cycle (Saito)",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §2, after Definition (Saito 5.10); Saito,\n  \\emph{The characteristic cycle and the singular support}, Invent.\\ Math.\\ 207\n  (2017) 597--695, Thms.\\ 5.9, 5.18.}\n  For $K\\in D^b_c(X,\\bF_\\ell)$ on a smooth variety $X$ of dimension $n$, the\n  characteristic cycle $\\CCyc(K)$ exists, is unique, and its coefficients lie in\n  $\\bZ$ (not merely in $\\bZ[1/p]$).  Concretely, $\\CCyc(K)$ is the unique\n  $\\bZ$-linear combination of irreducible components of $\\SSing(K)$ such that for\n  every étale $j:W\\to X$, every $f:W\\to Y$ to a smooth curve, and every at most\n  isolated $h^\\circ\\SSing(\\cF)$-characteristic point $u\\in W$ of $f$, the identity\n  \\[ -\\dimtot\\bigl(\\RPhi_f(j^*K)\\bigr)_u = (j^*\\CCyc(K),(df)^*\\omega)_{T^*W,u} \\]\n  holds for $\\omega$ a meromorphic one-form without zero or pole at $f(u)$.\n  Existence and uniqueness are Saito Theorem 5.9; integrality is Saito Theorem 5.18\n  (Beilinson--Deligne).",
+      "uses": [
+        "def:sawin_characteristic_cycle",
+        "def:sawin_singular_support",
+        "def:sawin_dimtot",
+        "def:vanishing_cycles"
+      ],
+      "lean_name": "MR4228499.characteristicCycle_exists",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  Axiomatized: this result is assumed without proof; the Lean formalization will use\n  an \\texttt{opaque} declaration.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Axioms.tex",
+      "lean_file": "",
+      "dep_count": 4,
+      "rdep_count": 1,
+      "descendant_count": 1,
+      "proof_size_tex": 116,
+      "effort_local": 116,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 3733
+    },
+    {
+      "id": "thm:saito_prop_514",
+      "type": "theorem",
+      "title": "Support of the characteristic cycle equals the singular support",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §2, note after Definition (Saito 5.10); Saito Proposition 5.14(2).}\n  For $K\\in D^b_c(X,\\bF_\\ell)$, $\\SSing(K) = \\operatorname{supp}\\CCyc(K)$.",
+      "uses": [
+        "thm:saito_cc_exists",
+        "def:sawin_singular_support",
+        "def:sawin_characteristic_cycle"
+      ],
+      "lean_name": "MR4228499.ss_eq_supp_cc",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  Axiomatized: this result is assumed without proof; the Lean formalization will use\n  an \\texttt{opaque} declaration.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Axioms.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 0,
+      "descendant_count": 0,
+      "proof_size_tex": 116,
+      "effort_local": 116,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 3849
+    },
+    {
+      "id": "thm:saito_cc_pullback",
+      "type": "theorem",
+      "title": "Pullback of the characteristic cycle (Saito)",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §4, proof of final-nearby-formula; Saito Theorem 6.6.}\n  Let $p:X\\to Y$ be a morphism of smooth varieties.  If $p$ is properly\n  $\\SSing(K)$-transversal and étale at $x\\in X$, then\n  \\[ \\CCyc(p^*K) = p^!\\CCyc(K). \\]\n  In particular, $\\CCyc'(p^*K) = p^!\\CCyc'(K)$, where $\\CCyc'$ denotes the\n  characteristic cycle with the cotangent space at any chosen point removed.",
+      "uses": [
+        "def:sawin_characteristic_cycle",
+        "def:sawin_properly_transversal",
+        "def:sawin_shriek_pullback"
+      ],
+      "lean_name": "MR4228499.cc_pullback",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  Axiomatized: this result is assumed without proof; the Lean formalization will use\n  an \\texttt{opaque} declaration.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Axioms.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 0,
+      "descendant_count": 0,
+      "proof_size_tex": 116,
+      "effort_local": 116,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 3676
+    },
+    {
+      "id": "thm:saito_cc_nearby",
+      "type": "theorem",
+      "title": "Characteristic cycle and nearby cycles (Saito)",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §4, proof of nearby-formula; Saito Theorem 7.6.}\n  Let $f:X\\to Y$ be a smooth projective morphism that is $\\SSing'(K)$-transversal\n  with fibres of dimension $\\dim X-1$.  Let $y\\in Y$, $Z=f^{-1}(y)$, and\n  $i:Z\\hookrightarrow X$ the inclusion.  If $i$ is properly $\\SSing'(K)$-transversal\n  (which follows from \\cref{lem:sawin_transversality_check}), then\n  \\[ i^!\\CCyc'(K) = \\CCyc(R\\Psi_f K), \\]\n  where $\\CCyc'(K)$ denotes $\\CCyc(K)$ with any cotangent-space-at-$x$ term removed.",
+      "uses": [
+        "def:sawin_characteristic_cycle",
+        "def:sawin_shriek_pullback",
+        "def:nearby_cycles",
+        "lem:sawin_transversality_check"
+      ],
+      "lean_name": "MR4228499.cc_nearby",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  Axiomatized: this result is assumed without proof; the Lean formalization will use\n  an \\texttt{opaque} declaration.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Axioms.tex",
+      "lean_file": "",
+      "dep_count": 4,
+      "rdep_count": 1,
+      "descendant_count": 1,
+      "proof_size_tex": 116,
+      "effort_local": 116,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 4736
+    },
+    {
+      "id": "thm:saito_index",
+      "type": "theorem",
+      "title": "Index formula for the characteristic cycle (Saito)",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §4, proof of nearby-formula; Saito Theorem 7.13.}\n  In the setting of \\cref{thm:saito_cc_nearby}, with $Z=f^{-1}(y)$ and $Z$ viewed\n  as the zero-section of $T^*Z$,\n  \\[ \\bigl(\\CCyc(R\\Psi_f K),\\, Z\\bigr)_{T^*Z} = \\chi(Z, R\\Psi_f K) = \\chi(f^{-1}(\\eta), K), \\]\n  where $\\eta$ is the generic point of $Y$ and the left side is the intersection\n  number in the cotangent bundle.",
+      "uses": [
+        "thm:saito_cc_nearby",
+        "def:sawin_characteristic_cycle",
+        "def:nearby_cycles"
+      ],
+      "lean_name": "MR4228499.indexFormula",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  Axiomatized: this result is assumed without proof; the Lean formalization will use\n  an \\texttt{opaque} declaration.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Axioms.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 0,
+      "descendant_count": 0,
+      "proof_size_tex": 116,
+      "effort_local": 116,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 4852
+    },
+    {
+      "id": "thm:saito_direct_pushforward",
+      "type": "theorem",
+      "title": "Direct-image formula for the characteristic cycle (Saito)",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §5, proof of ts-smooth-cc; Saito,\n  \\emph{Characteristic cycles and the conductor of direct image},\n  arXiv:1704.04832, Theorem 2.2.5.}\n  Let $f:X\\to Y$ be a quasi-projective proper morphism of smooth varieties with $Y$\n  projective, and let $K\\in D^b_c(X,\\bF_\\ell)$ be constructible.  Assume the\n  dimension hypothesis (2.20): $f_\\circ\\SSing(K)$ has dimension $\\dim Y$.  Then\n  \\[ \\CCyc(f_*K) = f_!\\CCyc(K). \\]",
+      "uses": [
+        "def:sawin_characteristic_cycle",
+        "def:sawin_shriek_forward",
+        "def:sawin_circ_forward"
+      ],
+      "lean_name": "MR4228499.cc_pushforward",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  Axiomatized: this result is assumed without proof; the Lean formalization will use\n  an \\texttt{opaque} declaration.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Axioms.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 0,
+      "descendant_count": 0,
+      "proof_size_tex": 116,
+      "effort_local": 116,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 3436
+    },
+    {
+      "id": "lem:gabber_illusie",
+      "type": "lemma",
+      "title": "Perversity of vanishing cycles (Gabber--Illusie)",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §4, proof of final-nearby-formula; Illusie,\n  \\emph{Autour du théorème de monodromie locale}, Astérisque 223 (1994) 9--57,\n  Corollary 4.6.}\n  Let $f:X\\to Y$ be a morphism to a smooth curve, and let $F\\in D^b_c(X,\\bF_\\ell)$.\n  If $F[-1]$ is perverse on $X$ and $F$ is supported on a fibre $f^{-1}(s)$, then\n  $R\\Phi_f(F)[-1]$ is perverse on $f^{-1}(s)$.",
+      "uses": [
+        "def:vanishing_cycles"
+      ],
+      "lean_name": "MR4228499.rphi_perverse",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  Axiomatized: this result is assumed without proof; the Lean formalization will use\n  an \\texttt{opaque} declaration.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Axioms.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 0,
+      "descendant_count": 0,
+      "proof_size_tex": 116,
+      "effort_local": 116,
+      "proof_size_tex_total": 232,
+      "proof_size_lean_total": null,
+      "effort_total": 811
+    },
+    {
+      "id": "lem:ts_3_22",
+      "type": "lemma",
+      "title": "Cycle class of the Tsimerman--Shende polar variety",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §5, proof of individual-polar-bound; Shende--Tsimerman,\n  \\emph{Equidistribution in $\\operatorname{Bun}_2(\\mathbb P^1)$}, Duke Math.\\ J.\\\n  166 (2017) 3461--3504, Lemma 3.22.}\n  Let $L\\subseteq H^1(C,\\cO_C)$ be a generic subspace of rank $g-i-1$ and\n  $L^\\vee\\subseteq H^0(C,K_C)$ its perpendicular subspace of dimension $i+1$.  Let\n  \\[ P'_L V_{w_1,w_2} = \\pi_{w_1,w_2}(\\sigma^{-1}(\\PP(L^\\vee))) \\subseteq J \\]\n  where $\\pi_{w_1,w_2}:C^{(w_1)}\\times C^{(w_2)}\\times(C/\\tau)^{g-1-w_1-w_2}\\to J$\n  sends $(D_1,D_2,D_3)\\mapsto [D_1+2D_2]$ and $\\sigma$ is the projection to\n  $\\PP(H^0(C,K_C))$.  Then the cycle class of $P'_L V_{w_1,w_2}$ in $\\CHow^*(J)$ is\n  \\[ \\sum_{\\substack{c+d=w_1+w_2-i\\\\ c\\le w_1,\\,d\\le w_2}}\n     2^{w_1+w_2-i}\\binom{g-i-1}{c,d,g-1-w_1-w_2}2^{w_2-d}\n     \\binom{w_1+w_2-c-d}{w_1-c}[\\Theta_i]. \\]\n  In particular, the $i$th polar multiplicity of $pr_{w_1,w_2*}[Z_{w_1,w_2}]$ at\n  any $E\\in J$ is at most the coefficient above times\n  $([\\Theta_i],[\\Theta_{g-i}])=\\binom{g}{i}$ (times $2^{i-1}$ for $i>0$, or $1$ for\n  $i=0$), via the appendix bound.",
+      "uses": [
+        "def:sawin_Z_locus",
+        "def:peer_jacobian",
+        "def:peer_weil_divisor"
+      ],
+      "lean_name": "MR4228499.ts_polar_class",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  Axiomatized: this result is assumed without proof; the Lean formalization will use\n  an \\texttt{opaque} declaration.  The cycle-class computation lifts cleanly from\n  characteristic zero (where Shende--Tsimerman prove it) because everything involved\n  in the intersection theory can be lifted.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Axioms.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 0,
+      "descendant_count": 0,
+      "proof_size_tex": 293,
+      "effort_local": 293,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 2340
+    },
+    {
+      "id": "thm:ts_4_4",
+      "type": "theorem",
+      "title": "Equidistribution from Betti-number bounds (Tsimerman--Shende)",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, proof of equidistribution; Shende--Tsimerman Theorem 4.4.}\n  If the Betti-number bound\n  \\[ \\sum_{i\\in\\bZ}\\dim H^i\\bigl((\\Theta_{g-a}\\cap L-\\Theta_{g-b})_{\\overline k},\n     \\bQ_\\ell\\bigr) \\le B(g) \\]\n  holds for all $L\\in J$ and all $a,b$ with $0\\le a,b\\le g$ (as provided by\n  \\cref{thm:sawin_theta_betti_bound}), then the equidistribution statement of\n  \\cref{thm:sawin_equidistribution} follows.  In particular, Theorem 4.4 of\n  Shende--Tsimerman handles the deduction from the Betti-number bound to the\n  equidistribution statement, including the case where the minimal degree does not\n  tend to $\\infty$.",
+      "uses": [
+        "thm:sawin_theta_betti_bound"
+      ],
+      "lean_name": "MR4228499.ts_equidistribution_from_betti",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  Axiomatized: this result is assumed without proof; the Lean formalization will use\n  an \\texttt{opaque} declaration.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_Axioms.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 0,
+      "descendant_count": 0,
+      "proof_size_tex": 116,
+      "effort_local": 116,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 20048
+    },
+    {
+      "id": "def:sawin_local_intersection",
+      "type": "definition",
+      "title": "Local intersection number",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §3, Definition (local intersection number).}\n  For $f:Y\\to X$, $x\\in X$, and cycles $C_1,C_2$ on $Y$ of total dimension\n  $\\dim Y$ with $C_1\\cap C_2\\cap f^{-1}(x)$ proper (and each component of\n  $C_1\\cap C_2$ either proper inside $f^{-1}(x)$ or disjoint from it), the local\n  intersection number $(C_1,C_2)_{Y,x}$ is the sum of the degrees of the refined\n  intersection $C_1\\cdot C_2$ (Fulton) over the components of $C_1\\cap C_2$\n  inside $f^{-1}(x)$.",
+      "uses": [],
+      "lean_name": "MR4228499.localIntersectionNumber",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_MasseyBound.tex",
+      "lean_file": "",
+      "dep_count": 0,
+      "rdep_count": 2,
+      "descendant_count": 9,
+      "proof_size_tex": null,
+      "effort_local": 476,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 476
+    },
+    {
+      "id": "lem:sawin_intersection_comparison",
+      "type": "lemma",
+      "title": "Independence of the polar intersection from the choice of $(Y,V)$",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §3, Lemma intersection-comparison.}\n  Let $X$ be smooth, $C$ a conical cycle on $T^*X$ of dimension $\\dim X$, $x\\in\n  X$, and $0\\le i<\\dim X$.  For $Y\\subset X$ smooth of dimension $\\dim X-i$\n  through $x$ and $V$ a rank-$(i+1)$ sub-bundle of $T^*X$ on $Y$ whose strict\n  transforms of $\\PP(C),\\PP(V)$ do not meet in the exceptional divisor of the\n  blowup of $\\PP(T^*X)$ at the fibre over $x$, the contribution of the fibre over\n  $x$ to $\\PP(C)\\cap\\PP(V)$ depends only on $i$.  A general pair $((TY)_x,V_x)$\n  satisfies the hypothesis, so such $(Y,V)$ exist.",
+      "uses": [
+        "def:sawin_projectivization",
+        "def:sawin_local_intersection"
+      ],
+      "lean_name": "MR4228499.intersection_comparison",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{def:sawin_projectivization}\n  Work locally and deform $(Y,V)$ to $(Y',V')$ through a connected family of\n  local complete intersections (convex combination of defining equations).  The\n  emptiness of the strict-transform intersection in the exceptional divisor is\n  open, so the whole family can be taken to satisfy it; the intersection locus is\n  closed and disjoint from $x$, hence avoids a neighborhood of $x$, so the\n  contribution at $x$ is constant in the family.  For genericity: $\\PP(C)$ has\n  dimension $\\dim X-1$, the exceptional fibre $\\PP((TX)_x)\\times\\PP((T^*X)_x)$ has\n  dimension $2\\dim X-2$, and the strict transform of $\\PP(V)$ is\n  $\\PP((TY)_x)\\times\\PP(V_x)$ of dimension $\\dim X-1$; for general subspaces the\n  intersection has expected dimension $-1$, i.e. is empty.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_MasseyBound.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 2,
+      "descendant_count": 7,
+      "proof_size_tex": 793,
+      "effort_local": 793,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 1864
+    },
+    {
+      "id": "def:sawin_polar_multiplicity_2",
+      "type": "definition",
+      "title": "Polar multiplicity, intersection form",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §3, Definition polar-multiplicity-2.}\n  For $0\\le i<\\dim X$, with $Y$ a sufficiently general smooth codimension-$i$\n  subvariety through $x$ and $V$ a sufficiently general rank-$(i+1)$ sub-bundle of\n  $T^*X$ over $Y$, the $i$th polar multiplicity of $C$ at $x$ is the local\n  intersection number $(\\PP(C),\\PP(V))_{\\PP(T^*X),x}$.  For $i=\\dim X$ it is the\n  multiplicity of the zero-section in $C$.  Well-definedness is\n  Lemma~\\ref{lem:sawin_intersection_comparison}.",
+      "uses": [
+        "def:sawin_projectivization",
+        "def:sawin_local_intersection"
+      ],
+      "lean_name": "MR4228499.polarMultiplicity'",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_MasseyBound.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 2,
+      "descendant_count": 7,
+      "proof_size_tex": null,
+      "effort_local": 490,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 1561
+    },
+    {
+      "id": "lem:sawin_multiplicity_polar",
+      "type": "lemma",
+      "title": "Equivalence of the two polar multiplicities",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §3, Lemma multiplicity-polar.}\n  Definition~\\ref{def:sawin_polar_multiplicity} and\n  Definition~\\ref{def:sawin_polar_multiplicity_2} agree.",
+      "uses": [
+        "def:sawin_polar_multiplicity",
+        "def:sawin_polar_multiplicity_2",
+        "lem:sawin_intersection_comparison"
+      ],
+      "lean_name": "MR4228499.polarMultiplicity_eq",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{def:sawin_polar_multiplicity, def:sawin_polar_multiplicity_2}\n  The multiplicity of a cycle at a point is its local intersection number with a\n  general smooth subscheme through the point.  The projection formula gives\n  $(\\pi_*(\\PP(C)\\cap\\PP(V)),Y)_{X,x} = (\\PP(C),\\PP(V)\\cap\\pi^*Y)_{\\PP(T^*X),x}$,\n  and $\\PP(V)\\cap\\pi^*Y$ is the projectivized restriction $V'$ of $V$ to $Y$.  A\n  dimension count in the exceptional divisor $\\PP((TX)_x)\\times\\PP((T^*X)_x)$\n  shows that for $V_x$ general and $Y$ general depending on $V$, the strict\n  transforms of $\\PP(C)$ and $\\PP(V')$ do not meet, so\n  Definition~\\ref{def:sawin_polar_multiplicity_2} applies and the two numbers\n  coincide.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_MasseyBound.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 0,
+      "descendant_count": 0,
+      "proof_size_tex": 685,
+      "effort_local": 685,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 3646
+    },
+    {
+      "id": "lem:sawin_transversality_check",
+      "type": "lemma",
+      "title": "Fibre inclusion is properly transversal",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §4, Lemma transversality-check.}\n  Let $f:X\\to Y$ be smooth of relative dimension $m$ between smooth varieties,\n  $C\\subseteq T^*X$ closed conical with all components of dimension $\\dim X$, and\n  $i:f^{-1}(y)\\hookrightarrow X$ the fibre inclusion.  If $f$ is $C$-transversal\n  and the fibres of $C\\to X\\to Y$ have dimension $m$, then $i$ is properly\n  $C$-transversal.",
+      "uses": [
+        "def:sawin_C_transversal_map",
+        "def:sawin_properly_transversal"
+      ],
+      "lean_name": "MR4228499.transversality_check",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{def:sawin_C_transversal_map, def:sawin_properly_transversal}\n  $C$-transversality of $f$ means $C$ meets the image of $df$ (the one-forms\n  pulled back from $Y$, i.e. those in $\\ker di$) only along the zero-section, so\n  $i$ is $C$-transversal.  Moreover $i^*C = y\\times_Y C$ is a fibre of $C\\to Y$,\n  of dimension $\\dim X-\\dim Y = \\dim f^{-1}(y)$, giving proper transversality.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_MasseyBound.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 2,
+      "descendant_count": 9,
+      "proof_size_tex": 384,
+      "effort_local": 384,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 1438
+    },
+    {
+      "id": "lem:sawin_nearby_formula",
+      "type": "lemma",
+      "title": "Nearby-cycle characteristic-cycle formula",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §4, Lemma nearby-formula.}\n  Let $X$ be smooth, $Y$ a smooth curve, $K\\in D^b_c(X,\\bF_\\ell)$, and let\n  $\\CCyc'(K)$, $\\SSing'(K)$ denote $\\CCyc(K)$, $\\SSing(K)$ with the cotangent\n  space at $x$ removed.  If $f:X\\to Y$ is smooth projective, $\\SSing'(K)$-transversal,\n  and the fibres of $\\SSing'(K)$ over $Y$ have dimension $\\dim X-1$, then for\n  $Z=f^{-1}(f(x))$ with inclusion $i$,\n  \\[ i^!\\CCyc'(K) = \\CCyc(\\RPsi_f K). \\]",
+      "uses": [
+        "lem:sawin_transversality_check",
+        "def:sawin_characteristic_cycle",
+        "def:sawin_shriek_pullback",
+        "def:sawin_singular_support"
+      ],
+      "lean_name": "MR4228499.nearby_formula",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:sawin_transversality_check, def:sawin_characteristic_cycle}\n  Away from $x$, $\\SSing'(K)$-transversality makes $f$ locally acyclic, so\n  $\\RPhi_f K=0$ and $\\RPsi_f K=i^*K$; by Saito Theorem 7.6 and\n  Lemma~\\ref{lem:sawin_transversality_check}, $\\CCyc(\\RPsi_f K)=i^!\\CCyc'(K)$\n  there.  Hence the difference $i^!\\CCyc'(K)-\\CCyc(\\RPsi_f K)$ is a multiple of\n  the cotangent space at $x$; pairing with the zero-section and using the index\n  formula (Saito Theorem 7.13) $(\\CCyc(\\RPsi_f K),Z)=\\chi(f^{-1}(\\eta),K)$ on one\n  side, and projection-formula manipulations $i_*(di)^*Z = N^*Z$ (Fulton\n  8.1.1(c)) together with the constancy of $(\\CCyc'(K),N^*f^{-1}(y'))$ in a smooth\n  family on the other, shows the two pairings agree, forcing the multiple to be\n  zero.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_MasseyBound.tex",
+      "lean_file": "",
+      "dep_count": 4,
+      "rdep_count": 1,
+      "descendant_count": 6,
+      "proof_size_tex": 771,
+      "effort_local": 771,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 4715
+    },
+    {
+      "id": "lem:sawin_genericity",
+      "type": "lemma",
+      "title": "A general pencil of conics is transversal",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §4, Lemma genericity-lemma.}\n  Let $X\\subseteq\\PP^n$ be smooth, $C\\subseteq T^*X$ closed conical of dimension\n  $\\dim X$, and $x\\in X$ a point whose cotangent space is not contained in $C$.\n  For a general pencil of conic sections $\\overline X\\subseteq X\\times\\PP^1$ with\n  projections $p:\\overline X\\to X$, $q:\\overline X\\to\\PP^1$: $p$ is properly\n  $C$-transversal, $q$ is $p^\\circ C$-transversal near the conic through $x$, and\n  the fibres of $p^\\circ C$ over $\\PP^1$ are $(\\dim X-1)$-dimensional near that\n  conic.",
+      "uses": [
+        "def:sawin_properly_transversal",
+        "def:sawin_h_transversal",
+        "def:sawin_C_transversal_map"
+      ],
+      "lean_name": "MR4228499.genericity_lemma",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{def:sawin_properly_transversal, def:sawin_h_transversal, def:sawin_C_transversal_map}\n  The base locus $Y$ of a generic pencil is smooth of codimension $2$ (Bertini),\n  and $p$ is the blow-up of $X$ along $Y$.  Counting conditions on the pencil:\n  for $(y,\\omega)\\in C$, ``$y\\in Y$'' is codimension $2$ and ``$\\omega$ transverse\n  to $Y$'' is codimension $\\dim X-2$, while the space of such $(y,\\omega)$ up to\n  scaling is $(\\dim X-1)$-dimensional, so the bad locus is codimension $1$ ---\n  non-generic --- giving $C$-transversality; the dimension count of $p^*C$ gives\n  proper transversality.  For $q$: $p^\\circ C$-transversality is open, and one\n  checks $dq(\\omega_0)\\notin p^\\circ C$ pointwise on the conic through $x$ via\n  analogous codimension counts, using that the cotangent space at $x$ is not in\n  $C$.  Finally each component of $p^\\circ C$ has dimension $\\dim X$, so its\n  fibres over $\\PP^1$ have dimension $\\dim X-1$ once the finitely many points\n  forced into a single conic are excluded from the neighborhood.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_MasseyBound.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 1,
+      "descendant_count": 6,
+      "proof_size_tex": 1033,
+      "effort_local": 1033,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 2087
+    },
+    {
+      "id": "lem:sawin_final_nearby_formula",
+      "type": "lemma",
+      "title": "Pencil-of-conics nearby/vanishing formula",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §4, Lemma final-nearby-formula.}\n  With $\\overline X$, $p$, $q$ a general pencil of conics, $\\overline x=p^{-1}(x)$,\n  $y=q(\\overline x)$, and $i:q^{-1}(y)\\hookrightarrow\\overline X$:\n  (1) $\\CCyc(\\RPsi_q p^*K)=i^!p^!\\CCyc'(K)$;\n  (2) $\\RPhi_q p^*K$ is supported at $x$;\n  (3) $-\\dimtot(\\RPhi_q p^*K)_x$ equals the multiplicity of the cotangent space at\n  $x$ in $\\CCyc(K)$;\n  (4) if $K$ is perverse, $(\\RPhi_q p^*K)_x$ is supported in degree $-1$.",
+      "uses": [
+        "lem:sawin_nearby_formula",
+        "lem:sawin_genericity",
+        "def:sawin_characteristic_cycle",
+        "def:sawin_shriek_pullback"
+      ],
+      "lean_name": "MR4228499.final_nearby_formula",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:sawin_nearby_formula, lem:sawin_genericity, def:sawin_characteristic_cycle, def:sawin_dimtot}\n  (1) By Lemma~\\ref{lem:sawin_genericity}, $p$ is properly $\\SSing(K)$-transversal\n  and étale at $x$, so $\\CCyc(p^*K)=p^!\\CCyc(K)$ (Saito Theorem 6.6); apply\n  Lemma~\\ref{lem:sawin_nearby_formula} to $p^*K$ and $q$.\n  (2) $q$ is $\\SSing(p^*K)$-transversal near $x$ off $x$, so $p^*K$ is locally\n  $q$-acyclic there and $\\RPhi_q p^*K$ is supported at $x$.\n  (3) $x$ is at most isolated characteristic, so\n  $-\\dimtot(\\RPhi_q p^*K)_x = (\\CCyc(p^*K),(dq)^*\\omega)_x$; the only component of\n  $\\SSing(p^*K)$ meeting $(dq)^*\\omega$ is $N^*x$, with intersection $1$, giving\n  the multiplicity of $N^*x$ in $\\CCyc(p^*K)=\\CCyc(K)$.\n  (4) $p^*K[-1]$ is perverse near $x$ on the generic fibre, so by Gabber's theorem\n  (Illusie, Corollary 4.6) $\\RPhi_q(p^*K)[-1]$ is perverse; being supported at a\n  point it sits in degree $0$, so the unshifted complex is in degree $-1$.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_MasseyBound.tex",
+      "lean_file": "",
+      "dep_count": 4,
+      "rdep_count": 1,
+      "descendant_count": 5,
+      "proof_size_tex": 967,
+      "effort_local": 967,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 6715
+    },
+    {
+      "id": "lem:sawin_multiplicity_hypersurface",
+      "type": "lemma",
+      "title": "Polar multiplicity drops under a generic conic section",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §4, Lemma multiplicity-hypersurface.}\n  Let $X\\subseteq\\PP^n$ be smooth, $x\\in X$, $C$ a conical cycle on $T^*X$, $C'$ its\n  part away from the cotangent space at $x$, $\\inhyper X$ a generic conic section\n  through $x$ with inclusion $j$, and $\\inhyper C=-j^!C'$.  Then for $i>0$ the\n  $i$th polar multiplicity of $C$ at $x$ equals the $(i-1)$st polar multiplicity\n  of $\\inhyper C$ at $x$, and for $i=0$ it equals the multiplicity of the\n  cotangent space at $x$ in $C$.",
+      "uses": [
+        "lem:sawin_intersection_comparison",
+        "def:sawin_polar_multiplicity_2",
+        "def:sawin_shriek_pullback",
+        "def:sawin_polar_multiplicity"
+      ],
+      "lean_name": "MR4228499.multiplicity_hypersurface",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:sawin_intersection_comparison, def:sawin_polar_multiplicity_2}\n  Split into $i=0$, $0<i<\\dim X$, $i=\\dim X$.  For $i=0$ a general section of\n  $\\PP(T^*X)$ meets $\\PP(C)$ only in the fibre over $x$.  For $0<i<\\dim X$, a\n  projective-geometry diagram (the blow-up of $\\PP(T^*X\\times_X\\inhyper X)$ along\n  the conormal section) and Fulton's projection formula identify\n  $(\\PP(\\inhyper C),\\PP(\\inhyper V))_{\\PP(T^*\\inhyper X),x}$ with\n  $(\\PP(C'),\\PP(V))_{\\PP(T^*X)}=(\\PP(C),\\PP(V))_{\\PP(T^*X)}$, while a codimension\n  count on the exceptional divisor verifies the strict-transform condition of\n  Lemma~\\ref{lem:sawin_intersection_comparison}.  For $i=\\dim X$, a cycle whose\n  hypersurface restriction (resp. cotangent projection) is the zero-section was\n  already the zero-section.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_MasseyBound.tex",
+      "lean_file": "",
+      "dep_count": 4,
+      "rdep_count": 1,
+      "descendant_count": 5,
+      "proof_size_tex": 789,
+      "effort_local": 789,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 4720
+    },
+    {
+      "id": "thm:sawin_first_massey",
+      "type": "theorem",
+      "title": "Characteristic-$p$ Massey bound",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §4, Theorem first-Massey.}\n  Let $X$ be a smooth variety over a perfect field $k$, $\\ell$ invertible in $k$,\n  and $K$ a perverse sheaf of $\\bF_\\ell$-modules on $X$.  Then for every $x\\in X$,\n  \\[ \\dim_{\\bF_\\ell}\\cH^{-i}(K)_x \\ \\le\\ \\gamma^i_{\\CCyc(K)}(x). \\]",
+      "uses": [
+        "lem:sawin_final_nearby_formula",
+        "lem:sawin_multiplicity_hypersurface",
+        "def:sawin_polar_multiplicity",
+        "def:sawin_characteristic_cycle"
+      ],
+      "lean_name": "MR4228499.first_Massey",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:sawin_final_nearby_formula, lem:sawin_multiplicity_hypersurface}\n  Étale-locally we may take $X\\subseteq\\PP^n$ smooth projective.  Induct on $i$.\n  From the distinguished triangle $p^*K\\to\\RPsi_q p^*K\\to\\RPhi_q p^*K$ take stalk\n  cohomology at $x$.  Since $\\RPsi_q p^*K[-1]$ is perverse, $\\cH^0(\\RPsi_q p^*K)_x=0$,\n  so for $i=0$, $\\dim\\cH^0(K)_x\\le\\dim(\\RPhi_q p^*K)^{-1}_x\\le-\\dimtot(\\RPhi_q\n  p^*K)_x$, the multiplicity of the cotangent space at $x$ in $\\CCyc(K)$, which by\n  Lemma~\\ref{lem:sawin_multiplicity_hypersurface} is $\\gamma^0_{\\CCyc(K)}(x)$.\n  For $i>0$, Lemma~\\ref{lem:sawin_final_nearby_formula}(4) makes the connecting map\n  vanish, so $\\dim\\cH^{-i}(K)_x\\le\\dim\\cH^{-i}(\\RPsi_q p^*K)_x$; the induction\n  hypothesis bounds this by the $(i-1)$st polar multiplicity of\n  $\\CCyc(\\RPsi_q p^*K[-1])$, which by\n  Lemma~\\ref{lem:sawin_final_nearby_formula}(1) and\n  Lemma~\\ref{lem:sawin_multiplicity_hypersurface} equals $\\gamma^i_{\\CCyc(K)}(x)$.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_MasseyBound.tex",
+      "lean_file": "",
+      "dep_count": 4,
+      "rdep_count": 2,
+      "descendant_count": 4,
+      "proof_size_tex": 965,
+      "effort_local": 965,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 11235
+    },
+    {
+      "id": "cor:sawin_vanishing",
+      "type": "corollary",
+      "title": "Vanishing of stalk cohomology",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, Corollary vanishing-intro.}\n  With $X$, $k$, $\\ell$, $K$ as in Theorem~\\ref{thm:sawin_first_massey},\n  $\\cH^{-i}(K)_x = 0$ whenever $-i > \\dim\\SSing(K)_x - \\dim X$, where\n  $\\SSing(K)_x$ is the fibre of the singular support over $x$.",
+      "uses": [
+        "thm:sawin_first_massey",
+        "def:sawin_polar_multiplicity",
+        "def:sawin_singular_support"
+      ],
+      "lean_name": "MR4228499.vanishing",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{thm:sawin_first_massey}\n  By Theorem~\\ref{thm:sawin_first_massey} it suffices that the $i$th polar\n  multiplicity vanishes for $i<\\dim X-\\dim\\SSing(K)_x$.  For a rank-$(i+1)$ bundle\n  $V$, $\\PP(V)$ has dimension $i$ in the fibre over $0$ while $\\PP(\\CCyc(K))\n  \\subseteq\\PP(\\SSing(K))$ has codimension $\\dim X-\\dim\\SSing(K)_x$ there, so a\n  general $V$ misses it and the polar multiplicity is zero.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_MasseyBound.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 0,
+      "descendant_count": 0,
+      "proof_size_tex": 404,
+      "effort_local": 404,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 11639
+    },
+    {
+      "id": "def:sawin_Z_locus",
+      "type": "definition",
+      "title": "The loci $Z_{w_1,w_2}$ and the maps $\\underline A^{a,b}$",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §5, construction of $Z_{w_1,w_2}$.}\n  Let $\\underline A^{a,b}:C^{(g-a)}\\times C^{(g-b)}\\to J$, $(D_1,D_2)\\mapsto\n  [D_1+D_2]$.  The cotangent fibre of $J$ is $H^0(C,K_C)$.  For $w_1+w_2\\le g$ let\n  $Z_{w_1,w_2}\\subseteq C^{(w_1)}\\times C^{(w_2)}\\times H^0(C,K_C)$ consist of\n  $(D_1,D_2,\\omega)$ with $\\divv(\\omega)\\ge D_1+D_2+\\tau(D_1)+\\tau(D_2)$; it is\n  smooth of dimension $g$.  Let $pr_{w_1,w_2}:Z_{w_1,w_2}\\to T^*J$,\n  $(D_1,D_2,\\omega)\\mapsto([D_1+2D_2],\\omega)$, a proper map, so\n  $pr_{w_1,w_2*}[Z_{w_1,w_2}]$ is a codimension-$g$ cycle on $T^*J$.",
+      "uses": [
+        "def:peer_jacobian",
+        "def:peer_weil_divisor",
+        "def:peer_canonical_differentials"
+      ],
+      "lean_name": "MR4228499.ZLocus",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_ShendeTsimerman.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 3,
+      "descendant_count": 9,
+      "proof_size_tex": null,
+      "effort_local": 579,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 2047
+    },
+    {
+      "id": "lem:sawin_ts_singular",
+      "type": "lemma",
+      "title": "Singular support of the theta map",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §5, Lemma ts-singular.}\n  The pushforward $\\underline A^{a,b}_\\circ(C^{(g-a)}\\times C^{(g-b)})$ of the\n  zero-section is contained in the union of the zero-section of $T^*J$ with\n  $\\bigcup_{w_1+w_2<g}\\operatorname{supp} pr_{w_1,w_2*}[Z_{w_1,w_2}]$.",
+      "uses": [
+        "def:sawin_circ_forward",
+        "def:sawin_Z_locus"
+      ],
+      "lean_name": "MR4228499.ts_singular",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{def:sawin_circ_forward, def:sawin_Z_locus}\n  A pair $(D_a,D_b,\\omega)$ lies in $(d\\underline A^{a,b})^{-1}$ of the\n  zero-section iff $\\divv(\\omega)\\ge\\max(D_a,D_b)$ (Serre duality identifies the\n  derivative with reduction modulo $D_a,D_b$).  Subtract divisors $[P+\\tau(P)]$\n  from $D_a+D_b$ until impossible, obtaining $D'$; let $D_1$ be its odd-multiplicity\n  part and $D_2=(D'-D_1)/2$, so $[D_a+D_b]=[D_1+2D_2]$.  A case analysis at each\n  point (using that $\\omega$ vanishes to even order at hyperelliptic points) shows\n  $\\divv(\\omega)\\ge D_1+D_2+\\tau(D_1)+\\tau(D_2)$, so $(D_1,D_2,\\omega)\\in\n  Z_{\\deg D_1,\\deg D_2}$ and $([D_a+D_b],\\omega)=pr_{w_1,w_2}(D_1,D_2,\\omega)$.  If\n  $\\deg(D_1+D_2)\\ge g$ then $\\omega=0$ and the point is on the zero-section.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_ShendeTsimerman.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 1,
+      "descendant_count": 6,
+      "proof_size_tex": 765,
+      "effort_local": 765,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 3224
+    },
+    {
+      "id": "lem:sawin_ts_smooth_cc",
+      "type": "lemma",
+      "title": "Characteristic cycle of $\\underline A_{a,b*}\\bQ_\\ell$",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §5, Lemma ts-smooth-cc.}\n  $\\CCyc(\\underline A_{a,b*}\\bQ_\\ell[2g-a-b]) = \\sum_{0\\le w_1+w_2<g}\n  m_{w_1,w_2,a,b}\\,pr_{w_1,w_2*}[Z_{w_1,w_2}] + m_{a,b}[J]$, where\n  $m_{w_1,w_2,a,b}$ is the coefficient of $v_1^{g-a}v_2^{g-b}$ in\n  \\[ (v_1+v_2+v_1^2v_2+v_1v_2^2)^{w_1}(v_1v_2)^{w_2}\n     (1+v_1^2+2v_1v_2+v_2^2+v_1^2v_2^2)^{g-1-w_1-w_2}, \\]\n  and $|m_{a,b}|\\le 8^g$.",
+      "uses": [
+        "lem:sawin_ts_singular",
+        "def:sawin_shriek_forward",
+        "def:sawin_characteristic_cycle"
+      ],
+      "lean_name": "MR4228499.ts_smooth_cc",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:sawin_ts_singular, def:sawin_shriek_forward}\n  Lemma~\\ref{lem:sawin_ts_singular} verifies the dimension hypothesis (2.20) of\n  Saito-direct Theorem 2.2.5, giving $\\CCyc(\\underline A_{a,b*}\\bQ_\\ell[2g-a-b]) =\n  \\underline A^{a,b}_![C^{(g-a)}\\times C^{(g-b)}]$.  Pulling back along a general\n  $\\omega\\in H^0(C,K_C)$ (with $2g-2$ simple zeros in $g-1$ $\\tau$-orbits) reduces\n  both sides to an explicit count of subsets, matched by the standard\n  generating-function bookkeeping that assigns the listed monomials; thus the\n  coefficient of $v_1^av_2^b$ is $m_{w_1,w_2,a,b}$.  The cycles agree on a general\n  fibre, hence up to components not dominating $H^0(C,K_C)$, which must be the\n  zero-section; its multiplicity is $(-1)^{g+a+b}$ times the Euler characteristic\n  of the generic fibre of $\\underline A_{a,b}$, bounded by $8^g$ (TS Proposition\n  3.16), and is characteristic-independent by lifting to characteristic zero.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_ShendeTsimerman.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 1,
+      "descendant_count": 5,
+      "proof_size_tex": 933,
+      "effort_local": 933,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 7065
+    },
+    {
+      "id": "lem:sawin_ts_decomposition",
+      "type": "lemma",
+      "title": "Decomposition of $\\pi^n_*\\bQ_\\ell$",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §5, Lemma ts-decomposition.}\n  For $0\\le n\\le g$, $\\pi^n_*\\bQ_\\ell = \\bigoplus_{r=0}^{n/2}\n  i^{n+2r}_*\\bQ_\\ell[-2r](-r)$, where $i^m:\\Theta_m\\hookrightarrow J$.  (Obtained\n  in the proofs of IY Lemma 2.9 / TS Lemma 3.1.)",
+      "uses": [
+        "def:peer_higher_direct_image",
+        "def:peer_weil_divisor"
+      ],
+      "lean_name": "MR4228499.ts_decomposition",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{def:peer_higher_direct_image}\n  This is part of the proofs of IY Lemma 2.9 and TS Lemma 3.1: the pushforward of\n  the constant sheaf along the Abel--Jacobi map of the symmetric power splits as\n  the displayed sum of (shifted, Tate-twisted) constant sheaves on the theta loci.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_ShendeTsimerman.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 1,
+      "descendant_count": 5,
+      "proof_size_tex": 281,
+      "effort_local": 281,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 1758
+    },
+    {
+      "id": "lem:sawin_ts_singular_cc",
+      "type": "lemma",
+      "title": "Characteristic cycle of $\\Sigma^{a,b}_*\\bQ_\\ell$",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §5, Lemma ts-singular-cc.}\n  $\\CCyc(\\Sigma^{a,b}_*\\bQ_\\ell[2g-a-b]) = \\sum_{0\\le w_1+w_2<g}\n  m'_{w_1,w_2,a,b}\\,pr_{w_1,w_2*}[Z_{w_1,w_2}] + m'_{a,b}[J]$, where\n  $m'_{w_1,w_2,a,b}$ is the coefficient of $v_1^{g-a}v_2^{g-b}$ in\n  $(1-v_1^{-2})(1-v_2^{-2})$ times the generating function of\n  Lemma~\\ref{lem:sawin_ts_smooth_cc}, and $|m'_{a,b}|\\le 4\\cdot 8^g$.",
+      "uses": [
+        "lem:sawin_ts_smooth_cc",
+        "lem:sawin_ts_decomposition"
+      ],
+      "lean_name": "MR4228499.ts_singular_cc",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:sawin_ts_smooth_cc, lem:sawin_ts_decomposition}\n  By Lemma~\\ref{lem:sawin_ts_decomposition},\n  $\\underline A^{a,b}_*\\bQ_\\ell = \\bigoplus_{r,s}\\Sigma^{a+2r,b+2s}_*\\bQ_\\ell[-2r-2s](-r-s)$,\n  so $\\CCyc(\\Sigma^{a,b}_*\\bQ_\\ell) = \\CCyc(\\underline A^{a,b}_*\\bQ_\\ell) -\n  \\CCyc(\\underline A^{a+2,b}_*) - \\CCyc(\\underline A^{a,b+2}_*) +\n  \\CCyc(\\underline A^{a+2,b+2}_*)$; substituting\n  Lemma~\\ref{lem:sawin_ts_smooth_cc} produces the factor $(1-v_1^{-2})(1-v_2^{-2})$\n  and the bound $|m'_{a,b}|\\le 4\\cdot 8^g$.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_ShendeTsimerman.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 2,
+      "descendant_count": 4,
+      "proof_size_tex": 515,
+      "effort_local": 515,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 8362
+    },
+    {
+      "id": "lem:sawin_individual_polar_bound",
+      "type": "lemma",
+      "title": "Polar multiplicity of a single $pr_{w_1,w_2*}[Z_{w_1,w_2}",
+      "chapter": "",
+      "statement": "$]\n  \n  \n  \n  \n  \n  \\textit{Source: Sawin, §5, Lemma individual-polar-bound.}\n  For $x\\in J$ and $0\\le i<g-1$, the $i$th polar multiplicity of\n  $pr_{w_1,w_2*}[Z_{w_1,w_2}]$ at $x$ is at most\n  \\[ 2^{w_1+w_2}\\binom{g}{i}\\!\\!\\sum_{\\substack{c+d=w_1+w_2-i\\\\ c\\le w_1,\\,d\\le w_2}}\\!\\!\n     \\binom{g-i-1}{c,d,g-1-w_1-w_2}2^{w_2-d}\\binom{w_1+w_2-c-d}{w_1-c}. \\]",
+      "uses": [
+        "def:sawin_polar_multiplicity",
+        "thm:sawin_appendix",
+        "def:sawin_Z_locus"
+      ],
+      "lean_name": "MR4228499.individual_polar_bound",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{def:sawin_polar_multiplicity, thm:sawin_appendix}\n  Choosing $V$ the constant bundle $L^\\vee$ ($L\\subseteq H^1(C,\\cO_C)$ generic of\n  rank $g-i-1$), the polar multiplicity is the multiplicity of the Shende--Tsimerman\n  polar variety $P'_L V_{w_1,w_2}=\\pi_{w_1,w_2}(\\sigma^{-1}\\PP(L^\\vee))$, after\n  identifying $\\PP(Z_{w_1,w_2})\\cong C^{(w_1)}\\times C^{(w_2)}\\times(C/\\tau)^{g-1-w_1-w_2}$.\n  TS Lemma 3.22 computes its class as a multiple of $[\\Theta_i]$; applying the\n  appendix bound Theorem~\\ref{thm:sawin_appendix} (with $r=2$) and\n  $([\\Theta_i],[\\Theta_{g-i}])=\\binom{g}{i}$ yields the stated estimate.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_ShendeTsimerman.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 1,
+      "descendant_count": 4,
+      "proof_size_tex": 614,
+      "effort_local": 614,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 5025
+    },
+    {
+      "id": "lem:sawin_global_polar_bound",
+      "type": "lemma",
+      "title": "Summed polar-multiplicity bound",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, §5, Lemma global-polar-bound.}\n  For $x\\in J$, $\\sum_{i=0}^{g-1}\\gamma^i_{\\CCyc(\\Sigma^{a,b}_*\\bQ_\\ell[2g-a-b])}(x)\n  \\le 28^g/16$.",
+      "uses": [
+        "lem:sawin_individual_polar_bound",
+        "lem:sawin_ts_singular_cc"
+      ],
+      "lean_name": "MR4228499.global_polar_bound",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:sawin_individual_polar_bound, lem:sawin_ts_singular_cc}\n  Rewrite the inner sum of Lemma~\\ref{lem:sawin_individual_polar_bound} as a\n  coefficient of $(1+2u)^i(1+u)^{w_1+w_2-i}$, and bound $m'_{w_1,w_2,a,b}\\le\n  m_{w_1,w_2,a,b}\\le 4^{w_1}6^{g-1-w_1-w_2}$ (value of the generating function at\n  $1$).  Summing over $w_2$ at fixed $w=w_1+w_2$ gives the $i$th polar multiplicity\n  of $\\sum_{w_1+w_2=w}m'_{w_1,w_2,a,b}pr_{w_1,w_2*}[Z_{w_1,w_2}]$ at most\n  $6^{g-1-w}12^i10^{w-i}\\binom{g}{i}\\binom{g-i-1}{w-i}$; summing over $w$ gives\n  $\\binom{g}{i}12^i16^{g-i-1}$, and summing over $i$ from $0$ to $g-1$ collapses to\n  $(12+16)^g/16=28^g/16$ (the zero-section does not contribute for $i<g$).\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_ShendeTsimerman.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 1,
+      "descendant_count": 3,
+      "proof_size_tex": 698,
+      "effort_local": 698,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 11843
+    },
+    {
+      "id": "thm:sawin_theta_betti_bound",
+      "type": "theorem",
+      "title": "Betti numbers of theta-locus intersections",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, Theorem theta-betti-bound.}\n  For $g\\in\\bN$, $0\\le a,b\\le g$, and $L\\in\\Pic^{2g-a-b}(C)$,\n  \\[ \\sum_{i\\in\\bZ}\\dim H^i\\bigl((\\Theta_{g-a}\\cap L-\\Theta_{g-b})_{\\overline k},\\bQ_\\ell\\bigr)\n     \\ \\le\\ 28^g/16 + 4\\cdot 8^g + 2\\cdot 4^g. \\]",
+      "uses": [
+        "thm:sawin_first_massey",
+        "lem:sawin_global_polar_bound",
+        "lem:sawin_ts_singular_cc"
+      ],
+      "lean_name": "MR4228499.theta_betti_bound",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{thm:sawin_first_massey, lem:sawin_global_polar_bound, lem:sawin_ts_singular_cc}\n  By proper base change the left side is the sum of Betti numbers of the stalk at\n  $L$ of $\\Sigma^{a,b}_*\\bQ_\\ell[2g-a-b]$.  This sheaf splits into perverse\n  homology (TS Lemmas 3.1, 3.6); the non-zero-degree pieces are constant of total\n  rank $\\le 4^g$ (the Betti numbers of $J$).  Apply\n  Theorem~\\ref{thm:sawin_first_massey} to ${}^p\\cH^0$: its polar multiplicities for\n  $i<g$ match those of $\\CCyc(\\Sigma^{a,b}_*\\bQ_\\ell[2g-a-b])$, bounded by\n  $28^g/16$ via Lemma~\\ref{lem:sawin_global_polar_bound}, while the $g$th polar\n  multiplicity is the zero-section multiplicity $\\le 4\\cdot 8^g + 4^g$\n  (Lemma~\\ref{lem:sawin_ts_singular_cc}).  Summing gives\n  $28^g/16 + 4\\cdot 8^g + 2\\cdot 4^g$.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_ShendeTsimerman.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 2,
+      "descendant_count": 2,
+      "proof_size_tex": 783,
+      "effort_local": 783,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 19932
+    },
+    {
+      "id": "thm:sawin_equidistribution",
+      "type": "theorem",
+      "title": "Equidistribution in $\\Bun_2(\\PP^1)$",
+      "chapter": "",
+      "statement": "\\textit{Source: Sawin, Theorem equidistribution-statement.}\n  Let $q>28^4=614{,}656$ be a prime power.  For a sequence $(C_i,M_i)$ of\n  hyperelliptic curves and line bundles with $\\deg M_i\\bmod 2$ constant,\n  $g(C_i)\\to\\infty$, and the minimal degree representing $M_i$ in\n  $\\Pic(C)/\\Pic(\\PP^1)$ tending to $\\infty$, the pushforward of the uniform\n  measure on $\\Pic(C_i)/\\Pic(\\PP^1)$ along $L\\mapsto(\\pi_*L,\\pi_*(L\\otimes M_i))$\n  converges to the stated even/odd mixture of products of the uniform measures\n  $\\mu_{\\Bun_2^0},\\mu_{\\Bun_2^1}$.",
+      "uses": [
+        "thm:sawin_theta_betti_bound"
+      ],
+      "lean_name": "MR4228499.equidistribution",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{thm:sawin_theta_betti_bound}\n  Immediate from Theorem~\\ref{thm:sawin_theta_betti_bound} and TS Theorem 4.4,\n  which deduces the equidistribution statement from the Betti-number bound (and\n  also handles the case where the minimal degree does not tend to $\\infty$).\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_ShendeTsimerman.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 0,
+      "descendant_count": 0,
+      "proof_size_tex": 270,
+      "effort_local": 270,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 20202
+    },
+    {
+      "id": "lem:sawin_appendix_linear",
+      "type": "lemma",
+      "title": "Pushforward of a linear class",
+      "chapter": "",
+      "statement": "\\textit{Source: Tsimerman appendix, Lemma.}\n  For $\\ell_j$ the class of a $j$-dimensional linear subspace of $\\PP^k$,\n  $\\phi_{k*}\\psi_k^*\\ell_j = r^{k-j}[\\Theta_j]$ in $\\CHow^*(J^{(k)})$.",
+      "uses": [
+        "def:peer_jacobian",
+        "def:peer_weil_divisor"
+      ],
+      "lean_name": "MR4228499.appendix_linear_class",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{def:peer_weil_divisor}\n  For an effective ordinary divisor $D$ of degree $k-j$, $L=\\psi_k(D+\\Sym^j C)$ is\n  a linear subspace, and $\\psi_k^*L$ is the union of $D'+\\Sym^j C$ over the\n  $r^{k-j}$ choices $D'$ of one point from each fibre, with no generic\n  multiplicity since $\\psi_k$ is étale over a generic point of $L$; thus\n  $\\psi_k^*\\ell_j=r^{k-j}[D+\\Sym^j C]$.  As $\\phi_k$ is birational onto\n  $(D)+\\Theta_j$, $\\phi_{k*}[D+\\Sym^j C]=[\\Theta_j]$.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_ShendeTsimerman.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 1,
+      "descendant_count": 6,
+      "proof_size_tex": 457,
+      "effort_local": 457,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 1433
+    },
+    {
+      "id": "thm:sawin_appendix",
+      "type": "theorem",
+      "title": "Multiplicity bound in the Jacobian",
+      "chapter": "",
+      "statement": "\\textit{Source: Tsimerman appendix, Theorem appendix.}\n  Let $V\\subseteq J^{(g)}$ be a subvariety of codimension $j<g$.  Then the\n  multiplicity of $V$ at any $v\\in V(k)$ is at most $r^{g-1-j}([V],[\\Theta_j])$.",
+      "uses": [
+        "lem:sawin_appendix_linear"
+      ],
+      "lean_name": "MR4228499.appendix_multiplicity_bound",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:sawin_appendix_linear}\n  Pick a translate $x+\\Theta_{g-1}$ with $v-x=(D)$, $D$ ordinary, and\n  $\\dim((V-x)\\cap\\Theta_{g-1})=j-1$.  Set $W=(V-x)\\cap\\Theta_{g-1}$, $W'$ the\n  component of $\\phi_k^*W$ through $\\phi_k^{-1}(v-x)$, and $W''=\\psi_k(W')$.  A\n  linear space $L_0\\subseteq\\PP^{g-1}$ of codimension $j-1$ meeting $W''$ in\n  isolated points through $\\psi_k\\phi_k^{-1}(v-x)$ produces, via\n  Lemma~\\ref{lem:sawin_appendix_linear}, an intersection\n  $x+\\psi_{k*}\\psi_k^*L_0$ meeting $V$ at isolated points through $v$ with all\n  contributions positive; as in TS Proposition 3.25 the local intersection\n  multiplicity at $v$ bounds the multiplicity of $V$ at $v$ from below, giving the\n  claim.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Sawin_ShendeTsimerman.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 1,
+      "descendant_count": 5,
+      "proof_size_tex": 705,
+      "effort_local": 705,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 2138
+    },
+    {
+      "id": "lean:hello",
+      "type": "lean_aux",
+      "title": "hello",
+      "chapter": "",
+      "statement": "",
+      "uses": [],
+      "lean_name": "hello",
+      "proved": true,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "def hello := \"world\"",
+      "proof_size_lean": 20,
+      "has_sorry": false,
+      "tex_file": "",
+      "lean_file": "MR4228499BoundsForTheStalksOfPerverseSheavesInCharacteristicPAndAConjectureO/Basic.lean",
+      "dep_count": 0,
+      "rdep_count": 0,
+      "descendant_count": 0,
+      "proof_size_tex": null,
+      "effort_local": 0,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": 20,
+      "effort_total": 0
+    }
+  ],
+  "edges": [
+    {
+      "from": "def:peer_jacobian",
+      "to": "def:peer_weil_divisor"
+    },
+    {
+      "from": "def:sawin_conical",
+      "to": "def:sawin_projectivization"
+    },
+    {
+      "from": "def:sawin_projectivization",
+      "to": "def:sawin_polar_multiplicity"
+    },
+    {
+      "from": "def:sawin_C_transversal_map",
+      "to": "def:sawin_circ_forward"
+    },
+    {
+      "from": "def:sawin_circ_forward",
+      "to": "def:sawin_shriek_forward"
+    },
+    {
+      "from": "def:sawin_conical",
+      "to": "def:sawin_h_transversal"
+    },
+    {
+      "from": "def:sawin_h_transversal",
+      "to": "def:sawin_pair_transversal"
+    },
+    {
+      "from": "def:sawin_C_transversal_map",
+      "to": "def:sawin_pair_transversal"
+    },
+    {
+      "from": "def:sawin_pair_transversal",
+      "to": "def:sawin_singular_support"
+    },
+    {
+      "from": "def:sawin_local_acyclic",
+      "to": "def:sawin_singular_support"
+    },
+    {
+      "from": "def:sawin_h_transversal",
+      "to": "def:sawin_properly_transversal"
+    },
+    {
+      "from": "def:sawin_properly_transversal",
+      "to": "def:sawin_shriek_pullback"
+    },
+    {
+      "from": "def:sawin_C_transversal_map",
+      "to": "def:sawin_isolated_char_point"
+    },
+    {
+      "from": "def:sawin_singular_support",
+      "to": "def:sawin_characteristic_cycle"
+    },
+    {
+      "from": "def:sawin_dimtot",
+      "to": "def:sawin_characteristic_cycle"
+    },
+    {
+      "from": "def:sawin_isolated_char_point",
+      "to": "def:sawin_characteristic_cycle"
+    },
+    {
+      "from": "def:sawin_pair_transversal",
+      "to": "thm:beilinson_ss"
+    },
+    {
+      "from": "def:sawin_local_acyclic",
+      "to": "thm:beilinson_ss"
+    },
+    {
+      "from": "def:sawin_singular_support",
+      "to": "thm:beilinson_ss"
+    },
+    {
+      "from": "def:sawin_characteristic_cycle",
+      "to": "thm:saito_cc_exists"
+    },
+    {
+      "from": "def:sawin_singular_support",
+      "to": "thm:saito_cc_exists"
+    },
+    {
+      "from": "def:sawin_dimtot",
+      "to": "thm:saito_cc_exists"
+    },
+    {
+      "from": "def:vanishing_cycles",
+      "to": "thm:saito_cc_exists"
+    },
+    {
+      "from": "thm:saito_cc_exists",
+      "to": "thm:saito_prop_514"
+    },
+    {
+      "from": "def:sawin_singular_support",
+      "to": "thm:saito_prop_514"
+    },
+    {
+      "from": "def:sawin_characteristic_cycle",
+      "to": "thm:saito_prop_514"
+    },
+    {
+      "from": "def:sawin_characteristic_cycle",
+      "to": "thm:saito_cc_pullback"
+    },
+    {
+      "from": "def:sawin_properly_transversal",
+      "to": "thm:saito_cc_pullback"
+    },
+    {
+      "from": "def:sawin_shriek_pullback",
+      "to": "thm:saito_cc_pullback"
+    },
+    {
+      "from": "def:sawin_characteristic_cycle",
+      "to": "thm:saito_cc_nearby"
+    },
+    {
+      "from": "def:sawin_shriek_pullback",
+      "to": "thm:saito_cc_nearby"
+    },
+    {
+      "from": "def:nearby_cycles",
+      "to": "thm:saito_cc_nearby"
+    },
+    {
+      "from": "lem:sawin_transversality_check",
+      "to": "thm:saito_cc_nearby"
+    },
+    {
+      "from": "thm:saito_cc_nearby",
+      "to": "thm:saito_index"
+    },
+    {
+      "from": "def:sawin_characteristic_cycle",
+      "to": "thm:saito_index"
+    },
+    {
+      "from": "def:nearby_cycles",
+      "to": "thm:saito_index"
+    },
+    {
+      "from": "def:sawin_characteristic_cycle",
+      "to": "thm:saito_direct_pushforward"
+    },
+    {
+      "from": "def:sawin_shriek_forward",
+      "to": "thm:saito_direct_pushforward"
+    },
+    {
+      "from": "def:sawin_circ_forward",
+      "to": "thm:saito_direct_pushforward"
+    },
+    {
+      "from": "def:vanishing_cycles",
+      "to": "lem:gabber_illusie"
+    },
+    {
+      "from": "def:sawin_Z_locus",
+      "to": "lem:ts_3_22"
+    },
+    {
+      "from": "def:peer_jacobian",
+      "to": "lem:ts_3_22"
+    },
+    {
+      "from": "def:peer_weil_divisor",
+      "to": "lem:ts_3_22"
+    },
+    {
+      "from": "thm:sawin_theta_betti_bound",
+      "to": "thm:ts_4_4"
+    },
+    {
+      "from": "def:sawin_projectivization",
+      "to": "lem:sawin_intersection_comparison"
+    },
+    {
+      "from": "def:sawin_local_intersection",
+      "to": "lem:sawin_intersection_comparison"
+    },
+    {
+      "from": "def:sawin_projectivization",
+      "to": "def:sawin_polar_multiplicity_2"
+    },
+    {
+      "from": "def:sawin_local_intersection",
+      "to": "def:sawin_polar_multiplicity_2"
+    },
+    {
+      "from": "def:sawin_polar_multiplicity",
+      "to": "lem:sawin_multiplicity_polar"
+    },
+    {
+      "from": "def:sawin_polar_multiplicity_2",
+      "to": "lem:sawin_multiplicity_polar"
+    },
+    {
+      "from": "lem:sawin_intersection_comparison",
+      "to": "lem:sawin_multiplicity_polar"
+    },
+    {
+      "from": "def:sawin_C_transversal_map",
+      "to": "lem:sawin_transversality_check"
+    },
+    {
+      "from": "def:sawin_properly_transversal",
+      "to": "lem:sawin_transversality_check"
+    },
+    {
+      "from": "lem:sawin_transversality_check",
+      "to": "lem:sawin_nearby_formula"
+    },
+    {
+      "from": "def:sawin_characteristic_cycle",
+      "to": "lem:sawin_nearby_formula"
+    },
+    {
+      "from": "def:sawin_shriek_pullback",
+      "to": "lem:sawin_nearby_formula"
+    },
+    {
+      "from": "def:sawin_singular_support",
+      "to": "lem:sawin_nearby_formula"
+    },
+    {
+      "from": "def:sawin_properly_transversal",
+      "to": "lem:sawin_genericity"
+    },
+    {
+      "from": "def:sawin_h_transversal",
+      "to": "lem:sawin_genericity"
+    },
+    {
+      "from": "def:sawin_C_transversal_map",
+      "to": "lem:sawin_genericity"
+    },
+    {
+      "from": "lem:sawin_nearby_formula",
+      "to": "lem:sawin_final_nearby_formula"
+    },
+    {
+      "from": "lem:sawin_genericity",
+      "to": "lem:sawin_final_nearby_formula"
+    },
+    {
+      "from": "def:sawin_characteristic_cycle",
+      "to": "lem:sawin_final_nearby_formula"
+    },
+    {
+      "from": "def:sawin_shriek_pullback",
+      "to": "lem:sawin_final_nearby_formula"
+    },
+    {
+      "from": "lem:sawin_intersection_comparison",
+      "to": "lem:sawin_multiplicity_hypersurface"
+    },
+    {
+      "from": "def:sawin_polar_multiplicity_2",
+      "to": "lem:sawin_multiplicity_hypersurface"
+    },
+    {
+      "from": "def:sawin_shriek_pullback",
+      "to": "lem:sawin_multiplicity_hypersurface"
+    },
+    {
+      "from": "def:sawin_polar_multiplicity",
+      "to": "lem:sawin_multiplicity_hypersurface"
+    },
+    {
+      "from": "lem:sawin_final_nearby_formula",
+      "to": "thm:sawin_first_massey"
+    },
+    {
+      "from": "lem:sawin_multiplicity_hypersurface",
+      "to": "thm:sawin_first_massey"
+    },
+    {
+      "from": "def:sawin_polar_multiplicity",
+      "to": "thm:sawin_first_massey"
+    },
+    {
+      "from": "def:sawin_characteristic_cycle",
+      "to": "thm:sawin_first_massey"
+    },
+    {
+      "from": "thm:sawin_first_massey",
+      "to": "cor:sawin_vanishing"
+    },
+    {
+      "from": "def:sawin_polar_multiplicity",
+      "to": "cor:sawin_vanishing"
+    },
+    {
+      "from": "def:sawin_singular_support",
+      "to": "cor:sawin_vanishing"
+    },
+    {
+      "from": "def:peer_jacobian",
+      "to": "def:sawin_Z_locus"
+    },
+    {
+      "from": "def:peer_weil_divisor",
+      "to": "def:sawin_Z_locus"
+    },
+    {
+      "from": "def:peer_canonical_differentials",
+      "to": "def:sawin_Z_locus"
+    },
+    {
+      "from": "def:sawin_circ_forward",
+      "to": "lem:sawin_ts_singular"
+    },
+    {
+      "from": "def:sawin_Z_locus",
+      "to": "lem:sawin_ts_singular"
+    },
+    {
+      "from": "lem:sawin_ts_singular",
+      "to": "lem:sawin_ts_smooth_cc"
+    },
+    {
+      "from": "def:sawin_shriek_forward",
+      "to": "lem:sawin_ts_smooth_cc"
+    },
+    {
+      "from": "def:sawin_characteristic_cycle",
+      "to": "lem:sawin_ts_smooth_cc"
+    },
+    {
+      "from": "def:peer_higher_direct_image",
+      "to": "lem:sawin_ts_decomposition"
+    },
+    {
+      "from": "def:peer_weil_divisor",
+      "to": "lem:sawin_ts_decomposition"
+    },
+    {
+      "from": "lem:sawin_ts_smooth_cc",
+      "to": "lem:sawin_ts_singular_cc"
+    },
+    {
+      "from": "lem:sawin_ts_decomposition",
+      "to": "lem:sawin_ts_singular_cc"
+    },
+    {
+      "from": "def:sawin_polar_multiplicity",
+      "to": "lem:sawin_individual_polar_bound"
+    },
+    {
+      "from": "thm:sawin_appendix",
+      "to": "lem:sawin_individual_polar_bound"
+    },
+    {
+      "from": "def:sawin_Z_locus",
+      "to": "lem:sawin_individual_polar_bound"
+    },
+    {
+      "from": "lem:sawin_individual_polar_bound",
+      "to": "lem:sawin_global_polar_bound"
+    },
+    {
+      "from": "lem:sawin_ts_singular_cc",
+      "to": "lem:sawin_global_polar_bound"
+    },
+    {
+      "from": "thm:sawin_first_massey",
+      "to": "thm:sawin_theta_betti_bound"
+    },
+    {
+      "from": "lem:sawin_global_polar_bound",
+      "to": "thm:sawin_theta_betti_bound"
+    },
+    {
+      "from": "lem:sawin_ts_singular_cc",
+      "to": "thm:sawin_theta_betti_bound"
+    },
+    {
+      "from": "thm:sawin_theta_betti_bound",
+      "to": "thm:sawin_equidistribution"
+    },
+    {
+      "from": "def:peer_jacobian",
+      "to": "lem:sawin_appendix_linear"
+    },
+    {
+      "from": "def:peer_weil_divisor",
+      "to": "lem:sawin_appendix_linear"
+    },
+    {
+      "from": "lem:sawin_appendix_linear",
+      "to": "thm:sawin_appendix"
+    }
+  ],
+  "meta": {
+    "num_nodes": 54,
+    "num_edges": 99,
+    "axioms": [
+      "def:peer_jacobian",
+      "def:peer_canonical_differentials",
+      "def:peer_higher_direct_image",
+      "def:sawin_conical",
+      "def:sawin_C_transversal_map",
+      "def:sawin_local_acyclic",
+      "def:sawin_dimtot",
+      "def:nearby_cycles",
+      "def:vanishing_cycles",
+      "def:sawin_local_intersection",
+      "lean:hello"
+    ],
+    "leaves": [
+      "thm:beilinson_ss",
+      "thm:saito_prop_514",
+      "thm:saito_cc_pullback",
+      "thm:saito_index",
+      "thm:saito_direct_pushforward",
+      "lem:gabber_illusie",
+      "lem:ts_3_22",
+      "thm:ts_4_4",
+      "lem:sawin_multiplicity_polar",
+      "cor:sawin_vanishing",
+      "thm:sawin_equidistribution",
+      "lean:hello"
+    ],
+    "macros": {
+      "\\PP": "\\mathbb{P}",
+      "\\bN": "\\mathbb{N}",
+      "\\bZ": "\\mathbb{Z}",
+      "\\bQ": "\\mathbb{Q}",
+      "\\bF": "\\mathbb{F}",
+      "\\bG": "\\mathbb{G}",
+      "\\cO": "\\mathcal{O}",
+      "\\cH": "\\mathcal{H}",
+      "\\cF": "\\mathcal{F}",
+      "\\Sym": "\\operatorname{Sym}",
+      "\\Sing": "\\operatorname{Sing}",
+      "\\Bun": "\\operatorname{Bun}",
+      "\\Pic": "\\operatorname{Pic}",
+      "\\Proj": "\\operatorname{Proj}",
+      "\\Bl": "\\operatorname{Bl}",
+      "\\Gr": "\\operatorname{Gr}",
+      "\\CHow": "\\operatorname{CH}",
+      "\\rank": "\\operatorname{rank}",
+      "\\Gal": "\\operatorname{Gal}",
+      "\\dimtot": "\\operatorname{dimtot}",
+      "\\SSing": "\\mathit{SS}",
+      "\\CCyc": "\\mathit{CC}",
+      "\\divv": "\\operatorname{div}",
+      "\\Frob": "\\operatorname{Frob}",
+      "\\Swan": "\\operatorname{Swan}",
+      "\\RPsi": "R\\Psi",
+      "\\RPhi": "R\\Phi",
+      "\\inhyper": "\\tilde{#1}",
+      "\\ra": "\\rightarrow"
+    },
+    "unmatched_lean": [
+      [
+        "def:peer_jacobian",
+        "AlgebraicGeometry.Jacobian"
+      ],
+      [
+        "def:peer_weil_divisor",
+        "AlgebraicGeometry.Scheme.WeilDivisor"
+      ],
+      [
+        "def:peer_canonical_differentials",
+        "AlgebraicGeometry.Scheme.relativeDifferentialsPresheaf"
+      ],
+      [
+        "def:peer_higher_direct_image",
+        "AlgebraicGeometry.higherDirectImage"
+      ],
+      [
+        "def:sawin_conical",
+        "MR4228499.IsConical"
+      ],
+      [
+        "def:sawin_projectivization",
+        "MR4228499.projectivization"
+      ],
+      [
+        "def:sawin_polar_multiplicity",
+        "MR4228499.polarMultiplicity"
+      ],
+      [
+        "def:sawin_C_transversal_map",
+        "MR4228499.CTransversalMap"
+      ],
+      [
+        "def:sawin_circ_forward",
+        "MR4228499.circForward"
+      ],
+      [
+        "def:sawin_shriek_forward",
+        "MR4228499.shriekForward"
+      ],
+      [
+        "def:sawin_h_transversal",
+        "MR4228499.HTransversal"
+      ],
+      [
+        "def:sawin_pair_transversal",
+        "MR4228499.PairTransversal"
+      ],
+      [
+        "def:sawin_local_acyclic",
+        "MR4228499.LocallyAcyclic"
+      ],
+      [
+        "def:sawin_singular_support",
+        "MR4228499.singularSupport"
+      ],
+      [
+        "def:sawin_properly_transversal",
+        "MR4228499.ProperlyCTransversal"
+      ],
+      [
+        "def:sawin_shriek_pullback",
+        "MR4228499.shriekPullback"
+      ],
+      [
+        "def:sawin_isolated_char_point",
+        "MR4228499.IsolatedCharacteristicPoint"
+      ],
+      [
+        "def:sawin_dimtot",
+        "MR4228499.dimtot"
+      ],
+      [
+        "def:sawin_characteristic_cycle",
+        "MR4228499.characteristicCycle"
+      ],
+      [
+        "def:nearby_cycles",
+        "MR4228499.nearbyCycles"
+      ],
+      [
+        "def:vanishing_cycles",
+        "MR4228499.vanishingCycles"
+      ],
+      [
+        "thm:beilinson_ss",
+        "MR4228499.singularSupport_exists"
+      ],
+      [
+        "thm:saito_cc_exists",
+        "MR4228499.characteristicCycle_exists"
+      ],
+      [
+        "thm:saito_prop_514",
+        "MR4228499.ss_eq_supp_cc"
+      ],
+      [
+        "thm:saito_cc_pullback",
+        "MR4228499.cc_pullback"
+      ],
+      [
+        "thm:saito_cc_nearby",
+        "MR4228499.cc_nearby"
+      ],
+      [
+        "thm:saito_index",
+        "MR4228499.indexFormula"
+      ],
+      [
+        "thm:saito_direct_pushforward",
+        "MR4228499.cc_pushforward"
+      ],
+      [
+        "lem:gabber_illusie",
+        "MR4228499.rphi_perverse"
+      ],
+      [
+        "lem:ts_3_22",
+        "MR4228499.ts_polar_class"
+      ],
+      [
+        "thm:ts_4_4",
+        "MR4228499.ts_equidistribution_from_betti"
+      ],
+      [
+        "def:sawin_local_intersection",
+        "MR4228499.localIntersectionNumber"
+      ],
+      [
+        "lem:sawin_intersection_comparison",
+        "MR4228499.intersection_comparison"
+      ],
+      [
+        "def:sawin_polar_multiplicity_2",
+        "MR4228499.polarMultiplicity'"
+      ],
+      [
+        "lem:sawin_multiplicity_polar",
+        "MR4228499.polarMultiplicity_eq"
+      ],
+      [
+        "lem:sawin_transversality_check",
+        "MR4228499.transversality_check"
+      ],
+      [
+        "lem:sawin_nearby_formula",
+        "MR4228499.nearby_formula"
+      ],
+      [
+        "lem:sawin_genericity",
+        "MR4228499.genericity_lemma"
+      ],
+      [
+        "lem:sawin_final_nearby_formula",
+        "MR4228499.final_nearby_formula"
+      ],
+      [
+        "lem:sawin_multiplicity_hypersurface",
+        "MR4228499.multiplicity_hypersurface"
+      ],
+      [
+        "thm:sawin_first_massey",
+        "MR4228499.first_Massey"
+      ],
+      [
+        "cor:sawin_vanishing",
+        "MR4228499.vanishing"
+      ],
+      [
+        "def:sawin_Z_locus",
+        "MR4228499.ZLocus"
+      ],
+      [
+        "lem:sawin_ts_singular",
+        "MR4228499.ts_singular"
+      ],
+      [
+        "lem:sawin_ts_smooth_cc",
+        "MR4228499.ts_smooth_cc"
+      ],
+      [
+        "lem:sawin_ts_decomposition",
+        "MR4228499.ts_decomposition"
+      ],
+      [
+        "lem:sawin_ts_singular_cc",
+        "MR4228499.ts_singular_cc"
+      ],
+      [
+        "lem:sawin_individual_polar_bound",
+        "MR4228499.individual_polar_bound"
+      ],
+      [
+        "lem:sawin_global_polar_bound",
+        "MR4228499.global_polar_bound"
+      ],
+      [
+        "thm:sawin_theta_betti_bound",
+        "MR4228499.theta_betti_bound"
+      ],
+      [
+        "thm:sawin_equidistribution",
+        "MR4228499.equidistribution"
+      ],
+      [
+        "lem:sawin_appendix_linear",
+        "MR4228499.appendix_linear_class"
+      ],
+      [
+        "thm:sawin_appendix",
+        "MR4228499.appendix_multiplicity_bound"
+      ]
+    ]
+  },
+  "error": null
+}

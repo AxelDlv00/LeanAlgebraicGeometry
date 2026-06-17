@@ -1,0 +1,51 @@
+{
+  "iteration": 303,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-06-05T06:10:33Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "d7a1d94a-a95d-48ab-a89d-fe70362f732f",
+    "durationSecs": 611
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 4
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 5825
+  },
+  "provers": {
+    "AlgebraicJacobian_Picard_TensorObjSubstrate_DualInverse": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "status": "done",
+      "mode": "fine-grained",
+      "sessionId": "0a893dd7-9fbd-4e97-85c2-ab7ea2a3d085"
+    },
+    "AlgebraicJacobian_Picard_TensorObjSubstrate": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "status": "done",
+      "mode": "fine-grained",
+      "sessionId": "fd9d1fda-c280-4bcf-a0c6-7e5cac523741"
+    },
+    "AlgebraicJacobian_Cohomology_CechHigherDirectImage": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "82210b31-d4fb-4912-9039-ed78b334e164"
+    },
+    "AlgebraicJacobian_Picard_FlatteningStratification": {
+      "file": "AlgebraicJacobian/Picard/FlatteningStratification.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "165262a0-bb33-4628-95de-f46673967af3"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "6dbc9117-e4bd-472c-9176-ec9226e2a064",
+    "durationSecs": 1021
+  },
+  "sorry_count": 93
+}

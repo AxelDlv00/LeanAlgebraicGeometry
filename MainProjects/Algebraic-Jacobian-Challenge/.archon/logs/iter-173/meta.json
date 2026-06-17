@@ -1,0 +1,46 @@
+{
+  "iteration": 173,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-22T07:25:15Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "d5627c7c-81fc-4949-bad6-2954ec65b352",
+    "durationSecs": 5527
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 4
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 2234
+  },
+  "provers": {
+    "AlgebraicJacobian_Genus0BaseObjects": {
+      "file": "AlgebraicJacobian/Genus0BaseObjects.lean",
+      "status": "done",
+      "sessionId": "d43e05bb-dcd1-40d8-b9a9-9bf91e0f1cc0"
+    },
+    "AlgebraicJacobian_Picard_RelativeSpec": {
+      "file": "AlgebraicJacobian/Picard/RelativeSpec.lean",
+      "status": "done",
+      "sessionId": "26f8088d-0747-4636-81e1-1e698df6b7a9"
+    },
+    "AlgebraicJacobian_RiemannRoch_WeilDivisor": {
+      "file": "AlgebraicJacobian/RiemannRoch/WeilDivisor.lean",
+      "status": "done",
+      "sessionId": "d24281c4-5f5d-4ebc-a65f-d58dabc7b23d"
+    },
+    "AlgebraicJacobian": {
+      "file": "AlgebraicJacobian.lean",
+      "status": "done",
+      "sessionId": "020f2d62-da65-4578-bbf6-8bf34ddad822"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "2c32b8a2-dfa0-4641-921c-27660cf99134",
+    "durationSecs": 1364
+  }
+}

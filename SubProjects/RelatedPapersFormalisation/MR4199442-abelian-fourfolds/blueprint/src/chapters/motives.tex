@@ -1,0 +1,586 @@
+\chapter{The motive of an abelian variety}
+
+This chapter is a faithful transcription of \S4--\S6 of Ancona's paper. It
+collects the structural facts about motives of abelian varieties that the main
+theorem (\cref{thm:scht}) and the chapter on exotic classes rely on: the
+Chow--K\"unneth decomposition and the \(\Sym^*\hh^1\) algebra structure
+(\S4); the Lefschetz-class formalism and the proof that the standard conjecture
+of Hodge type holds for Lefschetz classes (\S5); and, for abelian varieties over
+finite fields, the abundance of endomorphisms (Tate), CM-structures, the CM
+decomposition of \(\hh^n(A)\), and the lifting of that decomposition to
+characteristic zero via Honda--Tate (\S6). Most of the underlying objects are
+not present in Mathlib, so each statement is given self-containedly in the
+project's notation.
+
+\providecommand{\Frob}{\mathrm{Frob}}
+\providecommand{\GSp}{\mathrm{GSp}}
+
+\section*{The motive of an abelian variety}
+
+We work with the category of Chow motives \(\CHM(k)_{F}\), fixing a Weil
+cohomology \(H^*\) with its realization functor \(R\).
+
+\begin{theorem}[Motive of an abelian variety]
+  \label{thm:classic-motive}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.MotiveAbelianVariety}
+  \uses{def:chow-motives}
+  % SOURCE: [Ancona], §4, Theorem (classic) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let $A$ be an abelian variety of dimension  $g$. Let $\End(A)$ be its ring of endomorphisms (as group scheme) and $\mathfrak{h}(A)\in \CHM(k)_{F}$ be its motive. Then the following holds:
+  % \begin{enumerate}
+  % \item\label{kunneth} \cite{DeMu} The motive $\mathfrak{h}(A)$ admits a Chow--K\"unneth decomposition
+  % \[\mathfrak{h}(A)=\bigoplus_{n=0}^{2g} \mathfrak{h}^n(A)\] natural in $\End(A)$ and such that
+  % \[R(\mathfrak{h}^n(A))= H^n(A).\]
+  % \item\label{kunn} \cite{Ku1} The intersection product induces a canonical isomorphism of graded algebras \[\mathfrak{h}^*(A)=\Sym^* \mathfrak{h}^1(A).\]
+  % \item\label{kings}   \cite[Proposition 2.2.1]{Ki}  The action of $\End(A)$ on $\mathfrak{h}^1(A)$ (coming from naturality in (\ref{kunneth}))  induces an injective morphism of algebras  \[\End(A)\otimes_{\Z}F \hookrightarrow \End_{\CHM(k)_{F}}(\mathfrak{h}^1(A))\]
+  % and if $A$ is isogenous to $B\times C$ then $\mathfrak{h}^1(A) =  \mathfrak{h}^1(B) \oplus \mathfrak{h}^1(C) .$
+  % \item\label{polarization}   \cite{Ku2} The Chow--Lefschetz conjecture holds true for $A$. In particular, the classical isomorphism in $\ell$-adic cohomology  induced by a polarization $H_{\ell}^1(A)\cong H_{\ell}^1(A)^{\vee}(-1)$ lifts to an isomorphism
+  %  \[\mathfrak{h}^1(A)\cong\mathfrak{h}^1(A)^{\vee}(-1).\]
+  % \end{enumerate}"
+  \textit{Source: Ancona, arXiv:1806.03216, §4.}
+  Let \(A\) be an abelian variety of dimension \(g\), with endomorphism ring
+  \(\End(A)\) and motive \(\hh(A) \in \CHM(k)_{F}\). Then:
+  \begin{enumerate}
+    \item (Deninger--Murre) The motive \(\hh(A)\) admits a Chow--K\"unneth
+      decomposition
+      \[\hh(A) = \bigoplus_{n=0}^{2g} \hh^n(A),\]
+      natural in \(\End(A)\) and satisfying \(R(\hh^n(A)) = H^n(A)\).
+    \item (K\"unnemann) The intersection product induces a canonical isomorphism
+      of graded algebras
+      \[\hh^*(A) = \Sym^* \hh^1(A).\]
+    \item (Kings) The action of \(\End(A)\) on \(\hh^1(A)\) coming from the
+      naturality in (1) induces an injective morphism of algebras
+      \[\End(A) \otimes_{\Z} F \hookrightarrow \End_{\CHM(k)_{F}}(\hh^1(A)),\]
+      and if \(A\) is isogenous to \(B \times C\) then
+      \(\hh^1(A) = \hh^1(B) \oplus \hh^1(C)\).
+    \item (K\"unnemann) The Chow--Lefschetz conjecture holds for \(A\). In
+      particular the classical isomorphism in \(\ell\)-adic cohomology induced by
+      a polarization \(H_{\ell}^1(A) \cong H_{\ell}^1(A)^{\vee}(-1)\) lifts to an
+      isomorphism
+      \[\hh^1(A) \cong \hh^1(A)^{\vee}(-1).\]
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  Each of the four statements is a cited classical result, and no proof is
+  reproduced here: (1) is due to Deninger--Murre, (2) to K\"unnemann, (3) is
+  \cite[Proposition 2.2.1]{Ki} of Kings, and (4) is the Chow--Lefschetz theorem
+  of K\"unnemann.
+\end{proof}
+
+\begin{remark}
+  \label{rem:AHP}
+  % SOURCE: [Ancona], §4, Remark (AHP) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "We will need the above results also  in a slightly more general context, namely over the ring of integers of a $p$-adic field. Nowadays these results are known over very general bases, see \cite[Theorem 5.1.6]{OS2} or \cite[Theorem 3.3]{AHP}."
+  \textit{Source: Ancona, arXiv:1806.03216, §4.}
+  The results of \cref{thm:classic-motive} are needed also in the slightly more
+  general setting where the base is the ring of integers \(W\) of a \(p\)-adic
+  field. They are known over very general bases, so they hold in this relative
+  situation as well.
+\end{remark}
+
+\begin{definition}[Abelian type and rank]
+  \label{def:abelian-type-rank}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.AbelianTypeRank}
+  \uses{def:chow-motives}
+  % SOURCE: [Ancona], §4, Definition (defrank) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "A motive is called of abelian type if it  is a  direct factor of the motive of an abelian variety (up to Tate twist).
+  % We say that a motive of abelian type $T$ is  of rank $d$  if the  cohomology groups of $R(T)$ are all zero except in one degree and in that degree the cohomology group is of dimension $d$.  In this case we will write $\dim T = d.$"
+  \textit{Source: Ancona, arXiv:1806.03216, §4.}
+  A motive is of \emph{abelian type} if it is a direct factor, up to Tate twist,
+  of the motive of an abelian variety. A motive of abelian type \(T\) is of
+  \emph{rank \(d\)} if the cohomology groups of \(R(T)\) vanish in all degrees
+  except one, and in that degree the cohomology group has dimension \(d\); one
+  then writes \(\dim T = d\).
+\end{definition}
+
+\begin{remark}
+  \label{rem:rank-indep}
+  % SOURCE: [Ancona], §4, Remark (remarkrank) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "For motives of abelian type this definition is known to be independent of $R$, see for example  \cite[Corollary 3.5]{jannsen} and \cite[Corollary 1.6]{Ascona}."
+  \textit{Source: Ancona, arXiv:1806.03216, §4.}
+  For motives of abelian type the rank of \cref{def:abelian-type-rank} is known
+  to be independent of the realization \(R\).
+\end{remark}
+
+\begin{proposition}[Numerical bound for motives of abelian type]
+  \label{prop:motive-num-bound}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.MotiveNumericalBound}
+  \uses{def:abelian-type-rank, def:num-cycles, def:num-equiv}
+  % SOURCE: [Ancona], §4, Proposition (motivisupersingolari) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let $T$ be a motive of abelian type of dimension $d$.
+  % Consider   its space of algebraic classes modulo numerical equivalence \[V_Z = V_Z(T) =  \Hom_{\NUM(k)_\Q}(\one, T).\] Then the  inequality
+  % $\dim_\Q V_Z \leq d$ holds.
+  % Moreover, if the equality $\dim_\Q V_Z = d$ holds then we have the following facts:
+  % \begin{enumerate}
+  % \item All  realizations of $T$ are spanned by algebraic classes.
+  % \item Numerical equivalence on $\Hom_{\CHM(k)_\Q}(\one,T)$ coincides with  homological equivalence (for all  cohomologies).
+  % \item Call $L$ the field of coefficients of the realization $R$, then the equality $V_Z\otimes _\Q L = R(T)$ holds.
+  % \end{enumerate}"
+  \textit{Source: Ancona, arXiv:1806.03216, §4.}
+  Let \(T\) be a motive of abelian type of dimension \(d\), and let
+  \[V_Z = V_Z(T) = \Hom_{\NUM(k)_\Q}(\one, T)\]
+  be its space of algebraic classes modulo numerical equivalence. Then
+  \[\dim_\Q V_Z \le d.\]
+  Moreover, if \(\dim_\Q V_Z = d\), then:
+  \begin{enumerate}
+    \item all realizations of \(T\) are spanned by algebraic classes;
+    \item numerical equivalence on \(\Hom_{\CHM(k)_\Q}(\one, T)\) coincides with
+      homological equivalence (for all cohomologies);
+    \item if \(L\) is the coefficient field of the realization \(R\), then
+      \(V_Z \otimes_\Q L = R(T)\).
+  \end{enumerate}
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "Let us consider $n$ elements $\bar{v}_1,\ldots,\bar{v}_n$ which are linearly independent in $V_Z$ and fix $v_1,\ldots,v_n\in \Hom_{\CHM(k)_\Q}(\one,T)$ which are liftings of those. By definition of numerical equivalence, there exist  $n$ elements   $f_1,\ldots,f_n $  in $\Hom_{\CHM(k)_\Q}( T,\one)$ such that $f_i(v_j)=\delta_{ij}$. By applying a realization we get $R(f_i)(R(v_j))=\delta_{ij}$ which implies the inequality ${n \leq \dim R(T)=d.}$
+% When $n=d$, the argument just above shows that $R(v_1),\ldots,R(v_d)$ form a basis of $\Hom(R(\one),R(T))$, which means that $R(T)$ is spanned by the  algebraic classes $R(v_1)(1),\ldots,R(v_d)(1)$, hence we have (1).
+% Fix  an element $v\in \Hom_{\CHM(k)_\Q}(\one,T)$ and write its realization in the previous basis $R(v)= \lambda_1 R(v_1)+ \ldots + \lambda_d R(v_d)$. Consider now the composition $f_i(v)$. On the one hand, it is a rational number, on the other hand it equals $\lambda_i$. This means that any algebraic class is a rational combination of the basis $R(v_1)(1),\ldots,R(v_d)(1)$. This implies the points (2) and (3)."
+\begin{proof}
+  \uses{def:num-equiv, def:abelian-type-rank}
+  Take \(n\) classes \(\bar v_1, \dots, \bar v_n\) linearly independent in
+  \(V_Z\), and lift them to \(v_1, \dots, v_n \in \Hom_{\CHM(k)_\Q}(\one, T)\).
+  By the definition of numerical equivalence there exist
+  \(f_1, \dots, f_n \in \Hom_{\CHM(k)_\Q}(T, \one)\) with
+  \(f_i(v_j) = \delta_{ij}\). Applying a realization gives
+  \(R(f_i)(R(v_j)) = \delta_{ij}\), whence \(R(v_1), \dots, R(v_n)\) are linearly
+  independent and \(n \le \dim R(T) = d\). This proves the inequality.
+
+  Suppose now \(n = d\). Then \(R(v_1), \dots, R(v_d)\) form a basis of
+  \(\Hom(R(\one), R(T))\), so \(R(T)\) is spanned by the algebraic classes
+  \(R(v_1)(1), \dots, R(v_d)(1)\); this is (1). For an arbitrary
+  \(v \in \Hom_{\CHM(k)_\Q}(\one, T)\), write
+  \(R(v) = \lambda_1 R(v_1) + \cdots + \lambda_d R(v_d)\). The composition
+  \(f_i(v)\) is on the one hand a rational number and on the other hand equal to
+  \(\lambda_i\). Hence every algebraic class is a rational combination of the
+  basis \(R(v_1)(1), \dots, R(v_d)(1)\), which gives (2) and (3).
+\end{proof}
+
+\section*{Lefschetz classes}
+
+Throughout this section \(A\) is a polarized abelian variety of dimension \(g\).
+We use the motives \(\hh^n(A)\) of \cref{thm:classic-motive} and the motivic
+pairings \(\langle \cdot, \cdot \rangle_{n,\mathrm{mot}}\) of
+\cref{def:pairing-mot}.
+
+\begin{definition}[Lefschetz classes]
+  \label{def:lefschetz-class}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.LefschetzClass}
+  \uses{def:num-cycles}
+  % SOURCE: [Ancona], §5, Definition (defexotic) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let  $\Q[\mathcal{Z}^{1}_{\num}(A)_{\Q}]$ be the subalgebra of $\mathcal{Z}^{*}_{\num}(A)_{\Q}$ generated by $\mathcal{Z}^{1}_{\num}(A)_{\Q}$.  An element of $\Q[\mathcal{Z}^{1}_{\num}(A)_{\Q}]$ is called a  Lefschetz class. The subspace  of Lefschetz classes in $\mathcal{Z}^{n}_{\num}(A)_{\Q}$ is denoted by  $\mathcal{L}^{n}(A)$."
+  \textit{Source: Ancona, arXiv:1806.03216, §5.}
+  Let \(\Q[\mathcal{Z}^{1}_{\num}(A)_{\Q}]\) be the subalgebra of
+  \(\mathcal{Z}^{*}_{\num}(A)_{\Q}\) generated by
+  \(\mathcal{Z}^{1}_{\num}(A)_{\Q}\). An element of this subalgebra is called a
+  \emph{Lefschetz class}. The subspace of Lefschetz classes in
+  \(\mathcal{Z}^{n}_{\num}(A)_{\Q}\) is denoted \(\mathcal{L}^{n}(A)\).
+\end{definition}
+
+\begin{remark}
+  \label{rem:sym-inclusion}
+  % SOURCE: [Ancona], §5, Remark (nonsisa) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Given two positive integers $a,b$ such that $a\cdot b \leq g$ we have the canonical inclusions
+  % \begin{equation} \label{eq:nonsisa}
+  % \mathfrak{h}^{a\cdot b}(A)=\Sym^{a \cdot b} \mathfrak{h}^1(A) \subset (\Sym^{a} \mathfrak{h}^1(A))^{\otimes b}  = \mathfrak{h}^a(A)^{\otimes b}.
+  % \end{equation}
+  %   induced by Theorem \ref{classic}(\ref{kunn}). In particular any pairing on the right hand side induces a pairing on the left hand side."
+  \textit{Source: Ancona, arXiv:1806.03216, §5.}
+  For positive integers \(a, b\) with \(a \cdot b \le g\), the isomorphism
+  \(\hh^*(A) = \Sym^* \hh^1(A)\) of \cref{thm:classic-motive} gives canonical
+  inclusions
+  \[\hh^{a b}(A) = \Sym^{a b} \hh^1(A) \subset
+    (\Sym^{a} \hh^1(A))^{\otimes b} = \hh^a(A)^{\otimes b}.\]
+  In particular any pairing on the right-hand side induces one on the left.
+\end{remark}
+
+\begin{lemma}[Comparison of Lefschetz pairings]
+  \label{lem:lefschetz-pairings}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.lefschetzPairingsCoincide}
+  \uses{def:pairing-mot, thm:classic-motive}
+  % SOURCE: [Ancona], §5, Lemma (accoppiamenti1) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Fix an integer $n$ such that   $ 2 \leq 2n\leq g.$ Then the three motivic pairings $\langle \cdot, \cdot \rangle_{1,\mot}^{\otimes 2n}$,  $\langle \cdot, \cdot \rangle_{2,\mot}^{\otimes n}$ and $\langle \cdot, \cdot \rangle_{2n,\mot}$ on $\mathfrak{h}^{2n,\prim}(A)\in \NUM(k)_\Q$ coincide up to a positive rational scalar. Moreover, for each of these pairings, the Lefschetz decomposition $\mathfrak{h}^{2n}(A) = \mathfrak{h}^{2n,\prim}(A) \oplus \mathfrak{h}^{2n-2,\prim}(A) (-1)$ is orthogonal."
+  \textit{Source: Ancona, arXiv:1806.03216, §5.}
+  Fix \(n\) with \(2 \le 2n \le g\). Then the three motivic pairings
+  \(\langle \cdot, \cdot \rangle_{1,\mathrm{mot}}^{\otimes 2n}\),
+  \(\langle \cdot, \cdot \rangle_{2,\mathrm{mot}}^{\otimes n}\) and
+  \(\langle \cdot, \cdot \rangle_{2n,\mathrm{mot}}\) on
+  \(\hh^{2n,\prim}(A) \in \NUM(k)_\Q\) coincide up to a positive rational scalar.
+  Moreover, for each of these pairings, the Lefschetz decomposition
+  \[\hh^{2n}(A) = \hh^{2n,\prim}(A) \oplus \hh^{2n-2,\prim}(A)(-1)\]
+  is orthogonal.
+\end{lemma}
+
+% SOURCE QUOTE PROOF: "Our statement holds true even at homological level and not just numerically. For this, it is enough to check the statement after realization, for instance on the cohomology group $H_\ell^{2n,\prim}(A)$.
+% To do this, take the moduli space of polarized abelian varieties (in mixed characteristic, with some fixed level structure). These pairings are defined on  the relative cohomology of the abelian scheme. Recall that the Zariski closure of the monodromy group associated to this relative cohomology is $\GSp_{2g}= \GSp(H_\ell^{1}(A))$ and that $H_\ell^{2n,\prim}(A)\subset  H_\ell^{2n }(A) = \Lambda^{2n}H_\ell^{1}(A)$  is a geometrically irreducible representation. This implies that these pairings coincide up to a scalar, by Schur's lemma. As these pairings are also defined on Betti cohomology this scalar must be rational. Moreover, they are polarizations of the underlying Hodge structure, so this scalar must be positive.
+% For the orthogonality part, the argument is the same. If, for a fixed pairing, the decomposition was not orthogonal, we would have a nonzero map between $H_\ell^{2n,\prim}(A)$ and $H_\ell^{2n-2}(A)(-1)^\vee$ which would be $\GSp_{2g}$-equivariant. This is impossible again by Schur's lemma."
+\begin{proof}
+  \uses{thm:classic-motive, def:pairing-mot}
+  The statement may be checked at the homological level, hence after
+  realization, say on \(H_\ell^{2n,\prim}(A)\). Spread \(A\) over the moduli
+  space of polarized abelian varieties (in mixed characteristic, with fixed
+  level structure); the three pairings are defined on the relative cohomology of
+  the universal abelian scheme. The Zariski closure of the monodromy group of
+  this relative cohomology is \(\GSp_{2g} = \GSp(H_\ell^{1}(A))\), and
+  \[H_\ell^{2n,\prim}(A) \subset H_\ell^{2n}(A) = \Lambda^{2n} H_\ell^{1}(A)\]
+  is a geometrically irreducible representation. By Schur's lemma the three
+  pairings therefore coincide up to a scalar; since each is also defined over
+  Betti cohomology the scalar is rational, and since each is a polarization of
+  the underlying Hodge structure the scalar is positive. For orthogonality the
+  argument is the same: a failure of orthogonality would produce a nonzero
+  \(\GSp_{2g}\)-equivariant map
+  \(H_\ell^{2n,\prim}(A) \to H_\ell^{2n-2}(A)(-1)^\vee\), impossible by Schur's
+  lemma.
+\end{proof}
+
+\begin{proposition}[Hodge type for Lefschetz classes]
+  \label{prop:scht-lefschetz}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.schtLefschetz}
+  \uses{lem:lefschetz-pairings, thm:segre, def:lefschetz-class, thm:classic-motive}
+  % SOURCE: [Ancona], §5, Proposition (oklefschetz) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Fix an integer $n$ such that   $ 2 \leq 2n\leq g.$ The pairings $\langle \cdot, \cdot \rangle_{1,\mot }^{\otimes 2n}$,  $\langle \cdot, \cdot \rangle_{2,\mot}^{\otimes n}$ and $\langle \cdot, \cdot \rangle_{2n,\mot} $  on  $\mathcal{Z}^{n}_{\num}(A)_{\Q}$ are positive definite if and only if anyone of them is so. Moreover, they are positive definite on $\mathcal{L}^{n}(A)$."
+  \textit{Source: Ancona, arXiv:1806.03216, §5.}
+  Fix \(n\) with \(2 \le 2n \le g\). The three pairings
+  \(\langle \cdot, \cdot \rangle_{1,\mathrm{mot}}^{\otimes 2n}\),
+  \(\langle \cdot, \cdot \rangle_{2,\mathrm{mot}}^{\otimes n}\) and
+  \(\langle \cdot, \cdot \rangle_{2n,\mathrm{mot}}\) on
+  \(\mathcal{Z}^{n}_{\num}(A)_{\Q}\) are positive definite if and only if any one
+  of them is. Moreover, they are positive definite on the subspace
+  \(\mathcal{L}^{n}(A)\) of Lefschetz classes.
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "By Lemma \ref{accoppiamenti1} the Lefschetz decomposition \[\mathfrak{h}^{2n}(A) = \mathfrak{h}^{2n,\prim}(A) \oplus \mathfrak{h}^{2n-2,\prim}(A) (-1)\] is orthogonal with respect to any of these pairings, so, arguing by induction on $n$, it is enough to check positivity on algebraic classes of $ \mathfrak{h}^{2n,\prim}(A)$. Again by Lemma \ref{accoppiamenti1} the positivity on the primitive part does not depend on the pairing.
+% The argument just above works also for Lefschetz classes, indeed each component in the Lefschetz decomposition of a Lefschetz class is again a Lefschetz class  \cite[p. 640]{Milnelef}. Hence we can check positivity for one of the pairings, we will do it for $\langle \cdot, \cdot \rangle_{2,\mot}^{\otimes n}$. Notice that, by construction, the restriction of $\langle \cdot, \cdot \rangle_{2,\mot}^{\otimes n}$ to algebraic classes is $\langle \cdot, \cdot \rangle_{1}^{\otimes n}$, see Definition \ref{defpairing}.
+% Now, by (\ref{eq:nonsisa}), we have the inclusion
+%  \[\mathcal{Z}^n_{\num}(A)_{\Q}=\Hom_{\NUM(k)_\Q}(\one, \mathfrak{h}^{2n}(A)(n)) \subset  \Hom_{\NUM(k)_\Q}(\one,(\mathfrak{h}^2(A)(1))^{\otimes n}).\]
+%  Moreover Theorem \ref{classic}(\ref{kunn})   implies the equality
+%  \[\mathcal{L}^{n}(A)_{\Q} = \mathcal{Z}^n_{\num}(A)_{\Q} \cap \mathcal{Z}^1_{\num}(A)_{\Q}^{\otimes n}\]
+%  where the intersection is taken inside  $\Hom_{\NUM(k)_\Q}(\one,(\mathfrak{h}^2(A)(1))^{\otimes n})$.
+% On the other hand, the pairing $\langle \cdot, \cdot \rangle_1$ on \[\mathcal{Z}^1_{\num}(A)_{\Q}= \Hom_{\NUM(k)_\Q}(\one, \mathfrak{h}^2(A)(1))\]
+% is positive definite by Theorem \ref{segre}. Hence the pairing $\langle \cdot, \cdot \rangle_1^{\otimes n}$ on \[\mathcal{Z}^1_{\num}(A)^{\otimes n}_{\Q} = \Hom_{\NUM(k)_\Q}(\one, \mathfrak{h}^2(A)(1))^{\otimes n}\] is positive definite as well. In particular its restriction to $\mathcal{L}^{n}(A)_{\Q}$ will also be positive definite."
+\begin{proof}
+  \uses{lem:lefschetz-pairings, thm:segre, thm:classic-motive, def:lefschetz-class}
+  By \cref{lem:lefschetz-pairings} the Lefschetz decomposition
+  \(\hh^{2n}(A) = \hh^{2n,\prim}(A) \oplus \hh^{2n-2,\prim}(A)(-1)\) is orthogonal
+  for any of the three pairings; arguing by induction on \(n\) it therefore
+  suffices to check positivity on the algebraic classes of \(\hh^{2n,\prim}(A)\),
+  and again by \cref{lem:lefschetz-pairings} the positivity on the primitive
+  part does not depend on which pairing is used. The same induction applies to
+  Lefschetz classes, since each component in the Lefschetz decomposition of a
+  Lefschetz class is again a Lefschetz class.
+
+  We check positivity for \(\langle \cdot, \cdot \rangle_{2,\mathrm{mot}}^{\otimes
+  n}\). By construction its restriction to algebraic classes is
+  \(\langle \cdot, \cdot \rangle_{1}^{\otimes n}\). By
+  \cref{rem:sym-inclusion} we have the inclusion
+  \[\mathcal{Z}^n_{\num}(A)_{\Q} = \Hom_{\NUM(k)_\Q}(\one, \hh^{2n}(A)(n))
+    \subset \Hom_{\NUM(k)_\Q}(\one, (\hh^2(A)(1))^{\otimes n}),\]
+  and the algebra isomorphism of \cref{thm:classic-motive} gives
+  \[\mathcal{L}^{n}(A)_{\Q} =
+    \mathcal{Z}^n_{\num}(A)_{\Q} \cap (\mathcal{Z}^1_{\num}(A)_{\Q})^{\otimes n}\]
+  inside \(\Hom_{\NUM(k)_\Q}(\one, (\hh^2(A)(1))^{\otimes n})\). Now the pairing
+  \(\langle \cdot, \cdot \rangle_1\) on
+  \(\mathcal{Z}^1_{\num}(A)_{\Q} = \Hom_{\NUM(k)_\Q}(\one, \hh^2(A)(1))\) is
+  positive definite by \cref{thm:segre}, hence so is its \(n\)-th tensor power
+  \(\langle \cdot, \cdot \rangle_1^{\otimes n}\) on
+  \((\mathcal{Z}^1_{\num}(A)_{\Q})^{\otimes n}\), and in particular its
+  restriction to \(\mathcal{L}^{n}(A)_{\Q}\).
+\end{proof}
+
+\section*{Abelian varieties over finite fields}
+
+Throughout this section \(A\) is an abelian variety of dimension \(g\) over a
+finite field \(k\), with endomorphism ring \(\End(A)\) and Frobenius
+\(\Frob_A\). We write \(\End^0(A) = \End(A) \otimes_\Z \Q\) and \(*\) for the
+Rosati involution induced by a polarization.
+
+\begin{theorem}[Tate: abundance of endomorphisms]
+  \label{thm:tate}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.tateMaximalCommutative}
+  % SOURCE: [Ancona], §6, Theorem (tate) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "A maximal  commutative $\Q$-subalgebra of $\End^0(A)$ has dimension $2g$ \cite{Tate}. There exist maximal commutative $\Q$-subalgebras of $\End^0(A)$ which are the product of CM fields \cite[Lemma 2]{TateBour}."
+  \textit{Source: Ancona, arXiv:1806.03216, §6.}
+  (Tate.) A maximal commutative \(\Q\)-subalgebra of \(\End^0(A)\) has dimension
+  \(2g\). Moreover there exist maximal commutative \(\Q\)-subalgebras of
+  \(\End^0(A)\) which are products of CM fields.
+\end{theorem}
+
+\begin{proof}
+  Both statements are cited inputs: the dimension count is Tate's theorem, and
+  the existence of a maximal commutative subalgebra that is a product of CM
+  fields is \cite[Lemma 2]{TateBour}. No proof is reproduced.
+\end{proof}
+
+\begin{remark}
+  \label{rem:frob}
+  % SOURCE: [Ancona], §6, Remark (remfrob) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Any maximal commutative $\Q$-subalgebra of $\End^0(A)$ must contain  $\Frob_A$ as the latter is contained in the center of $\End^0(A)$."
+  \textit{Source: Ancona, arXiv:1806.03216, §6.}
+  Any maximal commutative \(\Q\)-subalgebra of \(\End^0(A)\) contains
+  \(\Frob_A\), since \(\Frob_A\) lies in the center of \(\End^0(A)\).
+\end{remark}
+
+\begin{definition}[CM-structure]
+  \label{def:CM-structure}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.CMStructure}
+  \uses{thm:tate}
+  % SOURCE: [Ancona], §6, Definition (definitionCM) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "When $A$ is a simple abelian variety over $k$ a CM-structure for $A$ is the choice of a maximal CM field in $\End^0(A)$.
+  % For a general $A$ the choice of a decomposition of $A$  in the isogeny category as a product of simple abelian varieties $A_1\times \cdots\times A_t$ and a  CM-structure $L_i$ for each $A_i$ induce a maximal commutative $\Q$-subalgebra ${B=L_1\times \cdots\times L_t}$ of $\End^0(A)$. An algebra $B$  constructed as above  is called a CM-structure for $A$. If such an algebra is $*$-stable we will say that the CM-structure is $*$-stable."
+  \textit{Source: Ancona, arXiv:1806.03216, §6.}
+  When \(A\) is simple over \(k\), a \emph{CM-structure} for \(A\) is a choice of
+  maximal CM field in \(\End^0(A)\). For general \(A\), a choice of isogeny
+  decomposition into simple factors \(A \sim A_1 \times \cdots \times A_t\)
+  together with a CM-structure \(L_i\) for each \(A_i\) induces a maximal
+  commutative \(\Q\)-subalgebra
+  \[B = L_1 \times \cdots \times L_t\]
+  of \(\End^0(A)\); such an algebra \(B\) is called a \emph{CM-structure} for
+  \(A\). The CM-structure is \emph{\(*\)-stable} if \(B\) is stable under the
+  Rosati involution \(*\).
+\end{definition}
+
+\begin{remark}
+  \label{rem:cm-stable-exists}
+  % SOURCE: [Ancona], §6, Remark following (definitionCM) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "We will see (Corollary \ref{CMstab}) that given a CM-structure there exists (possibly after a finite extension of the base field $k$ and after isogeny) a polarization for which  the CM-structure is $*$-stable."
+  \textit{Source: Ancona, arXiv:1806.03216, §6.}
+  As shown in \cref{cor:cm-stable}, given a CM-structure there exists (possibly
+  after a finite extension of \(k\) and after isogeny) a polarization for which
+  the CM-structure is \(*\)-stable.
+\end{remark}
+
+\begin{definition}[CM Galois data]
+  \label{def:cm-sigma}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.CMGaloisData}
+  \uses{def:CM-structure}
+  % SOURCE: [Ancona], §6, Notation (NotationCM) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let $B$ be a CM-structure for $A$. We write \[{B=L_1\times \cdots\times L_t}\] as a product of CM fields. Let
+  %  $L$ be the number field which is the Galois closure (over $\Q$) of the compositum of the fields $L_i$, it is a CM number field as well \cite[Proposition 5.12]{goro}. Let $\Sigma_i$ be the set of morphisms from $L_i$ to $L$ and   $\Sigma$ be the disjoint union
+  %  \[\Sigma = \Sigma_1\cup\cdots \cup \Sigma_t.\]
+  % Write $\bar{\cdot}$ for the action on $\Sigma$ induced by composition with  complex conjugation. We will use the same notation for the induced action on subsets of  $\Sigma$."
+  \textit{Source: Ancona, arXiv:1806.03216, §6.}
+  Let \(B = L_1 \times \cdots \times L_t\) be a CM-structure for \(A\), written
+  as a product of CM fields. Let \(L\) be the Galois closure over \(\Q\) of the
+  compositum of the \(L_i\); it is again a CM number field. Let
+  \(\Sigma_i = \Hom(L_i, L)\) be the set of embeddings, and let
+  \[\Sigma = \Sigma_1 \sqcup \cdots \sqcup \Sigma_t.\]
+  Write \(\bar{\cdot}\) for the action on \(\Sigma\) (and on its subsets) induced
+  by composition with complex conjugation.
+\end{definition}
+
+\begin{proposition}[CM decomposition of \(\hh^1\)]
+  \label{prop:decomposition}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.motiveH1Decomposition}
+  \uses{def:CM-structure, def:cm-sigma, thm:classic-motive, def:abelian-type-rank}
+  % SOURCE: [Ancona], §6, Proposition (decomposition) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let $L$ and   $\Sigma$ be as in Notation  \ref{NotationCM}. Then, in $\CHM (k)_{L}$, the motive $\mathfrak{h}^1(A)$ decomposes into a sum of $2g$ motives
+  % \[\mathfrak{h}^1(A) =\bigoplus_{\sigma \in \Sigma} M_\sigma,\]
+  % where the action of $b\in L_i$ on $M_\sigma$ induced by Theorem \ref{classic}(\ref{kings}) is given by multiplication by $\sigma(b)$ if $\sigma \in \Sigma_i$ and by multiplication by zero otherwise.  Moreover, each motive $ M_\sigma$ is of rank one (in the sense of Definition \ref{defrank}). Finally, if the CM-structure is $*$-stable, the isomorphism $p:  \mathfrak{h}^1(A)\cong\mathfrak{h}^1(A)^{\vee}(-1)$ of Theorem \ref{classic}(\ref{polarization}) restricts to an isomorphism \[M_\sigma\cong M_{\bar{\sigma}}^\vee(-1)\] for all $\sigma\in \Sigma$, and to the zero map
+  % \[ M_\sigma \stackrel{0}{\longrightarrow} M_{\sigma'}^\vee(-1) \]
+  % for all $\sigma'\neq {\bar{\sigma}}$."
+  \textit{Source: Ancona, arXiv:1806.03216, §6.}
+  With \(L\) and \(\Sigma\) as in \cref{def:cm-sigma}, the motive \(\hh^1(A)\)
+  decomposes in \(\CHM(k)_{L}\) as a sum of \(2g\) motives
+  \[\hh^1(A) = \bigoplus_{\sigma \in \Sigma} M_\sigma,\]
+  where \(b \in L_i\) acts on \(M_\sigma\) (via \cref{thm:classic-motive}) by
+  multiplication by \(\sigma(b)\) if \(\sigma \in \Sigma_i\) and by \(0\)
+  otherwise. Each \(M_\sigma\) is of rank one in the sense of
+  \cref{def:abelian-type-rank}. If the CM-structure is \(*\)-stable, the
+  polarization isomorphism \(p : \hh^1(A) \cong \hh^1(A)^{\vee}(-1)\) of
+  \cref{thm:classic-motive} restricts to an isomorphism
+  \[M_\sigma \cong M_{\bar\sigma}^\vee(-1) \qquad (\sigma \in \Sigma)\]
+  and to the zero map \(M_\sigma \to M_{\sigma'}^\vee(-1)\) for every
+  \(\sigma' \neq \bar\sigma\).
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "This is \cite[Corollary 3.2]{Ascona}, we recall here the argument. Consider the inclusion $L_1\times \cdots\times L_t  \hookrightarrow  \End^0(A).$ By Theorem \ref{classic}(\ref{kings}), we deduce an inclusion $(\prod_i L_i)\otimes L  \hookrightarrow  \End_{\CHM^{\ab}(k)_{L}}(\mathfrak{h}^1(A)).$ Each projector of the product of fields $(\prod_i L_i)\otimes L \cong \prod_i L^{\Sigma_i}$ defines a factor $M_{\sigma}.$
+% Let us now consider the last part of the statement. First, it can be checked after realization   \cite[Corollary 1.12]{Ascona}. Secondly, Rosati involution acts as  complex conjugation on CM fields  \cite[pp. 211-212]{MumfordTata}. Then the statement follows by the very definition of Rosati involution."
+\begin{proof}
+  \uses{thm:classic-motive, def:CM-structure, def:cm-sigma, def:abelian-type-rank}
+  This is \cite[Corollary 3.2]{Ascona}; we recall the argument. From the
+  inclusion \(L_1 \times \cdots \times L_t \hookrightarrow \End^0(A)\) and
+  \cref{thm:classic-motive} one deduces an inclusion
+  \((\prod_i L_i) \otimes L \hookrightarrow \End_{\CHM(k)_{L}}(\hh^1(A))\). The
+  product of fields decomposes as
+  \((\prod_i L_i) \otimes L \cong \prod_i L^{\Sigma_i}\), and each of its
+  projectors cuts out a factor \(M_\sigma\); the rank-one property and the
+  prescribed action of \(L_i\) follow. For the last part, the claim may be
+  checked after realization, and the Rosati involution acts as complex
+  conjugation on the CM fields, so the polarization isomorphism matches
+  \(M_\sigma\) with \(M_{\bar\sigma}^\vee(-1)\) and kills all other components.
+\end{proof}
+
+\begin{proposition}[CM decomposition of \(\hh^n\)]
+  \label{prop:cm-decomposition}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.cmDecomposition}
+  \uses{prop:decomposition, def:cm-sigma, thm:classic-motive}
+  % SOURCE: [Ancona], §6, Proposition (primadecomposizione) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "\item\label{decomposizioneL} In $\CHM (k)_{L}$ the motive $\mathfrak{h}^n(A)$ decomposes into a sum
+  % \[\mathfrak{h}^n(A) =\bigoplus_{I\subset \Sigma, \vert I \vert = n} M_I,\]
+  % with $M_I= \otimes_{\sigma \in I}M_\sigma$. Each motive $M_I$ is of rank one (in the sense of Definition \ref{defrank}).
+  % Moreover, if the CM-structure is $*$-stable, then the motives $M_I$ and $M_J$ are mutually orthogonal  in $\NUM(k)_L$ with respect to $\langle \cdot, \cdot \rangle_{1,\mot}^{\otimes n}$ (Definition \ref{defpairingmot}) except if $I = \overline{J}$.
+  % \item\label{decomposizioneQ} In $\CHM (k)_{\Q}$ the motive $\mathfrak{h}^n(A)$ decomposes into a sum of motives
+  % \[\mathfrak{h}^n(A) =\bigoplus  \mathcal{M}_I,\]
+  % where $\mathcal{M}_I$ is spanned by the factors of the form $M_{g(I)}$, with $g$ varying in $\Gal(L/\Q).$
+  % Moreover, if the CM-structure is \nobreak{$*$-stable}, this decomposition in $\NUM(k)_\Q$  is orthogonal with respect to $\langle \cdot, \cdot \rangle_{1,\mot}^{\otimes n}$  (Definition \ref{defpairingmot})."
+  \textit{Source: Ancona, arXiv:1806.03216, §6.}
+  In the setting of \cref{def:cm-sigma} and \cref{prop:decomposition}:
+  \begin{enumerate}
+    \item In \(\CHM(k)_{L}\) the motive \(\hh^n(A)\) decomposes as
+      \[\hh^n(A) = \bigoplus_{I \subset \Sigma,\ |I| = n} M_I, \qquad
+        M_I = \bigotimes_{\sigma \in I} M_\sigma,\]
+      with each \(M_I\) of rank one. If the CM-structure is \(*\)-stable, then
+      \(M_I\) and \(M_J\) are mutually orthogonal in \(\NUM(k)_L\) with respect
+      to \(\langle \cdot, \cdot \rangle_{1,\mathrm{mot}}^{\otimes n}\) unless
+      \(I = \bar J\).
+    \item In \(\CHM(k)_{\Q}\) the motive \(\hh^n(A)\) decomposes as
+      \[\hh^n(A) = \bigoplus \mathcal{M}_I,\]
+      where \(\mathcal{M}_I\) is spanned by the factors \(M_{g(I)}\),
+      \(g \in \Gal(L/\Q)\). If the CM-structure is \(*\)-stable, this
+      decomposition is orthogonal in \(\NUM(k)_\Q\) with respect to
+      \(\langle \cdot, \cdot \rangle_{1,\mathrm{mot}}^{\otimes n}\).
+  \end{enumerate}
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "Part (\ref{decomposizioneQ}) follows from part (\ref{decomposizioneL}). For the latter, Proposition \ref{decomposition} gives the case $n=1$. Using Theorem \ref{classic}(\ref{kunn}) we deduce the result for higher $n$."
+\begin{proof}
+  \uses{prop:decomposition, thm:classic-motive}
+  Part (2) follows from part (1) by collecting the \(\Gal(L/\Q)\)-orbits of the
+  factors. For part (1), \cref{prop:decomposition} is the case \(n = 1\), and the
+  algebra isomorphism \(\hh^*(A) = \Sym^* \hh^1(A)\) of \cref{thm:classic-motive}
+  deduces the decomposition for higher \(n\): the rank-one factors \(M_I\) are
+  the tensor products \(\bigotimes_{\sigma \in I} M_\sigma\), and orthogonality
+  for the tensor-power pairing is inherited from the \(n = 1\) case.
+\end{proof}
+
+\begin{proposition}[Algebraic and Lefschetz classes in a factor]
+  \label{prop:factor-algebraic}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.factorAlgebraic}
+  \uses{prop:cm-decomposition, prop:motive-num-bound, def:lefschetz-class}
+  % SOURCE: [Ancona], §6, Proposition (talvez) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let  $\mathcal{M}_I \in \CHM (k)_{\Q}$ be a  direct factor of $\mathfrak{h}^{2n}(A)$ as constructed in Proposition \ref{primadecomposizione}(\ref{decomposizioneQ}). Then the following holds:
+  % \begin{enumerate}
+  % \item\label{generatoalgebrico} If the vector space $\Hom_{\NUM(k)_\Q}(\one, \mathcal{M}_I (n))$ is not zero then
+  % \[\dim_\Q \Hom_{\NUM(k)_\Q}(\one, \mathcal{M}_I (n)) = \dim \mathcal{M}_I.\]
+  % In this case homological and numerical equivalence coincide on $ \mathcal{M}_I$ and the realizations of $ \mathcal{M}_I$ are spanned by algebraic classes.
+  % \item\label{generatolefschetz}   If the vector space $\Hom_{\NUM(k)_\Q}(\one, \mathcal{M}_I (n))$ contains a nonzero Lefschetz class (Definition \ref{defexotic}), then all algebraic  classes in
+  % it are Lefschetz."
+  \textit{Source: Ancona, arXiv:1806.03216, §6.}
+  Let \(\mathcal{M}_I \in \CHM(k)_{\Q}\) be a direct factor of \(\hh^{2n}(A)\) as
+  constructed in \cref{prop:cm-decomposition}(2). Then:
+  \begin{enumerate}
+    \item If \(\Hom_{\NUM(k)_\Q}(\one, \mathcal{M}_I(n)) \neq 0\), then
+      \[\dim_\Q \Hom_{\NUM(k)_\Q}(\one, \mathcal{M}_I(n)) = \dim \mathcal{M}_I.\]
+      In this case homological and numerical equivalence coincide on
+      \(\mathcal{M}_I\), and the realizations of \(\mathcal{M}_I\) are spanned by
+      algebraic classes.
+    \item If \(\Hom_{\NUM(k)_\Q}(\one, \mathcal{M}_I(n))\) contains a nonzero
+      Lefschetz class (\cref{def:lefschetz-class}), then all algebraic classes in
+      it are Lefschetz.
+  \end{enumerate}
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "As numerical equivalence commutes with  extension of scalars over $\mathbb{Q}$ \cite[Proposition 3.2.7.1]{Andmot}, we have \[\dim_\Q \Hom_{\NUM(k)_\Q}(\one, \mathcal{M}_I (n)) = \dim_L \Hom_{\NUM(k)_L}(\one, \mathcal{M}_I (n)).\]
+%  On the other hand, by construction of $\mathcal{M}_I$ (see Proposition \ref{primadecomposizione}(\ref{decomposizioneQ})), we have that the space $\Hom_{\NUM(k)_L}(\one,\mathcal{M}_I(n))$ is generated by the spaces $\Hom_{\NUM(k)_L}(\one,M_{g(I)}(n))$, with $g$ varying in $\Gal(L/\Q).$
+%  Moreover, as $\Gal(L/\Q)$  acts on the space of algebraic cycles modulo numerical equivalence, we have
+%  \[\dim_L \Hom_{\NUM(k)_L}(\one,M_{I}(n)) = \dim_L \Hom_{\NUM(k)_L}(\one,M_{g(I)}(n)),\] for all $g\in \Gal(L/\Q).$
+%  Now, by Proposition \ref{primadecomposizione}(\ref{decomposizioneL}), the motives $M_{I} \in \CHM (k)_{L}$ are of rank one hence, by Proposition \ref{motivisupersingolari}, the above  dimension is either zero or one. This implies the equality in part (\ref{generatoalgebrico}). The rest of part (\ref{generatoalgebrico}) follows from Proposition \ref{motivisupersingolari} as well.
+%  For part (\ref{generatolefschetz}), the proof just goes as part (\ref{generatoalgebrico}) as all the properties of motives and algebraic classes that we used hold true for Lefschetz motives and Lefschetz classes by   \cite[p. 640]{Milnelef}."
+\begin{proof}
+  \uses{prop:cm-decomposition, prop:motive-num-bound, def:lefschetz-class}
+  Since numerical equivalence commutes with extension of scalars over \(\Q\),
+  \[\dim_\Q \Hom_{\NUM(k)_\Q}(\one, \mathcal{M}_I(n)) =
+    \dim_L \Hom_{\NUM(k)_L}(\one, \mathcal{M}_I(n)).\]
+  By construction of \(\mathcal{M}_I\) (\cref{prop:cm-decomposition}(2)) the space
+  \(\Hom_{\NUM(k)_L}(\one, \mathcal{M}_I(n))\) is generated by the
+  \(\Hom_{\NUM(k)_L}(\one, M_{g(I)}(n))\), \(g \in \Gal(L/\Q)\); and since
+  \(\Gal(L/\Q)\) acts on cycles modulo numerical equivalence,
+  \[\dim_L \Hom_{\NUM(k)_L}(\one, M_{I}(n)) =
+    \dim_L \Hom_{\NUM(k)_L}(\one, M_{g(I)}(n))\]
+  for all \(g\). By \cref{prop:cm-decomposition}(1) the motives \(M_I\) are of
+  rank one, so by \cref{prop:motive-num-bound} each of these dimensions is \(0\)
+  or \(1\). This gives the dimension equality in (1); the remaining assertions of
+  (1) follow from \cref{prop:motive-num-bound} as well. Part (2) is proved
+  exactly as part (1), since every property of motives and algebraic classes used
+  above holds equally for Lefschetz motives and Lefschetz classes.
+\end{proof}
+
+\begin{remark}
+  \label{rem:num-vs-hom}
+  % SOURCE: [Ancona], §6, Remark following (talvez) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "The previous proposition is not accessible if one replaces numerical with homological equivalence as it is not known that homological equivalence commutes with extension of scalars. One finds the same issues in \cite{Clozel}. This is the crucial reason for which the main results in this paper are in the setting of numerical equivalence."
+  \textit{Source: Ancona, arXiv:1806.03216, §6.}
+  \cref{prop:factor-algebraic} is not available with homological equivalence in
+  place of numerical equivalence, because it is not known that homological
+  equivalence commutes with extension of scalars. This is the reason the main
+  results are stated for numerical equivalence.
+\end{remark}
+
+\begin{theorem}[Honda--Tate lifting]
+  \label{thm:honda-tate}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.hondaTateLifting}
+  \uses{def:CM-structure}
+  % SOURCE: [Ancona], §6, Theorem (HondaTate) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "For any CM-structure $B$ for $A$ (Definition \ref{definitionCM}), the pair  $(A,B)$ lifts to characteristic zero. More precisely there exists a $p$-adic field $K$ with ring of integers $W$ whose residue field $k'$ is a finite extension of $k$, and there is an abelian scheme $\mathcal{A}$ over $W$ together with an embedding $B\hookrightarrow \End^0(\mathcal{A})$, such that $\mathcal{A}\times_W k'$ is isogenous to $A \times_k k'$ (and the isogeny is $B$-equivariant)."
+  \textit{Source: Ancona, arXiv:1806.03216, §6.}
+  (Tate, Bourbaki.) For any CM-structure \(B\) for \(A\)
+  (\cref{def:CM-structure}), the pair \((A, B)\) lifts to characteristic zero:
+  there exist a \(p\)-adic field \(K\) with ring of integers \(W\), whose residue
+  field \(k'\) is a finite extension of \(k\), an abelian scheme \(\mathcal{A}\)
+  over \(W\), and an embedding \(B \hookrightarrow \End^0(\mathcal{A})\), such
+  that \(\mathcal{A} \times_W k'\) is \(B\)-equivariantly isogenous to
+  \(A \times_k k'\).
+\end{theorem}
+
+\begin{proof}
+  This is a cited input, \cite[Theorem 2]{TateBour}; no proof is reproduced.
+\end{proof}
+
+\begin{corollary}[Existence of a \(*\)-stable lift]
+  \label{cor:cm-stable}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.cmStable}
+  \uses{thm:honda-tate, def:CM-structure}
+  % SOURCE: [Ancona], §6, Corollary (CMstab) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "There exists a polarization on the abelian scheme $\mathcal{A}$ for which the CM-structure is $*$-stable"
+  \textit{Source: Ancona, arXiv:1806.03216, §6.}
+  There exists a polarization on the abelian scheme \(\mathcal{A}\) of
+  \cref{thm:honda-tate} for which the CM-structure is \(*\)-stable.
+\end{corollary}
+
+% SOURCE QUOTE PROOF: "Consider the decomposition $\mathcal{A}= \mathcal{A}_1\times \cdots \times \mathcal{A}_t  $ in product  CM simple abelian schemes given from the choice of the CM-structure (Definition \ref{definitionCM}). Choose the polarization to be the product of a polarization on each factor. The statement then reduces to the case when $\mathcal{A}$ is simple and it is enough to check it on the generic fiber, hence in characteristic zero. On the other hand the endomorphism algebra of a simple CM abelian variety in characteristic zero cannot be bigger than the CM-structure itself \cite[\S 22]{MumfordTata}, hence the $*$-stability is automatic."
+\begin{proof}
+  \uses{thm:honda-tate, def:CM-structure}
+  The CM-structure gives a decomposition
+  \(\mathcal{A} = \mathcal{A}_1 \times \cdots \times \mathcal{A}_t\) into simple
+  CM abelian schemes. Take the polarization to be the product of a polarization
+  on each factor; the statement then reduces to the case where \(\mathcal{A}\) is
+  simple, and it suffices to check it on the generic fiber, i.e. in
+  characteristic zero. There the endomorphism algebra of a simple CM abelian
+  variety cannot be larger than its CM-structure, so \(*\)-stability is
+  automatic.
+\end{proof}
+
+\begin{corollary}[Lifting the CM decomposition]
+  \label{cor:lifting-motives}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.liftingMotives}
+  \uses{prop:cm-decomposition, thm:honda-tate, thm:classic-motive}
+  % SOURCE: [Ancona], §6, Corollary (lifting motives) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "The decompositions of $\mathfrak{h}(A \times_k k')$ in Proposition \ref{primadecomposizione}  lift to decompositions of $\mathfrak{h}(\mathcal{A})\in  \CHM (W)$. Moreover, if the CM-structure of $A$ is $*$-stable (and if the polarisation lifts as well) then the orthogonality statement in Proposition \ref{primadecomposizione} holds true in $ \CHM (W)$ as well."
+  \textit{Source: Ancona, arXiv:1806.03216, §6.}
+  The decompositions of \(\hh(A \times_k k')\) in \cref{prop:cm-decomposition}
+  lift to decompositions of \(\hh(\mathcal{A}) \in \CHM(W)\). Moreover, if the
+  CM-structure of \(A\) is \(*\)-stable (and the polarization lifts as well),
+  then the orthogonality statement of \cref{prop:cm-decomposition} holds in
+  \(\CHM(W)\) too.
+\end{corollary}
+
+% SOURCE QUOTE PROOF: "The proof of Proposition \ref{primadecomposizione}    is a formal combination of Theorem \ref{classic} together with   the CM-structure.
+% It works also over $W$ because of Remark \ref{AHP} and Theorem \ref{HondaTate}."
+\begin{proof}
+  \uses{prop:cm-decomposition, thm:classic-motive, thm:honda-tate}
+  The construction of \cref{prop:cm-decomposition} is a formal combination of
+  \cref{thm:classic-motive} with the CM-structure. By \cref{rem:AHP} the results
+  of \cref{thm:classic-motive} hold over the ring of integers \(W\), and by
+  \cref{thm:honda-tate} the CM-structure lifts to \(\mathcal{A}/W\); hence the
+  same construction yields the decomposition of \(\hh(\mathcal{A})\) in
+  \(\CHM(W)\), together with the orthogonality statement when the CM-structure is
+  \(*\)-stable and the polarization lifts.
+\end{proof}

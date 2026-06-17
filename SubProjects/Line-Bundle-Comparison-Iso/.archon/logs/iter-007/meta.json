@@ -1,0 +1,48 @@
+{
+  "iteration": 7,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-06-13T00:50:40Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "5e4179d4-f8f9-4f59-b723-65dde38cff2b",
+    "durationSecs": 2461
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 1
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 1586
+  },
+  "provers": {
+    "AlgebraicJacobian_Picard_TensorObjSubstrate_DualInverse_SliceTransport": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/SliceTransport.lean",
+      "status": "done",
+      "mode": "prove",
+      "sessionId": "1bf1fbd8-8c29-4f86-ab05-ac884ea2a0ac"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "cdd113d2-f4bc-4c06-a8f7-ef8901a50b53",
+    "durationSecs": 857
+  },
+  "sorry_count": 5,
+  "finalize": {
+    "innerGit": {
+      "sha": "2f29631"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 6
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 6
+    }
+  },
+  "completedAt": "2026-06-13T02:13:42Z",
+  "wallTimeSecs": 4982
+}

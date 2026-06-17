@@ -1,0 +1,40 @@
+{
+  "iteration": 14,
+  "stage": "prover  (iteration 013 \u2014 Path-2 Mayer-Vietoris prerequisite sub-step. Iter-012's prover round closed both \u010cech-scaffold sorries (`Scheme.cechCochain_OC` at L228, `Scheme.cechCohomology_OC` at L241) cleanly: sorry count `11 \u2192 9`, kernel-only axioms, both bodies drop-in. With the \u010cech-side carriers in scope, iter-013 lays the next Path-2 prerequisite \u2014 a `ModuleCat k`-flavored cohomology of an open API (`Scheme.HModule'`, mirror of Mathlib's `Sheaf.H'`) needed by the iter-014+ Mayer-Vietoris LES and iter-015+ comparison theorem. Single-declaration scaffold + close in one iteration, probe-confirmed at one-line body. The iter-013 plan-agent has written `REFACTOR_DIRECTIVE.md`; the iter-013 refactor agent runs next, then the iter-013 prover round closes the new sorry.)",
+  "mode": "parallel",
+  "startedAt": "2026-05-08T02:06:40Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 429
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 159
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 533
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "dadb420"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 17
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 2
+    }
+  },
+  "completedAt": "2026-05-08T02:25:42Z",
+  "wallTimeSecs": 1142
+}

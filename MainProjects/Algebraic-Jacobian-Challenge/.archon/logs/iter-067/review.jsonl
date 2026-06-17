@@ -1,0 +1,3 @@
+{"ts": "2026-05-12T03:21:10.644057Z", "event": "session_start", "model": "opus", "role": "review"}
+{"ts": "2026-05-12T03:21:12.265800Z", "event": "text", "content": "You've hit your limit \u00b7 resets May 16, 5am (UTC)"}
+{"ts": "2026-05-12T03:21:12.266530Z", "event": "session_end", "session_id": "065cd7dd-a596-47d8-8031-8eb400f36631", "total_cost_usd": 0, "duration_ms": 501, "duration_api_ms": 0, "num_turns": 1, "input_tokens": 0, "output_tokens": 0, "cache_read_input_tokens": 0, "cache_creation_input_tokens": 0, "model_usage": {}, "summary": "You've hit your limit \u00b7 resets May 16, 5am (UTC)"}

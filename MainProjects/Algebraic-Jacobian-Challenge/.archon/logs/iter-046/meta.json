@@ -1,0 +1,40 @@
+{
+  "iteration": 46,
+  "stage": "prover  (iteration 045 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **global-sections evaluation iso** for the iter-044 geometric Stein input: append two declarations to `Cohomology/StructureSheafModuleK.lean` inside `namespace AlgebraicGeometry.Scheme`, after iter-044's `module_finite_globalSections_of_isProper` (currently ending around L578) and before `end AlgebraicGeometry.Scheme` (around L580). The two declarations bridge from the iter-044 carrier `Module.Finite k \u0393(C, \u22a4)` to `Module.Finite k ((Sheaf.\u0393).obj (toModuleKSheaf C))` via Mathlib's `Sheaf.\u0393NatIsoSheafSections` (terminal-evaluation natural iso for `Sheaf.\u0393`) lifted to a `LinearEquiv` through `Iso.toLinearEquiv` (categorical iso in `ModuleCat k` is a `k`-LinearEquiv on carriers). Iter-044 closure verified (this pass): single declaration lands cleanly at L542\u2013578; sorry count `9 \u2192 9`; file LOC `548 \u2192 615` (+67, vs +30\u201345 plan estimate \u2014 the prover's verbatim grafting needed 7 cosmetic `op \u2192 Opposite.op` qualifications because the plan-agent probe scaffold ran with a default `open Opposite` baseline that the file's open-list lacks; no semantic change). Plan-agent `lean_run_code` probe (this pass) confirms both iter-045 bodies typecheck `{success: true, diagnostics: []}` and `#print axioms` returns kernel-only `[propext, Classical.choice, Quot.sound]`. Iter-045 sorry trajectory `9 \u2192 9` (no transient \u2014 bodies probe-confirmed). Iter-045 closes step (2) of iter-044's four-step producer-instance plan; iter-046+ closes step (1) (linearised constant-sheaf-\u0393 adjunction homEquiv) which is multi-iteration project-local infrastructure. Iter-047+ assembles into the producer instance `IsHModuleHomFinite k C (toModuleKSheaf C)` via `Module.Finite.equiv` chain. Iter-048+ produces the parallel carrier instance `IsAffineHModuleVanishing k C (toModuleKSheaf C)` (multi-iteration; via \u010cech-vs-derived comparison + affine \u010cech vanishing). Iter-049+ consumes via the LES + iter-035 corner-bridge to derive `Module.Finite k (HModule k (toModuleKSheaf C) i)` (Step 5).",
+  "mode": "parallel",
+  "startedAt": "2026-05-10T00:28:12Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 2437
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 388
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 640
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "340af2c"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 37
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 5
+    }
+  },
+  "completedAt": "2026-05-10T01:59:03Z",
+  "wallTimeSecs": 5450
+}

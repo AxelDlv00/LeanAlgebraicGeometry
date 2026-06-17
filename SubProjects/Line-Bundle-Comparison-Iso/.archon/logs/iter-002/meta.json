@@ -1,0 +1,52 @@
+{
+  "iteration": 2,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-06-08T14:30:16Z",
+  "plan": {
+    "status": "skipped",
+    "sessionId": "6dea3a14-7ed3-4195-be16-34b59b044139",
+    "durationSecs": 424
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 2
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 3293
+  },
+  "provers": {
+    "AlgebraicJacobian_Picard_TensorObjSubstrate_DualInverse": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "status": "done",
+      "sessionId": "019ea9f1-f301-73d3-b5d1-fd22fdc1dbda"
+    },
+    "AlgebraicJacobian_Picard_TensorObjSubstrate": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "status": "done",
+      "sessionId": "019ea9f1-f358-75e0-8826-5380c227d0b7"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "019eaa25-1032-77b2-8e9e-28883517bf3b",
+    "durationSecs": 713
+  },
+  "sorry_count": 7,
+  "finalize": {
+    "innerGit": {
+      "sha": "3f3421a"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 6
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 5
+    }
+  },
+  "completedAt": "2026-06-09T02:22:21Z",
+  "wallTimeSecs": 4077
+}

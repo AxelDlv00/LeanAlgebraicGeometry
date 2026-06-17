@@ -1,0 +1,374 @@
+[
+  {
+    "id": "session_1",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_2",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_4",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_5",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_6",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_7",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_9",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_10",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_15",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_16",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_18",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_19",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_20",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_21",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_22",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_23",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_24",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_25",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_26",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_27",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_28",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_29",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_30",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_31",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_32",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_33",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_34",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_35",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_36",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_37",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_38",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_40",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_41",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_42",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_43",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_44",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_45",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_46",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_47",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_48",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_49",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_51",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_52",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_53",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_54",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_55",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_56",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_57",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_58",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_59",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_60",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_61",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_62",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_63",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_64",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_65",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_66",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_73",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_74",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_76",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_77",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_80",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  }
+]

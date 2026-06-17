@@ -1,0 +1,28 @@
+{
+  "iteration": 9,
+  "stage": "prover  (iteration 008 \u2014 Track 2 / \u00e9tale sheafification iteration; refactor will scaffold one new declaration in `Picard/FunctorAb.lean`, then the prover round closes it with a probe-confirmed one-line body)",
+  "mode": "parallel",
+  "startedAt": "2026-05-07T04:47:05Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 912
+  },
+  "refactor": {
+    "status": "done",
+    "durationSecs": 460
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 101
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 426
+  }
+}

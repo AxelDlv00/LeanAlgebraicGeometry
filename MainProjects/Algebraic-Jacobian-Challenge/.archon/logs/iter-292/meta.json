@@ -1,0 +1,12 @@
+{
+  "iteration": 292,
+  "stage": "dag",
+  "mode": "dag",
+  "startedAt": "2026-06-05T02:28:19Z",
+  "dag": {
+    "status": "done",
+    "durationSecs": 275
+  },
+  "completedAt": "2026-06-05T02:32:57Z",
+  "wallTimeSecs": 277
+}

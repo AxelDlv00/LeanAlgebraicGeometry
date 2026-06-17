@@ -1,0 +1,60 @@
+\section{Peer dependency anchors}
+
+This chapter records reusable infrastructure already present in peer DAGs.  The
+blocks here are dependency anchors for the later formal work; they are not
+mathematical claims of Sawin's paper.  They cover the \emph{classical} side of
+the §5 application (the geometry of a hyperelliptic Jacobian, its theta loci,
+symmetric powers, canonical differentials, and pushforwards of sheaves).  The
+genuinely new layer of the paper --- singular support, characteristic cycles in
+characteristic $p$, nearby/vanishing cycles, and intersection theory in the
+cotangent bundle --- has \emph{no} peer anchor and is introduced from scratch in
+the \texttt{Sawin\_Terminology} chapter.
+
+\begin{definition}[Jacobian of a curve anchor]
+  \label{def:peer_jacobian}
+  \lean{AlgebraicGeometry.Jacobian}
+  The peer project \emph{Algebraic-Jacobian-Challenge}, in its chapter on the
+  Jacobian, supplies the Jacobian $J$ of a smooth projective curve $C$ as a
+  group object representing degree-zero divisor classes.  Sawin's §5 works on
+  the Jacobian of a hyperelliptic curve, identifying each component $J^{(n)}$ of
+  degree-$n$ classes with $J$ after fixing a base point, and uses the trivial
+  cotangent bundle $T^*J \cong J \times H^0(C,K_C)$.  This anchor is that group
+  object.
+\end{definition}
+
+\begin{definition}[Weil divisors and symmetric powers anchor]
+  \label{def:peer_weil_divisor}
+  \lean{AlgebraicGeometry.Scheme.WeilDivisor}
+  \uses{def:peer_jacobian}
+  The peer project \emph{Algebraic-Jacobian-Challenge}, in its chapter on Weil
+  divisors, supplies effective divisors on a curve and (via prime divisors and
+  their multiplicities) the symmetric power $C^{(n)} = \Sym^n C$ as a moduli
+  space of degree-$n$ effective divisors, together with the Abel--Jacobi map
+  $\pi_n : C^{(n)} \to J$ sending a divisor to its class.  The theta locus
+  $\Theta_n = \pi_n(C^{(n)})$ and the maps $\underline A^{a,b}$, $\Sigma^{a,b}$
+  of §5 are built from this data.
+\end{definition}
+
+\begin{definition}[Canonical differentials anchor]
+  \label{def:peer_canonical_differentials}
+  \lean{AlgebraicGeometry.Scheme.relativeDifferentialsPresheaf}
+  The peer project \emph{Algebraic-Jacobian-Challenge}, in its chapter on
+  relative differentials, supplies the sheaf of Kähler differentials and hence
+  the canonical bundle $K_C = \Omega^1_{C/k}$ and its global sections
+  $H^0(C,K_C)$.  Sawin identifies the fibre of $T^*J$ with $H^0(C,K_C)$ and uses
+  Serre duality $T_{D}C^{(n)} \cong H^0(C,\cO(D)/\cO)$,
+  $(T^*)_{D}C^{(n)} \cong H^0(C, K_C/K_C(-D))$ throughout the
+  characteristic-cycle computation of Lemma~\ref{lem:sawin_ts_singular}.
+\end{definition}
+
+\begin{definition}[Higher direct image / pushforward anchor]
+  \label{def:peer_higher_direct_image}
+  \lean{AlgebraicGeometry.higherDirectImage}
+  The peer project \emph{Cech-Cohomology}, in its chapter on higher direct
+  images, supplies the derived pushforward $R^i f_* \cF$ of a sheaf along a
+  morphism.  Sawin's constructible-sheaf operations --- proper pushforward
+  $f_*$, the decomposition $\pi^n_*\bQ_\ell = \bigoplus_r i^{n+2r}_*
+  \bQ_\ell[-2r](-r)$ (Lemma~\ref{lem:sawin_ts_decomposition}), and proper base
+  change --- specialise this pushforward formalism to the $\ell$-adic setting.
+  This anchor is the common pushforward interface.
+\end{definition}

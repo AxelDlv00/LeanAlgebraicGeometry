@@ -1,0 +1,2 @@
+route-signal: CHURNING — 2 routes audited, 2 CHURNING/STUCK verdicts, 2 avoidance findings, dispatch=OK  
+Report: [progress-critic-route-signal.md](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/task_results/progress-critic-route-signal.md)

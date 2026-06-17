@@ -1,0 +1,40 @@
+{
+  "iteration": 49,
+  "stage": "prover  (iteration 048 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **\u010cech-side acyclicity carrier predicate**: append three declarations to `Cohomology/StructureSheafModuleK.lean` namespace `AlgebraicGeometry`, after iter-047's `cechCohomology_OC_eq` (around L863), before `end AlgebraicGeometry` (L865): (1) `class Scheme.IsCechAcyclicCover` \u2014 \u010cech-side positive-degree vanishing predicate (single field `subsingleton_cechCohomology`); (2) `theorem Scheme.subsingleton_HModule'_supr_of_isCechAcyclicCover` \u2014 abstract consumer that takes the \u010cech-vs-derived comparison iso as an explicit argument and transports `Subsingleton` from `cechCohomology` to `HModule'` on the cover supremum; (3) `theorem Scheme.subsingleton_HModule'_supr_of_isCechAcyclicCover_curve` \u2014 curve specialisation at `F := toModuleKSheaf C`. Iter-047 closure verified (this pass): all four iter-047 declarations land cleanly at L811 (`cechCochain`), L834 (`cechCohomology`), L850 (`cechCochain_OC_eq`), L858 (`cechCohomology_OC_eq`); sorry count `9 \u2192 9`; file LOC `811 \u2192 865` (+54, vs +30-50 plan estimate band, slight overage from multi-paragraph docstrings, within tolerance). Plan-agent `lean_run_code` probe (this pass) confirms all three iter-048 declarations land cleanly `{success: true, diagnostics: []}` end-to-end with kernel-only axioms `[propext, Classical.choice, Quot.sound]`. Iter-048 sorry trajectory `9 \u2192 9` (no transient \u2014 bodies probe-confirmed). The `compIso` is taken as an **explicit argument**, not a class field, decoupling \u010cech-side combinatorial vanishing from the substantive iter-049+ comparison theorem. Phase A iterations-remaining held at ~5 (no change from iter-047).",
+  "mode": "parallel",
+  "startedAt": "2026-05-10T04:29:34Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1440
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 189
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 564
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "594cd67"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 26
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 5
+    }
+  },
+  "completedAt": "2026-05-10T05:40:38Z",
+  "wallTimeSecs": 4264
+}

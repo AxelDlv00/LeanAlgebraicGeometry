@@ -1,0 +1,1 @@
+{"ts": "2026-06-05T04:06:39.857599Z", "event": "dispatch_start", "role": "dag-walker", "slug": "tos-infra", "parent_slug": "_root", "write_domain": ["blueprint/src/chapters/*.tex", "references/**"], "log_base": "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/logs/iter-300/dag-walker-tos-infra", "pid": 1926271}

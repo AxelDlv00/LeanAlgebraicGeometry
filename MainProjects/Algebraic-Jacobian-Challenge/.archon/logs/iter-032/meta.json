@@ -1,0 +1,40 @@
+{
+  "iteration": 32,
+  "stage": "prover  (iteration 031 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **cover-totality source-object identification**: append one declaration to `Cohomology/MayerVietoris.lean` in a new `section CoverTotality` at the file tail \u2014 `noncomputable def Scheme.HModule'_top_sourceIso` carrying a natural iso `(presheafToSheaf J _).obj ((yoneda \u22d9 ModuleCat.free k).obj T) \u2245 (constantSheaf J _).obj (ModuleCat.of k k)` for terminal `T`. Plan-agent `lean_run_code` probe (this pass) confirms the body \u2014 composing `Functor.isoWhiskerRight \u27e8yoneda(T) \u2245 const PUnit\u27e9 (ModuleCat.free k) \u226a\u226b Functor.constComp _ PUnit (ModuleCat.free k) \u226a\u226b (Functor.const C\u1d52\u1d56).mapIso (Finsupp.LinearEquiv.finsuppUnique k k PUnit).toModuleIso` under `(presheafToSheaf J _).mapIso` \u2014 typechecks end-to-end against the post-iter-030 file with `{success: true, diagnostics: []}`. The iter-030 prover's two-declaration close lands cleanly: 9 sorries (no change), zero diagnostics, kernel-only axioms on both new declarations, and +25 LOC (652 \u2192 677). Iter-031 sorry trajectory `9 \u2192 9 \u2192 9` (no transient scaffold sorries \u2014 body is a probe-confirmed term-mode one-liner).",
+  "mode": "parallel",
+  "startedAt": "2026-05-09T06:39:09Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1326
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 177
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 565
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "a05443d"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 22
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 3
+    }
+  },
+  "completedAt": "2026-05-09T07:14:05Z",
+  "wallTimeSecs": 2096
+}

@@ -1,0 +1,18 @@
+{
+  "iteration": 110,
+  "stage": "prover (Archon iter-110 / iter-112 narrative \u2014 single small prover lane;",
+  "mode": "parallel",
+  "startedAt": "2026-05-15T19:24:22Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "f991cd2a-3eab-4bab-a31b-f6ea02c59d72",
+    "durationSecs": 3203
+  },
+  "planValidate": {
+    "status": "failed",
+    "objectives": 0
+  },
+  "completedAt": "2026-05-15T20:17:45Z",
+  "wallTimeSecs": 3203,
+  "status": "plan_validate_failed"
+}

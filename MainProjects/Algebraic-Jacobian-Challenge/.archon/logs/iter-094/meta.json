@@ -1,0 +1,44 @@
+{
+  "iteration": 94,
+  "stage": "prover (iteration 093 \u2014 single substantive prover lane; HOU detour for step (b) of",
+  "mode": "parallel",
+  "startedAt": "2026-05-14T08:26:43Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "5709b8eb-7cdf-4961-8297-bf6b49e1ed60",
+    "durationSecs": 942
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 1814
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_BasicOpenCech": {
+      "file": "AlgebraicJacobian/Cohomology/BasicOpenCech.lean",
+      "status": "done",
+      "sessionId": "24354eb2-05b2-4e64-a292-fb34d3793452"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "241f4a99-8978-4536-b6d9-834a9ca47746",
+    "durationSecs": 539
+  },
+  "sorry_count": 7349,
+  "finalize": {
+    "innerGit": {
+      "sha": "61d3ff3"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 27
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 0,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-14T09:24:33Z",
+  "wallTimeSecs": 3469
+}

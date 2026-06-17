@@ -1,0 +1,74 @@
+\chapter{Sheaf condition along the structure-sheaf forget composite}
+\label{chap:Cohomology_SheafCompose}
+
+This chapter records the first step of Phase A in \texttt{STRATEGY.md}: equipping the abstract Mathlib sheaf-cohomology pipeline with the link it needs to compute $H^1(C, \mathcal O_C)$ as an abelian group. It is the smallest unblocking unit of progress toward Definition~\ref{def:genus} (the genus of a smooth proper curve).
+
+The chapter introduces no protected declarations: every definition and lemma here is auxiliary, supporting the construction of $H^1(C, \mathcal O_C)$ in subsequent Phase A iterations.
+
+\section{Statement}
+
+Mathlib has the abstract Grothendieck-topology sheaf-cohomology API
+\lstinline{CategoryTheory.Sheaf.H : Sheaf J AddCommGrpCat → ℕ → Type w'}, but the structure sheaf $\mathcal O_C$ of a scheme is delivered by Mathlib in the shape \lstinline{TopCat.Sheaf CommRingCat C} (i.e.\ $\mathrm{CommRing}$-valued, not $\mathrm{Ab}$-valued). To plug $\mathcal O_C$ into the cohomology API we must first transport the sheaf condition along the forgetful composite $\mathrm{CommRing} \to \mathrm{Ring} \to \mathrm{Ab}$. The \lstinline{HasSheafCompose} typeclass packages exactly this transport.
+
+\begin{theorem}[Sheaf condition transports along the structure-sheaf forget composite]
+  \label{thm:HasSheafCompose_forget}
+  \lean{AlgebraicGeometry.Cohomology.instHasSheafCompose_forget_CommRing_AddCommGrp}
+  \leanok
+  Let $X$ be a topological space. Then the Grothendieck topology of opens of $X$ has
+  \[
+    \mathtt{HasSheafCompose}\bigl(
+      \mathrm{forget}_2\, \mathrm{CommRingCat}\, \mathrm{RingCat} \;\circ\;
+      \mathrm{forget}_2\, \mathrm{RingCat}\, \mathrm{AddCommGrpCat}
+    \bigr).
+  \]
+\end{theorem}
+
+In Lean:
+\begin{lstlisting}
+instance (X : TopCat) :
+    (TopologicalSpace.Opens.grothendieckTopology X).HasSheafCompose
+      (CategoryTheory.forget₂ CommRingCat RingCat ⋙
+       CategoryTheory.forget₂ RingCat AddCommGrpCat)
+\end{lstlisting}
+
+\section{Proof sketch}
+
+\begin{proof}
+  \leanok
+  Both $\mathrm{forget}_2 \mathrm{CommRingCat}\, \mathrm{RingCat}$ and $\mathrm{forget}_2 \mathrm{RingCat}\, \mathrm{AddCommGrpCat}$ are algebraic structure-forgetful functors and hence \emph{create} (in particular preserve) all small limits. The sheaf condition for the topology of opens is expressed as preservation of certain limits of the form \lstinline{multiequalizer (Cover.index ...)} (see \lstinline{Presheaf.IsSheaf.isSheaf_iff_isSheaf_of_type} and the multispan-limit reformulation \lstinline{IsSheaf.isLimit_multifork}). Composing two limit-preserving functors gives a limit-preserving functor, so the post-composition with the forget composite preserves the sheaf condition. The \lstinline{HasSheafCompose} typeclass is exactly the resulting "sheaf-of-rings becomes sheaf-of-abelian-groups" lemma.
+\end{proof}
+
+\section{Use in the project}
+
+Theorem~\ref{thm:HasSheafCompose_forget} is the gateway to:
+
+\begin{itemize}
+  \item the construction of $\mathcal O_C$ as a sheaf of abelian groups on $C$, by post-composing $\mathcal O_C : \mathrm{Opens}(C)^{\mathrm{op}} \to \mathrm{CommRingCat}$ with the forget composite — the resulting object lives in $\mathrm{Sheaf}(\mathrm{Opens.gT}\, C, \mathrm{AddCommGrpCat})$ thanks to the typeclass above;
+  \item plugging that sheaf into \lstinline{CategoryTheory.Sheaf.H} once \lstinline{HasSheafify (Opens.gT C) AddCommGrpCat} and \lstinline{HasExt} are available (Phase A steps 2--3);
+  \item endowing the resulting $H^1$ with a $k$-vector-space structure via the $k$-algebra structure on $\Gamma(C, \mathcal O_C)$ (Phase A step 4);
+  \item finite-dimensionality via Serre's theorem on coherent cohomology of proper $k$-schemes (Phase A step 5);
+  \item Definition~\ref{def:genus} ($g(C) = \dim_k H^1(C, \mathcal O_C)$) which then becomes formalisable.
+\end{itemize}
+
+The chain is: \texttt{HasSheafCompose} (this chapter) $\to$ \texttt{HasSheafify} $\to$ \texttt{HasExt} $\to$ $\mathrm{Module}\, k$-on-$H^1$ $\to$ Serre finiteness $\to$ \lstinline{genus}.
+
+\section{Mathlib gap}
+
+Mathlib \texttt{b80f227} has all the constituent pieces:
+\begin{itemize}
+  \item \lstinline{CategoryTheory.GrothendieckTopology.HasSheafCompose} — the typeclass to populate.
+  \item \lstinline{CategoryTheory.HasForget₂} for $\mathrm{CommRingCat} \to \mathrm{RingCat}$ (\lstinline{CommRingCat.hasForgetToRingCat}) and $\mathrm{RingCat} \to \mathrm{AddCommGrpCat}$ (\lstinline{RingCat.hasForgetToAddCommGrp}).
+  \item Limit-preservation lemmas for algebraic forgetful functors and the sheaf-condition reformulations.
+\end{itemize}
+
+What is missing and supplied by this chapter: the assembled \texttt{HasSheafCompose} instance for the specific composite $\mathrm{CommRingCat} \to \mathrm{AddCommGrpCat}$ on the Grothendieck topology of opens of an arbitrary topological space.
+
+\subsection{Discovery objectives for this iteration (iter-005 prover)}
+
+The prover assigned to this chapter should:
+\begin{enumerate}
+  \item Use \lstinline{lean_local_search}/\lstinline{lean_leansearch} to identify the most direct existing Mathlib lemma that establishes \lstinline{HasSheafCompose} from limit preservation by the post-composing functor — e.g.\ \lstinline{Presheaf.isSheaf_iff_isSheaf_comp} or \lstinline{HasSheafCompose.isSheaf_of_preservesMultiequalizer}.
+  \item Establish that the composite $\mathrm{forget}_2\, \mathrm{CommRingCat}\, \mathrm{RingCat} \circ \mathrm{forget}_2\, \mathrm{RingCat}\, \mathrm{AddCommGrpCat}$ preserves the relevant limits, by appealing to existing Mathlib facts about algebraic forget functors (\lstinline{HasLimits} preservation).
+  \item Combine the two to produce the instance and close the sorry. The body should be at most $\sim 20$ lines.
+  \item \textbf{Do not} introduce a placeholder \lstinline{instance := sorry'} or any axiom: leave the sorry in place rather than weakening the definition.
+\end{enumerate}

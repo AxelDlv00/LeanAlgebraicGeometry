@@ -1,0 +1,48 @@
+{
+  "iteration": 112,
+  "stage": "prover (Archon iter-111 \u2014 **deeper-think iter: NO prover lane dispatched**;",
+  "mode": "parallel",
+  "startedAt": "2026-05-15T20:50:01Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "b08ec52c-a426-4351-91d7-77826275cafd",
+    "durationSecs": 1442
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 1
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 1035
+  },
+  "provers": {
+    "AlgebraicJacobian_Differentials": {
+      "file": "AlgebraicJacobian/Differentials.lean",
+      "status": "done",
+      "sessionId": "2b8b3c8a-719b-4071-b215-de4fde61c30f"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "b8485baa-e8ba-4b46-842f-1c9d30fba085",
+    "durationSecs": 1410
+  },
+  "sorry_count": 3662,
+  "finalize": {
+    "innerGit": {
+      "sha": "74ed498"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 17
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 1,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-15T21:57:47Z",
+  "wallTimeSecs": 4065
+}

@@ -1,0 +1,54 @@
+{
+  "iteration": 246,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-06-02T03:35:45Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "de76aa4b-fef0-4ff4-9034-d374ede0966e",
+    "durationSecs": 2685
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 2
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 2088
+  },
+  "provers": {
+    "AlgebraicJacobian_Picard_TensorObjSubstrate": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "62b8c170-b5f0-4f73-be03-198dd8aed196"
+    },
+    "AlgebraicJacobian_Picard_RelPicFunctor": {
+      "file": "AlgebraicJacobian/Picard/RelPicFunctor.lean",
+      "status": "done",
+      "mode": "prove",
+      "sessionId": "47b585aa-9867-407a-bb8d-940b14359bce"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "be20c11f-c7a6-489b-9be2-ed84665435fd",
+    "durationSecs": 647
+  },
+  "sorry_count": 87,
+  "finalize": {
+    "innerGit": {
+      "sha": "c9ef031d"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 7
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 35
+    }
+  },
+  "completedAt": "2026-06-02T05:14:49Z",
+  "wallTimeSecs": 5944
+}

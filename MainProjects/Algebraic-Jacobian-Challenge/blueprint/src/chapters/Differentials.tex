@@ -1,0 +1,211 @@
+\chapter{The relative cotangent presheaf}
+\label{chap:differentials}
+
+This chapter develops the relative cotangent \emph{presheaf} \(\Omega_{X/S}\) of a morphism of schemes \(f \colon X \to S\), starting from the ring-theoretic K\"ahler differential module \(\Omega_{B/A}\) already available in Mathlib. The output is a presheaf of \(\struct{X}\)-modules whose sections on each open \(V \subseteq X\) are the K\"ahler differential module of the ring map \((f^{-1}_{\mathrm{psh}}\struct{S})(V) \to \struct{X}(V)\) induced by \(f\), where \(f^{-1}_{\mathrm{psh}}\) denotes the \emph{presheaf-level} inverse-image functor (left Kan extension along \((\mathrm{Opens.map}\,f.\mathrm{base}).\mathrm{op}\)).
+
+The downstream role of this chapter is to provide the \emph{forward direction} of the standard smoothness criterion: smoothness of \(f\) implies that on every affine chart \(V \to U\) (with \(V \subseteq X\), \(U \subseteq S\) affine and \(f V \subseteq U\)) the appLE-algebra K\"ahler differential \(\Omega_{\Gamma(X, V)\,/\,\Gamma(S, U)}\) is a free \(\Gamma(X, V)\)-module of rank \(n\). This is the Jacobian-criterion direction and is what connects to the dimension hypothesis on the Jacobian: the smoothness of the curve \(C \to \Spec k\) in the Jacobian definition is the special case \(n = 1\), and the relative dimension of \(\Jac(C)\) is read off from the rank via the same forward implication. The bridge between this affine-chart-wise algebra-K\"ahler form and the section module of the relative cotangent presheaf \(\Omega_{X/S}\) was the former content of milestone~M1; the bridge declaration was excised iter-126 (zero in-tree consumers) and replaced in this chapter by the standalone K\"ahler-localization utilities of \cref{sec:bridge}, the off-loop Mathlib-PR work of which proceeds from \texttt{analogies/relative-differentials-presheaf-bridge.md}. The converse implication of the forward smoothness criterion is \emph{mathematically false} as stated and is documented separately in \cref{sec:converse-out-of-scope}.
+
+\section{The relative cotangent presheaf}
+
+\begin{definition}
+
+\leanok
+[Relative cotangent presheaf of a morphism]
+  \label{def:relative_kaehler_presheaf}
+  \lean{AlgebraicGeometry.Scheme.relativeDifferentialsPresheaf}
+  Let \(f \colon X \to S\) be a morphism of schemes. The presheaf-level inverse-image presheaf of rings \(f^{-1}_{\mathrm{psh}}\struct{S}\) on \(X\) (the left Kan extension of \(\struct{S}\) along \((\mathrm{Opens.map}\,f.\mathrm{base}).\mathrm{op}\), given on each open \(V \subseteq X\) by the colimit \(\mathrm{colim}_{W : \,f V \subseteq W \subseteq S}\,\struct{S}(W)\)) is paired with \(\struct{X}\) by the canonical adjunction-transpose \(f^{-1}_{\mathrm{psh}}\struct{S} \to \struct{X}\) of the comorphism \(f^{\sharp}\colon\struct{S}\to f_{*}\struct{X}\). Applying the presheaf-of-modules K\"ahler differential construction \(\mathrm{relativeDifferentials}'\) to this map of presheaves of commutative rings produces a presheaf of \(\struct{X}\)-modules on \(X\), the \emph{relative cotangent presheaf} \(\Omega_{X/S}\).
+\end{definition}
+
+\begin{lemma}
+
+\leanok
+[Sections of \(\Omega_{X/S}\) on an open]
+  \label{lem:relative_kaehler_presheaf_obj}
+  \lean{AlgebraicGeometry.Scheme.relativeDifferentialsPresheaf_obj_kaehler}
+  \uses{def:relative_kaehler_presheaf}
+  
+  For every open \(V \subseteq X\), the sections of the relative cotangent presheaf are, by construction, the K\"ahler differential module of the ring map \((f^{-1}_{\mathrm{psh}}\struct{S})(V) \to \struct{X}(V)\) induced by \(f\):
+  \[
+    \Omega_{X/S}(V) \;=\; \Omega_{\struct{X}(V) \,/\, (f^{-1}_{\mathrm{psh}}\struct{S})(V)}.
+  \]
+  Here \((f^{-1}_{\mathrm{psh}}\struct{S})(V) = \mathrm{colim}_{W : \,f V \subseteq W \subseteq S}\,\struct{S}(W)\) is the presheaf-level inverse-image section ring, \emph{not} \(\struct{S}(U)\) for an arbitrary affine open \(U \supseteq f V\). The relationship between this colimit-source K\"ahler module and the classical ring-theoretic \(\Omega_{B/A}\) for \(A = \struct{S}(U)\), \(B = \struct{X}(V)\) on an affine chart \(V = \Spec B \subseteq f^{-1}U\) with \(U = \Spec A \subseteq S\) affine is the content of the bridge documented in \cref{sec:bridge}.
+\end{lemma}
+
+\begin{proof}
+  
+  \leanok
+  By definition of \(\mathrm{relativeDifferentials}'\): the construction is built object-wise to be the Mathlib \texttt{KaehlerDifferential} module of the ring map at each open. The identification is therefore by \texttt{rfl} after unfolding the definition. The colimit description of \((f^{-1}_{\mathrm{psh}}\struct{S})(V)\) is the definition of \texttt{TopCat.Presheaf.pullback} as the left Kan extension along \((\mathrm{Opens.map}\,f.\mathrm{base}).\mathrm{op}\) in Mathlib.
+\end{proof}
+
+\begin{remark}[Comparison with Mathlib's ring-level \(\Omega_{B/A}\)]
+  \label{rem:kahler_compatibility}
+  Mathlib provides the ring-theoretic K\"ahler differential module \(\Omega_{B/A}\) together with the universal derivation \(\mathrm{d} \colon B \to \Omega_{B/A}\). The construction of \(\Omega_{X/S}\) on each open is, by definition, this Mathlib module applied at the ring level of the presheaf, so all ring-level Mathlib lemmas about \(\Omega_{B/A}\) transfer verbatim under \cref{lem:relative_kaehler_presheaf_obj} — but for the \emph{colimit-source} ring \((f^{-1}_{\mathrm{psh}}\struct{S})(V)\), not for \(\struct{S}(U)\). Transferring to the classical \(A = \struct{S}(U)\) source on an affine chart is the bridge of \cref{sec:bridge}.
+\end{remark}
+
+\section{Smoothness criterion for \(\Omega_{X/S}\) (forward direction)}
+
+The forward direction of the textbook smoothness criterion identifies a necessary condition on the relative K\"ahler differentials: every point of \(X\) admits an affine chart \(V \to U\) over which the appLE-algebra K\"ahler module \(\Omega_{B/A}\) is free of the prescribed rank, with \(A = \struct{S}(U)\) and \(B = \struct{X}(V)\). This is the global version of the algebraic-side fact that an \texttt{Algebra.IsStandardSmoothOfRelativeDimension}~\(n\)~algebra has a free K\"ahler differential module of rank \(n\). We state and prove the theorem directly on the appLE-algebra K\"ahler module, sidestepping the presheaf bridge of \cref{sec:bridge}. The converse implication (a local-freeness hypothesis on \(\Omega\) alone implying smoothness) is \emph{false}; see \cref{sec:converse-out-of-scope}.
+
+\begin{theorem}\leanok
+[Smooth implies \(\Omega\) locally free (algebra-K\"ahler form)]
+  \label{thm:smooth_locally_free_omega}
+  \lean{AlgebraicGeometry.Scheme.smooth_locally_free_omega}
+  
+  Let \(f \colon X \to S\) be a morphism of schemes and let \(n \in \mathbb{N}\). If \(f\) is smooth of relative dimension \(n\), then for every point \(x \in X\) there exist an affine open \(U \subseteq S\), an affine open \(V \subseteq X\) with \(x \in V\) and \(V \subseteq f^{-1}(U)\), such that the K\"ahler differential module
+  \[
+    \Omega_{\Gamma(X, V) \,/\, \Gamma(S, U)}
+  \]
+  (over the appLE algebra structure \(\Gamma(S, U) \to \Gamma(X, V)\) induced by \(f\)) is a free \(\Gamma(X, V)\)-module of rank \(n\).
+\end{theorem}
+
+\begin{proof}
+  
+  \leanok
+  Fix \(x \in X\). We use the abbreviation \(A := \Gamma(S, U)\) and \(B := \Gamma(X, V)\) for the section rings on the affine chart we will produce; the algebra map \(A \to B\) is the appLE map \((f.\mathrm{appLE}\,U\,V\,e).\mathrm{hom}\) induced by \(f\).
+
+  \emph{Step 1: extract a standard-smooth chart at \(x\).} The auto-generated \texttt{mk\_iff} bridge
+  \[
+    \texttt{AlgebraicGeometry.smoothOfRelativeDimension\_iff} \quad [\text{verified}]
+  \]
+  (\texttt{Mathlib.AlgebraicGeometry.Morphisms.Smooth}; produced by the \texttt{@[mk\_iff]} attribute on the class \texttt{SmoothOfRelativeDimension}) unfolds the hypothesis \texttt{SmoothOfRelativeDimension}~\(n\)~\(f\) into: for every \(x \in X\), there exist affine opens \(U \subseteq S\) and \(V \subseteq X\) with \(x \in V\) and \(V \leq f^{-1}U\), such that the induced algebra map \((f.\mathrm{appLE}\,U\,V\,e).\mathrm{hom}\colon A \to B\) satisfies \texttt{Algebra.IsStandardSmoothOfRelativeDimension}~\(n\)~\(A\)~\(B\).
+
+  \emph{Step 2: pass to plain standard-smooth.} The lemma
+  \[
+    \texttt{Algebra.IsStandardSmoothOfRelativeDimension.isStandardSmooth} \quad [\text{verified}]
+  \]
+  (\texttt{Mathlib.RingTheory.Smooth.StandardSmooth}) yields \texttt{Algebra.IsStandardSmooth}~\(A\)~\(B\) from the relative-dimension-tagged form, unlocking the cotangent-module machinery in the next two steps.
+
+  \emph{Step 3: free K\"ahler module on the chart.} The Mathlib instance
+  \[
+    \texttt{Algebra.IsStandardSmooth.free\_kaehlerDifferential} \quad [\text{verified}]
+  \]
+  (\texttt{Mathlib.RingTheory.Smooth.StandardSmoothCotangent}) synthesises \texttt{Module.Free}~\(B\)~\(\Omega_{B/A}\) from \texttt{Algebra.IsStandardSmooth}~\(A\)~\(B\).
+
+  \emph{Step 4: pin the rank.} The theorem
+  \[
+    \texttt{Algebra.IsStandardSmoothOfRelativeDimension.rank\_kaehlerDifferential} \quad [\text{verified}]
+  \]
+  (same file as Step 3) gives \(\rank_B\,\Omega_{B/A} = n\) under the hypotheses \texttt{Nontrivial}~\(B\) and \texttt{Algebra.IsStandardSmoothOfRelativeDimension}~\(n\)~\(A\)~\(B\).
+
+  \emph{Step 4.5: discharge the \texttt{Nontrivial}~\(B\) side condition.} The chart witness \(x \in V\) shows that the open \(V \subseteq X\) is non-empty as a set, so its structure-sheaf section ring \(B = \Gamma(X, V) = \struct{X}(V)\) is non-zero by \texttt{AlgebraicGeometry.Scheme.component\_nontrivial} (the structure sheaf of a scheme has \texttt{Nontrivial} sections on a non-empty open). This supplies the \texttt{Nontrivial}~\(B\) hypothesis required by Step 4.
+
+  Combining Steps 1--4.5, the chart \((U, V, e)\) produced by Step 1 satisfies \(x \in V\), \(\mathrm{IsAffineOpen}\,U\), \(\mathrm{IsAffineOpen}\,V\), and under the appLE algebra structure \(A = \Gamma(S, U) \to B = \Gamma(X, V)\), the K\"ahler module \(\Omega_{B/A}\) is a free \(B\)-module of rank \(n\). As \(x \in X\) was arbitrary, the statement follows.
+
+  This is the forward direction of the Jacobian criterion: Stacks Tag~02G1 (and Hartshorne~II.8, Theorem~II.5.2 in the Noetherian case).
+
+  \emph{Mathlib name summary.} The five \texttt{[verified]} closure pieces the proof relies on are
+  \texttt{AlgebraicGeometry.smoothOfRelativeDimension\_iff} (Step 1),
+  \texttt{Algebra.IsStandardSmoothOfRelativeDimension.isStandardSmooth} (Step 2),
+  \texttt{Algebra.IsStandardSmooth.free\_kaehlerDifferential} (Step 3),
+  \texttt{Algebra.IsStandardSmoothOfRelativeDimension.rank\_kaehlerDifferential} (Step 4),
+  and \texttt{AlgebraicGeometry.Scheme.component\_nontrivial} (Step 4.5).
+\end{proof}
+
+\begin{remark}[Lean naming]
+  \label{rem:smooth_class_naming}
+  The Lean class for ``smooth of relative dimension \(n\)'' is \texttt{AlgebraicGeometry.SmoothOfRelativeDimension}; the spelling \texttt{IsSmoothOfRelativeDimension} that appeared in earlier iterations of this project is a deprecated alias in Mathlib \texttt{b80f227}. The \texttt{\textbackslash lean\{...\}} hint above names the non-deprecated form.
+\end{remark}
+
+\section{Standalone K\"ahler-localization utilities (post-iter-126 M1 excise)}
+\label{sec:bridge}
+
+The presheaf-form \(\Omega_{X/S}\) of \cref{def:relative_kaehler_presheaf} and the algebra-K\"ahler form \(\Omega_{B / A}\) on an affine chart of \cref{thm:smooth_locally_free_omega} are connected, on an affine chart, by a canonical \(B\)-linear isomorphism. Earlier iterations of the project (iter-121 through iter-125) hosted this isomorphism in the Lean tree as a \emph{bridge} declaration \texttt{relativeDifferentialsPresheaf\_equiv\_kaehler\_appLE} backed by a Mathlib gap-fill sub-lemma \texttt{appLE\_isLocalization} (the load-bearing localization-at-the-image-submonoid claim, packaged as a multi-LOC residual sorry whose closure was concrete but had no in-tree consumer). The forward-direction smoothness criterion (\cref{thm:smooth_locally_free_omega}) closed iter-120 in algebra-K\"ahler form \emph{independently} of the bridge, so the bridge was project-local infrastructure with zero downstream consumer.
+
+\textbf{Excise decision (iter-126).} Per the iter-126 strategy-critic CHALLENGE, ratified by the iter-126 user hint endorsing "shortest path qualified by your role is to fill mathlib gaps", the bridge declaration and its load-bearing sub-lemma were excised from the Lean tree iter-126: closing the bridge produced neither a downstream consumer nor a Mathlib PR (the extractable PR candidate is M1.d — \cref{lem:kaehler_quotient_localization_iso} below — and is \emph{independent} of the bridge). The two retained declarations in this section are the standalone K\"ahler-localization utilities that survive as upstream-PR-quality material; off-loop PR work proceeds from \texttt{analogies/relative-differentials-presheaf-bridge.md}.
+
+\begin{lemma}\leanok
+[K\"ahler module of a localization is trivial]
+  \label{lem:kaehler_localization_subsingleton}
+  \lean{AlgebraicGeometry.Scheme.kaehler_localization_subsingleton}
+  Let \(A \to L\) be a localization at a multiplicative subset \(M \subseteq A\). Then \(\Omega_{L / A}\) is subsingleton (the zero \(L\)-module).
+\end{lemma}
+
+\begin{proof}
+
+\leanok
+  This is a thin re-export of Mathlib's existing infrastructure: \texttt{Algebra.FormallyUnramified.of\_isLocalization}~\texttt{[verified]} (\texttt{Mathlib.RingTheory.Unramified.Basic}, line 303) produces the instance \texttt{Algebra.FormallyUnramified}~\(A\)~\(L\) from any \texttt{IsLocalization}~\(M\)~\(L\) predicate; the instance \texttt{Algebra.FormallyUnramified.subsingleton\_kaehlerDifferential}~\texttt{[verified]} (same file, lines 57--59) then yields \texttt{Subsingleton}~\((\mathrm{KaehlerDifferential}~A~L)\). Hence the project-side lemma is a two-line re-export (\(\mathtt{haveI} := \mathtt{Algebra.FormallyUnramified.of\_isLocalization}~M\) \texttt{; infer\_instance}); contra an earlier framing, no Mathlib gap-fill is required for this lemma.
+\end{proof}
+
+\begin{lemma}\leanok
+[Tower-cancellation equivalence for K\"ahler modules under localization]
+  \label{lem:kaehler_quotient_localization_iso}
+  \lean{AlgebraicGeometry.Scheme.kaehler_quotient_localization_iso}
+  \uses{lem:kaehler_localization_subsingleton}
+  
+  Let \(A \to L\) be a localization (in the sense of \texttt{IsLocalization}), and let \(L \to B\) be a ring map forming a scalar tower \(A \to L \to B\). Then the canonical \(B\)-linear map \(\Omega_{B/A} \to \Omega_{B/L}\) induced by the tower is a \(B\)-linear equivalence.
+\end{lemma}
+
+\begin{proof}
+  
+  \leanok
+  The second fundamental exact sequence of K\"ahler differentials reads
+  \[
+    B \otimes_{L} \Omega_{L/A} \;\longrightarrow\; \Omega_{B/A} \;\twoheadrightarrow\; \Omega_{B/L} \;\longrightarrow\; 0.
+  \]
+  By \cref{lem:kaehler_localization_subsingleton}, the left term vanishes (since \(\Omega_{L/A}\) is subsingleton and tensoring against it gives the zero module). Therefore the right surjection has zero kernel and is a \(B\)-linear equivalence. The Mathlib closure pieces are \texttt{KaehlerDifferential.exact\_mapBaseChange\_map}~\texttt{[verified]} (the exact sequence above) and \texttt{KaehlerDifferential.map\_surjective}~\texttt{[verified]} (the right-hand surjection), both in \texttt{Mathlib.RingTheory.Kaehler.Basic}; the project-side declaration packages these into a \texttt{LinearEquiv} via \texttt{LinearEquiv.ofBijective}. This is the most extractable Mathlib contribution candidate of milestone~M1: a clean generalisation of \texttt{KaehlerDifferential.tensorKaehlerEquivOfFormallyEtale} to the ``only the lower step is formally unramified'' case, candidate name \texttt{KaehlerDifferential.equivOfFormallyUnramified}.
+\end{proof}
+
+\begin{remark}[Mathlib contribution candidate (preserved standalone post-excise)]
+  \label{rem:bridge_mathlib_pr}
+  Per the analogist's analysis (\texttt{analogies/relative-differentials-presheaf-bridge.md}, iter-121), the extractable Mathlib contribution candidate is \cref{lem:kaehler_quotient_localization_iso}: a clean generalisation of \texttt{KaehlerDifferential.tensorKaehlerEquivOfFormallyEtale} to the ``only the lower step is formally unramified'' case (candidate name \texttt{KaehlerDifferential.equivOfFormallyUnramified}, candidate Mathlib home \texttt{Mathlib.RingTheory.Kaehler.Basic}). This lemma survives the iter-126 M1 excise as standalone PR-ready material; the bridge declaration and its scheme-morphism-shaped \texttt{appLE\_isLocalization} sub-lemma were excised iter-126 because they had zero in-tree consumers, but the Mathlib-PR work proceeds off-loop from the analogist's file.
+\end{remark}
+
+\section{Converse direction (milestone M4)}
+\label{sec:converse-out-of-scope}
+
+This direction is recorded as an optional future milestone~M4 (see \texttt{STRATEGY.md}). Closure requires the deformation-theoretic hypothesis \texttt{Subsingleton (Algebra.H1Cotangent}~\(A\)~\(B\)\texttt{)}, which the project may wire up if a downstream consumer demands the iff form. The remainder of this section documents the obstruction in concrete form: a counterexample showing that without that hypothesis the converse fails, and a comparison with the Mathlib converse lemma at the ring level.
+
+The reverse implication
+\[
+  \forall x\in X,\ \exists\,U\text{ affine},\ \Omega_{X/S}(U)\text{ free of rank }n
+  \quad\Longrightarrow\quad f \text{ smooth of relative dimension } n
+\]
+is \emph{mathematically false} as stated, even under the auxiliary hypothesis that \(f\) is locally of finite presentation. Local freeness of \(\Omega\) alone does not imply flatness, and flatness (equivalently, formal smoothness via vanishing of the first Andr\'e--Quillen cohomology) is genuine deformation-theoretic content not encoded in the section-module hypothesis. This is why the iff form of the criterion present in earlier iterations was demoted to a forward implication.
+
+\begin{remark}[Explicit counterexample]
+  \label{rem:converse_counterexample}
+  Let \(k\) be a field and consider the morphism \(f \colon \Spec k \to \Spec k[t]\) induced by the surjection \(k[t] \twoheadrightarrow k\) sending \(t \mapsto 0\). Then \(f\) is locally of finite presentation, its source \(\Spec k\) has a unique affine open (itself), and the K\"ahler differential module \(\Omega_{k/k[t]} = 0\) is free of rank \(0\) (the trivial \texttt{Module.Basis} indexed by the empty set witnesses this). Yet \(f\) is the closed immersion of a non-open point of \(\Spec k[t]\), hence is not flat and therefore not smooth, so \texttt{SmoothOfRelativeDimension}~\(0\)~\(f\) fails. The local-freeness hypothesis on \(\Omega\) is therefore strictly weaker than smoothness, and the converse implication of the iff form fails on this very example.
+\end{remark}
+
+\begin{remark}[The Mathlib converse lemma and its hypotheses]
+  \label{rem:converse_lemma_hypotheses}
+  Mathlib does provide a converse-direction lemma at the ring level,
+  \[
+    \texttt{Algebra.IsStandardSmooth.of\_basis\_kaehlerDifferential} \quad [\text{verified}]
+  \]
+  (\texttt{Mathlib.RingTheory.Smooth.StandardSmoothOfFree}). Its three hypotheses make the missing content explicit:
+  \begin{itemize}
+    \item \texttt{Algebra.FinitePresentation}~\(A\)~\(B\);
+    \item \texttt{Subsingleton (Algebra.H1Cotangent}~\(A\)~\(B\)\texttt{)} --- vanishing of the first Andr\'e--Quillen cohomology, i.e.\ formal smoothness;
+    \item a basis \(b \colon \texttt{Module.Basis}~I~B~\Omega_{B/A}\) whose range lies in the image of the universal derivation, \(\mathrm{Set.range}\,(\texttt{Algebra.KaehlerDifferential.D}~A~B)\).
+  \end{itemize}
+  None of these three is supplied by the section-module hypothesis of the would-be iff. The first-cotangent-vanishing hypothesis in particular is the deformation-theoretic input that distinguishes ``\(\Omega\) locally free'' from ``smooth''; without it, the counterexample of \cref{rem:converse_counterexample} would already break the converse. Establishing \texttt{Subsingleton (Algebra.H1Cotangent}~\(A\)~\(B\)\texttt{)} from project-side hypotheses (e.g.\ via a flatness assumption added to the input) is the work that would close the converse, and is the content of milestone~M4.
+\end{remark}
+
+\begin{remark}[Cross-reference to Stacks 02G1]
+  \label{rem:stacks_02G1}
+  The standard textbook biconditional ``\(f\) is smooth of relative dimension \(d\) iff \(f\) is flat, locally of finite presentation, and \(\Omega_{X/S}\) is locally free of rank \(d\)'' is Stacks Tag~02G1 (and is the Noetherian-case Hartshorne~II.8, Theorem~II.5.2). The flatness conjunct is precisely what is missing from a hypothesis that only asserts local freeness of \(\Omega\); supplying it amounts to the deformation-theoretic content discussed in \cref{rem:converse_lemma_hypotheses}. The forward implication proved as \cref{thm:smooth_locally_free_omega} above corresponds to the easy direction of the same tag.
+\end{remark}
+
+\section{Content scheduled for later milestones}
+
+Each bullet below is a future milestone whose Mathlib infrastructure is not yet available in the pinned snapshot \texttt{b80f227}; inclusion in this list does \emph{not} mean the project has abandoned it. The roadmap progression is: M1 (this iter) \(\to\) M2 / M3 (existence routes) \(\to\) M4 (converse, \cref{sec:converse-out-of-scope}) \(\to\) M5+ (sheafification, cotangent exact sequence, etc., listed here). Each item lists the deferred concept, the missing Mathlib piece, and one cross-reference for forward-looking reinstatement.
+
+\begin{itemize}
+  \item \textbf{Sheaf condition for \(\Omega_{X/S}\) (M5).} The relative cotangent presheaf is, on an affine basis, locally isomorphic to Mathlib's quasi-coherent sheaf \(\widetilde{\Omega_{B/A}}\) on each affine chart, and the unique-gluing characterisation of the sheaf property holds basis-wise. No off-the-shelf Mathlib lemma packages ``\texttt{Scheme.PresheafOfModules}-sheaf-on-affine-basis \(\Rightarrow\) sheaf on \(X\)'' however; the cofinality descent against \texttt{TopCat.Presheaf.isSheaf\_iff\_isSheafOpensLeCover} is the deferred work for this milestone. Cross-reference: Hartshorne~II.5 (sheaves from affine charts) and Stacks Tag~009H.
+
+  \item \textbf{Cotangent exact sequence (M6).} For a composition of morphisms \(X \to Y \to S\), there is an exact sequence of quasi-coherent \(\struct{X}\)-modules
+  \[
+    f^{*}\Omega_{Y/S} \;\xrightarrow{\;\alpha\;}\; \Omega_{X/S} \;\xrightarrow{\;\beta\;}\;
+      \Omega_{X/Y} \;\longrightarrow\; 0.
+  \]
+  The ring-level ingredients (\texttt{KaehlerDifferential.exact\_mapBaseChange\_map} and the surjectivity of the right map) are in Mathlib, but the exactness conjunct requires \texttt{SheafOfModules.exact\_iff\_stalkwise} or an equivalent section-wise+sheafification route through homology-preserving instances of the forget functor; both are Mathlib gaps. Cross-reference: Hartshorne~II.8, Proposition~8.4A and Stacks Tag~01UV.
+
+  \item \textbf{Cotangent space at a section (M7).} A corollary of the smoothness criterion above, pulled back along a section \(s \colon S \to X\): if \(f\) is smooth of relative dimension \(n\) and \(s\) is a section, then \(s^{*}\Omega_{X/S}\) is a locally free \(\struct{S}\)-module of rank \(n\). The natural Lean framing uses \texttt{Scheme.Modules.pullback} against the sheaf-bundled \(\mathrm{relativeDifferentials}\), which was trimmed in iter-117; a presheaf-form analogue against \texttt{PresheafOfModules.pullback} would need a separate formulation. Cross-reference: Hartshorne~II.8, Corollary~8.10.
+
+  \item \textbf{Serre-duality genus identity (M8).} On a smooth proper geometrically integral curve \(C/k\),
+  \[
+    \dim_{k} H^{0}(C, \Omega_{C/k}) \;=\; \dim_{k} H^{1}(C, \struct{C}),
+  \]
+  both sides being equal to the genus \(g(C)\). Mathlib \texttt{b80f227} has no dualizing sheaf, no trace morphism for proper morphisms, and no Zariski coherent cohomology of \(\struct{X}\)-modules, so the equality cannot yet be expressed within the project's Mathlib snapshot. Cross-reference: Hartshorne~III.7 and Stacks Tag~0FVU.
+\end{itemize}

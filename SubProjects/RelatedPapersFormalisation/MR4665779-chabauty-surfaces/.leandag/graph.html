@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Blueprint dependency graph</title>
+<link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
+<script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+<style>
+:root {
+  --sidebar-bg: #0f172a;
+  --toolbar-bg: #1e293b;
+  --surface:    #1a2744;
+  --border:     #1e3a5f;
+  --text:       #e2e8f0;
+  --muted:      #64748b;
+  --accent:     #60a5fa;
+  --green:      #4ade80;
+  --green-bg:   rgba(74,222,128,.12);
+  --red:        #f87171;
+  --red-bg:     rgba(248,113,113,.12);
+  --orange:     #fb923c;
+  --orange-bg:  rgba(251,146,60,.12);
+  --code-bg:    #090d16;
+  --radius:     7px;
+  --mono: 'JetBrains Mono','Fira Code','Cascadia Code','Consolas','Monaco',monospace;
+  --sans: -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+}
+
+html { margin:0; padding:0; height:100%; overflow:hidden; }
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:var(--sans); display:flex; flex-direction:column;
+       height:100%; background:#f8fafc; color:var(--text); }
+
+/* ── Toolbar ─────────────────────────────────────────────────── */
+#toolbar {
+  background:var(--toolbar-bg); height:44px; padding:0 16px;
+  display:flex; align-items:center; gap:14px; flex-shrink:0;
+  border-bottom:1px solid #263045;
+}
+.brand { font-size:13px; font-weight:700; color:#f1f5f9; letter-spacing:.03em; }
+.stat  { font-size:12px; color:#64748b; white-space:nowrap; }
+.legend { display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
+.leg-dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
+.leg-bar {
+  width:54px; height:8px; border-radius:4px; display:inline-block;
+  background:linear-gradient(90deg,#facc15,#f59e0b,#f97316);
+}
+.leg-txt { font-size:10px; font-weight:600; color:#94a3b8; }
+.sym-legend { padding-left:10px; margin-left:4px; border-left:1px solid #334155; gap:8px; }
+.hint { margin-left:auto; font-size:11px; color:#334155; white-space:nowrap; }
+
+/* ── Controls bar ────────────────────────────────────────────── */
+#controls {
+  background:#16233b; min-height:40px; padding:6px 16px;
+  display:flex; align-items:center; gap:10px; flex-shrink:0;
+  border-bottom:1px solid #263045; flex-wrap:wrap;
+}
+#controls input[type=text], #controls select {
+  background:#0f1f3d; color:var(--text); border:1px solid #1e3a5f;
+  border-radius:5px; font-size:12px; padding:5px 8px;
+  font-family:var(--sans); outline:none;
+}
+#controls input[type=text] { width:200px; }
+#controls input[type=text]:focus, #controls select:focus { border-color:var(--accent); }
+#controls select { max-width:260px; cursor:pointer; }
+#controls .chk { font-size:12px; color:#94a3b8; display:flex; align-items:center; gap:5px; cursor:pointer; user-select:none; }
+.btn {
+  background:#1e293b; color:#cbd5e1; border:1px solid #334155;
+  border-radius:5px; font-size:12px; padding:5px 12px; cursor:pointer;
+}
+.btn:hover { background:#263045; }
+.pill {
+  display:inline-flex; align-items:center; gap:7px;
+  background:#172554; color:#93c5fd; border:1px solid #1e3a8a;
+  border-radius:12px; font-size:11px; padding:3px 4px 3px 11px; cursor:pointer;
+  max-width:280px;
+}
+.pill .lbl { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.pill .x { font-weight:700; padding:0 6px; border-radius:9px; }
+.pill:hover .x { background:#1e3a8a; }
+
+/* ── Main layout ─────────────────────────────────────────────── */
+#main  { display:flex; flex:1; overflow:hidden; min-height:0; position:relative; }
+#graph { flex:1; min-height:0; background:#f8fafc; }
+
+/* ── Project-stats overlay ───────────────────────────────────── */
+#stats-panel {
+  position:absolute; top:12px; left:12px; z-index:5;
+  background:rgba(15,23,42,.9); border:1px solid #1e3a5f; border-radius:8px;
+  padding:10px 12px; min-width:188px; backdrop-filter:blur(3px);
+  font-size:11px; color:#cbd5e1; box-shadow:0 4px 16px rgba(0,0,0,.25);
+}
+#stats-panel h4 {
+  font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  color:#64748b; margin-bottom:7px;
+}
+#stats-panel .row { display:flex; justify-content:space-between; gap:14px; line-height:1.7; }
+#stats-panel .row .v { font-family:var(--mono); color:#f1f5f9; }
+#stats-panel .v.done { color:var(--green); }
+#stats-panel .v.work { color:var(--orange); }
+#stats-panel .v.inf  { color:var(--red); }
+#stats-panel .bar {
+  height:6px; border-radius:3px; background:#1e293b; margin:7px 0 3px; overflow:hidden;
+}
+#stats-panel .bar > span { display:block; height:100%; background:var(--green); }
+#stats-panel .sep { border-top:1px solid #1e3a5f; margin:7px 0; }
+#graph canvas { display:block; }
+
+/* ── File-view colour legend ─────────────────────────────────── */
+#file-legend {
+  position:absolute; bottom:12px; left:12px; z-index:5;
+  background:rgba(15,23,42,.9); border:1px solid #1e3a5f; border-radius:8px;
+  padding:9px 11px; max-width:280px; max-height:42%; overflow-y:auto;
+  backdrop-filter:blur(3px); font-size:11px; color:#cbd5e1;
+  box-shadow:0 4px 16px rgba(0,0,0,.25);
+}
+#file-legend::-webkit-scrollbar { width:4px; }
+#file-legend::-webkit-scrollbar-thumb { background:#1e3a5f; border-radius:2px; }
+#file-legend h4 {
+  font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  color:#64748b; margin-bottom:7px;
+}
+#file-legend .fl-row { display:flex; align-items:center; gap:7px; line-height:1.9; }
+#file-legend .fl-sw { width:11px; height:11px; border-radius:3px; flex-shrink:0;
+  border:1px solid rgba(255,255,255,.18); }
+#file-legend .fl-name {
+  font-family:var(--mono); font-size:10px; color:#cbd5e1;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1;
+}
+#file-legend .fl-n { font-family:var(--mono); font-size:10px; color:#64748b; }
+#file-legend .fl-empty { font-style:italic; color:#475569; }
+
+/* ── Sidebar ─────────────────────────────────────────────────── */
+#sidebar {
+  width:340px; flex-shrink:0;
+  background:var(--sidebar-bg);
+  border-left:1px solid #1e293b;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+#sidebar-empty {
+  flex:1; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:10px;
+}
+#sidebar-empty svg { opacity:.2; }
+#sidebar-empty p { font-size:13px; color:#334155; }
+#sidebar-content {
+  flex:1; overflow-y:auto; padding:10px;
+  display:flex; flex-direction:column; gap:8px;
+}
+#sidebar-content::-webkit-scrollbar { width:4px; }
+#sidebar-content::-webkit-scrollbar-thumb { background:#1e3a5f; border-radius:2px; }
+
+/* ── Cards ───────────────────────────────────────────────────── */
+.card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:12px;
+}
+.card-title {
+  font-size:10px; font-weight:700; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:10px;
+}
+.btn-focus {
+  width:100%; margin-top:10px; background:#172554; color:#93c5fd;
+  border:1px solid #1e3a8a; border-radius:5px; font-size:11px;
+  font-weight:600; padding:7px; cursor:pointer; letter-spacing:.02em;
+}
+.btn-focus:hover { background:#1e3a8a; color:#bfdbfe; }
+
+/* ── Header card ─────────────────────────────────────────────── */
+.node-badges { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:8px; }
+.badge {
+  display:inline-block; padding:2px 8px; border-radius:10px;
+  font-size:10px; font-weight:700; letter-spacing:.04em;
+}
+.badge-type    { background:#172554; color:#93c5fd; border:1px solid #1e3a8a44; }
+.badge-proved  { background:var(--green-bg);  color:var(--green);  border:1px solid rgba(74,222,128,.25); }
+.badge-sorry   { background:var(--orange-bg); color:var(--orange); border:1px solid rgba(251,146,60,.25); }
+.badge-unproved{ background:var(--red-bg);    color:var(--red);    border:1px solid rgba(248,113,113,.25); }
+.node-title   { font-size:15px; font-weight:600; color:#f1f5f9; line-height:1.35; margin-bottom:5px; }
+.node-id      { font-family:var(--mono); font-size:11px; color:#475569; }
+.node-chapter { font-size:11px; color:#334155; margin-top:3px; }
+.lean-ref     { font-size:11px; color:var(--muted); margin-top:6px; }
+.lean-ref code{ font-family:var(--mono); color:var(--accent); }
+
+/* ── Structure card ──────────────────────────────────────────── */
+.degrees { display:flex; gap:20px; margin-bottom:10px; }
+.degree  { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.degree-val   { font-size:22px; font-weight:700; color:#f1f5f9; line-height:1; }
+.degree-label { font-size:10px; color:var(--muted); text-align:center; }
+.deps-list  { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:8px; }
+.deps-sub   { font-size:10px; color:var(--muted); margin:6px 0 4px; letter-spacing:.03em; }
+.dep-chip {
+  font-family:var(--mono); font-size:10px; padding:3px 7px;
+  background:#0f1f3d; border:1px solid #1e3a5f;
+  border-radius:4px; color:var(--accent); cursor:pointer; transition:background .15s;
+}
+.dep-chip:hover { background:#172554; }
+.no-deps { font-size:12px; color:var(--muted); font-style:italic; }
+
+/* ── Metrics card ────────────────────────────────────────────── */
+.metrics-grid {
+  display:grid; grid-template-columns:auto 1fr 1fr;
+  gap:5px 10px; align-items:center;
+}
+.col-head { font-size:10px; color:#334155; text-align:right; font-weight:600; }
+.m-label  { font-size:11px; color:var(--muted); }
+.m-val    { font-family:var(--mono); font-size:12px; color:#94a3b8; text-align:right; }
+.m-done   { color:var(--green); font-weight:700; }
+.m-inf    { color:var(--red);   font-weight:700; }
+.m-work   { color:var(--orange); }
+
+/* ── Section header ──────────────────────────────────────────── */
+.sec-hdr {
+  display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;
+}
+.chars-pair { font-family:var(--mono); font-size:10px; color:#334155; }
+.chars-inf  { color:var(--red); }
+.chars-val  { color:#475569; }
+
+/* ── LaTeX rendered block ────────────────────────────────────── */
+.latex-rendered {
+  font-family:var(--sans); font-size:13px; line-height:1.7;
+  color:#94a3b8; overflow-x:auto; min-height:1.5em;
+}
+.latex-rendered .katex-display { margin:6px 0; overflow-x:auto; }
+.latex-rendered em { font-style:italic; color:#cbd5e1; }
+.latex-rendered strong { font-weight:600; color:#cbd5e1; }
+.latex-rendered.empty { color:#1e3a5f; font-style:italic; }
+
+/* ── Lean code block ─────────────────────────────────────────── */
+.code-block {
+  font-family:var(--mono); font-size:11px; line-height:1.6;
+  background:var(--code-bg); color:#abb2bf;
+  border:1px solid #1a2744; border-radius:5px;
+  padding:10px 12px; white-space:pre; overflow:auto;
+  max-height:220px;
+}
+.code-block::-webkit-scrollbar { width:4px; height:4px; }
+.code-block::-webkit-scrollbar-thumb { background:#1e3a5f; border-radius:2px; }
+.code-block.empty { color:#1e3a5f; font-style:italic; white-space:normal; }
+
+/* ── Lean syntax colours (One Dark palette) ──────────────────── */
+.hl-kw      { color:#c678dd; }
+.hl-tactic  { color:#61afef; }
+.hl-type    { color:#e5c07b; }
+.hl-comment { color:#5c6370; font-style:italic; }
+.hl-str     { color:#98c379; }
+.hl-num     { color:#d19a66; }
+</style>
+</head>
+<body>
+<div id="toolbar">
+  <span class="brand">Blueprint DAG</span>
+  <span class="stat" id="stat">45 nodes &middot; 96 edges</span>
+  <span class="legend"><span class="leg-dot" style="background:#22c55e"></span><span class="leg-txt">done</span><span class="leg-dot" style="background:#3b82f6"></span><span class="leg-txt">mathlib</span><span class="leg-bar"></span><span class="leg-txt">more effort</span><span class="leg-dot" style="background:#ef4444"></span><span class="leg-txt">∞ no proof</span></span>
+  <span class="legend sym-legend">
+    <span class="leg-txt">✓ Lean proof</span>
+    <span class="leg-txt">⚠ sorry</span>
+    <span class="leg-txt">ⓜ mathlib</span>
+    <span class="leg-txt">λ Lean decl</span>
+    <span class="leg-txt">★ LaTeX proof</span>
+    <span class="leg-txt">§ statement</span>
+  </span>
+  <span class="hint">click = highlight cone &middot; double-click = focus &middot; ctrl+scroll = zoom</span>
+</div>
+<div id="controls">
+  <input id="search" type="text" list="node-ids" placeholder="Search node id…" autocomplete="off" spellcheck="false">
+  <datalist id="node-ids"></datalist>
+  <select id="nodeset" title="Which declarations to include">
+    <option value="union">All declarations</option>
+    <option value="blueprint">Blueprint only</option>
+    <option value="lean">Lean only</option>
+  </select>
+  <select id="component"><option value="">All components</option></select>
+  <select id="chapter"><option value="">All chapters</option></select>
+  <select id="fileview" title="Tint the background by source file">
+    <option value="off">File view: off</option>
+    <option value="lean">File view: Lean files</option>
+    <option value="tex">File view: LaTeX files</option>
+  </select>
+  <label class="chk"><input type="checkbox" id="orphans"> show isolated <span id="iso-count"></span></label>
+  <span id="focus-pill" class="pill" style="display:none" title="Clear focus">
+    <span class="lbl"></span><span class="x">&times;</span>
+  </span>
+  <button id="reset" class="btn">Reset view</button>
+</div>
+<div id="main">
+  <div id="graph"></div>
+  <div id="stats-panel"></div>
+  <div id="file-legend" style="display:none"></div>
+  <aside id="sidebar">
+    <div id="sidebar-empty">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+           stroke="#334155" stroke-width="1.2" stroke-linecap="round">
+        <path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+        <line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/>
+      </svg>
+      <p>Click a node to inspect it</p>
+    </div>
+    <div id="sidebar-content" style="display:none"></div>
+  </aside>
+</div>
+
+<script>
+const graphData = {"nodes": [{"id": "def:bootstrap_hello", "label": "bootstrap_hello\n✓§", "shape": "dot", "size": 11, "color": {"background": "#22c55e", "border": "#15803d", "highlight": {"background": "#22c55e", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "def:cp_notation", "label": "cp_notation\n§", "shape": "dot", "size": 11, "color": {"background": "#de8739", "border": "#9b5d26", "highlight": {"background": "#de8739", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "def:cp_geometry_interfaces", "label": "cp_geometry_interfaces\n§", "shape": "dot", "size": 11, "color": {"background": "#de8e39", "border": "#9b6226", "highlight": {"background": "#de8e39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_curve_singularity_package", "label": "cp_curve_singularity_package\n★", "shape": "dot", "size": 11, "color": {"background": "#de9039", "border": "#9b6426", "highlight": {"background": "#de9039", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_canonical_genus_bound", "label": "cp_canonical_genus_bound\n★", "shape": "dot", "size": 11, "color": {"background": "#de9539", "border": "#9b6726", "highlight": {"background": "#de9539", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_branches_package", "label": "cp_branches_package\n★", "shape": "dot", "size": 11, "color": {"background": "#de9139", "border": "#9b6426", "highlight": {"background": "#de9139", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_general_type_package", "label": "cp_general_type_package\n★", "shape": "dot", "size": 11, "color": {"background": "#de8e39", "border": "#9b6226", "highlight": {"background": "#de8e39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_weil_bound_singular_curve", "label": "cp_weil_bound_singular_curve\n★", "shape": "dot", "size": 11, "color": {"background": "#de8e39", "border": "#9b6226", "highlight": {"background": "#de8e39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "def:cp_omega_integral", "label": "cp_omega_integral\n§", "shape": "dot", "size": 11, "color": {"background": "#de9d39", "border": "#9b6c26", "highlight": {"background": "#de9d39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_omega_integral_functorial_local", "label": "cp_omega_integral_functorial_local\n★", "shape": "dot", "size": 11, "color": {"background": "#de9639", "border": "#9b6826", "highlight": {"background": "#de9639", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_local_integral_expressions", "label": "cp_local_integral_expressions\n★", "shape": "dot", "size": 11, "color": {"background": "#de8f39", "border": "#9b6326", "highlight": {"background": "#de8f39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_individual_branch_bound", "label": "cp_individual_branch_bound\n★", "shape": "dot", "size": 11, "color": {"background": "#de8d39", "border": "#9b6226", "highlight": {"background": "#de8d39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:cp_overdetermined_bound", "label": "cp_overdetermined_bound\n★", "shape": "dot", "size": 11, "color": {"background": "#de8f39", "border": "#9b6326", "highlight": {"background": "#de8f39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_ample_abvar_divisor", "label": "cp_ample_abvar_divisor\n★", "shape": "dot", "size": 11, "color": {"background": "#de9939", "border": "#9b6a26", "highlight": {"background": "#de9939", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_abvar_degree_trace_package", "label": "cp_abvar_degree_trace_package\n★", "shape": "dot", "size": 11, "color": {"background": "#de9e39", "border": "#9b6d26", "highlight": {"background": "#de9e39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_degrees_surface_threefold", "label": "cp_degrees_surface_threefold\n★", "shape": "dot", "size": 11, "color": {"background": "#dea239", "border": "#9b7026", "highlight": {"background": "#dea239", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_injectivity_one_forms", "label": "cp_injectivity_one_forms\n★", "shape": "dot", "size": 11, "color": {"background": "#de8639", "border": "#9b5d26", "highlight": {"background": "#de8639", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_nonvanishing_two_forms", "label": "cp_nonvanishing_two_forms\n★", "shape": "dot", "size": 11, "color": {"background": "#de8139", "border": "#9b5926", "highlight": {"background": "#de8139", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_zero_estimates", "label": "cp_zero_estimates\n★", "shape": "dot", "size": 11, "color": {"background": "#de8e39", "border": "#9b6226", "highlight": {"background": "#de8e39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_logexp_local_parameters", "label": "cp_logexp_local_parameters\n★", "shape": "dot", "size": 11, "color": {"background": "#de9639", "border": "#9b6826", "highlight": {"background": "#de9639", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_logexp_convergence_linearization", "label": "cp_logexp_convergence_linearization\n★", "shape": "dot", "size": 11, "color": {"background": "#de9039", "border": "#9b6326", "highlight": {"background": "#de9039", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "def:cp_one_parameter_subgroup", "label": "cp_one_parameter_subgroup\n§", "shape": "dot", "size": 11, "color": {"background": "#de8d39", "border": "#9b6226", "highlight": {"background": "#de8d39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_one_parameter_hyperplanes", "label": "cp_one_parameter_hyperplanes\n★", "shape": "dot", "size": 11, "color": {"background": "#de8d39", "border": "#9b6126", "highlight": {"background": "#de8d39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_infinitesimal_one_parameter", "label": "cp_infinitesimal_one_parameter\n★", "shape": "dot", "size": 11, "color": {"background": "#de9439", "border": "#9b6626", "highlight": {"background": "#de9439", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_one_parameter_omega_integral", "label": "cp_one_parameter_omega_integral\n★", "shape": "dot", "size": 11, "color": {"background": "#de9339", "border": "#9b6626", "highlight": {"background": "#de9339", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_rank_one_reduction", "label": "cp_rank_one_reduction\n★", "shape": "dot", "size": 11, "color": {"background": "#dea039", "border": "#9b6f26", "highlight": {"background": "#dea039", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_main_hypotheses", "label": "cp_main_hypotheses\n★", "shape": "dot", "size": 11, "color": {"background": "#de8939", "border": "#9b5f26", "highlight": {"background": "#de8939", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_special_fibre_curve_genus", "label": "cp_special_fibre_curve_genus\n★", "shape": "dot", "size": 11, "color": {"background": "#de9f39", "border": "#9b6e26", "highlight": {"background": "#de9f39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_choice_one_parameter_subgroup", "label": "cp_choice_one_parameter_subgroup\n★", "shape": "dot", "size": 11, "color": {"background": "#de9439", "border": "#9b6626", "highlight": {"background": "#de9439", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_choice_differentials", "label": "cp_choice_differentials\n★", "shape": "dot", "size": 11, "color": {"background": "#de9a39", "border": "#9b6b26", "highlight": {"background": "#de9a39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_special_canonical_divisor", "label": "cp_special_canonical_divisor\n★", "shape": "dot", "size": 11, "color": {"background": "#de9739", "border": "#9b6826", "highlight": {"background": "#de9739", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_choice_w", "label": "cp_choice_w\n★", "shape": "dot", "size": 11, "color": {"background": "#de9139", "border": "#9b6426", "highlight": {"background": "#de9139", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_mx_bounds", "label": "cp_mx_bounds\n★", "shape": "dot", "size": 11, "color": {"background": "#de9339", "border": "#9b6626", "highlight": {"background": "#de9339", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "prop:cp_residue_disk_bound", "label": "cp_residue_disk_bound\n★", "shape": "dot", "size": 11, "color": {"background": "#de7b39", "border": "#9b5526", "highlight": {"background": "#de7b39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:cp_main_local", "label": "cp_main_local\n★", "shape": "dot", "size": 11, "color": {"background": "#de8539", "border": "#9b5c26", "highlight": {"background": "#de8539", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:cp_main_qp", "label": "cp_main_qp\n★", "shape": "dot", "size": 11, "color": {"background": "#de9d39", "border": "#9b6d26", "highlight": {"background": "#de9d39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:cp_number_field_bound", "label": "cp_number_field_bound\n★", "shape": "dot", "size": 11, "color": {"background": "#de9d39", "border": "#9b6c26", "highlight": {"background": "#de9d39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:cp_intro_surface_bounds", "label": "cp_intro_surface_bounds\n★", "shape": "dot", "size": 11, "color": {"background": "#de9939", "border": "#9b6a26", "highlight": {"background": "#de9939", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_chavdarov_simple_reduction", "label": "cp_chavdarov_simple_reduction\n★", "shape": "dot", "size": 11, "color": {"background": "#de7d39", "border": "#9b5626", "highlight": {"background": "#de7d39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "cor:cp_dim3_density_application", "label": "cp_dim3_density_application\n★", "shape": "dot", "size": 11, "color": {"background": "#de9f39", "border": "#9b6e26", "highlight": {"background": "#de9f39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_symmetric_square_intersections", "label": "cp_symmetric_square_intersections\n★", "shape": "dot", "size": 11, "color": {"background": "#de9339", "border": "#9b6526", "highlight": {"background": "#de9339", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:cp_symmetric_square_jacobian_embedding", "label": "cp_symmetric_square_jacobian_embedding\n★", "shape": "dot", "size": 11, "color": {"background": "#de9639", "border": "#9b6826", "highlight": {"background": "#de9639", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "cor:cp_quadratic_points", "label": "cp_quadratic_points\n★", "shape": "dot", "size": 11, "color": {"background": "#de9039", "border": "#9b6426", "highlight": {"background": "#de9039", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "cor:cp_quadratic_points_genus_three", "label": "cp_quadratic_points_genus_three\n★", "shape": "dot", "size": 11, "color": {"background": "#de9639", "border": "#9b6726", "highlight": {"background": "#de9639", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:cp_project_goal", "label": "cp_project_goal\n★", "shape": "dot", "size": 11, "color": {"background": "#de9639", "border": "#9b6826", "highlight": {"background": "#de9639", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}], "edges": [{"from": "def:cp_notation", "to": "def:cp_geometry_interfaces", "arrows": "to"}, {"from": "def:cp_geometry_interfaces", "to": "lem:cp_curve_singularity_package", "arrows": "to"}, {"from": "def:cp_geometry_interfaces", "to": "lem:cp_canonical_genus_bound", "arrows": "to"}, {"from": "lem:cp_curve_singularity_package", "to": "lem:cp_canonical_genus_bound", "arrows": "to"}, {"from": "lem:cp_curve_singularity_package", "to": "lem:cp_branches_package", "arrows": "to"}, {"from": "def:cp_geometry_interfaces", "to": "lem:cp_general_type_package", "arrows": "to"}, {"from": "lem:cp_curve_singularity_package", "to": "lem:cp_general_type_package", "arrows": "to"}, {"from": "lem:cp_curve_singularity_package", "to": "lem:cp_weil_bound_singular_curve", "arrows": "to"}, {"from": "def:cp_geometry_interfaces", "to": "def:cp_omega_integral", "arrows": "to"}, {"from": "def:cp_omega_integral", "to": "lem:cp_omega_integral_functorial_local", "arrows": "to"}, {"from": "def:cp_omega_integral", "to": "lem:cp_local_integral_expressions", "arrows": "to"}, {"from": "lem:cp_omega_integral_functorial_local", "to": "lem:cp_local_integral_expressions", "arrows": "to"}, {"from": "lem:cp_branches_package", "to": "lem:cp_individual_branch_bound", "arrows": "to"}, {"from": "lem:cp_local_integral_expressions", "to": "lem:cp_individual_branch_bound", "arrows": "to"}, {"from": "lem:cp_individual_branch_bound", "to": "thm:cp_overdetermined_bound", "arrows": "to"}, {"from": "lem:cp_local_integral_expressions", "to": "thm:cp_overdetermined_bound", "arrows": "to"}, {"from": "def:cp_geometry_interfaces", "to": "lem:cp_ample_abvar_divisor", "arrows": "to"}, {"from": "def:cp_geometry_interfaces", "to": "lem:cp_abvar_degree_trace_package", "arrows": "to"}, {"from": "def:cp_geometry_interfaces", "to": "lem:cp_degrees_surface_threefold", "arrows": "to"}, {"from": "lem:cp_abvar_degree_trace_package", "to": "lem:cp_injectivity_one_forms", "arrows": "to"}, {"from": "lem:cp_degrees_surface_threefold", "to": "lem:cp_injectivity_one_forms", "arrows": "to"}, {"from": "lem:cp_canonical_genus_bound", "to": "lem:cp_injectivity_one_forms", "arrows": "to"}, {"from": "lem:cp_injectivity_one_forms", "to": "lem:cp_nonvanishing_two_forms", "arrows": "to"}, {"from": "lem:cp_degrees_surface_threefold", "to": "lem:cp_nonvanishing_two_forms", "arrows": "to"}, {"from": "lem:cp_ample_abvar_divisor", "to": "lem:cp_nonvanishing_two_forms", "arrows": "to"}, {"from": "def:cp_notation", "to": "lem:cp_zero_estimates", "arrows": "to"}, {"from": "def:cp_notation", "to": "lem:cp_logexp_local_parameters", "arrows": "to"}, {"from": "def:cp_geometry_interfaces", "to": "lem:cp_logexp_local_parameters", "arrows": "to"}, {"from": "lem:cp_logexp_local_parameters", "to": "lem:cp_logexp_convergence_linearization", "arrows": "to"}, {"from": "lem:cp_logexp_convergence_linearization", "to": "def:cp_one_parameter_subgroup", "arrows": "to"}, {"from": "def:cp_one_parameter_subgroup", "to": "lem:cp_one_parameter_hyperplanes", "arrows": "to"}, {"from": "def:cp_one_parameter_subgroup", "to": "lem:cp_infinitesimal_one_parameter", "arrows": "to"}, {"from": "lem:cp_logexp_convergence_linearization", "to": "lem:cp_infinitesimal_one_parameter", "arrows": "to"}, {"from": "def:cp_omega_integral", "to": "lem:cp_one_parameter_omega_integral", "arrows": "to"}, {"from": "lem:cp_omega_integral_functorial_local", "to": "lem:cp_one_parameter_omega_integral", "arrows": "to"}, {"from": "lem:cp_infinitesimal_one_parameter", "to": "lem:cp_one_parameter_omega_integral", "arrows": "to"}, {"from": "lem:cp_one_parameter_hyperplanes", "to": "lem:cp_one_parameter_omega_integral", "arrows": "to"}, {"from": "def:cp_notation", "to": "lem:cp_rank_one_reduction", "arrows": "to"}, {"from": "def:cp_geometry_interfaces", "to": "lem:cp_rank_one_reduction", "arrows": "to"}, {"from": "lem:cp_general_type_package", "to": "lem:cp_main_hypotheses", "arrows": "to"}, {"from": "lem:cp_ample_abvar_divisor", "to": "lem:cp_main_hypotheses", "arrows": "to"}, {"from": "lem:cp_main_hypotheses", "to": "lem:cp_special_fibre_curve_genus", "arrows": "to"}, {"from": "lem:cp_rank_one_reduction", "to": "lem:cp_choice_one_parameter_subgroup", "arrows": "to"}, {"from": "lem:cp_one_parameter_hyperplanes", "to": "lem:cp_choice_one_parameter_subgroup", "arrows": "to"}, {"from": "lem:cp_choice_one_parameter_subgroup", "to": "lem:cp_choice_differentials", "arrows": "to"}, {"from": "lem:cp_choice_differentials", "to": "lem:cp_special_canonical_divisor", "arrows": "to"}, {"from": "lem:cp_nonvanishing_two_forms", "to": "lem:cp_special_canonical_divisor", "arrows": "to"}, {"from": "lem:cp_main_hypotheses", "to": "lem:cp_special_canonical_divisor", "arrows": "to"}, {"from": "lem:cp_special_fibre_curve_genus", "to": "lem:cp_special_canonical_divisor", "arrows": "to"}, {"from": "lem:cp_general_type_package", "to": "lem:cp_special_canonical_divisor", "arrows": "to"}, {"from": "lem:cp_special_canonical_divisor", "to": "lem:cp_choice_w", "arrows": "to"}, {"from": "lem:cp_injectivity_one_forms", "to": "lem:cp_choice_w", "arrows": "to"}, {"from": "lem:cp_canonical_genus_bound", "to": "lem:cp_choice_w", "arrows": "to"}, {"from": "thm:cp_overdetermined_bound", "to": "lem:cp_mx_bounds", "arrows": "to"}, {"from": "lem:cp_choice_w", "to": "lem:cp_mx_bounds", "arrows": "to"}, {"from": "lem:cp_special_fibre_curve_genus", "to": "lem:cp_mx_bounds", "arrows": "to"}, {"from": "lem:cp_branches_package", "to": "lem:cp_mx_bounds", "arrows": "to"}, {"from": "lem:cp_canonical_genus_bound", "to": "lem:cp_mx_bounds", "arrows": "to"}, {"from": "lem:cp_main_hypotheses", "to": "lem:cp_mx_bounds", "arrows": "to"}, {"from": "lem:cp_mx_bounds", "to": "prop:cp_residue_disk_bound", "arrows": "to"}, {"from": "lem:cp_choice_one_parameter_subgroup", "to": "prop:cp_residue_disk_bound", "arrows": "to"}, {"from": "lem:cp_logexp_local_parameters", "to": "prop:cp_residue_disk_bound", "arrows": "to"}, {"from": "lem:cp_infinitesimal_one_parameter", "to": "prop:cp_residue_disk_bound", "arrows": "to"}, {"from": "lem:cp_one_parameter_omega_integral", "to": "prop:cp_residue_disk_bound", "arrows": "to"}, {"from": "lem:cp_zero_estimates", "to": "prop:cp_residue_disk_bound", "arrows": "to"}, {"from": "lem:cp_rank_one_reduction", "to": "thm:cp_main_local", "arrows": "to"}, {"from": "prop:cp_residue_disk_bound", "to": "thm:cp_main_local", "arrows": "to"}, {"from": "lem:cp_mx_bounds", "to": "thm:cp_main_local", "arrows": "to"}, {"from": "lem:cp_weil_bound_singular_curve", "to": "thm:cp_main_local", "arrows": "to"}, {"from": "lem:cp_canonical_genus_bound", "to": "thm:cp_main_local", "arrows": "to"}, {"from": "lem:cp_special_canonical_divisor", "to": "thm:cp_main_local", "arrows": "to"}, {"from": "thm:cp_main_local", "to": "thm:cp_main_qp", "arrows": "to"}, {"from": "lem:cp_main_hypotheses", "to": "thm:cp_main_qp", "arrows": "to"}, {"from": "thm:cp_main_local", "to": "thm:cp_number_field_bound", "arrows": "to"}, {"from": "thm:cp_main_qp", "to": "thm:cp_intro_surface_bounds", "arrows": "to"}, {"from": "thm:cp_number_field_bound", "to": "thm:cp_intro_surface_bounds", "arrows": "to"}, {"from": "lem:cp_general_type_package", "to": "thm:cp_intro_surface_bounds", "arrows": "to"}, {"from": "def:cp_geometry_interfaces", "to": "lem:cp_chavdarov_simple_reduction", "arrows": "to"}, {"from": "lem:cp_chavdarov_simple_reduction", "to": "cor:cp_dim3_density_application", "arrows": "to"}, {"from": "thm:cp_intro_surface_bounds", "to": "cor:cp_dim3_density_application", "arrows": "to"}, {"from": "def:cp_geometry_interfaces", "to": "lem:cp_symmetric_square_intersections", "arrows": "to"}, {"from": "lem:cp_symmetric_square_intersections", "to": "lem:cp_symmetric_square_jacobian_embedding", "arrows": "to"}, {"from": "thm:cp_intro_surface_bounds", "to": "cor:cp_quadratic_points", "arrows": "to"}, {"from": "lem:cp_symmetric_square_intersections", "to": "cor:cp_quadratic_points", "arrows": "to"}, {"from": "lem:cp_symmetric_square_jacobian_embedding", "to": "cor:cp_quadratic_points", "arrows": "to"}, {"from": "thm:cp_intro_surface_bounds", "to": "cor:cp_quadratic_points_genus_three", "arrows": "to"}, {"from": "lem:cp_symmetric_square_intersections", "to": "cor:cp_quadratic_points_genus_three", "arrows": "to"}, {"from": "lem:cp_symmetric_square_jacobian_embedding", "to": "cor:cp_quadratic_points_genus_three", "arrows": "to"}, {"from": "def:bootstrap_hello", "to": "thm:cp_project_goal", "arrows": "to"}, {"from": "thm:cp_main_local", "to": "thm:cp_project_goal", "arrows": "to"}, {"from": "thm:cp_main_qp", "to": "thm:cp_project_goal", "arrows": "to"}, {"from": "thm:cp_number_field_bound", "to": "thm:cp_project_goal", "arrows": "to"}, {"from": "thm:cp_intro_surface_bounds", "to": "thm:cp_project_goal", "arrows": "to"}, {"from": "cor:cp_dim3_density_application", "to": "thm:cp_project_goal", "arrows": "to"}, {"from": "cor:cp_quadratic_points", "to": "thm:cp_project_goal", "arrows": "to"}, {"from": "cor:cp_quadratic_points_genus_three", "to": "thm:cp_project_goal", "arrows": "to"}]};
+const allNodes  = {"def:bootstrap_hello": {"id": "def:bootstrap_hello", "type": "definition", "title": "Bootstrap constant", "chapter": "", "statement": "The current Lean scaffold contains the constant \\(\\mathrm{hello}\\), whose\n  value is the string ``world''.  It carries no mathematical content and is\n  included only to keep the Lean--blueprint correspondence exact.", "uses": [], "lean_name": "hello", "proved": false, "mathlib_ok": false, "proof_tex": "", "lean_source": "def hello := \"world\"", "proof_size_lean": 20, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "MR4665779AChabautyColemanBoundForSurfaces/Basic.lean", "dep_count": 0, "rdep_count": 1, "descendant_count": 1, "proof_size_tex": null, "effort_local": 0, "proof_size_tex_total": null, "proof_size_lean_total": 20, "effort_total": 0}, "def:cp_notation": {"id": "def:cp_notation", "type": "definition", "title": "Geometric and local-field notation", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Sections 2.1--2.3.}\n  A variety over a field \\(L\\) is a reduced separated \\(L\\)-scheme of finite\n  type.  Curves and surfaces have pure dimensions \\(1\\) and \\(2\\).  For a smooth\n  projective surface \\(S\\), \\(c_1^2(S)\\) is the self-intersection of a canonical\n  divisor.  For a finite extension \\(K/\\mathbb Q_p\\), write \\(R\\) for its ring\n  of integers, \\(\\mathfrak p\\) for its maximal ideal, \\(\\varpi\\) for a\n  uniformizer, \\(\\mathbf k\\) for the residue field of cardinality \\(q\\),\n  \\(\\mathfrak e\\) for the ramification index, and normalize the absolute value\n  by \\(|\\varpi|=q^{-1}\\).", "uses": [], "lean_name": "MR4665779.Notation", "proved": false, "mathlib_ok": false, "proof_tex": "", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 0, "rdep_count": 4, "descendant_count": 43, "proof_size_tex": null, "effort_local": 616, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 616}, "def:cp_geometry_interfaces": {"id": "def:cp_geometry_interfaces", "type": "definition", "title": "Basic surface and abelian-variety interfaces", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Sections 3 and 5.}\n  The formalization uses the standard interfaces for normalizations of curves,\n  arithmetic and geometric genus, multiplicity and singularity order at curve\n  points, divisor intersection on smooth projective surfaces, canonical divisors\n  and nef/ample divisors, global Kähler differentials, abelian varieties,\n  translations, invariant differentials, Tate-module characteristic\n  polynomials, and specialization of cycles under good reduction.", "uses": ["def:cp_notation"], "lean_name": "MR4665779.GeometryInterfaces", "proved": false, "mathlib_ok": false, "proof_tex": "", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 11, "descendant_count": 41, "proof_size_tex": null, "effort_local": 494, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1110}, "lem:cp_curve_singularity_package": {"id": "lem:cp_curve_singularity_package", "type": "lemma", "title": "Curve singularities and normalization", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemmas 3.1--3.5.}\n  For an irreducible curve \\(C\\) over an algebraically closed field and\n  \\(x\\in C(k)\\), the singularity order \\(\\delta(C,x)\\) is nonnegative and\n  vanishes exactly at regular points.  If \\(C\\) is projective, then\n  \\[\n    g_a(C)=g_g(C)+\\sum_{x\\in C(k)}\\delta(C,x).\n  \\]\n  If \\(C\\) lies on a regular surface at \\(x\\), the multiplicity is the largest\n  \\(n\\) for which a local equation lies in \\(\\mathfrak m_{S,x}^n\\), and\n  \\[\n    \\delta(C,x)\\ge \\frac12\\,\\operatorname{mult}_x(C)\n      (\\operatorname{mult}_x(C)-1).\n  \\]", "uses": ["def:cp_geometry_interfaces"], "lean_name": "MR4665779.CurveSingularityPackage", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Nonnegativity and the regularity criterion follow from the normalization\n  quotient.  Hironaka's genus formula identifies the total discrepancy between\n  arithmetic and geometric genus with the sum of local \\(\\delta\\)-invariants.\n  The multiplicity description is the standard Hilbert--Samuel formula for a\n  plane curve germ, and Hironaka's neighboring-points inequality gives the\n  displayed lower bound after discarding nonnegative higher contributions.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 4, "descendant_count": 22, "proof_size_tex": 456, "effort_local": 456, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1566}, "lem:cp_canonical_genus_bound": {"id": "lem:cp_canonical_genus_bound", "type": "lemma", "title": "Canonical genus bound", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemma 3.6.}\n  Let \\(S\\) be a smooth projective irreducible surface, and let\n  \\(D=\\sum_{j=1}^{\\ell}a_jC_j\\) be a positive nef canonical divisor.  Then\n  \\[\n    \\sum_{j=1}^{\\ell}a_j\\bigl(g_a(C_j)-1\\bigr)\\le c_1^2(S).\n  \\]", "uses": ["def:cp_geometry_interfaces", "lem:cp_curve_singularity_package"], "lean_name": "MR4665779.CanonicalGenusBound", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Reorder the \\(C_j\\) so that the positive self-intersection components come\n  first.  Adjunction gives\n  \\(2\\sum a_j(g_a(C_j)-1)=D^2+\\sum a_j C_j^2\\).  For each positive\n  self-intersection component, \\((D-a_jC_j)\\cdot C_j\\ge0\\), and nefness gives\n  \\(D\\cdot C_j\\ge0\\); hence \\(D^2\\) bounds the positive contribution\n  \\(\\sum a_j^2 C_j^2\\).  Combining the two inequalities gives the result.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 2, "rdep_count": 4, "descendant_count": 14, "proof_size_tex": 389, "effort_local": 389, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1955}, "lem:cp_branches_package": {"id": "lem:cp_branches_package", "type": "lemma", "title": "Branches and normalization fibres", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemmas 3.7--3.10.}\n  For a curve \\(C\\) through a smooth point \\(x\\) of a surface \\(S\\), the\n  irreducible factors of a completed local equation are pairwise\n  non-associated and define the branches at \\(x\\).  These branches are exactly\n  the kernels of the completed maps associated to points of the normalization\n  fibre \\(\\nu^{-1}(x)\\), and\n  \\(\\#\\nu^{-1}(x)\\le\\delta(C,x)+1\\).  If\n  \\(f(x_1,x_2)\\in k[[x_1,x_2]]\\) is irreducible and\n  \\(f(\\phi_1(t),\\phi_2(t))=0\\), then\n  \\(\\operatorname{ord}_t\\phi_1\\ge\\operatorname{ord}_{x_2}f(0,x_2)\\) and\n  \\(\\operatorname{ord}_t\\phi_2\\ge\\operatorname{ord}_{x_1}f(x_1,0)\\).", "uses": ["lem:cp_curve_singularity_package"], "lean_name": "MR4665779.BranchesPackage", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Analytic unramifiedness of the curve germ excludes associated distinct\n  factors in the completed local ring.  The standard branch--normalization\n  correspondence identifies branches with completed kernels at normalization\n  preimages.  The number of branches is bounded by multiplicity, and\n  multiplicity is bounded in terms of \\(\\delta\\) by the singularity package.\n  The order estimates are Płoski's theorem for irreducible plane power series.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 2, "descendant_count": 12, "proof_size_tex": 447, "effort_local": 447, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 2013}, "lem:cp_general_type_package": {"id": "lem:cp_general_type_package", "type": "lemma", "title": "General type and ampleness criteria", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemmas 3.11--3.14.}\n  A minimal smooth projective surface of general type has \\(c_1^2\\ge1\\) and\n  nef canonical sheaf.  If such a surface has no smooth rational curve of\n  self-intersection \\(-1\\) or \\(-2\\), its canonical sheaf is ample.  A complex\n  hyperbolic smooth projective surface is of general type.  If\n  \\(X\\subset A\\) is a smooth projective surface in a complex abelian variety,\n  \\(X\\) is not an abelian surface, and \\(X\\) contains no elliptic curves, then\n  \\(X\\) is of general type.", "uses": ["def:cp_geometry_interfaces", "lem:cp_curve_singularity_package"], "lean_name": "MR4665779.GeneralTypePackage", "proved": false, "mathlib_ok": false, "proof_tex": "\n  The nefness and positivity are the standard minimal-surface facts.  For\n  ampleness, Nakai--Moishezon reduces to excluding curves with zero\n  canonical degree; the Hodge index theorem and adjunction turn such a curve\n  into a forbidden rational \\((-2)\\)-curve.  Hyperbolicity implies general type\n  for surfaces by the cited surface classification theorem.  Green--Yau\n  hyperbolicity for subvarieties of abelian varieties without abelian-surface\n  or elliptic-curve exceptions gives the final assertion.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 2, "rdep_count": 3, "descendant_count": 14, "proof_size_tex": 504, "effort_local": 504, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 2070}, "lem:cp_weil_bound_singular_curve": {"id": "lem:cp_weil_bound_singular_curve", "type": "lemma", "title": "Modified Weil bound for singular curves", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemmas 3.15--3.17.}\n  Let \\(D\\) be a projective curve over a finite field \\(\\mathbf k\\) of\n  cardinality \\(q\\), and let \\(C_1,\\ldots,C_r\\) be its geometric irreducible\n  components with normalizations \\(\\widetilde C_j\\).  Then\n  \\[\n    \\sum_{x\\in D(\\mathbf k)}\\sum_{j=1}^r\n      \\#\\{y\\in\\widetilde C_j(k^{alg})\\mid \\nu_j(y)=x\\}\n    \\le (q+1)r+2q^{1/2}\\sum_{j=1}^r g_g(C_j).\n  \\]", "uses": ["lem:cp_curve_singularity_package"], "lean_name": "MR4665779.WeilBoundSingularCurve", "proved": false, "mathlib_ok": false, "proof_tex": "\n  After a finite field extension over which all components, singularities, and\n  normalization preimages are rational, the excess\n  \\(A_D(L)-\\#D(L)\\) stabilizes.  The modified zeta function\n  \\(Z^*_{D,\\mathbf k}\\) satisfies a product identity over roots of unity with\n  the zeta functions of the smooth normalizations.  Weil's bounds for smooth\n  projective curves applied to those factors, followed by logarithmic\n  differentiation and coefficient comparison at \\(n=1\\), gives the inequality.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 1, "descendant_count": 8, "proof_size_tex": 491, "effort_local": 491, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 2057}, "def:cp_omega_integral": {"id": "def:cp_omega_integral", "type": "definition", "title": "\\(\\omega\\)-integral morphisms", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Section 4.1.}\n  For a morphism of \\(T\\)-schemes \\(\\phi:X\\to Y\\), the pullback of\n  differentials defines\n  \\[\n    \\phi^\\bullet:H^0(Y,\\Omega^1_{Y/T})\\to H^0(X,\\Omega^1_{X/T}).\n  \\]\n  The morphism is \\(\\omega\\)-integral when \\(\\phi^\\bullet(\\omega)=0\\).", "uses": ["def:cp_geometry_interfaces"], "lean_name": "MR4665779.OmegaIntegral", "proved": false, "mathlib_ok": false, "proof_tex": "", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 3, "descendant_count": 15, "proof_size_tex": null, "effort_local": 280, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1390}, "lem:cp_omega_integral_functorial_local": {"id": "lem:cp_omega_integral_functorial_local", "type": "lemma", "title": "Functoriality and locality of \\(\\omega\\)-integrality", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemmas 4.1 and 4.2.}\n  Pullback of differentials is strictly functorial:\n  \\((\\psi\\circ\\phi)^\\bullet=\\phi^\\bullet\\circ\\psi^\\bullet\\).  It is also\n  compatible with local rings: the localization of \\(\\phi^\\bullet(\\omega)\\) at\n  \\(x\\) equals the pullback of the localized germ of \\(\\omega\\) by\n  \\(\\phi_x^\\#\\).", "uses": ["def:cp_omega_integral"], "lean_name": "MR4665779.OmegaIntegralFunctorialLocal", "proved": false, "mathlib_ok": false, "proof_tex": "\n  The functorial statement follows by comparing the canonical maps\n  \\(\\mathcal F\\to f_*f^*\\mathcal F\\) and the maps from pulled-back\n  differentials to relative differentials in the three commutative diagrams of\n  Caro--Pasten.  The local statement is the same construction after localizing\n  the sheaves of differentials and the morphism of rings at the chosen points.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 2, "descendant_count": 14, "proof_size_tex": 368, "effort_local": 368, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1758}, "lem:cp_local_integral_expressions": {"id": "lem:cp_local_integral_expressions", "type": "lemma", "title": "Local jet expressions for integral differentials", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemmas 4.5--4.7 and Corollary 4.8.}\n  Let \\(\\phi:\\operatorname{Spec}k[z]/(z^{m+1})\\to S\\) be a closed immersion\n  supported at a smooth surface point \\(x\\).  There are local parameters\n  \\(s_1,s_2\\) with \\(\\phi^\\#(s_1)=z\\), \\(\\phi^\\#(s_2)=0\\), and\n  \\(\\ker\\phi^\\#=(s_1^{m+1},s_2)\\).  If \\(\\phi\\) is \\(\\omega\\)-integral, then\n  locally\n  \\[\n    \\omega=(G_1s_1^m+G_2s_2)\\,ds_1+G_3\\,ds_2.\n  \\]\n  Consequently, if \\(\\omega_1\\wedge\\omega_2=F\\,ds_1\\wedge ds_2\\), then\n  \\(F\\in(s_1^m,s_2)\\), and if \\(x\\) is not in the divisor of\n  \\(\\omega_1\\wedge\\omega_2\\), then \\(m=0\\).", "uses": ["def:cp_omega_integral", "lem:cp_omega_integral_functorial_local"], "lean_name": "MR4665779.LocalIntegralExpressions", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Surjectivity of the local map of a closed immersion lets one choose\n  \\(s_1\\) mapping to \\(z\\); a second parameter is adjusted by a polynomial in\n  \\(s_1\\) so that it maps to \\(0\\).  The conormal exact sequence identifies\n  an integral differential modulo the jet with the differential of an element\n  of the kernel, which is generated by \\(s_1^{m+1}\\) and \\(s_2\\).  Expanding\n  the wedge of two such local expressions gives \\(F\\in(s_1^m,s_2)\\).  A unit\n  \\(F\\) forces \\(m=0\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 2, "rdep_count": 2, "descendant_count": 12, "proof_size_tex": 477, "effort_local": 477, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 2235}, "lem:cp_individual_branch_bound": {"id": "lem:cp_individual_branch_bound", "type": "lemma", "title": "Individual branch bound", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemma 4.9.}\n  In the setup of the overdetermined bound, let \\(F_{j,y}\\) be the completed\n  local equation of the branch of \\(C_j\\) corresponding to\n  \\(y\\in\\nu_j^{-1}(x)\\).  If the jet \\(\\phi\\) is \\(\\omega\\)-integral, then\n  \\[\n    \\operatorname{ord}_y(\\nu_j^\\bullet\\omega)\n    \\ge \\min\\{m,\\operatorname{ord}_{s_1}(\\pi(F_{j,y}))-1\\}.\n  \\]", "uses": ["lem:cp_branches_package", "lem:cp_local_integral_expressions"], "lean_name": "MR4665779.IndividualBranchBound", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Pull \\(\\omega\\) back to the completed local ring of the normalized branch.\n  The local expression for \\(\\omega\\) from\n  \\(\\ref{lem:cp_local_integral_expressions}\\) gives terms involving\n  \\(h_1^m h_1'\\), \\(h_2h_1'\\), and \\(h_2'\\), where\n  \\(h_i\\) are the images of \\(s_i\\).  Płoski's estimate bounds\n  \\(\\operatorname{ord}_t h_2\\) below by\n  \\(\\operatorname{ord}_{s_1}\\pi(F_{j,y})\\), and formal differentiation loses\n  at most one order.  Taking the minimum of the resulting lower bounds gives\n  the claim.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 2, "rdep_count": 1, "descendant_count": 11, "proof_size_tex": 506, "effort_local": 506, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 3644}, "thm:cp_overdetermined_bound": {"id": "thm:cp_overdetermined_bound", "type": "theorem", "title": "Overdetermined \\(\\omega\\)-integrality bound", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Theorem 4.4.}\n  Let \\(S\\) be a smooth irreducible surface over an algebraically closed field,\n  \\(x\\in S(k)\\), and \\(\\omega_1,\\omega_2\\) global \\(1\\)-forms with\n  \\(\\omega_1\\wedge\\omega_2\\ne0\\).  Write\n  \\(\\operatorname{div}(\\omega_1\\wedge\\omega_2)=\\sum a_jC_j\\), and let\n  \\(\\nu_j:\\widetilde C_j\\to S\\) be normalization followed by inclusion.  If\n  a length-\\(m\\) infinitesimal disk supported at \\(x\\) is integral for both\n  \\(\\omega_1\\) and \\(\\omega_2\\), then for every\n  \\(\\omega_0=c_1\\omega_1+c_2\\omega_2\\),\n  \\[\n    m\\le \\sum_j\\sum_{y\\in\\nu_j^{-1}(x)}\n      a_j\\bigl(\\operatorname{ord}_y(\\nu_j^\\bullet\\omega_0)+1\\bigr).\n  \\]", "uses": ["lem:cp_individual_branch_bound", "lem:cp_local_integral_expressions"], "lean_name": "MR4665779.OverdeterminedBound", "proved": false, "mathlib_ok": false, "proof_tex": "\n  If \\(x\\) is outside the divisor, the local expression lemma gives \\(m=0\\).\n  Otherwise, apply the individual branch bound to \\(\\omega_0\\).  If any branch\n  has \\(\\operatorname{ord}_{s_1}\\pi(F_{j,y})\\ge m+1\\), its summand already\n  exceeds \\(m\\).  If all branch orders are at most \\(m\\), multiplying the\n  branch equations shows that the right side is at least\n  \\(\\operatorname{ord}_{s_1}\\pi(F)\\), and the local divisor expression gives\n  \\(\\operatorname{ord}_{s_1}\\pi(F)\\ge m\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 2, "rdep_count": 1, "descendant_count": 10, "proof_size_tex": 479, "effort_local": 479, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 4123}, "lem:cp_ample_abvar_divisor": {"id": "lem:cp_ample_abvar_divisor", "type": "lemma", "title": "Ample effective divisors on abelian varieties", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemma 5.1.}\n  Let \\(D\\) be a nonzero effective divisor on an abelian variety \\(A\\).  If\n  \\(\\operatorname{supp}(D)\\) contains no translate of a positive-dimensional\n  abelian subvariety, then \\(D\\) is ample.", "uses": ["def:cp_geometry_interfaces"], "lean_name": "MR4665779.AmpleAbelianVarietyDivisor", "proved": false, "mathlib_ok": false, "proof_tex": "\n  The stabilizer \\(H(D)=\\{x:\\tau_x^*D=D\\}\\) is a closed subgroup of \\(A\\).\n  For any point of the support, the translate of \\(H(D)\\) through that point\n  lies in \\(\\operatorname{supp}(D)\\).  The hypothesis therefore forces\n  \\(H(D)\\) to be finite, and Mumford's ampleness criterion for divisors on\n  abelian varieties applies.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 2, "descendant_count": 15, "proof_size_tex": 324, "effort_local": 324, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1434}, "lem:cp_abvar_degree_trace_package": {"id": "lem:cp_abvar_degree_trace_package", "type": "lemma", "title": "Degree and trace package for curves in abelian varieties", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Section 5.2 and Lemma 5.2.}\n  For a curve \\(C\\) generating an abelian variety \\(A\\) of dimension \\(n\\) and\n  an ample divisor \\(D\\), the endomorphism \\(\\alpha_A(C,D)\\) has\n  \\(P_{\\alpha_A(C,D)}(t)=Q_{C,D}(t)^2\\) for a monic degree-\\(n\\) polynomial\n  whose roots are real and positive.  Moreover,\n  \\(\\operatorname{tr}(\\alpha_A(C,D))=2\\deg(C\\cdot D)\\), and\n  \\(\\alpha_A(C,D)=\\nu_{C/A,*}\\nu_{C/A}^*\\phi_D\\).", "uses": ["def:cp_geometry_interfaces"], "lean_name": "MR4665779.AbelianVarietyDegreeTracePackage", "proved": false, "mathlib_ok": false, "proof_tex": "\n  The trace formula and the factorization through the Jacobian of the\n  normalization are Matsusaka--Morikawa identities.  Debarre's positivity\n  theorem for the generated curve and ample divisor gives the square\n  characteristic polynomial and positive real roots.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 1, "descendant_count": 14, "proof_size_tex": 263, "effort_local": 263, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1373}, "lem:cp_degrees_surface_threefold": {"id": "lem:cp_degrees_surface_threefold", "type": "lemma", "title": "Degrees for surfaces in abelian threefolds", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemma 5.3.}\n  If \\(X\\) is a smooth projective surface contained in an abelian threefold\n  \\(A\\), then \\(X|_X\\) is a canonical divisor of \\(X\\), and\n  \\[\n    \\deg_X(X)=\\operatorname{cdeg}_X(X)=\\deg(X^3)_A=c_1^2(X).\n  \\]", "uses": ["def:cp_geometry_interfaces"], "lean_name": "MR4665779.SurfaceThreefoldDegrees", "proved": false, "mathlib_ok": false, "proof_tex": "\n  The canonical sheaf of \\(A\\) is trivial, so adjunction identifies \\(X|_X\\)\n  with a canonical divisor of \\(X\\).  The displayed equalities are then the\n  same intersection number computed in \\(A\\) and on \\(X\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 2, "descendant_count": 14, "proof_size_tex": 209, "effort_local": 209, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1319}, "lem:cp_injectivity_one_forms": {"id": "lem:cp_injectivity_one_forms", "type": "lemma", "title": "Injectivity of restricted one-forms", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemmas 5.4--5.6.}\n  In positive characteristic, if a curve \\(C\\subset A\\) generates \\(A\\) and\n  \\(p>\\frac{n!}{n^n}\\frac{\\deg_H(C)^n}{\\deg(H^n)}\\), then\n  \\(H^0(A,\\Omega^1_A)\\to H^0(\\widetilde C,\\Omega^1_{\\widetilde C})\\) is\n  injective.  For curves \\(C\\) in canonical divisors of the surface \\(X\\), the\n  same argument gives either injectivity or a kernel of dimension at most\n  \\(1\\) under the two Caro--Pasten hypotheses.  Under the surface hypotheses,\n  restriction \\(H^0(A,\\Omega^1_A)\\to H^0(X,\\Omega^1_X)\\) is injective.", "uses": ["lem:cp_abvar_degree_trace_package", "lem:cp_degrees_surface_threefold", "lem:cp_canonical_genus_bound"], "lean_name": "MR4665779.InjectivityOneForms", "proved": false, "mathlib_ok": false, "proof_tex": "\n  The degree--trace package gives an isogeny\n  \\(\\beta:A^\\vee\\to A\\) whose degree is a square \\(M^2\\), with\n  \\(M\\) bounded by the arithmetic--geometric mean in terms of\n  \\(\\deg_H(C)\\).  The numerical hypothesis gives \\(p\\nmid M\\), so \\(\\beta\\)\n  is separable and pullback of invariant forms is injective.  For curves in a\n  canonical divisor, either the generated abelian subvariety is all of \\(A\\),\n  or in the threefold case an abelian surface; the canonical genus bound\n  controls the surface case and leaves a one-dimensional kernel.  For surfaces,\n  intersect \\(X\\) with a very ample divisor to reduce to a smooth generating\n  curve.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 3, "rdep_count": 2, "descendant_count": 13, "proof_size_tex": 638, "effort_local": 638, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 3065}, "lem:cp_nonvanishing_two_forms": {"id": "lem:cp_nonvanishing_two_forms", "type": "lemma", "title": "Nonvanishing of restricted two-forms", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemma 5.7.}\n  Let \\(X\\subset A\\) be a smooth surface in an abelian variety of dimension\n  \\(n\\ge3\\) over a positive-characteristic algebraically closed field.  If\n  \\(\\omega_1,\\omega_2\\) are independent invariant differentials on \\(A\\), and\n  either the threefold/no-elliptic-curve bound\n  \\(p>(128/9)c_1^2(X)^2\\) or the geometrically simple ample-divisor bound\n  holds, then the restricted \\(2\\)-form\n  \\(\\iota^\\bullet\\omega_1\\wedge\\iota^\\bullet\\omega_2\\) is not zero on \\(X\\).", "uses": ["lem:cp_injectivity_one_forms", "lem:cp_degrees_surface_threefold", "lem:cp_ample_abvar_divisor"], "lean_name": "MR4665779.NonvanishingTwoForms", "proved": false, "mathlib_ok": false, "proof_tex": "\n  First the surface restriction of one-forms is injective, so the two\n  restrictions are \\(k\\)-linearly independent.  If their wedge vanished, one\n  would have \\(u_1=f u_2\\) for a nonconstant rational function.  A component\n  \\(C\\) of the zero divisor of \\(f\\) is then integral for \\(u_1\\).  An\n  auxiliary smooth curve \\(D\\sim3H|_X\\) bounds \\(H\\cdot C\\) by the degree of\n  the nonzero pullback of \\(u_1\\) to \\(D\\).  The one-form injectivity theorem\n  then contradicts \\(\\nu_{C/A}^\\bullet(\\omega_1)=0\\), except in the abelian\n  surface subcase of the threefold hypothesis; there the quotient by the\n  generated abelian surface produces an elliptic curve and forces \\(u_2\\) to\n  vanish on \\(C\\) as well, contradicting the one-dimensional kernel.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 3, "rdep_count": 1, "descendant_count": 12, "proof_size_tex": 742, "effort_local": 742, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 4131}, "lem:cp_zero_estimates": {"id": "lem:cp_zero_estimates", "type": "lemma", "title": "One- and multi-variable zero estimates", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemmas 6.1 and 6.2.}\n  For a nonzero one-variable \\(p\\)-adic power series \\(h\\), the number of\n  zeros in a closed disk of radius \\(r\\) is at most the largest index attaining\n  the Gauss norm at \\(r\\).  If a multivariable series \\(H\\) has coefficients\n  bounded by \\(M^{|\\alpha|-1}\\), and some homogeneous part of degree at most\n  \\(N\\) evaluates to norm at least \\(1\\) on a unit vector \\(u\\), then along the\n  line \\(zu\\),\n  \\[\n    n_0(H_u,r)\\le\n    \\left(N-\\frac{\\log M}{\\log(r^{-1})}\\right)\n    \\left(1-\\frac{\\log M}{\\log(r^{-1})}\\right)^{-1}\n  \\]\n  for \\(0<r<M^{-1}\\).", "uses": ["def:cp_notation"], "lean_name": "MR4665779.ZeroEstimates", "proved": false, "mathlib_ok": false, "proof_tex": "\n  The first statement is the Newton polygon/Gauss norm zero bound.  For the\n  second, the coefficient estimate implies convergence radius at least\n  \\(M^{-1}\\).  If \\(m>(N-\\lambda)/(1-\\lambda)\\), with\n  \\(\\lambda=\\log M/\\log(r^{-1})\\), then every degree-\\(m\\) homogeneous term is\n  strictly smaller than the nonzero contribution of degree at most \\(N\\).\n  Thus the Gauss norm of \\(H_u\\) is attained by a degree no larger than\n  \\(\\lfloor(N-\\lambda)/(1-\\lambda)\\rfloor\\), and the one-variable bound applies.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 1, "descendant_count": 9, "proof_size_tex": 504, "effort_local": 504, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1120}, "lem:cp_logexp_local_parameters": {"id": "lem:cp_logexp_local_parameters", "type": "lemma", "title": "Local parameters and formal multiplication", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemmas 7.1--7.4.}\n  For an abelian scheme \\(\\mathcal A/R\\), a section, and a smooth regular\n  closed subscheme through it, there exist \\(R\\)-local parameters along the\n  section whose first coordinates cut out the subscheme.  In such parameters,\n  the formal multiplication-by-\\(m\\) expansions have coefficients in \\(R\\);\n  multiplication by \\(1\\) has linear part \\(t_j\\), and the terms of degree\n  \\(<m\\) in the homogeneous piece \\(\\Psi_j^{[m]}\\) vanish.", "uses": ["def:cp_notation", "def:cp_geometry_interfaces"], "lean_name": "MR4665779.LogExpLocalParameters", "proved": false, "mathlib_ok": false, "proof_tex": "\n  The parameter choice is the SGA smooth-local normal form around a section\n  and a smooth closed subscheme.  Integrality of the formal group law over\n  \\(R\\) gives integral multiplication series.  The assertions about the linear\n  part and degree filtration are immediate from \\([1]=\\mathrm{id}\\) and the\n  standard formal-group identity for multiplication by \\(m\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 2, "rdep_count": 2, "descendant_count": 19, "proof_size_tex": 365, "effort_local": 365, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1475}, "lem:cp_logexp_convergence_linearization": {"id": "lem:cp_logexp_convergence_linearization", "type": "lemma", "title": "Convergence and linearization of logarithm and exponential", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemmas 7.5--7.7.}\n  In local parameters \\(\\mathbf t\\), the logarithm coefficients satisfy\n  \\(|b_{j,\\alpha}|\\le\\|\\alpha\\|^{[K:\\mathbb Q_p]}\\), and the exponential\n  coefficients satisfy\n  \\(m!c_{j,\\alpha}\\in R\\) and\n  \\(|c_{j,\\alpha}|\\le p^{[K:\\mathbb Q_p](m-1)/(p-1)}\\) for\n  \\(m=\\|\\alpha\\|\\).  If\n  \\(p>\\max\\{\\mathfrak e+1,\\exp(\\mathfrak e/\\exp(1))\\}\\), the logarithm and\n  exponential converge on the residue kernel and identify it, as a Lie group,\n  with the additive ball \\(\\mathfrak p^n\\).", "uses": ["lem:cp_logexp_local_parameters"], "lean_name": "MR4665779.LogExpConvergenceLinearization", "proved": false, "mathlib_ok": false, "proof_tex": "\n  The logarithm coefficient bound comes from the integral multiplication\n  series and denominators \\(m^{-1}\\).  The exponential bound follows from\n  \\(m!c_{j,\\alpha}\\in R\\) and Legendre's estimate for \\(|m!|\\).  The two\n  numerical hypotheses ensure both series converge on the radius \\(q^{-1}\\)\n  ball and map it to itself.  The formal-group identities\n  \\(\\log\\circ\\exp=\\mathrm{id}\\) and \\(\\exp\\circ\\log=\\mathrm{id}\\) then give\n  inverse analytic Lie-group isomorphisms.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 2, "descendant_count": 18, "proof_size_tex": 470, "effort_local": 470, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1945}, "def:cp_one_parameter_subgroup": {"id": "def:cp_one_parameter_subgroup", "type": "definition", "title": "Analytic one-parameter subgroup", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Section 8.1.}\n  A one-parameter subgroup of \\(\\mathcal A\\) is a pair\n  \\(\\gamma=(\\mathbf t,u)\\), where \\(\\mathbf t\\) is a choice of \\(R\\)-local\n  parameters at the identity and \\(u\\in K^n\\) has norm \\(1\\).  It defines\n  \\[\n    \\widetilde\\gamma(z)=\\widetilde{\\operatorname{Exp}}^{\\mathbf t}(zu)\n      :\\mathfrak p\\to U_e\n  \\]\n  and a hyperplane\n  \\(\\mathcal H(\\gamma)=\\ker(\\epsilon^u\\circ\n  (\\widetilde{\\operatorname{Exp}}^{\\mathbf t})^\\bullet)\\) in\n  \\(H^0(A,\\Omega^1_{A/K})\\).", "uses": ["lem:cp_logexp_convergence_linearization"], "lean_name": "MR4665779.OneParameterSubgroup", "proved": false, "mathlib_ok": false, "proof_tex": "", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 2, "descendant_count": 17, "proof_size_tex": null, "effort_local": 507, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 2452}, "lem:cp_one_parameter_hyperplanes": {"id": "lem:cp_one_parameter_hyperplanes", "type": "lemma", "title": "Hyperplanes and images of one-parameter subgroups", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemmas 8.1--8.6.}\n  The differential pullback of \\(\\widetilde\\gamma\\) has kernel\n  \\(\\mathcal H(\\gamma)\\).  The image of \\(\\gamma\\) is a closed saturated\n  rank-one \\(R\\)-submodule of the residue kernel under logarithm.  Two\n  one-parameter subgroups are equivalent exactly when their images agree,\n  exactly when their images meet nontrivially, and equivalence classes are in\n  bijection with \\(K\\)-linear hyperplanes of \\(H^0(A,\\Omega^1_{A/K})\\).\n  Every nonidentity element of \\(U_e\\) lies in the image of a unique such class.", "uses": ["def:cp_one_parameter_subgroup"], "lean_name": "MR4665779.OneParameterHyperplanes", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Under logarithm, the image of \\(\\gamma\\) is \\(\\mathfrak p u\\), so equality\n  and nontrivial intersection of images are equivalent to scaling \\(u\\) by a\n  unit after changing coordinates by the induced element of \\(\\operatorname{GL}_n(R)\\).\n  The hyperplane is the kernel of the linear functional evaluating invariant\n  differentials in the direction \\(u\\).  Every hyperplane is the kernel of such\n  a functional after choosing coordinates, and every nonzero vector in\n  \\(\\mathfrak p^n\\) normalizes to a unit vector \\(u\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 2, "descendant_count": 15, "proof_size_tex": 522, "effort_local": 522, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 2974}, "lem:cp_infinitesimal_one_parameter": {"id": "lem:cp_infinitesimal_one_parameter", "type": "lemma", "title": "Infinitesimal one-parameter subgroups and reduction", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemmas 8.7 and 8.8.}\n  The \\(m\\)-th truncation \\(\\widetilde\\gamma_m:\\operatorname{Spec}K[z]/(z^{m+1})\\to A\\)\n  is a closed immersion.  If \\(m<p\\), it extends to\n  \\(\\mathcal V_m=\\operatorname{Spec}R[z]/(z^{m+1})\\to\\mathcal A\\), and its\n  special fibre\n  \\(V'_m=\\operatorname{Spec}\\mathbf k[z]/(z^{m+1})\\to A'\\) is also a closed\n  immersion.", "uses": ["def:cp_one_parameter_subgroup", "lem:cp_logexp_convergence_linearization"], "lean_name": "MR4665779.InfinitesimalOneParameterSubgroup", "proved": false, "mathlib_ok": false, "proof_tex": "\n  For \\(m<p\\), the exponential coefficient bounds make the truncated power\n  series integral over \\(R\\), giving the integral model and special fibre.\n  The linear term of the exponential is \\(u_jz\\) in some coordinate with\n  \\(u_j\\in R^\\times\\), so the induced map on local rings contains an element\n  \\(u_jz+O(z^2)\\), which generates the truncated polynomial algebra.  Hence\n  the maps are closed immersions.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 2, "rdep_count": 2, "descendant_count": 10, "proof_size_tex": 407, "effort_local": 407, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 2859}, "lem:cp_one_parameter_omega_integral": {"id": "lem:cp_one_parameter_omega_integral", "type": "lemma", "title": "One-parameter subgroups are \\(\\omega\\)-integral along their hyperplane", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemmas 8.9--8.11.}\n  If \\(\\omega\\in\\mathcal H(\\gamma)\\), then every infinitesimal truncation\n  \\(\\widetilde\\gamma_m\\) is \\(\\omega\\)-integral.  If \\(m\\le p-2\\) and\n  \\(\\omega\\) extends to an integral differential on \\(\\mathcal A\\), then the\n  special-fibre truncation \\(\\widetilde\\gamma'_m\\) is integral for the reduced\n  differential.", "uses": ["def:cp_omega_integral", "lem:cp_omega_integral_functorial_local", "lem:cp_infinitesimal_one_parameter", "lem:cp_one_parameter_hyperplanes"], "lean_name": "MR4665779.OneParameterOmegaIntegral", "proved": false, "mathlib_ok": false, "proof_tex": "\n  The analytic pullback of \\(\\omega\\) by \\(\\widetilde\\gamma\\) vanishes because\n  \\(\\omega\\in\\mathcal H(\\gamma)\\).  The compatibility lemma compares this\n  analytic pullback with the algebraic pullback by each truncation.  For\n  \\(m\\le p-2\\), the module of differentials on \\(R[z]/(z^{m+1})\\) is free over\n  \\(R\\), so vanishing after base change to \\(K\\) descends to \\(R\\) and then\n  reduces modulo \\(\\mathfrak p\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 4, "rdep_count": 1, "descendant_count": 9, "proof_size_tex": 412, "effort_local": 412, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 4441}, "lem:cp_rank_one_reduction": {"id": "lem:cp_rank_one_reduction", "type": "lemma", "title": "Rank-one reduction", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemma 9.2.}\n  In Theorem \\(\\ref{thm:cp_main_local}\\), it suffices to treat the case\n  \\(\\operatorname{rank}G=1\\).", "uses": ["def:cp_notation", "def:cp_geometry_interfaces"], "lean_name": "MR4665779.RankOneReduction", "proved": false, "mathlib_ok": false, "proof_tex": "\n  If \\(G\\) has rank \\(0\\), enlarge it by a non-torsion point of the uncountable\n  group \\(A(K)\\).  The resulting group has rank \\(1\\), and its closure contains\n  the original closure, so the rank-one bound implies the rank-zero bound.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 2, "rdep_count": 2, "descendant_count": 14, "proof_size_tex": 232, "effort_local": 232, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1342}, "lem:cp_main_hypotheses": {"id": "lem:cp_main_hypotheses", "type": "lemma", "title": "Consequences of the local hypotheses", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemma 9.3.}\n  Under either local hypothesis of the main theorem, \\(X\\) and \\(X'\\) are\n  surfaces of general type and\n  \\(1\\le c_1^2(X')=c_1^2(X)<(p-2)/3\\).  In the threefold case \\(X'\\) is ample\n  on \\(A'\\); in the geometrically simple case the chosen ample divisor\n  specializes with the same intersection and canonical degrees.", "uses": ["lem:cp_general_type_package", "lem:cp_ample_abvar_divisor"], "lean_name": "MR4665779.MainHypotheses", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Simplicity or absence of elliptic curves rules out the abelian-surface and\n  elliptic-curve exceptions, so the general-type criterion applies.  Good\n  reduction and the Katsura--Ueno specialization results preserve general type\n  and \\(c_1^2\\).  The numerical hypotheses imply the displayed upper bound.\n  In the threefold case, the effective divisor \\(X'\\) has support containing no\n  translate of a positive-dimensional abelian subvariety, hence is ample.  In\n  the simple case, specialization of numerical equivalence and intersection\n  products preserves the relevant degrees.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 2, "rdep_count": 4, "descendant_count": 13, "proof_size_tex": 580, "effort_local": 580, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 2974}, "lem:cp_special_fibre_curve_genus": {"id": "lem:cp_special_fibre_curve_genus", "type": "lemma", "title": "Genus bound for curves in the special fibre", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemma 9.5.}\n  Every irreducible curve \\(C\\subset X'_k\\) has geometric genus at least \\(2\\).", "uses": ["lem:cp_main_hypotheses"], "lean_name": "MR4665779.SpecialFibreCurveGenus", "proved": false, "mathlib_ok": false, "proof_tex": "\n  A curve in an abelian variety has genus at least \\(1\\).  If the genus were\n  \\(1\\), the normalization would be an elliptic curve and its nonconstant map\n  to \\(A'_k\\) would have elliptic image contained in \\(X'_k\\), contradicting\n  the hypotheses.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 2, "descendant_count": 12, "proof_size_tex": 247, "effort_local": 247, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 3221}, "lem:cp_choice_one_parameter_subgroup": {"id": "lem:cp_choice_one_parameter_subgroup", "type": "lemma", "title": "Choice of the Chabauty one-parameter subgroup", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemma 9.6.}\n  For rank-one \\(G\\), and for any local parameters at the identity, there is a\n  one-parameter subgroup \\(\\gamma\\) such that\n  \\(\\Gamma\\cap U_e\\subseteq\\operatorname{im}\\gamma\\).  Its equivalence class is\n  uniquely determined by the condition that \\(\\operatorname{im}\\gamma\\cap\\Gamma\\)\n  strictly contains the identity.", "uses": ["lem:cp_rank_one_reduction", "lem:cp_one_parameter_hyperplanes"], "lean_name": "MR4665779.ChoiceOneParameterSubgroup", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Choose a nonidentity point of \\(\\Gamma\\cap U_e\\).  The one-parameter\n  hyperplane package puts it in a unique one-parameter subgroup up to\n  equivalence.  Since \\(\\Gamma\\cap U_e\\) is the closure of a rank-one subgroup\n  and \\(\\operatorname{im}\\gamma\\) is saturated and closed under logarithm, the\n  nontrivial intersection forces the whole \\(\\Gamma\\cap U_e\\) into\n  \\(\\operatorname{im}\\gamma\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 2, "rdep_count": 2, "descendant_count": 13, "proof_size_tex": 394, "effort_local": 394, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 3600}, "lem:cp_choice_differentials": {"id": "lem:cp_choice_differentials", "type": "lemma", "title": "Choice of two integral differentials", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemma 9.7.}\n  Let \\(\\mathcal H\\subset H^0(A,\\Omega^1_{A/K})\\) be the hyperplane associated\n  to \\(\\Gamma\\).  There exist \\(K\\)-linearly independent\n  \\(\\omega_1,\\omega_2\\in\\mathcal H\\) extending to\n  \\(H^0(\\mathcal A,\\Omega^1_{\\mathcal A/R})\\) whose reductions\n  \\(\\omega'_1,\\omega'_2\\) are \\(\\mathbf k\\)-linearly independent.", "uses": ["lem:cp_choice_one_parameter_subgroup"], "lean_name": "MR4665779.ChoiceDifferentials", "proved": false, "mathlib_ok": false, "proof_tex": "\n  The \\(R\\)-module \\(H^0(\\mathcal A,\\Omega^1_{\\mathcal A/R})\\) is free of rank\n  \\(n\\).  The intersection with a \\(K\\)-hyperplane has rank \\(n-1\\ge2\\).\n  Choose two primitive independent vectors in this lattice; primitivity and\n  independence prevent their reductions from becoming dependent over\n  \\(\\mathbf k\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 1, "descendant_count": 12, "proof_size_tex": 311, "effort_local": 311, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 3911}, "lem:cp_special_canonical_divisor": {"id": "lem:cp_special_canonical_divisor", "type": "lemma", "title": "The special-fibre canonical divisor from differentials", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemmas 9.8--9.9.}\n  Let \\(u_i\\) be the restrictions of \\(\\omega'_i\\) to \\(X'\\).  Then\n  \\(u_1\\wedge u_2\\) is nonzero.  Its divisor \\(D\\) on \\(X'\\) is effective,\n  ample, defined over \\(\\mathbf k\\), and canonical; in particular \\(D>0\\) and\n  is nef.", "uses": ["lem:cp_choice_differentials", "lem:cp_nonvanishing_two_forms", "lem:cp_main_hypotheses", "lem:cp_special_fibre_curve_genus", "lem:cp_general_type_package"], "lean_name": "MR4665779.SpecialCanonicalDivisor", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Nonvanishing is exactly the restricted two-form theorem applied to\n  \\(A'\\) and \\(X'\\).  Since \\(u_1\\wedge u_2\\) is a nonzero section of the\n  canonical sheaf, its divisor is effective and canonical.  The main\n  hypotheses give general type and exclude genus \\(0\\) and \\(1\\) curves in\n  the support, so the general-type ampleness criterion makes \\(D\\) ample.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 5, "rdep_count": 2, "descendant_count": 11, "proof_size_tex": 358, "effort_local": 358, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 8621}, "lem:cp_choice_w": {"id": "lem:cp_choice_w", "type": "lemma", "title": "Choice of a nonintegral linear combination", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemma 9.10.}\n  Writing \\(D=\\sum a_jC_j\\) over \\(k=\\mathbf k^{alg}\\), there exists\n  \\(b\\in\\mathbf k\\) such that \\(w=u_1+bu_2\\) has nonzero pullback to every\n  normalization \\(\\nu_j:\\widetilde C_j\\to X'_k\\).", "uses": ["lem:cp_special_canonical_divisor", "lem:cp_injectivity_one_forms", "lem:cp_canonical_genus_bound"], "lean_name": "MR4665779.ChoiceW", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Ampleness and the canonical genus bound imply that the number of components\n  \\(\\ell\\) is \\(<p\\).  If every \\(b\\in\\mathbb F_p\\) made some component\n  \\(w_b\\)-integral, two distinct \\(b,b'\\) would vanish on the same component.\n  Then the restrictions of both \\(\\omega'_1\\) and \\(\\omega'_2\\) would lie in\n  the kernel for that curve, making the kernel at least two-dimensional,\n  contradicting the injectivity or semi-injectivity theorem for one-forms.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 3, "rdep_count": 1, "descendant_count": 10, "proof_size_tex": 450, "effort_local": 450, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 9071}, "lem:cp_mx_bounds": {"id": "lem:cp_mx_bounds", "type": "lemma", "title": "Bounds for infinitesimal integral disks", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemmas 9.11--9.13.}\n  Let \\(m(x)\\) be the supremum length of closed infinitesimal disks in\n  \\(X'_k\\) supported at \\(x\\) and integral for both \\(u_1,u_2\\).  If\n  \\(x\\notin\\operatorname{supp}D\\), then \\(m(x)=0\\).  If \\(x\\in\\operatorname{supp}D\\),\n  then\n  \\[\n    m(x)\\le \\sum_j\\sum_{y\\in\\nu_j^{-1}(x)}\n      a_j(\\operatorname{ord}_y\\nu_j^\\bullet w+1),\n  \\]\n  and for every \\(x\\), \\(m(x)\\le p-3\\).", "uses": ["thm:cp_overdetermined_bound", "lem:cp_choice_w", "lem:cp_special_fibre_curve_genus", "lem:cp_branches_package", "lem:cp_canonical_genus_bound", "lem:cp_main_hypotheses"], "lean_name": "MR4665779.MxBounds", "proved": false, "mathlib_ok": false, "proof_tex": "\n  The first two assertions are the overdetermined bound, using\n  \\(\\omega_0=w\\).  For the uniform \\(p-3\\) bound, sum the orders of the\n  nonzero differentials \\(\\nu_j^\\bullet w\\), whose degrees are\n  \\(2g_g(C_j)-2\\), and use the normalization-fibre bound\n  \\(\\#\\nu_j^{-1}(x)\\le\\delta(C_j,x)+1\\le g_a(C_j)-1\\).  The genus bound\n  \\(g_g(C_j)\\ge2\\), the canonical genus bound, and\n  \\(3c_1^2(X')<p-2\\) give \\(m(x)<p-2\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 6, "rdep_count": 2, "descendant_count": 9, "proof_size_tex": 415, "effort_local": 415, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 12043}, "prop:cp_residue_disk_bound": {"id": "prop:cp_residue_disk_bound", "type": "proposition", "title": "Residue disk bound", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Proposition 9.14 and Lemmas 9.15--9.16.}\n  For \\(\\xi\\in\\Gamma\\cap X(K)\\) with reduction \\(x\\in X'(\\mathbf k)\\),\n  \\[\n    \\#(\\Gamma\\cap X(K)\\cap U_x)\n    \\le 1+m(x)\\left(1-\\frac{\\mathfrak e}{p-1}\\right)^{-1}.\n  \\]\n  In particular, if \\(m(x)=0\\), the residue disk contains at most one point of\n  \\(\\Gamma\\cap X(K)\\).", "uses": ["lem:cp_mx_bounds", "lem:cp_choice_one_parameter_subgroup", "lem:cp_logexp_local_parameters", "lem:cp_infinitesimal_one_parameter", "lem:cp_one_parameter_omega_integral", "lem:cp_zero_estimates"], "lean_name": "MR4665779.ResidueDiskBound", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Translate the situation so that \\(\\xi=e\\); translation preserves \\(\\Gamma\\),\n  residue disks, invariant differentials, and \\(m(x)\\).  Choose local\n  parameters whose first \\(n-2\\) coordinates cut out \\(\\mathcal X\\), and choose\n  the rank-one one-parameter subgroup whose image contains \\(\\Gamma\\cap U_e\\).\n  Then points of \\(\\Gamma\\cap X(K)\\cap U_e\\) are zeros of the one-variable\n  series \\(\\operatorname{Exp}^{\\mathbf t}_j(zu)\\) for each defining coordinate.\n  If all homogeneous coefficients of degrees \\(\\le m(e)\\) had norm \\(<1\\),\n  the reduced truncation would factor through \\(X'\\) and be integral for\n  \\(u_1,u_2\\), contradicting the definition of \\(m(e)\\); hence some\n  \\(P_{j,N}^{\\mathbf t}(u)\\) has norm at least \\(1\\) with \\(N\\le m(e)+1\\).\n  The multivariable zero estimate with\n  \\(M=p^{[K:\\mathbb Q_p]/(p-1)}\\) and \\(r=q^{-1}\\) gives the displayed bound.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 6, "rdep_count": 1, "descendant_count": 8, "proof_size_tex": 868, "effort_local": 868, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 14234}, "thm:cp_main_local": {"id": "thm:cp_main_local", "type": "theorem", "title": "Local Chabauty--Coleman bound for surfaces", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Theorem 9.1.}\n  Let \\(\\mathcal A/R\\) be an abelian scheme of relative dimension \\(n\\ge3\\),\n  let \\(\\mathcal X\\subset\\mathcal A\\) be smooth proper of relative dimension\n  \\(2\\) with geometrically irreducible fibres, and let\n  \\(\\Gamma\\) be the \\(p\\)-adic closure of a finitely generated subgroup\n  \\(G\\le A(K)\\) of rank at most \\(1\\).  Assume\n  \\(p>\\max\\{\\mathfrak e+1,\\exp(\\mathfrak e/\\exp(1))\\}\\) and either the\n  threefold/no-elliptic-curve hypothesis or the geometrically simple\n  ample-divisor hypothesis of Caro--Pasten.  Then\n  \\[\n    \\#(\\Gamma\\cap X(K))\\le\n    \\#X'(\\mathbf k)+\n    \\left(1-\\frac{\\mathfrak e}{p-1}\\right)^{-1}\n    (q+4q^{1/2}+3)c_1^2(X).\n  \\]", "uses": ["lem:cp_rank_one_reduction", "prop:cp_residue_disk_bound", "lem:cp_mx_bounds", "lem:cp_weil_bound_singular_curve", "lem:cp_canonical_genus_bound", "lem:cp_special_canonical_divisor"], "lean_name": "MR4665779.MainLocal", "proved": false, "mathlib_ok": false, "proof_tex": "\n  By rank-one reduction assume \\(\\operatorname{rank}G=1\\).  Sum the residue\n  disk bound over \\(x\\in X'(\\mathbf k)\\).  For \\(x\\notin D\\), \\(m(x)=0\\), so\n  these disks contribute exactly the main term.  For \\(x\\in D\\), the\n  overdetermined bound gives a sum of orders of \\(\\nu_j^\\bullet w\\) plus\n  weighted normalization-fibre counts.  The order sum is bounded by\n  \\(2c_1^2(X)\\) via the canonical genus bound.  The weighted fibre count is\n  bounded by the modified Weil estimate and then again by the canonical genus\n  bound, giving \\((q+4q^{1/2}+1)c_1^2(X)\\).  Together these contributions\n  yield \\((q+4q^{1/2}+3)c_1^2(X)\\), multiplied by the residue-disk factor.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 6, "rdep_count": 3, "descendant_count": 7, "proof_size_tex": 663, "effort_local": 663, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 15388}, "thm:cp_main_qp": {"id": "thm:cp_main_qp", "type": "theorem", "title": "The \\(\\mathbb Q_p\\) specialization", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Theorem 1.1 and Remark 9.4.}\n  Over \\(K=\\mathbb Q_p\\), under the hypotheses stated in the introduction,\n  \\[\n    \\#(X(\\mathbb Q_p)\\cap\\Gamma)\n    \\le \\#X'(\\mathbb F_p)+\n    \\frac{p-1}{p-2}\\bigl(p+4p^{1/2}+3\\bigr)c_1^2(X).\n  \\]", "uses": ["thm:cp_main_local", "lem:cp_main_hypotheses"], "lean_name": "MR4665779.MainQp", "proved": false, "mathlib_ok": false, "proof_tex": "\n  In the local theorem, \\(\\mathfrak e=1\\), \\(q=p\\), and the preliminary\n  numerical condition becomes \\(p\\ge3\\).  The main hypotheses imply\n  \\(p\\ge7\\) because \\(c_1^2(X)\\ge1\\), so no extra condition remains.  The\n  displayed formula is the specialization of the local bound.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 2, "rdep_count": 2, "descendant_count": 5, "proof_size_tex": 273, "effort_local": 273, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 15661}, "thm:cp_number_field_bound": {"id": "thm:cp_number_field_bound", "type": "theorem", "title": "Number-field rational-point bound", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Theorem 10.1.}\n  Let \\(F\\) be a number field and \\(\\mathfrak p\\mid p\\) a prime satisfying the\n  local numerical condition.  Let \\(X\\subset A\\) over \\(F\\) have good reduction\n  at \\(\\mathfrak p\\), with \\(\\dim A\\ge3\\), \\(\\operatorname{rank}A(F)\\le1\\),\n  and one of the two Caro--Pasten geometric hypotheses after reduction.  Then\n  \\(X(F)\\) is finite and satisfies the same bound as the local theorem with\n  \\(K=F_{\\mathfrak p}\\).", "uses": ["thm:cp_main_local"], "lean_name": "MR4665779.NumberFieldBound", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Embed \\(X(F)\\) into \\(X(F_{\\mathfrak p})\\cap\\Gamma\\), where \\(\\Gamma\\) is\n  the \\(p\\)-adic closure of \\(A(F)\\) in \\(A(F_{\\mathfrak p})\\).  The\n  Mordell--Weil rank condition gives \\(\\operatorname{rank}A(F)\\le1\\), so the\n  local theorem applies after base change to the completion.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 2, "descendant_count": 5, "proof_size_tex": 280, "effort_local": 280, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 15668}, "thm:cp_intro_surface_bounds": {"id": "thm:cp_intro_surface_bounds", "type": "theorem", "title": "Rational surface bounds over \\(\\mathbb Q\\)", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Theorems 1.5 and 1.7.}\n  The two stated \\(\\mathbb Q\\)-surface theorems follow: for a general-type\n  surface in an abelian threefold with rank at most \\(1\\) and no elliptic\n  curves in the good reduction, and for a surface in a geometrically simple\n  reduction with the ample-divisor numerical bound, \\(X(\\mathbb Q)\\) is finite\n  and satisfies the explicit \\(\\mathbb F_p\\)-point plus\n  \\(\\frac{p-1}{p-2}(p+4p^{1/2}+3)c_1^2(X)\\) bound.", "uses": ["thm:cp_main_qp", "thm:cp_number_field_bound", "lem:cp_general_type_package"], "lean_name": "MR4665779.IntroSurfaceBounds", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Both are the number-field theorem over \\(F=\\mathbb Q\\).  In the threefold\n  statement the hypotheses are exactly local hypothesis (i).  In the\n  higher-dimensional statement they are exactly local hypothesis (ii).  The\n  inclusion \\(X(\\mathbb Q)\\subset X(\\mathbb Q_p)\\cap\\Gamma\\) transfers the\n  local estimate to rational points.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 3, "rdep_count": 4, "descendant_count": 4, "proof_size_tex": 330, "effort_local": 330, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 16271}, "lem:cp_chavdarov_simple_reduction": {"id": "lem:cp_chavdarov_simple_reduction", "type": "lemma", "title": "Chavdarov density of geometrically simple reduction", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemma 10.2.}\n  If \\(A/\\mathbb Q\\) is an abelian variety of odd dimension \\(n\\) with\n  \\(\\operatorname{End}(A_\\mathbb C)=\\mathbb Z\\), then a density-one set of\n  primes has geometrically simple reduction for \\(A\\).", "uses": ["def:cp_geometry_interfaces"], "lean_name": "MR4665779.ChavdarovSimpleReduction", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Chavdarov's theorem (N. Chavdarov, ``The generic irreducibility of the numerator\n  of the zeta function in a family of curves with large monodromy,'' Duke Math.\\ J.\\\n  87 (1997), 151--180) establishes this for abelian varieties whose\n  \\(\\ell\\)-adic monodromy group is the full symplectic group.  For an abelian\n  variety \\(A/\\mathbb Q\\) of odd dimension \\(n\\) with\n  \\(\\operatorname{End}(A_\\mathbb C)=\\mathbb Z\\), the Tate conjecture (proved by\n  Faltings) and the classification of maximally symplectic monodromy groups\n  imply \\(G_{\\ell,A}=\\operatorname{Sp}_{2n}\\) for all but finitely many \\(\\ell\\).\n  Chavdarov's result then gives that for a density-one set of primes, the\n  characteristic polynomial of Frobenius on \\(T_\\ell A\\) is irreducible over\n  \\(\\mathbb Q\\), which implies geometric simplicity of the reduction.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 1, "descendant_count": 2, "proof_size_tex": 824, "effort_local": 824, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1934}, "cor:cp_dim3_density_application": {"id": "cor:cp_dim3_density_application", "type": "corollary", "title": "Density-one threefold applicability", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Corollary 1.11 and Section 10.2.}\n  For an abelian threefold \\(A/\\mathbb Q\\) with\n  \\(\\operatorname{rank}A(\\mathbb Q)\\le1\\) and\n  \\(\\operatorname{End}(A_\\mathbb C)=\\mathbb Z\\), a density-one set of primes\n  has the property that every smooth geometrically irreducible projective\n  surface \\(X\\subset A\\) with good reduction at such a prime and satisfying\n  \\(p>(128/9)c_1^2(X)^2\\) obeys the explicit rational-point bound.", "uses": ["lem:cp_chavdarov_simple_reduction", "thm:cp_intro_surface_bounds"], "lean_name": "MR4665779.Dim3DensityApplication", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Apply Chavdarov to obtain geometrically simple reductions after discarding\n  finitely many bad primes.  A surface in a geometrically simple abelian\n  threefold reduction contains no elliptic curve, so the threefold rational\n  surface theorem applies.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 2, "rdep_count": 1, "descendant_count": 1, "proof_size_tex": 250, "effort_local": 250, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 17345}, "lem:cp_symmetric_square_intersections": {"id": "lem:cp_symmetric_square_intersections", "type": "lemma", "title": "Intersection theory of \\(C^{(2)}\\)", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemmas 10.3--10.5.}\n  For a smooth curve \\(C\\) of genus \\(g\\ge2\\) in characteristic not \\(2\\),\n  \\[\n    K_{C^{(2)}}\\equiv(2g-2)V-\\frac12D,\\quad\n    V^2=1,\\quad D\\cdot V=2,\\quad D^2=4-4g,\n  \\]\n  and \\(c_1^2(C^{(2)})=(4g-9)(g-1)\\).  If \\(\\theta\\) is the pullback of a\n  theta divisor under the Abel--Jacobi map, then\n  \\(D\\equiv2((g+1)V-\\theta)\\), so\n  \\(K_{C^{(2)}}\\equiv\\theta+(g-3)V\\); hence for \\(g\\ge3\\),\n  \\(C^{(2)}\\) has ample canonical divisor and is of general type.  Also\n  \\(\\theta\\cdot K_{C^{(2)}}=2g(g-2)\\).", "uses": ["def:cp_geometry_interfaces"], "lean_name": "MR4665779.SymmetricSquareIntersections", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Adjunction for the quotient \\(C\\times C\\to C^{(2)}\\), ramified along the\n  diagonal, gives the canonical class and basic intersections.  Kouvidakis's\n  numerical equivalence formula gives the relation with \\(\\theta\\).  Since\n  \\(\\theta\\) is ample and \\(V\\) is effective, \\(K\\equiv\\theta+(g-3)V\\) is ample\n  for \\(g\\ge3\\).  Substituting the numerical equivalences gives the\n  \\(c_1^2\\) and \\(\\theta\\cdot K\\) formulas.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 3, "descendant_count": 4, "proof_size_tex": 416, "effort_local": 416, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1526}, "lem:cp_symmetric_square_jacobian_embedding": {"id": "lem:cp_symmetric_square_jacobian_embedding", "type": "lemma", "title": "Embedding \\(C^{(2)}\\) in the Jacobian", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Lemmas 10.6--10.7.}\n  If \\(C\\) is not hyperelliptic, the Abel--Jacobi map\n  \\(j:C^{(2)}\\to J\\) is injective and identifies \\(C^{(2)}\\) with its image\n  \\(W_2\\).  If \\(C\\) has an effective degree-\\(2\\) divisor over a field \\(F\\),\n  then \\(J\\) has an \\(F\\)-defined ample divisor \\(H\\) with\n  \\(H\\equiv2\\Theta\\).", "uses": ["lem:cp_symmetric_square_intersections"], "lean_name": "MR4665779.SymmetricSquareJacobianEmbedding", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Noninjectivity of the degree-\\(2\\) Abel--Jacobi map is exactly the existence\n  of a \\(g^1_2\\), i.e. hyperellipticity.  For the divisor \\(H\\), write the\n  degree-\\(2\\) divisor as \\(x_1+x_2\\), possibly a conjugate pair, and add the\n  two theta translates obtained from the \\((g-1)\\)-fold sums of\n  \\(j(V_{x_i})\\); the sum descends to \\(F\\) and is numerically \\(2\\Theta\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 2, "descendant_count": 3, "proof_size_tex": 369, "effort_local": 369, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1895}, "cor:cp_quadratic_points": {"id": "cor:cp_quadratic_points", "type": "corollary", "title": "Quadratic point bound for nonhyperelliptic curves", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Corollary 1.14 and Section 10.3.}\n  Let \\(C/\\mathbb Q\\) be smooth, geometrically irreducible, nonhyperelliptic\n  over \\(\\mathbb Q^{alg}\\), of genus \\(g\\ge3\\), and suppose\n  \\(\\operatorname{rank}J(\\mathbb Q)\\le1\\).  If\n  \\(p>(8g-10)^g\\) is a good prime such that \\(C'\\) is nonhyperelliptic and\n  \\(J'\\) is geometrically simple, then \\(C^{(2)}(\\mathbb Q)\\) is finite and\n  \\[\n    \\#C^{(2)}(\\mathbb Q)\\le \\#(C')^{(2)}(\\mathbb F_p)\n      +\\frac{p-1}{p-2}(p+4p^{1/2}+3)(4g-9)(g-1).\n  \\]", "uses": ["thm:cp_intro_surface_bounds", "lem:cp_symmetric_square_intersections", "lem:cp_symmetric_square_jacobian_embedding"], "lean_name": "MR4665779.QuadraticPoints", "proved": false, "mathlib_ok": false, "proof_tex": "\n  If \\(C^{(2)}(\\mathbb Q)\\) is nonempty, choose the corresponding degree-\\(2\\)\n  divisor to define \\(j:C^{(2)}\\simeq W_2\\subset J\\).  Take\n  \\(H\\equiv2\\Theta\\).  Poincaré formulas give\n  \\(\\deg(H^g)=2^g g!\\), \\(\\deg(H^2\\cdot W_2)=4g(g-1)\\), and\n  \\(\\deg(H\\cdot K_{W_2})=4g(g-2)\\).  Hence the ample-divisor threshold in the\n  surface theorem is \\((8g-10)^g\\), and the \\(c_1^2\\) term is\n  \\((4g-9)(g-1)\\).  Apply the geometrically simple rational surface theorem.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 3, "rdep_count": 1, "descendant_count": 1, "proof_size_tex": 459, "effort_local": 459, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 17515}, "cor:cp_quadratic_points_genus_three": {"id": "cor:cp_quadratic_points_genus_three", "type": "corollary", "title": "Genus-three quadratic point bound", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Corollary 1.15 and Section 10.3.}\n  If \\(C/\\mathbb Q\\) has genus \\(3\\), is nonhyperelliptic, has\n  \\(\\operatorname{rank}J(\\mathbb Q)\\le1\\), has good reduction at\n  \\(p\\ge521\\), and \\((C')^{(2)}\\) contains no elliptic curves, then\n  \\[\n    \\#C^{(2)}(\\mathbb Q)\\le \\#(C')^{(2)}(\\mathbb F_p)\n      +6\\frac{p-1}{p-2}(p+4p^{1/2}+3)\n      <\\#(C')^{(2)}(\\mathbb F_p)+7.1p .\n  \\]", "uses": ["thm:cp_intro_surface_bounds", "lem:cp_symmetric_square_intersections", "lem:cp_symmetric_square_jacobian_embedding"], "lean_name": "MR4665779.QuadraticPointsGenusThree", "proved": false, "mathlib_ok": false, "proof_tex": "\n  For \\(g=3\\), the symmetric-square intersection formula gives\n  \\(c_1^2(C^{(2)})=6\\) and the canonical divisor is ample.  Thus the\n  threefold rational surface theorem applies to \\(W_2\\simeq C^{(2)}\\).  The\n  threshold is \\((128/9)\\cdot6^2=512\\), so the least prime satisfying it is\n  \\(521\\), and the displayed numerical estimate is the specialization of the\n  theorem's bound.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 3, "rdep_count": 1, "descendant_count": 1, "proof_size_tex": 377, "effort_local": 377, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 17433}, "thm:cp_project_goal": {"id": "thm:cp_project_goal", "type": "theorem", "title": "Complete Caro--Pasten theorem package", "chapter": "", "statement": "\\textit{Source: Caro--Pasten, Abstract and Sections 1, 9, 10.}\n  The project proves the complete Caro--Pasten blueprint package: the local\n  Chabauty--Coleman bound for surfaces over finite extensions of\n  \\(\\mathbb Q_p\\), its \\(\\mathbb Q_p\\) specialization, the number-field\n  rational-point consequences, density-one applicability for abelian\n  threefolds with endomorphism ring \\(\\mathbb Z\\), and the symmetric-square\n  applications bounding quadratic points on nonhyperelliptic curves.", "uses": ["def:bootstrap_hello", "thm:cp_main_local", "thm:cp_main_qp", "thm:cp_number_field_bound", "thm:cp_intro_surface_bounds", "cor:cp_dim3_density_application", "cor:cp_quadratic_points", "cor:cp_quadratic_points_genus_three"], "lean_name": "MR4665779.ProjectGoal", "proved": false, "mathlib_ok": false, "proof_tex": "\n  The theorem is the conjunction of the local theorem, its specialization and\n  number-field transfer, the two rational-surface applications, Chavdarov's\n  density corollary, and the two symmetric-square corollaries.  The bootstrap\n  Lean constant is included only so the current Lean scaffold lies in the same\n  dependency cone; it contributes no mathematical premise.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR4665779AChabautyColemanBoundForSurfaces_Basic.tex", "lean_file": "", "dep_count": 8, "rdep_count": 0, "descendant_count": 0, "proof_size_tex": 367, "effort_local": 367, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 19333}};
+const katexMacros = {};   // blueprint-defined \newcommand etc.
+
+const $ = id => document.getElementById(id);
+
+// ── Graph structure: adjacency, degree, components ──────────────────────────
+
+const succ = {}, pred = {}, deg = {};
+for (const id in allNodes) { succ[id] = []; pred[id] = []; deg[id] = 0; }
+for (const e of graphData.edges) {
+  if (succ[e.from]) succ[e.from].push(e.to);
+  if (pred[e.to])   pred[e.to].push(e.from);
+  deg[e.from] = (deg[e.from] || 0) + 1;
+  deg[e.to]   = (deg[e.to]   || 0) + 1;
+}
+const isOrphan = id => !(deg[id] > 0);
+
+// weakly-connected components via union-find (orphans excluded)
+const parent = {};
+function find(x) { while (parent[x] !== x) x = parent[x] = parent[parent[x]]; return x; }
+for (const id in allNodes) parent[id] = id;
+for (const e of graphData.edges)
+  if (parent[e.from] !== undefined && parent[e.to] !== undefined)
+    parent[find(e.from)] = find(e.to);
+
+const compMembers = {};
+for (const id in allNodes) {
+  if (isOrphan(id)) continue;
+  const r = find(id);
+  (compMembers[r] = compMembers[r] || []).push(id);
+}
+const components = Object.values(compMembers).sort((a, b) => b.length - a.length);
+const compOf = {};
+components.forEach((m, i) => m.forEach(id => compOf[id] = i));
+
+// Isolated nodes are kept out of the force simulation (they'd only drift under
+// repulsion); layoutOrphans() grid-places them after each settle instead.
+for (const vn of graphData.nodes) if (isOrphan(vn.id)) vn.physics = false;
+
+// Surface the isolated-node count right on the toggle, so it's obvious how many
+// there are (and that they exist) without having to switch the view on.
+const _isoCount = Object.keys(allNodes).filter(isOrphan).length;
+$("iso-count").textContent = `(${_isoCount})`;
+if (!_isoCount) $("orphans").disabled = true;
+
+// ── Project-stats overlay ────────────────────────────────────────────────────
+
+// A node needs no more work if it's leanok, in mathlib, or already has a Lean
+// proof (effort 0).
+const isDone = n => n.proved || n.mathlib_ok || n.effort_local === 0;
+
+function renderStats() {
+  const vals = Object.values(allNodes);
+  const bp   = vals.filter(n => n.type !== "lean_aux");
+  const proved  = bp.filter(n => n.proved).length;
+  const mathlib = bp.filter(n => n.mathlib_ok).length;
+  const sorry  = vals.filter(n => n.has_sorry).length;
+  const doneIds = new Set(vals.filter(isDone).map(n => n.id));
+  const ready = bp.filter(n => !isDone(n) &&
+                  n.uses.every(d => !(d in allNodes) || doneIds.has(d))).length;
+  const gaps   = bp.filter(n => !n.lean_name && !n.mathlib_ok).length;
+  const leanok = bp.filter(n => !n.proved && !n.mathlib_ok && n.effort_local === 0).length;
+  const isolated   = vals.filter(n => isOrphan(n.id)).length;
+  const isolatedBp = bp.filter(n => isOrphan(n.id)).length;
+
+  let done = 0, remLower = 0, infNodes = 0;
+  for (const n of vals) {
+    if (n.proof_size_lean != null) done += n.proof_size_lean;
+    if (n.effort_local == null) infNodes++; else remLower += n.effort_local;
+  }
+  const pct = bp.length ? Math.round(100 * proved / bp.length) : 0;
+  const fmt = v => v.toLocaleString();
+
+  $("stats-panel").innerHTML = `
+    <h4>Project</h4>
+    <div class="row"><span>Proved (leanok)</span><span class="v done">${proved}/${bp.length} · ${pct}%</span></div>
+    <div class="bar"><span style="width:${pct}%"></span></div>
+    ${mathlib ? `<div class="row"><span>Mathlib-backed</span><span class="v done">${mathlib}</span></div>` : ''}
+    <div class="row"><span>With sorry</span><span class="v ${sorry ? 'inf' : ''}">${sorry}</span></div>
+    <div class="row"><span>Ready to formalize</span><span class="v">${ready}</span></div>
+    <div class="row"><span>Needs \\lean{}</span><span class="v">${gaps}</span></div>
+    <div class="row"><span>Needs \\leanok</span><span class="v">${leanok}</span></div>
+    <div class="row" title="Declarations with no \\uses{} in or out — never linked into the graph"><span>Isolated</span><span class="v ${isolated ? 'inf' : ''}">${isolated}${isolatedBp !== isolated ? ` (${isolatedBp} bp)` : ''}</span></div>
+    <div class="sep"></div>
+    <h4>Effort (chars)</h4>
+    <div class="row"><span>Done</span><span class="v done">${fmt(done)}</span></div>
+    <div class="row"><span>Remaining ≥</span><span class="v work">${fmt(remLower)}</span></div>
+    <div class="row"><span>∞ nodes</span><span class="v inf">${infNodes}</span></div>
+  `;
+}
+renderStats();
+
+// a human label for each component: its highest-degree member
+function compRepr(members) {
+  let best = members[0];
+  for (const id of members) if ((deg[id] || 0) > (deg[best] || 0)) best = id;
+  return best.split(":").pop();
+}
+
+const chapters = [...new Set(
+  Object.values(allNodes).map(n => n.chapter).filter(Boolean)
+)].sort();
+
+// ── Populate controls ───────────────────────────────────────────────────────
+
+$("node-ids").innerHTML =
+  Object.keys(allNodes).sort().map(id => `<option value="${id}">`).join("");
+
+$("component").insertAdjacentHTML("beforeend",
+  components.map((m, i) =>
+    `<option value="${i}">#${i + 1} · ${m.length} nodes · ${compRepr(m)}</option>`
+  ).join(""));
+
+$("chapter").insertAdjacentHTML("beforeend",
+  chapters.map(c => `<option value="${c.replace(/"/g, "&quot;")}">${c}</option>`).join(""));
+
+// ── Visible-set state & computation ─────────────────────────────────────────
+
+const state = { showOrphans: false, focus: null, component: null, chapter: null,
+                nodeset: "union", fileview: "off" };
+
+// Which universe a node belongs to. A node "has Lean" if it carries Lean source
+// (lean_aux nodes always do; blueprint nodes do once their \lean{} resolved).
+const hasLean    = n => n.type === "lean_aux" || !!(n.lean_source && n.lean_source.length);
+const inBlueprint = n => n.type !== "lean_aux";
+function inNodeset(id) {
+  const n = allNodes[id];
+  if (state.nodeset === "blueprint") return inBlueprint(n);
+  if (state.nodeset === "lean")      return hasLean(n);
+  return true;                                   // union
+}
+
+function coneOf(id) {
+  const out = new Set([id]);
+  const walk = (adj, start) => {
+    const st = [start];
+    while (st.length) {
+      const x = st.pop();
+      for (const y of (adj[x] || [])) if (!out.has(y)) { out.add(y); st.push(y); }
+    }
+  };
+  walk(pred, id);   // everything this node (transitively) depends on
+  walk(succ, id);   // everything that (transitively) depends on it
+  return out;
+}
+
+// all transitive predecessors of id (its full upstream dependency set)
+function ancestorsOf(id) {
+  const out = new Set();
+  const st = [...(pred[id] || [])];
+  while (st.length) {
+    const x = st.pop();
+    if (!out.has(x)) { out.add(x); for (const y of (pred[x] || [])) st.push(y); }
+  }
+  return out;
+}
+
+function visibleSet() {
+  if (state.focus && allNodes[state.focus]) {
+    return new Set([...coneOf(state.focus)].filter(inNodeset));
+  }
+  let ids = Object.keys(allNodes).filter(inNodeset);
+  if (!state.showOrphans)      ids = ids.filter(id => !isOrphan(id));
+  if (state.component !== null) ids = ids.filter(id => compOf[id] === state.component);
+  if (state.chapter)            ids = ids.filter(id => allNodes[id].chapter === state.chapter);
+  return new Set(ids);
+}
+
+// ── Network ─────────────────────────────────────────────────────────────────
+
+const nodesDS = new vis.DataSet();
+const edgesDS = new vis.DataSet();
+
+// Force-directed layout: connected nodes attract, so each declaration settles
+// next to what it depends on. Direction is conveyed by the arrows, not columns.
+const N_TOTAL = graphData.nodes.length;
+const PHYSICS_OPTS = {
+  enabled: true,
+  solver: "forceAtlas2Based",
+  forceAtlas2Based: {
+    gravitationalConstant: -45, centralGravity: 0.012,
+    springLength: 85, springConstant: 0.08,
+    damping: 0.45, avoidOverlap: 0.7,
+  },
+  stabilization: { enabled: true, iterations: 300, updateInterval: 25, fit: false },
+  minVelocity: 0.75, maxVelocity: 30,
+};
+
+const network = new vis.Network(
+  $("graph"),
+  { nodes: nodesDS, edges: edgesDS },
+  {
+    // physics does the placement; improvedLayout seeds it (skip on huge graphs)
+    layout: { improvedLayout: N_TOTAL <= 250 },
+    physics: { enabled: false },   // enabled per-apply, then frozen once settled
+    edges: {
+      smooth: { enabled: false },
+      color: { color: "#cbd5e1", highlight: "#64748b" },
+      arrows: { to: { scaleFactor: .55 } },
+      width: 1,
+    },
+    nodes: { shape: "dot" },
+    interaction: { hover: true, tooltipDelay: 150, zoomView: false },
+  }
+);
+
+// Once a settle finishes, freeze the simulation (so the view is stable and
+// draggable) and frame the result.
+network.on("stabilizationIterationsDone", () => {
+  network.setOptions({ physics: false });
+  layoutOrphans();
+  fitFloored();
+});
+
+// ── Isolated-node layout ──────────────────────────────────────────────────────
+// Isolated nodes (no edges) are excluded from the force simulation — under pure
+// repulsion they'd drift to the far edges and vanish at fit-zoom. Instead they
+// are parked on a tidy grid beside the connected graph so they stay visible.
+
+function layoutOrphans() {
+  if (state.focus || !state.showOrphans) return;
+  const ids = nodesDS.getIds().filter(id => isOrphan(id));
+  if (!ids.length) return;
+  const pos  = network.getPositions();
+  const conn = nodesDS.getIds().filter(id => !isOrphan(id));
+  const spacing = 46;
+  const cols = Math.max(1, Math.ceil(Math.sqrt(ids.length)));
+  const gridW = (cols - 1) * spacing;
+  let centerX, topY;
+  if (conn.length) {
+    const xs = conn.map(id => pos[id].x), ys = conn.map(id => pos[id].y);
+    centerX = (Math.min(...xs) + Math.max(...xs)) / 2;
+    topY    = Math.max(...ys) + 120;     // a tidy block just below the cluster
+  } else { centerX = 0; topY = 0; }
+  const startX = centerX - gridW / 2;    // centred, so a full fit frames it all
+  ids.sort();
+  ids.forEach((id, i) =>
+    network.moveNode(id, startX + (i % cols) * spacing,
+                         topY + Math.floor(i / cols) * spacing));
+}
+
+// ── File-view background ──────────────────────────────────────────────────────
+// An optional, subtle background tint that groups nodes by their source file.
+// Each node seeds its file's colour; every background pixel takes the colour of
+// the nearest node — an exact Voronoi map (spatial-hash accelerated) rendered at
+// high resolution for clean, anti-aliased borders, then drawn behind the graph
+// and extended to the whole viewport. Nodes keep their effort colours on top.
+
+const fileOf = (n, mode) => mode === "lean" ? (n.lean_file || "") : (n.tex_file || "");
+
+// A curated, perceptually-distinct palette (d3 category20-style). A file's
+// colour is chosen by hashing its *name*, so it is stable no matter how the
+// graph is filtered, focused or re-laid out — and adjacent files stay easy to
+// tell apart. Projects with more files than the palette wrap to a darker /
+// lighter tier so the wrapped entries remain distinguishable.
+const FILE_PALETTE = [
+  [31,119,180],[255,127,14],[44,160,44],[214,39,40],[148,103,189],
+  [140,86,75],[227,119,194],[188,189,34],[23,190,207],[127,205,187],
+  [174,199,232],[255,187,120],[152,223,138],[255,152,150],[197,176,213],
+  [196,156,148],[247,182,210],[252,146,114],[219,219,141],[158,218,229],
+];
+function hashStr(s) {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return h >>> 0;
+}
+const _SLOTS = FILE_PALETTE.length * 3;          // 20 hues × 3 lightness tiers
+function slotColor(slot) {
+  const base = FILE_PALETTE[slot % FILE_PALETTE.length];
+  const tier = Math.floor(slot / FILE_PALETTE.length) % 3;   // 0 normal · 1 dark · 2 light
+  return tier === 1 ? base.map(v => Math.round(v * 0.68))
+       : tier === 2 ? base.map(v => Math.round(v + (255 - v) * 0.45))
+       : base.slice();
+}
+// Per-mode slot assignment: each file's preferred slot is its name-hash; exact
+// collisions within the same mode are bumped to the next free slot. So every
+// file in a mode gets a distinct colour (up to _SLOTS files), the colour is
+// driven by the name, and it never shifts under focus/reset/filtering (the file
+// set is fixed for the session, and the map is cached).
+const _fileSlots = {};
+function ensureFileSlots(mode) {
+  if (_fileSlots[mode]) return _fileSlots[mode];
+  const files = Object.keys(fileCounts(mode)).sort();
+  const used = new Set(), map = {};
+  for (const f of files) {
+    let slot = hashStr(f) % _SLOTS, t = 0;
+    while (used.has(slot) && t < _SLOTS) { slot = (slot + 1) % _SLOTS; t++; }
+    used.add(slot); map[f] = slot;
+  }
+  return (_fileSlots[mode] = map);
+}
+function colorRGB(file) {
+  const map = ensureFileSlots(state.fileview);
+  const slot = (file in map) ? map[file] : hashStr(file) % _SLOTS;
+  return slotColor(slot);
+}
+
+function fileCounts(mode) {
+  const counts = {};
+  for (const id in allNodes) {
+    const f = fileOf(allNodes[id], mode);
+    if (f) counts[f] = (counts[f] || 0) + 1;
+  }
+  return counts;
+}
+
+let fileBg = null;            // {canvas, minX, minY, w, h, W, H} in graph coords
+
+function rebuildFileBg(quick) {
+  const mode = state.fileview;
+  if (mode === "off") { fileBg = null; network.redraw(); renderFileLegend(); return; }
+
+  const pos = network.getPositions();
+  const ids = Object.keys(pos).filter(id => allNodes[id] && fileOf(allNodes[id], mode));
+  if (!ids.length) { fileBg = null; network.redraw(); renderFileLegend(); return; }
+
+  const xs = ids.map(id => pos[id].x), ys = ids.map(id => pos[id].y);
+  const pad = 70;
+  const minX = Math.min(...xs) - pad, maxX = Math.max(...xs) + pad;
+  const minY = Math.min(...ys) - pad, maxY = Math.max(...ys) + pad;
+  const wG = Math.max(1, maxX - minX), hG = Math.max(1, maxY - minY);
+
+  // High-res grid → straight, finely anti-aliased borders; a coarser grid is
+  // used for the live updates while nodes are still moving, for speed.
+  const target = quick ? 224 : 512;
+  const scale  = target / Math.max(wG, hG);
+  const W = Math.max(1, Math.round(wG * scale)), H = Math.max(1, Math.round(hG * scale));
+
+  const seeds = ids.map(id => {
+    const [r, g, b] = colorRGB(fileOf(allNodes[id], mode));
+    return { x: pos[id].x, y: pos[id].y, r, g, b };
+  });
+
+  // Bucket the seeds so each pixel's nearest-seed search is ~O(1).
+  const gcols = Math.max(1, Math.round(Math.sqrt(seeds.length)));
+  const grows = gcols;
+  const cw = wG / gcols, ch = hG / grows;
+  const buckets = Array.from({ length: gcols * grows }, () => []);
+  const clampC = (v, hi) => Math.min(hi, Math.max(0, v));
+  for (const s of seeds) {
+    const cx = clampC(Math.floor((s.x - minX) / cw), gcols - 1);
+    const cy = clampC(Math.floor((s.y - minY) / ch), grows - 1);
+    buckets[cy * gcols + cx].push(s);
+  }
+  const cellMin = Math.min(cw, ch), maxR = Math.max(gcols, grows);
+  function nearest(wx, wy) {
+    const cx = clampC(Math.floor((wx - minX) / cw), gcols - 1);
+    const cy = clampC(Math.floor((wy - minY) / ch), grows - 1);
+    let best = Infinity, bs = seeds[0];
+    for (let r = 0; r <= maxR; r++) {
+      const x0 = Math.max(0, cx - r), x1 = Math.min(gcols - 1, cx + r);
+      const y0 = Math.max(0, cy - r), y1 = Math.min(grows - 1, cy + r);
+      for (let yy = y0; yy <= y1; yy++) {
+        const edgeRow = (yy === cy - r || yy === cy + r);
+        for (let xx = x0; xx <= x1; xx++) {
+          if (r > 0 && !edgeRow && xx !== cx - r && xx !== cx + r) continue;
+          for (const s of buckets[yy * gcols + xx]) {
+            const dx = s.x - wx, dy = s.y - wy, d = dx * dx + dy * dy;
+            if (d < best) { best = d; bs = s; }
+          }
+        }
+      }
+      // Stop once the closest hit is nearer than any not-yet-scanned ring.
+      if (best < Infinity && Math.sqrt(best) <= r * cellMin) break;
+    }
+    return bs;
+  }
+
+  const cv = document.createElement("canvas");
+  cv.width = W; cv.height = H;
+  const ctx = cv.getContext("2d");
+  const img = ctx.createImageData(W, H), data = img.data;
+  for (let gy = 0; gy < H; gy++) {
+    const wy = minY + (gy + 0.5) / H * hG;
+    for (let gx = 0; gx < W; gx++) {
+      const wx = minX + (gx + 0.5) / W * wG;
+      const s = nearest(wx, wy);
+      const o = (gy * W + gx) * 4;
+      data[o] = s.r; data[o + 1] = s.g; data[o + 2] = s.b; data[o + 3] = 255;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+  fileBg = { canvas: cv, minX, minY, w: wG, h: hG, W, H };
+  network.redraw();
+  renderFileLegend();
+}
+
+// beforeDrawing runs in graph coordinates, so the cached bitmap pans and zooms
+// with the view automatically. The seed bbox is filled with the Voronoi map, and
+// the colours of its edge pixels are extended outward to cover the *whole*
+// viewport — so the tint follows the nearest-node rule everywhere, not just a
+// central square.
+network.on("beforeDrawing", ctx => {
+  if (!fileBg) return;
+  const c = fileBg.canvas, W = fileBg.W, H = fileBg.H;
+  const x0 = fileBg.minX, y0 = fileBg.minY, x1 = x0 + fileBg.w, y1 = y0 + fileBg.h;
+  const tl = network.DOMtoCanvas({ x: 0, y: 0 });
+  const br = network.DOMtoCanvas({ x: $("graph").clientWidth, y: $("graph").clientHeight });
+  const L = Math.min(tl.x, br.x), R = Math.max(tl.x, br.x);
+  const T = Math.min(tl.y, br.y), B = Math.max(tl.y, br.y);
+
+  ctx.save();
+  ctx.globalAlpha = 0.32;                 // visible but still a background tint
+  ctx.imageSmoothingEnabled = true;
+  ctx.drawImage(c, x0, y0, fileBg.w, fileBg.h);                          // centre
+  if (L < x0) ctx.drawImage(c, 0, 0, 1, H, L, y0, x0 - L, fileBg.h);     // left
+  if (R > x1) ctx.drawImage(c, W - 1, 0, 1, H, x1, y0, R - x1, fileBg.h);// right
+  if (T < y0) ctx.drawImage(c, 0, 0, W, 1, x0, T, fileBg.w, y0 - T);     // top
+  if (B > y1) ctx.drawImage(c, 0, H - 1, W, 1, x0, y1, fileBg.w, B - y1);// bottom
+  if (L < x0 && T < y0) ctx.drawImage(c, 0, 0, 1, 1, L, T, x0 - L, y0 - T);
+  if (R > x1 && T < y0) ctx.drawImage(c, W - 1, 0, 1, 1, x1, T, R - x1, y0 - T);
+  if (L < x0 && B > y1) ctx.drawImage(c, 0, H - 1, 1, 1, L, y1, x0 - L, B - y1);
+  if (R > x1 && B > y1) ctx.drawImage(c, W - 1, H - 1, 1, 1, x1, y1, R - x1, B - y1);
+  ctx.restore();
+});
+
+function renderFileLegend() {
+  const panel = $("file-legend"), mode = state.fileview;
+  if (mode === "off") { panel.style.display = "none"; return; }
+  panel.style.display = "block";
+  const label = mode === "lean" ? "Lean" : "LaTeX";
+  const counts = fileCounts(mode);
+  const files = Object.keys(counts).sort();
+  if (!files.length) {
+    panel.innerHTML = `<h4>${label} files</h4>` +
+      `<div class="fl-empty">no ${label} file info available</div>`;
+    return;
+  }
+  panel.innerHTML = `<h4>${label} files · ${files.length}</h4>` + files.map(f => {
+    const [r, g, b] = colorRGB(f);
+    return `<div class="fl-row">` +
+      `<span class="fl-sw" style="background:rgb(${r},${g},${b})"></span>` +
+      `<span class="fl-name" title="${esc(f)}">${esc(f)}</span>` +
+      `<span class="fl-n">${counts[f]}</span></div>`;
+  }).join("");
+}
+
+// Recompute the tint *while* the layout changes, so the regions move with the
+// nodes rather than snapping only once at the end: throttled coarse rebuilds
+// during stabilization and dragging, then a final full-resolution pass.
+let _liveLast = 0;
+function liveFileBg() {
+  if (state.fileview === "off") return;
+  const now = Date.now();
+  if (now - _liveLast < 110) return;
+  _liveLast = now;
+  rebuildFileBg(true);
+}
+network.on("stabilizationProgress", liveFileBg);
+network.on("dragging", liveFileBg);
+network.on("dragEnd", () => { if (state.fileview !== "off") rebuildFileBg(); });
+
+// ── Navigation: swipe = pan · Ctrl+scroll / pinch = zoom ─────────────────────
+
+let ZOOM_MIN = 0.05;
+const ZOOM_MAX = 3.0;
+const FIT_FLOOR = 0.34;          // never auto-zoom below this — keeps nodes legible
+let graphBounds = null;
+
+function recomputeBounds() {
+  const pts = Object.values(network.getPositions());
+  if (pts.length) {
+    const pad = 200;
+    graphBounds = {
+      left:   Math.min(...pts.map(p => p.x)) - pad,
+      right:  Math.max(...pts.map(p => p.x)) + pad,
+      top:    Math.min(...pts.map(p => p.y)) - pad,
+      bottom: Math.max(...pts.map(p => p.y)) + pad,
+    };
+  } else graphBounds = null;
+}
+
+function fitFloored() {
+  network.fit({ animation: false });
+  const fitScale = network.getScale();
+  // The most-zoomed-out limit tracks the graph's actual extent — a little past
+  // the scale at which everything fits — instead of a fixed floor. So a small
+  // graph can't be shrunk to a speck, and a huge one can still reach overview.
+  ZOOM_MIN = Math.max(0.02, Math.min(fitScale * 0.7, ZOOM_MAX));
+  // For very large graphs `fit` is sub-pixel; don't *start* there (keeps nodes
+  // legible) but still allow zooming out to it. When isolated nodes are shown we
+  // fully fit instead, so their (potentially large) block is actually visible.
+  if (!state.showOrphans && fitScale < FIT_FLOOR)
+    network.moveTo({ scale: FIT_FLOOR, animation: false });
+  recomputeBounds();
+  rebuildFileBg();   // node positions just changed — refresh the file tint
+}
+
+$("graph").addEventListener("wheel", e => {
+  e.preventDefault();
+  e.stopPropagation();
+  const pos = network.getViewPosition();
+  const sc  = network.getScale();
+  if (e.ctrlKey) {
+    const f        = e.deltaY > 0 ? 0.9 : 1 / 0.9;
+    const newScale = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, sc * f));
+    network.moveTo({ scale: newScale, animation: false });
+  } else {
+    let nx = pos.x + e.deltaX / sc;
+    let ny = pos.y + e.deltaY / sc;
+    if (graphBounds) {
+      nx = Math.max(graphBounds.left, Math.min(graphBounds.right,  nx));
+      ny = Math.max(graphBounds.top,  Math.min(graphBounds.bottom, ny));
+    }
+    network.moveTo({ position: { x: nx, y: ny }, animation: false });
+  }
+}, { capture: true, passive: false });
+
+// ── Apply current filter state to the canvas ────────────────────────────────
+
+function apply() {
+  const vis   = visibleSet();
+  const nodes = graphData.nodes.filter(n => vis.has(n.id));
+  const edges = graphData.edges.filter(e => vis.has(e.from) && vis.has(e.to));
+
+  nodesDS.clear(); edgesDS.clear();
+  nodesDS.add(nodes); edgesDS.add(edges);
+
+  $("stat").innerHTML =
+    `${nodes.length} / ${graphData.nodes.length} nodes &middot; ${edges.length} edges`;
+
+  const pill = $("focus-pill");
+  if (state.focus) {
+    pill.style.display = "inline-flex";
+    pill.querySelector(".lbl").textContent = "focus: " + state.focus.split(":").pop();
+  } else {
+    pill.style.display = "none";
+  }
+
+  // Re-settle the now-visible subset; the stabilization handler freezes and
+  // fits when it finishes. With nothing to simulate (a lone node, or only
+  // isolated nodes — which are physics:false) we lay out and fit directly.
+  const anyPhysics = nodes.some(n => n.physics !== false);
+  if (nodes.length > 1 && anyPhysics) {
+    network.setOptions({ physics: PHYSICS_OPTS });
+  } else {
+    setTimeout(() => { layoutOrphans(); fitFloored(); }, 0);
+  }
+}
+
+function syncControls() {
+  $("orphans").checked  = state.showOrphans;
+  $("nodeset").value    = state.nodeset;
+  $("fileview").value   = state.fileview;
+  $("component").value  = state.component === null ? "" : String(state.component);
+  $("chapter").value    = state.chapter || "";
+}
+
+// ── Reveal-aware navigation ─────────────────────────────────────────────────
+
+function goTo(id) {
+  if (!allNodes[id]) return;
+  if (!visibleSet().has(id)) {            // relax filters until the node is shown
+    state.focus = null;
+    state.component = null;
+    state.chapter = null;
+    if (!inNodeset(id)) state.nodeset = "union";
+    if (isOrphan(id)) state.showOrphans = true;
+    syncControls();
+    apply();
+  }
+  setTimeout(() => jumpTo(id), 70);
+}
+
+function jumpTo(id) {
+  if (!allNodes[id]) return;
+  network.selectNodes([id]);
+  network.focus(id, { scale: 1.2, animation: { duration: 400, easingFunction: "easeInOutQuad" } });
+  renderNode(id);
+  highlightCone(id);
+}
+
+function setFocus(id) {
+  if (!allNodes[id]) return;
+  state.focus = id;
+  apply();
+  renderNode(id);
+  setTimeout(() => jumpTo(id), 70);
+}
+
+function clearFocus() { state.focus = null; apply(); }
+
+function resetView() {
+  state.showOrphans = false;
+  state.focus = null;
+  state.component = null;
+  state.chapter = null;
+  state.nodeset = "union";
+  $("search").value = "";
+  syncControls();
+  apply();
+}
+
+// ── Control wiring ──────────────────────────────────────────────────────────
+
+$("orphans").addEventListener("change", e => {
+  state.showOrphans = e.target.checked; state.focus = null; apply();
+});
+$("nodeset").addEventListener("change", e => {
+  state.nodeset = e.target.value; state.focus = null; apply();
+});
+$("component").addEventListener("change", e => {
+  state.component = e.target.value === "" ? null : Number(e.target.value);
+  state.focus = null; apply();
+});
+$("chapter").addEventListener("change", e => {
+  state.chapter = e.target.value || null; state.focus = null; apply();
+});
+$("fileview").addEventListener("change", e => {
+  state.fileview = e.target.value; rebuildFileBg();
+});
+$("search").addEventListener("change", e => {
+  const v = e.target.value.trim();
+  if (allNodes[v]) goTo(v);
+});
+$("reset").addEventListener("click", resetView);
+$("focus-pill").addEventListener("click", clearFocus);
+
+// ── Lean syntax highlighter ─────────────────────────────────────────────────
+
+function esc(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+const _KW      = /\b(def|lemma|theorem|instance|class|structure|inductive|abbrev|noncomputable|private|protected|section|namespace|end|open|variable|where|do|let|have|show|suffices|calc|if|then|else|return|for|in|fun|match|with|by|sorry)\b/g;
+const _TACTIC  = /\b(simp|ext|rfl|exact|intro|intros|apply|refine|constructor|use|rw|rewrite|rcases|rintro|obtain|push_neg|norm_num|ring|group|linarith|omega|decide|trivial|assumption|congr|tauto|aesop|cases|induction|revert|clear|next|all_goals|repeat|try|first|solve|fin_cases|positivity|gcongr|field_simp)\b/g;
+const _TYPE    = /\b(Nat|Int|Bool|String|List|Array|Option|Type|Prop|Sort|True|False|And|Or|Not|Iff|Eq|Subgroup|Group|Ring|Field|Fintype|Finite)\b/g;
+const _NUM     = /\b(\d+)\b/g;
+const _STR     = /("(?:[^"\\]|\\.)*")/g;
+
+function highlightLean(raw) {
+  return raw.split('\n').map(line => {
+    let commentAt = -1;
+    let inStr = false;
+    for (let i = 0; i < line.length - 1; i++) {
+      if (line[i] === '"' && (i === 0 || line[i-1] !== '\\')) inStr = !inStr;
+      if (!inStr && line[i] === '-' && line[i+1] === '-') { commentAt = i; break; }
+    }
+    const code    = commentAt >= 0 ? line.slice(0, commentAt) : line;
+    const comment = commentAt >= 0 ? line.slice(commentAt)    : '';
+    let h = esc(code);
+    h = h.replace(_STR,    m => `<span class="hl-str">${m}</span>`);
+    h = h.replace(_KW,     m => `<span class="hl-kw">${m}</span>`);
+    h = h.replace(_TACTIC, m => `<span class="hl-tactic">${m}</span>`);
+    h = h.replace(_TYPE,   m => `<span class="hl-type">${m}</span>`);
+    h = h.replace(_NUM,    m => `<span class="hl-num">${m}</span>`);
+    const commentHtml = comment ? `<span class="hl-comment">${esc(comment)}</span>` : '';
+    return h + commentHtml;
+  }).join('\n');
+}
+
+// ── LaTeX renderer ───────────────────────────────────────────────────────────
+
+function processNonMath(s) {
+  return esc(s)
+    .replace(/\\emph\{([^}]*)\}/g,   '<em>$1</em>')
+    .replace(/\\textbf\{([^}]*)\}/g, '<strong>$1</strong>')
+    .replace(/\\textit\{([^}]*)\}/g, '<em>$1</em>')
+    .replace(/\\text\{([^}]*)\}/g,   '$1');
+}
+
+function renderLatex(el, text) {
+  if (!text || !text.trim()) {
+    el.classList.add('empty'); el.textContent = '—'; return;
+  }
+  // Match every math delimiter style leanblueprint uses: $$…$$ and \[…\]
+  // (display) and \(…\) and $…$ (inline). $$ and \[ \] come first so the
+  // single-$ branch can't grab a $$ opener.
+  const re = /(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)|\$(?:[^$\\]|\\.)+?\$)/g;
+  let html = '', last = 0, m;
+  while ((m = re.exec(text)) !== null) {
+    html += processNonMath(text.slice(last, m.index));
+    const raw = m[0];
+    let disp, math;
+    if      (raw.startsWith('$$'))  { disp = true;  math = raw.slice(2, -2); }
+    else if (raw.startsWith('\\[')) { disp = true;  math = raw.slice(2, -2); }
+    else if (raw.startsWith('\\(')) { disp = false; math = raw.slice(2, -2); }
+    else                            { disp = false; math = raw.slice(1, -1); }
+    if (window.katex) {
+      try {
+        html += katex.renderToString(math, {
+          displayMode: disp, throwOnError: false, macros: katexMacros,
+        });
+      }
+      catch (_) { html += esc(raw); }
+    } else {
+      html += `<span style="color:#94a3b8">${esc(raw)}</span>`;
+    }
+    last = re.lastIndex;
+  }
+  html += processNonMath(text.slice(last));
+  el.innerHTML = html;
+}
+
+// ── Sidebar rendering ────────────────────────────────────────────────────────
+
+function charVal(v) {
+  if (v === null || v === undefined) return '<span class="m-val m-inf">∞</span>';
+  return `<span class="m-val">${v.toLocaleString()}</span>`;
+}
+function workVal(v) {
+  if (v === null || v === undefined) return '<span class="m-val m-inf">∞</span>';
+  if (v === 0) return '<span class="m-val m-done">0 ✓</span>';
+  return `<span class="m-val m-work">${v.toLocaleString()}</span>`;
+}
+function charsPair(rel, cum) {
+  const f = v => (v === null || v === undefined)
+    ? '<span class="chars-inf">∞</span>'
+    : `<span class="chars-val">${v}</span>`;
+  return `<span class="chars-pair">ℓ<sub>local</sub>=${f(rel)} &nbsp; ℓ<sub>total</sub>=${f(cum)}</span>`;
+}
+
+function renderNode(id) {
+  const n = allNodes[id];
+  if (!n) return;
+
+  $("sidebar-empty").style.display = "none";
+  const content = $("sidebar-content");
+  content.style.display = "flex";
+
+  const statusBadge = n.proved
+    ? '<span class="badge badge-proved">✓ leanok</span>'
+    : (n.mathlib_ok
+        ? '<span class="badge badge-proved">ⓜ mathlib</span>'
+        : (n.has_sorry
+            ? '<span class="badge badge-sorry">sorry</span>'
+            : '<span class="badge badge-unproved">unproved</span>'));
+
+  const mkChip = u => `<span class="dep-chip" onclick="goTo('${esc(u)}')">${esc(u)}</span>`;
+  const depsHtml = n.uses.length
+    ? n.uses.map(mkChip).join('')
+    : '<span class="no-deps">none — axiom</span>';
+
+  // full transitive upstream, with the direct deps split out
+  const anc       = ancestorsOf(id);
+  const directSet = new Set(n.uses);
+  const indirect  = [...anc].filter(x => !directSet.has(x)).sort();
+  const transHtml = indirect.length
+    ? indirect.map(mkChip).join('')
+    : '<span class="no-deps">none beyond the direct ones</span>';
+
+  const focusLabel = state.focus === id ? 'Clear focus' : 'Focus dependency cone';
+  const focusCall  = state.focus === id ? 'clearFocus()' : `setFocus('${esc(id)}')`;
+
+  content.innerHTML = `
+    <div class="card">
+      <div class="node-badges">
+        <span class="badge badge-type">${n.type.toUpperCase()}</span>${statusBadge}
+      </div>
+      <div class="node-title">${esc(n.title || n.id)}</div>
+      <div class="node-id">${esc(n.id)}</div>
+      ${n.chapter   ? `<div class="node-chapter">§ ${esc(n.chapter)}</div>` : ''}
+      ${n.lean_name ? `<div class="lean-ref">Lean: <code>${esc(n.lean_name)}</code></div>` : ''}
+      ${n.tex_file  ? `<div class="lean-ref">tex: <code>${esc(n.tex_file)}</code></div>` : ''}
+      ${n.lean_file ? `<div class="lean-ref">file: <code>${esc(n.lean_file)}</code></div>` : ''}
+      <button class="btn-focus" onclick="${focusCall}">⊙ ${focusLabel}</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Structure</div>
+      <div class="degrees">
+        <div class="degree">
+          <span class="degree-val">${n.dep_count}</span>
+          <span class="degree-label">direct deps</span>
+        </div>
+        <div class="degree">
+          <span class="degree-val">${anc.size}</span>
+          <span class="degree-label">total upstream</span>
+        </div>
+        <div class="degree">
+          <span class="degree-val">${n.rdep_count}</span>
+          <span class="degree-label">used by</span>
+        </div>
+      </div>
+      <div class="deps-sub">direct dependencies</div>
+      <div class="deps-list">${depsHtml}</div>
+      <div class="deps-sub">indirect (transitive) dependencies</div>
+      <div class="deps-list">${transHtml}</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Complexity</div>
+      <div class="metrics-grid">
+        <span></span>
+        <span class="col-head">local</span>
+        <span class="col-head">total</span>
+        <span class="m-label">LaTeX ℓ</span>${charVal(n.proof_size_tex)}${charVal(n.proof_size_tex_total)}
+        <span class="m-label">Lean ℓ</span>${charVal(n.proof_size_lean)}${charVal(n.proof_size_lean_total)}
+        <span class="m-label">Effort</span>${workVal(n.effort_local)}${workVal(n.effort_total)}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sec-hdr"><span class="card-title" style="margin:0">LaTeX statement</span></div>
+      <div class="latex-rendered" id="latex-stmt"></div>
+    </div>
+
+    <div class="card">
+      <div class="sec-hdr">
+        <span class="card-title" style="margin:0">LaTeX proof</span>
+        ${charsPair(n.proof_size_tex, n.proof_size_tex_total)}
+      </div>
+      <div class="latex-rendered" id="latex-proof"></div>
+    </div>
+
+    <div class="card">
+      <div class="sec-hdr">
+        <span class="card-title" style="margin:0">Lean code</span>
+        ${charsPair(n.proof_size_lean, n.proof_size_lean_total)}
+      </div>
+      <pre class="code-block" id="lean-code"></pre>
+    </div>
+  `;
+
+  renderLatex($('latex-stmt'),  n.statement);
+  renderLatex($('latex-proof'), n.proof_tex ? n.proof_tex.trim() : '');
+
+  const leanEl = $('lean-code');
+  if (n.lean_source) {
+    leanEl.innerHTML = highlightLean(n.lean_source);
+  } else {
+    leanEl.classList.add('empty');
+    leanEl.textContent = 'declaration not found';
+  }
+}
+
+// ── Cone highlighting on click ───────────────────────────────────────────────
+// Selecting a node lights up its WHOLE transitive cone — every ancestor and
+// descendant and the edges between them — while everything else fades back.
+
+const baseNodeById = {};
+for (const vn of graphData.nodes) baseNodeById[vn.id] = vn;
+
+const EDGE_BASE = { color: "#cbd5e1", highlight: "#64748b" };
+
+function highlightCone(id) {
+  const cone = coneOf(id);   // {id} ∪ ancestors ∪ descendants
+  nodesDS.update(nodesDS.getIds().map(nid =>
+    cone.has(nid)
+      ? baseNodeById[nid]                                   // full styling
+      : { id: nid, color: { background: "#e5e7eb", border: "#d1d5db" },
+          font: { color: "#cbd5e1" } }                      // faded
+  ));
+  edgesDS.update(edgesDS.get().map(e => {
+    const on = cone.has(e.from) && cone.has(e.to);
+    return { id: e.id,
+             color: on ? { color: "#475569", highlight: "#334155" } : { color: "#edf0f4" },
+             width: on ? 2.5 : 1 };
+  }));
+}
+
+function clearHighlight() {
+  nodesDS.update(nodesDS.getIds().map(nid => baseNodeById[nid]));
+  edgesDS.update(edgesDS.get().map(e => ({ id: e.id, color: EDGE_BASE, width: 1 })));
+}
+
+network.on("click", params => {
+  if (params.nodes.length) { renderNode(params.nodes[0]); highlightCone(params.nodes[0]); }
+  else                     { clearHighlight(); }
+});
+network.on("doubleClick", params => { if (params.nodes.length) setFocus(params.nodes[0]); });
+
+// ── Initial render ───────────────────────────────────────────────────────────
+
+apply();
+</script>
+</body>
+</html>

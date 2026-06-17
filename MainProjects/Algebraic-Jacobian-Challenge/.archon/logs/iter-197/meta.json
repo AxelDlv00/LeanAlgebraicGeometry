@@ -1,0 +1,69 @@
+{
+  "iteration": 197,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-27T12:42:46Z",
+  "plan": {
+    "status": "skipped",
+    "sessionId": "7c5dff38-d81b-4b94-a312-8a8c51fc2ad3",
+    "durationSecs": 4570
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 9994
+  },
+  "provers": {
+    "AlgebraicJacobian_Genus0BaseObjects_ChartIso": {
+      "file": "AlgebraicJacobian/Genus0BaseObjects/ChartIso.lean",
+      "status": "done",
+      "mode": "prove",
+      "sessionId": "622e055e-386b-4359-84e4-991a56023907"
+    },
+    "AlgebraicJacobian_AbelianVarietyRigidity": {
+      "file": "AlgebraicJacobian/AbelianVarietyRigidity.lean",
+      "status": "done",
+      "mode": "prove",
+      "sessionId": "6cddde43-be26-4250-ad34-1a38eda72bc0"
+    },
+    "AlgebraicJacobian_RiemannRoch_WeilDivisor": {
+      "file": "AlgebraicJacobian/RiemannRoch/WeilDivisor.lean",
+      "status": "done",
+      "mode": "prove",
+      "sessionId": "81a586d3-6b39-4cf0-a090-51fb53d69317"
+    },
+    "AlgebraicJacobian_RiemannRoch_OCofP": {
+      "file": "AlgebraicJacobian/RiemannRoch/OCofP.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "127e42a0-1812-421b-be4d-989cc20bdd54"
+    },
+    "AlgebraicJacobian_RiemannRoch_H1Vanishing": {
+      "file": "AlgebraicJacobian/RiemannRoch/H1Vanishing.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "72f6b0b4-c3aa-46c5-bd3e-30f387edd6c3"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "70d0cd8f-4758-4fd7-b5de-9f76dd846b90",
+    "durationSecs": 2728
+  },
+  "sorry_count": 83,
+  "finalize": {
+    "innerGit": {
+      "sha": "da1a430d"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 4
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 6,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-28T12:58:42Z",
+  "wallTimeSecs": 13130
+}

@@ -1,0 +1,48 @@
+{
+  "iteration": 235,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-06-01T02:18:22Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "fea68760-589f-4caf-a0a7-e7cf58880fd3",
+    "durationSecs": 1767
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 1
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 2994
+  },
+  "provers": {
+    "AlgebraicJacobian_Picard_TensorObjSubstrate_StalkTensor": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/StalkTensor.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "e2f1b6c0-0355-49c7-ad78-540c062dd7e0"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "7c54179d-1155-4e87-8fe3-301ddea58f89",
+    "durationSecs": 785
+  },
+  "sorry_count": 85,
+  "finalize": {
+    "innerGit": {
+      "sha": "722a8d30"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 30
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 35
+    }
+  },
+  "completedAt": "2026-06-01T03:59:20Z",
+  "wallTimeSecs": 6057
+}

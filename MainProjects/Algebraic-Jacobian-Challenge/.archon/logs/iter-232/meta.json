@@ -1,0 +1,48 @@
+{
+  "iteration": 232,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-31T17:16:22Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "48544057-0d47-4844-85e3-aecaf58fc413",
+    "durationSecs": 3628
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 1
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 783
+  },
+  "provers": {
+    "Cohomology_FlatBaseChange": {
+      "file": "Cohomology/FlatBaseChange.lean",
+      "status": "done",
+      "mode": "prove",
+      "sessionId": "cdd35caf-eab4-4881-99df-39a4823ca24a"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "981a8f9f-f017-40c7-a94d-fe8d783e3e4f",
+    "durationSecs": 549
+  },
+  "sorry_count": 82,
+  "finalize": {
+    "innerGit": {
+      "sha": "49de6286"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 77
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 31
+    }
+  },
+  "completedAt": "2026-05-31T18:47:48Z",
+  "wallTimeSecs": 5485
+}

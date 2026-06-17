@@ -1,0 +1,28 @@
+{
+  "iteration": 4,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-06-09T07:23:24Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "019eab43-c5a4-75c2-befb-392b746a58e5",
+    "durationSecs": 1578
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 2
+  },
+  "prover": {
+    "status": "running"
+  },
+  "provers": {
+    "AlgebraicJacobian_Picard_TensorObjSubstrate_DualInverse": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "status": "running"
+    },
+    "AlgebraicJacobian_Picard_TensorObjSubstrate": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "status": "running"
+    }
+  }
+}

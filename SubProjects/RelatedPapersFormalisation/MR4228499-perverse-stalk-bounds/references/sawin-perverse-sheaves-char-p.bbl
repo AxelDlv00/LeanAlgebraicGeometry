@@ -1,0 +1,85 @@
+\begin{thebibliography}{13}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Beilinson(2016)]{Beilinson}
+Alexander Beilinson.
+\newblock Constructible sheaves are holonomic.
+\newblock \emph{Selecta Mathematica}, 22:\penalty0 1797--1819, 2016.
+
+\bibitem[Deligne(1977)]{sga4h}
+Pierre Deligne.
+\newblock \emph{S\'{e}minaire de G\'{e}om\'{e}trie Alg\'{e}brique du Bois Marie
+  - Cohomologie \'{E}tale - (SGA 4{$1/2$})}.
+\newblock Lecture notes in mathematics. Springer-Verlag, 1977.
+
+\bibitem[Duke(1988)]{Duke}
+William Duke.
+\newblock Hyperbolic distribution problems and half-integral weight {M}aass
+  forms.
+\newblock \emph{Inventiones Mathematicae}, 92:\penalty0 73--90, 1988.
+\newblock \doi{https://doi.org/10.1007/BF01393993}.
+
+\bibitem[Einsiedler et~al.(2017)Einsiedler, Lindenstrauss, and Mohammadi]{ELM}
+Manfred Einsiedler, Elon Lindenstrauss, and Amir Mohammadi.
+\newblock Diagonal actions in positive characteristic.
+\newblock https://arxiv.org/abs/1705.10418, 2017.
+
+\bibitem[Fulton(1998)]{Fulton}
+William Fulton.
+\newblock \emph{Intersection Theory}.
+\newblock Springer-Verlag New York, 1998.
+
+\bibitem[Illusie(1994)]{Illusie}
+Luc Illusie.
+\newblock Autour du th\'{e}or\`{e}me de monodromie locale.
+\newblock \emph{Ast\'{e}risque}, 223\penalty0 (26):\penalty0 9--57, 1994.
+
+\bibitem[Inoue and Yamazaki(2006)]{IY}
+Rei Inoue and Takao Yamazaki.
+\newblock Cohomological study on variants of the {M}umford system, and
+  integrability of the {N}oumi-{Y}amada system.
+\newblock \emph{Communications in Mathematical Physics}, 265:\penalty0
+  699--719, 2006.
+\newblock \doi{https://doi.org/10.1007/s00220-006-0028-y}.
+
+\bibitem[Khayutin(2019)]{Khayutin}
+Ilya Khayutin.
+\newblock Joint equidistribution of {CM} points.
+\newblock \emph{Annals of Mathematics}, 189:\penalty0 145--276, 2019.
+\newblock \doi{https://doi.org/10.4007/annals.2019.189.1.4}.
+
+\bibitem[Massey(1994)]{Massey}
+David~B. Massey.
+\newblock Numerical invariants of perverse sheaves.
+\newblock \emph{Duke Mathematical Journal}, 73\penalty0 (2):\penalty0 307--369,
+  1994.
+
+\bibitem[Michel and Venkatesh(2006)]{MVUnpublished}
+Philippe Michel and Akshay Venkatesh.
+\newblock Equidistribution, {$L$}-functions and ergodic theory: on some
+  problems of {Y}u. {V}. {L}innik (unpublished version).
+\newblock http://math.stanford.edu/~akshay/research/linnik.pdf, 2006.
+
+\bibitem[Saito(2017{\natexlab{a}})]{saito-direct}
+Takeshi Saito.
+\newblock Characteristic cycles and the conductor of direct image.
+\newblock https://arxiv.org/abs/1704.04832, 2017{\natexlab{a}}.
+
+\bibitem[Saito(2017{\natexlab{b}})]{saito1}
+Takeshi Saito.
+\newblock The characteristic cycle and the singular support of a constructible
+  sheaf.
+\newblock \emph{Inventiones mathematicae}, 207:\penalty0 597--695,
+  2017{\natexlab{b}}.
+
+\bibitem[Shende and Tsimerman(2017)]{TS}
+Vivek Shende and Jacob Tsimerman.
+\newblock Equidistribution in {$\operatorname{Bun}_2(\mathbb P^1)$}.
+\newblock \emph{Duke Mathematical Journal}, 166\penalty0 (18):\penalty0
+  3461--3504, 2017.
+
+\end{thebibliography}

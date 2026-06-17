@@ -1,0 +1,184 @@
+# Session 35 — Iter-035 Phase A Step 6 *Path 2* / `AffineCoverMVSquare.X₄` corner-bridge specialisation
+
+## Metadata
+
+- **Archon iteration**: 035 (canonical, per dispatcher invocation header).
+- **Session number**: 35 (prover-round counter; matches the directory name `session_35/` and the iteration counter for the second consecutive iteration).
+- **Stage**: prover (refactor + prover sub-phase collapse — eighteenth consecutive substantive occurrence).
+- **Sorry count before this session**: 9 (5 `Jacobian.lean` + 3 `AbelJacobi.lean` + 1 `Picard/Functor.lean`).
+- **Sorry count after this session**: 9 (no transient — both bodies are probe-confirmed term-mode definitions; no scaffold `sorry` introduced at any point).
+- **Targets attempted**: 2 — both `noncomputable def`s appended to `AlgebraicJacobian/Cohomology/MayerVietoris.lean`, inside the existing `section CoverTotality` after iter-034's `HModule'_eq_HModule_linearEquiv`:
+  1. `AlgebraicGeometry.Scheme.AffineCoverMVSquare.HModule'_X₄_linearEquiv` (abstract sheaf-parameterised specialisation of iter-034's universal bridge to the `X₄` corner).
+  2. `AlgebraicGeometry.Scheme.AffineCoverMVSquare.HModule'_X₄_linearEquiv_curve` (curve specialisation via the dot-notation method-call form).
+- **Edits made by the prover**: 2 — Edit 1 (single import line `import Mathlib.CategoryTheory.Limits.Preorder`), Edit 2 (both new declarations + load-bearing docstrings, ~40 LOC, in a single append at the end of `section CoverTotality`).
+- **New `axiom` declarations**: 0. Both new declarations carry kernel-only axioms (`propext`, `Classical.choice`, `Quot.sound`).
+- **Files edited**: 1 — `AlgebraicJacobian/Cohomology/MayerVietoris.lean` (915 → 955 LOC, +40 LOC; the prover task result reports +42 to 957, off-by-2 minor accounting drift, actual `wc -l` is 955).
+- **`archon-protected.yaml`**: untouched (no protected declarations live in `Cohomology/MayerVietoris.lean`).
+
+## Context
+
+Iter-035 is the eighth concrete step of the multi-iteration **Serre-finiteness chain** (Phase A step 6 *Path 2*) that `smoothOfRelativeDimension_genus` (`Jacobian.lean`) will eventually consume. Previous chain steps: iter-028 bundled `Scheme.AffineCoverMVSquare` + accessor (Step 1); iter-029 four `@[simp]` corner-identification lemmas + `HModule'_sequence` + exactness (Step 2); iter-030 the curve-specific `toModuleKSheaf` specialisation (Step 2.5); iter-031 the cover-totality source-object iso `HModule'_top_sourceIso` (Step 3-source); iter-032 the cover-totality Ext-transport at universe `u+1` (Step 3-transport-`u+1`); iter-033 the parallel Ext-transport at universe `u` (Step 3-transport-`u`); iter-034 the Mathlib gap-fill `Abelian.Ext.chgUnivLinearEquiv` + the universal cover-totality bridge `HModule'_eq_HModule_linearEquiv` (Step 3 close).
+
+**Iter-035 (this session) closes Step 3.5 (the *corner-bridge*)** by appending two new declarations specialising the iter-034 universal bridge to the `X₄` corner of an `AffineCoverMVSquare`:
+
+1. **`AffineCoverMVSquare.HModule'_X₄_linearEquiv`** — abstract sheaf-parameterised specialisation. Body: `HModule'_eq_HModule_linearEquiv k F n (S.toMayerVietorisSquare_toSquare_X₄.symm ▸ Preorder.isTerminalTop (TopologicalSpace.Opens X.toTopCat))`. Transports Mathlib's `Preorder.isTerminalTop ⊤` along iter-029's `@[simp]` lemma `toMayerVietorisSquare_toSquare_X₄ : S.toMayerVietorisSquare.toSquare.X₄ = ⊤` (via `Eq.symm ▸`) to obtain `IsTerminal X₄`, then applies the iter-034 universal bridge.
+2. **`AffineCoverMVSquare.HModule'_X₄_linearEquiv_curve`** — curve specialisation. Body: `S.HModule'_X₄_linearEquiv k _ n`, the dot-notation method-call form on `Scheme.toModuleKSheaf C` for `C : Over (Spec (CommRingCat.of k))` (mirrors the iter-030 `HModule'_sequence_curve` pattern).
+
+The plan-agent's pre-prover `lean_run_code` probe (this pass) had verified both bodies typecheck end-to-end against the post-iter-034 file with `{success: true, diagnostics: []}` and kernel-only axioms `[propext, Classical.choice, Quot.sound]`. The prover landed both probe-confirmed bodies cleanly across two Edits: one for the new import (`Mathlib.CategoryTheory.Limits.Preorder`, source of `Preorder.isTerminalTop`) plus one for the substantive append. **Single substantive Edit, zero corrective Edits, zero diagnostic warnings** — the cleanest landing across the iter-031 → iter-035 cohort.
+
+## Target 1: `AlgebraicGeometry.Scheme.AffineCoverMVSquare.HModule'_X₄_linearEquiv` (`noncomputable def`)
+
+### Approach
+
+Verbatim PROGRESS.md plan-agent probe-confirmed body. The body specialises iter-034's universal bridge `HModule'_eq_HModule_linearEquiv k F n hT` — which lands on any terminal object — to the specific terminal corner `X₄` of an `AffineCoverMVSquare`. The witness `IsTerminal X₄` is built from Mathlib's `Preorder.isTerminalTop` (which gives `IsTerminal (⊤ : TopologicalSpace.Opens X.toTopCat)`) transported along iter-029's `@[simp]` lemma `toMayerVietorisSquare_toSquare_X₄ : S.toMayerVietorisSquare.toSquare.X₄ = ⊤` via `Eq.symm ▸`. Placed inside `section CoverTotality`, after iter-034's `HModule'_eq_HModule_linearEquiv` (ending at L912), before the section's `end CoverTotality`. New import `Mathlib.CategoryTheory.Limits.Preorder` added at the top of the file (sourcing `Preorder.isTerminalTop`).
+
+### Attempt 1 (Edit 1, log line 21, ts 12:04:02Z)
+
+- **Strategy**: Add the new import line `import Mathlib.CategoryTheory.Limits.Preorder` to the import block. This sources the `Preorder.isTerminalTop` lemma needed by Target 1's body.
+- **Code tried**:
+  ```diff
+   import AlgebraicJacobian.Cohomology.StructureSheafModuleK
+  +import Mathlib.CategoryTheory.Limits.Preorder
+  ```
+- **Goal before**: post-iter-034 file with import block ending at `import AlgebraicJacobian.Cohomology.StructureSheafModuleK`. No access to `Preorder.isTerminalTop`.
+- **Result**: success (preparatory edit; substantive content lands in Edit 2).
+- **Insight**: Mathlib's `Preorder.isTerminalTop` lives in `Mathlib/CategoryTheory/Limits/Preorder.lean`, which is not transitively imported via `StructureSheafModuleK`. A direct import is required.
+
+### Attempt 2 (Edit 2, log line 24, ts 12:04:24Z)
+
+- **Strategy**: Append the verbatim probe-confirmed bodies of both Target 1 and Target 2, plus a load-bearing docstring on each, replacing the `end CoverTotality` boundary with the new declarations and a fresh `end CoverTotality`.
+- **Code tried** (Target 1 portion):
+  ```lean
+  noncomputable def AffineCoverMVSquare.HModule'_X₄_linearEquiv
+      (k : Type u) [Field k] {X : Scheme.{u}} (S : X.AffineCoverMVSquare)
+      [HasExt.{u} (Sheaf (Opens.grothendieckTopology X.toTopCat) (ModuleCat.{u} k))]
+      [HasExt.{u + 1} (Sheaf (Opens.grothendieckTopology X.toTopCat) (ModuleCat.{u} k))]
+      (F : Sheaf (Opens.grothendieckTopology X.toTopCat) (ModuleCat.{u} k)) (n : ℕ) :
+      HModule' k F n S.toMayerVietorisSquare.toSquare.X₄ ≃ₗ[k] HModule k F n :=
+    HModule'_eq_HModule_linearEquiv k F n
+      (S.toMayerVietorisSquare_toSquare_X₄.symm ▸
+        (Preorder.isTerminalTop (TopologicalSpace.Opens X.toTopCat)))
+  ```
+- **Goal before**: post-iter-034 file with `section CoverTotality` containing iter-031's `HModule'_top_sourceIso`, iter-032's `HModule_top_linearEquiv`, iter-033's `HModule'_top_linearEquiv`, iter-034's `HModule'_top_linearEquiv` (presheaf-form helper), iter-034's `HModule'_eq_HModule_linearEquiv` (universal bridge), and `end CoverTotality`.
+- **`lean_diagnostic_messages` after Edit 2** (log line 30, ts 12:04:32Z): `{errors: [], warnings: [], error_count: 0, warning_count: 0, clean: true}` — first-try clean, including no whitespace-linter warning (the `HasExt.{u + 1}` binders include the spaces this time, having internalised the iter-034 lesson).
+- **Result**: RESOLVED on first attempt (zero corrective edits).
+- **Insight**: The `Eq.symm ▸` transport pattern combined with iter-029's `toMayerVietorisSquare_toSquare_X₄ : ... = ⊤` and Mathlib's `Preorder.isTerminalTop` is exactly the right substrate for corner-bridge specialisations. The qualified `TopologicalSpace.Opens X.toTopCat` form is essential — the bare `Opens X.toTopCat` would shadow to `Scheme.Opens` (which expects a `Scheme`) inside `def AffineCoverMVSquare.foo`, mirroring the iter-029 sub-namespace shadowing trap.
+
+### Key Mathlib lemmas used
+- `Preorder.isTerminalTop` (`Mathlib/CategoryTheory/Limits/Preorder.lean`) — produces `IsTerminal (⊤ : α)` for `α` a preorder with a top element.
+- `AlgebraicGeometry.Scheme.AffineCoverMVSquare.toMayerVietorisSquare_toSquare_X₄` (iter-029, this file) — the `@[simp]` corner-identification lemma identifying the `X₄` corner with `⊤`.
+- `AlgebraicGeometry.Scheme.HModule'_eq_HModule_linearEquiv` (iter-034, this file) — the iter-034 universal bridge whose specialisation is the goal.
+- `Eq.symm ▸` — the standard Lean 4 transport mechanism along an equation.
+
+## Target 2: `AlgebraicGeometry.Scheme.AffineCoverMVSquare.HModule'_X₄_linearEquiv_curve` (`noncomputable def`)
+
+### Approach
+
+Verbatim PROGRESS.md plan-agent probe-confirmed one-liner `S.HModule'_X₄_linearEquiv k _ n`. Specialises Target 1 to the curve case `F := Scheme.toModuleKSheaf C` for `C : Over (Spec (CommRingCat.of k))` via the dot-notation method-call form (mirrors the iter-030 `HModule'_sequence_curve` pattern). Placed immediately after Target 1, inside the same `section CoverTotality`, before `end CoverTotality`.
+
+### Attempt 1 (Edit 2, same Edit as Target 1 — single substantive append)
+
+- **Strategy**: Append the verbatim probe-confirmed one-liner `S.HModule'_X₄_linearEquiv k _ n` immediately after Target 1, in the same Edit.
+- **Code tried**:
+  ```lean
+  noncomputable def AffineCoverMVSquare.HModule'_X₄_linearEquiv_curve
+      (k : Type u) [Field k] {C : Over (Spec (CommRingCat.of k))}
+      (S : C.left.AffineCoverMVSquare)
+      [HasExt.{u} (Sheaf (Opens.grothendieckTopology C.left.toTopCat) (ModuleCat.{u} k))]
+      [HasExt.{u + 1} (Sheaf (Opens.grothendieckTopology C.left.toTopCat) (ModuleCat.{u} k))]
+      (n : ℕ) :
+      HModule' k (Scheme.toModuleKSheaf C) n S.toMayerVietorisSquare.toSquare.X₄
+        ≃ₗ[k] HModule k (Scheme.toModuleKSheaf C) n :=
+    S.HModule'_X₄_linearEquiv k _ n
+  ```
+- **Goal before**: same as Target 1 (single substantive Edit covers both).
+- **`lean_diagnostic_messages` after Edit 2** (log line 30): clean.
+- **Result**: RESOLVED on first attempt.
+- **Insight**: The dot-notation method-call form `S.HModule'_X₄_linearEquiv k _ n` resolves cleanly via lookup against `S : C.left.AffineCoverMVSquare`, sidestepping the iter-029 sub-namespace shadowing trap that required `_root_.` disambiguation in the abstract `_sequence` body. The `_` in position 2 (the `Scheme.{u}` argument to Target 1's general signature) is inferred from the receiver type `C.left.AffineCoverMVSquare`, which exposes `C.left : Scheme.{u}`.
+
+### Key Mathlib lemmas used
+- `AlgebraicGeometry.Scheme.AffineCoverMVSquare.HModule'_X₄_linearEquiv` (Target 1, this iteration) — the abstract sheaf-parameterised specialisation it lifts.
+- `AlgebraicGeometry.Scheme.toModuleKSheaf` (iter-007 / iter-030) — the sheaf the curve specialisation evaluates the bridge at.
+
+## Verification (this session)
+
+1. **`lean_diagnostic_messages` on `Cohomology/MayerVietoris.lean`** (post-Edit 2): `{success: true, items: [], failed_dependencies: []}`. Zero errors, zero warnings.
+2. **`lean_verify AlgebraicGeometry.Scheme.AffineCoverMVSquare.HModule'_X₄_linearEquiv`** (log line 33, ts 12:05:00Z): `{axioms: [propext, Classical.choice, Quot.sound], warnings: [{line: 259, pattern: "local instance"}]}` — kernel-only axioms; the single `local instance` warning at line 259 is the pre-existing iter-019 warning (now line 259 due to the +85 / +99 LOC iter-034 prelude cohort moving the rest of the file down + the 2-line iter-035 import edit), not introduced by iter-035.
+3. **`lean_verify AlgebraicGeometry.Scheme.AffineCoverMVSquare.HModule'_X₄_linearEquiv_curve`** (log line 35, ts 12:05:03Z): `{axioms: [propext, Classical.choice, Quot.sound], warnings: [{line: 259, pattern: "local instance"}]}` — kernel-only.
+4. **Plan-agent `lean_run_code` probes** (this pass): `{success: true, diagnostics: []}` for both bodies — pre-prover.
+5. **Sorry count** via `sorry_analyzer.py AlgebraicJacobian/ --format=summary`: 9 total across 3 files (5 `Jacobian.lean` + 3 `AbelJacobi.lean` + 1 `Picard/Functor.lean`); zero in `Cohomology/MayerVietoris.lean`. Trajectory `9 → 9 → 9` (no transient scaffold `sorry`).
+6. **No new `axiom` declarations** in `AlgebraicJacobian/`.
+7. **Section/namespace integrity**: both new declarations sit inside the existing `section CoverTotality`, after iter-034's `HModule'_eq_HModule_linearEquiv` and before the section's `end CoverTotality`. They use the `AffineCoverMVSquare.foo` sub-namespace pattern (matching iter-029 / iter-030).
+8. **Protected file unchanged**: `archon-protected.yaml` not touched.
+9. **LOC check**: `Cohomology/MayerVietoris.lean` 915 → 955 LOC (+40, comprising +1 LOC for the import line + ~39 LOC for the two new declarations and their docstrings). Plan estimate +25 LOC, actual +40 LOC, slightly above due to two multi-line docstrings on each declaration. (Prover task result reports +42 to 957; minor accounting drift — `wc -l` is the authority at 955.)
+
+## Pre-processed event data (`attempts_raw.jsonl`)
+
+`current_session/attempts_raw.jsonl` (17 lines): 1 summary header + 16 events. Highlights:
+
+- 1 `Bash` `wc -l` call before the first edit (orientation; ts 12:03:37Z, result `915`).
+- 5 `Read` events on `Cohomology/MayerVietoris.lean` (orientation passes; ts 12:03:40–12:03:56Z).
+- **Edit 1** (log line 21, ts 12:04:02Z) — single import line `import Mathlib.CategoryTheory.Limits.Preorder` added.
+- **Edit 2** (log line 24, ts 12:04:24Z) — substantive append: both new `noncomputable def`s + docstrings, replacing the `end CoverTotality` boundary with the new content + a fresh `end CoverTotality`.
+- 1 `ToolSearch` (no preview) — schema fetch for `lean_diagnostic_messages` etc.
+- `lean_diagnostic_messages` after Edit 2 (log line 30, ts 12:04:32Z): clean.
+- 2 `lean_verify` calls on the new declarations (log lines 33, 35; ts 12:05:00Z, 12:05:03Z): kernel-only axioms confirmed for both.
+- 3 `Bash` calls for sorry analysis + LOC count + script-resolution (log lines 38, 40, 42; ts 12:05:08–12:05:14Z): final sorry summary `9 total across 3 file(s)` (5 + 3 + 1).
+- 1 `Write` of `task_results/MayerVietoris.lean.md` recording the closure (log line 45, ts 12:05:46Z).
+
+The summary header confirms: `total_events: 16, edits: 2, goal_checks: 0, diagnostic_checks: 1, builds: 0, lemma_searches: 0, files_edited: ["…MayerVietoris.lean"], total_errors: 0, clean_diagnostics: 1`. **One preparatory Edit + one substantive Edit**, zero corrective Edits, zero diagnostic warnings. Cleanest landing across the iter-031 → iter-035 cohort (iter-031 needed 2 substantive Edits + 1 corrective; iter-032 needed 1 substantive + 1 minor; iter-033 needed 1 substantive; iter-034 needed 2 substantive + 1 whitespace-linter corrective; iter-035 needed 1 prep + 1 substantive, **0 corrective**).
+
+## Blueprint markers updated
+
+The plan-agent had already added the iter-035 § *AffineCoverMVSquare.X₄ specialisation (iter-035)* to `blueprint/src/chapters/Cohomology_MayerVietoris.tex` (L943 onward) with two `\begin{definition}\leanok` / `\begin{proof}\leanok` blocks, pre-staged with all four `\leanok` markers. Post-prover-closure, this review agent verified all four `\leanok` markers as accurate:
+
+| Chapter | Block | Marker | Notes |
+|---|---|---|---|
+| `Cohomology_MayerVietoris.tex` | `def:Scheme_AffineCoverMVSquare_HModule_prime_X4_linearEquiv` (statement, L947–958) | `\leanok` (already present, **verified accurate**) | `noncomputable def` exists at the named full path `AlgebraicGeometry.Scheme.AffineCoverMVSquare.HModule'_X₄_linearEquiv` (L925), file compiles with zero diagnostics, kernel-only axioms confirmed by `lean_verify`. |
+| `Cohomology_MayerVietoris.tex` | `def:Scheme_AffineCoverMVSquare_HModule_prime_X4_linearEquiv` (proof block, L960–964) | `\leanok` (already present, **verified accurate**) | Three-line term-mode body using `Eq.symm ▸` transport on iter-029's `toMayerVietorisSquare_toSquare_X₄` + `Preorder.isTerminalTop` + iter-034's universal bridge; no `sorry`, no new `axiom`, kernel-only axioms confirmed by `lean_verify`. |
+| `Cohomology_MayerVietoris.tex` | `def:Scheme_AffineCoverMVSquare_HModule_prime_X4_linearEquiv_curve` (statement, L966–977) | `\leanok` (already present, **verified accurate**) | `noncomputable def` exists at the named full path `AlgebraicGeometry.Scheme.AffineCoverMVSquare.HModule'_X₄_linearEquiv_curve` (L943), file compiles with zero diagnostics, kernel-only axioms confirmed by `lean_verify`. |
+| `Cohomology_MayerVietoris.tex` | `def:Scheme_AffineCoverMVSquare_HModule_prime_X4_linearEquiv_curve` (proof block, L979–983) | `\leanok` (already present, **verified accurate**) | One-liner `S.HModule'_X₄_linearEquiv k _ n` dot-notation method-call; no `sorry`, no new `axiom`, kernel-only axioms confirmed by `lean_verify`. |
+
+Marker delta this session: **0 marker additions** (the plan agent had pre-staged all four `\leanok` markers in anticipation of probe-confirmed closure; verification this session confirms all are accurate). No `\notready` markers exist anywhere. No `\lean{...}` macro renames needed — the prover used the exact names listed (`AlgebraicGeometry.Scheme.AffineCoverMVSquare.HModule'_X₄_linearEquiv` and `..._curve`).
+
+**`blueprint/lean_decls` status**: the iter-034 plan-agent gap (3 entries pending — iter-033's `HModule'_top_linearEquiv` and the two iter-034 declarations) was **cleared** by the iter-035 plan-agent: `blueprint/lean_decls` now lists `AlgebraicGeometry.Scheme.HModule'_top_linearEquiv`, `CategoryTheory.Abelian.Ext.chgUnivLinearEquiv`, and `AlgebraicGeometry.Scheme.HModule'_eq_HModule_linearEquiv`. **However, the iter-035 plan-agent did not append the two iter-035 declarations** (`AffineCoverMVSquare.HModule'_X₄_linearEquiv` and `..._curve`). New 2-entry pending gap. Flagged in `recommendations.md` for iter-036 plan agent. Non-blocking — chapter file is complete with all `\leanok` markers verified accurate.
+
+## Key findings / proof patterns discovered
+
+- **`Eq.symm ▸` transport on `@[simp]` corner-identification lemmas to specialise terminal-witness builders** *(iter-035, new this iteration)*: when an `@[simp]` corner-identification lemma identifies a bundled-square corner with a known terminal object (here `X₄ = ⊤`), and Mathlib provides a terminality witness on the known corner (`Preorder.isTerminalTop` for `⊤`), the substitution `corner_eq_top.symm ▸ Mathlib_witness` produces an `IsTerminal corner` witness directly. Three-line uniform pattern usable for any future corner-bridge specialisation along an `@[simp]`-equation-to-known-terminal.
+- **Qualified `TopologicalSpace.Opens X.toTopCat` form inside `def AffineCoverMVSquare.foo` bodies** *(iter-035)*: bare `Opens X.toTopCat` would shadow to `Scheme.Opens` (which expects a `Scheme`-typed argument) under sub-namespace resolution. Mirrors the iter-029 sub-namespace shadowing trap that previously required `_root_.`-prefix disambiguation. **The qualified form `TopologicalSpace.Opens X.toTopCat` is the canonical fix.**
+- **Dot-notation method-call form `S.foo k _ n` for sub-namespace re-application** *(iter-030, iter-035 reuse)*: when a sub-namespaced declaration (here `AffineCoverMVSquare.HModule'_X₄_linearEquiv_curve`) is a direct re-application of another sub-namespaced declaration (here `AffineCoverMVSquare.HModule'_X₄_linearEquiv`) on the same receiver, the dot-notation method-call form `S.HModule'_X₄_linearEquiv k _ n` resolves cleanly via lookup against `S`'s receiver type, sidestepping the iter-029 sub-namespace shadowing trap. The `_` in the second argument position is inferred from the receiver type. **Standard pattern for curve specialisations of abstract sheaf-parameterised bridges.**
+- **Single substantive Edit, zero corrective Edits** *(iter-035, new this iteration)*: when both bodies are probe-confirmed end-to-end and the import dependency is added in a separate preparatory Edit, the substantive append lands clean on the first try. Cleanest landing across iter-031 → iter-035.
+- **Probe-confirmed term-mode bodies (with embedded `Eq.symm ▸` transports) adopted verbatim** continue to land at ~100% reliability *(sessions 25–47 + sessions 33–35 = iter-033/iter-034/iter-035 = eighteen consecutive substantive single-Edit closures; iter-035 was the first **zero-corrective-Edit** instance of this cohort)*.
+- **Plan-agent pre-marking of `\leanok` on both blocks** *(iter-032, iter-033, iter-034, iter-035)*: when the body is probe-confirmed end-to-end, the plan-agent pre-stages both statement and proof markers; the review agent then verifies (rather than adds). **Single-step marker workflow** now standard across four consecutive iterations and ten `\leanok` marker pairs cumulative (1 × iter-032, 1 × iter-033, 2 × iter-034, 2 × iter-035).
+
+## Recommendations for next session
+
+See `recommendations.md` (sibling file in this folder) for the full iter-036 plan-agent guidance. Briefly:
+
+- **Track 1 (primary, iter-036 prover lane)**: the **affine-vanishing input** `Scheme.HModule'_zero_of_isAffineOpen` (`H^{>0}(Spec A, F) = 0`). Mathlib state needs re-probing first by the iter-036 plan-agent. Likely multi-iteration (2–4 iterations) if Mathlib has the result as a TODO; possibly single-iteration (~30–60 LOC) if Mathlib has it bundled. **Highest priority — gates Step 4.**
+- **Track 1 alternative (lighter, exploratory)**: a Mayer–Vietoris LES *consumer* lemma — e.g. taking iter-029's exact `HModule'_sequence_curve_exact` + iter-035's `HModule'_X₄_linearEquiv_curve` and producing a four-term LES `HModule k F n+1 → HModule' k F n X₁ ⊕ HModule' k F n X₂ → HModule' k F n X₃ → HModule k F (n+1)` directly on the `HModule` side (no `'`). Plausibly single-iteration ~20–40 LOC; useful as a downstream-API pre-bake.
+- **Track 2 (parallel low-coupling)**: still none recommended. Polish backlog remains empty.
+- **Hard avoid**: `representable`, the 8 remaining protected sorries, direct `LineBundle` refinement, and any of the closed scaffold sites (iter-014 → iter-026 + iter-028 → iter-035).
+- **`blueprint/lean_decls` gap (now 2 entries pending — iter-035 declarations)**: iter-036 plan-agent should append `AlgebraicGeometry.Scheme.AffineCoverMVSquare.HModule'_X₄_linearEquiv` and `AlgebraicGeometry.Scheme.AffineCoverMVSquare.HModule'_X₄_linearEquiv_curve`. Non-blocking — flagged so the gap doesn't accumulate again across iterations.
+- **Mathlib gating watch**: re-probe affine-vanishing API state. Re-probe Čech-vs-derived-functor comparison API. The off-Archon Mathlib upstream PR for `Abelian.Ext.chgUnivLinearEquiv` (iter-034 deliverable) remains a clean candidate.
+
+## Session-35 task_results status
+
+- `.archon/task_results/MayerVietoris.lean.md`: complete (prover task result, ~80 lines).
+- The iter-036 plan agent should:
+  1. Migrate the iter-035 cohort entries to `task_done.md` (two new entries: `AffineCoverMVSquare.HModule'_X₄_linearEquiv`, `AffineCoverMVSquare.HModule'_X₄_linearEquiv_curve`).
+  2. Update `task_pending.md` to remove iter-035 candidates and queue the iter-036 next-step candidates (affine-vanishing input + optional Mayer–Vietoris LES consumer lemma).
+  3. Update PROGRESS.md / STRATEGY.md narrative labels: Step 3.5 (corner-bridge) is fully complete; Step 4 (affine vanishing), Step 5 (finite-dimensional `H^0`) remain.
+  4. **Append two entries to `blueprint/lean_decls`** (the iter-035 declarations). Cleared the iter-033/iter-034 gap this iteration; only iter-035 entries pending.
+  5. Re-probe Mathlib for affine-vanishing API state.
+
+## Process drift status
+
+- **Refactor + prover sub-phase collapse**: eighteenth consecutive substantive occurrence (iter-015 → iter-022, iter-023, iter-026, iter-028, iter-029, iter-030, iter-031, iter-032, iter-033, iter-034, iter-035).
+- **Iteration-counter desync**: still resolved (drift counter 0; in sync). **Session-counter realignment**: dispatcher's session number 35 matches iteration counter 035, second consecutive iteration of alignment.
+- **`attempts_raw.jsonl` freshness**: this iteration refreshed it (16 events, all timestamped `2026-05-09T12:03…12:05Z`). No stale-data carryover.
+- **`archon-protected.yaml` discipline**: this session's plan-agent invocation re-probed the file before assigning the prover objective and confirmed the iter-035 targets sit entirely outside the protected list.
+- **Probe-vs-prover alignment**: this iteration confirms semantic alignment at **100%** (zero corrective Edits; bodies typecheck verbatim from the probe; the iter-034 whitespace-linter lesson was internalised — the iter-035 binders include the spaces from the start).
+- **Single-step blueprint marker workflow**: now standard practice — plan-agent pre-stages `\leanok` markers when bodies are probe-confirmed end-to-end; review agent verifies all four (rather than adds). Four markers verified this iteration, ten cumulative since iter-032.
+- **`blueprint/lean_decls` gap (cumulative process drift)**: the iter-033 + iter-034 backlog (3 entries) was cleared by the iter-035 plan-agent. New 2-entry gap from iter-035 declarations. Iter-036 plan-agent should clear them in the same pass that introduces new objectives, to prevent multi-iteration accumulation.

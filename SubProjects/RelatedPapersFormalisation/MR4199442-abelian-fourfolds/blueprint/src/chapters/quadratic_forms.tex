@@ -1,0 +1,445 @@
+\chapter{Orthogonal motives of rank two and quadratic forms}
+
+This chapter transcribes \S8 (``Orthogonal motives of rank $2$'') and \S9
+(``Quadratic forms'') of Ancona's paper. We first state the project's main
+technical result, \cref{thm:mainthm}: for a rank-two orthogonal motive in mixed
+characteristic, positivity of the Betti pairing forces positivity of the
+pairing on algebraic classes over the residue field. This is the statement that
+the proof of the standard conjecture of Hodge type (\cref{thm:scht}) reduces to;
+that reduction is carried out in the chapter on the standard conjecture of Hodge
+type and is \emph{not} repeated here. The proof of \cref{thm:mainthm} given here
+assembles the \(p\)-adic period computations of the later chapters; those
+computations themselves are established there and only invoked here.
+
+We then recall the classical theory of rank-two \(\Q\)-quadratic forms --- the
+Hilbert symbol, the local invariants, the product formula --- and combine them
+into a sign-comparison corollary (\cref{cor:signature-top}). The chapter
+culminates in \cref{prop:padic-reduction}, which reduces \cref{thm:mainthm} to a
+single comparison of the two quadratic spaces over \(\Q_p\).
+
+Throughout, \(K\) is a \(p\)-adic field with ring of integers \(W\) and residue
+field \(k\), and \(\Q_\nu\) denotes the completion of \(\Q\) at the place
+\(\nu\).
+
+\section*{The main technical result}
+
+\begin{definition}[Setup and hypotheses of the main theorem]
+  \label{def:mainthm-setup}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.MainTheoremSetup}
+  \uses{def:chow-motives, def:num-motives, def:realizations, def:pairing-mot, def:filtered-phi-modules}
+  % SOURCE: [Ancona], §8, Theorem (mainthm) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let $K$ be a $p$-adic field, $W$  its ring of integers and $k$  its residue field. Let us fix an embedding $\sigma : K \hookrightarrow \C$.
+  % Let \[M \in \CHM(W)_\Q\] be a motive in mixed characteristic and consider the motives induced by pullbacks $M_{\vert\C} \in \CHM(\C)_\Q$ and $M_{\vert{k}} \in \CHM(k)_\Q$. Consider $V_B$ and $V_Z$ the two $\Q$-vector spaces defined as
+  % \[V_B = R_B(M_{\vert\C} ) \hspace{0.5cm}
+  % \textrm{and} \hspace{0.5cm}
+  % V_Z = \Hom_{\NUM(k)_\Q}(\one, M_{\vert{k}}).\]
+  % Let $q$ be a quadratic form on $M$, by which we mean a morphism in $ \CHM(W)_\Q$  of the form
+  % $q: \Sym^2 M  \longrightarrow \one.$
+  %  Consider the two $\Q$-quadratic forms induced by $q$ on $V_B$ and $V_Z$ respectively,
+  % \[q_B=R_B(q)  \hspace{0.5cm} \textrm{and}  \hspace{0.5cm} q_Z(\cdot)= (q_{\vert{k}} \circ \Sym^2(\cdot)).\]
+  % Suppose that the following holds:
+  % \begin{enumerate}
+  % \item\label{assumptiondim2} The two $\Q$-vector spaces $V_B$  and $V_Z$ are of dimension $2$.
+  % \item The pairing $q_B$ on $V_B$ is a polarization of Hodge structures.
+  % \end{enumerate}
+  % Then the quadratic form $q_Z$ is positive definite."
+  \textit{Source: Ancona, arXiv:1806.03216, §8 (hypotheses of the main theorem, bundled).}
+  We bundle once and for all the data and hypotheses shared by the main theorem
+  and every statement that ``keeps its notation''. Let \(K\) be a \(p\)-adic
+  field, \(W\) its ring of integers and \(k\) its residue field, and fix an
+  embedding \(\sigma : K \hookrightarrow \C\). Let
+  \[M \in \CHM(W)_\Q\]
+  be a motive in mixed characteristic, with induced motives
+  \(M_{\vert\C} \in \CHM(\C)_\Q\) and \(M_{\vert{k}} \in \CHM(k)_\Q\) obtained by
+  pullback. Consider the two \(\Q\)-vector spaces
+  \[V_B = R_B(M_{\vert\C}) \qquad \text{and} \qquad
+    V_Z = \Hom_{\NUM(k)_\Q}(\one, M_{\vert{k}}).\]
+  Let \(q\) be a \emph{quadratic form on \(M\)}, that is, a morphism
+  \(q : \Sym^2 M \to \one\) in \(\CHM(W)_\Q\), and let
+  \[q_B = R_B(q) \qquad \text{and} \qquad
+    q_Z(\cdot) = q_{\vert{k}} \circ \Sym^2(\cdot)\]
+  be the induced \(\Q\)-quadratic forms on \(V_B\) and \(V_Z\) respectively. We
+  assume throughout that
+  \begin{enumerate}
+    \item the \(\Q\)-vector spaces \(V_B\) and \(V_Z\) are both of dimension
+      \(2\); and
+    \item the pairing \(q_B\) on \(V_B\) is a polarization of Hodge structures.
+  \end{enumerate}
+\end{definition}
+
+\begin{theorem}[Main theorem on rank-two orthogonal motives]
+  \label{thm:mainthm}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.mainTheorem}
+  \uses{def:mainthm-setup, prop:padic-reduction, prop:ordinary-case, ass:i-positive, prop:endo-field, prop:iso-norm-unram, cor:period-unram, lem:not-norm-unram, prop:iso-norm-ram, cor:period-ram, lem:not-norm-ram, cor:period-wild, lem:not-norm-wild, cor:period-wild2, lem:not-norm-wild2}
+  % SOURCE: [Ancona], §8, Theorem (mainthm) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let $K$ be a $p$-adic field, $W$  its ring of integers and $k$  its residue field. Let us fix an embedding $\sigma : K \hookrightarrow \C$.
+  % Let \[M \in \CHM(W)_\Q\] be a motive in mixed characteristic and consider the motives induced by pullbacks $M_{\vert\C} \in \CHM(\C)_\Q$ and $M_{\vert{k}} \in \CHM(k)_\Q$. Consider $V_B$ and $V_Z$ the two $\Q$-vector spaces defined as
+  % \[V_B = R_B(M_{\vert\C} ) \hspace{0.5cm}
+  % \textrm{and} \hspace{0.5cm}
+  % V_Z = \Hom_{\NUM(k)_\Q}(\one, M_{\vert{k}}).\]
+  % Let $q$ be a quadratic form on $M$, by which we mean a morphism in $ \CHM(W)_\Q$  of the form
+  % $q: \Sym^2 M  \longrightarrow \one.$
+  %  Consider the two $\Q$-quadratic forms induced by $q$ on $V_B$ and $V_Z$ respectively,
+  % \[q_B=R_B(q)  \hspace{0.5cm} \textrm{and}  \hspace{0.5cm} q_Z(\cdot)= (q_{\vert{k}} \circ \Sym^2(\cdot)).\]
+  % Suppose that the following holds:
+  % \begin{enumerate}
+  % \item\label{assumptiondim2} The two $\Q$-vector spaces $V_B$  and $V_Z$ are of dimension $2$.
+  % \item The pairing $q_B$ on $V_B$ is a polarization of Hodge structures.
+  % \end{enumerate}
+  % Then the quadratic form $q_Z$ is positive definite."
+  \textit{Source: Ancona, arXiv:1806.03216, §8.}
+  Let \(K\) be a \(p\)-adic field, \(W\) its ring of integers and \(k\) its
+  residue field, and fix an embedding \(\sigma : K \hookrightarrow \C\). Let
+  \[M \in \CHM(W)_\Q\]
+  be a motive in mixed characteristic, with induced motives
+  \(M_{\vert\C} \in \CHM(\C)_\Q\) and \(M_{\vert{k}} \in \CHM(k)_\Q\) obtained by
+  pullback. Consider the two \(\Q\)-vector spaces
+  \[V_B = R_B(M_{\vert\C}) \qquad \text{and} \qquad
+    V_Z = \Hom_{\NUM(k)_\Q}(\one, M_{\vert{k}}).\]
+  Let \(q\) be a \emph{quadratic form on \(M\)}, that is, a morphism
+  \(q : \Sym^2 M \to \one\) in \(\CHM(W)_\Q\), and let
+  \[q_B = R_B(q) \qquad \text{and} \qquad
+    q_Z(\cdot) = q_{\vert{k}} \circ \Sym^2(\cdot)\]
+  be the induced \(\Q\)-quadratic forms on \(V_B\) and \(V_Z\) respectively.
+  Suppose that
+  \begin{enumerate}
+    \item the \(\Q\)-vector spaces \(V_B\) and \(V_Z\) are both of dimension
+      \(2\); and
+    \item the pairing \(q_B\) on \(V_B\) is a polarization of Hodge structures.
+  \end{enumerate}
+  Then the quadratic form \(q_Z\) is positive definite.
+\end{theorem}
+
+% SOURCE QUOTE PROOF: "Thank to Proposition \ref{ordinarycase}, we can work under Assumption \ref{ipos}, and fix the positive integer $i$ as in the assumption as well as the field $F$ from Proposition \ref{propendo}.
+% Let us first suppose that  $F$ is unramified. We can then combine Proposition \ref{warmbrinon} and Corollary \ref{brinon} to conclude that the quadratic forms  $q_{B,p}$ and $q_{Z,p}$ are isomorphic if and only if $1/p^i$ is a norm. Because of Lemma \ref{notnorm}, this is the case   if and only if $i$ is even.
+% Suppose now that $F$ is ramified but it is not $\mathbb{Q}_2(\sqrt{3})$ nor $\mathbb{Q}_2(\sqrt{-1})$. Then, following  Remark \ref{remtame}, we can combine Proposition \ref{warmbrinonram} and Corollary \ref{brinonram} to conclude that the quadratic forms $q_{B,p}$ and $q_{Z,p}$ are isomorphic if and only if    $ a^i$ is a norm. Because of Lemma \ref{notnormram}, this is the case   if and only if $i$ is even.
+% If $F$ is  $\mathbb{Q}_2(\sqrt{-1})$ we can  combine Proposition \ref{warmbrinonram} and Corollary \ref{brinonwild} to conclude that the quadratic forms $q_{B,p}$ and $q_{Z,p}$ are isomorphic if and only if    $  (\alpha  \cdot \sigma(\alpha) )^i$ is a norm. Because of Lemma \ref{notnormwild}, this is the case   if and only if $i$ is even.
+% Finally, if $F$ is  $\mathbb{Q}_2(\sqrt{3})$ we can  combine Proposition \ref{warmbrinonram} and Corollary \ref{brinonwild2} to conclude that the quadratic forms  $q_{B,p}$ and $q_{Z,p}$ are isomorphic if and only if    $  (\alpha  \cdot \sigma(\alpha) )^i$ is a norm. Because of Lemma \ref{notnormwild2}, this is the case   if and only if $i$ is even.
+% In conclusion, we showed for that, for any possible $F$, the quadratic forms $q_{B,p}$ and $q_{Z,p}$ are isomorphic if and only if $i$ is even. This shows Theorem \ref{mainthm}  via Proposition \ref{padicreduction}."
+\begin{proof}
+  \uses{def:mainthm-setup, prop:padic-reduction, prop:ordinary-case,
+    ass:i-positive, prop:endo-field, prop:iso-norm-unram, cor:period-unram,
+    lem:not-norm-unram, prop:iso-norm-ram, cor:period-ram, lem:not-norm-ram,
+    cor:period-wild, lem:not-norm-wild, cor:period-wild2, lem:not-norm-wild2}
+  By \cref{prop:padic-reduction} it suffices to compare the two rank-two
+  \(\Q_p\)-quadratic spaces \((V_{B,p}, q_{B,p})\) and \((V_{Z,p}, q_{Z,p})\):
+  we must show that \(q_{B,p}\) and \(q_{Z,p}\) are isomorphic if and only if
+  \(i\) is even, where \(i\) is the Hodge weight of \cref{prop:padic-reduction}.
+
+  By \cref{prop:ordinary-case} we may assume that \(V_B\) is not of Hodge type
+  \((0,0)\); that is, we may work under \cref{ass:i-positive}, fixing the
+  positive integer \(i\) of that assumption and the field \(F\) furnished by
+  \cref{prop:endo-field}. We now case-split on \(F\).
+
+  \emph{\(F\) unramified.} Combining \cref{prop:iso-norm-unram} with the period
+  computation of \cref{cor:period-unram}, the forms \(q_{B,p}\) and \(q_{Z,p}\)
+  are isomorphic if and only if \(1/p^i\) is a norm; by
+  \cref{lem:not-norm-unram} this holds if and only if \(i\) is even.
+
+  \emph{\(F\) ramified, and \(F \neq \Q_2(\sqrt{3}), \Q_2(\sqrt{-1})\).}
+  Combining \cref{prop:iso-norm-ram} with \cref{cor:period-ram}, the forms are
+  isomorphic if and only if \(a^i\) is a norm; by \cref{lem:not-norm-ram} this
+  holds if and only if \(i\) is even.
+
+  \emph{\(F = \Q_2(\sqrt{-1})\).} Combining \cref{prop:iso-norm-ram} with
+  \cref{cor:period-wild}, the forms are isomorphic if and only if
+  \((\alpha \cdot \sigma(\alpha))^i\) is a norm; by \cref{lem:not-norm-wild}
+  this holds if and only if \(i\) is even.
+
+  \emph{\(F = \Q_2(\sqrt{3})\).} Combining \cref{prop:iso-norm-ram} with
+  \cref{cor:period-wild2}, the forms are isomorphic if and only if
+  \((\alpha \cdot \sigma(\alpha))^i\) is a norm; by \cref{lem:not-norm-wild2}
+  this holds if and only if \(i\) is even.
+
+  In every case \(q_{B,p}\) and \(q_{Z,p}\) are isomorphic if and only if \(i\)
+  is even, which is exactly the condition of \cref{prop:padic-reduction} for
+  \(q_Z\) to be positive definite. This proves the theorem.
+\end{proof}
+
+\begin{remark}[Hypotheses of the main theorem]
+  \label{rem:mainthm-hypotheses}
+  \uses{def:mainthm-setup, def:exotic-motive}
+  % SOURCE: [Ancona], §8, Remark (hypothesismainthm) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "\begin{enumerate}
+  % \item The main example of such a motive $M$ we have in mind is an exotic motive of an abelian fourfold (see Section \ref{sectionexotic}). Another example coming from geometry is given in Proposition \ref{propfermat}.
+  % \item\label{homvsrat} One can actually make the  hypothesis a little bit more flexible and work with homological motives instead of Chow motives. This will not matter for our application to abelian varieties.
+  % \end{enumerate}"
+  \textit{Source: Ancona, arXiv:1806.03216, §8.}
+  The main example of such a motive \(M\) is an exotic motive of an abelian
+  fourfold (see \cref{def:exotic-motive}). One may relax the hypothesis slightly
+  and work with homological motives instead of Chow motives; this does not
+  matter for the application to abelian varieties.
+\end{remark}
+
+\begin{proposition}[Consequences of the main hypotheses]
+  \label{prop:mainthm-properties}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.mainTheoremProperties}
+  \uses{def:mainthm-setup, def:realizations, def:num-motives, prop:motive-num-bound}
+  % SOURCE: [Ancona], §8, Proposition (tortura) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Under the hypothesis of Theorem \ref{mainthm} the following holds:
+  % \begin{enumerate}
+  % \item The quadratic form $q_Z$   on $V_Z$ is non-degenerate.
+  % \item  Given a classical realization $R$, the vector space $R(M_{\vert{k}})$  is of dimension two.
+  % \item Given a classical realization $R$, the vector space $R(M_{\vert{k}})$ is spanned by algebraic classes.
+  % \item Numerical equivalence on $\Hom_{\CHM(k)_\Q}(\one,M_{\vert{k}})$ coincides with the homological equivalence for any classical cohomology.
+  % \item\label{giorno} Fix a classical realization $R$ and call $L$ the field of coefficients of  $R$. Then the equality $V_Z\otimes _\Q L = R(M)$ holds.
+  % \end{enumerate}"
+  \textit{Source: Ancona, arXiv:1806.03216, §8.}
+  Under the hypotheses of \cref{thm:mainthm} the following hold.
+  \begin{enumerate}
+    \item The quadratic form \(q_Z\) on \(V_Z\) is non-degenerate.
+    \item For every classical realization \(R\), the vector space
+      \(R(M_{\vert{k}})\) has dimension two.
+    \item For every classical realization \(R\), the vector space
+      \(R(M_{\vert{k}})\) is spanned by algebraic classes.
+    \item Numerical equivalence on \(\Hom_{\CHM(k)_\Q}(\one, M_{\vert{k}})\)
+      coincides with homological equivalence for any classical cohomology.
+    \item If \(R\) is a classical realization with coefficient field \(L\), then
+      \(V_Z \otimes_\Q L = R(M)\).
+  \end{enumerate}
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "Let us start with (2). By the comparison theorem between singular and $\ell$-adic cohomology, we have ${\dim_\Q V_B = \dim_{\Q_\ell}R_\ell(M_{\vert{\C}})}$, for all primes $\ell$, including $\ell=p$.  Then, by smooth proper base change we have   $\dim_{\Q_\ell}R_\ell(M_{\vert{\C}})=\dim_{\Q_\ell}R_\ell(M_{\vert{k}})$ for all $\ell\neq p$ and finally by the $p$-adic comparison theorem we have
+%  $\dim_{\Q_p}R_p(M_{\vert{\C}})=\dim_{\Frac(W(k))}R_\crys(M_{\vert{k}})$. This concludes (2) as, by hypothesis, $\dim_\Q V_B=2$.
+%  The proof of (3)-(5) goes as in Proposition \ref{motivisupersingolari}. There, the hypothesis that the motive was of abelian type was used to ensure that all  realizations have the same dimension (see Remark \ref{remarkrank}). Here, this is replaced by part (2).
+%  Let us now show part (1). First notice that it is enough to show that $R(q_{\vert{k}})$ is non-degenerate (for some classical realization) because of parts (2)-(5).
+%  Then, again by using the comparison theorems, this is equivalent to the fact that $R_B(q)$ is non-degenerate. On the other hand this is the case as $R_B(q)$ is a polarization of Hodge structures."
+\begin{proof}
+  \proves{prop:mainthm-properties}
+  \uses{def:realizations, prop:motive-num-bound, def:mainthm-setup}
+  We start with (2). By the comparison theorem between singular and
+  \(\ell\)-adic cohomology, \(\dim_\Q V_B = \dim_{\Q_\ell} R_\ell(M_{\vert\C})\)
+  for all primes \(\ell\), including \(\ell = p\). By smooth proper base change,
+  \(\dim_{\Q_\ell} R_\ell(M_{\vert\C}) = \dim_{\Q_\ell} R_\ell(M_{\vert{k}})\)
+  for all \(\ell \neq p\), and by the \(p\)-adic comparison theorem
+  \(\dim_{\Q_p} R_p(M_{\vert\C}) = \dim_{\Frac(W(k))} R_\crys(M_{\vert{k}})\).
+  Since \(\dim_\Q V_B = 2\) by hypothesis, this gives (2).
+
+  Parts (3)--(5) follow exactly as in \cref{prop:motive-num-bound}: the
+  hypothesis used there that the motive is of abelian type, ensuring that all
+  realizations have the same dimension, is here replaced by part (2).
+
+  Finally, for part (1) it is enough to show that \(R(q_{\vert{k}})\) is
+  non-degenerate for some classical realization, by parts (2)--(5). Using the
+  comparison theorems once more, this is equivalent to \(R_B(q)\) being
+  non-degenerate, which holds because \(R_B(q)\) is a polarization of Hodge
+  structures.
+\end{proof}
+
+\section*{Rank-two quadratic forms}
+
+We recall the classical facts on quadratic forms that reduce \cref{thm:mainthm}
+to a \(p\)-adic question (\cref{prop:padic-reduction}). We work only in the
+context needed later: non-degenerate \(\Q\)-quadratic forms of rank \(2\).
+
+\begin{definition}[Hilbert symbol]
+  \label{def:hilbert-symbol}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.hilbertSymbol}
+  % SOURCE: [Ancona], §9, Definition (Hilbert) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let $q$ be a $\Q$-quadratic form of rank $2$. Define $\varepsilon_\nu(q)$, the Hilbert symbol of $q$ at $\nu$, as  $+1$ if the equation
+  % \[x^2-q(y,z)=0\]
+  % has a nonzero solution in $x,y,z\in \Q_\nu$, and as $-1$ otherwise. Depending on the context we may write $\varepsilon_p(q)$ or $\varepsilon_\R(q)$."
+  \textit{Source: Ancona, arXiv:1806.03216, §9.}
+  Let \(q\) be a \(\Q\)-quadratic form of rank \(2\) and \(\nu\) a place of
+  \(\Q\). The \emph{Hilbert symbol} \(\varepsilon_\nu(q)\) of \(q\) at \(\nu\) is
+  \(+1\) if the equation
+  \[x^2 - q(y,z) = 0\]
+  has a nonzero solution \(x, y, z \in \Q_\nu\), and \(-1\) otherwise. According
+  to context we write \(\varepsilon_p(q)\) or \(\varepsilon_\R(q)\).
+\end{definition}
+
+\begin{remark}[Signature of a rank-two form]
+  \label{rem:rank2-signature}
+  \uses{def:hilbert-symbol}
+  % SOURCE: [Ancona], §9, Remark (remarksignature) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let $q$ be a $\Q$-quadratic form of rank $2$. It is positive definite if and only if its discriminant is positive and $\varepsilon_\R(q)=+1$
+  % and it is negative definite if and only if its discriminant is positive and $\varepsilon_\R(q)=-1.$"
+  \textit{Source: Ancona, arXiv:1806.03216, §9.}
+  A \(\Q\)-quadratic form \(q\) of rank \(2\) is positive definite if and only
+  if its discriminant is positive and \(\varepsilon_\R(q) = +1\), and it is
+  negative definite if and only if its discriminant is positive and
+  \(\varepsilon_\R(q) = -1\).
+\end{remark}
+
+\begin{proposition}[Local invariants determine a rank-two form over $\Q_p$]
+  \label{prop:local-invariant}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.rank2FormIsoQp}
+  \uses{def:hilbert-symbol}
+  % SOURCE: [Ancona], §9, Proposition (localinvariant), citing [Serre, Cours d'arithmétique, §2.3] (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let $p$ be a prime number and $q_1$ and $q_2$   two non-degenerate $\Q$-quadratic forms of rank $2$. Then
+  % \[q_1 \otimes \Q_p \cong q_2 \otimes \Q_p\]
+  % if and only if the discriminants of $q_1$ and $q_2$ coincide in $\Q_p^*/(\Q_p^*)^2$ and
+  % \[\varepsilon_p(q_1)=\varepsilon_p(q_2).\]"
+  \textit{Source: Ancona, arXiv:1806.03216, §9 (Serre, \emph{Cours d'arithmétique}, §2.3).}
+  Let \(p\) be a prime and \(q_1, q_2\) two non-degenerate \(\Q\)-quadratic
+  forms of rank \(2\). Then
+  \[q_1 \otimes \Q_p \cong q_2 \otimes \Q_p\]
+  if and only if the discriminants of \(q_1\) and \(q_2\) coincide in
+  \(\Q_p^*/(\Q_p^*)^2\) and \(\varepsilon_p(q_1) = \varepsilon_p(q_2)\).
+\end{proposition}
+
+\begin{proof}
+  \uses{def:hilbert-symbol}
+  \textit{Source: Serre, Cours d'arithmétique, §2.3 (classical; proof sketch
+  supplied).}
+  Over a \(p\)-adic field a non-degenerate quadratic form of a given rank is
+  classified up to isomorphism by two invariants: its discriminant, viewed in
+  \(\Q_p^*/(\Q_p^*)^2\), and its Hasse--Witt invariant. Two such forms of equal
+  rank over \(\Q_p\) are therefore isomorphic if and only if both invariants
+  agree. For a rank-two form the Hasse--Witt invariant reduces to a single
+  Hilbert symbol, which — by the defining equation \(x^2 - q(y,z) = 0\) of
+  \cref{def:hilbert-symbol} — is exactly \(\varepsilon_p(q)\). Hence for
+  rank-two forms the pair (discriminant in \(\Q_p^*/(\Q_p^*)^2\),
+  \(\varepsilon_p\)) is a complete system of invariants, and
+  \(q_1 \otimes \Q_p \cong q_2 \otimes \Q_p\) if and only if the discriminants
+  of \(q_1\) and \(q_2\) coincide in \(\Q_p^*/(\Q_p^*)^2\) and
+  \(\varepsilon_p(q_1) = \varepsilon_p(q_2)\).
+\end{proof}
+
+\begin{theorem}[Product formula for the Hilbert symbol]
+  \label{thm:product-formula}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.hilbertProductFormula}
+  \uses{def:hilbert-symbol}
+  % SOURCE: [Ancona], §9, Theorem (productformula), citing [Serre, Cours d'arithmétique, §3.1] (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let $q$ be non-degenerate $\Q$-quadratic form of rank $2$ and $\varepsilon_\nu(q)$ be as in Definition \ref{Hilbert}. Then for all but finite places $\nu$ the equality $\varepsilon_\nu(q)=+1$ holds. Moreover, the following product formula running on all places holds
+  % \[\prod_\nu  \varepsilon_\nu(q)= +1.\]"
+  \textit{Source: Ancona, arXiv:1806.03216, §9 (Serre, \emph{Cours d'arithmétique}, §3.1).}
+  Let \(q\) be a non-degenerate \(\Q\)-quadratic form of rank \(2\), with Hilbert
+  symbols \(\varepsilon_\nu(q)\) as in \cref{def:hilbert-symbol}. Then
+  \(\varepsilon_\nu(q) = +1\) for all but finitely many places \(\nu\), and the
+  product formula over all places holds:
+  \[\prod_\nu \varepsilon_\nu(q) = +1.\]
+\end{theorem}
+
+\begin{proof}
+  \uses{def:hilbert-symbol}
+  \textit{Source: Serre, Cours d'arithmétique, §3.1 (classical; proof sketch
+  supplied).}
+  Up to scaling, diagonalize \(q = \langle a, b \rangle\) with
+  \(a, b \in \Q^*\). By \cref{def:hilbert-symbol} the local invariant
+  \(\varepsilon_\nu(q)\) is then the Hilbert symbol \((a,b)_\nu\) of \(\Q\) at
+  the place \(\nu\), measuring whether \(z^2 = a x^2 + b y^2\) has a nonzero
+  solution over \(\Q_\nu\). For a place \(\nu\) not lying over \(2\), \(\infty\),
+  or a prime dividing \(ab\), both \(a\) and \(b\) are units in \(\Z_\nu\) and
+  the form \(\langle a, b \rangle\) represents every unit, so
+  \((a,b)_\nu = +1\); this leaves only the finitely many places dividing
+  \(2 a b \infty\), giving the finiteness assertion. The global identity
+  \[\prod_\nu \varepsilon_\nu(q) = \prod_\nu (a,b)_\nu = +1\]
+  is Hilbert reciprocity for \(\Q\), which is equivalent to the law of quadratic
+  reciprocity together with its supplementary laws.
+\end{proof}
+
+\begin{corollary}[Sign comparison from $\ell$-adic data]
+  \label{cor:signature-top}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.signatureComparison}
+  \uses{def:hilbert-symbol, rem:rank2-signature, prop:local-invariant, thm:product-formula}
+  % SOURCE: [Ancona], §9, Corollary (signaturetop) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let $q_1$ and $q_2$  be two non-degenerate $\Q$-quadratic forms of rank $2$ and let $p$ be a prime number. Suppose that, for all primes $\ell$ different from $p$, we have
+  % \[q_1 \otimes \Q_\ell \cong q_2 \otimes \Q_\ell.\]
+  % Then $q_1$ is positive definite if and only if one of the following two cases happens:
+  % \begin{enumerate}
+  % \item  The quadratic forms $q_1\otimes \Q_p$ and $q_2\otimes \Q_p$ are isomorphic and $q_2$ is positive definite.
+  % \item  The quadratic forms $q_1\otimes \Q_p$ and $q_2\otimes \Q_p$ are not isomorphic and $q_2$ is negative definite.
+  % \end{enumerate}"
+  \textit{Source: Ancona, arXiv:1806.03216, §9.}
+  Let \(q_1, q_2\) be two non-degenerate \(\Q\)-quadratic forms of rank \(2\),
+  and let \(p\) be a prime. Suppose that
+  \[q_1 \otimes \Q_\ell \cong q_2 \otimes \Q_\ell \qquad
+    \text{for all primes } \ell \neq p.\]
+  Then \(q_1\) is positive definite if and only if one of the following holds:
+  \begin{enumerate}
+    \item \(q_1 \otimes \Q_p\) and \(q_2 \otimes \Q_p\) are isomorphic and
+      \(q_2\) is positive definite; or
+    \item \(q_1 \otimes \Q_p\) and \(q_2 \otimes \Q_p\) are not isomorphic and
+      \(q_2\) is negative definite.
+  \end{enumerate}
+\end{corollary}
+
+% SOURCE QUOTE PROOF: "The $\ell$-adic hypothesis implies in particular that the discriminants of $q_1$ and $q_2$ coincide in $ \Q_\ell^*/(\Q_\ell^*)^2$
+%  for all   $\ell\neq p$. This implies that they coincide in $ \Q^*/(\Q^*)^2$
+% by \cite[Theorem 3 in 5.2]{Ireland}.
+% If the discriminants are negative, none of the conditions in the statement holds and the equivalence is clear. From now on we suppose that the discriminants are   positive. By Remark \ref{remarksignature}, $q_1$ is positive definite if and only $\varepsilon_\R(q_1)=+1.$
+% There are then two cases, namely $q_2$ is positive definite, respectively $q_2$ is negative definite. Again by Remark \ref{remarksignature} they are equivalent to $\varepsilon_\R(q_2)=+1$, respectively $\varepsilon_\R(q_2)=-1$.
+% Now, Theorem \ref{productformula} implies that
+% $\prod_\nu  \varepsilon_\nu(q_1)=\prod_\nu  \varepsilon_\nu(q_2).$
+% Combining this with the $\ell$-adic isomorphisms we deduce
+% \[\varepsilon_\R(q_1)\varepsilon_p(q_1)=\varepsilon_\R(q_2)\varepsilon_p(q_2).\] This means that $q_1$ is positive definite if and only if
+%  \[\varepsilon_p(q_1)=\varepsilon_\R(q_2)\varepsilon_p(q_2).\]
+%  This relation is equivalent to the fact that one of the following two situations hold:
+%  \begin{enumerate}
+% \item   $q_2$ is positive definite and $\varepsilon_p(q_1)=\varepsilon_p(q_2).$
+% \item  $q_2$ is negative definite and $\varepsilon_p(q_1)\neq\varepsilon_p(q_2).$
+% \end{enumerate}
+% As the discriminant of $q_1$ and $q_2$ coincide, the equality $\varepsilon_p(q_1)=\varepsilon_p(q_2)$ is equivalent to the fact that $q_1\otimes \Q_p$ and $q_2\otimes \Q_p$ are isomorphic (Proposition \ref{localinvariant})."
+\begin{proof}
+  \uses{rem:rank2-signature, prop:local-invariant, thm:product-formula}
+  The \(\ell\)-adic hypothesis implies that the discriminants of \(q_1\) and
+  \(q_2\) coincide in \(\Q_\ell^*/(\Q_\ell^*)^2\) for all \(\ell \neq p\), and
+  hence (by the Hasse principle for squares in \(\Q\)) coincide already in
+  \(\Q^*/(\Q^*)^2\).
+
+  If the common discriminant is negative, none of the listed conditions holds
+  and neither does positive definiteness, so the equivalence is clear. Assume
+  henceforth the discriminant is positive. By \cref{rem:rank2-signature},
+  \(q_1\) is positive definite if and only if \(\varepsilon_\R(q_1) = +1\), and
+  \(q_2\) is positive (resp.\ negative) definite if and only if
+  \(\varepsilon_\R(q_2) = +1\) (resp.\ \(-1\)).
+
+  By \cref{thm:product-formula},
+  \(\prod_\nu \varepsilon_\nu(q_1) = \prod_\nu \varepsilon_\nu(q_2) = +1\).
+  Combining this with the \(\ell\)-adic isomorphisms (which give
+  \(\varepsilon_\ell(q_1) = \varepsilon_\ell(q_2)\) for all \(\ell \neq p\))
+  leaves only the real and \(p\)-adic places, whence
+  \[\varepsilon_\R(q_1)\,\varepsilon_p(q_1)
+    = \varepsilon_\R(q_2)\,\varepsilon_p(q_2).\]
+  Thus \(q_1\) is positive definite, i.e.\ \(\varepsilon_\R(q_1) = +1\), if and
+  only if \(\varepsilon_p(q_1) = \varepsilon_\R(q_2)\,\varepsilon_p(q_2)\); that
+  is, if and only if either \(q_2\) is positive definite and
+  \(\varepsilon_p(q_1) = \varepsilon_p(q_2)\), or \(q_2\) is negative definite
+  and \(\varepsilon_p(q_1) \neq \varepsilon_p(q_2)\). Since the discriminants of
+  \(q_1\) and \(q_2\) coincide, the equality
+  \(\varepsilon_p(q_1) = \varepsilon_p(q_2)\) is, by
+  \cref{prop:local-invariant}, equivalent to \(q_1 \otimes \Q_p\) and
+  \(q_2 \otimes \Q_p\) being isomorphic. This is the assertion.
+\end{proof}
+
+\section*{Reduction to a $p$-adic comparison}
+
+\begin{proposition}[$p$-adic reduction of the main theorem]
+  \label{prop:padic-reduction}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.padicReduction}
+  \uses{def:mainthm-setup, prop:mainthm-properties, cor:signature-top}
+  % SOURCE: [Ancona], §9, Proposition (padicreduction) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let us keep notation from Theorem \ref{mainthm}. Let $p$ be the characteristic of $k$ and $i$ be the unique non-negative integer such that the Hodge structure $V_B$ is of type $(i,-i)$ and  $(-i,i)$. Then, the quadratic form $q_Z$ is positive definite if and only if the  following   holds:
+  % \begin{enumerate}
+  % \item When $i$ is even: the quadratic forms $q_B\otimes \Q_p$ and $q_Z\otimes \Q_p$ are isomorphic.
+  % \item  When $i$ is odd: the quadratic forms $q_B\otimes \Q_p$ and $q_Z\otimes \Q_p$ are not isomorphic.
+  % \end{enumerate}"
+  \textit{Source: Ancona, arXiv:1806.03216, §9.}
+  Keep the notation of \cref{def:mainthm-setup}. Let \(p\) be the characteristic
+  of \(k\), and let \(i\) be the unique non-negative integer such that the Hodge
+  structure \(V_B\) is of type \((i,-i)\) and \((-i,i)\). Then \(q_Z\) is
+  positive definite if and only if:
+  \begin{enumerate}
+    \item when \(i\) is even, the quadratic forms \(q_B \otimes \Q_p\) and
+      \(q_Z \otimes \Q_p\) are isomorphic; and
+    \item when \(i\) is odd, the quadratic forms \(q_B \otimes \Q_p\) and
+      \(q_Z \otimes \Q_p\) are not isomorphic.
+  \end{enumerate}
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "By  Proposition \ref{tortura}(\ref{giorno}), we have that $q_Z \otimes \Q_\ell = R_\ell(q_{\vert{k}})$. By the comparison theorem, we have $q_B \otimes \Q_\ell = R_\ell(q_{\vert{\C}})$. Combining these equalities with smooth proper base change in $\ell$-adic cohomology   we deduce that \[q_B \otimes \Q_\ell = q_Z \otimes \Q_\ell.\]
+% On the other hand, by hypothesis, $q_B$ is a polarization for the Hodge structure $V_B$ hence it is positive definite if $i$ is even and negative definite if $i$ is odd. We can now conclude by applying Corollary \ref{signaturetop} to $q_1=q_Z$ and $q_2=q_B$."
+\begin{proof}
+  \uses{prop:mainthm-properties, cor:signature-top}
+  By \cref{prop:mainthm-properties}\,(part~(5)) we
+  have \(q_Z \otimes \Q_\ell = R_\ell(q_{\vert{k}})\), and by the comparison
+  theorem \(q_B \otimes \Q_\ell = R_\ell(q_{\vert\C})\). Combining these with
+  smooth proper base change in \(\ell\)-adic cohomology yields
+  \[q_B \otimes \Q_\ell = q_Z \otimes \Q_\ell \qquad
+    \text{for all } \ell \neq p.\]
+  On the other hand, by hypothesis \(q_B\) is a polarization of the Hodge
+  structure \(V_B\), hence \(q_B\) is positive definite when \(i\) is even and
+  negative definite when \(i\) is odd. The claim now follows by applying
+  \cref{cor:signature-top} with \(q_1 = q_Z\) and \(q_2 = q_B\).
+\end{proof}

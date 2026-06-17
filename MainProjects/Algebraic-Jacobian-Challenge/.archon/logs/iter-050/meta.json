@@ -1,0 +1,40 @@
+{
+  "iteration": 50,
+  "stage": "prover  (iteration 049 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **top-supremum HModule transport**: append two declarations to `Cohomology/MayerVietoris.lean` `section CoverTotality` (inside `namespace AlgebraicGeometry.Scheme`), after iter-037's `module_finite_HModule_of_HModule'_X\u2084_curve` (currently L1020), before `end CoverTotality` (L1022): (1) `theorem subsingleton_HModule_of_isCechAcyclicCover_top` \u2014 chains iter-048's `subsingleton_HModule'_supr_of_isCechAcyclicCover` consumer with iter-034's `HModule'_eq_HModule_linearEquiv` universe bridge, transporting `Subsingleton` from `HModule' k F n \u22a4` to `HModule k F n` when `\u2a06\ud835\udcb0 = \u22a4`; (2) `theorem subsingleton_HModule_of_isCechAcyclicCover_top_curve` \u2014 curve specialisation at `F := toModuleKSheaf C`. Iter-048 closure verified (this pass): all three iter-048 declarations land cleanly at L876 (`IsCechAcyclicCover`), L899 (`subsingleton_HModule'_supr_of_isCechAcyclicCover`), L920 (`subsingleton_HModule'_supr_of_isCechAcyclicCover_curve`); sorry count `9 \u2192 9`; file LOC `865 \u2192 931` (+66, vs +30-50 plan estimate band, slight overage from multi-paragraph docstrings, within tolerance). Plan-agent `lean_run_code` probe (this pass) confirms both iter-049 declaration bodies compile end-to-end with kernel-only axioms `[propext, Classical.choice, Quot.sound]`. Iter-049 sorry trajectory `9 \u2192 9` (no transient \u2014 bodies probe-confirmed). Phase A iterations-remaining held at ~5 (no change from iter-048).",
+  "mode": "parallel",
+  "startedAt": "2026-05-10T05:40:38Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1090
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 196
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 673
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "a74899c"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 26
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 5
+    }
+  },
+  "completedAt": "2026-05-10T07:02:25Z",
+  "wallTimeSecs": 4907
+}

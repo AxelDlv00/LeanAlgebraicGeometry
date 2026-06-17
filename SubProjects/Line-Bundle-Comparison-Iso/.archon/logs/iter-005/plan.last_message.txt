@@ -1,0 +1,16 @@
+Updated the plan state and objective files for iter-005.
+
+- [`PROGRESS.md`](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/PROGRESS.md) and [`task_pending.md`](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/task_pending.md) now use the actual `AlgebraicJacobian/...` Lean paths.
+- Wrote [`iter-005/plan.md`](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/iter/iter-005/plan.md) and [`iter-005/objectives.md`](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/iter/iter-005/objectives.md).
+- Cleared the processed subagent reports from `task_results/`.
+
+Audit result:
+- `strategy-critic`: `SOUND`
+- `progress-critic`: `CHURNING`, but dispatch is `OK`; corrective is to fill the two ready lanes
+- `blueprint-reviewer`: failed on model capacity before producing a report, so there is no fresh formal blueprint verdict this iter
+
+Current prover objectives remain:
+- `AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean`
+- `AlgebraicJacobian/Picard/TensorObjSubstrate.lean`
+
+The next move is to run those two lanes. If capacity frees up later, rerun the blueprint review.

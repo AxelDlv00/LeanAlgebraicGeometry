@@ -1,0 +1,29 @@
+{
+  "iteration": 144,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-18T10:47:23Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "5641da01-e660-4e99-93f9-296379ff06f1",
+    "durationSecs": 2530
+  },
+  "planValidate": {
+    "strategyBloat": true,
+    "strategyLines": 666,
+    "strategyBytes": 118884,
+    "strategyLeanFences": 0,
+    "strategyTexEnvs": 0,
+    "status": "ok_intentional_skip",
+    "objectives": 0
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 0
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "716d6963-8fb0-43f5-9cd1-b0174957b384",
+    "durationSecs": 574
+  }
+}

@@ -1,0 +1,37 @@
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ───────────────────────────────
+
+[ARCHON] Agent model: opus (blueprint-writer)
+Done. Rendering-cleanup pass complete for `blueprint/src/chapters/Albanese_CodimOneExtension.tex`.
+
+## Summary
+
+Fixed all **8 `math-delim` interleaved sites** — the inverted `$MATH\( prose \)MATH$` pattern — normalising each to `\(...\)` math with prose outside:
+
+| Line | Context |
+|------|---------|
+| 186–187 | `CodimOneFree` def, Lean-encoding prose |
+| 1685–1686 | `codim_one_extension` theorem statement |
+| 1731–1732 | theorem proof, Step 1 |
+| 1806–1807 | `milne_codim1_indeterminacy` lemma statement |
+| 1884–1885 | proof, Sub-step 2 |
+| 1894–1895 | proof, Sub-step 3 |
+| 1928–1931 | proof, Conclusion (two formulas) |
+| 2030–2031 | remark/proof condition (2) |
+
+Math content preserved exactly; only delimiters changed.
+
+**Verification passed:** zero `REF` placeholders; zero non-comment lines mixing `$` with `\(`/`\)`; no `\cref` needed (no ref defects); no statement text, `\lean{}`, `\label{}`, `\uses{}`, or `\leanok` touched; no blocks added/removed.
+
+**Correctly left alone:** `$...$` inside `%` source-quote comments (don't render) and balanced single-style `$...$` in lemma titles (not interleaved, and titles are protected statement text).
+
+One caveat noted in the report: the large whole-file `git diff` is pre-existing uncommitted working-tree content, not this pass — my contribution is exactly the 8 delimiter edits.
+[COST] 3.5min | $1.5575 | in=4435 out=14717 | turns=19
+[ARCHON] ✓ blueprint-writer/render-codimone finished (374s)
+render-codimone: COMPLETE — see /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/task_results/blueprint-writer-render-codimone.md (archived: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/logs/iter-279/blueprint-writer-render-codimone-report.md)

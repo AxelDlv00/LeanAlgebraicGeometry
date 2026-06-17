@@ -1,0 +1,406 @@
+\chapter{Standard conjecture of Hodge type}
+
+This chapter is a faithful transcription of \S3 of Ancona's paper. We recall the
+two classical standard conjectures of K\"unneth and Lefschetz type (due to
+Grothendieck), record the standing assumption that \(X\) satisfies them
+(verified in particular by abelian varieties), construct the motivic and
+primitive pairings, and state the standard conjecture of Hodge type. We then
+prove the first reduction steps: the kernel/perfectness results, the classical
+divisor case, the equivalent codimension-two signature formulation for
+fourfolds, and the reduction to a finite field. Finally we state the project's
+main theorem (\cref{thm:scht}) and record the forward-referencing proof sketch
+assembled in \S8 of the paper. Every downstream result of the project ultimately
+serves \cref{thm:scht}.
+
+Throughout the chapter, \(k\) is a base field, \(H^*\) is a fixed classical Weil
+cohomology with associated realization functor \(R\) (see the Conventions
+chapter), \(X\) is a variety over \(k\) of dimension \(d\), and \(L\) is an ample
+divisor on \(X\). We write \(\hh(X)\) for the homological motive of \(X\) with
+respect to \(H^*\). The whole chapter is written under
+\cref{ass:kun-lef}.
+
+\begin{conjecture}[Standard conjecture of K\"unneth type]
+  \label{conj:kunneth}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.KunnethConjecture}
+  % SOURCE: [Ancona], §3, Conjecture (conjkun) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "There exists a decomposition
+  % \[\mathfrak{h}(X)=\bigoplus_{n=0}^{2d} \mathfrak{h}^n(X)\]
+  % such that $R(\mathfrak{h}^n(X))=H^n(X)$ and $h^n(X)=h^{2d-n}(X)^{\vee}(-d).$"
+  \textit{Source: Ancona, arXiv:1806.03216, §3.}
+  There exists a decomposition
+  \[\hh(X) = \bigoplus_{n=0}^{2d} \hh^n(X)\]
+  in homological motives such that \(R(\hh^n(X)) = H^n(X)\) for every \(n\), and
+  such that the duality
+  \[\hh^n(X) = \hh^{2d-n}(X)^{\vee}(-d)\]
+  holds. This is a classical conjecture and is assumed in what follows.
+\end{conjecture}
+
+\begin{conjecture}[Standard conjecture of Lefschetz type]
+  \label{conj:lefschetz}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.LefschetzConjecture}
+  % SOURCE: [Ancona], §3, Conjecture (conjlef) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "For all $n \leq d$, there is an isomorphism
+  % \[\mathfrak{h}^n(X) \isocan \mathfrak{h}^{2d-n}(X)(d-n)\]
+  % induced by the cup product with $L^{d-n}$. Moreover, the K\"unneth decomposition can be refined to a  decomposition
+  % \[\mathfrak{h}^n(X)= \mathfrak{h}^{n,\prim}(X)\oplus \mathfrak{h}^{n-2}(X)(-1)\]
+  %  which realizes to the primitive decomposition of $H^n(X)$."
+  \textit{Source: Ancona, arXiv:1806.03216, §3.}
+  For all \(n \leq d\), cup product with \(L^{d-n}\) induces a canonical
+  isomorphism
+  \[\hh^n(X) \cong \hh^{2d-n}(X)(d-n).\]
+  Moreover, the K\"unneth decomposition of \cref{conj:kunneth} refines to a
+  primitive Lefschetz decomposition
+  \[\hh^n(X) = \hh^{n,\prim}(X) \oplus \hh^{n-2}(X)(-1)\]
+  which realizes to the primitive decomposition of \(H^n(X)\). This is a
+  classical conjecture and is assumed in what follows.
+\end{conjecture}
+
+\begin{remark}
+  By the work of Lieberman and Kleiman the conjectures of K\"unneth and Lefschetz
+  type are known for abelian varieties.
+\end{remark}
+
+\begin{definition}[Assumption: K\"unneth and Lefschetz]
+  \label{ass:kun-lef}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.KunnethLefschetzAssumption}
+  \uses{conj:kunneth, conj:lefschetz}
+  % SOURCE: [Ancona], §3, Assumption (kun+lef) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "From now on we will assume that $X$ verifies the   Conjectures \ref{conjkun} and \ref{conjlef}."
+  \textit{Source: Ancona, arXiv:1806.03216, §3.}
+  We say that \(X\) satisfies the \emph{K\"unneth--Lefschetz assumption} if it
+  verifies both the standard conjecture of K\"unneth type (\cref{conj:kunneth})
+  and the standard conjecture of Lefschetz type (\cref{conj:lefschetz}). This
+  assumption is satisfied in particular by abelian varieties, and is in force
+  throughout the chapter.
+\end{definition}
+
+\begin{remark}
+  Under \cref{ass:kun-lef} the K\"unneth and Lefschetz isomorphisms combine into
+  a canonical isomorphism \(\hh^n(X) \cong \hh^{n}(X)^{\vee}(-n)\), which by
+  adjunction yields a pairing
+  \[q_n : \hh^n(X) \otimes \hh^{n}(X) \longrightarrow \one(-n),\]
+  with respect to which the Lefschetz decomposition
+  \(\hh^{n}(X) = \hh^{n,\prim}(X) \oplus \hh^{n-2}(X)(-1)\) is orthogonal.
+\end{remark}
+
+\begin{definition}[Motivic pairing]
+  \label{def:pairing-mot}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.motivicPairing}
+  \uses{ass:kun-lef, def:chow-motives}
+  % SOURCE: [Ancona], §3, Remark and Definition (defpairingmot) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Conjectures \ref{conjkun} and \ref{conjlef} induce an isomorphism
+  % \[\mathfrak{h}^n(X) \isocan \mathfrak{h}^{n}(X)^{\vee}(-n).\]
+  % By adjunction this gives a pairing
+  % \[q_n : \mathfrak{h}^n(X) \otimes \mathfrak{h}^{n}(X)  \longrightarrow \one(-n).\]
+  % By construction  the Lefschetz decomposition
+  % \[\mathfrak{h}^{n }(X)=\mathfrak{h}^{n,\prim}(X) \oplus \mathfrak{h}^{n-2}(X)(-1)\]
+  % is orthogonal with respect to this pairing."
+  % SOURCE QUOTE: "For $n\leq d$, we define the pairing
+  % \[\langle \cdot, \cdot \rangle_{n,\mot} : \mathfrak{h}^n(X) \otimes \mathfrak{h}^{n}(X)  \longrightarrow \one(-n)\]
+  % recursively on $n$, by slightly modifying the pairing $q_n$ of the above remark. We impose that  the Lefschetz decomposition
+  % \[\mathfrak{h}^{n }(X)=\mathfrak{h}^{n,\prim}(X) \oplus \mathfrak{h}^{n-2}(X)(-1)\]
+  % is still orthogonal, we impose the equality $\langle \cdot, \cdot \rangle_{n,\mot} =\langle \cdot, \cdot \rangle_{n-2,\mot}(-2) $ on $\mathfrak{h}^{n-2}(X)(-1)$  and finally on $\mathfrak{h}^{n,\prim}(X)$ we define \[\langle \cdot, \cdot \rangle_{n,\mot}  = (-1)^{n(n+1)/2}q_n. \]"
+  \textit{Source: Ancona, arXiv:1806.03216, §3.}
+  For \(n \leq d\) the \emph{motivic pairing}
+  \[\langle \cdot, \cdot \rangle_{n,\mathrm{mot}} : \hh^n(X) \otimes \hh^{n}(X)
+    \longrightarrow \one(-n)\]
+  is defined recursively on \(n\) by modifying the adjunction pairing \(q_n\) of
+  the previous remark, as follows:
+  \begin{itemize}
+    \item the Lefschetz decomposition
+      \(\hh^{n}(X) = \hh^{n,\prim}(X) \oplus \hh^{n-2}(X)(-1)\) is required to be
+      orthogonal;
+    \item on the summand \(\hh^{n-2}(X)(-1)\) one imposes the equality
+      \(\langle \cdot, \cdot \rangle_{n,\mathrm{mot}} =
+      \langle \cdot, \cdot \rangle_{n-2,\mathrm{mot}}(-2)\);
+    \item on the primitive part \(\hh^{n,\prim}(X)\) one sets
+      \(\langle \cdot, \cdot \rangle_{n,\mathrm{mot}} = (-1)^{n(n+1)/2} q_n\).
+  \end{itemize}
+\end{definition}
+
+\begin{remark}\label{rem:hodge-type-pola}
+  If \(k\) is embedded in \(\C\), the Betti realization of
+  \(\langle \cdot, \cdot \rangle_{n,\mathrm{mot}}\) is a polarization of the Hodge
+  structure \(H^n(X)\).
+\end{remark}
+
+\begin{definition}[Primitive pairing on numerical cycles]
+  \label{def:primitive-pairing}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.primitivePairing}
+  \uses{def:pairing-mot, def:num-cycles}
+  % SOURCE: [Ancona], §3, Definition (defpairing) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "For $n \leq d/2$, we  define the pairing
+  % \[\langle \cdot, \cdot \rangle_{n} : \mathcal{Z}^{n}_{\hom}(X)_{\Q}  \times  \mathcal{Z}^{n}_{\hom}(X)_{\Q}  \longrightarrow \Q=\End(\one)\]
+  % as follows. For $\alpha, \beta  \in \mathcal{Z}^{n}_{\hom}(X)_{\Q}  = \Hom (\one, \mathfrak{h}^{2n}(X)(n))$ consider
+  % \[(\alpha \otimes \beta)  \in   \Hom (\one, \mathfrak{h}^{2n}(X) \otimes \mathfrak{h}^{2n}(X)(2n))\] and define
+  % \[\langle \alpha, \beta \rangle_{n} =      \langle \cdot, \cdot \rangle_{2n,\mot} (2n) \circ  (\alpha \otimes \beta).\]"
+  % SOURCE QUOTE: "For $n \leq d/2$, define  $\mathcal{Z}^{n,\prim}_{\num}(X)_{\Q} \subset \mathcal{Z}^{n}_{\num}(X)_{\Q}$ as
+  % \[\mathcal{Z}^{n,\prim}_{\num}(X)_{\Q}  = \Hom_{\NUM(k)_\Q}(\one, \mathfrak{h}^{2n,\prim}(X)(n)).\]  We will keep the same notation as in (1) for the induced pairing
+  % \[\langle \cdot, \cdot \rangle_{n} : \mathcal{Z}^{n,\prim}_{\num}(X)_{\Q}  \times  \mathcal{Z}^{n,\prim}_{\num}(X)_{\Q}  \longrightarrow \Q.\]"
+  % SOURCE QUOTE: "The  above definition is equivalent to the one given in the introduction, namely
+  % \[\mathcal{Z}^{n,\prim}_{\num}(X)_{\Q} = \{\alpha \in \mathcal{Z}^{n}_{\num}(X)_{\Q} , \hspace{0.2cm} \alpha \cdot L^ {{d-2n+1}}=0 \hspace{0.2cm}  \textrm{in}  \hspace{0.2cm}  \mathcal{Z}^{d-n+1}_{\num}(X)_{\Q}\}.\]
+  % Moreover,  for $\alpha$ and $\beta$ in $\mathcal{Z}^{n,\prim}_{\num}(X)_{\Q}$,  we have the equality \[\langle \alpha, \beta \rangle_{n} =  (-1)^n \alpha \cdot \beta \cdot L^{d-2n}.\]"
+  \textit{Source: Ancona, arXiv:1806.03216, §3.}
+  Fix \(n \leq d/2\). For
+  \(\alpha, \beta \in \mathcal{Z}^{n}_{\hom}(X)_{\Q} =
+  \Hom(\one, \hh^{2n}(X)(n))\), form
+  \(\alpha \otimes \beta \in
+  \Hom(\one, \hh^{2n}(X) \otimes \hh^{2n}(X)(2n))\) and define
+  \[\langle \alpha, \beta \rangle_{n} =
+    \langle \cdot, \cdot \rangle_{2n,\mathrm{mot}}(2n) \circ (\alpha \otimes \beta)
+    \;\in\; \Q = \End(\one).\]
+  The \emph{space of primitive numerical cycles} is the subspace
+  \[\mathcal{Z}^{n,\prim}_{\num}(X)_{\Q} =
+    \Hom_{\NUM(k)_\Q}\bigl(\one, \hh^{2n,\prim}(X)(n)\bigr)
+    \subset \mathcal{Z}^{n}_{\num}(X)_{\Q},\]
+  on which \(\langle \cdot, \cdot \rangle_{n}\) induces a pairing
+  \[\langle \cdot, \cdot \rangle_{n} :
+    \mathcal{Z}^{n,\prim}_{\num}(X)_{\Q} \times
+    \mathcal{Z}^{n,\prim}_{\num}(X)_{\Q} \longrightarrow \Q.\]
+  This admits the equivalent elementary description
+  \[\mathcal{Z}^{n,\prim}_{\num}(X)_{\Q} =
+    \{\alpha \in \mathcal{Z}^{n}_{\num}(X)_{\Q} :
+    \alpha \cdot L^{d-2n+1} = 0 \text{ in } \mathcal{Z}^{d-n+1}_{\num}(X)_{\Q}\},\]
+  and for \(\alpha, \beta \in \mathcal{Z}^{n,\prim}_{\num}(X)_{\Q}\) one has
+  \[\langle \alpha, \beta \rangle_{n} = (-1)^n\, \alpha \cdot \beta \cdot L^{d-2n}.\]
+\end{definition}
+
+\begin{conjecture}[Standard conjecture of Hodge type]
+  \label{conj:hodge-type}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.HodgeTypeConjecture}
+  \uses{def:primitive-pairing}
+  % SOURCE: [Ancona], §3, Conjecture (conjscht) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "For all $n \leq d/2$, the pairing  \[\langle \cdot, \cdot \rangle_{n} : \mathcal{Z}^{n,\prim}_{\num}(X)_{\Q}  \times  \mathcal{Z}^{n,\prim}_{\num}(X)_{\Q}  \longrightarrow \Q\]
+  % of Definition \ref{defpairing} is positive definite."
+  \textit{Source: Ancona, arXiv:1806.03216, §3.}
+  For all \(n \leq d/2\), the pairing
+  \[\langle \cdot, \cdot \rangle_{n} :
+    \mathcal{Z}^{n,\prim}_{\num}(X)_{\Q} \times
+    \mathcal{Z}^{n,\prim}_{\num}(X)_{\Q} \longrightarrow \Q\]
+  of \cref{def:primitive-pairing} is positive definite.
+\end{conjecture}
+
+\begin{proposition}[Kernel of the pairing]
+  \label{prop:ker-pairing}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.kernel_pairing_eq_num_trivial}
+  \uses{def:primitive-pairing, def:num-equiv}
+  % SOURCE: [Ancona], §3, Proposition (kerpairing) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "The kernel of the pairing $\langle \cdot, \cdot \rangle_{n}$  on the vector space $\mathcal{Z}_{\hom}^{n}(X)_{\Q}$ is the space of algebraic classes  which are numerically trivial. The analogous statement holds true for $\mathcal{Z}_{\hom}^{n,\prim}(X)_{\Q}$."
+  \textit{Source: Ancona, arXiv:1806.03216, §3.}
+  The kernel of the pairing \(\langle \cdot, \cdot \rangle_{n}\) on the vector
+  space \(\mathcal{Z}_{\hom}^{n}(X)_{\Q}\) is exactly the space of algebraic
+  classes that are numerically trivial. The analogous statement holds for
+  \(\mathcal{Z}_{\hom}^{n,\prim}(X)_{\Q}\).
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "This is a direct consequence of a general fact. Let $T$ be a homological motive and suppose that it is endowed with an isomorphism
+% $f:T \isocan T^\vee$. Call $q: T \otimes T \rightarrow \one $ the pairing induced by adjunction. In analogy to Definition \ref{defpairing}, $q$ induces a pairing $\langle \cdot , \cdot \rangle$ on the space $\Hom(\one, T).$ First, notice that this pairing can also be described in the following way
+% \[\langle \alpha,\beta\rangle=\alpha^\vee \circ f \circ \beta.\]
+% This equality holds for formal reasons in any rigid category (alternatively, for homological motives, one can check it after realization).
+% Using this equality one has that $\beta$ is in the kernel of the pairing if and only if  $(\alpha^\vee \circ f) \circ \beta=0$ for all $\alpha$. As $f$ is an isomorphism, this is equivalent to the fact that $\gamma \circ \beta=0$ for all $\gamma\in\Hom(T,\one).$ This means precisely that $\beta$ is numerically trivial.
+% To conclude, notice that, by construction, one can apply this general fact to $T= \mathfrak{h}^{2n}(X)(n)$ or $T= \mathfrak{h}^{2n,\prim}(X)(n)$."
+\begin{proof}
+  \uses{def:primitive-pairing, def:num-equiv}
+  This follows from a general fact. Let \(T\) be a homological motive endowed
+  with an isomorphism \(f : T \cong T^\vee\), and let
+  \(q : T \otimes T \to \one\) be the pairing it induces by adjunction. As in
+  \cref{def:primitive-pairing}, \(q\) induces a pairing
+  \(\langle \cdot, \cdot \rangle\) on \(\Hom(\one, T)\), which admits the
+  description
+  \[\langle \alpha, \beta \rangle = \alpha^\vee \circ f \circ \beta.\]
+  This equality holds for formal reasons in any rigid category (and, for
+  homological motives, may be checked after realization). Hence \(\beta\) lies in
+  the kernel if and only if \((\alpha^\vee \circ f) \circ \beta = 0\) for all
+  \(\alpha\); since \(f\) is an isomorphism, this is equivalent to
+  \(\gamma \circ \beta = 0\) for all \(\gamma \in \Hom(T, \one)\), i.e. \(\beta\)
+  is numerically trivial. Applying this to \(T = \hh^{2n}(X)(n)\) and to
+  \(T = \hh^{2n,\prim}(X)(n)\) gives both statements.
+\end{proof}
+
+\begin{corollary}[Perfectness and semipositivity]
+  \label{cor:semipos}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.pairing_perfect_and_semipos}
+  \uses{prop:ker-pairing}
+  % SOURCE: [Ancona], §3, Corollary (semipos) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "The pairing $\langle \cdot, \cdot \rangle_{n}$  is perfect on $\mathcal{Z}_{\num}^{n}(X)_{\Q}$. Moreover the pairing  is positive definite on  $\mathcal{Z}_{\num}^{n}(X)_{\Q}$ if and only if it is positive semidefinite on $\mathcal{Z}_{\hom}^{n}(X)_{\Q}$. The analogous statements hold true for $\mathcal{Z}_{\num}^{\prim,n}(X)_{\Q}$."
+  \textit{Source: Ancona, arXiv:1806.03216, §3.}
+  The pairing \(\langle \cdot, \cdot \rangle_{n}\) is perfect on
+  \(\mathcal{Z}_{\num}^{n}(X)_{\Q}\). Moreover it is positive definite on
+  \(\mathcal{Z}_{\num}^{n}(X)_{\Q}\) if and only if it is positive semidefinite
+  on \(\mathcal{Z}_{\hom}^{n}(X)_{\Q}\). The analogous statements hold for
+  \(\mathcal{Z}_{\num}^{n,\prim}(X)_{\Q}\).
+\end{corollary}
+
+\begin{proof}
+  \uses{prop:ker-pairing}
+  By \cref{prop:ker-pairing} the kernel of \(\langle \cdot, \cdot \rangle_{n}\)
+  on \(\mathcal{Z}_{\hom}^{n}(X)_{\Q}\) is precisely the space of numerically
+  trivial classes. The numerical space \(\mathcal{Z}_{\num}^{n}(X)_{\Q}\) is the
+  quotient of \(\mathcal{Z}_{\hom}^{n}(X)_{\Q}\) by that kernel, so the induced
+  pairing on \(\mathcal{Z}_{\num}^{n}(X)_{\Q}\) has trivial kernel, i.e. is
+  perfect. Since a symmetric form that is positive semidefinite descends to a
+  positive definite form precisely on the quotient by its kernel, positive
+  semidefiniteness on \(\mathcal{Z}_{\hom}^{n}(X)_{\Q}\) is equivalent to
+  positive definiteness on \(\mathcal{Z}_{\num}^{n}(X)_{\Q}\). The same argument
+  applies verbatim with \(\hh^{2n}(X)(n)\) replaced by \(\hh^{2n,\prim}(X)(n)\),
+  giving the primitive statements.
+\end{proof}
+
+\begin{theorem}[Divisor case, Segre--Bronowski]
+  \label{thm:segre}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.segre_divisor_positive_definite}
+  \uses{def:primitive-pairing}
+  % SOURCE: [Ancona], §3, Theorem (segre) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Together with the case of characteristic zero (see the above remark), the following is the only known result on the standard conjecture of Hodge type \cite[5.3.2.3]{Andmot}."
+  % SOURCE QUOTE: "The pairing\label{segre} $\langle \cdot, \cdot \rangle_{1}$   on $\mathcal{Z}_{\num}^{1}(X)_{\Q}$ is positive definite. Equivalently, the pairing
+  % \[\mathcal{Z}^1_{\num}(X)_{\Q}\times \mathcal{Z}_{\num}^1(X)_{\Q} \longrightarrow \Q \hspace{1cm} D,D' \mapsto D\cdot D' \cdot L^{d-2}\]
+  % is of signature  $ (s_+;s_-) = (1;  \rho_1-1)$ with
+  %  $\rho_1=\dim \mathcal{Z}_{\num}^1(X)_{\Q}$."
+  \textit{Source: Ancona, arXiv:1806.03216, §3.}
+  The pairing \(\langle \cdot, \cdot \rangle_{1}\) on
+  \(\mathcal{Z}_{\num}^{1}(X)_{\Q}\) is positive definite. Equivalently, the
+  pairing
+  \[\mathcal{Z}^1_{\num}(X)_{\Q} \times \mathcal{Z}_{\num}^1(X)_{\Q}
+    \longrightarrow \Q, \qquad (D, D') \mapsto D \cdot D' \cdot L^{d-2}\]
+  has signature \((s_+; s_-) = (1; \rho_1 - 1)\), where
+  \(\rho_1 = \dim \mathcal{Z}_{\num}^1(X)_{\Q}\).
+\end{theorem}
+
+\begin{proof}
+  This is the classical Hodge index theorem for divisors (Segre--Bronowski). It
+  is the only previously known case of the standard conjecture of Hodge type in
+  positive characteristic, and we cite it as a known input (André,
+  \emph{Une introduction aux motifs}, 5.3.2.3). No proof is reproduced here.
+\end{proof}
+
+\begin{proposition}[Equivalent signature formulation for fourfolds]
+  \label{prop:any-polarization}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.hodge_type_iff_signature}
+  \uses{thm:segre, conj:hodge-type, def:primitive-pairing}
+  % SOURCE: [Ancona], §3, Proposition (anypolarization) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "The standard conjecture of Hodge type for a fourfold $X$  is equivalent to the statement that the intersection product
+  % \[\mathcal{Z}^2_{\num}(X)_{\Q}\times \mathcal{Z}_{\num}^2(X)_{\Q} \longrightarrow \Q\]
+  % is of signature  $ (s_+;s_-) = ( \rho_2 - \rho_1+1;  \rho_1-1)$ with
+  %  $\rho_n=\dim \mathcal{Z}_{\num}^n(X)_{\Q}$.
+  % In particular the conjecture does not depend on the ample divisor $L$ chosen."
+  \textit{Source: Ancona, arXiv:1806.03216, §3.}
+  For a fourfold \(X\), the standard conjecture of Hodge type
+  (\cref{conj:hodge-type}) is equivalent to the assertion that the intersection
+  product
+  \[\mathcal{Z}^2_{\num}(X)_{\Q} \times \mathcal{Z}_{\num}^2(X)_{\Q}
+    \longrightarrow \Q\]
+  has signature \((s_+; s_-) = (\rho_2 - \rho_1 + 1; \rho_1 - 1)\), where
+  \(\rho_n = \dim \mathcal{Z}_{\num}^n(X)_{\Q}\). In particular the conjecture is
+  independent of the chosen ample divisor \(L\).
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "By Theorem \ref{segre} the standard conjecture of Hodge type holds true for divisors.  Hence we have to study codimension $2$ cycles.
+% Consider the decomposition \[\mathcal{Z}^{2}_{\num}(X)_{\Q} = \mathcal{Z}^{2,\prim}_{\num}(X)_{\Q} \oplus L \cdot \mathcal{Z}^{1}_{\num}(X)_{\Q}\] induced by the Lefschetz decomposition \[\mathfrak{h}^{4}(X)=\mathfrak{h}^{4,\prim}(X) \oplus \mathfrak{h}^{2}(X)(-1).\]  It is orthogonal with respect to the intersection product as the Lefschetz decomposition is orthogonal with respect to the cup product (already at homological level).
+% We claim that the intersection product on  $L \cdot \mathcal{Z}^{1}_{\num}(X)_{\Q}$ is of signature $(1;  \rho_1-1)$. Assuming the claim notice that  the intersection product is positive definite on $\mathcal{Z}^{2,\prim}_{\num}(X)_{\Q}$ if and only if the intersection product of the total space $\mathcal{Z}^2_{\num}(X)_{\Q}$ has the predicted signature.
+% For the claim, consider $\alpha=L \cdot D$ an element of $L \cdot \mathcal{Z}^{1}_{\num}(X)_{\Q}$. Then we have
+% $\alpha\cdot \alpha = D \cdot D \cdot L^2$
+% hence the claim follows from Theorem \ref{segre}."
+\begin{proof}
+  \uses{thm:segre, def:primitive-pairing}
+  By \cref{thm:segre} the standard conjecture of Hodge type holds for divisors,
+  so it remains to study codimension-two cycles. The Lefschetz decomposition
+  \(\hh^{4}(X) = \hh^{4,\prim}(X) \oplus \hh^{2}(X)(-1)\) induces a decomposition
+  \[\mathcal{Z}^{2}_{\num}(X)_{\Q} =
+    \mathcal{Z}^{2,\prim}_{\num}(X)_{\Q} \oplus L \cdot \mathcal{Z}^{1}_{\num}(X)_{\Q},\]
+  orthogonal for the intersection product because the Lefschetz decomposition is
+  orthogonal for the cup product already at the homological level.
+
+  We claim the intersection product on \(L \cdot \mathcal{Z}^{1}_{\num}(X)_{\Q}\)
+  has signature \((1; \rho_1 - 1)\). Granting the claim, the intersection product
+  is positive definite on \(\mathcal{Z}^{2,\prim}_{\num}(X)_{\Q}\) if and only if
+  the intersection product on the total space \(\mathcal{Z}^2_{\num}(X)_{\Q}\) has
+  the predicted signature \((\rho_2 - \rho_1 + 1; \rho_1 - 1)\); and positive
+  definiteness on the primitive part is exactly the standard conjecture of Hodge
+  type for \(X\) in codimension two (via \cref{def:primitive-pairing}, noting
+  \(\langle \alpha, \beta \rangle_2 = \alpha \cdot \beta\) on the primitive part
+  of a fourfold, \(d - 2n = 0\)). For the claim, an element
+  \(\alpha = L \cdot D \in L \cdot \mathcal{Z}^{1}_{\num}(X)_{\Q}\) satisfies
+  \(\alpha \cdot \alpha = D \cdot D \cdot L^2\), so the claim follows from
+  \cref{thm:segre}. Since the formulation refers only to the intersection product
+  on \(\mathcal{Z}^2_{\num}(X)_{\Q}\), it does not depend on \(L\).
+\end{proof}
+
+\begin{proposition}[Reduction to a finite field]
+  \label{prop:reduce-finite}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.reduce_to_finite_field}
+  \uses{cor:semipos, ass:kun-lef}
+  % SOURCE: [Ancona], §3, Proposition (reducefinite) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let $X_0$ be a specialization of $X$. Suppose that $X_0$ as well satisfies the Assumption \ref{kun+lef} (with respect to the specialization of $L$). Then the standard conjecture of Hodge type for $X_0$ implies the standard conjecture of Hodge type for $X$."
+  \textit{Source: Ancona, arXiv:1806.03216, §3.}
+  Let \(X_0\) be a specialization of \(X\), and suppose \(X_0\) also satisfies
+  \cref{ass:kun-lef} (with respect to the specialization of \(L\)). Then the
+  standard conjecture of Hodge type for \(X_0\) implies the standard conjecture of
+  Hodge type for \(X\). In particular the conjecture reduces to varieties defined
+  over a finite field.
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "Consider the canonical inclusion  $\mathcal{Z}_{\hom}^{n,\prim}(X)_{\Q}\subset \mathcal{Z}_{\hom}^{n,\prim}(X_0)_{\Q}$ induced by smooth proper base change in $\ell$-adic cohomology. Then, if the pairing $\langle \cdot, \cdot \rangle_{n}$  is positive semidefinite  on $\mathcal{Z}_{\hom}^{n,\prim}(X_0)_{\Q}$ it must be so for  $\mathcal{Z}_{\hom}^{n,\prim}(X)_{\Q} $. On the other hand, by Corollary \ref{semipos}, this semipositivity property is a reformulation of the standard conjecture of Hodge type."
+\begin{proof}
+  \uses{cor:semipos}
+  Smooth proper base change in \(\ell\)-adic cohomology gives a canonical
+  inclusion
+  \(\mathcal{Z}_{\hom}^{n,\prim}(X)_{\Q} \subset
+  \mathcal{Z}_{\hom}^{n,\prim}(X_0)_{\Q}\). Hence if
+  \(\langle \cdot, \cdot \rangle_{n}\) is positive semidefinite on
+  \(\mathcal{Z}_{\hom}^{n,\prim}(X_0)_{\Q}\) it is positive semidefinite on the
+  subspace \(\mathcal{Z}_{\hom}^{n,\prim}(X)_{\Q}\). By \cref{cor:semipos} this
+  semipositivity is equivalent to the standard conjecture of Hodge type, so the
+  conjecture passes from \(X_0\) to \(X\).
+\end{proof}
+
+The following is the main result of the project; it is proved at the end of \S8
+of the paper, and the proof sketch is recorded below.
+
+\begin{theorem}[Standard conjecture of Hodge type for abelian fourfolds]
+  \label{thm:scht}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.standardConjectureHodgeType_abelianFourfold}
+  \uses{conj:hodge-type, prop:reduce-finite, prop:exotic-dim2, thm:honda-tate, prop:any-polarization, cor:cm-stable, lem:lefschetz-pairings, prop:scht-lefschetz, prop:factor-algebraic, cor:lifting-motives, thm:mainthm}
+  % SOURCE: [Ancona], §3, Theorem (thmscht) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "The standard conjecture of Hodge type holds for abelian fourfolds in positive characteristic."
+  \textit{Source: Ancona, arXiv:1806.03216, §3.}
+  The standard conjecture of Hodge type (\cref{conj:hodge-type}) holds for abelian
+  fourfolds in positive characteristic.
+\end{theorem}
+
+% SOURCE QUOTE PROOF: "Let $A$ be an abelian fourfold and $L$ be a hyperplane section. By Proposition \ref{reducefinite} we can suppose that $A$ and $L$ are defined over a finite field $k=\mathbb{F}_q$. Notice that, in order to prove Theorem \ref{thmscht}, we can (and will) replace $k$ by a finite extension.
+% Consider now the decomposition from Proposition \ref{primadecomposizione}(\ref{decomposizioneQ}) and, among the factors of this decomposition, consider
+% those that are exotic (Definition \ref{defexotic}). Then there exist a finite extension $k'$ of $k$ and a  CM-structure for $A\times_k k'$ such that any exotic motive  of $\mathfrak{h}^{4}(A\times_k k')$ has dimension two (Proposition \ref{exoticdim2}).  By Theorem \ref{HondaTate}, the CM-structure can be lifted    to characteristic zero.  Moreover, by Proposition \ref{anypolarization}, it is enough to work with a single $L$ for a given abelian fourfold. By Corollary \ref{CMstab} we can choose such an $L$ so that it lifts to characteristic zero and the CM-structure is $*$-stable (Definition \ref{definitionCM}).
+% Now, by Lemma \ref{accoppiamenti1} we can work with the pairing $\langle \cdot, \cdot \rangle_{1,\mot}^{\otimes 4}$ instead of $\langle \cdot, \cdot \rangle_{4,\mot}$. For this pairing, the decomposition from Proposition \ref{primadecomposizione}(\ref{decomposizioneQ}) is orthogonal, hence we can work with a single motive of the decomposition. By Propositions \ref{oklefschetz} and \ref{talvez}(\ref{generatolefschetz}) we are reduced to motives that are exotic.
+% Finally, those exotic motives $\mathcal{M}_I$ are settled by Theorem \ref{mainthm} by setting $M=\mathcal{M}_I(2)$. Notice that all the hypothesis of Theorem \ref{mainthm} are satisfied. Indeed, the motive lives in mixed characteristic (Corollary \ref{lifting motives}), together with its quadratic form (because $L$ lifts to characteristic zero). The space $V_B$ is clearly of dimension two; so it is $V_Z$ by   Proposition  \ref{talvez}(\ref{generatoalgebrico}).  Last, the quadratic form $q_B=R_B(\langle \cdot, \cdot \rangle_{1,\mot}^{\otimes 4})$ is a polarization as $R_B(\langle \cdot, \cdot \rangle_{1,\mot})$ is so."
+\begin{proof}
+  \uses{prop:reduce-finite, prop:exotic-dim2, thm:honda-tate, prop:any-polarization, cor:cm-stable, lem:lefschetz-pairings, prop:scht-lefschetz, prop:factor-algebraic, cor:lifting-motives, thm:mainthm}
+  Let \(A\) be an abelian fourfold and \(L\) a hyperplane section. By
+  \cref{prop:reduce-finite} we may assume \(A\) and \(L\) are defined over a
+  finite field \(k = \F_q\); to prove the theorem we are free to replace \(k\) by
+  a finite extension.
+
+  Among the factors of the canonical decomposition of \(\hh^4(A)\), consider
+  those that are \emph{exotic}. There exist a finite extension \(k'\) of \(k\)
+  and a CM-structure for \(A \times_k k'\) such that every exotic motive of
+  \(\hh^{4}(A \times_k k')\) has dimension two (\cref{prop:exotic-dim2}). By
+  \cref{thm:honda-tate} this CM-structure lifts to characteristic zero. By
+  \cref{prop:any-polarization} it is enough to work with a single \(L\) for a
+  given abelian fourfold, and by \cref{cor:cm-stable} we may choose \(L\) so that
+  it lifts to characteristic zero and the CM-structure is \(*\)-stable.
+
+  By \cref{lem:lefschetz-pairings} we may replace the pairing
+  \(\langle \cdot, \cdot \rangle_{4,\mathrm{mot}}\) by
+  \(\langle \cdot, \cdot \rangle_{1,\mathrm{mot}}^{\otimes 4}\); for the latter
+  the CM-decomposition is orthogonal, so we may work with a single factor of the
+  decomposition. By \cref{prop:scht-lefschetz} and \cref{prop:factor-algebraic}
+  the Lefschetz factors are disposed of, reducing us to the exotic factors.
+
+  Finally, each exotic factor \(\mathcal{M}_I\) is settled by
+  \cref{thm:mainthm} applied with \(M = \mathcal{M}_I(2)\). All hypotheses of
+  \cref{thm:mainthm} hold: the motive lives in mixed characteristic
+  (\cref{cor:lifting-motives}), together with its quadratic form (because \(L\)
+  lifts to characteristic zero); the Betti space is two-dimensional, and so is the
+  space of numerical cycles by \cref{prop:factor-algebraic}; and the quadratic
+  form \(q_B = R_B(\langle \cdot, \cdot \rangle_{1,\mathrm{mot}}^{\otimes 4})\) is
+  a polarization since \(R_B(\langle \cdot, \cdot \rangle_{1,\mathrm{mot}})\) is.
+\end{proof}

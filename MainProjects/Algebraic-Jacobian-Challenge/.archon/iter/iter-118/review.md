@@ -1,0 +1,41 @@
+# Iter-118 (Archon canonical) — review
+
+## Outcome at a glance
+
+- **Refactor + blueprint iter; no prover lane.** The blueprint-reviewer-iter118 hard-gate finding (`Differentials.tex` carried a mathematically false iff statement) deferred the prover lane to **iter-119**. `meta.json prover.durationSecs: 0` and `planValidate.status: ok_intentional_skip / objectives: 0` are the correct loop-infrastructure signals.
+- **Sorry trajectory: 2 → 2** (unchanged). Per-file: Differentials.lean 1 → 1 (sorry moved with the refactored declaration, L81 → L93); Jacobian.lean 1 → 1 (`nonempty_jacobianWitness` unchanged).
+- **Correctness fix landed.** The iter-117 iff signature `smooth_iff_locally_free_omega` was mathematically false in the converse direction (counterexample: `Spec k → Spec k[t]` via `t ↦ 0`; locally of finite presentation, `Ω = 0` locally free of rank 0, but not flat hence not smooth). Iter-118 demoted to a forward-only implication `smooth_locally_free_omega`, dropped the `LocallyOfFinitePresentation` premise (subsumed by smoothness), switched from the deprecated `IsSmoothOfRelativeDimension` alias to the current Mathlib class `SmoothOfRelativeDimension`, made `n` implicit. Blueprint chapter `Differentials.tex` rewritten in parallel with the 5-step verified Mathlib chain + a new `\sec{Converse direction --- out of autonomous-loop scope}` with three remarks (counterexample, Mathlib converse-lemma hypotheses, Stacks 02G1 cross-reference).
+- **Compile-verified.** `lean_diagnostic_messages` on `Differentials.lean` returns `[]` errors. The only diagnostic is the expected `declaration uses sorry` warning at L87. The previously emitted `IsSmoothOfRelativeDimension` deprecation warning is now resolved (iter-118 switched to the un-aliased class). `lake build AlgebraicJacobian.Differentials` succeeded with 2820 jobs replayed, 1 warning (the sorry).
+- **No new axioms.** No protected signatures touched. `archon-protected.yaml` unchanged (9 protected declarations).
+- **Two independent fresh-context audits this iter** (plan-phase `progress-critic-iter118` UNCLEAR verdict; review-phase `lean-auditor-review118` finds 1 must-fix, 3 major, 6 minor, with the must-fix being a self-admitted dead `IsAffineHModuleHomFinite` chain in `Cohomology/StructureSheafModuleK.lean` — orthogonal to the active prover surface). The two active-surface `sorry`s (`smooth_locally_free_omega`, `nonempty_jacobianWitness`) both cleared: no excuse-comments, no fake content, no axioms.
+
+## Overall progress (this session detail)
+
+- **Total active syntactic sorry sites**: **2**, distributed:
+  - `AlgebraicJacobian/Differentials.lean:93` — `smooth_locally_free_omega` (forward implication, refactored signature; scheduled iter-119 prover-lane target).
+  - `AlgebraicJacobian/Jacobian.lean:179` — `nonempty_jacobianWitness` (the project's single explicit foundational existence hypothesis).
+- **Solved this iter**: **0** (no prover dispatch).
+- **Partial this iter**: **0**. The iter-118 refactor + blueprint rewrite landed structural correctness fixes but did not eliminate a sorry — both routes recorded as `not_started` for prover purposes.
+- **Blocked this iter**: **0** (no prover work to block; the route is *deferred-by-design* at the planning level pending the blueprint-reviewer hard-gate clearance).
+- **Untouched (deferred / out-of-scope)**: **0** in the project sense — the only two sorries are the two active routes. The lean-auditor flags additional must-fix / major items on the cohomology infrastructure surface, but those are not Sorry-bearing — they are dead-code / suspect-design findings to be triaged in iter-119+.
+
+## What the iter-118 plan got right
+
+- **Treated the converse-direction-is-false finding as a hard correctness issue, not as "wait for the prover to discover it"**. The iter-117 trim landed the iff form because it had been the iter-110+ shape; the iter-118 plan-phase critic + agent triage caught the mathematical falsity *before* a prover spent any cycles failing on it.
+- **Honoured the iter-116 user directive verbatim**: "no temporarily wrong statements." The refactor agent did not leave the iff in place "for the prover to fix" — the false statement was eliminated this iter, and the prover lane was deferred to a clean iter rather than dispatched against the wrong target.
+- **Pre-verified every Mathlib closing lemma** before scheduling the iter-119 prover lane. STRATEGY.md Phase C, the Lean docstring (L66–86), and the blueprint chapter all name identical pre-verified lemmas (`smoothOfRelativeDimension_iff`, `IsStandardSmoothOfRelativeDimension.isStandardSmooth`, `IsStandardSmooth.free_kaehlerDifferential`, `IsStandardSmoothOfRelativeDimension.rank_kaehlerDifferential`, project-local `relativeDifferentialsPresheaf_obj_kaehler`). Two iter-117-era wrong names (`isSmoothOfRelativeDimension_iff` with the spurious `is` prefix; `IsStandardSmoothOfRelativeDimension.basis_kaehlerDifferential` which doesn't exist) were caught and corrected by the plan agent before the writer dispatch.
+- **Rebutted the strategy-critic's axiomization challenge with an explicit on-the-record rationale**, rather than silently ignoring it or capitulating. The plan agent's `iter/iter-118/plan.md` records the rebuttal per the strategy-critic dispatcher_note: the no-new-axioms hard rule is the architectural commitment; axiomization is a different form of deferral (hides the gap from `sorry_analyzer` rather than removing it).
+- **Bundled the iter-117 must-fix items on `Jacobian.tex` into the same iter** (Fix 1 prose/Lean drift; Fix 2 `JacobianWitness` structure block; Fix 3 `IsAlbanese.*` extraction subsection). Three of three landed; lean-vs-blueprint-checker-jacobian-review118 returns 0 must-fix / 0 major on the resulting chapter.
+
+## What needs attention next iter
+
+- **Iter-119 prover lane on `smooth_locally_free_omega`** is the canonical follow-up. Closing slate fully pre-verified. Watch criteria from progress-critic-iter118 committed (resolve UNCLEAR → CONVERGING on COMPLETE; CHURNING + mathlib-analogist on PARTIAL+new-blocker).
+- **Concurrent must-fix on the dead `IsAffineHModuleHomFinite` chain** in `Cohomology/StructureSheafModuleK.lean:458–520` (class + 3 consumers, self-admitted dead by the iter-043 docstring at L530-543). Recommended slug: `dead-iaffhomfinite-iter119`; refactor agent dispatch; concurrent-able with the prover lane (different files).
+- **Triage decision on the two `MayerVietorisCover.lean` scaffolding classes** (`HasCechToHModuleIso`, `HasAffineCechAcyclicCover`). Lean-auditor's option (a) (downgrade to explicit-argument theorems) preferred; option (b) (delete) viable if no live callers outside the file. Not blocking iter-119; should not carry past iter-120 unaddressed.
+- **Stale-`\leanok` carry-overs**: `Differentials.tex:62` and `Jacobian.tex:249` have `\leanok` on `\begin{proof}` blocks whose Lean bodies are `sorry`. The deterministic `sync_leanok` phase should strip these after iter-119; if it does not, the review-phase manual marker-cleanup step (review-agent's `\notready` and stale-marker domain) should be exercised.
+
+## Notes for iter-119 plan agent
+
+- **STRATEGY.md, the refactored Lean signature, the new docstring, and the rewritten blueprint chapter are all in mutual agreement.** The iter-119 prover should be able to read any one of them and produce the same 5-step tactic plan. No fresh blueprint-writer dispatch needed for `Differentials.tex` unless the prover reports a chapter-side gap.
+- **The `attempts_raw.jsonl` carrier at `proof-journal/current_session/` is stale** (carries iter-115 prover-round events; the active iter-118 substantive work is recorded in `.archon/logs/iter-118/` writer / refactor / critic JSONLs and `*.md` reports). If the iter-119 loop infrastructure ships a fresh `attempts_raw.jsonl` for the prover round, that one will be authoritative; this iter's residual file should not be consulted for iter-119 narrative.
+- **Phase C is one prover round away from closing.** With the Mathlib chain pre-verified and the blueprint cleanly aligned, expected outcome is COMPLETE in 1-3 prover iters / 100-300 LOC. If the closure lands cleanly, iter-120 advances to `polish` stage with the dead-scaffolding cleanup tasks listed above.

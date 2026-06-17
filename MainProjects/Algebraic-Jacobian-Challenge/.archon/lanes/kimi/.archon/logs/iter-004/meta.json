@@ -1,0 +1,29 @@
+{
+  "iteration": 4,
+  "stage": "prover  (iter-005 = first prover round on the iter-004 helper scaffolds)",
+  "mode": "parallel",
+  "startedAt": "2026-05-06T07:05:19Z",
+  "plan": {
+    "status": "skipped",
+    "durationSecs": 1226
+  },
+  "refactor": {
+    "status": "done",
+    "durationSecs": 277
+  },
+  "prover": {
+    "status": "done",
+    "mode": "multilane-execute",
+    "multilaneExecute": true,
+    "multilaneReport": "/home/archon/Lean_tests/AlgebraicJacobian/.archon/multilane/reports/iter-004-execution.md",
+    "multilaneAssignments": 4,
+    "multilaneAssignmentsJsonl": "/home/archon/Lean_tests/AlgebraicJacobian/.archon/multilane/runtime/iter-004-assignments.jsonl",
+    "multilanePreparedJsonl": "/home/archon/Lean_tests/AlgebraicJacobian/.archon/multilane/runtime/iter-004-prepared-lanes.jsonl",
+    "multilaneResultsJsonl": "/home/archon/Lean_tests/AlgebraicJacobian/.archon/multilane/runtime/iter-004-results.jsonl",
+    "promotedFiles": [
+      "AlgebraicJacobian/Picard/FunctorAb.lean"
+    ],
+    "promotionCommit": "3762fa5910b175c1cce809554f11eedd64f0b6eb",
+    "durationSecs": 890
+  }
+}

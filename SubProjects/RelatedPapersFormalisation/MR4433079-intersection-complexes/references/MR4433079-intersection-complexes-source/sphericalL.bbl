@@ -1,0 +1,395 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
+% \MRhref is called by the amsart/book/proc definition of \MR.
+\providecommand{\MRhref}[2]{%
+  \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
+}
+\providecommand{\href}[2]{#2}
+\begin{thebibliography}{KKM{\etalchar{+}}92}
+
+\bibitem[AB09]{AB}
+Sergey Arkhipov and Roman Bezrukavnikov, \emph{Perverse sheaves on affine flags
+  and {L}anglands dual group}, Israel J. Math. \textbf{170} (2009), 135--183,
+  With an appendix by Bezrukavnikov and Ivan Mirkovi\'{c}. \MR{2506322}
+
+\bibitem[ABB{\etalchar{+}}05]{ABB}
+S.~Arkhipov, A.~Braverman, R.~Bezrukavnikov, D.~Gaitsgory, and I.~Mirkovi\'{c},
+  \emph{Modules over the small quantum group and semi-infinite flag manifold},
+  Transform. Groups \textbf{10} (2005), no.~3-4, 279--362. \MR{2183116}
+
+\bibitem[AT05]{AT}
+Ivan~V. Arzhantsev and Dmitri~A. Timashev, \emph{On the canonical embeddings of
+  certain homogeneous spaces}, Lie groups and invariant theory, Amer. Math.
+  Soc. Transl. Ser. 2, vol. 213, Amer. Math. Soc., Providence, RI, 2005,
+  pp.~63--83. \MR{2140714}
+
+\bibitem[BBDG18]{BBDG}
+A.~A. Beilinson, J.~Bernstein, P.~Deligne, and O.~Gabber, \emph{Faisceaux
+  pervers}, Analysis and topology on singular spaces, {I} ({L}uminy, 1981),
+  Ast\'{e}risque, vol. 100, Soc. Math. France, Paris, 2018, pp.~5--171.
+  \MR{751966}
+
+\bibitem[BD96]{BD}
+A.~A. Beilinson and V.~G. Drinfeld, \emph{Quantization of {H}itchin's fibration
+  and {L}anglands' program}, Algebraic and geometric methods in mathematical
+  physics ({K}aciveli, 1993), Math. Phys. Stud., vol.~19, Kluwer Acad. Publ.,
+  Dordrecht, 1996, pp.~3--7. \MR{1385674}
+
+\bibitem[BD04]{BD:chiral}
+Alexander Beilinson and Vladimir Drinfeld, \emph{Chiral algebras}, American
+  Mathematical Society Colloquium Publications, vol.~51, American Mathematical
+  Society, Providence, RI, 2004. \MR{2058353}
+
+\bibitem[Bei87a]{Beilinson}
+A.~A. Beilinson, \emph{How to glue perverse sheaves}, {$K$}-theory, arithmetic
+  and geometry ({M}oscow, 1984--1986), Lecture Notes in Math., vol. 1289,
+  Springer, Berlin, 1987, pp.~42--51. \MR{923134}
+
+\bibitem[Bei87b]{Beilinson2}
+\bysame, \emph{On the derived category of perverse sheaves}, {$K$}-theory,
+  arithmetic and geometry ({M}oscow, 1984--1986), Lecture Notes in Math., vol.
+  1289, Springer, Berlin, 1987, pp.~27--41. \MR{923133}
+
+\bibitem[BFG06]{BFG}
+Alexander Braverman, Michael Finkelberg, and Dennis Gaitsgory, \emph{Uhlenbeck
+  spaces via affine {L}ie algebras}, The unity of mathematics, Progr. Math.,
+  vol. 244, Birkh\"{a}user Boston, Boston, MA, 2006, Erratum added in
+  \url{https://arxiv.org/pdf/math/0301176v4.pdf}, pp.~17--135. \MR{2181803}
+
+\bibitem[BFGM02]{BFGM}
+A.~Braverman, M.~Finkelberg, D.~Gaitsgory, and I.~Mirkovi\'{c},
+  \emph{Intersection cohomology of {D}rinfeld's compactifications}, Selecta
+  Math. (N.S.) \textbf{8} (2002), no.~3, 381--418. \MR{1931170}
+
+\bibitem[BFGM04]{BFGM-erratum}
+\bysame, \emph{Erratum to: ``{I}ntersection cohomology of {D}rinfeld's
+  compactifications''}, Selecta Math. (N.S.) \textbf{10} (2004), no.~3,
+  429--430. \MR{2099075}
+
+\bibitem[BFO12]{BFO}
+Roman Bezrukavnikov, Michael Finkelberg, and Victor Ostrik, \emph{Character
+  {$D$}-modules via {D}rinfeld center of {H}arish-{C}handra bimodules}, Invent.
+  Math. \textbf{188} (2012), no.~3, 589--620. \MR{2917178}
+
+\bibitem[BG01]{BGcrys}
+Alexander Braverman and Dennis Gaitsgory, \emph{Crystals via the affine
+  {G}rassmannian}, Duke Math. J. \textbf{107} (2001), no.~3, 561--575.
+  \MR{1828302}
+
+\bibitem[BG02]{BG}
+A.~Braverman and D.~Gaitsgory, \emph{Geometric {E}isenstein series}, Invent.
+  Math. \textbf{150} (2002), no.~2, 287--384. \MR{1933587}
+
+\bibitem[BG08]{BG2}
+Alexander Braverman and Dennis Gaitsgory, \emph{Deformations of local systems
+  and {E}isenstein series}, Geom. Funct. Anal. \textbf{17} (2008), no.~6,
+  1788--1850. \MR{2399084}
+
+\bibitem[BL95]{BLa}
+Arnaud Beauville and Yves Laszlo, \emph{Un lemme de descente}, C. R. Acad. Sci.
+  Paris S\'{e}r. I Math. \textbf{320} (1995), no.~3, 335--340. \MR{1320381}
+
+\bibitem[BLV86]{BLV}
+M.~Brion, D.~Luna, and Th. Vust, \emph{Espaces homog\`enes sph\'{e}riques},
+  Invent. Math. \textbf{84} (1986), no.~3, 617--632. \MR{837530}
+
+\bibitem[BM20]{BM}
+Victor Batyrev and Anne Moreau, \emph{Satellites of spherical subgroups},
+  Algebr. Geom. \textbf{7} (2020), no.~1, 86--112. \MR{4038405}
+
+\bibitem[BNS16]{BNS}
+A.~Bouthier, B.~C. Ng\^{o}, and Y.~Sakellaridis, \emph{On the formal arc space
+  of a reductive monoid}, Amer. J. Math. \textbf{138} (2016), no.~1, 81--108.
+  \MR{3462881}
+
+\bibitem[BNS17]{BNS-erratum}
+\bysame, \emph{Erratum to: ``{O}n the formal arc space of a reductive
+  monoid''}, Amer. J. Math. \textbf{139} (2017), no.~1, 293--295. \MR{3619916}
+
+\bibitem[Bra03]{Braden}
+Tom Braden, \emph{Hyperbolic localization of intersection cohomology},
+  Transform. Groups \textbf{8} (2003), no.~3, 209--216. \MR{1996415}
+
+\bibitem[Bri07]{Brion07}
+Michel Brion, \emph{The total coordinate ring of a wonderful variety}, J.
+  Algebra \textbf{313} (2007), no.~1, 61--99. \MR{2326138}
+
+\bibitem[BS17]{BS}
+Daniel Bump and Anne Schilling, \emph{Crystal bases}, World Scientific
+  Publishing Co. Pte. Ltd., Hackensack, NJ, 2017, Representations and
+  combinatorics. \MR{3642318}
+
+\bibitem[BZSV]{BZSV}
+David Ben-Zvi, Yiannis Sakellaridis, and Akshay Venkatesh, \emph{Duality in the
+  relative {L}anglands program}, In preparation.
+
+\bibitem[Cam18]{Campbell2}
+Justin Campbell, \emph{Nearby cycles of {W}hittaker sheaves on {D}rinfeld's
+  compactification}, Compos. Math. \textbf{154} (2018), no.~8, 1775--1800.
+  \MR{3830552}
+
+\bibitem[Cam19]{Campbell}
+\bysame, \emph{A resolution of singularities for {D}rinfeld's compactification
+  by stable maps}, J. Algebraic Geom. \textbf{28} (2019), no.~1, 153--167.
+  \MR{3875364}
+
+\bibitem[Cas80]{C}
+W.~Casselman, \emph{The unramified principal series of {$p$}-adic groups. {I}.
+  {T}he spherical function}, Compositio Math. \textbf{40} (1980), no.~3,
+  387--406. \MR{571057}
+
+\bibitem[CG97]{Chriss-Ginzburg}
+N.~Chriss and V.~Ginzburg, \emph{Representation theory and complex geometry},
+  Birkh\"{a}user Boston, Inc., Boston, MA, 1997. \MR{1433132}
+
+\bibitem[CS80]{CS}
+W.~Casselman and J.~Shalika, \emph{The unramified principal series of
+  {$p$}-adic groups. {II}. {T}he {W}hittaker function}, Compositio Math.
+  \textbf{41} (1980), no.~2, 207--231. \MR{581582}
+
+\bibitem[Del77]{SGA4h}
+P.~Deligne, \emph{Th\'{e}or\`emes de finitude en cohomologie {$\ell$}-adique},
+  Cohomologie \'{e}tale, Lecture Notes in Math., vol. 569, Springer, Berlin,
+  1977, pp.~233--261. \MR{3727439}
+
+\bibitem[Dri18]{Drinfeld}
+V.~Drinfeld, \emph{{G}rinberg-{K}azhdan theorem and {N}ewton groupoids}, 2018,
+  Available at \url{https://arxiv.org/pdf/1801.01046v2.pdf}.
+
+\bibitem[DS95]{DS}
+V.~G. Drinfeld and Carlos Simpson, \emph{{$B$}-structures on {$G$}-bundles and
+  local triviality}, Math. Res. Lett. \textbf{2} (1995), no.~6, 823--829.
+  \MR{1362973}
+
+\bibitem[FFKM99]{FFKM}
+Boris Feigin, Michael Finkelberg, Alexander Kuznetsov, and Ivan Mirkovi\'{c},
+  \emph{Semi-infinite flags. {II}. {L}ocal and global intersection cohomology
+  of quasimaps' spaces}, Differential topology, infinite-dimensional {L}ie
+  algebras, and applications, Amer. Math. Soc. Transl. Ser. 2, vol. 194, Amer.
+  Math. Soc., Providence, RI, 1999, pp.~113--148. \MR{1729361}
+
+\bibitem[FGI{\etalchar{+}}05]{FGA-explained}
+Barbara Fantechi, Lothar G\"{o}ttsche, Luc Illusie, Steven~L. Kleiman, Nitin
+  Nitsure, and Angelo Vistoli, \emph{Fundamental algebraic geometry},
+  Mathematical Surveys and Monographs, vol. 123, American Mathematical Society,
+  Providence, RI, 2005, Grothendieck's FGA explained. \MR{2222646}
+
+\bibitem[FM99]{FM}
+Michael Finkelberg and Ivan Mirkovi\'{c}, \emph{Semi-infinite flags. {I}.
+  {C}ase of global curve {$\bold P^1$}}, Differential topology,
+  infinite-dimensional {L}ie algebras, and applications, Amer. Math. Soc.
+  Transl. Ser. 2, vol. 194, Amer. Math. Soc., Providence, RI, 1999,
+  pp.~81--112. \MR{1729360}
+
+\bibitem[Gai]{G:whatacts}
+D.~Gaitsgory, \emph{What acts on geometric {E}isenstein series}, Available at
+  \url{http://www.math.harvard.edu/~gaitsgde/GL/WhatActs.pdf}.
+
+\bibitem[Gai15]{G:outline}
+Dennis Gaitsgory, \emph{Outline of the proof of the geometric {L}anglands
+  conjecture for {$GL_2$}}, Ast\'{e}risque (2015), no.~370, 1--112.
+  \MR{3364744}
+
+\bibitem[GL93]{Grojnowski-Lusztig}
+I.~Grojnowski and G.~Lusztig, \emph{A comparison of bases of quantized
+  enveloping algebras}, Linear algebraic groups and their representations
+  ({L}os {A}ngeles, {CA}, 1992), Contemp. Math., vol. 153, Amer. Math. Soc.,
+  Providence, RI, 1993, pp.~11--19. \MR{1247495}
+
+\bibitem[GN10]{GN}
+Dennis Gaitsgory and David Nadler, \emph{Spherical varieties and {L}anglands
+  duality}, Mosc. Math. J. \textbf{10} (2010), no.~1, 65--137, 271.
+  \MR{2668830}
+
+\bibitem[Gro92]{Grosshans92}
+Frank~D. Grosshans, \emph{Contractions of the actions of reductive algebraic
+  groups in arbitrary characteristic}, Invent. Math. \textbf{107} (1992),
+  no.~1, 127--133. \MR{1135467}
+
+\bibitem[HK02]{HK}
+Jin Hong and Seok-Jin Kang, \emph{Introduction to quantum groups and crystal
+  bases}, Graduate Studies in Mathematics, vol.~42, American Mathematical
+  Society, Providence, RI, 2002. \MR{1881971}
+
+\bibitem[Ive76]{Iv}
+Birger Iversen, \emph{The geometry of algebraic groups}, Advances in Math.
+  \textbf{20} (1976), no.~1, 57--85. \MR{399114}
+
+\bibitem[Kal05]{Kaloshin}
+V.~Yu. Kaloshin, \emph{A geometric proof of the existence of {W}hitney
+  stratifications}, Mosc. Math. J. \textbf{5} (2005), no.~1, 125--133.
+  \MR{2153470}
+
+\bibitem[Kas93]{Kas93}
+Masaki Kashiwara, \emph{The crystal base and {L}ittelmann's refined {D}emazure
+  character formula}, Duke Math. J. \textbf{71} (1993), no.~3, 839--858.
+  \MR{1240605}
+
+\bibitem[Kas94]{Kas94}
+\bysame, \emph{Crystal bases of modified quantized enveloping algebra}, Duke
+  Math. J. \textbf{73} (1994), no.~2, 383--413. \MR{1262212}
+
+\bibitem[Kas95]{Kas95}
+\bysame, \emph{On crystal bases}, Representations of groups ({B}anff, {AB},
+  1994), CMS Conf. Proc., vol.~16, Amer. Math. Soc., Providence, RI, 1995,
+  pp.~155--197. \MR{1357199}
+
+\bibitem[KKLV89]{KKLV}
+Friedrich Knop, Hanspeter Kraft, Domingo Luna, and Thierry Vust, \emph{Local
+  properties of algebraic group actions}, Algebraische {T}ransformationsgruppen
+  und {I}nvariantentheorie, DMV Sem., vol.~13, Birkh\"{a}user, Basel, 1989,
+  pp.~63--75. \MR{1044585}
+
+\bibitem[KKM{\etalchar{+}}92]{KKMMNN}
+Seok-Jin Kang, Masaki Kashiwara, Kailash~C. Misra, Tetsuji Miwa, Toshiki
+  Nakashima, and Atsushi Nakayashiki, \emph{Affine crystals and vertex models},
+  Infinite analysis, {P}art {A}, {B} ({K}yoto, 1991), Adv. Ser. Math. Phys.,
+  vol.~16, World Sci. Publ., River Edge, NJ, 1992, pp.~449--484. \MR{1187560}
+
+\bibitem[Kno91]{KnLV}
+Friedrich Knop, \emph{The {L}una-{V}ust theory of spherical embeddings},
+  Proceedings of the {H}yderabad {C}onference on {A}lgebraic {G}roups
+  ({H}yderabad, 1989), Manoj Prakashan, Madras, 1991, pp.~225--249.
+  \MR{1131314}
+
+\bibitem[Kno94]{KnMotion}
+\bysame, \emph{The asymptotic behavior of invariant collective motion}, Invent.
+  Math. \textbf{116} (1994), no.~1-3, 309--328. \MR{1253195}
+
+\bibitem[Kno95]{KnBorbit}
+\bysame, \emph{On the set of orbits for a {B}orel subgroup}, Comment. Math.
+  Helv. \textbf{70} (1995), no.~2, 285--309. \MR{1324631}
+
+\bibitem[Kno14]{Knop-sphericalroots}
+\bysame, \emph{Spherical roots of spherical varieties}, Ann. Inst. Fourier
+  (Grenoble) \textbf{64} (2014), no.~6, 2503--2526. \MR{3331173}
+
+\bibitem[Kon95]{Kontsevich}
+Maxim Kontsevich, \emph{Enumeration of rational curves via torus actions}, The
+  moduli space of curves ({T}exel {I}sland, 1994), Progr. Math., vol. 129,
+  Birkh\"{a}user Boston, Boston, MA, 1995, pp.~335--368. \MR{1363062}
+
+\bibitem[KS17]{Knop-Schalke}
+F.~Knop and B.~Schalke, \emph{The dual group of a spherical variety}, Trans.
+  Moscow Math. Soc. \textbf{78} (2017), 187--216. \MR{3738085}
+
+\bibitem[KV04]{KV}
+Mikhail Kapranov and Eric Vasserot, \emph{Vertex algebras and the formal loop
+  space}, Publ. Math. Inst. Hautes \'{E}tudes Sci. (2004), no.~100, 209--269.
+  \MR{2102701}
+
+\bibitem[Laf]{VLaff}
+Vincent Lafforgue, \emph{Quelques calculs reli{\'e}s {\`a} la correspondance de
+  {L}anglands g{\'e}om{\'e}trique pour ${\mathbb{P}}^1$}, Available at
+  \url{http://vlafforg.perso.math.cnrs.fr/files/geom.pdf}.
+
+\bibitem[Lun73]{Lun73}
+Domingo Luna, \emph{Slices \'{e}tales}, Sur les groupes alg\'{e}briques, 1973,
+  pp.~81--105. Bull. Soc. Math. France, Paris, M\'{e}moire 33. \MR{0342523}
+
+\bibitem[Lun97]{Lun97}
+D.~Luna, \emph{Grosses cellules pour les vari\'{e}t\'{e}s sph\'{e}riques},
+  Algebraic groups and {L}ie groups, Austral. Math. Soc. Lect. Ser., vol.~9,
+  Cambridge Univ. Press, Cambridge, 1997, pp.~267--280. \MR{1635686}
+
+\bibitem[Lus90]{Lusztig90}
+G.~Lusztig, \emph{Canonical bases arising from quantized enveloping algebras.
+  {II}}, no. 102, 1990, Common trends in mathematics and quantum field theories
+  (Kyoto, 1990), pp.~175--201 (1991). \MR{1182165}
+
+\bibitem[LV83]{LV}
+D.~Luna and Th. Vust, \emph{Plongements d'espaces homog\`enes}, Comment. Math.
+  Helv. \textbf{58} (1983), no.~2, 186--245. \MR{705534}
+
+\bibitem[MV07]{MV}
+I.~Mirkovi\'{c} and K.~Vilonen, \emph{Geometric {L}anglands duality and
+  representations of algebraic groups over commutative rings}, Ann. of Math.
+  (2) \textbf{166} (2007), no.~1, 95--143. \MR{2342692}
+
+\bibitem[Pop86]{Pop86}
+V.~L. Popov, \emph{Contractions of actions of reductive algebraic groups}, Mat.
+  Sb. (N.S.) \textbf{130(172)} (1986), no.~3, 310--334, 431. \MR{865764}
+
+\bibitem[Ras]{cpsii}
+Sam Raskin, \emph{Chiral principal series categories {II}: the factorizable
+  {W}hittaker category}, Available at
+  \url{https://web.ma.utexas.edu/users/sraskin/cpsii.pdf}.
+
+\bibitem[Ric77]{Richardson}
+R.~W. Richardson, \emph{Affine coset spaces of reductive algebraic groups},
+  Bull. London Math. Soc. \textbf{9} (1977), no.~1, 38--41. \MR{437549}
+
+\bibitem[Sak08]{SaSpc}
+Yiannis Sakellaridis, \emph{On the unramified spectrum of spherical varieties
+  over {$p$}-adic fields}, Compos. Math. \textbf{144} (2008), no.~4, 978--1016.
+  \MR{2441254 (2010d:22026)}
+
+\bibitem[Sak12]{SaRS}
+\bysame, \emph{Spherical varieties and integral representations of
+  {$L$}-functions}, Algebra Number Theory \textbf{6} (2012), no.~4, 611--667,
+  Updated version at \url{https://arxiv.org/pdf/0905.4245.pdf}. \MR{2966713}
+
+\bibitem[Sak13]{SaSph}
+\bysame, \emph{Spherical functions on spherical varieties}, Amer. J. Math.
+  \textbf{135} (2013), no.~5, 1291--1381. \MR{3117308}
+
+\bibitem[Sak18]{SaSatake}
+\bysame, \emph{{I}nverse {S}atake {T}ransforms}, Geometric Aspects of the Trace
+  Formula (Cham), Springer International Publishing, 2018, pp.~321--349.
+
+\bibitem[Sch15]{Sch}
+Simon Schieder, \emph{The {H}arder-{N}arasimhan stratification of the moduli
+  stack of {$G$}-bundles via {D}rinfeld's compactifications}, Selecta Math.
+  (N.S.) \textbf{21} (2015), no.~3, 763--831. \MR{3366920}
+
+\bibitem[Sch16]{Sch-G}
+\bysame, \emph{Geometric {B}ernstein asymptotics and the
+  {D}rinfeld--{L}afforgue--{V}inberg degeneration for arbitrary reductive
+  groups}, 2016.
+
+\bibitem[Sch18]{Sch-SL2}
+\bysame, \emph{Picard-{L}efschetz oscillators for the
+  {D}rinfeld-{L}afforgue-{V}inberg degeneration for {$\rm SL_2$}}, Duke Math.
+  J. \textbf{167} (2018), no.~5, 835--921. \MR{3782063}
+
+\bibitem[SGA73]{SGA7-2}
+\emph{Groupes de monodromie en g\'{e}om\'{e}trie alg\'{e}brique. {II}}, Lecture
+  Notes in Mathematics, Vol. 340, Springer-Verlag, Berlin-New York, 1973,
+  S\'{e}minaire de G\'{e}om\'{e}trie Alg\'{e}brique du Bois-Marie 1967--1969
+  (SGA 7 II), Dirig\'{e} par P. Deligne et N. Katz. \MR{0354657}
+
+\bibitem[Ste65]{Steinberg}
+Robert Steinberg, \emph{Regular elements of semisimple algebraic groups}, Inst.
+  Hautes \'{E}tudes Sci. Publ. Math. (1965), no.~25, 49--80. \MR{180554}
+
+\bibitem[SV17]{SV}
+Yiannis Sakellaridis and Akshay Venkatesh, \emph{Periods and harmonic analysis
+  on spherical varieties}, Ast\'{e}risque (2017), no.~396, viii+360.
+  \MR{3764130}
+
+\bibitem[Tim11]{Timashev}
+Dmitry~A. Timashev, \emph{Homogeneous spaces and equivariant embeddings},
+  Encyclopaedia of Mathematical Sciences, vol. 138, Springer, Heidelberg, 2011,
+  Invariant Theory and Algebraic Transformation Groups, 8. \MR{2797018}
+
+\bibitem[VK78]{VinbergKimelfeld}
+\`E.~B. Vinberg and B.~N. Kimelfeld, \emph{Homogeneous domains on flag
+  manifolds and spherical subgroups of semisimple {L}ie groups}, Funktsional.
+  Anal. i Prilozhen. \textbf{12} (1978), no.~3, 12--19, 96. \MR{509380}
+
+\bibitem[Wan]{Wang:ULA}
+J.~Wang, \emph{Universal local acyclicity}, Available at
+  \url{https://www.jonathanpwang.com/notes/ULA.pdf}.
+
+\bibitem[Was96]{Wasserman}
+B.~Wasserman, \emph{Wonderful varieties of rank two}, Transform. Groups
+  \textbf{1} (1996), no.~4, 375--403. \MR{1424449}
+
+\bibitem[Zhu17]{Xinwen}
+Xinwen Zhu, \emph{An introduction to affine {G}rassmannians and the geometric
+  {S}atake equivalence}, Geometry of moduli spaces and representation theory,
+  IAS/Park City Math. Ser., vol.~24, Amer. Math. Soc., Providence, RI, 2017,
+  pp.~59--154. \MR{3752460}
+
+\end{thebibliography}

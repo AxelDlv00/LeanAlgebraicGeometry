@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rigidity for morphisms of group schemes (Mumford §4)</title>
+<link rel="next" href="chap-AbelJacobi.html" title="The Abel–Jacobi map" />
+<link rel="prev" href="chap-Jacobian.html" title="The Jacobian as an abelian variety" />
+<link rel="up" href="index.html" title="AlgebraicJacobian" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">AlgebraicJacobian</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="chap-Cohomology_SheafCompose.html"><span class="toc_ref">1</span> <span class="toc_entry">Sheaf condition along the structure-sheaf forget composite</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000002"><span class="toc_ref">1.1</span> <span class="toc_entry">Statement</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000004"><span class="toc_ref">1.2</span> <span class="toc_entry">Proof sketch</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000006"><span class="toc_ref">1.3</span> <span class="toc_entry">Use in the project</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000007"><span class="toc_ref">1.4</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000008"><span class="toc_ref">1.4.1</span> <span class="toc_entry">Discovery objectives for this iteration (iter-005 prover)</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Genus.html"><span class="toc_ref">2</span> <span class="toc_entry">Genus of a smooth proper curve</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Genus.html#a0000000009"><span class="toc_ref">2.1</span> <span class="toc_entry">Definition</span></a>
+ </li>
+<li class="">
+  <a href="chap-Genus.html#sec:Genus_status"><span class="toc_ref">2.2</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Genus.html#a0000000010"><span class="toc_ref">2.2.1</span> <span class="toc_entry">Discovery objective for this iteration</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html"><span class="toc_ref">3</span> <span class="toc_entry">Line bundles on schemes and the Picard group</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000011"><span class="toc_ref">3.1</span> <span class="toc_entry">Definition</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000012"><span class="toc_ref">3.2</span> <span class="toc_entry">Group structure under tensor product</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000013"><span class="toc_ref">3.3</span> <span class="toc_entry">Pull-back functoriality</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000014"><span class="toc_ref">3.4</span> <span class="toc_entry">Use in the project</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000015"><span class="toc_ref">3.5</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000016"><span class="toc_ref">3.5.1</span> <span class="toc_entry">Discovery objectives for this iteration</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html"><span class="toc_ref">4</span> <span class="toc_entry">The relative Picard functor</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Picard_Functor.html#a0000000017"><span class="toc_ref">4.1</span> <span class="toc_entry">Definition</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html#a0000000018"><span class="toc_ref">4.2</span> <span class="toc_entry">Representability</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html#a0000000019"><span class="toc_ref">4.3</span> <span class="toc_entry">Use in the project</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html#a0000000020"><span class="toc_ref">4.4</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Picard_Functor.html#a0000000021"><span class="toc_ref">4.4.1</span> <span class="toc_entry">Forward-compatibility note (<span class="ttfamily">LineBundle</span> approximation)</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html#a0000000022"><span class="toc_ref">4.4.2</span> <span class="toc_entry">Discovery objectives for this iteration (iter-005 prover)</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Jacobian.html"><span class="toc_ref">5</span> <span class="toc_entry">The Jacobian as an abelian variety</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Jacobian.html#a0000000023"><span class="toc_ref">5.1</span> <span class="toc_entry">The Jacobian</span></a>
+ </li>
+<li class="">
+  <a href="chap-Jacobian.html#a0000000024"><span class="toc_ref">5.2</span> <span class="toc_entry">Group scheme structure and abelian-variety properties</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Jacobian.html#a0000000025"><span class="toc_ref">5.2.1</span> <span class="toc_entry">Sanity check in low genus</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Jacobian.html#a0000000026"><span class="toc_ref">5.3</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Jacobian.html#a0000000027"><span class="toc_ref">5.3.1</span> <span class="toc_entry">Status note</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active current">
+  <a href="chap-Rigidity.html"><span class="toc_ref">6</span> <span class="toc_entry">Rigidity for morphisms of group schemes (Mumford §4)</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="chap-Rigidity.html#a0000000028"><span class="toc_ref">6.1</span> <span class="toc_entry">Statement</span></a>
+ </li>
+<li class="">
+  <a href="chap-Rigidity.html#a0000000029"><span class="toc_ref">6.2</span> <span class="toc_entry">Proof sketch</span></a>
+ </li>
+<li class="">
+  <a href="chap-Rigidity.html#a0000000030"><span class="toc_ref">6.3</span> <span class="toc_entry">Use in the project</span></a>
+ </li>
+<li class="">
+  <a href="chap-Rigidity.html#a0000000031"><span class="toc_ref">6.4</span> <span class="toc_entry">Mathlib gap</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-AbelJacobi.html"><span class="toc_ref">7</span> <span class="toc_entry">The Abel–Jacobi map</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-AbelJacobi.html#a0000000032"><span class="toc_ref">7.1</span> <span class="toc_entry">Definition</span></a>
+ </li>
+<li class="">
+  <a href="chap-AbelJacobi.html#a0000000033"><span class="toc_ref">7.2</span> <span class="toc_entry">Pointed property</span></a>
+ </li>
+<li class="">
+  <a href="chap-AbelJacobi.html#a0000000034"><span class="toc_ref">7.3</span> <span class="toc_entry">Universal (Albanese) property</span></a>
+ </li>
+<li class="">
+  <a href="chap-AbelJacobi.html#a0000000035"><span class="toc_ref">7.4</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-AbelJacobi.html#a0000000036"><span class="toc_ref">7.4.1</span> <span class="toc_entry">Discovery objective for this iteration</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="chap:Rigidity">6 Rigidity for morphisms of group schemes (Mumford §4)</h1>
+
+<p>This chapter records a self-contained Phase E helper: <em>rigidity for morphisms of abelian varieties</em>. It is the only sorry-blocking lemma in the project that is provable from current Mathlib (commit <span class="ttfamily">b80f227</span>) alone, and it unlocks the uniqueness half of Theorem&#160;<a href="chap-AbelJacobi.html#thm:exists_unique_ofCurve_comp">16</a> (the Albanese property). </p>
+<p>The lemma is independent of the construction of \(\Jac (C)\) — the source and target are abstract proper smooth geometrically irreducible group schemes over the base field \(k\). It is therefore the highest-leverage standalone target for the next prover round. </p>
+<h1 id="a0000000028">6.1 Statement</h1>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:GrpObj_eq_of_eqOnOpen">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">13</span>
+    <span class="theorem_thmtitle">Rigidity for morphisms of group schemes</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Rigidity.html#thm:GrpObj_eq_of_eqOnOpen">#</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.GrpObj.eq_of_eqOnOpen" class="lean_decl">AlgebraicGeometry.GrpObj.eq_of_eqOnOpen</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   Let \(k\) be a field. Let \(X, Y \in \textrm{Over}(\Spec k)\) be two objects equipped with the typeclasses </p>
+<div class="displaymath" id="a0000000044">
+  \[  \texttt{[SmoothOfRelativeDimension n X.hom] [IsProper X.hom] [GeometricallyIrreducible X.hom] [GrpObj X]}  \]
+</div>
+<p> and similarly for \(Y\) (with relative dimension \(m\)). Let \(g_1, g_2 \colon X \to Y\) be two morphisms in \(\textrm{Over}(\Spec k)\), and let \(U \subseteq X.\mathrm{left}\) be a non-empty open subset. If </p>
+<div class="displaymath" id="a0000000045">
+  \[  g_1\big|_U \; =\;  g_2\big|_U  \]
+</div>
+<p> on the underlying topological points, then \(g_1 = g_2\) as morphisms in \(\textrm{Over}(\Spec k)\). </p>
+
+  </div>
+</div>
+<p> The classical Mumford rigidity theorem usually states this for morphisms vanishing on an open subset (the difference morphism \(g_1 - g_2\) vanishes on \(U\), hence is identically zero). Our formulation above is the symmetric "agree on \(U \Rightarrow \) agree everywhere" version; it is interderivable with the standard statement using the group law on \(Y\).  </p>
+<h1 id="a0000000029">6.2 Proof sketch</h1>
+<div class="proof_wrapper" id="a0000000046">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Reduce to the standard form: let \(\delta \colon X \to Y\) be the difference morphism \(\delta = g_1 \cdot g_2^{-1}\), which makes sense because \(Y\) carries a \(\mathtt{GrpObj}\) structure. The hypothesis says \(\delta \) takes the constant value \(\eta [Y]\) (the identity of \(Y\)) on \(U\). </p>
+<p>Consider the equaliser </p>
+<div class="displaymath" id="a0000000047">
+  \[  E \; =\;  \mathrm{eq}\bigl(\delta ,\;  (\mathtt{toUnit}\  X) \circ \eta [Y]\bigr) \; \hookrightarrow \;  X,  \]
+</div>
+<p> i.e. the closed subscheme of \(X\) on which \(\delta \) agrees with the constant identity morphism. Two facts: </p>
+<ol class="enumerate">
+  <li><p><em>\(E\) is closed in \(X\).</em> The target \(Y\) is separated over \(\Spec k\) (proper \(\Rightarrow \) separated), so the equaliser of any two morphisms into \(Y\) is closed in the source. (Mathlib: <code class="plain_lstlinline"></code>IsProper.isSeparated together with <code class="plain_lstlinline"></code>CategoryTheory.IsClosed.equalizer_isClosed or the analogous schemes-side statement.) </p>
+</li>
+  <li><p><em>\(E\) contains the open \(U\).</em> By hypothesis on the underlying points; promote to a scheme-theoretic statement using the reduced-induced subscheme structure on \(U\) and faithfulness of the underlying-set functor on reduced schemes (Mathlib: <code class="plain_lstlinline"></code>AlgebraicGeometry.Scheme.eq_of_eq_on_underlying_of_reduced or analogous). </p>
+</li>
+</ol>
+<p> Since \(X\) is geometrically irreducible, in particular irreducible, the closed subscheme \(E\) contains a non-empty open \(U\), hence equals all of \(X\) as a topological space. Combined with the fact that both \(X\) and \(Y\) are reduced (smooth \(\Rightarrow \) regular \(\Rightarrow \) reduced), and the morphisms \(\delta \) and \(\mathtt{toUnit}\  X \circ \eta [Y]\) are determined by their values on the underlying topological space (because \(X\) is reduced and \(Y\) is separated), we conclude \(\delta = \mathtt{toUnit}\  X \circ \eta [Y]\), i.e. \(g_1 = g_2\). </p>
+<p><b class="bfseries">Mathlib ingredients.</b> </p>
+<ul class="itemize">
+  <li><p><code class="plain_lstlinline"></code>IsProper.isSeparated — proper morphisms are separated. </p>
+</li>
+  <li><p><code class="plain_lstlinline"></code>AlgebraicGeometry.IsSeparated and the equaliser-is-closed property for morphisms into a separated \(k\)-scheme. </p>
+</li>
+  <li><p><code class="plain_lstlinline"></code>GeometricallyIrreducible.irreducible (or unfold to the topological-irreducibility statement) — the underlying topological space of a geometrically irreducible scheme is irreducible. </p>
+</li>
+  <li><p><code class="plain_lstlinline"></code>AlgebraicGeometry.Scheme.IsReduced for \(X\) and \(Y\), plus the lemma identifying scheme morphisms by their values on points (for reduced source and separated target). </p>
+</li>
+  <li><p><code class="plain_lstlinline"></code>AlgebraicGeometry.SmoothOfRelativeDimension for \(X\) and \(Y\) — implies regularity, hence reducedness. </p>
+</li>
+  <li><p><code class="plain_lstlinline"></code>GrpObj on \(Y\) to form the difference morphism \(\delta = g_1 \cdot g_2^{-1}\), and to access \(\eta [Y]\). </p>
+</li>
+  <li><p><code class="plain_lstlinline"></code>Mathlib/AlgebraicGeometry/Group/Abelian.lean (Stacks 0BFD) is <em>not</em> used in the proof, but provides the wider context (commutativity of the group law). </p>
+</li>
+</ul>
+
+  </div>
+</div>
+<h1 id="a0000000030">6.3 Use in the project</h1>
+<p>The rigidity theorem is used in the proof of Theorem&#160;<a href="chap-AbelJacobi.html#thm:exists_unique_ofCurve_comp">16</a> (the Albanese property of the Jacobian). Specifically: given two morphisms \(g_1, g_2 \colon \Jac (C) \to A\) with \(g_1 \circ \alpha _P = g_2 \circ \alpha _P\), the rigidity theorem applied to \(\delta = g_1 \cdot g_2^{-1}\) on the image of \(\alpha _P\) (a non-empty open after passing to the symmetric power \(C^{(g)} \twoheadrightarrow \Jac (C)\)) forces \(g_1 = g_2\). </p>
+<p>Note: the existence half of <a href="chap-AbelJacobi.html#thm:exists_unique_ofCurve_comp">16</a> requires Phase B/C infrastructure (Picard scheme, dual abelian variety). Rigidity alone yields <em>uniqueness</em> only. </p>
+<h1 id="a0000000031">6.4 Mathlib gap</h1>
+<p>No rigidity lemma exists in Mathlib <span class="ttfamily">b80f227</span>. The closest pre-existing declaration is <code class="plain_lstlinline"></code>AlgebraicGeometry.isCommMonObj_of_isProper_of_isIntegral_tensorObj_of_isAlgClosed (commutativity of proper geometrically integral group schemes, Stacks 0BFD) in <code class="plain_lstlinline"></code>Mathlib/AlgebraicGeometry/Group/Abelian.lean. Our rigidity statement is independent of and in fact compatible with this commutativity result. </p>
+<p>The proof of Theorem&#160;<a href="chap-Rigidity.html#thm:GrpObj_eq_of_eqOnOpen">13</a> uses only Mathlib infrastructure that is already present (separatedness from properness, equaliser closedness, irreducibility of source, reducedness from smoothness). It is therefore provable in this iteration.  </p>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="chap-Jacobian.html" title="The Jacobian as an abelian variety"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="AlgebraicJacobian"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="chap-AbelJacobi.html" title="The Abel–Jacobi map"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

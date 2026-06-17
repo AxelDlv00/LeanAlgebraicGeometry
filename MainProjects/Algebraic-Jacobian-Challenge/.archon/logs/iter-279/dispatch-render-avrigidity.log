@@ -1,0 +1,16 @@
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ───────────────────────────────
+
+[ARCHON] Agent model: opus (blueprint-writer)
+render-avrigidity: COMPLETE — fixed all 41 live `math-delim` interleaving/`$`-style sites in `AbelianVarietyRigidity.tex` (math now uniformly `\(…\)`, prose outside; content preserved verbatim), leaving the 12 fully-commented sites untouched per directive; `\(`/`\)` balance verified exact (2495/2495), no `$` remains on any live line, no `REF`/`\cref`/statement/`\lean`/`\label`/`\uses` changes.
+
+Full report: `/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/task_results/blueprint-writer-render-avrigidity.md`
+[COST] 9.8min | $5.9996 | in=11515 out=44712 | turns=74
+[ARCHON] ✓ blueprint-writer/render-avrigidity finished (595s)
+render-avrigidity: COMPLETE — see /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/task_results/blueprint-writer-render-avrigidity.md (archived: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/logs/iter-279/blueprint-writer-render-avrigidity-report.md)

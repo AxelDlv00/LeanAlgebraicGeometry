@@ -1,0 +1,51 @@
+\chapter{The relative Picard functor as an abelian-group-valued presheaf}
+\label{chap:Picard_FunctorAb}
+
+This chapter is the natural successor to Chapter~\ref{chap:Picard_Functor}. The Lean realisation of the relative Picard functor in Chapter~\ref{chap:Picard_Functor} is $\Type$-valued (\lstinline{(Over (Spec k))ᵒᵖ ⥤ Type u}); the construction merely forgets the abelian-group structure that the values $\Pic(C \times_k S) / p_S^*\Pic(S)$ carry by definition. To set up Phase~C step~3 (étale sheafification, deferred) and any future cohomology-of-Picard-presheaf work, we need an $\AddCommGrpCat$-valued variant whose values agree on the nose with the $\Type$-valued ones.
+
+The chapter introduces no protected declarations: every definition and lemma here is auxiliary, supporting Chapter~\ref{chap:Jacobian} via the same path as Chapter~\ref{chap:Picard_Functor}.
+
+\section{Definition}
+
+\begin{definition}[Relative Picard functor, abelian-group valued]
+  \label{def:Pic_functorAb}
+  \lean{AlgebraicGeometry.Scheme.PicardFunctorAb}
+  \uses{def:Pic_functor}
+  Let $C$ be a scheme over $\Spec k$. The \emph{abelian-group-valued relative Picard functor} of $C$ over $k$ is the contravariant functor
+  \[
+    \PicardFunctorAb\, C \;\colon\; (\Sch_k)^{\mathrm{op}} \;\longrightarrow\; \AddCommGrpCat,\qquad
+    S \;\longmapsto\; \mathtt{AddCommGrpCat.of}\;\bigl(\Pic(C \times_k S) / p_S^*\Pic(S)\bigr),
+  \]
+  with morphisms induced by \lstinline{PicardFunctor.quotMap} (defined in Chapter~\ref{chap:Picard_Functor}) wrapped as \lstinline{AddCommGrpCat} morphisms via \lstinline{AddCommGrpCat.ofHom}.
+\end{definition}
+
+\begin{remark}
+  The underlying-set functor of $\PicardFunctorAb\, C$ agrees on the nose with the $\Type$-valued Picard functor of Chapter~\ref{chap:Picard_Functor}: Definition~\ref{def:Pic_functor} computes the same group quotient $\Pic(C \times_k S) / p_S^*\Pic(S)$ but discards the group structure. The lemma \lstinline{PicardFunctorAb.forget_eq} (or analogous) records this: \lstinline{PicardFunctorAb C ⋙ forget AddCommGrpCat = PicardFunctor C} (up to natural iso). It is needed to transport later results (e.g.\ representability) between the two flavours.
+\end{remark}
+
+\section{Use in the project}
+
+Definition~\ref{def:Pic_functorAb} sets up the codomain needed for:
+
+\begin{itemize}
+  \item Étale sheafification of the relative Picard functor (Phase~C step~3, deferred). The sheafification API \lstinline{CategoryTheory.presheafToSheaf} requires an $\AddCommGrpCat$-valued presheaf to land in $\Sheaf(J, \AddCommGrpCat)$.
+  \item Comparison with the Jacobian's $\Pic^0$ as a group scheme: the connected-component-of-identity of the representing scheme is a group object in $\Sch_k$; identifying $\PicardFunctorAb \cong \mathrm{HomFunctor}(\Pic_{C/k})$ via Yoneda is the cleanest path to the four \lstinline{Jacobian.lean} sorries.
+  \item Direct definition of $H^n$-of-the-Picard-presheaf if a future iteration wants to expose it as a derived functor.
+\end{itemize}
+
+The representability theorem \ref{thm:Pic_representable} of Chapter~\ref{chap:Picard_Functor} carries over verbatim once the étale sheafification of $\PicardFunctorAb$ has been constructed (Phase~C step~3); the four \lstinline{Jacobian.lean} sorries are the same as before. This chapter does \emph{not} add a representability theorem of its own — the present chapter is purely the codomain change.
+
+\section{Mathlib gap}
+
+Mathlib \texttt{b80f227} has every constituent for this chapter:
+\begin{itemize}
+  \item \lstinline{AddCommGrpCat.of}, \lstinline{AddCommGrpCat.ofHom} for wrapping a group / homomorphism into the bundled categorical shape.
+  \item \lstinline{CommGroup} structure on \lstinline{Pic _ ⧸ _} via Mathlib's quotient-of-commutative-group machinery.
+  \item This project's \lstinline{Picard.Functor} (Chapter~\ref{chap:Picard_Functor}, closed in iteration~004) for the underlying construction and the \lstinline{quotMap} functoriality.
+\end{itemize}
+
+The chapter therefore introduces no new sorries beyond the single definition itself; the prover task is to wrap the Chapter~\ref{chap:Picard_Functor} construction in \lstinline{AddCommGrpCat} and discharge the resulting \lstinline{map\_id}/\lstinline{map\_comp} obligations (which reduce to those already proved for \lstinline{quotMap}).
+
+\section{Forward-compatibility note}
+
+The abelian-group-valued variant inherits the \lstinline{LineBundle} approximation from Chapter~\ref{chap:Picard_LineBundle}: the values on non-affine $S$ are smaller subgroups of the true relative Picard group. Étale sheafification of $\PicardFunctorAb$ would compose with this approximation on the codomain side; closing the eventual étale-sheafified representability sorry on the approximation is forbidden for the same reason as in Chapter~\ref{chap:Picard_Functor}. The deferred \lstinline{representable} of Chapter~\ref{chap:Picard_Functor} is the unique gating obstruction; this chapter neither widens nor narrows it.

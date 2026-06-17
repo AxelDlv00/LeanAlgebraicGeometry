@@ -1,0 +1,52 @@
+{
+  "iteration": 155,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-20T05:46:44Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "691036d3-1daf-4cee-90b7-0f64135de692",
+    "durationSecs": 3297
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 2
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 621
+  },
+  "provers": {
+    "AlgebraicJacobian_Cotangent_ChartAlgebra": {
+      "file": "AlgebraicJacobian/Cotangent/ChartAlgebra.lean",
+      "status": "done",
+      "sessionId": "5ec63b98-a176-41e4-becd-46c2e91bd55f"
+    },
+    "AlgebraicJacobian_Jacobian": {
+      "file": "AlgebraicJacobian/Jacobian.lean",
+      "status": "done",
+      "sessionId": "6aa924f2-f133-4f14-b95c-fb2568f6c82f"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "aaab6f23-ea90-4e34-a19b-6be692c68159",
+    "durationSecs": 589
+  },
+  "sorry_count": 3,
+  "finalize": {
+    "innerGit": {
+      "sha": "d3e1745"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 21
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 7
+    }
+  },
+  "completedAt": "2026-05-20T07:04:13Z",
+  "wallTimeSecs": 4649
+}

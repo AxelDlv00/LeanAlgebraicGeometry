@@ -1,0 +1,635 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dependency graph</title>
+  <meta name="generator" content="plasTeX" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles/theme-white.css" />
+  <link rel="stylesheet" href="styles/dep_graph.css" />
+  
+  <script type="text/x-mathjax-config">
+  
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  
+  </script>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">  </script>
+
+
+<link rel="stylesheet" href="styles/extra_styles.css" />
+
+</head>
+
+<body>
+<header>
+  <a class="toc" href="index.html">Home</a>
+  <h1 id="doc_title">Dependencies</h1>
+</header>
+<div class="wrapper">
+<div class="content">
+  <div id="Legend">
+    <span id="legend_title" class="title">Legend
+    <div class="btn">
+       <div class="bar"></div>
+       <div class="bar"></div>
+       <div class="bar"></div>
+    </div></span> 
+    <dl class="legend">
+      
+      <dt>Boxes</dt><dd>definitions</dd>
+      
+      <dt>Ellipses</dt><dd>theorems and lemmas</dd>
+      
+      <dt>Blue border</dt><dd>the <em>statement</em> of this result is ready to be formalized; all prerequisites are done</dd>
+      
+      <dt>Orange border</dt><dd>the <em>statement</em> of this result is not ready to be formalized; the blueprint needs more work</dd>
+      
+      <dt>Blue background</dt><dd>the <em>proof</em> of this result is ready to be formalized; all prerequisites are done</dd>
+      
+      <dt>Green border</dt><dd>the <em>statement</em> of this result is formalized</dd>
+      
+      <dt>Green background</dt><dd>the <em>proof</em> of this result is formalized</dd>
+      
+      <dt>Dark green background</dt><dd>the <em>proof</em> of this result and all its ancestors are formalized</dd>
+      
+      <dt>Dark green border</dt><dd>this is in Mathlib</dd>
+      
+    </dl>
+  </div>
+    <div id="graph"></div>
+<div id="statements">
+
+    
+    <div class="dep-modal-container" id="def:genus_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:genus" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">2</span><span class="definition_thmtitle">Genus of a smooth proper curve</span></div>
+    <div class="thm_thmcontent"><p>   The <em>genus</em> of a smooth proper curve \(C\) over \(k\) is the natural number </p>
+<div class="displaymath" id="a0000000037">
+  \[  g(C) \; =\;  \dim _k H^1(C,\,  \mathcal O_C),  \]
+</div>
+<p> the \(k\)-dimension of the first sheaf-cohomology group of the structure sheaf of \(C\). </p>
+</div>
+
+    <a class="latex_link" href="chap-Genus.html#def:genus">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.genus">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:Jacobian_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:Jacobian" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">8</span><span class="definition_thmtitle">Jacobian</span></div>
+    <div class="thm_thmcontent"><p>    The <em>Jacobian</em> of \(C\) is the abelian variety </p>
+<div class="displaymath" id="a0000000043">
+  \[  \Jac (C) \; =\;  \Pic ^0_{C/k},  \]
+</div>
+<p> the connected component of the identity of the Picard scheme \(\Pic _{C/k}\) representing the relative Picard functor (Definition&#160;<a href="chap-Picard_Functor.html#def:Pic_functor">6</a>, Theorem&#160;<a href="chap-Picard_Functor.html#thm:Pic_representable">7</a>). It is viewed as an object of \(\textrm{Over}(\Spec k)\). </p>
+</div>
+
+    <a class="latex_link" href="chap-Jacobian.html#def:Jacobian">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.Jacobian">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:ofCurve_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:ofCurve" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">14</span><span class="definition_thmtitle">Abel–Jacobi map</span></div>
+    <div class="thm_thmcontent"><p>    Given a \(k\)-rational point \(P\colon \Spec k \to C\) — equivalently, a morphism \(P\colon \mathbf1 \to C\) in \(\textrm{Over}(\Spec k)\) — the <em>Abel–Jacobi map</em> is the \(k\)-morphism </p>
+<div class="displaymath" id="a0000000048">
+  \[  \alpha _P\colon C \; \longrightarrow \;  \Jac (C),\qquad Q \; \longmapsto \;  [\mathcal O_C(Q - P)].  \]
+</div>
+<p> Functorially, it is the morphism in \(\textrm{Over}(\Spec k)\) induced by the line bundle \(\mathcal O_{C \times C}(\Delta - p_1^* P)\) on \(C \times C\) via the universal property of \(\Pic ^0_{C/k}\). </p>
+</div>
+
+    <a class="latex_link" href="chap-AbelJacobi.html#def:ofCurve">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.Jacobian.ofCurve">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:Pic_functor_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:Pic_functor" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">6</span><span class="definition_thmtitle">Relative Picard functor</span></div>
+    <div class="thm_thmcontent"><p>   Let \(C\) be a scheme over \(\Spec k\). The <em>relative Picard functor</em> of \(C\) over \(k\) is the contravariant functor </p>
+<div class="displaymath" id="a0000000041">
+  \[  \PicardFunctor \,  C \; \colon \;  \mathrm{Sch}^{\mathrm{op}} \; \longrightarrow \;  \mathrm{Set},\qquad S \; \longmapsto \;  \Pic (C \times _k S) \, \big/\,  p_S^* \Pic (S),  \]
+</div>
+<p> where \(p_S \colon C \times _k S \to S\) is the projection and the quotient is by the subgroup \(p_S^*\Pic (S) \subseteq \Pic (C \times _k S)\) pulled back from \(S\). Functoriality in \(S\) is via base change of the fiber product and the pull-back homomorphism on Picard groups (Theorem&#160;<a href="chap-Picard_LineBundle.html#thm:Scheme_Pic_pullback">5</a>). </p>
+</div>
+
+    <a class="latex_link" href="chap-Picard_Functor.html#def:Pic_functor">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.Scheme.PicardFunctor">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:Scheme_LineBundle_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:Scheme_LineBundle" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">3</span><span class="definition_thmtitle">Line bundle on a scheme</span></div>
+    <div class="thm_thmcontent"><p>   Let \(X\) be a scheme. A <em>line bundle</em> on \(X\) is an invertible quasi-coherent \(\mathcal O_X\)-module: a sheaf \(L \in X.\mathtt{Modules}\) that is quasi-coherent and locally free of rank \(1\). Equivalently (Mathlib formulation): an object of \(X.\mathtt{Modules}\) that is invertible with respect to the tensor product \(- \otimes _{\mathcal O_X} -\) in the symmetric monoidal category \(X.\mathtt{Modules}\). </p>
+</div>
+
+    <a class="latex_link" href="chap-Picard_LineBundle.html#def:Scheme_LineBundle">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.Scheme.LineBundle">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:comp_ofCurve_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:comp_ofCurve" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">15</span><span class="lemma_thmtitle">\(\alpha _P\) sends \(P\) to \(0\)</span></div>
+    <div class="thm_thmcontent"><p>    \(P \; \circ \;  \alpha _P \; =\;  \eta \bigl[\Jac (C)\bigr]\), where \(\eta [\Jac (C)]\) is the identity element of the group scheme \(\Jac (C)\). </p>
+</div>
+
+    <a class="latex_link" href="chap-AbelJacobi.html#lem:comp_ofCurve">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.Jacobian.comp_ofCurve">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:exists_unique_ofCurve_comp_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:exists_unique_ofCurve_comp" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">16</span><span class="theorem_thmtitle">Albanese property of the Jacobian</span></div>
+    <div class="thm_thmcontent"><p>    Let \(A\) be an abelian variety over \(k\) — i.e. \(A \in \textrm{Over}(\Spec k)\) with <code class="plain_lstlinline"></code>[Smooth A.hom] [IsProper A.hom] [GrpObj A] [GeometricallyIrreducible A.hom]. For every pointed morphism \(f\colon C \to A\) with \(f \circ P = \eta [A]\), there exists a unique group-scheme morphism \(g\colon \Jac (C) \to A\) such that \(f = g \circ \alpha _P\). </p>
+<div class="displaymath" id="a0000000051">
+  \[  \begin{array}{ccc} C &  \stackrel{f}{\longrightarrow } &  A \\ {\scriptstyle \alpha _P} \downarrow &  \nearrow {\scriptstyle \exists ! g} & \\ \Jac (C) & & \end{array}  \]
+</div>
+</div>
+
+    <a class="latex_link" href="chap-AbelJacobi.html#thm:exists_unique_ofCurve_comp">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.Jacobian.exists_unique_ofCurve_comp">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:GrpObj_eq_of_eqOnOpen_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:GrpObj_eq_of_eqOnOpen" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">13</span><span class="theorem_thmtitle">Rigidity for morphisms of group schemes</span></div>
+    <div class="thm_thmcontent"><p>   Let \(k\) be a field. Let \(X, Y \in \textrm{Over}(\Spec k)\) be two objects equipped with the typeclasses </p>
+<div class="displaymath" id="a0000000044">
+  \[  \texttt{[SmoothOfRelativeDimension n X.hom] [IsProper X.hom] [GeometricallyIrreducible X.hom] [GrpObj X]}  \]
+</div>
+<p> and similarly for \(Y\) (with relative dimension \(m\)). Let \(g_1, g_2 \colon X \to Y\) be two morphisms in \(\textrm{Over}(\Spec k)\), and let \(U \subseteq X.\mathrm{left}\) be a non-empty open subset. If </p>
+<div class="displaymath" id="a0000000045">
+  \[  g_1\big|_U \; =\;  g_2\big|_U  \]
+</div>
+<p> on the underlying topological points, then \(g_1 = g_2\) as morphisms in \(\textrm{Over}(\Spec k)\). </p>
+</div>
+
+    <a class="latex_link" href="chap-Rigidity.html#thm:GrpObj_eq_of_eqOnOpen">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.GrpObj.eq_of_eqOnOpen">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:HasSheafCompose_forget_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:HasSheafCompose_forget" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">1</span><span class="theorem_thmtitle">Sheaf condition transports along the structure-sheaf forget composite</span></div>
+    <div class="thm_thmcontent"><p>   Let \(X\) be a topological space. Then the Grothendieck topology of opens of \(X\) has </p>
+<div class="displaymath" id="a0000000003">
+  \[  \mathtt{HasSheafCompose}\bigl( \mathrm{forget}_2\,  \mathrm{CommRingCat}\,  \mathrm{RingCat} \; \circ \;  \mathrm{forget}_2\,  \mathrm{RingCat}\,  \mathrm{AddCommGrpCat} \bigr).  \]
+</div>
+</div>
+
+    <a class="latex_link" href="chap-Cohomology_SheafCompose.html#thm:HasSheafCompose_forget">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.Cohomology.instHasSheafCompose_forget_CommRing_AddCommGrp">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:Jacobian_geomIrred_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:Jacobian_geomIrred" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">12</span><span class="theorem_thmtitle">Geometric irreducibility</span></div>
+    <div class="thm_thmcontent"><p>    \(\Jac (C) \to \Spec k\) is geometrically irreducible. </p>
+</div>
+
+    <a class="latex_link" href="chap-Jacobian.html#thm:Jacobian_geomIrred">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.Jacobian.instGeometricallyIrreducible">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:Jacobian_grpObj_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:Jacobian_grpObj" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">9</span><span class="theorem_thmtitle">Group object structure</span></div>
+    <div class="thm_thmcontent"><p>    \(\Jac (C)\) carries a canonical group-object structure in \(\textrm{Over}(\Spec k)\), induced from tensor product of line bundles on \(C\). </p>
+</div>
+
+    <a class="latex_link" href="chap-Jacobian.html#thm:Jacobian_grpObj">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.Jacobian.instGrpObj">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:Jacobian_proper_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:Jacobian_proper" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">11</span><span class="theorem_thmtitle">Properness</span></div>
+    <div class="thm_thmcontent"><p>    \(\Jac (C) \to \Spec k\) is proper. </p>
+</div>
+
+    <a class="latex_link" href="chap-Jacobian.html#thm:Jacobian_proper">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.Jacobian.instIsProper">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:Jacobian_smooth_genus_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:Jacobian_smooth_genus" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">10</span><span class="theorem_thmtitle">Smoothness and dimension</span></div>
+    <div class="thm_thmcontent"><p>    \(\Jac (C) \to \Spec k\) is smooth of relative dimension \(g(C)\). </p>
+</div>
+
+    <a class="latex_link" href="chap-Jacobian.html#thm:Jacobian_smooth_genus">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.Jacobian.smoothOfRelativeDimension_genus">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:Pic_representable_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:Pic_representable" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">7</span><span class="theorem_thmtitle">Representability of the Picard functor — Grothendieck FGA, Mumford <em>Abelian Varieties</em> §III.13</span></div>
+    <div class="thm_thmcontent"><p>    Let \(C\) be a smooth proper geometrically irreducible curve over a field \(k\). Then \(\PicardFunctor \,  C\) (after étale sheafification) is representable by a smooth, locally finite-type group scheme \(\Pic _{C/k}\) over \(k\). Its connected component of the identity \(\Pic ^0_{C/k}\) is a smooth proper geometrically irreducible group scheme over \(k\) of dimension \(g = g(C)\), hence an abelian variety. </p>
+</div>
+
+    <a class="latex_link" href="chap-Picard_Functor.html#thm:Pic_representable">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.Scheme.PicardFunctor.representable">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:Scheme_Pic_commGroup_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:Scheme_Pic_commGroup" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">4</span><span class="theorem_thmtitle">Picard group of a scheme</span></div>
+    <div class="thm_thmcontent"><p>   For every scheme \(X\), the type of line bundles on \(X\) (modulo isomorphism) carries a canonical commutative-group structure. The operation is tensor product over \(\mathcal O_X\), the unit is the structure sheaf \(\mathcal O_X\) itself, and the inverse of a line bundle \(L\) is its \(\mathcal O_X\)-dual \(L^\vee = \mathcal{H}om_{\mathcal O_X}(L, \mathcal O_X)\). </p>
+<p>We denote this group by \(\Pic (X)\) and call it the <em>Picard group</em> of \(X\). </p>
+</div>
+
+    <a class="latex_link" href="chap-Picard_LineBundle.html#thm:Scheme_Pic_commGroup">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.Scheme.instCommGroupLineBundle">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:Scheme_Pic_pullback_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:Scheme_Pic_pullback" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">5</span><span class="theorem_thmtitle">Pull-back of line bundles</span></div>
+    <div class="thm_thmcontent"><p>   Let \(f \colon X \to Y\) be a morphism of schemes. Pull-back of \(\mathcal O_Y\)-modules along \(f\) restricts to a group homomorphism </p>
+<div class="displaymath" id="a0000000040">
+  \[  f^* \colon \Pic (Y) \; \to \;  \Pic (X),\qquad L \; \mapsto \;  f^* L \; :=\;  f^{-1} L \otimes _{f^{-1}\mathcal O_Y} \mathcal O_X.  \]
+</div>
+<p> Pull-back preserves invertibility, commutes with tensor product, and is functorial: \((\mathrm{id}_X)^* = \mathrm{id}_{\Pic (X)}\) and \((f \circ g)^* = g^* \circ f^*\). </p>
+</div>
+
+    <a class="latex_link" href="chap-Picard_LineBundle.html#thm:Scheme_Pic_pullback">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.Scheme.Pic.pullback">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+</div>
+</div> <!-- content -->
+</div> <!-- wrapper -->
+<script src="js/jquery.min.js" type="text/javascript"></script>
+
+<script src="js/d3.min.js"></script>
+<script src="js/hpcc.min.js"></script>
+<script src="js/d3-graphviz.js"></script>
+
+<script type="text/javascript">
+const graphContainer = d3.select("#graph");
+const width = graphContainer.node().clientWidth;
+const height = graphContainer.node().clientHeight;
+
+
+graphContainer.graphviz({useWorker: true})
+    .width(width)
+    .height(height)
+    .fit(true)
+    .renderDot(`strict digraph "" {	graph [bgcolor=transparent];	node [label="\N",		penwidth=1.8	];	edge [arrowhead=vee];	"thm:Jacobian_smooth_genus"	[color=green,		label=Jacobian_smooth_genus,		shape=ellipse];	"thm:Jacobian_proper"	[color=green,		label=Jacobian_proper,		shape=ellipse];	"thm:GrpObj_eq_of_eqOnOpen"	[color=green,		label=GrpObj_eq_of_eqOnOpen,		shape=ellipse];	"thm:exists_unique_ofCurve_comp"	[color=green,		fillcolor="#A3D6FF",		label=exists_unique_ofCurve_comp,		shape=ellipse,		style=filled];	"thm:GrpObj_eq_of_eqOnOpen" -> "thm:exists_unique_ofCurve_comp";	"def:genus"	[color=green,		fillcolor="#B0ECA3",		label=genus,		shape=box,		style=filled];	"def:genus" -> "thm:Jacobian_smooth_genus"	[style=dashed];	"def:ofCurve"	[color=green,		fillcolor="#B0ECA3",		label=ofCurve,		shape=box,		style=filled];	"lem:comp_ofCurve"	[color=green,		fillcolor="#A3D6FF",		label=comp_ofCurve,		shape=ellipse,		style=filled];	"def:ofCurve" -> "lem:comp_ofCurve"	[style=dashed];	"lem:comp_ofCurve" -> "thm:exists_unique_ofCurve_comp"	[style=dashed];	"def:Scheme_LineBundle"	[color=green,		fillcolor="#B0ECA3",		label=Scheme_LineBundle,		shape=box,		style=filled];	"thm:Scheme_Pic_commGroup"	[color=green,		fillcolor="#1CAC78",		label=Scheme_Pic_commGroup,		shape=ellipse,		style=filled];	"def:Scheme_LineBundle" -> "thm:Scheme_Pic_commGroup";	"thm:Scheme_Pic_pullback"	[color=green,		fillcolor="#1CAC78",		label=Scheme_Pic_pullback,		shape=ellipse,		style=filled];	"thm:Scheme_Pic_commGroup" -> "thm:Scheme_Pic_pullback";	"thm:Pic_representable"	[color=green,		fillcolor="#A3D6FF",		label=Pic_representable,		shape=ellipse,		style=filled];	"thm:Scheme_Pic_pullback" -> "thm:Pic_representable";	"def:Jacobian"	[color=green,		fillcolor="#B0ECA3",		label=Jacobian,		shape=box,		style=filled];	"thm:Pic_representable" -> "def:Jacobian"	[style=dashed];	"def:Jacobian" -> "thm:Jacobian_smooth_genus"	[style=dashed];	"def:Jacobian" -> "thm:Jacobian_proper"	[style=dashed];	"def:Jacobian" -> "def:ofCurve"	[style=dashed];	"thm:Jacobian_geomIrred"	[color=green,		label=Jacobian_geomIrred,		shape=ellipse];	"def:Jacobian" -> "thm:Jacobian_geomIrred"	[style=dashed];	"thm:Jacobian_grpObj"	[color=green,		label=Jacobian_grpObj,		shape=ellipse];	"def:Jacobian" -> "thm:Jacobian_grpObj"	[style=dashed];	"def:Pic_functor"	[color=green,		fillcolor="#B0ECA3",		label=Pic_functor,		shape=box,		style=filled];	"def:Pic_functor" -> "thm:Pic_representable"	[style=dashed];	"thm:HasSheafCompose_forget"	[color=green,		label=HasSheafCompose_forget,		shape=ellipse];}`)
+    .on("end", interactive);
+
+latexLabelEscaper = function(label) {
+  return label.replace(/\./g, '\\.').replace(/:/g, '\\:')
+}
+
+clickNode = function() {
+  $("#statements div").hide()
+  var node_id = $('text', this).text();
+  $('.thm').hide();
+  $('#'+latexLabelEscaper(node_id)).show().children().show();
+}
+function interactive() {
+    $("span#legend_title").on("click", function () {
+           $(this).siblings('dl').toggle();
+        })
+
+    d3.selectAll('.node')
+        .attr('pointer-events', 'fill')
+        .on('click', function () {
+           var title = d3.select(this).selectAll('title').text().trim();
+           $('#statements > div').hide()
+           $('.thm').hide();
+           $('#'+latexLabelEscaper(title)+'_modal').show().children().show().children().show();
+           $('#statements').show()
+        });
+
+    d3.selectAll('.dep-closebtn').on('click', function() {
+        var modal =
+            d3.select(this).node().parentNode.parentNode.parentNode ;
+        d3.select(modal).style('display', 'none');
+    });
+}
+
+</script>
+
+</body>
+</html>

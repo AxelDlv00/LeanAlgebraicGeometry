@@ -1,0 +1,236 @@
+\chapter{Cross01 Substrate}
+\label{chap:Genus0BaseObjects_Cross01Substrate}
+% archon:covers AlgebraicJacobian/Genus0BaseObjects/Cross01Substrate.lean
+
+% STRATEGY NOTE (iter-189 plan-phase). This chapter is a project-bespoke
+% substrate file landing two reusable lemmas needed to close the Lane B
+% \(\mathbb{G}_m\)-scaling cocycle (path (III.c) of
+% chap:AbelianVarietyRigidity) together with two off-target sorries
+% (\texttt{gm\_geomIrred}, \texttt{projGm\_isReduced}) in
+% \texttt{Genus0BaseObjects/GmScaling.lean}. Both substrates are
+% generic in the geometric situation (the closed-immersion lift lemma is
+% scheme-level; the tensor-domain lemma is ring-level keyed on the
+% \texttt{projectiveLineBar} grading) and live in their own file rather
+% than inline so they can be re-used by the three GmScaling
+% applications and, if upstreamed, by Mathlib itself.
+%
+% The recipe consolidated below was produced by the
+% \texttt{mathlib-analogist} subagent in iter-189 and is preserved
+% verbatim in \texttt{analogies/lane-b-substrate.md} (Section
+% ``Concrete project-side recipe''). The chapter itself is the
+% prover-facing specification.
+
+\section{Setup and motivation}
+\label{sec:cross01_substrate_setup}
+
+The Lane B cocycle \texttt{gmScalingP1\_chart\_agreement\_cross01} reduces, after
+the iter-188 (III.c) separated-locus structural setup, to a single substantive
+factorisation: a pair morphism
+\(s_{\text{pair}} : T \to T_0 \times_X T_1\) into a fibre product over the
+projective line bar \(\mathrm{PLB}_{\overline{k}}\) must factor through the
+diagonal closed immersion
+\(\Delta : T_0 \times_{X} T_1 \hookrightarrow T_0 \times_{\overline{k}} T_1\)
+of the separated-over-\(\overline{k}\) target. Concretely the missing primitive is
+the equivalence
+\[
+  \exists\, h : Y \to Z,\ h \circ i = g \iff \mathrm{range}(g) \subseteq \mathrm{range}(i)
+\]
+for a closed immersion \(i\) with reduced source/target hypothesis, which Mathlib
+ships only in the kernel-inequality form (\(\mathtt{IsClosedImmersion.lift}\),
+keyed on \(f.\mathrm{ker} \le g.\mathrm{ker}\)). Substrate~1 fills this gap.
+
+The same Lane B cocycle, together with the two off-target instances
+\texttt{gm\_geomIrred} and \texttt{projGm\_isReduced}, also requires
+\[
+  \mathrm{IsDomain}\bigl(\mathrm{Away}_{\overline{k}}\,f \otimes_{\overline{k}} \mathrm{GmRing}\,\overline{k}\bigr)
+\]
+for a homogeneous generator \(f\) of positive degree in the
+\(\mathrm{projectiveLineBar}\) grading. Substrate~2 supplies this via a
+canonical iso chain
+\[
+  \mathrm{Away}\,f \otimes_{\overline{k}} \overline{k}[t]
+  \;\cong\; \mathrm{MvPolynomial}_{\mathrm{Unit}}(\mathrm{Away}\,f)
+\]
+followed by localisation at \(X()\), reducing the claim to the
+already-formalised pattern from \texttt{projectiveLineBar\_isReduced}.
+
+\section{Closed-immersion lift by range inclusion}
+\label{sec:lift_iff_range_subset}
+
+\begin{theorem}\leanok
+[lift through closed immersion via range containment]
+  \label{thm:IsClosedImmersion_lift_iff_range_subset}
+  \lean{AlgebraicGeometry.IsClosedImmersion.lift_iff_range_subset}
+  Let \(X,Y,Z\) be schemes (Type \(u\)), let \(i : Z \to X\) be a closed
+  immersion with \(Z\) reduced, and let \(g : Y \to X\) be a
+  quasi-compact morphism with \(Y\) reduced. Then there exists a
+  morphism \(h : Y \to Z\) with \(h \circ i = g\) if and only if the
+  topological range of \(g\) is contained in the topological range of
+  \(i\):
+  \[
+    (\exists\, h : Y \to Z,\ h \circ i = g)
+    \;\iff\;
+    \mathrm{range}(g_{\text{base}}) \subseteq \mathrm{range}(i_{\text{base}}).
+  \]
+\end{theorem}
+\begin{proof}
+
+
+\leanok
+  \emph{Forward direction} is range pushdown: if \(g = h \circ i\)
+  then every point in \(\mathrm{range}(g_{\text{base}})\) is the image
+  under \(i_{\text{base}}\) of \(h_{\text{base}}(y)\) for the
+  corresponding preimage \(y\).
+
+  \emph{Backward direction} threads the Galois connection between
+  vanishing-ideal and support of an ideal sheaf. The proof has six
+  steps; the Mathlib primitives cited are present at the project's
+  pinned commit (\texttt{b80f227}).
+
+  \begin{enumerate}
+  \item \emph{Range of a closed immersion is its kernel support.}
+    Because \(i\) is a closed immersion, \(i\) factors (up to
+    isomorphism) as the canonical subscheme inclusion of its kernel
+    ideal sheaf, so
+    \(\mathrm{range}(i_{\text{base}}) = i.\mathrm{ker}.\mathrm{support}\).
+    (Mathlib:
+    \texttt{IdealSheafData.range\_subschemeι} +
+    \texttt{Scheme.Hom.toImage}.)
+  \item \emph{Range of \(g\) lies in \(g.\mathrm{ker}.\mathrm{support}\).}
+    The unconditional inclusion
+    \(\mathrm{range}(g_{\text{base}}) \subseteq g.\mathrm{ker}.\mathrm{support}\)
+    is shipped (\texttt{Scheme.Hom.range\_subset\_ker\_support}); under
+    \([\mathrm{QuasiCompact}\;g]\), \(g.\mathrm{ker}.\mathrm{support}\)
+    equals \(\overline{\mathrm{range}\,g_{\text{base}}}\)
+    (\texttt{Scheme.Hom.support\_ker}). Since
+    \(i.\mathrm{ker}.\mathrm{support}\) is closed and contains
+    \(\mathrm{range}(g)\) by hypothesis, the closure also lies in
+    \(i.\mathrm{ker}.\mathrm{support}\):
+    \(g.\mathrm{ker}.\mathrm{support} \subseteq i.\mathrm{ker}.\mathrm{support}\).
+    (Mathlib: \texttt{closure\_minimal}.)
+  \item \emph{\(Y\) reduced \(\Rightarrow\) \(g.\mathrm{ker}\) is radical.}
+    Under \([\mathrm{QuasiCompact}\;g]\),
+    \(g.\mathrm{ker}.\mathrm{ideal}\,U = \mathrm{ker}(g.\mathrm{app}\,U)\)
+    (\texttt{Scheme.Hom.ker\_apply}). Reducedness of \(Y\) makes this
+    ring kernel a radical ideal pointwise on each affine open, so
+    \(g.\mathrm{ker}.\mathrm{radical} = g.\mathrm{ker}\).
+  \item \emph{\(Z\) reduced \(\Rightarrow\) \(i.\mathrm{ker}\) is
+    radical.} Identical argument with \(i\) in place of \(g\)
+    (closed immersions are quasi-compact, so the
+    \texttt{ker\_apply} hypothesis is satisfied automatically).
+  \item \emph{Galois-connection chain.} Combining Steps~2--4 with
+    \texttt{IdealSheafData.vanishingIdeal\_support} (which equates
+    the vanishing ideal of a support with the radical) gives
+    \[
+      i.\mathrm{ker}
+        = i.\mathrm{ker}.\mathrm{radical}
+        = \mathrm{vanishingIdeal}(i.\mathrm{ker}.\mathrm{support})
+        \le \mathrm{vanishingIdeal}(g.\mathrm{ker}.\mathrm{support})
+        = g.\mathrm{ker}.\mathrm{radical}
+        = g.\mathrm{ker}.
+    \]
+    The middle inequality uses the antitone half of the Galois
+    connection (\texttt{IdealSheafData.gc}).
+  \item \emph{Apply Mathlib's kernel-inequality lift.} The proof
+    concludes by feeding \(\mathrm{hker} : i.\mathrm{ker} \le g.\mathrm{ker}\)
+    to \texttt{IsClosedImmersion.lift} and reading off its
+    factorisation lemma \texttt{lift\_fac}.
+  \end{enumerate}
+\end{proof}
+
+\section{Tensor reducedness over the algebraic closure}
+\label{sec:tensor_AwayGm_isDomain}
+
+\begin{theorem}\leanok
+[domain structure on \(\mathrm{Away}\,f \otimes_{\overline{k}} \mathrm{GmRing}\)]
+  \label{thm:gmRing_tensor_homogeneousAway_isDomain}
+  \lean{AlgebraicGeometry.gmRing_tensor_homogeneousAway_isDomain}
+  Let \(\overline{k}\) be a field, let \(d \ge 1\), and let \(f\) be a
+  non-zero homogeneous polynomial of degree \(d\) in the
+  \(\mathrm{projectiveLineBar}\) grading on
+  \(\mathrm{MvPolynomial}(\mathrm{Fin}\,2)\;\overline{k}\). Then the
+  tensor product
+  \[
+    \mathrm{HomogeneousLocalization.Away}\bigl(\mathrm{projectiveLineBarGrading}\,\overline{k}\bigr)\,f
+    \;\otimes_{\overline{k}}\;
+    \mathrm{GmRing}\;\overline{k}
+  \]
+  is a domain (and hence reduced).
+\end{theorem}
+\begin{proof}
+
+\leanok
+  The proof exhibits a canonical isomorphism of \(\overline{k}\)-algebras
+  identifying the tensor product with the localisation of a
+  polynomial ring over a domain at a non-zero-divisor; both operations
+  preserve the domain property.
+
+  \begin{enumerate}
+  \item \emph{Domain instance on the homogeneous localisation.}
+    \(\mathrm{Away}\,f := \mathrm{HomogeneousLocalization.Away}(\mathrm{projectiveLineBarGrading})\,f\)
+    embeds via the \texttt{val\_injective} bridge into
+    \(\mathrm{Localization.Away}\,f\); since the polynomial ring
+    \(\mathrm{MvPolynomial}(\mathrm{Fin}\,2)\;\overline{k}\) is a domain
+    and \(f \ne 0\), the localisation is a domain, and the bridge
+    transports the property to \(\mathrm{Away}\,f\). (Already used in
+    \texttt{projectiveLineBar\_isReduced}; see
+    \texttt{GmScaling.lean} L734--738 for the precise instance
+    threading.)
+  \item \emph{Collapse the tensor with the polynomial factor.}
+    Recalling
+    \(\mathrm{GmRing}\;\overline{k}
+       = \mathrm{Localization.Away}(X()\,:\,\mathrm{MvPolynomial}\;\mathrm{Unit}\;\overline{k})\),
+    apply \texttt{MvPolynomial.algebraTensorAlgEquiv} to get
+    \[
+      \mathrm{Away}\,f \otimes_{\overline{k}} \mathrm{MvPolynomial}\;\mathrm{Unit}\;\overline{k}
+      \;\cong\;
+      \mathrm{MvPolynomial}\;\mathrm{Unit}\;(\mathrm{Away}\,f),
+    \]
+    a \(\overline{k}\)-algebra (in fact \(\mathrm{Away}\,f\)-algebra)
+    isomorphism.
+  \item \emph{Push the localisation through the tensor.}
+    Tensoring with the localisation step
+    \(\mathrm{MvPolynomial}\;\mathrm{Unit}\;\overline{k} \to \mathrm{GmRing}\;\overline{k}\)
+    factors through Mathlib's tensor-base-change lemma
+    \texttt{IsLocalization.Away.tensorRightEquiv}, yielding an
+    isomorphism
+    \[
+      \mathrm{Away}\,f \otimes_{\overline{k}} \mathrm{GmRing}\;\overline{k}
+      \;\cong\;
+      \mathrm{Localization.Away}(\iota(X())\,:\,\mathrm{MvPolynomial}\;\mathrm{Unit}\;(\mathrm{Away}\,f))
+    \]
+    where \(\iota\) is the canonical algebra map. The threading uses
+    \texttt{IsScalarTower} compatibility and the
+    \texttt{Algebra}/\(\mathrm{IsLocalization.Away}\) instance on the
+    tensored polynomial ring.
+  \item \emph{Right-hand side is a domain.}
+    \(\mathrm{MvPolynomial}\;\mathrm{Unit}\;(\mathrm{Away}\,f)\) is a
+    polynomial ring over a domain (Step~1), hence a domain by the
+    standard instance. The generator \(X()\) is non-zero
+    (\texttt{MvPolynomial.X\_ne\_zero}), so its powers form a
+    submonoid of the non-zero-divisors
+    (\texttt{powers\_le\_nonZeroDivisors\_of\_noZeroDivisors}); the
+    localisation is then a domain by
+    \texttt{IsLocalization.isDomain\_localization}.
+  \end{enumerate}
+
+  Transferring the domain property along the iso of Step~3 closes the
+  goal. Reducedness is a direct corollary of being a domain.
+\end{proof}
+
+% NOTE (iter-189 plan-phase). The two substrates above are independent
+% targets. Iter-189 prover dispatch lands Substrate~1
+% (\(\sim 40\)--60 LOC). Substrate~2 is owed iter-190 prover dispatch
+% (\(\sim 50\)--80 LOC). After both land, the three GmScaling.lean
+% consumer sorries (\texttt{gmScalingP1\_chart\_agreement\_cross01},
+% \texttt{gm\_geomIrred}, \texttt{projGm\_isReduced}) close in
+% iters~191--193 via \(\sim 65\)--105 LOC of inline application
+% (per the LOC table in \texttt{analogies/lane-b-substrate.md}).
+
+% Out of scope:
+% - The GmScaling.lean consumer applications (cocycle body, geometric
+%   irreducibility instance, reducedness instance) are bodied in the
+%   sibling chapter chap:Genus (and inline in GmScaling.lean once the
+%   substrates are imported); they do NOT live here.
+% - Upstreaming the lift_iff_range_subset variant to Mathlib is a
+%   future task tracked in the open strategic questions of STRATEGY.md.

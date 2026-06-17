@@ -1,0 +1,49 @@
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ───────────────────────────────
+
+[ARCHON] Agent model: opus (blueprint-writer)
+You've hit your session limit · resets 4pm (UTC)
+[COST] 0.9min | $0.6814 | in=10254 out=3437 | turns=8
+╭───────────────────── Traceback (most recent call last) ──────────────────────╮
+│ /home/archon/Archon/archon-multilane-private/src/archon/commands/subagent.py │
+│ :154 in subagent_command                                                     │
+│                                                                              │
+│   151 │   backend = resolve_claude_backend(cfg, cli_value=claude_backend)    │
+│   152 │   sub = Subagent(descriptor, resolved, verbose_logs=verbose_logs,    │
+│       backend=backend)                                                       │
+│   153 │   try:                                                               │
+│ ❱ 154 │   │   result = sub.run(                                              │
+│   155 │   │   │   directive=directive,                                       │
+│   156 │   │   │   slug=slug,                                                 │
+│   157 │   │   │   iter_num=iter_num,                                         │
+│                                                                              │
+│ /home/archon/Archon/archon-multilane-private/src/archon/subagents/base.py:38 │
+│ 3 in run                                                                     │
+│                                                                              │
+│   380 │   │   pool = SlotPool.from_env()                                     │
+│   381 │   │   if pool is not None:                                           │
+│   382 │   │   │   with pool.slot():                                          │
+│ ❱ 383 │   │   │   │   ok = agent.run(                                        │
+│   384 │   │   │   │   │   prompt,                                            │
+│   385 │   │   │   │   │   cwd=self.project_path,                             │
+│   386 │   │   │   │   │   log_base=log_base,                                 │
+│                                                                              │
+│ /home/archon/Archon/archon-multilane-private/src/archon/agent.py:723 in run  │
+│                                                                              │
+│    720 │   │   │   if outcome is RunOutcome.CANCELLED:                       │
+│    721 │   │   │   │   return False                                          │
+│    722 │   │   │   if outcome is RunOutcome.QUOTA_EXHAUSTED:                 │
+│ ❱  723 │   │   │   │   raise QuotaExhaustedError(                            │
+│    724 │   │   │   │   │   "API quota exhausted — stop the loop and wait for │
+│        the "                                                                 │
+│    725 │   │   │   │   │   "limit to reset before resuming."                 │
+│    726 │   │   │   │   )                                                     │
+╰──────────────────────────────────────────────────────────────────────────────╯
+QuotaExhaustedError: API quota exhausted — stop the loop and wait for the limit 
+to reset before resuming.

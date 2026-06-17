@@ -1,0 +1,26 @@
+{
+  "stage": "prover",
+  "objectives": [
+    "**`AlgebraicJacobian/Picard/GrassmannianQuot.lean`** — GR-quot endgame, **1 sorry** (GATE CLEAR;",
+    "**`AlgebraicJacobian/Picard/SectionGradedRing.lean`** — SNAP-S0 graded assembly, **9 scaffolded",
+    "**`AlgebraicJacobian/Cohomology/FlatBaseChangeGlobal.lean`** — FBC-B DIRECT capstone, **1 sorry**"
+  ],
+  "checklist": [
+    {
+      "label": "init",
+      "done": true
+    },
+    {
+      "label": "autoformalize",
+      "done": true
+    },
+    {
+      "label": "prover",
+      "done": false
+    },
+    {
+      "label": "polish",
+      "done": false
+    }
+  ]
+}

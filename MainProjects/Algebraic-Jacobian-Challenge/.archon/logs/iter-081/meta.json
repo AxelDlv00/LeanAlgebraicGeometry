@@ -1,0 +1,44 @@
+{
+  "iteration": 81,
+  "stage": "",
+  "mode": "parallel",
+  "startedAt": "2026-05-12T21:22:28Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 747
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 3554
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_BasicOpenCech": {
+      "file": "AlgebraicJacobian/Cohomology/BasicOpenCech.lean",
+      "status": "done"
+    },
+    "AlgebraicJacobian_Differentials": {
+      "file": "AlgebraicJacobian/Differentials.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 444
+  },
+  "sorry_count": 2716,
+  "finalize": {
+    "innerGit": {
+      "sha": "b4d009b5"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 19
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 2
+    }
+  },
+  "completedAt": "2026-05-12T22:45:50Z",
+  "wallTimeSecs": 5001
+}

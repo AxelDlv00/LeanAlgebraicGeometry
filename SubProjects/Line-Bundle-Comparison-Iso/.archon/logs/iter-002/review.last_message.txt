@@ -1,0 +1,18 @@
+Review for iter-002 is complete.
+
+Wrote the required outputs:
+- [milestones.jsonl](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/proof-journal/sessions/session_2/milestones.jsonl)
+- [summary.md](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/proof-journal/sessions/session_2/summary.md)
+- [recommendations.md](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/proof-journal/sessions/session_2/recommendations.md)
+- [review.md](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/iter/iter-002/review.md)
+- [PROJECT_STATUS.md](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/PROJECT_STATUS.md)
+
+Key result: active sorries remain `7 -> 7`, but one solved helper landed: `dualUnitRingSwap_apply`. Main next steps are factoring the DUAL naturality proof out of the monolithic `LinearEquiv`, and finishing the D3 mixed-comparison splice from the committed `leftAdjointCompNatTrans_assoc` scaffold.
+
+Verification done:
+- `milestones.jsonl` validates as JSON, 9 entries.
+- `lake env lean` succeeds on both touched Lean files.
+- Blueprint doctor clean, `sync_leanok` made no changes.
+- `archon dag-query unmatched` checked: 96 entries, with `dualUnitRingSwap_apply` new this iter.
+
+Review subagents were attempted but could not run: Archon needed the venv path, then the subagent runner failed because `codex` is not available as an executable. I recorded that in the review artifacts and `TO_USER.md`.

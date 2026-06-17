@@ -1,0 +1,24 @@
+{
+  "iteration": 33,
+  "stage": "prover  (iteration 032 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **cover-totality Ext-transport at universe `u+1`**: append one declaration to `Cohomology/MayerVietoris.lean` inside the existing `section CoverTotality` (after iter-031's `HModule'_top_sourceIso`) \u2014 `noncomputable def Scheme.HModule_top_linearEquiv` carrying a $k$-linear equivalence `Abelian.Ext.{u+1} ((presheafToSheaf J _).obj ((yoneda \u22d9 (Functor.whiskeringRight _ _ _).obj (ModuleCat.free k)).obj T)) F n \u2243\u2097[k] HModule k F n` for terminal `T`. Plan-agent `lean_run_code` probe (this pass) confirms the body \u2014 `LinearEquiv.ofLinear ((mk\u2080 \u03b1.inv).precompOfLinear k F (zero_add n)) ((mk\u2080 \u03b1.hom).precompOfLinear k F (zero_add n))` with round-trip equations closed by the four-step rewrite chain `\u2190 Abelian.Ext.comp_assoc_of_second_deg_zero` + `Abelian.Ext.mk\u2080_comp_mk\u2080` + iso identity (`\u03b1.inv_hom_id` / `\u03b1.hom_inv_id`) + `Abelian.Ext.mk\u2080_id_comp` \u2014 typechecks end-to-end against the post-iter-031 file with `{success: true, diagnostics: []}` and kernel-only axioms. The iter-031 prover's one-declaration close lands cleanly: 9 sorries (no change), zero diagnostics, kernel-only axioms, +43 LOC (677 \u2192 720). Iter-032 sorry trajectory `9 \u2192 9 \u2192 9` (no transient scaffold sorries \u2014 body is a probe-confirmed term-mode one-liner with two `by`-block equations).",
+  "mode": "parallel",
+  "startedAt": "2026-05-09T07:14:05Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1854
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 124
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 494
+  }
+}

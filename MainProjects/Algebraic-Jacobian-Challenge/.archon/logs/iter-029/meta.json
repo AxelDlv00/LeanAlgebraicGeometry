@@ -1,0 +1,40 @@
+{
+  "iteration": 29,
+  "stage": "prover  (iteration 028 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding kickoff: scaffold the bundled 2-affine cover Mayer-Vietoris square `Scheme.AffineCoverMVSquare` plus its `toMayerVietorisSquare` accessor in the new `Cohomology/MayerVietoris.lean`. Plan-agent `lean_run_code` probe (this pass) confirms a clean two-declaration scaffold compiles end-to-end against the post-iter-027 file with `{success: true, diagnostics: []}` and the four corner-equality `rfl`-smoke checks all pass. This is the first concrete step of the multi-iteration Serre-finiteness chain that `smoothOfRelativeDimension_genus` (Jacobian.lean) will eventually consume; it lives entirely in unprotected territory. The session-36 review recommendation (Option B) is taken: \u010cech-vs-derived-functor comparison API is still gated in Mathlib (probe-confirmed this pass), and the lighter MV-square specialisation is the right scope for iter-028. Iter-028 sorry trajectory `9 \u2192 10 \u2192 9` (one new scaffold sorry on the accessor, closed with the probe-confirmed term-mode body `Opens.mayerVietorisSquare S.U\u2081 S.U\u2082`).",
+  "mode": "parallel",
+  "startedAt": "2026-05-08T16:18:02Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 865
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 290
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 745
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "ed3f563"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 17
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 3
+    }
+  },
+  "completedAt": "2026-05-08T16:50:05Z",
+  "wallTimeSecs": 1923
+}

@@ -1,0 +1,6 @@
+`AlgebraicJacobian/Picard/TensorObjSubstrate.lean` still has open gaps, but it compiles with the partial proof attempt preserved. I wrote the handoff to [task_results/AlgebraicJacobian_Picard_TensorObjSubstrate.lean.md](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/task_results/AlgebraicJacobian_Picard_TensorObjSubstrate.lean.md).
+
+Current blockers:
+- `sheafificationCompPullback_comp_tail` at line 2623 is still open upstream.
+- `pullbackTensorMap_restrict` is reduced to the dependent δ-square rewrite, but that bridge still needs an explicit `congrArg`/`conv` splice.
+- The file currently has 4 open `sorry`s total: lines 712, 2623, 2959, 2963.

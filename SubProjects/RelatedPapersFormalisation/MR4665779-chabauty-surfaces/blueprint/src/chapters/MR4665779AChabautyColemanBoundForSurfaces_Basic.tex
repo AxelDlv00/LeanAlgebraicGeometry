@@ -1,0 +1,1065 @@
+\section{A Chabauty--Coleman bound for surfaces}
+
+% archon:covers MR4665779AChabautyColemanBoundForSurfaces.lean MR4665779AChabautyColemanBoundForSurfaces/Basic.lean
+
+This chapter is the complete informal dependency roadmap for Caro--Pasten's
+surface analogue of Coleman's bound.  It deliberately gives placeholder Lean
+names for the mathematical declarations that are not yet scaffolded; the only
+current Lean declaration is the bootstrap constant \(\lean{hello}\).
+
+\subsection{Bootstrap coverage}
+
+\begin{definition}[Bootstrap constant]
+  \label{def:bootstrap_hello}
+  \lean{hello}
+  The current Lean scaffold contains the constant \(\mathrm{hello}\), whose
+  value is the string ``world''.  It carries no mathematical content and is
+  included only to keep the Lean--blueprint correspondence exact.
+\end{definition}
+
+\subsection{Global notation and geometric interfaces}
+
+\begin{definition}[Geometric and local-field notation]
+  \label{def:cp_notation}
+  \lean{MR4665779.Notation}
+  % SOURCE: Caro--Pasten, Sections 2.1--2.3 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: A variety over $L$ is a reduced $L$-scheme which is separated of finte type over $L$.
+  \textit{Source: Caro--Pasten, Sections 2.1--2.3.}
+  A variety over a field \(L\) is a reduced separated \(L\)-scheme of finite
+  type.  Curves and surfaces have pure dimensions \(1\) and \(2\).  For a smooth
+  projective surface \(S\), \(c_1^2(S)\) is the self-intersection of a canonical
+  divisor.  For a finite extension \(K/\mathbb Q_p\), write \(R\) for its ring
+  of integers, \(\mathfrak p\) for its maximal ideal, \(\varpi\) for a
+  uniformizer, \(\mathbf k\) for the residue field of cardinality \(q\),
+  \(\mathfrak e\) for the ramification index, and normalize the absolute value
+  by \(|\varpi|=q^{-1}\).
+\end{definition}
+
+\begin{definition}[Basic surface and abelian-variety interfaces]
+  \label{def:cp_geometry_interfaces}
+  \lean{MR4665779.GeometryInterfaces}
+  \uses{def:cp_notation}
+  % SOURCE: Caro--Pasten, Sections 3 and 5 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: Given a geometrically irreducible, smooth, projective surface $S$ over $L$, we have a $\Z$-valued intersection product on divisors of $S$.
+  \textit{Source: Caro--Pasten, Sections 3 and 5.}
+  The formalization uses the standard interfaces for normalizations of curves,
+  arithmetic and geometric genus, multiplicity and singularity order at curve
+  points, divisor intersection on smooth projective surfaces, canonical divisors
+  and nef/ample divisors, global Kähler differentials, abelian varieties,
+  translations, invariant differentials, Tate-module characteristic
+  polynomials, and specialization of cycles under good reduction.
+\end{definition}
+
+\subsection{Curves, surfaces, and point counting}
+
+\begin{lemma}[Curve singularities and normalization]
+  \label{lem:cp_curve_singularity_package}
+  \lean{MR4665779.CurveSingularityPackage}
+  \uses{def:cp_geometry_interfaces}
+  % SOURCE: Caro--Pasten, Lemmas 3.1--3.5 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: If $C$ is a projective irreducible curve over $k$, then $\gfrak_a(C)=\gfrak_g(C) + \sum_{x\in C(k)} \delta(C,x)$.
+  \textit{Source: Caro--Pasten, Lemmas 3.1--3.5.}
+  For an irreducible curve \(C\) over an algebraically closed field and
+  \(x\in C(k)\), the singularity order \(\delta(C,x)\) is nonnegative and
+  vanishes exactly at regular points.  If \(C\) is projective, then
+  \[
+    g_a(C)=g_g(C)+\sum_{x\in C(k)}\delta(C,x).
+  \]
+  If \(C\) lies on a regular surface at \(x\), the multiplicity is the largest
+  \(n\) for which a local equation lies in \(\mathfrak m_{S,x}^n\), and
+  \[
+    \delta(C,x)\ge \frac12\,\operatorname{mult}_x(C)
+      (\operatorname{mult}_x(C)-1).
+  \]
+\end{lemma}
+\begin{proof}
+  Nonnegativity and the regularity criterion follow from the normalization
+  quotient.  Hironaka's genus formula identifies the total discrepancy between
+  arithmetic and geometric genus with the sum of local \(\delta\)-invariants.
+  The multiplicity description is the standard Hilbert--Samuel formula for a
+  plane curve germ, and Hironaka's neighboring-points inequality gives the
+  displayed lower bound after discarding nonnegative higher contributions.
+\end{proof}
+
+\begin{lemma}[Canonical genus bound]
+  \label{lem:cp_canonical_genus_bound}
+  \lean{MR4665779.CanonicalGenusBound}
+  \uses{def:cp_geometry_interfaces, lem:cp_curve_singularity_package}
+  % SOURCE: Caro--Pasten, Lemma 3.6 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: Then we have $$\sum_{j=1}^\ell a_j\cdot (\gfrak_a(C_j)-1)\le c_1^2(S).$$
+  \textit{Source: Caro--Pasten, Lemma 3.6.}
+  Let \(S\) be a smooth projective irreducible surface, and let
+  \(D=\sum_{j=1}^{\ell}a_jC_j\) be a positive nef canonical divisor.  Then
+  \[
+    \sum_{j=1}^{\ell}a_j\bigl(g_a(C_j)-1\bigr)\le c_1^2(S).
+  \]
+\end{lemma}
+\begin{proof}
+  Reorder the \(C_j\) so that the positive self-intersection components come
+  first.  Adjunction gives
+  \(2\sum a_j(g_a(C_j)-1)=D^2+\sum a_j C_j^2\).  For each positive
+  self-intersection component, \((D-a_jC_j)\cdot C_j\ge0\), and nefness gives
+  \(D\cdot C_j\ge0\); hence \(D^2\) bounds the positive contribution
+  \(\sum a_j^2 C_j^2\).  Combining the two inequalities gives the result.
+\end{proof}
+
+\begin{lemma}[Branches and normalization fibres]
+  \label{lem:cp_branches_package}
+  \lean{MR4665779.BranchesPackage}
+  \uses{lem:cp_curve_singularity_package}
+  % SOURCE: Caro--Pasten, Lemmas 3.7--3.10 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: there is a bijection between the set of branches of $C$ at $x$ and the points $y\in \nu^{-1}(x)$.
+  \textit{Source: Caro--Pasten, Lemmas 3.7--3.10.}
+  For a curve \(C\) through a smooth point \(x\) of a surface \(S\), the
+  irreducible factors of a completed local equation are pairwise
+  non-associated and define the branches at \(x\).  These branches are exactly
+  the kernels of the completed maps associated to points of the normalization
+  fibre \(\nu^{-1}(x)\), and
+  \(\#\nu^{-1}(x)\le\delta(C,x)+1\).  If
+  \(f(x_1,x_2)\in k[[x_1,x_2]]\) is irreducible and
+  \(f(\phi_1(t),\phi_2(t))=0\), then
+  \(\operatorname{ord}_t\phi_1\ge\operatorname{ord}_{x_2}f(0,x_2)\) and
+  \(\operatorname{ord}_t\phi_2\ge\operatorname{ord}_{x_1}f(x_1,0)\).
+\end{lemma}
+\begin{proof}
+  Analytic unramifiedness of the curve germ excludes associated distinct
+  factors in the completed local ring.  The standard branch--normalization
+  correspondence identifies branches with completed kernels at normalization
+  preimages.  The number of branches is bounded by multiplicity, and
+  multiplicity is bounded in terms of \(\delta\) by the singularity package.
+  The order estimates are Płoski's theorem for irreducible plane power series.
+\end{proof}
+
+\begin{lemma}[General type and ampleness criteria]
+  \label{lem:cp_general_type_package}
+  \lean{MR4665779.GeneralTypePackage}
+  \uses{def:cp_geometry_interfaces, lem:cp_curve_singularity_package}
+  % SOURCE: Caro--Pasten, Lemmas 3.11--3.14 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: If $S(\C)$ is hyperbolic, then $S$ is of general type.
+  \textit{Source: Caro--Pasten, Lemmas 3.11--3.14.}
+  A minimal smooth projective surface of general type has \(c_1^2\ge1\) and
+  nef canonical sheaf.  If such a surface has no smooth rational curve of
+  self-intersection \(-1\) or \(-2\), its canonical sheaf is ample.  A complex
+  hyperbolic smooth projective surface is of general type.  If
+  \(X\subset A\) is a smooth projective surface in a complex abelian variety,
+  \(X\) is not an abelian surface, and \(X\) contains no elliptic curves, then
+  \(X\) is of general type.
+\end{lemma}
+\begin{proof}
+  The nefness and positivity are the standard minimal-surface facts.  For
+  ampleness, Nakai--Moishezon reduces to excluding curves with zero
+  canonical degree; the Hodge index theorem and adjunction turn such a curve
+  into a forbidden rational \((-2)\)-curve.  Hyperbolicity implies general type
+  for surfaces by the cited surface classification theorem.  Green--Yau
+  hyperbolicity for subvarieties of abelian varieties without abelian-surface
+  or elliptic-curve exceptions gives the final assertion.
+\end{proof}
+
+\begin{lemma}[Modified Weil bound for singular curves]
+  \label{lem:cp_weil_bound_singular_curve}
+  \lean{MR4665779.WeilBoundSingularCurve}
+  \uses{lem:cp_curve_singularity_package}
+  % SOURCE: Caro--Pasten, Lemmas 3.15--3.17 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: $$\sum_{x\in D(\kk)} \sum_{j=1}^r \#\{y\in \widetilde{C}_j(\kk^{alg}) : \nu_j(y)=x\} \le (q+1)r + 2q^{1/2}\cdot \sum_{j=1}^r \gfrak_g(C_j).$$
+  \textit{Source: Caro--Pasten, Lemmas 3.15--3.17.}
+  Let \(D\) be a projective curve over a finite field \(\mathbf k\) of
+  cardinality \(q\), and let \(C_1,\ldots,C_r\) be its geometric irreducible
+  components with normalizations \(\widetilde C_j\).  Then
+  \[
+    \sum_{x\in D(\mathbf k)}\sum_{j=1}^r
+      \#\{y\in\widetilde C_j(k^{alg})\mid \nu_j(y)=x\}
+    \le (q+1)r+2q^{1/2}\sum_{j=1}^r g_g(C_j).
+  \]
+\end{lemma}
+\begin{proof}
+  After a finite field extension over which all components, singularities, and
+  normalization preimages are rational, the excess
+  \(A_D(L)-\#D(L)\) stabilizes.  The modified zeta function
+  \(Z^*_{D,\mathbf k}\) satisfies a product identity over roots of unity with
+  the zeta functions of the smooth normalizations.  Weil's bounds for smooth
+  projective curves applied to those factors, followed by logarithmic
+  differentiation and coefficient comparison at \(n=1\), gives the inequality.
+\end{proof}
+
+\subsection{\texorpdfstring{\(\omega\)}{omega}-integrality}
+
+\begin{definition}[\(\omega\)-integral morphisms]
+  \label{def:cp_omega_integral}
+  \lean{MR4665779.OmegaIntegral}
+  \uses{def:cp_geometry_interfaces}
+  % SOURCE: Caro--Pasten, Section 4.1 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: Given $T$-schemes $X$ and $Y$ and a differential $\omega\in H^0(Y, \Omega^1_{Y/T})$, we say that a morphism of $T$-schemes $\phi:X\to Y$ is \emph{$\omega$-integral} if $\phi^\bullet(\omega)=0$.
+  \textit{Source: Caro--Pasten, Section 4.1.}
+  For a morphism of \(T\)-schemes \(\phi:X\to Y\), the pullback of
+  differentials defines
+  \[
+    \phi^\bullet:H^0(Y,\Omega^1_{Y/T})\to H^0(X,\Omega^1_{X/T}).
+  \]
+  The morphism is \(\omega\)-integral when \(\phi^\bullet(\omega)=0\).
+\end{definition}
+
+\begin{lemma}[Functoriality and locality of \(\omega\)-integrality]
+  \label{lem:cp_omega_integral_functorial_local}
+  \lean{MR4665779.OmegaIntegralFunctorialLocal}
+  \uses{def:cp_omega_integral}
+  % SOURCE: Caro--Pasten, Lemmas 4.1 and 4.2 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: Then $(\psi\circ \phi)^\bullet = \phi^\bullet \circ \psi^\bullet$.
+  \textit{Source: Caro--Pasten, Lemmas 4.1 and 4.2.}
+  Pullback of differentials is strictly functorial:
+  \((\psi\circ\phi)^\bullet=\phi^\bullet\circ\psi^\bullet\).  It is also
+  compatible with local rings: the localization of \(\phi^\bullet(\omega)\) at
+  \(x\) equals the pullback of the localized germ of \(\omega\) by
+  \(\phi_x^\#\).
+\end{lemma}
+\begin{proof}
+  The functorial statement follows by comparing the canonical maps
+  \(\mathcal F\to f_*f^*\mathcal F\) and the maps from pulled-back
+  differentials to relative differentials in the three commutative diagrams of
+  Caro--Pasten.  The local statement is the same construction after localizing
+  the sheaves of differentials and the morphism of rings at the chosen points.
+\end{proof}
+
+\begin{lemma}[Local jet expressions for integral differentials]
+  \label{lem:cp_local_integral_expressions}
+  \lean{MR4665779.LocalIntegralExpressions}
+  \uses{def:cp_omega_integral, lem:cp_omega_integral_functorial_local}
+  % SOURCE: Caro--Pasten, Lemmas 4.5--4.7 and Corollary 4.8 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: There are local parameters $s_1,s_2\in \mfrak_{S,x}$ at $x$ such that $\phi^\#_\zeta(s_1)=z \bmod z^{m+1}$ and $\phi^\#_\zeta(s_2)=0$.
+  \textit{Source: Caro--Pasten, Lemmas 4.5--4.7 and Corollary 4.8.}
+  Let \(\phi:\operatorname{Spec}k[z]/(z^{m+1})\to S\) be a closed immersion
+  supported at a smooth surface point \(x\).  There are local parameters
+  \(s_1,s_2\) with \(\phi^\#(s_1)=z\), \(\phi^\#(s_2)=0\), and
+  \(\ker\phi^\#=(s_1^{m+1},s_2)\).  If \(\phi\) is \(\omega\)-integral, then
+  locally
+  \[
+    \omega=(G_1s_1^m+G_2s_2)\,ds_1+G_3\,ds_2.
+  \]
+  Consequently, if \(\omega_1\wedge\omega_2=F\,ds_1\wedge ds_2\), then
+  \(F\in(s_1^m,s_2)\), and if \(x\) is not in the divisor of
+  \(\omega_1\wedge\omega_2\), then \(m=0\).
+\end{lemma}
+\begin{proof}
+  Surjectivity of the local map of a closed immersion lets one choose
+  \(s_1\) mapping to \(z\); a second parameter is adjusted by a polynomial in
+  \(s_1\) so that it maps to \(0\).  The conormal exact sequence identifies
+  an integral differential modulo the jet with the differential of an element
+  of the kernel, which is generated by \(s_1^{m+1}\) and \(s_2\).  Expanding
+  the wedge of two such local expressions gives \(F\in(s_1^m,s_2)\).  A unit
+  \(F\) forces \(m=0\).
+\end{proof}
+
+\begin{lemma}[Individual branch bound]
+  \label{lem:cp_individual_branch_bound}
+  \lean{MR4665779.IndividualBranchBound}
+  \uses{lem:cp_branches_package, lem:cp_local_integral_expressions}
+  % SOURCE: Caro--Pasten, Lemma 4.9 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: $$\ord_y (\nu_j^\bullet(\omega))\ge \min\{m, \ord_{s_1}(\pi(F_{j,y})) -1\}.$$
+  \textit{Source: Caro--Pasten, Lemma 4.9.}
+  In the setup of the overdetermined bound, let \(F_{j,y}\) be the completed
+  local equation of the branch of \(C_j\) corresponding to
+  \(y\in\nu_j^{-1}(x)\).  If the jet \(\phi\) is \(\omega\)-integral, then
+  \[
+    \operatorname{ord}_y(\nu_j^\bullet\omega)
+    \ge \min\{m,\operatorname{ord}_{s_1}(\pi(F_{j,y}))-1\}.
+  \]
+\end{lemma}
+\begin{proof}
+  Pull \(\omega\) back to the completed local ring of the normalized branch.
+  The local expression for \(\omega\) from
+  \(\ref{lem:cp_local_integral_expressions}\) gives terms involving
+  \(h_1^m h_1'\), \(h_2h_1'\), and \(h_2'\), where
+  \(h_i\) are the images of \(s_i\).  Płoski's estimate bounds
+  \(\operatorname{ord}_t h_2\) below by
+  \(\operatorname{ord}_{s_1}\pi(F_{j,y})\), and formal differentiation loses
+  at most one order.  Taking the minimum of the resulting lower bounds gives
+  the claim.
+\end{proof}
+
+\begin{theorem}[Overdetermined \(\omega\)-integrality bound]
+  \label{thm:cp_overdetermined_bound}
+  \lean{MR4665779.OverdeterminedBound}
+  \uses{lem:cp_individual_branch_bound, lem:cp_local_integral_expressions}
+  % SOURCE: Caro--Pasten, Theorem 4.4 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: $$m\le \sum_{j=1}^\ell \sum_{y\in \nu_j^{-1}(x)} a_j\cdot \left(\ord_y (\nu_j^\bullet (\omega_0))+1 \right).$$
+  \textit{Source: Caro--Pasten, Theorem 4.4.}
+  Let \(S\) be a smooth irreducible surface over an algebraically closed field,
+  \(x\in S(k)\), and \(\omega_1,\omega_2\) global \(1\)-forms with
+  \(\omega_1\wedge\omega_2\ne0\).  Write
+  \(\operatorname{div}(\omega_1\wedge\omega_2)=\sum a_jC_j\), and let
+  \(\nu_j:\widetilde C_j\to S\) be normalization followed by inclusion.  If
+  a length-\(m\) infinitesimal disk supported at \(x\) is integral for both
+  \(\omega_1\) and \(\omega_2\), then for every
+  \(\omega_0=c_1\omega_1+c_2\omega_2\),
+  \[
+    m\le \sum_j\sum_{y\in\nu_j^{-1}(x)}
+      a_j\bigl(\operatorname{ord}_y(\nu_j^\bullet\omega_0)+1\bigr).
+  \]
+\end{theorem}
+\begin{proof}
+  If \(x\) is outside the divisor, the local expression lemma gives \(m=0\).
+  Otherwise, apply the individual branch bound to \(\omega_0\).  If any branch
+  has \(\operatorname{ord}_{s_1}\pi(F_{j,y})\ge m+1\), its summand already
+  exceeds \(m\).  If all branch orders are at most \(m\), multiplying the
+  branch equations shows that the right side is at least
+  \(\operatorname{ord}_{s_1}\pi(F)\), and the local divisor expression gives
+  \(\operatorname{ord}_{s_1}\pi(F)\ge m\).
+\end{proof}
+
+\subsection{Differentials on abelian varieties}
+
+\begin{lemma}[Ample effective divisors on abelian varieties]
+  \label{lem:cp_ample_abvar_divisor}
+  \lean{MR4665779.AmpleAbelianVarietyDivisor}
+  \uses{def:cp_geometry_interfaces}
+  % SOURCE: Caro--Pasten, Lemma 5.1 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: If $\supp(D)$ contains no translate of positive dimensional abelian subvarieties of $A$, then $D$ is ample.
+  \textit{Source: Caro--Pasten, Lemma 5.1.}
+  Let \(D\) be a nonzero effective divisor on an abelian variety \(A\).  If
+  \(\operatorname{supp}(D)\) contains no translate of a positive-dimensional
+  abelian subvariety, then \(D\) is ample.
+\end{lemma}
+\begin{proof}
+  The stabilizer \(H(D)=\{x:\tau_x^*D=D\}\) is a closed subgroup of \(A\).
+  For any point of the support, the translate of \(H(D)\) through that point
+  lies in \(\operatorname{supp}(D)\).  The hypothesis therefore forces
+  \(H(D)\) to be finite, and Mumford's ampleness criterion for divisors on
+  abelian varieties applies.
+\end{proof}
+
+\begin{lemma}[Degree and trace package for curves in abelian varieties]
+  \label{lem:cp_abvar_degree_trace_package}
+  \lean{MR4665779.AbelianVarietyDegreeTracePackage}
+  \uses{def:cp_geometry_interfaces}
+  % SOURCE: Caro--Pasten, Section 5.2 and Lemma 5.2 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: There is a monic polynomial $Q_{C,D}(t)\in \Z[t]$ of degree $n$ such that $P_{\alpha_A(C,D)}(t)=Q_{C,D}(t)^2$.
+  \textit{Source: Caro--Pasten, Section 5.2 and Lemma 5.2.}
+  For a curve \(C\) generating an abelian variety \(A\) of dimension \(n\) and
+  an ample divisor \(D\), the endomorphism \(\alpha_A(C,D)\) has
+  \(P_{\alpha_A(C,D)}(t)=Q_{C,D}(t)^2\) for a monic degree-\(n\) polynomial
+  whose roots are real and positive.  Moreover,
+  \(\operatorname{tr}(\alpha_A(C,D))=2\deg(C\cdot D)\), and
+  \(\alpha_A(C,D)=\nu_{C/A,*}\nu_{C/A}^*\phi_D\).
+\end{lemma}
+\begin{proof}
+  The trace formula and the factorization through the Jacobian of the
+  normalization are Matsusaka--Morikawa identities.  Debarre's positivity
+  theorem for the generated curve and ample divisor gives the square
+  characteristic polynomial and positive real roots.
+\end{proof}
+
+\begin{lemma}[Degrees for surfaces in abelian threefolds]
+  \label{lem:cp_degrees_surface_threefold}
+  \lean{MR4665779.SurfaceThreefoldDegrees}
+  \uses{def:cp_geometry_interfaces}
+  % SOURCE: Caro--Pasten, Lemma 5.3 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: $$\deg_X(X)=\cdeg_X(X)=\deg(X^3)_A=c_1^2(X).$$
+  \textit{Source: Caro--Pasten, Lemma 5.3.}
+  If \(X\) is a smooth projective surface contained in an abelian threefold
+  \(A\), then \(X|_X\) is a canonical divisor of \(X\), and
+  \[
+    \deg_X(X)=\operatorname{cdeg}_X(X)=\deg(X^3)_A=c_1^2(X).
+  \]
+\end{lemma}
+\begin{proof}
+  The canonical sheaf of \(A\) is trivial, so adjunction identifies \(X|_X\)
+  with a canonical divisor of \(X\).  The displayed equalities are then the
+  same intersection number computed in \(A\) and on \(X\).
+\end{proof}
+
+\begin{lemma}[Injectivity of restricted one-forms]
+  \label{lem:cp_injectivity_one_forms}
+  \lean{MR4665779.InjectivityOneForms}
+  \uses{lem:cp_abvar_degree_trace_package, lem:cp_degrees_surface_threefold, lem:cp_canonical_genus_bound}
+  % SOURCE: Caro--Pasten, Lemmas 5.4--5.6 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: Then the map $\nu_{C/A}^\bullet : H^0(A,\Omega^1_{A/k})\to H^0(\widetilde{C}, \Omega^1_{\widetilde{C}/k})$ is injective.
+  \textit{Source: Caro--Pasten, Lemmas 5.4--5.6.}
+  In positive characteristic, if a curve \(C\subset A\) generates \(A\) and
+  \(p>\frac{n!}{n^n}\frac{\deg_H(C)^n}{\deg(H^n)}\), then
+  \(H^0(A,\Omega^1_A)\to H^0(\widetilde C,\Omega^1_{\widetilde C})\) is
+  injective.  For curves \(C\) in canonical divisors of the surface \(X\), the
+  same argument gives either injectivity or a kernel of dimension at most
+  \(1\) under the two Caro--Pasten hypotheses.  Under the surface hypotheses,
+  restriction \(H^0(A,\Omega^1_A)\to H^0(X,\Omega^1_X)\) is injective.
+\end{lemma}
+\begin{proof}
+  The degree--trace package gives an isogeny
+  \(\beta:A^\vee\to A\) whose degree is a square \(M^2\), with
+  \(M\) bounded by the arithmetic--geometric mean in terms of
+  \(\deg_H(C)\).  The numerical hypothesis gives \(p\nmid M\), so \(\beta\)
+  is separable and pullback of invariant forms is injective.  For curves in a
+  canonical divisor, either the generated abelian subvariety is all of \(A\),
+  or in the threefold case an abelian surface; the canonical genus bound
+  controls the surface case and leaves a one-dimensional kernel.  For surfaces,
+  intersect \(X\) with a very ample divisor to reduce to a smooth generating
+  curve.
+\end{proof}
+
+\begin{lemma}[Nonvanishing of restricted two-forms]
+  \label{lem:cp_nonvanishing_two_forms}
+  \lean{MR4665779.NonvanishingTwoForms}
+  \uses{lem:cp_injectivity_one_forms, lem:cp_degrees_surface_threefold, lem:cp_ample_abvar_divisor}
+  % SOURCE: Caro--Pasten, Lemma 5.7 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: Then $\iota^\bullet (\omega_1)\wedge \iota^\bullet(\omega_2)\in H^0(X,\Omega^2_{X/k})$ is not the zero section.
+  \textit{Source: Caro--Pasten, Lemma 5.7.}
+  Let \(X\subset A\) be a smooth surface in an abelian variety of dimension
+  \(n\ge3\) over a positive-characteristic algebraically closed field.  If
+  \(\omega_1,\omega_2\) are independent invariant differentials on \(A\), and
+  either the threefold/no-elliptic-curve bound
+  \(p>(128/9)c_1^2(X)^2\) or the geometrically simple ample-divisor bound
+  holds, then the restricted \(2\)-form
+  \(\iota^\bullet\omega_1\wedge\iota^\bullet\omega_2\) is not zero on \(X\).
+\end{lemma}
+\begin{proof}
+  First the surface restriction of one-forms is injective, so the two
+  restrictions are \(k\)-linearly independent.  If their wedge vanished, one
+  would have \(u_1=f u_2\) for a nonconstant rational function.  A component
+  \(C\) of the zero divisor of \(f\) is then integral for \(u_1\).  An
+  auxiliary smooth curve \(D\sim3H|_X\) bounds \(H\cdot C\) by the degree of
+  the nonzero pullback of \(u_1\) to \(D\).  The one-form injectivity theorem
+  then contradicts \(\nu_{C/A}^\bullet(\omega_1)=0\), except in the abelian
+  surface subcase of the threefold hypothesis; there the quotient by the
+  generated abelian surface produces an elliptic curve and forces \(u_2\) to
+  vanish on \(C\) as well, contradicting the one-dimensional kernel.
+\end{proof}
+
+\subsection{\texorpdfstring{\(p\)}{p}-adic power series and logarithms}
+
+\begin{lemma}[One- and multi-variable zero estimates]
+  \label{lem:cp_zero_estimates}
+  \lean{MR4665779.ZeroEstimates}
+  \uses{def:cp_notation}
+  % SOURCE: Caro--Pasten, Lemmas 6.1 and 6.2 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: If $h\ne 0$ and $\rho_h>0$, then for each $0<r<\rho_h$ we have $\nn_0(h,r)\le \nu(h,r)$.
+  \textit{Source: Caro--Pasten, Lemmas 6.1 and 6.2.}
+  For a nonzero one-variable \(p\)-adic power series \(h\), the number of
+  zeros in a closed disk of radius \(r\) is at most the largest index attaining
+  the Gauss norm at \(r\).  If a multivariable series \(H\) has coefficients
+  bounded by \(M^{|\alpha|-1}\), and some homogeneous part of degree at most
+  \(N\) evaluates to norm at least \(1\) on a unit vector \(u\), then along the
+  line \(zu\),
+  \[
+    n_0(H_u,r)\le
+    \left(N-\frac{\log M}{\log(r^{-1})}\right)
+    \left(1-\frac{\log M}{\log(r^{-1})}\right)^{-1}
+  \]
+  for \(0<r<M^{-1}\).
+\end{lemma}
+\begin{proof}
+  The first statement is the Newton polygon/Gauss norm zero bound.  For the
+  second, the coefficient estimate implies convergence radius at least
+  \(M^{-1}\).  If \(m>(N-\lambda)/(1-\lambda)\), with
+  \(\lambda=\log M/\log(r^{-1})\), then every degree-\(m\) homogeneous term is
+  strictly smaller than the nonzero contribution of degree at most \(N\).
+  Thus the Gauss norm of \(H_u\) is attained by a degree no larger than
+  \(\lfloor(N-\lambda)/(1-\lambda)\rfloor\), and the one-variable bound applies.
+\end{proof}
+
+\begin{lemma}[Local parameters and formal multiplication]
+  \label{lem:cp_logexp_local_parameters}
+  \lean{MR4665779.LogExpLocalParameters}
+  \uses{def:cp_notation, def:cp_geometry_interfaces}
+  % SOURCE: Caro--Pasten, Lemmas 7.1--7.4 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: There are $t_j\in \mfrak_{\Acal,x_0}$ for $1\le j\le n$ such that $t_1,...,t_n$ are $R$-local parameters along $\Zcal$.
+  \textit{Source: Caro--Pasten, Lemmas 7.1--7.4.}
+  For an abelian scheme \(\mathcal A/R\), a section, and a smooth regular
+  closed subscheme through it, there exist \(R\)-local parameters along the
+  section whose first coordinates cut out the subscheme.  In such parameters,
+  the formal multiplication-by-\(m\) expansions have coefficients in \(R\);
+  multiplication by \(1\) has linear part \(t_j\), and the terms of degree
+  \(<m\) in the homogeneous piece \(\Psi_j^{[m]}\) vanish.
+\end{lemma}
+\begin{proof}
+  The parameter choice is the SGA smooth-local normal form around a section
+  and a smooth closed subscheme.  Integrality of the formal group law over
+  \(R\) gives integral multiplication series.  The assertions about the linear
+  part and degree filtration are immediate from \([1]=\mathrm{id}\) and the
+  standard formal-group identity for multiplication by \(m\).
+\end{proof}
+
+\begin{lemma}[Convergence and linearization of logarithm and exponential]
+  \label{lem:cp_logexp_convergence_linearization}
+  \lean{MR4665779.LogExpConvergenceLinearization}
+  \uses{lem:cp_logexp_local_parameters}
+  % SOURCE: Caro--Pasten, Lemmas 7.5--7.7 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: The maps $\widetilde{\Log}^\ttt$ and $\widetilde{\Exp}^\ttt$ ... are isomorphisms of Lie groups, inverse to each other.
+  \textit{Source: Caro--Pasten, Lemmas 7.5--7.7.}
+  In local parameters \(\mathbf t\), the logarithm coefficients satisfy
+  \(|b_{j,\alpha}|\le\|\alpha\|^{[K:\mathbb Q_p]}\), and the exponential
+  coefficients satisfy
+  \(m!c_{j,\alpha}\in R\) and
+  \(|c_{j,\alpha}|\le p^{[K:\mathbb Q_p](m-1)/(p-1)}\) for
+  \(m=\|\alpha\|\).  If
+  \(p>\max\{\mathfrak e+1,\exp(\mathfrak e/\exp(1))\}\), the logarithm and
+  exponential converge on the residue kernel and identify it, as a Lie group,
+  with the additive ball \(\mathfrak p^n\).
+\end{lemma}
+\begin{proof}
+  The logarithm coefficient bound comes from the integral multiplication
+  series and denominators \(m^{-1}\).  The exponential bound follows from
+  \(m!c_{j,\alpha}\in R\) and Legendre's estimate for \(|m!|\).  The two
+  numerical hypotheses ensure both series converge on the radius \(q^{-1}\)
+  ball and map it to itself.  The formal-group identities
+  \(\log\circ\exp=\mathrm{id}\) and \(\exp\circ\log=\mathrm{id}\) then give
+  inverse analytic Lie-group isomorphisms.
+\end{proof}
+
+\subsection{Analytic one-parameter subgroups}
+
+\begin{definition}[Analytic one-parameter subgroup]
+  \label{def:cp_one_parameter_subgroup}
+  \lean{MR4665779.OneParameterSubgroup}
+  \uses{lem:cp_logexp_convergence_linearization}
+  % SOURCE: Caro--Pasten, Section 8.1 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: A \emph{$1$-parameter subgroup} of $\Acal$ is a pair $\gamma=(\ttt,\uu)$ where $\ttt=(t_1,...,t_n)$ is a choice of $R$-local parameters at $e\in A(K)$ and $\uu\in K^n$ satisfies $|\uu|=1$.
+  \textit{Source: Caro--Pasten, Section 8.1.}
+  A one-parameter subgroup of \(\mathcal A\) is a pair
+  \(\gamma=(\mathbf t,u)\), where \(\mathbf t\) is a choice of \(R\)-local
+  parameters at the identity and \(u\in K^n\) has norm \(1\).  It defines
+  \[
+    \widetilde\gamma(z)=\widetilde{\operatorname{Exp}}^{\mathbf t}(zu)
+      :\mathfrak p\to U_e
+  \]
+  and a hyperplane
+  \(\mathcal H(\gamma)=\ker(\epsilon^u\circ
+  (\widetilde{\operatorname{Exp}}^{\mathbf t})^\bullet)\) in
+  \(H^0(A,\Omega^1_{A/K})\).
+\end{definition}
+
+\begin{lemma}[Hyperplanes and images of one-parameter subgroups]
+  \label{lem:cp_one_parameter_hyperplanes}
+  \lean{MR4665779.OneParameterHyperplanes}
+  \uses{def:cp_one_parameter_subgroup}
+  % SOURCE: Caro--Pasten, Lemmas 8.1--8.6 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: The rule $\gamma\mapsto \Hcal(\gamma)$ defines a bijection between equivalence classes of $1$-parameter subgroups of $\Acal$ and $K$-linear hyperplanes.
+  \textit{Source: Caro--Pasten, Lemmas 8.1--8.6.}
+  The differential pullback of \(\widetilde\gamma\) has kernel
+  \(\mathcal H(\gamma)\).  The image of \(\gamma\) is a closed saturated
+  rank-one \(R\)-submodule of the residue kernel under logarithm.  Two
+  one-parameter subgroups are equivalent exactly when their images agree,
+  exactly when their images meet nontrivially, and equivalence classes are in
+  bijection with \(K\)-linear hyperplanes of \(H^0(A,\Omega^1_{A/K})\).
+  Every nonidentity element of \(U_e\) lies in the image of a unique such class.
+\end{lemma}
+\begin{proof}
+  Under logarithm, the image of \(\gamma\) is \(\mathfrak p u\), so equality
+  and nontrivial intersection of images are equivalent to scaling \(u\) by a
+  unit after changing coordinates by the induced element of \(\operatorname{GL}_n(R)\).
+  The hyperplane is the kernel of the linear functional evaluating invariant
+  differentials in the direction \(u\).  Every hyperplane is the kernel of such
+  a functional after choosing coordinates, and every nonzero vector in
+  \(\mathfrak p^n\) normalizes to a unit vector \(u\).
+\end{proof}
+
+\begin{lemma}[Infinitesimal one-parameter subgroups and reduction]
+  \label{lem:cp_infinitesimal_one_parameter}
+  \lean{MR4665779.InfinitesimalOneParameterSubgroup}
+  \uses{def:cp_one_parameter_subgroup, lem:cp_logexp_convergence_linearization}
+  % SOURCE: Caro--Pasten, Lemmas 8.7 and 8.8 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: If $m<p$, the morphism $\tilde{\gamma}_m:V_m\to A$ extends to an $R$-morphism $\Vcal_m\to \Acal$.
+  \textit{Source: Caro--Pasten, Lemmas 8.7 and 8.8.}
+  The \(m\)-th truncation \(\widetilde\gamma_m:\operatorname{Spec}K[z]/(z^{m+1})\to A\)
+  is a closed immersion.  If \(m<p\), it extends to
+  \(\mathcal V_m=\operatorname{Spec}R[z]/(z^{m+1})\to\mathcal A\), and its
+  special fibre
+  \(V'_m=\operatorname{Spec}\mathbf k[z]/(z^{m+1})\to A'\) is also a closed
+  immersion.
+\end{lemma}
+\begin{proof}
+  For \(m<p\), the exponential coefficient bounds make the truncated power
+  series integral over \(R\), giving the integral model and special fibre.
+  The linear term of the exponential is \(u_jz\) in some coordinate with
+  \(u_j\in R^\times\), so the induced map on local rings contains an element
+  \(u_jz+O(z^2)\), which generates the truncated polynomial algebra.  Hence
+  the maps are closed immersions.
+\end{proof}
+
+\begin{lemma}[One-parameter subgroups are \(\omega\)-integral along their hyperplane]
+  \label{lem:cp_one_parameter_omega_integral}
+  \lean{MR4665779.OneParameterOmegaIntegral}
+  \uses{def:cp_omega_integral, lem:cp_omega_integral_functorial_local, lem:cp_infinitesimal_one_parameter, lem:cp_one_parameter_hyperplanes}
+  % SOURCE: Caro--Pasten, Lemmas 8.9--8.11 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: Then $\tilde{\gamma}_m:V_m\to A$ is $\omega$-integral.
+  \textit{Source: Caro--Pasten, Lemmas 8.9--8.11.}
+  If \(\omega\in\mathcal H(\gamma)\), then every infinitesimal truncation
+  \(\widetilde\gamma_m\) is \(\omega\)-integral.  If \(m\le p-2\) and
+  \(\omega\) extends to an integral differential on \(\mathcal A\), then the
+  special-fibre truncation \(\widetilde\gamma'_m\) is integral for the reduced
+  differential.
+\end{lemma}
+\begin{proof}
+  The analytic pullback of \(\omega\) by \(\widetilde\gamma\) vanishes because
+  \(\omega\in\mathcal H(\gamma)\).  The compatibility lemma compares this
+  analytic pullback with the algebraic pullback by each truncation.  For
+  \(m\le p-2\), the module of differentials on \(R[z]/(z^{m+1})\) is free over
+  \(R\), so vanishing after base change to \(K\) descends to \(R\) and then
+  reduces modulo \(\mathfrak p\).
+\end{proof}
+
+\subsection{The local Chabauty--Coleman bound}
+
+\begin{lemma}[Rank-one reduction]
+  \label{lem:cp_rank_one_reduction}
+  \lean{MR4665779.RankOneReduction}
+  \uses{def:cp_notation, def:cp_geometry_interfaces}
+  % SOURCE: Caro--Pasten, Lemma 9.2 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: It suffices to prove Theorem \ref{ThmMain} under the assumption $\rk(G)=1$.
+  \textit{Source: Caro--Pasten, Lemma 9.2.}
+  In Theorem \(\ref{thm:cp_main_local}\), it suffices to treat the case
+  \(\operatorname{rank}G=1\).
+\end{lemma}
+\begin{proof}
+  If \(G\) has rank \(0\), enlarge it by a non-torsion point of the uncountable
+  group \(A(K)\).  The resulting group has rank \(1\), and its closure contains
+  the original closure, so the rank-one bound implies the rank-zero bound.
+\end{proof}
+
+\begin{lemma}[Consequences of the local hypotheses]
+  \label{lem:cp_main_hypotheses}
+  \lean{MR4665779.MainHypotheses}
+  \uses{lem:cp_general_type_package, lem:cp_ample_abvar_divisor}
+  % SOURCE: Caro--Pasten, Lemma 9.3 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: $X$ and $X'$ are surfaces of general type and $1\le c_1^2(X')=c_1^2(X)<(p-2)/3$.
+  \textit{Source: Caro--Pasten, Lemma 9.3.}
+  Under either local hypothesis of the main theorem, \(X\) and \(X'\) are
+  surfaces of general type and
+  \(1\le c_1^2(X')=c_1^2(X)<(p-2)/3\).  In the threefold case \(X'\) is ample
+  on \(A'\); in the geometrically simple case the chosen ample divisor
+  specializes with the same intersection and canonical degrees.
+\end{lemma}
+\begin{proof}
+  Simplicity or absence of elliptic curves rules out the abelian-surface and
+  elliptic-curve exceptions, so the general-type criterion applies.  Good
+  reduction and the Katsura--Ueno specialization results preserve general type
+  and \(c_1^2\).  The numerical hypotheses imply the displayed upper bound.
+  In the threefold case, the effective divisor \(X'\) has support containing no
+  translate of a positive-dimensional abelian subvariety, hence is ample.  In
+  the simple case, specialization of numerical equivalence and intersection
+  products preserves the relevant degrees.
+\end{proof}
+
+\begin{lemma}[Genus bound for curves in the special fibre]
+  \label{lem:cp_special_fibre_curve_genus}
+  \lean{MR4665779.SpecialFibreCurveGenus}
+  \uses{lem:cp_main_hypotheses}
+  % SOURCE: Caro--Pasten, Lemma 9.5 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: Let $C$ be an irreducible curve in $X'_k$ defined over $k$. Then $\gfrak_g(C)\ge 2$.
+  \textit{Source: Caro--Pasten, Lemma 9.5.}
+  Every irreducible curve \(C\subset X'_k\) has geometric genus at least \(2\).
+\end{lemma}
+\begin{proof}
+  A curve in an abelian variety has genus at least \(1\).  If the genus were
+  \(1\), the normalization would be an elliptic curve and its nonconstant map
+  to \(A'_k\) would have elliptic image contained in \(X'_k\), contradicting
+  the hypotheses.
+\end{proof}
+
+\begin{lemma}[Choice of the Chabauty one-parameter subgroup]
+  \label{lem:cp_choice_one_parameter_subgroup}
+  \lean{MR4665779.ChoiceOneParameterSubgroup}
+  \uses{lem:cp_rank_one_reduction, lem:cp_one_parameter_hyperplanes}
+  % SOURCE: Caro--Pasten, Lemma 9.6 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: There is a $1$-parameter subgroup $\gamma=(\ttt,\uu)$ for $A$ such that $\Gamma\cap U_e\subseteq \im(\gamma)$.
+  \textit{Source: Caro--Pasten, Lemma 9.6.}
+  For rank-one \(G\), and for any local parameters at the identity, there is a
+  one-parameter subgroup \(\gamma\) such that
+  \(\Gamma\cap U_e\subseteq\operatorname{im}\gamma\).  Its equivalence class is
+  uniquely determined by the condition that \(\operatorname{im}\gamma\cap\Gamma\)
+  strictly contains the identity.
+\end{lemma}
+\begin{proof}
+  Choose a nonidentity point of \(\Gamma\cap U_e\).  The one-parameter
+  hyperplane package puts it in a unique one-parameter subgroup up to
+  equivalence.  Since \(\Gamma\cap U_e\) is the closure of a rank-one subgroup
+  and \(\operatorname{im}\gamma\) is saturated and closed under logarithm, the
+  nontrivial intersection forces the whole \(\Gamma\cap U_e\) into
+  \(\operatorname{im}\gamma\).
+\end{proof}
+
+\begin{lemma}[Choice of two integral differentials]
+  \label{lem:cp_choice_differentials}
+  \lean{MR4665779.ChoiceDifferentials}
+  \uses{lem:cp_choice_one_parameter_subgroup}
+  % SOURCE: Caro--Pasten, Lemma 9.7 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: There are $\omega_1,\omega_2\in \Hcal$ such that ... The differentials $\omega'_1,\omega'_2$ ... are $\kk$-linearly independent.
+  \textit{Source: Caro--Pasten, Lemma 9.7.}
+  Let \(\mathcal H\subset H^0(A,\Omega^1_{A/K})\) be the hyperplane associated
+  to \(\Gamma\).  There exist \(K\)-linearly independent
+  \(\omega_1,\omega_2\in\mathcal H\) extending to
+  \(H^0(\mathcal A,\Omega^1_{\mathcal A/R})\) whose reductions
+  \(\omega'_1,\omega'_2\) are \(\mathbf k\)-linearly independent.
+\end{lemma}
+\begin{proof}
+  The \(R\)-module \(H^0(\mathcal A,\Omega^1_{\mathcal A/R})\) is free of rank
+  \(n\).  The intersection with a \(K\)-hyperplane has rank \(n-1\ge2\).
+  Choose two primitive independent vectors in this lattice; primitivity and
+  independence prevent their reductions from becoming dependent over
+  \(\mathbf k\).
+\end{proof}
+
+\begin{lemma}[The special-fibre canonical divisor from differentials]
+  \label{lem:cp_special_canonical_divisor}
+  \lean{MR4665779.SpecialCanonicalDivisor}
+  \uses{lem:cp_choice_differentials, lem:cp_nonvanishing_two_forms, lem:cp_main_hypotheses, lem:cp_special_fibre_curve_genus, lem:cp_general_type_package}
+  % SOURCE: Caro--Pasten, Lemmas 9.8--9.9 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: The $2$-form $u_1\wedge u_2$ ... is not the zero section.
+  \textit{Source: Caro--Pasten, Lemmas 9.8--9.9.}
+  Let \(u_i\) be the restrictions of \(\omega'_i\) to \(X'\).  Then
+  \(u_1\wedge u_2\) is nonzero.  Its divisor \(D\) on \(X'\) is effective,
+  ample, defined over \(\mathbf k\), and canonical; in particular \(D>0\) and
+  is nef.
+\end{lemma}
+\begin{proof}
+  Nonvanishing is exactly the restricted two-form theorem applied to
+  \(A'\) and \(X'\).  Since \(u_1\wedge u_2\) is a nonzero section of the
+  canonical sheaf, its divisor is effective and canonical.  The main
+  hypotheses give general type and exclude genus \(0\) and \(1\) curves in
+  the support, so the general-type ampleness criterion makes \(D\) ample.
+\end{proof}
+
+\begin{lemma}[Choice of a nonintegral linear combination]
+  \label{lem:cp_choice_w}
+  \lean{MR4665779.ChoiceW}
+  \uses{lem:cp_special_canonical_divisor, lem:cp_injectivity_one_forms, lem:cp_canonical_genus_bound}
+  % SOURCE: Caro--Pasten, Lemma 9.10 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: There is $b\in \kk$ such that the differential $w=u_1+bu_2$ ... satisfies that no map $\nu_j$ is $w$-integral.
+  \textit{Source: Caro--Pasten, Lemma 9.10.}
+  Writing \(D=\sum a_jC_j\) over \(k=\mathbf k^{alg}\), there exists
+  \(b\in\mathbf k\) such that \(w=u_1+bu_2\) has nonzero pullback to every
+  normalization \(\nu_j:\widetilde C_j\to X'_k\).
+\end{lemma}
+\begin{proof}
+  Ampleness and the canonical genus bound imply that the number of components
+  \(\ell\) is \(<p\).  If every \(b\in\mathbb F_p\) made some component
+  \(w_b\)-integral, two distinct \(b,b'\) would vanish on the same component.
+  Then the restrictions of both \(\omega'_1\) and \(\omega'_2\) would lie in
+  the kernel for that curve, making the kernel at least two-dimensional,
+  contradicting the injectivity or semi-injectivity theorem for one-forms.
+\end{proof}
+
+\begin{lemma}[Bounds for infinitesimal integral disks]
+  \label{lem:cp_mx_bounds}
+  \lean{MR4665779.MxBounds}
+  \uses{thm:cp_overdetermined_bound, lem:cp_choice_w, lem:cp_special_fibre_curve_genus, lem:cp_branches_package, lem:cp_canonical_genus_bound, lem:cp_main_hypotheses}
+  % SOURCE: Caro--Pasten, Lemmas 9.11--9.13 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: For every $x\in X'(k)$ we have $m(x)\le p-3$.
+  \textit{Source: Caro--Pasten, Lemmas 9.11--9.13.}
+  Let \(m(x)\) be the supremum length of closed infinitesimal disks in
+  \(X'_k\) supported at \(x\) and integral for both \(u_1,u_2\).  If
+  \(x\notin\operatorname{supp}D\), then \(m(x)=0\).  If \(x\in\operatorname{supp}D\),
+  then
+  \[
+    m(x)\le \sum_j\sum_{y\in\nu_j^{-1}(x)}
+      a_j(\operatorname{ord}_y\nu_j^\bullet w+1),
+  \]
+  and for every \(x\), \(m(x)\le p-3\).
+\end{lemma}
+\begin{proof}
+  The first two assertions are the overdetermined bound, using
+  \(\omega_0=w\).  For the uniform \(p-3\) bound, sum the orders of the
+  nonzero differentials \(\nu_j^\bullet w\), whose degrees are
+  \(2g_g(C_j)-2\), and use the normalization-fibre bound
+  \(\#\nu_j^{-1}(x)\le\delta(C_j,x)+1\le g_a(C_j)-1\).  The genus bound
+  \(g_g(C_j)\ge2\), the canonical genus bound, and
+  \(3c_1^2(X')<p-2\) give \(m(x)<p-2\).
+\end{proof}
+
+\begin{proposition}[Residue disk bound]
+  \label{prop:cp_residue_disk_bound}
+  \lean{MR4665779.ResidueDiskBound}
+  \uses{lem:cp_mx_bounds, lem:cp_choice_one_parameter_subgroup, lem:cp_logexp_local_parameters, lem:cp_infinitesimal_one_parameter, lem:cp_one_parameter_omega_integral, lem:cp_zero_estimates}
+  % SOURCE: Caro--Pasten, Proposition 9.14 and Lemmas 9.15--9.16 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: $$\# \Gamma\cap X(K)\cap U_x\le 1+ m(x)\cdot  \left(1-\frac{\efrak}{p-1}\right)^{-1}.$$
+  \textit{Source: Caro--Pasten, Proposition 9.14 and Lemmas 9.15--9.16.}
+  For \(\xi\in\Gamma\cap X(K)\) with reduction \(x\in X'(\mathbf k)\),
+  \[
+    \#(\Gamma\cap X(K)\cap U_x)
+    \le 1+m(x)\left(1-\frac{\mathfrak e}{p-1}\right)^{-1}.
+  \]
+  In particular, if \(m(x)=0\), the residue disk contains at most one point of
+  \(\Gamma\cap X(K)\).
+\end{proposition}
+\begin{proof}
+  Translate the situation so that \(\xi=e\); translation preserves \(\Gamma\),
+  residue disks, invariant differentials, and \(m(x)\).  Choose local
+  parameters whose first \(n-2\) coordinates cut out \(\mathcal X\), and choose
+  the rank-one one-parameter subgroup whose image contains \(\Gamma\cap U_e\).
+  Then points of \(\Gamma\cap X(K)\cap U_e\) are zeros of the one-variable
+  series \(\operatorname{Exp}^{\mathbf t}_j(zu)\) for each defining coordinate.
+  If all homogeneous coefficients of degrees \(\le m(e)\) had norm \(<1\),
+  the reduced truncation would factor through \(X'\) and be integral for
+  \(u_1,u_2\), contradicting the definition of \(m(e)\); hence some
+  \(P_{j,N}^{\mathbf t}(u)\) has norm at least \(1\) with \(N\le m(e)+1\).
+  The multivariable zero estimate with
+  \(M=p^{[K:\mathbb Q_p]/(p-1)}\) and \(r=q^{-1}\) gives the displayed bound.
+\end{proof}
+
+\begin{theorem}[Local Chabauty--Coleman bound for surfaces]
+  \label{thm:cp_main_local}
+  \lean{MR4665779.MainLocal}
+  \uses{lem:cp_rank_one_reduction, prop:cp_residue_disk_bound, lem:cp_mx_bounds, lem:cp_weil_bound_singular_curve, lem:cp_canonical_genus_bound, lem:cp_special_canonical_divisor}
+  % SOURCE: Caro--Pasten, Theorem 9.1 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: $$\# \Gamma\cap X(K) \le \# X'(\kk) + \left(1-\frac{\efrak}{p-1}\right)^{-1}\cdot (q+4q^{1/2}+3)\cdot c_1^2(X).$$
+  \textit{Source: Caro--Pasten, Theorem 9.1.}
+  Let \(\mathcal A/R\) be an abelian scheme of relative dimension \(n\ge3\),
+  let \(\mathcal X\subset\mathcal A\) be smooth proper of relative dimension
+  \(2\) with geometrically irreducible fibres, and let
+  \(\Gamma\) be the \(p\)-adic closure of a finitely generated subgroup
+  \(G\le A(K)\) of rank at most \(1\).  Assume
+  \(p>\max\{\mathfrak e+1,\exp(\mathfrak e/\exp(1))\}\) and either the
+  threefold/no-elliptic-curve hypothesis or the geometrically simple
+  ample-divisor hypothesis of Caro--Pasten.  Then
+  \[
+    \#(\Gamma\cap X(K))\le
+    \#X'(\mathbf k)+
+    \left(1-\frac{\mathfrak e}{p-1}\right)^{-1}
+    (q+4q^{1/2}+3)c_1^2(X).
+  \]
+\end{theorem}
+\begin{proof}
+  By rank-one reduction assume \(\operatorname{rank}G=1\).  Sum the residue
+  disk bound over \(x\in X'(\mathbf k)\).  For \(x\notin D\), \(m(x)=0\), so
+  these disks contribute exactly the main term.  For \(x\in D\), the
+  overdetermined bound gives a sum of orders of \(\nu_j^\bullet w\) plus
+  weighted normalization-fibre counts.  The order sum is bounded by
+  \(2c_1^2(X)\) via the canonical genus bound.  The weighted fibre count is
+  bounded by the modified Weil estimate and then again by the canonical genus
+  bound, giving \((q+4q^{1/2}+1)c_1^2(X)\).  Together these contributions
+  yield \((q+4q^{1/2}+3)c_1^2(X)\), multiplied by the residue-disk factor.
+\end{proof}
+
+\begin{theorem}[The \(\mathbb Q_p\) specialization]
+  \label{thm:cp_main_qp}
+  \lean{MR4665779.MainQp}
+  \uses{thm:cp_main_local, lem:cp_main_hypotheses}
+  % SOURCE: Caro--Pasten, Theorem 1.1 and Remark 9.4 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: Theorem \ref{ThmMainIntro} follows from Theorem \ref{ThmMain}.
+  \textit{Source: Caro--Pasten, Theorem 1.1 and Remark 9.4.}
+  Over \(K=\mathbb Q_p\), under the hypotheses stated in the introduction,
+  \[
+    \#(X(\mathbb Q_p)\cap\Gamma)
+    \le \#X'(\mathbb F_p)+
+    \frac{p-1}{p-2}\bigl(p+4p^{1/2}+3\bigr)c_1^2(X).
+  \]
+\end{theorem}
+\begin{proof}
+  In the local theorem, \(\mathfrak e=1\), \(q=p\), and the preliminary
+  numerical condition becomes \(p\ge3\).  The main hypotheses imply
+  \(p\ge7\) because \(c_1^2(X)\ge1\), so no extra condition remains.  The
+  displayed formula is the specialization of the local bound.
+\end{proof}
+
+\subsection{Arithmetic applications}
+
+\begin{theorem}[Number-field rational-point bound]
+  \label{thm:cp_number_field_bound}
+  \lean{MR4665779.NumberFieldBound}
+  \uses{thm:cp_main_local}
+  % SOURCE: Caro--Pasten, Theorem 10.1 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: Then $X(F)$ is finite and we have $$\# X(F) \le \# X'(\kk) + \left(1-\frac{\efrak}{p-1}\right)^{-1}\cdot (q+4q^{1/2}+3)\cdot c_1^2(X).$$
+  \textit{Source: Caro--Pasten, Theorem 10.1.}
+  Let \(F\) be a number field and \(\mathfrak p\mid p\) a prime satisfying the
+  local numerical condition.  Let \(X\subset A\) over \(F\) have good reduction
+  at \(\mathfrak p\), with \(\dim A\ge3\), \(\operatorname{rank}A(F)\le1\),
+  and one of the two Caro--Pasten geometric hypotheses after reduction.  Then
+  \(X(F)\) is finite and satisfies the same bound as the local theorem with
+  \(K=F_{\mathfrak p}\).
+\end{theorem}
+\begin{proof}
+  Embed \(X(F)\) into \(X(F_{\mathfrak p})\cap\Gamma\), where \(\Gamma\) is
+  the \(p\)-adic closure of \(A(F)\) in \(A(F_{\mathfrak p})\).  The
+  Mordell--Weil rank condition gives \(\operatorname{rank}A(F)\le1\), so the
+  local theorem applies after base change to the completion.
+\end{proof}
+
+\begin{theorem}[Rational surface bounds over \(\mathbb Q\)]
+  \label{thm:cp_intro_surface_bounds}
+  \lean{MR4665779.IntroSurfaceBounds}
+  \uses{thm:cp_main_qp, thm:cp_number_field_bound, lem:cp_general_type_package}
+  % SOURCE: Caro--Pasten, Theorems 1.5 and 1.7 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: The following two results on rational points of surfaces are deduced from Theorem 1.1 by base change to Qp.
+  \textit{Source: Caro--Pasten, Theorems 1.5 and 1.7.}
+  The two stated \(\mathbb Q\)-surface theorems follow: for a general-type
+  surface in an abelian threefold with rank at most \(1\) and no elliptic
+  curves in the good reduction, and for a surface in a geometrically simple
+  reduction with the ample-divisor numerical bound, \(X(\mathbb Q)\) is finite
+  and satisfies the explicit \(\mathbb F_p\)-point plus
+  \(\frac{p-1}{p-2}(p+4p^{1/2}+3)c_1^2(X)\) bound.
+\end{theorem}
+\begin{proof}
+  Both are the number-field theorem over \(F=\mathbb Q\).  In the threefold
+  statement the hypotheses are exactly local hypothesis (i).  In the
+  higher-dimensional statement they are exactly local hypothesis (ii).  The
+  inclusion \(X(\mathbb Q)\subset X(\mathbb Q_p)\cap\Gamma\) transfers the
+  local estimate to rational points.
+\end{proof}
+
+\begin{lemma}[Chavdarov density of geometrically simple reduction]
+  \label{lem:cp_chavdarov_simple_reduction}
+  \lean{MR4665779.ChavdarovSimpleReduction}
+  \uses{def:cp_geometry_interfaces}
+  % SOURCE: Caro--Pasten, Lemma 10.2 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: There is a set of primes $\Pcal$ of density $1$ in the primes such that for every $p\in \Pcal$ the reduction of $A$ modulo $p$ is geometrically simple.
+  \textit{Source: Caro--Pasten, Lemma 10.2.}
+  If \(A/\mathbb Q\) is an abelian variety of odd dimension \(n\) with
+  \(\operatorname{End}(A_\mathbb C)=\mathbb Z\), then a density-one set of
+  primes has geometrically simple reduction for \(A\).
+\end{lemma}
+\begin{proof}
+  Chavdarov's theorem (N. Chavdarov, ``The generic irreducibility of the numerator
+  of the zeta function in a family of curves with large monodromy,'' Duke Math.\ J.\
+  87 (1997), 151--180) establishes this for abelian varieties whose
+  \(\ell\)-adic monodromy group is the full symplectic group.  For an abelian
+  variety \(A/\mathbb Q\) of odd dimension \(n\) with
+  \(\operatorname{End}(A_\mathbb C)=\mathbb Z\), the Tate conjecture (proved by
+  Faltings) and the classification of maximally symplectic monodromy groups
+  imply \(G_{\ell,A}=\operatorname{Sp}_{2n}\) for all but finitely many \(\ell\).
+  Chavdarov's result then gives that for a density-one set of primes, the
+  characteristic polynomial of Frobenius on \(T_\ell A\) is irreducible over
+  \(\mathbb Q\), which implies geometric simplicity of the reduction.
+\end{proof}
+
+\begin{corollary}[Density-one threefold applicability]
+  \label{cor:cp_dim3_density_application}
+  \lean{MR4665779.Dim3DensityApplication}
+  \uses{lem:cp_chavdarov_simple_reduction, thm:cp_intro_surface_bounds}
+  % SOURCE: Caro--Pasten, Corollary 1.11 and proof in Section 10.2 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: Let $A$ be an abelian threefold over $\Q$ with $\rk A(\Q)\le 1$ and $\End (A_\C) = \Z$.
+  \textit{Source: Caro--Pasten, Corollary 1.11 and Section 10.2.}
+  For an abelian threefold \(A/\mathbb Q\) with
+  \(\operatorname{rank}A(\mathbb Q)\le1\) and
+  \(\operatorname{End}(A_\mathbb C)=\mathbb Z\), a density-one set of primes
+  has the property that every smooth geometrically irreducible projective
+  surface \(X\subset A\) with good reduction at such a prime and satisfying
+  \(p>(128/9)c_1^2(X)^2\) obeys the explicit rational-point bound.
+\end{corollary}
+\begin{proof}
+  Apply Chavdarov to obtain geometrically simple reductions after discarding
+  finitely many bad primes.  A surface in a geometrically simple abelian
+  threefold reduction contains no elliptic curve, so the threefold rational
+  surface theorem applies.
+\end{proof}
+
+\subsection{Symmetric squares and quadratic points}
+
+\begin{lemma}[Intersection theory of \(C^{(2)}\)]
+  \label{lem:cp_symmetric_square_intersections}
+  \lean{MR4665779.SymmetricSquareIntersections}
+  \uses{def:cp_geometry_interfaces}
+  % SOURCE: Caro--Pasten, Lemmas 10.3--10.5 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: $$K_{C^{(2)}}\equiv (2g-2)V-D/2.$$
+  \textit{Source: Caro--Pasten, Lemmas 10.3--10.5.}
+  For a smooth curve \(C\) of genus \(g\ge2\) in characteristic not \(2\),
+  \[
+    K_{C^{(2)}}\equiv(2g-2)V-\frac12D,\quad
+    V^2=1,\quad D\cdot V=2,\quad D^2=4-4g,
+  \]
+  and \(c_1^2(C^{(2)})=(4g-9)(g-1)\).  If \(\theta\) is the pullback of a
+  theta divisor under the Abel--Jacobi map, then
+  \(D\equiv2((g+1)V-\theta)\), so
+  \(K_{C^{(2)}}\equiv\theta+(g-3)V\); hence for \(g\ge3\),
+  \(C^{(2)}\) has ample canonical divisor and is of general type.  Also
+  \(\theta\cdot K_{C^{(2)}}=2g(g-2)\).
+\end{lemma}
+\begin{proof}
+  Adjunction for the quotient \(C\times C\to C^{(2)}\), ramified along the
+  diagonal, gives the canonical class and basic intersections.  Kouvidakis's
+  numerical equivalence formula gives the relation with \(\theta\).  Since
+  \(\theta\) is ample and \(V\) is effective, \(K\equiv\theta+(g-3)V\) is ample
+  for \(g\ge3\).  Substituting the numerical equivalences gives the
+  \(c_1^2\) and \(\theta\cdot K\) formulas.
+\end{proof}
+
+\begin{lemma}[Embedding \(C^{(2)}\) in the Jacobian]
+  \label{lem:cp_symmetric_square_jacobian_embedding}
+  \lean{MR4665779.SymmetricSquareJacobianEmbedding}
+  \uses{lem:cp_symmetric_square_intersections}
+  % SOURCE: Caro--Pasten, Lemmas 10.6--10.7 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: If $C$ is not hyperelliptic, then $j$ is injective, in which case $C^{(2)}\simeq W_2$.
+  \textit{Source: Caro--Pasten, Lemmas 10.6--10.7.}
+  If \(C\) is not hyperelliptic, the Abel--Jacobi map
+  \(j:C^{(2)}\to J\) is injective and identifies \(C^{(2)}\) with its image
+  \(W_2\).  If \(C\) has an effective degree-\(2\) divisor over a field \(F\),
+  then \(J\) has an \(F\)-defined ample divisor \(H\) with
+  \(H\equiv2\Theta\).
+\end{lemma}
+\begin{proof}
+  Noninjectivity of the degree-\(2\) Abel--Jacobi map is exactly the existence
+  of a \(g^1_2\), i.e. hyperellipticity.  For the divisor \(H\), write the
+  degree-\(2\) divisor as \(x_1+x_2\), possibly a conjugate pair, and add the
+  two theta translates obtained from the \((g-1)\)-fold sums of
+  \(j(V_{x_i})\); the sum descends to \(F\) and is numerically \(2\Theta\).
+\end{proof}
+
+\begin{corollary}[Quadratic point bound for nonhyperelliptic curves]
+  \label{cor:cp_quadratic_points}
+  \lean{MR4665779.QuadraticPoints}
+  \uses{thm:cp_intro_surface_bounds, lem:cp_symmetric_square_intersections, lem:cp_symmetric_square_jacobian_embedding}
+  % SOURCE: Caro--Pasten, Corollary 1.14 and proof in Section 10.3 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: Then $C^{(2)}(\Q)$ is finite and ...
+  \textit{Source: Caro--Pasten, Corollary 1.14 and Section 10.3.}
+  Let \(C/\mathbb Q\) be smooth, geometrically irreducible, nonhyperelliptic
+  over \(\mathbb Q^{alg}\), of genus \(g\ge3\), and suppose
+  \(\operatorname{rank}J(\mathbb Q)\le1\).  If
+  \(p>(8g-10)^g\) is a good prime such that \(C'\) is nonhyperelliptic and
+  \(J'\) is geometrically simple, then \(C^{(2)}(\mathbb Q)\) is finite and
+  \[
+    \#C^{(2)}(\mathbb Q)\le \#(C')^{(2)}(\mathbb F_p)
+      +\frac{p-1}{p-2}(p+4p^{1/2}+3)(4g-9)(g-1).
+  \]
+\end{corollary}
+\begin{proof}
+  If \(C^{(2)}(\mathbb Q)\) is nonempty, choose the corresponding degree-\(2\)
+  divisor to define \(j:C^{(2)}\simeq W_2\subset J\).  Take
+  \(H\equiv2\Theta\).  Poincaré formulas give
+  \(\deg(H^g)=2^g g!\), \(\deg(H^2\cdot W_2)=4g(g-1)\), and
+  \(\deg(H\cdot K_{W_2})=4g(g-2)\).  Hence the ample-divisor threshold in the
+  surface theorem is \((8g-10)^g\), and the \(c_1^2\) term is
+  \((4g-9)(g-1)\).  Apply the geometrically simple rational surface theorem.
+\end{proof}
+
+\begin{corollary}[Genus-three quadratic point bound]
+  \label{cor:cp_quadratic_points_genus_three}
+  \lean{MR4665779.QuadraticPointsGenusThree}
+  \uses{thm:cp_intro_surface_bounds, lem:cp_symmetric_square_intersections, lem:cp_symmetric_square_jacobian_embedding}
+  % SOURCE: Caro--Pasten, Corollary 1.15 and proof in Section 10.3 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: Thus, $(128/9)c_1^2(X)^2= 512$ and the least prime $p>512$ is $521$.
+  \textit{Source: Caro--Pasten, Corollary 1.15 and Section 10.3.}
+  If \(C/\mathbb Q\) has genus \(3\), is nonhyperelliptic, has
+  \(\operatorname{rank}J(\mathbb Q)\le1\), has good reduction at
+  \(p\ge521\), and \((C')^{(2)}\) contains no elliptic curves, then
+  \[
+    \#C^{(2)}(\mathbb Q)\le \#(C')^{(2)}(\mathbb F_p)
+      +6\frac{p-1}{p-2}(p+4p^{1/2}+3)
+      <\#(C')^{(2)}(\mathbb F_p)+7.1p .
+  \]
+\end{corollary}
+\begin{proof}
+  For \(g=3\), the symmetric-square intersection formula gives
+  \(c_1^2(C^{(2)})=6\) and the canonical divisor is ample.  Thus the
+  threefold rational surface theorem applies to \(W_2\simeq C^{(2)}\).  The
+  threshold is \((128/9)\cdot6^2=512\), so the least prime satisfying it is
+  \(521\), and the displayed numerical estimate is the specialization of the
+  theorem's bound.
+\end{proof}
+
+\begin{theorem}[Complete Caro--Pasten theorem package]
+  \label{thm:cp_project_goal}
+  \lean{MR4665779.ProjectGoal}
+  \uses{def:bootstrap_hello, thm:cp_main_local, thm:cp_main_qp, thm:cp_number_field_bound, thm:cp_intro_surface_bounds, cor:cp_dim3_density_application, cor:cp_quadratic_points, cor:cp_quadratic_points_genus_three}
+  % SOURCE: Caro--Pasten, Abstract and Sections 1, 9, 10 (read from references/caro-pasten-chabauty-coleman-surfaces-source/MR4665779 - A Chabauty-Coleman bound for surfaces.tex)
+  % SOURCE QUOTE: We prove a result analogous to Coleman's bound in the case of a hyperbolic surface $X$ over a number field, embedded in an abelian variety $A$ of rank at most one.
+  \textit{Source: Caro--Pasten, Abstract and Sections 1, 9, 10.}
+  The project proves the complete Caro--Pasten blueprint package: the local
+  Chabauty--Coleman bound for surfaces over finite extensions of
+  \(\mathbb Q_p\), its \(\mathbb Q_p\) specialization, the number-field
+  rational-point consequences, density-one applicability for abelian
+  threefolds with endomorphism ring \(\mathbb Z\), and the symmetric-square
+  applications bounding quadratic points on nonhyperelliptic curves.
+\end{theorem}
+\begin{proof}
+  The theorem is the conjunction of the local theorem, its specialization and
+  number-field transfer, the two rational-surface applications, Chavdarov's
+  density corollary, and the two symmetric-square corollaries.  The bootstrap
+  Lean constant is included only so the current Lean scaffold lies in the same
+  dependency cone; it contributes no mathematical premise.
+\end{proof}

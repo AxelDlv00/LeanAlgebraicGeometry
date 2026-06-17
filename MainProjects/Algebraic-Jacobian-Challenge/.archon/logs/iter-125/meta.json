@@ -1,0 +1,11 @@
+{
+  "iteration": 125,
+  "stage": "prover (Iter-124: M1.b residual \u2014 Steps 2 + 3 of the",
+  "mode": "parallel",
+  "startedAt": "2026-05-17T08:19:01Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "9197e727-2e71-4b69-b900-59f9e427ebbd",
+    "durationSecs": 1848
+  }
+}

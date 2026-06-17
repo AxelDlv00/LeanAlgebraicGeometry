@@ -1,0 +1,87 @@
+\chapter{Structure sheaf as a sheaf of abelian groups, sheafification and Ext}
+\label{chap:Cohomology_StructureSheafAb}
+
+This chapter executes Phase~A steps~2--4 of \texttt{STRATEGY.md} on the topology of opens of an arbitrary topological space, using the \lstinline{HasSheafCompose} instance of Chapter~\ref{chap:Cohomology_SheafCompose} as input. It supplies three pieces of infrastructure that sit immediately upstream of Definition~\ref{def:genus} (the genus of a smooth proper curve):
+
+\begin{enumerate}
+  \item \texttt{HasSheafify} for $\AddCommGrpCat$-valued sheaves on $\opens X$ (Phase~A step~2).
+  \item \texttt{HasExt} on the same sheaf category (Phase~A step~3).
+  \item Promotion of the structure sheaf $\struct C$ from $\CommRingCat$-valued to $\AddCommGrpCat$-valued, packaging the data on which \lstinline{CategoryTheory.Sheaf.H} can be evaluated (Phase~A step~4 first half).
+\end{enumerate}
+
+A discovery probe of Mathlib \texttt{b80f227} (logged in \texttt{task\_pending.md}) confirms that all three pieces are constructible directly from existing Mathlib API plus the iteration~004 \lstinline{HasSheafCompose} instance: no new mathematical content is introduced here, only the typeclass plumbing and one definition. After this chapter lands, the only remaining steps in Phase~A are equipping $H^1(C, \struct C)$ with a $k$-vector-space structure and proving Serre finiteness; both are deferred to subsequent iterations.
+
+The chapter introduces no protected declarations: every definition and instance here is auxiliary, supporting the construction of $H^1(C, \struct C)$ in Definition~\ref{def:genus}.
+
+\section{Sheafification of $\AddCommGrpCat$-valued sheaves on opens}
+
+\begin{theorem}[Sheafification on the topology of opens, $\AddCommGrpCat$-valued]
+  \label{thm:HasSheafify_Opens_AddCommGrp}
+  \lean{AlgebraicGeometry.Cohomology.instHasSheafify_Opens_AddCommGrp}
+  Let $X$ be a topological space. Then the Grothendieck topology of opens of $X$ has
+  \[
+    \mathtt{HasSheafify}(\opens(X), \AddCommGrpCat).
+  \]
+\end{theorem}
+
+\begin{proof}
+  Mathlib's general sheafification API constructs \lstinline{HasSheafify J A} whenever \lstinline{HasWeakSheafify J A} holds and the resulting sheafification preserves finite limits. For \lstinline{J = Opens.grothendieckTopology X} and \lstinline{A = AddCommGrpCat} both prerequisites are already wired in Mathlib (concrete-category sheafification on a small site, plus exactness of $\AddCommGrpCat$-valued sheafification on a Noetherian-style topology). The instance is therefore inferable; the prover's task is to establish the universe pinning needed to make \lstinline{infer_instance} succeed.
+\end{proof}
+
+\section{$\Ext$ for sheaves on opens}
+
+\begin{theorem}[$\Ext$ on the topology of opens, $\AddCommGrpCat$-valued]
+  \label{thm:HasExt_Sheaf_Opens_AddCommGrp}
+  \lean{AlgebraicGeometry.Cohomology.instHasExt_Sheaf_Opens_AddCommGrp}
+  \uses{thm:HasSheafify_Opens_AddCommGrp}
+  Let $X$ be a topological space. Then the category $\Sheaf(\opens(X), \AddCommGrpCat)$ has
+  \[
+    \mathtt{HasExt.\{u+1\}}\bigl(\Sheaf(\opens(X), \AddCommGrpCat)\bigr).
+  \]
+\end{theorem}
+
+\begin{proof}
+  $\AddCommGrpCat$ is abelian. The sheaf category $\Sheaf(J, A)$ inherits an abelian structure from an abelian $A$ once \lstinline{HasSheafify J A} holds (Theorem~\ref{thm:HasSheafify_Opens_AddCommGrp}). Mathlib's \lstinline{CategoryTheory.HasExt.standard} produces a \lstinline{HasExt} instance from any abelian category. The universe annotation \lstinline{HasExt.\{u+1\}} matches the unique morphism universe of \lstinline{Sheaf (Opens.gT X) AddCommGrpCat.\{u\}}, which lives at type-universe \lstinline{u+1}; the sheafification API forces this shape.
+\end{proof}
+
+\section{Structure sheaf as a sheaf of abelian groups}
+
+\begin{definition}[Structure sheaf as a sheaf of abelian groups]
+  \label{def:Scheme_toAbSheaf}
+  \lean{AlgebraicGeometry.Scheme.toAbSheaf}
+  \uses{thm:HasSheafCompose_forget}
+  Let $C$ be a scheme. The structure sheaf of $C$, viewed as a sheaf of abelian groups on the topology of opens of the underlying topological space of $C$, is
+  \[
+    \toAbSheaf(C) \;:=\; (\sheafCompose(\opens(\Csp), F_{\mathrm{forget}})).\mathtt{obj}\;C.\mathtt{sheaf} \;\in\; \Sheaf(\opens(\Csp), \AddCommGrpCat),
+  \]
+  where $\Csp$ is the underlying topological space of $C$, $C.\mathtt{sheaf} \in \Sheaf(\opens(\Csp), \CommRingCat)$ is the Mathlib structure sheaf, and $F_{\mathrm{forget}} = \forget_2 \CommRingCat \RingCat \circ \forget_2 \RingCat \AddCommGrpCat$ is the forget composite of Chapter~\ref{chap:Cohomology_SheafCompose}.
+\end{definition}
+
+The construction uses \lstinline{CategoryTheory.sheafCompose}, which requires the \lstinline{HasSheafCompose} instance from Chapter~\ref{chap:Cohomology_SheafCompose}. Functoriality in $C$ is delegated to a future iteration once we need it for naturality of the cohomology long exact sequence.
+
+\section{Use in the project}
+
+The chain $\HasSheafCompose \to \HasSheafify \to \HasExt \to \toAbSheaf$ unblocks the abelian-group-level definition of $H^n(C, \struct C)$:
+\[
+  H^n(C, \struct C) \;:=\; \toAbSheaf(C).\mathtt{H}\,n,
+\]
+where \lstinline{Sheaf.H} is the abstract sheaf-cohomology API of Mathlib's \lstinline{Sites/SheafCohomology/Basic.lean}. The result is automatically an \lstinline{AddCommGroup} via \lstinline{Sheaf.instAddCommGroupH}. Only two steps remain inside Phase~A:
+
+\begin{itemize}
+  \item Equip $H^1(C, \struct C)$ with the $k$-module structure inherited from the $k$-algebra structure on $\Gamma(C, \struct C)$ (Phase~A step~5).
+  \item Establish $\Module.\finrank$ finiteness via Serre's theorem on coherent cohomology of proper $k$-schemes (Phase~A step~6 / "finiteness").
+\end{itemize}
+
+Both are deferred to iterations beyond this chapter.
+
+\section{Mathlib gap}
+
+Mathlib \texttt{b80f227} carries every constituent piece needed for this chapter:
+\begin{itemize}
+  \item \lstinline{CategoryTheory.HasSheafify} and the small-site / concrete-category sheafification API for $\AddCommGrpCat$-valued sheaves on $\opens(X)$ (verified by \texttt{lean\_run\_code}: \lstinline{infer_instance} succeeds for \lstinline{HasSheafify (Opens.grothendieckTopology X) AddCommGrpCat.\{u\}}).
+  \item \lstinline{CategoryTheory.HasExt.standard} for any abelian category, and the abelian instance \lstinline{Sheaf.instAbelian} on $\Sheaf(J, \AddCommGrpCat)$ (verified by \texttt{lean\_run\_code}).
+  \item \lstinline{CategoryTheory.sheafCompose} together with the \lstinline{HasSheafCompose} instance of Chapter~\ref{chap:Cohomology_SheafCompose} (closed in iteration~004).
+  \item The structure sheaf \lstinline{Scheme.sheaf : Sheaf (Opens.grothendieckTopology X.toTopCat) CommRingCat} is built into the Mathlib \lstinline{Scheme} structure.
+\end{itemize}
+
+Nothing is genuinely missing for this chapter; the work is to assemble the typeclass plumbing with universe annotations chosen so that downstream \lstinline{Sheaf.H} consumers can reach the sheaf via \lstinline{infer_instance}.

@@ -1,0 +1,48 @@
+{
+  "iteration": 7,
+  "stage": "prover  (iter-006 post-refactor pass; the iter-006 refactor has executed and the eight Phase A step 5 *main* scaffold sorries are in place inside `AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean`)",
+  "mode": "parallel",
+  "startedAt": "2026-05-07T03:32:38Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1374
+  },
+  "refactor": {
+    "status": "done",
+    "durationSecs": 146
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 107
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    },
+    "AlgebraicJacobian_Picard_FunctorAb": {
+      "file": "AlgebraicJacobian/Picard/FunctorAb.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 529
+  },
+  "sorry_count": 300,
+  "finalize": {
+    "innerGit": {
+      "sha": "ef99cd0"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 10
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 1
+    }
+  },
+  "completedAt": "2026-05-07T04:11:41Z",
+  "wallTimeSecs": 2343
+}

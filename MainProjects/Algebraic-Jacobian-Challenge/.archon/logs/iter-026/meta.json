@@ -1,0 +1,40 @@
+{
+  "iteration": 26,
+  "stage": "prover  (iteration 023 \u2014 Path-2 Mayer-Vietoris LES *technical heart*: four auxiliary lemmas mirroring Mathlib `MayerVietoris.lean` L48\u2013106 plus the comparison iso `noncomputable def HModule'_sequenceIso` mirroring Mathlib L124\u2013138 for the `ModuleCat k` flavor. The iter-022 prover round closed the LES `ComposableArrows`-form sequence cleanly: sorry count `9 \u2192 9` (the prover collapsed refactor + prover sub-phases into a single Edit; the transient `9 \u2192 10 \u2192 9` trajectory was condensed), kernel-only axioms on the new `HModule'_sequence` declaration, body adopted as the probe-confirmed verbatim Mathlib L120\u2013122 substitution `ComposableArrows.mk\u2085 (HModule'_toBiprod k S F n\u2080) (HModule'_fromBiprod k S F n\u2080) (HModule'_\u03b4 k S F n\u2080 n\u2081 h) (HModule'_toBiprod k S F n\u2081) (HModule'_fromBiprod k S F n\u2081)`. Iter-023 plan-agent has scoped + probe-confirmed the next sub-step: five new tightly-coupled declarations packaging the four auxiliary lemmas (L48\u2013106 mirrors) plus the comparison iso `HModule'_sequenceIso` (L124\u2013138 mirror), all in `Cohomology/StructureSheafModuleK.lean`. Direct mirror of Mathlib for the `ModuleCat k` flavor; **no new Mathlib gap** (the relevant `Ext.biprodAddEquiv` and biprod-iso machinery is already polymorphic in the value category). The required `[HasExt (Sheaf J (ModuleCat.{u} k))]` typeclass is load-bearing (consumed by `HModule'_\u03b4` / `HModule'_shortComplex_shortExact` in the bodies) and matches the iter-016/017/018/021/022 LES infrastructure cohort. Iter-023 sorry count `9 \u2192 14 \u2192 9` over the iteration. Refactor agent runs first to scaffold; prover agent then closes.",
+  "mode": "parallel",
+  "startedAt": "2026-05-08T10:34:31Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 920
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 139
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 659
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "101e289"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 17
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 3
+    }
+  },
+  "completedAt": "2026-05-08T11:03:32Z",
+  "wallTimeSecs": 1741
+}

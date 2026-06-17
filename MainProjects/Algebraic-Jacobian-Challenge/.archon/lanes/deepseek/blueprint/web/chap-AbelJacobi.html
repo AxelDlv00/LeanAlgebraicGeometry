@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Abel–Jacobi map</title>
+<link rel="prev" href="chap-Rigidity.html" title="Rigidity for morphisms of group schemes (Mumford §4)" />
+<link rel="up" href="index.html" title="AlgebraicJacobian" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">AlgebraicJacobian</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="chap-Cohomology_SheafCompose.html"><span class="toc_ref">1</span> <span class="toc_entry">Sheaf condition along the structure-sheaf forget composite</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000002"><span class="toc_ref">1.1</span> <span class="toc_entry">Statement</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000004"><span class="toc_ref">1.2</span> <span class="toc_entry">Proof sketch</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000006"><span class="toc_ref">1.3</span> <span class="toc_entry">Use in the project</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000007"><span class="toc_ref">1.4</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000008"><span class="toc_ref">1.4.1</span> <span class="toc_entry">Discovery objectives for this iteration (iter-005 prover)</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Genus.html"><span class="toc_ref">2</span> <span class="toc_entry">Genus of a smooth proper curve</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Genus.html#a0000000009"><span class="toc_ref">2.1</span> <span class="toc_entry">Definition</span></a>
+ </li>
+<li class="">
+  <a href="chap-Genus.html#sec:Genus_status"><span class="toc_ref">2.2</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Genus.html#a0000000010"><span class="toc_ref">2.2.1</span> <span class="toc_entry">Discovery objective for this iteration</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html"><span class="toc_ref">3</span> <span class="toc_entry">Line bundles on schemes and the Picard group</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000011"><span class="toc_ref">3.1</span> <span class="toc_entry">Definition</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000012"><span class="toc_ref">3.2</span> <span class="toc_entry">Group structure under tensor product</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000013"><span class="toc_ref">3.3</span> <span class="toc_entry">Pull-back functoriality</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000014"><span class="toc_ref">3.4</span> <span class="toc_entry">Use in the project</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000015"><span class="toc_ref">3.5</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000016"><span class="toc_ref">3.5.1</span> <span class="toc_entry">Discovery objectives for this iteration</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html"><span class="toc_ref">4</span> <span class="toc_entry">The relative Picard functor</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Picard_Functor.html#a0000000017"><span class="toc_ref">4.1</span> <span class="toc_entry">Definition</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html#a0000000018"><span class="toc_ref">4.2</span> <span class="toc_entry">Representability</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html#a0000000019"><span class="toc_ref">4.3</span> <span class="toc_entry">Use in the project</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html#a0000000020"><span class="toc_ref">4.4</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Picard_Functor.html#a0000000021"><span class="toc_ref">4.4.1</span> <span class="toc_entry">Forward-compatibility note (<span class="ttfamily">LineBundle</span> approximation)</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html#a0000000022"><span class="toc_ref">4.4.2</span> <span class="toc_entry">Discovery objectives for this iteration (iter-005 prover)</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Jacobian.html"><span class="toc_ref">5</span> <span class="toc_entry">The Jacobian as an abelian variety</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Jacobian.html#a0000000023"><span class="toc_ref">5.1</span> <span class="toc_entry">The Jacobian</span></a>
+ </li>
+<li class="">
+  <a href="chap-Jacobian.html#a0000000024"><span class="toc_ref">5.2</span> <span class="toc_entry">Group scheme structure and abelian-variety properties</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Jacobian.html#a0000000025"><span class="toc_ref">5.2.1</span> <span class="toc_entry">Sanity check in low genus</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Jacobian.html#a0000000026"><span class="toc_ref">5.3</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Jacobian.html#a0000000027"><span class="toc_ref">5.3.1</span> <span class="toc_entry">Status note</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Rigidity.html"><span class="toc_ref">6</span> <span class="toc_entry">Rigidity for morphisms of group schemes (Mumford §4)</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Rigidity.html#a0000000028"><span class="toc_ref">6.1</span> <span class="toc_entry">Statement</span></a>
+ </li>
+<li class="">
+  <a href="chap-Rigidity.html#a0000000029"><span class="toc_ref">6.2</span> <span class="toc_entry">Proof sketch</span></a>
+ </li>
+<li class="">
+  <a href="chap-Rigidity.html#a0000000030"><span class="toc_ref">6.3</span> <span class="toc_entry">Use in the project</span></a>
+ </li>
+<li class="">
+  <a href="chap-Rigidity.html#a0000000031"><span class="toc_ref">6.4</span> <span class="toc_entry">Mathlib gap</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active current">
+  <a href="chap-AbelJacobi.html"><span class="toc_ref">7</span> <span class="toc_entry">The Abel–Jacobi map</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="chap-AbelJacobi.html#a0000000032"><span class="toc_ref">7.1</span> <span class="toc_entry">Definition</span></a>
+ </li>
+<li class="">
+  <a href="chap-AbelJacobi.html#a0000000033"><span class="toc_ref">7.2</span> <span class="toc_entry">Pointed property</span></a>
+ </li>
+<li class="">
+  <a href="chap-AbelJacobi.html#a0000000034"><span class="toc_ref">7.3</span> <span class="toc_entry">Universal (Albanese) property</span></a>
+ </li>
+<li class="">
+  <a href="chap-AbelJacobi.html#a0000000035"><span class="toc_ref">7.4</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-AbelJacobi.html#a0000000036"><span class="toc_ref">7.4.1</span> <span class="toc_entry">Discovery objective for this iteration</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="chap:AbelJacobi">7 The Abel–Jacobi map</h1>
+
+<p>Let \(C\) be a smooth proper curve over \(k\) as in Chapter <a href="chap-Genus.html">2</a>, and let \(\Jac (C)\) be its Jacobian (Definition <a href="chap-Jacobian.html#def:Jacobian">8</a>). </p>
+<h1 id="a0000000032">7.1 Definition</h1>
+<div class="definition_thmwrapper theorem-style-definition" id="def:ofCurve">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">14</span>
+    <span class="definition_thmtitle">Abel–Jacobi map</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-AbelJacobi.html#def:ofCurve">#</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Jacobian.html#def:Jacobian">Definition 8</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Jacobian.ofCurve" class="lean_decl">AlgebraicGeometry.Jacobian.ofCurve</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>    Given a \(k\)-rational point \(P\colon \Spec k \to C\) — equivalently, a morphism \(P\colon \mathbf1 \to C\) in \(\textrm{Over}(\Spec k)\) — the <em>Abel–Jacobi map</em> is the \(k\)-morphism </p>
+<div class="displaymath" id="a0000000048">
+  \[  \alpha _P\colon C \; \longrightarrow \;  \Jac (C),\qquad Q \; \longmapsto \;  [\mathcal O_C(Q - P)].  \]
+</div>
+<p> Functorially, it is the morphism in \(\textrm{Over}(\Spec k)\) induced by the line bundle \(\mathcal O_{C \times C}(\Delta - p_1^* P)\) on \(C \times C\) via the universal property of \(\Pic ^0_{C/k}\). </p>
+
+  </div>
+</div>
+<h1 id="a0000000033">7.2 Pointed property</h1>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:comp_ofCurve">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">15</span>
+    <span class="lemma_thmtitle">\(\alpha _P\) sends \(P\) to \(0\)</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-AbelJacobi.html#lem:comp_ofCurve">#</a>
+    
+    <a class="icon proof" href="chap-AbelJacobi.html#a0000000049"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-AbelJacobi.html#def:ofCurve">Definition 14</a></li>
+          
+          <li><a href="chap-AbelJacobi.html#def:ofCurve">Definition 14</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Jacobian.comp_ofCurve" class="lean_decl">AlgebraicGeometry.Jacobian.comp_ofCurve</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>    \(P \; \circ \;  \alpha _P \; =\;  \eta \bigl[\Jac (C)\bigr]\), where \(\eta [\Jac (C)]\) is the identity element of the group scheme \(\Jac (C)\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000049">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> At the level of \(k\)-points: \(\alpha _P(P) = [\mathcal O_C(P - P)] = [\mathcal O_C] = 0\). Globally: by construction, \(\alpha _P\) is the morphism classifying the line bundle \(\mathcal O_{C \times C}(\Delta - p_1^* P)\); restricting to the section \((P, \mathrm{id})\) gives the trivial line bundle, hence the zero point of \(\Pic ^0\). </p>
+
+  </div>
+</div>
+<h1 id="a0000000034">7.3 Universal (Albanese) property</h1>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:exists_unique_ofCurve_comp">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">16</span>
+    <span class="theorem_thmtitle">Albanese property of the Jacobian</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-AbelJacobi.html#thm:exists_unique_ofCurve_comp">#</a>
+    
+    <a class="icon proof" href="chap-AbelJacobi.html#a0000000050"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-AbelJacobi.html#def:ofCurve">Definition 14</a></li>
+          
+          <li><a href="chap-AbelJacobi.html#lem:comp_ofCurve">Lemma 15</a></li>
+          
+          <li><a href="chap-Picard_Functor.html#thm:Pic_representable">Theorem 7</a></li>
+          
+          <li><a href="chap-Rigidity.html#thm:GrpObj_eq_of_eqOnOpen">Theorem 13</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Jacobian.exists_unique_ofCurve_comp" class="lean_decl">AlgebraicGeometry.Jacobian.exists_unique_ofCurve_comp</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    Let \(A\) be an abelian variety over \(k\) — i.e. \(A \in \textrm{Over}(\Spec k)\) with <code class="plain_lstlinline"></code>[Smooth A.hom] [IsProper A.hom] [GrpObj A] [GeometricallyIrreducible A.hom]. For every pointed morphism \(f\colon C \to A\) with \(f \circ P = \eta [A]\), there exists a unique group-scheme morphism \(g\colon \Jac (C) \to A\) such that \(f = g \circ \alpha _P\). </p>
+<div class="displaymath" id="a0000000051">
+  \[  \begin{array}{ccc} C &  \stackrel{f}{\longrightarrow } &  A \\ {\scriptstyle \alpha _P} \downarrow &  \nearrow {\scriptstyle \exists ! g} & \\ \Jac (C) & & \end{array}  \]
+</div>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000050">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> <em>Existence.</em> The map \(f\colon C \to A\) pointed at \(P\) is classified, via the Picard-functoriality of \(A\), by a line bundle on \(C \times A^\vee \) (where \(A^\vee \) is the dual abelian variety), normalised so that its restriction along \(\{ P\} \times A^\vee \) is trivial. By the universal property of \(\Pic ^0_{C/k}\), this line bundle yields a \(k\)-morphism \(A^\vee \to \Pic ^0_{C/k} = \Jac (C)\); dualising back gives \(g\colon \Jac (C) \to A\) with \(g \circ \alpha _P = f\). </p>
+<p><em>Uniqueness.</em> If \(g_1, g_2\colon \Jac (C) \to A\) both satisfy \(g_i \circ \alpha _P = f\), then \(g_1 - g_2\colon \Jac (C) \to A\) vanishes on the image of \(\alpha _P\). The image of \(\alpha _P\) generates \(\Jac (C)\) as a group scheme (a standard fact: the Abel–Jacobi morphism is generically finite onto its image and the symmetric power \(C^{(g)}\) surjects onto \(\Jac (C)\)). Combined with the rigidity theorem for morphisms between abelian varieties (Theorem&#160;<a href="chap-Rigidity.html#thm:GrpObj_eq_of_eqOnOpen">13</a>, the Lean-side scheme-level form of Mumford, <em>Abelian Varieties</em>, §4 Theorem 1), this forces \(g_1 = g_2\). </p>
+
+  </div>
+</div>
+<h1 id="a0000000035">7.4 Mathlib gap</h1>
+<p>The Albanese property requires: </p>
+<ul class="itemize">
+  <li><p>the rigidity theorem for morphisms between abelian varieties (Mumford §4) — <em>not</em> in Mathlib, but provable from <code class="plain_lstlinline"></code>Mathlib/AlgebraicGeometry/Group/Abelian.lean plus the rigidity lemma for proper morphisms over an irreducible base; </p>
+</li>
+  <li><p>generation of \(\Jac (C)\) by the image of \(\alpha _P\) — requires symmetric powers of curves and the surjectivity \(C^{(g)} \twoheadrightarrow \Jac (C)\); </p>
+</li>
+  <li><p>dual abelian varieties and biduality — currently absent. </p>
+</li>
+</ul>
+<p>These are mapped to Phase E of <span class="ttfamily">STRATEGY.md</span>. </p>
+<h2 id="a0000000036">7.4.1 Discovery objective for this iteration</h2>
+<p>The prover should: </p>
+<ol class="enumerate">
+  <li><p>Confirm that none of <code class="plain_lstlinline"></code>ofCurve, <code class="plain_lstlinline"></code>comp_ofCurve, <code class="plain_lstlinline"></code>exists_unique_ofCurve_comp can be filled without first defining <code class="plain_lstlinline"></code>Jacobian C (Chapter <a href="chap-Jacobian.html">5</a>). </p>
+</li>
+  <li><p>Document in <code class="plain_lstlinline"></code>task_results/AbelJacobi.md which of the three sorries would become provable from a working <code class="plain_lstlinline"></code>Jacobian via what specific helper lemmas (e.g. rigidity for morphisms of abelian varieties as a standalone declaration). </p>
+</li>
+  <li><p><b class="bfseries">Do not</b> introduce a placeholder <code class="plain_lstlinline"></code>ofCurve (such as the constant map to the identity) — this would make <code class="plain_lstlinline"></code>exists_unique_ofCurve_comp false in genus \(\ge 1\). </p>
+</li>
+</ol>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="chap-Rigidity.html" title="Rigidity for morphisms of group schemes (Mumford §4)"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="AlgebraicJacobian"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

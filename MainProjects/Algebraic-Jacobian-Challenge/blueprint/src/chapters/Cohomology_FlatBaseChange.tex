@@ -1,0 +1,1331 @@
+\chapter{Flat base change for the pushforward of a quasi-coherent sheaf ($i=0$)}
+\label{chap:Cohomology_FlatBaseChange}
+% SOURCE: [Stacks Project], Cohomology of Schemes, Section "Cohomology and
+% base change, I", and Tag 02KH (read from references/stacks-coherent.tex and
+% references/stacks-coherent.md).
+
+\section{Setup and motivation}
+
+This chapter establishes the $i=0$ (i.e.\ \(H^0\) / direct-image) case of flat
+base change: the formation of the pushforward \(f_*\mathcal{F}\) of a
+quasi-coherent sheaf commutes with flat base change on the target. It is the
+foundational, fully self-contained slice of the cohomology-and-base-change
+package that ultimately underlies relative representability statements; the
+higher derived cases \(R^i f_*\) for \(i \geq 1\) are treated separately and are
+out of scope here.
+
+Throughout, \(f : X \to S\) is a morphism of schemes that is quasi-compact and
+quasi-separated, and \(\mathcal{F}\) is a quasi-coherent \(\mathcal{O}_X\)-module.
+A base change of \(f\) along an arbitrary morphism \(g : S' \to S\) is recorded
+by the cartesian square obtained from the fibre product
+\(X' = X \times_S S'\):
+\[
+  \begin{array}{ccc}
+    X' & \xrightarrow{\;g'\;} & X \\[2pt]
+    {\scriptstyle f'}\big\downarrow & & \big\downarrow{\scriptstyle f} \\[2pt]
+    S' & \xrightarrow{\;g\;} & S
+  \end{array}
+\]
+Here \(f' : X' \to S'\) is the base change of \(f\), and \(g' : X' \to X\) is the
+first projection. We write \(\mathcal{F}' = (g')^*\mathcal{F}\) for the pullback
+of \(\mathcal{F}\) to \(X'\).
+
+\section{The canonical base-change map}
+
+\begin{definition}\leanok
+[Base-change map for the pushforward]
+  \label{def:pushforward_base_change_map}
+  \lean{AlgebraicGeometry.pushforwardBaseChangeMap}
+  % SOURCE: [Stacks Project], Cohomology of Schemes, Section "Cohomology and
+  % base change, I", base-change diagram (\ref{equation-base-change-diagram})
+  % (read from references/stacks-coherent.tex, L877--904).
+  % SOURCE QUOTE: "Let $f : X \to S$ be a morphism of schemes.
+  % Let $\mathcal{F}$ be a quasi-coherent sheaf on $X$.
+  % Suppose further that $g : S' \to S$ is any morphism of schemes. Denote
+  % $X' = X_{S'} = S' \times_S X$ the base change of $X$ and denote
+  % $f' : X' \to S'$ the base change of $f$.
+  % Also write $g' : X' \to X$ the projection,
+  % and set $\mathcal{F}' = (g')^*\mathcal{F}$."
+  \textit{Source: Stacks Project, Cohomology of Schemes, \S\,Cohomology and base
+  change, I.}
+  Let \(f : X \to S\) be a morphism of schemes, \(\mathcal{F}\) a quasi-coherent
+  \(\mathcal{O}_X\)-module, and \(g : S' \to S\) an arbitrary morphism, giving the
+  cartesian square above with projection \(g' : X' \to X\) and
+  \(\mathcal{F}' = (g')^*\mathcal{F}\). The \emph{base-change map for the
+  pushforward} is the canonical morphism of \(\mathcal{O}_{S'}\)-modules
+  \[
+    g^*\bigl(f_*\mathcal{F}\bigr) \longrightarrow f'_*\bigl((g')^*\mathcal{F}\bigr)
+    = f'_*\mathcal{F}' .
+  \]
+  It is adjoint to the morphism
+  \(f_*\mathcal{F} \to g_*\, f'_*\mathcal{F}' = f_*\,(g')_*\mathcal{F}'\) obtained
+  by applying \(f_*\) to the unit
+  \(\mathcal{F} \to (g')_*(g')^*\mathcal{F}\) of the
+  \(((g')^*, (g')_*)\)-adjunction, using the commutativity
+  \(g \circ f' = f \circ g'\) of the square.
+\end{definition}
+
+\section{The affine case}
+
+\subsection{Locality of isomorphisms for \texttt{Scheme.Modules} morphisms}
+
+Before treating the affine computation we record three project-local supplements
+to Mathlib. Mathlib provides the per-open criterion
+(\(\mathrm{IsIso}\,\varphi \iff \forall U,\ \mathrm{IsIso}(\varphi_U)\)) and a
+stalkwise isomorphism criterion for \(\mathrm{TopCat.Sheaf}\)-valued morphisms, but
+it does not package the stalk-local or basis-local criterion at the level of
+morphisms of \(\mathcal{O}_X\)-modules. The following lemmas bridge that gap; they
+are exactly the locality tools used in the first reduction of the affine
+base-change lemma below, where one checks the base-change map after restricting to
+the affine opens of the base. As bespoke infrastructure they carry no external
+citation and stand on their proof sketches.
+
+\begin{lemma}\leanok
+[Stalk-local criterion for isomorphisms of \(\mathcal{O}_X\)-modules]
+  \label{lem:modules_isIso_iff_stalk}
+  \lean{AlgebraicGeometry.Modules.isIso_iff_isIso_stalkFunctor_map}
+  Let \(X\) be a scheme and \(\varphi : M \to N\) a morphism of sheaves of
+  \(\mathcal{O}_X\)-modules. Then \(\varphi\) is an isomorphism if and only if the
+  underlying morphism of abelian-group presheaves induces an isomorphism on the
+  stalk at every point \(x \in X\).
+\end{lemma}
+
+\begin{proof}
+
+
+\leanok
+  If \(\varphi\) is an isomorphism, then so is its image under the forgetful
+  functor to abelian-group presheaves, and the stalk functor at each \(x\),
+  being a functor, carries isomorphisms to isomorphisms. Conversely, assume the
+  stalk map is an isomorphism at every \(x\). Package the underlying abelian-group
+  presheaves of \(M\) and \(N\) as sheaves of abelian groups, and \(\varphi\) as a
+  morphism of these sheaves; the stalkwise-isomorphism hypothesis lets us apply the
+  \(\mathrm{TopCat.Sheaf}\)-level stalk-local isomorphism criterion to conclude that
+  this morphism of sheaves of abelian groups is an isomorphism. Pushing it through
+  the forgetful functor to presheaves yields an isomorphism of the underlying
+  abelian-group presheaf morphisms, and since the forgetful functor from
+  \(\mathcal{O}_X\)-modules to abelian-group presheaves reflects isomorphisms,
+  \(\varphi\) itself is an isomorphism.
+\end{proof}
+
+\begin{lemma}\leanok
+[Basis-local criterion for isomorphisms of \(\mathcal{O}_X\)-modules]
+  \label{lem:modules_isIso_of_isBasis}
+  \lean{AlgebraicGeometry.Modules.isIso_of_isIso_app_of_isBasis}
+  \uses{lem:modules_isIso_iff_stalk}
+  Let \(X\) be a scheme, let \(\{B_i\}_{i \in \iota}\) be a family of opens whose
+  range is a basis of the topology of \(X\), and let \(\varphi : M \to N\) be a
+  morphism of sheaves of \(\mathcal{O}_X\)-modules. If \(\varphi\) restricts to an
+  isomorphism on the sections over every basic open \(B_i\), then \(\varphi\) is an
+  isomorphism.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:modules_isIso_iff_stalk}
+  \leanok
+  By Lemma~\ref{lem:modules_isIso_iff_stalk} it suffices to prove that the induced
+  stalk map is bijective at each point \(x \in X\). For injectivity, a germ that
+  vanishes at \(x\) already vanishes on some open neighbourhood, which may be
+  shrunk to a basic open \(B_i\); on \(B_i\) the section map \(\varphi_{B_i}\) is
+  injective, so the original section is zero, giving injectivity of the stalk map
+  from injectivity over the basis. For surjectivity, an arbitrary germ at \(x\) is
+  represented by a section of \(N\) over some basic open \(B_i\) containing \(x\);
+  since \(\varphi_{B_i}\) is surjective, this section lifts to a section of \(M\)
+  over \(B_i\), whose germ at \(x\) maps to the given germ. Thus the stalk map is
+  bijective, and \(\varphi\) is an isomorphism.
+\end{proof}
+
+\begin{lemma}\leanok
+[Affine-open locality criterion for isomorphisms of \(\mathcal{O}_X\)-modules]
+  \label{lem:modules_isIso_iff_affineOpens}
+  \lean{AlgebraicGeometry.Modules.isIso_iff_isIso_app_affineOpens}
+  \uses{lem:modules_isIso_of_isBasis}
+  Let \(X\) be a scheme and \(\varphi : M \to N\) a morphism of sheaves of
+  \(\mathcal{O}_X\)-modules. Then \(\varphi\) is an isomorphism if and only if it
+  restricts to an isomorphism on the sections over every affine open of \(X\).
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:modules_isIso_of_isBasis}
+  \leanok
+  The forward implication is immediate, since the section functor over a fixed open
+  preserves isomorphisms. For the converse, the affine opens of a scheme form a
+  basis of its topology, so the claim is the special case of
+  Lemma~\ref{lem:modules_isIso_of_isBasis} in which the basis is the family of
+  affine opens.
+\end{proof}
+
+\subsection{The affine computation}
+
+The whole result rests on the following elementary computation in the affine
+setting, where the base-change map is visibly an isomorphism because tensoring is
+associative. Before stating it we isolate the one ingredient not yet available as
+a ready-made result on which the affine reduction turns: the description of the
+pushforward of a tilde-module along a morphism of affine schemes.
+
+We first record three bespoke \(\Gamma\)-fragment supports that compute the global
+sections of an affine pushforward; they carry no external citation and stand on
+their proof sketches.
+
+\begin{lemma}
+
+\leanok
+[Naturality of the global-sections comparison square]
+  \label{lem:globalSectionsIso_hom_comp_specMap_appTop}
+  \lean{AlgebraicGeometry.globalSectionsIso_hom_comp_specMap_appTop}
+  Let \(\varphi : R \to R'\) be a homomorphism of commutative rings, and write
+  \(\mathrm{gs}_R : \Gamma(\operatorname{Spec} R, \top) \cong R\) and
+  \(\mathrm{gs}_{R'} : \Gamma(\operatorname{Spec} R', \top) \cong R'\) for the
+  global-sections isomorphisms of the structure sheaves. Then the ring square
+  \[
+    \mathrm{gs}_R \;\circ\; (\operatorname{Spec}\varphi)^{\sharp}_{\top}
+    \;=\; \varphi \;\circ\; \mathrm{gs}_{R'}
+  \]
+  commutes, where \((\operatorname{Spec}\varphi)^{\sharp}_{\top}\) is the
+  top-open component of the structure-sheaf comparison map underlying
+  \(\operatorname{Spec}\varphi\).
+\end{lemma}
+
+\begin{proof}
+
+
+\leanok
+  This is the naturality of the unit/counit of the
+  \(\Gamma \dashv \operatorname{Spec}\) adjunction read off at the top open: the
+  global-sections map of \(\operatorname{Spec}\varphi\) is, under the
+  global-sections isomorphisms on each side, conjugate to \(\varphi\) itself.
+  Transposing the naturality square of the \(\operatorname{Spec}\) unit gives
+  exactly the asserted ring equation.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Global sections of an affine pushforward]
+  \label{lem:gammaPushforwardIso}
+  \lean{AlgebraicGeometry.gammaPushforwardIso}
+  \uses{lem:globalSectionsIso_hom_comp_specMap_appTop}
+  Let \(\varphi : R \to R'\) be a homomorphism of commutative rings and let
+  \(N\) be an \(\operatorname{Spec}(R')\)-module. Then there is a canonical
+  isomorphism of \(R\)-modules
+  \[
+    \Gamma\bigl((\operatorname{Spec}\varphi)_* N\bigr)
+    \;\cong\;
+    \operatorname{restr}_\varphi\bigl(\Gamma N\bigr),
+  \]
+  identifying the \(R\)-module of global sections of the pushforward with the
+  restriction of scalars along \(\varphi\) of the \(R'\)-module of global sections
+  of \(N\).
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:globalSectionsIso_hom_comp_specMap_appTop}
+  \leanok
+  Because \((\operatorname{Spec}\varphi)^{-1}(\top) = \top\), the global sections of
+  the pushforward \((\operatorname{Spec}\varphi)_* N\) are, on underlying abelian
+  groups, the global sections of \(N\) with no transport along the open-set
+  identification. The two sides therefore carry the same underlying abelian group;
+  both unwind to nested restriction-of-scalars towers along the structure-sheaf
+  global-sections maps. These towers are reconciled by applying the
+  restriction-of-scalars composition identity twice and substituting the ring
+  equation of
+  Lemma~\ref{lem:globalSectionsIso_hom_comp_specMap_appTop}, which shows the
+  resulting \(R\)-action is exactly restriction of scalars along \(\varphi\).
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Global sections of an affine pushforward of a tilde-module]
+  \label{lem:gammaPushforwardTildeIso}
+  \lean{AlgebraicGeometry.gammaPushforwardTildeIso}
+  \uses{lem:gammaPushforwardIso}
+  Let \(\varphi : R \to R'\) be a homomorphism of commutative rings and let \(M\)
+  be an \(R'\)-module. Then there is a canonical isomorphism of \(R\)-modules
+  \[
+    \Gamma\bigl((\operatorname{Spec}\varphi)_* \widetilde{M}\bigr)
+    \;\cong\;
+    \operatorname{restr}_\varphi M .
+  \]
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:gammaPushforwardIso}
+  \leanok
+  Specialise Lemma~\ref{lem:gammaPushforwardIso} to \(N = \widetilde{M}\) and
+  compose with the tilde-unit isomorphism
+  \(\Gamma(\widetilde{M}) \cong M\) of \(R'\)-modules (which restricts to an
+  isomorphism of \(R\)-modules after applying \(\operatorname{restr}_\varphi\)).
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Sections of an affine pushforward over an arbitrary open]
+  \label{lem:gammaPushforwardIsoAt}
+  \lean{AlgebraicGeometry.gammaPushforwardIsoAt}
+  \uses{lem:globalSectionsIso_hom_comp_specMap_appTop}
+  Let \(\varphi : R \to R'\) be a homomorphism of commutative rings, let \(N\) be
+  an \(\operatorname{Spec}(R')\)-module, and let \(U\) be an open of
+  \(\operatorname{Spec}(R)\), with preimage
+  \(V = (\operatorname{Spec}\varphi)^{-1}(U)\) in \(\operatorname{Spec}(R')\). Then
+  there is a canonical isomorphism of \(R\)-modules
+  \[
+    \Gamma\bigl((\operatorname{Spec}\varphi)_* N,\, U\bigr)
+    \;\cong\;
+    \operatorname{restr}_\varphi\bigl(\Gamma(N,\, V)\bigr) .
+  \]
+  This is the open-indexed generalization of
+  Lemma~\ref{lem:gammaPushforwardIso}, which is the case \(U = \top\) (so that
+  \(V = \top\) as well). The family \(\{e_U\}_U\) of these isomorphisms is moreover
+  natural in the open argument: the structure-sheaf restriction maps on the two
+  sides commute with the isomorphisms, so the family is a natural isomorphism of the
+  two presheaves of \(R\)-modules in the open variable (this naturality is
+  established in the proof below). For \(U = D(a)\) it is exactly the linear
+  equivalence \(e_{D(a)}\) of movement~(1) in the proof of
+  Lemma~\ref{lem:pushforward_spec_tilde_iso}.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:globalSectionsIso_hom_comp_specMap_appTop}
+  \leanok
+  The construction copies that of Lemma~\ref{lem:gammaPushforwardIso} verbatim,
+  with the top open \(\top\) replaced throughout by the arbitrary open \(U\) (and
+  its preimage \(V\)). The point that makes this replacement free is that the
+  \(R\)-module structure on the sections is supplied \emph{uniformly} by
+  restriction of scalars along the global-sections ring map at the top open,
+  independently of the evaluation open; consequently both sides unwind to the same
+  nested restriction-of-scalars towers, reconciled by applying the
+  restriction-of-scalars composition identity twice and substituting the
+  \(\top\)-level ring equation of
+  Lemma~\ref{lem:globalSectionsIso_hom_comp_specMap_appTop}. Naturality in the open
+  follows because every constituent of the construction is either a structure-sheaf
+  restriction map or conjugation by a fixed ring map, and all of these commute with
+  further restriction along an inclusion of opens.
+
+  \medskip
+  \emph{Naturality of the family \(\{e_U\}_U\) in the open (remark).} The family is
+  in fact a natural isomorphism between two presheaves of \(R\)-modules on
+  \(\operatorname{Spec}(R)\): the source presheaf
+  \(U \mapsto \Gamma\bigl((\operatorname{Spec}\varphi)_* N,\, U\bigr)\), with the
+  structure-sheaf restriction maps of the pushforward, and the target presheaf
+  \(U \mapsto
+    \operatorname{restr}_\varphi\bigl(\Gamma(N,\, (\operatorname{Spec}\varphi)^{-1}U)\bigr)\),
+  with the structure-sheaf restriction maps of \(N\) transported through the preimage
+  operation \((\operatorname{Spec}\varphi)^{-1}\) and read as \(R\)-linear maps by
+  restriction of scalars along \(\varphi\). Concretely, for any inclusion of opens
+  \(U' \subseteq U\), with \(V = (\operatorname{Spec}\varphi)^{-1}U\) and
+  \(V' = (\operatorname{Spec}\varphi)^{-1}U'\), the square with horizontal maps
+  \(e_U, e_{U'}\) and vertical maps the respective structure-sheaf restrictions
+  commutes. The reason is structural: each \(e_U\) is a composite whose constituents
+  are of exactly two kinds — structure-sheaf restriction maps (of \(N\),
+  respectively of \((\operatorname{Spec}\varphi)_* N\)) and identity-on-carrier
+  \(\operatorname{restrictScalars}\) repackagings (conjugation by the \emph{fixed},
+  open-independent ring map supplied by the restriction-of-scalars reconciliation and
+  by the \(\top\)-level ring equation of
+  Lemma~\ref{lem:globalSectionsIso_hom_comp_specMap_appTop}). Restriction maps commute
+  with further restriction by the presheaf functoriality axiom (using
+  \(V' = (\operatorname{Spec}\varphi)^{-1}U' \subseteq
+  (\operatorname{Spec}\varphi)^{-1}U = V\), as \((\operatorname{Spec}\varphi)^{-1}\) is
+  monotone), and conjugation by a fixed ring map commutes with restriction because the
+  ring map does not depend on \(U\); the naturality square is the paste of these
+  component squares, and each \(e_U\) being an isomorphism makes the family a natural
+  isomorphism. This open-naturality is exactly the compatibility invoked, at the
+  inclusion \(D(a) \subseteq \top\), in the proof of
+  Lemma~\ref{lem:pushforward_spec_tilde_iso}.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[The tilde restriction from the top open to a basic open is a localization]
+  \label{lem:tildeRestriction_isLocalizedModule}
+  \lean{AlgebraicGeometry.tildeRestriction_isLocalizedModule}
+  Let \(M\) be an \(R'\)-module and \(b \in R'\). Then the structure-sheaf
+  restriction map
+  \[
+    \Gamma(\widetilde M,\, \top) \longrightarrow \Gamma(\widetilde M,\, D(b)),
+  \]
+  read as a map of \(R'\)-modules, exhibits \(\Gamma(\widetilde M, D(b))\) as the
+  localization of \(\Gamma(\widetilde M, \top)\) at \(\mathrm{powers}(b)\). This is
+  the \(R'\)-side localization fact transported in movement~(3) of the proof of
+  Lemma~\ref{lem:pushforward_spec_tilde_iso}.
+\end{lemma}
+
+\begin{proof}
+
+\leanok
+  By the defining property of \(\widetilde{(-)}\), the tilde-localization map
+  \(M \to \Gamma(\widetilde M, D(b))\) exhibits its target as the localization of
+  \(M\) at \(\mathrm{powers}(b)\). The global-sections map
+  \(M \to \Gamma(\widetilde M, \top)\) is the localization of \(M\) at the trivial
+  submonoid \(\mathrm{powers}(1)\) — since \(D(1) = \top\) — and is therefore
+  bijective. The triangle identity relating these two localization maps to the
+  structure-sheaf restriction \(\Gamma(\widetilde M, \top) \to
+  \Gamma(\widetilde M, D(b))\) then exhibits the restriction itself, post-composed
+  with the inverse of the bijection \(M \cong \Gamma(\widetilde M, \top)\), as the
+  localization of \(\Gamma(\widetilde M, \top)\) at \(\mathrm{powers}(b)\).
+\end{proof}
+
+We record three further bespoke supports that drive the basic-open verification of
+the affine-pushforward isomorphism below. They carry no external citation and stand
+on their proof sketches.
+
+\begin{lemma}
+
+\leanok
+[Restriction of scalars of a localized module]
+  \label{lem:powers_restrictScalars}
+  \lean{AlgebraicGeometry.IsLocalizedModule.powers_restrictScalars}
+  Let \(A\) be a commutative \(R\)-algebra, \(S \subseteq R\) a submonoid, and
+  \(f : M \to N\) an \(A\)-linear map that exhibits \(N\) as the localization of
+  \(M\) at the image submonoid
+  \(\operatorname{algMap}_A(S) \subseteq A\). Then the underlying \(R\)-linear map
+  \(\operatorname{restr}_R f\) exhibits \(N\) as the localization of \(M\) at \(S\)
+  itself.
+\end{lemma}
+
+\begin{proof}
+
+
+\leanok
+  This is the exact converse of the standard fact that a localization of \(M\) at a
+  submonoid \(S\) of \(R\) remains a localization after enlarging the base to an
+  \(R\)-algebra \(A\) along the image submonoid \(\operatorname{algMap}_A(S)\). One
+  checks the three defining conditions of a localized module directly. Each
+  \(s \in S\) acts invertibly on \(N\) because its image
+  \(\operatorname{algMap}_A(s)\) does and the two actions coincide by the scalar
+  tower \(R \to A \to N\). Surjectivity of \(f\) up to denominators and the
+  equality-witness condition transport along the map
+  \(s \mapsto \operatorname{algMap}_A(s)\) from \(S\) onto
+  \(\operatorname{algMap}_A(S)\), again using
+  \(\operatorname{algMap}_A(s)\cdot{} = s\cdot{}\). In the application
+  \(A = R'\), \(S = \mathrm{powers}(a)\), one has
+  \(\operatorname{algMap}_{R'}(\mathrm{powers}(a)) = \mathrm{powers}(\varphi a)\), so
+  this identifies the localization of \(\operatorname{restr}_\varphi M\) at \(a\)
+  with the localization of \(M\) at \(\varphi a\); it is the ring-change core of the
+  basic-open computation below.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Section-level counit isomorphism from a localization hypothesis]
+  \label{lem:fromTildeGamma_app_isIso_of_localized}
+  \lean{AlgebraicGeometry.fromTildeΓ_app_isIso_of_isLocalizedModule}
+  Let \(N\) be an \(\operatorname{Spec}(R)\)-module and \(a \in R\). Suppose the
+  structure-sheaf restriction map \(\Gamma(N, \top) \to \Gamma(N, D(a))\), read as
+  an \(R\)-linear map of the global-section modules, exhibits \(\Gamma(N, D(a))\) as
+  the localization of \(\Gamma(N, \top)\) at \(\mathrm{powers}(a)\). Then the
+  tilde--\(\Gamma\) counit
+  \(\mathrm{fromTilde}\Gamma\,N : \widetilde{\Gamma(N,\top)} \to N\) restricts to an
+  isomorphism on the sections over the basic open \(D(a)\).
+\end{lemma}
+
+\begin{proof}
+
+
+\leanok
+  Over \(D(a)\) the section map \(L\) of the counit sits in the triangle identity
+  \(L \circ j = \rho\), where
+  \(j : \Gamma(N,\top) \to \Gamma\bigl(\widetilde{\Gamma(N,\top)}, D(a)\bigr)\) is
+  the tilde-localization map and \(\rho : \Gamma(N,\top) \to \Gamma(N, D(a))\) is
+  the structure-sheaf restriction. Both \(j\) and \(\rho\) exhibit their targets as
+  the localization of \(\Gamma(N,\top)\) at \(\mathrm{powers}(a)\) — \(j\) by the
+  defining property of \(\widetilde{(-)}\), and \(\rho\) by hypothesis. By the
+  uniqueness of localized modules there is a unique \(R\)-linear isomorphism \(e\)
+  with \(e \circ j = \rho\); the triangle identity then forces \(L = e\), so \(L\) is
+  an isomorphism. (This is the per-basic-open input feeding the basis-local
+  criterion Lemma~\ref{lem:modules_isIso_of_isBasis}.)
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Affine pushforward of a tilde-module, conditional form]
+  \label{lem:pushforward_spec_tilde_iso_conditional}
+  \lean{AlgebraicGeometry.pushforward_spec_tilde_iso_of_isLocalizedModule}
+  \uses{lem:modules_isIso_of_isBasis, lem:gammaPushforwardTildeIso,
+  lem:fromTildeGamma_app_isIso_of_localized}
+  Let \(\varphi : R \to R'\) be a homomorphism of commutative rings and \(M\) an
+  \(R'\)-module. Suppose that for every \(a \in R\) the structure-sheaf restriction
+  of the pushforward \(N := (\operatorname{Spec}\varphi)_*\widetilde M\) exhibits its
+  sections over \(D(a)\) as the localization of its global sections at
+  \(\mathrm{powers}(a)\). Then there is a canonical isomorphism of
+  \(\operatorname{Spec}(R)\)-modules
+  \[
+    (\operatorname{Spec}\varphi)_*\widetilde M \;\cong\;
+    \widetilde{\bigl(\operatorname{restr}_\varphi M\bigr)} .
+  \]
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  \uses{lem:modules_isIso_of_isBasis, lem:gammaPushforwardTildeIso, lem:fromTildeGamma_app_isIso_of_localized}
+  Write \(N := (\operatorname{Spec}\varphi)_*\widetilde M\). Under the hypothesis,
+  Lemma~\ref{lem:fromTildeGamma_app_isIso_of_localized} applies for each \(a \in R\),
+  so the counit \(\mathrm{fromTilde}\Gamma\,N\) restricts to an isomorphism on the
+  sections over every basic open \(D(a)\). Since the basic opens form a basis of
+  \(\operatorname{Spec}(R)\), the basis-local criterion
+  Lemma~\ref{lem:modules_isIso_of_isBasis} upgrades this to: the counit
+  \(\mathrm{fromTilde}\Gamma\,N\) is an isomorphism, i.e.\ \(N\) lies in the
+  essential image of \(\widetilde{(-)}\). Composing the inverse counit with the
+  tilde of the global-sections comparison
+  Lemma~\ref{lem:gammaPushforwardTildeIso} yields the asserted object isomorphism.
+\end{proof}
+
+\begin{lemma}\leanok
+[Affine pushforward of a tilde-module]
+  \label{lem:pushforward_spec_tilde_iso}
+  \lean{AlgebraicGeometry.pushforward_spec_tilde_iso}
+  \uses{lem:modules_isIso_of_isBasis, lem:gammaPushforwardTildeIso,
+        lem:pushforward_spec_tilde_iso_conditional, lem:powers_restrictScalars,
+        lem:gammaPushforwardIso, lem:gammaPushforwardIsoAt,
+        lem:tildeRestriction_isLocalizedModule}
+% NOTE: the carrier-wall obstruction to `hloc` is resolved (restriction-of-scalars /
+% scalar-tower instances feed lem:powers_restrictScalars; lem:tildeRestriction_isLocalizedModule
+% supplies the R'-side localization). The single remaining obligation is the open-naturality of
+% the section comparison e_{D(a)}, established as a prose remark in the proof of
+% lem:gammaPushforwardIsoAt; the proof sketch below derives each per-a hloc(a) from the top-level
+% localization plus that naturality square for the inclusion D(a) ⊆ ⊤, so no section-level square
+% is hand-proved per a.
+  Let \(\varphi : R \to R'\) be a homomorphism of commutative rings and let \(M\)
+  be an \(R'\)-module. Then there is a canonical isomorphism of
+  \(\operatorname{Spec}(R)\)-modules
+  \[
+    \bigl(\operatorname{Spec}\varphi\bigr)_*\,\widetilde{M}
+    \;\cong\;
+    \widetilde{\bigl(\operatorname{restr}_\varphi M\bigr)},
+  \]
+  where \(\operatorname{Spec}\varphi : \operatorname{Spec}(R') \to
+  \operatorname{Spec}(R)\) is the induced morphism of affine schemes,
+  \(\widetilde{(-)}\) denotes the quasi-coherent sheaf associated to a module, and
+  \(\operatorname{restr}_\varphi M\) is the \(R\)-module obtained from \(M\) by
+  restriction of scalars along \(\varphi\). That is, pushing the quasi-coherent
+  sheaf \(\widetilde{M}\) forward along \(\operatorname{Spec}\varphi\) is, up to
+  this canonical identification, the tilde of the restriction of scalars of \(M\).
+
+  This is the classical fact that the direct image of a quasi-coherent sheaf along
+  a morphism of affine schemes is computed on modules by restriction of scalars; it
+  is the affine companion of the pullback formula (the affine case of the
+  pushforward analogue of Stacks ``$\widetilde{M}$ and pullback''). It is recorded
+  here as bespoke project infrastructure because the affine-pushforward
+  identification does not appear as a ready-made result in the existing
+  quasi-coherent sheaf theory.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  \uses{lem:modules_isIso_of_isBasis, lem:gammaPushforwardTildeIso, lem:pushforward_spec_tilde_iso_conditional, lem:powers_restrictScalars, lem:gammaPushforwardIso, lem:gammaPushforwardIsoAt, lem:tildeRestriction_isLocalizedModule}
+  We build the isomorphism \emph{directly on a basis of basic opens}. This is the
+  non-circular route: checking the comparison map on basic opens yields the object
+  isomorphism, and quasi-coherence of the pushforward is then a corollary, not a
+  prerequisite. (One must not reverse this order: the global-sections comparison
+  \(\Gamma\bigl((\operatorname{Spec}\varphi)_*\widetilde{M}\bigr) \cong
+  \operatorname{restr}_\varphi M\) of
+  Lemma~\ref{lem:gammaPushforwardTildeIso} alone would only upgrade to an object
+  isomorphism once the pushforward is already known to be quasi-coherent, so
+  quasi-coherence cannot be deduced from an object isomorphism built that way.)
+
+  \emph{The comparison morphism.} There is a canonical morphism of
+  \(\operatorname{Spec}(R)\)-modules
+  \[
+    \alpha : \widetilde{\bigl(\operatorname{restr}_\varphi M\bigr)}
+    \longrightarrow \bigl(\operatorname{Spec}\varphi\bigr)_*\widetilde{M},
+  \]
+  namely the tilde-adjoint of the global-sections identification of
+  Lemma~\ref{lem:gammaPushforwardTildeIso}. We show \(\alpha\) is an isomorphism.
+
+  \medskip
+  \emph{Reduction to basic opens.} The basic opens \(D(a)\), for \(a \in R\), form a
+  basis of the topology of \(\operatorname{Spec}(R)\). By the basis-local criterion
+  Lemma~\ref{lem:modules_isIso_of_isBasis} it suffices to check that \(\alpha\)
+  restricts to an isomorphism on the sections over each basic open \(D(a)\).
+
+  \medskip
+  \emph{The computation over \(D(a)\).} On the source, the sections of
+  \(\widetilde{(\operatorname{restr}_\varphi M)}\) over \(D(a)\) are the
+  localization \(\bigl(\operatorname{restr}_\varphi M\bigr)[1/a]\) as an
+  \(R[1/a]\)-module. On the target, since \((\operatorname{Spec}\varphi)^{-1}D(a) =
+  D(\varphi a)\), the sections of \(\bigl(\operatorname{Spec}\varphi\bigr)_*
+  \widetilde{M}\) over \(D(a)\) are the sections of \(\widetilde{M}\) over
+  \(D(\varphi a)\), i.e.\ the localization \(M[1/\varphi a]\), regarded as an
+  \(R[1/a]\)-module by restriction of scalars along the induced map
+  \(R[1/a] \to R'[1/\varphi a]\). These two localizations agree: the element \(a\)
+  acts on \(\operatorname{restr}_\varphi M\) through \(\varphi a\), so localizing
+  \(\operatorname{restr}_\varphi M\) at the multiplicative set generated by \(a\) is
+  the same module as localizing \(M\) at the multiplicative set generated by
+  \(\varphi a\). Both are the universal localization of
+  \(M\) inverting \(\varphi a\), so the comparison map \(\alpha\) is an isomorphism
+  on the sections over \(D(a)\). As this holds for every basic open, \(\alpha\) is
+  an isomorphism.
+
+  \medskip
+  \emph{The explicit formalization route over \(D(a)\).} The agreement of the two
+  localizations just described is the entire content, but it must be realized
+  through the global ring \(R\), because the \(R\)-action on the pushforward
+  sections over \(D(a)\) is built from the global-sections module of
+  \(N := (\operatorname{Spec}\varphi)_*\widetilde M\) rather than directly from
+  \(R[1/a]\). The reduction therefore proceeds exactly as the conditional
+  assembly Lemma~\ref{lem:pushforward_spec_tilde_iso_conditional} prescribes: it
+  suffices to supply, for each \(a \in R\), the hypothesis \(\mathrm{hloc}(a)\) that
+  the structure-sheaf restriction \(\Gamma(N, \top) \to \Gamma(N, D(a))\) exhibits
+  \(\Gamma(N, D(a))\) as the localization of \(\Gamma(N, \top)\) at
+  \(\mathrm{powers}(a)\). The \(R\)-action on \(\Gamma(N, D(a))\) is the honest
+  restriction-of-scalars action carried by the scalar tower \(R \to R' \to {-}\)
+  determined by \(\varphi\); against that structure the ring-change converse
+  Lemma~\ref{lem:powers_restrictScalars} is applicable, so the carrier of the
+  \(R\)-module is exactly the one to which the localization claim refers, and no
+  recursively-defined or ad-hoc section-level scalar action intervenes.
+  We obtain \(\mathrm{hloc}(a)\) by transporting the already-known \(R'\)-side
+  localization (Lemma~\ref{lem:tildeRestriction_isLocalizedModule}), in
+  element-free fashion, across the open-indexed section comparison of
+  Lemma~\ref{lem:gammaPushforwardIsoAt} \emph{using its naturality in the open}
+  (the naturality remark in the proof of
+  Lemma~\ref{lem:gammaPushforwardIsoAt}). This proceeds in three
+  movements.
+
+  \emph{(1) The \(D(a)\)-level linear equivalence.} This is the component at
+  \(U = D(a)\) of the open-indexed family of
+  Lemma~\ref{lem:gammaPushforwardIsoAt}: the \(R\)-linear isomorphism
+  \[
+    e_{D(a)} : \Gamma\bigl((\operatorname{Spec}\varphi)_*\widetilde M,\, D(a)\bigr)
+      \;\cong\;
+      \operatorname{restr}_\varphi\bigl(\Gamma(\widetilde M,\, D(\varphi a))\bigr) ,
+  \]
+  using \((\operatorname{Spec}\varphi)^{-1}D(a) = D(\varphi a)\), which is
+  definitional. No fresh \(D(a)\)-level construction is needed: this is precisely the
+  open-indexed isomorphism already supplied by
+  Lemma~\ref{lem:gammaPushforwardIsoAt} evaluated at the basic open \(D(a)\).
+
+  \emph{(2) The naturality square for \(D(a) \subseteq \top\).} The compatibility
+  that relates \(e_{D(a)}\) to the \(\top\)-level isomorphism
+  \(e_\top\) (the global-sections comparison of
+  Lemma~\ref{lem:gammaPushforwardIso}) is precisely the open-naturality square of the
+  family \(\{e_U\}_U\) (established in the proof of
+  Lemma~\ref{lem:gammaPushforwardIsoAt}), instantiated at the inclusion
+  \(D(a) \subseteq \top\): the square
+  \[
+    \begin{array}{ccc}
+      \Gamma\bigl((\operatorname{Spec}\varphi)_*\widetilde M,\, \top\bigr)
+        & \xrightarrow{\;e_\top\;}
+        & \operatorname{restr}_\varphi\bigl(\Gamma(\widetilde M,\, \top)\bigr) \\[4pt]
+      {\scriptstyle \mathrm{res}_{\top \to D(a)}}\big\downarrow & &
+        \big\downarrow{\scriptstyle \mathrm{res}_{\top \to D(\varphi a)}} \\[4pt]
+      \Gamma\bigl((\operatorname{Spec}\varphi)_*\widetilde M,\, D(a)\bigr)
+        & \xrightarrow{\;e_{D(a)}\;}
+        & \operatorname{restr}_\varphi\bigl(\Gamma(\widetilde M,\, D(\varphi a))\bigr)
+    \end{array}
+  \]
+  commutes, using \((\operatorname{Spec}\varphi)^{-1}D(a) = D(\varphi a)\), which is
+  definitional. Because the family \(\{e_U\}_U\) is a natural isomorphism, this single
+  square is available uniformly in \(a\); there is no per-\(a\) section-level identity
+  to re-prove by hand. It intertwines the source restriction
+  \(\mathrm{res}_{\top \to D(a)}\) on the pushforward with the (restriction-of-scalars
+  reading of the) target restriction \(\mathrm{res}_{\top \to D(\varphi a)}\) on
+  \(\widetilde M\).
+
+  \emph{(3) Discharging \(\mathrm{hloc}(a)\) by transport.} The target restriction
+  \(\mathrm{res}_{\top \to D(\varphi a)} : \Gamma(\widetilde M, \top) \to
+  \Gamma(\widetilde M, D(\varphi a))\) exhibits \(\Gamma(\widetilde M, D(\varphi a)) =
+  M[1/\varphi a]\) as the \(\mathrm{powers}(\varphi a)\)-localization of
+  \(M = \Gamma(\widetilde M, \top)\) over \(R'\); this is exactly
+  Lemma~\ref{lem:tildeRestriction_isLocalizedModule}. Apply the ring-change converse
+  Lemma~\ref{lem:powers_restrictScalars} (with \(R\)-algebra \(A = R'\) and submonoid
+  \(\mathrm{powers}(a)\), so that
+  \(\operatorname{algMap}_{R'}(\mathrm{powers}(a)) = \mathrm{powers}(\varphi a)\)) —
+  its \(\operatorname{Algebra} R\, R'\) and scalar-tower hypotheses being supplied by
+  the restriction-of-scalars structure along \(\varphi\) — to read this same map as
+  the \(\mathrm{powers}(a)\)-localization over \(R\). The commuting naturality square
+  of movement (2) intertwines this target restriction with the source restriction
+  \(\mathrm{res}_{\top \to D(a)} : \Gamma(N, \top) \to \Gamma(N, D(a))\) by way of the
+  isomorphisms \(e_\top\) and \(e_{D(a)}\); transporting the localization property
+  across that square — via the transport-along-an-equivalence principle for localized
+  modules — yields that \(\mathrm{res}_{\top \to D(a)}\) is the
+  \(\mathrm{powers}(a)\)-localization on \(\Gamma(N, D(a))\) over \(R\), i.e.\
+  \(\mathrm{hloc}(a)\). No section-level computation specific to the individual \(a\)
+  is performed: the only \(a\)-dependent input is the instantiation of the single
+  natural-isomorphism square at \(D(a)\). Feeding the family
+  \(\{\mathrm{hloc}(a)\}_{a \in R}\) to the conditional assembly
+  Lemma~\ref{lem:pushforward_spec_tilde_iso_conditional} produces the unconditional
+  object isomorphism \(\alpha\).
+
+  \medskip
+  \emph{Naturality in the open drives the transport.} The comparison assembled
+  here, \((\operatorname{Spec}\varphi)_* \circ \widetilde{(-)} \cong
+  \widetilde{(-)} \circ \operatorname{restr}_\varphi\), is natural in \emph{both}
+  arguments — in the module \(M\) and in the open \(U\). The naturality in the
+  module is the usual functoriality; the naturality in the open is the naturality
+  remark in the proof of Lemma~\ref{lem:gammaPushforwardIsoAt}: the family
+  \(\{e_U\}_U\) of Lemma~\ref{lem:gammaPushforwardIsoAt} commutes with the
+  structure-sheaf restriction maps on both sides. It is precisely this
+  open-naturality that drives the localization transport \emph{uniformly}: the
+  per-\(a\) localization fact \(\mathrm{hloc}(a)\) follows from the \(\top\)-level
+  localization Lemma~\ref{lem:tildeRestriction_isLocalizedModule} together with that
+  naturality square for the inclusion
+  \(D(a) \hookrightarrow \top\), rather than from a section-level naturality square
+  re-proved by hand for each individual \(a\). This is the single remaining
+  obligation of the construction; the carrier of the \(R\)-action on the pushforward
+  sections is the restriction-of-scalars structure along \(\varphi\), against which
+  Lemma~\ref{lem:powers_restrictScalars} applies directly.
+
+  The \(R\)-module structure on the \(R'\)-side sections to which the ring-change
+  converse Lemma~\ref{lem:powers_restrictScalars} is applied is the honest
+  restriction-of-scalars structure: \(R\) acts through \(\varphi\), i.e.\ via the
+  \(R\)-algebra structure on \(R'\) determined by \(\varphi\) and the associated
+  scalar tower \(R \to R' \to M[1/\varphi a]\). It is \emph{not} an ad-hoc,
+  recursively-defined scalar action. Lemma~\ref{lem:powers_restrictScalars} is
+  stated against exactly this restriction-of-scalars / scalar-tower structure, and
+  it is under that structure that localizing \(\operatorname{restr}_\varphi M\) at
+  \(a\) coincides with localizing \(M\) at \(\varphi a\).
+
+  % NOTE: This lemma is the affine case of the general fact that the pushforward of
+  % a quasi-coherent sheaf along an affine morphism is quasi-coherent. In current
+  % Mathlib master that fact is the IsLocalizing / fromTildeGamma characterization
+  % (AlgebraicGeometry.isIso_fromTildeΓ_pushforward); it post-dates the project's
+  % pinned Mathlib, so the project proves it in-tree by the basic-open route above.
+  % The in-tree proof remains valid and is not made redundant by a future Mathlib
+  % bump.
+  \medskip
+  \emph{Quasi-coherence as a corollary.} The object isomorphism just constructed
+  exhibits \(\bigl(\operatorname{Spec}\varphi\bigr)_*\widetilde{M} \cong
+  \widetilde{(\operatorname{restr}_\varphi M)}\) as the tilde of a module. Tilde
+  modules are quasi-coherent and quasi-coherence of \(\operatorname{Spec}(R)\)-modules
+  is closed under isomorphism, so the pushforward
+  \(\bigl(\operatorname{Spec}\varphi\bigr)_*\widetilde{M}\) is quasi-coherent. This
+  conclusion is stated \emph{after} the object isomorphism, of which it is a
+  consequence — no separate ``pushforward preserves quasi-coherent'' input is
+  needed for the affine lane.
+\end{proof}
+
+\begin{remark}
+  This single isomorphism discharges both inputs that the affine reduction below
+  requires of the pushforward of a tilde-module.
+  \begin{enumerate}
+    \item \emph{The global-sections comparison.} Applying the global-sections
+      (module-of-sections) functor to the isomorphism identifies the
+      \(R\)-module of sections of
+      \(\bigl(\operatorname{Spec}\varphi\bigr)_*\widetilde{M}\) with
+      \(\operatorname{restr}_\varphi M\); this is exactly the \(\Gamma\)-fragment
+      comparison used to recognise the section-level base-change map.
+    \item \emph{Quasi-coherence of the pushforward.} The tilde of any module is
+      quasi-coherent, and quasi-coherence of \(\operatorname{Spec}(R)\)-modules is
+      closed under isomorphism; hence
+      \(\bigl(\operatorname{Spec}\varphi\bigr)_*\widetilde{M}\) is quasi-coherent.
+      In particular no separate ``pushforward preserves quasi-coherent'' theorem is
+      needed for the affine lane.
+  \end{enumerate}
+  Because both inputs the affine reduction asks of the pushforward are corollaries
+  of this single object isomorphism — the section-level module identification and
+  the quasi-coherence of the pushforward — this lemma is the sole bespoke
+  ingredient the affine lane requires.
+\end{remark}
+
+\subsection{The pullback companion}
+
+The affine reduction below requires, alongside the pushforward dictionary, the
+\emph{pullback} companion: the affine description of the inverse image of a
+tilde-module. It is the affine case of the classical fact that the pullback of a
+quasi-coherent sheaf is computed on modules by base change of scalars.
+
+The pullback companion is built by uniqueness of left adjoints, which is driven by
+the following packaging of the per-object \(\Gamma\)-fragment comparison as a
+natural isomorphism of right-adjoint functors. It is bespoke project
+infrastructure and carries no external citation.
+
+\begin{lemma}
+
+\leanok
+[The pushforward--global-sections natural isomorphism]
+  \label{lem:gammaPushforwardNatIso}
+  \lean{AlgebraicGeometry.gammaPushforwardNatIso}
+  \uses{lem:gammaPushforwardIso}
+  Let \(\varphi : R \to R'\) be a homomorphism of commutative rings. Then the
+  per-object global-sections comparison of
+  Lemma~\ref{lem:gammaPushforwardIso} assembles into a natural isomorphism of
+  functors \((\operatorname{Spec} R').\mathrm{Modules} \to \operatorname{ModuleCat}(R)\)
+  \[
+    \bigl(\operatorname{Spec}\varphi\bigr)_* \;\circ\; \Gamma_R
+    \;\cong\;
+    \Gamma_{R'} \;\circ\; \operatorname{restr}_\varphi ,
+  \]
+  whose component at an \(\operatorname{Spec}(R')\)-module \(N\) is the isomorphism
+  \(\Gamma\bigl((\operatorname{Spec}\varphi)_* N\bigr) \cong
+  \operatorname{restr}_\varphi(\Gamma N)\) of
+  Lemma~\ref{lem:gammaPushforwardIso}.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:gammaPushforwardIso}
+  \leanok
+  The components are the isomorphisms supplied by
+  Lemma~\ref{lem:gammaPushforwardIso}. Naturality in the module argument \(N\)
+  holds on the nose: every constituent of the comparison
+  (the restriction-of-scalars composition repackagings and the
+  restriction-of-scalars congruence) is the identity on underlying elements,
+  merely re-presenting the module structure on an unchanged carrier, so each
+  naturality square is a pointwise identity. This is the right-adjoint natural
+  isomorphism that drives the uniqueness-of-left-adjoints argument for the affine
+  pullback dictionary Lemma~\ref{lem:pullback_spec_tilde_iso}: identifying the two
+  right adjoints \((\operatorname{Spec}\varphi)_* \circ \Gamma_R\) and
+  \(\Gamma_{R'} \circ \operatorname{restr}_\varphi\) by this isomorphism forces the
+  corresponding left adjoints to be isomorphic.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Affine pullback of a tilde-module]
+  \label{lem:pullback_spec_tilde_iso}
+  \lean{AlgebraicGeometry.pullback_spec_tilde_iso}
+  \uses{lem:pushforward_spec_tilde_iso}
+  % SOURCE: [Stacks Project], Schemes, Lemma `lemma-widetilde-pullback', Tag 01I9
+  % (\S\,Quasi-coherent sheaves on affines) (read from references/stacks-schemes.tex,
+  % L1241--1256).
+  % SOURCE QUOTE: "Let
+  % $(X, \mathcal{O}_X) = (\Spec(S), \mathcal{O}_{\Spec(S)})$,
+  % $(Y, \mathcal{O}_Y) = (\Spec(R), \mathcal{O}_{\Spec(R)})$
+  % be affine schemes.
+  % Let $\psi : (X, \mathcal{O}_X) \to (Y, \mathcal{O}_Y)$ be a
+  % morphism of affine schemes, corresponding to the ring map
+  % $\psi^\sharp : R \to S$ (see Lemma \ref{lemma-category-affine-schemes}).
+  % \begin{enumerate}
+  % \item We have $\psi^* \widetilde M = \widetilde{S \otimes_R M}$
+  % functorially in the $R$-module $M$.
+  % \item We have $\psi_* \widetilde N = \widetilde{N_R}$ functorially
+  % in the $S$-module $N$.
+  % \end{enumerate}"
+  \textit{Source: Stacks Project, Schemes, Lemma ``\(\widetilde M\) and pullback''
+  (Tag 01I9), part (1).}
+  Let \(\varphi : R \to R'\) be a homomorphism of commutative rings and let \(M\)
+  be an \(R\)-module. Then there is a canonical isomorphism of
+  \(\operatorname{Spec}(R')\)-modules
+  \[
+    \bigl(\operatorname{Spec}\varphi\bigr)^{*}\,\widetilde{M}
+    \;\cong\;
+    \widetilde{\bigl(R' \otimes_R M\bigr)},
+  \]
+  where \(\operatorname{Spec}\varphi : \operatorname{Spec}(R') \to
+  \operatorname{Spec}(R)\) is the induced morphism of affine schemes,
+  \(\widetilde{(-)}\) denotes the quasi-coherent sheaf associated to a module, and
+  \(R' \otimes_R M\) is the base change of \(M\) along \(\varphi\) — the
+  \(R'\)-module obtained by extension of scalars. The isomorphism is natural in
+  \(M\). That is, pulling the quasi-coherent sheaf \(\widetilde{M}\) back along
+  \(\operatorname{Spec}\varphi\) is, up to this canonical identification, the tilde
+  of the base change of \(M\). It is the pullback companion of the affine
+  pushforward dictionary Lemma~\ref{lem:pushforward_spec_tilde_iso}, and is part~(1)
+  of the same Stacks lemma of which the pushforward formula is part~(2).
+\end{lemma}
+
+% SOURCE QUOTE PROOF: "The first assertion follows from the identification in
+% Lemma \ref{lemma-compare-constructions}
+% and the result of Modules, Lemma \ref{modules-lemma-restrict-quasi-coherent}."
+\begin{proof}
+  \uses{lem:pushforward_spec_tilde_iso}
+  \leanok
+  Pullback along \(\operatorname{Spec}\varphi\) is, on quasi-coherent sheaves, the
+  extension-of-scalars operation \(- \otimes_R R'\) on modules transported through
+  the \(\widetilde{(-)}\) / \(\operatorname{moduleSpec}\Gamma\) equivalence between
+  modules and quasi-coherent sheaves. Concretely, the global sections of
+  \(\bigl(\operatorname{Spec}\varphi\bigr)^{*}\widetilde{M}\) are the base change
+  \(R' \otimes_R M\): the pullback functor \((\operatorname{Spec}\varphi)^{*}\) is
+  left adjoint to the pushforward \((\operatorname{Spec}\varphi)_{*}\), and under
+  the global-sections identification the latter is restriction of scalars along
+  \(\varphi\) (Lemma~\ref{lem:pushforward_spec_tilde_iso}); the left adjoint of
+  restriction of scalars is extension of scalars \(M \mapsto R' \otimes_R M\). The
+  comparison map is the unit of the base-change adjunction, and the universal
+  property of base change identifies it with the canonical isomorphism
+  \(\bigl(\operatorname{Spec}\varphi\bigr)^{*}\widetilde{M} \cong
+  \widetilde{(R' \otimes_R M)}\). Naturality in \(M\) is the naturality of that
+  unit. (One may equally read this off the standard-open description: on
+  \(D(\varphi a)\) the localization \((R' \otimes_R M)[1/a]\) is
+  \(R'[1/\varphi a] \otimes_{R[1/a]} M[1/a]\), which is the base change of the
+  sections of \(\widetilde M\) over \(D(a)\).)
+\end{proof}
+
+\subsection{The affine base-change lemma and its remaining obligations}
+
+The affine base-change lemma below reduces, via the locality criterion
+Lemma~\ref{lem:modules_isIso_iff_affineOpens} and the two affine dictionaries
+Lemmas~\ref{lem:pushforward_spec_tilde_iso} and~\ref{lem:pullback_spec_tilde_iso},
+to two obligations that are isolated here as named blocks. Both are extracted from
+the proof of Stacks ``Affine base change'', and both are absent from the pinned
+Mathlib: the first is the base-change-of-the-base-change-map compatibility under
+restriction to affine opens, the second is the coherence identification of the
+abstract adjoint mate with the concrete cancellation isomorphism.
+
+\begin{lemma}
+[Affine-local compatibility of the base-change map]
+  \label{lem:base_change_map_affine_local}
+  \lean{AlgebraicGeometry.TODO.base_change_map_affine_local}
+  \uses{def:pushforward_base_change_map, lem:modules_isIso_iff_affineOpens}
+  % SOURCE: [Stacks Project], Cohomology of Schemes, Lemma
+  % `lemma-affine-base-change' (\S\,Cohomology and base change, I), proof, the
+  % "local on $S$ and $S'$" step (read from references/stacks-coherent.tex,
+  % L920--926).
+  % SOURCE QUOTE: "The statement is local on $S$ and $S'$. Hence we may
+  % assume $X = \Spec(A)$, $S = \Spec(R)$,
+  % $S' = \Spec(R')$ and $\mathcal{F} = \widetilde{M}$
+  % for some $A$-module $M$."
+  \textit{Source: Stacks Project, Cohomology of Schemes, Lemma ``Affine base
+  change'' (proof, local-on-\(S\)-and-\(S'\) step).}
+  Let \(f : X \to S\) be an affine morphism and \(\mathcal{F}\) a quasi-coherent
+  \(\mathcal{O}_X\)-module, with a base-change square as above. The formation of
+  the base-change map \texttt{pushforwardBaseChangeMap}
+  (Definition~\ref{def:pushforward_base_change_map}) is compatible with restriction
+  to affine opens of \(S'\): for each affine open \(U \subseteq S'\), the
+  restriction of the base-change map to sections over \(U\) agrees with the
+  base-change map of the square obtained by restricting along \(U\). Consequently,
+  by the affine-open locality criterion
+  Lemma~\ref{lem:modules_isIso_iff_affineOpens}, the assertion that the base-change
+  map is an isomorphism over an arbitrary base-change square \((S, S', X, X')\)
+  reduces to the affine--affine case \(S = \operatorname{Spec}(R)\),
+  \(S' = \operatorname{Spec}(R')\), \(X = \operatorname{Spec}(A)\),
+  \(\mathcal{F} = \widetilde{M}\) for an \(A\)-module \(M\).
+\end{lemma}
+
+\begin{proof}
+  \uses{def:pushforward_base_change_map, lem:modules_isIso_iff_affineOpens}
+  Being an isomorphism of \(\mathcal{O}_{S'}\)-modules is, by
+  Lemma~\ref{lem:modules_isIso_iff_affineOpens}, a property that may be checked on
+  sections over the affine opens of \(S'\). Restricting the cartesian square along
+  an affine open \(U \subseteq S'\) produces a cartesian square over
+  \(U\) whose total space is the corresponding open of \(X'\); since affineness of
+  \(f\) is preserved by base change, the restricted morphism is again affine and
+  \(\mathcal{F}\) is again a tilde-module over the affine chart of \(X\) lying over
+  \(U\) (this is where quasi-coherence of \(\mathcal{F}\) is used). The
+  base-change map is the adjoint mate of the unit of the
+  \(((g')^*, (g')_*)\)-adjunction, and one must verify that forming this mate
+  commutes with the restriction; granting that compatibility, the general statement
+  reduces to the affine--affine case. The required compatibility of the abstract
+  adjoint mate with open restriction is not packaged in the pinned Mathlib, and is
+  itself a base-change-of-the-base-change-map naturality statement; it is recorded
+  here as a named obligation.
+\end{proof}
+
+\begin{lemma}
+[Adjoint-mate identification with the cancellation isomorphism]
+  \label{lem:pushforward_base_change_mate_cancelBaseChange}
+  \lean{AlgebraicGeometry.TODO.pushforward_base_change_mate_cancelBaseChange}
+  \uses{def:pushforward_base_change_map, lem:pushforward_spec_tilde_iso,
+  lem:pullback_spec_tilde_iso}
+  % SOURCE: [Stacks Project], Cohomology of Schemes, Lemma
+  % `lemma-affine-base-change' (\S\,Cohomology and base change, I), proof, the
+  % "boils down to the equality" step (read from references/stacks-coherent.tex,
+  % L927--938).
+  % SOURCE QUOTE: "We use Schemes, Lemma \ref{schemes-lemma-widetilde-pullback}
+  % to describe pullbacks and pushforwards of $\mathcal{F}$.
+  % Namely, $X' = \Spec(R' \otimes_R A)$ and
+  % $\mathcal{F}'$ is the quasi-coherent sheaf associated
+  % to $(R' \otimes_R A) \otimes_A M$.
+  % Thus we see that the lemma boils down to the
+  % equality
+  % $$
+  % (R' \otimes_R A) \otimes_A M = R' \otimes_R M
+  % $$
+  % as $R'$-modules."
+  \textit{Source: Stacks Project, Cohomology of Schemes, Lemma ``Affine base
+  change'' (proof, ``boils down to the equality'' step).}
+  In the affine--affine case \(S = \operatorname{Spec}(R)\),
+  \(S' = \operatorname{Spec}(R')\), \(X = \operatorname{Spec}(A)\),
+  \(\mathcal{F} = \widetilde{M}\), write \(\Gamma(\alpha)\) for the
+  global-sections incarnation of the base-change map
+  \texttt{pushforwardBaseChangeMap} (Definition~\ref{def:pushforward_base_change_map}).
+  Transport \(\Gamma(\alpha)\) through the two affine dictionaries that identify its
+  source and target: by the pullback dictionary
+  Lemma~\ref{lem:pullback_spec_tilde_iso} together with the pushforward dictionary
+  Lemma~\ref{lem:pushforward_spec_tilde_iso}, the source is identified with
+  \((R' \otimes_R A) \otimes_A M\) and the target with \(R' \otimes_R M\), both as
+  \(R'\)-modules. Under these identifications \(\Gamma(\alpha)\) equals the concrete
+  cancellation isomorphism
+  \[
+    \operatorname{cancelBaseChange} :
+    (R' \otimes_R A) \otimes_A M \;\xrightarrow{\ \sim\ }\; R' \otimes_R M,
+    \qquad (r' \otimes a) \otimes m \;\mapsto\; r' \otimes (a \cdot m)
+  \]
+  (Mathlib's \texttt{TensorProduct.AlgebraTensorModule.cancelBaseChange}). Since
+  \(\operatorname{cancelBaseChange}\) is an isomorphism with no flatness hypothesis,
+  this identification closes the affine case.
+\end{lemma}
+
+\begin{proof}
+  \uses{def:pushforward_base_change_map, lem:pushforward_spec_tilde_iso, lem:pullback_spec_tilde_iso}
+  The base-change map is defined abstractly as an adjoint mate: it is the transpose,
+  under the \((\text{pullback} \dashv \text{pushforward})\) adjunctions for \(g\) and
+  \(g'\), of the morphism obtained by applying \(f_*\) to the unit
+  \(\mathcal{F} \to (g')_*(g')^*\mathcal{F}\). In the affine--affine case the four
+  dictionary isomorphisms (the pullback dictionary
+  Lemma~\ref{lem:pullback_spec_tilde_iso} for \((g')^*\widetilde{M}\) and for
+  \(g^*(f_*\mathcal{F})\), and the pushforward dictionary
+  Lemma~\ref{lem:pushforward_spec_tilde_iso} for \(f_*\widetilde{M}\) and for
+  \(f'_*\) of the base-changed module) identify the source and target of
+  \(\Gamma(\alpha)\) with the iterated tensor products
+  \((R' \otimes_R A) \otimes_A M\) and \(R' \otimes_R M\). The genuine remaining
+  content is the coherence computation that unwinds the adjoint mate of the
+  \(((g')^*, (g')_*)\)-unit through these four dictionary isos and shows that the
+  resulting \(R'\)-linear map is exactly \(\operatorname{cancelBaseChange}\),
+  \((r' \otimes a) \otimes m \mapsto r' \otimes (a \cdot m)\). This mate-versus-
+  concrete-map identification has no ready counterpart in the pinned Mathlib; it is
+  the precise content that a later Mathlib bridge identifying the
+  pushforward base-change map with the tilde of \(\operatorname{cancelBaseChange}\)
+  would supply. Granting it, the affine case closes because
+  \(\operatorname{cancelBaseChange}\) is an isomorphism with no flatness.
+\end{proof}
+
+\begin{lemma}\leanok
+[Affine base change]
+  \label{lem:affine_base_change_pushforward}
+  \lean{AlgebraicGeometry.affineBaseChange_pushforward_iso}
+  \uses{def:pushforward_base_change_map, lem:base_change_map_affine_local,
+        lem:modules_isIso_iff_affineOpens, lem:pullback_spec_tilde_iso,
+        lem:pushforward_base_change_mate_cancelBaseChange,
+        lem:pushforward_spec_tilde_iso}
+  % SOURCE: [Stacks Project], Cohomology of Schemes, Lemma
+  % `lemma-affine-base-change' (\S\,Cohomology and base change, I)
+  % (read from references/stacks-coherent.tex, L906--918).
+  % SOURCE QUOTE: "Let $f : X \to S$ be a morphism of schemes.
+  % Let $\mathcal{F}$ be a quasi-coherent $\mathcal{O}_X$-module.
+  % Assume $f$ is affine.
+  % In this case $f_*\mathcal{F} \cong Rf_*\mathcal{F}$ is
+  % a quasi-coherent sheaf, and for every base change diagram
+  % (\ref{equation-base-change-diagram})
+  % we have
+  % $$
+  % g^*f_*\mathcal{F} = f'_*(g')^*\mathcal{F}.
+  % $$"
+  \textit{Source: Stacks Project, Cohomology of Schemes, Lemma ``Affine base
+  change''.}
+  Assume \(f : X \to S\) is an affine morphism and \(\mathcal{F}\) is a
+  quasi-coherent \(\mathcal{O}_X\)-module. Then for every base-change square as
+  above the canonical map of
+  Definition~\ref{def:pushforward_base_change_map} is an isomorphism
+  \[
+    g^*\bigl(f_*\mathcal{F}\bigr) \;\cong\; f'_*\bigl((g')^*\mathcal{F}\bigr).
+  \]
+  The quasi-coherence hypothesis on \(\mathcal{F}\) is essential and is not a mere
+  convenience: the proof works over an affine open by writing
+  \(\mathcal{F} = \widetilde{M}\) for a module \(M\), and a general
+  \(\mathcal{O}_X\)-module need not be of this form
+  \(\widetilde{M}\); without it neither the affine description of the pushforward
+  nor the tensor-associativity computation below is available, and the conclusion
+  fails.
+\end{lemma}
+
+% SOURCE QUOTE PROOF: "The vanishing of higher direct images is
+% Lemma \ref{lemma-relative-affine-vanishing}.
+% The statement is local on $S$ and $S'$. Hence we may
+% assume $X = \Spec(A)$, $S = \Spec(R)$,
+% $S' = \Spec(R')$ and $\mathcal{F} = \widetilde{M}$
+% for some $A$-module $M$.
+% We use Schemes, Lemma \ref{schemes-lemma-widetilde-pullback}
+% to describe pullbacks and pushforwards of $\mathcal{F}$.
+% Namely, $X' = \Spec(R' \otimes_R A)$ and
+% $\mathcal{F}'$ is the quasi-coherent sheaf associated
+% to $(R' \otimes_R A) \otimes_A M$.
+% Thus we see that the lemma boils down to the
+% equality
+% $$
+% (R' \otimes_R A) \otimes_A M = R' \otimes_R M
+% $$
+% as $R'$-modules."
+% NOTE (updated iter-242): Lean proof is a documented sorry. The locality
+% reduction (lem:modules_isIso_iff_affineOpens) lands, and BOTH affine
+% dictionaries are now proved and axiom-clean: lem:pushforward_spec_tilde_iso
+% (iter-241) and its pullback companion lem:pullback_spec_tilde_iso (iter-242).
+% Those are no longer the blockers. TWO Mathlib-absent obligations remain, neither
+% with a quick sub-step:
+%   (1) AFFINE REDUCTION. S, S', X, X' are arbitrary (only f affine, F quasi-
+%       coherent); reducing to S=Spec R, S'=Spec R', X=Spec A, F=M~ needs the
+%       naturality / base-change compatibility of pushforwardBaseChangeMap under
+%       restriction to affine opens of S', which is itself not packaged in Mathlib.
+%   (2) ADJOINT-MATE <-> cancelBaseChange. Even once affine, the abstract adjoint-
+%       mate pushforwardBaseChangeMap transported through the four dictionary isos
+%       must be shown equal to tilde(TensorProduct.AlgebraTensorModule.cancelBaseChange)
+%       -- a coherence computation unwinding the mate of the ((g')^*,(g')_*)-unit.
+% cancelBaseChange itself is present in Mathlib with no flatness; the gap is the
+% mate identification, not the closing algebra. See
+% informal/affineBaseChange_pushforward_iso.md and the in-file sorry comment.
+\begin{proof}
+  \uses{def:pushforward_base_change_map, lem:modules_isIso_iff_affineOpens, lem:pushforward_spec_tilde_iso, lem:pullback_spec_tilde_iso, lem:base_change_map_affine_local, lem:pushforward_base_change_mate_cancelBaseChange}
+  \emph{First reduction (locality).} By
+  Lemma~\ref{lem:modules_isIso_iff_affineOpens} it suffices to prove that the
+  base-change map of Definition~\ref{def:pushforward_base_change_map} is an
+  isomorphism on sections over every affine open of \(S'\). Fix one such affine
+  open. The assertion is then local on \(S\) and on \(S'\), so we may assume all
+  schemes in sight are affine: \(X = \operatorname{Spec}(A)\),
+  \(S = \operatorname{Spec}(R)\), \(S' = \operatorname{Spec}(R')\), with \(f\)
+  corresponding to a ring map \(R \to A\) and \(\mathcal{F} = \widetilde{M}\) the
+  quasi-coherent sheaf associated to an \(A\)-module \(M\). (It is here that
+  quasi-coherence of \(\mathcal{F}\) is used: it is what licenses writing
+  \(\mathcal{F} = \widetilde{M}\) over the affine open.) Computing the fibre product
+  gives \(X' = \operatorname{Spec}(R' \otimes_R A)\), and the pullback
+  \(\mathcal{F}' = (g')^*\mathcal{F}\) is the quasi-coherent sheaf associated to
+  the \((R' \otimes_R A)\)-module \((R' \otimes_R A) \otimes_A M\). In this affine
+  situation the base-change map is a morphism \(\alpha\) of quasi-coherent
+  \((\operatorname{Spec} R')\)-modules.
+
+  \medskip
+  \emph{Reduction to a concrete module map via full-faithfulness of tilde.} The
+  functor \(\widetilde{(-)} : \operatorname{ModuleCat}(R') \to
+  (\operatorname{Spec} R').\mathrm{Modules}\) is fully faithful, with essential
+  image precisely the quasi-coherent modules; equivalently, the counit comparison
+  \(\widetilde{\Gamma(\mathcal{N})} \to \mathcal{N}\) is an isomorphism exactly when
+  \(\mathcal{N}\) is quasi-coherent. Source and target of \(\alpha\) are
+  quasi-coherent, so both counits are isomorphisms; by naturality of the counit, a
+  square relates \(\alpha\) to \(\widetilde{\Gamma(\alpha)}\), and since the two
+  vertical counit maps are isomorphisms,
+  \[
+    \mathrm{IsIso}\,\alpha
+    \;\Longleftrightarrow\;
+    \mathrm{IsIso}\bigl(\Gamma(\alpha)\bigr),
+  \]
+  where \(\Gamma(\alpha)\) is a concrete \(R'\)-linear map of
+  \(\operatorname{ModuleCat}(R')\). This reframing keeps the whole computation at
+  the level of modules and morphisms of affine schemes; in particular it requires
+  no manipulation of section-level scalar-multiplication or module instances. The
+  ring map underlying the pushforward at the top open is the global-sections map
+  \(f_{\top}\) of the morphism (which for \(f = \operatorname{Spec}\varphi\) is
+  conjugate to \(\varphi\) via the naturality of the \(\Gamma\)--\(\operatorname{Spec}\)
+  unit), and the preimage of the top open under \(\operatorname{Spec}\varphi\) is
+  again the top open, so the identification of sections needs no transport. Any
+  residual scalar identity in \(\operatorname{ModuleCat}(R')\) is settled by the
+  scalar-tower compatibility of restriction of scalars.
+
+  \medskip
+  \emph{Identification of the two sides via the affine dictionaries.} The two
+  quasi-coherent sheaves whose comparison \(\alpha\) is the section-level
+  base-change map are identified over the affine chart by the two affine
+  dictionaries. On the one hand, the \emph{pullback dictionary}
+  Lemma~\ref{lem:pullback_spec_tilde_iso} identifies the restriction of
+  \((g')^*\mathcal{F} = (g')^*(\widetilde{M})\) to the chart with the tilde of the
+  base-changed module: writing \(g' = \operatorname{Spec}(\theta)\) for the induced
+  ring map \(\theta : A \to R' \otimes_R A\),
+  \[
+    (g')^*\widetilde{M} \;\cong\; \widetilde{\bigl((R' \otimes_R A) \otimes_A M\bigr)},
+  \]
+  the tilde of the \((R' \otimes_R A)\)-module \((R' \otimes_R A) \otimes_A M\);
+  pushing forward along the affine \(f' = \operatorname{Spec}(R \to R' \otimes_R A)\)
+  and then reading global sections recovers \((R' \otimes_R A) \otimes_A M\) as an
+  \(R'\)-module by restriction of scalars
+  (Lemma~\ref{lem:pushforward_spec_tilde_iso}). On the other hand, the
+  \emph{pushforward dictionary} Lemma~\ref{lem:pushforward_spec_tilde_iso}
+  identifies \(f_*\mathcal{F} = f_*(\widetilde{M})\) over \(S\) with
+  \(\widetilde{\operatorname{restr}_{R \to A} M}\), and the pullback dictionary
+  Lemma~\ref{lem:pullback_spec_tilde_iso} then identifies its pullback
+  \(g^*(f_*\mathcal{F})\) with \(\widetilde{R' \otimes_R M}\); reading global
+  sections gives the \(R'\)-module \(R' \otimes_R M\). Thus, under the dictionaries,
+  the source and target of \(\Gamma(\alpha)\) are the two iterated tensor products
+  \((R' \otimes_R A) \otimes_A M\) and \(R' \otimes_R M\), both viewed as
+  \(R'\)-modules.
+
+  \medskip
+  \emph{Identification of \(\Gamma(\alpha)\) with the cancellation isomorphism.} The
+  base-change map \(\Gamma(\alpha)\) is the global-sections incarnation of
+  \texttt{pushforwardBaseChangeMap} (Definition~\ref{def:pushforward_base_change_map}),
+  which is constructed abstractly as an \emph{adjoint mate}: it is the transpose,
+  under the \((\text{pullback} \dashv \text{pushforward})\) adjunctions for \(g\) and
+  \(g'\), of the morphism obtained by applying \(f_*\) to the unit
+  \(\mathcal{F} \to (g')_*(g')^*\mathcal{F}\). The crux of the remaining Lean work is
+  to match this abstractly-defined adjoint mate, transported through the two
+  dictionaries above, with the \emph{concrete} canonical \(R'\)-linear comparison
+  between the two iterated tensor products — that is, with the associativity /
+  cancellation isomorphism
+  \[
+    \operatorname{cancelBaseChange} :
+    (R' \otimes_R A) \otimes_A M \;\xrightarrow{\ \sim\ }\; R' \otimes_R M
+  \]
+  of \(R'\)-modules (Mathlib's
+  \texttt{TensorProduct.AlgebraTensorModule.cancelBaseChange}). Concretely the map
+  sends \((r' \otimes a) \otimes m \mapsto r' \otimes (a \cdot m)\), using the
+  \(A\)-action on \(M\). Once the identification of the abstract adjoint mate with
+  this concrete \(\operatorname{cancelBaseChange}\) is made — the sole nontrivial
+  remaining obligation — the affine case closes immediately, because
+  \(\operatorname{cancelBaseChange}\) is an isomorphism with no flatness hypothesis
+  whatsoever; flatness of \(g\) enters only in the global (non-affine) statement
+  via the {\v C}ech argument, not here.
+\end{proof}
+
+\section{Flat base change for the pushforward}
+
+\begin{theorem}\leanok
+[Flat base change, $i=0$ case]
+  \label{thm:flat_base_change_pushforward}
+  \lean{AlgebraicGeometry.flatBaseChange_pushforward_isIso}
+  \uses{def:pushforward_base_change_map, lem:affine_base_change_pushforward}
+  % SOURCE: [Stacks Project], Tag 02KH (Lemma "Flat base change", part for
+  % $i = 0$) (read from references/stacks-coherent.tex, L947--970, and
+  % references/stacks-coherent.md).
+  % SOURCE QUOTE: "Consider a cartesian diagram of schemes
+  % $$
+  % \xymatrix{
+  % X' \ar[d]_{f'} \ar[r]_{g'} & X \ar[d]^f \\
+  % S' \ar[r]^g & S
+  % }
+  % $$
+  % Let $\mathcal{F}$ be a quasi-coherent $\mathcal{O}_X$-module
+  % with pullback $\mathcal{F}' = (g')^*\mathcal{F}$.
+  % Assume that $g$ is flat and that $f$ is quasi-compact and quasi-separated.
+  % For any $i \geq 0$
+  % \begin{enumerate}
+  % \item the base change map of
+  % Cohomology, Lemma \ref{cohomology-lemma-base-change-map-flat-case}
+  % is an isomorphism
+  % $$
+  % g^*R^if_*\mathcal{F} \longrightarrow R^if'_*\mathcal{F}',
+  % $$
+  % \item if $S = \Spec(A)$ and $S' = \Spec(B)$, then
+  % $H^i(X, \mathcal{F}) \otimes_A B = H^i(X', \mathcal{F}')$.
+  % \end{enumerate}"
+  \textit{Source: Stacks Project, Tag 02KH (``Flat base change''), the
+  \(i = 0\) case.}
+  Consider the cartesian square
+  \[
+    \begin{array}{ccc}
+      X' & \xrightarrow{\;g'\;} & X \\[2pt]
+      {\scriptstyle f'}\big\downarrow & & \big\downarrow{\scriptstyle f} \\[2pt]
+      S' & \xrightarrow{\;g\;} & S
+    \end{array}
+  \]
+  with \(\mathcal{F}\) a quasi-coherent \(\mathcal{O}_X\)-module and
+  \(\mathcal{F}' = (g')^*\mathcal{F}\). Assume that \(g\) is flat and that \(f\)
+  is quasi-compact and quasi-separated. Then the base-change map of
+  Definition~\ref{def:pushforward_base_change_map} is an isomorphism
+  \[
+    g^*\bigl(f_*\mathcal{F}\bigr) \;\xrightarrow{\;\sim\;}\;
+    f'_*\bigl((g')^*\mathcal{F}\bigr) = f'_*\mathcal{F}' .
+  \]
+  Equivalently, in the affine situation \(S = \operatorname{Spec}(A)\),
+  \(S' = \operatorname{Spec}(B)\) with \(A \to B\) flat, the comparison map
+  \[
+    H^0(X, \mathcal{F}) \otimes_A B \;\xrightarrow{\;\sim\;}\;
+    H^0(X_B, \mathcal{F}_B)
+  \]
+  is an isomorphism, where \(X_B = X \times_{\operatorname{Spec}(A)}
+  \operatorname{Spec}(B)\) and \(\mathcal{F}_B\) is the pullback of
+  \(\mathcal{F}\).
+
+  The hypothesis that \(\mathcal{F}\) is quasi-coherent is essential: it is what
+  makes \(f_*\mathcal{F}\) quasi-coherent on the affine base and thus the tilde of
+  a module, and it is what lets the affine reduction
+  (Lemma~\ref{lem:affine_base_change_pushforward}) write \(\mathcal{F}\) as
+  \(\widetilde{M}\) over each affine open. Without it the comparison map need not be
+  an isomorphism.
+\end{theorem}
+
+% SOURCE QUOTE PROOF: "Having said this, part (1) follows from part (2). Namely,
+% part (1) is local on $S'$ and hence we may assume $S$
+% and $S'$ are affine. In other words, we have $S = \Spec(A)$
+% and $S' = \Spec(B)$ as in (2).
+% Then since $R^if_*\mathcal{F}$ is quasi-coherent
+% (Lemma \ref{lemma-quasi-coherence-higher-direct-images}),
+% it is the quasi-coherent $\mathcal{O}_S$-module associated to the
+% $A$-module $H^0(S, R^if_*\mathcal{F}) = H^i(X, \mathcal{F})$
+% (equality by
+% Lemma \ref{lemma-quasi-coherence-higher-direct-images-application}).
+% Similarly, $R^if'_*\mathcal{F}'$ is the quasi-coherent
+% $\mathcal{O}_{S'}$-module associated to the $B$-module
+% $H^i(X', \mathcal{F}')$. Since pullback by $g$ corresponds
+% to $- \otimes_A B$ on modules
+% (Schemes, Lemma \ref{schemes-lemma-widetilde-pullback})
+% we see that it suffices to prove (2).
+%
+% Let $A \to B$ be a flat ring homomorphism.
+% Let $X$ be a quasi-compact and quasi-separated scheme over $A$.
+% Let $\mathcal{F}$ be a quasi-coherent $\mathcal{O}_X$-module.
+% Set $X_B = X \times_{\Spec(A)} \Spec(B)$ and denote
+% $\mathcal{F}_B$ the pullback of $\mathcal{F}$.
+% We are trying to show that the map
+% $$
+% H^i(X, \mathcal{F}) \otimes_A B \longrightarrow H^i(X_B, \mathcal{F}_B)
+% $$
+% (given by the reference in the statement of the lemma)
+% is an isomorphism.
+%
+% In case $X$ is separated, choose an affine open covering
+% $\mathcal{U} : X = U_1 \cup \ldots \cup U_t$ and recall that
+% $$
+% \check{H}^p(\mathcal{U}, \mathcal{F}) = H^p(X, \mathcal{F}),
+% $$
+% see
+% Lemma \ref{lemma-cech-cohomology-quasi-coherent}.
+% If $\mathcal{U}_B : X_B = (U_1)_B \cup \ldots \cup (U_t)_B$ we obtain
+% by base change, then it is still the case that each $(U_i)_B$ is affine
+% and that $X_B$ is separated. Thus we obtain
+% $$
+% \check{H}^p(\mathcal{U}_B, \mathcal{F}_B) = H^p(X_B, \mathcal{F}_B).
+% $$
+% We have the following relation between the {\v C}ech complexes
+% $$
+% \check{\mathcal{C}}^\bullet(\mathcal{U}_B, \mathcal{F}_B) =
+% \check{\mathcal{C}}^\bullet(\mathcal{U}, \mathcal{F}) \otimes_A B
+% $$
+% as follows from
+% Lemma \ref{lemma-affine-base-change}.
+% Since $A \to B$ is flat, the same thing remains true on taking cohomology."
+% NOTE: Lean proof is a documented sorry (deferred). Its affine input is the
+% affine lemma above, which in turn reduces to lem:pushforward_spec_tilde_iso (the
+% affine-pushforward-of-tilde brick) plus the tilde full-faithfulness reframe. On
+% top of that it needs Čech-cohomology / affine-cover infrastructure for
+% SheafOfModules, which Mathlib does not provide. This remains a multi-lane engine
+% build, not a single-iter target. See informal/affineBaseChange_pushforward_iso.md.
+\begin{proof}
+  \uses{def:pushforward_base_change_map, lem:affine_base_change_pushforward}
+  \emph{Reduction to the affine target.} The statement is local on \(S'\), so we
+  may assume \(S\) and \(S'\) are affine, say \(S = \operatorname{Spec}(A)\) and
+  \(S' = \operatorname{Spec}(B)\) with \(A \to B\) flat. Because \(f\) is
+  quasi-compact and quasi-separated, \(f_*\mathcal{F}\) is quasi-coherent on
+  \(S\); it is therefore the sheaf associated to the \(A\)-module
+  \(H^0(S, f_*\mathcal{F}) = H^0(X, \mathcal{F})\). Likewise
+  \(f'_*\mathcal{F}'\) is the sheaf on \(S'\) associated to the \(B\)-module
+  \(H^0(X', \mathcal{F}')\). Since pullback along \(g\) corresponds to
+  \(- \otimes_A B\) on modules, the base-change map becomes the comparison map of
+  \(B\)-modules
+  \[
+    H^0(X, \mathcal{F}) \otimes_A B \longrightarrow H^0(X_B, \mathcal{F}_B),
+    \qquad X_B = X \times_{\operatorname{Spec}(A)} \operatorname{Spec}(B),
+  \]
+  and it suffices to prove that this map is an isomorphism.
+
+  \medskip
+  \emph{The separated case via {\v C}ech complexes.} Suppose first that \(X\) is
+  separated over \(A\). Choose a finite affine open cover
+  \(\mathcal{U} : X = U_1 \cup \dots \cup U_t\); by separatedness all finite
+  intersections \(U_{i_0 \dots i_p}\) are again affine, so {\v C}ech cohomology
+  computes sheaf cohomology:
+  \(\check{H}^p(\mathcal{U}, \mathcal{F}) = H^p(X, \mathcal{F})\). Base changing
+  the cover yields an affine open cover
+  \(\mathcal{U}_B : X_B = (U_1)_B \cup \dots \cup (U_t)_B\) of the again-separated
+  \(X_B\), with the same property
+  \(\check{H}^p(\mathcal{U}_B, \mathcal{F}_B) = H^p(X_B, \mathcal{F}_B)\). The
+  affine case (Lemma~\ref{lem:affine_base_change_pushforward}) identifies each
+  term of the base-changed {\v C}ech complex with the original term tensored over
+  \(A\) with \(B\); that is, there is an isomorphism of cochain complexes
+  \[
+    \check{\mathcal{C}}^\bullet(\mathcal{U}_B, \mathcal{F}_B) \;\cong\;
+    \check{\mathcal{C}}^\bullet(\mathcal{U}, \mathcal{F}) \otimes_A B .
+  \]
+  Because \(A \to B\) is flat, \(- \otimes_A B\) is an exact functor and hence
+  commutes with the formation of cohomology of a complex; taking \(H^0\)
+  (degree-zero cohomology) gives the desired isomorphism
+  \(H^0(X, \mathcal{F}) \otimes_A B \cong H^0(X_B, \mathcal{F}_B)\).
+
+  \medskip
+  \emph{The quasi-separated case.} In general \(X\) need only be quasi-separated.
+  Choose a finite affine open cover \(\mathcal{U} : X = U_1 \cup \dots \cup U_t\).
+  Now the intersections \(U_{i_0 \dots i_p}\) are quasi-compact and separated
+  rather than affine, but they fall under the separated case already treated, so
+  flat base change holds for each of them. One then compares the two
+  {\v C}ech-to-cohomology spectral sequences with \(E_2\)-pages
+  \(\check{H}^p(\mathcal{U}, \underline{H}^q(\mathcal{F}))\) and
+  \(\check{H}^p(\mathcal{U}_B, \underline{H}^q(\mathcal{F}_B))\), converging to
+  \(H^{p+q}(X, \mathcal{F})\) and \(H^{p+q}(X_B, \mathcal{F}_B)\) respectively.
+  The separated case provides the term-by-term identification
+  \(\check{H}^p(\mathcal{U}_B, \underline{H}^q(\mathcal{F}_B)) =
+  \check{H}^p(\mathcal{U}, \underline{H}^q(\mathcal{F})) \otimes_A B\) on the
+  \(E_2\)-pages, and flatness of \(A \to B\) propagates this isomorphism through
+  the spectral sequences to the abutment. In particular, in degree \(0\) one
+  obtains \(H^0(X, \mathcal{F}) \otimes_A B \cong H^0(X_B, \mathcal{F}_B)\), as
+  required. (For the \(i = 0\) statement at hand, one may avoid the spectral
+  sequence entirely and argue by Mayer--Vietoris induction on the number \(t\) of
+  cover members, reducing each step to the separated case.)
+\end{proof}

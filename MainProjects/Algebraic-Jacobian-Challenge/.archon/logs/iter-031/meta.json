@@ -1,0 +1,24 @@
+{
+  "iteration": 31,
+  "stage": "prover  (iteration 030 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **toModuleKSheaf specialisation on a curve**: append two declarations to the iter-029 `AffineCoverMVSquare` cohort in `Cohomology/MayerVietoris.lean` \u2014 a `noncomputable def AffineCoverMVSquare.HModule'_sequence_curve` binding `F := Scheme.toModuleKSheaf C` in the iter-029 sheaf-parameterised LES, plus its exactness companion `HModule'_sequence_curve_exact`. Plan-agent `lean_run_code` probe (this pass) confirms the two-declaration cohort compiles end-to-end against the post-iter-029 file with `{success: true, diagnostics: []}`. The iter-029 prover's six-declaration close lands cleanly: 9 sorries (no change), zero diagnostics, kernel-only axioms on both new declarations, and +52 LOC (600 \u2192 652) \u2014 `+22` LOC over the +30 plan estimate due to the `_root_.AlgebraicGeometry.Scheme.HModule'_sequence` disambiguation docstring the prover added (sub-namespace shadowing inside the def body is a newly-documented dead-end). Iter-030 sorry trajectory `9 \u2192 9 \u2192 9` (no transient scaffold sorries \u2014 both bodies are probe-confirmed term-mode one-liners using dot-notation method-call form to sidestep the iter-029 shadowing trap).",
+  "mode": "parallel",
+  "startedAt": "2026-05-08T17:20:55Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1466
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 135
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 531
+  }
+}

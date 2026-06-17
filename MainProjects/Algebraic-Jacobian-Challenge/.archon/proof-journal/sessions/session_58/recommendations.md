@@ -1,0 +1,87 @@
+# Recommendations for the next plan-agent iteration (iter-059)
+
+## Context
+
+Iter-058 closed the **last thin foundational helper** of the iter-053 → iter-058 six-iteration scaffolding chain (the n-ary basic-open intersection-in-`U` inclusion lemma). The chain is now complete; iter-059+ moves to the substantive Koszul + Čech-derived comparison branch.
+
+**Current scaffolding inventory (all closed, six-iteration chain)**:
+- `Scheme.HasAffineCechAcyclicCover` carrier + `instIsAffineHModuleVanishing_of_hasAffineCechAcyclicCover` producer (iter-053).
+- `Scheme.basicOpenCover` constructor + `_supr_of_span_eq_top` supremum equality + `_isAffineOpen` single-index affine membership (iter-054).
+- `Scheme.hasAffineCechAcyclicCover_of_basicOpen` universal producer + `_curve` specialisation (iter-055).
+- `Scheme.basicOpenCover_inter_eq_basicOpen_mul` binary-intersection identification + `_inter_isAffineOpen` binary-intersection affine membership (iter-056).
+- `Scheme.basicOpenCover_finset_inf'_eq_basicOpen_prod` n-ary `Finset.inf'` identification + `_finset_inf'_isAffineOpen` n-ary affine membership (iter-057).
+- `Scheme.basicOpenCover_finset_inf'_le` n-ary intersection-in-`U` inclusion (iter-058, this iteration).
+
+**Sorry trajectory unchanged**: 9 → 9 (5 protected `Jacobian.lean` + 3 protected `AbelJacobi.lean` + 1 deferred `Picard/Functor.lean`).
+
+## Track 2A.3a — Primary recommendation: **basic-open Koszul acyclicity** (iter-059+)
+
+**Phase A step 6 *Path 2* / Step 4.6.3** — prove `IsCechAcyclicCover (toModuleKSheaf C) (basicOpenCover s)` for spanning `s : Set Γ(C.left, U)` with `Ideal.span s = ⊤`. This is the **substantive Koszul step** of the iter-058+ branch.
+
+**Mathematical structure** (from the iter-058 informal scoping subsection L1397+):
+
+The Čech complex on basic opens of an affine `Spec A` evaluates to:
+```
+n ↦ ∏ (f : Fin (n+1) → s), (toModuleKSheaf C)(basicOpen (∏ k, (f k).1))
+```
+
+By Mathlib's `IsAffineOpen.isLocalization_of_eq_basicOpen` (using **iter-058's `basicOpenCover_finset_inf'_le` to construct the `V ⟶ U` morphism argument via `homOfLE`**), each factor is `Localization.Away (∏ k, (f k).1)` of `Γ(C.left, U)`. Acyclicity then follows from Mathlib's `exact_of_isLocalized_span` (`Mathlib/RingTheory/LocalProperties/Exactness.lean`) — exactness of a sequence is determined by exactness of its localizations at a spanning set — under the hypothesis `Ideal.span s = ⊤`.
+
+**Decomposition** (estimates from iter-058 PROJECT_STATUS.md):
+- **Algebraic Koszul step** (~80-150 LOC): show that for `s` with `Ideal.span s = ⊤`, the alternating-sum Koszul complex on `Localization.Away` factors is exact in positive degrees.
+- **Sectional identification** (~50-100 LOC): identify the Čech cochain at each degree with the alternating-sum Koszul complex via `IsAffineOpen.isLocalization_of_eq_basicOpen` (Mathlib). The iter-057/058 entry-point call sequence is now fully in place: `hU.isLocalization_of_eq_basicOpen f (homOfLE (basicOpenCover_finset_inf'_le ...)) (basicOpenCover_finset_inf'_eq_basicOpen_prod ...)` lands `IsLocalization.Away (∏ i ∈ t, i.1) Γ(C.left, t.inf' h (basicOpenCover s))` directly.
+- **Assembly** (~50-100 LOC): bundle the per-degree exactness into `IsCechAcyclicCover (toModuleKSheaf C) (basicOpenCover s)`.
+
+**Pre-iteration audit (strongly recommended preamble — fifth-iteration repeat recommendation per the iter-058 prompt header)**: **commission an analogy subagent** to scope Mathlib's existing Koszul / Localization-exactness machinery before attempting the substantive Koszul iteration. Specifically, audit:
+- `Mathlib.RingTheory.Localization.Module` and downstream files for Koszul-style exactness wrappers.
+- `Mathlib.RingTheory.LocalProperties.Exactness` (`exact_of_isLocalized_span` — corrected name) for the canonical spanning-set exactness lemma.
+- `Mathlib.AlgebraicGeometry.OpenImmersion`, `IsAffineOpen.isLocalization_of_eq_basicOpen`, and related infrastructure for the per-degree localization identification.
+- The `cechComplexFunctor` in `Mathlib/CategoryTheory/Sites/SheafCohomology/Cech.lean` to understand the canonical sheaf-Čech cochain shape (note: Mathlib has the cochain functor but **no comparison theorem to derived functor cohomology**, so the project-local construction is needed for iter-061+).
+
+**The 8x cost differential** between Mathlib-backed wrapper (~10-20 LOC) and project-local introduction (~80-150 LOC) warrants the upfront audit. **Do not skip this step.**
+
+**Estimate**: 2-3 iterations, ~150-250 LOC in `Cohomology/MayerVietoris.lean` (or possibly a new submodule `Cohomology/Koszul.lean` if the algebraic step exceeds ~150 LOC — refactor decision pending audit outcome).
+
+**LOC band guidance**: widen the per-iteration band to `+50-150` for substantive Koszul work; the iter-053 → iter-058 thin-scaffolding cohort's tighter `+30-50` band no longer applies after iter-058.
+
+## Track 2A.3b — Deferred until 2A.3a lands: **Čech-vs-derived comparison theorem** (iter-061+)
+
+**Phase A step 6 *Path 2* / Step 4.6.4** — substantive multi-iteration construction via the dual chain-level Mayer-Vietoris sheaf-resolution route (Stacks 01EO; Cartan-Leray spectral sequence collapsed under acyclicity, Stacks 03OU).
+
+**Should not start until 2A.3a lands**: Koszul exactness is a prerequisite of step (1) of the construction (constructing the augmented sheaf-level complex `𝓕_•` and showing it is exact in positive degrees under acyclicity).
+
+**Estimate**: 4-6 iterations, ~200-400 LOC. Package result as `HasCechToHModuleIso F 𝒰` instance via `⟨⟨the_iso⟩⟩`.
+
+## Track 2A.3c — Final assembly (iter-065+)
+
+Assemble per-affine basic-open evidence (iter-059+ Koszul acyclicity + iter-061+ Čech-derived comparison) into iter-055's existence-form hypothesis `h`, then call `hasAffineCechAcyclicCover_of_basicOpen_curve h` to produce the `HasAffineCechAcyclicCover (toModuleKSheaf C)` instance. Iter-053's producer fires automatically to derive `IsAffineHModuleVanishing k C (toModuleKSheaf C)`. Single-iteration assembly, ~30-50 LOC.
+
+## Track 2A.3d — Genus carrier (iter-066+)
+
+Chain the iter-046 H⁰ Module.Finite ladder + iter-035/049 transport + iter-059+ vanishing to derive `Module.Finite k (HModule k (toModuleKSheaf C) 1)` and the genus carrier identity. Single-iteration assembly, ~30-50 LOC.
+
+## Off-critical-path alternatives (still available)
+
+- **Track 2B**: finrank corollary of iter-046 producer — explicit identity `Module.finrank k (HModule k (toModuleKSheaf C) 0) = Module.finrank k Γ(C, 𝒪_C)`. Plausibly single-iteration ~30-50 LOC. Off-critical-path.
+- **Track 2C**: sharper Mayer-Vietoris LES consumer for the curve case. Plausibly single-iteration ~30-50 LOC. Off-critical-path.
+- **Track 2D (low-priority)**: Mathlib upstream PRs for the five new `CategoryTheory.*` declarations from iter-046, the `Ext.chgUnivLinearEquiv` from iter-034, and the iter-054 `IsAffineOpen.iSup_basicOpen_basicOpen_eq` candidate (n-fold intersections — pending upstream check).
+
+## Targets the plan-agent should NOT assign in iter-059
+
+- **Any of the 8 protected sorries** (5 Jacobian + 3 AbelJacobi) — structurally blocked by Phase C step 4 (FGA representability) plus `noncomputable` user-decision. Reopening these without the upstream Mathlib gaps would either fail or silently assert representability of the wrong functor.
+- **`PicardFunctor.representable`** — intentionally deferred per directive.
+- **Reverting iter-058's term-mode `▸` to tactic-mode `rw`** — same dead end as iter-057 Target 2: `rw` fails on `Subtype.val`-coercion motive-occurrence grounds. Term-mode `▸` (Eq.mpr) is mandatory.
+- **Promoting iter-058's declaration to `instance`** — typeclass synthesis cannot supply the explicit `(s : Set ...)`, `(t : Finset s)`, `(h : t.Nonempty)` arguments at call sites.
+- **Adding an `IsAffineOpen U` hypothesis to iter-058** — `basicOpen_le` is purely topological; the hypothesis would over-constrain.
+- **Folding iter-058 into iter-057 Target 2 (the `isAffineOpen` variant)** — the inclusion-only and affine-membership variants serve different downstream call sites (`homOfLE` vs `IsLocalization.Away`); merging would force every inclusion caller to also supply `(hU : IsAffineOpen U)`.
+- **Re-introducing the `Scheme.` short-name prefix inside `namespace AlgebraicGeometry.Scheme`** — known-dead-end #185.
+- **Switching iter-058's RHS from `≤ U` to `< U` or `= U` or `t.inf' h (basicOpenCover s) ⊆ U`** — `Opens` is a `CompleteLattice` (not `Set`); the `≤` lattice order is the canonical iter-059+ caller interface.
+
+## Process-discipline observations for the plan-agent
+
+- **LOC band**: iter-058 came in at +36, squarely inside the tighter `+30-50` plan band and the matching `+30-50` iteration-overview band from the prompt header. The body itself is **2 LOC of actual proof** — the smallest substantive contribution of any iteration in the iter-053 → iter-058 scaffolding chain. For substantive iter-059+ Koszul work, widen the band to `+50-150`; for iter-061+ comparison-theorem multi-iteration cohort, widen further to `+100-300`.
+- **Probe-confirmed body discipline**: continue the verbatim probe-confirmed body, single combined Edit pattern. Iter-058 was the **twelfth zero-corrective Edit in a row** (iter-047 → iter-058). For substantive iter-059+ Koszul work, pre-running probes is even more critical (the algebraic step has multiple moving parts including the alternating-sum acyclicity + per-degree localization identification).
+- **Blueprint-subsection / `\leanok`-pre-mark discipline**: continue the iter-051 → iter-058 streak (eight iterations now). Plan-agent should pre-author the iter-059 subsection block with conditional pre-marks (statement `\leanok` if statement is canonical at probe time; proof `\leanok` only after probe-confirmed body lands).
+- **`blueprint/lean_decls` clear-as-you-go**: continue the iter-040 → iter-058 streak (nineteen iterations now).
+- **Analogy subagent commission**: as flagged in the iter-056/057/058 retrospectives, **commission an analogy subagent before iter-059** to audit Mathlib's Koszul / Localization-exactness machinery. **Fifth-iteration repeat recommendation — do not skip.** The cost differential between "Mathlib-backed wrapper" and "project-local introduction" can be 8x or more.
+- **Mathlib name precision**: iter-057 corrected the `exact_of_localized_span` → `exact_of_isLocalized_span` name in the informal scoping subsection (verified iter-058 carried this correction forward). Plan-agent should validate Mathlib lemma names via `lean_local_search` or `lean_leanfinder` at probe time before encoding them in informal scoping prose; relying on memory across multiple iterations risks propagating typos.

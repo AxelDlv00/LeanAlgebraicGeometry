@@ -1,0 +1,35 @@
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ───────────────────────────────
+
+[ARCHON] Agent model: opus (blueprint-writer)
+Done. Rendering-cleanup of `blueprint/src/chapters/Picard_QuotScheme.tex` complete.
+
+## What I did
+
+Normalised **16 math-delimiter sites** to the `\(...\)` style (math inside `\(...\)`, prose outside):
+
+- **6 genuine interleaved/inverted defects** `$MATH\( prose \)MATH$` — lines 242–243, 331–332, 345–346, 508–509, 546–547, 668–669. These render broken.
+- **10 single-style `$...$` formulas** (including the two directive-named sites at 431 and 799) converted for one-style consistency, plus two appendix sites (1328, 1511) — one of which (`$\sim$` → `\(\sim\)`) sat right next to an existing `\(\sim\)`.
+
+## Constraints respected
+
+All edits are **delimiter-only**. No statement text, proof mathematics, `\lean{}`, `\label{}`, or `\uses{}` semantics changed; no `\leanok`/`\mathlibok` touched; no blocks added/removed/reordered.
+
+## Verification (all pass)
+
+- Non-comment lines with `$` → **NONE**
+- Interleaved `$...\(` pattern → **NONE**
+- Literal `REF` in prose → **NONE**
+
+No `\cref` was introduced (no `literal-ref`/`bare-label` defects existed here), so there's no dangling-label risk. The `REF` tokens that remain live **only** inside `% SOURCE QUOTE` comments (verbatim Nitsure/Stacks source excerpts) — non-rendering and out of scope. No unresolved defects.
+
+Report written to `.archon/task_results/blueprint-writer-render-quotscheme.md`.
+[COST] 3.8min | $1.7612 | in=4219 out=18629 | turns=23
+[ARCHON] ✓ blueprint-writer/render-quotscheme finished (286s)
+render-quotscheme: COMPLETE — see /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/task_results/blueprint-writer-render-quotscheme.md (archived: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/logs/iter-279/blueprint-writer-render-quotscheme-report.md)

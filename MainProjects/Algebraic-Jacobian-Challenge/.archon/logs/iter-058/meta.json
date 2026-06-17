@@ -1,0 +1,40 @@
+{
+  "iteration": 58,
+  "stage": "prover  (iteration 057 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **n-ary basic-open intersection helpers**: append two thin foundational helper declarations to `Cohomology/MayerVietoris.lean` `section CoverTotality` (inside `namespace AlgebraicGeometry.Scheme`), after iter-056's `basicOpenCover_inter_isAffineOpen` (currently L1465-1473), before `end CoverTotality` (currently L1475): (1) `theorem basicOpenCover_finset_inf'_eq_basicOpen_prod` \u2014 n-ary intersection of basic-open cover members over a non-empty `Finset s` equals basic open of finite product `\u220f i \u2208 t, i.1` (`Finset.cons_induction` + Mathlib's `Scheme.basicOpen_mul`); (2) `theorem basicOpenCover_finset_inf'_isAffineOpen` \u2014 n-ary intersection on an affine open is itself affine (chains (1) + Mathlib's `IsAffineOpen.basicOpen` via `\u25b8`-rewrite, NOT `rw`). Iter-056 closure verified (this pass): both iter-056 declarations land cleanly at L1442 (`basicOpenCover_inter_eq_basicOpen_mul`) and L1465 (`..._isAffineOpen`); sorry count `9 \u2192 9`; file LOC `1429 \u2192 1477` (+48, in plan band). Plan-agent `lean_run_code` probe (this pass) confirms both iter-057 declaration bodies compile end-to-end with kernel-only axioms `[propext, Classical.choice, Quot.sound]` \u2014 no new axiom introduced. Iter-057 sorry trajectory `9 \u2192 9` (no transient \u2014 bodies probe-confirmed). Phase A iterations-remaining held at ~5 (iter-057 is a thin scaffolding step generalising iter-056 binary form to n-ary; iter-058+ opens the substantive basic-open Koszul acyclicity branch as planned).",
+  "mode": "parallel",
+  "startedAt": "2026-05-11T01:40:32Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1595
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 88
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 368
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "d5deb16"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 27
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 6
+    }
+  },
+  "completedAt": "2026-05-11T02:43:21Z",
+  "wallTimeSecs": 3769
+}

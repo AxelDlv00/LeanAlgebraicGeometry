@@ -1,0 +1,40 @@
+{
+  "iteration": 53,
+  "stage": "prover  (iteration 052 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **generalised rewrite-bridge `\u2a06\ud835\udcb0 = U` for HModule' consumer + curve specialisation**: append two declarations to `Cohomology/MayerVietoris.lean` `section CoverTotality` (inside `namespace AlgebraicGeometry.Scheme`), after iter-051's `subsingleton_HModule'_supr_of_hasCechToHModuleIso_curve` (currently L1209), before `end CoverTotality` (currently L1211): (1) `theorem subsingleton_HModule'_of_hasCechToHModuleIso` \u2014 generalised rewrite-bridge from iter-051's `(\u2a06\ud835\udcb0)` form to an arbitrary open `U` under equality hypothesis `(h : \u2a06 i, \ud835\udcb0 i = U)`; body `haveI := subsingleton_HModule'_supr_of_hasCechToHModuleIso (F := F) (\ud835\udcb0 := \ud835\udcb0) n hn; exact h \u25b8 this`; (2) `_curve` specialisation. Iter-051 closure verified (this pass): both iter-051 declarations land cleanly at L1184 (`subsingleton_HModule'_supr_of_hasCechToHModuleIso`) and L1201 (`_curve`); sorry count `9 \u2192 9`; file LOC `1165 \u2192 1213` (+48, within +30-50 plan band). Plan-agent `lean_run_code` probe (this pass) confirms both iter-052 declaration bodies compile end-to-end with kernel-only axioms `[propext, Classical.choice, Quot.sound]` \u2014 no new axiom introduced. Iter-052 sorry trajectory `9 \u2192 9` (no transient \u2014 bodies probe-confirmed). Phase A iterations-remaining revised DOWN from ~5 to ~4 (iter-052 is a thin scaffolding step completing the typeclass-driven rewrite-bridge family; iter-053+ opens substantive comparison theorem branch).",
+  "mode": "parallel",
+  "startedAt": "2026-05-10T09:30:00Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1093
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 155
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 606
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "0f05270"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 26
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 5
+    }
+  },
+  "completedAt": "2026-05-10T11:05:01Z",
+  "wallTimeSecs": 5700
+}

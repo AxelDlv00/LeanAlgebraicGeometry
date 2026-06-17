@@ -1,0 +1,44 @@
+{
+  "iteration": 65,
+  "stage": "prover  (iteration 064 \u2014 **re-dispatch missed Phase B scaffold + continue substep component (i)**. Iter-063 prover on BasicOpenCech.lean delivered `hs_fin` finite-subspanning extraction + 3-component trajectory; Differentials.lean was listed but not dispatched (process gap). Iter-064 re-dispatches both as parallel objectives. Plan agent does NOT pre-verify candidate proof bodies; transient sorries explicitly acceptable.)",
+  "mode": "parallel",
+  "startedAt": "2026-05-11T13:01:31Z",
+  "plan": {
+    "status": "skipped",
+    "durationSecs": 1092
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 807
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_BasicOpenCech": {
+      "file": "AlgebraicJacobian/Cohomology/BasicOpenCech.lean",
+      "status": "done"
+    },
+    "AlgebraicJacobian_Differentials": {
+      "file": "AlgebraicJacobian/Differentials.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 513
+  },
+  "sorry_count": 998,
+  "finalize": {
+    "innerGit": {
+      "sha": "721950f"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 12
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 6
+    }
+  },
+  "completedAt": "2026-05-12T02:45:19Z",
+  "wallTimeSecs": 1462
+}

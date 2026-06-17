@@ -1,0 +1,106 @@
+{
+  "iteration": 182,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-24T06:50:32Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "9470fccc-3119-440a-aa97-7179f7606835",
+    "durationSecs": 5828
+  },
+  "planValidate": {
+    "status": "ok_overcap",
+    "objectivesProposed": 20,
+    "objectivesDispatched": 10,
+    "objectivesDeferred": [
+      "AlgebraicJacobian/Picard/FlatteningStratification.lean",
+      "AlgebraicJacobian/Picard/LineBundlePullback.lean",
+      "AlgebraicJacobian/Picard/QuotScheme.lean",
+      "AlgebraicJacobian/Picard/RelPicFunctor.lean",
+      "AlgebraicJacobian/Picard/RelativeSpec.lean",
+      "AlgebraicJacobian/RiemannRoch/OCofP.lean",
+      "AlgebraicJacobian/RiemannRoch/RRFormula.lean",
+      "AlgebraicJacobian/RiemannRoch/RationalCurveIso.lean",
+      "AlgebraicJacobian/RiemannRoch/WeilDivisor.lean",
+      "AlgebraicJacobian/RigidityKbar.lean"
+    ]
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 7055
+  },
+  "provers": {
+    "AlgebraicJacobian_AbelianVarietyRigidity": {
+      "file": "AlgebraicJacobian/AbelianVarietyRigidity.lean",
+      "status": "done",
+      "sessionId": "206a2d75-7b07-4138-8944-3cba6394cee7"
+    },
+    "AlgebraicJacobian_Albanese_AlbaneseUP": {
+      "file": "AlgebraicJacobian/Albanese/AlbaneseUP.lean",
+      "status": "done",
+      "sessionId": "b927ad88-9ae4-4684-a058-ea180a2b1789"
+    },
+    "AlgebraicJacobian_Albanese_AuslanderBuchsbaum": {
+      "file": "AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean",
+      "status": "done",
+      "sessionId": "409fdae5-acb7-4c03-9854-0910ec6527d6"
+    },
+    "AlgebraicJacobian_Albanese_CodimOneExtension": {
+      "file": "AlgebraicJacobian/Albanese/CodimOneExtension.lean",
+      "status": "done",
+      "sessionId": "457c83e2-2c68-4440-8972-31e91710e0f4"
+    },
+    "AlgebraicJacobian_Albanese_Thm32RationalMapExtension": {
+      "file": "AlgebraicJacobian/Albanese/Thm32RationalMapExtension.lean",
+      "status": "done",
+      "sessionId": "7a270d6a-152a-4491-83f3-3fed199c92ca"
+    },
+    "AlgebraicJacobian_Genus0BaseObjects_BareScheme": {
+      "file": "AlgebraicJacobian/Genus0BaseObjects/BareScheme.lean",
+      "status": "done",
+      "sessionId": "995df148-5e7b-4962-86e1-b0e77f52a53a"
+    },
+    "AlgebraicJacobian_Genus0BaseObjects_GmScaling": {
+      "file": "AlgebraicJacobian/Genus0BaseObjects/GmScaling.lean",
+      "status": "done",
+      "sessionId": "b97e2685-9658-4285-bee6-cdb42c68e29a"
+    },
+    "AlgebraicJacobian_Genus0BaseObjects_Points": {
+      "file": "AlgebraicJacobian/Genus0BaseObjects/Points.lean",
+      "status": "done",
+      "sessionId": "969b655e-0c45-48b4-b8b9-bb00ba9478bd"
+    },
+    "AlgebraicJacobian_Jacobian": {
+      "file": "AlgebraicJacobian/Jacobian.lean",
+      "status": "done",
+      "sessionId": "bee3a424-9b88-4c10-bb2f-aaace3bf1dfb"
+    },
+    "AlgebraicJacobian_Picard_FGAPicRepresentability": {
+      "file": "AlgebraicJacobian/Picard/FGAPicRepresentability.lean",
+      "status": "done",
+      "sessionId": "7714b465-17ce-43c4-9513-e5831eb62a70"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "65c84490-85ae-4b54-9a74-e443ad099d4e",
+    "durationSecs": 1035
+  },
+  "sorry_count": 75,
+  "finalize": {
+    "innerGit": {
+      "sha": "c16230fe"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 3
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 5,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-24T10:46:35Z",
+  "wallTimeSecs": 14163
+}

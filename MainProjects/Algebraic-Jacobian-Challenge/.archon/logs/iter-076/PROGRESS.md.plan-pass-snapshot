@@ -1,0 +1,141 @@
+# Project Progress
+
+## Current Stage
+
+prover (iteration 076 — **repair round**: two parallel lanes restoring compilation in `Differentials.lean` and `Cohomology/BasicOpenCech.lean`).
+
+## Stages
+- [x] init
+- [x] autoformalize
+- [ ] prover
+- [ ] polish
+
+## Big-picture context
+
+This project formalizes the Jacobian of a smooth proper geometrically irreducible curve over a field, following Christian Merten's challenge (`references/challenge.lean`). The nine declarations in `archon-protected.yaml` are the deliverables — their signatures are frozen.
+
+`STRATEGY.md` describes the five-phase build-out plan. **Phase C is re-opened iter-076** per user directive 2026-05-12 — replaces the prior "deferred indefinitely" framing with a four-step (C0→C3) Mathlib gap-fill plan. The user's directive: "This project aims at filling mathlib gaps, therefore you should not defer it, instead you should trace a route to fill the gap and close the sorries of phase C, as you already did for the other phases by introducing all the necessary lemmas and definitions, subagents might be useful for this."
+
+The blueprint chapter `Modules_Monoidal.tex` (Phase C step C0 informal content) was written this iter; `Picard_Functor.tex` was softened with the C0–C3 roadmap; `content.tex` updated. The Lean-side scaffolding for the new file `AlgebraicJacobian/Modules/Monoidal.lean` is deferred to iter-077 (refactor subagent), because iter-076's first priority is repair.
+
+After verifying with `lean_diagnostic_messages` this plan pass, the actual project state is:
+
+| File | Sorries | Compiles? | Phase | Iter-076 plan |
+|---|---|---|---|---|
+| `AlgebraicJacobian/Cohomology/BasicOpenCech.lean` | **6** | **NO** (5 errors) | A | **Repair Lane 2** |
+| `AlgebraicJacobian/Differentials.lean` | **6** | **NO** (12 errors) | B | **Repair Lane 1** |
+| `AlgebraicJacobian/Jacobian.lean` | 1 | yes | C (re-opened) | off-limits this iter |
+| `AlgebraicJacobian/Picard/Functor.lean` | 1 | yes | C-rep (re-opened) | off-limits this iter |
+| `AlgebraicJacobian/AbelJacobi.lean` | 0 | yes | E **DONE** | off-limits |
+| `AlgebraicJacobian/Genus.lean` | 0 | yes | D done | off-limits |
+| **Total syntactic** | **14** | — | | |
+
+**Critical correction iter-076.** The persistent PROGRESS / STRATEGY note "build environment broken since iter-069" is **stale**. `lean_diagnostic_messages` works correctly and returns useful errors; `lean_leansearch` works; the LSP is responsive. What is actually broken is the *project source*: in-flight prover bodies in `Differentials.lean` (Steps 7+ of `_structure.h_zero` and the `d_target` construction inside `cotangentExactSeqAlpha`) and in `BasicOpenCech.lean` (the smul transport for `f_R`/`g_R` and the `h_diff_pi_smul_g` analogue) have accumulated multiple type errors and heartbeat timeouts. The iter-074/075 dispatches' "commit credible tactics without LSP verification" policy was rooted in this stale assumption and is what produced the current broken state.
+
+This iteration corrects the framing: the lanes use `lean_diagnostic_messages` to verify each tactic-edit before committing. The user policy "no `lean_run_code` pre-validation of candidate bodies" stays — but `lean_diagnostic_messages` on edits-already-on-disk is NOT pre-validation; it's the standard development feedback loop.
+
+## Current Objectives
+
+The dispatcher fans out one prover per file listed below. Each objective is self-contained — the prover does **not** see the strategy file. **Both lanes are repair-only**; no new feature work; new sorries are acceptable wherever an in-flight tactic chain cannot be repaired in-iteration.
+
+### 1. `AlgebraicJacobian/Differentials.lean` — REPAIR (restore compilation, preserve 6 sorries)
+
+**File status.** 6 syntactic sorries (L122, L604, L617, L662, L679, L821), 823 LOC. **File does not compile.** 12 errors reported by `lean_diagnostic_messages` this plan pass.
+
+**Goal.** Make the file compile cleanly (no errors). Preserve the 6 residual sorries at the listed lines. Where an in-flight tactic chain cannot be repaired in-iteration, **roll the surrounding `by`-block back to `by sorry`** with a one-line `-- ITER-076: <issue>` comment.
+
+**Specific errors to repair** (from `lean_diagnostic_messages` this plan pass):
+
+1. **L244** (`cotangentExactSeqAlpha`'s `d_target.d` constructor) — unsolved additivity goal. The `(by intro a b; simp)` argument leaves `D_X.d ((f.c.app U).hom (a + b)) = D_X.d (… a) + D_X.d (… b)`. **Repair**: replace with `(by intro a b; rw [(f.c.app U).hom.map_add, D_X.d_add])`.
+
+2. **L248** (`d_target.d_mul`) — rewrite pattern not present after `dsimp`. **Repair**: insert `show D_X.d ((f.c.app U).hom (a * b)) = a • D_X.d ((f.c.app U).hom b) + b • D_X.d ((f.c.app U).hom a)` before the `rw`, then `rw [(f.c.app U).hom.map_mul, D_X.d_mul]; rfl`.
+
+3. **L256** (`d_target.d_map`) — `Function expected at ConcreteCategory.hom h`. **Repair**: tag the `h` type, `have := congr_arg (fun h : _ ⟶ _ => (ConcreteCategory.hom h) x) (f.c.naturality f')` (with an explicit hom-type or via a `let h_eq := f.c.naturality f'` pre-binding).
+
+4. **L258** — same shape as L248. **Repair**: insert an explicit `show` to commit the `(f.c.app V).hom (Y.presheaf.map f' x)` form before the `rw`.
+
+5. **L266** (`d_target.d_app`'s `hcomm` step) — `rfl` claim fails for `φ_g' ≫ f.c = adj_f.unit ≫ (pushforward).map φ_fg'`. This identity is not definitionally true; it requires the adjunction-coherence at the composition `(f ≫ g).base = g.base ≫ f.base`. **Repair**: roll back the `d_target.d_app` proof block to `sorry` with a comment, OR derive `hcomm` via `Adjunction.homEquiv_naturality` + `Equiv.symm_apply_eq` instead of `rfl`. The simpler in-iteration fix is the rollback.
+
+6. **L297, L342, L343** (`cotangentExactSeqBeta`) — `whnf` / tactic-execution heartbeat timeouts at 200000 heartbeats. The `set adj_fg; set η` chain at L304–L306 is heavy. **Repair**: prepend `set_option maxHeartbeats 400000 in` to `cotangentExactSeqBeta`'s definition, OR roll back `cotangentExactSeqBeta`'s body to `sorry` (it was originally `sorry` and the closure attempted in iter-069 produced this chain). The simpler in-iteration fix is the rollback — `cotangentExactSeqBeta` was closed iter-069 by an earlier attempt; the current body is a re-attempt that doesn't fit in 200k heartbeats.
+
+7. **L332** (`cotangentExactSeqBeta`'s `hη.h5`) — `No goals to be solved` on `exact h4`. **Repair**: remove the redundant `exact h4` line (the prior `simp only / erw [h6]` chain has already closed the goal).
+
+8. **L381–L384** — `Unknown identifier cotangentExactSeqBeta` cascade. **Resolves automatically** once L297/L342 are repaired.
+
+9. **L452** (`cotangentExactSeq_structure`'s `h_zero` setup) — `simp made no progress`. **Repair**: replace `simp only [SheafOfModules.comp_val, SheafOfModules.pushforward_map_val]` with `dsimp only [SheafOfModules.comp_val, SheafOfModules.pushforward_map_val]`, or drop the line.
+
+10. **L645** (`cotangent_exact_sequence`) — `Unknown identifier cotangentExactSeq_structure`. **Resolves automatically** once the upstream is repaired.
+
+**Fallback.** Any block that cannot be repaired in-iteration: replace with `by sorry` + `-- ITER-076: <issue>` comment. **Goal is compilation cleanness, not closing more sorries.**
+
+**Sorry-count budget.** Starts at 6; the repaired file should have **at most 8** sorries (allow +2 for in-flight rollback).
+
+**Hard constraints**:
+- **No new project-local helper lemmas.** Per user feedback memory ("no chains of thin helpers across iterations").
+- **No new axioms.**
+- **No `lean_run_code` pre-validation** (user policy). `lean_diagnostic_messages` after each save IS allowed (it's not pre-validation; it's the standard dev feedback loop).
+
+Blueprint: `blueprint/src/chapters/Differentials.tex` (unchanged this iter).
+
+### 2. `AlgebraicJacobian/Cohomology/BasicOpenCech.lean` — REPAIR (restore compilation, preserve 6 sorries)
+
+**File status.** 6 syntactic sorries (L495, L819, L847, L1166, L1181, L1260), 1270 LOC. **File does not compile.** 5 errors reported by `lean_diagnostic_messages` this plan pass.
+
+**Goal.** Make the file compile cleanly. Preserve the 6 residual sorries at the listed lines. Same fallback policy as Lane 1.
+
+**Specific errors to repair**:
+
+1. **L952** — unsolved goal: `Module ↑R ↑(∏ᶜ fun i ↦ ModuleCat.of k ↑(C.left.presheaf.obj (…))) = Module ↑R ↑(∏ᶜ Z₃)`. The `h_mod_pi₃` setup derives the instance via `Pi.module` but the underlying type defeq doesn't close. **Repair**: insert `convert h_mod_pi₃` or `change Module ↑R ↑(∏ᶜ Z₃) from h_mod_pi₃`; or wrap the line in `letI : Module ↑R ↑(∏ᶜ Z₃) := h_mod_pi₃`.
+
+2. **L1088** — `simp made no progress`. In `h_diff_pi_smul_f`, the `simp only [Pi.smul_apply, Finset.sum_apply, Finset.smul_sum]` after the bulk simp on L1080–L1087 fires on a target where the lemmas don't apply (or have already fired). **Repair**: replace `simp only` with `try simp only`, or drop the line entirely.
+
+3. **L1170, L1171** — type mismatches in `h_diff_pi_smul_g`. `(ConcreteCategory.hom scK₀.g) (e₂.symm (r • y))` has type `↑scK₀.X₃`, but `e₃` expects `↑(∏ᶜ Z₃)`. The statement at L1167–L1171 was patterned on `h_diff_pi_smul_f` but the wrong type-bridge was used. **Repair**: roll back the body of `h_diff_pi_smul_g` to a bare `sorry` (preserving the `letI`s and the statement shape via `change`/explicit annotations), OR fix the statement so the `e₃`-images type-check.
+
+4. **L1182** — `isDefEq` heartbeat timeout (≥ 200000 heartbeats) in `h_diff_pi_smul_g`'s `try` chain. **Repair**: remove the `try funext j; try simp only [Pi.smul_apply]` chain at L1179–L1180; replace the body with `intro r y; sorry`.
+
+5. **L412** — `whnf` heartbeat timeout. **Investigate**: read the context at L412; if it's inside the dead-end substep (L495 territory), the body may have been recently bloated. Wrap with `set_option maxHeartbeats 400000 in` locally OR roll back the offending block.
+
+6. **L1205, L1213** (cascade from above) — unsolved goals + `whnf` timeout in `f_R.map_smul'`/`g_R.map_smul'`'s `calc` chain. **Repair**: if necessary, roll back the `map_smul'` bodies of `f_R` and `g_R` to `by intro r x; sorry`.
+
+**Fallback.** Same as Lane 1: replace problematic `by`-blocks with `by sorry` + `-- ITER-076` comment.
+
+**Sorry-count budget.** Starts at 6; the repaired file should have **at most 9** sorries (allow +3 for the potential `f_R`/`g_R`/`h_diff_pi_smul_g` rollbacks).
+
+**Hard constraints**: same as Lane 1.
+
+Blueprint: `blueprint/src/chapters/Cohomology_MayerVietoris.tex` § *Čech acyclicity for the structure sheaf on affine basic-open covers*; also `analogies/cech-koszul-precedent.md`.
+
+## Off-limits this iteration
+
+- `AlgebraicJacobian/Jacobian.lean` (1 sorry on `nonempty_jacobianWitness` L177) — Phase C now active but the Lean-side closure is iter-085+ at earliest.
+- `AlgebraicJacobian/AbelJacobi.lean` (0 sorries) — DONE iter-073.
+- `AlgebraicJacobian/Picard/Functor.lean` (1 sorry on `PicardFunctor.representable`) — gated on C0–C3.
+- `AlgebraicJacobian/Genus.lean` (0 sorries) — DONE iter-011.
+- `AlgebraicJacobian/Picard/LineBundle.lean` (0 sorries) — refactor C1 deferred to iter-079+.
+- `AlgebraicJacobian/Picard/FunctorAb.lean` (0 sorries) — C2 re-derivation deferred to iter-081+.
+- `AlgebraicJacobian/Modules/Monoidal.lean` — does not exist; refactor subagent creates it in iter-077.
+- BasicOpenCech `h_π_split` analogue at L819, extra-degeneracy substeps L495 + L847 — confirmed dead-ends.
+
+## Verification (pre-dispatch, iter-076 plan pass)
+
+| Check | Status |
+|---|---|
+| Sorry count per file | BasicOpenCech 6, Differentials 6, Jacobian 1, Picard/Functor 1, AbelJacobi 0, Genus 0 = **14 total** (verified via `sorry_analyzer.py` this pass) |
+| File compilation | BasicOpenCech **FAILS** (5 errors); Differentials **FAILS** (12 errors); Jacobian/Picard/Functor/AbelJacobi/Genus **PASS** |
+| `archon-protected.yaml` | unchanged |
+| New axioms | none |
+| `USER_HINTS.md` | cleared this pass after acting on Phase C re-opening directive |
+| Build env | **WORKING** — corrected stale claim. LSP returns useful diagnostics; `lean_leansearch` works. |
+| Blueprint chapters | `Modules_Monoidal.tex` written (new); `content.tex` updated; `Picard_Functor.tex` softened with C0–C3 roadmap. Other chapters unchanged. |
+| `task_results/` | empty (no prover dispatched yet this iter) |
+
+## Related state files
+
+- `STRATEGY.md` — rewritten this iter: Phase C re-opened (C0/C1/C2/C3 four-step plan); estimates updated; revision log extended with the iter-076 strategic shift.
+- `task_pending.md` — rewritten this iter: index reflects actual file state (BasicOpenCech / Differentials don't compile); iter-076 repair lanes specified with line-level error inventories; forward scoping post-076 updated.
+- `task_done.md` — extended with the inter-iter structural progress note (Differentials Step 7 essentially-complete inline; BasicOpenCech sign-factor peeled). Distinct from iter-076's repair outcome (logged after the lane).
+- `blueprint/src/chapters/Modules_Monoidal.tex` — new chapter (Phase C step C0).
+- `blueprint/src/content.tex` — adds `\input{chapters/Modules_Monoidal}`.
+- `blueprint/src/chapters/Picard_Functor.tex` — proof framing softened: "deferred indefinitely" → C0–C3 roadmap.
+- `archon-protected.yaml` — read only; unchanged.
+- `USER_HINTS.md` — cleared this pass.

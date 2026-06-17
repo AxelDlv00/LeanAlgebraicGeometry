@@ -1,0 +1,49 @@
+\section{Peer dependency anchors}
+
+This chapter records reusable infrastructure already present in peer DAGs.  The
+blocks here are dependency anchors for later formal work; they are not final
+mathematical claims from Kemeny's paper.
+
+\begin{definition}[Sheaf cohomology and higher direct image anchor]
+  \label{def:peer_higher_direct_image}
+  \lean{AlgebraicGeometry.higherDirectImage}
+  The peer project \emph{Cech-Cohomology}, in its chapter on higher direct
+  images \(R^i f_*\) of quasi-coherent sheaves, supplies the standard higher
+  direct image object \(R^i f_*\mathcal F\).  This is the infrastructure through
+  which Kemeny's uses of \(R^i q_*\), Grauert-type local freeness, and Leray
+  spectral sequences should pass.
+\end{definition}
+
+\begin{definition}[Scheme cohomology module anchor]
+  \label{def:peer_scheme_hmodule}
+  \lean{AlgebraicGeometry.Scheme.HModule}
+  The peer project \emph{Algebraic-Jacobian-Challenge}, in its chapter on
+  sheaves of \(k\)-modules, supplies the scheme cohomology module
+  \(H^i(X,\mathcal F)\) for module-valued sheaves on a scheme.  The present
+  blueprint uses this object as the common cohomological interface.
+\end{definition}
+
+\begin{definition}[Affine pushforward and base-change anchor]
+  \label{def:peer_affine_pushforward_base_change}
+  \lean{AlgebraicGeometry.pushforwardBaseChangeMap}
+  \uses{def:peer_higher_direct_image}
+  The peer project \emph{Quot-Foundations}, in its chapter on flat base change
+  for degree-zero pushforward of quasi-coherent sheaves, supplies the affine
+  base-change morphism.  It is connected here to the higher direct image anchor
+  because the \(i=0\) construction is the degree-zero member of the same
+  pushforward formalism.  Kemeny's pushforward identities for blow-ups,
+  restrictions, and products should be expressed through this base-change
+  object.
+\end{definition}
+
+\begin{definition}[Local criterion for module isomorphisms anchor]
+  \label{def:peer_module_iso_locality}
+  \lean{AlgebraicGeometry.Modules.isIso_iff_isIso_stalkFunctor_map}
+  \uses{def:peer_scheme_hmodule}
+  The peer project \emph{Quot-Foundations}, in its chapter on flat base change
+  for degree-zero pushforward, supplies the local criterion that a morphism of
+  \(\mathcal O_X\)-modules is an isomorphism exactly when the induced morphisms
+  on stalks are isomorphisms.  Later comparisons of cohomology sheaves and
+  vector bundles should reduce global module isomorphisms to these stalkwise
+  verifications.
+\end{definition}

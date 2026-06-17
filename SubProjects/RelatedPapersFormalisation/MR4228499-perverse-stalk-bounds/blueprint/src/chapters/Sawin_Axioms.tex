@@ -1,0 +1,289 @@
+% archon:covers MR4228499BoundsForTheStalksOfPerverseSheavesInCharacteristicPAndAConjectureO/Axioms.lean
+
+\section{Axiom-layer foundations: nearby/vanishing cycles, Beilinson and Saito}
+
+This chapter collects the external results that the project invokes as black boxes:
+the nearby- and vanishing-cycles functors, Beilinson's existence theorem for the
+singular support, Saito's existence and push-pull theorems for the characteristic
+cycle, the Gabber--Illusie perversity result, and the two Tsimerman--Shende results.
+All declarations in this chapter will be formalized as \texttt{opaque} axioms in
+Lean; none carry original proofs.
+
+All schemes are smooth over a perfect field $k$; $\ell$ is a prime invertible in
+$k$.  The derived category $D^b_c(X,\bF_\ell)$ denotes the bounded derived category
+of constructible sheaves of $\bF_\ell$-modules on $X$.
+
+\subsection{The nearby- and vanishing-cycles functors}
+
+\begin{definition}[Nearby-cycles functor $R\Psi_f$]
+  \label{def:nearby_cycles}
+  \lean{MR4228499.nearbyCycles}
+  % SOURCE: Sawin, §2 (implicit, SGA 4 1/2 Th. Finitude, Illusie 1994).
+  % SOURCE QUOTE: taking $t$ the generic point, $H^* ( W_{x,t}, K)$ is the stalk of $R \Psi_ K$ at $x$ and $H^* ( W_x, K) $ is the stalk of $K$ at $x$, so the map is an isomorphism if and only if the mapping cone $R(\Phi_f K)_x$ vanishes.
+  \textit{Source: Sawin, §2 (SGA~$4\tfrac{1}{2}$, Th.\ Finitude; Illusie 1994).}
+  Let $f:X\to Y$ be a morphism to a smooth curve $Y$ over a perfect field $k$, let
+  $\eta$ denote the generic point of $Y$, and let $s\in Y$ be a closed point.  The
+  \emph{nearby-cycles functor}
+  \[ R\Psi_f : D^b_c(X,\bF_\ell) \longrightarrow D^b_c(f^{-1}(\eta),\bF_\ell) \]
+  sends $K$ to the restriction of $K$ to the geometric generic fibre $f^{-1}(\eta)$,
+  equipped with the continuous action of the fundamental group of $Y$ at $\eta$.  Its
+  stalk at a geometric point $x\in f^{-1}(s)$ is $H^*(W_{x,\eta},K)$, where
+  $W_{x,\eta}$ is the henselization of the fibre of $f$ over $s$ at $x$.
+\end{definition}
+
+% SOURCE QUOTE PROOF: (axiom — no proof in Sawin; see SGA 4 1/2 Th. Finitude for construction.)
+\begin{proof}
+  Axiomatized: this result is assumed without proof; the Lean formalization will use
+  an \texttt{opaque} declaration.
+\end{proof}
+
+\begin{definition}[Vanishing-cycles functor $R\Phi_f$]
+  \label{def:vanishing_cycles}
+  \lean{MR4228499.vanishingCycles}
+  % SOURCE: Sawin, §2 (implicit, SGA 4 1/2 Th. Finitude, Illusie 1994).
+  % SOURCE QUOTE: taking $t$ the generic point, $H^* ( W_{x,t}, K)$ is the stalk of $R \Psi_ K$ at $x$ and $H^* ( W_x, K) $ is the stalk of $K$ at $x$, so the map is an isomorphism if and only if the mapping cone $R(\Phi_f K)_x$ vanishes.
+  \textit{Source: Sawin, §2 (SGA~$4\tfrac{1}{2}$, Th.\ Finitude; Illusie 1994).}
+  In the same setting as \cref{def:nearby_cycles}, the \emph{vanishing-cycles
+  functor}
+  \[ R\Phi_f : D^b_c(X,\bF_\ell) \longrightarrow D^b_c(f^{-1}(s),\bF_\ell) \]
+  is defined by the exact triangle $K|_{f^{-1}(s)} \to R\Psi_f K \to R\Phi_f K \to
+  \cdots$ (with the arrow from $K|_{f^{-1}(s)}$ to $R\Psi_f K$ being the
+  specialization map).  When $Y$ is a smooth curve, local acyclicity of $f$ relative
+  to $K$ (see \cref{def:sawin_local_acyclic}) is equivalent to $R\Phi_f K = 0$, since
+  the mapping cone $R(\Phi_f K)_x$ vanishes exactly when the stalk map
+  $H^*(W_x,K)\to H^*(W_{x,t},K)$ is an isomorphism.
+\end{definition}
+
+% SOURCE QUOTE PROOF: (axiom — no proof in Sawin; see SGA 4 1/2 Th. Finitude for construction.)
+\begin{proof}
+  Axiomatized: this result is assumed without proof; the Lean formalization will use
+  an \texttt{opaque} declaration.
+\end{proof}
+
+\subsection{Beilinson's existence theorem and Saito's characteristic cycle}
+
+\begin{theorem}[Existence of the singular support (Beilinson)]
+  \label{thm:beilinson_ss}
+  \lean{MR4228499.singularSupport_exists}
+  \uses{def:sawin_pair_transversal, def:sawin_local_acyclic, def:sawin_singular_support}
+  % SOURCE: Sawin, §2, after Definition (Beilinson 1.3) (read from references/sawin-perverse-sheaves-char-p.tex).
+  % SOURCE QUOTE: The existence and uniqueness of $SS(K)$ is \cite[Theorem 1.3]{Beilinson}, which also proves that if $X$ has dimension $n$ then $SS(K)$ has dimension $n$ as well.
+  \textit{Source: Sawin, §2, after Definition (Beilinson 1.3); Beilinson,
+  \emph{Constructible sheaves are holonomic}, Selecta Math.\ 22 (2016) 1797--1819.}
+  For $K\in D^b_c(X,\bF_\ell)$ on a smooth variety $X$ of dimension $n$ over a
+  perfect field $k$, the singular support $\SSing(K)$ exists and is unique: it is the
+  smallest closed conical subset $C\subseteq T^*X$ such that for every $C$-transversal
+  pair $h:W\to X$, $f:W\to Y$, the map $f$ is locally acyclic relative to $h^*K$.
+  Moreover, $\dim\SSing(K)=n$.
+\end{theorem}
+
+% SOURCE QUOTE PROOF: (axiom — Beilinson Theorem 1.3; no proof reproduced in Sawin.)
+\begin{proof}
+  Axiomatized: this result is assumed without proof; the Lean formalization will use
+  an \texttt{opaque} declaration.
+\end{proof}
+
+\begin{theorem}[Existence and integrality of the characteristic cycle (Saito)]
+  \label{thm:saito_cc_exists}
+  \lean{MR4228499.characteristicCycle_exists}
+  \uses{def:sawin_characteristic_cycle, def:sawin_singular_support, def:sawin_dimtot, def:vanishing_cycles}
+  % SOURCE: Sawin, §2, after Definition (Saito Def 5.10) (read from references/sawin-perverse-sheaves-char-p.tex).
+  % SOURCE QUOTE: The existence and uniqueness is \cite[Theorem 5.9]{saito1}, except for the fact that the coefficients lie in $\mathbb Z$ and not $\mathbb Z[1/p]$, which is \cite[Theorem 5.18]{saito1} and is due to Beilinson, based on a suggestion by Deligne.
+  \textit{Source: Sawin, §2, after Definition (Saito 5.10); Saito,
+  \emph{The characteristic cycle and the singular support}, Invent.\ Math.\ 207
+  (2017) 597--695, Thms.\ 5.9, 5.18.}
+  For $K\in D^b_c(X,\bF_\ell)$ on a smooth variety $X$ of dimension $n$, the
+  characteristic cycle $\CCyc(K)$ exists, is unique, and its coefficients lie in
+  $\bZ$ (not merely in $\bZ[1/p]$).  Concretely, $\CCyc(K)$ is the unique
+  $\bZ$-linear combination of irreducible components of $\SSing(K)$ such that for
+  every étale $j:W\to X$, every $f:W\to Y$ to a smooth curve, and every at most
+  isolated $h^\circ\SSing(\cF)$-characteristic point $u\in W$ of $f$, the identity
+  \[ -\dimtot\bigl(\RPhi_f(j^*K)\bigr)_u = (j^*\CCyc(K),(df)^*\omega)_{T^*W,u} \]
+  holds for $\omega$ a meromorphic one-form without zero or pole at $f(u)$.
+  Existence and uniqueness are Saito Theorem 5.9; integrality is Saito Theorem 5.18
+  (Beilinson--Deligne).
+\end{theorem}
+
+% SOURCE QUOTE PROOF: (axiom — Saito Theorems 5.9 and 5.18; no proof reproduced in Sawin.)
+\begin{proof}
+  Axiomatized: this result is assumed without proof; the Lean formalization will use
+  an \texttt{opaque} declaration.
+\end{proof}
+
+\begin{theorem}[Support of the characteristic cycle equals the singular support]
+  \label{thm:saito_prop_514}
+  \lean{MR4228499.ss_eq_supp_cc}
+  \uses{thm:saito_cc_exists, def:sawin_singular_support, def:sawin_characteristic_cycle}
+  % SOURCE: Sawin, §2, Definition (Saito Def 5.10) (read from references/sawin-perverse-sheaves-char-p.tex).
+  % SOURCE QUOTE: By Saito Proposition 5.14(2), $\SSing(K) = \operatorname{supp}\CCyc(K)$.
+  \textit{Source: Sawin, §2, note after Definition (Saito 5.10); Saito Proposition 5.14(2).}
+  For $K\in D^b_c(X,\bF_\ell)$, $\SSing(K) = \operatorname{supp}\CCyc(K)$.
+\end{theorem}
+
+% SOURCE QUOTE PROOF: (axiom — Saito Proposition 5.14(2); no proof reproduced in Sawin.)
+\begin{proof}
+  Axiomatized: this result is assumed without proof; the Lean formalization will use
+  an \texttt{opaque} declaration.
+\end{proof}
+
+\subsection{Saito's push-pull theorems for the characteristic cycle}
+
+\begin{theorem}[Pullback of the characteristic cycle (Saito)]
+  \label{thm:saito_cc_pullback}
+  \lean{MR4228499.cc_pullback}
+  \uses{def:sawin_characteristic_cycle, def:sawin_properly_transversal, def:sawin_shriek_pullback}
+  % SOURCE: Sawin, §4, proof of lem:final-nearby-formula (read from references/sawin-perverse-sheaves-char-p.tex).
+  % SOURCE QUOTE: p is properly $SS'(K)$-transversal, and it is \'{e}tale at $x$ so it is properly $SS(K)$-transversal, so by \cite[Theorem 6.6]{saito1}, \[CC(p^* K) = p^!(CC(K))\]
+  \textit{Source: Sawin, §4, proof of final-nearby-formula; Saito Theorem 6.6.}
+  Let $p:X\to Y$ be a morphism of smooth varieties.  If $p$ is properly
+  $\SSing(K)$-transversal and étale at $x\in X$, then
+  \[ \CCyc(p^*K) = p^!\CCyc(K). \]
+  In particular, $\CCyc'(p^*K) = p^!\CCyc'(K)$, where $\CCyc'$ denotes the
+  characteristic cycle with the cotangent space at any chosen point removed.
+\end{theorem}
+
+% SOURCE QUOTE PROOF: (axiom — Saito Theorem 6.6; no proof reproduced in Sawin.)
+\begin{proof}
+  Axiomatized: this result is assumed without proof; the Lean formalization will use
+  an \texttt{opaque} declaration.
+\end{proof}
+
+\begin{theorem}[Characteristic cycle and nearby cycles (Saito)]
+  \label{thm:saito_cc_nearby}
+  \lean{MR4228499.cc_nearby}
+  \uses{def:sawin_characteristic_cycle, def:sawin_shriek_pullback, def:nearby_cycles, lem:sawin_transversality_check}
+  % SOURCE: Sawin, §4, proof of lem:nearby-formula (read from references/sawin-perverse-sheaves-char-p.tex).
+  % SOURCE QUOTE: Then by \cite[Theorem 7.6]{saito1} \[ CC ( R \Psi_{f} K) = CC( i^* K ) = i^! CC(K) = i^! CC'(K) \] away from $x$.
+  \textit{Source: Sawin, §4, proof of nearby-formula; Saito Theorem 7.6.}
+  Let $f:X\to Y$ be a smooth projective morphism that is $\SSing'(K)$-transversal
+  with fibres of dimension $\dim X-1$.  Let $y\in Y$, $Z=f^{-1}(y)$, and
+  $i:Z\hookrightarrow X$ the inclusion.  If $i$ is properly $\SSing'(K)$-transversal
+  (which follows from \cref{lem:sawin_transversality_check}), then
+  \[ i^!\CCyc'(K) = \CCyc(R\Psi_f K), \]
+  where $\CCyc'(K)$ denotes $\CCyc(K)$ with any cotangent-space-at-$x$ term removed.
+\end{theorem}
+
+% SOURCE QUOTE PROOF: (axiom — Saito Theorem 7.6; invoked in Sawin nearby-formula proof.)
+\begin{proof}
+  Axiomatized: this result is assumed without proof; the Lean formalization will use
+  an \texttt{opaque} declaration.
+\end{proof}
+
+\begin{theorem}[Index formula for the characteristic cycle (Saito)]
+  \label{thm:saito_index}
+  \lean{MR4228499.indexFormula}
+  \uses{thm:saito_cc_nearby, def:sawin_characteristic_cycle, def:nearby_cycles}
+  % SOURCE: Sawin, §4, proof of lem:nearby-formula (read from references/sawin-perverse-sheaves-char-p.tex).
+  % SOURCE QUOTE: By the index formula \cite[Theorem 7 .13]{saito1}, \[ (CC ( R \Psi_{f} K) , Z)_{T^*Z} = \chi(Z, R \Psi_f K) =\chi ( f^{-1}(\eta),K)\]
+  \textit{Source: Sawin, §4, proof of nearby-formula; Saito Theorem 7.13.}
+  In the setting of \cref{thm:saito_cc_nearby}, with $Z=f^{-1}(y)$ and $Z$ viewed
+  as the zero-section of $T^*Z$,
+  \[ \bigl(\CCyc(R\Psi_f K),\, Z\bigr)_{T^*Z} = \chi(Z, R\Psi_f K) = \chi(f^{-1}(\eta), K), \]
+  where $\eta$ is the generic point of $Y$ and the left side is the intersection
+  number in the cotangent bundle.
+\end{theorem}
+
+% SOURCE QUOTE PROOF: (axiom — Saito Theorem 7.13; invoked in Sawin nearby-formula proof.)
+\begin{proof}
+  Axiomatized: this result is assumed without proof; the Lean formalization will use
+  an \texttt{opaque} declaration.
+\end{proof}
+
+\begin{theorem}[Direct-image formula for the characteristic cycle (Saito)]
+  \label{thm:saito_direct_pushforward}
+  \lean{MR4228499.cc_pushforward}
+  \uses{def:sawin_characteristic_cycle, def:sawin_shriek_forward, def:sawin_circ_forward}
+  % SOURCE: Sawin, §5, proof of lem:ts-smooth-cc (read from references/sawin-perverse-sheaves-char-p.tex).
+  % SOURCE QUOTE: This verifies condition (2.20) of \cite[Theorem 2.2.5]{saito-direct}. The other conditions ... are clear. Hence from \cite[Theorem 2.2.5]{saito-direct} we deduce \[CC ( \underline{A}_{a,b *} \mathbb Q_\ell[2g-a-b] )= \underline{A}^{a,b}_! CC( \mathbb Q_\ell[2g-a-b]) = \underline{A}^{a,b}_! [ C^{(g-a)} \times C^{(g-b) }].\]
+  \textit{Source: Sawin, §5, proof of ts-smooth-cc; Saito,
+  \emph{Characteristic cycles and the conductor of direct image},
+  arXiv:1704.04832, Theorem 2.2.5.}
+  Let $f:X\to Y$ be a quasi-projective proper morphism of smooth varieties with $Y$
+  projective, and let $K\in D^b_c(X,\bF_\ell)$ be constructible.  Assume the
+  dimension hypothesis (2.20): $f_\circ\SSing(K)$ has dimension $\dim Y$.  Then
+  \[ \CCyc(f_*K) = f_!\CCyc(K). \]
+\end{theorem}
+
+% SOURCE QUOTE PROOF: (axiom — Saito-direct Theorem 2.2.5; no proof reproduced in Sawin.)
+\begin{proof}
+  Axiomatized: this result is assumed without proof; the Lean formalization will use
+  an \texttt{opaque} declaration.
+\end{proof}
+
+\subsection{Gabber--Illusie and Tsimerman--Shende results}
+
+\begin{lemma}[Perversity of vanishing cycles (Gabber--Illusie)]
+  \label{lem:gabber_illusie}
+  \lean{MR4228499.rphi_perverse}
+  \uses{def:vanishing_cycles}
+  % SOURCE: Sawin, §4, proof of lem:final-nearby-formula (read from references/sawin-perverse-sheaves-char-p.tex).
+  % SOURCE QUOTE: because $p^*K$ is perverse near $x$, $p^* K[-1]$ is perverse near $x$ when restricted to the generic fiber of $q$, and so by the theorem of Gabber \cite[Corollary 4.6]{Illusie}, $R\Phi_q ( p^* K)[-1]$ is perverse
+  \textit{Source: Sawin, §4, proof of final-nearby-formula; Illusie,
+  \emph{Autour du théorème de monodromie locale}, Astérisque 223 (1994) 9--57,
+  Corollary 4.6.}
+  Let $f:X\to Y$ be a morphism to a smooth curve, and let $F\in D^b_c(X,\bF_\ell)$.
+  If $F[-1]$ is perverse on $X$ and $F$ is supported on a fibre $f^{-1}(s)$, then
+  $R\Phi_f(F)[-1]$ is perverse on $f^{-1}(s)$.
+\end{lemma}
+
+% SOURCE QUOTE PROOF: (axiom — Illusie Corollary 4.6; invoked in Sawin final-nearby-formula proof.)
+\begin{proof}
+  Axiomatized: this result is assumed without proof; the Lean formalization will use
+  an \texttt{opaque} declaration.
+\end{proof}
+
+\begin{lemma}[Cycle class of the Tsimerman--Shende polar variety]
+  \label{lem:ts_3_22}
+  \lean{MR4228499.ts_polar_class}
+  \uses{def:sawin_Z_locus, def:peer_jacobian, def:peer_weil_divisor}
+  % SOURCE: Sawin, §5, proof of lem:individual-polar-bound (read from references/sawin-perverse-sheaves-char-p.tex).
+  % SOURCE QUOTE: They calculated \cite[Lemma 3.22]{TS} that the cycle class of $P_L'V_{w_1,w_2}$ equals \[ \sum_{\substack{c+d = w_1+w_2 -i \\ c \leq w_1, d\leq w_2 }} 2^{ w_1+w_2-i} {g-i-1 \choose c,d,g-1-w_1-w_2} 2^{w_2-d} {w_1 + w_2 -c -d \choose w_1 -c } [\Theta_i].\]
+  \textit{Source: Sawin, §5, proof of individual-polar-bound; Shende--Tsimerman,
+  \emph{Equidistribution in $\operatorname{Bun}_2(\mathbb P^1)$}, Duke Math.\ J.\
+  166 (2017) 3461--3504, Lemma 3.22.}
+  Let $L\subseteq H^1(C,\cO_C)$ be a generic subspace of rank $g-i-1$ and
+  $L^\vee\subseteq H^0(C,K_C)$ its perpendicular subspace of dimension $i+1$.  Let
+  \[ P'_L V_{w_1,w_2} = \pi_{w_1,w_2}(\sigma^{-1}(\PP(L^\vee))) \subseteq J \]
+  where $\pi_{w_1,w_2}:C^{(w_1)}\times C^{(w_2)}\times(C/\tau)^{g-1-w_1-w_2}\to J$
+  sends $(D_1,D_2,D_3)\mapsto [D_1+2D_2]$ and $\sigma$ is the projection to
+  $\PP(H^0(C,K_C))$.  Then the cycle class of $P'_L V_{w_1,w_2}$ in $\CHow^*(J)$ is
+  \[ \sum_{\substack{c+d=w_1+w_2-i\\ c\le w_1,\,d\le w_2}}
+     2^{w_1+w_2-i}\binom{g-i-1}{c,d,g-1-w_1-w_2}2^{w_2-d}
+     \binom{w_1+w_2-c-d}{w_1-c}[\Theta_i]. \]
+  In particular, the $i$th polar multiplicity of $pr_{w_1,w_2*}[Z_{w_1,w_2}]$ at
+  any $E\in J$ is at most the coefficient above times
+  $([\Theta_i],[\Theta_{g-i}])=\binom{g}{i}$ (times $2^{i-1}$ for $i>0$, or $1$ for
+  $i=0$), via the appendix bound.
+\end{lemma}
+
+% SOURCE QUOTE PROOF: (axiom — TS Lemma 3.22; intersection theory lifts to characteristic p.)
+\begin{proof}
+  Axiomatized: this result is assumed without proof; the Lean formalization will use
+  an \texttt{opaque} declaration.  The cycle-class computation lifts cleanly from
+  characteristic zero (where Shende--Tsimerman prove it) because everything involved
+  in the intersection theory can be lifted.
+\end{proof}
+
+\begin{theorem}[Equidistribution from Betti-number bounds (Tsimerman--Shende)]
+  \label{thm:ts_4_4}
+  \lean{MR4228499.ts_equidistribution_from_betti}
+  \uses{thm:sawin_theta_betti_bound}
+  % SOURCE: Sawin, §5, proof of thm:sawin_equidistribution (read from references/sawin-perverse-sheaves-char-p.tex lines 221-224 in blueprint chapter Sawin_ShendeTsimerman.tex).
+  % SOURCE QUOTE: Immediate from Theorem~\ref{thm:sawin_theta_betti_bound} and TS Theorem 4.4, which deduces the equidistribution statement from the Betti-number bound (and also handles the case where the minimal degree does not tend to $\infty$).
+  \textit{Source: Sawin, proof of equidistribution; Shende--Tsimerman Theorem 4.4.}
+  If the Betti-number bound
+  \[ \sum_{i\in\bZ}\dim H^i\bigl((\Theta_{g-a}\cap L-\Theta_{g-b})_{\overline k},
+     \bQ_\ell\bigr) \le B(g) \]
+  holds for all $L\in J$ and all $a,b$ with $0\le a,b\le g$ (as provided by
+  \cref{thm:sawin_theta_betti_bound}), then the equidistribution statement of
+  \cref{thm:sawin_equidistribution} follows.  In particular, Theorem 4.4 of
+  Shende--Tsimerman handles the deduction from the Betti-number bound to the
+  equidistribution statement, including the case where the minimal degree does not
+  tend to $\infty$.
+\end{theorem}
+
+% SOURCE QUOTE PROOF: (axiom — TS Theorem 4.4; no proof reproduced in Sawin.)
+\begin{proof}
+  Axiomatized: this result is assumed without proof; the Lean formalization will use
+  an \texttt{opaque} declaration.
+\end{proof}

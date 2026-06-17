@@ -1,0 +1,84 @@
+{
+  "iteration": 177,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-23T14:18:13Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "fa7abc2e-a261-4cbc-8d39-821974a36863",
+    "durationSecs": 1273
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 8
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 5471
+  },
+  "provers": {
+    "AlgebraicJacobian_Albanese_AlbaneseUP": {
+      "file": "AlgebraicJacobian/Albanese/AlbaneseUP.lean",
+      "status": "done",
+      "sessionId": "800b941b-4e0f-4393-afec-49da74abf9ae"
+    },
+    "AlgebraicJacobian_Albanese_CodimOneExtension": {
+      "file": "AlgebraicJacobian/Albanese/CodimOneExtension.lean",
+      "status": "done",
+      "sessionId": "4375c6e0-28ba-4b75-93d2-cdf8330b6d9b"
+    },
+    "AlgebraicJacobian_Genus0BaseObjects_GmScaling": {
+      "file": "AlgebraicJacobian/Genus0BaseObjects/GmScaling.lean",
+      "status": "done",
+      "sessionId": "8d135deb-895d-4365-8dbd-102a487a8314"
+    },
+    "AlgebraicJacobian_Picard_QuotScheme": {
+      "file": "AlgebraicJacobian/Picard/QuotScheme.lean",
+      "status": "done",
+      "sessionId": "4d591da5-ccf9-4fdc-abcf-441532a12a9b"
+    },
+    "AlgebraicJacobian_Picard_RelPicFunctor": {
+      "file": "AlgebraicJacobian/Picard/RelPicFunctor.lean",
+      "status": "done",
+      "sessionId": "44944fea-aec6-4e21-aecc-aa1dbe9b389f"
+    },
+    "AlgebraicJacobian_RiemannRoch_OCofP": {
+      "file": "AlgebraicJacobian/RiemannRoch/OCofP.lean",
+      "status": "done",
+      "sessionId": "11bf7860-0bcd-40e9-9557-a032d024db2f"
+    },
+    "AlgebraicJacobian_RiemannRoch_RationalCurveIso": {
+      "file": "AlgebraicJacobian/RiemannRoch/RationalCurveIso.lean",
+      "status": "done",
+      "sessionId": "f6e88f6e-8b1c-421b-b9dc-16f6f07423b3"
+    },
+    "AlgebraicJacobian_RiemannRoch_WeilDivisor": {
+      "file": "AlgebraicJacobian/RiemannRoch/WeilDivisor.lean",
+      "status": "done",
+      "sessionId": "bfb1b836-abda-4ad1-88f2-5a6294c54f4f"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "2f5dd79b-e802-4b82-b49c-8fa078e02f34",
+    "durationSecs": 1495
+  },
+  "sorry_count": 72,
+  "finalize": {
+    "innerGit": {
+      "sha": "1bd00f42"
+    },
+    "lake": {
+      "ok": false,
+      "durationSecs": 7,
+      "error": "build"
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 5,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-23T16:39:26Z",
+  "wallTimeSecs": 8472
+}

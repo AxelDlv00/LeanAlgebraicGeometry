@@ -1,0 +1,27 @@
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ───────────────────────────────
+
+[ARCHON] Agent model: opus (blueprint-writer)
+Done. Rendering cleanup of `blueprint/src/chapters/Differentials.tex` is complete.
+
+## Summary
+
+All **17 `…~REF` literal placeholders** (the directive estimated 16; one extra was present) were eliminated and replaced with proper `\cref{}` cross-references. **No rewording was needed** — although the iter-126 bridge *declaration* was excised, the section documenting it (`sec:bridge`) and the converse section (`sec:converse-out-of-scope`) both remain live, so every dangling reference had a correct existing target.
+
+Key resolutions:
+- `Section~REF` → `\cref{sec:bridge}` (standalone Kähler-localization utilities) or `\cref{sec:converse-out-of-scope}` (converse), per sentence.
+- `Theorem~REF` → `\cref{thm:smooth_locally_free_omega}` (forward smoothness criterion).
+- `Definition~REF` → `\cref{def:relative_kaehler_presheaf}`.
+- `Lemma~REF` disambiguated from context: line 42 → `lem:relative_kaehler_presheaf_obj` (the sections-identification lemma that licenses Mathlib lemma transfer — *not* the blanket hint's utility lemma); line 145 → `lem:kaehler_localization_subsingleton` (subsingleton vanishing); lines 114/150 → `lem:kaehler_quotient_localization_iso` (the `equivOfFormallyUnramified` PR candidate).
+- `Remark~REF` → `rem:converse_counterexample` / `rem:converse_lemma_hypotheses`.
+
+Verification passed: zero `REF` tokens remain; every introduced `\cref` names a label defined exactly once in the blueprint; no `math-delim`/`bare-label`/`undefined-macro` defects existed; and no statement text, `\lean{}`, `\label{}`, `\uses{}`, or `\leanok` was touched. No unresolved defects. Report written to `.archon/task_results/blueprint-writer-render-differentials.md`.
+[COST] 2.8min | $1.2319 | in=4437 out=13325 | turns=21
+[ARCHON] ✓ blueprint-writer/render-differentials finished (171s)
+render-differentials: COMPLETE — see /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/task_results/blueprint-writer-render-differentials.md (archived: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/logs/iter-279/blueprint-writer-render-differentials-report.md)

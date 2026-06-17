@@ -1,0 +1,4 @@
+Closed all four proof holes in [AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean](/home/archon/proj/Line-Bundle-Comparison-Iso/AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean) and logged the run in [task_results/AlgebraicJacobian_Picard_TensorObjSubstrate_DualInverse.lean.md](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/task_results/AlgebraicJacobian_Picard_TensorObjSubstrate_DualInverse.lean.md).
+
+- Closed proofs: `sliceDualTransportInv.naturality`, `sliceDualTransport.naturality`, `sliceDualTransport.left_inv`, `sliceDualTransport.right_inv`.
+- Validation blocker: the upstream parent module [AlgebraicJacobian/Picard/TensorObjSubstrate.lean](/home/archon/proj/Line-Bundle-Comparison-Iso/AlgebraicJacobian/Picard/TensorObjSubstrate.lean) fails to build independently at line 2823 (`unexpected token 'set_option'`) and again at lines 2936/2938 (type mismatches), so I could not complete an end-to-end `lake` build of the import chain.

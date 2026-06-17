@@ -1,0 +1,60 @@
+{
+  "iteration": 233,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-31T18:47:48Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "4c9a7f08-b09d-4375-a9dd-4e378e579a25",
+    "durationSecs": 4237
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 3
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 2550
+  },
+  "provers": {
+    "Picard_TensorObjSubstrate_StalkTensor": {
+      "file": "Picard/TensorObjSubstrate/StalkTensor.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "52edfcf6-2959-4ed6-8620-cada48205f23"
+    },
+    "Cohomology_HigherDirectImage": {
+      "file": "Cohomology/HigherDirectImage.lean",
+      "status": "done",
+      "mode": "prove",
+      "sessionId": "2f6fb571-3c4b-4d21-bfbb-a6585d1ee8d3"
+    },
+    "AlgebraicJacobian_Cohomology_FlatBaseChange": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "0005994c-3ddf-4380-82f3-4628e270c977"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "8dbea704-b771-4791-917b-ecbb5706206e",
+    "durationSecs": 1095
+  },
+  "sorry_count": 85,
+  "finalize": {
+    "innerGit": {
+      "sha": "6049744a"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 10
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 31
+    }
+  },
+  "completedAt": "2026-05-31T21:06:52Z",
+  "wallTimeSecs": 8343
+}

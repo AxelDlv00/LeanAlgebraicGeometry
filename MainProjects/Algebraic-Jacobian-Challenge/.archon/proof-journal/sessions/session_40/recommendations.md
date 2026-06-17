@@ -1,0 +1,96 @@
+# Recommendations for the next plan-agent iteration (iter-041)
+
+## Tracks
+
+### Track 1A (recommended primary — iter-041 prover lane): producer instance for `IsAffineHModuleVanishing` (substantive geometric step, multi-iteration likely)
+
+**Target**: a producer instance (or theorem)
+
+```
+instance/theorem isAffineHModuleVanishing_toModuleKSheaf
+    {k : Type u} [Field k] (C : Over (Spec (CommRingCat.of k))) :
+    IsAffineHModuleVanishing k C (Scheme.toModuleKSheaf C)
+```
+
+(or, if the instance form risks slow synthesis, a `theorem`-flavoured supplier consumed manually at use sites). With iter-040's carrier predicate now in scope, this is the **only remaining algebraic obstruction** to chaining into the Serre-finiteness `Module.Finite k (HModule k (toModuleKSheaf C) n)` instance for proper geometrically integral $k$-curves.
+
+**Mathlib re-probe re-issue (already confirmed in iter-039 plan-agent pass)**: still absent — `Mathlib/AlgebraicGeometry/Cohomology/` does not exist; only `subsingleton_H_of_isZero` (`Mathlib/CategoryTheory/Sites/SheafCohomology/Basic.lean` L74) is available, trivial; no `IsAffineOpen.cohomology_zero_of_pos`, `Scheme.cohomology_isAffineOpen`, `IsAffineOpen.HModule_eq_zero`. **The iter-041 plan-agent should re-probe Mathlib HEAD once more before committing to the multi-iteration assembly path** — Mathlib changes weekly and a Serre-vanishing PR could have landed.
+
+**If still absent (default expectation)**: multi-iteration assembly is required:
+
+1. **iter-041 step (a)**: introduce a project-local Čech-vs-derived comparison theorem at the level of an arbitrary affine open — likely the heaviest single declaration of the entire Phase A step 6 chain. Probably needs an intermediate scaffold (Čech complex of the structure sheaf restricted to an affine, contracted by a constant section). Plausibly 50–100+ LOC, multi-Edit, multi-iteration if probe-confirmation fails.
+2. **iter-041 step (b)** (in the same iteration if scope allows, otherwise iter-042): apply the comparison to derive the producer instance.
+3. **iter-042+ consume**: produce `HModule'_eq_zero_of_isAffineOpen_curve` (the actual finiteness input) by pairing the producer with iter-040's `module_finite_HModule'_of_isAffineHModuleVanishing` consumer.
+
+**Probe-confirmation gate** (continued cohort discipline): as established across iter-031 → iter-040, do **not** assign the prover lane until the plan-agent's `lean_run_code` probe returns `{success: true, diagnostics: []}` end-to-end on the proposed body. **5 of 6 zero-corrective-Edit landings since iter-035** have followed verbatim probe-confirmed plan-agent prompts. If the producer instance is too heavy to probe end-to-end in a single `lean_run_code` call, **decompose into sub-targets and probe each** before assigning.
+
+**Highest priority — gates Step 4** (the last unproved input to the Serre-finiteness `Module.Finite k (HModule k F n)` instance for `F = toModuleKSheaf C` on a proper $k$-curve).
+
+### Track 1B (recommended alternative — iter-041 prover lane): sharper Mayer–Vietoris LES consumer (single-iteration close, recommendation re-issued from iter-039)
+
+**Target**: a single-step LES consumer combining
+
+- iter-029's `HModule'_sequence_curve_exact` (exactness in the LES on `HModule'`),
+- iter-035's `HModule'_X₄_linearEquiv_curve` (corner-bridge for `X₄`),
+- iter-036's `finrank_HModule_eq_HModule'_X₄_curve` (finrank corollary of the corner-bridge),
+- iter-037's `module_finite_HModule_of_HModule'_X₄_curve` (corner-bridge `Module.Finite` transport),
+- iter-038's `module_finite_HModule_zero` (abstract H⁰ `Module.Finite` transport),
+- iter-039's `module_finite_HModule_zero_curve` and `module_finite_HModule'_zero_curve` (curve-form H⁰ transports),
+- **iter-040's `IsAffineHModuleVanishing` carrier + `module_finite_HModule'_of_isAffineHModuleVanishing` consumer** (now both in scope),
+
+into a four-term LES directly on `HModule k F (n+1)` for the curve case:
+
+```
+HModule' k F n X₁ ⊕ HModule' k F n X₂ → HModule' k F n X₃ → HModule k F (n+1)
+```
+
+Plausibly a single-iteration ~20–40 LOC declaration (`Scheme.AffineCoverMVSquare.HModule_LES_curve` or similar). With iter-040's affine-vanishing consumer now available (taking `IsAffineHModuleVanishing` as a hypothesis), this consumer can chain directly into `Module.Finite` for the higher-degree slots without waiting on the iter-041+ producer instance.
+
+**Equal priority with Track 1A**: this is forward investment that does NOT require the iter-041+ producer instance to land. **The iter-041 plan-agent should pick Track 1A or Track 1B based on which has a tighter probe-confirmation circle**. Track 1B is plausibly the cleaner single-iteration close; Track 1A is more strategically valuable (gates the entire Step 4) but requires multi-iteration assembly.
+
+### Track 1C (new for iter-041 — low-risk warm-up if Track 1A probe-confirmation circle is too heavy)
+
+**Target**: the `_curve` companion of iter-040's consumer — `Scheme.module_finite_HModule'_of_isAffineHModuleVanishing_curve` specialising to `F := Scheme.toModuleKSheaf C`. Body would be a one-line `Scheme.module_finite_HModule'_of_isAffineHModuleVanishing k _ F hU i hi` invocation following the iter-039 `_curve` wrapper pattern.
+
+**Caveat**: the iter-040 consumer is already curve-ready by parametrisation (any sheaf `F` is accepted); a `_curve` companion would only fix `F := toModuleKSheaf C` and provide a slightly more ergonomic call site. **Marginal value** — recommended only if Track 1A and Track 1B both probe-fail. Plausibly ~5–10 LOC, zero-corrective-Edit close (continuing the iter-035 → iter-040 paired-cohort pattern).
+
+### Track 2 (parallel low-coupling): none recommended
+
+Polish backlog remains empty. The protected sorries in `Jacobian.lean` and `AbelJacobi.lean` are all blocked on Phase C step 4 / Phase A step 6 chain completion plus a `noncomputable` user-decision; do not attempt them prematurely.
+
+### Hard avoid
+
+- `representable` — closing on the global-sections-approximate `LineBundle` would silently assert representability of the wrong functor.
+- The 5 `Jacobian.lean` protected sorries — Phase C step 4 (FGA representability) plus `noncomputable` user-decision.
+- The 3 `AbelJacobi.lean` protected sorries — structurally downstream of `Jacobian C` plus `noncomputable` user-decision on `ofCurve`.
+- Closed scaffold sites in `Cohomology/MayerVietoris.lean` (iter-016 → iter-026, iter-028 → iter-037) and in `Cohomology/StructureSheafModuleK.lean` (iter-006, iter-009, iter-010, iter-011, iter-012, iter-014, iter-015, iter-026, iter-038, iter-039, iter-040) — do not retry; they are already closed.
+- Re-introducing the `Scheme.` short-name prefix inside `namespace AlgebraicGeometry.Scheme` — known-dead-end #185 (surfaced iter-038, internalised by iter-039 + iter-040).
+- Switching the iter-040 `Subsingleton` formulation to `Limits.IsZero` — the iter-014 typing of `HModule'` returning `Type u` (not a `ModuleCat` object) makes `IsZero` strictly weaker for the chaining into `Module.Finite`. Stick with `Subsingleton`.
+
+## `blueprint/lean_decls` maintenance — iter-040 cleared the seven-iteration drift
+
+**For the first time since iter-033**, the iter-040 plan-agent appended **the iter-040 declarations themselves** to `blueprint/lean_decls` in the same pass that introduced them (rather than the now-customary clear-on-arrival in the next iteration's plan-agent pass). New entries at L27–28:
+
+- `AlgebraicGeometry.Scheme.IsAffineHModuleVanishing`
+- `AlgebraicGeometry.Scheme.module_finite_HModule'_of_isAffineHModuleVanishing`
+
+Combined with the iter-039 entries already present at L25–26 (caught up by the iter-040 plan-agent earlier in the pass), `blueprint/lean_decls` is now **fully current through iter-040**.
+
+**Recommendation**: the **iter-041 plan-agent should maintain this clear-as-you-go discipline**. If maintained for one more iteration (iter-041), the manual escalation to a hook or template change (recommended in the previous five `recommendations.md` iterations) may no longer be needed — the discipline will be load-bearing on the plan-agent prompt structure rather than infrastructure. **Recommendation softened from "strong escalation" to "monitor for one more iteration".**
+
+## Reusable proof patterns (collected this iteration)
+
+- **Verbatim probe-confirmed body, single combined Edit**: when the plan-agent's `lean_run_code` probe returns `{success: true, diagnostics: []}` end-to-end, the prover lands the body verbatim in a single Edit with zero corrective rounds. **5 of 6 iterations zero-corrective-Edit, 1 of 6 with two corrective Edits sharing one root cause (iter-038 / known-dead-end #185).**
+- **`Subsingleton` formulation over `Limits.IsZero` for `Type u`-valued cohomology gadgets**: when a project carrier predicate must talk about a `Type u`-flavoured cohomology, `Subsingleton` is the right Mathlib idiom — directly chains into `Module.Finite` via instance synthesis.
+- **`class` + `theorem` over `class` + `instance`** when explicit hypothesis args block typeclass resolution: the consumer's explicit witness arguments cannot be instance-synthesised, so the consumer is a `theorem` (not an `instance`).
+- **`have ... inferInstance` two-line consumer for "Subsingleton-flavoured carrier ⇒ Module.Finite"**: works because Mathlib auto-derives `Module.Finite` from `Subsingleton`; reusable wherever the same chaining is wanted.
+- **Carrier-predicate + immediate consumer paired-cohort packaging**: the carrier `class` and its immediate `Module.Finite` consumer paired in a single iteration is preferable to splitting across iterations when the consumer is body-trivial. Distinct from the `_abstract` + `_curve` paired-cohort pattern (iter-035 → iter-039), which paired specialisations across the curve axis instead.
+
+## Net iteration progress
+
+- **Sorry trajectory**: `9 → 9 → 9` (no transient).
+- **Sixth consecutive substantive single-Edit closure** (Edit-count 1 substantive); 23 consecutive single-Edit closures since iter-018.
+- **Two new declarations** added to `Cohomology/StructureSheafModuleK.lean` (L355–361 and L374–383 in the post-Edit file). LOC: 381 → 420 (+39).
+- **`blueprint/lean_decls` drift cleared** for the first time since iter-033 (clear-as-you-go for iter-040).
+- **All four blueprint markers verified accurate** post-prover (statement + proof for both new theorems); chapter file complete.
+- **Phase A step 6 / Step 4 (affine-vanishing) carrier predicate now in scope**; the only remaining Step 4 algebraic obstruction is the producer instance `IsAffineOpen → IsAffineHModuleVanishing k C (toModuleKSheaf C)`.

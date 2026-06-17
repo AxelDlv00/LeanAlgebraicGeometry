@@ -1,0 +1,66 @@
+{
+  "iteration": 199,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-28T16:24:23Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "dc571f91-7d04-4752-acfe-bb23e43b4cba",
+    "durationSecs": 3504
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 4
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 4669
+  },
+  "provers": {
+    "AlgebraicJacobian_RiemannRoch_WeilDivisor": {
+      "file": "AlgebraicJacobian/RiemannRoch/WeilDivisor.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "5870fff5-3549-4f70-b31f-4b19902305a7"
+    },
+    "AlgebraicJacobian_Albanese_AuslanderBuchsbaum": {
+      "file": "AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "2c1e3878-4547-4470-88f4-bfc443e9a6f0"
+    },
+    "AlgebraicJacobian_Albanese_CodimOneExtension": {
+      "file": "AlgebraicJacobian/Albanese/CodimOneExtension.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "45cc6ff9-304d-4291-a956-13c957a62726"
+    },
+    "AlgebraicJacobian_Picard_FGAPicRepresentability": {
+      "file": "AlgebraicJacobian/Picard/FGAPicRepresentability.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "2a1f099e-1274-4e54-b37d-f4baff26ff22"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "f095ac09-d0d6-4365-8d36-8e609ce8fb06",
+    "durationSecs": 1960
+  },
+  "sorry_count": 78,
+  "finalize": {
+    "innerGit": {
+      "sha": "4d66bb47"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 35
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 28
+    }
+  },
+  "completedAt": "2026-05-28T19:21:05Z",
+  "wallTimeSecs": 10601
+}

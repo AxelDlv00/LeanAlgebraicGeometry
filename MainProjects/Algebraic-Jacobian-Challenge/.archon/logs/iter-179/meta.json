@@ -1,0 +1,73 @@
+{
+  "iteration": 179,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-23T18:35:29Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "93cc260b-f07a-43d9-8f93-a6ace1334b8f",
+    "durationSecs": 2329
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 6
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 6109
+  },
+  "provers": {
+    "AlgebraicJacobian_Albanese_AuslanderBuchsbaum": {
+      "file": "AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean",
+      "status": "done",
+      "sessionId": "9ef36056-9757-436a-b1de-2d9389965bde"
+    },
+    "AlgebraicJacobian_Albanese_CodimOneExtension": {
+      "file": "AlgebraicJacobian/Albanese/CodimOneExtension.lean",
+      "status": "done",
+      "sessionId": "25305615-2039-4e15-9283-c08ba7931466"
+    },
+    "AlgebraicJacobian_Albanese_Thm32RationalMapExtension": {
+      "file": "AlgebraicJacobian/Albanese/Thm32RationalMapExtension.lean",
+      "status": "done",
+      "sessionId": "5f1d3ad0-74c4-43a6-804d-e8ccfb0d249e"
+    },
+    "AlgebraicJacobian_Genus0BaseObjects_GmScaling": {
+      "file": "AlgebraicJacobian/Genus0BaseObjects/GmScaling.lean",
+      "status": "done",
+      "sessionId": "550e87cc-51e3-4b95-92fb-a92c4d3d91c4"
+    },
+    "AlgebraicJacobian_Picard_RelativeSpec": {
+      "file": "AlgebraicJacobian/Picard/RelativeSpec.lean",
+      "status": "done",
+      "sessionId": "0769acf9-b1b9-450a-bcc4-48cc050056b7"
+    },
+    "AlgebraicJacobian_RiemannRoch_RationalCurveIso": {
+      "file": "AlgebraicJacobian/RiemannRoch/RationalCurveIso.lean",
+      "status": "done",
+      "sessionId": "dbecf1b9-5fdc-48e7-97a2-4b0970d05f65"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "37cb15cb-50b1-41fd-8d42-76c8c2476aa3",
+    "durationSecs": 2245
+  },
+  "sorry_count": 72,
+  "finalize": {
+    "innerGit": {
+      "sha": "2c9b74ca"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 3
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 5,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-23T21:37:30Z",
+  "wallTimeSecs": 10920
+}

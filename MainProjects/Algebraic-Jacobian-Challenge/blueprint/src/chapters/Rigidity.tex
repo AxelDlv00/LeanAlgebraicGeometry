@@ -1,0 +1,71 @@
+\chapter{Rigidity for morphisms of schemes (scheme-level form; Mumford \S4 in the abelian-variety case)}
+\label{chap:Rigidity}
+
+This chapter records a self-contained helper: \emph{rigidity for morphisms of schemes that agree on a non-empty open}. The classical motivation is Mumford's rigidity for abelian-variety morphisms, but the project's formalised statement is more general: the source-side group-object hypothesis is unused by the proof and is dropped.
+
+The lemma is independent of the construction of \(\Jac(C)\). It is the load-bearing input for the M2.a sub-step of the genus-0 Albanese-witness argument (Jacobian.tex \S C.2.b), where the source is taken to be \(\mathbb P^1_{\bar k}\) (which is \emph{not} a group scheme).
+
+\section{Statement}
+
+\begin{theorem}\leanok
+[Rigidity for morphisms of schemes (scheme-level form)]
+  \label{thm:GrpObj_eq_of_eqOnOpen}
+  \lean{AlgebraicGeometry.Scheme.Over.ext_of_eqOnOpen}
+  Let \(k\) be a field. Let \(X\) be a reduced geometrically irreducible \(k\)-scheme and let \(Y\) be a separated \(k\)-scheme. Let \(g_1, g_2 \colon X \to Y\) be two morphisms of \(k\)-schemes, and let \(U \subseteq X\) be a non-empty open subset. If
+  \[
+    U.\iota \circ g_1 \;=\; U.\iota \circ g_2
+  \]
+  as scheme morphisms (where \(U.\iota \colon U \hookrightarrow X\) is the canonical open immersion), then \(g_1 = g_2\) as morphisms of \(k\)-schemes.
+\end{theorem}
+
+\begin{remark}
+  The classical Mumford rigidity theorem (\emph{Abelian Varieties}, \S4) usually states the special case where \(Y\) is an abelian variety and the conclusion is phrased as ``a morphism vanishing on a non-empty open is zero''. The two forms are interderivable in the abelian-variety case via the difference morphism \(\delta = g_1 \cdot g_2^{-1}\) formed from the group law on \(Y\). The project formalises the more general statement above because the M2.a (genus-0 Albanese-witness) consumer specifically needs the source to be \(\mathbb P^1_{\bar k}\), which is not a group scheme: the abelian-variety packaging is consumer-side and the scheme-level statement is what the proof actually establishes.
+
+  The refactor that landed the scheme-level form (iter-125; see \texttt{analogies/rigidity-refactor.md}) dropped 8 unused hypotheses from the project's original group-scheme-flavoured declaration and weakened the target-side \([\mathtt{IsProper}\ Y.\mathrm{hom}]\) to \([\mathtt{IsSeparated}\ Y.\mathrm{hom}]\).
+\end{remark}
+
+\section{Proof sketch}
+
+\begin{proof}
+  \leanok
+  We reduce to Mathlib's \texttt{AlgebraicGeometry.ext\_of\_isDominant\_of\_isSeparated'} (\texttt{Mathlib.AlgebraicGeometry.Morphisms.Separated}), which gives the standard scheme-level fact that two morphisms from a reduced scheme to a separated scheme agreeing on a dominant subscheme agree everywhere.
+
+  The three load-bearing instances feeding that closure are:
+  \begin{itemize}
+    \item \emph{\(Y \to \Spec k\) is separated.} Hypothesis \([\mathtt{IsSeparated}\ Y.\mathrm{hom}]\) provides this directly (no projection from \(\mathtt{IsProper}\) needed). The \texttt{OverClass.fromOver} instance transports it to the form \(\mathtt{IsSeparated}\ (Y.\mathrm{left} \downarrow \Spec k)\) that the closure step expects.
+    \item \emph{\(X\) is an irreducible space.} Hypothesis \([\mathtt{GeometricallyIrreducible}\ X.\mathrm{hom}]\) over the field-spectrum base \(\Spec k\) (which is a single point, hence subsingleton) yields \(\mathtt{IrreducibleSpace}\ X.\mathrm{left}\) via \texttt{GeometricallyIrreducible.irreducibleSpace\_of\_subsingleton}.
+    \item \emph{The inclusion \(U.\iota\) is dominant.} A non-empty open in an irreducible space is dense, and a dense open immersion is dominant: \texttt{Scheme.PartialMap.Opens.isDominant\_ι}.
+  \end{itemize}
+  With these three derived instances and the hypothesis \([\mathtt{IsReduced}\ X.\mathrm{left}]\), the closure \texttt{ext\_of\_isDominant\_of\_isSeparated'} produces the underlying scheme-morphism equality \(g_1.\mathrm{left} = g_2.\mathrm{left}\) from the agreement-on-\(U\) hypothesis. The promotion to \(g_1 = g_2\) in \(\mathrm{Over}\ (\Spec k)\) uses \texttt{Over.OverMorphism.ext}.
+
+  \medskip
+  \noindent\textbf{Mathlib ingredients.}
+  \begin{itemize}
+    \item \texttt{AlgebraicGeometry.ext\_of\_isDominant\_of\_isSeparated'} for the scheme-level closure step.
+    \item \texttt{GeometricallyIrreducible.irreducibleSpace\_of\_subsingleton} to derive irreducibility of \(X.\mathrm{left}\).
+    \item \texttt{Scheme.PartialMap.Opens.isDominant\_ι} to derive dominance of the open immersion \(U.\iota\) from the non-empty hypothesis.
+    \item \texttt{Over.OverMorphism.ext} to promote underlying scheme equality to \(\mathrm{Over}\)-morphism equality.
+    \item No abelian-variety / group-object infrastructure is needed: smoothness, properness, and group-object hypotheses on \(X\) and \(Y\) are all dropped from the formalised statement.
+  \end{itemize}
+\end{proof}
+
+\section{Use in the project}
+
+The rigidity theorem is used in two places downstream:
+
+\begin{itemize}
+  \item \textbf{M2.a (genus-0 Albanese witness).} Jacobian.tex \S C.2.b reduces the genus-0 rigidity-over-\(\bar k\) argument (for \(f \colon \mathbb P^1_{\bar k} \to A_{\bar k}\) hitting the identity at a \(\bar k\)-point) to this theorem with \(X := \mathbb P^1_{\bar k}\) and \(Y := A_{\bar k}\). The refactor of iter-125 (dropping the source-side group-object hypothesis) is what enables this application. The named project declaration packaging the C.2.a–C.2.e reduction is \cref{thm:rigidity_over_kbar} in \cref{chap:RigidityKbar}; that chapter scaffolds the iter-126 Lean target \texttt{AlgebraicGeometry.rigidity\_over\_kbar} with the C.2.d cotangent-vanishing keystone residual.
+  \item \textbf{Uniqueness in the Albanese property.} Used in the uniqueness half of \cref{thm:albanese_universal_property} (the Albanese property of \(\Jac(C)\)): given two morphisms \(g_1, g_2 \colon \Jac(C) \to A\) with \(g_1 \circ \alpha_P = g_2 \circ \alpha_P\), scheme-level agreement on the image of \(\alpha_P\) (a non-empty open after passing to \(C^{(g)} \twoheadrightarrow \Jac(C)\)) forces \(g_1 = g_2\).
+\end{itemize}
+
+Note: the existence half of \cref{thm:albanese_universal_property} requires Phase~B/C infrastructure (Picard scheme, dual abelian variety). Rigidity alone yields \emph{uniqueness} only.
+
+\section{Mathlib status}
+
+The scheme-level form is a thin specialization of Mathlib's existing \texttt{ext\_of\_isDominant\_of\_isSeparated'} (in \texttt{Mathlib.AlgebraicGeometry.Morphisms.Separated}); the project's contribution is the \(\mathrm{Over}\ (\Spec k)\)-bundled packaging plus the convenience derivations of \texttt{IrreducibleSpace} and \texttt{IsDominant} from the project-side hypotheses.
+
+An upstream-PR candidate is a thin corollary in Mathlib's \texttt{Separated} file:
+\[
+  \texttt{ext\_of\_eqOnNonemptyOpen} \;\colon\; \texttt{(non-empty open) + (reduced source) + (separated target) }\Rightarrow\texttt{ ext}
+\]
+packaging the dense-and-dominant chain into a single API call. The incremental value over the existing \texttt{ext\_of\_isDominant\_of\_isSeparated'} is small (just the API convenience of "non-empty open" over "dominant morphism"); see \texttt{analogies/rigidity-refactor.md} for the proposed statement and home file. The project does not pursue this upstream PR as part of the iter-125 work.

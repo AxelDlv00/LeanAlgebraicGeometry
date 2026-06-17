@@ -1,0 +1,11 @@
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://api.deepseek.com/anthropic",
+    "ANTHROPIC_AUTH_TOKEN": "sk-b6fea1948d614a07b6b5fa678f55a31d",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "ANTHROPIC_MODEL": "deepseek-coder",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-coder",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-coder",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-coder"
+  }
+}

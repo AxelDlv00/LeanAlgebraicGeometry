@@ -1,0 +1,16 @@
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ───────────────────────────────
+
+[ARCHON] Agent model: opus (blueprint-writer)
+RiemannRoch_H1Vanishing-cov273: COMPLETE — added 13 one-to-one `\lean{}`-pinned blueprint blocks for the chapter's uncovered Lean helpers, wired every one into the H¹-vanishing dependency cone (leandag: 0 isolated, 0 unknown_uses in chapter), and fixed both literal `REF` placeholders.
+
+Full report: `/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/task_results/blueprint-writer-RiemannRoch_H1Vanishing-cov273.md`
+[COST] 4.5min | $2.0547 | in=10540 out=21070 | turns=21
+[ARCHON] ✓ blueprint-writer/RiemannRoch_H1Vanishing-cov273 finished (577s)
+RiemannRoch_H1Vanishing-cov273: COMPLETE — see /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/task_results/blueprint-writer-RiemannRoch_H1Vanishing-cov273.md (archived: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/logs/iter-273/blueprint-writer-RiemannRoch_H1Vanishing-cov273-report.md)

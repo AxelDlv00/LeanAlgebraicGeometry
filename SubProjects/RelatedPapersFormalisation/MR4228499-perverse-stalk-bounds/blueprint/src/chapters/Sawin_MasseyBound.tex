@@ -1,0 +1,282 @@
+\section{The characteristic-$p$ Massey bound}
+
+% archon:covered-by Sawin_Terminology
+
+This chapter proves the main theorem: the stalk dimension $\dim \cH^{-i}(K)_x$ of
+a perverse $\bF_\ell$-sheaf is bounded by the $i$th polar multiplicity of
+$\CCyc(K)$ at $x$ (Theorem~\ref{thm:sawin_first_massey}).  §3 establishes an
+alternate, manifestly well-defined form of the polar multiplicity; §4 carries
+out the pencil-of-conics induction.
+
+\subsection{Equivalent definitions of the polar multiplicity}
+
+\begin{definition}[Local intersection number]
+  \label{def:sawin_local_intersection}
+  \lean{MR4228499.localIntersectionNumber}
+  % SOURCE: Sawin, §3, Definition (local intersection number).
+  % SOURCE QUOTE: We define their intersection number locally at $x$ \[ (C_1,C_2)_{Y, x} \] to be the sum of the degrees of the refined intersection $C_1 \cdot C_2$ on all connected components of $C_1 \cap C_2$ contained in $f^{-1}(x)$.
+  \textit{Source: Sawin, §3, Definition (local intersection number).}
+  For $f:Y\to X$, $x\in X$, and cycles $C_1,C_2$ on $Y$ of total dimension
+  $\dim Y$ with $C_1\cap C_2\cap f^{-1}(x)$ proper (and each component of
+  $C_1\cap C_2$ either proper inside $f^{-1}(x)$ or disjoint from it), the local
+  intersection number $(C_1,C_2)_{Y,x}$ is the sum of the degrees of the refined
+  intersection $C_1\cdot C_2$ (Fulton) over the components of $C_1\cap C_2$
+  inside $f^{-1}(x)$.
+\end{definition}
+
+\begin{lemma}[Independence of the polar intersection from the choice of $(Y,V)$]
+  \label{lem:sawin_intersection_comparison}
+  \lean{MR4228499.intersection_comparison}
+  \uses{def:sawin_projectivization, def:sawin_local_intersection}
+  % SOURCE: Sawin, §3, Lemma intersection-comparison.
+  % SOURCE QUOTE: For any $(Y,V)$ such that the strict transforms of $\mathbb P(C)$ and $\mathbb P(V)$ in the blowup of $\mathbb P(T^* X)$ at the fiber over $X$ do not intersect inside the exceptional divisor, the contribution of the fiber over $x$ to the intersection number $\mathbb P(C) \cap \mathbb P(V)$ depends only on $i$ and is independent of $Y,V$.
+  \textit{Source: Sawin, §3, Lemma intersection-comparison.}
+  Let $X$ be smooth, $C$ a conical cycle on $T^*X$ of dimension $\dim X$, $x\in
+  X$, and $0\le i<\dim X$.  For $Y\subset X$ smooth of dimension $\dim X-i$
+  through $x$ and $V$ a rank-$(i+1)$ sub-bundle of $T^*X$ on $Y$ whose strict
+  transforms of $\PP(C),\PP(V)$ do not meet in the exceptional divisor of the
+  blowup of $\PP(T^*X)$ at the fibre over $x$, the contribution of the fibre over
+  $x$ to $\PP(C)\cap\PP(V)$ depends only on $i$.  A general pair $((TY)_x,V_x)$
+  satisfies the hypothesis, so such $(Y,V)$ exist.
+\end{lemma}
+\begin{proof}
+  \uses{def:sawin_projectivization}
+  Work locally and deform $(Y,V)$ to $(Y',V')$ through a connected family of
+  local complete intersections (convex combination of defining equations).  The
+  emptiness of the strict-transform intersection in the exceptional divisor is
+  open, so the whole family can be taken to satisfy it; the intersection locus is
+  closed and disjoint from $x$, hence avoids a neighborhood of $x$, so the
+  contribution at $x$ is constant in the family.  For genericity: $\PP(C)$ has
+  dimension $\dim X-1$, the exceptional fibre $\PP((TX)_x)\times\PP((T^*X)_x)$ has
+  dimension $2\dim X-2$, and the strict transform of $\PP(V)$ is
+  $\PP((TY)_x)\times\PP(V_x)$ of dimension $\dim X-1$; for general subspaces the
+  intersection has expected dimension $-1$, i.e. is empty.
+\end{proof}
+
+\begin{definition}[Polar multiplicity, intersection form]
+  \label{def:sawin_polar_multiplicity_2}
+  \lean{MR4228499.polarMultiplicity'}
+  \uses{def:sawin_projectivization, def:sawin_local_intersection}
+  % SOURCE: Sawin, §3, Definition polar-multiplicity-2.
+  % SOURCE QUOTE: Define the $i$th polar multiplicity of $C$ at $x$ to be the intersection number \[ ( \mathbb P(C) , \mathbb P(V))_{ \mathbb P(T^* X), x} \] ... For $i=\dim X$, define the $i$th polar multiplicity ... to be the multiplicity of the zero section in $C$.
+  \textit{Source: Sawin, §3, Definition polar-multiplicity-2.}
+  For $0\le i<\dim X$, with $Y$ a sufficiently general smooth codimension-$i$
+  subvariety through $x$ and $V$ a sufficiently general rank-$(i+1)$ sub-bundle of
+  $T^*X$ over $Y$, the $i$th polar multiplicity of $C$ at $x$ is the local
+  intersection number $(\PP(C),\PP(V))_{\PP(T^*X),x}$.  For $i=\dim X$ it is the
+  multiplicity of the zero-section in $C$.  Well-definedness is
+  Lemma~\ref{lem:sawin_intersection_comparison}.
+\end{definition}
+
+\begin{lemma}[Equivalence of the two polar multiplicities]
+  \label{lem:sawin_multiplicity_polar}
+  \lean{MR4228499.polarMultiplicity_eq}
+  \uses{def:sawin_polar_multiplicity, def:sawin_polar_multiplicity_2, lem:sawin_intersection_comparison}
+  % SOURCE: Sawin, §3, Lemma multiplicity-polar.
+  % SOURCE QUOTE: Definitions polar-multiplicity and polar-multiplicity-2 are equivalent.
+  \textit{Source: Sawin, §3, Lemma multiplicity-polar.}
+  Definition~\ref{def:sawin_polar_multiplicity} and
+  Definition~\ref{def:sawin_polar_multiplicity_2} agree.
+\end{lemma}
+\begin{proof}
+  \uses{def:sawin_polar_multiplicity, def:sawin_polar_multiplicity_2}
+  The multiplicity of a cycle at a point is its local intersection number with a
+  general smooth subscheme through the point.  The projection formula gives
+  $(\pi_*(\PP(C)\cap\PP(V)),Y)_{X,x} = (\PP(C),\PP(V)\cap\pi^*Y)_{\PP(T^*X),x}$,
+  and $\PP(V)\cap\pi^*Y$ is the projectivized restriction $V'$ of $V$ to $Y$.  A
+  dimension count in the exceptional divisor $\PP((TX)_x)\times\PP((T^*X)_x)$
+  shows that for $V_x$ general and $Y$ general depending on $V$, the strict
+  transforms of $\PP(C)$ and $\PP(V')$ do not meet, so
+  Definition~\ref{def:sawin_polar_multiplicity_2} applies and the two numbers
+  coincide.
+\end{proof}
+
+\subsection{Transversality and nearby-cycle formulas}
+
+\begin{lemma}[Fibre inclusion is properly transversal]
+  \label{lem:sawin_transversality_check}
+  \lean{MR4228499.transversality_check}
+  \uses{def:sawin_C_transversal_map, def:sawin_properly_transversal}
+  % SOURCE: Sawin, §4, Lemma transversality-check.
+  % SOURCE QUOTE: If $f$ is $C$-transversal and the fibers of the composition $C \to X \to Y$ have dimension $m$, then $i$ is properly $C$-transversal.
+  \textit{Source: Sawin, §4, Lemma transversality-check.}
+  Let $f:X\to Y$ be smooth of relative dimension $m$ between smooth varieties,
+  $C\subseteq T^*X$ closed conical with all components of dimension $\dim X$, and
+  $i:f^{-1}(y)\hookrightarrow X$ the fibre inclusion.  If $f$ is $C$-transversal
+  and the fibres of $C\to X\to Y$ have dimension $m$, then $i$ is properly
+  $C$-transversal.
+\end{lemma}
+\begin{proof}
+  \uses{def:sawin_C_transversal_map, def:sawin_properly_transversal}
+  $C$-transversality of $f$ means $C$ meets the image of $df$ (the one-forms
+  pulled back from $Y$, i.e. those in $\ker di$) only along the zero-section, so
+  $i$ is $C$-transversal.  Moreover $i^*C = y\times_Y C$ is a fibre of $C\to Y$,
+  of dimension $\dim X-\dim Y = \dim f^{-1}(y)$, giving proper transversality.
+\end{proof}
+
+\begin{lemma}[Nearby-cycle characteristic-cycle formula]
+  \label{lem:sawin_nearby_formula}
+  \lean{MR4228499.nearby_formula}
+  \uses{lem:sawin_transversality_check, def:sawin_characteristic_cycle, def:sawin_shriek_pullback, def:sawin_singular_support}
+  % SOURCE: Sawin, §4, Lemma nearby-formula.
+  % SOURCE QUOTE: Then \[i^! CC'(K) = CC ( R \Psi_{f} K) \] where we view the nearby cycles relative to $f$ as a complex of sheaves on $f^{-1}(Y)$.
+  \textit{Source: Sawin, §4, Lemma nearby-formula.}
+  Let $X$ be smooth, $Y$ a smooth curve, $K\in D^b_c(X,\bF_\ell)$, and let
+  $\CCyc'(K)$, $\SSing'(K)$ denote $\CCyc(K)$, $\SSing(K)$ with the cotangent
+  space at $x$ removed.  If $f:X\to Y$ is smooth projective, $\SSing'(K)$-transversal,
+  and the fibres of $\SSing'(K)$ over $Y$ have dimension $\dim X-1$, then for
+  $Z=f^{-1}(f(x))$ with inclusion $i$,
+  \[ i^!\CCyc'(K) = \CCyc(\RPsi_f K). \]
+\end{lemma}
+\begin{proof}
+  \uses{lem:sawin_transversality_check, def:sawin_characteristic_cycle}
+  Away from $x$, $\SSing'(K)$-transversality makes $f$ locally acyclic, so
+  $\RPhi_f K=0$ and $\RPsi_f K=i^*K$; by Saito Theorem 7.6 and
+  Lemma~\ref{lem:sawin_transversality_check}, $\CCyc(\RPsi_f K)=i^!\CCyc'(K)$
+  there.  Hence the difference $i^!\CCyc'(K)-\CCyc(\RPsi_f K)$ is a multiple of
+  the cotangent space at $x$; pairing with the zero-section and using the index
+  formula (Saito Theorem 7.13) $(\CCyc(\RPsi_f K),Z)=\chi(f^{-1}(\eta),K)$ on one
+  side, and projection-formula manipulations $i_*(di)^*Z = N^*Z$ (Fulton
+  8.1.1(c)) together with the constancy of $(\CCyc'(K),N^*f^{-1}(y'))$ in a smooth
+  family on the other, shows the two pairings agree, forcing the multiple to be
+  zero.
+\end{proof}
+
+\begin{lemma}[A general pencil of conics is transversal]
+  \label{lem:sawin_genericity}
+  \lean{MR4228499.genericity_lemma}
+  \uses{def:sawin_properly_transversal, def:sawin_h_transversal, def:sawin_C_transversal_map}
+  % SOURCE: Sawin, §4, Lemma genericity-lemma.
+  % SOURCE QUOTE: Then $p$ is properly $C$-transversal, $q$ is $p^{\circ} C$-transversal in a neighborhood of the unique conic in the pencil containing $x$, and the fibers of $p^\circ C$ over $\mathbb P^1$ are $\dim X-1$-dimensional in a neighborhood of the conic containing $x$.
+  \textit{Source: Sawin, §4, Lemma genericity-lemma.}
+  Let $X\subseteq\PP^n$ be smooth, $C\subseteq T^*X$ closed conical of dimension
+  $\dim X$, and $x\in X$ a point whose cotangent space is not contained in $C$.
+  For a general pencil of conic sections $\overline X\subseteq X\times\PP^1$ with
+  projections $p:\overline X\to X$, $q:\overline X\to\PP^1$: $p$ is properly
+  $C$-transversal, $q$ is $p^\circ C$-transversal near the conic through $x$, and
+  the fibres of $p^\circ C$ over $\PP^1$ are $(\dim X-1)$-dimensional near that
+  conic.
+\end{lemma}
+\begin{proof}
+  \uses{def:sawin_properly_transversal, def:sawin_h_transversal, def:sawin_C_transversal_map}
+  The base locus $Y$ of a generic pencil is smooth of codimension $2$ (Bertini),
+  and $p$ is the blow-up of $X$ along $Y$.  Counting conditions on the pencil:
+  for $(y,\omega)\in C$, ``$y\in Y$'' is codimension $2$ and ``$\omega$ transverse
+  to $Y$'' is codimension $\dim X-2$, while the space of such $(y,\omega)$ up to
+  scaling is $(\dim X-1)$-dimensional, so the bad locus is codimension $1$ ---
+  non-generic --- giving $C$-transversality; the dimension count of $p^*C$ gives
+  proper transversality.  For $q$: $p^\circ C$-transversality is open, and one
+  checks $dq(\omega_0)\notin p^\circ C$ pointwise on the conic through $x$ via
+  analogous codimension counts, using that the cotangent space at $x$ is not in
+  $C$.  Finally each component of $p^\circ C$ has dimension $\dim X$, so its
+  fibres over $\PP^1$ have dimension $\dim X-1$ once the finitely many points
+  forced into a single conic are excluded from the neighborhood.
+\end{proof}
+
+\begin{lemma}[Pencil-of-conics nearby/vanishing formula]
+  \label{lem:sawin_final_nearby_formula}
+  \lean{MR4228499.final_nearby_formula}
+  \uses{lem:sawin_nearby_formula, lem:sawin_genericity, def:sawin_characteristic_cycle, def:sawin_shriek_pullback}
+  % SOURCE: Sawin, §4, Lemma final-nearby-formula.
+  % SOURCE QUOTE: (1) $CC ( R \Psi_{q} p^*K) = i^! p^! CC'(K)$ (2) $R\Phi_q p^* K$ is supported at $x$. (3) $-\operatorname{dimtot} \left( R\Phi_q ( p^* K) \right)_x$ is the multiplicity of the cotangent space at $x$ in $CC(K)$. (4) If $K$ is perverse, then $\left( R\Phi_q ( p^* K) \right)_x$ is supported in degree $-1$.
+  \textit{Source: Sawin, §4, Lemma final-nearby-formula.}
+  With $\overline X$, $p$, $q$ a general pencil of conics, $\overline x=p^{-1}(x)$,
+  $y=q(\overline x)$, and $i:q^{-1}(y)\hookrightarrow\overline X$:
+  (1) $\CCyc(\RPsi_q p^*K)=i^!p^!\CCyc'(K)$;
+  (2) $\RPhi_q p^*K$ is supported at $x$;
+  (3) $-\dimtot(\RPhi_q p^*K)_x$ equals the multiplicity of the cotangent space at
+  $x$ in $\CCyc(K)$;
+  (4) if $K$ is perverse, $(\RPhi_q p^*K)_x$ is supported in degree $-1$.
+\end{lemma}
+\begin{proof}
+  \uses{lem:sawin_nearby_formula, lem:sawin_genericity, def:sawin_characteristic_cycle, def:sawin_dimtot}
+  (1) By Lemma~\ref{lem:sawin_genericity}, $p$ is properly $\SSing(K)$-transversal
+  and étale at $x$, so $\CCyc(p^*K)=p^!\CCyc(K)$ (Saito Theorem 6.6); apply
+  Lemma~\ref{lem:sawin_nearby_formula} to $p^*K$ and $q$.
+  (2) $q$ is $\SSing(p^*K)$-transversal near $x$ off $x$, so $p^*K$ is locally
+  $q$-acyclic there and $\RPhi_q p^*K$ is supported at $x$.
+  (3) $x$ is at most isolated characteristic, so
+  $-\dimtot(\RPhi_q p^*K)_x = (\CCyc(p^*K),(dq)^*\omega)_x$; the only component of
+  $\SSing(p^*K)$ meeting $(dq)^*\omega$ is $N^*x$, with intersection $1$, giving
+  the multiplicity of $N^*x$ in $\CCyc(p^*K)=\CCyc(K)$.
+  (4) $p^*K[-1]$ is perverse near $x$ on the generic fibre, so by Gabber's theorem
+  (Illusie, Corollary 4.6) $\RPhi_q(p^*K)[-1]$ is perverse; being supported at a
+  point it sits in degree $0$, so the unshifted complex is in degree $-1$.
+\end{proof}
+
+\begin{lemma}[Polar multiplicity drops under a generic conic section]
+  \label{lem:sawin_multiplicity_hypersurface}
+  \lean{MR4228499.multiplicity_hypersurface}
+  \uses{lem:sawin_intersection_comparison, def:sawin_polar_multiplicity_2, def:sawin_shriek_pullback, def:sawin_polar_multiplicity}
+  % SOURCE: Sawin, §4, Lemma multiplicity-hypersurface.
+  % SOURCE QUOTE: Then for $i>0$, the $i$th polar multiplicity of $C$ at $x$ equals the $i-1$st polar multiplicity of $\inhyper{C}$ at $x$, and for $i=0$, the $i$th polar multiplicity of $C$ at $X$ equals the multiplicity of the cotangent space at $x$ in $C$.
+  \textit{Source: Sawin, §4, Lemma multiplicity-hypersurface.}
+  Let $X\subseteq\PP^n$ be smooth, $x\in X$, $C$ a conical cycle on $T^*X$, $C'$ its
+  part away from the cotangent space at $x$, $\inhyper X$ a generic conic section
+  through $x$ with inclusion $j$, and $\inhyper C=-j^!C'$.  Then for $i>0$ the
+  $i$th polar multiplicity of $C$ at $x$ equals the $(i-1)$st polar multiplicity
+  of $\inhyper C$ at $x$, and for $i=0$ it equals the multiplicity of the
+  cotangent space at $x$ in $C$.
+\end{lemma}
+\begin{proof}
+  \uses{lem:sawin_intersection_comparison, def:sawin_polar_multiplicity_2}
+  Split into $i=0$, $0<i<\dim X$, $i=\dim X$.  For $i=0$ a general section of
+  $\PP(T^*X)$ meets $\PP(C)$ only in the fibre over $x$.  For $0<i<\dim X$, a
+  projective-geometry diagram (the blow-up of $\PP(T^*X\times_X\inhyper X)$ along
+  the conormal section) and Fulton's projection formula identify
+  $(\PP(\inhyper C),\PP(\inhyper V))_{\PP(T^*\inhyper X),x}$ with
+  $(\PP(C'),\PP(V))_{\PP(T^*X)}=(\PP(C),\PP(V))_{\PP(T^*X)}$, while a codimension
+  count on the exceptional divisor verifies the strict-transform condition of
+  Lemma~\ref{lem:sawin_intersection_comparison}.  For $i=\dim X$, a cycle whose
+  hypersurface restriction (resp. cotangent projection) is the zero-section was
+  already the zero-section.
+\end{proof}
+
+\subsection{The main bound and its vanishing corollary}
+
+\begin{theorem}[Characteristic-$p$ Massey bound]
+  \label{thm:sawin_first_massey}
+  \lean{MR4228499.first_Massey}
+  \uses{lem:sawin_final_nearby_formula, lem:sawin_multiplicity_hypersurface, def:sawin_polar_multiplicity, def:sawin_characteristic_cycle}
+  % SOURCE: Sawin, §4, Theorem first-Massey (= Theorem first-Massey-intro).
+  % SOURCE QUOTE: Then $\dim_{\mathbb F_\ell} \mathcal H^{-i}(K)_x$ is at most $i$th polar multiplicity of $CC(K)$ at $x$.
+  \textit{Source: Sawin, §4, Theorem first-Massey.}
+  Let $X$ be a smooth variety over a perfect field $k$, $\ell$ invertible in $k$,
+  and $K$ a perverse sheaf of $\bF_\ell$-modules on $X$.  Then for every $x\in X$,
+  \[ \dim_{\bF_\ell}\cH^{-i}(K)_x \ \le\ \gamma^i_{\CCyc(K)}(x). \]
+\end{theorem}
+\begin{proof}
+  \uses{lem:sawin_final_nearby_formula, lem:sawin_multiplicity_hypersurface}
+  Étale-locally we may take $X\subseteq\PP^n$ smooth projective.  Induct on $i$.
+  From the distinguished triangle $p^*K\to\RPsi_q p^*K\to\RPhi_q p^*K$ take stalk
+  cohomology at $x$.  Since $\RPsi_q p^*K[-1]$ is perverse, $\cH^0(\RPsi_q p^*K)_x=0$,
+  so for $i=0$, $\dim\cH^0(K)_x\le\dim(\RPhi_q p^*K)^{-1}_x\le-\dimtot(\RPhi_q
+  p^*K)_x$, the multiplicity of the cotangent space at $x$ in $\CCyc(K)$, which by
+  Lemma~\ref{lem:sawin_multiplicity_hypersurface} is $\gamma^0_{\CCyc(K)}(x)$.
+  For $i>0$, Lemma~\ref{lem:sawin_final_nearby_formula}(4) makes the connecting map
+  vanish, so $\dim\cH^{-i}(K)_x\le\dim\cH^{-i}(\RPsi_q p^*K)_x$; the induction
+  hypothesis bounds this by the $(i-1)$st polar multiplicity of
+  $\CCyc(\RPsi_q p^*K[-1])$, which by
+  Lemma~\ref{lem:sawin_final_nearby_formula}(1) and
+  Lemma~\ref{lem:sawin_multiplicity_hypersurface} equals $\gamma^i_{\CCyc(K)}(x)$.
+\end{proof}
+
+\begin{corollary}[Vanishing of stalk cohomology]
+  \label{cor:sawin_vanishing}
+  \lean{MR4228499.vanishing}
+  \uses{thm:sawin_first_massey, def:sawin_polar_multiplicity, def:sawin_singular_support}
+  % SOURCE: Sawin, §1/§4, Corollary vanishing-intro.
+  % SOURCE QUOTE: Then $\mathcal H^{-i} (K)_x$ vanishes for \[ -i> \dim SS(K)_x - \dim X \] where $(SS(K))_x$ is the fiber of the singular support of $K$ over $x$.
+  \textit{Source: Sawin, Corollary vanishing-intro.}
+  With $X$, $k$, $\ell$, $K$ as in Theorem~\ref{thm:sawin_first_massey},
+  $\cH^{-i}(K)_x = 0$ whenever $-i > \dim\SSing(K)_x - \dim X$, where
+  $\SSing(K)_x$ is the fibre of the singular support over $x$.
+\end{corollary}
+\begin{proof}
+  \uses{thm:sawin_first_massey}
+  By Theorem~\ref{thm:sawin_first_massey} it suffices that the $i$th polar
+  multiplicity vanishes for $i<\dim X-\dim\SSing(K)_x$.  For a rank-$(i+1)$ bundle
+  $V$, $\PP(V)$ has dimension $i$ in the fibre over $0$ while $\PP(\CCyc(K))
+  \subseteq\PP(\SSing(K))$ has codimension $\dim X-\dim\SSing(K)_x$ there, so a
+  general $V$ misses it and the polar multiplicity is zero.
+\end{proof}

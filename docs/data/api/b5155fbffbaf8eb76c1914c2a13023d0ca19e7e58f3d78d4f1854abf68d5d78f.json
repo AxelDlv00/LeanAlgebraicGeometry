@@ -1,0 +1,3945 @@
+{
+  "commits": [
+    {
+      "sha": "35689d9738d1cad32fcaca053715760bc7b14bb6",
+      "shortSha": "35689d97",
+      "subject": "Adding dashboard",
+      "date": "2026-06-16 17:04:09 +0800",
+      "parents": [
+        "03f3bfa616915fee7c04d6e65786525ff4d8c827"
+      ],
+      "refs": [
+        "HEAD -> main",
+        "origin/main",
+        "origin/HEAD"
+      ],
+      "branch": "main"
+    },
+    {
+      "sha": "03f3bfa616915fee7c04d6e65786525ff4d8c827",
+      "shortSha": "03f3bfa6",
+      "subject": "Adding dashboard",
+      "date": "2026-06-16 16:55:30 +0800",
+      "parents": [
+        "ef5814875c8f3102a0d3ede5e488490cf802f8ce"
+      ],
+      "refs": [],
+      "branch": "main"
+    },
+    {
+      "sha": "ef5814875c8f3102a0d3ede5e488490cf802f8ce",
+      "shortSha": "ef581487",
+      "subject": "Adding dashboard",
+      "date": "2026-06-16 16:38:37 +0800",
+      "parents": [
+        "38212c536503544b7d12a9d252c4a2e6f66f3615"
+      ],
+      "refs": [],
+      "branch": "main"
+    },
+    {
+      "sha": "38212c536503544b7d12a9d252c4a2e6f66f3615",
+      "shortSha": "38212c53",
+      "subject": "Adding dashboard",
+      "date": "2026-06-16 16:27:08 +0800",
+      "parents": [
+        "e47609644d552f60bbde52de8fc80aea6c59ee89"
+      ],
+      "refs": [],
+      "branch": "main"
+    },
+    {
+      "sha": "e47609644d552f60bbde52de8fc80aea6c59ee89",
+      "shortSha": "e4760964",
+      "subject": "archon[303/finalize]: stage=prover sorry=93",
+      "date": "2026-06-05 16:24:57 +0800",
+      "parents": [
+        "fb9bdfbe788fe9437cddbcb7248796ccbdd82b89"
+      ],
+      "refs": [],
+      "iteration": "iter-303",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "fb9bdfbe788fe9437cddbcb7248796ccbdd82b89",
+      "shortSha": "fb9bdfbe",
+      "subject": "archon[302/dag]: elaboration (5154s)",
+      "date": "2026-06-05 14:08:00 +0800",
+      "parents": [
+        "e2587a4fded058f22a1b707511dbf1d98d2d6fa5"
+      ],
+      "refs": [],
+      "iteration": "iter-302",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "e2587a4fded058f22a1b707511dbf1d98d2d6fa5",
+      "shortSha": "e2587a4f",
+      "subject": "archon[300/dag]: elaboration (685s)",
+      "date": "2026-06-05 12:09:18 +0800",
+      "parents": [
+        "8cc9ba77ed0bc690ddae58d404b1817492478ef5"
+      ],
+      "refs": [],
+      "iteration": "iter-300",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "8cc9ba77ed0bc690ddae58d404b1817492478ef5",
+      "shortSha": "8cc9ba77",
+      "subject": "archon[298/dag]: elaboration (585s)",
+      "date": "2026-06-05 11:31:14 +0800",
+      "parents": [
+        "78e0c65ecce635b71eed8912469c77e684d38bb2"
+      ],
+      "refs": [],
+      "iteration": "iter-298",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "78e0c65ecce635b71eed8912469c77e684d38bb2",
+      "shortSha": "78e0c65e",
+      "subject": "archon[297/dag]: elaboration (1118s)",
+      "date": "2026-06-05 11:21:25 +0800",
+      "parents": [
+        "c3719f0801fca1cdaaa30af4a1ccfe74e9accf7d"
+      ],
+      "refs": [],
+      "iteration": "iter-297",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "c3719f0801fca1cdaaa30af4a1ccfe74e9accf7d",
+      "shortSha": "c3719f08",
+      "subject": "archon[296/dag]: elaboration (654s)",
+      "date": "2026-06-05 11:02:43 +0800",
+      "parents": [
+        "4ecb30648693337960976b09c9230ab7a08655eb"
+      ],
+      "refs": [],
+      "iteration": "iter-296",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "4ecb30648693337960976b09c9230ab7a08655eb",
+      "shortSha": "4ecb3064",
+      "subject": "archon[294/dag]: elaboration (290s)",
+      "date": "2026-06-05 10:39:47 +0800",
+      "parents": [
+        "b489ff1c923c4d99d3b2d0f2f35205408c9b08a1"
+      ],
+      "refs": [],
+      "iteration": "iter-294",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "b489ff1c923c4d99d3b2d0f2f35205408c9b08a1",
+      "shortSha": "b489ff1c",
+      "subject": "archon[293/dag]: elaboration (116s)",
+      "date": "2026-06-05 10:34:54 +0800",
+      "parents": [
+        "eef8a49d56da2cc82bf99de34f2c9a9cbe9e6d8b"
+      ],
+      "refs": [],
+      "iteration": "iter-293",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "eef8a49d56da2cc82bf99de34f2c9a9cbe9e6d8b",
+      "shortSha": "eef8a49d",
+      "subject": "archon[292/dag]: elaboration (275s)",
+      "date": "2026-06-05 10:32:55 +0800",
+      "parents": [
+        "bd0bdd22da925158b7c4eb2cdac40902006293d4"
+      ],
+      "refs": [],
+      "iteration": "iter-292",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "bd0bdd22da925158b7c4eb2cdac40902006293d4",
+      "shortSha": "bd0bdd22",
+      "subject": "archon[291/dag]: elaboration (301s)",
+      "date": "2026-06-05 10:28:17 +0800",
+      "parents": [
+        "793897626316f935d5418bfce7dd0561ccdcb686"
+      ],
+      "refs": [],
+      "iteration": "iter-291",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "793897626316f935d5418bfce7dd0561ccdcb686",
+      "shortSha": "79389762",
+      "subject": "archon[290/dag]: elaboration (169s)",
+      "date": "2026-06-05 10:23:13 +0800",
+      "parents": [
+        "aecfc09b0e3acec010f5b30dfea91c1d6660f085"
+      ],
+      "refs": [],
+      "iteration": "iter-290",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "aecfc09b0e3acec010f5b30dfea91c1d6660f085",
+      "shortSha": "aecfc09b",
+      "subject": "archon[289/dag]: elaboration (486s)",
+      "date": "2026-06-05 10:20:20 +0800",
+      "parents": [
+        "6f0c9c29d67b89c720f989b3493954b4530f8047"
+      ],
+      "refs": [],
+      "iteration": "iter-289",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "6f0c9c29d67b89c720f989b3493954b4530f8047",
+      "shortSha": "6f0c9c29",
+      "subject": "archon[288/dag]: elaboration (351s)",
+      "date": "2026-06-05 10:12:12 +0800",
+      "parents": [
+        "0add603dcf20cf13689f875b41391a28d9a3a133"
+      ],
+      "refs": [],
+      "iteration": "iter-288",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "0add603dcf20cf13689f875b41391a28d9a3a133",
+      "shortSha": "0add603d",
+      "subject": "archon[287/dag]: elaboration (1151s)",
+      "date": "2026-06-05 10:06:17 +0800",
+      "parents": [
+        "6dbf00b6f6fa99038390eaaba09b0506251f408e"
+      ],
+      "refs": [],
+      "iteration": "iter-287",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "6dbf00b6f6fa99038390eaaba09b0506251f408e",
+      "shortSha": "6dbf00b6",
+      "subject": "archon[286/dag]: elaboration (931s)",
+      "date": "2026-06-05 09:47:03 +0800",
+      "parents": [
+        "389aba3baea6afd6268c9c4032942fc509fd01b9"
+      ],
+      "refs": [],
+      "iteration": "iter-286",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "389aba3baea6afd6268c9c4032942fc509fd01b9",
+      "shortSha": "389aba3b",
+      "subject": "archon[285/dag]: elaboration (323s)",
+      "date": "2026-06-05 09:31:29 +0800",
+      "parents": [
+        "c118f00cb5441e6e4aa34dbbfa292fce13bf1a10"
+      ],
+      "refs": [],
+      "iteration": "iter-285",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "c118f00cb5441e6e4aa34dbbfa292fce13bf1a10",
+      "shortSha": "c118f00c",
+      "subject": "archon[284/dag]: elaboration (287s)",
+      "date": "2026-06-05 03:07:09 +0800",
+      "parents": [
+        "38279bba5592949a584b7964b957eb804be63742"
+      ],
+      "refs": [],
+      "iteration": "iter-284",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "38279bba5592949a584b7964b957eb804be63742",
+      "shortSha": "38279bba",
+      "subject": "archon[283/dag]: elaboration (1817s)",
+      "date": "2026-06-05 03:02:18 +0800",
+      "parents": [
+        "9a25fbf9b70bfe64fc82a00dfb66bf6ad35de92a"
+      ],
+      "refs": [],
+      "iteration": "iter-283",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "9a25fbf9b70bfe64fc82a00dfb66bf6ad35de92a",
+      "shortSha": "9a25fbf9",
+      "subject": "archon[282/dag]: elaboration (139s)",
+      "date": "2026-06-05 02:31:57 +0800",
+      "parents": [
+        "58f8bcfe8df37642bf109361f3d2794924b4cd9e"
+      ],
+      "refs": [],
+      "iteration": "iter-282",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "58f8bcfe8df37642bf109361f3d2794924b4cd9e",
+      "shortSha": "58f8bcfe",
+      "subject": "archon[281/dag]: elaboration (305s)",
+      "date": "2026-06-05 02:29:36 +0800",
+      "parents": [
+        "56126fd5071f80a0e6c42c97bd0ae915b677834a"
+      ],
+      "refs": [],
+      "iteration": "iter-281",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "56126fd5071f80a0e6c42c97bd0ae915b677834a",
+      "shortSha": "56126fd5",
+      "subject": "archon[280/dag]: elaboration (1003s)",
+      "date": "2026-06-05 02:24:27 +0800",
+      "parents": [
+        "438658af98f70ff7e86a17937449e2b018afc187"
+      ],
+      "refs": [],
+      "iteration": "iter-280",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "438658af98f70ff7e86a17937449e2b018afc187",
+      "shortSha": "438658af",
+      "subject": "archon[279/dag]: elaboration (1425s)",
+      "date": "2026-06-05 02:07:41 +0800",
+      "parents": [
+        "8b4cccd899de8a3efe4a03cf7f380a004b48877b"
+      ],
+      "refs": [],
+      "iteration": "iter-279",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "8b4cccd899de8a3efe4a03cf7f380a004b48877b",
+      "shortSha": "8b4cccd8",
+      "subject": "archon[278/dag]: elaboration (1921s)",
+      "date": "2026-06-05 01:43:52 +0800",
+      "parents": [
+        "240d6c3848ab7b4170744bb20b3390035be56d0f"
+      ],
+      "refs": [],
+      "iteration": "iter-278",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "240d6c3848ab7b4170744bb20b3390035be56d0f",
+      "shortSha": "240d6c38",
+      "subject": "archon[277/dag]: elaboration (1716s)",
+      "date": "2026-06-05 01:11:47 +0800",
+      "parents": [
+        "59e4f803a4b91d8568a89ec45f002e2075e85a32"
+      ],
+      "refs": [],
+      "iteration": "iter-277",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "59e4f803a4b91d8568a89ec45f002e2075e85a32",
+      "shortSha": "59e4f803",
+      "subject": "archon[276/dag]: elaboration (2400s)",
+      "date": "2026-06-05 00:43:08 +0800",
+      "parents": [
+        "ccf16e45fe202dd20e64bc009e3c81b0a31f3358"
+      ],
+      "refs": [],
+      "iteration": "iter-276",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "ccf16e45fe202dd20e64bc009e3c81b0a31f3358",
+      "shortSha": "ccf16e45",
+      "subject": "archon[275/dag]: elaboration (1879s)",
+      "date": "2026-06-05 00:03:04 +0800",
+      "parents": [
+        "255f113c5adffcc3132a37c4c7fe09bca7d68bb6"
+      ],
+      "refs": [],
+      "iteration": "iter-275",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "255f113c5adffcc3132a37c4c7fe09bca7d68bb6",
+      "shortSha": "255f113c",
+      "subject": "archon[273/dag]: elaboration (3617s)",
+      "date": "2026-06-04 20:50:37 +0800",
+      "parents": [
+        "bba4902bb62bbb92c9b17fc8e534be03ab395a49"
+      ],
+      "refs": [],
+      "iteration": "iter-273",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "bba4902bb62bbb92c9b17fc8e534be03ab395a49",
+      "shortSha": "bba4902b",
+      "subject": "archon[272/dag]: elaboration (2219s)",
+      "date": "2026-06-04 19:50:17 +0800",
+      "parents": [
+        "a0a035922463233df26a59e5759a4ff7ddbcb0be"
+      ],
+      "refs": [],
+      "iteration": "iter-272",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "a0a035922463233df26a59e5759a4ff7ddbcb0be",
+      "shortSha": "a0a03592",
+      "subject": "archon[271/review]: journal session (1061s)",
+      "date": "2026-06-04 19:06:22 +0800",
+      "parents": [
+        "bcd0b35901f258dd9b7d6f1d697182a3a45b7a52"
+      ],
+      "refs": [],
+      "iteration": "iter-271",
+      "phase": "review",
+      "branch": "main"
+    },
+    {
+      "sha": "bcd0b35901f258dd9b7d6f1d697182a3a45b7a52",
+      "shortSha": "bcd0b359",
+      "subject": "archon[270/dag]: elaboration (6381s)",
+      "date": "2026-06-04 17:03:17 +0800",
+      "parents": [
+        "9b63491bbd8a40ea91f12b6dffc71d3358f333d4"
+      ],
+      "refs": [],
+      "iteration": "iter-270",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "9b63491bbd8a40ea91f12b6dffc71d3358f333d4",
+      "shortSha": "9b63491b",
+      "subject": "archon[268/dag]: elaboration (406s)",
+      "date": "2026-06-04 14:58:20 +0800",
+      "parents": [
+        "1d8567b46b40d206b8ac2c2d65f1aaf186501bd5"
+      ],
+      "refs": [],
+      "iteration": "iter-268",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "1d8567b46b40d206b8ac2c2d65f1aaf186501bd5",
+      "shortSha": "1d8567b4",
+      "subject": "archon[267/dag]: elaboration (471s)",
+      "date": "2026-06-04 14:43:42 +0800",
+      "parents": [
+        "623b7bb86e0a482b1e2848c3a9855f4e2bdf5829"
+      ],
+      "refs": [],
+      "iteration": "iter-267",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "623b7bb86e0a482b1e2848c3a9855f4e2bdf5829",
+      "shortSha": "623b7bb8",
+      "subject": "archon[266/dag]: elaboration (1842s)",
+      "date": "2026-06-04 14:35:48 +0800",
+      "parents": [
+        "1434046d3c7fb8815d8c9ba700e685eb45904589"
+      ],
+      "refs": [],
+      "iteration": "iter-266",
+      "phase": "dag",
+      "branch": "main"
+    },
+    {
+      "sha": "1434046d3c7fb8815d8c9ba700e685eb45904589",
+      "shortSha": "1434046d",
+      "subject": "archon[265/finalize]: stage=prover sorry=93",
+      "date": "2026-06-04 13:03:41 +0800",
+      "parents": [
+        "851608815bed86cbe390f46b62e5b1919a335d61"
+      ],
+      "refs": [],
+      "iteration": "iter-265",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "851608815bed86cbe390f46b62e5b1919a335d61",
+      "shortSha": "85160881",
+      "subject": "archon[264/finalize]: stage=prover sorry=93",
+      "date": "2026-06-04 11:03:10 +0800",
+      "parents": [
+        "d6134dc28cddabfe78a61d696f5e457168ba937b"
+      ],
+      "refs": [],
+      "iteration": "iter-264",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "d6134dc28cddabfe78a61d696f5e457168ba937b",
+      "shortSha": "d6134dc2",
+      "subject": "archon[263/finalize]: stage=prover sorry=94",
+      "date": "2026-06-04 07:35:33 +0800",
+      "parents": [
+        "1041034100f3cce0577f1480e9198647594ec621"
+      ],
+      "refs": [],
+      "iteration": "iter-263",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "1041034100f3cce0577f1480e9198647594ec621",
+      "shortSha": "10410341",
+      "subject": "archon[262/finalize]: stage=prover sorry=95",
+      "date": "2026-06-04 05:29:20 +0800",
+      "parents": [
+        "c3f1c4cbdfc5468479a0639061e33975f36dccfb"
+      ],
+      "refs": [],
+      "iteration": "iter-262",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "c3f1c4cbdfc5468479a0639061e33975f36dccfb",
+      "shortSha": "c3f1c4cb",
+      "subject": "archon[261/finalize]: stage=prover sorry=97",
+      "date": "2026-06-04 03:24:17 +0800",
+      "parents": [
+        "f676174cc866c8a97828ed02c9995aad0709a3e6"
+      ],
+      "refs": [],
+      "iteration": "iter-261",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "f676174cc866c8a97828ed02c9995aad0709a3e6",
+      "shortSha": "f676174c",
+      "subject": "archon[260/finalize]: stage=prover sorry=85",
+      "date": "2026-06-04 01:33:17 +0800",
+      "parents": [
+        "5917f0fa6e493ee3422aebea95298122a1df037e"
+      ],
+      "refs": [],
+      "iteration": "iter-260",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "5917f0fa6e493ee3422aebea95298122a1df037e",
+      "shortSha": "5917f0fa",
+      "subject": "archon[259/finalize]: stage=prover sorry=86",
+      "date": "2026-06-03 20:37:48 +0800",
+      "parents": [
+        "6d2be063484340042810a220d25378b62a161448"
+      ],
+      "refs": [],
+      "iteration": "iter-259",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "6d2be063484340042810a220d25378b62a161448",
+      "shortSha": "6d2be063",
+      "subject": "archon[258/finalize]: stage=prover sorry=87",
+      "date": "2026-06-03 19:07:00 +0800",
+      "parents": [
+        "fe5b7e6ebbb56e787d552c1870ea78078d05a5d6"
+      ],
+      "refs": [],
+      "iteration": "iter-258",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "fe5b7e6ebbb56e787d552c1870ea78078d05a5d6",
+      "shortSha": "fe5b7e6e",
+      "subject": "archon[257/finalize]: stage=prover sorry=86",
+      "date": "2026-06-03 16:41:59 +0800",
+      "parents": [
+        "d74347ad3a90b98fa5795f7f8eb1bbdb701bb59b"
+      ],
+      "refs": [],
+      "iteration": "iter-257",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "d74347ad3a90b98fa5795f7f8eb1bbdb701bb59b",
+      "shortSha": "d74347ad",
+      "subject": "archon[256/finalize]: stage=prover sorry=89",
+      "date": "2026-06-03 14:38:04 +0800",
+      "parents": [
+        "c5707a2fdcc5ba214bfa12ae26a28b994efbcd35"
+      ],
+      "refs": [],
+      "iteration": "iter-256",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "c5707a2fdcc5ba214bfa12ae26a28b994efbcd35",
+      "shortSha": "c5707a2f",
+      "subject": "archon[255/finalize]: stage=prover sorry=84",
+      "date": "2026-06-03 12:43:49 +0800",
+      "parents": [
+        "3237f5bab263684639dd19793737f16af191bf44"
+      ],
+      "refs": [],
+      "iteration": "iter-255",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "3237f5bab263684639dd19793737f16af191bf44",
+      "shortSha": "3237f5ba",
+      "subject": "archon[254/finalize]: stage=prover sorry=85",
+      "date": "2026-06-03 10:46:29 +0800",
+      "parents": [
+        "e5a2c8dc8560b7f9368f00e0a8dc0519b96778cb"
+      ],
+      "refs": [],
+      "iteration": "iter-254",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "e5a2c8dc8560b7f9368f00e0a8dc0519b96778cb",
+      "shortSha": "e5a2c8dc",
+      "subject": "archon[253/finalize]: stage=prover sorry=87",
+      "date": "2026-06-03 04:32:23 +0800",
+      "parents": [
+        "0f2f723d15075ab6a84f11377f1905361c2bf830"
+      ],
+      "refs": [],
+      "iteration": "iter-253",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "0f2f723d15075ab6a84f11377f1905361c2bf830",
+      "shortSha": "0f2f723d",
+      "subject": "archon[252/finalize]: stage=prover sorry=86",
+      "date": "2026-06-03 01:35:21 +0800",
+      "parents": [
+        "fb8ae5187ed69e473b804621d72ebbe6c0f68501"
+      ],
+      "refs": [],
+      "iteration": "iter-252",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "fb8ae5187ed69e473b804621d72ebbe6c0f68501",
+      "shortSha": "fb8ae518",
+      "subject": "archon[251/finalize]: stage=prover sorry=86",
+      "date": "2026-06-02 23:01:58 +0800",
+      "parents": [
+        "5806d5e94677a4cc083488f7654d23531a172aa0"
+      ],
+      "refs": [],
+      "iteration": "iter-251",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "5806d5e94677a4cc083488f7654d23531a172aa0",
+      "shortSha": "5806d5e9",
+      "subject": "archon[250/finalize]: stage=prover sorry=82",
+      "date": "2026-06-02 20:50:35 +0800",
+      "parents": [
+        "505cbe49bd561a2a95b82a9853b611695c1f500d"
+      ],
+      "refs": [],
+      "iteration": "iter-250",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "505cbe49bd561a2a95b82a9853b611695c1f500d",
+      "shortSha": "505cbe49",
+      "subject": "archon[249/finalize]: stage=prover sorry=83",
+      "date": "2026-06-02 18:01:58 +0800",
+      "parents": [
+        "3059fe96bab184f829dcd38379f2f595a5b4dada"
+      ],
+      "refs": [],
+      "iteration": "iter-249",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "3059fe96bab184f829dcd38379f2f595a5b4dada",
+      "shortSha": "3059fe96",
+      "subject": "archon[248/finalize]: stage=prover sorry=83",
+      "date": "2026-06-02 16:17:57 +0800",
+      "parents": [
+        "cdaec34f10ea314131f39bc8bf51a4709e3cb2f2"
+      ],
+      "refs": [],
+      "iteration": "iter-248",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "cdaec34f10ea314131f39bc8bf51a4709e3cb2f2",
+      "shortSha": "cdaec34f",
+      "subject": "archon[247/finalize]: stage=prover sorry=82",
+      "date": "2026-06-02 14:52:59 +0800",
+      "parents": [
+        "c9ef031df2120d0fce132ac0955b349ef7cbaed5"
+      ],
+      "refs": [],
+      "iteration": "iter-247",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "c9ef031df2120d0fce132ac0955b349ef7cbaed5",
+      "shortSha": "c9ef031d",
+      "subject": "archon[246/finalize]: stage=prover sorry=87",
+      "date": "2026-06-02 13:14:06 +0800",
+      "parents": [
+        "e88831b1abfd4aa0d695c37dedaa85378ca08090"
+      ],
+      "refs": [],
+      "iteration": "iter-246",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "e88831b1abfd4aa0d695c37dedaa85378ca08090",
+      "shortSha": "e88831b1",
+      "subject": "archon[245/finalize]: stage=prover sorry=84",
+      "date": "2026-06-02 11:34:35 +0800",
+      "parents": [
+        "83164f33ed327282e24d38ab95bdffd051bbf3d4"
+      ],
+      "refs": [],
+      "iteration": "iter-245",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "83164f33ed327282e24d38ab95bdffd051bbf3d4",
+      "shortSha": "83164f33",
+      "subject": "archon[244/finalize]: stage=prover sorry=84",
+      "date": "2026-06-02 09:39:09 +0800",
+      "parents": [
+        "ea7aee580b4419010a12d672241d7c96ac7313ea"
+      ],
+      "refs": [],
+      "iteration": "iter-244",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "ea7aee580b4419010a12d672241d7c96ac7313ea",
+      "shortSha": "ea7aee58",
+      "subject": "archon[243/finalize]: stage=prover sorry=84",
+      "date": "2026-06-02 01:22:08 +0800",
+      "parents": [
+        "6c4fc0e1a6b125afd5baf1b5a90274bf961865e6"
+      ],
+      "refs": [],
+      "iteration": "iter-243",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "6c4fc0e1a6b125afd5baf1b5a90274bf961865e6",
+      "shortSha": "6c4fc0e1",
+      "subject": "archon[242/finalize]: stage=prover sorry=84",
+      "date": "2026-06-01 23:43:02 +0800",
+      "parents": [
+        "2cf26636eaab4c13e552e6b722a6ed94c16555a9"
+      ],
+      "refs": [],
+      "iteration": "iter-242",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "2cf26636eaab4c13e552e6b722a6ed94c16555a9",
+      "shortSha": "2cf26636",
+      "subject": "archon[241/finalize]: stage=prover sorry=84",
+      "date": "2026-06-01 21:49:58 +0800",
+      "parents": [
+        "4f2f0c1dd1960faae1780b97d5d36a0a3704947a"
+      ],
+      "refs": [],
+      "iteration": "iter-241",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "4f2f0c1dd1960faae1780b97d5d36a0a3704947a",
+      "shortSha": "4f2f0c1d",
+      "subject": "archon[240/finalize]: stage=prover sorry=85",
+      "date": "2026-06-01 20:34:56 +0800",
+      "parents": [
+        "7212696fae39d9718e6ded16c087c80d56f3194e"
+      ],
+      "refs": [],
+      "iteration": "iter-240",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "7212696fae39d9718e6ded16c087c80d56f3194e",
+      "shortSha": "7212696f",
+      "subject": "archon[239/finalize]: stage=prover sorry=85",
+      "date": "2026-06-01 18:20:38 +0800",
+      "parents": [
+        "2396ec67797b2c7586faf728273a7ed32703e31a"
+      ],
+      "refs": [],
+      "iteration": "iter-239",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "2396ec67797b2c7586faf728273a7ed32703e31a",
+      "shortSha": "2396ec67",
+      "subject": "archon[238/finalize]: stage=prover sorry=84",
+      "date": "2026-06-01 16:39:12 +0800",
+      "parents": [
+        "4bef73732704ffb32d0c62db384adbe67d577fd9"
+      ],
+      "refs": [],
+      "iteration": "iter-238",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "4bef73732704ffb32d0c62db384adbe67d577fd9",
+      "shortSha": "4bef7373",
+      "subject": "archon[237/finalize]: stage=prover sorry=84",
+      "date": "2026-06-01 15:16:06 +0800",
+      "parents": [
+        "d680978a5918d0b1da7399160dc0e6c0de6e5200"
+      ],
+      "refs": [],
+      "iteration": "iter-237",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "d680978a5918d0b1da7399160dc0e6c0de6e5200",
+      "shortSha": "d680978a",
+      "subject": "archon[236/finalize]: stage=prover sorry=85",
+      "date": "2026-06-01 13:37:00 +0800",
+      "parents": [
+        "722a8d304130b4ca09424b4019fe2a096947ad1e"
+      ],
+      "refs": [],
+      "iteration": "iter-236",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "722a8d304130b4ca09424b4019fe2a096947ad1e",
+      "shortSha": "722a8d30",
+      "subject": "archon[235/finalize]: stage=prover sorry=85",
+      "date": "2026-06-01 11:58:15 +0800",
+      "parents": [
+        "6ad436e7874068a5e0f743019e7ba49c7924aa60"
+      ],
+      "refs": [],
+      "iteration": "iter-235",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "6ad436e7874068a5e0f743019e7ba49c7924aa60",
+      "shortSha": "6ad436e7",
+      "subject": "archon[234/finalize]: stage=prover sorry=85",
+      "date": "2026-06-01 10:17:23 +0800",
+      "parents": [
+        "6049744a28b21b54421ce51388e0584850d033da"
+      ],
+      "refs": [],
+      "iteration": "iter-234",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "6049744a28b21b54421ce51388e0584850d033da",
+      "shortSha": "6049744a",
+      "subject": "archon[233/finalize]: stage=prover sorry=85",
+      "date": "2026-06-01 05:06:11 +0800",
+      "parents": [
+        "49de6286007a9d5db56487e3f072b071e9df1f3e"
+      ],
+      "refs": [],
+      "iteration": "iter-233",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "49de6286007a9d5db56487e3f072b071e9df1f3e",
+      "shortSha": "49de6286",
+      "subject": "archon[232/finalize]: stage=prover sorry=82",
+      "date": "2026-06-01 02:46:00 +0800",
+      "parents": [
+        "c394778166b4e8408db7c5073efc6b804c26009c"
+      ],
+      "refs": [],
+      "iteration": "iter-232",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "c394778166b4e8408db7c5073efc6b804c26009c",
+      "shortSha": "c3947781",
+      "subject": "archon[231/finalize]: stage=prover sorry=80",
+      "date": "2026-06-01 01:15:48 +0800",
+      "parents": [
+        "0b5e30eed1b9f766d46675784f2cea85d50380d1"
+      ],
+      "refs": [],
+      "iteration": "iter-231",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "0b5e30eed1b9f766d46675784f2cea85d50380d1",
+      "shortSha": "0b5e30ee",
+      "subject": "archon[230/finalize]: stage=prover sorry=80",
+      "date": "2026-06-01 00:07:25 +0800",
+      "parents": [
+        "777039752c8d47dfd2ff61cc850a41319d5c4fd5"
+      ],
+      "refs": [],
+      "iteration": "iter-230",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "777039752c8d47dfd2ff61cc850a41319d5c4fd5",
+      "shortSha": "77703975",
+      "subject": "archon[229/finalize]: stage=prover sorry=80",
+      "date": "2026-05-31 23:00:05 +0800",
+      "parents": [
+        "313c64bb2bdf9912f443dd29d2d95a4b5f770ceb"
+      ],
+      "refs": [],
+      "iteration": "iter-229",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "313c64bb2bdf9912f443dd29d2d95a4b5f770ceb",
+      "shortSha": "313c64bb",
+      "subject": "archon[228/finalize]: stage=prover sorry=80",
+      "date": "2026-05-31 21:29:22 +0800",
+      "parents": [
+        "207ef1b525792868e4d4df954ea71e6ff83ca797"
+      ],
+      "refs": [],
+      "iteration": "iter-228",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "207ef1b525792868e4d4df954ea71e6ff83ca797",
+      "shortSha": "207ef1b5",
+      "subject": "archon[227/finalize]: stage=prover sorry=80",
+      "date": "2026-05-31 20:07:47 +0800",
+      "parents": [
+        "5fb77dc00ca85e95ed5bb874e6b7c3961c20412a"
+      ],
+      "refs": [],
+      "iteration": "iter-227",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "5fb77dc00ca85e95ed5bb874e6b7c3961c20412a",
+      "shortSha": "5fb77dc0",
+      "subject": "archon[226/finalize]: stage=prover sorry=80",
+      "date": "2026-05-31 19:06:05 +0800",
+      "parents": [
+        "c4287f20cb099fb84e462b43275e75db57def6fb"
+      ],
+      "refs": [],
+      "iteration": "iter-226",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "c4287f20cb099fb84e462b43275e75db57def6fb",
+      "shortSha": "c4287f20",
+      "subject": "archon[225/finalize]: stage=prover sorry=80",
+      "date": "2026-05-31 18:06:28 +0800",
+      "parents": [
+        "f854979be654ed2371d3577d534e2cb0eed4f9e2"
+      ],
+      "refs": [],
+      "iteration": "iter-225",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "f854979be654ed2371d3577d534e2cb0eed4f9e2",
+      "shortSha": "f854979b",
+      "subject": "archon[224/review]: journal session (335s)",
+      "date": "2026-05-31 17:11:22 +0800",
+      "parents": [
+        "a181fa8b7f4f4312818fd11d41517b087bec867f"
+      ],
+      "refs": [],
+      "iteration": "iter-224",
+      "phase": "review",
+      "branch": "main"
+    },
+    {
+      "sha": "a181fa8b7f4f4312818fd11d41517b087bec867f",
+      "shortSha": "a181fa8b",
+      "subject": "archon[223/finalize]: stage=prover sorry=81",
+      "date": "2026-05-31 15:11:00 +0800",
+      "parents": [
+        "ad961680c7a5d8588ebf5c0e1b1d028753474ac6"
+      ],
+      "refs": [],
+      "iteration": "iter-223",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "ad961680c7a5d8588ebf5c0e1b1d028753474ac6",
+      "shortSha": "ad961680",
+      "subject": "archon[222/finalize]: stage=prover sorry=81",
+      "date": "2026-05-31 12:12:02 +0800",
+      "parents": [
+        "c30269c82ac937271a458fa6a1ff827b01f0d985"
+      ],
+      "refs": [],
+      "iteration": "iter-222",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "c30269c82ac937271a458fa6a1ff827b01f0d985",
+      "shortSha": "c30269c8",
+      "subject": "archon[221/finalize]: stage=prover sorry=80",
+      "date": "2026-05-31 10:09:15 +0800",
+      "parents": [
+        "458d27bed83a85c6860e940ce72b02d29e6a04b2"
+      ],
+      "refs": [],
+      "iteration": "iter-221",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "458d27bed83a85c6860e940ce72b02d29e6a04b2",
+      "shortSha": "458d27be",
+      "subject": "archon[220/finalize]: stage=prover sorry=80",
+      "date": "2026-05-31 08:37:44 +0800",
+      "parents": [
+        "6b462819ec0098bad882a3221233ba1be44d5eba"
+      ],
+      "refs": [],
+      "iteration": "iter-220",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "6b462819ec0098bad882a3221233ba1be44d5eba",
+      "shortSha": "6b462819",
+      "subject": "archon[219/finalize]: stage=prover sorry=80",
+      "date": "2026-05-31 06:46:47 +0800",
+      "parents": [
+        "41ce21a5d16607ef8baa1306a367c67f7bc95704"
+      ],
+      "refs": [],
+      "iteration": "iter-219",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "41ce21a5d16607ef8baa1306a367c67f7bc95704",
+      "shortSha": "41ce21a5",
+      "subject": "archon[218/finalize]: stage=prover sorry=80",
+      "date": "2026-05-31 05:07:36 +0800",
+      "parents": [
+        "27514251347c85e3fc68ad9726a7ba99b8da291b"
+      ],
+      "refs": [],
+      "iteration": "iter-218",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "27514251347c85e3fc68ad9726a7ba99b8da291b",
+      "shortSha": "27514251",
+      "subject": "archon[217/finalize]: stage=prover sorry=80",
+      "date": "2026-05-31 04:04:44 +0800",
+      "parents": [
+        "4ef266a085f267fb1d0aed5f6595dc6bf039345b"
+      ],
+      "refs": [],
+      "iteration": "iter-217",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "4ef266a085f267fb1d0aed5f6595dc6bf039345b",
+      "shortSha": "4ef266a0",
+      "subject": "archon[216/finalize]: stage=prover sorry=81",
+      "date": "2026-05-31 02:29:56 +0800",
+      "parents": [
+        "89ad5a395d5af82ecdc3ce20f86db1714b0fcd4e"
+      ],
+      "refs": [],
+      "iteration": "iter-216",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "89ad5a395d5af82ecdc3ce20f86db1714b0fcd4e",
+      "shortSha": "89ad5a39",
+      "subject": "archon[215/finalize]: stage=prover sorry=81",
+      "date": "2026-05-31 00:08:24 +0800",
+      "parents": [
+        "61646e3cd547caa90217ac13b0ebaeb3b18c8a52"
+      ],
+      "refs": [],
+      "iteration": "iter-215",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "61646e3cd547caa90217ac13b0ebaeb3b18c8a52",
+      "shortSha": "61646e3c",
+      "subject": "archon[214/finalize]: stage=prover sorry=81",
+      "date": "2026-05-30 22:18:23 +0800",
+      "parents": [
+        "af2da39fd273300126367b071dd4d4e1f2b4355c"
+      ],
+      "refs": [],
+      "iteration": "iter-214",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "af2da39fd273300126367b071dd4d4e1f2b4355c",
+      "shortSha": "af2da39f",
+      "subject": "archon[213/finalize]: stage=prover sorry=81",
+      "date": "2026-05-30 20:28:39 +0800",
+      "parents": [
+        "5a95bc0f64052f9601a386333513a0ae17c11a59"
+      ],
+      "refs": [],
+      "iteration": "iter-213",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "5a95bc0f64052f9601a386333513a0ae17c11a59",
+      "shortSha": "5a95bc0f",
+      "subject": "archon[212/finalize]: stage=prover sorry=81",
+      "date": "2026-05-30 15:46:39 +0800",
+      "parents": [
+        "3ad054f488326570d8bf5716bce758d48d2701f3"
+      ],
+      "refs": [],
+      "iteration": "iter-212",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "3ad054f488326570d8bf5716bce758d48d2701f3",
+      "shortSha": "3ad054f4",
+      "subject": "archon[211/finalize]: stage=prover sorry=81",
+      "date": "2026-05-30 14:53:24 +0800",
+      "parents": [
+        "20884bc3e27c5ea3f227f5d7596fdaaf8f068311"
+      ],
+      "refs": [],
+      "iteration": "iter-211",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "20884bc3e27c5ea3f227f5d7596fdaaf8f068311",
+      "shortSha": "20884bc3",
+      "subject": "archon[210/finalize]: stage=prover sorry=80",
+      "date": "2026-05-30 12:35:17 +0800",
+      "parents": [
+        "966c8025e76e0dae93d69be4412ae23860a7176d"
+      ],
+      "refs": [],
+      "iteration": "iter-210",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "966c8025e76e0dae93d69be4412ae23860a7176d",
+      "shortSha": "966c8025",
+      "subject": "archon[209/finalize]: stage=prover sorry=80",
+      "date": "2026-05-30 11:45:01 +0800",
+      "parents": [
+        "56e33f533404c52a1b978def07503df08f374375"
+      ],
+      "refs": [],
+      "iteration": "iter-209",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "56e33f533404c52a1b978def07503df08f374375",
+      "shortSha": "56e33f53",
+      "subject": "archon[208/finalize]: stage=prover sorry=80",
+      "date": "2026-05-30 10:41:56 +0800",
+      "parents": [
+        "8f2f7dc71b089aad5f1ff0628b391fcea73b488f"
+      ],
+      "refs": [],
+      "iteration": "iter-208",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "8f2f7dc71b089aad5f1ff0628b391fcea73b488f",
+      "shortSha": "8f2f7dc7",
+      "subject": "archon[207/finalize]: stage=prover sorry=80",
+      "date": "2026-05-29 18:59:30 +0800",
+      "parents": [
+        "8c2b40bba465d8d6a8f4e8cdbdf09e6ddbba7b4d"
+      ],
+      "refs": [],
+      "iteration": "iter-207",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "8c2b40bba465d8d6a8f4e8cdbdf09e6ddbba7b4d",
+      "shortSha": "8c2b40bb",
+      "subject": "archon[206/finalize]: stage=prover sorry=80",
+      "date": "2026-05-29 17:32:30 +0800",
+      "parents": [
+        "10e85beda74cf6c9d706c0baaf2dc71b82ffb4d7"
+      ],
+      "refs": [],
+      "iteration": "iter-206",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "10e85beda74cf6c9d706c0baaf2dc71b82ffb4d7",
+      "shortSha": "10e85bed",
+      "subject": "archon[205/finalize]: stage=prover sorry=81",
+      "date": "2026-05-29 16:03:13 +0800",
+      "parents": [
+        "6cd7c831a77bea5263f7c9c0ca7cdf4bdc7ba420"
+      ],
+      "refs": [],
+      "iteration": "iter-205",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "6cd7c831a77bea5263f7c9c0ca7cdf4bdc7ba420",
+      "shortSha": "6cd7c831",
+      "subject": "archon[204/finalize]: stage=prover sorry=81",
+      "date": "2026-05-29 15:09:25 +0800",
+      "parents": [
+        "1c95d2b7b154c649d25f73419dfa166831533232"
+      ],
+      "refs": [],
+      "iteration": "iter-204",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "1c95d2b7b154c649d25f73419dfa166831533232",
+      "shortSha": "1c95d2b7",
+      "subject": "archon[203/finalize]: stage=prover sorry=81",
+      "date": "2026-05-29 13:22:09 +0800",
+      "parents": [
+        "b0b1dd454d8cd19cf63a4e337779e007740c99f3"
+      ],
+      "refs": [],
+      "iteration": "iter-203",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "b0b1dd454d8cd19cf63a4e337779e007740c99f3",
+      "shortSha": "b0b1dd45",
+      "subject": "archon[202/finalize]: stage=prover sorry=83",
+      "date": "2026-05-29 11:59:18 +0800",
+      "parents": [
+        "aed327d65d7c9b300fa66a79efb16ed0415645ea"
+      ],
+      "refs": [],
+      "iteration": "iter-202",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "aed327d65d7c9b300fa66a79efb16ed0415645ea",
+      "shortSha": "aed327d6",
+      "subject": "archon[201/finalize]: stage=prover sorry=78",
+      "date": "2026-05-29 09:04:07 +0800",
+      "parents": [
+        "3f4feb1a21674d822db5ac3fb7114ad3ebd91715"
+      ],
+      "refs": [],
+      "iteration": "iter-201",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "3f4feb1a21674d822db5ac3fb7114ad3ebd91715",
+      "shortSha": "3f4feb1a",
+      "subject": "archon[200/finalize]: stage=prover sorry=78",
+      "date": "2026-05-29 06:09:48 +0800",
+      "parents": [
+        "4d66bb475aec874e014299859966bd27b3282b26"
+      ],
+      "refs": [],
+      "iteration": "iter-200",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "4d66bb475aec874e014299859966bd27b3282b26",
+      "shortSha": "4d66bb47",
+      "subject": "archon[199/finalize]: stage=prover sorry=78",
+      "date": "2026-05-29 03:20:01 +0800",
+      "parents": [
+        "7df0ea74548e932d413db5fe7e370ed6316380b9"
+      ],
+      "refs": [],
+      "iteration": "iter-199",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "7df0ea74548e932d413db5fe7e370ed6316380b9",
+      "shortSha": "7df0ea74",
+      "subject": "archon[198/finalize]: stage=prover sorry=78",
+      "date": "2026-05-29 00:23:44 +0800",
+      "parents": [
+        "da1a430ddaebc02462729236ddae12d158dda7d3"
+      ],
+      "refs": [],
+      "iteration": "iter-198",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "da1a430ddaebc02462729236ddae12d158dda7d3",
+      "shortSha": "da1a430d",
+      "subject": "archon[197/finalize]: stage=prover sorry=83",
+      "date": "2026-05-28 20:58:31 +0800",
+      "parents": [
+        "b758bb72c0eafe12a2b1b5ad0b62c2183c44e4f0"
+      ],
+      "refs": [],
+      "iteration": "iter-197",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "b758bb72c0eafe12a2b1b5ad0b62c2183c44e4f0",
+      "shortSha": "b758bb72",
+      "subject": "archon[196/finalize]: stage=prover sorry=86",
+      "date": "2026-05-27 20:42:20 +0800",
+      "parents": [
+        "aa032783a1ee466a3cf16d4e2992e6fce7247c15"
+      ],
+      "refs": [],
+      "iteration": "iter-196",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "aa032783a1ee466a3cf16d4e2992e6fce7247c15",
+      "shortSha": "aa032783",
+      "subject": "archon[195/finalize]: stage=prover sorry=86",
+      "date": "2026-05-27 15:43:56 +0800",
+      "parents": [
+        "330ae2afc59b54fb61435cfb557ca02bafeebdd9"
+      ],
+      "refs": [],
+      "iteration": "iter-195",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "330ae2afc59b54fb61435cfb557ca02bafeebdd9",
+      "shortSha": "330ae2af",
+      "subject": "archon[194/finalize]: stage=prover sorry=87",
+      "date": "2026-05-27 11:00:32 +0800",
+      "parents": [
+        "bc6aaf9361061ea4701a2b1cac3dd1f070f52cb6"
+      ],
+      "refs": [],
+      "iteration": "iter-194",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "bc6aaf9361061ea4701a2b1cac3dd1f070f52cb6",
+      "shortSha": "bc6aaf93",
+      "subject": "archon[193/finalize]: stage=prover sorry=87",
+      "date": "2026-05-27 06:14:24 +0800",
+      "parents": [
+        "52f449e84007006db2f5d7c689b25c6e2a866536"
+      ],
+      "refs": [],
+      "iteration": "iter-193",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "52f449e84007006db2f5d7c689b25c6e2a866536",
+      "shortSha": "52f449e8",
+      "subject": "archon[192/finalize]: stage=prover sorry=76",
+      "date": "2026-05-27 01:30:39 +0800",
+      "parents": [
+        "bb2843fc505900c46e72576219946a0c10053f9c"
+      ],
+      "refs": [],
+      "iteration": "iter-192",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "bb2843fc505900c46e72576219946a0c10053f9c",
+      "shortSha": "bb2843fc",
+      "subject": "archon[191/finalize]: stage=prover sorry=79",
+      "date": "2026-05-26 20:33:09 +0800",
+      "parents": [
+        "661e411f08e261671bebfeaaca2fda4346d1aa01"
+      ],
+      "refs": [],
+      "iteration": "iter-191",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "661e411f08e261671bebfeaaca2fda4346d1aa01",
+      "shortSha": "661e411f",
+      "subject": "archon[190/finalize]: stage=prover sorry=79",
+      "date": "2026-05-26 17:20:12 +0800",
+      "parents": [
+        "837c3c5c8e17315b807b8c61889af682313201b5"
+      ],
+      "refs": [],
+      "iteration": "iter-190",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "837c3c5c8e17315b807b8c61889af682313201b5",
+      "shortSha": "837c3c5c",
+      "subject": "archon[189/finalize]: stage=prover sorry=78",
+      "date": "2026-05-26 11:27:50 +0800",
+      "parents": [
+        "364f2c4375c344c6e5b04388c1eb273544b8a79b"
+      ],
+      "refs": [],
+      "iteration": "iter-189",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "364f2c4375c344c6e5b04388c1eb273544b8a79b",
+      "shortSha": "364f2c43",
+      "subject": "archon[188/finalize]: stage=prover sorry=77",
+      "date": "2026-05-26 07:46:33 +0800",
+      "parents": [
+        "fcad811f7c55df42ffc8aa9c0f999fcb728a2296"
+      ],
+      "refs": [],
+      "iteration": "iter-188",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "fcad811f7c55df42ffc8aa9c0f999fcb728a2296",
+      "shortSha": "fcad811f",
+      "subject": "archon[187/finalize]: stage=prover sorry=81",
+      "date": "2026-05-26 03:05:29 +0800",
+      "parents": [
+        "422dc201f31f75f7c4fe42d28e44278747aa53b1"
+      ],
+      "refs": [],
+      "iteration": "iter-187",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "422dc201f31f75f7c4fe42d28e44278747aa53b1",
+      "shortSha": "422dc201",
+      "subject": "archon[186/finalize]: stage=prover sorry=76",
+      "date": "2026-05-25 23:48:11 +0800",
+      "parents": [
+        "de27fbbc257620df62fcd0f323d956eca6558b44"
+      ],
+      "refs": [],
+      "iteration": "iter-186",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "de27fbbc257620df62fcd0f323d956eca6558b44",
+      "shortSha": "de27fbbc",
+      "subject": "archon[185/finalize]: stage=prover sorry=81",
+      "date": "2026-05-25 19:13:22 +0800",
+      "parents": [
+        "82abd66a20b71616ac78a95336e8ec7d81d969fb"
+      ],
+      "refs": [],
+      "iteration": "iter-185",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "82abd66a20b71616ac78a95336e8ec7d81d969fb",
+      "shortSha": "82abd66a",
+      "subject": "archon[184/review]: journal session (1957s)",
+      "date": "2026-05-25 12:48:52 +0800",
+      "parents": [
+        "0a8c49cea75a13238d34022da09fa3d399b7f05f"
+      ],
+      "refs": [],
+      "iteration": "iter-184",
+      "phase": "review",
+      "branch": "main"
+    },
+    {
+      "sha": "0a8c49cea75a13238d34022da09fa3d399b7f05f",
+      "shortSha": "0a8c49ce",
+      "subject": "Adding some references + correcting the blueprint errors",
+      "date": "2026-05-25 12:10:07 +0800",
+      "parents": [
+        "c5f8bb21a842bfe2df4fb230005c2c60f9620988"
+      ],
+      "refs": [],
+      "branch": "main"
+    },
+    {
+      "sha": "c5f8bb21a842bfe2df4fb230005c2c60f9620988",
+      "shortSha": "c5f8bb21",
+      "subject": "archon[183/finalize]: stage=prover sorry=82",
+      "date": "2026-05-24 23:07:10 +0800",
+      "parents": [
+        "c16230fe7a6083952fd38fc602ed06c4d794119e"
+      ],
+      "refs": [],
+      "iteration": "iter-183",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "c16230fe7a6083952fd38fc602ed06c4d794119e",
+      "shortSha": "c16230fe",
+      "subject": "archon[182/finalize]: stage=prover sorry=75",
+      "date": "2026-05-24 18:46:26 +0800",
+      "parents": [
+        "8ae247941c4d7d36eae172fefdabc33c28cbcffd"
+      ],
+      "refs": [],
+      "iteration": "iter-182",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "8ae247941c4d7d36eae172fefdabc33c28cbcffd",
+      "shortSha": "8ae24794",
+      "subject": "archon[181/finalize]: stage=prover sorry=75",
+      "date": "2026-05-24 14:50:23 +0800",
+      "parents": [
+        "9cdef3c60ff8a6210c5da25d399050037528598a"
+      ],
+      "refs": [],
+      "iteration": "iter-181",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "9cdef3c60ff8a6210c5da25d399050037528598a",
+      "shortSha": "9cdef3c6",
+      "subject": "archon[180/finalize]: stage=prover sorry=74",
+      "date": "2026-05-24 08:58:17 +0800",
+      "parents": [
+        "2c9b74ca361b9355d038e6c3b28d2fe507274d56"
+      ],
+      "refs": [],
+      "iteration": "iter-180",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "2c9b74ca361b9355d038e6c3b28d2fe507274d56",
+      "shortSha": "2c9b74ca",
+      "subject": "archon[179/finalize]: stage=prover sorry=72",
+      "date": "2026-05-24 05:37:21 +0800",
+      "parents": [
+        "eb57b2c2b5b170c40f40bfda20abc3398423ceb7"
+      ],
+      "refs": [],
+      "iteration": "iter-179",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "eb57b2c2b5b170c40f40bfda20abc3398423ceb7",
+      "shortSha": "eb57b2c2",
+      "subject": "archon[178/finalize]: stage=prover sorry=70",
+      "date": "2026-05-24 02:35:20 +0800",
+      "parents": [
+        "1bd00f42697aa9a705136877e5869f6c3cf8eacd"
+      ],
+      "refs": [],
+      "iteration": "iter-178",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "1bd00f42697aa9a705136877e5869f6c3cf8eacd",
+      "shortSha": "1bd00f42",
+      "subject": "archon[177/finalize]: stage=prover sorry=72",
+      "date": "2026-05-24 00:39:13 +0800",
+      "parents": [
+        "c5421b78ecc6bcaa54821f24b3e4fac89b4a78dd"
+      ],
+      "refs": [],
+      "iteration": "iter-177",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "c5421b78ecc6bcaa54821f24b3e4fac89b4a78dd",
+      "shortSha": "c5421b78",
+      "subject": "archon[176/finalize]: stage=prover sorry=64",
+      "date": "2026-05-23 22:18:00 +0800",
+      "parents": [
+        "5fb8aec6037c54c827d365c6be8cd8cbe4bd9501"
+      ],
+      "refs": [],
+      "iteration": "iter-176",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "5fb8aec6037c54c827d365c6be8cd8cbe4bd9501",
+      "shortSha": "5fb8aec6",
+      "subject": "archon[175/review]: journal session (4s)",
+      "date": "2026-05-23 14:17:40 +0800",
+      "parents": [
+        "aecd13e9fb299e53aa0a7d1dc99a09845887b619"
+      ],
+      "refs": [],
+      "iteration": "iter-175",
+      "phase": "review",
+      "branch": "main"
+    },
+    {
+      "sha": "aecd13e9fb299e53aa0a7d1dc99a09845887b619",
+      "shortSha": "aecd13e9",
+      "subject": "archon[174/finalize]: stage=prover sorry=32",
+      "date": "2026-05-23 12:56:35 +0800",
+      "parents": [
+        "ac69076f37fc83bf3615334eb123057ae78572de"
+      ],
+      "refs": [],
+      "iteration": "iter-174",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "ac69076f37fc83bf3615334eb123057ae78572de",
+      "shortSha": "ac69076f",
+      "subject": "archon[173/review]: journal session (1364s)",
+      "date": "2026-05-22 17:59:46 +0800",
+      "parents": [
+        "3ffd8cd7270f24382d60fe8d7f8c0ecad45a9ff7"
+      ],
+      "refs": [],
+      "iteration": "iter-173",
+      "phase": "review",
+      "branch": "main"
+    },
+    {
+      "sha": "3ffd8cd7270f24382d60fe8d7f8c0ecad45a9ff7",
+      "shortSha": "3ffd8cd7",
+      "subject": "archon[172/finalize]: stage=prover sorry=20",
+      "date": "2026-05-22 15:25:01 +0800",
+      "parents": [
+        "07007afcf62220320c6caee1a9accfa9c135cef6"
+      ],
+      "refs": [],
+      "iteration": "iter-172",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "07007afcf62220320c6caee1a9accfa9c135cef6",
+      "shortSha": "07007afc",
+      "subject": "archon[171/finalize]: stage=prover sorry=15",
+      "date": "2026-05-22 13:45:48 +0800",
+      "parents": [
+        "32f2beccad160687a21e5ff46903d430ecce272f"
+      ],
+      "refs": [],
+      "iteration": "iter-171",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "32f2beccad160687a21e5ff46903d430ecce272f",
+      "shortSha": "32f2becc",
+      "subject": "archon[170/finalize]: stage=prover sorry=13",
+      "date": "2026-05-22 12:09:51 +0800",
+      "parents": [
+        "3a82b163dcb9156e118e90a1ebb6be7922b1b4da"
+      ],
+      "refs": [],
+      "iteration": "iter-170",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "3a82b163dcb9156e118e90a1ebb6be7922b1b4da",
+      "shortSha": "3a82b163",
+      "subject": "archon[169/finalize]: stage=prover sorry=13",
+      "date": "2026-05-22 11:19:30 +0800",
+      "parents": [
+        "6efd40bb0f8d951a4fb824d816ceb7458b9171c4"
+      ],
+      "refs": [],
+      "iteration": "iter-169",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "6efd40bb0f8d951a4fb824d816ceb7458b9171c4",
+      "shortSha": "6efd40bb",
+      "subject": "Removing github workflow",
+      "date": "2026-05-22 11:05:53 +0800",
+      "parents": [
+        "6e78ba583cfb0fbeaf81e4e33e0e47afc6976776"
+      ],
+      "refs": [],
+      "branch": "main"
+    },
+    {
+      "sha": "6e78ba583cfb0fbeaf81e4e33e0e47afc6976776",
+      "shortSha": "6e78ba58",
+      "subject": "archon[168/finalize]: stage=prover sorry=14",
+      "date": "2026-05-22 10:25:27 +0800",
+      "parents": [
+        "4dc3f5c39c709f829f4ffd135ceff7cca8123018"
+      ],
+      "refs": [],
+      "iteration": "iter-168",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "4dc3f5c39c709f829f4ffd135ceff7cca8123018",
+      "shortSha": "4dc3f5c3",
+      "subject": "archon[167/finalize]: stage=prover sorry=14",
+      "date": "2026-05-21 20:20:31 +0800",
+      "parents": [
+        "b6d06ddca58eb5eb6706888ce82351358427a2c8"
+      ],
+      "refs": [],
+      "iteration": "iter-167",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "b6d06ddca58eb5eb6706888ce82351358427a2c8",
+      "shortSha": "b6d06ddc",
+      "subject": "archon[166/finalize]: stage=prover sorry=15",
+      "date": "2026-05-21 19:10:37 +0800",
+      "parents": [
+        "1f1a8ffaa9438576e08686698df29ea120cd4821"
+      ],
+      "refs": [],
+      "iteration": "iter-166",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "1f1a8ffaa9438576e08686698df29ea120cd4821",
+      "shortSha": "1f1a8ffa",
+      "subject": "archon[165/finalize]: stage=prover sorry=15",
+      "date": "2026-05-21 18:01:07 +0800",
+      "parents": [
+        "eca494cb9f4739abdcfcca848d0baa136ef4bebc"
+      ],
+      "refs": [],
+      "iteration": "iter-165",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "eca494cb9f4739abdcfcca848d0baa136ef4bebc",
+      "shortSha": "eca494cb",
+      "subject": "archon[164/review]: journal session (1155s)",
+      "date": "2026-05-21 16:46:44 +0800",
+      "parents": [
+        "40534c3807e3c8b4486755097667477da5f40ecd"
+      ],
+      "refs": [],
+      "iteration": "iter-164",
+      "phase": "review",
+      "branch": "main"
+    },
+    {
+      "sha": "40534c3807e3c8b4486755097667477da5f40ecd",
+      "shortSha": "40534c38",
+      "subject": "archon[163/finalize]: stage=prover sorry=6",
+      "date": "2026-05-21 11:49:43 +0800",
+      "parents": [
+        "5d7e61fee1573b4610ebc0157fb9b81e68d724fa"
+      ],
+      "refs": [],
+      "iteration": "iter-163",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "5d7e61fee1573b4610ebc0157fb9b81e68d724fa",
+      "shortSha": "5d7e61fe",
+      "subject": "archon[162/finalize]: stage=prover sorry=6",
+      "date": "2026-05-21 10:41:05 +0800",
+      "parents": [
+        "2ff14933634d8843dc59a4c7e76947c2395ac166"
+      ],
+      "refs": [],
+      "iteration": "iter-162",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "2ff14933634d8843dc59a4c7e76947c2395ac166",
+      "shortSha": "2ff14933",
+      "subject": "archon[161/finalize]: stage=prover sorry=7",
+      "date": "2026-05-20 22:06:40 +0800",
+      "parents": [
+        "2157075d4ebc738c8abfa73db806420697ee1fa8"
+      ],
+      "refs": [],
+      "iteration": "iter-161",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "2157075d4ebc738c8abfa73db806420697ee1fa8",
+      "shortSha": "2157075d",
+      "subject": "archon[160/finalize]: stage=prover sorry=8",
+      "date": "2026-05-20 21:07:27 +0800",
+      "parents": [
+        "a39cab5c82f5d0ee1546525701be3fa0037075e8"
+      ],
+      "refs": [],
+      "iteration": "iter-160",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "a39cab5c82f5d0ee1546525701be3fa0037075e8",
+      "shortSha": "a39cab5c",
+      "subject": "archon[159/finalize]: stage=prover sorry=7",
+      "date": "2026-05-20 20:13:31 +0800",
+      "parents": [
+        "8f32cff4772a5288cc5a32af3c67ab9bf11c8afb"
+      ],
+      "refs": [],
+      "iteration": "iter-159",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "8f32cff4772a5288cc5a32af3c67ab9bf11c8afb",
+      "shortSha": "8f32cff4",
+      "subject": "archon[158/finalize]: stage=prover sorry=8",
+      "date": "2026-05-20 19:13:42 +0800",
+      "parents": [
+        "82a6486e773de22883345640097d532ccc0162c2"
+      ],
+      "refs": [],
+      "iteration": "iter-158",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "82a6486e773de22883345640097d532ccc0162c2",
+      "shortSha": "82a6486e",
+      "subject": "archon[157/finalize]: stage=prover sorry=7",
+      "date": "2026-05-20 18:26:48 +0800",
+      "parents": [
+        "07d66f6c344ab32b2bfef474452ddca6e92e83eb"
+      ],
+      "refs": [],
+      "iteration": "iter-157",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "07d66f6c344ab32b2bfef474452ddca6e92e83eb",
+      "shortSha": "07d66f6c",
+      "subject": "archon[156/finalize]: stage=prover sorry=3",
+      "date": "2026-05-20 16:56:16 +0800",
+      "parents": [
+        "d3e174574a2cdf2601c97bb574a80e0b12d763cc"
+      ],
+      "refs": [],
+      "iteration": "iter-156",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "d3e174574a2cdf2601c97bb574a80e0b12d763cc",
+      "shortSha": "d3e17457",
+      "subject": "archon[155/finalize]: stage=prover sorry=3",
+      "date": "2026-05-20 15:03:44 +0800",
+      "parents": [
+        "470ffcceed04cc1a18bddbd5585c0657588fcf99"
+      ],
+      "refs": [],
+      "iteration": "iter-155",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "470ffcceed04cc1a18bddbd5585c0657588fcf99",
+      "shortSha": "470ffcce",
+      "subject": "archon[154/finalize]: stage=prover sorry=7",
+      "date": "2026-05-20 13:46:30 +0800",
+      "parents": [
+        "cb0f44ef162b6c2fd9a7bbd129ee6ba1e96cce9b"
+      ],
+      "refs": [],
+      "iteration": "iter-154",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "cb0f44ef162b6c2fd9a7bbd129ee6ba1e96cce9b",
+      "shortSha": "cb0f44ef",
+      "subject": "archon[153/finalize]: stage=prover sorry=8",
+      "date": "2026-05-20 12:37:53 +0800",
+      "parents": [
+        "8ac1e8b7b3ea7d981e94e845a58848e251efa9e4"
+      ],
+      "refs": [],
+      "iteration": "iter-153",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "8ac1e8b7b3ea7d981e94e845a58848e251efa9e4",
+      "shortSha": "8ac1e8b7",
+      "subject": "archon[152/finalize]: stage=prover sorry=9",
+      "date": "2026-05-20 12:09:08 +0800",
+      "parents": [
+        "1e4dd9229599fc0740c35d0e023eadc30a7e75c8"
+      ],
+      "refs": [],
+      "iteration": "iter-152",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "1e4dd9229599fc0740c35d0e023eadc30a7e75c8",
+      "shortSha": "1e4dd922",
+      "subject": "archon[151/finalize]: stage=prover sorry=9",
+      "date": "2026-05-20 11:13:20 +0800",
+      "parents": [
+        "818a2e4e66933abdcdd8e47a465ab5c1f7ed72a0"
+      ],
+      "refs": [],
+      "iteration": "iter-151",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "818a2e4e66933abdcdd8e47a465ab5c1f7ed72a0",
+      "shortSha": "818a2e4e",
+      "subject": "archon[150/review]: journal session (1109s)",
+      "date": "2026-05-19 19:27:32 +0800",
+      "parents": [
+        "a5b0123952e6cdffe6e679e6a72f59b6d27e9bab"
+      ],
+      "refs": [],
+      "iteration": "iter-150",
+      "phase": "review",
+      "branch": "main"
+    },
+    {
+      "sha": "a5b0123952e6cdffe6e679e6a72f59b6d27e9bab",
+      "shortSha": "a5b01239",
+      "subject": "archon[149/finalize]: stage=prover sorry=18",
+      "date": "2026-05-19 17:40:11 +0800",
+      "parents": [
+        "648a3fe8a08aebbd3f2412c7141ebca8fae46017"
+      ],
+      "refs": [],
+      "iteration": "iter-149",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "648a3fe8a08aebbd3f2412c7141ebca8fae46017",
+      "shortSha": "648a3fe8",
+      "subject": "archon[148/finalize]: stage=prover sorry=14",
+      "date": "2026-05-19 16:18:12 +0800",
+      "parents": [
+        "d07d850c1b4fbca9b8db6ac48d83f3d07c5b3bf3"
+      ],
+      "refs": [],
+      "iteration": "iter-148",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "d07d850c1b4fbca9b8db6ac48d83f3d07c5b3bf3",
+      "shortSha": "d07d850c",
+      "subject": "archon[147/finalize]: stage=prover sorry=14",
+      "date": "2026-05-19 14:49:45 +0800",
+      "parents": [
+        "61f339c68a483246238b74accbb80d60ddfe7549"
+      ],
+      "refs": [],
+      "iteration": "iter-147",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "61f339c68a483246238b74accbb80d60ddfe7549",
+      "shortSha": "61f339c6",
+      "subject": "archon[146/finalize]: stage=prover sorry=15",
+      "date": "2026-05-19 13:56:50 +0800",
+      "parents": [
+        "cf3cd0fd4a1f67574e3ccd7dc110f64e75ecd2d4"
+      ],
+      "refs": [],
+      "iteration": "iter-146",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "cf3cd0fd4a1f67574e3ccd7dc110f64e75ecd2d4",
+      "shortSha": "cf3cd0fd",
+      "subject": "archon[145/finalize]: stage=prover sorry=17",
+      "date": "2026-05-19 12:02:24 +0800",
+      "parents": [
+        "879029a34e01cd1bf02471331564796c2e6386ab"
+      ],
+      "refs": [],
+      "iteration": "iter-145",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "879029a34e01cd1bf02471331564796c2e6386ab",
+      "shortSha": "879029a3",
+      "subject": "archon[144/review]: journal session (574s)",
+      "date": "2026-05-18 19:40:47 +0800",
+      "parents": [
+        "69c6f0cee4e1218243e6478fa5b71dc19b9b4cbf"
+      ],
+      "refs": [],
+      "iteration": "iter-144",
+      "phase": "review",
+      "branch": "main"
+    },
+    {
+      "sha": "69c6f0cee4e1218243e6478fa5b71dc19b9b4cbf",
+      "shortSha": "69c6f0ce",
+      "subject": "archon[143/finalize]: stage=prover sorry=15",
+      "date": "2026-05-18 18:47:14 +0800",
+      "parents": [
+        "a611923eddada06ee57125dfee17179ab80c0cb7"
+      ],
+      "refs": [],
+      "iteration": "iter-143",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "a611923eddada06ee57125dfee17179ab80c0cb7",
+      "shortSha": "a611923e",
+      "subject": "archon[142/finalize]: stage=prover sorry=15",
+      "date": "2026-05-18 17:20:32 +0800",
+      "parents": [
+        "e71a4f25c8089824a7ce982675576a98c5f8892a"
+      ],
+      "refs": [],
+      "iteration": "iter-142",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "e71a4f25c8089824a7ce982675576a98c5f8892a",
+      "shortSha": "e71a4f25",
+      "subject": "archon[141/finalize]: stage=prover sorry=16",
+      "date": "2026-05-18 16:12:38 +0800",
+      "parents": [
+        "2952b1b50e21a2f61f864ac9487ef4bdcd127282"
+      ],
+      "refs": [],
+      "iteration": "iter-141",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "2952b1b50e21a2f61f864ac9487ef4bdcd127282",
+      "shortSha": "2952b1b5",
+      "subject": "archon[140/finalize]: stage=prover sorry=16",
+      "date": "2026-05-18 15:24:50 +0800",
+      "parents": [
+        "2e61b3f7f767e5e9e233c7ab01bfaad5c658ebb0"
+      ],
+      "refs": [],
+      "iteration": "iter-140",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "2e61b3f7f767e5e9e233c7ab01bfaad5c658ebb0",
+      "shortSha": "2e61b3f7",
+      "subject": "archon[139/finalize]: stage=prover sorry=16",
+      "date": "2026-05-18 14:09:26 +0800",
+      "parents": [
+        "2e0c5dc8a8bf4172e99b5be7fd9681ed660b1f40"
+      ],
+      "refs": [],
+      "iteration": "iter-139",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "2e0c5dc8a8bf4172e99b5be7fd9681ed660b1f40",
+      "shortSha": "2e0c5dc8",
+      "subject": "archon[138/finalize]: stage=prover sorry=16",
+      "date": "2026-05-18 13:01:59 +0800",
+      "parents": [
+        "662a8a38040b4e09721d0862e2af174818357112"
+      ],
+      "refs": [],
+      "iteration": "iter-138",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "662a8a38040b4e09721d0862e2af174818357112",
+      "shortSha": "662a8a38",
+      "subject": "archon[137/finalize]: stage=prover sorry=14",
+      "date": "2026-05-18 11:21:41 +0800",
+      "parents": [
+        "c2c1d2198b9f58f287a7a55777636fd2149e27b8"
+      ],
+      "refs": [],
+      "iteration": "iter-137",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "c2c1d2198b9f58f287a7a55777636fd2149e27b8",
+      "shortSha": "c2c1d219",
+      "subject": "archon[136/finalize]: stage=prover sorry=14",
+      "date": "2026-05-18 10:04:10 +0800",
+      "parents": [
+        "ca58b8cef65cfc69a8517cde0cfc813fb5c25980"
+      ],
+      "refs": [],
+      "iteration": "iter-136",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "ca58b8cef65cfc69a8517cde0cfc813fb5c25980",
+      "shortSha": "ca58b8ce",
+      "subject": "archon[135/finalize]: stage=prover sorry=15",
+      "date": "2026-05-18 05:48:11 +0800",
+      "parents": [
+        "ea37cec37a8bbc055c2dc477d265a745ff81dbb0"
+      ],
+      "refs": [],
+      "iteration": "iter-135",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "ea37cec37a8bbc055c2dc477d265a745ff81dbb0",
+      "shortSha": "ea37cec3",
+      "subject": "archon[134/finalize]: stage=prover sorry=13",
+      "date": "2026-05-18 04:12:14 +0800",
+      "parents": [
+        "3b62f2b1252e0f114c550fd2c0a32a9295fd7c63"
+      ],
+      "refs": [],
+      "iteration": "iter-134",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "3b62f2b1252e0f114c550fd2c0a32a9295fd7c63",
+      "shortSha": "3b62f2b1",
+      "subject": "archon[133/finalize]: stage=prover sorry=12",
+      "date": "2026-05-18 02:55:08 +0800",
+      "parents": [
+        "5244063e4c563964a050c9cadd4af8c6cda0efa4"
+      ],
+      "refs": [],
+      "iteration": "iter-133",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "5244063e4c563964a050c9cadd4af8c6cda0efa4",
+      "shortSha": "5244063e",
+      "subject": "archon[132/finalize]: stage=prover sorry=12",
+      "date": "2026-05-18 01:42:01 +0800",
+      "parents": [
+        "9dcfbc48ee7f20e9a30d687761209838d1a8dddb"
+      ],
+      "refs": [],
+      "iteration": "iter-132",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "9dcfbc48ee7f20e9a30d687761209838d1a8dddb",
+      "shortSha": "9dcfbc48",
+      "subject": "archon[131/finalize]: stage=prover sorry=12",
+      "date": "2026-05-18 00:34:20 +0800",
+      "parents": [
+        "f0cd2853553a747dcc9681c3c0d8b3890da34cd7"
+      ],
+      "refs": [],
+      "iteration": "iter-131",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "f0cd2853553a747dcc9681c3c0d8b3890da34cd7",
+      "shortSha": "f0cd2853",
+      "subject": "archon[130/finalize]: stage=prover sorry=12",
+      "date": "2026-05-17 23:23:43 +0800",
+      "parents": [
+        "b836845560f209a46a9953047174a9f112fc7dc9"
+      ],
+      "refs": [],
+      "iteration": "iter-130",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "b836845560f209a46a9953047174a9f112fc7dc9",
+      "shortSha": "b8368455",
+      "subject": "archon[129/finalize]: stage=prover sorry=12",
+      "date": "2026-05-17 22:25:41 +0800",
+      "parents": [
+        "b50d700378b251c62bb08153080de3d4c6580db1"
+      ],
+      "refs": [],
+      "iteration": "iter-129",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "b50d700378b251c62bb08153080de3d4c6580db1",
+      "shortSha": "b50d7003",
+      "subject": "archon[128/finalize]: stage=prover sorry=12",
+      "date": "2026-05-17 21:09:11 +0800",
+      "parents": [
+        "52a316da916ff0f1669a4850551cdc6217a26ed3"
+      ],
+      "refs": [],
+      "iteration": "iter-128",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "52a316da916ff0f1669a4850551cdc6217a26ed3",
+      "shortSha": "52a316da",
+      "subject": "archon[127/finalize]: stage=prover sorry=12",
+      "date": "2026-05-17 19:50:03 +0800",
+      "parents": [
+        "de534ec4d639c593e6ad87161ed8441e8be6a9fc"
+      ],
+      "refs": [],
+      "iteration": "iter-127",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "de534ec4d639c593e6ad87161ed8441e8be6a9fc",
+      "shortSha": "de534ec4",
+      "subject": "archon[126/finalize]: stage=prover sorry=11",
+      "date": "2026-05-17 18:37:33 +0800",
+      "parents": [
+        "7b51d15339325fb5c0cedef926242b2fdb552426"
+      ],
+      "refs": [],
+      "iteration": "iter-126",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "7b51d15339325fb5c0cedef926242b2fdb552426",
+      "shortSha": "7b51d153",
+      "subject": "archon[125/plan]: stage=prover (Iter-124: M1.b residual — Steps 2 + 3 of the (1848s)",
+      "date": "2026-05-17 16:49:50 +0800",
+      "parents": [
+        "57ae4da72d2633ef2acd4d292835ff8509ed4b8c"
+      ],
+      "refs": [],
+      "iteration": "iter-125",
+      "phase": "plan",
+      "branch": "main"
+    },
+    {
+      "sha": "57ae4da72d2633ef2acd4d292835ff8509ed4b8c",
+      "shortSha": "57ae4da7",
+      "subject": "archon[124/finalize]: stage=prover (Iter-124: M1.b residual — Steps 2 + 3 of the sorry=3826",
+      "date": "2026-05-17 16:18:50 +0800",
+      "parents": [
+        "2061bd02609302e4f22023888f685d883eea042e"
+      ],
+      "refs": [],
+      "iteration": "iter-124",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "2061bd02609302e4f22023888f685d883eea042e",
+      "shortSha": "2061bd02",
+      "subject": "archon[123/finalize]: stage=prover (Iter-123: M1.b residual — Steps 1–4 of the sorry=3824",
+      "date": "2026-05-17 15:10:19 +0800",
+      "parents": [
+        "1dc11528e70dd5af2df303e8756a733b483b85b8"
+      ],
+      "refs": [],
+      "iteration": "iter-123",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "1dc11528e70dd5af2df303e8756a733b483b85b8",
+      "shortSha": "1dc11528",
+      "subject": "archon[122/review]: journal session (731s)",
+      "date": "2026-05-17 01:51:21 +0800",
+      "parents": [
+        "43e7e95da5c773353722ba139a1dc89113f9fbff"
+      ],
+      "refs": [],
+      "iteration": "iter-122",
+      "phase": "review",
+      "branch": "main"
+    },
+    {
+      "sha": "43e7e95da5c773353722ba139a1dc89113f9fbff",
+      "shortSha": "43e7e95d",
+      "subject": "archon[121/finalize]: stage=prover (Iter-121 strategic pivot: per user directive sorry=3705",
+      "date": "2026-05-17 00:07:39 +0800",
+      "parents": [
+        "fff15470be36c50102e3faad39fde8312e07160b"
+      ],
+      "refs": [],
+      "iteration": "iter-121",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "fff15470be36c50102e3faad39fde8312e07160b",
+      "shortSha": "fff15470",
+      "subject": "archon[120/finalize]: stage=prover (Phase C — close the forward smoothness criterion sorry=3705",
+      "date": "2026-05-16 23:05:15 +0800",
+      "parents": [
+        "dd7b80abc94f9863ba4ae7af51663f64dbc18cbd"
+      ],
+      "refs": [],
+      "iteration": "iter-120",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "dd7b80abc94f9863ba4ae7af51663f64dbc18cbd",
+      "shortSha": "dd7b80ab",
+      "subject": "archon[119/finalize]: stage=prover (Phase C — close the forward implication sorry=3705",
+      "date": "2026-05-16 22:04:11 +0800",
+      "parents": [
+        "d6ff7a98d7438c3c72c5acc618bc60340a968ea5"
+      ],
+      "refs": [],
+      "iteration": "iter-119",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "d6ff7a98d7438c3c72c5acc618bc60340a968ea5",
+      "shortSha": "d6ff7a98",
+      "subject": "archon[118/finalize]: stage=prover (Phase C — close the forward implication on sorry=3687",
+      "date": "2026-05-16 20:59:04 +0800",
+      "parents": [
+        "0d6edc24c72d10a7e45ad107e6139b4377ff8dc1"
+      ],
+      "refs": [],
+      "iteration": "iter-118",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "0d6edc24c72d10a7e45ad107e6139b4377ff8dc1",
+      "shortSha": "0d6edc24",
+      "subject": "archon[117/finalize]: stage=prover (Phase C — close the last two non-protected sorries via verified sorry=3687",
+      "date": "2026-05-16 19:52:43 +0800",
+      "parents": [
+        "0c801b7f8862c503cde7bc5d9c290e7288d74c77"
+      ],
+      "refs": [],
+      "iteration": "iter-117",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "0c801b7f8862c503cde7bc5d9c290e7288d74c77",
+      "shortSha": "0c801b7f",
+      "subject": "archon[116/finalize]: stage=prover (Archon iter-116 — **NO prover lane this iter; user-escalation pause on sorry=3701",
+      "date": "2026-05-16 18:37:18 +0800",
+      "parents": [
+        "f98eabd407508a7f949957ab7e80b8b217f5f495"
+      ],
+      "refs": [],
+      "iteration": "iter-116",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "f98eabd407508a7f949957ab7e80b8b217f5f495",
+      "shortSha": "f98eabd4",
+      "subject": "archon[115/finalize]: stage=prover (Archon iter-115 — **single Phase B prover lane on `Differentials.lean` sorry=3701",
+      "date": "2026-05-16 08:46:01 +0800",
+      "parents": [
+        "7ac215a002cd4cc7cd3bc127d1f47018916cf277"
+      ],
+      "refs": [],
+      "iteration": "iter-115",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "7ac215a002cd4cc7cd3bc127d1f47018916cf277",
+      "shortSha": "7ac215a0",
+      "subject": "archon[114/plan]: stage=prover (Archon iter-113 — single Phase B prover lane on (2856s)",
+      "date": "2026-05-16 08:05:54 +0800",
+      "parents": [
+        "0d2194e8e18d3416d02c655c392a9b94d1a8bf4b"
+      ],
+      "refs": [],
+      "iteration": "iter-114",
+      "phase": "plan",
+      "branch": "main"
+    },
+    {
+      "sha": "0d2194e8e18d3416d02c655c392a9b94d1a8bf4b",
+      "shortSha": "0d2194e8",
+      "subject": "archon[113/finalize]: stage=prover (Archon iter-113 — single Phase B prover lane on sorry=3686",
+      "date": "2026-05-16 07:17:59 +0800",
+      "parents": [
+        "74ed498719751b9d7fbe1d0429dae5642256e3ac"
+      ],
+      "refs": [],
+      "iteration": "iter-113",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "74ed498719751b9d7fbe1d0429dae5642256e3ac",
+      "shortSha": "74ed4987",
+      "subject": "archon[112/finalize]: stage=prover (Archon iter-112 — single Phase B prover lane on `Differentials.lean` L122 sorry=3662",
+      "date": "2026-05-16 05:57:28 +0800",
+      "parents": [
+        "652fdc89e35a1f4a93327721d8691da28ff3f92b"
+      ],
+      "refs": [],
+      "iteration": "iter-112",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "652fdc89e35a1f4a93327721d8691da28ff3f92b",
+      "shortSha": "652fdc89",
+      "subject": "archon[111/plan]: stage=prover (Archon iter-110 — **deeper-think iter: NO prover lane dispatched**; 4 (1936s)",
+      "date": "2026-05-16 04:50:01 +0800",
+      "parents": [
+        "294c3915523ac03edcf35e0b0b1ca84bf9f3bcd6"
+      ],
+      "refs": [],
+      "iteration": "iter-111",
+      "phase": "plan",
+      "branch": "main"
+    },
+    {
+      "sha": "294c3915523ac03edcf35e0b0b1ca84bf9f3bcd6",
+      "shortSha": "294c3915",
+      "subject": "archon[110/plan]: stage=prover (Archon iter-110 / iter-112 narrative — single small prover lane; (3203s)",
+      "date": "2026-05-16 04:17:45 +0800",
+      "parents": [
+        "0875eab5f8d74e75cc1520e8310fca026a7e0fd9"
+      ],
+      "refs": [],
+      "iteration": "iter-110",
+      "phase": "plan",
+      "branch": "main"
+    },
+    {
+      "sha": "0875eab5f8d74e75cc1520e8310fca026a7e0fd9",
+      "shortSha": "0875eab5",
+      "subject": "archon[109/finalize]: stage=prover (Archon iter-110 / iter-112 narrative — single small prover lane; sorry=3631",
+      "date": "2026-05-16 03:24:17 +0800",
+      "parents": [
+        "c0304c09563b20972a23fc5538314a1a0ed7877a"
+      ],
+      "refs": [],
+      "iteration": "iter-109",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "c0304c09563b20972a23fc5538314a1a0ed7877a",
+      "shortSha": "c0304c09",
+      "subject": "archon[108/finalize]: stage=prover (narrative iter-110 / Archon iter-108 — single small prover lane; sorry=3615",
+      "date": "2026-05-16 01:54:35 +0800",
+      "parents": [
+        "9e2f9d951688661cf978f9ec4e068657af725459"
+      ],
+      "refs": [],
+      "iteration": "iter-108",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "9e2f9d951688661cf978f9ec4e068657af725459",
+      "shortSha": "9e2f9d95",
+      "subject": "archon[107/finalize]: stage=prover (narrative iter-109 / Archon iter-107 — single substantive prover sorry=3603",
+      "date": "2026-05-16 00:35:54 +0800",
+      "parents": [
+        "1936d5a0139580b3aab40d86fcfa12c3db694bd8"
+      ],
+      "refs": [],
+      "iteration": "iter-107",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "1936d5a0139580b3aab40d86fcfa12c3db694bd8",
+      "shortSha": "1936d5a0",
+      "subject": "archon[106/finalize]: stage=prover (iteration 108 — single substantive prover lane; close sorry=3591",
+      "date": "2026-05-15 21:33:17 +0800",
+      "parents": [
+        "d7a7bc0a57786b9de4315a20b8bf78f6cafe7e8b"
+      ],
+      "refs": [],
+      "iteration": "iter-106",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "d7a7bc0a57786b9de4315a20b8bf78f6cafe7e8b",
+      "shortSha": "d7a7bc0a",
+      "subject": "archon[105/finalize]: stage=prover (iteration 107 — single substantive prover lane; close sorry=3579",
+      "date": "2026-05-15 20:12:25 +0800",
+      "parents": [
+        "06d4861143e2bb621e7a9006bdd0d37430d9caa7"
+      ],
+      "refs": [],
+      "iteration": "iter-105",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "06d4861143e2bb621e7a9006bdd0d37430d9caa7",
+      "shortSha": "06d48611",
+      "subject": "archon[104/finalize]: stage=prover (iteration 106 — single substantive prover lane; close sorry=3470",
+      "date": "2026-05-15 18:19:25 +0800",
+      "parents": [
+        "cf0ed534cde61ee60dd690c411d122c744a539d4"
+      ],
+      "refs": [],
+      "iteration": "iter-104",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "cf0ed534cde61ee60dd690c411d122c744a539d4",
+      "shortSha": "cf0ed534",
+      "subject": "archon[103/finalize]: stage=prover (iteration 105 — single substantive prover lane; close sorry=3435",
+      "date": "2026-05-15 16:12:03 +0800",
+      "parents": [
+        "f3f71333dd4066cc2ad1ae728c0f34beceb1d22a"
+      ],
+      "refs": [],
+      "iteration": "iter-103",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "f3f71333dd4066cc2ad1ae728c0f34beceb1d22a",
+      "shortSha": "f3f71333",
+      "subject": "archon[102/finalize]: stage=prover (iteration 104 — single substantive prover lane; close sorry=3411",
+      "date": "2026-05-15 13:21:21 +0800",
+      "parents": [
+        "2466fa230414a2be3df80b370367183742ed1616"
+      ],
+      "refs": [],
+      "iteration": "iter-102",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "2466fa230414a2be3df80b370367183742ed1616",
+      "shortSha": "2466fa23",
+      "subject": "archon[101/finalize]: stage=prover (iteration 103 — single substantive prover lane; close sorry=3391",
+      "date": "2026-05-15 10:50:50 +0800",
+      "parents": [
+        "5c771a91998090d142d4d939f02d4ce504af0795"
+      ],
+      "refs": [],
+      "iteration": "iter-101",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "5c771a91998090d142d4d939f02d4ce504af0795",
+      "shortSha": "5c771a91",
+      "subject": "archon[099/finalize]: stage=prover (iteration 101 — single substantive prover lane; close sorry=3310",
+      "date": "2026-05-14 22:16:53 +0800",
+      "parents": [
+        "6ed242fea28217596d3d6f48c4bd127c8da4a6ee"
+      ],
+      "refs": [],
+      "iteration": "iter-099",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "6ed242fea28217596d3d6f48c4bd127c8da4a6ee",
+      "shortSha": "6ed242fe",
+      "subject": "archon[098/finalize]: stage=prover (iteration 100 — single substantive prover lane; close sorry=3298",
+      "date": "2026-05-14 21:29:05 +0800",
+      "parents": [
+        "6ec115f966132d8345b29a606c6d65b473c57814"
+      ],
+      "refs": [],
+      "iteration": "iter-098",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "6ec115f966132d8345b29a606c6d65b473c57814",
+      "shortSha": "6ec115f9",
+      "subject": "archon[097/finalize]: stage=prover (iteration 099 — single substantive prover lane; iter-098 refactor sorry=3280",
+      "date": "2026-05-14 20:30:46 +0800",
+      "parents": [
+        "ffce2971a45626412d387cfb3c10f97987f966a4"
+      ],
+      "refs": [],
+      "iteration": "iter-097",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "ffce2971a45626412d387cfb3c10f97987f966a4",
+      "shortSha": "ffce2971",
+      "subject": "archon[096/finalize]: stage=prover (iteration 097 — single substantive prover lane; iter-096 refactor sorry=3255",
+      "date": "2026-05-14 19:39:41 +0800",
+      "parents": [
+        "4e6f48924dfc061be0ff99cbcdb76592c66451fa"
+      ],
+      "refs": [],
+      "iteration": "iter-096",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "4e6f48924dfc061be0ff99cbcdb76592c66451fa",
+      "shortSha": "4e6f4892",
+      "subject": "archon[095/finalize]: stage=prover (iteration 095 — single substantive prover lane; HOU-blocker breakthrough sorry=3218",
+      "date": "2026-05-14 18:18:13 +0800",
+      "parents": [
+        "61d3ff324b9bd374dd6a6bcf1be003a0a1f8d0d3"
+      ],
+      "refs": [],
+      "iteration": "iter-095",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "61d3ff324b9bd374dd6a6bcf1be003a0a1f8d0d3",
+      "shortSha": "61d3ff32",
+      "subject": "archon[094/finalize]: stage=prover (iteration 094 — single substantive prover lane; eqToHom-blocker sorry=7349",
+      "date": "2026-05-14 17:24:06 +0800",
+      "parents": [
+        "6aa0a7ec488048862770bd17ec5841d8ec965e4b"
+      ],
+      "refs": [],
+      "iteration": "iter-094",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "6aa0a7ec488048862770bd17ec5841d8ec965e4b",
+      "shortSha": "6aa0a7ec",
+      "subject": "archon[093/finalize]: stage=prover (iteration 093 — single substantive prover lane; HOU detour for step (b) of sorry=7317",
+      "date": "2026-05-14 16:26:18 +0800",
+      "parents": [
+        "6336ccf776aea7a7fca49c5547d1c0233ef5d631"
+      ],
+      "refs": [],
+      "iteration": "iter-093",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "6336ccf776aea7a7fca49c5547d1c0233ef5d631",
+      "shortSha": "6336ccf7",
+      "subject": "archon[092/finalize]: stage=prover (iteration 092 — single substantive prover lane; sorry=7253",
+      "date": "2026-05-14 15:37:31 +0800",
+      "parents": [
+        "e5acada34f36844b3169165ca0b26fb514819ffa"
+      ],
+      "refs": [],
+      "iteration": "iter-092",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "e5acada34f36844b3169165ca0b26fb514819ffa",
+      "shortSha": "e5acada3",
+      "subject": "archon[091/finalize]: stage=prover (iteration 091 — single substantive prover lane; iter-090 landed S6 sorry=3147",
+      "date": "2026-05-14 14:37:03 +0800",
+      "parents": [
+        "f8f7e836ad34332090a59d76a5c9876053226ac5"
+      ],
+      "refs": [],
+      "iteration": "iter-091",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "f8f7e836ad34332090a59d76a5c9876053226ac5",
+      "shortSha": "f8f7e836",
+      "subject": "archon[090/finalize]: stage=prover (iteration 090 — single substantive prover lane; iter-089 landed S6 sorry=3126",
+      "date": "2026-05-14 13:54:19 +0800",
+      "parents": [
+        "09ae60516643660c274beeb4e30abf421b893e23"
+      ],
+      "refs": [],
+      "iteration": "iter-090",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "09ae60516643660c274beeb4e30abf421b893e23",
+      "shortSha": "09ae6051",
+      "subject": "archon[089/finalize]: stage=prover (iteration 089 — single substantive prover lane; iter-088 reproduced sorry=3114",
+      "date": "2026-05-14 13:25:46 +0800",
+      "parents": [
+        "6eafd445bfadf2aa0c1422c2ed5d9a2df133be55"
+      ],
+      "refs": [],
+      "iteration": "iter-089",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "6eafd445bfadf2aa0c1422c2ed5d9a2df133be55",
+      "shortSha": "6eafd445",
+      "subject": "archon[088/plan]: stage= (450s)",
+      "date": "2026-05-13 13:04:56 +0800",
+      "parents": [
+        "de2ab1a961897c00816ec8edff2d8067852fb7cd"
+      ],
+      "refs": [],
+      "iteration": "iter-088",
+      "phase": "plan",
+      "branch": "main"
+    },
+    {
+      "sha": "de2ab1a961897c00816ec8edff2d8067852fb7cd",
+      "shortSha": "de2ab1a9",
+      "subject": "archon[087/finalize]: stage= sorry=3102",
+      "date": "2026-05-13 12:51:50 +0800",
+      "parents": [
+        "831ea9b9554e4fefa32a3ef08296550154b2bfc6"
+      ],
+      "refs": [],
+      "iteration": "iter-087",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "831ea9b9554e4fefa32a3ef08296550154b2bfc6",
+      "shortSha": "831ea9b9",
+      "subject": "archon[086/finalize]: stage= sorry=3084",
+      "date": "2026-05-13 11:48:28 +0800",
+      "parents": [
+        "803ab689dc8d533d610cf3e13594d652e3c2c3d8"
+      ],
+      "refs": [],
+      "iteration": "iter-086",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "803ab689dc8d533d610cf3e13594d652e3c2c3d8",
+      "shortSha": "803ab689",
+      "subject": "archon[085/finalize]: stage= sorry=3010",
+      "date": "2026-05-13 11:01:10 +0800",
+      "parents": [
+        "fbd6587cad06b9fbe75d9605f671fd4676cbea12"
+      ],
+      "refs": [],
+      "iteration": "iter-085",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "fbd6587cad06b9fbe75d9605f671fd4676cbea12",
+      "shortSha": "fbd6587c",
+      "subject": "archon[084/finalize]: stage= sorry=2982",
+      "date": "2026-05-13 10:01:40 +0800",
+      "parents": [
+        "4a3ec2c792c35fb62b9c9ea8811eafc6d4f7cb6b"
+      ],
+      "refs": [],
+      "iteration": "iter-084",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "4a3ec2c792c35fb62b9c9ea8811eafc6d4f7cb6b",
+      "shortSha": "4a3ec2c7",
+      "subject": "archon[083/finalize]: stage= sorry=2865",
+      "date": "2026-05-13 09:01:26 +0800",
+      "parents": [
+        "d887613bfa0120f3a0733047df08b8facf5107cd"
+      ],
+      "refs": [],
+      "iteration": "iter-083",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "d887613bfa0120f3a0733047df08b8facf5107cd",
+      "shortSha": "d887613b",
+      "subject": "archon[082/finalize]: stage= sorry=2807",
+      "date": "2026-05-13 07:58:44 +0800",
+      "parents": [
+        "b4d009b5eb9f955ed15a998cd84a8589ab36fb56"
+      ],
+      "refs": [],
+      "iteration": "iter-082",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "b4d009b5eb9f955ed15a998cd84a8589ab36fb56",
+      "shortSha": "b4d009b5",
+      "subject": "archon[081/finalize]: stage= sorry=2716",
+      "date": "2026-05-13 06:45:27 +0800",
+      "parents": [
+        "384b4edb145e3b484f543708df8dae3a10c81d03"
+      ],
+      "refs": [],
+      "iteration": "iter-081",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "384b4edb145e3b484f543708df8dae3a10c81d03",
+      "shortSha": "384b4edb",
+      "subject": "archon[080/finalize]: stage= sorry=2463",
+      "date": "2026-05-13 05:22:07 +0800",
+      "parents": [
+        "77a71a7955d01557f13f4b5e0004d7262bb70036"
+      ],
+      "refs": [],
+      "iteration": "iter-080",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "77a71a7955d01557f13f4b5e0004d7262bb70036",
+      "shortSha": "77a71a79",
+      "subject": "archon[079/finalize]: stage= sorry=2305",
+      "date": "2026-05-13 03:56:49 +0800",
+      "parents": [
+        "0cdb784d4fc1975418fbecc0c89789e85354e88b"
+      ],
+      "refs": [],
+      "iteration": "iter-079",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "0cdb784d4fc1975418fbecc0c89789e85354e88b",
+      "shortSha": "0cdb784d",
+      "subject": "archon[078/finalize]: stage= sorry=2257",
+      "date": "2026-05-13 02:54:06 +0800",
+      "parents": [
+        "b57c6e75c1839b114d05ea9aff9ce4cf8eb68998"
+      ],
+      "refs": [],
+      "iteration": "iter-078",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "b57c6e75c1839b114d05ea9aff9ce4cf8eb68998",
+      "shortSha": "b57c6e75",
+      "subject": "archon[077/finalize]: stage= sorry=2138",
+      "date": "2026-05-13 01:51:55 +0800",
+      "parents": [
+        "4df0c664474b733515713a676a6c0be8e033f31a"
+      ],
+      "refs": [],
+      "iteration": "iter-077",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "4df0c664474b733515713a676a6c0be8e033f31a",
+      "shortSha": "4df0c664",
+      "subject": "archon[076/finalize]: stage= sorry=1917",
+      "date": "2026-05-13 00:19:05 +0800",
+      "parents": [
+        "cde24e8c3f38681e812728fda60c4e9db3644d2a"
+      ],
+      "refs": [],
+      "iteration": "iter-076",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "cde24e8c3f38681e812728fda60c4e9db3644d2a",
+      "shortSha": "cde24e8c",
+      "subject": "archon[075/finalize]: stage= sorry=1794",
+      "date": "2026-05-12 21:12:37 +0800",
+      "parents": [
+        "e97b02ae76428a9267b7eb5f1cd5ee475d818ac5"
+      ],
+      "refs": [],
+      "iteration": "iter-075",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "e97b02ae76428a9267b7eb5f1cd5ee475d818ac5",
+      "shortSha": "e97b02ae",
+      "subject": "archon[074/finalize]: stage= sorry=1747",
+      "date": "2026-05-12 20:41:35 +0800",
+      "parents": [
+        "ec8192f7eabaa698fb1ee9fa651a9978556f0958"
+      ],
+      "refs": [],
+      "iteration": "iter-074",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "ec8192f7eabaa698fb1ee9fa651a9978556f0958",
+      "shortSha": "ec8192f7",
+      "subject": "archon[073/finalize]: stage= sorry=1708",
+      "date": "2026-05-12 20:12:33 +0800",
+      "parents": [
+        "fde5a36e2810681c0b1de07910c8ba1893e1a135"
+      ],
+      "refs": [],
+      "iteration": "iter-073",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "fde5a36e2810681c0b1de07910c8ba1893e1a135",
+      "shortSha": "fde5a36e",
+      "subject": "archon[072/finalize]: stage= sorry=1645",
+      "date": "2026-05-12 19:22:11 +0800",
+      "parents": [
+        "d365c9dbd69e07e825d7abca17bbe775917c8095"
+      ],
+      "refs": [],
+      "iteration": "iter-072",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "d365c9dbd69e07e825d7abca17bbe775917c8095",
+      "shortSha": "d365c9db",
+      "subject": "archon[071/finalize]: stage= sorry=1600",
+      "date": "2026-05-12 18:37:01 +0800",
+      "parents": [
+        "7dc13a2b0b9cf55377dde5c25d68e3164bc01de1"
+      ],
+      "refs": [],
+      "iteration": "iter-071",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "7dc13a2b0b9cf55377dde5c25d68e3164bc01de1",
+      "shortSha": "7dc13a2b",
+      "subject": "archon[070/finalize]: stage= sorry=1530",
+      "date": "2026-05-12 17:36:46 +0800",
+      "parents": [
+        "b3e8d0b1bc2f0d209417632a162da7407efe8f8d"
+      ],
+      "refs": [],
+      "iteration": "iter-070",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "b3e8d0b1bc2f0d209417632a162da7407efe8f8d",
+      "shortSha": "b3e8d0b1",
+      "subject": "archon[069/finalize]: stage= sorry=1530",
+      "date": "2026-05-12 16:01:40 +0800",
+      "parents": [
+        "d1faa446579ca9443491d8e85efb361bd900b779"
+      ],
+      "refs": [],
+      "iteration": "iter-069",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "d1faa446579ca9443491d8e85efb361bd900b779",
+      "shortSha": "d1faa446",
+      "subject": "archon[068/finalize]: stage= sorry=1239",
+      "date": "2026-05-12 11:23:18 +0800",
+      "parents": [
+        "5e4018d043eef22de20508cbf19b44a8100c4213"
+      ],
+      "refs": [],
+      "iteration": "iter-068",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "5e4018d043eef22de20508cbf19b44a8100c4213",
+      "shortSha": "5e4018d0",
+      "subject": "archon[067/finalize]: stage= sorry=1217",
+      "date": "2026-05-12 11:21:15 +0800",
+      "parents": [
+        "866b9243120fd5249a84d1cb2764d8fa4ccef477"
+      ],
+      "refs": [],
+      "iteration": "iter-067",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "866b9243120fd5249a84d1cb2764d8fa4ccef477",
+      "shortSha": "866b9243",
+      "subject": "archon[066/finalize]: stage= sorry=1195",
+      "date": "2026-05-12 11:19:01 +0800",
+      "parents": [
+        "721950f9788df86c452adddfd802268662618fab"
+      ],
+      "refs": [],
+      "iteration": "iter-066",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "721950f9788df86c452adddfd802268662618fab",
+      "shortSha": "721950f9",
+      "subject": "archon[065/finalize]: stage= sorry=998",
+      "date": "2026-05-12 10:45:00 +0800",
+      "parents": [
+        "20a5a9d41e2b861480cd2845646011d834967de2"
+      ],
+      "refs": [],
+      "iteration": "iter-065",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "20a5a9d41e2b861480cd2845646011d834967de2",
+      "shortSha": "20a5a9d4",
+      "subject": "Merge branch 'with-subagents' of https://github.com/AxelDlv00/Algebraic-Jacobian-Challenge into with-subagents",
+      "date": "2026-05-12 10:28:44 +0800",
+      "parents": [
+        "52fcd768f25a478661692d1cb61b0baff7a93832",
+        "b563b7411f3c7a7b585892224a4de048e9e4ec80"
+      ],
+      "refs": [],
+      "branch": "main"
+    },
+    {
+      "sha": "b563b7411f3c7a7b585892224a4de048e9e4ec80",
+      "shortSha": "b563b741",
+      "subject": "archon[063/finalize]: stage=prover  (iteration 063 — **parallelism + refactor pass; user-directed 2026-05-11**: split `MayerVietoris.lean` (1872 LOC) into three f",
+      "date": "2026-05-11 16:29:29 +0800",
+      "parents": [
+        "cd6a11f470746b37acbf66d56497964140678301"
+      ],
+      "refs": [],
+      "iteration": "iter-063",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "52fcd768f25a478661692d1cb61b0baff7a93832",
+      "shortSha": "52fcd768",
+      "subject": "archon[064/finalize]: stage=prover  (iteration 064 — **re-dispatch missed Phase B scaffold + continue substep component (i)**. Iter-063 prover on BasicOpenCech.le",
+      "date": "2026-05-11 20:38:05 +0800",
+      "parents": [
+        "cd6a11f470746b37acbf66d56497964140678301"
+      ],
+      "refs": [],
+      "iteration": "iter-064",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "cd6a11f470746b37acbf66d56497964140678301",
+      "shortSha": "cd6a11f4",
+      "subject": "archon[062/finalize]: stage=prover  (iteration 062 — Phase A step 6 *Path 2* / **third prover pass on the substantive Čech acyclicity theorem**: iter-061 decompos",
+      "date": "2026-05-11 15:20:33 +0800",
+      "parents": [
+        "2d1cdbeb41f4cfa44a0631d9a458a945fa5e6062"
+      ],
+      "refs": [],
+      "iteration": "iter-062",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "2d1cdbeb41f4cfa44a0631d9a458a945fa5e6062",
+      "shortSha": "2d1cdbeb",
+      "subject": "archon[061/finalize]: stage=prover  (iteration 061 — Phase A step 6 *Path 2* / **second prover pass on the substantive Čech acyclicity theorem**: the iter-060 pro",
+      "date": "2026-05-11 14:21:19 +0800",
+      "parents": [
+        "16068b846b23acb73166a59fc2bfff5500658c96"
+      ],
+      "refs": [],
+      "iteration": "iter-061",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "16068b846b23acb73166a59fc2bfff5500658c96",
+      "shortSha": "16068b84",
+      "subject": "archon[060/finalize]: stage=prover  (iteration 060 — Phase A step 6 *Path 2* / **substantive Čech acyclicity attempt**: hand the prover the substantive `basicOpen",
+      "date": "2026-05-11 13:04:58 +0800",
+      "parents": [
+        "498e30043768ce95dcc0289430a4a4023f2b1f53"
+      ],
+      "refs": [],
+      "iteration": "iter-060",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "498e30043768ce95dcc0289430a4a4023f2b1f53",
+      "shortSha": "498e3004",
+      "subject": "archon[059/finalize]: stage=prover  (iteration 059 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **n-ary basic-open localization helper**: append a sin",
+      "date": "2026-05-11 11:46:12 +0800",
+      "parents": [
+        "594b6f10d354e2da306c4409d8b156933ccb130f"
+      ],
+      "refs": [],
+      "iteration": "iter-059",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "594b6f10d354e2da306c4409d8b156933ccb130f",
+      "shortSha": "594b6f10",
+      "subject": "archon[058/finalize]: stage=prover  (iteration 058 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **n-ary basic-open inclusion helper**: append a single",
+      "date": "2026-05-11 10:42:47 +0800",
+      "parents": [
+        "1e41bab42a5954d219201ec84e7e0f9f9777de31"
+      ],
+      "refs": [],
+      "iteration": "iter-058",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "1e41bab42a5954d219201ec84e7e0f9f9777de31",
+      "shortSha": "1e41bab4",
+      "subject": "archon[057/finalize]: stage=prover  (iteration 057 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **n-ary basic-open intersection helpers**: append two",
+      "date": "2026-05-11 00:55:58 +0800",
+      "parents": [
+        "97cb1d4540dcae2f8c099eda504887e1d8f02176"
+      ],
+      "refs": [],
+      "iteration": "iter-057",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "97cb1d4540dcae2f8c099eda504887e1d8f02176",
+      "shortSha": "97cb1d45",
+      "subject": "archon[056/finalize]: stage=prover  (iteration 056 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **pairwise basic-open intersection helpers**: append t",
+      "date": "2026-05-10 23:45:52 +0800",
+      "parents": [
+        "6ef667ee41e7ff80bd3078d262b86276a2e49855"
+      ],
+      "refs": [],
+      "iteration": "iter-056",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "6ef667ee41e7ff80bd3078d262b86276a2e49855",
+      "shortSha": "6ef667ee",
+      "subject": "archon[055/finalize]: stage=prover  (iteration 055 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **basic-open existence-form producer**: append two thi",
+      "date": "2026-05-10 22:31:56 +0800",
+      "parents": [
+        "1361e97c557ec93f024c8cc5d64ed8f1642f24a3"
+      ],
+      "refs": [],
+      "iteration": "iter-055",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "1361e97c557ec93f024c8cc5d64ed8f1642f24a3",
+      "shortSha": "1361e97c",
+      "subject": "archon[054/finalize]: stage=prover  (iteration 054 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **foundational basic-open cover infrastructure**: appe",
+      "date": "2026-05-10 20:30:34 +0800",
+      "parents": [
+        "4467eb12de0831b852f78ad88cda6cda33154dcb"
+      ],
+      "refs": [],
+      "iteration": "iter-054",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "4467eb12de0831b852f78ad88cda6cda33154dcb",
+      "shortSha": "4467eb12",
+      "subject": "archon[053/finalize]: stage=prover  (iteration 053 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **existence-bundled affine Čech-acyclic cover carrier",
+      "date": "2026-05-10 19:04:29 +0800",
+      "parents": [
+        "c3d5481650ab6231f61d7ca8d5839f6038e4a09e"
+      ],
+      "refs": [],
+      "iteration": "iter-053",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "c3d5481650ab6231f61d7ca8d5839f6038e4a09e",
+      "shortSha": "c3d54816",
+      "subject": "archon[052/finalize]: stage=prover  (iteration 052 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **generalised rewrite-bridge `⨆𝒰 = U` for HModule' con",
+      "date": "2026-05-10 17:29:28 +0800",
+      "parents": [
+        "95e154ea9b764934860cad5ab6abda4c34b84a7e"
+      ],
+      "refs": [],
+      "iteration": "iter-052",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "95e154ea9b764934860cad5ab6abda4c34b84a7e",
+      "shortSha": "95e154ea",
+      "subject": "archon[051/finalize]: stage=prover  (iteration 051 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **instance-driven supremum HModule' consumer + curve s",
+      "date": "2026-05-10 16:14:08 +0800",
+      "parents": [
+        "148f8e4553186fbc7411eea77aa68e85f1eb3915"
+      ],
+      "refs": [],
+      "iteration": "iter-051",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "148f8e4553186fbc7411eea77aa68e85f1eb3915",
+      "shortSha": "148f8e45",
+      "subject": "archon[050/finalize]: stage=prover  (iteration 050 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **comparison-iso typeclass carrier + instance-driven c",
+      "date": "2026-05-10 15:01:54 +0800",
+      "parents": [
+        "a6291a877da032b6347c9e1a7fa21b1ca3519273"
+      ],
+      "refs": [],
+      "iteration": "iter-050",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "a6291a877da032b6347c9e1a7fa21b1ca3519273",
+      "shortSha": "a6291a87",
+      "subject": "archon[049/finalize]: stage=prover  (iteration 049 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **top-supremum HModule transport**: append two declara",
+      "date": "2026-05-10 13:40:07 +0800",
+      "parents": [
+        "c98cedc893c06a409461898b91b9eafb02dead6b"
+      ],
+      "refs": [],
+      "iteration": "iter-049",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "c98cedc893c06a409461898b91b9eafb02dead6b",
+      "shortSha": "c98cedc8",
+      "subject": "archon[048/finalize]: stage=prover  (iteration 048 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **Čech-side acyclicity carrier predicate**: append thr",
+      "date": "2026-05-10 12:28:54 +0800",
+      "parents": [
+        "d522c2a837b7c10f928b82c9d876603a7d5944cb"
+      ],
+      "refs": [],
+      "iteration": "iter-048",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "d522c2a837b7c10f928b82c9d876603a7d5944cb",
+      "shortSha": "d522c2a8",
+      "subject": "archon[047/finalize]: stage=prover  (iteration 047 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **foundational parameterised Čech infrastructure**: ap",
+      "date": "2026-05-10 11:11:34 +0800",
+      "parents": [
+        "d3be418dfff60dc0e4f9222605b80b6e08bb7b03"
+      ],
+      "refs": [],
+      "iteration": "iter-047",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "d3be418dfff60dc0e4f9222605b80b6e08bb7b03",
+      "shortSha": "d3be418d",
+      "subject": "archon[046/finalize]: stage=prover  (iteration 046 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **producer instance** for the iter-043 wholespace H⁰ H",
+      "date": "2026-05-10 09:58:20 +0800",
+      "parents": [
+        "52596e27f8e5934783ef6117783512030a067814"
+      ],
+      "refs": [],
+      "iteration": "iter-046",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "52596e27f8e5934783ef6117783512030a067814",
+      "shortSha": "52596e27",
+      "subject": "archon[045/finalize]: stage=prover  (iteration 045 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **global-sections evaluation iso** for the iter-044 ge",
+      "date": "2026-05-10 08:27:33 +0800",
+      "parents": [
+        "561651fa38732066d9cf63030d5067faf0f13cbc"
+      ],
+      "refs": [],
+      "iteration": "iter-045",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "561651fa38732066d9cf63030d5067faf0f13cbc",
+      "shortSha": "561651fa",
+      "subject": "archon[044/finalize]: stage=prover  (iteration 044 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **geometric Stein input** for the iter-043 wholespace",
+      "date": "2026-05-10 07:06:30 +0800",
+      "parents": [
+        "72be9c029770142bf0ecf29250087aacfe007b7c"
+      ],
+      "refs": [],
+      "iteration": "iter-044",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "72be9c029770142bf0ecf29250087aacfe007b7c",
+      "shortSha": "72be9c02",
+      "subject": "archon[043/finalize]: stage=prover  (iteration 043 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **wholespace H⁰ Hom-finiteness carrier predicate + imm",
+      "date": "2026-05-10 05:46:53 +0800",
+      "parents": [
+        "9638dd539c1537afa6322a5fafd689d08e861cc8"
+      ],
+      "refs": [],
+      "iteration": "iter-043",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "9638dd539c1537afa6322a5fafd689d08e861cc8",
+      "shortSha": "9638dd53",
+      "subject": "archon[042/finalize]: stage=prover  (iteration 042 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **combined affine-corner `Module.Finite` consumer + cu",
+      "date": "2026-05-10 04:43:34 +0800",
+      "parents": [
+        "43e9862e3e4c09a3626ab2e0ad820faab58a46be"
+      ],
+      "refs": [],
+      "iteration": "iter-042",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "43e9862e3e4c09a3626ab2e0ad820faab58a46be",
+      "shortSha": "43e9862e",
+      "subject": "archon[041/finalize]: stage=prover  (iteration 041 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **H⁰ Hom finiteness carrier predicate + immediate `Mod",
+      "date": "2026-05-10 03:35:47 +0800",
+      "parents": [
+        "ec859a862349015ce3fff287dad3716c2b6485ad"
+      ],
+      "refs": [],
+      "iteration": "iter-041",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "ec859a862349015ce3fff287dad3716c2b6485ad",
+      "shortSha": "ec859a86",
+      "subject": "archon[040/finalize]: stage=prover  (iteration 040 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **affine cohomology vanishing carrier predicate + imme",
+      "date": "2026-05-10 02:41:44 +0800",
+      "parents": [
+        "81af136672a3eb1bb2e9d4df565222552139d363"
+      ],
+      "refs": [],
+      "iteration": "iter-040",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "81af136672a3eb1bb2e9d4df565222552139d363",
+      "shortSha": "81af1366",
+      "subject": "archon[039/finalize]: stage=prover  (iteration 039 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **curve specialisations of the H⁰ `Module.Finite` tran",
+      "date": "2026-05-10 01:52:55 +0800",
+      "parents": [
+        "74c92ab73926d5b4dece4d71521a2e332210b858"
+      ],
+      "refs": [],
+      "iteration": "iter-039",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "74c92ab73926d5b4dece4d71521a2e332210b858",
+      "shortSha": "74c92ab7",
+      "subject": "archon[038/finalize]: stage=prover  (iteration 038 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **`Module.Finite` H⁰ transport companions**: append tw",
+      "date": "2026-05-10 01:00:51 +0800",
+      "parents": [
+        "59da3649fdd412806ef8e01c893da49ed7ed4f33"
+      ],
+      "refs": [],
+      "iteration": "iter-038",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "59da3649fdd412806ef8e01c893da49ed7ed4f33",
+      "shortSha": "59da3649",
+      "subject": "archon[037/finalize]: stage=prover  (iteration 037 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **`AffineCoverMVSquare.X₄` Module.Finite transport com",
+      "date": "2026-05-09 23:50:16 +0800",
+      "parents": [
+        "c6a7a55a3852441c48ebbdcd1ec669fd18cc0a5f"
+      ],
+      "refs": [],
+      "iteration": "iter-037",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "c6a7a55a3852441c48ebbdcd1ec669fd18cc0a5f",
+      "shortSha": "c6a7a55a",
+      "subject": "archon[036/finalize]: stage=prover  (iteration 036 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **`AffineCoverMVSquare.X₄` finrank corollary**: append",
+      "date": "2026-05-09 23:06:18 +0800",
+      "parents": [
+        "92789e65488eade4aa945eee6fd21cba4764768a"
+      ],
+      "refs": [],
+      "iteration": "iter-036",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "92789e65488eade4aa945eee6fd21cba4764768a",
+      "shortSha": "92789e65",
+      "subject": "archon[035/finalize]: stage=prover  (iteration 035 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **`AffineCoverMVSquare.X₄` corner-bridge specialisatio",
+      "date": "2026-05-09 20:23:30 +0800",
+      "parents": [
+        "e55ee0698f64463ba02901719001b54e7b6bf833"
+      ],
+      "refs": [],
+      "iteration": "iter-035",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "e55ee0698f64463ba02901719001b54e7b6bf833",
+      "shortSha": "e55ee069",
+      "subject": "archon[034/finalize]: stage=prover  (iteration 034 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **universe-bump + full cover-totality bridge**: append",
+      "date": "2026-05-09 19:16:02 +0800",
+      "parents": [
+        "b6de6a4303b4a8a06e95712d3d0136136a1d829c"
+      ],
+      "refs": [],
+      "iteration": "iter-034",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "b6de6a4303b4a8a06e95712d3d0136136a1d829c",
+      "shortSha": "b6de6a43",
+      "subject": "archon[033/review]: journal session (494s)",
+      "date": "2026-05-09 15:55:19 +0800",
+      "parents": [
+        "cc1e2f11bcdb0b896541d25e64ba37be23820d4a"
+      ],
+      "refs": [],
+      "iteration": "iter-033",
+      "phase": "review",
+      "branch": "main"
+    },
+    {
+      "sha": "cc1e2f11bcdb0b896541d25e64ba37be23820d4a",
+      "shortSha": "cc1e2f11",
+      "subject": "archon[032/finalize]: stage=prover  (iteration 032 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **cover-totality Ext-transport at universe `u+1`**: ap",
+      "date": "2026-05-09 15:13:39 +0800",
+      "parents": [
+        "36f7ca8342e7802957e899bc217244b7610cfd33"
+      ],
+      "refs": [],
+      "iteration": "iter-032",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "36f7ca8342e7802957e899bc217244b7610cfd33",
+      "shortSha": "36f7ca83",
+      "subject": "archon[031/review]: journal session (531s)",
+      "date": "2026-05-09 01:56:29 +0800",
+      "parents": [
+        "1b16c619b4de833cd547160f44e5b39f10520399"
+      ],
+      "refs": [],
+      "iteration": "iter-031",
+      "phase": "review",
+      "branch": "main"
+    },
+    {
+      "sha": "1b16c619b4de833cd547160f44e5b39f10520399",
+      "shortSha": "1b16c619",
+      "subject": "archon[030/finalize]: stage=prover  (iteration 030 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding **toModuleKSheaf specialisation on a curve**: append t",
+      "date": "2026-05-09 01:20:32 +0800",
+      "parents": [
+        "50a98cf3dbd584ae600ace3919fda3365172793b"
+      ],
+      "refs": [],
+      "iteration": "iter-030",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "50a98cf3dbd584ae600ace3919fda3365172793b",
+      "shortSha": "50a98cf3",
+      "subject": "archon[029/finalize]: stage=prover  (iteration 029 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding companions: append four `@[simp]` corner-identificatio",
+      "date": "2026-05-09 00:49:44 +0800",
+      "parents": [
+        "1cd7490bc6dc83e8e7552da7e2c66af4b21bb324"
+      ],
+      "refs": [],
+      "iteration": "iter-029",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "1cd7490bc6dc83e8e7552da7e2c66af4b21bb324",
+      "shortSha": "1cd7490b",
+      "subject": "archon[028/finalize]: stage=prover  (iteration 028 — Phase A step 6 *Path 2* / Serre-finiteness scaffolding kickoff: scaffold the bundled 2-affine cover Mayer-Vie",
+      "date": "2026-05-09 00:17:41 +0800",
+      "parents": [
+        "63e1e586decbbfdd6371f9a1b09595eb6fbb67f1"
+      ],
+      "refs": [],
+      "iteration": "iter-028",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "63e1e586decbbfdd6371f9a1b09595eb6fbb67f1",
+      "shortSha": "63e1e586",
+      "subject": "archon[027/finalize]: stage=prover  (iteration 027 — refactor-only iteration: file split `Cohomology/StructureSheafModuleK.lean` → new `Cohomology/MayerVietoris.l",
+      "date": "2026-05-08 23:49:26 +0800",
+      "parents": [
+        "a63610fe2c7e68627601c25d4657a829be3c5e97"
+      ],
+      "refs": [],
+      "iteration": "iter-027",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "a63610fe2c7e68627601c25d4657a829be3c5e97",
+      "shortSha": "a63610fe",
+      "subject": "archon[026/finalize]: stage=prover  (iteration 026 — Path-2 Mayer-Vietoris LES *finalization*: three short one-liners on top of iter-023's `HModule'_sequenceIso`,",
+      "date": "2026-05-08 19:03:11 +0800",
+      "parents": [
+        "45fa67086b6e1c2ec26938403b4bbdf2948d29e4"
+      ],
+      "refs": [],
+      "iteration": "iter-026",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "45fa67086b6e1c2ec26938403b4bbdf2948d29e4",
+      "shortSha": "45fa6708",
+      "subject": "archon[025/finalize]: stage=prover  (iteration 023 — Path-2 Mayer-Vietoris LES *technical heart*: four auxiliary lemmas mirroring Mathlib `MayerVietoris.lean` L48",
+      "date": "2026-05-08 18:33:57 +0800",
+      "parents": [
+        "26ba04e43ebfcf4031bf510b26705d6f553912e6"
+      ],
+      "refs": [],
+      "iteration": "iter-025",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "26ba04e43ebfcf4031bf510b26705d6f553912e6",
+      "shortSha": "26ba04e4",
+      "subject": "archon[024/finalize]: stage=prover  (iteration 022 — Path-2 Mayer-Vietoris LES `ComposableArrows`-form sequence: `noncomputable abbrev HModule'_sequence` mirrorin",
+      "date": "2026-05-08 17:51:50 +0800",
+      "parents": [
+        "09d090a1c3336955ba134ebc769ccbb1dc32ad5a"
+      ],
+      "refs": [],
+      "iteration": "iter-024",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "09d090a1c3336955ba134ebc769ccbb1dc32ad5a",
+      "shortSha": "09d090a1",
+      "subject": "archon[023/finalize]: stage=prover  (iteration 022 — Path-2 Mayer-Vietoris LES `ComposableArrows`-form sequence: `noncomputable abbrev HModule'_sequence` mirrorin",
+      "date": "2026-05-08 17:30:15 +0800",
+      "parents": [
+        "1e000298b241a4339bd8cb175bd18b7ecab2fad3"
+      ],
+      "refs": [],
+      "iteration": "iter-023",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "1e000298b241a4339bd8cb175bd18b7ecab2fad3",
+      "shortSha": "1e000298",
+      "subject": "archon[021/review]: journal session (637s)",
+      "date": "2026-05-08 15:55:32 +0800",
+      "parents": [
+        "f985d0287d37d1b43ef302cf7054a12f34391b0d"
+      ],
+      "refs": [],
+      "iteration": "iter-021",
+      "phase": "review",
+      "branch": "main"
+    },
+    {
+      "sha": "f985d0287d37d1b43ef302cf7054a12f34391b0d",
+      "shortSha": "f985d028",
+      "subject": "archon[020/finalize]: stage=prover  (iteration 020 — Path-2 Mayer-Vietoris LES short-exact infrastructure: helper instance `(ModuleCat.free k).PreservesMonomorphi",
+      "date": "2026-05-08 15:23:34 +0800",
+      "parents": [
+        "782f3367cbe6da5053e7b556ff0bc998d1e167e0"
+      ],
+      "refs": [],
+      "iteration": "iter-020",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "782f3367cbe6da5053e7b556ff0bc998d1e167e0",
+      "shortSha": "782f3367",
+      "subject": "archon[019/review]: journal session (743s)",
+      "date": "2026-05-08 13:43:39 +0800",
+      "parents": [
+        "aca30e415237f55b57d281c44ea12d8fd193c7f2"
+      ],
+      "refs": [],
+      "iteration": "iter-019",
+      "phase": "review",
+      "branch": "main"
+    },
+    {
+      "sha": "aca30e415237f55b57d281c44ea12d8fd193c7f2",
+      "shortSha": "aca30e41",
+      "subject": "archon[018/finalize]: stage=prover  (iteration 018 — Path-2 Mayer-Vietoris LES composition-is-zero lemma `HModule'_toBiprod_fromBiprod`, refactor-then-prover phas",
+      "date": "2026-05-08 13:06:57 +0800",
+      "parents": [
+        "539adae27ccc42c721b2ed14fb2df895461c4509"
+      ],
+      "refs": [],
+      "iteration": "iter-018",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "539adae27ccc42c721b2ed14fb2df895461c4509",
+      "shortSha": "539adae2",
+      "subject": "archon[017/finalize]: stage=prover  (iteration 017 — Path-2 Mayer-Vietoris LES building blocks `HModule'_toBiprod` + `HModule'_fromBiprod`, refactor-then-prover p",
+      "date": "2026-05-08 12:19:39 +0800",
+      "parents": [
+        "00de030c3dd66983db9fd0ff92301cdbb990f3c6"
+      ],
+      "refs": [],
+      "iteration": "iter-017",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "00de030c3dd66983db9fd0ff92301cdbb990f3c6",
+      "shortSha": "00de030c",
+      "subject": "archon[016/finalize]: stage=prover  (iteration 016 — Path-2 functorial wrappers `HModule'_cohomologyPresheafFunctor` + `HModule'_cohomologyPresheaf`, refactor-the",
+      "date": "2026-05-08 11:50:24 +0800",
+      "parents": [
+        "bf0465ff49ecf1ee94a097725b2d53da9159bab8"
+      ],
+      "refs": [],
+      "iteration": "iter-016",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "bf0465ff49ecf1ee94a097725b2d53da9159bab8",
+      "shortSha": "bf0465ff",
+      "subject": "archon[015/finalize]: stage=prover  (iteration 015 — Path-2 `H⁰` algebraic bridge for `HModule'`, refactor-then-prover phase. The iter-014 prover round closed `Al",
+      "date": "2026-05-08 10:52:10 +0800",
+      "parents": [
+        "008527eb74acb3916e8563387dde3a3186f34f8e"
+      ],
+      "refs": [],
+      "iteration": "iter-015",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "008527eb74acb3916e8563387dde3a3186f34f8e",
+      "shortSha": "008527eb",
+      "subject": "archon[014/finalize]: stage=prover  (iteration 014 — Path-2 Mayer-Vietoris prerequisite, prover-round phase. The iter-013 (legacy label) → iter-014 (canonical) pl",
+      "date": "2026-05-08 10:25:23 +0800",
+      "parents": [
+        "3b61ef56e6852c8f409c94ff9d63d48773ddc7e8"
+      ],
+      "refs": [],
+      "iteration": "iter-014",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "3b61ef56e6852c8f409c94ff9d63d48773ddc7e8",
+      "shortSha": "3b61ef56",
+      "subject": "archon[013/refactor]: sorry=307",
+      "date": "2026-05-07 18:59:35 +0800",
+      "parents": [
+        "796eb28bf1585ca4cfb497432352eec5f88c7d0e"
+      ],
+      "refs": [],
+      "iteration": "iter-013",
+      "phase": "refactor",
+      "branch": "main"
+    },
+    {
+      "sha": "796eb28bf1585ca4cfb497432352eec5f88c7d0e",
+      "shortSha": "796eb28b",
+      "subject": "archon[012/finalize]: stage=prover  (iteration 012 — Path-2 Čech scaffold sub-step, **prover round**. The iter-012 refactor agent has executed the directive: two",
+      "date": "2026-05-07 18:31:09 +0800",
+      "parents": [
+        "0738ab9e10d084d69acdca554764877c845b8850"
+      ],
+      "refs": [],
+      "iteration": "iter-012",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "0738ab9e10d084d69acdca554764877c845b8850",
+      "shortSha": "0738ab9e",
+      "subject": "archon[011/finalize]: stage=prover  (iteration 011 — first protected sorry closure: `genus`. Iter-011 refactor has executed and verified; `Genus.lean` carries the",
+      "date": "2026-05-07 17:40:25 +0800",
+      "parents": [
+        "5f3155ed635e97b209acdd8dbd4e357d525d4ab9"
+      ],
+      "refs": [],
+      "iteration": "iter-011",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "5f3155ed635e97b209acdd8dbd4e357d525d4ab9",
+      "shortSha": "5f3155ed",
+      "subject": "archon[010/finalize]: stage=prover  (iteration 010 — Track 1 / `H⁰` algebraic bridge iteration; refactor has scaffolded one new declaration in `Cohomology/Structu",
+      "date": "2026-05-07 17:04:23 +0800",
+      "parents": [
+        "b5f04254486867ff447aa57ca0b4518c3a9c3a84"
+      ],
+      "refs": [],
+      "iteration": "iter-010",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "b5f04254486867ff447aa57ca0b4518c3a9c3a84",
+      "shortSha": "b5f04254",
+      "subject": "archon[009/review]: journal session (426s)",
+      "date": "2026-05-07 13:22:34 +0800",
+      "parents": [
+        "5eb3fef135df1169f2dce895a4e6f57ae6f53905"
+      ],
+      "refs": [],
+      "iteration": "iter-009",
+      "phase": "review",
+      "branch": "main"
+    },
+    {
+      "sha": "5eb3fef135df1169f2dce895a4e6f57ae6f53905",
+      "shortSha": "5eb3fef1",
+      "subject": "archon[008/finalize]: stage=prover  (iteration 008 — Track 2 / étale sheafification iteration; refactor will scaffold one new declaration in `Picard/FunctorAb.lea",
+      "date": "2026-05-07 12:46:52 +0800",
+      "parents": [
+        "14bd2680b73171da93c71d7f69ce832f1f8883ef"
+      ],
+      "refs": [],
+      "iteration": "iter-008",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "14bd2680b73171da93c71d7f69ce832f1f8883ef",
+      "shortSha": "14bd2680",
+      "subject": "archon[007/finalize]: stage=prover  (iteration 007 — small polish iteration; refactor will scaffold three consumer-facing helpers, then the prover round closes th",
+      "date": "2026-05-07 12:11:29 +0800",
+      "parents": [
+        "ff821da367385baa56421999fea407d12808fe7e"
+      ],
+      "refs": [],
+      "iteration": "iter-007",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "ff821da367385baa56421999fea407d12808fe7e",
+      "shortSha": "ff821da3",
+      "subject": "archon[006/finalize]: stage=prover  (iter-006 post-refactor pass; the iter-006 refactor has executed and the eight Phase A step 5 *main* scaffold sorries are in p",
+      "date": "2026-05-07 11:32:25 +0800",
+      "parents": [
+        "f2527bf4adf8f9386d1385ddbaca3bc05bf0c08f"
+      ],
+      "refs": [],
+      "iteration": "iter-006",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "f2527bf4adf8f9386d1385ddbaca3bc05bf0c08f",
+      "shortSha": "f2527bf4",
+      "subject": "archon[005/finalize]: stage=prover  (iter-005 refactor executed; prover round active on three new scaffold sorries) sorry=255",
+      "date": "2026-05-06 18:18:03 +0800",
+      "parents": [
+        "3bd947c611082919d9bb3848b91f1641a9c4839c"
+      ],
+      "refs": [],
+      "iteration": "iter-005",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "3bd947c611082919d9bb3848b91f1641a9c4839c",
+      "shortSha": "3bd947c6",
+      "subject": "archon[004/finalize]: stage=prover  (iter-004 prover round: close the 4 scaffold sorries laid by the iter-004 refactor) sorry=251",
+      "date": "2026-05-06 17:07:43 +0800",
+      "parents": [
+        "6209b15da58c906d7acfff5152dcbfb305afb53a"
+      ],
+      "refs": [],
+      "iteration": "iter-004",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "6209b15da58c906d7acfff5152dcbfb305afb53a",
+      "shortSha": "6209b15d",
+      "subject": "archon[003/finalize]: stage=prover  (iter-005 = first prover round on the iter-004 helper scaffolds) sorry=50",
+      "date": "2026-05-06 15:03:49 +0800",
+      "parents": [
+        "a7455e48dfccfc86b6f07dc80edda0a2d5b06d2e"
+      ],
+      "refs": [],
+      "iteration": "iter-003",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "a7455e48dfccfc86b6f07dc80edda0a2d5b06d2e",
+      "shortSha": "a7455e48",
+      "subject": "archon[002/finalize]: stage=prover sorry=44",
+      "date": "2026-05-06 13:54:02 +0800",
+      "parents": [
+        "1e0a45cee61fcca9d0901691139ba327cd87dfcd"
+      ],
+      "refs": [],
+      "iteration": "iter-002",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "1e0a45cee61fcca9d0901691139ba327cd87dfcd",
+      "shortSha": "1e0a45ce",
+      "subject": "archon[001/finalize]: stage=prover sorry=43",
+      "date": "2026-05-06 11:42:44 +0800",
+      "parents": [
+        "b4a0d122231293e79e97acf091ea8256ed6eaabc"
+      ],
+      "refs": [],
+      "iteration": "iter-001",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "b4a0d122231293e79e97acf091ea8256ed6eaabc",
+      "shortSha": "b4a0d122",
+      "subject": "archon[000/init]: initial state",
+      "date": "2026-05-06 11:08:23 +0800",
+      "parents": [],
+      "refs": [],
+      "iteration": "iter-000",
+      "phase": "init",
+      "branch": "main"
+    }
+  ]
+}

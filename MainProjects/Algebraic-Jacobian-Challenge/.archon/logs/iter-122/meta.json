@@ -1,0 +1,31 @@
+{
+  "iteration": 122,
+  "stage": "prover (Iter-121 strategic pivot: per user directive",
+  "mode": "parallel",
+  "startedAt": "2026-05-16T16:07:43Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "76187035-2f3c-493e-8c2e-0592b6e07336",
+    "durationSecs": 1969
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 1
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 3411
+  },
+  "provers": {
+    "AlgebraicJacobian_Differentials": {
+      "file": "AlgebraicJacobian/Differentials.lean",
+      "status": "done",
+      "sessionId": "5d9b1ae7-402d-4afa-b368-a68384c35ab9"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "9a28fc5d-fde5-4038-8069-33e8034bd47e",
+    "durationSecs": 731
+  }
+}

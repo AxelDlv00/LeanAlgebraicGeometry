@@ -1,0 +1,1370 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dependency graph</title>
+  <meta name="generator" content="plasTeX" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles/theme-white.css" />
+  <link rel="stylesheet" href="styles/dep_graph.css" />
+  
+  <script type="text/x-mathjax-config">
+  
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  
+  </script>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">  </script>
+
+
+<link rel="stylesheet" href="styles/extra_styles.css" />
+
+</head>
+
+<body>
+<header>
+  <a class="toc" href="index.html">Home</a>
+  <h1 id="doc_title">Dependencies</h1>
+</header>
+<div class="wrapper">
+<div class="content">
+  <div id="Legend">
+    <span id="legend_title" class="title">Legend
+    <div class="btn">
+       <div class="bar"></div>
+       <div class="bar"></div>
+       <div class="bar"></div>
+    </div></span> 
+    <dl class="legend">
+      
+      <dt>Boxes</dt><dd>definitions</dd>
+      
+      <dt>Ellipses</dt><dd>theorems and lemmas</dd>
+      
+      <dt>Blue border</dt><dd>the <em>statement</em> of this result is ready to be formalized; all prerequisites are done</dd>
+      
+      <dt>Orange border</dt><dd>the <em>statement</em> of this result is not ready to be formalized; the blueprint needs more work</dd>
+      
+      <dt>Blue background</dt><dd>the <em>proof</em> of this result is ready to be formalized; all prerequisites are done</dd>
+      
+      <dt>Green border</dt><dd>the <em>statement</em> of this result is formalized</dd>
+      
+      <dt>Green background</dt><dd>the <em>proof</em> of this result is formalized</dd>
+      
+      <dt>Dark green background</dt><dd>the <em>proof</em> of this result and all its ancestors are formalized</dd>
+      
+      <dt>Dark green border</dt><dd>this is in Mathlib</dd>
+      
+    </dl>
+  </div>
+    <div id="graph"></div>
+<div id="statements">
+
+    
+    <div class="dep-modal-container" id="cor:sawin_vanishing_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="cor:sawin_vanishing" style="display: none">
+    <div class="thm_thmheading">
+      <span class="corollary_thmcaption">
+      Corollary
+      </span>
+      <span class="corollary_thmlabel">30</span><span class="corollary_thmtitle">Vanishing of stalk cohomology</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, Corollary vanishing-intro.</i> With \(X\), \(k\), \(\ell \), \(K\) as in Theorem&#160;<a href="index.html#thm:sawin_first_massey">29</a>, \(\mathcal{H}^{-i}(K)_x = 0\) whenever \(-i {\gt} \dim \mathit{SS}(K)_x - \dim X\), where \(\mathit{SS}(K)_x\) is the fibre of the singular support over \(x\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#cor:sawin_vanishing">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.vanishing">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:peer_canonical_differentials_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:peer_canonical_differentials" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">3</span><span class="definition_thmtitle">Canonical differentials anchor</span></div>
+    <div class="thm_thmcontent"><p>   The peer project <em>Algebraic-Jacobian-Challenge</em>, in its chapter on relative differentials, supplies the sheaf of Kähler differentials and hence the canonical bundle \(K_C = \Omega ^1_{C/k}\) and its global sections \(H^0(C,K_C)\). Sawin identifies the fibre of \(T^*J\) with \(H^0(C,K_C)\) and uses Serre duality \(T_{D}C^{(n)} \cong H^0(C,\mathcal{O}(D)/\mathcal{O})\), \((T^*)_{D}C^{(n)} \cong H^0(C, K_C/K_C(-D))\) throughout the characteristic-cycle computation of Lemma&#160;<a href="index.html#lem:sawin_ts_singular">32</a>. </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:peer_canonical_differentials">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.Scheme.relativeDifferentialsPresheaf">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:peer_higher_direct_image_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:peer_higher_direct_image" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">4</span><span class="definition_thmtitle">Higher direct image / pushforward anchor</span></div>
+    <div class="thm_thmcontent"><p>   The peer project <em>Cech-Cohomology</em>, in its chapter on higher direct images, supplies the derived pushforward \(R^i f_* \mathcal{F}\) of a sheaf along a morphism. Sawin’s constructible-sheaf operations — proper pushforward \(f_*\), the decomposition \(\pi ^n_*\mathbb {Q}_\ell = \bigoplus _r i^{n+2r}_* \mathbb {Q}_\ell [-2r](-r)\) (Lemma&#160;<a href="index.html#lem:sawin_ts_decomposition">34</a>), and proper base change — specialise this pushforward formalism to the \(\ell \)-adic setting. This anchor is the common pushforward interface. </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:peer_higher_direct_image">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.higherDirectImage">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:peer_jacobian_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:peer_jacobian" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">1</span><span class="definition_thmtitle">Jacobian of a curve anchor</span></div>
+    <div class="thm_thmcontent"><p>   The peer project <em>Algebraic-Jacobian-Challenge</em>, in its chapter on the Jacobian, supplies the Jacobian \(J\) of a smooth projective curve \(C\) as a group object representing degree-zero divisor classes. Sawin’s §5 works on the Jacobian of a hyperelliptic curve, identifying each component \(J^{(n)}\) of degree-\(n\) classes with \(J\) after fixing a base point, and uses the trivial cotangent bundle \(T^*J \cong J \times H^0(C,K_C)\). This anchor is that group object. </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:peer_jacobian">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.Jacobian">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:peer_weil_divisor_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:peer_weil_divisor" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">2</span><span class="definition_thmtitle">Weil divisors and symmetric powers anchor</span></div>
+    <div class="thm_thmcontent"><p>    The peer project <em>Algebraic-Jacobian-Challenge</em>, in its chapter on Weil divisors, supplies effective divisors on a curve and (via prime divisors and their multiplicities) the symmetric power \(C^{(n)} = \operatorname {Sym}^n C\) as a moduli space of degree-\(n\) effective divisors, together with the Abel–Jacobi map \(\pi _n : C^{(n)} \to J\) sending a divisor to its class. The theta locus \(\Theta _n = \pi _n(C^{(n)})\) and the maps \(\underline A^{a,b}\), \(\Sigma ^{a,b}\) of §5 are built from this data. </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:peer_weil_divisor">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/AlgebraicGeometry.Scheme.WeilDivisor">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:sawin_C_transversal_map_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:sawin_C_transversal_map" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">8</span><span class="definition_thmtitle">\(C\)-transversal morphism (to \(Y\))</span></div>
+    <div class="thm_thmcontent"><p>   <i class="itshape">Source: Sawin, §2, Definition C-transversal-1.</i> For \(C\subseteq T^*X\) a closed conical subset and \(f:X\to Y\) a morphism of smooth schemes, \(f\) is <em>\(C\)-transversal</em> if \(df^{-1}(C)\), under \(X\times _Y T^*Y \to T^*X\), lies in the zero-section. </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:sawin_C_transversal_map">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.CTransversalMap">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:sawin_characteristic_cycle_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:sawin_characteristic_cycle" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">19</span><span class="definition_thmtitle">Characteristic cycle \(CC(K)\)</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §2, Definition (Saito 5.10).</i> \(\mathit{CC}(K)\) is the unique \(\mathbb {Z}\)-linear combination of irreducible components of \(\mathit{SS}(K)\) such that for every étale \(j:W\to X\), every \(f:W\to Y\) to a smooth curve, and every at most isolated \(h^\circ \mathit{SS}(\mathcal{F})\)-characteristic point \(u\in W\) of \(f\), </p>
+<div class="displaymath" id="a0000000006">
+  \[  -\operatorname {dimtot}\bigl(R\Phi _f(j^*K)\bigr)_u = (j^*\mathit{CC}(K),(df)^*\omega )_{T^*W,u},  \]
+</div>
+<p> for \(\omega \) a meromorphic one-form without zero or pole at \(f(u)\). Existence and uniqueness are Saito Theorem 5.9; integrality (Beilinson–Deligne) is Saito Theorem 5.18. By Saito Proposition 5.14(2), \(\mathit{SS}(K) = \operatorname {supp}\mathit{CC}(K)\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:sawin_characteristic_cycle">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.characteristicCycle">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:sawin_circ_forward_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:sawin_circ_forward" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">9</span><span class="definition_thmtitle">Pushforward \(f_\circ C\)</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §2, Definition circ-forward.</i> If \(f\) is proper, \(f_\circ C\) is the pushforward from \(X\times _Y T^*Y\) to \(T^*Y\) of \(df^{-1}(C)\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:sawin_circ_forward">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.circForward">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:sawin_conical_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:sawin_conical" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">5</span><span class="definition_thmtitle">Conical subset</span></div>
+    <div class="thm_thmcontent"><p>   <i class="itshape">Source: Sawin, §1, Definition (conical).</i> A closed subset, or algebraic cycle, on a vector bundle is <em>conical</em> if it is invariant under the \(\mathbb {G}_m\)-action by dilation of vectors. </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:sawin_conical">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.IsConical">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:sawin_dimtot_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:sawin_dimtot" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">18</span><span class="definition_thmtitle">Total dimension \(\operatorname {dimtot}\)</span></div>
+    <div class="thm_thmcontent"><p>   <i class="itshape">Source: Sawin, §2, Definition (dimtot).</i> For a Galois representation \(V\) of a local field over \(\mathbb {F}_\ell \), \(\operatorname {dimtot}V = \dim V + \operatorname {Swan}V\). For a complex \(W\), \(\operatorname {dimtot}W = \sum _i (-1)^i \operatorname {dimtot}\mathcal{H}^i(W)\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:sawin_dimtot">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.dimtot">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:sawin_h_transversal_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:sawin_h_transversal" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">11</span><span class="definition_thmtitle">\(C\)-transversal \(h:W\to X\) and \(h^\circ C\)</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §2, Definition (Saito 3.1).</i> For \(h:W\to X\), let \(h^*C\subseteq W\times _X T^*X\) be the pullback of \(C\) and \(K=\ker (dh:W\times _X T^*X\to T^*W)\). Then \(h\) is <em>\(C\)-transversal</em> if \(h^*C\cap K\) lies in the zero-section, and one sets \(h^\circ C = dh(h^*C) \subseteq T^*W\) (closed by Saito Lemma 3.1). </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:sawin_h_transversal">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.HTransversal">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:sawin_isolated_char_point_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:sawin_isolated_char_point" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">17</span><span class="definition_thmtitle">Isolated \(C\)-characteristic point</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §2, Definition (Saito 5.3(1)).</i> For \(f:X\to Y\) to a smooth curve, a closed point \(x\) is <em>at most an isolated \(C\)-characteristic point</em> if \(f\) is \(C\)-transversal on some punctured neighborhood of \(x\); it is an <em>isolated \(C\)-characteristic point</em> if in addition \(f\) is \(C\)-transversal on no full neighborhood of \(x\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:sawin_isolated_char_point">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.IsolatedCharacteristicPoint">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:sawin_local_acyclic_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:sawin_local_acyclic" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">13</span><span class="definition_thmtitle">Local acyclicity</span></div>
+    <div class="thm_thmcontent"><p>   <i class="itshape">Source: Sawin, §2, Definition (SGA 4.5).</i> \(f:W\to Y\) is <em>locally acyclic</em> relative to \(K\in D^b_c(W,\mathbb {F}_\ell )\) if for every geometric point \(x\in W\) and geometric point \(t\in Y\) specializing to \(f(x)\), the map \(H^*(W_x,K)\to H^*(W_{x,t},K)\) is an isomorphism. When \(Y\) is a smooth curve this is equivalent to the vanishing of \(R\Phi _f K\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:sawin_local_acyclic">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.LocallyAcyclic">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:sawin_local_intersection_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:sawin_local_intersection" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">20</span><span class="definition_thmtitle">Local intersection number</span></div>
+    <div class="thm_thmcontent"><p>   <i class="itshape">Source: Sawin, §3, Definition (local intersection number).</i> For \(f:Y\to X\), \(x\in X\), and cycles \(C_1,C_2\) on \(Y\) of total dimension \(\dim Y\) with \(C_1\cap C_2\cap f^{-1}(x)\) proper (and each component of \(C_1\cap C_2\) either proper inside \(f^{-1}(x)\) or disjoint from it), the local intersection number \((C_1,C_2)_{Y,x}\) is the sum of the degrees of the refined intersection \(C_1\cdot C_2\) (Fulton) over the components of \(C_1\cap C_2\) inside \(f^{-1}(x)\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:sawin_local_intersection">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.localIntersectionNumber">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:sawin_pair_transversal_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:sawin_pair_transversal" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">12</span><span class="definition_thmtitle">\(C\)-transversal pair</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §2, Definition (Saito 3.5(2)).</i> A pair \(h:W\to X\), \(f:W\to Y\) is <em>\(C\)-transversal</em> if \(h\) is \(C\)-transversal and \(f\) is \(h^\circ C\)-transversal. </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:sawin_pair_transversal">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.PairTransversal">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:sawin_polar_multiplicity_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:sawin_polar_multiplicity" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">7</span><span class="definition_thmtitle">Polar multiplicity, projective form</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §1, Definition polar-multiplicity.</i> Let \(X\) be smooth of dimension \(n\), \(C\) a conical cycle on \(T^*X\) of dimension \(n\), and \(x\in X\). For \(0\le i{\lt}n\), let \(V\) be a rank-\((i+1)\) sub-bundle of \(T^*X\) near \(x\) with \(V_x\) a general point of the Grassmannian of \((i+1)\)-planes in \((T^*X)_x\). The <em>\(i\)th polar multiplicity</em> \(\gamma ^i_C(x)\) is the multiplicity at \(x\) of \(\pi _*(\mathbb {P}(C)\cap \mathbb {P}(V))\), where \(\pi :\mathbb {P}(T^*X)\to X\). The \(n\)th polar multiplicity is the multiplicity of the zero-section in \(C\). Well-definedness is Lemma&#160;<a href="index.html#lem:sawin_intersection_comparison">21</a>. </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:sawin_polar_multiplicity">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.polarMultiplicity">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:sawin_polar_multiplicity_2_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:sawin_polar_multiplicity_2" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">22</span><span class="definition_thmtitle">Polar multiplicity, intersection form</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §3, Definition polar-multiplicity-2.</i> For \(0\le i{\lt}\dim X\), with \(Y\) a sufficiently general smooth codimension-\(i\) subvariety through \(x\) and \(V\) a sufficiently general rank-\((i+1)\) sub-bundle of \(T^*X\) over \(Y\), the \(i\)th polar multiplicity of \(C\) at \(x\) is the local intersection number \((\mathbb {P}(C),\mathbb {P}(V))_{\mathbb {P}(T^*X),x}\). For \(i=\dim X\) it is the multiplicity of the zero-section in \(C\). Well-definedness is Lemma&#160;<a href="index.html#lem:sawin_intersection_comparison">21</a>. </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:sawin_polar_multiplicity_2">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.polarMultiplicity'">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:sawin_projectivization_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:sawin_projectivization" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">6</span><span class="definition_thmtitle">Projectivization of a conical cycle</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §1, Definition (projectivization).</i> For a vector bundle \(V\) on a variety \(X\), \(\mathbb {P}(V) = \operatorname {Proj}(\operatorname {Sym}^*(V^\vee ))\) is its projectivization, of dimension \(\dim X + \operatorname {rank}V - 1\), identified with the quotient of \(V\) minus its zero section by \(\mathbb {G}_m\). For a conical cycle \(C\) on \(V\), \(\mathbb {P}(C)\) is the quotient of \(C\), minus its intersection with the zero section, by \(\mathbb {G}_m\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:sawin_projectivization">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.projectivization">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:sawin_properly_transversal_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:sawin_properly_transversal" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">15</span><span class="definition_thmtitle">Properly \(C\)-transversal morphism</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §2, Definition (Saito 7.1(1)).</i> With \(C\subseteq T^*X\) of pure dimension \(n=\dim X\) and \(h:W\to X\) with \(\dim W=m\), \(h\) is <em>properly \(C\)-transversal</em> if it is \(C\)-transversal and every irreducible component of \(h^*C\) has dimension \(m\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:sawin_properly_transversal">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.ProperlyCTransversal">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:sawin_shriek_forward_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:sawin_shriek_forward" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">10</span><span class="definition_thmtitle">Pushforward \(f_! A\) of a cycle</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §2, Definition shriek-forward.</i> For \(A\) a codimension-\(\dim X\) cycle supported on \(C\) with \(f_\circ C\) of dimension \(\dim Y\), \(f_! A\) is the pushforward to \(T^*Y\) of the intersection-theoretic inverse image \(df^*A\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:sawin_shriek_forward">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.shriekForward">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:sawin_shriek_pullback_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:sawin_shriek_pullback" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">16</span><span class="definition_thmtitle">Pullback \(h^! A\) of a cycle</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §2, Definition (Saito 7.1(2)).</i> For \(A\) a codimension-\(n\) cycle on \(T^*X\) with conical support \(C\) and \(h:W\to X\) properly \(C\)-transversal, \(h^!A = (-1)^{n-m}\) times the intersection-theoretic pushforward along \(dh:W\times _X T^*X\to T^*W\) of the pullback along \(h\) of \(A\) (well-defined since \(dh\) is finite on \(\operatorname {supp} h^*A\)). </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:sawin_shriek_pullback">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.shriekPullback">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:sawin_singular_support_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:sawin_singular_support" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">14</span><span class="definition_thmtitle">Singular support \(SS(K)\)</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §2, Definition (Beilinson 1.3).</i> For \(K\in D^b_c(X,\mathbb {F}_\ell )\), the <em>singular support</em> \(\mathit{SS}(K)\) is the smallest closed conical \(C\subseteq T^*X\) such that for every \(C\)-transversal pair \(h:W\to X\), \(f:W\to Y\), the map \(f\) is locally acyclic relative to \(h^*K\). Existence, uniqueness, and \(\dim \mathit{SS}(K)=\dim X\) are Beilinson’s Theorem 1.3. </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:sawin_singular_support">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.singularSupport">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="def:sawin_Z_locus_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="def:sawin_Z_locus" style="display: none">
+    <div class="thm_thmheading">
+      <span class="definition_thmcaption">
+      Definition
+      </span>
+      <span class="definition_thmlabel">31</span><span class="definition_thmtitle">The loci \(Z_{w_1,w_2}\) and the maps \(\underline A^{a,b}\)</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §5, construction of \(Z_{w_1,w_2}\).</i> Let \(\underline A^{a,b}:C^{(g-a)}\times C^{(g-b)}\to J\), \((D_1,D_2)\mapsto [D_1+D_2]\). The cotangent fibre of \(J\) is \(H^0(C,K_C)\). For \(w_1+w_2\le g\) let \(Z_{w_1,w_2}\subseteq C^{(w_1)}\times C^{(w_2)}\times H^0(C,K_C)\) consist of \((D_1,D_2,\omega )\) with \(\operatorname {div}(\omega )\ge D_1+D_2+\tau (D_1)+\tau (D_2)\); it is smooth of dimension \(g\). Let \(pr_{w_1,w_2}:Z_{w_1,w_2}\to T^*J\), \((D_1,D_2,\omega )\mapsto ([D_1+2D_2],\omega )\), a proper map, so \(pr_{w_1,w_2*}[Z_{w_1,w_2}]\) is a codimension-\(g\) cycle on \(T^*J\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#def:sawin_Z_locus">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.ZLocus">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:sawin_appendix_linear_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:sawin_appendix_linear" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">40</span><span class="lemma_thmtitle">Pushforward of a linear class</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Tsimerman appendix, Lemma.</i> For \(\ell _j\) the class of a \(j\)-dimensional linear subspace of \(\mathbb {P}^k\), \(\phi _{k*}\psi _k^*\ell _j = r^{k-j}[\Theta _j]\) in \(\operatorname {CH}^*(J^{(k)})\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#lem:sawin_appendix_linear">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.appendix_linear_class">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:sawin_final_nearby_formula_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:sawin_final_nearby_formula" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">27</span><span class="lemma_thmtitle">Pencil-of-conics nearby/vanishing formula</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §4, Lemma final-nearby-formula.</i> With \(\overline X\), \(p\), \(q\) a general pencil of conics, \(\overline x=p^{-1}(x)\), \(y=q(\overline x)\), and \(i:q^{-1}(y)\hookrightarrow \overline X\): (1) \(\mathit{CC}(R\Psi _q p^*K)=i^!p^!\mathit{CC}'(K)\); (2) \(R\Phi _q p^*K\) is supported at \(x\); (3) \(-\operatorname {dimtot}(R\Phi _q p^*K)_x\) equals the multiplicity of the cotangent space at \(x\) in \(\mathit{CC}(K)\); (4) if \(K\) is perverse, \((R\Phi _q p^*K)_x\) is supported in degree \(-1\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#lem:sawin_final_nearby_formula">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.final_nearby_formula">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:sawin_genericity_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:sawin_genericity" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">26</span><span class="lemma_thmtitle">A general pencil of conics is transversal</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §4, Lemma genericity-lemma.</i> Let \(X\subseteq \mathbb {P}^n\) be smooth, \(C\subseteq T^*X\) closed conical of dimension \(\dim X\), and \(x\in X\) a point whose cotangent space is not contained in \(C\). For a general pencil of conic sections \(\overline X\subseteq X\times \mathbb {P}^1\) with projections \(p:\overline X\to X\), \(q:\overline X\to \mathbb {P}^1\): \(p\) is properly \(C\)-transversal, \(q\) is \(p^\circ C\)-transversal near the conic through \(x\), and the fibres of \(p^\circ C\) over \(\mathbb {P}^1\) are \((\dim X-1)\)-dimensional near that conic. </p>
+</div>
+
+    <a class="latex_link" href="index.html#lem:sawin_genericity">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.genericity_lemma">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:sawin_global_polar_bound_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:sawin_global_polar_bound" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">37</span><span class="lemma_thmtitle">Summed polar-multiplicity bound</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §5, Lemma global-polar-bound.</i> For \(x\in J\), \(\sum _{i=0}^{g-1}\gamma ^i_{\mathit{CC}(\Sigma ^{a,b}_*\mathbb {Q}_\ell [2g-a-b])}(x) \le 28^g/16\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#lem:sawin_global_polar_bound">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.global_polar_bound">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:sawin_individual_polar_bound_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:sawin_individual_polar_bound" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">36</span><span class="lemma_thmtitle">Polar multiplicity of a single \(pr_{w_1,w_2*}[Z_{w_1,w_2}]\)</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §5, Lemma individual-polar-bound.</i> For \(x\in J\) and \(0\le i{\lt}g-1\), the \(i\)th polar multiplicity of \(pr_{w_1,w_2*}[Z_{w_1,w_2}]\) at \(x\) is at most </p>
+<div class="displaymath" id="a0000000031">
+  \[  2^{w_1+w_2}\binom {g}{i}\! \! \sum _{\substack {c+d=w_1+w_2-i\\ c\le w_1,\, d\le w_2}}\! \!  \binom {g-i-1}{c,d,g-1-w_1-w_2}2^{w_2-d}\binom {w_1+w_2-c-d}{w_1-c}.  \]
+</div>
+</div>
+
+    <a class="latex_link" href="index.html#lem:sawin_individual_polar_bound">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.individual_polar_bound">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:sawin_intersection_comparison_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:sawin_intersection_comparison" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">21</span><span class="lemma_thmtitle">Independence of the polar intersection from the choice of \((Y,V)\)</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §3, Lemma intersection-comparison.</i> Let \(X\) be smooth, \(C\) a conical cycle on \(T^*X\) of dimension \(\dim X\), \(x\in X\), and \(0\le i{\lt}\dim X\). For \(Y\subset X\) smooth of dimension \(\dim X-i\) through \(x\) and \(V\) a rank-\((i+1)\) sub-bundle of \(T^*X\) on \(Y\) whose strict transforms of \(\mathbb {P}(C),\mathbb {P}(V)\) do not meet in the exceptional divisor of the blowup of \(\mathbb {P}(T^*X)\) at the fibre over \(x\), the contribution of the fibre over \(x\) to \(\mathbb {P}(C)\cap \mathbb {P}(V)\) depends only on \(i\). A general pair \(((TY)_x,V_x)\) satisfies the hypothesis, so such \((Y,V)\) exist. </p>
+</div>
+
+    <a class="latex_link" href="index.html#lem:sawin_intersection_comparison">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.intersection_comparison">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:sawin_multiplicity_hypersurface_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:sawin_multiplicity_hypersurface" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">28</span><span class="lemma_thmtitle">Polar multiplicity drops under a generic conic section</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §4, Lemma multiplicity-hypersurface.</i> Let \(X\subseteq \mathbb {P}^n\) be smooth, \(x\in X\), \(C\) a conical cycle on \(T^*X\), \(C'\) its part away from the cotangent space at \(x\), \(\tilde{X}\) a generic conic section through \(x\) with inclusion \(j\), and \(\tilde{C}=-j^!C'\). Then for \(i{\gt}0\) the \(i\)th polar multiplicity of \(C\) at \(x\) equals the \((i-1)\)st polar multiplicity of \(\tilde{C}\) at \(x\), and for \(i=0\) it equals the multiplicity of the cotangent space at \(x\) in \(C\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#lem:sawin_multiplicity_hypersurface">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.multiplicity_hypersurface">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:sawin_multiplicity_polar_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:sawin_multiplicity_polar" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">23</span><span class="lemma_thmtitle">Equivalence of the two polar multiplicities</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §3, Lemma multiplicity-polar.</i> Definition&#160;<a href="index.html#def:sawin_polar_multiplicity">7</a> and Definition&#160;<a href="index.html#def:sawin_polar_multiplicity_2">22</a> agree. </p>
+</div>
+
+    <a class="latex_link" href="index.html#lem:sawin_multiplicity_polar">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.polarMultiplicity_eq">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:sawin_nearby_formula_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:sawin_nearby_formula" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">25</span><span class="lemma_thmtitle">Nearby-cycle characteristic-cycle formula</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §4, Lemma nearby-formula.</i> Let \(X\) be smooth, \(Y\) a smooth curve, \(K\in D^b_c(X,\mathbb {F}_\ell )\), and let \(\mathit{CC}'(K)\), \(\mathit{SS}'(K)\) denote \(\mathit{CC}(K)\), \(\mathit{SS}(K)\) with the cotangent space at \(x\) removed. If \(f:X\to Y\) is smooth projective, \(\mathit{SS}'(K)\)-transversal, and the fibres of \(\mathit{SS}'(K)\) over \(Y\) have dimension \(\dim X-1\), then for \(Z=f^{-1}(f(x))\) with inclusion \(i\), </p>
+<div class="displaymath" id="a0000000014">
+  \[  i^!\mathit{CC}'(K) = \mathit{CC}(R\Psi _f K).  \]
+</div>
+</div>
+
+    <a class="latex_link" href="index.html#lem:sawin_nearby_formula">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.nearby_formula">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:sawin_transversality_check_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:sawin_transversality_check" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">24</span><span class="lemma_thmtitle">Fibre inclusion is properly transversal</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §4, Lemma transversality-check.</i> Let \(f:X\to Y\) be smooth of relative dimension \(m\) between smooth varieties, \(C\subseteq T^*X\) closed conical with all components of dimension \(\dim X\), and \(i:f^{-1}(y)\hookrightarrow X\) the fibre inclusion. If \(f\) is \(C\)-transversal and the fibres of \(C\to X\to Y\) have dimension \(m\), then \(i\) is properly \(C\)-transversal. </p>
+</div>
+
+    <a class="latex_link" href="index.html#lem:sawin_transversality_check">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.transversality_check">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:sawin_ts_decomposition_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:sawin_ts_decomposition" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">34</span><span class="lemma_thmtitle">Decomposition of \(\pi ^n_*\mathbb {Q}_\ell \)</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §5, Lemma ts-decomposition.</i> For \(0\le n\le g\), \(\pi ^n_*\mathbb {Q}_\ell = \bigoplus _{r=0}^{n/2} i^{n+2r}_*\mathbb {Q}_\ell [-2r](-r)\), where \(i^m:\Theta _m\hookrightarrow J\). (Obtained in the proofs of IY Lemma 2.9 / TS Lemma 3.1.) </p>
+</div>
+
+    <a class="latex_link" href="index.html#lem:sawin_ts_decomposition">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.ts_decomposition">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:sawin_ts_singular_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:sawin_ts_singular" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">32</span><span class="lemma_thmtitle">Singular support of the theta map</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §5, Lemma ts-singular.</i> The pushforward \(\underline A^{a,b}_\circ (C^{(g-a)}\times C^{(g-b)})\) of the zero-section is contained in the union of the zero-section of \(T^*J\) with \(\bigcup _{w_1+w_2{\lt}g}\operatorname {supp} pr_{w_1,w_2*}[Z_{w_1,w_2}]\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#lem:sawin_ts_singular">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.ts_singular">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:sawin_ts_singular_cc_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:sawin_ts_singular_cc" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">35</span><span class="lemma_thmtitle">Characteristic cycle of \(\Sigma ^{a,b}_*\mathbb {Q}_\ell \)</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §5, Lemma ts-singular-cc.</i> \(\mathit{CC}(\Sigma ^{a,b}_*\mathbb {Q}_\ell [2g-a-b]) = \sum _{0\le w_1+w_2{\lt}g} m'_{w_1,w_2,a,b}\, pr_{w_1,w_2*}[Z_{w_1,w_2}] + m'_{a,b}[J]\), where \(m'_{w_1,w_2,a,b}\) is the coefficient of \(v_1^{g-a}v_2^{g-b}\) in \((1-v_1^{-2})(1-v_2^{-2})\) times the generating function of Lemma&#160;<a href="index.html#lem:sawin_ts_smooth_cc">33</a>, and \(|m'_{a,b}|\le 4\cdot 8^g\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#lem:sawin_ts_singular_cc">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.ts_singular_cc">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="lem:sawin_ts_smooth_cc_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="lem:sawin_ts_smooth_cc" style="display: none">
+    <div class="thm_thmheading">
+      <span class="lemma_thmcaption">
+      Lemma
+      </span>
+      <span class="lemma_thmlabel">33</span><span class="lemma_thmtitle">Characteristic cycle of \(\underline A_{a,b*}\mathbb {Q}_\ell \)</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §5, Lemma ts-smooth-cc.</i> \(\mathit{CC}(\underline A_{a,b*}\mathbb {Q}_\ell [2g-a-b]) = \sum _{0\le w_1+w_2{\lt}g} m_{w_1,w_2,a,b}\, pr_{w_1,w_2*}[Z_{w_1,w_2}] + m_{a,b}[J]\), where \(m_{w_1,w_2,a,b}\) is the coefficient of \(v_1^{g-a}v_2^{g-b}\) in </p>
+<div class="displaymath" id="a0000000026">
+  \[  (v_1+v_2+v_1^2v_2+v_1v_2^2)^{w_1}(v_1v_2)^{w_2} (1+v_1^2+2v_1v_2+v_2^2+v_1^2v_2^2)^{g-1-w_1-w_2},  \]
+</div>
+<p> and \(|m_{a,b}|\le 8^g\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#lem:sawin_ts_smooth_cc">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.ts_smooth_cc">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:sawin_appendix_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:sawin_appendix" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">41</span><span class="theorem_thmtitle">Multiplicity bound in the Jacobian</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Tsimerman appendix, Theorem appendix.</i> Let \(V\subseteq J^{(g)}\) be a subvariety of codimension \(j{\lt}g\). Then the multiplicity of \(V\) at any \(v\in V(k)\) is at most \(r^{g-1-j}([V],[\Theta _j])\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#thm:sawin_appendix">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.appendix_multiplicity_bound">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:sawin_equidistribution_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:sawin_equidistribution" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">39</span><span class="theorem_thmtitle">Equidistribution in \(\operatorname {Bun}_2(\mathbb {P}^1)\)</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, Theorem equidistribution-statement.</i> Let \(q{\gt}28^4=614{,}656\) be a prime power. For a sequence \((C_i,M_i)\) of hyperelliptic curves and line bundles with \(\deg M_i\bmod 2\) constant, \(g(C_i)\to \infty \), and the minimal degree representing \(M_i\) in \(\operatorname {Pic}(C)/\operatorname {Pic}(\mathbb {P}^1)\) tending to \(\infty \), the pushforward of the uniform measure on \(\operatorname {Pic}(C_i)/\operatorname {Pic}(\mathbb {P}^1)\) along \(L\mapsto (\pi _*L,\pi _*(L\otimes M_i))\) converges to the stated even/odd mixture of products of the uniform measures \(\mu _{\operatorname {Bun}_2^0},\mu _{\operatorname {Bun}_2^1}\). </p>
+</div>
+
+    <a class="latex_link" href="index.html#thm:sawin_equidistribution">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.equidistribution">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:sawin_first_massey_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:sawin_first_massey" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">29</span><span class="theorem_thmtitle">Characteristic-\(p\) Massey bound</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, §4, Theorem first-Massey.</i> Let \(X\) be a smooth variety over a perfect field \(k\), \(\ell \) invertible in \(k\), and \(K\) a perverse sheaf of \(\mathbb {F}_\ell \)-modules on \(X\). Then for every \(x\in X\), </p>
+<div class="displaymath" id="a0000000020">
+  \[  \dim _{\mathbb {F}_\ell }\mathcal{H}^{-i}(K)_x \  \le \  \gamma ^i_{\mathit{CC}(K)}(x).  \]
+</div>
+</div>
+
+    <a class="latex_link" href="index.html#thm:sawin_first_massey">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.first_Massey">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+
+
+    
+    <div class="dep-modal-container" id="thm:sawin_theta_betti_bound_modal">
+      <div class="dep-modal-content">
+          <button class="dep-closebtn">
+<svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        
+  <div class="thm" id="thm:sawin_theta_betti_bound" style="display: none">
+    <div class="thm_thmheading">
+      <span class="theorem_thmcaption">
+      Theorem
+      </span>
+      <span class="theorem_thmlabel">38</span><span class="theorem_thmtitle">Betti numbers of theta-locus intersections</span></div>
+    <div class="thm_thmcontent"><p>    <i class="itshape">Source: Sawin, Theorem theta-betti-bound.</i> For \(g\in \mathbb {N}\), \(0\le a,b\le g\), and \(L\in \operatorname {Pic}^{2g-a-b}(C)\), </p>
+<div class="displaymath" id="a0000000035">
+  \[  \sum _{i\in \mathbb {Z}}\dim H^i\bigl((\Theta _{g-a}\cap L-\Theta _{g-b})_{\overline k},\mathbb {Q}_\ell \bigr) \  \le \  28^g/16 + 4\cdot 8^g + 2\cdot 4^g.  \]
+</div>
+</div>
+
+    <a class="latex_link" href="index.html#thm:sawin_theta_betti_bound">LaTeX</a>
+    
+    
+  <a class="lean_link lean_decl" href="/find/#doc/MR4228499.theta_betti_bound">Lean</a>
+    
+    
+  
+    
+  </div>
+    
+      </div>
+    </div>
+</div>
+</div> <!-- content -->
+</div> <!-- wrapper -->
+<script src="js/jquery.min.js" type="text/javascript"></script>
+
+<script src="js/d3.min.js"></script>
+<script src="js/hpcc.min.js"></script>
+<script src="js/d3-graphviz.js"></script>
+
+<script type="text/javascript">
+const graphContainer = d3.select("#graph");
+const width = graphContainer.node().clientWidth;
+const height = graphContainer.node().clientHeight;
+
+
+graphContainer.graphviz({useWorker: true})
+    .width(width)
+    .height(height)
+    .fit(true)
+    .renderDot(`strict digraph "" {	graph [bgcolor=transparent];	node [label="\N",		penwidth=1.8	];	edge [arrowhead=vee];	"def:sawin_projectivization"	[label=sawin_projectivization,		shape=box];	"def:sawin_polar_multiplicity"	[label=sawin_polar_multiplicity,		shape=box];	"def:sawin_projectivization" -> "def:sawin_polar_multiplicity"	[style=dashed];	"def:sawin_polar_multiplicity_2"	[label=sawin_polar_multiplicity_2,		shape=box];	"def:sawin_projectivization" -> "def:sawin_polar_multiplicity_2"	[style=dashed];	"lem:sawin_intersection_comparison"	[label=sawin_intersection_comparison,		shape=ellipse];	"def:sawin_projectivization" -> "lem:sawin_intersection_comparison"	[style=dashed];	"lem:sawin_multiplicity_polar"	[label=sawin_multiplicity_polar,		shape=ellipse];	"def:sawin_polar_multiplicity" -> "lem:sawin_multiplicity_polar"	[style=dashed];	"lem:sawin_multiplicity_hypersurface"	[label=sawin_multiplicity_hypersurface,		shape=ellipse];	"def:sawin_polar_multiplicity" -> "lem:sawin_multiplicity_hypersurface"	[style=dashed];	"lem:sawin_individual_polar_bound"	[label=sawin_individual_polar_bound,		shape=ellipse];	"def:sawin_polar_multiplicity" -> "lem:sawin_individual_polar_bound"	[style=dashed];	"def:sawin_polar_multiplicity_2" -> "lem:sawin_multiplicity_polar"	[style=dashed];	"def:sawin_polar_multiplicity_2" -> "lem:sawin_multiplicity_hypersurface"	[style=dashed];	"lem:sawin_intersection_comparison" -> "lem:sawin_multiplicity_polar"	[style=dashed];	"lem:sawin_intersection_comparison" -> "lem:sawin_multiplicity_hypersurface"	[style=dashed];	"thm:sawin_first_massey"	[label=sawin_first_massey,		shape=ellipse];	"lem:sawin_multiplicity_hypersurface" -> "thm:sawin_first_massey"	[style=dashed];	"lem:sawin_global_polar_bound"	[label=sawin_global_polar_bound,		shape=ellipse];	"lem:sawin_individual_polar_bound" -> "lem:sawin_global_polar_bound"	[style=dashed];	"def:sawin_circ_forward"	[label=sawin_circ_forward,		shape=box];	"def:sawin_shriek_forward"	[label=sawin_shriek_forward,		shape=box];	"def:sawin_circ_forward" -> "def:sawin_shriek_forward"	[style=dashed];	"lem:sawin_ts_singular"	[label=sawin_ts_singular,		shape=ellipse];	"def:sawin_circ_forward" -> "lem:sawin_ts_singular"	[style=dashed];	"lem:sawin_ts_smooth_cc"	[label=sawin_ts_smooth_cc,		shape=ellipse];	"def:sawin_shriek_forward" -> "lem:sawin_ts_smooth_cc"	[style=dashed];	"lem:sawin_ts_singular" -> "lem:sawin_ts_smooth_cc"	[style=dashed];	"lem:sawin_ts_singular_cc"	[label=sawin_ts_singular_cc,		shape=ellipse];	"lem:sawin_ts_smooth_cc" -> "lem:sawin_ts_singular_cc"	[style=dashed];	"def:sawin_h_transversal"	[label=sawin_h_transversal,		shape=box];	"def:sawin_properly_transversal"	[label=sawin_properly_transversal,		shape=box];	"def:sawin_h_transversal" -> "def:sawin_properly_transversal"	[style=dashed];	"def:sawin_pair_transversal"	[label=sawin_pair_transversal,		shape=box];	"def:sawin_h_transversal" -> "def:sawin_pair_transversal"	[style=dashed];	"lem:sawin_genericity"	[label=sawin_genericity,		shape=ellipse];	"def:sawin_properly_transversal" -> "lem:sawin_genericity"	[style=dashed];	"lem:sawin_transversality_check"	[label=sawin_transversality_check,		shape=ellipse];	"def:sawin_properly_transversal" -> "lem:sawin_transversality_check"	[style=dashed];	"def:sawin_shriek_pullback"	[label=sawin_shriek_pullback,		shape=box];	"def:sawin_properly_transversal" -> "def:sawin_shriek_pullback"	[style=dashed];	"def:sawin_singular_support"	[label=sawin_singular_support,		shape=box];	"def:sawin_pair_transversal" -> "def:sawin_singular_support"	[style=dashed];	"lem:sawin_final_nearby_formula"	[label=sawin_final_nearby_formula,		shape=ellipse];	"lem:sawin_genericity" -> "lem:sawin_final_nearby_formula"	[style=dashed];	"lem:sawin_final_nearby_formula" -> "thm:sawin_first_massey"	[style=dashed];	"lem:sawin_nearby_formula"	[label=sawin_nearby_formula,		shape=ellipse];	"lem:sawin_transversality_check" -> "lem:sawin_nearby_formula"	[style=dashed];	"def:sawin_shriek_pullback" -> "lem:sawin_multiplicity_hypersurface"	[style=dashed];	"def:sawin_shriek_pullback" -> "lem:sawin_nearby_formula"	[style=dashed];	"def:sawin_characteristic_cycle"	[label=sawin_characteristic_cycle,		shape=box];	"def:sawin_singular_support" -> "def:sawin_characteristic_cycle"	[style=dashed];	"cor:sawin_vanishing"	[label=sawin_vanishing,		shape=ellipse];	"thm:sawin_first_massey" -> "cor:sawin_vanishing"	[style=dashed];	"thm:sawin_theta_betti_bound"	[label=sawin_theta_betti_bound,		shape=ellipse];	"thm:sawin_first_massey" -> "thm:sawin_theta_betti_bound"	[style=dashed];	"lem:sawin_global_polar_bound" -> "thm:sawin_theta_betti_bound"	[style=dashed];	"thm:sawin_equidistribution"	[label=sawin_equidistribution,		shape=ellipse];	"thm:sawin_theta_betti_bound" -> "thm:sawin_equidistribution"	[style=dashed];	"def:sawin_characteristic_cycle" -> "lem:sawin_ts_smooth_cc"	[style=dashed];	"def:sawin_characteristic_cycle" -> "lem:sawin_nearby_formula"	[style=dashed];	"lem:sawin_nearby_formula" -> "lem:sawin_final_nearby_formula"	[style=dashed];	"lem:sawin_ts_singular_cc" -> "lem:sawin_global_polar_bound"	[style=dashed];	"lem:sawin_ts_decomposition"	[label=sawin_ts_decomposition,		shape=ellipse];	"lem:sawin_ts_decomposition" -> "lem:sawin_ts_singular_cc"	[style=dashed];	"def:peer_jacobian"	[color=blue,		fillcolor="#A3D6FF",		label=peer_jacobian,		shape=box,		style=filled];	"def:peer_weil_divisor"	[label=peer_weil_divisor,		shape=box];	"def:peer_jacobian" -> "def:peer_weil_divisor"	[style=dashed];	"def:peer_weil_divisor" -> "lem:sawin_ts_decomposition"	[style=dashed];	"def:sawin_Z_locus"	[label=sawin_Z_locus,		shape=box];	"def:peer_weil_divisor" -> "def:sawin_Z_locus"	[style=dashed];	"lem:sawin_appendix_linear"	[label=sawin_appendix_linear,		shape=ellipse];	"def:peer_weil_divisor" -> "lem:sawin_appendix_linear"	[style=dashed];	"def:sawin_Z_locus" -> "lem:sawin_individual_polar_bound"	[style=dashed];	"def:sawin_Z_locus" -> "lem:sawin_ts_singular"	[style=dashed];	"thm:sawin_appendix"	[label=sawin_appendix,		shape=ellipse];	"lem:sawin_appendix_linear" -> "thm:sawin_appendix"	[style=dashed];	"thm:sawin_appendix" -> "lem:sawin_individual_polar_bound"	[style=dashed];	"def:sawin_local_acyclic"	[color=blue,		fillcolor="#A3D6FF",		label=sawin_local_acyclic,		shape=box,		style=filled];	"def:sawin_local_acyclic" -> "def:sawin_singular_support"	[style=dashed];	"def:sawin_local_intersection"	[color=blue,		fillcolor="#A3D6FF",		label=sawin_local_intersection,		shape=box,		style=filled];	"def:sawin_local_intersection" -> "def:sawin_polar_multiplicity_2"	[style=dashed];	"def:sawin_local_intersection" -> "lem:sawin_intersection_comparison"	[style=dashed];	"def:sawin_dimtot"	[color=blue,		fillcolor="#A3D6FF",		label=sawin_dimtot,		shape=box,		style=filled];	"def:sawin_dimtot" -> "def:sawin_characteristic_cycle"	[style=dashed];	"def:sawin_conical"	[color=blue,		fillcolor="#A3D6FF",		label=sawin_conical,		shape=box,		style=filled];	"def:sawin_conical" -> "def:sawin_projectivization"	[style=dashed];	"def:sawin_conical" -> "def:sawin_h_transversal"	[style=dashed];	"def:sawin_isolated_char_point"	[label=sawin_isolated_char_point,		shape=box];	"def:sawin_isolated_char_point" -> "def:sawin_characteristic_cycle"	[style=dashed];	"def:peer_canonical_differentials"	[color=blue,		fillcolor="#A3D6FF",		label=peer_canonical_differentials,		shape=box,		style=filled];	"def:peer_canonical_differentials" -> "def:sawin_Z_locus"	[style=dashed];	"def:sawin_C_transversal_map"	[color=blue,		fillcolor="#A3D6FF",		label=sawin_C_transversal_map,		shape=box,		style=filled];	"def:sawin_C_transversal_map" -> "def:sawin_circ_forward"	[style=dashed];	"def:sawin_C_transversal_map" -> "def:sawin_pair_transversal"	[style=dashed];	"def:sawin_C_transversal_map" -> "lem:sawin_genericity"	[style=dashed];	"def:sawin_C_transversal_map" -> "lem:sawin_transversality_check"	[style=dashed];	"def:sawin_C_transversal_map" -> "def:sawin_isolated_char_point"	[style=dashed];	"def:peer_higher_direct_image"	[color=blue,		fillcolor="#A3D6FF",		label=peer_higher_direct_image,		shape=box,		style=filled];	"def:peer_higher_direct_image" -> "lem:sawin_ts_decomposition"	[style=dashed];}`)
+    .on("end", interactive);
+
+latexLabelEscaper = function(label) {
+  return label.replace(/\./g, '\\.').replace(/:/g, '\\:')
+}
+
+clickNode = function() {
+  $("#statements div").hide()
+  var node_id = $('text', this).text();
+  $('.thm').hide();
+  $('#'+latexLabelEscaper(node_id)).show().children().show();
+}
+function interactive() {
+    $("span#legend_title").on("click", function () {
+           $(this).siblings('dl').toggle();
+        })
+
+    d3.selectAll('.node')
+        .attr('pointer-events', 'fill')
+        .on('click', function () {
+           var title = d3.select(this).selectAll('title').text().trim();
+           $('#statements > div').hide()
+           $('.thm').hide();
+           $('#'+latexLabelEscaper(title)+'_modal').show().children().show().children().show();
+           $('#statements').show()
+        });
+
+    d3.selectAll('.dep-closebtn').on('click', function() {
+        var modal =
+            d3.select(this).node().parentNode.parentNode.parentNode ;
+        d3.select(modal).style('display', 'none');
+    });
+}
+
+</script>
+
+</body>
+</html>

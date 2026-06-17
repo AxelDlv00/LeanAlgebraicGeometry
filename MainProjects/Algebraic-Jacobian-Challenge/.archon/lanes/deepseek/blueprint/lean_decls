@@ -1,0 +1,16 @@
+AlgebraicGeometry.Cohomology.instHasSheafCompose_forget_CommRing_AddCommGrp
+AlgebraicGeometry.genus
+AlgebraicGeometry.Scheme.LineBundle
+AlgebraicGeometry.Scheme.instCommGroupLineBundle
+AlgebraicGeometry.Scheme.Pic.pullback
+AlgebraicGeometry.Scheme.PicardFunctor
+AlgebraicGeometry.Scheme.PicardFunctor.representable
+AlgebraicGeometry.Jacobian
+AlgebraicGeometry.Jacobian.instGrpObj
+AlgebraicGeometry.Jacobian.smoothOfRelativeDimension_genus
+AlgebraicGeometry.Jacobian.instIsProper
+AlgebraicGeometry.Jacobian.instGeometricallyIrreducible
+AlgebraicGeometry.GrpObj.eq_of_eqOnOpen
+AlgebraicGeometry.Jacobian.ofCurve
+AlgebraicGeometry.Jacobian.comp_ofCurve
+AlgebraicGeometry.Jacobian.exists_unique_ofCurve_comp

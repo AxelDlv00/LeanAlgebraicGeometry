@@ -1,0 +1,1 @@
+{"ts": "2026-06-05T02:59:41.740525Z", "event": "dispatch_start", "role": "dag-walker", "slug": "tensorsubstrate-cover54", "parent_slug": "_root", "write_domain": ["blueprint/src/chapters/*.tex", "references/**"], "log_base": "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/logs/iter-296/dag-walker-tensorsubstrate-cover54", "pid": 1842102}

@@ -1,0 +1,360 @@
+[
+  {
+    "timestamp": "2026-06-09T02:17:18Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.dualUnitRingSwap_apply"
+    },
+    "session": {
+      "id": "session_2",
+      "model": "codex"
+    },
+    "findings": {
+      "blocker": "",
+      "key_lemmas_used": [
+        "dualUnitRingSwap_comp_dualUnitRingSwapInv",
+        "ModuleCat.restrictScalars_η",
+        "CategoryTheory.ConcreteCategory.bijective_of_isIso",
+        "ConcreteCategory.congr_hom",
+        "Scheme.Hom.appIso.hom_inv_id"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "prove the underlying function of dualUnitRingSwap by applying the inverse appIso map and cancelling",
+        "code_tried": "have h := congrArg ModuleCat.Hom.hom (dualUnitRingSwap_comp_dualUnitRingSwapInv f W'); have hx := DFunLike.congr_fun h x; change (dualUnitRingSwapInv f W').hom ((dualUnitRingSwap f W').hom x) = x at hx; dsimp [dualUnitRingSwapInv] at hx; have hinj := (CategoryTheory.ConcreteCategory.bijective_of_isIso (Scheme.Hom.appIso f W').inv).1",
+        "line_number": "234",
+        "lean_error": "",
+        "goal_before": "show (dualUnitRingSwap f W').hom x = (Scheme.Hom.appIso f W').hom.hom x",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "Factoring this pointwise swap avoids repeated unfolding of the lax unit inside sliceDualTransport."
+      }
+    ],
+    "next_steps": "Blueprint a helper block for dualUnitRingSwap_apply; it is the sole new iter-002 unmatched decl."
+  },
+  {
+    "timestamp": "2026-06-09T02:17:18Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.sliceDualTransport.naturality"
+    },
+    "session": {
+      "id": "session_2",
+      "model": "codex"
+    },
+    "findings": {
+      "blocker": "The elementwise proof closes in isolation but is too expensive inline in the monolithic LinearEquiv; later fields hit heartbeat timeouts.",
+      "key_lemmas_used": [
+        "Over.homMk",
+        "NatTrans.naturality",
+        "dualUnitRingSwap_apply",
+        "Scheme.Hom.appIso_inv_naturality",
+        "ConcreteCategory.comp_apply",
+        "ConcreteCategory.id_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "direct category automation after introducing the naturality variables",
+        "code_tried": "intro X_1 Y_1 f_1; cat_disch",
+        "line_number": "533",
+        "lean_error": "Real diagnostics left the epsilon/pushforward naturality content; multi_attempt goal-consumed signal was ambiguous with aesop/cat_disch diagnostics.",
+        "goal_before": "restriction map then restrictScalars.map then dualUnitRingSwap equals source square followed by restriction of unit",
+        "goal_after": "residual epsilon/pushforward naturality square",
+        "result": "failed",
+        "insight": "The square is not pure thin-poset coherence."
+      },
+      {
+        "attempt": 2,
+        "strategy": "record the induced over-morphism and source naturality square",
+        "code_tried": "intro X_1 Y_1 f_1; let i := Over.homMk ((Hom.opensFunctor f).map f_1.unop.left); have hφ := φ.naturality i.op; exact sorry",
+        "line_number": "544",
+        "lean_error": "",
+        "goal_before": "sliceDualTransport naturality field",
+        "goal_after": "typed residual sorry after hφ is available",
+        "result": "partial",
+        "insight": "This is the committed partial skeleton."
+      },
+      {
+        "attempt": 3,
+        "strategy": "elementwise proof using the new unit-swap helper and open-immersion appIso naturality",
+        "code_tried": "apply ModuleCat.hom_ext; refine LinearMap.ext fun z => ?_; rw [dualUnitRingSwap_apply]; have hnat := Scheme.Hom.appIso_inv_naturality f (((unop W).hom).op); simp [CategoryTheory.comp_apply, CategoryTheory.id_apply]",
+        "line_number": "533",
+        "lean_error": "No logical error in isolated attempt; inserted full proof pushed later map_add/map_smul fields past heartbeat limits even at 5M heartbeats.",
+        "goal_before": "pointwise scalar equation after hφ",
+        "goal_after": "no goals in isolated attempt; file-level elaboration timeout",
+        "result": "partial",
+        "insight": "Do not paste this full proof inline; factor the naturality field or refactor the structure."
+      }
+    ],
+    "next_steps": "Create a standalone lemma for the forward naturality pointwise paste, then call it from sliceDualTransport to avoid re-elaboration in later fields."
+  },
+  {
+    "timestamp": "2026-06-09T02:17:18Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.sliceDualTransportInv.naturality"
+    },
+    "session": {
+      "id": "session_2",
+      "model": "codex"
+    },
+    "findings": {
+      "blocker": "Same epsilon/reindexing paste as forward naturality; no new proof body attempted beyond goal inspection.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "inspect LSP goal at the reverse naturality field",
+        "code_tried": "lean_goal at old line 388/current line 407",
+        "line_number": "407",
+        "lean_error": "",
+        "goal_before": "reverse component naturality for the four-piece invFun app",
+        "goal_after": "unchanged",
+        "result": "partial",
+        "insight": "Forward and reverse naturality share the same missing technique."
+      }
+    ],
+    "next_steps": "After factoring the forward naturality helper, mirror it for the reverse component with unitRelabelSwap/epsilon naturality."
+  },
+  {
+    "timestamp": "2026-06-09T02:17:18Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.sliceDualTransport.left_inv"
+    },
+    "session": {
+      "id": "session_2",
+      "model": "codex"
+    },
+    "findings": {
+      "blocker": "Round-trip proof remains blocked on the two naturality fields; no committed proof attempt this iter.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "inspect LSP goal and dependency on preceding fields",
+        "code_tried": "lean_goal at old line 627/current line 655",
+        "line_number": "655",
+        "lean_error": "",
+        "goal_before": "Function.LeftInverse invFun toFun",
+        "goal_after": "unchanged",
+        "result": "partial",
+        "insight": "Do not assign before naturality closes."
+      }
+    ],
+    "next_steps": "Resume only after forward/reverse naturality fields are closed."
+  },
+  {
+    "timestamp": "2026-06-09T02:17:18Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.sliceDualTransport.right_inv"
+    },
+    "session": {
+      "id": "session_2",
+      "model": "codex"
+    },
+    "findings": {
+      "blocker": "Mirror round-trip proof remains blocked on naturality; no committed proof attempt this iter.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "inspect LSP goal and dependency on preceding fields",
+        "code_tried": "lean_goal at old line 629/current line 657",
+        "line_number": "657",
+        "lean_error": "",
+        "goal_before": "Function.RightInverse invFun toFun",
+        "goal_after": "unchanged",
+        "result": "partial",
+        "insight": "Do not assign before naturality closes."
+      }
+    ],
+    "next_steps": "Resume only after forward/reverse naturality fields are closed."
+  },
+  {
+    "timestamp": "2026-06-09T02:17:18Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.sheafificationCompPullback_comp_tail"
+    },
+    "session": {
+      "id": "session_2",
+      "model": "codex"
+    },
+    "findings": {
+      "blocker": "Raw reassociation, aesop_cat, and sectionwise hom_ext do not close the composite-adjunction unit cocycle.",
+      "key_lemmas_used": [
+        "leftAdjointUniqUnitEta_app",
+        "PresheafOfModules.hom_ext",
+        "ModuleCat.hom_ext"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "try raw category normalization at the tail goal",
+        "code_tried": "aesop_cat; simp only [Category.assoc]; erw [← Functor.map_comp]; rw [← Category.assoc]",
+        "line_number": "2467",
+        "lean_error": "aesop_cat failed after exhaustive search; reassociation did not advance the mate cocycle.",
+        "goal_before": "expanded B_{h≫f}.unit cocycle",
+        "goal_after": "same cocycle modulo reassociation",
+        "result": "failed",
+        "insight": "The tail is not a simp/category-normalization goal."
+      },
+      {
+        "attempt": 2,
+        "strategy": "materialize f- and h-layer unit recovery bricks",
+        "code_tried": "have hLf := leftAdjointUniqUnitEta_app f P; have hLh := leftAdjointUniqUnitEta_app h ((PresheafOfModules.pullback (Hom.toRingCatSheafHom f).hom).obj P)",
+        "line_number": "2467",
+        "lean_error": "",
+        "goal_before": "expanded unit cocycle",
+        "goal_after": "hLf/hLh elaborate but do not directly splice into the raw goal",
+        "result": "partial",
+        "insight": "The expected bricks line up; the missing step is the whole-equation mate assembly."
+      },
+      {
+        "attempt": 3,
+        "strategy": "reduce sectionwise by presheaf/module extensionality",
+        "code_tried": "apply PresheafOfModules.hom_ext; intro U; apply ModuleCat.hom_ext; ext x; simp only [PresheafOfModules.comp_app, ModuleCat.hom_comp, LinearMap.comp_apply]",
+        "line_number": "2467",
+        "lean_error": "Sectionwise goal remains non-definitional.",
+        "goal_before": "morphism equality of presheaves/modules",
+        "goal_after": "large pointwise mate expression",
+        "result": "failed",
+        "insight": "Do not retry sectionwise hom_ext as the main route."
+      }
+    ],
+    "next_steps": "Use the checked leftAdjointCompNatTrans_assoc scaffold in sheafificationCompPullback_comp; avoid raw tail reassociation."
+  },
+  {
+    "timestamp": "2026-06-09T02:17:18Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.sheafificationCompPullback_comp"
+    },
+    "session": {
+      "id": "session_2",
+      "model": "codex"
+    },
+    "findings": {
+      "blocker": "Remaining splice identifies the mixed comparison with sheafificationCompPullback h followed by sheafified PresheafOfModules.pullbackComp.hom, including functor-associator cleanup.",
+      "key_lemmas_used": [
+        "Adjunction.leftAdjointCompNatTrans_assoc",
+        "SheafOfModules.pushforwardComp",
+        "PresheafOfModules.pushforwardComp",
+        "Adjunction.homEquiv_leftAdjointUniq_hom_app"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "instantiate adjunction-associativity using named adjunction fields",
+        "code_tried": "let adj01 := ...; have τ012 : adj02.right ⟶ adj12.right ⋙ adj01.right := 𝟙 _",
+        "line_number": "2467",
+        "lean_error": "Invalid field rightAdjoint/right: Adjunction is notation L ⊣ R and does not expose those projections.",
+        "goal_before": "set up leftAdjointCompNatTrans_assoc",
+        "goal_after": "failed API shape",
+        "result": "failed",
+        "insight": "Let the theorem infer functors from transformation types."
+      },
+      {
+        "attempt": 2,
+        "strategy": "spell the four right-adjoint transformations with explicit universe .{u}",
+        "code_tried": "let τ012 := 𝟙 _; let τ123 := (SheafOfModules.pushforwardComp.{u} ...).inv; let τ013 := 𝟙 _; let τ023 := Functor.whiskerLeft ... (PresheafOfModules.pushforwardComp.{u} ...).inv",
+        "line_number": "2637",
+        "lean_error": "",
+        "goal_before": "universe metavariables in comparison transformations",
+        "goal_after": "four transformations elaborate",
+        "result": "partial",
+        "insight": "Pinning .{u} avoids unconstrained module-universe metavars."
+      },
+      {
+        "attempt": 3,
+        "strategy": "prove right-adjoint coherence and take component of associativity theorem",
+        "code_tried": "have hτ : τ023 ≫ Functor.whiskerLeft ... τ012 = τ013 ≫ Functor.whiskerRight τ123 ... ≫ (CategoryTheory.Functor.associator _ _ _).hom := by ext A; rfl; have hAssocComponent := congr_app (Adjunction.leftAdjointCompNatTrans_assoc adj01 adj12 adj23 adj02 adj13 adj03 τ012 τ123 τ013 τ023 hτ) P",
+        "line_number": "2709",
+        "lean_error": "",
+        "goal_before": "need high-level associativity component",
+        "goal_after": "hAssocComponent available; final target still open",
+        "result": "partial",
+        "insight": "This is the committed non-circular scaffold."
+      }
+    ],
+    "next_steps": "Prove the mixed-comparison component via the nested associativity instance for presheaf pullback f, sheafification on Y, and sheaf pullback h; then simplify functor associator components explicitly."
+  },
+  {
+    "timestamp": "2026-06-09T02:17:18Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.pullbackTensorMap_restrict"
+    },
+    "session": {
+      "id": "session_2",
+      "model": "codex"
+    },
+    "findings": {
+      "blocker": "Gated on sheafificationCompPullback_comp/Sq1; no direct attempt this iter.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "defer per plan while preserving existing paste-ready proof body",
+        "code_tried": "existing proof remains: simp only [pullbackTensorMap, tensorObjIsoOfIso]; rw [Functor.map_comp, Functor.map_comp, Functor.map_comp]; simp only [Category.assoc]; sorry",
+        "line_number": "2824",
+        "lean_error": "",
+        "goal_before": "four-square composition coherence for pullbackTensorMap",
+        "goal_after": "unchanged",
+        "result": "partial",
+        "insight": "Assigning this before Sq1 closes is wasted work."
+      }
+    ],
+    "next_steps": "Do not assign until sheafificationCompPullback_comp closes."
+  },
+  {
+    "timestamp": "2026-06-09T02:17:18Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.exists_tensorObj_inverse"
+    },
+    "session": {
+      "id": "session_2",
+      "model": "codex"
+    },
+    "findings": {
+      "blocker": "Intentionally left untouched; closes downstream through the DUAL route, not direct assignment.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "defer per PROGRESS",
+        "code_tried": "no code attempted",
+        "line_number": "712",
+        "lean_error": "",
+        "goal_before": "existence of tensorObj inverse",
+        "goal_after": "unchanged",
+        "result": "partial",
+        "insight": "Direct assignment remains an import-cycle trap."
+      }
+    ],
+    "next_steps": "Leave deferred until DUAL chain closes."
+  }
+]

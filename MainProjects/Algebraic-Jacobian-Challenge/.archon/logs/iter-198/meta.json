@@ -1,0 +1,72 @@
+{
+  "iteration": 198,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-28T12:58:42Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "ca19dad7-6646-4fe6-9b26-6ab28748e7b7",
+    "durationSecs": 3769
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 5
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 5498
+  },
+  "provers": {
+    "AlgebraicJacobian_RiemannRoch_WeilDivisor": {
+      "file": "AlgebraicJacobian/RiemannRoch/WeilDivisor.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "6db5a44b-e27b-4677-8c25-6725572ae885"
+    },
+    "AlgebraicJacobian_Albanese_AuslanderBuchsbaum": {
+      "file": "AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "2893d6a4-dab6-4975-932b-371696d4eff0"
+    },
+    "AlgebraicJacobian_Picard_RelPicFunctor": {
+      "file": "AlgebraicJacobian/Picard/RelPicFunctor.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "2325adfa-4277-4257-a401-cefdfb4cdf4b"
+    },
+    "AlgebraicJacobian_Albanese_CodimOneExtension": {
+      "file": "AlgebraicJacobian/Albanese/CodimOneExtension.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "1237c715-12b0-47ab-9573-5d427002397c"
+    },
+    "AlgebraicJacobian_Albanese_Thm32RationalMapExtension": {
+      "file": "AlgebraicJacobian/Albanese/Thm32RationalMapExtension.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "f4553b53-ac5f-4071-b623-b25389f17651"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "4620de09-be85-444a-a7d4-496042d23c05",
+    "durationSecs": 2617
+  },
+  "sorry_count": 78,
+  "finalize": {
+    "innerGit": {
+      "sha": "7df0ea74"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 11
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 28
+    }
+  },
+  "completedAt": "2026-05-28T16:24:23Z",
+  "wallTimeSecs": 12340
+}

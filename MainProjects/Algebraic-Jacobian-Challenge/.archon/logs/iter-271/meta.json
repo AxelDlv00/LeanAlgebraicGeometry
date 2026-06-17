@@ -1,0 +1,44 @@
+{
+  "iteration": 271,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-06-04T09:07:04Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "888125e5-fb51-418b-ae54-12ebbda4a1db",
+    "durationSecs": 1764
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 3
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 3766
+  },
+  "provers": {
+    "AlgebraicJacobian_Picard_TensorObjSubstrate_DualInverse": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "status": "done",
+      "mode": "fine-grained",
+      "sessionId": "d475b0ad-5ea3-48ed-a896-3859cf856162"
+    },
+    "AlgebraicJacobian_Picard_TensorObjSubstrate": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "status": "done",
+      "mode": "fine-grained",
+      "sessionId": "4d0076a3-56a7-4697-84fc-4cf29816a1e8"
+    },
+    "AlgebraicJacobian_Cohomology_CechHigherDirectImage": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "5ccec748-1a54-4b04-ab76-f45ad2423e89"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "b3e320aa-09b4-43db-ae72-6ca41949fa01",
+    "durationSecs": 1061
+  }
+}

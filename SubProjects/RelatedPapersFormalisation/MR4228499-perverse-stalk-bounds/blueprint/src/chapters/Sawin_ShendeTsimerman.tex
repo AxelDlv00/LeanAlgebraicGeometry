@@ -1,0 +1,275 @@
+\section{Application to the conjecture of Shende and Tsimerman}
+
+% archon:covered-by Sawin_Terminology
+
+This chapter applies the Massey bound to bound the Betti numbers of intersections
+of translates of theta loci in a hyperelliptic Jacobian
+(Theorem~\ref{thm:sawin_theta_betti_bound}), recovering and tightening the
+characteristic-zero computation of Shende and Tsimerman, and deduces the
+equidistribution statement.  Tsimerman's appendix supplies the multiplicity bound
+(Theorem~\ref{thm:sawin_appendix}) that controls the polar multiplicities.
+
+Throughout, $C$ is a smooth projective hyperelliptic curve of genus $g$ over an
+algebraically closed field $k$ of characteristic $\ne 2$, with hyperelliptic
+involution $\tau$, Jacobian $J$, and symmetric powers $C^{(n)}$.  A fixed
+half-hyperelliptic divisor identifies all degree-$n$ divisor-class spaces with
+$J$, so $[P+\tau(P)]=0$.
+
+\subsection{The characteristic cycle of the theta map}
+
+\begin{definition}[The loci $Z_{w_1,w_2}$ and the maps $\underline A^{a,b}$]
+  \label{def:sawin_Z_locus}
+  \lean{MR4228499.ZLocus}
+  \uses{def:peer_jacobian, def:peer_weil_divisor, def:peer_canonical_differentials}
+  % SOURCE: Sawin, §5, construction of Z_{w_1,w_2} and pr_{w_1,w_2}.
+  % SOURCE QUOTE: consider the closed subset $Z_{w_1,w_2}$ of $C^{ (w_1) } \times C^{ (w_2)} \times H^0(C, K_C)$ consisting of pairs $(D_1,D_2, \omega )$ ... and $\omega$ a differential form on $C$ whose divisor of zeroes is at least $D_1+D_2+ \tau(D_1) + \tau(D_2)$.
+  \textit{Source: Sawin, §5, construction of $Z_{w_1,w_2}$.}
+  Let $\underline A^{a,b}:C^{(g-a)}\times C^{(g-b)}\to J$, $(D_1,D_2)\mapsto
+  [D_1+D_2]$.  The cotangent fibre of $J$ is $H^0(C,K_C)$.  For $w_1+w_2\le g$ let
+  $Z_{w_1,w_2}\subseteq C^{(w_1)}\times C^{(w_2)}\times H^0(C,K_C)$ consist of
+  $(D_1,D_2,\omega)$ with $\divv(\omega)\ge D_1+D_2+\tau(D_1)+\tau(D_2)$; it is
+  smooth of dimension $g$.  Let $pr_{w_1,w_2}:Z_{w_1,w_2}\to T^*J$,
+  $(D_1,D_2,\omega)\mapsto([D_1+2D_2],\omega)$, a proper map, so
+  $pr_{w_1,w_2*}[Z_{w_1,w_2}]$ is a codimension-$g$ cycle on $T^*J$.
+\end{definition}
+
+\begin{lemma}[Singular support of the theta map]
+  \label{lem:sawin_ts_singular}
+  \lean{MR4228499.ts_singular}
+  \uses{def:sawin_circ_forward, def:sawin_Z_locus}
+  % SOURCE: Sawin, §5, Lemma ts-singular.
+  % SOURCE QUOTE: The pushforward $ \underline{A}^{A,b}_{\circ} (C^{(g-a)} \times C^{(g-b)} )$ of the zero-section ... is contained in the union of the zero section of $T^* J$ with the union over $w_1,w_2$ such that $w_1+w_2<g$ of the support of $pr_{W_1,W_2 *} [ Z_{w_1,w_2} ]$.
+  \textit{Source: Sawin, §5, Lemma ts-singular.}
+  The pushforward $\underline A^{a,b}_\circ(C^{(g-a)}\times C^{(g-b)})$ of the
+  zero-section is contained in the union of the zero-section of $T^*J$ with
+  $\bigcup_{w_1+w_2<g}\operatorname{supp} pr_{w_1,w_2*}[Z_{w_1,w_2}]$.
+\end{lemma}
+\begin{proof}
+  \uses{def:sawin_circ_forward, def:sawin_Z_locus}
+  A pair $(D_a,D_b,\omega)$ lies in $(d\underline A^{a,b})^{-1}$ of the
+  zero-section iff $\divv(\omega)\ge\max(D_a,D_b)$ (Serre duality identifies the
+  derivative with reduction modulo $D_a,D_b$).  Subtract divisors $[P+\tau(P)]$
+  from $D_a+D_b$ until impossible, obtaining $D'$; let $D_1$ be its odd-multiplicity
+  part and $D_2=(D'-D_1)/2$, so $[D_a+D_b]=[D_1+2D_2]$.  A case analysis at each
+  point (using that $\omega$ vanishes to even order at hyperelliptic points) shows
+  $\divv(\omega)\ge D_1+D_2+\tau(D_1)+\tau(D_2)$, so $(D_1,D_2,\omega)\in
+  Z_{\deg D_1,\deg D_2}$ and $([D_a+D_b],\omega)=pr_{w_1,w_2}(D_1,D_2,\omega)$.  If
+  $\deg(D_1+D_2)\ge g$ then $\omega=0$ and the point is on the zero-section.
+\end{proof}
+
+\begin{lemma}[Characteristic cycle of $\underline A_{a,b*}\bQ_\ell$]
+  \label{lem:sawin_ts_smooth_cc}
+  \lean{MR4228499.ts_smooth_cc}
+  \uses{lem:sawin_ts_singular, def:sawin_shriek_forward, def:sawin_characteristic_cycle}
+  % SOURCE: Sawin, §5, Lemma ts-smooth-cc.
+  % SOURCE QUOTE: The characteristic cycle $CC ( \underline{A}_{a,b *} \mathbb Q_\ell [ 2g-a-b] )$ is equal to \[ \sum_{0 \leq w_1+ w_2 < g} m_{w_1,w_2,a,b} pr_{w_1,w_2 *} [ Z_{w_1,w_2} ] + m_{a,b} [ A] \] where $m_{w_1,w_2,a,b}$ is the coefficient of $v_1^{g-a} v_2^{g-b}$ in [the generating function], and $|m_{a,b}| \leq 8^g$.
+  \textit{Source: Sawin, §5, Lemma ts-smooth-cc.}
+  $\CCyc(\underline A_{a,b*}\bQ_\ell[2g-a-b]) = \sum_{0\le w_1+w_2<g}
+  m_{w_1,w_2,a,b}\,pr_{w_1,w_2*}[Z_{w_1,w_2}] + m_{a,b}[J]$, where
+  $m_{w_1,w_2,a,b}$ is the coefficient of $v_1^{g-a}v_2^{g-b}$ in
+  \[ (v_1+v_2+v_1^2v_2+v_1v_2^2)^{w_1}(v_1v_2)^{w_2}
+     (1+v_1^2+2v_1v_2+v_2^2+v_1^2v_2^2)^{g-1-w_1-w_2}, \]
+  and $|m_{a,b}|\le 8^g$.
+\end{lemma}
+\begin{proof}
+  \uses{lem:sawin_ts_singular, def:sawin_shriek_forward}
+  Lemma~\ref{lem:sawin_ts_singular} verifies the dimension hypothesis (2.20) of
+  Saito-direct Theorem 2.2.5, giving $\CCyc(\underline A_{a,b*}\bQ_\ell[2g-a-b]) =
+  \underline A^{a,b}_![C^{(g-a)}\times C^{(g-b)}]$.  Pulling back along a general
+  $\omega\in H^0(C,K_C)$ (with $2g-2$ simple zeros in $g-1$ $\tau$-orbits) reduces
+  both sides to an explicit count of subsets, matched by the standard
+  generating-function bookkeeping that assigns the listed monomials; thus the
+  coefficient of $v_1^av_2^b$ is $m_{w_1,w_2,a,b}$.  The cycles agree on a general
+  fibre, hence up to components not dominating $H^0(C,K_C)$, which must be the
+  zero-section; its multiplicity is $(-1)^{g+a+b}$ times the Euler characteristic
+  of the generic fibre of $\underline A_{a,b}$, bounded by $8^g$ (TS Proposition
+  3.16), and is characteristic-independent by lifting to characteristic zero.
+\end{proof}
+
+\begin{lemma}[Decomposition of $\pi^n_*\bQ_\ell$]
+  \label{lem:sawin_ts_decomposition}
+  \lean{MR4228499.ts_decomposition}
+  \uses{def:peer_higher_direct_image, def:peer_weil_divisor}
+  % SOURCE: Sawin, §5, Lemma ts-decomposition.
+  % SOURCE QUOTE: For $0 \leq n \leq g$, \[ \pi^n_* \mathbb Q_\ell= \bigoplus_{r=0}^{n/2} i^{n+2r}_* \mathbb Q_\ell [-2r] (-r) .\]
+  \textit{Source: Sawin, §5, Lemma ts-decomposition.}
+  For $0\le n\le g$, $\pi^n_*\bQ_\ell = \bigoplus_{r=0}^{n/2}
+  i^{n+2r}_*\bQ_\ell[-2r](-r)$, where $i^m:\Theta_m\hookrightarrow J$.  (Obtained
+  in the proofs of IY Lemma 2.9 / TS Lemma 3.1.)
+\end{lemma}
+\begin{proof}
+  \uses{def:peer_higher_direct_image}
+  This is part of the proofs of IY Lemma 2.9 and TS Lemma 3.1: the pushforward of
+  the constant sheaf along the Abel--Jacobi map of the symmetric power splits as
+  the displayed sum of (shifted, Tate-twisted) constant sheaves on the theta loci.
+\end{proof}
+
+\begin{lemma}[Characteristic cycle of $\Sigma^{a,b}_*\bQ_\ell$]
+  \label{lem:sawin_ts_singular_cc}
+  \lean{MR4228499.ts_singular_cc}
+  \uses{lem:sawin_ts_smooth_cc, lem:sawin_ts_decomposition}
+  % SOURCE: Sawin, §5, Lemma ts-singular-cc.
+  % SOURCE QUOTE: The characteristic cycle $CC ( \Sigma^{a,b}_* \mathbb Q_\ell[2g-a-b] )$ is equal to \[ \sum_{0 \leq w_1+ w_2 < g} m'_{w_1,w_2,a,b} pr_{w_1,w_2 *} [ Z_{w_1,w_2} ] + m'_{a,b} [ A] \] ... and $|m'_{a,b}| \leq 4 \cdot 8^g$.
+  \textit{Source: Sawin, §5, Lemma ts-singular-cc.}
+  $\CCyc(\Sigma^{a,b}_*\bQ_\ell[2g-a-b]) = \sum_{0\le w_1+w_2<g}
+  m'_{w_1,w_2,a,b}\,pr_{w_1,w_2*}[Z_{w_1,w_2}] + m'_{a,b}[J]$, where
+  $m'_{w_1,w_2,a,b}$ is the coefficient of $v_1^{g-a}v_2^{g-b}$ in
+  $(1-v_1^{-2})(1-v_2^{-2})$ times the generating function of
+  Lemma~\ref{lem:sawin_ts_smooth_cc}, and $|m'_{a,b}|\le 4\cdot 8^g$.
+\end{lemma}
+\begin{proof}
+  \uses{lem:sawin_ts_smooth_cc, lem:sawin_ts_decomposition}
+  By Lemma~\ref{lem:sawin_ts_decomposition},
+  $\underline A^{a,b}_*\bQ_\ell = \bigoplus_{r,s}\Sigma^{a+2r,b+2s}_*\bQ_\ell[-2r-2s](-r-s)$,
+  so $\CCyc(\Sigma^{a,b}_*\bQ_\ell) = \CCyc(\underline A^{a,b}_*\bQ_\ell) -
+  \CCyc(\underline A^{a+2,b}_*) - \CCyc(\underline A^{a,b+2}_*) +
+  \CCyc(\underline A^{a+2,b+2}_*)$; substituting
+  Lemma~\ref{lem:sawin_ts_smooth_cc} produces the factor $(1-v_1^{-2})(1-v_2^{-2})$
+  and the bound $|m'_{a,b}|\le 4\cdot 8^g$.
+\end{proof}
+
+\subsection{Bounding the polar multiplicities}
+
+\begin{lemma}[Polar multiplicity of a single $pr_{w_1,w_2*}[Z_{w_1,w_2}]$]
+  \label{lem:sawin_individual_polar_bound}
+  \lean{MR4228499.individual_polar_bound}
+  \uses{def:sawin_polar_multiplicity, thm:sawin_appendix, def:sawin_Z_locus}
+  % SOURCE: Sawin, §5, Lemma individual-polar-bound.
+  % SOURCE QUOTE: For a line bundle $E$ in $J$ and $0\leq i < g-1$, the $i$th polar multiplicity of $pr_{w_1,w_2 *} [ Z_{w_1,w_2} ]$ at $E$ is at most \[ 2^{w_1 +w_2} { g \choose i} \sum_{\substack{c+d = w_1+w_2 -i \\ c \leq w_1, d\leq w_2 }} {g-i-1 \choose c,d,g-1-w_1-w_2} 2^{w_2-d} {w_1 + w_2 -c -d \choose w_1 -c }.\]
+  \textit{Source: Sawin, §5, Lemma individual-polar-bound.}
+  For $x\in J$ and $0\le i<g-1$, the $i$th polar multiplicity of
+  $pr_{w_1,w_2*}[Z_{w_1,w_2}]$ at $x$ is at most
+  \[ 2^{w_1+w_2}\binom{g}{i}\!\!\sum_{\substack{c+d=w_1+w_2-i\\ c\le w_1,\,d\le w_2}}\!\!
+     \binom{g-i-1}{c,d,g-1-w_1-w_2}2^{w_2-d}\binom{w_1+w_2-c-d}{w_1-c}. \]
+\end{lemma}
+\begin{proof}
+  \uses{def:sawin_polar_multiplicity, thm:sawin_appendix}
+  Choosing $V$ the constant bundle $L^\vee$ ($L\subseteq H^1(C,\cO_C)$ generic of
+  rank $g-i-1$), the polar multiplicity is the multiplicity of the Shende--Tsimerman
+  polar variety $P'_L V_{w_1,w_2}=\pi_{w_1,w_2}(\sigma^{-1}\PP(L^\vee))$, after
+  identifying $\PP(Z_{w_1,w_2})\cong C^{(w_1)}\times C^{(w_2)}\times(C/\tau)^{g-1-w_1-w_2}$.
+  TS Lemma 3.22 computes its class as a multiple of $[\Theta_i]$; applying the
+  appendix bound Theorem~\ref{thm:sawin_appendix} (with $r=2$) and
+  $([\Theta_i],[\Theta_{g-i}])=\binom{g}{i}$ yields the stated estimate.
+\end{proof}
+
+\begin{lemma}[Summed polar-multiplicity bound]
+  \label{lem:sawin_global_polar_bound}
+  \lean{MR4228499.global_polar_bound}
+  \uses{lem:sawin_individual_polar_bound, lem:sawin_ts_singular_cc}
+  % SOURCE: Sawin, §5, Lemma global-polar-bound.
+  % SOURCE QUOTE: For $x \in J$, the sum for $i$ from $0$ to $g-1$ of the $i$th polar multiplicity of $CC ( \Sigma^{a,b}_* \mathbb Q_\ell[2g-a-b] )$ at $x$ is at most $28^g/16$.
+  \textit{Source: Sawin, §5, Lemma global-polar-bound.}
+  For $x\in J$, $\sum_{i=0}^{g-1}\gamma^i_{\CCyc(\Sigma^{a,b}_*\bQ_\ell[2g-a-b])}(x)
+  \le 28^g/16$.
+\end{lemma}
+\begin{proof}
+  \uses{lem:sawin_individual_polar_bound, lem:sawin_ts_singular_cc}
+  Rewrite the inner sum of Lemma~\ref{lem:sawin_individual_polar_bound} as a
+  coefficient of $(1+2u)^i(1+u)^{w_1+w_2-i}$, and bound $m'_{w_1,w_2,a,b}\le
+  m_{w_1,w_2,a,b}\le 4^{w_1}6^{g-1-w_1-w_2}$ (value of the generating function at
+  $1$).  Summing over $w_2$ at fixed $w=w_1+w_2$ gives the $i$th polar multiplicity
+  of $\sum_{w_1+w_2=w}m'_{w_1,w_2,a,b}pr_{w_1,w_2*}[Z_{w_1,w_2}]$ at most
+  $6^{g-1-w}12^i10^{w-i}\binom{g}{i}\binom{g-i-1}{w-i}$; summing over $w$ gives
+  $\binom{g}{i}12^i16^{g-i-1}$, and summing over $i$ from $0$ to $g-1$ collapses to
+  $(12+16)^g/16=28^g/16$ (the zero-section does not contribute for $i<g$).
+\end{proof}
+
+\subsection{The Betti-number bound and equidistribution}
+
+\begin{theorem}[Betti numbers of theta-locus intersections]
+  \label{thm:sawin_theta_betti_bound}
+  \lean{MR4228499.theta_betti_bound}
+  \uses{thm:sawin_first_massey, lem:sawin_global_polar_bound, lem:sawin_ts_singular_cc}
+  % SOURCE: Sawin, §1/§5, Theorem theta-betti-bound (verifies TS Conjecture 1.4).
+  % SOURCE QUOTE: For any $g \in \mathbb N$, $0,\leq a,b \leq g$, and $L \in \operatorname{Pic}^{2g-a-b} (C)$, we have \[ \sum_{i \in \mathbb Z} \dim H^i ( (\Theta_{g-a} \cap L - \Theta_{g-b} )_{\overline{k}}, \mathbb Q_\ell) \leq 28^g/16 + 4\cdot 8^g + 2\cdot 4^g. \]
+  \textit{Source: Sawin, Theorem theta-betti-bound.}
+  For $g\in\bN$, $0\le a,b\le g$, and $L\in\Pic^{2g-a-b}(C)$,
+  \[ \sum_{i\in\bZ}\dim H^i\bigl((\Theta_{g-a}\cap L-\Theta_{g-b})_{\overline k},\bQ_\ell\bigr)
+     \ \le\ 28^g/16 + 4\cdot 8^g + 2\cdot 4^g. \]
+\end{theorem}
+\begin{proof}
+  \uses{thm:sawin_first_massey, lem:sawin_global_polar_bound, lem:sawin_ts_singular_cc}
+  By proper base change the left side is the sum of Betti numbers of the stalk at
+  $L$ of $\Sigma^{a,b}_*\bQ_\ell[2g-a-b]$.  This sheaf splits into perverse
+  homology (TS Lemmas 3.1, 3.6); the non-zero-degree pieces are constant of total
+  rank $\le 4^g$ (the Betti numbers of $J$).  Apply
+  Theorem~\ref{thm:sawin_first_massey} to ${}^p\cH^0$: its polar multiplicities for
+  $i<g$ match those of $\CCyc(\Sigma^{a,b}_*\bQ_\ell[2g-a-b])$, bounded by
+  $28^g/16$ via Lemma~\ref{lem:sawin_global_polar_bound}, while the $g$th polar
+  multiplicity is the zero-section multiplicity $\le 4\cdot 8^g + 4^g$
+  (Lemma~\ref{lem:sawin_ts_singular_cc}).  Summing gives
+  $28^g/16 + 4\cdot 8^g + 2\cdot 4^g$.
+\end{proof}
+
+\begin{theorem}[Equidistribution in $\Bun_2(\PP^1)$]
+  \label{thm:sawin_equidistribution}
+  \lean{MR4228499.equidistribution}
+  \uses{thm:sawin_theta_betti_bound}
+  % SOURCE: Sawin, §1, Theorem equidistribution-statement.
+  % SOURCE QUOTE: Let $q> 28^4= 614,656$ be a prime power. ... Then as $i$ goes to $\infty$, the pushforward of the uniform probability measure ... converges to [the stated mixture of uniform measures].
+  \textit{Source: Sawin, Theorem equidistribution-statement.}
+  Let $q>28^4=614{,}656$ be a prime power.  For a sequence $(C_i,M_i)$ of
+  hyperelliptic curves and line bundles with $\deg M_i\bmod 2$ constant,
+  $g(C_i)\to\infty$, and the minimal degree representing $M_i$ in
+  $\Pic(C)/\Pic(\PP^1)$ tending to $\infty$, the pushforward of the uniform
+  measure on $\Pic(C_i)/\Pic(\PP^1)$ along $L\mapsto(\pi_*L,\pi_*(L\otimes M_i))$
+  converges to the stated even/odd mixture of products of the uniform measures
+  $\mu_{\Bun_2^0},\mu_{\Bun_2^1}$.
+\end{theorem}
+\begin{proof}
+  \uses{thm:sawin_theta_betti_bound}
+  Immediate from Theorem~\ref{thm:sawin_theta_betti_bound} and TS Theorem 4.4,
+  which deduces the equidistribution statement from the Betti-number bound (and
+  also handles the case where the minimal degree does not tend to $\infty$).
+\end{proof}
+
+\subsection{Appendix (J. Tsimerman): bounding multiplicity in Jacobians}
+
+Here $C/k$ is a curve of genus $g$ and gonality $r$, $\pi:C\to\PP^1$ of degree
+$r$, $\psi_k:\Sym^k C\to\Sym^k\PP^1\cong\PP^k$ and $\phi_k:\Sym^k C\to J^{(k)}$,
+with $\Theta_k\subseteq J^{(k)}$ the image of $\Sym^k C$.
+
+\begin{lemma}[Pushforward of a linear class]
+  \label{lem:sawin_appendix_linear}
+  \lean{MR4228499.appendix_linear_class}
+  \uses{def:peer_jacobian, def:peer_weil_divisor}
+  % SOURCE: Sawin, Appendix (Tsimerman), Lemma.
+  % SOURCE QUOTE: Let $\ell_j$ be the class of a linear subspace of dimension $j$ in $\PP^k$. Then $\phi_{k*}\circ\psi_k^*L_j = r^{k-j} [\Theta_j]$.
+  \textit{Source: Tsimerman appendix, Lemma.}
+  For $\ell_j$ the class of a $j$-dimensional linear subspace of $\PP^k$,
+  $\phi_{k*}\psi_k^*\ell_j = r^{k-j}[\Theta_j]$ in $\CHow^*(J^{(k)})$.
+\end{lemma}
+\begin{proof}
+  \uses{def:peer_weil_divisor}
+  For an effective ordinary divisor $D$ of degree $k-j$, $L=\psi_k(D+\Sym^j C)$ is
+  a linear subspace, and $\psi_k^*L$ is the union of $D'+\Sym^j C$ over the
+  $r^{k-j}$ choices $D'$ of one point from each fibre, with no generic
+  multiplicity since $\psi_k$ is étale over a generic point of $L$; thus
+  $\psi_k^*\ell_j=r^{k-j}[D+\Sym^j C]$.  As $\phi_k$ is birational onto
+  $(D)+\Theta_j$, $\phi_{k*}[D+\Sym^j C]=[\Theta_j]$.
+\end{proof}
+
+\begin{theorem}[Multiplicity bound in the Jacobian]
+  \label{thm:sawin_appendix}
+  \lean{MR4228499.appendix_multiplicity_bound}
+  \uses{lem:sawin_appendix_linear}
+  % SOURCE: Sawin, Appendix (Tsimerman), Theorem appendix.
+  % SOURCE QUOTE: Let $V\subset J^{(g)}$ be a subvariety of codimension $j<g$. Then the multiplicity of $V$ at any point $v\in V(k)$ is bounded above by $r^{g-1-j} ([V],[\Theta_j])$.
+  \textit{Source: Tsimerman appendix, Theorem appendix.}
+  Let $V\subseteq J^{(g)}$ be a subvariety of codimension $j<g$.  Then the
+  multiplicity of $V$ at any $v\in V(k)$ is at most $r^{g-1-j}([V],[\Theta_j])$.
+\end{theorem}
+\begin{proof}
+  \uses{lem:sawin_appendix_linear}
+  Pick a translate $x+\Theta_{g-1}$ with $v-x=(D)$, $D$ ordinary, and
+  $\dim((V-x)\cap\Theta_{g-1})=j-1$.  Set $W=(V-x)\cap\Theta_{g-1}$, $W'$ the
+  component of $\phi_k^*W$ through $\phi_k^{-1}(v-x)$, and $W''=\psi_k(W')$.  A
+  linear space $L_0\subseteq\PP^{g-1}$ of codimension $j-1$ meeting $W''$ in
+  isolated points through $\psi_k\phi_k^{-1}(v-x)$ produces, via
+  Lemma~\ref{lem:sawin_appendix_linear}, an intersection
+  $x+\psi_{k*}\psi_k^*L_0$ meeting $V$ at isolated points through $v$ with all
+  contributions positive; as in TS Proposition 3.25 the local intersection
+  multiplicity at $v$ bounds the multiplicity of $V$ at $v$ from below, giving the
+  claim.
+\end{proof}

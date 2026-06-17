@@ -1,0 +1,175 @@
+\chapter{Cotangent space at the identity (piece (i) --- Lean file)}
+\label{chap:cotangent-grpobj}
+
+\providecommand{\obj}{\mathrm{obj}}
+\providecommand{\toUnit}{\mathrm{toUnit}}
+
+This chapter is a pointer to the Lean file
+\texttt{AlgebraicJacobian/Cotangent/GrpObj.lean}. The mathematical content
+itself lives in \cref{chap:RigidityKbar} (\texttt{RigidityKbar.tex}
+\S "Piece (i)") and is not duplicated here. This chapter exists to satisfy
+the per-Lean-file blueprint convention (one chapter per Lean file).
+
+\textbf{Post-iter-145 disposition.} After the iter-145 refactor
+\texttt{refactor-chart-algebra-skeleton-bundled-excise-iter145}, the
+file contains the piece (i.a) trio
+(\texttt{cotangentSpaceAtIdentity},
+\texttt{cotangentSpaceAtIdentity\_eq\_extendScalars},
+\texttt{cotangentSpaceAtIdentity\_finrank\_eq}, all closed
+iter-128--iter-132) plus a small set of orphan helpers from the
+iter-134--iter-136 bundled-route build
+(\texttt{shearMulRight} with its \texttt{\_hom\_fst}/\texttt{\_hom\_snd}
+companions, \texttt{schemeHomRingCompatibility}, and
+\texttt{relativeDifferentialsPresheaf\_restrict\_along\_identity\_section}),
+together with two private structural helpers
+(\texttt{section\_snd\_eq\_identity\_struct} and
+\texttt{isIso\_of\_app\_iso\_module}) that the surviving public
+declarations use locally. Zero \texttt{sorry}-bodied declarations
+remain in this file. The five excised bundled-route declarations
+(\texttt{basechange\_along\_proj\_two\_inv\_derivation},
+\texttt{basechange\_along\_proj\_two\_inv},
+\texttt{basechange\_along\_proj\_two\_inv\_app\_isIso},
+\texttt{relativeDifferentialsPresheaf\_basechange\_along\_proj\_two},
+\texttt{mulRight\_globalises\_cotangent}) and their iter-138--iter-143
+build history live in the git history of this file (per the iter-145
+Q7 "auditable record IS git history" framing in \texttt{STRATEGY.md}
+\S Iter-144 chart-algebra pivot). The active chart-algebra piece (ii)
+work has moved to \texttt{AlgebraicJacobian/Cotangent/ChartAlgebra.lean}
+with informal content in \cref{chap:RigidityKbar} \S "Chart-algebra
+piece (ii) first-class decomposition" of \texttt{RigidityKbar.tex}.
+
+\section{Lean declarations in this file}
+
+\begin{itemize}
+  \item \texttt{AlgebraicGeometry.GrpObj.cotangentSpaceAtIdentity}
+        --- the definition of the cotangent space at the identity as a
+        \texttt{ModuleCat k}. Statement~\cref{lem:GrpObj_cotangentSpace}
+        (piece (i.a); closed iter-128, body refactored through iter-131).
+  \item \texttt{AlgebraicGeometry.GrpObj.cotangentSpaceAtIdentity\_eq\_extendScalars}
+        --- structural-shape acceptance lemma (piece (i.a); closed
+        iter-131; supports both \texttt{change}-based and
+        \texttt{obtain}+\texttt{rw} rewrite patterns downstream).
+  \item \texttt{AlgebraicGeometry.GrpObj.cotangentSpaceAtIdentity\_finrank\_eq}
+        --- rank lemma (piece (i.a); closed iter-132).
+        Statement~\cref{lem:GrpObj_lieAlgebra_finrank}.
+  \item \texttt{AlgebraicGeometry.GrpObj.shearMulRight} --- the binary-product
+        shear isomorphism \(\sigma = \langle \pr_1, \mu \rangle\) in
+        \(\Over\,(\Spec k)\) (piece (i.b) Step 1; closed iter-134). Built
+        from \texttt{GrpObj} data only; modelled on
+        \texttt{CategoryTheory.GrpObj.mulRight}. Companion \texttt{@[simps]}
+        lemmas \texttt{shearMulRight\_hom\_fst} and
+        \texttt{shearMulRight\_hom\_snd} expose the first/second-coordinate
+        identifications \(\sigma_{\mathrm{hom}} \circ \pr_1 = \pr_1\) and
+        \(\sigma_{\mathrm{hom}} \circ \pr_2 = \mu\). Closed iter-134;
+        consumer (piece (i.b) Step 2 chain) DELETED iter-145 under the
+        chart-algebra pivot, leaving these as standalone categorical
+        helpers. Iter-146+ cleanup candidate; preserved iter-145 per the
+        refactor directive's \texttt{private}-or-public-discipline rule.
+  \item \texttt{AlgebraicGeometry.GrpObj.schemeHomRingCompatibility} ---
+        packaging helper around \(((\mathrm{adj}).\mathrm{homEquiv}\,\_\,\_).\mathrm{symm}\,f.c\),
+        the adjunction-transpose compatibility morphism of structure presheaves
+        of rings along a scheme morphism \(f \colon Y \to Z\). Note: this is
+        \emph{not} the \(\varphi\) for \texttt{PresheafOfModules.pullback},
+        which expects a morphism of presheaves on the codomain \(Y\),
+        obtained via Mathlib's \texttt{Scheme.Hom.toRingCatSheafHom}
+        (iter-135 mathlib-analogist verdict; see
+        \texttt{analogies/phi-compatibility-morphisms.md}). Closed
+        iter-135; consumer (piece (i.b) Step 2 chain) DELETED iter-145
+        under the chart-algebra pivot, leaving this as a standalone
+        adjunction-transpose utility. Iter-146+ cleanup candidate.
+  \item \texttt{AlgebraicGeometry.GrpObj.relativeDifferentialsPresheaf\_restrict\_along\_identity\_section}
+        --- section-restriction helper (piece (i.b) Step 3).
+        Statement~\cref{lem:GrpObj_omega_restrict_to_identity_section}.
+        Closed iter-136; consumer (the Compose main lemma
+        \texttt{mulRight\_globalises\_cotangent}) DELETED iter-145 under
+        the chart-algebra pivot, leaving this as a standalone Step 3
+        section-restriction utility. Iter-146+ cleanup candidate.
+\end{itemize}
+
+\section{Coverage blocks for internal helpers}
+
+The blocks below give \lean{}-pinned coverage to the internal helper
+declarations of this Lean file that have no external mathematical source.
+Each is stated faithfully against its Lean signature and wired into the
+piece~(i) cone; the full informal content lives in
+\cref{chap:RigidityKbar} \S "Piece (i)".
+
+\begin{lemma}\leanok
+[(i.b-helper) Shear iso, first-coordinate identification]
+  \label{lem:shearMulRight_hom_fst}
+  \lean{AlgebraicGeometry.GrpObj.shearMulRight_hom_fst}
+  \uses{lem:GrpObj_shearMulRight}
+  For a group object \(G\) in a Cartesian monoidal category, the forward
+  shear map of \cref{lem:GrpObj_shearMulRight} preserves the first
+  projection:
+  \[
+    \sigma_{\mathrm{hom}} \circ \pr_{1} \;=\; \pr_{1}
+    \qquad\text{(\texttt{(shearMulRight\,G).hom\,≫\,fst\,G\,G\,=\,fst\,G\,G}).}
+  \]
+\end{lemma}
+\begin{proof}
+
+\leanok
+  Proved directly in Lean.
+\end{proof}
+
+\begin{lemma}\leanok
+[(i.b-helper) Shear iso, second-coordinate identification]
+  \label{lem:shearMulRight_hom_snd}
+  \lean{AlgebraicGeometry.GrpObj.shearMulRight_hom_snd}
+  \uses{lem:GrpObj_shearMulRight}
+  For a group object \(G\) in a Cartesian monoidal category, post-composing
+  the forward shear map of \cref{lem:GrpObj_shearMulRight} with the second
+  projection recovers the multiplication:
+  \[
+    \sigma_{\mathrm{hom}} \circ \pr_{2} \;=\; \mu
+    \qquad\text{(\texttt{(shearMulRight\,G).hom\,≫\,snd\,G\,G\,=\,μ}).}
+  \]
+\end{lemma}
+\begin{proof}
+
+\leanok
+  Proved directly in Lean.
+\end{proof}
+
+\begin{lemma}\leanok
+[(i.b-helper) Section second-projection categorical identity]
+  \label{lem:section_snd_eq_identity_struct}
+  \lean{AlgebraicGeometry.GrpObj.section_snd_eq_identity_struct}
+  For a group object \(G\) in \(\Over\,(\Spec k)\), the canonical section
+  \(s := \langle \mathrm{id}_{G},\, \toUnit_{G} \circ \eta_{G} \rangle\) of
+  the first projection satisfies, at the underlying-scheme level,
+  \[
+    s.\mathrm{left} \circ \pr_{2}.\mathrm{left}
+      \;=\; G.\mathrm{hom} \circ \eta_{G}.\mathrm{left},
+  \]
+  i.e.\ \(\pr_{2} \circ s = \eta_{G} \circ \pi_{G}\) read off via
+  \texttt{lift\_snd} and \texttt{Over.toUnit\_left}. This is the
+  scheme-level identity consumed by
+  \cref{lem:GrpObj_omega_restrict_to_identity_section}.
+\end{lemma}
+\begin{proof}
+
+\leanok
+  Proved directly in Lean.
+\end{proof}
+
+\begin{lemma}\leanok
+[Iso-reflection bridge for presheaf-of-modules morphisms]
+  \label{lem:isIso_of_app_iso_module}
+  \lean{AlgebraicGeometry.GrpObj.isIso_of_app_iso_module}
+  Let \(R \colon C^{\mathrm{op}} \to \mathbf{RingCat}\) and let
+  \(f \colon M \to N\) be a morphism of presheaves of modules over \(R\).
+  If every component \(f.\app\,X\) is an isomorphism in
+  \(\ModuleCat\,(R.\obj\,X)\), then \(f\) is an isomorphism. The bridge
+  chains the iso-reflection of \texttt{PresheafOfModules.toPresheaf\,R}
+  with \texttt{NatTrans.isIso\_iff\_isIso\_app}.
+\end{lemma}
+\begin{proof}
+
+\leanok
+  Proved directly in Lean.
+\end{proof}
+
+For the informal mathematical content + closure-path documentation, see
+\cref{chap:RigidityKbar} \S "Piece (i)" in \texttt{RigidityKbar.tex}.

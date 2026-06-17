@@ -1,0 +1,54 @@
+{
+  "iteration": 241,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-06-01T12:36:13Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "f6ca5021-7641-414b-b054-f43d0c0330f3",
+    "durationSecs": 1694
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 2
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 1522
+  },
+  "provers": {
+    "AlgebraicJacobian_Picard_TensorObjSubstrate": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "77815fa9-11f6-44e9-b890-eb4b6555a53b"
+    },
+    "AlgebraicJacobian_Cohomology_FlatBaseChange": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "status": "done",
+      "mode": "prove",
+      "sessionId": "db06e9a6-a7a0-457f-b8f2-bbe1277b1fa8"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "5e4f590a-b54e-49e4-add8-7dcb6373f5b6",
+    "durationSecs": 731
+  },
+  "sorry_count": 84,
+  "finalize": {
+    "innerGit": {
+      "sha": "2cf26636"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 28
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 32
+    }
+  },
+  "completedAt": "2026-06-01T13:50:59Z",
+  "wallTimeSecs": 4485
+}

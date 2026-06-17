@@ -1,0 +1,40 @@
+{
+  "iteration": 15,
+  "stage": "prover  (iteration 014 \u2014 Path-2 Mayer-Vietoris prerequisite, prover-round phase. The iter-013 (legacy label) \u2192 iter-014 (canonical) plan-agent + refactor-agent passes scaffolded the new declaration `AlgebraicGeometry.Scheme.HModule'` (`ModuleCat k`-flavored cohomology of an open) in `AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean` at L232\u2013L236 with body `:= sorry`. Sorry count moved `9 \u2192 10` (one new sorry, drop-in body re-probed by plan-agent). Iter-014 prover round closes the body with the probe-confirmed one-liner; expected post-prover count `10 \u2192 9`.)",
+  "mode": "parallel",
+  "startedAt": "2026-05-08T02:25:42Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 740
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 259
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 587
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "9b1d6a3"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 17
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 2
+    }
+  },
+  "completedAt": "2026-05-08T02:52:29Z",
+  "wallTimeSecs": 1607
+}

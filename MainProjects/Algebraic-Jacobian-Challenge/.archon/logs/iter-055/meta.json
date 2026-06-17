@@ -1,0 +1,40 @@
+{
+  "iteration": 55,
+  "stage": "prover  (iteration 054 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **foundational basic-open cover infrastructure**: append three thin foundational declarations to `Cohomology/MayerVietoris.lean` `section CoverTotality` (inside `namespace AlgebraicGeometry.Scheme`), after iter-053's `instIsAffineHModuleVanishing_of_hasAffineCechAcyclicCover` (currently L1303-1313), before `end CoverTotality` (currently L1315): (1) `noncomputable def basicOpenCover` \u2014 basic-open cover constructor from a spanning subset `s \u2286 \u0393(C, U)`, returning `s \u2192 Opens` mapping `f \u21a6 C.left.basicOpen f`; (2) `theorem basicOpenCover_supr_of_span_eq_top` \u2014 supremum equality on affine `U` from `Ideal.span s = \u22a4` via Mathlib's `IsAffineOpen.iSup_basicOpen_eq_self_iff`; (3) `theorem basicOpenCover_isAffineOpen` \u2014 each cover member is itself affine via Mathlib's `IsAffineOpen.basicOpen`. Iter-053 closure verified (this pass): both iter-053 declarations land cleanly at L1279 (`HasAffineCechAcyclicCover`) and L1303 (`instIsAffineHModuleVanishing_of_hasAffineCechAcyclicCover`); sorry count `9 \u2192 9`; file LOC `1264 \u2192 1317` (+53, slight overage from multi-paragraph docstrings vs +30-50 plan band; within tolerance, mirrors iter-045/047/048/050/052 pattern). Plan-agent `lean_run_code` probe (this pass) confirms all three iter-054 declaration bodies compile end-to-end with kernel-only axioms `[propext, Classical.choice, Quot.sound]` \u2014 no new axiom introduced. Iter-054 sorry trajectory `9 \u2192 9` (no transient \u2014 bodies probe-confirmed). Phase A iterations-remaining revised UP from ~4 to ~5 to reflect the genuine multi-iteration shape of iter-055+: basic-open Koszul acyclicity (~2-4 iter), \u010cech-vs-derived comparison (~4-6 iter), packaging (~1 iter), genus carrier assembly (~1 iter). Iter-054 is itself a thin scaffolding step packaging Mathlib's basic-open lemmas into project conventions; iter-055+ opens the substantive Koszul + \u010cech-derived comparison branch.",
+  "mode": "parallel",
+  "startedAt": "2026-05-10T12:31:07Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1142
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 203
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 620
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "e0d6bc7"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 26
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 5
+    }
+  },
+  "completedAt": "2026-05-10T14:32:28Z",
+  "wallTimeSecs": 7281
+}

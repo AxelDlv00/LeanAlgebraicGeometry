@@ -1,0 +1,44 @@
+{
+  "iteration": 10,
+  "stage": "prover  (iteration 009 \u2014 Track 1 / `HModule` infrastructure iteration; refactor will scaffold one new declaration in `Cohomology/StructureSheafModuleK.lean`, then the prover round closes it with a probe-confirmed one-line body)",
+  "mode": "parallel",
+  "startedAt": "2026-05-07T08:28:19Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1065
+  },
+  "refactor": {
+    "status": "done",
+    "durationSecs": 248
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 81
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 585
+  },
+  "sorry_count": 303,
+  "finalize": {
+    "innerGit": {
+      "sha": "5b633a4"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 11
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 2
+    }
+  },
+  "completedAt": "2026-05-07T09:04:37Z",
+  "wallTimeSecs": 2177
+}

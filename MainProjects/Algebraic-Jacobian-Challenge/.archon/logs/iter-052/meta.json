@@ -1,0 +1,40 @@
+{
+  "iteration": 52,
+  "stage": "prover  (iteration 051 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **instance-driven supremum HModule' consumer + curve specialisation**: append two declarations to `Cohomology/MayerVietoris.lean` `section CoverTotality` (inside `namespace AlgebraicGeometry.Scheme`), after iter-050's `subsingleton_HModule_of_hasCechToHModuleIso_top_curve` (currently L1161), before `end CoverTotality` (currently L1163): (1) `theorem subsingleton_HModule'_supr_of_hasCechToHModuleIso` \u2014 symmetric instance-driven counterpart to iter-048's explicit-argument supr consumer, body `subsingleton_HModule'_supr_of_isCechAcyclicCover cechToHModuleIso n hn`; (2) `_curve` specialisation. Iter-050 closure verified (this pass): all four iter-050 declarations land cleanly at L1094 (`HasCechToHModuleIso`), L1110 (`cechToHModuleIso`), L1134 (`_top`), L1152 (`_top_curve`); sorry count `9 \u2192 9`; file LOC `1077 \u2192 1165` (+88, slight overage from multi-paragraph docstrings vs +50-70 plan band, within tolerance, mirrors iter-045/047/048 pattern). Plan-agent `lean_run_code` probe (this pass) confirms both iter-051 declaration bodies compile end-to-end with kernel-only axioms `[propext, Classical.choice, Quot.sound]` \u2014 no new axiom introduced. Iter-051 sorry trajectory `9 \u2192 9` (no transient \u2014 bodies probe-confirmed). Phase A iterations-remaining revised UP from ~4 to ~5 (substantive iter-052+ comparison theorem + basic-open acyclicity forms a 4-6-iteration cohort; previous estimate underweighted).",
+  "mode": "parallel",
+  "startedAt": "2026-05-10T08:14:40Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 962
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 122
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 583
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "62bf222"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 26
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 5
+    }
+  },
+  "completedAt": "2026-05-10T09:30:00Z",
+  "wallTimeSecs": 4519
+}

@@ -1,0 +1,40 @@
+{
+  "iteration": 152,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-20T03:13:39Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "55fbbbb1-b0d7-4766-92b1-536c01655272",
+    "durationSecs": 2310
+  },
+  "planValidate": {
+    "status": "ok_intentional_skip",
+    "objectives": 0
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 0
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "869e5469-a58c-45de-8dd2-8d2ea3bf6d99",
+    "durationSecs": 922
+  },
+  "sorry_count": 9,
+  "finalize": {
+    "innerGit": {
+      "sha": "8ac1e8b"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 3
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 7
+    }
+  },
+  "completedAt": "2026-05-20T04:09:19Z",
+  "wallTimeSecs": 3339
+}

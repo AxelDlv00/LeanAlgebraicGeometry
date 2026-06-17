@@ -1,0 +1,27 @@
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ───────────────────────────────
+
+[ARCHON] Agent model: opus (blueprint-writer)
+**COMPLETE.**
+
+Both Lean declarations in `Presheaf.lean` now have additive `\lean{}`-pinned blueprint coverage in `Cohomology_StructureSheafModuleK.tex`:
+
+- **`CategoryTheory.Functor.const_additive`** → `\begin{lemma}` `\label{lem:Functor_const_additive}` — the constant functor `Functor.const C : D ⥤ C ⥤ D` is additive when `D` is preadditive. (chain root)
+- **`CategoryTheory.Functor.const_linear`** → `\begin{lemma}` `\label{lem:Functor_const_linear}`, `\uses{lem:Functor_const_additive}` — the constant functor is `R`-linear when `D` is `R`-linear preadditive.
+
+**Wiring** (statement-level `\uses{}` only): `const_additive ← const_linear ← def:Scheme_constantSheafGammaHom_linearEquiv` (existing covered node). The hoist is justified because `constantSheafGammaHom_linearEquiv` (Carriers.lean:454-459) derives `(constantSheaf).Additive`/`.Linear` via `unfold constantSheaf; infer_instance`, which resolve through exactly these two `Functor.const` instances.
+
+**Verification:**
+- `leandag build --json` succeeds.
+- `leandag query --isolated --chapter Cohomology_StructureSheafModuleK` → 0 results.
+- No uncovered lean-aux entries for `Presheaf.lean` / `const_*`.
+- No `\leanok` added; no citation blocks (internal helpers); no other chapters or unrelated prose touched. The one global `unknown_uses` is pre-existing in another chapter, unrelated to this pass.
+[COST] 2.3min | $0.8880 | in=4207 out=8425 | turns=18
+[ARCHON] ✓ blueprint-writer/cov274-ssmk finished (138s)
+cov274-ssmk: COMPLETE — see /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/task_results/blueprint-writer-cov274-ssmk.md (archived: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/logs/iter-274/blueprint-writer-cov274-ssmk-report.md)

@@ -1,0 +1,202 @@
+\section{Terminology: transversality, singular support, characteristic cycle}
+
+% archon:covers MR4228499BoundsForTheStalksOfPerverseSheavesInCharacteristicPAndAConjectureO/Basic.lean
+
+This chapter fixes the notation and the basic objects of Beilinson's and Saito's
+theory of singular support and characteristic cycles in characteristic $p$,
+following §1 and §2 of the paper.  All schemes are smooth over a perfect field
+$k$; $\ell$ is a prime invertible in $k$.
+
+\subsection{Conical cycles, projectivization, and polar multiplicities}
+
+\begin{definition}[Conical subset]
+  \label{def:sawin_conical}
+  \lean{MR4228499.IsConical}
+  % SOURCE: Sawin, §1, Definition (conical).
+  % SOURCE QUOTE: We say a closed subset, or algebraic cycle, on a vector bundle is \emph{conical} if it is invariant under the $\mathbb G_m$ action by dilation of vectors.
+  \textit{Source: Sawin, §1, Definition (conical).}
+  A closed subset, or algebraic cycle, on a vector bundle is \emph{conical} if it
+  is invariant under the $\bG_m$-action by dilation of vectors.
+\end{definition}
+
+\begin{definition}[Projectivization of a conical cycle]
+  \label{def:sawin_projectivization}
+  \lean{MR4228499.projectivization}
+  \uses{def:sawin_conical}
+  % SOURCE: Sawin, §1, Definition (projectivization).
+  % SOURCE QUOTE: For a vector bundle $V$ on a variety $X$, let $\mathbb P(V) = \operatorname{Proj} (\operatorname{Sym}^* (V^\vee ))$ be its projectivization ... For a conical cycle $C$ on $V$, let $\mathbb P(C)$ the quotient of $C$, minus its intersection with the zero section, by $\mathbb G_m$.
+  \textit{Source: Sawin, §1, Definition (projectivization).}
+  For a vector bundle $V$ on a variety $X$, $\PP(V) = \Proj(\Sym^*(V^\vee))$ is
+  its projectivization, of dimension $\dim X + \rank V - 1$, identified with the
+  quotient of $V$ minus its zero section by $\bG_m$.  For a conical cycle $C$ on
+  $V$, $\PP(C)$ is the quotient of $C$, minus its intersection with the zero
+  section, by $\bG_m$.
+\end{definition}
+
+\begin{definition}[Polar multiplicity, projective form]
+  \label{def:sawin_polar_multiplicity}
+  \lean{MR4228499.polarMultiplicity}
+  \uses{def:sawin_projectivization}
+  % SOURCE: Sawin, §1, Definition polar-multiplicity (Definition 1.3).
+  % SOURCE QUOTE: Then we define \emph{the $i$th polar multiplicity of $C$ at $x$}, $\gamma^i_C(x)$, as the multiplicity of the pushforward $\pi_* ( \mathbb P(C) \cap \mathbb P(V))$ at $x$ ... We define the $n$th polar multiplicity of $C$ at $x$ to be the multiplicity of the zero-section in $C$.
+  \textit{Source: Sawin, §1, Definition polar-multiplicity.}
+  Let $X$ be smooth of dimension $n$, $C$ a conical cycle on $T^*X$ of dimension
+  $n$, and $x\in X$.  For $0\le i<n$, let $V$ be a rank-$(i+1)$ sub-bundle of
+  $T^*X$ near $x$ with $V_x$ a general point of the Grassmannian of
+  $(i+1)$-planes in $(T^*X)_x$.  The \emph{$i$th polar multiplicity}
+  $\gamma^i_C(x)$ is the multiplicity at $x$ of $\pi_*(\PP(C)\cap\PP(V))$, where
+  $\pi:\PP(T^*X)\to X$.  The $n$th polar multiplicity is the multiplicity of the
+  zero-section in $C$.  Well-definedness is Lemma~\ref{lem:sawin_intersection_comparison}.
+\end{definition}
+
+\subsection{Transversality and pushforward/pullback of conical cycles}
+
+\begin{definition}[$C$-transversal morphism (to $Y$)]
+  \label{def:sawin_C_transversal_map}
+  \lean{MR4228499.CTransversalMap}
+  % SOURCE: Sawin, §2, Definition C-transversal-1 (Saito Def 3.5(1)).
+  % SOURCE QUOTE: We say that $f: X \to Y$ is \emph{$C$-transversal} if the inverse image $df^{-1}(C)$ by the canonical morphism $X \times_Y T^* Y \to T^* X$ is a subset of the zero-section $X \subseteq X \times_Y T^* Y$.
+  \textit{Source: Sawin, §2, Definition C-transversal-1.}
+  For $C\subseteq T^*X$ a closed conical subset and $f:X\to Y$ a morphism of
+  smooth schemes, $f$ is \emph{$C$-transversal} if $df^{-1}(C)$, under
+  $X\times_Y T^*Y \to T^*X$, lies in the zero-section.
+\end{definition}
+
+\begin{definition}[Pushforward $f_\circ C$]
+  \label{def:sawin_circ_forward}
+  \lean{MR4228499.circForward}
+  \uses{def:sawin_C_transversal_map}
+  % SOURCE: Sawin, §2, Definition circ-forward (Beilinson (1.2)).
+  % SOURCE QUOTE: if $f$ is proper, let $f_\circ C$ be pushforward from $X \times_Y T^* Y$ to $T^*Y$ of the the inverse image $df^{-1}(C)$.
+  \textit{Source: Sawin, §2, Definition circ-forward.}
+  If $f$ is proper, $f_\circ C$ is the pushforward from $X\times_Y T^*Y$ to
+  $T^*Y$ of $df^{-1}(C)$.
+\end{definition}
+
+\begin{definition}[Pushforward $f_! A$ of a cycle]
+  \label{def:sawin_shriek_forward}
+  \lean{MR4228499.shriekForward}
+  \uses{def:sawin_circ_forward}
+  % SOURCE: Sawin, §2, Definition shriek-forward (Saito-direct (2.3)).
+  % SOURCE QUOTE: Let $A$ be an algebraic cycle of codimension $\dim X$ supported on $C$. Assume also that $f_\circ C$ has dimension $\dim Y$. Let $f_! A$ be the pushforward from $X \times_Y T^* Y$ to $T^*Y$ of the intersection-theoretic inverse image $df^* C$.
+  \textit{Source: Sawin, §2, Definition shriek-forward.}
+  For $A$ a codimension-$\dim X$ cycle supported on $C$ with $f_\circ C$ of
+  dimension $\dim Y$, $f_! A$ is the pushforward to $T^*Y$ of the
+  intersection-theoretic inverse image $df^*A$.
+\end{definition}
+
+\begin{definition}[$C$-transversal $h:W\to X$ and $h^\circ C$]
+  \label{def:sawin_h_transversal}
+  \lean{MR4228499.HTransversal}
+  \uses{def:sawin_conical}
+  % SOURCE: Sawin, §2, Definition (Saito Def 3.1).
+  % SOURCE QUOTE: We say that $h: W\to X$ is \emph{$C$-transversal} if the intersection $h^* C \cap K$ is a subset of the zero-section $W \subseteq W \times_X T^* X$. If $h: W \to X$ is $C$-transversal, we define a closed conical subset $h^\circ C \subseteq T^* W$ as the image of $h^* C$ under $dh$.
+  \textit{Source: Sawin, §2, Definition (Saito 3.1).}
+  For $h:W\to X$, let $h^*C\subseteq W\times_X T^*X$ be the pullback of $C$ and
+  $K=\ker(dh:W\times_X T^*X\to T^*W)$.  Then $h$ is \emph{$C$-transversal} if
+  $h^*C\cap K$ lies in the zero-section, and one sets $h^\circ C = dh(h^*C)
+  \subseteq T^*W$ (closed by Saito Lemma 3.1).
+\end{definition}
+
+\begin{definition}[$C$-transversal pair]
+  \label{def:sawin_pair_transversal}
+  \lean{MR4228499.PairTransversal}
+  \uses{def:sawin_h_transversal, def:sawin_C_transversal_map}
+  % SOURCE: Sawin, §2, Definition (Saito Def 3.5(2)).
+  % SOURCE QUOTE: We say that a pair of morphisms $h: W \to X$ and $f:W\to Y$ ... is \emph{$C$-transversal} ... if $h$ is $C$-transversal and $f$ is $h^\circ C$-transversal.
+  \textit{Source: Sawin, §2, Definition (Saito 3.5(2)).}
+  A pair $h:W\to X$, $f:W\to Y$ is \emph{$C$-transversal} if $h$ is
+  $C$-transversal and $f$ is $h^\circ C$-transversal.
+\end{definition}
+
+\begin{definition}[Local acyclicity]
+  \label{def:sawin_local_acyclic}
+  \lean{MR4228499.LocallyAcyclic}
+  % SOURCE: Sawin, §2, Definition (SGA 4.5, Th. Finitude 2.12).
+  % SOURCE QUOTE: We say that a morphism $f: W \to Y$ is locally acyclic relative to $K$ ... if for each geometric point $x \in W$ geometric point $t \in Y$ specializing to $f(x)$ ... the natural map $H^* ( W_x, K) \to H^* ( W_{x,t}, K)$ is an isomorphism.
+  \textit{Source: Sawin, §2, Definition (SGA 4.5).}
+  $f:W\to Y$ is \emph{locally acyclic} relative to $K\in D^b_c(W,\bF_\ell)$ if for
+  every geometric point $x\in W$ and geometric point $t\in Y$ specializing to
+  $f(x)$, the map $H^*(W_x,K)\to H^*(W_{x,t},K)$ is an isomorphism.  When $Y$ is a
+  smooth curve this is equivalent to the vanishing of $\RPhi_f K$.
+\end{definition}
+
+\begin{definition}[Singular support $SS(K)$]
+  \label{def:sawin_singular_support}
+  \lean{MR4228499.singularSupport}
+  \uses{def:sawin_pair_transversal, def:sawin_local_acyclic}
+  % SOURCE: Sawin, §2, Definition (Beilinson 1.3).
+  % SOURCE QUOTE: let the \emph{singular support $SS(K)$ of $K$} be the smallest closed conical subset $C \in T^* X$ such that for every $C$-transversal pair $h: W \to X$ and $f: W\to Y$, the morphism $f: W\to Y$ is locally acyclic relative to $h^* K$.
+  \textit{Source: Sawin, §2, Definition (Beilinson 1.3).}
+  For $K\in D^b_c(X,\bF_\ell)$, the \emph{singular support} $\SSing(K)$ is the
+  smallest closed conical $C\subseteq T^*X$ such that for every $C$-transversal
+  pair $h:W\to X$, $f:W\to Y$, the map $f$ is locally acyclic relative to $h^*K$.
+  Existence, uniqueness, and $\dim \SSing(K)=\dim X$ are Beilinson's
+  Theorem 1.3.
+\end{definition}
+
+\begin{definition}[Properly $C$-transversal morphism]
+  \label{def:sawin_properly_transversal}
+  \lean{MR4228499.ProperlyCTransversal}
+  \uses{def:sawin_h_transversal}
+  % SOURCE: Sawin, §2, Definition (Saito Def 7.1(1)).
+  % SOURCE QUOTE: We say that $h$ is \emph{properly $C$-transversal} if it is $C$-transversal and each irreducible component of $h^* C$ has dimension $m$.
+  \textit{Source: Sawin, §2, Definition (Saito 7.1(1)).}
+  With $C\subseteq T^*X$ of pure dimension $n=\dim X$ and $h:W\to X$ with
+  $\dim W=m$, $h$ is \emph{properly $C$-transversal} if it is $C$-transversal and
+  every irreducible component of $h^*C$ has dimension $m$.
+\end{definition}
+
+\begin{definition}[Pullback $h^! A$ of a cycle]
+  \label{def:sawin_shriek_pullback}
+  \lean{MR4228499.shriekPullback}
+  \uses{def:sawin_properly_transversal}
+  % SOURCE: Sawin, §2, Definition (Saito Def 7.1(2)).
+  % SOURCE QUOTE: We say that $h^{!} A$ is $(-1)^{n-m}$ times the pushforward along $dh$ ... of the pullback along $h$ ... of $A$, with the pullback and pushforward in the sense of intersection theory.
+  \textit{Source: Sawin, §2, Definition (Saito 7.1(2)).}
+  For $A$ a codimension-$n$ cycle on $T^*X$ with conical support $C$ and $h:W\to
+  X$ properly $C$-transversal, $h^!A = (-1)^{n-m}$ times the
+  intersection-theoretic pushforward along $dh:W\times_X T^*X\to T^*W$ of the
+  pullback along $h$ of $A$ (well-defined since $dh$ is finite on $\operatorname{supp} h^*A$).
+\end{definition}
+
+\begin{definition}[Isolated $C$-characteristic point]
+  \label{def:sawin_isolated_char_point}
+  \lean{MR4228499.IsolatedCharacteristicPoint}
+  \uses{def:sawin_C_transversal_map}
+  % SOURCE: Sawin, §2, Definition (Saito Def 5.3(1)).
+  % SOURCE QUOTE: We say a closed point $x \in X$ is at most an \emph{isolated $C$-characteristic point} of $f$ if $f$ is $C$-transversal when restricted to some open neighborhood of $x$ in $X$, minus $x$.
+  \textit{Source: Sawin, §2, Definition (Saito 5.3(1)).}
+  For $f:X\to Y$ to a smooth curve, a closed point $x$ is \emph{at most an
+  isolated $C$-characteristic point} if $f$ is $C$-transversal on some punctured
+  neighborhood of $x$; it is an \emph{isolated $C$-characteristic point} if in
+  addition $f$ is $C$-transversal on no full neighborhood of $x$.
+\end{definition}
+
+\begin{definition}[Total dimension $\dimtot$]
+  \label{def:sawin_dimtot}
+  \lean{MR4228499.dimtot}
+  % SOURCE: Sawin, §2, Definition (dimtot).
+  % SOURCE QUOTE: we define $\operatorname{dimtot} V$ to be the dimension of $V$ plus the Swan conductor of $V$. For a complex $W$ ... $\operatorname{dimtot}W$ to be the alternating sum $\sum_i (-1)^i \operatorname{dimtot} \mathcal H^i(W)$.
+  \textit{Source: Sawin, §2, Definition (dimtot).}
+  For a Galois representation $V$ of a local field over $\bF_\ell$,
+  $\dimtot V = \dim V + \Swan V$.  For a complex $W$,
+  $\dimtot W = \sum_i (-1)^i \dimtot \cH^i(W)$.
+\end{definition}
+
+\begin{definition}[Characteristic cycle $CC(K)$]
+  \label{def:sawin_characteristic_cycle}
+  \lean{MR4228499.characteristicCycle}
+  \uses{def:sawin_singular_support, def:sawin_dimtot, def:sawin_isolated_char_point}
+  % SOURCE: Sawin, §2, Definition (Saito Def 5.10).
+  % SOURCE QUOTE: Let the \emph{characteristic cycle of $K$}, $CC(K)$, be the unique $\mathbb Z$-linear combination of irreducible components of $SS(K)$ such that ... $- \operatorname{dimtot} \left( R \Phi_f(j^* K) \right)_u = (j^* CC(K), (df)^*\omega )_{T^*W,u}$.
+  \textit{Source: Sawin, §2, Definition (Saito 5.10).}
+  $\CCyc(K)$ is the unique $\bZ$-linear combination of irreducible components of
+  $\SSing(K)$ such that for every étale $j:W\to X$, every $f:W\to Y$ to a smooth
+  curve, and every at most isolated $h^\circ \SSing(\cF)$-characteristic point
+  $u\in W$ of $f$,
+  \[ -\dimtot\bigl(\RPhi_f(j^*K)\bigr)_u = (j^*\CCyc(K),(df)^*\omega)_{T^*W,u}, \]
+  for $\omega$ a meromorphic one-form without zero or pole at $f(u)$.  Existence
+  and uniqueness are Saito Theorem 5.9; integrality (Beilinson--Deligne) is Saito
+  Theorem 5.18.  By Saito Proposition 5.14(2), $\SSing(K) = \operatorname{supp}\CCyc(K)$.
+\end{definition}

@@ -1,0 +1,52 @@
+{
+  "iteration": 3,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-06T05:54:14Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 928
+  },
+  "refactor": {
+    "status": "done",
+    "durationSecs": 584
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 1742
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_SheafCompose": {
+      "file": "AlgebraicJacobian/Cohomology/SheafCompose.lean",
+      "status": "done"
+    },
+    "AlgebraicJacobian_Genus": {
+      "file": "AlgebraicJacobian/Genus.lean",
+      "status": "done"
+    },
+    "AlgebraicJacobian_Picard_Functor": {
+      "file": "AlgebraicJacobian/Picard/Functor.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 593
+  },
+  "sorry_count": 50,
+  "finalize": {
+    "innerGit": {
+      "sha": "43565a2"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 3
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 1
+    }
+  },
+  "completedAt": "2026-05-06T07:03:54Z",
+  "wallTimeSecs": 4179
+}

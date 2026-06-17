@@ -1,0 +1,53 @@
+{
+  "iteration": 146,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-19T04:02:30Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "a3cde467-3fd7-45ba-9037-1f212eb3cec0",
+    "durationSecs": 3095
+  },
+  "planValidate": {
+    "strategyBloat": true,
+    "strategyLines": 624,
+    "strategyBytes": 94998,
+    "strategyLeanFences": 0,
+    "strategyTexEnvs": 2,
+    "status": "ok",
+    "objectives": 1
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 1631
+  },
+  "provers": {
+    "AlgebraicJacobian_Cotangent_ChartAlgebra": {
+      "file": "AlgebraicJacobian/Cotangent/ChartAlgebra.lean",
+      "status": "done",
+      "sessionId": "e6e89d8c-d18f-41d4-afa8-0566e1ea0118"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "c64fd614-2e2b-440a-9e55-44c810bb9a71",
+    "durationSecs": 1195
+  },
+  "sorry_count": 15,
+  "finalize": {
+    "innerGit": {
+      "sha": "61f339c"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 11
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 2,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-19T05:57:04Z",
+  "wallTimeSecs": 6034
+}

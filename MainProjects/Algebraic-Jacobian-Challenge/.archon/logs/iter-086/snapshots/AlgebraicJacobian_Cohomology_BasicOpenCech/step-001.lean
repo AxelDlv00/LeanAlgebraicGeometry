@@ -1,0 +1,1549 @@
+/-
+Copyright (c) 2026 Christian Merten. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+-/
+import AlgebraicJacobian.Cohomology.MayerVietorisCover
+
+/-!
+# Basic-open cover wrappers and the substantive Čech acyclicity theorem
+
+This file (iter-063 split, cohort 3) contains the `basicOpenCover` family
+of definitions and identification lemmas (iter-054), the producer
+`hasAffineCechAcyclicCover_of_basicOpen` (iter-055), the
+`cechCohomology_subsingleton_of_cechCochain_exactAt` lemma, and the
+substantive theorem `basicOpenCover_isCechAcyclicCover_toModuleKSheaf`
+(iter-056 → iter-062). The latter currently carries two labelled substep
+sorries plus the iter-062 `h_a_fun` scaffolding.
+
+This is cohort 3 of the original `MayerVietoris.lean` split:
+* `MayerVietorisCore.lean`: MV LES core + Mathlib gap-fill.
+* `MayerVietorisCover.lean`: 2-affine cover MV + cover-totality bridges +
+  `IsCechAcyclicCover` consumers + `HasAffineCechAcyclicCover` carrier.
+* `BasicOpenCech.lean` (this file): basic-open cover wrappers + the
+  substantive Čech acyclicity theorem.
+
+See `blueprint/src/chapters/Cohomology_MayerVietoris.tex`.
+-/
+
+set_option autoImplicit false
+
+universe u v
+
+open CategoryTheory Limits TopologicalSpace AlgebraicGeometry
+
+namespace AlgebraicGeometry.Scheme
+
+/-- Iter-054: basic-open cover from a spanning subset of `Γ(C.left, U)`.
+
+Given a subset `s ⊆ Γ(C.left, U)`, this constructs the family of basic opens
+`s → Opens` mapping each `f ∈ s` to `C.left.basicOpen f`. When `s` spans the
+unit ideal of `Γ(C.left, U)` and `U` is affine, this family covers `U`
+(see `basicOpenCover_supr_of_span_eq_top`); each member is itself an affine
+open (see `basicOpenCover_isAffineOpen`).
+
+Iter-054 is a thin Mathlib-API wrapper (parameterised by the project's
+`C : Over (Spec (.of k))` convention) so iter-055+ instantiation work for
+`HasAffineCechAcyclicCover (toModuleKSheaf C)` can call the constructor +
+supremum + affine-membership directly.
+
+Mirrors the iter-047 foundational parameterised Čech infrastructure pattern:
+package thin Mathlib wrappers as named project-local declarations so the
+substantive multi-iteration work downstream focuses purely on content
+(Koszul acyclicity + Čech-vs-derived comparison) rather than re-deriving
+infrastructure at every call site. -/
+noncomputable def basicOpenCover
+    {k : Type u} [Field k] {C : Over (Spec (.of k))}
+    {U : TopologicalSpace.Opens C.left.toTopCat}
+    (s : Set Γ(C.left, U)) :
+    s → TopologicalSpace.Opens C.left.toTopCat :=
+  fun f => C.left.basicOpen (f : Γ(C.left, U))
+
+/-- Iter-054: supremum equality for the basic-open cover from generators
+spanning the unit ideal of an affine open.
+
+Given `(hU : IsAffineOpen U)` and `(hs : Ideal.span s = ⊤)`, the basic-open
+cover `basicOpenCover s` covers `U` exactly: `⨆ i, basicOpenCover s i = U`.
+This is a thin wrapper around Mathlib's `IsAffineOpen.iSup_basicOpen_eq_self_iff`
+(`Mathlib/AlgebraicGeometry/AffineScheme.lean` L898).
+
+Used by iter-055+ when constructing the `HasAffineCechAcyclicCover (toModuleKSheaf C)`
+instance: the existential's third conjunct `(⨆ i, 𝒰 i = U)` is exactly what
+this theorem produces. -/
+theorem basicOpenCover_supr_of_span_eq_top
+    {k : Type u} [Field k] {C : Over (Spec (.of k))}
+    {U : TopologicalSpace.Opens C.left.toTopCat} (hU : IsAffineOpen U)
+    (s : Set Γ(C.left, U)) (hs : Ideal.span s = ⊤) :
+    ⨆ i, basicOpenCover (C := C) (U := U) s i = U := by
+  unfold basicOpenCover
+  exact hU.iSup_basicOpen_eq_self_iff.mpr hs
+
+/-- Iter-054: each member of the basic-open cover of an affine open is itself
+affine.
+
+Given `(hU : IsAffineOpen U)` and `(i : s)`, conclude `IsAffineOpen (basicOpenCover s i)`.
+This is a thin wrapper around Mathlib's `IsAffineOpen.basicOpen`
+(`Mathlib/AlgebraicGeometry/AffineScheme.lean` L589).
+
+Used by iter-055+ when proving the Koszul acyclicity of the basic-open Čech
+complex: each finite intersection of basic opens is itself basic (hence affine),
+which is the inductive step for the Koszul-style alternating-sum argument. -/
+theorem basicOpenCover_isAffineOpen
+    {k : Type u} [Field k] {C : Over (Spec (.of k))}
+    {U : TopologicalSpace.Opens C.left.toTopCat} (hU : IsAffineOpen U)
+    (s : Set Γ(C.left, U)) (i : s) :
+    IsAffineOpen (basicOpenCover (C := C) (U := U) s i) := by
+  unfold basicOpenCover
+  exact hU.basicOpen i.1
+
+/-- Iter-055: producer for `HasAffineCechAcyclicCover` from existence of basic-open
+Čech-acyclic cover.
+
+Given that for every affine open `U` of `C.left` there exists a spanning subset
+`s ⊆ Γ(C.left, U)` with `Ideal.span s = ⊤` such that the basic-open cover
+`basicOpenCover s : s → Opens` carries both `IsCechAcyclicCover F (basicOpenCover s)`
+and `HasCechToHModuleIso F (basicOpenCover s)`, conclude `HasAffineCechAcyclicCover F`.
+
+Iter-055 specialises iter-053's existence-bundled cover form to the basic-open cover
+shape constructed iter-054. Strategic value: factors out the existence-bundling step
+from iter-056+ substantive work, so the iter-056+ Koszul acyclicity branch and the
+iter-057+ Čech-vs-derived comparison branch can each prove specifically the basic-open
+form (which the universal Koszul + comparison arguments naturally produce), and the
+iter-055 producer then bundles their results into iter-053's carrier shape automatically.
+
+Body: destructures the per-affine existence to obtain `(s, hs, hacy, hcomp)`, then
+bundles them into iter-053's existential cover via iter-054's
+`basicOpenCover_supr_of_span_eq_top` to produce the supremum hypothesis. -/
+theorem hasAffineCechAcyclicCover_of_basicOpen
+    {k : Type u} [Field k] {C : Over (Spec (.of k))}
+    {F : Sheaf (Opens.grothendieckTopology C.left.toTopCat) (ModuleCat.{u} k)}
+    [HasExt.{u} (Sheaf (Opens.grothendieckTopology C.left.toTopCat) (ModuleCat.{u} k))]
+    (h : ∀ {U : TopologicalSpace.Opens C.left.toTopCat}, IsAffineOpen U →
+        ∃ (s : Set Γ(C.left, U)) (_ : Ideal.span s = ⊤),
+          IsCechAcyclicCover F (basicOpenCover s) ∧
+          HasCechToHModuleIso F (basicOpenCover s)) :
+    HasAffineCechAcyclicCover F where
+  exists_cover {U} hU := by
+    obtain ⟨s, hs, hacy, hcomp⟩ := h hU
+    exact ⟨s, basicOpenCover s, basicOpenCover_supr_of_span_eq_top hU s hs, hacy, hcomp⟩
+
+/-- Iter-055: curve specialisation of `hasAffineCechAcyclicCover_of_basicOpen` at
+`F := toModuleKSheaf C`.
+
+Mirrors the iter-039/042/043/048/049/050/051/052/053 `_curve` pattern: a thin
+dot-notation wrapper that saves call sites in the curve setting (where `F` is the
+structure sheaf) from re-typing `toModuleKSheaf C` whenever the iter-055 producer
+is chained through. Used by the iter-057+ packaging step to instantiate
+`HasAffineCechAcyclicCover (toModuleKSheaf C)` once iter-056+ supplies the
+per-affine basic-open Čech-acyclic + comparison-iso evidence. -/
+theorem hasAffineCechAcyclicCover_of_basicOpen_curve
+    {k : Type u} [Field k] (C : Over (Spec (.of k)))
+    [HasExt.{u} (Sheaf (Opens.grothendieckTopology C.left.toTopCat) (ModuleCat.{u} k))]
+    (h : ∀ {U : TopologicalSpace.Opens C.left.toTopCat}, IsAffineOpen U →
+        ∃ (s : Set Γ(C.left, U)) (_ : Ideal.span s = ⊤),
+          IsCechAcyclicCover (toModuleKSheaf C) (basicOpenCover s) ∧
+          HasCechToHModuleIso (toModuleKSheaf C) (basicOpenCover s)) :
+    HasAffineCechAcyclicCover (toModuleKSheaf C) :=
+  hasAffineCechAcyclicCover_of_basicOpen h
+
+/-- Iter-056: pairwise basic-open intersection identification.
+
+Given a Set `s ⊆ Γ(C.left, U)` and indices `i j : s`, the intersection of the
+two basic-open cover members `basicOpenCover s i` and `basicOpenCover s j`
+equals the basic open of the product `i.1 * j.1`. Direct iteration of Mathlib's
+`Scheme.basicOpen_mul`.
+
+This is the foundational identification for iter-057+ Čech complex evaluation:
+the Čech cochain at degree 1 indexes pairs `(i, j) : s × s` and assigns the
+sheaf evaluated at `basicOpenCover s i ⊓ basicOpenCover s j`. Via this lemma,
+that intersection is identified with `C.left.basicOpen (i.1 * j.1)`, which by
+`IsAffineOpen.isLocalization_of_eq_basicOpen` (Mathlib) is the localization
+`Localization.Away (i.1 * j.1)` of `Γ(C.left, U)`. The Koszul-style
+alternating-sum exactness on these localizations follows from
+`exact_of_localized_span` (Mathlib) under `Ideal.span s = ⊤`. -/
+theorem basicOpenCover_inter_eq_basicOpen_mul
+    {k : Type u} [Field k] {C : Over (Spec (.of k))}
+    {U : TopologicalSpace.Opens C.left.toTopCat}
+    (s : Set Γ(C.left, U)) (i j : s) :
+    basicOpenCover (C := C) (U := U) s i ⊓ basicOpenCover (C := C) (U := U) s j =
+      C.left.basicOpen ((i.1 : Γ(C.left, U)) * j.1) := by
+  unfold basicOpenCover
+  exact (Scheme.basicOpen_mul C.left _ _).symm
+
+/-- Iter-056: pairwise basic-open intersection on an affine open is itself
+affine.
+
+Given `(hU : IsAffineOpen U)`, `(s : Set Γ(C.left, U))`, and indices `i j : s`,
+the intersection `basicOpenCover s i ⊓ basicOpenCover s j` is itself affine.
+Thin wrapper combining `basicOpenCover_inter_eq_basicOpen_mul` (rewriting the
+intersection as a basic open of the product) with Mathlib's
+`IsAffineOpen.basicOpen` (membership preservation under basic-open formation).
+
+Generalises iter-054's `basicOpenCover_isAffineOpen` (single-index affine
+membership) to pairwise intersections. Used by iter-057+ Čech evaluation: each
+finite intersection of basic opens is itself affine, which is the inductive
+step for the Koszul alternating-sum argument (Stacks 03F7 / Hartshorne III.4.5
+/ Eisenbud Commutative Algebra §17 Koszul resolution). -/
+theorem basicOpenCover_inter_isAffineOpen
+    {k : Type u} [Field k] {C : Over (Spec (.of k))}
+    {U : TopologicalSpace.Opens C.left.toTopCat} (hU : IsAffineOpen U)
+    (s : Set Γ(C.left, U)) (i j : s) :
+    IsAffineOpen (basicOpenCover (C := C) (U := U) s i ⊓
+        basicOpenCover (C := C) (U := U) s j) := by
+  unfold basicOpenCover
+  rw [← Scheme.basicOpen_mul]
+  exact hU.basicOpen _
+
+/-- Iter-057: n-ary basic-open intersection identification (Finset.inf' form).
+
+Given a non-empty `Finset t : Finset s`, the infimum (over `t`) of the basic-open
+cover members `basicOpenCover s i` for `i ∈ t` equals the basic open of the
+finite product `∏ i ∈ t, i.1` in `Γ(C.left, U)`. Generalises iter-056's binary
+`basicOpenCover_inter_eq_basicOpen_mul` to arbitrary non-empty Finset indexing.
+
+Body via `Finset.cons_induction`: the empty case is impossible by `t.Nonempty`
+(closed via `Finset.not_nonempty_empty`); the cons case splits on whether the
+residual `t` is empty or non-empty (via `Finset.eq_empty_or_nonempty`). In the
+empty residual case, `simp [basicOpenCover]` closes via single-element reduction
+of `Finset.inf'` and `Finset.prod`. In the non-empty residual case, decompose
+via `Finset.inf'_cons hne` to expose `basicOpenCover s a ⊓ rest`, decompose
+`Finset.prod_cons` to expose `a.1 * (∏ i ∈ t, i.1)`, apply the IH to identify
+`rest = C.left.basicOpen (∏ i ∈ t, i.1)`, then `change ... ⊓ _ = _` followed by
+`rw [← Scheme.basicOpen_mul]` consolidates the product form.
+
+This is the foundational identification for iter-058+ Čech complex evaluation
+at arbitrary degree `n`: the Čech cochain at degree `n` indexes `x : Fin (n+1) → s`
+and assigns the sheaf evaluated at `⨅ i : Fin (n+1), basicOpenCover s (x i)`.
+Via this lemma (instantiated at `t := (Finset.univ : Finset (Fin (n+1))).image x`,
+or more directly via `Finset.univ.inf' Finset.univ_nonempty (basicOpenCover s ∘ x)`),
+that intersection identifies with `C.left.basicOpen (∏ i : Fin (n+1), (x i).1)`,
+which by `IsAffineOpen.isLocalization_of_eq_basicOpen` (Mathlib) is the
+localization `Localization.Away (∏ i, (x i).1)` of `Γ(C.left, U)`. -/
+theorem basicOpenCover_finset_inf'_eq_basicOpen_prod
+    {k : Type u} [Field k] {C : Over (Spec (.of k))}
+    {U : TopologicalSpace.Opens C.left.toTopCat}
+    (s : Set Γ(C.left, U)) (t : Finset s) (h : t.Nonempty) :
+    t.inf' h (basicOpenCover (C := C) (U := U) s) =
+      C.left.basicOpen (∏ i ∈ t, (i.1 : Γ(C.left, U))) := by
+  classical
+  induction t using Finset.cons_induction with
+  | empty => exact absurd h Finset.not_nonempty_empty
+  | cons a t ha ih =>
+    rcases t.eq_empty_or_nonempty with rfl | hne
+    · simp [basicOpenCover]
+    · rw [Finset.inf'_cons hne, Finset.prod_cons, ih hne]
+      change C.left.basicOpen (a.1 : Γ(C.left, U)) ⊓ _ = _
+      rw [← Scheme.basicOpen_mul]
+
+/-- Iter-057: n-ary basic-open intersection on an affine open is itself affine.
+
+Given `(hU : IsAffineOpen U)`, `(s : Set Γ(C.left, U))`, `(t : Finset s)`, and
+`(h : t.Nonempty)`, the n-ary intersection `t.inf' h (basicOpenCover s)` is
+itself affine. Term-mode body chains
+`basicOpenCover_finset_inf'_eq_basicOpen_prod` (rewriting the n-ary intersection
+as a basic open of the finite product) with Mathlib's `IsAffineOpen.basicOpen`
+(membership preservation under basic-open formation).
+
+Generalises iter-056's `basicOpenCover_inter_isAffineOpen` (pairwise affine
+membership) to arbitrary non-empty Finset indexing. Used by iter-058+ Čech
+evaluation: each finite intersection of basic opens of an affine is itself
+affine, which is the inductive step for the Koszul alternating-sum argument
+(Stacks 03F7 / Hartshorne III.4.5 / Eisenbud Commutative Algebra §17 Koszul
+resolution).
+
+**Body uses `▸` (Eq.mpr), NOT `rw`**: `rw` on the equation produced by Theorem
+(1) fails because of motive-occurrence issues with the implicit `Subtype.val`
+coercions on elements of `Finset s`; term-mode `▸` rewrite resolves these
+directly without invoking the rewriter's pattern-matching. Plan-agent
+`lean_run_code` probe (this pass) confirmed the term-mode form compiles
+kernel-only while the tactic-mode `rw` form fails with "Did not find an
+occurrence of the pattern" error. -/
+theorem basicOpenCover_finset_inf'_isAffineOpen
+    {k : Type u} [Field k] {C : Over (Spec (.of k))}
+    {U : TopologicalSpace.Opens C.left.toTopCat} (hU : IsAffineOpen U)
+    (s : Set Γ(C.left, U)) (t : Finset s) (h : t.Nonempty) :
+    IsAffineOpen (t.inf' h (basicOpenCover (C := C) (U := U) s)) :=
+  basicOpenCover_finset_inf'_eq_basicOpen_prod s t h ▸ hU.basicOpen _
+
+/-- Iter-058: n-ary basic-open intersection is contained in `U`.
+
+Given a non-empty `Finset t : Finset s`, the infimum (over `t`) of the basic-open
+cover members `basicOpenCover s i` for `i ∈ t` is contained in `U`. Term-mode
+body chains iter-057's `basicOpenCover_finset_inf'_eq_basicOpen_prod` (rewriting
+the n-ary intersection as a single basic open of the finite product) with
+Mathlib's `Scheme.basicOpen_le` (`X.basicOpen f ≤ U` for any `f ∈ Γ(X, U)`)
+via Lean's `▸` (Eq.mpr) rewrite.
+
+**No `IsAffineOpen` hypothesis required**: `basicOpen_le` holds for any open `U`
+(the basic open of `f ∈ Γ(X, U)` is always a sub-open of `U`); compare iter-057's
+`basicOpenCover_finset_inf'_isAffineOpen` which does need `(hU : IsAffineOpen U)`.
+
+This is the inclusion morphism iter-059+ Čech-evaluation arguments need when
+applying Mathlib's `IsAffineOpen.isLocalization_of_eq_basicOpen`:
+```
+(hU : IsAffineOpen U) (f : Γ(X, U)) {V : X.Opens} (i : V ⟶ U) :
+  V = X.basicOpen f → IsLocalization.Away f Γ(X, V)
+```
+The morphism `i : V ⟶ U` argument (which is `homOfLE` of `V ≤ U`) is needed to
+install the `Algebra Γ(X, U) Γ(X, V)` instance for the conclusion type, since
+Mathlib's `algebra_section_section_basicOpen` instance only fires for the
+syntactic form `Γ(X, X.basicOpen f)`, not for `V = t.inf' h (basicOpenCover s)`.
+Iter-058's inclusion lemma supplies this `V ≤ U` proof so iter-059+ can call
+`hU.isLocalization_of_eq_basicOpen f (homOfLE (basicOpenCover_finset_inf'_le ...))
+(basicOpenCover_finset_inf'_eq_basicOpen_prod ...)` to land
+`IsLocalization.Away (∏ i ∈ t, i.1) Γ(C.left, t.inf' h (basicOpenCover s))`
+directly. -/
+theorem basicOpenCover_finset_inf'_le
+    {k : Type u} [Field k] {C : Over (Spec (.of k))}
+    {U : TopologicalSpace.Opens C.left.toTopCat}
+    (s : Set Γ(C.left, U)) (t : Finset s) (h : t.Nonempty) :
+    t.inf' h (basicOpenCover (C := C) (U := U) s) ≤ U :=
+  basicOpenCover_finset_inf'_eq_basicOpen_prod s t h ▸
+    C.left.basicOpen_le _
+
+/-- Iter-059: n-ary basic-open intersection is a localization.
+
+Given an affine open `U`, a subset `s ⊆ Γ(C.left, U)`, and a non-empty `Finset t : Finset s`,
+the structure sheaf evaluated on the n-ary intersection of basic-open cover members
+`t.inf' h (basicOpenCover s)` is identified — as a localization away from the product
+`∏ i ∈ t, i.1` of generators — with `Γ(C.left, U)`. The algebra structure on the conclusion
+type is given explicitly by `(C.left.presheaf.map (homOfLE _).op).hom.toAlgebra`, threaded
+through the conclusion `@IsLocalization.Away _ _ f Γ(X, V) _ algebra` form (matching
+Mathlib's `IsAffineOpen.isLocalization_of_eq_basicOpen` signature exactly).
+
+**Explicit `@`-algebra binding is essential.** Mathlib's default
+`algebra_section_section_basicOpen` instance (`Mathlib/AlgebraicGeometry/Scheme.lean` L724)
+fires only for the syntactic form `Γ(X, X.basicOpen f)`, *not* for arbitrary `V`
+definitionally equal to `X.basicOpen f`. The iter-058 plan-agent probe-confirmed that
+stating this theorem with *inferred* algebra fails with
+`failed to synthesize instance of type class Algebra Γ(C.left, U) Γ(C.left, t.inf' h …)`.
+Threading the algebra structure as part of the conclusion type — matching Mathlib's
+signature exactly — sidesteps the synthesis attempt.
+
+This is the **fourth and final** thin foundational scaffolding helper on the affine
+basic-open identification side. The iter-060+ basic-open Koszul acyclicity argument
+(per the iter-059 analogy report at `analogies/cech-koszul-precedent.md`, Branch A
+substep 2) chains iter-057's equality + iter-058's inclusion + iter-059's localization
++ `IsLocalizedModule.map_exact` (`Mathlib/Algebra/Module/LocalizedModule/Exact.lean`)
+to identify each Čech-cochain factor `F(⋂_k 𝒰(x k))` with the cover-of-`D(f)` Čech complex
+on localised modules. -/
+theorem basicOpenCover_finset_inf'_isLocalization
+    {k : Type u} [Field k] {C : Over (Spec (.of k))}
+    {U : TopologicalSpace.Opens C.left.toTopCat} (hU : IsAffineOpen U)
+    (s : Set Γ(C.left, U)) (t : Finset s) (h : t.Nonempty) :
+    @IsLocalization.Away _ _ (∏ i ∈ t, (i.1 : Γ(C.left, U)))
+      Γ(C.left, t.inf' h (basicOpenCover (C := C) (U := U) s)) _
+      ((C.left.presheaf.map (homOfLE
+        (basicOpenCover_finset_inf'_le (C := C) (U := U) s t h)).op).hom.toAlgebra) :=
+  hU.isLocalization_of_eq_basicOpen _
+    (homOfLE (basicOpenCover_finset_inf'_le (C := C) (U := U) s t h))
+    (basicOpenCover_finset_inf'_eq_basicOpen_prod (C := C) (U := U) s t h)
+
+/-- Iter-066 helper: in `ModuleCat k`, a product projection induced by an
+injection of index sets is a split epi.
+
+Given an injection `f : β → α` and a family `M : α → ModuleCat k`, the natural
+projection `∏ᶜ_a M a ⟶ ∏ᶜ_b M (f b)` defined as `Pi.lift (fun b => Pi.π M (f b))`
+(which sends a tuple indexed by `α` to its `image f` components, reindexed by `β`)
+admits a section in `ModuleCat k`. The section is the "extend by zero" map:
+given a tuple indexed by `β`, fill in the components in `image f` (using the
+unique preimage given by injectivity of `f`) and set the remaining components
+to `0`.
+
+This is the categorical fact underlying `h_π_split` in
+`basicOpenCover_isCechAcyclicCover_toModuleKSheaf`: the cochain-complex map
+`π : K ⟶ K₀` is at each degree of this form (the `↑s₀ ↪ s` inclusion induces a
+postcomposition map `(Fin (i+1) → ↑s₀) → (Fin (i+1) → s)` which is injective by
+injectivity of the inclusion, hence the induced product projection on cochain
+factors is split).
+
+The helper is stated for a generic injection so it can be reused for both the
+`s` substep (`h_π_split` proper) and the slice-cover variants. -/
+noncomputable def splitEpi_pi_lift_of_injective {k : Type u} [Field k]
+    {α β : Type u} (M : α → ModuleCat.{u} k)
+    (f : β → α) (hf : Function.Injective f) :
+    SplitEpi (Pi.lift (fun b : β => Pi.π M (f b))) where
+  section_ := by
+    classical
+    refine Pi.lift (fun a => ?_)
+    by_cases h : ∃ b, f b = a
+    · exact h.choose_spec ▸ Pi.π (fun b => M (f b)) h.choose
+    · exact 0
+  id := by
+    classical
+    apply Pi.hom_ext
+    intro b
+    rw [Category.assoc, Pi.lift_π, Category.id_comp, Pi.lift_π]
+    have h : ∃ b', f b' = f b := ⟨b, rfl⟩
+    rw [dif_pos h]
+    -- The transport `h.choose_spec ▸ Pi.π _ h.choose = Pi.π _ b`.
+    -- By injectivity of `f`, `h.choose = b`, so the transport collapses.
+    -- We use the helper lemma below.
+    have key : ∀ {b b' : β} (heq : f b' = f b),
+        heq ▸ (Pi.π (fun b'' => M (f b'')) b' :
+            (∏ᶜ fun b'' => M (f b'')) ⟶ M (f b')) =
+          (Pi.π (fun b'' => M (f b'')) b :
+            (∏ᶜ fun b'' => M (f b'')) ⟶ M (f b)) := by
+      intro b b' heq
+      have hbb : b' = b := hf heq
+      subst hbb
+      rfl
+    exact key h.choose_spec
+
+/-- Iter-060 helper: bridge from `ExactAt n` on the Čech cochain complex to
+`Subsingleton (cechCohomology n)`.
+
+The chain is two steps: `HomologicalComplex.ExactAt.isZero_homology` packages an
+`ExactAt n` hypothesis into `IsZero ((cechCochain ...).homology n)`, and
+`ModuleCat.subsingleton_of_isZero` then upgrades `IsZero` on a `ModuleCat`
+object to `Subsingleton` on its underlying carrier type.
+
+This is the structural skeleton common to *every* `IsCechAcyclicCover` instance
+proof: the actual mathematical content lives in establishing
+`(cechCochain C F 𝒰).ExactAt n` for each `n > 0`. -/
+theorem cechCohomology_subsingleton_of_cechCochain_exactAt
+    {k : Type u} [Field k] {C : Over (Spec (.of k))}
+    {F : Sheaf (Opens.grothendieckTopology C.left.toTopCat) (ModuleCat.{u} k)}
+    {ι : Type u} {𝒰 : ι → TopologicalSpace.Opens C.left.toTopCat}
+    {n : ℕ} (h : (cechCochain C F 𝒰).ExactAt n) :
+    Subsingleton (cechCohomology C F 𝒰 n) :=
+  ModuleCat.subsingleton_of_isZero h.isZero_homology
+
+-- Iter-078: lifted to 800000 because the iter-078 prover work on
+-- `h_diff_pi_smul_f` (per-summand R-linearity of the Čech differential)
+-- requires further tactic steps inside the deeply-nested `have` block;
+-- each additional rewrite touching the `(r • _)` smul triggers
+-- `HSMul R (Z_i j) ?_` synthesis whose `whnf` cost exceeds the default
+-- 200000 budget at the theorem head.
+set_option maxHeartbeats 800000 in
+/-- Iter-060 (Phase A step 6 / Path 2 — **substantive Čech acyclicity attempt**):
+the basic-open cover of an affine open `U` by a spanning subset `s ⊆ Γ(C.left, U)`
+gives a Čech-acyclic cover for the `ModuleCat k`-valued structure sheaf
+`toModuleKSheaf C`. This is the Stacks 01ED Čech-acyclicity theorem for affine
+schemes in our setting.
+
+**Mathematical content (Stacks 01ED route).** For each positive degree `n`,
+exactness of the Čech cochain at degree `n` is a *local* property on the
+spanning set `s`. Localising the Čech complex at any `f ∈ s` exhibits the
+slice over `D(f)` as a Čech complex of an affine cover whose terminal vertex
+`D(f) → D(f)` supplies an *extra degeneracy* (Mathlib's
+`FormalCoproduct.extraDegeneracyCech`). By
+`SimplicialObject.Augmented.ExtraDegeneracy.homotopyEquiv` the augmented
+chain complex of the slice is homotopy equivalent to the constant complex on
+the augmentation, hence exact in positive degrees. Re-globalising via
+`exact_of_isLocalized_span` (Mathlib `RingTheory/LocalProperties/Exactness.lean`
+L173) yields exactness of the *unlocalised* Čech complex at degree `n`.
+
+The structural skeleton is:
+* reduce `Subsingleton (cechCohomology n)` to `ExactAt (cechCochain) n` via
+  `cechCohomology_subsingleton_of_cechCochain_exactAt`;
+* the substantive `ExactAt n` is decomposed into three substeps tracked by
+  separate `sorry`s, each annotated with the missing computational step.
+
+**Transient sorries (iter-060)** — explicitly endorsed by the iteration
+directive; each sorry names a substep. The substeps are:
+  (a) **local exactness at `D(f)`** (extra-degeneracy invocation): given the
+      cover-of-`D(f)` slice, build the augmented Čech simplicial object,
+      apply `FormalCoproduct.extraDegeneracyCech` to obtain an
+      `ExtraDegeneracy`, then transport via
+      `ExtraDegeneracy.homotopyEquiv` and op-passage `CochainComplex.opEquivalence`
+      to get cochain-level exactness in positive degrees;
+  (b) **localised-Čech identification**: the localisation at `f` of the
+      degree-`n` Čech cochain is the degree-`n` cochain of the cover-of-`D(f)`
+      Čech complex, via iter-057+ identifications chained with
+      `IsLocalizedModule.map_exact`;
+  (c) **local-to-global** via `exact_of_isLocalized_span`: the assembled
+      family of per-`f` local exactnesses lifts to global exactness.
+
+The decomposition follows §"Branch A — Čech acyclicity" of
+`analogies/cech-koszul-precedent.md`. -/
+theorem basicOpenCover_isCechAcyclicCover_toModuleKSheaf
+    {k : Type u} [Field k] {C : Over (Spec (.of k))}
+    {U : TopologicalSpace.Opens C.left.toTopCat} (hU : IsAffineOpen U)
+    (s : Set Γ(C.left, U)) (hs : Ideal.span s = ⊤) :
+    IsCechAcyclicCover (toModuleKSheaf C)
+        (basicOpenCover (C := C) (U := U) s) where
+  subsingleton_cechCohomology n hn := by
+    -- Step 0 (structural): reduce `Subsingleton (cechCohomology n)` to
+    -- `ExactAt n` of the underlying Čech cochain complex via the iter-060
+    -- helper `cechCohomology_subsingleton_of_cechCochain_exactAt`.
+    refine cechCohomology_subsingleton_of_cechCochain_exactAt (n := n) ?_
+    -- The goal is now
+    --   `(cechCochain C (toModuleKSheaf C) (basicOpenCover s)).ExactAt n`.
+    -- Iter-061 decomposition: the Stacks 01ED extra-degeneracy + local-to-global
+    -- argument has three substeps tracked by separate labelled `sorry`s.
+    --
+    -- ===========================================================================
+    -- Substep (a) — Extra-degeneracy on the slice cover of `D(f)`.
+    -- ===========================================================================
+    -- For each `f ∈ s`, the slice cover of `D(f)` by the family
+    --   `{basicOpenCover s f' ⊓ D(f)}_{f' ∈ s}`
+    -- contains `D(f) ⊓ D(f) = D(f)` itself (at index `f' = f`), so the
+    -- terminal vertex maps to `D(f)` via the identity section
+    -- `D(f) → D(f)`. By `FormalCoproduct.extraDegeneracyCech`
+    -- (`Mathlib/CategoryTheory/Limits/FormalCoproducts/ExtraDegeneracy.lean` L92),
+    -- the augmented Čech simplicial object on this slice has an
+    -- `ExtraDegeneracy`. By `SimplicialObject.Augmented.ExtraDegeneracy.homotopyEquiv`
+    -- (`Mathlib/AlgebraicTopology/ExtraDegeneracy.lean` L328), the associated
+    -- alternating-face-map chain complex is homotopy-equivalent to the
+    -- constant complex on the augmentation. Op-passage through
+    -- `CochainComplex.opEquivalence` then yields cochain-level exactness in
+    -- positive degrees. We state substep (a) as a concrete `ExactAt n`
+    -- claim on the slice cover Čech cochain complex:
+    have h_a : ∀ (f : s),
+        (cechCochain C (toModuleKSheaf C)
+            (fun (f' : s) => basicOpenCover (C := C) (U := U) s f' ⊓
+              C.left.basicOpen (f : Γ(C.left, U)))).ExactAt n := by
+      intro f
+      -- The terminal vertex of the slice cover is at `f' = f`:
+      --   `basicOpenCover s f ⊓ C.left.basicOpen f.1 = D(f) ⊓ D(f) = D(f)`.
+      -- Plug into `FormalCoproduct.extraDegeneracyCech` with `i₀ := f`,
+      -- extract `homotopyEquiv`, op-pass, read off `ExactAt n` for `0 < n`.
+      sorry  -- substep (a) infrastructure: augmented Čech simplicial object
+             -- + extraDegeneracyCech + homotopyEquiv + CochainComplex.opEquivalence
+    -- ===========================================================================
+    -- Substep (b) — Localised-Čech identification.
+    -- ===========================================================================
+    -- For each `f ∈ s`, the slice cover Čech cochain complex above is
+    -- isomorphic (in `ModuleCat k`) to the localisation at `f` of the
+    -- original Čech cochain complex `K`. Cochain-factor-wise:
+    --   `(slice cover).X^n = ∏_x F(⨅ k, basicOpenCover s (x k) ⊓ D(f))`
+    --                      = `∏_x F(D(f · ∏ k, (x k).1))`              (Stacks identity)
+    --                      = `∏_x Localization.Away (f · ∏ k, (x k).1) Γ(C.left, U)`
+    --                      = `∏_x Γ(C.left, ⨅ k, basicOpenCover s (x k))[1/f]`
+    --                      = `K.X^n [1/f]`.
+    -- The first equality is iter-057 (`basicOpenCover_finset_inf'_eq_basicOpen_prod`)
+    -- applied to the augmented index `{f} ∪ image(x)`. The second is
+    -- iter-059 (`basicOpenCover_finset_inf'_isLocalization`). The third is
+    -- the universal property of localisation (transitivity of localisation:
+    -- `R[1/(f·g)] = R[1/g][1/f]` when `f` is also among the generators).
+    -- The differential identification uses `IsLocalizedModule.map_exact`
+    -- (`Mathlib/Algebra/Module/LocalizedModule/Exact.lean` L56) to transport
+    -- the cochain-level identification to the slice differential.
+    --
+    -- ===========================================================================
+    -- Substep (c) — Local-to-global via `exact_of_isLocalized_span`.
+    -- ===========================================================================
+    -- The combined data from substeps (a) and (b) — per-`f` exactness at
+    -- degree `n` of the slice cover Čech complex, which by substep (b) is
+    -- the localisation of `K.sc n` — fits the hypothesis of
+    -- `exact_of_isLocalized_span s hs ...`
+    -- (`Mathlib/RingTheory/LocalProperties/Exactness.lean` L173) viewing
+    -- the cochain factors as `Γ(C.left, U)`-modules through their natural
+    -- module structure. The conclusion is `Function.Exact ⇑(K.sc n).f ⇑(K.sc n).g`,
+    -- which converts back to `K.ExactAt n` via
+    -- `ShortComplex.ShortExact.moduleCat_exact_iff_function_exact` and
+    -- `HomologicalComplex.exactAt_iff`.
+    --
+    -- This combined assembly remains as a single transient sorry: it
+    -- requires constructing the cochain-level localisation iso (substep (b)
+    -- ≈ a `noncomputable def` for the localised Čech short complex plus
+    -- its identification iso) and routing the ring-base mismatch
+    -- (`(K.sc n).f.hom` is `k`-linear; `exact_of_isLocalized_span` consumes
+    -- `Γ(C.left, U)`-linear maps — they coincide as set-functions, but the
+    -- type-level reconciliation is non-trivial).
+    --
+    -- For iter-061, substep (a)'s claim is concretely stated above and
+    -- substep (b)+(c)'s assembly remains as the second labelled sorry below.
+    -- We perform the mechanical conversion `K.ExactAt n ↔ Function.Exact ⇑f ⇑g`
+    -- before the sorry, so the remaining content is precisely the
+    -- "transport per-f exactness through the localisation iso then apply
+    -- the local-to-global principle" assembly step.
+    rw [HomologicalComplex.exactAt_iff,
+        ShortComplex.ShortExact.moduleCat_exact_iff_function_exact]
+    -- Goal:
+    --   `Function.Exact ⇑(ConcreteCategory.hom ((K).sc n).f)
+    --                   ⇑(ConcreteCategory.hom ((K).sc n).g)`
+    -- where `K := cechCochain C (toModuleKSheaf C) (basicOpenCover s)`.
+    -- ===========================================================================
+    -- Iter-062 substantive scaffolding (a): convert `h_a` into `Function.Exact` form.
+    -- ===========================================================================
+    -- The same `HomologicalComplex.exactAt_iff` +
+    -- `ShortComplex.ShortExact.moduleCat_exact_iff_function_exact` chain that
+    -- converts our goal also converts each per-`f` slice-cover `ExactAt n`
+    -- hypothesis into a per-`f` `Function.Exact` statement at the
+    -- function-level. This is closed under `← rw` (no new sorry).
+    have h_a_fun : ∀ (f : s),
+        Function.Exact
+          ⇑(ConcreteCategory.hom (HomologicalComplex.sc
+              (cechCochain C (toModuleKSheaf C)
+                (fun (f' : s) => basicOpenCover (C := C) (U := U) s f' ⊓
+                  C.left.basicOpen (f : Γ(C.left, U)))) n).f)
+          ⇑(ConcreteCategory.hom (HomologicalComplex.sc
+              (cechCochain C (toModuleKSheaf C)
+                (fun (f' : s) => basicOpenCover (C := C) (U := U) s f' ⊓
+                  C.left.basicOpen (f : Γ(C.left, U)))) n).g) := by
+      intro f
+      rw [← ShortComplex.ShortExact.moduleCat_exact_iff_function_exact,
+          ← HomologicalComplex.exactAt_iff]
+      exact h_a f
+    -- ===========================================================================
+    -- Iter-062 substantive scaffolding (b): outline the local-to-global route.
+    -- ===========================================================================
+    -- The closure of the remaining goal proceeds via Mathlib's local-to-global
+    -- principle for exactness `exact_of_isLocalized_span` applied to the
+    -- ring `R := Γ(C.left, U)`, the spanning subset `s ⊆ R`, and the
+    -- `R`-linear maps `(K.sc n).f.hom` and `(K.sc n).g.hom` (treated as
+    -- `R`-linear via the `Module R ((K.sc n).X i)`-structure obtained from
+    -- the cochain factor's natural `Γ(C.left, ⋂_x …)`-module structure
+    -- precomposed with the algebra map `R → Γ(C.left, ⋂_x …)`).
+    -- The required input is, for each `f ∈ s`, a `Function.Exact`
+    -- statement on the localised cochain factors at `f`. By the
+    -- cochain-factor identification chain (iter-057 + iter-058 + iter-059
+    -- + Mathlib `Localization.localizationLocalization` + product-localisation
+    -- commutation), the localised `(K.sc n).X i [1/f]` identifies with the
+    -- slice-cover Čech `.X i` at the same degree, and consequently the
+    -- localised differential identifies with the slice-cover differential.
+    -- This identification + `IsLocalizedModule.map_exact` transports
+    -- `h_a_fun f` (which is the slice-cover Čech `Function.Exact` at
+    -- degree `n`) to `Function.Exact` of the localised differential.
+    -- The infinite-set subtlety (`s` is `Set`, not `Finset`) is sidestepped
+    -- because `Ideal.span s = ⊤` already implies a *finite* subset spans
+    -- the unit ideal — `exact_of_isLocalized_span` only consumes the per-`r`
+    -- localised exactness data and the spanning hypothesis, not finiteness
+    -- of `s` directly.
+    -- ===========================================================================
+    -- Substep (b1) — install the `Module Γ(C.left, U)` instances on each
+    -- cochain factor `(K.sc n).X i`.
+    -- ===========================================================================
+    -- The cochain factor `K.X i = ∏_{x : Fin (i+1) → s} Γ(C.left, ⋂_k 𝒰(x k))`
+    -- carries a `Γ(C.left, U)`-module structure pointwise, since each
+    -- `Γ(C.left, V)` for `V ≤ U` is a `Γ(C.left, U)`-algebra via the
+    -- restriction map (iter-058's `basicOpenCover_finset_inf'_le` supplies
+    -- the inclusion `V ≤ U`, iter-006's `algebraSection` supplies the
+    -- algebra structure on each factor).
+    --
+    -- ===========================================================================
+    -- Substep (b2) — exhibit `slice_K.X i` as `IsLocalizedModule.Away f.1`
+    -- of `(K.sc n).X i` for each `f ∈ s`.
+    -- ===========================================================================
+    -- The cochain-factor identification chain (iter-057 + iter-058 + iter-059
+    -- + Mathlib `Localization.localizationLocalization` + product-localisation
+    -- commutation) gives
+    --   `slice_K.X i = ∏_x Γ(C.left, ⋂_k 𝒰_slice(x k))`
+    --                = `∏_x Γ(C.left, ⋂_k 𝒰(x k) ⊓ D(f))`
+    --                = `∏_x Γ(C.left, ⋂_k 𝒰(x k))[1/f]`        (iter-058 + iter-059)
+    --                = `(∏_x Γ(C.left, ⋂_k 𝒰(x k)))[1/f]`     (product-loc commutation)
+    --                = `(K.X i)[1/f]`.
+    -- The pointwise localisation map (component-wise restriction map
+    -- `Γ(C.left, V) → Γ(C.left, V')` for `V' = V ⊓ D(f) ≤ V`) is the canonical
+    -- localisation map and an `IsLocalizedModule.Away f.1` instance.
+    --
+    -- ===========================================================================
+    -- Substep (c) — apply `exact_of_isLocalized_span s hs ... h_a_fun`.
+    -- ===========================================================================
+    -- With the data from (b1) and (b2), `exact_of_isLocalized_span` packages
+    -- the per-`f` exactness `h_a_fun f` into the global `Function.Exact`
+    -- conclusion. The remaining work is purely the unification of the per-`f`
+    -- input shape with the conclusion of `IsLocalizedModule.map ... F`
+    -- via the iso from (b2) and `IsLocalizedModule.map_exact`.
+    -- ===========================================================================
+    -- Iter-063 progress: explicit finite-subspanning extraction + obstruction
+    -- diagnosis.
+    -- ===========================================================================
+    -- The localisation-commutes-with-products subtlety identified by the
+    -- iter-061 prover (Attempt 3) is genuine and severe: for the cochain
+    -- factor `K.X i = ∏ᶜ_{x : Fin (i+1) → s} P.obj (op (∏ᶜ_k 𝒰(x k)))` in
+    -- `ModuleCat k` (where `P` is the underlying presheaf of `toModuleKSheaf C`),
+    -- the index set `Fin (i+1) → s` is *infinite* when `s` is infinite, and
+    -- `LocalizedModule (powers f) (∏ᶜ_x M_x) ≄ ∏ᶜ_x LocalizedModule (powers f) M_x`
+    -- in general for infinite products. So `slice_K.X i = ∏_x Γ(V_x ⊓ D(f))`
+    -- is NOT literally `(K.X i)[1/f]` — the natural map between them is
+    -- *not* an `IsLocalizedModule.Away f.1`. Iter-062's substep (b2) plan
+    -- ("install `IsLocalizedModule.Away f.1` instances on the product")
+    -- requires reducing to a finite index-set first.
+    --
+    -- Iter-063 lands the finite-subspanning extraction as a structural fact
+    -- inside the proof: `Ideal.span s = ⊤` implies the existence of a
+    -- *finite* subset `s₀ ⊆ s` with `Ideal.span ↑s₀ = ⊤` via Mathlib's
+    -- `Ideal.span_eq_top_iff_finite`. The remaining substep work uses `s₀`
+    -- (a `Finset`, hence `Fin (i+1) → ↑s₀` is finite) to install the
+    -- product-localisation commutation. The transport step from `s₀`-cover
+    -- exactness to `s`-cover exactness is itself non-trivial: it requires
+    -- a Čech-complex refinement comparison (`s₀ ⊆ s` ⇒ Čech-cohomology
+    -- equality), which Mathlib does not currently expose directly but can
+    -- be derived from the universal property of products via `Pi.eqOfPi`
+    -- + the per-component (cofinal) refinement.
+    have hs_fin : ∃ s' : Finset Γ(C.left, U), (↑s' : Set Γ(C.left, U)) ⊆ s ∧
+        Ideal.span (↑s' : Set Γ(C.left, U)) = ⊤ :=
+      (Ideal.span_eq_top_iff_finite (s := s)).mp hs
+    -- ===========================================================================
+    -- Substep (b1-b2-c) merged with the iter-063 finite-subspanning data.
+    -- ===========================================================================
+    -- The route now has three components: (i) Čech-cohomology refinement
+    -- transport `s → s₀` (using `hs_fin`); (ii) substep (b2) at the finite
+    -- cover `s₀` where the product-localisation commutation succeeds; and
+    -- (iii) `exact_of_isLocalized_span` on `s₀` together with the per-`f`
+    -- slice-cover exactness `h_a_fun ⟨f, hs_fin.choose_spec.1 hf⟩` for
+    -- `f ∈ s₀ ⊆ s`.
+    --
+    -- The Čech-refinement transport (i) is the new iter-064+ work; it has
+    -- the form
+    -- `Function.Exact (K(s).sc n).f (K(s).sc n).g ↔
+    --    Function.Exact (K(s₀).sc n).f (K(s₀).sc n).g`
+    -- under `hs_fin`. A natural framing: there is a *cochain-complex map*
+    -- `K(s) → K(s₀)` (induced by the cofinal inclusion `s₀ ⊆ s` and the
+    -- product universal property), and exactness transports along it
+    -- iff one shows the map is a "Čech equivalence" — equivalently, by
+    -- the lattice-supremum agreement `⨆ basicOpenCover s = U = ⨆ basicOpenCover s₀`,
+    -- the two covers compute the same Čech cohomology via the
+    -- `cechCohomology` carrier.
+    -- ===========================================================================
+    -- Iter-064: component (i) scaffolding — Čech-cohomology refinement transport.
+    -- ===========================================================================
+    -- Extract the finite subspanning set `s₀` and its properties.
+    obtain ⟨s₀, h_sub, h_top⟩ := hs_fin
+    -- Introduce shorthand for the two Čech cochain complexes.
+    let K := cechCochain C (toModuleKSheaf C) (basicOpenCover s)
+    let K₀ := cechCochain C (toModuleKSheaf C)
+      (basicOpenCover (C := C) (U := U) (↑s₀ : Set Γ(C.left, U)))
+    -- The inclusion `↑s₀ ⊆ s` induces a cochain-complex map `K → K₀` by
+    -- precomposing multi-indices.  Exactness transports across this map because
+    -- both covers generate the same sieve on `U` (`⨆ basicOpenCover s = U =
+    -- ⨆ basicOpenCover ↑s₀`).  The transport is stated as a `have` below;
+    -- closing it requires either a direct homological-algebra argument
+    -- (quasi-isomorphism induced by the refinement) or a reduction to the
+    -- sheaf-theoretic fact that Čech cohomology depends only on the generated
+    -- sieve.  Mathlib does not yet expose this comparison directly.
+    have h_transport :
+      Function.Exact
+        ⇑(ConcreteCategory.hom (HomologicalComplex.sc K₀ n).f)
+        ⇑(ConcreteCategory.hom (HomologicalComplex.sc K₀ n).g) →
+      Function.Exact
+        ⇑(ConcreteCategory.hom (HomologicalComplex.sc K n).f)
+        ⇑(ConcreteCategory.hom (HomologicalComplex.sc K n).g) := by
+      -- =========================================================================
+      -- Iter-065 scaffolding: Čech-cohomology refinement transport `s → s₀`.
+      -- =========================================================================
+      intro h_exact_K₀
+      -- Step 1: the inclusion `↑s₀ ↪ s` induces a map of index sets
+      -- `Fin (i+1) → ↑s₀ → Fin (i+1) → s` for each degree `i`.  By the universal
+      -- property of the categorical product, this gives a projection map
+      -- `π_i : K.X i → K₀.X i` in `ModuleCat k` (project onto the smaller index
+      -- set).  These assemble into a cochain-complex map `π : K → K₀` because
+      -- the Čech differential is natural in the index set.
+      --
+      -- **Iter-065 concrete construction** of `π`.  We assemble it through the
+      -- Mathlib API:
+      --   1. The inclusion `↑s₀ ⊆ s` gives a `FormalCoproduct`-morphism
+      --      `g_FC : ⟨↑s₀, basicOpenCover ↑s₀⟩ ⟶ ⟨s, basicOpenCover s⟩`
+      --      (function `j ↦ ⟨j.1, h_sub j.2⟩` on indices, identity on objects
+      --      since `basicOpenCover s ⟨j.1, _⟩ = C.left.basicOpen j.1 =
+      --      basicOpenCover ↑s₀ j`).
+      --   2. `Limits.FormalCoproduct.cechFunctor` applied to `g_FC` produces a
+      --      morphism of simplicial objects in `FormalCoproduct (Opens _)`.
+      --   3. `cosimplicialObjectFunctor` precomposes with `_.rightOp`, hence is
+      --      *contravariant* in the simplicial object.  Applying it via
+      --      `whiskeringLeft` yields a natural transformation
+      --      `cosimplicialObjectFunctor (mk s _).cech ⟶
+      --       cosimplicialObjectFunctor (mk ↑s₀ _).cech`.
+      --   4. Whiskering with `alternatingCofaceMapComplex` and evaluating at
+      --      the underlying presheaf of `toModuleKSheaf C` gives the desired
+      --      cochain-complex morphism `K ⟶ K₀`.
+      let g_FC :
+          (Limits.FormalCoproduct.mk (↑s₀ : Set Γ(C.left, U))
+              (basicOpenCover (C := C) (U := U) (↑s₀ : Set Γ(C.left, U)))) ⟶
+          (Limits.FormalCoproduct.mk s
+              (basicOpenCover (C := C) (U := U) s)) :=
+        { f := fun j => ⟨j.1, h_sub j.2⟩
+          φ := fun _ => 𝟙 _ }
+      let g_simp :
+          (Limits.FormalCoproduct.mk (↑s₀ : Set Γ(C.left, U))
+              (basicOpenCover (C := C) (U := U)
+                (↑s₀ : Set Γ(C.left, U)))).cech ⟶
+          (Limits.FormalCoproduct.mk s
+              (basicOpenCover (C := C) (U := U) s)).cech :=
+        Limits.FormalCoproduct.cechFunctor.map g_FC
+      let π : HomologicalComplex.Hom K K₀ :=
+        ((Functor.whiskerLeft (Limits.FormalCoproduct.evalOp _ (ModuleCat.{u} k))
+            ((Functor.whiskeringLeft _ _ _).map g_simp.rightOp)) ◫
+          𝟙 (AlgebraicTopology.alternatingCofaceMapComplex (ModuleCat.{u} k))).app
+          ((sheafToPresheaf _ _).obj (toModuleKSheaf C))
+      -- Step 2: each component `π_i` is a split surjection in `ModuleCat k`.
+      -- The splitting is given by extending a function `Fin (i+1) → ↑s₀` to
+      -- `Fin (i+1) → s` by choosing arbitrary values on the complement of `↑s₀`
+      -- (possible because `s` is non-empty, as `Ideal.span s = ⊤`).
+      --
+      -- Iter-066: the categorical content is captured by
+      -- `splitEpi_pi_lift_of_injective` (defined above), which says a product
+      -- projection induced by an injection of index sets is split in
+      -- `ModuleCat k`. The remaining obligation is to identify `π.f i` as such
+      -- a product projection — namely
+      -- `Pi.lift (fun j' : Fin(i+1) → ↑s₀ => Pi.π M (g_FC.f ∘ j'))` for the
+      -- family `M : (Fin(i+1) → s) → ModuleCat k` given by
+      -- `j ↦ F.obj (op (∏ᶜ_a basicOpenCover s (j a)))`. From the simp lemmas of
+      -- `evalOp` (`Mathlib/CategoryTheory/Limits/FormalCoproducts/Basic.lean` L383),
+      -- of `cechFunctor` (`.../FormalCoproducts/Cech.lean` L194), and of
+      -- `alternatingCofaceMapComplex`, `π.f i` reduces to exactly this form
+      -- (the `≫ F.map (𝟙).op` factor collapses by `F.map_id` since
+      -- `(powerMap g_FC (Fin (i+1))).φ j' = 𝟙` for our `g_FC`).
+      --
+      -- Decomposing into named subobligations:
+      have h_inj : Function.Injective (g_FC.f) := fun a b hab => by
+        -- g_FC.f j = ⟨j.1, h_sub j.2⟩ ∈ s; injective because Subtype.val is.
+        have : (g_FC.f a).1 = (g_FC.f b).1 := congrArg Subtype.val hab
+        exact Subtype.ext this
+      have h_inj' (i : ℕ) :
+          Function.Injective (fun (j' : Fin (i + 1) → ↑s₀) => g_FC.f ∘ j') :=
+        fun a b hab => funext (fun x => h_inj (congrFun hab x))
+      -- The actual identification of `π.f i` with the product projection (and
+      -- thus the SplitEpi) remains to be carried out. The helper
+      -- `splitEpi_pi_lift_of_injective` reduces the work to this identification
+      -- step. See `task_results/BasicOpenCech.lean.md` for the iter-066
+      -- analysis of the simp lemmas needed.
+      have h_π_split (i : ℕ) : SplitEpi (π.f i) := by
+        -- Approach: use convert with the helper, then close the equality subgoal
+        -- via simp lemmas for evalOp, cechFunctor, and alternatingCofaceMapComplex.
+        convert splitEpi_pi_lift_of_injective _ (fun j' => g_FC.f ∘ j') (h_inj' i) using 2
+        · -- After convert, the goal is π.f i = Pi.lift (...).  Simplify the
+          -- left-hand side using the simps lemmas for evalOp, cechFunctor,
+          -- and alternatingCofaceMapComplex, then unfold g_simp and use the
+          -- powerMap simps.  The remaining identity morphisms are eliminated
+          -- pointwise after congr+funext.
+          simp [π]
+          rw [show g_simp = FormalCoproduct.cechFunctor.map g_FC by rfl]
+          simp [FormalCoproduct.cechFunctor_map_app, FormalCoproduct.powerMap_f,
+            FormalCoproduct.powerMap_φ]
+          dsimp [g_FC]
+          congr
+          funext i_1
+          erw [Limits.Pi.map_id, CategoryTheory.op_id, CategoryTheory.Functor.map_id,
+            CategoryTheory.Category.comp_id]
+      -- Step 3: the kernel of `π` at degree `i` is the product of the factors
+      -- indexed by `x : Fin (i+1) → s` that are *not* in the image of
+      -- `Fin (i+1) → ↑s₀`.  The kernel complex is acyclic in positive degrees
+      -- because it is a Čech complex of a cover that is a refinement of a cover
+      -- with a terminal object (the extra-degeneracy argument applies to the
+      -- kernel once `s` is reduced modulo `↑s₀`).  Alternatively, one can use
+      -- the sheaf-theoretic fact that Čech cohomology depends only on the
+      -- generated sieve, and both `s` and `s₀` generate the same sieve `U`.
+      --
+      -- Step 4: from the short exact sequence of complexes
+      -- `0 → ker(π) → K → K₀ → 0` and exactness of `K₀` at degree `n`, the
+      -- long exact sequence in cohomology gives exactness of `K` at degree `n`.
+      -- A direct diagram-chase argument (or `HomologicalComplex.homologyMap`)
+      -- closes the goal.
+      sorry
+    -- ===========================================================================
+    -- Iter-064: component (ii) scaffolding — `exact_of_isLocalized_span` on `s₀`.
+    -- ===========================================================================
+    -- We now prove exactness of `K₀` using the finite-spanning local-to-global
+    -- principle.  Because `s₀` is finite, the cochain factors of `K₀` are
+    -- *finite* products, so product-localisation commutation holds and
+    -- `IsLocalizedModule.Away f.1` instances can be installed.
+    have h_K₀_exact : Function.Exact
+        ⇑(ConcreteCategory.hom (HomologicalComplex.sc K₀ n).f)
+        ⇑(ConcreteCategory.hom (HomologicalComplex.sc K₀ n).g) := by
+      -- Step 1: install `Module Γ(C.left, U)` instances on each cochain factor
+      -- of `K₀`.  Each factor `Γ(C.left, V)` for `V ≤ U` is a
+      -- `Γ(C.left, U)`-algebra via the restriction map; the finite product
+      -- inherits the pointwise `Γ(C.left, U)`-module structure.
+      --
+      -- Step 2: for each `f ∈ ↑s₀`, the slice cover Čech complex at `f`
+      -- (indexed by `↑s₀`) is exact in degree `n` by the same extra-degeneracy
+      -- argument as substep (a): the cover of `D(f)` contains `D(f)` itself
+      -- (at index `f`), so the augmented complex contracts.  This is stated
+      -- as `h_a₀` below.
+      have h_a₀ : ∀ (f : ↑s₀),
+          (cechCochain C (toModuleKSheaf C)
+            (fun (f' : ↑s₀) => basicOpenCover (C := C) (U := U) (↑s₀ : Set Γ(C.left, U)) f' ⊓
+              C.left.basicOpen (f : Γ(C.left, U)))).ExactAt n := by
+        intro f
+        -- Same extra-degeneracy argument as `h_a`: the terminal vertex of the
+        -- `↑s₀`-indexed slice cover is at `f' = f`, giving `D(f) ⊓ D(f) = D(f)`.
+        sorry  -- substep (a) for `s₀`: extra-degeneracy on `s₀`-indexed slice cover
+      have h_a₀_fun : ∀ (f : ↑s₀),
+          Function.Exact
+            ⇑(ConcreteCategory.hom (HomologicalComplex.sc
+                (cechCochain C (toModuleKSheaf C)
+                  (fun (f' : ↑s₀) => basicOpenCover (C := C) (U := U) (↑s₀ : Set Γ(C.left, U)) f' ⊓
+                    C.left.basicOpen (f : Γ(C.left, U)))) n).f)
+            ⇑(ConcreteCategory.hom (HomologicalComplex.sc
+                (cechCochain C (toModuleKSheaf C)
+                  (fun (f' : ↑s₀) => basicOpenCover (C := C) (U := U) (↑s₀ : Set Γ(C.left, U)) f' ⊓
+                    C.left.basicOpen (f : Γ(C.left, U)))) n).g) := by
+        intro f
+        rw [← ShortComplex.ShortExact.moduleCat_exact_iff_function_exact,
+            ← HomologicalComplex.exactAt_iff]
+        exact h_a₀ f
+      -- Step 3: for each `f ∈ ↑s₀`, identify the localisation of `K₀.X i` at
+      -- `f` with the `↑s₀`-indexed slice-cover term at the same degree.
+      -- Because `s₀` is finite, `Fin (i+1) → ↑s₀` is finite, and the
+      -- product-localisation commutation
+      --   `LocalizedModule (powers f) (∏ᶜ_x Γ(V_x)) ≅ ∏ᶜ_x Γ(V_x ⊓ D(f))`
+      -- holds.  This gives `IsLocalizedModule.Away f.1` instances on the
+      -- cochain-complex maps of `K₀`, viewed as `Γ(C.left, U)`-linear maps.
+      --
+      -- Step 4: transport `h_a₀_fun f` (exactness of the slice-cover Čech
+      -- complex) across the product-localisation identification via
+      -- `IsLocalizedModule.map_exact` to obtain exactness of the localised
+      -- differential of `K₀` at `f`.
+      --
+      -- Step 5: apply `exact_of_isLocalized_span ↑s₀ h_top ...` to conclude
+      -- global exactness of `K₀`.
+      -- =========================================================================
+      -- Iter-065 scaffolding: structured attack on `exact_of_isLocalized_span`.
+      -- =========================================================================
+      let R := Γ(C.left, U)
+      let scK₀ := HomologicalComplex.sc K₀ n
+      -- =========================================================================
+      -- Iter-072 prover refactor: hoist `Z_i`, `e_i`, `h_mod_pi_i` to the outer
+      -- scope so the LinearEquiv handles `e_i` are available for `Equiv.smul_def`
+      -- unfolding in `map_smul'` below.
+      -- =========================================================================
+      -- The pointwise product types for each cochain degree.
+      let Z₁ := fun (i : Fin ((ComplexShape.up ℕ).prev n + 1) → ↑s₀) =>
+        ModuleCat.of k (C.left.presheaf.obj
+          (Opposite.op (∏ᶜ fun a => basicOpenCover (C := C) (U := U) ↑s₀ (i a))))
+      let Z₂ := fun (i : Fin (n + 1) → ↑s₀) =>
+        ModuleCat.of k (C.left.presheaf.obj
+          (Opposite.op (∏ᶜ fun a => basicOpenCover (C := C) (U := U) ↑s₀ (i a))))
+      let Z₃ := fun (i : Fin (n + 2) → ↑s₀) =>
+        ModuleCat.of k (C.left.presheaf.obj
+          (Opposite.op (∏ᶜ fun a => basicOpenCover (C := C) (U := U) ↑s₀ (i a))))
+      -- LinearEquivs `∏ᶜ Z_i ≃ₗ[k] (∀ i, Z_i)` from Mathlib's `ModuleCat.piIsoPi`.
+      let e₁ := (ModuleCat.piIsoPi Z₁).toLinearEquiv
+      let e₂ := (ModuleCat.piIsoPi Z₂).toLinearEquiv
+      let e₃ := (ModuleCat.piIsoPi Z₃).toLinearEquiv
+      -- Pointwise `R`-module structure on each `∀ i, Z_i`.
+      -- Each component `Z_i k = Γ(C.left, V_k)` is an `R`-algebra (via restriction),
+      -- hence an `R`-module; the product inherits the pointwise structure.
+      --
+      -- ITER-080 refactor: the per-i Module instance is now bound as a named
+      -- `letI perI_n` and `h_mod_pi_n` is constructed via `Pi.module` which
+      -- picks up `perI_n` via typeclass synthesis on `[∀ i, Module R (β i)]`.
+      -- This makes `Pi.smul_apply` fire on `h_mod_pi_n.toSMul.smul r _ j`
+      -- because the per-i SMul is now visible to typeclass search (whereas the
+      -- previous anonymous per-i builder was unreachable). Semantic content is
+      -- preserved byte-for-byte: each `perI_n` is the same `fun i => by ...`
+      -- term that previously sat inside `Pi.module`'s instance argument.
+      letI perI₁ : ∀ i, Module R (Z₁ i) := fun i => by
+        apply RingHom.toModule
+        refine (C.left.presheaf.map (homOfLE ?_).op).hom
+        let a0 : Fin ((ComplexShape.up ℕ).prev n + 1) := ⟨0, by omega⟩
+        have h1 : ∏ᶜ (fun a => basicOpenCover (C := C) (U := U) ↑s₀ (i a)) ≤
+          basicOpenCover (C := C) (U := U) ↑s₀ (i a0) := (Pi.π _ a0).le
+        have h2 : basicOpenCover (C := C) (U := U) ↑s₀ (i a0) ≤ U :=
+          basicOpen_le C.left (i a0 : Γ(C.left, U))
+        exact h1.trans h2
+      letI h_mod_pi₁ : Module R (∀ i, Z₁ i) := Pi.module _ _ _
+      letI perI₂ : ∀ i, Module R (Z₂ i) := fun i => by
+        apply RingHom.toModule
+        refine (C.left.presheaf.map (homOfLE ?_).op).hom
+        let a0 : Fin (n + 1) := ⟨0, by omega⟩
+        have h1 : ∏ᶜ (fun a => basicOpenCover (C := C) (U := U) ↑s₀ (i a)) ≤
+          basicOpenCover (C := C) (U := U) ↑s₀ (i a0) := (Pi.π _ a0).le
+        have h2 : basicOpenCover (C := C) (U := U) ↑s₀ (i a0) ≤ U :=
+          basicOpen_le C.left (i a0 : Γ(C.left, U))
+        exact h1.trans h2
+      letI h_mod_pi₂ : Module R (∀ i, Z₂ i) := Pi.module _ _ _
+      letI perI₃ : ∀ i, Module R (Z₃ i) := fun i => by
+        apply RingHom.toModule
+        refine (C.left.presheaf.map (homOfLE ?_).op).hom
+        let a0 : Fin (n + 2) := ⟨0, by omega⟩
+        have h1 : ∏ᶜ (fun a => basicOpenCover (C := C) (U := U) ↑s₀ (i a)) ≤
+          basicOpenCover (C := C) (U := U) ↑s₀ (i a0) := (Pi.π _ a0).le
+        have h2 : basicOpenCover (C := C) (U := U) ↑s₀ (i a0) ≤ U :=
+          basicOpen_le C.left (i a0 : Γ(C.left, U))
+        exact h1.trans h2
+      letI h_mod_pi₃ : Module R (∀ i, Z₃ i) := Pi.module _ _ _
+      -- `Module R` instances on `scK₀.X_i`, transported via `e_i` from the
+      -- pointwise structure on `∀ i, Z_i`. We keep `convert h` (rather than
+      -- `exact h`) as a defensive measure: after `dsimp`, the types match
+      -- definitionally, but `convert` succeeds even if a residual coercion
+      -- appears. The `Equiv.smul_def` rewrites in `map_smul'` below depend on
+      -- the resulting smul being literally `e_i.toEquiv.smul R`; iter-071
+      -- verified this holds in practice (the LinearEquiv on `scK₀.X_i` matches
+      -- the pi-iso target after dsimp).
+      -- ITER-077: use `letI` (not `have`) so the module instance registers
+      -- with typeclass synthesis, and bind it to the literal
+      -- `e_i.toAddEquiv.module R` term so the underlying smul is
+      -- `e_i.toEquiv.smul R` (which gives `r • x = e_i.symm (r • e_i x)` by
+      -- `rfl` per `Equiv.smul_def` being `rfl`).
+      letI h_mod_X₁ : Module R scK₀.X₁ := by
+        dsimp only [scK₀, K₀, cechCochain, cechComplexFunctor,
+          toModuleKSheaf, toModuleKPresheaf_obj]
+        letI := h_mod_pi₁
+        exact e₁.toAddEquiv.module R
+      letI h_mod_X₂ : Module R scK₀.X₂ := by
+        dsimp only [scK₀, K₀, cechCochain, cechComplexFunctor,
+          toModuleKSheaf, toModuleKPresheaf_obj]
+        letI := h_mod_pi₂
+        exact e₂.toAddEquiv.module R
+      letI h_mod_X₃ : Module R scK₀.X₃ := by
+        -- `scK₀.X₃ = K₀.X ((ComplexShape.up ℕ).next n)` doesn't reduce to
+        -- `K₀.X (n + 1)` by `rfl` — `ComplexShape.next` is opaque (defined
+        -- via `Classical.choose` over `Rel`). Pre-rewrite via `CochainComplex.next`.
+        have h_eq : scK₀.X₃ = K₀.X (n + 1) := by
+          change K₀.X ((ComplexShape.up ℕ).next n) = K₀.X (n + 1)
+          rw [CochainComplex.next]
+        rw [h_eq]
+        dsimp only [K₀, cechCochain, cechComplexFunctor,
+          toModuleKSheaf, toModuleKPresheaf_obj]
+        letI := h_mod_pi₃
+        exact e₃.toAddEquiv.module R
+      -- =========================================================================
+      -- Step 2: repackage the Čech differential as `R`-linear maps.
+      -- =========================================================================
+      -- The Čech differential is an alternating sum of restriction maps; each
+      -- restriction map `Γ(C.left, V) → Γ(C.left, W)` (for `W ≤ V ≤ U`) is an
+      -- `R`-algebra homomorphism, hence `R`-linear.
+      --
+      -- Iter-072 prover: with the hoisted `e_i` and `h_mod_pi_i` in scope,
+      -- `map_smul'` reduces (via `Equiv.smul_def` applied to the transported
+      -- module structure) to the analogous identity on the explicit product
+      -- `∀ i, Z_i`. The deep step — `R`-linearity of the alternating-coface
+      -- differential pointwise — is captured as a labelled sub-claim
+      -- `h_diff_pi_smul_{f,g}` below, which factors out the residual obligation
+      -- from the structural transport.
+      --
+      -- The substantive content of `h_diff_pi_smul_{f,g}` is:
+      -- `∀ (r : R) (x : ∀ i, Z_{i+1} i),
+      --   (e_{out} (⇑(scK₀.{f,g}) (e_{in}.symm x))) = r • (e_{out} (⇑(scK₀.{f,g}) (e_{in}.symm (r⁻¹ • x))))`
+      -- (up to symmetry / direction). After unfolding `alternatingCofaceMapComplex.d`
+      -- to expose the alternating sum of `Pi.map (restriction)` terms, each
+      -- summand is `R`-linear because:
+      --   1. Each `restriction : Γ(V) → Γ(W)` is an `R`-algebra-hom (chain
+      --      `R = Γ(U) → Γ(V) → Γ(W)`), hence `R`-linear.
+      --   2. `Pi.map (R-linear) is R-linear` pointwise on each component.
+      --   3. Sums of `R`-linear maps are `R`-linear (`LinearMap.add_comp` etc).
+      -- The mechanical implementation of these three observations is queued
+      -- for the next iteration; the structural transport (via `Equiv.smul_def`)
+      -- is closed here.
+      have h_diff_pi_smul_f : ∀ (r : R) (y : ∀ i, Z₁ i),
+          letI := h_mod_pi₁
+          letI := h_mod_pi₂
+          e₂ (⇑(ConcreteCategory.hom scK₀.f) (e₁.symm (r • y))) =
+            r • e₂ (⇑(ConcreteCategory.hom scK₀.f) (e₁.symm y)) := by
+        -- Substantive deep claim: the Čech differential, viewed in the
+        -- product representation via `e₁/e₂`, is `R`-linear on each component.
+        -- Reduces to: each component-restriction in `alternatingCofaceMapComplex.d`
+        -- is an `R`-algebra-hom (project-local `Scheme.algebraSection.algebraMap`
+        -- chain). Mechanical but multi-step; deferred to iter-073.
+        --
+        -- ==================================================================
+        -- Iter-073 prover analysis (env broken — LSP unavailable, sorry kept):
+        -- ==================================================================
+        -- Concrete reduction chain that the next-iteration prover should follow.
+        --
+        -- (S1) `scK₀ := HomologicalComplex.sc K₀ n`, so `scK₀.f = K₀.d (prev n) n`
+        --   where for `(up ℕ).Rel (prev n) n`, this is the cochain-complex differential.
+        --   `scK₀.f.hom : K₀.X (prev n) ⟶ K₀.X n` in `ModuleCat k`.
+        --
+        -- (S2) `K₀ := cechCochain C (toModuleKSheaf C) (basicOpenCover ↑s₀)`
+        --   `   = (cechComplexFunctor (basicOpenCover ↑s₀)).obj (sheafToPresheaf.obj (toModuleKSheaf C))`
+        --   `   = (FormalCoproduct.cochainComplexFunctor (mk _ basicOpenCover ↑s₀).cech).obj P`
+        --   `   = (alternatingCofaceMapComplex (ModuleCat k)).obj X'`
+        --   where `X' := (FormalCoproduct.cosimplicialObjectFunctor (mk _ basicOpenCover ↑s₀).cech).obj P`
+        --   and `P := (sheafToPresheaf _ _).obj (toModuleKSheaf C)`.
+        --
+        -- (S3) `(alternatingCofaceMapComplex C).obj X` is `CochainComplex.of` with
+        --   differential `AlternatingCofaceMapComplex.objD X m = ∑ i : Fin (m+2), (-1)^i • X.δ i`.
+        --
+        -- (S4) `X'.δ i = X'.map (SimplexCategory.δ i).op`
+        --   `  = (evalOp.obj P).map (((mk _ basicOpenCover ↑s₀).cech.rightOp).map δ_i.op).unop`
+        --   With `(evalOp.obj P).map f = Pi.lift (fun i ↦ Pi.π _ (f.unop.f i) ≫ P.map (f.unop.φ i).op)`,
+        --   each `X'.δ k` at degree `m` is:
+        --   `   Pi.lift (fun (j : Fin (m+2) → ↑s₀) ↦ Pi.π _ (j ∘ δ_k.toOrderHom) ≫ P.map (φ).op)`
+        --   where `φ : ∏ᶜ_a basicOpenCover ↑s₀ ((j ∘ δ_k.toOrderHom) a) ⟶ ∏ᶜ_a basicOpenCover ↑s₀ (j a)`
+        --   is the appropriate `Pi.map (Pi.lift ...)`-shape morphism in `Scheme.Opens`.
+        --
+        -- (S5) Each `P.map (φ).op` is `(C.left.presheaf.map (homOfLE V_j ≤ V_{j∘δ_k}).op).hom`
+        --   = a ring-hom restriction (since `presheaf.map` produces `CommRingCat` morphisms,
+        --   whose `.hom` is a ring-hom).
+        --
+        -- (S6) The R-module structure on `(∀ i, Z₁ i)` is via `Pi.module`, with each component
+        --   using `RingHom.toModule (presheaf.map (V_i ≤ U).op).hom`.
+        --   So `(r • y) i = (presheaf.map (V_i ≤ U).op).hom r * y i`.
+        --
+        -- (S7) Per-summand R-linearity: for each `k` and output multi-index `j`, write
+        --   `restrict_{i→j} := (presheaf.map (V_j ≤ V_i).op).hom` where `i = j ∘ δ_k.toOrderHom`.
+        --   Then:
+        --     `restrict_{i→j} ((presheaf.map (V_i ≤ U).op).hom r * y i)`
+        --     `= restrict_{i→j} ((presheaf.map (V_i ≤ U).op).hom r) * restrict_{i→j} (y i)`  [ring-hom]
+        --     `= (presheaf.map (V_j ≤ U).op).hom r * restrict_{i→j} (y i)`  [presheaf functoriality]
+        --     `= r •_j (restrict_{i→j} (y i))`.
+        --
+        -- (S8) Pi.lift / Pi.π and finite alternating sums commute with R-action componentwise.
+        --
+        -- The mechanical execution needs `dsimp` through the 5-layer functor stack and
+        -- careful handling of `letI`-introduced module instances. Without LSP feedback,
+        -- I leave the sorry intact rather than risk breaking the file's compilation.
+        --
+        -- Concrete recipe for next iteration:
+        --   `dsimp only [scK₀, K₀, cechCochain, cechComplexFunctor,`
+        --   `  FormalCoproduct.cochainComplexFunctor, FormalCoproduct.cosimplicialObjectFunctor,`
+        --   `  FormalCoproduct.evalOp, AlgebraicTopology.alternatingCofaceMapComplex,`
+        --   `  AlgebraicTopology.AlternatingCofaceMapComplex.obj,`
+        --   `  AlgebraicTopology.AlternatingCofaceMapComplex.objD,`
+        --   `  HomologicalComplex.sc, ShortComplex.f, CochainComplex.of, CochainComplex.ofHom,`
+        --   `  ComplexShape.up]`
+        --   then `funext j`, expand Pi.module smul via `Pi.smul_apply`, distribute the sum
+        --   via `Finset.sum_apply` + `Finset.smul_sum`, and reduce each summand via
+        --   `algebraMap_naturality` (`AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean` L161).
+        -- ITER-076 prover: roll back the in-flight `funext + 5-layer simp +
+        -- refine Finset.sum_congr + rw smul_comm + congr 1` chain. The
+        -- `Pi.smul_apply / Finset.sum_apply / Finset.smul_sum` rewrites no
+        -- longer fire after the 5-layer unfold (diagnostic L1088 — `simp made
+        -- no progress`), and the subsequent `refine Finset.sum_congr rfl` then
+        -- fails because the goal is `_ j = _ j` rather than `∑ = ∑` (L1095
+        -- type mismatch). The recipe (S1–S8 above + sign peel + sign-free
+        -- 5-step) remains correct in concept; the next iteration's prover
+        -- should re-instantiate it after the cochain factor identification is
+        -- restored.
+        --
+        -- ITER-078 prover: with `set_option maxHeartbeats 800000 in` on
+        -- the enclosing theorem, attempt the S1–S4 prefix of the iter-073
+        -- recipe. The deeper alternating-sum dissection (S5–S8) requires
+        -- non-trivial `dsimp` through the `cechComplexFunctor` →
+        -- `cochainComplexFunctor` → `cosimplicialObjectFunctor` chain to
+        -- expose the `objD` alternating sum, then per-summand
+        -- `algebraMap_naturality`-based R-linearity.
+        intro r y
+        funext j
+        -- After `funext j`, the goal is
+        --   `e₂ ((scK₀.f).hom (e₁.symm (r • y))) j =
+        --      (r • e₂ ((scK₀.f).hom (e₁.symm y))) j`
+        -- (componentwise — NOT in indexed-sum form yet).
+        --
+        -- ITER-080: structural advance over iter-079.  With `perI_i`
+        -- registered via `letI` (and `h_mod_pi_i` also `letI`, so transparent
+        -- and instance-visible), `Pi.smul_apply` now fires directly on the
+        -- RHS — the per-i SMul family `[∀ i, SMul R (Z_i)]` is synthesisable
+        -- from `perI_i`, and the smul on `(∀ i, Z₂ i)` cleanly reduces.
+        -- After this rewrite, the goal becomes:
+        --   `e₂ ((scK₀.f).hom (e₁.symm (r • y))) j =
+        --       r • e₂ ((scK₀.f).hom (e₁.symm y)) j`
+        -- with `r •` on the RHS now at the j-component level (via
+        -- `(perI₂ j).toSMul`, which is the canonical Module.toSMul of the
+        -- R-algebra restriction map `presheaf.map (V_j ≤ U).op`).
+        simp only [Pi.smul_apply]
+        -- ===========================================================================
+        -- ITER-081 advance: S2 + S3 + S4 executed inline; alternating-sum form exposed.
+        -- ===========================================================================
+        -- Step S3 (helper): the only `n`-dependent positivity needed below.  For
+        -- `0 < n`, `(ComplexShape.up ℕ).prev n + 1 = n` — this is the precondition
+        -- for `CochainComplex.of_d` to fire on the inline `K₀ = (alternatingCofaceMapComplex).obj X`.
+        have hRel : (ComplexShape.up ℕ).prev n + 1 = n := by
+          rcases n with _ | k
+          · simp at hn
+          · simp [ComplexShape.prev, ComplexShape.up_Rel]
+        -- Step S2 + S3 + S4 (combined unfold).  `dsimp` peels the 5-layer functor
+        -- stack `scK₀ → K₀ → cechCochain → cechComplexFunctor → toModuleKSheaf`
+        -- to expose the `HomologicalComplex.shortComplexFunctor.obj` representation;
+        -- `simp` (full, with `dif_pos hRel`) then collapses the `CochainComplex.of`
+        -- `.d` projection to the explicit alternating sum
+        --   `∑ i : Fin (prev n + 2), (-1)^i • Pi.lift (Pi.π Z₁ (· ∘ δ_i.toOrderHom) ≫
+        --      (toModuleKPresheaf C).map (Pi.lift (Pi.π (basicOpenCover s₀ ∘ _) (δ_i ·)).op)`
+        -- composed with an `eqToHom` casting through `hRel`.
+        --
+        -- This is the substantive iter-081 advance: prior iterations could not
+        -- expose this explicit form because the `(up ℕ).Rel`-opacity and the
+        -- 5-layer functor stack together blocked the `K₀.d` projection.  The
+        -- `dif_pos hRel`-driven unfold collapses both at once.
+        dsimp only [scK₀, K₀, cechCochain, cechComplexFunctor,
+          toModuleKSheaf, toModuleKPresheaf_obj]
+        simp [FormalCoproduct.cochainComplexFunctor,
+          FormalCoproduct.cosimplicialObjectFunctor,
+          AlgebraicTopology.alternatingCofaceMapComplex,
+          AlgebraicTopology.AlternatingCofaceMapComplex.obj,
+          AlgebraicTopology.AlternatingCofaceMapComplex.objD,
+          AlgebraicTopology.AlternatingCofaceMapComplex.map,
+          CochainComplex.of, FormalCoproduct.evalOp,
+          CosimplicialObject.δ, e₁, e₂, ModuleCat.piIsoPi, dif_pos hRel]
+        -- ===========================================================================
+        -- ITER-082 advance: S5 prelude — transport j-projection past `piIsoPi`.
+        -- ===========================================================================
+        -- Re-fold the `limit.isoLimitCone {cone := productCone, ...}` shape that the
+        -- iter-081 `simp [..., ModuleCat.piIsoPi, ...]` exposed back into the
+        -- `ModuleCat.piIsoPi` API form, so that the `piIsoPi_hom_ker_subtype_apply`
+        -- simp lemma can fire to push the j-projection past the iso.
+        rw [show (limit.isoLimitCone
+              ⟨ModuleCat.productCone Z₂, ModuleCat.productConeIsLimit Z₂⟩)
+              = ModuleCat.piIsoPi Z₂ from rfl,
+            show (limit.isoLimitCone
+              ⟨ModuleCat.productCone Z₁, ModuleCat.productConeIsLimit Z₁⟩)
+              = ModuleCat.piIsoPi Z₁ from rfl]
+        show (ConcreteCategory.hom (ModuleCat.piIsoPi Z₂).hom) _ j =
+            r • (ConcreteCategory.hom (ModuleCat.piIsoPi Z₂).hom) _ j
+        rw [ModuleCat.piIsoPi_hom_ker_subtype_apply,
+            ModuleCat.piIsoPi_hom_ker_subtype_apply]
+        -- ===========================================================================
+        -- ITER-082 post-S5 goal shape (verified via `lean_goal`):
+        -- ===========================================================================
+        -- After the S5 prelude above, BOTH sides of the goal are in the form:
+        --   `(Pi.π Z₂ j).hom ((eqToHom_hom ∘ₗ Σ_hom) ((piIsoPi Z₁).inv <argument>))`
+        -- where `<argument>` is `r • y` (LHS) or `y` (RHS, with an outer `r • ·_j`).
+        -- The `j` projection is now adjacent to the differential application,
+        -- ready for the per-summand R-linearity work S6–S8 below.
+        --
+        -- Iter-082 obstruction: the next step S6 — `simp only [LinearMap.comp_apply]`
+        -- to split the `(eqToHom_hom ∘ₗ Σ_hom) z = eqToHom_hom (Σ_hom z)` —
+        -- fails to fire as a `rw` because the `LinearMap.comp_apply` Mathlib lemma
+        -- has signature `(?f ∘ₛₗ ?g) ?x` (semilinear-style), while our goal has
+        -- the homogeneous `∘ₗ` notation. Higher-order unification fails to bridge
+        -- these. Workarounds attempted:
+        --   * `change` to the explicitly unfolded form fails because the
+        --     `eqToHom` cast type is not displayable in surface syntax.
+        --   * `simp only [LinearMap.coe_comp, Function.comp_apply]` makes
+        --     no progress because the `(... ∘ₗ ...) z` form does not contain
+        --     an explicit coercion `⇑(... ∘ₗ ...)` to rewrite.
+        --   * `simp only [LinearMap.comp_apply]` with explicit RingHomCompTriple
+        --     (`σ := RingHom.id k` everywhere) — also no match.
+        -- Iter-083 path: introduce a `let M : ↑(∏ᶜ Z₁) →ₗ[k] ↑(∏ᶜ Z₂) := eqToHom _ ∘ₗ ∑ ...`
+        -- abbreviation BEFORE the S5 prelude, so the comp is a single named
+        -- LinearMap (not a syntactic `∘ₗ`), then apply `M.map_smul` after
+        -- recognising R-linearity through a per-summand argument.
+        --
+        -- ===========================================================================
+        -- ITER-083 advances + new findings (Lane 1, structural pass; closure NOT
+        -- achieved this iter — sorry preserved at L1240 with no regression).
+        -- ===========================================================================
+        --
+        -- Surface the R-actions on `↑scK₀.X₁` / `↑scK₀.X₂` as local instances so the
+        -- post-S5 goal can at least *talk about* `r • z` for `z : ↑scK₀.X₁` /
+        -- `↑scK₀.X₂` in subsequent rewrite attempts.  These `letI`s are local to
+        -- the proof body and do not alter the closed prefix.
+        letI := h_mod_X₁
+        letI := h_mod_X₂
+        --
+        -- ITER-083 NEW FINDING (1) — typeclass barrier persists despite `letI`.
+        --
+        -- Even AFTER `letI := h_mod_X₁` / `letI := h_mod_X₂`, the ascription
+        -- `(r • e₁.symm y : ↑scK₀.X₁)` fails to elaborate.  Verified diagnostic
+        -- (via `lean_multi_attempt`): `failed to synthesize instance of type
+        -- class HSMul ↑R ↑(∏ᶜ Z₁) ?m`.  The reason: the outer type-ascription
+        -- `: ↑scK₀.X₁` propagates *inward* during elaboration, and Lean tries to
+        -- find `HSMul ↑R ↑(∏ᶜ Z₁) ↑scK₀.X₁` (since `e₁.symm y : ↑(∏ᶜ Z₁)`).  But
+        -- `h_mod_X₁ : Module ↑R ↑scK₀.X₁` provides `HSMul ↑R ↑scK₀.X₁ ↑scK₀.X₁`,
+        -- NOT the `↑(∏ᶜ Z₁)`-source-side variant.
+        --
+        -- Practical implication: ANY tactic that tries to rewrite `r • z` with
+        -- `z : ↑(∏ᶜ Z₁)` (as opposed to `↑scK₀.X₁`) will hit this barrier first.
+        -- The type ascription must be threaded explicitly at the `r •` syntax
+        -- site, e.g. via `@HSMul.hSMul ↑R ↑scK₀.X₁ ↑scK₀.X₁ _ r z`, NOT via
+        -- outer `(... : ↑scK₀.X₁)`.  However, even this is delicate because
+        -- `↑(∏ᶜ Z₁) = ↑scK₀.X₁` is defeq (confirmed via
+        -- `lean_multi_attempt`: `(↑(∏ᶜ Z₁) : Type _) = ↑scK₀.X₁ := rfl`
+        -- succeeds), but unification on the `HSMul.hSMul` instance argument
+        -- does NOT propagate defeq through that equality automatically.
+        --
+        -- ITER-083 NEW FINDING (2) — `e₁.symm (r • y) = r •_{h_mod_X₁} e₁.symm y` is NOT rfl.
+        --
+        -- Despite `h_mod_X₁ = e₁.toAddEquiv.module R`, which defines the smul
+        -- on `↑scK₀.X₁` via `r •_{X₁} z := e₁.symm (r •_{Pi.module} e₁ z)`, the
+        -- identity
+        --     `e₁.symm (r •_{Pi.module} y) = r •_{X₁} e₁.symm y`
+        -- is NOT `rfl`.  Substituting on the RHS gives
+        --     `r •_{X₁} e₁.symm y = e₁.symm (r •_{Pi.module} e₁ (e₁.symm y))`
+        -- which equals `e₁.symm (r •_{Pi.module} y)` only via the `e₁`
+        -- `apply_symm_apply` collapse on the inner argument.  This collapse is
+        -- NOT definitional — `e₁.apply_symm_apply` is a lemma, not `rfl`.
+        --
+        -- Verified diagnostic: the candidate `rfl`-proof for
+        --     `r • e₁.symm y = e₁.symm (r • y)`
+        -- (using `@HSMul.hSMul (α := ↑R) (β := ↑scK₀.X₁) r (e₁.symm y)`) fails
+        -- with `type mismatch: rfl has type ?m = ?m but is expected to have
+        -- type r • e₁.symm y = e₁.symm (r • y)`.
+        --
+        -- Practical implication: the LHS-side smul commutation requires
+        -- `LinearEquiv.symm_apply_apply` (or `Equiv.smul_def` + manual collapse)
+        -- as an explicit rewrite step.  This is a non-trivial complication for
+        -- the path (a) recipe, which assumed the smul commutation through `e₁`
+        -- would be transparent.
+        --
+        -- ITER-084 path forward (revised):
+        --   1. Introduce `let M_h : ↑scK₀.X₁ →ₗ[k] ↑scK₀.X₂ := scK₀.f.hom` BEFORE
+        --      the iter-081 simp chain at L1144.  Defeq `↑scK₀.X₁ = ↑(∏ᶜ Z₁)`
+        --      means the type unifies, and simp does NOT unfold local `let`s.
+        --   2. After the iter-081 simp chain + iter-082 S5 prelude, the goal
+        --      should contain `M_h` (since simp didn't unfold it).  Verify via
+        --      `lean_goal`.
+        --   3. Use `M_h.map_smul'` directly — BUT this is *k-linear*, not
+        --      R-linear, so `r : R` (not `k`) doesn't immediately apply.
+        --   4. ACTUAL closure route: package the per-summand R-linearity as a
+        --      genuine `Φ_j : (∀ i, Z₁ i) →ₗ[R] ↑(Z₂ j)`, constructed via
+        --      `LinearMap.mk` with explicit `map_smul'` proved by `Finset.sum_apply`
+        --      + `Pi.smul_apply` (perI₁) + `RingHom.map_mul` + `presheaf.map_comp`
+        --      + algebraMap_naturality (from `StructureSheafModuleK.lean` L161).
+        --      Each summand at fixed `(i, j)` is R-linear because the restriction
+        --      map `Γ(V_{j∘δ_i}) → Γ(V_j)` is an R-algebra hom (chain
+        --      R = Γ(U) → Γ(V_{j∘δ_i}) → Γ(V_j) via presheaf functoriality).
+        --   5. Then `Φ_j.map_smul r y` directly gives the desired equation, and
+        --      `congr 1` (matching `(Pi.π Z₂ j).hom` on both sides) closes it
+        --      after unfolding `Φ_j`'s definition.
+        --
+        -- The ~30 LOC estimate from iter-082 was optimistic: the construction of
+        -- `Φ_j` in step (4) is closer to 50–80 LOC because each summand needs
+        -- its own R-linearity proof (5 sub-steps each).  The full Phase B
+        -- closure for `h_diff_pi_smul_f` is a multi-iteration project.
+        --
+        -- ===========================================================================
+        -- Sorry rationale (iter-081):
+        -- ===========================================================================
+        -- After the S2+S3+S4 unfold above, BOTH sides of the goal have the form:
+        --   `(piIsoPi Z₂).hom (eqToHom ∘ₗ (∑ i : Fin (prev n + 2),
+        --       (-1)^i • Pi.lift (fun j' => Pi.π Z₁ (j' ∘ δ_i.toOrderHom) ≫
+        --                                      (toModuleKPresheaf C).map (φ_i).op)))
+        --     ((piIsoPi Z₁).symm <argument>) j`
+        -- where `<argument>` is `r • y` (LHS) or `y` (RHS, with an outer `r • ·`).
+        --
+        -- Remaining S5–S8 work (per PROGRESS.md):
+        --   (S5) Distribute `e₂ = (piIsoPi Z₂).hom` and the alternating sum through
+        --        `Pi.lift` to surface per-`(i, j')` summands at the j-component.
+        --        The eqToHom cast is a non-rfl identity from the `(prev n + 1) = n`
+        --        path through `Z₂ ≅ X.obj ⦋n⦌`; it commutes with the smul on Z₂
+        --        because both modules are obtained by the same `AddEquiv.module`
+        --        transport.  `eqToHom_app` + `LinearMap.comp_apply` + `Finset.sum_apply`
+        --        chain expected.
+        --   (S6) `Finset.smul_sum` on the RHS distributes `r •` across the sum.
+        --   (S7) Per-summand at fixed `i : Fin (prev n + 2)` and the output index `j`:
+        --        the summand is `(-1)^i • ((toModuleKPresheaf C).map (φ_i).op).hom
+        --                                  ((Pi.π Z₁ (j ∘ δ_i.toOrderHom)) (e₁.symm _))`
+        --        applied at `j`.  Using `Pi.π Z₁ k (e₁.symm z) = z k` (from
+        --        `piIsoPi_inv_kernel_ι`), the inner term is `z (j ∘ δ_i.toOrderHom)`.
+        --        Then for `z = r • y`, `(r • y) (j ∘ δ_i) = (presheaf.map (V_{j∘δ_i} ≤ U).op).hom r
+        --                                                  * y (j ∘ δ_i)` by `Pi.smul_apply` and `perI₁`.
+        --        Apply `(toModuleKPresheaf C).map (φ_i).op . hom` (a ring-hom via
+        --        `RingHom.map_mul`) to split the product:
+        --          `(toModuleKPresheaf C).map (φ_i).op . hom (a * b)
+        --             = (toModuleKPresheaf C).map (φ_i).op . hom a
+        --             * (toModuleKPresheaf C).map (φ_i).op . hom b`.
+        --        For `a = (presheaf.map (V_{j∘δ_i} ≤ U).op).hom r`, use functoriality
+        --        `presheaf.map (V_j ≤ V_{j∘δ_i}).op ∘ presheaf.map (V_{j∘δ_i} ≤ U).op
+        --           = presheaf.map (V_j ≤ U).op` (i.e., `← presheaf.map_comp`) to
+        --        collapse to `(presheaf.map (V_j ≤ U).op).hom r`.  This matches the
+        --        RHS's `r •_j _` (which is `(presheaf.map (V_j ≤ U).op).hom r * _`
+        --        by `perI₂ j`).
+        --   (S8) `Finset.sum_congr rfl`-rfl on each summand closes the goal.
+        --
+        -- The mechanical execution is ~30 LOC but each step needs careful
+        -- elaboration because the deeply nested `Pi.lift` / `Pi.π` / `eqToHom`
+        -- structure shifts after every rewrite.  Iter-082+ closure target.
+        --
+        -- ===========================================================================
+        -- ITER-084 advance: clear both iter-083 typeclass barriers.
+        -- ===========================================================================
+        -- Iter-083 Finding (1) — HSMul source-type ascription barrier — is
+        -- resolved by binding the R-module instance under the literal `↑(∏ᶜ Z_i)`
+        -- form (NOT just `↑scK₀.X_i`).  This makes `HSMul ↑R ↑(∏ᶜ Z₁) ?m`
+        -- synthesise to the correct target type.  Without this, the type
+        -- ascription `(r • e₁.symm y : ↑(∏ᶜ Z₁))` propagates `↑(∏ᶜ Z₁)` as the
+        -- SMul source type, which `letI := h_mod_X₁` (typed `Module ↑R ↑scK₀.X₁`)
+        -- cannot match by typeclass synthesis (only by defeq via `dsimp`).
+        letI hmod_pi_Z₁ : Module ↑R ↑(∏ᶜ Z₁) := h_mod_X₁
+        letI hmod_pi_Z₂ : Module ↑R ↑(∏ᶜ Z₂) := h_mod_X₂
+        -- Iter-083 Finding (2) — `e₁.symm (r • y) = r • e₁.symm y` is NOT rfl —
+        -- is resolved by an explicit one-step rewrite via `LinearEquiv.apply_symm_apply`.
+        -- Mechanism: the smul on `↑(∏ᶜ Z₁)` from `h_mod_X₁ = e₁.toAddEquiv.module R`
+        -- is defined as `r • z := e₁.symm (r •_pi e₁ z)` (via `Equiv.smul_def`).
+        -- Setting `z := e₁.symm y` gives
+        --   `r • e₁.symm y = e₁.symm (r •_pi e₁ (e₁.symm y)) = e₁.symm (r •_pi y)`
+        -- after the `e₁.apply_symm_apply` collapse.  The `show ... rw [...]`
+        -- below applies this rewrite explicitly.
+        rw [show (ModuleCat.piIsoPi Z₁).toLinearEquiv.symm (r • y) =
+            (r • (ModuleCat.piIsoPi Z₁).toLinearEquiv.symm y : ↑(∏ᶜ Z₁)) from by
+          show e₁.symm (r • y) = e₁.symm (r • e₁ (e₁.symm y))
+          rw [LinearEquiv.apply_symm_apply]]
+        -- ===========================================================================
+        -- ITER-084 Phase B residual: genuine per-summand R-linearity.
+        -- ===========================================================================
+        -- After the two `letI`s and the smul-commutation rw above, BOTH sides of
+        -- the goal have the form
+        --   `(Pi.π Z₂ j).hom ((eqToHom ∘ₗ Σ.hom) <argument>)`
+        -- where `<argument>` is `r • e₁.symm y` (LHS) or `e₁.symm y` (RHS, with
+        -- an outer `r •`).  The remaining obligation is genuine R-linearity of
+        -- the function
+        --   `Φ_j : ↑(∏ᶜ Z₁) →ₗ[R] ↑(Z₂ j)`,  `Φ_j z := (Pi.π Z₂ j).hom (L z)`
+        -- (with `L := eqToHom ∘ₗ Σ.hom`), evaluated at `z = e₁.symm y`.
+        --
+        -- Per-summand decomposition (S6–S8 from iter-081 + iter-082 chain):
+        --   1. Apply `LinearMap.coe_comp` + `Function.comp_apply` to split
+        --      `(eqToHom ∘ₗ Σ.hom) (r • z) = eqToHom (Σ.hom (r • z))`.
+        --   2. Use `Finset.sum_apply` + `Pi.smul_apply` (with `perI₁`) on
+        --      `Σ.hom (r • z)` to distribute the sum across the smul and reduce
+        --      to per-`(i, j)` summands.
+        --   3. Per summand at fixed `i`: the summand at `j` reduces (via
+        --      `Pi.lift_π` + `Pi.π Z₁ k (e₁.symm z) = z k`) to
+        --        `(presheaf.map (V_j ≤ V_{j∘δ_i}).op).hom ((r • z) (j∘δ_i))
+        --           = (presheaf.map (V_j ≤ V_{j∘δ_i}).op).hom
+        --               ((presheaf.map (V_{j∘δ_i a0} ≤ U).op).hom r * z (j∘δ_i))`
+        --      by `Pi.smul_apply` and the `perI₁` definition.
+        --   4. Apply `RingHom.map_mul` to split the product, and
+        --      `← C.left.presheaf.map_comp` to collapse the algebra-map chain
+        --      `R = Γ(U) → Γ(V_{j∘δ_i a0}) → Γ(V_{j∘δ_i}) → Γ(V_j)`
+        --      to `(presheaf.map (V_j ≤ U).op).hom r`, matching `perI₂ j`'s
+        --      definition of `r •_{Z₂ j} _`.
+        --   5. Reassemble: `Finset.smul_sum` on the RHS, then `Finset.sum_congr rfl`
+        --      with the per-summand identity to close.
+        -- The mechanics span ~50–80 LOC.  Both iter-083 typeclass barriers are
+        -- now cleared (the `letI` block above + the `rw` above), so the remaining
+        -- work is genuine R-linearity rather than typeclass scaffolding.
+        -- Iter-085+ closure target.
+        --
+        -- ===========================================================================
+        -- ITER-085 advance: surface the inner Pi.module smul via `hsmul_eq` rewrite.
+        -- ===========================================================================
+        -- The iter-084 prelude rewrote `e₁.symm (r • y)` (with inner Pi.module smul)
+        -- INTO `r • e₁.symm y` (using the transported `h_mod_X₁` smul) so that the
+        -- type-ascription site `(... : ↑(∏ᶜ Z₁))` could synthesise.  The S6 chain,
+        -- however, needs the OPPOSITE direction: it must reach the per-summand R-action
+        -- `(perI₁ (j ∘ δ_i.toOrderHom)).smul r (e₁.symm y _)` which is only visible
+        -- after rewriting back to `e₁.symm (r •_pi y)` (with the Pi.module smul, which
+        -- is `Pi.smul_apply`-fired by typeclass instance `[∀ i, SMul R (Z₁ i)]`).
+        -- Iter-085 substep:  rewrite the LHS smul back to its `e₁.symm (r •_pi y)`
+        -- form (via the same `LinearEquiv.apply_symm_apply` collapse used by iter-084).
+        --
+        -- ITER-086 advance: introduce the per-summand R-linear restriction lemma
+        -- `R_restrict_R_linear` (inline `have`).  This collapses the
+        -- functoriality chain `R = Γ(U) → Γ(W) → Γ(V)` (with `V ≤ W ≤ U`) to the
+        -- direct map `R = Γ(U) → Γ(V)`, exactly the algebra-map collapse needed
+        -- per-summand at index `(i, j)` (the chain
+        -- `Γ(U) → Γ(V_{j∘δ_i}) → Γ(V_j)` collapses to `Γ(U) → Γ(V_j)`).
+        have R_restrict_R_linear :
+            ∀ {V W : TopologicalSpace.Opens C.left.toTopCat}
+              (h_VW : V ≤ W) (h_VU : V ≤ U) (h_WU : W ≤ U)
+              (r' : ↑R) (z : C.left.presheaf.obj (Opposite.op W)),
+              (C.left.presheaf.map (homOfLE h_VW).op).hom
+                ((C.left.presheaf.map (homOfLE h_WU).op).hom r' * z) =
+              (C.left.presheaf.map (homOfLE h_VU).op).hom r' *
+                (C.left.presheaf.map (homOfLE h_VW).op).hom z := by
+          intro V W h_VW _ _ r' z
+          rw [(C.left.presheaf.map (homOfLE h_VW).op).hom.map_mul,
+              ← ConcreteCategory.comp_apply, ← C.left.presheaf.map_comp]
+        have hsmul_eq : (r • (ModuleCat.piIsoPi Z₁).toLinearEquiv.symm y : ↑(∏ᶜ Z₁)) =
+            e₁.symm (r • y) := by
+          show e₁.symm (r • e₁ (e₁.symm y)) = e₁.symm (r • y)
+          rw [LinearEquiv.apply_symm_apply]
+        rw [hsmul_eq]
+        -- ===========================================================================
+        -- ITER-085 obstruction: HOU mismatch on `LinearMap.comp_apply`.
+        -- ===========================================================================
+        -- After the `rw [hsmul_eq]` above, the LHS reads
+        --   `(Pi.π Z₂ j).hom ((eqToHom).hom ∘ₗ Σ.hom) (e₁.symm (r •_pi y))`
+        -- and the RHS reads
+        --   `r •_{perI₂ j} (Pi.π Z₂ j).hom ((eqToHom).hom ∘ₗ Σ.hom) (e₁.symm y)`.
+        -- The next step S6 — split the `∘ₗ`-comp via `LinearMap.comp_apply` — fails
+        -- (verified via `lean_multi_attempt` iter-085) for the following reasons:
+        --   (a) `simp only [LinearMap.comp_apply]` does NOT fire — the lemma is stated
+        --       for `∘ₛₗ` (semilinear comp) with explicit `RingHom.id` ring-hom, while
+        --       the goal has the homogeneous `∘ₗ` notation; higher-order unification
+        --       fails to bridge the implicit ring-hom triple.
+        --   (b) `rw [LinearMap.comp_apply]` (with or without `(σ₁₂ := RingHom.id k)`
+        --       hint) likewise fails: pattern `(?f ∘ₗ ?g) ?x` does not unify against
+        --       the term, even though that term's surface syntax IS `(... ∘ₗ ...) (...)`.
+        --       Diagnostic: pattern-printed as `?m ∘ₗ ?m'` is not found, suggesting
+        --       elaboration internally expands the `∘ₗ` to a `LinearMap.comp` call
+        --       that is not pattern-matched by the lemma's HOU surface form.
+        --   (c) `change ((eqToHom).hom (Σ.hom ...)) = ...` fails: the implicit
+        --       `eqToHom`-cast type proof `_ : (?_ : ModuleCat k) = ?_` cannot be
+        --       inferred without the original elaborator context.
+        --   (d) `induction hRel; rfl` fails with motive issue (n appears in many
+        --       other hypotheses, including `Z₁`/`Z₂`/`Z₃`/`e_i`/`perI_i`/`h_mod_pi_i`/
+        --       `h_mod_X_i`/`h_a₀`/`h_a₀_fun` etc.).
+        --
+        -- Iter-086 path forward (revised):
+        --   Construct an **explicit per-summand R-linear restriction map** as an inline
+        --   `have` BEFORE the `rw [hsmul_eq]` above:
+        --     `have R_restrict_i : ∀ (i : Fin (prev n + 2)) (i_1 : Fin (prev n + 2) → s₀)
+        --        (h₁ : V_{i_1 ∘ δ_i} ≤ V_{i_1 a0_for_(i_1∘δ_i)})  -- internal to perI₁
+        --        (h₂ : V_{i_1} ≤ V_{i_1 ∘ δ_i})                   -- the restriction face
+        --        (z : Z₁ (i_1 ∘ δ_i)),
+        --        (presheaf.map h₂.op).hom (perI₁ (i_1 ∘ δ_i)).smul r z =
+        --          (perI₂ i_1).smul r ((presheaf.map h₂.op).hom z)`
+        --     proven via `presheaf.map_comp` collapsing the algebra-map chain
+        --     `R = Γ(U) → Γ(V_{i_1 a0}) → Γ(V_{i_1 ∘ δ_i}) → Γ(V_{i_1})`
+        --     to the direct `Γ(U) → Γ(V_{i_1 a0'}) → Γ(V_{i_1})` via `← presheaf.map_comp`.
+        --   Then use `Finset.sum_apply` + `Pi.smul_apply` + `Pi.lift_π_apply` +
+        --   `R_restrict_i` (per-summand) + `Finset.smul_sum` (S8 reassembly) to close.
+        --
+        -- The `have hsmul_eq` rewrite above IS the iter-085 substantive structural
+        -- progress: the goal is now in the form where each summand's per-`(i, j)`
+        -- factor `Pi.lift fun i_1 ↦ Pi.π Z₁ (i_1 ∘ δ_i.toOrderHom) ≫ ...` can be
+        -- reached via `Finset.sum_apply` after the `LinearMap.comp_apply` HOU is
+        -- bypassed (per iter-086 plan above).
+        sorry
+      -- ITER-076 prover: dropped `h_diff_pi_smul_g` declaration entirely. Its
+      -- statement was patterned on `h_diff_pi_smul_f` but the `e₃`-image at
+      -- the codomain `scK₀.X₃` no longer type-checks: unlike `scK₀.X₂` (which
+      -- reduces to `↑(∏ᶜ Z₂)` because the index `n` is literal), `scK₀.X₃ =
+      -- K₀.X ((ComplexShape.up ℕ).next n)` does not reduce to `↑(∏ᶜ Z₃)`
+      -- (`Z₃`'s Fin index uses the literal `n + 2`). The next iteration can
+      -- re-introduce it after either adding `ComplexShape.up_next` rewrites
+      -- to the `e₃`/`Z₃` setup or by casting through `Eq.mpr` on the type
+      -- equality. With `g_R.map_smul'` rolled back to `sorry` below, the
+      -- declaration is no longer referenced.
+      let f_R : scK₀.X₁ →ₗ[R] scK₀.X₂ :=
+        { toFun := ⇑(ConcreteCategory.hom scK₀.f)
+          map_add' := map_add (ConcreteCategory.hom scK₀.f)
+          map_smul' := by
+            -- ITER-077: with literal `h_mod_X_i = e_i.toAddEquiv.module R`,
+            -- the smul on `scK₀.X_i` is `e_i.symm (r • e_i x)` by `rfl`
+            -- (`Equiv.smul_def` is `rfl`). Transport `h_diff_pi_smul_f` via
+            -- `e₂.injective` to close.
+            -- ITER-080: the iter-079 `change` no longer fires after the
+            -- `perI_i` letI-refactor — fresh `r • e_i x` synthesis now picks
+            -- a different `Module R (∀ i, Z_i)` instance than `h_mod_X_i`'s
+            -- baked-in one. Shadow `h_mod_pi_i` locally so fresh synthesis
+            -- prefers `h_mod_pi_i`, matching `h_mod_X_i`'s construction.
+            intro r x
+            change (ConcreteCategory.hom scK₀.f) (e₁.symm (r • e₁ x)) =
+              e₂.symm (r • e₂ ((ConcreteCategory.hom scK₀.f) x))
+            apply e₂.injective
+            rw [LinearEquiv.apply_symm_apply, h_diff_pi_smul_f r (e₁ x),
+              LinearEquiv.symm_apply_apply] }
+      let g_R : scK₀.X₂ →ₗ[R] scK₀.X₃ :=
+        { toFun := ⇑(ConcreteCategory.hom scK₀.g)
+          map_add' := map_add (ConcreteCategory.hom scK₀.g)
+          map_smul' := by
+            -- ITER-077: blocker for the `f_R`-style transport is the smul on
+            -- `↑scK₀.X₃ = ↑(K₀.X ((up ℕ).next n))`. Because `(up ℕ).next n` does
+            -- not reduce to `n + 1` by `rfl` (opaque `Classical.choose`), the
+            -- `h_mod_X₃` instance is built via `rw [h_eq]; exact e₃.toAddEquiv.module R`,
+            -- so the smul carries an `Eq.mpr`-transport through
+            -- `CochainComplex.next` that breaks the literal `r • y = e₃.symm
+            -- (r • e₃ y)` identity.  The `f_R` pattern (`change` + `e₂.injective`
+            -- + `h_diff_pi_smul_f`) does NOT lift to the g-side without first
+            -- restating `h_diff_pi_smul_g` with explicit `Eq.mpr`-casts on the
+            -- codomain.  Deferred to the next iteration.
+            intro r x
+            sorry }
+      have hf_eq : ⇑f_R = ⇑(ConcreteCategory.hom scK₀.f) := rfl
+      have hg_eq : ⇑g_R = ⇑(ConcreteCategory.hom scK₀.g) := rfl
+      -- Step 3: for each `f ∈ ↑s₀`, the canonical localization map
+      -- `LocalizedModule.mkLinearMap (powers f.1) scK₀.X_i` is universal — this is
+      -- the standard Mathlib instance `localizedModuleIsLocalizedModule`. The
+      -- substantive iter-069 plan invokes the *slice-cover* identification as the
+      -- localization target; the present formulation (using `LocalizedModule`
+      -- directly) sidesteps the product-localisation commutation argument and
+      -- is closable by typeclass synthesis.
+      --
+      -- Iter-071 prover: discharge `h_loc_X_i (f : ↑s₀)` for each `i ∈ {1, 2, 3}`
+      -- via `localizedModuleIsLocalizedModule` (kernel-only).
+      have h_loc_X₁ (f : ↑s₀) : IsLocalizedModule.Away (f.1 : R)
+          (LocalizedModule.mkLinearMap (Submonoid.powers (f.1 : R)) scK₀.X₁) :=
+        localizedModuleIsLocalizedModule _
+      have h_loc_X₂ (f : ↑s₀) : IsLocalizedModule.Away (f.1 : R)
+          (LocalizedModule.mkLinearMap (Submonoid.powers (f.1 : R)) scK₀.X₂) :=
+        localizedModuleIsLocalizedModule _
+      have h_loc_X₃ (f : ↑s₀) : IsLocalizedModule.Away (f.1 : R)
+          (LocalizedModule.mkLinearMap (Submonoid.powers (f.1 : R)) scK₀.X₃) :=
+        localizedModuleIsLocalizedModule _
+      -- Step 4: the localized Čech differential `LocalizedModule.map (powers f.1) f_R`
+      -- agrees with the slice-cover Čech differential (viewed as an `R`-linear map)
+      -- via the universal property of localization (`IsLocalizedModule.ext` plus
+      -- `map_comp`).  Consequently `h_a₀_fun f` yields exactness of the localized
+      -- differential at each `f ∈ ↑s₀`.
+      have h_loc_exact (f : ↑s₀) : Function.Exact
+          ⇑(LocalizedModule.map (Submonoid.powers (f.1 : R)) f_R)
+          ⇑(LocalizedModule.map (Submonoid.powers (f.1 : R)) g_R) := sorry
+      -- Step 5: apply `exact_of_isLocalized_span` to conclude global exactness of `K₀`.
+      rw [← hf_eq, ← hg_eq]
+      exact exact_of_localized_span (↑s₀ : Set R) h_top f_R g_R h_loc_exact
+    -- ===========================================================================
+    -- Close the original goal via the transport `K₀ exact → K exact` + exactness of `K₀`.
+    -- ===========================================================================
+    exact h_transport h_K₀_exact
+
+
+end AlgebraicGeometry.Scheme

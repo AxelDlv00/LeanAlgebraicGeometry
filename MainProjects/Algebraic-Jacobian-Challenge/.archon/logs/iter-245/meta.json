@@ -1,0 +1,48 @@
+{
+  "iteration": 245,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-06-02T01:40:12Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "8e979bb3-68b9-430a-a73f-945bd67dd9b7",
+    "durationSecs": 3662
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 1
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 1626
+  },
+  "provers": {
+    "AlgebraicJacobian_Picard_TensorObjSubstrate": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "30aedf0a-7147-4784-80f2-5084c94403fc"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "58c079be-2d1c-4bfe-bf7f-2ca7d79d59e8",
+    "durationSecs": 1081
+  },
+  "sorry_count": 84,
+  "finalize": {
+    "innerGit": {
+      "sha": "e88831b1"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 34
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 35
+    }
+  },
+  "completedAt": "2026-06-02T03:35:45Z",
+  "wallTimeSecs": 6932
+}

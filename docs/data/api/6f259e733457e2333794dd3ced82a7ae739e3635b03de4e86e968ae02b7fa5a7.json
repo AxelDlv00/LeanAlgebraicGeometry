@@ -1,0 +1,246 @@
+{
+  "commits": [
+    {
+      "sha": "d2027c8882306d94ac80a3a074ff1ac73cfbdf9b",
+      "shortSha": "d2027c8",
+      "subject": "archon[010/marker-sync]: +1 -0 \\leanok (57s)",
+      "date": "2026-06-13 12:01:58 +0800",
+      "parents": [
+        "31d1e1ae730fcc828e080c977a0a71ba805ac362"
+      ],
+      "refs": [
+        "HEAD -> main",
+        "origin/main",
+        "origin/HEAD"
+      ],
+      "iteration": "iter-010",
+      "phase": "marker-sync",
+      "branch": "main"
+    },
+    {
+      "sha": "31d1e1ae730fcc828e080c977a0a71ba805ac362",
+      "shortSha": "31d1e1a",
+      "subject": "archon[009/finalize]: stage=prover sorry=5",
+      "date": "2026-06-13 10:54:43 +0800",
+      "parents": [
+        "4c84b903fcf2f415c6ec81b7dab8697fdfc1a607"
+      ],
+      "refs": [],
+      "iteration": "iter-009",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "4c84b903fcf2f415c6ec81b7dab8697fdfc1a607",
+      "shortSha": "4c84b90",
+      "subject": "archon[008/finalize]: stage=prover sorry=5",
+      "date": "2026-06-13 10:46:18 +0800",
+      "parents": [
+        "2f2963173dfa992fc0fb80ba4732c7cdd49ff5d9"
+      ],
+      "refs": [],
+      "iteration": "iter-008",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "2f2963173dfa992fc0fb80ba4732c7cdd49ff5d9",
+      "shortSha": "2f29631",
+      "subject": "archon[007/finalize]: stage=prover sorry=5",
+      "date": "2026-06-13 10:13:29 +0800",
+      "parents": [
+        "5a2bd1e7045ab3a6a54ac24465d5a4fc433254af"
+      ],
+      "refs": [],
+      "iteration": "iter-007",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "5a2bd1e7045ab3a6a54ac24465d5a4fc433254af",
+      "shortSha": "5a2bd1e",
+      "subject": "archon[006/finalize]: stage=prover sorry=2",
+      "date": "2026-06-12 20:59:04 +0800",
+      "parents": [
+        "8b489c38fc4ca6889c2b993dc927a71d2ff520d3"
+      ],
+      "refs": [],
+      "iteration": "iter-006",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "8b489c38fc4ca6889c2b993dc927a71d2ff520d3",
+      "shortSha": "8b489c3",
+      "subject": "archon[005/finalize]: stage=prover sorry=4",
+      "date": "2026-06-09 17:55:02 +0800",
+      "parents": [
+        "7286955947044780997b80f63c359302d822db88"
+      ],
+      "refs": [],
+      "iteration": "iter-005",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "7286955947044780997b80f63c359302d822db88",
+      "shortSha": "7286955",
+      "subject": "archon[004/plan]: stage=prover (1578s)",
+      "date": "2026-06-09 15:49:42 +0800",
+      "parents": [
+        "9613f65a02b278e2969ba58ec0ed3a1d4e650fad"
+      ],
+      "refs": [],
+      "iteration": "iter-004",
+      "phase": "plan",
+      "branch": "main"
+    },
+    {
+      "sha": "9613f65a02b278e2969ba58ec0ed3a1d4e650fad",
+      "shortSha": "9613f65",
+      "subject": "archon[003/prover]: all-provers sorry=7 (3s)",
+      "date": "2026-06-09 13:37:19 +0800",
+      "parents": [
+        "3f3421a98fe000d8eeb06184b74f27c20b4410da"
+      ],
+      "refs": [],
+      "iteration": "iter-003",
+      "phase": "prover",
+      "branch": "main"
+    },
+    {
+      "sha": "3f3421a98fe000d8eeb06184b74f27c20b4410da",
+      "shortSha": "3f3421a",
+      "subject": "archon[002/finalize]: stage=prover sorry=7",
+      "date": "2026-06-09 10:22:10 +0800",
+      "parents": [
+        "0305a261364eee0803cd2ac7407655d491ddcba0"
+      ],
+      "refs": [],
+      "iteration": "iter-002",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "0305a261364eee0803cd2ac7407655d491ddcba0",
+      "shortSha": "0305a26",
+      "subject": "archon[001/finalize]: stage=prover sorry=7",
+      "date": "2026-06-08 21:55:09 +0800",
+      "parents": [
+        "83d9cb1aa8dacd3c75bd15c2df61d09e88e3d4e5"
+      ],
+      "refs": [],
+      "iteration": "iter-001",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "83d9cb1aa8dacd3c75bd15c2df61d09e88e3d4e5",
+      "shortSha": "83d9cb1",
+      "subject": "extract: adapt remaining .archon state (PROJECT_STATUS stub, USER_HINTS scope retarget, prune .archon analogies)",
+      "date": "2026-06-08 19:49:56 +0800",
+      "parents": [
+        "dd0a23f1a95cf59b64d5e5f5d0b0b01d56f33025"
+      ],
+      "refs": [],
+      "branch": "main"
+    },
+    {
+      "sha": "dd0a23f1a95cf59b64d5e5f5d0b0b01d56f33025",
+      "shortSha": "dd0a23f",
+      "subject": "extract: prose adaptation — clean dangling cref/uses to carved labels; trim empty sections + decl-list bullets",
+      "date": "2026-06-08 19:46:24 +0800",
+      "parents": [
+        "5228451535162785971aac47a961ee57c24c05b0"
+      ],
+      "refs": [],
+      "branch": "main"
+    },
+    {
+      "sha": "5228451535162785971aac47a961ee57c24c05b0",
+      "shortSha": "5228451",
+      "subject": "extract: adapt state files (README, PROGRESS, STRATEGY, TO_USER, summary) to the comparison-iso scope",
+      "date": "2026-06-08 19:41:43 +0800",
+      "parents": [
+        "5305252e20ca15de7aec4cb37e8ef0c38ff8cead"
+      ],
+      "refs": [],
+      "branch": "main"
+    },
+    {
+      "sha": "5305252e20ca15de7aec4cb37e8ef0c38ff8cead",
+      "shortSha": "5305252",
+      "subject": "extract: retarget archon-protected.yaml to seeds; prune out-of-scope scratch (analogies/informal/RR)",
+      "date": "2026-06-08 19:38:54 +0800",
+      "parents": [
+        "dbeacb79d0a443cb4ad97f22e558bfe28ff929ab"
+      ],
+      "refs": [],
+      "branch": "main"
+    },
+    {
+      "sha": "dbeacb79d0a443cb4ad97f22e558bfe28ff929ab",
+      "shortSha": "dbeacb7",
+      "subject": "extract: prune references to cited sources (stacks-modules, kleiman-picard, fga-explained) + summary/challenge",
+      "date": "2026-06-08 19:36:00 +0800",
+      "parents": [
+        "0113e1490f19caa1a0c81c06af85923508cc19de"
+      ],
+      "refs": [],
+      "branch": "main"
+    },
+    {
+      "sha": "0113e1490f19caa1a0c81c06af85923508cc19de",
+      "shortSha": "0113e14",
+      "subject": "extract: Lean surgery — remove 28 out-of-cone declarations from 6 mixed files",
+      "date": "2026-06-08 19:35:07 +0800",
+      "parents": [
+        "2edbc3e27c1cce1f196a90bb59a3c8df7632c29f"
+      ],
+      "refs": [],
+      "branch": "main"
+    },
+    {
+      "sha": "2edbc3e27c1cce1f196a90bb59a3c8df7632c29f",
+      "shortSha": "2edbc3e",
+      "subject": "extract: tex surgery — carve out-of-cone blocks from 3 mixed chapters (4+11+102 blocks)",
+      "date": "2026-06-08 19:30:12 +0800",
+      "parents": [
+        "80e3f2c2748a1da2739fdd5906bdc638ef03c715"
+      ],
+      "refs": [],
+      "branch": "main"
+    },
+    {
+      "sha": "80e3f2c2748a1da2739fdd5906bdc638ef03c715",
+      "shortSha": "80e3f2c",
+      "subject": "extract: drop 46 out-of-cone Lean files + 35 chapters; regen root import + content.tex",
+      "date": "2026-06-08 19:26:24 +0800",
+      "parents": [
+        "7b703f9cfc9bedecaf3ff2718428c148157d0c95"
+      ],
+      "refs": [],
+      "branch": "main"
+    },
+    {
+      "sha": "7b703f9cfc9bedecaf3ff2718428c148157d0c95",
+      "shortSha": "7b703f9",
+      "subject": "extract: record scope seeds + sibling overlaps in manifest",
+      "date": "2026-06-08 19:24:18 +0800",
+      "parents": [
+        "26e82baf91f5a52033afd6c66cb2940a4a5f9a49"
+      ],
+      "refs": [],
+      "branch": "main"
+    },
+    {
+      "sha": "26e82baf91f5a52033afd6c66cb2940a4a5f9a49",
+      "shortSha": "26e82ba",
+      "subject": "archon[extract]: sandbox duplicated from Algebraic-Jacobian-Challenge",
+      "date": "2026-06-08 19:06:00 +0800",
+      "parents": [],
+      "refs": [],
+      "branch": "main"
+    }
+  ]
+}

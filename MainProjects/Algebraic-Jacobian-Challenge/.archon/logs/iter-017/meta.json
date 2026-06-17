@@ -1,0 +1,40 @@
+{
+  "iteration": 17,
+  "stage": "prover  (iteration 016 \u2014 Path-2 functorial wrappers `HModule'_cohomologyPresheafFunctor` + `HModule'_cohomologyPresheaf`, refactor-then-prover phase. The iter-015 prover round closed `AlgebraicGeometry.Scheme.HModule'_zero_linearEquiv` cleanly: sorry count `9 \u2192 9` (the prover collapsed the refactor + prover sub-phases into a single Edit; the transient `9 \u2192 10 \u2192 9` trajectory was condensed), kernel-only axioms, body adopted as the probe-confirmed `Abelian.Ext.linearEquiv\u2080`. Iter-016 plan-agent has scoped + probe-confirmed the next two-declaration sub-step: the functorial wrappers `Scheme.HModule'_cohomologyPresheafFunctor` (the substantive functor `Sheaf J (ModuleCat.{u} k) \u2964 C\u1d52\u1d56 \u2964 AddCommGrpCat` mirroring Mathlib's `cohomologyPresheafFunctor`) and `Scheme.HModule'_cohomologyPresheaf` (the abbrev wrapper), unlocking the iter-017+ Mayer-Vietoris LES theorem on the `ModuleCat k` side. Both bodies probe-confirmed at one-line term-mode forms; per-fiber compatibility `((cohomologyPresheaf F n).obj (op X) : Type u) = HModule' k F n X` is `rfl`. Iter-016 sorry count `9 \u2192 11 \u2192 9` over the iteration. Refactor agent runs first to scaffold; prover agent then closes.)",
+  "mode": "parallel",
+  "startedAt": "2026-05-08T03:50:44Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 841
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 179
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 713
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "21ef9f5"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 17
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 2
+    }
+  },
+  "completedAt": "2026-05-08T04:19:59Z",
+  "wallTimeSecs": 1755
+}

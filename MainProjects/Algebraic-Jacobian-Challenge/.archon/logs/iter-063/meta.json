@@ -1,0 +1,25 @@
+{
+  "iteration": 63,
+  "stage": "prover  (iteration 062 \u2014 Phase A step 6 *Path 2* / **third prover pass on the substantive \u010cech acyclicity theorem**: iter-061 decomposed iter-060's single sorry into two labelled substep sorries plus substantive `have`/`rw` scaffolding that performed the mechanical `K.ExactAt n \u2194 Function.Exact \u21d1f \u21d1g` conversion via `HomologicalComplex.exactAt_iff` + `ShortComplex.ShortExact.moduleCat_exact_iff_function_exact`. Iter-062 returns the same theorem to the prover with directive to engage with the substep (b)+(c) assembly sorry: build the localised \u010cech cochain `noncomputable def` + identification iso in the same prover session, resolve the ring-base mismatch (`k`-linear vs `\u0393(C.left, U)`-linear), and apply `exact_of_isLocalized_span`. Substep (a) extra-degeneracy infrastructure may also be attacked. Per user policy (2026-05-11), the plan agent does NOT extract substep helpers (e.g., the localised \u010cech cochain) as standalone planner-iteration objectives; the prover folds substep helpers into its own session. The plan agent does NOT pre-verify candidate proof bodies via `lean_run_code` / `lean_multi_attempt`. Transient sorries inside the prover-built substep helpers remain acceptable.",
+  "mode": "parallel",
+  "startedAt": "2026-05-11T07:21:09Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1353
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 825
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_BasicOpenCech": {
+      "file": "AlgebraicJacobian/Cohomology/BasicOpenCech.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 445
+  },
+  "sorry_count": 323
+}

@@ -1,0 +1,1504 @@
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.2.0    https://github.com/frenzymath/Archon  ──────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  2640260                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 2640260  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.2.0    https://github.com/frenzymath/Archon  ──────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  2745260                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 2745260  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.2.0    https://github.com/frenzymath/Archon  ─────────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  3114547                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 3114547  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.2.0    https://github.com/frenzymath/Archon  ─────────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  3349443                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 3349443  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.2.0    https://github.com/frenzymath/Archon  ─────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  4019087                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 4019087  (or: kill $(cat /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.2.0    https://github.com/frenzymath/Archon  ─────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  4020113                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 4020113  (or: kill $(cat /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.2.0    https://github.com/frenzymath/Archon  ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  132545                                                                                           │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 132545  (or: kill $(cat /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.2.0    https://github.com/frenzymath/Archon  ───────────────────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  1249965                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1249965  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.2.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  1440291                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1440291  (or: kill $(cat /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.2.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  1762063                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1762063  (or: kill $(cat /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.2.0    https://github.com/frenzymath/Archon  ─────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  2973133                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 2973133  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.2.0    https://github.com/frenzymath/Archon  ─────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  3043116                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 3043116  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.2.0    https://github.com/frenzymath/Archon  ─────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  3043746                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 3043746  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.2.0    https://github.com/frenzymath/Archon  ─────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  3558567                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 3558567  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.2.0    https://github.com/frenzymath/Archon  ─────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  3606077                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 3606077  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ─────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  3697677                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 3697677  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ─────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  3756021                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 3756021  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ─────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  239601                                                                                           │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 239601  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ─────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  239940                                                                                           │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 239940  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  790563                                                                                           │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 790563  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  1179802                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1179802  (or: kill $(cat /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ──────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  1181668                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1181668  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ──────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  1182014                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1182014  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ──────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  1182533                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1182533  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ──────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  1351256                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1351256  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ─────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  1579542                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1579542  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  1765700                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1765700  (or: kill $(cat /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ─────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ─────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  1819920                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1819920  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  2284325                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 2284325  (or: kill $(cat /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  2539669                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 2539669  (or: kill $(cat /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  3112431                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 3112431  (or: kill $(cat /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  3759235                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 3759235  (or: kill $(cat /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ───────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                            │
+│  Overview   │  http://127.0.0.1:8091/                                                                           │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  762284                                                                                           │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 762284  (or: kill $(cat /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8091                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8091  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8091                                                                          │
+│  Overview   │  http://127.0.0.1:8091/                                                                         │
+│  Logs       │  http://127.0.0.1:8091/logs                                                                     │
+│  Journal    │  http://127.0.0.1:8091/journal                                                                  │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                │
+│  PID        │  991889                                                                                         │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.…  │
+└─────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 991889  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8091.pid))
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8092                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8092  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8092                                                                          │
+│  Overview   │  http://127.0.0.1:8092/                                                                         │
+│  Logs       │  http://127.0.0.1:8092/logs                                                                     │
+│  Journal    │  http://127.0.0.1:8092/journal                                                                  │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                │
+│  PID        │  994422                                                                                         │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8092.…  │
+└─────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 994422  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8092.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8082                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8082  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8082                                                                          │
+│  Overview   │  http://127.0.0.1:8082/                                                                         │
+│  Logs       │  http://127.0.0.1:8082/logs                                                                     │
+│  Journal    │  http://127.0.0.1:8082/journal                                                                  │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                │
+│  PID        │  1046276                                                                                        │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.…  │
+└─────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1046276  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8082                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8082  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8082                                                                          │
+│  Overview   │  http://127.0.0.1:8082/                                                                         │
+│  Logs       │  http://127.0.0.1:8082/logs                                                                     │
+│  Journal    │  http://127.0.0.1:8082/journal                                                                  │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                │
+│  PID        │  1072603                                                                                        │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.…  │
+└─────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1072603  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8082                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8082  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8082                                                                          │
+│  Overview   │  http://127.0.0.1:8082/                                                                         │
+│  Logs       │  http://127.0.0.1:8082/logs                                                                     │
+│  Journal    │  http://127.0.0.1:8082/journal                                                                  │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                │
+│  PID        │  1197849                                                                                        │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.…  │
+└─────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1197849  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.pid))
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8082                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8082  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8082                                                                          │
+│  Overview   │  http://127.0.0.1:8082/                                                                         │
+│  Logs       │  http://127.0.0.1:8082/logs                                                                     │
+│  Journal    │  http://127.0.0.1:8082/journal                                                                  │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                │
+│  PID        │  1283991                                                                                        │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.…  │
+└─────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1283991  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8082                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8082  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8082                                                                          │
+│  Overview   │  http://127.0.0.1:8082/                                                                         │
+│  Logs       │  http://127.0.0.1:8082/logs                                                                     │
+│  Journal    │  http://127.0.0.1:8082/journal                                                                  │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                │
+│  PID        │  1440784                                                                                        │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.…  │
+└─────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1440784  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8082                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8082  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8082                                                                          │
+│  Overview   │  http://127.0.0.1:8082/                                                                         │
+│  Logs       │  http://127.0.0.1:8082/logs                                                                     │
+│  Journal    │  http://127.0.0.1:8082/journal                                                                  │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                │
+│  PID        │  1506823                                                                                        │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.…  │
+└─────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1506823  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ───────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8082                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8082  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8082                                                                            │
+│  Overview   │  http://127.0.0.1:8082/                                                                           │
+│  Logs       │  http://127.0.0.1:8082/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8082/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  1744059                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1744059  (or: kill $(cat /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[archon-ui] Shutdown watchdog fired — forcing exit.
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ──────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8082                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8082  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ──────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8082                                                                            │
+│  Overview   │  http://127.0.0.1:8082/                                                                           │
+│  Logs       │  http://127.0.0.1:8082/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8082/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  1833301                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1833301  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ──────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8082                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8082  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ──────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8082                                                                            │
+│  Overview   │  http://127.0.0.1:8082/                                                                           │
+│  Logs       │  http://127.0.0.1:8082/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8082/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  1836396                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1836396  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ──────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8082                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] › Building client...
+[ARCHON] ✓ Client built
+Archon UI → http://127.0.0.1:8082  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ──────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8082                                                                            │
+│  Overview   │  http://127.0.0.1:8082/                                                                           │
+│  Logs       │  http://127.0.0.1:8082/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8082/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  1914431                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1914431  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8082.pid))
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ──────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8083                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8083  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ──────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8083                                                                            │
+│  Overview   │  http://127.0.0.1:8083/                                                                           │
+│  Logs       │  http://127.0.0.1:8083/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8083/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  1939175                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8083.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1939175  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8083.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ──────────────────────────────────────────────────────────────────────
+
+┌───────────┬───────────────────────────────────────────────────────────────────┐
+│  Project  │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge  │
+│  Port     │  8083                                                             │
+│  Mode     │  production                                                       │
+└───────────┴───────────────────────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8083  (project: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge)
+
+Archon Dashboard ──────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8083                                                                            │
+│  Overview   │  http://127.0.0.1:8083/                                                                           │
+│  Logs       │  http://127.0.0.1:8083/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8083/journal                                                                    │
+│  Project    │  /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge                                  │
+│  PID        │  2019789                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8083.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 2019789  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/21001ed42396a6e5-8083.pid))

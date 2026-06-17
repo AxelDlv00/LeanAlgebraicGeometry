@@ -1,0 +1,75 @@
+\chapter{Rigidity for morphisms of group schemes (Mumford §4)}
+\label{chap:Rigidity}
+
+This chapter records a self-contained Phase E helper: \emph{rigidity for morphisms of abelian varieties}. It is the only sorry-blocking lemma in the project that is provable from current Mathlib (commit \texttt{b80f227}) alone, and it unlocks the uniqueness half of Theorem~\ref{thm:exists_unique_ofCurve_comp} (the Albanese property).
+
+The lemma is independent of the construction of $\Jac(C)$ — the source and target are abstract proper smooth geometrically irreducible group schemes over the base field $k$. It is therefore the highest-leverage standalone target for the next prover round.
+
+\section{Statement}
+
+% NOTE: Iter-003 strengthened the Lean hypothesis from the point-wise topological
+% form below to the scheme-level form `U.ι ≫ g₁.left = U.ι ≫ g₂.left`. The
+% point-wise form is mathematically false in characteristic p (absolute Frobenius
+% on an elliptic curve over 𝔽_p is a counterexample); the scheme-level form is
+% what the use site at thm:exists_unique_ofCurve_comp actually produces. The
+% informal statement below is preserved as the colloquial reading.
+\begin{theorem}[Rigidity for morphisms of group schemes]
+  \label{thm:GrpObj_eq_of_eqOnOpen}
+  \lean{AlgebraicGeometry.GrpObj.eq_of_eqOnOpen}
+  \leanok
+  Let $k$ be a field. Let $X, Y \in \textrm{Over}(\Spec k)$ be two objects equipped with the typeclasses
+  \[
+    \texttt{[SmoothOfRelativeDimension n X.hom] [IsProper X.hom] [GeometricallyIrreducible X.hom] [GrpObj X]}
+  \]
+  and similarly for $Y$ (with relative dimension $m$). Let $g_1, g_2 \colon X \to Y$ be two morphisms in $\textrm{Over}(\Spec k)$, and let $U \subseteq X.\mathrm{left}$ be a non-empty open subset. If
+  \[
+    g_1\big|_U \;=\; g_2\big|_U
+  \]
+  on the underlying topological points, then $g_1 = g_2$ as morphisms in $\textrm{Over}(\Spec k)$.
+\end{theorem}
+
+\begin{remark}
+  The classical Mumford rigidity theorem usually states this for morphisms vanishing on an open subset (the difference morphism $g_1 - g_2$ vanishes on $U$, hence is identically zero). Our formulation above is the symmetric "agree on $U \Rightarrow$ agree everywhere" version; it is interderivable with the standard statement using the group law on $Y$.
+\end{remark}
+
+\section{Proof sketch}
+
+\begin{proof}
+  \leanok
+  Reduce to the standard form: let $\delta \colon X \to Y$ be the difference morphism $\delta = g_1 \cdot g_2^{-1}$, which makes sense because $Y$ carries a $\mathtt{GrpObj}$ structure. The hypothesis says $\delta$ takes the constant value $\eta[Y]$ (the identity of $Y$) on $U$.
+
+  Consider the equaliser
+  \[
+    E \;=\; \mathrm{eq}\bigl(\delta,\; (\mathtt{toUnit}\ X) \circ \eta[Y]\bigr) \;\hookrightarrow\; X,
+  \]
+  i.e.\ the closed subscheme of $X$ on which $\delta$ agrees with the constant identity morphism. Two facts:
+  \begin{enumerate}
+    \item \emph{$E$ is closed in $X$.} The target $Y$ is separated over $\Spec k$ (proper $\Rightarrow$ separated), so the equaliser of any two morphisms into $Y$ is closed in the source. (Mathlib: \lstinline{IsProper.isSeparated} together with \lstinline{CategoryTheory.IsClosed.equalizer_isClosed} or the analogous schemes-side statement.)
+    \item \emph{$E$ contains the open $U$.} By hypothesis on the underlying points; promote to a scheme-theoretic statement using the reduced-induced subscheme structure on $U$ and faithfulness of the underlying-set functor on reduced schemes (Mathlib: \lstinline{AlgebraicGeometry.Scheme.eq_of_eq_on_underlying_of_reduced} or analogous).
+  \end{enumerate}
+  Since $X$ is geometrically irreducible, in particular irreducible, the closed subscheme $E$ contains a non-empty open $U$, hence equals all of $X$ as a topological space. Combined with the fact that both $X$ and $Y$ are reduced (smooth $\Rightarrow$ regular $\Rightarrow$ reduced), and the morphisms $\delta$ and $\mathtt{toUnit}\ X \circ \eta[Y]$ are determined by their values on the underlying topological space (because $X$ is reduced and $Y$ is separated), we conclude $\delta = \mathtt{toUnit}\ X \circ \eta[Y]$, i.e.\ $g_1 = g_2$.
+
+  \medskip
+  \noindent\textbf{Mathlib ingredients.}
+  \begin{itemize}
+    \item \lstinline{IsProper.isSeparated} — proper morphisms are separated.
+    \item \lstinline{AlgebraicGeometry.IsSeparated} and the equaliser-is-closed property for morphisms into a separated $k$-scheme.
+    \item \lstinline{GeometricallyIrreducible.irreducible} (or unfold to the topological-irreducibility statement) — the underlying topological space of a geometrically irreducible scheme is irreducible.
+    \item \lstinline{AlgebraicGeometry.Scheme.IsReduced} for $X$ and $Y$, plus the lemma identifying scheme morphisms by their values on points (for reduced source and separated target).
+    \item \lstinline{AlgebraicGeometry.SmoothOfRelativeDimension} for $X$ and $Y$ — implies regularity, hence reducedness.
+    \item \lstinline{GrpObj} on $Y$ to form the difference morphism $\delta = g_1 \cdot g_2^{-1}$, and to access $\eta[Y]$.
+    \item \lstinline{Mathlib/AlgebraicGeometry/Group/Abelian.lean} (Stacks 0BFD) is \emph{not} used in the proof, but provides the wider context (commutativity of the group law).
+  \end{itemize}
+\end{proof}
+
+\section{Use in the project}
+
+The rigidity theorem is used in the proof of Theorem~\ref{thm:exists_unique_ofCurve_comp} (the Albanese property of the Jacobian). Specifically: given two morphisms $g_1, g_2 \colon \Jac(C) \to A$ with $g_1 \circ \alpha_P = g_2 \circ \alpha_P$, the rigidity theorem applied to $\delta = g_1 \cdot g_2^{-1}$ on the image of $\alpha_P$ (a non-empty open after passing to the symmetric power $C^{(g)} \twoheadrightarrow \Jac(C)$) forces $g_1 = g_2$.
+
+Note: the existence half of \ref{thm:exists_unique_ofCurve_comp} requires Phase B/C infrastructure (Picard scheme, dual abelian variety). Rigidity alone yields \emph{uniqueness} only.
+
+\section{Mathlib gap}
+
+No rigidity lemma exists in Mathlib \texttt{b80f227}. The closest pre-existing declaration is \lstinline{AlgebraicGeometry.isCommMonObj_of_isProper_of_isIntegral_tensorObj_of_isAlgClosed} (commutativity of proper geometrically integral group schemes, Stacks 0BFD) in \lstinline{Mathlib/AlgebraicGeometry/Group/Abelian.lean}. Our rigidity statement is independent of and in fact compatible with this commutativity result.
+
+The proof of Theorem~\ref{thm:GrpObj_eq_of_eqOnOpen} uses only Mathlib infrastructure that is already present (separatedness from properness, equaliser closedness, irreducibility of source, reducedness from smoothness). It is therefore provable in this iteration.

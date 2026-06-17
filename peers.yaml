@@ -1,0 +1,16 @@
+# peers.yaml — the members of this Archon *scope* (a read-only lens over
+# several projects). `archon scope roadmap` builds the union merge DAG across
+# these members and reports who unblocks whom, duplicated work, and what to
+# extract. Same glob schema as a project's .archon/peers.yaml: patterns are
+# filesystem globs (*, ?, **, [...]); `~`/$VARS expand; relative paths resolve
+# against this folder; `no-access` carve-outs win; only real Archon projects
+# (those with a `.archon/` dir) are kept. Members may live inside this folder
+# or anywhere on the machine. Run `archon scope ls` to see what resolves.
+
+read: 
+  - ./MainProjects/*
+  - ./SubProjects/*
+  - ./SubProjects/RelatedPapersFormalisation/*
+
+no-access: []
+  # - ./scratch

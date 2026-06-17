@@ -1,0 +1,18 @@
+{
+  "iteration": 111,
+  "stage": "prover (Archon iter-110 \u2014 **deeper-think iter: NO prover lane dispatched**; 4",
+  "mode": "parallel",
+  "startedAt": "2026-05-15T20:17:45Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "0356a5cb-fc7e-4d23-86a2-6066cb4a1d88",
+    "durationSecs": 1936
+  },
+  "planValidate": {
+    "status": "failed",
+    "objectives": 0
+  },
+  "completedAt": "2026-05-15T20:50:01Z",
+  "wallTimeSecs": 1936,
+  "status": "plan_validate_failed"
+}

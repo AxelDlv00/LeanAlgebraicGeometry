@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sheaf condition along the structure-sheaf forget composite</title>
+<link rel="next" href="chap-Genus.html" title="Genus of a smooth proper curve" />
+<link rel="prev" href="index.html" title="AlgebraicJacobian" />
+<link rel="up" href="index.html" title="AlgebraicJacobian" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">AlgebraicJacobian</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class=" active current">
+  <a href="chap-Cohomology_SheafCompose.html"><span class="toc_ref">1</span> <span class="toc_entry">Sheaf condition along the structure-sheaf forget composite</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000002"><span class="toc_ref">1.1</span> <span class="toc_entry">Statement</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000004"><span class="toc_ref">1.2</span> <span class="toc_entry">Proof sketch</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000006"><span class="toc_ref">1.3</span> <span class="toc_entry">Use in the project</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000007"><span class="toc_ref">1.4</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000008"><span class="toc_ref">1.4.1</span> <span class="toc_entry">Discovery objectives for this iteration (iter-005 prover)</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Genus.html"><span class="toc_ref">2</span> <span class="toc_entry">Genus of a smooth proper curve</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Genus.html#a0000000009"><span class="toc_ref">2.1</span> <span class="toc_entry">Definition</span></a>
+ </li>
+<li class="">
+  <a href="chap-Genus.html#sec:Genus_status"><span class="toc_ref">2.2</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Genus.html#a0000000010"><span class="toc_ref">2.2.1</span> <span class="toc_entry">Discovery objective for this iteration</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html"><span class="toc_ref">3</span> <span class="toc_entry">Line bundles on schemes and the Picard group</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000011"><span class="toc_ref">3.1</span> <span class="toc_entry">Definition</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000012"><span class="toc_ref">3.2</span> <span class="toc_entry">Group structure under tensor product</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000013"><span class="toc_ref">3.3</span> <span class="toc_entry">Pull-back functoriality</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000014"><span class="toc_ref">3.4</span> <span class="toc_entry">Use in the project</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000015"><span class="toc_ref">3.5</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000016"><span class="toc_ref">3.5.1</span> <span class="toc_entry">Discovery objectives for this iteration</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html"><span class="toc_ref">4</span> <span class="toc_entry">The relative Picard functor</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Picard_Functor.html#a0000000017"><span class="toc_ref">4.1</span> <span class="toc_entry">Definition</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html#a0000000018"><span class="toc_ref">4.2</span> <span class="toc_entry">Representability</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html#a0000000019"><span class="toc_ref">4.3</span> <span class="toc_entry">Use in the project</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html#a0000000020"><span class="toc_ref">4.4</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Picard_Functor.html#a0000000021"><span class="toc_ref">4.4.1</span> <span class="toc_entry">Forward-compatibility note (<span class="ttfamily">LineBundle</span> approximation)</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html#a0000000022"><span class="toc_ref">4.4.2</span> <span class="toc_entry">Discovery objectives for this iteration (iter-005 prover)</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Jacobian.html"><span class="toc_ref">5</span> <span class="toc_entry">The Jacobian as an abelian variety</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Jacobian.html#a0000000023"><span class="toc_ref">5.1</span> <span class="toc_entry">The Jacobian</span></a>
+ </li>
+<li class="">
+  <a href="chap-Jacobian.html#a0000000024"><span class="toc_ref">5.2</span> <span class="toc_entry">Group scheme structure and abelian-variety properties</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Jacobian.html#a0000000025"><span class="toc_ref">5.2.1</span> <span class="toc_entry">Sanity check in low genus</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Jacobian.html#a0000000026"><span class="toc_ref">5.3</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Jacobian.html#a0000000027"><span class="toc_ref">5.3.1</span> <span class="toc_entry">Status note</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Rigidity.html"><span class="toc_ref">6</span> <span class="toc_entry">Rigidity for morphisms of group schemes (Mumford §4)</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Rigidity.html#a0000000028"><span class="toc_ref">6.1</span> <span class="toc_entry">Statement</span></a>
+ </li>
+<li class="">
+  <a href="chap-Rigidity.html#a0000000029"><span class="toc_ref">6.2</span> <span class="toc_entry">Proof sketch</span></a>
+ </li>
+<li class="">
+  <a href="chap-Rigidity.html#a0000000030"><span class="toc_ref">6.3</span> <span class="toc_entry">Use in the project</span></a>
+ </li>
+<li class="">
+  <a href="chap-Rigidity.html#a0000000031"><span class="toc_ref">6.4</span> <span class="toc_entry">Mathlib gap</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-AbelJacobi.html"><span class="toc_ref">7</span> <span class="toc_entry">The Abel–Jacobi map</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-AbelJacobi.html#a0000000032"><span class="toc_ref">7.1</span> <span class="toc_entry">Definition</span></a>
+ </li>
+<li class="">
+  <a href="chap-AbelJacobi.html#a0000000033"><span class="toc_ref">7.2</span> <span class="toc_entry">Pointed property</span></a>
+ </li>
+<li class="">
+  <a href="chap-AbelJacobi.html#a0000000034"><span class="toc_ref">7.3</span> <span class="toc_entry">Universal (Albanese) property</span></a>
+ </li>
+<li class="">
+  <a href="chap-AbelJacobi.html#a0000000035"><span class="toc_ref">7.4</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-AbelJacobi.html#a0000000036"><span class="toc_ref">7.4.1</span> <span class="toc_entry">Discovery objective for this iteration</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="chap:Cohomology_SheafCompose">1 Sheaf condition along the structure-sheaf forget composite</h1>
+
+<p>This chapter records the first step of Phase A in <span class="ttfamily">STRATEGY.md</span>: equipping the abstract Mathlib sheaf-cohomology pipeline with the link it needs to compute \(H^1(C, \mathcal O_C)\) as an abelian group. It is the smallest unblocking unit of progress toward Definition&#160;<a href="chap-Genus.html#def:genus">2</a> (the genus of a smooth proper curve). </p>
+<p>The chapter introduces no protected declarations: every definition and lemma here is auxiliary, supporting the construction of \(H^1(C, \mathcal O_C)\) in subsequent Phase A iterations. </p>
+<h1 id="a0000000002">1.1 Statement</h1>
+<p>Mathlib has the abstract Grothendieck-topology sheaf-cohomology API <code class="plain_lstlinline"></code>CategoryTheory.Sheaf.H : Sheaf J AddCommGrpCat → ℕ → Type w’, but the structure sheaf \(\mathcal O_C\) of a scheme is delivered by Mathlib in the shape <code class="plain_lstlinline"></code>TopCat.Sheaf CommRingCat C (i.e. \(\mathrm{CommRing}\)-valued, not \(\mathrm{Ab}\)-valued). To plug \(\mathcal O_C\) into the cohomology API we must first transport the sheaf condition along the forgetful composite \(\mathrm{CommRing} \to \mathrm{Ring} \to \mathrm{Ab}\). The <code class="plain_lstlinline"></code>HasSheafCompose typeclass packages exactly this transport. </p>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:HasSheafCompose_forget">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">1</span>
+    <span class="theorem_thmtitle">Sheaf condition transports along the structure-sheaf forget composite</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Cohomology_SheafCompose.html#thm:HasSheafCompose_forget">#</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Cohomology.instHasSheafCompose_forget_CommRing_AddCommGrp" class="lean_decl">AlgebraicGeometry.Cohomology.instHasSheafCompose_forget_CommRing_AddCommGrp</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>   Let \(X\) be a topological space. Then the Grothendieck topology of opens of \(X\) has </p>
+<div class="displaymath" id="a0000000003">
+  \[  \mathtt{HasSheafCompose}\bigl( \mathrm{forget}_2\,  \mathrm{CommRingCat}\,  \mathrm{RingCat} \; \circ \;  \mathrm{forget}_2\,  \mathrm{RingCat}\,  \mathrm{AddCommGrpCat} \bigr).  \]
+</div>
+
+  </div>
+</div>
+<p>In Lean:  instance (X : TopCat) : (TopologicalSpace.Opens.grothendieckTopology X).HasSheafCompose (CategoryTheory.forget₂ CommRingCat RingCat ⋙ CategoryTheory.forget₂ RingCat AddCommGrpCat)  </p>
+<h1 id="a0000000004">1.2 Proof sketch</h1>
+<div class="proof_wrapper" id="a0000000005">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p>Both \(\mathrm{forget}_2 \mathrm{CommRingCat}\,  \mathrm{RingCat}\) and \(\mathrm{forget}_2 \mathrm{RingCat}\,  \mathrm{AddCommGrpCat}\) are algebraic structure-forgetful functors and hence <em>create</em> (in particular preserve) all small limits. The sheaf condition for the topology of opens is expressed as preservation of certain limits of the form <code class="plain_lstlinline"></code>multiequalizer (Cover.index ...) (see <code class="plain_lstlinline"></code>Presheaf.IsSheaf.isSheaf_iff_isSheaf_of_type and the multispan-limit reformulation <code class="plain_lstlinline"></code>IsSheaf.isLimit_multifork). Composing two limit-preserving functors gives a limit-preserving functor, so the post-composition with the forget composite preserves the sheaf condition. The <code class="plain_lstlinline"></code>HasSheafCompose typeclass is exactly the resulting "sheaf-of-rings becomes sheaf-of-abelian-groups" lemma. </p>
+
+  </div>
+</div>
+<h1 id="a0000000006">1.3 Use in the project</h1>
+<p>Theorem&#160;<a href="chap-Cohomology_SheafCompose.html#thm:HasSheafCompose_forget">1</a> is the gateway to: </p>
+<ul class="itemize">
+  <li><p>the construction of \(\mathcal O_C\) as a sheaf of abelian groups on \(C\), by post-composing \(\mathcal O_C : \mathrm{Opens}(C)^{\mathrm{op}} \to \mathrm{CommRingCat}\) with the forget composite — the resulting object lives in \(\mathrm{Sheaf}(\mathrm{Opens.gT}\,  C, \mathrm{AddCommGrpCat})\) thanks to the typeclass above; </p>
+</li>
+  <li><p>plugging that sheaf into <code class="plain_lstlinline"></code>CategoryTheory.Sheaf.H once <code class="plain_lstlinline"></code>HasSheafify (Opens.gT C) AddCommGrpCat and <code class="plain_lstlinline"></code>HasExt are available (Phase A steps 2–3); </p>
+</li>
+  <li><p>endowing the resulting \(H^1\) with a \(k\)-vector-space structure via the \(k\)-algebra structure on \(\Gamma (C, \mathcal O_C)\) (Phase A step 4); </p>
+</li>
+  <li><p>finite-dimensionality via Serre’s theorem on coherent cohomology of proper \(k\)-schemes (Phase A step 5); </p>
+</li>
+  <li><p>Definition&#160;<a href="chap-Genus.html#def:genus">2</a> (\(g(C) = \dim _k H^1(C, \mathcal O_C)\)) which then becomes formalisable. </p>
+</li>
+</ul>
+<p>The chain is: <span class="ttfamily">HasSheafCompose</span> (this chapter) \(\to \) <span class="ttfamily">HasSheafify</span> \(\to \) <span class="ttfamily">HasExt</span> \(\to \) \(\mathrm{Module}\,  k\)-on-\(H^1\) \(\to \) Serre finiteness \(\to \) <code class="plain_lstlinline"></code>genus. </p>
+<h1 id="a0000000007">1.4 Mathlib gap</h1>
+<p>Mathlib <span class="ttfamily">b80f227</span> has all the constituent pieces: </p>
+<ul class="itemize">
+  <li><p><code class="plain_lstlinline"></code>CategoryTheory.GrothendieckTopology.HasSheafCompose — the typeclass to populate. </p>
+</li>
+  <li><p><code class="plain_lstlinline"></code>CategoryTheory.HasForget₂ for \(\mathrm{CommRingCat} \to \mathrm{RingCat}\) (<code class="plain_lstlinline"></code>CommRingCat.hasForgetToRingCat) and \(\mathrm{RingCat} \to \mathrm{AddCommGrpCat}\) (<code class="plain_lstlinline"></code>RingCat.hasForgetToAddCommGrp). </p>
+</li>
+  <li><p>Limit-preservation lemmas for algebraic forgetful functors and the sheaf-condition reformulations. </p>
+</li>
+</ul>
+<p>What is missing and supplied by this chapter: the assembled <span class="ttfamily">HasSheafCompose</span> instance for the specific composite \(\mathrm{CommRingCat} \to \mathrm{AddCommGrpCat}\) on the Grothendieck topology of opens of an arbitrary topological space. </p>
+<h2 id="a0000000008">1.4.1 Discovery objectives for this iteration (iter-005 prover)</h2>
+<p>The prover assigned to this chapter should: </p>
+<ol class="enumerate">
+  <li><p>Use <code class="plain_lstlinline"></code>lean_local_search/<code class="plain_lstlinline"></code>lean_leansearch to identify the most direct existing Mathlib lemma that establishes <code class="plain_lstlinline"></code>HasSheafCompose from limit preservation by the post-composing functor — e.g. <code class="plain_lstlinline"></code>Presheaf.isSheaf_iff_isSheaf_comp or <code class="plain_lstlinline"></code>HasSheafCompose.isSheaf_of_preservesMultiequalizer. </p>
+</li>
+  <li><p>Establish that the composite \(\mathrm{forget}_2\,  \mathrm{CommRingCat}\,  \mathrm{RingCat} \circ \mathrm{forget}_2\,  \mathrm{RingCat}\,  \mathrm{AddCommGrpCat}\) preserves the relevant limits, by appealing to existing Mathlib facts about algebraic forget functors (<code class="plain_lstlinline"></code>HasLimits preservation). </p>
+</li>
+  <li><p>Combine the two to produce the instance and close the sorry. The body should be at most \(\sim 20\) lines. </p>
+</li>
+  <li><p><b class="bfseries">Do not</b> introduce a placeholder <code class="plain_lstlinline"></code>instance := sorry’ or any axiom: leave the sorry in place rather than weakening the definition. </p>
+</li>
+</ol>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="index.html" title="AlgebraicJacobian"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="AlgebraicJacobian"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="chap-Genus.html" title="Genus of a smooth proper curve"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

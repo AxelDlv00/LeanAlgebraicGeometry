@@ -1,0 +1,42 @@
+{
+  "iteration": 116,
+  "stage": "prover (Archon iter-115 \u2014 **single Phase B prover lane on `Differentials.lean`",
+  "mode": "parallel",
+  "startedAt": "2026-05-16T00:46:20Z",
+  "plan": {
+    "status": "skipped",
+    "sessionId": "3000a8eb-0143-4dd3-a72b-14ce2e2a5bb3",
+    "durationSecs": 2493
+  },
+  "planValidate": {
+    "status": "failed",
+    "objectives": 0
+  },
+  "completedAt": "2026-05-16T10:37:23Z",
+  "wallTimeSecs": 736,
+  "status": "plan_validate_failed",
+  "prover": {
+    "status": "done",
+    "durationSecs": 0
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "335f50b7-2f5d-485e-adc5-df34acd4c584",
+    "durationSecs": 585
+  },
+  "sorry_count": 3701,
+  "finalize": {
+    "innerGit": {
+      "sha": "0c801b7"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 3
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 1,
+      "error": "web"
+    }
+  }
+}

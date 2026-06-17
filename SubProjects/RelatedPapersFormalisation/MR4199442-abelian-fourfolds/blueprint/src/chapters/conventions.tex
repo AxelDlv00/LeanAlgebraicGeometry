@@ -1,0 +1,168 @@
+\chapter{Conventions}
+
+This chapter fixes the vocabulary of motives and algebraic cycles used throughout
+the formalization. It is a faithful transcription of the Conventions section
+(\S2) of Ancona's paper. All later chapters depend on the definitions collected here.
+
+\begin{definition}[Variety]
+  \label{def:variety}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.Variety}
+  % SOURCE: [Ancona], §2, item (1) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "A \textbf{variety} will mean a smooth, projective and geometrically connected scheme over a base  field  $k$."
+  \textit{Source: Ancona, arXiv:1806.03216, §2.}
+  Fix a base field \(k\). A \emph{variety} over \(k\) is a smooth, projective and
+  geometrically connected scheme over \(k\).
+\end{definition}
+
+\begin{definition}[Chow motives]
+  \label{def:chow-motives}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.ChowMotives}
+  \uses{def:variety}
+  % SOURCE: [Ancona], §2, item (2) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let  $k$ be a base field and $F$ be a field of coefficients of characteristic zero, we will denote by \[\CHM(k)_{F}\] the category of  \textbf{Chow motives} over $k$ with coefficients in $F$. (The subscript $F$ may sometimes be omitted.) For generalities, we refer to \cite{Andmot} in particular to \cite[Definition 3.3.1.1]{Andmot}  for the notion of Weil cohomology and to \cite[Proposition 4.2.5.1]{Andmot}  for the associated realization functor."
+  % SOURCE QUOTE: "We will denote by \[\mathfrak{h} : \Var_k\longrightarrow \CHM(k)_{F}^{\op}\] the functor associating to each variety its motive."
+  % SOURCE QUOTE: "We will work also with \textbf{homological and numerical motives}. The motive of a variety $X$ in these categories will still be denoted by $\mathfrak{h} (X)$. We will denote by \[\NUM(k)_F\] the category of numerical motives over $k$ with coefficients in $F$."
+  % SOURCE QUOTE: "Finally, we will need also to work with  \textbf{relative motives} as defined for example in \cite[\S 5.1]{OS2}.  The relative situation that will appear in this paper will always be over the ring of integers $W$ of a $p$-adic field. We will use analogous notation as in the absolute setting, for example Chow motives over $W$ will be denoted by \[\CHM(W).\]"
+  \textit{Source: Ancona, arXiv:1806.03216, §2.}
+  Let \(k\) be a base field and let \(F\) be a field of coefficients of
+  characteristic zero. We denote by \(\CHM(k)_{F}\) the category of \emph{Chow
+  motives} over \(k\) with coefficients in \(F\) (the subscript \(F\) may be
+  omitted). The motive functor
+  \[\hh : \Var_k \longrightarrow \CHM(k)_{F}^{\op}\]
+  associates to each variety its motive. The same notation \(\hh(X)\) is used for
+  the image of \(X\) in the associated categories of \emph{homological} and
+  \emph{numerical} motives. One also works with \emph{relative motives}: the
+  relative base is always the ring of integers \(W\) of a \(p\)-adic field, and
+  Chow motives over \(W\) are denoted \(\CHM(W)\).
+\end{definition}
+
+\begin{definition}[Numerical motives]
+  \label{def:num-motives}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.NumericalMotives}
+  \uses{def:chow-motives}
+  % SOURCE: [Ancona], §2, item (2) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "We will work also with \textbf{homological and numerical motives}. The motive of a variety $X$ in these categories will still be denoted by $\mathfrak{h} (X)$. We will denote by \[\NUM(k)_F\] the category of numerical motives over $k$ with coefficients in $F$."
+  \textit{Source: Ancona, arXiv:1806.03216, §2.}
+  For a base field \(k\) and a coefficient field \(F\) of characteristic zero,
+  \(\NUM(k)_F\) denotes the category of \emph{numerical motives} over \(k\) with
+  coefficients in \(F\): the quotient of the homological category in which
+  morphisms are taken modulo numerical equivalence. The motive of a variety
+  \(X\) is still written \(\hh(X)\).
+\end{definition}
+
+\begin{definition}[Classical realizations]
+  \label{def:realizations}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.ClassicalRealizations}
+  \uses{def:chow-motives}
+  % SOURCE: [Ancona], §2, item (3) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "By \textbf{classical realizations}\footnote{We tried to distinguish the properties which hold true for any realization and those which are known only for classical realizations.  In any case, the main results of the paper only make use of classical realizations and the reader can safely think only about them.} we will mean Betti realization \[R_B : \CHM(\C)_{\Q}\longrightarrow \GrVec_\Q,\]   $\ell$-adic realization (when $\ell$ is invertible in $k$) \[R_\ell : \CHM(k)_{\Q}\longrightarrow \GrVec_{\Q_\ell}\]  de Rham realization (when $k$ is of characteristic zero) \[R_\dR : \CHM(k)_{\Q}\longrightarrow \GrVec_{k}\] and crystalline realization (when $k$ is perfect and of positive characteristic) \[R_\crys : \CHM(k)_{\Q}\longrightarrow \GrVec_{\Frac (W(k))}.\]  For generalities see  \cite[\S 3.4.2 and Proposition 4.2.5.1]{Andmot}."
+  % SOURCE QUOTE: "The realization functor are sometimes used in their enriched form, i.e. $R_B$ provides Hodge structures, $R_\ell$ provides Galois representations, $R_\dR$ provides filtered vector spaces and $R_\crys$ provides absolute Frobenius actions, see \cite[\S 7.1]{Andmot}."
+  \textit{Source: Ancona, arXiv:1806.03216, §2.}
+  The \emph{classical realizations} are the following functors into graded vector
+  spaces:
+  \begin{itemize}
+    \item Betti realization \(R_B : \CHM(\C)_{\Q} \to \GrVec_\Q\);
+    \item \(\ell\)-adic realization (\(\ell\) invertible in \(k\))
+      \(R_\ell : \CHM(k)_{\Q} \to \GrVec_{\Q_\ell}\);
+    \item de Rham realization (\(k\) of characteristic zero)
+      \(R_\dR : \CHM(k)_{\Q} \to \GrVec_{k}\);
+    \item crystalline realization (\(k\) perfect of positive characteristic)
+      \(R_\crys : \CHM(k)_{\Q} \to \GrVec_{\Frac(W(k))}\).
+  \end{itemize}
+  In their enriched form these functors land in Hodge structures (\(R_B\)),
+  Galois representations (\(R_\ell\)), filtered vector spaces (\(R_\dR\)) and
+  spaces with an absolute Frobenius action (\(R_\crys\)).
+\end{definition}
+
+\begin{definition}[Admissible filtered $\varphi$-modules]
+  \label{def:filtered-phi-modules}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.FilteredPhiModules}
+  % SOURCE: [Ancona], §2, item (4) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let $W$ be the ring of integers  of a $p$-adic field $K$ with residue field $k$ (then $\Frac (W(k))$ is the maximal unramified subfield of $K$). We will denote by  \[\MOD\] the category  of admissible filtered $\varphi$-modules \cite{BertOgus,HyodoKato,NiziFred}."
+  % SOURCE QUOTE: "Recall that an element in $\MOD$ is, in particular, a finite dimensional  $\Frac (W(k))$-vector space $V$, together with a decreasing filtration $\Fil^*$ on $V\otimes_{\Frac (W(k))} K$ and a $(\Frac (W(k))/\Q_p)$-semilinear endomorphism $\varphi$ of $V$, usually called absolute Frobenius, verifying some compatibilities between $\Fil^*$ and $\varphi$."
+  \textit{Source: Ancona, arXiv:1806.03216, §2.}
+  Let \(W\) be the ring of integers of a \(p\)-adic field \(K\) with residue
+  field \(k\), so that \(\Frac(W(k))\) is the maximal unramified subfield of
+  \(K\). We denote by \(\MOD\) the category of \emph{admissible filtered
+  \(\varphi\)-modules}. An object of \(\MOD\) is, in particular, a
+  finite-dimensional \(\Frac(W(k))\)-vector space \(V\), together with a
+  decreasing filtration \(\Fil^*\) on \(V \otimes_{\Frac(W(k))} K\) and a
+  \((\Frac(W(k))/\Q_p)\)-semilinear endomorphism \(\varphi\) of \(V\) (the
+  absolute Frobenius), satisfying compatibilities between \(\Fil^*\) and
+  \(\varphi\).
+\end{definition}
+
+\begin{definition}[Hyodo--Kato realization]
+  \label{def:hyodo-kato}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.HyodoKatoRealization}
+  \uses{def:filtered-phi-modules, def:realizations}
+  % SOURCE: [Ancona], §2, item (4) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "There is a \textbf{Hyodo-Kato} realization functor \[R_{\HK}: \CHM(W)\rightarrow \MOD\] such that, after forgetting the absolute Frobenius, it coincides with de Rham realization of the generic fiber $R_{\HK}(\cdot)\otimes K=R_\dR(\cdot_{\vert K})$  and, after forgetting the filtration, it coincides with  crystalline realization of the special fiber $R_{\HK}(\cdot) = R_{\crys}(\cdot_{\vert k})$."
+  \textit{Source: Ancona, arXiv:1806.03216, §2.}
+  There is a \emph{Hyodo--Kato} realization functor
+  \[R_{\HK} : \CHM(W) \longrightarrow \MOD\]
+  interpolating the de Rham and crystalline realizations: forgetting the absolute
+  Frobenius recovers the de Rham realization of the generic fiber,
+  \(R_{\HK}(\cdot) \otimes K = R_\dR(\cdot_{|K})\), while forgetting the
+  filtration recovers the crystalline realization of the special fiber,
+  \(R_{\HK}(\cdot) = R_\crys(\cdot_{|k})\).
+\end{definition}
+
+\begin{definition}[Unit object]
+  \label{def:unit-object}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.UnitMotive}
+  \uses{def:chow-motives}
+  % SOURCE: [Ancona], §2, item (5) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "The \textbf{unit object} in one of the above categories of motives (Chow, homological or numerical motives) over a base $S$ is the motive $\mathfrak{h}(S)$ and it will be denoted by \[\one \coloneqq \mathfrak{h}(S).\] When $S=\Spec(k)$ we have the identification \[\End(\one)=\Q.\]"
+  \textit{Source: Ancona, arXiv:1806.03216, §2.}
+  The \emph{unit object} in any of the above categories of motives (Chow,
+  homological or numerical) over a base \(S\) is the motive of \(S\),
+  \[\one \coloneqq \hh(S).\]
+  When \(S = \Spec(k)\) one has the identification \(\End(\one) = \Q\).
+\end{definition}
+
+\begin{definition}[Algebraic class]
+  \label{def:algebraic-class}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.AlgebraicClass}
+  \uses{def:unit-object}
+  % SOURCE: [Ancona], §2, item (6) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "An \textbf{algebraic class} of a motive $T$ is a map \[\alpha\in\Hom(\one, T).\] The realization of an algebraic class gives a map \[R(\alpha) : F \longrightarrow R(T),\] where $F$ is the field of coefficients of the realization. The map $R(\alpha)$ is characterized by its value at $1\in F$. An element of the cohomology group $R(T)$ of this form \[R(\alpha)(1) \in R(T)\] will be called an algebraic class of  $R(T)$. By abuse of language, an algebraic class of the cohomology group $R(T)$ may also be called an algebraic class of the motive $T$."
+  \textit{Source: Ancona, arXiv:1806.03216, §2.}
+  An \emph{algebraic class} of a motive \(T\) is a morphism
+  \[\alpha \in \Hom(\one, T).\]
+  Its realization is the map \(R(\alpha) : F \to R(T)\), where \(F\) is the
+  coefficient field of the realization; \(R(\alpha)\) is determined by its value
+  \(R(\alpha)(1) \in R(T)\), which is called an algebraic class of the cohomology
+  group \(R(T)\) (and, by abuse, of the motive \(T\)). One may ignore Tate twists
+  and say \(T\) has algebraic classes when \(T(n)\) does.
+\end{definition}
+
+\begin{definition}[Numerical equivalence]
+  \label{def:num-equiv}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.NumericallyEquivalent}
+  \uses{def:algebraic-class}
+  % SOURCE: [Ancona], §2, item (7) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "An algebraic class $\alpha$ of a motive $T$ is \textbf{numerically trivial} if, for all $\beta\in\Hom(T,\one)$, the composition $\beta \circ \alpha $  is zero. Two algebraic classes are numerically equivalent if their difference is numerically trivial. (This recovers the classical definition \cite[7.1.2]{AK}.)"
+  \textit{Source: Ancona, arXiv:1806.03216, §2.}
+  An algebraic class \(\alpha\) of a motive \(T\) is \emph{numerically trivial}
+  if \(\beta \circ \alpha = 0\) for every \(\beta \in \Hom(T, \one)\). Two
+  algebraic classes are \emph{numerically equivalent} if their difference is
+  numerically trivial. This recovers the classical notion of numerical
+  equivalence.
+\end{definition}
+
+\begin{definition}[Spaces of algebraic cycles]
+  \label{def:num-cycles}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.NumericalCycles}
+  \uses{def:num-motives, def:num-equiv, def:algebraic-class}
+  % SOURCE: [Ancona], §2, item (8) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let $X$ be a variety. The space of algebraic cycles on $X$ with coefficients in $F$ modulo numerical equivalence will be denoted by \[\mathcal{Z}^{n}_{\num}(X)_{F}= \Hom_{\NUM(k)_F}(\one, \mathfrak{h}(X)(n)).\] Similarly, for a fixed Weil cohomology, $\mathcal{Z}^{n}_{\hom}(X)_{F}$ will denote the space of algebraic cycles on $X$ with coefficients in $F$ modulo homological equivalence."
+  \textit{Source: Ancona, arXiv:1806.03216, §2.}
+  Let \(X\) be a variety. The space of algebraic cycles on \(X\) with coefficients
+  in \(F\) modulo numerical equivalence is
+  \[\mathcal{Z}^{n}_{\num}(X)_{F} = \Hom_{\NUM(k)_F}\bigl(\one, \hh(X)(n)\bigr),\]
+  a finite-dimensional \(F\)-vector space whose dimension is denoted \(\rho_n\).
+  Analogously, for a fixed Weil cohomology, \(\mathcal{Z}^{n}_{\hom}(X)_{F}\)
+  denotes the space of algebraic cycles on \(X\) with coefficients in \(F\)
+  modulo homological equivalence.
+\end{definition}

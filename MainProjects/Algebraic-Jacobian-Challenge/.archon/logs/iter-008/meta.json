@@ -1,0 +1,44 @@
+{
+  "iteration": 8,
+  "stage": "prover  (iteration 007 \u2014 small polish iteration; refactor will scaffold three consumer-facing helpers, then the prover round closes them with probe-confirmed one-line bodies)",
+  "mode": "parallel",
+  "startedAt": "2026-05-07T04:12:40Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1218
+  },
+  "refactor": {
+    "status": "done",
+    "durationSecs": 155
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 106
+  },
+  "provers": {
+    "AlgebraicJacobian_Picard_FunctorAb": {
+      "file": "AlgebraicJacobian/Picard/FunctorAb.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 374
+  },
+  "sorry_count": 301,
+  "finalize": {
+    "innerGit": {
+      "sha": "4d32144"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 10
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 2
+    }
+  },
+  "completedAt": "2026-05-07T04:47:05Z",
+  "wallTimeSecs": 2065
+}

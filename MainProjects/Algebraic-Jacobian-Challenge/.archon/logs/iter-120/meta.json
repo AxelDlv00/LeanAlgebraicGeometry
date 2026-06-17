@@ -1,0 +1,48 @@
+{
+  "iteration": 120,
+  "stage": "prover (Phase C \u2014 close the forward implication",
+  "mode": "parallel",
+  "startedAt": "2026-05-16T14:04:19Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "d47c5c16-60c0-439e-9f39-f7dc3a458f84",
+    "durationSecs": 2609
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 1
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 229
+  },
+  "provers": {
+    "AlgebraicJacobian_Differentials": {
+      "file": "AlgebraicJacobian/Differentials.lean",
+      "status": "done",
+      "sessionId": "80ecd017-0f37-484d-ac45-e70e10efe8f0"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "9ad8dbff-6c9c-4c90-aade-d1f38c7fe3ab",
+    "durationSecs": 714
+  },
+  "sorry_count": 3705,
+  "finalize": {
+    "innerGit": {
+      "sha": "fff1547"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 6
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 1,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-16T15:05:23Z",
+  "wallTimeSecs": 3664
+}

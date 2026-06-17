@@ -1,0 +1,91 @@
+# Iter-169 review — recommendations for the iter-170 plan agent
+
+## CRITICAL (must address iter-170)
+
+### 1. The `gmScalingP1` body deferral has now fired the armed user-escalation trigger.
+
+Both iter-168 and iter-169 plans committed: **"if iter-169 prover lands PARTIAL/INCOMPLETE on `gmScalingP1` body, iter-170 plan opens with user escalation via TO_USER.md — NOT another helper-supports round."** The prover landed PARTIAL with three structurally distinct routes each blocked on a different missing Mathlib piece. The trigger is **ARMED**.
+
+**The planner MUST NOT open a 6th iter of supports.** The plan agent's iter-170 first action is to choose between the three options below (writing `TO_USER.md` with the chosen option) and proceed — no waiting on user. The user can override via `USER_HINTS.md`.
+
+**The three options (per iter-169 plan's commit-language, lightly revised based on what the prover found):**
+
+- **(a) Commit to upstream Mathlib sub-build.** Build the relative-Proj base-change iso `Proj(MvPoly (Fin n) R) ≅ Proj(MvPoly (Fin n) k) ×_{Spec k} Spec R` (verified absent from Mathlib iter-169). Unblocks the Attempt-3 functoriality route, which is the cleanest mathematically. **Estimate**: ~5-iter detour. **Pro**: lands `gmScalingP1` axiom-clean once done; reusable upstream contribution. **Con**: 5 iters of off-path infrastructure work; project sorry count stays flat for that period.
+- **(b) Accept `[CharZero]` as a temporary hypothesis** and use `rigidity_over_kbar` (`RigidityKbar.lean:88`, char-0-only fallback artifact, body still `sorry`) as the genus-0 artifact. The final headline becomes a `[CharZero]`-gated theorem; the char-general claim becomes a future cleanup. **Estimate**: ~2-iter detour to wire `[CharZero]`-gating through the headline. **Pro**: project starts closing the headline in 2 iters. **Con**: the headline is no longer char-general; the strategy critic's iter-163 "char-free via Milne" stance is partly abandoned.
+- **(c) Build the chart-glue inline at scale.** Commit to ~200-300 LOC dedicated to `gmScalingP1` body across 2-3 iters, building the project-local `TensorProduct (HomogeneousLocalization.Away _ _) (GmRing _)` CommRing/Algebra instance + the cocycle infrastructure inline. **Pro**: no Mathlib PR dependency; no `[CharZero]` weakening. **Con**: 200-300 LOC of project-local infrastructure that duplicates what a future Mathlib relative-Proj would replace; risk of further hidden gaps mid-flight; the iter-169 prover already characterised it as "not closeable within an iter budget consistent with not breaking the build."
+
+**Recommended option**: **(b)**. Rationale: the genus-0 arm has been the project bottleneck for 5+ iters; the strategy-critic's iter-163 char-free stance is a strategic preference, not a binding goal; landing the headline char-0-only THEN swapping in a char-free genus-0 artifact later (when Mathlib supplies relative-Proj) is the lowest-regret path. The iter-170 planner should make this call (record it in `iter/iter-170/plan.md` under `## Decision made`), write `TO_USER.md` with the chosen option + the 1-line rationale, and proceed.
+
+**Hard-no on this iter-170 plan**: ANY plan of the form "build ONE more helper on `gmScalingP1`" (whether `gm_grpObj`, `homogeneousLocalizationAwayIso_aux_left`, or any new sub-build) is the churn pattern the critic has already named. The progress-critic's CHURNING verdict still applies until the body lands axiom-clean OR the planner commits to a non-helper option (a/b/c above).
+
+## HIGH (prefer for iter-170 or shortly thereafter)
+
+### 2. Blueprint pin `\lean{AlgebraicGeometry.ga_grpObj}` is ORPHANED (`AbelianVarietyRigidity.tex:1023`). [CONFIRMED by lean-vs-blueprint-checker `g0bo-iter169`]
+
+The Lean decl `ga_grpObj` was deleted iter-169 SECONDARY-4. The chapter still pins it. **Review-agent action taken**: added a `% NOTE (iter-169)` to the block flagging the orphan + instructing the iter-170 plan-writer to delete it.
+
+**iter-170 plan-agent action** (informal-prose scope, NOT review):
+1. **Delete the `def:ga_grpObj` block entirely** (L1020-L1032 including `\label`, `\lean{...}` pin, `\uses{def:ga}` edge, and the iter-169 NOTE just landed). No incoming `\uses{def:ga_grpObj}` edges in the chapter (verified grep).
+2. **Regenerate `blueprint/lean_decls`** so the orphan entry around L134 (`AlgebraicGeometry.ga_grpObj`) disappears.
+
+The blueprint-doctor will surface the broken `\lean{...}` reference in the iter-170 plan prompt automatically. The lean-vs-blueprint-checker has already confirmed via `lean_verify`: `Axiom check failed: Unknown constant '_root_.AlgebraicGeometry.ga_grpObj'`.
+
+### 3. `projGm_isReduced` (Genus0BaseObjects.lean:819) is BORDERLINE, NOT a genuine Mathlib gap — recommended near-term close target. [NEW iter-169 finding from lean-auditor `iter169`]
+
+The iter-169 lean-auditor re-audited the 4 "Mathlib gap"-framed scaffold sorries per directive and found **3 of 4 genuinely sit on Mathlib gaps** (`projectiveLineBar_geomIrred` L175, `projectiveLineBar_smoothOfRelDim` L182, `gm_geomIrred` L789 — `GeometricallyIrreducible` and `SmoothOfRelativeDimension` APIs lack `of_openCover` / chart-stability lemmas) BUT **`projGm_isReduced` L819 is BORDERLINE** and matches the iter-168 `projectiveLineBar_isReduced` precedent (which closed in <10 LOC via `IsReduced.of_openCover` + injectivity-into-larger-domain pattern).
+
+The chart cover here is `(D₊(X i) ×_{Spec k̄} 𝔾_m)_{i ∈ Fin 2}`, each chart `Spec(HomogeneousLocalization.Away 𝒜 (X i) ⊗_{k̄} k̄[t, t⁻¹])` — a tensor of two integral domains over the field `k̄`. The remaining gap (tensor-of-domains-over-field-is-reduced) admits TWO closures: (a) prove the tensor-domain lemma inline against the concrete rings; (b) identify the chart ring with a single localization of a polynomial ring (`k̄[u, t, t⁻¹]`) which is trivially a domain. **Estimated 30-60 LOC.**
+
+**Recommend iter-170 schedule a NARROW Lane B on `projGm_isReduced` independent of the gmScalingP1 escalation lane.** It is file-disjoint from the headline escalation work (does not block, is not blocked); landing it gives a sorry count `-1` for relatively cheap effort + clears one of the 4 "Mathlib gap" docstrings the iter-168/169 KB flagged as candidates for re-audit.
+
+### 4. `homogeneousLocalizationAwayIso_aux_left` (G0BO.lean:360) propagates `sorry` into the public `homogeneousLocalizationAwayIso` def — structural decision needed. [NEW iter-169 from lean-auditor `iter169`]
+
+The auditor confirms zero consumers of `homogeneousLocalizationAwayIso` across the codebase. The current state — public `noncomputable def` whose body relies on a `sorry`-bottomed aux — is the worst-case advertisement (advertises a closed iso while not actually being one). Per the iter-169 plan's Option B pivot, the iso is also no longer load-bearing on the genus-0 critical path.
+
+**Recommend iter-170 plan agent decide between two clean structural options**:
+- **(close-or-seal A)** Mark `homogeneousLocalizationAwayIso` `private` (rather than public exported `noncomputable def`) so the `sorry`-tainted iso is not advertised. Keep the iso in tree as deferred infrastructure (a future Mathlib upstream candidate).
+- **(close-or-seal B)** Delete `homogeneousLocalizationAwayIso` + `_aux_left` + `_aux_right` + the 5 ring-hom helpers entirely. Sorry count `-1`; deferred infrastructure is regenerable from the iter-167 KB pattern if needed later.
+
+Either is acceptable. Recommend **(close-or-seal B)** — the iso is genuinely off-path per iter-169 Option B pivot; removing it cleans the public API and the iter-167 KB documents the construction recipe.
+
+### 3. Confirm/refute the prover's deferred re-audit of the 4 remaining "Mathlib gap" scaffolds (SECONDARY-5).
+
+The prover deferred SECONDARY-5 (`projectiveLineBar_geomIrred` L175, `projectiveLineBar_smoothOfRelDim` L182, `gm_geomIrred` L789, `projGm_isReduced` L819). The prover's task_result states "each appears genuinely blocked on scheme-level alg-closed-base / smooth-to-reduced bridges that are multi-iter upstream items, not <20 LOC inline fixes" — but this is a stated impression, not a verified investigation. The iter-168 `projectiveLineBar_isReduced` "Mathlib gap" turned out to be <10 LOC of inline bridge. **Recommend**: schedule a hygiene iter (post-escalation, ideally bundled with the iter-170+ refactor for the chosen escalation option) where a `mathlib-analogist` consult re-audits each of the 4. Even if 1 of 4 closes in <30 LOC, that's a net `-1` on the sorry count for ~30 LOC.
+
+## MEDIUM (background hygiene)
+
+### 5a. Trim long iter-status docstrings on `gmScalingP1` / `_collapse_at_zero`. [NEW iter-169 from lean-auditor `iter169` major]
+
+The iter-169 prover's two PRIMARY docstrings on `gmScalingP1` (G0BO.lean L626-L684, ~60 lines) + `gmScalingP1_collapse_at_zero` (L697-L708) carry iter-specific status prose ("Status (iter-169 PARTIAL/escalation)", "Iter-170 escalation surface…"). The auditor's verdict: this **encodes plan churn into git history** — docstrings will drift stale within 1-2 iters. Recommend the iter-170 prover (whoever picks up the escalation route) trim to a stable mathematical description + a single-line `TODO` pointing to the iter sidecar.
+
+### 5b. `gm_grpObj` docstring (G0BO.lean:588) still references the deleted `ga_grpObj`. [NEW iter-169]
+
+The phrase "same discipline as `ga_grpObj`" at L588 is now dangling (`ga_grpObj` was deleted SECONDARY-4 this iter). Cosmetic but actively misleading. Recommend a 1-line docstring touch the next time `Genus0BaseObjects.lean` is opened.
+
+### 6. The 5 lean-auditor stale-narrative majors in fallback-route files (iter-168 carryover).
+Still untouched: `Cotangent/GrpObj.lean:297-326,465-525`, `Cotangent/ChartAlgebra.lean:20-34,552-560,624-629`, `RigidityKbar.lean:9-89`, AVR L1090/L1156/L915-922 iter-tag bumps. Defer until the iter-170 escalation decision crystallises (so the bumped iter-tags reflect the right state).
+
+### 7. AVR `iotaGm_isDominant` (`AbelianVarietyRigidity.lean:931`) is `infer_instance`-closeable IF `gmScalingP1` body lands.
+- If iter-170 picks option (a) or (c) → close at the end of that route (auto, gated on the body).
+- If iter-170 picks option (b) → the AVR consumer route gets re-shaped around `[CharZero]`; `iotaGm_isDominant` may become irrelevant. Re-assess in the option-(b) plan.
+
+## DO NOT RETRY (blocked targets)
+
+### 8. Do NOT re-attempt `gmScalingP1` body via Option B chart-glue without a Mathlib-side fix.
+The iter-169 prover hit a CommRing/Algebra-instance gap on `TensorProduct (HomogeneousLocalization.Away _ _) (GmRing _)` that Mathlib does not ship. Re-trying without first building (or upstreaming) that instance is the churn pattern.
+
+### 9. Do NOT re-attempt the iter-168 iso (`homogeneousLocalizationAwayIso_aux_left`) on the genus-0 critical path.
+Per the iter-169 plan's Option B pivot, the iso is no longer load-bearing. Keep it in tree as deferred infrastructure (an upstream-Mathlib candidate); do NOT chase the `aux_left` sorry as part of a `gmScalingP1` close.
+
+### 10. Do NOT re-attempt `gm_grpObj` (L593) speculatively.
+Per the iter-169 plan's constraint, `gm_grpObj` MUST NOT be consumed by `gmScalingP1` body (the morphism `σ_× : ℙ¹ × Gm ⟶ ℙ¹` is a bare `Scheme.Hom`, not a `GrpObj.Hom`). The instance has been deferred for 4 iters; its closure (~80-150 LOC per iter-167 KB) only becomes critical AFTER the escalation decision lands. Defer until then.
+
+## Reusable proof patterns discovered iter-169
+
+- **`Proj.map` as morphism-construction primitive for ℙ-bundle base-change-style maps** — `ProjectiveSpectrum/Functor.lean:144`. When a desired morphism `Proj ℬ → Proj 𝒜` arises from a graded ring map `𝒜 →+*ᵍ ℬ`, this is the canonical Mathlib hook. The 𝔾_m-scaling action would fit cleanly IF the relative-Proj base-change iso were available.
+- **Verifying a Mathlib formalism is absent before designing around it** — iter-169 used a `Glob`+`Grep` pass across the whole `Mathlib/AlgebraicGeometry/` tree to confirm `Proj.iso_pullback_Spec`/`relativeProj`/`ProjPolynomial` are all genuinely missing. Pattern: when a critic or analogist suggests a route, do a 1-minute `Glob`+`Grep` smoke test for the load-bearing Mathlib declarations BEFORE committing the iter. This iter saved the prover from a multi-iter route-(b) commitment that would have stalled in iter-171.
+- **Loss of factor through global-sections on a non-affine source** — the iter-169 Attempt-1 dead-end (Γ(ℙ¹ × 𝔾_m, ⊤) = k̄[t, t⁻¹], so morphisms via `fromOfGlobalSections` factor through 𝔾_m and lose the ℙ¹ factor). A useful tell when designing morphisms out of `Proj × Affine` products: if the construction lands `X · ⊗ A → ⊤`, the resulting morphism is forced to be the affine-projection-composed-with-something. Cannot encode a genuine bivariate scaling.
+
+## Subagent reviews (this iter)
+- **`lean-auditor iter169`** (narrow scope: G0BO.lean only) — verdict: 18 issues (8 must-fix / 3 major / 3 minor / 4 excuse). Headline finding: **BORDERLINE `projGm_isReduced` L819 is closable** (NOT a genuine Mathlib gap) — folded into HIGH #3 above. Report: `.archon/task_results/lean-auditor-iter169.md`.
+- **`lean-vs-blueprint-checker g0bo-iter169`** (Lean ↔ AVR.tex pair) — verdict: structurally sound; 8 red flags (3 must-fix sorry-on-substantive-pin + 1 orphan + 1 stale narrative + 1 documented-soft + 2 minor coverage). Headline finding: **`\lean{ga_grpObj}` orphan CONFIRMED** via `lean_verify` — folded into HIGH #2 above; review agent applied `% NOTE (iter-169)` markers to the chapter for iter-170 plan-writer attention. Report: `.archon/task_results/lean-vs-blueprint-checker-g0bo-iter169.md`.

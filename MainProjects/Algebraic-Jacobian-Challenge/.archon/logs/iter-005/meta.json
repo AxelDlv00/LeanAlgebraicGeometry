@@ -1,0 +1,33 @@
+{
+  "iteration": 5,
+  "stage": "prover  (iter-004 prover round: close the 4 scaffold sorries laid by the iter-004 refactor)",
+  "mode": "parallel",
+  "startedAt": "2026-05-06T09:36:44Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1203
+  },
+  "refactor": {
+    "status": "done",
+    "durationSecs": 256
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 107
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    },
+    "AlgebraicJacobian_Picard_FunctorAb": {
+      "file": "AlgebraicJacobian/Picard/FunctorAb.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 534
+  },
+  "sorry_count": 255
+}

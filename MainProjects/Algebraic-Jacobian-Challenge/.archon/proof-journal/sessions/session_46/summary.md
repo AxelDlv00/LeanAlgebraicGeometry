@@ -1,0 +1,141 @@
+# Session 46 — iter-046 review
+
+## Metadata
+
+- **Archon iteration**: 046
+- **Stage**: prover (Phase A step 6 *Path 2* / Serre-finiteness scaffolding — **producer instance** for the iter-043 wholespace H⁰ Hom-finiteness carrier on the curve sheaf)
+- **File touched**: `AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean` (single file)
+- **Sorry count before**: 9 (project-wide non-archon)
+- **Sorry count after**: 9 (unchanged — all eight new bodies probe-confirmed and landed; no transient scaffold sorries)
+- **LOC delta on the touched file**: 670 → 811 (+141) — within the plan estimate band of 120–160 LOC; bodies ~38 lines + multi-paragraph load-bearing docstrings ~103 lines.
+- **Attempts (raw events from `attempts_raw.jsonl`)**: **3 substantive Edits** (Block A initial append → cosmetic corrective `include adj in lemma` → `include adj` section style → Block B append), 3 diagnostic checks (1 with errors, 2 clean), 4 axiom verifications (kernel-only on all four sampled declarations), 0 builds, 0 lemma searches, 1 Mathlib `Adjunction/Additive.lean` reference read.
+- **Net diagnostics (review-side re-verification this pass)**: clean — `lean_diagnostic_messages` returns `{success: true, items: [], failed_dependencies: []}`.
+- **Axioms (review-side re-verification this pass)**: kernel-only `[propext, Classical.choice, Quot.sound]` on all eight new declarations (sampled this pass: `instIsHModuleHomFinite_toModuleKSheaf`, `homLinearEquiv`, `constantSheafGammaHom_linearEquiv`, `homFromOne_linearEquiv`, `left_adjoint_linear`, `right_adjoint_linear`, `Functor.const_additive`, `Functor.const_linear`).
+
+## Targets attempted (eight solved across two blocks, three Edits)
+
+The plan: append eight declarations to `Cohomology/StructureSheafModuleK.lean` to produce `IsHModuleHomFinite k C (toModuleKSheaf C)` end-to-end. Five general Mathlib gap-fills go into a new `namespace CategoryTheory` block at the file head (between L38 `open` and what becomes L100 `namespace AlgebraicGeometry.Cohomology`); three project-local applied declarations go inside `namespace AlgebraicGeometry.Scheme` after iter-045's `module_finite_gammaObj_of_isProper`.
+
+### Block A — Mathlib gap-fills (`namespace CategoryTheory`, L40–L98)
+
+#### Target A1 — `CategoryTheory.Functor.const_additive` (L47)
+
+`instance` declaration. `(Functor.const C : D ⥤ C ⥤ D).Additive` when `D : Preadditive`. Body: `where map_add := by intros; ext; rfl`.
+
+##### Attempt 1 (success — first attempt, in combined Edit with A2/A3/A4/A5)
+- **Strategy**: Plan-agent probe-confirmed body, term-mode anonymous-constructor.
+- **Code applied**: see L48–L49.
+- **Result**: lands as part of the combined Block A Edit; verified clean post-Edit-2 (after the `include adj in` cosmetic fix).
+- **Insight**: `intros; ext; rfl` reduces componentwise `f + g = f + g`.
+
+#### Target A2 — `CategoryTheory.Functor.const_linear` (L54)
+
+`instance` declaration. `(Functor.const C : D ⥤ C ⥤ D).Linear R` for `[Preadditive D] (R : Semiring) [CategoryTheory.Linear R D]`. Body: `where map_smul := by intros; ext; rfl`.
+
+##### Attempt 1 (success — first attempt, in combined Edit with A1/A3/A4/A5)
+- **Strategy**: Plan-agent probe-confirmed body, mirrors A1.
+- **Code applied**: see L56–L58.
+- **Result**: lands as part of the combined Block A Edit.
+- **Insight**: The `[CategoryTheory.Linear R D]` qualification (full path) is load-bearing — bare `[Linear R D]` resolves to a different `Linear` (e.g. `Module.LinearMap`-flavoured). Plan-agent had this right out of the gate.
+
+#### Target A3 — `CategoryTheory.Adjunction.left_adjoint_linear` (L72)
+
+`lemma` declaration. If `G.Linear R` and `adj : F ⊣ G`, then `F.Linear R`. Body: `where map_smul {X Y} f r := (adj.homEquiv _ _).injective (by simp [adj.homEquiv_unit])`.
+
+##### Attempt 1 (failure — `include adj in lemma ...` syntax rejected)
+- **Strategy**: Plan-agent probe-confirmed body used `include adj in lemma left_adjoint_linear ...` (per-declaration include).
+- **Code applied** (initial): `include adj in\n/-- docstring -/\nlemma left_adjoint_linear ...` — but Lean's parser does not accept the `in` form before `lemma` here.
+- **Lean diagnostic** (post-Edit-1): `unexpected token 'include'; expected 'lemma'` at L69:24, L76:70, etc. (three errors, one per Adjunction declaration).
+- **Goal before**: `[Preadditive C₁] [Preadditive D₁] {F G} (adj : F ⊣ G) ...` — the `adj` variable needs to be promoted to a dependency.
+- **Insight**: `include adj in <decl>` is not valid Lean syntax in this context (despite being a documented form in some Mathlib versions). The correct pattern is the **section-style `include adj`** as a standalone line, mirroring Mathlib's `CategoryTheory/Adjunction/Additive.lean` L36.
+
+##### Attempt 2 (success — `include adj` section-style fix)
+- **Strategy**: Drop `in <decl>`, place `include adj` on its own line before the three Adjunction declarations.
+- **Code applied** (Edit-2, L66): `include adj` on a standalone line; the three lemma/def declarations follow naturally with `adj` as an explicit dependency.
+- **Lean diagnostic** (post-Edit-2): clean (`error_count: 0, warning_count: 0`).
+- **Insight**: Section-style `include adj` mirrors Mathlib's own pattern (`CategoryTheory/Adjunction/Additive.lean` L36). Functionally equivalent to the rejected `include adj in <decl>` form — no semantic change. **First substantive corrective Edit since iter-044's `op` → `Opposite.op` qualification fix.**
+
+#### Target A4 — `CategoryTheory.Adjunction.right_adjoint_linear` (L78)
+
+`lemma` declaration. Dual of A3: if `F.Linear R` and `adj : F ⊣ G`, then `G.Linear R`. Body uses `adj.homEquiv_counit` in place of `adj.homEquiv_unit`.
+
+##### Attempt 1 (success — first attempt, in same Edits as A3)
+- **Strategy**: Same shape as A3, dualised.
+- **Code applied**: see L78–L80.
+- **Result**: lands clean once the `include adj` section-style fix is applied.
+- **Insight**: Mathlib's `right_adjoint_additive` uses the same shape — direct port to `Linear`.
+
+#### Target A5 — `CategoryTheory.Adjunction.homLinearEquiv` (L88)
+
+`noncomputable def` declaration. `LinearEquiv` between `(F.obj X ⟶ Y)` and `(X ⟶ G.obj Y)` over `R`, lifting Mathlib's `Adjunction.homAddEquiv` from `≃+` to `≃ₗ[R]`. Body: anonymous-constructor `{ adj.homAddEquiv X Y with map_smul' := ... }` with `change` exposing the underlying `homEquiv` form, then `simp [adj.homEquiv_unit]`.
+
+##### Attempt 1 (success — first attempt, in same Edits as A3/A4)
+- **Strategy**: Plan-agent probe-confirmed body. The `haveI : F.Linear R := adj.left_adjoint_linear R` line is load-bearing — it establishes the typeclass needed for `simp [adj.homEquiv_unit]` to discharge the `r • f` ↔ `r • adj.homEquiv f` equation.
+- **Code applied**: see L88–L94.
+- **Result**: kernel-only axioms verified (`[propext, Classical.choice, Quot.sound]`).
+- **Insight**: The `change` tactic exposing `adj.homEquiv _ _ (r • f) = r • adj.homEquiv _ _ f` is essential — without it, `simp` cannot match the `homAddEquiv`-spelled goal against the `homEquiv_unit` simp lemma.
+
+### Block B — project-local applied bridges + producer (`namespace AlgebraicGeometry.Scheme`, L695–L774)
+
+#### Target B1 — `AlgebraicGeometry.Scheme.constantSheafGammaHom_linearEquiv` (L710)
+
+`noncomputable def` declaration. Applied LinearEquiv from the constant-sheaf-Γ adjunction. For any sheaf `F : Sheaf J (ModuleCat k)` and `X : ModuleCat k`, gives `((constantSheaf).obj X ⟶ F) ≃ₗ[k] (X ⟶ (Sheaf.Γ).obj F)`.
+
+##### Attempt 1 (success — first attempt, in combined Edit-3 with B2/B3)
+- **Strategy**: Plan-agent probe-confirmed body — five `haveI` lines build the typeclass scaffolding (`presheafToSheaf` Linear via `sheafificationAdjunction.left_adjoint_linear`, `constantSheaf` Additive + Linear via composition with `Functor.const`, `Sheaf.Γ` Additive + Linear via `constantSheafΓAdj.right_adjoint_*`), then the body invokes A5 (`(constantSheafΓAdj J _).homLinearEquiv k X F`).
+- **Code applied**: see L710–L726.
+- **Result**: kernel-only axioms verified.
+- **Insight**: The five `haveI` lines are necessary because Lean's typeclass synthesis cannot independently bridge `constantSheaf` Linear from `Functor.const` Linear + sheafification Linear without explicit guidance through `unfold constantSheaf; infer_instance`. Pattern reusable for any composed-functor `Linear`/`Additive` propagation.
+
+#### Target B2 — `AlgebraicGeometry.Scheme.homFromOne_linearEquiv` (L733)
+
+`noncomputable def` declaration. Hom-from-`k` upgrade `(ModuleCat.of k k ⟶ M) ≃ₗ[k] M` for `M : ModuleCat k`. Body: one-liner `(ModuleCat.homLinearEquiv ...).trans (LinearMap.ringLmapEquivSelf k k M)`.
+
+##### Attempt 1 (success — first attempt, in same Edit as B1/B3)
+- **Strategy**: Plan-agent probe-confirmed body — direct one-liner combining `ModuleCat.homLinearEquiv` (Mathlib's `LinearEquiv`-version of the underlying-LinearMap correspondence) with `LinearMap.ringLmapEquivSelf` (Mathlib's `(R →ₗ[R] M) ≃ₗ[S] M` evaluation).
+- **Code applied**: see L733–L736.
+- **Result**: kernel-only axioms verified.
+- **Insight**: Both Mathlib pieces exist and slot together via `.trans` directly — no `haveI` scaffolding needed.
+
+#### Target B3 — `AlgebraicGeometry.Scheme.instIsHModuleHomFinite_toModuleKSheaf` (L762) — **THE PRODUCER INSTANCE**
+
+`noncomputable instance` declaration. The producer for `IsHModuleHomFinite k C (toModuleKSheaf C)` from `[IsIntegral C.left] [IsProper C.hom]`. Body: `haveI` for `module_finite_gammaObj_of_isProper k C` (iter-045), two `let` bindings for `LE1` (B1 specialised) and `LE2` (B2 specialised), then `Module.Finite.equiv (LE1.trans LE2).symm`.
+
+##### Attempt 1 (success — first attempt, in same Edit as B1/B2)
+- **Strategy**: Plan-agent probe-confirmed body. Marked `instance` (not `theorem`) — required for typeclass synthesis to find this as a producer.
+- **Code applied**: see L762–L774.
+- **Result**: kernel-only axioms verified `[propext, Classical.choice, Quot.sound]`.
+- **Insight**: The `Module.Finite.equiv ... .symm` orientation transports finiteness from the `Sheaf.Γ.obj` side (iter-045) to the Hom-from-constantSheaf side (the carrier predicate). The four-step chain (B1 → B2 → composition → iter-045 transport) closes end-to-end as a single `let`-bound expression. **Once landed, iter-043's curve consumer `module_finite_HModule_zero_of_isHModuleHomFinite_curve` fires automatically on `Module.Finite k (HModule k (toModuleKSheaf C) 0)` queries** — closing the H⁰ side of the genus-finrank Module.Finite ladder.
+
+## Key findings / proof patterns
+
+- **Section-style `include adj` over per-declaration `include adj in <decl>`** *(iter-046, new this iteration)*: when multiple declarations in a `namespace` share a `variable`-bound dependency that needs promotion to an explicit argument, place `include adj` as a standalone line before the declaration block. Mirrors Mathlib's `CategoryTheory/Adjunction/Additive.lean` L36. **Avoids the `unexpected token 'include'; expected 'lemma'` parser error that the per-declaration `in` form triggers.** Reusable for any future `Adjunction`-parameterised lemma cohort.
+- **Five-`haveI` typeclass scaffolding for composed-functor `Linear`/`Additive` propagation** *(iter-046, new this iteration)*: when invoking a `Linear`-requiring lemma on a composed functor (`constantSheaf = presheafToSheaf ∘ Functor.const`), build the typeclass scaffolding explicitly: source-functor Linear via the appropriate adjunction's `left_adjoint_*`, intermediate functor Additive/Linear via `unfold; infer_instance`, target-functor Additive/Linear via `right_adjoint_*` along the framing adjunction. **Pattern**: `haveI : F.Linear R := <adj1>.left_adjoint_linear R; haveI : G.Linear R := by unfold G; infer_instance; haveI : H.Linear R := <adj2>.right_adjoint_linear R`. Reusable for any future composed-functor enrichment propagation.
+- **Anonymous-constructor `LinearEquiv` from `AddEquiv` + `change` + `simp [homEquiv_unit]`** *(iter-046, new this iteration)*: the canonical pattern for upgrading an `AddEquiv` produced by an adjunction's `homAddEquiv` to a `LinearEquiv`. The `change` tactic exposes the underlying `homEquiv` form so that `simp [adj.homEquiv_unit]` can match the `r • f` vs `r • adj.homEquiv f` equation. The `haveI : F.Linear R := adj.left_adjoint_linear R` is load-bearing for the simp call. Reusable for any future "AddEquiv → LinearEquiv" upgrade in a categorical-Hom context.
+- **Producer instance via `Module.Finite.equiv (LE1.trans LE2).symm` chain** *(iter-046, mirrors iter-037/038/045 transport pattern at producer-instance level)*: the canonical assembly for a typeclass-instance producer combining two `LinearEquiv` bridges with a third-party `Module.Finite` source. The `let LE1 := ...; let LE2 := ...; exact Module.Finite.equiv (LE1.trans LE2).symm` shape is cleaner than inlining and gives `haveI` access to the iter-045 source naturally.
+- **`unfold <def>; infer_instance` for typeclass derivation through definitional unfolding** *(iter-046, new this iteration)*: when a project- or Mathlib-defined functor is definitionally a composition (e.g. `constantSheaf := presheafToSheaf ∘ Functor.const`) and the typeclass on the composition is required, `unfold <def>; infer_instance` lets Lean's typeclass synthesis fire on the unfolded form. Cheaper than spelling out the composition explicitly. Reusable for any composed-definitional-equality typeclass bridge.
+- **Verbatim probe-confirmed body landing pattern continues** *(iter-035 → iter-046)*: 9 of 12 iterations zero-corrective-Edit, 1 with 1 cosmetic corrective (iter-044, `op` → `Opposite.op`), 1 with 1 substantive cosmetic corrective (iter-046, `include adj in` → `include adj`). The pattern of "plan-agent probe-confirms, prover lands verbatim or with a one-line syntax fix" is firmly established. **First multi-declaration packaged Edit in the project's history (8 declarations across 2 blocks in 3 Edits)** — handled cleanly with one cosmetic corrective.
+- **Probe `include`-syntax parity check (recommendation for iter-047 plan-agent)** *(iter-046 retro)*: the plan-agent's `lean_run_code` probe scaffold appears to have used the `include adj in <decl>` form (which compiled in the probe environment) but the local Lean toolchain rejected it at the prover's first Edit. **Recommendation**: future plan-agent probes that feature `include` should test the exact section-style or per-declaration form used in the body, or default to the section-style form to avoid this class of cosmetic corrective.
+
+## Blueprint markers updated
+
+The iter-046 plan-agent already pre-marked all eight new declarations' statement and proof blocks with `\leanok` in `blueprint/src/chapters/Cohomology_StructureSheafModuleK.tex` § *Producer instance for `IsHModuleHomFinite` on the curve sheaf (iter-046)* (L763–L866). This pass — review-side re-verification of compilation (clean diagnostics) and axioms (kernel-only on all eight) confirms the pre-marks are valid:
+
+- `Cohomology_StructureSheafModuleK.tex`, `lemma:Adjunction_left_adjoint_linear`: pre-marked `\leanok` on statement (L777) — **verified valid this pass**.
+- `Cohomology_StructureSheafModuleK.tex`, `lemma:Adjunction_left_adjoint_linear`: pre-marked `\leanok` on proof (L785) — **verified valid this pass** (kernel-only axioms, no sorry).
+- `Cohomology_StructureSheafModuleK.tex`, `lemma:Adjunction_right_adjoint_linear`: pre-marked `\leanok` on statement (L789) — **verified valid this pass**.
+- `Cohomology_StructureSheafModuleK.tex`, `lemma:Adjunction_right_adjoint_linear`: pre-marked `\leanok` on proof (L797) — **verified valid this pass** (kernel-only axioms).
+- `Cohomology_StructureSheafModuleK.tex`, `def:Adjunction_homLinearEquiv`: pre-marked `\leanok` on statement (L801) — **verified valid this pass**.
+- `Cohomology_StructureSheafModuleK.tex`, `def:Adjunction_homLinearEquiv`: pre-marked `\leanok` on proof (L813) — **verified valid this pass** (kernel-only axioms).
+- `Cohomology_StructureSheafModuleK.tex`, `def:Scheme_constantSheafGammaHom_linearEquiv`: pre-marked `\leanok` on statement (L819) — **verified valid this pass**.
+- `Cohomology_StructureSheafModuleK.tex`, `def:Scheme_constantSheafGammaHom_linearEquiv`: pre-marked `\leanok` on proof (L831) — **verified valid this pass** (kernel-only axioms).
+- `Cohomology_StructureSheafModuleK.tex`, `def:Scheme_homFromOne_linearEquiv`: pre-marked `\leanok` on statement (L835) — **verified valid this pass**.
+- `Cohomology_StructureSheafModuleK.tex`, `def:Scheme_homFromOne_linearEquiv`: pre-marked `\leanok` on proof (L846) — **verified valid this pass** (kernel-only axioms).
+- `Cohomology_StructureSheafModuleK.tex`, `inst:Scheme_instIsHModuleHomFinite_toModuleKSheaf`: pre-marked `\leanok` on statement (L850) — **verified valid this pass**.
+- `Cohomology_StructureSheafModuleK.tex`, `inst:Scheme_instIsHModuleHomFinite_toModuleKSheaf`: pre-marked `\leanok` on proof (L864) — **verified valid this pass** (kernel-only axioms).
+
+The two `Functor.const_*` instances (`CategoryTheory.Functor.const_additive`, `CategoryTheory.Functor.const_linear`) are listed in `blueprint/lean_decls` (L40–L41) but do not appear as standalone blocks in the chapter — they are mentioned in the iter-046 section preamble (§ "Mathlib gap-fills" prose discussion) and in the propagation-chain bullet (L769). **No additional marker edits required from the review agent this iteration** — pre-marks are accurate. `blueprint/lean_decls` already contains all eight new entries (L40–L47).
+
+## Recommendations for next session (iter-047)
+
+See `recommendations.md`. The producer chain for `IsHModuleHomFinite k C (toModuleKSheaf C)` is now complete end-to-end. Highest-priority track: **Step 4.6 — `IsAffineHModuleVanishing k C (toModuleKSheaf C)`** (multi-iteration likely; via Čech-vs-derived comparison + affine Čech vanishing).

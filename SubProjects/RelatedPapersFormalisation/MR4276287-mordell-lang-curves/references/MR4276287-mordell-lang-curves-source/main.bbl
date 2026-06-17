@@ -1,0 +1,393 @@
+\def\cprime{$'$}
+\begin{thebibliography}{CGHX21}
+
+\bibitem[ACG11]{ACG:Curve}
+E.~Arbarello, M.~Cornalba, and P.~Griffiths.
+\newblock {\em Geometry of Algebraic Curves, II (with a contribution by
+  J.~Harris)}, volume 268 of {\em Grundlehren der mathematischen
+  Wissenschaften}.
+\newblock Springer-Verlag, Berlin, 2011.
+
+\bibitem[ACZ20]{ACZBetti}
+Yves Andr\'{e}, Pietro Corvaja, and Umberto Zannier.
+\newblock The {B}etti map associated to a section of an abelian scheme (with an
+  appendix by {Z.~Gao}).
+\newblock {\em Inv. Math.}, 222:161--202, 2020.
+
+\bibitem[Alp18]{AlpogeRatPt}
+L.~Alpoge.
+\newblock The average number of rational points on genus two curves is bounded.
+\newblock {\em arXiv:1804.05859}, 2018.
+
+\bibitem[Alp20]{AlpogeThesis}
+L.~Alpoge.
+\newblock {\em Points on Curves}.
+\newblock PhD thesis, Princeton University, 2020.
+
+\bibitem[BG06]{BG}
+E.~Bombieri and W.~Gubler.
+\newblock {\em {H}eights in {D}iophantine {G}eometry}.
+\newblock Cambridge University Press, 2006.
+
+\bibitem[BGS94]{BGS}
+J.-B. Bost, H.~Gillet, and C.~Soul{\'e}.
+\newblock {H}eights of projective varieties and positive {G}reen forms.
+\newblock {\em J. Amer. Math. Soc.}, 7(2):903--1027, 1994.
+
+\bibitem[BLR90]{NeronModels}
+S.~Bosch, W.~L{\"u}tkebohmert, and M.~Raynaud.
+\newblock {\em N\'eron models}, volume~21 of {\em Ergebnisse der Mathematik und
+  ihrer Grenzgebiete (3)}.
+\newblock Springer-Verlag, Berlin, 1990.
+
+\bibitem[Bom90]{Bombieri:Mordell}
+E.~Bombieri.
+\newblock The {M}ordell conjecture revisited.
+\newblock {\em Ann. Scuola Norm. Sup. Pisa Cl. Sci. (4)}, 17(4):615--640, 1990.
+
+\bibitem[CGHX21]{CGHX:18}
+S.~Cantat, Z.~Gao, P.~Habegger, and J.~Xie.
+\newblock The geometric {B}ogomolov conjecture.
+\newblock {\em Duke Math. J.}, 170(2):247--277, 2021.
+
+\bibitem[Cha41]{Chabauty}
+C.~Chabauty.
+\newblock Sur les points rationnels des courbes alg\'{e}briques de genre
+  sup\'{e}rieur \`a l'unit\'{e}.
+\newblock {\em C. R. Acad. Sci. Paris}, 212:882--885, 1941.
+
+\bibitem[Col85]{Coleman:effCha}
+R.~.F. Coleman.
+\newblock Effective {C}habauty.
+\newblock {\em Duke Math. J.}, 52(3):765--770, 1985.
+
+\bibitem[CVV17]{CVV:17}
+S.~Checcoli, F.~Veneziano, and E.~Viada.
+\newblock On the explicit torsion anomalous conjecture.
+\newblock {\em Trans. Amer. Math. Soc.}, 369(9):6465--6491, 2017.
+
+\bibitem[dD97]{deDiego:97}
+T.~de~Diego.
+\newblock Points rationnels sur les familles de courbes de genre au moins 2.
+\newblock {\em J. Number Theory}, 67(1):85--114, 1997.
+
+\bibitem[Dem12]{Demailly}
+J.P. Demailly.
+\newblock {\em Complex analytic and differential geometry}.
+\newblock 2012.
+\newblock Available at \url{https://www-fourier.ujf-grenoble.fr/\textasciitilde
+  demailly/manuscripts/agbook.pdf}.
+
+\bibitem[DGH19]{DGH1p}
+V.~Dimitrov, Z.~Gao, and P.~Habegger.
+\newblock Uniform bound for the number of rational points on a pencil of
+  curves.
+\newblock {\em Int. Math. Res. Not. IMRN},
+  (rnz248):https://doi.org/10.1093/imrn/rnz248, 2019.
+
+\bibitem[DKY20]{DeMarcoKriegerYeUniManinMumford}
+L.~DeMarco, H.~Krieger, and H.~Ye.
+\newblock Uniform {M}anin-{M}umford for a family of genus $2$ curves.
+\newblock {\em Ann. of Math.}, 191:949--1001, 2020.
+
+\bibitem[DM69]{DM:irreducibility}
+P.~Deligne and D.~Mumford.
+\newblock The irreducibility of the space of curves of given genus.
+\newblock {\em Inst. Hautes \'{E}tudes Sci. Publ. Math.}, (36):75--109, 1969.
+
+\bibitem[DNP07]{DaNaPh:07}
+S.~David, M.~Nakamaye, and P.~Philippon.
+\newblock Bornes uniformes pour le nombre de points rationnels de certaines
+  courbes.
+\newblock In {\em Diophantine geometry}, volume~4 of {\em CRM Series}, pages
+  143--164. Ed. Norm., Pisa, 2007.
+
+\bibitem[DP02]{DPvarabII}
+S.~David and P.~Philippon.
+\newblock Minorations des hauteurs normalis\'ees des sous-vari\'et\'es de
+  vari\'et\'es abeliennes. {II}.
+\newblock {\em Comment. Math. Helv.}, 77(4):639--700, 2002.
+
+\bibitem[DP07]{DaPh:07}
+S.~David and P.~Philippon.
+\newblock Minorations des hauteurs normalis\'{e}es des sous-vari\'{e}t\'{e}s
+  des puissances des courbes elliptiques.
+\newblock {\em Int. Math. Res. Pap. IMRP}, (3):Art. ID rpm006, 113, 2007.
+
+\bibitem[Fal83]{Faltings:ES}
+G.~Faltings.
+\newblock {E}ndlichkeitss{\"a}tze f{\"u}r abelsche {V}ariet{\"a}ten {\"u}ber
+  {Z}ahlk{\"o}rpern.
+\newblock {\em Invent. Math.}, 73:349--366, 1983.
+
+\bibitem[Fal91]{Faltings:DAAV}
+G.~Faltings.
+\newblock Diophantine approximation on abelian varieties.
+\newblock {\em Ann. of Math. (2)}, 133(3):549--576, 1991.
+
+\bibitem[FC90]{FaltingsChai}
+G.~Faltings and C.-L. Chai.
+\newblock {\em Degeneration of abelian varieties}, volume~22 of {\em Ergebnisse
+  der Mathematik und ihrer Grenzgebiete (3) [Results in Mathematics and Related
+  Areas (3)]}.
+\newblock Springer-Verlag, Berlin, 1990.
+\newblock With an appendix by David Mumford.
+
+\bibitem[Ful98]{Fulton}
+W.~Fulton.
+\newblock {\em Intersection theory}, volume~2 of {\em Ergebnisse der Mathematik
+  und ihrer Grenzgebiete. 3. Folge. A Series of Modern Surveys in Mathematics
+  [Results in Mathematics and Related Areas. 3rd Series. A Series of Modern
+  Surveys in Mathematics]}.
+\newblock Springer-Verlag, Berlin, second edition, 1998.
+
+\bibitem[Gao20a]{GaoBettiRank}
+Z.~Gao.
+\newblock Generic rank of {B}etti map and unlikely intersections.
+\newblock {\em Compos. Math.}, 156(12):2469--2509, 2020.
+
+\bibitem[Gao20b]{GaoMixedAS}
+Z.~Gao.
+\newblock Mixed {A}x-{S}chanuel for the universal abelian varieties and some
+  applications.
+\newblock {\em Compos. Math.}, 156(11):2263--2297, 2020.
+
+\bibitem[GH19]{GaoHab}
+Z.~Gao and P.~Habegger.
+\newblock {Heights in Families of Abelian Varieties and the Geometric Bogomolov
+  Conjecture}.
+\newblock {\em Ann. of Math.}, 189(2):527--604, 2019.
+
+\bibitem[GN09]{GenestierNgo}
+A.~Genestier and B.C. Ng\^{o}.
+\newblock Lecture on {S}himura varieties.
+\newblock In {\em Autour de motifs, Ecole d'\'et\'e Franco-Asiatique de
+  G\'eom\'etrie Alg\'ebrique et de Th\'eorie des Nombres/Asian-French Summer
+  School on Algebraic Geometry and Number Theory. Vol.~I}, pages 187--236.
+  Panor. Synth\`ese 29, Soc. Math. France, 2009.
+
+\bibitem[Gro61]{EGAII}
+A.~Grothendieck.
+\newblock \'{E}l\'ements de g\'eom\'etrie alg\'ebrique. {II}. \'{E}tude globale
+  \'{e}l\'{e}mentaire de quelques classes de morphismes.
+\newblock {\em Inst. Hautes \'Etudes Sci. Publ. Math.}, (8), 1961.
+
+\bibitem[Gro67]{EGAIV}
+A.~Grothendieck.
+\newblock \'{E}l\'ements de g\'eom\'etrie alg\'ebrique. {IV}. \'{E}tude locale
+  des sch\'emas et des morphismes de sch\'emas {I}-{IV}.
+\newblock {\em Inst. Hautes \'Etudes Sci. Publ. Math.}, (20,24,28,32),
+  1964--1967.
+
+\bibitem[GW10]{GoertzWedhorn}
+U.~G\"{o}rtz and T.~Wedhorn.
+\newblock {\em Algebraic geometry {I}}.
+\newblock Advanced Lectures in Mathematics. Vieweg + Teubner, Wiesbaden, 2010.
+\newblock Schemes with examples and exercises.
+
+\bibitem[Hab09]{habegger:imrn}
+P.~Habegger.
+\newblock On the bounded height conjecture.
+\newblock {\em Int. Math. Res. Not. IMRN}, (5):860--886, 2009.
+
+\bibitem[Hab13]{Hab:Special}
+P.~Habegger.
+\newblock {S}pecial {P}oints on {F}ibered {P}owers of {E}lliptic {S}urfaces.
+\newblock {\em J.Reine Angew. Math.}, 685:143--179, 2013.
+
+\bibitem[HP16]{HabeggerPilaENS}
+P.~Habegger and J.~Pila.
+\newblock O-minimality and certain atypical intersections.
+\newblock {\em Ann. Sci. École Norm. Sup.}, 49:813--858, 2016.
+
+\bibitem[Hur92]{Hurwitz1892}
+A.~Hurwitz.
+\newblock \"{U}ber algebraische {G}ebilde mit eindeutigen {T}ransformationen in
+  sich.
+\newblock {\em Math. Ann.}, 41(3):403--442, 1892.
+
+\bibitem[KRZB16]{KatzRabinoffZB}
+E.~Katz, J.~Rabinoff, and D.~Zureick-Brown.
+\newblock Uniform bounds for the number of rational points on curves of small
+  {M}ordell-{W}eil rank.
+\newblock {\em Duke Math. J.}, 165(16):3189--3240, 2016.
+
+\bibitem[K{\"u}h20]{kuehne:semiabelianbhc}
+L.~K{\"u}hne.
+\newblock The {B}ounded {H}eight {C}onjecture for {S}emiabelian {V}arieties.
+\newblock {\em Compos. Math}, 156:1405--1456, 2020.
+
+\bibitem[Lan65]{Lang:Division}
+S.~Lang.
+\newblock Division points on curves.
+\newblock {\em Ann. Mat. Pura Appl. (4)}, 70:229--234, 1965.
+
+\bibitem[Lan78]{Lang:EllipticCurves78}
+S.~Lang.
+\newblock {\em Elliptic curves: {D}iophantine analysis}, volume 231 of {\em
+  Grundlehren der Mathematischen Wissenschaften [Fundamental Principles of
+  Mathematical Sciences]}.
+\newblock Springer-Verlag, Berlin-New York, 1978.
+
+\bibitem[Laz04]{PosAlgGeom}
+R.~Lazarsfeld.
+\newblock {\em {P}ositivity in {A}lgebraic {G}eometry {I}}.
+\newblock Springer, 2004.
+
+\bibitem[Lel57]{Lelong}
+P.~Lelong.
+\newblock Int\'{e}gration sur un ensemble analytique complexe.
+\newblock {\em Bull. Soc. Math. France}, 85:239--262, 1957.
+
+\bibitem[Maz86]{mazur1986arithmetic}
+B.~Mazur.
+\newblock Arithmetic on curves.
+\newblock {\em Bulletin of the American Mathematical Society}, 14(2):207--259,
+  1986.
+
+\bibitem[Maz00]{Mazur:00}
+B.~Mazur.
+\newblock Abelian varieties and the {M}ordell-{L}ang conjecture.
+\newblock In {\em Model theory, algebra, and geometry}, volume~39 of {\em Math.
+  Sci. Res. Inst. Publ.}, pages 199--227. Cambridge Univ. Press, Cambridge,
+  2000.
+
+\bibitem[MFK94]{MFK:GIT94}
+D.~Mumford, J.~Fogarty, and F.~Kirwan.
+\newblock {\em Geometric invariant theory}, volume~34 of {\em Ergebnisse der
+  Mathematik und ihrer Grenzgebiete (2) [Results in Mathematics and Related
+  Areas (2)]}.
+\newblock Springer-Verlag, Berlin, third edition, 1994.
+
+\bibitem[Mok91]{Mok11Form}
+N.~Mok.
+\newblock Aspects of {K}\"ahler geometry on arithmetic varieties.
+\newblock In {\em Several complex variables and complex geometry, {P}art 2
+  ({S}anta {C}ruz, {CA}, 1989)}, volume~52 of {\em Proc. Sympos. Pure Math.},
+  pages 335--396. Amer. Math. Soc., Providence, RI, 1991.
+
+\bibitem[Mum70]{Mumford:quadeq}
+D.~Mumford.
+\newblock Varieties defined by quadratic equations.
+\newblock In {\em Questions on {A}lgebraic {V}arieties ({C}.{I}.{M}.{E}., {III}
+  {C}iclo, {V}arenna, 1969)}, pages 29--100. Edizioni Cremonese, Rome, 1970.
+
+\bibitem[Mum74]{MumfordAbVar}
+D.~Mumford.
+\newblock {\em Abelian Varieties, 2nd ed.}
+\newblock Oxford University Press, London, 1974.
+
+\bibitem[OS80]{OortSteenbrink}
+F.~Oort and J.~Steenbrink.
+\newblock The local {T}orelli problem for algebraic curves.
+\newblock In {\em Journ\'{e}es de {G}\'{e}ometrie {A}lg\'{e}brique d'{A}ngers,
+  {J}uillet 1979/{A}lgebraic {G}eometry, {A}ngers, 1979}, pages 157--204.
+  Sijthoff \& Noordhoff, Alphen aan den Rijn---Germantown, Md., 1980.
+
+\bibitem[Paz12]{Pazuki:12}
+F.~Pazuki.
+\newblock Theta height and {F}altings height.
+\newblock {\em Bull. Soc. Math. France}, 140(1):19--49, 2012.
+
+\bibitem[Phi86]{Philippon}
+P.~Philippon.
+\newblock {L}emmes de z{\'e}ros dans les groupes alg{\'e}briques commutatifs.
+\newblock {\em Bull. Soc. Math. France}, 114:355--383, 1986.
+
+\bibitem[Phi95]{HauteursAlt3}
+P.~Philippon.
+\newblock Sur des hauteurs alternatives {III}.
+\newblock {\em J. Math. Pures Appl.}, 74:345--365, 1995.
+
+\bibitem[Pin89]{PinkThesis}
+R.~Pink.
+\newblock {\em Arithmetical compactification of mixed {S}himura varieties}.
+\newblock PhD thesis, Bonner Mathematische Schriften, 1989.
+
+\bibitem[Pin05a]{Pink05}
+R.~Pink.
+\newblock {A} combination of the conjectures of {M}ordell-{L}ang and
+  {A}ndr\'e-{O}ort.
+\newblock In {\em {G}eometric methods in algebra and number theory}, volume 235
+  of {\em {P}rogr. {M}ath.}, pages 251--282. Birk{\"a}user, 2005.
+
+\bibitem[Pin05b]{Pink}
+R.~Pink.
+\newblock {A} {C}ommon {G}eneralization of the {C}onjectures of
+  {A}ndr\'e-{O}ort, {M}anin-{M}umford, and {M}ordell-{L}ang.
+\newblock {\em Preprint}, page 13pp, 2005.
+
+\bibitem[Ray70]{LNM119}
+M.~Raynaud.
+\newblock {\em Faisceaux amples sur les sch\'{e}mas en groupes et les espaces
+  homog\`enes}.
+\newblock Lecture Notes in Mathematics, Vol. 119. Springer-Verlag, Berlin-New
+  York, 1970.
+
+\bibitem[Ray83]{Raynaud:MMcurves}
+M.~Raynaud.
+\newblock Courbes sur une vari\'{e}t\'{e} ab\'{e}lienne et points de torsion.
+\newblock {\em Invent. Math.}, 71(1):207--233, 1983.
+
+\bibitem[R{\'e}m00a]{Remond:Decompte}
+G.~R{\'e}mond.
+\newblock D{\'e}compte dans une conjecture de {L}ang.
+\newblock {\em Invent. Math.}, 142(3):513--545, 2000.
+
+\bibitem[R{\'e}m00b]{remond:vojtasup}
+G.~R{\'e}mond.
+\newblock In{\'e}galit\'{e} de {V}ojta en dimension sup{\'e}rieure.
+\newblock {\em Ann. Scuola Norm. Sup. Pisa Cl. Sci. (4)}, 29(1):101--151, 2000.
+
+\bibitem[Sil83]{Silverman}
+J.~H. Silverman.
+\newblock {H}eights and the specialization map for families of abelian
+  varieties.
+\newblock {\em J. Reine Angew. Math.}, 342:197--211, 1983.
+
+\bibitem[Sil93]{Silverman:twists}
+J.~H. Silverman.
+\newblock A uniform bound for rational points on twists of a given curve.
+\newblock {\em J. London Math. Soc. (2)}, 47(3):385--394, 1993.
+
+\bibitem[Sil11]{Silverman:heightest11}
+J.~H. Silverman.
+\newblock Height estimates for equidimensional dominant rational maps.
+\newblock {\em J. Ramanujan Math. Soc.}, 26(2):145--163, 2011.
+
+\bibitem[Sto19]{Stoll:Uniform}
+M.~Stoll.
+\newblock Uniform bounds for the number of rational points on hyperelliptic
+  curves of small {M}ordell-{W}eil rank.
+\newblock {\em J. Eur. Math. Soc. (JEMS)}, 21(3):923--956, 2019.
+
+\bibitem[Voi02]{voisin:hodge1}
+C.~Voisin.
+\newblock {\em Hodge theory and complex algebraic geometry. {I}}, volume~76 of
+  {\em Cambridge Studies in Advanced Mathematics}.
+\newblock Cambridge University Press, Cambridge, {E}nglish edition, 2002.
+
+\bibitem[Voj91]{Vojta:siegelcompact}
+P.~Vojta.
+\newblock Siegel's theorem in the compact case.
+\newblock {\em Ann. of Math. (2)}, 133(3):509--548, 1991.
+
+\bibitem[Wal87]{Ast6970}
+M.~Waldschmidt.
+\newblock Nombres transcendants et groupes alg\'{e}briques.
+\newblock {\em Ast\'{e}risque}, (69-70):218, 1987.
+\newblock With appendices by Daniel Bertrand and Jean-Pierre Serre.
+
+\bibitem[Zan12]{ZannierBook}
+U.~Zannier.
+\newblock {\em Some problems of unlikely intersections in arithmetic and
+  geometry}, volume 181 of {\em Annals of Mathematics Studies}.
+\newblock Princeton University Press, Princeton, NJ, 2012.
+\newblock With appendixes by David Masser.
+
+\bibitem[Zha98]{ZhangEquidist}
+S.~Zhang.
+\newblock Equidistribution of small points on abelian varieties.
+\newblock {\em Ann. of Math. (2)}, 147(1):159--165, 1998.
+
+\end{thebibliography}

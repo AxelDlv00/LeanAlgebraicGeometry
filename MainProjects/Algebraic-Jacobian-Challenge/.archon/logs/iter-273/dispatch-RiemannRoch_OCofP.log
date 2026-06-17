@@ -1,0 +1,21 @@
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ───────────────────────────────
+
+[ARCHON] Agent model: opus (blueprint-writer)
+RiemannRoch_OCofP-cov273: COMPLETE — all 14 uncovered Lean decls now have one `\lean{}`-pinned blueprint block each, wired acyclically into the chapter's O_C(P)/Riemann–Roch cone (leandag: 0 isolated, 0 unknown_uses, 0 conflicts), and all 35 literal `REF` placeholders replaced with real `\cref{}`s.
+
+Report: `/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/task_results/blueprint-writer-RiemannRoch_OCofP-cov273.md`
+
+Key points for the plan agent:
+- Each of the 14 decls now resolves to a matched blueprint node (no longer uncovered `lean-aux`).
+- I corrected one pre-existing backwards `\uses{}` edge on `carrierSubmoduleSheaf` (it pointed up to `carrierPresheaf`; real dependency is the reverse) to keep the construction sub-DAG acyclic while wiring the new helpers.
+- `h0_sub_h1_…_eq_two` and `functionField_const_…_orderZero` carry typed Lean `sorry`s (standing Mathlib gaps); their blocks state this faithfully and `\leanok` is left to `sync_leanok`.
+[COST] 13.9min | $7.7906 | in=11505 out=65051 | turns=70
+[ARCHON] ✓ blueprint-writer/RiemannRoch_OCofP-cov273 finished (1534s)
+RiemannRoch_OCofP-cov273: COMPLETE — see /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/task_results/blueprint-writer-RiemannRoch_OCofP-cov273.md (archived: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/logs/iter-273/blueprint-writer-RiemannRoch_OCofP-cov273-report.md)

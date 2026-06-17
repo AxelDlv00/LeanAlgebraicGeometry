@@ -1,0 +1,1207 @@
+\chapter{p-adic periods and the proof of the main theorem}
+
+% Chapter-local macros (report to plan agent: move to macros/common.tex if shared).
+\providecommand{\REP}{\mathrm{Rep}}
+\providecommand{\SO}{\mathrm{SO}}
+
+This chapter transcribes \S10--\S13 of Ancona's paper. Keeping the notation of
+the main theorem (\cref{def:mainthm-setup}), it compares the two rank-two
+\(\Q_p\)-quadratic spaces
+\[(V_{B,p}, q_{B,p}) = (V_B, q_B) \otimes_\Q \Q_p \qquad \text{and} \qquad
+  (V_{Z,p}, q_{Z,p}) = (V_Z, q_Z) \otimes_\Q \Q_p\]
+through \(p\)-adic Hodge theory. The crystalline period ring identifies the two
+spaces (\cref{cor:crys-identifications}); the periods relating them are
+characterized by their behaviour under Frobenius and filtration
+(\cref{prop:periods-unram-dim}, \cref{prop:periods-ram-dim}), computed
+explicitly (\S\ref{sec:padic-computation}), and the outcome is governed by a
+norm condition whose answer depends on the parity of the integer \(i\). The
+final case-by-case proof of \cref{thm:mainthm} is carried out in the chapter on
+quadratic forms and is not repeated here; this chapter supplies the inputs it
+uses.
+
+\textit{Source: Ancona, arXiv:1806.03216, \S10--\S13.}
+
+\section{The p-adic comparison theorem}
+
+We recall the foundational results of \(p\)-adic Hodge theory and apply them to
+the geometric situation. Throughout, \(K\) is the \(p\)-adic field over which the
+motive \(M\) of \cref{def:mainthm-setup} is defined.
+
+\begin{theorem}[Period rings (Fontaine)]
+  \label{thm:bcrys-bdr}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.BcrysBdR}
+  \uses{def:filtered-phi-modules}
+  % SOURCE: [Ancona], §10, Theorem (javier), citing [Fonfon],[Fontp Theorem 5.3.7] (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "There are two integral $\Q_p$-algebras \[B_\crys \subset B_\dR\] the first endowed with  actions of the Galois group $\Gal_K$ and of the absolute Frobenius $\varphi$ and the second endowed with a discrete valuation,
+  % \[\nu: B_\dR \longrightarrow \Z \cup \{+\infty\}\]
+  % hence in particular endowed with a decreasing filtration \[\Fil^i B_\dR=\{x \in B_\dR, \nu(x)\geq i\}\] verifying
+  % \[\Fil^i \cdot \Fil^j \subset \Fil^{i+j}.\]
+  % The $\Q_p$-algebra $ B_\dR$ contains $\overline{\Q}_p$, an algebraic closure of $\Q_p$, and the intersection $ B_\crys \cap \overline{\Q}_p$ is the biggest non-ramified extension of $\Q_p$ inside $\overline{\Q}_p$.
+  % Finally, the following equality holds \cite[Theorem 5.3.7]{Fontp}
+  %  \begin{equation}\label{eq:fontaine}(B_\crys^{\varphi=\id} \cap \Fil^0B_\dR)=\Q_p.\end{equation}"
+  \textit{Source: Ancona, arXiv:1806.03216, \S10.}
+  There are two integral \(\Q_p\)-algebras
+  \[\Bcrys \subset \BdR,\]
+  the first carrying actions of the Galois group \(\Gal_K\) and of the absolute
+  Frobenius \(\varphi\), the second carrying a discrete valuation
+  \(\nu : \BdR \to \Z \cup \{+\infty\}\) and hence a decreasing filtration
+  \(\Fil^i \BdR = \{x \in \BdR : \nu(x) \geq i\}\) satisfying
+  \(\Fil^i \cdot \Fil^j \subset \Fil^{i+j}\). The algebra \(\BdR\) contains an
+  algebraic closure \(\overline{\Q}_p\), and \(\Bcrys \cap \overline{\Q}_p\) is
+  the maximal unramified extension of \(\Q_p\) inside \(\overline{\Q}_p\).
+  Finally, the key identity
+  \[\bigl(\Bcrys^{\varphi=\id} \cap \Fil^0 \BdR\bigr) = \Q_p\]
+  holds.
+\end{theorem}
+
+\begin{proof}
+  This is a foundational theorem of \(p\)-adic Hodge theory; see Fontaine, cited
+  in Ancona \S10 as \cite{Fonfon} and \cite{Fontp} (the last identity is
+  \cite[Theorem~5.3.7]{Fontp}). We take it as an external input.
+\end{proof}
+
+\begin{theorem}[Crystalline comparison (Fontaine--Messing, Faltings, Tsuji)]
+  \label{thm:crys-equiv}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.crystallineEquivalence}
+  \uses{def:filtered-phi-modules, def:realizations, def:hyodo-kato, thm:bcrys-bdr}
+  % SOURCE: [Ancona], §10, Theorem (tsuji), citing [FontMess],[Falt],[CF] (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "There is an  equivalence of $\Q_p$-linear rigid categories
+  % \[D : \REP \longrightarrow \MOD\]
+  % between the category $\REP$  of crystalline  $\Gal_K$-representations and the category $\MOD$ of admissible filtered $\varphi$-modules (see Convention (\ref{Hyodo-Kato})). This equivalence verifies the following properties:
+  % \begin{enumerate}
+  % \item\label{tsujican} There is a canonical identification
+  % \[ V \otimes B_\crys=  D(V)\otimes B_\crys \]
+  % which is $\Gal_K$-equivariant and $\varphi$-equivariant. Moreover, the induced isomorphism
+  % \[ V \otimes B_\dR=  D(V)\otimes B_\dR \]
+  % respects the filtrations.
+  % \item The functor $D$ is given by
+  % \[V \mapsto D(V)= (V \otimes B_\crys)^{\Gal_K}\]
+  % and its inverse is given by
+  % \[ [W\otimes B_\crys]^{\varphi=\id} \cap  \Fil^0[W \otimes B_\dR] \mapsfrom W.\]
+  % \item The equivalence $D$  is compatible with the two realization functors
+  % $R_p ((\cdot)_{\vert K}): \CHM(W) \rightarrow \REP$   and $R_\HK (\cdot): \CHM(W)\rightarrow \MOD$, namely we have
+  % \[R_\HK (\cdot) = D \circ R_p ((\cdot)_{\vert K}).\]
+  % \end{enumerate}"
+  \textit{Source: Ancona, arXiv:1806.03216, \S10.}
+  There is an equivalence of \(\Q_p\)-linear rigid categories
+  \[D : \REP \longrightarrow \MOD\]
+  between the category \(\REP\) of crystalline \(\Gal_K\)-representations and the
+  category \(\MOD\) of admissible filtered \(\varphi\)-modules
+  (\cref{def:filtered-phi-modules}), with the following properties.
+  \begin{enumerate}
+    \item There is a canonical identification \(V \otimes \Bcrys = D(V) \otimes
+      \Bcrys\), \(\Gal_K\)- and \(\varphi\)-equivariant, and the induced
+      isomorphism \(V \otimes \BdR = D(V) \otimes \BdR\) respects filtrations.
+    \item The functor is \(D(V) = (V \otimes \Bcrys)^{\Gal_K}\) and its inverse
+      sends \(W \mapsto [W \otimes \Bcrys]^{\varphi=\id} \cap \Fil^0[W \otimes
+      \BdR]\).
+    \item \(D\) is compatible with the realization functors \(R_p((\cdot)_{\vert
+      K})\) and \(R_\HK(\cdot)\): one has \(R_\HK(\cdot) = D \circ R_p((\cdot)_{\vert
+      K})\).
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  This is a foundational theorem of \(p\)-adic Hodge theory; see
+  Fontaine--Messing, Faltings, and Tsuji, cited in Ancona \S10 as
+  \cite{FontMess}, \cite{Falt}, \cite{CF}. We take it as an external input.
+\end{proof}
+
+\begin{corollary}[Crystalline identification of the two spaces]
+  \label{cor:crys-identifications}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.crysIdentifications}
+  \uses{thm:crys-equiv, prop:mainthm-properties, def:hyodo-kato, def:realizations, def:mainthm-setup}
+  % SOURCE: [Ancona], §10, Corollary (cortsuji) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "There are canonical identifications (commuting with the extra structures):
+  % \begin{equation} \label{eq:tsuji}
+  %  (V_{B,p},q_{B,p}) =[(V_{Z,p},q_{Z,p})\otimes B_\crys]^{\varphi=\id} \cap  \Fil^0[(V_{Z,p},q_{Z,p})\otimes B_\dR].
+  % \end{equation}
+  % \begin{equation}\label{chissa}
+  %  (V_{B,p},q_{B,p}) \otimes B_\crys=  (V_{Z,p},q_{Z,p}) \otimes B_\crys.
+  % \end{equation}
+  % \begin{equation}\label{chissa2}
+  %  (V_{B,p},q_{B,p}) \otimes B_\dR=  (V_{Z,p},q_{Z,p}) \otimes B_\dR.
+  % \end{equation}
+  % Moreover, under these identifications,  the  equality of $\Q_p$-algebras
+  % \begin{equation}\label{stessaalgebra}
+  %  \End_{\Gal_K}(V_{B,p}) = \End_{\varphi,\Fil^*}(V_{Z,p}\otimes \Frac(W(k)))
+  % \end{equation}
+  % holds."
+  \textit{Source: Ancona, arXiv:1806.03216, \S10.}
+  There are canonical identifications, commuting with all the extra structure:
+  \begin{align}
+    (V_{B,p}, q_{B,p}) &= [(V_{Z,p}, q_{Z,p}) \otimes \Bcrys]^{\varphi=\id}
+      \cap \Fil^0[(V_{Z,p}, q_{Z,p}) \otimes \BdR], \\
+    (V_{B,p}, q_{B,p}) \otimes \Bcrys &= (V_{Z,p}, q_{Z,p}) \otimes \Bcrys, \\
+    (V_{B,p}, q_{B,p}) \otimes \BdR &= (V_{Z,p}, q_{Z,p}) \otimes \BdR.
+  \end{align}
+  Moreover, under these identifications, the equality of \(\Q_p\)-algebras
+  \[\End_{\Gal_K}(V_{B,p}) = \End_{\varphi,\Fil^*}(V_{Z,p} \otimes \Frac(W(k)))\]
+  holds.
+\end{corollary}
+
+% SOURCE QUOTE PROOF: "Proposition \ref{tortura}(\ref{giorno}) gives the identification
+% \[  V_{Z,p}\otimes \Frac(W(k)) =  R_\crys (M_{\vert k}).\]
+% and we have the identification $R_\crys (M_{\vert k})= R_\HK (M)$, see Convention (\ref{Hyodo-Kato}).
+% On the other hand, we have the equality
+% \[V_{B,p}  =  R_p (M_{\vert K})\]
+% because of the comparison theorem between singular and $p$-adic cohomology.
+% Finally, Theorem \ref{tsuji}(3) implies
+% \[ D(R_p (M_{\vert K}))   =   R_\HK (M).\]
+% Altogether we have the equality
+% \[D(V_{B,p}) = V_{Z,p}\otimes \Frac(W(k)).\]
+% Notice that these identifications are compatible with the quadratic forms as realization functors and the equivalence $D$ are tensor functors.
+% Hence Theorem \ref{tsuji}(2) gives  (\ref{eq:tsuji}) and Theorem \ref{tsuji}(1) gives  (\ref{chissa}) and   (\ref{chissa2}).
+% The identification (\ref{stessaalgebra}) follows from the fact that $D$ is an equivalence of $\Q_p$-linear categories."
+\begin{proof}
+  \uses{thm:crys-equiv, prop:mainthm-properties, def:hyodo-kato}
+  By \cref{prop:mainthm-properties} (part~(5))
+  we have \(V_{Z,p} \otimes \Frac(W(k)) = R_\crys(M_{\vert k})\), and by
+  \cref{def:hyodo-kato} this equals \(R_\HK(M)\). On the other hand
+  \(V_{B,p} = R_p(M_{\vert K})\) by the comparison between singular and
+  \(p\)-adic cohomology. Part (3) of \cref{thm:crys-equiv} then gives
+  \(D(R_p(M_{\vert K})) = R_\HK(M)\), so altogether
+  \(D(V_{B,p}) = V_{Z,p} \otimes \Frac(W(k))\). These identifications are
+  compatible with the quadratic forms, the realization functors and \(D\) being
+  tensor functors. Part (2) of \cref{thm:crys-equiv} then gives
+  the first identity, and part (1) gives the second and third identities;
+  the algebra identification follows because \(D\) is an equivalence of
+  \(\Q_p\)-linear categories.
+\end{proof}
+
+\begin{proposition}[The ordinary case]
+  \label{prop:ordinary-case}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.ordinaryCase}
+  \uses{cor:crys-identifications, thm:bcrys-bdr, prop:padic-reduction, def:mainthm-setup}
+  % SOURCE: [Ancona], §10, Proposition (ordinarycase) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Suppose that the Hodge structure $V_B$ is of type $(0,0)$, then $q_{B,p}$ and $q_{Z,p}$ are isomorphic, hence Theorem \ref{mainthm}  holds true in this case."
+  \textit{Source: Ancona, arXiv:1806.03216, \S10.}
+  Suppose the Hodge structure \(V_B\) is of type \((0,0)\). Then \(q_{B,p}\) and
+  \(q_{Z,p}\) are isomorphic --- in fact equal under the second identity of
+  \cref{cor:crys-identifications} --- and hence \cref{thm:mainthm} holds in this
+  case.
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "First notice that   Frobenius acts trivially on $V_{Z,p}$ because the latter is spanned by  algebraic classes. Second, the hypothesis on the Hodge types gives
+% $\Fil^0(V_{Z,p} \otimes K)=V_{Z,p} \otimes K$. Hence the relation (\ref{eq:tsuji}) implies
+% \[(V_{B,p},q_{B,p}) =(V_{Z,p},q_{Z,p})\otimes (B_\crys^{\varphi=\id} \cap \Fil^0B_\dR).\]
+% Using (\ref{eq:fontaine}) we deduce the equality $q_{B,p} = q_{Z,p}$. Theorem \ref{mainthm}  then follows using  Proposition \ref{padicreduction}."
+\begin{proof}
+  \uses{cor:crys-identifications, thm:bcrys-bdr, prop:padic-reduction}
+  Frobenius acts trivially on \(V_{Z,p}\), which is spanned by algebraic
+  classes. The hypothesis on Hodge types gives \(\Fil^0(V_{Z,p} \otimes K) =
+  V_{Z,p} \otimes K\). Hence the first identity of \cref{cor:crys-identifications}
+  yields
+  \[(V_{B,p}, q_{B,p}) = (V_{Z,p}, q_{Z,p}) \otimes (\Bcrys^{\varphi=\id} \cap
+    \Fil^0 \BdR).\]
+  By the identity \(\Bcrys^{\varphi=\id} \cap \Fil^0 \BdR = \Q_p\) of
+  \cref{thm:bcrys-bdr} we deduce \(q_{B,p} = q_{Z,p}\). \cref{thm:mainthm} then
+  follows via \cref{prop:padic-reduction}.
+\end{proof}
+
+\begin{remark}
+  This case is the only one where the algebraic classes in \(V_Z\) might be
+  lifted to characteristic zero, in which case \cref{thm:mainthm} would follow
+  from the Hodge--Riemann relations; the conjecturally easier case corresponds
+  to an easier \(p\)-adic analysis. Under the identifications of
+  \cref{cor:crys-identifications} one in fact has the equality of
+  \(\Q_p\)-vector spaces \(V_{B,p} = V_{Z,p}\).
+\end{remark}
+
+By \cref{prop:ordinary-case} we may henceforth assume \(V_B\) is of type
+\((-i,i),(i,-i)\) for a positive integer \(i\).
+
+\begin{definition}[The integer \(i\); non-ordinary assumption]
+  \label{ass:i-positive}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.iPositive}
+  \uses{def:mainthm-setup, def:realizations}
+  % SOURCE: [Ancona], §10, Assumption (ipos) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "From now on we will suppose that the Hodge structure $V_B$ is not of type $(0,0)$. Equivalently there is a well-defined positive integer $i$ such that $\Fil^i(V_Z\otimes K)$ is a $K$-line and $\Fil^{i+1}(V_Z\otimes K)=0$."
+  \textit{Source: Ancona, arXiv:1806.03216, \S10.}
+  From now on we suppose the Hodge structure \(V_B\) is \emph{not} of type
+  \((0,0)\). Equivalently, there is a well-defined positive integer \(i\) such
+  that \(\Fil^i(V_Z \otimes K)\) is a \(K\)-line and
+  \(\Fil^{i+1}(V_Z \otimes K) = 0\).
+\end{definition}
+
+\begin{lemma}[The Hodge line is isotropic]
+  \label{lem:isotropic-line}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.isotropicLine}
+  \uses{ass:i-positive, def:mainthm-setup}
+  % SOURCE: [Ancona], §10, Lemma (isotrop) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Under Assumption \ref{ipos} the line
+  %  $\Fil^i(V_Z\otimes K)$ is isotropic."
+  \textit{Source: Ancona, arXiv:1806.03216, \S10.}
+  Under \cref{ass:i-positive} the line \(\Fil^i(V_Z \otimes K)\) is isotropic.
+\end{lemma}
+
+% SOURCE QUOTE PROOF: "As the quadratic form $q$ is motivic its de Rham realization must respect the filtration, so $R_{\dR}(q)(\Fil^i(V_Z\otimes K)) \subset \Fil^{2i}R_{\dR}(\one).$ As $i$ is positive $\Fil^{2i}R_{\dR}(\one) =0.$"
+\begin{proof}
+  \uses{ass:i-positive}
+  As the quadratic form \(q\) is motivic, its de Rham realization respects the
+  filtration, so \(R_\dR(q)(\Fil^i(V_Z \otimes K)) \subset \Fil^{2i} R_\dR(\one)\).
+  As \(i > 0\), we have \(\Fil^{2i} R_\dR(\one) = 0\).
+\end{proof}
+
+\begin{proposition}[The endomorphism field \(F\)]
+  \label{prop:endo-field}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.endoField}
+  \uses{cor:crys-identifications, lem:isotropic-line, ass:i-positive}
+  % SOURCE: [Ancona], §10, Proposition (propendo) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Under  Assumption \ref{ipos} the
+  % $\Q_p$-algebra  $\End_{\Gal_K}(V_{B,p})$
+  % is a field $F$ such that  $[F:\Q_p]=2$. Moreover, for all $v\in V_{B,p}$ and all $f\in F$,  we have the equality
+  % \begin{equation} \label{eq:nonso}
+  %  q_{B,p}(f \cdot v)=N_{F/\Q_p}(f) q_{B,p}(v).
+  % \end{equation}"
+  \textit{Source: Ancona, arXiv:1806.03216, \S10.}
+  Under \cref{ass:i-positive}, the \(\Q_p\)-algebra
+  \(\End_{\Gal_K}(V_{B,p})\) is a field \(F\) with \([F : \Q_p] = 2\). Moreover,
+  for all \(v \in V_{B,p}\) and \(f \in F\),
+  \begin{equation}
+    q_{B,p}(f \cdot v) = N_{F/\Q_p}(f)\, q_{B,p}(v).
+  \end{equation}
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "Consider the ($\Q_p$-points of the) orthogonal  group $G=\SO(q_{B,p})$. We claim that the $\Q_p$-algebra
+% \[F\coloneqq \Q_p[G]\subset \End (V_{B,p})\]
+% satisfies all the properties of the statement. First, notice that this algebra is commutative and has dimension two by construction.
+% As the quadratic form is induced by an algebraic cycle, the Galois group $\Gal_K$ must act on $V_{B,p}$ through $G$. Hence we have the inclusions
+% \[\Q_p[\Gal_K]\subset  F \subset  \End (V_{B,p}).\]
+% Let us show that $\Q_p[\Gal_K]$ is not of dimension one. If it were so, the algebra $\End_{\Gal_K}(V_{B,p})$ would be isomorphic to $M_{2\times 2}(\Q_p)$. By   (\ref{stessaalgebra}) the algebra $\End_{\varphi,\Fil^*}(V_{Z,p}\otimes \Frac(W(k)))$ would also be $M_{2\times 2}(\Q_p)$, which would imply that $V_{Z,p}\otimes \Frac(W(k))$ would be decomposed into the sum of two isomorphic filtered $\varphi$-modules. This is impossible as it would in particular imply that the filtration on $V_{Z,p}\otimes \Frac(W(k))$ would be a one step filtration, hence contradicting Assumption  \ref{ipos}.
+% As the $\Q_p$-algebra $\Q_p[\Gal_K]$ is not of dimension one, we deduce that the  inclusion $\Q_p[\Gal_K]\subset  F$ is an equality. The commutator of $F$ being $F$ itself, we also have
+% $F=\End_{\Gal_K}(V_{B,p})$.
+% Let us show that the algebra $F$ is not isomorphic to $\Q_p \times \Q_p$. If it were so, arguing as before, we would have a decomposition of
+% filtered $\varphi$-modules
+% $(V_{Z,p}\otimes \Frac(W(k))= W \oplus W'$ and each of the lines $W, W'$ would be isotropic. On the other hand  the line $\Fil^i(V_Z\otimes K)$ is also isotropic (Lemma \ref{isotrop}), hence, we would have  the equality
+% \[W\otimes K =\Fil^i(V_Z\otimes K)\]
+% after possibly replacing $W$ with $W'$.
+% Now, as $W$ must be admissible, for any nonzero vector $w$ of $W$, the scalar $\alpha$ such that $\varphi(w)=\alpha w$ has $p$-adic valuation equal to $i$.
+% On the other hand, as  $V_{Z,p}$ is spanned by algebraic classes,  there is a nonzero vector of $W$ which is fixed by $\varphi$. As $i\neq 0$ by Assumption  \ref{ipos}, we deduce a contradiction.
+% As it is not isomorphic to $\Q_p \times \Q_p$ the algebra $F=\Q_p[\SO(q_{B,p})]$ must be a quadratic field extension of $\Q_p.$ The vector space $V_{B,p}$ can be identified with $F$ and the action of $F$ on it can be identified with the (left) multiplication. Under this identification we have $N_{F/\Q_p}(f)= \det(f \cdot)$ and the relation  (\ref{eq:nonso})   follows."
+\begin{proof}
+  \uses{cor:crys-identifications, lem:isotropic-line, ass:i-positive}
+  Let \(G = \SO(q_{B,p})\) (its \(\Q_p\)-points) and set \(F := \Q_p[G] \subset
+  \End(V_{B,p})\); this algebra is commutative of dimension two by construction.
+  As the quadratic form is induced by an algebraic cycle, \(\Gal_K\) acts on
+  \(V_{B,p}\) through \(G\), so
+  \(\Q_p[\Gal_K] \subset F \subset \End(V_{B,p})\).
+
+  First, \(\Q_p[\Gal_K]\) is not of dimension one: otherwise
+  \(\End_{\Gal_K}(V_{B,p}) \cong M_{2\times 2}(\Q_p)\), and by the algebra
+  identification of \cref{cor:crys-identifications} the same would hold for
+  \(\End_{\varphi,\Fil^*}(V_{Z,p} \otimes \Frac(W(k)))\), forcing
+  \(V_{Z,p} \otimes \Frac(W(k))\) to split as a sum of two isomorphic filtered
+  \(\varphi\)-modules with a one-step filtration, contradicting
+  \cref{ass:i-positive}. Hence \(\Q_p[\Gal_K] = F\), and since \(F\) is its own
+  commutant, \(F = \End_{\Gal_K}(V_{B,p})\).
+
+  Next, \(F\) is not isomorphic to \(\Q_p \times \Q_p\): otherwise
+  \(V_{Z,p} \otimes \Frac(W(k)) = W \oplus W'\) as filtered \(\varphi\)-modules
+  with both lines isotropic; as \(\Fil^i(V_Z \otimes K)\) is isotropic
+  (\cref{lem:isotropic-line}), after possibly swapping \(W, W'\) we would have
+  \(W \otimes K = \Fil^i(V_Z \otimes K)\). Admissibility then forces, for any
+  nonzero \(w \in W\), the scalar \(\alpha\) with \(\varphi(w) = \alpha w\) to
+  have \(p\)-adic valuation \(i\); but \(V_{Z,p}\) being spanned by algebraic
+  classes provides a nonzero \(\varphi\)-fixed vector of \(W\), and since
+  \(i \neq 0\) this is a contradiction.
+
+  Not being isomorphic to \(\Q_p \times \Q_p\), the algebra \(F = \Q_p[\SO(q_{B,p})]\)
+  is a quadratic field extension of \(\Q_p\). Identifying \(V_{B,p}\) with \(F\)
+  and the action of \(F\) with left multiplication, we have
+  \(N_{F/\Q_p}(f) = \det(f \cdot)\), whence the displayed norm relation.
+\end{proof}
+
+\begin{corollary}[\(F\) acts on the numerical side]
+  \label{cor:F-acts-num}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.FactsNum}
+  \uses{prop:endo-field, cor:crys-identifications}
+  % SOURCE: [Ancona], §10, Corollary (nonso) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Keep Assumption  \ref{ipos} and let $F$ be the field of  Proposition \ref{propendo}. Then $F$ acts on $V_{Z,p}$ and the equality  (\ref{eq:tsuji}) is $F$-equivariant. Moreover,  for all $v\in V_{Z,p} $ and all $f\in F$  we have the equality
+  % \begin{equation} \label{eq:nonso2}
+  % q_{Z,p}(f \cdot v)=N_{F/\Q_p}(f) q_{Z,p}(v).
+  % \end{equation}"
+  \textit{Source: Ancona, arXiv:1806.03216, \S10.}
+  Let \(F\) be the field of \cref{prop:endo-field}. Then \(F\) acts on
+  \(V_{Z,p}\), the first identification of \cref{cor:crys-identifications} is
+  \(F\)-equivariant, and for all \(v \in V_{Z,p}\) and \(f \in F\),
+  \begin{equation}
+    q_{Z,p}(f \cdot v) = N_{F/\Q_p}(f)\, q_{Z,p}(v).
+  \end{equation}
+\end{corollary}
+
+% SOURCE QUOTE PROOF: "If one replaces $V_{Z,p}$ by $V_{Z,p}\otimes \Frac(W(k))$ the statement is a combination of  Corollary \ref{cortsuji}   and Proposition \ref{propendo}. As $F$ commutes with the action of $\varphi$ and $V_{Z,p} \subset V_{Z,p}\otimes \Frac(W(k))$ is precisely the space of vectors which are fixed by $\varphi$, we deduce that $V_{Z,p}$ is stable by $F$ and the statement follows."
+\begin{proof}
+  \uses{prop:endo-field, cor:crys-identifications}
+  Replacing \(V_{Z,p}\) by \(V_{Z,p} \otimes \Frac(W(k))\), the statement
+  combines \cref{cor:crys-identifications} and \cref{prop:endo-field}. As \(F\)
+  commutes with \(\varphi\), and \(V_{Z,p} \subset V_{Z,p} \otimes \Frac(W(k))\)
+  is exactly the space of \(\varphi\)-fixed vectors, \(V_{Z,p}\) is stable under
+  \(F\) and the statement follows.
+\end{proof}
+
+\begin{corollary}[Norm criterion for isomorphism]
+  \label{cor:norm-criterion}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.normCriterion}
+  \uses{prop:endo-field, cor:F-acts-num}
+  % SOURCE: [Ancona], §10, Corollary (norms) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Keep Assumption  \ref{ipos} and let $F$ be the field of  Proposition \ref{propendo}. The following statements are equivalent:
+  % \begin{enumerate}
+  % \item The quadratic forms $q_{B,p}$ and $q_{Z,p}$ are isomorphic.
+  % \item There exists a pair of nonzero vectors  $v_B\in V_{B,p}$ and $v_Z\in V_{Z,p}$ such that $q_{B,p}(v_B)$ and $q_{Z,p}(v_Z)$ are equal in $\Q_p^*/N_{F/\Q_p}(F^*).$
+  % \item For any  pair of nonzero vectors  $v_B\in V_{B,p}$ and $v_Z\in V_{Z,p}$ we have that $q_{B,p}(v_B)$ and $q_{Z,p}(v_Z)$ are equal in $\Q_p^*/N_{F/\Q_p}(F^*).$
+  % \end{enumerate}"
+  \textit{Source: Ancona, arXiv:1806.03216, \S10.}
+  Let \(F\) be the field of \cref{prop:endo-field}. The following are
+  equivalent.
+  \begin{enumerate}
+    \item The quadratic forms \(q_{B,p}\) and \(q_{Z,p}\) are isomorphic.
+    \item There exist nonzero \(v_B \in V_{B,p}\), \(v_Z \in V_{Z,p}\) with
+      \(q_{B,p}(v_B)\) and \(q_{Z,p}(v_Z)\) equal in
+      \(\Q_p^*/N_{F/\Q_p}(F^*)\).
+    \item For all nonzero \(v_B \in V_{B,p}\), \(v_Z \in V_{Z,p}\), the values
+      \(q_{B,p}(v_B)\) and \(q_{Z,p}(v_Z)\) are equal in
+      \(\Q_p^*/N_{F/\Q_p}(F^*)\).
+  \end{enumerate}
+\end{corollary}
+
+% SOURCE QUOTE PROOF: "This is a formal consequence of  formulas (\ref{eq:nonso}) and (\ref{eq:nonso2})."
+\begin{proof}
+  \uses{prop:endo-field, cor:F-acts-num}
+  A formal consequence of the norm relations of \cref{prop:endo-field} and
+  \cref{cor:F-acts-num}: both forms
+  scale by \(N_{F/\Q_p}\) under the \(F\)-action, which acts transitively on
+  nonzero vectors of each rank-two \(F\)-line, so the class of the value in
+  \(\Q_p^*/N_{F/\Q_p}(F^*)\) is independent of the chosen nonzero vector.
+\end{proof}
+
+\begin{remark}[The \(F\)-eigenspace decomposition]
+  \label{rem:conventionF}
+  % SOURCE: [Ancona], §10, Remark (conventionF) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "By the very construction of $F$, there are two actions of $F$ on  $V_{Z,p}\otimes F$ and this allows us to write the decomposition
+  % \[V_{Z,p}\otimes F= V_{Z,+}  \oplus  V_{Z,-}\]
+  % where $V_{Z,+}$ is the line where the two actions coincide and $V_{Z,-}$ is the line where the two actions are permuted by the non-trivial element of $\Gal(F/\Q_p)$. Using (\ref{eq:nonso2}), we see that $V_{Z,+}$ and $V_{Z,-}$ are also the two isotropic lines of the hyperbolic plane $V_{Z,p}\otimes F$. Notice that there is also an analogous decomposition
+  % \[V_{B,p}\otimes F= V_{B,+} \oplus V_{B,-}\]
+  % with analogous properties and that these decompositions are respected by Corollary \ref{cortsuji}.
+  % Finally, as $\Fil^i V_{Z,p}\otimes K$ is an isotropic line (Lemma \ref{isotrop}) it must coincide with $V_{Z,+}$ or  $V_{Z,-}$ (after extension of scalars to a field containing $F$ and $K$). We decide that the identification of $F$ and $K$ with a subfield of $\overline{\mathbb{Q}}_p$ is made to have the equality
+  % \[\Fil^i V_{Z,p}\otimes  \overline{\mathbb{Q}}_p = V_{Z,+} \otimes  \overline{\mathbb{Q}}_p.\]"
+  \textit{Source: Ancona, arXiv:1806.03216, \S10.}
+  There are two actions of \(F\) on \(V_{Z,p} \otimes F\), giving a
+  decomposition
+  \[V_{Z,p} \otimes F = V_{Z,+} \oplus V_{Z,-},\]
+  where \(V_{Z,+}\) is the line on which the two actions coincide and \(V_{Z,-}\)
+  the line on which they are permuted by the nontrivial element of
+  \(\Gal(F/\Q_p)\). By the norm relation of \cref{cor:F-acts-num}, \(V_{Z,+}\) and \(V_{Z,-}\) are the two
+  isotropic lines of the hyperbolic plane \(V_{Z,p} \otimes F\). There is an
+  analogous decomposition \(V_{B,p} \otimes F = V_{B,+} \oplus V_{B,-}\), and
+  these decompositions are respected by \cref{cor:crys-identifications}. We fix
+  the embedding of \(F\) and \(K\) into \(\overline{\Q}_p\) so that
+  \(\Fil^i V_{Z,p} \otimes \overline{\Q}_p = V_{Z,+} \otimes \overline{\Q}_p\).
+\end{remark}
+
+\section{Characterization of p-adic periods}
+\label{sec:padic-periods}
+
+We work under \cref{ass:i-positive}, with the positive integer \(i\) and the
+field \(F\) of \cref{prop:endo-field}, and we study the periods relating
+\(V_{B,p}\) and \(V_{Z,p}\) given by \cref{cor:crys-identifications}. The
+analysis splits according to whether \(F\) is unramified or ramified over
+\(\Q_p\).
+
+\subsection*{Unramified case}
+
+Here \(F\) is unramified, so \(F \subset \Bcrys\) and \(\varphi\) restricted to
+\(F\) is the nontrivial element of \(\Gal(F/\Q_p)\).
+
+\begin{definition}[Periods, unramified case]
+  \label{def:periods-unram}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.periodsUnram}
+  \uses{thm:bcrys-bdr, prop:endo-field, ass:i-positive}
+  % SOURCE: [Ancona], §11, Definition (defpi) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "We define the $F$-vector subspace $P_i=P_i(F)$ of $B_\crys$ as the set of $\lambda_i \in B_\crys$ verifying the following properties:
+  % \begin{enumerate}
+  % \item $\varphi^2 (\lambda_i)= \lambda_i.$
+  % \item $\lambda_i \in \Fil ^i B_\dR.$
+  % \item $\varphi(\lambda_i) \in \Fil ^{-i} B_\dR.$
+  % \end{enumerate}"
+  \textit{Source: Ancona, arXiv:1806.03216, \S11.}
+  The \(F\)-vector subspace \(P_i = P_i(F) \subset \Bcrys\) is the set of
+  \(\lambda \in \Bcrys\) such that \(\varphi^2(\lambda) = \lambda\),
+  \(\lambda \in \Fil^i \BdR\), and \(\varphi(\lambda) \in \Fil^{-i} \BdR\).
+\end{definition}
+
+\begin{proposition}[Periods are a line, unramified case]
+  \label{prop:periods-unram-dim}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.periodsUnramDim}
+  \uses{def:periods-unram, thm:crys-equiv, thm:bcrys-bdr}
+  % SOURCE: [Ancona], §11, Proposition (lemmapi) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "The $F$-vector space  $P_i(F)$ is of dimension one. Moreover a nonzero element $\lambda_i \in P_i$ verifies the following properties.
+  % \begin{enumerate}
+  %  \item\label{preciso1} $\lambda_i \cdot\varphi(\lambda_i) \in \Q^*_p.$
+  %   \item\label{preciso4} $\lambda_i $ and $\varphi(\lambda_i)$ are invertible in $B_\crys.$
+  % \item\label{preciso2} $\lambda \in \Fil ^i B_\dR-\Fil ^{i+1} B_\dR.$
+  % \item\label{preciso3} $\varphi(\lambda) \in \Fil ^{-i} B_\dR-\Fil ^{-i+1} B_\dR.$
+  % \end{enumerate}"
+  \textit{Source: Ancona, arXiv:1806.03216, \S11.}
+  The \(F\)-vector space \(P_i(F)\) has dimension one. A nonzero
+  \(\lambda_i \in P_i\) satisfies:
+  (1) \(\lambda_i \cdot \varphi(\lambda_i) \in \Q_p^*\);
+  (2) \(\lambda_i\) and \(\varphi(\lambda_i)\) are invertible in \(\Bcrys\);
+  (3) \(\lambda_i \in \Fil^i \BdR \setminus \Fil^{i+1} \BdR\);
+  (4) \(\varphi(\lambda_i) \in \Fil^{-i} \BdR \setminus \Fil^{-i+1} \BdR\).
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "By construction of $P_i$ we have   $ \lambda_i \cdot\varphi(\lambda_i) \in (B_\crys^{\varphi=\id} \cap \Fil^0B_\dR)$  and on the other hand we have  $(B_\crys^{\varphi=\id} \cap \Fil^0B_\dR)=\Q_p$, see Theorem \ref{javier}. What is missing to show (\ref{preciso1}) is that $\lambda_i \cdot\varphi(\lambda_i)\neq 0.$ It will follow from part (\ref{preciso4}).
+%   Consider the $\Q_p$-vector space $N=\Q_p^2$ with basis $e_1,e_2$ endowed with
+% \begin{equation}\label{biagi}\varphi=\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} \end{equation}
+% as Frobenius and with the following filtration
+% \[\Fil^{-i}N=N, \Fil^{-i+1}N =\Fil^i N=\Q_p\cdot e_2, \Fil^{i+1} N=0.  \]
+% Let us  check that $N$ is an admissible filtered $\varphi$-module.  The action of $\varphi$ on $\det N$, the maximal exterior power of $N$, is by multiplication by $-1$, which has valuation equal to $0$, and the only non trivial step of the induced filtration on $\det N$ is at $0$ as well. There are two lines  stable by $\varphi$ and none of those is $\Q_p\cdot e_2$ hence the only non trivial step of the induced filtration on these lines is at $-i$. On the other hand the action of $\varphi$ on these lines is by multiplication by $\pm 1$, which has valuation equal to $0$. As $i$ is  positive, the required inequality  $-i \leq 0$ holds true.
+%  As $N$ is an admissible $\varphi$-module, by Theorem \ref{tsuji} there exists a unique $\Gal_{\Q_p}$-representation $V$ such that $N=D(V)$. Consider the identification $V \otimes B_\crys= N \otimes B_\crys$ given by  Theorem \ref{tsuji}. It allows to write an element of $V$ with respect to the basis $e_1,e_2$. Let $(\alpha, \beta)$ be a fixed nonzero vector in $V$. As the Frobenius must act trivially on it we get from (\ref{biagi})  the relations $ \alpha=  \varphi(\beta), \beta= \varphi(\alpha) $ which give the equality $\alpha=  \varphi^2(\alpha).$
+%    On the other hand, again by Theorem \ref{tsuji}, the vector $(\alpha,\beta)$ lies in $ \Fil^0[M \otimes B_\dR]$. This means that it can be written as a linear combination $\gamma n + \delta e_2$ with $\gamma \in \Fil^{i}B_\dR, \delta \in \Fil^{-i} B_\dR$ and $n \in N$, which implies that $\alpha \in \Fil^{i}B_\dR$ and  $\beta \in \Fil^{-i}B_\dR$.
+%  Altogether we have    $\alpha \in P_i$ and in particular  $P_i$ is a non empty space. Moreover, arguing as above, one sees that for all $t \in P_i$ the vector $(t,\varphi(t))$ is in the vector space $V=[N \otimes B_\crys]^{\varphi=\id} \cap  \Fil^0[N \otimes B_\dR] $. This gives an isomorphism of $\Q_p$-vector spaces between $V$ and $P_i$. As $V$ has dimension $2$ the space $P_i$ is an $F$-vector space of dimension one.
+%  Now notice that  the one dimensional $\Q_p$-vector space of $p$-adic periods relating $\det N$ to $\det V$ is generated by an element in $B_\crys$ of the form $\alpha \beta (f-\varphi( f) )$, for any fixed $f \in F- \Q_p$. As $\det N\otimes B_\crys$ and $\det V\otimes B_\crys$ are free $B_\crys$-modules of rank one the element $\alpha \beta (f-\varphi( f) )$ must be invertible in $B_\crys$, hence $\alpha$ and  $\beta$ are invertible as well.
+% Finally, let us consider the  valuation $\nu$ from Theorem \ref{javier} associated to the filtration. We have showed the inequalities $\nu ( \alpha) \geq +i$ and  $\nu (  \beta)\geq -i$. On the other hand, as the only non trivial step of the filtration on $\det M$ is  $0$, we deduce that $\nu ( \alpha \beta (f-\sigma( f) ))=0$ and hence $\nu ( \alpha \beta)=0$. This implies  that the above inequalities are actually equalities."
+\begin{proof}
+  \uses{def:periods-unram, thm:crys-equiv, thm:bcrys-bdr}
+  By construction \(\lambda_i \cdot \varphi(\lambda_i) \in \Bcrys^{\varphi=\id}
+  \cap \Fil^0 \BdR = \Q_p\) (\cref{thm:bcrys-bdr}); that it is nonzero will
+  follow from part (2), giving part (1).
+
+  Consider \(N = \Q_p^2\) with basis \(e_1, e_2\), Frobenius
+  \(\varphi = \left(\begin{smallmatrix} 0 & 1 \\ 1 & 0 \end{smallmatrix}\right)\),
+  and filtration \(\Fil^{-i} N = N\),
+  \(\Fil^{-i+1} N = \Fil^i N = \Q_p \cdot e_2\), \(\Fil^{i+1} N = 0\). This is an
+  admissible filtered \(\varphi\)-module: on \(\det N\), \(\varphi\) acts by
+  \(-1\) (valuation \(0\)) and the filtration jumps only at \(0\); the two
+  \(\varphi\)-stable lines are not \(\Q_p \cdot e_2\), so their filtration jumps
+  at \(-i\), while \(\varphi\) acts by \(\pm 1\) (valuation \(0\)), and
+  \(-i \leq 0\) as \(i > 0\). By \cref{thm:crys-equiv} there is a unique \(V\)
+  with \(N = D(V)\). Writing a nonzero \((\alpha, \beta) \in V\) in the basis,
+  \(\varphi\)-invariance gives \(\alpha = \varphi(\beta)\),
+  \(\beta = \varphi(\alpha)\), hence \(\alpha = \varphi^2(\alpha)\); membership
+  in \(\Fil^0[N \otimes \BdR]\) gives \(\alpha \in \Fil^i \BdR\),
+  \(\beta \in \Fil^{-i} \BdR\). Thus \(\alpha \in P_i\), and \(t \mapsto (t,
+  \varphi(t))\) identifies \(P_i\) with \(V\); as \(\dim_{\Q_p} V = 2\), \(P_i\)
+  is an \(F\)-line.
+
+  The determinant period relating \(\det N\) to \(\det V\) is generated by
+  \(\alpha\beta(f - \varphi(f))\) for fixed \(f \in F \setminus \Q_p\); as
+  \(\det N \otimes \Bcrys\) and \(\det V \otimes \Bcrys\) are free of rank one,
+  this is invertible, hence so are \(\alpha\) and \(\beta\). Finally
+  \(\nu(\alpha) \geq i\) and \(\nu(\beta) \geq -i\), while
+  \(\nu(\alpha\beta(f - \varphi(f))) = 0\) gives \(\nu(\alpha\beta) = 0\), so
+  both inequalities are equalities.
+\end{proof}
+
+\begin{definition}[The space \(Q\), unramified case]
+  \label{def:Q-unram}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.QUnram}
+  \uses{cor:crys-identifications, prop:endo-field}
+  % SOURCE: [Ancona], §11, Definition (defqi) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Consider $V_{Z,+}$ and $V_{B,+}$ as constructed in Remark \ref{conventionF} and consider them as $F$-vector subspaces of $V_{Z,p}\otimes B_\crys$ via Corollary \ref{cortsuji}.
+  % We define the $F$-vector subspace $Q=Q(M)$ of $B_\crys$ as the set of $\lambda \in B_\crys$ such that
+  % \[\lambda \cdot V_{B,+} \subset V_{Z,+}.\]"
+  \textit{Source: Ancona, arXiv:1806.03216, \S11.}
+  Viewing \(V_{Z,+}\) and \(V_{B,+}\) of \cref{rem:conventionF} as \(F\)-subspaces
+  of \(V_{Z,p} \otimes \Bcrys\) via \cref{cor:crys-identifications}, the
+  \(F\)-vector subspace \(Q = Q(M) \subset \Bcrys\) is the set of
+  \(\lambda \in \Bcrys\) with \(\lambda \cdot V_{B,+} \subset V_{Z,+}\).
+\end{definition}
+
+\begin{proposition}[\(P_i = Q\), unramified case]
+  \label{prop:PQ-unram}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.PQUnram}
+  \uses{def:periods-unram, def:Q-unram, prop:periods-unram-dim, cor:crys-identifications}
+  % SOURCE: [Ancona], §11, Proposition (piqi) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "The $F$-vector subspaces $P_i,Q\subset B_\crys$ introduced in Definitions \ref{defpi} and \ref{defqi} coincide and they have dimension one."
+  \textit{Source: Ancona, arXiv:1806.03216, \S11.}
+  The \(F\)-vector subspaces \(P_i, Q \subset \Bcrys\) of
+  \cref{def:periods-unram} and \cref{def:Q-unram} coincide and have dimension
+  one.
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "Following Remark \ref{conventionF} we have
+%  \begin{equation} \label{eq:mirella0}V_{B,+} \cdot B_\crys =  V_{Z,+} \cdot B_\crys.\end{equation}
+%   As the  $F$-vector spaces $V_{B,+} $ and $ V_{Z,+}$ have dimension one   then $Q\subset B_\crys$ must have dimension one as well.
+% Fix a nonzero element $\lambda \in Q$. By definition of $Q$ there are nonzero vectors $v_B \in V_{B,+} $ and $v_Z \in V_{Z,+} $ such that
+% \begin{equation} \label{eq:mirella} \lambda \cdot v_{B} = v_{Z}  \end{equation}
+% which implies
+% \begin{equation} \label{eq:mirella2} \varphi(\lambda) \cdot \varphi(v_{B}) = \varphi(v_{Z}). \end{equation}
+% Now  $\varphi$ acts trivially on $V_{B,p}$ and,  because of the presence of algebraic classes, also on $V_{Z,p}$. Hence $\varphi$ acts as the non-trivial element of $\Gal(F/\Q_p)$ on $V_{B,p}\otimes F$ and  $V_{Z,p}\otimes F$. This implies that
+% \begin{equation} \label{eq:mirella3} \varphi(v_{B})  \in V_{B,-} \hspace{0.5cm}  \textrm{and} \hspace{0.5cm} \varphi(v_{Z})  \in V_{Z,-} \end{equation}
+% as well as
+% \begin{equation} \label{eq:mirella4} \varphi^2(v_B)=v_B \hspace{0.5cm}  \textrm{and} \hspace{0.5cm}   \varphi^2(v_Z)=v_Z. \end{equation}
+% We claim that  the above relations (through Corollary \ref{cortsuji}) imply   that $\lambda$ verifies conditions (1),(2) and (3) from Definition \ref{defpi}. Indeed (\ref{eq:mirella}) gives (2), (\ref{eq:mirella2}) and  (\ref{eq:mirella3}) give (3) and finally  (\ref{eq:mirella4}) gives (1).
+% Hence, we have showed the  inclusion $Q \subset P_i$. For dimensional reasons (Proposition \ref{lemmapi}) it is actually an equality."
+\begin{proof}
+  \uses{def:periods-unram, def:Q-unram, prop:periods-unram-dim, cor:crys-identifications}
+  By \cref{rem:conventionF} we have \(V_{B,+} \cdot \Bcrys = V_{Z,+} \cdot \Bcrys\),
+  and since \(V_{B,+}, V_{Z,+}\) are \(F\)-lines, \(Q\) has dimension one. Fix a
+  nonzero \(\lambda \in Q\); there are nonzero \(v_B \in V_{B,+}\),
+  \(v_Z \in V_{Z,+}\) with \(\lambda \cdot v_B = v_Z\), hence
+  \(\varphi(\lambda) \cdot \varphi(v_B) = \varphi(v_Z)\). As \(\varphi\) acts
+  trivially on \(V_{B,p}\) and on \(V_{Z,p}\) (algebraic classes), it acts as the
+  nontrivial element of \(\Gal(F/\Q_p)\) on \(V_{B,p} \otimes F\) and
+  \(V_{Z,p} \otimes F\); thus \(\varphi(v_B) \in V_{B,-}\),
+  \(\varphi(v_Z) \in V_{Z,-}\) and \(\varphi^2(v_B) = v_B\),
+  \(\varphi^2(v_Z) = v_Z\). Through \cref{cor:crys-identifications} these give
+  the three conditions of \cref{def:periods-unram}, so \(Q \subset P_i\); by
+  \cref{prop:periods-unram-dim} this is an equality.
+\end{proof}
+
+\begin{proposition}[Isomorphism via a norm, unramified case]
+  \label{prop:iso-norm-unram}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.isoNormUnram}
+  \uses{prop:periods-unram-dim, prop:PQ-unram, cor:norm-criterion, cor:crys-identifications}
+  % SOURCE: [Ancona], §11, Proposition (warmbrinon) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Consider a nonzero element $\lambda_i \in P_i,$ and recall that $\lambda_i \cdot\varphi(\lambda_i) \in \Q^*_p$ (Proposition \ref{lemmapi}).  Then the quadratic forms $q_{B,p}$ and $q_{Z,p}$ are isomorphic if and only if
+  %  \[\lambda_i \cdot\varphi(\lambda_i) \in N_{F/\Q_p}(F^*).\]"
+  \textit{Source: Ancona, arXiv:1806.03216, \S11.}
+  For a nonzero \(\lambda_i \in P_i\) (recall
+  \(\lambda_i \cdot \varphi(\lambda_i) \in \Q_p^*\) by
+  \cref{prop:periods-unram-dim}), the quadratic forms \(q_{B,p}\) and
+  \(q_{Z,p}\) are isomorphic if and only if
+  \(\lambda_i \cdot \varphi(\lambda_i) \in N_{F/\Q_p}(F^*)\).
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "Let $v_B \in V_{B,+}$ and $v_Z \in V_{Z,+}$ as in the proof of Proposition \ref{piqi}.  By (\ref{eq:mirella4}) we have
+% \begin{equation} \label{eq:mirella9}v_B + \varphi(v_{B})  \in  V_{B,p} \hspace{0.5cm}  \textrm{and} \hspace{0.5cm}    v_Z + \varphi(v_{Z})  \in  V_{Z,p}. \end{equation}
+% Write  $\langle \cdot  ,  \cdot \rangle_{?}$ for the bilinear form associated to the quadratic form $q_?$. Then we have
+% \[q_{B,p}(v_B + \varphi(v_{B}) ) = 2 \langle v_B ,  \varphi(v_{B}) \rangle_{B,p}  \hspace{0.3cm}  \textrm{and}   \hspace{0.3cm} q_{Z,p}(v_Z + \varphi(v_{Z}) ) = 2 \langle v_Z ,  \varphi(v_{Z}) \rangle_{Z,p}  \]
+% because    $v_B,v_Z,\varphi(v_B)$ and $\varphi(v_Z)$ are isotropic vectors (see Remark \ref{conventionF} and (\ref{eq:mirella3})).
+% Hence, using  relations  (\ref{eq:mirella}), (\ref{eq:mirella2}), together with (\ref{chissa}), we have
+% \[\lambda_i \cdot\varphi(\lambda_i) \cdot q_{B,p}(v_B + \varphi(v_{B}) ) =  q_{Z,p}(v_Z + \varphi(v_{Z}) ) . \]
+% We can conclude thanks to Corollary \ref{norms}."
+\begin{proof}
+  \uses{prop:periods-unram-dim, prop:PQ-unram, cor:norm-criterion, cor:crys-identifications}
+  Take \(v_B \in V_{B,+}\), \(v_Z \in V_{Z,+}\) as in
+  \cref{prop:PQ-unram}. Then \(v_B + \varphi(v_B) \in V_{B,p}\) and
+  \(v_Z + \varphi(v_Z) \in V_{Z,p}\). Since \(v_B, v_Z, \varphi(v_B),
+  \varphi(v_Z)\) are isotropic (\cref{rem:conventionF}),
+  \[q_{B,p}(v_B + \varphi(v_B)) = 2\langle v_B, \varphi(v_B)\rangle_{B,p}, \quad
+    q_{Z,p}(v_Z + \varphi(v_Z)) = 2\langle v_Z, \varphi(v_Z)\rangle_{Z,p}.\]
+  Using \(\lambda_i v_B = v_Z\), \(\varphi(\lambda_i)\varphi(v_B) = \varphi(v_Z)\)
+  and the second identity of \cref{cor:crys-identifications}, we get
+  \[\lambda_i \cdot \varphi(\lambda_i) \cdot q_{B,p}(v_B + \varphi(v_B)) =
+    q_{Z,p}(v_Z + \varphi(v_Z)).\]
+  \cref{cor:norm-criterion} concludes.
+\end{proof}
+
+\subsection*{Ramified case}
+
+Here \(F\) is ramified; let \(\sigma\) be the nontrivial element of
+\(\Gal(F/\Q_p)\) and \(B_{\crys,F} \subset \BdR\) the smallest subring
+containing \(F\) and \(\Bcrys\), so \(B_{\crys,F} = F \otimes_{\Q_p} \Bcrys\),
+with commuting endomorphisms \(\sigma, \varphi : B_{\crys,F} \to B_{\crys,F}\).
+
+\begin{definition}[Periods, ramified case]
+  \label{def:periods-ram}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.periodsRam}
+  \uses{thm:bcrys-bdr, prop:endo-field, ass:i-positive}
+  % SOURCE: [Ancona], §11, Definition (defpiram) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "We define the $F$-vector subspace $P_i=P_i(F)$ of $B_{\crys,F}$ as the set of $\lambda \in B_{\crys,F}$ verifying the following properties.
+  % \begin{enumerate}
+  % \item $\lambda \in \Fil ^i B_\dR.$
+  % \item $\sigma(\lambda) \in \Fil ^{-i} B_\dR.$
+  % \item $\varphi (\lambda)= \lambda.$
+  % \end{enumerate}"
+  \textit{Source: Ancona, arXiv:1806.03216, \S11.}
+  Writing \(B_{\crys,F} = F \otimes_{\Q_p} \Bcrys\), the \(F\)-vector subspace
+  \(P_i = P_i(F) \subset B_{\crys,F}\) is the set of \(\lambda \in B_{\crys,F}\)
+  with \(\lambda \in \Fil^i \BdR\), \(\sigma(\lambda) \in \Fil^{-i} \BdR\), and
+  \(\varphi(\lambda) = \lambda\).
+\end{definition}
+
+\begin{proposition}[Periods are a line, ramified case]
+  \label{prop:periods-ram-dim}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.periodsRamDim}
+  \uses{def:periods-ram, thm:crys-equiv, thm:bcrys-bdr}
+  % SOURCE: [Ancona], §11, Proposition (lemmapiram) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "The $F$-vector space  $P_i(F)$ is of dimension one.
+  % Moreover a nonzero element $\lambda_i \in P_i$  verifies the following properties.
+  % \begin{enumerate}
+  %  \item  $\lambda_i \cdot\sigma(\lambda_i) \in \Q^*_p.$
+  %   \item  $\lambda_i$ and $\sigma(\lambda_i)$ are invertible in $B_{\crys,F}.$
+  % \item  $\lambda_i \in \Fil ^i B_\dR-\Fil ^{i+1} B_\dR.$
+  % \item  $\sigma(\lambda_i) \in \Fil ^{-i} B_\dR-\Fil ^{-i+1} B_\dR.$
+  % \end{enumerate}"
+  \textit{Source: Ancona, arXiv:1806.03216, \S11.}
+  The \(F\)-vector space \(P_i(F)\) has dimension one. A nonzero
+  \(\lambda_i \in P_i\) satisfies:
+  (1) \(\lambda_i \cdot \sigma(\lambda_i) \in \Q_p^*\);
+  (2) \(\lambda_i\) and \(\sigma(\lambda_i)\) are invertible in \(B_{\crys,F}\);
+  (3) \(\lambda_i \in \Fil^i \BdR \setminus \Fil^{i+1} \BdR\);
+  (4) \(\sigma(\lambda_i) \in \Fil^{-i} \BdR \setminus \Fil^{-i+1} \BdR\).
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "By construction of $P_i$ we have that $\lambda_i \cdot\varphi(\lambda_i) $ is invariant under $\sigma$ hence it is in $B_\crys$. Moreover it verifies  $ \lambda_i \cdot\varphi(\lambda_i) \in (B_\crys^{\varphi=\id} \cap \Fil^0B_\dR)$  and on the other hand we have  $(B_\crys^{\varphi=\id} \cap \Fil^0B_\dR)=\Q_p$, see Theorem \ref{javier}. What is missing to show (\ref{preciso1}) is that $\lambda_i \cdot\varphi(\lambda_i)\neq 0.$ It will follow from part (\ref{preciso4}).
+%  Consider the $\Q_p$-vector space $N=\Q_p^2$ endowed with the identity as Frobenius. Let $L$ be a line in $N\otimes F$ which is not stable under $\sigma$.
+% Define the following filtration
+% \[\Fil^{-i}N\otimes F=N\otimes F, \Fil^{-i+1}N\otimes F =\Fil^i N \otimes F=\sigma(L), \Fil^{i+1} N=0.  \]
+% Let us  check that $N$ is an admissible filtered $\varphi$-module.  The action of $\varphi$ on $\det N$, the maximal exterior power of $N$, is by multiplication by $+1$, which has valuation equal to $0$, and the only non trivial step of the induced filtration on $\det N$ is at $0$ as well. Consider a line $L'$ in $N$. The action of $\varphi$ on it is again by multiplication by $+ 1$, which has valuation equal to $0$, and the only non trivial step of the induced filtration on it is at $-i$ because $L'\neq \sigma(L)$. As $i$ is  positive, the required inequality  $-i \leq 0$ holds true.
+%  As $N$ is an admissible $\varphi$-module, by Theorem \ref{tsuji} there exists a unique $\Gal_{\Q_p}$-representation $V$ such that $N=D(V)$. Consider the action of $f\in F$ on $N\otimes F$ given by multiplication by $f$ on $L$ and by multiplication by $\sigma(f)$ on $ \sigma(L)$. It descends over $\Q_p$ and gives an action of $F$ on $N$. Moreover this action respects the filtration. By  Theorem \ref{tsuji}, the field $F$ acts on $V$ as well and  the identification $V \otimes B_\crys= N \otimes B_\crys$ is $F$-equivariant. In particular there are eigenvectors $m\in L$ and  $v \in V \otimes F$ and a scalar $\alpha \in B_{\crys,F}$ such that $\alpha \cdot m=   v$ and hence $ \sigma(\alpha) \cdot \sigma(m)=   \sigma(v)$.
+% As the Frobenius acts trivially on $V$ and $N$ we deduce that it acts as the identity on  $\alpha$ and $\sigma(\alpha)$ as well. Moreover,  the inclusion $V \subset \Fil^0 N\otimes B_\dR$ implies $\alpha \in \Fil ^i B_\dR-\Fil ^{i+1} B_\dR$ and $\sigma(\alpha) \in \Fil ^{-i} B_\dR-\Fil ^{-i+1} B_\dR.$
+%  Altogether we have    $\alpha \in P_i$ and in particular  $P_i$ is a non empty space. Moreover, arguing as above, one sees that for all $t \in P_i$ the linear combination $t \cdot m + \sigma(t) \cdot \sigma (m)$  is in the vector space $V=[N \otimes B_\crys]^{\varphi=\id} \cap  \Fil^0[N \otimes B_\dR] $. This gives an isomorphism of $\Q_p$-vector spaces between $V$ and $P_i$. As $V$ has dimension $2$ the space $P_i$ is an $F$-vector space of dimension one.
+%  Finally, as $v$ and $m$ generates the same free  $B_{\crys,F}$-module of rank one, the scalar $\alpha$ must be invertible in $B_{\crys,F}$, and the same argument applies for $ \sigma(\alpha)$."
+\begin{proof}
+  \uses{def:periods-ram, thm:crys-equiv, thm:bcrys-bdr}
+  By construction \(\lambda_i \cdot \varphi(\lambda_i)\) is \(\sigma\)-invariant,
+  hence in \(\Bcrys\), and lies in \(\Bcrys^{\varphi=\id} \cap \Fil^0 \BdR =
+  \Q_p\) (\cref{thm:bcrys-bdr}); nonvanishing follows from part (2), giving part
+  (1).
+
+  Take \(N = \Q_p^2\) with Frobenius the identity, let \(L \subset N \otimes F\)
+  be a line not stable under \(\sigma\), and set \(\Fil^{-i}(N \otimes F) =
+  N \otimes F\), \(\Fil^{-i+1}(N \otimes F) = \Fil^i(N \otimes F) = \sigma(L)\),
+  \(\Fil^{i+1} = 0\). This is admissible: on \(\det N\), \(\varphi\) acts by
+  \(+1\) with filtration jump at \(0\); any line \(L' \neq \sigma(L)\) has
+  filtration jump at \(-i\) with \(\varphi\) acting by \(+1\), and \(-i \leq 0\).
+  By \cref{thm:crys-equiv} there is a unique \(V\) with \(N = D(V)\); letting
+  \(f \in F\) act by \(f\) on \(L\) and \(\sigma(f)\) on \(\sigma(L)\) gives an
+  \(F\)-action on \(N\) respecting the filtration, hence on \(V\), with
+  \(V \otimes \Bcrys = N \otimes \Bcrys\) being \(F\)-equivariant. There are
+  eigenvectors \(m \in L\), \(v \in V \otimes F\) and \(\alpha \in B_{\crys,F}\)
+  with \(\alpha \cdot m = v\), hence \(\sigma(\alpha) \cdot \sigma(m) =
+  \sigma(v)\). As \(\varphi\) acts trivially on \(V\) and \(N\), it fixes
+  \(\alpha\) and \(\sigma(\alpha)\); the inclusion \(V \subset \Fil^0(N \otimes
+  \BdR)\) gives \(\alpha \in \Fil^i \setminus \Fil^{i+1}\),
+  \(\sigma(\alpha) \in \Fil^{-i} \setminus \Fil^{-i+1}\). Thus \(\alpha \in P_i\),
+  and \(t \mapsto t \cdot m + \sigma(t) \cdot \sigma(m)\) identifies \(P_i\) with
+  \(V\), an \(F\)-line. Finally \(v\) and \(m\) generate the same rank-one free
+  \(B_{\crys,F}\)-module, so \(\alpha\) is invertible, and likewise
+  \(\sigma(\alpha)\).
+\end{proof}
+
+\begin{definition}[The space \(Q\), ramified case]
+  \label{def:Q-ram}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.QRam}
+  \uses{cor:crys-identifications, prop:endo-field}
+  % SOURCE: [Ancona], §11, Definition (defqiram) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Consider $V_{Z,+}$ and $V_{B,+}$ as constructed in Remark \ref{conventionF} and consider them as $F$-vector subspaces of $V_{Z,p}\otimes B_{\crys,F}$ via Corollary \ref{cortsuji}.
+  % We define the $F$-vector subspace $Q=Q(M)$ of $B_{\crys,F}$ as the set of $\lambda \in B_{\crys,F}$ such that
+  % \[\lambda \cdot V_{B,+} \subset V_{Z,+}.\]"
+  \textit{Source: Ancona, arXiv:1806.03216, \S11.}
+  Viewing \(V_{Z,+}\) and \(V_{B,+}\) of \cref{rem:conventionF} as \(F\)-subspaces
+  of \(V_{Z,p} \otimes B_{\crys,F}\) via \cref{cor:crys-identifications}, the
+  \(F\)-vector subspace \(Q = Q(M) \subset B_{\crys,F}\) is the set of
+  \(\lambda \in B_{\crys,F}\) with \(\lambda \cdot V_{B,+} \subset V_{Z,+}\).
+\end{definition}
+
+\begin{proposition}[\(P_i = Q\), ramified case]
+  \label{prop:PQ-ram}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.PQRam}
+  \uses{def:periods-ram, def:Q-ram, prop:periods-ram-dim}
+  % SOURCE: [Ancona], §11, Proposition (piqiram) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "The $F$-vector subspaces $P_i,Q\subset B_{\crys,F}$ introduced in Definitions \ref{defpiram} and \ref{defqiram} coincide and they have dimension one."
+  \textit{Source: Ancona, arXiv:1806.03216, \S11.}
+  The \(F\)-vector subspaces \(P_i, Q \subset B_{\crys,F}\) of
+  \cref{def:periods-ram} and \cref{def:Q-ram} coincide and have dimension one.
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "Analogous to the proof of Proposition \ref{piqi}."
+\begin{proof}
+  \uses{def:periods-ram, def:Q-ram, prop:periods-ram-dim}
+  The argument is identical to that of \cref{prop:PQ-unram}, with \(\Bcrys\)
+  replaced by \(B_{\crys,F}\) and \(\varphi\) replaced by \(\sigma\): a nonzero
+  \(\lambda \in Q\) satisfies \(\lambda \cdot v_B = v_Z\) with \(v_B \in V_{B,+}\),
+  \(v_Z \in V_{Z,+}\), and applying \(\sigma\) together with the eigenspace
+  behaviour of \cref{rem:conventionF} shows \(\lambda\) meets the three
+  conditions of \cref{def:periods-ram}, so \(Q \subset P_i\); equality follows
+  from \cref{prop:periods-ram-dim}.
+\end{proof}
+
+\begin{proposition}[Isomorphism via a norm, ramified case]
+  \label{prop:iso-norm-ram}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.isoNormRam}
+  \uses{prop:periods-ram-dim, prop:PQ-ram, cor:norm-criterion}
+  % SOURCE: [Ancona], §11, Proposition (warmbrinonram) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Consider a nonzero element $\lambda_i \in P_i,$ then \[\lambda_i \cdot\sigma(\lambda_i) \in \Q^*_p.\] Moreover the quadratic forms $q_{B,p}$ and $q_{Z,p}$ are isomorphic if and only if
+  %  \[\lambda_i \cdot\sigma(\lambda_i) \in N_{F/\Q_p}(F^*).\]"
+  \textit{Source: Ancona, arXiv:1806.03216, \S11.}
+  For a nonzero \(\lambda_i \in P_i\) one has
+  \(\lambda_i \cdot \sigma(\lambda_i) \in \Q_p^*\), and the quadratic forms
+  \(q_{B,p}\) and \(q_{Z,p}\) are isomorphic if and only if
+  \(\lambda_i \cdot \sigma(\lambda_i) \in N_{F/\Q_p}(F^*)\).
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "Analogous to the proof of Proposition \ref{warmbrinon}."
+\begin{proof}
+  \uses{prop:periods-ram-dim, prop:PQ-ram, cor:norm-criterion}
+  Identical to \cref{prop:iso-norm-unram}, with \(\varphi\) replaced by
+  \(\sigma\): for \(v_B \in V_{B,+}\), \(v_Z \in V_{Z,+}\) the vectors
+  \(v_B + \sigma(v_B)\) and \(v_Z + \sigma(v_Z)\) lie in \(V_{B,p}\), \(V_{Z,p}\),
+  and isotropy gives
+  \(\lambda_i \cdot \sigma(\lambda_i) \cdot q_{B,p}(v_B + \sigma(v_B)) =
+  q_{Z,p}(v_Z + \sigma(v_Z))\); \cref{cor:norm-criterion} concludes.
+\end{proof}
+
+\section{Computation of p-adic periods}
+\label{sec:padic-computation}
+
+We exhibit explicit elements of \(P_i(F)\), with
+\cref{prop:iso-norm-unram} and \cref{prop:iso-norm-ram} in mind. The
+construction is inspired by Colmez (\cite[\S9]{Colmez}).
+
+\subsection*{Unramified case}
+
+\begin{proposition}[Lubin--Tate period, unramified case]
+  \label{prop:lubin-tate-unram}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.lubinTateUnram}
+  \uses{thm:crys-equiv, thm:bcrys-bdr}
+  % SOURCE: [Ancona], §12, Proposition (lubintate), Lubin--Tate (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "There is an element $t_2 \in B_\crys$ which verifies the following properties:
+  % \begin{enumerate}
+  % \item $t_2 \in \Fil ^{1} B_\dR-\Fil ^{2} B_\dR$.
+  % \item  $ \varphi(t_2) \in \Fil ^{0} B_\dR-\Fil ^{1} B_\dR$.
+  % \item $\varphi^2(t_2) = p \cdot t_2$.
+  % \item Both $t_2 $ and  $ \varphi(t_2) $ are invertible in $B_{\crys}$.
+  % \end{enumerate}"
+  \textit{Source: Ancona, arXiv:1806.03216, \S12.}
+  There is an element \(t_2 \in \Bcrys\) with:
+  (1) \(t_2 \in \Fil^1 \BdR \setminus \Fil^2 \BdR\);
+  (2) \(\varphi(t_2) \in \Fil^0 \BdR \setminus \Fil^1 \BdR\);
+  (3) \(\varphi^2(t_2) = p \cdot t_2\);
+  (4) both \(t_2\) and \(\varphi(t_2)\) are invertible in \(\Bcrys\).
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "This period will appear as the period of an explicit filtered $\varphi$-module. Consider the vector space  $N=\Q_p^2$ with basis $e_1,e_2$ endowed with the Frobenius
+% \begin{equation}\label{darienzo} \varphi =  \begin{pmatrix} 0 & 1/p \\ 1 & 0 \end{pmatrix}. \end{equation}
+%  Define the filtration to be $\Fil^{-1} N=N, \, \Fil^0 N= \Q_p e_2, \, \Fil^{1} N=0.$ This filtered $\varphi$-module is admissible. To check so notice that there are no non trivial submodules of $N$ stable by $\varphi$ hence the admissibility condition has to be checked only on $N$. Moreover the action of $\varphi$ on $\det N$, the maximal exterior power of $N$, is by multiplication by $-1/p$, which has valuation equal to $-1$, and the only non trivial step of the induced filtration on $\det N$ is at $-1$ as well.
+%  As $N$ is an admissible $\varphi$-module, by Theorem \ref{tsuji} there exists a unique $\Gal_{\Q_p}$-representation $V$ such that $N=D(V)$. Consider the identification $V \otimes B_\crys= N \otimes B_\crys$ given by  Theorem \ref{tsuji}. It allows to write an element of $V$ with respect to the basis $e_1,e_2$. Let $(\alpha, \beta)$ be a fixed nonzero vector in $V$. As the Frobenius must act trivially on it we get from (\ref{darienzo})  the relations $ \alpha= 1/p \cdot \varphi(\beta), \beta= \varphi(\alpha),$ which give the equality $ p \cdot \alpha=  \varphi^2(\alpha).$ We claim that $t_2= \alpha$ and $\varphi(t_2)= \beta$ verify all the properties of the proposition.
+%   By Theorem \ref{tsuji} the vector $(\alpha,\beta)$ belongs to $\Fil^0[M \otimes B_\dR]$. This means that it can be written as $\gamma n + \delta e_2$ with $\gamma \in \Fil^{1}B_\dR, \delta \in \Fil^0 B_\dR$ and $n \in N$, which implies that $\alpha \in \Fil^{1}B_\dR$ and  $\beta \in \Fil^{0}B_\dR$.
+%   Now notice that, for all $f\in F$, the vector $(f\cdot \alpha, \varphi(f)\beta)$ is in the vector space $V=[N\otimes B_\crys]^{\varphi=\id} \cap  \Fil^0[N \otimes B_\dR] $. Hence,  the one dimensional $\Q_p$-vector space of $p$-adic periods relating $\det N$ to $\det V$ is generated by an element in $B_\crys$ of the form $\alpha \beta (f-\sigma( f) )$, for any fixed $f \in F- \Q_p$. As $\det N\otimes B_\crys$ and $\det V\otimes B_\crys$ are free $B_\crys$-modules of rank one the element $\alpha \beta (f-\sigma( f) )$ must be invertible in $B_\crys$, hence $\alpha$ and  $\beta$ are invertible as well.
+% Finally, let us consider the  valuation $\nu$ from Theorem \ref{javier} associated to the filtration. We have showed the inequalities $\nu ( \alpha) \geq 1$ and  $\nu (  \beta)\geq 0$. On the other hand, as the only non trivial step of the filtration on $\det M$ is  $-1$, we deduce that $\nu ( \alpha \beta (f-\sigma( f) ))=1$ and hence $\nu ( \alpha \beta)=1$. This implies  that the above inequalities are actually equalities and concludes the proof."
+\begin{proof}
+  \uses{thm:crys-equiv, thm:bcrys-bdr}
+  Consider \(N = \Q_p^2\) with basis \(e_1, e_2\), Frobenius
+  \(\varphi = \left(\begin{smallmatrix} 0 & 1/p \\ 1 & 0 \end{smallmatrix}\right)\),
+  and filtration \(\Fil^{-1} N = N\), \(\Fil^0 N = \Q_p e_2\), \(\Fil^1 N = 0\).
+  This is admissible: \(N\) has no nontrivial \(\varphi\)-stable submodule, and on
+  \(\det N\), \(\varphi\) acts by \(-1/p\) (valuation \(-1\)) with the only
+  filtration jump at \(-1\). By \cref{thm:crys-equiv} there is a unique \(V\) with
+  \(N = D(V)\). A nonzero \((\alpha, \beta) \in V\), being \(\varphi\)-fixed,
+  satisfies \(\alpha = (1/p)\varphi(\beta)\), \(\beta = \varphi(\alpha)\), hence
+  \(p \cdot \alpha = \varphi^2(\alpha)\); set \(t_2 = \alpha\),
+  \(\varphi(t_2) = \beta\). Membership in \(\Fil^0[N \otimes \BdR]\) gives
+  \(\alpha \in \Fil^1 \BdR\), \(\beta \in \Fil^0 \BdR\). The determinant period
+  \(\alpha\beta(f - \varphi(f))\) (\(f \in F \setminus \Q_p\)) is invertible, so
+  \(\alpha, \beta\) are invertible. Finally \(\nu(\alpha) \geq 1\),
+  \(\nu(\beta) \geq 0\) and \(\nu(\alpha\beta) = 1\) force equalities, giving (1)
+  and (2).
+\end{proof}
+
+\begin{corollary}[Explicit unramified period]
+  \label{cor:period-unram}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.periodUnram}
+  \uses{prop:lubin-tate-unram, def:periods-unram, prop:periods-unram-dim}
+  % SOURCE: [Ancona], §12, Corollary (brinon) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Fix a positive integer $i$ and define $\lambda_i \in B_\crys$ as
+  % \[\lambda_i = (t_2/\varphi(t_2))^i .\]
+  % Then $\lambda_i$ is a nonzero element of  $P_i$ and moreover it verifies
+  % \[\lambda_i \cdot\varphi(\lambda_i) = 1/p^i.\]"
+  \textit{Source: Ancona, arXiv:1806.03216, \S12.}
+  With \(t_2\) of \cref{prop:lubin-tate-unram}, the element
+  \(\lambda_i = (t_2/\varphi(t_2))^i\) is a nonzero element of \(P_i\) with
+  \(\lambda_i \cdot \varphi(\lambda_i) = 1/p^i\).
+\end{corollary}
+
+% SOURCE QUOTE PROOF: "All properties follow from Proposition \ref{lubintate} by direct calculation."
+\begin{proof}
+  \uses{prop:lubin-tate-unram, def:periods-unram, prop:periods-unram-dim}
+  Direct calculation from \cref{prop:lubin-tate-unram}: from \(\varphi^2(t_2) =
+  p t_2\) one gets \(\varphi^2(\lambda_i) = \lambda_i\); the filtration
+  properties give \(\lambda_i \in \Fil^i \BdR\), \(\varphi(\lambda_i) \in
+  \Fil^{-i} \BdR\), so \(\lambda_i \in P_i\) (\cref{def:periods-unram}); and
+  \(\lambda_i \cdot \varphi(\lambda_i) = (t_2 \varphi(t_2)/(\varphi(t_2)
+  \varphi^2(t_2)))^i = (1/p)^i\).
+\end{proof}
+
+\subsection*{Ramified case}
+
+Denote by \(\Q_{p^n} \subset \Bcrys\) the unramified extension of \(\Q_p\) of
+degree \(n\).
+
+\begin{proposition}[Lubin--Tate period, ramified case (Colmez)]
+  \label{prop:lubin-tate-ram}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.lubinTateRam}
+  \uses{thm:crys-equiv, thm:bcrys-bdr, def:periods-ram}
+  % SOURCE: [Ancona], §12, Proposition (lubintateram), Colmez (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "For each uniformizer $\pi \in F$ there exists an element $t_\pi \in B_{\crys,F}$  which verifies the following properties.
+  % \begin{enumerate}
+  % \item $t_\pi \in \Fil ^{1} B_\dR-\Fil ^{2} B_\dR$.
+  % \item $\sigma (t_\pi) \in \Fil ^{0} B_\dR-\Fil ^{1} B_\dR$.
+  % \item  $ \varphi(t_\pi) = \pi  \cdot t_\pi$.
+  % \item Both $t_\pi $ and  $ \sigma(t_\pi) $ are invertible in $B_{\crys,F}$.
+  % \end{enumerate}"
+  \textit{Source: Ancona, arXiv:1806.03216, \S12.}
+  For each uniformizer \(\pi \in F\) there is an element
+  \(t_\pi \in B_{\crys,F}\) with:
+  (1) \(t_\pi \in \Fil^1 \BdR \setminus \Fil^2 \BdR\);
+  (2) \(\sigma(t_\pi) \in \Fil^0 \BdR \setminus \Fil^1 \BdR\);
+  (3) \(\varphi(t_\pi) = \pi \cdot t_\pi\);
+  (4) both \(t_\pi\) and \(\sigma(t_\pi)\) are invertible in \(B_{\crys,F}\).
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "This period will appear as the period of an explicit filtered $\varphi$-module. Let $x^2+ax+b$ be the minimal polynomial of $1/\pi$ over $\Q_p$. Consider the vector space  $N=\Q_p^2$ with basis $e_1,e_2$ endowed with the Frobenius
+% \[ \varphi =  \begin{pmatrix} 0 & -b \\ 1 & -a \end{pmatrix}. \]
+%  Fix an eigenvector $m \in M \otimes F$ satisfying
+%  \begin{equation}\label{disarli2} \varphi (m)=  \frac{1}{\pi} m \end{equation}
+%  and hence  $\varphi (\sigma(m))=  \frac{1}{\sigma(\pi)} \sigma(m).$
+%  Define the filtration to be \[\Fil^{-1} (N\otimes F)=N\otimes F, \, \Fil^0 (N\otimes F)= F\cdot ( \sigma(v)), \, \Fil^{1} (N\otimes F)=0.\] We claim that this filtered $\varphi$-module is admissible. To check so notice that there are no non trivial submodules of $N$ stable by $\varphi$ hence the admissibility condition has to be checked only on $N$. Moreover the action of $\varphi$ on $\det N$, the maximal exterior power of $N$, is by multiplication by $b$, which has valuation equal to $-1$, as $\pi$ is a uniformizer of $F$, and the only non trivial step of the induced filtration on $\det N$ is at $-1$ as well.
+%   As $N$ is an admissible filtered $\varphi$-module we can apply Theorem \ref{tsuji} and consider the $\Gal_{\Q_p}$-representation $V$ which verifies  $N=D(V)$. Now notice that the action of $\varphi$ on $N$ respects the filtration, this means that the field $F$ acts on $N$ as filtered $\varphi$-module. Then Theorem \ref{tsuji}  implies that $F$ acts on $V$ as well and that the canonical isomorphism  $V \otimes B_\crys= N \otimes B_\crys$ is $F$-equivariant. In particular we can find an eigenvector $v \in V \otimes F$ and a scalar $\alpha \in B_{\crys,F}$ such that
+%   \begin{equation}\label{disarli4} \alpha \cdot m=   v \end{equation}
+%  and hence $ \sigma(\alpha) \cdot \sigma(m)=   \sigma(v)$.
+% As the Frobenius acts trivially on $V$, relations (\ref{disarli2}) and (\ref{disarli4}) imply $ \varphi(\alpha) = \pi  \cdot \alpha$. We claim now that the period $t_\pi=\alpha$ satisfies all the properties of the statement. Indeed, as $v$ and $m$ generates the same free  $B_{\crys,F}$-module of rank one, the scalar $\alpha$ must be invertible in $B_{\crys,F}$, and the same argument applies for $ \sigma(\alpha)$. As the filtration is trivial on $V \otimes F$, relation   (\ref{disarli4}) implies that $\alpha \in \Fil ^{1} B_\dR-\Fil ^{2} B_\dR$ and again the same argument applies for $ \sigma(\alpha)$."
+\begin{proof}
+  \uses{thm:crys-equiv, thm:bcrys-bdr, def:periods-ram}
+  Let \(x^2 + ax + b\) be the minimal polynomial of \(1/\pi\) over \(\Q_p\) and
+  \(N = \Q_p^2\) with Frobenius
+  \(\varphi = \left(\begin{smallmatrix} 0 & -b \\ 1 & -a \end{smallmatrix}\right)\).
+  Fix an eigenvector \(m \in N \otimes F\) with \(\varphi(m) = (1/\pi)m\), hence
+  \(\varphi(\sigma(m)) = (1/\sigma(\pi))\sigma(m)\), and the filtration
+  \(\Fil^{-1}(N \otimes F) = N \otimes F\), \(\Fil^0(N \otimes F) = F \cdot
+  \sigma(m)\), \(\Fil^1 = 0\). This is admissible: \(N\) has no nontrivial
+  \(\varphi\)-stable submodule, and on \(\det N\), \(\varphi\) acts by \(b\)
+  (valuation \(-1\), as \(\pi\) is a uniformizer) with filtration jump at \(-1\).
+  By \cref{thm:crys-equiv} there is \(V\) with \(N = D(V)\); since \(\varphi\)
+  respects the filtration, \(F\) acts on \(N\), hence on \(V\), with
+  \(V \otimes \Bcrys = N \otimes \Bcrys\) being \(F\)-equivariant. There are an
+  eigenvector \(v \in V \otimes F\) and \(\alpha \in B_{\crys,F}\) with
+  \(\alpha \cdot m = v\), so \(\sigma(\alpha)\sigma(m) = \sigma(v)\). As
+  \(\varphi\) acts trivially on \(V\), \(\varphi(\alpha) = \pi \cdot \alpha\). Set
+  \(t_\pi = \alpha\). As \(v\) and \(m\) generate the same rank-one free
+  \(B_{\crys,F}\)-module, \(\alpha\) is invertible, and likewise
+  \(\sigma(\alpha)\); the filtration being trivial on \(V \otimes F\),
+  \(\alpha \in \Fil^1 \setminus \Fil^2\) and \(\sigma(\alpha) \in \Fil^0
+  \setminus \Fil^1\).
+\end{proof}
+
+\begin{corollary}[Explicit ramified period]
+  \label{cor:period-ram}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.periodRam}
+  \uses{prop:lubin-tate-ram, prop:periods-ram-dim}
+  % SOURCE: [Ancona], §12, Corollary (brinonram) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Suppose that there is a uniformizer $\pi\in F$ such that
+  % \[\sigma(\pi)=-\pi.\]
+  % Let $\sqrt{a}\in \Q_{p^2}$ be an element of the quadratic unramified extension of $\Q_p$ such that
+  % \[\varphi(\sqrt{a}) = -\sqrt{a}.\]
+  % Define $\lambda_i \in B_{\crys,F}$ as
+  % \[\lambda_i = (\sqrt{a}  \cdot t_\pi/ \sigma(t_\pi))^i .\]
+  % Then $\lambda_i$ is a nonzero element of  $P_i(F)$ and moreover it verifies
+  % \[\lambda_i \cdot\sigma(\lambda_i) = a^i.\]"
+  \textit{Source: Ancona, arXiv:1806.03216, \S12.}
+  Suppose there is a uniformizer \(\pi \in F\) with \(\sigma(\pi) = -\pi\), and
+  let \(\sqrt{a} \in \Q_{p^2}\) satisfy \(\varphi(\sqrt{a}) = -\sqrt{a}\). Then
+  \(\lambda_i = (\sqrt{a} \cdot t_\pi/\sigma(t_\pi))^i\) is a nonzero element of
+  \(P_i(F)\) with \(\lambda_i \cdot \sigma(\lambda_i) = a^i\).
+\end{corollary}
+
+% SOURCE QUOTE PROOF: "All properties follow from  Proposition \ref{lubintateram} by direct calculation."
+\begin{proof}
+  \uses{prop:lubin-tate-ram, prop:periods-ram-dim}
+  Direct calculation from \cref{prop:lubin-tate-ram}: \(\varphi(t_\pi) = \pi
+  t_\pi\), \(\sigma(\pi) = -\pi\) and \(\varphi(\sqrt{a}) = -\sqrt{a}\) give
+  \(\varphi(\lambda_i) = \lambda_i\), the filtration steps place
+  \(\lambda_i \in \Fil^i\) and \(\sigma(\lambda_i) \in \Fil^{-i}\), so
+  \(\lambda_i \in P_i\) (\cref{def:periods-ram}), and \(\lambda_i \cdot
+  \sigma(\lambda_i) = (\sqrt{a}\,\sigma(\sqrt{a}))^i = a^i\).
+\end{proof}
+
+\begin{remark}
+  The quadratic extensions of \(\Q_p\) are as follows. For \(p \neq 2\), with
+  \(a\) a non-square mod \(p\): \(\Q_p(\sqrt{a})\) is unramified, and
+  \(\Q_p(\sqrt{p}), \Q_p(\sqrt{ap})\) are ramified. For \(p = 2\),
+  \(\Q_2(\sqrt 5)\) is unramified, and \(\Q_2(\sqrt 2), \Q_2(\sqrt 6),
+  \Q_2(\sqrt{10}), \Q_2(\sqrt{14}), \Q_2(\sqrt 3), \Q_2(\sqrt{-1})\) are the six
+  ramified ones. A uniformizer \(\pi\) with \(\sigma(\pi) = -\pi\) exists in all
+  ramified cases except \(p = 2\) with \(F = \Q_2(\sqrt 3)\) or
+  \(F = \Q_2(\sqrt{-1})\), treated below.
+\end{remark}
+
+\begin{corollary}[Explicit period, \(F = \Q_2(\sqrt{-1})\)]
+  \label{cor:period-wild}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.periodWild}
+  \uses{prop:lubin-tate-ram, prop:periods-ram-dim}
+  % SOURCE: [Ancona], §12, Corollary (brinonwild) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "We keep notation from Proposition  \ref{lubintateram} and we work  with $p=2$ and the field  $F=\mathbb{Q}_2(\sqrt{-1})$.  Let $\alpha \in \Q_{2^4}(\sqrt{-1})$ be an element  such that
+  % \[\varphi(\alpha) =  \sqrt{-1} \cdot \alpha.\]
+  % Define $\lambda_i \in B_{\crys,F}$ as
+  % \[\lambda_i = (\alpha \cdot t_{1-\sqrt{-1}} /\sigma(t_{1-\sqrt{-1}}))^i .\]
+  % Then $\lambda_i$ is a nonzero element of  $P_{i}(F) $ and  moreover it verifies
+  % \[\lambda_i \cdot\sigma(\lambda_i) = (\alpha  \cdot \sigma(\alpha) )^i.\]"
+  \textit{Source: Ancona, arXiv:1806.03216, \S12.}
+  For \(p = 2\) and \(F = \Q_2(\sqrt{-1})\), let \(\alpha \in
+  \Q_{2^4}(\sqrt{-1})\) satisfy \(\varphi(\alpha) = \sqrt{-1} \cdot \alpha\).
+  Then \(\lambda_i = (\alpha \cdot t_{1-\sqrt{-1}}/\sigma(t_{1-\sqrt{-1}}))^i\)
+  is a nonzero element of \(P_i(F)\) with
+  \(\lambda_i \cdot \sigma(\lambda_i) = (\alpha \cdot \sigma(\alpha))^i\).
+\end{corollary}
+
+% SOURCE QUOTE PROOF: "All properties follow from Proposition \ref{lubintateram}  by direct calculation."
+\begin{proof}
+  \uses{prop:lubin-tate-ram, prop:periods-ram-dim}
+  Direct calculation from \cref{prop:lubin-tate-ram} applied to the uniformizer
+  \(\pi = 1 - \sqrt{-1}\) of \(\Q_2(\sqrt{-1})\): the factor \(\alpha\) with
+  \(\varphi(\alpha) = \sqrt{-1}\,\alpha\) corrects the Frobenius eigenvalue so
+  that \(\varphi(\lambda_i) = \lambda_i\), and the filtration steps give
+  \(\lambda_i \in P_i(F)\) with \(\lambda_i \cdot \sigma(\lambda_i) = (\alpha\,
+  \sigma(\alpha))^i\).
+\end{proof}
+
+\begin{proposition}[Iterated period (Colmez)]
+  \label{prop:idea-ref}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.ideaRef}
+  \uses{thm:crys-equiv, thm:bcrys-bdr, def:periods-ram}
+  % SOURCE: [Ancona], §12, Proposition (idearef), Colmez (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "For each uniformizer $\pi \in F$ there exists an element $t_{2,\pi} \in B_{\crys,F}$  which verifies the following properties.
+  % \begin{enumerate}
+  % \item $t_{2,\pi}  \in \Fil ^{1} B_\dR-\Fil ^{2} B_\dR$.
+  % \item $\sigma (t_{2,\pi} ) , \varphi (t_{2,\pi} ) , \varphi \circ \sigma (t_{2,\pi} ) \in \Fil ^{0} B_\dR-\Fil ^{1} B_\dR$.
+  % \item  $ \varphi^2(t_{2,\pi} ) = \pi \cdot t_{2,\pi} $.
+  % \item The elements $t_{2,\pi}  ,  \sigma(t_{2,\pi} ), \varphi (t_{2,\pi} )$ and $ \varphi \circ \sigma (t_{2,\pi} )  $ are invertible in $B_{\crys,F}$.
+  % \end{enumerate}"
+  \textit{Source: Ancona, arXiv:1806.03216, \S12.}
+  For each uniformizer \(\pi \in F\) there is an element
+  \(t_{2,\pi} \in B_{\crys,F}\) with:
+  (1) \(t_{2,\pi} \in \Fil^1 \BdR \setminus \Fil^2 \BdR\);
+  (2) \(\sigma(t_{2,\pi}), \varphi(t_{2,\pi}), \varphi\sigma(t_{2,\pi}) \in
+  \Fil^0 \BdR \setminus \Fil^1 \BdR\);
+  (3) \(\varphi^2(t_{2,\pi}) = \pi \cdot t_{2,\pi}\);
+  (4) \(t_{2,\pi}, \sigma(t_{2,\pi}), \varphi(t_{2,\pi}), \varphi\sigma(t_{2,\pi})\)
+  are invertible in \(B_{\crys,F}\).
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "This period will appear as the period of an explicit filtered $\varphi$-module. Let $x^2+ax+b$ be the minimal polynomial of $1/\pi$ over $\Q_p$.  Define the $2 \times 2$ matrix
+% \[ C =  \begin{pmatrix} 0 & -b \\ 1 & -a \end{pmatrix}. \]
+%  Consider the vector space  $N=\Q_p^4$  endowed with the Frobenius given by the block matrix
+%  \[ \varphi =  \begin{pmatrix} 0_2 & C \\ I_2 & 0_2 \end{pmatrix}, \]
+% where $I_2$ and $0_2$ are the identity and the zero $2 \times 2$  matrices.
+%  Notice  that we have \[ \varphi^2 =  \begin{pmatrix} C & 0_2 \\ 0_2 & C \end{pmatrix}. \]
+%  Hence the action of $\varphi^2$ induces a decomposition of eigenspaces \[N \otimes F=N_{1/\pi}\otimes N_{1/\sigma(\pi)}.\]
+%  Fix a nonzero eigenvector $m \in N_{1/\pi}$ hence satisfying
+%  \begin{equation}\label{troilo} \varphi^2 (m)=  \frac{1}{\pi} m. \end{equation}
+% Define the filtration to be \[\Fil^{-1} (N\otimes F)=N\otimes F, \, \Fil^0 (N\otimes F)= N_{1/\sigma(\pi)}\oplus F\cdot \varphi (m ) , \, \Fil^{1} (N\otimes F)=0.\]
+% We claim that this filtered $\varphi$-module is admissible. First notice that there are no non trivial submodules of $N$ stable by $\varphi$. Indeed the action of $\varphi$ on $N$ satisfies the equation $x^4+ax^2+b=0$. This polynomial is irreducible over $\Q_p$ as it is also the minimal polynomial of $1/\sqrt{\pi}$, which has valuation $1/4$. We deduce that the admissibility condition has to be checked only on $N$. Moreover the action of $\varphi$ on $\det N$, the maximal exterior power of $N$, is by multiplication by $b$, which has valuation equal to $-1$ and the only non trivial step of the induced filtration on $\det N$ is at $-1$ as well.
+% As $N$ is an admissible filtered $\varphi$-module we can apply Theorem \ref{tsuji} and consider the $\Gal_{\Q_p}$-representation $V$ which verifies  $N=D(V)$. Now notice that the action of $\varphi^2$ on $N$ respects the filtration, this means that the field $F$ acts on $N$ as filtered $\varphi$-module. Then Theorem \ref{tsuji}  implies that $F$ acts on $V$ as well and that the canonical isomorphism  $V \otimes B_\crys= N \otimes B_\crys$ is $F$-equivariant. In particular there is a decomposition in eigenspaces  \[V \otimes F=V_{1/\pi}\otimes V_{1/\sigma(\pi)}\] and, if we fix  a nonzero eigenvector $v \in V_{1/\pi}$, there exist two periods $\alpha, \beta$ in $B_{\crys,F}$ such that
+%   \begin{equation}\label{troilo2} \alpha \cdot m+ \beta \cdot \varphi(m)=   v. \end{equation}
+% As the Frobenius acts trivially on $V$, relations (\ref{troilo}) and (\ref{troilo2}) imply $ \varphi(\alpha) = \beta$ and $ \varphi^2(\alpha) = \pi \alpha$ . We claim now that the period $t_{2,\pi}=\alpha$ satisfies all the properties of the statement.
+%  By Theorem \ref{tsuji} we have $v\in \Fil^0[N_{1/\pi} \otimes B_\dR]$. This means that the vector $v$ can be written as $\gamma n + \delta \varphi(m)$ with $\gamma \in \Fil^{1}B_\dR, \delta \in \Fil^0B_\dR$ and $n \in N_{1/\pi}$, which implies that $\alpha \in \Fil^{1}B_\dR$ and  $\beta \in \Fil^{0}B_\dR$.
+% Now notice that, for all $x\in \Q_{p^2}$, the vector $x\alpha \cdot m+ \varphi(x)\varphi(\alpha) \cdot \varphi(m)$ is in the vector space $V=[N\otimes B_\crys]^{\varphi=\id} \cap  \Fil^0[N \otimes B_\dR] $. Moreover, it is in the eigenspace $V_{1/\pi}$. Hence,  the one dimensional $F$-vector space of $p$-adic periods relating $\det N_{1/\pi}$ to $\det V_{1/\pi}$ is generated by an element in $B_{\crys,F}$ of the form $\alpha \varphi(\alpha) (x-\varphi( x) )$, for any fixed $x \in \Q_{p^2} - \Q_p$. As $\det N_{1/\pi}\otimes B_{\crys,F}$ and $\det V_{1/\pi}\otimes B_{\crys,F}$ are free $B_{\crys,F}$-modules of rank one the element $\alpha \varphi(\alpha) (x-\varphi( x) )$ must be invertible in $B_{\crys,F}$, hence $\alpha$ and  $\varphi(\alpha)$ are invertible as well.
+%  Finally, let us  consider the valuation $\nu$ from Theorem \ref{javier} associated  to the filtration. First of all, as the only non trivial step of the filtration on $\det N_{1/\pi}$ is  $-1$, we deduce that $\nu ( \alpha \varphi(\alpha) (f-\sigma( f) ))=1$ and hence $\nu ( \alpha \varphi(\alpha))=1$. On the other hand we have showed the inequalities $\nu ( \alpha) \geq 1$ and  $\nu (  \varphi(\alpha))\geq 0$. Combining them with $\nu ( \alpha \varphi(\alpha)  )=1$ we deduce that these inequalities are actually equalities.
+%  This shows all the desired properties on $\alpha$ and $ \varphi(\alpha)$. To show the analogous properties on $\sigma (\alpha)$ and $ \varphi \circ \sigma (\alpha)$ one applies $\sigma$ on the relation (\ref{troilo2}) and argues as above replacing the eigenspaces $N_{1/\pi}$ and $V_{1/\pi}$ with the eigenspaces $N_{1/\sigma(\pi)}$  and $V_{1/\sigma(\pi)}$."
+\begin{proof}
+  \uses{thm:crys-equiv, thm:bcrys-bdr, def:periods-ram}
+  Let \(x^2 + ax + b\) be the minimal polynomial of \(1/\pi\) over \(\Q_p\),
+  \(C = \left(\begin{smallmatrix} 0 & -b \\ 1 & -a \end{smallmatrix}\right)\),
+  and \(N = \Q_p^4\) with block Frobenius
+  \(\varphi = \left(\begin{smallmatrix} 0_2 & C \\ I_2 & 0_2 \end{smallmatrix}\right)\),
+  so \(\varphi^2 = \mathrm{diag}(C, C)\) and \(N \otimes F = N_{1/\pi} \oplus
+  N_{1/\sigma(\pi)}\). Fix \(m \in N_{1/\pi}\) with \(\varphi^2(m) = (1/\pi)m\),
+  and set \(\Fil^{-1}(N \otimes F) = N \otimes F\), \(\Fil^0(N \otimes F) =
+  N_{1/\sigma(\pi)} \oplus F \cdot \varphi(m)\), \(\Fil^1 = 0\). This is
+  admissible: \(\varphi\) on \(N\) satisfies the irreducible \(x^4 + ax^2 + b\)
+  (minimal polynomial of \(1/\sqrt{\pi}\), valuation \(1/4\)), so there is no
+  nontrivial \(\varphi\)-stable submodule; on \(\det N\), \(\varphi\) acts by
+  \(b\) (valuation \(-1\)) with filtration jump at \(-1\). By
+  \cref{thm:crys-equiv} there is \(V\) with \(N = D(V)\); \(\varphi^2\) respects
+  the filtration, so \(F\) acts on \(N\), hence on \(V\), \(F\)-equivariantly,
+  giving \(V \otimes F = V_{1/\pi} \oplus V_{1/\sigma(\pi)}\). For \(v \in
+  V_{1/\pi}\) write \(\alpha m + \beta \varphi(m) = v\); \(\varphi\)-triviality
+  on \(V\) gives \(\varphi(\alpha) = \beta\), \(\varphi^2(\alpha) = \pi\alpha\).
+  Set \(t_{2,\pi} = \alpha\). Membership of \(v\) in \(\Fil^0\) gives \(\alpha
+  \in \Fil^1\), \(\beta \in \Fil^0\); the determinant period \(\alpha\varphi(\alpha)
+  (x - \varphi(x))\) (\(x \in \Q_{p^2} \setminus \Q_p\)) is invertible, so
+  \(\alpha, \varphi(\alpha)\) are invertible; and \(\nu(\alpha\varphi(\alpha)) =
+  1\) with \(\nu(\alpha) \geq 1\), \(\nu(\varphi(\alpha)) \geq 0\) forces
+  equalities. Applying \(\sigma\) to the period relation and using the eigenspaces
+  \(N_{1/\sigma(\pi)}, V_{1/\sigma(\pi)}\) yields the same for \(\sigma(\alpha)\)
+  and \(\varphi\sigma(\alpha)\).
+\end{proof}
+
+\begin{proposition}[Period for \(F = \Q_2(\sqrt 3)\) (Colmez)]
+  \label{prop:lubin-tate-wild2}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.lubinTateWild2}
+  \uses{prop:idea-ref}
+  % SOURCE: [Ancona], §12, Proposition (lubintatewild2), Colmez (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Consider the ring $B_{\crys,F}$ for the prime $p=2$ and $F=\Q_2(\sqrt{3}).$
+  % There  exists an element $t_{f} \in B_{\crys,F}$ which verifies the following properties.
+  % \begin{enumerate}
+  % \item $t_{f} \in \Fil ^{1} B_\dR-\Fil ^{2} B_\dR$.
+  % \item $\sigma (t_{f}) , \varphi (t_{f}) , \varphi \circ \sigma (t_{f}) \in \Fil ^{0} B_\dR-\Fil ^{1} B_\dR$.
+  % \item  $ \varphi^2(t_{f}) = (1-\sqrt{-1})  \cdot t_{f}$.
+  % \item The elements $t_{f}  ,  \sigma(t_{f} ), \varphi (t_{f} )$ and $ \varphi \circ \sigma (t_{f} )  $ are invertible in $B_{\crys,F}$.
+  % \end{enumerate}"
+  \textit{Source: Ancona, arXiv:1806.03216, \S12.}
+  For \(p = 2\) and \(F = \Q_2(\sqrt 3)\) there is an element
+  \(t_f \in B_{\crys,F}\) with:
+  (1) \(t_f \in \Fil^1 \BdR \setminus \Fil^2 \BdR\);
+  (2) \(\sigma(t_f), \varphi(t_f), \varphi\sigma(t_f) \in \Fil^0 \BdR \setminus
+  \Fil^1 \BdR\);
+  (3) \(\varphi^2(t_f) = (1 - \sqrt{-1}) \cdot t_f\);
+  (4) \(t_f, \sigma(t_f), \varphi(t_f), \varphi\sigma(t_f)\) are invertible in
+  \(B_{\crys,F}\).
+\end{proposition}
+
+% SOURCE QUOTE PROOF: "This is a special case of Proposition \ref{idearef} up to a little subtlety. Consider first the ramified extension $F=\mathbb{Q}_2(\sqrt{-1})$ and the uniformizer $\pi= 1-\sqrt{-1}. $ Then Proposition  \ref{idearef}  will give a period $t_{2,\pi}$ which verifies all the properties of the statement except that it is constructed in $B_{\crys,\mathbb{Q}_2(\sqrt{-1})}$. On the other hand we have the equality \[B_{\crys,\mathbb{Q}_2(\sqrt{-1})} = B_{\crys,\mathbb{Q}_2(\sqrt{3})}.\] Notice though that the two descriptions of this ring exchange the role of $ \sigma $ with $ \varphi \circ \sigma$. As  Proposition \ref{idearef}  is stable under this exchange, the period $t_f=t_{2,\pi}$ does satisfy all the desired properties."
+\begin{proof}
+  \uses{prop:idea-ref}
+  Apply \cref{prop:idea-ref} to \(F = \Q_2(\sqrt{-1})\) with the uniformizer
+  \(\pi = 1 - \sqrt{-1}\), giving a period \(t_{2,\pi}\) in
+  \(B_{\crys,\Q_2(\sqrt{-1})}\). One has the equality of rings
+  \(B_{\crys,\Q_2(\sqrt{-1})} = B_{\crys,\Q_2(\sqrt 3)}\), the two descriptions
+  exchanging the roles of \(\sigma\) and \(\varphi\sigma\). As
+  \cref{prop:idea-ref} is symmetric under this exchange, \(t_f = t_{2,\pi}\) has
+  all the stated properties.
+\end{proof}
+
+\begin{corollary}[Explicit period, \(F = \Q_2(\sqrt 3)\)]
+  \label{cor:period-wild2}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.periodWild2}
+  \uses{prop:lubin-tate-wild2, prop:periods-ram-dim}
+  % SOURCE: [Ancona], §12, Corollary (brinonwild2) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Consider $F=\Q_2(\sqrt{3})$ and let $\alpha \in \Q_{2^4}(\sqrt{3})=\Q_{2^4}(\sqrt{-1})$ be an element  such that
+  % \[\varphi(\alpha) =  \sqrt{-1} \cdot \alpha.\]
+  % Define $\lambda_i \in B_{\crys,F}$ as
+  % \[\lambda_i = \left(\frac{\alpha \cdot t_{f} \cdot \varphi(t_{f}) }{\sigma(t_{f})   \cdot (\varphi \circ \sigma) (t_{f})}\right)^i .\]
+  % Then $\lambda_i$ is a nonzero element of  $P_{i}(F)$ and  moreover it verifies
+  % \[\lambda_i \cdot\sigma(\lambda_i) = (\alpha  \cdot \sigma(\alpha))^i.\]"
+  \textit{Source: Ancona, arXiv:1806.03216, \S12.}
+  For \(F = \Q_2(\sqrt 3)\), let \(\alpha \in \Q_{2^4}(\sqrt 3) =
+  \Q_{2^4}(\sqrt{-1})\) satisfy \(\varphi(\alpha) = \sqrt{-1} \cdot \alpha\).
+  Then
+  \[\lambda_i = \left(\frac{\alpha \cdot t_f \cdot \varphi(t_f)}{\sigma(t_f)
+    \cdot \varphi\sigma(t_f)}\right)^i\]
+  is a nonzero element of \(P_i(F)\) with \(\lambda_i \cdot \sigma(\lambda_i) =
+  (\alpha \cdot \sigma(\alpha))^i\).
+\end{corollary}
+
+% SOURCE QUOTE PROOF: "All properties follow from Proposition \ref{lubintatewild2}  by direct calculation."
+\begin{proof}
+  \uses{prop:lubin-tate-wild2, prop:periods-ram-dim}
+  Direct calculation from \cref{prop:lubin-tate-wild2}: the combination of
+  \(t_f, \varphi(t_f), \sigma(t_f), \varphi\sigma(t_f)\) makes \(\varphi^2\) act
+  trivially and, with the factor \(\alpha\), \(\varphi(\lambda_i) = \lambda_i\);
+  the filtration steps give \(\lambda_i \in P_i(F)\) (\cref{def:periods-ram}) and
+  \(\lambda_i \cdot \sigma(\lambda_i) = (\alpha\,\sigma(\alpha))^i\).
+\end{proof}
+
+\section{The not-a-norm lemmas}
+\label{sec:not-norm}
+
+The following elementary local-field computations feed the final case-by-case
+proof of \cref{thm:mainthm}, which is carried out in the chapter on quadratic
+forms: combined with \cref{prop:iso-norm-unram}, \cref{prop:iso-norm-ram} and
+the explicit periods above, they show \(q_{B,p} \cong q_{Z,p}\) precisely when
+\(i\) is even.
+
+\begin{lemma}[\(1/p\) is not a norm, unramified case]
+  \label{lem:not-norm-unram}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.notNormUnram}
+  \uses{prop:endo-field}
+  % SOURCE: [Ancona], §13, Lemma (notnorm) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "The element $1/p\in \Q_p^*$ does not belong to the group of norms $ N_{\Q_{p^2}/\Q_p}(\Q^*_{p^2}).$"
+  \textit{Source: Ancona, arXiv:1806.03216, \S13.}
+  The element \(1/p \in \Q_p^*\) does not belong to the group of norms
+  \(N_{\Q_{p^2}/\Q_p}(\Q_{p^2}^*)\).
+\end{lemma}
+
+% SOURCE QUOTE PROOF: "For $f\in \Q_{p^2}$,   the $p$-adic valuation of $f$ and $\varphi (f)$ coincide, hence a norm must have even $p$-adic valuation."
+\begin{proof}
+  For \(f \in \Q_{p^2}\), the \(p\)-adic valuations of \(f\) and \(\varphi(f)\)
+  coincide, so a norm \(N_{\Q_{p^2}/\Q_p}(f) = f \varphi(f)\) has even
+  \(p\)-adic valuation; but \(1/p\) has valuation \(-1\).
+\end{proof}
+
+\begin{lemma}[\(a\) is not a norm, tame ramified case]
+  \label{lem:not-norm-ram}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.notNormRam}
+  \uses{prop:endo-field, cor:period-ram}
+  % SOURCE: [Ancona], §13, Lemma (notnormram) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Suppose that $F$ is ramified but it is not $\mathbb{Q}_2(\sqrt{3})$ nor  $\mathbb{Q}_2(\sqrt{-1})$. Let $\sqrt{a}\in \Q_{p^2}$ be as in Corollary \ref{brinonram}. Then the element $a \in \Q_p^*$ does not belong to the group of norms $ N_{F/\Q_p}(F^*).$"
+  \textit{Source: Ancona, arXiv:1806.03216, \S13.}
+  Suppose \(F\) is ramified and is neither \(\Q_2(\sqrt 3)\) nor
+  \(\Q_2(\sqrt{-1})\), with \(\sqrt{a} \in \Q_{p^2}\) as in
+  \cref{cor:period-ram}. Then \(a \in \Q_p^*\) does not belong to
+  \(N_{F/\Q_p}(F^*)\).
+\end{lemma}
+
+% SOURCE QUOTE PROOF: "This is about finding nonzero solutions $ x,y \in \Q_p$ of the equation
+% \begin{equation}\label{calcare} x^2 -\pi^2 y ^2 = a. \end{equation}
+% We can suppose that    $a$ has $p$-adic valuation zero. Then $x$ has valuation zero and $y$ has non-negative valuation.
+% Consider first the case $p\neq 2$. By reducing modulo $p$ we see that the existence of a solution $(x,y)$ would imply that $a$ would be a square in $\mathbb{F}_p$  which gives a contradiction.
+% Consider now the case $p= 2$. We can then take $a=5$ and $\pi^2=2,6,10$ or $14$, see Remark \ref{remtame}. If we reduce modulo $8$ the  equation (\ref{calcare}) we see that the existence of a solution $(x,y)$ would imply that  $3,5$ or $7$ would be a square in $\mathbb{Z}/ 8 \mathbb{Z}$ which gives a contradiction."
+\begin{proof}
+  \uses{cor:period-ram}
+  A norm \(a = N_{F/\Q_p}(x + y\pi) = x^2 - \pi^2 y^2\) requires a nonzero
+  solution \(x, y \in \Q_p\) of \(x^2 - \pi^2 y^2 = a\). We may take \(a\) of
+  valuation zero; then \(x\) has valuation zero and \(y\) non-negative
+  valuation. For \(p \neq 2\), reducing mod \(p\) would make \(a\) a square in
+  \(\F_p\), a contradiction. For \(p = 2\) we take \(a = 5\) and \(\pi^2 = 2, 6,
+  10\) or \(14\); reducing mod \(8\) would make \(3, 5\) or \(7\) a square in
+  \(\Z/8\Z\), a contradiction.
+\end{proof}
+
+\begin{lemma}[\(-9\) is not a norm, \(F = \Q_2(\sqrt{-1})\)]
+  \label{lem:not-norm-wild}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.notNormWild}
+  \uses{prop:endo-field, cor:period-wild}
+  % SOURCE: [Ancona], §13, Lemma (notnormwild) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let $\alpha \in \Q_{2^4}(\sqrt{3})=\Q_{2^4}(\sqrt{-1})$ be as in Corollary \ref{brinonwild}. Then the element $\alpha  \cdot \sigma(\alpha) \in \Q_2^*$ does not belong to the group of norms $ N_{\mathbb{Q}_2(\sqrt{-1})/\Q_2}(\mathbb{Q}_2(\sqrt{-1})^*).$"
+  \textit{Source: Ancona, arXiv:1806.03216, \S13.}
+  With \(\alpha\) as in \cref{cor:period-wild}, the element
+  \(\alpha \cdot \sigma(\alpha) = -9 \in \Q_2^*\) does not belong to
+  \(N_{\Q_2(\sqrt{-1})/\Q_2}(\Q_2(\sqrt{-1})^*)\).
+\end{lemma}
+
+% SOURCE QUOTE PROOF: "Write $\alpha= \alpha_1+\sqrt{-1}\cdot\alpha_2$ with $\alpha_1,\alpha_2 \in \Q_{2^4}$, then we have
+%  \[\varphi(\alpha_1)=-\alpha_2,  \hspace{1cm} \varphi(\alpha_2)=\alpha_1, \hspace{1cm} \alpha  \cdot \sigma(\alpha)=\alpha_1^2+\varphi(\alpha_1^2).\]
+%  Let us make explicit computations. Fix the presentations
+% \[\mathbb{F}_{2^2}=\mathbb{F}_{2}[x]/(x^2+x+1) \hspace{1cm} \mathbb{F}_{2^4}=\mathbb{F}_{2^2}[y]/(y^2+xy+1)\]
+% and write
+% \[\mathbb{Q}_{2^2}=\mathbb{Q}_{2}(\frac{-1+\sqrt{-3}}{2}) \hspace{1cm} \mathbb{Q}_{2^4}=\mathbb{Q}_{2^2}[y]/(y^2+(\frac{-1+\sqrt{-3}}{2})y+1).\]
+% Then $\Delta=\sqrt{(\frac{-1+\sqrt{-3}}{2})^2-4}=\sqrt{\frac{-1-\sqrt{-3}}{2}-4}$ can be chosen as $\alpha_1$. Thus,
+% \[\alpha  \cdot \sigma(\alpha)=\Delta^2 + \varphi(\Delta^2)= -9.\]
+% This is a norm if and only if one can find a nonzero solution $u,v \in \Q_2$ of the equation $u^2+v^2=-9$. This is impossible by looking at the equation modulo $8$."
+\begin{proof}
+  \uses{cor:period-wild}
+  Write \(\alpha = \alpha_1 + \sqrt{-1}\,\alpha_2\) with
+  \(\alpha_1, \alpha_2 \in \Q_{2^4}\); then \(\varphi(\alpha_1) = -\alpha_2\),
+  \(\varphi(\alpha_2) = \alpha_1\) and \(\alpha \cdot \sigma(\alpha) = \alpha_1^2
+  + \varphi(\alpha_1^2)\). With the presentations \(\F_{2^2} = \F_2[x]/(x^2 + x
+  + 1)\), \(\F_{2^4} = \F_{2^2}[y]/(y^2 + xy + 1)\) and \(\Q_{2^2} =
+  \Q_2((-1+\sqrt{-3})/2)\), one may take \(\alpha_1 = \Delta =
+  \sqrt{((-1+\sqrt{-3})/2)^2 - 4}\), giving \(\alpha \cdot \sigma(\alpha) =
+  \Delta^2 + \varphi(\Delta^2) = -9\). This is a norm iff \(u^2 + v^2 = -9\) has
+  a nonzero solution \(u, v \in \Q_2\), impossible modulo \(8\).
+\end{proof}
+
+\begin{lemma}[\(-9\) is not a norm, \(F = \Q_2(\sqrt 3)\)]
+  \label{lem:not-norm-wild2}
+  \lean{MR4199442StandardConjecturesForAbelianFourfolds.notNormWild2}
+  \uses{prop:endo-field, cor:period-wild2}
+  % SOURCE: [Ancona], §13, Lemma (notnormwild2) (read from references/source/fourfolds_2020.tex)
+  % SOURCE QUOTE: "Let $\alpha \in \Q_{2^4}(\sqrt{3})=\Q_{2^4}(\sqrt{-1})$ be as in Corollary \ref{brinonwild2}. Then the element $\alpha  \cdot \sigma(\alpha) \in \Q_2^*$ does not belong to the group of norms $ N_{\mathbb{Q}_2(\sqrt{3})/\Q_2}(\mathbb{Q}_2(\sqrt{3})^*).$"
+  \textit{Source: Ancona, arXiv:1806.03216, \S13.}
+  With \(\alpha\) as in \cref{cor:period-wild2}, the element
+  \(\alpha \cdot \sigma(\alpha) = -9 \in \Q_2^*\) does not belong to
+  \(N_{\Q_2(\sqrt 3)/\Q_2}(\Q_2(\sqrt 3)^*)\).
+\end{lemma}
+
+% SOURCE QUOTE PROOF: "We argue as in the proof of Lemma \ref{notnormwild}. Write $\alpha= \alpha_1+\sqrt{-1}\cdot \alpha_2$ with $\alpha_1,\alpha_2 \in \Q_{2^4}$, then we have
+% \[\varphi(\alpha_1)=-\alpha_2,  \hspace{1cm} \varphi(\alpha_2)=\alpha_1, \hspace{1cm}\]
+%  Moreover, as the elements fixed by $\sigma$ are exactly those in $B_{\crys}$, we have
+%  \[ \sigma(\sqrt{-1})=-\sqrt{-1} \hspace{1cm} \sigma(\alpha_1)= \alpha_1 \hspace{1cm} \sigma(\alpha_1)= \alpha_1 \]
+%  and we deduce that $\alpha  \cdot \sigma(\alpha)=\alpha_1^2+\varphi(\alpha_1^2).$ This means that we can use the same computations as in  the proof of Lemma \ref{notnormwild} and for the same choice of $\alpha$ in there we have \[\alpha  \cdot \sigma(\alpha) = -9.\]
+% This is a norm if and only if one can find a nonzero solution $u,v \in \Q_2$ of the equation $u^2 - 3 v^2=-9$. This is impossible by looking at the equation modulo $8$."
+\begin{proof}
+  \uses{cor:period-wild2}
+  Arguing as in \cref{lem:not-norm-wild}, write \(\alpha = \alpha_1 +
+  \sqrt{-1}\,\alpha_2\) with \(\varphi(\alpha_1) = -\alpha_2\),
+  \(\varphi(\alpha_2) = \alpha_1\). As the \(\sigma\)-fixed elements are exactly
+  those of \(\Bcrys\), \(\sigma(\sqrt{-1}) = -\sqrt{-1}\) and
+  \(\sigma(\alpha_1) = \alpha_1\), so \(\alpha \cdot \sigma(\alpha) = \alpha_1^2
+  + \varphi(\alpha_1^2)\). With the same choice of \(\alpha\) as in
+  \cref{lem:not-norm-wild} this is \(-9\). It is a norm iff \(u^2 - 3v^2 = -9\)
+  has a nonzero solution \(u, v \in \Q_2\), impossible modulo \(8\).
+\end{proof}

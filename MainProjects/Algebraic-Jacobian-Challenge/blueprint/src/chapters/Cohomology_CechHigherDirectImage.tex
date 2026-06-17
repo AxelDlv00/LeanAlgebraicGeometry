@@ -1,0 +1,883 @@
+\chapter{{\v C}ech computation of higher direct images $R^i f_*$ (unconditional)}
+\label{chap:Cohomology_CechHigherDirectImage}
+% archon:covers AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean
+% SOURCE: [Stacks Project], Cohomology of Schemes, \S{\v C}ech cohomology of
+% quasi-coherent sheaves and \S Quasi-coherence of higher direct images
+% (Lemmas \texttt{lemma-cech-cohomology-quasi-coherent-trivial},
+% \texttt{lemma-quasi-coherent-affine-cohomology-zero},
+% \texttt{lemma-cech-cohomology-quasi-coherent},
+% \texttt{lemma-quasi-coherence-higher-direct-images-application},
+% \texttt{lemma-flat-base-change-cohomology}) (read from
+% references/stacks-coherent.tex).
+
+\section{Setup and motivation}
+
+This chapter constructs the higher derived direct images \(R^i f_*\mathcal{F}\) for
+\(i \geq 1\) \emph{without appealing to injective resolutions in the category of
+sheaves of modules}. The companion development of
+Chapter~\ref{chap:Cohomology_HigherDirectImage} defines \(R^i f_*\) as a right
+derived functor, which in a formalisation requires the ambient category of
+\(\mathcal{O}_X\)-modules to have enough injectives; that property is not currently
+available for sheaves of modules over a sheaf of rings whose value category varies
+over the site. The {\v C}ech approach developed here sidesteps the issue entirely:
+it computes \(R^i f_*\mathcal{F}\) as the cohomology of an explicit complex built
+from the pushforwards of \(\mathcal{F}\) over the finite intersections of an affine
+open cover, and so produces an \emph{unconditional} construction of \(R^i f_*\) for
+quasi-coherent \(\mathcal{F}\) and separated quasi-compact \(f\).
+
+Throughout, \(f : X \to S\) is a morphism of schemes that is quasi-compact and
+separated (so that all finite intersections of an affine open cover of \(X\) are
+again affine), and \(\mathcal{F}\) is a quasi-coherent \(\mathcal{O}_X\)-module. We
+write \(\operatorname{QCoh}(X)\) for the category of quasi-coherent
+\(\mathcal{O}_X\)-modules. A base change of \(f\) along a morphism \(g : S' \to S\)
+is recorded by the cartesian square obtained from the fibre product
+\(X' = X \times_S S'\):
+\[
+  \begin{array}{ccc}
+    X' & \xrightarrow{\;g'\;} & X \\[2pt]
+    {\scriptstyle f'}\big\downarrow & & \big\downarrow{\scriptstyle f} \\[2pt]
+    S' & \xrightarrow{\;g\;} & S
+  \end{array}
+\]
+Here \(f' : X' \to S'\) is the base change of \(f\), \(g' : X' \to X\) is the first
+projection, and \(\mathcal{F}' = (g')^*\mathcal{F}\) is the pullback of
+\(\mathcal{F}\) to \(X'\).
+
+\section{The {\v C}ech nerve and {\v C}ech complex of an affine cover}
+
+\begin{definition}
+
+\leanok
+[{\v C}ech nerve of an affine open cover]
+  \label{def:cech_nerve}
+  \lean{AlgebraicGeometry.CechNerve}
+  \uses{def:cover_cech_nerve, lem:push_pull_functor}
+  % SOURCE: [Stacks Project], Cohomology of Schemes, \S{\v C}ech cohomology of
+  % quasi-coherent sheaves, opening paragraph and Lemma
+  % \texttt{lemma-cech-cohomology-quasi-coherent-trivial}
+  % (read from references/stacks-coherent.tex, L36--67).
+  % SOURCE QUOTE: "Let $X$ be a scheme.
+  % Let $U \subset X$ be an affine open.
+  % Recall that a {\it standard open covering} of $U$ is a covering
+  % of the form $\mathcal{U} : U = \bigcup_{i = 1}^n D(f_i)$
+  % where $f_1, \ldots, f_n \in \Gamma(U, \mathcal{O}_X)$ generate
+  % the unit ideal, see
+  % Schemes, Definition \ref{schemes-definition-standard-covering}."
+  \textit{Source: Stacks Project, Cohomology of Schemes, \S{\v C}ech cohomology of
+  quasi-coherent sheaves.}
+  Let \(X\) be a scheme and let
+  \(\mathcal{U} : X = \bigcup_{i \in I} U_i\) be a finite open cover of \(X\) by
+  affine opens, with index set \(I\). For a finite nonempty tuple
+  \(i_0, \ldots, i_p \in I\) write
+  \(U_{i_0 \ldots i_p} = U_{i_0} \cap \cdots \cap U_{i_p}\) for the corresponding
+  intersection. The \emph{{\v C}ech nerve} of \(\mathcal{U}\) is the augmented
+  \emph{cosimplicial} object in \(\operatorname{QCoh}(X)\) whose object in
+  cosimplicial degree \(p\) is the direct image, along the open immersions
+  \(j_{i_0 \ldots i_p} : U_{i_0 \ldots i_p} \hookrightarrow X\), of the restriction
+  of \(\mathcal{O}_X\) (or of any chosen quasi-coherent sheaf) to the
+  \((p+1)\)-fold intersections,
+  \[
+    [p] \;\longmapsto\;
+      \prod_{(i_0, \ldots, i_p) \in I^{p+1}}
+        (j_{i_0 \ldots i_p})_* \,\bigl(\,\cdot\,|_{U_{i_0 \ldots i_p}}\bigr),
+  \]
+  with cofaces given by the restriction maps that omit one index and
+  codegeneracies by the maps that repeat one index; the augmentation in degree
+  \(-1\) is the object on all of \(X\). The variance is essential: the geometric
+  nerve of the cover (the iterated fibre powers of \(\coprod_i U_i\) over \(X\),
+  introduced in \S\ref{sec:cech_three_part} below) is a \emph{simplicial} object
+  in \emph{schemes}, but applying the covariant direct-image functor turns it into
+  a \emph{cosimplicial} object in \(\operatorname{QCoh}(X)\); consequently the
+  associated alternating-coface complex is a \emph{cochain} complex (differentials
+  raising degree), not a chain complex. When \(X\) is separated each intersection
+  \(U_{i_0 \ldots i_p}\) is itself affine. The local affine model is the
+  \emph{standard open covering} \(U = \bigcup_{i=1}^n D(f_i)\) of an affine open
+  \(U = \operatorname{Spec}(A)\) by basic opens, where \(f_1, \ldots, f_n \in A\)
+  generate the unit ideal; on such a cover the intersections are again basic opens
+  \(D(f_{i_0} \cdots f_{i_p})\).
+\end{definition}
+
+\begin{definition}
+
+\leanok
+[{\v C}ech complex of a quasi-coherent sheaf]
+  \label{def:cech_complex}
+  \lean{AlgebraicGeometry.CechComplex}
+  \uses{def:cech_nerve, def:relative_cech_complex_of_nerve}
+  % SOURCE: [Stacks Project], Cohomology of Schemes, Lemma
+  % \texttt{lemma-cech-cohomology-quasi-coherent-trivial} (proof)
+  % (read from references/stacks-coherent.tex, L59--77).
+  % SOURCE QUOTE: "Clearly the {\v C}ech complex
+  % $\check{\mathcal{C}}^\bullet(\mathcal{U}, \mathcal{F})$
+  % is identified with the complex
+  % $$
+  % \prod\nolimits_{i_0} M_{f_{i_0}} \to
+  % \prod\nolimits_{i_0i_1} M_{f_{i_0}f_{i_1}} \to
+  % \prod\nolimits_{i_0i_1i_2} M_{f_{i_0}f_{i_1}f_{i_2}} \to
+  % \ldots
+  % $$
+  % We are asked to show that the extended complex
+  % \begin{equation}
+  % \label{equation-extended}
+  % 0 \to
+  % M \to
+  % \prod\nolimits_{i_0} M_{f_{i_0}} \to
+  % \prod\nolimits_{i_0i_1} M_{f_{i_0}f_{i_1}} \to
+  % \prod\nolimits_{i_0i_1i_2} M_{f_{i_0}f_{i_1}f_{i_2}} \to
+  % \ldots
+  % \end{equation}
+  % (whose truncation we have studied in
+  % Algebra, Lemma \ref{algebra-lemma-cover-module}) is exact."
+  \textit{Source: Stacks Project, Cohomology of Schemes,
+  \texttt{lemma-cech-cohomology-quasi-coherent-trivial} (standard-cover {\v C}ech
+  vanishing).}
+  Let \(\mathcal{F}\) be a quasi-coherent \(\mathcal{O}_X\)-module and let
+  \(\mathcal{U} : X = \bigcup_{i \in I} U_i\) be a finite affine open cover with
+  all intersections \(U_{i_0 \ldots i_p}\) affine (e.g.\ \(X\) separated). The
+  \emph{{\v C}ech complex} \(\check{\mathcal{C}}^\bullet(\mathcal{U}, \mathcal{F})\)
+  is the cochain complex obtained by applying the global-sections functor to the
+  {\v C}ech nerve of Definition~\ref{def:cech_nerve} evaluated at \(\mathcal{F}\);
+  in degree \(p\) it is
+  \[
+    \check{\mathcal{C}}^p(\mathcal{U}, \mathcal{F})
+      = \prod_{(i_0, \ldots, i_p) \in I^{p+1}}
+        \mathcal{F}\bigl(U_{i_0 \ldots i_p}\bigr),
+  \]
+  with differential \(d : \check{\mathcal{C}}^p \to \check{\mathcal{C}}^{p+1}\) the
+  alternating sum \((d s)_{i_0 \ldots i_{p+1}} = \sum_{j=0}^{p+1} (-1)^j\,
+  s_{i_0 \ldots \widehat{i_j} \ldots i_{p+1}}|_{U_{i_0 \ldots i_{p+1}}}\) of the
+  restriction maps. Over an affine \(U = \operatorname{Spec}(A)\) with
+  \(\mathcal{F}|_U = \widetilde{M}\) and a standard cover by the
+  \(D(f_i)\), this is the complex
+  \(\prod_{i_0} M_{f_{i_0}} \to \prod_{i_0 i_1} M_{f_{i_0} f_{i_1}} \to \cdots\) of
+  localisations. The \emph{relative {\v C}ech complex} \(\check{\mathcal{C}}^\bullet
+  (\mathfrak{U}, \mathcal{F})\) for \(f : X \to S\) is the analogous complex in
+  \(\operatorname{QCoh}(S)\) obtained by applying \(f_*\) over each finite
+  intersection instead of global sections; its terms are
+  \(\prod_{i_0 \ldots i_p} (f|_{U_{i_0 \ldots i_p}})_*
+  \bigl(\mathcal{F}|_{U_{i_0 \ldots i_p}}\bigr)\), and it is a complex in
+  \(\operatorname{QCoh}(S)\) because each \(U_{i_0 \ldots i_p}\) is affine and the
+  pushforward of a quasi-coherent sheaf along a quasi-compact quasi-separated
+  morphism is quasi-coherent.
+\end{definition}
+
+\subsection{The three-part construction of the relative {\v C}ech complex}
+\label{sec:cech_three_part}
+
+It is convenient to factor the construction of
+Definitions~\ref{def:cech_nerve}--\ref{def:cech_complex} into three independent
+pieces. Two of them are purely formal and unconditional; the entire mathematical
+content that is not yet available off the shelf is isolated in the middle piece.
+
+\paragraph{(1) Geometric backbone — the augmented {\v C}ech nerve of an arrow.}
+Package the affine cover as a single morphism
+\(\coprod_{i \in I} U_i \longrightarrow X\) (the canonical map out of the
+coproduct induced by the inclusions \(U_i \hookrightarrow X\)). The augmented
+{\v C}ech nerve of this arrow is an augmented \emph{simplicial scheme} over
+\(X\): its object in simplicial degree \(p\) is the \((p+1)\)-fold fibre power
+\[
+  \Bigl(\coprod_{i} U_i\Bigr)^{\times_X (p+1)}
+    \;=\;
+    \coprod_{(i_0, \ldots, i_p) \in I^{p+1}}
+      U_{i_0} \times_X \cdots \times_X U_{i_p},
+\]
+with the augmentation the cover map to \(X\). Because the \(U_i\) are open
+subschemes of \(X\), each fibre product \(U_{i_0} \times_X \cdots \times_X U_{i_p}\)
+is canonically the intersection \(U_{i_0 \ldots i_p}\). This backbone exists
+\emph{unconditionally}: it uses only that the category of schemes has coproducts
+and finite limits (hence the wide pullbacks underlying the {\v C}ech nerve of an
+arrow). It carries no sheaf-theoretic data yet — it is the simplicial diagram of
+spaces over which the construction is indexed.
+
+\paragraph{(2) Push--pull functor — lifting the backbone to modules.}
+The geometric backbone is turned into a cosimplicial \(\mathcal{O}_X\)-module by
+the \emph{relative-direct-image functor on the over-category}
+\[
+  G : (X/\mathbf{Sch})^{\mathrm{op}} \longrightarrow \operatorname{QCoh}(X),
+  \qquad
+  (Y \xrightarrow{\,p\,} X) \;\longmapsto\; p_*\, p^*\mathcal{F},
+\]
+sending an \(X\)-scheme \(p : Y \to X\) to the pushforward along \(p\) of the
+pullback \(p^*\mathcal{F}\). Composing \(G\) with the (opposite of the) simplicial
+backbone of (1) produces exactly the augmented cosimplicial object of
+Definition~\ref{def:cech_nerve}: on the degree-\(p\) piece
+\(p : U_{i_0 \ldots i_p} \hookrightarrow X\) one has
+\(p_* p^*\mathcal{F} = (j_{i_0 \ldots i_p})_*(\mathcal{F}|_{U_{i_0 \ldots i_p}})\),
+and a morphism of \(X\)-schemes \(h : (Y_1, p_1) \to (Y_2, p_2)\) (so
+\(h \circ p_2 = p_1\)\,, reading \(p\) as the structure map) induces the
+restriction comparison \(G(p_2) \to G(p_1)\) via the unit/counit of the
+pull-push adjunction together with the over-triangle identifying the two
+structure maps. This functor \(G\) is the \emph{one non-formal step} in the whole
+construction. Its functoriality --- that \(G\) respects identities and composition
+of morphisms over \(X\) --- is precisely a statement about the coherence of the
+comparison isomorphisms \((p \circ q)_* \cong p_* q_*\) and
+\((p \circ q)^* \cong q^* p^*\) for pushforward and pullback of sheaves of
+modules, together with their compatibility with the adjunction units. This
+functoriality is \emph{not} coupled to the project's tensor--pullback substrate;
+it consumes only Mathlib's pseudofunctor packaging of pullback and pushforward.
+Concretely, pullback and pushforward of sheaves of modules are organised as a
+pseudofunctor \(\mathrm{LocallyDiscrete}(\mathbf{Sch}^{\mathrm{op}}) \to
+\mathbf{Adj}\,\mathbf{Cat}\) (sending a morphism to the adjoint pair
+\(p^* \dashv p_*\)), and the comparison isomorphisms
+\((p \circ q)^* \cong q^* p^*\), \((p \circ q)_* \cong p_* q_*\) are its structure
+\(2\)-cells. The functoriality of \(G\) needs exactly three facts about this
+packaging: the mate identity expressing the conjugate of the inverse pullback
+comparison as the pushforward comparison (the lemma
+\texttt{conjugateEquiv\_pullbackComp\_inv}), its identity normalisation
+\texttt{conjugateEquiv\_pullbackId\_hom}, and the pseudofunctor unitor and pentagon
+(associativity) coherences \texttt{pseudofunctor\_left\_unitality},
+\texttt{pseudofunctor\_right\_unitality}, \texttt{pseudofunctor\_associativity}.
+All of these are already available off the shelf, so the functoriality of the
+relative-direct-image functor is a \emph{consumer of Mathlib's coherence},
+independent of the project-local sheafification/pullback machinery of the
+tensor--pullback substrate. The laws are nonetheless not formal trivialities: each
+is a multi-step mate calculation that transports the comparison isomorphisms along
+the over-triangle \(g \circ p_2 = p_1\) of structure maps and past the adjunction
+unit, gluing them across two \(\mathrm{eqToHom}\) coercions; the obstacle is the
+bookkeeping of those transports, not a missing geometric ingredient.
+
+\paragraph{(3) Coherence-free plumbing — from the nerve to the cochain complex.}
+The passage from the augmented cosimplicial \(\mathcal{O}_X\)-module of (1)--(2)
+to the relative {\v C}ech complex in \(\operatorname{QCoh}(S)\) is again purely
+formal and uses \emph{no} pushforward/pullback coherence. One forgets the
+augmentation, pushes the cosimplicial object forward along \(f : X \to S\) (a
+covariant operation applied degreewise), and takes the alternating-coface-map
+cochain complex of the resulting cosimplicial object of \(\mathcal{O}_S\)-modules.
+This step relies only on the preadditivity of \(\operatorname{QCoh}(S)\): the
+alternating sum \(\sum_{j} (-1)^j d^j\) of the cofaces is defined in any
+preadditive category and squares to zero by the cosimplicial identities. Thus the
+relative {\v C}ech complex \(\check{\mathcal{C}}^\bullet(\mathfrak{U}, \mathcal{F})\)
+of Definition~\ref{def:cech_complex} is genuinely \emph{defined} in terms of the
+{\v C}ech nerve of Definition~\ref{def:cech_nerve}: once the nerve is constructed,
+the complex follows with no further input. In summary, of the three pieces only
+the push--pull functor (2) requires content beyond formal category theory, and
+that content is the pushforward/pullback pseudofunctor coherence supplied by
+Mathlib (the comparison \(2\)-cells of the pseudofunctor
+\(\mathrm{LocallyDiscrete}(\mathbf{Sch}^{\mathrm{op}}) \to \mathbf{Adj}\,\mathbf{Cat}\)
+and their unitor/pentagon identities), not any project-local ingredient.
+
+\paragraph{Formal bricks of the three-part construction.}
+The geometric backbone (1), the push--pull functor (2), and the plumbing (3) are
+recorded as the following declarations. The backbone and plumbing are
+unconditional; the push--pull object and morphism maps are likewise unconditional
+bricks, and the functor laws assembling them are the lone coherence statement.
+
+\begin{definition}\leanok
+[Arrow of an affine cover]
+  \label{def:cover_arrow}
+  \lean{AlgebraicGeometry.coverArrow}
+  Let \(\mathcal{U} : X = \bigcup_{i \in I} U_i\) be an affine open cover. Its
+  \emph{cover arrow} is the single morphism
+  \(\coprod_{i \in I} U_i \longrightarrow X\) obtained as the universal map out of
+  the coproduct induced by the open immersions \(U_i \hookrightarrow X\). Packaging
+  the cover as one arrow lets the generic {\v C}ech-nerve-of-an-arrow machinery
+  apply.
+\end{definition}
+
+\begin{definition}\leanok
+[Augmented {\v C}ech nerve of a cover]
+  \label{def:cover_cech_nerve}
+  \lean{AlgebraicGeometry.coverCechNerve}
+  \uses{def:cover_arrow}
+  The augmented {\v C}ech nerve of the cover arrow of
+  Definition~\ref{def:cover_arrow}: the augmented \emph{simplicial scheme} over
+  \(X\) whose degree-\(p\) object is the \((p+1)\)-fold fibre power
+  \[
+    \Bigl(\coprod_{i} U_i\Bigr)^{\times_X (p+1)}
+      = \coprod_{(i_0, \ldots, i_p) \in I^{p+1}}
+        U_{i_0} \times_X \cdots \times_X U_{i_p},
+  \]
+  with augmentation the cover map to \(X\). It exists unconditionally because the
+  category of schemes has all finite limits (hence the wide pullbacks underlying the
+  {\v C}ech nerve of an arrow). This is the geometric backbone (1).
+\end{definition}
+
+\begin{definition}\leanok
+[Push--pull object map]
+  \label{def:push_pull_obj}
+  \lean{AlgebraicGeometry.pushPullObj}
+  The object map of the push--pull functor \(G\): to an \(X\)-scheme
+  \(p : Y \to X\) it assigns
+  \[
+    G(Y, p) \;=\; p_*\, p^*\mathcal{F},
+  \]
+  the pushforward along \(p\) of the pullback \(p^*\mathcal{F}\).
+\end{definition}
+
+\begin{definition}\leanok
+[Push--pull comparison map]
+  \label{def:push_pull_map}
+  \lean{AlgebraicGeometry.pushPullMap}
+  \uses{def:push_pull_obj}
+  The morphism map of \(G\). A morphism \(g : (Y_2, p_2) \to (Y_1, p_1)\) of
+  \(X\)-schemes has underlying map \(\bar g : Y_2 \to Y_1\) satisfying the
+  over-triangle \(p_1 \circ \bar g = p_2\); the contravariant functor produces the
+  restriction comparison \(G(Y_1, p_1) \to G(Y_2, p_2)\) as the five-step composite
+  \[
+    p_{1*}\,p_1^*\mathcal{F}
+      \xrightarrow{\,p_{1*}(\eta)\,}
+    p_{1*}\,\bar g_*\,\bar g^*\,p_1^*\mathcal{F}
+      \xrightarrow{\,\sim\,}
+    (p_1 \circ \bar g)_*\,\bar g^*\,p_1^*\mathcal{F}
+      \;=\;
+    p_{2*}\,\bar g^*\,p_1^*\mathcal{F}
+      \xrightarrow{\,p_{2*}(\sim)\,}
+    p_{2*}\,p_2^*\mathcal{F},
+  \]
+  where \(\eta\) is the unit of the adjunction \(\bar g^* \dashv \bar g_*\), the
+  second arrow is the pushforward comparison \(p_{1*}\bar g_* \cong (p_1 \bar g)_*\),
+  the equality is the substitution \(p_2 = p_1 \circ \bar g\) of the over-triangle,
+  and the last arrow applies \(p_{2*}\) to the pullback comparison
+  \(\bar g^* p_1^* \cong (p_1 \bar g)^* = p_2^*\). The two over-triangle
+  substitutions are realised as coercions along \(p_1 \circ \bar g = p_2\).
+\end{definition}
+
+\begin{lemma}\leanok
+[Push--pull functor assembly]
+  \label{lem:push_pull_functor}
+  \lean{AlgebraicGeometry.pushPullMap_id}
+  \lean{AlgebraicGeometry.pushPullMap_comp}
+  % NOTE (iter-264): only `pushPullMap_id` exists in Lean (landed axiom-clean this iter);
+  % `pushPullMap_comp` (the pentagon law) is still deferred to an in-file comment, NOT a
+  % declaration. The statement-block \leanok therefore over-states this lemma. Plan agent:
+  % either split this block into two (one \lean{} pin each) so \leanok tracks them
+  % independently, or have a `lemma pushPullMap_comp ... := sorry` stub added to the Lean file.
+  % NOTE iter-283: removed the spurious `def:cech_nerve` from this \uses. The
+  % functor laws `pushPullMap_id`/`pushPullMap_comp` (L216/278 of the Lean file)
+  % depend only on push_pull_obj/push_pull_map and the mate lemmas; their
+  % signatures never mention `CechNerve`. The dependency runs the OTHER way:
+  % `CechNerve` is BUILT FROM the push-pull functor (def:cech_nerve \uses
+  % lem:push_pull_functor), so listing def:cech_nerve here created a
+  % cech_nerve <-> push_pull_functor cycle that crashed `leanblueprint web`.
+  \uses{def:push_pull_obj, def:push_pull_map, lem:push_pull_unit_mate, lem:push_pull_transport_cancel}
+  The object and morphism assignments of
+  Definitions~\ref{def:push_pull_obj}--\ref{def:push_pull_map} assemble into a
+  functor \(G : (X/\mathbf{Sch})^{\mathrm{op}} \to \operatorname{QCoh}(X)\): the
+  comparison maps respect identities and composition,
+  \[
+    G(\mathrm{id}_Y) = \mathrm{id}_{G(Y)},
+    \qquad
+    G(g \circ h) = G(h) \circ G(g),
+  \]
+  the latter for composable morphisms \(h : Y_3 \to Y_2\), \(g : Y_2 \to Y_1\) of
+  \(X\)-schemes. Composing \(G\) with the backbone of
+  Definition~\ref{def:cover_cech_nerve} yields the {\v C}ech nerve of
+  Definition~\ref{def:cech_nerve}.
+\end{lemma}
+
+\begin{proof}
+  \uses{def:push_pull_obj, def:push_pull_map}
+  Both laws are statements purely about the pushforward/pullback comparison
+  isomorphisms and carry no sectionwise content. The route is the adjunction-mate
+  calculus applied to the head \(p_{1*}(\eta)\) followed by the pushforward
+  comparison in the composite defining \(G(g)\): rewriting this head as the
+  conjugate-mate of the inverse pullback comparison
+  \((p \circ q)^* \cong q^* p^*\) — via \texttt{conjugateEquiv\_pullbackComp\_inv} —
+  turns both laws into identities among the pseudofunctor's structure \(2\)-cells.
+
+  For \(G(\mathrm{id}_Y) = \mathrm{id}\): after the mate rewrite the identity leg
+  collapses by the identity normalisation \texttt{conjugateEquiv\_pullbackId\_hom}
+  together with the right unitality \texttt{pseudofunctor\_right\_unitality};
+  the two over-triangle coercions cancel against the unitality coercion.
+
+  For \(G(g \circ h) = G(h) \circ G(g)\): the same mate rewrite reduces the claim to
+  reassociating the three pullback comparisons, which is the pseudofunctor pentagon
+  \texttt{pseudofunctor\_associativity}; the inner adjunction unit is slid past the
+  outer pushforward by naturality of the unit (\(\mathrm{Adjunction.unit\_naturality}\)).
+
+  The content is entirely Mathlib-side pseudofunctor coherence; the work is the
+  bookkeeping of the \(\mathrm{eqToHom}\) coercions along the over-triangle
+  \(p_1 \circ \bar g = p_2\). No step invokes the project-local sheafification/pullback
+  square, so the laws are independent of the tensor--pullback substrate.
+\end{proof}
+
+\begin{lemma}
+[Base-change unit (mate) identity for the push--pull head]
+  \label{lem:push_pull_unit_mate}
+  \lean{AlgebraicGeometry.pushPull_unit_mate}
+  \uses{def:push_pull_map}
+  For composable scheme morphisms \(f : A \to B\), \(p : B \to Z\) and a
+  \(\mathcal{O}_Z\)-module \(N\), the adjunction unit \(\eta^p_N\) of
+  \(p^* \dashv p_*\) at \(N\), followed by \(p_*\) of the unit \(\eta^f\) for
+  \(f^* \dashv f_*\) at \(p^*N\), followed by the pushforward comparison
+  \(p_* f_* \cong (f \circ p)_*\), equals the unit \(\eta^{f \circ p}_N\) for the
+  composite followed by \((f \circ p)_*\) applied to the inverse pullback
+  comparison \((f \circ p)^* \cong f^* p^*\):
+  \[
+    \eta^p_N \;\circ\; p_*(\eta^f_{p^*N}) \;\circ\;
+      \bigl(p_* f_* \cong (f \circ p)_*\bigr)
+    \;=\;
+    \eta^{f \circ p}_N \;\circ\; (f \circ p)_*\bigl((f\circ p)^* \cong f^* p^*\bigr)^{-1}.
+  \]
+  This is the mate-calculus core that converts the single-morphism unit
+  \(\eta^{f \circ p}\) into the iterated units \(\eta^p, \eta^f\); it is the
+  reusable ingredient consumed by the functoriality (pentagon) law of the
+  push--pull comparison map of Definition~\ref{def:push_pull_map}.
+\end{lemma}
+
+\begin{proof}
+  Proved directly in Lean.
+\end{proof}
+
+\begin{lemma}
+[Over-triangle transport cancellation for the push--pull tail]
+  \label{lem:push_pull_transport_cancel}
+  \lean{AlgebraicGeometry.pushPull_transport_cancel}
+  \uses{def:push_pull_map}
+  Let \(\bar g : Y_2 \to Y_1\), \(p_1 : Y_1 \to X\), \(p_2 : Y_2 \to X\) satisfy the
+  over-triangle \(\bar g \circ p_1 = p_2\), and let \(\mathcal{F}\) be a
+  \(\mathcal{O}_X\)-module. Then the pullback-comparison leg of the push--pull map,
+  conjugated by the two \(\mathrm{eqToHom}\) coercions along the over-triangle,
+  collapses to the transport-light form
+  \[
+    e_1 \;\circ\; p_{2*}\bigl((\bar g^* p_1^* \cong (\bar g p_1)^*)_{\mathcal{F}}\bigr)
+      \;\circ\; e_2
+    \;=\;
+    (\bar g p_1)_*\bigl((\bar g^* p_1^* \cong (\bar g p_1)^*)_{\mathcal{F}}\bigr)
+      \;\circ\; e_3,
+  \]
+  where \(e_1, e_2, e_3\) are the \(\mathrm{eqToHom}\) coercions induced by
+  \(\bar g \circ p_1 = p_2\). It states the over-triangle cancellation in the
+  push--pull comparison map of Definition~\ref{def:push_pull_map} with the
+  over-triangle equality as a free hypothesis, so a single substitution turns the
+  transports into identities; it is the reusable pre-coherence brick for the
+  composition (pentagon) law.
+\end{lemma}
+
+\begin{proof}
+  Proved directly in Lean.
+\end{proof}
+
+\begin{definition}\leanok
+[Relative {\v C}ech complex from a nerve]
+  \label{def:relative_cech_complex_of_nerve}
+  \lean{AlgebraicGeometry.relativeCechComplexOfNerve}
+  \uses{def:cech_nerve}
+  Given \(f : X \to S\) and an augmented cosimplicial \(\mathcal{O}_X\)-module
+  \(N\), the \emph{relative {\v C}ech cochain complex} in \(\operatorname{QCoh}(S)\)
+  obtained by forgetting the augmentation of \(N\), pushing the resulting
+  cosimplicial object forward degreewise along \(f\), and taking the
+  alternating-coface-map cochain complex. This passage uses only the preadditivity
+  of \(\operatorname{QCoh}(S)\) and \emph{no} pushforward/pullback coherence; it is
+  the coherence-free plumbing (3) that turns the nerve of
+  Definition~\ref{def:cech_nerve} into the {\v C}ech complex.
+\end{definition}
+
+\section{Affine acyclicity of the {\v C}ech complex}
+
+\begin{lemma}
+
+\leanok
+[{\v C}ech acyclicity on affines]
+  \label{lem:cech_acyclic_affine}
+  \lean{AlgebraicGeometry.CechAcyclic.affine}
+  \uses{def:cech_complex}
+  % SOURCE: [Stacks Project], Cohomology of Schemes, Tag 02KG (affine vanishing);
+  % Lemma \texttt{lemma-cech-cohomology-quasi-coherent-trivial} (standard-cover
+  % {\v C}ech vanishing) and Lemma
+  % \texttt{lemma-quasi-coherent-affine-cohomology-zero} (Serre vanishing on affines)
+  % (read from references/stacks-coherent.tex, L44--52 and L145--155).
+  % SOURCE QUOTE: "Let $X$ be a scheme.
+  % Let $\mathcal{F}$ be a quasi-coherent $\mathcal{O}_X$-module.
+  % Let $\mathcal{U} : U = \bigcup_{i = 1}^n D(f_i)$ be a standard
+  % open covering of an affine open of $X$.
+  % Then $\check{H}^p(\mathcal{U}, \mathcal{F}) = 0$ for
+  % all $p > 0$."
+  % SOURCE QUOTE: "Serre vanishing: Higher cohomology vanishes on affine schemes
+  % for quasi-coherent modules.
+  % Let $X$ be a scheme.
+  % Let $\mathcal{F}$ be a quasi-coherent $\mathcal{O}_X$-module.
+  % For any affine open $U \subset X$ we have
+  % $H^p(U, \mathcal{F}) = 0$ for all $p > 0$."
+  \textit{Source: Stacks Project, Cohomology of Schemes,
+  \texttt{lemma-cech-cohomology-quasi-coherent-trivial} (standard-cover {\v C}ech
+  vanishing) and Stacks, Tag 02KG
+  (\texttt{lemma-quasi-coherent-affine-cohomology-zero}, Serre vanishing on
+  affines).}
+  Let \(U = \operatorname{Spec}(A)\) be an affine scheme, \(\mathcal{F}\) a
+  quasi-coherent \(\mathcal{O}_U\)-module, and
+  \(\mathcal{U} : U = \bigcup_{i=1}^n D(f_i)\) a standard open cover (so the
+  \(f_i \in A\) generate the unit ideal). Then the {\v C}ech complex
+  \(\check{\mathcal{C}}^\bullet(\mathcal{U}, \mathcal{F})\) has vanishing cohomology
+  in all positive degrees:
+  \[
+    \check{H}^p(\mathcal{U}, \mathcal{F}) = 0 \qquad \text{for all } p > 0,
+  \]
+  and consequently \(H^p(U, \mathcal{F}) = 0\) for all \(p > 0\).
+\end{lemma}
+
+% SOURCE QUOTE PROOF: "Write $U = \Spec(A)$ for some ring $A$.
+% In other words, $f_1, \ldots, f_n$ are elements of $A$
+% which generate the unit ideal of $A$.
+% Write $\mathcal{F}|_U = \widetilde{M}$ for some $A$-module $M$.
+% ...
+% It suffices to show that (\ref{equation-extended})
+% is exact after localizing at a prime $\mathfrak p$, see
+% Algebra, Lemma \ref{algebra-lemma-characterize-zero-local}.
+% In fact we will show that the extended complex localized
+% at $\mathfrak p$ is homotopic to zero.
+% There exists an index $i$ such that $f_i \not \in \mathfrak p$.
+% Choose and fix such an element $i_{\text{fix}}$. ...
+% Let us define a homotopy
+% $$
+% h :
+% \prod\nolimits_{i_0 \ldots i_{p + 1}}
+% M_{f_{i_0} \ldots f_{i_{p + 1}}, \mathfrak p}
+% \longrightarrow
+% \prod\nolimits_{i_0 \ldots i_p}
+% M_{f_{i_0} \ldots f_{i_p}, \mathfrak p}
+% $$
+% by the rule
+% $$
+% h(s)_{i_0 \ldots i_p} = s_{i_{\text{fix}} i_0 \ldots i_p}
+% $$
+% ... We compute ... $(dh + hd)(s)_{i_0 \ldots i_p} = s_{i_0 \ldots i_p}$ ...
+% This proves the identity map is homotopic to zero as desired."
+% SOURCE QUOTE PROOF: "We are going to apply
+% Cohomology, Lemma \ref{cohomology-lemma-cech-vanish-basis}.
+% As our basis $\mathcal{B}$ for the topology of $X$ we are going to use
+% the affine opens of $X$. ... Note that the intersection of standard opens
+% in an affine is another standard open. Hence property (1) holds. ...
+% Finally, condition (3) of the lemma follows from
+% Lemma \texttt{lemma-cech-cohomology-quasi-coherent-trivial}."
+\begin{proof}
+  \uses{def:cech_complex}
+  Write \(U = \operatorname{Spec}(A)\) and \(\mathcal{F}|_U = \widetilde{M}\) for an
+  \(A\)-module \(M\). By Definition~\ref{def:cech_complex} the {\v C}ech complex of
+  the standard cover is the complex of localisations
+  \[
+    \prod_{i_0} M_{f_{i_0}} \;\to\;
+    \prod_{i_0 i_1} M_{f_{i_0} f_{i_1}} \;\to\;
+    \prod_{i_0 i_1 i_2} M_{f_{i_0} f_{i_1} f_{i_2}} \;\to\; \cdots,
+  \]
+  and the claim \(\check{H}^p = 0\) for \(p > 0\) is equivalent to exactness of the
+  extended complex \(0 \to M \to \prod_{i_0} M_{f_{i_0}} \to \cdots\). Exactness may
+  be checked after localising at an arbitrary prime \(\mathfrak{p} \subset A\).
+  Choose an index \(i_{\mathrm{fix}}\) with
+  \(f_{i_{\mathrm{fix}}} \notin \mathfrak{p}\); then
+  \(M_{f_{i_{\mathrm{fix}}}, \mathfrak{p}} = M_{\mathfrak{p}}\), and the
+  prescription \(h(s)_{i_0 \ldots i_p} = s_{i_{\mathrm{fix}} i_0 \ldots i_p}\)
+  defines a contracting homotopy of the localised extended complex: a direct
+  computation gives \((dh + hd)(s) = s\), so the identity is homotopic to zero and
+  the localised complex is exact. As exactness holds after every localisation, the
+  extended complex is exact and \(\check{H}^p(\mathcal{U}, \mathcal{F}) = 0\) for
+  \(p > 0\).
+
+  For the sheaf-cohomology statement, take the affine opens of \(U\) as a basis of
+  the topology and the standard open covers as the admissible covers. Intersections
+  of standard opens are again standard opens, standard covers are cofinal among
+  covers of a basic open, and the {\v C}ech vanishing just proved supplies the
+  acyclicity hypothesis; the {\v C}ech-to-cohomology comparison on a basis then
+  yields \(H^p(U, \mathcal{F}) = 0\) for all \(p > 0\). \emph{(This is Serre
+  vanishing for quasi-coherent sheaves on affine schemes.)}
+
+  \emph{This proof depends on the following currently-absent Mathlib
+  infrastructure: the explicit description of the standard-cover {\v C}ech complex
+  as the complex of localisations \(\prod M_{f_{i_0}} \to \prod M_{f_{i_0}f_{i_1}}
+  \to \cdots\) together with the prime-local, module-level contracting homotopy
+  \(h(s)_{i_0 \ldots i_p} = s_{i_{\mathrm{fix}} i_0 \ldots i_p}\) witnessing its
+  positive-degree exactness, neither of which is available for sheaves of modules
+  on a scheme.}
+\end{proof}
+
+\section{The {\v C}ech complex computes $R^i f_*$}
+
+\begin{lemma}
+
+\leanok
+[{\v C}ech complex computes the higher direct images]
+  \label{lem:cech_computes_cohomology}
+  \lean{AlgebraicGeometry.cech_computes_higherDirectImage}
+  \uses{lem:cech_acyclic_affine, def:cech_complex}
+  % SOURCE: [Stacks Project], Cohomology of Schemes, Tag 02KE; Lemma
+  % \texttt{lemma-cech-cohomology-quasi-coherent} ({\v C}ech computes cohomology when
+  % all intersections are affine) and Lemma
+  % \texttt{lemma-quasi-coherence-higher-direct-images-application}
+  % ($H^q(X,\mathcal{F}) = H^0(S, R^q f_*\mathcal{F})$ for affine $S$)
+  % (read from references/stacks-coherent.tex, L245--256 and L843--854).
+  % SOURCE QUOTE: "Let $X$ be a scheme.
+  % Let $\mathcal{U} : X = \bigcup_{i \in I} U_i$ be an open covering such that
+  % $U_{i_0 \ldots i_p}$ is affine open for all $p \ge 0$ and all
+  % $i_0, \ldots, i_p \in I$.
+  % In this case for any quasi-coherent sheaf $\mathcal{F}$ we have
+  % $$
+  % \check{H}^p(\mathcal{U}, \mathcal{F}) = H^p(X, \mathcal{F})
+  % $$
+  % as $\Gamma(X, \mathcal{O}_X)$-modules for all $p$."
+  % SOURCE QUOTE: "Let $f : X \to S$ be a morphism of schemes.
+  % Assume that $f$ is quasi-separated and quasi-compact.
+  % Assume $S$ is affine.
+  % For any quasi-coherent $\mathcal{O}_X$-module $\mathcal{F}$
+  % we have
+  % $$
+  % H^q(X, \mathcal{F}) = H^0(S, R^qf_*\mathcal{F})
+  % $$
+  % for all $q \in \mathbf{Z}$."
+  \textit{Source: Stacks Project, Cohomology of Schemes, Tag 02KE
+  (\texttt{lemma-cech-cohomology-quasi-coherent}) and
+  \texttt{lemma-quasi-coherence-higher-direct-images-application}.}
+  Let \(f : X \to S\) be a separated quasi-compact morphism of schemes, let
+  \(\mathcal{F}\) be a quasi-coherent \(\mathcal{O}_X\)-module, and let
+  \(\mathfrak{U} : X = \bigcup_{i \in I} U_i\) be a finite affine open cover of
+  \(X\) (so, by separatedness, every intersection \(U_{i_0 \ldots i_p}\) is
+  affine). Then the cohomology sheaves of the relative {\v C}ech complex
+  \(\check{\mathcal{C}}^\bullet(\mathfrak{U}, \mathcal{F})\) of
+  Definition~\ref{def:cech_complex} compute the higher direct images: for every
+  \(i \geq 0\) there is a canonical isomorphism of \(\mathcal{O}_S\)-modules
+  \[
+    H^i\bigl(\check{\mathcal{C}}^\bullet(\mathfrak{U}, \mathcal{F})\bigr)
+      \;\cong\; R^i f_*\mathcal{F}.
+  \]
+  In particular, over an affine base \(S = \operatorname{Spec}(A)\), taking global
+  sections gives \(H^i(X, \mathcal{F}) = \check{H}^i(\mathfrak{U}, \mathcal{F}) =
+  H^0(S, R^i f_*\mathcal{F})\) as \(A\)-modules for all \(i\).
+
+  Two points about the precise form of the comparison should be noted. First, the
+  derived-functor higher direct image \(R^i f_*\mathcal{F}\) on the right-hand side
+  is the one obtained from injective resolutions, which is available only when the
+  category of \(\mathcal{O}_X\)-modules has enough injectives; accordingly this
+  comparison is asserted under the hypothesis that injective resolutions exist in
+  \(\operatorname{QCoh}(X)\), and it compares the (always-defined) {\v C}ech higher
+  direct image of Definition~\ref{def:cech_higher_direct_image} against the
+  derived-functor one only in that case. Second, we assert the comparison in the
+  weak form of the \emph{existence} of an isomorphism, i.e.\ as
+  \(\bigl(H^i(\check{\mathcal{C}}^\bullet(\mathfrak{U}, \mathcal{F})) \cong
+  R^i f_*\mathcal{F}\bigr)\) without singling out a chosen natural isomorphism.
+  This existence statement is all the downstream consumers (representability of the
+  relative Picard functor, local triviality of the comparison) require: they use
+  only that the unconditional {\v C}ech \(R^i f_*\) and the derived-functor
+  \(R^i f_*\) agree as objects, never a specific identification, so committing to a
+  canonical natural transformation would add coherence obligations that play no
+  role in the applications.
+\end{lemma}
+
+% SOURCE QUOTE PROOF: "In view of
+% Lemma \texttt{lemma-quasi-coherent-affine-cohomology-zero}
+% this is a special case of
+% Cohomology, Lemma
+% \ref{cohomology-lemma-cech-spectral-sequence-application}."
+% SOURCE QUOTE PROOF: "Consider the Leray spectral sequence
+% $E_2^{p, q} = H^p(S, R^qf_*\mathcal{F})$
+% converging to $H^{p + q}(X, \mathcal{F})$, see
+% Cohomology, Lemma \ref{cohomology-lemma-Leray}.
+% By Lemma \ref{lemma-quasi-coherence-higher-direct-images}
+% we see that the sheaves $R^qf_*\mathcal{F}$ are quasi-coherent.
+% By Lemma \texttt{lemma-quasi-coherent-affine-cohomology-zero}
+% we see that $E_2^{p, q} = 0$ when $p > 0$.
+% Hence the spectral sequence degenerates at $E_2$ and we win."
+\begin{proof}
+  \uses{lem:cech_acyclic_affine, def:cech_complex}
+  The question is local on \(S\), and the formation of both sides commutes with
+  restriction to opens of \(S\), so we may assume \(S = \operatorname{Spec}(A)\) is
+  affine. Because \(f\) is separated and quasi-compact, each finite intersection
+  \(U_{i_0 \ldots i_p}\) is affine, and \(f\) restricted to it is an affine
+  morphism; by the affine acyclicity of Lemma~\ref{lem:cech_acyclic_affine} the
+  higher direct images of \(\mathcal{F}\) over each such intersection vanish, so the
+  terms of the relative {\v C}ech complex carry no hidden higher cohomology.
+
+  Consider the {\v C}ech-to-cohomology spectral sequence of the cover
+  \(\mathfrak{U}\), with \(E_2\)-page
+  \(E_2^{p,q} = \check{H}^p(\mathfrak{U}, \underline{H}^q(\mathcal{F}))\)
+  converging to \(H^{p+q}(X, \mathcal{F})\). Since all intersections are affine,
+  Lemma~\ref{lem:cech_acyclic_affine} forces the presheaf cohomology
+  \(\underline{H}^q(\mathcal{F})\) to vanish on the intersections for \(q > 0\), so
+  the spectral sequence collapses to its row \(q = 0\): the {\v C}ech cohomology of
+  \(\mathcal{F}\) for the cover \(\mathfrak{U}\) computes the sheaf cohomology,
+  \(\check{H}^p(\mathfrak{U}, \mathcal{F}) = H^p(X, \mathcal{F})\) for all \(p\),
+  and the same identification holds relatively, i.e.\ the cohomology sheaves of
+  \(\check{\mathcal{C}}^\bullet(\mathfrak{U}, \mathcal{F})\) compute the cohomology
+  sheaves of \(Rf_*\mathcal{F}\).
+
+  It remains to identify these cohomology sheaves with \(R^i f_*\mathcal{F}\). Over
+  the affine base \(S = \operatorname{Spec}(A)\), the Leray spectral sequence
+  \(E_2^{p,q} = H^p(S, R^q f_*\mathcal{F}) \Rightarrow H^{p+q}(X, \mathcal{F})\)
+  has \(R^q f_*\mathcal{F}\) quasi-coherent, whence \(H^p(S, R^q f_*\mathcal{F}) = 0\)
+  for \(p > 0\) by Serre vanishing (Lemma~\ref{lem:cech_acyclic_affine}). The Leray
+  sequence therefore degenerates at \(E_2\), giving
+  \(H^i(X, \mathcal{F}) = H^0(S, R^i f_*\mathcal{F})\). Combining with the previous
+  paragraph, \(H^i\bigl(\check{\mathcal{C}}^\bullet(\mathfrak{U}, \mathcal{F})\bigr)
+  \cong R^i f_*\mathcal{F}\) as \(\mathcal{O}_S\)-modules for all \(i \geq 0\).
+
+  \emph{This proof depends on the following currently-absent Mathlib
+  infrastructure: the {\v C}ech-to-derived-functor spectral sequence and the Leray
+  spectral sequence for the category of sheaves of modules on a scheme, neither of
+  which is presently available there; the argument uses both to collapse onto the
+  comparison isomorphism.}
+\end{proof}
+
+\section{The unconditional higher direct image}
+
+\begin{definition}
+
+\leanok
+[Unconditional higher direct image via {\v C}ech]
+  \label{def:cech_higher_direct_image}
+  \lean{AlgebraicGeometry.cechHigherDirectImage}
+  \uses{lem:cech_computes_cohomology}
+  % SOURCE: [Stacks Project], Cohomology of Schemes, Lemma
+  % \texttt{lemma-quasi-coherence-higher-direct-images-application}
+  % (read from references/stacks-coherent.tex, L843--854); the unconditional
+  % packaging via the {\v C}ech complex is an Archon-original construction grounded
+  % in this lemma and Lemma \texttt{lemma-cech-cohomology-quasi-coherent}.
+  % SOURCE QUOTE: "Let $f : X \to S$ be a morphism of schemes.
+  % Assume that $f$ is quasi-separated and quasi-compact.
+  % Assume $S$ is affine.
+  % For any quasi-coherent $\mathcal{O}_X$-module $\mathcal{F}$
+  % we have
+  % $$
+  % H^q(X, \mathcal{F}) = H^0(S, R^qf_*\mathcal{F})
+  % $$
+  % for all $q \in \mathbf{Z}$."
+  \textit{Source: Stacks Project, Cohomology of Schemes,
+  \texttt{lemma-quasi-coherence-higher-direct-images-application}; unconditional
+  {\v C}ech packaging is Archon-original.}
+  Let \(f : X \to S\) be a separated quasi-compact morphism and \(\mathcal{F}\) a
+  quasi-coherent \(\mathcal{O}_X\)-module. Fix a finite affine open cover
+  \(\mathfrak{U}\) of \(X\). The \emph{(unconditional) \(i\)-th higher direct
+  image} is defined, for each \(i \geq 0\), as the \(i\)-th cohomology sheaf of the
+  relative {\v C}ech complex,
+  \[
+    R^i f_*\mathcal{F} \;:=\;
+      H^i\bigl(\check{\mathcal{C}}^\bullet(\mathfrak{U}, \mathcal{F})\bigr)
+      \in \operatorname{QCoh}(S).
+  \]
+  This requires \emph{no} hypothesis that the category of \(\mathcal{O}_X\)-modules
+  have enough injectives: the right-hand side is the cohomology of an explicit
+  complex of quasi-coherent sheaves. By
+  Lemma~\ref{lem:cech_computes_cohomology} the result is canonically isomorphic to
+  the derived-functor higher direct image wherever the latter is defined, and in
+  particular is independent of the chosen affine cover \(\mathfrak{U}\) up to
+  canonical isomorphism: two affine covers admit a common affine refinement, and
+  the induced refinement maps on {\v C}ech complexes are quasi-isomorphisms because
+  both compute the same \(R^i f_*\mathcal{F}\) by
+  Lemma~\ref{lem:cech_computes_cohomology}. For \(i = 0\) one recovers the ordinary
+  pushforward \(R^0 f_*\mathcal{F} = f_*\mathcal{F}\).
+\end{definition}
+
+\section{Flat base change for the {\v C}ech higher direct images}
+
+\begin{lemma}
+
+\leanok
+[Flat base change of $R^i f_*$ via {\v C}ech]
+  \label{lem:cech_flat_base_change}
+  \lean{AlgebraicGeometry.cech_flatBaseChange}
+  \uses{def:cech_higher_direct_image, lem:cech_computes_cohomology}
+  % SOURCE: [Stacks Project], Cohomology of Schemes, Tag 02KH (Lemma
+  % \texttt{lemma-flat-base-change-cohomology}, "Flat base change")
+  % (read from references/stacks-coherent.tex, L947--970).
+  % SOURCE QUOTE: "Consider a cartesian diagram of schemes
+  % $$
+  % \xymatrix{
+  % X' \ar[d]_{f'} \ar[r]_{g'} & X \ar[d]^f \\
+  % S' \ar[r]^g & S
+  % }
+  % $$
+  % Let $\mathcal{F}$ be a quasi-coherent $\mathcal{O}_X$-module
+  % with pullback $\mathcal{F}' = (g')^*\mathcal{F}$.
+  % Assume that $g$ is flat and that $f$ is quasi-compact and quasi-separated.
+  % For any $i \geq 0$
+  % \begin{enumerate}
+  % \item the base change map of
+  % Cohomology, Lemma \ref{cohomology-lemma-base-change-map-flat-case}
+  % is an isomorphism
+  % $$
+  % g^*R^if_*\mathcal{F} \longrightarrow R^if'_*\mathcal{F}',
+  % $$
+  % \item if $S = \Spec(A)$ and $S' = \Spec(B)$, then
+  % $H^i(X, \mathcal{F}) \otimes_A B = H^i(X', \mathcal{F}')$.
+  % \end{enumerate}"
+  \textit{Source: Stacks Project, Cohomology of Schemes, Tag 02KH
+  (\texttt{lemma-flat-base-change-cohomology}, ``Flat base change'').}
+  Consider the cartesian square
+  \[
+    \begin{array}{ccc}
+      X' & \xrightarrow{\;g'\;} & X \\[2pt]
+      {\scriptstyle f'}\big\downarrow & & \big\downarrow{\scriptstyle f} \\[2pt]
+      S' & \xrightarrow{\;g\;} & S
+    \end{array}
+  \]
+  with \(f : X \to S\) separated and quasi-compact, \(\mathcal{F}\) a
+  quasi-coherent \(\mathcal{O}_X\)-module, and
+  \(\mathcal{F}' = (g')^*\mathcal{F}\). Assume \(g\) is flat. Then for every
+  \(i \geq 0\) the canonical base-change map between the unconditional {\v C}ech
+  higher direct images of Definition~\ref{def:cech_higher_direct_image} is an
+  isomorphism
+  \[
+    g^*\bigl(R^i f_*\mathcal{F}\bigr) \;\xrightarrow{\;\sim\;}\;
+      R^i f'_*\bigl((g')^*\mathcal{F}\bigr) = R^i f'_*\mathcal{F}'.
+  \]
+  Equivalently, when \(S = \operatorname{Spec}(A)\) and
+  \(S' = \operatorname{Spec}(B)\) with \(A \to B\) flat, the comparison map of
+  \(B\)-modules \(H^i(X, \mathcal{F}) \otimes_A B \to H^i(X', \mathcal{F}')\) is an
+  isomorphism.
+\end{lemma}
+
+% SOURCE QUOTE PROOF: "Having said this, part (1) follows from part (2). Namely,
+% part (1) is local on $S'$ and hence we may assume $S$
+% and $S'$ are affine. ...
+% In case $X$ is separated, choose an affine open covering
+% $\mathcal{U} : X = U_1 \cup \ldots \cup U_t$ and recall that
+% $$
+% \check{H}^p(\mathcal{U}, \mathcal{F}) = H^p(X, \mathcal{F}),
+% $$
+% see
+% Lemma \texttt{lemma-cech-cohomology-quasi-coherent}.
+% If $\mathcal{U}_B : X_B = (U_1)_B \cup \ldots \cup (U_t)_B$ we obtain
+% by base change, then it is still the case that each $(U_i)_B$ is affine
+% and that $X_B$ is separated. ...
+% We have the following relation between the {\v C}ech complexes
+% $$
+% \check{\mathcal{C}}^\bullet(\mathcal{U}_B, \mathcal{F}_B) =
+% \check{\mathcal{C}}^\bullet(\mathcal{U}, \mathcal{F}) \otimes_A B
+% $$
+% as follows from
+% Lemma \ref{lemma-affine-base-change}.
+% Since $A \to B$ is flat, the same thing remains true on taking cohomology."
+\begin{proof}
+  \uses{def:cech_higher_direct_image, lem:cech_computes_cohomology}
+  The assertion that the base-change map is an isomorphism is local on \(S'\), so we
+  may assume \(S = \operatorname{Spec}(A)\) and \(S' = \operatorname{Spec}(B)\) with
+  \(A \to B\) flat. By Lemma~\ref{lem:cech_computes_cohomology} both
+  \(R^i f_*\mathcal{F}\) and \(R^i f'_*\mathcal{F}'\) are quasi-coherent, associated
+  to the \(A\)-module \(H^i(X, \mathcal{F})\) and the \(B\)-module
+  \(H^i(X', \mathcal{F}')\) respectively; since pullback along \(g\) corresponds to
+  \(- \otimes_A B\) on modules, it suffices to prove that the comparison map
+  \(H^i(X, \mathcal{F}) \otimes_A B \to H^i(X', \mathcal{F}')\) is an isomorphism.
+
+  Choose a finite affine open cover \(\mathfrak{U} : X = U_1 \cup \dots \cup U_t\);
+  by separatedness all intersections \(U_{i_0 \ldots i_p}\) are affine. Base
+  changing the cover yields an affine open cover \(\mathfrak{U}_B\) of the
+  again-separated \(X' = X_B\), with each \((U_{i_0 \ldots i_p})_B\) affine. By
+  Lemma~\ref{lem:cech_computes_cohomology} the two {\v C}ech complexes compute the
+  respective cohomologies. The affine base change for the \(i = 0\) direct image
+  identifies each term of the base-changed {\v C}ech complex with the original term
+  tensored over \(A\) with \(B\), giving an isomorphism of cochain complexes
+  \[
+    \check{\mathcal{C}}^\bullet(\mathfrak{U}_B, \mathcal{F}_B)
+      \;\cong\;
+      \check{\mathcal{C}}^\bullet(\mathfrak{U}, \mathcal{F}) \otimes_A B.
+  \]
+  Because \(A \to B\) is flat, \(- \otimes_A B\) is exact and commutes with the
+  formation of cohomology of a complex; applying \(H^i\) for any \(i \geq 0\) yields
+  \[
+    H^i(X, \mathcal{F}) \otimes_A B \;\xrightarrow{\;\sim\;}\;
+      H^i(X', \mathcal{F}').
+  \]
+  Translating back to sheaves on \(S' = \operatorname{Spec}(B)\) — using that the
+  unconditional higher direct images are the quasi-coherent sheaves associated to
+  these modules — gives the asserted isomorphism
+  \(g^*(R^i f_*\mathcal{F}) \xrightarrow{\sim} R^i f'_*\mathcal{F}'\) for all
+  \(i \geq 0\). The flatness of \(g\) (hence of \(g'\), by base change) is exactly
+  what makes \(- \otimes_A B\) exact, and is therefore the precise hypothesis under
+  which the {\v C}ech computation of Definition~\ref{def:cech_higher_direct_image}
+  is compatible with base change.
+
+  \emph{This proof depends on the following currently-absent Mathlib
+  infrastructure: the term-wise affine base change of the {\v C}ech complex
+  identifying \(\check{\mathcal{C}}^\bullet(\mathfrak{U}_B, \mathcal{F}_B) \cong
+  \check{\mathcal{C}}^\bullet(\mathfrak{U}, \mathcal{F}) \otimes_A B\), and the
+  exactness of \(- \otimes_A B\) (its commutation with the formation of cohomology
+  of a complex) for the relevant categories of sheaves of modules, neither of which
+  is presently available there.}
+\end{proof}

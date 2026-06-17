@@ -1,0 +1,46 @@
+# Session 9 (iter-009) — Recommendations
+
+## CRITICAL — switch the prover model (user action; blocks all prover progress)
+`fable` capacity-failed at session start for BOTH lanes, **two iters running** (iter-008 + iter-009):
+`num_turns 1`, `$0`, ~1s, 0 tokens, 0 events. The loop cannot self-heal — `config.json` model
+selection is user-only. **Until the prover model is changed, every prover round is a guaranteed
+no-op.** This is now surfaced in TO_USER.md. The plan agent already pre-authorized this escalation
+(iter-009 plan.md). Do NOT keep re-dispatching `fable` and reading the resulting 0-event iters as
+trajectory data.
+
+## Re-dispatch BOTH lanes verbatim once the model is switched
+Directives are validated and carry forward unchanged — neither was executed, so neither is stale.
+
+### Closest-to-completion — DUAL (`SliceTransport.lean`)
+Highest priority. The 30-iter-class blocker is already broken (forward naturality closed iter-007);
+3 residual sorries, all downstream of one root:
+- **ROOT L444 `sliceDualTransportInv.naturality`** — mirror the iter-007-closed forward square.
+  Rotate `inv ε` morphism-level via `IsIso.inv_comp_eq` → forward the ε-square
+  (`analogies/dualnat006.md`). **NEVER apply `inv ε` pointwise / through `whnf`** (reproduces the
+  ≥6-iter deterministic timeout — confirmed again iter-007). Extract a standalone sorry-free
+  `_apply` helper (parent def at heartbeat limit), close via `appIso_hom_naturality_apply` +
+  `dualUnitRingSwap_apply` + `unitRelabelSwap`, discharge `hβ` via `Iso.hom_inv_id`.
+- **L724 `left_inv` / L726 `right_inv`** — `hom_inv_id` round-trips using existing `@[simp]` lemmas;
+  fall out cheaply once the root closes.
+
+### D3′ (`TensorObjSubstrate.lean`) — `pullbackTensorMap_restrict` (L3144)
+Project-lemma construction, not a tactic gap. Scaffold + prove bottom-up:
+`sheafifyMap_pullbackComp_hom_inv_id` → Sq3 `sheafifyTensorUnitIso_comp` → Sq4 `pullbackValIso_comp`,
+then assemble the four-square merge (`analogies/d3cocycle006.md`; `erw` for carrier-spelling).
+`comp_tail` gate already lifted (closed iter-006).
+
+## Do NOT retry without a structural change
+- `exists_tensorObj_inverse` (L712): import-cycle gated — never assign directly; closes downstream
+  via the DUAL chain.
+- Any `inv ε` pointwise / `whnf` route on the DUAL naturality squares — deterministic timeout.
+
+## Coverage debt (deferred, non-blocking)
+~97 `lean_aux` decls (incl. iter-007 SliceTransport helpers) still unmatched in the blueprint
+(`archon dag-query unmatched`). Scheduled `Coverage + file-split cleanup` phase; do not author 97
+entries while two lanes edit the consolidated `Picard_TensorObjSubstrate.tex` (race). No new helpers
+this iter (prover no-op) → debt unchanged from iter-007.
+
+## Stale `.lean` docstrings (carry-forward, non-blocking)
+lean-auditor iter-007 flagged 3 stale comments (Vestigial.lean:15; DualInverse.lean:44, :200,
+obsoleted by the iter-007 split). Neither file got prover work iter-008/009 → still present; fix when
+a prover next touches them or in the cleanup phase.

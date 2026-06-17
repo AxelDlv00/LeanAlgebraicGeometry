@@ -1,0 +1,24 @@
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ───────────────────────────────
+
+[ARCHON] Agent model: opus (blueprint-writer)
+Done. Rendering-cleanup pass on `Albanese_AuslanderBuchsbaum.tex` complete.
+
+**3 edits, all non-semantic:**
+
+1. **math-delim** (lines 158–159) — fixed inverted `$MATH\(prose\)MATH\(prose\)MATH$` → `\(MATH\) prose \(MATH\) prose \(MATH\)` in the `lem:depth_via_ext` proof.
+2. **math-delim** (lines 402–403) — fixed inverted `$x\in\mathfrak{m}\( … \)M$` → `\(x\in\mathfrak{m}\) … \(M\)` in the Auslander–Buchsbaum inductive step.
+3. **bare-label** (line 578) — `lem:depth_drops_by_one` sat inside a `verbatim` ASCII diagram where `\cref{}` can't render, so per the reword fallback I changed it to "see the lemma above" (the live `\cref{lem:depth_drops_by_one}` on the next prose line, 581, is untouched).
+
+**Verification passed:** no rendered `REF` (all 13 are in `%` comments), no `$…\(…\)…$` interleaving remains, no bare `lem:depth_drops_by_one` outside `\cref/\uses/\label`. The one remaining non-comment `$...$` (lines 393–394) is balanced and not a defect class, so left as-is. No statement text, `\lean`, `\label`, `\uses`, or `\leanok` touched.
+
+Report written to `.archon/task_results/blueprint-writer-render-auslander.md`.
+[COST] 2.7min | $1.0934 | in=4423 out=11851 | turns=13
+[ARCHON] ✓ blueprint-writer/render-auslander finished (162s)
+render-auslander: COMPLETE — see /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/task_results/blueprint-writer-render-auslander.md (archived: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/logs/iter-279/blueprint-writer-render-auslander-report.md)

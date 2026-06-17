@@ -1,0 +1,83 @@
+{
+  "iteration": 180,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-23T21:37:30Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "55dcaef3-b690-40b7-8564-097865110164",
+    "durationSecs": 2139
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 8
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 7014
+  },
+  "provers": {
+    "AlgebraicJacobian_Albanese_AuslanderBuchsbaum": {
+      "file": "AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean",
+      "status": "done",
+      "sessionId": "055e382d-52a5-4b2b-92d2-c2cc37a8ea00"
+    },
+    "AlgebraicJacobian_Albanese_Thm32RationalMapExtension": {
+      "file": "AlgebraicJacobian/Albanese/Thm32RationalMapExtension.lean",
+      "status": "done",
+      "sessionId": "7debe453-b878-42d2-b86c-cc9d059cf3bc"
+    },
+    "AlgebraicJacobian_Genus0BaseObjects_GmScaling": {
+      "file": "AlgebraicJacobian/Genus0BaseObjects/GmScaling.lean",
+      "status": "done",
+      "sessionId": "4790780b-7b96-4891-b7bb-961eb62c15a7"
+    },
+    "AlgebraicJacobian_Genus0BaseObjects_Points": {
+      "file": "AlgebraicJacobian/Genus0BaseObjects/Points.lean",
+      "status": "done",
+      "sessionId": "70af55ef-4c83-4f55-8f9a-2cdad7864f2d"
+    },
+    "AlgebraicJacobian_Picard_QuotScheme": {
+      "file": "AlgebraicJacobian/Picard/QuotScheme.lean",
+      "status": "done",
+      "sessionId": "025668f1-c56e-415f-a035-f425a10c5b63"
+    },
+    "AlgebraicJacobian_Picard_RelativeSpec": {
+      "file": "AlgebraicJacobian/Picard/RelativeSpec.lean",
+      "status": "done",
+      "sessionId": "7b243967-7ba3-4b96-8fdd-00f16f6b1119"
+    },
+    "AlgebraicJacobian_RiemannRoch_OCofP": {
+      "file": "AlgebraicJacobian/RiemannRoch/OCofP.lean",
+      "status": "done",
+      "sessionId": "ac443add-2beb-4109-ba69-35e3c32b6605"
+    },
+    "AlgebraicJacobian_RiemannRoch_RRFormula": {
+      "file": "AlgebraicJacobian/RiemannRoch/RRFormula.lean",
+      "status": "done",
+      "sessionId": "db78c584-65fa-4f00-bf43-6657d9eb6ef3"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "49447399-239d-4eab-b014-da1d19eda529",
+    "durationSecs": 2664
+  },
+  "sorry_count": 74,
+  "finalize": {
+    "innerGit": {
+      "sha": "9cdef3c6"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 3
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 5,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-24T00:58:26Z",
+  "wallTimeSecs": 12056
+}

@@ -1,0 +1,48 @@
+{
+  "iteration": 131,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-17T15:23:53Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "bce41d46-fa85-4a91-a3bc-eceab0ee1bc8",
+    "durationSecs": 3540
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 1
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 200
+  },
+  "provers": {
+    "AlgebraicJacobian_Cotangent_GrpObj": {
+      "file": "AlgebraicJacobian/Cotangent/GrpObj.lean",
+      "status": "done",
+      "sessionId": "1d7cab99-b704-48cf-b453-d0ea2c48693e"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "d8e1d9dc-7e23-4197-af95-746c80ce60e8",
+    "durationSecs": 398
+  },
+  "sorry_count": 12,
+  "finalize": {
+    "innerGit": {
+      "sha": "9dcfbc4"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 8
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 1,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-17T16:34:30Z",
+  "wallTimeSecs": 4237
+}

@@ -1,0 +1,76 @@
+{
+  "iteration": 175,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-23T04:56:44Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "b5b96e31-95aa-4883-8326-e0fb2849e9bc",
+    "durationSecs": 3504
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 10
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 1142
+  },
+  "provers": {
+    "AlgebraicJacobian_Albanese_AuslanderBuchsbaum": {
+      "file": "AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean",
+      "status": "done",
+      "sessionId": "04a1ea37-dfc4-4538-86e2-45121600ff67"
+    },
+    "AlgebraicJacobian_Albanese_Thm32RationalMapExtension": {
+      "file": "AlgebraicJacobian/Albanese/Thm32RationalMapExtension.lean",
+      "status": "done",
+      "sessionId": "ecf62bfb-4c89-4c47-b5a4-feed3924dd36"
+    },
+    "AlgebraicJacobian_Genus0BaseObjects_GmScaling": {
+      "file": "AlgebraicJacobian/Genus0BaseObjects/GmScaling.lean",
+      "status": "done",
+      "sessionId": "7519efd7-7c89-4ef5-8359-5ce20b477e1b"
+    },
+    "AlgebraicJacobian_Picard_FGAPicRepresentability": {
+      "file": "AlgebraicJacobian/Picard/FGAPicRepresentability.lean",
+      "status": "done",
+      "sessionId": "dd80e24c-9131-4e7b-be29-c28defe2ccbc"
+    },
+    "AlgebraicJacobian_Picard_FlatteningStratification": {
+      "file": "AlgebraicJacobian/Picard/FlatteningStratification.lean",
+      "status": "done",
+      "sessionId": "e4914f1a-a592-493b-be05-44984d1e4c24"
+    },
+    "AlgebraicJacobian_Picard_QuotScheme": {
+      "file": "AlgebraicJacobian/Picard/QuotScheme.lean",
+      "status": "done",
+      "sessionId": "865ab2cd-e707-4c4f-bb00-0ae570336390"
+    },
+    "AlgebraicJacobian_Picard_RelPicFunctor": {
+      "file": "AlgebraicJacobian/Picard/RelPicFunctor.lean",
+      "status": "done",
+      "sessionId": "f185e068-3398-4ac5-bb01-b94a9b119505"
+    },
+    "AlgebraicJacobian_Picard_RelativeSpec": {
+      "file": "AlgebraicJacobian/Picard/RelativeSpec.lean",
+      "status": "done",
+      "sessionId": "a7e359d9-3b12-4107-8fd7-9af6246c6b78"
+    },
+    "AlgebraicJacobian_RiemannRoch_OCofP": {
+      "file": "AlgebraicJacobian/RiemannRoch/OCofP.lean",
+      "status": "done",
+      "sessionId": "2c9eb8c6-b338-4f66-a049-2335d9e68cd1"
+    },
+    "AlgebraicJacobian_RiemannRoch_WeilDivisor": {
+      "file": "AlgebraicJacobian/RiemannRoch/WeilDivisor.lean",
+      "status": "done",
+      "sessionId": "3826b2a3-3d07-4999-b970-9b6d7b010ad6"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "f65b4e48-e4f9-4527-8a13-7a05a850e630",
+    "durationSecs": 4
+  }
+}

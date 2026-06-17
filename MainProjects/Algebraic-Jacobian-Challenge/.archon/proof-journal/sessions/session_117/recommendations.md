@@ -1,0 +1,59 @@
+# Recommendations for the next plan-agent iteration (iter-118)
+
+## CRITICAL (must-fix-this-iter)
+
+(None on the Lean side.) The `lean-auditor-review117` and the plan-phase `lean-auditor-iter117` both return 0 must-fix / 0 major / 0 excuse-comments / 0 axioms — the surviving framework is mathematically honest.
+
+**However**, the `lean-vs-blueprint-checker-differentials-review117` (review-phase) returned **2 MAJOR** blueprint-side findings that **gate** the iter-118 prover lane on `smooth_iff_locally_free_omega`. These MUST be addressed by an iter-118 plan-phase blueprint-writer pass on `Differentials.tex` BEFORE the prover lane is dispatched, otherwise the prover will read the chapter, search for two non-existent Mathlib names, and fail / churn.
+
+## HIGH
+
+1. **GATE on the iter-118 `smooth_iff_locally_free_omega` prover lane: dispatch a blueprint-writer for `Differentials.tex` FIRST** to fix two `[verified]`-tagged Mathlib name errors in the proof of `thm:smooth_iff_locally_free_omega`, and to expand the converse-direction sketch:
+   - **Name error #1**: `Algebra.IsStandardSmoothOfRelativeDimension.basis_kaehlerDifferential` **does not exist** in Mathlib b80f227. The actual API in `Mathlib/RingTheory/Smooth/StandardSmoothCotangent.lean` is `Algebra.SubmersivePresentation.basisKaehler` / `basisKaehlerOfIsCompl` — defined on a `SubmersivePresentation` witness, not directly on `IsStandardSmoothOfRelativeDimension`. The chapter prose needs to mention extracting a `SubmersivePresentation` witness from `IsStandardSmoothOfRelativeDimension` first.
+   - **Name error #2**: `AlgebraicGeometry.isSmoothOfRelativeDimension_iff` **does not exist**. The actual name is `AlgebraicGeometry.smoothOfRelativeDimension_iff` (no `is` prefix; matches the post-deprecation `SmoothOfRelativeDimension` class).
+   - **Converse-direction expansion**: the current sketch hand-waves how `Subsingleton (Algebra.H1Cotangent A B)` is supplied. This is the genuine deformation-theoretic content of the converse. The blueprint should either cite the specific Mathlib lemma supplying H1-cotangent vanishing (one named lemma, please) or admit explicitly that this is content the iter-118 prover must construct.
+   - **Three other `[verified]` names in the sketch (`rank_kaehlerDifferential`, `IsStandardSmooth.iff_exists_basis_kaehlerDifferential`, `IsStandardSmoothOfRelativeDimension.iff_of_isStandardSmooth`) DO exist** and are correctly cited.
+
+   The misnamed lemmas were apparently introduced this iter (the names appear in iter-117 plan-phase prep and again in `STRATEGY.md` Phase C). Recommend re-running the `mathlib-analogist` or doing direct `lean_loogle` / Mathlib grep verification on each citation before the blueprint-writer commits the iter-118 fix.
+
+2. **After the iter-118 blueprint fix lands, schedule the prover lane on `AlgebraicJacobian/Differentials.lean:81` `smooth_iff_locally_free_omega`**. Estimated 3–7 prover iters / ~200–700 LOC for forward + converse combined.
+
+   The minor stylistic observation from `lean-auditor-review117` (the conclusion mixes `Module.rank` (Cardinal) with `ℕ` via coercion rather than using `Module.finrank`) is non-blocking: the protected signature should be preserved this iter, but the iter-118+ plan-agent may want to ask the user to consider a signature tweak to `Module.finrank R M = n` as a future polish step after the proof body lands.
+
+3. **Fix `STRATEGY.md` Phase C in the same iter-118 plan-phase**. The Phase C text (L128–162) lists the same two incorrect names that appear in the blueprint. The fix is the same as #1 above.
+
+## MEDIUM
+
+2. **Blueprint-writer follow-up on `Jacobian.tex`** (from `lean-vs-blueprint-checker-jacobian-review117`): three coverage / signature-alignment items. Non-blocking for the iter-118 `smooth_iff_locally_free_omega` prover lane, but worth bundling into the same iter-118 plan-phase blueprint-writer dispatch on `Differentials.tex`:
+   - **`thm:IsAlbanese_unique` prose-vs-Lean mismatch**: blueprint says "uniquely isomorphic by an isomorphism"; Lean asserts `∃! (e : J₁ ⟶ J₂), …` (unique morphism, not iso). The Lean *proof* computes the iso content (composites equal identity) but the return type discards the invertibility witnesses. Either tighten the Lean return type to `∃! (e : J₁ ≅ J₂), h₂.ofCurve = h₁.ofCurve ≫ e.hom` (changes a non-protected theorem signature — no user approval needed), or weaken the blueprint prose. The Lean fix is the more faithful one because the proof already establishes the iso content.
+   - **Add a `\structure{}` block for `JacobianWitness`** in `Jacobian.tex`. The blueprint refers to "Albanese witness" / "uniform-over-$P$ Albanese witness" but never anchors the bundle name to a chapter block; consumers reading the chapter must guess the field layout.
+   - **Add a "Extracting the universal morphism" remark block** with three `\lean{...}` hints pinning `AlgebraicGeometry.IsAlbanese.ofCurve`, `.comp_ofCurve`, `.exists_unique_ofCurve_comp`. These declarations feed directly into the protected `AbelJacobi.Jacobian.ofCurve` family; making them blueprint-anchored closes the coverage gap.
+
+3. **Decide the orphan blueprint chapter policy** for iter-118+:
+   - `Modules_Monoidal.tex`, `Picard_LineBundle.tex`, `Picard_Functor.tex`, `Picard_FunctorAb.tex` no longer correspond to any Lean file and are not in `content.tex`. The iter-117 plan agent recommended (a) delete for `Modules_Monoidal.tex` + the BasicOpenCech sections of `Cohomology_MayerVietoris.tex` (pure infrastructure scaffolding), and (b) rewrite-as-stub for the Picard arc (conceptually-useful forward-looking material).
+   - Plan-agent decision lever: a one-shot blueprint-writer dispatch for the Picard arc that converts each chapter to a brief `\section{Out of autonomous-loop scope}` stub naming the Mathlib infrastructure needed for reinstatement, plus an outright delete of `Modules_Monoidal.tex`. Cost: 1 blueprint-writer + 1 deletion ≈ 1 iter, prose-only.
+
+4. **Tighten `STRATEGY.md` Phase C on `cotangent_at_section`.** The current text (L118–120, L128–162) lists `cotangent_at_section` as an iter-118 Phase-C target. The refactor in fact deleted it (it depended on the now-deleted sheafified `relativeDifferentials`). The iter-118 plan-phase should drop this from the Phase C objective list. Cost: ~5 line edits to STRATEGY.md.
+
+5. **Fix the deprecation warning on `Differentials.lean:76`** (`IsSmoothOfRelativeDimension` → `SmoothOfRelativeDimension`). The protected `Jacobian.lean:50,213` signatures already use the new name, so this rename on `Differentials.lean` aligns with the protected surface. Single-line edit, ideally bundled into the iter-118 prover lane on `smooth_iff_locally_free_omega`.
+
+## LOW (informational; not actionable next iter)
+
+5. **`Genus.lean:39–61` historical sketch block** — large `--`-commented block documenting an abandoned alternative route. Now historical; deletion is a clean-up candidate.
+
+6. **Verbose `## Status` docstrings on `AbelJacobi.lean`, `Genus.lean`, `Jacobian.lean`, `Rigidity.lean`** — multi-line per-iteration narratives that drift in usefulness as the iter counter advances. Trim to ≤3 lines at a future cleanup pass.
+
+7. **`MayerVietorisCore.lean` / `MayerVietorisCover.lean` docstrings cite Mathlib mirror line numbers** — these silently drift across Mathlib bumps. Future maintainers should consider relying on declaration names instead. Not a current-iter issue.
+
+8. **`IsAffineHModuleHomFinite` / `HasAffineCechAcyclicCover` carriers in the Cohomology files** — described in `StructureSheafModuleK.lean:530-543` as "dead scaffolding" (no producer can exist on a non-trivial proper curve). The classes and consumer instances are still on disk; the producers were never built. The chosen route does not need them. They could be removed in a future trim pass, but they are NOT broken code — the documentation explicitly names them as dead scaffolding superseded by the wholespace-finiteness route.
+
+## Avoid retrying
+
+- **Do NOT retry the L191 unique-gluing route on `Differentials.lean`.** The route was correctly deleted this iter after 5 iters of progress-critic STUCK verdicts (iter-111…iter-115). The route's blocker was a missing Mathlib bridge (`Scheme.PresheafOfModules`-sheaf-on-affine-basis ⇒ sheaf on X) that the autonomous loop cannot synthesize. The presheaf-form refactor sidesteps the need entirely.
+- **Do NOT retry the `cechCofaceMap_pi_smul` route on the deleted `BasicOpenCech.lean`.** 7 prior PARTIALs across iter-100..iter-107 on a `Pi.lift` discrimination-tree blocker; 9 parked iters did not resolve the architectural blocker; file is now deleted. Do NOT recreate the file.
+- **Do NOT reintroduce `Serre duality genus identity` as a project obligation.** This would require Mathlib infrastructure (dualizing sheaf, trace map, Zariski coherent cohomology of `O_X`-modules) that is multi-Hartshorne-chapter outside the autonomous loop's scope. The trimmed `Differentials.tex` § "Content out of autonomous-loop scope" documents the deferral honestly.
+- **Do NOT add `\leanok` markers manually to chapters whose Lean targets no longer exist.** The orphan chapters (Modules_Monoidal, Picard_*) may still carry `\leanok` markers from before iter-117; these are inert because the chapters are not `\input`'d in `content.tex`. Strip them only as part of an explicit chapter-cleanup pass.
+
+## Mathlib gaps still on the books (informational)
+
+The project ships against exactly **one** explicit foundational hypothesis: `nonempty_jacobianWitness` (existence of an Albanese variety for a smooth proper geometrically irreducible curve). The blueprint chapter `Jacobian.tex` documents 3 classical construction routes (Pic^0 via FGA representability; Sym^g via Stein factorisation; genus-0 via Brauer–Severi + rigidity); each requires multi-iter Mathlib infrastructure outside the autonomous loop's scope. This is honest mathematical disclosure of a project-external assumption, not deferred-indefinitely loop work.

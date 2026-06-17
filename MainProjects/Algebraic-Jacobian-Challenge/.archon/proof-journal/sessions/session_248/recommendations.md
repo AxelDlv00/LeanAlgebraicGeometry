@@ -1,0 +1,39 @@
+# Recommendations for iter-249 (plan agent)
+
+## Closest-to-completion — Lane TS D2′ (drive it home)
+
+The route is UNSTUCK; the abstract mate-calculus (★ steps 3,4 + the `rfl` linchpin) is fully discharged axiom-clean. D2′ now bottoms out in **one** concrete residual. But the next step has a **plan-side prerequisite** — do these in order:
+
+1. **[BLOCKING, plan/writer] Retype `lem:epsilon_presheaf_to_sheaf_unit` (★ step 7).** As written it is ill-typed: there is **no `Functor.LaxMonoidal` instance on the sheaf pushforward** `SheafOfModules.pushforward φ` at the pin (only the presheaf `presheafPushforwardLaxMonoidal`), so `Functor.LaxMonoidal.ε (pushforward φ)` on the LHS does not exist. Dispatch a **blueprint-writer** for `Picard_TensorObjSubstrate.tex` to restate it as a presheaf↔sheaf **`.val`-level** identity reconciling the presheaf `ε(pushforward φ')` with the sheaf `unitToPushforwardObjUnit φ` (use `unitToPushforwardObjUnit_val_app_apply`). The prover recommends pinning the exact Lean type **from inside the live (∗∗) subgoal** — so the writer should state it at the `.val` level and let the prover finalize the precise form. Review has placed a `% NOTE:` on the block flagging this.
+
+2. **[plan] Add a blueprint block for the linchpin** `sheafificationCompPullback_eq_leftAdjointUniq` (`SheafOfModules.sheafificationCompPullback φ = A.leftAdjointUniq B`, holds by `rfl`). It is load-bearing, reusable, axiom-clean, and currently unpinned. A short lemma block with `\lean{AlgebraicGeometry.Scheme.Modules.sheafificationCompPullback_eq_leftAdjointUniq}` suffices.
+
+3. **[prover, after 1] One bounded `prove` pass on `pullbackEtaUnitSquare`'s (∗∗) residual** (L1672). The goal is concrete:
+   `sheafAdj.unit.app 𝒪_X ≫ (pushforward φ).map (pullbackValIso.inv ≫ a_Y.map (η F) ≫ sheafifyUnitIso.hom) = unitToPushforwardObjUnit φ`.
+   The remaining work is `(pushforward φ).map` distribution + `Adjunction.unit_naturality` (step 2/5) + the retyped step-7 identity, all reusing the **now-closed** `compHomEquivFactor`, `leftAdjointUniqUnitEta`, `presheafUnit_comp_map_eta`. Closing (∗∗) makes `pullbackTensorMap_unit_isIso` (D2′) axiom-clean automatically.
+
+   **ARMED reversing signal (carry forward):** this will be iter 5 (245–249) without a canonical sorry closed. If the (∗∗) pass — *after* the step-7 retype — STILL does not close, the budget-bound exemption is exhausted: run progress-critic and consider a mathlib-analogist cross-domain consult or a more concrete construction of the comparison map. Do NOT dispatch a further helper round on the same decomposition with zero closures.
+
+## Reusable proof patterns discovered (iter-248)
+- **Composite-adjunction `homEquiv` factorisation without a `comp_homEquiv` lemma.** `(adj₁.comp adj₂).homEquiv g = adj₁.homEquiv (adj₂.homEquiv g)` is **not** a named Mathlib lemma; derive it: `simp only [Adjunction.homEquiv_unit, Adjunction.comp_unit_app, Functor.comp_map, Functor.map_comp]; exact Category.assoc _ _ _`. Note: keep `Category.assoc` **out** of the simp set and close with `exact Category.assoc _ _ _` (a trailing `rw [Category.assoc]` fails — the term is already right-associated up to defeq).
+- **The 3-layer adjunction "defeq wall" is `rfl`.** `sheafificationCompPullback φ = A.leftAdjointUniq B` holds definitionally. The two composite adjunctions of the sheafification↔pullback unit square have defeq-equal right adjoints (`pushforward φ ⋙ forget_X ≡ forget_Y ⋙ pushforward φ'`), so `leftAdjointUniq` typechecks and the comparison is `rfl`-equal to the project's `sheafificationCompPullback`. This unblocks every `homEquiv_leftAdjointUniq_hom_app` mate identity.
+- **Absorb a `.obj`/`.val` carrier mismatch with `refine Eq.trans (lemma …) ?_` + `rfl`** rather than a direct `rw`, when a Mathlib mate lemma won't rewrite because of a coercion mismatch in the head (used to close `leftAdjointUniqUnitEta`).
+
+## Structural / hygiene must-address
+- **[plan, MECHANICAL] Relocate the stray `\leanok` at `Picard_TensorObjSubstrate.tex` L3349** (it sits between the two `\uses{}` continuation lines L3348/L3350 of the `lem:pullback_tensor_iso_unit` proof, breaking `lem:isiso_sheafifyeta_of_unitsquare`). Move it onto its own line outside the `\uses{}` braces (the established fix from iter-247). Review cannot touch `\leanok`.
+- **[USER, sync_leanok logic] Two sync bugs surfaced this iter.** (a) `sync_leanok` keeps inserting `\leanok` at a position that can land **inside a multi-line `\uses{}`** — this is the recurring actor-deadlock (now 3 iters). (b) The proof-block `\leanok` it added to `lem:pullback_tensor_iso_unit` is a **false positive**: the decl `pullbackTensorMap_unit_isIso` carries `sorryAx` transitively (via `pullbackEtaUnitSquare`), so its proof is NOT closed — the sync apparently checks the decl's own source body for literal `sorry` and misses transitive `sorryAx`. Both warrant a user-side fix to the sync insertion/detection logic; the loop cannot self-heal these (writer forbidden to type `\leanok`, review forbidden to touch it).
+
+## Blocked — do NOT re-assign
+- **`RelPicFunctor.lean` `PicSharp`/`functorial` real bodies** — genuinely cross-file-gated on Lane TS D4′ (`pullback_tensor_iso_loctriv` → `IsInvertible.pullback`). The file has 0 reachable proof work until D4′ lands. iter-248 confirmed there is nothing more to do here; do not dispatch a prover lane on it.
+- **`epsilonPresheafToSheafUnit` as currently stated** — do not re-dispatch as-is; it must be retyped first (item 1 above).
+
+## Review-subagent findings (iter-248) — both clean, no must-fix
+
+- **lean-auditor `aud248`** (`task_results/lean-auditor-aud248.md`): 0 must-fix, **1 MAJOR**, 1 minor. Both files structurally clean; new decls have sound proof bodies; RPF docstrings now accurate.
+  - **[MAJOR — bounded doc fix for the next TS prover pass]** `TensorObjSubstrate.lean:43–44` module Status block says "The remaining typed-`sorry` residual is … `exists_tensorObj_inverse`" (singular) — but there are now **two** tracked sorries (L692 `exists_tensorObj_inverse` + L1672 `pullbackEtaUnitSquare` (∗∗)). Update the header to list both. Review cannot edit `.lean`; fold this into the next Lane TS dispatch's secondary objective (or a bounded doc pass).
+  - **[minor]** `TensorObjSubstrate.lean:51` "the consumer `PicSharp.addCommGroup` … can be rewired" is stale — rewiring completed iter-247. Fold into the same doc pass.
+- **lean-vs-blueprint-checker `ts248`** (`task_results/lean-vs-blueprint-checker-ts248.md`): 0 must-fix, 0 major, 2 minor — independently **confirms** the four new decls' signatures and proofs match their `\lean{}` blocks and the D2′ telescope prose, all 50+ chapter pins resolve, and absent decls correctly carry no `\leanok`. The 2 minor items are the unpinned linchpin and the misplaced `\leanok` (both already in this file above).
+
+## Skip notes for next plan phase
+- strategy-critic: still skippable while STRATEGY.md is SHA-unchanged and the work stays a within-route decomposition (the step-7 retype + (∗∗) close is not a route pivot).
+- progress-critic: dispatch it iter-249 — the route is at iter-4-without-canonical-closure and the armed reversing signal is one pass from firing; the convergence read matters.

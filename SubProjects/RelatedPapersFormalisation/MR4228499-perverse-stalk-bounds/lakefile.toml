@@ -1,0 +1,27 @@
+name = "MR4228499-bounds-for-the-stalks-of-perverse-sheaves-in-characteristic-p-and-a-conjecture-o"
+version = "0.1.0"
+keywords = ["math"]
+defaultTargets = ["MR4228499BoundsForTheStalksOfPerverseSheavesInCharacteristicPAndAConjectureO"]
+
+[leanOptions]
+pp.unicode.fun = true # pretty-prints `fun a ↦ b`
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+maxSynthPendingDepth = 3
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.30.0"
+
+
+[[require]]
+name = "checkdecls"
+git = "https://github.com/PatrickMassot/checkdecls.git"
+
+[[require]]
+name = "«doc-gen4»"
+git = "https://github.com/leanprover/doc-gen4"
+rev = "main"
+[[lean_lib]]
+name = "MR4228499BoundsForTheStalksOfPerverseSheavesInCharacteristicPAndAConjectureO"

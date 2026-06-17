@@ -1,0 +1,207 @@
+# Session 86 — iter-086 review
+
+## Metadata
+
+- **Archon iteration**: 086
+- **Stage**: prover (two substantive lanes — BasicOpenCech, Differentials; Modules/Monoidal off-limits per plan).
+- **Sorry count before iter-086**: 14 active syntactic sorry sites.
+- **Sorry count after iter-086**: **14** active syntactic sorry sites (net 0).
+  - Per-file (post-iter-086):
+    - `Cohomology/BasicOpenCech.lean`: 6 — L502, L826, L854, **L1478** (was L1447 pre-iter-086; shifted by the +47-LOC `R_restrict_R_linear` helper insertion + comment revision), L1523 (was L1492), L1552 (was L1521).
+    - `Differentials.lean`: 5 — L122, **L636** (`cotangentExactSeq_structure case h_exact` — sorry RETURNED after iter-085 false-helper revert; was L640 pre-iter-085, then L521 in iter-085 as the helper body, now L636 inline in the host theorem again), L957 (was L987 in iter-085, shifted −30 due to helper deletion), L974 (was L1004), L1116 (was L1146).
+    - `Modules/Monoidal.lean`: 1 — L173 (unchanged, off-limits).
+    - `Jacobian.lean`: 1 — L179 (unchanged, deferred Phase C).
+    - `Picard/Functor.lean`: 1 — L190 (unchanged, deferred Phase C).
+- **Net sorry-count change**: **0**. But two qualitatively different structural movements:
+  - Lane 1 (BasicOpenCech): a substantive new inline lemma `R_restrict_R_linear` LANDED with a real 3-tactic body (no sorry, no axioms). This is mathematically meaningful infrastructure that Step 2 of the iter-086 closure recipe needs. Full closure of `h_diff_pi_smul_f` did not land (Step 2 chain stalled on a missing sum-distribution lemma).
+  - Lane 2 (Differentials): mandatory revert of the iter-085 false-signature helper `_root_.SheafOfModules.exact_iff_stalkwise` (which had a sorry body but a true-looking universal signature `S.Exact` for ANY `S : ShortComplex (SheafOfModules R)` — i.e. it asserted "every short complex of sheaves of modules is exact", which is false). The revert is a STRUCTURAL REGRESSION in the sense that `cotangentExactSeq_structure`'s body contains a sorry again (the `case h_exact` branch). Net sorry count unchanged: helper body sorry (L521) traded back for inline case-branch sorry (L636). Mathematically honest.
+- **Compilation status iter-086**: ALL FILES COMPILE CLEANLY.
+  - `BasicOpenCech.lean`: clean (final `lean_diagnostic_messages` event 159: 0 errors, 0 warnings).
+  - `Differentials.lean`: clean (final event 240: 0 errors, single grouped sorry warning summarising 5 sorries; 1 pre-existing long-line warning at L626 unrelated to this iter).
+  - All other project files: unchanged, compile clean.
+- **Env state** (from `attempts_raw.jsonl` summary line):
+  103 total events; **11 source edits** (8 BasicOpenCech, 2 Differentials, plus 1 task-result write each); **2** `lean_goal`; **13** `lean_diagnostic_messages`; **21** lemma searches; **0** `lake build`; **0** `lean_run_code` pre-validation (per user policy).
+- **`lean_verify`**: not run this iteration; the iter-085 verify on `basicOpenCover_isCechAcyclicCover_toModuleKSheaf` and `cotangentExactSeq_structure` (only standard axioms) is still authoritative; the false-helper-via-sorry axiom dependency has been REMOVED.
+
+---
+
+## Lane summary
+
+| Lane | File | Status | Sorry Δ | Compile |
+|---|---|---|---|---|
+| 1 | `Cohomology/BasicOpenCech.lean` | **PARTIAL ADVANCE** — `R_restrict_R_linear` inline `have` landed (lines 1406–1414 + 3-tactic body) with a fully-proved body. Step 2 of the iter-086 recipe (per-summand chain) stalled: the post-`hsmul_eq` goal needs a `ModuleCat.hom_sum`-style sum-distribution lemma to peel `ModuleCat.Hom.hom (∑ i, ...)` BEFORE per-summand `R_restrict_R_linear` can fire. Searches confirmed `ModuleCat.hom_sum` does not exist by direct name in Mathlib; only `ModuleCat.hom_add` (two-summand). Six `lean_multi_attempt` probes on the closure chain all failed (each `simp only` reported "argument unused"). | 0 (6 → 6) | yes |
+| 2 | `Differentials.lean` | **REVERT COMPLETED (mandatory)** — iter-085 false-signature helper `_root_.SheafOfModules.exact_iff_stalkwise` (L501–521) was deleted in full (declaration + 16-line GAP-FILL comment block). `case h_exact` of `cotangentExactSeq_structure` was replaced with an honest 4-line `sorry`-with-pointer block (now L613–616, sorry at L636 within proof). Plan-agent's optional Step 2 (build an alternative-route helper) was attempted via 8 searches but no clean Mathlib lemma was found — per plan instructions, STOPPED without introducing any replacement helper. | 0 (5 → 5) | yes |
+| 3 | `Modules/Monoidal.lean` | not assigned (deferred pending Mathlib upstream gap on `PresheafOfModules.stalk_tensorObj` for varying-ring R₀). | — | unchanged |
+
+---
+
+## Lane 1 — `BasicOpenCech.lean`: `R_restrict_R_linear` helper landed
+
+**Status**: PARTIAL ADVANCE. The iter-086 prover successfully introduced the inline lemma `R_restrict_R_linear` as planned (the Step 1 of the iter-085 recipe), but the Step 2 closure chain stalled before reaching the per-summand application.
+
+### Concrete delivery — inline `R_restrict_R_linear` lemma (event 95 in JSONL)
+
+```lean
+-- The presheaf-functoriality collapse: restricting `r' ∈ R = Γ(U)` through
+-- the chain `Γ(U) → Γ(W) → Γ(V)` equals the direct `Γ(U) → Γ(V)`. Used to
+-- match the perI₁/perI₂ R-action chains in the per-summand step S7.
+have R_restrict_R_linear :
+    ∀ {V W : TopologicalSpace.Opens C.left.toTopCat}
+      (h_VW : V ≤ W) (h_VU : V ≤ U) (h_WU : W ≤ U) (r' : ↑R),
+      (C.left.presheaf.map (homOfLE h_VW).op).hom
+        ((C.left.presheaf.map (homOfLE h_WU).op).hom r') =
+      (C.left.presheaf.map (homOfLE h_VU).op).hom r' := by
+  intro V W h_VW h_VU h_WU r'
+  rw [← ConcreteCategory.comp_apply, ← C.left.presheaf.map_comp]
+  congr 1
+```
+
+Verified via `lean_diagnostic_messages` (event 111): clean (0 errors). Three-tactic body. The original iter-085 recipe's signature `(... * z)` with `(z : C.left.presheaf.obj (Opposite.op W))` had to be simplified: Lean failed to synthesise `HMul ↑(C.left.presheaf.obj (Opposite.op W))` at statement elaboration (typeclass resolution at `*` couldn't reach the bundled `CommRingCat` instance through the carrier coercion). The element-level functoriality form (no `* z`) is what the per-summand step needs anyway — the `* z` factor pulls out via `map_mul` at the call site.
+
+### Attack record (iter-086) — Lane 1
+
+| Event | Tactic / Action | Result | Insight |
+|---|---|---|---|
+| 9 | `lean_goal` at L1447 baseline | confirmed S6-form from iter-085 | starting state with `hsmul_eq` rewrite in scope; LHS = `(Pi.π Z₂ j).hom ((eqToHom ∘ₗ Σ.hom) (e₁.symm (r •_pi y)))`, RHS = `r •_{perI₂ j} (Pi.π Z₂ j).hom ((eqToHom ∘ₗ Σ.hom) (e₁.symm y))` |
+| 16 | `lean_diagnostic_messages` baseline | clean | file compiles cleanly |
+| 18 | first `Edit` introducing `R_restrict_R_linear` with `(... * z)` signature | error: `failed to synthesize HMul ↑(C.left.presheaf.obj (Opposite.op W)) ↑(C.left.presheaf.obj (Opposite.op W)) ?m.2230` | typeclass synth at statement elaboration site cannot reach bundled CommRingCat instance through carrier coercion |
+| 20 | second `Edit` adding `↑(...)` ascription on `z` | same `HMul` synth failure | ascribing to literal carrier type insufficient |
+| 33 | third `Edit` using `↑Γ(C.left, W)` notation for `z` | error: `failed to synthesize HMul ↑(C.left.presheaf.obj (Opposite.op W)) ↑Γ(C.left, W) ?m.2229` | the notation expands but the synthesis site sees both forms simultaneously |
+| 35 | fourth `Edit` adding underscore prefix on `_h_WU` | same `HMul` synth failure | named-binder hint doesn't help |
+| 37 | fifth `Edit` reverting to `↑Γ(C.left, W)` with `h_WU` named | same `HMul` synth failure | confirms the issue is statement-level, not binder-level |
+| 39 | sixth `Edit` — drop the `* z` factor entirely; state only the element-level functoriality | success at type check; body still needs final tactic | clean simplification; the `* z` is pulled out via `map_mul` at the call site |
+| 42 | seventh `Edit` — body `intro V W h_VW h_VU h_WU r' ; rw [← ConcreteCategory.comp_apply, ← C.left.presheaf.map_comp] ; congr 1 ; exact Subsingleton.elim _ _` | error: `No goals to be solved` at the `exact` step | the `congr 1` already closes via `Opens.op` subsingleton; trailing `exact` is redundant |
+| 44 | eighth `Edit` — remove trailing `exact Subsingleton.elim _ _` | clean ✓ | helper LANDED |
+| 47 | `lean_goal` at L1466 (post-helper) | confirmed S6-form goal still in scope after helper insertion | next: peel ModuleCat.Hom.hom of sum |
+| 48 | `lean_multi_attempt` `simp only [LinearMap.comp_apply, map_sum, LinearMap.zsmul_apply, ConcreteCategory.comp_apply]` at L1466 | no progress | argument unused — pattern not in goal |
+| 54 | `lean_multi_attempt` `simp only [ModuleCat.hom_sum]` | no progress | lemma may not exist by that name |
+| 56 | `lean_loogle ModuleCat.Hom.hom (∑ _, _)` | 0 results | confirms `ModuleCat.hom_sum` is NOT a direct-named Mathlib lemma |
+| 56 (cont.) | `lean_loogle ModuleCat.Hom.hom` | found `ModuleCat.hom_add`, `ModuleCat.hom_comp`, `ModuleCat.hom_id` etc. (two-summand `hom_add` only) | iterated `Finset.cons_induction` would be needed to derive `hom_sum` |
+| 57 | `lean_multi_attempt` `simp only [Pi.lift_π_apply]` | no progress | the `Pi.lift` is INSIDE the sum, not at the top level |
+| 58 | `Edit` (iter-086 final) — preserve `R_restrict_R_linear`, replace iter-085 obstruction comment with iter-086 progress + iter-087 path-forward sketch | clean ✓ | source-level delivery sealed |
+
+### Iter-087 Lane 1 path forward (concrete, from task result)
+
+The iter-086 task result documents the concrete next-step recipe at L88–111:
+
+1. **Surface the sum** via an inline `have hom_sum_dist : ∀ (s : Finset ι) (f : ι → (M ⟶ N)), ModuleCat.Hom.hom (∑ i ∈ s, f i) = ∑ i ∈ s, ModuleCat.Hom.hom (f i)` proved by `Finset.cons_induction` + `ModuleCat.hom_add` + a zero case. *Must be an inline `have`* (no top-level helper, per user policy).
+2. **Apply `hom_sum_dist`** to peel the sum off `ModuleCat.Hom.hom (∑ i, ...)` on both sides of the goal.
+3. **Distribute `(Pi.π Z₂ j).hom`** over the resulting outer sum via `LinearMap.coe_sum` + `Finset.sum_apply` (now applicable because the sum is at the `(Pi.π Z₂ j).hom (∑ i, ...)` level, and `(Pi.π Z₂ j).hom` is k-linear hence sum-distributive via `map_sum`).
+4. **Per-summand `(i,j)`**: `Pi.lift_π_apply` → peel `Pi.lift` → `Pi.smul_apply` (perI₁) on inner smul → `(C.left.presheaf.map _).hom.map_mul` to split the product → `R_restrict_R_linear` (already landed!) to collapse the algebra-map chain.
+5. **Reassemble** via `Finset.smul_sum` on the RHS.
+
+Total estimate: ~40–60 LOC of carefully-sequenced tactics. The key new infrastructure (`hom_sum_dist`) is ~6 LOC inline.
+
+### Dead-ends confirmed iter-086
+
+- `simp only [LinearMap.comp_apply, map_sum, LinearMap.zsmul_apply, ConcreteCategory.comp_apply]` — no progress (all 4 lemmas report "argument unused").
+- `simp only [map_sum, LinearMap.coe_comp, Function.comp_apply, LinearMap.smul_apply, Finset.smul_sum]` — no progress.
+- `simp only [Pi.lift_π_apply]` — no progress (the `Pi.lift` is INSIDE the sum, not at top level).
+- `simp only [LinearMap.coe_comp, Function.comp_apply, ConcreteCategory.hom_ofHom]` — no progress.
+- `simp only [ModuleCat.hom_sum]` — lemma doesn't exist by that name; no progress.
+- `rw [ModuleCat.hom_comp]` — pattern `ModuleCat.Hom.hom (?f ≫ ?g)` not in goal (the `≫` sits INSIDE the `Pi.lift` inside the sum).
+
+### Mathlib lemmas verified to exist (iter-086, via `lean_loogle`)
+
+- `ModuleCat.Hom.hom : {R} [Ring R] {A B : ModuleCat R} (f : A.Hom B) : ↑A →ₗ[R] ↑B`.
+- `ModuleCat.hom_add : ModuleCat.Hom.hom (f + g) = ModuleCat.Hom.hom f + ModuleCat.Hom.hom g`.
+- `ModuleCat.hom_comp : ModuleCat.Hom.hom (f ≫ g) = ModuleCat.Hom.hom g ∘ₗ ModuleCat.Hom.hom f`.
+- `ModuleCat.hom_id`, `ModuleCat.hom_bijective`, `ModuleCat.hom_ext`, `ModuleCat.ofHom_hom`.
+
+### Mathlib lemmas verified NOT to exist by direct name
+
+- `ModuleCat.hom_sum` (iterated `hom_add` via `Finset.cons_induction` needed inline).
+- `LinearMap.zsmul_apply` (despite plausibility from iter-085 commentary).
+
+---
+
+## Lane 2 — `Differentials.lean`: false-helper revert completed; alternative route not formalised
+
+**Status**: REVERT COMPLETED. Optional alternative route NOT FORMALIZED — no clean Mathlib lemma found, prover STOPPED per plan instructions.
+
+### Concrete delivery — Step 1 (mandatory revert)
+
+**Action 1.1**: deleted iter-085 false helper at L501–521 (the declaration `_root_.SheafOfModules.exact_iff_stalkwise` plus its 16-line GAP-FILL comment block). The false-signature was
+
+```lean
+lemma _root_.SheafOfModules.exact_iff_stalkwise
+    {C : Type*} [Category C] {J : CategoryTheory.GrothendieckTopology C}
+    {R : CategoryTheory.Sheaf J RingCat}
+    (S : CategoryTheory.ShortComplex (SheafOfModules R)) : S.Exact := by
+  sorry
+```
+
+— asserting that EVERY short complex of sheaves of modules is exact, which is mathematically false.
+
+**Action 1.2**: replaced `case h_exact` body in `cotangentExactSeq_structure`:
+
+Old (iter-085, L654–666):
+```lean
+case h_exact =>
+  -- [13 lines of comments]
+  exact _root_.SheafOfModules.exact_iff_stalkwise _
+```
+
+New (iter-086, L613–616):
+```lean
+case h_exact =>
+  -- Iter-086 (Lane 2): the iter-085 false-signature helper has been reverted.
+  -- Alternative route deferred: see `blueprint/src/chapters/Differentials.tex`
+  -- § Cotangent exact sequence for the section-wise + sheafification strategy.
+  sorry
+```
+
+Verification: `lean_diagnostic_messages` reports 5 sorry warnings (L113, L517, L950, L966, L1110 — these are declaration-level "uses sorry" markers), 0 errors. File compiles. No new axioms introduced (the false-axiom-via-sorry dependency on `exact_iff_stalkwise` has been REMOVED).
+
+### Concrete delivery — Step 2 (alternative route exploration)
+
+Per plan instructions, the prover ran 9 search queries to find a clean Mathlib lemma for either Route A (`SheafOfModules.exact_of_presheaf_exact`) or Route B (section-wise + sheafification). All searches confirm no direct lemma exists in Mathlib:
+
+| Query | Tool | Result |
+|---|---|---|
+| `SheafOfModules.exact` | `lean_local_search` | empty |
+| `PresheafOfModules.shortComplex` | `lean_local_search` | empty |
+| `Sheaf.exact` | `lean_local_search` | empty |
+| `ShortComplex.Exact` | `lean_local_search` | only the inductive declaration itself |
+| `SheafOfModules` | `lean_local_search` | structure declaration only |
+| `exact_iff_stalk` | `lean_local_search` | `TopCat.Sheaf.exact_iff_stalkFunctor_map_exact` (sheaf of *abelian groups*, NOT `SheafOfModules`) |
+| `stalkFunctor` | `lean_local_search` | only `TopCat.Presheaf.stalkFunctor` (AddCommGrp-level) |
+| `exact_of_presheaf` | `lean_local_search` | empty |
+| `ShortComplex.map_exact` | `lean_local_search` | empty |
+| "SheafOfModules short complex exact iff presheaf section exact" | `lean_leansearch` | only generic `HomologicalComplex.exact_of_degreewise_exact` (wrong category) |
+| "PresheafOfModules exact iff pointwise sections" | `lean_leansearch` | empty (rate-limited / only generic results) |
+| "sheafification preserves short exact sequence sheaf of modules" | `lean_leansearch` | `PresheafOfModules.instPreservesFiniteLimitsSheafOfModulesSheafification` (left-exactness yes; no direct `Sheaf.exact_of_presheaf_exact`) |
+| "ShortComplex exact reflected faithful functor" | `lean_leansearch` | **`CategoryTheory.ShortComplex.exact_map_iff_of_faithful`** (general reflection, but applying it to `SheafOfModules.toPresheaf` requires preservation-of-homology instances that Mathlib does not currently provide) |
+
+Per plan-agent instruction: "If you don't find a clean Mathlib lemma for (1), STOP and report." Prover stopped without introducing any replacement helper. `case h_exact` remains `sorry`.
+
+### Iter-087 Lane 2 path forward
+
+The task result (L107–128) outlines two viable routes:
+
+- **Route A (top-down)**: introduce a project-local helper `SheafOfModules.exact_of_presheaf_exact` with a TRUE signature (in iff or implication form), bodied via `CategoryTheory.ShortComplex.exact_map_iff_of_faithful` against `SheafOfModules.toPresheaf` plus provable faithfulness + homology-preservation instances. Closer to closure-in-principle but technically demanding (the homology-preservation argument is multi-iter).
+- **Route B (bottom-up)**: skip `SheafOfModules`-level exactness; use `ShortComplex.exact_iff_image_eq_kernel` and compute ker/image directly via `KaehlerDifferential.exact_mapBaseChange_map` at each open, then glue via sheafification's left-exactness. Concrete but mechanically long.
+
+The blueprint (`blueprint/src/chapters/Differentials.tex` § cotangent-exact-sequence, L93 and L98–107) already documents the situation and notes "not yet formalised in Lean" for the stalkwise-criterion lemma. No additional blueprint edits needed this iter (the plan agent's iter-086 blueprint update already absorbed the revert).
+
+---
+
+## Lane 3 — `Modules/Monoidal.lean` (off-limits)
+
+Not assigned; Mathlib gap (`PresheafOfModules.stalk_tensorObj` for varying-ring R₀) unchanged. 1 sorry at L173 remains.
+
+---
+
+## Aggregate findings & iter-087 outlook
+
+- **Net sorry count unchanged at 14**. But the iter-085 mathematical-dishonesty (false-universal helper signature) has been **removed**; the project is now in an honest state where every `sorry` is either (a) a Phase-C/E deferred existence packaging, or (b) a Mathlib-gap-fill that Lane 1 / Lane 2 prover work is actively progressing on, or (c) the `instIsMonoidal_W` Mathlib upstream gap.
+- **Lane 1 substantive infrastructure landed**: `R_restrict_R_linear` is a real proved lemma (not a sorry-bodied stub), now in scope inside `h_diff_pi_smul_f` for the iter-087 closure chain. The blocker that prevented Step 2 closure has been characterised concretely: a `Finset.cons_induction`-derived `hom_sum_dist` is the missing piece, ~6 LOC inline.
+- **Lane 2 honesty restored**: `cotangentExactSeq_structure` body has a sorry again in `case h_exact`, but it is no longer "closed" by an unfounded claim. The two routes (A: build the `SheafOfModules.exact_of_presheaf_exact` helper with a true signature; B: section-wise + sheafification) are documented and ready for plan-agent decision.
+- **Realistic iter-087 target**: net **−1** sorry (13 active). Best-case if Lane 1 lands a clean closure following the documented Step 2 recipe.
+
+## Blueprint markers updated (manual)
+
+- No `\mathlibok` adds or removes this iter.
+- No `\lean{...}` macro corrections this iter — the plan agent's iter-086 update already (a) added a `% NOTE: (iter-086)` comment in `Differentials.tex` at the cotangent-exactness proof block explaining the revert and the alternative-route trajectory, (b) removed the `\lean{...}` line from the `lem:sheafOfModules_exact_iff_stalkwise` block (which now stands as a mathematical statement only, no Lean reference), and (c) added a second `% NOTE: (iter-086)` block above the lemma documenting the deferral.
+- Verified: no `\notready` markers were resurrected by the revert (the iter-085 setup had used `\leanok` directly on the helper, which the deterministic `sync_leanok` phase has already stripped this iteration).
+- No new `% NOTE:` annotations added by the review agent this iter (the plan agent's iter-086 blueprint update is internally consistent and complete with respect to the revert).

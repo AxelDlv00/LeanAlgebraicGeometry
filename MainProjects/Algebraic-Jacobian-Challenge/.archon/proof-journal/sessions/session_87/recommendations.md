@@ -1,0 +1,82 @@
+# Recommendations for the next plan-agent iteration (iter-088)
+
+## TL;DR
+
+iter-087 delivered an **important structural refactor + S1–S5 prefix transcription**, but the **sandbox LSP failure** means no Lean code was actually validated by the compiler this iteration. Before iter-088 can do useful work on `cechCofaceMap_pi_smul` closure, the **`.lake/packages/*` root-ownership issue must be fixed** (user action surfaced via `TO_USER.md`).
+
+If the sandbox is fixed in time, iter-088's primary objective is the **S6 distribution chain closure** in the now-isolated top-level theorem `cechCofaceMap_pi_smul`.
+
+## Priority targets for iter-088
+
+### 1. `cechCofaceMap_pi_smul` — S6 distribution chain closure (Lane 1, high priority)
+
+**Status going in**: S1–S5 prefix transcribed (L495–L521 in `AlgebraicJacobian/Cohomology/BasicOpenCech.lean`), trailing `sorry` at L522. Top-level lemma `presheafMap_restrict_collapse` (L412–L434, fully proved iter-087 refactor) is in scope.
+
+**Expected goal at L522** (per iter-086 verified inline-have analog):
+```
+(Pi.π Z₂ j).hom ((eqToHom ∘ₗ Σ.hom) ((piIsoPi Z₁).inv (r • y))) =
+  r • (Pi.π Z₂ j).hom ((eqToHom ∘ₗ Σ.hom) ((piIsoPi Z₁).inv y))
+```
+
+**Concrete recipe**:
+
+1. **Inline have `hom_sum_dist`** (~6 LOC) — `Finset.cons_induction` + `ModuleCat.hom_add` to derive `ModuleCat.Hom.hom (∑ i ∈ s, f i) = ∑ i ∈ s, ModuleCat.Hom.hom (f i)`. Direct named lemma `ModuleCat.hom_sum` does **NOT exist** in Mathlib (confirmed iter-086).
+2. `rw [hom_sum_dist]` on both sides.
+3. Distribute `(Pi.π Z₂ j).hom` over the outer sum via `LinearMap.map_sum` (or `Finset.sum_apply` + `LinearMap.coe_sum` if the explicit form is needed).
+4. Per-summand `(i, j)`: `Pi.lift_π_apply` → peel `Pi.lift` → `Pi.smul_apply` (using `perI₁`) on the inner smul → `RingHom.map_mul` to split the product `restrict_{i→j}(r-restricted * y(j ∘ δ_i))` → `presheafMap_restrict_collapse` (now top-level at L425!) to collapse the algebra-map chain `R = Γ(U) → Γ(V_{j∘δ_i}) → Γ(V_j)`.
+5. Reassemble via `Finset.smul_sum` to match the outer `r •` on RHS.
+
+**Estimated LOC**: 40–60.
+
+**Risks documented by iter-087 prover** (must validate before assuming Step 1 lands):
+- **`intro` on `let`/`letI` conclusion**: if Lean's elaborator beta-reduces the lets before `intro` fires, the 12-arg `intro R K₀ scK₀ Z₁ Z₂ e₁ e₂ perI₁ h_mod_pi₁ perI₂ h_mod_pi₂ r y` line will fail. Recovery: drop `intro` and use `simp only` to unfold lets, OR call `intros r y` after the lets reduce.
+- **`Pi.smul_apply` firing**: depends on `[∀ i, SMul R (Z₂ i)]` synthesis from `perI₂`. `perI₂` is in scope post-`intro`. Recovery: prefix the `simp only` with `letI := perI₂`.
+
+**Dead-ends to avoid (from iter-086, still applicable)**:
+- `simp only [LinearMap.comp_apply, map_sum, LinearMap.zsmul_apply, ConcreteCategory.comp_apply]` — all 4 lemmas "argument unused".
+- `simp only [ModuleCat.hom_sum]` — lemma doesn't exist.
+- `simp only [Pi.lift_π_apply]` at top level — `Pi.lift` is inside the sum.
+- `rw [ModuleCat.hom_comp]` directly — pattern not in goal because `≫` is inside `Pi.lift` inside sum.
+- `simp only [LinearMap.comp_apply]` — `∘ₛₗ`-vs-`∘ₗ` HOU mismatch.
+- `set L : ↑(∏ᶜ Z₁) →ₗ[k] ↑(∏ᶜ Z₂) := ...` — stuck universe `u =?= imax ?u' ?u''`.
+
+### 2. `cotangentExactSeq_structure case h_exact` — Route A or B decision (Lane 2, medium priority)
+
+**Status going in**: honest `sorry` at L636 (iter-086 revert; iter-087 did NOT touch this file). Two viable routes documented in iter-085/086:
+
+- **Route A (top-down)**: project-local helper `SheafOfModules.exact_of_presheaf_exact` with TRUE signature (iff or implication form), bodied via `CategoryTheory.ShortComplex.exact_map_iff_of_faithful` against `SheafOfModules.toPresheaf` plus provable faithfulness + homology-preservation instances. Closer to closure-in-principle but technically demanding (the homology-preservation argument is multi-iter).
+- **Route B (bottom-up)**: skip `SheafOfModules`-level exactness; use `ShortComplex.exact_iff_image_eq_kernel` and compute ker/image directly via `KaehlerDifferential.exact_mapBaseChange_map` at each open, then glue via sheafification's left-exactness. Concrete but mechanically long.
+
+**Recommendation**: Plan agent should commit to one route in iter-088's PROGRESS.md and assign a Differentials lane to it. Route A is structurally closer to a clean closure but the homology-preservation work is upstream Mathlib territory and may take 2–3 iterations to land cleanly. Route B is more LOC but stays inside the project.
+
+**Important honesty constraint** (iter-086): any helper signature introduced MUST pass the mathematical-honesty audit. The iter-085 false `_root_.SheafOfModules.exact_iff_stalkwise (S : ShortComplex (SheafOfModules R)) : S.Exact` MUST NOT be reintroduced. The iter-087 `cechCofaceMap_pi_smul` first-pass extract refactor had a similarly-false universal signature; the specialize refactor caught it. **Plan agent: when authorising any new sorry-bodied helper, require the prover/refactor agent to demonstrate that the conclusion is NOT vacuously / universally false.**
+
+### 3. Other files
+
+- **`g_R.map_smul'` (BasicOpenCech.lean L1156, formerly L1523)** — downstream of `cechCofaceMap_pi_smul` closure. Comment at L1148–1154 confirms the g-side needs `Eq.mpr` casts on the codomain due to `CochainComplex.next` indexing. Defer to iter-089+ unless iter-088 lands `cechCofaceMap_pi_smul` cleanly with budget left over.
+- **`h_loc_exact` (BasicOpenCech.lean L1185)** — needs `IsLocalizedModule.Away f.1` infrastructure. Multi-iter Mathlib gap. Defer.
+- **Extra-degeneracy substeps (BasicOpenCech.lean L614, L966)** — augmented simplicial object infrastructure. Multi-iter. Defer.
+- **`Modules/Monoidal.lean` L173 `instIsMonoidal_W`** — off-limits (Mathlib upstream gap `PresheafOfModules.stalk_tensorObj` for varying-ring `R₀`). Continue to defer.
+- **`Differentials.lean` L122/L957/L974/L1116** — Phase-B/B+ deferred sorries. Not active this iteration.
+- **`Jacobian.lean` L179 `nonempty_jacobianWitness`**, **`Picard/Functor.lean` L190 `PicardFunctor.representable`** — Phase-C/E deferred packagings. Not active.
+
+## Targets the plan agent should NOT retry
+
+Based on the iter-086 + iter-087 dead-end catalog, do not assign:
+
+- Any direct rewrite of the `ModuleCat.Hom.hom` of a Finset sum (via `ModuleCat.hom_sum`, `simp only [map_sum]` alone, or `simp only [LinearMap.zsmul_apply]`). Must derive `hom_sum_dist` inline via `Finset.cons_induction`.
+- Any helper with a signature that is universally false (the audit rule introduced iter-086 after the `SheafOfModules.exact_iff_stalkwise` debacle, reinforced iter-087 by the specialize refactor).
+- Any extract that introduces a top-level helper without ensuring the signature is **concrete to the call site's specialised context** (iter-087 extract → specialize was the lesson).
+
+## Process recommendations for the plan agent
+
+1. **Single-lane vs multi-lane**: iter-087 ran with a single substantive lane (BasicOpenCech). Given the sandbox LSP issue, single-lane is the right call until the environment is fixed. Once fixed, a second lane on `cotangentExactSeq_structure case h_exact` (Route A or B) is the natural parallel target. The two files are independent.
+2. **Refactor subagent dispatch**: the iter-087 plan agent's two refactor calls (extract + specialize) were strategically valuable — they isolated the hot obligation as a focused top-level goal and caught a mathematical-honesty problem before the prover saw it. Continue this pattern when a prover-target obligation sits ≥500 LOC inside another proof body.
+3. **Sandbox verification**: do NOT accept a "structure-transcribed but compilation-unverified" delivery as iter-088 progress unless the dispatcher environment fully validates the prover's edit. The iter-087 work is structurally sound by inspection but technically unverified. The plan agent's first iter-088 action should be a `lake build` + `lean_diagnostic_messages` sweep on `BasicOpenCech.lean` to confirm the iter-087 work landed. If the sandbox issue persists, escalate to the user.
+4. **`hom_sum_dist` inline have**: the plan agent should write the exact 6-LOC `hom_sum_dist` block in the PROGRESS.md S6 recipe so the iter-088 prover can paste it directly. This avoids the prover wasting tactic budget rediscovering the `Finset.cons_induction` + `ModuleCat.hom_add` pattern.
+
+## Realistic iter-088 outlook
+
+- **Best case**: sandbox fixed, S1–S5 prefix verified, S6 chain closes cleanly → **net −1 sorry** (5 in BasicOpenCech, 13 total active).
+- **Likely case**: sandbox fixed, S1–S5 needs minor adjustment (e.g. `letI := perI₂` prefix or `intro` recovery), S6 chain partial → **net 0 sorry, structural verification + dead-end documentation**.
+- **Worst case**: sandbox NOT fixed → no useful prover work possible; **net 0 sorry**, iter-088 becomes another structural/blueprint iteration only.

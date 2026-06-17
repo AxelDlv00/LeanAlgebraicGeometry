@@ -1,0 +1,44 @@
+{
+  "iteration": 64,
+  "stage": "prover  (iteration 063 \u2014 **parallelism + refactor pass; user-directed 2026-05-11**: split `MayerVietoris.lean` (1872 LOC) into three files via the refactor subagent, opened Phase B by writing the `Differentials.tex` blueprint chapter, and dispatched two parallel prover objectives \u2014 substep (b)+(c) work continues in its new home `Cohomology/BasicOpenCech.lean`, and a brand-new `Differentials.lean` opens Phase B step 1. Plan agent does NOT pre-verify candidate proof bodies; transient sorries explicitly acceptable on the Phase B scaffold.)",
+  "mode": "parallel",
+  "startedAt": "2026-05-11T09:09:00Z",
+  "plan": {
+    "status": "skipped",
+    "durationSecs": 871
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 1657
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_BasicOpenCech": {
+      "file": "AlgebraicJacobian/Cohomology/BasicOpenCech.lean",
+      "status": "done"
+    },
+    "AlgebraicJacobian_Differentials": {
+      "file": "AlgebraicJacobian/Differentials.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 2544
+  },
+  "sorry_count": 421,
+  "finalize": {
+    "innerGit": {
+      "sha": "52fcd76"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 12
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 6
+    }
+  },
+  "completedAt": "2026-05-11T12:38:24Z",
+  "wallTimeSecs": 4409
+}

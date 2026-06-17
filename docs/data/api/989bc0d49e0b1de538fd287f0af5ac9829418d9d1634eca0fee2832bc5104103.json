@@ -1,0 +1,1760 @@
+{
+  "nodes": [
+    {
+      "id": "def:peer_higher_direct_image",
+      "type": "definition",
+      "title": "Sheaf cohomology and higher direct image anchor",
+      "chapter": "",
+      "statement": "The peer project \\emph{Cech-Cohomology}, in its chapter on higher direct\n  images \\(R^i f_*\\) of quasi-coherent sheaves, supplies the standard higher\n  direct image object \\(R^i f_*\\mathcal F\\).  This is the infrastructure through\n  which Kemeny's uses of \\(R^i q_*\\), Grauert-type local freeness, and Leray\n  spectral sequences should pass.",
+      "uses": [],
+      "lean_name": "AlgebraicGeometry.higherDirectImage",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_PeerDependencies.tex",
+      "lean_file": "",
+      "dep_count": 0,
+      "rdep_count": 4,
+      "descendant_count": 24,
+      "proof_size_tex": null,
+      "effort_local": 341,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 341
+    },
+    {
+      "id": "def:peer_scheme_hmodule",
+      "type": "definition",
+      "title": "Scheme cohomology module anchor",
+      "chapter": "",
+      "statement": "The peer project \\emph{Algebraic-Jacobian-Challenge}, in its chapter on\n  sheaves of \\(k\\)-modules, supplies the scheme cohomology module\n  \\(H^i(X,\\mathcal F)\\) for module-valued sheaves on a scheme.  The present\n  blueprint uses this object as the common cohomological interface.",
+      "uses": [],
+      "lean_name": "AlgebraicGeometry.Scheme.HModule",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_PeerDependencies.tex",
+      "lean_file": "",
+      "dep_count": 0,
+      "rdep_count": 2,
+      "descendant_count": 21,
+      "proof_size_tex": null,
+      "effort_local": 281,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 281
+    },
+    {
+      "id": "def:peer_affine_pushforward_base_change",
+      "type": "definition",
+      "title": "Affine pushforward and base-change anchor",
+      "chapter": "",
+      "statement": "The peer project \\emph{Quot-Foundations}, in its chapter on flat base change\n  for degree-zero pushforward of quasi-coherent sheaves, supplies the affine\n  base-change morphism.  It is connected here to the higher direct image anchor\n  because the \\(i=0\\) construction is the degree-zero member of the same\n  pushforward formalism.  Kemeny's pushforward identities for blow-ups,\n  restrictions, and products should be expressed through this base-change\n  object.",
+      "uses": [
+        "def:peer_higher_direct_image"
+      ],
+      "lean_name": "AlgebraicGeometry.pushforwardBaseChangeMap",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_PeerDependencies.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 4,
+      "descendant_count": 23,
+      "proof_size_tex": null,
+      "effort_local": 462,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 803
+    },
+    {
+      "id": "def:peer_module_iso_locality",
+      "type": "definition",
+      "title": "Local criterion for module isomorphisms anchor",
+      "chapter": "",
+      "statement": "The peer project \\emph{Quot-Foundations}, in its chapter on flat base change\n  for degree-zero pushforward, supplies the local criterion that a morphism of\n  \\(\\mathcal O_X\\)-modules is an isomorphism exactly when the induced morphisms\n  on stalks are isomorphisms.  Later comparisons of cohomology sheaves and\n  vector bundles should reduce global module isomorphisms to these stalkwise\n  verifications.",
+      "uses": [
+        "def:peer_scheme_hmodule"
+      ],
+      "lean_name": "AlgebraicGeometry.Modules.isIso_iff_isIso_stalkFunctor_map",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_PeerDependencies.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 1,
+      "descendant_count": 17,
+      "proof_size_tex": null,
+      "effort_local": 404,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 685
+    },
+    {
+      "id": "thm:kemeny_generic_green",
+      "type": "theorem",
+      "title": "Generic Green's conjecture for general canonical curves",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Introduction, Theorem generic-green.}\n  If \\(C\\) is a general complex curve of genus \\(2k\\) or \\(2k+1\\), then\n  \\(\\K_{k,1}(C,\\omega_C)=0\\).",
+      "uses": [
+        "lem:kemeny_even_k3_section_to_general_curve",
+        "thm:kemeny_odd_voisin"
+      ],
+      "lean_name": "MR4213770.GenericGreen",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:kemeny_even_k3_section_to_general_curve, thm:kemeny_odd_voisin}\n  For even genus, apply the K3-section transfer from the Picard-rank-one K3\n  vanishing proved by the universal secant bundle argument to a general\n  canonical curve of genus \\(2k\\).\n  For odd genus, use the Picard-rank-two nodal K3 reduction: the projection\n  criterion reduces the desired vanishing to injectivity of the projection map,\n  and the odd-genus secant-bundle calculation supplies that injectivity.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 0,
+      "descendant_count": 0,
+      "proof_size_tex": 485,
+      "effort_local": 485,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 15851
+    },
+    {
+      "id": "thm:kemeny_even_geometric_syzygy_structure",
+      "type": "theorem",
+      "title": "Even-genus geometric syzygy theorem",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Introduction, Theorem geo-thm-intro.}\n  Let \\(X\\) be a complex K3 surface with \\(\\Pic(X)=\\mathbb Z[L]\\) and \\(L\\)\n  ample of even genus \\(g=2k\\).  For the Lazarsfeld--Mukai bundle \\(E\\), each\n  nonzero section \\(s\\) determines a one-dimensional subspace\n  \\[\n    \\K_{k-1,1}\\bigl(X,L,H^0(L\\otimes I_{Z(s)})\\bigr)\\subseteq \\K_{k-1,1}(X,L).\n  \\]\n  The induced map\n  \\(\\PP(H^0(E))\\to \\PP(\\K_{k-1,1}(X,L))\\) is the degree \\(k-2\\) Veronese\n  embedding, hence induces\n  \\(\\Sym^{k-2}H^0(X,E)\\simeq \\K_{k-1,1}(X,L)\\).",
+      "uses": [
+        "cor:kemeny_extremal_syzygy_iso",
+        "thm:kemeny_veronese_identification"
+      ],
+      "lean_name": "MR4213770.EvenGeometricSyzygyStructure",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{cor:kemeny_extremal_syzygy_iso, thm:kemeny_veronese_identification}\n  The surjectivity theorem for\n  \\(H^1(B,\\wedge^k\\pi^*\\cM\\otimes p'^*L)\\to H^1(B,\\wedge^k\\Gamma\\otimes p'^*L)\\)\n  and the determinant computation for \\(\\Gamma\\) identify the target cohomology\n  with \\(H^0(\\PP,\\mathcal O_{\\PP}(k-2))^\\vee\\).  Dualizing gives an injection\n  \\(\\Sym^{k-2}H^0(E)\\hookrightarrow \\K_{k-1,1}(X,L)\\), and the even-genus\n  vanishing gives equality of dimensions.  The fibre calculation in Section 2\n  identifies the hyperplane quotient over \\([t]\\) with the secant Koszul\n  subspace attached to \\(Z(t)\\), so the projective morphism is the Veronese map.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 2,
+      "descendant_count": 4,
+      "proof_size_tex": 649,
+      "effort_local": 649,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 9047
+    },
+    {
+      "id": "cor:kemeny_geometric_syzygy_even",
+      "type": "corollary",
+      "title": "Geometric Syzygy Conjecture in even genus",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Introduction, Corollary geo-cor.}\n  If \\(C\\) is a general curve of even genus \\(2k\\), then\n  \\(\\K_{k-1,1}(C,\\omega_C)\\) is generated by the rank \\(k\\) syzygies arising\n  from the subspaces \\(H^0(\\omega_C\\otimes A^{-1})\\), for\n  \\(A\\in W^1_{k+1}(C)\\).",
+      "uses": [
+        "thm:kemeny_even_geometric_syzygy_structure",
+        "lem:kemeny_grassmann_pencil_map",
+        "lem:kemeny_voisin_generation_observation",
+        "lem:kemeny_restrict_k3_syzygies_to_curve"
+      ],
+      "lean_name": "MR4213770.GeometricSyzygyEven",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{thm:kemeny_even_geometric_syzygy_structure, lem:kemeny_grassmann_pencil_map, lem:kemeny_voisin_generation_observation, lem:kemeny_restrict_k3_syzygies_to_curve}\n  For a general \\(C\\in |L|\\), the finite map from\n  \\(\\Gr_2(H^0(E))\\) to \\(|L|\\) identifies its fibre over \\(C\\) with\n  \\(W^1_{k+1}(C)\\).  The degree \\(k-2\\) Veronese image is nondegenerate on the\n  union of the lines corresponding to these pencils, so the K3 space\n  \\(\\K_{k-1,1}(X,L)\\) is generated by the corresponding secant subspaces.\n  Restriction to \\(C\\) identifies these subspaces with the rank \\(k\\) syzygy\n  spaces in the statement.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 4,
+      "rdep_count": 0,
+      "descendant_count": 0,
+      "proof_size_tex": 610,
+      "effort_local": 610,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 10637
+    },
+    {
+      "id": "def:kemeny_kernel_bundle_reduction",
+      "type": "definition",
+      "title": "Kernel bundle and Koszul cohomology reduction",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Section sec1, opening paragraph.}\n  The kernel bundle \\(M_L\\) is defined by\n  \\(0\\to M_L\\to H^0(L)\\otimes \\cO_X\\to L\\to0\\).  For the even-genus K3\n  surface, the desired vanishing \\(\\K_{k,1}(X,L)=0\\) follows from\n  \\(H^1(X,\\wedge^{k+1}M_L)=0\\).",
+      "uses": [
+        "def:peer_scheme_hmodule"
+      ],
+      "lean_name": "MR4213770.KernelBundleReduction",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 1,
+      "descendant_count": 15,
+      "proof_size_tex": null,
+      "effort_local": 268,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 549
+    },
+    {
+      "id": "def:kemeny_universal_zero_locus",
+      "type": "definition",
+      "title": "Universal zero locus",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Section sec1.}\n  Let \\(\\PP=\\PP(H^0(E))\\), with projections \\(p:X\\times\\PP\\to X\\) and\n  \\(q:X\\times\\PP\\to\\PP\\).  The universal zero locus is\n  \\[\n    \\cZ=\\{(x,s)\\mid s(x)=0\\}\\subseteq X\\times\\PP .\n  \\]\n  It is smooth over \\(X\\), and finite flat over \\(\\PP\\) under the Picard-rank-one\n  hypothesis.",
+      "uses": [],
+      "lean_name": "MR4213770.UniversalZeroLocus",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 0,
+      "rdep_count": 3,
+      "descendant_count": 25,
+      "proof_size_tex": null,
+      "effort_local": 320,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 320
+    },
+    {
+      "id": "def:kemeny_universal_secant_bundles",
+      "type": "definition",
+      "title": "Universal secant bundles",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Section sec1.}\n  Let \\(\\pi:B\\to X\\times\\PP\\) be the blow-up of \\(\\cZ\\), with exceptional\n  divisor \\(D\\), and let \\(p'=p\\circ\\pi\\), \\(q'=q\\circ\\pi\\).  Define\n  \\[\n    0\\to\\cS\\to q'^*q'_*(p'^*L\\otimes I_D)\\to p'^*L\\otimes I_D\\to0\n  \\]\n  and let \\(\\Gamma\\) be the quotient in\n  \\(0\\to\\cS\\to\\pi^*\\cM\\to\\Gamma\\to0\\).  The bundles \\(\\cS\\) and \\(\\Gamma\\) are\n  Kemeny's universal secant bundles.",
+      "uses": [
+        "def:kemeny_universal_zero_locus"
+      ],
+      "lean_name": "MR4213770.UniversalSecantBundles",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 5,
+      "descendant_count": 21,
+      "proof_size_tex": null,
+      "effort_local": 413,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 733
+    },
+    {
+      "id": "lem:kemeny_W_locally_free",
+      "type": "lemma",
+      "title": "The cokernel bundle \\(\\mathcal W\\)",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Lemma very-first-lem.}\n  The cokernel\n  \\[\n    \\mathcal W=\\operatorname{Coker}\\bigl(q'_*(p'^*L\\otimes I_D)\\to q'_*p'^*L\\bigr)\n  \\]\n  is locally free of rank \\(k\\).",
+      "uses": [
+        "def:kemeny_universal_zero_locus",
+        "def:peer_higher_direct_image",
+        "def:peer_affine_pushforward_base_change",
+        "def:peer_module_iso_locality"
+      ],
+      "lean_name": "MR4213770.WLocallyFree",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{def:peer_higher_direct_image, def:peer_affine_pushforward_base_change, def:peer_module_iso_locality}\n  Apply \\(Rq_*\\) to the universal exact sequence.  The fibres of\n  \\(q_*(p^*L|_{\\cZ})\\) have dimension \\(k+1\\), while\n  \\(R^1q_*(p^*L\\otimes I_{\\cZ})\\) has fibre \\(H^2(\\cO_X)\\), hence rank one.\n  Grauert's theorem gives local freeness.  The pushforward exact sequence is\n  checked after the standard base-change reductions, and the resulting\n  sheaf-map identification is local on stalks; the exact sequence then shows\n  that the kernel \\(\\mathcal W\\) has rank \\(k\\).\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 4,
+      "rdep_count": 3,
+      "descendant_count": 16,
+      "proof_size_tex": 574,
+      "effort_local": 574,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 2382
+    },
+    {
+      "id": "lem:kemeny_first_iso",
+      "type": "lemma",
+      "title": "First symmetric-power computation",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Lemma first-iso.}\n  For \\(\\cG=q^*q_*(p^*L\\otimes I_{\\cZ})\\), one has\n  \\(H^{k+1}(X\\times\\PP,\\Sym^{k+1}\\cG)=0\\) and a natural isomorphism\n  \\(H^k(X\\times\\PP,\\Sym^{k+1}\\cG)\\simeq \\Sym^kH^0(E)\\).",
+      "uses": [
+        "def:kemeny_universal_secant_bundles"
+      ],
+      "lean_name": "MR4213770.FirstIso",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  Resolve \\(\\Sym^{k+1}\\cG\\) by the two-term symmetric-power sequence induced\n  from \\(0\\to q^*\\cO_{\\PP}(-2)\\to H^0(E)\\otimes q^*\\cO_{\\PP}(-1)\\to\\cG\\to0\\).\n  The cohomology of negative twists on \\(\\PP^{k+1}\\), Kunneth, and\n  \\(H^1(\\cO_X)=0\\) identify the only nonzero contribution in degree \\(k\\) with\n  \\(\\Sym^kH^0(E)\\) and force the degree \\(k+1\\) group to vanish.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 2,
+      "descendant_count": 18,
+      "proof_size_tex": 363,
+      "effort_local": 363,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 1096
+    },
+    {
+      "id": "lem:kemeny_twisted_symmetric_comparison",
+      "type": "lemma",
+      "title": "Twisted symmetric-power comparison",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Lemmas first-twist-lem and second-twist-lem.}\n  The group \\(H^k(\\Sym^k\\cG\\otimes p^*L\\otimes I_{\\cZ})\\) is naturally\n  \\(\\Sym^kH^0(E)\\), and the evaluation map \\(\\cG\\twoheadrightarrow\n  p^*L\\otimes I_{\\cZ}\\) induces an isomorphism\n  \\[\n    H^k(\\Sym^k\\cG\\otimes\\cG)\\simeq\n    H^k(\\Sym^k\\cG\\otimes p^*L\\otimes I_{\\cZ}).\n  \\]",
+      "uses": [
+        "lem:kemeny_first_iso"
+      ],
+      "lean_name": "MR4213770.TwistedSymmetricComparison",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:kemeny_first_iso}\n  Tensor the symmetric-power resolution of \\(\\cG\\) with \\(p^*L\\otimes I_{\\cZ}\\).\n  The universal section exact sequence identifies the relevant boundary map with\n  the identity of \\(H^0(E)\\), so the only surviving degree \\(k\\) contribution is\n  \\(\\Sym^kH^0(E)\\).  Repeating the same computation with \\(\\cG\\) in place of\n  \\(p^*L\\otimes I_{\\cZ}\\) gives the same vector space, and the evaluation map is\n  the identity under these identifications.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 1,
+      "descendant_count": 17,
+      "proof_size_tex": 472,
+      "effort_local": 472,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 1568
+    },
+    {
+      "id": "prop:kemeny_auto_injectivity",
+      "type": "proposition",
+      "title": "Automatic injectivity",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Proposition auto-injectivity.}\n  The natural map\n  \\(H^k(\\Sym^{k+1}\\cG)\\to H^k(\\Sym^k\\cG\\otimes p^*L\\otimes I_{\\cZ})\\) is an\n  isomorphism.",
+      "uses": [
+        "lem:kemeny_first_iso",
+        "lem:kemeny_twisted_symmetric_comparison"
+      ],
+      "lean_name": "MR4213770.AutoInjectivity",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:kemeny_first_iso, lem:kemeny_twisted_symmetric_comparison}\n  Under the two preceding identifications, it is enough to prove injectivity of\n  \\(H^k(\\Sym^{k+1}\\cG)\\to H^k(\\Sym^k\\cG\\otimes\\cG)\\).  For any vector bundle\n  \\(\\mathcal F\\), the composite\n  \\(\\Sym^i\\mathcal F\\to \\Sym^{i-1}\\mathcal F\\otimes\\mathcal F\\to\\Sym^i\\mathcal F\\)\n  is multiplication by \\(i\\), hence is injective over \\(\\C\\).\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 1,
+      "descendant_count": 16,
+      "proof_size_tex": 402,
+      "effort_local": 402,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 1970
+    },
+    {
+      "id": "thm:kemeny_even_secant_vanishing",
+      "type": "theorem",
+      "title": "Even-genus secant-bundle vanishing",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Theorem main-thm.}\n  For \\(1\\le i\\le k+1\\),\n  \\[\n    H^i\\bigl(B,\\wedge^{k+1-i}\\pi^*\\cM\\otimes\\Sym^i\\cS\\bigr)=0 .\n  \\]",
+      "uses": [
+        "def:kemeny_universal_secant_bundles",
+        "prop:kemeny_auto_injectivity",
+        "def:peer_affine_pushforward_base_change"
+      ],
+      "lean_name": "MR4213770.EvenSecantVanishing",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{prop:kemeny_auto_injectivity, def:peer_affine_pushforward_base_change}\n  Use the symmetric-power sequence for the quotient defining \\(\\cS\\).  After\n  applying the projection formula and the blow-up identities\n  \\(\\pi_*\\cO_B=\\cO_{X\\times\\PP}\\), \\(\\pi_*I_D=I_{\\cZ}\\), and vanishing of higher\n  direct images, the top case is exactly the automatic-injectivity isomorphism.\n  The remaining cases reduce to Kunneth vanishings for exterior powers of\n  \\(M_L\\) tensored with negative line bundles on \\(\\PP\\).\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 1,
+      "descendant_count": 15,
+      "proof_size_tex": 507,
+      "effort_local": 507,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 3280
+    },
+    {
+      "id": "thm:kemeny_even_voisin",
+      "type": "theorem",
+      "title": "Voisin's theorem in even genus",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Section sec1.}\n  For a Picard-rank-one complex K3 surface \\((X,L)\\) of even genus \\(2k\\),\n  \\(\\K_{k,1}(X,L)=0\\).",
+      "uses": [
+        "def:kemeny_kernel_bundle_reduction",
+        "thm:kemeny_even_secant_vanishing"
+      ],
+      "lean_name": "MR4213770.EvenVoisin",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{def:kemeny_kernel_bundle_reduction, thm:kemeny_even_secant_vanishing}\n  The kernel-bundle description reduces \\(\\K_{k,1}(X,L)=0\\) to\n  \\(H^1(X,\\wedge^{k+1}M_L)=0\\).  Pulling to \\(B\\) and using the exact sequence\n  \\(0\\to\\cS\\to\\pi^*\\cM\\to\\Gamma\\to0\\), the exterior-power filtration reduces\n  this vanishing to the family of vanishing statements in\n  Theorem~\\ref{thm:kemeny_even_secant_vanishing}.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 3,
+      "descendant_count": 14,
+      "proof_size_tex": 402,
+      "effort_local": 402,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 4231
+    },
+    {
+      "id": "lem:kemeny_even_k3_section_to_general_curve",
+      "type": "lemma",
+      "title": "Even K3 section transfer to a general curve",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Introduction, even-genus transfer sentence.}\n  The vanishing \\(\\K_{k,1}(X,L)=0\\) for a Picard-rank-one K3 surface of even\n  genus \\(2k\\) implies \\(\\K_{k,1}(C,\\omega_C)=0\\) for a general canonical curve\n  \\(C\\) of genus \\(2k\\).",
+      "uses": [
+        "thm:kemeny_even_voisin"
+      ],
+      "lean_name": "MR4213770.EvenK3SectionToGeneralCurve",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{thm:kemeny_even_voisin}\n  Restrict the K3 Koszul complex to smooth hyperplane sections \\(C\\in |L|\\);\n  adjunction identifies \\(L|_C\\) with \\(\\omega_C\\), and the standard Green\n  restriction comparison identifies the relevant curve Koszul group with the\n  specialization controlled by \\(\\K_{k,1}(X,L)\\).  Since Kemeny's even K3\n  vanishing supplies zero for this specialization and Koszul cohomology\n  dimensions are upper semicontinuous in flat families of canonical curves, the\n  same vanishing holds on the open general even-genus locus.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 1,
+      "descendant_count": 1,
+      "proof_size_tex": 545,
+      "effort_local": 545,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 4776
+    },
+    {
+      "id": "thm:kemeny_real_thm",
+      "type": "theorem",
+      "title": "Surjectivity for the extremal syzygy map",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Theorem real-thm.}\n  The natural map\n  \\(H^1(B,\\wedge^k\\pi^*\\cM\\otimes p'^*L)\\to\n    H^1(B,\\wedge^k\\Gamma\\otimes p'^*L)\\)\n  is surjective.",
+      "uses": [
+        "def:kemeny_universal_secant_bundles"
+      ],
+      "lean_name": "MR4213770.ExtremalMapSurjective",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{def:kemeny_universal_secant_bundles}\n  The exterior-power sequence for \\(0\\to\\cS\\to\\pi^*\\cM\\to\\Gamma\\to0\\) reduces\n  surjectivity to the vanishing of\n  \\(H^{1+i}(\\Sym^i\\cS\\otimes\\wedge^{k-i}\\pi^*\\cM\\otimes p'^*L)\\).\n  The symmetric-power sequence for \\(\\cS\\), the projection formula, and the\n  universal zero-locus exact sequence reduce these groups to Kunneth vanishings\n  on \\(X\\times\\PP\\).\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 1,
+      "descendant_count": 13,
+      "proof_size_tex": 398,
+      "effort_local": 398,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 1131
+    },
+    {
+      "id": "lem:kemeny_even_det_gamma",
+      "type": "lemma",
+      "title": "Determinant of \\(\\Gamma\\) in even genus",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Section sec2, determinant lemma.}\n  With the notation of the even-genus construction,\n  \\(\\wedge^k\\Gamma\\simeq I_D\\otimes q'^*\\cO_{\\PP}(k)\\).",
+      "uses": [
+        "lem:kemeny_W_locally_free"
+      ],
+      "lean_name": "MR4213770.EvenDetGamma",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:kemeny_W_locally_free}\n  Take determinants in\n  \\(0\\to\\Gamma\\to q'^*\\mathcal W\\to p'^*L|_D\\to0\\).  The determinant of\n  \\(\\mathcal W\\) is computed from\n  \\(0\\to q_*(p^*L\\otimes I_{\\cZ})\\to q_*p^*L\\to\\mathcal W\\to0\\), and the\n  two-term resolution of \\(q_*(p^*L\\otimes I_{\\cZ})\\) gives\n  \\(\\det\\mathcal W\\simeq \\cO_{\\PP}(k)\\).\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 1,
+      "descendant_count": 13,
+      "proof_size_tex": 335,
+      "effort_local": 335,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 2717
+    },
+    {
+      "id": "cor:kemeny_extremal_syzygy_iso",
+      "type": "corollary",
+      "title": "Extremal syzygy vector-space isomorphism",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Corollary main-cor-nat-iso.}\n  The map \\(\\psi\\) is an isomorphism and induces a natural isomorphism\n  \\(\\K_{k-1,1}(X,L)\\simeq \\Sym^{k-2}H^0(X,E)\\).",
+      "uses": [
+        "thm:kemeny_real_thm",
+        "lem:kemeny_even_det_gamma",
+        "thm:kemeny_even_voisin"
+      ],
+      "lean_name": "MR4213770.ExtremalSyzygyIso",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{thm:kemeny_real_thm, lem:kemeny_even_det_gamma, thm:kemeny_even_voisin}\n  The determinant computation rewrites the target of \\(\\psi\\) as the cohomology\n  of \\(I_D\\otimes q'^*\\cO_{\\PP}(k)\\otimes p'^*L\\), which is\n  \\(H^0(\\cO_{\\PP}(k-2))^\\vee\\).  Surjectivity gives the dual injection\n  \\(\\Sym^{k-2}H^0(E)\\hookrightarrow \\K_{k-1,1}(X,L)\\); the even-genus vanishing\n  supplies the dimension equality.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 4,
+      "descendant_count": 12,
+      "proof_size_tex": 403,
+      "effort_local": 403,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 6345
+    },
+    {
+      "id": "lem:kemeny_gamma_prime_image",
+      "type": "lemma",
+      "title": "Image of \\(\\wedge^k\\Gamma'\\)",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Proof of Theorem geo-thm-intro.}\n  With \\(\\Gamma'=\\pi_*\\Gamma\\), there is an exact sequence\n  \\(0\\to\\Gamma'\\to q^*\\mathcal W\\to p^*L|_{\\cZ}\\to0\\).  The image of\n  \\(\\wedge^k\\Gamma'\\to\\wedge^kq^*\\mathcal W\\simeq\\cO_{\\PP}(k)\\) is\n  \\(I_{\\cZ}\\otimes q^*\\cO_{\\PP}(k)\\), and the induced map is the pushforward of\n  \\(\\wedge^k\\Gamma\\to I_D\\otimes q'^*\\cO_{\\PP}(k)\\).",
+      "uses": [
+        "def:kemeny_universal_secant_bundles",
+        "lem:kemeny_W_locally_free"
+      ],
+      "lean_name": "MR4213770.GammaPrimeImage",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{def:kemeny_universal_secant_bundles, lem:kemeny_W_locally_free}\n  Push forward the quotient sequence defining \\(\\Gamma\\) and compare its\n  determinant with the determinant of \\(q^*\\mathcal W\\).  The standard secant\n  image computation for the zero locus \\(\\cZ\\) identifies the resulting ideal\n  image with \\(I_{\\cZ}\\otimes q^*\\cO_{\\PP}(k)\\).\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 1,
+      "descendant_count": 8,
+      "proof_size_tex": 347,
+      "effort_local": 347,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 3142
+    },
+    {
+      "id": "lem:kemeny_R1q_line_bundle",
+      "type": "lemma",
+      "title": "The \\(R^1q_*\\)-line bundle",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Proof of Theorem geo-thm-intro.}\n  The higher direct image\n  \\(R^1q_*((L\\boxtimes\\cO_{\\PP}(k))\\otimes I_{\\cZ})\\) is canonically\n  isomorphic to \\(\\cO_{\\PP}(k-2)\\).",
+      "uses": [
+        "def:kemeny_universal_zero_locus",
+        "lem:kemeny_W_locally_free",
+        "def:peer_higher_direct_image",
+        "def:peer_affine_pushforward_base_change"
+      ],
+      "lean_name": "MR4213770.R1qLineBundle",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{def:kemeny_universal_zero_locus, lem:kemeny_W_locally_free, def:peer_higher_direct_image, def:peer_affine_pushforward_base_change}\n  Twist the universal zero-locus sequence by \\(q^*\\cO_{\\PP}(k)\\) and apply\n  \\(Rq_*\\).  The middle term has no relevant higher image, and relative duality\n  gives \\(R^2q_*\\cO_{X\\times\\PP}\\simeq\\cO_{\\PP}\\), producing the line bundle\n  \\(\\cO_{\\PP}(k-2)\\).\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 4,
+      "rdep_count": 1,
+      "descendant_count": 8,
+      "proof_size_tex": 390,
+      "effort_local": 390,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 2772
+    },
+    {
+      "id": "lem:kemeny_psi_global_sections",
+      "type": "lemma",
+      "title": "Global-section description of \\(\\psi\\)",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Proof of Theorem geo-thm-intro.}\n  Under Leray and the preceding image computation, \\(\\psi\\) is the map on global\n  sections induced by\n  \\[\n    \\K_{k-1,1}(X,L)^\\vee\\otimes\\cO_{\\PP}\\to\\cO_{\\PP}(k-2).\n  \\]",
+      "uses": [
+        "cor:kemeny_extremal_syzygy_iso",
+        "lem:kemeny_gamma_prime_image",
+        "lem:kemeny_R1q_line_bundle",
+        "def:peer_higher_direct_image"
+      ],
+      "lean_name": "MR4213770.PsiGlobalSections",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{cor:kemeny_extremal_syzygy_iso, lem:kemeny_gamma_prime_image, lem:kemeny_R1q_line_bundle, def:peer_higher_direct_image}\n  Leray rewrites the source cohomology as global sections of\n  \\(R^1q_*(\\wedge^k\\mathcal M\\otimes p^*L)\\).  The map\n  \\(\\wedge^k\\Gamma'\\to I_{\\cZ}\\otimes q^*\\cO_{\\PP}(k)\\), followed by the\n  \\(R^1q_*\\)-identification, gives the displayed vector-bundle morphism.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 4,
+      "rdep_count": 2,
+      "descendant_count": 7,
+      "proof_size_tex": 387,
+      "effort_local": 387,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 7469
+    },
+    {
+      "id": "lem:kemeny_fibre_secant_map",
+      "type": "lemma",
+      "title": "Fibre of the secant map",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Proof of Theorem geo-thm-intro.}\n  For nonzero \\(t\\in H^0(E)\\), the fibre over \\([t]\\) of the morphism\n  \\(\\K_{k-1,1}(X,L)^\\vee\\otimes\\cO_{\\PP}\\to\\cO_{\\PP}(k-2)\\) is the map through\n  the blow-up \\(B_t\\) of \\(Z(t)\\).  Under Serre duality and the kernel-bundle\n  description, its dual image is precisely\n  \\[\n    \\K_{k-1,1}\\bigl(X,L,H^0(L\\otimes I_{Z(t)})\\bigr)\n    \\subseteq \\K_{k-1,1}(X,L).\n  \\]",
+      "uses": [
+        "lem:kemeny_psi_global_sections",
+        "def:kemeny_universal_secant_bundles"
+      ],
+      "lean_name": "MR4213770.FibreSecantMap",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:kemeny_psi_global_sections, def:kemeny_universal_secant_bundles}\n  Evaluate the global vector-bundle morphism at \\([t]\\) and identify the fibre\n  with the cohomology map on the individual secant blow-up \\(B_t\\).  The\n  determinant identifications convert this to the Serre dual inclusion\n  \\(\\wedge^k\\mathcal S_t(D_t)\\hookrightarrow\\wedge^k\\pi_t^*M_L(D_t)\\), which is\n  the inclusion of the secant Koszul subspace.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 1,
+      "descendant_count": 6,
+      "proof_size_tex": 424,
+      "effort_local": 424,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 7893
+    },
+    {
+      "id": "thm:kemeny_veronese_identification",
+      "type": "theorem",
+      "title": "Veronese identification of the secant syzygy map",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Proof of Theorem geo-thm-intro.}\n  The morphism\n  \\(\\K_{k-1,1}(X,L)^\\vee\\otimes\\cO_{\\PP}\\to\\cO_{\\PP}(k-2)\\) induced by \\(\\psi\\)\n  is a quotient bundle.  The associated projective map\n  \\(\\PP(H^0(E))\\to\\PP(\\K_{k-1,1}(X,L))\\) is the degree \\(k-2\\) Veronese map, and\n  its point over \\([t]\\) is the secant Koszul line associated to \\(Z(t)\\).",
+      "uses": [
+        "cor:kemeny_extremal_syzygy_iso",
+        "lem:kemeny_psi_global_sections",
+        "lem:kemeny_fibre_secant_map"
+      ],
+      "lean_name": "MR4213770.VeroneseIdentification",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{cor:kemeny_extremal_syzygy_iso, lem:kemeny_psi_global_sections, lem:kemeny_fibre_secant_map}\n  The global-section description identifies the map as a morphism onto\n  \\(\\cO_{\\PP}(k-2)\\).  The extremal syzygy isomorphism makes it surjective on\n  global sections; since \\(\\cO_{\\PP}(k-2)\\) is globally generated, the morphism is\n  surjective as a sheaf map.  Its projectivization is therefore the Veronese\n  quotient, and the fibre lemma identifies its points with the desired secant\n  Koszul subspaces.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 2,
+      "descendant_count": 5,
+      "proof_size_tex": 505,
+      "effort_local": 505,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 8398
+    },
+    {
+      "id": "lem:kemeny_grassmann_pencil_map",
+      "type": "lemma",
+      "title": "Grassmannian map to \\(|L|\\)",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Proof of Corollary geo-cor.}\n  There is a finite surjective morphism\n  \\(d:\\Gr_2(H^0(E))\\to |L|\\) sending \\(W\\subset H^0(E)\\) to the degeneracy\n  divisor of \\(W\\otimes\\cO_X\\to E\\).  For a general \\(C\\in|L|\\), the fibre\n  \\(d^{-1}(C)\\) is naturally identified with the reduced Brill--Noether locus\n  \\(W^1_{k+1}(C)\\).",
+      "uses": [
+        "thm:kemeny_even_geometric_syzygy_structure"
+      ],
+      "lean_name": "MR4213770.GrassmannPencilMap",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{thm:kemeny_even_geometric_syzygy_structure}\n  The evaluation degeneracy construction gives the morphism to \\(|L|\\).  For a\n  general curve \\(C\\), the cokernel of evaluation is \\(\\omega_C\\otimes A^{-1}\\),\n  and the Brill--Noether comparison identifies \\(W\\) with \\(H^0(A)^\\vee\\) for\n  \\(A\\in W^1_{k+1}(C)\\).\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 3,
+      "descendant_count": 3,
+      "proof_size_tex": 312,
+      "effort_local": 312,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 9359
+    },
+    {
+      "id": "lem:kemeny_voisin_generation_observation",
+      "type": "lemma",
+      "title": "Voisin generation observation",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Proof of Corollary geo-cor.}\n  For general \\(C\\in |L|\\), the subspaces\n  \\(\\Sym^{k-2}H^0(A)^\\vee\\), as \\(A\\) ranges over \\(W^1_{k+1}(C)\\), generate\n  \\(\\Sym^{k-2}H^0(E)\\).",
+      "uses": [
+        "lem:kemeny_grassmann_pencil_map"
+      ],
+      "lean_name": "MR4213770.VoisinGenerationObservation",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:kemeny_grassmann_pencil_map}\n  Under the fibre identification \\(d^{-1}(C)\\simeq W^1_{k+1}(C)\\), the pencils\n  give the lines \\(H^0(A)^\\vee\\subset H^0(E)\\).  Voisin's generation statement\n  says that their \\((k-2)\\)-nd symmetric powers span the full symmetric power.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 1,
+      "descendant_count": 1,
+      "proof_size_tex": 275,
+      "effort_local": 275,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 9634
+    },
+    {
+      "id": "lem:kemeny_restrict_k3_syzygies_to_curve",
+      "type": "lemma",
+      "title": "Restriction of K3 secant syzygies",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Proof of Corollary geo-cor.}\n  Under restriction\n  \\(\\K_{k-1,1}(X,L)\\simeq \\K_{k-1,1}(C,\\omega_C)\\), the K3 secant subspaces\n  attached to sections corresponding to \\(A\\in W^1_{k+1}(C)\\) become exactly\n  \\[\n    \\K_{k-1,1}\\bigl(C,\\omega_C,H^0(\\omega_C\\otimes A^{-1})\\bigr)\n    \\subseteq \\K_{k-1,1}(C,\\omega_C).\n  \\]",
+      "uses": [
+        "thm:kemeny_veronese_identification",
+        "lem:kemeny_grassmann_pencil_map"
+      ],
+      "lean_name": "MR4213770.RestrictK3SyzygiesToCurve",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{thm:kemeny_veronese_identification, lem:kemeny_grassmann_pencil_map}\n  The section \\(s\\) corresponding to the pencil \\(A\\) has zero scheme whose\n  secant subspace is identified by the Veronese fibre calculation.  Restricting\n  the K3 Koszul complex to the hyperplane section \\(C\\) sends\n  \\(H^0(L\\otimes I_{Z(s)})\\) to \\(H^0(\\omega_C\\otimes A^{-1})\\), giving the\n  stated curve subspace.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 1,
+      "descendant_count": 1,
+      "proof_size_tex": 393,
+      "effort_local": 393,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 9752
+    },
+    {
+      "id": "lem:kemeny_BNP_gen",
+      "type": "lemma",
+      "title": "Picard-rank-two K3 input",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Lemma BNP-gen.}\n  For the Picard-rank-two K3 surface used in the odd-genus reduction, the line\n  bundles \\(L_n=L'-n\\Delta\\), \\(0\\le n\\le3\\), are base-point free, \\(L_n\\) is\n  ample for \\(0<n\\le2\\), \\(|L_n|\\) is not a sum of two pencils, and general\n  smooth curves in \\(|L_n|\\) are Brill--Noether and Petri general.",
+      "uses": [],
+      "lean_name": "MR4213770.BNPGen",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  Riemann--Roch gives nonempty systems.  A negative intersection rational base\n  component would force an impossible decomposition in the rank-two Picard\n  lattice, so \\(L_n\\) is nef; Mayer's criterion gives base-point freeness and\n  the same lattice calculation gives ampleness for \\(0<n\\le2\\).  If\n  \\(L_n=A_1+A_2\\) with both \\(h^0(A_i)\\ge2\\), expressing the \\(A_i\\) in the\n  basis \\(L',\\Delta\\) forces one summand to have only one section.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 0,
+      "rdep_count": 5,
+      "descendant_count": 19,
+      "proof_size_tex": 440,
+      "effort_local": 440,
+      "proof_size_tex_total": 440,
+      "proof_size_lean_total": null,
+      "effort_total": 440
+    },
+    {
+      "id": "lem:kemeny_projection_criterion",
+      "type": "lemma",
+      "title": "Projection criterion",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Lemma proj-crit.}\n  If the projection map\n  \\(pr_k:H^1(\\wedge^{k+1}M_{L'})\\to H^1(\\wedge^kM_L(-\\Delta))\\) is injective,\n  then \\(H^1(\\wedge^{k+1}M_L)=0\\).",
+      "uses": [
+        "lem:kemeny_BNP_gen"
+      ],
+      "lean_name": "MR4213770.ProjectionCriterion",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  Take cohomology of\n  \\(0\\to\\wedge^{k+1}M_L\\to\\wedge^{k+1}M_{L'}\\to\\wedge^kM_L(-\\Delta)\\to0\\).\n  The group \\(H^0(\\wedge^kM_L(-\\Delta))\\) vanishes, so injectivity of \\(pr_k\\)\n  kills the connecting obstruction and gives the desired \\(H^1\\)-vanishing.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 2,
+      "descendant_count": 3,
+      "proof_size_tex": 248,
+      "effort_local": 248,
+      "proof_size_tex_total": 688,
+      "proof_size_lean_total": null,
+      "effort_total": 688
+    },
+    {
+      "id": "lem:kemeny_green_pic2",
+      "type": "lemma",
+      "title": "Even-style result on the nodal K3 surface",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Lemma green-pic2.}\n  For the odd-genus Picard-rank-two surface,\n  \\(\\K_{k+1,1}(X,L')=0\\) and\n  \\(\\Sym^{k-1}H^0(X,E)\\simeq \\K_{k,1}(X,L')\\).",
+      "uses": [
+        "thm:kemeny_even_voisin",
+        "cor:kemeny_extremal_syzygy_iso"
+      ],
+      "lean_name": "MR4213770.GreenPicTwo",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{thm:kemeny_even_voisin, cor:kemeny_extremal_syzygy_iso}\n  Contract \\(\\Delta\\) to a rational double point on \\(\\hat X\\).  The universal\n  zero-locus construction remains finite flat because \\(\\operatorname{Cl}(\\hat\n  X)=\\mathbb Z[\\hat L]\\), so the even-genus cohomological proof applies on\n  \\(\\hat X\\).  Rational singularities identify the section rings of \\(L'\\) and\n  \\(\\hat L\\), transferring the Koszul statements back to \\(X\\).\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 2,
+      "descendant_count": 3,
+      "proof_size_tex": 437,
+      "effort_local": 437,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 6782
+    },
+    {
+      "id": "lem:kemeny_decomposable",
+      "type": "lemma",
+      "title": "Nonvanishing on decomposable elements",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Lemma decomposable.}\n  The determinant map\n  \\(\\wedge^2H^0(E)\\to H^0(\\wedge^2E)=H^0(L')\\) is nonzero on every nonzero\n  decomposable element.",
+      "uses": [
+        "lem:kemeny_BNP_gen"
+      ],
+      "lean_name": "MR4213770.DecomposableNonzero",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:kemeny_BNP_gen}\n  If a decomposable wedge vanished, the two sections would generate a rank-one\n  subsheaf with at least two sections.  After removing torsion from the quotient,\n  both determinant factors have at least two sections, so \\(L'\\) would split as a\n  sum of two pencils, contradicting Lemma~\\ref{lem:kemeny_BNP_gen}.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 1,
+      "descendant_count": 12,
+      "proof_size_tex": 336,
+      "effort_local": 336,
+      "proof_size_tex_total": 776,
+      "proof_size_lean_total": null,
+      "effort_total": 776
+    },
+    {
+      "id": "lem:kemeny_E_minus_delta_is_F",
+      "type": "lemma",
+      "title": "Twisting \\(E\\) by the nodal curve gives \\(F\\)",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  The rank-two Lazarsfeld--Mukai bundle satisfies \\(E(-\\Delta)\\simeq F\\), where\n  \\(F\\) is the unique stable bundle with determinant \\(L-\\Delta\\) and Euler\n  characteristic \\(k+1\\).",
+      "uses": [
+        "lem:kemeny_BNP_gen"
+      ],
+      "lean_name": "MR4213770.EMinusDeltaIsF",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:kemeny_BNP_gen}\n  The bundle \\(E(-\\Delta)\\) has the same numerical invariants as \\(F\\).  If it\n  were unstable, a destabilizing rank-one filtration would give two line\n  bundles with at least two sections whose sum is \\(L\\), contradicting the\n  no-sum-of-pencils property in the rank-two Picard lattice.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 2,
+      "descendant_count": 16,
+      "proof_size_tex": 313,
+      "effort_local": 313,
+      "proof_size_tex_total": 753,
+      "proof_size_lean_total": null,
+      "effort_total": 753
+    },
+    {
+      "id": "def:kemeny_odd_kernel_N",
+      "type": "definition",
+      "title": "Odd-genus kernel bundle \\(N\\)",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  Define \\(N\\) by\n  \\[\n    0\\to N\\to H^0(E(-\\Delta))\\otimes\\cO_X\\to E(-\\Delta)\\to0 .\n  \\]\n  For \\(t\\in H^0(E)\\), wedging with \\(t\\) gives\n  \\(H^0(E(-\\Delta))\\to H^0(L)\\) and hence a map \\(N\\to M_L\\).  Globalizing over\n  \\(\\PP=\\PP(H^0(E))\\) gives\n  \\[\n    r:N\\boxtimes\\cO_{\\PP}(-1)\\to \\mathcal M=p^*M_L .\n  \\]",
+      "uses": [
+        "lem:kemeny_E_minus_delta_is_F"
+      ],
+      "lean_name": "MR4213770.OddKernelN",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 3,
+      "descendant_count": 14,
+      "proof_size_tex": null,
+      "effort_local": 352,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 1105
+    },
+    {
+      "id": "def:kemeny_odd_blowup_elementary_transform",
+      "type": "definition",
+      "title": "Odd blow-up and elementary transform",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  The map \\(r\\) fails to be fibrewise injective along\n  \\(\\mathcal Z=\\{(x,s)\\mid s(x)=0\\}\\subset X\\times\\PP(H^0(E(-\\Delta)))\\).  Let\n  \\(\\pi:B\\to X\\times\\PP\\) be the blow-up along \\(\\mathcal Z\\), with exceptional\n  divisor \\(D\\), and define \\(p'=p\\circ\\pi\\), \\(q'=q\\circ\\pi\\).  The elementary\n  transform \\(S\\) is the dual of \\(\\operatorname{Im}((\\pi^*r)^\\vee)\\), and\n  \\(\\Gamma\\) is the quotient in \\(0\\to S\\to\\pi^*\\mathcal M\\to\\Gamma\\to0\\).",
+      "uses": [
+        "def:kemeny_odd_kernel_N",
+        "lem:kemeny_decomposable"
+      ],
+      "lean_name": "MR4213770.OddBlowupElementaryTransform",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 2,
+      "descendant_count": 11,
+      "proof_size_tex": null,
+      "effort_local": 486,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 1927
+    },
+    {
+      "id": "lem:kemeny_odd_projective_bundle_model",
+      "type": "lemma",
+      "title": "Odd projective-bundle model",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  With \\(\\mathcal F=\\operatorname{Coker}(N\\to H^0(E)\\otimes\\cO_X)\\), the blow-up\n  \\(B\\) is \\(\\PP(\\mathcal H)\\) over \\(\\PP(\\mathcal F)\\).  The projection\n  \\(\\chi:B\\to\\PP(\\mathcal F)\\) satisfies\n  \\[\n    \\chi^*\\cO_{\\PP(\\mathcal F)}(1)\\simeq q'^*\\cO_{\\PP}(1)(-D).\n  \\]",
+      "uses": [
+        "def:kemeny_odd_blowup_elementary_transform"
+      ],
+      "lean_name": "MR4213770.OddProjectiveBundleModel",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{def:kemeny_odd_blowup_elementary_transform}\n  Fibrewise, \\(B\\) is the blow-up of a projective space along the linear subspace\n  cut out by \\(N\\).  The standard description of such a blow-up as a projective\n  bundle over the quotient projective bundle gives \\(\\PP(\\mathcal H)\\), and the\n  exceptional divisor accounts for the twist in \\(\\chi^*\\cO(1)\\).\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 4,
+      "descendant_count": 10,
+      "proof_size_tex": 357,
+      "effort_local": 357,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 2284
+    },
+    {
+      "id": "lem:kemeny_odd_S_relative_tangent",
+      "type": "lemma",
+      "title": "Elementary transform as a relative tangent bundle",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  The elementary transform bundle is\n  \\(S\\simeq T_\\chi\\otimes q'^*\\cO_{\\PP}(-2)\\), where \\(T_\\chi\\) is the relative\n  tangent bundle of \\(\\chi:B\\to\\PP(\\mathcal F)\\).",
+      "uses": [
+        "lem:kemeny_odd_projective_bundle_model"
+      ],
+      "lean_name": "MR4213770.OddSRelativeTangent",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:kemeny_odd_projective_bundle_model}\n  Compare the relative Euler sequence for \\(\\PP(\\mathcal H)\\) with the dual\n  defining exact sequence for \\(S\\).  After twisting by \\(q'^*\\cO_{\\PP}(-2)\\),\n  the two cokernel descriptions agree.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 2,
+      "descendant_count": 7,
+      "proof_size_tex": 239,
+      "effort_local": 239,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 2523
+    },
+    {
+      "id": "lem:kemeny_odd_det_gamma",
+      "type": "lemma",
+      "title": "Determinant of \\(\\Gamma\\) in odd genus",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Lemma det-gamma.}\n  One has\n  \\(\\det\\Gamma\\simeq q'^*\\cO_{\\PP}(k-1)(-D-p'^*\\Delta)\\).  Consequently\n  \\[\n    H^2\\bigl(B,\\wedge^{k+2}\\Gamma(p'^*\\Delta)(D)\\bigr)\n    \\simeq \\Sym^{k-1}H^0(X,E)^\\vee .\n  \\]",
+      "uses": [
+        "def:kemeny_odd_blowup_elementary_transform",
+        "lem:kemeny_odd_S_relative_tangent",
+        "def:peer_affine_pushforward_base_change"
+      ],
+      "lean_name": "MR4213770.OddDetGamma",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{def:kemeny_odd_blowup_elementary_transform, lem:kemeny_odd_S_relative_tangent, def:peer_affine_pushforward_base_change}\n  Taking determinants in \\(0\\to S\\to\\pi^*\\mathcal M\\to\\Gamma\\to0\\) and using\n  the tangent-bundle description of \\(S\\) gives the determinant formula.  The\n  cohomology identification follows after cancelling \\(D\\) and \\(p'^*\\Delta\\)\n  and pushing \\(q'^*\\cO_{\\PP}(k-1)\\) down to the projective-space factor.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 2,
+      "descendant_count": 5,
+      "proof_size_tex": 432,
+      "effort_local": 432,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 3758
+    },
+    {
+      "id": "prop:kemeny_odd_most_of_vanishing",
+      "type": "proposition",
+      "title": "Most odd-genus exterior-power vanishings",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Proposition most-of-van.}\n  For \\(1\\le i\\le k+2\\) with \\(i\\ne k,k+1\\),\n  \\[\n    H^{2+i}\\bigl(B,\\wedge^{k+2-i}\\pi^*\\mathcal M\\otimes\n    \\Sym^i(S)(p'^*\\Delta)(D)\\bigr)=0 .\n  \\]",
+      "uses": [
+        "lem:kemeny_odd_S_relative_tangent",
+        "lem:kemeny_odd_projective_bundle_model"
+      ],
+      "lean_name": "MR4213770.OddMostOfVanishing",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:kemeny_odd_S_relative_tangent, lem:kemeny_odd_projective_bundle_model}\n  Resolve \\(\\Sym^i(S)\\) by the Euler sequence for \\(S\\simeq T_\\chi\\otimes\n  q'^*\\cO_{\\PP}(-2)\\).  For \\(1\\le i\\le k-1\\), the relative projective-space\n  fibres of \\(\\chi\\), Leray, and Kunneth vanish the terms; the remaining\n  \\(i=k+2\\) case is reduced to a Kunneth vanishing on \\(X\\times\\PP\\).\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 1,
+      "descendant_count": 4,
+      "proof_size_tex": 374,
+      "effort_local": 374,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 2897
+    },
+    {
+      "id": "lem:kemeny_LM_mult_map",
+      "type": "lemma",
+      "title": "Odd Lazarsfeld--Mukai multiplication map",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Lemma LM-mult-map.}\n  The multiplication map\n  \\[\n    H^0(X,E(-\\Delta))\\otimes H^0(X,L-\\Delta)\\to H^0(X,E(L-2\\Delta))\n  \\]\n  is surjective.",
+      "uses": [
+        "lem:kemeny_E_minus_delta_is_F",
+        "lem:kemeny_BNP_gen"
+      ],
+      "lean_name": "MR4213770.LMMultMap",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:kemeny_E_minus_delta_is_F, lem:kemeny_BNP_gen}\n  Restrict to a smooth curve \\(C\\in|L-\\Delta|\\), split the restricted bundle as\n  the two Lazarsfeld--Mukai summands associated to a pencil, and apply the\n  base-point-free pencil trick, together with the standard reduction from\n  restricted multiplication to the surface multiplication map.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 1,
+      "descendant_count": 7,
+      "proof_size_tex": 348,
+      "effort_local": 348,
+      "proof_size_tex_total": 1101,
+      "proof_size_lean_total": null,
+      "effort_total": 1101
+    },
+    {
+      "id": "lem:kemeny_odd_mult_vanishings",
+      "type": "lemma",
+      "title": "Odd multiplication vanishings",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Lemma mult-maps.}\n  The vanishings\n  \\(H^2(X,M_L(\\Delta)\\otimes N)=0\\) and \\(H^2(X,M_L(\\Delta))=0\\) hold.",
+      "uses": [
+        "def:kemeny_odd_kernel_N",
+        "lem:kemeny_LM_mult_map"
+      ],
+      "lean_name": "MR4213770.OddMultVanishings",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{def:kemeny_odd_kernel_N, lem:kemeny_LM_mult_map}\n  Use the defining sequence of \\(N\\).  The first vanishing is reduced to\n  surjectivity of the surface multiplication map, which follows from\n  \\(\\cref{lem:kemeny_LM_mult_map}\\) and the restriction diagram along\n  \\(\\Delta\\); the second follows directly from the defining sequence of \\(M_L\\).\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 1,
+      "descendant_count": 6,
+      "proof_size_tex": 347,
+      "effort_local": 347,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 1800
+    },
+    {
+      "id": "prop:kemeny_green_odd_main",
+      "type": "proposition",
+      "title": "Odd \\(i=k+1\\) vanishing",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Proposition green-odd-main.}\n  The middle vanishing\n  \\[\n    H^{k+3}\\bigl(B,\\pi^*\\mathcal M\\otimes\\Sym^{k+1}(S)(p'^*\\Delta)(D)\\bigr)=0\n  \\]\n  holds.",
+      "uses": [
+        "lem:kemeny_odd_projective_bundle_model",
+        "lem:kemeny_odd_mult_vanishings"
+      ],
+      "lean_name": "MR4213770.GreenOddMain",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:kemeny_odd_projective_bundle_model, lem:kemeny_odd_mult_vanishings}\n  Resolve \\(\\Sym^{k+1}(S)\\) using the relative Euler sequence.  Relative duality\n  over \\(\\chi\\) turns the critical map into the multiplication map on symmetric\n  powers of \\(\\mathcal H\\), whose composite is multiplication by \\(k+1\\).  The\n  remaining obstruction groups are exactly the Kunneth consequences of\n  \\(\\cref{lem:kemeny_odd_mult_vanishings}\\).\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 2,
+      "descendant_count": 5,
+      "proof_size_tex": 433,
+      "effort_local": 433,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 3412
+    },
+    {
+      "id": "lem:kemeny_odd_identilem",
+      "type": "lemma",
+      "title": "Odd cohomology identifications",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Lemma identilem.}\n  For every \\(j\\), there are natural isomorphisms\n  \\[\n  \\begin{aligned}\n    H^j(B,\\pi^*\\mathcal M\\otimes\\Sym^{k+1}(S)(p'^*\\Delta)(D))\n      &\\simeq H^{j+1}(B,\\pi^*\\mathcal M\\otimes S(-2k)(p'^*\\Delta)(D)),\\\\\n    H^j(B,\\wedge^2\\pi^*\\mathcal M\\otimes\\Sym^k(S)(p'^*\\Delta)(D))\n      &\\simeq H^{j+1}(B,\\wedge^2\\pi^*\\mathcal M(-2k)(p'^*\\Delta)(D)).\n  \\end{aligned}\n  \\]",
+      "uses": [
+        "lem:kemeny_odd_projective_bundle_model"
+      ],
+      "lean_name": "MR4213770.OddIdentiLem",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:kemeny_odd_projective_bundle_model}\n  Apply the relative Euler resolution of \\(\\Sym^{k+1}(S)\\) and \\(\\Sym^k(S)\\),\n  push along \\(\\chi\\), and use relative duality.  The natural splitting of the\n  symmetric-power surjection identifies the kernels and cokernels with the\n  displayed cohomology groups.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 1,
+      "rdep_count": 2,
+      "descendant_count": 5,
+      "proof_size_tex": 308,
+      "effort_local": 308,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 2592
+    },
+    {
+      "id": "lem:kemeny_odd_sym2S_vanishing",
+      "type": "lemma",
+      "title": "Vanishing for \\(\\Sym^2(S)\\)",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  The cohomology group\n  \\(H^{k+4}(B,\\Sym^2(S)(-2k)(p'^*\\Delta)(D))\\) vanishes.",
+      "uses": [
+        "def:kemeny_odd_kernel_N",
+        "lem:kemeny_BNP_gen"
+      ],
+      "lean_name": "MR4213770.OddSymTwoSVanishing",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{def:kemeny_odd_kernel_N, lem:kemeny_BNP_gen}\n  Away from \\(D\\), \\(\\Sym^2(S)(p'^*\\Delta)\\) is identified with the pullback of\n  \\(\\Sym^2N(\\Delta)\\boxtimes\\cO_{\\PP}(-2)\\).  Kunneth reduces the claim to\n  \\(H^2(X,\\Sym^2N(\\Delta))=0\\), which follows from the symmetric-square sequence\n  for \\(N\\) and surjectivity of the determinant map, itself obtained from Petri\n  generality of curves in \\(|L+\\Delta|\\).\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 2,
+      "rdep_count": 1,
+      "descendant_count": 5,
+      "proof_size_tex": 408,
+      "effort_local": 408,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 1513
+    },
+    {
+      "id": "prop:kemeny_odd_wedge2_gamma_vanishing",
+      "type": "proposition",
+      "title": "Odd \\(\\wedge^2\\Gamma\\)-vanishing",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  The group\n  \\(H^{k+3}(B,\\wedge^2\\Gamma(-2k)(p'^*\\Delta)(D))\\) vanishes.  Consequently the\n  map \\(\\phi\\) induced by \\(0\\to S\\to\\pi^*\\mathcal M\\to\\Gamma\\to0\\) is\n  surjective.",
+      "uses": [
+        "lem:kemeny_odd_det_gamma",
+        "prop:kemeny_green_odd_main",
+        "lem:kemeny_odd_identilem",
+        "lem:kemeny_odd_sym2S_vanishing"
+      ],
+      "lean_name": "MR4213770.OddWedgeTwoGammaVanishing",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:kemeny_odd_det_gamma, prop:kemeny_green_odd_main, lem:kemeny_odd_identilem, lem:kemeny_odd_sym2S_vanishing}\n  The four-term exterior-power sequence\n  \\(0\\to\\Sym^2(S)\\to\\pi^*\\mathcal M\\otimes S\\to\\wedge^2\\pi^*\\mathcal M\n  \\to\\wedge^2\\Gamma\\to0\\) reduces surjectivity to the \\(\\Sym^2(S)\\)-vanishing\n  and the \\(\\wedge^2\\Gamma\\)-vanishing.  The latter is proved by first restricting\n  to \\(D\\), then using the determinant formula, Serre duality, and the same\n  relative-Euler vanishing package as above.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 4,
+      "rdep_count": 1,
+      "descendant_count": 4,
+      "proof_size_tex": 510,
+      "effort_local": 510,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 6112
+    },
+    {
+      "id": "prop:kemeny_odd_phi_surjective",
+      "type": "proposition",
+      "title": "Odd-genus projection-map surjectivity dual",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  In the odd-genus construction, the map\n  \\[\n    \\phi:H^2(\\wedge^{k+2}M_L(\\Delta))\\to\n    H^2(\\wedge^{k+2}\\Gamma(p'^*\\Delta)(D))\n  \\]\n  induced from \\(0\\to S\\to\\pi^*\\cM\\to\\Gamma\\to0\\) is surjective.",
+      "uses": [
+        "lem:kemeny_odd_det_gamma",
+        "prop:kemeny_odd_most_of_vanishing",
+        "prop:kemeny_green_odd_main",
+        "lem:kemeny_odd_identilem",
+        "prop:kemeny_odd_wedge2_gamma_vanishing"
+      ],
+      "lean_name": "MR4213770.OddPhiSurjective",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:kemeny_odd_det_gamma, prop:kemeny_odd_most_of_vanishing, prop:kemeny_green_odd_main, lem:kemeny_odd_identilem, prop:kemeny_odd_wedge2_gamma_vanishing}\n  The determinant lemma identifies the target of \\(\\phi\\) with\n  \\(\\Sym^{k-1}H^0(E)^\\vee\\).  Taking exterior powers of\n  \\(0\\to S\\to\\pi^*\\mathcal M\\to\\Gamma\\to0\\), twisted by \\(D+p'^*\\Delta\\), gives\n  the obstruction sequence for surjectivity.  The most-of-vanishing proposition\n  kills all terms except \\(i=k,k+1\\); the \\(i=k+1\\) vanishing and the\n  identifications rewrite the remaining map.  The final\n  \\(\\wedge^2\\Gamma\\)-vanishing closes the last obstruction, hence \\(\\phi\\) is\n  surjective.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 5,
+      "rdep_count": 2,
+      "descendant_count": 3,
+      "proof_size_tex": 657,
+      "effort_local": 657,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 7143
+    },
+    {
+      "id": "lem:kemeny_odd_projection_comparison",
+      "type": "lemma",
+      "title": "Odd projection comparison",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  With \\(\\psi^\\vee:\\Sym^{k-1}H^0(E)\\simeq\\K_{k,1}(X,L')\\) from\n  \\(\\cref{lem:kemeny_green_pic2}\\) and \\(\\phi^\\vee\\) dual to the odd map\n  \\(\\phi\\), one has\n  \\[\n    \\phi^\\vee=pr_k\\circ\\psi^\\vee .\n  \\]",
+      "uses": [
+        "lem:kemeny_projection_criterion",
+        "lem:kemeny_green_pic2",
+        "prop:kemeny_odd_phi_surjective"
+      ],
+      "lean_name": "MR4213770.OddProjectionComparison",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:kemeny_projection_criterion, lem:kemeny_green_pic2, prop:kemeny_odd_phi_surjective}\n  Blow up the codimension-two universal zero locus\n  \\(\\widetilde{\\mathcal Z}\\subset X\\times\\PP(H^0(E))\\), obtaining\n  \\(\\widetilde B\\) with exceptional divisor \\(\\widetilde D\\).  Define\n  \\(\\widetilde S_{L'}\\) and \\(\\widetilde S_L\\) by the two universal secant\n  sequences on \\(\\widetilde B\\).  Exterior powers identify \\(\\psi^\\vee\\) with the\n  map from \\(\\widetilde S_{L'}\\) and \\(\\phi^\\vee\\) with the corresponding map\n  from \\(\\widetilde S_L\\).  On the complement of the codimension-two locus there\n  is an exact sequence\n  \\(0\\to\\widetilde S_L\\to\\widetilde S_{L'}\\to\\cO(-\\widetilde p^*\\Delta)\\to0\\),\n  and the induced exterior-power diagram is exactly the projection \\(pr_k\\).  The\n  diagram extends uniquely across codimension two, giving the equality.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 3,
+      "rdep_count": 1,
+      "descendant_count": 2,
+      "proof_size_tex": 852,
+      "effort_local": 852,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 14222
+    },
+    {
+      "id": "thm:kemeny_odd_voisin",
+      "type": "theorem",
+      "title": "Voisin's theorem in odd genus",
+      "chapter": "",
+      "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  For a general complex curve \\(C\\) of odd genus \\(g=2k+1\\ge9\\),\n  \\(\\K_{k,1}(C,\\omega_C)=0\\).",
+      "uses": [
+        "lem:kemeny_projection_criterion",
+        "lem:kemeny_green_pic2",
+        "prop:kemeny_odd_phi_surjective",
+        "lem:kemeny_odd_projection_comparison"
+      ],
+      "lean_name": "MR4213770.OddVoisin",
+      "proved": false,
+      "mathlib_ok": false,
+      "proof_tex": "\n  \\uses{lem:kemeny_projection_criterion, lem:kemeny_green_pic2, prop:kemeny_odd_phi_surjective, lem:kemeny_odd_projection_comparison}\n  Lemma~\\ref{lem:kemeny_green_pic2} identifies the source of the projection map\n  with \\(\\Sym^{k-1}H^0(E)\\).  Surjectivity of \\(\\phi\\) makes\n  \\(\\phi^\\vee\\) injective, and the projection comparison identifies this\n  injection with \\(pr_k\\circ\\psi^\\vee\\).  Hence \\(pr_k\\) is injective.  The\n  projection criterion gives \\(H^1(\\wedge^{k+1}M_L)=0\\), and the kernel-bundle\n  description identifies this with the odd-genus Koszul vanishing for a general\n  canonical curve.\n",
+      "lean_source": "",
+      "proof_size_lean": null,
+      "has_sorry": false,
+      "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex",
+      "lean_file": "",
+      "dep_count": 4,
+      "rdep_count": 1,
+      "descendant_count": 1,
+      "proof_size_tex": 599,
+      "effort_local": 599,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": null,
+      "effort_total": 14821
+    },
+    {
+      "id": "lean:hello",
+      "type": "lean_aux",
+      "title": "hello",
+      "chapter": "",
+      "statement": "",
+      "uses": [],
+      "lean_name": "hello",
+      "proved": true,
+      "mathlib_ok": false,
+      "proof_tex": "",
+      "lean_source": "def hello := \"world\"",
+      "proof_size_lean": 20,
+      "has_sorry": false,
+      "tex_file": "",
+      "lean_file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Basic.lean",
+      "dep_count": 0,
+      "rdep_count": 0,
+      "descendant_count": 0,
+      "proof_size_tex": null,
+      "effort_local": 0,
+      "proof_size_tex_total": null,
+      "proof_size_lean_total": 20,
+      "effort_total": 0
+    }
+  ],
+  "edges": [
+    {
+      "from": "def:peer_higher_direct_image",
+      "to": "def:peer_affine_pushforward_base_change"
+    },
+    {
+      "from": "def:peer_scheme_hmodule",
+      "to": "def:peer_module_iso_locality"
+    },
+    {
+      "from": "lem:kemeny_even_k3_section_to_general_curve",
+      "to": "thm:kemeny_generic_green"
+    },
+    {
+      "from": "thm:kemeny_odd_voisin",
+      "to": "thm:kemeny_generic_green"
+    },
+    {
+      "from": "cor:kemeny_extremal_syzygy_iso",
+      "to": "thm:kemeny_even_geometric_syzygy_structure"
+    },
+    {
+      "from": "thm:kemeny_veronese_identification",
+      "to": "thm:kemeny_even_geometric_syzygy_structure"
+    },
+    {
+      "from": "thm:kemeny_even_geometric_syzygy_structure",
+      "to": "cor:kemeny_geometric_syzygy_even"
+    },
+    {
+      "from": "lem:kemeny_grassmann_pencil_map",
+      "to": "cor:kemeny_geometric_syzygy_even"
+    },
+    {
+      "from": "lem:kemeny_voisin_generation_observation",
+      "to": "cor:kemeny_geometric_syzygy_even"
+    },
+    {
+      "from": "lem:kemeny_restrict_k3_syzygies_to_curve",
+      "to": "cor:kemeny_geometric_syzygy_even"
+    },
+    {
+      "from": "def:peer_scheme_hmodule",
+      "to": "def:kemeny_kernel_bundle_reduction"
+    },
+    {
+      "from": "def:kemeny_universal_zero_locus",
+      "to": "def:kemeny_universal_secant_bundles"
+    },
+    {
+      "from": "def:kemeny_universal_zero_locus",
+      "to": "lem:kemeny_W_locally_free"
+    },
+    {
+      "from": "def:peer_higher_direct_image",
+      "to": "lem:kemeny_W_locally_free"
+    },
+    {
+      "from": "def:peer_affine_pushforward_base_change",
+      "to": "lem:kemeny_W_locally_free"
+    },
+    {
+      "from": "def:peer_module_iso_locality",
+      "to": "lem:kemeny_W_locally_free"
+    },
+    {
+      "from": "def:kemeny_universal_secant_bundles",
+      "to": "lem:kemeny_first_iso"
+    },
+    {
+      "from": "lem:kemeny_first_iso",
+      "to": "lem:kemeny_twisted_symmetric_comparison"
+    },
+    {
+      "from": "lem:kemeny_first_iso",
+      "to": "prop:kemeny_auto_injectivity"
+    },
+    {
+      "from": "lem:kemeny_twisted_symmetric_comparison",
+      "to": "prop:kemeny_auto_injectivity"
+    },
+    {
+      "from": "def:kemeny_universal_secant_bundles",
+      "to": "thm:kemeny_even_secant_vanishing"
+    },
+    {
+      "from": "prop:kemeny_auto_injectivity",
+      "to": "thm:kemeny_even_secant_vanishing"
+    },
+    {
+      "from": "def:peer_affine_pushforward_base_change",
+      "to": "thm:kemeny_even_secant_vanishing"
+    },
+    {
+      "from": "def:kemeny_kernel_bundle_reduction",
+      "to": "thm:kemeny_even_voisin"
+    },
+    {
+      "from": "thm:kemeny_even_secant_vanishing",
+      "to": "thm:kemeny_even_voisin"
+    },
+    {
+      "from": "thm:kemeny_even_voisin",
+      "to": "lem:kemeny_even_k3_section_to_general_curve"
+    },
+    {
+      "from": "def:kemeny_universal_secant_bundles",
+      "to": "thm:kemeny_real_thm"
+    },
+    {
+      "from": "lem:kemeny_W_locally_free",
+      "to": "lem:kemeny_even_det_gamma"
+    },
+    {
+      "from": "thm:kemeny_real_thm",
+      "to": "cor:kemeny_extremal_syzygy_iso"
+    },
+    {
+      "from": "lem:kemeny_even_det_gamma",
+      "to": "cor:kemeny_extremal_syzygy_iso"
+    },
+    {
+      "from": "thm:kemeny_even_voisin",
+      "to": "cor:kemeny_extremal_syzygy_iso"
+    },
+    {
+      "from": "def:kemeny_universal_secant_bundles",
+      "to": "lem:kemeny_gamma_prime_image"
+    },
+    {
+      "from": "lem:kemeny_W_locally_free",
+      "to": "lem:kemeny_gamma_prime_image"
+    },
+    {
+      "from": "def:kemeny_universal_zero_locus",
+      "to": "lem:kemeny_R1q_line_bundle"
+    },
+    {
+      "from": "lem:kemeny_W_locally_free",
+      "to": "lem:kemeny_R1q_line_bundle"
+    },
+    {
+      "from": "def:peer_higher_direct_image",
+      "to": "lem:kemeny_R1q_line_bundle"
+    },
+    {
+      "from": "def:peer_affine_pushforward_base_change",
+      "to": "lem:kemeny_R1q_line_bundle"
+    },
+    {
+      "from": "cor:kemeny_extremal_syzygy_iso",
+      "to": "lem:kemeny_psi_global_sections"
+    },
+    {
+      "from": "lem:kemeny_gamma_prime_image",
+      "to": "lem:kemeny_psi_global_sections"
+    },
+    {
+      "from": "lem:kemeny_R1q_line_bundle",
+      "to": "lem:kemeny_psi_global_sections"
+    },
+    {
+      "from": "def:peer_higher_direct_image",
+      "to": "lem:kemeny_psi_global_sections"
+    },
+    {
+      "from": "lem:kemeny_psi_global_sections",
+      "to": "lem:kemeny_fibre_secant_map"
+    },
+    {
+      "from": "def:kemeny_universal_secant_bundles",
+      "to": "lem:kemeny_fibre_secant_map"
+    },
+    {
+      "from": "cor:kemeny_extremal_syzygy_iso",
+      "to": "thm:kemeny_veronese_identification"
+    },
+    {
+      "from": "lem:kemeny_psi_global_sections",
+      "to": "thm:kemeny_veronese_identification"
+    },
+    {
+      "from": "lem:kemeny_fibre_secant_map",
+      "to": "thm:kemeny_veronese_identification"
+    },
+    {
+      "from": "thm:kemeny_even_geometric_syzygy_structure",
+      "to": "lem:kemeny_grassmann_pencil_map"
+    },
+    {
+      "from": "lem:kemeny_grassmann_pencil_map",
+      "to": "lem:kemeny_voisin_generation_observation"
+    },
+    {
+      "from": "thm:kemeny_veronese_identification",
+      "to": "lem:kemeny_restrict_k3_syzygies_to_curve"
+    },
+    {
+      "from": "lem:kemeny_grassmann_pencil_map",
+      "to": "lem:kemeny_restrict_k3_syzygies_to_curve"
+    },
+    {
+      "from": "lem:kemeny_BNP_gen",
+      "to": "lem:kemeny_projection_criterion"
+    },
+    {
+      "from": "thm:kemeny_even_voisin",
+      "to": "lem:kemeny_green_pic2"
+    },
+    {
+      "from": "cor:kemeny_extremal_syzygy_iso",
+      "to": "lem:kemeny_green_pic2"
+    },
+    {
+      "from": "lem:kemeny_BNP_gen",
+      "to": "lem:kemeny_decomposable"
+    },
+    {
+      "from": "lem:kemeny_BNP_gen",
+      "to": "lem:kemeny_E_minus_delta_is_F"
+    },
+    {
+      "from": "lem:kemeny_E_minus_delta_is_F",
+      "to": "def:kemeny_odd_kernel_N"
+    },
+    {
+      "from": "def:kemeny_odd_kernel_N",
+      "to": "def:kemeny_odd_blowup_elementary_transform"
+    },
+    {
+      "from": "lem:kemeny_decomposable",
+      "to": "def:kemeny_odd_blowup_elementary_transform"
+    },
+    {
+      "from": "def:kemeny_odd_blowup_elementary_transform",
+      "to": "lem:kemeny_odd_projective_bundle_model"
+    },
+    {
+      "from": "lem:kemeny_odd_projective_bundle_model",
+      "to": "lem:kemeny_odd_S_relative_tangent"
+    },
+    {
+      "from": "def:kemeny_odd_blowup_elementary_transform",
+      "to": "lem:kemeny_odd_det_gamma"
+    },
+    {
+      "from": "lem:kemeny_odd_S_relative_tangent",
+      "to": "lem:kemeny_odd_det_gamma"
+    },
+    {
+      "from": "def:peer_affine_pushforward_base_change",
+      "to": "lem:kemeny_odd_det_gamma"
+    },
+    {
+      "from": "lem:kemeny_odd_S_relative_tangent",
+      "to": "prop:kemeny_odd_most_of_vanishing"
+    },
+    {
+      "from": "lem:kemeny_odd_projective_bundle_model",
+      "to": "prop:kemeny_odd_most_of_vanishing"
+    },
+    {
+      "from": "lem:kemeny_E_minus_delta_is_F",
+      "to": "lem:kemeny_LM_mult_map"
+    },
+    {
+      "from": "lem:kemeny_BNP_gen",
+      "to": "lem:kemeny_LM_mult_map"
+    },
+    {
+      "from": "def:kemeny_odd_kernel_N",
+      "to": "lem:kemeny_odd_mult_vanishings"
+    },
+    {
+      "from": "lem:kemeny_LM_mult_map",
+      "to": "lem:kemeny_odd_mult_vanishings"
+    },
+    {
+      "from": "lem:kemeny_odd_projective_bundle_model",
+      "to": "prop:kemeny_green_odd_main"
+    },
+    {
+      "from": "lem:kemeny_odd_mult_vanishings",
+      "to": "prop:kemeny_green_odd_main"
+    },
+    {
+      "from": "lem:kemeny_odd_projective_bundle_model",
+      "to": "lem:kemeny_odd_identilem"
+    },
+    {
+      "from": "def:kemeny_odd_kernel_N",
+      "to": "lem:kemeny_odd_sym2S_vanishing"
+    },
+    {
+      "from": "lem:kemeny_BNP_gen",
+      "to": "lem:kemeny_odd_sym2S_vanishing"
+    },
+    {
+      "from": "lem:kemeny_odd_det_gamma",
+      "to": "prop:kemeny_odd_wedge2_gamma_vanishing"
+    },
+    {
+      "from": "prop:kemeny_green_odd_main",
+      "to": "prop:kemeny_odd_wedge2_gamma_vanishing"
+    },
+    {
+      "from": "lem:kemeny_odd_identilem",
+      "to": "prop:kemeny_odd_wedge2_gamma_vanishing"
+    },
+    {
+      "from": "lem:kemeny_odd_sym2S_vanishing",
+      "to": "prop:kemeny_odd_wedge2_gamma_vanishing"
+    },
+    {
+      "from": "lem:kemeny_odd_det_gamma",
+      "to": "prop:kemeny_odd_phi_surjective"
+    },
+    {
+      "from": "prop:kemeny_odd_most_of_vanishing",
+      "to": "prop:kemeny_odd_phi_surjective"
+    },
+    {
+      "from": "prop:kemeny_green_odd_main",
+      "to": "prop:kemeny_odd_phi_surjective"
+    },
+    {
+      "from": "lem:kemeny_odd_identilem",
+      "to": "prop:kemeny_odd_phi_surjective"
+    },
+    {
+      "from": "prop:kemeny_odd_wedge2_gamma_vanishing",
+      "to": "prop:kemeny_odd_phi_surjective"
+    },
+    {
+      "from": "lem:kemeny_projection_criterion",
+      "to": "lem:kemeny_odd_projection_comparison"
+    },
+    {
+      "from": "lem:kemeny_green_pic2",
+      "to": "lem:kemeny_odd_projection_comparison"
+    },
+    {
+      "from": "prop:kemeny_odd_phi_surjective",
+      "to": "lem:kemeny_odd_projection_comparison"
+    },
+    {
+      "from": "lem:kemeny_projection_criterion",
+      "to": "thm:kemeny_odd_voisin"
+    },
+    {
+      "from": "lem:kemeny_green_pic2",
+      "to": "thm:kemeny_odd_voisin"
+    },
+    {
+      "from": "prop:kemeny_odd_phi_surjective",
+      "to": "thm:kemeny_odd_voisin"
+    },
+    {
+      "from": "lem:kemeny_odd_projection_comparison",
+      "to": "thm:kemeny_odd_voisin"
+    }
+  ],
+  "meta": {
+    "num_nodes": 49,
+    "num_edges": 90,
+    "axioms": [
+      "def:peer_higher_direct_image",
+      "def:peer_scheme_hmodule",
+      "def:kemeny_universal_zero_locus",
+      "lem:kemeny_BNP_gen",
+      "lean:hello"
+    ],
+    "leaves": [
+      "thm:kemeny_generic_green",
+      "cor:kemeny_geometric_syzygy_even",
+      "lean:hello"
+    ],
+    "entry": "blueprint/src/web.tex",
+    "has_blueprint": true,
+    "total_lean_decls": 1,
+    "total_blueprint_decls": 48,
+    "duplicate_ids": [],
+    "macros": {
+      "\\C": "\\mathbb{C}",
+      "\\PP": "\\mathbb{P}",
+      "\\K": "\\mathrm{K}",
+      "\\Sym": "\\mathrm{Sym}",
+      "\\Pic": "\\mathrm{Pic}",
+      "\\Gr": "\\mathrm{Gr}",
+      "\\cO": "\\mathcal{O}",
+      "\\cM": "\\mathcal{M}",
+      "\\cS": "\\mathcal{S}",
+      "\\cG": "\\mathcal{G}",
+      "\\cZ": "\\mathcal{Z}"
+    }
+  },
+  "error": null
+}

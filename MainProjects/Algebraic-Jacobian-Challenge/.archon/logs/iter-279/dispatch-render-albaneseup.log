@@ -1,0 +1,24 @@
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ───────────────────────────────
+
+[ARCHON] Agent model: opus (blueprint-writer)
+Rendering cleanup of `Albanese_AlbaneseUP.tex` is complete.
+
+## Summary
+
+**math-delim (the bulk of the defects):** Fixed every inverted `$MATH\( prose \)MATH$` site in rendered prose by converting to the `\(MATH\)` math + prose-outside form — lines 78, 83, 368, 434, 439, 506, 547–551, 560, 615–618, 688, 785, 795. All pure delimiter swaps; mathematical content preserved exactly. I also converted four remaining standalone balanced `$…$` inline formulas (273, 608, 726, 751) to `\(…\)` for one-style uniformity per the directive.
+
+**bare-label (`lem:agps`):** Could **not** be wrapped as `\cref{lem:agps}` as the directive suggested — neither `lem:agps` nor `prp:pic0` has a live `\label{}` anywhere in the blueprint; they exist only inside `%`-commented Kleiman source quotes and are that external paper's internal labels. Wrapping them in `\cref` would have created a brand-new broken reference, violating the hard constraint. Following defect-class-3's external-label rule, I **reworded** the sentence to a human-readable Kleiman citation ("Kleiman, *The Picard scheme*, the identity-component lemma and its `\(\Pic^0_{C/k}\)` specialisation"), removing both dangling label ids while keeping the live `\cref{thm:Jacobian_geomIrred}`.
+
+**Verification:** zero `REF`, zero `$` in non-comment prose, zero bare labels remaining; `\lean`/`\label`/`\uses`/`\leanok` counts all unchanged (no statement, annotation, or block touched). Report written to `task_results/blueprint-writer-render-albaneseup.md`.
+
+One flagged item resolved by rewording rather than `\cref` (target excised); nothing left unresolved.
+[COST] 4.5min | $1.9844 | in=4578 out=20008 | turns=27
+[ARCHON] ✓ blueprint-writer/render-albaneseup finished (558s)
+render-albaneseup: COMPLETE — see /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/task_results/blueprint-writer-render-albaneseup.md (archived: /home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/.archon/logs/iter-279/blueprint-writer-render-albaneseup-report.md)

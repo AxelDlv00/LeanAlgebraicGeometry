@@ -1,0 +1,40 @@
+{
+  "iteration": 37,
+  "stage": "prover  (iteration 036 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **`AffineCoverMVSquare.X\u2084` finrank corollary**: append two declarations to `Cohomology/MayerVietoris.lean` inside the existing `section CoverTotality`, after iter-035's `HModule'_X\u2084_linearEquiv_curve`. (i) `AffineCoverMVSquare.finrank_HModule_eq_HModule'_X\u2084` \u2014 `Module.finrank k (HModule k F n) = Module.finrank k (HModule' k F n S.toMayerVietorisSquare.toSquare.X\u2084)`, body `(S.HModule'_X\u2084_linearEquiv k F n).symm.finrank_eq` (Mathlib `LinearEquiv.finrank_eq`). (ii) `AffineCoverMVSquare.finrank_HModule_eq_HModule'_X\u2084_curve` \u2014 curve specialisation via the dot-notation method-call form `S.finrank_HModule_eq_HModule'_X\u2084 k _ n` for `Scheme.toModuleKSheaf C` with `C : Over (Spec (CommRingCat.of k))`. Plan-agent `lean_run_code` probe (this pass) confirms both bodies typecheck end-to-end against the post-iter-035 file with `{success: true, diagnostics: []}` and kernel-only axioms `[propext, Classical.choice, Quot.sound]`. The iter-035 prover's two-declaration close lands cleanly: 9 sorries (no change), zero diagnostics, kernel-only axioms, +42 LOC (915 \u2192 957). Iter-036 sorry trajectory `9 \u2192 9 \u2192 9` (no transient scaffold sorries \u2014 both bodies probe-confirmed).",
+  "mode": "parallel",
+  "startedAt": "2026-05-09T15:06:48Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 799
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 113
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 582
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "ffd7af6"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 26
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 3
+    }
+  },
+  "completedAt": "2026-05-09T15:50:46Z",
+  "wallTimeSecs": 2637
+}

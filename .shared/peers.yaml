@@ -1,0 +1,9 @@
+# peers.yaml — read-only awareness scope (globs, like archon-protected.yaml).
+# Run `archon peers` to see what these resolve to.
+
+read:
+  - ~/proj/*                                          # sibling projects (self auto-excluded)
+  - ~/proj/AlgebraicGeometryDAG/*                     # related projects
+  - ~/FormalizationProjects/Algebraic-Jacobian-Challenge
+
+no-access: []

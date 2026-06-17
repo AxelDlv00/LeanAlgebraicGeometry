@@ -1,0 +1,40 @@
+{
+  "iteration": 60,
+  "stage": "prover  (iteration 059 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **n-ary basic-open localization helper**: append a single thin foundational declaration to `Cohomology/MayerVietoris.lean` `section CoverTotality` (inside `namespace AlgebraicGeometry.Scheme`), after iter-058's `basicOpenCover_finset_inf'_le` (currently L1574-1580), before `end CoverTotality` (currently L1582): `theorem basicOpenCover_finset_inf'_isLocalization` \u2014 packages iter-057's equality + iter-058's inclusion + Mathlib's `IsAffineOpen.isLocalization_of_eq_basicOpen` to land `@IsLocalization.Away _ _ (\u220f i \u2208 t, i.1) \u0393(C.left, t.inf' h (basicOpenCover s)) _ ((presheaf.map (homOfLE _).op).hom.toAlgebra)` directly. Iter-058 closure verified (this pass): declaration lands cleanly at L1574; sorry count `9 \u2192 9`; file LOC `1548 \u2192 1584` (+36, in plan band +30-50; **twelfth zero-corrective single-Edit iteration in a row**, iter-047 \u2192 iter-058). **Analogy subagent invoked this pass** (slug `cech-koszul-precedent`, 5th-iteration repeat recommendation honoured; persistent output at `analogies/cech-koszul-precedent.md`, report archived to `logs/iter-059/`) \u2014 confirmed Mathlib has no acyclic-cover \u21d2 \u010cech-iso-to-derived theorem, the iter-060+ Koszul branch can leverage `ExtraDegeneracy.homotopyEquiv` + `extraDegeneracyCech` engines, and both `exact_of_isLocalized_span` (L173) and `exact_of_localized_span` (L211) exist (iter-057 over-corrected). Plan-agent `lean_run_code` probe (this pass) confirms iter-059 declaration body compiles end-to-end with kernel-only axioms `[propext, Classical.choice, Quot.sound]` \u2014 no new axiom introduced. Iter-059 sorry trajectory `9 \u2192 9` (no transient \u2014 body probe-confirmed). Phase A iterations-remaining **revised UP from ~5 to ~7** as the iter-060+ Koszul + iter-063+ comparison + iter-067+ packaging branches are now better-scoped from the analogy report (Koszul ~2-3 iter, comparison ~3-4 iter, packaging ~1 iter, genus carrier ~1 iter).",
+  "mode": "parallel",
+  "startedAt": "2026-05-11T04:00:08Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1266
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 462
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 432
+  },
+  "sorry_count": 309,
+  "finalize": {
+    "innerGit": {
+      "sha": "7a16ba6"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 27
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 6
+    }
+  },
+  "completedAt": "2026-05-11T05:05:31Z",
+  "wallTimeSecs": 3923
+}

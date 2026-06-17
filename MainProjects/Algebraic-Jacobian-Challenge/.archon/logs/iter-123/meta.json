@@ -1,0 +1,48 @@
+{
+  "iteration": 123,
+  "stage": "prover (Iter-122: per the iter-121 user pivot directive, the project",
+  "mode": "parallel",
+  "startedAt": "2026-05-17T02:37:52Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "93853e2e-702e-4fec-bcb7-1ed433dd6f7f",
+    "durationSecs": 114
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 1
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 950
+  },
+  "provers": {
+    "AlgebraicJacobian_Differentials": {
+      "file": "AlgebraicJacobian/Differentials.lean",
+      "status": "done",
+      "sessionId": "3155c57a-f382-416b-ae4e-7a92105aae07"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "13e225dd-6ca4-4253-a9d1-1b92c89b7ec0",
+    "durationSecs": 936
+  },
+  "sorry_count": 3824,
+  "finalize": {
+    "innerGit": {
+      "sha": "2061bd0"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 6
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 1,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-17T07:10:27Z",
+  "wallTimeSecs": 2115
+}

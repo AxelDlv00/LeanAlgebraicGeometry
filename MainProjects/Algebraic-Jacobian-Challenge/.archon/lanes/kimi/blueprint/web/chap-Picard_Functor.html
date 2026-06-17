@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The relative Picard functor</title>
+<link rel="next" href="chap-Jacobian.html" title="The Jacobian as an abelian variety" />
+<link rel="prev" href="chap-Picard_LineBundle.html" title="Line bundles on schemes and the Picard group" />
+<link rel="up" href="index.html" title="AlgebraicJacobian" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">AlgebraicJacobian</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="chap-Cohomology_SheafCompose.html"><span class="toc_ref">1</span> <span class="toc_entry">Sheaf condition along the structure-sheaf forget composite</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000002"><span class="toc_ref">1.1</span> <span class="toc_entry">Statement</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000004"><span class="toc_ref">1.2</span> <span class="toc_entry">Proof sketch</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000006"><span class="toc_ref">1.3</span> <span class="toc_entry">Use in the project</span></a>
+ </li>
+<li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000007"><span class="toc_ref">1.4</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Cohomology_SheafCompose.html#a0000000008"><span class="toc_ref">1.4.1</span> <span class="toc_entry">Discovery objectives for this iteration (iter-005 prover)</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Genus.html"><span class="toc_ref">2</span> <span class="toc_entry">Genus of a smooth proper curve</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Genus.html#a0000000009"><span class="toc_ref">2.1</span> <span class="toc_entry">Definition</span></a>
+ </li>
+<li class="">
+  <a href="chap-Genus.html#sec:Genus_status"><span class="toc_ref">2.2</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Genus.html#a0000000010"><span class="toc_ref">2.2.1</span> <span class="toc_entry">Discovery objective for this iteration</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html"><span class="toc_ref">3</span> <span class="toc_entry">Line bundles on schemes and the Picard group</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000011"><span class="toc_ref">3.1</span> <span class="toc_entry">Definition</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000012"><span class="toc_ref">3.2</span> <span class="toc_entry">Group structure under tensor product</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000013"><span class="toc_ref">3.3</span> <span class="toc_entry">Pull-back functoriality</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000014"><span class="toc_ref">3.4</span> <span class="toc_entry">Use in the project</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000015"><span class="toc_ref">3.5</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Picard_LineBundle.html#a0000000016"><span class="toc_ref">3.5.1</span> <span class="toc_entry">Discovery objectives for this iteration</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active current">
+  <a href="chap-Picard_Functor.html"><span class="toc_ref">4</span> <span class="toc_entry">The relative Picard functor</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="chap-Picard_Functor.html#a0000000017"><span class="toc_ref">4.1</span> <span class="toc_entry">Definition</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html#a0000000018"><span class="toc_ref">4.2</span> <span class="toc_entry">Representability</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html#a0000000019"><span class="toc_ref">4.3</span> <span class="toc_entry">Use in the project</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html#a0000000020"><span class="toc_ref">4.4</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Picard_Functor.html#a0000000021"><span class="toc_ref">4.4.1</span> <span class="toc_entry">Forward-compatibility note (<span class="ttfamily">LineBundle</span> approximation)</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_Functor.html#a0000000022"><span class="toc_ref">4.4.2</span> <span class="toc_entry">Discovery objectives for this iteration (iter-005 prover)</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Jacobian.html"><span class="toc_ref">5</span> <span class="toc_entry">The Jacobian as an abelian variety</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Jacobian.html#a0000000023"><span class="toc_ref">5.1</span> <span class="toc_entry">The Jacobian</span></a>
+ </li>
+<li class="">
+  <a href="chap-Jacobian.html#a0000000024"><span class="toc_ref">5.2</span> <span class="toc_entry">Group scheme structure and abelian-variety properties</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Jacobian.html#a0000000025"><span class="toc_ref">5.2.1</span> <span class="toc_entry">Sanity check in low genus</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Jacobian.html#a0000000026"><span class="toc_ref">5.3</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Jacobian.html#a0000000027"><span class="toc_ref">5.3.1</span> <span class="toc_entry">Status note</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Rigidity.html"><span class="toc_ref">6</span> <span class="toc_entry">Rigidity for morphisms of group schemes (Mumford §4)</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Rigidity.html#a0000000028"><span class="toc_ref">6.1</span> <span class="toc_entry">Statement</span></a>
+ </li>
+<li class="">
+  <a href="chap-Rigidity.html#a0000000029"><span class="toc_ref">6.2</span> <span class="toc_entry">Proof sketch</span></a>
+ </li>
+<li class="">
+  <a href="chap-Rigidity.html#a0000000030"><span class="toc_ref">6.3</span> <span class="toc_entry">Use in the project</span></a>
+ </li>
+<li class="">
+  <a href="chap-Rigidity.html#a0000000031"><span class="toc_ref">6.4</span> <span class="toc_entry">Mathlib gap</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-AbelJacobi.html"><span class="toc_ref">7</span> <span class="toc_entry">The Abel–Jacobi map</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-AbelJacobi.html#a0000000032"><span class="toc_ref">7.1</span> <span class="toc_entry">Definition</span></a>
+ </li>
+<li class="">
+  <a href="chap-AbelJacobi.html#a0000000033"><span class="toc_ref">7.2</span> <span class="toc_entry">Pointed property</span></a>
+ </li>
+<li class="">
+  <a href="chap-AbelJacobi.html#a0000000034"><span class="toc_ref">7.3</span> <span class="toc_entry">Universal (Albanese) property</span></a>
+ </li>
+<li class="">
+  <a href="chap-AbelJacobi.html#a0000000035"><span class="toc_ref">7.4</span> <span class="toc_entry">Mathlib gap</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-AbelJacobi.html#a0000000036"><span class="toc_ref">7.4.1</span> <span class="toc_entry">Discovery objective for this iteration</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="chap:Picard_Functor">4 The relative Picard functor</h1>
+
+<p>This chapter sets up Phase&#160;C step&#160;2: the <em>relative Picard functor</em> of a curve \(C\) over \(\Spec k\), packaged as a contravariant functor on schemes, and the (deferred) representability theorem whose closure delivers the Picard scheme. It is the natural successor to Chapter&#160;<a href="chap-Picard_LineBundle.html">3</a>. </p>
+<p>The chapter introduces no protected declarations: every definition and lemma here is auxiliary, supporting the construction of \(\Jac (C)\) in Chapter&#160;<a href="chap-Jacobian.html">5</a>. </p>
+<h1 id="a0000000017">4.1 Definition</h1>
+<div class="definition_thmwrapper theorem-style-definition" id="def:Pic_functor">
+  <div class="definition_thmheading">
+    <span class="definition_thmcaption">
+    Definition
+    </span>
+    <span class="definition_thmlabel">6</span>
+    <span class="definition_thmtitle">Relative Picard functor</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_Functor.html#def:Pic_functor">#</a>
+    
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicardFunctor" class="lean_decl">AlgebraicGeometry.Scheme.PicardFunctor</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="definition_thmcontent">
+  <p>   Let \(C\) be a scheme over \(\Spec k\). The <em>relative Picard functor</em> of \(C\) over \(k\) is the contravariant functor </p>
+<div class="displaymath" id="a0000000041">
+  \[  \PicardFunctor \,  C \; \colon \;  \mathrm{Sch}^{\mathrm{op}} \; \longrightarrow \;  \mathrm{Set},\qquad S \; \longmapsto \;  \Pic (C \times _k S) \, \big/\,  p_S^* \Pic (S),  \]
+</div>
+<p> where \(p_S \colon C \times _k S \to S\) is the projection and the quotient is by the subgroup \(p_S^*\Pic (S) \subseteq \Pic (C \times _k S)\) pulled back from \(S\). Functoriality in \(S\) is via base change of the fiber product and the pull-back homomorphism on Picard groups (Theorem&#160;<a href="chap-Picard_LineBundle.html#thm:Scheme_Pic_pullback">5</a>). </p>
+
+  </div>
+</div>
+<p> The presheaf \(\PicardFunctor \) above is sometimes called the <em>absolute</em> Picard presheaf; the standard <em>relative Picard functor</em> of \(C/k\) is its étale-sheafification, denoted \(\underline{\Pic }_{C/k}\). For a smooth proper geometrically connected curve \(C\) over a field \(k\), étale sheafification is automatic on schemes that are themselves Picard sheaves over \(S\) (the obstruction is the Brauer group), so this chapter records the presheaf definition; the étale sheafification is deferred to a subsequent iteration (Phase&#160;C step&#160;3).  </p>
+<h1 id="a0000000018">4.2 Representability</h1>
+<div class="theorem_thmwrapper theorem-style-plain" id="thm:Pic_representable">
+  <div class="theorem_thmheading">
+    <span class="theorem_thmcaption">
+    Theorem
+    </span>
+    <span class="theorem_thmlabel">7</span>
+    <span class="theorem_thmtitle">Representability of the Picard functor — Grothendieck FGA, Mumford <em>Abelian Varieties</em> §III.13</span>
+    <div class="thm_header_extras">
+
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_Functor.html#thm:Pic_representable">#</a>
+    
+    <a class="icon proof" href="chap-Picard_Functor.html#a0000000042"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Picard_Functor.html#def:Pic_functor">Definition 6</a></li>
+          
+          <li><a href="chap-Picard_Functor.html#def:Pic_functor">Definition 6</a></li>
+          
+          <li><a href="chap-Picard_LineBundle.html#def:Scheme_LineBundle">Definition 3</a></li>
+          
+          <li><a href="chap-Picard_LineBundle.html#thm:Scheme_Pic_pullback">Theorem 5</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicardFunctor.representable" class="lean_decl">AlgebraicGeometry.Scheme.PicardFunctor.representable</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="theorem_thmcontent">
+  <p>    Let \(C\) be a smooth proper geometrically irreducible curve over a field \(k\). Then \(\PicardFunctor \,  C\) (after étale sheafification) is representable by a smooth, locally finite-type group scheme \(\Pic _{C/k}\) over \(k\). Its connected component of the identity \(\Pic ^0_{C/k}\) is a smooth proper geometrically irreducible group scheme over \(k\) of dimension \(g = g(C)\), hence an abelian variety. </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000042">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  <p> See <em>Fundamental Algebraic Geometry: Grothendieck’s FGA Explained</em> (Fantechi–Göttsche–Illusie–Kleiman–Nitsure–Vistoli, 2005), Chapter&#160;9, and Mumford, <em>Abelian Varieties</em>, Chapter&#160;III §13. The proof goes via Hilbert schemes and quotient stacks, both of which currently exceed the Mathlib substrate. The Lean side leaves this as a deferred sorry; downstream consumers (<a href="chap-Jacobian.html#def:Jacobian">8</a> and the four <code class="plain_lstlinline"></code>Jacobian instances of Chapter&#160;<a href="chap-Jacobian.html">5</a>) record their dependence on it. </p>
+
+  </div>
+</div>
+<h1 id="a0000000019">4.3 Use in the project</h1>
+<p>Theorem&#160;<a href="chap-Picard_Functor.html#thm:Pic_representable">7</a> is the bundled blocker for the four <code class="plain_lstlinline"></code>Jacobian.lean sorries: </p>
+<ul class="itemize">
+  <li><p>Definition&#160;<a href="chap-Jacobian.html#def:Jacobian">8</a> (\(\Jac (C) = \Pic ^0_{C/k}\)) takes the connected component of identity of the representing scheme. </p>
+</li>
+  <li><p>Theorem&#160;<a href="chap-Jacobian.html#thm:Jacobian_grpObj">9</a> (group-object structure) is the abelian-variety structure on \(\Pic ^0_{C/k}\). </p>
+</li>
+  <li><p>Theorem&#160;<a href="chap-Jacobian.html#thm:Jacobian_smooth_genus">10</a> (smooth of relative dimension \(g\)) is the dimension formula in the representability statement. </p>
+</li>
+  <li><p>Theorem&#160;<a href="chap-Jacobian.html#thm:Jacobian_proper">11</a> (properness) and Theorem&#160;<a href="chap-Jacobian.html#thm:Jacobian_geomIrred">12</a> (geometric irreducibility) are direct consequences of the representability conclusion. </p>
+</li>
+</ul>
+<h1 id="a0000000020">4.4 Mathlib gap</h1>
+<p>Mathlib <span class="ttfamily">b80f227</span> has the constituent infrastructure for the <em>definition</em> (Definition&#160;<a href="chap-Picard_Functor.html#def:Pic_functor">6</a>): </p>
+<ul class="itemize">
+  <li><p>Fiber products of schemes (<code class="plain_lstlinline"></code>CategoryTheory.Limits.HasPullback for the category of schemes). </p>
+</li>
+  <li><p><code class="plain_lstlinline"></code>AlgebraicGeometry.Scheme.LineBundle (this project, Chapter&#160;<a href="chap-Picard_LineBundle.html">3</a>). </p>
+</li>
+  <li><p><code class="plain_lstlinline"></code>AlgebraicGeometry.Scheme.Pic.pullback (this project, Chapter&#160;<a href="chap-Picard_LineBundle.html">3</a>). </p>
+</li>
+  <li><p><code class="plain_lstlinline"></code>QuotientGroup.mk, <code class="plain_lstlinline"></code>QuotientAddGroup.mk for group quotients. </p>
+</li>
+  <li><p><code class="plain_lstlinline"></code>CategoryTheory.Functor for assembling the contravariant functor. </p>
+</li>
+</ul>
+<p>What is <em>missing</em> and supplied by this chapter (as a deferred sorry): </p>
+<ul class="itemize">
+  <li><p>The actual representability theorem (Theorem&#160;<a href="chap-Picard_Functor.html#thm:Pic_representable">7</a>). FGA-level, kept as a sorry; all four <code class="plain_lstlinline"></code>Jacobian.lean sorries reduce to it once it is closed. </p>
+</li>
+</ul>
+<h2 id="a0000000021">4.4.1 Forward-compatibility note (<span class="ttfamily">LineBundle</span> approximation)</h2>
+<p>Chapter&#160;<a href="chap-Picard_LineBundle.html">3</a> defines <code class="plain_lstlinline"></code>LineBundle X as the global-sections approximation <code class="plain_lstlinline"></code>CommRing.Pic Γ(X, ⊤), correct on affine schemes (Stacks 0AGS) but a strict subgroup of the true \(\Pic (X)\) on non-affine schemes. The <em>definition</em> of <code class="plain_lstlinline"></code>PicardFunctor C therefore inherits this approximation: the values \(\PicardFunctor (S)\) for non-affine \(S\) are smaller subgroups of the true relative Picard group. Consequently the representability theorem stated above will be honest only after <code class="plain_lstlinline"></code>LineBundle is refined to the bespoke "invertible quasi-coherent sheaf" definition (gated on Mathlib’s <code class="plain_lstlinline"></code>MonoidalCategory X.Modules, currently absent). Until that refinement lands, the <code class="plain_lstlinline"></code>representable sorry of this chapter must remain unattacked: closing it on the approximate <code class="plain_lstlinline"></code>LineBundle would silently assert representability of the wrong functor. </p>
+<h2 id="a0000000022">4.4.2 Discovery objectives for this iteration (iter-005 prover)</h2>
+<p>The prover assigned to this chapter should: </p>
+<ol class="enumerate">
+  <li><p>Fill the body of <code class="plain_lstlinline"></code>AlgebraicGeometry.Scheme.PicardFunctor C as the contravariant functor \(S \mapsto \Pic (C \times _k S) / p_S^*\Pic (S)\). Use: </p>
+<ul class="itemize">
+  <li><p><code class="plain_lstlinline"></code>Limits.pullback for the fiber product \(C \times _k S\) in the category of schemes; </p>
+</li>
+  <li><p><code class="plain_lstlinline"></code>AlgebraicGeometry.Scheme.LineBundle (now closed in Chapter&#160;<a href="chap-Picard_LineBundle.html">3</a>) for \(\Pic (C \times _k S)\) and \(\Pic (S)\); </p>
+</li>
+  <li><p><code class="plain_lstlinline"></code>AlgebraicGeometry.Scheme.Pic.pullback for the homomorphism \(\Pic (S) \to \Pic (C \times _k S)\); </p>
+</li>
+  <li><p><code class="plain_lstlinline"></code>QuotientGroup.mk for the quotient \(\Pic (C \times _k S) / p_S^*\Pic (S)\); </p>
+</li>
+  <li><p><code class="plain_lstlinline"></code>QuotientGroup.lift for the induced map on the quotients (functoriality of \(\PicardFunctor \) in \(S\)). </p>
+</li>
+</ul>
+<p> Document each constituent in the task result. </p>
+</li>
+  <li><p><b class="bfseries">Do not</b> attempt to fill the <code class="plain_lstlinline"></code>representable sorry. It is FGA-level and intentionally deferred. Even if a "trivial" closure is found (e.g. via the global-sections approximation), it would assert representability of the wrong functor and is therefore a forbidden shortcut. Keep <code class="plain_lstlinline"></code>sorry in place. </p>
+</li>
+  <li><p>Add functoriality lemmas (<code class="plain_lstlinline"></code>PicardFunctor.map_id, <code class="plain_lstlinline"></code>PicardFunctor.map_comp) only if they are not already automatic from <code class="plain_lstlinline"></code>Functor.map_id / <code class="plain_lstlinline"></code>Functor.map_comp; in most cases the bundled <code class="plain_lstlinline"></code>Functor structure provides them for free. Decompose into private lemmas if a one-shot definition exceeds \(\sim 60\) lines. </p>
+</li>
+  <li><p>If a Mathlib gap blocks progress on the definition (e.g. "the pull-back of fiber products of schemes is not exposed in this exact form"), document the missing declaration in the task result with name and intended type — <em>do not</em> fill the sorry with an ad-hoc placeholder. </p>
+</li>
+</ol>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="chap-Picard_LineBundle.html" title="Line bundles on schemes and the Picard group"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="AlgebraicJacobian"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="chap-Jacobian.html" title="The Jacobian as an abelian variety"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

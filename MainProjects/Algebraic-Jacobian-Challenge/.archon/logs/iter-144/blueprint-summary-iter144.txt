@@ -1,0 +1,19 @@
+Chapter summary (blueprint/src/chapters/):
+
+- AbelJacobi.tex — Abel-Jacobi map; backs AbelJacobi.lean (3 declarations all closed).
+- AlgebraicJacobian_Cotangent_GrpObj.tex — pointer chapter to RigidityKbar.tex piece (i); lists the Lean declarations in Cotangent/GrpObj.lean.
+- Cohomology_*.tex (3-4 files) — Čech / Mayer-Vietoris infrastructure; closed end-to-end.
+- Differentials.tex — `smooth_locally_free_omega` forward direction + iter-126 excision documentation.
+- Genus.tex — `genus C := Module.finrank k (Scheme.HModule k (Scheme.toModuleKSheaf C) 1)`.
+- Jacobian.tex — `Jacobian` + `genusZeroWitness` + `positiveGenusWitness` scaffolds; `nonempty_jacobianWitness` genus case-split.
+- RigidityKbar.tex — M2.a `rigidity_over_kbar` over arbitrary k + the entire shared cotangent-vanishing pile § "Piece (i)" (i.a)/(i.b)/(i.c) + § "Piece (ii)" + § "Piece (iii)". 1634 LOC after iter-143 +285 expansion. Carries detailed closure recipes for piece (i.b) Step 2.
+- Rigidity.tex — Mumford rigidity (over any base) backing Rigidity.lean.
+- StructureSheafAb.tex / StructureSheafModuleK.tex — sheaf-of-modules infrastructure.
+
+Project goal (from references/challenge.lean):
+
+Formalize the nine protected declarations of Christian Merten's Jacobian challenge: AlgebraicGeometry.genus + AlgebraicGeometry.Jacobian + Jacobian.instGrpObj + Jacobian.smoothOfRelativeDimension_genus + Jacobian.instIsProper + Jacobian.instGeometricallyIrreducible + Jacobian.ofCurve + Jacobian.comp_ofCurve + Jacobian.exists_unique_ofCurve_comp. The protected `nonempty_jacobianWitness` quantifies over arbitrary `C : Over (Spec (.of k))` with `[SmoothOfRelativeDimension 1 C.hom]` `[IsProper C.hom]` `[GeometricallyIrreducible C.hom]` — no genus parameter, no `k`-rational-point hypothesis.
+
+References index (references/summary.md):
+
+- challenge.lean — original AI challenge file by Christian Merten with the formal statement of missing definitions and theorems; signatures here are authoritative.

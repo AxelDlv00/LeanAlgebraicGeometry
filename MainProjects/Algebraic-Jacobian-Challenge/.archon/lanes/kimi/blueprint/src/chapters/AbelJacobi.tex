@@ -1,0 +1,77 @@
+\chapter{The Abel--Jacobi map}
+\label{chap:AbelJacobi}
+
+Let $C$ be a smooth proper curve over $k$ as in Chapter \ref{chap:Genus}, and let $\Jac(C)$ be its Jacobian (Definition \ref{def:Jacobian}).
+
+\section{Definition}
+
+\begin{definition}[Abel--Jacobi map]
+  \label{def:ofCurve}
+  \lean{AlgebraicGeometry.Jacobian.ofCurve}
+  \leanok
+  \uses{def:Jacobian}
+  Given a $k$-rational point $P\colon \Spec k \to C$ — equivalently, a morphism $P\colon \mathbf 1 \to C$ in $\textrm{Over}(\Spec k)$ — the \emph{Abel--Jacobi map} is the $k$-morphism
+  \[
+    \alpha_P\colon C \;\longrightarrow\; \Jac(C),\qquad Q \;\longmapsto\; [\mathcal O_C(Q - P)].
+  \]
+  Functorially, it is the morphism in $\textrm{Over}(\Spec k)$ induced by the line bundle $\mathcal O_{C \times C}(\Delta - p_1^* P)$ on $C \times C$ via the universal property of $\Pic^0_{C/k}$.
+\end{definition}
+
+\section{Pointed property}
+
+\begin{lemma}[$\alpha_P$ sends $P$ to $0$]
+  \label{lem:comp_ofCurve}
+  \lean{AlgebraicGeometry.Jacobian.comp_ofCurve}
+  \leanok
+  \uses{def:ofCurve}
+  $P \;\circ\; \alpha_P \;=\; \eta\bigl[\Jac(C)\bigr]$, where $\eta[\Jac(C)]$ is the identity element of the group scheme $\Jac(C)$.
+\end{lemma}
+
+\begin{proof}
+  \uses{def:ofCurve}
+  At the level of $k$-points: $\alpha_P(P) = [\mathcal O_C(P - P)] = [\mathcal O_C] = 0$. Globally: by construction, $\alpha_P$ is the morphism classifying the line bundle $\mathcal O_{C \times C}(\Delta - p_1^* P)$; restricting to the section $(P, \mathrm{id})$ gives the trivial line bundle, hence the zero point of $\Pic^0$.
+\end{proof}
+
+\section{Universal (Albanese) property}
+
+\begin{theorem}[Albanese property of the Jacobian]
+  \label{thm:exists_unique_ofCurve_comp}
+  \lean{AlgebraicGeometry.Jacobian.exists_unique_ofCurve_comp}
+  \leanok
+  \uses{def:ofCurve, lem:comp_ofCurve}
+  Let $A$ be an abelian variety over $k$ — i.e.\ $A \in \textrm{Over}(\Spec k)$ with \lstinline{[Smooth A.hom] [IsProper A.hom] [GrpObj A] [GeometricallyIrreducible A.hom]}. For every pointed morphism $f\colon C \to A$ with $f \circ P = \eta[A]$, there exists a unique group-scheme morphism $g\colon \Jac(C) \to A$ such that $f = g \circ \alpha_P$.
+  \[
+  \begin{array}{ccc}
+    C & \stackrel{f}{\longrightarrow} & A \\
+    {\scriptstyle\alpha_P} \downarrow & \nearrow {\scriptstyle\exists ! g} & \\
+    \Jac(C) & &
+  \end{array}
+  \]
+\end{theorem}
+
+\begin{proof}
+  \uses{thm:Pic_representable, thm:GrpObj_eq_of_eqOnOpen}
+  \emph{Existence.} The map $f\colon C \to A$ pointed at $P$ is classified, via the Picard-functoriality of $A$, by a line bundle on $C \times A^\vee$ (where $A^\vee$ is the dual abelian variety), normalised so that its restriction along $\{P\}\times A^\vee$ is trivial. By the universal property of $\Pic^0_{C/k}$, this line bundle yields a $k$-morphism $A^\vee \to \Pic^0_{C/k} = \Jac(C)$; dualising back gives $g\colon \Jac(C) \to A$ with $g \circ \alpha_P = f$.
+
+  \emph{Uniqueness.} If $g_1, g_2\colon \Jac(C) \to A$ both satisfy $g_i \circ \alpha_P = f$, then $g_1 - g_2\colon \Jac(C) \to A$ vanishes on the image of $\alpha_P$. The image of $\alpha_P$ generates $\Jac(C)$ as a group scheme (a standard fact: the Abel--Jacobi morphism is generically finite onto its image and the symmetric power $C^{(g)}$ surjects onto $\Jac(C)$). Combined with the rigidity theorem for morphisms between abelian varieties (Theorem~\ref{thm:GrpObj_eq_of_eqOnOpen}, the Lean-side scheme-level form of Mumford, \emph{Abelian Varieties}, §4 Theorem 1), this forces $g_1 = g_2$.
+\end{proof}
+
+\section{Mathlib gap}
+
+The Albanese property requires:
+\begin{itemize}
+  \item the rigidity theorem for morphisms between abelian varieties (Mumford §4) — \emph{not} in Mathlib, but provable from \lstinline{Mathlib/AlgebraicGeometry/Group/Abelian.lean} plus the rigidity lemma for proper morphisms over an irreducible base;
+  \item generation of $\Jac(C)$ by the image of $\alpha_P$ — requires symmetric powers of curves and the surjectivity $C^{(g)} \twoheadrightarrow \Jac(C)$;
+  \item dual abelian varieties and biduality — currently absent.
+\end{itemize}
+
+These are mapped to Phase E of \texttt{STRATEGY.md}.
+
+\subsection{Discovery objective for this iteration}
+
+The prover should:
+\begin{enumerate}
+  \item Confirm that none of \lstinline{ofCurve}, \lstinline{comp_ofCurve}, \lstinline{exists_unique_ofCurve_comp} can be filled without first defining \lstinline{Jacobian C} (Chapter \ref{chap:Jacobian}).
+  \item Document in \lstinline{task_results/AbelJacobi.md} which of the three sorries would become provable from a working \lstinline{Jacobian} via what specific helper lemmas (e.g.\ \enquote{rigidity for morphisms of abelian varieties} as a standalone declaration).
+  \item \textbf{Do not} introduce a placeholder \lstinline{ofCurve} (such as the constant map to the identity) — this would make \lstinline{exists_unique_ofCurve_comp} false in genus $\ge 1$.
+\end{enumerate}

@@ -1,0 +1,48 @@
+{
+  "iteration": 96,
+  "stage": "prover (iteration 095 \u2014 single substantive prover lane; HOU-blocker breakthrough",
+  "mode": "parallel",
+  "startedAt": "2026-05-14T10:18:45Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "58fa9189-127e-4c22-8fad-8f15c0435d78",
+    "durationSecs": 1893
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 1
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 2024
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_BasicOpenCech": {
+      "file": "AlgebraicJacobian/Cohomology/BasicOpenCech.lean",
+      "status": "done",
+      "sessionId": "7d357c30-774e-4cf3-958b-691ba097735d"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "f9264f16-613d-453f-a17c-0770376a6b56",
+    "durationSecs": 597
+  },
+  "sorry_count": 3255,
+  "finalize": {
+    "innerGit": {
+      "sha": "ffce297"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 32
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 0,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-14T11:40:14Z",
+  "wallTimeSecs": 4888
+}

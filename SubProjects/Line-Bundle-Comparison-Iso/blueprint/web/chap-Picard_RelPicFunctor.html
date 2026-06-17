@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  MathJax = { 
+    tex: {
+		    inlineMath: [['$','$'], ['\\(','\\)']]
+	} }
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+<meta name="generator" content="plasTeX" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The relative Picard functor and its étale sheafification</title>
+<link rel="next" href="chap-Picard_TensorObjSubstrate.html" title="Relative Picard sheaf — Scheme.Modules.tensorObj substrate (A.1.c.SubT)" />
+<link rel="prev" href="chap-Picard_LineBundlePullback.html" title="Line-bundle pullback on a relative curve" />
+<link rel="up" href="index.html" title="AlgebraicJacobian" />
+<link rel="stylesheet" href="styles/theme-white.css" />
+<link rel="stylesheet" href="styles/amsthm.css" />
+<link rel="stylesheet" href="styles/showmore.css" />
+<link rel="stylesheet" href="styles/blueprint.css" />
+<link rel="stylesheet" href="styles/extra_styles.css" />
+</head>
+
+<body>
+<header>
+<svg  id="toc-toggle" class="icon icon-list-numbered "><use xlink:href="symbol-defs.svg#icon-list-numbered"></use></svg>
+<h1 id="doc_title"><a href="index.html">AlgebraicJacobian</a></h1>
+</header>
+
+<div class="wrapper">
+<nav class="toc">
+<ul class="sub-toc-0">
+<li class="">
+  <a href="chap-Picard_LineBundlePullback.html"><span class="toc_ref">1</span> <span class="toc_entry">Line-bundle pullback on a relative curve</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Picard_LineBundlePullback.html#sec:lbp_setup"><span class="toc_ref">1.1</span> <span class="toc_entry">Setup and motivation</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundlePullback.html#sec:lbp_line_bundle"><span class="toc_ref">1.2</span> <span class="toc_entry">Line bundles on a relative curve</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundlePullback.html#sec:lbp_isLocallyTrivial_substrate"><span class="toc_ref">1.3</span> <span class="toc_entry">Project-side IsLocallyTrivial substrate</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundlePullback.html#sec:lbp_pullback_projection"><span class="toc_ref">1.4</span> <span class="toc_entry">The pullback functor along the projection</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundlePullback.html#sec:lbp_relpic_quotient"><span class="toc_ref">1.5</span> <span class="toc_entry">The relative Picard presheaf (set-valued)</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundlePullback.html#sec:lbp_lean_encoding"><span class="toc_ref">1.6</span> <span class="toc_entry">Lean encoding</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundlePullback.html#sec:lbp_out_of_scope"><span class="toc_ref">1.7</span> <span class="toc_entry">Out of scope</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_LineBundlePullback.html#sec:lbp_consistency_check"><span class="toc_ref">1.8</span> <span class="toc_entry">Internal-consistency check</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class=" active current">
+  <a href="chap-Picard_RelPicFunctor.html"><span class="toc_ref">2</span> <span class="toc_entry">The relative Picard functor and its étale sheafification</span></a>
+  <span class="expand-toc">▼</span>
+  <ul class="sub-toc-1 active">
+     <li class="">
+  <a href="chap-Picard_RelPicFunctor.html#sec:relpic_setup"><span class="toc_ref">2.1</span> <span class="toc_entry">Setup and motivation</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_RelPicFunctor.html#sec:relpic_group"><span class="toc_ref">2.2</span> <span class="toc_entry">Group structure on the relative Picard quotient</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Picard_RelPicFunctor.html#subsec:relpic_group_helpers"><span class="toc_ref">2.2.1</span> <span class="toc_entry">Helper constructions underlying the group law</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Picard_RelPicFunctor.html#sec:relpic_groupvalued"><span class="toc_ref">2.3</span> <span class="toc_entry">The relative Picard presheaf as a group-valued presheaf</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_RelPicFunctor.html#sec:relpic_etale_sheaf"><span class="toc_ref">2.4</span> <span class="toc_entry">Étale sheafification</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_RelPicFunctor.html#sec:relpic_lean_encoding"><span class="toc_ref">2.5</span> <span class="toc_entry">Lean encoding</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_RelPicFunctor.html#sec:relpic_out_of_scope"><span class="toc_ref">2.6</span> <span class="toc_entry">Out of scope</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_RelPicFunctor.html#sec:relpic_consistency_check"><span class="toc_ref">2.7</span> <span class="toc_entry">Internal-consistency check</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html"><span class="toc_ref">3</span> <span class="toc_entry">Relative Picard sheaf — <span class="ttfamily">Scheme.Modules.tensorObj</span> substrate (A.1.c.SubT)</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-1">
+     <li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#sec:tensorobj_motivation"><span class="toc_ref">3.1</span> <span class="toc_entry">Motivation: the abelian-group-valued relative Picard sheaf</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#sec:tensorobj_api_survey"><span class="toc_ref">3.2</span> <span class="toc_entry">Mathlib API survey</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#a0000000009"><span class="toc_ref"></span> <span class="toc_entry">(i) The presheaf-of-modules monoidal category.</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#a0000000010"><span class="toc_ref"></span> <span class="toc_entry">(ii) The localization-of-monoidal-categories API.</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#a0000000011"><span class="toc_ref"></span> <span class="toc_entry">(iii) The proof template for \(W\)-monoidality.</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#a0000000012"><span class="toc_ref"></span> <span class="toc_entry">The gap and route&#160;(e), superseded.</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#sec:tensorobj_substrate"><span class="toc_ref">3.3</span> <span class="toc_entry">The substrate \(\mathrm{Scheme}.\mathtt{Modules}.\mathtt{tensorObj}\)</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#sec:tensorobj_onproduct_lift"><span class="toc_ref">3.4</span> <span class="toc_entry">The lift through \(\texttt{LineBundle.OnProduct}\)</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#sec:tensorobj_route_e"><span class="toc_ref">3.5</span> <span class="toc_entry">Route&#160;(e): the \(J.W\)-monoidality instance and the localized monoidal structure</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#a0000000013"><span class="toc_ref"></span> <span class="toc_entry">What the group law consumes.</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#sec:tensorobj_stalk_tensor"><span class="toc_ref">3.6</span> <span class="toc_entry">The varying-ring stalk–tensor commutation (d.2) and the unconditional left-whiskering</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#subsec:tensorobj_stalktensor_helpers"><span class="toc_ref">3.6.1</span> <span class="toc_entry">Stalk–tensor comparison helper declarations</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#sec:tensorobj_invertibility"><span class="toc_ref">3.7</span> <span class="toc_entry">\(\otimes \)-invertibility and the commutative-monoid group-law engine</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#sec:tensorobj_pullback_monoidality"><span class="toc_ref">3.8</span> <span class="toc_entry">Pullback-monoidality: invertibility under a general scheme morphism</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#a0000000014"><span class="toc_ref"></span> <span class="toc_entry">The reduction to two facts about pullback.</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#a0000000015"><span class="toc_ref"></span> <span class="toc_entry">Why the apparent obstruction does not apply.</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#a0000000016"><span class="toc_ref"></span> <span class="toc_entry">The construction route.</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#a0000000017"><span class="toc_ref">3.8.1</span> <span class="toc_entry">The unit square (D2\('\)): a mate-calculus telescope</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#sec:tensorobj_pic_carrier"><span class="toc_ref">3.9</span> <span class="toc_entry">The invertibility-carrier Picard group</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#sec:tensorobj_consumer_acg"><span class="toc_ref">3.10</span> <span class="toc_entry">Consumer: the \(\mathrm{AddCommGroup}\) instance for the relative Picard sheaf</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#sec:tensorobj_out_of_scope"><span class="toc_ref">3.11</span> <span class="toc_entry">Out of scope</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#sec:tensorobj_consistency_check"><span class="toc_ref">3.12</span> <span class="toc_entry">Internal-consistency check</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#sec:tensorobj_dual_infra"><span class="toc_ref">3.13</span> <span class="toc_entry">Sheaf internal-hom of \(\mathcal{O}_X\)-modules (the \(\otimes \)-inverse infrastructure)</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#subsec:dual_inverse_helpers"><span class="toc_ref">3.13.1</span> <span class="toc_entry">Dual-inverse lane: the slice-transport helper declarations</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#subsec:tensorobj_internalhom_helpers"><span class="toc_ref">3.13.2</span> <span class="toc_entry">Internal-hom and restrict-scalars helper declarations</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#subsec:tensorobj_vestigial_helpers"><span class="toc_ref">3.13.3</span> <span class="toc_entry">Vestigial / off-path helper declarations</span></a>
+ </li>
+
+  </ul>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#sec:tensorobj_substrate_helpers"><span class="toc_ref">3.14</span> <span class="toc_entry">Substrate helper declarations (wired lean-aux blocks)</span></a>
+  <span class="expand-toc">▶</span>
+  <ul class="sub-toc-2">
+     <li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#subsec:tensorobj_changeofrings_helpers"><span class="toc_ref">3.14.1</span> <span class="toc_entry">Change-of-rings, lax-\(\mu \) and \(\mathtt{extendScalars}\) helpers</span></a>
+ </li>
+<li class="">
+  <a href="chap-Picard_TensorObjSubstrate.html#subsec:tensorobj_pic_quotient_helpers"><span class="toc_ref">3.14.2</span> <span class="toc_entry">The Picard quotient: setoid, multiplication and inverse</span></a>
+ </li>
+
+  </ul>
+ </li>
+
+  </ul>
+ </li>
+<li ><a href="dep_graph_document.html">Dependency graph</a></li>
+</ul>
+</nav>
+
+<div class="content">
+<div class="content-wrapper">
+
+
+<div class="main-text">
+<h1 id="chap:Picard_RelPicFunctor">2 The relative Picard functor and its étale sheafification</h1>
+
+<h1 id="sec:relpic_setup">2.1 Setup and motivation</h1>
+
+<p>Fix a base field \(k\) and a smooth proper geometrically integral curve \(C\) over \(k\). As in <a href="chap-Picard_LineBundlePullback.html">1</a>, write \(\pi _T : C \times _k T \to T\) for the projection of a relative curve over a \(k\)-scheme \(T\) and \(\pi _T^* : \operatorname{Pic}(T) \to \operatorname{Pic}(C \times _k T)\) for the induced pullback of isomorphism classes of line bundles (<a href="chap-Picard_LineBundlePullback.html#def:pullback_along_projection">4</a>). </p>
+<p>The set-valued relative Picard presheaf </p>
+<div class="displaymath" id="a0000000018">
+  \[  \operatorname{Pic}^\sharp _{C/k}(T) \; \; =\; \;  \operatorname{Pic}(C \times _k T) \,  / \,  \pi _T^*\operatorname{Pic}(T)  \]
+</div>
+<p> of <a href="chap-Picard_LineBundlePullback.html#thm:relative_pic_quotient_well_defined">5</a> was set up forgetting the abelian-group structure inherited from tensor product. This chapter restores that structure and then sheafifies. The first half (<a href="chap-Picard_RelPicFunctor.html#sec:relpic_group">2.2</a> and <a href="chap-Picard_RelPicFunctor.html#sec:relpic_groupvalued">2.3</a>) verifies that the quotient is canonically an abelian group and the functoriality of <span class="ttfamily">pullback_natural</span> respects that group structure; the result is a group-valued presheaf \(\operatorname{Pic}^\sharp _{C/k} : (\operatorname{Sch}/k)^{op} \to \mathrm{Ab}\) on the category of \(k\)-schemes. The second half (<a href="chap-Picard_RelPicFunctor.html#sec:relpic_etale_sheaf">2.4</a>) takes the étale sheafification \(\operatorname{Pic}^\sharp _{(C/k)\mathrm{\acute{e}t}} := (\operatorname{Pic}^\sharp _{C/k})^\sim \) in the étale topology on \((\operatorname{Sch}/k)^{op}\), and verifies that sheafification preserves the abelian-group target. The étale-sheafified functor is the object represented by the Picard scheme in the FGA Picard-representability chapter (parent scope). </p>
+<h1 id="sec:relpic_group">2.2 Group structure on the relative Picard quotient</h1>
+
+<p>The Picard group \(\operatorname{Pic}(X)\) of any scheme is canonically an abelian group under tensor product of line bundles (Stacks tag 01CR; the inverse of \([\mathcal{L}]\) is \([\mathcal{L}^{-1}] = [\mathcal{H}om_{\mathcal{O}_X}(\mathcal{L}, \mathcal{O}_X)]\)). The pullback map \(\pi _T^* : \operatorname{Pic}(T) \to \operatorname{Pic}(C \times _k T)\) of <a href="chap-Picard_LineBundlePullback.html#def:pullback_along_projection">4</a> respects this structure: pullback of \(\mathcal{O}_X\)-modules sends \(\mathcal{O}_T\) to \(\mathcal{O}_{C \times _k T}\) and is multiplicative on tensor products. </p>
+<div class="lemma_thmwrapper theorem-style-plain" id="lem:rel_pic_sharp_groupoid">
+  <div class="lemma_thmheading">
+    <span class="lemma_thmcaption">
+    Lemma
+    </span>
+    <span class="lemma_thmlabel">6</span>
+    <div class="thm_header_extras">
+
+    
+    ✓
+        </div>
+    <div class="thm_header_hidden_extras">
+
+    <a class="icon proof" href="chap-Picard_RelPicFunctor.html#lem:rel_pic_sharp_groupoid">#</a>
+    
+    <a class="icon proof" href="chap-Picard_RelPicFunctor.html#a0000000019"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+</a>
+    
+    
+    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
+</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Uses</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="chap-Picard_LineBundlePullback.html#def:line_bundle_on_product">Definition 1</a></li>
+          
+          <li><a href="chap-Picard_LineBundlePullback.html#def:pullback_along_projection">Definition 4</a></li>
+          
+          <li><a href="chap-Picard_LineBundlePullback.html#thm:relative_pic_quotient_well_defined">Theorem 5</a></li>
+          
+          <li><a href="chap-Picard_LineBundlePullback.html#def:line_bundle_on_product">Definition 1</a></li>
+          
+          <li><a href="chap-Picard_LineBundlePullback.html#def:pullback_along_projection">Definition 4</a></li>
+          
+          <li><a href="chap-Picard_LineBundlePullback.html#thm:relative_pic_quotient_well_defined">Theorem 5</a></li>
+          
+          <li><a href="chap-Picard_TensorObjSubstrate.html#lem:tensorobj_lift_onproduct">Lemma 22</a></li>
+          
+          <li><a href="chap-Picard_TensorObjSubstrate.html#lem:tensorobj_preserves_locally_trivial">Lemma 13</a></li>
+          
+          <li><a href="chap-Picard_TensorObjSubstrate.html#lem:tensorobj_assoc_iso">Lemma 18</a></li>
+          
+          <li><a href="chap-Picard_TensorObjSubstrate.html#lem:tensorobj_comm_iso">Lemma 20</a></li>
+          
+          <li><a href="chap-Picard_TensorObjSubstrate.html#lem:tensorobj_unit_iso">Lemma 19</a></li>
+          
+          <li><a href="chap-Picard_TensorObjSubstrate.html#lem:tensorobj_isoclass_commgroup">Lemma 27</a></li>
+          
+          <li><a href="chap-Picard_TensorObjSubstrate.html#lem:tensorobj_inverse_invertible">Lemma 21</a></li>
+          
+          <li><a href="chap-Picard_TensorObjSubstrate.html#lem:pullback_unit_iso">Lemma 34</a></li>
+          
+          <li><a href="chap-Picard_TensorObjSubstrate.html#lem:pullback_tensor_iso_loctriv">Lemma 47</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+    
+    <button class="modal lean">L∃∀N</button>
+        <div class="modal-container">
+      <div class="modal-content">
+        <header>
+          <h1>Lean declarations</h1>
+          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
+</button>
+        </header>
+        
+        <ul class="uses">
+          
+          <li><a href="/find/#doc/AlgebraicGeometry.Scheme.PicSharp.addCommGroup" class="lean_decl">AlgebraicGeometry.Scheme.PicSharp.addCommGroup</a></li>
+          
+        </ul>
+    
+      </div>
+    </div>
+
+    
+        </div>
+  </div>
+  <div class="lemma_thmcontent">
+  <p>[Group structure descends to the relative Picard quotient]    </p>
+<p><i class="itshape">Source: [Kleiman], “The Picard scheme”, §2, Defs.&#160;df:aPf + df:Pfs (the Picard functors are abelian-group-valued, and the relative one is a quotient of abelian groups; cf. Stacks tag 01CR for the abelian-group structure on \(\operatorname{Pic}\)).</i> Let \(C/k\) be a smooth proper geometrically integral curve and let \(T\) be a \(k\)-scheme. The Picard group \(\operatorname{Pic}(C \times _k T)\) is an abelian group under tensor product of line bundles, and the pullback map </p>
+<div class="displaymath" id="a0000000020">
+  \[  \pi _T^* \; \colon \;  \operatorname{Pic}(T) \; \longrightarrow \;  \operatorname{Pic}(C \times _k T)  \]
+</div>
+<p> of <a href="chap-Picard_LineBundlePullback.html#def:pullback_along_projection">4</a> is a group homomorphism. Its image </p>
+<div class="displaymath" id="a0000000021">
+  \[  H_T \; \; :=\; \;  \pi _T^* \operatorname{Pic}(T)  \]
+</div>
+<p> is therefore a subgroup of \(\operatorname{Pic}(C \times _k T)\), and the quotient set of <a href="chap-Picard_LineBundlePullback.html#thm:relative_pic_quotient_well_defined">5</a> </p>
+<div class="displaymath" id="a0000000022">
+  \[  \operatorname{Pic}^\sharp _{C/k}(T) \; \; =\; \;  \operatorname{Pic}(C \times _k T) \,  / \,  H_T  \]
+</div>
+<p> inherits a canonical abelian-group structure under which the quotient map \(\operatorname{Pic}(C \times _k T) \twoheadrightarrow \operatorname{Pic}^\sharp _{C/k}(T)\) is a surjective homomorphism with kernel exactly \(H_T\). </p>
+
+  </div>
+</div>
+<div class="proof_wrapper" id="a0000000019">
+  <div class="proof_heading">
+    <span class="proof_caption">
+    Proof
+    </span>
+    <span class="expand-proof">▶</span>
+  </div>
+  <div class="proof_content">
+  
+<p>The construction proceeds in four steps over the locally-trivial carrier </p>
+<div class="displaymath" id="a0000000023">
+  \[  \mathrm{OnProduct}(\pi _C, \pi _T) \; =\;  \bigl\{ \,  M : \text{a module on } C \times _k T \; \bigm |\;  M \text{ is locally trivial} \, \bigr\}   \]
+</div>
+<p> of <a href="chap-Picard_LineBundlePullback.html#def:line_bundle_on_product">1</a>, on whose isomorphism classes the relative Picard quotient is taken. It is authored <em>in parallel</em> against two inputs being built concurrently: the locally-trivial pullback–tensor comparison isomorphism <a href="chap-Picard_TensorObjSubstrate.html#lem:pullback_tensor_iso_loctriv">47</a> (consumed in Step&#160;2 to make \(\pi _T^*\) additive) and the tensor inverse <a href="chap-Picard_TensorObjSubstrate.html#lem:tensorobj_inverse_invertible">21</a> (consumed in Step&#160;1 for group closure); both are themselves deferred targets. </p>
+<p><em>Step 1 (abelian group on the carrier).</em> On isomorphism classes of the carrier \(\mathrm{OnProduct}(\pi _C, \pi _T)\), addition is the descent of the scheme-level tensor product of line bundles, </p>
+<div class="displaymath" id="a0000000024">
+  \[  [L] + [L'] \; :=\;  [\,  L \otimes _{\mathcal{O}_{C \times _k T}} L' \, ],  \]
+</div>
+<p> where \(L \otimes L'\) is the locally-trivial descent of the scheme-level tensor product (<a href="chap-Picard_TensorObjSubstrate.html#lem:tensorobj_lift_onproduct">22</a>); the sum lands again in the carrier because the tensor product of two locally-trivial modules is locally trivial (<a href="chap-Picard_TensorObjSubstrate.html#lem:tensorobj_preserves_locally_trivial">13</a>). The zero element is the class \([\mathcal{O}_{C \times _k T}]\) of the structure sheaf, the monoidal unit, which is locally trivial. Associativity, commutativity, and left/right unitality of \(+\) descend from the scheme-level coherence isomorphisms — the associator (<a href="chap-Picard_TensorObjSubstrate.html#lem:tensorobj_assoc_iso">18</a>), the braiding (<a href="chap-Picard_TensorObjSubstrate.html#lem:tensorobj_comm_iso">20</a>), and the unitors (<a href="chap-Picard_TensorObjSubstrate.html#lem:tensorobj_unit_iso">19</a>) — exactly as for the absolute Picard group on tensor-invertible isomorphism classes (<a href="chap-Picard_TensorObjSubstrate.html#lem:tensorobj_isoclass_commgroup">27</a>). The additive inverse is </p>
+<div class="displaymath" id="a0000000025">
+  \[  -[L] \; :=\;  [\,  L^{\mathrm{inv}} \, ],  \]
+</div>
+<p> where \(L^{\mathrm{inv}}\) is the witness supplied by <a href="chap-Picard_TensorObjSubstrate.html#lem:tensorobj_inverse_invertible">21</a>: it returns a <em>locally-trivial</em> module together with an isomorphism \(L \otimes L^{\mathrm{inv}} \cong \mathcal{O}_{C \times _k T}\), so the inverse stays inside the loc-triv carrier and the group is closed under negation. </p>
+<p><em>Step 2 (the pullback homomorphism \(\pi _T^*\)).</em> Pullback along the projection \(\pi _T\) gives an additive map </p>
+<div class="displaymath" id="a0000000026">
+  \[  \pi _T^* \; \colon \;  \operatorname{Pic}(T) \; \longrightarrow \;  \mathrm{OnProduct}(\pi _C, \pi _T),  \]
+</div>
+<p> whose underlying assignment of line bundles is <a href="chap-Picard_LineBundlePullback.html#def:pullback_along_projection">4</a>. It is a homomorphism of abelian groups: it sends the unit to the unit, since \(\pi _T^*\mathcal{O}_T \cong \mathcal{O}_{C \times _k T}\) by the unconditional pullback–unit isomorphism (<a href="chap-Picard_TensorObjSubstrate.html#lem:pullback_unit_iso">34</a>); and it is additive, since pullback commutes with tensor product on locally-trivial modules, </p>
+<div class="displaymath" id="a0000000027">
+  \[  \pi _T^*(N \otimes _{\mathcal{O}_T} N') \; \cong \;  \pi _T^* N \otimes _{\mathcal{O}_{C \times _k T}} \pi _T^* N',  \]
+</div>
+<p> by the locally-trivial comparison isomorphism <a href="chap-Picard_TensorObjSubstrate.html#lem:pullback_tensor_iso_loctriv">47</a> specialised to the projection \(\pi _T\) on the \(\mathrm{OnProduct}\) carrier. This is the exact analogue, for the geometric pullback, of the additive monoid homomorphism on Picard groups induced by a ring map respecting tensor product, and is modelled on it field-for-field. Write \(H_T := \mathrm{im}(\pi _T^*)\) for its image, a subgroup of the carrier’s isomorphism-class group. </p>
+<p><em>Step 3 (setoid reconciliation).</em> The set-valued quotient of <a href="chap-Picard_LineBundlePullback.html#thm:relative_pic_quotient_well_defined">5</a> is taken modulo the isomorphism-class equivalence that declares two line bundles related when their classes differ by an element of \(H_T\). This relation coincides with the left-coset relation of the subgroup \(H_T\) inside the abelian group of Steps&#160;1–2: both encode </p>
+<div class="displaymath" id="a0000000028">
+  \[  L \sim L' \quad \Longleftrightarrow \quad [\,  L^{\mathrm{inv}} \otimes L' \, ] \in H_T .  \]
+</div>
+<p> Establishing this equivalence of relations is a concrete isomorphism-class argument over the carrier; it consumes the tensor inverse (Step&#160;1) and the group law, but not the computational content of the comparison isomorphism. </p>
+<p><em>Step 4 (transport).</em> By Step&#160;3 the quotient set underlying \(\operatorname{Pic}^\sharp _{C/k}(T)\) is in canonical bijection with the group quotient \(\mathrm{OnProduct}(\pi _C, \pi _T) / H_T\), which carries the canonical abelian-group structure of a quotient of an abelian group by a subgroup. Transporting this structure along the bijection of Step&#160;3 endows \(\operatorname{Pic}^\sharp _{C/k}(T)\) with its abelian-group structure, under which the canonical surjection \(\operatorname{Pic}(C \times _k T) \twoheadrightarrow \operatorname{Pic}^\sharp _{C/k}(T)\) is a homomorphism with kernel exactly \(H_T\). </p>
+
+  </div>
+</div>
+<h2 id="subsec:relpic_group_helpers">2.2.1 Helper constructions underlying the group law</h2>
+
+<p>The abelian-group instance of <a href="chap-Picard_RelPicFunctor.html#lem:rel_pic_sharp_groupoid">6</a> is assembled from a handful of project-internal helper constructions on the locally-trivial carrier \(\mathrm{OnProduct}(\pi _C, \pi _T)\): the tensor-product operation that realises addition, the local triviality of the unit (the zero element), the uniqueness of tensor inverses (which makes negation well defined), and the two descended operations on isomorphism classes. Each is recorded here for the one-to-one Lean correspondence; all are proved directly in Lean. </p>
+<h1 id="sec:relpic_groupvalued">2.3 The relative Picard presheaf as a group-valued presheaf</h1>
+
+<p>We now refine the set-valued functor of <span class="ttfamily">pullback_natural</span> into a group-valued presheaf. </p>
+<h1 id="sec:relpic_etale_sheaf">2.4 Étale sheafification</h1>
+
+<p>The presheaf \(\operatorname{Pic}^\sharp _{C/k}\) is generally not an étale (or even Zariski) sheaf. The standard obstruction (Kleiman §2, L1292–L1302): for a \(k\)-scheme \(T\) carrying a non-trivial line bundle whose pullback to \(C \times _k T\) becomes non-trivial after an open cover, the Zariski separated-presheaf condition fails. Therefore, to obtain a representable functor in the sense of the FGA Picard-representability chapter (parent scope), one must replace \(\operatorname{Pic}^\sharp _{C/k}\) by its <em>associated étale sheaf</em>. Kleiman §2 names this sheaf \(\operatorname{Pic}_{(X/S)\mathrm{\acute{e}t}}\) and singles it out as the functor that Kleiman’s main existence theorem in §4 represents. </p>
+<h1 id="sec:relpic_lean_encoding">2.5 Lean encoding</h1>
+
+<p>The Lean target file is the new <span class="ttfamily">AlgebraicJacobian/Picard/RelPicFunctor.lean</span>, sibling to <span class="ttfamily">AlgebraicJacobian/Picard/LineBundlePullback.lean</span> (<a href="chap-Picard_LineBundlePullback.html">1</a>) and <span class="ttfamily">AlgebraicJacobian/Picard/RelativeSpec.lean</span> (the Picard relative-spectrum chapter (parent scope)). The blueprint declarations correspond to Lean targets as follows. </p>
+<p>At the current Lean state, only <span class="ttfamily">PicSharp.addCommGroup</span> is realized as a live, sorry-free declaration. The remaining items below are the intended end-state interface and should be read as provisional scaffolding, blocked on the upstream D3′/DUAL comparison and the A-bridge, not as already-finished Lean code. </p>
+<ul class="itemize">
+  <li><p><span class="ttfamily">AlgebraicGeometry.Scheme.PicSharp.addCommGroup</span> (<a href="chap-Picard_RelPicFunctor.html#lem:rel_pic_sharp_groupoid">6</a>) is the abelian-group instance on the quotient set built in <span class="ttfamily">AlgebraicGeometry.Scheme.RelPicPresheaf.preimage_subgroup</span> (<a href="chap-Picard_LineBundlePullback.html#thm:relative_pic_quotient_well_defined">5</a>). Mathlib’s <span class="ttfamily">QuotientAddGroup</span> machinery on a normal subgroup of an abelian group is the backbone; the project-side work is to certify that \(\pi _T^*\) is a group homomorphism (one extra <span class="ttfamily">LinearMap.map_mul</span>–style line on tensor product preservation). </p>
+</li>
+  <li><p><span class="ttfamily">AlgebraicGeometry.Scheme.PicSharp</span> (<span class="ttfamily">rel_pic_sharp</span>) is the group-valued presheaf \(T \mapsto \operatorname{Pic}(C \times _k T)/\pi _T^*\operatorname{Pic}(T)\). The Lean form is a functor \((\operatorname{Sch}/k)^{op} \to \mathrm{AddCommGroup}\) built from the data of <a href="chap-Picard_LineBundlePullback.html#thm:relative_pic_quotient_well_defined">5</a> + <a href="chap-Picard_RelPicFunctor.html#lem:rel_pic_sharp_groupoid">6</a>. </p>
+</li>
+  <li><p><span class="ttfamily">AlgebraicGeometry.Scheme.PicSharp.functorial</span> (<span class="ttfamily">rel_pic_sharp_functorial</span>) packages the structure-map homomorphism property: the set map \(g^\sharp \) of <span class="ttfamily">pullback_natural</span> is a group homomorphism. On the Lean side this is a one-step strengthening of the existing set-valued naturality proof. </p>
+</li>
+  <li><p><span class="ttfamily">AlgebraicGeometry.Scheme.PicSharp.presheaf</span> (<span class="ttfamily">rel_pic_sharp_presheaf</span>) wraps the previous three lemmas as a functor instance into \(\mathrm{AddCommGroup}\). </p>
+</li>
+  <li><p><span class="ttfamily">AlgebraicGeometry.Scheme.PicSharp.etSheaf</span> (<span class="ttfamily">rel_pic_etale_sheafification</span>) is the étale sheafification of <span class="ttfamily">PicSharp</span>. The Lean form is <span class="ttfamily">CategoryTheory.presheafToSheaf</span> applied to the big étale topology on <span class="ttfamily">Scheme</span> with target category <span class="ttfamily">AddCommGrpCat</span>. <b class="bfseries">Lean API note.</b> The big étale Grothendieck topology on the category of schemes is <span class="ttfamily">AlgebraicGeometry.Scheme.etaleTopology</span>, of type <span class="ttfamily">CategoryTheory.GrothendieckTopology AlgebraicGeometry.Scheme</span> (module <span class="ttfamily">Mathlib.AlgebraicGeometry.Sites.Etale</span>; an <span class="ttfamily">abbrev</span> for the topology generated by the big étale pretopology <span class="ttfamily">Scheme.etalePretopology</span>). The sheafification entry point with abelian-group target is <span class="ttfamily">CategoryTheory.presheafToSheaf AlgebraicGeometry.Scheme.etaleTopology AddCommGrpCat</span>, of type <span class="ttfamily">Functor (Schemeᵒᵖ \(\Rightarrow \) AddCommGrpCat) (Sheaf etaleTopology AddCommGrpCat)</span> (module <span class="ttfamily">Mathlib.CategoryTheory.Sites.Sheafification</span>); it is available under a <span class="ttfamily">CategoryTheory.HasWeakSheafify</span> instance for the pair <span class="ttfamily">(etaleTopology, AddCommGrpCat)</span>. The slice \((\operatorname{Sch}/k)\) on the Lean side is captured by working over the global <span class="ttfamily">Scheme</span> category and restricting along <span class="ttfamily">Over (Spec k)</span> via Mathlib’s <span class="ttfamily">CategoryTheory.Sites.Over</span> / <span class="ttfamily">GrothendieckTopology</span> pullback construction (the relative Picard functor’s natural domain is the slice; Kleiman’s notation \((\operatorname{Sch}/S)^{op}\) corresponds to <span class="ttfamily">(Over (Spec k))ᵒᵖ</span>). If the <span class="ttfamily">HasWeakSheafify</span> instance for the pair <span class="ttfamily">(etaleTopology, AddCommGrpCat)</span> is missing at the pinned Mathlib commit, the project-side fallback combines the concrete set-valued sheafification <span class="ttfamily">CategoryTheory.GrothendieckTopology.sheafify</span> (module <span class="ttfamily">Mathlib.CategoryTheory.Sites.ConcreteSheafification</span>) with the colimit-preservation of the forgetful functor \(\texttt{AddCommGrpCat} \to \mathbf{Set}\) and the <span class="ttfamily">plusPlusSheaf</span> plus-construction on the underlying set-valued presheaf, transported back through the <span class="ttfamily">ConcreteCategory</span> instance on <span class="ttfamily">AddCommGrpCat</span>. </p>
+</li>
+  <li><p><span class="ttfamily">AlgebraicGeometry.Scheme.PicSharp.etSheaf_group_structure</span> (<span class="ttfamily">rel_pic_etale_sheaf_group_structure</span>) packages the fact that the étale sheafification preserves the abelian-group target. On the Lean side it is the canonical <span class="ttfamily">Functor (Schemeᵒᵖ \(\Rightarrow \) AddCommGrpCat)</span> obtained by applying <span class="ttfamily">CategoryTheory.presheafToSheaf AlgebraicGeometry.Scheme.etaleTopology AddCommGrpCat</span> to <span class="ttfamily">PicSharp.presheaf</span> and then forgetting from the sheaf category back to a presheaf-of-abelian-groups via <span class="ttfamily">(CategoryTheory.sheafToPresheaf etaleTopology AddCommGrpCat)</span>. The proof is structural: it identifies <span class="ttfamily">etSheaf</span> (typed as a sheaf of sets via the concrete plus-construction <span class="ttfamily">CategoryTheory.GrothendieckTopology.sheafify</span>) with the value of <span class="ttfamily">presheafToSheaf etaleTopology AddCommGrpCat PicSharp.presheaf</span> under the forgetful functor, using <span class="ttfamily">CategoryTheory.GrothendieckTopology.sheafification_obj</span> (the equality \(\texttt{J.sheafification D}.\mathrm{obj}\,  P = \texttt{J.sheafify}\,  P\)) and the fact that the forgetful functor \(\texttt{AddCommGrpCat} \to \mathbf{Set}\) preserves the multiequalizer / filtered-colimit data used by the plus-construction (<span class="ttfamily">plusPlusSheaf</span> commutes with <span class="ttfamily">forget</span> on a <span class="ttfamily">ConcreteCategory</span> target). </p>
+</li>
+</ul>
+<p>The relationship with the FGA Picard-representability chapter (parent scope) is captured by the slogan: the FGA Picard scheme of A.2.c represents \(\operatorname{Pic}^\sharp _{(C/k)\mathrm{\acute{e}t}}\) (Kleiman §4, the main existence theorem: “…represents \(\operatorname{Pic}_{(X/S)\mathrm{\acute{e}t}}\)”), <em>not</em> \(\operatorname{Pic}^\sharp _{C/k}\) directly. The étale sheafification step of this chapter is precisely what makes the representability theorem in A.2.c well-posed. </p>
+<h1 id="sec:relpic_out_of_scope">2.6 Out of scope</h1>
+
+<p>The following constructions are downstream of this chapter and live in dedicated sibling chapters; this chapter does <em>not</em> touch them: </p>
+<ul class="itemize">
+  <li><p><b class="bfseries">Representability of \(\operatorname{Pic}^\sharp _{(C/k)\mathrm{\acute{e}t}}\) by a scheme</b> (A.2.c, the FGA Picard-representability chapter (parent scope)) — the Grothendieck–Mumford–Kleiman existence theorem is the next step but is not part of this chapter. </p>
+</li>
+  <li><p><b class="bfseries">Comparison theorem \(\operatorname{Pic}_{X/S} \hookrightarrow \operatorname{Pic}_{(X/S)\mathrm{Zar}} \hookrightarrow \operatorname{Pic}_{(X/S)\mathrm{\acute{e}t}} \hookrightarrow \operatorname{Pic}_{(X/S)\mathrm{fppf}}\)</b> (Kleiman §2, the comparison theorem) — the chain of inclusions under \(\mathcal{O}_S \cong f_*\mathcal{O}_X\); we use only the étale-sheafified functor here, not the full comparison chain. </p>
+</li>
+  <li><p><b class="bfseries">Identity component \(\operatorname{Pic}^0_{C/k}\)</b> (A.3) — the open subgroup scheme cut out by Hilbert polynomials, treated in a downstream chapter. </p>
+</li>
+  <li><p><b class="bfseries">Albanese universal property</b> (A.4) — consumes the full Route&#160;A stack. </p>
+</li>
+  <li><p><b class="bfseries">Group-scheme structure on the representing object</b> — once \(\operatorname{Pic}^\sharp _{(C/k)\mathrm{\acute{e}t}}\) is representable (A.2.c), its representing scheme inherits a \(k\)-group-scheme structure from the abelian-group-valued target via the Yoneda embedding; that refinement is part of A.2.c, not of this chapter. </p>
+</li>
+</ul>
+<h1 id="sec:relpic_consistency_check">2.7 Internal-consistency check</h1>
+
+<p>The six Lean-pinned declaration blocks (plus the forward-looking <span class="ttfamily">rel_pic_etale_sheaf_unit_canonical</span>, which carries no <span class="ttfamily">\lean{…}</span> pin and so is not yet tracked by the deterministic <span class="ttfamily">sync_leanok</span> phase) form a connected <span class="ttfamily">\uses{…}</span> chain rooted in <a href="chap-Picard_LineBundlePullback.html">1</a>: </p>
+<ul class="itemize">
+  <li><p><a href="chap-Picard_RelPicFunctor.html#lem:rel_pic_sharp_groupoid">6</a> uses ?? (all from A.1.b on disk) for the statement, and in its proof additionally consumes the tensor-substrate lemmas ?? together with the locally-trivial pullback–tensor comparison isomorphism <a href="chap-Picard_TensorObjSubstrate.html#lem:pullback_tensor_iso_loctriv">47</a> (the concurrently-built A.1.c.sub input feeding additivity of \(\pi _T^*\)). </p>
+</li>
+  <li><p><span class="ttfamily">rel_pic_sharp</span> uses ??. </p>
+</li>
+  <li><p><span class="ttfamily">rel_pic_sharp_functorial</span> uses <a href="chap-Picard_RelPicFunctor.html#lem:rel_pic_sharp_groupoid">6</a>. </p>
+</li>
+  <li><p><span class="ttfamily">rel_pic_sharp_presheaf</span> uses <a href="chap-Picard_RelPicFunctor.html#lem:rel_pic_sharp_groupoid">6</a>. </p>
+</li>
+  <li><p><span class="ttfamily">rel_pic_etale_sheafification</span> uses <span class="ttfamily">rel_pic_sharp</span>, <span class="ttfamily">rel_pic_sharp_presheaf</span>. </p>
+</li>
+  <li><p><span class="ttfamily">rel_pic_etale_sheaf_group_structure</span> uses <span class="ttfamily">rel_pic_etale_sheafification</span>, <span class="ttfamily">rel_pic_sharp_presheaf</span>. </p>
+</li>
+  <li><p><span class="ttfamily">rel_pic_etale_sheaf_unit_canonical</span> uses <span class="ttfamily">rel_pic_etale_sheafification</span>, <span class="ttfamily">rel_pic_sharp_presheaf</span>, <span class="ttfamily">rel_pic_etale_sheaf_group_structure</span>. This block records the canonical sheafification unit and its universal property; it carries no <span class="ttfamily">\lean{…}</span> pin and is not yet tracked by the deterministic <span class="ttfamily">sync_leanok</span> phase. </p>
+</li>
+</ul>
+<p> All \(\) pointers resolve either inside this chapter or inside the already on-disk <a href="chap-Picard_LineBundlePullback.html">1</a>. No declaration cross-references a chapter that does not yet exist on disk; the reference to the FGA Picard-representability chapter (parent scope) is purely commentary in the section “Lean encoding” and “Out of scope”, not a \(\) target.  </p>
+
+</div> <!--main-text -->
+</div> <!-- content-wrapper -->
+</div> <!-- content -->
+</div> <!-- wrapper -->
+
+<nav class="prev_up_next">
+  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
+
+  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
+
+  <a href="chap-Picard_LineBundlePullback.html" title="Line-bundle pullback on a relative curve"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
+</a>
+  <a href="index.html" title="AlgebraicJacobian"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
+</a>
+  <a href="chap-Picard_TensorObjSubstrate.html" title="Relative Picard sheaf — Scheme.Modules.tensorObj substrate (A.1.c.SubT)"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+</a>
+</nav>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plastex.js"></script>
+<script type="text/javascript" src="js/svgxuse.js"></script>
+<script type="text/javascript" src="js/js.cookie.min.js"></script>
+<script type="text/javascript" src="js/showmore.js"></script>
+</body>
+</html>

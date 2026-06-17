@@ -1,0 +1,67 @@
+{
+  "iteration": 191,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-26T09:20:48Z",
+  "plan": {
+    "status": "skipped",
+    "sessionId": "63fd671d-7e5d-4259-849a-13bf45d98442",
+    "durationSecs": 3952
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 5
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 6037
+  },
+  "provers": {
+    "AlgebraicJacobian_Albanese_AuslanderBuchsbaum": {
+      "file": "AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean",
+      "status": "done",
+      "sessionId": "985f7c37-a964-4abe-933a-974b1c614d59"
+    },
+    "AlgebraicJacobian_Genus0BaseObjects_GmScaling": {
+      "file": "AlgebraicJacobian/Genus0BaseObjects/GmScaling.lean",
+      "status": "done",
+      "sessionId": "5c560467-8771-4ac3-b5c8-cd377058315a"
+    },
+    "AlgebraicJacobian_AbelianVarietyRigidity": {
+      "file": "AlgebraicJacobian/AbelianVarietyRigidity.lean",
+      "status": "done",
+      "sessionId": "941ea20f-af47-4102-a862-029c537c71a5"
+    },
+    "AlgebraicJacobian_RiemannRoch_H1Vanishing": {
+      "file": "AlgebraicJacobian/RiemannRoch/H1Vanishing.lean",
+      "status": "done",
+      "sessionId": "e883f518-0b13-4ef4-9d1c-634aa858d761"
+    },
+    "AlgebraicJacobian_Albanese_CodimOneExtension": {
+      "file": "AlgebraicJacobian/Albanese/CodimOneExtension.lean",
+      "status": "done",
+      "sessionId": "aa5c4657-dcfc-4070-98f9-246be9c1d070"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "9e63ef1b-4597-4da0-b0a2-5c664b9af615",
+    "durationSecs": 852
+  },
+  "sorry_count": 79,
+  "finalize": {
+    "innerGit": {
+      "sha": "bb2843fc"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 3
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 24
+    }
+  },
+  "completedAt": "2026-05-26T12:33:37Z",
+  "wallTimeSecs": 7227
+}

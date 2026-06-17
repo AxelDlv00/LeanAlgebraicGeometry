@@ -1,0 +1,44 @@
+{
+  "iteration": 12,
+  "stage": "prover  (iteration 011 \u2014 first protected sorry closure: `genus`. Iter-011 refactor has executed and verified; `Genus.lean` carries the `noncomputable` modifier and the `import AlgebraicJacobian.Cohomology.StructureSheafModuleK` import; sorry count unchanged at 10. Iter-011 prover round will fill the body of `AlgebraicGeometry.genus` with the probe-confirmed one-liner `Module.finrank k (Scheme.HModule k (Scheme.toModuleKSheaf C) 1)`. Sorry count expected to drop 10 \u2192 9 (8 protected + 1 deferred `representable`). **First protected sorry to close.**)",
+  "mode": "parallel",
+  "startedAt": "2026-05-07T09:44:59Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1388
+  },
+  "refactor": {
+    "status": "done",
+    "durationSecs": 414
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 113
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 510
+  },
+  "sorry_count": 306,
+  "finalize": {
+    "innerGit": {
+      "sha": "f6b162c"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 17
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 2
+    }
+  },
+  "completedAt": "2026-05-07T10:31:29Z",
+  "wallTimeSecs": 2789
+}

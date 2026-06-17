@@ -1,0 +1,48 @@
+{
+  "iteration": 147,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-19T05:57:04Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "f95bac86-586a-4918-9436-3f09056c2c8e",
+    "durationSecs": 1365
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 1
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 1104
+  },
+  "provers": {
+    "AlgebraicJacobian_Cotangent_ChartAlgebra": {
+      "file": "AlgebraicJacobian/Cotangent/ChartAlgebra.lean",
+      "status": "done",
+      "sessionId": "82bcaf57-38cd-4aad-a865-fb822ba3d642"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "fa37d946-eee0-4023-b73d-33d60de30a6e",
+    "durationSecs": 592
+  },
+  "sorry_count": 14,
+  "finalize": {
+    "innerGit": {
+      "sha": "d07d850"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 11
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 2,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-19T06:49:59Z",
+  "wallTimeSecs": 3174
+}

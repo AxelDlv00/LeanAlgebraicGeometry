@@ -1,0 +1,40 @@
+{
+  "iteration": 20,
+  "stage": "prover  (iteration 019 \u2014 Path-2 Mayer-Vietoris LES infrastructure: short-complex carrier `HModule'_shortComplex` + pushout-of-free-sheaves analog `HModule'_isPushoutModuleCatFreeSheaf` + helper instance `(ModuleCat.free k).IsLeftAdjoint`. The iter-018 prover round closed `AlgebraicGeometry.Scheme.HModule'_toBiprod_fromBiprod` cleanly: sorry count `9 \u2192 9` (the prover collapsed the refactor + prover sub-phases into a single Edit; the transient `9 \u2192 10 \u2192 9` trajectory was condensed), kernel-only axioms, the per-fiber `rfl` compatibility `((HModule'_cohomologyPresheaf k F n).obj (op X) : Type u) = HModule' k F n X` continues to hold, body adopted as the probe-confirmed `simp only`-block proof verbatim from Mathlib L74\u201375. Iter-019 plan-agent has scoped + probe-confirmed the next sub-step: a tightly-coupled triple of declarations laying the `Sheaf J (ModuleCat k)`-flavored short-complex infrastructure that powers the connecting hom `\u03b4` (queued iter-022+) and the LES exactness theorem (queued iter-024+). All three are direct mirrors of Mathlib's `MayerVietorisSquare.shortComplex` / `isPushoutAddCommGrpFreeSheaf` (file `Mathlib/CategoryTheory/Sites/MayerVietorisSquare.lean`, L154\u2013160 + L234\u2013249), with `AddCommGrpCat.free` replaced by `ModuleCat.free k`. Iter-019 sorry count `9 \u2192 11 \u2192 9` over the iteration. Refactor agent runs first to scaffold; prover agent then closes.)",
+  "mode": "parallel",
+  "startedAt": "2026-05-08T06:43:58Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1247
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 288
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 840
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "d5d9e2e"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 26
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 3
+    }
+  },
+  "completedAt": "2026-05-08T07:24:04Z",
+  "wallTimeSecs": 2406
+}

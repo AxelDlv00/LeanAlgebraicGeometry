@@ -1,0 +1,44 @@
+{
+  "iteration": 11,
+  "stage": "prover  (iteration 010 \u2014 Track 1 / `H\u2070` algebraic bridge iteration; refactor has scaffolded one new declaration in `Cohomology/StructureSheafModuleK.lean` (verified post-refactor pass); the prover round next closes it with a probe-confirmed one-line body)",
+  "mode": "parallel",
+  "startedAt": "2026-05-07T09:04:37Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 940
+  },
+  "refactor": {
+    "status": "done",
+    "durationSecs": 212
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 87
+  },
+  "provers": {
+    "AlgebraicJacobian_Genus": {
+      "file": "AlgebraicJacobian/Genus.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 571
+  },
+  "sorry_count": 303,
+  "finalize": {
+    "innerGit": {
+      "sha": "2dd218d"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 17
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 2
+    }
+  },
+  "completedAt": "2026-05-07T09:40:45Z",
+  "wallTimeSecs": 2168
+}

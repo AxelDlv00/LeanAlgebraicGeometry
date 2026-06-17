@@ -1,0 +1,40 @@
+{
+  "iteration": 35,
+  "stage": "prover  (iteration 034 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **universe-bump + full cover-totality bridge**: append two declarations to `Cohomology/MayerVietoris.lean` \u2014 (i) a *Mathlib gap-fill* `Abelian.Ext.chgUnivLinearEquiv` upgrading Mathlib's bare `Equiv` `Abelian.Ext.chgUniv : Ext.{w} X Y n \u2243 Ext.{w'} X Y n` to a `LinearEquiv` over any `Linear R C`-enriched abelian category `C` (proving additivity and `R`-scalar compatibility through the underlying `homEquiv`), to live at the top of the file before `namespace AlgebraicGeometry.Scheme`; and (ii) the *full cover-totality bridge* `Scheme.HModule'_eq_HModule_linearEquiv` carrying `HModule' k F n T \u2243\u2097[k] HModule k F n` for terminal `T`, built as the composition of iter-033's `HModule'_top_linearEquiv` (universe-`u` cover-totality) and (i)'s `chgUnivLinearEquiv` instantiated at `Sheaf J (ModuleCat.{u} k)`. Plan-agent `lean_run_code` probe (this pass) confirms both bodies typecheck end-to-end against the post-iter-033 file with `{success: true, diagnostics: []}` and kernel-only axioms `[propext, Classical.choice, Quot.sound]`. The probe-confirmed body for (i) is two private helper lemmas `chgUniv_add` / `chgUniv_smul` (each a 5-line `letI := HasDerivedCategory.standard C; ext; rw [add_hom/smul_hom, \u2190 homAddEquiv_apply...]; change ...; rw [homEquiv_chgUniv...]; rw [\u2190 add_hom/smul_hom]`) followed by a 7-line `LinearEquiv` structure literal. The probe-confirmed body for (ii) is a one-liner `(HModule'_top_linearEquiv k F n hT).trans Abelian.Ext.chgUnivLinearEquiv`. The iter-033 prover's one-declaration close lands cleanly: 9 sorries (no change), zero diagnostics, kernel-only axioms, +48 LOC (768 \u2192 816). Iter-034 sorry trajectory `9 \u2192 9 \u2192 9` (no transient scaffold sorries \u2014 both bodies probe-confirmed).",
+  "mode": "parallel",
+  "startedAt": "2026-05-09T11:16:32Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 998
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 151
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 763
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "0085515"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 26
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 3
+    }
+  },
+  "completedAt": "2026-05-09T12:24:00Z",
+  "wallTimeSecs": 4047
+}

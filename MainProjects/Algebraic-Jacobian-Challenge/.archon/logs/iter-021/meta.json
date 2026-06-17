@@ -1,0 +1,24 @@
+{
+  "iteration": 21,
+  "stage": "prover  (iteration 020 \u2014 Path-2 Mayer-Vietoris LES short-exact infrastructure: helper instance `(ModuleCat.free k).PreservesMonomorphisms` (Mathlib gap-fill #2) + `Mono HModule'_shortComplex.f` instance + `Epi HModule'_shortComplex.g` instance + `lemma HModule'_shortComplex_exact` + `lemma HModule'_shortComplex_shortExact`. The iter-019 prover round closed the short-complex carrier infrastructure cleanly: sorry count `9 \u2192 9` (the prover collapsed refactor + prover sub-phases into a single Edit; the transient `9 \u2192 11 \u2192 9` trajectory was condensed), kernel-only axioms on both substantive new declarations (`HModule'_isPushoutModuleCatFreeSheaf`, `HModule'_shortComplex`), the per-fiber `rfl` compatibility continues to hold, body adopted as the probe-confirmed verbatim Mathlib L154\u2013160 + L234\u2013249 substitution. The `lean_verify` source-scan flagged a harmless `local instance` heuristic match at L397 on the docstring text \"project-local instance\" inside `ModuleCat_free_isLeftAdjoint` \u2014 not an actual `local instance` declaration, no corrective action needed. Iter-020 plan-agent has scoped + probe-confirmed the next sub-step: a tightly-coupled cohort of five declarations laying the categorical-exactness infrastructure on `HModule'_shortComplex` that powers the connecting hom `\u03b4` (queued iter-021+) and the LES exactness theorem (queued iter-024+). All five are direct mirrors of Mathlib's `MayerVietorisSquare.shortComplex_f_mono` / `shortComplex_g_epi` / `shortComplex_exact` / `shortComplex_shortExact` (file `Mathlib/CategoryTheory/Sites/MayerVietorisSquare.lean`, L251\u2013268), with `AddCommGrpCat.free` replaced by `ModuleCat.free k`. **Mathlib gap surfaced**: Mathlib registers `AddCommGrpCat.instPreservesMonomorphismsFree` but not the corresponding `(ModuleCat.free k).PreservesMonomorphisms`; without it, the `Mono f` proof fails. The iter-020 helper instance fills this gap with a four-line tactic block using `Finsupp.mapDomain_injective`. Iter-020 sorry count `9 \u2192 13 \u2192 9` over the iteration. Refactor agent runs first to scaffold; prover agent then closes.)",
+  "mode": "parallel",
+  "startedAt": "2026-05-08T07:24:04Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1063
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 185
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 637
+  }
+}

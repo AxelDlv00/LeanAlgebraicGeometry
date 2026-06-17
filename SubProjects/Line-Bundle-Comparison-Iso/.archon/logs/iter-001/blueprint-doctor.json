@@ -1,0 +1,91 @@
+{
+  "chapters_dir": "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters",
+  "content_tex": "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/content.tex",
+  "chapters_present": [
+    "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_LineBundlePullback.tex",
+    "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_RelPicFunctor.tex",
+    "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_TensorObjSubstrate.tex"
+  ],
+  "chapters_included": [
+    "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_LineBundlePullback.tex",
+    "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_RelPicFunctor.tex",
+    "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_TensorObjSubstrate.tex"
+  ],
+  "orphan_chapters": [],
+  "labels_defined_count": 150,
+  "broken_refs": [
+    {
+      "chapter": "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_LineBundlePullback.tex",
+      "kind": "cref",
+      "label": "chap:Jacobian"
+    },
+    {
+      "chapter": "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_LineBundlePullback.tex",
+      "kind": "cref",
+      "label": "chap:Picard_RelativeSpec"
+    },
+    {
+      "chapter": "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_LineBundlePullback.tex",
+      "kind": "cref",
+      "label": "chap:Picard_RelativeSpec"
+    },
+    {
+      "chapter": "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_LineBundlePullback.tex",
+      "kind": "cref",
+      "label": "chap:Picard_RelativeSpec"
+    },
+    {
+      "chapter": "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_LineBundlePullback.tex",
+      "kind": "cref",
+      "label": "chap:Picard_RelativeSpec"
+    },
+    {
+      "chapter": "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_RelPicFunctor.tex",
+      "kind": "cref",
+      "label": "chap:Picard_FGAPicRepresentability"
+    },
+    {
+      "chapter": "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_RelPicFunctor.tex",
+      "kind": "cref",
+      "label": "chap:Picard_FGAPicRepresentability"
+    },
+    {
+      "chapter": "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_RelPicFunctor.tex",
+      "kind": "cref",
+      "label": "chap:Picard_FGAPicRepresentability"
+    },
+    {
+      "chapter": "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_RelPicFunctor.tex",
+      "kind": "cref",
+      "label": "chap:Picard_FGAPicRepresentability"
+    },
+    {
+      "chapter": "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_RelPicFunctor.tex",
+      "kind": "cref",
+      "label": "chap:Picard_FGAPicRepresentability"
+    },
+    {
+      "chapter": "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_RelPicFunctor.tex",
+      "kind": "cref",
+      "label": "chap:Picard_RelativeSpec"
+    },
+    {
+      "chapter": "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_TensorObjSubstrate.tex",
+      "kind": "cref",
+      "label": "chap:Albanese_AlbaneseUP"
+    },
+    {
+      "chapter": "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_TensorObjSubstrate.tex",
+      "kind": "cref",
+      "label": "chap:Picard_FGAPicRepresentability"
+    },
+    {
+      "chapter": "/home/archon/proj/Line-Bundle-Comparison-Iso/blueprint/src/chapters/Picard_TensorObjSubstrate.tex",
+      "kind": "cref",
+      "label": "chap:Picard_IdentityComponent"
+    }
+  ],
+  "malformed_refs": [],
+  "axiom_decls": [],
+  "covers_problems": []
+}

@@ -1,0 +1,41 @@
+{
+  "iteration": 121,
+  "stage": "prover (Phase C \u2014 close the forward smoothness criterion",
+  "mode": "parallel",
+  "startedAt": "2026-05-16T15:05:23Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "35239617-31bf-4dfe-a492-ddb83c22c534",
+    "durationSecs": 2587
+  },
+  "planValidate": {
+    "status": "ok_intentional_skip",
+    "objectives": 0
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 0
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "78aa2899-90ff-4dab-9181-ebbb73849dab",
+    "durationSecs": 1046
+  },
+  "sorry_count": 3705,
+  "finalize": {
+    "innerGit": {
+      "sha": "43e7e95"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 3
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 1,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-16T16:07:43Z",
+  "wallTimeSecs": 3740
+}

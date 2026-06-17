@@ -1,0 +1,40 @@
+{
+  "iteration": 40,
+  "stage": "prover  (iteration 039 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **curve specialisations of the H\u2070 `Module.Finite` transports**: append two declarations to `Cohomology/StructureSheafModuleK.lean` inside the existing `namespace AlgebraicGeometry.Scheme`, after iter-038's `module_finite_HModule'_zero` (currently ending L301) and before `end AlgebraicGeometry.Scheme` (at L303). (i) `module_finite_HModule_zero_curve` \u2014 hypothesis `[Module.Finite k ((constantSheaf (Opens.grothendieckTopology C.left.toTopCat) (ModuleCat.{u} k)).obj (ModuleCat.of k k) \u27f6 Scheme.toModuleKSheaf C)]`, conclusion `Module.Finite k (Scheme.HModule k (Scheme.toModuleKSheaf C) 0)`, body `Scheme.module_finite_HModule_zero k _` (dot-notation method-call). (ii) `module_finite_HModule'_zero_curve` \u2014 additional `(U : TopologicalSpace.Opens C.left.toTopCat)` parameter; hypothesis `[Module.Finite k ((presheafToSheaf (Opens.grothendieckTopology C.left.toTopCat) (ModuleCat.{u} k)).obj ((yoneda \u22d9 (Functor.whiskeringRight _ _ _).obj (ModuleCat.free k)).obj U) \u27f6 Scheme.toModuleKSheaf C)]`, conclusion `Module.Finite k (Scheme.HModule' k (Scheme.toModuleKSheaf C) 0 U)`, body `Scheme.module_finite_HModule'_zero k _ U`. Plan-agent `lean_run_code` probe (this pass) confirms both bodies typecheck end-to-end against the post-iter-038 file with `{success: true, diagnostics: []}` and kernel-only axioms `[propext, Classical.choice, Quot.sound]`. The iter-038 prover's two-declaration close lands cleanly: 9 sorries (no change), zero diagnostics, kernel-only axioms, +33 LOC (305 \u2192 338). Iter-039 sorry trajectory `9 \u2192 9 \u2192 9` (no transient scaffold sorries \u2014 both bodies probe-confirmed).",
+  "mode": "parallel",
+  "startedAt": "2026-05-09T17:53:32Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1050
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 125
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 437
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "68c863e"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 32
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 4
+    }
+  },
+  "completedAt": "2026-05-09T18:42:21Z",
+  "wallTimeSecs": 2928
+}

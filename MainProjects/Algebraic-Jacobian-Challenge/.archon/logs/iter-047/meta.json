@@ -1,0 +1,40 @@
+{
+  "iteration": 47,
+  "stage": "prover  (iteration 046 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **producer instance** for the iter-043 wholespace H\u2070 Hom-finiteness carrier on the curve sheaf: append eight declarations to `Cohomology/StructureSheafModuleK.lean` to produce `IsHModuleHomFinite k C (toModuleKSheaf C)` end-to-end. Five general Mathlib gap-fills go into a new `namespace CategoryTheory` block at the file head: (1) `instance Functor.const_additive`, (2) `instance Functor.const_linear`, (3) `lemma Adjunction.left_adjoint_linear`, (4) `lemma Adjunction.right_adjoint_linear`, (5) `noncomputable def Adjunction.homLinearEquiv` (linear lifting of Mathlib's `Adjunction.homAddEquiv`). Three project-local applied declarations go inside `namespace AlgebraicGeometry.Scheme` after iter-045's `module_finite_gammaObj_of_isProper`: (6) `noncomputable def constantSheafGammaHom_linearEquiv` \u2014 applied LinearEquiv from `constantSheaf\u0393Adj` for `Sheaf J (ModuleCat k)`; (7) `noncomputable def homFromOne_linearEquiv` \u2014 Hom-from-`k` upgrade `(ModuleCat.of k k \u27f6 M) \u2243\u2097[k] M`; (8) `noncomputable instance instIsHModuleHomFinite_toModuleKSheaf` \u2014 **the producer instance**, completing the four-step chain (constantSheaf\u0393Adj LinearEquiv \u2192 iter-045 SheafGammaObj_linearEquiv_top \u2192 Hom-from-k upgrade \u2192 iter-044 Module.Finite transport via Module.Finite.equiv). Iter-045 closure verified (this pass): two declarations land cleanly at L580\u2013633; sorry count `9 \u2192 9`; file LOC `615 \u2192 670` (+55, within plan estimate band of +30\u201350 \u2014 slight overage from multi-paragraph load-bearing docstrings). Plan-agent `lean_run_code` probe (this pass) confirms all eight iter-046 declarations compose cleanly `{success: true, diagnostics: []}` end-to-end and the producer instance has kernel-only axioms `[propext, Classical.choice, Quot.sound]`. Iter-046 sorry trajectory `9 \u2192 9` (no transient \u2014 bodies probe-confirmed). Iter-046 closes steps (1)+(3)+(4) of the iter-044 four-step producer-instance plan; combined with iter-045's step (2) this completes the **full producer chain** for `IsHModuleHomFinite k C (toModuleKSheaf C)`. Once landed, iter-043's `module_finite_HModule_zero_of_isHModuleHomFinite_curve` consumer fires automatically on `Module.Finite k (HModule k (toModuleKSheaf C) 0)` queries. Iter-047+ produces the parallel carrier instance `IsAffineHModuleVanishing k C (toModuleKSheaf C)` (multi-iteration; via \u010cech-vs-derived comparison + affine \u010cech vanishing), and iter-048+ consumes via the LES + iter-035 corner-bridge to derive `Module.Finite k (HModule k (toModuleKSheaf C) 1)` (Step 5 \u2014 the genus carrier).",
+  "mode": "parallel",
+  "startedAt": "2026-05-10T01:59:03Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1122
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 117
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 411
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "b5144fe"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 35
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 5
+    }
+  },
+  "completedAt": "2026-05-10T03:12:14Z",
+  "wallTimeSecs": 4391
+}

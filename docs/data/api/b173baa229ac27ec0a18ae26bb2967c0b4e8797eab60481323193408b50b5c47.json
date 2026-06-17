@@ -1,0 +1,142 @@
+{
+  "files": [
+    {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "count": 4,
+      "lines": [
+        1949,
+        2416,
+        2597,
+        2619
+      ],
+      "occurrences": [
+        {
+          "line": 1949,
+          "column": 3
+        },
+        {
+          "line": 2416,
+          "column": 3
+        },
+        {
+          "line": 2597,
+          "column": 3
+        },
+        {
+          "line": 2619,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChangeGlobal.lean",
+      "count": 1,
+      "lines": [
+        274
+      ],
+      "occurrences": [
+        {
+          "line": 274,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/Picard/GrassmannianQuot.lean",
+      "count": 1,
+      "lines": [
+        2470
+      ],
+      "occurrences": [
+        {
+          "line": 2470,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/Picard/QuotScheme.lean",
+      "count": 4,
+      "lines": [
+        126,
+        165,
+        201,
+        228
+      ],
+      "occurrences": [
+        {
+          "line": 126,
+          "column": 3
+        },
+        {
+          "line": 165,
+          "column": 3
+        },
+        {
+          "line": 201,
+          "column": 3
+        },
+        {
+          "line": 228,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "count": 9,
+      "lines": [
+        1843,
+        1849,
+        1856,
+        1862,
+        1867,
+        1874,
+        1882,
+        1892,
+        1901
+      ],
+      "occurrences": [
+        {
+          "line": 1843,
+          "column": 3
+        },
+        {
+          "line": 1849,
+          "column": 3
+        },
+        {
+          "line": 1856,
+          "column": 3
+        },
+        {
+          "line": 1862,
+          "column": 58
+        },
+        {
+          "line": 1867,
+          "column": 10
+        },
+        {
+          "line": 1874,
+          "column": 3
+        },
+        {
+          "line": 1882,
+          "column": 3
+        },
+        {
+          "line": 1892,
+          "column": 3
+        },
+        {
+          "line": 1901,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "total": 19,
+  "partial": false,
+  "warnings": []
+}

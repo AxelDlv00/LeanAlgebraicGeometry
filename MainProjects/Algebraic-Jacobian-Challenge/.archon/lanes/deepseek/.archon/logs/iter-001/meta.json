@@ -1,0 +1,48 @@
+{
+  "iteration": 1,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-06T03:13:18Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 541
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 703
+  },
+  "provers": {
+    "AlgebraicJacobian_AbelJacobi": {
+      "file": "AlgebraicJacobian/AbelJacobi.lean",
+      "status": "done"
+    },
+    "AlgebraicJacobian_Genus": {
+      "file": "AlgebraicJacobian/Genus.lean",
+      "status": "done"
+    },
+    "AlgebraicJacobian_Jacobian": {
+      "file": "AlgebraicJacobian/Jacobian.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 520
+  },
+  "sorry_count": 43,
+  "finalize": {
+    "innerGit": {
+      "sha": "37c5d81"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 17
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 0
+    }
+  },
+  "completedAt": "2026-05-06T03:43:02Z",
+  "wallTimeSecs": 1783
+}

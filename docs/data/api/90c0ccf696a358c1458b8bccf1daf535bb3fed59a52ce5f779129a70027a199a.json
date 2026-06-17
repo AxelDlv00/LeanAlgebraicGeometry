@@ -1,0 +1,38 @@
+[
+  {
+    "id": "session_1",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_2",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_6",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_7",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_8",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_9",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  }
+]

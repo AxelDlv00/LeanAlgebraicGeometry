@@ -1,0 +1,66 @@
+{
+  "iteration": 264,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-06-04T01:12:25Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "f9016aad-f83e-48f8-a79e-20d064f56de3",
+    "durationSecs": 2131
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 4
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 3007
+  },
+  "provers": {
+    "AlgebraicJacobian_Picard_TensorObjSubstrate_DualInverse": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "status": "done",
+      "mode": "fine-grained",
+      "sessionId": "c9822b45-9edb-4a54-84e1-e1388463cac2"
+    },
+    "AlgebraicJacobian_Picard_TensorObjSubstrate": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "status": "done",
+      "mode": "fine-grained",
+      "sessionId": "fd96cb0d-7331-4d9e-851d-f555def3f7bb"
+    },
+    "AlgebraicJacobian_Cohomology_CechHigherDirectImage": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "8c75760c-cfc8-47d1-a7c1-3860097dcaff"
+    },
+    "AlgebraicJacobian_Picard_LineBundleCoherence": {
+      "file": "AlgebraicJacobian/Picard/LineBundleCoherence.lean",
+      "status": "done",
+      "sessionId": "2bc889b1-e614-442a-b483-6cc542bf71ad"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "55161da7-f63b-4a1b-b9fe-da48e76b2e92",
+    "durationSecs": 924
+  },
+  "sorry_count": 93,
+  "finalize": {
+    "innerGit": {
+      "sha": "85160881"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 31
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 10,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-06-04T03:03:52Z",
+  "wallTimeSecs": 6687
+}

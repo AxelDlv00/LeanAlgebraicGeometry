@@ -1,0 +1,48 @@
+{
+  "iteration": 109,
+  "stage": "prover (narrative iter-110 / Archon iter-108 \u2014 single small prover lane;",
+  "mode": "parallel",
+  "startedAt": "2026-05-15T17:55:35Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "74c0c45b-7756-4b70-96fe-449789dfc8d1",
+    "durationSecs": 3547
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 1
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 780
+  },
+  "provers": {
+    "AlgebraicJacobian_Picard_LineBundle": {
+      "file": "AlgebraicJacobian/Picard/LineBundle.lean",
+      "status": "done",
+      "sessionId": "b91f6415-b92a-4df0-a538-b91f7d69872b"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "6fe349b6-3cc2-4671-ab8f-b854bffcf078",
+    "durationSecs": 848
+  },
+  "sorry_count": 3631,
+  "finalize": {
+    "innerGit": {
+      "sha": "0875eab"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 3
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 1,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-15T19:24:22Z",
+  "wallTimeSecs": 5326
+}

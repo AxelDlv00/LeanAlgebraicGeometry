@@ -1,0 +1,82 @@
+\chapter{The Jacobian as an abelian variety}
+\label{chap:Jacobian}
+
+Let $C$ be a smooth proper curve over $k$ in the sense of Chapter \ref{chap:Genus}, with genus $g = g(C)$.
+
+The Picard scheme machinery underlying the construction of $\Jac(C)$ — in particular the relative Picard functor (Definition~\ref{def:Pic_functor}) and its bundled representability theorem (Theorem~\ref{thm:Pic_representable}) — is set up in Chapter~\ref{chap:Picard_Functor}. This chapter consumes those declarations to define the Jacobian and prove the four abelian-variety instances.
+
+\section{The Jacobian}
+
+\begin{definition}[Jacobian]
+  \label{def:Jacobian}
+  \lean{AlgebraicGeometry.Jacobian}
+  \leanok
+  \uses{thm:Pic_representable}
+  The \emph{Jacobian} of $C$ is the abelian variety
+  \[
+    \Jac(C) \;=\; \Pic^0_{C/k},
+  \]
+  the connected component of the identity of the Picard scheme $\Pic_{C/k}$ representing the relative Picard functor (Definition~\ref{def:Pic_functor}, Theorem~\ref{thm:Pic_representable}). It is viewed as an object of $\textrm{Over}(\Spec k)$.
+\end{definition}
+
+\section{Group scheme structure and abelian-variety properties}
+
+\begin{theorem}[Group object structure]
+  \label{thm:Jacobian_grpObj}
+  \lean{AlgebraicGeometry.Jacobian.instGrpObj}
+  \leanok
+  \uses{def:Jacobian}
+  $\Jac(C)$ carries a canonical group-object structure in $\textrm{Over}(\Spec k)$, induced from tensor product of line bundles on $C$.
+\end{theorem}
+
+\begin{theorem}[Smoothness and dimension]
+  \label{thm:Jacobian_smooth_genus}
+  \lean{AlgebraicGeometry.Jacobian.smoothOfRelativeDimension_genus}
+  \leanok
+  \uses{def:Jacobian, def:genus}
+  $\Jac(C) \to \Spec k$ is smooth of relative dimension $g(C)$.
+\end{theorem}
+
+\begin{theorem}[Properness]
+  \label{thm:Jacobian_proper}
+  \lean{AlgebraicGeometry.Jacobian.instIsProper}
+  \leanok
+  \uses{def:Jacobian}
+  $\Jac(C) \to \Spec k$ is proper.
+\end{theorem}
+
+\begin{theorem}[Geometric irreducibility]
+  \label{thm:Jacobian_geomIrred}
+  \lean{AlgebraicGeometry.Jacobian.instGeometricallyIrreducible}
+  \leanok
+  \uses{def:Jacobian}
+  $\Jac(C) \to \Spec k$ is geometrically irreducible.
+\end{theorem}
+
+\noindent All four properties are part of the conclusion of Theorem~\ref{thm:Pic_representable}: once $\Pic^0_{C/k}$ is constructed as an abelian scheme of dimension $g(C)$, smoothness, properness and geometric irreducibility hold by construction. The dimension formula in Theorem~\ref{thm:Jacobian_smooth_genus} additionally needs the Phase~A identification of $g(C) = \dim_k H^1(C, \mathcal O_C)$ with the dimension of the tangent space at the identity of $\Pic^0_{C/k}$ (Riemann--Roch / Serre duality).
+
+\subsection{Sanity check in low genus}
+
+\begin{itemize}
+  \item $g = 0$: Then $\Pic^0_{C/k} = \Spec k$, the trivial group scheme; $\Jac(\mathbb P^1_k) = \Spec k$ is smooth of relative dimension $0 = g$. The terminal object of $\textrm{Over}(\Spec k)$ already carries \lstinline{GrpObj} via \lstinline{instTensorUnit}.
+  \item $g = 1$: Then $\Jac(C) \cong C$ once a $k$-rational point on $C$ is fixed; $C$ is itself an abelian variety.
+  \item $g \ge 2$: $\Jac(C)$ is a non-trivial $g$-dimensional abelian variety, never isomorphic to $C$ as a scheme.
+\end{itemize}
+
+\section{Mathlib gap}
+
+The Picard scheme is absent from Mathlib b80f227. Mathlib has only \lstinline{CommRing.Pic R} (the Picard group of a commutative ring) and the abstract \lstinline{GrpObj} machinery. Constructing \lstinline{Jacobian C} therefore requires building, inside this project, the Picard scheme machinery of Chapter~\ref{chap:Picard_Functor}:
+
+\begin{itemize}
+  \item the line-bundle / Picard-group API on a single scheme — Chapter~\ref{chap:Picard_LineBundle} (closed iter-003 under documented first-approximation);
+  \item the relative Picard functor (Definition~\ref{def:Pic_functor}) — Chapter~\ref{chap:Picard_Functor} (scaffolded iter-004, definition assigned to iter-005 prover);
+  \item étale sheafification of group-valued functors on $\mathrm{Sch}/k$ — iter-006+;
+  \item representability for the curve case (Theorem~\ref{thm:Pic_representable}) — FGA-level, deferred indefinitely;
+  \item the connected-component-of-identity construction for group schemes locally of finite type — iter-006+.
+\end{itemize}
+
+These are mapped to Phase C of \texttt{STRATEGY.md}.
+
+\subsection{Status note}
+
+The four \lstinline{Jacobian.lean} sorries (\lstinline{Jacobian}, \lstinline{instGrpObj}, \lstinline{instIsProper}, \lstinline{instGeometricallyIrreducible}, plus \lstinline{smoothOfRelativeDimension_genus} which additionally depends on Phase~A) all reduce to Theorem~\ref{thm:Pic_representable}. They are \emph{not} assigned to any prover until that theorem is honestly closed (which is gated on multiple Mathlib chapters: étale sheafification, Hilbert / Quot schemes, Riemann--Roch). Iter-005 will not attack them.

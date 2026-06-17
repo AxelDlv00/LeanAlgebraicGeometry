@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Blueprint dependency graph</title>
+<link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
+<script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+<style>
+:root {
+  --sidebar-bg: #0f172a;
+  --toolbar-bg: #1e293b;
+  --surface:    #1a2744;
+  --border:     #1e3a5f;
+  --text:       #e2e8f0;
+  --muted:      #64748b;
+  --accent:     #60a5fa;
+  --green:      #4ade80;
+  --green-bg:   rgba(74,222,128,.12);
+  --red:        #f87171;
+  --red-bg:     rgba(248,113,113,.12);
+  --orange:     #fb923c;
+  --orange-bg:  rgba(251,146,60,.12);
+  --code-bg:    #090d16;
+  --radius:     7px;
+  --mono: 'JetBrains Mono','Fira Code','Cascadia Code','Consolas','Monaco',monospace;
+  --sans: -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+}
+
+html { margin:0; padding:0; height:100%; overflow:hidden; }
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:var(--sans); display:flex; flex-direction:column;
+       height:100%; background:#f8fafc; color:var(--text); }
+
+/* ── Toolbar ─────────────────────────────────────────────────── */
+#toolbar {
+  background:var(--toolbar-bg); height:44px; padding:0 16px;
+  display:flex; align-items:center; gap:14px; flex-shrink:0;
+  border-bottom:1px solid #263045;
+}
+.brand { font-size:13px; font-weight:700; color:#f1f5f9; letter-spacing:.03em; }
+.stat  { font-size:12px; color:#64748b; white-space:nowrap; }
+.legend { display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
+.leg-dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
+.leg-bar {
+  width:54px; height:8px; border-radius:4px; display:inline-block;
+  background:linear-gradient(90deg,#facc15,#f59e0b,#f97316);
+}
+.leg-txt { font-size:10px; font-weight:600; color:#94a3b8; }
+.sym-legend { padding-left:10px; margin-left:4px; border-left:1px solid #334155; gap:8px; }
+.hint { margin-left:auto; font-size:11px; color:#334155; white-space:nowrap; }
+
+/* ── Controls bar ────────────────────────────────────────────── */
+#controls {
+  background:#16233b; min-height:40px; padding:6px 16px;
+  display:flex; align-items:center; gap:10px; flex-shrink:0;
+  border-bottom:1px solid #263045; flex-wrap:wrap;
+}
+#controls input[type=text], #controls select {
+  background:#0f1f3d; color:var(--text); border:1px solid #1e3a5f;
+  border-radius:5px; font-size:12px; padding:5px 8px;
+  font-family:var(--sans); outline:none;
+}
+#controls input[type=text] { width:200px; }
+#controls input[type=text]:focus, #controls select:focus { border-color:var(--accent); }
+#controls select { max-width:260px; cursor:pointer; }
+#controls .chk { font-size:12px; color:#94a3b8; display:flex; align-items:center; gap:5px; cursor:pointer; user-select:none; }
+.btn {
+  background:#1e293b; color:#cbd5e1; border:1px solid #334155;
+  border-radius:5px; font-size:12px; padding:5px 12px; cursor:pointer;
+}
+.btn:hover { background:#263045; }
+.pill {
+  display:inline-flex; align-items:center; gap:7px;
+  background:#172554; color:#93c5fd; border:1px solid #1e3a8a;
+  border-radius:12px; font-size:11px; padding:3px 4px 3px 11px; cursor:pointer;
+  max-width:280px;
+}
+.pill .lbl { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.pill .x { font-weight:700; padding:0 6px; border-radius:9px; }
+.pill:hover .x { background:#1e3a8a; }
+
+/* ── Main layout ─────────────────────────────────────────────── */
+#main  { display:flex; flex:1; overflow:hidden; min-height:0; position:relative; }
+#graph { flex:1; min-height:0; background:#f8fafc; }
+
+/* ── Project-stats overlay ───────────────────────────────────── */
+#stats-panel {
+  position:absolute; top:12px; left:12px; z-index:5;
+  background:rgba(15,23,42,.9); border:1px solid #1e3a5f; border-radius:8px;
+  padding:10px 12px; min-width:188px; backdrop-filter:blur(3px);
+  font-size:11px; color:#cbd5e1; box-shadow:0 4px 16px rgba(0,0,0,.25);
+}
+#stats-panel h4 {
+  font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  color:#64748b; margin-bottom:7px;
+}
+#stats-panel .row { display:flex; justify-content:space-between; gap:14px; line-height:1.7; }
+#stats-panel .row .v { font-family:var(--mono); color:#f1f5f9; }
+#stats-panel .v.done { color:var(--green); }
+#stats-panel .v.work { color:var(--orange); }
+#stats-panel .v.inf  { color:var(--red); }
+#stats-panel .bar {
+  height:6px; border-radius:3px; background:#1e293b; margin:7px 0 3px; overflow:hidden;
+}
+#stats-panel .bar > span { display:block; height:100%; background:var(--green); }
+#stats-panel .sep { border-top:1px solid #1e3a5f; margin:7px 0; }
+#graph canvas { display:block; }
+
+/* ── File-view colour legend ─────────────────────────────────── */
+#file-legend {
+  position:absolute; bottom:12px; left:12px; z-index:5;
+  background:rgba(15,23,42,.9); border:1px solid #1e3a5f; border-radius:8px;
+  padding:9px 11px; max-width:280px; max-height:42%; overflow-y:auto;
+  backdrop-filter:blur(3px); font-size:11px; color:#cbd5e1;
+  box-shadow:0 4px 16px rgba(0,0,0,.25);
+}
+#file-legend::-webkit-scrollbar { width:4px; }
+#file-legend::-webkit-scrollbar-thumb { background:#1e3a5f; border-radius:2px; }
+#file-legend h4 {
+  font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  color:#64748b; margin-bottom:7px;
+}
+#file-legend .fl-row { display:flex; align-items:center; gap:7px; line-height:1.9; }
+#file-legend .fl-sw { width:11px; height:11px; border-radius:3px; flex-shrink:0;
+  border:1px solid rgba(255,255,255,.18); }
+#file-legend .fl-name {
+  font-family:var(--mono); font-size:10px; color:#cbd5e1;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1;
+}
+#file-legend .fl-n { font-family:var(--mono); font-size:10px; color:#64748b; }
+#file-legend .fl-empty { font-style:italic; color:#475569; }
+
+/* ── Sidebar ─────────────────────────────────────────────────── */
+#sidebar {
+  width:340px; flex-shrink:0;
+  background:var(--sidebar-bg);
+  border-left:1px solid #1e293b;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+#sidebar-empty {
+  flex:1; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:10px;
+}
+#sidebar-empty svg { opacity:.2; }
+#sidebar-empty p { font-size:13px; color:#334155; }
+#sidebar-content {
+  flex:1; overflow-y:auto; padding:10px;
+  display:flex; flex-direction:column; gap:8px;
+}
+#sidebar-content::-webkit-scrollbar { width:4px; }
+#sidebar-content::-webkit-scrollbar-thumb { background:#1e3a5f; border-radius:2px; }
+
+/* ── Cards ───────────────────────────────────────────────────── */
+.card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:12px;
+}
+.card-title {
+  font-size:10px; font-weight:700; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:10px;
+}
+.btn-focus {
+  width:100%; margin-top:10px; background:#172554; color:#93c5fd;
+  border:1px solid #1e3a8a; border-radius:5px; font-size:11px;
+  font-weight:600; padding:7px; cursor:pointer; letter-spacing:.02em;
+}
+.btn-focus:hover { background:#1e3a8a; color:#bfdbfe; }
+
+/* ── Header card ─────────────────────────────────────────────── */
+.node-badges { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:8px; }
+.badge {
+  display:inline-block; padding:2px 8px; border-radius:10px;
+  font-size:10px; font-weight:700; letter-spacing:.04em;
+}
+.badge-type    { background:#172554; color:#93c5fd; border:1px solid #1e3a8a44; }
+.badge-proved  { background:var(--green-bg);  color:var(--green);  border:1px solid rgba(74,222,128,.25); }
+.badge-sorry   { background:var(--orange-bg); color:var(--orange); border:1px solid rgba(251,146,60,.25); }
+.badge-unproved{ background:var(--red-bg);    color:var(--red);    border:1px solid rgba(248,113,113,.25); }
+.node-title   { font-size:15px; font-weight:600; color:#f1f5f9; line-height:1.35; margin-bottom:5px; }
+.node-id      { font-family:var(--mono); font-size:11px; color:#475569; }
+.node-chapter { font-size:11px; color:#334155; margin-top:3px; }
+.lean-ref     { font-size:11px; color:var(--muted); margin-top:6px; }
+.lean-ref code{ font-family:var(--mono); color:var(--accent); }
+
+/* ── Structure card ──────────────────────────────────────────── */
+.degrees { display:flex; gap:20px; margin-bottom:10px; }
+.degree  { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.degree-val   { font-size:22px; font-weight:700; color:#f1f5f9; line-height:1; }
+.degree-label { font-size:10px; color:var(--muted); text-align:center; }
+.deps-list  { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:8px; }
+.deps-sub   { font-size:10px; color:var(--muted); margin:6px 0 4px; letter-spacing:.03em; }
+.dep-chip {
+  font-family:var(--mono); font-size:10px; padding:3px 7px;
+  background:#0f1f3d; border:1px solid #1e3a5f;
+  border-radius:4px; color:var(--accent); cursor:pointer; transition:background .15s;
+}
+.dep-chip:hover { background:#172554; }
+.no-deps { font-size:12px; color:var(--muted); font-style:italic; }
+
+/* ── Metrics card ────────────────────────────────────────────── */
+.metrics-grid {
+  display:grid; grid-template-columns:auto 1fr 1fr;
+  gap:5px 10px; align-items:center;
+}
+.col-head { font-size:10px; color:#334155; text-align:right; font-weight:600; }
+.m-label  { font-size:11px; color:var(--muted); }
+.m-val    { font-family:var(--mono); font-size:12px; color:#94a3b8; text-align:right; }
+.m-done   { color:var(--green); font-weight:700; }
+.m-inf    { color:var(--red);   font-weight:700; }
+.m-work   { color:var(--orange); }
+
+/* ── Section header ──────────────────────────────────────────── */
+.sec-hdr {
+  display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;
+}
+.chars-pair { font-family:var(--mono); font-size:10px; color:#334155; }
+.chars-inf  { color:var(--red); }
+.chars-val  { color:#475569; }
+
+/* ── LaTeX rendered block ────────────────────────────────────── */
+.latex-rendered {
+  font-family:var(--sans); font-size:13px; line-height:1.7;
+  color:#94a3b8; overflow-x:auto; min-height:1.5em;
+}
+.latex-rendered .katex-display { margin:6px 0; overflow-x:auto; }
+.latex-rendered em { font-style:italic; color:#cbd5e1; }
+.latex-rendered strong { font-weight:600; color:#cbd5e1; }
+.latex-rendered.empty { color:#1e3a5f; font-style:italic; }
+
+/* ── Lean code block ─────────────────────────────────────────── */
+.code-block {
+  font-family:var(--mono); font-size:11px; line-height:1.6;
+  background:var(--code-bg); color:#abb2bf;
+  border:1px solid #1a2744; border-radius:5px;
+  padding:10px 12px; white-space:pre; overflow:auto;
+  max-height:220px;
+}
+.code-block::-webkit-scrollbar { width:4px; height:4px; }
+.code-block::-webkit-scrollbar-thumb { background:#1e3a5f; border-radius:2px; }
+.code-block.empty { color:#1e3a5f; font-style:italic; white-space:normal; }
+
+/* ── Lean syntax colours (One Dark palette) ──────────────────── */
+.hl-kw      { color:#c678dd; }
+.hl-tactic  { color:#61afef; }
+.hl-type    { color:#e5c07b; }
+.hl-comment { color:#5c6370; font-style:italic; }
+.hl-str     { color:#98c379; }
+.hl-num     { color:#d19a66; }
+</style>
+</head>
+<body>
+<div id="toolbar">
+  <span class="brand">Blueprint DAG</span>
+  <span class="stat" id="stat">49 nodes &middot; 90 edges</span>
+  <span class="legend"><span class="leg-dot" style="background:#22c55e"></span><span class="leg-txt">done</span><span class="leg-dot" style="background:#3b82f6"></span><span class="leg-txt">mathlib</span><span class="leg-bar"></span><span class="leg-txt">more effort</span><span class="leg-dot" style="background:#ef4444"></span><span class="leg-txt">∞ no proof</span></span>
+  <span class="legend sym-legend">
+    <span class="leg-txt">✓ Lean proof</span>
+    <span class="leg-txt">⚠ sorry</span>
+    <span class="leg-txt">ⓜ mathlib</span>
+    <span class="leg-txt">λ Lean decl</span>
+    <span class="leg-txt">★ LaTeX proof</span>
+    <span class="leg-txt">§ statement</span>
+  </span>
+  <span class="hint">click = highlight cone &middot; double-click = focus &middot; ctrl+scroll = zoom</span>
+</div>
+<div id="controls">
+  <input id="search" type="text" list="node-ids" placeholder="Search node id…" autocomplete="off" spellcheck="false">
+  <datalist id="node-ids"></datalist>
+  <select id="nodeset" title="Which declarations to include">
+    <option value="union">All declarations</option>
+    <option value="blueprint">Blueprint only</option>
+    <option value="lean">Lean only</option>
+  </select>
+  <select id="component"><option value="">All components</option></select>
+  <select id="chapter"><option value="">All chapters</option></select>
+  <select id="fileview" title="Tint the background by source file">
+    <option value="off">File view: off</option>
+    <option value="lean">File view: Lean files</option>
+    <option value="tex">File view: LaTeX files</option>
+  </select>
+  <label class="chk"><input type="checkbox" id="orphans"> show isolated <span id="iso-count"></span></label>
+  <span id="focus-pill" class="pill" style="display:none" title="Clear focus">
+    <span class="lbl"></span><span class="x">&times;</span>
+  </span>
+  <button id="reset" class="btn">Reset view</button>
+</div>
+<div id="main">
+  <div id="graph"></div>
+  <div id="stats-panel"></div>
+  <div id="file-legend" style="display:none"></div>
+  <aside id="sidebar">
+    <div id="sidebar-empty">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+           stroke="#334155" stroke-width="1.2" stroke-linecap="round">
+        <path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+        <line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/>
+      </svg>
+      <p>Click a node to inspect it</p>
+    </div>
+    <div id="sidebar-content" style="display:none"></div>
+  </aside>
+</div>
+
+<script>
+const graphData = {"nodes": [{"id": "def:peer_higher_direct_image", "label": "peer_higher_direct_image\n§", "shape": "dot", "size": 11, "color": {"background": "#de9839", "border": "#9b6926", "highlight": {"background": "#de9839", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "def:peer_scheme_hmodule", "label": "peer_scheme_hmodule\n§", "shape": "dot", "size": 11, "color": {"background": "#de9c39", "border": "#9b6c26", "highlight": {"background": "#de9c39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "def:peer_affine_pushforward_base_change", "label": "peer_affine_pushforward_base_change\n§", "shape": "dot", "size": 11, "color": {"background": "#de9039", "border": "#9b6326", "highlight": {"background": "#de9039", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "def:peer_module_iso_locality", "label": "peer_module_iso_locality\n§", "shape": "dot", "size": 11, "color": {"background": "#de9339", "border": "#9b6626", "highlight": {"background": "#de9339", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:kemeny_generic_green", "label": "kemeny_generic_green\n★", "shape": "dot", "size": 11, "color": {"background": "#de8e39", "border": "#9b6226", "highlight": {"background": "#de8e39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:kemeny_even_geometric_syzygy_structure", "label": "kemeny_even_geometric_syzygy_structure\n★", "shape": "dot", "size": 11, "color": {"background": "#de8539", "border": "#9b5c26", "highlight": {"background": "#de8539", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "cor:kemeny_geometric_syzygy_even", "label": "kemeny_geometric_syzygy_even\n★", "shape": "dot", "size": 11, "color": {"background": "#de8739", "border": "#9b5d26", "highlight": {"background": "#de8739", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "def:kemeny_kernel_bundle_reduction", "label": "kemeny_kernel_bundle_reduction\n§", "shape": "dot", "size": 11, "color": {"background": "#de9d39", "border": "#9b6d26", "highlight": {"background": "#de9d39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "def:kemeny_universal_zero_locus", "label": "kemeny_universal_zero_locus\n§", "shape": "dot", "size": 11, "color": {"background": "#de9939", "border": "#9b6a26", "highlight": {"background": "#de9939", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "def:kemeny_universal_secant_bundles", "label": "kemeny_universal_secant_bundles\n§", "shape": "dot", "size": 11, "color": {"background": "#de9339", "border": "#9b6526", "highlight": {"background": "#de9339", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_W_locally_free", "label": "kemeny_W_locally_free\n★", "shape": "dot", "size": 11, "color": {"background": "#de8939", "border": "#9b5e26", "highlight": {"background": "#de8939", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_first_iso", "label": "kemeny_first_iso\n★", "shape": "dot", "size": 11, "color": {"background": "#de9639", "border": "#9b6826", "highlight": {"background": "#de9639", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_twisted_symmetric_comparison", "label": "kemeny_twisted_symmetric_comparison\n★", "shape": "dot", "size": 11, "color": {"background": "#de8f39", "border": "#9b6326", "highlight": {"background": "#de8f39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "prop:kemeny_auto_injectivity", "label": "kemeny_auto_injectivity\n★", "shape": "dot", "size": 11, "color": {"background": "#de9339", "border": "#9b6626", "highlight": {"background": "#de9339", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:kemeny_even_secant_vanishing", "label": "kemeny_even_secant_vanishing\n★", "shape": "dot", "size": 11, "color": {"background": "#de8d39", "border": "#9b6126", "highlight": {"background": "#de8d39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:kemeny_even_voisin", "label": "kemeny_even_voisin\n★", "shape": "dot", "size": 11, "color": {"background": "#de9339", "border": "#9b6626", "highlight": {"background": "#de9339", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_even_k3_section_to_general_curve", "label": "kemeny_even_k3_section_to_general_curve\n★", "shape": "dot", "size": 11, "color": {"background": "#de8b39", "border": "#9b6026", "highlight": {"background": "#de8b39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:kemeny_real_thm", "label": "kemeny_real_thm\n★", "shape": "dot", "size": 11, "color": {"background": "#de9439", "border": "#9b6626", "highlight": {"background": "#de9439", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_even_det_gamma", "label": "kemeny_even_det_gamma\n★", "shape": "dot", "size": 11, "color": {"background": "#de9839", "border": "#9b6926", "highlight": {"background": "#de9839", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "cor:kemeny_extremal_syzygy_iso", "label": "kemeny_extremal_syzygy_iso\n★", "shape": "dot", "size": 11, "color": {"background": "#de9339", "border": "#9b6626", "highlight": {"background": "#de9339", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_gamma_prime_image", "label": "kemeny_gamma_prime_image\n★", "shape": "dot", "size": 11, "color": {"background": "#de9739", "border": "#9b6826", "highlight": {"background": "#de9739", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_R1q_line_bundle", "label": "kemeny_R1q_line_bundle\n★", "shape": "dot", "size": 11, "color": {"background": "#de9439", "border": "#9b6626", "highlight": {"background": "#de9439", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_psi_global_sections", "label": "kemeny_psi_global_sections\n★", "shape": "dot", "size": 11, "color": {"background": "#de9439", "border": "#9b6626", "highlight": {"background": "#de9439", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_fibre_secant_map", "label": "kemeny_fibre_secant_map\n★", "shape": "dot", "size": 11, "color": {"background": "#de9239", "border": "#9b6526", "highlight": {"background": "#de9239", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:kemeny_veronese_identification", "label": "kemeny_veronese_identification\n★", "shape": "dot", "size": 11, "color": {"background": "#de8d39", "border": "#9b6126", "highlight": {"background": "#de8d39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_grassmann_pencil_map", "label": "kemeny_grassmann_pencil_map\n★", "shape": "dot", "size": 11, "color": {"background": "#de9a39", "border": "#9b6a26", "highlight": {"background": "#de9a39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_voisin_generation_observation", "label": "kemeny_voisin_generation_observation\n★", "shape": "dot", "size": 11, "color": {"background": "#de9d39", "border": "#9b6c26", "highlight": {"background": "#de9d39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_restrict_k3_syzygies_to_curve", "label": "kemeny_restrict_k3_syzygies_to_curve\n★", "shape": "dot", "size": 11, "color": {"background": "#de9439", "border": "#9b6626", "highlight": {"background": "#de9439", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_BNP_gen", "label": "kemeny_BNP_gen\n★", "shape": "dot", "size": 11, "color": {"background": "#de9139", "border": "#9b6426", "highlight": {"background": "#de9139", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_projection_criterion", "label": "kemeny_projection_criterion\n★", "shape": "dot", "size": 11, "color": {"background": "#de9f39", "border": "#9b6e26", "highlight": {"background": "#de9f39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_green_pic2", "label": "kemeny_green_pic2\n★", "shape": "dot", "size": 11, "color": {"background": "#de9139", "border": "#9b6426", "highlight": {"background": "#de9139", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_decomposable", "label": "kemeny_decomposable\n★", "shape": "dot", "size": 11, "color": {"background": "#de9839", "border": "#9b6926", "highlight": {"background": "#de9839", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_E_minus_delta_is_F", "label": "kemeny_E_minus_delta_is_F\n★", "shape": "dot", "size": 11, "color": {"background": "#de9a39", "border": "#9b6a26", "highlight": {"background": "#de9a39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "def:kemeny_odd_kernel_N", "label": "kemeny_odd_kernel_N\n§", "shape": "dot", "size": 11, "color": {"background": "#de9739", "border": "#9b6826", "highlight": {"background": "#de9739", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "def:kemeny_odd_blowup_elementary_transform", "label": "kemeny_odd_blowup_elementary_transform\n§", "shape": "dot", "size": 11, "color": {"background": "#de8e39", "border": "#9b6226", "highlight": {"background": "#de8e39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_odd_projective_bundle_model", "label": "kemeny_odd_projective_bundle_model\n★", "shape": "dot", "size": 11, "color": {"background": "#de9639", "border": "#9b6826", "highlight": {"background": "#de9639", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_odd_S_relative_tangent", "label": "kemeny_odd_S_relative_tangent\n★", "shape": "dot", "size": 11, "color": {"background": "#de9f39", "border": "#9b6e26", "highlight": {"background": "#de9f39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_odd_det_gamma", "label": "kemeny_odd_det_gamma\n★", "shape": "dot", "size": 11, "color": {"background": "#de9139", "border": "#9b6426", "highlight": {"background": "#de9139", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "prop:kemeny_odd_most_of_vanishing", "label": "kemeny_odd_most_of_vanishing\n★", "shape": "dot", "size": 11, "color": {"background": "#de9539", "border": "#9b6726", "highlight": {"background": "#de9539", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_LM_mult_map", "label": "kemeny_LM_mult_map\n★", "shape": "dot", "size": 11, "color": {"background": "#de9739", "border": "#9b6826", "highlight": {"background": "#de9739", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_odd_mult_vanishings", "label": "kemeny_odd_mult_vanishings\n★", "shape": "dot", "size": 11, "color": {"background": "#de9739", "border": "#9b6826", "highlight": {"background": "#de9739", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "prop:kemeny_green_odd_main", "label": "kemeny_green_odd_main\n★", "shape": "dot", "size": 11, "color": {"background": "#de9139", "border": "#9b6426", "highlight": {"background": "#de9139", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_odd_identilem", "label": "kemeny_odd_identilem\n★", "shape": "dot", "size": 11, "color": {"background": "#de9a39", "border": "#9b6a26", "highlight": {"background": "#de9a39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_odd_sym2S_vanishing", "label": "kemeny_odd_sym2S_vanishing\n★", "shape": "dot", "size": 11, "color": {"background": "#de9339", "border": "#9b6526", "highlight": {"background": "#de9339", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "prop:kemeny_odd_wedge2_gamma_vanishing", "label": "kemeny_odd_wedge2_gamma_vanishing\n★", "shape": "dot", "size": 11, "color": {"background": "#de8d39", "border": "#9b6126", "highlight": {"background": "#de8d39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "prop:kemeny_odd_phi_surjective", "label": "kemeny_odd_phi_surjective\n★", "shape": "dot", "size": 11, "color": {"background": "#de8539", "border": "#9b5b26", "highlight": {"background": "#de8539", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:kemeny_odd_projection_comparison", "label": "kemeny_odd_projection_comparison\n★", "shape": "dot", "size": 11, "color": {"background": "#de7b39", "border": "#9b5526", "highlight": {"background": "#de7b39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:kemeny_odd_voisin", "label": "kemeny_odd_voisin\n★", "shape": "dot", "size": 11, "color": {"background": "#de8839", "border": "#9b5e26", "highlight": {"background": "#de8839", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lean:hello", "label": "hello\n✓", "shape": "dot", "size": 11, "color": {"background": "#22c55e", "border": "#15803d", "highlight": {"background": "#22c55e", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {"borderDashes": [3, 3]}}], "edges": [{"from": "def:peer_higher_direct_image", "to": "def:peer_affine_pushforward_base_change", "arrows": "to"}, {"from": "def:peer_scheme_hmodule", "to": "def:peer_module_iso_locality", "arrows": "to"}, {"from": "lem:kemeny_even_k3_section_to_general_curve", "to": "thm:kemeny_generic_green", "arrows": "to"}, {"from": "thm:kemeny_odd_voisin", "to": "thm:kemeny_generic_green", "arrows": "to"}, {"from": "cor:kemeny_extremal_syzygy_iso", "to": "thm:kemeny_even_geometric_syzygy_structure", "arrows": "to"}, {"from": "thm:kemeny_veronese_identification", "to": "thm:kemeny_even_geometric_syzygy_structure", "arrows": "to"}, {"from": "thm:kemeny_even_geometric_syzygy_structure", "to": "cor:kemeny_geometric_syzygy_even", "arrows": "to"}, {"from": "lem:kemeny_grassmann_pencil_map", "to": "cor:kemeny_geometric_syzygy_even", "arrows": "to"}, {"from": "lem:kemeny_voisin_generation_observation", "to": "cor:kemeny_geometric_syzygy_even", "arrows": "to"}, {"from": "lem:kemeny_restrict_k3_syzygies_to_curve", "to": "cor:kemeny_geometric_syzygy_even", "arrows": "to"}, {"from": "def:peer_scheme_hmodule", "to": "def:kemeny_kernel_bundle_reduction", "arrows": "to"}, {"from": "def:kemeny_universal_zero_locus", "to": "def:kemeny_universal_secant_bundles", "arrows": "to"}, {"from": "def:kemeny_universal_zero_locus", "to": "lem:kemeny_W_locally_free", "arrows": "to"}, {"from": "def:peer_higher_direct_image", "to": "lem:kemeny_W_locally_free", "arrows": "to"}, {"from": "def:peer_affine_pushforward_base_change", "to": "lem:kemeny_W_locally_free", "arrows": "to"}, {"from": "def:peer_module_iso_locality", "to": "lem:kemeny_W_locally_free", "arrows": "to"}, {"from": "def:kemeny_universal_secant_bundles", "to": "lem:kemeny_first_iso", "arrows": "to"}, {"from": "lem:kemeny_first_iso", "to": "lem:kemeny_twisted_symmetric_comparison", "arrows": "to"}, {"from": "lem:kemeny_first_iso", "to": "prop:kemeny_auto_injectivity", "arrows": "to"}, {"from": "lem:kemeny_twisted_symmetric_comparison", "to": "prop:kemeny_auto_injectivity", "arrows": "to"}, {"from": "def:kemeny_universal_secant_bundles", "to": "thm:kemeny_even_secant_vanishing", "arrows": "to"}, {"from": "prop:kemeny_auto_injectivity", "to": "thm:kemeny_even_secant_vanishing", "arrows": "to"}, {"from": "def:peer_affine_pushforward_base_change", "to": "thm:kemeny_even_secant_vanishing", "arrows": "to"}, {"from": "def:kemeny_kernel_bundle_reduction", "to": "thm:kemeny_even_voisin", "arrows": "to"}, {"from": "thm:kemeny_even_secant_vanishing", "to": "thm:kemeny_even_voisin", "arrows": "to"}, {"from": "thm:kemeny_even_voisin", "to": "lem:kemeny_even_k3_section_to_general_curve", "arrows": "to"}, {"from": "def:kemeny_universal_secant_bundles", "to": "thm:kemeny_real_thm", "arrows": "to"}, {"from": "lem:kemeny_W_locally_free", "to": "lem:kemeny_even_det_gamma", "arrows": "to"}, {"from": "thm:kemeny_real_thm", "to": "cor:kemeny_extremal_syzygy_iso", "arrows": "to"}, {"from": "lem:kemeny_even_det_gamma", "to": "cor:kemeny_extremal_syzygy_iso", "arrows": "to"}, {"from": "thm:kemeny_even_voisin", "to": "cor:kemeny_extremal_syzygy_iso", "arrows": "to"}, {"from": "def:kemeny_universal_secant_bundles", "to": "lem:kemeny_gamma_prime_image", "arrows": "to"}, {"from": "lem:kemeny_W_locally_free", "to": "lem:kemeny_gamma_prime_image", "arrows": "to"}, {"from": "def:kemeny_universal_zero_locus", "to": "lem:kemeny_R1q_line_bundle", "arrows": "to"}, {"from": "lem:kemeny_W_locally_free", "to": "lem:kemeny_R1q_line_bundle", "arrows": "to"}, {"from": "def:peer_higher_direct_image", "to": "lem:kemeny_R1q_line_bundle", "arrows": "to"}, {"from": "def:peer_affine_pushforward_base_change", "to": "lem:kemeny_R1q_line_bundle", "arrows": "to"}, {"from": "cor:kemeny_extremal_syzygy_iso", "to": "lem:kemeny_psi_global_sections", "arrows": "to"}, {"from": "lem:kemeny_gamma_prime_image", "to": "lem:kemeny_psi_global_sections", "arrows": "to"}, {"from": "lem:kemeny_R1q_line_bundle", "to": "lem:kemeny_psi_global_sections", "arrows": "to"}, {"from": "def:peer_higher_direct_image", "to": "lem:kemeny_psi_global_sections", "arrows": "to"}, {"from": "lem:kemeny_psi_global_sections", "to": "lem:kemeny_fibre_secant_map", "arrows": "to"}, {"from": "def:kemeny_universal_secant_bundles", "to": "lem:kemeny_fibre_secant_map", "arrows": "to"}, {"from": "cor:kemeny_extremal_syzygy_iso", "to": "thm:kemeny_veronese_identification", "arrows": "to"}, {"from": "lem:kemeny_psi_global_sections", "to": "thm:kemeny_veronese_identification", "arrows": "to"}, {"from": "lem:kemeny_fibre_secant_map", "to": "thm:kemeny_veronese_identification", "arrows": "to"}, {"from": "thm:kemeny_even_geometric_syzygy_structure", "to": "lem:kemeny_grassmann_pencil_map", "arrows": "to"}, {"from": "lem:kemeny_grassmann_pencil_map", "to": "lem:kemeny_voisin_generation_observation", "arrows": "to"}, {"from": "thm:kemeny_veronese_identification", "to": "lem:kemeny_restrict_k3_syzygies_to_curve", "arrows": "to"}, {"from": "lem:kemeny_grassmann_pencil_map", "to": "lem:kemeny_restrict_k3_syzygies_to_curve", "arrows": "to"}, {"from": "lem:kemeny_BNP_gen", "to": "lem:kemeny_projection_criterion", "arrows": "to"}, {"from": "thm:kemeny_even_voisin", "to": "lem:kemeny_green_pic2", "arrows": "to"}, {"from": "cor:kemeny_extremal_syzygy_iso", "to": "lem:kemeny_green_pic2", "arrows": "to"}, {"from": "lem:kemeny_BNP_gen", "to": "lem:kemeny_decomposable", "arrows": "to"}, {"from": "lem:kemeny_BNP_gen", "to": "lem:kemeny_E_minus_delta_is_F", "arrows": "to"}, {"from": "lem:kemeny_E_minus_delta_is_F", "to": "def:kemeny_odd_kernel_N", "arrows": "to"}, {"from": "def:kemeny_odd_kernel_N", "to": "def:kemeny_odd_blowup_elementary_transform", "arrows": "to"}, {"from": "lem:kemeny_decomposable", "to": "def:kemeny_odd_blowup_elementary_transform", "arrows": "to"}, {"from": "def:kemeny_odd_blowup_elementary_transform", "to": "lem:kemeny_odd_projective_bundle_model", "arrows": "to"}, {"from": "lem:kemeny_odd_projective_bundle_model", "to": "lem:kemeny_odd_S_relative_tangent", "arrows": "to"}, {"from": "def:kemeny_odd_blowup_elementary_transform", "to": "lem:kemeny_odd_det_gamma", "arrows": "to"}, {"from": "lem:kemeny_odd_S_relative_tangent", "to": "lem:kemeny_odd_det_gamma", "arrows": "to"}, {"from": "def:peer_affine_pushforward_base_change", "to": "lem:kemeny_odd_det_gamma", "arrows": "to"}, {"from": "lem:kemeny_odd_S_relative_tangent", "to": "prop:kemeny_odd_most_of_vanishing", "arrows": "to"}, {"from": "lem:kemeny_odd_projective_bundle_model", "to": "prop:kemeny_odd_most_of_vanishing", "arrows": "to"}, {"from": "lem:kemeny_E_minus_delta_is_F", "to": "lem:kemeny_LM_mult_map", "arrows": "to"}, {"from": "lem:kemeny_BNP_gen", "to": "lem:kemeny_LM_mult_map", "arrows": "to"}, {"from": "def:kemeny_odd_kernel_N", "to": "lem:kemeny_odd_mult_vanishings", "arrows": "to"}, {"from": "lem:kemeny_LM_mult_map", "to": "lem:kemeny_odd_mult_vanishings", "arrows": "to"}, {"from": "lem:kemeny_odd_projective_bundle_model", "to": "prop:kemeny_green_odd_main", "arrows": "to"}, {"from": "lem:kemeny_odd_mult_vanishings", "to": "prop:kemeny_green_odd_main", "arrows": "to"}, {"from": "lem:kemeny_odd_projective_bundle_model", "to": "lem:kemeny_odd_identilem", "arrows": "to"}, {"from": "def:kemeny_odd_kernel_N", "to": "lem:kemeny_odd_sym2S_vanishing", "arrows": "to"}, {"from": "lem:kemeny_BNP_gen", "to": "lem:kemeny_odd_sym2S_vanishing", "arrows": "to"}, {"from": "lem:kemeny_odd_det_gamma", "to": "prop:kemeny_odd_wedge2_gamma_vanishing", "arrows": "to"}, {"from": "prop:kemeny_green_odd_main", "to": "prop:kemeny_odd_wedge2_gamma_vanishing", "arrows": "to"}, {"from": "lem:kemeny_odd_identilem", "to": "prop:kemeny_odd_wedge2_gamma_vanishing", "arrows": "to"}, {"from": "lem:kemeny_odd_sym2S_vanishing", "to": "prop:kemeny_odd_wedge2_gamma_vanishing", "arrows": "to"}, {"from": "lem:kemeny_odd_det_gamma", "to": "prop:kemeny_odd_phi_surjective", "arrows": "to"}, {"from": "prop:kemeny_odd_most_of_vanishing", "to": "prop:kemeny_odd_phi_surjective", "arrows": "to"}, {"from": "prop:kemeny_green_odd_main", "to": "prop:kemeny_odd_phi_surjective", "arrows": "to"}, {"from": "lem:kemeny_odd_identilem", "to": "prop:kemeny_odd_phi_surjective", "arrows": "to"}, {"from": "prop:kemeny_odd_wedge2_gamma_vanishing", "to": "prop:kemeny_odd_phi_surjective", "arrows": "to"}, {"from": "lem:kemeny_projection_criterion", "to": "lem:kemeny_odd_projection_comparison", "arrows": "to"}, {"from": "lem:kemeny_green_pic2", "to": "lem:kemeny_odd_projection_comparison", "arrows": "to"}, {"from": "prop:kemeny_odd_phi_surjective", "to": "lem:kemeny_odd_projection_comparison", "arrows": "to"}, {"from": "lem:kemeny_projection_criterion", "to": "thm:kemeny_odd_voisin", "arrows": "to"}, {"from": "lem:kemeny_green_pic2", "to": "thm:kemeny_odd_voisin", "arrows": "to"}, {"from": "prop:kemeny_odd_phi_surjective", "to": "thm:kemeny_odd_voisin", "arrows": "to"}, {"from": "lem:kemeny_odd_projection_comparison", "to": "thm:kemeny_odd_voisin", "arrows": "to"}]};
+const allNodes  = {"def:peer_higher_direct_image": {"id": "def:peer_higher_direct_image", "type": "definition", "title": "Sheaf cohomology and higher direct image anchor", "chapter": "", "statement": "The peer project \\emph{Cech-Cohomology}, in its chapter on higher direct\n  images \\(R^i f_*\\) of quasi-coherent sheaves, supplies the standard higher\n  direct image object \\(R^i f_*\\mathcal F\\).  This is the infrastructure through\n  which Kemeny's uses of \\(R^i q_*\\), Grauert-type local freeness, and Leray\n  spectral sequences should pass.", "uses": [], "lean_name": "AlgebraicGeometry.higherDirectImage", "proved": false, "mathlib_ok": false, "proof_tex": "", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_PeerDependencies.tex", "lean_file": "", "dep_count": 0, "rdep_count": 4, "descendant_count": 24, "proof_size_tex": null, "effort_local": 341, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 341}, "def:peer_scheme_hmodule": {"id": "def:peer_scheme_hmodule", "type": "definition", "title": "Scheme cohomology module anchor", "chapter": "", "statement": "The peer project \\emph{Algebraic-Jacobian-Challenge}, in its chapter on\n  sheaves of \\(k\\)-modules, supplies the scheme cohomology module\n  \\(H^i(X,\\mathcal F)\\) for module-valued sheaves on a scheme.  The present\n  blueprint uses this object as the common cohomological interface.", "uses": [], "lean_name": "AlgebraicGeometry.Scheme.HModule", "proved": false, "mathlib_ok": false, "proof_tex": "", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_PeerDependencies.tex", "lean_file": "", "dep_count": 0, "rdep_count": 2, "descendant_count": 21, "proof_size_tex": null, "effort_local": 281, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 281}, "def:peer_affine_pushforward_base_change": {"id": "def:peer_affine_pushforward_base_change", "type": "definition", "title": "Affine pushforward and base-change anchor", "chapter": "", "statement": "The peer project \\emph{Quot-Foundations}, in its chapter on flat base change\n  for degree-zero pushforward of quasi-coherent sheaves, supplies the affine\n  base-change morphism.  It is connected here to the higher direct image anchor\n  because the \\(i=0\\) construction is the degree-zero member of the same\n  pushforward formalism.  Kemeny's pushforward identities for blow-ups,\n  restrictions, and products should be expressed through this base-change\n  object.", "uses": ["def:peer_higher_direct_image"], "lean_name": "AlgebraicGeometry.pushforwardBaseChangeMap", "proved": false, "mathlib_ok": false, "proof_tex": "", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_PeerDependencies.tex", "lean_file": "", "dep_count": 1, "rdep_count": 4, "descendant_count": 23, "proof_size_tex": null, "effort_local": 462, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 803}, "def:peer_module_iso_locality": {"id": "def:peer_module_iso_locality", "type": "definition", "title": "Local criterion for module isomorphisms anchor", "chapter": "", "statement": "The peer project \\emph{Quot-Foundations}, in its chapter on flat base change\n  for degree-zero pushforward, supplies the local criterion that a morphism of\n  \\(\\mathcal O_X\\)-modules is an isomorphism exactly when the induced morphisms\n  on stalks are isomorphisms.  Later comparisons of cohomology sheaves and\n  vector bundles should reduce global module isomorphisms to these stalkwise\n  verifications.", "uses": ["def:peer_scheme_hmodule"], "lean_name": "AlgebraicGeometry.Modules.isIso_iff_isIso_stalkFunctor_map", "proved": false, "mathlib_ok": false, "proof_tex": "", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_PeerDependencies.tex", "lean_file": "", "dep_count": 1, "rdep_count": 1, "descendant_count": 17, "proof_size_tex": null, "effort_local": 404, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 685}, "thm:kemeny_generic_green": {"id": "thm:kemeny_generic_green", "type": "theorem", "title": "Generic Green's conjecture for general canonical curves", "chapter": "", "statement": "\\textit{Source: Kemeny, Introduction, Theorem generic-green.}\n  If \\(C\\) is a general complex curve of genus \\(2k\\) or \\(2k+1\\), then\n  \\(\\K_{k,1}(C,\\omega_C)=0\\).", "uses": ["lem:kemeny_even_k3_section_to_general_curve", "thm:kemeny_odd_voisin"], "lean_name": "MR4213770.GenericGreen", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{lem:kemeny_even_k3_section_to_general_curve, thm:kemeny_odd_voisin}\n  For even genus, apply the K3-section transfer from the Picard-rank-one K3\n  vanishing proved by the universal secant bundle argument to a general\n  canonical curve of genus \\(2k\\).\n  For odd genus, use the Picard-rank-two nodal K3 reduction: the projection\n  criterion reduces the desired vanishing to injectivity of the projection map,\n  and the odd-genus secant-bundle calculation supplies that injectivity.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 2, "rdep_count": 0, "descendant_count": 0, "proof_size_tex": 485, "effort_local": 485, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 15851}, "thm:kemeny_even_geometric_syzygy_structure": {"id": "thm:kemeny_even_geometric_syzygy_structure", "type": "theorem", "title": "Even-genus geometric syzygy theorem", "chapter": "", "statement": "\\textit{Source: Kemeny, Introduction, Theorem geo-thm-intro.}\n  Let \\(X\\) be a complex K3 surface with \\(\\Pic(X)=\\mathbb Z[L]\\) and \\(L\\)\n  ample of even genus \\(g=2k\\).  For the Lazarsfeld--Mukai bundle \\(E\\), each\n  nonzero section \\(s\\) determines a one-dimensional subspace\n  \\[\n    \\K_{k-1,1}\\bigl(X,L,H^0(L\\otimes I_{Z(s)})\\bigr)\\subseteq \\K_{k-1,1}(X,L).\n  \\]\n  The induced map\n  \\(\\PP(H^0(E))\\to \\PP(\\K_{k-1,1}(X,L))\\) is the degree \\(k-2\\) Veronese\n  embedding, hence induces\n  \\(\\Sym^{k-2}H^0(X,E)\\simeq \\K_{k-1,1}(X,L)\\).", "uses": ["cor:kemeny_extremal_syzygy_iso", "thm:kemeny_veronese_identification"], "lean_name": "MR4213770.EvenGeometricSyzygyStructure", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{cor:kemeny_extremal_syzygy_iso, thm:kemeny_veronese_identification}\n  The surjectivity theorem for\n  \\(H^1(B,\\wedge^k\\pi^*\\cM\\otimes p'^*L)\\to H^1(B,\\wedge^k\\Gamma\\otimes p'^*L)\\)\n  and the determinant computation for \\(\\Gamma\\) identify the target cohomology\n  with \\(H^0(\\PP,\\mathcal O_{\\PP}(k-2))^\\vee\\).  Dualizing gives an injection\n  \\(\\Sym^{k-2}H^0(E)\\hookrightarrow \\K_{k-1,1}(X,L)\\), and the even-genus\n  vanishing gives equality of dimensions.  The fibre calculation in Section 2\n  identifies the hyperplane quotient over \\([t]\\) with the secant Koszul\n  subspace attached to \\(Z(t)\\), so the projective morphism is the Veronese map.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 2, "rdep_count": 2, "descendant_count": 4, "proof_size_tex": 649, "effort_local": 649, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 9047}, "cor:kemeny_geometric_syzygy_even": {"id": "cor:kemeny_geometric_syzygy_even", "type": "corollary", "title": "Geometric Syzygy Conjecture in even genus", "chapter": "", "statement": "\\textit{Source: Kemeny, Introduction, Corollary geo-cor.}\n  If \\(C\\) is a general curve of even genus \\(2k\\), then\n  \\(\\K_{k-1,1}(C,\\omega_C)\\) is generated by the rank \\(k\\) syzygies arising\n  from the subspaces \\(H^0(\\omega_C\\otimes A^{-1})\\), for\n  \\(A\\in W^1_{k+1}(C)\\).", "uses": ["thm:kemeny_even_geometric_syzygy_structure", "lem:kemeny_grassmann_pencil_map", "lem:kemeny_voisin_generation_observation", "lem:kemeny_restrict_k3_syzygies_to_curve"], "lean_name": "MR4213770.GeometricSyzygyEven", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{thm:kemeny_even_geometric_syzygy_structure, lem:kemeny_grassmann_pencil_map, lem:kemeny_voisin_generation_observation, lem:kemeny_restrict_k3_syzygies_to_curve}\n  For a general \\(C\\in |L|\\), the finite map from\n  \\(\\Gr_2(H^0(E))\\) to \\(|L|\\) identifies its fibre over \\(C\\) with\n  \\(W^1_{k+1}(C)\\).  The degree \\(k-2\\) Veronese image is nondegenerate on the\n  union of the lines corresponding to these pencils, so the K3 space\n  \\(\\K_{k-1,1}(X,L)\\) is generated by the corresponding secant subspaces.\n  Restriction to \\(C\\) identifies these subspaces with the rank \\(k\\) syzygy\n  spaces in the statement.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 4, "rdep_count": 0, "descendant_count": 0, "proof_size_tex": 610, "effort_local": 610, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 10637}, "def:kemeny_kernel_bundle_reduction": {"id": "def:kemeny_kernel_bundle_reduction", "type": "definition", "title": "Kernel bundle and Koszul cohomology reduction", "chapter": "", "statement": "\\textit{Source: Kemeny, Section sec1, opening paragraph.}\n  The kernel bundle \\(M_L\\) is defined by\n  \\(0\\to M_L\\to H^0(L)\\otimes \\cO_X\\to L\\to0\\).  For the even-genus K3\n  surface, the desired vanishing \\(\\K_{k,1}(X,L)=0\\) follows from\n  \\(H^1(X,\\wedge^{k+1}M_L)=0\\).", "uses": ["def:peer_scheme_hmodule"], "lean_name": "MR4213770.KernelBundleReduction", "proved": false, "mathlib_ok": false, "proof_tex": "", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 1, "rdep_count": 1, "descendant_count": 15, "proof_size_tex": null, "effort_local": 268, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 549}, "def:kemeny_universal_zero_locus": {"id": "def:kemeny_universal_zero_locus", "type": "definition", "title": "Universal zero locus", "chapter": "", "statement": "\\textit{Source: Kemeny, Section sec1.}\n  Let \\(\\PP=\\PP(H^0(E))\\), with projections \\(p:X\\times\\PP\\to X\\) and\n  \\(q:X\\times\\PP\\to\\PP\\).  The universal zero locus is\n  \\[\n    \\cZ=\\{(x,s)\\mid s(x)=0\\}\\subseteq X\\times\\PP .\n  \\]\n  It is smooth over \\(X\\), and finite flat over \\(\\PP\\) under the Picard-rank-one\n  hypothesis.", "uses": [], "lean_name": "MR4213770.UniversalZeroLocus", "proved": false, "mathlib_ok": false, "proof_tex": "", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 0, "rdep_count": 3, "descendant_count": 25, "proof_size_tex": null, "effort_local": 320, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 320}, "def:kemeny_universal_secant_bundles": {"id": "def:kemeny_universal_secant_bundles", "type": "definition", "title": "Universal secant bundles", "chapter": "", "statement": "\\textit{Source: Kemeny, Section sec1.}\n  Let \\(\\pi:B\\to X\\times\\PP\\) be the blow-up of \\(\\cZ\\), with exceptional\n  divisor \\(D\\), and let \\(p'=p\\circ\\pi\\), \\(q'=q\\circ\\pi\\).  Define\n  \\[\n    0\\to\\cS\\to q'^*q'_*(p'^*L\\otimes I_D)\\to p'^*L\\otimes I_D\\to0\n  \\]\n  and let \\(\\Gamma\\) be the quotient in\n  \\(0\\to\\cS\\to\\pi^*\\cM\\to\\Gamma\\to0\\).  The bundles \\(\\cS\\) and \\(\\Gamma\\) are\n  Kemeny's universal secant bundles.", "uses": ["def:kemeny_universal_zero_locus"], "lean_name": "MR4213770.UniversalSecantBundles", "proved": false, "mathlib_ok": false, "proof_tex": "", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 1, "rdep_count": 5, "descendant_count": 21, "proof_size_tex": null, "effort_local": 413, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 733}, "lem:kemeny_W_locally_free": {"id": "lem:kemeny_W_locally_free", "type": "lemma", "title": "The cokernel bundle \\(\\mathcal W\\)", "chapter": "", "statement": "\\textit{Source: Kemeny, Lemma very-first-lem.}\n  The cokernel\n  \\[\n    \\mathcal W=\\operatorname{Coker}\\bigl(q'_*(p'^*L\\otimes I_D)\\to q'_*p'^*L\\bigr)\n  \\]\n  is locally free of rank \\(k\\).", "uses": ["def:kemeny_universal_zero_locus", "def:peer_higher_direct_image", "def:peer_affine_pushforward_base_change", "def:peer_module_iso_locality"], "lean_name": "MR4213770.WLocallyFree", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{def:peer_higher_direct_image, def:peer_affine_pushforward_base_change, def:peer_module_iso_locality}\n  Apply \\(Rq_*\\) to the universal exact sequence.  The fibres of\n  \\(q_*(p^*L|_{\\cZ})\\) have dimension \\(k+1\\), while\n  \\(R^1q_*(p^*L\\otimes I_{\\cZ})\\) has fibre \\(H^2(\\cO_X)\\), hence rank one.\n  Grauert's theorem gives local freeness.  The pushforward exact sequence is\n  checked after the standard base-change reductions, and the resulting\n  sheaf-map identification is local on stalks; the exact sequence then shows\n  that the kernel \\(\\mathcal W\\) has rank \\(k\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 4, "rdep_count": 3, "descendant_count": 16, "proof_size_tex": 574, "effort_local": 574, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 2382}, "lem:kemeny_first_iso": {"id": "lem:kemeny_first_iso", "type": "lemma", "title": "First symmetric-power computation", "chapter": "", "statement": "\\textit{Source: Kemeny, Lemma first-iso.}\n  For \\(\\cG=q^*q_*(p^*L\\otimes I_{\\cZ})\\), one has\n  \\(H^{k+1}(X\\times\\PP,\\Sym^{k+1}\\cG)=0\\) and a natural isomorphism\n  \\(H^k(X\\times\\PP,\\Sym^{k+1}\\cG)\\simeq \\Sym^kH^0(E)\\).", "uses": ["def:kemeny_universal_secant_bundles"], "lean_name": "MR4213770.FirstIso", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Resolve \\(\\Sym^{k+1}\\cG\\) by the two-term symmetric-power sequence induced\n  from \\(0\\to q^*\\cO_{\\PP}(-2)\\to H^0(E)\\otimes q^*\\cO_{\\PP}(-1)\\to\\cG\\to0\\).\n  The cohomology of negative twists on \\(\\PP^{k+1}\\), Kunneth, and\n  \\(H^1(\\cO_X)=0\\) identify the only nonzero contribution in degree \\(k\\) with\n  \\(\\Sym^kH^0(E)\\) and force the degree \\(k+1\\) group to vanish.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 1, "rdep_count": 2, "descendant_count": 18, "proof_size_tex": 363, "effort_local": 363, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1096}, "lem:kemeny_twisted_symmetric_comparison": {"id": "lem:kemeny_twisted_symmetric_comparison", "type": "lemma", "title": "Twisted symmetric-power comparison", "chapter": "", "statement": "\\textit{Source: Kemeny, Lemmas first-twist-lem and second-twist-lem.}\n  The group \\(H^k(\\Sym^k\\cG\\otimes p^*L\\otimes I_{\\cZ})\\) is naturally\n  \\(\\Sym^kH^0(E)\\), and the evaluation map \\(\\cG\\twoheadrightarrow\n  p^*L\\otimes I_{\\cZ}\\) induces an isomorphism\n  \\[\n    H^k(\\Sym^k\\cG\\otimes\\cG)\\simeq\n    H^k(\\Sym^k\\cG\\otimes p^*L\\otimes I_{\\cZ}).\n  \\]", "uses": ["lem:kemeny_first_iso"], "lean_name": "MR4213770.TwistedSymmetricComparison", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{lem:kemeny_first_iso}\n  Tensor the symmetric-power resolution of \\(\\cG\\) with \\(p^*L\\otimes I_{\\cZ}\\).\n  The universal section exact sequence identifies the relevant boundary map with\n  the identity of \\(H^0(E)\\), so the only surviving degree \\(k\\) contribution is\n  \\(\\Sym^kH^0(E)\\).  Repeating the same computation with \\(\\cG\\) in place of\n  \\(p^*L\\otimes I_{\\cZ}\\) gives the same vector space, and the evaluation map is\n  the identity under these identifications.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 1, "rdep_count": 1, "descendant_count": 17, "proof_size_tex": 472, "effort_local": 472, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1568}, "prop:kemeny_auto_injectivity": {"id": "prop:kemeny_auto_injectivity", "type": "proposition", "title": "Automatic injectivity", "chapter": "", "statement": "\\textit{Source: Kemeny, Proposition auto-injectivity.}\n  The natural map\n  \\(H^k(\\Sym^{k+1}\\cG)\\to H^k(\\Sym^k\\cG\\otimes p^*L\\otimes I_{\\cZ})\\) is an\n  isomorphism.", "uses": ["lem:kemeny_first_iso", "lem:kemeny_twisted_symmetric_comparison"], "lean_name": "MR4213770.AutoInjectivity", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{lem:kemeny_first_iso, lem:kemeny_twisted_symmetric_comparison}\n  Under the two preceding identifications, it is enough to prove injectivity of\n  \\(H^k(\\Sym^{k+1}\\cG)\\to H^k(\\Sym^k\\cG\\otimes\\cG)\\).  For any vector bundle\n  \\(\\mathcal F\\), the composite\n  \\(\\Sym^i\\mathcal F\\to \\Sym^{i-1}\\mathcal F\\otimes\\mathcal F\\to\\Sym^i\\mathcal F\\)\n  is multiplication by \\(i\\), hence is injective over \\(\\C\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 2, "rdep_count": 1, "descendant_count": 16, "proof_size_tex": 402, "effort_local": 402, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1970}, "thm:kemeny_even_secant_vanishing": {"id": "thm:kemeny_even_secant_vanishing", "type": "theorem", "title": "Even-genus secant-bundle vanishing", "chapter": "", "statement": "\\textit{Source: Kemeny, Theorem main-thm.}\n  For \\(1\\le i\\le k+1\\),\n  \\[\n    H^i\\bigl(B,\\wedge^{k+1-i}\\pi^*\\cM\\otimes\\Sym^i\\cS\\bigr)=0 .\n  \\]", "uses": ["def:kemeny_universal_secant_bundles", "prop:kemeny_auto_injectivity", "def:peer_affine_pushforward_base_change"], "lean_name": "MR4213770.EvenSecantVanishing", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{prop:kemeny_auto_injectivity, def:peer_affine_pushforward_base_change}\n  Use the symmetric-power sequence for the quotient defining \\(\\cS\\).  After\n  applying the projection formula and the blow-up identities\n  \\(\\pi_*\\cO_B=\\cO_{X\\times\\PP}\\), \\(\\pi_*I_D=I_{\\cZ}\\), and vanishing of higher\n  direct images, the top case is exactly the automatic-injectivity isomorphism.\n  The remaining cases reduce to Kunneth vanishings for exterior powers of\n  \\(M_L\\) tensored with negative line bundles on \\(\\PP\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 3, "rdep_count": 1, "descendant_count": 15, "proof_size_tex": 507, "effort_local": 507, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 3280}, "thm:kemeny_even_voisin": {"id": "thm:kemeny_even_voisin", "type": "theorem", "title": "Voisin's theorem in even genus", "chapter": "", "statement": "\\textit{Source: Kemeny, Section sec1.}\n  For a Picard-rank-one complex K3 surface \\((X,L)\\) of even genus \\(2k\\),\n  \\(\\K_{k,1}(X,L)=0\\).", "uses": ["def:kemeny_kernel_bundle_reduction", "thm:kemeny_even_secant_vanishing"], "lean_name": "MR4213770.EvenVoisin", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{def:kemeny_kernel_bundle_reduction, thm:kemeny_even_secant_vanishing}\n  The kernel-bundle description reduces \\(\\K_{k,1}(X,L)=0\\) to\n  \\(H^1(X,\\wedge^{k+1}M_L)=0\\).  Pulling to \\(B\\) and using the exact sequence\n  \\(0\\to\\cS\\to\\pi^*\\cM\\to\\Gamma\\to0\\), the exterior-power filtration reduces\n  this vanishing to the family of vanishing statements in\n  Theorem~\\ref{thm:kemeny_even_secant_vanishing}.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 2, "rdep_count": 3, "descendant_count": 14, "proof_size_tex": 402, "effort_local": 402, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 4231}, "lem:kemeny_even_k3_section_to_general_curve": {"id": "lem:kemeny_even_k3_section_to_general_curve", "type": "lemma", "title": "Even K3 section transfer to a general curve", "chapter": "", "statement": "\\textit{Source: Kemeny, Introduction, even-genus transfer sentence.}\n  The vanishing \\(\\K_{k,1}(X,L)=0\\) for a Picard-rank-one K3 surface of even\n  genus \\(2k\\) implies \\(\\K_{k,1}(C,\\omega_C)=0\\) for a general canonical curve\n  \\(C\\) of genus \\(2k\\).", "uses": ["thm:kemeny_even_voisin"], "lean_name": "MR4213770.EvenK3SectionToGeneralCurve", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{thm:kemeny_even_voisin}\n  Restrict the K3 Koszul complex to smooth hyperplane sections \\(C\\in |L|\\);\n  adjunction identifies \\(L|_C\\) with \\(\\omega_C\\), and the standard Green\n  restriction comparison identifies the relevant curve Koszul group with the\n  specialization controlled by \\(\\K_{k,1}(X,L)\\).  Since Kemeny's even K3\n  vanishing supplies zero for this specialization and Koszul cohomology\n  dimensions are upper semicontinuous in flat families of canonical curves, the\n  same vanishing holds on the open general even-genus locus.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 1, "rdep_count": 1, "descendant_count": 1, "proof_size_tex": 545, "effort_local": 545, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 4776}, "thm:kemeny_real_thm": {"id": "thm:kemeny_real_thm", "type": "theorem", "title": "Surjectivity for the extremal syzygy map", "chapter": "", "statement": "\\textit{Source: Kemeny, Theorem real-thm.}\n  The natural map\n  \\(H^1(B,\\wedge^k\\pi^*\\cM\\otimes p'^*L)\\to\n    H^1(B,\\wedge^k\\Gamma\\otimes p'^*L)\\)\n  is surjective.", "uses": ["def:kemeny_universal_secant_bundles"], "lean_name": "MR4213770.ExtremalMapSurjective", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{def:kemeny_universal_secant_bundles}\n  The exterior-power sequence for \\(0\\to\\cS\\to\\pi^*\\cM\\to\\Gamma\\to0\\) reduces\n  surjectivity to the vanishing of\n  \\(H^{1+i}(\\Sym^i\\cS\\otimes\\wedge^{k-i}\\pi^*\\cM\\otimes p'^*L)\\).\n  The symmetric-power sequence for \\(\\cS\\), the projection formula, and the\n  universal zero-locus exact sequence reduce these groups to Kunneth vanishings\n  on \\(X\\times\\PP\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 1, "rdep_count": 1, "descendant_count": 13, "proof_size_tex": 398, "effort_local": 398, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1131}, "lem:kemeny_even_det_gamma": {"id": "lem:kemeny_even_det_gamma", "type": "lemma", "title": "Determinant of \\(\\Gamma\\) in even genus", "chapter": "", "statement": "\\textit{Source: Kemeny, Section sec2, determinant lemma.}\n  With the notation of the even-genus construction,\n  \\(\\wedge^k\\Gamma\\simeq I_D\\otimes q'^*\\cO_{\\PP}(k)\\).", "uses": ["lem:kemeny_W_locally_free"], "lean_name": "MR4213770.EvenDetGamma", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{lem:kemeny_W_locally_free}\n  Take determinants in\n  \\(0\\to\\Gamma\\to q'^*\\mathcal W\\to p'^*L|_D\\to0\\).  The determinant of\n  \\(\\mathcal W\\) is computed from\n  \\(0\\to q_*(p^*L\\otimes I_{\\cZ})\\to q_*p^*L\\to\\mathcal W\\to0\\), and the\n  two-term resolution of \\(q_*(p^*L\\otimes I_{\\cZ})\\) gives\n  \\(\\det\\mathcal W\\simeq \\cO_{\\PP}(k)\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 1, "rdep_count": 1, "descendant_count": 13, "proof_size_tex": 335, "effort_local": 335, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 2717}, "cor:kemeny_extremal_syzygy_iso": {"id": "cor:kemeny_extremal_syzygy_iso", "type": "corollary", "title": "Extremal syzygy vector-space isomorphism", "chapter": "", "statement": "\\textit{Source: Kemeny, Corollary main-cor-nat-iso.}\n  The map \\(\\psi\\) is an isomorphism and induces a natural isomorphism\n  \\(\\K_{k-1,1}(X,L)\\simeq \\Sym^{k-2}H^0(X,E)\\).", "uses": ["thm:kemeny_real_thm", "lem:kemeny_even_det_gamma", "thm:kemeny_even_voisin"], "lean_name": "MR4213770.ExtremalSyzygyIso", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{thm:kemeny_real_thm, lem:kemeny_even_det_gamma, thm:kemeny_even_voisin}\n  The determinant computation rewrites the target of \\(\\psi\\) as the cohomology\n  of \\(I_D\\otimes q'^*\\cO_{\\PP}(k)\\otimes p'^*L\\), which is\n  \\(H^0(\\cO_{\\PP}(k-2))^\\vee\\).  Surjectivity gives the dual injection\n  \\(\\Sym^{k-2}H^0(E)\\hookrightarrow \\K_{k-1,1}(X,L)\\); the even-genus vanishing\n  supplies the dimension equality.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 3, "rdep_count": 4, "descendant_count": 12, "proof_size_tex": 403, "effort_local": 403, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 6345}, "lem:kemeny_gamma_prime_image": {"id": "lem:kemeny_gamma_prime_image", "type": "lemma", "title": "Image of \\(\\wedge^k\\Gamma'\\)", "chapter": "", "statement": "\\textit{Source: Kemeny, Proof of Theorem geo-thm-intro.}\n  With \\(\\Gamma'=\\pi_*\\Gamma\\), there is an exact sequence\n  \\(0\\to\\Gamma'\\to q^*\\mathcal W\\to p^*L|_{\\cZ}\\to0\\).  The image of\n  \\(\\wedge^k\\Gamma'\\to\\wedge^kq^*\\mathcal W\\simeq\\cO_{\\PP}(k)\\) is\n  \\(I_{\\cZ}\\otimes q^*\\cO_{\\PP}(k)\\), and the induced map is the pushforward of\n  \\(\\wedge^k\\Gamma\\to I_D\\otimes q'^*\\cO_{\\PP}(k)\\).", "uses": ["def:kemeny_universal_secant_bundles", "lem:kemeny_W_locally_free"], "lean_name": "MR4213770.GammaPrimeImage", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{def:kemeny_universal_secant_bundles, lem:kemeny_W_locally_free}\n  Push forward the quotient sequence defining \\(\\Gamma\\) and compare its\n  determinant with the determinant of \\(q^*\\mathcal W\\).  The standard secant\n  image computation for the zero locus \\(\\cZ\\) identifies the resulting ideal\n  image with \\(I_{\\cZ}\\otimes q^*\\cO_{\\PP}(k)\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 2, "rdep_count": 1, "descendant_count": 8, "proof_size_tex": 347, "effort_local": 347, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 3142}, "lem:kemeny_R1q_line_bundle": {"id": "lem:kemeny_R1q_line_bundle", "type": "lemma", "title": "The \\(R^1q_*\\)-line bundle", "chapter": "", "statement": "\\textit{Source: Kemeny, Proof of Theorem geo-thm-intro.}\n  The higher direct image\n  \\(R^1q_*((L\\boxtimes\\cO_{\\PP}(k))\\otimes I_{\\cZ})\\) is canonically\n  isomorphic to \\(\\cO_{\\PP}(k-2)\\).", "uses": ["def:kemeny_universal_zero_locus", "lem:kemeny_W_locally_free", "def:peer_higher_direct_image", "def:peer_affine_pushforward_base_change"], "lean_name": "MR4213770.R1qLineBundle", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{def:kemeny_universal_zero_locus, lem:kemeny_W_locally_free, def:peer_higher_direct_image, def:peer_affine_pushforward_base_change}\n  Twist the universal zero-locus sequence by \\(q^*\\cO_{\\PP}(k)\\) and apply\n  \\(Rq_*\\).  The middle term has no relevant higher image, and relative duality\n  gives \\(R^2q_*\\cO_{X\\times\\PP}\\simeq\\cO_{\\PP}\\), producing the line bundle\n  \\(\\cO_{\\PP}(k-2)\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 4, "rdep_count": 1, "descendant_count": 8, "proof_size_tex": 390, "effort_local": 390, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 2772}, "lem:kemeny_psi_global_sections": {"id": "lem:kemeny_psi_global_sections", "type": "lemma", "title": "Global-section description of \\(\\psi\\)", "chapter": "", "statement": "\\textit{Source: Kemeny, Proof of Theorem geo-thm-intro.}\n  Under Leray and the preceding image computation, \\(\\psi\\) is the map on global\n  sections induced by\n  \\[\n    \\K_{k-1,1}(X,L)^\\vee\\otimes\\cO_{\\PP}\\to\\cO_{\\PP}(k-2).\n  \\]", "uses": ["cor:kemeny_extremal_syzygy_iso", "lem:kemeny_gamma_prime_image", "lem:kemeny_R1q_line_bundle", "def:peer_higher_direct_image"], "lean_name": "MR4213770.PsiGlobalSections", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{cor:kemeny_extremal_syzygy_iso, lem:kemeny_gamma_prime_image, lem:kemeny_R1q_line_bundle, def:peer_higher_direct_image}\n  Leray rewrites the source cohomology as global sections of\n  \\(R^1q_*(\\wedge^k\\mathcal M\\otimes p^*L)\\).  The map\n  \\(\\wedge^k\\Gamma'\\to I_{\\cZ}\\otimes q^*\\cO_{\\PP}(k)\\), followed by the\n  \\(R^1q_*\\)-identification, gives the displayed vector-bundle morphism.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 4, "rdep_count": 2, "descendant_count": 7, "proof_size_tex": 387, "effort_local": 387, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 7469}, "lem:kemeny_fibre_secant_map": {"id": "lem:kemeny_fibre_secant_map", "type": "lemma", "title": "Fibre of the secant map", "chapter": "", "statement": "\\textit{Source: Kemeny, Proof of Theorem geo-thm-intro.}\n  For nonzero \\(t\\in H^0(E)\\), the fibre over \\([t]\\) of the morphism\n  \\(\\K_{k-1,1}(X,L)^\\vee\\otimes\\cO_{\\PP}\\to\\cO_{\\PP}(k-2)\\) is the map through\n  the blow-up \\(B_t\\) of \\(Z(t)\\).  Under Serre duality and the kernel-bundle\n  description, its dual image is precisely\n  \\[\n    \\K_{k-1,1}\\bigl(X,L,H^0(L\\otimes I_{Z(t)})\\bigr)\n    \\subseteq \\K_{k-1,1}(X,L).\n  \\]", "uses": ["lem:kemeny_psi_global_sections", "def:kemeny_universal_secant_bundles"], "lean_name": "MR4213770.FibreSecantMap", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{lem:kemeny_psi_global_sections, def:kemeny_universal_secant_bundles}\n  Evaluate the global vector-bundle morphism at \\([t]\\) and identify the fibre\n  with the cohomology map on the individual secant blow-up \\(B_t\\).  The\n  determinant identifications convert this to the Serre dual inclusion\n  \\(\\wedge^k\\mathcal S_t(D_t)\\hookrightarrow\\wedge^k\\pi_t^*M_L(D_t)\\), which is\n  the inclusion of the secant Koszul subspace.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 2, "rdep_count": 1, "descendant_count": 6, "proof_size_tex": 424, "effort_local": 424, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 7893}, "thm:kemeny_veronese_identification": {"id": "thm:kemeny_veronese_identification", "type": "theorem", "title": "Veronese identification of the secant syzygy map", "chapter": "", "statement": "\\textit{Source: Kemeny, Proof of Theorem geo-thm-intro.}\n  The morphism\n  \\(\\K_{k-1,1}(X,L)^\\vee\\otimes\\cO_{\\PP}\\to\\cO_{\\PP}(k-2)\\) induced by \\(\\psi\\)\n  is a quotient bundle.  The associated projective map\n  \\(\\PP(H^0(E))\\to\\PP(\\K_{k-1,1}(X,L))\\) is the degree \\(k-2\\) Veronese map, and\n  its point over \\([t]\\) is the secant Koszul line associated to \\(Z(t)\\).", "uses": ["cor:kemeny_extremal_syzygy_iso", "lem:kemeny_psi_global_sections", "lem:kemeny_fibre_secant_map"], "lean_name": "MR4213770.VeroneseIdentification", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{cor:kemeny_extremal_syzygy_iso, lem:kemeny_psi_global_sections, lem:kemeny_fibre_secant_map}\n  The global-section description identifies the map as a morphism onto\n  \\(\\cO_{\\PP}(k-2)\\).  The extremal syzygy isomorphism makes it surjective on\n  global sections; since \\(\\cO_{\\PP}(k-2)\\) is globally generated, the morphism is\n  surjective as a sheaf map.  Its projectivization is therefore the Veronese\n  quotient, and the fibre lemma identifies its points with the desired secant\n  Koszul subspaces.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 3, "rdep_count": 2, "descendant_count": 5, "proof_size_tex": 505, "effort_local": 505, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 8398}, "lem:kemeny_grassmann_pencil_map": {"id": "lem:kemeny_grassmann_pencil_map", "type": "lemma", "title": "Grassmannian map to \\(|L|\\)", "chapter": "", "statement": "\\textit{Source: Kemeny, Proof of Corollary geo-cor.}\n  There is a finite surjective morphism\n  \\(d:\\Gr_2(H^0(E))\\to |L|\\) sending \\(W\\subset H^0(E)\\) to the degeneracy\n  divisor of \\(W\\otimes\\cO_X\\to E\\).  For a general \\(C\\in|L|\\), the fibre\n  \\(d^{-1}(C)\\) is naturally identified with the reduced Brill--Noether locus\n  \\(W^1_{k+1}(C)\\).", "uses": ["thm:kemeny_even_geometric_syzygy_structure"], "lean_name": "MR4213770.GrassmannPencilMap", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{thm:kemeny_even_geometric_syzygy_structure}\n  The evaluation degeneracy construction gives the morphism to \\(|L|\\).  For a\n  general curve \\(C\\), the cokernel of evaluation is \\(\\omega_C\\otimes A^{-1}\\),\n  and the Brill--Noether comparison identifies \\(W\\) with \\(H^0(A)^\\vee\\) for\n  \\(A\\in W^1_{k+1}(C)\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 1, "rdep_count": 3, "descendant_count": 3, "proof_size_tex": 312, "effort_local": 312, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 9359}, "lem:kemeny_voisin_generation_observation": {"id": "lem:kemeny_voisin_generation_observation", "type": "lemma", "title": "Voisin generation observation", "chapter": "", "statement": "\\textit{Source: Kemeny, Proof of Corollary geo-cor.}\n  For general \\(C\\in |L|\\), the subspaces\n  \\(\\Sym^{k-2}H^0(A)^\\vee\\), as \\(A\\) ranges over \\(W^1_{k+1}(C)\\), generate\n  \\(\\Sym^{k-2}H^0(E)\\).", "uses": ["lem:kemeny_grassmann_pencil_map"], "lean_name": "MR4213770.VoisinGenerationObservation", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{lem:kemeny_grassmann_pencil_map}\n  Under the fibre identification \\(d^{-1}(C)\\simeq W^1_{k+1}(C)\\), the pencils\n  give the lines \\(H^0(A)^\\vee\\subset H^0(E)\\).  Voisin's generation statement\n  says that their \\((k-2)\\)-nd symmetric powers span the full symmetric power.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 1, "rdep_count": 1, "descendant_count": 1, "proof_size_tex": 275, "effort_local": 275, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 9634}, "lem:kemeny_restrict_k3_syzygies_to_curve": {"id": "lem:kemeny_restrict_k3_syzygies_to_curve", "type": "lemma", "title": "Restriction of K3 secant syzygies", "chapter": "", "statement": "\\textit{Source: Kemeny, Proof of Corollary geo-cor.}\n  Under restriction\n  \\(\\K_{k-1,1}(X,L)\\simeq \\K_{k-1,1}(C,\\omega_C)\\), the K3 secant subspaces\n  attached to sections corresponding to \\(A\\in W^1_{k+1}(C)\\) become exactly\n  \\[\n    \\K_{k-1,1}\\bigl(C,\\omega_C,H^0(\\omega_C\\otimes A^{-1})\\bigr)\n    \\subseteq \\K_{k-1,1}(C,\\omega_C).\n  \\]", "uses": ["thm:kemeny_veronese_identification", "lem:kemeny_grassmann_pencil_map"], "lean_name": "MR4213770.RestrictK3SyzygiesToCurve", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{thm:kemeny_veronese_identification, lem:kemeny_grassmann_pencil_map}\n  The section \\(s\\) corresponding to the pencil \\(A\\) has zero scheme whose\n  secant subspace is identified by the Veronese fibre calculation.  Restricting\n  the K3 Koszul complex to the hyperplane section \\(C\\) sends\n  \\(H^0(L\\otimes I_{Z(s)})\\) to \\(H^0(\\omega_C\\otimes A^{-1})\\), giving the\n  stated curve subspace.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 2, "rdep_count": 1, "descendant_count": 1, "proof_size_tex": 393, "effort_local": 393, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 9752}, "lem:kemeny_BNP_gen": {"id": "lem:kemeny_BNP_gen", "type": "lemma", "title": "Picard-rank-two K3 input", "chapter": "", "statement": "\\textit{Source: Kemeny, Lemma BNP-gen.}\n  For the Picard-rank-two K3 surface used in the odd-genus reduction, the line\n  bundles \\(L_n=L'-n\\Delta\\), \\(0\\le n\\le3\\), are base-point free, \\(L_n\\) is\n  ample for \\(0<n\\le2\\), \\(|L_n|\\) is not a sum of two pencils, and general\n  smooth curves in \\(|L_n|\\) are Brill--Noether and Petri general.", "uses": [], "lean_name": "MR4213770.BNPGen", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Riemann--Roch gives nonempty systems.  A negative intersection rational base\n  component would force an impossible decomposition in the rank-two Picard\n  lattice, so \\(L_n\\) is nef; Mayer's criterion gives base-point freeness and\n  the same lattice calculation gives ampleness for \\(0<n\\le2\\).  If\n  \\(L_n=A_1+A_2\\) with both \\(h^0(A_i)\\ge2\\), expressing the \\(A_i\\) in the\n  basis \\(L',\\Delta\\) forces one summand to have only one section.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 0, "rdep_count": 5, "descendant_count": 19, "proof_size_tex": 440, "effort_local": 440, "proof_size_tex_total": 440, "proof_size_lean_total": null, "effort_total": 440}, "lem:kemeny_projection_criterion": {"id": "lem:kemeny_projection_criterion", "type": "lemma", "title": "Projection criterion", "chapter": "", "statement": "\\textit{Source: Kemeny, Lemma proj-crit.}\n  If the projection map\n  \\(pr_k:H^1(\\wedge^{k+1}M_{L'})\\to H^1(\\wedge^kM_L(-\\Delta))\\) is injective,\n  then \\(H^1(\\wedge^{k+1}M_L)=0\\).", "uses": ["lem:kemeny_BNP_gen"], "lean_name": "MR4213770.ProjectionCriterion", "proved": false, "mathlib_ok": false, "proof_tex": "\n  Take cohomology of\n  \\(0\\to\\wedge^{k+1}M_L\\to\\wedge^{k+1}M_{L'}\\to\\wedge^kM_L(-\\Delta)\\to0\\).\n  The group \\(H^0(\\wedge^kM_L(-\\Delta))\\) vanishes, so injectivity of \\(pr_k\\)\n  kills the connecting obstruction and gives the desired \\(H^1\\)-vanishing.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 1, "rdep_count": 2, "descendant_count": 3, "proof_size_tex": 248, "effort_local": 248, "proof_size_tex_total": 688, "proof_size_lean_total": null, "effort_total": 688}, "lem:kemeny_green_pic2": {"id": "lem:kemeny_green_pic2", "type": "lemma", "title": "Even-style result on the nodal K3 surface", "chapter": "", "statement": "\\textit{Source: Kemeny, Lemma green-pic2.}\n  For the odd-genus Picard-rank-two surface,\n  \\(\\K_{k+1,1}(X,L')=0\\) and\n  \\(\\Sym^{k-1}H^0(X,E)\\simeq \\K_{k,1}(X,L')\\).", "uses": ["thm:kemeny_even_voisin", "cor:kemeny_extremal_syzygy_iso"], "lean_name": "MR4213770.GreenPicTwo", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{thm:kemeny_even_voisin, cor:kemeny_extremal_syzygy_iso}\n  Contract \\(\\Delta\\) to a rational double point on \\(\\hat X\\).  The universal\n  zero-locus construction remains finite flat because \\(\\operatorname{Cl}(\\hat\n  X)=\\mathbb Z[\\hat L]\\), so the even-genus cohomological proof applies on\n  \\(\\hat X\\).  Rational singularities identify the section rings of \\(L'\\) and\n  \\(\\hat L\\), transferring the Koszul statements back to \\(X\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 2, "rdep_count": 2, "descendant_count": 3, "proof_size_tex": 437, "effort_local": 437, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 6782}, "lem:kemeny_decomposable": {"id": "lem:kemeny_decomposable", "type": "lemma", "title": "Nonvanishing on decomposable elements", "chapter": "", "statement": "\\textit{Source: Kemeny, Lemma decomposable.}\n  The determinant map\n  \\(\\wedge^2H^0(E)\\to H^0(\\wedge^2E)=H^0(L')\\) is nonzero on every nonzero\n  decomposable element.", "uses": ["lem:kemeny_BNP_gen"], "lean_name": "MR4213770.DecomposableNonzero", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{lem:kemeny_BNP_gen}\n  If a decomposable wedge vanished, the two sections would generate a rank-one\n  subsheaf with at least two sections.  After removing torsion from the quotient,\n  both determinant factors have at least two sections, so \\(L'\\) would split as a\n  sum of two pencils, contradicting Lemma~\\ref{lem:kemeny_BNP_gen}.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 1, "rdep_count": 1, "descendant_count": 12, "proof_size_tex": 336, "effort_local": 336, "proof_size_tex_total": 776, "proof_size_lean_total": null, "effort_total": 776}, "lem:kemeny_E_minus_delta_is_F": {"id": "lem:kemeny_E_minus_delta_is_F", "type": "lemma", "title": "Twisting \\(E\\) by the nodal curve gives \\(F\\)", "chapter": "", "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  The rank-two Lazarsfeld--Mukai bundle satisfies \\(E(-\\Delta)\\simeq F\\), where\n  \\(F\\) is the unique stable bundle with determinant \\(L-\\Delta\\) and Euler\n  characteristic \\(k+1\\).", "uses": ["lem:kemeny_BNP_gen"], "lean_name": "MR4213770.EMinusDeltaIsF", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{lem:kemeny_BNP_gen}\n  The bundle \\(E(-\\Delta)\\) has the same numerical invariants as \\(F\\).  If it\n  were unstable, a destabilizing rank-one filtration would give two line\n  bundles with at least two sections whose sum is \\(L\\), contradicting the\n  no-sum-of-pencils property in the rank-two Picard lattice.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 1, "rdep_count": 2, "descendant_count": 16, "proof_size_tex": 313, "effort_local": 313, "proof_size_tex_total": 753, "proof_size_lean_total": null, "effort_total": 753}, "def:kemeny_odd_kernel_N": {"id": "def:kemeny_odd_kernel_N", "type": "definition", "title": "Odd-genus kernel bundle \\(N\\)", "chapter": "", "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  Define \\(N\\) by\n  \\[\n    0\\to N\\to H^0(E(-\\Delta))\\otimes\\cO_X\\to E(-\\Delta)\\to0 .\n  \\]\n  For \\(t\\in H^0(E)\\), wedging with \\(t\\) gives\n  \\(H^0(E(-\\Delta))\\to H^0(L)\\) and hence a map \\(N\\to M_L\\).  Globalizing over\n  \\(\\PP=\\PP(H^0(E))\\) gives\n  \\[\n    r:N\\boxtimes\\cO_{\\PP}(-1)\\to \\mathcal M=p^*M_L .\n  \\]", "uses": ["lem:kemeny_E_minus_delta_is_F"], "lean_name": "MR4213770.OddKernelN", "proved": false, "mathlib_ok": false, "proof_tex": "", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 1, "rdep_count": 3, "descendant_count": 14, "proof_size_tex": null, "effort_local": 352, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1105}, "def:kemeny_odd_blowup_elementary_transform": {"id": "def:kemeny_odd_blowup_elementary_transform", "type": "definition", "title": "Odd blow-up and elementary transform", "chapter": "", "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  The map \\(r\\) fails to be fibrewise injective along\n  \\(\\mathcal Z=\\{(x,s)\\mid s(x)=0\\}\\subset X\\times\\PP(H^0(E(-\\Delta)))\\).  Let\n  \\(\\pi:B\\to X\\times\\PP\\) be the blow-up along \\(\\mathcal Z\\), with exceptional\n  divisor \\(D\\), and define \\(p'=p\\circ\\pi\\), \\(q'=q\\circ\\pi\\).  The elementary\n  transform \\(S\\) is the dual of \\(\\operatorname{Im}((\\pi^*r)^\\vee)\\), and\n  \\(\\Gamma\\) is the quotient in \\(0\\to S\\to\\pi^*\\mathcal M\\to\\Gamma\\to0\\).", "uses": ["def:kemeny_odd_kernel_N", "lem:kemeny_decomposable"], "lean_name": "MR4213770.OddBlowupElementaryTransform", "proved": false, "mathlib_ok": false, "proof_tex": "", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 2, "rdep_count": 2, "descendant_count": 11, "proof_size_tex": null, "effort_local": 486, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1927}, "lem:kemeny_odd_projective_bundle_model": {"id": "lem:kemeny_odd_projective_bundle_model", "type": "lemma", "title": "Odd projective-bundle model", "chapter": "", "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  With \\(\\mathcal F=\\operatorname{Coker}(N\\to H^0(E)\\otimes\\cO_X)\\), the blow-up\n  \\(B\\) is \\(\\PP(\\mathcal H)\\) over \\(\\PP(\\mathcal F)\\).  The projection\n  \\(\\chi:B\\to\\PP(\\mathcal F)\\) satisfies\n  \\[\n    \\chi^*\\cO_{\\PP(\\mathcal F)}(1)\\simeq q'^*\\cO_{\\PP}(1)(-D).\n  \\]", "uses": ["def:kemeny_odd_blowup_elementary_transform"], "lean_name": "MR4213770.OddProjectiveBundleModel", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{def:kemeny_odd_blowup_elementary_transform}\n  Fibrewise, \\(B\\) is the blow-up of a projective space along the linear subspace\n  cut out by \\(N\\).  The standard description of such a blow-up as a projective\n  bundle over the quotient projective bundle gives \\(\\PP(\\mathcal H)\\), and the\n  exceptional divisor accounts for the twist in \\(\\chi^*\\cO(1)\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 1, "rdep_count": 4, "descendant_count": 10, "proof_size_tex": 357, "effort_local": 357, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 2284}, "lem:kemeny_odd_S_relative_tangent": {"id": "lem:kemeny_odd_S_relative_tangent", "type": "lemma", "title": "Elementary transform as a relative tangent bundle", "chapter": "", "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  The elementary transform bundle is\n  \\(S\\simeq T_\\chi\\otimes q'^*\\cO_{\\PP}(-2)\\), where \\(T_\\chi\\) is the relative\n  tangent bundle of \\(\\chi:B\\to\\PP(\\mathcal F)\\).", "uses": ["lem:kemeny_odd_projective_bundle_model"], "lean_name": "MR4213770.OddSRelativeTangent", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{lem:kemeny_odd_projective_bundle_model}\n  Compare the relative Euler sequence for \\(\\PP(\\mathcal H)\\) with the dual\n  defining exact sequence for \\(S\\).  After twisting by \\(q'^*\\cO_{\\PP}(-2)\\),\n  the two cokernel descriptions agree.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 1, "rdep_count": 2, "descendant_count": 7, "proof_size_tex": 239, "effort_local": 239, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 2523}, "lem:kemeny_odd_det_gamma": {"id": "lem:kemeny_odd_det_gamma", "type": "lemma", "title": "Determinant of \\(\\Gamma\\) in odd genus", "chapter": "", "statement": "\\textit{Source: Kemeny, Lemma det-gamma.}\n  One has\n  \\(\\det\\Gamma\\simeq q'^*\\cO_{\\PP}(k-1)(-D-p'^*\\Delta)\\).  Consequently\n  \\[\n    H^2\\bigl(B,\\wedge^{k+2}\\Gamma(p'^*\\Delta)(D)\\bigr)\n    \\simeq \\Sym^{k-1}H^0(X,E)^\\vee .\n  \\]", "uses": ["def:kemeny_odd_blowup_elementary_transform", "lem:kemeny_odd_S_relative_tangent", "def:peer_affine_pushforward_base_change"], "lean_name": "MR4213770.OddDetGamma", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{def:kemeny_odd_blowup_elementary_transform, lem:kemeny_odd_S_relative_tangent, def:peer_affine_pushforward_base_change}\n  Taking determinants in \\(0\\to S\\to\\pi^*\\mathcal M\\to\\Gamma\\to0\\) and using\n  the tangent-bundle description of \\(S\\) gives the determinant formula.  The\n  cohomology identification follows after cancelling \\(D\\) and \\(p'^*\\Delta\\)\n  and pushing \\(q'^*\\cO_{\\PP}(k-1)\\) down to the projective-space factor.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 3, "rdep_count": 2, "descendant_count": 5, "proof_size_tex": 432, "effort_local": 432, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 3758}, "prop:kemeny_odd_most_of_vanishing": {"id": "prop:kemeny_odd_most_of_vanishing", "type": "proposition", "title": "Most odd-genus exterior-power vanishings", "chapter": "", "statement": "\\textit{Source: Kemeny, Proposition most-of-van.}\n  For \\(1\\le i\\le k+2\\) with \\(i\\ne k,k+1\\),\n  \\[\n    H^{2+i}\\bigl(B,\\wedge^{k+2-i}\\pi^*\\mathcal M\\otimes\n    \\Sym^i(S)(p'^*\\Delta)(D)\\bigr)=0 .\n  \\]", "uses": ["lem:kemeny_odd_S_relative_tangent", "lem:kemeny_odd_projective_bundle_model"], "lean_name": "MR4213770.OddMostOfVanishing", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{lem:kemeny_odd_S_relative_tangent, lem:kemeny_odd_projective_bundle_model}\n  Resolve \\(\\Sym^i(S)\\) by the Euler sequence for \\(S\\simeq T_\\chi\\otimes\n  q'^*\\cO_{\\PP}(-2)\\).  For \\(1\\le i\\le k-1\\), the relative projective-space\n  fibres of \\(\\chi\\), Leray, and Kunneth vanish the terms; the remaining\n  \\(i=k+2\\) case is reduced to a Kunneth vanishing on \\(X\\times\\PP\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 2, "rdep_count": 1, "descendant_count": 4, "proof_size_tex": 374, "effort_local": 374, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 2897}, "lem:kemeny_LM_mult_map": {"id": "lem:kemeny_LM_mult_map", "type": "lemma", "title": "Odd Lazarsfeld--Mukai multiplication map", "chapter": "", "statement": "\\textit{Source: Kemeny, Lemma LM-mult-map.}\n  The multiplication map\n  \\[\n    H^0(X,E(-\\Delta))\\otimes H^0(X,L-\\Delta)\\to H^0(X,E(L-2\\Delta))\n  \\]\n  is surjective.", "uses": ["lem:kemeny_E_minus_delta_is_F", "lem:kemeny_BNP_gen"], "lean_name": "MR4213770.LMMultMap", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{lem:kemeny_E_minus_delta_is_F, lem:kemeny_BNP_gen}\n  Restrict to a smooth curve \\(C\\in|L-\\Delta|\\), split the restricted bundle as\n  the two Lazarsfeld--Mukai summands associated to a pencil, and apply the\n  base-point-free pencil trick, together with the standard reduction from\n  restricted multiplication to the surface multiplication map.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 2, "rdep_count": 1, "descendant_count": 7, "proof_size_tex": 348, "effort_local": 348, "proof_size_tex_total": 1101, "proof_size_lean_total": null, "effort_total": 1101}, "lem:kemeny_odd_mult_vanishings": {"id": "lem:kemeny_odd_mult_vanishings", "type": "lemma", "title": "Odd multiplication vanishings", "chapter": "", "statement": "\\textit{Source: Kemeny, Lemma mult-maps.}\n  The vanishings\n  \\(H^2(X,M_L(\\Delta)\\otimes N)=0\\) and \\(H^2(X,M_L(\\Delta))=0\\) hold.", "uses": ["def:kemeny_odd_kernel_N", "lem:kemeny_LM_mult_map"], "lean_name": "MR4213770.OddMultVanishings", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{def:kemeny_odd_kernel_N, lem:kemeny_LM_mult_map}\n  Use the defining sequence of \\(N\\).  The first vanishing is reduced to\n  surjectivity of the surface multiplication map, which follows from\n  \\(\\cref{lem:kemeny_LM_mult_map}\\) and the restriction diagram along\n  \\(\\Delta\\); the second follows directly from the defining sequence of \\(M_L\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 2, "rdep_count": 1, "descendant_count": 6, "proof_size_tex": 347, "effort_local": 347, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1800}, "prop:kemeny_green_odd_main": {"id": "prop:kemeny_green_odd_main", "type": "proposition", "title": "Odd \\(i=k+1\\) vanishing", "chapter": "", "statement": "\\textit{Source: Kemeny, Proposition green-odd-main.}\n  The middle vanishing\n  \\[\n    H^{k+3}\\bigl(B,\\pi^*\\mathcal M\\otimes\\Sym^{k+1}(S)(p'^*\\Delta)(D)\\bigr)=0\n  \\]\n  holds.", "uses": ["lem:kemeny_odd_projective_bundle_model", "lem:kemeny_odd_mult_vanishings"], "lean_name": "MR4213770.GreenOddMain", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{lem:kemeny_odd_projective_bundle_model, lem:kemeny_odd_mult_vanishings}\n  Resolve \\(\\Sym^{k+1}(S)\\) using the relative Euler sequence.  Relative duality\n  over \\(\\chi\\) turns the critical map into the multiplication map on symmetric\n  powers of \\(\\mathcal H\\), whose composite is multiplication by \\(k+1\\).  The\n  remaining obstruction groups are exactly the Kunneth consequences of\n  \\(\\cref{lem:kemeny_odd_mult_vanishings}\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 2, "rdep_count": 2, "descendant_count": 5, "proof_size_tex": 433, "effort_local": 433, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 3412}, "lem:kemeny_odd_identilem": {"id": "lem:kemeny_odd_identilem", "type": "lemma", "title": "Odd cohomology identifications", "chapter": "", "statement": "\\textit{Source: Kemeny, Lemma identilem.}\n  For every \\(j\\), there are natural isomorphisms\n  \\[\n  \\begin{aligned}\n    H^j(B,\\pi^*\\mathcal M\\otimes\\Sym^{k+1}(S)(p'^*\\Delta)(D))\n      &\\simeq H^{j+1}(B,\\pi^*\\mathcal M\\otimes S(-2k)(p'^*\\Delta)(D)),\\\\\n    H^j(B,\\wedge^2\\pi^*\\mathcal M\\otimes\\Sym^k(S)(p'^*\\Delta)(D))\n      &\\simeq H^{j+1}(B,\\wedge^2\\pi^*\\mathcal M(-2k)(p'^*\\Delta)(D)).\n  \\end{aligned}\n  \\]", "uses": ["lem:kemeny_odd_projective_bundle_model"], "lean_name": "MR4213770.OddIdentiLem", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{lem:kemeny_odd_projective_bundle_model}\n  Apply the relative Euler resolution of \\(\\Sym^{k+1}(S)\\) and \\(\\Sym^k(S)\\),\n  push along \\(\\chi\\), and use relative duality.  The natural splitting of the\n  symmetric-power surjection identifies the kernels and cokernels with the\n  displayed cohomology groups.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 1, "rdep_count": 2, "descendant_count": 5, "proof_size_tex": 308, "effort_local": 308, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 2592}, "lem:kemeny_odd_sym2S_vanishing": {"id": "lem:kemeny_odd_sym2S_vanishing", "type": "lemma", "title": "Vanishing for \\(\\Sym^2(S)\\)", "chapter": "", "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  The cohomology group\n  \\(H^{k+4}(B,\\Sym^2(S)(-2k)(p'^*\\Delta)(D))\\) vanishes.", "uses": ["def:kemeny_odd_kernel_N", "lem:kemeny_BNP_gen"], "lean_name": "MR4213770.OddSymTwoSVanishing", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{def:kemeny_odd_kernel_N, lem:kemeny_BNP_gen}\n  Away from \\(D\\), \\(\\Sym^2(S)(p'^*\\Delta)\\) is identified with the pullback of\n  \\(\\Sym^2N(\\Delta)\\boxtimes\\cO_{\\PP}(-2)\\).  Kunneth reduces the claim to\n  \\(H^2(X,\\Sym^2N(\\Delta))=0\\), which follows from the symmetric-square sequence\n  for \\(N\\) and surjectivity of the determinant map, itself obtained from Petri\n  generality of curves in \\(|L+\\Delta|\\).\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 2, "rdep_count": 1, "descendant_count": 5, "proof_size_tex": 408, "effort_local": 408, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1513}, "prop:kemeny_odd_wedge2_gamma_vanishing": {"id": "prop:kemeny_odd_wedge2_gamma_vanishing", "type": "proposition", "title": "Odd \\(\\wedge^2\\Gamma\\)-vanishing", "chapter": "", "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  The group\n  \\(H^{k+3}(B,\\wedge^2\\Gamma(-2k)(p'^*\\Delta)(D))\\) vanishes.  Consequently the\n  map \\(\\phi\\) induced by \\(0\\to S\\to\\pi^*\\mathcal M\\to\\Gamma\\to0\\) is\n  surjective.", "uses": ["lem:kemeny_odd_det_gamma", "prop:kemeny_green_odd_main", "lem:kemeny_odd_identilem", "lem:kemeny_odd_sym2S_vanishing"], "lean_name": "MR4213770.OddWedgeTwoGammaVanishing", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{lem:kemeny_odd_det_gamma, prop:kemeny_green_odd_main, lem:kemeny_odd_identilem, lem:kemeny_odd_sym2S_vanishing}\n  The four-term exterior-power sequence\n  \\(0\\to\\Sym^2(S)\\to\\pi^*\\mathcal M\\otimes S\\to\\wedge^2\\pi^*\\mathcal M\n  \\to\\wedge^2\\Gamma\\to0\\) reduces surjectivity to the \\(\\Sym^2(S)\\)-vanishing\n  and the \\(\\wedge^2\\Gamma\\)-vanishing.  The latter is proved by first restricting\n  to \\(D\\), then using the determinant formula, Serre duality, and the same\n  relative-Euler vanishing package as above.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 4, "rdep_count": 1, "descendant_count": 4, "proof_size_tex": 510, "effort_local": 510, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 6112}, "prop:kemeny_odd_phi_surjective": {"id": "prop:kemeny_odd_phi_surjective", "type": "proposition", "title": "Odd-genus projection-map surjectivity dual", "chapter": "", "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  In the odd-genus construction, the map\n  \\[\n    \\phi:H^2(\\wedge^{k+2}M_L(\\Delta))\\to\n    H^2(\\wedge^{k+2}\\Gamma(p'^*\\Delta)(D))\n  \\]\n  induced from \\(0\\to S\\to\\pi^*\\cM\\to\\Gamma\\to0\\) is surjective.", "uses": ["lem:kemeny_odd_det_gamma", "prop:kemeny_odd_most_of_vanishing", "prop:kemeny_green_odd_main", "lem:kemeny_odd_identilem", "prop:kemeny_odd_wedge2_gamma_vanishing"], "lean_name": "MR4213770.OddPhiSurjective", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{lem:kemeny_odd_det_gamma, prop:kemeny_odd_most_of_vanishing, prop:kemeny_green_odd_main, lem:kemeny_odd_identilem, prop:kemeny_odd_wedge2_gamma_vanishing}\n  The determinant lemma identifies the target of \\(\\phi\\) with\n  \\(\\Sym^{k-1}H^0(E)^\\vee\\).  Taking exterior powers of\n  \\(0\\to S\\to\\pi^*\\mathcal M\\to\\Gamma\\to0\\), twisted by \\(D+p'^*\\Delta\\), gives\n  the obstruction sequence for surjectivity.  The most-of-vanishing proposition\n  kills all terms except \\(i=k,k+1\\); the \\(i=k+1\\) vanishing and the\n  identifications rewrite the remaining map.  The final\n  \\(\\wedge^2\\Gamma\\)-vanishing closes the last obstruction, hence \\(\\phi\\) is\n  surjective.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 5, "rdep_count": 2, "descendant_count": 3, "proof_size_tex": 657, "effort_local": 657, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 7143}, "lem:kemeny_odd_projection_comparison": {"id": "lem:kemeny_odd_projection_comparison", "type": "lemma", "title": "Odd projection comparison", "chapter": "", "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  With \\(\\psi^\\vee:\\Sym^{k-1}H^0(E)\\simeq\\K_{k,1}(X,L')\\) from\n  \\(\\cref{lem:kemeny_green_pic2}\\) and \\(\\phi^\\vee\\) dual to the odd map\n  \\(\\phi\\), one has\n  \\[\n    \\phi^\\vee=pr_k\\circ\\psi^\\vee .\n  \\]", "uses": ["lem:kemeny_projection_criterion", "lem:kemeny_green_pic2", "prop:kemeny_odd_phi_surjective"], "lean_name": "MR4213770.OddProjectionComparison", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{lem:kemeny_projection_criterion, lem:kemeny_green_pic2, prop:kemeny_odd_phi_surjective}\n  Blow up the codimension-two universal zero locus\n  \\(\\widetilde{\\mathcal Z}\\subset X\\times\\PP(H^0(E))\\), obtaining\n  \\(\\widetilde B\\) with exceptional divisor \\(\\widetilde D\\).  Define\n  \\(\\widetilde S_{L'}\\) and \\(\\widetilde S_L\\) by the two universal secant\n  sequences on \\(\\widetilde B\\).  Exterior powers identify \\(\\psi^\\vee\\) with the\n  map from \\(\\widetilde S_{L'}\\) and \\(\\phi^\\vee\\) with the corresponding map\n  from \\(\\widetilde S_L\\).  On the complement of the codimension-two locus there\n  is an exact sequence\n  \\(0\\to\\widetilde S_L\\to\\widetilde S_{L'}\\to\\cO(-\\widetilde p^*\\Delta)\\to0\\),\n  and the induced exterior-power diagram is exactly the projection \\(pr_k\\).  The\n  diagram extends uniquely across codimension two, giving the equality.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 3, "rdep_count": 1, "descendant_count": 2, "proof_size_tex": 852, "effort_local": 852, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 14222}, "thm:kemeny_odd_voisin": {"id": "thm:kemeny_odd_voisin", "type": "theorem", "title": "Voisin's theorem in odd genus", "chapter": "", "statement": "\\textit{Source: Kemeny, Section odd-genus.}\n  For a general complex curve \\(C\\) of odd genus \\(g=2k+1\\ge9\\),\n  \\(\\K_{k,1}(C,\\omega_C)=0\\).", "uses": ["lem:kemeny_projection_criterion", "lem:kemeny_green_pic2", "prop:kemeny_odd_phi_surjective", "lem:kemeny_odd_projection_comparison"], "lean_name": "MR4213770.OddVoisin", "proved": false, "mathlib_ok": false, "proof_tex": "\n  \\uses{lem:kemeny_projection_criterion, lem:kemeny_green_pic2, prop:kemeny_odd_phi_surjective, lem:kemeny_odd_projection_comparison}\n  Lemma~\\ref{lem:kemeny_green_pic2} identifies the source of the projection map\n  with \\(\\Sym^{k-1}H^0(E)\\).  Surjectivity of \\(\\phi\\) makes\n  \\(\\phi^\\vee\\) injective, and the projection comparison identifies this\n  injection with \\(pr_k\\circ\\psi^\\vee\\).  Hence \\(pr_k\\) is injective.  The\n  projection criterion gives \\(H^1(\\wedge^{k+1}M_L)=0\\), and the kernel-bundle\n  description identifies this with the odd-genus Koszul vanishing for a general\n  canonical curve.\n", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/Kemeny_UniversalSecantBundles.tex", "lean_file": "", "dep_count": 4, "rdep_count": 1, "descendant_count": 1, "proof_size_tex": 599, "effort_local": 599, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 14821}, "lean:hello": {"id": "lean:hello", "type": "lean_aux", "title": "hello", "chapter": "", "statement": "", "uses": [], "lean_name": "hello", "proved": true, "mathlib_ok": false, "proof_tex": "", "lean_source": "def hello := \"world\"", "proof_size_lean": 20, "has_sorry": false, "tex_file": "", "lean_file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Basic.lean", "dep_count": 0, "rdep_count": 0, "descendant_count": 0, "proof_size_tex": null, "effort_local": 0, "proof_size_tex_total": null, "proof_size_lean_total": 20, "effort_total": 0}};
+const katexMacros = {"\\C": "\\mathbb{C}", "\\PP": "\\mathbb{P}", "\\K": "\\mathrm{K}", "\\Sym": "\\mathrm{Sym}", "\\Pic": "\\mathrm{Pic}", "\\Gr": "\\mathrm{Gr}", "\\cO": "\\mathcal{O}", "\\cM": "\\mathcal{M}", "\\cS": "\\mathcal{S}", "\\cG": "\\mathcal{G}", "\\cZ": "\\mathcal{Z}"};   // blueprint-defined \newcommand etc.
+
+const $ = id => document.getElementById(id);
+
+// ── Graph structure: adjacency, degree, components ──────────────────────────
+
+const succ = {}, pred = {}, deg = {};
+for (const id in allNodes) { succ[id] = []; pred[id] = []; deg[id] = 0; }
+for (const e of graphData.edges) {
+  if (succ[e.from]) succ[e.from].push(e.to);
+  if (pred[e.to])   pred[e.to].push(e.from);
+  deg[e.from] = (deg[e.from] || 0) + 1;
+  deg[e.to]   = (deg[e.to]   || 0) + 1;
+}
+const isOrphan = id => !(deg[id] > 0);
+
+// weakly-connected components via union-find (orphans excluded)
+const parent = {};
+function find(x) { while (parent[x] !== x) x = parent[x] = parent[parent[x]]; return x; }
+for (const id in allNodes) parent[id] = id;
+for (const e of graphData.edges)
+  if (parent[e.from] !== undefined && parent[e.to] !== undefined)
+    parent[find(e.from)] = find(e.to);
+
+const compMembers = {};
+for (const id in allNodes) {
+  if (isOrphan(id)) continue;
+  const r = find(id);
+  (compMembers[r] = compMembers[r] || []).push(id);
+}
+const components = Object.values(compMembers).sort((a, b) => b.length - a.length);
+const compOf = {};
+components.forEach((m, i) => m.forEach(id => compOf[id] = i));
+
+// Isolated nodes are kept out of the force simulation (they'd only drift under
+// repulsion); layoutOrphans() grid-places them after each settle instead.
+for (const vn of graphData.nodes) if (isOrphan(vn.id)) vn.physics = false;
+
+// Surface the isolated-node count right on the toggle, so it's obvious how many
+// there are (and that they exist) without having to switch the view on.
+const _isoCount = Object.keys(allNodes).filter(isOrphan).length;
+$("iso-count").textContent = `(${_isoCount})`;
+if (!_isoCount) $("orphans").disabled = true;
+
+// ── Project-stats overlay ────────────────────────────────────────────────────
+
+// A node needs no more work if it's leanok, in mathlib, or already has a Lean
+// proof (effort 0).
+const isDone = n => n.proved || n.mathlib_ok || n.effort_local === 0;
+
+function renderStats() {
+  const vals = Object.values(allNodes);
+  const bp   = vals.filter(n => n.type !== "lean_aux");
+  const proved  = bp.filter(n => n.proved).length;
+  const mathlib = bp.filter(n => n.mathlib_ok).length;
+  const sorry  = vals.filter(n => n.has_sorry).length;
+  const doneIds = new Set(vals.filter(isDone).map(n => n.id));
+  const ready = bp.filter(n => !isDone(n) &&
+                  n.uses.every(d => !(d in allNodes) || doneIds.has(d))).length;
+  const gaps   = bp.filter(n => !n.lean_name && !n.mathlib_ok).length;
+  const leanok = bp.filter(n => !n.proved && !n.mathlib_ok && n.effort_local === 0).length;
+  const isolated   = vals.filter(n => isOrphan(n.id)).length;
+  const isolatedBp = bp.filter(n => isOrphan(n.id)).length;
+
+  let done = 0, remLower = 0, infNodes = 0;
+  for (const n of vals) {
+    if (n.proof_size_lean != null) done += n.proof_size_lean;
+    if (n.effort_local == null) infNodes++; else remLower += n.effort_local;
+  }
+  const pct = bp.length ? Math.round(100 * proved / bp.length) : 0;
+  const fmt = v => v.toLocaleString();
+
+  $("stats-panel").innerHTML = `
+    <h4>Project</h4>
+    <div class="row"><span>Proved (leanok)</span><span class="v done">${proved}/${bp.length} · ${pct}%</span></div>
+    <div class="bar"><span style="width:${pct}%"></span></div>
+    ${mathlib ? `<div class="row"><span>Mathlib-backed</span><span class="v done">${mathlib}</span></div>` : ''}
+    <div class="row"><span>With sorry</span><span class="v ${sorry ? 'inf' : ''}">${sorry}</span></div>
+    <div class="row"><span>Ready to formalize</span><span class="v">${ready}</span></div>
+    <div class="row"><span>Needs \\lean{}</span><span class="v">${gaps}</span></div>
+    <div class="row"><span>Needs \\leanok</span><span class="v">${leanok}</span></div>
+    <div class="row" title="Declarations with no \\uses{} in or out — never linked into the graph"><span>Isolated</span><span class="v ${isolated ? 'inf' : ''}">${isolated}${isolatedBp !== isolated ? ` (${isolatedBp} bp)` : ''}</span></div>
+    <div class="sep"></div>
+    <h4>Effort (chars)</h4>
+    <div class="row"><span>Done</span><span class="v done">${fmt(done)}</span></div>
+    <div class="row"><span>Remaining ≥</span><span class="v work">${fmt(remLower)}</span></div>
+    <div class="row"><span>∞ nodes</span><span class="v inf">${infNodes}</span></div>
+  `;
+}
+renderStats();
+
+// a human label for each component: its highest-degree member
+function compRepr(members) {
+  let best = members[0];
+  for (const id of members) if ((deg[id] || 0) > (deg[best] || 0)) best = id;
+  return best.split(":").pop();
+}
+
+const chapters = [...new Set(
+  Object.values(allNodes).map(n => n.chapter).filter(Boolean)
+)].sort();
+
+// ── Populate controls ───────────────────────────────────────────────────────
+
+$("node-ids").innerHTML =
+  Object.keys(allNodes).sort().map(id => `<option value="${id}">`).join("");
+
+$("component").insertAdjacentHTML("beforeend",
+  components.map((m, i) =>
+    `<option value="${i}">#${i + 1} · ${m.length} nodes · ${compRepr(m)}</option>`
+  ).join(""));
+
+$("chapter").insertAdjacentHTML("beforeend",
+  chapters.map(c => `<option value="${c.replace(/"/g, "&quot;")}">${c}</option>`).join(""));
+
+// ── Visible-set state & computation ─────────────────────────────────────────
+
+const state = { showOrphans: false, focus: null, component: null, chapter: null,
+                nodeset: "union", fileview: "off" };
+
+// Which universe a node belongs to. A node "has Lean" if it carries Lean source
+// (lean_aux nodes always do; blueprint nodes do once their \lean{} resolved).
+const hasLean    = n => n.type === "lean_aux" || !!(n.lean_source && n.lean_source.length);
+const inBlueprint = n => n.type !== "lean_aux";
+function inNodeset(id) {
+  const n = allNodes[id];
+  if (state.nodeset === "blueprint") return inBlueprint(n);
+  if (state.nodeset === "lean")      return hasLean(n);
+  return true;                                   // union
+}
+
+function coneOf(id) {
+  const out = new Set([id]);
+  const walk = (adj, start) => {
+    const st = [start];
+    while (st.length) {
+      const x = st.pop();
+      for (const y of (adj[x] || [])) if (!out.has(y)) { out.add(y); st.push(y); }
+    }
+  };
+  walk(pred, id);   // everything this node (transitively) depends on
+  walk(succ, id);   // everything that (transitively) depends on it
+  return out;
+}
+
+// all transitive predecessors of id (its full upstream dependency set)
+function ancestorsOf(id) {
+  const out = new Set();
+  const st = [...(pred[id] || [])];
+  while (st.length) {
+    const x = st.pop();
+    if (!out.has(x)) { out.add(x); for (const y of (pred[x] || [])) st.push(y); }
+  }
+  return out;
+}
+
+function visibleSet() {
+  if (state.focus && allNodes[state.focus]) {
+    return new Set([...coneOf(state.focus)].filter(inNodeset));
+  }
+  let ids = Object.keys(allNodes).filter(inNodeset);
+  if (!state.showOrphans)      ids = ids.filter(id => !isOrphan(id));
+  if (state.component !== null) ids = ids.filter(id => compOf[id] === state.component);
+  if (state.chapter)            ids = ids.filter(id => allNodes[id].chapter === state.chapter);
+  return new Set(ids);
+}
+
+// ── Network ─────────────────────────────────────────────────────────────────
+
+const nodesDS = new vis.DataSet();
+const edgesDS = new vis.DataSet();
+
+// Force-directed layout: connected nodes attract, so each declaration settles
+// next to what it depends on. Direction is conveyed by the arrows, not columns.
+const N_TOTAL = graphData.nodes.length;
+const PHYSICS_OPTS = {
+  enabled: true,
+  solver: "forceAtlas2Based",
+  forceAtlas2Based: {
+    gravitationalConstant: -45, centralGravity: 0.012,
+    springLength: 85, springConstant: 0.08,
+    damping: 0.45, avoidOverlap: 0.7,
+  },
+  stabilization: { enabled: true, iterations: 300, updateInterval: 25, fit: false },
+  minVelocity: 0.75, maxVelocity: 30,
+};
+
+const network = new vis.Network(
+  $("graph"),
+  { nodes: nodesDS, edges: edgesDS },
+  {
+    // physics does the placement; improvedLayout seeds it (skip on huge graphs)
+    layout: { improvedLayout: N_TOTAL <= 250 },
+    physics: { enabled: false },   // enabled per-apply, then frozen once settled
+    edges: {
+      smooth: { enabled: false },
+      color: { color: "#cbd5e1", highlight: "#64748b" },
+      arrows: { to: { scaleFactor: .55 } },
+      width: 1,
+    },
+    nodes: { shape: "dot" },
+    interaction: { hover: true, tooltipDelay: 150, zoomView: false },
+  }
+);
+
+// Once a settle finishes, freeze the simulation (so the view is stable and
+// draggable) and frame the result.
+network.on("stabilizationIterationsDone", () => {
+  network.setOptions({ physics: false });
+  layoutOrphans();
+  fitFloored();
+});
+
+// ── Isolated-node layout ──────────────────────────────────────────────────────
+// Isolated nodes (no edges) are excluded from the force simulation — under pure
+// repulsion they'd drift to the far edges and vanish at fit-zoom. Instead they
+// are parked on a tidy grid beside the connected graph so they stay visible.
+
+function layoutOrphans() {
+  if (state.focus || !state.showOrphans) return;
+  const ids = nodesDS.getIds().filter(id => isOrphan(id));
+  if (!ids.length) return;
+  const pos  = network.getPositions();
+  const conn = nodesDS.getIds().filter(id => !isOrphan(id));
+  const spacing = 46;
+  const cols = Math.max(1, Math.ceil(Math.sqrt(ids.length)));
+  const gridW = (cols - 1) * spacing;
+  let centerX, topY;
+  if (conn.length) {
+    const xs = conn.map(id => pos[id].x), ys = conn.map(id => pos[id].y);
+    centerX = (Math.min(...xs) + Math.max(...xs)) / 2;
+    topY    = Math.max(...ys) + 120;     // a tidy block just below the cluster
+  } else { centerX = 0; topY = 0; }
+  const startX = centerX - gridW / 2;    // centred, so a full fit frames it all
+  ids.sort();
+  ids.forEach((id, i) =>
+    network.moveNode(id, startX + (i % cols) * spacing,
+                         topY + Math.floor(i / cols) * spacing));
+}
+
+// ── File-view background ──────────────────────────────────────────────────────
+// An optional, subtle background tint that groups nodes by their source file.
+// Each node seeds its file's colour; every background pixel takes the colour of
+// the nearest node — an exact Voronoi map (spatial-hash accelerated) rendered at
+// high resolution for clean, anti-aliased borders, then drawn behind the graph
+// and extended to the whole viewport. Nodes keep their effort colours on top.
+
+const fileOf = (n, mode) => mode === "lean" ? (n.lean_file || "") : (n.tex_file || "");
+
+// A curated, perceptually-distinct palette (d3 category20-style). A file's
+// colour is chosen by hashing its *name*, so it is stable no matter how the
+// graph is filtered, focused or re-laid out — and adjacent files stay easy to
+// tell apart. Projects with more files than the palette wrap to a darker /
+// lighter tier so the wrapped entries remain distinguishable.
+const FILE_PALETTE = [
+  [31,119,180],[255,127,14],[44,160,44],[214,39,40],[148,103,189],
+  [140,86,75],[227,119,194],[188,189,34],[23,190,207],[127,205,187],
+  [174,199,232],[255,187,120],[152,223,138],[255,152,150],[197,176,213],
+  [196,156,148],[247,182,210],[252,146,114],[219,219,141],[158,218,229],
+];
+function hashStr(s) {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return h >>> 0;
+}
+const _SLOTS = FILE_PALETTE.length * 3;          // 20 hues × 3 lightness tiers
+function slotColor(slot) {
+  const base = FILE_PALETTE[slot % FILE_PALETTE.length];
+  const tier = Math.floor(slot / FILE_PALETTE.length) % 3;   // 0 normal · 1 dark · 2 light
+  return tier === 1 ? base.map(v => Math.round(v * 0.68))
+       : tier === 2 ? base.map(v => Math.round(v + (255 - v) * 0.45))
+       : base.slice();
+}
+// Per-mode slot assignment: each file's preferred slot is its name-hash; exact
+// collisions within the same mode are bumped to the next free slot. So every
+// file in a mode gets a distinct colour (up to _SLOTS files), the colour is
+// driven by the name, and it never shifts under focus/reset/filtering (the file
+// set is fixed for the session, and the map is cached).
+const _fileSlots = {};
+function ensureFileSlots(mode) {
+  if (_fileSlots[mode]) return _fileSlots[mode];
+  const files = Object.keys(fileCounts(mode)).sort();
+  const used = new Set(), map = {};
+  for (const f of files) {
+    let slot = hashStr(f) % _SLOTS, t = 0;
+    while (used.has(slot) && t < _SLOTS) { slot = (slot + 1) % _SLOTS; t++; }
+    used.add(slot); map[f] = slot;
+  }
+  return (_fileSlots[mode] = map);
+}
+function colorRGB(file) {
+  const map = ensureFileSlots(state.fileview);
+  const slot = (file in map) ? map[file] : hashStr(file) % _SLOTS;
+  return slotColor(slot);
+}
+
+function fileCounts(mode) {
+  const counts = {};
+  for (const id in allNodes) {
+    const f = fileOf(allNodes[id], mode);
+    if (f) counts[f] = (counts[f] || 0) + 1;
+  }
+  return counts;
+}
+
+let fileBg = null;            // {canvas, minX, minY, w, h, W, H} in graph coords
+
+function rebuildFileBg(quick) {
+  const mode = state.fileview;
+  if (mode === "off") { fileBg = null; network.redraw(); renderFileLegend(); return; }
+
+  const pos = network.getPositions();
+  const ids = Object.keys(pos).filter(id => allNodes[id] && fileOf(allNodes[id], mode));
+  if (!ids.length) { fileBg = null; network.redraw(); renderFileLegend(); return; }
+
+  const xs = ids.map(id => pos[id].x), ys = ids.map(id => pos[id].y);
+  const pad = 70;
+  const minX = Math.min(...xs) - pad, maxX = Math.max(...xs) + pad;
+  const minY = Math.min(...ys) - pad, maxY = Math.max(...ys) + pad;
+  const wG = Math.max(1, maxX - minX), hG = Math.max(1, maxY - minY);
+
+  // High-res grid → straight, finely anti-aliased borders; a coarser grid is
+  // used for the live updates while nodes are still moving, for speed.
+  const target = quick ? 224 : 512;
+  const scale  = target / Math.max(wG, hG);
+  const W = Math.max(1, Math.round(wG * scale)), H = Math.max(1, Math.round(hG * scale));
+
+  const seeds = ids.map(id => {
+    const [r, g, b] = colorRGB(fileOf(allNodes[id], mode));
+    return { x: pos[id].x, y: pos[id].y, r, g, b };
+  });
+
+  // Bucket the seeds so each pixel's nearest-seed search is ~O(1).
+  const gcols = Math.max(1, Math.round(Math.sqrt(seeds.length)));
+  const grows = gcols;
+  const cw = wG / gcols, ch = hG / grows;
+  const buckets = Array.from({ length: gcols * grows }, () => []);
+  const clampC = (v, hi) => Math.min(hi, Math.max(0, v));
+  for (const s of seeds) {
+    const cx = clampC(Math.floor((s.x - minX) / cw), gcols - 1);
+    const cy = clampC(Math.floor((s.y - minY) / ch), grows - 1);
+    buckets[cy * gcols + cx].push(s);
+  }
+  const cellMin = Math.min(cw, ch), maxR = Math.max(gcols, grows);
+  function nearest(wx, wy) {
+    const cx = clampC(Math.floor((wx - minX) / cw), gcols - 1);
+    const cy = clampC(Math.floor((wy - minY) / ch), grows - 1);
+    let best = Infinity, bs = seeds[0];
+    for (let r = 0; r <= maxR; r++) {
+      const x0 = Math.max(0, cx - r), x1 = Math.min(gcols - 1, cx + r);
+      const y0 = Math.max(0, cy - r), y1 = Math.min(grows - 1, cy + r);
+      for (let yy = y0; yy <= y1; yy++) {
+        const edgeRow = (yy === cy - r || yy === cy + r);
+        for (let xx = x0; xx <= x1; xx++) {
+          if (r > 0 && !edgeRow && xx !== cx - r && xx !== cx + r) continue;
+          for (const s of buckets[yy * gcols + xx]) {
+            const dx = s.x - wx, dy = s.y - wy, d = dx * dx + dy * dy;
+            if (d < best) { best = d; bs = s; }
+          }
+        }
+      }
+      // Stop once the closest hit is nearer than any not-yet-scanned ring.
+      if (best < Infinity && Math.sqrt(best) <= r * cellMin) break;
+    }
+    return bs;
+  }
+
+  const cv = document.createElement("canvas");
+  cv.width = W; cv.height = H;
+  const ctx = cv.getContext("2d");
+  const img = ctx.createImageData(W, H), data = img.data;
+  for (let gy = 0; gy < H; gy++) {
+    const wy = minY + (gy + 0.5) / H * hG;
+    for (let gx = 0; gx < W; gx++) {
+      const wx = minX + (gx + 0.5) / W * wG;
+      const s = nearest(wx, wy);
+      const o = (gy * W + gx) * 4;
+      data[o] = s.r; data[o + 1] = s.g; data[o + 2] = s.b; data[o + 3] = 255;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+  fileBg = { canvas: cv, minX, minY, w: wG, h: hG, W, H };
+  network.redraw();
+  renderFileLegend();
+}
+
+// beforeDrawing runs in graph coordinates, so the cached bitmap pans and zooms
+// with the view automatically. The seed bbox is filled with the Voronoi map, and
+// the colours of its edge pixels are extended outward to cover the *whole*
+// viewport — so the tint follows the nearest-node rule everywhere, not just a
+// central square.
+network.on("beforeDrawing", ctx => {
+  if (!fileBg) return;
+  const c = fileBg.canvas, W = fileBg.W, H = fileBg.H;
+  const x0 = fileBg.minX, y0 = fileBg.minY, x1 = x0 + fileBg.w, y1 = y0 + fileBg.h;
+  const tl = network.DOMtoCanvas({ x: 0, y: 0 });
+  const br = network.DOMtoCanvas({ x: $("graph").clientWidth, y: $("graph").clientHeight });
+  const L = Math.min(tl.x, br.x), R = Math.max(tl.x, br.x);
+  const T = Math.min(tl.y, br.y), B = Math.max(tl.y, br.y);
+
+  ctx.save();
+  ctx.globalAlpha = 0.32;                 // visible but still a background tint
+  ctx.imageSmoothingEnabled = true;
+  ctx.drawImage(c, x0, y0, fileBg.w, fileBg.h);                          // centre
+  if (L < x0) ctx.drawImage(c, 0, 0, 1, H, L, y0, x0 - L, fileBg.h);     // left
+  if (R > x1) ctx.drawImage(c, W - 1, 0, 1, H, x1, y0, R - x1, fileBg.h);// right
+  if (T < y0) ctx.drawImage(c, 0, 0, W, 1, x0, T, fileBg.w, y0 - T);     // top
+  if (B > y1) ctx.drawImage(c, 0, H - 1, W, 1, x0, y1, fileBg.w, B - y1);// bottom
+  if (L < x0 && T < y0) ctx.drawImage(c, 0, 0, 1, 1, L, T, x0 - L, y0 - T);
+  if (R > x1 && T < y0) ctx.drawImage(c, W - 1, 0, 1, 1, x1, T, R - x1, y0 - T);
+  if (L < x0 && B > y1) ctx.drawImage(c, 0, H - 1, 1, 1, L, y1, x0 - L, B - y1);
+  if (R > x1 && B > y1) ctx.drawImage(c, W - 1, H - 1, 1, 1, x1, y1, R - x1, B - y1);
+  ctx.restore();
+});
+
+function renderFileLegend() {
+  const panel = $("file-legend"), mode = state.fileview;
+  if (mode === "off") { panel.style.display = "none"; return; }
+  panel.style.display = "block";
+  const label = mode === "lean" ? "Lean" : "LaTeX";
+  const counts = fileCounts(mode);
+  const files = Object.keys(counts).sort();
+  if (!files.length) {
+    panel.innerHTML = `<h4>${label} files</h4>` +
+      `<div class="fl-empty">no ${label} file info available</div>`;
+    return;
+  }
+  panel.innerHTML = `<h4>${label} files · ${files.length}</h4>` + files.map(f => {
+    const [r, g, b] = colorRGB(f);
+    return `<div class="fl-row">` +
+      `<span class="fl-sw" style="background:rgb(${r},${g},${b})"></span>` +
+      `<span class="fl-name" title="${esc(f)}">${esc(f)}</span>` +
+      `<span class="fl-n">${counts[f]}</span></div>`;
+  }).join("");
+}
+
+// Recompute the tint *while* the layout changes, so the regions move with the
+// nodes rather than snapping only once at the end: throttled coarse rebuilds
+// during stabilization and dragging, then a final full-resolution pass.
+let _liveLast = 0;
+function liveFileBg() {
+  if (state.fileview === "off") return;
+  const now = Date.now();
+  if (now - _liveLast < 110) return;
+  _liveLast = now;
+  rebuildFileBg(true);
+}
+network.on("stabilizationProgress", liveFileBg);
+network.on("dragging", liveFileBg);
+network.on("dragEnd", () => { if (state.fileview !== "off") rebuildFileBg(); });
+
+// ── Navigation: swipe = pan · Ctrl+scroll / pinch = zoom ─────────────────────
+
+let ZOOM_MIN = 0.05;
+const ZOOM_MAX = 3.0;
+const FIT_FLOOR = 0.34;          // never auto-zoom below this — keeps nodes legible
+let graphBounds = null;
+
+function recomputeBounds() {
+  const pts = Object.values(network.getPositions());
+  if (pts.length) {
+    const pad = 200;
+    graphBounds = {
+      left:   Math.min(...pts.map(p => p.x)) - pad,
+      right:  Math.max(...pts.map(p => p.x)) + pad,
+      top:    Math.min(...pts.map(p => p.y)) - pad,
+      bottom: Math.max(...pts.map(p => p.y)) + pad,
+    };
+  } else graphBounds = null;
+}
+
+function fitFloored() {
+  network.fit({ animation: false });
+  const fitScale = network.getScale();
+  // The most-zoomed-out limit tracks the graph's actual extent — a little past
+  // the scale at which everything fits — instead of a fixed floor. So a small
+  // graph can't be shrunk to a speck, and a huge one can still reach overview.
+  ZOOM_MIN = Math.max(0.02, Math.min(fitScale * 0.7, ZOOM_MAX));
+  // For very large graphs `fit` is sub-pixel; don't *start* there (keeps nodes
+  // legible) but still allow zooming out to it. When isolated nodes are shown we
+  // fully fit instead, so their (potentially large) block is actually visible.
+  if (!state.showOrphans && fitScale < FIT_FLOOR)
+    network.moveTo({ scale: FIT_FLOOR, animation: false });
+  recomputeBounds();
+  rebuildFileBg();   // node positions just changed — refresh the file tint
+}
+
+$("graph").addEventListener("wheel", e => {
+  e.preventDefault();
+  e.stopPropagation();
+  const pos = network.getViewPosition();
+  const sc  = network.getScale();
+  if (e.ctrlKey) {
+    const f        = e.deltaY > 0 ? 0.9 : 1 / 0.9;
+    const newScale = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, sc * f));
+    network.moveTo({ scale: newScale, animation: false });
+  } else {
+    let nx = pos.x + e.deltaX / sc;
+    let ny = pos.y + e.deltaY / sc;
+    if (graphBounds) {
+      nx = Math.max(graphBounds.left, Math.min(graphBounds.right,  nx));
+      ny = Math.max(graphBounds.top,  Math.min(graphBounds.bottom, ny));
+    }
+    network.moveTo({ position: { x: nx, y: ny }, animation: false });
+  }
+}, { capture: true, passive: false });
+
+// ── Apply current filter state to the canvas ────────────────────────────────
+
+function apply() {
+  const vis   = visibleSet();
+  const nodes = graphData.nodes.filter(n => vis.has(n.id));
+  const edges = graphData.edges.filter(e => vis.has(e.from) && vis.has(e.to));
+
+  nodesDS.clear(); edgesDS.clear();
+  nodesDS.add(nodes); edgesDS.add(edges);
+
+  $("stat").innerHTML =
+    `${nodes.length} / ${graphData.nodes.length} nodes &middot; ${edges.length} edges`;
+
+  const pill = $("focus-pill");
+  if (state.focus) {
+    pill.style.display = "inline-flex";
+    pill.querySelector(".lbl").textContent = "focus: " + state.focus.split(":").pop();
+  } else {
+    pill.style.display = "none";
+  }
+
+  // Re-settle the now-visible subset; the stabilization handler freezes and
+  // fits when it finishes. With nothing to simulate (a lone node, or only
+  // isolated nodes — which are physics:false) we lay out and fit directly.
+  const anyPhysics = nodes.some(n => n.physics !== false);
+  if (nodes.length > 1 && anyPhysics) {
+    network.setOptions({ physics: PHYSICS_OPTS });
+  } else {
+    setTimeout(() => { layoutOrphans(); fitFloored(); }, 0);
+  }
+}
+
+function syncControls() {
+  $("orphans").checked  = state.showOrphans;
+  $("nodeset").value    = state.nodeset;
+  $("fileview").value   = state.fileview;
+  $("component").value  = state.component === null ? "" : String(state.component);
+  $("chapter").value    = state.chapter || "";
+}
+
+// ── Reveal-aware navigation ─────────────────────────────────────────────────
+
+function goTo(id) {
+  if (!allNodes[id]) return;
+  if (!visibleSet().has(id)) {            // relax filters until the node is shown
+    state.focus = null;
+    state.component = null;
+    state.chapter = null;
+    if (!inNodeset(id)) state.nodeset = "union";
+    if (isOrphan(id)) state.showOrphans = true;
+    syncControls();
+    apply();
+  }
+  setTimeout(() => jumpTo(id), 70);
+}
+
+function jumpTo(id) {
+  if (!allNodes[id]) return;
+  network.selectNodes([id]);
+  network.focus(id, { scale: 1.2, animation: { duration: 400, easingFunction: "easeInOutQuad" } });
+  renderNode(id);
+  highlightCone(id);
+}
+
+function setFocus(id) {
+  if (!allNodes[id]) return;
+  state.focus = id;
+  apply();
+  renderNode(id);
+  setTimeout(() => jumpTo(id), 70);
+}
+
+function clearFocus() { state.focus = null; apply(); }
+
+function resetView() {
+  state.showOrphans = false;
+  state.focus = null;
+  state.component = null;
+  state.chapter = null;
+  state.nodeset = "union";
+  $("search").value = "";
+  syncControls();
+  apply();
+}
+
+// ── Control wiring ──────────────────────────────────────────────────────────
+
+$("orphans").addEventListener("change", e => {
+  state.showOrphans = e.target.checked; state.focus = null; apply();
+});
+$("nodeset").addEventListener("change", e => {
+  state.nodeset = e.target.value; state.focus = null; apply();
+});
+$("component").addEventListener("change", e => {
+  state.component = e.target.value === "" ? null : Number(e.target.value);
+  state.focus = null; apply();
+});
+$("chapter").addEventListener("change", e => {
+  state.chapter = e.target.value || null; state.focus = null; apply();
+});
+$("fileview").addEventListener("change", e => {
+  state.fileview = e.target.value; rebuildFileBg();
+});
+$("search").addEventListener("change", e => {
+  const v = e.target.value.trim();
+  if (allNodes[v]) goTo(v);
+});
+$("reset").addEventListener("click", resetView);
+$("focus-pill").addEventListener("click", clearFocus);
+
+// ── Lean syntax highlighter ─────────────────────────────────────────────────
+
+function esc(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+const _KW      = /\b(def|lemma|theorem|instance|class|structure|inductive|abbrev|noncomputable|private|protected|section|namespace|end|open|variable|where|do|let|have|show|suffices|calc|if|then|else|return|for|in|fun|match|with|by|sorry)\b/g;
+const _TACTIC  = /\b(simp|ext|rfl|exact|intro|intros|apply|refine|constructor|use|rw|rewrite|rcases|rintro|obtain|push_neg|norm_num|ring|group|linarith|omega|decide|trivial|assumption|congr|tauto|aesop|cases|induction|revert|clear|next|all_goals|repeat|try|first|solve|fin_cases|positivity|gcongr|field_simp)\b/g;
+const _TYPE    = /\b(Nat|Int|Bool|String|List|Array|Option|Type|Prop|Sort|True|False|And|Or|Not|Iff|Eq|Subgroup|Group|Ring|Field|Fintype|Finite)\b/g;
+const _NUM     = /\b(\d+)\b/g;
+const _STR     = /("(?:[^"\\]|\\.)*")/g;
+
+function highlightLean(raw) {
+  return raw.split('\n').map(line => {
+    let commentAt = -1;
+    let inStr = false;
+    for (let i = 0; i < line.length - 1; i++) {
+      if (line[i] === '"' && (i === 0 || line[i-1] !== '\\')) inStr = !inStr;
+      if (!inStr && line[i] === '-' && line[i+1] === '-') { commentAt = i; break; }
+    }
+    const code    = commentAt >= 0 ? line.slice(0, commentAt) : line;
+    const comment = commentAt >= 0 ? line.slice(commentAt)    : '';
+    let h = esc(code);
+    h = h.replace(_STR,    m => `<span class="hl-str">${m}</span>`);
+    h = h.replace(_KW,     m => `<span class="hl-kw">${m}</span>`);
+    h = h.replace(_TACTIC, m => `<span class="hl-tactic">${m}</span>`);
+    h = h.replace(_TYPE,   m => `<span class="hl-type">${m}</span>`);
+    h = h.replace(_NUM,    m => `<span class="hl-num">${m}</span>`);
+    const commentHtml = comment ? `<span class="hl-comment">${esc(comment)}</span>` : '';
+    return h + commentHtml;
+  }).join('\n');
+}
+
+// ── LaTeX renderer ───────────────────────────────────────────────────────────
+
+function processNonMath(s) {
+  return esc(s)
+    .replace(/\\emph\{([^}]*)\}/g,   '<em>$1</em>')
+    .replace(/\\textbf\{([^}]*)\}/g, '<strong>$1</strong>')
+    .replace(/\\textit\{([^}]*)\}/g, '<em>$1</em>')
+    .replace(/\\text\{([^}]*)\}/g,   '$1');
+}
+
+function renderLatex(el, text) {
+  if (!text || !text.trim()) {
+    el.classList.add('empty'); el.textContent = '—'; return;
+  }
+  // Match every math delimiter style leanblueprint uses: $$…$$ and \[…\]
+  // (display) and \(…\) and $…$ (inline). $$ and \[ \] come first so the
+  // single-$ branch can't grab a $$ opener.
+  const re = /(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)|\$(?:[^$\\]|\\.)+?\$)/g;
+  let html = '', last = 0, m;
+  while ((m = re.exec(text)) !== null) {
+    html += processNonMath(text.slice(last, m.index));
+    const raw = m[0];
+    let disp, math;
+    if      (raw.startsWith('$$'))  { disp = true;  math = raw.slice(2, -2); }
+    else if (raw.startsWith('\\[')) { disp = true;  math = raw.slice(2, -2); }
+    else if (raw.startsWith('\\(')) { disp = false; math = raw.slice(2, -2); }
+    else                            { disp = false; math = raw.slice(1, -1); }
+    if (window.katex) {
+      try {
+        html += katex.renderToString(math, {
+          displayMode: disp, throwOnError: false, macros: katexMacros,
+        });
+      }
+      catch (_) { html += esc(raw); }
+    } else {
+      html += `<span style="color:#94a3b8">${esc(raw)}</span>`;
+    }
+    last = re.lastIndex;
+  }
+  html += processNonMath(text.slice(last));
+  el.innerHTML = html;
+}
+
+// ── Sidebar rendering ────────────────────────────────────────────────────────
+
+function charVal(v) {
+  if (v === null || v === undefined) return '<span class="m-val m-inf">∞</span>';
+  return `<span class="m-val">${v.toLocaleString()}</span>`;
+}
+function workVal(v) {
+  if (v === null || v === undefined) return '<span class="m-val m-inf">∞</span>';
+  if (v === 0) return '<span class="m-val m-done">0 ✓</span>';
+  return `<span class="m-val m-work">${v.toLocaleString()}</span>`;
+}
+function charsPair(rel, cum) {
+  const f = v => (v === null || v === undefined)
+    ? '<span class="chars-inf">∞</span>'
+    : `<span class="chars-val">${v}</span>`;
+  return `<span class="chars-pair">ℓ<sub>local</sub>=${f(rel)} &nbsp; ℓ<sub>total</sub>=${f(cum)}</span>`;
+}
+
+function renderNode(id) {
+  const n = allNodes[id];
+  if (!n) return;
+
+  $("sidebar-empty").style.display = "none";
+  const content = $("sidebar-content");
+  content.style.display = "flex";
+
+  const statusBadge = n.proved
+    ? '<span class="badge badge-proved">✓ leanok</span>'
+    : (n.mathlib_ok
+        ? '<span class="badge badge-proved">ⓜ mathlib</span>'
+        : (n.has_sorry
+            ? '<span class="badge badge-sorry">sorry</span>'
+            : '<span class="badge badge-unproved">unproved</span>'));
+
+  const mkChip = u => `<span class="dep-chip" onclick="goTo('${esc(u)}')">${esc(u)}</span>`;
+  const depsHtml = n.uses.length
+    ? n.uses.map(mkChip).join('')
+    : '<span class="no-deps">none — axiom</span>';
+
+  // full transitive upstream, with the direct deps split out
+  const anc       = ancestorsOf(id);
+  const directSet = new Set(n.uses);
+  const indirect  = [...anc].filter(x => !directSet.has(x)).sort();
+  const transHtml = indirect.length
+    ? indirect.map(mkChip).join('')
+    : '<span class="no-deps">none beyond the direct ones</span>';
+
+  const focusLabel = state.focus === id ? 'Clear focus' : 'Focus dependency cone';
+  const focusCall  = state.focus === id ? 'clearFocus()' : `setFocus('${esc(id)}')`;
+
+  content.innerHTML = `
+    <div class="card">
+      <div class="node-badges">
+        <span class="badge badge-type">${n.type.toUpperCase()}</span>${statusBadge}
+      </div>
+      <div class="node-title">${esc(n.title || n.id)}</div>
+      <div class="node-id">${esc(n.id)}</div>
+      ${n.chapter   ? `<div class="node-chapter">§ ${esc(n.chapter)}</div>` : ''}
+      ${n.lean_name ? `<div class="lean-ref">Lean: <code>${esc(n.lean_name)}</code></div>` : ''}
+      ${n.tex_file  ? `<div class="lean-ref">tex: <code>${esc(n.tex_file)}</code></div>` : ''}
+      ${n.lean_file ? `<div class="lean-ref">file: <code>${esc(n.lean_file)}</code></div>` : ''}
+      <button class="btn-focus" onclick="${focusCall}">⊙ ${focusLabel}</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Structure</div>
+      <div class="degrees">
+        <div class="degree">
+          <span class="degree-val">${n.dep_count}</span>
+          <span class="degree-label">direct deps</span>
+        </div>
+        <div class="degree">
+          <span class="degree-val">${anc.size}</span>
+          <span class="degree-label">total upstream</span>
+        </div>
+        <div class="degree">
+          <span class="degree-val">${n.rdep_count}</span>
+          <span class="degree-label">used by</span>
+        </div>
+      </div>
+      <div class="deps-sub">direct dependencies</div>
+      <div class="deps-list">${depsHtml}</div>
+      <div class="deps-sub">indirect (transitive) dependencies</div>
+      <div class="deps-list">${transHtml}</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Complexity</div>
+      <div class="metrics-grid">
+        <span></span>
+        <span class="col-head">local</span>
+        <span class="col-head">total</span>
+        <span class="m-label">LaTeX ℓ</span>${charVal(n.proof_size_tex)}${charVal(n.proof_size_tex_total)}
+        <span class="m-label">Lean ℓ</span>${charVal(n.proof_size_lean)}${charVal(n.proof_size_lean_total)}
+        <span class="m-label">Effort</span>${workVal(n.effort_local)}${workVal(n.effort_total)}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sec-hdr"><span class="card-title" style="margin:0">LaTeX statement</span></div>
+      <div class="latex-rendered" id="latex-stmt"></div>
+    </div>
+
+    <div class="card">
+      <div class="sec-hdr">
+        <span class="card-title" style="margin:0">LaTeX proof</span>
+        ${charsPair(n.proof_size_tex, n.proof_size_tex_total)}
+      </div>
+      <div class="latex-rendered" id="latex-proof"></div>
+    </div>
+
+    <div class="card">
+      <div class="sec-hdr">
+        <span class="card-title" style="margin:0">Lean code</span>
+        ${charsPair(n.proof_size_lean, n.proof_size_lean_total)}
+      </div>
+      <pre class="code-block" id="lean-code"></pre>
+    </div>
+  `;
+
+  renderLatex($('latex-stmt'),  n.statement);
+  renderLatex($('latex-proof'), n.proof_tex ? n.proof_tex.trim() : '');
+
+  const leanEl = $('lean-code');
+  if (n.lean_source) {
+    leanEl.innerHTML = highlightLean(n.lean_source);
+  } else {
+    leanEl.classList.add('empty');
+    leanEl.textContent = 'declaration not found';
+  }
+}
+
+// ── Cone highlighting on click ───────────────────────────────────────────────
+// Selecting a node lights up its WHOLE transitive cone — every ancestor and
+// descendant and the edges between them — while everything else fades back.
+
+const baseNodeById = {};
+for (const vn of graphData.nodes) baseNodeById[vn.id] = vn;
+
+const EDGE_BASE = { color: "#cbd5e1", highlight: "#64748b" };
+
+function highlightCone(id) {
+  const cone = coneOf(id);   // {id} ∪ ancestors ∪ descendants
+  nodesDS.update(nodesDS.getIds().map(nid =>
+    cone.has(nid)
+      ? baseNodeById[nid]                                   // full styling
+      : { id: nid, color: { background: "#e5e7eb", border: "#d1d5db" },
+          font: { color: "#cbd5e1" } }                      // faded
+  ));
+  edgesDS.update(edgesDS.get().map(e => {
+    const on = cone.has(e.from) && cone.has(e.to);
+    return { id: e.id,
+             color: on ? { color: "#475569", highlight: "#334155" } : { color: "#edf0f4" },
+             width: on ? 2.5 : 1 };
+  }));
+}
+
+function clearHighlight() {
+  nodesDS.update(nodesDS.getIds().map(nid => baseNodeById[nid]));
+  edgesDS.update(edgesDS.get().map(e => ({ id: e.id, color: EDGE_BASE, width: 1 })));
+}
+
+network.on("click", params => {
+  if (params.nodes.length) { renderNode(params.nodes[0]); highlightCone(params.nodes[0]); }
+  else                     { clearHighlight(); }
+});
+network.on("doubleClick", params => { if (params.nodes.length) setFocus(params.nodes[0]); });
+
+// ── Initial render ───────────────────────────────────────────────────────────
+
+apply();
+</script>
+</body>
+</html>

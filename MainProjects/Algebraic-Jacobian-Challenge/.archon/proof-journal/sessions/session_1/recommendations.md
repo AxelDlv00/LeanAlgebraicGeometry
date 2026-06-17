@@ -1,0 +1,62 @@
+# Recommendations for the next plan-agent iteration (iter-010)
+
+## Headline
+
+iter-009 closed the single Track 1 / `HModule` infrastructure scaffold sorry on the first edit, with the probe-confirmed body adopted verbatim modulo an optional cosmetic `CategoryTheory.` prefix drop. Project sorry count 11 → 10 (back to baseline of 9 protected + 1 deferred `representable`). `lean_diagnostic_messages` clean; `lean_verify` reports kernel-only axioms. Track 1 step 5/6 bridge **complete**. Iter-010 should lead with **Phase A step 6 — Serre finiteness for `H^i(C, F)` over a smooth proper geometrically irreducible curve `C/k`** (now expressible as `Module.Finite k (HModule k F n)` thanks to iter-009), and may parallel-run a polish-shape `HModule_forget` simp lemma at low risk.
+
+## What is closest to completion
+
+- **Phase A step 5/6 bridge — `HModule` (CLOSED iter-009).** The parallel `Sheaf.H` for `ModuleCat k`-valued sheaves on a Grothendieck site, scaffolded by the iter-009 refactor and closed by the iter-009 prover round in this session. Body: `Abelian.Ext ((constantSheaf J (ModuleCat.{u} k)).obj (ModuleCat.of k k)) F n`. Migrate to `task_done.md`.
+
+- **Phase A step 6 (Serre finiteness, primary candidate for iter-010).** With `HModule` landed, the Serre finiteness statement becomes `Module.Finite k (HModule k (toModuleKSheaf C) i)` (or similar, depending on the exact framing). Three plausible paths, unchanged from session 14's recommendations:
+  1. **Mathlib has it already (best case).** Re-probe `Module.Finite` instance / theorem against the current Mathlib snapshot for `Abelian.Ext` in a `Linear k`-enriched abelian category over a smooth proper variety. If the instance is inferable end-to-end, closing `genus` becomes a one-liner of the form `Module.finrank k (HModule k (toModuleKSheaf C) 1)`, gated on the `noncomputable` user-decision (still pending in `task_pending.md`).
+  2. **Čech-cover scaffold (medium-effort).** Reduce Serre finiteness on a smooth proper curve to a finite Čech computation (every quasi-coherent sheaf on a smooth proper curve has finite-dimensional cohomology by Cartan–Serre). Multi-iteration; would scaffold `H^0` finiteness first (sections of the structure sheaf are `k` on a connected proper variety) then `H^1` finiteness via the Čech complex on a finite affine cover.
+  3. **First-approximation `finrank` placeholder (forbidden — see "Forbidden shortcuts" below).** Closing `genus` with a constant `finrank` placeholder is a documented forbidden shortcut. Do NOT scaffold step 6 with a placeholder.
+
+  **Probe-driven first action recommended.** Plan agent should `lean_run_code` against the current Mathlib snapshot to discriminate between paths (1) and (2) before committing to a refactor + prover round.
+
+## What showed promise but needs more work
+
+- **Polish-shape `HModule_forget` simp lemma (parallel candidate for iter-010, new).** Analogous to `toModuleKSheaf_forgetCompare` (closed session 13) and `PicardFunctorAb_forget_obj` (closed session 13), but lifted to the cohomology level: a simp lemma showing that the `forget₂ (ModuleCat k) AddCommGrpCat`-image of `HModule k F n` agrees with `Sheaf.H ((sheafCompose _ (forget₂ …)).obj F) n` (i.e., the forgetful functor commutes with cohomology, on the type level). Useful for transporting Serre finiteness between the `Module k`-flavoured and `AddCommGrpCat`-flavoured cohomology theories. Polish-shape; one prover round if it lands. Probe before committing — `Abelian.Ext`'s behaviour under `forget`-style functors may or may not give a `rfl`/single-application body.
+
+- **`Linear k` enrichment of `Sheaf J (ModuleCat.{u} k)` is now confirmed inferable** (session 15 byproduct). The `HModule` body relies on `CategoryTheory.Abelian.Ext.instModule`, which requires the value category to be `Linear k`-enriched; instance synthesis succeeded end-to-end without explicit ascription. Useful background fact for any iter-010+ work that touches `Abelian.Ext` inside `Sheaf J (ModuleCat.{u} k)`.
+
+## What is blocked (do NOT assign as direct prover objective)
+
+- **The 9 protected sorries** (`Genus.lean` × 1, `Jacobian.lean` × 5, `AbelJacobi.lean` × 3) — all blocked behind upstream Mathlib infrastructure. Additionally, the three `def`-flavoured ones (`genus`, `Jacobian`, `ofCurve`) require a `noncomputable` modifier whose authorisation is a user-facing decision (see `task_pending.md`). Do not assign.
+
+- **`PicardFunctor.representable`** — closing on the global-sections-approximate `LineBundle` is a forbidden shortcut. Honest closure requires `LineBundle` refinement (gated on `MonoidalCategory X.Modules`, still absent in Mathlib `b80f227` per iter-009 plan-agent re-probe) plus the FGA representability argument. Multi-iteration; do not retry.
+
+- **Direct `LineBundle` refinement** — gated on `MonoidalCategory X.Modules`. Multi-iteration; not in scope until that lands upstream.
+
+- **Phase A step 6 / Serre finiteness *proper*** — the deep work. Recommended for iter-010 as the *primary* track but only via probe-driven scaffolding (paths (1) or (2) above), not via shortcuts. Expect multi-iteration.
+
+## Reusable proof patterns (consolidated; updated this session)
+
+- **Probe-confirmed bodies adopted verbatim have ~100% first-edit reliability** (sessions 12, 13, 14, 15 — four consecutive rounds). Heuristic stable.
+- **`noncomputable abbrev` (rather than `def`) is mandatory for instance-transparent wrappers around `Ext`** (new in session 15). Under `def`, `AddCommMonoid` synthesis fails on the wrapper; under `abbrev`, the wrapper is reducible and `Module k` / `AddCommGroup` synthesis succeeds through `CategoryTheory.Abelian.Ext.instModule`. Generalises to any wrapper that must transport instances through.
+- **`open CategoryTheory` allows dropping the prefix on `Abelian.Ext` and `constantSheaf`** (new in session 15, cosmetic).
+- **`ModuleCat.of k k` is the regular `k`-module** (new in session 15). Picked up automatically as the `Module k k` instance.
+- **Mirror-from-Mathlib pattern** (refines sessions 5, 6, 12, 14, 15). When Mathlib has a parameterised version of the construction needed (e.g. `Sheaf.H` over `AddCommGrpCat`), the `ModuleCat k`-flavoured version mirrors the Mathlib body verbatim modulo the value-category and unit-object substitutions. Useful template for any future "lift the Mathlib `AddCommGrpCat` cohomology to `ModuleCat k`" work.
+- All earlier patterns from sessions 1–14 stand unchanged; see `PROJECT_STATUS.md` knowledge base.
+
+## Forbidden shortcuts (re-emphasised for iter-010+)
+
+- Closing Phase A step 6 (Serre finiteness) with `decide`/`trivial`/vacuous-rank values, defining `Serre finiteness` as `True`, or any constant `finrank` placeholder — would silently falsify `genus`.
+- Closing the protected `genus` body without honest Serre finiteness backing it — even after iter-009 lands `HModule`, the closure of the protected `genus` still requires `Module.finrank k (HModule k …) : ℕ` to be the *correct* dimension, not a vacuous one. The iter-009 `HModule` makes this *expressible*, not *closed*.
+- Wrapper definitions as `def` rather than `abbrev` when instance synthesis must see through the wrapper (new finding this session).
+- New `axiom` declarations.
+- The full forbidden-shortcuts list from sessions 1–14 stands unchanged; see `PROJECT_STATUS.md`.
+
+## Off-limits for iter-010 prover-agent assignments
+
+- `Genus.lean`, `Jacobian.lean`, `AbelJacobi.lean` — 9 protected sorries; signatures frozen and require `noncomputable` user-decision for the three `def`-flavoured ones.
+- `Picard/Functor.lean` — `PicardFunctor.representable` (L190) is a documented dead-end deferral.
+- `Cohomology/SheafCompose.lean`, `Cohomology/StructureSheafAb.lean`, `Picard/LineBundle.lean`, `Rigidity.lean`, `Picard/FunctorAb.lean` — closed in earlier iterations; nothing to do.
+- All existing declarations inside `Cohomology/StructureSheafModuleK.lean` — closed across iters 005/006/007/009; existing declarations are read-only context for iter-010.
+
+## Suggested iter-010 shape
+
+- **Refactor pass** (light): scaffold the Phase A step 6 / Serre finiteness statement (precise framing TBD by plan-agent probe — `Module.Finite k (HModule k (toModuleKSheaf C) i)` is one candidate, `∃ B, finrank k (HModule …) ≤ B` is another) plus, optionally, a polish-shape `HModule_forget` simp lemma. Light if the probe of path (1) succeeds; heavier if a Čech scaffold (path (2)) is needed.
+- **Prover pass** (variable): close the polish-shape `HModule_forget` if scaffolded (one-line probe-confirmed body expected); make first scaffold progress on Serre finiteness (more iterations expected, likely staged across iter-010, iter-011, iter-012). The probe-driven first action for the plan agent is whether Mathlib gives the `Module.Finite` instance for free on a smooth proper curve; if yes, Serre finiteness collapses to a one-liner; if no, multi-iteration scaffold begins.
+- **Polish backlog**: empty after iter-009.

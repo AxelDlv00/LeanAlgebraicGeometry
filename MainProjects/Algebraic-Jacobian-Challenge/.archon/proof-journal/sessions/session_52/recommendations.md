@@ -1,0 +1,61 @@
+# Recommendations for the next plan-agent iteration (iter-053)
+
+## Status overview
+
+- **Iter-052 closed cleanly** (sixth zero-corrective single-Edit iteration in a row, iter-047 → iter-052). Both new declarations (`subsingleton_HModule'_of_hasCechToHModuleIso` L1231 and `_curve` L1251) compile, are `sorry`-free, and carry kernel-only axioms `[propext, Classical.choice, Quot.sound]`.
+- The instance-driven Cover-totality consumer surface is now **fully closed**: top-supremum (iter-049/050 `_top` form, universe `u+1`), intermediate-supremum (iter-051 `(⨆𝒰)`-direct form, universe `u`), and arbitrary `U` via rewrite-bridge (iter-052 `h : ⨆𝒰 = U` form, universe `u`). Iter-054+ producer chain has all the consumer infrastructure it needs.
+- Sorry trajectory: still **9** (5 protected `Jacobian.lean` + 3 protected `AbelJacobi.lean` + 1 deferred `Picard/Functor.lean`). Unchanged since iter-051. All Phase A iterations have been pure scaffolding (no protected sorry closure).
+
+## Highest-priority track for iter-053 (PRIMARY recommendation)
+
+**Track 2A.3 — substantive Čech-vs-derived comparison theorem (Phase A step 6 / step 4.6.3).** This is the data argument: a `LinearEquiv`
+```
+∀ n, Scheme.cechCohomology C F 𝒰 n ≃ₗ[k] Scheme.HModule' k F n (⨆ i, 𝒰 i)
+```
+under appropriate hypotheses (most likely `[IsCechAcyclicCover F 𝒰]` plus a covering condition; possibly also paracompactness or a sieve cofinality input). Once landed as a theorem, an instance for `HasCechToHModuleIso` wraps it via `⟨⟨the_iso⟩⟩`. Together with iter-053+ basic-open acyclicity producers (Step 4.6.4), this unblocks the iter-054+ `IsAffineHModuleVanishing` producer chain.
+
+- **Estimate**: now revised DOWN to a **~3-4-iteration cohort** (from the iter-051 prompt's "4-6 iteration" estimate) given iter-052's thin-scaffolding closure. Mathlib substrate: `cechComplexFunctor` exists (`Mathlib/CategoryTheory/Sites/SheafCohomology/Cech.lean`) but no comparison-to-derived theorem. Project-local construction is most likely.
+- **Approach**: build the spectral sequence or direct comparison via the iter-047 parameterised Čech infrastructure + iter-019's pushout-Module-Cat-Free-Sheaf bridge + LES. Decompose into:
+  - **iter-053**: Čech sheaf-resolution at degree `≥ 1` (computational; alternating face complex is exact under acyclicity). Likely 1-2 iterations.
+  - **iter-054**: Chain via `Ext` functoriality to derived-functor cohomology to land the comparison `LinearEquiv`. Likely 1-2 iterations.
+  - **iter-055**: Wrap as `HasCechToHModuleIso` instance via `⟨⟨the_iso⟩⟩`.
+
+## Alternative warm-up tracks (kept as fallback)
+
+These remain valid but are lower priority than Track 2A.3:
+
+- **Track 2A.4 — basic-open cover acyclicity producer instances (Step 4.6.4)** for affine basic-open covers. Koszul-type alternating-sum exactness on localisations. Plausibly multi-iteration (~2-3 iterations, ~100-200 LOC). Can proceed in parallel with Track 2A.3 since the two are independent.
+- **Track 2B — finrank corollary of iter-046 producer**: explicit identity `Module.finrank k (HModule k (toModuleKSheaf C) 0) = Module.finrank k Γ(C, 𝒪_C)`. Plausibly single-iteration ~30-50 LOC. Off-critical-path.
+- **Track 2C — sharper Mayer–Vietoris LES consumer** for the curve case. Plausibly single-iteration ~30-50 LOC. Off-critical-path.
+- **Track 2D — Mathlib upstream PRs** for the five new `CategoryTheory.*` declarations from iter-046. Off-Archon side track.
+
+## Reusable proof patterns confirmed iter-052
+
+These are now well-established and should be reused at iter-053+ producer call sites:
+
+- **Verbatim probe-confirmed body, single combined Edit pattern** *(iter-035 → iter-052)*: 15 of 18 iterations zero-corrective. **Sixth zero-corrective Edit in a row** (iter-047 → iter-052). Plan-agent should continue probing each new declaration body via `lean_run_code` before authoring the Edit.
+- **Rewrite-bridge generalisation pattern** *(iter-052)*: `haveI := <consumer>; exact h ▸ this` two-line tactic block to lift `Subsingleton X(⨆𝒰)` to `Subsingleton X(U)` under `(h : ⨆𝒰 = U)`. Reusable wherever an open `U` needs to be presented as a sup of a cover.
+- **Implicit-argument disambiguation `(F := F) (𝒰 := 𝒰)`** *(iter-052, generalises iter-049/050/051)*: required when both `{F}` and `{𝒰}` are implicit and positional inference is ambiguous. Plan-agent should default to fully-named arguments at chained call sites.
+- **`_curve` companion via dot-notation forwarding** *(iter-039 → iter-052)*: thin one-line term-mode wrapper at `F := toModuleKSheaf C`, with `(𝒰 := 𝒰)` to lock in the cover.
+
+## Plan-agent process discipline (continuing)
+
+- **Pre-mark `\leanok` discipline**: iter-051 → iter-052 streak holds (2 iterations in a row, after iter-050 broke a 5-iteration streak). Continue authoring `\subsection{...}` blocks in `Cohomology_MayerVietoris.tex` with pre-marks **before** the prover Edit, then validate review-side. Resolves cleanly.
+- **`blueprint/lean_decls` clear-as-you-go**: 13 iterations in a row (iter-040 → iter-052). Continue.
+- **LOC band**: iter-052 came in at +51 (1 over the `+30-50` band). Within tolerance. For iter-053+ substantive comparison theorem work, plan should keep the widened `+50-100` band given the heavier content.
+
+## Known dead-ends (do not retry — see `PROJECT_STATUS.md` Known Blockers section)
+
+In addition to the existing dead-ends, iter-052 adds these:
+
+- **Promoting iter-052's two consumers from `theorem` to `instance`** — typeclass synthesis cannot supply the explicit `h : ⨆𝒰 = U`, `n`, `hn` arguments at call sites.
+- **Folding iter-052's `h ▸ this` rewrite into a more general transport** — the `(h : ⨆𝒰 = U)`-style hypothesis is the canonical iter-054+ consumer interface; over-generalisation would force every basic-open producer to construct a more abstract bridge.
+- **Folding iter-052 into iter-049's `_top`-form** — iter-052 is the universe-`u` `HModule'` parallel; iter-049 is the universe-`u+1` `HModule` rewrite to `⊤`. Different universes, different conclusions, different consumer interfaces.
+- **Removing the named-argument `(F := F) (𝒰 := 𝒰)` disambiguation** — positional inference fails because both `{F}` and `{𝒰}` are implicit.
+
+## What the plan agent should NOT assign at iter-053
+
+- The 5 `Jacobian.lean` protected sorries (Phase C step 4 / FGA representability + `noncomputable` user decision).
+- The 3 `AbelJacobi.lean` protected sorries (structurally downstream of `Jacobian C` + `noncomputable` decision).
+- The deferred `Picard/Functor.lean` `representable` sorry (would silently assert representability of the wrong functor).
+- All closed scaffold sites (iter-016 → iter-052 in `MayerVietoris.lean` + `StructureSheafModuleK.lean`).

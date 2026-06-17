@@ -1,0 +1,40 @@
+{
+  "iteration": 51,
+  "stage": "prover  (iteration 050 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **comparison-iso typeclass carrier + instance-driven consumers**: append four declarations to `Cohomology/MayerVietoris.lean` `section CoverTotality` (inside `namespace AlgebraicGeometry.Scheme`), after iter-049's `subsingleton_HModule_of_isCechAcyclicCover_top_curve` (currently L1071), before `end CoverTotality` (currently L1073): (1) `class HasCechToHModuleIso F \ud835\udcb0 : Prop` \u2014 single-field `Nonempty`-wrapped class capturing existence of the comparison iso `\u2200 n, cechCohomology n \u2243\u2097[k] HModule' n (\u2a06 \ud835\udcb0)`; (2) `noncomputable def cechToHModuleIso` \u2014 `Classical.choice`-based extractor; (3) `theorem subsingleton_HModule_of_hasCechToHModuleIso_top` \u2014 instance-driven consumer chaining iter-049 with the class extractor; (4) `_curve` specialisation. Iter-049 closure verified (this pass): both iter-049 declarations land cleanly at L1022 (`subsingleton_HModule_of_isCechAcyclicCover_top`) and L1053 (`_curve`); sorry count `9 \u2192 9`; file LOC `1024 \u2192 1077` (+53, within +30-50 plan estimate band). Plan-agent `lean_run_code` probe (this pass) confirms all four iter-050 declaration bodies compile end-to-end with kernel-only axioms `[propext, Classical.choice, Quot.sound]` \u2014 `Classical.choice` was already in the kernel-only set; no new axiom introduced. Iter-050 sorry trajectory `9 \u2192 9` (no transient \u2014 bodies probe-confirmed). Phase A iterations-remaining held at ~4 (renumbering: comparison theorem moved from iter-050 placeholder to iter-051+; substantive multi-iteration unchanged).",
+  "mode": "parallel",
+  "startedAt": "2026-05-10T07:02:25Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1248
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 123
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 584
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "151ae0d"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 26
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 5
+    }
+  },
+  "completedAt": "2026-05-10T08:14:40Z",
+  "wallTimeSecs": 4334
+}

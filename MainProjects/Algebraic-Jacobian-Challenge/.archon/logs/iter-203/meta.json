@@ -1,0 +1,54 @@
+{
+  "iteration": 203,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-29T04:00:20Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "f58cdd62-fb61-4e93-9e73-f3a772ea7d0e",
+    "durationSecs": 976
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 2
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 2367
+  },
+  "provers": {
+    "AlgebraicJacobian_Albanese_CodimOneExtension": {
+      "file": "AlgebraicJacobian/Albanese/CodimOneExtension.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "c05e1cd1-caaa-481f-b233-de035257a8bd"
+    },
+    "AlgebraicJacobian_Picard_TensorObjSubstrate": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "status": "done",
+      "mode": "mathlib-build",
+      "sessionId": "4b13a135-50c4-4425-ac4f-ae85b80fdb0a"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "f2ed45a1-e598-4896-8375-d2b99e7ed89d",
+    "durationSecs": 1139
+  },
+  "sorry_count": 81,
+  "finalize": {
+    "innerGit": {
+      "sha": "1c95d2b7"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 11
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 27
+    }
+  },
+  "completedAt": "2026-05-29T05:22:47Z",
+  "wallTimeSecs": 4899
+}

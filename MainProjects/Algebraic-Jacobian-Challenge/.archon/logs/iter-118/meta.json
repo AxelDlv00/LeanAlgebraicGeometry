@@ -1,0 +1,41 @@
+{
+  "iteration": 118,
+  "stage": "prover (Phase C \u2014 close the last two non-protected sorries via verified",
+  "mode": "parallel",
+  "startedAt": "2026-05-16T11:52:48Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "01d5ed34-0ea8-41c8-b33c-2a2635211851",
+    "durationSecs": 2567
+  },
+  "planValidate": {
+    "status": "ok_intentional_skip",
+    "objectives": 0
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 0
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "d2ba1397-8dd6-4b1b-afa9-60dd46b762a3",
+    "durationSecs": 1291
+  },
+  "sorry_count": 3687,
+  "finalize": {
+    "innerGit": {
+      "sha": "d6ff7a9"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 6
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 1,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-16T12:59:12Z",
+  "wallTimeSecs": 3984
+}

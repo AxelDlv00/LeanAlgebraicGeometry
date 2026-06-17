@@ -1,0 +1,40 @@
+{
+  "iteration": 42,
+  "stage": "prover  (iteration 041 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **H\u2070 Hom finiteness carrier predicate + immediate `Module.Finite` consumer**: append two declarations to `Cohomology/StructureSheafModuleK.lean` inside the existing `namespace AlgebraicGeometry.Scheme`, after iter-040's `module_finite_HModule'_of_isAffineHModuleVanishing` (currently ending around L383) and before `end AlgebraicGeometry.Scheme` (around L385). (i) `class IsAffineHModuleHomFinite` \u2014 single field `module_finite_hom : \u2200 {U : TopologicalSpace.Opens C.left.toTopCat}, AlgebraicGeometry.IsAffineOpen U \u2192 Module.Finite k ((presheafToSheaf (Opens.grothendieckTopology C.left.toTopCat) (ModuleCat.{u} k)).obj ((yoneda \u22d9 (Functor.whiskeringRight _ _ _).obj (ModuleCat.free k)).obj U) \u27f6 F)`, packaging the H\u2070 Hom-finiteness on affine opens (morally $\\Gamma(U, F)$ being a finite $k$-module on each affine corner) as a hypothesis (Mathlib gap re-probed this pass: scheme-level affine Hom-finiteness for $\\ModuleCat k$-flavoured cohomology still absent; only abstract `subsingleton_H_of_isZero` available). (ii) `theorem module_finite_HModule'_zero_of_isAffineHModuleHomFinite` \u2014 immediate consumer, hypothesis `[IsAffineHModuleHomFinite k C F]`, plus explicit arg `(hU : IsAffineOpen U)`, conclusion `Module.Finite k (Scheme.HModule' k F 0 U)`, body `have : Module.Finite k ((presheafToSheaf _ _).obj _ \u27f6 F) := IsAffineHModuleHomFinite.module_finite_hom hU; Scheme.module_finite_HModule'_zero k F U` (chains the class field into iter-038's H\u2070 transport). Plan-agent `lean_run_code` probe (this pass) confirms both bodies typecheck end-to-end against the post-iter-040 file with `{success: true, diagnostics: []}` and kernel-only axioms `[propext, Classical.choice, Quot.sound]`. The iter-040 prover's two-declaration close lands cleanly: 9 sorries (no change), zero diagnostics, kernel-only axioms, +39 LOC (381 \u2192 420). Iter-041 sorry trajectory `9 \u2192 9 \u2192 9` (no transient scaffold sorries \u2014 both bodies probe-confirmed).",
+  "mode": "parallel",
+  "startedAt": "2026-05-09T19:36:25Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 983
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 85
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_StructureSheafModuleK": {
+      "file": "AlgebraicJacobian/Cohomology/StructureSheafModuleK.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 717
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "0d3e107"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 33
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 4
+    }
+  },
+  "completedAt": "2026-05-09T20:44:13Z",
+  "wallTimeSecs": 4067
+}

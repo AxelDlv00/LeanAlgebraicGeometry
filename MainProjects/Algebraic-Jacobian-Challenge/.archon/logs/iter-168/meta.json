@@ -1,0 +1,43 @@
+{
+  "iteration": 168,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-21T12:20:44Z",
+  "plan": {
+    "status": "skipped",
+    "sessionId": "fe5e7a57-5586-4ade-9ded-f4e672619104",
+    "durationSecs": 1767
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 3530
+  },
+  "provers": {
+    "AlgebraicJacobian_Genus0BaseObjects": {
+      "file": "AlgebraicJacobian/Genus0BaseObjects.lean",
+      "status": "done",
+      "sessionId": "0854272a-a78d-4f86-b455-ffd17892a6fa"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "e27486bf-520c-4139-96aa-221bcd63b72c",
+    "durationSecs": 1054
+  },
+  "sorry_count": 14,
+  "finalize": {
+    "innerGit": {
+      "sha": "6e78ba58"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 3
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 9
+    }
+  },
+  "completedAt": "2026-05-22T02:25:40Z",
+  "wallTimeSecs": 4714
+}

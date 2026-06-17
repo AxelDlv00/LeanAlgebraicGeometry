@@ -1,0 +1,117 @@
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
+% \MRhref is called by the amsart/book/proc definition of \MR.
+\providecommand{\MRhref}[2]{%
+  \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
+}
+\providecommand{\href}[2]{#2}
+\begin{thebibliography}{{Gro}97}
+
+\bibitem[AGV08]{agv08}
+D.~{Abramovich}, T.~{Graber}, and A.~{Vistoli}, \emph{{G}romov-{W}itten theory
+  of {D}eligne-{M}umford stacks}, American Journal of Mathematics \textbf{130}
+  (2008), no.~5, 1337--1398.
+
+\bibitem[And74]{anderson}
+Michael~P. Anderson, \emph{Exactness properties of profinite completion
+  functors}, Topology \textbf{13} (1974), no.~3, 229--239.
+
+\bibitem[Bre21a]{fed}
+Giulio Bresciani, \emph{Essential dimension and pro-finite group schemes}, Ann.
+  Sc. Norm. Super. Pisa Cl. Sci. (5) \textbf{22} (2021), no.~4, 1899--1936.
+  \MR{4360607}
+
+\bibitem[Bre21b]{anab}
+\bysame, \emph{Some implications between {G}rothendieck's anabelian
+  conjectures}, Algebr. Geom. \textbf{8} (2021), no.~2, 231--267. \MR{4174290}
+
+\bibitem[Bre23]{scfg}
+\bysame, \emph{On the section conjecture over fields of finite type},
+  arxiv:1911.03234, 2023.
+
+\bibitem[BV15]{bv15}
+N.~{Borne} and A.~{Vistoli}, \emph{{The Nori fundamental gerbe of a fibered
+  category}}, Journal of Algebraic Geometry \textbf{24} (2015), 311--353.
+
+\bibitem[BV19]{bv19}
+Niels Borne and Angelo Vistoli, \emph{Fundamental gerbes}, Algebra Number
+  Theory \textbf{13} (2019), no.~3, 531--576.
+
+\bibitem[BV23]{giulio-angelo-valuative}
+Giulio Bresciani and Angelo Vistoli, \emph{An arithmetic valuative criterion
+  for proper maps of tame algebraic stacks}, Manuscripta Math. (2023),
+  \url{https://doi.org/10.1007/s00229--023--01491--6}.
+
+\bibitem[EH08]{eh08}
+H\'{e}l\`ene Esnault and Ph\`ung~H\^{o} Hai, \emph{Packets in {G}rothendieck's
+  section conjecture}, Adv. Math. \textbf{218} (2008), no.~2, 395--416.
+
+\bibitem[GJZZ08]{gjz08}
+F.~Grunewald, A.~Jaikin-Zapirain, and P.~A. Zalesskii, \emph{Cohomological
+  goodness and the profinite completion of {B}ianchi groups}, Duke Math. J.
+  \textbf{144} (2008), no.~1, 53--72.
+
+\bibitem[Gro71]{sga1}
+Alexandre Grothendieck, \emph{Rev\^{e}tements \'{e}tales et groupe
+  fondamental}, Lecture Notes in Mathematics, Vol. 224, Springer-Verlag,
+  Berlin-New York, 1971, S\'{e}minaire de G\'{e}om\'{e}trie Alg\'{e}brique du
+  Bois Marie 1960--1961 (SGA 1), Dirig\'{e} par Alexandre Grothendieck.
+  Augment\'{e} de deux expos\'{e}s de M. Raynaud.
+
+\bibitem[{Gro}97]{gro97}
+A.~{Grothendieck}, \emph{Brief an {G}. {F}altings}, Geometric Galois actions,
+  1, London Math. Soc. Lecture Note Ser., vol. 242, Cambridge University Press,
+  1997, With an English translation on pp. 285--293, pp.~49--58.
+
+\bibitem[Koe05]{koe05}
+Jochen Koenigsmann, \emph{On the `section conjecture' in anabelian geometry},
+  J. Reine Angew. Math. \textbf{588} (2005), 221--235.
+
+\bibitem[Mat55]{mat55}
+Arthur Mattuck, \emph{Abelian varieties over {$p$}-adic ground fields}, Ann. of
+  Math. (2) \textbf{62} (1955), 92--119.
+
+\bibitem[Ols16]{olsson}
+Martin Olsson, \emph{Algebraic spaces and stacks}, American Mathematical
+  Society Colloquium Publications, vol.~62, American Mathematical Society,
+  Providence, RI, 2016.
+
+\bibitem[Sch15]{sch15}
+Johannes Schmidt, \emph{Homotopy rational points of {B}rauer-{S}everi
+  varieties}, arxiv:1503.08108, 2015.
+
+\bibitem[ST21]{saty21}
+Mohamed Sa\"{i}di and Michael Tyler, \emph{On the birational section conjecture
+  over finitely generated fields}, Algebra Number Theory \textbf{15} (2021),
+  no.~2, 435--460. \MR{4243653}
+
+\bibitem[Sti12]{sti12}
+Jakob Stix, \emph{On cuspidal sections of algebraic fundamental groups},
+  Galois-Teichm\"uller theory and arithmetic geometry. Selected papers based on
+  the presentations at the workshop and conference, Kyoto, Japan, October
+  25--30, 2010, Tokyo: Mathematical Society of Japan, 2012, pp.~519--563.
+
+\bibitem[{Sti}13]{sti13}
+J.~{Stix}, \emph{Rational points and arithmetic of fundamental groups}, Lecture
+  Notes in Mathematics, no. 2054, Springer, 2013.
+
+\bibitem[Sti15]{sti15}
+Jakob Stix, \emph{On the birational section conjecture with local conditions},
+  Invent. Math. \textbf{199} (2015), no.~1, 239--265.
+
+\bibitem[Tam97]{tam97}
+Akio Tamagawa, \emph{The {G}rothendieck conjecture for affine curves},
+  Compositio Math. \textbf{109} (1997), no.~2, 135--194.
+
+\bibitem[TV18]{tv18}
+Mattia Talpo and Angelo Vistoli, \emph{Infinite root stacks and quasi-coherent
+  sheaves on logarithmic schemes}, Proc. Lond. Math. Soc. (3) \textbf{116}
+  (2018), no.~5, 1187--1243.
+
+\bibitem[Wic12]{wic12}
+Kirsten Wickelgren, \emph{{$n$}-nilpotent obstructions to {$\pi_1$} sections of
+  {$\Bbb P^1-\{0,1,\infty\}$} and {M}assey products}, Galois-{T}eichm\"{u}ller
+  theory and arithmetic geometry, Adv. Stud. Pure Math., vol.~63, Math. Soc.
+  Japan, Tokyo, 2012, pp.~579--600.
+
+\end{thebibliography}

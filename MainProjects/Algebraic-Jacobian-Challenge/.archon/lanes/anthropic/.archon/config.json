@@ -1,0 +1,41 @@
+{
+  "loop": {
+    "max_iterations": 1,
+    "parallel": true,
+    "max_parallel": 2,
+    "model": "opus",
+    "verbose_logs": false,
+    "no_review": false
+  },
+  "multilane": {
+    "_help": "Set 'enabled' to true and add the lanes you want. Each lane uses Claude Code as its driver but routes requests to a different provider via ANTHROPIC_BASE_URL (set in .archon/.env).",
+    "enabled": true,
+    "base_ref": "main",
+    "lanes": [
+      {
+        "lane_id": "anthropic",
+        "provider": "anthropic",
+        "model": "opus"
+      },
+      {
+        "lane_id": "kimi",
+        "provider": "moonshot"
+      }
+    ],
+    "_examples": {
+      "_help": "Copy any of these into the 'lanes' list above to enable. Set the keys named in '_env' inside .archon/.env first.",
+      "kimi": {
+        "lane_id": "kimi",
+        "provider": "moonshot",
+        "_env": "Set MOONSHOT_API_KEY in .archon/.env (optional: MOONSHOT_BASE_URL, MOONSHOT_MODEL).",
+        "_extras": "No extras package needed \u2014 Moonshot speaks the Anthropic API natively."
+      },
+      "deepseek": {
+        "lane_id": "deepseek",
+        "provider": "deepseek",
+        "_env": "Set DEEPSEEK_API_KEY in .archon/.env (optional: DEEPSEEK_BASE_URL, DEEPSEEK_MODEL).",
+        "_extras": "No extras package needed \u2014 DeepSeek speaks the Anthropic API natively."
+      }
+    }
+  }
+}

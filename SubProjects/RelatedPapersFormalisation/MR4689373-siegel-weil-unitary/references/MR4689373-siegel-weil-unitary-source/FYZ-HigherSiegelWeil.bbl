@@ -1,0 +1,147 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
+% \MRhref is called by the amsart/book/proc definition of \MR.
+\providecommand{\MRhref}[2]{%
+  \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
+}
+\providecommand{\href}[2]{#2}
+\begin{thebibliography}{BHK{\etalchar{+}}20}
+
+\bibitem[BHK{\etalchar{+}}20]{BHKRY1}
+Jan~H. Bruinier, Benjamin Howard, Stephen~S. Kudla, Michael Rapoport, and
+  Tonghai Yang, \emph{Modularity of generating series of divisors on unitary
+  {S}himura varieties}, Ast\'{e}risque (2020), no.~421, Diviseurs
+  arithm\'{e}tiques sur les vari\'{e}t\'{e}s orthogonales et unitaires de
+  Shimura, 7--125.
+
+\bibitem[BM83]{BM}
+Walter Borho and Robert MacPherson, \emph{Partial resolutions of nilpotent
+  varieties}, Analysis and topology on singular spaces, {II}, {III} ({L}uminy,
+  1981), Ast\'{e}risque, vol. 101, Soc. Math. France, Paris, 1983, pp.~23--74.
+  \MR{737927}
+
+\bibitem[CY20]{CY}
+Sungmun Cho and Takuya Yamauchi, \emph{A reformulation of the {S}iegel series
+  and intersection numbers}, Math. Ann. \textbf{377} (2020), no.~3-4,
+  1757--1826.
+
+\bibitem[Ful98]{Ful98}
+William Fulton, \emph{Intersection theory}, second ed., Ergebnisse der
+  Mathematik und ihrer Grenzgebiete. 3. Folge. A Series of Modern Surveys in
+  Mathematics [Results in Mathematics and Related Areas. 3rd Series. A Series
+  of Modern Surveys in Mathematics], vol.~2, Springer-Verlag, Berlin, 1998.
+
+\bibitem[FYZ21]{FYZ2}
+Tony Feng, Zhiwei Yun, and Wei Zhang, \emph{Higher theta series for unitary
+  groups over function fields}, 2021, Available at
+  \url{https://arxiv.org/abs/2110.07001}.
+
+\bibitem[GS19]{GS19}
+Luis~E. Garcia and Siddarth Sankaran, \emph{Green forms and the arithmetic
+  {S}iegel-{W}eil formula}, Invent. Math. \textbf{215} (2019), no.~3, 863--975.
+  \MR{3935034}
+
+\bibitem[Hei10]{Hei10}
+Jochen Heinloth, \emph{Uniformization of {$\scr G$}-bundles}, Math. Ann.
+  \textbf{347} (2010), no.~3, 499--528.
+
+\bibitem[Hir12]{Hironaka2012}
+Yumiko Hironaka, \emph{Spherical functions on {$U(2n)/(U(n)\times U(n))$} and
+  {H}ermitian {S}iegel series}, Geometry and analysis of automorphic forms of
+  several variables, Ser. Number Theory Appl., vol.~7, World Sci. Publ.,
+  Hackensack, NJ, 2012, pp.~120--159. \MR{2908038}
+
+\bibitem[HS77]{HS77}
+R.~Hotta and T.~A. Springer, \emph{A specialization theorem for certain {W}eyl
+  group representations and an application to the {G}reen polynomials of
+  unitary groups}, Invent. Math. \textbf{41} (1977), no.~2, 113--127.
+
+\bibitem[KR11]{KRI}
+Stephen Kudla and Michael Rapoport, \emph{Special cycles on unitary {S}himura
+  varieties {I}. {U}nramified local theory}, Invent. Math. \textbf{184} (2011),
+  no.~3, 629--682.
+
+\bibitem[KR14]{KRII}
+\bysame, \emph{Special cycles on unitary {S}himura varieties {II}: {G}lobal
+  theory}, J. Reine Angew. Math. \textbf{697} (2014), 91--157.
+
+\bibitem[Kre99]{Kr99}
+Andrew Kresch, \emph{Cycle groups for {A}rtin stacks}, Invent. Math.
+  \textbf{138} (1999), no.~3, 495--536.
+
+\bibitem[Kud97]{Kudla1997}
+Stephen~S. Kudla, \emph{Central derivatives of {E}isenstein series and height
+  pairings}, Ann. of Math. (2) \textbf{146} (1997), no.~3, 545--646.
+
+\bibitem[Laf18]{Laff18}
+Vincent Lafforgue, \emph{Chtoucas pour les groupes r\'{e}ductifs et
+  param\'{e}trisation de {L}anglands globale}, J. Amer. Math. Soc. \textbf{31}
+  (2018), no.~3, 719--891.
+
+\bibitem[Lau87]{Lau87}
+G\'{e}rard Laumon, \emph{Correspondance de {L}anglands g\'{e}om\'{e}trique pour
+  les corps de fonctions}, Duke Math. J. \textbf{54} (1987), no.~2, 309--359.
+
+\bibitem[Liu11]{Liu11}
+Yifeng Liu, \emph{Arithmetic theta lifting and {$L$}-derivatives for unitary
+  groups, {I}}, Algebra Number Theory \textbf{5} (2011), no.~7, 849--921.
+
+\bibitem[LL21]{LL1}
+Chao Li and Yifeng Liu, \emph{Chow groups and {$L$}-derivatives of automorphic
+  motives for unitary groups}, Ann. of Math. (2) \textbf{194} (2021), no.~3,
+  817--901. \MR{4334978}
+
+\bibitem[LL22]{LL2}
+\bysame, \emph{Chow groups and {$L$}-derivatives of automorphic motives for
+  unitary groups, {II}}, Forum Math. Pi \textbf{10} (2022), Paper No. e5, 71.
+  \MR{4390300}
+
+\bibitem[LZ22a]{LZ1}
+Chao Li and Wei Zhang, \emph{Kudla-{R}apoport cycles and derivatives of local
+  densities}, J. Amer. Math. Soc. \textbf{35} (2022), no.~3, 705--797.
+  \MR{4433078}
+
+\bibitem[LZ22b]{LZ2}
+\bysame, \emph{On the arithmetic {S}iegel-{W}eil formula for {GS}pin {S}himura
+  varieties}, Invent. Math. \textbf{228} (2022), no.~3, 1353--1460.
+  \MR{4419634}
+
+\bibitem[Mum71]{Mum71}
+David Mumford, \emph{Theta characteristics of an algebraic curve}, Ann. Sci.
+  \'{E}cole Norm. Sup. (4) \textbf{4} (1971), 181--192.
+
+\bibitem[Sie51]{Siegel1951}
+Carl~Ludwig Siegel, \emph{Indefinite quadratische {F}ormen und
+  {F}unktionentheorie. {I}}, Math. Ann. \textbf{124} (1951), 17--54.
+
+\bibitem[{Sta}20]{stacks-project}
+The {Stacks Project Authors}, \emph{\textit{Stacks Project}},
+  \url{https://stacks.math.columbia.edu}, 2020.
+
+\bibitem[Var04]{V04}
+Yakov Varshavsky, \emph{Moduli spaces of principal {$F$}-bundles}, Selecta
+  Math. (N.S.) \textbf{10} (2004), no.~1, 131--166.
+
+\bibitem[Wei65]{Weil1965}
+Andr\'{e} Weil, \emph{Sur la formule de {S}iegel dans la th\'{e}orie des
+  groupes classiques}, Acta Math. \textbf{113} (1965), 1--87.
+
+\bibitem[Wei95]{Weil}
+\bysame, \emph{Basic number theory}, Classics in Mathematics, Springer-Verlag,
+  Berlin, 1995, Reprint of the second (1973) edition.
+
+\bibitem[Wei19]{Wei19}
+Fu-Tsun Wei, \emph{On derivatives of {S}iegel-{E}isenstein series over global
+  function fields}, J. Lond. Math. Soc. (2) \textbf{100} (2019), no.~2,
+  518--544.
+
+\bibitem[YZ17]{YZ}
+Zhiwei Yun and Wei Zhang, \emph{Shtukas and the {T}aylor expansion of
+  {$L$}-functions}, Ann. of Math. (2) \textbf{186} (2017), no.~3, 767--911.
+
+\bibitem[YZ19]{YZII}
+\bysame, \emph{Shtukas and the {T}aylor expansion of {$L$}-functions ({II})},
+  Ann. of Math. (2) \textbf{189} (2019), no.~2, 393--526.
+
+\end{thebibliography}

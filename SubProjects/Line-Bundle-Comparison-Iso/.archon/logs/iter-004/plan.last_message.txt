@@ -1,0 +1,5 @@
+Updated the iteration state and tightened the route plan.
+
+- [Plan sidecar](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/iter/iter-004/plan.md) and [objectives](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/iter/iter-004/objectives.md) now record the CHURNING verdict, the `homOfLocalCompat` A-bridge decision, and the next prover targets.
+- [Task state](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/task_pending.md), [done queue](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/task_done.md), [memory](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/ARCHON_MEMORY.md), and [notice board](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/TO_USER.md) were updated; processed reports were cleared from [`.archon/task_results`](/home/archon/proj/Line-Bundle-Comparison-Iso/.archon/task_results).
+

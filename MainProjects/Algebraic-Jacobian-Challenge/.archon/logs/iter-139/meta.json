@@ -1,0 +1,46 @@
+{
+  "iteration": 139,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-18T05:02:04Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "4e958986-83e5-45cc-9ea0-6f7303b6829c",
+    "durationSecs": 2203
+  },
+  "planValidate": {
+    "strategyBloat": true,
+    "strategyLines": 587,
+    "strategyBytes": 98915,
+    "strategyLeanFences": 0,
+    "strategyTexEnvs": 0,
+    "status": "ok_intentional_skip",
+    "objectives": 0
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 0
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "b4d2c7d2-54b9-4e31-bb4d-86371ae6de9f",
+    "durationSecs": 443
+  },
+  "sorry_count": 16,
+  "finalize": {
+    "innerGit": {
+      "sha": "2e61b3f"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 3
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 1,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-18T06:09:31Z",
+  "wallTimeSecs": 2743
+}

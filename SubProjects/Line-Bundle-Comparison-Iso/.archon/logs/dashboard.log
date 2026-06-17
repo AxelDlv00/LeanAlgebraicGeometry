@@ -1,0 +1,359 @@
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ───────────────────────────────────────────────────────────────────────────
+
+┌───────────┬────────────────────────────────────────────────┐
+│  Project  │  /home/archon/proj/Line-Bundle-Comparison-Iso  │
+│  Port     │  8088                                          │
+│  Mode     │  production                                    │
+└───────────┴────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8088  (project: /home/archon/proj/Line-Bundle-Comparison-Iso)
+
+Archon Dashboard ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8088                                                                            │
+│  Overview   │  http://127.0.0.1:8088/                                                                           │
+│  Logs       │  http://127.0.0.1:8088/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8088/journal                                                                    │
+│  Project    │  /home/archon/proj/Line-Bundle-Comparison-Iso                                                     │
+│  PID        │  1802700                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8088.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1802700  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8088.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ───────────────────────────────────────────────────────────────────────────
+
+┌───────────┬────────────────────────────────────────────────┐
+│  Project  │  /home/archon/proj/Line-Bundle-Comparison-Iso  │
+│  Port     │  8088                                          │
+│  Mode     │  production                                    │
+└───────────┴────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8088  (project: /home/archon/proj/Line-Bundle-Comparison-Iso)
+
+Archon Dashboard ───────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8088                                                                            │
+│  Overview   │  http://127.0.0.1:8088/                                                                           │
+│  Logs       │  http://127.0.0.1:8088/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8088/journal                                                                    │
+│  Project    │  /home/archon/proj/Line-Bundle-Comparison-Iso                                                     │
+│  PID        │  1835311                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8088.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1835311  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8088.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────
+
+┌───────────┬────────────────────────────────────────────────┐
+│  Project  │  /home/archon/proj/Line-Bundle-Comparison-Iso  │
+│  Port     │  8088                                          │
+│  Mode     │  production                                    │
+└───────────┴────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8088  (project: /home/archon/proj/Line-Bundle-Comparison-Iso)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬─────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8088                                                                      │
+│  Overview   │  http://127.0.0.1:8088/                                                                     │
+│  Logs       │  http://127.0.0.1:8088/logs                                                                 │
+│  Journal    │  http://127.0.0.1:8088/journal                                                              │
+│  Project    │  /home/archon/proj/Line-Bundle-Comparison-Iso                                               │
+│  PID        │  1980088                                                                                    │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8…  │
+└─────────────┴─────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1980088  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8088.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────
+
+┌───────────┬────────────────────────────────────────────────┐
+│  Project  │  /home/archon/proj/Line-Bundle-Comparison-Iso  │
+│  Port     │  8088                                          │
+│  Mode     │  production                                    │
+└───────────┴────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8088  (project: /home/archon/proj/Line-Bundle-Comparison-Iso)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬─────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8088                                                                      │
+│  Overview   │  http://127.0.0.1:8088/                                                                     │
+│  Logs       │  http://127.0.0.1:8088/logs                                                                 │
+│  Journal    │  http://127.0.0.1:8088/journal                                                              │
+│  Project    │  /home/archon/proj/Line-Bundle-Comparison-Iso                                               │
+│  PID        │  1983112                                                                                    │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8…  │
+└─────────────┴─────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 1983112  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8088.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────
+
+┌───────────┬────────────────────────────────────────────────┐
+│  Project  │  /home/archon/proj/Line-Bundle-Comparison-Iso  │
+│  Port     │  8088                                          │
+│  Mode     │  production                                    │
+└───────────┴────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8088  (project: /home/archon/proj/Line-Bundle-Comparison-Iso)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬─────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8088                                                                      │
+│  Overview   │  http://127.0.0.1:8088/                                                                     │
+│  Logs       │  http://127.0.0.1:8088/logs                                                                 │
+│  Journal    │  http://127.0.0.1:8088/journal                                                              │
+│  Project    │  /home/archon/proj/Line-Bundle-Comparison-Iso                                               │
+│  PID        │  2461748                                                                                    │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8…  │
+└─────────────┴─────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 2461748  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8088.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────
+
+┌───────────┬────────────────────────────────────────────────┐
+│  Project  │  /home/archon/proj/Line-Bundle-Comparison-Iso  │
+│  Port     │  8088                                          │
+│  Mode     │  production                                    │
+└───────────┴────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8088  (project: /home/archon/proj/Line-Bundle-Comparison-Iso)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8088                                                                          │
+│  Overview   │  http://127.0.0.1:8088/                                                                         │
+│  Logs       │  http://127.0.0.1:8088/logs                                                                     │
+│  Journal    │  http://127.0.0.1:8088/journal                                                                  │
+│  Project    │  /home/archon/proj/Line-Bundle-Comparison-Iso                                                   │
+│  PID        │  2844794                                                                                        │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8088.…  │
+└─────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 2844794  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8088.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────
+
+┌───────────┬────────────────────────────────────────────────┐
+│  Project  │  /home/archon/proj/Line-Bundle-Comparison-Iso  │
+│  Port     │  8088                                          │
+│  Mode     │  production                                    │
+└───────────┴────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8088  (project: /home/archon/proj/Line-Bundle-Comparison-Iso)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8088                                                                          │
+│  Overview   │  http://127.0.0.1:8088/                                                                         │
+│  Logs       │  http://127.0.0.1:8088/logs                                                                     │
+│  Journal    │  http://127.0.0.1:8088/journal                                                                  │
+│  Project    │  /home/archon/proj/Line-Bundle-Comparison-Iso                                                   │
+│  PID        │  2956176                                                                                        │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8088.…  │
+└─────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 2956176  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8088.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────
+
+┌───────────┬────────────────────────────────────────────────┐
+│  Project  │  /home/archon/proj/Line-Bundle-Comparison-Iso  │
+│  Port     │  8088                                          │
+│  Mode     │  production                                    │
+└───────────┴────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8088  (project: /home/archon/proj/Line-Bundle-Comparison-Iso)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8088                                                                          │
+│  Overview   │  http://127.0.0.1:8088/                                                                         │
+│  Logs       │  http://127.0.0.1:8088/logs                                                                     │
+│  Journal    │  http://127.0.0.1:8088/journal                                                                  │
+│  Project    │  /home/archon/proj/Line-Bundle-Comparison-Iso                                                   │
+│  PID        │  3075244                                                                                        │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8088.…  │
+└─────────────┴─────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 3075244  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8088.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬────────────────────────────────────────────────┐
+│  Project  │  /home/archon/proj/Line-Bundle-Comparison-Iso  │
+│  Port     │  8088                                          │
+│  Mode     │  production                                    │
+└───────────┴────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8088  (project: /home/archon/proj/Line-Bundle-Comparison-Iso)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8088                                                                            │
+│  Overview   │  http://127.0.0.1:8088/                                                                           │
+│  Logs       │  http://127.0.0.1:8088/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8088/journal                                                                    │
+│  Project    │  /home/archon/proj/Line-Bundle-Comparison-Iso                                                     │
+│  PID        │  2386415                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8088.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 2386415  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8088.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ─────────────────────────────────────────────────────────────────
+
+┌───────────┬────────────────────────────────────────────────┐
+│  Project  │  /home/archon/proj/Line-Bundle-Comparison-Iso  │
+│  Port     │  8081                                          │
+│  Mode     │  production                                    │
+└───────────┴────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8081  (project: /home/archon/proj/Line-Bundle-Comparison-Iso)
+
+Archon Dashboard ─────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬──────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8081                                                                           │
+│  Overview   │  http://127.0.0.1:8081/                                                                          │
+│  Logs       │  http://127.0.0.1:8081/logs                                                                      │
+│  Journal    │  http://127.0.0.1:8081/journal                                                                   │
+│  Project    │  /home/archon/proj/Line-Bundle-Comparison-Iso                                                    │
+│  PID        │  2608930                                                                                         │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8081.p…  │
+└─────────────┴──────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 2608930  (or: kill $(cat 
+/home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8081.pid))
+
+[archon-ui] Received SIGTERM, closing server…
+[ARCHON] Dashboard stopped
+
+   _            _                 
+  /_\  _ __ ___| |__   ___  _ __  
+ //_\\| '__/ __| '_ \ / _ \| '_ \ 
+/  _  \ | | (__| | | | (_) | | | |
+\_/ \_/_|  \___|_| |_|\___/|_| |_|
+
+ v0.3.0    https://github.com/frenzymath/Archon  ────────────────────────────────────────────────────────────────────────────────────────────────────
+
+┌───────────┬────────────────────────────────────────────────┐
+│  Project  │  /home/archon/proj/Line-Bundle-Comparison-Iso  │
+│  Port     │  8081                                          │
+│  Mode     │  production                                    │
+└───────────┴────────────────────────────────────────────────┘
+[ARCHON] ✓ Node.js v24.15.0
+[ARCHON] ✓ Client up to date
+Archon UI → http://127.0.0.1:8081  (project: /home/archon/proj/Line-Bundle-Comparison-Iso)
+
+Archon Dashboard ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┌─────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  Dashboard  │  http://127.0.0.1:8081                                                                            │
+│  Overview   │  http://127.0.0.1:8081/                                                                           │
+│  Logs       │  http://127.0.0.1:8081/logs                                                                       │
+│  Journal    │  http://127.0.0.1:8081/journal                                                                    │
+│  Project    │  /home/archon/proj/Line-Bundle-Comparison-Iso                                                     │
+│  PID        │  2932196                                                                                          │
+│  PID file   │  /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8081.pid  │
+└─────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────┘
+[ARCHON] › Stop:  kill 2932196  (or: kill $(cat /home/archon/Archon/archon-multilane-private/src/archon/ui/.archon-ui/44db9b2f1e1ce911-8081.pid))

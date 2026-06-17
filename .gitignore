@@ -1,0 +1,10 @@
+# OS files
+.DS_Store
+.DS_Store?
+._*
+
+# Lean/Lake build directories in nested projects
+**/.lake/
+
+# Ignore local git-dir databases (large pack files)
+**/git-dir/

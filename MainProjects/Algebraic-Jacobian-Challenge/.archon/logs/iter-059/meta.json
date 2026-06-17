@@ -1,0 +1,40 @@
+{
+  "iteration": 59,
+  "stage": "prover  (iteration 058 \u2014 Phase A step 6 *Path 2* / Serre-finiteness scaffolding **n-ary basic-open inclusion helper**: append a single thin foundational inclusion declaration to `Cohomology/MayerVietoris.lean` `section CoverTotality` (inside `namespace AlgebraicGeometry.Scheme`), after iter-057's `basicOpenCover_finset_inf'_isAffineOpen` (currently L1544), before `end CoverTotality` (currently L1546): `theorem basicOpenCover_finset_inf'_le` \u2014 n-ary intersection of basic-open cover members over a non-empty `Finset s` is contained in `U` (term-mode body chaining iter-057's `basicOpenCover_finset_inf'_eq_basicOpen_prod` with Mathlib's `Scheme.basicOpen_le` via `\u25b8`-rewrite). Iter-057 closure verified (this pass): both iter-057 declarations land cleanly at L1500 (`basicOpenCover_finset_inf'_eq_basicOpen_prod`) and L1539 (`..._isAffineOpen`); sorry count `9 \u2192 9`; file LOC `1477 \u2192 1548` (+71, slightly above the +30-50 plan band but within the +60-90 estimate range due to verbatim long docstrings \u2014 function bodies are 8 + 1 = 9 LOC of actual proof). Plan-agent `lean_run_code` probe (this pass) confirms the iter-058 declaration body compiles end-to-end with kernel-only axioms `[propext, Classical.choice, Quot.sound]` \u2014 no new axiom introduced. Iter-058 sorry trajectory `9 \u2192 9` (no transient \u2014 body probe-confirmed). Phase A iterations-remaining held at ~5 (iter-058 is a thin scaffolding step packaging the inclusion `t.inf' h (basicOpenCover s) \u2264 U` needed for the Mathlib `isLocalization_of_eq_basicOpen` morphism argument; iter-059+ opens the substantive basic-open Koszul acyclicity branch as planned, after invoking the `analogy` subagent for Mathlib precedent \u2014 strongly recommended preamble).",
+  "mode": "parallel",
+  "startedAt": "2026-05-11T02:43:22Z",
+  "plan": {
+    "status": "done",
+    "durationSecs": 1545
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 102
+  },
+  "provers": {
+    "AlgebraicJacobian_Cohomology_MayerVietoris": {
+      "file": "AlgebraicJacobian/Cohomology/MayerVietoris.lean",
+      "status": "done"
+    }
+  },
+  "review": {
+    "status": "done",
+    "durationSecs": 367
+  },
+  "sorry_count": 307,
+  "finalize": {
+    "innerGit": {
+      "sha": "b8518e3"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 28
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 6
+    }
+  },
+  "completedAt": "2026-05-11T03:46:47Z",
+  "wallTimeSecs": 3805
+}

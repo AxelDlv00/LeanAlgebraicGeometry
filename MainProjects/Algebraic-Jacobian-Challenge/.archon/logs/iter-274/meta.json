@@ -1,0 +1,9 @@
+{
+  "iteration": 274,
+  "stage": "dag",
+  "mode": "dag",
+  "startedAt": "2026-06-04T14:50:18Z",
+  "dag": {
+    "status": "running"
+  }
+}

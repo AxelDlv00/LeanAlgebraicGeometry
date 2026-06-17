@@ -1,0 +1,38 @@
+{
+  "chapters_dir": "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters",
+  "content_tex": "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/content.tex",
+  "chapters_present": [
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/AbelJacobi.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/AbelianVarietyRigidity.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/AlgebraicJacobian_Cotangent_GrpObj.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Cohomology_MayerVietoris.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Cohomology_SheafCompose.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Cohomology_StructureSheafAb.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Cohomology_StructureSheafModuleK.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Differentials.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Genus.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Jacobian.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Rigidity.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/RigidityKbar.tex"
+  ],
+  "chapters_included": [
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/AbelJacobi.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/AbelianVarietyRigidity.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/AlgebraicJacobian_Cotangent_GrpObj.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Cohomology_MayerVietoris.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Cohomology_SheafCompose.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Cohomology_StructureSheafAb.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Cohomology_StructureSheafModuleK.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Differentials.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Genus.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Jacobian.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Rigidity.tex",
+    "/home/archon/FormalizationProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/RigidityKbar.tex"
+  ],
+  "orphan_chapters": [],
+  "labels_defined_count": 257,
+  "broken_refs": [],
+  "malformed_refs": [],
+  "axiom_decls": [],
+  "covers_problems": []
+}

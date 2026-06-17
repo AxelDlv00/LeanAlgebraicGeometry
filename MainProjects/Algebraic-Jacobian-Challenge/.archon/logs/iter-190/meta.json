@@ -1,0 +1,73 @@
+{
+  "iteration": 190,
+  "stage": "prover",
+  "mode": "parallel",
+  "startedAt": "2026-05-26T04:04:39Z",
+  "plan": {
+    "status": "skipped",
+    "sessionId": "67f7a577-4949-4b55-881f-aad9bec35a6e",
+    "durationSecs": 3935
+  },
+  "planValidate": {
+    "status": "ok",
+    "objectives": 6
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 9531
+  },
+  "provers": {
+    "AlgebraicJacobian_AbelianVarietyRigidity": {
+      "file": "AlgebraicJacobian/AbelianVarietyRigidity.lean",
+      "status": "done",
+      "sessionId": "2396e9a2-7f10-45ec-82ed-0e8ac06bf4c2"
+    },
+    "AlgebraicJacobian_Albanese_AuslanderBuchsbaum": {
+      "file": "AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean",
+      "status": "done",
+      "sessionId": "99b42a95-496e-4a6a-b0a3-942c2cac0116"
+    },
+    "AlgebraicJacobian_Genus0BaseObjects_Cross01Substrate": {
+      "file": "AlgebraicJacobian/Genus0BaseObjects/Cross01Substrate.lean",
+      "status": "done",
+      "sessionId": "93ecc9c7-ac14-4638-9d58-abbc7eda45c8"
+    },
+    "AlgebraicJacobian_Picard_QuotScheme": {
+      "file": "AlgebraicJacobian/Picard/QuotScheme.lean",
+      "status": "done",
+      "sessionId": "7911959b-72e6-4f87-995a-b41d910e102c"
+    },
+    "AlgebraicJacobian_RiemannRoch_RationalCurveIso": {
+      "file": "AlgebraicJacobian/RiemannRoch/RationalCurveIso.lean",
+      "status": "done",
+      "sessionId": "f5bfd99b-86a9-4bce-abcf-83cdcba75f27"
+    },
+    "AlgebraicJacobian_RiemannRoch_WeilDivisor": {
+      "file": "AlgebraicJacobian/RiemannRoch/WeilDivisor.lean",
+      "status": "done",
+      "sessionId": "1157a1a5-15ec-478f-92da-66ca6cafcc39"
+    }
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "999bbd3d-4393-4887-b26b-95ad3bbb4cb1",
+    "durationSecs": 978
+  },
+  "sorry_count": 79,
+  "finalize": {
+    "innerGit": {
+      "sha": "661e411f"
+    },
+    "lake": {
+      "ok": false,
+      "durationSecs": 10,
+      "error": "build"
+    },
+    "blueprint": {
+      "ok": true,
+      "durationSecs": 24
+    }
+  },
+  "completedAt": "2026-05-26T09:20:48Z",
+  "wallTimeSecs": 1322
+}

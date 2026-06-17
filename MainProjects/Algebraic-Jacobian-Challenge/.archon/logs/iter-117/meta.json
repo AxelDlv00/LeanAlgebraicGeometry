@@ -1,0 +1,41 @@
+{
+  "iteration": 117,
+  "stage": "prover (Archon iter-116 \u2014 **NO prover lane this iter; user-escalation pause on",
+  "mode": "parallel",
+  "startedAt": "2026-05-16T10:37:23Z",
+  "plan": {
+    "status": "done",
+    "sessionId": "ce58ed2d-81ad-4937-854a-6bcc36406888",
+    "durationSecs": 3260
+  },
+  "planValidate": {
+    "status": "ok_intentional_skip",
+    "objectives": 0
+  },
+  "prover": {
+    "status": "done",
+    "durationSecs": 0
+  },
+  "review": {
+    "status": "done",
+    "sessionId": "292bfa88-24fa-406a-be5c-fec83cf15135",
+    "durationSecs": 1142
+  },
+  "sorry_count": 3687,
+  "finalize": {
+    "innerGit": {
+      "sha": "0d6edc2"
+    },
+    "lake": {
+      "ok": true,
+      "durationSecs": 3
+    },
+    "blueprint": {
+      "ok": false,
+      "durationSecs": 1,
+      "error": "web"
+    }
+  },
+  "completedAt": "2026-05-16T11:52:48Z",
+  "wallTimeSecs": 4524
+}
