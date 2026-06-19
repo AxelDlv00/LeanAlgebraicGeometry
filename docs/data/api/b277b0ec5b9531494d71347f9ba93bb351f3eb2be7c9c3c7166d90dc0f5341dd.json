@@ -1,11 +1,11 @@
 {
   "commit": {
-    "sha": "7a82c0697b8514935a3b97aecc16db8f09734686",
-    "shortSha": "7a82c06",
-    "subject": "archon[006/finalize]: stage=prover sorry=7",
-    "date": "2026-06-18 18:25:51 +0800",
+    "sha": "09d9781af6035c91ee171212615b0975c5075616",
+    "shortSha": "09d9781",
+    "subject": "archon[017/marker-sync]: +0 -22 \\leanok (35s)",
+    "date": "2026-06-19 22:26:26 +0800",
     "branch": "main",
-    "iteration": "iter-006",
-    "phase": "finalize"
+    "iteration": "iter-017",
+    "phase": "marker-sync"
   }
 }

@@ -1,4 +1,4 @@
-# AlgebraicJacobian
+# AlgebraicJacobian — Čech computation of higher direct images (Cech-Cohomology subproject)
 
 <!-- archon:readme -->
 

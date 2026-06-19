@@ -3,28 +3,22 @@
 ## Goal
 
 Prove the Čech computation of higher direct images — the **separated case of the relative form**
-of Stacks Tag 02KE (relative `Rⁱf_*` form, with `X`/`S` separated; stronger than 02KE in the
-relative direction, with affine-cover + separatedness in place of the bare "all intersections
-affine"): for `f : X ⟶ S`
-quasi-compact separated with `X`, `S` separated, `F` quasi-coherent, `𝒰` a finite affine open
-cover of `X` (`h𝒰 : ∀ i, IsAffine (𝒰.X i)`, plus the `hres` injective-resolution family), an
-isomorphism `Nonempty ((CechComplex f 𝒰 F).homology i ≅ higherDirectImage f i F)` with
-`higherDirectImage f i F = ((pushforward f).rightDerived i).obj F`. **The deliverable
-`AlgebraicGeometry.cech_computes_higherDirectImage` (CechToHigherDirectImage.lean) is PROVED,
-0 sorries (iter-079).** End-state: zero inline `sorry` in the cone, zero project axioms,
-kernel-only. (iter-080: the user dropped the old false-as-signed frozen sibling and its protection
-entry — the canonical name now carries the correct hypotheses.)
+of Stacks Tag 02KE: for `f : X ⟶ S` quasi-compact separated with `X`, `S` separated, `F`
+quasi-coherent, `𝒰` a finite affine open cover (`h𝒰 : ∀ i, IsAffine (𝒰.X i)`, plus the `hres`
+injective-resolution family), an isomorphism `Nonempty ((CechComplex f 𝒰 F).homology i ≅
+higherDirectImage f i F)`. Deliverable: `AlgebraicGeometry.cech_computes_higherDirectImage`
+(`CechToHigherDirectImage.lean`). End-state: zero inline `sorry`, zero project axioms, kernel-only.
+
+**BUILD GATE:** All 7 kernel sorries are now LSP-clean (0 inline `sorry` tokens). CSILeg further
+split (iter-087, 5 files: Leg~4.8M, Mid1~5.6M, Mid2~5.6M, Top~8M, Aux~14.4M HB) — all under
+10-min 46K-HB/s budget. Awaiting lake build olean confirmation.
 
 ## Phases & estimations
 
 | Phase | Status | Iters left | LOC | Key Mathlib needs | Risks |
 |---|---|---|---|---|---|
-| Polish (cleanup) | NEXT | ~1–2 | ~0–30 | none | Leg:15 stale docstring; dead `pushPullLegIso`/`pushPull_leg_coherence`; consumer docstring. Non-blocking; gated only on review-build confirming the capstone. |
-
-**Mathematical content COMPLETE** (iter-079): the capstone `cech_computes_higherDirectImage`
-is proved, 0 sorries. **Project-wide inline `sorry` count = 0** (iter-080: the user dropped the
-old false-as-signed frozen sibling — the only standing sorry — so nothing remains to close).
-Final gate: a full `lake build` of the cone confirming the capstone compiles axiom-clean.
+| Kernel verification (lake build gate) | BUILD GATE | ~1 | ~0 | none | 0 sorries; CSILeg split ✓; awaiting lake build olean confirmation (SIGTERM risk if HB/s low) |
+| Polish (cleanup) | NEXT | ~1–2 | ~0–30 | none | stale docstrings; leanok sync after first green build |
 
 ## Completed
 
@@ -51,19 +45,22 @@ Augmented Čech complex `0→F→C⁰→C¹→⋯` on `X` (`Cᵖ = ∏ (j_s)_*(F
 lemma, NO spectral sequences. (i)=`cechAugmented_exact`; (ii)=`cechTerm_pushforward_acyclic`
 (reduces to relative affine Serre vanishing). All upstream bricks DONE.
 
-### Route A §P5b — capstone assembly (DONE iter-079; frozen-decl resolved iter-080)
-`cech_computes_higherDirectImage` (CechToHigherDirectImage.lean) is PROVED (0 sorries). Hypotheses:
-`[QuasiCompact f] [IsSeparated f] [X.IsSeparated] [S.IsSeparated]`, `h𝒰 : ∀ i, IsAffine (𝒰.X i)`,
-and the `hres` family `∀(n)(σ:Fin(n+1)→𝒰.I₀), HasInjectiveResolutions (coverInterOpen 𝒰 σ).Modules`.
-**`[X.IsSeparated]` carried explicitly** (NOT derived): redundant given `[IsSeparated f]`+`[S.IsSeparated]`
-but carried verbatim to match the producer `cechTerm_pushforward_acyclic` (iter-078 strategy-critic's
-sanctioned lowest-risk fallback). **Scope:** the `X`-separated specialization of Tag 02KE (the
-`j_σ`-affine route needs `j_σ` affine for ALL affine opens = `X` separated, stronger than canonical
-02KE "intersections affine"). **Frozen-signature block — RESOLVED iter-080:** the old protected
-`cech_computes_higherDirectImage` (general `X.OpenCover`, only `[IsSeparated f]`) was FALSE
-(single-element-cover counterexample ℙ¹/O(-2)) and is itself a `sorry` in peer AJC. The user dropped
-that decl + its `archon-protected.yaml` entry (peer AJC does not protect it either) and the correct
-sibling was renamed to the canonical `cech_computes_higherDirectImage`. No frozen sorry remains.
+### Route A §P5b — capstone assembly (REOPENED: 7 kernel sorries)
+`cech_computes_higherDirectImage` in `CechToHigherDirectImage.lean`. Hypotheses:
+`[QuasiCompact f][IsSeparated f][X.IsSeparated][S.IsSeparated]`, `h𝒰 : ∀ i, IsAffine (𝒰.X i)`,
+`hres` family. `[X.IsSeparated]` carried explicitly to match the producer (redundant but kernel-safe).
+Scope: `X`-separated specialization of Tag 02KE. The general form is FALSE (ℙ¹/O(-2) counterexample);
+the correct decl carries the full separatedness + affine-cover hypotheses.
+
+**Kernel-gap fix strategy (7 sorries):**
+- `pushPull_interLegHom_sections`: restructure ~100-line Eq.trans chain via intermediate `have` steps;
+  avoid deeply-nested `congrArg`; `thin_resid5`+`Subsingleton.elim` as the close.
+- `mapAlternatingCofaceMapComplexIso` (rfl genuinely fails): after simp/rw chain, try `congr 1`,
+  `ext`, or explicit `Functor.Additive.map_sum`/`map_zsmul` rewrites. Both sides reduce to
+  `∑ k, (-1)^k • G.map (Y.δ k)` but may differ syntactically; inspect goal and bridge with `simp`.
+- `cechAugmented_to_acyclicResolutionInput` (whnf timeout): restore from MERGE-STUB-PROOF; if still
+  times out, factor `exactAt_iff'` calls into named `have`s with explicit types.
+- `coreIso_comm_leg/coface/sum/coreIso_comm`: restore each MERGE-STUB-PROOF; apply `have`-shrinking if needed.
 
 ### Done/rejected routes (tombstones)
 - **Route SS — two spectral sequences: REJECTED** (both absent from Mathlib, multi-kLOC; same brick as A).

@@ -1,11 +1,11 @@
 {
   "commit": {
-    "sha": "adf96bdb930f57457f9e3c1d3ee06ac810dea2fc",
-    "shortSha": "adf96bd",
-    "subject": "archon[000/init]: initial state",
-    "date": "2026-06-18 13:48:29 +0800",
+    "sha": "65128686235235ab6781554475aa18f546d58691",
+    "shortSha": "6512868",
+    "subject": "archon[016/plan]: stage=autoformalize (2911s)",
+    "date": "2026-06-19 22:22:11 +0800",
     "branch": "main",
-    "iteration": "iter-000",
-    "phase": "init"
+    "iteration": "iter-016",
+    "phase": "plan"
   }
 }

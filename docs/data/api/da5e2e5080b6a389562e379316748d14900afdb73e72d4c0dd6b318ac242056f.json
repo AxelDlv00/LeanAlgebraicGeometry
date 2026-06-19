@@ -1,0 +1,419 @@
+[
+  {
+    "timestamp": "2026-06-19T03:01:08Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "Modules.isIso_iff_isIso_stalkFunctor_map"
+    },
+    "session": {
+      "id": "session_5",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "isIso_iff_of_reflects_iso",
+        "TopCat.Presheaf.isIso_iff_stalkFunctor_map_iso",
+        "fullyFaithfulSheafToPresheaf",
+        "Functor.FullyFaithful.isIso_of_isIso_map"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Reduce via toPresheaf (reflects iso) then sheaf-level stalk criterion; bundle M.presheaf/N.presheaf as TopCat.Sheaf and pass to isIso_iff_stalkFunctor_map_iso directly",
+        "code_tried": "exact TopCat.Presheaf.isIso_iff_stalkFunctor_map_iso (F := ⟨M.presheaf, M.isSheaf⟩) (G := ⟨N.presheaf, N.isSheaf⟩) ⟨(Scheme.Modules.toPresheaf X).map φ⟩",
+        "line_number": "41",
+        "lean_error": "Type mismatch: isIso_iff_stalkFunctor_map_iso states IsIso {hom := ...} ↔ ... but expected IsIso ((toPresheaf X).map φ) ↔ ...",
+        "result": "failed",
+        "insight": "Mathlib criterion is stated about the sheaf-hom, not its underlying presheaf-hom; need an explicit presheaf↔sheaf iso bridge"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Bridge presheaf-iso↔sheaf-iso via TopCat.Sheaf.forget reflecting isos",
+        "code_tried": "haveI : (TopCat.Sheaf.forget Ab X).ReflectsIsomorphisms := reflectsIsomorphisms_of_full_and_faithful (TopCat.Sheaf.forget Ab X); exact (isIso_iff_of_reflects_iso sh (TopCat.Sheaf.forget Ab X)).symm.trans ...",
+        "line_number": "43",
+        "lean_error": "synthInstanceFailed: (TopCat.Sheaf.forget Ab ↑X.toPresheafedSpace).ReflectsIsomorphisms (persists even at maxSynthPendingDepth 16)",
+        "result": "failed",
+        "insight": "ReflectsIsomorphisms instance for Sheaf.forget will not synthesize through the coerced PresheafedSpace; abandon the forget-functor route"
+      },
+      {
+        "attempt": 3,
+        "strategy": "Use the explicit FullyFaithful term route: fullyFaithfulSheafToPresheaf.isIso_of_isIso_map both directions, with key = isIso_iff_stalkFunctor_map_iso sh",
+        "code_tried": "refine ⟨fun h x => ?_, fun h => ?_⟩; · haveI : IsIso ((sheafToPresheaf _ Ab).map sh) := h; exact key.mp ((fullyFaithfulSheafToPresheaf _ _).isIso_of_isIso_map sh) x; · haveI : IsIso sh := key.mpr h; exact (inferInstance : IsIso ((sheafToPresheaf _ Ab).map sh))",
+        "line_number": "57",
+        "lean_error": "",
+        "result": "success",
+        "insight": "FullyFaithful.isIso_of_isIso_map gives sheaf-iso from presheaf-iso; relies on two silent defeq load points (sh.hom = (toPresheaf X).map φ and sheafToPresheaf.map sh = sh.hom)"
+      }
+    ],
+    "next_steps": "Done (axiom-clean). Blueprint: re-environment def:peer_module_iso_locality as lemma + add proof sketch."
+  },
+  {
+    "timestamp": "2026-06-19T03:08:58Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "Scheme.globalSectionsAb"
+    },
+    "session": {
+      "id": "session_5",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "CategoryTheory.evaluation",
+        "Scheme.Modules.toPresheaf"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Compose forget-to-Ab-presheaf with evaluation at op ⊤",
+        "code_tried": "Scheme.Modules.toPresheaf X ⋙ (evaluation _ _).obj (Opposite.op ⊤)",
+        "line_number": "80",
+        "lean_error": "Invalid field `obj`: environment does not contain `Function.obj` (evaluation resolved to AlgebraicGeometry.evaluation, the residue-field functor, under open AlgebraicGeometry)",
+        "result": "failed",
+        "insight": "Under `open AlgebraicGeometry`, bare `evaluation` shadows to the residue-field functor; must qualify `CategoryTheory.evaluation`"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Qualify the namespace",
+        "code_tried": "Scheme.Modules.toPresheaf X ⋙ (CategoryTheory.evaluation _ _).obj (Opposite.op ⊤)",
+        "line_number": "80",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Ab = AddCommGrpCat (renamed in this mathlib); landing category is AddCommGrpCat"
+      }
+    ],
+    "next_steps": "Done. Additivity supplied by companion instance globalSectionsAb_additive."
+  },
+  {
+    "timestamp": "2026-06-19T03:09:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "Scheme.Modules.toPresheaf_additive"
+    },
+    "session": {
+      "id": "session_5",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "",
+      "key_lemmas_used": [
+        "inferInstanceAs",
+        "SheafOfModules.forget",
+        "PresheafOfModules.toPresheaf"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Prove Additive of toPresheaf via delta-unfold + Functor.additive of composition",
+        "code_tried": "by delta Scheme.Modules.toPresheaf Scheme.Modules.toPresheafOfModules; exact Functor.additive...",
+        "line_number": "65",
+        "lean_error": "synthInstanceFailed: (Scheme.Modules.toPresheaf X).Additive — additivity does not transfer through the toPresheafOfModules/toPresheaf defs during synthesis",
+        "result": "failed",
+        "insight": "Instance synthesis will not see the underlying composition's Additive through the def layers"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Assert defeq to the explicit composition and reuse its Additive instance",
+        "code_tried": "inferInstanceAs (SheafOfModules.forget X.ringCatSheaf ⋙ PresheafOfModules.toPresheaf X.ringCatSheaf.obj).Additive",
+        "line_number": "68",
+        "lean_error": "",
+        "result": "success",
+        "insight": "inferInstanceAs on the defeq composition works; couples the instance to Mathlib's *definition* of toPresheaf (auditor flags as fragile)"
+      }
+    ],
+    "next_steps": "Done. Coverage debt: unpinned helper — needs a thin blueprint block."
+  },
+  {
+    "timestamp": "2026-06-19T03:10:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "Scheme.globalSectionsAb_additive"
+    },
+    "session": {
+      "id": "session_5",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Functor.map_add",
+        "NatTrans pointwise add"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "inferInstanceAs / set_option maxSynthPendingDepth on the composition's Additive",
+        "code_tried": "set_option maxSynthPendingDepth 8 in instance ... := inferInstanceAs ...",
+        "line_number": "75",
+        "lean_error": "failed to synthesize (Modules.toPresheaf X ⋙ (evaluation _).obj (op ⊤)).Additive",
+        "result": "failed",
+        "insight": "Composition Additive still won't synthesize even with the toPresheaf_additive instance available + raised depth"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Prove map_add field directly: change goal to .app equation, rw Functor.map_add, rfl (NatTrans add is pointwise)",
+        "code_tried": "where map_add {M N f g} := by change ((toPresheaf X).map (f+g)).app (op ⊤) = ((toPresheaf X).map f).app (op ⊤) + ((toPresheaf X).map g).app (op ⊤); rw [Functor.map_add]; rfl",
+        "line_number": "85",
+        "lean_error": "(initially used `show` → style linter; switched to `change`)",
+        "result": "success",
+        "insight": "Explicit map_add field with change+rw[Functor.map_add]+rfl is the robust route; rfl closes via pointwise NatTrans addition"
+      }
+    ],
+    "next_steps": "Done. Coverage debt: unpinned helper — backs the 'is additive' prose claim of found:global_sections_ab; needs pin/note."
+  },
+  {
+    "timestamp": "2026-06-19T03:05:30Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "Scheme.Modules.IsLocallyFree"
+    },
+    "session": {
+      "id": "session_5",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "SheafOfModules.free",
+        "Scheme.Modules.restrictFunctor",
+        "X.Opens.toScheme.ringCatSheaf"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Predicate: ∃ rank r, cover by opens with restriction ≅ free I; first used `SheafOfModules.free I` bare",
+        "code_tried": "∃ (I : Type u) (_ : Finite I), ∀ x, ∃ U ∋ x, Nonempty ((restrictFunctor U.ι).obj F ≅ SheafOfModules.free I)",
+        "line_number": "75",
+        "lean_error": "Application type mismatch: I : Type u (sort Type (u+1)) but SheafOfModules.free expects Type (sort Type 1) — and missing the ring-sheaf R argument",
+        "result": "failed",
+        "insight": "SheafOfModules.free needs explicit (R := …) ring-sheaf; the target lives over the open subscheme U.toScheme"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Supply the ring sheaf of the open subscheme explicitly",
+        "code_tried": "Nonempty ((Scheme.Modules.restrictFunctor U.ι).obj F ≅ (SheafOfModules.free (R := U.toScheme.ringCatSheaf) I))",
+        "line_number": "75",
+        "lean_error": "",
+        "result": "success",
+        "insight": "∃ I outside ∀ x ⇒ constant-rank local freeness (correct for connected curves; would be False for varying-rank on disconnected X — auditor noted as undocumented restriction)"
+      }
+    ],
+    "next_steps": "Done. Document the constant-rank restriction in the blueprint block."
+  },
+  {
+    "timestamp": "2026-06-19T03:11:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "higherDirectImage"
+    },
+    "session": {
+      "id": "session_5",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "",
+      "key_lemmas_used": [
+        "Scheme.Modules.pushforward",
+        "CategoryTheory.Functor.rightDerived"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Define R^i f_* as the i-th right-derived functor of the additive pushforward, taking [HasInjectiveResolutions X.Modules] as instance hypothesis (bridge not yet in Mathlib)",
+        "code_tried": "noncomputable def higherDirectImage {X Y} (f : X ⟶ Y) (n : ℕ) [HasInjectiveResolutions X.Modules] : X.Modules ⥤ Y.Modules := (Scheme.Modules.pushforward f).rightDerived n",
+        "line_number": "129",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Honest gating: takes HasInjectiveResolutions as hypothesis; self-discharges once the Grothendieck bridge instance lands"
+      }
+    ],
+    "next_steps": "Done conditionally. Becomes unconditional when found:has_injective_resolutions bridge is supplied."
+  },
+  {
+    "timestamp": "2026-06-19T03:11:30Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "Scheme.HModule"
+    },
+    "session": {
+      "id": "session_5",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Scheme.globalSectionsAb",
+        "CategoryTheory.Functor.rightDerived"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Sheaf cohomology H^i(X,ℱ) = i-th right-derived of additive Γ, evaluated at ℱ, with [HasInjectiveResolutions X.Modules] hypothesis",
+        "code_tried": "noncomputable def Scheme.HModule {X} (i : ℕ) [HasInjectiveResolutions X.Modules] (F : X.Modules) : AddCommGrpCat := ((Scheme.globalSectionsAb X).rightDerived i).obj F",
+        "line_number": "138",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Additive instance for globalSectionsAb supplied by companion instance; honest bridge hypothesis"
+      }
+    ],
+    "next_steps": "Done conditionally. Auditor minor: name `HModule` ambiguous; consider `sheafCohomology`."
+  },
+  {
+    "timestamp": "2026-06-19T03:12:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "pushforwardBaseChangeMap"
+    },
+    "session": {
+      "id": "session_5",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "mateEquiv",
+        "Scheme.Modules.pullbackPushforwardAdjunction",
+        "Scheme.Modules.pullbackComp",
+        "Scheme.Modules.pullbackCongr"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Beck–Chevalley mate of the canonical comparison g^*∘f'^* ≅ f^*∘g'^* under the two pullback⊣pushforward adjunctions, built from pullbackComp + pullbackCongr h",
+        "code_tried": "(mateEquiv (pullbackPushforwardAdjunction f) (pullbackPushforwardAdjunction f') ((pullbackComp f' g).hom ≫ (pullbackCongr h).hom ≫ (pullbackComp g' f).inv)).natTrans",
+        "line_number": "160",
+        "lean_error": "",
+        "result": "success",
+        "insight": "mateEquiv wiring is correct (commutativity h suffices for the morphism; cartesianness only for iso). Blueprint over-constrains to 'cartesian square'"
+      }
+    ],
+    "next_steps": "Done. Blueprint: reword block to 'commutative square'."
+  },
+  {
+    "timestamp": "2026-06-19T03:05:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "instIsGrothendieckAbelianModules"
+    },
+    "session": {
+      "id": "session_5",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "IsGrothendieckAbelian X.Modules needs AB5OfSize (SheafOfModules R) + HasSeparator (SheafOfModules R); neither exists in Mathlib (probed: both synthInstanceFailed). Mathlib has these for `Sheaf J A`, not for sheaves-of-modules.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Probe whether the bridge instances synthesize off the shelf via Sheaf.isGrothendieckAbelian_of_essentiallySmall",
+        "code_tried": "(probe) example : HasSeparator X.Modules := inferInstance; example : AB5OfSize (PresheafOfModules ...) := inferInstance",
+        "line_number": "n/a (probe)",
+        "lean_error": "synthInstanceFailed: HasSeparator X.Modules; AB5OfSize.{u,u,u,u+1} (PresheafOfModules (Sheaf.val X.ringCatSheaf))",
+        "result": "failed",
+        "insight": "Genuine Mathlib gap; not formalizable without first contributing AB5OfSize+HasSeparator for SheafOfModules. Do NOT retry as a proof lane — it is a Mathlib-contribution-sized obligation."
+      }
+    ],
+    "next_steps": "Strategy item, not a proof lane. Derived functors run conditional on [HasInjectiveResolutions] until this lands."
+  },
+  {
+    "timestamp": "2026-06-19T03:05:01Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "instHasInjectiveResolutionsModules"
+    },
+    "session": {
+      "id": "session_5",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "Downstream of instIsGrothendieckAbelianModules: enoughInjectives ⇒ HasInjectiveResolutions chain is in Mathlib, but its head (Grothendieck-abelian for X.Modules) is the blocked bridge above.",
+      "key_lemmas_used": [
+        "CategoryTheory.IsGrothendieckAbelian.enoughInjectives",
+        "CategoryTheory.InjectiveResolution.instHasInjectiveResolution"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Inherit from the Grothendieck-abelian bridge (link 2 & 3 are Mathlib)",
+        "code_tried": "(blocked upstream — see instIsGrothendieckAbelianModules)",
+        "line_number": "n/a",
+        "lean_error": "blocked on AB5OfSize/HasSeparator",
+        "result": "failed",
+        "insight": "Only link 1 (Modules grothendieck-abelian) is the gap; links 2-3 (enoughInjectives, has-resolutions) are Mathlib and would follow instantly."
+      }
+    ],
+    "next_steps": "Unblocks automatically once instIsGrothendieckAbelianModules lands."
+  },
+  {
+    "timestamp": "2026-06-19T03:04:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "Scheme.Modules.exteriorPower"
+    },
+    "session": {
+      "id": "session_5",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "No functorial exterior power for (pre)sheaves of modules in Mathlib (only ModuleCat.exteriorPower.functor at the module level). Probed: no exteriorPower under Algebra/Category/ModuleCat/Sheaf* or Presheaf*.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Search for an existing (pre)sheaf-of-modules exterior power functor",
+        "code_tried": "grep exteriorPower under ModuleCat/Sheaf*, ModuleCat/Presheaf*, AlgebraicGeometry/",
+        "line_number": "n/a",
+        "lean_error": "no results",
+        "result": "failed",
+        "insight": "Real Mathlib gap; would need an openwise/sheafified exterior-power functor construction. Strategy/infra item, not a one-shot proof."
+      }
+    ],
+    "next_steps": "Strategy: decide build-it-in-project vs await Mathlib. Not on any current frontier-critical path until even-genus Sym/∧ lemmas are scoped."
+  },
+  {
+    "timestamp": "2026-06-19T03:04:01Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "Scheme.Modules.symPower"
+    },
+    "session": {
+      "id": "session_5",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "No functorial symmetric power for (pre)sheaves of modules in Mathlib (parallel to exteriorPower gap). Known project gap (memory sheafofmodules-grothendieck-gap).",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Search for sheaf-of-modules symmetric power",
+        "code_tried": "grep symPower/symmetricPower under ModuleCat/Sheaf*, Presheaf*, AlgebraicGeometry/",
+        "line_number": "n/a",
+        "lean_error": "no results",
+        "result": "failed",
+        "insight": "Real Mathlib gap, even at ModuleCat level (no functorial sym power). Strategy/infra item."
+      }
+    ],
+    "next_steps": "Same as exteriorPower: project-build vs Mathlib decision when even-genus Sym lemmas are scoped."
+  }
+]

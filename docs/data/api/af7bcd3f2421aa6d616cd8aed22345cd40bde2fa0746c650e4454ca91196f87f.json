@@ -1,0 +1,99 @@
+[
+  {
+    "timestamp": "2026-06-19T03:57:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pullbackTensorMap_isIso_of_isOpenImmersion"
+    },
+    "session": {
+      "id": "session_24",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "hmon mate-transport re-expresses but does not eliminate the sectionwise pure-tensor f.appIso collapse; residuals hηcompat/hδcompat, and hδcompat is circular-equivalent to the prior hcompat",
+      "key_lemmas_used": [
+        "Adjunction.IsMonoidal.leftAdjoint_μ",
+        "leftAdjointUniq",
+        "unit_leftAdjointUniq_hom_app",
+        "leftAdjointUniq_hom_app_counit",
+        "presheafUnit_comp_map_eta",
+        "MonoidalCategory.tensorHom_comp_tensorHom"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Transport hadj'.IsMonoidal's two fields across H1=leftAdjointUniq from known adj₀.IsMonoidal instead of proving sectionwise; ε-field via presheafUnit_comp_map_eta+unit_leftAdjointUniq_hom_app driven by erw/reassoc_of%; μ-field via leftAdjoint_μ(adj₀)+hcounit/hunit cancellation",
+        "code_tried": "haveI hmon : hadj'.IsMonoidal := by refine ⟨?_,?_⟩ ... have hηcompat ... have hδcompat ...; ε/μ-field plumbing ~50 LOC",
+        "line_number": "4093 (lemma), 4244 (hηcompat sorry), 4262 (hδcompat sorry)",
+        "lean_error": "none (compiles); residuals left as 2 typed sorries with verified hom_ext reductions",
+        "goal_after": "hηcompat: η Gβ = H1.hom.app 𝟙_ ≫ η (pullback φ'); hδcompat: ∀ A B, δ Gβ A B = H1.hom.app(A⊗B) ≫ δ(pullback φ') A B ≫ (H1.inv A ⊗ₘ H1.inv B)",
+        "result": "partial",
+        "insight": "plain rw key-fails on defeq-but-not-syntactic ≫ instances (carrier residue) — must use erw/reassoc_of%/simp only[Category.assoc]; δ-domain Gβ.obj(A⊗B) is pushforward of a tensor, NOT syntactic tensor, so tensor_ext stuck after hom_ext (CommRing metavar); transport is circular — hδcompat ⟺ original hcompat, sole win is connecting to Mathlib monoidal-adjunction doctrine"
+      }
+    ],
+    "next_steps": "Close hδcompat/hηcompat sectionwise on PURE TENSORS reusing D3′ pushforwardComp_lax_μ helpers (pushforward_μ_eq/restrictScalars_μ_app/forget₂_restrictScalars_μ_hom_tmul/pushforward_map_restrictScalars_μ_app_tmul). Effort-break hmon into ε-field + μ-field standalone if it stalls again. DO NOT re-attempt mate-transport reshuffles (circular)."
+  },
+  {
+    "timestamp": "2026-06-19T03:55:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "exists_tensorObj_inverse"
+    },
+    "session": {
+      "id": "session_24",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Residual B depends on connector homOfLocalCompat_restrictFunctor_map NOT YET in environment (co-assigned DualInverse lane, undelivered this iter); residual A cocycle needs ~8 section-app (_hom_val_app) lemmas that do not exist",
+      "key_lemmas_used": [
+        "isIso_of_isIso_restrict",
+        "homOfLocalCompat",
+        "topSectionToHom_app"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Residual B: isolate connector as `have key : (restrictFunctor (U x).ι).map ε = f x`, then rw[key]; exact hfiso x",
+        "code_tried": "have key : (restrictFunctor (U x).ι).map ε = f x := by rw [hεdef]; sorry\n    rw [key]; exact hfiso x",
+        "line_number": "139 (key), 121 (cocycle hf)",
+        "lean_error": "none (compiles); key body left sorry — equals exactly homOfLocalCompat_restrictFunctor_map U _ f _ x",
+        "goal_after": "(restrictFunctor (U x).ι).map (homOfLocalCompat U ⋯ f ⋯) = f x",
+        "result": "partial",
+        "insight": "iso-from-equation half CLOSED; connector reads off homOfLocalCompat's opaque internal IsGluing datum — must be proven in DualInverse.lean where H/hsup/hglue/hcompat are in scope; one-line swap on integration"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Residual A cocycle hf: heavy automation then definitional reduction",
+        "code_tried": "rfl / aesop_cat / simp / subsingleton (all FAIL); then simp only [hf_def, he, huι, heN, heM]",
+        "line_number": "121",
+        "lean_error": "subsingleton: failed to synthesize Subsingleton (genuine ab-group hom-type, not thin poset)",
+        "goal_after": "explicit canonical iso-chain on each leg conjugated by image_preimage_of_le eqToHoms",
+        "result": "partial",
+        "insight": "needs sectionwise _hom_val_app characterisations of 8 sheafified isos (tensorObj_restrict_iso, tensorObjIsoOfIso, tensorObj_unit_iso, dual_restrict_iso, dualIsoOfIso, dual_unit_iso, restrictFunctorIsoPullback, pullbackUnitIso) — NONE exist; cleaner abstract route = dualIsoOfIso contravariant functoriality + tensorObjIsoOfIso bifunctoriality + unit self-duality cancellation (multi-hundred LOC)"
+      }
+    ],
+    "next_steps": "PRIORITIZE the connector lane homOfLocalCompat_restrictFunctor_map (frontier lem:hom_of_local_compat_restrict, DualInverse.lean, ~40-80 LOC) — it was assigned but NOT delivered this iter; unblocks B with a one-line swap. Then effort-break the A cocycle along the abstract functoriality trio."
+  },
+  {
+    "timestamp": "2026-06-19T03:57:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "homOfLocalCompat_restrictFunctor_map"
+    },
+    "session": {
+      "id": "session_24",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Connector lane (objective 2) was NOT delivered — no edit to DualInverse.lean this iter; declaration does not exist (still a frontier node lem:hom_of_local_compat_restrict). Blocks TensorObjInverse residual B.",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Dispatch a dedicated prover lane on DualInverse.lean to author homOfLocalCompat_restrictFunctor_map (read off homOfLocalCompat's internal IsGluing/hconn spec; ~40-80 LOC). Cheapest remaining win; on landing, TensorObjInverse `key` becomes one line."
+  }
+]

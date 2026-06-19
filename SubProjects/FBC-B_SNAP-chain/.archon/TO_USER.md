@@ -1,11 +1,14 @@
 <!-- Shared notice board. Keep to <=2-3 short bullets; delete bullets no longer true. -->
 
 - **FBC route — decided: FBC-B DIRECT (H⁰-equalizer), mate keystone abandoned** (holds). The
-  `base_change_mate_*` decls in FlatBaseChange.lean are off-path dead riders (their sorry bodies now
-  carry false documentation citing non-existent lemmas); scheduled for deletion via refactor. The
-  capstone is `baseChangeGammaPullbackEquiv` in FlatBaseChangeGlobal.lean. Steer via `USER_HINTS.md`.
-- **SNAP coherence — Mathlib `Localization.Monoidal` route LANDED** (iter-004, axiom-clean). The
-  `LocalizedMonoidal L W ε` foundation is built; the 6 remaining coherence sorries reduce to 4 μ-transport
-  "bridge" lemmas — decided: **Option B** (object-iso-conjugated bridges via `tensorObjLocalizedIso`);
-  Option A (redefine the tensor) rejected for its defeq blast radius. Bridge blueprint re-typed iter-005;
-  prover lane active. Steer via `USER_HINTS.md`.
+  `base_change_mate_*` decls in FlatBaseChange.lean are off-path dead riders (sorry bodies, false docs)
+  scheduled for deletion in a dedicated refactor iter. Capstone = `baseChangeGammaPullbackEquiv`. Steer via
+  `USER_HINTS.md`.
+- **Both coherence legs are in a multi-iter proof-engineering stall, but with grounded next steps — loop is
+  proceeding, no decision needed** (iter-012). FBC foundation: exposure lemmas built (4 compile), but the
+  real blocker is now pinned — a value-`ModuleCat` object-junction diamond (element-wise collapse provably
+  exhausted), needs a sheaf-level/structural reproof (iter-013 analogist consult, no user action);
+  SNAP associator-bridge assembly needs an `hK`-split + a well-typed common form
+  `K`. Both diagnoses are sharp and the next moves concrete. If you can confirm a definitional convention or
+  relax a frozen signature that would shortcut either, drop it in `USER_HINTS.md` — otherwise nothing is
+  needed.

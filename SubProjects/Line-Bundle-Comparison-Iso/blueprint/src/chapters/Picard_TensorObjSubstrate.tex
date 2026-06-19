@@ -6,6 +6,7 @@
 % archon:covers AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean
 % archon:covers AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/SliceTransport.lean
 % archon:covers AlgebraicJacobian/Picard/TensorObjSubstrate/PresheafInternalHom.lean
+% archon:covers AlgebraicJacobian/Picard/TensorObjInverse.lean
 
 \section{Motivation: the abelian-group-valued relative Picard sheaf}
 \label{sec:tensorobj_motivation}
@@ -1356,7 +1357,6 @@ block is retained for the historical record only and must \emph{not} be formaliz
 
 \begin{lemma}
 
-\leanok
 [Inverse of an invertible module]
   \label{lem:tensorobj_inverse_invertible}
   \lean{AlgebraicGeometry.Scheme.Modules.exists_tensorObj_inverse}
@@ -1412,7 +1412,7 @@ block is retained for the historical record only and must \emph{not} be formaliz
 \end{lemma}
 
 \begin{proof}
-  \uses{lem:tensorobj_preserves_locally_trivial, lem:tensorobj_restrict_iso, lem:tensorobj_unit_iso, lem:internal_hom_eval, lem:internal_hom_isSheaf, lem:dual_isLocallyTrivial, lem:dual_restrict_iso}
+  \uses{lem:tensorobj_preserves_locally_trivial, lem:tensorobj_restrict_iso, lem:tensorobj_unit_iso, lem:internal_hom_eval, lem:internal_hom_isSheaf, lem:dual_isLocallyTrivial, lem:dual_restrict_iso, lem:sheafofmodules_hom_of_local_compat, lem:hom_of_local_compat_restrict, lem:isiso_of_isiso_restrict, lem:trivialisation_restrict_compat, lem:tensorobj_unit_self_duality_collapse}
   The dual object and its evaluation are now supplied by the internal-hom
   infrastructure of \cref{sec:tensorobj_dual_infra}. Take
   \(L^{-1} := \mathcal{H}om_{\mathcal{O}_X}(L, \mathcal{O}_X)\) to be the
@@ -1490,7 +1490,6 @@ block is retained for the historical record only and must \emph{not} be formaliz
 
 \begin{lemma}
 
-\leanok
 [Closure of \(\otimes\) on the locally-trivial carrier
   \(\texttt{LineBundle.OnProduct}\)]
   \label{lem:tensorobj_lift_onproduct}
@@ -1515,7 +1514,6 @@ block is retained for the historical record only and must \emph{not} be formaliz
 
 \begin{proof}
   \uses{lem:tensorobj_preserves_locally_trivial}
-  \leanok
   Closure is exactly
   \cref{lem:tensorobj_preserves_locally_trivial}: the tensor product of two
   locally-trivial rank-one modules is again locally trivial of rank one
@@ -3643,19 +3641,315 @@ the presheaf-level pullback. Write
   preserved and reflected by the pseudofunctoriality isomorphism it is conjugated by.
 \end{proof}
 
+\subsection{The K1 monoidal-mate bridge ($\mu$-side): two pure-tensor collapses}
+
+The open-immersion comparison lemma K1 (\cref{lem:pullback_tensor_map_isiso_open_immersion})
+reduces, by the same two-ingredient model as \cref{lem:tensorobj_restrict_iso}, to the
+statement that the canonical left-adjoint-uniqueness isomorphism
+\(H_1 = \mathtt{leftAdjointUniq} : G_\beta \xrightarrow{\sim} \mathtt{pullback}\,\varphi'\) is a
+\emph{monoidal} natural isomorphism. Here \(f : Y \to X\) is the open immersion,
+\(\varphi' = f.\mathtt{toRingCatSheafHom}.\mathrm{hom}\) is its presheaf-level structure map,
+\(\beta\) is the sectionwise-bijective structure-ring map of the restriction (sectionwise
+\(f.\mathtt{appIso}^{-1}\)), and
+\(G_\beta = \mathtt{pushforward}_0^{\mathrm{Comm}}\,f.\mathtt{opensFunctor}\,X.\mathrm{presheaf}
+\,\circ\, \mathtt{restrictScalars}\,\beta'\) is the resulting \emph{strong}-monoidal restriction
+functor (a left adjoint of \(\mathtt{pushforward}\,\varphi'\), so \(H_1\) is defined). That \(H_1\)
+is monoidal is two compatibilities --- one on the unit comparison, one on the tensorator --- and
+each is an open-immersion pure-tensor collapse of the bijective structure-ring map
+\(f.\mathtt{appIso}\). These are the $\mu$/$\delta$-side twins of the already-proved $\eta$/$\varepsilon$-side
+template \cref{lem:presheafunit_comp_map_eta}, and the open-immersion analogues of the D3$'$
+composition coherence \cref{lem:pushforwardcomp_lax_mu}; they use the same D3$'$ pure-tensor
+section calculus. We isolate them as the next two lemmas; granting them, K1's
+monoidal-mate obligation is discharged by the standard mate transport across \(H_1\).
+
+\begin{lemma}
+
+\leanok
+[Presheaf-side mate identity for the $\eta$-bridge]
+  \label{lem:presheafunit_comp_map_eta}
+  \lean{AlgebraicGeometry.Scheme.Modules.presheafUnit_comp_map_eta}
+  \uses{lem:presheaf_pushforward_laxmonoidal, lem:presheaf_pullback_oplaxmonoidal}
+  For a scheme morphism \(f : Y \to X\) with \(\varphi' = f.\mathtt{toRingCatSheafHom}.\mathrm{hom}\),
+  the presheaf-of-modules adjunction unit at the monoidal unit, post-composed with the pushforward
+  of the oplax unit comparison \(\eta(\mathtt{pullback}\,\varphi')\), recovers the lax unit
+  comparison \(\varepsilon(\mathtt{pushforward}\,\varphi')\):
+  \[
+    (\mathtt{pullbackPushforwardAdjunction}\,\varphi').\mathrm{unit}.\mathrm{app}\,
+      \mathbf{1}^{\mathrm p}
+    \;\mathbin{;}\;
+    (\mathtt{pushforward}\,\varphi').\mathrm{map}\bigl(\eta(\mathtt{pullback}\,\varphi')\bigr)
+    \;=\;
+    \varepsilon(\mathtt{pushforward}\,\varphi').
+  \]
+  This is the presheaf-level driver of the D2$'$ $\eta$-bridge, and the template the K1
+  $\mu$-side bridge mirrors.
+\end{lemma}
+\begin{proof}
+  \uses{lem:presheaf_pushforward_laxmonoidal, lem:presheaf_pullback_oplaxmonoidal}
+  This is the mate identity
+  \(\mathtt{Adjunction.unit\_app\_unit\_comp\_map\_}\eta\) for the adjunction
+  \(\mathtt{pullbackPushforwardAdjunction}\,\varphi'\), whose
+  \(\mathtt{Adjunction.IsMonoidal}\) structure is supplied by
+  \(\mathtt{presheafPushforwardLaxMonoidal}\) (\cref{lem:presheaf_pushforward_laxmonoidal}) and
+  \(\mathtt{presheafPullbackOplaxMonoidal}\) (\cref{lem:presheaf_pullback_oplaxmonoidal}).
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[K1 $\eta$-side collapse: $H_1$ respects the unit comparison]
+  \label{lem:pushforward_eta_appiso_collapse}
+  \lean{AlgebraicGeometry.Scheme.Modules.pushforward_eta_appIso_collapse}
+  \uses{lem:tensorobj_restrict_iso, lem:restrictscalars_laxmonoidal, lem:presheaf_pullback_oplaxmonoidal, lem:pushforwardpushforwardadj_unit_app_app_apply, lem:restrictscalars_oplaxmonoidal_eta_app_one}
+  In the K1 setting above, the strong unit comparison \(\eta\,G_\beta\) of the restriction functor
+  agrees, under \(H_1\), with the oplax unit comparison \(\eta(\mathtt{pullback}\,\varphi')\):
+  \[
+    \eta\,G_\beta
+    \;=\;
+    H_1.\mathrm{hom}.\mathrm{app}\,\mathbf{1}^{\mathrm p}
+    \;\mathbin{;}\;
+    \eta(\mathtt{pullback}\,\varphi').
+  \]
+  Equivalently, \(H_1\) carries the monoidal unit of \(G_\beta\) to that of
+  \(\mathtt{pullback}\,\varphi'\).
+\end{lemma}
+\begin{proof}
+  \uses{lem:tensorobj_restrict_iso, lem:restrictscalars_laxmonoidal, lem:pushforwardpushforwardadj_unit_app_app_apply, lem:restrictscalars_oplaxmonoidal_eta_app_one}
+  This is the $\eta$/$\varepsilon$-side of ``\(H_1\) is a monoidal natural isomorphism'', the
+  open-immersion analogue of the D2$'$ template \cref{lem:presheafunit_comp_map_eta}. It is
+  verified sectionwise on an open \(U\). On the unit module the strong unit
+  comparison \(\eta\,G_\beta\) of \(\mathtt{restrictScalars}\,\beta'\) is, sectionwise, the
+  structure-ring identity of the \emph{bijective} \(f.\mathtt{appIso}\)
+  (the strong-monoidal upgrade of base change along a ring isomorphism, as in
+  \cref{lem:tensorobj_restrict_iso}); the mate \(\eta(\mathtt{pullback}\,\varphi')\) is the same
+  base-change value transported across \(H_1\), so the two sides coincide. The collapse of the
+  adjunction-unit composite to a sectionwise structure-ring map uses the presheaf-level value
+  \cref{lem:pushforwardpushforwardadj_unit_app_app_apply}, after which both sides reduce to the
+  ring-unit identity \(1 \mapsto 1\).
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Presheaf-level value of the pushforward--pushforward adjunction unit]
+  \label{lem:pushforwardpushforwardadj_unit_app_app_apply}
+  \lean{AlgebraicGeometry.Scheme.Modules.pushforwardPushforwardAdj_unit_app_app_apply}
+  For the pushforward--pushforward adjunction \(F \dashv G\) assembled from a morphism of
+  presheaves of rings (the adjunction \(\mathtt{pushforwardPushforwardAdj}\,adj\,\varphi\,\psi\,H_1\,H_2\)),
+  the unit's sectionwise carrier action is precomposition by the pullback of the adjunction
+  counit: for a module \(M\), an open \(U\) and a section \(x\),
+  \[
+    \bigl(((\mathtt{pushforwardPushforwardAdj}\,adj\,\varphi\,\psi\,H_1\,H_2).\mathrm{unit}.\mathrm{app}\,M).\mathrm{app}\,U\bigr).\mathrm{hom}\,x
+    \;=\;
+    \bigl(M.\mathrm{map}\,(adj.\mathrm{counit}.\mathrm{app}\,U^{\mathrm{op}})^{\mathrm{op}}\bigr).\mathrm{hom}\,x .
+  \]
+\end{lemma}
+\begin{proof}
+  Definitional. The constituent isomorphisms \(\mathtt{pushforwardId}\) and
+  \(\mathtt{pushforwardComp}\) are \(\mathtt{Iso.refl}\), so the unit composite collapses to the
+  \(\mathtt{pushforwardNatTrans}\) of the adjunction counit, whose carrier action is exactly the
+  displayed precomposition; the equation holds by \(\mathtt{rfl}\) on the element-applied form.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Unit-preservation of the strong-monoidal $\mathtt{restrictScalars}$ oplax unit]
+  \label{lem:restrictscalars_oplaxmonoidal_eta_app_one}
+  \lean{AlgebraicGeometry.Scheme.Modules.restrictScalars_oplaxMonoidal_η_app_one}
+  \uses{lem:restrictscalars_laxmonoidal}
+  Let \(\alpha : R \to S\) be a morphism of presheaves of commutative rings whose every sectionwise
+  carrier \(\alpha_W\) is \emph{bijective}, so that \(\mathtt{restrictScalars}\,\alpha\) is
+  \emph{strong} monoidal. Then its oplax-monoidal unit comparison
+  \(\eta(\mathtt{restrictScalars}\,\alpha)\) preserves the section ring unit: for every object \(W\),
+  \[
+    \bigl(\eta(\mathtt{restrictScalars}\,\alpha)_W\bigr)(1_{S(W)}) = 1_{R(W)} .
+  \]
+\end{lemma}
+\begin{proof}
+  \uses{lem:restrictscalars_laxmonoidal}
+  Since \(\alpha\) is sectionwise bijective, \(\mathtt{restrictScalars}\,\alpha\) carries a
+  \emph{strong} monoidal structure, in which the oplax unit \(\eta\) is the two-sided inverse of the
+  lax unit \(\varepsilon\). The lax unit sends \(1 \mapsto 1\): on sections it is the change-of-rings
+  unit, namely the ring map \(\alpha_W\) applied to the unit, and \(\alpha_W(1)=1\). Composing
+  \(\varepsilon\) with its inverse \(\eta\) yields the identity (\(\varepsilon \mathbin{;} \eta =
+  \mathbf 1\)), so \(\eta\) too sends the unit to the unit.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Sectionwise value of the LHS mate tensorator on a pure tensor]
+  \label{lem:pushforward_lax_mu_comparison_lhs_tmul}
+  % NOTE (iter-029, lvb substrate029): statement-shape drift. This block frames a one-sided VALUE
+  % (LHS mate evaluates to m⊗n), but the Lean `pushforward_lax_mu_comparison_lhs_tmul` is a per-section
+  % morphism COMPARISON (μ(rightAdjointLaxMonoidal).app W = μ(presheafPushforwardLaxMonoidal).app W),
+  % with the value computation as the (still-open) sorry residual. Blueprint-writer: reword to the
+  % comparison form, and move the rhs_tmul + pushforward_mu_eq \uses into THIS block (consumed here,
+  % not in the parent's hom_ext).
+  \lean{AlgebraicGeometry.Scheme.Modules.pushforward_lax_mu_comparison_lhs_tmul}
+  \uses{lem:pushforwardpushforwardadj_unit_app_app_apply, lem:restrictscalars_mu_app, lem:restrictscalars_mu_app_tmul, lem:forget2_restrictscalars_mu_hom_tmul}
+  In the K1 setting, the adjoint-transported tensorator
+  \(\mu(\mathtt{rightAdjointLaxMonoidal}\,\mathtt{hadj}')\) on the objects \(G_\beta A\), \(G_\beta B\)
+  is an adjunction \emph{mate}. Unfolding the mate to its explicit adjunction form
+  \[
+    \mathtt{hadj}'.\mathrm{unit}
+      \;\mathbin{;}\;
+    (\mathtt{pushforward}\,\varphi').\mathrm{map}
+      \bigl(\delta\,G_\beta\,A\,B \;\mathbin{;}\;
+        (\mathtt{hadj}'.\mathrm{counit} \otimes_{\mathrm m} \mathtt{hadj}'.\mathrm{counit})\bigr),
+  \]
+  its value on an open \(W\) at a pure tensor \(m \otimes_t n\) is the base-change value
+  \(m \otimes_t n\).
+\end{lemma}
+\begin{proof}
+  \uses{lem:pushforwardpushforwardadj_unit_app_app_apply, lem:restrictscalars_mu_app, lem:restrictscalars_mu_app_tmul, lem:forget2_restrictscalars_mu_hom_tmul}
+  We evaluate the three legs of the unfolded mate sectionwise at \(W\) on the pure tensor
+  \(m \otimes_t n\). The adjunction unit acts by precomposition with the pullback of the counit,
+  \(M.\mathrm{map}\,(\mathtt{hadj}'.\mathrm{counit})^{\mathrm{op}}\), by
+  \cref{lem:pushforwardpushforwardadj_unit_app_app_apply}. Reindexing the
+  \((\mathtt{pushforward}\,\varphi').\mathrm{map}\) leg to the section over \(F^{\mathrm{op}}W\), the
+  strong-monoidal oplax tensorator \(\delta\,G_\beta\) of the composite
+  \(\mathtt{pushforward}_0^{\mathrm{Comm}} \cdot \mathtt{restrictScalars}\,\beta'\) is, on a pure
+  tensor, the identity: its \(\mathtt{restrictScalars}\,\beta'\) factor is the base-change tensorator,
+  which is the identity on pure tensors by \cref{lem:restrictscalars_mu_app},
+  \cref{lem:restrictscalars_mu_app_tmul} and \cref{lem:forget2_restrictscalars_mu_hom_tmul}, while its
+  \(\mathtt{pushforward}_0^{\mathrm{Comm}}\) factor has identity tensorator. Finally the pair of
+  counits \(\mathtt{hadj}'.\mathrm{counit} \otimes_{\mathrm m} \mathtt{hadj}'.\mathrm{counit}\) acts as
+  the structure-ring identity of the \emph{bijective} \(f.\mathtt{appIso}\) on each factor. The three
+  legs compose to the identity, so the value is \(m \otimes_t n\).
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Sectionwise value of the RHS composition tensorator on a pure tensor]
+  \label{lem:pushforward_lax_mu_comparison_rhs_tmul}
+  \lean{AlgebraicGeometry.Scheme.Modules.pushforward_lax_mu_comparison_rhs_tmul}
+  \uses{lem:pushforward_mu_eq, lem:restrictscalars_mu_app, lem:restrictscalars_mu_app_tmul, lem:forget2_restrictscalars_mu_hom_tmul, lem:pushforward_map_restrictscalars_mu_app_tmul}
+  In the K1 setting, the directly-defined composition tensorator
+  \(\mu(\mathtt{presheafPushforwardLaxMonoidal}\,\varphi')\) on \(G_\beta A\), \(G_\beta B\),
+  evaluated on an open \(W\) at a pure tensor \(m \otimes_t n\), is the base-change value
+  \(m \otimes_t n\).
+\end{lemma}
+\begin{proof}
+  \uses{lem:pushforward_mu_eq, lem:restrictscalars_mu_app, lem:restrictscalars_mu_app_tmul, lem:forget2_restrictscalars_mu_hom_tmul, lem:pushforward_map_restrictscalars_mu_app_tmul}
+  By \cref{lem:pushforward_mu_eq} the pushforward composition tensorator reduces to the
+  \(\mathtt{restrictScalars}\,\varphi'\) tensorator on the \(\mathtt{pushforward}_0^{\mathrm{Comm}}\)
+  reindexed objects. Exposing the \(\mathtt{ModuleCat}\) tensorator by
+  \cref{lem:restrictscalars_mu_app} and collapsing on the pure tensor by
+  \cref{lem:restrictscalars_mu_app_tmul} and \cref{lem:forget2_restrictscalars_mu_hom_tmul}, with the
+  outer \((\mathtt{pushforward}\,\varphi').\mathrm{map}\) leg collapsed by
+  \cref{lem:pushforward_map_restrictscalars_mu_app_tmul}, the value is \(m \otimes_t n\). This reuses
+  the same helper family as the composition coherence of the single pushforward.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Bare tensorator comparison of the two lax structures on $\mathtt{pushforward}\,\varphi'$]
+  \label{lem:pushforward_lax_mu_comparison}
+  \lean{AlgebraicGeometry.Scheme.Modules.pushforward_lax_mu_comparison}
+  \uses{lem:pushforward_lax_mu_comparison_lhs_tmul, lem:pushforward_lax_mu_comparison_rhs_tmul, lem:pushforward_mu_eq}
+  In the K1 setting above, the functor \(\mathtt{pushforward}\,\varphi'\) carries \emph{two} lax
+  monoidal structures: the adjoint-transported one
+  \(\mathtt{rightAdjointLaxMonoidal}\,(\mathtt{hadj}')\), induced from the strong-monoidal left
+  adjoint \(G_\beta\) through the adjunction \(\mathtt{hadj}' : G_\beta \dashv
+  \mathtt{pushforward}\,\varphi'\), and the directly-defined
+  \(\mathtt{presheafPushforwardLaxMonoidal}\) (\cref{lem:presheaf_pushforward_laxmonoidal}). Their
+  tensorators agree on the objects \(G_\beta A\), \(G_\beta B\):
+  \[
+    \mu\bigl(\mathtt{rightAdjointLaxMonoidal}\,\mathtt{hadj}'\bigr)\,(G_\beta A)\,(G_\beta B)
+    \;=\;
+    \mu\bigl(\mathtt{presheafPushforwardLaxMonoidal}\bigr)\,(G_\beta A)\,(G_\beta B).
+  \]
+  This is a \emph{bare} tensorator identity between two \emph{different kinds} of lax structures on
+  the same functor, with \emph{no} appeal to any monoidal-adjunction structure on \(\mathtt{hadj}'\):
+  that structure is precisely the monoidal adjunction being established, which in turn depends on
+  this identity.
+\end{lemma}
+\begin{proof}
+  \uses{lem:pushforward_lax_mu_comparison_lhs_tmul, lem:pushforward_lax_mu_comparison_rhs_tmul, lem:pushforward_mu_eq}
+  Crucially the two sides are \emph{not} symmetric. The left-hand tensorator
+  \(\mu(\mathtt{rightAdjointLaxMonoidal}\,\mathtt{hadj}')\) is an adjunction \emph{mate} of the strong
+  oplax tensorator of \(G_\beta\), whereas the right-hand
+  \(\mu(\mathtt{presheafPushforwardLaxMonoidal}\,\varphi')\) is a \emph{composition} structure. They
+  carry no common normal form, and must be brought to a common value by two distinct routes. No
+  appeal is made to a monoidal structure on the adjunction \(\mathtt{hadj}'\); such an appeal would
+  be circular, since that structure is precisely the monoidal adjunction instance being established,
+  which in turn consumes this identity.
+
+  We first reduce the right-hand side at the level of \emph{morphisms}, replacing
+  \(\mu(\mathtt{presheafPushforwardLaxMonoidal}\,\varphi')\) by the
+  \(\mathtt{restrictScalars}\,\varphi'\) tensorator via \cref{lem:pushforward_mu_eq} at the
+  \emph{morphism level}, before descending to sections --- \cref{lem:pushforward_mu_eq} is an
+  identity of presheaf morphisms and must be applied there, prior to section evaluation. We then argue sectionwise: on an open \(W\) the domain
+  \(G_\beta.\mathrm{obj}\,(A \otimes B)\) is, sectionwise, an honest \(\mathtt{ModuleCat}\) tensor, so
+  pure-tensor extensionality reduces the goal to checking equality on each pure tensor
+  \(m \otimes_t n\). By \cref{lem:pushforward_lax_mu_comparison_lhs_tmul} the left-hand mate evaluates
+  to \(m \otimes_t n\), and by \cref{lem:pushforward_lax_mu_comparison_rhs_tmul} the right-hand
+  composition tensorator evaluates to the same \(m \otimes_t n\). The two sides therefore agree on
+  every pure tensor, hence as presheaf morphisms.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[K1 $\mu$/$\delta$-side collapse: $H_1$ respects the tensorator]
+  \label{lem:pushforward_mu_appiso_collapse}
+  \lean{AlgebraicGeometry.Scheme.Modules.pushforward_mu_appIso_collapse}
+  \uses{lem:pushforward_lax_mu_comparison, lem:pushforward_mu_eq, lem:tensorobj_restrict_iso, lem:presheaf_pushforward_laxmonoidal, lem:presheaf_pullback_oplaxmonoidal}
+  In the K1 setting above, for all presheaves of modules \(A, B\) the strong tensorator
+  \(\delta\,G_\beta\,A\,B\) of the restriction functor agrees with the \(H_1\)-conjugate of the
+  oplax tensorator \(\delta(\mathtt{pullback}\,\varphi')\,A\,B\):
+  \[
+    \delta\,G_\beta\,A\,B
+    \;=\;
+    H_1.\mathrm{hom}.\mathrm{app}\,(A \otimes B)
+    \;\mathbin{;}\;
+    \delta(\mathtt{pullback}\,\varphi')\,A\,B
+    \;\mathbin{;}\;
+    \bigl(H_1.\mathrm{inv}.\mathrm{app}\,A \otimes_{\mathrm m} H_1.\mathrm{inv}.\mathrm{app}\,B\bigr).
+  \]
+  Equivalently, \(H_1\) is monoidal on tensorators. This is the genuine geometric content of K1
+  (the $\mu$/$\delta$-side twin of \cref{lem:presheafunit_comp_map_eta}, and the open-immersion
+  analogue of \cref{lem:pushforwardcomp_lax_mu}).
+\end{lemma}
+\begin{proof}
+  \uses{lem:pushforward_lax_mu_comparison, lem:pushforward_mu_eq}
+  The genuine geometric content is the bare tensorator comparison
+  \cref{lem:pushforward_lax_mu_comparison}; this proof is the formal reduction to it, and uses
+  \emph{no} mate machinery (\(\mathtt{hadj}'.\mathtt{IsMonoidal}\)), which would be circular. Four
+  steps: (1) cancel the isomorphism \(H_1 = \mathtt{leftAdjointUniq}\), restating the goal on the
+  \(\mathtt{pullback}\,\varphi'\) domain; (2) transpose across
+  \(\mathtt{hadj}' : G_\beta \dashv \mathtt{pushforward}\,\varphi'\) by hom-equivalence
+  injectivity, turning the left adjoint's oplax tensorator into the right adjoint's lax tensorator
+  \(\mu(\mathtt{rightAdjointLaxMonoidal}\,\mathtt{hadj}')\); (3) replace \(\delta\,G_\beta\) by
+  \(\mu_{\mathrm{Iso},\beta}^{-1}\); (4) reduce
+  \(\delta(\mathtt{pullback}\,\varphi')\) to \(\mu(\mathtt{presheafPushforwardLaxMonoidal})\) via
+  \cref{lem:pushforward_mu_eq}. The goal is then exactly
+  \cref{lem:pushforward_lax_mu_comparison}, which closes it.
+\end{proof}
+
 \begin{lemma}
 
 \leanok
 [Pullback commutes with $\otimes$ along an open immersion (K1)]
   \label{lem:pullback_tensor_map_isiso_open_immersion}
   \lean{AlgebraicGeometry.Scheme.Modules.pullbackTensorMap_isIso_of_isOpenImmersion}
-  % NOTE: K1 is the sole open ingredient of D4' (lem:pullback_tensor_iso_loctriv). The
-  % comparison is invertible for all modules along an open immersion because the pullback
-  % there is base change along the structure-sheaf isomorphism, which is strong monoidal.
-  % NOTE (iter-021): statement \leanok (scaffold present: STEP A sheafify-reduction +
-  % STEP B strong-monoidal witness e, all typecheck). Proof OPEN: sole residual is the
-  % `hcompat` mate-compatibility sorry (delta = e.hom), the monoidal-mate compatibility of
-  % leftAdjointUniq (delta-side analogue of D2' presheafUnit_comp_map_eta).
+  % NOTE (iter-025): K1's own body is now FULLY PROVED in Lean — `hmon : hadj'.IsMonoidal`
+  % is a real proof consuming the two extracted collapse lemmas. K1 is therefore transitively
+  % sorry ONLY through lem:pushforward_eta_appiso_collapse (η-side) and
+  % lem:pushforward_mu_appiso_collapse (μ/δ-side, the multi-hundred-LOC residual). Prove those
+  % two DIRECTLY (mirror pushforwardComp_lax_μ); do NOT route μ back through hmon — that is
+  % circular (hmon consumes the μ-collapse). The carrier diamond is gone (iter-023).
+  % NOTE (iter-026): circularity now EMPIRICALLY CONFIRMED — `unit_app_tensor_comp_map_δ hadj'`
+  % (and the η-twin `unit_app_unit_comp_map_η hadj'`) both error "failed to synthesize
+  % hadj'.IsMonoidal". The genuine μ-residual is the BARE tensorator comparison
+  % `μ(rightAdjointLaxMonoidal hadj') = μ(presheafPushforwardLaxMonoidal)` on Gβ A, Gβ B, proved
+  % sectionwise on pushforward₀OfCommRingCat pure tensors (NOT via the mate calculus). The η-side
+  % is nearly closed: reduced to one sectionwise ring identity `LHS(1)=(φ'.app U)(1)` (L4182),
+  % needing only a presheaf-level pushforwardPushforwardAdj.unit value lemma (rfl-shaped).
   \uses{lem:pullback_tensor_map, lem:tensorobj_restrict_iso, lem:isiso_pullbacktensormap_of_sheafifydelta}
   Let \(f : Y \to X\) be an \emph{open immersion} of schemes and let
   \(M, N \in \Scheme.\mathtt{Modules}\,X\) be \emph{arbitrary} \(\mathcal{O}_X\)-modules.
@@ -3690,7 +3984,7 @@ the presheaf-level pullback. Write
 \end{lemma}
 
 \begin{proof}
-  \uses{lem:pullback_tensor_map, lem:tensorobj_restrict_iso, lem:isiso_pullbacktensormap_of_sheafifydelta}
+  \uses{lem:pullback_tensor_map, lem:tensorobj_restrict_iso, lem:isiso_pullbacktensormap_of_sheafifydelta, lem:presheafunit_comp_map_eta, lem:pushforward_eta_appiso_collapse, lem:pushforward_mu_appiso_collapse}
   \textit{Source: [Stacks Project], Modules on Ringed Spaces, Lemma
   \texttt{lemma-tensor-product-pullback}.}
 
@@ -3726,10 +4020,28 @@ the presheaf-level pullback. Write
 
   Under the identification H1 the adjunction-mate oplax comparison
   \(\delta(\mathtt{pullback}\,\varphi')\) corresponds to that invertible tensorator of the
-  strong-monoidal \(\mathtt{pushforward}\,\beta\): this is the monoidal-mate compatibility of
+  strong-monoidal \(G_\beta\): this is the monoidal-mate compatibility of
   \(\mathtt{leftAdjointUniq}\) (its \(\mathtt{Adjunction.IsMonoidal}\) structure), the
   \(\delta\)-side analogue of the unit-side identity already used for the \(\eta\)-bridge of
-  the unit pair (D2$'$). Hence \(\delta(\mathtt{pullback}\,\varphi')\) is an isomorphism, so
+  the unit pair (D2$'$).
+
+  \emph{The monoidal-mate compatibility (the $\mu$-side bridge).} What must be shown is that the
+  lax structure on \(\mathtt{pushforward}\,\varphi'\) (the right adjoint) is the adjunction-mate
+  of the strong structure on its left adjoint \(G_\beta\) --- equivalently, that
+  \(H_1\) is a \emph{monoidal} natural isomorphism. This is exactly the two pure-tensor collapses
+  isolated above: the unit compatibility is \cref{lem:pushforward_eta_appiso_collapse} and the
+  tensorator compatibility is \cref{lem:pushforward_mu_appiso_collapse}. Granting them, the
+  Mathlib mate transport across \(H_1\) reduces each \(\mathtt{Adjunction.IsMonoidal}\) field to
+  the known monoidality of the canonical adjunction
+  \(\mathtt{pullbackPushforwardAdjunction}\,\varphi'\): the $\varepsilon$-field contracts the
+  unit comparison via \cref{lem:pushforward_eta_appiso_collapse} and closes by the proved D2$'$
+  template \cref{lem:presheafunit_comp_map_eta}; the $\mu$-field transports the tensorator via
+  \cref{lem:pushforward_mu_appiso_collapse} together with the unit/counit halves of the
+  \(\mathtt{leftAdjointUniq}\) comparison. With both fields in hand the standard mate calculus
+  identifies \(\delta(\mathtt{pullback}\,\varphi')\) with the invertible strong tensorator of
+  \(G_\beta\).
+
+  Hence \(\delta(\mathtt{pullback}\,\varphi')\) is an isomorphism, so
   its sheafification \(a_Y.\mathrm{map}\,\delta\) is too, and therefore
   \(\mathtt{pullbackTensorMap}\,f\,M\,N\) is an isomorphism.
 \end{proof}
@@ -5356,8 +5668,7 @@ internal construction.
   (\cref{lem:internal_hom_eval}) specialised at \(M = \mathbf 1\).
 \end{proof}
 
-\begin{definition}\leanok
-[Scheme-level presheaf dual of the unit is the unit]
+\begin{definition}[Scheme-level presheaf dual of the unit is the unit]
   \label{def:presheaf_dual_unit_iso}
   \lean{AlgebraicGeometry.Scheme.Modules.presheafDualUnitIso}
   \uses{def:dual_unit_iso_gen}
@@ -5368,7 +5679,6 @@ internal construction.
 \end{definition}
 \begin{proof}
   \uses{def:dual_unit_iso_gen}
-  \leanok
   Proved directly in Lean --- a direct instance of \cref{def:dual_unit_iso_gen}.
 \end{proof}
 
@@ -5567,7 +5877,6 @@ internal construction.
 
 
 
-\leanok
 [Restriction commutes with the dual along an open immersion (the C-bridge)]
   \label{lem:dual_restrict_iso}
   \lean{AlgebraicGeometry.Scheme.Modules.dual_restrict_iso}
@@ -5601,7 +5910,6 @@ internal construction.
 
 \begin{proof}
   \uses{lem:internal_hom_isSheaf, lem:restrictscalars_ringiso_dualequiv, lem:slice_dual_transport}
-  \leanok
   This is the classical internal-hom base-change isomorphism
   \(f^*\mathcal{H}\!om_{\mathcal{O}_X}(M, \mathcal{O}_X) \cong
   \mathcal{H}\!om_{\mathcal{O}_Y}(f^*M, f^*\mathcal{O}_X)\) of
@@ -5756,8 +6064,7 @@ internal construction.
   the construction commits to legs (A) and (B) above.
 \end{proof}
 
-\begin{lemma}\leanok
-[Dual of the structure sheaf]
+\begin{lemma}[Dual of the structure sheaf]
   \label{lem:dual_unit_iso}
   \lean{AlgebraicGeometry.Scheme.Modules.dual_unit_iso}
   \uses{lem:internal_hom_eval, lem:internal_hom_isSheaf, lem:tensorobj_unit_iso}
@@ -5774,7 +6081,6 @@ internal construction.
 
 \begin{proof}
   \uses{lem:internal_hom_eval, lem:internal_hom_isSheaf, def:presheaf_dual_unit_iso}
-  \leanok
   At the presheaf level the dual of the unit \(\mathbf{1} = \mathcal{O}_Y\) is the internal
   hom \(\mathcal{H}om(\mathbf{1}, \mathbf{1})\), whose value on an open \(U\) is the module
   of \(\mathcal{O}(U)\)-linear endomorphisms of \(\mathbf{1}|_U\). Each such endomorphism is
@@ -5794,7 +6100,6 @@ internal construction.
 
 
 
-\leanok
 [The dual of a line bundle is a line bundle]
   \label{lem:dual_isLocallyTrivial}
   \lean{AlgebraicGeometry.Scheme.Modules.dual_isLocallyTrivial}
@@ -5818,7 +6123,6 @@ internal construction.
 
 \begin{proof}
   \uses{lem:internal_hom_isSheaf, lem:dual_restrict_iso, lem:dual_unit_iso, def:scheme_modules_dual_iso_of_iso, lem:restrictscalars_ringiso_dualequiv}
-  \leanok
   Local triviality of \(L\) furnishes, around each point, an affine open \(U\) with a
   trivialisation \(L|_U \cong \mathcal{O}_U\); writing \(f : U \hookrightarrow X\) for the
   associated open immersion, it suffices to exhibit an isomorphism
@@ -5888,8 +6192,7 @@ internal construction.
   itself is an isomorphism.
 \end{proof}
 
-\begin{lemma}\leanok
-[Down-set image identity \(\iota_!(\iota^{-1}V) = V\)]
+\begin{lemma}[Down-set image identity \(\iota_!(\iota^{-1}V) = V\)]
   \label{lem:image_preimage_of_le}
   \lean{AlgebraicGeometry.Scheme.Modules.image_preimage_of_le}
   For opens \(V \le W\) of a scheme \(X\), the image under the open immersion \(W.\iota\) of
@@ -5901,7 +6204,6 @@ internal construction.
 \begin{proof}
 
 
-\leanok
   Proved directly in Lean --- the image of the preimage is the intersection with the
   (open) range of the immersion, which equals \(V\) since \(V \le W\) lies in that range.
 \end{proof}
@@ -5909,7 +6211,6 @@ internal construction.
 \begin{definition}
 
 
-\leanok
 [Local section of the hom-sheaf from a compatible family]
   \label{def:scheme_modules_hom_local_section}
   \lean{AlgebraicGeometry.Scheme.Modules.homLocalSection}
@@ -5925,7 +6226,6 @@ internal construction.
 \begin{definition}
 
 
-\leanok
 [Top section to global hom]
   \label{def:scheme_modules_top_section_to_hom}
   \lean{AlgebraicGeometry.Scheme.Modules.topSectionToHom}
@@ -5938,7 +6238,6 @@ internal construction.
 \begin{lemma}
 
 
-\leanok
 [Sectionwise value of `topSectionToHom`]
   \label{lem:scheme_modules_top_section_to_hom_app}
   \lean{AlgebraicGeometry.Scheme.Modules.topSectionToHom_app}
@@ -5964,7 +6263,6 @@ internal construction.
 \begin{lemma}
 
 
-\leanok
 [Compatible local morphisms glue to a global morphism]
   \label{lem:sheafofmodules_hom_of_local_compat}
   \lean{AlgebraicGeometry.Scheme.Modules.homOfLocalCompat}
@@ -5976,10 +6274,38 @@ internal construction.
   each open of the cover.
 \end{lemma}
 
+\begin{lemma}
+
+[The glued morphism restricts to its local datum]
+  \label{lem:hom_of_local_compat_restrict}
+  \lean{AlgebraicGeometry.Scheme.Modules.homOfLocalCompat_restrictFunctor_map}
+  \uses{lem:sheafofmodules_hom_of_local_compat, lem:scheme_modules_top_section_to_hom_app}
+  In the situation of \cref{lem:sheafofmodules_hom_of_local_compat} --- a cover \(\{U_i\}\)
+  of \(X\) and a compatible family \(f_i : M|_{U_i} \to N|_{U_i}\) --- the restriction of the
+  glued global morphism back to a cover member recovers its local datum:
+  \[
+    (\mathtt{restrictFunctor}\,U_i).\mathtt{map}\,(\mathtt{homOfLocalCompat}\,f) \;=\; f_i .
+  \]
+  This is the companion gluing-value identity needed to apply the B-connector
+  \cref{lem:isiso_of_isiso_restrict}: when every \(f_i\) is an isomorphism, this identity
+  transports that to the restriction of the glued morphism, so the global morphism is
+  locally an isomorphism and hence an isomorphism.
+\end{lemma}
+\begin{proof}
+
+  By construction, \(\mathtt{homOfLocalCompat}\) produces its global morphism by gluing
+  the local sections of the hom-sheaf associated to each \(f_i\) along the cover; the sheaf
+  gluing axiom states that the resulting global section restricts on \(U_i\) to the section
+  corresponding to \(f_i\). Converting the global section back to a morphism is sectionwise
+  faithful (\cref{lem:scheme_modules_top_section_to_hom_app}), and the section-to-morphism
+  construction preserves the underlying section, so the restriction of the global morphism to
+  \(U_i\) is sectionwise equal to \(f_i\) --- hence equal as a morphism.
+\end{proof}
+
 \begin{remark}
 [How the dual infrastructure discharges the \(\otimes\)-inverse]
   \label{rem:dual_discharges_inverse}
-  \uses{lem:tensorobj_inverse_invertible, lem:dual_isLocallyTrivial, lem:sheafofmodules_hom_of_local_compat, lem:isiso_of_isiso_restrict, lem:tensorobj_restrict_iso, lem:tensorobj_unit_iso}
+  \uses{lem:tensorobj_inverse_invertible, lem:dual_isLocallyTrivial, lem:sheafofmodules_hom_of_local_compat, lem:hom_of_local_compat_restrict, lem:isiso_of_isiso_restrict, lem:tensorobj_restrict_iso, lem:tensorobj_unit_iso, lem:tensorobjisoofiso_trans, lem:tensorobjisoofiso_refl, lem:dualisoofiso_trans, lem:dualisoofiso_refl, lem:trivialisation_restrict_compat, lem:tensorobj_unit_self_duality_collapse}
   Once the dual package \cref{lem:dual_isLocallyTrivial} and the A-bridge
   \cref{lem:sheafofmodules_hom_of_local_compat} are available,
   \cref{lem:tensorobj_inverse_invertible} is discharged by taking \(L^{-1} := \mathtt{dual}\,L\)
@@ -6000,12 +6326,233 @@ internal construction.
   each \(U\), it is a global isomorphism \(L \otimes_X L^{-1} \xrightarrow{\sim}
   \mathcal{O}_X\) by the B-connector \cref{lem:isiso_of_isiso_restrict}.
 
-  This descent construction deliberately avoids the forbidden
-  ``sheafify-the-evaluation'' route --- which would re-enter the abandoned
-  tensor-stalk / sheafification-unit whiskering commutation --- and computes no tensor
-  stalk anywhere. It is the realization the ``infrastructure-blocked'' note in
-  \cref{lem:tensorobj_inverse_invertible} points to.
+  This descent construction avoids the ``sheafify-the-evaluation'' route, which would
+  require commuting the sheafification unit past tensor-stalk whiskering; the gluing strategy
+  computes no tensor stalk anywhere.
+
+  Two conditions make the gluing of \cref{lem:sheafofmodules_hom_of_local_compat} applicable.
+  First, \emph{overlap compatibility}: on each overlap \(V \subseteq U_i \cap U_j\) the
+  sectionwise restrictions of the two local contractions \(f_i\) and \(f_j\) to \(V\) must
+  agree. They do because each \(f_x\) is the canonical evaluation
+  \(L \otimes L^{-1} \to \mathcal{O}\), independent of the chosen trivialisation: the dual
+  trivialisation \(e^N_x\) is built from the primal \(e^M_x\) via
+  \cref{lem:tensorobj_restrict_iso}, \(\mathtt{tensorObjIsoOfIso}\), \(\mathtt{dualIsoOfIso}\),
+  and \cref{lem:tensorobj_unit_iso}, so the transition isomorphism \(g_{ij}\) entering
+  \(e^M_x\) and its inverse \(g_{ij}^{-1}\) entering \(e^N_x\) cancel through
+  \(\mathtt{tensorObjIsoOfIso}\); this cancellation is a genuine computation of abelian-group
+  homomorphisms. Concretely, the mechanism realising the cancellation is the
+  \emph{functoriality of the iso-transport operators}: bifunctoriality of
+  \(\mathtt{tensorObjIsoOfIso}\) (\cref{lem:tensorobjisoofiso_trans}, \cref{lem:tensorobjisoofiso_refl})
+  and contravariant functoriality of \(\mathtt{dualIsoOfIso}\) (\cref{lem:dualisoofiso_trans},
+  \cref{lem:dualisoofiso_refl}). Pushing both legs to a pure tensor \(a \otimes b\), these laws
+  rewrite \(e^N_x\) so that the \(g_{ij}\) inside \(e^M_x\) meets \(g_{ij}^{-1} = \mathtt{dualIsoOfIso}\,
+  (g_{ij})\) inside \(e^N_x\) as adjacent factors, where \(\mathtt{tensorObjIsoOfIso}\,g_{ij}\,
+  (\mathtt{dualIsoOfIso}\,g_{ij})\) followed by \(\mathtt{tensorObj\_unit\_iso}\) reduces to
+  \(\mathtt{tensorObj\_unit\_iso}\) alone (the unit self-duality evaluation collapse); the
+  iso-level identities above thereby reduce sectionwise to the required cocycle equality.
+  Second, the \emph{local-iso} step: by the gluing-value identity
+  \cref{lem:hom_of_local_compat_restrict}, the restriction of \(\varepsilon_L\) to \(U_x\)
+  equals the local isomorphism \(f_x\), so \cref{lem:isiso_of_isiso_restrict} upgrades
+  \(\varepsilon_L\) to a global isomorphism.
 \end{remark}
+
+The two mechanism steps named in the overlap-compatibility argument of
+\cref{rem:dual_discharges_inverse} are isolated below as formal target lemmas, so the
+cocycle obligation (residual~A) of \cref{lem:tensorobj_inverse_invertible} has a named
+formalization target for each. The iso-transport operators
+\(\mathtt{tensorObjIsoOfIso}\) and \(\mathtt{dualIsoOfIso}\) and the unit comparison
+\(\mathtt{tensorObj\_unit\_iso}\) are the existing helpers
+(\cref{lem:tensorobjisoofiso_trans}, \cref{lem:dualisoofiso_trans},
+\cref{lem:tensorobj_unit_iso}).
+
+\begin{lemma}
+
+[Trivialisation iso-chain compatible with further restriction (cocycle residual A, step 1)]
+  \label{lem:trivialisation_restrict_compat}
+  \lean{AlgebraicGeometry.Scheme.Modules.trivialisation_restrict_compat}
+  \uses{lem:tensorobj_restrict_iso, lem:tensorobj_unit_iso}
+  Let \(V \subseteq U\) be opens of \(X\) (an inclusion of trivialising opens, e.g.
+  \(V \subseteq U_i \cap U_j\)). The trivialisation iso-chain that builds the local
+  contraction --- the restriction-compatibility iso \cref{lem:tensorobj_restrict_iso}
+  carrying \((L \otimes_X L^{-1})|_U\) to \(\mathcal{O}_U \otimes_U \mathcal{O}_U\),
+  composed with the unit contraction \cref{lem:tensorobj_unit_iso} --- is \emph{natural in
+  the open}: its further restriction along \(V \hookrightarrow U\) equals the same chain
+  built directly over \(V\). Consequently the sectionwise overlap equation of two local
+  contractions \(f_i, f_j\) restricted to \(V\) lifts to an equation of \emph{restricted
+  sheaf morphisms} over \(V\), the form on which the iso-level functoriality laws
+  (\cref{lem:tensorobjisoofiso_trans}, \cref{lem:dualisoofiso_trans}) and
+  \cref{lem:tensorobj_unit_self_duality_collapse} can act.
+\end{lemma}
+\begin{proof}
+  \uses{lem:tensorobj_restrict_iso, lem:tensorobj_unit_iso}
+  Each constituent of the chain is a restriction-functor image of a structural iso, and the
+  restriction functor along \(V \hookrightarrow U\) is functorial; the naturality square of
+  each constituent with respect to the inclusion commutes by construction
+  (\cref{lem:tensorobj_restrict_iso} is itself defined by the sectionwise structure-ring
+  identity, which is stable under further restriction). Composing the commuting squares gives
+  the stated compatibility, and restricting the overlap equation through it produces the
+  restricted-morphism equation.
+\end{proof}
+
+\begin{lemma}
+[Mutually-inverse unit endomorphisms cancel against the left unitor]
+  \label{lem:tensorhom_inv_comp_leftunitor}
+  \lean{AlgebraicGeometry.Scheme.Modules.tensorHom_inv_comp_leftUnitor}
+  In any monoidal category \(\mathcal C\), if \(s, s' : \mathbf 1 \to \mathbf 1\) are endomorphisms
+  of the monoidal unit with \(s \mathbin{;} s' = \mathbf 1\), then
+  \[
+    (s \otimes_{\mathrm m} s') \;\mathbin{;}\; \lambda_{\mathbf 1} = \lambda_{\mathbf 1},
+  \]
+  where \(\lambda_{\mathbf 1} : \mathbf 1 \otimes \mathbf 1 \to \mathbf 1\) is the left unitor at the
+  unit.
+\end{lemma}
+\begin{proof}
+  Factor the tensor product \(s \otimes_{\mathrm m} s'\) through the interchange law. Sliding the
+  right factor past the left unitor by its naturality, and the left factor past the right unitor
+  (which coincides with the left unitor at the unit), the composite becomes \(\lambda_{\mathbf 1}\)
+  precomposed with \(s \mathbin{;} s' = \mathbf 1\); cancelling that identity leaves
+  \(\lambda_{\mathbf 1}\).
+\end{proof}
+
+\begin{lemma}
+[Pairing mutually-inverse unit autos through $\mathtt{tensorObjIsoOfIso}$ contracts (cocycle residual A, step 2b)]
+  \label{lem:tensorobjisoofiso_comp_unit_iso}
+  \lean{AlgebraicGeometry.Scheme.Modules.tensorObjIsoOfIso_comp_unit_iso}
+  \uses{lem:tensorhom_inv_comp_leftunitor, def:tensorobjisoofiso, lem:tensorobj_unit_iso}
+  Let \(t, s\) be self-isomorphisms of the trivial line bundle \(\mathcal O_V\) with
+  \(t.\mathrm{hom} \mathbin{;} s.\mathrm{hom} = \mathbf 1\). Then pairing them through the
+  iso-transport bifunctor and contracting via the unit comparison is trivial:
+  \[
+    \mathtt{tensorObjIsoOfIso}\,t\,s \;\mathbin{;}\; \mathtt{tensorObj\_unit\_iso}
+      = \mathtt{tensorObj\_unit\_iso}.
+  \]
+\end{lemma}
+\begin{proof}
+  \uses{lem:tensorhom_inv_comp_leftunitor, def:tensorobjisoofiso, lem:tensorobj_unit_iso}
+  Both \(\mathtt{tensorObjIsoOfIso}\,t\,s\) and \(\mathtt{tensorObj\_unit\_iso}\) are sheafifications
+  of presheaf-level constructions, so the claim is the image under the sheafification functor of a
+  presheaf-level coherence. At the presheaf level the pairing is the monoidal tensor
+  \((\,\mathrm{forget}\,t \otimes_{\mathrm m} \mathrm{forget}\,s\,)\) of the two underlying unit
+  endomorphisms, whose hom-composite is the identity, and the contraction is the left unitor at the
+  unit; \cref{lem:tensorhom_inv_comp_leftunitor} collapses the composite to the bare unitor.
+  Functoriality of sheafification transports this to the stated sheaf-level identity.
+\end{proof}
+
+\begin{lemma}
+[Naturality of the presheaf dual-of-unit iso against a unit automorphism (B1 eval-core)]
+  \label{lem:presheafdualunitiso_naturality}
+  \lean{AlgebraicGeometry.Scheme.Modules.presheafDualUnitIso_naturality}
+  \uses{def:presheaf_dual_unit_iso, def:dual_unit_iso_gen, lem:internal_hom_eval, lem:presheaf_dualisoofiso_trans}
+  Let \(\hat s\) be a presheaf-level automorphism of the unit \(\mathbf 1\) (the underlying map of a
+  sheaf-level unit automorphism \(s\)). The presheaf dual-of-unit isomorphism
+  \(\mathtt{presheafDualUnitIso} : \mathtt{dual}\,\mathbf 1 \cong \mathbf 1\) is natural in
+  \(\hat s\) for the contravariant transport on the source:
+  \[
+    \mathtt{dualIsoOfIso}\,\hat s \;\mathbin{;}\; \mathtt{presheafDualUnitIso}
+      = \mathtt{presheafDualUnitIso} \;\mathbin{;}\; \hat s.
+  \]
+\end{lemma}
+\begin{proof}
+  \uses{def:presheaf_dual_unit_iso, def:dual_unit_iso_gen, lem:internal_hom_eval, lem:presheaf_dualisoofiso_trans}
+  By construction (\cref{def:dual_unit_iso_gen}, \cref{def:presheaf_dual_unit_iso})
+  \(\mathtt{presheafDualUnitIso}\) is the sectionwise evaluation-at-\(1\) map of the internal hom of
+  the unit into itself. On sections, \(\mathtt{dualIsoOfIso}\,\hat s\) is precomposition by the
+  underlying map of \(\hat s\) (\cref{lem:presheaf_dualisoofiso_trans}), so the left-hand composite
+  evaluates a dual section \(\varphi\) at \(1\) after precomposing by \(\hat s\), i.e.\ it computes
+  \(\varphi(\hat s(1))\). Since \(\hat s\) is a unit automorphism --- multiplication by a unit scalar
+  --- it commutes with evaluation, so this equals \(\hat s\) applied to \(\varphi(1)\), the
+  right-hand composite. Equality of the two evaluation-at-\(1\) maps is the naturality of the
+  internal-hom evaluation (\cref{lem:internal_hom_eval}) specialised at the unit.
+\end{proof}
+
+\begin{lemma}
+[Dual of a unit automorphism is itself (cocycle residual A, step 2a / B1)]
+  \label{lem:dualunitiso_dualisoofiso}
+  \lean{AlgebraicGeometry.Scheme.Modules.dualUnitIso_dualIsoOfIso}
+  \uses{lem:dual_unit_iso, def:scheme_modules_dual_iso_of_iso, lem:presheafdualunitiso_naturality, def:presheaf_dual_unit_iso}
+  Let \(s\) be a self-isomorphism of the trivial line bundle \(\mathcal O_V\). Conjugating its
+  contravariant dual-transport by the unit-self-duality iso recovers \(s\):
+  \[
+    \mathtt{dual\_unit\_iso}^{-1}
+      \;\mathbin{;}\; \mathtt{dualIsoOfIso}\,s
+      \;\mathbin{;}\; \mathtt{dual\_unit\_iso}
+    \;=\; s .
+  \]
+  Equivalently, the sheaf-level dual of a unit automorphism, read through
+  \(\mathtt{dual}\,\mathcal O_V \cong \mathcal O_V\), is the automorphism itself.
+\end{lemma}
+\begin{proof}
+  \uses{lem:dual_unit_iso, def:scheme_modules_dual_iso_of_iso, lem:presheafdualunitiso_naturality, def:presheaf_dual_unit_iso}
+  By pure iso-algebra the claim is equivalent to the single naturality square
+  \[
+    (\mathrm N):\qquad
+    \mathtt{dualIsoOfIso}\,s \;\mathbin{;}\; \mathtt{dual\_unit\_iso}
+      = \mathtt{dual\_unit\_iso} \;\mathbin{;}\; s,
+  \]
+  the naturality of \(\mathtt{dual\_unit\_iso} : \mathtt{dual}\,\mathcal O_V \cong \mathcal O_V\) with
+  respect to the unit automorphism \(s\), acting contravariantly through \(\mathtt{dualIsoOfIso}\,s\)
+  on the source. This is the genuine open obligation. It decomposes through the two layers of the
+  construction \(\mathtt{dual\_unit\_iso} = \mathtt{sheafify}(\mathtt{presheafDualUnitIso})
+  \mathbin{;} \mathtt{counit}\):
+  \begin{itemize}
+    \item the presheaf eval-core naturality
+      \(\mathtt{dualIsoOfIso}\,\hat s \mathbin{;} \mathtt{presheafDualUnitIso}
+        = \mathtt{presheafDualUnitIso} \mathbin{;} \hat s\)
+      (\cref{lem:presheafdualunitiso_naturality}, with \(\hat s\) the underlying presheaf map of
+      \(s\)), pushed through the sheafification functor; and
+    \item the sheafification-counit naturality
+      \(\mathtt{sheafify}(\hat s) \mathbin{;} \mathtt{counit} = \mathtt{counit} \mathbin{;} s\),
+      the naturality of the sheafification counit at the unit automorphism.
+  \end{itemize}
+  Composing the two squares gives \((\mathrm N)\), and the iso-algebra reduction then yields the
+  stated identity.
+\end{proof}
+
+\begin{lemma}
+
+[Unit self-duality evaluation collapse (cocycle residual A, step 2)]
+  \label{lem:tensorobj_unit_self_duality_collapse}
+  \lean{AlgebraicGeometry.Scheme.Modules.tensorObj_unit_self_duality_collapse}
+  \uses{lem:tensorobjisoofiso_trans, lem:tensorobjisoofiso_refl, lem:dualisoofiso_trans, lem:dualisoofiso_refl, lem:tensorobj_unit_iso, lem:dual_unit_iso, lem:dualunitiso_dualisoofiso, lem:tensorobjisoofiso_comp_unit_iso}
+  Let \(t\) be a self-isomorphism of the trivial line bundle \(\mathcal{O}_V\) on a
+  trivialising open \(V\). Pairing \(t\) on the \(M\)-leg with the dual-transported transition
+  on the \(N\)-leg --- which lands at the node \(\mathtt{dual}\,\mathcal{O}_V\) and so must be
+  conjugated back to \(\mathcal{O}_V\) through the unit-self-duality iso
+  \(\mathtt{dual\_unit\_iso} : \mathtt{dual}\,\mathcal{O}_V \cong \mathcal{O}_V\)
+  (\cref{lem:dual_unit_iso}) --- and then contracting via the unit comparison cancels:
+  \[
+    \mathtt{tensorObjIsoOfIso}\,t\,
+      \bigl(\mathtt{dual\_unit\_iso}^{-1}
+            \;\mathbin{;}\;(\mathtt{dualIsoOfIso}\,t)^{-1}
+            \;\mathbin{;}\;\mathtt{dual\_unit\_iso}\bigr)
+    \;\mathbin{;}\;
+    \mathtt{tensorObj\_unit\_iso}
+    \;=\;
+    \mathtt{tensorObj\_unit\_iso}.
+  \]
+  This is the \(g_{ij}\) (inside \(e^M_x\)) meeting \(g_{ij}^{-1} = \mathtt{dualIsoOfIso}\,
+  g_{ij}\) (inside \(e^N_x\)) cancellation: under the canonical evaluation of the free
+  rank-one module against its dual, the transition iso and its inverse-transpose annihilate,
+  leaving the trivialisation-independent unit contraction. The \(\mathtt{dual\_unit\_iso}\)
+  conjugation on the \(N\)-leg is what makes both factors live on \(\mathcal{O}_V\) so the
+  bifunctor \(\mathtt{tensorObjIsoOfIso}\) can pair them; under the eval-at-\(1\) semantics of
+  \(\mathtt{presheafDualUnitIso}\) the conjugated dual leg reduces to \(t^{-1}\), so the pair is
+  the symmetric \(t \otimes t^{-1}\) that the multiplication kills.
+\end{lemma}
+\begin{proof}
+  \uses{lem:tensorobjisoofiso_trans, lem:tensorobjisoofiso_refl, lem:dualisoofiso_trans, lem:dualisoofiso_refl, lem:tensorobj_unit_iso, lem:dual_unit_iso, lem:dualunitiso_dualisoofiso, lem:tensorobjisoofiso_comp_unit_iso}
+  The collapse factors through the two cocycle helpers rather than a direct sectionwise computation.
+  First, the \(N\)-leg --- the dual-conjugated transition
+  \(\mathtt{dual\_unit\_iso}^{-1} \mathbin{;} (\mathtt{dualIsoOfIso}\,t)^{-1} \mathbin{;}
+  \mathtt{dual\_unit\_iso}\) --- is exactly \(t^{-1}\): inverting the dual-of-a-unit identity
+  \cref{lem:dualunitiso_dualisoofiso} (applied to \(t\), read off its inverse) turns the conjugated
+  transition into \(t^{-1}\). The collapse thus reduces to pairing \(t\) with \(t^{-1}\) on the two
+  legs. Second, since \(t.\mathrm{hom} \mathbin{;} (t^{-1}).\mathrm{hom} = \mathbf 1\), the pairing
+  contracts against the unit comparison by \cref{lem:tensorobjisoofiso_comp_unit_iso}, leaving
+  \(\mathtt{tensorObj\_unit\_iso}\) alone. This is the \(g_{ij}\)-meets-\(g_{ij}^{-1}\) cancellation,
+  now realised as the algebraic identity ``the dual of a unit-automorphism is itself, and a
+  unit-automorphism paired with its inverse contracts to the unit''.
+\end{proof}
 
 \begin{remark}
 [Alternative route via object-level descent (fallback)]
@@ -6168,6 +6715,106 @@ above are wired to depend on them. All but one are sorry-free; the single residu
   \uses{def:scheme_modules_tensorobj}
   Proved directly in Lean: it is \(\mathtt{sheafification}.\mathrm{mapIso}\) applied to the
   monoidal \(\mathtt{tensorIso}\) of the two forgetful images of the given isomorphisms.
+\end{proof}
+
+% Functoriality of the iso-transport operators: mechanism by which transition isomorphisms
+% cancel in the overlap-compatibility step of rem:dual_discharges_inverse.
+\begin{lemma}[\(\mathtt{tensorObjIsoOfIso}\) is bifunctorial in composition]
+  \label{lem:tensorobjisoofiso_trans}
+  \lean{AlgebraicGeometry.Scheme.Modules.tensorObjIsoOfIso_trans}
+  \uses{def:tensorobjisoofiso}
+  For composable isomorphisms \(M \xrightarrow{e_1} M' \xrightarrow{e_2} M''\) and
+  \(N \xrightarrow{e_1'} N' \xrightarrow{e_2'} N''\) in \(\Scheme.\mathtt{Modules}\,X\),
+  \[
+    \mathtt{tensorObjIsoOfIso}\,(e_1 \ggg e_2)\,(e_1' \ggg e_2')
+      = \mathtt{tensorObjIsoOfIso}\,e_1\,e_1' \,\ggg\, \mathtt{tensorObjIsoOfIso}\,e_2\,e_2'.
+  \]
+  Tensor-transport of a composite of isomorphisms is the composite of the transports.
+\end{lemma}
+\begin{proof}
+  \uses{def:tensorobjisoofiso}
+  Both sides are sheafifications of presheaf tensor isomorphisms; the identity reduces, after
+  applying the forgetful functor, to the interchange
+  \((e_2 \circ e_1) \otimes (e_2' \circ e_1') = (e_2 \otimes e_2') \circ (e_1 \otimes e_1')\)
+  of the monoidal tensor of morphisms, together with functoriality of sheafification
+  (\(\mathrm{mapIso}\) of a composite is the composite of \(\mathrm{mapIso}\)s).
+\end{proof}
+
+\begin{lemma}[\(\mathtt{tensorObjIsoOfIso}\) preserves identities]
+  \label{lem:tensorobjisoofiso_refl}
+  \lean{AlgebraicGeometry.Scheme.Modules.tensorObjIsoOfIso_refl}
+  \uses{def:tensorobjisoofiso}
+  \(\mathtt{tensorObjIsoOfIso}\,(\mathrm{Iso.refl}\,M)\,(\mathrm{Iso.refl}\,N)
+    = \mathrm{Iso.refl}\,(M \otimes_X N)\): the tensor-transport of a pair of identities is the
+  identity.
+\end{lemma}
+\begin{proof}
+  \uses{def:tensorobjisoofiso}
+  The monoidal tensor of two identity morphisms is the identity, and sheafification sends the
+  identity isomorphism to the identity isomorphism.
+\end{proof}
+
+\begin{lemma}[Presheaf dual-transport is contravariantly functorial in composition]
+  \label{lem:presheaf_dualisoofiso_trans}
+  \lean{AlgebraicGeometry.Scheme.Modules.presheaf_dualIsoOfIso_trans}
+  \uses{def:presheaf_dual_iso_of_iso}
+  For composable presheaf-of-modules isomorphisms \(L \xrightarrow{e_1} L' \xrightarrow{e_2} L''\),
+  \[
+    \mathtt{dualIsoOfIso}\,(e_1 \ggg e_2)
+      = \mathtt{dualIsoOfIso}\,e_2 \,\ggg\, \mathtt{dualIsoOfIso}\,e_1,
+  \]
+  the order reversing because the dual is built by \emph{pre}composition (it is contravariant).
+\end{lemma}
+\begin{proof}
+  \uses{def:presheaf_dual_iso_of_iso}
+  \(\mathtt{dualIsoOfIso}\,e\) is precomposition of internal-hom sections by the underlying map of
+  \(e\). Precomposition by a composite is the composite of precompositions in reversed order, so
+  the claim is the contravariant functoriality of \(\mathtt{Hom}(-,\,\mathcal{O})\) applied
+  sectionwise; established by \(\mathrm{Iso.ext}\) followed by sectionwise extensionality.
+\end{proof}
+
+\begin{lemma}[Presheaf dual-transport preserves identities]
+  \label{lem:presheaf_dualisoofiso_refl}
+  \lean{AlgebraicGeometry.Scheme.Modules.presheaf_dualIsoOfIso_refl}
+  \uses{def:presheaf_dual_iso_of_iso}
+  \(\mathtt{dualIsoOfIso}\,(\mathrm{Iso.refl}\,L) = \mathrm{Iso.refl}\,(L^{\vee})\) at the presheaf
+  level.
+\end{lemma}
+\begin{proof}
+  \uses{def:presheaf_dual_iso_of_iso}
+  Precomposition by the identity is the identity on internal-hom sections.
+\end{proof}
+
+\begin{lemma}[Sheaf-level dual-transport is contravariantly functorial in composition]
+  \label{lem:dualisoofiso_trans}
+  \lean{AlgebraicGeometry.Scheme.Modules.dualIsoOfIso_trans}
+  \uses{def:scheme_modules_dual_iso_of_iso, lem:presheaf_dualisoofiso_trans}
+  For composable isomorphisms \(L \xrightarrow{e_1} L' \xrightarrow{e_2} L''\) in
+  \(\Scheme.\mathtt{Modules}\,X\),
+  \[
+    \mathtt{dualIsoOfIso}\,(e_1 \ggg e_2)
+      = \mathtt{dualIsoOfIso}\,e_2 \,\ggg\, \mathtt{dualIsoOfIso}\,e_1.
+  \]
+\end{lemma}
+\begin{proof}
+  \uses{def:scheme_modules_dual_iso_of_iso, lem:presheaf_dualisoofiso_trans}
+  The sheaf-level dual-transport is the presheaf-level one
+  (\cref{lem:presheaf_dualisoofiso_trans}) transported through the sheaf-equivalence and the
+  forgetful functor; functoriality of \(\mathrm{mapIso}\) carries the presheaf identity to the
+  sheaf identity.
+\end{proof}
+
+\begin{lemma}[Sheaf-level dual-transport preserves identities]
+  \label{lem:dualisoofiso_refl}
+  \lean{AlgebraicGeometry.Scheme.Modules.dualIsoOfIso_refl}
+  \uses{def:scheme_modules_dual_iso_of_iso, lem:presheaf_dualisoofiso_refl}
+  \(\mathtt{dualIsoOfIso}\,(\mathrm{Iso.refl}\,L) = \mathrm{Iso.refl}\,(L^{\vee})\) at the sheaf
+  level.
+\end{lemma}
+\begin{proof}
+  \uses{def:scheme_modules_dual_iso_of_iso, lem:presheaf_dualisoofiso_refl}
+  Immediate from the presheaf-level statement \cref{lem:presheaf_dualisoofiso_refl} and
+  functoriality of \(\mathrm{mapIso}\) on the identity.
 \end{proof}
 
 \begin{definition}\leanok

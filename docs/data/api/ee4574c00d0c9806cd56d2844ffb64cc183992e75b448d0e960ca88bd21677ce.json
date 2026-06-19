@@ -1,0 +1,96 @@
+[
+  {
+    "timestamp": "2026-06-19T07:30:58Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "ModuleCat.symmetricPower.functor"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "mathlib-build"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "PiTensorProduct.map",
+        "PiTensorProduct.map_tprod",
+        "AddCon.lift",
+        "AddCon.addConGen_le",
+        "SymmetricPower.tprod_equiv",
+        "span_tprod_eq_top",
+        "LinearMap.ext_on"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Layer 1: build SymmetricPower.map by descending mk ∘ PiTensorProduct.map (fun _=>f) through the symmetrisation AddCon via AddCon.lift; well-definedness mapAux_respects = addConGen_le reduced to Rel.perm generator closed by map_tprod + tprod_equiv",
+        "code_tried": "def map (f : M →ₗ[R] N) : Sym[R] ι M →ₗ[R] Sym[R] ι N := AddCon.lift … (mapAux f) (mapAux_respects f)",
+        "line_number": "445-470",
+        "lean_error": null,
+        "goal_before": "Sym[R] ι M →ₗ[R] Sym[R] ι N",
+        "goal_after": "",
+        "result": "success",
+        "insight": "Mathlib has only the TYPE SymmetricPower; functorial action is a TODO. AddCon.lift route works; map_smul' via AddCon.induction_on + LinearMap.map_smul"
+      },
+      {
+        "attempt": 2,
+        "strategy": "map_id/map_comp via LinearMap.ext_on (span_tprod_eq_top) + map_tprod",
+        "code_tried": "lemma map_id : map (LinearMap.id) = LinearMap.id := by ext_on (span_tprod_eq_top …); simp [map_tprod]",
+        "line_number": "481-488",
+        "lean_error": null,
+        "goal_before": "map id = id",
+        "goal_after": "",
+        "result": "success",
+        "insight": "decomposable symmetric tensors span ⇒ two maps agreeing on tprod coincide"
+      },
+      {
+        "attempt": 3,
+        "strategy": "Layer 2: ModuleCat.symmetricPower wrapper mirroring exteriorPower.functor; index by ULift.{u} (Fin n) to avoid universe trap",
+        "code_tried": "noncomputable def symmetricPower (M : ModuleCat.{v} R) (n : ℕ) := ModuleCat.of R (SymmetricPower R (ULift.{u} (Fin n)) M); functor map_id/map_comp via hom_ext + SymmetricPower.map_id/map_comp",
+        "line_number": "501-531",
+        "lean_error": null,
+        "goal_before": "ModuleCat.{v} R ⥤ ModuleCat.{max u v} R",
+        "goal_after": "",
+        "result": "success",
+        "insight": "UNIVERSE TRAP confirmed: SymmetricPower (R ι : Type u) couples ring+index; Fin n : Type 0 would force R : Type 0. ULift fixes it. #print axioms → [propext, Classical.choice, Quot.sound]"
+      }
+    ],
+    "next_steps": "Blueprint the 7 unmatched sym Layer-1 lean_aux helpers. Open Layer-3 base-change lane: SymmetricPower.baseChange (effort-break, mirror exterior_power_base_change effort-893)."
+  },
+  {
+    "timestamp": "2026-06-19T07:30:58Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.PresheafOfModules.symPower"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "mathlib-build"
+    },
+    "findings": {
+      "blocker": "PresheafOfModules restriction maps are semilinear over φ : R.obj X →+* R.obj Y; applying Sym^i openwise needs a base-change comparison ModuleCat.symmetricPower.baseChangeMap (absent from Mathlib, symmetric analogue of effort-893 exterior_power_base_change). MultilinearMap.restrictScalars needs [Module A N][IsScalarTower A B N] which do NOT synthesize from [Algebra A B][Module B N] alone (diamond-avoidance).",
+      "key_lemmas_used": [
+        "PiTensorProduct.lift",
+        "MultilinearMap.restrictScalars",
+        "ModuleCat.restrictScalars"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Probe base-change route at LinearAlgebra level: PiTensorProduct.lift ((tprod B).restrictScalars A) then descend through addConGen (Rel A ι N)",
+        "code_tried": "PiTensorProduct.lift ((SymmetricPower.tprod B).restrictScalars A) — needs MultilinearMap.restrictScalars A",
+        "line_number": "n/a (probe via lean_run_code)",
+        "lean_error": "failed to synthesize instance of type class Module A N (and Module A (Sym[B] ι N))",
+        "goal_before": "Sym[A] ι N →ₗ[A] Sym[B] ι N",
+        "goal_after": "",
+        "result": "failed",
+        "insight": "carriers defeq (rfl); blocker is the A-module + IsScalarTower instance plumbing between ModuleCat.restrictScalars's Module.compHom and φ.toAlgebra. Recommend stating deliverable categorically over restrictScalars φ. Clean planner-designated STOP point."
+      }
+    ],
+    "next_steps": "effort-break into SymmetricPower.baseChange (carry Module A N + IsScalarTower as explicit binders) → ModuleCat.symmetricPower.baseChangeMap → PresheafOfModules.symPower → Scheme.Modules.symPower. Do NOT retry expecting Module A N to synth from [Algebra A B][Module B N]."
+  }
+]

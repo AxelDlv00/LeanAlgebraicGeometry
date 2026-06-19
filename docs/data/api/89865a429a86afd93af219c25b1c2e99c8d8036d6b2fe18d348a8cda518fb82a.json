@@ -1,0 +1,286 @@
+[
+  {
+    "timestamp": "2026-06-19T13:18:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Basic.lean",
+      "theorem": "MR4213770.kernelBundle"
+    },
+    "session": {
+      "id": "session_15",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "AlgebraicGeometry.Scheme.Modules.evalKernel"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Specialise the general evaluation kernel evalKernel (Foundations) to a line bundle L; first import placed mid-file then moved to top to satisfy module-doc header style",
+        "code_tried": "noncomputable def kernelBundle {X : Scheme.{u}} (L : X.Modules) : X.Modules := AlgebraicGeometry.Scheme.Modules.evalKernel L  (+ import …Foundations at file top, open AlgebraicGeometry)",
+        "line_number": "~25",
+        "lean_error": "none (clean; first import placement gave linter.style.header warning, fixed by moving import above file comment)",
+        "result": "success",
+        "insight": "First genuine paper object. axiom-clean {propext, Classical.choice, Quot.sound}. M_L = ker(ev_L) bottoms on real categorical kernel, not a placeholder."
+      }
+    ],
+    "next_steps": "Stub kernelBundle_isLocallyFree (lem:kemeny_kernel_bundle_locally_free) once Foundations Core 2 lands."
+  },
+  {
+    "timestamp": "2026-06-19T13:11:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.trivialBundle_isLocallyFree"
+    },
+    "session": {
+      "id": "session_15",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback",
+        "SheafOfModules.pullbackObjFreeIso",
+        "CategoryTheory.Functor.final_of_adjunction",
+        "Scheme.Hom.isOpenEmbedding.isOpenMap.adjunction"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "iter-014 planner-flagged dead end: mapFreeIso/restrictFunctor coproduct route — PreservesColimitsOfShape (Discrete I) (restrictFunctor f) at Type u",
+        "code_tried": "SheafOfModules.mapFreeIso (restrictFunctor U.ι) I … via PreservesColimitsOfShape",
+        "line_number": "~1212",
+        "lean_error": "failed to synthesize PreservesColimitsOfShape (Discrete I) (restrictFunctor f) — but ALSO found this DOES synth (restrictFunctor is a left adjoint restrictAdjunction); the iter-014 note was wrong/outdated",
+        "result": "partial",
+        "insight": "The iter-014 'dead end' was incorrect. restrictFunctor IS a left adjoint."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Cleaner route avoiding unit-iso: restrictFunctor f ≅ Scheme.Modules.pullback f, whose site functor Opens.map f.base is the RIGHT adjoint of f.opensFunctor for an open immersion ⇒ FINAL ⇒ hypothesis of pullbackObjFreeIso",
+        "code_tried": "restrictFunctorObjFreeIso := restrictFunctorIsoPullback f ≪≫ pullbackObjFreeIso (via Functor.final_of_adjunction (f.isOpenEmbedding.isOpenMap.adjunction)); then trivialBundle_isLocallyFree takes single ⊤-cover for every point",
+        "line_number": "1212",
+        "lean_error": "none (axiom-clean, full lake build green, 8475 jobs)",
+        "result": "success",
+        "insight": "pullbackObjFreeIso IS the correct functor — the iter-014 memory conflated preimage Opens.map (right adjoint, final) with image opensFunctor (not final). CORE 1 LANDED."
+      }
+    ],
+    "next_steps": "Feeds Core 2 (isLocallyFree_kernel_of_shortExact) and step 5 (evalKernel_isLocallyFree)."
+  },
+  {
+    "timestamp": "2026-06-19T13:13:36Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.evalShortComplex_shortExact_of_globallyGenerated"
+    },
+    "session": {
+      "id": "session_15",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "CategoryTheory.ShortComplex.exact_kernel",
+        "CategoryTheory.Limits.kernel.ι"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Model 'globally generated' as hypothesis Epi (evalMap F) (no GloballyGenerated predicate exists); assemble ShortExact: exact via exact_kernel, mono_f via kernel.ι, epi_g = hF",
+        "code_tried": "structure fields: exact := ShortComplex.exact_kernel (evalMap F); mono_f := inferInstance; epi_g := hF",
+        "line_number": "1248",
+        "lean_error": "failed to synthesize Mono F.evalShortComplex.f (the mono instance did not fire through the ShortComplex.mk wrapper)",
+        "result": "failed",
+        "insight": "Mono instance does not propagate through the ShortComplex.mk def head."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Unfold the short complex head so the kernel.ι mono instance is visible",
+        "code_tried": "mono_f := by dsimp only [evalShortComplex, ShortComplex.mk]; infer_instance",
+        "line_number": "1248",
+        "lean_error": "none (clean)",
+        "result": "success",
+        "insight": "evalShortComplex.X₁ is defeq evalKernel F; step 4 LANDED axiom-clean. NOTE: this proves only (epi ⇒ short-exact); the prose's globally-generated⇒epi implication is unformalized (altitude gap flagged on blueprint)."
+      }
+    ],
+    "next_steps": "Planner: split the unformalized 'globally generated ⇒ epi' into its own node, or restate hypothesis as epi in blueprint prose."
+  },
+  {
+    "timestamp": "2026-06-19T13:11:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.restrictFunctorObjFreeIso"
+    },
+    "session": {
+      "id": "session_15",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback",
+        "SheafOfModules.pullbackObjFreeIso",
+        "CategoryTheory.Functor.final_of_adjunction"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Compose restrictFunctorIsoPullback with pullbackObjFreeIso, finality from image⊣preimage adjunction",
+        "code_tried": "restrictFunctorObjFreeIso {X Y} (f : X ⟶ Y) [IsOpenImmersion f] (I) : (restrictFunctor f).obj (free I) ≅ free I",
+        "line_number": "1183",
+        "lean_error": "none (axiom-clean)",
+        "result": "success",
+        "insight": "Coverage-debt helper supporting trivialBundle_isLocallyFree; needs a blueprint node."
+      }
+    ],
+    "next_steps": "Blueprint: add lean_aux node, \\uses{found:trivial_bundle, mathlib:sheafmod_free}."
+  },
+  {
+    "timestamp": "2026-06-19T13:15:27Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.isLocallyFree_of_iso"
+    },
+    "session": {
+      "id": "session_15",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "CategoryTheory.Functor.mapIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Transport each local trivialisation of F across the restriction of an iso e : F ≅ G",
+        "code_tried": "isLocallyFree_of_iso {X} {F G : X.Modules} (e : F ≅ G) (hF : F.IsLocallyFree) : G.IsLocallyFree := obtain ⟨I, hI, hcov⟩ := hF; refine ⟨I, …⟩; transport via (restrictFunctor U.ι).mapIso e",
+        "line_number": "1196",
+        "lean_error": "none (axiom-clean)",
+        "result": "success",
+        "insight": "General-purpose iso-invariance of IsLocallyFree; needed by the rank/assembly steps. Coverage-debt helper."
+      }
+    ],
+    "next_steps": "Blueprint: add lean_aux node, \\uses{found:locally_free}."
+  },
+  {
+    "timestamp": "2026-06-19T13:13:21Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.evalShortComplex"
+    },
+    "session": {
+      "id": "session_15",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "CategoryTheory.Limits.kernel.ι",
+        "CategoryTheory.Limits.kernel.condition",
+        "CategoryTheory.ShortComplex.mk"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Build the short complex M_F → H⁰⊗𝒪 → F as ShortComplex.mk (kernel.ι (evalMap F)) (evalMap F) (kernel.condition _)",
+        "code_tried": "evalShortComplex F := ShortComplex.mk (kernel.ι (evalMap F)) (evalMap F) (kernel.condition _); .X₁ defeq evalKernel F (checked)",
+        "line_number": "1238",
+        "lean_error": "none (axiom-clean)",
+        "result": "success",
+        "insight": "Object on which step 4 short-exactness is stated; coverage-debt helper."
+      }
+    ],
+    "next_steps": "Blueprint: add lean_aux node, \\uses{found:eval_morphism, found:eval_kernel_bundle, mathlib:categorical_kernel}."
+  },
+  {
+    "timestamp": "2026-06-19T13:17:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.isLocallyFree_kernel_of_shortExact"
+    },
+    "session": {
+      "id": "session_15",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Hartshorne III.6.5 stalk-free ⇒ open-free bridge: project IsLocallyFree demands OPEN trivialisations of constant finite rank, but III.6.5 only yields freeness at each stalk 𝒦_x (SES of O_{X,x}-modules, free middle + projective quotient splits). Bridging stalk-free ⇒ free on an open neighbourhood needs vector-bundle splitting machinery (Nakayama / determinant-non-vanishing + finite presentation). NO Mathlib anchor: grep over Mathlib/AlgebraicGeometry + ModuleCat/Sheaf finds ZERO locally-free-sheaf / VectorBundle infrastructure. Informal-agent key unavailable.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Search Mathlib for locally-free-sheaf / vector-bundle / IsLocallyFree infrastructure on schemes",
+        "code_tried": "grep -rln 'IsLocallyFree|LocallyFree|vectorBundle|VectorBundle' Mathlib/AlgebraicGeometry Mathlib/.../ModuleCat/Sheaf",
+        "line_number": "n/a",
+        "lean_error": "zero results — no Mathlib anchor exists",
+        "result": "failed",
+        "insight": "This is a build-from-scratch chunk of vector-bundle theory, not a single step. NOT added (no fake hypothesis-conditional version)."
+      }
+    ],
+    "next_steps": "Effort-break into stalk-level substrate lanes: (a) stalk functor X.Modules → Module O_{X,x}; (b) SES-with-projective-quotient-splits (Mathlib Module.Projective + ShortComplex.Splitting at module level); (c) stalk→open bridge for finitely-presented modules. Each is its own mathlib-build lane. Do NOT re-assign as a one-shot."
+  },
+  {
+    "timestamp": "2026-06-19T13:17:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.rank_kernel_of_shortExact"
+    },
+    "session": {
+      "id": "session_15",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Depends on Core 2 (isLocallyFree_kernel_of_shortExact). With Core 2 absent it cannot be assembled non-circularly; a hypothesis-conditional version would be a fake contribution.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — correctly left unassembled pending Core 2",
+        "code_tried": "n/a",
+        "line_number": "n/a",
+        "lean_error": "n/a",
+        "result": "partial",
+        "insight": "Blocked downstream of Core 2; rank additivity rank M_F = h⁰(F) − r."
+      }
+    ],
+    "next_steps": "Unblocks once Core 2 lands. Do NOT re-assign before Core 2."
+  },
+  {
+    "timestamp": "2026-06-19T13:17:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.evalKernel_isLocallyFree"
+    },
+    "session": {
+      "id": "session_15",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Consumes Core 2 (isLocallyFree_kernel_of_shortExact). Absent ⇒ cannot assemble non-circularly.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — correctly left unassembled pending Core 2",
+        "code_tried": "n/a",
+        "line_number": "n/a",
+        "lean_error": "n/a",
+        "result": "partial",
+        "insight": "Final assembly of M_F local freeness; ready once Core 2 + step 3 land. Now genuinely on the frontier (its other deps trivial_bundle_locally_free + eval_shortexact landed this iter)."
+      }
+    ],
+    "next_steps": "Unblocks once Core 2 + rank_kernel land. Do NOT re-assign before Core 2."
+  }
+]

@@ -1,0 +1,98 @@
+[
+  {
+    "timestamp": "2026-06-19T05:53:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegTop.lean",
+      "theorem": "pushPull_interLegHom_sections"
+    },
+    "session": {
+      "id": "session_94",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Decomposition applied + structurally validated (lean-auditor PASS, 0 sorries) but NOT kernel-confirmed: no lake build completed. LegTop.olean still ABSENT. All 3 prover builds exited 137 (SIGKILL/OOM) or SIGTERM before [8326/8326] LegTop finished; review clean-build cut off at [8325/8326] Mid2.",
+      "key_lemmas_used": [
+        "pushPull_interLegHom_resid",
+        "pls_eq",
+        "thin_resid5",
+        "pushPull_toRestrict_comm"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Extract heavy post-hstep residual into a new private lemma so the kernel checks it independently of the pls_eq/hstep prefix (kernel-budget split per iter-093 directive)",
+        "code_tried": "set_option maxHeartbeats 1600000 in / private lemma pushPull_interLegHom_resid (...) : G1 := by simp only [...]; erw [Functor.map_comp, ...]; congr 1; exact thin_resid5 ...",
+        "line_number": "281-371",
+        "lean_error": "none (no diagnostic errors; build killed before kernel verdict)",
+        "goal_before": "post-hstep residual goal G1 on (sectionFunctorV V).map of the pushPull_toRestrict_comm RHS",
+        "goal_after": "no goals (LSP); kernel unverified",
+        "result": "partial",
+        "insight": "Split is faithful (auditor: non-trivial 5-map eqToHom chain, not a tautology) but the kernel verdict is unknown because no build finished."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Simplify main lemma body to delegate to the residual lemma",
+        "code_tried": "exact pushPull_interLegHom_resid 𝒰 F V σ' k hle   (replacing inline simp/erw/congr 1/thin_resid5 block)",
+        "line_number": "434",
+        "lean_error": "none",
+        "goal_before": "G1 after Eq.trans (congrArg ... hstep) ?_",
+        "goal_after": "no goals (LSP)",
+        "result": "partial",
+        "insight": "Main lemma now: rw [pls_eq ...] prefix + erw [← Category.assoc] + Eq.trans congrArg hstep, then exact resid."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Replace inline have heq_σ'/heq_dk/hcomp_image blocks with direct pls_eq rewrites",
+        "code_tried": "rw [pls_eq 𝒰 F σ' V, pls_eq 𝒰 F (σ' ∘ (SimplexCategory.δ k).toOrderHom) V]",
+        "line_number": "~410",
+        "lean_error": "none",
+        "goal_before": "main lemma after heq lemmas",
+        "goal_after": "n/a",
+        "result": "partial",
+        "insight": "Trims the main lemma; consolidates the basicOpen-image rewrites into pls_eq."
+      },
+      {
+        "attempt": 4,
+        "strategy": "Verify via real lake build (LSP false-green on kernel timeouts)",
+        "code_tried": "timeout 1500 lake build AlgebraicJacobian.Cohomology.CechSectionIdentificationLegTop",
+        "line_number": "n/a",
+        "lean_error": "Exit code 137 (SIGKILL/OOM); earlier attempt SIGTERM ('Terminated'). No 'deterministic timeout' message captured — build was killed before LegTop's kernel verdict printed.",
+        "goal_before": "n/a",
+        "goal_after": "n/a",
+        "result": "failed",
+        "insight": "Build never reached a verdict on LegTop in the time/memory budget. 137 suggests OOM-kill — plausibly aggravated by many concurrent heavy Archon project builds on the same host. Kernel acceptance of the decomposition remains UNCONFIRMED."
+      }
+    ],
+    "next_steps": "Run a detached, uninterrupted lake build of LegTop to completion (consider -j1 / off-peak to dodge OOM). Confirm LegTop.olean appears + #print axioms coreIso_comm_leg is sorry/axiom-clean. Then build the rest of the chain (Aux → CSI → CechAugmentedResolution → CHDI). Do NOT re-edit LegTop; do NOT LSP-poke. If LegTop still times out (not OOM), recurse the decomposition or raise maxHeartbeats on just the offending decl."
+  },
+  {
+    "timestamp": "2026-06-19T05:53:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean",
+      "theorem": "cech_computes_higherDirectImage"
+    },
+    "session": {
+      "id": "session_94",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Capstone source-complete (0 sorries) but kernel-broken: its dependency chain does not compile past LegTop. CHDI.olean stale (Jun 18). No \\leanok (sync_leanok added 0).",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted this iter — gated behind LegTop kernel verification",
+        "code_tried": "n/a",
+        "line_number": "n/a",
+        "lean_error": "n/a",
+        "result": "partial",
+        "insight": "Capstone is downstream of LegTop; cannot be kernel-confirmed until the chain rebuilds."
+      }
+    ],
+    "next_steps": "After LegTop + Aux + CSI + CechAugmentedResolution build green, build CHDI; then sync_leanok marks cech_computes_higherDirectImage and the stage advances to polish."
+  }
+]

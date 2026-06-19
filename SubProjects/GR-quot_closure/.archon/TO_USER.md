@@ -1,12 +1,5 @@
 <!-- Shared notice board. Keep to <=2-3 short bullets; delete bullets no longer true. -->
 
-
-- **GR-quot closure DELIVERED — this leg is at its terminal state (merge-pending).** Goal seed
-  `Grassmannian.represents` is sorry-free + axiom-clean. No closable in-leg prover work remains: all
-  26 open `sorry`s are deferred-by-directive (SNAP→sibling `FBC-B_SNAP-chain`, χ→cohomology leg) or
-  out-of-cone tracked debt. Ready to merge back into *Quot-Foundations*.
-- **Blueprint-doctor broken refs are extraction artifacts**, not bugs: they target labels outside
-  the extracted 3-seed cone and resolve at merge-back. Not edited here (would diverge the
-  byte-identical-to-parent blueprint). To redirect this leg, add to `USER_HINTS.md`. (Note: the
-  sibling's SNAP is NOT yet finished — its `SectionGradedRing.lean` still has 9 sorries and has
-  diverged from ours, so an "import now" is not currently actionable; SNAP reconciles at merge.)
+- **Goal seed `Grassmannian.represents` is DELIVERED** — sorry-free + axiom-clean, and stays so (the SNAP assoc work below is self-contained and cannot disturb it).
+- **SNAP assoc core ★ `tensorObjAssoc_eta_factor_sheaf`: math fully PROVEN (axiom-clean); the placement blocker was RE-DIAGNOSED iter-017 and the loop is executing the fix — no user action needed.** iter-016 proved ★'s residual as a generic coherence; ★'s `exact` placement then blew >4M heartbeats. A mathlib-analogist consult (iter-017) found the cause is **head-misalignment, not term size**: the `exact` lets the generic's category `M` default to the native `X.Modules` comp head while the `hc`-normalized goal carries the `LocalizedMonoidal` head, so `isDefEq` can't short-circuit and traverses the whole 1.2M-char term across the rfl-diamond. Fix (applied this iter): pin `M` to the `LocalizedMonoidal` synonym so the heads match (1-line); fallback = restate ★ uniformly in synonym-comp. Details: `analogies/coherence-placement.md`.
+- **⚠ Tooling: `sync_leanok` over-strips the `Picard_SectionGradedRing` chapter every iter (3rd consecutive).** It removed 21 proof-block `\leanok` from genuinely closed, `lean_verify`-axiom-clean lemmas (module builds green); review restores them each iter — pure churn. Durable fix is sync-side (raise the per-decl build budget on this large/slow file, or skip re-stripping already-clean decls).

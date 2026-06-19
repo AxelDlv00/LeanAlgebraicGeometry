@@ -1,0 +1,87 @@
+[
+  {
+    "timestamp": "2026-06-19T08:37:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegMid1.lean",
+      "theorem": "(all_declarations)"
+    },
+    "session": {
+      "id": "session_87",
+      "model": "claude-sonnet-4-6"
+    },
+    "findings": {
+      "blocker": "no_prover_lane: refactor-only iter; new split files have no oleans yet — lake build pending"
+    },
+    "attempts": [],
+    "next_steps": "lake build will compile Mid1 (~5.6M HB, ~122s at 46K HB/s) in review phase"
+  },
+  {
+    "timestamp": "2026-06-19T08:37:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegMid2.lean",
+      "theorem": "(all_declarations)"
+    },
+    "session": {
+      "id": "session_87",
+      "model": "claude-sonnet-4-6"
+    },
+    "findings": {
+      "blocker": "no_prover_lane: refactor-only iter; new split files have no oleans yet — lake build pending"
+    },
+    "attempts": [],
+    "next_steps": "lake build will compile Mid2 (~5.6M HB, ~122s at 46K HB/s) in review phase"
+  },
+  {
+    "timestamp": "2026-06-19T08:37:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegTop.lean",
+      "theorem": "(all_declarations)"
+    },
+    "session": {
+      "id": "session_87",
+      "model": "claude-sonnet-4-6"
+    },
+    "findings": {
+      "blocker": "no_prover_lane: refactor-only iter; new split files have no oleans yet — lake build pending"
+    },
+    "attempts": [],
+    "next_steps": "lake build will compile Top (~8M HB, ~174s at 46K HB/s) in review phase"
+  },
+  {
+    "timestamp": "2026-06-19T08:37:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegAux.lean",
+      "theorem": "(all_declarations)"
+    },
+    "session": {
+      "id": "session_87",
+      "model": "claude-sonnet-4-6"
+    },
+    "findings": {
+      "blocker": "no_prover_lane: refactor-only iter; no olean yet — lake build pending"
+    },
+    "attempts": [],
+    "next_steps": "lake build will compile Aux (~14.4M HB, ~313s at 46K HB/s) — highest risk module"
+  },
+  {
+    "timestamp": "2026-06-19T08:37:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean",
+      "theorem": "cech_computes_higherDirectImage"
+    },
+    "session": {
+      "id": "session_87",
+      "model": "claude-sonnet-4-6"
+    },
+    "findings": {
+      "blocker": "no olean for upstream chain (Mid1/Mid2/Top/Aux); CechToHigherDirectImage.olean absent"
+    },
+    "attempts": [],
+    "next_steps": "kernel-verify after chain builds green"
+  }
+]

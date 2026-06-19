@@ -1,11 +1,11 @@
 {
   "commit": {
-    "sha": "b08f9838637042a1b8754f8fc9269c4bf7db97e6",
-    "shortSha": "b08f983",
-    "subject": "archon[080/finalize]: stage=prover sorry=0",
-    "date": "2026-06-13 11:15:06 +0800",
+    "sha": "50bf578c5101947cc547a28b187a5f3d278569b7",
+    "shortSha": "50bf578",
+    "subject": "archon[094/finalize]: stage=prover sorry=0",
+    "date": "2026-06-19 14:59:01 +0800",
     "branch": "main",
-    "iteration": "iter-080",
+    "iteration": "iter-094",
     "phase": "finalize"
   }
 }

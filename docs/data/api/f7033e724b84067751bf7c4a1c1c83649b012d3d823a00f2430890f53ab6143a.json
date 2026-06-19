@@ -1,0 +1,156 @@
+[
+  {
+    "timestamp": "2026-06-19T04:41:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorObjAssoc_eq_localizedAssociator"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Two `μ` isos that are defeq carry different internal `⋙`-nesting (keystone produces `(sheafification ⋙ forget ⋙ restrictScalars).obj (a⊗b)`; tensorObjLocalizedIso carries `(toPresheafOfModules X).obj (A.tensorObj B)`). rw/simp/erw/change/rfl-bridge all report 'pattern not found' (or whnf timeout for full-goal erw), so Iso.hom_inv_id_assoc never fires to cancel the μ-pair.",
+      "key_lemmas_used": [
+        "sheafification_braiding_whiskerRight_unit_eq_whiskerLeft_unit",
+        "SymmetricCategory.braiding_swap_eq_inv_braiding",
+        "Iso.eq_inv_comp",
+        "asIso_hom",
+        "sheafification_whiskerRight_unit_eq_mu",
+        "sheafification_whiskerLeft_unit_eq_mu"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Expand hand-built associator to 5 segments + object iso",
+        "code_tried": "rw [tensorObjAssoc]; simp only [tensorObjLocalizedIso, Iso.trans_hom, Iso.symm_hom, MonoidalCategory.tensorIso_hom]",
+        "line_number": "1818",
+        "lean_error": "none (committed)",
+        "result": "success",
+        "insight": "tensorObjLocalizedIso = μ⁻¹ ≫ (c⊗c); goal becomes 5-segment composite."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Move inverse segment-1 whiskered unit s1.inv onto localized side",
+        "code_tried": "simp only [Category.assoc]; rw [Iso.eq_inv_comp, asIso_hom]",
+        "line_number": "1818",
+        "lean_error": "none (committed)",
+        "result": "success",
+        "insight": "Prefixing by iso s1 makes counit/unit pairs cancelable; key move toward common form K."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Braiding collapse of segments 3-5 as a local have hcol",
+        "code_tried": "have hcol : ... := by rw [SymmetricCategory.braiding_swap_eq_inv_braiding]; exact sheafification_braiding_whiskerRight_unit_eq_whiskerLeft_unit _ _",
+        "line_number": "1818",
+        "lean_error": "first form failed codomain inference; fixed by ascribing codomain `_ ⟶ tensorObj A (tensorObj B C)`",
+        "result": "success",
+        "insight": "Stating hcol in the goal's surface syntax (ascribed codomain) lets the later erw discharge defeq cheaply."
+      },
+      {
+        "attempt": 4,
+        "strategy": "Apply hcol to collapse segments 3-5",
+        "code_tried": "slice_rhs 2 4 => rw [hcol]",
+        "line_number": "1832",
+        "lean_error": "rewrite failed: Did not find an occurrence of the pattern (junction object A.tensorObj (B.tensorObj C) vs sheafification.obj (...))",
+        "result": "failed",
+        "insight": "Plain rw cannot match the junction-object defeq."
+      },
+      {
+        "attempt": 5,
+        "strategy": "reassoc variant",
+        "code_tried": "rw [reassoc_of% hcol]  then  erw [reassoc_of% hcol]",
+        "line_number": "1832",
+        "lean_error": "rw: pattern not found; erw: (deterministic) timeout at whnf (200000 heartbeats)",
+        "result": "failed",
+        "insight": "Full-goal erw with reassoc overflows whnf; must isolate a small composite first."
+      },
+      {
+        "attempt": 6,
+        "strategy": "slice + erw to isolate the 3-composite and discharge codomain defeq",
+        "code_tried": "slice_rhs 2 4 => erw [hcol]",
+        "line_number": "1832",
+        "lean_error": "none (committed)",
+        "result": "success",
+        "insight": "slice isolates the small composite; erw then discharges the tensorObj/sheafification.obj defeq cheaply. THE idiom that beats the pervasive junction-defeq problem."
+      },
+      {
+        "attempt": 7,
+        "strategy": "Rewrite both whiskered units as μ-conjugates",
+        "code_tried": "rw [sheafification_whiskerRight_unit_eq_mu]; slice_rhs 2 2 => erw [sheafification_whiskerLeft_unit_eq_mu ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B ⊗ (toPresheafOfModules X).obj C)]",
+        "line_number": "1837",
+        "lean_error": "none (committed)",
+        "result": "success",
+        "insight": "Left keystone needs slice+erw (its ◁ instance differs after erw[hcol]); right keystone fires with plain rw. Goal now a μ/counit/L'(η)/L'(α^p) diagram chase."
+      },
+      {
+        "attempt": 8,
+        "strategy": "Cancel μ hom-inv pair via Iso.hom_inv_id_assoc (remaining 4 steps)",
+        "code_tried": "simp only [Category.assoc, Iso.hom_inv_id_assoc, Iso.inv_hom_id_assoc]  (and explicit μ-form rewrites)",
+        "line_number": "1862",
+        "lean_error": "no progress — the two μ terms differ by internal ⋙-nesting so the matcher cannot unify them in the giant goal",
+        "result": "failed",
+        "insight": "BLOCKER. Fix recipe: restate the two keystones so their final μ argument is canonically `(toPresheafOfModules X).obj (sheafification.obj _)`, matching tensorObjLocalizedIso; then Iso.hom_inv_id_assoc fires."
+      }
+    ],
+    "next_steps": "Restate sheafification_whiskerRight_unit_eq_mu / sheafification_whiskerLeft_unit_eq_mu with canonical μ object nesting (proofs defeq-tolerant: simp only [Functor.id_obj]; rw [μ_natural_…, Iso.inv_hom_id_assoc]; rfl). Then step (1) μ-cancel via Iso.hom_inv_id_assoc; steps (2) triangle identities (left_triangle_components) + whisker_exchange; (3) associator_naturality₃/associator_hom_app push to L'-objects; (4) tensorHom_def/whiskerLeft_comp coherence. ALTERNATIVE: prove via `have hK_lhs : <lhs> = K` / `have hK_rhs : <rhs> = K` pair, slice+erw throughout. ESCALATION: pc010 reversal signal tripped (sorry did not drop ≥3) — planner must re-engage at strategy level, not assign another warm-lane attempt blind."
+  },
+  {
+    "timestamp": "2026-06-19T04:41:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorPowAdd_rightUnit / tensorPowAdd_braiding / tensorPowAdd_assoc (x2) / sectionsMul_mul_assoc"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "All 5 gated coherences transfer pentagon/triangle/hexagon/unit from the Mathlib localized monoidal structure THROUGH tensorObjAssoc_eq_localizedAssociator, which is not yet closed.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — gated on the unclosed assembly bridge upstream",
+        "code_tried": "(none)",
+        "line_number": "2333/2355/2370/2373/2433",
+        "lean_error": "n/a",
+        "result": "failed",
+        "insight": "Correctly deferred; mechanical once the assembly lands (load in same warm lane)."
+      }
+    ],
+    "next_steps": "Defer until tensorObjAssoc_eq_localizedAssociator closes; then mechanical cascade."
+  },
+  {
+    "timestamp": "2026-06-19T04:41:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "gammaPushforwardNatIso_comp (+ FBC crux/seams)"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "No FBC prover this iter (plan: STUCK corrective = blueprint-writer kernel-light decomposition only). FBC foundation gammaPushforwardNatIso_comp still sorry @718; iter-009 'pointwise rfl' recipe was WRONG (real = 3-fold global-sections coherence) + monolithic simp overflows kernel.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — blueprint-writer only this iter (kernel-light decomposition: globalSectionsIso_hom_comp3_specMap_appTop + gammaPushforwardIso_comp per-component via NatTrans.ext)",
+        "code_tried": "(none — .lean untouched)",
+        "line_number": "718",
+        "lean_error": "n/a",
+        "result": "failed",
+        "insight": "Sanctioned 1-iter deferral; FBC prover fires next iter after blueprint-reviewer gate + blueprint-clean."
+      }
+    ],
+    "next_steps": "Next iter: blueprint-reviewer gate on FlatBaseChange chapter → blueprint-clean → fire FBC prover on the 2 kernel-light sub-lemmas + foundation + seams + crux."
+  }
+]

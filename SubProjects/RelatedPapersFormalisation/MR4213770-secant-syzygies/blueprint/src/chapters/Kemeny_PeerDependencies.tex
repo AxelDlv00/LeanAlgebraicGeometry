@@ -1,49 +1,2125 @@
 \section{Imported foundations}
 
-This chapter records reusable infrastructure already present in peer DAGs.  The
-blocks here are dependency anchors for later formal work; they are not final
-mathematical claims from Kemeny's paper.
+% archon:covers MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean
 
-\begin{definition}[Sheaf cohomology and higher direct image anchor]
+This chapter records the foundational cohomology-and-bundle layer on which every
+later construction rests.  The substrate is supplied by \emph{Mathlib}: for a
+scheme \(X\), the category \(X.\mathrm{Modules}\) of sheaves of
+\(\cO_X\)-modules is abelian and carries an additive pushforward functor along a
+morphism of schemes.  Producing the derived functors that compute sheaf
+cohomology and higher direct images requires, in addition, that the relevant
+category have injective resolutions, and here the two cohomological invariants
+part ways into a \emph{light} and a \emph{heavy} route.
+
+For \emph{scalar sheaf cohomology} \(H^i(X,\mathcal F)\) one only needs derived
+functors in the category \(\mathrm{Sh}(X,\mathrm{Ab})\) of abelian-group sheaves
+on the (essentially small) site of opens of \(X\).  That category \emph{is} of
+the form \(\mathrm{Sheaf}\,J\,\mathcal A\) with \(\mathcal A=\mathrm{Ab}\), so
+Mathlib's essentially-small theorem applies directly and makes it Grothendieck
+abelian, hence equipped with injective resolutions, \emph{unconditionally}.  We
+compute \(H^i\) by pushing an \(\cO_X\)-module to its underlying abelian-group
+sheaf and deriving global sections there.
+
+For \emph{higher direct images} \(R^if_*\) in the module category one genuinely
+needs \(X.\mathrm{Modules}\) itself to be Grothendieck abelian.  This is the
+\emph{heavy} bridge: sheaves of modules over a \emph{varying} ring sheaf are not
+literally objects of a category \(\mathrm{Sheaf}\,J\,\mathcal A\), so the
+essentially-small theorem does \emph{not} apply, and Grothendieck-abelianness
+must be assembled from its constituent axioms --- the \(\mathrm{AB5}\) exactness
+of filtered colimits and the existence of a separator.  This route is heavier
+and is invoked only by \(R^if_*\).
+
+The blocks below first record the relevant Mathlib results as dependency
+anchors, then assemble the project-side interface: the light abelian-group-sheaf
+bridge, the heavy module-category bridge, the derived pushforward and sheaf
+cohomology, the base-change comparison morphism, the stalk-local isomorphism
+criterion, and the exterior/symmetric power and local-freeness machinery.
+
+\subsection{Mathlib substrate anchors}
+
+\begin{definition}[Category of \(\cO_X\)-modules]
+  \label{mathlib:oxmod_category}
+  \lean{AlgebraicGeometry.Scheme.Modules}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For a scheme \(X\), Mathlib provides the category \(X.\mathrm{Modules}\) of
+  sheaves of \(\cO_X\)-modules, realised as \(\mathrm{SheafOfModules}\,
+  X.\mathrm{ringCatSheaf}\): sheaves of modules over the structure ring sheaf of
+  \(X\) on the site of opens.  It is an abelian category, so kernels, cokernels,
+  images and short exact sequences are available, and additive functors out of
+  it may be right-derived.
+\end{definition}
+
+\begin{definition}[Additive pushforward of \(\cO\)-modules]
+  \label{mathlib:oxmod_pushforward}
+  \lean{AlgebraicGeometry.Scheme.Modules.pushforward}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For a morphism of schemes \(f:X\to Y\), Mathlib provides the additive
+  pushforward functor
+  \[
+    f_*:X.\mathrm{Modules}\to Y.\mathrm{Modules},
+  \]
+  the degree-zero direct image of a sheaf of \(\cO_X\)-modules.  Its
+  right-derived functors are the higher direct images.
+\end{definition}
+
+\begin{definition}[Right-derived functor of an additive functor]
+  \label{mathlib:right_derived}
+  \lean{CategoryTheory.Functor.rightDerived}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Let \(F:\mathcal A\to\mathcal B\) be an additive functor between abelian
+  categories, with \(\mathcal A\) having enough injectives.  Mathlib provides the
+  \(i\)-th right-derived functor \(F.\mathrm{rightDerived}\,i:\mathcal A\to
+  \mathcal B\), computed by applying \(F\) to an injective resolution and taking
+  the \(i\)-th cohomology.  A short exact sequence in \(\mathcal A\) induces the
+  associated long exact sequence of the \(F.\mathrm{rightDerived}\,i\).
+\end{definition}
+
+\begin{definition}[Exterior power functor on a module category]
+  \label{mathlib:exterior_power_functor}
+  \lean{ModuleCat.exteriorPower.functor}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For a commutative ring \(R\) and \(i\in\mathbb N\), Mathlib provides the
+  \(i\)-th exterior power as a functor
+  \(\wedge^i:\mathrm{Mod}_R\to\mathrm{Mod}_R\) on the category of \(R\)-modules,
+  natural in the module argument.  Note there is no analogous symmetric-power
+  functor in Mathlib (see \cref{found:modulecat_sym_power}).
+\end{definition}
+
+\begin{definition}[Short exact sequence in an abelian category]
+  \label{mathlib:short_exact}
+  \lean{CategoryTheory.ShortComplex.ShortExact}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Mathlib encodes a short exact sequence in an abelian category as the predicate
+  \(\mathrm{ShortExact}\) on a short complex \(A\xrightarrow{f}B\xrightarrow{g}C\):
+  \(f\) is a monomorphism, \(g\) is an epimorphism, and the complex is exact at
+  \(B\).  This is the formalism in which the kernel-bundle and power-filtration
+  sequences of the secant-bundle construction are stated.
+\end{definition}
+
+\begin{lemma}[Stalkwise criterion for isomorphisms of sheaves]
+  \label{mathlib:stalk_locality}
+  \lean{TopCat.Presheaf.isIso_iff_stalkFunctor_map_iso}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  A morphism \(\varphi:\mathcal F\to\mathcal G\) of sheaves on a topological
+  space is an isomorphism if and only if the induced morphism on every stalk
+  \(\varphi_x:\mathcal F_x\to\mathcal G_x\) is an isomorphism.
+\end{lemma}
+
+\begin{lemma}[A Grothendieck abelian category has enough injectives]
+  \label{mathlib:groth_enough_injectives}
+  \lean{CategoryTheory.IsGrothendieckAbelian.enoughInjectives}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Every Grothendieck abelian category has enough injectives: each object admits a
+  monomorphism into an injective object.
+\end{lemma}
+
+\begin{lemma}[Enough injectives gives injective resolutions]
+  \label{mathlib:enough_inj_has_resolutions}
+  \lean{CategoryTheory.InjectiveResolution.instHasInjectiveResolution}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  In an abelian category with enough injectives, every object admits an injective
+  resolution; i.e. the category satisfies \(\mathrm{HasInjectiveResolutions}\).
+\end{lemma}
+
+\begin{lemma}[Sheaves valued in a Grothendieck category are Grothendieck abelian]
+  \label{mathlib:sheaf_groth_abelian}
+  \lean{CategoryTheory.Sheaf.isGrothendieckAbelian_of_essentiallySmall}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For an essentially small category \(\mathcal C\) equipped with a Grothendieck
+  topology \(J\), and a Grothendieck abelian target category \(\mathcal A\)
+  admitting sheafification (\(\mathrm{HasSheafify}\)), the category
+  \(\mathrm{Sheaf}\,J\,\mathcal A\) of \(\mathcal A\)-valued sheaves on
+  \(\mathcal C\) is again Grothendieck abelian.  Its valid application target in
+  this chapter is the category of \emph{abelian-group}-valued sheaves on the
+  essentially small site of opens of a scheme (\cref{found:absheaf_groth_abelian}),
+  which literally has this form with \(\mathcal A=\mathrm{Ab}\).  It does
+  \emph{not} apply to \(X.\mathrm{Modules}\): sheaves of modules over a varying
+  ring sheaf are not objects of any single \(\mathrm{Sheaf}\,J\,\mathcal A\), so
+  the module-category bridge (\cref{found:modules_grothendieck_abelian}) takes a
+  different route.
+\end{lemma}
+
+\begin{remark}[An alternative \(\mathrm{AB5}\) input from the module category]
+  For a ring \(R\), the category \(\mathrm{Mod}_R\) itself satisfies
+  Grothendieck's \(\mathrm{AB5}\) axiom: it has filtered colimits and these are
+  exact (they preserve finite limits / short exact sequences).  One could in
+  principle feed \(\mathrm{AB5}\) for (pre)sheaves of modules from this module-level
+  axiom, transported objectwise and then through sheafification.  The project does
+  \emph{not} take this route: its presheaf-of-modules \(\mathrm{AB5}\) is obtained
+  instead from the \(\mathrm{Ab}\)-valued functor category, via
+  \cref{mathlib:addcommgrp_ab5}.
+\end{remark}
+
+\begin{lemma}[The category of abelian groups satisfies \(\mathrm{AB5}\)]
+  \label{mathlib:addcommgrp_ab5}
+  \lean{instAB5AddCommGrpCat}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  The category \(\mathrm{Ab}\) of abelian groups satisfies Grothendieck's
+  \(\mathrm{AB5}\) axiom: it has filtered colimits and these are exact.  This is
+  the concrete base-category input from which \(\mathrm{AB5}\) for presheaves of
+  modules is obtained, by lifting to the functor category \(\mathcal C^{\mathrm{op}}
+  \to\mathrm{Ab}\) and transporting along the forgetful functor.
+\end{lemma}
+
+\begin{lemma}[Sheafification of presheaves of modules is exact]
+  \label{mathlib:sheafification_modules_exact}
+  \lean{PresheafOfModules.sheafification}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Mathlib provides the sheafification functor
+  \[
+    (-)^{\sharp}:\mathrm{PresheafOfModules}\,R\to\mathrm{SheafOfModules}\,R ,
+  \]
+  left adjoint to the forgetful inclusion.  It is exact: being a left adjoint it
+  preserves all colimits, and Mathlib furthermore proves it preserves finite
+  limits, so it is left exact as well.  This exactness is what lets one transport \(\mathrm{AB5}\) and
+  the exterior/symmetric powers from the presheaf level to the sheaf level.
+\end{lemma}
+
+\begin{remark}[Why the global free sheaves do not separate]
+  For a sheaf of rings \(R\) on a site and an index type \(I\) there is a free
+  sheaf of modules \(R^{(I)}\), together with the natural bijection
+  \(\mathrm{Hom}(R^{(I)},\mathcal M)\cong (I\to\mathcal M.\mathrm{sections})\)
+  identifying morphisms out of a free sheaf with families of \emph{global}
+  sections.  Because this universal property sees only global sections, the family
+  of these global free sheaves is \emph{not} separating on a general scheme:
+  separation by \(\{R^{(I)}\}\) would force the global-sections functor to be
+  conservative, which fails already for \(\cO(-1)\) on \(\mathbb P^1\).  The
+  separator route for sheaves of modules therefore uses a different family, one
+  that sees sections over every open rather than only the global ones --- namely
+  the free-Yoneda family \cref{mathlib:presheafmod_freeYoneda}.
+\end{remark}
+
+\begin{lemma}[Free-Yoneda separating family of presheaves of modules]
+  \label{mathlib:presheafmod_freeYoneda}
+  \lean{PresheafOfModules.freeYoneda.isSeparating}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For a presheaf of rings \(R\) on a category \(\mathcal C\), Mathlib provides the
+  family \(\mathrm{freeYoneda}\,R\) of free presheaves of modules built on the
+  representable (Yoneda) presheaves: for an open \(U\), a morphism
+  \(\mathrm{freeYoneda}(U)\to\mathcal F\) is precisely a section of \(\mathcal F\)
+  over \(U\).  This family therefore sees sections over \emph{every} open, and
+  Mathlib proves it is a small separating family:
+  \(\mathrm{freeYoneda}\,R\) is \(\mathrm{IsSeparating}\) (and \(\mathrm{Small}\))
+  in \(\mathrm{PresheafOfModules}\,R\).
+\end{lemma}
+
+\begin{lemma}[Sheafification adjunction for presheaves of modules]
+  \label{mathlib:sheafification_adjunction}
+  \lean{PresheafOfModules.sheafificationAdjunction}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For a sheaf of rings \(R\) on a site, Mathlib provides the sheafification adjunction
+  \[
+    (-)^{\sharp}\dashv \iota:\;\mathrm{PresheafOfModules}\,R.\mathrm{obj}
+    \;\rightleftarrows\;\mathrm{SheafOfModules}\,R ,
+  \]
+  whose left adjoint is sheafification and whose right adjoint \(\iota\) is the
+  (faithful) forgetful inclusion of sheaves of modules into presheaves of modules.
+\end{lemma}
+
+\begin{lemma}[A coproduct of a separating family is a separator]
+  \label{mathlib:isSeparator_sigma}
+  \lean{CategoryTheory.isSeparator_sigma}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  In a category with the relevant coproduct, a family of objects
+  \((S_b)_{b\in\beta}\) is separating if and only if its coproduct
+  \(\coprod_{b}S_b\) is a separator.  In particular a small separating family
+  yields a single separator object.
+\end{lemma}
+
+\subsection{Light cohomology bridge: abelian-group sheaves}
+
+\begin{definition}\leanok
+[Underlying abelian-group sheaf of an \(\cO_X\)-module]
+  \label{found:modules_to_absheaf}
+  \lean{AlgebraicGeometry.Scheme.Modules.toAbSheaf}
+  \uses{mathlib:oxmod_category}
+  For a scheme \(X\), the forgetful functor
+  \[
+    (-)^{\mathrm{Ab}}:X.\mathrm{Modules}\to\mathrm{Sh}(X,\mathrm{Ab})
+  \]
+  sending an \(\cO_X\)-module \(\mathcal F\) to its underlying sheaf of abelian
+  groups, an object of the category \(\mathrm{Sh}(X,\mathrm{Ab})\).  This is the
+  forgetful functor that retains the sheaf condition and the abelian-group
+  structure of \(\mathcal F\) while forgetting the \(\cO_X\)-module structure.
+\end{definition}
+
+\begin{lemma}\leanok
+[Abelian-group sheaves on a scheme are Grothendieck abelian]
+  \label{found:absheaf_groth_abelian}
+  \lean{AlgebraicGeometry.instIsGrothendieckAbelianTopCatSheafAb}
+  \uses{mathlib:sheaf_groth_abelian}
+  For a scheme \(X\), the category \(\mathrm{Sh}(X,\mathrm{Ab})\) of
+  abelian-group-valued sheaves on the site of opens of \(X\) is Grothendieck
+  abelian.
+\end{lemma}
+
+\begin{proof}
+  \uses{mathlib:sheaf_groth_abelian}
+  \leanok
+  The category \(\mathrm{Ab}\) of abelian groups is Grothendieck abelian, the
+  site of opens of \(X\) is essentially small, and sheafification of
+  abelian-group presheaves exists (\(\mathrm{HasSheafify}\)).  The category
+  \(\mathrm{Sh}(X,\mathrm{Ab})\) is exactly \(\mathrm{Sheaf}\,J\,\mathrm{Ab}\) for
+  the canonical Grothendieck topology \(J\) on the opens of \(X\); applying
+  \cref{mathlib:sheaf_groth_abelian} to this essentially small site with target
+  \(\mathcal A=\mathrm{Ab}\) yields the Grothendieck-abelian structure.
+\end{proof}
+
+\begin{lemma}\leanok
+[Abelian-group sheaves have injective resolutions]
+  \label{found:absheaf_has_injective_resolutions}
+  \lean{AlgebraicGeometry.instHasInjectiveResolutionsTopCatSheafAb}
+  \uses{found:absheaf_groth_abelian, found:absheaf_enough_injectives, mathlib:groth_enough_injectives, mathlib:enough_inj_has_resolutions}
+  For a scheme \(X\), the abelian category \(\mathrm{Sh}(X,\mathrm{Ab})\) has
+  injective resolutions: every abelian-group sheaf embeds into an injective one,
+  and admits an injective resolution.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:absheaf_groth_abelian, found:absheaf_enough_injectives, mathlib:groth_enough_injectives, mathlib:enough_inj_has_resolutions}
+  \leanok
+  By \cref{found:absheaf_groth_abelian} the category \(\mathrm{Sh}(X,\mathrm{Ab})\)
+  is Grothendieck abelian, hence has enough injectives by
+  \cref{mathlib:groth_enough_injectives}; an abelian category with enough
+  injectives has injective resolutions by
+  \cref{mathlib:enough_inj_has_resolutions}.
+\end{proof}
+
+\begin{lemma}\leanok
+[Abelian-group sheaves have enough injectives]
+  \label{found:absheaf_enough_injectives}
+  \lean{AlgebraicGeometry.instEnoughInjectivesTopCatSheafAb}
+  \uses{found:absheaf_groth_abelian, mathlib:groth_enough_injectives}
+  For a scheme \(X\), the category \(\mathrm{Sh}(X,\mathrm{Ab})\) of
+  abelian-group sheaves has enough injectives: every abelian-group sheaf admits a
+  monomorphism into an injective one.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:absheaf_groth_abelian, mathlib:groth_enough_injectives}
+  \leanok
+  Being Grothendieck abelian (\cref{found:absheaf_groth_abelian}), the category
+  \(\mathrm{Sh}(X,\mathrm{Ab})\) has enough injectives by
+  \cref{mathlib:groth_enough_injectives}.
+\end{proof}
+
+\begin{definition}\leanok
+[Sheaf-level global-sections functor]
+  \label{found:absheaf_global_sections}
+  \lean{AlgebraicGeometry.Scheme.absheafGlobalSections}
+  \uses{found:modules_to_absheaf}
+  For a scheme \(X\), the sheaf-level global-sections functor
+  \[
+    \Gamma:\mathrm{Sh}(X,\mathrm{Ab})\to\mathrm{Ab}
+  \]
+  on abelian-group sheaves, given by forgetting an abelian-group sheaf to its
+  underlying presheaf and evaluating at the terminal open \(\top=X\).  This is the
+  functor whose right-derived functors compute sheaf cohomology
+  (\cref{def:peer_scheme_hmodule}): the cohomology of an \(\cO_X\)-module is
+  obtained by first passing to its underlying abelian-group sheaf
+  (\cref{found:modules_to_absheaf}) and then right-deriving this \(\Gamma\).  It
+  is distinct from the module-level global-sections functor of
+  \cref{found:global_sections_ab}, which lands in \(\mathrm{Ab}\) directly from
+  \(X.\mathrm{Modules}\).
+\end{definition}
+
+\begin{lemma}\leanok
+[Sheaf-level global-sections functor is additive]
+  \label{found:absheaf_global_sections_additive}
+  \lean{AlgebraicGeometry.Scheme.absheafGlobalSections_additive}
+  \uses{found:absheaf_global_sections}
+  For a scheme \(X\), the sheaf-level global-sections functor \(\Gamma\) of
+  \cref{found:absheaf_global_sections} is additive, hence may be right-derived.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:absheaf_global_sections}
+  \leanok
+  \(\Gamma\) is the composite of the additive forgetful functor from
+  abelian-group sheaves to abelian-group presheaves with the additive evaluation
+  functor at the open \(\top=X\); a composite of additive functors is additive.
+\end{proof}
+
+% NOTE: This module-level \(\Gamma_{\mathrm{Ab}}\) is distinct from the
+% sheaf-level \(\Gamma\) (\cref{found:absheaf_global_sections}) that
+% \cref{def:peer_scheme_hmodule} right-derives.  Whether right-deriving
+% \(\Gamma_{\mathrm{Ab}}:X.\mathrm{Modules}\to\mathrm{Ab}\) directly recovers
+% the same cohomology groups as the sheaf-level route is not yet established.
+\begin{definition}[Additive global-sections functor]
+  \leanok
+  \label{found:global_sections_ab}
+  \lean{AlgebraicGeometry.Scheme.globalSectionsAb}
+  \uses{mathlib:oxmod_category}
+  For a scheme \(X\), the additive global-sections functor
+  \[
+    \Gamma_{\mathrm{Ab}}:X.\mathrm{Modules}\to\mathrm{Ab}
+  \]
+  sends an \(\cO_X\)-module \(\mathcal F\) to its abelian group of global
+  sections \(\mathcal F(X)\) and a morphism to its induced map on global
+  sections.  It factors through the underlying-abelian-group-sheaf functor of
+  \cref{found:modules_to_absheaf} followed by the global-sections functor
+  \(\Gamma(X,-)\).  This module-level \(\Gamma_{\mathrm{Ab}}:X.\mathrm{Modules}\to
+  \mathrm{Ab}\) is \emph{not} the functor that sheaf cohomology right-derives:
+  \(H^i\) is computed by right-deriving the sheaf-level global sections
+  \(\Gamma:\mathrm{Sh}(X,\mathrm{Ab})\to\mathrm{Ab}\)
+  (\cref{found:absheaf_global_sections}) after passing to the underlying
+  abelian-group sheaf.  Whether right-deriving \(\Gamma_{\mathrm{Ab}}\)
+  directly produces the same cohomology groups as the sheaf-level route of
+  \cref{def:peer_scheme_hmodule} is an open comparison question.
+\end{definition}
+
+\subsection{Heavy bridge: module category is Grothendieck abelian}
+
+\begin{lemma}\leanok
+[Presheaves of modules satisfy \(\mathrm{AB5}\)]
+  \label{found:presheafmod_ab5}
+  \lean{AlgebraicGeometry.instAB5OfSizePresheafOfModules}
+  \uses{mathlib:addcommgrp_ab5}
+  For a presheaf of rings \(R\) on the site of opens of a scheme, the category
+  \(\mathrm{PresheafOfModules}\,R\) satisfies \(\mathrm{AB5OfSize}\): it has
+  filtered colimits and these are exact.
+\end{lemma}
+
+\begin{proof}
+  \uses{mathlib:addcommgrp_ab5}
+  \leanok
+  The exactness of filtered colimits is transported from \(\mathrm{Ab}\) along the
+  forgetful functor to abelian-group presheaves.  The category \(\mathrm{Ab}\)
+  satisfies \(\mathrm{AB5}\) (\cref{mathlib:addcommgrp_ab5}); exactness of filtered
+  colimits is inherited by any functor category, so the presheaf category
+  \(\mathcal C^{\mathrm{op}}\to\mathrm{Ab}\) of abelian-group presheaves again
+  satisfies \(\mathrm{AB5}\).  The forgetful functor
+  \(\mathrm{PresheafOfModules}\,R\to(\mathcal C^{\mathrm{op}}\to\mathrm{Ab})\)
+  preserves colimits while reflecting and preserving finite limits, so the
+  domain-transport principle for exact colimits (\(\mathrm{HasExactColimitsOfShape}
+  \) along a functor) carries the \(\mathrm{AB5}\) exactness back to
+  \(\mathrm{PresheafOfModules}\,R\).
+\end{proof}
+
+\begin{lemma}\leanok
+[Sheaves of modules satisfy \(\mathrm{AB5}\)]
+  \label{found:sheafmod_ab5}
+  \lean{AlgebraicGeometry.instAB5OfSizeSheafOfModules}
+  \uses{found:presheafmod_ab5, mathlib:sheafification_modules_exact}
+  For a sheaf of rings \(R\) on the site of opens of a scheme, the category
+  \(\mathrm{SheafOfModules}\,R\) satisfies \(\mathrm{AB5OfSize}\).
+\end{lemma}
+
+\begin{proof}
+  \uses{found:presheafmod_ab5, mathlib:sheafification_modules_exact}
+  \leanok
+  Filtered colimits in \(\mathrm{SheafOfModules}\,R\) are computed by sheafifying
+  the corresponding filtered colimit of presheaves.  By
+  \cref{found:presheafmod_ab5} filtered colimits are exact at the presheaf level,
+  and by \cref{mathlib:sheafification_modules_exact} the sheafification functor is
+  exact; composing an exact filtered-colimit functor with the exact
+  sheafification (and using that the forgetful inclusion is left exact) transports
+  the \(\mathrm{AB5}\) exactness from presheaves to sheaves.
+\end{proof}
+
+\begin{lemma}\leanok
+[Separating families transport along a left adjoint with faithful right adjoint]
+  \label{found:separating_transport_left_adjoint}
+  \lean{AlgebraicGeometry.isSeparating_ofObj_leftAdjoint}
+  Let \(F\dashv G\) be an adjunction with \(G\) faithful.  If \(\{S_b\}_{b\in\beta}\)
+  is a separating family in the source category, then \(\{F(S_b)\}_{b\in\beta}\)
+  is a separating family in the target category.
+\end{lemma}
+
+\begin{proof}
+
+\leanok
+  Proved directly in Lean.
+\end{proof}
+
+\begin{lemma}\leanok
+[Sheaves of modules have a separator]
+  \label{found:sheafmod_separator}
+  \lean{AlgebraicGeometry.instHasSeparatorSheafOfModules}
+  \uses{mathlib:presheafmod_freeYoneda, mathlib:sheafification_adjunction, mathlib:isSeparator_sigma, found:separating_transport_left_adjoint}
+  For a sheaf of rings \(R\) on the site of opens of a scheme, the category
+  \(\mathrm{SheafOfModules}\,R\) has a separator.
+\end{lemma}
+
+\begin{proof}
+  \uses{mathlib:presheafmod_freeYoneda, mathlib:sheafification_adjunction, mathlib:isSeparator_sigma, found:separating_transport_left_adjoint}
+  \leanok
+  Work at the presheaf level first.  The free-Yoneda family
+  \(\mathrm{freeYoneda}\,R.\mathrm{obj}\) of free presheaves of modules on the
+  representable presheaves is a small separating family of
+  \(\mathrm{PresheafOfModules}\,R.\mathrm{obj}\)
+  (\cref{mathlib:presheafmod_freeYoneda}): a morphism out of
+  \(\mathrm{freeYoneda}(U)\) is exactly a section over the open \(U\), so the
+  family detects morphisms by their effect on sections over \emph{every} open, not
+  merely the global ones.
+
+  Transport this family across the sheafification adjunction
+  \((-)^{\sharp}\dashv\iota\) of \cref{mathlib:sheafification_adjunction}.  A separating family transports
+  along a left adjoint whose right adjoint is faithful
+  (\cref{found:separating_transport_left_adjoint}): since \(\iota\) is faithful,
+  the images \(\bigl(\mathrm{freeYoneda}(U)\bigr)^{\sharp}\) form a separating
+  family of \(\mathrm{SheafOfModules}\,R\).
+
+  Finally, the coproduct of a separating family is a separator
+  (\cref{mathlib:isSeparator_sigma}), so the coproduct of the sheafified
+  free-Yoneda family is a single separator object of
+  \(\mathrm{SheafOfModules}\,R\).
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Sheaves of modules over a sheaf of rings form a Grothendieck abelian category]
+  \label{found:sheafmod_grothendieck_abelian}
+  \lean{AlgebraicGeometry.instIsGrothendieckAbelianSheafOfModules}
+  \uses{found:sheafmod_ab5, found:sheafmod_separator}
+  For a sheaf of rings \(R\) on the (small) site of opens of a scheme, the category
+  \(\mathrm{SheafOfModules}\,R\) is Grothendieck abelian.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:sheafmod_ab5, found:sheafmod_separator}
+  \leanok
+  Being Grothendieck abelian amounts to four data on the abelian category
+  \(\mathrm{SheafOfModules}\,R\): existence of filtered colimits, local smallness,
+  exactness of filtered colimits (\(\mathrm{AB5OfSize}\)), and the existence of a
+  separator.  The first two hold by inference (filtered colimits are computed via
+  sheafification of objectwise colimits, and the category is locally small).  The
+  substantive inputs are the \(\mathrm{AB5}\) exactness, supplied by
+  \cref{found:sheafmod_ab5}, and the separator, supplied by
+  \cref{found:sheafmod_separator}.  Assembling the four fields yields the
+  Grothendieck-abelian structure.  The essentially-small theorem
+  \cref{mathlib:sheaf_groth_abelian} is \emph{not} used, as sheaves of modules over
+  a varying ring sheaf are not of the form \(\mathrm{Sheaf}\,J\,\mathcal A\).
+\end{proof}
+
+\begin{lemma}\leanok
+[\(\cO_X\)-modules form a Grothendieck abelian category]
+  \label{found:modules_grothendieck_abelian}
+  \lean{AlgebraicGeometry.instIsGrothendieckAbelianModules}
+  \uses{found:sheafmod_grothendieck_abelian, mathlib:oxmod_category}
+  For every scheme \(X\), the category \(X.\mathrm{Modules}\) is Grothendieck
+  abelian.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:sheafmod_grothendieck_abelian, mathlib:oxmod_category}
+  \leanok
+  By definition \(X.\mathrm{Modules}=\mathrm{SheafOfModules}\,X.\mathrm{ringCatSheaf}\)
+  (\cref{mathlib:oxmod_category}), so this is the specialisation of the general
+  instance \cref{found:sheafmod_grothendieck_abelian} to the structure ring sheaf
+  \(R=X.\mathrm{ringCatSheaf}\), transferred across that definitional equality.  The
+  four-field assembly of the Grothendieck-abelian structure (filtered colimits and
+  local smallness by inference, \(\mathrm{AB5}\), and the separator) lives in the
+  general instance.
+\end{proof}
+
+\begin{lemma}\leanok
+[\(\cO_X\)-modules have injective resolutions]
+  \label{found:has_injective_resolutions}
+  \lean{AlgebraicGeometry.instHasInjectiveResolutionsModules}
+  \uses{found:modules_grothendieck_abelian, mathlib:groth_enough_injectives, mathlib:enough_inj_has_resolutions}
+  For every scheme \(X\), the abelian category \(X.\mathrm{Modules}\) has enough
+  injectives, so every \(\cO_X\)-module admits an injective resolution; in
+  particular, the hypothesis of \cref{mathlib:right_derived} is satisfied for
+  the pushforward functor in the module category.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:modules_grothendieck_abelian, mathlib:groth_enough_injectives, mathlib:enough_inj_has_resolutions}
+  \leanok
+  By \cref{found:modules_grothendieck_abelian} the category \(X.\mathrm{Modules}\)
+  is Grothendieck abelian, hence has enough injectives by
+  \cref{mathlib:groth_enough_injectives}; an abelian category with enough
+  injectives has injective resolutions by
+  \cref{mathlib:enough_inj_has_resolutions}.
+\end{proof}
+
+\subsection{Exterior and symmetric powers}
+
+\begin{lemma}\leanok
+[Commutative-ring structure on the structure-sheaf sections]
+  \label{found:ringcatsheaf_commring}
+  \lean{AlgebraicGeometry.Scheme.ringCatSheaf_commRing}
+  \uses{mathlib:oxmod_category}
+  For a scheme \(X\) and an open \(U\), the value \(X.\mathrm{ringCatSheaf}(U)\) of
+  the structure ring sheaf --- a priori only an object of \(\mathrm{RingCat}\) ---
+  carries a commutative-ring structure, compatible with (indeed identical to) the
+  commutative-ring structure of the structure-sheaf sections \(\cO_X(U)=
+  X.\mathrm{presheaf}(U)\) as an object of \(\mathrm{CommRingCat}\).
+\end{lemma}
+
+\begin{proof}
+  \uses{mathlib:oxmod_category}
+  \leanok
+  The ring sheaf \(X.\mathrm{ringCatSheaf}\) is the image of the structure sheaf
+  \(\cO_X\) under the forgetful functor \(\mathrm{CommRingCat}\to\mathrm{RingCat}\):
+  its value at \(U\) is the same underlying set with the same addition and
+  multiplication as \(\cO_X(U)\).  The commutativity carried by the
+  \(\mathrm{CommRingCat}\) object \(\cO_X(U)\) is therefore present on the
+  sections, and is recovered as a \(\mathrm{CommRing}\) instance on the
+  \(\mathrm{RingCat}\)-valued \(X.\mathrm{ringCatSheaf}(U)\), which the
+  \(\mathrm{RingCat}\) type level forgets.
+\end{proof}
+
+\begin{lemma}\leanok
+[Linear-algebra base change of exterior powers]
+  \label{found:exterior_base_change_linear}
+  \lean{ModuleCat.exteriorPower.baseChange}
+  \uses{found:exterior_base_change_alt, mathlib:exterior_power_functor}
+  Let \(A\) be a commutative ring, \(B\) an \(A\)-algebra, and \(N\) a
+  \(B\)-module equipped with a compatible \(A\)-module structure and the scalar
+  tower \(\mathrm{IsScalarTower}\,A\,B\,N\).  Then for each \(i\in\mathbb N\)
+  there is an \(A\)-linear comparison map
+  \[
+    \textstyle\bigwedge^i_A N\to\bigwedge^i_B N
+  \]
+  from the exterior power formed over \(A\) to the exterior power formed over
+  \(B\); on a decomposable wedge it acts as the identity on representatives:
+  \(n_1\wedge\cdots\wedge n_i\mapsto n_1\wedge\cdots\wedge n_i\).  The target
+  exterior power inherits the \(A\)-module structure via the scalar tower
+  \(\mathrm{IsScalarTower}\,A\,B\,(\bigwedge^i_B N)\), so that source and target
+  are both \(A\)-modules.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:exterior_base_change_alt, mathlib:exterior_power_functor}
+  \leanok
+  Over the fixed ring \(B\) the exterior power \(\bigwedge^i_B N\) is the object
+  of \cref{mathlib:exterior_power_functor}; the new content is the
+  comparison with the exterior power formed over the subring of scalars \(A\).
+  The \(i\)-fold wedge \(n_1\wedge\cdots\wedge n_i\) over \(A\) is sent to the
+  same expression read over \(B\); by the alternating-multilinear universal
+  property of \(\bigwedge^i_A N\) this rule extends uniquely to an \(A\)-linear
+  map into \(\bigwedge^i_B N\), the latter regarded as an \(A\)-module via the
+  scalar tower.  The action-on-generators identity is then the defining equation
+  of the map on the spanning decomposable wedges.
+\end{proof}
+
+\begin{lemma}\leanok
+[Base-change functoriality of exterior powers]
+  \label{found:exterior_power_base_change}
+  \lean{ModuleCat.exteriorPower.baseChangeMap}
+  \uses{found:exterior_base_change_linear, mathlib:exterior_power_functor}
+  Let \(\varphi:R\to S\) be a homomorphism of commutative rings, \(M\) an
+  \(R\)-module, \(N\) an \(S\)-module, and \(g:M\to N\) a \(\varphi\)-semilinear
+  map --- equivalently an \(R\)-linear map \(M\to N{\restriction}_R\) into the
+  restriction of scalars of \(N\) along \(\varphi\).  Then for each
+  \(i\in\mathbb N\) there is an induced \(\varphi\)-semilinear map
+  \[
+    \wedge^i g:\textstyle\bigwedge^i_R M\to\bigwedge^i_S N
+  \]
+  on exterior powers, compatible with restriction of scalars along \(\varphi\) and
+  determined on a decomposable wedge by \(n_1\wedge\cdots\wedge n_i\mapsto
+  g(n_1)\wedge\cdots\wedge g(n_i)\) read over \(S\).  Its behaviour under the
+  identity ring map and under composition of semilinear maps --- the naturality
+  that makes base change functorial in the ring map --- is recorded separately in
+  \cref{found:exterior_base_change_map_id} and
+  \cref{found:exterior_base_change_map_comp}.
+  This is the ingredient that Mathlib lacks: it provides the exterior power as a
+  functor over a \emph{fixed} commutative base
+  (\cref{mathlib:exterior_power_functor}) but not its variance in the base ring,
+  so this base-change functoriality is supplied here as project infrastructure.
+  It arises as the semilinear wrapper of the linear-algebra comparison map
+  \cref{found:exterior_base_change_linear}, via restriction of scalars along \(\varphi\).
+\end{lemma}
+
+\begin{proof}
+  \uses{found:exterior_base_change_linear, mathlib:exterior_power_functor}
+  \leanok
+  A \(\varphi\)-semilinear map \(g:M\to N\) is an \(R\)-linear map
+  \(M\to N{\restriction}_R\), so applying the fixed-base functor
+  \cref{mathlib:exterior_power_functor} over \(R\) yields an \(R\)-linear map
+  \(\bigwedge^i_R M\to\bigwedge^i_R(N{\restriction}_R)\).  It remains to compare
+  \(\bigwedge^i_R(N{\restriction}_R)\) with \(\bigl(\bigwedge^i_S N\bigr){\restriction}_R\);
+  this is exactly the linear-algebra comparison of
+  \cref{found:exterior_base_change_linear}, applied with the algebra structure
+  on \(S\) induced by \(\varphi\), the \(R\)-module structure on \(N\) supplied
+  by restriction of scalars, and the scalar tower \(\mathrm{IsScalarTower}\,R\,S\,N\).
+  Composing the two \(R\)-linear maps sends a decomposable wedge
+  \(n_1\wedge\cdots\wedge n_i\) to the same decomposable wedge formed over \(S\)
+  and produces the desired \(\varphi\)-semilinear map, with the stated action on
+  generators.  This construction supplies only the semilinear map and its value on
+  generators; that base change along the identity ring map recovers the fixed-base
+  exterior power and that it respects composition of semilinear maps is established
+  separately in \cref{found:exterior_base_change_map_id} and
+  \cref{found:exterior_base_change_map_comp}.
+\end{proof}
+
+\begin{lemma}[Base change along the identity ring map --- exterior]\leanok
+  \label{found:exterior_base_change_map_id}
+  \lean{ModuleCat.exteriorPower.baseChangeMap_id}
+  \uses{found:exterior_power_base_change, mathlib:exterior_power_functor}
+  Let \(R\) be a commutative ring, \(M\) an \(R\)-module and \(g:M\to M\) an
+  \(R\)-linear map, viewed as an \(\mathrm{id}_R\)-semilinear map.  Then the
+  base-change map \(\wedge^i g\) of \cref{found:exterior_power_base_change} formed
+  along the identity ring homomorphism \(\mathrm{id}_R\) coincides with the
+  fixed-base exterior power \(\wedge^i g\) of the functor
+  \cref{mathlib:exterior_power_functor}, both being \(R\)-linear endomorphisms of
+  \(\bigwedge^i_R M\).
+\end{lemma}
+
+\begin{proof}\leanok
+  \uses{found:exterior_power_base_change, mathlib:exterior_power_functor}
+  Both maps are \(R\)-linear endomorphisms of \(\bigwedge^i_R M\), so it suffices
+  to compare them on the decomposable wedges \(n_1\wedge\cdots\wedge n_i\), which
+  span.  Base change along \(\mathrm{id}_R\) leaves the base ring unchanged, so its
+  action \(n_1\wedge\cdots\wedge n_i\mapsto g(n_1)\wedge\cdots\wedge g(n_i)\) is
+  exactly that of the fixed-base functor \cref{mathlib:exterior_power_functor}.
+\end{proof}
+
+\begin{lemma}[Base change respects composition of ring maps --- exterior]\leanok
+  \label{found:exterior_base_change_map_comp}
+  \lean{ModuleCat.exteriorPower.baseChangeMap_comp}
+  \uses{found:exterior_power_base_change}
+  Let \(\varphi:R\to S\) and \(\psi:S\to T\) be homomorphisms of commutative rings,
+  let \(g:M\to N\) be \(\varphi\)-semilinear and \(h:N\to P\) be
+  \(\psi\)-semilinear.  Then the base-change map of the composite \(h\circ g\)
+  (which is \((\psi\circ\varphi)\)-semilinear), formed along \(\psi\circ\varphi\),
+  factors as the composite of the base-change maps of \(g\) and \(h\):
+  \[
+    \wedge^i(h\circ g)=\wedge^i h\circ\wedge^i g
+    :\textstyle\bigwedge^i_R M\to\bigwedge^i_T P .
+  \]
+\end{lemma}
+
+\begin{proof}\leanok
+  \uses{found:exterior_power_base_change}
+  Both sides are additive maps \(\bigwedge^i_R M\to\bigwedge^i_T P\) that agree on
+  the spanning decomposable wedges: each sends \(n_1\wedge\cdots\wedge n_i\) to
+  \(h(g(n_1))\wedge\cdots\wedge h(g(n_i))\) read over \(T\).  Hence they coincide.
+\end{proof}
+
+\begin{lemma}\leanok
+[Alternating map underlying the exterior base-change comparison]
+  \label{found:exterior_base_change_alt}
+  \lean{ModuleCat.exteriorPower.baseChangeAlt}
+  \uses{mathlib:exterior_power_functor}
+  The \(A\)-alternating map \(N^i\to\bigwedge^i_B N\) underlying the comparison map
+  \cref{found:exterior_base_change_linear}: the canonical \(B\)-alternating map
+  \((n_1,\dots,n_i)\mapsto n_1\wedge\cdots\wedge n_i\) into \(\bigwedge^i_B N\),
+  with its scalars restricted from \(B\) to \(A\) along the algebra structure.
+\end{lemma}
+
+\begin{proof}
+  \uses{mathlib:exterior_power_functor}
+  \leanok
+  The fixed-base exterior power over \(B\) (\cref{mathlib:exterior_power_functor})
+  carries its universal \(B\)-alternating map; restriction of scalars along
+  \(A\to B\) turns it into an \(A\)-alternating map, alternating because the
+  underlying additive map is unchanged.
+\end{proof}
+
+\begin{lemma}\leanok
+[Generator action of the exterior base-change comparison]
+  \label{found:exterior_base_change_apply_iotamulti}
+  \lean{ModuleCat.exteriorPower.baseChange_apply_ιMulti}
+  \uses{found:exterior_base_change_linear, found:exterior_base_change_alt}
+  The comparison map \cref{found:exterior_base_change_linear} sends the
+  decomposable wedge \(v_1\wedge\cdots\wedge v_i\) formed over \(A\) to the same
+  wedge \(v_1\wedge\cdots\wedge v_i\) formed over \(B\).
+\end{lemma}
+
+\begin{proof}
+  \uses{found:exterior_base_change_linear, found:exterior_base_change_alt}
+  \leanok
+  This is the defining equation of \cref{found:exterior_base_change_linear} on the
+  spanning decomposable wedges, read off from the universal property of
+  \(\bigwedge^i_A N\) applied to the \(A\)-alternating map
+  \cref{found:exterior_base_change_alt}.
+\end{proof}
+
+\begin{lemma}\leanok
+[Generator action of the exterior base-change map]
+  \label{found:exterior_base_change_map_apply_iotamulti}
+  \lean{ModuleCat.exteriorPower.baseChangeMap_apply_ιMulti}
+  \uses{found:exterior_power_base_change, found:exterior_base_change_apply_iotamulti}
+  The base-change map \cref{found:exterior_power_base_change} along
+  \(\varphi:R\to S\) sends the decomposable wedge \(v_1\wedge\cdots\wedge v_i\)
+  over \(R\) to \(g(v_1)\wedge\cdots\wedge g(v_i)\) over \(S\), the wedge of the
+  \(g\)-images of the entries.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:exterior_power_base_change, found:exterior_base_change_apply_iotamulti}
+  \leanok
+  Unfolding \cref{found:exterior_power_base_change} as the fixed-base exterior
+  power of \(g\) over \(R\) followed by the comparison map
+  \cref{found:exterior_base_change_linear}, the wedge \(v_1\wedge\cdots\wedge v_i\)
+  maps first to \(g(v_1)\wedge\cdots\wedge g(v_i)\) over \(R\) and then, by
+  \cref{found:exterior_base_change_apply_iotamulti}, to the same wedge read over
+  \(S\).
+\end{proof}
+
+\begin{lemma}[Exterior power of a presheaf of modules]\leanok
+  \label{found:presheafmod_exterior_power}
+  \lean{AlgebraicGeometry.PresheafOfModules.exteriorPower}
+  \uses{found:ringcatsheaf_commring, found:exterior_power_base_change, found:exterior_base_change_map_id, found:exterior_base_change_map_comp, mathlib:exterior_power_functor, found:exterior_base_change_map_cat, found:presheafmod_extpowmap, found:presheafmod_extpowmap_id, found:presheafmod_extpowmap_comp}
+  For \(i\in\mathbb N\), the \(i\)-th exterior power functor
+  \[
+    \wedge^i:\mathrm{PresheafOfModules}\,R\to\mathrm{PresheafOfModules}\,R ,
+  \]
+  given over each open \(U\) by the module-level exterior power
+  \(\mathrm{ModuleCat.exteriorPower}\) of \(\mathcal F(U)\), and functorial in the
+  restriction maps.
+\end{lemma}
+
+\begin{proof}\leanok
+  \uses{found:ringcatsheaf_commring, found:exterior_power_base_change, found:exterior_base_change_map_id, found:exterior_base_change_map_comp, mathlib:exterior_power_functor, found:exterior_base_change_map_cat, found:presheafmod_extpowmap, found:presheafmod_extpowmap_id, found:presheafmod_extpowmap_comp}
+  Two obstructions must be cleared.  First, \(\mathrm{PresheafOfModules}\,R\) is
+  \(\mathrm{RingCat}\)-valued, so the sections ring \(R(U)\) does not present as
+  commutative at the type level and the module-level exterior-power functor
+  \cref{mathlib:exterior_power_functor}, which requires a commutative base, does
+  not apply directly; \cref{found:ringcatsheaf_commring} restores the
+  \(\mathrm{CommRing}\) structure on each \(R(U)\), so the openwise exterior power
+  \(\wedge^i_{R(U)}\mathcal F(U)\) is defined.  Second, the restriction map of
+  \(\mathcal F\) along an inclusion \(V\subseteq U\) is not \(R(U)\)-linear but
+  \emph{semilinear} over the ring map \(R(U)\to R(V)\), so the induced map on
+  exterior powers must run \(\wedge^i_{R(U)}\mathcal F(U)\to\wedge^i_{R(V)}\mathcal
+  F(V)\) over \(R(U)\to R(V)\); this is exactly the base-change functoriality of
+  \cref{found:exterior_power_base_change}.  Applying that lemma to each
+  restriction map produces semilinear transition maps on exterior powers, which
+  inherit the presheaf identity and composition laws from those of
+  \(\mathcal F\) --- via the identity-ring-map and composition naturality of base
+  change, \cref{found:exterior_base_change_map_id} and
+  \cref{found:exterior_base_change_map_comp} --- and assemble into a presheaf of
+  modules \(\wedge^i\mathcal F\), functorially in \(\mathcal F\).
+\end{proof}
+
+\begin{definition}[Exterior power of an \(\cO_X\)-module]\leanok
+  \label{found:oxmod_exterior_power}
+  \lean{AlgebraicGeometry.Scheme.Modules.exteriorPower}
+  \uses{found:presheafmod_exterior_power, mathlib:sheafification_modules_exact, mathlib:oxmod_category}
+  For \(i\in\mathbb N\), the exterior power functor
+  \(\wedge^i:X.\mathrm{Modules}\to X.\mathrm{Modules}\), obtained by applying the
+  presheaf-level exterior power \cref{found:presheafmod_exterior_power} to the
+  underlying presheaf of an \(\cO_X\)-module and then sheafifying
+  (\cref{mathlib:sheafification_modules_exact}).  Kemeny's bundles
+  \(\wedge^{k+1}M_L\), \(\wedge^k\pi^*\cM\) and \(\wedge^k\Gamma\) are instances
+  of this functor.
+\end{definition}
+
+\begin{definition}[Symmetric power type]
+  \label{mathlib:symmetricpower_type}
+  \lean{SymmetricPower}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For a commutative (semi)ring \(R\), an index type \(\iota\) and an
+  \(R\)-module \(M\), Mathlib provides the symmetric-power \emph{type}
+  \(\Sym^i M=\mathrm{SymmetricPower}\,R\,\iota\,M\) --- the quotient of the
+  \(\iota\)-fold tensor power by the permutation relation --- together with its
+  \(R\)-module structure and the generating family of decomposable symmetric
+  tensors \(\mathrm{tprod}\), whose span is everything.  It does \emph{not}
+  provide the functorial action \(\Sym^i f\) of a linear map, nor any functor
+  packaging; those are built in \cref{found:modulecat_sym_power}.
+\end{definition}
+
+\begin{lemma}\leanok
+[Factorwise tensor map underlying \(\Sym^i f\)]
+  \label{found:sympow_map_aux}
+  \lean{SymmetricPower.mapAux}
+  \uses{mathlib:symmetricpower_type}
+  For an \(R\)-linear map \(f:M\to N\), the auxiliary \(R\)-linear map
+  \[
+    \textstyle\bigotimes^i M\to\Sym^i N
+  \]
+  obtained by applying \(f\) factor-wise on the \(i\)-fold tensor power and then
+  symmetrising --- sending a decomposable tensor to the \(\mathrm{tprod}\) of the
+  images of its factors.  This is the map that descends to \(\Sym^i f\).
+\end{lemma}
+
+\begin{proof}
+
+\leanok
+  Proved directly in Lean.
+\end{proof}
+
+\begin{lemma}\leanok
+[The auxiliary map respects symmetrisation]
+  \label{found:sympow_map_aux_respects}
+  \lean{SymmetricPower.mapAux_respects}
+  \uses{found:sympow_map_aux, mathlib:symmetricpower_type}
+  The factorwise map of \cref{found:sympow_map_aux} is constant on the
+  symmetrisation-equivalence classes: the factor-wise action commutes with
+  permutations of the tensor factors, hence it descends through the
+  symmetrisation quotient that defines \(\Sym^i M\).
+\end{lemma}
+
+\begin{proof}
+
+\leanok
+  Proved directly in Lean.
+\end{proof}
+
+\begin{lemma}\leanok
+[Induced map \(\Sym^i f\) on symmetric powers]
+  \label{found:sympow_map}
+  \lean{SymmetricPower.map}
+  \uses{found:sympow_map_aux, found:sympow_map_aux_respects}
+  For an \(R\)-linear map \(f:M\to N\), the induced \(R\)-linear map
+  \[
+    \Sym^i f:\Sym^i M\to\Sym^i N ,
+  \]
+  obtained by descending the factorwise map \cref{found:sympow_map_aux} through
+  the symmetrisation quotient; well-definedness is
+  \cref{found:sympow_map_aux_respects}.
+\end{lemma}
+
+\begin{proof}
+
+\leanok
+  Proved directly in Lean.
+\end{proof}
+
+\begin{lemma}\leanok
+[\(\Sym^i f\) acts factorwise on decomposable tensors]
+  \label{found:sympow_map_tprod}
+  \lean{SymmetricPower.map_tprod}
+  \uses{found:sympow_map, found:sympow_map_aux}
+  The map \(\Sym^i f\) of \cref{found:sympow_map} sends a decomposable symmetric
+  tensor \(m_1\cdots m_i\) to \(f(m_1)\cdots f(m_i)\).
+\end{lemma}
+
+\begin{proof}
+
+\leanok
+  Proved directly in Lean.
+\end{proof}
+
+\begin{lemma}\leanok
+[\(\Sym^i\) preserves identities]
+  \label{found:sympow_map_id}
+  \lean{SymmetricPower.map_id}
+  \uses{found:sympow_map, found:sympow_map_tprod}
+  \(\Sym^i(\mathrm{id}_M)=\mathrm{id}_{\Sym^i M}\): two linear maps agreeing on
+  the spanning decomposable tensors coincide.
+\end{lemma}
+
+\begin{proof}
+
+\leanok
+  Proved directly in Lean.
+\end{proof}
+
+\begin{lemma}\leanok
+[\(\Sym^i\) preserves composition]
+  \label{found:sympow_map_comp}
+  \lean{SymmetricPower.map_comp}
+  \uses{found:sympow_map, found:sympow_map_tprod}
+  \(\Sym^i(g\circ f)=\Sym^i g\circ\Sym^i f\).
+\end{lemma}
+
+\begin{proof}
+
+\leanok
+  Proved directly in Lean.
+\end{proof}
+
+\begin{definition}\leanok
+[Symmetric power object in the module category]
+  \label{found:modulecat_sympow_obj}
+  \lean{ModuleCat.symmetricPower}
+  \uses{mathlib:symmetricpower_type}
+  For an object \(M\) of \(\mathrm{Mod}_R\) and \(n\in\mathbb N\), the symmetric
+  power \(\Sym^n M\) as an object of \(\mathrm{Mod}_R\), with the index type taken
+  to be \(\mathrm{ULift}(\mathrm{Fin}\,n)\) so that the ring/index universe
+  coupling of the symmetric-power type is satisfied while \(R\) stays in a general
+  universe (mirroring the exterior-power object of
+  \cref{mathlib:exterior_power_functor}).
+\end{definition}
+
+\begin{definition}\leanok
+[Induced morphism on symmetric power objects]
+  \label{found:modulecat_sympow_map}
+  \lean{ModuleCat.symmetricPower.map}
+  \uses{found:modulecat_sympow_obj, found:sympow_map}
+  For a morphism \(f:M\to N\) of \(\mathrm{Mod}_R\) and \(n\in\mathbb N\), the
+  induced morphism \(\Sym^n M\to\Sym^n N\) of \(\mathrm{Mod}_R\), the categorical
+  wrapper of the linear map \(\Sym^n f\) of \cref{found:sympow_map}.
+\end{definition}
+
+\begin{lemma}\leanok
+[Symmetric power functor on a module category]
+  \label{found:modulecat_sym_power}
+  \lean{ModuleCat.symmetricPower.functor}
+  \uses{found:modulecat_sympow_obj, found:modulecat_sympow_map, found:sympow_map_id, found:sympow_map_comp}
+  For a commutative ring \(R\) and \(i\in\mathbb N\), the \(i\)-th symmetric power
+  as a functor \(\Sym^i:\mathrm{Mod}_R\to\mathrm{Mod}_R\).  Mathlib supplies only
+  the symmetric-power \emph{object} \(\Sym^i M\) (the type
+  \(\mathrm{SymmetricPower}\,R\,\iota\,M\) of \cref{mathlib:symmetricpower_type})
+  and its generating decomposable tensors; the induced linear map on a morphism
+  and the functor packaging are both absent and are constructed here in two
+  layers.
+
+  \emph{Layer 1 (linear algebra).}  For an \(R\)-linear map \(f:M\to N\) one
+  forms the induced map
+  \[
+    \Sym^i f:\Sym^i M\to\Sym^i N
+  \]
+  by descending the \(i\)-fold tensor-power action of \(f\) through the
+  symmetrisation quotient: \(f\) acts factor-wise on the \(i\)-fold tensor power
+  by tensor-power functoriality, this action carries the permutation relation
+  into itself, so it passes to the quotient and defines \(\Sym^i f\) on
+  decomposable symmetric tensors by \(m_1\cdots m_i\mapsto f(m_1)\cdots f(m_i)\).
+  The functoriality laws
+  \[
+    \Sym^i(\mathrm{id}_M)=\mathrm{id}_{\Sym^i M},\qquad
+    \Sym^i(g\circ f)=\Sym^i g\circ\Sym^i f
+  \]
+  follow from the corresponding identities for the tensor power together with the
+  fact that the decomposable symmetric tensors span \(\Sym^i M\), so two linear
+  maps agreeing on them coincide.
+
+  \emph{Layer 2 (module category).}  Wrapping Layer 1 gives the functor
+  \(\Sym^i:\mathrm{Mod}_R\to\mathrm{Mod}_R\), \(M\mapsto\Sym^i M\),
+  \(f\mapsto\Sym^i f\), mirroring the exterior-power functor
+  \cref{mathlib:exterior_power_functor}; the functor laws are exactly the
+  Layer 1 identities.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:modulecat_sympow_obj, found:modulecat_sympow_map, found:sympow_map_id, found:sympow_map_comp, mathlib:exterior_power_functor}
+  \leanok
+  Layer~1: the symmetrisation quotient defining \(\Sym^i M\) is taken on the
+  \(i\)-fold tensor power, whose functorial action sends \(f:M\to N\) to the
+  factor-wise map on tensors.  This map intertwines the permutation relations on
+  source and target, hence descends to a well-defined linear map
+  \(\Sym^i f:\Sym^i M\to\Sym^i N\) determined by
+  \(m_1\cdots m_i\mapsto f(m_1)\cdots f(m_i)\) on decomposable symmetric tensors.
+  Because these tensors span \(\Sym^i M\), the identities
+  \(\Sym^i(\mathrm{id})=\mathrm{id}\) and
+  \(\Sym^i(g\circ f)=\Sym^i g\circ\Sym^i f\) reduce to the tensor-power versions,
+  which they inherit factor-wise.  Layer~2: \(M\mapsto\Sym^i M\),
+  \(f\mapsto\Sym^i f\) is then a functor \(\mathrm{Mod}_R\to\mathrm{Mod}_R\), with
+  the functor laws supplied by the Layer~1 identities, in the same packaging as
+  \cref{mathlib:exterior_power_functor}.
+\end{proof}
+
+\begin{lemma}\leanok
+[Linear-algebra base change of symmetric powers]
+  \label{found:sympow_base_change_linear}
+  \lean{SymmetricPower.baseChange}
+  \uses{found:sympow_base_change_aux, mathlib:symmetricpower_type}
+  Let \(A\) be a commutative ring, \(B\) an \(A\)-algebra, and \(N\) a
+  \(B\)-module equipped with a compatible \(A\)-module structure and the scalar
+  tower \(\mathrm{IsScalarTower}\,A\,B\,N\).  Then for each \(i\in\mathbb N\)
+  there is an \(A\)-linear comparison map
+  \[
+    \Sym^i_A N\to\Sym^i_B N
+  \]
+  from the symmetric power formed over \(A\) to the symmetric power formed over
+  \(B\); on a decomposable symmetric tensor it acts as the identity on
+  representatives: \(n_1\cdots n_i\mapsto n_1\cdots n_i\).  The target symmetric
+  power inherits the \(A\)-module structure via the scalar tower
+  \(\mathrm{IsScalarTower}\,A\,B\,(\Sym^i_B N)\), so that source and target are
+  both \(A\)-modules.
+\end{lemma}
+
+\begin{proof}
+  \uses{mathlib:symmetricpower_type, found:sympow_base_change_aux, found:sympow_base_change_aux_respects}
+  \leanok
+  Over the fixed ring \(B\) the symmetric power \(\Sym^i_B N\) is the object of
+  \cref{mathlib:symmetricpower_type}; the new content is the comparison with the
+  symmetric power formed over the subring of scalars \(A\).  The decomposable
+  symmetric tensor \(n_1\cdots n_i\) over \(A\) is sent to the same expression
+  read over \(B\).  This map arises from the factorwise lift
+  \cref{found:sympow_base_change_aux} on the \(i\)-fold tensor power, which respects
+  symmetrisation (\cref{found:sympow_base_change_aux_respects}): the multilinear assignment
+  \((n_1,\dots,n_i)\mapsto n_1\cdots n_i\in\Sym^i_B N\), viewed as an
+  \(A\)-multilinear map via restriction of scalars, factors through \(\Sym^i_A N\)
+  by the universal property of the symmetric power and the symmetrisation quotient,
+  yielding the desired \(A\)-linear map.  The action-on-generators identity is the
+  defining equation of the map on the spanning decomposable symmetric tensors.
+\end{proof}
+
+\begin{lemma}\leanok
+[Base-change functoriality of symmetric powers]
+  \label{found:sym_power_base_change}
+  \lean{ModuleCat.symmetricPower.baseChangeMap}
+  \uses{found:modulecat_sym_power, found:sympow_base_change_linear}
+  Let \(\varphi:R\to S\) be a homomorphism of commutative rings, \(M\) an
+  \(R\)-module, \(N\) an \(S\)-module, and \(g:M\to N\) a \(\varphi\)-semilinear
+  map --- equivalently an \(R\)-linear map \(M\to N{\restriction}_R\) into the
+  restriction of scalars of \(N\) along \(\varphi\).  Then for each
+  \(i\in\mathbb N\) there is an induced \(\varphi\)-semilinear map
+  \[
+    \Sym^i g:\Sym^i_R M\to\Sym^i_S N
+  \]
+  on symmetric powers, compatible with restriction of scalars along \(\varphi\)
+  and determined on a decomposable symmetric tensor by
+  \(m_1\cdots m_i\mapsto g(m_1)\cdots g(m_i)\) read over \(S\).  Its behaviour
+  under the identity ring map and under composition of semilinear maps --- the
+  naturality that makes base change functorial in the ring map --- is recorded
+  separately in \cref{found:sym_base_change_map_id} and
+  \cref{found:sym_base_change_map_comp}.  Exactly as on the exterior side
+  (\cref{found:exterior_power_base_change}), Mathlib supplies no variance of the
+  symmetric power in the base ring, so this base-change functoriality is project
+  infrastructure; it arises as the semilinear wrapper of the linear-algebra comparison
+  map \cref{found:sympow_base_change_linear}, via restriction of scalars along \(\varphi\).
+\end{lemma}
+
+\begin{proof}
+  \uses{found:modulecat_sym_power, found:sympow_base_change_linear}
+  \leanok
+  A \(\varphi\)-semilinear map \(g:M\to N\) is an \(R\)-linear map
+  \(M\to N{\restriction}_R\), so applying the fixed-base symmetric-power functor
+  \cref{found:modulecat_sym_power} over \(R\) yields an \(R\)-linear map
+  \(\Sym^i_R M\to\Sym^i_R(N{\restriction}_R)\).  It remains to compare
+  \(\Sym^i_R(N{\restriction}_R)\) with \(\bigl(\Sym^i_S N\bigr){\restriction}_R\);
+  this is exactly the linear-algebra comparison of
+  \cref{found:sympow_base_change_linear}, applied with the algebra structure on
+  \(S\) induced by \(\varphi\), the \(R\)-module structure on \(N\) supplied by
+  restriction of scalars, and the scalar tower \(\mathrm{IsScalarTower}\,R\,S\,N\).
+  Composing the two \(R\)-linear maps sends a decomposable symmetric tensor
+  \(m_1\cdots m_i\) to
+  \(g(m_1)\cdots g(m_i)\) formed over \(S\) and produces the desired
+  \(\varphi\)-semilinear map, with the stated action on generators.  This
+  construction supplies only the semilinear map and its value on generators; that
+  base change along the identity ring map recovers the fixed-base symmetric power
+  and that it respects composition of semilinear maps is established separately in
+  \cref{found:sym_base_change_map_id} and \cref{found:sym_base_change_map_comp}.
+\end{proof}
+
+\begin{lemma}[Base change along the identity ring map --- symmetric]\leanok
+  \label{found:sym_base_change_map_id}
+  \lean{ModuleCat.symmetricPower.baseChangeMap_id}
+  \uses{found:sym_power_base_change, found:modulecat_sym_power}
+  Let \(R\) be a commutative ring, \(M\) an \(R\)-module and \(g:M\to M\) an
+  \(R\)-linear map, viewed as an \(\mathrm{id}_R\)-semilinear map.  Then the
+  base-change map \(\Sym^i g\) of \cref{found:sym_power_base_change} formed along
+  the identity ring homomorphism \(\mathrm{id}_R\) coincides with the fixed-base
+  symmetric power \(\Sym^i g\) of \cref{found:modulecat_sym_power}, both being
+  \(R\)-linear endomorphisms of \(\Sym^i_R M\).
+\end{lemma}
+
+\begin{proof}\leanok
+  \uses{found:sym_power_base_change, found:modulecat_sym_power}
+  Both maps are \(R\)-linear endomorphisms of \(\Sym^i_R M\), so it suffices to
+  compare them on the decomposable symmetric tensors \(m_1\cdots m_i\), which span.
+  Base change along \(\mathrm{id}_R\) leaves the base ring unchanged, so its action
+  \(m_1\cdots m_i\mapsto g(m_1)\cdots g(m_i)\) is exactly that of the fixed-base
+  functor \cref{found:modulecat_sym_power}.
+\end{proof}
+
+\begin{lemma}[Base change respects composition of ring maps --- symmetric]\leanok
+  \label{found:sym_base_change_map_comp}
+  \lean{ModuleCat.symmetricPower.baseChangeMap_comp}
+  \uses{found:sym_power_base_change}
+  Let \(\varphi:R\to S\) and \(\psi:S\to T\) be homomorphisms of commutative rings,
+  let \(g:M\to N\) be \(\varphi\)-semilinear and \(h:N\to P\) be
+  \(\psi\)-semilinear.  Then the base-change map of the composite \(h\circ g\)
+  (which is \((\psi\circ\varphi)\)-semilinear), formed along \(\psi\circ\varphi\),
+  factors as the composite of the base-change maps of \(g\) and \(h\):
+  \[
+    \Sym^i(h\circ g)=\Sym^i h\circ\Sym^i g
+    :\Sym^i_R M\to\Sym^i_T P .
+  \]
+\end{lemma}
+
+\begin{proof}\leanok
+  \uses{found:sym_power_base_change}
+  Both sides are additive maps \(\Sym^i_R M\to\Sym^i_T P\) that agree on the
+  spanning decomposable symmetric tensors: each sends \(m_1\cdots m_i\) to
+  \(h(g(m_1))\cdots h(g(m_i))\) read over \(T\).  Hence they coincide.
+\end{proof}
+
+\begin{lemma}\leanok
+[Generator action of the symmetric base-change map]
+  \label{found:sym_base_change_map_tprod}
+  \lean{ModuleCat.symmetricPower.baseChangeMap_tprod}
+  \uses{found:sym_power_base_change, found:sympow_base_change_linear}
+  The base-change map \cref{found:sym_power_base_change} along \(\varphi:R\to S\)
+  sends the decomposable symmetric tensor \(m_1\cdots m_i\) over \(R\) to
+  \(g(m_1)\cdots g(m_i)\) over \(S\).
+\end{lemma}
+
+\begin{proof}
+  \uses{found:sym_power_base_change, found:sympow_base_change_linear}
+  \leanok
+  Unfolding \cref{found:sym_power_base_change} as the fixed-base symmetric power of
+  \(g\) over \(R\) followed by the comparison map
+  \cref{found:sympow_base_change_linear}, the tensor \(m_1\cdots m_i\) maps first
+  to \(g(m_1)\cdots g(m_i)\) over \(R\) and then to the same tensor read over
+  \(S\).
+\end{proof}
+
+\begin{lemma}\leanok
+[Generator action of the symmetric-power comparison]
+  \label{found:sympow_base_change_tprod}
+  \lean{SymmetricPower.baseChange_tprod}
+  \uses{found:sympow_base_change_linear, found:sympow_base_change_aux, found:sympow_base_change_aux_tprod}
+  The comparison map \cref{found:sympow_base_change_linear} sends the decomposable
+  symmetric tensor \(m_1\cdots m_i\) formed over \(A\) to the same tensor
+  \(m_1\cdots m_i\) formed over \(B\).
+\end{lemma}
+
+\begin{proof}
+  \uses{found:sympow_base_change_linear, found:sympow_base_change_aux, found:sympow_base_change_aux_tprod}
+  \leanok
+  By construction \cref{found:sympow_base_change_linear} descends the factorwise
+  lift \cref{found:sympow_base_change_aux}; on the decomposable tensor
+  \(m_1\cdots m_i\) the latter returns \(m_1\cdots m_i\) over \(B\)
+  (\cref{found:sympow_base_change_aux_tprod}), which is therefore the value of the
+  comparison map.
+\end{proof}
+
+\begin{lemma}\leanok
+[Factorwise lift underlying the symmetric base-change comparison]
+  \label{found:sympow_base_change_aux}
+  \lean{SymmetricPower.baseChangeAux}
+  \uses{mathlib:symmetricpower_type}
+  The \(A\)-linear map \(\bigotimes^i_A N\to\Sym^i_B N\) from the \(i\)-fold
+  \(A\)-tensor power obtained as the universal lift of the
+  decomposable-symmetric-tensor family
+  \((n_1,\dots,n_i)\mapsto n_1\cdots n_i\in\Sym^i_B N\), the latter's
+  \(B\)-multilinearity restricted to \(A\).  It is the factorwise lift that
+  descends to the comparison map \cref{found:sympow_base_change_linear}.
+\end{lemma}
+
+\begin{proof}
+  \uses{mathlib:symmetricpower_type}
+  \leanok
+  The decomposable symmetric tensors of \(\Sym^i_B N\)
+  (\cref{mathlib:symmetricpower_type}) assemble into a \(B\)-multilinear, hence
+  \(A\)-multilinear, family; its universal lift through the \(A\)-tensor power is
+  the stated \(A\)-linear map.
+\end{proof}
+
+\begin{lemma}\leanok
+[The factorwise lift on a decomposable tensor]
+  \label{found:sympow_base_change_aux_tprod}
+  \lean{SymmetricPower.baseChangeAux_apply_tprod}
+  \uses{mathlib:symmetricpower_type, found:sympow_base_change_aux}
+  The factorwise lift \cref{found:sympow_base_change_aux} sends a decomposable
+  tensor \(m_1\otimes\cdots\otimes m_i\) of the \(A\)-tensor power to the
+  decomposable symmetric tensor \(m_1\cdots m_i\in\Sym^i_B N\).
+\end{lemma}
+
+\begin{proof}
+  \uses{found:sympow_base_change_aux}
+  \leanok
+  This is the value of the universal lift on a decomposable tensor, namely the
+  defining equation of \cref{found:sympow_base_change_aux}.
+\end{proof}
+
+\begin{lemma}\leanok
+[The factorwise lift respects symmetrisation]
+  \label{found:sympow_base_change_aux_respects}
+  \lean{SymmetricPower.baseChangeAux_respects}
+  \uses{mathlib:symmetricpower_type, found:sympow_base_change_aux, found:sympow_base_change_aux_tprod}
+  The factorwise lift \cref{found:sympow_base_change_aux} is invariant under
+  permutations of the tensor factors: for a permutation \(\sigma\), the
+  decomposable tensors \(m_1\otimes\cdots\otimes m_i\) and
+  \(m_{\sigma(1)}\otimes\cdots\otimes m_{\sigma(i)}\) have the same image.  Hence
+  it descends through the \(A\)-symmetrisation quotient defining \(\Sym^i_A N\).
+\end{lemma}
+
+\begin{proof}
+  \uses{found:sympow_base_change_aux, found:sympow_base_change_aux_tprod}
+  \leanok
+  By \cref{found:sympow_base_change_aux_tprod} both tensors map to a decomposable
+  symmetric tensor over \(B\) that differ only by the permutation \(\sigma\) of
+  their factors; since decomposable symmetric tensors over \(B\) are themselves
+  permutation-invariant (\cref{mathlib:symmetricpower_type}), the two images
+  coincide, so the lift is constant on \(A\)-symmetrisation classes.
+\end{proof}
+
+\begin{lemma}[Symmetric power of a presheaf of modules]\leanok
+  \label{found:presheafmod_sym_power}
+  \lean{AlgebraicGeometry.PresheafOfModules.symPower}
+  \uses{found:modulecat_sym_power, found:ringcatsheaf_commring, found:sym_power_base_change, found:sym_base_change_map_id, found:sym_base_change_map_comp, found:sym_base_change_map_cat, found:presheafmod_sympowmap, found:presheafmod_sympowmap_id, found:presheafmod_sympowmap_comp}
+  For \(i\in\mathbb N\), the \(i\)-th symmetric power functor
+  \(\Sym^i:\mathrm{PresheafOfModules}\,R\to\mathrm{PresheafOfModules}\,R\), given
+  over each open \(U\) by the module-level symmetric power
+  \cref{found:modulecat_sym_power} of \(\mathcal F(U)\) and functorial in the
+  restriction maps.
+\end{lemma}
+
+\begin{proof}\leanok
+  \uses{found:modulecat_sym_power, found:ringcatsheaf_commring, found:sym_power_base_change, found:sym_base_change_map_id, found:sym_base_change_map_comp, found:sym_base_change_map_cat, found:presheafmod_sympowmap, found:presheafmod_sympowmap_id, found:presheafmod_sympowmap_comp}
+  Two obstructions must be cleared, exactly as for the exterior power
+  \cref{found:presheafmod_exterior_power}.  First,
+  \(\mathrm{PresheafOfModules}\,R\) is \(\mathrm{RingCat}\)-valued, so the sections
+  ring \(R(U)\) carries no commutative ring structure directly, and the
+  module-level symmetric-power functor \cref{found:modulecat_sym_power}, which
+  requires a commutative base, does not apply directly;
+  \cref{found:ringcatsheaf_commring} restores the \(\mathrm{CommRing}\) structure
+  on each \(R(U)\), so the openwise symmetric power \(\Sym^i_{R(U)}\mathcal F(U)\)
+  is defined.  Second, the restriction map of \(\mathcal F\) along an inclusion
+  \(V\subseteq U\) is not \(R(U)\)-linear but \emph{semilinear} over the ring map
+  \(R(U)\to R(V)\), so the induced map on symmetric powers must run
+  \(\Sym^i_{R(U)}\mathcal F(U)\to\Sym^i_{R(V)}\mathcal F(V)\) over
+  \(R(U)\to R(V)\); this is exactly the base-change functoriality of
+  \cref{found:sym_power_base_change}, not plain functoriality over a fixed base.
+  Applying that lemma to each restriction map produces semilinear transition maps
+  on symmetric powers, which inherit the presheaf identity and composition laws
+  from those of \(\mathcal F\) --- via the identity-ring-map and composition
+  naturality of base change, \cref{found:sym_base_change_map_id} and
+  \cref{found:sym_base_change_map_comp} --- and assemble into a presheaf of modules
+  \(\Sym^i\mathcal F\), functorially in \(\mathcal F\).
+\end{proof}
+
+\begin{definition}[Symmetric power of an \(\cO_X\)-module]\leanok
+  \label{found:oxmod_sym_power}
+  \lean{AlgebraicGeometry.Scheme.Modules.symPower}
+  \uses{found:presheafmod_sym_power, mathlib:sheafification_modules_exact, mathlib:oxmod_category}
+  For \(i\in\mathbb N\), the symmetric power functor
+  \(\Sym^i:X.\mathrm{Modules}\to X.\mathrm{Modules}\), obtained by applying the
+  presheaf-level symmetric power \cref{found:presheafmod_sym_power} to the
+  underlying presheaf of an \(\cO_X\)-module and then sheafifying
+  (\cref{mathlib:sheafification_modules_exact}).  Kemeny's \(\Sym^i\cS\) and
+  \(\Sym^{k+1}\cG\) are instances.
+\end{definition}
+
+\subsection{Local freeness}
+
+\begin{definition}[Locally free \(\cO_X\)-module]
+  \leanok
+  \label{found:locally_free}
+  \lean{AlgebraicGeometry.Scheme.Modules.IsLocallyFree}
+  \uses{mathlib:oxmod_category}
+  The predicate \(\mathrm{IsLocallyFree}\) on \(X.\mathrm{Modules}\): an
+  \(\cO_X\)-module \(\mathcal F\) is locally free (of rank \(r\)) when \(X\) is
+  covered by open subsets on which \(\mathcal F\) is isomorphic to
+  \(\cO_X^{\oplus r}\).  The rank is recorded as a finite index type \(I\) (of
+  cardinality the rank), so this is local freeness of \emph{constant finite
+  rank}.  Kemeny's ``locally free of rank \(k\)'' assertions for the cokernel
+  bundle \(\mathcal W\) and the universal secant bundles are instances of this
+  predicate.
+\end{definition}
+
+\subsection{Derived foundational anchors}
+
+\begin{definition}[Higher direct image \(R^if_*\)]
+  \leanok
   \label{def:peer_higher_direct_image}
   \lean{AlgebraicGeometry.higherDirectImage}
-  The peer project \emph{Cech-Cohomology}, in its chapter on higher direct
-  images \(R^i f_*\) of quasi-coherent sheaves, supplies the standard higher
-  direct image object \(R^i f_*\mathcal F\).  This is the infrastructure through
-  which Kemeny's uses of \(R^i q_*\), Grauert-type local freeness, and Leray
-  spectral sequences should pass.
+  \uses{mathlib:oxmod_pushforward, mathlib:right_derived, mathlib:short_exact, found:has_injective_resolutions}
+  For a morphism of schemes \(f:X\to Y\) and \(i\in\mathbb N\), the higher direct
+  image is the \(i\)-th right-derived functor of the additive pushforward:
+  \[
+    (R^if_*)\mathcal F=\bigl((\text{pushforward }f).\mathrm{rightDerived}\,i\bigr)\mathcal F .
+  \]
+  Right-deriving in the module category requires injective resolutions in
+  \(X.\mathrm{Modules}\) (\cref{found:has_injective_resolutions}).  A short exact
+  sequence of \(\cO_X\)-modules induces the long exact sequence of higher direct
+  images.
 \end{definition}
 
-\begin{definition}[Scheme cohomology module anchor]
+\begin{definition}[Sheaf cohomology \(H^i(X,\mathcal F)\)]
+  \leanok
   \label{def:peer_scheme_hmodule}
   \lean{AlgebraicGeometry.Scheme.HModule}
-  The peer project \emph{Algebraic-Jacobian-Challenge}, in its chapter on
-  sheaves of \(k\)-modules, supplies the scheme cohomology module
-  \(H^i(X,\mathcal F)\) for module-valued sheaves on a scheme.  The present
-  blueprint uses this object as the common cohomological interface.
+  \uses{mathlib:right_derived, mathlib:short_exact, found:modules_to_absheaf, found:absheaf_global_sections, found:absheaf_global_sections_additive, found:absheaf_has_injective_resolutions}
+  For a scheme \(X\) and \(i\in\mathbb N\), the sheaf cohomology of an
+  \(\cO_X\)-module \(\mathcal F\) is computed in the category
+  \(\mathrm{Sh}(X,\mathrm{Ab})\) of abelian-group sheaves: it is the \(i\)-th
+  right-derived functor of global sections on \(\mathrm{Sh}(X,\mathrm{Ab})\),
+  applied to the underlying abelian-group sheaf
+  \(\mathcal F^{\mathrm{Ab}}\) (\cref{found:modules_to_absheaf}) of
+  \(\mathcal F\):
+  \[
+    H^i(X,\mathcal F)=\bigl(\Gamma.\mathrm{rightDerived}\,i\bigr)\bigl(\mathcal F^{\mathrm{Ab}}\bigr).
+  \]
+  Injective resolutions in \(\mathrm{Sh}(X,\mathrm{Ab})\) are provided by
+  \cref{found:absheaf_has_injective_resolutions}, requiring no hypothesis on
+  \(X.\mathrm{Modules}\).  A short exact sequence of \(\cO_X\)-modules has exact
+  underlying abelian-group sheaves, hence induces the long exact sequence of
+  cohomology groups.
 \end{definition}
 
-\begin{definition}[Affine pushforward and base-change anchor]
+\begin{definition}[Base-change comparison morphism]
+  \leanok
   \label{def:peer_affine_pushforward_base_change}
   \lean{AlgebraicGeometry.pushforwardBaseChangeMap}
-  \uses{def:peer_higher_direct_image}
-  The peer project \emph{Quot-Foundations}, in its chapter on flat base change
-  for degree-zero pushforward of quasi-coherent sheaves, supplies the affine
-  base-change morphism.  It is connected here to the higher direct image anchor
-  because the \(i=0\) construction is the degree-zero member of the same
-  pushforward formalism.  Kemeny's pushforward identities for blow-ups,
-  restrictions, and products should be expressed through this base-change
-  object.
+  \uses{mathlib:oxmod_pushforward}
+  Given a commutative square of schemes
+  \[
+    \begin{array}{ccc}
+      X' & \xrightarrow{\,g'\,} & X\\
+      \downarrow{\scriptstyle f'} & & \downarrow{\scriptstyle f}\\
+      Y' & \xrightarrow{\,g\,} & Y
+    \end{array}
+  \]
+  the base-change comparison morphism is the natural map
+  \[
+    g^*f_*\mathcal F\to f'_*g'^*\mathcal F
+  \]
+  on degree-zero pushforwards, defined as the Beck--Chevalley mate of the
+  canonical comparison of inverse-image functors under the two
+  pullback--pushforward adjunctions.  Only commutativity of the square is needed
+  to define the morphism; cartesianness of the square is the extra hypothesis that
+  makes it an isomorphism.  Kemeny's pushforward identities for blow-ups, restrictions and products are
+  expressed through this morphism.
 \end{definition}
 
-\begin{definition}[Local criterion for module isomorphisms anchor]
+\begin{lemma}[Stalk-local criterion for module isomorphisms]
+  \leanok
   \label{def:peer_module_iso_locality}
   \lean{AlgebraicGeometry.Modules.isIso_iff_isIso_stalkFunctor_map}
-  \uses{def:peer_scheme_hmodule}
-  The peer project \emph{Quot-Foundations}, in its chapter on flat base change
-  for degree-zero pushforward, supplies the local criterion that a morphism of
-  \(\mathcal O_X\)-modules is an isomorphism exactly when the induced morphisms
-  on stalks are isomorphisms.  Later comparisons of cohomology sheaves and
-  vector bundles should reduce global module isomorphisms to these stalkwise
-  verifications.
+  \uses{mathlib:stalk_locality}
+  A morphism of \(\cO_X\)-modules is an isomorphism if and only if the induced
+  morphism on every stalk is an isomorphism.  The criterion reduces to the
+  stalkwise criterion for morphisms of sheaves on the underlying topological
+  space of \(X\).  A stronger criterion checks isomorphism on every open section
+  of \(X\), which subsumes the stalkwise test.
+\end{lemma}
+
+\subsection{Coverage-debt helper functors}
+
+\begin{lemma}\leanok
+[Forgetful functor to abelian-group presheaves is additive]
+  \label{found:modules_topresheaf_additive}
+  \lean{AlgebraicGeometry.Scheme.Modules.toPresheaf_additive}
+  \uses{mathlib:oxmod_category}
+  For a scheme \(X\), the forgetful functor \(X.\mathrm{Modules}\to\) (presheaves
+  of abelian groups on \(X\)) is additive.
+\end{lemma}
+
+\begin{proof}
+  \uses{mathlib:oxmod_category}
+  \leanok
+  This forgetful functor is a composite of two additive functors (the forgetful
+  from sheaves of modules to presheaves of modules, then the forgetful to
+  presheaves of abelian groups), hence additive.
+\end{proof}
+
+\begin{lemma}\leanok
+[Additive global-sections functor is additive]
+  \label{found:global_sections_ab_additive}
+  \lean{AlgebraicGeometry.Scheme.globalSectionsAb_additive}
+  \uses{found:global_sections_ab, found:modules_topresheaf_additive}
+  For a scheme \(X\), the global-sections functor
+  \(\Gamma_{\mathrm{Ab}}\) of \cref{found:global_sections_ab} is additive.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:global_sections_ab, found:modules_topresheaf_additive}
+  \leanok
+  \(\Gamma_{\mathrm{Ab}}\) is the composite of the additive forgetful functor to
+  abelian-group presheaves with the additive sections functor \(\Gamma(X,-)\); a
+  composite of additive functors is additive.
+\end{proof}
+
+\begin{lemma}\leanok
+[Categorical exterior base-change morphism]
+  \label{found:exterior_base_change_map_cat}
+  \lean{ModuleCat.exteriorPower.baseChangeMapCat}
+  \uses{found:exterior_power_base_change, found:exterior_base_change_map_apply_iotamulti}
+  For a homomorphism \(\varphi:R\to S\) of commutative rings, an \(R\)-module \(M\),
+  an \(S\)-module \(N\) and a morphism \(g:M\to(\mathrm{restrictScalars}\,\varphi)\,N\)
+  of \(\mathrm{Mod}_R\) (equivalently a \(\varphi\)-semilinear map \(M\to N\)), the
+  induced morphism of \(\mathrm{Mod}_R\)
+  \[
+    \textstyle\bigwedge^i_R M\to(\mathrm{restrictScalars}\,\varphi)\bigl(\bigwedge^i_S N\bigr),
+  \]
+  the \(\mathrm{ModuleCat}\)-morphism repackaging of the semilinear base-change map
+  \cref{found:exterior_power_base_change} across the additive bijection
+  \(\mathrm{semilinearMapAddEquiv}\,\varphi\) between \(\varphi\)-semilinear maps
+  \(M\to N\) and \(R\)-linear maps \(M\to(\mathrm{restrictScalars}\,\varphi)N\).  This
+  is the form consumed by the openwise exterior-power presheaf assembly
+  \cref{found:presheafmod_exterior_power}.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:exterior_power_base_change, found:exterior_base_change_map_apply_iotamulti}
+  \leanok
+  Apply \(\mathrm{semilinearMapAddEquiv}\,\varphi\) to the semilinear base-change map
+  \(\wedge^i g\) of \cref{found:exterior_power_base_change}; its value on generators
+  is read off from \cref{found:exterior_base_change_map_apply_iotamulti}.
+\end{proof}
+
+\begin{lemma}\leanok
+[Generator action of the categorical exterior base-change morphism]
+  \label{found:exterior_base_change_map_cat_hom_iotamulti}
+  \lean{ModuleCat.exteriorPower.baseChangeMapCat_hom_ιMulti}
+  \uses{found:exterior_base_change_map_cat}
+  The morphism \cref{found:exterior_base_change_map_cat} along \(\varphi:R\to S\)
+  sends a decomposable wedge \(v_1\wedge\cdots\wedge v_i\) over \(R\) to
+  \(g(v_1)\wedge\cdots\wedge g(v_i)\) over \(S\).
+\end{lemma}
+
+\begin{proof}
+  \uses{found:exterior_base_change_map_cat}
+  \leanok
+  Unfolding the \(\mathrm{semilinearMapAddEquiv}\) repackaging reduces the claim to
+  the generator action of the underlying semilinear base-change map
+  \cref{found:exterior_base_change_map_cat}.
+\end{proof}
+
+\begin{lemma}\leanok
+[Categorical symmetric base-change morphism]
+  \label{found:sym_base_change_map_cat}
+  \lean{ModuleCat.symmetricPower.baseChangeMapCat}
+  \uses{found:sym_power_base_change, found:sym_base_change_map_tprod}
+  The symmetric twin of \cref{found:exterior_base_change_map_cat}: for
+  \(\varphi:R\to S\), an \(R\)-module \(M\), an \(S\)-module \(N\) and a morphism
+  \(g:M\to(\mathrm{restrictScalars}\,\varphi)\,N\), the induced morphism of
+  \(\mathrm{Mod}_R\)
+  \[
+    \Sym^i_R M\to(\mathrm{restrictScalars}\,\varphi)\bigl(\Sym^i_S N\bigr),
+  \]
+  the \(\mathrm{ModuleCat}\)-morphism repackaging of the semilinear symmetric
+  base-change map \cref{found:sym_power_base_change} across
+  \(\mathrm{semilinearMapAddEquiv}\,\varphi\).  It is the form consumed by the
+  openwise symmetric-power presheaf assembly \cref{found:presheafmod_sym_power}.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:sym_power_base_change, found:sym_base_change_map_tprod}
+  \leanok
+  Apply \(\mathrm{semilinearMapAddEquiv}\,\varphi\) to the semilinear base-change map
+  \(\Sym^i g\) of \cref{found:sym_power_base_change}; its value on the spanning
+  decomposable symmetric tensors is \cref{found:sym_base_change_map_tprod}.
+\end{proof}
+
+\begin{lemma}\leanok
+[Generator action of the categorical symmetric base-change morphism]
+  \label{found:sym_base_change_map_cat_tprod}
+  \lean{ModuleCat.symmetricPower.baseChangeMapCat_hom_tprod}
+  \uses{found:sym_base_change_map_cat}
+  The morphism \cref{found:sym_base_change_map_cat} along \(\varphi:R\to S\) sends a
+  decomposable symmetric tensor \(m_1\cdots m_i\) over \(R\) to
+  \(g(m_1)\cdots g(m_i)\) over \(S\).
+\end{lemma}
+
+\begin{proof}
+  \uses{found:sym_base_change_map_cat}
+  \leanok
+  Unfolding the \(\mathrm{semilinearMapAddEquiv}\) repackaging reduces the claim to
+  the generator action of the underlying semilinear symmetric base-change map
+  \cref{found:sym_base_change_map_cat}.
+\end{proof}
+
+\begin{lemma}\leanok
+[Openwise exterior transition component]
+  \label{found:presheafmod_extpowmap}
+  \lean{AlgebraicGeometry.PresheafOfModules.extPowMap}
+  \uses{found:exterior_base_change_map_cat}
+  For a presheaf of modules \(\mathcal F\) over the structure ring presheaf of a
+  scheme \(X\) and a morphism \(f\) of opens, the transition map on \(i\)-th exterior
+  powers
+  \(\bigwedge^i_{R(U)}\mathcal F(U)\to(\mathrm{restrictScalars})\bigwedge^i_{R(V)}\mathcal F(V)\),
+  obtained by feeding the restriction ring map \(R(U)\to R(V)\) and the restriction
+  \(\mathcal F.\mathrm{map}\,f\) to the categorical base-change morphism
+  \cref{found:exterior_base_change_map_cat}.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:exterior_base_change_map_cat}
+  \leanok
+  Direct definition: \cref{found:exterior_base_change_map_cat} of the restriction ring
+  map applied to \(\mathcal F.\mathrm{map}\,f\).
+\end{proof}
+
+\begin{lemma}\leanok
+[Identity coherence of the exterior transition component]
+  \label{found:presheafmod_extpowmap_id}
+  \lean{AlgebraicGeometry.PresheafOfModules.extPowMap_id}
+  \uses{found:presheafmod_extpowmap, found:exterior_base_change_map_cat_hom_iotamulti}
+  The transition component \cref{found:presheafmod_extpowmap} along the identity map
+  of an open is the identity, modulo the canonical restriction-of-scalars coherence
+  isomorphism.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:presheafmod_extpowmap, found:exterior_base_change_map_cat_hom_iotamulti}
+  \leanok
+  Both sides agree on the spanning decomposable wedges by the generator action
+  \cref{found:exterior_base_change_map_cat_hom_iotamulti} together with
+  \(\mathcal F.\mathrm{map}\,\mathrm{id}=\mathrm{id}\).
+\end{proof}
+
+\begin{lemma}\leanok
+[Composition coherence of the exterior transition component]
+  \label{found:presheafmod_extpowmap_comp}
+  \lean{AlgebraicGeometry.PresheafOfModules.extPowMap_comp}
+  \uses{found:presheafmod_extpowmap, found:exterior_base_change_map_cat_hom_iotamulti}
+  The transition component \cref{found:presheafmod_extpowmap} of a composite of opens
+  is the composite of the components, modulo the restriction-of-scalars coherence.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:presheafmod_extpowmap, found:exterior_base_change_map_cat_hom_iotamulti}
+  \leanok
+  Both sides agree on the spanning decomposable wedges by the generator action
+  \cref{found:exterior_base_change_map_cat_hom_iotamulti} together with
+  \(\mathcal F.\mathrm{map}(f\circ g)=\mathcal F.\mathrm{map}\,g\circ\mathcal F.\mathrm{map}\,f\).
+\end{proof}
+
+\begin{lemma}\leanok
+[Openwise symmetric transition component]
+  \label{found:presheafmod_sympowmap}
+  \lean{AlgebraicGeometry.PresheafOfModules.symPowMap}
+  \uses{found:sym_base_change_map_cat}
+  The symmetric twin of \cref{found:presheafmod_extpowmap}: for a presheaf of modules
+  \(\mathcal F\) and a morphism \(f\) of opens, the transition map on \(i\)-th
+  symmetric powers
+  \(\Sym^i_{R(U)}\mathcal F(U)\to(\mathrm{restrictScalars})\Sym^i_{R(V)}\mathcal F(V)\),
+  obtained by feeding the restriction ring map and \(\mathcal F.\mathrm{map}\,f\) to
+  \cref{found:sym_base_change_map_cat}.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:sym_base_change_map_cat}
+  \leanok
+  Direct definition: \cref{found:sym_base_change_map_cat} of the restriction ring map
+  applied to \(\mathcal F.\mathrm{map}\,f\).
+\end{proof}
+
+\begin{lemma}\leanok
+[Identity coherence of the symmetric transition component]
+  \label{found:presheafmod_sympowmap_id}
+  \lean{AlgebraicGeometry.PresheafOfModules.symPowMap_id}
+  \uses{found:presheafmod_sympowmap, found:sym_base_change_map_cat_tprod}
+  The transition component \cref{found:presheafmod_sympowmap} along the identity map
+  of an open is the identity, modulo the restriction-of-scalars coherence.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:presheafmod_sympowmap, found:sym_base_change_map_cat_tprod}
+  \leanok
+  Both sides agree on the spanning decomposable symmetric tensors by
+  \cref{found:sym_base_change_map_cat_tprod} together with
+  \(\mathcal F.\mathrm{map}\,\mathrm{id}=\mathrm{id}\).
+\end{proof}
+
+\begin{lemma}\leanok
+[Composition coherence of the symmetric transition component]
+  \label{found:presheafmod_sympowmap_comp}
+  \lean{AlgebraicGeometry.PresheafOfModules.symPowMap_comp}
+  \uses{found:presheafmod_sympowmap, found:sym_base_change_map_cat_tprod}
+  The transition component \cref{found:presheafmod_sympowmap} of a composite of opens
+  is the composite of the components, modulo the restriction-of-scalars coherence.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:presheafmod_sympowmap, found:sym_base_change_map_cat_tprod}
+  \leanok
+  Both sides agree on the spanning decomposable symmetric tensors by
+  \cref{found:sym_base_change_map_cat_tprod} together with
+  \(\mathcal F.\mathrm{map}(f\circ g)=\mathcal F.\mathrm{map}\,g\circ\mathcal F.\mathrm{map}\,f\).
+\end{proof}
+
+\subsection{Evaluation map and kernel bundle}
+
+This subsection isolates the general foundational substrate behind Kemeny's kernel
+bundle \(M_L\): for an arbitrary scheme \(X\) over a base ring \(k\) and an arbitrary
+\(\cO_X\)-module \(\mathcal F\), the trivial bundle on the global sections, the
+evaluation morphism onto \(\mathcal F\), and its kernel.  Specialising \(X\) to a K3
+surface and \(\mathcal F\) to a line bundle \(L\) recovers Kemeny's defining sequence;
+the curve-specific instantiation is taken up in the chapter on universal secant bundles.
+
+\begin{definition}[Free sheaf of modules]
+  \label{mathlib:sheafmod_free}
+  \lean{SheafOfModules.free}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For a sheaf of rings \(R\) on a site and an index type \(I\), Mathlib provides the
+  free sheaf of \(R\)-modules \(R^{(I)}=\mathrm{free}\,I\) on \(I\).
 \end{definition}
+
+\begin{lemma}[Universal property of the free sheaf of modules]
+  \label{mathlib:sheafmod_freehomequiv}
+  \lean{SheafOfModules.freeHomEquiv}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For a sheaf of \(R\)-modules \(\mathcal M\) and an index type \(I\), Mathlib
+  provides the natural bijection
+  \(\mathrm{Hom}(R^{(I)},\mathcal M)\cong(I\to\mathcal M.\mathrm{sections})\)
+  identifying morphisms out of the free sheaf with \(I\)-indexed families of global
+  sections --- the free \(\dashv\) global-sections adjunction at the level of
+  hom-sets.
+\end{lemma}
+
+\begin{definition}[Categorical kernel]
+  \label{mathlib:categorical_kernel}
+  \lean{CategoryTheory.Limits.kernel}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  In a category with zero morphisms and the relevant equalizer, Mathlib provides the
+  kernel \(\ker f\) of a morphism \(f\) together with the monomorphism
+  \(\ker f\to\mathrm{dom}\,f\) and the kernel's universal property.  In an abelian
+  category every morphism has a kernel.
+\end{definition}
+
+\begin{definition}\leanok
+[Trivial bundle on a vector space]
+  \label{found:trivial_bundle}
+  \lean{AlgebraicGeometry.Scheme.Modules.trivialBundle}
+  \uses{mathlib:sheafmod_free}
+  For a scheme \(X\) over a base ring \(k\) and a \(k\)-module \(V\), the trivial
+  \(\cO_X\)-module \(V\otimes_k\cO_X\): the free \(\cO_X\)-module \(\cO_X^{(I)}\)
+  (\cref{mathlib:sheafmod_free}) on an index set \(I\) of a basis of \(V\).  This is
+  a construction only; when \(V\) is finite-dimensional of dimension \(r\) it is
+  locally free of constant rank \(r\), recorded separately in
+  \cref{found:trivial_bundle_locally_free}.
+\end{definition}
+
+\begin{proof}
+  \uses{mathlib:sheafmod_free}
+  \leanok
+  Take a basis \(I\) of \(V\) and let \(V\otimes_k\cO_X:=\cO_X^{(I)}=\mathrm{free}\,I\).
+  Local freeness of finite rank is \cref{found:trivial_bundle_locally_free}.
+\end{proof}
+
+\begin{lemma}[Restriction of a free module along an open immersion is free]
+  \label{found:restrict_free_iso}
+  \lean{AlgebraicGeometry.Scheme.Modules.restrictFunctorObjFreeIso}
+  \uses{found:trivial_bundle, mathlib:sheafmod_free}
+  For an open immersion \(j:U\hookrightarrow X\) and an index type \(I\), the
+  restriction \((\mathrm{restrictFunctor}\,j).\mathrm{obj}(\mathrm{free}\,I)\) of the
+  free \(\cO_X\)-module on \(I\) is isomorphic to the free \(\cO_U\)-module
+  \(\mathrm{free}\,I\).
+\end{lemma}
+
+\begin{proof}
+  \uses{found:trivial_bundle, mathlib:sheafmod_free}
+  The restriction functor along an open immersion is isomorphic to the inverse-image
+  (pullback) functor \(\mathrm{restrictFunctor}\,j\cong\mathrm{pullback}\,j\), whose
+  underlying site functor is the preimage \(\mathrm{Opens.map}\,j\).  For an open
+  immersion this preimage is the right adjoint of the direct-image functor on opens,
+  hence a final functor; finality is exactly the hypothesis under which pullback sends
+  the free module \(\mathrm{free}\,I\) to \(\mathrm{free}\,I\).  Composing the two
+  isomorphisms gives the claim.
+\end{proof}
+
+\begin{lemma}[Local freeness is invariant under isomorphism]
+  \label{found:locally_free_of_iso}
+  \lean{AlgebraicGeometry.Scheme.Modules.isLocallyFree_of_iso}
+  \uses{found:locally_free}
+  If \(\mathcal F\cong\mathcal G\) in \(X.\mathrm{Modules}\) and \(\mathcal F\) is
+  locally free (\cref{found:locally_free}), then \(\mathcal G\) is locally free, with the
+  same trivialising cover and the same finite rank.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:locally_free}
+  Given a trivialising open \(U\) with \((\mathrm{restrictFunctor}\,U).\mathrm{obj}\,
+  \mathcal F\cong\mathrm{free}\,I\), transport it along the restriction
+  \((\mathrm{restrictFunctor}\,U).\mathrm{mapIso}\) of the isomorphism
+  \(\mathcal F\cong\mathcal G\) to obtain a trivialisation of \(\mathcal G\) on the same
+  open and the same finite index type \(I\); the trivialising cover is unchanged.
+\end{proof}
+
+\begin{lemma}\leanok
+[Trivial bundle of finite rank is locally free]
+  \label{found:trivial_bundle_locally_free}
+  \lean{AlgebraicGeometry.Scheme.Modules.trivialBundle_isLocallyFree}
+  \uses{found:trivial_bundle, found:locally_free, found:restrict_free_iso, mathlib:sheafmod_free}
+  For a scheme \(X\) and a finite index type \(I\), the trivial bundle
+  \(\mathrm{trivialBundle}\,I=\cO_X^{(I)}\) (\cref{found:trivial_bundle}) is locally
+  free of constant rank \(|I|\) (\cref{found:locally_free}).  In particular, for a
+  finite-dimensional \(k\)-vector space \(V\) of dimension \(r\) the trivial bundle
+  \(V\otimes_k\cO_X\) is locally free of rank \(r\).
+\end{lemma}
+
+\begin{proof}
+  \uses{found:trivial_bundle, found:locally_free, found:restrict_free_iso, mathlib:sheafmod_free}
+  \leanok
+  The free \(\cO_X\)-module \(\cO_X^{(I)}=\mathrm{free}\,I\) is already globally a
+  direct sum of \(|I|\) copies of \(\cO_X\).  Taking the single trivialising open
+  cover by \(U=X\) itself, the restriction of \(\cO_X^{(I)}\) to \(U\) is isomorphic
+  to the free \(\cO_U\)-module \(\mathrm{free}\,I\), so every point of \(X\) lies in
+  an open on which the bundle is free on the fixed finite index set \(I\); this is
+  exactly local freeness of constant rank \(|I|\) in the sense of
+  \cref{found:locally_free}.  For \(V\) finite-dimensional one applies this with
+  \(I\) a basis of \(V\), of cardinality \(\dim_k V\).
+\end{proof}
+
+\begin{definition}\leanok
+[Evaluation morphism]
+  \label{found:eval_morphism}
+  \lean{AlgebraicGeometry.Scheme.Modules.evalMap}
+  \uses{found:trivial_bundle, found:absheaf_global_sections, mathlib:sheafmod_freehomequiv}
+  For an \(\cO_X\)-module \(\mathcal F\), the evaluation morphism
+  \[
+    \mathrm{ev}_{\mathcal F}:H^0(X,\mathcal F)\otimes_k\cO_X\to\mathcal F
+  \]
+  out of the trivial bundle (\cref{found:trivial_bundle}) on the global sections
+  \(H^0(X,\mathcal F)\) (\cref{found:absheaf_global_sections}): the
+  \(\cO_X\)-linear extension of \(1\mapsto s\) on each basis section
+  \(s\in H^0(X,\mathcal F)\).  Equivalently it is the counit of the adjunction between
+  the free-\(\cO_X\)-module functor and the global-sections functor, corresponding
+  under the free hom-bijection \cref{mathlib:sheafmod_freehomequiv} to the identity
+  family of global sections.
+\end{definition}
+
+\begin{proof}
+  \uses{found:trivial_bundle, found:absheaf_global_sections, mathlib:sheafmod_freehomequiv}
+  \leanok
+  A global section \(s\in H^0(X,\mathcal F)\) is a morphism \(\cO_X\to\mathcal F\)
+  with \(1\mapsto s\); by the free hom-bijection \cref{mathlib:sheafmod_freehomequiv}
+  the family \((s)_{s}\) of all global sections assembles into a single morphism out
+  of the free bundle \(H^0(X,\mathcal F)\otimes_k\cO_X\), natural in \(\mathcal F\)
+  (the counit).
+\end{proof}
+
+% SOURCE: Kemeny, Universal Secant Bundles and Syzygies of Canonical Curves, \S1 (sec1), opening (read from references/MR4213770-secant-syzygies.tex, line 255)
+% SOURCE QUOTE: "Let $X$ be a K3 surface of Picard rank one and even genus $g=2k$. Let $M_L$ denote the bundle defined by the sequence $0 \to M_L \to \mathrm{H}^0(L)\otimes \mathcal{O}_X \to L \to 0.$
+% By the Kernel Bundle description of Koszul cohomology, see \cite{lazarsfeld-VBT} or \cite[\S 3]{ein-lazarsfeld-asymptotic}, to prove Voisin's Theorem it suffices to show $$\mathrm{H}^1(X, \bigwedge^{k+1} M_L )=0.$$"
+\begin{definition}\leanok
+[Evaluation kernel bundle]
+  \label{found:eval_kernel_bundle}
+  \lean{AlgebraicGeometry.Scheme.Modules.evalKernel}
+  \uses{found:eval_morphism, mathlib:categorical_kernel, mathlib:oxmod_category}
+  \textit{Source: Kemeny, \S1.}
+  For an \(\cO_X\)-module \(\mathcal F\), the evaluation kernel
+  \(M_{\mathcal F}:=\ker(\mathrm{ev}_{\mathcal F})\), the kernel
+  (\cref{mathlib:categorical_kernel}) of the evaluation morphism
+  \cref{found:eval_morphism} taken in the abelian category \(X.\mathrm{Modules}\)
+  (\cref{mathlib:oxmod_category}).  It sits in the left-exact sequence
+  \[
+    0\to M_{\mathcal F}\to H^0(X,\mathcal F)\otimes_k\cO_X
+       \xrightarrow{\mathrm{ev}_{\mathcal F}}\mathcal F .
+  \]
+  Specialising \(X\) to a K3 surface and \(\mathcal F\) to a line bundle \(L\) gives
+  Kemeny's kernel bundle \(M_L\), defined by
+  \(0\to M_L\to H^0(L)\otimes\cO_X\to L\to 0\).
+\end{definition}
+
+\begin{proof}
+  \uses{found:eval_morphism, mathlib:categorical_kernel, mathlib:oxmod_category}
+  \leanok
+  The category \(X.\mathrm{Modules}\) is abelian (\cref{mathlib:oxmod_category}), so
+  the morphism \(\mathrm{ev}_{\mathcal F}\) of \cref{found:eval_morphism} has a kernel
+  (\cref{mathlib:categorical_kernel}); \(M_{\mathcal F}\) is by definition that kernel,
+  with its monomorphism into \(H^0(X,\mathcal F)\otimes_k\cO_X\).
+\end{proof}
+
+\begin{definition}[Evaluation short complex]
+  \label{found:eval_short_complex}
+  \lean{AlgebraicGeometry.Scheme.Modules.evalShortComplex}
+  \uses{found:eval_morphism, found:eval_kernel_bundle, mathlib:categorical_kernel}
+  For an \(\cO_X\)-module \(\mathcal F\), the short complex
+  \[
+    M_{\mathcal F}\hookrightarrow H^0(X,\mathcal F)\otimes_k\cO_X
+       \xrightarrow{\mathrm{ev}_{\mathcal F}}\mathcal F ,
+  \]
+  whose first map is the kernel inclusion of the evaluation morphism
+  (\cref{found:eval_morphism}) and whose second map is \(\mathrm{ev}_{\mathcal F}\); its
+  left object is (definitionally) the evaluation kernel bundle \(M_{\mathcal F}\)
+  (\cref{found:eval_kernel_bundle}).
+\end{definition}
+
+\begin{proof}
+  \uses{found:eval_morphism, found:eval_kernel_bundle, mathlib:categorical_kernel}
+  The short complex is assembled from the kernel inclusion
+  \(\ker(\mathrm{ev}_{\mathcal F})\hookrightarrow H^0\otimes\cO_X\)
+  (\cref{mathlib:categorical_kernel}) and \(\mathrm{ev}_{\mathcal F}\) itself; the
+  composite is zero by the kernel condition.  Its left object is by definition
+  \(M_{\mathcal F}=\ker(\mathrm{ev}_{\mathcal F})\) (\cref{found:eval_kernel_bundle}).
+\end{proof}
+
+\begin{lemma}\leanok
+[Epimorphic evaluation gives a short exact evaluation sequence]
+  \label{found:eval_shortexact_of_globally_generated}
+  \lean{AlgebraicGeometry.Scheme.Modules.evalShortComplex_shortExact_of_globallyGenerated}
+  \uses{found:eval_morphism, found:eval_kernel_bundle, found:eval_short_complex, mathlib:short_exact}
+  If the evaluation morphism \(\mathrm{ev}_{\mathcal F}\) (\cref{found:eval_morphism}) is
+  an epimorphism, then the evaluation short complex (\cref{found:eval_short_complex})
+  \[
+    0\to M_{\mathcal F}\to H^0(X,\mathcal F)\otimes_k\cO_X
+       \xrightarrow{\mathrm{ev}_{\mathcal F}}\mathcal F\to 0
+  \]
+  is short exact (\cref{mathlib:short_exact}).  This is the formalized core of the
+  paper's evaluation sequence: a globally generated \(\mathcal F\) has surjective
+  evaluation (the global sections generate every stalk), so the epimorphism hypothesis
+  holds.  The implication ``\(\mathcal F\) globally generated \(\Rightarrow\)
+  \(\mathrm{ev}_{\mathcal F}\) epi'' is itself not yet formalized --- no
+  \(\mathrm{GloballyGenerated}\) predicate on \(X.\mathrm{Modules}\) is available ---
+  and is left for future work.
+\end{lemma}
+
+\begin{proof}
+  \uses{found:eval_kernel_bundle, found:eval_short_complex, mathlib:short_exact}
+  \leanok
+  By construction \(M_{\mathcal F}=\ker(\mathrm{ev}_{\mathcal F})\)
+  (\cref{found:eval_kernel_bundle}): the kernel inclusion is a monomorphism and the
+  evaluation short complex (\cref{found:eval_short_complex}) is exact at the middle
+  term.  The hypothesis that \(\mathrm{ev}_{\mathcal F}\) is an epimorphism upgrades this
+  left-exact kernel sequence to a short exact sequence (\cref{mathlib:short_exact}).
+\end{proof}
+
+% --- Mathlib dependency anchors for the kernel-bundle locally-free decomposition
+%     (\cref{found:isLocallyFree_kernel_of_shortExact}). ---
+
+\begin{definition}[Tilde: quasicoherent sheaf of a module on \(\operatorname{Spec}R\)]
+  \label{mathlib:tilde}
+  \lean{AlgebraicGeometry.tilde}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For a commutative ring \(R\) and an \(R\)-module \(M\), Mathlib provides the
+  associated quasicoherent sheaf of \(\cO_{\operatorname{Spec}R}\)-modules
+  \(\widetilde M=\mathrm{tilde}\,M\) on \(\operatorname{Spec}R\), the
+  module-to-sheaf construction \(M\mapsto M^{\sim}\).  It is fully faithful
+  (\cref{mathlib:tilde_fullyFaithful}) and exact, so it identifies \(R\)-modules
+  with quasicoherent \(\cO_{\operatorname{Spec}R}\)-modules and carries kernels and
+  short exact sequences of \(R\)-modules to kernels and short exact sequences of
+  sheaves.
+\end{definition}
+
+\begin{lemma}[Tilde of a finite free module is the free sheaf]
+  \label{mathlib:tildeFinsupp}
+  \lean{AlgebraicGeometry.tildeFinsupp}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For a commutative ring \(R\) and an index type \(\iota\), Mathlib provides a
+  natural isomorphism \(\widetilde{(\iota\to_0 R)}\cong\mathrm{free}\,\iota\)
+  (\cref{mathlib:tilde}, \cref{mathlib:sheafmod_free}) between the tilde of the
+  finitely supported free \(R\)-module on \(\iota\) and the free sheaf of
+  \(\cO_{\operatorname{Spec}R}\)-modules on \(\iota\).
+\end{lemma}
+
+\begin{lemma}[Tilde is fully faithful]
+  \label{mathlib:tilde_fullyFaithful}
+  \lean{AlgebraicGeometry.tilde.fullyFaithfulFunctor}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Mathlib provides that the tilde functor (\cref{mathlib:tilde}) from
+  \(R\)-modules to \(\cO_{\operatorname{Spec}R}\)-modules is fully faithful: the
+  induced map on hom-sets
+  \(\mathrm{Hom}_R(M,N)\to\mathrm{Hom}(\widetilde M,\widetilde N)\) is a bijection.
+\end{lemma}
+
+\begin{lemma}[A short exact sequence with projective quotient splits]
+  \label{mathlib:splittingOfProjective}
+  \lean{CategoryTheory.ShortComplex.ShortExact.splittingOfProjective}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  In a balanced preadditive category, a short exact sequence
+  \(0\to X_1\to X_2\to X_3\to 0\) (\cref{mathlib:short_exact}) whose right-hand
+  term \(X_3\) is projective admits a splitting; in particular
+  \(X_2\cong X_1\oplus X_3\).
+\end{lemma}
+
+\begin{definition}[Free locus of a module]
+  \label{mathlib:freeLocus}
+  \lean{Module.freeLocus}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For a commutative ring \(R\) and an \(R\)-module \(M\), Mathlib provides the free
+  locus \(\mathrm{freeLocus}\,R\,M\subseteq\operatorname{Spec}R\), the set of primes
+  \(\mathfrak p\) at which the localization \(M_{\mathfrak p}\) is free of finite
+  rank.
+\end{definition}
+
+\begin{lemma}[The free locus is open for a finitely presented module]
+  \label{mathlib:isOpen_freeLocus}
+  \lean{Module.isOpen_freeLocus}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For a finitely presented \(R\)-module \(M\), the free locus
+  \(\mathrm{freeLocus}\,R\,M\) (\cref{mathlib:freeLocus}) is open in
+  \(\operatorname{Spec}R\).
+\end{lemma}
+
+\begin{lemma}[Free locus is everything iff projective]
+  \label{mathlib:freeLocus_eq_univ_iff}
+  \lean{Module.freeLocus_eq_univ_iff}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For a finitely presented \(R\)-module \(M\),
+  \(\mathrm{freeLocus}\,R\,M=\operatorname{Spec}R\) if and only if \(M\) is
+  projective (\cref{mathlib:freeLocus}).
+\end{lemma}
+
+\begin{lemma}[Basic open in the free locus iff localized module projective]
+  \label{mathlib:basicOpen_subset_freeLocus_iff}
+  \lean{Module.basicOpen_subset_freeLocus_iff}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For a finitely presented \(R\)-module \(M\) and \(f\in R\), the basic open
+  \(D(f)\) is contained in \(\mathrm{freeLocus}\,R\,M\) (\cref{mathlib:freeLocus})
+  if and only if the localized module \(M_f\) is projective over \(R_f\); for a
+  finitely presented module such a localized projective module is free of finite
+  rank.
+\end{lemma}
+
+% --- Affine reduction sub-lemmas for \cref{found:isLocallyFree_kernel_of_shortExact}.
+%     The Kemeny/Hartshorne source quote lives on that lemma block below. ---
+
+\begin{lemma}[Local freeness is local on the base]
+  \label{lem:isLocallyFree_local}
+  \lean{AlgebraicGeometry.Scheme.Modules.isLocallyFree_of_isLocallyFree_cover}
+  \uses{found:locally_free, found:locally_free_of_iso}
+  Let \(\{U_\alpha\}\) be an open cover of \(X\) and \(\mathcal K\) an
+  \(\cO_X\)-module.  If each restriction \(\mathcal K|_{U_\alpha}\) is locally free
+  of constant rank \(r\) (\cref{found:locally_free}), then \(\mathcal K\) is locally
+  free of rank \(r\) on \(X\).
+\end{lemma}
+
+\begin{proof}
+  \uses{found:locally_free, found:locally_free_of_iso}
+  Local freeness of rank \(r\) means \(X\) has an open cover trivialising
+  \(\mathcal K\) to \(\mathrm{free}\,I\) with \(|I|=r\) (\cref{found:locally_free}).
+  Each \(U_\alpha\) carries such a cover for \(\mathcal K|_{U_\alpha}\), equivalently
+  for \(\mathcal K\) (\cref{found:locally_free_of_iso}); the union over \(\alpha\)
+  covers \(X\) and trivialises \(\mathcal K\) on the fixed \(I\).
+\end{proof}
+
+\begin{lemma}[Kernel of a finite free presentation is free on a basic-open cover]
+  \label{lem:module_kernel_free_basicOpen_cover}
+  \lean{AlgebraicGeometry.Scheme.Modules.kernel_module_free_on_basicOpen_cover}
+  \uses{mathlib:short_exact, mathlib:splittingOfProjective, mathlib:freeLocus, mathlib:isOpen_freeLocus, mathlib:freeLocus_eq_univ_iff, mathlib:basicOpen_subset_freeLocus_iff}
+  Let \(0\to K\to R^m\to R^n\to 0\) be a short exact sequence
+  (\cref{mathlib:short_exact}) of \(R\)-modules with \(R^m\) and \(R^n\) finite
+  free.  Then \(K\) is finitely presented and projective, and there is a finite
+  family \(f_1,\dots,f_s\in R\) with \(\bigcup_i D(f_i)=\operatorname{Spec}R\) such
+  that each localized module \(K_{f_i}\) is free of finite rank over \(R_{f_i}\).
+\end{lemma}
+
+\begin{proof}
+  \uses{mathlib:short_exact, mathlib:splittingOfProjective, mathlib:freeLocus, mathlib:isOpen_freeLocus, mathlib:freeLocus_eq_univ_iff, mathlib:basicOpen_subset_freeLocus_iff}
+  \(R^n\) is free, hence projective, so the sequence splits
+  (\cref{mathlib:splittingOfProjective}) and \(R^m\cong K\oplus R^n\); thus \(K\) is a
+  finitely presented projective summand of a finite free module.  Projectivity gives
+  \(\mathrm{freeLocus}\,R\,K=\operatorname{Spec}R\)
+  (\cref{mathlib:freeLocus_eq_univ_iff}, \cref{mathlib:freeLocus}).  This locus is
+  open (\cref{mathlib:isOpen_freeLocus}) and the basic opens form a basis, so every
+  point lies in some \(D(f)\subseteq\mathrm{freeLocus}\,R\,K\), on which \(K_f\) is
+  projective, hence free of finite rank, over \(R_f\)
+  (\cref{mathlib:basicOpen_subset_freeLocus_iff}).  Quasi-compactness of
+  \(\operatorname{Spec}R\) extracts a finite subcover \(D(f_1),\dots,D(f_s)\).
+\end{proof}
+
+\begin{lemma}[Affine bridge: the kernel of a free SES on \(\operatorname{Spec}R\) is a tilde]
+  \label{lem:kernel_iso_tilde_affine}
+  \lean{AlgebraicGeometry.Scheme.Modules.kernel_iso_tilde_of_free_ses_affine}
+  \uses{mathlib:short_exact, mathlib:tilde, mathlib:tildeFinsupp, mathlib:tilde_fullyFaithful, mathlib:sheafmod_free}
+  Let \(0\to\mathcal K\to\mathcal G\to\mathcal H\to 0\) be a short exact sequence
+  (\cref{mathlib:short_exact}) of \(\cO_{\operatorname{Spec}R}\)-modules with
+  \(\mathcal G\cong\mathrm{free}\,m\) and \(\mathcal H\cong\mathrm{free}\,n\)
+  (\cref{mathlib:sheafmod_free}).  Then there is a short exact sequence of
+  \(R\)-modules \(0\to K\to R^m\to R^n\to 0\) (\cref{mathlib:short_exact}) together
+  with an isomorphism \(\mathcal K\cong\widetilde K\) (\cref{mathlib:tilde}).
+\end{lemma}
+
+\begin{proof}
+  \uses{mathlib:short_exact, mathlib:tilde, mathlib:tildeFinsupp, mathlib:tilde_fullyFaithful, mathlib:sheafmod_free}
+  By \cref{mathlib:tildeFinsupp}, \(\mathrm{free}\,m\cong\widetilde{R^m}\) and
+  \(\mathrm{free}\,n\cong\widetilde{R^n}\), so the trivialisations present
+  \(\mathcal G\to\mathcal H\) as a map \(\widetilde{R^m}\to\widetilde{R^n}\).  Full
+  faithfulness (\cref{mathlib:tilde_fullyFaithful}) makes it \(\widetilde\varphi\)
+  for a unique \(R\)-linear \(\varphi:R^m\to R^n\); set \(K=\ker\varphi\), giving
+  \(0\to K\to R^m\to R^n\to 0\) (\cref{mathlib:short_exact}).  Exactness of tilde
+  (\cref{mathlib:tilde}) sends this kernel to \(\ker(\mathcal G\to\mathcal H)=
+  \mathcal K\), so \(\mathcal K\cong\widetilde K\).
+\end{proof}
+
+\begin{lemma}[Kernel is locally free on an affine trivialising open]
+  \label{lem:isLocallyFree_kernel_on_affine}
+  \lean{AlgebraicGeometry.Scheme.Modules.isLocallyFree_kernel_on_affine}
+  \uses{lem:kernel_iso_tilde_affine, lem:module_kernel_free_basicOpen_cover, mathlib:tilde, mathlib:tildeFinsupp, mathlib:sheafmod_free, found:locally_free, found:locally_free_of_iso}
+  Let \(0\to\mathcal K\to\mathcal G\to\mathcal H\to 0\) be a short exact sequence
+  of \(\cO_{\operatorname{Spec}R}\)-modules with \(\mathcal G\cong\mathrm{free}\,m\)
+  and \(\mathcal H\cong\mathrm{free}\,n\).  Then \(\mathcal K\) is locally free of
+  constant rank \(m-n\) on \(\operatorname{Spec}R\) (\cref{found:locally_free}).
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:kernel_iso_tilde_affine, lem:module_kernel_free_basicOpen_cover, mathlib:tilde, mathlib:tildeFinsupp, mathlib:sheafmod_free, found:locally_free, found:locally_free_of_iso}
+  The affine bridge (\cref{lem:kernel_iso_tilde_affine}) gives
+  \(0\to K\to R^m\to R^n\to 0\) with \(\mathcal K\cong\widetilde K\)
+  (\cref{mathlib:tilde}).  By \cref{lem:module_kernel_free_basicOpen_cover},
+  \(\operatorname{Spec}R\) is covered by basic opens \(D(f_i)\) with \(K_{f_i}\) free
+  of rank \(m-n\).  On \(D(f_i)\cong\operatorname{Spec}R_{f_i}\), \(\widetilde K\)
+  restricts to \(\widetilde{K_{f_i}}\cong\mathrm{free}\,(m-n)\)
+  (\cref{mathlib:tildeFinsupp}, \cref{mathlib:sheafmod_free}); transporting along
+  \(\mathcal K\cong\widetilde K\) (\cref{found:locally_free_of_iso}) trivialises
+  \(\mathcal K\) on each \(D(f_i)\).  These cover \(\operatorname{Spec}R\), so
+  \(\mathcal K\) is locally free of rank \(m-n\) (\cref{found:locally_free}).
+\end{proof}
+
+% SOURCE: Kemeny, Universal Secant Bundles and Syzygies of Canonical Curves, \S0 (Introduction, preliminaries) (read from references/MR4213770-secant-syzygies.tex, line 251)
+% SOURCE QUOTE: "Assume we have an exact sequence $0 \to \mathcal{F} \to \mathcal{G} \to \mathcal{H} \to 0$ of coherent sheaves on a quasi-projective variety, with $\mathcal{G}$ locally free. Assume either $\mathcal{H}$ is locally free or $\mathcal{H} \simeq \mathcal{O}_D$ for a Cartier divisor $D$. Then $\mathcal{F}$ is locally free. This follows from \cite[III, Ex 6.5]{hartshorne}."
+\begin{lemma}[Locally free kernel of a short exact sequence (Hartshorne III, Ex.~6.5)]
+  \label{found:isLocallyFree_kernel_of_shortExact}
+  \lean{AlgebraicGeometry.Scheme.Modules.isLocallyFree_kernel_of_shortExact}
+  \uses{found:locally_free, mathlib:short_exact, lem:isLocallyFree_local, lem:isLocallyFree_kernel_on_affine}
+  \textit{Source: Kemeny, \S0 (preliminaries on locally free sheaves), citing
+  Hartshorne III, Ex.~6.5.}
+  Let \(0\to\mathcal K\to\mathcal G\to\mathcal H\to 0\) be a short exact sequence
+  (\cref{mathlib:short_exact}) of \(\cO_X\)-modules with \(\mathcal G\) and
+  \(\mathcal H\) locally free (\cref{found:locally_free}).  Then \(\mathcal K\) is
+  locally free.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:isLocallyFree_local, lem:isLocallyFree_kernel_on_affine, found:locally_free, mathlib:short_exact}
+  Local freeness is local on \(X\) (\cref{lem:isLocallyFree_local}).  Each point has
+  an affine neighbourhood \(\operatorname{Spec}R\subseteq X\) trivialising both
+  \(\mathcal G\) and \(\mathcal H\) (refine an affine cover against their
+  trivialising covers, \cref{found:locally_free}).  There the sequence
+  (\cref{mathlib:short_exact}) has free middle and right terms, so
+  \cref{lem:isLocallyFree_kernel_on_affine} trivialises \(\mathcal K\).  These opens
+  cover \(X\), so \(\mathcal K\) is locally free (\cref{lem:isLocallyFree_local}).
+  This is Hartshorne III, Ex.~6.5.
+\end{proof}
+
+\begin{lemma}[Rank additivity for a short exact sequence of locally free sheaves]
+  \label{found:rank_kernel_of_shortExact}
+  \lean{AlgebraicGeometry.Scheme.Modules.rank_kernel_of_shortExact}
+  \uses{found:locally_free, found:isLocallyFree_kernel_of_shortExact, mathlib:short_exact}
+  Let \(0\to\mathcal K\to\mathcal G\to\mathcal H\to 0\) be a short exact sequence
+  (\cref{mathlib:short_exact}) of \(\cO_X\)-modules with \(\mathcal G\) and
+  \(\mathcal H\) locally free (\cref{found:locally_free}); by
+  \cref{found:isLocallyFree_kernel_of_shortExact} the kernel \(\mathcal K\) is then
+  locally free as well.  Its rank satisfies
+  \[
+    \operatorname{rank}\mathcal K=\operatorname{rank}\mathcal G-\operatorname{rank}\mathcal H .
+  \]
+\end{lemma}
+
+\begin{proof}
+  \uses{found:locally_free, found:isLocallyFree_kernel_of_shortExact, mathlib:short_exact}
+  By \cref{found:isLocallyFree_kernel_of_shortExact} the kernel \(\mathcal K\) is
+  locally free, so all three terms carry a well-defined constant rank.  Locally the
+  sequence splits --- a free quotient makes it split --- giving
+  \(\mathcal G\cong\mathcal K\oplus\mathcal H\) on each trivialising open; the rank
+  of a finite free module is additive over direct sums, so
+  \(\operatorname{rank}\mathcal G=\operatorname{rank}\mathcal K+\operatorname{rank}
+  \mathcal H\), which rearranges to the stated identity.
+\end{proof}
+
+% SOURCE (rank $r = h^0(L)-1$, Lazarsfeld, A Sampling of Vector Bundle Techniques in the Study of Linear Series, \S1.1 (p.~505) and \S1.3 (p.~509); read from references/lazarsfeld-vbt.pdf):
+% SOURCE QUOTE (\S1.1, rank formula): "where $r = r(L) = h^0(L) - 1$."
+% SOURCE QUOTE (\S1.3, rank of $M_L$): "Then there is a surjective evaluation map of vector bundles $e_L : H^0(L) \otimes_{\mathbf{C}} \mathcal{O}_X \longrightarrow L$, and we put $M_L = \ker e_L$. Thus $M_L$ is a vector bundle on $X$ of rank $r = r(L)$, and by construction one has the basic exact sequence $(1.3.1)$ $0 \longrightarrow M_L \longrightarrow H^0(L) \otimes_{\mathbf{C}} \mathcal{O}_X \longrightarrow L \longrightarrow 0$."
+\begin{lemma}[Evaluation kernel of a globally generated locally free module is locally free]
+  \label{found:eval_kernel_locally_free}
+  \lean{AlgebraicGeometry.Scheme.Modules.evalKernel_isLocallyFree}
+  \uses{found:eval_kernel_bundle, found:eval_shortexact_of_globally_generated, found:trivial_bundle_locally_free, found:isLocallyFree_kernel_of_shortExact, found:rank_kernel_of_shortExact, found:locally_free}
+  \textit{Source: Kemeny, \S0 (preliminaries on locally free sheaves); rank formula after Lazarsfeld, VBT \S1.1--1.3.}
+  If \(\mathcal F\) is globally generated --- so \(\mathrm{ev}_{\mathcal F}\) is
+  surjective --- and locally free of finite rank \(r\), then the evaluation kernel
+  \(M_{\mathcal F}\) (\cref{found:eval_kernel_bundle}) is locally free of rank
+  \(\dim_k H^0(X,\mathcal F)-r\).  In particular, for a globally generated line bundle
+  \(L\) (\(r=1\)), \(M_L\) is locally free of rank \(h^0(L)-1\).
+\end{lemma}
+
+\begin{proof}
+  \uses{found:eval_kernel_bundle, found:eval_shortexact_of_globally_generated, found:trivial_bundle_locally_free, found:isLocallyFree_kernel_of_shortExact, found:rank_kernel_of_shortExact, found:locally_free}
+  Global generation gives the short exact sequence
+  \(0\to M_{\mathcal F}\to H^0(X,\mathcal F)\otimes_k\cO_X\to\mathcal F\to 0\)
+  (\cref{found:eval_shortexact_of_globally_generated}), with middle term locally free
+  of rank \(\dim_k H^0(X,\mathcal F)\) (\cref{found:trivial_bundle_locally_free}) and
+  quotient \(\mathcal F\) locally free of rank \(r\) by hypothesis.  Hence the kernel
+  \(M_{\mathcal F}\) is locally free (\cref{found:isLocallyFree_kernel_of_shortExact},
+  \cref{found:locally_free}) of rank
+  \(\dim_k H^0(X,\mathcal F)-r\) (\cref{found:rank_kernel_of_shortExact}); for a line
+  bundle \(r=1\) this is \(h^0(L)-1\).
+\end{proof}

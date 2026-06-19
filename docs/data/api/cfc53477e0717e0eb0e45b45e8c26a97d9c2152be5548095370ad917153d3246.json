@@ -1,0 +1,111 @@
+[
+  {
+    "timestamp": "2026-06-19T09:45:31Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pushforward_eta_appIso_collapse"
+    },
+    "session": {
+      "id": "session_27",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Pure coercion/OfNat plumbing, not math: (a) map_one does not fire on ConcreteCategory.hom (φ'.app U) RingCat-coercion form; (b) cannot STATE 1 : (𝟙_ _).obj W — OfNat synth won't reduce 𝟙_ = unit _ to expose the ring carrier.",
+      "key_lemmas_used": [
+        "pushforwardPushforwardAdj_unit_app_app_apply",
+        "PresheafOfModules.unit_map_one",
+        "Functor.OplaxMonoidal.comp_η",
+        "PresheafOfModules.pushforward_map_app_apply",
+        "Functor.Monoidal.ε_η",
+        "Functor.OplaxMonoidal.inv_ε"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Add presheaf-level unit value helper pushforwardPushforwardAdj_unit_app_app_apply (generic adj F⊣G): (((unit.app M).app U).hom x = (M.map (adj.counit.app U.unop).op).hom x). Proof rfl (relies on pushforwardId/pushforwardComp = Iso.refl, pushforwardNatTrans/pushforwardCongr trivial on carriers).",
+        "code_tried": "lemma pushforwardPushforwardAdj_unit_app_app_apply ... := by rfl",
+        "line_number": "4094",
+        "lean_error": "none (compiles)",
+        "result": "success",
+        "insight": "rfl helper is honest (LSP confirms non-trivial goal). The morphism-level (no applied element) form FAILS — bundled .hom carries different scalar structures on target. The asserted sheaf-level twin pushforwardPushforwardAdj_unit_app_val_app does NOT exist (only comment refs)."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Reduce the η residual sectionwise: comp_app + hom_comp/comp_apply split, comp_η, η pushforward₀ = 𝟙 (rfl), pushforward_map_app_apply reindex to op (f⁻¹ᵁ U), then collapse unit via the new helper + unit_map_one.",
+        "code_tried": "rw [PresheafOfModules.comp_app]; erw [ModuleCat.hom_comp, LinearMap.comp_apply]; rw [Functor.OplaxMonoidal.comp_η, show η (pushforward₀OfCommRingCat ...) = 𝟙 _ from rfl]; erw [pushforward_map_app_apply]; simp only [pushforwardPushforwardAdj_unit_app_app_apply]; erw [PresheafOfModules.unit_map_one]; sorry",
+        "line_number": "4202-4235",
+        "lean_error": "none through the steps; residual sorry remains",
+        "result": "partial",
+        "insight": "AUDITOR FINDING: the `simp only [pushforwardPushforwardAdj_unit_app_app_apply]` step is a NO-OP (compiler flags unused simp arg; goal identical before/after). The actual collapse is done by `erw [unit_map_one]` alone. The helper, though compiling, is NOT load-bearing at this site — the comments crediting it (L4208-4214) are inaccurate. Residual: ((restrictScalars β').map 𝟙 ≫ η (restrictScalars β')).app W).hom 1 = (φ'.app U) 1, both sides = ring unit 1."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Draft standalone restrictScalars_oplaxMonoidal_η_app_one (η on unit preserves 1 via ε_η + injective ε.app W + restrictScalars_η).",
+        "code_tried": "lemma restrictScalars_oplaxMonoidal_η_app_one ... (1 : (𝟙_ (PresheafOfModules _)).obj W) ...",
+        "line_number": "n/a (could not state)",
+        "lean_error": "OfNat synthesis fails: Lean won't reduce 𝟙_ = unit _ to expose ring carrier",
+        "result": "failed",
+        "insight": "Functor.Monoidal.ε_η _ CONFIRMED to typecheck in context. Blocker is STATING the lemma, not proving it. Fix: phrase unit element via PresheafOfModules.unit (carrier R.obj W, a genuine ring) and transport along 𝟙_ = unit defeq."
+      }
+    ],
+    "next_steps": "Effort-break η per plan iter-028. Two concrete sub-targets: (1) a RingCat/CommRingCat ConcreteCategory.hom map_one bridge so map_one fires on RHS; (2) restate the η-on-unit value lemma via PresheafOfModules.unit instead of 𝟙_ to dodge OfNat. Math (ε_η + lax-ε value + iso injectivity) is settled. Remove the dead simp step."
+  },
+  {
+    "timestamp": "2026-06-19T09:45:31Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pushforward_lax_mu_comparison"
+    },
+    "session": {
+      "id": "session_27",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Not attempted this iter (budget consumed by η must-close). Bare sorry retained from scaffold.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Per blueprint, mirror proved pushforwardComp_lax_μ (L2197) 1:1. Recipe in /- Planner strategy -/ comment above stub.",
+        "code_tried": "sorry (unchanged scaffold)",
+        "line_number": "4276",
+        "lean_error": "n/a",
+        "result": "failed",
+        "insight": "AUDITOR: lemma is ORPHANED — sorry'd but not yet referenced by its intended consumer pushforward_mu_appIso_collapse. Wiring not done. This is the genuine non-circular μ residual."
+      }
+    ],
+    "next_steps": "Dedicated prove lane mirroring pushforwardComp_lax_μ: hom_ext to open U; thread pure-tensor extensionality through pushforward₀OfCommRingCat sections (Gβ.obj(A⊗B) is pushforward-of-tensor, NOT syntactic — tensor_ext won't fire). Multi-hundred LOC. Wire into pushforward_mu_appIso_collapse."
+  },
+  {
+    "timestamp": "2026-06-19T09:45:31Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pushforward_mu_appIso_collapse"
+    },
+    "session": {
+      "id": "session_27",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Gated on pushforward_lax_mu_comparison (not yet proved/wired). Unchanged iter-026 scaffold.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "4-step mate reduction onto pushforward_lax_mu_comparison (cancel H1=leftAdjointUniq; transpose across hadj'; replace δ Gβ by μIsoβ.inv; reduce δ(pullback) via pushforward_mu_eq). NO hadj'.IsMonoidal (circular).",
+        "code_tried": "refine PresheafOfModules.hom_ext (fun U => ?_); sorry",
+        "line_number": "4381",
+        "lean_error": "n/a (not attempted)",
+        "result": "failed",
+        "insight": "Mate route via hmon EMPIRICALLY CIRCULAR (iter-026). Reduction is the formal scaffold; depends on the bare comparison above."
+      }
+    ],
+    "next_steps": "After pushforward_lax_mu_comparison lands, do the 4-step reduction wiring. Do NOT route through hadj'.IsMonoidal."
+  }
+]

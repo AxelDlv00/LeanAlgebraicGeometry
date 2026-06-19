@@ -1,5 +1,5 @@
 {
   "path": "AlgebraicJacobian.lean",
-  "size": 406,
-  "content": "import AlgebraicJacobian.Picard.LineBundlePullback\nimport AlgebraicJacobian.Picard.TensorObjSubstrate\nimport AlgebraicJacobian.Picard.TensorObjSubstrate.PresheafInternalHom\nimport AlgebraicJacobian.Picard.TensorObjSubstrate.StalkTensor\nimport AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse\nimport AlgebraicJacobian.Picard.TensorObjSubstrate.Vestigial\nimport AlgebraicJacobian.Picard.RelPicFunctor\n"
+  "size": 455,
+  "content": "import AlgebraicJacobian.Picard.LineBundlePullback\nimport AlgebraicJacobian.Picard.TensorObjSubstrate\nimport AlgebraicJacobian.Picard.TensorObjSubstrate.PresheafInternalHom\nimport AlgebraicJacobian.Picard.TensorObjSubstrate.StalkTensor\nimport AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse\nimport AlgebraicJacobian.Picard.TensorObjInverse\nimport AlgebraicJacobian.Picard.TensorObjSubstrate.Vestigial\nimport AlgebraicJacobian.Picard.RelPicFunctor\n"
 }

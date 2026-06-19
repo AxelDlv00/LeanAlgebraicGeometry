@@ -1,0 +1,85 @@
+[
+  {
+    "timestamp": "2026-06-19T02:14:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "pullback_spec_tilde_iso_ring_square_natural"
+    },
+    "session": {
+      "id": "session_8",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "(★) = ring-square pseudofunctoriality (cocycle) coherence of the conjugate dictionary pst; no turnkey Mathlib lemma; the factored conjugate-mate build is a documented multi-hundred-LOC dedicated lane (class resisted 7 iters per analogies/fbc-composite-mate-recognition.md). moduleSpecΓFunctor is NOT Faithful (Γ-injectivity route dead). pst legs are not identity-on-sections (rfl/ext;rfl/aesop_cat/exact? all fail).",
+      "key_lemmas_used": [
+        "pullback_spec_tilde_iso_inv_unit_triangle (proven brick, L707, axiom-clean)",
+        "conjugateIsoEquiv",
+        "gammaPushforwardNatIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "automation / faithfulness reduction on the L1257 triple-transposed tail",
+        "code_tried": "rfl ; ext x <;> rfl ; ext x; simp ; aesop_cat ; exact? ; apply moduleSpecΓFunctor.map_injective",
+        "line_number": "1257",
+        "lean_error": "ext;rfl -> not definitionally equal (pst legs not identity-on-elements); moduleSpecΓFunctor.map_injective -> failed to synthesize moduleSpecΓFunctor.Faithful; aesop_cat exhausts; exact? heartbeat-times-out",
+        "goal_before": "tilde.adjunction.unit.app M >> moduleSpecΓFunctor.map (... nested pullbackPushforward units + chartBaseChangeGeometricComparison + pst legs ...)",
+        "result": "failed",
+        "insight": "moduleSpecΓFunctor (Γ on ALL (Spec R).Modules, not just QCoh) is NOT faithful -> goal cannot be discharged by Γ-injectivity; faithfulness only after restricting to QCoh ess.image of tilde."
+      },
+      {
+        "attempt": 2,
+        "strategy": "diagnostic: are the 3 transpose peels actually progressing the goal?",
+        "code_tried": "simp only [← Functor.map_comp]; congr",
+        "line_number": "1257",
+        "lean_error": "",
+        "goal_before": "triple-transposed tail in ModuleCat ↑R",
+        "goal_after": "collapses back to (★) at L1229",
+        "result": "partial",
+        "insight": "the 3 homEquiv.injective peels are PROVABLY REVERSIBLE (collapse via simp[←map_comp];congr) -> they are setup-only, not progress; their sole purpose is to expose the unit>>R.map(·) form where the proven brick pullback_spec_tilde_iso_inv_unit_triangle can be applied. Brick NOT yet applied = the entire remaining content."
+      },
+      {
+        "attempt": 3,
+        "strategy": "inverse-transpose shortcut: prove (★) via g1.inv = g2.inv hoping source becomes a bare tilde (1 transpose not 3)",
+        "code_tried": "Iso.eq_inv_comp / work with .inv legs",
+        "line_number": "1204-1229",
+        "lean_error": "",
+        "goal_before": "both g1,g2 : pb(rhoB)(pb(inclR)(tilde M)) ≅ pb(inclR')(tilde N')",
+        "goal_after": "",
+        "result": "failed",
+        "insight": "neither source nor target is a bare tilde (source is a TRIPLE pullback); inverse needs the same 3 transposes. No shortcut."
+      }
+    ],
+    "next_steps": "Dedicated factored-conjugate build lane (NOT alongside other FBC work). effort-break seam4 (ring_square_mate_glue, effort ~1078) FIRST per pc008. Foundation sub-lemma to prove first: composition coherence of gammaPushforwardNatIso over a composite ring map (likely ext;rfl, gammaPushforwardIso identity-on-elements per L662); its conjugate (via conjugateEquiv_*_comp/whisker telescoping) IS pst pseudofunctoriality pullback_spec_tilde_iso_comp, whence (★) follows by feeding the two ring-square composites + geom/reassoc mediators. Reuse proven brick L707 per-leg."
+  },
+  {
+    "timestamp": "2026-06-19T02:14:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "base_change_mate_gstar_transpose (+2 dead-mate sorries L1685, L1707)"
+    },
+    "session": {
+      "id": "session_8",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "100% COMPILE-DEAD mate apparatus (seeds are bare sorry, nothing on-path consumes it). Per PROGRESS/ARCHON_MEMORY: excise in a DEDICATED refactor iter, NEVER alongside an FBC prover (file-stability). Not attempted by design.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "out of scope — deliberately not attempted (dead-mate excision is a dedicated refactor iter)",
+        "code_tried": "(none)",
+        "line_number": "1504,1685,1707",
+        "lean_error": "",
+        "result": "partial",
+        "insight": "3 dead-mate sorries left untouched per file-stability protocol; correct hygiene call by prover."
+      }
+    ],
+    "next_steps": "Schedule dedicated refactor iter to excise the whole base_change_mate_* apparatus + sync blueprint \\uses web same iter. KEEP base_change_mate_regroupEquiv + base_change_map_affine_local."
+  }
+]

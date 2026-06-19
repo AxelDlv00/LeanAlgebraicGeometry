@@ -10141,5 +10141,573 @@
         "next_steps": "Confirm full `lake build AlgebraicJacobian.Cohomology.CechToHigherDirectImage` is green and #print axioms is kernel-clean (capstone olean absent at review start; review launched the build — user's 630-line edit to CechHigherDirectImage.lean invalidated the downstream chain). On green, advance stage prover→polish and declare content-complete."
       }
     ]
+  },
+  {
+    "sessionId": "session_81",
+    "milestones": [
+      {
+        "timestamp": "2026-06-18T15:55:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean",
+          "theorem": "pushPull_interLegHom_sections"
+        },
+        "session": {
+          "id": "session_81",
+          "model": "claude-sonnet-4-6"
+        },
+        "findings": {
+          "blocker": "lake build did not complete (timeout/killed); kernel verification pending. LSP goal closed.",
+          "key_lemmas_used": [
+            "pushPull_toRestrict_comm",
+            "thin_resid5"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "replaced plain sorry with kernel-term-shrink proof: named have hle (le_iInf), have hstep (@pushPull_toRestrict_comm), thin_resid5 chain",
+            "code_tried": "have hle : coverInterOpen 𝒰 σ' ≤ coverInterOpen 𝒰 (σ' ∘ (SimplexCategory.δ k).toOrderHom) := le_iInf (...); have hstep := @pushPull_toRestrict_comm X ...; ... exact thin_resid5 ...",
+            "line_number": "1434",
+            "lean_error": null,
+            "goal_before": "...(sectionFunctorV V).map (pushPullMap F (interLegHom 𝒰 σ' k)) ≫ (pushPull_leg_sections 𝒰 F σ' V).hom = ...",
+            "goal_after": "[]",
+            "result": "partial",
+            "insight": "LSP accepts proof (goals_after: []); lake build timed out — kernel-term-shrink approach may still produce large terms"
+          }
+        ],
+        "next_steps": "run lake build AlgebraicJacobian.Cohomology.CechSectionIdentificationLeg to confirm kernel acceptance; if still timeout, further decompose with additional named have steps"
+      },
+      {
+        "timestamp": "2026-06-18T15:55:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean",
+          "theorem": "coreIso_comm_leg"
+        },
+        "session": {
+          "id": "session_81",
+          "model": "claude-sonnet-4-6"
+        },
+        "findings": {
+          "blocker": "lake build did not complete; kernel verification pending. LSP goal closed.",
+          "key_lemmas_used": [
+            "backboneIncl_nerveδ",
+            "pushPull_leg_sections"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "restored MERGE-STUB-PROOF: removed 'sorry -- MERGE-STUB' and opened comment block, retaining the preserved proof body verbatim",
+            "code_tried": "-- The central exchange: nerve coface ≫ object-iso projection... (original proof body restored)",
+            "line_number": "1575",
+            "lean_error": null,
+            "goal_after": "[]",
+            "result": "partial",
+            "insight": "LSP closes the goal; original proof was saved in the comment block exactly for this restoration"
+          }
+        ],
+        "next_steps": "kernel build verification needed"
+      },
+      {
+        "timestamp": "2026-06-18T15:55:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean",
+          "theorem": "coreIso_comm_coface"
+        },
+        "session": {
+          "id": "session_81",
+          "model": "claude-sonnet-4-6"
+        },
+        "findings": {
+          "blocker": "lake build did not complete; kernel verification pending. LSP goal closed.",
+          "key_lemmas_used": [
+            "sectionCechProductEquiv",
+            "sectionCechProductEquiv_apply"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "restored MERGE-STUB-PROOF verbatim: ext x, apply sectionCechProductEquiv chain",
+            "code_tried": "ext x\napply (sectionCechProductEquiv (fun a => coverOpen 𝒰 a ⊓ V) ...)",
+            "line_number": "1644",
+            "lean_error": null,
+            "goal_after": "[]",
+            "result": "partial",
+            "insight": "LSP clean; proof restored from preserved block"
+          }
+        ],
+        "next_steps": "kernel build verification needed"
+      },
+      {
+        "timestamp": "2026-06-18T15:55:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean",
+          "theorem": "coreIso_comm_sum"
+        },
+        "session": {
+          "id": "session_81",
+          "model": "claude-sonnet-4-6"
+        },
+        "findings": {
+          "blocker": "lake build did not complete; kernel verification pending. LSP goal closed.",
+          "key_lemmas_used": [
+            "coreIso_comm_coface"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "restored MERGE-STUB-PROOF: haveI Additive instances, map_alternatingFaceMapComplex chain",
+            "code_tried": "haveI : (SheafOfModules.forget X.ringCatSheaf ⋙ ...).Additive := inferInstance; ...",
+            "line_number": "1688",
+            "lean_error": null,
+            "goal_after": "[]",
+            "result": "partial",
+            "insight": "LSP clean"
+          }
+        ],
+        "next_steps": "kernel build verification needed"
+      },
+      {
+        "timestamp": "2026-06-18T15:55:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean",
+          "theorem": "coreIso_comm"
+        },
+        "session": {
+          "id": "session_81",
+          "model": "claude-sonnet-4-6"
+        },
+        "findings": {
+          "blocker": "lake build did not complete; kernel verification pending. LSP goal closed.",
+          "key_lemmas_used": [
+            "coreIso_comm_sum"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "restored MERGE-STUB-PROOF: obtain rfl : i+1=j := hij, rw [hsec, hX], exact coreIso_comm_sum",
+            "code_tried": "obtain rfl : i + 1 = j := hij\n...\nrw [hsec, hX]\nexact coreIso_comm_sum 𝒰 F V i",
+            "line_number": "1720",
+            "lean_error": null,
+            "goal_after": "[]",
+            "result": "partial",
+            "insight": "LSP clean; thin delegation via coreIso_comm_sum"
+          }
+        ],
+        "next_steps": "kernel build verification needed"
+      },
+      {
+        "timestamp": "2026-06-18T15:55:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean",
+          "theorem": "cechAugmented_to_acyclicResolutionInput"
+        },
+        "session": {
+          "id": "session_81",
+          "model": "claude-sonnet-4-6"
+        },
+        "findings": {
+          "blocker": "lake build backgrounded (not confirmed complete). LSP clean.",
+          "key_lemmas_used": [
+            "cechAugmented_exact",
+            "HomologicalComplex.exactAt_iff_isZero_homology",
+            "cechAugmented_to_res"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "replaced MERGE-STUB sorry with have hKex + proof body using cechAugmented_exact; set maxHeartbeats 4000000",
+            "code_tried": "have hKex : ∀ p, (cechAugmentedComplex 𝒰 F).ExactAt p := fun p => (HomologicalComplex.exactAt_iff_isZero_homology _ p).2 (cechAugmented_exact 𝒰 h𝒰 F hF p); ...",
+            "line_number": "116",
+            "lean_error": null,
+            "goal_after": "[]",
+            "result": "partial",
+            "insight": "LSP clean; maxHeartbeats escalated to 4M after initial 800k timeout"
+          }
+        ],
+        "next_steps": "confirm lake build succeeds; if heartbeat issue remains, further decompose"
+      },
+      {
+        "timestamp": "2026-06-18T15:55:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean",
+          "theorem": "pushforward_mapHomologicalComplex_cechComplexOnX (mapAlternatingCofaceMapComplexIso rfl gap)"
+        },
+        "session": {
+          "id": "session_81",
+          "model": "claude-sonnet-4-6"
+        },
+        "findings": {
+          "blocker": "lake build backgrounded (not confirmed complete). LSP clean.",
+          "key_lemmas_used": [
+            "Functor.map_sum",
+            "Functor.map_zsmul",
+            "CosimplicialObject.whiskerRight"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "replaced sorry with simp [Functor.map_sum, Functor.map_zsmul, CosimplicialObject.whiskerRight] to close the rfl gap on mapAlternatingCofaceMapComplexIso",
+            "code_tried": "simp [Functor.map_sum, Functor.map_zsmul, CosimplicialObject.whiskerRight, ...]",
+            "line_number": "75",
+            "lean_error": null,
+            "goal_after": "[]",
+            "result": "partial",
+            "insight": "simp + rfl approach worked at LSP level for the additivity gap"
+          }
+        ],
+        "next_steps": "kernel build verification needed"
+      }
+    ]
+  },
+  {
+    "sessionId": "session_86",
+    "milestones": [
+      {
+        "timestamp": "2026-06-19T04:50:00Z",
+        "status": "not_started",
+        "target": {
+          "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean",
+          "theorem": "(build gate)"
+        },
+        "session": {
+          "id": "session_86",
+          "model": "claude-sonnet-4-6"
+        },
+        "findings": {
+          "blocker": "no_prover_lane: true — intentional no-dispatch iter. review-build attempted CSILeg, SIGTERM (trace.nobuild Jun 19 04:44). Build wall persists: CSILeg ~28M HB, machine ~46K HB/s → ~600s, exceeds sync_leanok budget.",
+          "key_lemmas_used": []
+        },
+        "attempts": [],
+        "next_steps": "Further split CSILeg: profile L733 backboneIncl_proj (maxHB 3200000) + other 1600000 blocks; extract heaviest to CSILegAux or new file. DO NOT retry same approach without additional split."
+      }
+    ]
+  },
+  {
+    "sessionId": "session_87",
+    "milestones": [
+      {
+        "timestamp": "2026-06-19T08:37:00Z",
+        "status": "not_started",
+        "target": {
+          "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegMid1.lean",
+          "theorem": "(all_declarations)"
+        },
+        "session": {
+          "id": "session_87",
+          "model": "claude-sonnet-4-6"
+        },
+        "findings": {
+          "blocker": "no_prover_lane: refactor-only iter; new split files have no oleans yet — lake build pending"
+        },
+        "attempts": [],
+        "next_steps": "lake build will compile Mid1 (~5.6M HB, ~122s at 46K HB/s) in review phase"
+      },
+      {
+        "timestamp": "2026-06-19T08:37:00Z",
+        "status": "not_started",
+        "target": {
+          "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegMid2.lean",
+          "theorem": "(all_declarations)"
+        },
+        "session": {
+          "id": "session_87",
+          "model": "claude-sonnet-4-6"
+        },
+        "findings": {
+          "blocker": "no_prover_lane: refactor-only iter; new split files have no oleans yet — lake build pending"
+        },
+        "attempts": [],
+        "next_steps": "lake build will compile Mid2 (~5.6M HB, ~122s at 46K HB/s) in review phase"
+      },
+      {
+        "timestamp": "2026-06-19T08:37:00Z",
+        "status": "not_started",
+        "target": {
+          "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegTop.lean",
+          "theorem": "(all_declarations)"
+        },
+        "session": {
+          "id": "session_87",
+          "model": "claude-sonnet-4-6"
+        },
+        "findings": {
+          "blocker": "no_prover_lane: refactor-only iter; new split files have no oleans yet — lake build pending"
+        },
+        "attempts": [],
+        "next_steps": "lake build will compile Top (~8M HB, ~174s at 46K HB/s) in review phase"
+      },
+      {
+        "timestamp": "2026-06-19T08:37:00Z",
+        "status": "not_started",
+        "target": {
+          "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegAux.lean",
+          "theorem": "(all_declarations)"
+        },
+        "session": {
+          "id": "session_87",
+          "model": "claude-sonnet-4-6"
+        },
+        "findings": {
+          "blocker": "no_prover_lane: refactor-only iter; no olean yet — lake build pending"
+        },
+        "attempts": [],
+        "next_steps": "lake build will compile Aux (~14.4M HB, ~313s at 46K HB/s) — highest risk module"
+      },
+      {
+        "timestamp": "2026-06-19T08:37:00Z",
+        "status": "not_started",
+        "target": {
+          "file": "AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean",
+          "theorem": "cech_computes_higherDirectImage"
+        },
+        "session": {
+          "id": "session_87",
+          "model": "claude-sonnet-4-6"
+        },
+        "findings": {
+          "blocker": "no olean for upstream chain (Mid1/Mid2/Top/Aux); CechToHigherDirectImage.olean absent"
+        },
+        "attempts": [],
+        "next_steps": "kernel-verify after chain builds green"
+      }
+    ]
+  },
+  {
+    "sessionId": "session_88",
+    "milestones": [
+      {
+        "timestamp": "2026-06-19T00:54:31Z",
+        "status": "not_started",
+        "target": {
+          "file": null,
+          "theorem": null
+        },
+        "session": {
+          "id": "session_88",
+          "model": "claude-sonnet-4-6"
+        },
+        "findings": {
+          "blocker": "no_prover_lane — intentional skip (plan-validate ok_intentional_skip); 0 sorries project-wide; all 4 frontier nodes lack Lean declarations"
+        },
+        "attempts": [],
+        "next_steps": "Build gate partial: CSILeg.olean present; CSILegMid1 elaboration started (setup.json created), olean absent; Mid2/Top/Aux/CHDI not yet built. Next iter sync_leanok will restore markers once all oleans present."
+      }
+    ]
+  },
+  {
+    "sessionId": "session_89",
+    "milestones": [
+      {
+        "timestamp": "2026-06-19T09:15:00Z",
+        "status": "not_started",
+        "target": {
+          "file": "no_prover_lane",
+          "theorem": "no_prover_lane"
+        },
+        "session": {
+          "id": "session_89",
+          "model": "claude-sonnet-4-6"
+        },
+        "findings": {
+          "blocker": "No prover lane this iter — intentional no-dispatch (0 sorries project-wide; all 4 frontier nodes lack Lean declarations; build chain in progress for CSILeg split files)",
+          "key_lemmas_used": []
+        },
+        "attempts": [],
+        "next_steps": "Continue build chain. Once Mid1→Mid2→Top→Aux→CHDI oleans present, sync_leanok will add \\leanok for cech_computes_higherDirectImage. Advance to polish."
+      }
+    ]
+  },
+  {
+    "sessionId": "session_90",
+    "milestones": [
+      {
+        "timestamp": "2026-06-19T01:25:00Z",
+        "status": "not_started",
+        "target": {
+          "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegMid1.lean",
+          "theorem": "(build gate — no prover lane)"
+        },
+        "session": {
+          "id": "session_90",
+          "model": "claude-sonnet-4-6"
+        },
+        "findings": {
+          "blocker": "no_prover_lane: intentional no-dispatch (0 sorries project-wide; 4 frontier nodes lack Lean decls; build chain progressing slowly at ~2-4K HB/s). CSILeg.olean PRESENT (08:37 CST); Mid1 olean ABSENT (elaborating); Mid2/Top/Aux/CHDI not started."
+        },
+        "attempts": [],
+        "next_steps": "No prover dispatch. Continue no-dispatch until all 6 oleans present (Mid1/Mid2/Top/Aux/CHDI). Then sync_leanok + advance to polish stage."
+      }
+    ]
+  },
+  {
+    "sessionId": "session_91",
+    "milestones": [
+      {
+        "timestamp": "2026-06-19T01:45:00Z",
+        "status": "not_started",
+        "target": {
+          "file": "AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean",
+          "theorem": "cech_computes_higherDirectImage"
+        },
+        "session": {
+          "id": "session_91",
+          "model": "claude-sonnet-4-6"
+        },
+        "findings": {
+          "blocker": "no_prover_lane: build gate pending; CSILeg split chain (Mid1/Mid2/Top/Aux) not yet fully elaborated; CechToHigherDirectImage.olean absent; sync_leanok added=0"
+        },
+        "attempts": [],
+        "next_steps": "Continue no-dispatch until all split-chain oleans present; once sync_leanok confirms leanok for main theorem, advance to polish stage."
+      }
+    ]
+  },
+  {
+    "sessionId": "session_92",
+    "milestones": [
+      {
+        "timestamp": "2026-06-19T12:05:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean",
+          "theorem": "cech_computes_higherDirectImage"
+        },
+        "session": {
+          "id": "session_92",
+          "model": "claude-opus-4-8"
+        },
+        "findings": {
+          "blocker": "build-gate pending: source-complete (0 sorries) but durable oleans for the split chain not yet all present; real lake build actively running and progressing",
+          "key_lemmas_used": []
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "no prover dispatch (0 inline sorries); root-caused the iters 088-091 stall (LSP elaboration never writes oleans) and launched a detached real `lake build AlgebraicJacobian.Cohomology.CechToHigherDirectImage`",
+            "code_tried": "nohup lake build AlgebraicJacobian.Cohomology.CechToHigherDirectImage",
+            "line_number": "n/a",
+            "lean_error": "none — build progressing without errors",
+            "goal_before": "n/a",
+            "goal_after": "n/a",
+            "result": "partial",
+            "insight": "Build chain now writing real oleans: Base 11:26, Leg 11:45, Mid1 11:45, Mid2 12:00 all fresh today; Top+Aux elaborating; CSI/CechAugmentedResolution stale (rebuild after Aux); CHDI absent. No errors in chain-build.log at [8334/8340]."
+          }
+        ],
+        "next_steps": "Let detached lake build finish Top->Aux->CSI->CechAugmentedResolution->CHDI. Next review: confirm CHDI olean present + sync_leanok confirms cech_computes_higherDirectImage -> advance stage to polish."
+      }
+    ]
+  },
+  {
+    "sessionId": "session_94",
+    "milestones": [
+      {
+        "timestamp": "2026-06-19T05:53:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegTop.lean",
+          "theorem": "pushPull_interLegHom_sections"
+        },
+        "session": {
+          "id": "session_94",
+          "model": "claude-opus-4-8"
+        },
+        "findings": {
+          "blocker": "Decomposition applied + structurally validated (lean-auditor PASS, 0 sorries) but NOT kernel-confirmed: no lake build completed. LegTop.olean still ABSENT. All 3 prover builds exited 137 (SIGKILL/OOM) or SIGTERM before [8326/8326] LegTop finished; review clean-build cut off at [8325/8326] Mid2.",
+          "key_lemmas_used": [
+            "pushPull_interLegHom_resid",
+            "pls_eq",
+            "thin_resid5",
+            "pushPull_toRestrict_comm"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Extract heavy post-hstep residual into a new private lemma so the kernel checks it independently of the pls_eq/hstep prefix (kernel-budget split per iter-093 directive)",
+            "code_tried": "set_option maxHeartbeats 1600000 in / private lemma pushPull_interLegHom_resid (...) : G1 := by simp only [...]; erw [Functor.map_comp, ...]; congr 1; exact thin_resid5 ...",
+            "line_number": "281-371",
+            "lean_error": "none (no diagnostic errors; build killed before kernel verdict)",
+            "goal_before": "post-hstep residual goal G1 on (sectionFunctorV V).map of the pushPull_toRestrict_comm RHS",
+            "goal_after": "no goals (LSP); kernel unverified",
+            "result": "partial",
+            "insight": "Split is faithful (auditor: non-trivial 5-map eqToHom chain, not a tautology) but the kernel verdict is unknown because no build finished."
+          },
+          {
+            "attempt": 2,
+            "strategy": "Simplify main lemma body to delegate to the residual lemma",
+            "code_tried": "exact pushPull_interLegHom_resid 𝒰 F V σ' k hle   (replacing inline simp/erw/congr 1/thin_resid5 block)",
+            "line_number": "434",
+            "lean_error": "none",
+            "goal_before": "G1 after Eq.trans (congrArg ... hstep) ?_",
+            "goal_after": "no goals (LSP)",
+            "result": "partial",
+            "insight": "Main lemma now: rw [pls_eq ...] prefix + erw [← Category.assoc] + Eq.trans congrArg hstep, then exact resid."
+          },
+          {
+            "attempt": 3,
+            "strategy": "Replace inline have heq_σ'/heq_dk/hcomp_image blocks with direct pls_eq rewrites",
+            "code_tried": "rw [pls_eq 𝒰 F σ' V, pls_eq 𝒰 F (σ' ∘ (SimplexCategory.δ k).toOrderHom) V]",
+            "line_number": "~410",
+            "lean_error": "none",
+            "goal_before": "main lemma after heq lemmas",
+            "goal_after": "n/a",
+            "result": "partial",
+            "insight": "Trims the main lemma; consolidates the basicOpen-image rewrites into pls_eq."
+          },
+          {
+            "attempt": 4,
+            "strategy": "Verify via real lake build (LSP false-green on kernel timeouts)",
+            "code_tried": "timeout 1500 lake build AlgebraicJacobian.Cohomology.CechSectionIdentificationLegTop",
+            "line_number": "n/a",
+            "lean_error": "Exit code 137 (SIGKILL/OOM); earlier attempt SIGTERM ('Terminated'). No 'deterministic timeout' message captured — build was killed before LegTop's kernel verdict printed.",
+            "goal_before": "n/a",
+            "goal_after": "n/a",
+            "result": "failed",
+            "insight": "Build never reached a verdict on LegTop in the time/memory budget. 137 suggests OOM-kill — plausibly aggravated by many concurrent heavy Archon project builds on the same host. Kernel acceptance of the decomposition remains UNCONFIRMED."
+          }
+        ],
+        "next_steps": "Run a detached, uninterrupted lake build of LegTop to completion (consider -j1 / off-peak to dodge OOM). Confirm LegTop.olean appears + #print axioms coreIso_comm_leg is sorry/axiom-clean. Then build the rest of the chain (Aux → CSI → CechAugmentedResolution → CHDI). Do NOT re-edit LegTop; do NOT LSP-poke. If LegTop still times out (not OOM), recurse the decomposition or raise maxHeartbeats on just the offending decl."
+      },
+      {
+        "timestamp": "2026-06-19T05:53:00Z",
+        "status": "blocked",
+        "target": {
+          "file": "AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean",
+          "theorem": "cech_computes_higherDirectImage"
+        },
+        "session": {
+          "id": "session_94",
+          "model": "claude-opus-4-8"
+        },
+        "findings": {
+          "blocker": "Capstone source-complete (0 sorries) but kernel-broken: its dependency chain does not compile past LegTop. CHDI.olean stale (Jun 18). No \\leanok (sync_leanok added 0).",
+          "key_lemmas_used": []
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Not attempted this iter — gated behind LegTop kernel verification",
+            "code_tried": "n/a",
+            "line_number": "n/a",
+            "lean_error": "n/a",
+            "result": "partial",
+            "insight": "Capstone is downstream of LegTop; cannot be kernel-confirmed until the chain rebuilds."
+          }
+        ],
+        "next_steps": "After LegTop + Aux + CSI + CechAugmentedResolution build green, build CHDI; then sync_leanok marks cech_computes_higherDirectImage and the stage advances to polish."
+      }
+    ]
   }
 ]

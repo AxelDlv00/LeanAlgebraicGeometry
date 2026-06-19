@@ -371,7 +371,6 @@ Mathlib-absent brick on which the comparison rests.
 
 \begin{proof}
   \uses{lem:presheafModule_sheafification_mathlib}
-  \leanok
   Module sheafification (\cref{def:schemeModuleSheafification}) is the localization
   functor at the class \(W\) of morphisms of presheaves of modules whose underlying
   abelian-presheaf morphism lies in \(J.W\), i.e.\ the inverse image of \(J.W\) along
@@ -396,7 +395,6 @@ Mathlib-absent brick on which the comparison rests.
 
 \begin{proof}
   \uses{lem:presheafModule_sheafification_mathlib}
-  \leanok
   The forgetful functor to abelian-group presheaves carries the module
   sheafification unit to the unit of the abelian associated-sheaf adjunction, which
   is a local isomorphism, hence a member of \(J.W\).
@@ -552,7 +550,6 @@ with the presheaf tensor product (\cref{lem:presheaf_tensorObj_obj_mathlib}).
 
 \begin{proof}
   \uses{lem:relativeTensor_objectwise_coequalizer}
-  \leanok
   Objectwise at each open \(U\) the identity is the cofork condition of the
   objectwise coequalizer \cref{lem:relativeTensor_objectwise_coequalizer}: both
   composites send \(m \otimes (s \otimes n)\) to the relative-tensor class
@@ -580,7 +577,6 @@ with the presheaf tensor product (\cref{lem:presheaf_tensorObj_obj_mathlib}).
 \begin{proof}
   \uses{def:relTensorDomainPresheaf, def:relTensorTriplePresheaf,
     lem:relativeTensor_as_coequalizer, lem:relativeTensor_objectwise_coequalizer}
-    \leanok
   Two reductions.
 
   \emph{(i) \(\mathbb{Z}\)-tensor whiskering preserves \(J.W\).} The category
@@ -634,7 +630,6 @@ with the presheaf tensor product (\cref{lem:presheaf_tensorObj_obj_mathlib}).
 
 \begin{proof}
   \uses{lem:tensorProduct_liftAddHom_mathlib}
-  \leanok
   Write \(a_N : S \otimes_{\mathbb{Z}} N \to N\) and
   \(a_M : M \otimes_{\mathbb{Z}} S \to M\) for the \(\mathbb{Z}\)-linear maps
   induced by the scalar action (\(s \otimes n \mapsto s \cdot n\),
@@ -693,7 +688,6 @@ with the presheaf tensor product (\cref{lem:presheaf_tensorObj_obj_mathlib}).
     lem:presheaf_tensorObj_obj_mathlib,
     def:relTensorActL, def:relTensorActR, def:relTensorProj,
     lem:snap_relTensorActL_proj_eq}
-    \leanok
   The argument promotes the objectwise coequalizer of
   \cref{lem:relativeTensor_objectwise_coequalizer} to the functor category, in
   three steps.
@@ -791,7 +785,6 @@ with the presheaf tensor product (\cref{lem:presheaf_tensorObj_obj_mathlib}).
     lem:relativeTensor_as_coequalizer,
     lem:relativeTensor_objectwise_coequalizer,
     lem:snap_ztensor_whisker_localIso, def:relTensorDomainPresheaf}
-    \leanok
   Module sheafification is a localization functor: it inverts exactly the class
   \(W\) of morphisms of presheaves of modules whose underlying morphism of
   abelian-group presheaves is a local isomorphism --- that is, lies in the class
@@ -854,7 +847,6 @@ with the presheaf tensor product (\cref{lem:presheaf_tensorObj_obj_mathlib}).
   \uses{def:sheafTensorObj, lem:isIso_sheafification_whiskerRight_unit,
     lem:presheafModule_monoidal_mathlib,
     lem:presheafModule_sheafification_mathlib}
-    \leanok
   Write \(a, b, c\) for the underlying presheaves of modules of
   \(\mathcal{A}, \mathcal{B}, \mathcal{C}\) and \((-)^{\#}\) for sheafification
   (\cref{lem:presheafModule_sheafification_mathlib}). By
@@ -877,19 +869,30 @@ with the presheaf tensor product (\cref{lem:presheaf_tensorObj_obj_mathlib}).
     \bigl((a \otimes_p b)^{\#} \otimes_p c\bigr)^{\#}
     = (\mathcal{A} \otimes \mathcal{B}) \otimes \mathcal{C}
   \]
-  is an isomorphism; and, reading the same lemma through the braiding of the
-  presheaf monoidal structure (\cref{lem:presheafModule_monoidal_mathlib}) so as
-  to whisker the unit \(\eta_{b \otimes_p c}\) on the left of \(a\), the
-  morphism
+  is an isomorphism; and the unit whiskered on the \emph{left} of \(a\),
   \[
     (a \lhd \eta_{b \otimes_p c})^{\#} :
     \bigl(a \otimes_p (b \otimes_p c)\bigr)^{\#}
     \xrightarrow{\ \sim\ }
     \bigl(a \otimes_p (b \otimes_p c)^{\#}\bigr)^{\#}
-    = \mathcal{A} \otimes (\mathcal{B} \otimes \mathcal{C})
+    = \mathcal{A} \otimes (\mathcal{B} \otimes \mathcal{C}),
   \]
-  is an isomorphism. Between the two un-sheafified middle terms sits the
-  sheafification of the presheaf associator
+  is an isomorphism as well. The Mathlib-absent brick
+  \cref{lem:isIso_sheafification_whiskerRight_unit} inverts only a \emph{right}
+  whiskered unit, so this left-whiskered comparison is \emph{realised} by
+  conjugating the right-whiskered one with the presheaf braiding
+  (\cref{lem:presheafModule_monoidal_mathlib}): writing \(p = b \otimes_p c\), the
+  braided-category identity \(a \lhd \eta_{p} = \beta^p_{a,p}\,;\,
+  (\eta_{p} \rhd a)\,;\,\beta^p_{p^{\#},a}\) (naturality of the braiding in its
+  right argument, with \(\beta^p_{a,p^{\#}}{}^{-1} = \beta^p_{p^{\#},a}\) by the
+  symmetry) carried through sheafification gives
+  \[
+    (a \lhd \eta_{p})^{\#}
+      = (\beta^p_{a,p})^{\#} \,;\, (\eta_{p} \rhd a)^{\#}
+        \,;\, (\beta^p_{p^{\#},a})^{\#}.
+  \]
+  Between the two un-sheafified middle terms sits the sheafification of the
+  presheaf associator
   \[
     \alpha^p_{a,b,c} :
     (a \otimes_p b) \otimes_p c
@@ -897,14 +900,19 @@ with the presheaf tensor product (\cref{lem:presheaf_tensorObj_obj_mathlib}).
     a \otimes_p (b \otimes_p c)
   \]
   (\cref{lem:presheafModule_monoidal_mathlib}), an isomorphism because
-  sheafification is a functor and \(\alpha^p\) is one. The associator is the
-  composite
+  sheafification is a functor and \(\alpha^p\) is one. The associator is therefore
+  the \textbf{five-segment} composite
   \[
     \alpha_{\mathcal{A},\mathcal{B},\mathcal{C}}
-    = (a \lhd \eta_{b \otimes_p c})^{\#}
-      \circ (\alpha^p_{a,b,c})^{\#}
-      \circ \bigl((\eta_{a \otimes_p b} \rhd c)^{\#}\bigr)^{-1},
+      = \underbrace{\bigl((\eta_{a \otimes_p b} \rhd c)^{\#}\bigr)^{-1}}_{\text{seg }1}
+        \,;\, \underbrace{(\alpha^p_{a,b,c})^{\#}}_{\text{seg }2}
+        \,;\, \underbrace{(\beta^p_{a,p})^{\#}}_{\text{seg }3}
+        \,;\, \underbrace{(\eta_{p} \rhd a)^{\#}}_{\text{seg }4}
+        \,;\, \underbrace{(\beta^p_{p^{\#},a})^{\#}}_{\text{seg }5},
+    \quad p = b \otimes_p c,
   \]
+  where segments 3--5 jointly realise the left-whiskered unit
+  \((a \lhd \eta_{p})^{\#}\) via braiding conjugation,
   an isomorphism as a composite of isomorphisms. Naturality in
   \(\mathcal{A}, \mathcal{B}, \mathcal{C}\) follows from naturality of the unit,
   of the whiskerings, and of the presheaf associator.
@@ -1198,6 +1206,8 @@ then the bridge equalities themselves.
 \end{lemma}
 
 \begin{definition}
+
+\leanok
 [Object identification: hand-built versus localized tensor]
   \label{def:tensorObjLocalizedIso}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObjLocalizedIso}
@@ -1256,12 +1266,355 @@ sheafified presheaf-level coherence; the localized coherence laws then transfer
 across the identifications. The four bridge lemmas below are exactly these
 squares.
 
-\begin{lemma}[The hand-built associator is the localized associator]
+The associator bridge below is the genuine \(\mu\)-formula obligation of this
+section. We isolate its mathematical content in four seam lemmas --- the keystone
+identifying a sheafified whiskered unit with a \(\mu\) component (and its
+left-whisker variant), the braiding-conjugation collapse of segments 3--5, and the
+identification of segment~2 with \(L'(\alpha^p)\) --- so that the bridge proof is a
+factor-by-factor assembly.
+
+\begin{lemma}\leanok
+[Keystone: the right-whiskered sheafification unit is a \(\mu\) component]
+  \label{lem:whiskeredUnit_eq_localizationMu}
+  \lean{AlgebraicGeometry.Scheme.Modules.sheafification_whiskerRight_unit_eq_mu}
+  \uses{lem:localizationMonoidal_mu_mathlib, def:modulesLocalizedMonoidal,
+    def:schemeModuleSheafification, lem:isIso_sheafification_whiskerRight_unit,
+    lem:presheafModule_monoidal_mathlib, lem:presheafModule_sheafification_mathlib,
+    thm:localizedMonoidal_mathlib}
+  For presheaves of \(\mathcal{O}_X\)-modules \(\mathcal{P}, \mathcal{Q}\), the
+  sheafified right-whiskered unit
+  \((\eta_{\mathcal{P}} \rhd \mathcal{Q})^{\#} :
+    (\mathcal{P} \otimes_p \mathcal{Q})^{\#}
+    \to (\mathcal{P}^{\#} \otimes_p \mathcal{Q})^{\#}\)
+  (\cref{lem:isIso_sheafification_whiskerRight_unit}) is the \(\mu\)-conjugate of
+  the localized right-whiskering of the sheafified unit:
+  \[
+    (\eta_{\mathcal{P}} \rhd \mathcal{Q})^{\#}
+      = \mu_{\mathcal{P},\mathcal{Q}}^{-1} \,;\,
+        \bigl((\eta_{\mathcal{P}})^{\#} \rhd_{\mathrm{loc}} \mathcal{Q}^{\#}\bigr)
+        \,;\, \mu_{\mathcal{P}^{\#},\mathcal{Q}},
+  \]
+  where \(\mu\) is the strong-monoidality comparison
+  (\cref{lem:localizationMonoidal_mu_mathlib}) and \(\rhd_{\mathrm{loc}}\) the
+  right-whiskering of the synonym \cref{def:modulesLocalizedMonoidal}. This is the
+  precise sense in which ``the whiskered-unit comparisons are the components of
+  \(\mu\)'': not a literal equality of components, but the \(\mu\)-naturality
+  square below.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:localizationMonoidal_mu_mathlib,
+    lem:isIso_sheafification_whiskerRight_unit}
+  Apply the left-argument naturality square \texttt{μ\_natural\_left} of \(\mu\)
+  (\cref{lem:localizationMonoidal_mu_mathlib}) to the morphism
+  \(f = \eta_{\mathcal{P}} : \mathcal{P} \to \mathcal{P}^{\#}\) and the fixed
+  object \(\mathcal{Q}\):
+  \[
+    \bigl((\eta_{\mathcal{P}})^{\#} \rhd_{\mathrm{loc}} \mathcal{Q}^{\#}\bigr)
+      \,;\, \mu_{\mathcal{P}^{\#},\mathcal{Q}}
+      = \mu_{\mathcal{P},\mathcal{Q}} \,;\,
+        L'(\eta_{\mathcal{P}} \rhd \mathcal{Q}).
+  \]
+  The localization functor \(L'\) acts as sheafification on morphisms, so
+  \(L'(\eta_{\mathcal{P}} \rhd \mathcal{Q}) = (\eta_{\mathcal{P}} \rhd
+  \mathcal{Q})^{\#}\) and \(L'(\eta_{\mathcal{P}}) = (\eta_{\mathcal{P}})^{\#}\).
+  Pre-composing with the isomorphism \(\mu_{\mathcal{P},\mathcal{Q}}^{-1}\) yields
+  the displayed formula. Both sides are isomorphisms: the left by
+  \cref{lem:isIso_sheafification_whiskerRight_unit}, the right because
+  \((\eta_{\mathcal{P}})^{\#}\) is invertible (sheafification inverts its own unit,
+  the morphism lying in the inverted class \(W\)) and \(\mu\) is an isomorphism.
+\end{proof}
+
+\begin{lemma}\leanok
+[Keystone variant: the left-whiskered sheafification unit is a \(\mu\) component]
+  \label{lem:whiskeredUnitLeft_eq_localizationMu}
+  \lean{AlgebraicGeometry.Scheme.Modules.sheafification_whiskerLeft_unit_eq_mu}
+  \uses{lem:localizationMonoidal_mu_mathlib, def:modulesLocalizedMonoidal,
+    def:schemeModuleSheafification, lem:presheafModule_monoidal_mathlib,
+    lem:presheafModule_sheafification_mathlib, thm:localizedMonoidal_mathlib}
+  For presheaves of \(\mathcal{O}_X\)-modules \(\mathcal{P}, \mathcal{Q}\), the
+  sheafified left-whiskered unit
+  \((\mathcal{P} \lhd \eta_{\mathcal{Q}})^{\#} :
+    (\mathcal{P} \otimes_p \mathcal{Q})^{\#}
+    \to (\mathcal{P} \otimes_p \mathcal{Q}^{\#})^{\#}\)
+  is the \(\mu\)-conjugate of the localized left-whiskering of the sheafified unit:
+  \[
+    (\mathcal{P} \lhd \eta_{\mathcal{Q}})^{\#}
+      = \mu_{\mathcal{P},\mathcal{Q}}^{-1} \,;\,
+        \bigl(\mathcal{P}^{\#} \lhd_{\mathrm{loc}} (\eta_{\mathcal{Q}})^{\#}\bigr)
+        \,;\, \mu_{\mathcal{P},\mathcal{Q}^{\#}}.
+  \]
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:localizationMonoidal_mu_mathlib}
+  Identical to \cref{lem:whiskeredUnit_eq_localizationMu}, using instead the
+  right-argument naturality square \texttt{μ\_natural\_right} of \(\mu\)
+  (\cref{lem:localizationMonoidal_mu_mathlib}) at the morphism
+  \(g = \eta_{\mathcal{Q}} : \mathcal{Q} \to \mathcal{Q}^{\#}\) and the fixed
+  object \(\mathcal{P}\), namely
+  \(\bigl(\mathcal{P}^{\#} \lhd_{\mathrm{loc}} (\eta_{\mathcal{Q}})^{\#}\bigr)
+    \,;\, \mu_{\mathcal{P},\mathcal{Q}^{\#}}
+    = \mu_{\mathcal{P},\mathcal{Q}} \,;\,
+      L'(\mathcal{P} \lhd \eta_{\mathcal{Q}})\);
+  pre-compose with \(\mu_{\mathcal{P},\mathcal{Q}}^{-1}\).
+\end{proof}
+
+\begin{lemma}\leanok
+[Braiding conjugation realises the left-whiskered unit]
+  \label{lem:sheafification_braidingConj_whiskerRightUnit}
+  \lean{AlgebraicGeometry.Scheme.Modules.sheafification_braiding_whiskerRight_unit_eq_whiskerLeft_unit}
+  \uses{lem:presheafModule_monoidal_mathlib, def:schemeModuleSheafification,
+    lem:isIso_sheafification_whiskerRight_unit,
+    lem:presheafModule_sheafification_mathlib, cor:sheafTensorObjAssoc}
+  For presheaves of \(\mathcal{O}_X\)-modules \(\mathcal{A}, \mathcal{P}\),
+  conjugating the right-whiskered unit \((\eta_{\mathcal{P}} \rhd
+  \mathcal{A})^{\#}\) by the sheafified presheaf braidings
+  (\cref{lem:presheafModule_monoidal_mathlib}) yields the left-whiskered unit:
+  \[
+    (\beta^p_{\mathcal{A},\mathcal{P}})^{\#} \,;\,
+      (\eta_{\mathcal{P}} \rhd \mathcal{A})^{\#} \,;\,
+      (\beta^p_{\mathcal{P}^{\#},\mathcal{A}})^{\#}
+      = (\mathcal{A} \lhd \eta_{\mathcal{P}})^{\#}.
+  \]
+  In particular, with \(\mathcal{P} = \mathcal{B} \otimes_p \mathcal{C}\), the
+  composite of segments 3--5 of the hand-built associator
+  (\cref{cor:sheafTensorObjAssoc}) equals
+  \((\mathcal{A} \lhd \eta_{\mathcal{B} \otimes_p \mathcal{C}})^{\#}\).
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:presheafModule_monoidal_mathlib, def:schemeModuleSheafification}
+  At the presheaf level, naturality of the braiding in its right argument is the
+  braided-category identity
+  \(\mathcal{A} \lhd \eta_{\mathcal{P}}
+    = \beta^p_{\mathcal{A},\mathcal{P}} \,;\,
+      (\eta_{\mathcal{P}} \rhd \mathcal{A}) \,;\,
+      \beta^p_{\mathcal{P}^{\#},\mathcal{A}}\)
+  in the presheaf monoidal structure
+  (\cref{lem:presheafModule_monoidal_mathlib}), where the closing factor uses the
+  symmetry \(\beta^p_{\mathcal{A},\mathcal{P}^{\#}}{}^{-1} =
+  \beta^p_{\mathcal{P}^{\#},\mathcal{A}}\). The sheafification functor
+  (\cref{def:schemeModuleSheafification}) preserves composition, so applying it to
+  this presheaf identity gives the displayed equality of sheaf morphisms.
+\end{proof}
+
+\begin{lemma}\leanok
+[Segment 2 is the localized image of the presheaf associator]
+  \label{lem:sheafificationMapIso_assoc_eq_localized}
+  \lean{AlgebraicGeometry.Scheme.Modules.sheafification_mapIso_associator_eq_localizationMap}
+  \uses{lem:presheafModule_monoidal_mathlib, lem:localizationMonoidal_mu_mathlib,
+    def:modulesLocalizedMonoidal, thm:localizedMonoidal_mathlib}
+  For presheaves of \(\mathcal{O}_X\)-modules \(\mathcal{P}, \mathcal{Q},
+  \mathcal{R}\), segment~2 of the hand-built associator --- the sheafification of
+  the presheaf associator (\cref{lem:presheafModule_monoidal_mathlib}) --- is the
+  localization functor \(L'\) applied to that same associator:
+  \[
+    (\alpha^p_{\mathcal{P},\mathcal{Q},\mathcal{R}})^{\#}
+      = L'(\alpha^p_{\mathcal{P},\mathcal{Q},\mathcal{R}}).
+  \]
+\end{lemma}
+
+\begin{proof}
+  \uses{def:modulesLocalizedMonoidal, thm:localizedMonoidal_mathlib}
+  The localization functor \(L' = \texttt{toMonoidalCategory}\)
+  (\cref{thm:localizedMonoidal_mathlib}) onto the synonym
+  \cref{def:modulesLocalizedMonoidal} is, by construction, equal to sheafification
+  \((-)^{\#}\) on objects and on morphisms. Hence \(L'\) applied to the morphism
+  \(\alpha^p_{\mathcal{P},\mathcal{Q},\mathcal{R}}\) is definitionally its
+  sheafification \((\alpha^p)^{\#}\); the equality holds by reflexivity.
+\end{proof}
+
+The bridge proof reduces both sides of the commuting square to a single common
+\(\mu^{\pm1}\)/counit conjugate of \(L'(\alpha^p)\). The remaining obstruction is
+purely formal: a \(\mu\)-pair that must cancel by \(\mu^{-1}\,;\,\mu = \mathrm{id}\)
+carries the \emph{same} comparison object in two presentations that the
+keystones~\cref{lem:whiskeredUnit_eq_localizationMu,lem:whiskeredUnitLeft_eq_localizationMu}
+leave in a non-canonical form. We therefore record two \emph{canonical} restatements
+of the keystones (pinning the trailing comparison's object argument to the
+counit-object form used by \cref{def:tensorObjLocalizedIso}, so the two \(\mu\)
+occurrences become the literally same comparison and cancel), and split the square
+into two half-assemblies meeting at the common form \(K\).
+
+\begin{lemma}\leanok
+[Canonical keystone: right-whiskered unit as the counit-object \(\mu\) component]
+  \label{lem:whiskeredUnit_eq_localizationMu_canonical}
+  \lean{AlgebraicGeometry.Scheme.Modules.sheafification_whiskerRight_unit_eq_mu'}
+  \uses{lem:whiskeredUnit_eq_localizationMu, lem:localizationMonoidal_mu_mathlib,
+    def:tensorObjLocalizedIso, def:schemeModuleSheafification}
+  The right-whiskered keystone \cref{lem:whiskeredUnit_eq_localizationMu} holds
+  verbatim,
+  \[
+    (\eta_{\mathcal{P}} \rhd \mathcal{Q})^{\#}
+      = \mu_{\mathcal{P},\mathcal{Q}}^{-1} \,;\,
+        \bigl((\eta_{\mathcal{P}})^{\#} \rhd_{\mathrm{loc}} \mathcal{Q}^{\#}\bigr)
+        \,;\, \mu_{\mathcal{P}^{\#},\mathcal{Q}},
+  \]
+  with the trailing comparison \(\mu_{\mathcal{P}^{\#},\mathcal{Q}}\) written so that
+  its first object argument is the counit object
+  \((\mathcal{P}^{\#})^{\flat}\) exactly as it appears in
+  \cref{def:tensorObjLocalizedIso} (rather than the fused composite-functor form in
+  which Lean would otherwise elaborate it). Mathematically identical to
+  \cref{lem:whiskeredUnit_eq_localizationMu}; the restatement only fixes the
+  representation of the comparison's object so the comparison is the syntactically
+  same isomorphism on both sides of the bridge.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:whiskeredUnit_eq_localizationMu, lem:localizationMonoidal_mu_mathlib}
+  The two object presentations are equal by definitional unfolding of the counit
+  object (the underlying presheaf of a sheafification), so the equality is the same
+  one proved in \cref{lem:whiskeredUnit_eq_localizationMu}: apply
+  \texttt{μ\_natural\_left} (\cref{lem:localizationMonoidal_mu_mathlib}) to
+  \(\eta_{\mathcal{P}}\), then cancel \(\mu^{-1}\,;\,\mu\) by
+  \texttt{Iso.inv\_hom\_id\_assoc}.
+\end{proof}
+
+\begin{lemma}\leanok
+[Canonical keystone: left-whiskered unit as the counit-object \(\mu\) component]
+  \label{lem:whiskeredUnitLeft_eq_localizationMu_canonical}
+  \lean{AlgebraicGeometry.Scheme.Modules.sheafification_whiskerLeft_unit_eq_mu'}
+  \uses{lem:whiskeredUnitLeft_eq_localizationMu, lem:localizationMonoidal_mu_mathlib,
+    def:tensorObjLocalizedIso, def:schemeModuleSheafification}
+  The left-whiskered keystone \cref{lem:whiskeredUnitLeft_eq_localizationMu} holds
+  verbatim,
+  \[
+    (\mathcal{P} \lhd \eta_{\mathcal{Q}})^{\#}
+      = \mu_{\mathcal{P},\mathcal{Q}}^{-1} \,;\,
+        \bigl(\mathcal{P}^{\#} \lhd_{\mathrm{loc}} (\eta_{\mathcal{Q}})^{\#}\bigr)
+        \,;\, \mu_{\mathcal{P},\mathcal{Q}^{\#}},
+  \]
+  with the trailing comparison \(\mu_{\mathcal{P},\mathcal{Q}^{\#}}\) written so that
+  its second object argument is the counit object \((\mathcal{Q}^{\#})^{\flat}\)
+  exactly as in \cref{def:tensorObjLocalizedIso}. Mathematically identical to
+  \cref{lem:whiskeredUnitLeft_eq_localizationMu}.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:whiskeredUnitLeft_eq_localizationMu, lem:localizationMonoidal_mu_mathlib}
+  Identical to \cref{lem:whiskeredUnit_eq_localizationMu_canonical}, using
+  \texttt{μ\_natural\_right} (\cref{lem:localizationMonoidal_mu_mathlib}) at
+  \(\eta_{\mathcal{Q}}\).
+\end{proof}
+
+The two half-assemblies meet at the common morphism
+\[
+  K \;=\; L'(\alpha^p_{a,b,c}) \,;\, \mu_{a,\,b\otimes_p c}^{-1} \,;\,
+    \bigl(L'a \lhd_{\mathrm{loc}} \mu_{b,c}^{-1}\bigr) \,;\,
+    \bigl(c_{\mathcal{A}} \lotimes (c_{\mathcal{B}} \lotimes c_{\mathcal{C}})\bigr),
+\]
+where \(a = \mathcal{A}^{\flat}, b = \mathcal{B}^{\flat}, c = \mathcal{C}^{\flat}\),
+\(\alpha^p\) is the presheaf associator
+(\cref{lem:presheafModule_monoidal_mathlib}), \(L'\) the localization functor
+(\cref{thm:localizedMonoidal_mathlib}), \(\mu\) the strong-monoidality comparison
+(\cref{lem:localizationMonoidal_mu_mathlib}), and \(c_{-}\) the sheafification
+counit isomorphisms (\cref{def:schemeModuleSheafification}).
+
+\begin{lemma}
+
+\leanok
+[Localized half-assembly of the associator bridge equals the common form]
+  \label{lem:tensorObjAssoc_hK_lhs}
+  \lean{AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_eq_localizedAssociator_hK_lhs}
+  \uses{def:tensorObjLocalizedIso, def:modulesLocalizedMonoidal,
+    lem:localizationMonoidal_mu_mathlib,
+    lem:whiskeredUnit_eq_localizationMu_canonical,
+    lem:isIso_sheafification_whiskerRight_unit, thm:localizedMonoidal_mathlib}
+  With the notation of \cref{lem:tensorObjAssoc_eq_localizedAssociator}, the
+  localized side of the bridge equals the common form \(K\):
+  \[
+    \Phi^{L}_{\mathcal{A},\mathcal{B},\mathcal{C}} \,;\,
+      \alpha^{\mathrm{loc}}_{\mathcal{A},\mathcal{B},\mathcal{C}}
+    \;=\; K,
+    \qquad
+    \Phi^{L}_{\mathcal{A},\mathcal{B},\mathcal{C}}
+      = i_{\mathcal{A} \otimes_{\mathcal{O}_X} \mathcal{B},\,\mathcal{C}}
+        \,;\, \bigl(i_{\mathcal{A},\mathcal{B}} \rhd \mathcal{C}\bigr).
+  \]
+\end{lemma}
+
+\begin{proof}
+  \uses{def:tensorObjLocalizedIso, lem:localizationMonoidal_mu_mathlib,
+    lem:whiskeredUnit_eq_localizationMu_canonical}
+  Expand the object identifications via
+  \(i_{-,-} = \mu^{-1}\,;\,(c \lotimes c)\)
+  (\cref{def:tensorObjLocalizedIso}) and the localized associator via
+  \texttt{associator\_hom\_app} (\cref{lem:localizationMonoidal_mu_mathlib}),
+  rewriting the segment-1 right-whiskered unit by the canonical keystone
+  \cref{lem:whiskeredUnit_eq_localizationMu_canonical}. The comparison
+  \(\mu_{\mathcal{A}^{\flat}\otimes_p\mathcal{B}^{\flat},\,\mathcal{C}^{\flat}}\)
+  produced by the keystone and the one carried by
+  \(i_{\mathcal{A}\otimes\mathcal{B},\mathcal{C}}\) are now the syntactically same
+  comparison, so the pair \(\mu^{-1}\,;\,\mu\) cancels by
+  \texttt{Iso.hom\_inv\_id\_assoc}. The triangle identity
+  \(L'(\eta_{\mathcal{P}})\,;\,c_{L'\mathcal{P}} = \mathrm{id}\) collapses the
+  remaining unit/counit factor, and \texttt{μ\_natural\_left} slides the surviving
+  comparison past the whiskered counit, leaving \(K\). \emph{Isolation note:} on this
+  small goal the surviving comparison may be pinned to the counit-object literal form
+  with \texttt{show}/\texttt{change} (full-transparency \texttt{isDefEq}, cheap here)
+  before \texttt{Iso.hom\_inv\_id\_assoc} fires --- the same cancellation fails on the
+  full bridge goal only as a \texttt{whnf}-at-scale artifact.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Hand-built half-assembly of the associator bridge equals the common form]
+  \label{lem:tensorObjAssoc_hK_rhs}
+  \lean{AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_eq_localizedAssociator_hK_rhs}
+  \uses{cor:sheafTensorObjAssoc, def:tensorObjLocalizedIso,
+    def:modulesLocalizedMonoidal, lem:localizationMonoidal_mu_mathlib,
+    lem:sheafificationMapIso_assoc_eq_localized,
+    lem:sheafification_braidingConj_whiskerRightUnit,
+    lem:whiskeredUnitLeft_eq_localizationMu_canonical, thm:localizedMonoidal_mathlib}
+  With the notation of \cref{lem:tensorObjAssoc_eq_localizedAssociator}, the
+  hand-built side of the bridge equals the same common form \(K\):
+  \[
+    \alpha_{\mathcal{A},\mathcal{B},\mathcal{C}} \,;\,
+      \Phi^{R}_{\mathcal{A},\mathcal{B},\mathcal{C}}
+    \;=\; K,
+    \qquad
+    \Phi^{R}_{\mathcal{A},\mathcal{B},\mathcal{C}}
+      = i_{\mathcal{A},\,\mathcal{B} \otimes_{\mathcal{O}_X} \mathcal{C}}
+        \,;\, \bigl(\mathcal{A} \lhd i_{\mathcal{B},\mathcal{C}}\bigr).
+  \]
+\end{lemma}
+
+\begin{proof}
+  \uses{cor:sheafTensorObjAssoc, def:tensorObjLocalizedIso,
+    lem:sheafificationMapIso_assoc_eq_localized,
+    lem:sheafification_braidingConj_whiskerRightUnit,
+    lem:whiskeredUnitLeft_eq_localizationMu_canonical}
+  By \cref{cor:sheafTensorObjAssoc} the hand-built associator
+  \(\alpha_{\mathcal{A},\mathcal{B},\mathcal{C}}\) is the five-segment composite;
+  \cref{lem:sheafificationMapIso_assoc_eq_localized} identifies segment~2 with
+  \(L'(\alpha^p)\) and
+  \cref{lem:sheafification_braidingConj_whiskerRightUnit} collapses segments 3--5 to
+  the left-whiskered unit \((\mathcal{A} \lhd \eta_{\mathcal{B}\otimes_p\mathcal{C}})^{\#}\),
+  which the canonical keystone
+  \cref{lem:whiskeredUnitLeft_eq_localizationMu_canonical} rewrites as a
+  \(\mu\)-conjugate. Expanding \(\Phi^{R}\) through
+  \(i_{-,-} = \mu^{-1}\,;\,(c \lotimes c)\) (\cref{def:tensorObjLocalizedIso}), the
+  comparison \(\mu_{\mathcal{A}^{\flat},\,\mathcal{B}^{\flat}\otimes_p\mathcal{C}^{\flat}}\)
+  from the keystone and the one carried by \(i_{\mathcal{A},\mathcal{B}\otimes\mathcal{C}}\)
+  are now syntactically the same and cancel by \texttt{Iso.hom\_inv\_id\_assoc};
+  the triangle identity and \texttt{μ\_natural\_right} reduce the counit factors to
+  \(c_{\mathcal{A}} \lotimes (c_{\mathcal{B}} \lotimes c_{\mathcal{C}})\), giving
+  \(K\). \emph{Lower-fragility alternative:} routing the localized side through
+  \texttt{Localization.Monoidal.associator\_hom\_app} (whose object arguments are
+  inferred, so its \(\mu\)'s unify natively and the colliding raw comparison never
+  forms) collapses this half-assembly to the counit-coherence alone and avoids the
+  pinning step; this is the preferred route once that lemma is available rather than
+  re-derived.
+\end{proof}
+
+\begin{lemma}\leanok
+[The hand-built associator is the localized associator]
   \label{lem:tensorObjAssoc_eq_localizedAssociator}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_eq_localizedAssociator}
   \uses{cor:sheafTensorObjAssoc, def:modulesLocalizedMonoidal,
-    def:tensorObjLocalizedIso, lem:localizationMonoidal_mu_mathlib,
-    lem:isIso_sheafification_whiskerRight_unit, thm:localizedMonoidal_mathlib}
+    def:tensorObjLocalizedIso, lem:tensorObjAssoc_hK_lhs,
+    lem:tensorObjAssoc_hK_rhs}
   For sheaves of \(\mathcal{O}_X\)-modules \(\mathcal{A}, \mathcal{B},
   \mathcal{C}\), the hand-built associator
   \(\alpha_{\mathcal{A},\mathcal{B},\mathcal{C}}\) (\cref{cor:sheafTensorObjAssoc})
@@ -1307,32 +1660,16 @@ squares.
 \end{lemma}
 
 \begin{proof}
-  \uses{cor:sheafTensorObjAssoc, def:modulesLocalizedMonoidal,
-    def:tensorObjLocalizedIso, lem:localizationMonoidal_mu_mathlib,
-    lem:isIso_sheafification_whiskerRight_unit, thm:localizedMonoidal_mathlib}
-  By naturality of \(\alpha^{\mathrm{loc}}\) and of \(\mu\) along the counit
-  isomorphisms \(c_{\mathcal{A}}, c_{\mathcal{B}}, c_{\mathcal{C}}\), it suffices to
-  prove the square at objects of the form
-  \(\mathcal{A} = (P)^{\#}, \mathcal{B} = (Q)^{\#}, \mathcal{C} = (R)^{\#}\) with
-  \(P = \mathcal{A}^{\flat}\) etc.; the object identifications then absorb the
-  counits, and the displayed square reduces to the Mathlib component formula
-  \texttt{associator\_hom\_app} (\cref{lem:localizationMonoidal_mu_mathlib}):
-  \(\alpha^{\mathrm{loc}}_{L'P, L'Q, L'R}\) is
-  \((\mu_{P,Q} \rhd \cdot)\,;\, \mu_{P \otimes Q, R}\,;\, L'(\alpha^p_{P,Q,R})\,;\,
-  \mu_{P, Q \otimes R}^{-1}\,;\,(\cdot \lhd \mu_{Q,R}^{-1})\). Expanding
-  \(\Phi^{L}, \Phi^{R}\) through \(\mu^{-1}\) (the definition of \(i_{-,-}\),
-  \cref{def:tensorObjLocalizedIso}) and cancelling the \(\mu\)'s against the
-  \(\mu^{-1}\)'s by \texttt{μ\_natural\_left}/\texttt{μ\_natural\_right}, both sides
-  collapse to the single composite carried by \(L'(\alpha^p_{P,Q,R}) =
-  (\alpha^p_{P,Q,R})^{\#}\). The hand-built associator
-  (\cref{cor:sheafTensorObjAssoc}) is by construction \((\alpha^p)^{\#}\)
-  conjugated by the whiskered-unit comparison isomorphisms
-  (\cref{lem:isIso_sheafification_whiskerRight_unit}), and those comparisons are
-  exactly the components of \(\mu\); the two composites therefore coincide, which
-  is the square.
+  \uses{lem:tensorObjAssoc_hK_lhs, lem:tensorObjAssoc_hK_rhs}
+  Both sides of the commuting square equal the common form \(K\): the localized
+  side by \cref{lem:tensorObjAssoc_hK_lhs}, the hand-built side by
+  \cref{lem:tensorObjAssoc_hK_rhs}. The bridge is their composite
+  \(\Phi^{L}\,;\,\alpha^{\mathrm{loc}} = K = \alpha\,;\,\Phi^{R}\), i.e.\ the equality
+  is \texttt{hK\_lhs.trans hK\_rhs.symm}.
 \end{proof}
 
-\begin{lemma}[The hand-built braiding is the localized braiding]
+\begin{lemma}\leanok
+[The hand-built braiding is the localized braiding]
   \label{lem:tensorBraiding_eq_localizedBraiding}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorBraiding_eq_localizedBraiding}
   \uses{def:tensorBraiding, def:modulesLocalizedMonoidal,
@@ -1525,7 +1862,6 @@ squares.
     lem:isIso_sheafification_whiskerRight_unit,
     lem:presheafModule_monoidal_mathlib,
     lem:presheafModule_sheafification_mathlib}
-    \leanok
   We do \emph{not} build a full monoidal structure on the whole category
   \(\ShMod(\mathcal{O}_X)\) --- none is constructed here --- but only assemble
   the comparison \(\mu_{m,m'}\) from those structural isomorphisms of
@@ -1641,7 +1977,6 @@ sheaf-level associator, braiding and unitors in place of the strict ones.
 
 \begin{proof}
   \uses{lem:sheafTensorPow_add}
-  \leanok
   This is exactly the base branch of the recursion defining \(\mu_{m,n}\) on the
   first index \(m\) in \cref{lem:sheafTensorPow_add}. Since the first index is the
   literal \(0\), the recursion reduces to its base case, which is by construction
@@ -1954,7 +2289,6 @@ transported equality as an equality of dependent pairs.
 
 \begin{proof}
 
-\leanok
   The canonical isomorphism
   \(\mathcal{L}^{\otimes i} \cong \mathcal{L}^{\otimes i}\) induced by the
   reflexive equality is the identity, and the global-sections functor carries
@@ -1979,7 +2313,6 @@ transported equality as an equality of dependent pairs.
 
 \begin{proof}
   \uses{lem:sectionsCast_refl}
-  \leanok
   Substituting \(j = i\) by means of \(h\) reduces the transport to the identity
   (\cref{lem:sectionsCast_refl}), so the hypothesis becomes \(x = y\); the two
   dependent pairs \((i, x)\) and \((i, y)\) then coincide.
@@ -2009,10 +2342,56 @@ are isolated first, then the four cores.
 
 \begin{proof}
 
-\leanok
   Functoriality of the underlying-presheaf evaluation at the top open: the
   value at \(\top\) of \(g \circ f\) is the composite of the values, and applying
   it to \(x\) gives the iterated application.
+\end{proof}
+
+\begin{lemma}\leanok
+[Sheafification unit is natural at the top open]
+  \label{lem:sheafification_map_unit_top}
+  \lean{AlgebraicGeometry.Scheme.Modules.sheafification_map_unit_top}
+  \uses{def:schemeModuleSheafification, lem:val_app_top_comp}
+  Let \(f : P \to Q\) be a morphism of presheaves of \(\mathcal{O}_X\)-modules,
+  \(\eta\) the unit of the sheafification adjunction, and \(x \in \Gamma(X, P)\) a
+  global section. Then
+  \[
+    \Gamma\bigl(\mathrm{sheafification}(f)\bigr)\bigl(\eta_P(x)\bigr)
+      \;=\; \eta_Q\bigl(f_{\top}(x)\bigr),
+  \]
+  i.e.\ the naturality square of \(\eta\) against \(f\), read at the top open and
+  applied to \(x\).
+\end{lemma}
+
+\begin{proof}
+
+  The naturality square of the sheafification-adjunction unit gives
+  \(\eta_Q \circ f = \mathrm{sheafification}(f) \circ \eta_P\) as morphisms of
+  sheaves; taking \(\Gamma(X,-)\) at the top open (\cref{lem:val_app_top_comp})
+  and evaluating at \(x\) yields the displayed equality. Formally it is
+  \(\mathrm{congrArg}\) of \(\eta.\mathrm{naturality}\,f\).
+\end{proof}
+
+\begin{lemma}\leanok
+[Inverse companion of the unit naturality]
+  \label{lem:sheafification_map_unit_top_inv}
+  \lean{AlgebraicGeometry.Scheme.Modules.sheafification_map_unit_top_inv}
+  \uses{lem:sheafification_map_unit_top, lem:val_app_top_comp}
+  With the notation of \cref{lem:sheafification_map_unit_top}, suppose
+  \(\mathrm{sheafification}(f)\) is an isomorphism. Then for \(x \in \Gamma(X,P)\),
+  \[
+    \Gamma\bigl(\mathrm{sheafification}(f)^{-1}\bigr)
+      \bigl(\eta_Q(f_{\top}(x))\bigr) \;=\; \eta_P(x).
+  \]
+\end{lemma}
+
+\begin{proof}
+
+  Rewrite \(\eta_Q(f_{\top}(x))\) backwards through
+  \cref{lem:sheafification_map_unit_top} to
+  \(\Gamma(\mathrm{sheafification}(f))(\eta_P(x))\), then collapse
+  \(\Gamma(\mathrm{sheafification}(f)^{-1}) \circ \Gamma(\mathrm{sheafification}(f))\)
+  to the identity by \cref{lem:val_app_top_comp} and \(\mathrm{IsIso.hom\_inv\_id}\).
 \end{proof}
 
 \begin{lemma}\leanok
@@ -2036,7 +2415,6 @@ are isolated first, then the four cores.
 
 \begin{proof}
 
-\leanok
   This is the definition of the left unitor (\cref{def:tensorObjUnitIso}) read on
   forward maps.
 \end{proof}
@@ -2064,7 +2442,6 @@ are isolated first, then the four cores.
 
 \begin{proof}
 
-\leanok
   This is the definition of the right unitor (\cref{def:tensorObjRightUnitor}) read
   on forward maps.
 \end{proof}
@@ -2097,7 +2474,6 @@ are isolated first, then the four cores.
   \uses{def:sectionMul, lem:tensorObjUnitIso_hom, lem:val_app_top_comp,
     lem:presheafModule_monoidal_mathlib,
     lem:presheafModule_sheafification_mathlib}
-    \leanok
   By \cref{lem:tensorObjUnitIso_hom},
   \(\lambda_{\mathcal{G}} = \varepsilon_{\mathcal{G}} \circ
   (\lambda^p_{\mathcal{G}})^{\#}\); splitting the global-sections application along
@@ -2145,7 +2521,6 @@ are isolated first, then the four cores.
   \uses{def:sectionMul, def:tensorObjRightUnitor, def:tensorBraiding,
     lem:sectionMul_unitor_core, lem:val_app_top_comp,
     lem:presheafModule_monoidal_mathlib}
-    \leanok
   By \cref{def:tensorObjRightUnitor},
   \(\rho_{\mathcal{G}} = \lambda_{\mathcal{G}} \circ
   \beta_{\mathcal{G},\mathbf{1}_X}\); splitting the application
@@ -2191,7 +2566,6 @@ are isolated first, then the four cores.
 \begin{proof}
   \uses{def:sectionMul, def:tensorBraiding, lem:presheafModule_monoidal_mathlib,
     lem:presheafModule_sheafification_mathlib}
-    \leanok
   The braiding is the sheafification of the presheaf braiding \(\beta^p\)
   (\cref{def:tensorBraiding}) and the section multiplication is the
   sheafification unit \(\eta\) at the top open (\cref{def:sectionMul}). The
@@ -2234,26 +2608,29 @@ are isolated first, then the four cores.
 
 \begin{proof}
   \uses{def:sectionMul, cor:sheafTensorObjAssoc,
-    lem:tensorObjAssoc_eq_localizedAssociator, def:modulesLocalizedMonoidal,
-    thm:localizedMonoidal_mathlib, lem:presheafModule_monoidal_mathlib,
+    lem:isIso_sheafification_whiskerRight_unit, lem:val_app_top_comp,
+    lem:sheafification_map_unit_top, lem:sheafification_map_unit_top_inv,
+    lem:presheafModule_monoidal_mathlib,
     lem:presheafModule_sheafification_mathlib}
-  Both sides are iterated images of elementary tensors under the sheafification
-  unit \(\eta\) (\cref{def:sectionMul}): the left side is the \(\eta\)-image of
-  \((\sigma \otimes \tau) \otimes \upsilon\) and the right side that of
-  \(\sigma \otimes (\tau \otimes \upsilon)\), each through the two-step
-  sheafification recorded by \cref{def:sheafTensorObj}. By the associator bridge
-  \cref{lem:tensorObjAssoc_eq_localizedAssociator}, the hand-built associator
-  \(\alpha_{\mathcal{A},\mathcal{B},\mathcal{C}}\) (\cref{cor:sheafTensorObjAssoc})
-  coincides with the localized associator \(\alpha^{\mathrm{loc}}\) of
-  \cref{def:modulesLocalizedMonoidal}, whose action on such a tensor is computed
-  componentwise by \(\mathrm{associator\_hom\_app}\)
-  (\cref{thm:localizedMonoidal_mathlib}): the strong-monoidality comparison
-  \(\mu\) carries the iterated \(\eta\)-image to the sheafified presheaf associator
-  \((\alpha^p)^{\#}\), whose top-open value reassociates
-  \((\sigma \otimes \tau) \otimes \upsilon\) to
-  \(\sigma \otimes (\tau \otimes \upsilon)\) by naturality of \(\eta\) against the
-  presheaf associator \(\alpha^p\) (\cref{lem:presheafModule_monoidal_mathlib}).
-  This gives the claim.
+  Closed BRIDGE-FREE by the section-\(\eta\) route (it does NOT use the associator
+  bridge \cref{lem:tensorObjAssoc_eq_localizedAssociator}). Both sides are iterated
+  images of elementary tensors under the sheafification unit \(\eta\)
+  (\cref{def:sectionMul}). Expand the associator
+  \(\alpha_{\mathcal{A},\mathcal{B},\mathcal{C}}\) into its five segments
+  (\cref{cor:sheafTensorObjAssoc}) and ride \(\eta\) through each: the inverse
+  whiskered-unit segment is handled by
+  \cref{lem:sheafification_map_unit_top_inv}, sending the left
+  \(\mathrm{sectionsMul}\)-nest back to the triple-presheaf unit image
+  \(\eta_{(\mathcal{A}^{\flat} \otimes_p \mathcal{B}^{\flat}) \otimes_p
+  \mathcal{C}^{\flat}}\); the remaining four segments (presheaf associator, two
+  braidings, whiskered unit) are pushed across by repeated
+  \cref{lem:sheafification_map_unit_top} (each a single \(\eta\)-naturality square,
+  read at the top open via \cref{lem:val_app_top_comp}). The residual presheaf
+  structural maps (associator/braiding/whiskered unit) compute definitionally on
+  the elementary tensor at the top open (\cref{lem:presheafModule_monoidal_mathlib},
+  \cref{lem:presheafModule_sheafification_mathlib}), landing on
+  \(\sigma \cdot (\tau \cdot \upsilon)\). The whiskered-unit segments are
+  isomorphisms by \cref{lem:isIso_sheafification_whiskerRight_unit}.
 \end{proof}
 
 \begin{lemma}[Coherence of the section multiplication]
@@ -2484,7 +2861,7 @@ landing in the index-sum component, not submodules of a pre-existing ring.
   \uses{lem:sheafTensorPow_add, lem:sectionMul_coherent, def:sectionsCast,
     lem:gradedMonoid_eq_of_cast, def:sectionMul,
     lem:directSum_gcommSemiring_mathlib}
-  % NOTE: \leanok is absent from this proof because the graded-semiring instance
+  % NOTE:  is absent from this proof because the graded-semiring instance
   % depends transitively on the three coherences of \cref{lem:sectionMul_coherent},
   % which are not yet closed.
   The structure is assembled field-for-field following Mathlib's construction of

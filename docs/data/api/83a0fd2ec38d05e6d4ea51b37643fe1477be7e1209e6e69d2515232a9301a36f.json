@@ -30,29 +30,39 @@
     },
     {
       "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
-      "count": 3,
+      "count": 5,
       "lines": [
-        2031,
-        2091,
-        2107
+        3104,
+        3134,
+        3152,
+        3167,
+        3209
       ],
       "occurrences": [
         {
-          "line": 2031,
+          "line": 3104,
           "column": 5
         },
         {
-          "line": 2091,
+          "line": 3134,
           "column": 3
         },
         {
-          "line": 2107,
+          "line": 3152,
+          "column": 3
+        },
+        {
+          "line": 3167,
+          "column": 3
+        },
+        {
+          "line": 3209,
           "column": 3
         }
       ]
     }
   ],
-  "total": 7,
+  "total": 9,
   "partial": false,
   "warnings": []
 }

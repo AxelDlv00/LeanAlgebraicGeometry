@@ -1,0 +1,75 @@
+[
+  {
+    "timestamp": "2026-06-18T11:41:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pullbackTensorMap_isIso_of_isOpenImmersion"
+    },
+    "session": {
+      "id": "session_22",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Carrier diamond: pushforward(β)/hadj typed over X/Y.ringCatSheaf.obj while pullback(φ')/adj over (_ ⋙ forget₂ CommRingCat RingCat); defeq but PresheafOfModules.monoidalCategory keyed on the latter, so MonoidalCategory (PresheafOfModules X.ringCatSheaf.obj) NOT synthesizable. A single μ_natural/IsMonoidal step cannot reconcile the two non-syntactic instances. Math reduction COMPLETE; blocker is Lean infra, mathlib-build/refactor scale.",
+      "key_lemmas_used": [
+        "Adjunction.unit_leftAdjointUniq_hom_app",
+        "Adjunction.unit_app_tensor_comp_map_δ",
+        "Functor.Monoidal.μIso_inv",
+        "Functor.LaxMonoidal.μ_natural",
+        "MonoidalCategory.tensorHom_comp_tensorHom",
+        "Adjunction.IsMonoidal",
+        "PresheafOfModules.monoidalCategory",
+        "PresheafOfModules.monoidalCategoryStruct"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "recon022 Adjunction.IsMonoidal route: full mate-calculus reduction of hcompat to single residual (★) hadj.IsMonoidal; supply carrier MonoidalCategory via inferInstanceAs",
+        "code_tried": "letI mcatX : MonoidalCategory (_root_.PresheafOfModules X.ringCatSheaf.obj) := inferInstanceAs (MonoidalCategory (_root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)))",
+        "line_number": "4257 (hcompat)",
+        "lean_error": "failed to synthesize instance of type class MonoidalCategory (_root_.PresheafOfModules X.ringCatSheaf.obj)",
+        "result": "failed",
+        "insight": "Carrier diamond pinned: global monoidalCategory instance keyed on (_ ⋙ forget₂), not synthesizable on ringCatSheaf.obj."
+      },
+      {
+        "attempt": 2,
+        "strategy": "inferInstanceAs → direct constant PresheafOfModules.monoidalCategory (R := X.presheaf) to dodge eta-expand noncomputable aux-def errors; add mcatY for Y",
+        "code_tried": "letI mcatX := PresheafOfModules.monoidalCategory (R := X.presheaf); letI mcatY := PresheafOfModules.monoidalCategory (R := Y.presheaf)",
+        "line_number": "4257",
+        "lean_error": "failed to synthesize instance (PresheafOfModules.pushforward φ').LaxMonoidal (downstream of μ_natural/IsMonoidal needing reconciled MonoidalCategoryStruct on Y.ringCatSheaf.obj)",
+        "result": "failed",
+        "insight": "mcatX/mcatY, monβ, hstar statement, hU all ELABORATE with the direct constant; but μ_natural / hadj.IsMonoidal need both good-form (global) and bad-form (letI) instances reconciled in ONE step — not syntactically equal → diamond."
+      },
+      {
+        "attempt": 3,
+        "strategy": "add explicit MonoidalCategoryStruct letIs (mcatStructX/Y); try noncomputable lemma; try haveI vs letI",
+        "code_tried": "letI mcatStructY : MonoidalCategoryStruct (_root_.PresheafOfModules Y.ringCatSheaf.obj) := PresheafOfModules.monoidalCategoryStruct (R := Y.presheaf); private noncomputable lemma ...",
+        "line_number": "4257",
+        "lean_error": "failed to synthesize MonoidalCategoryStruct (_root_.PresheafOfModules Y.ringCatSheaf.obj); separately: 'theorem' subsumes 'noncomputable', code is not generated for theorems",
+        "result": "failed",
+        "insight": "Struct-letI has no effect on the diamond; noncomputable rejected on lemma; haveI strictly worse (opacity breaks monβ defeq). All carrier-cast variants exhausted."
+      }
+    ],
+    "next_steps": "STOP prove-mode on hcompat. Either (route 1) refactor/mathlib-build re-key the monoidal carrier instance so both spellings resolve to the same term, or (route 2) good-form scaffold: restate β/hadj/H1/μIsoβ over (_ ⋙ forget₂) — risk: pushforwardPushforwardAdj forces ringCatSheaf.obj form, but a defeq β-ascription is untested. Try route 2 (cheaper, focused) before committing to route 1."
+  },
+  {
+    "timestamp": "2026-06-18T11:41:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "exists_tensorObj_inverse"
+    },
+    "session": {
+      "id": "session_22",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Import-cycle gated; out of scope this iter. Closes via refactor-MOVE downstream of DualInverse (RelPicFunctor sole code consumer). Untouched.",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Not in scope this iter. Needs architectural MOVE; serialize after K1 to avoid parallel-write conflict on TensorObjSubstrate.lean."
+  }
+]

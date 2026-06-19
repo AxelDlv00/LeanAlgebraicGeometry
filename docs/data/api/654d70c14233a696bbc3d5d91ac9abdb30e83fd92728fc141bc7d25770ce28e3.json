@@ -1,0 +1,32 @@
+[
+  {
+    "timestamp": "2026-06-19T12:05:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean",
+      "theorem": "cech_computes_higherDirectImage"
+    },
+    "session": {
+      "id": "session_92",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "build-gate pending: source-complete (0 sorries) but durable oleans for the split chain not yet all present; real lake build actively running and progressing",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "no prover dispatch (0 inline sorries); root-caused the iters 088-091 stall (LSP elaboration never writes oleans) and launched a detached real `lake build AlgebraicJacobian.Cohomology.CechToHigherDirectImage`",
+        "code_tried": "nohup lake build AlgebraicJacobian.Cohomology.CechToHigherDirectImage",
+        "line_number": "n/a",
+        "lean_error": "none — build progressing without errors",
+        "goal_before": "n/a",
+        "goal_after": "n/a",
+        "result": "partial",
+        "insight": "Build chain now writing real oleans: Base 11:26, Leg 11:45, Mid1 11:45, Mid2 12:00 all fresh today; Top+Aux elaborating; CSI/CechAugmentedResolution stale (rebuild after Aux); CHDI absent. No errors in chain-build.log at [8334/8340]."
+      }
+    ],
+    "next_steps": "Let detached lake build finish Top->Aux->CSI->CechAugmentedResolution->CHDI. Next review: confirm CHDI olean present + sync_leanok confirms cech_computes_higherDirectImage -> advance stage to polish."
+  }
+]

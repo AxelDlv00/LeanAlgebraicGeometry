@@ -1,0 +1,174 @@
+[
+  {
+    "timestamp": "2026-06-19T07:39:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "sheafification_map_unit_eq"
+    },
+    "session": {
+      "id": "session_13",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "Adjunction.left_triangle_components",
+        "Iso.comp_hom_eq_id",
+        "Functor.id_obj"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "rewrite via counit hom_inv_id cancellation",
+        "code_tried": "rw [← Category.comp_id (sheafification.map _), ← (sheafificationCounitIso (sheafification.obj P)).hom_inv_id, ← Category.assoc, h, Category.id_comp]",
+        "line_number": "2442",
+        "lean_error": "Tactic rewrite failed: Did not find an occurrence of the pattern 𝟙 (sheafification.obj ((toPresheafOfModules X).obj (sheafification.obj P)))",
+        "result": "failed",
+        "insight": "Functor.id_obj decoration on the identity blocked positional rw"
+      },
+      {
+        "attempt": 2,
+        "strategy": "normalize id_obj decoration then use comp_hom_eq_id",
+        "code_tried": "simp only [Functor.id_obj] at h; exact (Iso.comp_hom_eq_id _).mp h",
+        "line_number": "2447",
+        "lean_error": null,
+        "result": "success",
+        "insight": "left_triangle_components gives L.map η ≫ ε.hom = 𝟙; Iso.comp_hom_eq_id converts to L.map η = ε.inv. Axiom-clean [propext, Classical.choice, Quot.sound]."
+      }
+    ],
+    "next_steps": "Consume in ★ to rewrite L(η_P) = ε_{LP}⁻¹. Needs blueprint \\label/\\lean/\\uses block."
+  },
+  {
+    "timestamp": "2026-06-19T07:24:56Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorObjAssoc_eta_factor"
+    },
+    "session": {
+      "id": "session_13",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "restrictScalars(𝟙) defeq-decoration on η's codomain blocks positional rw; needs erw at decorated junctions",
+      "key_lemmas_used": [
+        "sheafificationAdjunction.unit.naturality",
+        "tensorObjAssoc_eta_factor_sheaf",
+        "Functor.map_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "single bundled rw chain through hval/hnatL/assoc/map_comp/key",
+        "code_tried": "rw [hval, hnatL, Category.assoc, ← Functor.map_comp, key, Functor.map_comp]; conv_rhs => rw [hnatR, ← Category.assoc, hnatA, Category.assoc]",
+        "line_number": "2540",
+        "lean_error": "Tactic rewrite failed: Did not find an occurrence of the pattern (?f ≫ ?g) ≫ ?h in the target",
+        "result": "failed",
+        "insight": "Category.assoc won't fire under the restrictScalars(𝟙) decoration via plain rw"
+      },
+      {
+        "attempt": 2,
+        "strategy": "split rw, escalate decorated junctions to erw, close with rfl",
+        "code_tried": "rw [hval, hnatL]; erw [Category.assoc, ← Functor.map_comp, key, Functor.map_comp, hnatR]; erw [← Category.assoc, ← Category.assoc, hnatA]; rfl",
+        "line_number": "2561",
+        "lean_error": null,
+        "result": "success",
+        "insight": "erw matches up to defeq across the decoration. η-naturality applied 3× collapses both sides to η_{(A⊗B)⊗C} ≫ T.map Φ; reduces B4 to the sheaf-level core ★. sorryAx now traces SOLELY to ★ (auditor + prover lean_verify confirmed)."
+      }
+    ],
+    "next_steps": "Auto-clean once ★ (tensorObjAssoc_eta_factor_sheaf) closes. No further work on B4 itself."
+  },
+  {
+    "timestamp": "2026-06-19T07:36:03Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorObjAssoc_eta_factor_sheaf"
+    },
+    "session": {
+      "id": "session_13",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "~15-25 step μ-conjugation cancellation; every step hits restrictScalars(𝟙) decoration at μ-second-index, needs erw/term-mode bridging. NOT a missing ingredient.",
+      "key_lemmas_used": [
+        "Localization.Monoidal.μ_natural_left",
+        "Localization.Monoidal.μ_natural_right",
+        "Localization.Monoidal.associator_hom_app",
+        "sheafification_map_unit_eq",
+        "tensorPowAdd_zero_right (cancellation recipe)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "isolate B4's content as a new sheaf-level (X.Modules-internal) iso identity, route documented in sorry body",
+        "code_tried": "private lemma tensorObjAssoc_eta_factor_sheaf : L(η_{A⊗ₚB}▷C) ≫ tensorObjAssoc = L(α^p) ≫ L(A◁η_{B⊗ₚC}) := by sorry",
+        "line_number": "2458",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "Statement well-formed and non-trivial (auditor: not defeq-laundered; two composites are distinct morphism-level identities). Working at sheaf level avoids the .val/forget₂ instance diamond entirely. Standalone μ-bridge helper lemmas were attempted but resisted clean rw/exact (decoration) and were removed to keep file clean; re-attempt inline with erw."
+      }
+    ],
+    "next_steps": "Execute ~15-25 step μ-conjugation assembly inline with erw at each cancellation (mirror B4-reduction recipe): rewrite the 3 sheafified-presheaf maps via μ_natural_left/right + associator_hom_app + sheafification_map_unit_eq, cancel adjacent μ/tensorObjIso pairs, leaving canonical α_ (rfl)."
+  },
+  {
+    "timestamp": "2026-06-19T07:37:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorPowAdd_assoc"
+    },
+    "session": {
+      "id": "session_13",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Not attempted — budget spent on B4 must-fix reduction",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "deferred this iter",
+        "code_tried": null,
+        "line_number": "2768",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "B6 is INDEPENDENT of B4/★: iso-level pentagon by induction on m (analogue of tensorPowAdd_zero_right), collapses to MonoidalCategory.pentagon. Ready to attempt next iter."
+      }
+    ],
+    "next_steps": "Induction on m; base from tensorPowAdd_zero_right pattern, step from MonoidalCategory.pentagon. Independent of ★."
+  },
+  {
+    "timestamp": "2026-06-19T07:37:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "sectionsMul_mul_assoc"
+    },
+    "session": {
+      "id": "session_13",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Not attempted — needs B5 (modulo ★) + B6 + a new μ-slide helper",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "deferred this iter",
+        "code_tried": null,
+        "line_number": "2798",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "B7 is the final assoc leg; gated on B5 (modulo ★), B6, and a μ-naturality-slide ingredient."
+      }
+    ],
+    "next_steps": "Assemble after ★ and B6 land."
+  }
+]

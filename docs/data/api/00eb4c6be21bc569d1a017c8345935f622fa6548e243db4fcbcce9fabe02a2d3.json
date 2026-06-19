@@ -1,0 +1,322 @@
+[
+  {
+    "timestamp": "2026-06-19T09:00:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "globalSectionsIso_hom_comp3_specMap_appTop"
+    },
+    "session": {
+      "id": "session_11",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "globalSectionsIso_hom_comp_specMap_appTop"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "The 3-fold (R→S→T) square is literally the single-map lemma instantiated at the composite φ≫ρ (the single-map lemma is stated for an arbitrary ring map).",
+        "code_tried": "exact globalSectionsIso_hom_comp_specMap_appTop (φ ≫ ρ)",
+        "line_number": "290",
+        "result": "success",
+        "insight": "No splice through gs_S needed; the general single-map statement covers the composite directly."
+      }
+    ],
+    "next_steps": "Done. Needs blueprint \\leanok (sync added it)."
+  },
+  {
+    "timestamp": "2026-06-19T09:00:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "gammaPushforwardIso_hom_apply"
+    },
+    "session": {
+      "id": "session_11",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Every constituent of gammaPushforwardIso (restrictScalarsComp'App, restrictScalarsCongr) is identity-on-carrier, so .hom applied to a section returns it.",
+        "code_tried": ":= rfl",
+        "line_number": "680",
+        "result": "success",
+        "insight": "rfl genuine here; used to collapse wrappers in gammaPushforwardIso_comp WITHOUT change/defeq (which is a kernel bomb). gammaPushforwardIso_inv_apply (L686) closed identically."
+      }
+    ],
+    "next_steps": "Done. Coverage debt: NO blueprint entry — planner must add \\label/\\lean/\\uses."
+  },
+  {
+    "timestamp": "2026-06-19T09:00:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "gammaPushforwardNatIso_comp"
+    },
+    "session": {
+      "id": "session_11",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Own body now sorry-free, but TRANSITIVELY gated on gammaPushforwardIso_comp (still has 1 sorry).",
+      "key_lemmas_used": [
+        "gammaPushforwardIso_comp",
+        "Functor.isoWhiskerRight_hom",
+        "Functor.associator_hom_app",
+        "NatIso.ofComponents_hom_app"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "ext N x element expansion of the natural-iso equality.",
+        "code_tried": "apply Iso.ext; ext N x",
+        "line_number": "718",
+        "lean_error": "element-level goal overflows kernel (carrier expansion)",
+        "result": "failed",
+        "insight": "Per-element expansion of the carriers is the kernel bomb the recipe warned about."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Reduce to a single .hom.app N morphism equality, then a PURELY STRUCTURAL simp only (whiskering/associator lemmas) collapses the RHS pasting to the concrete per-component composite (associators → 𝟙), then discharge by the per-component lemma.",
+        "code_tried": "apply Iso.ext; apply NatTrans.ext; funext N; simp only [Iso.trans_hom, NatTrans.comp_app, Functor.isoWhiskerRight_hom, Functor.isoWhiskerLeft_hom, Functor.associator_hom_app, Functor.associator_inv_app, Iso.symm_hom, Functor.whiskerRight_app, Functor.whiskerLeft_app, Category.id_comp, Category.comp_id, Category.assoc, NatIso.ofComponents_hom_app]; exact gammaPushforwardIso_comp φ ρ N",
+        "line_number": "758",
+        "result": "success",
+        "insight": "Kernel-light decomposition: structural simp produces a SMALL per-component term (the 𝟙s absorb by cheap id_comp, NOT sheaf whnf); the heavy carrier content is bounded inside the single component gammaPushforwardIso_comp. Own body cold-build verified sorry-free."
+      }
+    ],
+    "next_steps": "Fully closes once gammaPushforwardIso_comp's residual cast sorry is filled. NOTE: in-code docstring (L748-768) still falsely says 'proof is pointwise reflexivity' — auditor+checker MAJOR; fix in a cleanup pass."
+  },
+  {
+    "timestamp": "2026-06-19T09:00:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "gammaPushforwardIso_comp"
+    },
+    "session": {
+      "id": "session_11",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Single isolated residual: the Spec.map_comp reindexing-cast identity `Γ(cast) x = x`. Blocked on TWO named missing infra lemmas: (a) moduleSpecΓFunctor.map g underlying = (modulesSpecToSheaf.map g).val.app (op ⊤) underlying; (b) ConcreteCategory.hom (eqToHom _) x = x for ModuleCat. Both rw-only (kernel-light).",
+      "key_lemmas_used": [
+        "gammaPushforwardIso_hom_apply",
+        "ModuleCat.comp_apply",
+        "Functor.map_comp",
+        "SheafOfModules.pushforwardComp_inv_app_val_app"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Collapse LHS via pointwise-identity helper, distribute RHS to nested section maps.",
+        "code_tried": "apply ModuleCat.hom_ext; refine LinearMap.ext fun x => ?_; rw [gammaPushforwardIso_hom_apply (φ ≫ ρ) N x, ModuleCat.comp_apply, ModuleCat.comp_apply]",
+        "line_number": "699",
+        "result": "partial",
+        "insight": "Reduces to `x = restrictScalarsComp.inv (restrictScalars.map γ_ρ (γ_φ (Γ(cast) x)))`; only genuine content is `Γ(cast) x = x`."
+      },
+      {
+        "attempt": 2,
+        "strategy": "rfl on x = Γ(cast) x.",
+        "code_tried": "rfl",
+        "line_number": "726",
+        "lean_error": "not definitionally equal (Spec.map_comp eqToHom carries genuine content; proof term not rfl)",
+        "result": "failed",
+        "insight": "Carriers defeq but proof not rfl."
+      },
+      {
+        "attempt": 3,
+        "strategy": "change/rfl full-transparency defeq collapse of wrappers.",
+        "code_tried": "change x = (ConcreteCategory.hom (moduleSpecΓFunctor.map (...))) x; rfl",
+        "line_number": "726",
+        "lean_error": "(kernel) deterministic timeout at whnf, 200000 heartbeats (verified in COLD build)",
+        "result": "failed",
+        "insight": "DEAD END — defeq route is a kernel bomb even on the small per-component goal (forces reduction of whole Spec structure-sheaf machinery)."
+      },
+      {
+        "attempt": 4,
+        "strategy": "element-level simp with restrictScalarsComp'App/restrictScalarsCongr apply-lemmas.",
+        "code_tried": "simp only [gammaPushforwardIso, ModuleCat.restrictScalarsComp'App_inv_apply, ModuleCat.restrictScalarsCongr_app_hom_apply]",
+        "line_number": "726",
+        "lean_error": "lemmas never fire (discrimination-tree key mismatch: X.Modules/value-ModuleCat diamond, middle ring map is RingCat.Hom.hom)",
+        "result": "failed",
+        "insight": "Matches known hazard: positional simp/comp_apply/erw fail on the diamond."
+      },
+      {
+        "attempt": 5,
+        "strategy": "erw the pushforwardComp val-app lemma.",
+        "code_tried": "rw [Functor.map_comp, ModuleCat.comp_apply, SheafOfModules.pushforwardComp_inv_app_val_app]",
+        "line_number": "726",
+        "lean_error": "fails to fire: moduleSpecΓFunctor.map g is not syntactically g.val.app U",
+        "result": "failed",
+        "insight": "Needs a moduleSpecΓFunctor.map-vs-.val.app(op ⊤) exposure bridge lemma (missing)."
+      }
+    ],
+    "next_steps": "Scaffold the 2 named rw-only exposure lemmas (a)+(b), then finish via eqToIso.hom/eqToHom_app/eqToHom_map + eqToHom-on-carrier cast + pushforwardComp_inv_app_val_app. CLOSEST-TO-DONE target. Mathlib Tilde.lean source only in .ltar cache this session (could not read .map characterization)."
+  },
+  {
+    "timestamp": "2026-06-19T09:00:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "pullback_spec_tilde_iso_ring_square_natural"
+    },
+    "session": {
+      "id": "session_11",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Crux gated on foundation gammaPushforwardIso_comp (not fully landed); budget consumed isolating the foundation."
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — foundation did not fully land; left as pre-existing typed sorry.",
+        "code_tried": "(untouched)",
+        "line_number": "1289",
+        "result": "partial",
+        "insight": "Correct deferral per directive (attempt crux only if foundation lands with budget)."
+      }
+    ],
+    "next_steps": "Attempt once gammaPushforwardIso_comp closes; mate recipe via conjugateEquiv telescoping (per analogies/fbc-pst-pseudofunctor.md)."
+  },
+  {
+    "timestamp": "2026-06-19T09:00:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "sheafification_whiskerRight_unit_eq_mu'"
+    },
+    "session": {
+      "id": "session_11",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "sheafification_whiskerRight_unit_eq_mu"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Canonical keystone = unprimed keystone with the trailing μ's first object arg PINNED to the counit-object form (toPresheafOfModules X).obj (sheafification.obj P), matching tensorObjLocalizedIso. The pinned statement is defeq to the unprimed one (inferred _ elaborates to the pinned object).",
+        "code_tried": ":= sheafification_whiskerRight_unit_eq_mu P Q",
+        "line_number": "1777",
+        "result": "success",
+        "insight": "Term-mode defeq wrapper typechecks; verified sorry-free (lean_verify, no sorryAx) + cold build."
+      }
+    ],
+    "next_steps": "Done. Used to clear iter-010's object-fold blocker."
+  },
+  {
+    "timestamp": "2026-06-19T09:00:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "sheafification_whiskerLeft_unit_eq_mu'"
+    },
+    "session": {
+      "id": "session_11",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "sheafification_whiskerLeft_unit_eq_mu"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Analogue pinning the trailing μ's SECOND object arg to (toPresheafOfModules X).obj (sheafification.obj Q).",
+        "code_tried": ":= sheafification_whiskerLeft_unit_eq_mu P Q",
+        "line_number": "1800",
+        "result": "success",
+        "insight": "Same defeq-wrapper mechanism; sorry-free + cold build verified."
+      }
+    ],
+    "next_steps": "Done."
+  },
+  {
+    "timestamp": "2026-06-19T09:00:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorObjAssoc_eq_localizedAssociator"
+    },
+    "session": {
+      "id": "session_11",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Even with the canonical keystones unifying the μ-objects, Iso.hom_inv_id_assoc does NOT fire. Two compounding causes: (a) ADJACENCY — the seg-1 keystone composite is ONE atomic factor (arrived via rw [Iso.eq_inv_comp, asIso_hom] wrapping), so simp [Category.assoc] never re-associates μ.hom/μ.inv adjacent; (b) INSTANCE IDENTITY — ⊗_loc not defeq tensorObj, so localized-side and keystone-side μ's (object-identical) may not be the same Iso term to the matcher.",
+      "key_lemmas_used": [
+        "sheafification_whiskerRight_unit_eq_mu'",
+        "sheafification_whiskerLeft_unit_eq_mu'",
+        "tensorObj (simp only)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Rewrite both whiskered units via canonical keystones, then fold the μ objects with simp only [tensorObj].",
+        "code_tried": "rw [sheafification_whiskerRight_unit_eq_mu']; slice_rhs 2 2 => erw [sheafification_whiskerLeft_unit_eq_mu' ...]; simp only [tensorObj]",
+        "line_number": "1894",
+        "result": "partial",
+        "insight": "CLEARED iter-010 blocker: both μ's now print with IDENTICAL object args (verified via lean_goal). No show-pin needed."
+      },
+      {
+        "attempt": 2,
+        "strategy": "rw [show μ_obj1 = μ_obj2 from rfl] to force the object fold.",
+        "code_tried": "rw [show ... = ... from rfl]",
+        "line_number": "1894",
+        "lean_error": "motive is not type correct (μ object appears in the TYPE of the adjacent whiskering morphism — dependent)",
+        "result": "failed",
+        "insight": "DEAD END (do not retry): this is why iter-010's change/rfl-bridge failed. simp only [tensorObj] sidesteps it (folds the def, not the object-in-a-motive)."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Try to fire the cancel after the object fold.",
+        "code_tried": "simp only [tensorObj, Category.assoc, Iso.hom_inv_id_assoc]",
+        "line_number": "1894",
+        "lean_error": "Iso.hom_inv_id_assoc reported UNUSED",
+        "result": "failed",
+        "insight": "Adjacency (3a) + synonym instance identity (3b) block the cancel on the full goal. Fix = the planned hK split (isolate hK_rhs FRESH without Iso.eq_inv_comp)."
+      }
+    ],
+    "next_steps": "STUCK on warm full-goal lane (3 iters, 0 net sorry). NEXT: build hK_rhs FRESH (expand tensorObjAssoc + tensorObjLocalizedIso directly, no Iso.eq_inv_comp) + hK_lhs via Localization.Monoidal.associator_hom_app; GATING SUB-TASK = derive the explicit WELL-TYPED common form K (schematic L'(α^p) doesn't typecheck — must absorb counit object-glue on all 4 tensor slots). Effort-breaker / focused hK-only prover, NOT another warm monolithic lane."
+  },
+  {
+    "timestamp": "2026-06-19T09:00:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorObjAssoc_eq_localizedAssociator_hK_lhs"
+    },
+    "session": {
+      "id": "session_11",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Gated on the explicit well-typed common form K (counit object-glue on 4 tensor slots). Prover declined to scaffold with placeholder K=assemblyRHS (cosmetic, no isolation benefit)."
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not scaffolded — deferred until K is constructed.",
+        "code_tried": "(none)",
+        "line_number": "1515",
+        "result": "partial",
+        "insight": "hK_rhs analogous; both blocked on K."
+      }
+    ],
+    "next_steps": "Construct typed K by reducing the localized side (Φ^L ≫ α^loc) in a fresh isolated lemma via associator_hom_app, transcribe the residual as K."
+  }
+]

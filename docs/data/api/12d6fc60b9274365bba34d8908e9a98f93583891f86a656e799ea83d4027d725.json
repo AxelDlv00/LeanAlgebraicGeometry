@@ -2,7 +2,7 @@
   "files": [
     {
       "path": "AlgebraicJacobian.lean",
-      "size": 406
+      "size": 455
     },
     {
       "path": "AlgebraicJacobian/Picard/LineBundlePullback.lean",
@@ -10,15 +10,19 @@
     },
     {
       "path": "AlgebraicJacobian/Picard/RelPicFunctor.lean",
-      "size": 32296
+      "size": 32345
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "size": 28865
     },
     {
       "path": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
-      "size": 305950
+      "size": 347438
     },
     {
       "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
-      "size": 40521
+      "size": 54306
     },
     {
       "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/SliceTransport.lean",

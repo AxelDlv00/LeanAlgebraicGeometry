@@ -1,9 +1,9 @@
 {
   "commit": {
-    "sha": "9317bf40379350ffc2dfe5eac7f2b9fdc511186b",
-    "shortSha": "9317bf40",
-    "subject": "merge: restore real Čech proofs that kernel-verify; sorry the 4 confirmed Category-2 blow-ups (proofs preserved); lake build green; honest state recorded",
-    "date": "2026-06-18 18:29:58 +0800",
+    "sha": "51394ac300e033beb5215221c7a58bca55f83dca",
+    "shortSha": "51394ac3",
+    "subject": "archon[merge]: merged Cech-Cohomology into Algebraic-Jacobian-Challenge (in-place)",
+    "date": "2026-06-18 20:03:00 +0800",
     "branch": "main"
   }
 }

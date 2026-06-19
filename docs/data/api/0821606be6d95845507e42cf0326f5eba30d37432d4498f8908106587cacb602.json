@@ -1,0 +1,251 @@
+[
+  {
+    "timestamp": "2026-06-19T00:50:47Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorObjAssoc"
+    },
+    "session": {
+      "id": "session_8",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "MonoidalCategory.associator",
+        "tensorObjIso",
+        "MonoidalCategory.whiskerRightIso",
+        "MonoidalCategory.whiskerLeftIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "REDEFINE the associator as a transport of the canonical Mac Lane associator alpha_ along the bridge tensorObjIso (5-segment composite), replacing the iter-006/007 hand-rolled double-braiding composite flagged as non-canonical",
+        "code_tried": "exact (tensorObjIso (tensorObj A B) C).symm ≈≫ MonoidalCategory.whiskerRightIso (tensorObjIso A B).symm C ≈≫ α_ A B C ≈≫ MonoidalCategory.whiskerLeftIso A (tensorObjIso B C) ≈≫ tensorObjIso A (tensorObj B C)",
+        "line_number": "1837",
+        "lean_error": null,
+        "goal_before": "tensorObj (tensorObj A B) C ≅ tensorObj A (tensorObj B C)",
+        "goal_after": "",
+        "result": "success",
+        "insight": "Dissolves the auditor's non-canonicity flag by construction; pentagon/triangle now inherited from monoidalCategory X.Modules. Type preserved → tensorPowAdd/GMul unaffected. Axiom-clean [propext,Classical.choice,Quot.sound]."
+      }
+    ],
+    "next_steps": "None — done. Downstream coherences now route through canonical alpha_."
+  },
+  {
+    "timestamp": "2026-06-19T01:04:34Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorObjRightUnitor_eq"
+    },
+    "session": {
+      "id": "session_8",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "Localization.Monoidal.rightUnitor_hom_app",
+        "MonoidalCategory.rightUnitor_naturality",
+        "MonoidalCategory.tensorHom_def",
+        "Iso.eq_inv_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Bridge hand-built right unitor to canonical rho_ via Iso.ext then rho_ naturality (counit.inv as the morphism) + Mathlib rightUnitor_hom_app, closing with simp[Category.assoc];rfl",
+        "code_tried": "apply Iso.ext; rw [Iso.trans_hom, Iso.symm_hom, Iso.eq_inv_comp]; have hnat ... rw[← Category.assoc, MonoidalCategory.rightUnitor_naturality, Category.assoc, Iso.inv_hom_id, Category.comp_id]; have hru ...; dsimp only[...]; rw [MonoidalCategory.tensorHom_def, ← hnat, hru]; simp only [Category.assoc]; rfl",
+        "line_number": "1679",
+        "lean_error": "intermediate: 'rewrite failed: did not find occurrence' on first rightUnitor_naturality order — fixed by prepending ← Category.assoc",
+        "goal_before": "tensorObjRightUnitor G = (tensorObjIso G (unitModule X)).symm ≈≫ ρ_ G",
+        "goal_after": "",
+        "result": "success",
+        "insight": "Unit object 1_ X.Modules is DEFINITIONALLY unitModule X (codomain of localizationUnitIso), so rho_ G : tensorObj G (unitModule X) ≅ G typechecks directly. rfl is a real defeq closer (auditor-confirmed). Axiom-clean."
+      }
+    ],
+    "next_steps": "Needs blueprint block (coverage debt)."
+  },
+  {
+    "timestamp": "2026-06-19T01:05:49Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorObjUnitIso_eq"
+    },
+    "session": {
+      "id": "session_8",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "Localization.Monoidal.leftUnitor_hom_app",
+        "MonoidalCategory.leftUnitor_naturality",
+        "MonoidalCategory.tensorHom_def'"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Mirror tensorObjRightUnitor_eq for the left unitor lambda_ (private lemma)",
+        "code_tried": "apply Iso.ext; rw [Iso.trans_hom, Iso.symm_hom, Iso.eq_inv_comp]; have hnat : (1_ X.Modules) ◁ G.sheafificationCounitIso.inv ≈≫ (λ_ ...).hom ... = (λ_ G).hom ...",
+        "line_number": "1708",
+        "lean_error": "failed to synthesize BraidedCategory X.Modules (resolved next: added attribute [local instance] braidedCategory at L1645)",
+        "goal_before": "tensorObjUnitIso G = (tensorObjIso (unitModule X) G).symm ≈≫ λ_ G",
+        "goal_after": "",
+        "result": "success",
+        "insight": "Same defeq-unit trick as the right unitor. Surfaced the need for the local braidedCategory instance (used by the braiding lemma next)."
+      }
+    ],
+    "next_steps": "Needs blueprint block (coverage debt)."
+  },
+  {
+    "timestamp": "2026-06-19T01:23:41Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorBraiding_eq"
+    },
+    "session": {
+      "id": "session_8",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "Localization.Monoidal.Braided.β_hom_app",
+        "BraidedCategory.braiding_naturality",
+        "MonoidalCategory.tensorHom_comp_tensorHom_assoc",
+        "Category.assoc (term-mode)",
+        "erw"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Bridge hand-built braiding to canonical beta_ via braiding_naturality + beta_hom_app, then collapse counit/mu cancellations",
+        "code_tried": "rw [← BraidedCategory.braiding_naturality, ...]; simp only [Category.assoc, MonoidalCategory.tensorHom_comp_tensorHom_assoc, Iso.hom_inv_id, ...]; rw [Iso.inv_hom_id, Category.comp_id]",
+        "line_number": "1732",
+        "lean_error": "Unknown constant MonoidalCategory.braiding_naturality (fixed: BraidedCategory.braiding_naturality); then 'rewrite failed: did not find (f≈≫g)≈≫h' / 'simp made no progress' — the LocalizedMonoidal/X.Modules instance diamond blocks tactic rw/simp re-association",
+        "goal_before": "tensorBraiding F G = (tensorObjIso F G).symm ≈≫ β_ F G ≈≫ tensorObjIso G F",
+        "goal_after": "residual: μ_{f,g} ≈≫ map ≈≫ μ_{g,f}⁻¹ ≈≫ μ_{g,f}",
+        "result": "partial",
+        "insight": "Tactic rw/simp[Category.assoc] CANNOT match (f≈≫g)≈≫h when inner/outer ≈≫ straddle the two instances."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Finish the residual re-association in TERM mode (Category.assoc _ _ _, defeq-checked) and the final cancellation via erw (keyed matching, higher transparency)",
+        "code_tried": "refine Eq.symm ((Category.assoc _ _ _).trans ?_); refine (congrArg _ (Category.assoc _ _ _)).trans ?_; erw [Iso.inv_hom_id, Category.comp_id]; rfl",
+        "line_number": "1772",
+        "lean_error": null,
+        "goal_before": "case w.e_a residual mu/map composite",
+        "goal_after": "",
+        "result": "success",
+        "insight": "Term-mode Category.assoc bridges the instance diamond rw cannot; erw closes the final Iso.inv_hom_id/comp_id. This is the WORKED TEMPLATE for the remaining whiskering bridges. Axiom-clean."
+      }
+    ],
+    "next_steps": "Needs blueprint block (coverage debt). Use as template for tensorObjWhiskerLeftIso/RightIso bridges."
+  },
+  {
+    "timestamp": "2026-06-19T01:26:59Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorPowAdd_zero_right"
+    },
+    "session": {
+      "id": "session_8",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "succ case needs two whiskering bridges (tensorObjWhiskerLeftIso/RightIso → canonical ◁/▷) plus canonical right-unitor triangle coherence; reduction fired but residual canonical triangle left as sorry",
+      "key_lemmas_used": [
+        "tensorObjRightUnitor_eq",
+        "tensorBraiding_eq",
+        "tensorPowAdd (def unfold)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Rewrite succ goal onto canonical form using the new bridge lemmas + ih, leaving the residual canonical triangle as sorry",
+        "code_tried": "rw [tensorPowAdd, ih, tensorObjRightUnitor_eq, tensorBraiding_eq]  -- then sorry at residual",
+        "line_number": "2234",
+        "lean_error": null,
+        "goal_before": "L.tensorPowAdd (k+1) 0 = (L.tensorPow (k+1)).tensorObjRightUnitor",
+        "goal_after": "α_(L^k) L 1 ≈≫ whiskerLeftIso(L^k)(...β_...) ≈≫ (α_(L^k) 1 L).symm ≈≫ whiskerRightIso(...ρ_...) L ≈≫ eqToIso = tensorObjRightUnitor(L^(k+1))",
+        "result": "partial",
+        "insight": "4 substantive rewrites fire (auditor-confirmed real progress). Remaining: whiskering bridges (mirror tensorBraiding_eq) then MonoidalCategory.triangle + unitors_equal with tensorObjIso bridges cancelling in adjacent pairs."
+      }
+    ],
+    "next_steps": "Build tensorObjWhiskerLeftIso/RightIso bridge lemmas (template = tensorBraiding_eq), then close via canonical triangle. Unlocks sectionsMul_mul_one transitively."
+  },
+  {
+    "timestamp": "2026-06-19T01:27:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "sectionsMul_mul_assoc"
+    },
+    "session": {
+      "id": "session_8",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "needs iso-level coherence of tensorPowAdd (canonical pentagon) + the whiskering bridges; not attempted in detail this iter (gated on the same whiskering bridges as tensorPowAdd_zero_right)",
+      "key_lemmas_used": [
+        "gMul_mul_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Pre-existing reduction simp only [gMul_mul_apply] then sorry (unchanged from iter-006); route now identified: prove iso-level tensorPowAdd coherence via canonical pentagon then push through Gamma(X,-)=.val.app(op top) + eta-naturality",
+        "code_tried": "simp only [gMul_mul_apply]  -- then sorry",
+        "line_number": "2294",
+        "lean_error": null,
+        "goal_before": "associativity constraint of mu_{.,.} (tensorPowAdd) at top open",
+        "goal_after": "full associativity constraint (reduced one layer)",
+        "result": "partial",
+        "insight": "Route is mechanical once iso-level tensorPowAdd pentagon coherence + whiskering bridges land. Not bare — simp reduction is real (auditor-confirmed)."
+      }
+    ],
+    "next_steps": "Do NOT re-assign bare. First land whiskering bridges + iso-level tensorPowAdd pentagon coherence lemma, then apply Gamma + eta-naturality (template = tensorObjUnitIso_hom_sectionsMul)."
+  },
+  {
+    "timestamp": "2026-06-19T01:27:01Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "sectionsMul_mul_comm"
+    },
+    "session": {
+      "id": "session_8",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "needs iso-level coherence of tensorPowAdd (canonical hexagon) + whiskering bridges; not attempted in detail this iter",
+      "key_lemmas_used": [
+        "gMul_mul_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Pre-existing reduction simp only [gMul_mul_apply] then sorry; route = canonical hexagon_forward via now-canonical tensorBraiding_eq",
+        "code_tried": "simp only [gMul_mul_apply]  -- then sorry",
+        "line_number": "2310",
+        "lean_error": null,
+        "goal_before": "commutativity constraint of mu_{.,.} riding braiding",
+        "goal_after": "full commutativity constraint (reduced one layer)",
+        "result": "partial",
+        "insight": "Same gating as assoc; uses MonoidalCategory.hexagon_forward + tensorBraiding_eq."
+      }
+    ],
+    "next_steps": "Do NOT re-assign bare. Same prerequisite as sectionsMul_mul_assoc."
+  }
+]

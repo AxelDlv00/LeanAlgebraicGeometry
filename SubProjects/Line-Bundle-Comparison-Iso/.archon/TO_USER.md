@@ -1,8 +1,7 @@
-- **Milestone (iter-019): the D3′ comparison-iso cone is CLOSED.** The 5-iter-stuck leaf
-  `pullbackValIso_comp_leg` is proved + axiom-clean, so `pullbackTensorMap_restrict` and the whole D3′
-  cone are sorry-free. Project-wide there is now 1 bare `sorry` left: `exists_tensorObj_inverse`
-  (import-cycle deferred — closes downstream, never in `TensorObjSubstrate.lean`). The loop now pivots
-  to the downstream consumers (`pullbackTensorIsoOfLocallyTrivial` → `pullback_tensorObj_iso`); steer via
-  `USER_HINTS.md` if you'd prefer a different next target.
-- File-split (your >1000-LOC policy): `TensorObjSubstrate.lean` (~3400 LOC) split is now unblocked
-  (D3′ closed) and scheduled for the upcoming Coverage + file-split phase.
+- **K1 μ-side narrowed to ONE residual (iter-029):** the asymmetric mate-vs-composition tensorator
+  comparison is now a proven assembly + proven RHS half; the sole open piece is the LHS mate
+  pure-tensor value (`pushforward_lax_mu_comparison_lhs_tmul`). η-side already closed (iter-028).
+- **Build is transiently RED (iter-029) with a one-token fix already identified and queued** —
+  `DualInverse.lean:219` uses unqualified `map_smul` (shadowed by a project-local decl under full
+  imports); next iter qualifies it to `LinearMap.map_smul`, which re-greens the tree and lands the
+  iter-029 B1/hN/cocycle closures (currently written-but-blocked). No user action needed.

@@ -207,6 +207,18 @@ noncomputable def dual_restrict_iso {X Y : Scheme.{u}} (f : Y ⟶ X)
 
 /-! ## §B. Local triviality of the dual -/
 
+/-- **Two `S`-linear endomorphisms of the regular module `S` (`S` commutative) commute on `1`.**
+For `a b : S →ₗ[S] S`, `a (b 1) = b (a 1)`: an `S`-linear endomorphism `g` of `S` is multiplication
+by `g 1` (`g x = x * g 1`, from `g x = g (x • 1) = x • g 1`), and `S` is commutative, so the two
+products `(b 1) * (a 1)` and `(a 1) * (b 1)` agree.  Used to close `presheafDualUnitIso_naturality`:
+both `evalLin _ X φ` (the eval-at-`1`) and `ŝ.hom.app X` (the unit automorphism) are `𝒪_Y(X)`-linear
+endomorphisms of the regular module `𝒪_Y(X)`, and `𝒪_Y(X)` is commutative. -/
+private lemma linearEndo_apply_comm {S : Type u} [CommRing S] (a b : S →ₗ[S] S) :
+    a (b 1) = b (a 1) := by
+  have key : ∀ (g : S →ₗ[S] S) (x : S), g x = x * g 1 := fun g x => by
+    rw [← smul_eq_mul, ← map_smul, smul_eq_mul, mul_one]
+  rw [key a (b 1), key b (a 1), mul_comm]
+
 /-- **Presheaf-level: the dual of the monoidal unit is the unit.**
 `PresheafOfModules.dual 𝟙_ = ℋom(𝟙_, 𝟙_) ≅ 𝟙_`, the evaluation-at-`1` isomorphism.
 Local supplement (the `PresheafOfModules`-level ingredient of `dual_unit_iso`). -/
@@ -215,6 +227,127 @@ noncomputable def presheafDualUnitIso {Y : Scheme.{u}} :
         (𝟙_ (_root_.PresheafOfModules.{u} (Y.presheaf ⋙ forget₂ CommRingCat RingCat)))
       ≅ 𝟙_ (_root_.PresheafOfModules.{u} (Y.presheaf ⋙ forget₂ CommRingCat RingCat)) :=
   PresheafOfModules.dualUnitIsoGen (R₀ := Y.presheaf)
+
+/-- **Naturality of `presheafDualUnitIso` w.r.t. unit automorphisms** (blueprint
+`lem:presheafdualunitiso_naturality`, the eval-core (★')).  For any automorphism `ŝ` of
+the monoidal unit `𝟙_` in
+`PresheafOfModules.{u} (Y.presheaf ⋙ forget₂ CommRingCat RingCat)`, the
+evaluation-at-`1` isomorphism `presheafDualUnitIso : (𝟙_).dual ≅ 𝟙_` intertwines the
+contravariant dual transport `PresheafOfModules.dualIsoOfIso ŝ : (𝟙_).dual ≅ (𝟙_).dual`
+with `ŝ` acting on the codomain:
+
+```
+PresheafOfModules.dualIsoOfIso ŝ ≪≫ presheafDualUnitIso
+  = presheafDualUnitIso ≪≫ ŝ
+```
+
+This is the presheaf eval-core (★') consumed by `dualUnitIso_dualIsoOfIso` in
+`TensorObjInverse.lean` (`hN` sorry at L237): that assembly reduces `hN` to this
+statement via `sheafification.mapIso` + the sheafification-counit naturality.
+
+/- Planner strategy:
+   Blueprint label: lem:presheafdualunitiso_naturality.
+   `\uses`: def:presheaf_dual_unit_iso, def:dual_unit_iso_gen,
+            lem:internal_hom_eval, lem:presheaf_dualisoofiso_trans.
+
+   Setting: let `C = _root_.PresheafOfModules.{u} (Y.presheaf ⋙ forget₂ CommRingCat RingCat)`.
+   Both sides have type `(𝟙_ C).dual ≅ 𝟙_ C`.
+
+   ## Key facts
+
+   (A) `presheafDualUnitIso = dualUnitIsoGen (R₀ := Y.presheaf)` (L217 of this file).
+       Its sectionwise content (from `dualUnitIsoGen` / `unitDualSectionEquiv`,
+       SliceTransport.lean L42): the forward map sends a dual section
+       `φ : (𝟙_).dual.obj X` to `evalLin φ 1` ∈ `(𝟙_ C).obj X = 𝒪_Y(X)`,
+       where `evalLin φ 1 = (φ.app (op (Over.mk 𝟙))).hom 1`
+       (PresheafInternalHom.lean L889).
+
+   (B) `PresheafOfModules.dualIsoOfIso ŝ` (PresheafInternalHom.lean L1078):
+       assembled via `dualPrecompEquiv ŝ U` (L1033) at each section `U`.
+       `dualPrecompEquiv ŝ U` sends a dual section `φ` to
+       `pushforward₀.map ŝ.hom ≫ φ` — i.e. precomposition of `φ` by `ŝ.hom`.
+       In sectionwise terms: the new dual section `ψ = (pushforward₀.map ŝ.hom) ≫ φ`
+       satisfies `ψ.app (op (Over.mk 𝟙)) = ŝ.hom.app X ≫ φ.app (op (Over.mk 𝟙))`
+       (in `ModuleCat`).
+
+   ## Sectionwise proof
+
+   Fix a section `X : (Opens Y)ᵒᵖ` and an element `φ : (𝟙_).dual.obj X`.
+   Writing `ev(φ) := evalLin φ 1 = (φ.app (op (Over.mk 𝟙))).hom 1 ∈ 𝒪_Y(X)`:
+
+   LHS at `φ`:
+     `ev(dualPrecompEquiv ŝ X φ) 1`
+     = `(ŝ.hom.app X ≫ φ.app (op (Over.mk 𝟙))).hom 1`
+     = `(φ.app (op (Over.mk 𝟙))).hom (ŝ.hom.app X 1)`   [by definition of composition]
+     = `φ evaluated at ŝ.hom.app X 1`.
+
+   RHS at `φ`:
+     `(ŝ.hom.app X).hom (ev(φ) 1)`
+     = `(ŝ.hom.app X).hom ((φ.app (op (Over.mk 𝟙))).hom 1)`
+     = `ŝ evaluated at φ(1)`.
+
+   Both `φ.app (op (Over.mk 𝟙))` and `ŝ.hom.app X` are `𝒪_Y(X)`-linear endomorphisms
+   of `𝒪_Y(X)` (= the value of `𝟙_` at `X`). An `R`-linear endomorphism of `R`
+   (commutative ring, viewed as a module over itself) is multiplication by a scalar
+   `c = f(1) ∈ R`, so `f(r) = c * r`. Since `𝒪_Y(X)` is **commutative**, the two
+   multiplications commute:
+     `c₁ * (c₂ * 1) = c₁ * c₂ = c₂ * c₁ = c₂ * (c₁ * 1)`.
+   Hence LHS = RHS at every section.
+
+   ## Recommended tactic proof
+
+   1. `apply Iso.ext` — reduces to equality of the `.hom` morphisms.
+   2. `apply PresheafOfModules.hom_ext` — reduces to each section `X : (Opens Y)ᵒᵖ`.
+   3. `apply ModuleCat.hom_ext; ext φ` — reduces to an element `φ`.
+   4. Unfold `dualUnitIsoGen`, `dualIsoOfIso` (via `dualPrecompEquiv`), `evalLin`,
+      `unitDualSectionEquiv` (SliceTransport.lean L42) — the composition/application
+      chain should expose the `mul_comm` identity.
+   5. The key closing step is `mul_comm` (commutativity of `𝒪_Y(X)`) or equivalently
+      `smul_comm` after converting between multiplication and scalar action.
+      Alternatively `LinearMap.mul_apply` + `mul_comm` once both sides are in the form
+      `c₁ * c₂` resp. `c₂ * c₁`.
+
+   Alternative via `simp`/`ring` after sufficient unfolding if the scalar-multiplication
+   form is exposed. The `Iso.trans_hom` / `Iso.trans_inv` simp lemmas + `Category.assoc`
+   may help simplify the composite before unfolding.
+
+   Useful API:
+   - `PresheafOfModules.dualUnitIsoGen` (PresheafInternalHom.lean) = sectionwise eval-at-1.
+   - `evalLin` (PresheafInternalHom.lean L889).
+   - `dualPrecompEquiv` (PresheafInternalHom.lean L1033): `toFun φ = pushforward₀.map ŝ.hom ≫ φ`.
+   - `unitDualSectionEquiv` (SliceTransport.lean L42): the eval-at-1 linear equiv.
+   - `mul_comm` / `smul_comm` / `CommRing.mul_comm`.
+   - `PresheafOfModules.hom_ext`, `ModuleCat.hom_ext`, `LinearMap.ext`.
+   - `Iso.ext`, `Iso.trans_hom`.
+-/
+-/
+lemma presheafDualUnitIso_naturality {Y : Scheme.{u}}
+    (ŝ : 𝟙_ (_root_.PresheafOfModules.{u} (Y.presheaf ⋙ forget₂ CommRingCat RingCat)) ≅
+         𝟙_ (_root_.PresheafOfModules.{u} (Y.presheaf ⋙ forget₂ CommRingCat RingCat))) :
+    PresheafOfModules.dualIsoOfIso ŝ ≪≫ presheafDualUnitIso (Y := Y)
+      = presheafDualUnitIso (Y := Y) ≪≫ ŝ := by
+  apply Iso.ext
+  apply PresheafOfModules.hom_ext
+  intro X
+  apply ModuleCat.hom_ext
+  ext φ
+  simp only [Iso.trans_hom, PresheafOfModules.comp_app, ModuleCat.hom_comp, LinearMap.comp_apply]
+  change PresheafOfModules.evalLin _ X
+      ((PresheafOfModules.pushforward₀ (Over.forget (Opposite.unop X))
+        (Y.presheaf ⋙ forget₂ CommRingCat RingCat)).map ŝ.hom ≫ φ)
+        (1 : ((Y.presheaf ⋙ forget₂ CommRingCat RingCat).obj X : Type u))
+    = (ŝ.hom.app X).hom (PresheafOfModules.evalLin _ X φ
+        (1 : ((Y.presheaf ⋙ forget₂ CommRingCat RingCat).obj X : Type u)))
+  -- The composite-section evaluation is definitionally the value of `φ` on the `ŝ`-image of `1`:
+  -- `evalLin _ X (pushforward₀.map ŝ.hom ≫ φ) 1 = evalLin _ X φ ((ŝ.hom.app X).hom 1)`.
+  change PresheafOfModules.evalLin _ X φ
+      ((ŝ.hom.app X).hom (1 : ((Y.presheaf ⋙ forget₂ CommRingCat RingCat).obj X : Type u)))
+    = (ŝ.hom.app X).hom (PresheafOfModules.evalLin _ X φ
+        (1 : ((Y.presheaf ⋙ forget₂ CommRingCat RingCat).obj X : Type u)))
+  -- Both `evalLin _ X φ` and `ŝ.hom.app X` are `𝒪_Y(X)`-linear endomorphisms of the regular
+  -- module `𝒪_Y(X)`; commutativity of `𝒪_Y(X)` closes via `linearEndo_apply_comm`.
+  exact linearEndo_apply_comm
+    (PresheafOfModules.evalLin _ X φ) (ModuleCat.Hom.hom (ŝ.hom.app X))
 
 /-- **The dual of the structure sheaf is the structure sheaf.** `dual 𝒪_Y ≅ 𝒪_Y`.
 The presheaf-level dual of the monoidal unit `𝟙_` is the unit (evaluation at `1`),
@@ -629,6 +762,112 @@ noncomputable def homOfLocalCompat {X : Scheme.{u}} {M N : X.Modules}
   refine (ConcreteCategory.congr_hom (congrArg X.presheaf.map
     (Subsingleton.elim _ (𝟙 (op W)))) _).trans ?_
   rw [X.presheaf.map_id]
+  rfl
+
+set_option backward.isDefEq.respectTransparency false in
+open Opposite TopologicalSpace in
+/- Planner strategy:
+   The glued global morphism `homOfLocalCompat U hU f hf` is built as
+   `homMk (topSectionToHom (hsup ▸ (hglue hcompat).choose)) _`
+   whose underlying ab-presheaf morphism is `topSectionToHom` of a glued section.
+   Its restriction to `U i` recovers the local datum `homLocalSection U f i` — exactly
+   the internal `IsGluing` datum exploited in `homOfLocalCompat`'s body at L514–551
+   (`topSectionToHom_app`, `htr hsup`, `hgl : IsGluing … (hglue hcompat).choose`, `hsi`).
+
+   Route:
+   - `apply Scheme.Modules.hom_ext` (sectionwise equality of module morphisms).
+   - Reuse `topSectionToHom_app` + the `IsGluing` restriction
+     `hgl i : (H.obj.map (Opens.leSupr U i).op) (hglue hcompat).choose = homLocalSection U f i`,
+     mirroring the `hconn` argument at L534–551.
+   - `homMk`/`topSectionToHom` are sectionwise faithful, so agreement of the underlying
+     ab-presheaf morphisms suffices.
+   - ~40–80 LOC when proved (next prover lane fills the sorry this iter).
+-/
+lemma homOfLocalCompat_restrictFunctor_map {X : Scheme.{u}} {M N : X.Modules}
+    {ι : Type*} (U : ι → X.Opens) (hU : ∀ x : X, ∃ i, x ∈ U i)
+    (f : ∀ i, M.restrict (U i).ι ⟶ N.restrict (U i).ι)
+    (hf : ∀ (i j : ι) (V : X.Opens) (hVi : V ≤ U i) (hVj : V ≤ U j),
+        M.val.presheaf.map (eqToHom (congrArg op (image_preimage_of_le (U i) hVi).symm)) ≫
+          ((PresheafOfModules.toPresheaf _).map (f i).val).app (op ((U i).ι ⁻¹ᵁ V)) ≫
+            N.val.presheaf.map (eqToHom (congrArg op (image_preimage_of_le (U i) hVi)))
+          = M.val.presheaf.map (eqToHom (congrArg op (image_preimage_of_le (U j) hVj).symm)) ≫
+              ((PresheafOfModules.toPresheaf _).map (f j).val).app (op ((U j).ι ⁻¹ᵁ V)) ≫
+                N.val.presheaf.map (eqToHom (congrArg op (image_preimage_of_le (U j) hVj))))
+    (i : ι) :
+    (Scheme.Modules.restrictFunctor (U i).ι).map (homOfLocalCompat U hU f hf) = f i := by
+  -- Reconstruct the gluing internals of `homOfLocalCompat` (identical to its body), so that the
+  -- underlying ab-presheaf morphism `g` of `homOfLocalCompat` is `topSectionToHom (glued section)`.
+  let H : TopCat.Sheaf (Type u) (X : TopCat) :=
+    ⟨CategoryTheory.presheafHom M.val.presheaf N.val.presheaf,
+      Presheaf.IsSheaf.hom M.val.presheaf N.val.presheaf N.isSheaf⟩
+  have hsup : iSup U = ⊤ := by
+    rw [eq_top_iff]
+    intro x _
+    obtain ⟨i, hi⟩ := hU x
+    exact TopologicalSpace.Opens.mem_iSup.mpr ⟨i, hi⟩
+  have hglue := H.existsUnique_gluing U (fun i => homLocalSection U f i)
+  have hcompat : TopCat.Presheaf.IsCompatible
+      (CategoryTheory.presheafHom M.val.presheaf N.val.presheaf) U
+      (fun i => homLocalSection U f i) := by
+    intro i j
+    refine NatTrans.ext (funext fun Z => ?_)
+    obtain ⟨W⟩ := Z
+    erw [presheafHom_map_app W.hom (TopologicalSpace.Opens.infLELeft (U i) (U j)) _ rfl,
+        presheafHom_map_app W.hom (TopologicalSpace.Opens.infLERight (U i) (U j)) _ rfl]
+    simp only [homLocalSection]
+    exact hf i j W.left (W.hom.le.trans inf_le_left) (W.hom.le.trans inf_le_right)
+  -- The glued underlying ab-presheaf morphism `g` (defeq to `(homOfLocalCompat …).val`'s presheaf).
+  set g : M.val.presheaf ⟶ N.val.presheaf :=
+    topSectionToHom (hsup ▸ (hglue hcompat).choose) with hg
+  have _hs := (hglue hcompat).choose_spec.1
+  -- **Connection lemma** (identical to `homOfLocalCompat` body L534–551): on every `W' ≤ U i`,
+  -- `g` agrees with the local section manufactured from `f i`.
+  have hconn : ∀ (i : ι) (W' : X.Opens) (hWi : W' ≤ U i),
+      g.app (op W') = (homLocalSection U f i).app (op (Over.mk (homOfLE hWi))) := by
+    intro i W' hWi
+    have htr : ∀ {a : X.Opens} (h : a = ⊤) (y : H.obj.obj (op a)),
+        (h ▸ y : H.obj.obj (op ⊤)) = H.obj.map (eqToHom (congrArg op h)) y := by
+      intro a h y; subst h; simp
+    rw [hg, topSectionToHom_app, htr hsup]
+    have hop : eqToHom (congrArg op hsup) = (eqToHom hsup.symm).op := Subsingleton.elim _ _
+    have hgl : TopCat.Presheaf.IsGluing H.obj U (fun i => homLocalSection U f i)
+        (hglue hcompat).choose := _hs
+    have hsi : (ConcreteCategory.hom (H.obj.map (Opens.leSupr U i).op)) (hglue hcompat).choose
+        = homLocalSection U f i := hgl i
+    rw [hop, presheafHom_map_app (homOfLE le_top) (eqToHom hsup.symm)
+        (homOfLE le_top ≫ eqToHom hsup.symm) rfl, ← hsi,
+      presheafHom_map_app (homOfLE hWi) (Opens.leSupr U i)
+        (homOfLE hWi ≫ Opens.leSupr U i) rfl]
+    rw [show (homOfLE le_top ≫ eqToHom hsup.symm : W' ⟶ iSup U)
+        = (homOfLE hWi ≫ Opens.leSupr U i) from Subsingleton.elim _ _]
+  -- Sectionwise reduction.
+  apply SheafOfModules.Hom.ext
+  refine PresheafOfModules.hom_ext (fun P => ?_)
+  obtain ⟨P⟩ := P
+  apply ModuleCat.hom_ext
+  ext m
+  -- The LHS section value is (defeq) the glued morphism `g` at the open `(U i).ι ''ᵁ P`.
+  have hWi : (U i).ι ''ᵁ P ≤ U i := (U i).ι_image_le P
+  -- **Local-section value at an image open** recovers `f i`: the eqToHom-conjugation collapses to
+  -- the identity, since `(U i).ι ⁻¹ᵁ ((U i).ι ''ᵁ P) = P` for the open immersion `(U i).ι`.
+  have key : (homLocalSection U f i).app (op (Over.mk (homOfLE hWi)))
+      = ((PresheafOfModules.toPresheaf (U i).toScheme.ringCatSheaf.obj).map (f i).val).app
+          (op P) := by
+    simp only [homLocalSection, Over.mk_left, homOfLE_leOfHom]
+    -- The two flanking `M`/`N` restriction maps are `eqToHom`s of the down-set identity; the goal
+    -- is an `eqToHom`-conjugation of the natural transformation `(toPresheaf).map (f i).val`, which
+    -- the naturality square (for `(U i).ι ⁻¹ᵁ ((U i).ι ''ᵁ P) = P`) collapses to the identity.
+    simp only [eqToHom_map]
+    have hh : (op ((U i).ι ⁻¹ᵁ ((U i).ι ''ᵁ P)) : (TopologicalSpace.Opens ↥(U i).toScheme)ᵒᵖ)
+        = op P := congrArg op ((U i).ι.preimage_image_eq P)
+    rw [eqToHom_comp_iff]
+    have hnat := ((PresheafOfModules.toPresheaf (U i).toScheme.ringCatSheaf.obj).map
+      (f i).val).naturality (eqToHom hh)
+    simp only [eqToHom_map] at hnat
+    exact hnat.symm
+  change (ConcreteCategory.hom (g.app (op ((U i).ι ''ᵁ P)))) m
+    = (ModuleCat.Hom.hom ((f i).val.app (op P))) m
+  rw [hconn i ((U i).ι ''ᵁ P) hWi, key]
   rfl
 
 end Modules

@@ -2,6 +2,98 @@
 
 % archon:covers MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves.lean MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Basic.lean
 
+\subsection{Foundational objects}
+
+\begin{definition}[Koszul cohomology \(\K_{p,q}(X,L)\)]
+  \label{def:kemeny_koszul_cohomology}
+  \lean{MR4213770.koszulCohomology}
+  \uses{def:peer_scheme_hmodule, found:oxmod_exterior_power, def:kemeny_kernel_bundle}
+  % SOURCE: Kemeny, Introduction, definition of Koszul cohomology (read from references/kemeny-universal-secant-bundles-syzygies-canonical-curves-source/kemeny-universal-secant-bundles-syzygies-canonical-curves.tex)
+  % SOURCE QUOTE: Define $\mathrm{K}_{p,q}(X,L)$ as the middle cohomology of $$\bigwedge^{p+1} \mathrm{H}^0(X,L) \otimes \mathrm{H}^0(X,L^{\otimes q-1}) \to \bigwedge^p \mathrm{H}^0(X,L) \otimes \mathrm{H}^0(X,L^{\otimes q}) \to \bigwedge^{p-1} \mathrm{H}^0(X,L) \otimes \mathrm{H}^0(X,L^{\otimes q+1}) $$
+  % SOURCE: Ein--Lazarsfeld, Syzygies and Koszul cohomology of smooth projective varieties of arbitrary dimension, Lemma 1.4 (read from references/ein-lazarsfeld-syzygies-koszul.pdf, OCR-extracted text)
+  % SOURCE QUOTE: Lemma 1.4 Assume that H i ( X , L q- 1 @ N) = O. Then the complex KWis exact (in the middle) if and only if (1.5) H 1(X, A p+ i M w | L q- 1 | N) = 0 . In particular, K. is exact if and only if H i ( X , AP+I ML | L q-1 | N) = O.
+  \textit{Source: Kemeny, Introduction; kernel-bundle description after Ein--Lazarsfeld, Lemma 1.4.}
+  For a polarized variety \((X,L)\) and integers \(p,q\), the Koszul cohomology
+  group \(\K_{p,q}(X,L)\) is the cohomology at the middle term of the Koszul
+  complex
+  \[
+    \wedge^{p+1}H^0(X,L)\otimes H^0(X,L^{q-1})
+      \to \wedge^{p}H^0(X,L)\otimes H^0(X,L^{q})
+      \to \wedge^{p-1}H^0(X,L)\otimes H^0(X,L^{q+1}).
+  \]
+  More generally, for a base-point-free subspace \(V\subseteq H^0(X,L)\) the same
+  complex built from \(V\) computes \(\K_{p,q}(X,L,V)\).
+
+  \emph{Kernel-bundle description.}  Let \(M_L\) be the kernel bundle of
+  \cref{def:kemeny_kernel_bundle}.  If \(H^1(X,L^{q-1})=0\), then the Koszul
+  complex is exact at the middle term --- that is, \(\K_{p,q}(X,L)=0\) --- if and
+  only if
+  \[
+    H^1\bigl(X,\wedge^{p+1}M_L\otimes L^{q-1}\bigr)=0 .
+  \]
+  In particular, \(\K_{p,1}(X,L)=0\) is equivalent to
+  \(H^1(X,\wedge^{p+1}M_L)=0\).
+\end{definition}
+
+\begin{definition}\leanok
+[Kernel bundle \(M_L\)]
+  \label{def:kemeny_kernel_bundle}
+  \lean{MR4213770.kernelBundle}
+  \uses{found:eval_kernel_bundle}
+  % SOURCE: Kemeny, Section sec1, opening paragraph (read from references/kemeny-universal-secant-bundles-syzygies-canonical-curves-source/kemeny-universal-secant-bundles-syzygies-canonical-curves.tex)
+  % SOURCE QUOTE: Let $M_L$ denote the bundle defined by the sequence $0 \to M_L \to \mathrm{H}^0(L)\otimes \mathcal{O}_X \to L \to 0.$
+  \textit{Source: Kemeny, Section sec1, opening paragraph.}
+  For a line bundle \(L\) on \(X\), the \emph{kernel bundle} \(M_L\) is the kernel
+  of the evaluation morphism, i.e.\ \(M_L=\ker(\mathrm{ev}_L)\), so that it sits in
+  the left-exact sequence
+  \[
+    0\to M_L\to H^0(L)\otimes\cO_X\xrightarrow{\mathrm{ev}_L}L .
+  \]
+  This is the specialisation of the general evaluation kernel \(M_{\mathcal F}\)
+  (\cref{found:eval_kernel_bundle}) to \(\mathcal F=L\).  When \(L\) is globally
+  generated the evaluation map is surjective, the sequence becomes short exact, and
+  \(M_L\) is a vector bundle of rank \(h^0(L)-1\)
+  (\cref{lem:kemeny_kernel_bundle_locally_free}).
+\end{definition}
+
+\begin{lemma}[The kernel bundle is locally free of rank \(h^0(L)-1\)]
+  \label{lem:kemeny_kernel_bundle_locally_free}
+  \lean{MR4213770.kernelBundle_isLocallyFree}
+  \uses{def:kemeny_kernel_bundle, found:eval_kernel_locally_free}
+  % SOURCE: Kemeny, Section sec1, opening paragraph (read from references/kemeny-universal-secant-bundles-syzygies-canonical-curves-source/kemeny-universal-secant-bundles-syzygies-canonical-curves.tex)
+  % SOURCE QUOTE: Let $M_L$ denote the bundle defined by the sequence $0 \to M_L \to \mathrm{H}^0(L)\otimes \mathcal{O}_X \to L \to 0.$
+  \textit{Source: Kemeny, Section sec1, opening paragraph; rank after Lazarsfeld, VBT \S1.3.}
+  Let \(L\) be a globally generated line bundle on \(X\).  Then the kernel bundle
+  \(M_L\) (\cref{def:kemeny_kernel_bundle}) is locally free of rank \(h^0(L)-1\).
+\end{lemma}
+
+\begin{proof}
+  \uses{def:kemeny_kernel_bundle, found:eval_kernel_locally_free}
+  A line bundle is locally free of rank \(1\); global generation makes the
+  evaluation morphism surjective.  Apply the general statement
+  \cref{found:eval_kernel_locally_free} with \(\mathcal F=L\) and \(r=1\): the
+  evaluation kernel is locally free of rank \(\dim_k H^0(L)-1=h^0(L)-1\).
+\end{proof}
+
+\begin{definition}[Lazarsfeld--Mukai bundle \(E\)]
+  \label{def:kemeny_LM_bundle}
+  \lean{MR4213770.lazarsfeldMukaiBundle}
+  \uses{def:peer_scheme_hmodule}
+  % SOURCE: Kemeny, Introduction, definition of the Lazarsfeld--Mukai bundle (read from references/kemeny-universal-secant-bundles-syzygies-canonical-curves-source/kemeny-universal-secant-bundles-syzygies-canonical-curves.tex)
+  % SOURCE QUOTE: Let $E$ be the rank two \emph{Lazarsfeld--Mukai bundle} associated to a $g^1_{k+1}$ on a smooth curve $C \in |L|$, see \cite{lazarsfeld-BNP}. The dual bundle $E^{\vee}$ fits into the exact sequence $$0 \to E^{\vee} \to \mathrm{H}^0(C,A) \otimes \mathcal{O}_X \to i_*A \to 0,$$ for $A$ a $g^1_{k+1}$ on $C$, where $i: C \hookrightarrow X$ is the inclusion. The vector bundle $E$ has invariants $\det(E)=L$, $h^0(E)=k+2$, $h^1(E)=h^2(E)=0$.
+  \textit{Source: Kemeny, Introduction.}
+  Let \(X\) be a K3 surface with \(\Pic(X)=\mathbb Z[L]\) and \(L\) ample of even
+  genus \(g=2k\).  The \emph{Lazarsfeld--Mukai bundle} \(E\) is the rank-two
+  bundle associated to a \(g^1_{k+1}\), i.e.\ a pencil \(A\), on a smooth curve
+  \(C\in|L|\); its dual fits into the exact sequence
+  \[
+    0\to E^\vee\to H^0(C,A)\otimes\cO_X\to i_*A\to0 ,
+  \]
+  where \(i:C\hookrightarrow X\) is the inclusion.  It has invariants
+  \(\det E=L\), \(h^0(E)=k+2\), and \(h^1(E)=h^2(E)=0\); in particular
+  \(\PP(H^0(E))\simeq\PP^{k+1}\).
+\end{definition}
+
 \subsection{Introduction}
 
 \begin{theorem}[Generic Green's conjecture for general canonical curves]
@@ -27,7 +119,7 @@
 \begin{theorem}[Even-genus geometric syzygy theorem]
   \label{thm:kemeny_even_geometric_syzygy_structure}
   \lean{MR4213770.EvenGeometricSyzygyStructure}
-  \uses{cor:kemeny_extremal_syzygy_iso, thm:kemeny_veronese_identification}
+  \uses{cor:kemeny_extremal_syzygy_iso, thm:kemeny_veronese_identification, lem:kemeny_psi_global_sections, lem:kemeny_R1q_line_bundle, lem:kemeny_fibre_secant_map}
   % SOURCE: Kemeny, Introduction, Theorem geo-thm-intro (read from references/kemeny-universal-secant-bundles-syzygies-canonical-curves-source/kemeny-universal-secant-bundles-syzygies-canonical-curves.tex)
   % SOURCE QUOTE: For any nonzero $s \in \mathrm{H}^0(E)$, the space $\mathrm{K}_{k-1,1}(X,L,\mathrm{H}^0(L \otimes I_{Z(s)}))$ is a one-dimensional subspace of $\mathrm{K}_{k-1,1}(X,L)$.
   \textit{Source: Kemeny, Introduction, Theorem geo-thm-intro.}
@@ -42,16 +134,87 @@
   embedding, hence induces
   \(\Sym^{k-2}H^0(X,E)\simeq \K_{k-1,1}(X,L)\).
 \end{theorem}
+
+% SOURCE QUOTE PROOF: We have the exact sequence $0 \to \Gamma' \to q^* \mathcal{W} \to p^*L_{|_{\mathcal{Z}}} \to 0,$ where we have set $\Gamma':=\pi_* \Gamma$. The image of the natural map $\wedge^k \Gamma' \to \wedge^k q^* \mathcal{W}  \simeq \mathcal{O}_{\PP}(k)$ is $I_{\mathcal{Z}} \otimes q^*\mathcal{O}_{\PP}(k)$ from \cite[Cor.\ 3.7]{ein-lazarsfeld-asymptotic}. The induced surjection $\wedge^k \Gamma' \to I_{\mathcal{Z}} \otimes q^*\mathcal{O}_{\PP}(k)$ can be identified with the natural map
+% $$\wedge^k \pi_* \Gamma \to \pi_*\wedge^k \Gamma \simeq \pi_*(I_D \otimes {q'}^*\mathcal{O}_{\PP}(k)) \hookrightarrow \pi_* \wedge^k {q'}^* \mathcal{W} \simeq \wedge^k q^* \mathcal{W} . $$ The map $\psi: \mathrm{H}^1(B, \wedge^k \pi^* \mathcal{M} \otimes {p'}^*L) \to \mathrm{H}^1(B, \wedge^k \Gamma \otimes {p'}^*L)$ can be identified with the composition
+% $$\mathrm{H}^1(X\times \PP, \wedge^k\mathcal{M} \otimes p^*L) \to \mathrm{H}^1(X\times \PP, \wedge^k \Gamma' \otimes p^*L) \to \mathrm{H}^1( X\times \PP, (L \boxtimes \mathcal{O}_{\PP}(k))\otimes I_{\mathcal{Z}}),$$
+% where the first map is induced from the natural surjection $\mathcal{M} \to \Gamma'$. Since $q_*\wedge^k\mathcal{M} \otimes p^*L \simeq \mathrm{H}^0(X, \wedge^k M_L(L)) \otimes \mathcal{O}_{\PP}$, we have $\mathrm{H}^i(q_*\wedge^k\mathcal{M} \otimes p^*L)=0$ for $i>0$. Thus the Leray spectral sequence gives an isomorphism
+% $$\mathrm{H}^1(X \times \PP, \wedge^k\mathcal{M} \otimes p^*L) \simeq \mathrm{H}^0(\PP, R^1q_*\wedge^k\mathcal{M} \otimes p^*L).$$
+% Next, the exact sequence $0 \to \mathcal{O}_{\PP}(k-2) \to \mathrm{H}^0(E) \otimes \mathcal{O}_{\PP}(k-1) \to q_*((L \boxtimes \mathcal{O}_{\PP}(k))\otimes I_{\mathcal{Z}}) \to 0$ gives $\mathrm{H}^i(q_*((L \boxtimes \mathcal{O}_{\PP}(k))\otimes I_{\mathcal{Z}}))=0$ for $i >0$ so
+% $$\mathrm{H}^1( X \times \PP,(L \boxtimes \mathcal{O}_{\PP}(k))\otimes I_{\mathcal{Z}})\simeq \mathrm{H}^0(\PP, R^1 q_*((L \boxtimes \mathcal{O}_{\PP}(k))\otimes I_{\mathcal{Z}})).$$
+% The map $\psi$ is thus naturally identified with the global section map applied to the morphism
+% $$\mathrm{K}_{k-1,1}(X,L)^{\vee} \otimes \mathcal{O}_{\PP} \simeq R^1q_*\wedge^k\mathcal{M} \otimes p^*L \to R^1 q_*((L \boxtimes \mathcal{O}_{\PP}(k))\otimes I_{\mathcal{Z}}),$$
+% of vector bundles. Note that $R^1 q_*((L \boxtimes \mathcal{O}_{\PP}(k))\otimes I_{\mathcal{Z}})$ is a line bundle from the proof of Lemma \ref{very-first-lem}. From
+% $0 \to \mathcal{O}_X \boxtimes \mathcal{O}_{\PP}(-2) \to E \boxtimes \mathcal{O}_{\PP}(-1) \to p^*L \otimes  I_{\mathcal{Z}} \to 0,$
+% we have $$R^1 q_*((L \boxtimes \mathcal{O}_{\PP}(k))\otimes I_{\mathcal{Z}}) \simeq R^2q_*\mathcal{O}_{X \times \PP} \otimes \mathcal{O}_{\PP}(k-2)\simeq \mathcal{O}_{\PP}(k-2),$$
+% using that $R^2q_*\mathcal{O}_{X \times \PP} \simeq \mathcal{O}_{\PP}$ by relative duality. Since the induced morphism
+% \begin{align} \label{bundle-ind-vero}
+% \mathrm{K}_{k-1,1}(X,L)^{\vee} \otimes \mathcal{O}_{\PP} \to R^1 q_*((L \boxtimes \mathcal{O}_{\PP}(k))\otimes I_{\mathcal{Z}}) \simeq \mathcal{O}_{\PP}(k-2)
+% \end{align}
+% is surjective on global sections and $\mathcal{O}_{\PP}(k-2)$ is globally generated, it must be surjective as a morphism of sheaves. Morphism (\ref{bundle-ind-vero}) therefore induces a Veronese morphism $$\widetilde{\psi} : \PP(\mathrm{H}^0(E)) \to \PP(\mathrm{K}_{k-1,1}(X,L))$$ of degree $k-2$.\smallskip
+% To complete the proof, it only remains to show that, for any nonzero $t \in \mathrm{H}^0(E)$, we have
+% $$\widetilde{\psi}([t])=[\mathrm{K}_{k-1,1}\left(X,L,\mathrm{H}^0(L \otimes I_{Z(t)})\right)].$$
+% The fiber of the morphism (\ref{bundle-ind-vero}) over $[t]$ is identified with the natural composition
+% $$\mathrm{H}^1(X,\wedge^k M_L(L)) \to \mathrm{H}^1(X,\wedge^k \Gamma'_t(L)) \to \mathrm{H}^1(X,L \otimes I_{Z(t)}),$$
+% using the notation from Section \ref{sec1}. As above, this may be identified with the natural surjection
+% $$\mathrm{H}^1(B_t,\wedge^k \pi^*_tM_L(L)) \twoheadrightarrow \mathrm{H}^1(B_t,\wedge^k \Gamma_t (\pi^*_t L )).$$
+% From the exact sequence $0 \to \mathcal{S}_t \to \pi_t^* M_L \to \Gamma_t \to 0$ and the isomorphisms $\wedge^k M_L(L) \simeq \wedge^k M_L^{\vee}$, $\wedge^k \Gamma_t (\pi^*_t L) \simeq \wedge^k \mathcal{S}_t^{\vee}$, we may identify the fiber of (\ref{bundle-ind-vero}) with the map $\mathrm{H}^1(X,\wedge^k M_L^{\vee}) \twoheadrightarrow \mathrm{H}^1(B_t, \wedge^k \mathcal{S}_t^{\vee})$, which is Serre dual to
+% $$ \mathrm{H}^1(B_t, \wedge^k \mathcal{S}_t(D_t)) \hookrightarrow \mathrm{H}^1(B_t,\wedge^k \pi_t^* M_L(D_t)). $$ Using the Kernel Bundle description of syzygies, this may be interpreted as an inclusion
+% $$\mathrm{K}_{k-1,1}(B_t,D_t, \pi_t^*L-D_t)\hookrightarrow \mathrm{K}_{k-1,1}(B_t,D_t,\pi_t^*L).$$
+% Since $\mathrm{H}^0(B_t, \pi_t^*L^{\otimes n}(D_t)) \simeq \mathrm{H}^0(B_t, \pi_t^*L^{\otimes n})\simeq \mathrm{H}^0(X, L^{\otimes n})$ for any $n$,
+% this inclusion is naturally identified with $\mathrm{K}_{k-1,1}\left(X,L,\mathrm{H}^0(L \otimes I_{Z(t)})\right) \hookrightarrow \mathrm{K}_{k-1,1}(X,L),$
+% as required.
 \begin{proof}
-  \uses{cor:kemeny_extremal_syzygy_iso, thm:kemeny_veronese_identification}
-  The surjectivity theorem for
-  \(H^1(B,\wedge^k\pi^*\cM\otimes p'^*L)\to H^1(B,\wedge^k\Gamma\otimes p'^*L)\)
-  and the determinant computation for \(\Gamma\) identify the target cohomology
-  with \(H^0(\PP,\mathcal O_{\PP}(k-2))^\vee\).  Dualizing gives an injection
-  \(\Sym^{k-2}H^0(E)\hookrightarrow \K_{k-1,1}(X,L)\), and the even-genus
-  vanishing gives equality of dimensions.  The fibre calculation in Section 2
-  identifies the hyperplane quotient over \([t]\) with the secant Koszul
-  subspace attached to \(Z(t)\), so the projective morphism is the Veronese map.
+  \uses{cor:kemeny_extremal_syzygy_iso, thm:kemeny_veronese_identification, lem:kemeny_psi_global_sections, lem:kemeny_R1q_line_bundle, lem:kemeny_fibre_secant_map}
+  Write \(\cM=p^*M_L\) and \(\Gamma'=\pi_*\Gamma\).  Because
+  \(q_*(\wedge^k\cM\otimes p^*L)\simeq H^0(X,\wedge^kM_L(L))\otimes\cO_{\PP}\) has no
+  higher cohomology, the Leray spectral sequence gives
+  \(H^1(B,\wedge^k\pi^*\cM\otimes p'^*L)\simeq
+   H^0(\PP,R^1q_*(\wedge^k\cM\otimes p^*L))\); applying Leray likewise to the
+  target, via the determinant identification
+  \(\wedge^k\Gamma\simeq I_D\otimes q'^*\cO_{\PP}(k)\), rewrites
+  \(H^1(B,\wedge^k\Gamma\otimes p'^*L)\) as
+  \(H^0(\PP,R^1q_*((L\boxtimes\cO_{\PP}(k))\otimes I_{\cZ}))\).  By
+  \cref{lem:kemeny_psi_global_sections}, \(\psi\) is therefore the map on global
+  sections of the vector-bundle morphism
+  \[
+    \K_{k-1,1}(X,L)^\vee\otimes\cO_{\PP}\;\longrightarrow\;
+      R^1q_*\bigl((L\boxtimes\cO_{\PP}(k))\otimes I_{\cZ}\bigr).
+  \]
+  By \cref{lem:kemeny_R1q_line_bundle} the target is the line bundle
+  \(\cO_{\PP}(k-2)\), the identification
+  \(R^1q_*((L\boxtimes\cO_{\PP}(k))\otimes I_{\cZ})\simeq
+    R^2q_*\cO_{X\times\PP}\otimes\cO_{\PP}(k-2)\simeq\cO_{\PP}(k-2)\) resting on
+  relative duality \(R^2q_*\cO_{X\times\PP}\simeq\cO_{\PP}\).  By
+  \cref{cor:kemeny_extremal_syzygy_iso} the map \(\psi\) is surjective on global
+  sections; since \(\cO_{\PP}(k-2)\) is globally generated, the bundle morphism is
+  a surjection of sheaves, so \(\cref{thm:kemeny_veronese_identification}\)
+  realizes it as the quotient inducing a degree \(k-2\) Veronese embedding
+  \(\widetilde\psi:\PP(H^0(E))\to\PP(\K_{k-1,1}(X,L))\).
+
+  It remains to compute \(\widetilde\psi([t])\) for nonzero \(t\in H^0(E)\).  By
+  \cref{lem:kemeny_fibre_secant_map} the fibre of the bundle morphism over
+  \([t]\) is the composition
+  \(H^1(X,\wedge^kM_L(L))\to H^1(X,\wedge^k\Gamma'_t(L))\to
+   H^1(X,L\otimes I_{Z(t)})\), which on the blow-up \(\pi_t:B_t\to X\) of
+  \(Z(t)\) is the surjection
+  \(H^1(B_t,\wedge^k\pi_t^*M_L(L))\twoheadrightarrow
+    H^1(B_t,\wedge^k\Gamma_t(\pi_t^*L))\).  Using
+  \(\wedge^kM_L(L)\simeq\wedge^kM_L^\vee\) and
+  \(\wedge^k\Gamma_t(\pi_t^*L)\simeq\wedge^k\cS_t^\vee\) (from
+  \(0\to\cS_t\to\pi_t^*M_L\to\Gamma_t\to0\)), this is Serre dual to the inclusion
+  \(H^1(B_t,\wedge^k\cS_t(D_t))\hookrightarrow H^1(B_t,\wedge^k\pi_t^*M_L(D_t))\),
+  i.e.\ to
+  \(\K_{k-1,1}(B_t,D_t,\pi_t^*L-D_t)\hookrightarrow\K_{k-1,1}(B_t,D_t,\pi_t^*L)\)
+  by the kernel-bundle description.  Since
+  \(H^0(B_t,\pi_t^*L^{\otimes n}(D_t))\simeq H^0(X,L^{\otimes n})\) for all \(n\),
+  this is the inclusion
+  \(\K_{k-1,1}(X,L,H^0(L\otimes I_{Z(t)}))\hookrightarrow\K_{k-1,1}(X,L)\), a
+  one-dimensional subspace; thus \(\widetilde\psi([t])\) is the secant Koszul line
+  attached to \(Z(t)\).  Finally \cref{cor:kemeny_extremal_syzygy_iso} packages
+  the surjectivity of \(\psi\) and the even-genus vanishing
+  \(\K_{k,1}(X,L)=0\) into the natural isomorphism
+  \(\Sym^{k-2}H^0(X,E)\simeq\K_{k-1,1}(X,L)\).
 \end{proof}
 
 \begin{corollary}[Geometric Syzygy Conjecture in even genus]
@@ -101,22 +264,32 @@
 
 \subsection{Voisin's Theorem in Even Genus}
 
-\begin{definition}[Kernel bundle and Koszul cohomology reduction]
-  \label{def:kemeny_kernel_bundle_reduction}
+\begin{lemma}[Koszul vanishing via the kernel bundle]
+  \label{lem:kemeny_koszul_reduction}
   \lean{MR4213770.KernelBundleReduction}
-  \uses{def:peer_scheme_hmodule}
+  % NOTE: the Lean declaration MR4213770.KernelBundleReduction was scaffolded iter-003 as an `opaque ... : Prop := True` placeholder — NOT yet the genuine reduction statement; replace with the real implication before relying on it.
+  \uses{def:kemeny_kernel_bundle, def:kemeny_koszul_cohomology, found:oxmod_exterior_power}
   % SOURCE: Kemeny, Section sec1, opening paragraph (read from references/kemeny-universal-secant-bundles-syzygies-canonical-curves-source/kemeny-universal-secant-bundles-syzygies-canonical-curves.tex)
-  % SOURCE QUOTE: Let $M_L$ denote the bundle defined by the sequence $0 \to M_L \to \mathrm{H}^0(L)\otimes \mathcal{O}_X \to L \to 0.$ By the Kernel Bundle description of Koszul cohomology, see \cite{lazarsfeld-VBT} or \cite[\S 3]{ein-lazarsfeld-asymptotic}, to prove Voisin's Theorem it suffices to show $$\mathrm{H}^1(X, \bigwedge^{k+1} M_L )=0.$$
+  % SOURCE QUOTE: By the Kernel Bundle description of Koszul cohomology, see \cite{lazarsfeld-VBT} or \cite[\S 3]{ein-lazarsfeld-asymptotic}, to prove Voisin's Theorem it suffices to show $$\mathrm{H}^1(X, \bigwedge^{k+1} M_L )=0.$$
   \textit{Source: Kemeny, Section sec1, opening paragraph.}
-  The kernel bundle \(M_L\) is defined by
-  \(0\to M_L\to H^0(L)\otimes \cO_X\to L\to0\).  For the even-genus K3
-  surface, the desired vanishing \(\K_{k,1}(X,L)=0\) follows from
-  \(H^1(X,\wedge^{k+1}M_L)=0\).
-\end{definition}
+  Let \(X\) be a K3 surface of even genus \(g=2k\) with kernel bundle \(M_L\)
+  (\cref{def:kemeny_kernel_bundle}).  Then the vanishing
+  \(H^1(X,\wedge^{k+1}M_L)=0\) implies \(\K_{k,1}(X,L)=0\).
+\end{lemma}
+\begin{proof}
+  \uses{def:kemeny_kernel_bundle, def:kemeny_koszul_cohomology}
+  This is the kernel-bundle description of Koszul cohomology specialized to
+  \((p,q)=(k,1)\) (\cref{def:kemeny_koszul_cohomology}).  Since
+  \(H^1(X,\cO_X)=0\) on a K3 surface, the degree \((k,1)\) Koszul complex is
+  exact at its middle term precisely when \(H^1(X,\wedge^{k+1}M_L)=0\); hence the
+  stated vanishing forces \(\K_{k,1}(X,L)=0\).
+\end{proof}
 
 \begin{definition}[Universal zero locus]
   \label{def:kemeny_universal_zero_locus}
   \lean{MR4213770.UniversalZeroLocus}
+  % NOTE: scaffolded iter-003 as an `opaque ... : Type := Unit` placeholder — NOT the genuine subscheme.  deliberately withheld (placeholder, not a sync miss); replace with the real construction before marking.
+  \uses{def:kemeny_LM_bundle}
   % SOURCE: Kemeny, Section sec1, universal construction (read from references/kemeny-universal-secant-bundles-syzygies-canonical-curves-source/kemeny-universal-secant-bundles-syzygies-canonical-curves.tex)
   % SOURCE QUOTE: Set $\PP:=\PP(\mathrm{H}^0(E))\simeq \PP^{k+1}$. Consider $X \times \PP$ with projections $p: X \times \PP \to X$, $q: X \times \PP \to \PP$. Define $\mathcal{Z} \seq X \times \PP$ as the locus $\left\{ (x,s) \; | \; s(x)=0 \right\}$.
   \textit{Source: Kemeny, Section sec1.}
@@ -132,7 +305,8 @@
 \begin{definition}[Universal secant bundles]
   \label{def:kemeny_universal_secant_bundles}
   \lean{MR4213770.UniversalSecantBundles}
-  \uses{def:kemeny_universal_zero_locus}
+  % NOTE: scaffolded iter-003 as an `opaque ... : Type := Unit` placeholder — NOT the genuine bundle construction.  deliberately withheld (placeholder, not a sync miss); replace with the real construction before marking.
+  \uses{def:kemeny_universal_zero_locus, def:kemeny_kernel_bundle}
   % SOURCE: Kemeny, Section sec1, definition after Lemma very-first-lem (read from references/kemeny-universal-secant-bundles-syzygies-canonical-curves-source/kemeny-universal-secant-bundles-syzygies-canonical-curves.tex)
   % SOURCE QUOTE: Let $\mathcal{S}$ be the vector bundle on $B$ defined by the exact sequence $$0 \to \mathcal{S} \to {q'}^* q'_* ({p'}^*L \otimes I_D) \to {p'}^*L \otimes I_D \to 0.$$ We call $\mathcal{S}$ and $\Gamma$ the \emph{universal secant bundles}. We have an exact sequence $$0 \to \mathcal{S} \to \pi^* \mathcal{M} \to \Gamma \to 0$$
   \textit{Source: Kemeny, Section sec1.}
@@ -142,14 +316,15 @@
     0\to\cS\to q'^*q'_*(p'^*L\otimes I_D)\to p'^*L\otimes I_D\to0
   \]
   and let \(\Gamma\) be the quotient in
-  \(0\to\cS\to\pi^*\cM\to\Gamma\to0\).  The bundles \(\cS\) and \(\Gamma\) are
-  Kemeny's universal secant bundles.
+  \(0\to\cS\to\pi^*\cM\to\Gamma\to0\), where \(\cM=p^*M_L\) is the pullback to
+  \(X\times\PP\) of the kernel bundle \(M_L\) (\cref{def:kemeny_kernel_bundle}).
+  The bundles \(\cS\) and \(\Gamma\) are Kemeny's universal secant bundles.
 \end{definition}
 
 \begin{lemma}[The cokernel bundle \(\mathcal W\)]
   \label{lem:kemeny_W_locally_free}
   \lean{MR4213770.WLocallyFree}
-  \uses{def:kemeny_universal_zero_locus, def:peer_higher_direct_image, def:peer_affine_pushforward_base_change, def:peer_module_iso_locality}
+  \uses{def:kemeny_universal_zero_locus, def:peer_higher_direct_image, def:peer_affine_pushforward_base_change, def:peer_module_iso_locality, found:locally_free}
   % SOURCE: Kemeny, Section sec1, Lemma very-first-lem (read from references/kemeny-universal-secant-bundles-syzygies-canonical-curves-source/kemeny-universal-secant-bundles-syzygies-canonical-curves.tex)
   % SOURCE QUOTE: The sheaf $\mathcal{W}$ is locally free of rank $k$.
   \textit{Source: Kemeny, Lemma very-first-lem.}
@@ -173,7 +348,7 @@
 \begin{lemma}[First symmetric-power computation]
   \label{lem:kemeny_first_iso}
   \lean{MR4213770.FirstIso}
-  \uses{def:kemeny_universal_secant_bundles}
+  \uses{def:kemeny_universal_secant_bundles, def:kemeny_universal_zero_locus, found:oxmod_sym_power}
   % SOURCE: Kemeny, Section sec1, Lemma first-iso (read from references/kemeny-universal-secant-bundles-syzygies-canonical-curves-source/kemeny-universal-secant-bundles-syzygies-canonical-curves.tex)
   % SOURCE QUOTE: We have $\mathrm{H}^{k+1}(X \times \PP,\mathrm{Sym}^{k+1} \mathcal{G})=0$ as well as a natural isomorphism $$\mathrm{H}^k(X \times \PP,\mathrm{Sym}^{k+1} \mathcal{G})\simeq \mathrm{Sym}^k \mathrm{H}^0(E).$$
   \textit{Source: Kemeny, Lemma first-iso.}
@@ -181,43 +356,184 @@
   \(H^{k+1}(X\times\PP,\Sym^{k+1}\cG)=0\) and a natural isomorphism
   \(H^k(X\times\PP,\Sym^{k+1}\cG)\simeq \Sym^kH^0(E)\).
 \end{lemma}
+
+% SOURCE QUOTE PROOF: The sequence $0 \to q^*\mathcal{O}_{\PP}(-2) \to q^*q_*p^*E \otimes q^*\mathcal{O}_{\PP}(-1) \to \mathcal{G}\to 0$
+%  gives the exact sequence
+% $$0 \to \mathrm{Sym}^k \mathrm{H}^0(E) \otimes q^*\mathcal{O}_{\PP}(-k-2) \to \mathrm{Sym}^{k+1}\mathrm{H}^0(E) \otimes q^*\mathcal{O}_{\PP}(-k-1) \to \mathrm{Sym}^{k+1}\mathcal{G} \to 0,$$
+% since $q_*p^*E \simeq \mathrm{H}^0(E) \otimes \mathcal{O}_{\PP}$. Thus
+% \begin{align*}
+% \mathrm{H}^k(\mathrm{Sym}^{k+1}\mathcal{G}) \simeq \mathrm{H}^{k+1}(\mathrm{Sym}^k \mathrm{H}^0(E) \otimes q^*\mathcal{O}_{\PP}(-k-2))\simeq \mathrm{Sym}^k \mathrm{H}^0(E)
+% \end{align*}
+% The vanishing $\mathrm{H}^{k+1}(\mathrm{Sym}^{k+1} \mathcal{G})=0$ follows from $$\mathrm{H}^{k+1}(\mathcal{O}_X \boxtimes \mathcal{O}_{\PP}(-k-1))=\mathrm{H}^{k+2}(\mathcal{O}_X \boxtimes \mathcal{O}_{\PP}(-k-2))=0,$$
+% using $\mathrm{H}^1(\mathcal{O}_X)=0$.
 \begin{proof}
-  Resolve \(\Sym^{k+1}\cG\) by the two-term symmetric-power sequence induced
-  from \(0\to q^*\cO_{\PP}(-2)\to H^0(E)\otimes q^*\cO_{\PP}(-1)\to\cG\to0\).
-  The cohomology of negative twists on \(\PP^{k+1}\), Kunneth, and
-  \(H^1(\cO_X)=0\) identify the only nonzero contribution in degree \(k\) with
-  \(\Sym^kH^0(E)\) and force the degree \(k+1\) group to vanish.
+  \uses{def:kemeny_universal_secant_bundles, def:kemeny_universal_zero_locus, def:kemeny_LM_bundle, found:oxmod_sym_power}
+  Recall \(\cG=q^*q_*(p^*L\otimes I_{\cZ})\) and that
+  \(q_*p^*E\simeq H^0(E)\otimes\cO_{\PP}\).  Pulling the evaluation
+  \(q^*q_*p^*E\to p^*E\) back together with the universal section presents \(\cG\)
+  as the cokernel of the two-term locally free complex
+  \[
+    0\to q^*\cO_{\PP}(-2)\to H^0(E)\otimes q^*\cO_{\PP}(-1)\to\cG\to0 ,
+  \]
+  whose left map is multiplication by
+  \(\mathrm{id}\in H^0(E)\otimes H^0(E)^\vee\).  Taking the \((k+1)\)-st symmetric power
+  of this two-term complex yields the short exact sequence
+  \[
+    0\to\Sym^kH^0(E)\otimes q^*\cO_{\PP}(-k-2)
+      \to\Sym^{k+1}H^0(E)\otimes q^*\cO_{\PP}(-k-1)
+      \to\Sym^{k+1}\cG\to0 .
+  \]
+  We read the cohomology of \(\Sym^{k+1}\cG\) from the associated long exact
+  sequence.  Working on \(X\times\PP^{k+1}\), the Künneth formula together with
+  \(H^1(\cO_X)=0\) gives
+  \[
+    H^k\bigl(\cO_X\boxtimes\cO_{\PP}(-k-1)\bigr)
+      =H^{k+1}\bigl(\cO_X\boxtimes\cO_{\PP}(-k-1)\bigr)=0 ,
+  \]
+  since \(H^{k+1}(\PP,\cO_{\PP}(-k-1))=H^0(\PP,\cO_{\PP}(-1))^\vee=0\) by Serre
+  duality on \(\PP^{k+1}\) (whose canonical bundle is \(\cO_{\PP}(-k-2)\)), and the
+  lower twists of \(\cO_{\PP}(-k-1)\) carry no cohomology.  Hence the middle term
+  of the symmetric-power sequence has vanishing \(H^k\) and \(H^{k+1}\), so the
+  connecting homomorphism is an isomorphism
+  \[
+    H^k\bigl(\Sym^{k+1}\cG\bigr)\;\xrightarrow{\ \sim\ }\;
+    H^{k+1}\bigl(\Sym^kH^0(E)\otimes q^*\cO_{\PP}(-k-2)\bigr)
+    \simeq\Sym^kH^0(E) ,
+  \]
+  the final identification using
+  \(H^{k+1}(\cO_X\boxtimes\cO_{\PP}(-k-2))=H^0(\cO_X)\otimes
+   H^{k+1}(\cO_{\PP}(-k-2))\simeq\C\) (again Serre duality on \(\PP^{k+1}\)).
+  Finally \(H^{k+1}(\Sym^{k+1}\cG)=0\): in the long exact sequence it lies between
+  \(H^{k+1}\) of the middle term, which vanishes as above, and
+  \(H^{k+2}(\cO_X\boxtimes\cO_{\PP}(-k-2))\), whose only Künneth summand
+  \(H^1(\cO_X)\otimes H^{k+1}(\cO_{\PP}(-k-2))\) is killed by \(H^1(\cO_X)=0\).
 \end{proof}
 
-\begin{lemma}[Twisted symmetric-power comparison]
-  \label{lem:kemeny_twisted_symmetric_comparison}
+\begin{lemma}[First twisted symmetric-power computation]
+  \label{lem:kemeny_first_twist}
   \lean{MR4213770.TwistedSymmetricComparison}
-  \uses{lem:kemeny_first_iso}
-  % SOURCE: Kemeny, Section sec1, Lemmas first-twist-lem and second-twist-lem (read from references/kemeny-universal-secant-bundles-syzygies-canonical-curves-source/kemeny-universal-secant-bundles-syzygies-canonical-curves.tex)
-  % SOURCE QUOTE: The evaluation morphism $\mathcal{G} \twoheadrightarrow p^*L \otimes I_{\mathcal{Z}}$ induces an isomorphism
-  \textit{Source: Kemeny, Lemmas first-twist-lem and second-twist-lem.}
-  The group \(H^k(\Sym^k\cG\otimes p^*L\otimes I_{\cZ})\) is naturally
-  \(\Sym^kH^0(E)\), and the evaluation map \(\cG\twoheadrightarrow
-  p^*L\otimes I_{\cZ}\) induces an isomorphism
+  \uses{lem:kemeny_first_iso, def:kemeny_universal_zero_locus}
+  % SOURCE: Kemeny, Section sec1, Lemma first-twist-lem (read from references/kemeny-universal-secant-bundles-syzygies-canonical-curves-source/kemeny-universal-secant-bundles-syzygies-canonical-curves.tex)
+  % SOURCE QUOTE: We have a natural isomorphism $\mathrm{H}^k(\mathrm{Sym}^{k} \mathcal{G} \otimes p^*L \otimes I_{\mathcal{Z}}) \simeq \mathrm{Sym}^k \mathrm{H}^0(E).$
+  \textit{Source: Kemeny, Lemma first-twist-lem.}
+  There is a natural isomorphism
   \[
-    H^k(\Sym^k\cG\otimes\cG)\simeq
+    H^k\bigl(\Sym^k\cG\otimes p^*L\otimes I_{\cZ}\bigr)\simeq \Sym^kH^0(E).
+  \]
+\end{lemma}
+
+% SOURCE QUOTE PROOF: We have the short exact sequence
+% \begin{align*}
+% 0 &\to \mathrm{Sym}^{k-1} \mathrm{H}^0(E) \otimes q^*\mathcal{O}_{\PP}(-k-1) \otimes p^*L \otimes I_{\mathcal{Z}} \to \mathrm{Sym}^{k}\mathrm{H}^0(E) \otimes q^*\mathcal{O}_{\PP}(-k) \otimes p^*L \otimes I_{\mathcal{Z}} \\
+% &\to \mathrm{Sym}^{k}\mathcal{G} \otimes p^*L \otimes I_{\mathcal{Z}}\to 0,
+% \end{align*}
+% as well as the exact sequence
+% $0 \to \mathcal{O}_X \boxtimes \mathcal{O}_{\PP}(-2) \to E \boxtimes \mathcal{O}_{\PP}(-1) \to p^*L \otimes I_{\mathcal{Z}} \to 0.$\\
+% By the K\"unneth formula, $\mathrm{H}^{k+2}(\mathcal{O}_X \boxtimes \mathcal{O}_{\PP}(-k-3))=0$. We have
+% $$\mathrm{H}^{k+1}(\mathcal{O}_X \boxtimes \mathcal{O}_{\PP}(-k-3))=\mathrm{H}^{k+1}(\mathrm{K}_{\PP}(-1)) \simeq \mathrm{H}^0(\mathcal{O}_{\PP}(1))^{\vee}\simeq \mathrm{H}^0(E).$$
+% Further, $\mathrm{H}^{k+1}(E \boxtimes \mathcal{O}_{\PP}(-k-2)) \simeq \mathrm{H}^{k+1}(E \boxtimes \mathrm{K}_{\PP}) \simeq \mathrm{H}^0(E).$
+% The map $$\mathrm{H}^{k+1}(\mathcal{O}_X \boxtimes \mathcal{O}_{\PP}(-k-3)) \to \mathrm{H}^{k+1}(E \boxtimes \mathcal{O}_{\PP}(-k-2)) $$ is identified with $\mathrm{id}: \mathrm{H}^0(E) \to \mathrm{H}^0(E)$. Thus $\mathrm{H}^{k+1}(L \boxtimes \mathcal{O}_{\PP}(-k-1)\otimes I_{\mathcal{Z}})=0.$ We likewise have $\mathrm{H}^{k}(L \boxtimes \mathcal{O}_{\PP}(-k-1)\otimes I_{\mathcal{Z}})=0.$
+% Thus,
+% \begin{align*}
+% \mathrm{H}^k(\mathrm{Sym}^{k} \mathcal{G} \otimes p^*L \otimes I_{\mathcal{Z}})
+% \simeq \mathrm{Sym}^k\mathrm{H}^0(E)\otimes \mathrm{H}^k(L \boxtimes \mathcal{O}_{\PP}(-k)\otimes I_{\mathcal{Z}}).
+% \end{align*}
+% To finish the proof, it suffices to show that the boundary map
+% $$\mathrm{H}^k(L \boxtimes \mathcal{O}_{\PP}(-k)\otimes I_{\mathcal{Z}}) \to \mathrm{H}^{k+1}(q^*\mathrm{K}_{\PP})$$
+% is an isomorphism, which follows from the fact that $\mathrm{H}^i(E \boxtimes \mathcal{O}(-k-1))=0$ for all $i$.
+\begin{proof}
+  \uses{lem:kemeny_first_iso, def:kemeny_universal_zero_locus}
+  Tensor the symmetric-power resolution of \(\cG\) by \(p^*L\otimes I_{\cZ}\),
+  getting the short exact sequence
+  \begin{align*}
+    0\to{}&\Sym^{k-1}H^0(E)\otimes q^*\cO_{\PP}(-k-1)\otimes p^*L\otimes I_{\cZ}
+      \to\Sym^kH^0(E)\otimes q^*\cO_{\PP}(-k)\otimes p^*L\otimes I_{\cZ}\\
+      &\to\Sym^k\cG\otimes p^*L\otimes I_{\cZ}\to0 .
+  \end{align*}
+  The twist \(p^*L\otimes I_{\cZ}\) is resolved by the universal section sequence
+  \(0\to\cO_X\boxtimes\cO_{\PP}(-2)\to E\boxtimes\cO_{\PP}(-1)\to
+   p^*L\otimes I_{\cZ}\to0\).  We use it to compute
+  \(H^\bullet(L\boxtimes\cO_{\PP}(-k-1)\otimes I_{\cZ})\): by Künneth
+  \(H^{k+2}(\cO_X\boxtimes\cO_{\PP}(-k-3))=0\), while
+  \[
+    H^{k+1}\bigl(\cO_X\boxtimes\cO_{\PP}(-k-3)\bigr)
+      =H^{k+1}\bigl(\omega_{\PP}(-1)\bigr)\simeq H^0(\cO_{\PP}(1))^\vee\simeq H^0(E),
+    \quad
+    H^{k+1}\bigl(E\boxtimes\cO_{\PP}(-k-2)\bigr)\simeq H^0(E),
+  \]
+  where \(\omega_{\PP}=\cO_{\PP}(-k-2)\) is the canonical bundle of
+  \(\PP^{k+1}\).  The connecting map between these two groups is identified with
+  \(\mathrm{id}:H^0(E)\to H^0(E)\), so
+  \(H^{k+1}(L\boxtimes\cO_{\PP}(-k-1)\otimes I_{\cZ})=0\) and, likewise,
+  \(H^k(L\boxtimes\cO_{\PP}(-k-1)\otimes I_{\cZ})=0\).  Consequently the left-hand
+  term of the symmetric-power sequence drops out in degree \(k\) and
+  \[
+    H^k\bigl(\Sym^k\cG\otimes p^*L\otimes I_{\cZ}\bigr)\simeq
+    \Sym^kH^0(E)\otimes H^k\bigl(L\boxtimes\cO_{\PP}(-k)\otimes I_{\cZ}\bigr).
+  \]
+  It remains to see that the boundary map
+  \(H^k(L\boxtimes\cO_{\PP}(-k)\otimes I_{\cZ})\to H^{k+1}(q^*\omega_{\PP})\) is an
+  isomorphism; this follows because \(H^i(E\boxtimes\cO_{\PP}(-k-1))=0\) for all
+  \(i\), giving \(H^k(L\boxtimes\cO_{\PP}(-k)\otimes I_{\cZ})\simeq\C\) and hence
+  the asserted natural isomorphism.
+\end{proof}
+
+\begin{lemma}[Second twisted symmetric-power comparison]
+  \label{lem:kemeny_second_twist}
+  \lean{MR4213770.SecondTwist}
+  \uses{lem:kemeny_first_iso, lem:kemeny_first_twist, def:kemeny_universal_zero_locus}
+  % SOURCE: Kemeny, Section sec1, Lemma second-twist-lem (read from references/kemeny-universal-secant-bundles-syzygies-canonical-curves-source/kemeny-universal-secant-bundles-syzygies-canonical-curves.tex)
+  % SOURCE QUOTE: The evaluation morphism $\mathcal{G} \twoheadrightarrow p^*L \otimes I_{\mathcal{Z}}$ induces an isomorphism $$\mathrm{H}^k(\mathrm{Sym}^{k} \mathcal{G} \otimes \mathcal{G}) \xrightarrow{\sim} \mathrm{H}^k(\mathrm{Sym}^{k} \mathcal{G} \otimes p^*L \otimes I_{\mathcal{Z}}) .$$
+  \textit{Source: Kemeny, Lemma second-twist-lem.}
+  The evaluation morphism \(\cG\twoheadrightarrow p^*L\otimes I_{\cZ}\) induces an
+  isomorphism
+  \[
+    H^k(\Sym^k\cG\otimes\cG)\;\xrightarrow{\ \sim\ }\;
     H^k(\Sym^k\cG\otimes p^*L\otimes I_{\cZ}).
   \]
 \end{lemma}
+
+% SOURCE QUOTE PROOF: We have the short exact sequences
+% \begin{align*}
+% 0 \to \mathrm{Sym}^{k-1} \mathrm{H}^0(E) \otimes q^*\mathcal{O}_{\PP}(-k-1) \otimes \mathcal{G} \to \mathrm{Sym}^{k}\mathrm{H}^0(E) \otimes q^*\mathcal{O}_{\PP}(-k) \otimes \mathcal{G} \to \mathrm{Sym}^{k}\mathcal{G} \otimes \mathcal{G} \to 0,
+% \end{align*}
+% and $0 \to q^*\mathcal{O}_{\PP}(-2) \to \mathrm{H}^0(E) \otimes q^*\mathcal{O}_{\PP}(-1) \to \mathcal{G} \to 0.$\smallskip
+% Using the second sequence, $\mathrm{H}^{k+1}(\mathcal{G} \otimes q^*\mathcal{O}_{\PP}(-k-1))=\mathrm{H}^{k}(\mathcal{G} \otimes q^*\mathcal{O}_{\PP}(-k-1))=0$ and $\mathrm{H}^k(\mathcal{G} \otimes q^*\mathcal{O}_{\PP}(-k))\xrightarrow{\sim} \mathrm{H}^{k+1}(q^*\mathrm{K}_{\PP})$. Thus
+% \begin{align*}
+% \mathrm{H}^k(\mathrm{Sym}^{k} \mathcal{G} \otimes \mathcal{G}) \simeq \mathrm{H}^k(\mathrm{Sym}^k \mathrm{H}^0(E) \otimes q^*\mathcal{O}_{\PP}(-k)\otimes \mathcal{G}) \simeq \mathrm{Sym}^k\mathrm{H}^0(E)
+% \end{align*}
+% and the evaluation map gives an isomorphism $\mathrm{H}^k(\mathrm{Sym}^{k}\mathcal{G} \otimes \mathcal{G}) \xrightarrow{\sim} \mathrm{H}^k(\mathrm{Sym}^{k} \mathcal{G} \otimes p^*L \otimes I_{\mathcal{Z}}).$
 \begin{proof}
-  \uses{lem:kemeny_first_iso}
-  Tensor the symmetric-power resolution of \(\cG\) with \(p^*L\otimes I_{\cZ}\).
-  The universal section exact sequence identifies the relevant boundary map with
-  the identity of \(H^0(E)\), so the only surviving degree \(k\) contribution is
-  \(\Sym^kH^0(E)\).  Repeating the same computation with \(\cG\) in place of
-  \(p^*L\otimes I_{\cZ}\) gives the same vector space, and the evaluation map is
-  the identity under these identifications.
+  \uses{lem:kemeny_first_iso, lem:kemeny_first_twist, def:kemeny_universal_zero_locus}
+  The argument repeats the previous one with \(\cG\) in place of
+  \(p^*L\otimes I_{\cZ}\).  Tensoring the symmetric-power resolution of \(\cG\) by
+  \(\cG\) gives
+  \[
+    0\to\Sym^{k-1}H^0(E)\otimes q^*\cO_{\PP}(-k-1)\otimes\cG
+      \to\Sym^kH^0(E)\otimes q^*\cO_{\PP}(-k)\otimes\cG
+      \to\Sym^k\cG\otimes\cG\to0 .
+  \]
+  Using the two-term resolution
+  \(0\to q^*\cO_{\PP}(-2)\to H^0(E)\otimes q^*\cO_{\PP}(-1)\to\cG\to0\) one finds
+  \(H^{k+1}(\cG\otimes q^*\cO_{\PP}(-k-1))=H^k(\cG\otimes q^*\cO_{\PP}(-k-1))=0\)
+  and \(H^k(\cG\otimes q^*\cO_{\PP}(-k))\xrightarrow{\sim}H^{k+1}(q^*\omega_{\PP})\),
+  where \(\omega_{\PP}=\cO_{\PP}(-k-2)\).  Hence the left term again drops out in
+  degree \(k\) and
+  \[
+    H^k\bigl(\Sym^k\cG\otimes\cG\bigr)\simeq
+    H^k\bigl(\Sym^kH^0(E)\otimes q^*\cO_{\PP}(-k)\otimes\cG\bigr)\simeq\Sym^kH^0(E).
+  \]
+  By \cref{lem:kemeny_first_twist} the target
+  \(H^k(\Sym^k\cG\otimes p^*L\otimes I_{\cZ})\) is the same space
+  \(\Sym^kH^0(E)\), and under these identifications the map induced by the
+  evaluation \(\cG\twoheadrightarrow p^*L\otimes I_{\cZ}\) is the identity of
+  \(\Sym^kH^0(E)\); it is therefore the asserted isomorphism.
 \end{proof}
 
 \begin{proposition}[Automatic injectivity]
   \label{prop:kemeny_auto_injectivity}
   \lean{MR4213770.AutoInjectivity}
-  \uses{lem:kemeny_first_iso, lem:kemeny_twisted_symmetric_comparison}
+  \uses{lem:kemeny_first_iso, lem:kemeny_first_twist, lem:kemeny_second_twist}
   % SOURCE: Kemeny, Section sec1, Proposition auto-injectivity (read from references/kemeny-universal-secant-bundles-syzygies-canonical-curves-source/kemeny-universal-secant-bundles-syzygies-canonical-curves.tex)
   % SOURCE QUOTE: We have a natural isomorphism $\mathrm{H}^k(\mathrm{Sym}^{k+1} \mathcal{G}) \xrightarrow{\sim} \mathrm{H}^k(\mathrm{Sym}^{k} \mathcal{G} \otimes p^*L \otimes I_{\mathcal{Z}}).$
   \textit{Source: Kemeny, Proposition auto-injectivity.}
@@ -225,13 +541,29 @@
   \(H^k(\Sym^{k+1}\cG)\to H^k(\Sym^k\cG\otimes p^*L\otimes I_{\cZ})\) is an
   isomorphism.
 \end{proposition}
+
+% SOURCE QUOTE PROOF: By the previous lemmas, it suffices to show that the natural morphism
+% $$\mathrm{H}^k(\mathrm{Sym}^{k+1} \mathcal{G}) \to \mathrm{H}^k(\mathrm{Sym}^{k} \mathcal{G} \otimes \mathcal{G})$$
+% is injective. For a vector bundle $\mathcal{F}$ the composition $\mathrm{Sym}^i \mathcal{F} \to \mathrm{Sym}^{i-1}\mathcal{F} \otimes \mathcal{F} \to \mathrm{Sym}^i \mathcal{F}$
+% of natural maps is just multiplication by $i$. This completes the proof.
 \begin{proof}
-  \uses{lem:kemeny_first_iso, lem:kemeny_twisted_symmetric_comparison}
-  Under the two preceding identifications, it is enough to prove injectivity of
-  \(H^k(\Sym^{k+1}\cG)\to H^k(\Sym^k\cG\otimes\cG)\).  For any vector bundle
-  \(\mathcal F\), the composite
-  \(\Sym^i\mathcal F\to \Sym^{i-1}\mathcal F\otimes\mathcal F\to\Sym^i\mathcal F\)
-  is multiplication by \(i\), hence is injective over \(\C\).
+  \uses{lem:kemeny_first_iso, lem:kemeny_first_twist, lem:kemeny_second_twist}
+  The natural map factors as
+  \[
+    H^k(\Sym^{k+1}\cG)\to H^k(\Sym^k\cG\otimes\cG)
+      \xrightarrow{\ \sim\ }H^k(\Sym^k\cG\otimes p^*L\otimes I_{\cZ}),
+  \]
+  where the second arrow is the evaluation isomorphism of
+  \cref{lem:kemeny_second_twist}.  So it suffices to show that the first arrow is
+  injective.  For any vector bundle \(\mathcal F\) the composite of natural maps
+  \(\Sym^{k+1}\mathcal F\to \Sym^k\mathcal F\otimes\mathcal F\to
+   \Sym^{k+1}\mathcal F\) is multiplication by \(k+1\), an isomorphism in
+  characteristic zero; hence the first map
+  \(\Sym^{k+1}\cG\to\Sym^k\cG\otimes\cG\) is a split injection of bundles and
+  stays injective on \(H^k\).  Finally both ends are \(\Sym^kH^0(E)\): the source
+  by \cref{lem:kemeny_first_iso} and the target by
+  \cref{lem:kemeny_first_twist}, so the injection of equal-dimensional spaces is
+  an isomorphism.
 \end{proof}
 
 \begin{theorem}[Even-genus secant-bundle vanishing]
@@ -246,20 +578,83 @@
     H^i\bigl(B,\wedge^{k+1-i}\pi^*\cM\otimes\Sym^i\cS\bigr)=0 .
   \]
 \end{theorem}
+
+% SOURCE QUOTE PROOF: Observe $\pi^*\mathcal{G}\simeq {q'}^*q'_*({p'}^*L \otimes I_{D})$. From the defining sequence for $\mathcal{S}$, we have an exact sequence
+% \begin{align} \label{ses-S}
+% 0 \to \mathrm{Sym}^{i}\mathcal{S} \to \mathrm{Sym}^{i} \pi^* \mathcal{G} \to \mathrm{Sym}^{i-1} \pi^*\mathcal{G} \otimes {p'}^*L \otimes I_{D} \to 0.
+% \end{align}
+% Using the projection formula, and recalling the identities $\pi_*\mathcal{O}_B \simeq \mathcal{O}_{X \times \PP}$, $\pi_* I_{D} \simeq I_{\mathcal{Z}}$ and $\mathrm{R}^j \pi_*\mathcal{O}_B=\mathrm{R}^j\pi_* I_D=0$ for $j>0$,  we may identify
+% $$\mathrm{H}^{\ell}(B, \mathrm{Sym}^{i} \pi^* \mathcal{G}) \to \mathrm{H}^{\ell}(B,\mathrm{Sym}^{i-1} \pi^*\mathcal{G} \otimes {p'}^*L \otimes I_{D})$$
+% with the natural map $\mathrm{H}^{\ell}(X \times \PP, \mathrm{Sym}^{i} \mathcal{G}) \to \mathrm{H}^{\ell}(X \times \PP,\mathrm{Sym}^{i-1} \mathcal{G} \otimes {p}^*L \otimes I_{\mathcal{Z}})$, for any $\ell$. Taking the long exact sequence of cohomology for the sequence (\ref{ses-S}) for $i=k+1$ and applying the previous lemmas, we immediately see $\displaystyle \mathrm{H}^{k+1}(B,\mathrm{Sym}^{k+1} \mathcal{S})=0.$ Namely, $\mathrm{H}^{k+1}(\mathrm{Sym}^{k+1}\pi^* \mathcal{G})=0$ from Lemma \ref{first-iso} and the map $\mathrm{H}^k(\mathrm{Sym}^{k+1} \pi^* \mathcal{G}) \to \mathrm{H}^k(\mathrm{Sym}^{k}\pi^* \mathcal{G}  \otimes {p'}^*L \otimes I_{D} )$ is an isomorphism by Proposition \ref{auto-injectivity}.
+% To complete the proof, it suffices to show
+% \begin{align*}
+% \mathrm{H}^i (\bigwedge^{k+1-i} \pi^* \mathcal{M} \otimes \mathrm{Sym}^{i} \pi^* \mathcal{G})=\mathrm{H}^{i-1}(\bigwedge^{k+1-i} \pi^* \mathcal{M} \otimes \mathrm{Sym}^{i-1} \pi^* \mathcal{G} \otimes {p'}^*L \otimes I_{D} )=0, \; \; \text{for $1 \leq i \leq k$}.
+% \end{align*}
+% The first vanishing follows from the exact sequence
+% $$0 \to \mathrm{Sym}^{i-1} \mathrm{H}^0(E) \otimes q^*\mathcal{O}_{\PP}(-i-1) \to \mathrm{Sym}^{i}\mathrm{H}^0(E) \otimes q^*\mathcal{O}_{\PP}(-i) \to \mathrm{Sym}^{i}\mathcal{G}\to 0,$$
+% together with $\mathrm{H}^i(\bigwedge^{k+1-i} M_L \boxtimes \mathcal{O}_{\PP}(-i))=\mathrm{H}^{i+1}(\bigwedge^{k+1-i}M_L \boxtimes \mathcal{O}_{\PP}(-i-1))=0$ for $1 \leq i \leq k$.
+% Next, from the exact sequence
+% \begin{align*}
+% 0 &\to \mathrm{Sym}^{i-2} \mathrm{H}^0(E) \otimes q^*\mathcal{O}_{\PP}(-i) \otimes p^*L \otimes I_{\mathcal{Z}} \to \mathrm{Sym}^{i-1}\mathrm{H}^0(E) \otimes q^*\mathcal{O}_{\PP}(-i+1) \otimes p^*L \otimes I_{\mathcal{Z}}\\ &\to \mathrm{Sym}^{i-1}\mathcal{G} \otimes p^*L \otimes I_{\mathcal{Z}}\to 0,
+% \end{align*}
+% it suffices to show $\mathrm{H}^{i-1}(\bigwedge^{k+1-i} M_L (L)\boxtimes \mathcal{O}_{\PP}(-i+1)\otimes I_{\mathcal{Z}})=\mathrm{H}^{i}(\bigwedge^{k+1-i} M_L(L) \boxtimes \mathcal{O}_{\PP}(-i) \otimes I_{\mathcal{Z}})=0$ for $1 \leq i \leq k.$ This follows from $0 \to \mathcal{O}_X \boxtimes \mathcal{O}_{\PP}(-2) \to E \boxtimes \mathcal{O}_{\PP}(-1) \to L \otimes I_{\mathcal{Z}} \to 0,$ after twisting with $\bigwedge^{k+1-i} M_L \boxtimes \mathcal{O}_{\PP}(q)$ for $q \in \{-i+1,-i \}$, as $\mathrm{H}^0(X,M_L)=0$ if $i=k$.
 \begin{proof}
-  \uses{prop:kemeny_auto_injectivity, def:peer_affine_pushforward_base_change}
-  Use the symmetric-power sequence for the quotient defining \(\cS\).  After
-  applying the projection formula and the blow-up identities
-  \(\pi_*\cO_B=\cO_{X\times\PP}\), \(\pi_*I_D=I_{\cZ}\), and vanishing of higher
-  direct images, the top case is exactly the automatic-injectivity isomorphism.
-  The remaining cases reduce to Kunneth vanishings for exterior powers of
-  \(M_L\) tensored with negative line bundles on \(\PP\).
+  \uses{def:kemeny_universal_secant_bundles, prop:kemeny_auto_injectivity, lem:kemeny_first_iso, lem:kemeny_first_twist, def:peer_affine_pushforward_base_change}
+  Note first \(\pi^*\cG\simeq q'^*q'_*(p'^*L\otimes I_D)\).  The defining sequence
+  \(0\to\cS\to\pi^*\cM\to\Gamma\to0\) yields, for each \(i\), the
+  symmetric-power sequence
+  \begin{equation}\label{eq:ses-S}
+    0\to\Sym^i\cS\to\Sym^i\pi^*\cG\to\Sym^{i-1}\pi^*\cG\otimes p'^*L\otimes I_D\to0 .
+  \end{equation}
+  By the projection formula and the blow-up identities
+  \(\pi_*\cO_B\simeq\cO_{X\times\PP}\), \(\pi_*I_D\simeq I_{\cZ}\),
+  \(R^j\pi_*\cO_B=R^j\pi_*I_D=0\) for \(j>0\), the natural map
+  \(H^\ell(B,\Sym^i\pi^*\cG)\to H^\ell(B,\Sym^{i-1}\pi^*\cG\otimes p'^*L\otimes I_D)\)
+  is identified, for every \(\ell\), with
+  \(H^\ell(X\times\PP,\Sym^i\cG)\to
+    H^\ell(X\times\PP,\Sym^{i-1}\cG\otimes p^*L\otimes I_{\cZ})\).
+
+  \emph{Top case \(i=k+1\).}  Taking the long exact sequence of
+  \eqref{eq:ses-S} for \(i=k+1\): the term \(H^{k+1}(\Sym^{k+1}\pi^*\cG)=0\) by
+  \cref{lem:kemeny_first_iso}, while the map
+  \(H^k(\Sym^{k+1}\pi^*\cG)\to H^k(\Sym^k\pi^*\cG\otimes p'^*L\otimes I_D)\) is an
+  isomorphism by \cref{prop:kemeny_auto_injectivity}.  Hence
+  \(H^{k+1}(B,\Sym^{k+1}\cS)=0\).
+
+  \emph{Cases \(1\le i\le k\).}  From \eqref{eq:ses-S} twisted by
+  \(\wedge^{k+1-i}\pi^*\cM\) it suffices to prove the two vanishings
+  \[
+    H^i\bigl(\wedge^{k+1-i}\pi^*\cM\otimes\Sym^i\pi^*\cG\bigr)
+      =H^{i-1}\bigl(\wedge^{k+1-i}\pi^*\cM\otimes\Sym^{i-1}\pi^*\cG\otimes
+       p'^*L\otimes I_D\bigr)=0 .
+  \]
+  For the first, the symmetric-power resolution
+  \[
+    0\to\Sym^{i-1}H^0(E)\otimes q^*\cO_{\PP}(-i-1)
+      \to\Sym^iH^0(E)\otimes q^*\cO_{\PP}(-i)\to\Sym^i\cG\to0
+  \]
+  reduces it to
+  \(H^i(\wedge^{k+1-i}M_L\boxtimes\cO_{\PP}(-i))=
+   H^{i+1}(\wedge^{k+1-i}M_L\boxtimes\cO_{\PP}(-i-1))=0\), which holds by Künneth
+  for \(1\le i\le k\).  For the second, the resolution
+  \begin{align*}
+    0\to{}&\Sym^{i-2}H^0(E)\otimes q^*\cO_{\PP}(-i)\otimes p^*L\otimes I_{\cZ}
+      \to\Sym^{i-1}H^0(E)\otimes q^*\cO_{\PP}(-i+1)\otimes p^*L\otimes I_{\cZ}\\
+      &\to\Sym^{i-1}\cG\otimes p^*L\otimes I_{\cZ}\to0
+  \end{align*}
+  reduces it to
+  \(H^{i-1}(\wedge^{k+1-i}M_L(L)\boxtimes\cO_{\PP}(-i+1)\otimes I_{\cZ})=
+   H^i(\wedge^{k+1-i}M_L(L)\boxtimes\cO_{\PP}(-i)\otimes I_{\cZ})=0\).  These follow
+  from the universal section sequence
+  \(0\to\cO_X\boxtimes\cO_{\PP}(-2)\to E\boxtimes\cO_{\PP}(-1)\to L\otimes I_{\cZ}\to0\),
+  twisted by \(\wedge^{k+1-i}M_L\boxtimes\cO_{\PP}(q)\) for \(q\in\{-i+1,-i\}\) and
+  evaluated by Künneth, using \(H^0(X,M_L)=0\) when \(i=k\).
 \end{proof}
 
 \begin{theorem}[Voisin's theorem in even genus]
   \label{thm:kemeny_even_voisin}
   \lean{MR4213770.EvenVoisin}
-  \uses{def:kemeny_kernel_bundle_reduction, thm:kemeny_even_secant_vanishing}
+  \uses{lem:kemeny_koszul_reduction, thm:kemeny_even_secant_vanishing}
   % SOURCE: Kemeny, Section sec1 and Introduction (read from references/kemeny-universal-secant-bundles-syzygies-canonical-curves-source/kemeny-universal-secant-bundles-syzygies-canonical-curves.tex)
   % SOURCE QUOTE: We now complete the proof that $\mathrm{K}_{k,1}(X,L)=0$.
   \textit{Source: Kemeny, Section sec1.}
@@ -267,12 +662,12 @@
   \(\K_{k,1}(X,L)=0\).
 \end{theorem}
 \begin{proof}
-  \uses{def:kemeny_kernel_bundle_reduction, thm:kemeny_even_secant_vanishing}
+  \uses{lem:kemeny_koszul_reduction, thm:kemeny_even_secant_vanishing}
   The kernel-bundle description reduces \(\K_{k,1}(X,L)=0\) to
   \(H^1(X,\wedge^{k+1}M_L)=0\).  Pulling to \(B\) and using the exact sequence
   \(0\to\cS\to\pi^*\cM\to\Gamma\to0\), the exterior-power filtration reduces
   this vanishing to the family of vanishing statements in
-  Theorem~\ref{thm:kemeny_even_secant_vanishing}.
+  \cref{thm:kemeny_even_secant_vanishing}.
 \end{proof}
 
 \subsection{The Geometric Syzygy Conjecture}
@@ -289,14 +684,76 @@
     H^1(B,\wedge^k\Gamma\otimes p'^*L)\)
   is surjective.
 \end{theorem}
+
+% SOURCE QUOTE PROOF: From the exact sequence
+% \begin{align*}
+% \ldots \to \mathcal{S} \otimes \wedge^{k-1} \pi^* \mathcal{M}   \otimes {p'}^*L \to \wedge^k  \mathcal{M}   \otimes {p'}^*L \to \wedge^k \Gamma \otimes {p'}^*L \to 0,
+% \end{align*}
+% it suffices to show $\mathrm{H}^{1+i}(\mathrm{Sym}^i \mathcal{S} \otimes \wedge^{k-i} \pi^* \mathcal{M} \otimes {p'}^*L)=0$
+% for $1 \leq i \leq k$. From the exact sequence
+% $$0 \to \mathrm{Sym}^{i} \mathcal{S} \to \mathrm{Sym}^i( \pi^*\mathcal{G}) \to \mathrm{Sym}^{i-1}(\pi^*\mathcal{G})\otimes {p'}^*L \otimes I_D \to 0$$
+% it suffices to have
+% \begin{align*}
+% \mathrm{H}^{1+i}\left(X \times \PP,\mathrm{Sym}^i (\mathcal{G}) \otimes \wedge^{k-i} \mathcal{M} \otimes {p}^*L\right)=\mathrm{H}^i\left(X \times \PP,\mathrm{Sym}^{i-1}(\mathcal{G})\otimes \wedge^{k-i}  \mathcal{M} \otimes {p}^*L^{\otimes 2} \otimes I_{\mathcal{Z}}\right)=0
+% \end{align*}
+% By taking $\mathrm{Sym}^i$ of the exact sequence
+% $$0 \to q^*\mathcal{O}_{\PP}(-2) \to \mathrm{H}^0(E) \otimes q^*\mathcal{O}_{\PP}(-1) \to \mathcal{G} \to 0$$
+% it suffices to show the four vanishings
+% {\small{\begin{align*}
+% &\mathrm{H}^{2+i}\left( \wedge^{k-i} M_L (L) \boxtimes   \mathcal{O}_{\PP}(-i-1)  \right)=0, & &\mathrm{H}^{1+i}\left(\wedge^{k-i} M_L (L) \boxtimes \mathcal{O}_{\PP}(-i)  \right)=0,\\
+% &\mathrm{H}^{1+i}\left((\wedge^{k-i} M_L (2L) \boxtimes \mathcal{O}_{\PP}(-i) )\otimes I_{\mathcal{Z}} \right)=0, & &\mathrm{H}^{i}\left((\wedge^{k-i} M_L (2L) \boxtimes \mathcal{O}_{\PP}(-i+1) )\otimes I_{\mathcal{Z}} \right)=0.
+% \end{align*}}}
+% The first two claims follow from the K\"unneth formula, for $1 \leq i \leq k$. For the last two claims, we use the short exact sequence
+% $$0 \to L^{-1} \boxtimes \mathcal{O}_{\PP}(-2) \to E(L^{-1}) \boxtimes \mathcal{O}_{\PP}(-1) \to I_{\mathcal{Z}} \to 0,$$
+% so it suffices to have the four vanishings
+% {\small{\begin{align*}
+% &\mathrm{H}^{2+i}\left(\wedge^{k-i} M_L (L) \boxtimes \mathcal{O}_{\PP}(-i-2)  \right)=0,
+% & &\mathrm{H}^{1+i}\left( \wedge^{k-i} M_L \otimes E(L) \boxtimes \mathcal{O}_{\PP}(-i-1)  \right)=0,\\
+% &\mathrm{H}^{1+i}\left( \wedge^{k-i} M_L (L) \boxtimes \mathcal{O}_{\PP}(-i-1)  \right)=0,
+% & &\mathrm{H}^{i}\left(\wedge^{k-i} M_L \otimes E(L) \boxtimes \mathcal{O}_{\PP}(-i)  \right)=0.
+% \end{align*}}}
+% This follows from the K\"unneth formula, using $\mathrm{H}^1(X,L)=0$ if $i=k$ in the first vanishing.
 \begin{proof}
-  \uses{def:kemeny_universal_secant_bundles}
-  The exterior-power sequence for \(0\to\cS\to\pi^*\cM\to\Gamma\to0\) reduces
-  surjectivity to the vanishing of
-  \(H^{1+i}(\Sym^i\cS\otimes\wedge^{k-i}\pi^*\cM\otimes p'^*L)\).
-  The symmetric-power sequence for \(\cS\), the projection formula, and the
-  universal zero-locus exact sequence reduce these groups to Kunneth vanishings
-  on \(X\times\PP\).
+  \uses{def:kemeny_universal_secant_bundles, def:peer_affine_pushforward_base_change}
+  The exterior-power filtration of \(0\to\cS\to\pi^*\cM\to\Gamma\to0\), namely
+  \[
+    \dots\to\cS\otimes\wedge^{k-1}\pi^*\cM\otimes p'^*L
+      \to\wedge^k\pi^*\cM\otimes p'^*L\to\wedge^k\Gamma\otimes p'^*L\to0 ,
+  \]
+  shows that \(\psi\) is surjective once
+  \(H^{1+i}(\Sym^i\cS\otimes\wedge^{k-i}\pi^*\cM\otimes p'^*L)=0\) for
+  \(1\le i\le k\).  Feeding in the symmetric-power sequence
+  \(0\to\Sym^i\cS\to\Sym^i\pi^*\cG\to\Sym^{i-1}\pi^*\cG\otimes p'^*L\otimes I_D\to0\)
+  and pushing down by \(\pi\) (using \(\pi_*\cO_B=\cO_{X\times\PP}\),
+  \(\pi_*I_D=I_{\cZ}\), \(R^{>0}\pi_*=0\) on these sheaves), this reduces to the
+  two vanishings on \(X\times\PP\)
+  \[
+    H^{1+i}\bigl(\Sym^i\cG\otimes\wedge^{k-i}\cM\otimes p^*L\bigr)
+      =H^i\bigl(\Sym^{i-1}\cG\otimes\wedge^{k-i}\cM\otimes p^*L^{\otimes2}
+       \otimes I_{\cZ}\bigr)=0 .
+  \]
+  Taking \(\Sym^i\) of
+  \(0\to q^*\cO_{\PP}(-2)\to H^0(E)\otimes q^*\cO_{\PP}(-1)\to\cG\to0\) replaces
+  these by the four Künneth vanishings
+  \begin{align*}
+    &H^{2+i}\bigl(\wedge^{k-i}M_L(L)\boxtimes\cO_{\PP}(-i-1)\bigr)=0,
+    &&H^{1+i}\bigl(\wedge^{k-i}M_L(L)\boxtimes\cO_{\PP}(-i)\bigr)=0,\\
+    &H^{1+i}\bigl((\wedge^{k-i}M_L(2L)\boxtimes\cO_{\PP}(-i))\otimes I_{\cZ}\bigr)=0,
+    &&H^i\bigl((\wedge^{k-i}M_L(2L)\boxtimes\cO_{\PP}(-i+1))\otimes I_{\cZ}\bigr)=0.
+  \end{align*}
+  The first two hold by the Künneth formula for \(1\le i\le k\) (the
+  \(\cO_{\PP}\)-twists are too negative to contribute below degree \(k+1\)).  For
+  the last two, resolve \(I_{\cZ}\) by
+  \(0\to L^{-1}\boxtimes\cO_{\PP}(-2)\to E(L^{-1})\boxtimes\cO_{\PP}(-1)
+   \to I_{\cZ}\to0\); this reduces them to the further four Künneth vanishings
+  \begin{align*}
+    &H^{2+i}\bigl(\wedge^{k-i}M_L(L)\boxtimes\cO_{\PP}(-i-2)\bigr)=0,
+    &&H^{1+i}\bigl(\wedge^{k-i}M_L\otimes E(L)\boxtimes\cO_{\PP}(-i-1)\bigr)=0,\\
+    &H^{1+i}\bigl(\wedge^{k-i}M_L(L)\boxtimes\cO_{\PP}(-i-1)\bigr)=0,
+    &&H^i\bigl(\wedge^{k-i}M_L\otimes E(L)\boxtimes\cO_{\PP}(-i)\bigr)=0,
+  \end{align*}
+  all of which follow from the Künneth formula, using \(H^1(X,L)=0\) when
+  \(i=k\) in the first.
 \end{proof}
 
 \begin{lemma}[Determinant of \(\Gamma\) in even genus]
@@ -558,8 +1015,6 @@
   For the odd-genus Picard-rank-two surface,
   \(\K_{k+1,1}(X,L')=0\) and
   \(\Sym^{k-1}H^0(X,E)\simeq \K_{k,1}(X,L')\).
-  Here \(L=L'-\Delta\), so the blueprint's \(\K_{k,1}(X,L')\) is the paper's
-  \(\K_{k,1}(X,L+\Delta)\).
 \end{lemma}
 \begin{proof}
   \uses{thm:kemeny_even_voisin, cor:kemeny_extremal_syzygy_iso}
@@ -586,7 +1041,7 @@
   If a decomposable wedge vanished, the two sections would generate a rank-one
   subsheaf with at least two sections.  After removing torsion from the quotient,
   both determinant factors have at least two sections, so \(L'\) would split as a
-  sum of two pencils, contradicting Lemma~\ref{lem:kemeny_BNP_gen}.
+  sum of two pencils, contradicting \cref{lem:kemeny_BNP_gen}.
 \end{proof}
 
 \begin{lemma}[Twisting \(E\) by the nodal curve gives \(F\)]
@@ -792,7 +1247,7 @@
   \lean{MR4213770.OddIdentiLem}
   \uses{lem:kemeny_odd_projective_bundle_model}
   % SOURCE: Kemeny, Section odd-genus, Lemma identilem (read from references/kemeny-universal-secant-bundles-syzygies-canonical-curves-source/kemeny-universal-secant-bundles-syzygies-canonical-curves.tex)
-  % SOURCE QUOTE: For any $j$, we have have natural isomorphisms
+  % SOURCE QUOTE: For any $j$, we have have natural isomorphisms $\mathrm{H}^j(B, \pi^* \mathcal{M} \otimes \mathrm{Sym}^{k+1}(S)({p'}^*\Delta)(D))\simeq \mathrm{H}^{j+1}(B, \pi^* \mathcal{M} \otimes S(-2k)({p'}^*\Delta)(D))$ and $\mathrm{H}^{j}(B,\bigwedge^{2}\pi^*\mathcal{M} \otimes \mathrm{Sym}^k(S)({p'}^*\Delta)(D))\simeq \mathrm{H}^{j+1}(B,\bigwedge^{2}\pi^*\mathcal{M}(-2k)({p'}^*\Delta)(D)).$
   \textit{Source: Kemeny, Lemma identilem.}
   For every \(j\), there are natural isomorphisms
   \[
@@ -892,8 +1347,6 @@
   \[
     \phi^\vee=pr_k\circ\psi^\vee .
   \]
-  Here \(L=L'-\Delta\), so the blueprint's \(\K_{k,1}(X,L')\) is the paper's
-  \(\K_{k,1}(X,L+\Delta)\).
 \end{lemma}
 \begin{proof}
   \uses{lem:kemeny_projection_criterion, lem:kemeny_green_pic2, prop:kemeny_odd_phi_surjective}
@@ -922,7 +1375,7 @@
 \end{theorem}
 \begin{proof}
   \uses{lem:kemeny_projection_criterion, lem:kemeny_green_pic2, prop:kemeny_odd_phi_surjective, lem:kemeny_odd_projection_comparison}
-  Lemma~\ref{lem:kemeny_green_pic2} identifies the source of the projection map
+  \cref{lem:kemeny_green_pic2} identifies the source of the projection map
   with \(\Sym^{k-1}H^0(E)\).  Surjectivity of \(\phi\) makes
   \(\phi^\vee\) injective, and the projection comparison identifies this
   injection with \(pr_k\circ\psi^\vee\).  Hence \(pr_k\) is injective.  The

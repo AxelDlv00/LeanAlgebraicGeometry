@@ -1,11 +1,12 @@
 {
-  "iter": 21,
-  "sha": "1eaa293",
-  "timestamp": "2026-06-18T10:22:09Z",
+  "iter": 29,
+  "sha": "cd418cf",
+  "timestamp": "2026-06-19T13:41:05Z",
   "added": 3,
-  "removed": 54,
-  "duration_secs": 195,
+  "removed": 29,
+  "duration_secs": 115,
   "chapters_touched": [
+    "blueprint/src/chapters/Picard_RelPicFunctor.tex",
     "blueprint/src/chapters/Picard_TensorObjSubstrate.tex"
   ]
 }

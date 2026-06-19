@@ -1,30 +1,51 @@
 # Pending Tasks
 <!-- Current open-task set, last-known state only. Per-attempt detail → iter sidecars. -->
 
-## Seed 1 — `pullbackTensorIsoOfLocallyTrivial` (D4′ chart-chase) — `TensorObjSubstrate.lean` — ACTIVE
-STATE: body CLOSED iter-020 (decl L4238, chart-chase sorry-free). K1 SCAFFOLDED iter-021 (Steps A+B +
-the `hcompat` transposition all in place). Residual = the SINGLE in-proof `hcompat` sorry (L4219, inside
-`pullbackTensorMap_isIso_of_isOpenImmersion` L4139, transitive sorryAx to seed-1).
-- **K1** = `IsIso (pullbackTensorMap f M N)` for `[IsOpenImmersion f]`, ARBITRARY M,N. Entry
-  `isIso_pullbackTensorMap_of_isIso_sheafifyDelta` → presheaf `IsIso (δ (pullback φ'))`; Step B builds the
-  strong-monoidal witness mirroring `tensorObj_restrict_iso` (H1 `leftAdjointUniq`, μIsoβ
-  `restrictScalarsMonoidalOfBijective`). `hcompat` = `leftAdjointOplaxMonoidal hadj .δ = μIsoβ.inv`.
-- **De-risked iter-022 (recon022):** `hcompat` ⟺ `hadj.IsMonoidal` (Mathlib carrier `Adjunction.IsMonoidal`;
-  NO Mathlib gap). Close = build the project-side instance sectionwise (`homEquiv.injective`+`tensor_ext`,
-  ⚠ likely multi-line simp not rfl per sc022), then `laxMonoidalEquivOplaxMonoidal.right_inv` +
-  `Functor.Monoidal.μIso`. Mode `prove`. Full recipe: PROGRESS objective + `analogies/recon022.md`. Do NOT
-  retry functor-level transport / a fresh hand-built `e`.
-- Pin: `AlgebraicGeometry.Scheme.Modules.pullbackTensorIsoOfLocallyTrivial`. Blueprint K1 node
-  `lem:pullback_tensor_map_isiso_open_immersion` (gate-cleared bpr021).
-- Reference: Stacks `lemma-tensor-product-pullback` (pullback strong-monoidal) — `references/stacks-modules.tex`.
+## Seed 1 — `pullbackTensorIsoOfLocallyTrivial` (D4′ chart-chase) — `TensorObjSubstrate.lean` — DEFERRED iter-030
+STATE: body CLOSED. K1 residual `hmon` DECOMPOSED; **η-side CLOSED iter-028**; μ-side RHS + comparison-assembly
+CLOSED iter-029 (`pushforward_lax_mu_comparison_rhs_tmul` PROVEN green; parent `pushforward_lax_mu_comparison`
+body sorry-free via `hom_ext` delegation — both in task_done). **TWO residual sorries remain, both deferred to
+iter-031 as a SOLO root-churning lane** (Substrate is the import-chain ROOT; editing it in parallel with the
+DualInverse/TensorObjInverse lanes caused the iter-029 build-race that lost all work — see ARCHON_MEMORY).
+**HARD (pc030): lhs_tmul gets its solo lane iter-031 — a 2nd consecutive deferral trips CHURNING-by-avoidance.**
+- **`pushforward_lax_mu_comparison_lhs_tmul`** (`lem:pushforward_lax_mu_comparison_lhs_tmul`, L4303 sorry@L4353)
+  — THE genuine residual (multi-hundred-LOC mate seam, flagged since iter-026). Packaged as the per-section
+  comparison (let-chain + fixed `W`, `tensor_ext` INSIDE so `m,n` carry correct module instances — UNSTATABLE
+  as a standalone pure-tensor lemma, module-instance trap). iter-029 committed `tensor_ext` +
+  `rw [Adjunction.rightAdjointLaxMonoidal_μ, Adjunction.homEquiv_unit]` (mate → explicit
+  `unit ≫ G.map(δGβ ≫ counit⊗counit)`). Residual = sectionwise value of the unfolded mate on `m⊗ₜn`: unit leg →
+  `pushforwardPushforwardAdj_unit_app_app_apply`; δGβ leg → `Functor.OplaxMonoidal.comp_δ` +
+  `restrictScalars_μ_app_tmul`/`forget₂_restrictScalars_μ_hom_tmul`; counit pair → bijective `f.appIso`. All
+  via `erw` (no whnf on heavy sections), mirroring `pushforwardComp_lax_μ` leg calculus but for a MATE LHS.
+  Routing through `hadj'.IsMonoidal` is CIRCULAR.
+- **`pushforward_mu_appIso_collapse`** (`lem:pushforward_mu_appiso_collapse`, L4410 sorry@L4506): downstream;
+  rewire to the 4-step mate reduction CALLING the now-assembled comparison once `lhs_tmul` closes.
+- Pin: `AlgebraicGeometry.Scheme.Modules.pullbackTensorIsoOfLocallyTrivial`. Blueprint §"K1 monoidal-mate
+  bridge". Reference: Stacks `lemma-tensor-product-pullback` — `references/stacks-modules.tex`.
 
-## Deferred terminal — `exists_tensorObj_inverse` (`lem:tensorobj_inverse_invertible`)
-STATE: the project's SOLE bare `sorry` (TensorObjSubstrate.lean:730). Import-cycle-gated: needs
-`dual_isLocallyTrivial` (DualInverse.lean, which imports TensorObjSubstrate) → cannot close in
-TensorObjSubstrate.lean. RESOLUTION (next phase, planned in STRATEGY): refactor-MOVE the decl to a file
-downstream of DualInverse where `dual_isLocallyTrivial` is visible, repoint RelPicFunctor's import
-(its `neg`/`neg_add_cancel` is the only consumer), then close the gluing proof (bridge A
-`homOfLocalCompat` + B `isIso_of_isIso_restrict` [done] + C `dual_isLocallyTrivial` [done]).
+## Terminal — `exists_tensorObj_inverse` (`lem:tensorobj_inverse_invertible`) — ACTIVE, DECOUPLED
+STATE: descent skeleton BUILT; collapse MECHANISM PROVEN mod B1 (iter-028). iter-029 (RED, lands on the
+iter-030 build-fix): **eval-core `presheafDualUnitIso_naturality` (DualInverse.lean) WRITTEN + verified
+`goals:[]`** — file sorry-free except ONE compile error at L219 (one-token name-shadow `← map_smul` →
+`Scheme.Modules.map_smul`; fix = `← LinearMap.map_smul`, confirmed closing iter-030); **hN
+`dualUnitIso_dualIsoOfIso` CLOSED + verified `goals:[]`** (assembled from the eval-core via `sheafification`
+`erw` + counit naturality — `tensorObj_unit_self_duality_collapse` now fully sorry-free). Neither committed
+green in iter-029 (build-race). Two genuine open sorries, BOTH this-iter targets (pc030: close BOTH, NO new
+helpers — a 3rd PARTIAL = STUCK):
+- **`trivialisation_restrict_compat` (`TensorObjInverse.lean` L183 sorry@L211)** — restriction-functor
+  naturality of the trivialisation iso-chain; mirror `restrictIsoUnitOfLE` (`analogies/cocycle-a.md` §A);
+  memory [[restrictfunctor-glued-morphism-pattern]] (`SheafOfModules.Hom.ext` before `PresheafOfModules.hom_ext`;
+  `eqToHom_comp_iff`+`exact`-matched naturality; forward `rw [naturality]` fails on X-vs-restrict defeq).
+  iter-029 NOT typed (no green build window — build-race).
+- **Cocycle `exists_tensorObj_inverse` (`TensorObjInverse.lean` L302 sorry@L434)** — **FULL iso-algebra
+  reduction DERIVED + written in-code iter-029** (paper-validated `/- Planner strategy -/` block): `erw
+  [trivialisation_restrict_compat …]` reduces both overlap legs to one `t`; `dualIsoOfIso_trans` + insert
+  `dual_unit_iso ≪≫ dual_unit_iso.symm = 𝟙` ⇒ `dualLeg eMj = dualLeg eMi ≪≫ sConj`; `tensorObjIsoOfIso_trans`
+  factors RHS; `tensorObjIsoOfIso t sConj ≪≫ tensorObj_unit_iso = tensorObj_unit_iso` is EXACTLY
+  `tensorObj_unit_self_duality_collapse t` (sorry-free). Just needs TYPING in a green window. NEVER
+  sheafify-the-eval (d.2 dead-end).
+- **Residual B** — CLOSED iter-026. Recipe `rem:dual_discharges_inverse`. Non-critical branch (seed-3
+  `map_add` rides seed-1→K1).
 
 ## Scaffold target — seed 3 `PicSharp.addCommGroup_via_tensorObj` (`RelPicFunctor.lean`)
 STATE: not in Lean. Gated on seed-1 (map_add ← comparison iso) + `exists_tensorObj_inverse` (group inverse).

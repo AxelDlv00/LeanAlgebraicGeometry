@@ -1,0 +1,179 @@
+\def\cprime{$'$}
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
+% \MRhref is called by the amsart/book/proc definition of \MR.
+\providecommand{\MRhref}[2]{%
+  \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
+}
+\providecommand{\href}[2]{#2}
+\begin{thebibliography}{ACMV23}
+
+\bibitem[AC15]{achtercunningham15}
+Jeffrey~D. Achter and Clifton Cunningham, \emph{A note on {$L$}-packets and
+  abelian varieties over local fields}, Pacific J. Math. \textbf{273} (2015),
+  no.~2, 395--412. \MR{3317772}
+
+\bibitem[ACMV23]{ACMVfunctor}
+Jeffrey~D. Achter, Sebastian Casalaina-Martin, and Charles Vial, \emph{A
+  functorial approach to regular homomorphisms}, Algebr. Geom. \textbf{10}
+  (2023), no.~1, 87--129. \MR{4537125}
+
+\bibitem[AHL13]{aubryhalouilachaud13}
+Yves Aubry, Safia Haloui, and Gilles Lachaud, \emph{On the number of points on
+  abelian and {J}acobian varieties over finite fields}, Acta Arith.
+  \textbf{160} (2013), no.~3, 201--241. \MR{3106095}
+
+\bibitem[BLR90]{BLR}
+Siegfried Bosch, Werner L{\"u}tkebohmert, and Michel Raynaud, \emph{N\'eron
+  models}, Ergebnisse der Mathematik und ihrer Grenzgebiete (3) [Results in
+  Mathematics and Related Areas (3)], vol.~21, Springer-Verlag, Berlin, 1990.
+  \MR{1045822 (91i:14034)}
+
+\bibitem[Bou81]{bourbakifields}
+Nicolas Bourbaki, \emph{\'{E}l\'{e}ments de math\'{e}matique}, Masson, Paris,
+  1981, Alg\`ebre. Chapitres 4 \`a 7. [Algebra. Chapters 4--7]. \MR{643362}
+
+\bibitem[Bri17]{brionstructure}
+Michel Brion, \emph{Some structure theorems for algebraic groups}, Algebraic
+  groups: structure and actions, Proc. Sympos. Pure Math., vol.~94, Amer. Math.
+  Soc., Providence, RI, 2017, pp.~53--126. \MR{3645068}
+
+\bibitem[Che60]{Chevalley60}
+C.~Chevalley, \emph{Sur la th\'{e}orie de la vari\'{e}t\'{e} de {P}icard},
+  Amer. J. Math. \textbf{82} (1960), 435--490. \MR{118723}
+
+\bibitem[Con06]{conradtrace}
+Brian Conrad, \emph{Chow's {$K/k$}-image and {$K/k$}-trace, and the
+  {L}ang-{N}\'eron theorem}, Enseign. Math. (2) \textbf{52} (2006), no.~1-2,
+  37--108. \MR{2255529 (2007e:14068)}
+
+\bibitem[Con07]{conradNagata}
+\bysame, \emph{Deligne's notes on {N}agata compactifications}, J. Ramanujan
+  Math. Soc. \textbf{22} (2007), no.~3, 205--257. \MR{2356346}
+
+\bibitem[Con17]{ConradMathOver}
+\bysame, \emph{Albanese variety over non-perfect fields}, 2017, Available at
+  \url{https://mathoverflow.net/questions/260982/albanese-variety-over-non-perfect-fields},
+  p.~1.
+
+\bibitem[DG70]{SGA32}
+M.~Demazure and A.~Grothendieck, \emph{Sch\'{e}mas en groupes. {II}: {G}roupes
+  de type multiplicatif, et structure des sch\'{e}mas en groupes
+  g\'{e}n\'{e}raux}, S\'{e}minaire de G\'{e}om\'{e}trie Alg\'{e}brique du Bois
+  Marie 1962/64 (SGA 3). Dirig\'{e} par M. Demazure et A. Grothendieck. Lecture
+  Notes in Mathematics, Vol. 152, Springer-Verlag, Berlin-New York, 1970.
+  \MR{0274459}
+
+\bibitem[dJ96]{deJong}
+A.~J. de~Jong, \emph{Smoothness, semi-stability and alterations}, Inst. Hautes
+  \'Etudes Sci. Publ. Math. (1996), no.~83, 51--93. \MR{1423020}
+
+\bibitem[EH00]{EH2000}
+David Eisenbud and Joe Harris, \emph{The geometry of schemes}, Graduate Texts
+  in Mathematics, vol. 197, Springer-Verlag, New York, 2000. \MR{1730819}
+
+\bibitem[FC90]{FC}
+Gerd Faltings and Ching-Li Chai, \emph{Degeneration of abelian varieties},
+  Ergebnisse der Mathematik und ihrer Grenzgebiete (3) [Results in Mathematics
+  and Related Areas (3)], vol.~22, Springer-Verlag, Berlin, 1990, With an
+  appendix by David Mumford. \MR{1083353}
+
+\bibitem[FT15]{flynntesta15}
+E.~V. Flynn and D.~Testa, \emph{Finite {W}eil restriction of curves}, Monatsh.
+  Math. \textbf{176} (2015), no.~2, 197--218. \MR{3302155}
+
+\bibitem[Gro62]{FGA}
+Alexander Grothendieck, \emph{Fondements de la g\'{e}om\'{e}trie
+  alg\'{e}brique. [{E}xtraits du {S}\'{e}minaire {B}ourbaki, 1957--1962.]},
+  Secr\'{e}tariat math\'{e}matique, Paris, 1962. \MR{0146040}
+
+\bibitem[Gro67]{EGAIV4}
+A.~Grothendieck, \emph{\'{E}l\'{e}ments de g\'{e}om\'{e}trie alg\'{e}brique.
+  {IV}. \'{E}tude locale des sch\'{e}mas et des morphismes de sch\'{e}mas
+  {IV}}, Inst. Hautes \'{E}tudes Sci. Publ. Math. (1967), no.~32, 361.
+  \MR{238860}
+
+\bibitem[GW20]{GW20}
+Ulrich G\"{o}rtz and Torsten Wedhorn, \emph{Algebraic geometry {I}.
+  {S}chemes---with examples and exercises}, Springer Studium
+  Mathematik---Master, Springer Spektrum, Wiesbaden, [2020] \copyright 2020,
+  Second edition [of 2675155]. \MR{4225278}
+
+\bibitem[Hal08]{hallbigmonodromy}
+Chris Hall, \emph{Big symplectic or orthogonal monodromy modulo {$l$}}, Duke
+  Math. J. \textbf{141} (2008), no.~1, 179--203. \MR{2372151}
+
+\bibitem[HZ02]{howezhu02}
+Everett~W. Howe and Hui~June Zhu, \emph{On the existence of absolutely simple
+  abelian varieties of a given dimension over an arbitrary field}, J. Number
+  Theory \textbf{92} (2002), no.~1, 139--163. \MR{1880590}
+
+\bibitem[Kat19]{katzbigmonodromy}
+Nicholas~M. Katz, \emph{A note on {G}alois representations with big image},
+  Enseign. Math. \textbf{65} (2019), no.~3-4, 271--301. \MR{4113044}
+
+\bibitem[Ked22]{kedlayarelclassoneI}
+Kiran~S. Kedlaya, \emph{The relative class number one problem for function
+  fields, {I}}, Res. Number Theory \textbf{8} (2022), no.~4, Paper No. 79, 21.
+  \MR{4493405}
+
+\bibitem[LS21]{laurentschroeralbanese}
+Bruno Laurent and Stefan Schr\"oer, \emph{Para-abelian varieties and {A}lbanese
+  maps}, \mbox{arXiv:2101.10829 [math.AG]}, 2021.
+
+\bibitem[L{\"u}t93]{lutkebohmert93}
+W.~L{\"u}tkebohmert, \emph{On compactification of schemes}, Manuscripta Math.
+  \textbf{80} (1993), no.~1, 95--111. \MR{1226600}
+
+\bibitem[MFK94]{mumfordGIT}
+D.~Mumford, J.~Fogarty, and F.~Kirwan, \emph{Geometric invariant theory}, third
+  ed., Ergebnisse der Mathematik und ihrer Grenzgebiete (2) [Results in
+  Mathematics and Related Areas (2)], vol.~34, Springer-Verlag, Berlin, 1994.
+  \MR{1304906}
+
+\bibitem[Mil72]{milnearithmeticabvars}
+J.~S. Milne, \emph{On the arithmetic of abelian varieties}, Invent. Math.
+  \textbf{17} (1972), 177--190. \MR{330174}
+
+\bibitem[ML39]{maclane}
+Saunders Mac~Lane, \emph{Modular fields. {I}. {S}eparating transcendence
+  bases}, Duke Math. J. \textbf{5} (1939), no.~2, 372--393. \MR{1546131}
+
+\bibitem[Moc12]{mochizuki12}
+Shinichi Mochizuki, \emph{Topics in absolute anabelian geometry {I}:
+  generalities}, J. Math. Sci. Univ. Tokyo \textbf{19} (2012), no.~2, 139--242.
+  \MR{2987306}
+
+\bibitem[NS52]{NS52}
+Andr\'{e} N\'{e}ron and Pierre Samuel, \emph{La vari\'{e}t\'{e} de {P}icard
+  d'une vari\'{e}t\'{e} normale}, Ann. Inst. Fourier (Grenoble) \textbf{4}
+  (1952), 1--30 (1954). \MR{61858}
+
+\bibitem[Ols08]{olssonAV}
+Martin~C. Olsson, \emph{Compactifying moduli spaces for abelian varieties},
+  Lecture Notes in Mathematics, vol. 1958, Springer-Verlag, Berlin, 2008.
+  \MR{2446415}
+
+\bibitem[Sch23]{schroeralbanese}
+Stefan Schröer, \emph{{Albanese Maps for Open Algebraic Spaces}},
+  International Mathematics Research Notices (2023), rnad187,
+  \mbox{https://academic.oup.com/imrn/advance-article-pdf/doi/10.1093/imrn/rnad187/51468824/rnad187.pdf}.
+
+\bibitem[Ser60]{serrealb}
+J.-P. Serre, \emph{Morphismes universels et vari\'et\'es d'{A}lbanese},
+  S\'{e}minaire {C}. {C}hevalley, 3i\`eme ann\'{e}e: 1958/59, vol.~4, \'{E}cole
+  Normale Sup\'{e}rieure, Paris, 1960. \MR{0157865}
+
+\bibitem[{Sta}22]{stacks-project}
+The {Stacks Project Authors}, \emph{\itshape {S}tacks {P}roject},
+  \url{http://stacks.math.columbia.edu}, 2022.
+
+\bibitem[Voj21]{vojta}
+P.~Vojta, \emph{Lecture notes},
+  \url{https://math.berkeley.edu/~vojta/254b/ho3.pdf}, 2021.
+
+\bibitem[Wit08]{wittenberg08}
+Olivier Wittenberg, \emph{On {A}lbanese torsors and the elementary
+  obstruction}, Math. Ann. \textbf{340} (2008), no.~4, 805--838. \MR{2372739}
+
+\end{thebibliography}

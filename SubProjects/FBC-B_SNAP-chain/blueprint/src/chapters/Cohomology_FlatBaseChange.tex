@@ -742,6 +742,192 @@ right-adjoint functors (Lemma~\ref{lem:gammaPushforwardNatIso}).
 \begin{lemma}
 
 \leanok
+[Three-fold naturality of the global-sections comparison square]
+  \label{lem:globalSectionsIso_hom_comp3_specMap_appTop}
+  \lean{AlgebraicGeometry.globalSectionsIso_hom_comp3_specMap_appTop}
+  \uses{lem:globalSectionsIso_hom_comp_specMap_appTop}
+  Let \(\varphi : R \to S\) and \(\rho : S \to T\) be homomorphisms of commutative
+  rings, and write \(\mathrm{gs}_R, \mathrm{gs}_S, \mathrm{gs}_T\) for the
+  global-sections isomorphisms of the three structure sheaves. By contravariance of
+  \(\operatorname{Spec}\) one has
+  \(\operatorname{Spec}(\rho\circ\varphi) = \operatorname{Spec}\varphi \circ
+  \operatorname{Spec}\rho\); transporting the top-open structure-sheaf component along
+  this identity expresses the composite component as the pasting of the two single-map
+  components,
+  \[
+    (\operatorname{Spec}(\rho\circ\varphi))^{\sharp}_{\top}
+      \;=\;
+    (\operatorname{Spec}\varphi)^{\sharp}_{\top}
+      \;\text{followed by}\;
+    (\operatorname{Spec}\rho)^{\sharp}_{\top},
+  \]
+  the two presentations being identified by the cast carried by that contravariance
+  identity. Equivalently, conjugating by the global-sections isomorphisms, the ring
+  square
+  \[
+    \mathrm{gs}_R \;\circ\; (\operatorname{Spec}(\rho\circ\varphi))^{\sharp}_{\top}
+    \;=\; (\rho\circ\varphi) \;\circ\; \mathrm{gs}_T
+  \]
+  commutes. This is the three-fold \((R \to S \to T)\) composite analogue of the
+  single-map square \cref{lem:globalSectionsIso_hom_comp_specMap_appTop}.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:globalSectionsIso_hom_comp_specMap_appTop}
+  By the contravariance of \(\operatorname{Spec}\) the morphism
+  \(\operatorname{Spec}(\rho\circ\varphi)\) equals the composite
+  \(\operatorname{Spec}\varphi \circ \operatorname{Spec}\rho\). Since the structure-sheaf
+  comparison is multiplicative under composition of morphisms, transporting the top-open
+  component along this identity expresses
+  \((\operatorname{Spec}(\rho\circ\varphi))^{\sharp}_{\top}\) as the pasting of
+  \((\operatorname{Spec}\varphi)^{\sharp}_{\top}\) followed by
+  \((\operatorname{Spec}\rho)^{\sharp}_{\top}\). Now apply the single-map square
+  \cref{lem:globalSectionsIso_hom_comp_specMap_appTop} twice: for \(\varphi\) it gives
+  \(\mathrm{gs}_R \circ (\operatorname{Spec}\varphi)^{\sharp}_{\top}
+  = \varphi \circ \mathrm{gs}_S\), and for \(\rho\) it gives
+  \(\mathrm{gs}_S \circ (\operatorname{Spec}\rho)^{\sharp}_{\top}
+  = \rho \circ \mathrm{gs}_T\). Splicing the two squares along \(\mathrm{gs}_S\) yields
+  \(\mathrm{gs}_R \circ (\operatorname{Spec}(\rho\circ\varphi))^{\sharp}_{\top}
+  = (\rho\circ\varphi) \circ \mathrm{gs}_T\), as claimed.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Per-component composition coherence of the affine-pushforward \(\Gamma\)-comparison]
+  \label{lem:gammaPushforwardIso_comp}
+  \lean{AlgebraicGeometry.gammaPushforwardIso_comp}
+  \uses{lem:gammaPushforwardIso, lem:globalSectionsIso_hom_comp3_specMap_appTop}
+  Let \(\varphi : R \to S\) and \(\rho : S \to T\) be homomorphisms of commutative
+  rings and let \(N\) be an \(\operatorname{Spec}(T)\)-module. Then the global-sections
+  comparison \cref{lem:gammaPushforwardIso} for the composite ring map
+  \(\rho\circ\varphi\),
+  \[
+    \Gamma\bigl((\operatorname{Spec}(\rho\circ\varphi))_* N\bigr)
+      \;\cong\;
+    \operatorname{restr}_{\rho\circ\varphi}\bigl(\Gamma N\bigr),
+  \]
+  agrees with the composite of the two single-map comparisons — that for \(\rho\)
+  applied to \(N\), and that for \(\varphi\) applied to the pushforward
+  \((\operatorname{Spec}\rho)_* N\) — once the codomain is reorganised by the
+  restrict-scalars composition identity
+  \(\operatorname{restr}_{\rho\circ\varphi} = \operatorname{restr}_\varphi \circ
+  \operatorname{restr}_\rho\) and the domain by the pushforward composition identity
+  \((\operatorname{Spec}(\rho\circ\varphi))_* = (\operatorname{Spec}\varphi)_* \circ
+  (\operatorname{Spec}\rho)_*\). This is the component at \(N\) of the coherence
+  packaged in \cref{lem:gammaPushforwardNatIso_comp}, and it is the component where the
+  genuine global-sections ring content lives.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:gammaPushforwardIso, lem:globalSectionsIso_hom_comp3_specMap_appTop, lem:gammaPushforwardIso_hom_apply}
+  Each comparison of \cref{lem:gammaPushforwardIso} is the identity on the underlying
+  abelian group of global sections; its only content is the module structure it records,
+  namely the restriction-of-scalars action along the structure-sheaf global-sections ring
+  map. Unwinding both sides to these underlying carriers, the asserted equality reduces to
+  the commutativity of the two ring maps indexing the two routes: the composite route
+  carries the top-open component of \(\operatorname{Spec}(\rho\circ\varphi)\), while the
+  spliced route carries the top-open components of \(\operatorname{Spec}\varphi\) and
+  \(\operatorname{Spec}\rho\) joined through the \(\operatorname{Spec}\)-contravariance
+  cast. That these two ring maps coincide — and hence that the two
+  restriction-of-scalars towers agree — is exactly the three-fold global-sections ring
+  coherence \cref{lem:globalSectionsIso_hom_comp3_specMap_appTop}. Substituting it
+  identifies the two sides, while the restrict-scalars and pushforward composition
+  identities account for the codomain and domain reorganisations respectively.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Carrier action of the affine-pushforward \(\Gamma\)-comparison]
+  \label{lem:gammaPushforwardIso_hom_apply}
+  \lean{AlgebraicGeometry.gammaPushforwardIso_hom_apply}
+  \uses{lem:gammaPushforwardIso}
+  For \(\varphi : R \to S\) and an \(\operatorname{Spec}(S)\)-module \(N\), the forward
+  comparison map of \cref{lem:gammaPushforwardIso} acts as the identity on the underlying
+  carrier: for any global section \(x\), \((\mathrm{gammaPushforwardIso}\,\varphi\,N).\mathrm{hom}\,x = x\).
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:gammaPushforwardIso}
+  Every constituent of the comparison isomorphism
+  (\(\mathrm{restrictScalarsComp'App}\), \(\mathrm{restrictScalarsCongr}\)) is the identity
+  on the underlying abelian group of global sections; only the recorded module structure
+  changes. Hence the underlying map of \(\mathrm{hom}\) is the identity.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Carrier action of the inverse affine-pushforward \(\Gamma\)-comparison]
+  \label{lem:gammaPushforwardIso_inv_apply}
+  \lean{AlgebraicGeometry.gammaPushforwardIso_inv_apply}
+  \uses{lem:gammaPushforwardIso}
+  Under the same hypotheses, the inverse comparison map of \cref{lem:gammaPushforwardIso}
+  also acts as the identity on the carrier: \((\mathrm{gammaPushforwardIso}\,\varphi\,N).\mathrm{inv}\,x = x\).
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:gammaPushforwardIso}
+  Identical to \cref{lem:gammaPushforwardIso_hom_apply}, applied to the inverse, which is
+  built from the same identity-on-carrier constituents.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Composition coherence of the pushforward \(\Gamma\)-comparison]
+  \label{lem:gammaPushforwardNatIso_comp}
+  \lean{AlgebraicGeometry.gammaPushforwardNatIso_comp}
+  \uses{lem:gammaPushforwardNatIso, lem:gammaPushforwardIso_comp, lem:globalSectionsIso_hom_comp3_specMap_appTop}
+  The naturality packaging \cref{lem:gammaPushforwardNatIso} is coherent under composition of
+  ring maps: for ring maps \(\varphi : R \to S\) and \(\rho : S \to T\), the comparison for the
+  composite \(\rho \circ \varphi\) is the pasting of the two single-map comparisons
+  \(\bigl(\text{\cref{lem:gammaPushforwardNatIso}}\bigr)_\varphi\) and
+  \(\bigl(\text{\cref{lem:gammaPushforwardNatIso}}\bigr)_\rho\), glued on the domain side by the
+  pushforward composition isomorphism \(\mathrm{pushforwardComp}\) and on the codomain side by the
+  restrict-scalars composition isomorphism \(\mathrm{restrictScalarsComp}\). This is the foundation
+  coherence whose conjugate through the composite-adjunction mate equivalence produces the
+  pseudofunctoriality of the tilde-pullback dictionary used in
+  \cref{lem:pullback_spec_tilde_iso_ring_square_mate_glue}.
+
+  The domain-side gluing isomorphism \(\mathrm{pushforwardComp}\) carries the
+  \(\operatorname{Spec}\)-contravariance cast (an \(\mathrm{eqToIso}\)) coming from the
+  identity \(\operatorname{Spec}(\rho\circ\varphi) = \operatorname{Spec}\varphi \circ
+  \operatorname{Spec}\rho\). Far from being inert, that cast is the locus of the genuine
+  content of the lemma: it is what reconciles the composite structure-sheaf comparison
+  with the pasting of the two single-map comparisons, and unwinding it is precisely the
+  three-fold global-sections ring coherence
+  \cref{lem:globalSectionsIso_hom_comp3_specMap_appTop}.
+  \begin{proof}
+    \uses{lem:gammaPushforwardNatIso, lem:gammaPushforwardIso_comp, lem:globalSectionsIso_hom_comp3_specMap_appTop}
+    On the domain side the gluing is trivial: the pushforward composition isomorphism
+    \(\mathrm{pushforwardComp}\) acts as the identity on every module, so it contributes no
+    genuine content. The substance is therefore entirely in reconciling the two natural
+    isomorphisms component by component.
+
+    By extensionality of natural transformations between functors, it suffices to verify
+    the asserted equality on a single, arbitrary component; there is no need to expand
+    every constituent of the two composite isomorphisms simultaneously, and it is precisely
+    this reduction to a per-component check that keeps the verification tractable. Fixing a
+    module \(N\), the component equality is exactly the per-component composition coherence
+    \cref{lem:gammaPushforwardIso_comp} of the global-sections comparison
+    \(\mathrm{gammaPushforwardIso}\) for the composite ring map \(\rho\circ\varphi\).
+
+    That component coherence is not a pointwise identity. The comparison for the composite
+    is indexed by the top-open structure-sheaf component of
+    \(\operatorname{Spec}(\rho\circ\varphi)\), whereas the pasting of the two single-map
+    comparisons is indexed by the top-open components of \(\operatorname{Spec}\varphi\) and
+    \(\operatorname{Spec}\rho\) joined through the \(\operatorname{Spec}\)-contravariance
+    cast. Reconciling these two indexings is precisely the three-fold global-sections ring
+    coherence \cref{lem:globalSectionsIso_hom_comp3_specMap_appTop}, which discharges the
+    component equality and thereby completes the proof.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}
+
+\leanok
 [Affine pullback of a tilde-module]
   \label{lem:pullback_spec_tilde_iso}
   \lean{AlgebraicGeometry.pullback_spec_tilde_iso}
@@ -808,6 +994,43 @@ right-adjoint functors (Lemma~\ref{lem:gammaPushforwardNatIso}).
   \(R'[1/\varphi a] \otimes_{R[1/a]} M[1/a]\), which is the base change of the
   sections of \(\widetilde M\) over \(D(a)\).)
 \end{proof}
+
+\begin{lemma}
+
+\leanok
+[Defining unit triangle of the affine pullback dictionary]
+  \label{lem:pullback_spec_tilde_iso_inv_unit_triangle}
+  \lean{AlgebraicGeometry.pullback_spec_tilde_iso_inv_unit_triangle}
+  \uses{lem:pullback_spec_tilde_iso, lem:gammaPushforwardNatIso}
+  The inverse of the affine pullback dictionary \cref{lem:pullback_spec_tilde_iso} is, by
+  construction, the adjoint conjugate of the \(\Gamma\)-pushforward natural isomorphism
+  \cref{lem:gammaPushforwardNatIso}; this is recorded by its \emph{defining unit triangle}.
+  Write \(L = \widetilde{(-)} \ggg \mathrm{pullback}(\operatorname{Spec}\varphi)\) for the
+  composite left adjoint (right adjoint \(\mathrm{pushforward}(\operatorname{Spec}\varphi)\ggg
+  \Gamma_R\)) and \(L' = \mathrm{ext}_\varphi \ggg \widetilde{(-)}\) for the algebraic one
+  (right adjoint \(\Gamma_{R'}\ggg\mathrm{restr}_\varphi\)). Then, for every \(R\)-module \(M\),
+  \[
+    \eta^{L}_M \mathbin{;} \bigl(\text{\cref{lem:gammaPushforwardNatIso}}\bigr)_{L.\mathrm{obj}\,M}
+      \;=\;
+    \eta^{L'}_M \mathbin{;} \bigl(\Gamma_{R'}\ggg\mathrm{restr}_\varphi\bigr)
+              \!\bigl((\text{\cref{lem:pullback_spec_tilde_iso}}_M)^{-1}\bigr),
+  \]
+  where \(\eta^{L}, \eta^{L'}\) are the two units. This is the per-leg bridge
+  ``\(\mathrm{pullback\_spec\_tilde\_iso}\rightsquigarrow\mathrm{gammaPushforwardNatIso}\)''
+  consumed by the ring-square crux \cref{lem:pullback_spec_tilde_iso_ring_square_natural}.
+  \begin{proof}
+    \uses{lem:pullback_spec_tilde_iso, lem:gammaPushforwardNatIso}
+    By construction \cref{lem:pullback_spec_tilde_iso} is the \(M\)-component of
+    \((\mathrm{conjugateIsoEquiv}\,\mathrm{adj}_L\,\mathrm{adj}_{L'})^{-1}\) applied to
+    \cref{lem:gammaPushforwardNatIso}, so its inverse is the conjugate of that
+    \(\Gamma\)-comparison and the bridge
+    \(\bigl((\mathrm{conjugateEquiv}\,\mathrm{adj}_L\,\mathrm{adj}_{L'})^{-1}
+    (\text{\cref{lem:gammaPushforwardNatIso}}).\mathrm{hom}\bigr)_M
+    = (\text{\cref{lem:pullback_spec_tilde_iso}}_M)^{-1}\) holds by \texttt{rfl}. The displayed
+    triangle is then exactly Mathlib's \texttt{CategoryTheory.unit\_conjugateEquiv\_symm} for this
+    conjugate. (One line; the Lean declaration is axiom-clean.)
+  \end{proof}
+\end{lemma}
 
 \subsection{The affine base-change lemma and its remaining obligations}
 
@@ -1818,6 +2041,116 @@ supplied verbatim by Mathlib, recorded here as a dependency anchor.
   \end{proof}
 \end{lemma}
 
+\begin{lemma}
+[(b2) Geometric-leg coherence: the geometric comparison is the mate of the pushforward coherence]
+  \label{lem:chartBaseChangeGeometricComparison_mate}
+  \lean{AlgebraicGeometry.chartBaseChangeGeometricComparison_mate}
+  \uses{lem:chartBaseChangeGeometricComparison, lem:chartBaseChange_ring_square}
+  The geometric comparison \cref{lem:chartBaseChangeGeometricComparison} is assembled from two
+  pullback pseudofunctor coherences (\(\mathrm{pullbackComp}\)) and the pullback congruence on the
+  base-change ring square \cref{lem:chartBaseChange_ring_square}. Transported through the composite
+  pullback--pushforward adjunction transpose, its forward map agrees with the corresponding composite
+  of the two \emph{pushforward} composition coherences (\(\mathrm{pushforwardComp}\)) and the
+  pushforward congruence on the same ring square: that is, the pullback coherences from which
+  \cref{lem:chartBaseChangeGeometricComparison} is built are the adjoint \emph{mates} of the
+  matching pushforward coherences. This is the geometric leg of the ring-square mate-glue
+  \cref{lem:pullback_spec_tilde_iso_ring_square_mate_glue}.
+  \begin{proof}
+    \uses{lem:chartBaseChangeGeometricComparison, lem:chartBaseChange_ring_square}
+    Unfold \cref{lem:chartBaseChangeGeometricComparison} as
+    \(\mathrm{pullbackComp}(\operatorname{Spec}\rho_B,\operatorname{Spec}\iota_R)\) followed by the
+    pullback congruence on \cref{lem:chartBaseChange_ring_square} followed by
+    \(\mathrm{pullbackComp}(\operatorname{Spec}\iota_{R'},\operatorname{Spec}\rho)^{-1}\). Each
+    \texttt{Scheme.Modules.pullbackComp} is, under \texttt{pullbackPushforwardAdjunction}, the adjoint
+    mate of the corresponding \texttt{Scheme.Modules.pushforwardComp}; transporting the composite
+    through the composite-adjunction mate equivalence
+    \texttt{CategoryTheory.conjugateEquiv\_mateEquiv\_vcomp} replaces each \(\mathrm{pullbackComp}\)
+    leg by its \(\mathrm{pushforwardComp}\) mate and the pullback congruence by the matching
+    \texttt{Scheme.Modules.pushforwardCongr} on \cref{lem:chartBaseChange_ring_square}. Both
+    composites are identity-on-sections over \(\operatorname{Spec} R\).
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}
+[(b2) Algebraic-leg coherence: the module reassociation through \texttt{extendScalarsComp}]
+  \label{lem:chartBaseChangeModuleReassoc_extendScalarsComp}
+  \lean{AlgebraicGeometry.chartBaseChangeModuleReassoc_extendScalarsComp}
+  \uses{lem:chartBaseChangeModuleReassoc, lem:chartBaseChange_ring_square}
+  The algebraic reassociation \cref{lem:chartBaseChangeModuleReassoc} is the composite of the two
+  extend-scalars composition coherences with the \(\mathrm{eqToIso}\) of the base-change ring square
+  \cref{lem:chartBaseChange_ring_square}. Under the algebraic extend--restrict adjunction its forward
+  map is the adjoint mate of the corresponding restrict-scalars composition coherence. This is the
+  algebraic leg of the ring-square mate-glue
+  \cref{lem:pullback_spec_tilde_iso_ring_square_mate_glue}.
+  \begin{proof}
+    \uses{lem:chartBaseChangeModuleReassoc, lem:chartBaseChange_ring_square}
+    By definition \cref{lem:chartBaseChangeModuleReassoc} is
+    \((\mathrm{extendScalarsComp}\,\iota_R\,\rho_B)^{-1}\) followed by the \(\mathrm{eqToIso}\) of the
+    ring equality \cref{lem:chartBaseChange_ring_square} followed by
+    \(\mathrm{extendScalarsComp}\,\rho\,\iota_{R'}\), each factor being Mathlib's
+    \texttt{ModuleCat.extendScalarsComp}. Since extend scalars is left adjoint to restrict scalars,
+    transporting this composite through the composite-adjunction mate equivalence
+    \texttt{CategoryTheory.mateEquiv\_conjugateEquiv\_vcomp} exhibits it as the mate of the analogous
+    restrict-scalars coherence; both are identity-on-elements.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}
+[(b2) Iterated-mate glue of the ring-square naturality]
+  \label{lem:pullback_spec_tilde_iso_ring_square_mate_glue}
+  \lean{AlgebraicGeometry.pullback_spec_tilde_iso_ring_square_mate_glue}
+  \uses{lem:pullback_spec_tilde_iso_inv_unit_triangle, lem:chartBaseChangeGeometricComparison_mate,
+        lem:chartBaseChangeModuleReassoc_extendScalarsComp, lem:gammaPushforwardNatIso,
+        lem:gammaPushforwardNatIso_comp}
+  After the ring-square equation of \cref{lem:pullback_spec_tilde_iso_ring_square_natural} is
+  transposed through the three adjunctions of the composite left adjoint
+  \(L_{\mathrm{tot}} = \widetilde{(-)} \ggg \mathrm{pullback}(\operatorname{Spec}\iota_R) \ggg
+  \mathrm{pullback}(\operatorname{Spec}\rho_B)\), it becomes a single equation in
+  \(\mathrm{ModuleCat}\,R\) between two maps \(M \to \mathrm{restr}_{\iota_R}\,\mathrm{restr}_{\rho_B}\,N\).
+  That equation holds: each \cref{lem:pullback_spec_tilde_iso} leg (for the four ring maps
+  \(\iota_R,\rho,\rho_B,\iota_{R'}\)) transposes to \cref{lem:gammaPushforwardNatIso} by
+  \cref{lem:pullback_spec_tilde_iso_inv_unit_triangle}, the geometric comparison transposes by
+  \cref{lem:chartBaseChangeGeometricComparison_mate}, and the algebraic reassociation transposes by
+  \cref{lem:chartBaseChangeModuleReassoc_extendScalarsComp}; the three are then assembled through the
+  nested \(\mathrm{pushforward}.\mathrm{map}\)/\(\Gamma.\mathrm{map}\) wrappers and closed on the
+  composition coherence \cref{lem:gammaPushforwardNatIso_comp}.
+  \begin{proof}
+    \uses{lem:pullback_spec_tilde_iso_inv_unit_triangle, lem:chartBaseChangeGeometricComparison_mate,
+          lem:chartBaseChangeModuleReassoc_extendScalarsComp, lem:gammaPushforwardNatIso,
+          lem:gammaPushforwardNatIso_comp}
+    \emph{Mathlib API note (current pin, v4.30.0-rc2).} The mate equivalence is
+    \(\mathrm{TwoSquare}\)-valued: \texttt{mateEquiv adj₁ adj₂} maps
+    \(\mathrm{TwoSquare}\,G\,L_1\,L_2\,H\) to \(\mathrm{TwoSquare}\,R_1\,H\,G\,R_2\), where
+    \(\mathrm{TwoSquare}\,T\,L\,R\,B\) is (reducibly) the type \(T \ggg R \Rightarrow L \ggg B\).
+    Recover the underlying natural transformation of an (iterated) mate with \texttt{.natTrans}, i.e.\
+    through \texttt{TwoSquare.equivNatTrans}; and note that the whiskerings
+    \texttt{.whiskerLeft}/\texttt{.whiskerTop}/\texttt{.whiskerRight}/\texttt{.whiskerBottom}
+    appearing in the \texttt{vcomp} lemmas are \(\mathrm{TwoSquare}\) pasting operations, \emph{not}
+    \texttt{Functor.whiskerLeft} on bare \(\mathrm{NatTrans}\). (Feeding bare \(\mathrm{NatTrans}\)
+    into these lemmas is the type-mismatch that stalled the earlier hand-peel attempts.)
+
+    Because \(\mathrm{pst}\) is built from \(\mathrm{conjugateIsoEquiv}\,\mathrm{adj}_L\,\mathrm{adj}_R\)
+    over the \emph{binary composite} adjunctions
+    \(\mathrm{adj}_L = (\widetilde{(-)}\dashv\Gamma).\mathrm{comp}\,(\mathrm{pullback}\dashv\mathrm{pushforward})\)
+    and the analogous \(\mathrm{adj}_R\), lift each \(\mathrm{pst}\) factor from the iso level to the hom
+    level by \texttt{conjugateIsoEquiv\_apply\_hom}/\texttt{\_apply\_inv}, then rewrite the
+    conjugate-over-composite-adjunctions by
+    \texttt{CategoryTheory.iterated\_mateEquiv\_conjugateEquiv} (its \texttt{\_symm} direction, since
+    \(\mathrm{pst}\) is the \(\mathrm{.symm}\)) to expose it as an \emph{iterated single-step mate}.
+    Discharge the geometric leg with \texttt{CategoryTheory.conjugateEquiv\_mateEquiv\_vcomp}
+    (whiskering a conjugate into a mate square, replacing each \(\mathrm{pullbackComp}\) by its
+    \(\mathrm{pushforwardComp}\) mate) and the algebraic leg with
+    \texttt{CategoryTheory.mateEquiv\_conjugateEquiv\_vcomp} (\emph{not} the same-category
+    \texttt{conjugateEquiv\_comp}, which mismatches the source/target categories of the legs). All
+    constituents are identity-on-elements, so the residual \(\mathrm{ModuleCat}\,R\) equation reduces to
+    the composition coherence \cref{lem:gammaPushforwardNatIso_comp}, on which it closes. That coherence
+    is \emph{not} a pointwise identity: it is assembled component by component, by extensionality of
+    natural transformations, from the three-fold global-sections ring coherence
+    \cref{lem:globalSectionsIso_hom_comp3_specMap_appTop}, which reconciles the composite
+    \(\operatorname{Spec}\)-contravariance indexing with the pasting of the two single-map comparisons.
+  \end{proof}
+\end{lemma}
+
 \begin{lemma}\leanok
 [(b2) Ring-square naturality of the tilde-pullback dictionary]
   \label{lem:pullback_spec_tilde_iso_ring_square_natural}
@@ -1833,38 +2166,29 @@ supplied verbatim by Mathlib, recorded here as a dependency anchor.
   per-chart dictionaries of \cref{lem:pullback_spec_tilde_iso} for \(V\) and for \(W\). This is the
   residual crux of \cref{lem:pullback_tilde_restriction_natural}.
   \begin{proof}
-    \uses{lem:gammaPushforwardNatIso}
-    The isomorphism \cref{lem:pullback_spec_tilde_iso} is the adjoint conjugate
-    of the \(\Gamma\)-pushforward natural isomorphism
-    \cref{lem:gammaPushforwardNatIso}. Hence its naturality across the ring square is precisely the
-    naturality of \cref{lem:gammaPushforwardNatIso} under the same square, transported through the
-    naturality of the adjoint-conjugation construction. The geometric comparison
-    \cref{lem:chartBaseChangeGeometricComparison} (pullback pseudofunctoriality) and the algebraic
-    reassociation \cref{lem:chartBaseChangeModuleReassoc} are the two legs of that naturality square;
-    both are the image of the single naturality square of the \(\Gamma\)-pushforward isomorphism under
-    the ring square, so they coincide. No flatness and no adjoint mate enter.
-
-    \emph{Operational route} (validated to the proof head in iter-004; this is the residual mechanical
-    tail, not a new idea). The equation is between isomorphisms, so it suffices to prove the underlying
-    \(\hom\)-morphism equality. Rearranging the trailing inverse onto the other side turns the goal into
-    an equality of honest morphisms out of the source object \(L_{\mathrm{tot}}.\!obj\,M\) (a double
-    pullback of \(\widetilde M\)), where \(L_{\mathrm{tot}}\) is the composite left adjoint
-    \(\widetilde{(-)} \ggg \text{pullback}(\operatorname{Spec}\mathrm{inclR}) \ggg
-    \text{pullback}(\operatorname{Spec}\rho_B)\). Because maps OUT of \(L_{\mathrm{tot}}.\!obj\,M\)
-    transpose without needing any inverse, peel the three adjunctions of \(L_{\mathrm{tot}}\) in turn
-    (outermost \(\text{pullback}(\operatorname{Spec}\rho_B)\dashv\text{pushforward}\), then
-    \(\text{pullback}(\operatorname{Spec}\mathrm{inclR})\dashv\text{pushforward}\), then
-    \(\widetilde{(-)}\dashv\Gamma\)): each peel cancels a common unit prefix and lands the identity one
-    level down, finally in \(\mathrm{ModuleCat}\;R\) as a map
-    \(M \to \operatorname{restr}_{\mathrm{inclR}}\operatorname{restr}_{\rho_B} N\). There each
-    \cref{lem:pullback_spec_tilde_iso} leg transposes to \cref{lem:gammaPushforwardNatIso} by the
-    defining unit triangle of the conjugate transform (Mathlib \texttt{unit\_conjugateEquiv}); the
-    geometric comparison \cref{lem:chartBaseChangeGeometricComparison} transposes through pushforward
-    pseudofunctoriality (Mathlib \texttt{conjugateEquiv\_pullbackComp\_inv}); the reassociation
-    \cref{lem:chartBaseChangeModuleReassoc} transposes through \texttt{ModuleCat.extendScalarsComp}.
-    All three constituents are identity-on-elements, so the two resulting \(\mathrm{ModuleCat}\;R\)
-    maps agree by the pointwise naturality of \cref{lem:gammaPushforwardNatIso} (whose own proof is
-    pointwise reflexivity).
+    \uses{lem:pullback_spec_tilde_iso_inv_unit_triangle, lem:chartBaseChangeGeometricComparison_mate,
+          lem:chartBaseChangeModuleReassoc_extendScalarsComp,
+          lem:pullback_spec_tilde_iso_ring_square_mate_glue, lem:gammaPushforwardNatIso,
+          lem:gammaPushforwardNatIso_comp}
+    The claim is an equality of isomorphisms, so it suffices to prove the underlying \(\hom\)-morphism
+    equality. Rearranging the trailing inverse onto the other side turns the goal into an equality of
+    honest morphisms out of \(L_{\mathrm{tot}}.\mathrm{obj}\,M\) (a double pullback of
+    \(\widetilde M\)), where \(L_{\mathrm{tot}}\) is the composite left adjoint
+    \(\widetilde{(-)} \ggg \text{pullback}(\operatorname{Spec}\iota_R) \ggg
+    \text{pullback}(\operatorname{Spec}\rho_B)\). \emph{Do not hand-peel} the three adjunction transposes
+    by \(\mathrm{homEquiv}\)-injectivity: that route strands the goal as a unit-prefixed equation with no
+    finisher and never reaches the mate API (it is the dead end of the earlier attempts). Instead lift
+    each \(\mathrm{pst}\) factor to the hom level by
+    \texttt{conjugateIsoEquiv\_apply\_hom}/\texttt{\_apply\_inv} and recognise it, via
+    \texttt{CategoryTheory.iterated\_mateEquiv\_conjugateEquiv}, as an iterated single-step mate over the
+    composite adjunctions \(\mathrm{adj}_L,\mathrm{adj}_R\). The resulting equation is exactly the
+    iterated-mate glue \cref{lem:pullback_spec_tilde_iso_ring_square_mate_glue}, which combines the
+    per-leg conjugate identity \cref{lem:pullback_spec_tilde_iso_inv_unit_triangle}, the geometric-leg
+    coherence \cref{lem:chartBaseChangeGeometricComparison_mate}, and the algebraic-leg coherence
+    \cref{lem:chartBaseChangeModuleReassoc_extendScalarsComp} through the nested
+    \(\mathrm{pushforward}.\mathrm{map}\)/\(\Gamma.\mathrm{map}\) wrappers, closing on the composition
+    coherence \cref{lem:gammaPushforwardNatIso_comp}. No flatness and no adjoint mate of the base-change
+    map enter.
   \end{proof}
 \end{lemma}
 
@@ -2615,7 +2939,8 @@ over the base-changed cover \(\{(U_i)_B\}\) of \(X' = X_B\). The theorem below s
   \label{lem:fbcb_baseChangeEqLocusToPullbackGamma}
   \lean{AlgebraicGeometry.Modules.baseChangeEqLocusToPullbackGamma}
   \uses{lem:fbcb_gammaTopEquivEqLocus, lem:pullback_spec_tilde_iso,
-        def:fbcb_pullbackGroundRingAlg}
+        def:fbcb_pullbackGroundRingAlg, lem:pullback_tilde_restriction_natural,
+        lem:base_change_chart_tensor_iso, lem:tensor_finite_product_comm}
   Let \(X\) be a quasi-compact, quasi-separated (for the affine-overlap step, separated)
   scheme with ground ring \(A = \Gamma(X,\OO_X)\), \(B\) a flat \(A\)-algebra,
   \(X' = X_B\), \(\mathcal{F}' = (g')^*\mathcal{F}\), and \(\{U_i\}_{i}\) the finite affine
@@ -2632,7 +2957,8 @@ over the base-changed cover \(\{(U_i)_B\}\) of \(X' = X_B\). The theorem below s
   of scalars along \(B \to \Gamma(X',\OO_{X'})\) (Definition~\ref{def:fbcb_pullbackGroundRingAlg}).
   \begin{proof}
     \uses{lem:fbcb_gammaTopEquivEqLocus, lem:pullback_spec_tilde_iso,
-          def:fbcb_pullbackGroundRingAlg}
+          def:fbcb_pullbackGroundRingAlg, lem:pullback_tilde_restriction_natural,
+          lem:base_change_chart_tensor_iso, lem:tensor_finite_product_comm}
     The base-changed cover \(\{U_i'\}\) is a finite affine cover of \(X'\) with
     \(\bigvee_i U_i' = \top\) (base change preserves affineness and open immersions and
     carries \(\bigvee_i U_i = \top\) across). Three pieces compose:
@@ -2668,7 +2994,8 @@ over the base-changed cover \(\{(U_i)_B\}\) of \(X' = X_B\). The theorem below s
   \uses{lem:finite_affine_cover_qcqs, lem:fbcb_gammaTopEquivEqLocus,
         lem:fbcb_baseChangeGammaEquiv, lem:pullback_spec_tilde_iso,
         lem:fbcb_baseChangeEqLocusToPullbackGamma, lem:flat_base_change_reduce_global_sections,
-        def:fbcb_pullbackGroundRingAlg}
+        def:fbcb_pullbackGroundRingAlg, lem:pullback_tilde_restriction_natural,
+        lem:base_change_chart_tensor_iso, lem:tensor_finite_product_comm}
   % SOURCE: [Stacks Project], Tag 02KH (``Flat base change''), part (2), $i = 0$ case
   % (read from references/stacks-coherent.tex, L966--968).
   % SOURCE QUOTE: "\item if $S = \Spec(A)$ and $S' = \Spec(B)$, then
@@ -2694,7 +3021,9 @@ over the base-changed cover \(\{(U_i)_B\}\) of \(X' = X_B\). The theorem below s
   \begin{proof}
     \uses{lem:finite_affine_cover_qcqs, lem:fbcb_gammaTopEquivEqLocus,
           lem:fbcb_baseChangeGammaEquiv, lem:pullback_spec_tilde_iso,
-          lem:fbcb_baseChangeEqLocusToPullbackGamma, lem:flat_base_change_reduce_global_sections}
+          lem:fbcb_baseChangeEqLocusToPullbackGamma, lem:flat_base_change_reduce_global_sections,
+          lem:pullback_tilde_restriction_natural, lem:base_change_chart_tensor_iso,
+          lem:tensor_finite_product_comm}
     Choose a finite affine cover \(\{U_i\}_{i\in\iota}\) of \(X\) with quasi-compact pairwise overlaps
     (Lemma~\ref{lem:finite_affine_cover_qcqs}), so that \(\bigvee_i U_i = \top\).
 

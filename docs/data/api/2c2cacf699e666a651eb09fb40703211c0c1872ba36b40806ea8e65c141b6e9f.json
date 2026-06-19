@@ -1,7 +1,7 @@
 {
   "stage": "prover",
   "objectives": [
-    "**`AlgebraicJacobian/Picard/SectionGradedRing.lean`** — Fill the 9 SNAP-S0 residue sorries, in"
+    "**`AlgebraicJacobian/Picard/SectionGradedRing.lean`** — Blueprint: `chapters/Picard_SectionGradedRing.tex`"
   ],
   "checklist": [
     {
@@ -13,7 +13,7 @@
       "done": true
     },
     {
-      "label": "prover — GR-seed cone delivered (iter-001). SNAP-S0 residue (9 sorries in",
+      "label": "prover — GR-seed cone delivered (iter-001). SNAP-S0 residue ACTIVE.",
       "done": false
     },
     {

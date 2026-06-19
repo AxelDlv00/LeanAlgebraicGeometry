@@ -1,0 +1,199 @@
+[
+  {
+    "timestamp": "2026-06-19T11:09:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "ModuleCat.exteriorPower.baseChangeMap_id / baseChangeMap_comp"
+    },
+    "session": {
+      "id": "session_13",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "LinearMap.ext_on",
+        "exteriorPower.ιMulti_span",
+        "ModuleCat.exteriorPower.baseChangeMap_apply_ιMulti",
+        "RingHomCompTriple"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "ext_on via ιMulti_span to reduce naturality to decomposable wedges",
+        "code_tried": "refine LinearMap.ext_on (Eq.symm (exteriorPower.ιMulti_span R n M) ▸ Submodule.mem_top) ?_",
+        "line_number": "~741",
+        "lean_error": "Type mismatch: Eq.symm (exteriorPower.ιMulti_span …) ▸ Submodule.mem_top has type ?m ∈ Submodule.span …",
+        "result": "failed",
+        "insight": "the ▸ rewrite on the span membership does not typecheck directly; need ιMulti_span fed as the spanning-set hypothesis to ext_on, not as a mem_top transport"
+      },
+      {
+        "attempt": 2,
+        "strategy": "baseChangeMap_comp stated with ψ.comp φ as the composite ring hom",
+        "code_tried": "theorem baseChangeMap_comp … (baseChangeMap (ψ.comp φ) …)",
+        "line_number": "~758",
+        "lean_error": "failed to synthesize instance RingHomCompTriple φ ψ (ψ.comp φ)",
+        "result": "failed",
+        "insight": "the presheaf form needs R.map(f≫g); generalize the composite to χ:R→+*T with an explicit [RingHomCompTriple φ ψ χ] binder so the composite-ring case matches the presheaf transition"
+      },
+      {
+        "attempt": 3,
+        "strategy": "generalize composite to χ with RingHomCompTriple binder; ext_on + baseChangeMap_apply_ιMulti",
+        "code_tried": "theorem baseChangeMap_comp {R S T}[…] (φ:R→+*S)(ψ:S→+*T)(χ:R→+*T)[RingHomCompTriple φ ψ χ] … ; LinearMap.ext_on (exteriorPower.ιMulti_span …) ; simp [baseChangeMap_apply_ιMulti]",
+        "line_number": "758-767",
+        "lean_error": null,
+        "result": "success",
+        "insight": "the iter-010/012 instance-diamond worry did NOT materialize at statement level: →ₗ[R] is defeq →ₛₗ[RingHom.id R], so baseChangeMap_id types cleanly; both laws close on decomposable generators"
+      }
+    ],
+    "next_steps": "none — landed axiom-clean; symmetric twin mirrors via span_tprod_eq_top + baseChangeMap_tprod"
+  },
+  {
+    "timestamp": "2026-06-19T11:09:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "ModuleCat.symmetricPower.baseChangeMap_id / baseChangeMap_comp"
+    },
+    "session": {
+      "id": "session_13",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "SymmetricPower.span_tprod_eq_top",
+        "ModuleCat.symmetricPower.baseChangeMap_tprod",
+        "RingHomCompTriple"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "mirror the exterior naturality proof on decomposable symmetric tensors",
+        "code_tried": "LinearMap.ext_on (SymmetricPower.span_tprod_eq_top …); simp [baseChangeMap_tprod]",
+        "line_number": "858-882",
+        "lean_error": null,
+        "result": "success",
+        "insight": "identical shape to exterior; spanning set is decomposable symmetric tensors ⨂ₛ"
+      }
+    ],
+    "next_steps": "none — axiom-clean"
+  },
+  {
+    "timestamp": "2026-06-19T11:09:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "ModuleCat.exteriorPower.baseChangeMapCat (+ symmetricPower twin)"
+    },
+    "session": {
+      "id": "session_13",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "ModuleCat.semilinearMapAddEquiv",
+        "ModuleCat.ofHom",
+        "map_smulₛₗ"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "repackage semilinear baseChangeMap as a ModuleCat morphism M ⟶ (restrictScalars φ).obj N via semilinearMapAddEquiv",
+        "code_tried": "noncomputable def baseChangeMapCat … := ModuleCat.semilinearMapAddEquiv φ _ _ (baseChangeMap φ n g)",
+        "line_number": "776-789",
+        "lean_error": null,
+        "result": "success",
+        "insight": "generator lemma proved by `change` to the underlying semilinear map (defeq through the equiv) + baseChangeMap_apply_ιMulti/_tprod; these are the new un-blueprinted helpers the mk assembly actually consumes"
+      }
+    ],
+    "next_steps": "blueprint these 2 wrappers + 2 generator lemmas (coverage debt)"
+  },
+  {
+    "timestamp": "2026-06-19T11:09:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.PresheafOfModules.exteriorPower / symPower"
+    },
+    "session": {
+      "id": "session_13",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "PresheafOfModules.mk",
+        "Scheme.ringCatSheaf_commRing",
+        "baseChangeMapCat",
+        "restrictScalarsId'",
+        "restrictScalarsComp'",
+        "F.map_id",
+        "F.map_comp"
+      ],
+      "blocker": null
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "mk assembly; discharge map_id/map_comp coherence by rewriting with F.map_id/F.map_comp",
+        "code_tried": "apply ModuleCat.hom_ext; refine LinearMap.ext_on …; rw [F.map_id]",
+        "line_number": "~928-946",
+        "lean_error": "(deterministic) timeout at whnf, maximum number of heartbeats (200000) reached",
+        "result": "partial",
+        "insight": "rw [F.map_id]/[F.map_comp] forces a whnf of the scheme structure-sheaf functor on 𝟙 / f≫g — expensive but FINITE (~10×/20× default), not divergent"
+      },
+      {
+        "attempt": 2,
+        "strategy": "factor an F-free baseChangeMapCat_restrictScalarsId'_inv helper to avoid the whnf spike",
+        "code_tried": "rw [baseChangeMapCat_restrictScalarsId'_inv …]",
+        "line_number": "~940",
+        "lean_error": "Tactic rewrite failed: did not find pattern Hom.hom (↟?f) … / head ConcreteCategory.hom vs ModuleCat.Hom.hom",
+        "result": "failed",
+        "insight": "head-symbol mismatch (ConcreteCategory.hom vs ModuleCat.Hom.hom — defeq, not syntactic); abandoned the F-free helper in favour of bumped heartbeats"
+      },
+      {
+        "attempt": 3,
+        "strategy": "accept maxHeartbeats bumps; final generator rewrite via erw not rw",
+        "code_tried": "set_option maxHeartbeats 2000000/4000000 …; erw [baseChangeMapCat_hom_ιMulti]",
+        "line_number": "949-975",
+        "lean_error": null,
+        "result": "success",
+        "insight": "extPowMap_comp needs one erw (not rw) for the final baseChangeMapCat_hom_ιMulti since restrictScalars.map_apply leaves head ConcreteCategory.hom; mk accepts the explicit by-rw coherence proofs verbatim (proof-irrelevance on hf/hgf args ⇒ defeq with mk's ⋯ proofs)"
+      }
+    ],
+    "next_steps": "none for correctness; optional polish — build the F-free baseChangeMapCat naturality helper with the right ConcreteCategory.hom bridge simp lemma to drop the 2M/4M bumps and the erw"
+  },
+  {
+    "timestamp": "2026-06-19T11:09:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.exteriorPower / symPower"
+    },
+    "session": {
+      "id": "session_13",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "PresheafOfModules.sheafification",
+        "SheafOfModules.forget",
+        "PresheafOfModules.sheafificationAdjunction (𝟙 R.obj)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "sheafify the openwise presheaf power along the identity ring map",
+        "code_tried": "(PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)).obj (PresheafOfModules.exteriorPower n ((SheafOfModules.forget X.ringCatSheaf).obj F))",
+        "line_number": "1090-1108",
+        "lean_error": null,
+        "result": "success",
+        "insight": "X.ringCatSheaf.obj (the forget base) is defeq to X.ringCatSheaf.presheaf (the presheaf-functor base) — no coercion; all sheafification instances for the scheme opens site resolve automatically (the heavy bridge already exercises sheafificationAdjunction (𝟙 R.obj)). mathlib:sheafification_modules_exact = PresheafOfModules.sheafification as expected"
+      }
+    ],
+    "next_steps": "none — Foundations power-functor substrate COMPLETE. Optional: package as honest functors X.Modules ⥤ X.Modules (currently object-level defs)"
+  }
+]

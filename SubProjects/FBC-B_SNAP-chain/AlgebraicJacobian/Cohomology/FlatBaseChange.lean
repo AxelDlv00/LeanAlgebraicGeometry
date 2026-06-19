@@ -273,6 +273,26 @@ theorem globalSectionsIso_hom_comp_specMap_appTop {R R' : CommRingCat.{u}} (φ :
   rw [hR, hR']
   exact (Scheme.ΓSpecIso_inv_naturality φ).symm
 
+/-- **Three-fold naturality of the global-sections comparison square** (blueprint
+`lem:globalSectionsIso_hom_comp3_specMap_appTop`). The `R → S → T` composite analogue of
+`globalSectionsIso_hom_comp_specMap_appTop`: for ring maps `φ : R ⟶ S` and `ρ : S ⟶ T`, the
+ring square
+```
+  R       --gsR.hom-->       Γ(Spec R, ⊤)
+  |φ≫ρ                              |(Spec.map (φ ≫ ρ)).appTop
+  v                                 v
+  T       --gsT.hom-->       Γ(Spec T, ⊤)
+```
+commutes. Because the single-map square `globalSectionsIso_hom_comp_specMap_appTop` is stated
+for an *arbitrary* ring map, the composite case is just that lemma instantiated at `φ ≫ ρ`; the
+splicing through `gs_S` (and the `Spec`-contravariance cast `Spec.map_comp`) is what the
+single-map lemma already encapsulates via `Scheme.ΓSpecIso_inv_naturality`. Project-local. -/
+theorem globalSectionsIso_hom_comp3_specMap_appTop {R S T : CommRingCat.{u}}
+    (φ : R ⟶ S) (ρ : S ⟶ T) :
+    (StructureSheaf.globalSectionsIso ↑R).hom ≫ (Spec.map (φ ≫ ρ)).appTop
+      = (φ ≫ ρ) ≫ (StructureSheaf.globalSectionsIso ↑T).hom :=
+  globalSectionsIso_hom_comp_specMap_appTop (φ ≫ ρ)
+
 /-! ## Project-local Mathlib supplement — Γ of an affine pushforward -/
 
 /-- **Global sections of an affine pushforward = restriction of scalars.** For a ring
@@ -652,6 +672,117 @@ noncomputable def pushforward_spec_tilde_iso {R R' : CommRingCat.{u}}
   exact IsLocalizedModule.of_linearEquiv (Submonoid.powers a)
     (Gmor.hom ∘ₗ e₁.toLinearEquiv.toLinearMap) e₂.toLinearEquiv.symm
 
+/-- **The Γ-pushforward comparison is the identity on underlying sections.** Every constituent of
+`gammaPushforwardIso φ N` (`restrictScalarsComp'App`, `restrictScalarsCongr`) merely repackages the
+module structure on the unchanged carrier `Γ(N, ⊤)`, so its forward map sends each section to
+itself. Project-local helper, used to collapse the per-component composition coherence
+`gammaPushforwardIso_comp`. -/
+theorem gammaPushforwardIso_hom_apply {R R' : CommRingCat.{u}} (φ : R ⟶ R')
+    (N : (Spec R').Modules)
+    (y : (moduleSpecΓFunctor (R := R)).obj ((Scheme.Modules.pushforward (Spec.map φ)).obj N)) :
+    (ModuleCat.Hom.hom (gammaPushforwardIso φ N).hom) y = y := rfl
+
+/-- **The Γ-pushforward comparison inverse is the identity on underlying sections.** -/
+theorem gammaPushforwardIso_inv_apply {R R' : CommRingCat.{u}} (φ : R ⟶ R')
+    (N : (Spec R').Modules)
+    (y : (ModuleCat.restrictScalars φ.hom).obj ((moduleSpecΓFunctor (R := R')).obj N)) :
+    (ModuleCat.Hom.hom (gammaPushforwardIso φ N).inv) y = y := rfl
+
+/-- **`eqToHom` on `ModuleCat` is the carrier transport.** Applying the morphism `eqToHom h`
+attached to an object equality `h : M = N` of `ModuleCat R` to an element is, on the underlying
+carrier, the `cast` along the induced type equality. This is the kernel-light replacement for a
+`change`/`rfl` collapse of an `eqToHom` cast (the latter forces `whnf` of the full
+structure-sheaf machinery and times out). Project-local. -/
+theorem moduleCat_eqToHom_concreteCategory_apply {R : Type u} [Ring R]
+    {M N : ModuleCat.{v} R} (h : M = N) (x : M) :
+    (ConcreteCategory.hom (eqToHom h)) x
+      = cast (congrArg (fun K : ModuleCat.{v} R => (↑K : Type v)) h) x := by
+  subst h
+  rfl
+
+/-- `ConcreteCategory.hom`-keyed restatement of `gammaPushforwardIso_hom_apply` (so that `simp`/`rw`
+fire after `ModuleCat.comp_apply` has rewritten every application head to `ConcreteCategory.hom`).
+Single-layer `rfl`, hence kernel-light. Project-local. -/
+theorem gammaPushforwardIso_hom_concreteApply {R R' : CommRingCat.{u}} (φ : R ⟶ R')
+    (N : (Spec R').Modules)
+    (y : (moduleSpecΓFunctor (R := R)).obj ((Scheme.Modules.pushforward (Spec.map φ)).obj N)) :
+    (ConcreteCategory.hom (gammaPushforwardIso φ N).hom) y = y := rfl
+
+/-- Restriction of scalars does not change the underlying function of a morphism. Single-layer
+`rfl`, kernel-light. Project-local. -/
+theorem restrictScalars_map_concreteApply {R S : Type u} [Ring R] [Ring S] (f : R →+* S)
+    {A B : ModuleCat.{u} S} (h : A ⟶ B) (y : (ModuleCat.restrictScalars f).obj A) :
+    (ConcreteCategory.hom ((ModuleCat.restrictScalars f).map h)) y = (ConcreteCategory.hom h) y :=
+  rfl
+
+/-- The restrict-scalars composition iso is the identity on underlying elements. Single-layer
+`rfl`, kernel-light. Project-local. -/
+theorem restrictScalarsComp_inv_app_concreteApply {R S T : Type u} [Ring R] [Ring S] [Ring T]
+    (f : R →+* S) (g : S →+* T) (M : ModuleCat.{u} T)
+    (y : ((ModuleCat.restrictScalars g).comp (ModuleCat.restrictScalars f)).obj M) :
+    (ConcreteCategory.hom ((ModuleCat.restrictScalarsComp f g).inv.app M)) y = y := rfl
+
+/-- **Per-component composition coherence of the affine-pushforward Γ-comparison** (blueprint
+`lem:gammaPushforwardIso_comp`). For ring maps `φ : R ⟶ S`, `ρ : S ⟶ T` and a `Spec T`-module
+`N`, the comparison `gammaPushforwardIso (φ ≫ ρ) N` for the composite agrees with the pasting of
+the two single-map comparisons (that for `ρ` at `N`, that for `φ` at `(Spec ρ)_* N`), reorganised
+on the domain by the pushforward composition iso (carrying the `Spec.map_comp` cast) and on the
+codomain by `restrictScalarsComp`. This is the component where the genuine global-sections ring
+content lives; the cast reconciliation is exactly the three-fold ring coherence
+`globalSectionsIso_hom_comp3_specMap_appTop`. Project-local. -/
+theorem gammaPushforwardIso_comp {R S T : CommRingCat.{u}} (φ : R ⟶ S) (ρ : S ⟶ T)
+    (N : (Spec T).Modules) :
+    (gammaPushforwardIso (φ ≫ ρ) N).hom =
+      (moduleSpecΓFunctor (R := R)).map
+          ((eqToIso (congrArg Scheme.Modules.pushforward (Spec.map_comp φ ρ))).hom.app N ≫
+            (Scheme.Modules.pushforwardComp (Spec.map ρ) (Spec.map φ)).inv.app N) ≫
+        (gammaPushforwardIso φ ((Scheme.Modules.pushforward (Spec.map ρ)).obj N)).hom ≫
+          (ModuleCat.restrictScalars φ.hom).map (gammaPushforwardIso ρ N).hom ≫
+            (ModuleCat.restrictScalarsComp φ.hom ρ.hom).inv.app
+              ((moduleSpecΓFunctor (R := T)).obj N) := by
+  apply ModuleCat.hom_ext
+  refine LinearMap.ext fun x => ?_
+  -- LHS collapses on the carrier by the pointwise-identity helper; the RHS outer compositions
+  -- distribute to nested section maps. After this purely lemma-driven step the goal is
+  --   `x = restrictScalarsComp.inv (restrictScalars.map (γ_ρ) (γ_φ (Γ(cast) x)))`,
+  -- where every wrapper is the identity on the underlying section `x ∈ Γ(N, ⊤)` (by
+  -- `gammaPushforwardIso_{hom,inv}_apply`) and the only genuine content is the reindexing cast
+  -- `Γ(cast)` = global sections of the `Spec.map_comp φ ρ` glue (`eqToIso` ≫ `pushforwardComp.inv`).
+  rw [gammaPushforwardIso_hom_apply (φ ≫ ρ) N x, ModuleCat.comp_apply, ModuleCat.comp_apply]
+  -- GOAL NOW: `x = B (A (γ_φ (Γ_cast x)))`, where `Γ_cast = moduleSpecΓFunctor.map (eqToIso.hom.app N
+  -- ≫ pushforwardComp.inv.app N)` is the domain reindexing cast and `B, A, γ_φ` are the three
+  -- comparison wrappers. On the underlying carrier `Γ(N,⊤)` EVERY wrapper is the identity:
+  --   • `B  = restrictScalarsComp.inv.app _`                       — `restrictScalarsComp_inv_app_concreteApply` (`:= rfl`)
+  --   • `A  = restrictScalars.map (gammaPushforwardIso ρ N).hom`   — `restrictScalars_map_concreteApply` (`:= rfl`)
+  --   • `γ_φ = (gammaPushforwardIso φ _).hom`                       — `gammaPushforwardIso_hom_concreteApply` (`:= rfl`)
+  --   • `Γ_cast` splits (via `Functor.map_comp`, `eqToHom_map`) into `moduleSpecΓFunctor.map
+  --     (pushforwardComp.inv.app N)` (`:= rfl`) ∘ `Γ(eqToHom (Spec.map_comp))`, the latter sent to a
+  --     SYMBOLIC carrier `cast` by `moduleCat_eqToHom_concreteCategory_apply`; the carrier transport
+  --     itself is `rfl`-CHEAP (verified: `(rfl : ↑(Γ(pushforward (Spec (φ≫ρ)) N)) =
+  --     ↑(Γ(pushforward (Spec ρ ≫ Spec φ) N)))` typechecks instantly).
+  -- The five single-layer `*_concreteApply` helpers above ALL COMPILE (each is a kernel-light `rfl`).
+  --
+  -- BLOCKER (characterised precisely this iter; the genuine obstruction): the `X.Modules`/value-
+  -- `ModuleCat` diamond. Every wrapper changes the OBJECT type (its domain ≠ codomain as `ModuleCat`
+  -- objects — they agree ONLY on the carrier), so the per-layer collapse cannot be assembled:
+  --   – `rw`/`simp` with a helper FAILS to fire on `γ_φ` and `B`: rewriting `γ_φ z → z` retypes `z`
+  --     from `γ_φ`'s codomain object to its domain object, and the enclosing wrapper then fails to
+  --     typecheck WITHOUT the heavy `restrictScalars ↔ pushforward∘Γ` object identity (motive-not-
+  --     type-correct). (`A` and the inner `γ_ρ` DO fire — their junction sits under
+  --     `restrictScalars.map` and stays syntactic.)
+  --   – a term-mode `Eq.trans` chain through all layers (verified to elaborate under the LSP)
+  --     EXPLODES on cold build — the junction defeqs are that heavy object identity at every step
+  --     (`> 1.6M` heartbeats, verified timeout); even the bare `simp`+`rw [moduleCat_eqToHom…]`
+  --     SETUP for that chain is a cold-build (kernel) deterministic timeout.
+  --   – a single monolithic `rfl` (`rw [moduleCat_eqToHom…]; rfl`) is a VERIFIED cold-build KERNEL
+  --     BOMB (`whnf` timeout) — it forces the whole structure-sheaf reduction at once.
+  -- The carrier-rfl being CHEAP while the per-junction OBJECT-defeq is HEAVY is the essential
+  -- tension. iter-013 PRE-COMMITTED corrective (PROGRESS.md): mathlib-analogist consult on
+  -- collapsing this value-`ModuleCat` carrier-identity composite — route through `.val.app (op ⊤)`
+  -- (`pushforwardComp_inv_app_val_app` EXISTS, `SheafOfModules`) at the sheaf level, where the
+  -- objects are the uniform `N.val.obj ⊤` and the restrictScalars/globalSections junctions never form.
+  sorry
+
 /-! ## Project-local Mathlib supplement — affine pullback dictionary -/
 
 /-- **Naturality of the Γ-fragment comparison.** The per-object isomorphisms
@@ -671,6 +802,42 @@ noncomputable def gammaPushforwardNatIso {R R' : CommRingCat.{u}} (φ : R ⟶ R'
     intro N N' g
     ext x
     rfl)
+
+/-- **Composition coherence of the pushforward Γ-comparison** (blueprint
+`lem:gammaPushforwardNatIso_comp`). For ring maps `φ : R ⟶ S` and `ρ : S ⟶ T`, the comparison
+`gammaPushforwardNatIso (φ ≫ ρ)` for the composite is the pasting of the two single-map comparisons
+`gammaPushforwardNatIso φ` and `gammaPushforwardNatIso ρ`, glued on the domain side by the
+pushforward composition isomorphism `pushforwardComp` (and the `Spec`-contravariance
+`Spec.map_comp`) and on the codomain side by the restrict-scalars composition isomorphism
+`restrictScalarsComp`. Every constituent is identity-on-carriers (as is `gammaPushforwardNatIso`
+itself), so the proof is pointwise reflexivity. This is the foundation coherence whose conjugate
+through the composite-adjunction mate equivalence produces the pseudofunctoriality of the
+tilde-pullback dictionary used in `pullback_spec_tilde_iso_ring_square_mate_glue`. Project-local. -/
+theorem gammaPushforwardNatIso_comp {R S T : CommRingCat.{u}} (φ : R ⟶ S) (ρ : S ⟶ T) :
+    gammaPushforwardNatIso (φ ≫ ρ) =
+      Functor.isoWhiskerRight (eqToIso (congrArg Scheme.Modules.pushforward (Spec.map_comp φ ρ)) ≪≫
+          (Scheme.Modules.pushforwardComp (Spec.map ρ) (Spec.map φ)).symm)
+        (moduleSpecΓFunctor (R := R)) ≪≫
+      (Functor.associator _ _ _) ≪≫
+      Functor.isoWhiskerLeft (Scheme.Modules.pushforward (Spec.map ρ)) (gammaPushforwardNatIso φ) ≪≫
+      (Functor.associator _ _ _).symm ≪≫
+      Functor.isoWhiskerRight (gammaPushforwardNatIso ρ) (ModuleCat.restrictScalars φ.hom) ≪≫
+      (Functor.associator _ _ _) ≪≫
+      Functor.isoWhiskerLeft (moduleSpecΓFunctor (R := T))
+        (ModuleCat.restrictScalarsComp φ.hom ρ.hom).symm := by
+  apply Iso.ext
+  apply NatTrans.ext
+  funext N
+  -- Reduce per-component (no element expansion of the carriers — that overflows the kernel).
+  -- The structural whiskering/associator lemmas collapse the RHS pasting to the concrete
+  -- per-component composite, whose genuine coherence content is isolated in
+  -- `gammaPushforwardIso_comp` (where the `Spec.map_comp` cast is reconciled by the three-fold
+  -- ring coherence `globalSectionsIso_hom_comp3_specMap_appTop`).
+  simp only [Iso.trans_hom, NatTrans.comp_app, Functor.isoWhiskerRight_hom,
+    Functor.isoWhiskerLeft_hom, Functor.associator_hom_app, Functor.associator_inv_app,
+    Iso.symm_hom, Functor.whiskerRight_app, Functor.whiskerLeft_app, Category.id_comp,
+    Category.comp_id, Category.assoc, gammaPushforwardNatIso, NatIso.ofComponents_hom_app]
+  exact gammaPushforwardIso_comp φ ρ N
 
 /-- **Affine pullback of a tilde-module.** For a ring map `φ : R ⟶ R'` and an `R`-module `M`,
 pulling the quasi-coherent sheaf `M^~` back along `Spec φ` is, up to canonical isomorphism, the

@@ -1,0 +1,295 @@
+[
+  {
+    "timestamp": "2026-06-19T11:24:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pushforward_eta_appIso_collapse"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "restrictScalars_oplaxMonoidal_η_app_one",
+        "ModuleCat.restrictScalars_η",
+        "RingHom.map_one",
+        "Functor.Monoidal.ε_η"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Apply LSP-verified analogies/eta-plumbing.md idiom; add helper restrictScalars_oplaxMonoidal_η_app_one stating the unit through the genuine ring (S⋙forget₂…).obj W to dodge 𝟙_-OfNat synthesis",
+        "code_tried": "erw [restrictScalars_oplaxMonoidal_η_app_one β' hβ (op (f ⁻¹ᵁ unop U)), map_one]; rfl",
+        "line_number": "4261",
+        "result": "success",
+        "insight": "erw defeq-matches the (restrictScalars β').map 𝟙 ≫ η composite against the helper's bare η — no explicit Functor.map_id/Category.id_comp needed (those rw FAIL on a dependent-type motive: the 1 argument's type mentions the rewritten object). map_one fires on RHS ring-hom (φ'.app U) 1, rfl closes 1=1."
+      }
+    ],
+    "next_steps": "Closed + axiom-clean. Helper restrictScalars_oplaxMonoidal_η_app_one needs a blueprint block (coverage debt)."
+  },
+  {
+    "timestamp": "2026-06-19T11:15:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pushforward_lax_mu_comparison"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "LHS is an adjunction MATE (rightAdjointLaxMonoidal hadj'), RHS is a COMPOSITION structure (presheafPushforwardLaxMonoidal φ') — NOT a 1-to-1 port of pushforwardComp_lax_μ which compares two composition structures; the mate has no composition form and must be computed sectionwise from unit/δ/counit",
+      "key_lemmas_used": [
+        "Adjunction.rightAdjointLaxMonoidal_μ",
+        "Adjunction.homEquiv_unit",
+        "pushforward_μ_eq",
+        "restrictScalars_μ_app_tmul"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Mirror proved pushforwardComp_lax_μ one-to-one (planner directive)",
+        "code_tried": "intro α β hadj hβ β' hadj'; rw [Adjunction.rightAdjointLaxMonoidal_μ, Adjunction.homEquiv_unit, pushforward_μ_eq]",
+        "line_number": "4310",
+        "lean_error": "pushforward_μ_eq does NOT key-match RHS μ once under .app W .hom (pattern μ (pushforward ?φ) ?A ?B not found — instance/association friction)",
+        "result": "partial",
+        "insight": "Mirroring pushforwardComp_lax_μ ONLY reduces the RHS; the LHS is a mate not a composition — genuine multi-hundred-LOC seam."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Commit the mate unfold only (compiling partial)",
+        "code_tried": "intro α β hadj hβ β' hadj'; rw [Adjunction.rightAdjointLaxMonoidal_μ, Adjunction.homEquiv_unit]",
+        "line_number": "4310",
+        "result": "partial",
+        "insight": "Unfolds opaque mate μ to concrete hadj'.unit ≫ (pushforward φ').map (δ Gβ ≫ counit⊗counit). Post-unfold residual IS exactly Adjunction.IsMonoidal.leftAdjoint_μ = K1's hmon → confirms mate/IsMonoidal route is CIRCULAR. Non-circular route: compute BOTH sides sectionwise to m⊗ₜn independently."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Sectionwise extensionality (verified in-LSP, NOT committed)",
+        "code_tried": "refine PresheafOfModules.hom_ext (fun W => ?_); refine ModuleCat.MonoidalCategory.tensor_ext (fun m n => ?_); rw [pushforward_μ_eq]; erw [restrictScalars_μ_app_tmul]",
+        "line_number": "4310",
+        "lean_error": "RHS-leg pushforward_μ_eq finicky under .app W; uncommitted to avoid regressing clean compile",
+        "result": "partial",
+        "insight": "hom_ext + tensor_ext + comp_app all fire cleanly. Next prover: reduce RHS at MORPHISM level (pushforward_μ_eq on bare RHS μ BEFORE hom_ext), THEN hom_ext."
+      }
+    ],
+    "next_steps": "Sectionwise mate calculus (unit/δ/counit/tensorHom value lemmas). Reduce RHS at morphism level before hom_ext. Consider finer effort-break (LHS δ Gβ / RHS μ(pushforward) halves)."
+  },
+  {
+    "timestamp": "2026-06-19T11:18:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pushforward_mu_appIso_collapse"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "Downstream of pushforward_lax_mu_comparison — rewiring to 4-step mate reduction yields no sorry-count benefit while comparison is open and risks destabilising the compile"
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Left untouched by design",
+        "code_tried": "(none — deferred)",
+        "line_number": "4436",
+        "result": "partial",
+        "insight": "Defer until pushforward_lax_mu_comparison closes."
+      }
+    ],
+    "next_steps": "Rewire to call pushforward_lax_mu_comparison once that closes."
+  },
+  {
+    "timestamp": "2026-06-19T11:06:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "tensorObj_unit_self_duality_collapse"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "Body now sorry-free but transitively depends on B1 (dualUnitIso_dualIsoOfIso) which still has 1 sorry (naturality square N)",
+      "key_lemmas_used": [
+        "tensorObjIsoOfIso_comp_unit_iso",
+        "dualUnitIso_dualIsoOfIso",
+        "Iso.trans_symm",
+        "Iso.symm_symm"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "N-leg via (dualIsoOfIso t).symm = dualIsoOfIso t.symm rewrite",
+        "code_tried": "rw [show t ≪≫ t.symm = Iso.refl _ from Iso.self_symm_id t, dualIsoOfIso_refl]",
+        "line_number": "around 240",
+        "lean_error": "Tactic rewrite failed: Iso.self_symm_id pattern not found on dualIsoOfIso (t ≪≫ t.symm) even though subterm present",
+        "result": "failed",
+        "insight": "DEAD route — do not retry (dualIsoOfIso t).symm = dualIsoOfIso t.symm rewrite."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Take .symm of B1 instead",
+        "code_tried": "have hNleg : dual_unit_iso.symm ≪≫ (dualIsoOfIso t).symm ≪≫ dual_unit_iso = t.symm := by have hB1 := congrArg Iso.symm (dualUnitIso_dualIsoOfIso t); simpa using hB1\n  rw [hNleg]; exact tensorObjIsoOfIso_comp_unit_iso t t.symm t.hom_inv_id",
+        "line_number": "around 250",
+        "result": "success",
+        "insight": "Sidesteps the dead rewrite. Body compiles sorry-free; collapse MECHANISM fully proven mod B1."
+      }
+    ],
+    "next_steps": "Closes fully once B1 (dualUnitIso_dualIsoOfIso) N-square is discharged."
+  },
+  {
+    "timestamp": "2026-06-19T10:57:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "tensorHom_inv_comp_leftUnitor"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "MonoidalCategory.tensorHom_def",
+        "leftUnitor_naturality",
+        "unitors_equal",
+        "rightUnitor_naturality"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "General monoidal coherence: s≫s'=𝟙 → (s⊗ₘs')≫(λ_𝟙_).hom = (λ_𝟙_).hom; factor tensor via tensorHom_def, slide right factor past λ, left past ρ=λ, cancel",
+        "code_tried": "rw [MonoidalCategory.tensorHom_def, Category.assoc, MonoidalCategory.leftUnitor_naturality, ...]",
+        "line_number": "129",
+        "result": "success",
+        "insight": "Generic helper, no Scheme content, axiom-clean. Needs blueprint block (coverage debt)."
+      }
+    ],
+    "next_steps": "Done. Blueprint coverage."
+  },
+  {
+    "timestamp": "2026-06-19T11:03:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "tensorObjIsoOfIso_comp_unit_iso"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "tensorHom_inv_comp_leftUnitor",
+        "tensorObjIsoOfIso",
+        "tensorObj_unit_iso",
+        "Functor.map_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "B2: t.hom≫s.hom=𝟙 → tensorObjIsoOfIso t s ≪≫ tensorObj_unit_iso = tensorObj_unit_iso; reduce to presheaf coherence (1) pushed through sheafification.map",
+        "code_tried": "apply Iso.ext; have hpre := …; have hmap := congrArg sheafification.map hpre; erw [Functor.map_comp] at hmap; simp only [...]; rw [← Category.assoc]; exact congrArg (· ≫ _) hmap",
+        "line_number": "143",
+        "result": "success",
+        "insight": "Carrier diamond (X.ringCatSheaf.val vs X.presheaf⋙forget₂): erw [Functor.map_comp] for sheafification leg + exact congrArg (· ≫ _) hmap (defeq-tolerant) for final collapse — plain rw FAILS on middle-object diamond (forget unit vs 𝟙_)."
+      }
+    ],
+    "next_steps": "Done. Blueprint coverage."
+  },
+  {
+    "timestamp": "2026-06-19T11:19:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dualUnitIso_dualIsoOfIso"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "Reduced to single naturality square (N): dualIsoOfIso s ≪≫ dual_unit_iso = dual_unit_iso ≪≫ s; decomposes as (★') presheaf eval-core + counit naturality; (★') sectionwise = evalLin (pushforward₀.map ŝ.hom ≫ φ) 1 = ŝ.app·(evalLin φ 1) — ~100-150 LOC slice-API assembly, NOT a Mathlib gap",
+      "key_lemmas_used": [
+        "Iso.trans_assoc",
+        "Iso.symm_self_id",
+        "Iso.refl_trans"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Reduce B1 by pure iso-algebra to the naturality square (N)",
+        "code_tried": "rw [hN, ← Iso.trans_assoc, Iso.symm_self_id, Iso.refl_trans]  -- hN : dualIsoOfIso s ≪≫ dual_unit_iso = dual_unit_iso ≪≫ s := by sorry",
+        "line_number": "238",
+        "result": "partial",
+        "insight": "B1 compiles; obstacle isolated from raw 100-line cocycle comment to a single clean naturality square. Slice eval API needed: evalLin (PresheafInternalHom L889), dualPrecompEquiv (L1033), unitDualSectionEquiv (SliceTransport L42)."
+      }
+    ],
+    "next_steps": "Discharge (N) via slice eval-core: evalLin (pushforward₀.map ŝ.hom ≫ φ) 1 = ŝ.hom.app X (evalLin φ 1). Pure project-API assembly."
+  },
+  {
+    "timestamp": "2026-06-19T10:49:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "Compile-fixed only (op→Opposite.op, 4 occurrences); eqToHom restriction-naturality chase de-prioritised in favour of closing the collapse mechanism"
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Fix scaffold compile error",
+        "code_tried": "congrArg op → congrArg Opposite.op (4 occurrences)",
+        "line_number": "211",
+        "result": "partial",
+        "insight": "Bare op unknown under set_option relaxedAutoImplicit false. File now compiles (was 4 hard errors blocking the whole module)."
+      }
+    ],
+    "next_steps": "eqToHom restriction-naturality chase mirroring restrictIsoUnitOfLE (cocycle-a.md §A idiom)."
+  },
+  {
+    "timestamp": "2026-06-19T10:49:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "exists_tensorObj_inverse"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "Not attempted — gated on trivialisation_restrict_compat landing; cocycle assembly implementable once collapse + trivialisation are usable"
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Deferred",
+        "code_tried": "(none)",
+        "line_number": "397",
+        "result": "partial",
+        "insight": "tensorObj_unit_self_duality_collapse now usable; planner strategy implementable once trivialisation_restrict_compat lands."
+      }
+    ],
+    "next_steps": "Assemble cocycle once trivialisation_restrict_compat + B1 are closed."
+  }
+]

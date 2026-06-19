@@ -1,0 +1,161 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
+% \MRhref is called by the amsart/book/proc definition of \MR.
+\providecommand{\MRhref}[2]{%
+  \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
+}
+\providecommand{\href}[2]{#2}
+\begin{thebibliography}{EHKV01}
+
+\bibitem[AK80]{MR555258}
+A.~B. Altman and S.~L. Kleiman, \emph{Compactifying the {P}icard scheme}, Adv.
+  in Math. \textbf{35} (1980), no.~1, 50--112.
+
+\bibitem[Aus66]{MR0212070}
+M.~Auslander, \emph{Coherent functors}, Proc. {C}onf. {C}ategorical {A}lgebra
+  ({L}a {J}olla, {C}alif., 1965), Springer, New York, 1966, pp.~189--231.
+
+\bibitem[Beh03]{MR1963494}
+K.~Behrend, \emph{Derived {$l$}-adic categories for algebraic stacks}, Mem.
+  Amer. Math. Soc. \textbf{163} (2003), no.~774, viii+93.
+
+\bibitem[BF97]{MR1437495}
+K.~Behrend and B.~Fantechi, \emph{The intrinsic normal cone}, Invent. Math.
+  \textbf{128} (1997), no.~1, 45--88.
+
+\bibitem[Bro12]{MR2871149}
+S.~Brochard, \emph{Finiteness theorems for the {P}icard objects of an algebraic
+  stack}, Adv. Math. \textbf{229} (2012), no.~3, 1555--1585.
+
+\bibitem[EGA]{EGA}
+A.~Grothendieck, \emph{\'{E}l\'ements de g\'eom\'etrie alg\'ebrique}, I.H.E.S.
+  Publ. Math. \textbf{4, 8, 11, 17, 20, 24, 28, 32} (1960, 1961, 1961, 1963,
+  1964, 1965, 1966, 1967).
+
+\bibitem[EHKV01]{MR1844577}
+D.~Edidin, B.~Hassett, A.~Kresch, and A.~Vistoli, \emph{Brauer groups and
+  quotient stacks}, Amer. J. Math. \textbf{123} (2001), no.~4, 761--777.
+
+\bibitem[FGI{\etalchar{+}}05]{MR2222646}
+B.~Fantechi, L.~G{\"o}ttsche, L.~Illusie, S.~L. Kleiman, N.~Nitsure, and
+  A.~Vistoli, \emph{Fundamental algebraic geometry}, Mathematical Surveys and
+  Monographs, vol. 123, American Mathematical Society, Providence, RI, 2005,
+  Grothendieck's FGA explained.
+
+\bibitem[Fle81]{MR638811}
+H.~Flenner, \emph{Ein {K}riterium f\"ur die {O}ffenheit der {V}ersalit\"at},
+  Math. Z. \textbf{178} (1981), no.~4, 449--473.
+
+\bibitem[Fle82]{MR641823}
+\bysame, \emph{Eine {B}emerkung \"uber relative {${\rm Ext}$}-{G}arben}, Math.
+  Ann. \textbf{258} (1981/82), no.~2, 175--182.
+
+\bibitem[{Hal}12]{hallj_openness_coh}
+J.~{Hall}, \emph{{Openness of versality via coherent functors}}, ArXiv e-prints
+  (2012), \href{http://arXiv.org/abs/1206.4182}{\mbox{arXiv:1206.4182}}.
+
+\bibitem[Har66]{MR0222093}
+R.~Hartshorne, \emph{Residues and duality}, Lecture notes of a seminar on the
+  work of A. Grothendieck, given at Harvard 1963/64. With an appendix by P.
+  Deligne. Lecture Notes in Mathematics, No. 20, Springer-Verlag, Berlin, 1966.
+
+\bibitem[Har98]{MR1656482}
+\bysame, \emph{Coherent functors}, Adv. Math. \textbf{140} (1998), no.~1,
+  44--94.
+
+\bibitem[HR12a]{coh_crit_he_func}
+J.~Hall and D.~Rydh, \emph{Coherence criteria for half-exact functors}, In
+  preparation (2012).
+
+\bibitem[HR12b]{hallj_dary_g_hilb_quot}
+\bysame, \emph{General {H}ilbert stacks and {Q}uot schemes}, In preparation
+  (2012).
+
+\bibitem[HR12c]{perfect_complexes_stacks}
+\bysame, \emph{Tame stacks are perfect}, In preparation (2012).
+
+\bibitem[Kra03]{MR2026723}
+H.~Krause, \emph{Coherent functors and covariantly finite subcategories},
+  Algebr. Represent. Theory \textbf{6} (2003), no.~5, 475--499.
+
+\bibitem[KS06]{MR2182076}
+M.~Kashiwara and P.~Schapira, \emph{Categories and sheaves}, Grundlehren der
+  Mathematischen Wissenschaften [Fundamental Principles of Mathematical
+  Sciences], vol. 332, Springer-Verlag, Berlin, 2006.
+
+\bibitem[Laz64]{MR0168625}
+D.~Lazard, \emph{Sur les modules plats}, C. R. Acad. Sci. Paris \textbf{258}
+  (1964), 6313--6316.
+
+\bibitem[Lie06]{MR2233719}
+M.~Lieblich, \emph{Remarks on the stack of coherent algebras}, Int. Math. Res.
+  Not. (2006), Art. ID 75273, 12.
+
+\bibitem[LMB]{MR1771927}
+G.~Laumon and L.~Moret-Bailly, \emph{Champs alg\'ebriques}, Ergebnisse der
+  Mathematik und ihrer Grenzgebiete. 3. Folge., vol.~39, Springer-Verlag,
+  Berlin, 2000.
+
+\bibitem[LO08]{MR2434692}
+Y.~Laszlo and M.~Olsson, \emph{The six operations for sheaves on {A}rtin
+  stacks. {I}. {F}inite coefficients}, Publ. Math. Inst. Hautes \'Etudes Sci.
+  (2008), no.~107, 109--168.
+
+\bibitem[Lur04]{lurie_tannaka}
+J.~Lurie, \emph{Tannaka duality for geometric stacks},
+  \href{http://arXiv.org/abs/math/0412266}{\mbox{arXiv:math/0412266}}.
+
+\bibitem[Mum70]{MR0282985}
+D.~Mumford, \emph{Abelian varieties}, Tata Institute of Fundamental Research
+  Studies in Mathematics, No. 5, Published for the Tata Institute of
+  Fundamental Research, Bombay, 1970.
+
+\bibitem[Nee96]{MR1308405}
+A.~Neeman, \emph{The {G}rothendieck duality theorem via {B}ousfield's
+  techniques and {B}rown representability}, J. Amer. Math. Soc. \textbf{9}
+  (1996), no.~1, 205--236.
+
+\bibitem[{Nee}11]{2011arXiv1103.5539N}
+A.~{Neeman}, \emph{{Non-left-complete derived categories}}, ArXiv e-prints
+  (2011), \href{http://arXiv.org/abs/1103.5539}{\mbox{arXiv:1103.5539}}.
+
+\bibitem[OB72]{MR0302633}
+A.~Ogus and G.~Bergman, \emph{Nakayama's lemma for half-exact functors}, Proc.
+  Amer. Math. Soc. \textbf{31} (1972), 67--74.
+
+\bibitem[Ols06]{MR2239345}
+M.~Olsson, \emph{{$\underline {\rm Hom}$}-stacks and restriction of scalars},
+  Duke Math. J. \textbf{134} (2006), no.~1, 139--164.
+
+\bibitem[Ols07]{MR2312554}
+\bysame, \emph{Sheaves on {A}rtin stacks}, J. Reine Angew. Math. \textbf{603}
+  (2007), 55--112.
+
+\bibitem[RS09]{2009arXiv0908.0096R}
+M.~{Roth} and J.~M. {Starr}, \emph{{A local-global principle for weak
+  approximation on varieties over function fields}}, ArXiv e-prints (2009),
+  \href{http://arXiv.org/abs/0908.0096}{\mbox{arXiv:0908.0096}}.
+
+\bibitem[{R}yd09]{rydh-2009}
+D.~{R}ydh, \emph{{Noetherian approximation of algebraic spaces and stacks}},
+  ArXiv e-prints (2009),
+  \href{http://arXiv.org/abs/0904.0227}{\mbox{arXiv:0904.0227}}.
+
+\bibitem[SGA6]{MR0354655}
+\emph{Th\'eorie des intersections et th\'eor\`eme de {R}iemann-{R}och}, Lecture
+  Notes in Mathematics, Vol. 225, Springer-Verlag, Berlin, 1971, S{\'e}minaire
+  de G{\'e}om{\'e}trie Alg{\'e}brique du Bois-Marie 1966--1967 (SGA 6),
+  Dirig{\'e} par P. Berthelot, A. Grothendieck et L. Illusie. Avec la
+  collaboration de D. Ferrand, J. P. Jouanolou, O. Jussila, S. Kleiman, M.
+  Raynaud et J. P. Serre.
+
+\bibitem[Stacks]{stacks-project}
+The Stacks~Project Authors, \emph{{\itshape Stacks Project}},
+  \url{http://math.columbia.edu/algebraic_geometry/stacks-git}.
+
+\bibitem[Wat60]{MR0118757}
+C.~E. Watts, \emph{Intrinsic characterizations of some additive functors},
+  Proc. Amer. Math. Soc. \textbf{11} (1960), 5--8.
+
+\end{thebibliography}

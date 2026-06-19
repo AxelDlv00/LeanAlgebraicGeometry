@@ -2,11 +2,15 @@
   "files": [
     {
       "path": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves.lean",
-      "size": 73
+      "size": 152
     },
     {
       "path": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Basic.lean",
-      "size": 21
+      "size": 3122
+    },
+    {
+      "path": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "size": 69921
     }
   ]
 }

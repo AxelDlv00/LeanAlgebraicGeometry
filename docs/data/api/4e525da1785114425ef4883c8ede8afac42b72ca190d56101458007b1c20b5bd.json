@@ -121,57 +121,6 @@
       ]
     },
     {
-      "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean",
-      "count": 5,
-      "lines": [
-        1434,
-        1575,
-        1644,
-        1684,
-        1822
-      ],
-      "occurrences": [
-        {
-          "line": 1434,
-          "column": 3
-        },
-        {
-          "line": 1575,
-          "column": 3
-        },
-        {
-          "line": 1644,
-          "column": 3
-        },
-        {
-          "line": 1684,
-          "column": 3
-        },
-        {
-          "line": 1822,
-          "column": 3
-        }
-      ]
-    },
-    {
-      "file": "AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean",
-      "count": 2,
-      "lines": [
-        75,
-        122
-      ],
-      "occurrences": [
-        {
-          "line": 75,
-          "column": 5
-        },
-        {
-          "line": 122,
-          "column": 3
-        }
-      ]
-    },
-    {
       "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
       "count": 2,
       "lines": [
@@ -671,7 +620,7 @@
       ]
     }
   ],
-  "total": 94,
+  "total": 87,
   "partial": false,
   "warnings": []
 }

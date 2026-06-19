@@ -780,7 +780,7 @@ the manifestly-iso chain through `coprodDecompMap`. -/
 `M = q^* F` and `c` is a coproduct inclusion `coprod.inl`/`coprod.inr`) with the push–pull object
 `pushPullObj F (Over.mk pC)` along the over-triangle `wC : c ≫ q = pC`.  Project-local component of
 the L2 `q_*`-coherence chain. -/
-private noncomputable def pushPullCoprodLegIso {C : Scheme.{u}} (q : (A ⨿ B) ⟶ X)
+noncomputable def pushPullCoprodLegIso {C : Scheme.{u}} (q : (A ⨿ B) ⟶ X)
     (c : C ⟶ A ⨿ B) [IsOpenImmersion c] (pC : C ⟶ X) (wC : c ≫ q = pC) (F : X.Modules) :
     (pushforward q).obj ((pushforward c).obj
         (((Scheme.Modules.pullback q).obj F).restrict c)) ≅
@@ -798,7 +798,7 @@ set_option maxHeartbeats 800000 in
 Over.mk q` is, through the canonical leg iso, the pushforward of the disjoint-cover restriction unit
 `(restrictAdjunction c).unit`.  This is the bridge that converts the canonical comparison map
 `prod.lift (pushPullMap F …)` into the manifestly-iso `coprodDecompMap` chain.  Project-local. -/
-private lemma pushPull_binary_leg_coherence {C : Scheme.{u}} (q : (A ⨿ B) ⟶ X)
+lemma pushPull_binary_leg_coherence {C : Scheme.{u}} (q : (A ⨿ B) ⟶ X)
     (c : C ⟶ A ⨿ B) [IsOpenImmersion c] (pC : C ⟶ X) (wC : c ≫ q = pC) (F : X.Modules) :
     pushPullMap F (Over.homMk c wC : Over.mk pC ⟶ Over.mk q) =
       (pushforward q).map

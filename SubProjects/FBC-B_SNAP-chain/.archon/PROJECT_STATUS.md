@@ -8,6 +8,36 @@
 
 ### Proof Patterns (reusable across targets)
 
+- **`slice`+`erw` junction idiom for `tensorObj`/`sheafification.obj` defeq (iter-010, SNAP).** When a
+  rewrite target straddles a defeq junction between a hand-built object (`A.tensorObj (B.tensorObj C)`,
+  from `tensorObjAssoc`'s codomain) and its sheafified form (`sheafification.obj (…)` /
+  `toMonoidalCategory`-mapped), plain `rw`/`simp`/`reassoc_of%` report "did not find pattern" and
+  full-goal `erw` deterministically times out at `whnf` (200000 hb). FIX: `slice_lhs/rhs i j => erw [h]`
+  isolates the small composite so `erw` discharges only the LOCAL codomain defeq — cheap and reliable at
+  every junction. Companion moves: state a collapse `have` with codomain explicitly ascribed to the goal's
+  surface syntax (`… : _ ⟶ tensorObj A (tensorObj B C)`) so the later `erw` matches; and
+  `simp only [Category.assoc]; rw [Iso.eq_inv_comp, asIso_hom]` to slide an `s.inv` onto the other side
+  (prefixing by `s`), exposing counit/unit cancellations. LIMIT: this does NOT cancel a defeq `μ` hom-inv
+  pair whose two occurrences carry different internal `⋙`-nesting — the matcher still cannot unify them in
+  a giant goal, so `Iso.hom_inv_id_assoc` never fires. Canonicalize the `μ` object argument first (restate
+  the producing lemma with the counit-object form `(toPresheafOfModules X).obj (sheafification.obj _)`).
+- **μ-object fold via `simp only [tensorObj]` (iter-011, SNAP — UPDATES the canonicalization note above).**
+  After restating the producing keystone in counit-object form (`…_eq_mu'` defeq wrappers), the two μ's
+  become object-identical but still print via different unfoldings. The WINNING fold is `simp only
+  [tensorObj]` (folds `tensorObjLocalizedIso`'s `A.tensorObj B` to the same `sheafification.obj (a⊗b)`) —
+  verified both μ's then print identically. **DEAD END (do not retry): `rw [show μ_obj1 = μ_obj2 from rfl]`
+  fails `motive is not type correct`** (the μ object sits in the *type* of an adjacent dependent whiskering
+  morphism); `simp only [tensorObj]` sidesteps it. The object fold alone is necessary-not-sufficient — see
+  the Known Blocker on the assembly cancel.
+- **Kernel-light NatIso composition coherence (iter-011, FBC, reusable & cold-build verified).** To prove a
+  natural-iso composition-coherence equality without a kernel bomb: `apply Iso.ext; apply NatTrans.ext;
+  funext N` → a PURELY STRUCTURAL `simp only` (`Iso.trans_hom`, `NatTrans.comp_app`,
+  `Functor.isoWhiskerRight/Left_hom`, `Functor.associator_{hom,inv}_app`, `Functor.whisker{Right,Left}_app`,
+  `Category.{id_comp,comp_id,assoc}`, `NatIso.ofComponents_hom_app`) collapses the RHS pasting to the
+  concrete per-component composite (associators become `𝟙`) → `exact <per_component_lemma> φ ρ N` (the `𝟙`s
+  absorb by cheap `id_comp`, NOT the sheaf `whnf`). Bounds the kernel term to a single component. AVOID
+  `ext N x` (element expansion = kernel bomb) and `change`/`rfl` defeq collapse (= cold-build `whnf`
+  deterministic timeout). Closed `gammaPushforwardNatIso_comp`'s monolithic sorry this way.
 - **Localized-monoidal synonym wiring (iter-004, SNAP, axiom-clean).** To get a symmetric monoidal
   structure on a localization `E` of a symmetric monoidal `D` (when a direct instance on `E` collides),
   instantiate Mathlib `CategoryTheory.LocalizedMonoidal L W ε`. Load-bearing engineering facts:
@@ -1820,8 +1850,131 @@
   `mul_submatrix_col'`. No signature drift (known-good code). The clean fix is a visibility-only change: export
   the 7 Cells originals as non-private and delete the ports — see recommendations.
 
+- **Bridge-free section-η associativity — closes `sectionMul_assoc_core` axiom-clean (iter-007, SNAP).**
+  To prove `Γ(structural-iso)(iterated η-image of an elementary tensor) = iterated η-image`, do NOT route
+  through the iso-level localized-associator bridge (that is a 100–200-line μ-match — see blocker below).
+  Instead factor the single unit-naturality square into two reusable engine lemmas:
+  `sheafification_map_unit_top f x : Γ(sheafification.map f)(η_P x) = η_Q(f_⊤ x)` (one-line `congrArg` of
+  `(sheafificationAdjunction _).unit.naturality f`, `.symm`) + its `IsIso` inverse companion
+  `sheafification_map_unit_top_inv` (by `rw [← sheafification_map_unit_top, ← val_app_top_comp,
+  IsIso.hom_inv_id]; rfl`). Then `haveI` the segment isos via `isIso_sheafification_whiskerRight_unit`, peel
+  the iso's segment definition with `simp only [<tensorObjAssoc>, Iso.trans_hom, val_app_top_comp,
+  Iso.symm_hom, asIso_hom, asIso_inv, Functor.mapIso_hom]`, ride η through each segment with **`erw`** of the
+  engine lemma, and close with `rfl`. CRITICAL: positional `rw` of the engine lemma FAILS ("Did not find an
+  occurrence of the pattern") — the `IsIso` instance baked into the iso's segments is *syntactically* distinct
+  from a freshly-synthesised one; only `erw`'s up-to-defeq matching bridges it. The final element identity is
+  pure `rfl` (ModuleCat structural maps reduce on elementary tensors). This engine is section-level — it does
+  NOT help the iso-level bridges.
+- **Instance-threading fix for "failed to synthesize" inside a large `exact` (iter-007, SNAP
+  `tensorBraiding_eq_localizedBraiding`).** When `letI mc := inferInstance` finds an instance but an inline
+  `Foo (C := …)` inside a big `exact` term *re-synthesises* it and aborts (surfaced as `failed to synthesize
+  instance … MonoidalCategory (modulesLocalizedMonoidal X)`, breaking cold `lake build` while the LSP
+  error-recovers past it), thread the found instance explicitly: `@Foo … _ mc _ …`. Keep it **inline** — a
+  `have h := …` binding makes `.hom` opaque so it stops reducing to `⊗ₘ` and downstream unification against
+  the goal's `tensorHom` form fails. Fragile to Mathlib refactors of the instance path (auditor major).
+
+- **`𝟭`-wrapper blocks μ-naturality rewrites — normalize with `simp only [Functor.id_obj]` FIRST (iter-009,
+  SNAP, the 4 associator seam lemmas, axiom-clean).** `(sheafificationAdjunction (𝟙 …)).unit.app P` has
+  domain printing as `(𝟭).obj P`; this `𝟭`-wrapper makes both `rw [Localization.Monoidal.μ_natural_left]`
+  (pattern-not-found) and `Iso.eq_inv_comp` (type mismatch) fail. A leading `simp only
+  [CategoryTheory.Functor.id_obj]` on the goal normalizes `𝟭.obj P → P` so `μ_natural_left` (resp.
+  `_right`) fires; the residual `sheafification.map = L'.map` closes by `rfl` (default transparency).
+  For the braiding-collapse seam, leave the seg-5 braiding object as `_` so Lean infers the exact
+  `unit.app P` codomain — then `exact (braiding_naturality_right A (unit.app P)).symm` absorbs the
+  `𝟭.obj P` vs `P` discrepancy up to defeq (explicit object → `exact` fails). Template:
+  `rw [← map_comp, ← map_comp]; congr 1; … rw [← Category.assoc, Iso.comp_inv_eq]; exact hn.symm`.
+- **`whiskerRightIso`/`whiskerLeftIso` fail instance synthesis in STATEMENT position on a
+  `backward.isDefEq.respectTransparency false` monoidal instance — use `MonoidalCategoryStruct.*` (iter-009,
+  SNAP `tensorObjAssoc_eq_localizedAssociator`).** `MonoidalCategory.whiskerRightIso (C :=
+  modulesLocalizedMonoidal X)` needs the full `MonoidalCategory` instance, which won't synthesize in a
+  lemma *statement*; restate the bridge as a `.hom` **commuting-square** (`Φ^L ; α^loc = α ; Φ^R`) using
+  `MonoidalCategoryStruct.whiskerRight/.whiskerLeft/.associator` (need only `MonoidalCategoryStruct`,
+  synthesizes fine). Square ⇔ iso-conjugation by `Iso.ext`; the square IS the blueprint's primary form.
+
 ### Known Blockers (do not retry without a structural change)
 
+- **SNAP assembly `tensorObjAssoc_eq_localizedAssociator` is a multi-step μ/counit chase, NOT "one
+  `associator_naturality` step from done" (iter-009 premise, DISPROVED iter-010).** The full-goal μ hom-inv
+  cancel cannot fire by ANY of `rw`/`simp`/`erw`/`change`-via-`slice`/`rfl`-bridge: the keystones
+  (`sheafification_whiskerRight_unit_eq_mu` / `…_whiskerLeft_…`) produce a `μ` over
+  `(sheafification ⋙ forget ⋙ restrictScalars).obj (a⊗b)` whereas `tensorObjLocalizedIso`'s `μ` carries
+  `(toPresheafOfModules X).obj (A.tensorObj B)` — defeq (bridge `:= rfl` typechecks) but DIFFERENT internal
+  `⋙`-nesting, so the matcher cannot unify the two `μ` terms in the giant goal and `Iso.hom_inv_id_assoc`
+  never fires. ~60% of a worked closed-form proof is committed & cold-build-verified (collapse to common
+  `K = L'(α^p) ≫ μ_{a,b⊗c}⁻¹ ≫ (L'a ◁ μ_{b,c}⁻¹) ≫ (c_A ⊗ₘ (c_B ⊗ₘ c_C))`). DO NOT re-fire a blind warm
+  `prove` lane (pc010 reversal signal tripped — sorry dropped 0). STRUCTURAL CHANGE required: either restate
+  the two keystones with canonical μ-object nesting `(toPresheafOfModules X).obj (sheafification.obj _)`
+  (proofs defeq-tolerant: `simp only [Functor.id_obj]; rw [μ_natural_…, Iso.inv_hom_id_assoc]; rfl`), OR
+  effort-break into `hK_lhs : <lhs>=K` / `hK_rhs : <rhs>=K` standalone lemmas (slice+erw throughout) +
+  assembly = `hK_lhs.trans hK_rhs.symm`. The 5 gated coherences cascade only after this lands.
+  **iter-011 UPDATE:** the object-mismatch half of this blocker is CLEARED — canonical keystones
+  (`…_eq_mu'`, defeq wrappers) + `simp only [tensorObj]` make both μ's print identically (verified). But
+  the cancel STILL won't fire (`Iso.hom_inv_id_assoc` reported UNUSED): TWO residual causes — (a) ADJACENCY:
+  the seg-1 keystone composite is ONE atomic factor (it arrived via `rw [Iso.eq_inv_comp, asIso_hom]`
+  wrapping), so `simp [Category.assoc]` never makes μ.hom/μ.inv adjacent; (b) INSTANCE IDENTITY: `⊗_loc`
+  not defeq `tensorObj`, so the two object-identical μ's may not be the same `Iso` term to the matcher.
+  Both dissolve only under the hK split with **`hK_rhs` built FRESH (NO `Iso.eq_inv_comp` wrapping)** +
+  `hK_lhs` via `Localization.Monoidal.associator_hom_app`. **GATING SUB-TASK = derive the WELL-TYPED `K`**
+  (the schematic `L'(α^p)` does NOT typecheck — its domain differs from the assembly domain; `K` must absorb
+  counit object-glue on all 4 tensor slots). This is prover/effort-breaker work, NOT a blueprint gap (the
+  chapter's `K` is mathematically explicit, snap011 checker confirms). 3 iters at 0 net sorry — do NOT
+  re-fire the warm monolithic lane.
+- **FBC foundation `gammaPushforwardNatIso_comp` is NOT "pointwise reflexivity" AND the monolithic-simp
+  proof OVERFLOWS THE KERNEL (iter-009).** The blueprint recipe claiming pointwise `rfl` is WRONG (prover +
+  both reviewers): LHS is indexed by the composite `(Spec(φ≫ρ))^♯_⊤`, RHS factors through
+  `(Spec ρ)^♯_⊤ ∘ (Spec φ)^♯_⊤` joined by an `eqToHom` from `Spec.map_comp` — the residual is the 3-fold
+  (R→S→T) composite analogue of `globalSectionsIso_hom_comp_specMap_appTop` (= `Scheme.ΓSpecIso_inv_naturality`),
+  genuinely non-`rfl` (single-map analogy fails — that square is over a fixed φ). The domain gluing DOES
+  collapse (`hpc`: `pushforwardComp.inv.app N = 𝟙` via `ext U:2; simp [pushforwardComp_inv_app_app]; rfl`).
+  The natIso-pasting form proven by one structural `simp only` (unfolding `gammaPushforwardIso`)
+  deterministically times out the kernel (`lake build` confirms; LSP hides it). REQUIRED route: kernel-light —
+  per-component `gammaPushforwardIso` coherence helper via `NatIso`/`Functor.ext` + a 3-fold ring-level
+  coherence helper, NOT a monolithic simp. The crux `pullback_spec_tilde_iso_ring_square_natural` is gated
+  on this foundation — do NOT scaffold the seams/crux on the unproven base.
+  **iter-011 UPDATE:** the kernel-light route LANDED for the natIso level — `gammaPushforwardNatIso_comp`'s
+  own body is now CLOSED (see Proof Pattern "Kernel-light NatIso composition coherence"), reducing to the
+  new per-component `gammaPushforwardIso_comp`. The 3-fold ring helper `globalSectionsIso_hom_comp3_specMap_appTop`
+  is PROVED (= single-map lemma at `φ≫ρ`). `gammaPushforwardIso_comp` now carries the WHOLE remaining content
+  in ONE named residual: `Γ(cast) x = x` (the `Spec.map_comp` glue). **DO NOT retry on that residual:** `rfl`
+  (not defeq), `change`/`rfl` defeq collapse (**verified cold-build kernel bomb** — whnf timeout even on the
+  small per-component goal), element `simp` on `restrictScalarsComp'App_*` (discrimination-tree miss, the
+  X.Modules/value-ModuleCat diamond), bare `erw [pushforwardComp_inv_app_val_app]` (doesn't fire —
+  `moduleSpecΓFunctor.map g` not syntactically `g.val.app U`). NEEDED (rw-only, kernel-light): 2 exposure
+  lemmas — (a) `moduleSpecΓFunctor.map g` underlying `= (modulesSpecToSheaf.map g).val.app (op ⊤)`; (b)
+  `ConcreteCategory.hom (eqToHom _) x = x` for `ModuleCat`. This is the CLOSEST-TO-DONE FBC target.
+
+- **FBC crux `pullback_spec_tilde_iso_ring_square_natural` `(★)` = `pst` pseudofunctoriality coherence — do
+  NOT re-run as a monolithic prover (iter-008, churn pattern, no sorry progress several iters).** The real
+  obligation after the (preserved, compiling) 3-peel partial is the **ring-square pseudofunctoriality
+  (cocycle) coherence of the conjugate dictionary `pst`** (the two builds of `pst` for `inclR ≫ ρB =
+  ρ ≫ inclR'` agree, mediated by `geom = chartBaseChangeGeometricComparison` / `reassoc =
+  chartBaseChangeModuleReassoc`). It is a documented multi-hundred-LOC factored-conjugate-mate build
+  ("class resisted 7 iters", `analogies/fbc-composite-mate-recognition.md`). **Three dead-ends eliminated
+  as FACT this iter — do not retry:** (1) `moduleSpecΓFunctor` is **NOT Faithful** (global Γ on all
+  `(Spec R).Modules`, not just QCoh) ⇒ no `moduleSpecΓFunctor.map_injective` / Γ-injectivity discharge;
+  (2) `rfl`/`ext;rfl`/`aesop_cat`/`exact?` all fail (the `pst` legs are genuine conjugate isos, NOT
+  identity-on-sections); (3) the inverse-transpose shortcut needs the SAME 3 transposes (source is a triple
+  pullback). The 3 `homEquiv.injective` transpose peels are **provably reversible** (`simp[←map_comp];congr`
+  round-trips them) — setup-only, not progress. **Required structural move:** effort-break seam4
+  (`…ring_square_mate_glue`, effort ~1078) first; prove the cheap foundation sub-lemma (composition
+  coherence of `gammaPushforwardNatIso`, likely `ext;rfl` since identity-on-elements per L662), then
+  conjugate via the Mathlib `Adjunction.Mates` simp-set (`conjugateEquiv_{symm_comp,comp,whiskerLeft/Right,
+  associator_hom,leftAdjointCompIso_inv}`) + per-leg brick `unit_conjugateEquiv_symm`; that yields `pst`
+  pseudofunctoriality `pullback_spec_tilde_iso_comp`, whence `(★)`. Reuse proven brick
+  `pullback_spec_tilde_iso_inv_unit_triangle` (L707, axiom-clean).
+- **SNAP associator bridge `tensorObjAssoc_eq_localizedAssociator` is NOT a "braiding-bridge clone" (iter-007).**
+  The 4 remaining SNAP sorries (`tensorPowAdd_{rightUnit,braiding}` succ, `tensorPowAdd_assoc` base+succ,
+  `sectionsMul_mul_assoc`) are all gated on this one bridge. The plan premise that each bridge clones the
+  working `tensorBraiding_eq_localizedBraiding` (which opens `rw [show tensorBraiding = L'.mapIso β_p from rfl]`
+  because it is a bare `mapIso`) is FALSE for the associator: `tensorObjAssoc` is a hand-built 5-segment
+  composite (inv whiskered unit · `sheafification.mapIso α_p` · braiding · whiskered unit · braiding) because
+  `(A⊗B)⊗C` and `A⊗(B⊗C)` sheafify *different* presheaves. The bridge requires matching that composite against
+  `Localization.Monoidal.associator_hom_app`'s μ-formula — a genuine 100–200-line theorem. **Decompose via
+  effort-breaker** into seams: (a) keystone — the two whiskered-unit segments EQUAL `Localization.Monoidal.μ`
+  (both are the strong-monoidality comparison); (b) `sheafification.mapIso α_p = L'.mapIso α_p` (defeq); (c) the
+  two presheaf braidings cancel as in the braiding bridge. Do NOT re-assign as a clone — that reproduces the
+  pc007 churn. `sectionMul_assoc_core` itself is now CLOSED bridge-free (see pattern above); only the
+  iso-coherences (`tensorPowAdd_*`) remain bridge-gated.
 - **SNAP 6 coherence sorries (iter-004): gated on 4 unbuilt bridge lemmas, NOT on hand-proofs.**
   `tensorPowAdd_{rightUnit,braiding}`(succ), `tensorPowAdd_assoc`, `sectionMul_assoc_core`,
   `sectionsMul_mul_assoc` ALL reduce to one obstacle: the hand-built `tensorObj F G =
@@ -2571,7 +2724,53 @@
   enforced corrective is a mathlib-analogist consult on the reframing keystone, not a prove round.
 
 ## Last Updated
-2026-06-18T (iter-004 review, this subproject) — project sorry 16→14. SNAP `SectionGradedRing` 8→6: the
+2026-06-19T (iter-011 review, this subproject) — FIRED BOTH provers. SNAP 6→6, FBC 5→5 (net 0 sorry — 3rd
+consecutive 0-net iter on both routes). REAL structural progress: FBC `gammaPushforwardNatIso_comp` own body
+CLOSED (kernel-light NatIso route) + `globalSectionsIso_hom_comp3` + 2 `:= rfl` helpers PROVED → foundation
+isolated to ONE named residual `Γ(cast) x = x` in new `gammaPushforwardIso_comp` (blocked on 2 rw-only
+exposure lemmas — CLOSEST-TO-DONE). SNAP 2 canonical keystones `…_eq_mu'` CLOSED + iter-010 object-fold
+blocker CLEARED (`simp only [tensorObj]`); assembly STILL won't cancel (adjacency + instance-identity) →
+STUCK, needs hK split + typed-`K`. lean-auditor: 0 must-fix / 3 major (misleading docstring + LATENT BUG:
+misdirected maxHeartbeats stacks) / 5 minor. lean-vs-blueprint snap011: 0 red flags; fbc011: blueprint prose
+corrected, Lean docstring still stale. sync_leanok +2 (FBC only). See iter/iter-011/review.md. — PRIOR:
+2026-06-19T (iter-010 review, this subproject) — SNAP assembly `tensorObjAssoc_eq_localizedAssociator`
+PARTIAL, 0 sorries closed (sorry 6→6); pc010 reversal signal TRIPPED (required ≥3). The iter-009 "one
+`associator_naturality` step from done" premise DISPROVED — residual is a multi-step μ/counit chase; ~60%
+of a closed-form proof committed & cold-build-verified, blocker isolated to a μ-object `⋙`-nesting mismatch
+(see Known Blockers). NEXT iter: do NOT blind-retry the warm lane — effort-break into `hK_lhs`/`hK_rhs` or
+canonicalize keystone μ-objects. FBC = blueprint-writer only (kernel-light decomposition), no prover, no
+`.lean` edits — FBC prover fires iter-011 post blueprint-reviewer gate. lean-vs-blueprint snap010: 0 red
+flags. lean-auditor: 9 must-fix = all pre-existing intentional FBC sorries (no strategy context). sync_leanok
+removed 27 `\leanok` (deterministic, conservative). See iter/iter-010/review.md. — PRIOR:
+2026-06-19T (iter-009 review, this subproject) — SNAP 4 associator seam lemmas CLOSED axiom-clean
+(`sheafification_{mapIso_associator_eq_localizationMap, whiskerRight_unit_eq_mu, whiskerLeft_unit_eq_mu,
+braiding_whiskerRight_unit_eq_whiskerLeft_unit}`); `tensorObjAssoc_eq_localizedAssociator` MATERIALIZED
+(.hom square form, sorry @L1821 — one `associator_naturality` step from done). FBC foundation
+`gammaPushforwardNatIso_comp` scaffolded (sorry); blueprint "pointwise reflexivity" recipe found WRONG
+(real = 3-fold globalSectionsIso coherence) + monolithic-simp KERNEL TIMEOUT → kernel-light route
+required; crux NOT advanced (foundation-gated). See Known Blockers + iter/iter-009/review.md. — PRIOR:
+2026-06-19T (iter-008 review, this subproject) — FBC `FlatBaseChange` 4→4, NO `.lean` edits.
+No-sorry-progress iter on the crux `pullback_spec_tilde_iso_ring_square_natural`; value = sharpened
+diagnosis (`(★)` = `pst` pseudofunctoriality coherence) + 3 dead-ends eliminated as fact
+(`moduleSpecΓFunctor` NOT Faithful; rfl/ext/aesop/exact? dead; inverse-transpose no shortcut; the 3
+transpose peels are reversible setup) + handed-off route (effort-break seam4 → foundation sub-lemma
+`gammaPushforwardNatIso` comp-coherence → conjugate telescope). See Known Blockers (top). Crux now in a
+churn pattern — MUST decompose structurally before any further prover. SNAP = effort-break only (no
+prover, per plan); iter-009 = mandatory SNAP prover on the 4 stubbed associator-bridge seams. Both review
+subagents skipped (no Lean edits; iter-007 auditor had 0 must-fix). blueprint-doctor clean.
+
+### Prior: 2026-06-19T (iter-007 review, this subproject) — SNAP `SectionGradedRing` declarations-with-sorry 5→4:
+CLOSED `sectionMul_assoc_core` axiom-clean via the bridge-free section-η route (two new engine lemmas
+`sheafification_map_unit_top{,_inv}`) — the pc007 "close ≥1 coherence" deliverable. ALSO fixed a
+build-blocker: `tensorBraiding_eq_localizedBraiding` (1695) instance-resynthesis failure that broke cold
+`lake build` (now exit 0). 4 sorries remain, ALL gated on the associator bridge whose "braiding-clone"
+premise is FALSE (5-segment composite — see Known Blockers; decompose, don't re-assign). Subagents:
+lean-auditor + lean-vs-blueprint-checker both confirm Lean correct & axiom-clean, 0 Lean must-fix; the
+live finding is blueprint-side (assoc_core proof block documents the abandoned bridge route — `% NOTE:`
+added, writer realign queued) + auditor comment/fragility majors. FBC decompose-only (no prover). See
+iter/iter-007/review.md.
+
+### Prior: 2026-06-18T (iter-004 review, this subproject) — project sorry 16→14. SNAP `SectionGradedRing` 8→6: the
 LocalizedMonoidal pivot LANDED axiom-clean (`W_isMonoidal`, `localizedMonoidalUnitIso`,
 `modulesLocalizedMonoidal` instantiate Mathlib `LocalizedMonoidal L W ε` synonym; Symm/Braided/Monoidal
 all resolve), + 2 base cases closed (`tensorPowAdd_{rightUnit,braiding}`). 6 residual sorries gated on 4

@@ -1,0 +1,257 @@
+[
+  {
+    "timestamp": "2026-06-19T13:45:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "linearEndo_apply_comm"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "BUILD RED at L219: `rw [← smul_eq_mul, ← map_smul, ...]` — `← map_smul` resolves to project-local `AlgebraicGeometry.Scheme.Modules.map_smul`, NOT `LinearMap.map_smul`, in the full-import context. Isolated `lake env lean` scratch + LSP diagnostics BOTH passed (that name not in scope there), masking the failure. One-token fix: `← LinearMap.map_smul`.",
+      "key_lemmas_used": [
+        "smul_eq_mul",
+        "map_smul",
+        "mul_comm"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "new helper: S-linear endos of regular module S commute on 1 (g x = x * g 1 via g(x•1)=x•g1)",
+        "code_tried": "have key : ∀ (g : S →ₗ[S] S) (x : S), g x = x * g 1 := fun g x => by rw [← smul_eq_mul, ← map_smul, smul_eq_mul, mul_one]\n  rw [key a (b 1), key b (a 1), mul_comm]",
+        "line_number": "216-220",
+        "lean_error": "Tactic `rewrite` failed: Did not find an occurrence of the pattern (L219:23, full `lake build` only)",
+        "result": "partial",
+        "insight": "LSP-clean + isolated-scratch-pass ≠ full-build-green when an unqualified lemma name (`map_smul`) is shadowed by a project-local decl reachable only with the full imports."
+      }
+    ],
+    "next_steps": "Qualify the rewrite: `← LinearMap.map_smul`. Then rebuild DualInverse → presheafDualUnitIso_naturality + downstream land."
+  },
+  {
+    "timestamp": "2026-06-19T13:45:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "presheafDualUnitIso_naturality"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Proof body is honest and complete, but it calls `linearEndo_apply_comm` which is sorryAx-tainted by the L219 build break → this decl is also tainted and the module is RED. NOT landed until L219 is fixed.",
+      "key_lemmas_used": [
+        "PresheafOfModules.hom_ext",
+        "ModuleCat.hom_ext",
+        "PresheafOfModules.evalLin",
+        "linearEndo_apply_comm"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "B1 eval-core ★': Iso.ext → hom_ext;intro X → ModuleCat.hom_ext;ext φ → simp[Iso.trans_hom,comp_app,...] → 2 defeq `change`s to eval-at-1 form → exact linearEndo_apply_comm",
+        "code_tried": "apply Iso.ext; apply PresheafOfModules.hom_ext; intro X; apply ModuleCat.hom_ext; ext φ; simp only [Iso.trans_hom, PresheafOfModules.comp_app, ModuleCat.hom_comp, LinearMap.comp_apply]; change ...evalLin... ; change ...; exact linearEndo_apply_comm _ _",
+        "line_number": "231-345",
+        "lean_error": "(none in this decl; blocked transitively by linearEndo_apply_comm at L219)",
+        "result": "partial",
+        "insight": "Two defeq `change`s reshape the goal to `evalLin φ ((ŝ.app X) 1) = (ŝ.app X) (evalLin φ 1)`, exactly `linearEndo_apply_comm`. Proof structurally correct (lean-auditor confirmed honest mod the helper bug)."
+      }
+    ],
+    "next_steps": "Lands automatically once L219 is qualified and DualInverse rebuilds green."
+  },
+  {
+    "timestamp": "2026-06-19T13:45:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dualUnitIso_dualIsoOfIso"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "hN sorry removed + proof honest, but TensorObjInverse cannot build because its upstream DualInverse is RED (L219). Not landed until L219 fixed.",
+      "key_lemmas_used": [
+        "presheafDualUnitIso_naturality",
+        "Functor.map_comp",
+        "sheafificationAdjunction counit naturality"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "rw [← Functor.mapIso_trans, presheafDualUnitIso_naturality, ...]",
+        "code_tried": "unfold dualIsoOfIso dual_unit_iso; rw [← Iso.trans_assoc, ← Functor.mapIso_trans, presheafDualUnitIso_naturality, Functor.mapIso_trans, Iso.trans_assoc]; apply Iso.ext; ...; rw [counit.naturality s.hom]",
+        "line_number": "238",
+        "lean_error": "rewrite did not match (sheafification.map legs defeq-not-syntactic)",
+        "result": "failed",
+        "insight": "Every `rw [← Functor.map_comp/map_comp_assoc/mapIso_trans, hcore]` fails to key-match past the `sheafification.map` legs (defeq, not syntactic)."
+      },
+      {
+        "attempt": 2,
+        "strategy": "hom-level via congrArg + erw past defeq sheafification legs + counit naturality",
+        "code_tried": "apply Iso.ext; unfold ...; simp only [Iso.trans_hom,Functor.mapIso_hom,Category.assoc]; have hcore := congrArg Iso.hom (presheafDualUnitIso_naturality ...); simp only [Iso.trans_hom] at hcore; rw [← Category.assoc]; erw [← Functor.map_comp, hcore, Functor.map_comp, Category.assoc]; erw [counit.naturality s.hom]; simp",
+        "line_number": "238",
+        "lean_error": "(none — `goals: []`, verified)",
+        "result": "success",
+        "insight": "`erw` (not `rw`) required to combine/split the two `S.map` legs (defeq, not syntactic); then sheafification-counit naturality + `simp` closes. hN itself is honest."
+      }
+    ],
+    "next_steps": "Lands automatically once upstream DualInverse L219 is fixed and TensorObjInverse rebuilds."
+  },
+  {
+    "timestamp": "2026-06-19T13:45:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pushforward_lax_mu_comparison_rhs_tmul"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "restrictScalars_μ_app_tmul",
+        "pushforward_μ_eq"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "abstract-object signature + respectTransparency false, reduce composition-μ to restrictScalars-μ (defeq via pushforward_μ_eq=rfl), collapse pure tensor",
+        "code_tried": "set_option backward.isDefEq.respectTransparency false in private lemma ... (φ' : (S₀⋙forget₂)⟶(T₀⋙forget₂)) (M₁ M₂ ...) (m n) : ((LaxMonoidal.μ (restrictScalars φ') M₁ M₂).app W).hom (m ⊗ₜ n) = m ⊗ₜ n := by exact restrictScalars_μ_app_tmul φ'",
+        "line_number": "4276",
+        "lean_error": "(resolved; multiple `failed to synthesize Module` errors first — fixed by abstract binders + respectTransparency false)",
+        "result": "success",
+        "insight": "Pure-tensor μ-value lemmas elaborate ONLY with ABSTRACT objects + `respectTransparency false`; concrete `functor.obj X .obj W` binders fail module-synth (binder trap)."
+      }
+    ],
+    "next_steps": "Done. Consumed (by defeq) inside lhs_tmul/the assembly."
+  },
+  {
+    "timestamp": "2026-06-19T13:45:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pushforward_lax_mu_comparison_lhs_tmul"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Genuine residual: the LHS mate (adjoint-transported) tensorator's per-section value. sorry at L4353.",
+      "key_lemmas_used": [
+        "ModuleCat.MonoidalCategory.tensor_ext",
+        "pushforward_lax_mu_comparison_rhs_tmul",
+        "rightAdjointLaxMonoidal_μ"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "package as per-section comparison `μ(rightAdjointLaxMonoidal hadj').app W = μ(presheafPushforwardLaxMonoidal φ').app W`; tensor_ext inside; RHS by rhs_tmul; residual = LHS mate pure-tensor value",
+        "code_tried": "set_option backward.isDefEq.respectTransparency false in private lemma pushforward_lax_mu_comparison_lhs_tmul ... := by intro α β hadj hβ β' hadj'; refine ModuleCat.MonoidalCategory.tensor_ext (fun m n => ?_); ... sorry",
+        "line_number": "4303-4353",
+        "lean_error": "(in progress — `introN failed`, `Unknown identifier φ'/Gβ.obj` while fixing binder shape; final shape compiles with sorry)",
+        "result": "partial",
+        "insight": "lean-vs-blueprint flagged: blueprint frames this as a one-sided VALUE (`LHS=m⊗n`) but the Lean is a per-section morphism COMPARISON — statement-shape drift (blueprint-writer fix). Residual *is* the value computation the blueprint sketches."
+      }
+    ],
+    "next_steps": "Prove the LHS mate pure-tensor value (unfold `rightAdjointLaxMonoidal_μ` + `homEquiv_unit` to unit ≫ map(δ ≫ (counit⊗counit))). NOT a 1-1 port of pushforwardComp_lax_μ."
+  },
+  {
+    "timestamp": "2026-06-19T13:45:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pushforward_lax_mu_comparison"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Assembly proven (no own sorry); transitively depends on lhs_tmul's sorry.",
+      "key_lemmas_used": [
+        "PresheafOfModules.hom_ext",
+        "pushforward_lax_mu_comparison_lhs_tmul"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "reduce the morphism equality to per-section via hom_ext, defer each W to lhs_tmul",
+        "code_tried": "intro α β hadj hβ β' hadj'; (hom_ext to per-section, defer to pushforward_lax_mu_comparison_lhs_tmul)",
+        "line_number": "4363",
+        "lean_error": "(none — assembly compiles; lean-auditor confirmed honest)",
+        "result": "success",
+        "insight": "The asymmetric mate-vs-composition comparison is now fully reduced to lhs_tmul; rhs handled by rhs_tmul inside. The single open residual on the μ-side is lhs_tmul."
+      }
+    ],
+    "next_steps": "Closes when lhs_tmul closes."
+  },
+  {
+    "timestamp": "2026-06-19T13:45:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pushforward_mu_appIso_collapse"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Downstream of pushforward_lax_mu_comparison; not attempted (gated). sorry at L4506. Mate route to IsMonoidal is CIRCULAR (confirmed iter-026/028) — must consume the comparison lemma.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not attempted this iter (gated on comparison)",
+        "code_tried": "sorry",
+        "line_number": "4410",
+        "lean_error": "n/a",
+        "result": "partial",
+        "insight": "Do NOT retry the IsMonoidal/mate route (circular). Consume pushforward_lax_mu_comparison once lhs_tmul lands."
+      }
+    ],
+    "next_steps": "After comparison fully closes, rewrite the collapse via the comparison lemma at morphism level."
+  },
+  {
+    "timestamp": "2026-06-19T13:45:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "exists_tensorObj_inverse"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Cocycle-A main (L211). Depends on tensorObj_unit_self_duality_collapse, which depends (via B1=dualUnitIso_dualIsoOfIso/hN) on the now-RED DualInverse. Not attempted this iter.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not attempted (gated on hN/B1 + DualInverse green)",
+        "code_tried": "sorry",
+        "line_number": "211",
+        "lean_error": "n/a",
+        "result": "partial",
+        "insight": "Frontier node; its foundation (hN, B1 eval-core) is written but blocked by the L219 build break."
+      }
+    ],
+    "next_steps": "After DualInverse green: assemble via tensorObj_unit_self_duality_collapse + the precise iso-algebra bridge noted at L211."
+  }
+]

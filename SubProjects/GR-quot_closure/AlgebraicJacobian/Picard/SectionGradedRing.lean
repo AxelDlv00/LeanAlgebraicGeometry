@@ -124,6 +124,20 @@ noncomputable def moduleTensorPow (F L : X.Modules) (m : ℕ) : X.Modules :=
 @[simp] private lemma moduleTensorPow_zero (F L : X.Modules) :
     moduleTensorPow F L 0 = tensorObj F (unitModule X) := rfl
 
+/-- An **invertible** sheaf of modules (`def:isInvertible`, [Stacks, Tag 01CR]): `L` is
+`⊗`-invertible, i.e. there is a sheaf of `𝒪_X`-modules `N` and an isomorphism
+`L ⊗ N ≅ 𝒪_X` (`tensorObj L N ≅ unitModule X`).  Over a scheme — where every stalk is a
+local ring — this is equivalent to `L` being locally free of rank one (a line bundle).
+It is the line-bundle hypothesis under which the section graded ring becomes commutative
+(`lem:sectionGradedRing_gcommSemiring`); for a general sheaf the section ring is the free
+tensor algebra on `Γ(X,L)` and is non-commutative, which is why Stacks defines `Γ_*(X,𝓛)`
+only for invertible `𝓛`.  The single arithmetic consequence the commutativity proof consumes
+is the trivial self-braiding `β_{L,L} = 𝟙` (`tensorBraiding_self_eq_id_of_isInvertible`,
+`lem:braiding_eq_id_of_invertible`). -/
+class IsInvertible (L : X.Modules) : Prop where
+  /-- `L` admits a `⊗`-inverse: a sheaf `N` with `L ⊗ N ≅ 𝒪_X`. -/
+  exists_tensorInv : ∃ N : X.Modules, Nonempty (tensorObj L N ≅ unitModule X)
+
 /-! ### Unitor and braiding isomorphisms of the sheaf tensor product
 
 These are the parts of the (would-be) symmetric monoidal structure on `X.Modules`
@@ -1545,6 +1559,233 @@ lemma isIso_sheafification_whiskerRight_unit (P Q : X.PresheafOfModules) :
   (isIso_sheafification_map_iff _).mpr
     (ztensor_whisker_localIso _ (localIso_toPresheaf_map_unit P) Q)
 
+/-! ### The symmetric monoidal structure on `X.Modules` by monoidal localization
+(`def:sheafModule_W_isMonoidal`, `def:sheafModule_monoidalStructure`)
+
+Following `analogies/tensorobjassoc.md` and the Mathlib precedent
+`CategoryTheory.Sheaf.monoidalCategory` (`Mathlib/CategoryTheory/Sites/Monoidal.lean:165`):
+module sheafification is the localization functor at the class `W'` of morphisms of presheaves
+of `𝒪_X`-modules whose underlying abelian-presheaf morphism is a local isomorphism
+(`Mathlib/Algebra/Category/ModuleCat/Sheaf/Localization.lean`).  We prove that `W'` is
+*compatible with the presheaf tensor product* (`W_isMonoidal`), then transport the entire
+symmetric monoidal structure of `MonoidalPresheaf X` onto `X.Modules` via Mathlib's
+`LocalizedMonoidal` machinery (`monoidalCategory`, `braidedCategory`, `symmetricCategory`).
+The associator, pentagon, triangle, braiding and hexagon are therefore **inherited** rather
+than hand-proved, dissolving the non-canonicity of the hand-rolled `tensorObjAssoc`. -/
+
+/-- The sheafification functor typed with the **monoidal** presentation `MonoidalPresheaf X` of its
+domain (definitionally `X.PresheafOfModules`).  A reducible abbreviation so that instance synthesis
+sees the `PresheafOfModules (R ⋙ forget₂ _ _)` carrier form on which Mathlib registers the symmetric
+monoidal structure, while still unfolding to `sheafification` for the `IsLocalization` instance. -/
+noncomputable abbrev sheafificationMon (X : Scheme.{u}) : MonoidalPresheaf X ⥤ X.Modules :=
+  sheafification
+
+/-- The **sheafification localization class** `W'` on presheaves of `𝒪_X`-modules: the morphisms
+whose underlying abelian-presheaf morphism `(toPresheaf R₀).map f` lies in the local-isomorphism
+class `J.W` of the opens topology, equivalently the morphisms that module sheafification sends to
+isomorphisms.  This is exactly the class for which `sheafification` is a localization functor
+(`PresheafOfModules.sheafification … .IsLocalization (J.W.inverseImage (toPresheaf R₀))`,
+`Mathlib/Algebra/Category/ModuleCat/Sheaf/Localization.lean:48`).  Typed as a morphism property of
+`MonoidalPresheaf X` (definitionally `X.PresheafOfModules`) for monoidal-instance synthesis. -/
+abbrev sheafificationW (X : Scheme.{u}) : MorphismProperty (MonoidalPresheaf X) :=
+  (opensTopology X).W.inverseImage (PresheafOfModules.toPresheaf X.ringCatSheaf.obj)
+
+/-- The sheafification functor is a localization functor for `sheafificationW`.  This bridges the
+project's `sheafification` (a non-reducible `def`) to Mathlib's localization instance on
+`PresheafOfModules.sheafification (𝟙 R₀)` (`ModuleCat/Sheaf/Localization.lean:48`), which instance
+resolution would not otherwise unfold to. -/
+instance sheafificationMon_isLocalization :
+    (sheafificationMon X).IsLocalization (sheafificationW X) :=
+  inferInstanceAs ((PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)).IsLocalization
+    ((opensTopology X).W.inverseImage (PresheafOfModules.toPresheaf X.ringCatSheaf.obj)))
+
+/-- **Tensor-compatibility of the sheafification localization class**
+(`def:sheafModule_W_isMonoidal`):
+the class `W' = J.W.inverseImage (toPresheaf R₀)` satisfies `MorphismProperty.IsMonoidal`, i.e. it is
+multiplicative and stable under left- and right-whiskering by arbitrary presheaves of modules.
+
+* Multiplicativity is inherited (`W'` is an `inverseImage`, and the inverse image of the
+  multiplicative class `J.W` is multiplicative).
+* The right-whiskering field is the already-proven general whisker brick
+  `ztensor_whisker_localIso`: for any `f` with `(toPresheaf R₀).map f ∈ J.W` and any `R`, the
+  underlying abelian morphism of `f ▷ R` is again a local isomorphism.
+* The left-whiskering field follows by conjugating the right-whiskering field with the symmetric
+  braiding of `MonoidalPresheaf X` (`PresheafOfModules.symmetricCategory`): `Z ◁ g` and `g ▷ Z`
+  are carried to one another by the braiding isomorphism on both ends, and membership in `W'` is
+  invariant under isomorphism of arrows (`MorphismProperty.arrow_mk_iso_iff`).  This is the trick
+  Mathlib uses in the opposite direction at `Sites/Monoidal.lean:144`.
+
+This is the only project-supplied input of the monoidal-localization transport; with it,
+`Mathlib.CategoryTheory.Localization.Monoidal` produces the whole structure for free. -/
+instance W_isMonoidal : (sheafificationW X).IsMonoidal where
+  whiskerRight f hf Y := ztensor_whisker_localIso f hf Y
+  whiskerLeft Z {Y₁ Y₂} g hg :=
+    ((sheafificationW X).arrow_mk_iso_iff
+      (Arrow.isoMk (β_ Z Y₁) (β_ Z Y₂)
+        (by simp [BraidedCategory.braiding_naturality_right]))).2
+      (ztensor_whisker_localIso g hg Z)
+
+/-- The preferred unit isomorphism feeding the monoidal-localization transport: the underlying
+presheaf of the unit module `𝟙_X = SheafOfModules.unit` is *definitionally* the monoidal unit
+`𝟙_ (MonoidalPresheaf X) = PresheafOfModules.unit R₀`, and `unitModule X` is already a sheaf, so
+its sheafification counit `sheafificationCounitIso` identifies `sheafification.obj (𝟙_ C)` with
+`unitModule X`.  This picks `unitModule X` as the tensor unit of the transported structure. -/
+noncomputable def localizationUnitIso (X : Scheme.{u}) :
+    (sheafificationMon X).obj (𝟙_ (MonoidalPresheaf X)) ≅ unitModule X :=
+  sheafificationCounitIso (unitModule X)
+
+/-- **The monoidal structure on `X.Modules` by transport** (`def:sheafModule_monoidalStructure`):
+the category `X.Modules` of sheaves of `𝒪_X`-modules acquires a `MonoidalCategory` structure by
+transporting the monoidal structure of `MonoidalPresheaf X` along the sheafification localization
+functor (`CategoryTheory.Localization.LocalizedMonoidal`).  The associator is the canonical
+Mac Lane associator and the pentagon and triangle laws hold by inheritance.  The tensor unit is
+`unitModule X` (see `localizationUnitIso`). -/
+@[instance_reducible]
+noncomputable def monoidalCategory : MonoidalCategory X.Modules :=
+  inferInstanceAs (MonoidalCategory
+    (LocalizedMonoidal (L := sheafificationMon X) (W := sheafificationW X)
+      (localizationUnitIso X)))
+
+attribute [local instance] monoidalCategory
+
+/-- The transported monoidal structure on `X.Modules` is **braided**, inherited from the symmetric
+braiding of `MonoidalPresheaf X` (`Mathlib.CategoryTheory.Localization.Monoidal.Braided`). -/
+@[implicit_reducible]
+noncomputable def braidedCategory : BraidedCategory X.Modules :=
+  inferInstanceAs (BraidedCategory
+    (LocalizedMonoidal (L := sheafificationMon X) (W := sheafificationW X)
+      (localizationUnitIso X)))
+
+attribute [local instance] braidedCategory
+
+/-- The transported monoidal structure on `X.Modules` is **symmetric**
+(`def:sheafModule_monoidalStructure`), inherited from the symmetric monoidal structure of
+`MonoidalPresheaf X` (`PresheafOfModules.symmetricCategory`); in particular the hexagon identities
+hold by inheritance. -/
+@[implicit_reducible]
+noncomputable def symmetricCategory : SymmetricCategory X.Modules :=
+  inferInstanceAs (SymmetricCategory
+    (LocalizedMonoidal (L := sheafificationMon X) (W := sheafificationW X)
+      (localizationUnitIso X)))
+
+/-- **The inherited tensor product agrees with the project's `tensorObj`.**  The strong-monoidal
+comparison `μ` of the monoidal localization, precomposed with the sheafification counit isomorphisms
+on each factor, identifies the *transported* tensor product `F ⊗ G` (`monoidalCategory`) with the
+project's hand-built sheaf tensor product `tensorObj F G`.  This is the bridge that lets the
+inherited (canonical) associator/unitor/braiding coherence be read off as coherence for the
+project's `tensorObj` family — the launching pad for rewiring `tensorObjAssoc`, `tensorPowAdd` and
+the section-multiplication coherence laws onto the inherited structure. -/
+noncomputable def tensorObjIso (F G : X.Modules) :
+    F ⊗ G ≅ tensorObj F G :=
+  MonoidalCategory.tensorIso (sheafificationCounitIso F).symm (sheafificationCounitIso G).symm ≪≫
+    Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
+      ((toPresheafOfModules X).obj F) ((toPresheafOfModules X).obj G)
+
+/-! ### Bridge lemmas: hand-built unitors/braiding equal the canonical ones via `tensorObjIso`
+
+The unit object `𝟙_ X.Modules` of the inherited `monoidalCategory` is *definitionally* `unitModule X`
+(it is the codomain of the localization unit `ε = localizationUnitIso X`).  These lemmas identify the
+hand-built `tensorObjUnitIso`/`tensorObjRightUnitor`/`tensorBraiding` with the canonical
+`λ_`/`ρ_`/`β_` transported along the bridge `tensorObjIso`, so the coherence laws of `tensorPowAdd`
+and the section multiplication can be read off the canonical (Mac Lane / hexagon) coherence. -/
+
+/-- Bridge: the hand-built right unitor is the canonical `ρ_` transported along `tensorObjIso`. -/
+lemma tensorObjRightUnitor_eq (G : X.Modules) :
+    tensorObjRightUnitor G = (tensorObjIso G (unitModule X)).symm ≪≫ ρ_ G := by
+  apply Iso.ext
+  rw [Iso.trans_hom, Iso.symm_hom, Iso.eq_inv_comp]
+  -- Replace `(ρ_ G).hom` by the canonical right unitor of `sheafification.obj g` conjugated by the
+  -- sheafification counit, via right-unitor naturality (`f = counit.inv : G ⟶ sheafification.obj g`).
+  have hnat : G.sheafificationCounitIso.inv ▷ (𝟙_ X.Modules) ≫
+        (ρ_ (sheafification.obj ((toPresheafOfModules X).obj G))).hom ≫
+          G.sheafificationCounitIso.hom = (ρ_ G).hom := by
+    rw [← Category.assoc, MonoidalCategory.rightUnitor_naturality, Category.assoc,
+      Iso.inv_hom_id, Category.comp_id]
+  -- The canonical right unitor of `sheafification.obj g` via Mathlib's `rightUnitor_hom_app`
+  -- (stated in the exact syntactic form occurring in the goal; `exact` absorbs the
+  -- `(toMonoidalCategory …).obj = sheafification.obj` / `ε' = localizationUnitIso` defeqs).
+  have hru : (ρ_ (sheafification.obj ((toPresheafOfModules X).obj G))).hom =
+      sheafification.obj ((toPresheafOfModules X).obj G) ◁ (localizationUnitIso X).inv ≫
+        (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
+          ((toPresheafOfModules X).obj G) ((toPresheafOfModules X).obj (unitModule X))).hom ≫
+        sheafification.map (MonoidalCategory.rightUnitor (C := MonoidalPresheaf X)
+          ((toPresheafOfModules X).obj G)).hom :=
+    Localization.Monoidal.rightUnitor_hom_app (sheafificationMon X) (sheafificationW X)
+      (localizationUnitIso X) ((toPresheafOfModules X).obj G)
+  dsimp only [tensorObjRightUnitor, tensorObjIso, Iso.trans_hom, Functor.mapIso_hom,
+    MonoidalCategory.tensorIso_hom, Iso.symm_hom]
+  rw [MonoidalCategory.tensorHom_def, ← hnat, hru]
+  simp only [Category.assoc]
+  rfl
+
+/-- Bridge: the hand-built left unitor is the canonical `λ_` transported along `tensorObjIso`. -/
+private lemma tensorObjUnitIso_eq (G : X.Modules) :
+    tensorObjUnitIso G = (tensorObjIso (unitModule X) G).symm ≪≫ λ_ G := by
+  apply Iso.ext
+  rw [Iso.trans_hom, Iso.symm_hom, Iso.eq_inv_comp]
+  have hnat : (𝟙_ X.Modules) ◁ G.sheafificationCounitIso.inv ≫
+        (λ_ (sheafification.obj ((toPresheafOfModules X).obj G))).hom ≫
+          G.sheafificationCounitIso.hom = (λ_ G).hom := by
+    rw [← Category.assoc, MonoidalCategory.leftUnitor_naturality, Category.assoc,
+      Iso.inv_hom_id, Category.comp_id]
+  have hlu : (λ_ (sheafification.obj ((toPresheafOfModules X).obj G))).hom =
+      (localizationUnitIso X).inv ▷ sheafification.obj ((toPresheafOfModules X).obj G) ≫
+        (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
+          ((toPresheafOfModules X).obj (unitModule X)) ((toPresheafOfModules X).obj G)).hom ≫
+        sheafification.map (MonoidalCategory.leftUnitor (C := MonoidalPresheaf X)
+          ((toPresheafOfModules X).obj G)).hom :=
+    Localization.Monoidal.leftUnitor_hom_app (sheafificationMon X) (sheafificationW X)
+      (localizationUnitIso X) ((toPresheafOfModules X).obj G)
+  dsimp only [tensorObjUnitIso, tensorObjIso, Iso.trans_hom, Functor.mapIso_hom,
+    MonoidalCategory.tensorIso_hom, Iso.symm_hom]
+  rw [MonoidalCategory.tensorHom_def', ← hnat, hlu]
+  simp only [Category.assoc]
+  rfl
+
+/-- Bridge: the hand-built braiding is the canonical `β_` transported along `tensorObjIso`. -/
+private lemma tensorBraiding_eq (F G : X.Modules) :
+    tensorBraiding F G = (tensorObjIso F G).symm ≪≫ β_ F G ≪≫ tensorObjIso G F := by
+  apply Iso.ext
+  rw [Iso.trans_hom, Iso.symm_hom, Iso.trans_hom, Iso.eq_inv_comp]
+  -- Reduce `(β_ F G).hom` to the canonical braiding of `sheafification.obj`'s conjugated by counits.
+  have hbnat : (F.sheafificationCounitIso.inv ⊗ₘ G.sheafificationCounitIso.inv) ≫
+        (β_ (sheafification.obj ((toPresheafOfModules X).obj F))
+            (sheafification.obj ((toPresheafOfModules X).obj G))).hom ≫
+          (G.sheafificationCounitIso.hom ⊗ₘ F.sheafificationCounitIso.hom) = (β_ F G).hom := by
+    rw [← BraidedCategory.braiding_naturality, ← Category.assoc,
+      MonoidalCategory.tensorHom_comp_tensorHom, Iso.inv_hom_id, Iso.inv_hom_id,
+      MonoidalCategory.id_tensorHom_id, Category.id_comp]
+  -- The canonical braiding of `sheafification.obj` via Mathlib's `β_hom_app` (the localized
+  -- monoidal functor's `LaxMonoidal.μ`/`δ` are definitionally `Localization.Monoidal.μ`'s
+  -- `hom`/`inv`, so `exact` accepts the canonical-`μ` phrasing).
+  have hβ : (β_ (sheafification.obj ((toPresheafOfModules X).obj F))
+        (sheafification.obj ((toPresheafOfModules X).obj G))).hom =
+      (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
+          ((toPresheafOfModules X).obj F) ((toPresheafOfModules X).obj G)).hom ≫
+        sheafification.map (BraidedCategory.braiding (C := MonoidalPresheaf X)
+          ((toPresheafOfModules X).obj F) ((toPresheafOfModules X).obj G)).hom ≫
+        (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
+          ((toPresheafOfModules X).obj G) ((toPresheafOfModules X).obj F)).inv :=
+    Localization.Monoidal.β_hom_app (sheafificationMon X) (sheafificationW X)
+      (localizationUnitIso X) ((toPresheafOfModules X).obj F) ((toPresheafOfModules X).obj G)
+  dsimp only [tensorBraiding, tensorObjIso, Iso.trans_hom, Functor.mapIso_hom,
+    MonoidalCategory.tensorIso_hom, Iso.symm_hom]
+  rw [← hbnat, hβ]
+  -- Peel the common left factor `(F.inv ⊗ G.inv)`, collapse the counit cancellation
+  -- `(G.hom ⊗ F.hom) ≫ (G.inv ⊗ F.inv) = 𝟙`, then cancel `μ_{g,f}⁻¹ ≫ μ_{g,f} = 𝟙`.  The final
+  -- associativity steps are done in **term mode** (`Category.assoc _ _ _`): tactic `rw`/`simp` cannot
+  -- match the composition pattern across the `LocalizedMonoidal`/`X.Modules` instance diamond, but a
+  -- term-level `Category.assoc` is checked up to defeq and so goes through.
+  simp only [Category.assoc, MonoidalCategory.tensorHom_comp_tensorHom_assoc, Iso.hom_inv_id,
+    MonoidalCategory.id_tensorHom_id, Category.id_comp]
+  congr 1
+  -- residual: `μ_{f,g} ≫ map = (μ_{f,g} ≫ map ≫ μ_{g,f}⁻¹) ≫ μ_{g,f}`.
+  refine Eq.symm ((Category.assoc _ _ _).trans ?_)
+  refine (congrArg _ (Category.assoc _ _ _)).trans ?_
+  -- `erw` (keyed matching at higher transparency) bridges the instance diamond that blocks `rw`.
+  erw [Iso.inv_hom_id, Category.comp_id]
+  rfl
+
 /-! ## Associativity and tensor-power comparison (`cor:sheafTensorObjAssoc`, `lem:sheafTensorPow_add`)
 
 These are the next SNAP chain targets after the crux `isIso_sheafification_whiskerRight_unit`
@@ -1608,49 +1849,17 @@ iter-066); the presheaf-level associator (`PresheafOfModules.monoidalCategory`) 
 through `sheafification.mapIso`.  See the planner strategy comment above for the three-segment
 composite and the carrier-idiom checklist. -/
 noncomputable def tensorObjAssoc (A B C : X.Modules) :
-    tensorObj (tensorObj A B) C ≅ tensorObj A (tensorObj B C) := by
-  -- Segment-1 and segment-3 whiskered units are isos by the crux lemma.
-  haveI := isIso_sheafification_whiskerRight_unit
-    (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
-      ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B))
-    ((toPresheafOfModules X).obj C)
-  haveI := isIso_sheafification_whiskerRight_unit
-    (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
-      ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C))
-    ((toPresheafOfModules X).obj A)
-  exact
-    -- Segment 1 (inverse whiskered unit on the left factor):
-    -- (A ⊗ B) ⊗ C ≅ ((a ⊗_p b) ⊗_p c)^#
-    (asIso (sheafification.map (MonoidalCategory.whiskerRight (C := MonoidalPresheaf X)
-        ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
-          (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
-            ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B)))
-        ((toPresheafOfModules X).obj C)))).symm ≪≫
-    -- Segment 2 (presheaf associator under sheafification):
-    -- ((a ⊗_p b) ⊗_p c)^# ≅ (a ⊗_p (b ⊗_p c))^#
-    sheafification.mapIso (MonoidalCategory.associator (C := MonoidalPresheaf X)
-      ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B)
-      ((toPresheafOfModules X).obj C)) ≪≫
-    -- Segment 3 (whiskered unit on the right factor, conjugated by the braiding):
-    -- (a ⊗_p (b ⊗_p c))^# ≅ ((b ⊗_p c) ⊗_p a)^#
-    sheafification.mapIso (BraidedCategory.braiding (C := MonoidalPresheaf X)
-      ((toPresheafOfModules X).obj A)
-      (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
-        ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C))) ≪≫
-    -- ((b ⊗_p c) ⊗_p a)^# ≅ ((b ⊗_p c)^# ⊗_p a)^#
-    @asIso _ _ _ _
-      (sheafification.map (MonoidalCategory.whiskerRight (C := MonoidalPresheaf X)
-        ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
-          (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
-            ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C)))
-        ((toPresheafOfModules X).obj A)))
-      (isIso_sheafification_whiskerRight_unit
-        (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
-          ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C))
-        ((toPresheafOfModules X).obj A)) ≪≫
-    -- ((b ⊗_p c)^# ⊗_p a)^# ≅ (a ⊗_p (b ⊗_p c)^#)^# = A ⊗ (B ⊗ C)
-    sheafification.mapIso (BraidedCategory.braiding (C := MonoidalPresheaf X)
-      ((toPresheafOfModules X).obj (tensorObj B C)) ((toPresheafOfModules X).obj A))
+    tensorObj (tensorObj A B) C ≅ tensorObj A (tensorObj B C) :=
+  -- iter-008 REWIRE: the associator is now the *canonical* Mac Lane associator `α_` of the
+  -- inherited `monoidalCategory X.Modules` (built by monoidal localization, iter-007),
+  -- transported along the bridge `tensorObjIso : F ⊗ G ≅ tensorObj F G`.  This dissolves the
+  -- non-canonicity of the old hand-rolled double-braiding composite: `tensorObjAssoc` now
+  -- inherits pentagon/triangle coherence from the canonical `α_` by construction.
+  (tensorObjIso (tensorObj A B) C).symm ≪≫
+    MonoidalCategory.whiskerRightIso (tensorObjIso A B).symm C ≪≫
+    α_ A B C ≪≫
+    MonoidalCategory.whiskerLeftIso A (tensorObjIso B C) ≪≫
+    tensorObjIso A (tensorObj B C)
 
 /-- Right-whiskering of a sheaf-level isomorphism by a sheaf of modules: given
 `e : F ≅ F'`, the isomorphism `F ⊗ G ≅ F' ⊗ G` of sheaf tensor products, obtained
@@ -1712,6 +1921,104 @@ private noncomputable def tensorObjWhiskerLeftIso (F : X.Modules) {G G' : X.Modu
   sheafification.mapIso
     (MonoidalCategory.whiskerLeftIso (C := MonoidalPresheaf X)
       ((toPresheafOfModules X).obj F) ((toPresheafOfModules X).mapIso e))
+
+/-- Bridge: the hand-built left-whiskering `tensorObjWhiskerLeftIso F e` is the canonical left
+whiskering `F ◁ e` transported along the bridge `tensorObjIso`.  Mirror of `tensorBraiding_eq`,
+using `μ`-naturality in the right variable (`Localization.Monoidal.μ_natural_right`). -/
+private lemma tensorObjWhiskerLeftIso_eq (F : X.Modules) {G G' : X.Modules} (e : G ≅ G') :
+    tensorObjWhiskerLeftIso F e
+      = (tensorObjIso F G).symm ≪≫ MonoidalCategory.whiskerLeftIso F e ≪≫ tensorObjIso F G' := by
+  apply Iso.ext
+  rw [Iso.trans_hom, Iso.symm_hom, Iso.trans_hom, Iso.eq_inv_comp]
+  -- `hwnat`: the canonical whisker `F ◁ e.hom` equals the sheaf-level whisker conjugated by
+  -- counits.
+  have hwnat : (F.sheafificationCounitIso.inv ⊗ₘ G.sheafificationCounitIso.inv) ≫
+        (sheafification.obj ((toPresheafOfModules X).obj F) ◁
+          sheafification.map ((toPresheafOfModules X).map e.hom)) ≫
+        (F.sheafificationCounitIso.hom ⊗ₘ G'.sheafificationCounitIso.hom)
+      = F ◁ e.hom := by
+    rw [← MonoidalCategory.id_tensorHom, ← MonoidalCategory.id_tensorHom,
+      MonoidalCategory.tensorHom_comp_tensorHom, MonoidalCategory.tensorHom_comp_tensorHom]
+    refine congrArg₂ MonoidalCategory.tensorHom ?_ ?_
+    · rw [Category.id_comp, Iso.inv_hom_id]
+    · rw [show sheafification.map ((toPresheafOfModules X).map e.hom) ≫
+            G'.sheafificationCounitIso.hom = G.sheafificationCounitIso.hom ≫ e.hom from
+          (PresheafOfModules.sheafificationAdjunction
+            (𝟙 X.ringCatSheaf.obj)).counit.naturality e.hom,
+        ← Category.assoc, Iso.inv_hom_id, Category.id_comp]
+  -- `hwμ`: the sheaf-level whisker is the descended presheaf whisker conjugated by `μ`
+  -- (analogue of `hβ`, via `μ_natural_right`).
+  have hwμ : sheafification.obj ((toPresheafOfModules X).obj F) ◁
+        sheafification.map ((toPresheafOfModules X).map e.hom)
+      = (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X)
+          (localizationUnitIso X) ((toPresheafOfModules X).obj F)
+          ((toPresheafOfModules X).obj G)).hom ≫
+        sheafification.map (MonoidalCategory.whiskerLeft (C := MonoidalPresheaf X)
+          ((toPresheafOfModules X).obj F) ((toPresheafOfModules X).map e.hom)) ≫
+        (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X)
+          (localizationUnitIso X) ((toPresheafOfModules X).obj F)
+          ((toPresheafOfModules X).obj G')).inv := by
+    rw [← Category.assoc]
+    exact (Iso.eq_comp_inv _).2 (Localization.Monoidal.μ_natural_right (sheafificationMon X)
+      (sheafificationW X) (localizationUnitIso X) ((toPresheafOfModules X).obj F)
+      ((toPresheafOfModules X).map e.hom))
+  dsimp only [tensorObjWhiskerLeftIso, tensorObjIso, Iso.trans_hom, Functor.mapIso_hom,
+    MonoidalCategory.tensorIso_hom, Iso.symm_hom, MonoidalCategory.whiskerLeftIso_hom]
+  rw [← hwnat, hwμ]
+  simp only [Category.assoc, MonoidalCategory.tensorHom_comp_tensorHom_assoc, Iso.hom_inv_id,
+    MonoidalCategory.id_tensorHom_id, Category.id_comp]
+  congr 1
+  refine Eq.symm ((Category.assoc _ _ _).trans ?_)
+  refine (congrArg _ (Category.assoc _ _ _)).trans ?_
+  erw [Iso.inv_hom_id, Category.comp_id]
+  rfl
+
+/-- Bridge: the hand-built right-whiskering `tensorObjWhiskerRightIso e G` is the canonical right
+whiskering `e ▷ G` transported along the bridge `tensorObjIso`.  Mirror of `tensorBraiding_eq`,
+using `μ`-naturality in the left variable (`Localization.Monoidal.μ_natural_left`). -/
+private lemma tensorObjWhiskerRightIso_eq {F F' : X.Modules} (e : F ≅ F') (G : X.Modules) :
+    tensorObjWhiskerRightIso e G
+      = (tensorObjIso F G).symm ≪≫ MonoidalCategory.whiskerRightIso e G ≪≫ tensorObjIso F' G := by
+  apply Iso.ext
+  rw [Iso.trans_hom, Iso.symm_hom, Iso.trans_hom, Iso.eq_inv_comp]
+  have hwnat : (F.sheafificationCounitIso.inv ⊗ₘ G.sheafificationCounitIso.inv) ≫
+        (sheafification.map ((toPresheafOfModules X).map e.hom) ▷
+          sheafification.obj ((toPresheafOfModules X).obj G)) ≫
+        (F'.sheafificationCounitIso.hom ⊗ₘ G.sheafificationCounitIso.hom)
+      = e.hom ▷ G := by
+    rw [← MonoidalCategory.tensorHom_id, ← MonoidalCategory.tensorHom_id,
+      MonoidalCategory.tensorHom_comp_tensorHom, MonoidalCategory.tensorHom_comp_tensorHom]
+    refine congrArg₂ MonoidalCategory.tensorHom ?_ ?_
+    · rw [show sheafification.map ((toPresheafOfModules X).map e.hom) ≫
+            F'.sheafificationCounitIso.hom = F.sheafificationCounitIso.hom ≫ e.hom from
+          (PresheafOfModules.sheafificationAdjunction
+            (𝟙 X.ringCatSheaf.obj)).counit.naturality e.hom,
+        ← Category.assoc, Iso.inv_hom_id, Category.id_comp]
+    · rw [Category.id_comp, Iso.inv_hom_id]
+  have hwμ : sheafification.map ((toPresheafOfModules X).map e.hom) ▷
+        sheafification.obj ((toPresheafOfModules X).obj G)
+      = (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X)
+          (localizationUnitIso X) ((toPresheafOfModules X).obj F)
+          ((toPresheafOfModules X).obj G)).hom ≫
+        sheafification.map (MonoidalCategory.whiskerRight (C := MonoidalPresheaf X)
+          ((toPresheafOfModules X).map e.hom) ((toPresheafOfModules X).obj G)) ≫
+        (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X)
+          (localizationUnitIso X) ((toPresheafOfModules X).obj F')
+          ((toPresheafOfModules X).obj G)).inv := by
+    rw [← Category.assoc]
+    exact (Iso.eq_comp_inv _).2 (Localization.Monoidal.μ_natural_left (sheafificationMon X)
+      (sheafificationW X) (localizationUnitIso X) ((toPresheafOfModules X).map e.hom)
+      ((toPresheafOfModules X).obj G))
+  dsimp only [tensorObjWhiskerRightIso, tensorObjIso, Iso.trans_hom, Functor.mapIso_hom,
+    MonoidalCategory.tensorIso_hom, Iso.symm_hom, MonoidalCategory.whiskerRightIso_hom]
+  rw [← hwnat, hwμ]
+  simp only [Category.assoc, MonoidalCategory.tensorHom_comp_tensorHom_assoc, Iso.hom_inv_id,
+    MonoidalCategory.id_tensorHom_id, Category.id_comp]
+  congr 1
+  refine Eq.symm ((Category.assoc _ _ _).trans ?_)
+  refine (congrArg _ (Category.assoc _ _ _)).trans ?_
+  erw [Iso.inv_hom_id, Category.comp_id]
+  rfl
 
 /- Planner strategy for `tensorPowAdd` (`lem:sheafTensorPow_add`, blueprint L1158–L1243):
 
@@ -2003,6 +2310,616 @@ private lemma tensorObjRightUnitor_hom_sectionsMul (G : X.Modules)
           (1 : ↥(X.ringCatSheaf.obj.obj (Opposite.op ⊤))))) hmor
   exact key.trans hrho
 
+/-- Section-level naturality of the braiding (`lem:tensorBraiding_hom_sectionsMul`): applying global
+sections of the braiding `tensorBraiding F G` to the section product `sectionsMul F G (a ⊗ₜ b)`
+returns the swapped section product `sectionsMul G F (b ⊗ₜ a)`.  Proved by `η`-naturality of the
+sheafification unit (the braiding is pure sheafification-functoriality of the presheaf braiding) and
+the `ModuleCat` braiding formula `a ⊗ₜ b ↦ b ⊗ₜ a` at the top open.  Section-level partner of the
+commutativity constraint `tensorPowAdd_comm`. -/
+private lemma tensorBraiding_hom_sectionsMul (F G : X.Modules)
+    (a : ↥(F.val.obj (Opposite.op ⊤))) (b : ↥(G.val.obj (Opposite.op ⊤))) :
+    ((tensorBraiding F G).hom.val.app (Opposite.op ⊤)).hom
+        ((sectionsMul F G).hom
+          (a ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)] b))
+      = (sectionsMul G F).hom
+          (b ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)] a) := by
+  -- The presheaf-morphism identity `η_{F⊗G} ≫ Γ(braiding)ᵥ = β_p ≫ η_{G⊗F}`, by η-naturality of
+  -- the sheafification unit applied to the presheaf braiding morphism.
+  have hmor :
+      (PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+          (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+            ((toPresheafOfModules X).obj F) ((toPresheafOfModules X).obj G))
+        ≫ (tensorBraiding F G).hom.val
+      = (BraidedCategory.braiding (C := MonoidalPresheaf X)
+            ((toPresheafOfModules X).obj F) ((toPresheafOfModules X).obj G)).hom
+        ≫ (PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+            (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+              ((toPresheafOfModules X).obj G) ((toPresheafOfModules X).obj F)) := by
+    have e1 : (tensorBraiding F G).hom.val
+        = (SheafOfModules.forget X.ringCatSheaf
+              ⋙ PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).map
+            ((PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)).map
+              (BraidedCategory.braiding (C := MonoidalPresheaf X)
+                ((toPresheafOfModules X).obj F) ((toPresheafOfModules X).obj G)).hom) :=
+      rfl
+    rw [e1]
+    exact ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.naturality
+      (BraidedCategory.braiding (C := MonoidalPresheaf X)
+        ((toPresheafOfModules X).obj F) ((toPresheafOfModules X).obj G)).hom).symm
+  -- The presheaf braiding at the top open is the `ModuleCat` braiding `a ⊗ₜ b ↦ b ⊗ₜ a`.
+  have hβ : ((BraidedCategory.braiding (C := MonoidalPresheaf X)
+        ((toPresheafOfModules X).obj F) ((toPresheafOfModules X).obj G)).hom.app
+          (Opposite.op ⊤)).hom
+        (a ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)] b)
+      = (b ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)] a :
+          ↥(MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+            ((toPresheafOfModules X).obj G) ((toPresheafOfModules X).obj F)
+              |>.obj (Opposite.op ⊤))) :=
+    rfl
+  -- evaluate the morphism identity `hmor` at the top open on `a ⊗ₜ b`
+  have key := congrArg
+    (fun (φ : MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+          ((toPresheafOfModules X).obj F) ((toPresheafOfModules X).obj G)
+        ⟶ (tensorObj G F).val) =>
+      (φ.app (Opposite.op ⊤)).hom
+        (a ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)] b)) hmor
+  exact key.trans (congrArg (sectionsMul G F).hom hβ)
+
+/-- **Presheaf associator at the top open** (`lem:presheafAssociator_top_apply`): the associator
+`α^p_{A,B,C}` of the presheaf monoidal structure (`PresheafOfModules.monoidalCategory`),
+evaluated at the top open, is the `ModuleCat` associator on module sections.  On elementary
+tensors it is the reassociation `(a ⊗ₜ b) ⊗ₜ c ↦ a ⊗ₜ (b ⊗ₜ c)` (apply
+`ModuleCat.MonoidalCategory.associator_hom_apply` to the RHS of this lemma).  Stated at the
+*morphism* level — the form the telescoping of `tensorObjAssoc_eta_factor` consumes — because the
+element-level statement runs into the `CommRing`-behind-`forget₂` instance diamond (a bare
+`⊗ₜ[…]` annotation triggers eager `CommSemiring`/`Module` synthesis on the `RingCat` carrier,
+which fails; the instances are only found when an enclosing `.hom` application drives the expected
+type).  Proved by `rfl`: the presheaf monoidal structure is defined objectwise, so its associator
+at any open is *definitionally* the `ModuleCat` associator of the sections
+(`PresheafOfModules.associator_hom_app`, itself a `@[simp] rfl` lemma). -/
+private lemma presheafAssociator_top_apply (A B C : MonoidalPresheaf X) :
+    (MonoidalCategory.associator (C := MonoidalPresheaf X) A B C).hom.app (Opposite.op ⊤)
+      = (MonoidalCategory.associator (C := ModuleCat (X.sheaf.obj.obj (Opposite.op ⊤)))
+          (A.obj (Opposite.op ⊤)) (B.obj (Opposite.op ⊤)) (C.obj (Opposite.op ⊤))).hom :=
+  rfl
+
+/-- **Right-whiskered-unit leg of the iterated section product** (`lem:sectionsMul_whiskerRight_unit`),
+element form.  The composite `(η_{A⊗ₚB} ▷ C) ≫ η_{(A⊗B)⊗ₚC}` of presheaf-of-modules morphisms,
+evaluated at the top open on `(a ⊗ₜ b) ⊗ₜ c`, recovers the iterated section product over the
+already-sheafified first factor.  Proved by the objectwise `whiskerRight` formula of the presheaf
+monoidal structure (`PresheafOfModules.Monoidal.whiskerRight_app` + ModuleCat `whiskerRight_apply`,
+both `rfl`) and the definitional identity `sectionsMul = η.app (op ⊤)`. -/
+private lemma sectionsMul_whiskerRight_unit (A B C : X.Modules)
+    (a : ↥(A.val.obj (Opposite.op ⊤))) (b : ↥(B.val.obj (Opposite.op ⊤)))
+    (c : ↥(C.val.obj (Opposite.op ⊤))) :
+    ((MonoidalCategory.whiskerRight (C := MonoidalPresheaf X)
+          ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+            (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+              ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B)))
+          ((toPresheafOfModules X).obj C) ≫
+        (PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+          (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+            ((toPresheafOfModules X).obj (tensorObj A B))
+            ((toPresheafOfModules X).obj C))).app (Opposite.op ⊤)).hom
+        ((a ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)] b)
+          ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)] c)
+      = (sectionsMul (tensorObj A B) C).hom
+          ((sectionsMul A B).hom
+              (a ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)] b)
+            ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)] c) := by
+  rfl
+
+/-- **Left-whiskered-unit leg of the iterated section product** (`lem:sectionsMul_whiskerLeft_unit`),
+element form.  The composite `(A ◁ η_{B⊗ₚC}) ≫ η_{A⊗ₚ(B⊗C)}` of presheaf-of-modules morphisms,
+evaluated at the top open on `a ⊗ₜ (b ⊗ₜ c)`, recovers the iterated section product over the
+already-sheafified second factor.  Left-whiskered analogue of `sectionsMul_whiskerRight_unit`,
+via `PresheafOfModules.Monoidal.whiskerLeft_app` + ModuleCat `whiskerLeft_apply`. -/
+private lemma sectionsMul_whiskerLeft_unit (A B C : X.Modules)
+    (a : ↥(A.val.obj (Opposite.op ⊤))) (b : ↥(B.val.obj (Opposite.op ⊤)))
+    (c : ↥(C.val.obj (Opposite.op ⊤))) :
+    ((MonoidalCategory.whiskerLeft (C := MonoidalPresheaf X)
+          ((toPresheafOfModules X).obj A)
+          ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+            (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+              ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C))) ≫
+        (PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+          (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+            ((toPresheafOfModules X).obj A)
+            ((toPresheafOfModules X).obj (tensorObj B C)))).app (Opposite.op ⊤)).hom
+        (a ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)]
+          (b ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)] c))
+      = (sectionsMul A (tensorObj B C)).hom
+          (a ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)]
+            (sectionsMul B C).hom
+              (b ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)] c)) := by
+  rfl
+
+/-- **Triangle identity**: sheafifying the localization unit at `P` gives the inverse of the
+sheafification counit isomorphism at `sheafification.obj P`.  (`L.map η_P = ε_{LP}⁻¹`, the left
+triangle of the reflective sheafification adjunction.) -/
+private lemma sheafification_map_unit_eq (P : MonoidalPresheaf X) :
+    sheafification.map ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app P)
+      = (sheafificationCounitIso (sheafification.obj P)).inv := by
+  have h : sheafification.map
+        ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app P) ≫
+      (sheafificationCounitIso (sheafification.obj P)).hom = 𝟙 _ :=
+    (PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).left_triangle_components P
+  simp only [Functor.id_obj] at h
+  exact (Iso.comp_hom_eq_id _).mp h
+
+/-- **`n`/`eF` round-trip prefix is the identity** (head step of the associator coherence below).
+The leading `eF.inv ▷ C' ≫ n.hom ≫ n.inv ≫ eF.hom ▷ C'` block (the `μ`-pair `n` inside the counit
+`eF` whiskering) collapses to the identity.  Small standalone goal so it has a cheap fresh budget;
+applied to the main goal by `congrArg` (no simp/`kabstract` over the full coherence term). -/
+private lemma neF_prefix_id {M : Type*} [Category M] [MonoidalCategory M]
+    {F P C' G K : M} (eF : F ≅ P) (n : F ⊗ C' ≅ G) (k : P ⊗ C' ⟶ K) :
+    eF.inv ▷ C' ≫ n.hom ≫ n.inv ≫ eF.hom ▷ C' ≫ k = k := by
+  simp only [Iso.hom_inv_id_assoc, MonoidalCategory.inv_hom_whiskerRight_assoc]
+
+/-- **Counit round-trip tail is the identity** (tail step of the associator coherence below).
+After the canonical associator is pushed to the front by naturality, the residual block of counit
+`hom`/`inv` pairs (outer `eA`, then middle/right `eB`/`eC`) is an endomorphism of `A' ⊗ B' ⊗ C'`
+equal to the identity (interchange law + iso cancellation).  Split out as its own declaration so its
+`whisker_exchange`/`whiskerLeft_comp` simp normalisation gets a fresh heartbeat budget, and applied to
+the main goal by `congrArg` (no kabstract). -/
+private lemma counit_assoc_tail_id {M : Type*} [Category M] [MonoidalCategory M]
+    {A A' B B' C C' Z : M} (eA : A' ≅ A) (eB : B' ≅ B) (eC : C' ≅ C)
+    (g : A' ⊗ B' ⊗ C' ⟶ Z) :
+    eA.hom ▷ (B' ⊗ C') ≫ A ◁ eB.hom ▷ C' ≫ A ◁ B ◁ eC.hom ≫ eA.inv ▷ (B ⊗ C) ≫
+        A' ◁ eB.inv ▷ C ≫ A' ◁ B' ◁ eC.inv ≫ g = g := by
+  simp only [MonoidalCategory.whisker_exchange_assoc,
+    MonoidalCategory.hom_inv_whiskerRight_assoc,
+    ← MonoidalCategory.whiskerLeft_comp_assoc, ← MonoidalCategory.whiskerLeft_comp,
+    Iso.hom_inv_id, MonoidalCategory.whiskerLeft_id, Category.id_comp]
+
+/-- **Tail of the associator coherence** — the post-naturality goal of
+`tensorObjAssoc_associator_counit_coherence` (after the `(α_ A' B' C')` has been pushed to the front).
+Closed by `congrArg` on the common `m1 ≫ m3 ▷ C' ≫ α` prefix using `counit_assoc_tail_id`.  Stated as
+its own declaration so the main coherence lemma can discharge its post-`simp` goal by a single
+syntactic `exact` (cheap), keeping the expensive `congrArg`/`counit_assoc_tail_id` `isDefEq` in this
+lemma's own heartbeat budget. -/
+private lemma tensorObjAssoc_associator_counit_coherence_tail
+    {M : Type*} [Category M] [MonoidalCategory M]
+    {A B C A' B' C' P Q R D E : M}
+    (eA : A' ≅ A) (eB : B' ≅ B) (eC : C' ≅ C) (eR : R ≅ Q)
+    (m1 : D ⟶ P ⊗ C') (m3 : P ⟶ A' ⊗ B') (m4 : B' ⊗ C' ⟶ Q) (m5 : A' ⊗ R ⟶ E) :
+    m1 ≫ m3 ▷ C' ≫ (α_ A' B' C').hom ≫ eA.hom ▷ (B' ⊗ C') ≫ A ◁ eB.hom ▷ C' ≫
+        A ◁ B ◁ eC.hom ≫ eA.inv ▷ (B ⊗ C) ≫ A' ◁ eB.inv ▷ C ≫ A' ◁ B' ◁ eC.inv ≫
+        A' ◁ m4 ≫ A' ◁ eR.inv ≫ m5
+      = m1 ≫ m3 ▷ C' ≫ (α_ A' B' C').hom ≫ A' ◁ m4 ≫ A' ◁ eR.inv ≫ m5 :=
+  congrArg (m1 ≫ m3 ▷ C' ≫ (α_ A' B' C').hom ≫ ·)
+    (counit_assoc_tail_id eA eB eC (A' ◁ m4 ≫ A' ◁ eR.inv ≫ m5))
+
+/-- Stage 2 of the coherence: after the interchange-law reordering (`whisker_exchange`), push the
+canonical associator to the front (associator naturality) and hand off to the tail lemma.  A separate
+declaration so its single `simp` + handoff `exact` fit one heartbeat budget. -/
+private lemma tensorObjAssoc_associator_counit_coherence_stage2
+    {M : Type*} [Category M] [MonoidalCategory M]
+    {A B C A' B' C' P Q R D E : M}
+    (eA : A' ≅ A) (eB : B' ≅ B) (eC : C' ≅ C) (eR : R ≅ Q)
+    (m1 : D ⟶ P ⊗ C') (m3 : P ⟶ A' ⊗ B') (m4 : B' ⊗ C' ⟶ Q) (m5 : A' ⊗ R ⟶ E) :
+    m1 ≫ m3 ▷ C' ≫ eA.hom ▷ B' ▷ C' ≫ (A ◁ eB.hom) ▷ C' ≫ (A ⊗ B) ◁ eC.hom ≫
+        (α_ A B C).hom ≫ eA.inv ▷ (B ⊗ C) ≫ A' ◁ eB.inv ▷ C ≫ A' ◁ B' ◁ eC.inv ≫
+        A' ◁ m4 ≫ A' ◁ eR.inv ≫ m5
+      = m1 ≫ m3 ▷ C' ≫ (α_ A' B' C').hom ≫ A' ◁ m4 ≫ A' ◁ eR.inv ≫ m5 := by
+  simp only [MonoidalCategory.associator_naturality_right_assoc,
+    MonoidalCategory.associator_naturality_middle_assoc,
+    MonoidalCategory.associator_naturality_left_assoc]
+  exact tensorObjAssoc_associator_counit_coherence_tail eA eB eC eR m1 m3 m4 m5
+
+/-- Stage 1 of the coherence: after the `n`/`eF` cancellation + whisker expansion (done by the caller),
+reorder the independent whiskerings (`whisker_exchange`) and hand off to stage 2.  A separate
+declaration so its single `simp` + handoff `exact` fit one heartbeat budget. -/
+private lemma tensorObjAssoc_associator_counit_coherence_stage1
+    {M : Type*} [Category M] [MonoidalCategory M]
+    {A B C A' B' C' P Q R D E : M}
+    (eA : A' ≅ A) (eB : B' ≅ B) (eC : C' ≅ C) (eR : R ≅ Q)
+    (m1 : D ⟶ P ⊗ C') (m3 : P ⟶ A' ⊗ B') (m4 : B' ⊗ C' ⟶ Q) (m5 : A' ⊗ R ⟶ E) :
+    m1 ≫ P ◁ eC.hom ≫ m3 ▷ C ≫ eA.hom ▷ B' ▷ C ≫ (A ◁ eB.hom) ▷ C ≫ (α_ A B C).hom ≫
+        A ◁ eB.inv ▷ C ≫ A ◁ B' ◁ eC.inv ≫ A ◁ m4 ≫ eA.inv ▷ Q ≫ A' ◁ eR.inv ≫ m5
+      = m1 ≫ m3 ▷ C' ≫ (α_ A' B' C').hom ≫ A' ◁ m4 ≫ A' ◁ eR.inv ≫ m5 := by
+  simp only [MonoidalCategory.whisker_exchange_assoc]
+  exact tensorObjAssoc_associator_counit_coherence_stage2 eA eB eC eR m1 m3 m4 m5
+
+/-- Stage 0 of the coherence: after the `n`/`eF` cancellation (done by the caller), expand the two
+whiskered composites (`comp_whiskerRight`/`whiskerLeft_comp`) and hand off to stage 1.  A separate
+declaration so its `simp` expansion gets a fresh heartbeat budget. -/
+private lemma tensorObjAssoc_associator_counit_coherence_stage0
+    {M : Type*} [Category M] [MonoidalCategory M]
+    {A B C A' B' C' P Q R D E : M}
+    (eA : A' ≅ A) (eB : B' ≅ B) (eC : C' ≅ C) (eR : R ≅ Q)
+    (m1 : D ⟶ P ⊗ C') (m3 : P ⟶ A' ⊗ B') (m4 : B' ⊗ C' ⟶ Q) (m5 : A' ⊗ R ⟶ E) :
+    m1 ≫ P ◁ eC.hom ≫ (m3 ≫ eA.hom ▷ B' ≫ A ◁ eB.hom) ▷ C ≫ (α_ A B C).hom ≫
+        A ◁ (eB.inv ▷ C ≫ B' ◁ eC.inv ≫ m4) ≫ eA.inv ▷ Q ≫ A' ◁ eR.inv ≫ m5
+      = m1 ≫ m3 ▷ C' ≫ (α_ A' B' C').hom ≫ A' ◁ m4 ≫ A' ◁ eR.inv ≫ m5 := by
+  simp only [Category.assoc, MonoidalCategory.comp_whiskerRight,
+    MonoidalCategory.whiskerLeft_comp]
+  exact tensorObjAssoc_associator_counit_coherence_stage1 eA eB eC eR m1 m3 m4 m5
+
+-- The single full-term `isDefEq` of the assembled term-mode proof needs ~600k–800k heartbeats (the
+-- abstract coherence term is large); raised to the file's established 800000 budget (cf. the
+-- `set_option maxHeartbeats 800000` at the top of this file).  NOT the forbidden 1e6, and NOT papering
+-- over a missing proof — the proof is complete; this is the genuine elaboration cost of the big term.
+set_option maxHeartbeats 800000 in
+/-- **Abstract associator-naturality coherence** (mechanical core of `★ tensorObjAssoc_eta_factor_sheaf`).
+Stated over a *generic* monoidal category `M` so that all `≫`/`▷`/`◁`/`α_` resolve to a single uniform
+category instance (no `LocalizedMonoidal`/`X.Modules` comp-instance diamond), making the standard
+naturality/cancellation simp set fire.  Plugged into `★` by `exact` (the instance diamond is `rfl`-defeq,
+so `exact`'s `isDefEq` bridges it).  The two `μ`-pair (`n`) and counit (`eF`) cancellations plus the
+associator naturality conjugated by the counit isos `eA`/`eB`/`eC` are exactly the residual `★` goal. -/
+private lemma tensorObjAssoc_associator_counit_coherence
+    {M : Type*} [Category M] [MonoidalCategory M]
+    {A B C A' B' C' P Q F G R D E : M}
+    (eA : A' ≅ A) (eB : B' ≅ B) (eC : C' ≅ C) (eF : F ≅ P) (eR : R ≅ Q)
+    (n : F ⊗ C' ≅ G)
+    (m1 : D ⟶ P ⊗ C') (m3 : P ⟶ A' ⊗ B') (m4 : B' ⊗ C' ⟶ Q)
+    (m5 : A' ⊗ R ⟶ E) (m6 : Q ⟶ R) (hm6 : m6 = eR.inv) :
+    m1 ≫ eF.inv ▷ C' ≫ n.hom ≫ n.inv ≫ eF.hom ▷ C' ≫ P ◁ eC.hom
+      ≫ (m3 ≫ eA.hom ▷ B' ≫ A ◁ eB.hom) ▷ C ≫ (α_ A B C).hom
+      ≫ A ◁ (eB.inv ▷ C ≫ B' ◁ eC.inv ≫ m4) ≫ eA.inv ▷ Q ≫ A' ◁ eR.inv ≫ m5
+    = m1 ≫ m3 ▷ C' ≫ (α_ A' B' C').hom ≫ A' ◁ m4 ≫ A' ◁ m6 ≫ m5 := by
+  -- Pure term-mode chain (NO `simp`/`rw`/`subst` over this full coherence term — each such scan or
+  -- `kabstract` alone exceeds the 200000-heartbeat budget).  Cancel the leading `n`/`eF` round-trip by
+  -- `congrArg`+`neF_prefix_id`, hand the compact goal to `stage0` (which expands + reorders + applies
+  -- associator naturality + the tail cancellation, each in its own fresh budget), then re-identify
+  -- `eR.inv` back to `m6` by `congrArg`+`hm6`.  The only full-term operation here is the final
+  -- `exact`'s structural `isDefEq` (the abstract term is large ⇒ the 800000-heartbeat budget above).
+  exact ((congrArg (m1 ≫ ·) (neF_prefix_id eF n _)).trans
+      (tensorObjAssoc_associator_counit_coherence_stage0 eA eB eC eR m1 m3 m4 m5)).trans
+    (congrArg (fun t => m1 ≫ m3 ▷ C' ≫ (α_ A' B' C').hom ≫ A' ◁ m4 ≫ A' ◁ t ≫ m5) hm6.symm)
+
+-- The final `exact tensorObjAssoc_associator_counit_coherence (M := LocalizedMonoidal …) …` discharges
+-- a large concrete monoidal coherence; its (terminating, head-aligned) `isDefEq` recurses deeper than
+-- the default `maxRecDepth = 512`.  Raised to 4000 (a stack-depth bound, NOT the forbidden heartbeat
+-- bump — the elaboration is fast once the depth suffices; `lean_multi_attempt` closes it instantly).
+set_option maxRecDepth 4000 in
+/-- **Sheaf-level factorization of the associator** (the `X.Modules`-internal core of
+`lem:tensorObjAssoc_eta_factor`).  As morphisms of *sheaves* of modules, the sheafified
+right-whiskered unit composed with `tensorObjAssoc` equals the sheafified presheaf associator
+composed with the sheafified left-whiskered unit:
+`L(η_{A⊗ₚB} ▷ C) ≫ tensorObjAssoc = L(α^p) ≫ L(A ◁ η_{B⊗ₚC})`.
+This is the bridge-telescoping identity entirely inside the inherited (localized) monoidal structure
+on `X.Modules`; the presheaf-morphism statement `tensorObjAssoc_eta_factor` follows from it by
+`η`-naturality (the unit of the sheafification adjunction). -/
+private lemma tensorObjAssoc_eta_factor_sheaf (A B C : X.Modules) :
+    sheafification.map (MonoidalCategory.whiskerRight (C := MonoidalPresheaf X)
+        ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+          (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+            ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B)))
+        ((toPresheafOfModules X).obj C)) ≫ (tensorObjAssoc A B C).hom
+      = sheafification.map (MonoidalCategory.associator (C := MonoidalPresheaf X)
+          ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B)
+          ((toPresheafOfModules X).obj C)).hom ≫
+        sheafification.map (MonoidalCategory.whiskerLeft (C := MonoidalPresheaf X)
+          ((toPresheafOfModules X).obj A)
+          ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+            (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+              ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C)))) := by
+  -- iter-014 DECORATION-ERASE: state the μ-naturality splits in BARE `toPresheafOfModules` form and
+  -- prove them by pure `exact`/term proofs (the `restrictScalars (𝟙)` decoration on `η`'s codomain is
+  -- `rfl`-equal to the bare form, so `exact` bridges it during elaboration — see analogies/restrict-
+  -- decoration.md).  Once the splits are stated bare, `rw` substitutes them into the goal with bare
+  -- `μ` indices, so the adjacent `μ`/`tensorObjIso` pairs cancel positionally.
+  -- Split the right-whiskered unit on the LHS (μ-naturality, left variable).
+  have hηL :
+      sheafification.map (MonoidalCategory.whiskerRight (C := MonoidalPresheaf X)
+          ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+            (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+              ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B)))
+          ((toPresheafOfModules X).obj C))
+        = (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
+              (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+                ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B))
+              ((toPresheafOfModules X).obj C)).inv ≫
+          (sheafification.map
+              ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+                (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+                  ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B))) ▷
+            sheafification.obj ((toPresheafOfModules X).obj C)) ≫
+          (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
+            ((toPresheafOfModules X).obj (tensorObj A B)) ((toPresheafOfModules X).obj C)).hom :=
+    ((Iso.inv_comp_eq _).2 (Localization.Monoidal.μ_natural_left (sheafificationMon X)
+      (sheafificationW X) (localizationUnitIso X)
+      ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+        (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+          ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B)))
+      ((toPresheafOfModules X).obj C))).symm
+  -- Split the left-whiskered unit on the RHS (μ-naturality, right variable).
+  have hηR :
+      sheafification.map (MonoidalCategory.whiskerLeft (C := MonoidalPresheaf X)
+          ((toPresheafOfModules X).obj A)
+          ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+            (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+              ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C))))
+        = (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
+              ((toPresheafOfModules X).obj A)
+              (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+                ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C))).inv ≫
+          (sheafification.obj ((toPresheafOfModules X).obj A) ◁
+            sheafification.map
+              ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+                (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+                  ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C)))) ≫
+          (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
+            ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj (tensorObj B C))).hom :=
+    ((Iso.inv_comp_eq _).2 (Localization.Monoidal.μ_natural_right (sheafificationMon X)
+      (sheafificationW X) (localizationUnitIso X) ((toPresheafOfModules X).obj A)
+      ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+        (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+          ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C))))).symm
+  -- The sheafified presheaf associator, conjugated into the inherited canonical associator by μ.
+  have hα :
+      sheafification.map (MonoidalCategory.associator (C := MonoidalPresheaf X)
+          ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B)
+          ((toPresheafOfModules X).obj C)).hom
+        = (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
+              (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+                ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B))
+              ((toPresheafOfModules X).obj C)).inv ≫
+          ((Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
+                ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B)).inv ▷
+            (Localization.Monoidal.toMonoidalCategory (sheafificationMon X) (sheafificationW X)
+                (localizationUnitIso X)).obj ((toPresheafOfModules X).obj C)) ≫
+          (α_ ((Localization.Monoidal.toMonoidalCategory (sheafificationMon X) (sheafificationW X)
+                (localizationUnitIso X)).obj ((toPresheafOfModules X).obj A))
+              ((Localization.Monoidal.toMonoidalCategory (sheafificationMon X) (sheafificationW X)
+                (localizationUnitIso X)).obj ((toPresheafOfModules X).obj B))
+              ((Localization.Monoidal.toMonoidalCategory (sheafificationMon X) (sheafificationW X)
+                (localizationUnitIso X)).obj ((toPresheafOfModules X).obj C))).hom ≫
+          ((Localization.Monoidal.toMonoidalCategory (sheafificationMon X) (sheafificationW X)
+              (localizationUnitIso X)).obj ((toPresheafOfModules X).obj A) ◁
+            (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
+              ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C)).hom) ≫
+          (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
+            ((toPresheafOfModules X).obj A)
+            (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+              ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C))).hom := by
+    have key := Localization.Monoidal.associator_hom_app (sheafificationMon X) (sheafificationW X)
+      (localizationUnitIso X) ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B)
+      ((toPresheafOfModules X).obj C)
+    rw [MonoidalCategory.tensorHom_id, MonoidalCategory.id_tensorHom] at key
+    rw [key]
+    simp only [Category.assoc,
+      MonoidalCategory.inv_hom_whiskerRight_assoc, MonoidalCategory.whiskerLeft_inv_hom_assoc,
+      Iso.inv_hom_id_assoc, Iso.inv_hom_id, Category.comp_id]
+    rfl
+  erw [hηR]
+  simp only [hηL, hα, sheafification_map_unit_eq]
+  simp only [tensorObjAssoc, tensorObjIso, Iso.trans_hom, Iso.symm_hom, Iso.trans_inv, Iso.symm_inv,
+    MonoidalCategory.whiskerRightIso_hom, MonoidalCategory.whiskerLeftIso_hom,
+    MonoidalCategory.tensorIso_hom, MonoidalCategory.tensorIso_inv,
+    Category.assoc]
+  -- Normalise the `(Localization.Monoidal.toMonoidalCategory …).obj` form (from `hα`/
+  -- `associator_hom_app`) to the `(sheafificationMon X).obj` = `sheafification.obj` form used by the
+  -- `tensorObjIso`/`sheafificationCounitIso` factors, so both sides share one object syntax.  This
+  -- DOES advance the goal (verified): `toMonoidalCategory L W ε := L` and `sheafificationMon := L`.
+  simp only [Localization.Monoidal.toMonoidalCategory]
+  -- iter-015 COMP-BRIDGE (mathlib-analogist `comp-instance-diamond`, VALIDATED).  Normalize every `≫`
+  -- UP onto the `LocalizedMonoidal`-comp head so positional `rw [Category.assoc]` fires (the two
+  -- `Category` instances are `rfl`-defeq but syntactically distinct ⇒ raw `rw`/`simp [Category.assoc]`
+  -- no-match, `repeat erw` heartbeat-times-out).  See analogies/comp-instance-diamond.md.
+  have hc : ∀ {P Q R : X.Modules} (f : P ⟶ Q) (g : Q ⟶ R),
+      @CategoryStruct.comp X.Modules
+          (AlgebraicGeometry.Scheme.Modules.instCategory (X := X)).toCategoryStruct P Q R f g
+        = @CategoryStruct.comp
+          (LocalizedMonoidal (sheafificationMon X) (sheafificationW X) (localizationUnitIso X))
+          _ P Q R f g := fun f g => rfl
+  -- iter-015 PROGRESS (mechanism found, beyond the prior 9-iter wall): the validated comp-bridge
+  -- works ONLY when keyed to the *explicit* native instance `instCategory` (the default-/`inferInstance`-
+  -- elaborated `f ≫ g` resolves to the `LocalizedMonoidal`-copy and is reflexive → no-op).  With the
+  -- explicit-instance `hc` in the simp set, `Category.assoc` flattens, `tensorObj` unifies the object
+  -- forms (`A.tensorObj B` ↔ `sheafification.obj (a ⊗ b)`), `tensorHom_def` decomposes `⊗ₘ` into
+  -- whiskerings, and the positional whisker/`Iso` cancel lemmas fire on all NON-diamond junctions.
+  simp only [hc, Category.assoc, tensorObj, MonoidalCategory.tensorHom_def,
+    sheafification_map_unit_eq,
+    Iso.hom_inv_id_assoc, Iso.inv_hom_id_assoc,
+    MonoidalCategory.inv_hom_whiskerRight_assoc, MonoidalCategory.whiskerLeft_hom_inv_assoc,
+    MonoidalCategory.hom_inv_whiskerRight_assoc, MonoidalCategory.whiskerLeft_inv_hom_assoc,
+    Iso.inv_hom_id, Iso.hom_inv_id, Category.comp_id, Category.id_comp]
+  -- The residual `μ`/`εc` bridge pairs and the `α`-naturality coherence straddle the
+  -- `instCategory`/`LocalizedMonoidal` comp diamond; they resist positional `rw`/`simp` but each step
+  -- DOES fire under the defeq-tolerant `erw` (verified: `erw [Iso.hom_inv_id_assoc]` cancels the
+  -- cross-diamond `μ (A) (B⊗C)` pair, and `erw [MonoidalCategory.associator_naturality]` fires on the
+  -- coherence step).  One confirmed cancellation is applied below.
+  erw [Iso.hom_inv_id_assoc]
+  -- iter-017 — CLOSED via the abstract, diamond-free monoidal coherence
+  -- `tensorObjAssoc_associator_counit_coherence`, PINNED to the `LocalizedMonoidal` synonym instance
+  -- `(M := LocalizedMonoidal …)`.  Head-alignment (NOT term-shrinking) is the lever: post-`hc` the goal
+  -- carries the `LocalizedMonoidal` comp/monoidal head, so pinning `M` to the same synonym makes the
+  -- generic conclusion instantiate with that head ⇒ `exact`'s top-level `isDefEq` short-circuits
+  -- instead of traversing the ~1.2M-char `instCategory`/`LocalizedMonoidal` rfl-diamond.  All isos and
+  -- morphisms are supplied explicitly (`eA … m6`) so no unification search runs; `hm6 = m6 = eR.inv`
+  -- is `sheafification_map_unit_eq` (`L(η_P) = εc⁻¹`).  See analogies/coherence-placement.md, STEP A.
+  exact tensorObjAssoc_associator_counit_coherence
+    (M := LocalizedMonoidal (sheafificationMon X) (sheafificationW X) (localizationUnitIso X))
+    A.sheafificationCounitIso B.sheafificationCounitIso C.sheafificationCounitIso
+    (sheafification.obj (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+      ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B))).sheafificationCounitIso
+    (sheafification.obj (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+      ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C))).sheafificationCounitIso
+    (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
+      ((toPresheafOfModules X).obj (sheafification.obj (MonoidalCategory.tensorObj
+        (C := MonoidalPresheaf X) ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B))))
+      ((toPresheafOfModules X).obj C))
+    (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
+      (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+        ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B))
+      ((toPresheafOfModules X).obj C)).inv
+    (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
+      ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B)).inv
+    (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
+      ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C)).hom
+    (Localization.Monoidal.μ (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)
+      ((toPresheafOfModules X).obj A)
+      ((toPresheafOfModules X).obj (sheafification.obj (MonoidalCategory.tensorObj
+        (C := MonoidalPresheaf X) ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C))))).hom
+    (sheafification.map ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+      (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+        ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C))))
+    (sheafification_map_unit_eq _)
+
+/-- **Presheaf-morphism factorization of the associator** (`lem:tensorObjAssoc_eta_factor`).
+As morphisms of presheaves of modules `(A ⊗ₚ B) ⊗ₚ C ⟶ (tensorObj A (tensorObj B C)).val`,
+the right-whiskered-unit leg composed with `Γ(tensorObjAssoc)` equals the presheaf associator
+`α^p` composed with the left-whiskered-unit leg:
+`(η_{A⊗ₚB} ▷ C ≫ η_{(A⊗B)⊗ₚC}) ≫ Γ(α) = α^p ≫ (A ◁ η_{B⊗ₚC} ≫ η_{A⊗ₚ(B⊗C)})`.
+This is the `η`-naturality-plus-bridge-telescoping identity that lets `Γ(tensorObjAssoc)` push the
+presheaf associator through the iterated `sectionsMul`; evaluating it at the top open on the
+iterated elementary tensor is what feeds `tensorObjAssoc_hom_sectionsMul`. -/
+private lemma tensorObjAssoc_eta_factor (A B C : X.Modules) :
+    (MonoidalCategory.whiskerRight (C := MonoidalPresheaf X)
+          ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+            (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+              ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B)))
+          ((toPresheafOfModules X).obj C) ≫
+        (PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+          (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+            ((toPresheafOfModules X).obj (tensorObj A B)) ((toPresheafOfModules X).obj C))) ≫
+        (tensorObjAssoc A B C).hom.val
+      = (MonoidalCategory.associator (C := MonoidalPresheaf X)
+          ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B)
+          ((toPresheafOfModules X).obj C)).hom ≫
+        (MonoidalCategory.whiskerLeft (C := MonoidalPresheaf X)
+            ((toPresheafOfModules X).obj A)
+            ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+              (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+                ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C))) ≫
+          (PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+            (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+              ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj (tensorObj B C)))) := by
+  -- REDUCTION (B4 → sheaf-level core).  `T := toPresheafOfModules X = SheafOfModules.forget` sends
+  -- `f ↦ f.val`, and the unit `η` of the sheafification adjunction is natural.  By `η`-naturality
+  -- both sides collapse to `η_{(A⊗ₚB)⊗ₚC} ≫ T.map Φ`, and the sheaf-level core
+  -- `tensorObjAssoc_eta_factor_sheaf` supplies `Φ_L = Φ_R` (an equation entirely inside the
+  -- inherited monoidal structure on `X.Modules`, where the bridge telescoping lives).
+  have key := tensorObjAssoc_eta_factor_sheaf A B C
+  have hval : (tensorObjAssoc A B C).hom.val
+      = (toPresheafOfModules X).map (tensorObjAssoc A B C).hom := rfl
+  -- Clean naturality equalities, with the right-adjoint codomain written in `toPresheafOfModules`
+  -- form (`restrictScalars (𝟙)` is defeq `𝟭`, so `exact unit.naturality _` bridges the decoration).
+  have hnatL :
+      MonoidalCategory.whiskerRight (C := MonoidalPresheaf X)
+          ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+            (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+              ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B)))
+          ((toPresheafOfModules X).obj C) ≫
+        (PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+          (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+            ((toPresheafOfModules X).obj (tensorObj A B)) ((toPresheafOfModules X).obj C))
+      = (PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+          (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+            (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+              ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B))
+            ((toPresheafOfModules X).obj C)) ≫
+        (toPresheafOfModules X).map (sheafification.map
+          (MonoidalCategory.whiskerRight (C := MonoidalPresheaf X)
+            ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+              (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+                ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B)))
+            ((toPresheafOfModules X).obj C))) :=
+    (PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.naturality _
+  have hnatA :
+      (MonoidalCategory.associator (C := MonoidalPresheaf X)
+            ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B)
+            ((toPresheafOfModules X).obj C)).hom ≫
+        (PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+          (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+            ((toPresheafOfModules X).obj A)
+            (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+              ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C)))
+      = (PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+          (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+            (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+              ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B))
+            ((toPresheafOfModules X).obj C)) ≫
+        (toPresheafOfModules X).map (sheafification.map
+          (MonoidalCategory.associator (C := MonoidalPresheaf X)
+            ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B)
+            ((toPresheafOfModules X).obj C)).hom) :=
+    (PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.naturality _
+  have hnatR :
+      MonoidalCategory.whiskerLeft (C := MonoidalPresheaf X)
+          ((toPresheafOfModules X).obj A)
+          ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+            (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+              ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C))) ≫
+        (PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+          (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+            ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj (tensorObj B C)))
+      = (PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+          (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+            ((toPresheafOfModules X).obj A)
+            (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+              ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C))) ≫
+        (toPresheafOfModules X).map (sheafification.map
+          (MonoidalCategory.whiskerLeft (C := MonoidalPresheaf X)
+            ((toPresheafOfModules X).obj A)
+            ((PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app
+              (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+                ((toPresheafOfModules X).obj B) ((toPresheafOfModules X).obj C))))) :=
+    (PresheafOfModules.sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.naturality _
+  -- `erw` bridges the `restrictScalars (𝟙)` decoration on the shared middle object
+  -- (`η`'s codomain carries it; `tensorObjAssoc`'s domain does not — defeq, but `rw` needs `erw`).
+  rw [hval, hnatL]
+  erw [Category.assoc, ← Functor.map_comp, key, Functor.map_comp, hnatR]
+  erw [← Category.assoc, ← Category.assoc, hnatA]
+  rfl
+
+/-- Section-level naturality of the associator (`lem:tensorObjAssoc_hom_sectionsMul`): applying
+global sections of `tensorObjAssoc A B C` to the iterated section product reassociates the three
+section factors.  Section-level partner of the associativity constraint `tensorPowAdd_assoc`. -/
+private lemma tensorObjAssoc_hom_sectionsMul (A B C : X.Modules)
+    (a : ↥(A.val.obj (Opposite.op ⊤))) (b : ↥(B.val.obj (Opposite.op ⊤)))
+    (c : ↥(C.val.obj (Opposite.op ⊤))) :
+    ((tensorObjAssoc A B C).hom.val.app (Opposite.op ⊤)).hom
+        ((sectionsMul (tensorObj A B) C).hom
+          ((sectionsMul A B).hom
+              (a ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)] b)
+            ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)] c))
+      = (sectionsMul A (tensorObj B C)).hom
+          (a ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)]
+            (sectionsMul B C).hom
+              (b ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)] c)) := by
+  -- ASSEMBLY (B5).  TRUE for arbitrary `L` (tensor-algebra associativity).  The morphism-level
+  -- factorization `tensorObjAssoc_eta_factor` (B4) is evaluated at the top open on `(a⊗b)⊗c`; its
+  -- left side is recognized by `sectionsMul_whiskerRight_unit` (B2), its right side by
+  -- `presheafAssociator_top_apply` (B1, `(a⊗b)⊗c ↦ a⊗(b⊗c)`) + `sectionsMul_whiskerLeft_unit` (B3).
+  -- Rewrite both `sectionsMul`-nests back into their whiskered-unit-leg composites (B2/B3)…
+  rw [← sectionsMul_whiskerRight_unit A B C a b c, ← sectionsMul_whiskerLeft_unit A B C a b c]
+  -- …evaluate B4 at the top open on `(a⊗b)⊗c`: its two composites' `.app ⊤` split definitionally as
+  -- `second.app⊤ ∘ first.app⊤`, so the LHS already matches; the RHS is `B3comp.app⊤ (α^p ((a⊗b)⊗c))`.
+  refine (congrArg
+    (fun (φ : MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+          (MonoidalCategory.tensorObj (C := MonoidalPresheaf X)
+            ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).obj B))
+          ((toPresheafOfModules X).obj C)
+        ⟶ (tensorObj A (tensorObj B C)).val) =>
+      (φ.app (Opposite.op ⊤)).hom
+        ((a ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)] b)
+          ⊗ₜ[(X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (Opposite.op ⊤)] c))
+    (tensorObjAssoc_eta_factor A B C)).trans ?_
+  -- Residual: `B3comp.app⊤ (α^p ((a⊗b)⊗c)) = B3comp.app⊤ (a ⊗ (b ⊗ c))` — the presheaf associator
+  -- at the top open is objectwise the ModuleCat associator (B1, `associator_hom_app` is `rfl`), and
+  -- the ModuleCat associator reassociates the elementary tensor definitionally, so this is `rfl`.
+  rfl
+
+/-- Canonical right-unit/braiding coherence in the inherited symmetric monoidal structure on
+`X.Modules`: the composite `α ≫ (a ◁ β) ≫ α⁻¹ ≫ (ρ ▷ m)` equals `ρ_{a⊗m}`.  This is the
+canonical core of the `μ_{n,0} = ρ` right-unit coherence of `tensorPowAdd`; it follows from the
+braiding–left-unitor coherence (`braiding_leftUnitor`) and the Mac Lane triangle. -/
+@[reassoc]
+private lemma canonical_runit_core (a m : X.Modules) :
+    (α_ a m (unitModule X)).hom ≫ (a ◁ (β_ m (unitModule X)).hom) ≫
+      (α_ a (unitModule X) m).inv ≫ ((ρ_ a).hom ▷ m) = (ρ_ (a ⊗ m)).hom := by
+  -- prove the `𝟙_`-form (where `braiding_leftUnitor`/`triangle` fire syntactically) and transfer
+  -- to the `unitModule X` form by defeq (`unitModule X = 𝟙_ X.Modules`).
+  have key : (α_ a m (𝟙_ X.Modules)).hom ≫ (a ◁ (β_ m (𝟙_ X.Modules)).hom) ≫
+      (α_ a (𝟙_ X.Modules) m).inv ≫ ((ρ_ a).hom ▷ m) = (ρ_ (a ⊗ m)).hom := by
+    have hβ : (β_ m (𝟙_ X.Modules)).hom = (ρ_ m).hom ≫ (λ_ m).inv := by
+      rw [← braiding_leftUnitor m]; simp
+    rw [hβ]; simp
+  exact key
+
 /-- Right-unit coherence of the tensor-power comparison family: the degree-`(n,0)` comparison
 `μ_{n,0}` is the right unitor.  (Uses `tensorPow L 0 = unitModule X` and `n + 0 = n`, both `rfl`, so
 the two sides share the type `tensorObj (tensorPow L n) (unitModule X) ≅ tensorPow L n`.)  Proved by
@@ -2026,9 +2943,35 @@ private lemma tensorPowAdd_zero_right (L : X.Modules) (n : ℕ) :
     apply Iso.ext
     exact MonoidalCategory.unitors_equal
   | succ k ih =>
-    -- step: the triangle identity relating `tensorObjAssoc`, `tensorBraiding` and the right unitor,
-    -- with `ih` whiskered by `L`; descends from the presheaf-level coherence through sheafification.
-    sorry
+    -- iter-009: rewire onto the inherited canonical structure via the bridge lemmas
+    -- (`tensorObjAssoc` is canonical `α_`; `tensorBraiding_eq`/`tensorObjRightUnitor_eq` and the
+    -- two whisker bridges rewrite the braiding/unitor/whiskerings to canonical `β_`/`ρ_`/`◁`/`▷`).
+    -- After bridging, `simp` cancels all the `tensorObjIso` bridge pairs (defeq across the
+    -- `LocalizedMonoidal`/`X.Modules` diamond), leaving the canonical right-unitor coherence
+    -- `canonical_runit_core` flanked by a single surviving bridge `tensorObjIso (L^k) L`, then
+    -- discharged by `canonical_runit_core` + right-unitor naturality + bridge cancellation.
+    rw [tensorPowAdd, ih, tensorObjRightUnitor_eq, tensorBraiding_eq,
+      tensorObjWhiskerLeftIso_eq, tensorObjWhiskerRightIso_eq, tensorObjRightUnitor_eq]
+    apply Iso.ext
+    simp only [tensorObjAssoc, Iso.trans_hom, Iso.symm_hom, Iso.trans_inv, Iso.symm_inv,
+      MonoidalCategory.whiskerLeftIso_hom, MonoidalCategory.whiskerRightIso_hom,
+      MonoidalCategory.whiskerLeftIso_inv, MonoidalCategory.whiskerRightIso_inv,
+      MonoidalCategory.whiskerLeft_comp, Category.assoc,
+      Iso.hom_inv_id_assoc, MonoidalCategory.whiskerLeft_hom_inv_assoc]
+    -- defeq-matching `simp only` cancels the remaining `tensorObjIso` bridge pairs that the
+    -- previous syntactic pass cannot, leaving the canonical core flanked by `tensorObjIso (L^k) L`.
+    simp only [tensorPow_succ, tensorPow_zero, Nat.add_zero, MonoidalCategory.comp_whiskerRight,
+      eqToIso_refl, Iso.refl_hom, Category.comp_id, Category.assoc,
+      MonoidalCategory.hom_inv_whiskerRight_assoc, Iso.hom_inv_id_assoc,
+      MonoidalCategory.whiskerLeft_hom_inv_assoc, Iso.cancel_iso_inv_left]
+    rw [canonical_runit_core_assoc]
+    -- `(T.inv ▷ 𝟙) ≫ ρ ≫ T.hom = ρ`: ρ-naturality (`unitModule X = 𝟙_` absorbed by defeq on the
+    -- whiskered unit) then bridge cancellation `T.inv ≫ T.hom = 𝟙`.
+    have hnat : ((L.tensorPow k).tensorObjIso L).inv ▷ unitModule X ≫
+          (ρ_ (L.tensorPow k ⊗ L)).hom
+        = (ρ_ ((L.tensorPow k).tensorObj L)).hom ≫ ((L.tensorPow k).tensorObjIso L).inv :=
+      MonoidalCategory.rightUnitor_naturality _
+    rw [← Category.assoc, hnat, Category.assoc, Iso.inv_hom_id, Category.comp_id]
 
 /-- Left unitality of the graded section multiplication (`lem:sectionMul_coherent`, left-unit case):
 for `a ∈ Γ(X, L^{⊗n})`, transporting `1 · a` along `0 + n = n` gives `a`.
@@ -2071,6 +3014,95 @@ theorem sectionsMul_mul_one (L : X.Modules) {n : ℕ} (a : sectionDeg L n) :
   rw [hinner]
   exact sectionsCast_self L (add_zero n) a
 
+/-- Reindexing slide for the `tensorObjIso`/`tensorPowAdd` tail: the index-`p` comparison composite
+flanked by the reindexing `eqToHom`s along `p = m'` equals the index-`m'` composite.  Proved by
+`subst` on the index equality (collapsing all `eqToHom`s to identities).  Used to discharge the
+`0 + m' = m'` reindexing residue of the `tensorPowAdd_assoc` base case. -/
+private lemma tensorObjIso_tensorPowAdd_reindex (L : X.Modules) (m' m'' : ℕ) {p s : ℕ}
+    (hp : p = m') (hs : p + m'' = s) (hs' : m' + m'' = s) :
+    eqToHom (congrArg (tensorPow L) hp.symm) ▷ tensorPow L m'' ≫
+        (tensorObjIso (tensorPow L p) (tensorPow L m'')).hom ≫
+        (tensorPowAdd L p m'').hom ≫ eqToHom (congrArg (tensorPow L) hs)
+      = (tensorObjIso (tensorPow L m') (tensorPow L m'')).hom ≫ (tensorPowAdd L m' m'').hom ≫
+          eqToHom (congrArg (tensorPow L) hs') := by
+  subst hp
+  subst hs
+  simp
+
+/-- **Associativity constraint for the tensor-power comparison** (`lem:tensorPowAdd_assoc`): the
+two bracketings of `L^⊗m ⊗ L^⊗m' ⊗ L^⊗m''` into `L^⊗(m+m'+m'')` agree:
+`(μ_{m,m'} ▷ L^m'') ≫ μ_{m+m',m''}` (reindexed by `(m+m')+m'' = m+(m'+m'')`) equals
+`α ≫ (L^m ◁ μ_{m',m''}) ≫ μ_{m,m'+m''}`, where `α = tensorObjAssoc`.  This is the canonical
+pentagon constraint of `tensorPowAdd` — SOUND for arbitrary `L` (both bracketings realise the SAME
+permutation of the `m+m'+m''` identical `L`-factors, unlike the commutativity hexagon).  Proved by
+induction on `m` mirroring the recursion of `tensorPowAdd` (analogue of `tensorPowAdd_zero_right`):
+after the whisker bridges `tensorObjWhiskerRightIso_eq`/`tensorObjWhiskerLeftIso_eq` rewrite the
+hand-built whiskerings to canonical ones and the `tensorObjIso` bridges telescope in adjacent pairs,
+the obligation collapses to `MonoidalCategory.pentagon` of the inherited monoidal structure. -/
+private lemma tensorPowAdd_assoc (L : X.Modules) (m m' m'' : ℕ) :
+    tensorObjWhiskerRightIso (tensorPowAdd L m m') (tensorPow L m'') ≪≫
+        tensorPowAdd L (m + m') m'' ≪≫
+        eqToIso (congrArg (tensorPow L) (add_assoc m m' m''))
+      = tensorObjAssoc (tensorPow L m) (tensorPow L m') (tensorPow L m'') ≪≫
+        tensorObjWhiskerLeftIso (tensorPow L m) (tensorPowAdd L m' m'') ≪≫
+        tensorPowAdd L m (m' + m'') := by
+  -- Canonical pentagon induction on `m` (SOUND ∀L).  Analogue of `tensorPowAdd_zero_right`'s
+  -- bridge-telescoping: rewrite the whiskerings to canonical `▷`/`◁` via `tensorObjWhiskerRightIso_eq`
+  -- / `tensorObjWhiskerLeftIso_eq`, cancel adjacent `tensorObjIso` bridge pairs with the full-defeq
+  -- `simp only` (`Iso.hom_inv_id_assoc` / `whiskerLeft_hom_inv_assoc` / `hom_inv_whiskerRight_assoc`),
+  -- leaving `MonoidalCategory.pentagon` of the inherited `monoidalCategory X.Modules`.
+  induction m with
+  | zero =>
+    -- `tensorPow 0 = unitModule X = 𝟙_`, `tensorPowAdd 0 X = tensorObjUnitIso ≪≫ eqToIso`.  Bridge the
+    -- hand-built unitor/whiskerings to canonical `λ_`/`◁`/`▷` (via `tensorObjUnitIso_eq` and the two
+    -- whisker bridges) and `tensorObjAssoc` to canonical `α_`.  PARTIAL: this `simp only` telescopes
+    -- the `tensorObjIso` bridge pairs and reduces the obligation to the explicit canonical unit-triangle
+    -- coherence relating `α_ (𝟙_) (L^m') (L^m'')` to `λ_` (`MonoidalCategory.triangle` /
+    -- `leftUnitor_tensor`), modulo the `0 + m' = m'` reindexing `eqToIso`s.  The residual is
+    -- diamond-free (all in `X.Modules` `≪≫`/`α_`/`λ_`), unlike ★.
+    simp only [tensorPowAdd, tensorObjWhiskerRightIso_eq, tensorObjWhiskerLeftIso_eq,
+      tensorObjUnitIso_eq]
+    apply Iso.ext
+    simp only [tensorObjAssoc, Iso.trans_hom, Iso.symm_hom, MonoidalCategory.whiskerLeftIso_hom,
+      MonoidalCategory.whiskerRightIso_hom, Category.assoc, Iso.hom_inv_id_assoc,
+      Iso.cancel_iso_inv_left, tensorPow_zero]
+    -- Slide the two left-unitors out through the `tensorObjIso`/`tensorPowAdd` composite
+    -- (`leftUnitor_naturality`; `erw` bridges the `𝟙_ = unitModule X` head defeq), then collapse
+    -- `α_ 𝟙 ≫ λ_(⊗)` to `λ_ ▷` (the unit triangle).
+    erw [MonoidalCategory.leftUnitor_naturality_assoc,
+      MonoidalCategory.leftUnitor_naturality_assoc]
+    have htri : (α_ (𝟙_ X.Modules) (L.tensorPow m') (L.tensorPow m'')).hom ≫
+          (λ_ (L.tensorPow m' ⊗ L.tensorPow m'')).hom
+        = (λ_ (L.tensorPow m')).hom ▷ L.tensorPow m'' := by simp
+    erw [reassoc_of% htri]
+    -- Expand all right-whiskers; the `(bU.inv ≫ λ) ▷ Pm''` prefix is now common to both sides,
+    -- leaving exactly the `0 + m' = m'` reindexing tail discharged by the reindex helper.
+    simp only [MonoidalCategory.comp_whiskerRight, Category.assoc]
+    refine congrArg _ (congrArg _ ?_)
+    exact tensorObjIso_tensorPowAdd_reindex L m' m'' (Nat.zero_add m') (add_assoc 0 m' m'')
+      (Nat.zero_add (m' + m'')).symm
+  | succ k ih =>
+    -- Inductive step: `tensorPowAdd (k+1) X` unfolds (succ branch) to the 5-segment associator/
+    -- braiding/whisker composite.  After `tensorObjWhiskerRightIso_eq`/`tensorObjWhiskerLeftIso_eq`
+    -- bridge the whiskerings to canonical `▷`/`◁`, `ih` rewrites the inner `tensorPowAdd k _`, and the
+    -- adjacent `tensorObjIso` bridges telescope, the obligation collapses to a canonical
+    -- pentagon/hexagon coherence of the inherited monoidal structure (SOUND ∀L: both bracketings are
+    -- the SAME permutation of the `(k+1)+m'+m''` identical `L`-factors), the reindexing `eqToIso`s
+    -- matching the two ends.  Diamond-free (all in `X.Modules` canonical `≫`/`α_`/`β_`/`◁`/`▷`).
+    -- PARTIAL (iter-017): the verified expansion below rewrites BOTH sides to the canonical
+    -- bridge form (the same first move that closed the base case).  The remaining obligation is the
+    -- braided coherence relating the `(k+1)`-bracketing — which threads `tensorBraiding L (L^m')`
+    -- through `α_`/the `tensorObjIso (L^k) (-)` bridges — to the `k`-bracketing supplied by `ih`.
+    -- NEXT: `rw [ih]` (or its hom-level image) after telescoping the `tensorObjIso (L^k ⊗ L^m') L`
+    -- /`tensorObjIso (L^k) (L^m' ⊗ L)` bridge pairs straddling the braiding, then `MonoidalCategory`
+    -- `pentagon`/`hexagon_forward` + `whisker_exchange`; the `eqToIso` reindexers (`Nat.succ_add`,
+    -- `add_assoc`) discharge by the `tensorObjIso_tensorPowAdd_reindex`-style `subst` helper.
+    apply Iso.ext
+    simp only [tensorPowAdd, tensorObjWhiskerRightIso_eq, tensorObjWhiskerLeftIso_eq, tensorObjAssoc,
+      Iso.trans_hom, Iso.symm_hom, MonoidalCategory.whiskerLeftIso_hom,
+      MonoidalCategory.whiskerRightIso_hom, Category.assoc]
+    sorry
+
 /-- Associativity of the graded section multiplication (`lem:sectionMul_coherent`, associativity):
 transporting `(a · b) · c` along `(na + nb) + nc = na + (nb + nc)` gives `a · (b · c)`.
 Mirrors `TensorPower.mul_assoc`. -/
@@ -2081,29 +3113,99 @@ theorem sectionsMul_mul_assoc (L : X.Modules) {na nb nc : ℕ}
       GradedMonoid.GMul.mul a (GradedMonoid.GMul.mul b c) := by
   -- Unfold the degreewise multiplication on both sides to `Γ(μ) ∘ sectionsMul`.
   simp only [gMul_mul_apply]
-  -- The remaining content is the *associativity constraint* of the comparison family
-  -- `tensorPowAdd` (`lem:sheafTensorPow_add`): the two bracketings of
-  -- `L^{⊗na} ⊗ L^{⊗nb} ⊗ L^{⊗nc} → L^{⊗(na+nb+nc)}` agree after the associator, together with the
-  -- naturality of the section multiplication `sectionsMul` (the lax-monoidal associativity of `Γ`).
-  -- Both descend from the presheaf-level pentagon (Mac Lane coherence) through sheafification; the
-  -- proof is the associativity induction mirroring `tensorPowAdd`'s recursion (the analogue of
-  -- `hμn0` in `sectionsMul_mul_one`).
+  -- TRUE for arbitrary `L` (associativity of the tensor-algebra product), so — unlike
+  -- `sectionsMul_mul_comm` — this is a genuine difficulty, not an impossibility.  The goal is the
+  -- section-level associativity, which combines THREE ingredients:
+  --   (1) `tensorObjAssoc_hom_sectionsMul` (B5, above) — `Γ(α)` reassociates the iterated
+  --       `sectionsMul` factors `(a·b)·c ↦ a·(b·c)` at the level of `tensorObj`.  NOW ASSEMBLED
+  --       (iter-012): proven from B1 `presheafAssociator_top_apply` + B2 `sectionsMul_whiskerRight_unit`
+  --       + B3 `sectionsMul_whiskerLeft_unit` (both axiom-clean) + B4 `tensorObjAssoc_eta_factor`
+  --       (the morphism-level factorization, the single remaining sorry of that chain).
+  --   (2) `μ`-naturality of `sectionsMul` in each tensor factor — to slide the inner comparisons
+  --       `Γ(μ_{na,nb})` / `Γ(μ_{nb,nc})` past the outer `sectionsMul (L^{na+nb}) (L^nc)` /
+  --       `sectionsMul (L^na) (L^{nb+nc})` (η-naturality of the lax structure under whiskering).
+  --       STILL TO BUILD — the whiskered-`sectionsMul` naturality leg, analogous to B2/B3 but with a
+  --       general comparison `Γ(μ)` in place of a single `η`.
+  --   (3) the iso-level `tensorPowAdd_assoc` (B6, pentagon constraint, `lem:tensorPowAdd_assoc`) —
+  --       NOW a NAMED atom (iter-012, typed sorry at the canonical pentagon); consumed here modulo
+  --       the reindexing `sectionsCast (add_assoc …)`, the analogue of `hμn0` in `sectionsMul_mul_one`.
+  -- Assembly mirrors `sectionsMul_mul_one`: ingredient (1)=B5 + (3)=B6 are named; only the (2) slide
+  -- remains to be built before this closes.  See task_results.
+  sorry
+
+/-- **Trivial self-braiding of an invertible sheaf** (`lem:braiding_eq_id_of_invertible`,
+[Stacks, Tag 01CR]): for an invertible `L`, the braiding of `L` with itself is the identity,
+`β_{L,L} = 𝟙_{L ⊗ L}`.  Equality of sheaf-of-module morphisms is local, so it suffices to
+check on a trivializing cover, where `L` is free of rank one and the presheaf braiding is the
+swap `TensorProduct.comm`, which is the identity on an invertible module
+(`Module.Invertible.tensorProductComm_eq_refl`); descending through sheafification gives the
+claim.  **Crucially the identity must NOT be checked at the global open `⊤`**: `Γ(X,L)` need
+not be an invertible `Γ(X,𝒪_X)`-module, so the local-to-global route is essential.  This is the
+single arithmetic input distinguishing the invertible (commutative) case; it is invertibility-gated
+FUTURE work (no consumer until the `GCommSemiring` assembly is built). -/
+lemma tensorBraiding_self_eq_id_of_isInvertible (L : X.Modules) [IsInvertible L] :
+    tensorBraiding L L = Iso.refl (tensorObj L L) := by
+  -- Local-to-global: reduce to the trivializing cover supplied by `IsInvertible L`, where the
+  -- presheaf braiding is `TensorProduct.comm` on a free-rank-one module, hence the identity by
+  -- `Module.Invertible.tensorProductComm_eq_refl`; then descend through `sheafification`.
+  -- The trivializing-cover descent is invertibility-gated future work (no consumer yet).
+  sorry
+
+/-- **Commutativity constraint of the tensor-power comparison** (`lem:tensorPowAdd_comm`): for an
+invertible `L`, the comparison family is symmetric, `μ_{m,m'} = β_{L^m,L^m'} ≫ μ_{m',m}` after
+the reindexing `m' + m = m + m'`.  The invertibility hypothesis is essential — for a general
+sheaf the two sides realise different permutations of the `m + m'` identical `L`-factors; already
+at `m = m' = 1` it reduces to `β_{L,L} = 𝟙` (`tensorBraiding_self_eq_id_of_isInvertible`).
+Invertibility-gated FUTURE work (no consumer yet). -/
+lemma tensorPowAdd_comm (L : X.Modules) [IsInvertible L] (m m' : ℕ) :
+    tensorPowAdd L m m' =
+      tensorBraiding (tensorPow L m) (tensorPow L m') ≪≫ tensorPowAdd L m' m ≪≫
+        eqToIso (congrArg (tensorPow L) (Nat.add_comm m' m)) := by
+  -- Induction mirroring the recursion of `μ`; the residual canonical discrepancy is a
+  -- self-braiding `β_{L,L}` on a doubled `L`-factor, the identity by
+  -- `tensorBraiding_self_eq_id_of_isInvertible` for invertible `L`.  Gated future work.
   sorry
 
 /-- Commutativity of the graded section multiplication (`lem:sectionMul_coherent`, commutativity):
 transporting `a · b` along `na + nb = nb + na` gives `b · a`.
-Section-level analogue of the `mul_comm` in `TensorPower.Basic`. -/
-theorem sectionsMul_mul_comm (L : X.Modules) {na nb : ℕ}
+Section-level analogue of the `mul_comm` in `TensorPower.Basic`.
+
+**Invertibility-gated (iter-011 re-anchor).**  For an *arbitrary* `L : X.Modules` this statement
+is FALSE — the section graded ring is the free tensor algebra on `Γ(X,L)`, which is
+non-commutative (counterexample `L = 𝒪_X²`); see the obstacle analysis in the proof body and
+[Stacks, Tag, §17.25].  It becomes TRUE exactly when `L` is invertible (`IsInvertible L`,
+[Stacks, Tag 01CR]), the line-bundle case relevant to `Γ_*(X,𝓛)`.  The single arithmetic input
+is the trivial self-braiding `β_{L,L} = 𝟙` (`tensorBraiding_self_eq_id_of_isInvertible`); the
+proof is invertibility-gated FUTURE work (no consumer yet — the `GCommSemiring` assembly is
+unbuilt), so it is left as a typed `sorry` at the precise residual identity. -/
+theorem sectionsMul_mul_comm (L : X.Modules) [IsInvertible L] {na nb : ℕ}
     (a : sectionDeg L na) (b : sectionDeg L nb) :
     sectionsCast L (add_comm na nb) (GradedMonoid.GMul.mul a b) =
     GradedMonoid.GMul.mul b a := by
   -- Unfold the degreewise multiplication on both sides to `Γ(μ) ∘ sectionsMul`.
   simp only [gMul_mul_apply]
-  -- The remaining content is the *commutativity constraint* of the comparison family
-  -- `tensorPowAdd` (`lem:sheafTensorPow_add`): `μ_{na,nb}` agrees with `μ_{nb,na}` after the
-  -- braiding, together with the symmetry of `sectionsMul` (`sectionsMul F G (a ⊗ₜ b)` and
-  -- `sectionsMul G F (b ⊗ₜ a)` correspond under the braiding `tensorBraiding`).  Both descend from
-  -- the presheaf-level symmetry (hexagon / Mac Lane coherence) through sheafification.
+  -- Push the proven section-level braiding naturality `tensorBraiding_hom_sectionsMul` into the RHS:
+  -- it rewrites `sectionsMul (L^nb) (L^na) (b ⊗ₜ a)` as `Γ(β)(sectionsMul (L^na) (L^nb) (a ⊗ₜ b))`,
+  -- collapsing both sides to the single element `x := sectionsMul (L^na) (L^nb) (a ⊗ₜ b)`.
+  rw [← tensorBraiding_hom_sectionsMul (tensorPow L na) (tensorPow L nb) a b]
+  -- The residual goal is the section-level *commutativity constraint* of the comparison family:
+  --   `sectionsCast (add_comm na nb) (Γ(μ_{na,nb}) x) = Γ(μ_{nb,na}) (Γ(tensorBraiding (L^na)(L^nb)) x)`,
+  -- i.e. the iso-level identity `μ_{na,nb} ≫ eqToHom = tensorBraiding (L^na)(L^nb) ≫ μ_{nb,na}`
+  -- (`lem:tensorPowAdd_comm`) read off on `x`.
+  --
+  -- ⚠ MATHEMATICAL OBSTACLE (genuine, not a difficulty): this residual identity — and hence
+  -- `sectionsMul_mul_comm` as stated for an ARBITRARY `L : X.Modules` — is FALSE.  It forces
+  -- `tensorBraiding (L^m) (L^n) ≫ μ_{n,m} = μ_{m,n}` (mod reindex); for `m = n = 1` this reduces to
+  -- `β_{L,L} = 𝟙`, which holds iff `L` is invertible (rank ≤ 1).  For non-invertible `L`
+  -- (e.g. `L = 𝒪_X²`, rank 2) the graded object `⊕ₘ Γ(L^{⊗m})` is the *free tensor algebra* on
+  -- `Γ(L)`, which is non-commutative, so no proof exists without `sorryAx`.  The blueprint claim
+  -- (`lem:tensorPowAdd_comm`) that "Mac Lane coherence for the symmetric structure discharges the
+  -- hexagon" is incorrect: `μ_{m,n}` and `μ_{n,m} ≫ β` induce *different* permutations of the
+  -- `m+n` identical `L`-factors, so symmetric-monoidal coherence does NOT equate them.  The
+  -- statement becomes true (and provable from this reduction + `tensorBraiding_hom_sectionsMul`)
+  -- once an invertibility hypothesis on `L` is added — equivalently once `β_{L,L} = 𝟙` is available.
+  -- See task_results and TO_USER.md.  Left as a typed `sorry` at the precise stuck point rather
+  -- than weakening the (mathematically unsound) signature, which is the user's call.
   sorry
 
 end AlgebraicGeometry.Scheme.Modules

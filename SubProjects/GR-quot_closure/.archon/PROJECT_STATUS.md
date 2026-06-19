@@ -8,6 +8,103 @@
 
 ### Proof Patterns (reusable across targets)
 
+- **Comp-instance-diamond bridge — CORRECTED (iter-015, SNAP; ★ `tensorObjAssoc_eta_factor_sheaf`
+  mechanism found, prefix compiles past the 9-iter wall).** When a goal mixes the native `X.Modules` `≫`
+  (used by the structural `sheafification.map _ ≫ tensorObjAssoc.hom`) with `LocalizedMonoidal`-comp
+  factors (every `Localization.Monoidal.μ … .hom/.inv` from the μ-naturality/associator `have`s), the two
+  `CategoryStruct.comp` instances are rfl-defeq but syntactically distinct, so `rw`/`simp [Category.assoc]`
+  no-match. FIX = a rfl comp-bridge `have hc : ∀ {P Q R : X.Modules} (f g),
+  @CategoryStruct.comp X.Modules (AlgebraicGeometry.Scheme.Modules.instCategory (X := X)).toCategoryStruct
+  P Q R f g = @CategoryStruct.comp (LocalizedMonoidal …) _ P Q R f g := fun f g => rfl`. CRITICAL DETAILS
+  (each a separately-discovered dead-end): (1) the bridge MUST be keyed to the **explicit native instance**
+  `AlgebraicGeometry.Scheme.Modules.instCategory` (X IMPLICIT ⇒ `(X := X)`; `instCategory X` fails
+  "Function expected"). Keying the LHS to the ambient `f ≫ g` or to `inferInstance`/`inferInstanceAs
+  (Category X.Modules)` makes the bridge **REFLEXIVE = a NO-OP** (this was the flaw in the iter-015
+  directive's "validated" bridge). (2) `hc` MUST sit INSIDE the big `simp only` (not a separate prior
+  `simp only [hc]`) so it re-fires after `tensorHom_def`/whiskering re-introduce native comps. With it,
+  `Category.assoc` flattens, `tensorObj` unifies object forms, `tensorHom_def` decomposes `⊗ₘ`, and the
+  whisker/`Iso` cancel lemmas clear all NON-diamond junctions. (3) Cross-diamond `hom≫inv` pairs and the
+  final `associator_naturality` resist positional `rw`/`simp` but EACH fire under `erw [Iso.hom_inv_id_assoc]`
+  / `erw [MonoidalCategory.associator_naturality]` (one keyed defeq match). (4) DEAD END: an unbounded
+  `repeat (first | erw …)` over the cancel set hits the 200000-heartbeat `whnf` timeout (each `erw` is a
+  full cross-diamond defeq search) — closure needs a BOUNDED, correctly-ORDERED erw sequence (~10–20
+  steps). Never raise maxHeartbeats. See `analogies/comp-instance-diamond.md`.
+- **Reduce a presheaf-morphism factorization to a sheaf-level (`X.Modules`-internal) core via
+  `η`-naturality, then bridge the `restrictScalars(𝟙)` decoration with `erw` (iter-013, SNAP; reduced
+  B4 `tensorObjAssoc_eta_factor` to ★ `tensorObjAssoc_eta_factor_sheaf`).** Working at the SHEAF level
+  beats the `.val`/presheaf-descent route: `Localization.Monoidal.*` and the `tensorObjIso` bridges all
+  live in `X.Modules`, while `.val` fights the `CommRing`-behind-`forget₂` element diamond. Recipe:
+  `T := toPresheafOfModules X = SheafOfModules.forget` sends `f ↦ f.val`; applying the sheafification
+  unit's `naturality` to each whiskered/associator segment collapses both sides of the presheaf
+  identity to `η_{…} ≫ T.map Φ`, reducing to a pure-`X.Modules` iso identity `Φ_L = Φ_R` (the core ★).
+  GOTCHA: the adjunction's right adjoint is `forget ⋙ restrictScalars(𝟙)`, which is *defeq* `𝟭` but
+  NOT syntactically `forget` — so `η`'s codomain carries a `restrictScalars(𝟙)` decoration absent from
+  the undecorated morphism. The shared middle object is then two defeq-distinct exprs ⇒ positional `rw`
+  (incl. `Category.assoc`, `Functor.map_comp`) FAILS with "did not find pattern `(?f ≫ ?g) ≫ ?h`". FIX:
+  state the unit-naturality `have`s in clean `toPresheafOfModules` form (proved by `exact …
+  .unit.naturality _`, defeq-bridged) and drive the cancellation chain with **`erw`** at the decorated
+  junctions, closing with `rfl`. Same recipe is the template for the ★ μ-conjugation assembly.
+- **Triangle identity as an inverse: `Iso.comp_hom_eq_id` (iter-013; proved `sheafification_map_unit_eq`
+  axiom-clean).** `adjunction.left_triangle_components P : L.map η_P ≫ ε.hom = 𝟙` becomes
+  `L.map η_P = ε.inv` via `simp only [Functor.id_obj] at h; exact (Iso.comp_hom_eq_id _).mp h` (the
+  `Functor.id_obj` normalize is needed first — the decorated `𝟙 (…)` blocks the bare `comp_hom_eq_id`).
+- **Whisker-unit legs close by `rfl` when `⊗ₜ` is driven through an enclosing `.hom` application
+  (iter-012, SNAP; closed B2 `sectionsMul_whiskerRight_unit` + B3 `sectionsMul_whiskerLeft_unit`
+  axiom-clean).** The iter-011 morphism-level diagnosis VALIDATED: an element-level whisker-unit
+  identity `((η_{A⊗ₚB} ▷ C ≫ η).app ⊤).hom ((a⊗ₜb)⊗ₜc) = sectionsMul … (sectionsMul … ⊗ₜ c)` ELABORATES
+  and proves by `rfl` provided every `⊗ₜ` sits inside an enclosing `.hom (…)` application (never a bare
+  annotated `⊗ₜ[↑((X.sheaf.obj ⋙ forget₂ …).obj (op ⊤))]` at top level — that re-triggers the failed
+  eager synthesis). Closes because `PresheafOfModules.Monoidal.whiskerRight_app`/`whiskerLeft_app`
+  (`@[simp] rfl`) + ModuleCat `whiskerRight_apply`/`whiskerLeft_apply` (`rfl`) + `sectionsMul = η.app
+  (op ⊤)` (def `rfl`) all compose definitionally. This dissolved the iter-011 plumbing wall.
+- **B5-assembly recipe — rewrite section-nests to whiskered-unit composites, then evaluate the
+  morphism factorization (iter-012, SNAP; assembled `tensorObjAssoc_hom_sectionsMul`).** To turn an
+  opaque "associator reassociates the iterated section product" leg into a sorry-free body that depends
+  only on the underlying morphism-level factorization: `rw [← <whiskerRight-unit>, ← <whiskerLeft-unit>]`
+  to expose the whiskered-unit composites, then `congrArg ((·.app ⊤).hom <elt>) <morphism-factorization>`
+  to evaluate the factorization lemma at the top open, then `rfl` on the objectwise-associator residual
+  (the presheaf associator at ⊤ is DEFINITIONALLY the ModuleCat associator, so
+  `(α^p ((a⊗b)⊗c)) = (a⊗(b⊗c))` after the bracket is `rfl`). Result: the element-level associativity
+  reduces to a SINGLE morphism-level crux (here B4 `tensorObjAssoc_eta_factor`), isolating `sorryAx`.
+  Apply the same recipe to B7 `sectionsMul_mul_assoc` once the μ-naturality-slide leg exists.
+- **Morphism-level statement bypasses the `forget₂`-CommRing element-`⊗ₜ` instance diamond (iter-011,
+  SNAP; closed `presheafAssociator_top_apply` axiom-clean).** An *element-level* lemma with a bare
+  `⊗ₜ[↑((X.sheaf.obj ⋙ forget₂ CommRingCat RingCat).obj (op ⊤))]` annotation does NOT elaborate
+  standalone: the written annotation triggers eager `CommSemiring`/`Module` synthesis on the `RingCat`
+  carrier, and `CommRing` is hidden behind `forget₂` ⇒ synthesis fails ("failed to synthesize"). The
+  instances are found ONLY when an enclosing `.hom` application drives the expected type (as in the
+  existing consumer lemmas). FIX: state the lemma at the **morphism level** —
+  `(MonoidalCategory.associator (C := MonoidalPresheaf X) A B C).hom.app (op ⊤) =
+  (MonoidalCategory.associator (C := ModuleCat (X.sheaf.obj.obj (op ⊤))) …).hom` — with the RHS
+  `ModuleCat` over the CommRingCat-backed ring `X.sheaf.obj.obj (op ⊤)` (NOT the `forget₂` form). Then
+  `MonoidalCategoryStruct` is synthesizable and it closes by `rfl` (presheaf monoidal structure is
+  objectwise; `PresheafOfModules.associator_hom_app` is a `@[simp] rfl`). Recover the element-level
+  reassociation in the consumer via `ModuleCat.MonoidalCategory.associator_hom_apply a b c`. This is
+  the standing constraint for the remaining assoc whisker-unit legs (B2/B3): drive every `⊗ₜ` through a
+  `.hom` application, never a bare annotated `⊗ₜ[forget₂-ring]`.
+- **Re-anchoring a FALSE general statement to an invertibility hypothesis (iter-011, SNAP comm).** When
+  a coherence is false for arbitrary `L` but true under invertibility (Stacks `Γ_*` is defined only for
+  invertible sheaves), eliminate the false signature rather than leaving an unprovable `sorry`: add a
+  project-local `class IsInvertible (L : X.Modules) : Prop` with the ⊗-invertible field
+  `exists_tensorInv : ∃ N, Nonempty (tensorObj L N ≅ unitModule X)` (Stacks-01CR PRIMARY form, the
+  clean consumed one — mathlib-analogist ALIGN), re-sign `[IsInvertible L]`. The comm residue reduces
+  to `β_{L,L}=𝟙` (`Module.Invertible.tensorProductComm_eq_refl`, local-to-global — NOT checkable at
+  `⊤`, since `Γ(X,L)` need not be an invertible `Γ(X,𝒪)`-module).
+- **Closing a `tensorPowAdd`/`μ` iso-coherence induction onto the inherited canonical structure
+  (iter-009, SectionGradedRing SNAP).** Recipe that closed `tensorPowAdd_zero_right` succ:
+  (1) `rw [tensorPowAdd, ih, <unitor>_eq, tensorBraiding_eq, tensorObjWhiskerLeftIso_eq,
+  tensorObjWhiskerRightIso_eq, …]` to rewrite EVERY hand-built constituent (assoc/braiding/unitor/
+  whiskerings) to its bridge-conjugate canonical form (`α_`/`β_`/`ρ_`/`◁`/`▷` flanked by `tensorObjIso`
+  bridges); (2) `apply Iso.ext`; (3) a SYNTACTIC `simp only [tensorObjAssoc, Iso.trans_hom, …,
+  whiskerLeftIso_hom, …, Iso.hom_inv_id_assoc, whiskerLeft_hom_inv_assoc]` then a DEFEQ-matching
+  `simp only [tensorPow_succ, …, Iso.cancel_iso_inv_left]` to cancel the adjacent `tensorObjIso`
+  bridge pairs across the `LocalizedMonoidal`/`X.Modules` diamond (syntactic `simp only` cannot match
+  these — needs the defeq pass); (4) `rw [canonical_runit_core_assoc]` to discharge the canonical core;
+  (5) finish with `MonoidalCategory.rightUnitor_naturality` (as a named `have hnat`) + `Iso.inv_hom_id`/
+  `comp_id` for the last bridge cancellation. KEY auxiliary `canonical_runit_core`:
+  `α ≫ (a◁β) ≫ α⁻¹ ≫ (ρ▷m) = ρ_(a⊗m)` — proved on the `𝟙_`-form (where `braiding_leftUnitor`/triangle
+  fire syntactically) via `rw [hβ]; simp` with `hβ : β_ m 𝟙 = ρ ≫ λ⁻¹`, then transferred to the
+  `unitModule X`-form by defeq (`unitModule X = 𝟙_ X.Modules`). Mark it `@[reassoc]`.
 - **Sheaf-unitor coherence at `op ⊤` via `erw`-through-adjunction-naturality (iter-006,
   SectionGradedRing SNAP-S0).** For `Γ(unitor) ∘ sectionsMul` identities (`tensorObjUnitIso_hom_sectionsMul`,
   `tensorObjRightUnitor_hom_sectionsMul`, base case of `tensorPowAdd_zero_right`):
@@ -35,6 +132,31 @@
   though `lean_verify` confirms the name resolves and is axiom-clean. The review agent manually adds
   `\leanok` after `lean_verify`. (If ever renamed for clarity, a `\lean{}` correction follows — but
   merge-discipline keeps the auto-names stable.)
+- **Canonical-transport bridge recipe + `LocalizedMonoidal`/`X.Modules` instance-diamond workaround
+  (iter-008, SectionGradedRing SNAP-S0; closed `tensorObjRightUnitor_eq`/`tensorObjUnitIso_eq`/
+  `tensorBraiding_eq`, redefined `tensorObjAssoc`).** After iter-007 inherited the canonical monoidal
+  structure on `X.Modules` via Mathlib monoidal localization, identify each hand-built structural iso
+  (`= sheafification.mapIso (presheaf ρ/λ/β) ≪≫ counit`) with the canonical `ρ_`/`λ_`/`β_`/`α_`:
+  `apply Iso.ext` → `Iso.eq_inv_comp` → a naturality `have` (reduces general `G` to
+  `sheafification.obj g`; first ordering often fails `rewrite did not find occurrence`, prepend
+  `← Category.assoc`) → the Mathlib `Localization.Monoidal.{leftUnitor,rightUnitor}_hom_app` /
+  `Braided.β_hom_app` `have` → `tensorHom_def`(`'`) + telescope. KEY defeqs (state helper `have`s in
+  the *exact* syntactic goal form, close by `exact <mathlib lemma>`): `𝟙_ X.Modules` ≡ `unitModule X`
+  (so `ρ_ G : tensorObj G (unitModule X) ≅ G` typechecks directly); `Functor.LaxMonoidal.μ`/`δ` ≡
+  `(Localization.Monoidal.μ …).hom`/`.inv`; `(toMonoidalCategory L W ε).obj` ≡ `sheafification.obj`;
+  `localizationUnitIso X` ≡ `ε'`. **Instance-diamond escape:** tactic `rw`/`simp [Category.assoc]`
+  CANNOT match `(f ≫ g) ≫ h` when the inner/outer `≫` straddle the `LocalizedMonoidal` and `X.Modules`
+  instances ("did not find (f≫g)≫h" / "made no progress") — re-associate in **term mode**
+  (`Category.assoc _ _ _`, `congrArg`, `Eq.symm (…).trans`, defeq-checked) and finish the
+  `Iso.inv_hom_id`/`Category.comp_id` cancellation with **`erw`** (keyed matching, higher
+  transparency) + `rfl`. `tensorBraiding_eq`'s finisher is the worked template. Use `BraidedCategory.braiding_naturality`
+  (NOT `MonoidalCategory.braiding_naturality`, unknown) and
+  `MonoidalCategory.tensorHom_comp_tensorHom(_assoc)`; `β_` needs `attribute [local instance]
+  braidedCategory` in scope. Redefining `tensorObjAssoc` as the 5-segment transport
+  `(tensorObjIso (A⊗B) C).symm ≪≫ whiskerRightIso (tensorObjIso A B).symm C ≪≫ α_ A B C ≪≫
+  whiskerLeftIso A (tensorObjIso B C) ≪≫ tensorObjIso A (B⊗C)` is non-weakening (type preserved) and
+  inherits pentagon/triangle — this RETIRES the iter-006 hand-rolled double-braiding-associator
+  non-canonicity flag.
 
 - **Post-`rw` diamond `X = X` → append explicit `rfl`; the bogus "calc `Trans Eq Eq ?m`" is a
   misdiagnosed `rfl` gap, NOT a toolchain bug (iter-001, GrassmannianQuot, closed
@@ -1773,18 +1895,88 @@
 
 ### Known Blockers (do not retry without a structural change)
 
-- **SNAP-S0 coherence inductions gated on possibly-non-canonical `tensorObjAssoc` (iter-006,
-  `SectionGradedRing.lean`).** The 3 open sorries — `tensorPowAdd_zero_right` succ (L2031, sheaf
-  triangle identity), `sectionsMul_mul_assoc` (L2091, pentagon analog), `sectionsMul_mul_comm`
-  (L2107, hexagon analog) — are coherence inductions through `sheafification`. Mathlib's `coherence`
-  tactic does NOT apply: the participating isos (`tensorObjAssoc`/`tensorBraiding`/unitors) are
-  bespoke `sheafification`-defined, NOT a registered `MonoidalCategory` instance. **Structural risk
-  (lean-auditor iter-006):** `tensorObjAssoc` (L1610) builds the associator via a *double-braiding*
-  detour — valid type but possibly non-canonical vs Mac Lane, so the pentagon may not hold. Before
-  re-assigning `mul_assoc`, run a mathlib-analogist probe on the associator construction; if
-  non-canonical it is a STRATEGY item (rebuild `tensorObjAssoc`), not a prover retry. The
-  `tensorPowAdd_zero_right` succ step (triangle) is the cheapest entry (unlocks `sectionsMul_mul_one`
-  for free) and uses only the proven `erw`-through-naturality template — try it first.
+- **[iter-016 — ★ `tensorObjAssoc_eta_factor_sheaf`: MATH SOLVED, PLACEMENT is a >4M-heartbeat
+  comp-diamond `isDefEq` DEAD-END. ESCALATED — do NOT re-assign ANY mechanical closer.]** This
+  SUPERSEDES the iter-014/015 ★ entries below. ★'s residual was decomposed and PROVEN: it IS the
+  generic `tensorObjAssoc_associator_counit_coherence` (+ 6 staged helpers), all axiom-clean
+  (`lean_verify` = `[propext, Quot.sound]`, no `sorryAx`), under `set_option maxHeartbeats 800000`. The
+  closer `exact tensorObjAssoc_associator_counit_coherence _ … (sheafification_map_unit_eq _)` is
+  VERIFIED to close ★ — BUT the bridging `isDefEq` across the `LocalizedMonoidal` /
+  `Scheme.Modules.instCategory` comp-instance diamond on the ~1.2M-char CONCRETE term does **not
+  terminate within 4,000,000 heartbeats** (authoritative `lake build`). Re-confirmed this iter that ALL
+  closers hit the same term-size+diamond wall: `exact` (>4M), ordered/bounded `erw` (each step a
+  cross-diamond `kabstract` on the 1.2M-char goal; even one `simp only [Iso.hom_inv_id_assoc]` over the
+  SMALLER abstract term >200k), positional `simp`/`rw` (no-match across the diamond), `subst`/`conv … rw`
+  (motive `kabstract` >200k). The obstruction is no longer mathematical. **Required corrective is
+  STRUCTURAL** (4 iters of the same wall — 013/014/015/016): (1) eliminate the comp-instance diamond at
+  the monoidal-setup source so ★'s `≫` resolves to a single `CategoryStruct.comp` head, or (2) a
+  `@[reducible]`/`abbrev` comp-bridge making the two `Category` instances *syntactically* (not merely
+  `rfl`-defeq) equal so the `isDefEq` short-circuits. Both are beyond a file-local mechanical prover →
+  refactor / mathlib-analogist (api-alignment) / user decision (TO_USER.md). B6 `tensorPowAdd_assoc` is
+  diamond-FREE and bankable independent of ★ — assign that instead.
+- **[iter-016 — tooling: sync_leanok over-strip is RECURRING (3rd consecutive: 014/015/016).]** sync
+  removed 21–22 proof-block `\leanok` on `Picard_SectionGradedRing` each iter; review re-verifies
+  (`lean_verify`) + restores the axiom-clean ones (21 this iter; the 22nd, `sectionMul_coherent`
+  multi-decl block, is legitimately removed — 2 of its 4 members carry `sorryAx`). Pure churn; durable
+  fix is sync-side. Do NOT read the strip as laundering.
+- **[iter-016 — proof pattern: STAGE heavy abstract-monoidal proofs across tiny declarations.]** When a
+  single `simp`/`isDefEq`/`kabstract` over a monoidal goal exceeds 200k heartbeats, generalise the goal
+  to a uniform `[MonoidalCategory M]` (strip the concrete diamond) and split the proof into a chain of
+  tiny private lemmas, each ONE simp pass + ONE handoff `exact` (so each fits a fresh budget). Replace
+  `subst h` with a `congrArg`/term-mode chain (`subst`'s motive `kabstract` over a big goal alone >200k).
+  This is what made `tensorObjAssoc_associator_counit_coherence` provable. Closer set:
+  `whisker_exchange_assoc`, `associator_naturality_{left,middle,right}_assoc`, `comp_whiskerRight`,
+  `whiskerLeft_comp`, `hom_inv_whiskerRight_assoc`, `inv_hom_whiskerRight_assoc`, `Iso.hom_inv_id(_assoc)`.
+- **[iter-014 — ★ `tensorObjAssoc_eta_factor_sheaf`: the erw-grind is a HEARTBEAT DEAD-END; the
+  blocker is a `CategoryStruct.comp` INSTANCE diamond, NOT the `restrictScalars(𝟙)` decoration.]** The
+  iter-013/014 KB premise that the friction is η's `restrictScalars(𝟙)` decoration (erw- or
+  `change`-erasable) is SUPERSEDED at ★: the decoration is already gone (`sheafification_map_unit_eq`
+  rewrites `L(η_P)=ε⁻¹` first). The live wall is that the split hyps `hηL/hηR/hα` carry
+  `LocalizedMonoidal`-comp internally (pinned by `Localization.Monoidal.μ ….inv/.hom`), while the goal's
+  `≫` is `X.Modules`-comp; the two `Category` instances are `rfl`-defeq but syntactically distinct, so
+  `rw`/`simp [Category.assoc]`/`Iso.hom_inv_id_assoc` FAIL to match, `erw [Category.assoc]` bridges ONE
+  step, and `repeat erw` hits the 200k-heartbeat `isDefEq` timeout (maxHeartbeats forbidden). **Do NOT
+  re-assign the erw grind.** STRUCTURAL FIX: retype the `μ ….inv/.hom` factors of `hηL/hηR/hα` into
+  `X.Modules`-comp natively (defeq coercion `@CategoryStruct.comp X.Modules`, or a small `X.Modules`
+  wrapper iso), making the substituted goal uniform-instance — then the `tensorPowAdd_zero_right`
+  `simp only` cancel-recipe + `associator_naturality` closes WITHOUT erw. The one piece that DID fire:
+  `simp only [Localization.Monoidal.toMonoidalCategory]` (normalizes `(toMonoidalCategory).obj/.map` to
+  the underlying functor by `rfl`, unifying object syntax) — keep it.
+- **[iter-014 — tooling: sync_leanok over-strips proof-block `\leanok` on this large file.]** sync
+  removed 22 proof-block `\leanok` (incl. ~19 axiom-clean closed proofs) on `Picard_SectionGradedRing`,
+  likely a per-decl `lake build`/heartbeat glitch during sync. Review restored the verified ones; if it
+  recurs, re-verify with `lean_verify` and restore — do NOT read the strip as laundering.
+
+- **[RESOLVED iter-008/009 — non-canonicity risk DISSOLVED, right-unit leg CLOSED.]** ~~SNAP-S0
+  coherence inductions gated on possibly-non-canonical `tensorObjAssoc` (iter-006).~~ iter-008
+  redefined `tensorObjAssoc` onto the canonical Mac Lane `α_` (transported along `tensorObjIso`), so
+  pentagon/triangle are now inherited — the iter-006 double-braiding non-canonicity flag is gone by
+  construction. iter-009 then CLOSED `tensorPowAdd_zero_right` (succ via the canonical right-unitor
+  core `canonical_runit_core` + the two whisker bridges) and therefore `sectionsMul_mul_one` (both
+  axiom-clean, lean-auditor confirms genuine, no circularity). **Residual after iter-010 — the comm
+  leg is a FALSE STATEMENT, not a hard proof (the "closable off `hexagon_forward`" claim below was
+  WRONG):**
+  - `sectionsMul_mul_comm` — **[RE-ANCHORED iter-011 — false signature ELIMINATED.]** Was
+    MATHEMATICALLY FALSE for `(L : X.Modules)` (no invertibility): `⊕ₘ Γ(L^{⊗m})` is the FREE TENSOR
+    ALGEBRA on `Γ(L)`, non-commutative for non-invertible `L`; `μ_{m,m'}` and `μ_{m',m}∘β` induce
+    DIFFERENT permutations of the `m+m'` identical `L`-factors, so Mac Lane coherence does NOT equate
+    them; at `m=m'=1` the constraint is `β_{L,L}=𝟙` ⇔ `L` invertible (counterexample `L=𝒪²`,
+    `e₁⊗e₂=e₂⊗e₁` in `k⁴`). iter-011 re-signed it `(L : X.Modules) [IsInvertible L]` (autonomous
+    planner decision; project-local `IsInvertible` = ⊗-invertible Stacks-01CR `Prop` class) — now a
+    TRUE statement. **DO NOT re-assign as a prover lane:** body is a typed `sorry`, invertibility-gated
+    FUTURE work with NO consumer (`GCommSemiring` assembly unbuilt). Closes (when needed) via the PROVEN
+    `tensorBraiding_hom_sectionsMul` + the residue `β_{L,L}=𝟙` (`tensorBraiding_self_eq_id_of_isInvertible`,
+    scaffold) — local-to-global, NOT at `⊤`, via `Module.Invertible.tensorProductComm_eq_refl`. Companion
+    gated scaffolds: `tensorPowAdd_comm`. See `informal/sectionsMul_mul_comm.md`.
+  - `sectionsMul_mul_assoc` (≈L2540) — TRUE for arbitrary `L` (tensor-algebra associativity), the ONLY
+    live SNAP lane. Decomposed into a chain: B2 `sectionsMul_whiskerRight_unit` (NOT yet committed) → B3
+    `sectionsMul_whiskerLeft_unit` (NOT) → B4 `tensorObjAssoc_eta_factor` (DEEP crux, 5-segment bridge
+    telescoping) → B5 `tensorObjAssoc_hom_sectionsMul` (≈L2389, blocked on B2/B3/B4) → B6
+    `tensorPowAdd_assoc` (pentagon, NOT built; sketch SOUND) → B7 `sectionsMul_mul_assoc` (assembly).
+    **iter-011 landed B-leg keystone `presheafAssociator_top_apply` (PROVEN, axiom-clean, morphism-level
+    `rfl`).** Critical path = B2 first (smallest, unblocks B5); the obstacle is writing the RHS
+    presheaf-morphism `⊗ₜ` past the `forget₂` instance diamond — see Proof Patterns "morphism-level
+    statement bypasses the `forget₂`-CommRing instance diamond".
 
 - **[GR-quot CLOSED iter-001 — the primary deliverable is DONE.]** `GrassmannianQuot.lean` 3→0; goal
   seed `AlgebraicGeometry.Grassmannian.represents` is sorry-free AND axiom-clean
@@ -2471,7 +2663,114 @@
   enforced corrective is a mathlib-analogist consult on the reframing keystone, not a prove round.
 
 ## Last Updated
-2026-06-18T (iter-006 review) — **First prover lane since iter-001.** SNAP-S0 activated (user hint
+2026-06-19T (iter-016 review) — **★ MATH SOLVED (abstract coherence PROVEN, axiom-clean); ★ PLACEMENT
+ESCALATED — a >4M-heartbeat comp-diamond `isDefEq` dead-end.** The DECOMPOSE corrective ran: ★'s residual
+was extracted as a generic `[MonoidalCategory M]` coherence `tensorObjAssoc_associator_counit_coherence`
+(+ 6 staged helpers), all `lean_verify` = `[propext, Quot.sound]`, under `set_option maxHeartbeats 800000`
+(file's established budget; lean-auditor confirmed JUSTIFIED). The closer `exact <it>` is verified to
+close ★ but its diamond-bridging `isDefEq` on the ~1.2M-char concrete term needs >4,000,000 heartbeats
+(`lake build`); every closer (`exact`/ordered `erw`/`simp`/`subst`) hits the same term-size+diamond wall
+≫200k. Obstruction is no longer math — STRUCTURAL fix required (eliminate the comp-instance diamond at the
+monoidal-setup source, or a syntactic comp-bridge). 4th iter of the same wall → escalated (TO_USER).
+SNAP sorry decls 6→6 (★ still sorry; B6/B7 not attempted, budget; B6 diamond-free + bankable). Build green
+(2439 jobs). lean-auditor PASS (0 must-fix; 7 new lemmas genuine + axiom-clean; budget justified; 2 major =
+stale `.lean` comments). lean-vs-blueprint-checker 1 must-fix = sync over-strip (3rd consecutive) →
+REVIEW RESTORED 21 `lean_verify`-confirmed axiom-clean proof-block `\leanok` (22nd legit-removed) + added
+statement `\leanok` on `cor:sheafModule_braided_symmetric` + `% NOTE:` on 3 dangling graded-assembly
+`\lean{}` hints. dag unmatched 324→331 (+7 = new private staging lemmas). NEXT: assign B6 (diamond-free),
+NOT ★ — ★ needs the structural decision.
+
+2026-06-19T (iter-015 review) — **★ comp-instance-diamond MECHANISM FOUND (prefix compiles past the
+9-iter wall); the iter-015 directive's "validated" comp-bridge was a NO-OP as written.** The bridge bites
+ONLY keyed to the explicit native `AlgebraicGeometry.Scheme.Modules.instCategory (X := X)` and placed
+INSIDE the big `simp only` (ambient/`inferInstance` head ⇒ reflexive no-op). With that, `Category.assoc`/
+`tensorObj`/`tensorHom_def` + cancel lemmas clear non-diamond junctions; residual cross-diamond μ-pair +
+`associator_naturality` each fire under `erw`. Only blocker left = a BOUNDED ORDERED erw tail (~10–20
+steps); unbounded `repeat erw` = 200k-heartbeat timeout. New Knowledge-Base pattern recorded. SNAP sorry
+7→7 (★ still sorry; B6/B7 not attempted, budget). Build green (2439 jobs). lean-auditor 0 NEW must-fix
+(★ prefix genuine; 7 must-fix = standing sorrys; 2 major = stale .lean comments → recommendations).
+lean-vs-blueprint-checker 0 must-fix: sync RE-stripped 19 proof-block `\leanok` (2nd consecutive iter) →
+REVIEW RESTORED 21 lean_verify-confirmed axiom-clean markers + added statement `\leanok` on
+`cor:sheafModule_braided_symmetric`. Recurring sync defect surfaced to user (TO_USER). dag unmatched 324
+(unchanged). Per plan hard-stop: iter-016 closes the erw tail or escalates to user.
+
+2026-06-19T (iter-014 review) — **ESCALATION: the iter-014 corrective premise was VERIFIED WRONG.**
+The `restrict-decoration` corrective assumed ★'s friction was η's `restrictScalars(𝟙)` decoration
+(`change`-erasable); the prover found the decoration is already gone (`sheafification_map_unit_eq`), and
+the real ★ blocker is a `CategoryStruct.comp` INSTANCE diamond (`LocalizedMonoidal`-comp vs
+`X.Modules`-comp, `rfl`-defeq but syntactically distinct ⇒ `rw`/`simp` don't match, `repeat erw` =
+200k-heartbeat timeout). Fix = retype `hηL/hηR/hα`'s factors into `X.Modules`-comp at the source (do NOT
+re-run the erw grind). SNAP sorry 6→6; B6 `tensorPowAdd_assoc` PARTIAL (base reduced, diamond-free,
+independent parallel lane); B7 untouched. Build green (2439 jobs). lean-auditor 0 must-fix (3 stale
+.lean comments → next prover). lean-vs-blueprint-checker 0 must-fix: sync over-stripped ~19 axiom-clean
+proof-block `\leanok` → REVIEW RESTORED them (lean_verify-confirmed) + added `% NOTE` on ★ block.
+ARCHON_MEMORY's iter-014 "supersedes the erw-grind" bullet must be corrected by the planner. STUCK on ★
+(3 iters); B6 is the throughput lever.
+
+2026-06-19T (iter-013 review) — **B4 REDUCED to the single sheaf-level core ★.** B4
+`tensorObjAssoc_eta_factor` body now compiles (η-naturality reduction, `erw`-bridged across the
+`restrictScalars(𝟙)` decoration); its `sorryAx` traces SOLELY to the new isolated ★
+`tensorObjAssoc_eta_factor_sheaf` (an `X.Modules`-internal iso identity, no `.val` descent). New helper
+`sheafification_map_unit_eq` proved axiom-clean. SNAP sorry 6→6 (B4's sorry MOVED to the strictly
+simpler ★; closing ★ auto-cleans B4 + B5). Build green (2439 jobs). lean-auditor: 0 must-fix (new code
+genuine, no laundering, sorryAx solely via ★). lean-vs-blueprint-checker: 1 must-fix = proof-block
+`\leanok` on B4 (+ inherited B5) misrepresenting transitive-sorryAx as closed → REVIEW OVERRIDE removed
+both (justified in summary). Live SNAP = ★ (critical path, route fully documented, no missing
+ingredient) + B6 (pentagon, independent) + B7. Coverage debt: ★ + `sheafification_map_unit_eq` need
+blueprint blocks. CONVERGING.
+
+2026-06-19T (iter-012 review) — **Morphism-level technique VALIDATED; assoc chain factored.** B2/B3
+whisker-unit legs closed by `rfl` axiom-clean (`⊗ₜ` driven through enclosing `.hom`); B5
+`tensorObjAssoc_hom_sectionsMul` ASSEMBLED (own body sorry-free, `sorryAx` via B4 only — lean_verify +
+auditor confirmed). SNAP sorry 5→6 (decomposition: opaque B5 sorry GONE; replaced by two exact named
+atoms — B4 `tensorObjAssoc_eta_factor` crux + B6 `tensorPowAdd_assoc` pentagon). Build green (2439 jobs).
+Both review subagents: 0 must-fix on the live chain (checker 0 must-fix; auditor structurally sound,
+no laundering). Live SNAP = B4 (critical path) + B6 (pentagon) + B7 (μ-slide). 2 majors flagged
+(stale comm comment L2745–2757; coequalizer `\lean{}` coverage gap) → recommendations. CONVERGING.
+
+2026-06-19T (iter-011 review) — **RE-ANCHOR executed: false `comm` signature ELIMINATED.**
+`sectionsMul_mul_comm` re-signed `(L : X.Modules) [IsInvertible L]` (new ⊗-invertible Stacks-01CR `Prop`
+class) — now TRUE; body typed `sorry`, gated, no consumer. SNAP sorry 3→5 (NOT regression: +2 honest
+gated scaffolds `tensorBraiding_self_eq_id_of_isInvertible`, `tensorPowAdd_comm`; the one false signature
+removed). 1 genuine new proof axiom-clean: `presheafAssociator_top_apply` (morphism-level `rfl`, first
+assoc-chain B-leg keystone). Build green (2439 jobs); `lean_verify` = `[propext, Classical.choice,
+Quot.sound]`, no `sorryAx`. Both review subagents 0 must-fix (auditor: re-sign correct, sorries honest;
+checker: 1 major blueprint-prose mismatch on `def:isInvertible`, `% NOTE:` added). The ONLY live SNAP
+lane is now the TRUE assoc chain (B2→B7); critical path = B2 `sectionsMul_whiskerRight_unit`. See
+`iter/iter-011/review.md`.
+
+2026-06-19T (iter-010 review) — **CRITICAL STRATEGY FINDING: `sectionsMul_mul_comm` is FALSE for the
+current signature.** SNAP sorry 2→3 (one NEW true partial atom added; net not a regression). PROVEN
+axiom-clean this iter: `tensorBraiding_hom_sectionsMul` (one of the 4 planned atoms; `rfl` + `congrArg
+.trans`). The comm leg is a free-tensor-algebra non-commutativity — triple-confirmed (prover +
+lean-auditor + lean-vs-blueprint-checker). NOT a difficulty: the Lean signature `(L : X.Modules)` drops
+the line-bundle hypothesis the blueprint STATEMENT carries; the `lem:tensorPowAdd_comm` proof sketch
+("Mac Lane coherence discharges the hexagon") is mathematically WRONG. Blueprint `% NOTE:` markers added
+to `lem:tensorPowAdd_comm`, `lem:sectionMul_coherent`, `lem:sectionGradedRing_gcommSemiring`, and the
+`lem:tensorObjAssoc_hom_sectionsMul` proof sketch. assoc leg is TRUE but deep (3-ingredient decomposition).
+Fix = signature change (user's call, escalated to TO_USER.md + informal/). Build green; no laundering.
+See `iter/iter-010/review.md`.
+
+2026-06-19T (iter-009 review) — **SNAP sorry 3→2, axiom-clean.** Closed `tensorPowAdd_zero_right` (succ
+via NEW `canonical_runit_core` + the two NEW whisker bridges `tensorObjWhiskerLeft/RightIso_eq`) and
+therefore `sectionsMul_mul_one`. Build green (2439 jobs); `lean_verify` = `[propext, Classical.choice,
+Quot.sound]` on both. Added 1 proof pattern (canonical iso-coherence close recipe). iter-006/008
+non-canonical-associator blocker marked RESOLVED. lean-auditor: all new proofs genuine/no circularity;
+iter-008's `@[*_reducible]` "non-standard attr" flag RESOLVED (they are standard Lean 4 core attrs,
+correctly load-bearing). lean-vs-blueprint-checker PASS (0 must-fix). Coverage debt: `canonical_runit_core`
++ `tensorPowAdd_zero_right` lack blueprint blocks (flagged to planner). 2 residual sorries
+(`sectionsMul_mul_assoc`/`_comm`) are mechanical pentagon/hexagon assembly. See `iter/iter-009/review.md`.
+
+(prior) 2026-06-19T (iter-008 review) — **REWIRE iter (infrastructure, not a stall).** SNAP sorry 3→3 but the 3
+de-risked from bare to mechanical residuals. Redefined `tensorObjAssoc` onto the canonical Mac Lane
+`α_` transported along `tensorObjIso` — **retires the iter-006 non-canonical-associator flag by
+construction.** Added 3 axiom-clean bridge lemmas (`tensorObjRightUnitor_eq`, `tensorObjUnitIso_eq`,
+`tensorBraiding_eq`). Build green (2439 jobs); `lean_verify` clean. Added 1 proof pattern
+(canonical-transport bridge recipe + `LocalizedMonoidal`/`X.Modules` instance-diamond escape). No manual
+markers; `sync_leanok` correct. lean-auditor 0 must-fix (1 major: verify non-standard `@[*_reducible]`
+attrs). 4 coverage-debt decls flagged to planner. See `iter/iter-008/review.md`.
+
+(prior) 2026-06-18T (iter-006 review) — **First prover lane since iter-001.** SNAP-S0 activated (user hint
 "start proving now"). `SectionGradedRing.lean` sorry 9→3, axiom-clean, cold build green (2439 jobs).
 Solved `sectionsCast`/`_refl`/`gradedMonoid_eq_of_cast`/GMul/GOne instances/`sectionsMul_one_mul`;
 3 reduced coherence sorries remain (`tensorPowAdd_zero_right` succ, `mul_assoc`, `mul_comm`). Added 4

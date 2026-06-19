@@ -1,0 +1,287 @@
+[
+  {
+    "timestamp": "2026-06-19T03:30:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "sheafification_mapIso_associator_eq_localizationMap"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "toMonoidalCategory defeq sheafification on morphisms"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "seg-2 defeq: (alpha^p)^# = L'(alpha^p)",
+        "code_tried": "rfl",
+        "line_number": "1716",
+        "result": "success",
+        "insight": "toMonoidalCategory = sheafification on morphisms, holds by rfl (default transparency)"
+      }
+    ],
+    "next_steps": "reusable ingredient for the assembly bridge"
+  },
+  {
+    "timestamp": "2026-06-19T03:30:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "sheafification_whiskerRight_unit_eq_mu"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Localization.Monoidal.μ_natural_left",
+        "Iso.inv_hom_id_assoc"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Iso.eq_inv_comp peel then μ_natural_left",
+        "code_tried": "rw [Iso.eq_inv_comp (μ ... P Q)]; exact μ_natural_left ...",
+        "line_number": "1727",
+        "result": "failed",
+        "insight": "unit.app P domain prints as (𝟭).obj P; the 𝟭-wrapper blocks both rw [μ_natural_left] (pattern not found) and Iso.eq_inv_comp (type mismatch)"
+      },
+      {
+        "attempt": 2,
+        "strategy": "normalize 𝟭-wrapper first, then μ_natural_left",
+        "code_tried": "simp only [CategoryTheory.Functor.id_obj]; rw [Localization.Monoidal.μ_natural_left, Iso.inv_hom_id_assoc]; rfl",
+        "line_number": "1727",
+        "result": "success",
+        "insight": "a leading simp only [Functor.id_obj] normalizes the 𝟭.obj P so μ_natural_left fires; residual sheafification.map = L'.map closes by rfl"
+      }
+    ],
+    "next_steps": "keystone ingredient for assembly"
+  },
+  {
+    "timestamp": "2026-06-19T03:30:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "sheafification_whiskerLeft_unit_eq_mu"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Localization.Monoidal.μ_natural_right",
+        "Iso.inv_hom_id_assoc"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "left-whisker mirror of seam 2",
+        "code_tried": "simp only [CategoryTheory.Functor.id_obj]; rw [Localization.Monoidal.μ_natural_right, Iso.inv_hom_id_assoc]; rfl",
+        "line_number": "1751",
+        "result": "success",
+        "insight": "identical template to seam 2 with μ_natural_right"
+      }
+    ],
+    "next_steps": "keystone ingredient for assembly"
+  },
+  {
+    "timestamp": "2026-06-19T03:30:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "sheafification_braiding_whiskerRight_unit_eq_whiskerLeft_unit"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "BraidedCategory.braiding_naturality_right",
+        "Iso.comp_inv_eq"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "naturality then hom_inv_id collapse",
+        "code_tried": "simp only [Functor.id_obj] at hn; rw [← Category.assoc, ← hn, Category.assoc, Iso.hom_inv_id, Category.comp_id]",
+        "line_number": "1774",
+        "result": "failed",
+        "insight": "object-codomain mismatch on the braiding object; the 𝟭.obj P vs P discrepancy strands the rewrite"
+      },
+      {
+        "attempt": 2,
+        "strategy": "leave seg-5 braiding object as _ for inference; close via comp_inv_eq + exact",
+        "code_tried": "rw [← map_comp, ← map_comp]; congr 1; have hn := braiding_naturality_right A (unit.app P); rw [← Category.assoc, Iso.comp_inv_eq]; exact hn.symm",
+        "line_number": "1774",
+        "result": "success",
+        "insight": "leaving the seg-5 braiding object as _ lets Lean infer the exact unit.app P codomain so exact absorbs the 𝟭.obj P vs P discrepancy up to defeq"
+      }
+    ],
+    "next_steps": "braiding-collapse ingredient for assembly"
+  },
+  {
+    "timestamp": "2026-06-19T03:30:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorObjAssoc_eq_localizedAssociator"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "general-object α^loc must be reduced to L'-object form via associator_naturality (push the 4 counit isos through) before associator_hom_app + the 4 seams + μ-cancellation finish; multi-step, beyond per-sentence budget",
+      "key_lemmas_used": [
+        "tensorObjAssoc (equation lemma)",
+        "tensorObjLocalizedIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "iso-conjugation form with whiskerRightIso/whiskerLeftIso",
+        "code_tried": "stated via @MonoidalCategory.whiskerRightIso (modulesLocalizedMonoidal X) ...",
+        "line_number": "1796",
+        "result": "failed",
+        "insight": "MonoidalCategory.whiskerRightIso fails instance synthesis in STATEMENT position (needs full MonoidalCategory instance whose backward.isDefEq.respectTransparency-false definition does not synthesize there)"
+      },
+      {
+        "attempt": 2,
+        "strategy": "restate as .hom commuting-square form (chapter's primary form); partial body",
+        "code_tried": "rw [tensorObjAssoc]; simp only [tensorObjLocalizedIso, Iso.trans_hom, Iso.symm_hom, MonoidalCategory.tensorIso_hom]  -- then sorry",
+        "line_number": "1796",
+        "result": "partial",
+        "insight": "MonoidalCategoryStruct.whiskerRight/.whiskerLeft/.associator need only MonoidalCategoryStruct which synthesizes fine; square form ⇔ iso form by Iso.ext; stuck on the general→L'-object associator_naturality reduction"
+      }
+    ],
+    "next_steps": "focused prove pass: continue from rw [tensorObjAssoc], apply 4 seams, crack associator_naturality general→L'-object reduction using proven tensorBraiding_eq_localizedBraiding (braiding_naturality) as template"
+  },
+  {
+    "timestamp": "2026-06-19T03:30:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "sectionsMul_mul_assoc"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "gated on tensorObjAssoc_eq_localizedAssociator (transfers pentagon/hexagon/right-unit from Mathlib localized monoidal through tensorObjAssoc); not attempted this iter"
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not attempted — gated on the assembly bridge",
+        "code_tried": "(unchanged, sorry @L2392)",
+        "line_number": "2392",
+        "result": "partial",
+        "insight": "sorry propagates through instGMonoid.mul_assoc → instGSemiring → sectionGradedRing_gcommSemiring (top-level graded-ring instance is sorry-laden)"
+      }
+    ],
+    "next_steps": "unblocks once tensorObjAssoc_eq_localizedAssociator + tensorPowAdd_* land"
+  },
+  {
+    "timestamp": "2026-06-19T03:30:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorPowAdd_assoc"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "gated on tensorObjAssoc_eq_localizedAssociator; not attempted (pre-existing sorries L2329 base, L2332 succ from iter-007)"
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not attempted — gated on assembly bridge",
+        "code_tried": "(unchanged sorries)",
+        "line_number": "2329",
+        "result": "partial",
+        "insight": "gated; same blocker as the other tensorPowAdd_* coherences"
+      }
+    ],
+    "next_steps": "unblocks with the assembly bridge"
+  },
+  {
+    "timestamp": "2026-06-19T03:30:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "gammaPushforwardNatIso_comp"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "blueprint recipe WRONG (not pointwise rfl); residual = 3-fold composite analogue of globalSectionsIso_hom_comp_specMap_appTop through Spec.map_comp eqToHom; AND monolithic structural simp overflows the kernel (deterministic timeout) — kernel-light route required",
+      "key_lemmas_used": [
+        "pushforwardComp_inv_app_app",
+        "globalSectionsIso_hom_comp_specMap_appTop (= Scheme.ΓSpecIso_inv_naturality)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "natIso pasting statement (whiskerings via Functor.isoWhiskerRight/Left) + Iso.ext;ext N x;rfl",
+        "code_tried": "Functor.isoWhiskerRight (eqToIso (congrArg pushforward (Spec.map_comp φ ρ)) ≪≫ (pushforwardComp ...).symm) ... ; apply Iso.ext; ext N x; rfl",
+        "line_number": "718",
+        "result": "failed",
+        "insight": "statement type-checks (incl (φ≫ρ).hom = ρ.hom.comp φ.hom defeq); rfl fails — sides differ by composite vs single structure-sheaf map"
+      },
+      {
+        "attempt": 2,
+        "strategy": "prove domain-glue trivial (hpc) then monolithic structural simp to reduce both sides",
+        "code_tried": "have hpc : (pushforwardComp ...).inv.app N = 𝟙 _ := by ext U:2; simp only [pushforwardComp_inv_app_app]; rfl  -- then big simp only [gammaPushforwardNatIso, gammaPushforwardIso, NatIso.ofComponents_hom_app, ...]",
+        "line_number": "718",
+        "result": "failed",
+        "insight": "hpc compiles (domain gluing IS identity); but the full structural simp OVERFLOWS THE KERNEL (lake build deterministic timeout; LSP hid it). residual = composite (Spec(φ≫ρ))^#_⊤ vs (Spec ρ)^#_⊤∘(Spec φ)^#_⊤ joined by Spec.map_comp eqToHom — genuine 3-fold global-sections coherence, NOT rfl"
+      }
+    ],
+    "next_steps": "kernel-light: per-component gammaPushforwardIso coherence helper assembled via NatIso/Functor.ext; add 3-fold globalSectionsIso_hom_comp_specMap_appTop ring helper; correct blueprint prose (done via % NOTE this iter)"
+  },
+  {
+    "timestamp": "2026-06-19T03:30:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "pullback_spec_tilde_iso_ring_square_natural"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "crux gated on foundation gammaPushforwardNatIso_comp being a usable equation; foundation not closed (and kernel-fragile), so seam4/crux mate assembly cannot rest on it; prover declined to destabilise the file"
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not advanced — corrected mate route (conjugateIsoEquiv + iterated_mateEquiv_conjugateEquiv + 2 vcomp lemmas) depends on the unproven foundation",
+        "code_tried": "(unchanged iter-008 hand-peel body ending in sorry @L1549; seams 2/3/4 NOT scaffolded)",
+        "line_number": "1549",
+        "result": "partial",
+        "insight": "foundation-first: scaffolding 3 more deep TwoSquare-mate sorries on an unproven kernel-fragile base adds risk; correct to defer until foundation lands kernel-light"
+      }
+    ],
+    "next_steps": "close gammaPushforwardNatIso_comp kernel-light FIRST, then scaffold seams 2/3/4 + rewrite crux per corrected mate recipe"
+  }
+]

@@ -1,0 +1,149 @@
+[
+  {
+    "timestamp": "2026-06-19T11:20:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorObjAssoc_eta_factor_sheaf"
+    },
+    "session": {
+      "id": "session_15",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Residual associator-naturality coherence straddles the instCategory/LocalizedMonoidal comp-instance diamond; every closing step fires individually under `erw` but an unbounded `repeat (first|erw ...)` hits the 200000-heartbeat whnf timeout (each erw is a full cross-diamond defeq search). Needs a BOUNDED, correctly-ORDERED erw sequence (~10-20 steps) found by step-by-step goal inspection; goals are ~1.2M chars under pp.all.",
+      "key_lemmas_used": [
+        "AlgebraicGeometry.Scheme.Modules.instCategory",
+        "Localization.Monoidal.mu_natural_left",
+        "Localization.Monoidal.mu_natural_right",
+        "Localization.Monoidal.associator_hom_app",
+        "sheafification_map_unit_eq",
+        "MonoidalCategory.tensorHom_def",
+        "Iso.hom_inv_id_assoc",
+        "MonoidalCategory.associator_naturality"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Directive's VALIDATED comp-bridge as written: hc keyed to default/inferInstance comp head, then `simp only [hc]`",
+        "code_tried": "have hc : ∀ {P Q R} (f g), f ≫ g = @CategoryStruct.comp (LocalizedMonoidal ...) _ P Q R f g := fun f g => rfl; simp only [hc]",
+        "line_number": "2580",
+        "lean_error": "no-op / `No goals to be solved` at 2605 (bridge is reflexive: LHS `f ≫ g` elaborates to the SAME instance as RHS)",
+        "result": "failed",
+        "insight": "The directive's comp-bridge is REFLEXIVE — the ambient `≫` already resolves to the LocalizedMonoidal copy, so `simp only [hc]` makes no progress. Root correction of the iter-015 directive."
+      },
+      {
+        "attempt": 2,
+        "strategy": "After bridge, positional `rw [Category.assoc]`",
+        "code_tried": "rw [Category.assoc]",
+        "line_number": "2581",
+        "lean_error": "Tactic `rewrite` failed: Did not find an occurrence of the pattern (?f ≫ ?g) ≫ ?h",
+        "result": "failed",
+        "insight": "Confirms the comp diamond: the goal's structural `≫` is a syntactically distinct (rfl-defeq) instance from the one `Category.assoc` is stated over."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Key the bridge LHS to the EXPLICIT native instance — tried several names",
+        "code_tried": "@CategoryStruct.comp X.Modules SheafOfModules.instCategorySheafOfModules ...; then ...instCategoryModules...; then (inferInstanceAs (Category X.Modules)); then (inferInstance : Category X.Modules); then (AlgebraicGeometry.Scheme.Modules.instCategory X)",
+        "line_number": "2576",
+        "lean_error": "`Unknown constant SheafOfModules.instCategorySheafOfModules`; `Unknown constant ...instCategoryModules`; `inferInstanceAs ... metavariables`; `inferInstance` elaborates but is the WRONG (reflexive) copy; `instCategory X` → `Function expected at instCategory`",
+        "result": "partial",
+        "insight": "The native X.Modules comp instance is `AlgebraicGeometry.Scheme.Modules.instCategory` with X IMPLICIT (found via `set_option pp.all`); must be applied as `(... .instCategory (X := X))`."
+      },
+      {
+        "attempt": 4,
+        "strategy": "Working bridge `instCategory (X := X)` + big `simp only` with hc and cancel lemmas",
+        "code_tried": "have hc : @CategoryStruct.comp X.Modules (AlgebraicGeometry.Scheme.Modules.instCategory (X := X)).toCategoryStruct P Q R f g = @CategoryStruct.comp (LocalizedMonoidal ...) _ P Q R f g := fun f g => rfl; simp only [hc, Category.assoc, tensorObj, MonoidalCategory.tensorHom_def, sheafification_map_unit_eq, Iso.hom_inv_id_assoc, Iso.inv_hom_id_assoc, MonoidalCategory.inv_hom_whiskerRight_assoc, MonoidalCategory.whiskerLeft_hom_inv_assoc, MonoidalCategory.hom_inv_whiskerRight_assoc, MonoidalCategory.whiskerLeft_inv_hom_assoc, Iso.inv_hom_id, Iso.hom_inv_id, Category.comp_id, Category.id_comp]",
+        "line_number": "2581",
+        "lean_error": "compiles (no error); goal advanced",
+        "result": "partial",
+        "insight": "With the explicit-instance hc INSIDE the simp set (so it re-fires after tensorHom_def/whiskering re-introduce native comps), `Category.assoc` flattens, `tensorObj` unifies `A.tensorObj B` ↔ `sheafification.obj (a⊗b)`, `tensorHom_def` decomposes `⊗ₘ`, and all NON-diamond junctions cancel positionally. This is the mechanism past the 9-iter wall."
+      },
+      {
+        "attempt": 5,
+        "strategy": "Cancel the residual cross-diamond μ pair",
+        "code_tried": "erw [Iso.hom_inv_id_assoc]",
+        "line_number": "2587",
+        "lean_error": "(none — fires, verified via lean_multi_attempt)",
+        "result": "partial",
+        "insight": "Positional `rw`/`simp [Iso.hom_inv_id_assoc]` FAIL on cross-diamond pairs, but defeq-tolerant `erw` cancels the `μ (A) (B⊗C)` pair."
+      },
+      {
+        "attempt": 6,
+        "strategy": "Fire associator-naturality on the coherence step",
+        "code_tried": "erw [MonoidalCategory.associator_naturality]",
+        "line_number": "~2600",
+        "lean_error": "(none — fires, verified)",
+        "result": "partial",
+        "insight": "The residual coherence (LHS `(α_ A B C).hom` on sheaves vs RHS `(α_ (L T A)(L T B)(L T C)).hom` via the three counit isos) DOES advance under `erw [associator_naturality]`."
+      },
+      {
+        "attempt": 7,
+        "strategy": "Close the tail with an unbounded progress loop",
+        "code_tried": "repeat (first | erw [Iso.hom_inv_id_assoc] | ... | erw [MonoidalCategory.associator_naturality] | ...)",
+        "line_number": "~2600",
+        "lean_error": "(deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached",
+        "result": "failed",
+        "insight": "Each `erw` is a full cross-diamond defeq search; unbounded repetition times out. Closure needs a bounded, ordered erw sequence. maxHeartbeats must NOT be raised (project rule)."
+      }
+    ],
+    "next_steps": "Keep the compiling prefix (verified to the first `erw [Iso.hom_inv_id_assoc]`). From the post-erw goal, inspect with non-pp.all `lean_goal` and apply cancel lemmas one `erw` at a time IN GOAL ORDER, interleaving the big `simp only [hc, ...]` when a positional pass makes progress, until only the α-naturality step remains; then `erw [associator_naturality]` + the counit `erw [Iso.hom_inv_id_assoc]` pairs + `rfl`. Do NOT use unbounded `repeat erw`. Once ★ closes, B4 and B5 become axiom-clean automatically."
+  },
+  {
+    "timestamp": "2026-06-19T11:20:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorPowAdd_assoc"
+    },
+    "session": {
+      "id": "session_15",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Not attempted this session — budget consumed on the ★ mechanism. Diamond-free pentagon induction (base reduced iter-014); bankable independent of ★. Two sorry bodies remain (zero base 2904, succ 2912).",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "planned but not executed (budget)",
+        "code_tried": "(none this session)",
+        "line_number": "2904,2912",
+        "lean_error": "",
+        "result": "partial",
+        "insight": "If the succ case hits the same comp diamond, reuse the explicit-instCategory hc + erw-cancellation recipe from ★ (NOT the reflexive default bridge)."
+      }
+    ],
+    "next_steps": "Close B6 first next iter — diamond-free, bankable, independent of ★. Base = canonical unit-triangle coherence; succ → MonoidalCategory.pentagon."
+  },
+  {
+    "timestamp": "2026-06-19T11:20:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "sectionsMul_mul_assoc"
+    },
+    "session": {
+      "id": "session_15",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Not attempted (budget). Assembly blocked on three ingredients: (1) tensorObjAssoc_hom_sectionsMul [assembled, transitively sorry via ★], (2) μ-naturality slide [not yet built], (3) tensorPowAdd_assoc [B6, sorry].",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "planned but not executed (budget)",
+        "code_tried": "(none this session)",
+        "line_number": "2942",
+        "lean_error": "",
+        "result": "partial",
+        "insight": "Gated on ★ (→B4→B5) + B6 + the new μ-slide lemma."
+      }
+    ],
+    "next_steps": "Assemble after ★ and B6 land; build the μ-naturality slide helper."
+  }
+]

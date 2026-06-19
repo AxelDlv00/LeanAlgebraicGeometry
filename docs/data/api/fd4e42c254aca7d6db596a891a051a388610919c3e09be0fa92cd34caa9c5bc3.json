@@ -2,28 +2,33 @@
   "files": [
     {
       "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
-      "count": 4,
+      "count": 5,
       "lines": [
-        1257,
-        1504,
-        1685,
-        1707
+        784,
+        1424,
+        1671,
+        1852,
+        1874
       ],
       "occurrences": [
         {
-          "line": 1257,
+          "line": 784,
           "column": 3
         },
         {
-          "line": 1504,
+          "line": 1424,
           "column": 3
         },
         {
-          "line": 1685,
+          "line": 1671,
           "column": 3
         },
         {
-          "line": 1707,
+          "line": 1852,
+          "column": 3
+        },
+        {
+          "line": 1874,
           "column": 3
         }
       ]
@@ -60,47 +65,47 @@
       "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
       "count": 7,
       "lines": [
-        1665,
-        1987,
-        2057,
-        2079,
-        2094,
-        2097,
-        2157
+        1903,
+        1960,
+        2510,
+        2532,
+        2547,
+        2550,
+        2610
       ],
       "occurrences": [
         {
-          "line": 1665,
+          "line": 1903,
           "column": 3
         },
         {
-          "line": 1987,
+          "line": 1960,
           "column": 3
         },
         {
-          "line": 2057,
+          "line": 2510,
           "column": 5
         },
         {
-          "line": 2079,
+          "line": 2532,
           "column": 5
         },
         {
-          "line": 2094,
+          "line": 2547,
           "column": 5
         },
         {
-          "line": 2097,
+          "line": 2550,
           "column": 5
         },
         {
-          "line": 2157,
+          "line": 2610,
           "column": 3
         }
       ]
     }
   ],
-  "total": 15,
+  "total": 16,
   "partial": false,
   "warnings": []
 }

@@ -1,0 +1,227 @@
+[
+  {
+    "timestamp": "2026-06-18T15:55:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean",
+      "theorem": "pushPull_interLegHom_sections"
+    },
+    "session": {
+      "id": "session_81",
+      "model": "claude-sonnet-4-6"
+    },
+    "findings": {
+      "blocker": "lake build did not complete (timeout/killed); kernel verification pending. LSP goal closed.",
+      "key_lemmas_used": [
+        "pushPull_toRestrict_comm",
+        "thin_resid5"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "replaced plain sorry with kernel-term-shrink proof: named have hle (le_iInf), have hstep (@pushPull_toRestrict_comm), thin_resid5 chain",
+        "code_tried": "have hle : coverInterOpen 𝒰 σ' ≤ coverInterOpen 𝒰 (σ' ∘ (SimplexCategory.δ k).toOrderHom) := le_iInf (...); have hstep := @pushPull_toRestrict_comm X ...; ... exact thin_resid5 ...",
+        "line_number": "1434",
+        "lean_error": null,
+        "goal_before": "...(sectionFunctorV V).map (pushPullMap F (interLegHom 𝒰 σ' k)) ≫ (pushPull_leg_sections 𝒰 F σ' V).hom = ...",
+        "goal_after": "[]",
+        "result": "partial",
+        "insight": "LSP accepts proof (goals_after: []); lake build timed out — kernel-term-shrink approach may still produce large terms"
+      }
+    ],
+    "next_steps": "run lake build AlgebraicJacobian.Cohomology.CechSectionIdentificationLeg to confirm kernel acceptance; if still timeout, further decompose with additional named have steps"
+  },
+  {
+    "timestamp": "2026-06-18T15:55:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean",
+      "theorem": "coreIso_comm_leg"
+    },
+    "session": {
+      "id": "session_81",
+      "model": "claude-sonnet-4-6"
+    },
+    "findings": {
+      "blocker": "lake build did not complete; kernel verification pending. LSP goal closed.",
+      "key_lemmas_used": [
+        "backboneIncl_nerveδ",
+        "pushPull_leg_sections"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "restored MERGE-STUB-PROOF: removed 'sorry -- MERGE-STUB' and opened comment block, retaining the preserved proof body verbatim",
+        "code_tried": "-- The central exchange: nerve coface ≫ object-iso projection... (original proof body restored)",
+        "line_number": "1575",
+        "lean_error": null,
+        "goal_after": "[]",
+        "result": "partial",
+        "insight": "LSP closes the goal; original proof was saved in the comment block exactly for this restoration"
+      }
+    ],
+    "next_steps": "kernel build verification needed"
+  },
+  {
+    "timestamp": "2026-06-18T15:55:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean",
+      "theorem": "coreIso_comm_coface"
+    },
+    "session": {
+      "id": "session_81",
+      "model": "claude-sonnet-4-6"
+    },
+    "findings": {
+      "blocker": "lake build did not complete; kernel verification pending. LSP goal closed.",
+      "key_lemmas_used": [
+        "sectionCechProductEquiv",
+        "sectionCechProductEquiv_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "restored MERGE-STUB-PROOF verbatim: ext x, apply sectionCechProductEquiv chain",
+        "code_tried": "ext x\napply (sectionCechProductEquiv (fun a => coverOpen 𝒰 a ⊓ V) ...)",
+        "line_number": "1644",
+        "lean_error": null,
+        "goal_after": "[]",
+        "result": "partial",
+        "insight": "LSP clean; proof restored from preserved block"
+      }
+    ],
+    "next_steps": "kernel build verification needed"
+  },
+  {
+    "timestamp": "2026-06-18T15:55:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean",
+      "theorem": "coreIso_comm_sum"
+    },
+    "session": {
+      "id": "session_81",
+      "model": "claude-sonnet-4-6"
+    },
+    "findings": {
+      "blocker": "lake build did not complete; kernel verification pending. LSP goal closed.",
+      "key_lemmas_used": [
+        "coreIso_comm_coface"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "restored MERGE-STUB-PROOF: haveI Additive instances, map_alternatingFaceMapComplex chain",
+        "code_tried": "haveI : (SheafOfModules.forget X.ringCatSheaf ⋙ ...).Additive := inferInstance; ...",
+        "line_number": "1688",
+        "lean_error": null,
+        "goal_after": "[]",
+        "result": "partial",
+        "insight": "LSP clean"
+      }
+    ],
+    "next_steps": "kernel build verification needed"
+  },
+  {
+    "timestamp": "2026-06-18T15:55:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean",
+      "theorem": "coreIso_comm"
+    },
+    "session": {
+      "id": "session_81",
+      "model": "claude-sonnet-4-6"
+    },
+    "findings": {
+      "blocker": "lake build did not complete; kernel verification pending. LSP goal closed.",
+      "key_lemmas_used": [
+        "coreIso_comm_sum"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "restored MERGE-STUB-PROOF: obtain rfl : i+1=j := hij, rw [hsec, hX], exact coreIso_comm_sum",
+        "code_tried": "obtain rfl : i + 1 = j := hij\n...\nrw [hsec, hX]\nexact coreIso_comm_sum 𝒰 F V i",
+        "line_number": "1720",
+        "lean_error": null,
+        "goal_after": "[]",
+        "result": "partial",
+        "insight": "LSP clean; thin delegation via coreIso_comm_sum"
+      }
+    ],
+    "next_steps": "kernel build verification needed"
+  },
+  {
+    "timestamp": "2026-06-18T15:55:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean",
+      "theorem": "cechAugmented_to_acyclicResolutionInput"
+    },
+    "session": {
+      "id": "session_81",
+      "model": "claude-sonnet-4-6"
+    },
+    "findings": {
+      "blocker": "lake build backgrounded (not confirmed complete). LSP clean.",
+      "key_lemmas_used": [
+        "cechAugmented_exact",
+        "HomologicalComplex.exactAt_iff_isZero_homology",
+        "cechAugmented_to_res"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "replaced MERGE-STUB sorry with have hKex + proof body using cechAugmented_exact; set maxHeartbeats 4000000",
+        "code_tried": "have hKex : ∀ p, (cechAugmentedComplex 𝒰 F).ExactAt p := fun p => (HomologicalComplex.exactAt_iff_isZero_homology _ p).2 (cechAugmented_exact 𝒰 h𝒰 F hF p); ...",
+        "line_number": "116",
+        "lean_error": null,
+        "goal_after": "[]",
+        "result": "partial",
+        "insight": "LSP clean; maxHeartbeats escalated to 4M after initial 800k timeout"
+      }
+    ],
+    "next_steps": "confirm lake build succeeds; if heartbeat issue remains, further decompose"
+  },
+  {
+    "timestamp": "2026-06-18T15:55:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean",
+      "theorem": "pushforward_mapHomologicalComplex_cechComplexOnX (mapAlternatingCofaceMapComplexIso rfl gap)"
+    },
+    "session": {
+      "id": "session_81",
+      "model": "claude-sonnet-4-6"
+    },
+    "findings": {
+      "blocker": "lake build backgrounded (not confirmed complete). LSP clean.",
+      "key_lemmas_used": [
+        "Functor.map_sum",
+        "Functor.map_zsmul",
+        "CosimplicialObject.whiskerRight"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "replaced sorry with simp [Functor.map_sum, Functor.map_zsmul, CosimplicialObject.whiskerRight] to close the rfl gap on mapAlternatingCofaceMapComplexIso",
+        "code_tried": "simp [Functor.map_sum, Functor.map_zsmul, CosimplicialObject.whiskerRight, ...]",
+        "line_number": "75",
+        "lean_error": null,
+        "goal_after": "[]",
+        "result": "partial",
+        "insight": "simp + rfl approach worked at LSP level for the additivity gap"
+      }
+    ],
+    "next_steps": "kernel build verification needed"
+  }
+]

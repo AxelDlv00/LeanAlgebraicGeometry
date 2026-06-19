@@ -1,0 +1,231 @@
+[
+  {
+    "timestamp": "2026-06-19T06:17:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "instAB5OfSizePresheafOfModules"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "CategoryTheory.AB5OfSize.ofShape",
+        "instAB5AddCommGrp",
+        "HasExactColimitsOfShape.domain_of_functor",
+        "PresheafOfModules.toPresheaf"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Route AB5 through ModuleCat Mod_R(U) via instAB5ModuleCat as the blueprint suggested",
+        "code_tried": "haveI : HasExactColimitsOfShape J (Cᵒᵖ ⥤ Ab) ; synth failed",
+        "line_number": "239",
+        "lean_error": "failed to synthesize instance of type class HasExactColimitsOfShape J (Cᵒᵖ ⥤ Ab) / HasExactColimitsOfShape J Ab",
+        "result": "failed",
+        "insight": "HasExactColimitsOfShape K Ab is NOT a registered instance (would loop); must be pulled out explicitly via AB5OfSize.ofShape (C := Ab) K"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Pull HasExactColimitsOfShape K Ab out explicitly, lift to functor cat, transport via toPresheaf",
+        "code_tried": "haveI : HasExactColimitsOfShape K Ab.{u} := CategoryTheory.AB5OfSize.ofShape (C := Ab.{u}) K; exact HasExactColimitsOfShape.domain_of_functor K (PresheafOfModules.toPresheaf R₀)",
+        "line_number": "241",
+        "result": "success",
+        "insight": "toPresheaf preserves colimits + reflects/preserves finite limits (all inferred); Ab-route works, instAB5ModuleCat not needed"
+      }
+    ],
+    "next_steps": "Done. Blueprint \\uses{mathlib:modulecat_ab5} is stale (Ab route, not Mod_R)."
+  },
+  {
+    "timestamp": "2026-06-19T06:17:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "isSeparating_ofObj_leftAdjoint"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Functor.map_injective",
+        "ObjectProperty.ofObj_iff",
+        "Adjunction.homEquiv_naturality_right"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Private helper: separating family transports along left adjoint with faithful right adjoint (mirrors IsSeparating.of_equivalence)",
+        "code_tried": "intro X Y f g H; apply Gr.map_injective; refine hS (Gr.map f) (Gr.map g) ?_; rintro Z hZ k; obtain ⟨b, rfl⟩ := (ObjectProperty.ofObj_iff _ _).1 hZ; simpa [Adjunction.homEquiv_naturality_right] using congrArg (adj.homEquiv (S b) Y) (H _ _ ((adj.homEquiv _ _).symm k))",
+        "line_number": "251",
+        "result": "success",
+        "insight": "Linchpin of the separator proof; adjunction naturality turns H at the adjoint transpose into the needed equality"
+      }
+    ],
+    "next_steps": "private theorem (not a dag node); needs % NOTE in found:sheafmod_separator naming it."
+  },
+  {
+    "timestamp": "2026-06-19T06:17:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "instAB5OfSizeSheafOfModules"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "PresheafOfModules.sheafificationAdjunction",
+        "Adjunction.hasExactColimitsOfShape",
+        "CategoryTheory.AB5OfSize.ofShape"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Transport presheaf AB5 across exact sheafification adjunction using α = 𝟙 R.obj (so R₀ = R.obj)",
+        "code_tried": "have adj := PresheafOfModules.sheafificationAdjunction (𝟙 R.obj); haveI : HasExactColimitsOfShape K (PresheafOfModules R.obj) := AB5OfSize.ofShape (C := PresheafOfModules R.obj) K; exact adj.hasExactColimitsOfShape K",
+        "line_number": "279",
+        "result": "success",
+        "insight": "α = 𝟙 R.obj is the clean choice (identity is locally injective/surjective via [IsIso φ] instances); do NOT build a separate presheaf→sheaf ring comparison"
+      }
+    ],
+    "next_steps": "Done. Clean blueprint match."
+  },
+  {
+    "timestamp": "2026-06-19T06:17:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "instHasSeparatorSheafOfModules"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "blueprint informal proof was mathematically false (global free sheaves), required pivot",
+      "key_lemmas_used": [
+        "PresheafOfModules.freeYoneda.isSeparating",
+        "isSeparating_ofObj_leftAdjoint",
+        "CategoryTheory.isSeparator_sigma",
+        "PresheafOfModules.sheafificationAdjunction"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Blueprint route: coproduct of SheafOfModules.free I over generating global sections",
+        "code_tried": "SheafOfModules.free / GeneratingSections family",
+        "line_number": "297",
+        "lean_error": "mathematically wrong — Hom(free I, M) ≅ (I → M.sections) sees only GLOBAL sections; {free I} does not separate a nonzero sheaf with no global sections",
+        "result": "failed",
+        "insight": "DEAD END: SheafOfModules.free / GeneratingSections only sees global sections; Γ not conservative on schemes"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Sheafify the presheaf-level freeYoneda separating family (free presheaves on Yoneda presheaves = local sections)",
+        "code_tried": "have adj := PresheafOfModules.sheafificationAdjunction (𝟙 R.obj); exact ⟨_, (isSeparator_sigma _).2 (isSeparating_ofObj_leftAdjoint adj (PresheafOfModules.freeYoneda.isSeparating R.obj))⟩",
+        "line_number": "297",
+        "result": "success",
+        "insight": "freeYoneda is a small separating family at presheaf level (local sections); sheafify via faithful-right-adjoint transport, then isSeparator_sigma makes the coproduct a separator"
+      }
+    ],
+    "next_steps": "Blueprint proof must be rewritten (% NOTE added). \\uses{mathlib:sheafmod_free} stale."
+  },
+  {
+    "timestamp": "2026-06-19T06:17:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "instIsGrothendieckAbelianSheafOfModules"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "IsGrothendieckAbelian (4-field mk)",
+        "instAB5OfSizeSheafOfModules",
+        "instHasSeparatorSheafOfModules"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Assemble 4-field IsGrothendieckAbelian on SheafOfModules R with default where; key on SheafOfModules head (X.Modules def-head not unfolded by instance matching)",
+        "code_tried": "instance instIsGrothendieckAbelianSheafOfModules : IsGrothendieckAbelian.{u} (SheafOfModules.{u} R) where",
+        "line_number": "310",
+        "result": "success",
+        "insight": "LocallySmall + HasFilteredColimitsOfSize infer; AB5/HasSeparator from L279/L297; universes pinned to u everywhere (essential). Empty where body valid — all 4 fields synthesized. NOT in objective list — new lean_aux, needs blueprint block."
+      }
+    ],
+    "next_steps": "Add found:sheafmod_grothendieck_abelian block that found:modules_grothendieck_abelian \\uses."
+  },
+  {
+    "timestamp": "2026-06-19T06:17:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "instIsGrothendieckAbelianModules"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "inferInstanceAs",
+        "instIsGrothendieckAbelianSheafOfModules"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Transfer general SheafOfModules instance to X.Modules across defeq",
+        "code_tried": "inferInstanceAs (IsGrothendieckAbelian.{u} (SheafOfModules.{u} X.ringCatSheaf))",
+        "line_number": "322",
+        "result": "success",
+        "insight": "X.Modules defeq SheafOfModules X.ringCatSheaf (rfl); site instances (HasSheafify/WEqualsLocallyBijective/HasSheafCompose) for Opens.grothendieckTopology X all infer"
+      }
+    ],
+    "next_steps": "Done. found:modules_grothendieck_abelian is now just the specialization."
+  },
+  {
+    "timestamp": "2026-06-19T06:17:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "instHasInjectiveResolutionsModules"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "IsGrothendieckAbelian.enoughInjectives",
+        "InjectiveResolution.instHasInjectiveResolution"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "EnoughInjectives X.Modules (from Grothendieck-abelian) → injective resolution of every object",
+        "code_tried": "letI : EnoughInjectives X.Modules := inferInstanceAs (EnoughInjectives (SheafOfModules X.ringCatSheaf)); ⟨fun Z => InjectiveResolution.instHasInjectiveResolution Z⟩",
+        "line_number": "333",
+        "result": "success",
+        "insight": "Discharges [HasInjectiveResolutions X.Modules] binder on higherDirectImage (R^if_*); noncomputable"
+      }
+    ],
+    "next_steps": "Heavy bridge fully closed. higherDirectImage/HModule self-discharge the hypothesis."
+  }
+]

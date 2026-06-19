@@ -1,0 +1,128 @@
+[
+  {
+    "timestamp": "2026-06-19T03:54:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorBraiding_hom_sectionsMul"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "PresheafOfModules.braiding_hom_app",
+        "ModuleCat.MonoidalCategory.braiding_hom_apply",
+        "sheafificationAdjunction.unit.naturality"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Mirror tensorObjRightUnitor_hom_sectionsMul template; tensorBraiding = sheafification.mapIso(presheaf braiding) so one-step eta-naturality applies. e1 := rfl, hbeta := rfl (after type ascription of b⊗ₜa). Evaluate at op⊤ via congrArg, finish with key.trans(congrArg (sectionsMul G F).hom hbeta).",
+        "code_tried": "exact key.trans (congrArg (sectionsMul G F).hom hβ)",
+        "line_number": "2305",
+        "lean_error": "first tried rw [hβ] at key — failed: un-beta-reduced redex from congrArg lambda; .trans route succeeded",
+        "result": "success",
+        "insight": "hβ closes by bare rfl once b⊗ₜa has explicit type ascription onto (tensorObj_p G_pre F_pre).obj(op⊤). ARCHON_MEMORY 'hβ not rfl' was half-right: the ascription is what makes rfl go. Axiom-clean [propext, Classical.choice, Quot.sound]."
+      }
+    ],
+    "next_steps": "Done. This is the section-level braiding atom; reused in sectionsMul_mul_comm reduction."
+  },
+  {
+    "timestamp": "2026-06-19T03:54:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "sectionsMul_mul_comm"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "MATHEMATICALLY FALSE for signature (L : X.Modules) — no invertibility. Section ring = free tensor algebra on Γ(L); non-commutative for non-invertible L. Triple-confirmed (prover + lean-auditor + lean-vs-blueprint-checker).",
+      "key_lemmas_used": [
+        "tensorBraiding_hom_sectionsMul",
+        "gMul_mul_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "simp only [gMul_mul_apply] then rw [← tensorBraiding_hom_sectionsMul (L^na) (L^nb) a b] to collapse both sides to x := sectionsMul(L^na)(L^nb)(a⊗ₜb).",
+        "code_tried": "simp only [gMul_mul_apply]; rw [← tensorBraiding_hom_sectionsMul ...]; sorry",
+        "line_number": "2559",
+        "lean_error": "residual goal: sectionsCast(add_comm)(Γ(μ_{na,nb}) x) = Γ(μ_{nb,na})(Γ(tensorBraiding) x), i.e. iso-level lem:tensorPowAdd_comm on x — UNSATISFIABLE for general L",
+        "goal_after": "Γ(μ_{m,n}) vs μ_{n,m}∘β forces β_{L,L}=𝟙 at m=n=1; counterexample L=𝒪² gives e₁⊗e₂≠e₂⊗e₁ in k⁴",
+        "result": "partial",
+        "insight": "Reduced to exact residue, PROVED residue is unsatisfiable for general L. Symmetric coherence does NOT rescue: μ_{m,n} (identity perm) and μ_{n,m}∘β (block-transpose perm) are different canonical maps. Left typed sorry; did NOT sorryAx-launder or weaken signature."
+      }
+    ],
+    "next_steps": "DO NOT RETRY under current signature. User must add invertibility/line-bundle hypothesis (escalated TO_USER.md + informal/sectionsMul_mul_comm.md). Then residue β_{L,L}=𝟙 + tensorBraiding_hom_sectionsMul close it."
+  },
+  {
+    "timestamp": "2026-06-19T03:54:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorObjAssoc_hom_sectionsMul"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "TRUE for arbitrary L but tensorObjAssoc is bridge-conjugated canonical α_, NOT sheafification.mapIso of one morphism, so one-step braiding template fails. Difficulty, not impossibility.",
+      "key_lemmas_used": [
+        "isIso_sheafification_whiskerRight_unit",
+        "PresheafOfModules.associator_hom_app"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Try braiding template directly.",
+        "code_tried": "rfl; dsimp only [tensorObjAssoc]; rfl; simp only [tensorObjAssoc, sectionsMul, Iso.trans_hom]",
+        "line_number": "2389",
+        "lean_error": "all three leave goal open",
+        "result": "failed",
+        "insight": "tensorObjAssoc = canonical α_ A B C conjugated by 5 tensorObjIso bridge segments (iter-008 rewire), acting through Localization.Monoidal.μ — one-step η-naturality does not apply. Documented intended multi-lemma route in body."
+      }
+    ],
+    "next_steps": "Build the presheaf-morphism identity η≫Γ(assoc)=(whiskered η)≫α_p≫(whiskered η)⁻¹≫η via isIso_sheafification_whiskerRight_unit + associator_hom_app, then evaluate at ⊤. tensorPowAdd_zero_right-scale effort."
+  },
+  {
+    "timestamp": "2026-06-19T03:54:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "sectionsMul_mul_assoc"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "TRUE for arbitrary L (tensor-algebra associativity) but deep; needs 3 ingredients, 1 set up.",
+      "key_lemmas_used": [
+        "gMul_mul_apply",
+        "tensorObjAssoc_hom_sectionsMul",
+        "tensorPowAdd_assoc"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "simp only [gMul_mul_apply]; document 3-ingredient route.",
+        "code_tried": "simp only [gMul_mul_apply]; sorry",
+        "line_number": "2526",
+        "lean_error": "n/a — typed sorry after unfold",
+        "result": "partial",
+        "insight": "3 ingredients: (1) tensorObjAssoc_hom_sectionsMul (partial atom, set up); (2) μ-naturality of sectionsMul under whiskering (not built); (3) iso-level pentagon tensorPowAdd_assoc (not built, induction mirroring tensorPowAdd with MonoidalCategory.pentagon as canonical core)."
+      }
+    ],
+    "next_steps": "Build ingredient (2) as η-naturality-under-whiskering lemma and (3) by induction mirroring tensorPowAdd's recursion with MonoidalCategory.pentagon (analogue of canonical_runit_core). Effort-break candidate."
+  }
+]

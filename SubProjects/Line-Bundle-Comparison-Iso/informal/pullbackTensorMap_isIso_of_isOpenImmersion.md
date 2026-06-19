@@ -76,3 +76,69 @@ that the resulting `δ` agrees (defeq or via a stated lemma) with the adjunction
   in-proof (mirroring `tensorObj_restrict_iso`'s object-level closure but at the `δ` level).
 
 Estimated ~80–150 LOC, mate-calculus + carrier-bridging style.
+
+---
+
+## UPDATE iter-022 — `Adjunction.IsMonoidal` route (recon022): full reduction, same wall
+
+The `Functor.Monoidal.transport` route above is **superseded** (PROGRESS: "DO NOT retry the
+functor-level transport route"). This iter I followed recon022's `Adjunction.IsMonoidal`
+route and drove the `hcompat` goal to a **single concrete residual (★)**, verified to be the
+geometric content. The reduction is complete; it is blocked by the **same** carrier diamond,
+now pinned exactly.
+
+### Goal at the `hcompat` sorry (after `rw [leftAdjointOplaxMonoidal_δ, Equiv.symm_apply_eq, homEquiv_unit]`)
+```
+(adj.unit M ⊗ₘ adj.unit N) ≫ μ_G (FM) (FN) = adj.unit (M⊗N) ≫ G.map e.hom
+```
+`adj = pullbackPushforwardAdjunction φ'`, `G = pushforward φ'`, `F = pullback φ'`.
+
+### Reduction to (★)  — both sides → midpoint `(hadj.unit M ⊗ₘ hadj.unit N) ≫ μ_G (βM) (βN) ≫ G.map (H1.hom M ⊗ₘ H1.hom N)`
+- `hU P : hadj.unit P ≫ G.map (H1.hom P) = adj.unit P` `:= Adjunction.unit_leftAdjointUniq_hom_app hadj adj P`  [ELABORATES]
+- `hUinv P : adj.unit P ≫ G.map (H1.inv P) = hadj.unit P`  (`← hU P` + `Iso.hom_inv_id_app`)
+- `he : e.hom = H1.inv (M⊗N) ≫ μIsoβ.inv ≫ (H1.hom M ⊗ₘ H1.hom N) := rfl`
+- LHS: `rw [← hU M, ← hU N, ← MonoidalCategory.tensorHom_comp_tensorHom, Category.assoc, Functor.LaxMonoidal.μ_natural]`
+- RHS: `rw [he, Functor.map_comp, Functor.map_comp, reassoc_of% (hUinv (M⊗N)), reassoc_of% hstar]`
+
+### (★) THE SOLE RESIDUAL
+```
+hstar : hadj.unit (M⊗N) ≫ G.map μIsoβ.inv = (hadj.unit M ⊗ₘ hadj.unit N) ≫ μ_G (βM) (βN)
+```
+`:= Adjunction.unit_app_tensor_comp_map_δ (adj := hadj) M.val N.val` once `[hadj.IsMonoidal]`
+(using `δ (pushforward β) = μIsoβ.inv` via `Functor.Monoidal.μIso_inv`). `hadj.IsMonoidal` =
+"strong oplax on `pushforward β` is the `hadj`-mate of `presheafPushforwardLaxMonoidal` on
+`pushforward φ'`" — the δ-side analogue of `presheafUnit_comp_map_eta`.
+Mathlib carrier: `Adjunction.IsMonoidal` (`Monoidal/Functor.lean:952`), δ-side mate lemma
+`Adjunction.unit_app_tensor_comp_map_δ` (:973), uniqueness `laxMonoidalEquivOplaxMonoidal` (:1070).
+
+### The wall, pinned exactly (iter-022)
+`hadj`/`pushforward β` are typed over `X.ringCatSheaf.obj`/`Y.ringCatSheaf.obj`;
+`adj`/`pullback φ'` over `X.presheaf ⋙ forget₂`/`Y.presheaf ⋙ forget₂` (defeq, syntactically
+distinct). `PresheafOfModules.monoidalCategory` (`ModuleCat/Presheaf/Monoidal.lean:125`) /
+`…monoidalCategoryStruct` (:104) are keyed on `_ ⋙ forget₂`.
+- `letI mcatX := PresheafOfModules.monoidalCategory (R := X.presheaf)` (SAME term as the global
+  instance, ascribed to the `ringCatSheaf.obj` type — avoids the eta-expansion-into-compiled-
+  noncomputable-aux-defs that `inferInstanceAs` triggers) makes `mcatX/mcatY`, `monβ :=
+  inferInstance`, `hstar`'s statement, and `hU` ALL ELABORATE.
+- BUT `H1.hom ⊗ₘ`, `Functor.LaxMonoidal.μ_natural`, and `hadj.IsMonoidal`'s `(pushforward
+  φ').LaxMonoidal` then fail: `failed to synthesize MonoidalCategoryStruct (PresheafOfModules
+  Y.ringCatSheaf.obj)` — even WITH an explicit `letI mcatStructY := …monoidalCategoryStruct
+  (R := Y.presheaf)` — because a single `μ_natural`/`IsMonoidal` application must reconcile the
+  good-form (global) and bad-form (`letI`) instances at once and they are not syntactically equal.
+- `haveI` (vs `letI`) destroys the defeq `monβ` needs (strictly worse). `noncomputable lemma`
+  rejected.
+
+### Resolution (mathlib-build scale) — pick one
+1. **Re-key the instance** so BOTH `X.ringCatSheaf.obj` and `X.presheaf ⋙ forget₂` resolve to the
+   *same* `MonoidalCategory`/`…Struct` term (no diamond). Memory: naive top-level instance is
+   kernel-rejected; the kernel-accepted spelling (reducibility plumbing on `ringCatSheaf.obj`, or
+   `MonoidalCategory.ofTensorHom` re-export) must be found by mathlib-build.
+2. **Good-form K1 `hδ` scaffold:** retype `β` as the good-form `β'` (`Y.presheaf ⋙ forget₂ ⟶
+   (opensFunctor.op ⋙ X.presheaf) ⋙ forget₂`) and rebuild `hadj`/`H1`/`μIsoβ` over `_ ⋙ forget₂`
+   from the start, so the reduction above is single-form (no diamond) and closes `hcompat`
+   directly. **Risk:** `PresheafOfModules.pushforwardPushforwardAdj` /
+   `f.isOpenEmbedding.isOpenMap.adjunction` may force `β : Y.ringCatSheaf.obj ⟶ …`; verify the
+   signature accepts good-form `β` before committing. If it does, this closes K1 in-file with no
+   Mathlib gap.
+
+(Informal agent not consulted: no API key set this session.)

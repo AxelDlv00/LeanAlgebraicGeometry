@@ -6,6 +6,7 @@ Authors: Christian Merten
 import Mathlib
 import AlgebraicJacobian.Picard.LineBundlePullback
 import AlgebraicJacobian.Picard.TensorObjSubstrate
+import AlgebraicJacobian.Picard.TensorObjInverse
 
 /-!
 # The relative Picard functor and its étale sheafification (A.1.c)

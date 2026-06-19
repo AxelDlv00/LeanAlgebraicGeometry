@@ -1,0 +1,181 @@
+[
+  {
+    "timestamp": "2026-06-19T05:07:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "Scheme.HModule (light-bridge redefinition)"
+    },
+    "session": {
+      "id": "session_6",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Sheaf.isGrothendieckAbelian_of_essentiallySmall",
+        "IsGrothendieckAbelian.enoughInjectives",
+        "InjectiveResolution.instHasInjectiveResolution",
+        "Functor.rightDerived"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Redefine HModule unconditionally via light bridge: right-derive Scheme.absheafGlobalSections at (toAbSheaf X).obj F",
+        "code_tried": "noncomputable def Scheme.HModule {X : Scheme.{u}} (i : ℕ) (F : X.Modules) : Ab.{u} := ((Scheme.absheafGlobalSections X).rightDerived i).obj ((Scheme.Modules.toAbSheaf X).obj F)",
+        "line_number": "227",
+        "result": "success",
+        "insight": "Dropping [HasInjectiveResolutions X.Modules] works once the light TopCat.Sheaf Ab X bridge supplies resolutions; HModule no longer depends on the heavy gap."
+      }
+    ],
+    "next_steps": "Stale module docstring (lines 25-30) + return-type-change doc are .lean cleanup for a prover/refactor lane; blueprint must anchor absheafGlobalSections."
+  },
+  {
+    "timestamp": "2026-06-19T05:07:01Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "Scheme.Modules.toAbSheaf"
+    },
+    "session": {
+      "id": "session_6",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Scheme.Modules.toPresheaf",
+        "Sheaf.hom_ext"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Lift toPresheaf through sheafToPresheaf: obj M := ⟨M.presheaf, M.isSheaf⟩, map φ := ⟨toPresheaf.map φ⟩",
+        "code_tried": "X.Modules ⥤ TopCat.Sheaf.{u} Ab.{u} X; map_id/map_comp via Sheaf.hom_ext + (toPresheaf X).map_id/.map_comp",
+        "line_number": "136",
+        "result": "success",
+        "insight": "TopCat.Sheaf morphisms use .hom (not .val); ext lemma is Sheaf.hom_ext."
+      }
+    ],
+    "next_steps": "No Additive instance yet; needed when composing with absheafGlobalSections in a future functoriality lemma."
+  },
+  {
+    "timestamp": "2026-06-19T05:07:02Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "instIsGrothendieckAbelianTopCatSheafAb"
+    },
+    "session": {
+      "id": "session_6",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Sheaf.isGrothendieckAbelian_of_essentiallySmall"
+      ],
+      "blocker": "universe-pinning mandatory"
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Apply essentially-small Grothendieck-abelian lemma to opens site with A = Ab, ascribed IsGrothendieckAbelian.{u}",
+        "code_tried": "Sheaf.isGrothendieckAbelian_of_essentiallySmall (Opens.grothendieckTopology (X : TopCat)) Ab.{u}",
+        "line_number": "151",
+        "lean_error": "(unpinned) failed to synthesize Abelian (TopCat.Sheaf Ab X) / universe constraint u_1 =?= max u ?",
+        "result": "success",
+        "insight": "TopCat.Sheaf C X unfolds to Sheaf (Opens.grothendieckTopology X) C so the lemma DOES apply; but ALL universes must pin to u (TopCat.Sheaf.{u} Ab.{u} X, IsGrothendieckAbelian.{u}) or Abelian fails to synthesize as a term."
+      }
+    ],
+    "next_steps": "Reused downstream for EnoughInjectives + HasInjectiveResolutions instances."
+  },
+  {
+    "timestamp": "2026-06-19T05:07:03Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "instEnoughInjectivesTopCatSheafAb / instHasInjectiveResolutionsTopCatSheafAb"
+    },
+    "session": {
+      "id": "session_6",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "IsGrothendieckAbelian.enoughInjectives",
+        "InjectiveResolution.instHasInjectiveResolution"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "EnoughInjectives from Grothendieck-abelian theorem; HasInjectiveResolutions per-object",
+        "code_tried": "instEnoughInjectives := IsGrothendieckAbelian.enoughInjectives ; instHasInjectiveResolutions := ⟨fun Z => InjectiveResolution.instHasInjectiveResolution Z⟩",
+        "line_number": "161, 171",
+        "result": "success",
+        "insight": "enoughInjectives is a theorem not instance; works as plain term ONLY with universes pinned. No Mathlib plural HasInjectiveResolutions instance — built manually per-object."
+      }
+    ],
+    "next_steps": "instEnoughInjectives is an unmatched lean_aux (needs blueprint block)."
+  },
+  {
+    "timestamp": "2026-06-19T05:07:04Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "Scheme.absheafGlobalSections (+_additive)"
+    },
+    "session": {
+      "id": "session_6",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "TopCat.Sheaf.forget",
+        "CategoryTheory.evaluation",
+        "Functor.map_add"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "forget ⋙ evaluation at op ⊤; additivity via change/rw[Functor.map_add]/rfl",
+        "code_tried": "TopCat.Sheaf.forget Ab X ⋙ (evaluation _ _).obj (op ⊤) ; additive: change …; rw [Functor.map_add]; rfl",
+        "line_number": "180, 186",
+        "lean_error": "(initial) failed to synthesize (sheafGlobalSections X).Additive — no auto comp-additive instance",
+        "result": "success",
+        "insight": "No Functor.Additive (F ⋙ G) auto-instance; prove additivity manually mirroring globalSectionsAb_additive. Both decls are unmatched lean_aux (need blueprint blocks)."
+      }
+    ],
+    "next_steps": "Blueprint must anchor these (load-bearing: HModule right-derives absheafGlobalSections)."
+  },
+  {
+    "timestamp": "2026-06-19T05:07:05Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "PresheafOfModules.exteriorPower / Scheme.Modules.exteriorPower"
+    },
+    "session": {
+      "id": "session_6",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Genuine multi-lemma Mathlib gap: SheafOfModules is RingCat-valued (no per-open CommRing synthesizes), and exterior power must be base-change functorial over the varying ring map R(U)→R(V); ModuleCat.exteriorPower.functor is fixed-ring only, no restrictScalars base-change lemma (loogle empty). Informal agent unavailable (no API key).",
+      "key_lemmas_used": [
+        "ModuleCat.exteriorPower.functor"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Objectwise ModuleCat.exteriorPower.functor",
+        "code_tried": "exteriorPower over SheafOfModules / PresheafOfModules underlying ModuleCat",
+        "lean_error": "failed to synthesize CommRing ↑((Sheaf ...).val.obj U); fixed-ring only, no base-change",
+        "result": "failed",
+        "insight": "RingCat (not CommRingCat) at type level; SECONDARY correctly NOT added rather than sorry-stubbed (mathlib-build invariant)."
+      }
+    ],
+    "next_steps": "DO NOT re-assign as a thin port. Dedicated lane: (1) recover per-open CommRing; (2) build exterior-power base-change over a ring hom + semilinear map; (3) assemble + sheafify. Strategy item."
+  }
+]

@@ -19,3 +19,5 @@
 - JPPZ 2018 formula is a permanent named axiom (`Axiom.JPPZ2018`) — it is the keystone reduction for `thm:main`; the main theorem is axiom-dependent on it until a formalization of JPPZ is available.
 - Operational Chow is represented as an abstract ring (not a concrete completion/limit) — this decision is committed; do not re-open it.
 - `MulAction.orbitEquiv` (Mathlib, `GroupTheory.GroupAction.Quotient`) is available for the graph automorphism quotient.
+- leandag wires DAG edges from STATEMENT-level `\uses{}` ONLY — proof-block `\uses` are ignored; put proof dependencies at statement level or they stay invisible/dangling.
+- DR invariances I (dualizing), IV (twisting-pullback), V (vertical-twisting) are independent Sec-0.3 deliverables (DAG leaves), NOT deps of the main theorems; only II/III/VI feed `thm:main`. Do not fabricate cone edges to them.

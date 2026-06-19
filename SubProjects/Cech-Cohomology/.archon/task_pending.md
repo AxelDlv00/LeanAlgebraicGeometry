@@ -1,5 +1,20 @@
 # Pending Tasks
 
+## iter-087 status — BUILD GATE only
+
+All 7 kernel sorries are now LSP-clean (0 inline `sorry` tokens, resolved iters 081–085):
+1. `pushPull_interLegHom_sections` — term-shrunk via `erw`, proof complete (iter-081).
+2. `coreIso_comm` / `coreIso_comm_leg` / `_coface` / `_sum` — MERGE-STUB proofs restored + split
+   to CSILegAux (iter-085). All LSP-green.
+3. `mapAlternatingCofaceMapComplexIso` naturality — fixed via simp+rfl (iter-081).
+4. `cechAugmented_to_acyclicResolutionInput` — restored (iter-081).
+
+**Single remaining gate:** `lake build AlgebraicJacobian.Cohomology.CechToHigherDirectImage`
+must succeed (olean confirmation). CSILeg further split (iter-087) into 5 files:
+Leg~4.8M, Mid1~5.6M, Mid2~5.6M, Top~8M, Aux~14.4M HB — all under 10-min 46K-HB/s budget.
+
+---
+
 Current open obligations (last-known state). Per-attempt detail lives in iter sidecars.
 
 > **iter-080 status. PROJECT MATHEMATICALLY COMPLETE — 0 inline `sorry` project-wide.**

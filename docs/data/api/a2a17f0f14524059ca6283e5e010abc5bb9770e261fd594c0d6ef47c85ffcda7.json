@@ -1,0 +1,165 @@
+[
+  {
+    "timestamp": "2026-06-19T12:12:30Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.trivialBundle"
+    },
+    "session": {
+      "id": "session_14",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "SheafOfModules.free",
+        "Scheme.ringCatSheaf"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Index-type free sheaf (blueprint-sanctioned: index set of a basis, not choose/basis dependent)",
+        "code_tried": "noncomputable def trivialBundle {X : Scheme.{u}} (I : Type u) : X.Modules := SheafOfModules.free (R := X.ringCatSheaf) I",
+        "line_number": "1127",
+        "lean_error": null,
+        "goal_before": null,
+        "goal_after": null,
+        "result": "success",
+        "insight": "free sheaf over X.ringCatSheaf is the project-side constant bundle V⊗_k O_X; axiom-clean ⊆ {propext, Classical.choice, Quot.sound}"
+      }
+    ],
+    "next_steps": "trivialBundle local-freeness lemma still blocked at Type u (see separate milestone)."
+  },
+  {
+    "timestamp": "2026-06-19T12:12:31Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.evalMap"
+    },
+    "session": {
+      "id": "session_14",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "SheafOfModules.freeHomEquiv",
+        "SheafOfModules.sections"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Counit of free ⊣ global-sections: identity family of sections under freeHomEquiv, indexed by F.sections (NOT derived/Ab Γ)",
+        "code_tried": "noncomputable def evalMap {X : Scheme.{u}} (F : X.Modules) : trivialBundle (X := X) F.sections ⟶ F := (SheafOfModules.freeHomEquiv F (I := F.sections)).symm id",
+        "line_number": "1140",
+        "lean_error": null,
+        "goal_before": null,
+        "goal_after": null,
+        "result": "success",
+        "insight": "LSP-confirmed type (free F.sections ⟶ F) ≃ (F.sections → F.sections); .symm id is the counit component. Domain typed trivialBundle F.sections (defeq free F.sections) to honour \\uses{found:trivial_bundle}. F.sections : Type u confirmed (avoids universe mismatch with derived Γ)."
+      }
+    ],
+    "next_steps": "Feeds evalKernel; downstream eval_kernel_locally_free needs surjectivity (global generation), not formalized."
+  },
+  {
+    "timestamp": "2026-06-19T12:12:32Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.evalKernel"
+    },
+    "session": {
+      "id": "session_14",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "CategoryTheory.Limits.kernel",
+        "IsGrothendieckAbelian (heavy bridge)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Categorical kernel of evalMap in abelian X.Modules",
+        "code_tried": "noncomputable def evalKernel {X : Scheme.{u}} (F : X.Modules) : X.Modules := Limits.kernel (evalMap F)",
+        "line_number": "1152",
+        "lean_error": null,
+        "goal_before": null,
+        "goal_after": null,
+        "result": "success",
+        "insight": "HasKernel (evalMap F) discharged automatically via IsGrothendieckAbelian X.Modules → Abelian → HasKernel (heavy bridge in-file). #print axioms clean. This is M_F; kernelBundle := evalKernel L next iter in Basic.lean."
+      }
+    ],
+    "next_steps": "Scaffold MR4213770.kernelBundle := evalKernel L in Basic.lean — first genuine paper object."
+  },
+  {
+    "timestamp": "2026-06-19T12:12:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "trivialBundle_isLocallyFree (sub-claim of found:trivial_bundle)"
+    },
+    "session": {
+      "id": "session_14",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "PreservesColimitsOfShape (Discrete (I:Type u)) (Scheme.Modules.restrictFunctor U.ι) does not synthesize at Type u (only Type 0); and IsIso (unitToPushforwardObjUnit φ) unproven for the appIso restriction φ",
+      "key_lemmas_used": [
+        "SheafOfModules.mapFreeIso",
+        "Scheme.Modules.restrictFunctor",
+        "SheafOfModules.unitToPushforwardObjUnit"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "mapFreeIso route: per-point open U with (restrictFunctor U.ι).obj (free I) ≅ free I",
+        "code_tried": "SheafOfModules.mapFreeIso (restrictFunctor U.ι) I η  -- needs PreservesColimitsOfShape (Discrete I) (restrictFunctor U.ι)",
+        "line_number": "n/a (not committed)",
+        "lean_error": "failed to synthesize instance of type class PreservesColimitsOfShape (Discrete I) (Scheme.Modules.restrictFunctor U.ι)",
+        "goal_before": "IsLocallyFree (trivialBundle I)",
+        "goal_after": null,
+        "result": "failed",
+        "insight": "restrictFunctor f = SheafOfModules.pushforward of f.appIso.inv; the coproduct/left-adjoint instance synthesizes only at Type 0, not Type u. Mathlib pullbackObjFreeIso is for the PULLBACK functor, NOT this pushforward — does not apply. DEAD END at Type u without first establishing the PreservesColimitsOfShape instance."
+      }
+    ],
+    "next_steps": "Either prove Type-u PreservesColimitsOfShape for restrictFunctor + IsIso(unitToPushforwardObjUnit φ), OR mathlib-build a separate locally-free-of-free node. Do NOT retry mapFreeIso at Type u as-is."
+  },
+  {
+    "timestamp": "2026-06-19T12:12:10Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.evalKernel_isLocallyFree"
+    },
+    "session": {
+      "id": "session_14",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "No Mathlib anchor for Hartshorne III.6.5 (loc-free middle + loc-free quotient ⇒ loc-free kernel) nor rank additivity; also depends on trivialBundle local-freeness (itself blocked)",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Plan-flagged STOP candidate — not attempted in Lean (no anchor)",
+        "code_tried": "-- needs: (a) ev_F surjective from global generation ⇒ SES; (b) Hartshorne III.6.5; (c) rank additivity rank M_F = h0(F) - r",
+        "line_number": "n/a",
+        "lean_error": null,
+        "goal_before": "IsLocallyFree (evalKernel F)",
+        "goal_after": null,
+        "result": "partial",
+        "insight": "Three sub-ingredients, none with a Mathlib anchor. mathlib-build invariant honoured: NOT stubbed, left absent. Expected STOP point per iter-014 plan."
+      }
+    ],
+    "next_steps": "effort-break into: (i) SES from surjective evalMap, (ii) Hartshorne III.6.5 locally-free-kernel node, (iii) rank additivity node. Resolve trivialBundle local-freeness first."
+  }
+]

@@ -1,6 +1,42 @@
 # Done Tasks
 <!-- Resolved items, last-known state only. Per-attempt detail → iter sidecars. -->
 
+- **K1 μ-side RHS `pushforward_lax_mu_comparison_rhs_tmul` (`TensorObjSubstrate.lean`) — PROVEN iter-029,
+  axiom-clean (green).** The RHS-composition tensorator's pure-tensor value: `(μ (restrictScalars φ') M₁ M₂).app W
+  (m⊗ₜn) = m⊗ₜn`, proof `= restrictScalars_μ_app_tmul`. Stated generic/abstract (abstract base-ring functors +
+  abstract `M₁ M₂`) with `set_option backward.isDefEq.respectTransparency false in` BEFORE the doc comment —
+  concrete K1 `Gβ.obj`/`pushforward₀` section binders fail module-synth (memory `restrictscalars-mu-tmul-binder-trap`);
+  applied to the K1 objects by defeq. Also: parent `pushforward_lax_mu_comparison` body is now sorry-free
+  (clean `hom_ext` delegation to the per-section lemma — the prior undecomposed in-proof sorry eliminated);
+  transitively sorry only via `_lhs_tmul` (still open, deferred to iter-031 solo lane).
+
+- **K1 η-side `pushforward_eta_appIso_collapse` (`TensorObjSubstrate.lean`) — CLOSED iter-028, axiom-clean.**
+  First K1 critical-path sorry eliminated after the ~14-iter η stall (leaf sorries 6→5). The blocker was pure
+  Lean plumbing (RingCat `map_one` won't fire; `𝟙_` `OfNat` won't synth), solved by the mathlib-analogist
+  `analogies/eta-plumbing.md` idiom: new sorry-free helper `restrictScalars_oplaxMonoidal_η_app_one` states
+  `1` through `(S ⋙ forget₂ CommRingCat RingCat).obj W`; closer `erw [restrictScalars_oplaxMonoidal_η_app_one
+  β' hβ (op (f⁻¹ᵁU)), map_one]; rfl`. (`rw [Functor.map_id]` FAILS — dependent motive; `erw [helper]` matches
+  the whole `(restrictScalars β').map 𝟙 ≫ η` composite up to defeq.) Blueprint helper entry authored bp029.
+- **Cocycle-A collapse mechanism (`TensorObjInverse.lean`) — PROVEN mod B1, iter-028, axiom-clean.** Two new
+  fully-proven helpers: `tensorHom_inv_comp_leftUnitor` (generic monoidal coherence `s≫s'=𝟙 → (s⊗ₘs')≫λ=λ`)
+  and `tensorObjIsoOfIso_comp_unit_iso` (B2; the `X.ringCatSheaf.val` vs `presheaf⋙forget₂` carrier diamond
+  crossed via `erw [Functor.map_comp]` + `exact congrArg (·≫_) hmap`). `tensorObj_unit_self_duality_collapse`
+  body now sorry-free (N-leg via `congrArg Iso.symm (dualUnitIso_dualIsoOfIso t)` + `simpa`; the
+  `(dualIsoOfIso t).symm = dualIsoOfIso t.symm` rewrite is a DEAD route — `Iso.self_symm_id` "pattern not
+  found"). Memory: [[cocycle-a-collapse-mechanism]]. Residual = B1's eval-core (N) only.
+
+- **Connector `homOfLocalCompat_restrictFunctor_map` (`DualInverse.lean`) — CLOSED iter-026, axiom-clean.**
+  `(restrictFunctor (U i).ι).map (homOfLocalCompat U hU f hf) = f i`. Route: reconstruct gluing internals
+  defeq + `change` to glued-section form + morphism-level `key` collapsing the `homLocalSection`
+  eqToHom-conjugation via `eqToHom_comp_iff` + `exact`-matched `α.naturality` (forward `rw [naturality]`
+  fails — X-level vs restrict-level only defeq, not syntactic). `SheafOfModules.Hom.ext` BEFORE
+  `PresheafOfModules.hom_ext`. `(U i).ι ''ᵁ P ≤ U i` = `Scheme.Opens.ι_image_le` (NOT `image_le_range`).
+  DualInverse.lean now fully sorry-free. (Memory: [[restrictfunctor-glued-morphism-pattern]].)
+- **Terminal residual B (`exists_tensorObj_inverse`, `TensorObjInverse.lean`) — CLOSED iter-026.** With the
+  connector decl present, `rw [key]; exact hfiso x` where `key := homOfLocalCompat_restrictFunctor_map U _ f _ x`.
+  Leaf sorries 5→3. The 3-iter connector "non-delivery" was a plan-validate DROP (file had 0 sorries →
+  prover never dispatched), fixed by scaffolding the stub first (iter-026 plan turn).
+
 - **Seed-1 D4′ chart-chase ASSEMBLED iter-020** (`pullbackTensorIsoOfLocallyTrivial`, L4238): body sorry-free,
   reduces the whole D4′ `IsIso` obligation to the single open-immersion brick K1. 3 new sorry-free `private`
   helpers (aud020: non-vacuous + used): `isIso_of_isIso_comp4_mid` (generic plumbing), `chart_isIso` (per-chart

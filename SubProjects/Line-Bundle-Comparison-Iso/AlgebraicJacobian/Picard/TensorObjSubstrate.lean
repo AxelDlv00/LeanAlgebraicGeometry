@@ -40,11 +40,14 @@ into a monoidal-category structure on `Scheme.Modules X`.
 
 `tensorObj` and `tensorObj_functoriality` are fully defined (no `sorry`), lifting
 `PresheafOfModules.Monoidal.tensorObj` through sheafification on the small Zariski
-site. There are now TWO tracked typed-`sorry` residuals:
-1. (deferred) `⊗`-inverse lane (`exists_tensorObj_inverse`, ~L697, cross-file gated —
-   closes via the dual chain in `DualInverse.lean`).
-2. (seed-1, active, iter-020) `pullbackTensorIsoOfLocallyTrivial` (~L4001, D4′ comparison
-   iso — prover closes next via the `isIso_of_isIso_restrict` chart-chase).
+site. Tracked typed-`sorry` residuals (current):
+1. (deferred) `⊗`-inverse lane (`exists_tensorObj_inverse`, MOVED iter-023 to
+   `TensorObjInverse.lean` — closes via the dual chain in `DualInverse.lean`).
+2. (seed-1, active) K1's `hcompat`: the SOLE in-file sorry is now `hmon : hadj'.IsMonoidal`
+   inside `pullbackTensorMap_isIso_of_isOpenImmersion` (~L4223).  `pullbackTensorIsoOfLocallyTrivial`,
+   `chart_isIso`, and K1's whole mate calculus are CLOSED (iter-023); the residual `hmon` is the
+   δ-side mate compatibility (Gβ strong / `pushforward φ'` lax), the µ-side twin of D2′
+   `presheafUnit_comp_map_eta` and the open-immersion analogue of D3′ `pushforwardComp_lax_μ`.
 The D3′ Sq4 per-leg brick
 `pullbackValIso_comp_leg` (the `pullbackValIso` composition coherence) is **CLOSED axiom-clean
 (iter-019+)** — see below — so the ENTIRE D3′ cone is sorry-free except the import-cycle-deferred
@@ -683,55 +686,6 @@ task result for the full statement of the missing ingredient.
 
 The diagnostic def is intentionally NOT committed (it would pin a new `sorry`, which
 the iter-230 HARD-TRIPWIRE directive forbids). -/
-
-/-- **Inverse of an invertible module.**
-
-Every line bundle `L : X.Modules` has a two-sided tensor inverse: there is a
-locally-trivial `Linv : X.Modules` (the dual `L⁻¹ = Hom(L, O_X)`) together with
-a tensor isomorphism `L ⊗_X Linv ≅ 𝒪_X`. Per blueprint
-`lem:tensorobj_inverse_invertible`. iter-206 flat-pivot: the designated unit is
-`SheafOfModules.unit X.ringCatSheaf = 𝒪_X` (the `MonoidalCategory` unit `𝟙_` is
-no longer available — the full monoidal instance is off the critical path, see
-§2).
-
-**iter-226+ d.2-free descent re-route (current state).** `Linv := Scheme.Modules.dual L`
-IS nameable: the sheaf-level dual `dual` (this file) landed iter-225, so the FIRST
-step is no longer blocked and the iter-218 "infrastructure-missing" gate is retired.
-The closure is now assembled WITHOUT the categorical "invertible object ⇒ inverse"
-escape (still unavailable — no `MonoidalCategory (X.Modules)` for the varying
-structure sheaf, §2) and WITHOUT the forbidden sheafify-the-presheaf-evaluation
-shortcut (it re-hits the `M ◁ η` whiskering = the abandoned tensor-stalk "d.2"
-gap, a DEAD END — analogist `ts226descent.md`, verdict D). Instead it glues local
-trivialising data, touching no tensor stalk. Two bridges remain before this sorry
-closes (see body comment): the C-bridge `dual_isLocallyTrivial` and the A-bridge
-`homOfLocalCompat` (SheafOfModules morphism descent). The B-bridge
-`isIso_of_isIso_restrict` (local-iso ⇒ global iso, mirroring the CLOSED
-`tensorObj_isLocallyTrivial` at L1912) is DONE (iter-226, above, axiom-clean). EXACT
-decomposition: `informal/exists_tensorObj_inverse.md` and `analogies/ts226descent.md`.
--/
-lemma exists_tensorObj_inverse {X : Scheme.{u}} {L : X.Modules}
-    (hL : LineBundle.IsLocallyTrivial L) :
-    ∃ Linv : X.Modules, LineBundle.IsLocallyTrivial Linv ∧
-      Nonempty (tensorObj L Linv ≅ SheafOfModules.unit X.ringCatSheaf) :=
-  -- iter-226 descent re-route (d.2-FREE). `Linv := Scheme.Modules.dual L` is now
-  -- nameable (dual OBJECT landed iter-225). The B-connector
-  -- `isIso_of_isIso_restrict` (above, axiom-clean) closes the final "locally-iso ⇒
-  -- global iso" step. Two bridges REMAIN before this sorry closes:
-  --   (C) `dual_isLocallyTrivial : IsLocallyTrivial L → IsLocallyTrivial (dual L)`,
-  --       via `(dual M).restrict f ≅ dual (M.restrict f)` — the dual analogue of the
-  --       CLOSED `tensorObj_restrict_iso`, mirroring its H1∘H2 recipe with
-  --       `ModuleCat.restrictScalarsEquivalenceOfRingEquiv` carrying the bespoke
-  --       presheaf `dual` (= `internalHom(-, R)`) across the open-immersion ring iso.
-  --   (A) SheafOfModules morphism descent: glue the canonical local trivialising isos
-  --       `(L ⊗ dual L)|_{Uᵢ} ≅ 𝒪_{Uᵢ}` (pattern of `tensorObj_isLocallyTrivial`,
-  --       L1920) — agreeing on overlaps (bounded cocycle check, NOT d.2) — to a global
-  --       `tensorObj L (dual L) ⟶ 𝒪_X` via `CategoryTheory.Presheaf.IsSheaf.hom` /
-  --       `sheafHomSectionsEquiv` + `PresheafOfModules.homMk`. Then `isIso_of_isIso_restrict`
-  --       upgrades the glued morphism to a global iso, closing this sorry (80→79).
-  -- The FORBIDDEN sheafify-the-presheaf-eval shortcut re-hits the `M ◁ η` whiskering
-  -- (d.2) and is a DEAD END; only the gluing route escapes. See the docstring and
-  -- `informal/exists_tensorObj_inverse.md`.
-  sorry
 
 /-! ## §5. The invertibility-carrier Picard group `picCommGroup`
 
@@ -4129,6 +4083,428 @@ private lemma pullbackTensorMap_isIso_of_base_unit {X Y : Scheme.{u}} (f : Y ⟶
     (tensorObj_functoriality ((Scheme.Modules.pullback f).map eP.hom)
       ((Scheme.Modules.pullback f).map eQ.hom))
 
+/-- **Sectionwise value of the presheaf-level `pushforwardPushforwardAdj` unit.** The unit of
+`pushforwardPushforwardAdj adj φ ψ H₁ H₂ : pushforward φ ⊣ pushforward ψ` is the four-fold composite
+`(pushforwardId _).inv ≫ pushforwardNatTrans (𝟙 _) adj.counit ≫ (pushforwardCongr _).hom ≫
+(pushforwardComp _ _).inv`.  Both `pushforwardId` and `pushforwardComp` are `Iso.refl` (identity on
+carriers), and `pushforwardNatTrans`/`pushforwardCongr` act on carriers by the presheaf restriction
+map of `M` along `adj.counit` (the `restrictScalars` base change is the identity on the underlying
+abelian group).  Hence on a section at `U`, the unit is just `M.map (adj.counit.app U.unop).op`.
+This is the presheaf-level value lemma the K1 η-bridge needs (no sheaf-level twin exists). -/
+private lemma pushforwardPushforwardAdj_unit_app_app_apply
+    {C : Type u} [Category.{u} C] {D : Type u} [Category.{u} D]
+    {F : C ⥤ D} {G : D ⥤ C} {S : Cᵒᵖ ⥤ RingCat.{u}} {R : Dᵒᵖ ⥤ RingCat.{u}}
+    (adj : F ⊣ G) (φ : S ⟶ F.op ⋙ R) (ψ : R ⟶ G.op ⋙ S)
+    (H₁ : Functor.whiskerRight (NatTrans.op adj.counit) R = ψ ≫ G.op.whiskerLeft φ)
+    (H₂ : φ ≫ F.op.whiskerLeft ψ ≫ Functor.whiskerRight (NatTrans.op adj.unit) S = 𝟙 S)
+    (M : _root_.PresheafOfModules R) (U : Dᵒᵖ) (x : M.obj U) :
+    (((PresheafOfModules.pushforwardPushforwardAdj adj φ ψ H₁ H₂).unit.app M).app U).hom x
+      = (M.map (adj.counit.app U.unop).op).hom x := by
+  rfl
+
+/-- **Sectionwise unit-preservation of the strong-monoidal `restrictScalars` oplax unit.**
+For a sectionwise-bijective ground-ring map `α`, the oplax monoidal unit `η (restrictScalars α)`
+sends the section ring unit `1` to `1`.  The unit element is typed through the genuine ring
+`(S ⋙ forget₂ …).obj W` (so `OfNat`/`One` synthesises), transported along `𝟙_ = unit`.  This is
+the LHS twin of the K1 η-collapse residual: lax `ε` sends `1 ↦ 1`
+(`ModuleCat.restrictScalars_η` + `RingHom.map_one`) and `ε ≫ η = 𝟙` (`Functor.Monoidal.ε_η`). -/
+lemma restrictScalars_oplaxMonoidal_η_app_one {C : Type u} [Category.{u} C]
+    {R S : Cᵒᵖ ⥤ CommRingCat.{u}}
+    (α : R ⋙ forget₂ CommRingCat RingCat ⟶ S ⋙ forget₂ CommRingCat RingCat)
+    (hα : ∀ U, Function.Bijective (α.app U).hom) (W : Cᵒᵖ) :
+    letI := PresheafOfModules.restrictScalarsMonoidalOfBijective α hα
+    ((Functor.OplaxMonoidal.η (PresheafOfModules.restrictScalars α)).app W).hom
+        (1 : (S ⋙ forget₂ CommRingCat RingCat).obj W)
+      = (1 : (R ⋙ forget₂ CommRingCat RingCat).obj W) := by
+  letI := PresheafOfModules.restrictScalarsMonoidalOfBijective α hα
+  have hε : ((Functor.LaxMonoidal.ε (PresheafOfModules.restrictScalars α)).app W).hom
+      (1 : (R ⋙ forget₂ CommRingCat RingCat).obj W)
+      = (1 : (S ⋙ forget₂ CommRingCat RingCat).obj W) := by
+    erw [ModuleCat.restrictScalars_η]; exact RingHom.map_one _
+  rw [← hε, ← LinearMap.comp_apply, ← ModuleCat.hom_comp, ← PresheafOfModules.comp_app,
+      show Functor.LaxMonoidal.ε (PresheafOfModules.restrictScalars α)
+          ≫ Functor.OplaxMonoidal.η (PresheafOfModules.restrictScalars α) = 𝟙 _
+        from Functor.Monoidal.ε_η _]
+  rfl
+
+/-- **K1 η-side collapse: `H1` respects the unit comparison.** In the K1 setting (open immersion
+`f : Y ⟶ X`, presheaf structure map `φ'`, structure-ring iso `β`/`β'`, strong-monoidal restriction
+functor `Gβ = pushforward₀OfCommRingCat f.opensFunctor X.presheaf ⋙ restrictScalars β'`, and the
+`leftAdjointUniq` iso `H1 : Gβ ≅ pullback φ'`), the strong unit comparison `η Gβ` agrees, under
+`H1`, with the oplax unit comparison `η (pullback φ')`. This is the η/ε-side twin of the proved D2′
+template `presheafUnit_comp_map_eta`; sectionwise it is the `f.appIso` structure-ring identity on the
+unit module. -/
+private lemma pushforward_eta_appIso_collapse {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f] :
+    letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
+        (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
+        (f.toRingCatSheafHom).hom
+    haveI hRA : (PresheafOfModules.pushforward φ').IsRightAdjoint :=
+      (PresheafOfModules.pullbackPushforwardAdjunction φ').isRightAdjoint
+    let α : Y.presheaf ⟶ f.opensFunctor.op ⋙ X.presheaf :=
+      { app := fun U => (f.appIso U.unop).inv }
+    let β : Y.ringCatSheaf.obj ⟶ f.opensFunctor.op ⋙ X.ringCatSheaf.obj :=
+      Functor.whiskerRight α (forget₂ CommRingCat RingCat)
+    let hadj : PresheafOfModules.pushforward β ⊣ PresheafOfModules.pushforward φ' :=
+      PresheafOfModules.pushforwardPushforwardAdj f.isOpenEmbedding.isOpenMap.adjunction β φ'
+        (by ext U x; exact congr($((f.app_appIso_inv _).symm).hom x))
+        (by ext U x; exact congr($(f.appIso_inv_app_presheafMap U.unop) x))
+    have hβ : ∀ U, Function.Bijective (β.app U).hom := by
+      intro U
+      haveI : IsIso (β.app U) :=
+        inferInstanceAs (IsIso ((forget₂ CommRingCat RingCat).map (f.appIso U.unop).inv))
+      exact ConcreteCategory.bijective_of_isIso (β.app U)
+    let β' : (Y.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
+        (f.opensFunctor.op ⋙ X.presheaf) ⋙ forget₂ CommRingCat RingCat := β
+    letI hMonβ : (PresheafOfModules.restrictScalars β').Monoidal :=
+      PresheafOfModules.restrictScalarsMonoidalOfBijective β' hβ
+    letI Gβ := PresheafOfModules.pushforward₀OfCommRingCat f.opensFunctor X.presheaf ⋙
+      PresheafOfModules.restrictScalars β'
+    let hadj' : Gβ ⊣ PresheafOfModules.pushforward φ' := hadj
+    Functor.OplaxMonoidal.η Gβ
+      = (hadj'.leftAdjointUniq (PresheafOfModules.pullbackPushforwardAdjunction φ')).hom.app (𝟙_ _)
+        ≫ Functor.OplaxMonoidal.η (PresheafOfModules.pullback φ') := by
+  letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
+      (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
+      (f.toRingCatSheafHom).hom
+  haveI hRA : (PresheafOfModules.pushforward φ').IsRightAdjoint :=
+    (PresheafOfModules.pullbackPushforwardAdjunction φ').isRightAdjoint
+  let α : Y.presheaf ⟶ f.opensFunctor.op ⋙ X.presheaf :=
+    { app := fun U => (f.appIso U.unop).inv }
+  let β : Y.ringCatSheaf.obj ⟶ f.opensFunctor.op ⋙ X.ringCatSheaf.obj :=
+    Functor.whiskerRight α (forget₂ CommRingCat RingCat)
+  -- `hadj` is a `let` (not `have`): the statement's signature `let`s zeta-reduce the `H1` term in
+  -- the goal to its fully-unfolded `pushforwardPushforwardAdj …` form, so a transparent `let` is
+  -- needed for the mate lemmas (`unit_leftAdjointUniq_hom_app`) to key-match it via `erw`.
+  let hadj : PresheafOfModules.pushforward β ⊣ PresheafOfModules.pushforward φ' :=
+    PresheafOfModules.pushforwardPushforwardAdj f.isOpenEmbedding.isOpenMap.adjunction β φ'
+      (by ext U x; exact congr($((f.app_appIso_inv _).symm).hom x))
+      (by ext U x; exact congr($(f.appIso_inv_app_presheafMap U.unop) x))
+  have hβ : ∀ U, Function.Bijective (β.app U).hom := by
+    intro U
+    haveI : IsIso (β.app U) :=
+      inferInstanceAs (IsIso ((forget₂ CommRingCat RingCat).map (f.appIso U.unop).inv))
+    exact ConcreteCategory.bijective_of_isIso (β.app U)
+  let β' : (Y.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
+      (f.opensFunctor.op ⋙ X.presheaf) ⋙ forget₂ CommRingCat RingCat := β
+  letI hMonβ : (PresheafOfModules.restrictScalars β').Monoidal :=
+    PresheafOfModules.restrictScalarsMonoidalOfBijective β' hβ
+  letI Gβ := PresheafOfModules.pushforward₀OfCommRingCat f.opensFunctor X.presheaf ⋙
+    PresheafOfModules.restrictScalars β'
+  let hadj' : Gβ ⊣ PresheafOfModules.pushforward φ' := hadj
+  -- η/ε-side of "H1 is a monoidal natural iso": the open-immersion analogue of the proved D2′
+  -- template `presheafUnit_comp_map_eta`.  Sectionwise the `f.appIso` structure-ring identity.
+  --
+  -- ROUTE (iter-026): transpose across the adjunction `hadj' : Gβ ⊣ pushforward φ'` (its `homEquiv`
+  -- is injective).  Under `homEquiv_unit` the RHS becomes
+  --   `hadj'.unit 𝟙_ ≫ G.map (H1.hom 𝟙_) ≫ G.map (η pullback)`;
+  -- the first two factors contract to `adj₀.unit 𝟙_` (`unit_leftAdjointUniq_hom_app`), and
+  -- `adj₀.unit 𝟙_ ≫ G.map (η pullback) = ε (pushforward φ')` is the PROVED D2′ template
+  -- `presheafUnit_comp_map_eta`.  The LHS becomes `hadj'.unit 𝟙_ ≫ G.map (η Gβ)`, so the goal
+  -- reduces to the single ε-comparison `(★η)` below.
+  apply (hadj'.homEquiv _ _).injective
+  rw [Adjunction.homEquiv_unit, Adjunction.homEquiv_unit, Functor.map_comp]
+  erw [reassoc_of% (Adjunction.unit_leftAdjointUniq_hom_app hadj'
+    (PresheafOfModules.pullbackPushforwardAdjunction φ') (𝟙_ _))]
+  erw [presheafUnit_comp_map_eta f]
+  -- (★η): `hadj'.unit 𝟙_ ≫ (pushforward φ').map (η Gβ) = ε (pushforward φ')`.
+  -- Reduce the RHS `ε (pushforward φ')` to the concrete unit comparison `unitToPushforwardObjUnit`
+  -- (proved D2′ lemma `epsilonPresheafToSheafUnit`), then verify sectionwise.  Sectionwise the
+  -- presheaf-of-modules unit `𝟙ᵖ` over `X.presheaf ⋙ forget₂` is the structure ring as a module
+  -- over itself, so a linear map out of it is determined by its value on `1` (`LinearMap.ext_ring`);
+  -- both sides send `1 ↦ 1` (the `ε`/unit structure maps preserve the ring unit).
+  erw [epsilonPresheafToSheafUnit f]
+  refine PresheafOfModules.hom_ext (fun U => ?_)
+  apply ModuleCat.hom_ext
+  ext
+  erw [SheafOfModules.unitToPushforwardObjUnit_val_app_apply]
+  -- residual: `((hadj'.unit 𝟙ᵖ ≫ (pushforward φ').map (η Gβ)).app U) 1 = (φ'.app U) 1`.
+  -- RHS `= 1` (`φ'.app U` is a ring hom); the LHS is the `rightAdjointLaxMonoidal hadj'` unit `ε`
+  -- read sectionwise on `1`, which is likewise `1`.
+  -- Split the composite, then reduce each factor: `η Gβ = (restrictScalars β').map (η pushforward₀)
+  -- ≫ η (restrictScalars β')` with `η pushforward₀ = 𝟙`; the `(pushforward φ').map` reindexes the
+  -- section to `op (f ⁻¹ᵁ U)`; the presheaf-level unit value lemma collapses `hadj'.unit` to the
+  -- unit-module restriction map of `M = 𝟙ᵖ` along `adj.counit`, which preserves `1`.
+  rw [PresheafOfModules.comp_app]
+  erw [ModuleCat.hom_comp, LinearMap.comp_apply]
+  rw [Functor.OplaxMonoidal.comp_η,
+    show Functor.OplaxMonoidal.η
+        (PresheafOfModules.pushforward₀OfCommRingCat (Hom.opensFunctor f) X.presheaf) = 𝟙 _ from rfl]
+  erw [PresheafOfModules.pushforward_map_app_apply]
+  -- collapse `hadj'.unit` to the unit-module restriction map of `𝟙ᵖ` along `adj.counit`
+  -- (the presheaf-level value lemma; unfold the `let` aliases so the rewrite matches syntactically
+  -- without the `erw` whnf-explosion on the heavy `pushforwardPushforwardAdj` term).
+  simp only [pushforwardPushforwardAdj_unit_app_app_apply]
+  erw [PresheafOfModules.unit_map_one]
+  -- REDUCED RESIDUAL (iter-027): the η-collapse is now reduced — via the new presheaf-level unit
+  -- value lemma `pushforwardPushforwardAdj_unit_app_app_apply` + `unit_map_one` — to the single
+  -- clean sectionwise identity (`W := op (f ⁻¹ᵁ U)`):
+  --   `((restrictScalars β').map 𝟙 ≫ η (restrictScalars β')).app W).hom 1 = (φ'.app U) 1`.
+  -- BOTH sides are the ring unit `1`:
+  --   • LHS: `(restrictScalars β').map 𝟙 = 𝟙`, and the strong-monoidal oplax unit
+  --     `η (restrictScalars β') = inv (ε (restrictScalars β'))` (`Functor.OplaxMonoidal.inv_ε`)
+  --     preserves `1`, because `ε ≫ η = 𝟙` (`Functor.Monoidal.ε_η _`, CONFIRMED to typecheck here)
+  --     and the lax `ε` sends `1 ↦ (β'.app W) 1 = 1` (`ModuleCat.restrictScalars_η` + `map_one`),
+  --     whence `η 1 = η (ε 1) = (ε ≫ η) 1 = 1` by injectivity of the iso `ε.app W`.
+  --   • RHS: `φ'.app U` is a ring hom, so `(φ'.app U) 1 = 1`.
+  -- The remaining Lean obstacle is purely coercion/`OfNat` plumbing, NOT mathematics:
+  --   (a) `map_one` does not fire on `ConcreteCategory.hom (φ'.app U)` (RingCat-morphism coercion
+  --       form); need the `RingCat`/`CommRingCat`-flavoured `map_one`/`RingHom.map_one` or to
+  --       expose the `RingHom`.
+  --   (b) the `ε`-value step needs `1 : (𝟙_ _).obj W`, whose carrier `One` instance Lean will not
+  --       synthesize without reducing `𝟙_ = unit _` (the same `OfNat` failure that blocks stating a
+  --       standalone `restrictScalars`-oplax-`η`-on-unit helper — see iter-027 task_result).
+  -- RESOLVED (iter-028): the LHS oplax-unit-on-`1` collapses to `1` via the standalone helper
+  -- `restrictScalars_oplaxMonoidal_η_app_one` (states the unit through the genuine ring
+  -- `(S ⋙ forget₂ …).obj W` to dodge the `OfNat` synthesis (b), proof = lax `ε(1)=1` +
+  -- `Functor.Monoidal.ε_η`); the RHS ring-hom `(φ'.app U) 1 = 1` via `map_one` (the `erw`
+  -- defeq-matches the `(restrictScalars β').map 𝟙 ≫ η` composite against the helper's `η`).
+  erw [restrictScalars_oplaxMonoidal_η_app_one β' hβ (Opposite.op (f ⁻¹ᵁ Opposite.unop U)),
+    map_one]
+  rfl
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **Sectionwise value of the RHS composition tensorator on a pure tensor (blueprint
+`lem:pushforward_lax_mu_comparison_rhs_tmul`).** The directly-defined composition lax tensorator
+`μ (presheafPushforwardLaxMonoidal φ)` (= the ambient `Functor.LaxMonoidal.μ (pushforward φ)`),
+evaluated on a section `W` at a pure tensor `m ⊗ₜ n`, is the base-change value `m ⊗ₜ n`. By
+`pushforward_μ_eq` (a `rfl`-identity) the single-pushforward μ is *defeq* to the `restrictScalars φ'`
+μ on the `pushforward₀OfCommRingCat`-reindexed objects, which collapses on a pure tensor by
+`restrictScalars_μ_app_tmul` (the same helper family as `pushforwardComp_lax_μ`). Stated with abstract
+base ring functors and objects (so the section module instances resolve cleanly, exactly as in
+`restrictScalars_μ_app_tmul`); applied in the K1 assembly to `T₀ := (Opens.map f.base).op ⋙ Y.presheaf`,
+`M₁ := pushforward₀.obj (Gβ.obj A)` etc. by definitional equality. -/
+private lemma pushforward_lax_mu_comparison_rhs_tmul
+    {C : Type u} [Category.{u} C] {S₀ T₀ : Cᵒᵖ ⥤ CommRingCat.{u}}
+    (φ' : (S₀ ⋙ forget₂ CommRingCat RingCat) ⟶ (T₀ ⋙ forget₂ CommRingCat RingCat))
+    (M₁ M₂ : _root_.PresheafOfModules (T₀ ⋙ forget₂ CommRingCat RingCat)) (W : Cᵒᵖ)
+    (m : (M₁.obj W)) (n : (M₂.obj W)) :
+    ((Functor.LaxMonoidal.μ (PresheafOfModules.restrictScalars φ') M₁ M₂).app W).hom
+        (m ⊗ₜ[(S₀ ⋙ forget₂ CommRingCat RingCat).obj W] n) = m ⊗ₜ n :=
+  -- The RHS composition tensorator `μ (presheafPushforwardLaxMonoidal φ)` is, by `pushforward_μ_eq`
+  -- (a `rfl`-identity), exactly this `restrictScalars φ'` μ on the `pushforward₀`-reindexed objects;
+  -- `restrictScalars_μ_app_tmul` collapses it on a pure tensor.  The base ring functors `S₀ T₀` and the
+  -- objects `M₁ M₂` are abstract (as in `restrictScalars_μ_app_tmul`) so the section module instances
+  -- resolve cleanly; in the K1 assembly it is applied to `T₀ := (Opens.map f.base).op ⋙ Y.presheaf`,
+  -- `M₁ := pushforward₀.obj (Gβ.obj A)` etc. by definitional equality (`pushforward_μ_eq` is `rfl`).
+  restrictScalars_μ_app_tmul φ' M₁ M₂ W m n
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **Sectionwise value of the LHS mate tensorator on a pure tensor (blueprint
+`lem:pushforward_lax_mu_comparison_lhs_tmul`), packaged as the per-section comparison.** In the K1
+setting, on a fixed open `W` the adjoint-transported tensorator `μ (rightAdjointLaxMonoidal hadj')`
+agrees with the directly-defined composition tensorator `μ (presheafPushforwardLaxMonoidal φ')` on the
+objects `Gβ.obj A`, `Gβ.obj B`.  We work sectionwise via `tensor_ext`: the RHS pure-tensor value is
+`m ⊗ₜ n` by `pushforward_lax_mu_comparison_rhs_tmul`, and the genuine geometric residual is the LHS
+*mate* value, obtained by unfolding the mate (`rightAdjointLaxMonoidal_μ` + `homEquiv_unit`) and
+computing the three legs sectionwise (unit acts by `M.map counit.op` via
+`pushforwardPushforwardAdj_unit_app_app_apply`; `δ Gβ` is the identity on pure tensors via the
+`restrictScalars`-μ helper family; the counit pair is the bijective `f.appIso`).  The parent assembles
+this with `PresheafOfModules.hom_ext`.  The LHS mate pure-tensor value remains the sole open residual. -/
+private lemma pushforward_lax_mu_comparison_lhs_tmul {X Y : Scheme.{u}} (f : Y ⟶ X)
+    [IsOpenImmersion f]
+    (A B : _root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat))
+    (W : (TopologicalSpace.Opens ↥X)ᵒᵖ) :
+    letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
+        (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
+        (f.toRingCatSheafHom).hom
+    haveI hRA : (PresheafOfModules.pushforward φ').IsRightAdjoint :=
+      (PresheafOfModules.pullbackPushforwardAdjunction φ').isRightAdjoint
+    let α : Y.presheaf ⟶ f.opensFunctor.op ⋙ X.presheaf :=
+      { app := fun U => (f.appIso U.unop).inv }
+    let β : Y.ringCatSheaf.obj ⟶ f.opensFunctor.op ⋙ X.ringCatSheaf.obj :=
+      Functor.whiskerRight α (forget₂ CommRingCat RingCat)
+    let hadj : PresheafOfModules.pushforward β ⊣ PresheafOfModules.pushforward φ' :=
+      PresheafOfModules.pushforwardPushforwardAdj f.isOpenEmbedding.isOpenMap.adjunction β φ'
+        (by ext U x; exact congr($((f.app_appIso_inv _).symm).hom x))
+        (by ext U x; exact congr($(f.appIso_inv_app_presheafMap U.unop) x))
+    have hβ : ∀ U, Function.Bijective (β.app U).hom := by
+      intro U
+      haveI : IsIso (β.app U) :=
+        inferInstanceAs (IsIso ((forget₂ CommRingCat RingCat).map (f.appIso U.unop).inv))
+      exact ConcreteCategory.bijective_of_isIso (β.app U)
+    let β' : (Y.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
+        (f.opensFunctor.op ⋙ X.presheaf) ⋙ forget₂ CommRingCat RingCat := β
+    letI hMonβ : (PresheafOfModules.restrictScalars β').Monoidal :=
+      PresheafOfModules.restrictScalarsMonoidalOfBijective β' hβ
+    letI Gβ := PresheafOfModules.pushforward₀OfCommRingCat f.opensFunctor X.presheaf ⋙
+      PresheafOfModules.restrictScalars β'
+    let hadj' : Gβ ⊣ PresheafOfModules.pushforward φ' := hadj
+    (@Functor.LaxMonoidal.μ _ _ _ _ _ _ (PresheafOfModules.pushforward φ')
+        (Adjunction.rightAdjointLaxMonoidal hadj') (Gβ.obj A) (Gβ.obj B)).app W
+      = (@Functor.LaxMonoidal.μ _ _ _ _ _ _ (PresheafOfModules.pushforward φ')
+        (presheafPushforwardLaxMonoidal φ') (Gβ.obj A) (Gβ.obj B)).app W := by
+  intro α β hadj hβ β' hadj'
+  -- Sectionwise: `(G(Gβ A) ⊗ G(Gβ B)).obj W` is a genuine `ModuleCat` tensor, so `tensor_ext` fires.
+  refine ModuleCat.MonoidalCategory.tensor_ext (fun m n => ?_)
+  -- The RHS pure-tensor value is `m ⊗ₜ n` by `pushforward_lax_mu_comparison_rhs_tmul`
+  -- (composition-tensorator collapse, defeq `pushforward_μ_eq`).  The genuine residual is the LHS:
+  -- unfold the *mate* tensorator to its explicit adjunction form
+  -- `unit ≫ G.map (δ Gβ _ _ ≫ (hadj'.counit ⊗ₘ hadj'.counit))` (`rightAdjointLaxMonoidal_μ` +
+  -- `homEquiv_unit`), genuine progress over the opaque mate μ.
+  rw [Adjunction.rightAdjointLaxMonoidal_μ, Adjunction.homEquiv_unit]
+  -- RESIDUAL (the multi-hundred-LOC mate seam): the three legs evaluate sectionwise on `m ⊗ₜ n` to
+  -- `m ⊗ₜ n` — matching `pushforward_lax_mu_comparison_rhs_tmul`'s RHS value, closing the comparison:
+  --   • unit acts by `M.map (hadj'.counit).op` (`pushforwardPushforwardAdj_unit_app_app_apply`);
+  --   • `δ Gβ` (strong-monoidal oplax tensorator of `pushforward₀ ⋙ restrictScalars β'`) is the
+  --     identity on a pure tensor, by `restrictScalars_μ_app` / `restrictScalars_μ_app_tmul` /
+  --     `forget₂_restrictScalars_μ_hom_tmul` (the same helper family as `pushforwardComp_lax_μ`);
+  --   • the counit pair `hadj'.counit ⊗ₘ hadj'.counit` is the bijective `f.appIso` structure-ring map.
+  -- Do NOT route through `hadj'.IsMonoidal` — empirically circular (iter-026).
+  sorry
+
+/- Planner strategy (iter-027): genuine non-circular residual of K1's μ-collapse, extracted by
+effort-break. PROVE THIS by mirroring the PROVED in-project `pushforwardComp_lax_μ` (L2197) ONE-TO-ONE:
+`hom_ext` to an open U; thread pure-tensor extensionality through `pushforward₀OfCommRingCat` sections
+(Gβ.obj (A⊗B) is a pushforward of a tensor, NOT syntactic — `tensor_ext` will NOT fire); expose μ via
+`restrictScalars_μ_app`; collapse both legs to the common `f.appIso` base-change value via
+`forget₂_restrictScalars_μ_hom_tmul` / `pushforward_map_restrictScalars_μ_app_tmul` (use `erw`, no whnf).
+Do NOT route through `hadj'.IsMonoidal`/`unit_app_tensor_comp_map_δ` — empirically circular (iter-026).
+Blueprint: chapters/Picard_TensorObjSubstrate.tex `lem:pushforward_lax_mu_comparison`. -/
+private lemma pushforward_lax_mu_comparison {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
+    (A B : _root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) :
+    letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
+        (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
+        (f.toRingCatSheafHom).hom
+    haveI hRA : (PresheafOfModules.pushforward φ').IsRightAdjoint :=
+      (PresheafOfModules.pullbackPushforwardAdjunction φ').isRightAdjoint
+    let α : Y.presheaf ⟶ f.opensFunctor.op ⋙ X.presheaf :=
+      { app := fun U => (f.appIso U.unop).inv }
+    let β : Y.ringCatSheaf.obj ⟶ f.opensFunctor.op ⋙ X.ringCatSheaf.obj :=
+      Functor.whiskerRight α (forget₂ CommRingCat RingCat)
+    let hadj : PresheafOfModules.pushforward β ⊣ PresheafOfModules.pushforward φ' :=
+      PresheafOfModules.pushforwardPushforwardAdj f.isOpenEmbedding.isOpenMap.adjunction β φ'
+        (by ext U x; exact congr($((f.app_appIso_inv _).symm).hom x))
+        (by ext U x; exact congr($(f.appIso_inv_app_presheafMap U.unop) x))
+    have hβ : ∀ U, Function.Bijective (β.app U).hom := by
+      intro U
+      haveI : IsIso (β.app U) :=
+        inferInstanceAs (IsIso ((forget₂ CommRingCat RingCat).map (f.appIso U.unop).inv))
+      exact ConcreteCategory.bijective_of_isIso (β.app U)
+    let β' : (Y.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
+        (f.opensFunctor.op ⋙ X.presheaf) ⋙ forget₂ CommRingCat RingCat := β
+    letI hMonβ : (PresheafOfModules.restrictScalars β').Monoidal :=
+      PresheafOfModules.restrictScalarsMonoidalOfBijective β' hβ
+    letI Gβ := PresheafOfModules.pushforward₀OfCommRingCat f.opensFunctor X.presheaf ⋙
+      PresheafOfModules.restrictScalars β'
+    let hadj' : Gβ ⊣ PresheafOfModules.pushforward φ' := hadj
+    @Functor.LaxMonoidal.μ _ _ _ _ _ _ (PresheafOfModules.pushforward φ')
+        (Adjunction.rightAdjointLaxMonoidal hadj') (Gβ.obj A) (Gβ.obj B)
+      = @Functor.LaxMonoidal.μ _ _ _ _ _ _ (PresheafOfModules.pushforward φ')
+        (presheafPushforwardLaxMonoidal φ') (Gβ.obj A) (Gβ.obj B) := by
+  intro α β hadj hβ β' hadj'
+  -- ASSEMBLY (iter-029, blueprint decomposition): the two lax structures on `pushforward φ'` agree on
+  -- `Gβ.obj A`, `Gβ.obj B` as a *morphism* equality.  Reduce to the per-section comparison by
+  -- `PresheafOfModules.hom_ext`, then defer each open `W` to `pushforward_lax_mu_comparison_lhs_tmul`,
+  -- which works sectionwise via `tensor_ext`: the RHS pure-tensor value is `m ⊗ₜ n` by
+  -- `pushforward_lax_mu_comparison_rhs_tmul` (PROVEN), and the LHS *mate* pure-tensor value is the sole
+  -- residual (the genuine NON-circular geometric seam; routing through `hadj'.IsMonoidal` is CIRCULAR).
+  exact PresheafOfModules.hom_ext (fun W => pushforward_lax_mu_comparison_lhs_tmul f A B W)
+
+/-- **K1 μ/δ-side collapse: `H1` respects the tensorator.** In the K1 setting, for all presheaves
+of modules `A B`, the strong tensorator `δ Gβ A B` of the restriction functor agrees with the
+`H1`-conjugate of the oplax tensorator `δ (pullback φ') A B`. This is the genuine geometric content
+of K1 (the μ/δ-side twin of `presheafUnit_comp_map_eta`, the open-immersion analogue of
+`pushforwardComp_lax_μ`). Sectionwise, the crux is that `Gβ.obj (A ⊗ B)` is a pushforward of a
+tensor (not a syntactic tensor), so the pure-tensor extensionality is threaded through the
+`pushforward₀OfCommRingCat` sections, exactly as in `pushforwardComp_lax_μ`. -/
+private lemma pushforward_mu_appIso_collapse {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
+    (A B : _root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) :
+    letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
+        (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
+        (f.toRingCatSheafHom).hom
+    haveI hRA : (PresheafOfModules.pushforward φ').IsRightAdjoint :=
+      (PresheafOfModules.pullbackPushforwardAdjunction φ').isRightAdjoint
+    let α : Y.presheaf ⟶ f.opensFunctor.op ⋙ X.presheaf :=
+      { app := fun U => (f.appIso U.unop).inv }
+    let β : Y.ringCatSheaf.obj ⟶ f.opensFunctor.op ⋙ X.ringCatSheaf.obj :=
+      Functor.whiskerRight α (forget₂ CommRingCat RingCat)
+    let hadj : PresheafOfModules.pushforward β ⊣ PresheafOfModules.pushforward φ' :=
+      PresheafOfModules.pushforwardPushforwardAdj f.isOpenEmbedding.isOpenMap.adjunction β φ'
+        (by ext U x; exact congr($((f.app_appIso_inv _).symm).hom x))
+        (by ext U x; exact congr($(f.appIso_inv_app_presheafMap U.unop) x))
+    have hβ : ∀ U, Function.Bijective (β.app U).hom := by
+      intro U
+      haveI : IsIso (β.app U) :=
+        inferInstanceAs (IsIso ((forget₂ CommRingCat RingCat).map (f.appIso U.unop).inv))
+      exact ConcreteCategory.bijective_of_isIso (β.app U)
+    let β' : (Y.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
+        (f.opensFunctor.op ⋙ X.presheaf) ⋙ forget₂ CommRingCat RingCat := β
+    letI hMonβ : (PresheafOfModules.restrictScalars β').Monoidal :=
+      PresheafOfModules.restrictScalarsMonoidalOfBijective β' hβ
+    letI Gβ := PresheafOfModules.pushforward₀OfCommRingCat f.opensFunctor X.presheaf ⋙
+      PresheafOfModules.restrictScalars β'
+    let hadj' : Gβ ⊣ PresheafOfModules.pushforward φ' := hadj
+    Functor.OplaxMonoidal.δ Gβ A B
+      = (hadj'.leftAdjointUniq (PresheafOfModules.pullbackPushforwardAdjunction φ')).hom.app (A ⊗ B)
+        ≫ Functor.OplaxMonoidal.δ (PresheafOfModules.pullback φ') A B
+        ≫ ((hadj'.leftAdjointUniq (PresheafOfModules.pullbackPushforwardAdjunction φ')).inv.app A
+            ⊗ₘ (hadj'.leftAdjointUniq (PresheafOfModules.pullbackPushforwardAdjunction φ')).inv.app B) := by
+  letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
+      (TopologicalSpace.Opens.map f.base).op ⋙ (Y.presheaf ⋙ forget₂ CommRingCat RingCat) :=
+      (f.toRingCatSheafHom).hom
+  haveI hRA : (PresheafOfModules.pushforward φ').IsRightAdjoint :=
+    (PresheafOfModules.pullbackPushforwardAdjunction φ').isRightAdjoint
+  let α : Y.presheaf ⟶ f.opensFunctor.op ⋙ X.presheaf :=
+    { app := fun U => (f.appIso U.unop).inv }
+  let β : Y.ringCatSheaf.obj ⟶ f.opensFunctor.op ⋙ X.ringCatSheaf.obj :=
+    Functor.whiskerRight α (forget₂ CommRingCat RingCat)
+  -- `hadj` is a `let` (not `have`): keeps the goal's `H1 = hadj'.leftAdjointUniq` term in its
+  -- fully-unfolded `pushforwardPushforwardAdj …` form key-matchable via `erw` (cf. the η-side).
+  let hadj : PresheafOfModules.pushforward β ⊣ PresheafOfModules.pushforward φ' :=
+    PresheafOfModules.pushforwardPushforwardAdj f.isOpenEmbedding.isOpenMap.adjunction β φ'
+      (by ext U x; exact congr($((f.app_appIso_inv _).symm).hom x))
+      (by ext U x; exact congr($(f.appIso_inv_app_presheafMap U.unop) x))
+  have hβ : ∀ U, Function.Bijective (β.app U).hom := by
+    intro U
+    haveI : IsIso (β.app U) :=
+      inferInstanceAs (IsIso ((forget₂ CommRingCat RingCat).map (f.appIso U.unop).inv))
+    exact ConcreteCategory.bijective_of_isIso (β.app U)
+  let β' : (Y.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
+      (f.opensFunctor.op ⋙ X.presheaf) ⋙ forget₂ CommRingCat RingCat := β
+  letI hMonβ : (PresheafOfModules.restrictScalars β').Monoidal :=
+    PresheafOfModules.restrictScalarsMonoidalOfBijective β' hβ
+  letI Gβ := PresheafOfModules.pushforward₀OfCommRingCat f.opensFunctor X.presheaf ⋙
+    PresheafOfModules.restrictScalars β'
+  let hadj' : Gβ ⊣ PresheafOfModules.pushforward φ' := hadj
+  -- δ-side of "H1 is a monoidal natural iso": the genuine geometric content of K1.  Sectionwise
+  -- (`hom_ext` to `U`); `Gβ.obj (A ⊗ B)` is a pushforward of a tensor, so the pure-tensor
+  -- extensionality is threaded through `pushforward₀OfCommRingCat`'s sections, mirroring
+  -- `pushforwardComp_lax_μ` one-to-one.
+  -- NOTE (iter-025): `δ Gβ A B = (Functor.Monoidal.μIso Gβ A B).inv` by `rfl` (the carrier diamond is
+  -- resolved, cf. K1 `hd`).  So the goal rearranges to exactly the per-`A B` form of the K1 in-proof
+  -- `hcompat` (`δ (pullback φ') A B = H1.inv (A⊗B) ≫ μIsoβ.inv ≫ (H1.hom A ⊗ₘ H1.hom B) = e.hom`),
+  -- which MUST be proved directly here (the K1 `hmon` consumes THIS lemma, so routing back through
+  -- `hmon`/`Adjunction.IsMonoidal` is circular).  Direct route = the μ-side analogue of
+  -- `pushforwardComp_lax_μ`: `hom_ext` to `U`, expose `δ Gβ` via `Functor.Monoidal.μIso`/
+  -- `restrictScalars_μ_app`, transpose `δ (pullback φ')` to `μ (pushforward φ')` via
+  -- `Adjunction.leftAdjointOplaxMonoidal_δ` + `pushforward_μ_eq`, then collapse both to the common
+  -- `f.appIso` base-change value on `pushforward₀OfCommRingCat` pure-tensor sections using
+  -- `forget₂_restrictScalars_μ_hom_tmul` / `pushforward_map_restrictScalars_μ_app_tmul` (erw, no whnf).
+  -- CIRCULARITY FINDING (iter-026): the clean mate reduction (mirror of `pullbackComp_δ`) goes:
+  --   (1) cancel `H1.hom (A⊗B)` on the left (H1 iso) to move to the `pullback φ'` domain;
+  --   (2) transpose across `adj₀ := pullbackPushforwardAdjunction φ'` (`homEquiv` injective);
+  --   (3) RHS `adj₀.unit(A⊗B) ≫ G.map (δ (pullback φ'))` → `(adj₀.unit A ⊗ₘ adj₀.unit B) ≫ μ G …`
+  --       by `Adjunction.unit_app_tensor_comp_map_δ (adj := adj₀)` (OK: `adj₀.IsMonoidal` is the
+  --       auto-instance since `pullback φ'`'s oplax IS `leftAdjointOplaxMonoidal adj₀`);
+  --   (4) LHS `adj₀.unit(A⊗B) ≫ G.map (H1.inv (A⊗B)) ≫ G.map (δ Gβ)` → (via `hUinv`,
+  --       `δ Gβ = μIsoβ.inv` `rfl`) `hadj'.unit(A⊗B) ≫ G.map μIsoβ.inv`.
+  -- The transposed goal `(★μ)` is then exactly the K1 in-proof `hstar`:
+  --   `hadj'.unit(A⊗B) ≫ G.map μIsoβ.inv = (hadj'.unit A ⊗ₘ hadj'.unit B) ≫ μ G (Gβ A) (Gβ B)`.
+  -- `hstar` is `Adjunction.unit_app_tensor_comp_map_δ (adj := hadj')`, which needs `hadj'.IsMonoidal`
+  -- w.r.t. `presheafPushforwardLaxMonoidal` — but THAT is exactly K1's `hmon`, which CONSUMES this
+  -- very lemma, so closing (★μ) by it is CIRCULAR.  The non-circular content is the bare μ-comparison
+  --   `μ (rightAdjointLaxMonoidal hadj') (Gβ A) (Gβ B) = μ (presheafPushforwardLaxMonoidal) (Gβ A)(Gβ B)`
+  -- (the two lax structures on `pushforward φ'` agree on tensorators), proved DIRECTLY sectionwise on
+  -- the `pushforward₀OfCommRingCat` pure-tensor sections — the open-immersion analogue of
+  -- `pushforwardComp_lax_μ`, threading `restrictScalars_μ_app(_tmul)` /
+  -- `forget₂_restrictScalars_μ_hom_tmul` / `pushforward_map_restrictScalars_μ_app_tmul` (erw, no whnf).
+  -- This is the multi-hundred-LOC seam flagged for a mathlib-analogist consult (see task_results).
+  -- Sectionwise reduction started (`hom_ext` to `U`); `Gβ.obj (A ⊗ B)` is a pushforward of a tensor
+  -- (NOT syntactic), so `tensor_ext` does not fire — the pure-tensor extensionality must be threaded
+  -- through `pushforward₀OfCommRingCat`'s sections.
+  refine PresheafOfModules.hom_ext (fun U => ?_)
+  sorry
+
 /-- **K1: `pullbackTensorMap` is an isomorphism for an open immersion.**
 For an open immersion `f : Y ⟶ X` (e.g. an `Opens.ι`) and arbitrary `M N : X.Modules`,
 the comparison `pullbackTensorMap f M N` is an isomorphism. Geometric content: pullback
@@ -4159,7 +4535,7 @@ private lemma pullbackTensorMap_isIso_of_isOpenImmersion {X Y : Scheme.{u}} (f :
       { app := fun U => (f.appIso U.unop).inv }
     let β : Y.ringCatSheaf.obj ⟶ f.opensFunctor.op ⋙ X.ringCatSheaf.obj :=
       Functor.whiskerRight α (forget₂ CommRingCat RingCat)
-    have hadj : PresheafOfModules.pushforward β ⊣ PresheafOfModules.pushforward φ' :=
+    let hadj : PresheafOfModules.pushforward β ⊣ PresheafOfModules.pushforward φ' :=
       PresheafOfModules.pushforwardPushforwardAdj f.isOpenEmbedding.isOpenMap.adjunction β φ'
         (by ext U x; exact congr($((f.app_appIso_inv _).symm).hom x))
         (by ext U x; exact congr($(f.appIso_inv_app_presheafMap U.unop) x))
@@ -4173,7 +4549,7 @@ private lemma pullbackTensorMap_isIso_of_isOpenImmersion {X Y : Scheme.{u}} (f :
       exact ConcreteCategory.bijective_of_isIso (β.app U)
     let β' : (Y.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶
         (f.opensFunctor.op ⋙ X.presheaf) ⋙ forget₂ CommRingCat RingCat := β
-    haveI hMonβ : (PresheafOfModules.restrictScalars β').Monoidal :=
+    letI hMonβ : (PresheafOfModules.restrictScalars β').Monoidal :=
       PresheafOfModules.restrictScalarsMonoidalOfBijective β' hβ
     -- the strong-monoidal tensorator μIso of `pushforward β` (over the syntactic forget₂ base).
     let μIsoβ := Functor.Monoidal.μIso
@@ -4213,10 +4589,156 @@ private lemma pullbackTensorMap_isIso_of_isOpenImmersion {X Y : Scheme.{u}} (f :
       -- `presheafPushforwardLaxMonoidal` on `pushforward φ'` agrees, through `hadj`, with the
       -- strong-monoidal structure `restrictScalarsMonoidalOfBijective` on `pushforward β`.
       -- This is the δ-side analogue of the unit-side `presheafUnit_comp_map_eta` (D2′) and the
-      -- open-immersion analogue of the D3′ base-change mate calculus.  It is the SOLE residual
-      -- content of K1; closing it is a `mathlib-build`-scale reconciliation of the two monoidal
-      -- structures on `pushforward φ'` (the explicit composite one and the hadj-mate one).
-      sorry
+      -- open-immersion analogue of the D3′ base-change mate calculus.  Closed via the Mathlib
+      -- `Adjunction.IsMonoidal` carrier (recon022): build `hadj.IsMonoidal`, then the δ-side mate
+      -- lemma `unit_app_tensor_comp_map_δ` + the `leftAdjointUniq` unit comparison + μ-naturality.
+      --
+      -- ════════ COMPLETE MATE-CALCULUS REDUCTION (iter-022) — blocked only by a carrier diamond ═══
+      -- The goal (**) is `(adj.unit M ⊗ₘ adj.unit N) ≫ μ_G (FM) (FN) = adj.unit (M⊗N) ≫ G.map e.hom`,
+      -- with `adj = pullbackPushforwardAdjunction φ'`, `G = pushforward φ'`, `F = pullback φ'`.
+      -- It reduces to the SINGLE residual (★) below, then both sides meet at the common midpoint
+      --   `(hadj.unit M ⊗ₘ hadj.unit N) ≫ μ_G (βM) (βN) ≫ G.map (H1.hom M ⊗ₘ H1.hom N)`, via:
+      --   • `hU P : hadj.unit P ≫ G.map (H1.hom P) = adj.unit P`
+      --        (`Adjunction.unit_leftAdjointUniq_hom_app hadj adj P`)  [VERIFIED to elaborate]
+      --   • `hUinv P : adj.unit P ≫ G.map (H1.inv P) = hadj.unit P`   (from `hU` + `Iso.hom_inv_id_app`)
+      --   • `he : e.hom = H1.inv (M⊗N) ≫ μIsoβ.inv ≫ (H1.hom M ⊗ₘ H1.hom N)`  (`:= rfl`)
+      --   • LHS:  `← hU M, ← hU N, ← tensorHom_comp_tensorHom, assoc, Functor.LaxMonoidal.μ_natural`
+      --   • RHS:  `he, map_comp, map_comp, reassoc_of% (hUinv (M⊗N)), reassoc_of% hstar`
+      -- where (★) `hstar : hadj.unit (M⊗N) ≫ G.map μIsoβ.inv
+      --                    = (hadj.unit M ⊗ₘ hadj.unit N) ≫ μ_G (βM) (βN)`
+      -- is EXACTLY `Adjunction.unit_app_tensor_comp_map_δ (adj := hadj) M.val N.val` once
+      -- `[hadj.IsMonoidal]` holds (`δ (pushforward β) = μIsoβ.inv` by `Functor.Monoidal.μIso_inv`),
+      -- and `hadj.IsMonoidal` IS the geometric content: the strong oplax on `pushforward β`
+      -- (`restrictScalarsMonoidalOfBijective`, `μIsoβ`) is the `hadj`-mate of the project lax
+      -- `presheafPushforwardLaxMonoidal` on `pushforward φ'` — the δ-side analogue of the η-bridge
+      -- `presheafUnit_comp_map_eta`.
+      --
+      -- ════════ CLOSURE (recon023 / iter-023): mate calculus, carrier handled via `Gβ` ══════════
+      -- `pushforward β'` does NOT typecheck (`pushforward` wants its target spelled `F.op ⋙ _`, but
+      -- `β'` is `(F.op ⋙ R₀) ⋙ forget₂`).  Instead work over the DEFEQ composite model
+      -- `Gβ := pushforward₀OfCommRingCat f.opensFunctor X.presheaf ⋙ restrictScalars β'` — the functor
+      -- whose strong tensorator IS `μIsoβ` (so `δ Gβ = μIsoβ.inv`) and on which the global `Monoidal`
+      -- instance fires syntactically.  `hadj' : Gβ ⊣ pushforward φ'` is `hadj` re-ascribed.  The whole
+      -- `hcompat` then reduces by the standard mate calculus (mirroring `pullbackComp_δ`, the D3′ twin)
+      -- to the SINGLE δ-side compatibility `hadj'.IsMonoidal` (the μ-side analogue of the η-side
+      -- `presheafUnit_comp_map_eta`, D2′): genuine geometric content, not a carrier artefact.
+      letI Gβ := PresheafOfModules.pushforward₀OfCommRingCat f.opensFunctor X.presheaf ⋙
+        PresheafOfModules.restrictScalars β'
+      let hadj' : Gβ ⊣ PresheafOfModules.pushforward φ' := hadj
+      -- `H1` re-ascribed onto the `Gβ` spelling (defeq) — keeps every morphism over the good
+      -- `_ ⋙ forget₂` carrier; mixing `H1` (spelled over `pushforward β` / `ringCatSheaf.obj`) with
+      -- `hadj'.unit` (over `Gβ`) breaks `rw`/`Category.assoc` on defeq-but-not-syntactic objects.
+      let H1' : Gβ ≅ PresheafOfModules.pullback φ' := H1
+      -- δ-side mate compatibility of `hadj'` (Gβ strong-oplax / `pushforward φ'` lax).
+      -- SOLE RESIDUAL of K1.  `Adjunction.IsMonoidal hadj'` has two fields (exposed by `constructor`):
+      --   • `leftAdjoint_ε : ε (pushforward φ') = hadj'.unit (𝟙_) ≫ (pushforward φ').map (η Gβ)`
+      --   • `leftAdjoint_μ X Y : μ (pushforward φ') X Y
+      --        = hadj'.unit _ ≫ (pushforward φ').map (δ Gβ _ _ ≫ (hadj'.counit X ⊗ₘ hadj'.counit Y))`
+      -- i.e. the `presheafPushforwardLaxMonoidal` structure on `pushforward φ'` is the `hadj'`-mate
+      -- of the STRONG structure `μIsoβ`/`δ Gβ` on `Gβ`.  This is the genuine geometric content — the
+      -- δ/μ-side twin of the already-proved η/ε-side `presheafUnit_comp_map_eta` (D2′), and the
+      -- open-immersion analogue of `pushforwardComp_lax_μ` (D3′, which proved the sibling lax-μ
+      -- coherence sectionwise via `pushforward_μ_eq`/`restrictScalars_μ_app`/
+      -- `forget₂_restrictScalars_μ_hom_tmul`/`pushforward_map_restrictScalars_μ_app_tmul`).
+      -- ROUTE: `refine ⟨?_, ?_⟩` then prove each field sectionwise (`hom_ext` + `tensor_ext`) reusing
+      -- that D3′ machinery — `Gβ = pushforward₀OfCommRingCat … ⋙ restrictScalars β'` is the same
+      -- `restrictScalars`-composite shape those lemmas collapse on pure tensors.  Substantial
+      -- (~100–200 LOC, the µ-side analogue of `pushforwardComp_lax_μ`); not a carrier artefact.
+      haveI hmon : hadj'.IsMonoidal := by
+        -- The two `IsMonoidal` fields both TRANSPORT, across the `leftAdjointUniq` iso `H1`, from the
+        -- KNOWN monoidality of `adj₀ := pullbackPushforwardAdjunction φ'` (whose left adjoint
+        -- `pullback φ'` carries the canonical `leftAdjointOplaxMonoidal` structure, so `adj₀.IsMonoidal`
+        -- holds by the Mathlib doctrinal instance).  The residual geometric content is exactly that
+        -- `H1 : Gβ ≅ pullback φ'` is a MONOIDAL natural isomorphism (`hηcompat` on the unit, `hδcompat`
+        -- on the tensorator): Gβ's STRONG structure (`μIsoβ`/`restrictScalarsMonoidalOfBijective`)
+        -- agrees, under `H1`, with the mate structure on `pullback φ'`.  This is the δ/μ-side twin of
+        -- the η/ε-side `presheafUnit_comp_map_eta` (D2′).  Both are sectionwise (`hom_ext`+`tensor_ext`)
+        -- pure-tensor collapses of the open-immersion structure-ring iso `β = f.appIso`.
+        -- `hηcompat`/`hδcompat` are the SOLE remaining residual (the mate-transport plumbing below is
+        -- fully verified).
+        -- GENUINE RESIDUAL (η-side of "H1 is a monoidal natural iso"): extracted as the top-level
+        -- `pushforward_eta_appIso_collapse` (defeq let-chain rebuild of `Gβ`/`hadj'`).
+        have hηcompat : Functor.OplaxMonoidal.η Gβ
+            = (hadj'.leftAdjointUniq (PresheafOfModules.pullbackPushforwardAdjunction φ')).hom.app (𝟙_ _)
+              ≫ Functor.OplaxMonoidal.η (PresheafOfModules.pullback φ') :=
+          pushforward_eta_appIso_collapse f
+        -- GENUINE RESIDUAL (δ-side of "H1 is a monoidal natural iso"): extracted as the top-level
+        -- `pushforward_mu_appIso_collapse` (defeq let-chain rebuild of `Gβ`/`hadj'`).
+        have hδcompat : ∀ (A B : _root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)),
+            Functor.OplaxMonoidal.δ Gβ A B
+            = (hadj'.leftAdjointUniq (PresheafOfModules.pullbackPushforwardAdjunction φ')).hom.app (A ⊗ B)
+              ≫ Functor.OplaxMonoidal.δ (PresheafOfModules.pullback φ') A B
+              ≫ ((hadj'.leftAdjointUniq (PresheafOfModules.pullbackPushforwardAdjunction φ')).inv.app A
+                  ⊗ₘ (hadj'.leftAdjointUniq (PresheafOfModules.pullbackPushforwardAdjunction φ')).inv.app B) :=
+          fun A B => pushforward_mu_appIso_collapse f A B
+        -- The counit half of the `leftAdjointUniq` comparison (`H1.inv` cancels `hadj'.counit` to
+        -- `adj₀.counit`), used in the μ-field transport.
+        have hcounit : ∀ (P : _root_.PresheafOfModules (Y.presheaf ⋙ forget₂ CommRingCat RingCat)),
+            (hadj'.leftAdjointUniq (PresheafOfModules.pullbackPushforwardAdjunction φ')).inv.app
+                ((PresheafOfModules.pushforward φ').obj P) ≫ hadj'.counit.app P
+              = (PresheafOfModules.pullbackPushforwardAdjunction φ').counit.app P := by
+          intro P
+          rw [← Adjunction.leftAdjointUniq_hom_app_counit hadj'
+              (PresheafOfModules.pullbackPushforwardAdjunction φ') P, Iso.inv_hom_id_app_assoc]
+        refine ⟨?_, ?_⟩
+        · -- ε-field: substitute `hηcompat`, contract `hadj'.unit ≫ map H1.hom` to `adj₀.unit`
+          -- (`unit_leftAdjointUniq_hom_app`), then close by the proved D2′ η-bridge.
+          rw [hηcompat, Functor.map_comp]
+          erw [reassoc_of% (Adjunction.unit_leftAdjointUniq_hom_app hadj'
+            (PresheafOfModules.pullbackPushforwardAdjunction φ') (𝟙_ _))]
+          exact (presheafUnit_comp_map_eta f).symm
+        · -- μ-field: start from `adj₀`'s known `leftAdjoint_μ`, then transport the δ (`hδcompat`),
+          -- the counit pair (`hcounit`) and the unit (`unit_leftAdjointUniq_hom_app`) across `H1`.
+          intro X₁ Y₁
+          have hunit := Adjunction.unit_leftAdjointUniq_hom_app hadj'
+            (PresheafOfModules.pullbackPushforwardAdjunction φ')
+            ((PresheafOfModules.pushforward φ').obj X₁ ⊗ (PresheafOfModules.pushforward φ').obj Y₁)
+          refine (Adjunction.IsMonoidal.leftAdjoint_μ
+            (adj := PresheafOfModules.pullbackPushforwardAdjunction φ') X₁ Y₁).trans ?_
+          symm
+          rw [hδcompat ((PresheafOfModules.pushforward φ').obj X₁)
+            ((PresheafOfModules.pushforward φ').obj Y₁)]
+          simp only [Category.assoc, MonoidalCategory.tensorHom_comp_tensorHom, hcounit]
+          rw [Functor.map_comp]
+          erw [reassoc_of% hunit]
+          rfl
+      -- `δ Gβ = μIsoβ.inv` (μIsoβ = `Functor.Monoidal.μIso Gβ`).
+      have hd : Functor.OplaxMonoidal.δ Gβ M.val N.val = μIsoβ.inv := rfl
+      -- `hU`/`hUinv`: the `leftAdjointUniq` unit comparison (Mathlib mate identity) and its inverse.
+      -- Phrased over `hadj'.unit` (good `_ ⋙ forget₂` carrier) — `hadj.unit` would force the bad
+      -- `X.ringCatSheaf.obj` carrier and break even `Category.assoc`.  `hadj'.leftAdjointUniq adj`
+      -- is defeq to `H1`, so the lemma applies by `exact`.
+      have hU : ∀ (P : _root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)),
+          hadj'.unit.app P ≫ (PresheafOfModules.pushforward φ').map (H1'.hom.app P)
+          = (PresheafOfModules.pullbackPushforwardAdjunction φ').unit.app P :=
+        fun P => Adjunction.unit_leftAdjointUniq_hom_app hadj'
+          (PresheafOfModules.pullbackPushforwardAdjunction φ') P
+      have hUinv : ∀ (P : _root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)),
+          (PresheafOfModules.pullbackPushforwardAdjunction φ').unit.app P ≫
+          (PresheafOfModules.pushforward φ').map (H1'.inv.app P) = hadj'.unit.app P := by
+        intro P
+        rw [← hU P]
+        simp
+      -- `hstar` (★): `Adjunction.unit_app_tensor_comp_map_δ` for `hadj'`, with `δ Gβ = μIsoβ.inv`.
+      -- `hstar`/`he` use `Monoidal.tensorObj` (the spelling the goal's `adj.unit` argument carries,
+      -- from `homEquiv_unit`); `exact` bridges the lemma's `⊗` form by defeq.
+      have hstar : hadj'.unit.app (M.val ⊗ N.val) ≫ (PresheafOfModules.pushforward φ').map μIsoβ.inv
+          = (hadj'.unit.app M.val ⊗ₘ hadj'.unit.app N.val) ≫
+              Functor.LaxMonoidal.μ (PresheafOfModules.pushforward φ')
+                (Gβ.obj M.val) (Gβ.obj N.val) := by
+        rw [← hd]
+        exact Adjunction.unit_app_tensor_comp_map_δ (adj := hadj') M.val N.val
+      -- expand `e.hom`, then run the mate calculus on the RHS.
+      have he : e.hom = H1'.inv.app (M.val ⊗ N.val) ≫ μIsoβ.inv ≫
+          (H1'.hom.app M.val ⊗ₘ H1'.hom.app N.val) := rfl
+      -- Run the calculus.  Plain `rw` keyed-matching fails on these `PresheafOfModules` compositions
+      -- (carrier-diamond curse), but `simp` with the reassociated mate lemmas matches.
+      simp only [he, Functor.map_comp]
+      -- `zeta := false` keeps the `let`s `hadj'`/`H1'`/`Gβ` folded; otherwise `simp` unfolds them to
+      -- the bad-carrier `hadj`/`H1`/`pushforward β` spellings and the later mate lemmas stop matching.
+      simp (config := { zeta := false }) [reassoc_of% (hUinv (M.val ⊗ N.val))]
+      erw [reassoc_of% hstar, Category.assoc, ← Functor.LaxMonoidal.μ_natural,
+        MonoidalCategory.tensorHom_comp_tensorHom_assoc, hU M.val, hU N.val]
     rw [hcompat]
     exact e.isIso_hom
   exact Functor.map_isIso _ (Functor.OplaxMonoidal.δ (PresheafOfModules.pullback φ') M.val N.val)

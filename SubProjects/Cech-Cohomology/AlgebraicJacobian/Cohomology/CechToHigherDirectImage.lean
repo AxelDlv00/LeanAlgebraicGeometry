@@ -70,7 +70,9 @@ noncomputable def mapAlternatingCofaceMapComplexIso
     rw [CochainComplex.of_d, CochainComplex.of_d]
     simp only [AlgebraicTopology.AlternatingCofaceMapComplex.objD, Functor.map_sum,
       Functor.map_zsmul]
-    rfl)
+    -- After simp, both sides equal ∑ k, (-1)^k • G.map (Y.δ k); close by rfl after
+    -- unfolding whiskering and additivity.
+    simp [Functor.map_sum, Functor.map_zsmul, CosimplicialObject.whiskering]; rfl)
 
 /-- **The `f_*`-image of the un-augmented Čech complex on `X` is isomorphic to the relative Čech
 complex** (blueprint `lem:pushforward_mapHC_cechComplexOnX`). -/
@@ -103,6 +105,7 @@ degree 0 is the augmentation `ε : F → C⁰`.
 
 Both outputs are assembled into a `PProd` (anonymous constructor `⟨e, hexact⟩`; `PProd` rather
 than `Prod` because the second component is a `Prop` while the first is an `Iso` in `Type`). -/
+set_option maxHeartbeats 4000000 in
 /-- **From augmented exactness to the P4 input data**
 (blueprint `lem:cechAugmented_to_acyclicResolutionInput`).
 
@@ -116,44 +119,55 @@ noncomputable def cechAugmented_to_acyclicResolutionInput
     (F ≅ (cechComplexOnX 𝒰 F).cycles 0) ×' (∀ n, (cechComplexOnX 𝒰 F).ExactAt (n + 1)) := by
   have hKex : ∀ p, (cechAugmentedComplex 𝒰 F).ExactAt p := fun p =>
     (HomologicalComplex.exactAt_iff_isZero_homology _ p).2 (cechAugmented_exact 𝒰 h𝒰 F hF p)
-  -- (2) positive-degree exactness: the short complex of the augmented complex around `n+2`
-  -- is definitionally the short complex of the un-augmented complex around `n+1`.
+  -- (1) positive-degree exactness: sc' of augmented at (n+2) = sc' of original at (n+1)
+  -- because CochainComplex.augment_X_succ and augment_d_succ_succ are both rfl.
+  -- Explicit have-steps with fully-typed RHS prevent whnf elaboration blowup.
   have hexact : ∀ n, (cechComplexOnX 𝒰 F).ExactAt (n + 1) := by
     intro n
-    have h := hKex (n + 2)
-    rw [(cechAugmentedComplex 𝒰 F).exactAt_iff' (n + 1) (n + 2) (n + 3)
-      ((ComplexShape.up ℕ).prev_eq' rfl) ((ComplexShape.up ℕ).next_eq' rfl)] at h
-    rw [(cechComplexOnX 𝒰 F).exactAt_iff' n (n + 1) (n + 2)
-      ((ComplexShape.up ℕ).prev_eq' rfl) ((ComplexShape.up ℕ).next_eq' rfl)]
-    exact h
-  -- ε is a monomorphism: the augmented complex is exact at 0 and its incoming map vanishes.
-  have h0 := hKex 0
-  rw [(cechAugmentedComplex 𝒰 F).exactAt_iff' 0 0 1 CochainComplex.prev_nat_zero
-    ((ComplexShape.up ℕ).next_eq' rfl)] at h0
+    have h : (cechAugmentedComplex 𝒰 F).ExactAt (n + 2) := hKex (n + 2)
+    have h' : ((cechAugmentedComplex 𝒰 F).sc' (n + 1) (n + 2) (n + 3)).Exact :=
+      ((cechAugmentedComplex 𝒰 F).exactAt_iff' (n + 1) (n + 2) (n + 3)
+        ((ComplexShape.up ℕ).prev_eq' rfl) ((ComplexShape.up ℕ).next_eq' rfl)).mp h
+    have h'' : ((cechComplexOnX 𝒰 F).sc' n (n + 1) (n + 2)).Exact := h'
+    exact ((cechComplexOnX 𝒰 F).exactAt_iff' n (n + 1) (n + 2)
+      ((ComplexShape.up ℕ).prev_eq' rfl) ((ComplexShape.up ℕ).next_eq' rfl)).mpr h''
+  -- (2) exactness at degree 0 gives Mono (cechAugmentation).
+  have h0 : (cechAugmentedComplex 𝒰 F).ExactAt 0 := hKex 0
+  have h0' : ((cechAugmentedComplex 𝒰 F).sc' 0 0 1).Exact :=
+    ((cechAugmentedComplex 𝒰 F).exactAt_iff' 0 0 1 CochainComplex.prev_nat_zero
+      ((ComplexShape.up ℕ).next_eq' rfl)).mp h0
   haveI hmono : Mono (cechAugmentation 𝒰 F) :=
-    h0.mono_g ((cechAugmentedComplex 𝒰 F).shape 0 0 (by simp))
-  -- exactness of the augmented complex at 1: the short complex `F –ε→ C⁰ –d⁰→ C¹`.
-  have h1 := hKex 1
-  rw [(cechAugmentedComplex 𝒰 F).exactAt_iff' 0 1 2
-    ((ComplexShape.up ℕ).prev_eq' rfl) ((ComplexShape.up ℕ).next_eq' rfl)] at h1
+    h0'.mono_g ((cechAugmentedComplex 𝒰 F).shape 0 0 (by simp))
+  -- (3) exactness at degree 1 gives the lift for the inverse iso.
+  have h1 : (cechAugmentedComplex 𝒰 F).ExactAt 1 := hKex 1
+  have h1' : ((cechAugmentedComplex 𝒰 F).sc' 0 1 2).Exact :=
+    ((cechAugmentedComplex 𝒰 F).exactAt_iff' 0 1 2
+      ((ComplexShape.up ℕ).prev_eq' rfl) ((ComplexShape.up ℕ).next_eq' rfl)).mp h1
   haveI : Mono ((cechAugmentedComplex 𝒰 F).sc' 0 1 2).f := hmono
-  -- `ι' ≫ ε = iCycles`: the exactness-lift of the cycle inclusion through ε.
-  have hl : h1.lift ((cechComplexOnX 𝒰 F).iCycles 0) ((cechComplexOnX 𝒰 F).iCycles_d 0 1) ≫
-      cechAugmentation 𝒰 F = (cechComplexOnX 𝒰 F).iCycles 0 := h1.lift_f _ _
-  refine ⟨⟨(cechComplexOnX 𝒰 F).liftCycles (cechAugmentation 𝒰 F) 1
-      ((ComplexShape.up ℕ).next_eq' rfl) (cechAugmentation_comp_d 𝒰 F),
-    h1.lift ((cechComplexOnX 𝒰 F).iCycles 0) ((cechComplexOnX 𝒰 F).iCycles_d 0 1),
-    ?_, ?_⟩, hexact⟩
-  · -- hom_inv_id: cancel the monomorphism ε on the right.
-    rw [← cancel_mono (cechAugmentation 𝒰 F), Category.assoc, Category.id_comp, hl,
-      HomologicalComplex.liftCycles_i]
-  · -- inv_hom_id: cancel the monomorphism `iCycles` on the right.
-    rw [← cancel_mono ((cechComplexOnX 𝒰 F).iCycles 0), Category.assoc, Category.id_comp,
-      HomologicalComplex.liftCycles_i, hl]
-
+  -- Bind both maps once: otherwise the elided `lift`/`liftCycles` proof-args get distinct
+  -- def-eq casts and `rw [HomologicalComplex.liftCycles_i]` grinds at `whnf` on the cover-built
+  -- complex (the original `rw`-chains here both fail / time out).
+  set inv := h1'.lift ((cechComplexOnX 𝒰 F).iCycles 0) ((cechComplexOnX 𝒰 F).iCycles_d 0 1)
+    with hinv
+  set hom := (cechComplexOnX 𝒰 F).liftCycles (cechAugmentation 𝒰 F) 1
+      ((ComplexShape.up ℕ).next_eq' rfl) (cechAugmentation_comp_d 𝒰 F) with hhom
+  have hl : inv ≫ cechAugmentation 𝒰 F = (cechComplexOnX 𝒰 F).iCycles 0 := h1'.lift_f _ _
+  have hli : hom ≫ (cechComplexOnX 𝒰 F).iCycles 0 = cechAugmentation 𝒰 F :=
+    (cechComplexOnX 𝒰 F).liftCycles_i _ _ _ _
+  refine ⟨⟨hom, inv, ?_, ?_⟩, hexact⟩
+  · -- hom_inv_id (term-mode: the `≫` def-eq cast between `(sc' …).X₁` and `F` blocks `rw`/`simp`)
+    exact (cancel_mono (cechAugmentation 𝒰 F)).1
+      (((Category.assoc hom inv (cechAugmentation 𝒰 F)).trans
+          ((congrArg (fun x => hom ≫ x) hl).trans hli)).trans
+        (Category.id_comp (cechAugmentation 𝒰 F)).symm)
+  · -- inv_hom_id
+    exact (cancel_mono ((cechComplexOnX 𝒰 F).iCycles 0)).1
+      (((Category.assoc inv hom ((cechComplexOnX 𝒰 F).iCycles 0)).trans
+          ((congrArg (fun x => inv ≫ x) hli).trans hl)).trans
+        (Category.id_comp ((cechComplexOnX 𝒰 F).iCycles 0)).symm)
 /-! ## Capstone: Čech computes higher direct images (affine-cover form) -/
 
-/- Planner strategy: lem:cech_computes_cohomology_affineCover ·
+/- Planner strategy: lem:cech_computes_cohomology ·
 Assembly of the four Route-A ingredients:
 
 (a) `cechAugmented_to_acyclicResolutionInput` yields:
@@ -182,7 +196,7 @@ Additive / PreservesFiniteLimits hypotheses on `pushforward f`: `Additive` is an
 `PreservesFiniteLimits (Scheme.Modules.pushforward f)` — left-exact since it is a right adjoint
 via the global sections adjunction). -/
 /-- **The Čech complex computes the higher direct images** (Stacks Tag 02KE;
-blueprint `lem:cech_computes_cohomology_affineCover`).
+blueprint `lem:cech_computes_cohomology`).
 
 Let `f : X ⟶ S` be a separated quasi-compact morphism with `X` and `S` both separated, `F` a
 quasi-coherent `O_X`-module, `𝒰` a finite affine open cover of `X` (with all cover opens affine,

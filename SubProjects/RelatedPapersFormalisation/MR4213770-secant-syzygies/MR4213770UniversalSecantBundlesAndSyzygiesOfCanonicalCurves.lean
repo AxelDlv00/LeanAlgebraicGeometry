@@ -1,1 +1,2 @@
 import MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves.Basic
+import MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves.Foundations

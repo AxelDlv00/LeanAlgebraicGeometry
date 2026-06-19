@@ -1,0 +1,81 @@
+[
+  {
+    "timestamp": "2026-06-19T00:58:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pullbackTensorMap_isIso_of_isOpenImmersion"
+    },
+    "session": {
+      "id": "session_23",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Carrier diamond RESOLVED this iter; sole residual is genuine math content hmon : hadj'.IsMonoidal (mu-side twin of proved D2' eta-bridge presheafUnit_comp_map_eta).",
+      "key_lemmas_used": [
+        "Adjunction.unit_app_tensor_comp_map_delta",
+        "Adjunction.unit_leftAdjointUniq_hom_app",
+        "Functor.Monoidal.muIso_inv",
+        "leftAdjointOplaxMonoidal_delta",
+        "pushforward0OfCommRingCat",
+        "restrictScalars"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Normalize the carrier diamond AWAY via the defeq composite Gbeta := pushforward0OfCommRingCat f.opensFunctor X.presheaf ⋙ restrictScalars beta', whose strong tensorator IS muIsobeta so delta Gbeta = muIsobeta.inv by rfl; re-ascribe hadj'/H1' onto the good (_ ⋙ forget₂) carrier; run the recon022 mate calculus (hd/hU/hUinv/hstar/he) and close final assembly with simp(config:={zeta:=false})+erw.",
+        "code_tried": "let Gβ := pushforward₀OfCommRingCat f.opensFunctor X.presheaf ⋙ restrictScalars β'; have hadj' : Gβ ⊣ pushforward φ' := hadj; have hd : δ Gβ M.val N.val = μIsoβ.inv := rfl; ... simp only [he, map_comp]; simp (config := {zeta := false}) [reassoc_of% hUinv]; erw [reassoc_of% hstar, Category.assoc, ← μ_natural, tensorHom_comp_tensorHom_assoc, hU M, hU N]",
+        "line_number": "4093-4266",
+        "lean_error": "none (file compiles EXIT 0, single sorry warning at hmon L4226)",
+        "goal_before": "(adj.unit M ⊗ₘ adj.unit N) ≫ μ_G (FM)(FN) = adj.unit (M⊗N) ≫ G.map e.hom",
+        "goal_after": "⊢ hadj'.IsMonoidal  (hadj' : Gβ ⊣ pushforward φ')",
+        "result": "partial",
+        "insight": "The 5-iter (018-022) carrier diamond was an INSTANCE-KEY artefact, not math; the Gβ-composite re-ascription + zeta:=false + erw defeat it definitively (recon023 kill-criterion resolved). Plain rw/simp-only key-fail on defeq-but-not-syntactic ≫ instances; full simp zeta-unfolds the carrier-normalizing lets and reintroduces the diamond; erw is the only tactic that fires hstar/μ_natural."
+      }
+    ],
+    "next_steps": "Prove hmon : hadj'.IsMonoidal sectionwise: refine ⟨?_,?_⟩ for the two fields (leftAdjoint_ε, leftAdjoint_μ), each by PresheafOfModules.hom_ext + ModuleCat.MonoidalCategory.tensor_ext, reusing the D3' machinery in this file (pushforward_μ_eq, restrictScalars_μ_app, forget₂_restrictScalars_μ_hom_tmul, pushforward_map_restrictScalars_μ_app_tmul). ~100-200 LOC, the μ-side analogue of pushforwardComp_lax_μ. This is now a NORMAL prove obligation, NOT a wall."
+  },
+  {
+    "timestamp": "2026-06-19T00:58:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "exists_tensorObj_inverse"
+    },
+    "session": {
+      "id": "session_23",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Two residuals: (A) overlap cocycle hf (self-contained, hard transition-unit cancellation); (B) BLOCKED on a missing cross-file connector homOfLocalCompat_restrictFunctor_map in DualInverse.lean.",
+      "key_lemmas_used": [
+        "dual_isLocallyTrivial",
+        "homOfLocalCompat",
+        "isIso_of_isIso_restrict",
+        "tensorObj_restrict_iso",
+        "tensorObjIsoOfIso",
+        "tensorObj_unit_iso",
+        "dual_restrict_iso",
+        "dual_unit_iso",
+        "dualIsoOfIso",
+        "restrictFunctorIsoPullback",
+        "pullbackUnitIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Replace the single bare sorry (moved from TensorObjSubstrate L730 to this new file L48) with the full rem:dual_discharges_inverse descent skeleton: Linv:=dual L (C-bridge dual_isLocallyTrivial CLOSED); choose trivialising cover U/eM; derive dual trivialisations eN FROM eM on the same open; local contraction e; unit identification uι; local iso morphisms f x = (e x).hom ≫ (uι x).inv landing in the restricted GLOBAL unit; glue to ε via homOfLocalCompat (A-bridge); IsIso ε via isIso_of_isIso_restrict (B-bridge); ⟨asIso ε⟩.",
+        "code_tried": "refine ⟨dual L, dual_isLocallyTrivial hL, ?_⟩; choose U hxU _hUaff hLt using hL; set eM ...; set eN := fun x => dual_restrict_iso (U x).ι L ≪≫ (dualIsoOfIso (eM x)).symm ≪≫ dual_unit_iso; set e ...; set uι ...; set f := fun x => (e x).hom ≫ (uι x).inv; have hfiso ...; set ε := homOfLocalCompat U (fun x => ⟨x, hxU x⟩) f (by intro i j V hVi hVj; sorry); have hεiso : IsIso ε := isIso_of_isIso_restrict ε U hxU (by intro x; have := hfiso x; sorry); exact ⟨asIso ε⟩",
+        "line_number": "48-118",
+        "lean_error": "Intermediate: 'Invalid field restrict: environment does not contain SheafOfModules.restrict' — dot-notation resolved to SheafOfModules head not Scheme.Modules; fixed by function-form restrict (unit …) (U x).ι. Final: compiles, single 'declaration uses sorry' warning at L48.",
+        "goal_before": "∃ Linv, IsLocallyTrivial Linv ∧ Nonempty (tensorObj L Linv ≅ SheafOfModules.unit X.ringCatSheaf)",
+        "goal_after": "two internal sorries: (A) L104 cocycle agreement of eqToHom-conjugated section maps of f i, f j on overlaps; (B) L117 IsIso ((restrictFunctor (U x).ι).map ε) given IsIso (f x)",
+        "result": "partial",
+        "insight": "Object choice + C-bridge genuinely discharged; whole local-data construction + glued ε + B-bridge/asIso wiring built and compiles. Residual A section-hom types are REAL ab-group maps (subsingleton/Subsingleton.elim do NOT apply — verified wrong tool). Residual B is category-2: homOfLocalCompat exports NO restriction/gluing-value lemma; its IsGluing/hconn spec is unreachable from outside the def."
+      }
+    ],
+    "next_steps": "FIRST (cheap unblock, assign DualInverse.lean): add connector lemma homOfLocalCompat_restrictFunctor_map : (restrictFunctor (U i).ι).map (homOfLocalCompat U hU f hf) = f i (~40-80 LOC reusing internal hconn + IsGluing _hs); then residual B closes by rw+exact hfiso x. SECOND: residual A cocycle = push g·g⁻¹=1 transition-unit cancellation through tensorObj_restrict_iso/tensorObjIsoOfIso/dualIsoOfIso (large, self-contained). Serialize: connector first."
+  }
+]

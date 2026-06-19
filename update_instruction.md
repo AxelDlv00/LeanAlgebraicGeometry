@@ -1,6 +1,6 @@
 # Update instructions (before every push)
 
-- Update `roadmap.md` and `README.md` by hand (status, sorry counts, papers).
+- Update `roadmap.md` and `README.md` by hand (status, sorry counts, papers). Recent changes should contain the emoji ✨.
 - Regenerate scope DAG (if members/deps changed): `archon scope roadmap`
 - Build the static dashboard: `archon scope dashboard --static-build`
 - Commit **and push** everything incl. `docs/` — Pages only deploys what's pushed to `main`:

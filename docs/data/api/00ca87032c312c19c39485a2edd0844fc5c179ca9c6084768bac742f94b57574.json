@@ -1,0 +1,101 @@
+[
+  {
+    "timestamp": "2026-06-19T01:15:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "sectionMul_assoc_core"
+    },
+    "session": {
+      "id": "session_7",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "sheafification_map_unit_top",
+        "sheafification_map_unit_top_inv",
+        "isIso_sheafification_whiskerRight_unit",
+        "val_app_top_comp",
+        "tensorObjAssoc"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Build two engine lemmas then peel tensorObjAssoc's 5-segment definition and ride the sheafification unit η through each segment (bridge-free section-η template)",
+        "code_tried": "haveI i1 i2 := isIso_sheafification_whiskerRight_unit …; simp only [tensorObjAssoc, Iso.trans_hom, val_app_top_comp, Iso.symm_hom, asIso_hom, asIso_inv, Functor.mapIso_hom]; erw [h1]; erw [sheafification_map_unit_top (α_…).hom, …(β_ a (b⊗c)).hom, …(η_{b⊗c}▷a), …(β_ (B⊗C) a).hom]; rfl",
+        "line_number": "2032",
+        "lean_error": "positional rw [h1] failed: 'Did not find an occurrence of the pattern' (IsIso instance baked into tensorObjAssoc segments differs syntactically from freshly-synthesised) — switched to erw",
+        "goal_before": "Γ((A.tensorObjAssoc B C).hom)((A⊗B).sectionsMul C ((A.sectionsMul B)(σ⊗τ)⊗υ)) = A.sectionsMul (B⊗C)(σ ⊗ (B.sectionsMul C)(τ⊗υ))",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "rw FAILS but erw succeeds — only erw's up-to-defeq matching bridges the syntactically-different IsIso instances; final element identity is pure rfl (ModuleCat structural maps reduce on elementary tensors). lean_verify axiom-clean {propext, Classical.choice, Quot.sound}."
+      }
+    ],
+    "next_steps": "Engine lemmas sheafification_map_unit_top/_inv need blueprint entries (coverage debt). Blueprint proof-block prose+\\uses still describe the abandoned associator-bridge route — realign via writer."
+  },
+  {
+    "timestamp": "2026-06-19T01:10:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorBraiding_eq_localizedBraiding (build-blocker fix, not a sorry)"
+    },
+    "session": {
+      "id": "session_7",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "MonoidalCategory.tensorIso",
+        "Iso.hom_inv_id_assoc"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Thread the already-found MonoidalCategory instance mc explicitly into tensorIso to stop re-synthesis abort inside the large exact term",
+        "code_tried": "have tIso := @MonoidalCategory.tensorIso (modulesLocalizedMonoidal X) _ mc _ _ _ _ (sheafificationCounitIso F) (sheafificationCounitIso G); exact (tIso.hom_inv_id_assoc _).symm",
+        "line_number": "1695",
+        "lean_error": "Type mismatch: Eq.symm (Iso.hom_inv_id_assoc tIso ?m) — 'have tIso' binding makes .hom opaque so it no longer reduces to ⊗ₘ; unification against goal's tensorHom form fails",
+        "goal_before": "(F.sheafificationCounitIso.hom ⊗ₘ G.sheafificationCounitIso.hom) ≫ (β_ F G).hom = (μ … ≫ L'.map (β_ …) ≫ μ⁻¹) ≫ (G.counit.hom ⊗ₘ F.counit.hom)",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "the cold file did NOT build on entry (lake exit 1 at 1695: failed to synthesize MonoidalCategory (modulesLocalizedMonoidal X)); letI mc finds it but inline re-synthesis aborts. Fix: keep @-explicit-threading INLINE (a `have` binding makes .hom opaque → fails). Cold lake build now exit 0."
+      }
+    ],
+    "next_steps": "Fragile load-bearing pattern (auditor major) — will break if Mathlib refactors the LocalizedMonoidal MonoidalCategory instance path."
+  },
+  {
+    "timestamp": "2026-06-19T01:13:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorPowAdd_rightUnit (succ), tensorPowAdd_braiding (succ), tensorPowAdd_assoc (base+succ), sectionsMul_mul_assoc"
+    },
+    "session": {
+      "id": "session_7",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "All 4 remaining sorries gated on the associator bridge lem:tensorObjAssoc_eq_localizedAssociator, whose plan premise ('a clone of the braiding bridge') is FALSE: tensorObjAssoc is a hand-built 5-segment composite (inv whiskered unit · sheafification.mapIso α_p · braiding · whiskered unit · braiding), not a bare mapIso, because (A⊗B)⊗C and A⊗(B⊗C) sheafify DIFFERENT presheaves. The bridge requires matching the 5-segment composite against associator_hom_app's μ-formula — a genuine 100-200 line theorem, not a rfl-opener.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — premise flaw identified before churn",
+        "code_tried": "n/a",
+        "line_number": "2171,2193,2208,2211,2271",
+        "lean_error": "n/a",
+        "goal_before": "n/a",
+        "goal_after": "n/a",
+        "result": "partial",
+        "insight": "Prover correctly declined to reproduce pc007 churn. Re-scope (ii) as its own iter with tensorObjAssoc_eq_loc decomposed into seams: (a) two whiskered-unit segments = μ's via isIso_sheafification_whiskerRight_unit ↔ Localization.Monoidal.μ (both are the strong-monoidality comparison — they should be EQUAL, the real lemma to find); (b) sheafification.mapIso α_p = L'.mapIso α_p (defeq); (c) the two presheaf braidings cancel as in the braiding bridge. The section-level engine does NOT help (it is section-level; bridges are iso-level)."
+      }
+    ],
+    "next_steps": "Do NOT re-assign these as 'braiding-bridge clones'. Decompose tensorObjAssoc_eq_localizedAssociator (effort-breaker) into the 3 seams above before any prover. Seam (a) — proving the hand-built whiskered-unit iso EQUALS Localization.Monoidal.μ — is the keystone."
+  }
+]

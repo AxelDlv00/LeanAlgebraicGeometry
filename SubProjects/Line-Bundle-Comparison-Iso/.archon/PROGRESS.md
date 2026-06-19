@@ -16,128 +16,123 @@ prover
 + kernel-only axioms**, for the **Line-Bundle Comparison Iso** subproject
 (A.1.c.sub of the Algebraic-Jacobian-Challenge). Seeds:
 
-- `lem:pullback_tensor_iso_loctriv` — `pullbackTensorIsoOfLocallyTrivial` (D4′; body+chart-chase
-  CLOSED iter-020; sole residual = K1's `hcompat`, ACTIVE this iter via the recon022 idiom).
-- `lem:dual_isLocallyTrivial` — `dual_isLocallyTrivial` (DUAL route) — **DELIVERED iter-015**.
-- `thm:rel_pic_addcommgroup_via_tensorobj` — `PicSharp.addCommGroup_via_tensorObj` (consumer; SCAFFOLD).
+- `lem:pullback_tensor_iso_loctriv` — `pullbackTensorIsoOfLocallyTrivial` (D4′; body CLOSED; transitively
+  sorry only via K1 μ-side — **η CLOSED iter-028**, **μ RHS + comparison-assembly CLOSED iter-029**; sole
+  residual = `pushforward_lax_mu_comparison_lhs_tmul`, deferred to iter-031 solo lane).
+- `lem:dual_isLocallyTrivial` — `dual_isLocallyTrivial` (DUAL route) — **DELIVERED**.
+- `thm:rel_pic_addcommgroup_via_tensorobj` — `PicSharp.addCommGroup_via_tensorObj` (consumer; SCAFFOLD,
+  gated on seed-1 + terminal).
 
-## Build state (iter-022 plan turn)
+## Build state (iter-030 plan turn)
 
-- **D3′ comparison-iso substrate COMPLETE @ iter-019** (`pullbackTensorMap_restrict` + whole base-change
-  cone sorry-free, axiom-clean).
-- **Seed-1 D4′ chart-chase ASSEMBLED @ iter-020; K1 scaffolded @ iter-021**:
-  `pullbackTensorIsoOfLocallyTrivial` (L4238) body sorry-free; `chart_isIso` + the whole D4′ `IsIso`
-  reduce to the single open-immersion brick **K1** (`pullbackTensorMap_isIso_of_isOpenImmersion`, L4139),
-  whose Steps A+B + the `hcompat` transposition are all in place — sole residual = the `hcompat` sorry (L4219).
-- **`TensorObjSubstrate.lean`** — GREEN, 2 bare sorries:
-  - L4219 — K1 `hcompat` (the ACTIVE target; transitive sorryAx to seed-1).
-  - L734 `exists_tensorObj_inverse` — import-cycle-deferred terminal (never close here; see deferrals).
-- **`SliceTransport.lean` / `DualInverse.lean`** — sorry-free (DUAL route CLOSED iter-015).
-- Project-wide bare sorries: **2** (1 active K1 `hcompat` + 1 deferred terminal).
+- **Tree is currently RED** from a single iter-029 one-token name-shadow at `DualInverse.lean:219`
+  (`← map_smul` resolves to project-local `Scheme.Modules.map_smul` under full imports, not
+  `LinearMap.map_smul`). Verified fix `← LinearMap.map_smul` closes the goal (`goals:[]`). This break
+  stripped ~29 `\leanok` across DualInverse → TensorObjInverse → RelPicFunctor.
+- **iter-029 delivered real math, lost to a parallel-lane build-race** (all 3 lanes ran on the import
+  chain `Substrate→DualInverse→TensorObjInverse`; the heavy Substrate μ-lane churned the ROOT all session
+  so the two downstream lanes never got a green `lake build` window):
+  - **Substrate (root, GREEN, committed):** `pushforward_lax_mu_comparison_rhs_tmul` PROVEN; parent
+    `pushforward_lax_mu_comparison` body sorry-free (`hom_ext` delegation). 2 residual sorries: `lhs_tmul`
+    (L4353), `mu_appIso_collapse` (L4506).
+  - **DualInverse (RED, one token from green):** `presheafDualUnitIso_naturality` WRITTEN + verified
+    `goals:[]`; file sorry-free; sole blocker = L219 shadow.
+  - **TensorObjInverse (RED, paper-complete):** hN `dualUnitIso_dualIsoOfIso` CLOSED + verified `goals:[]`
+    (⇒ `tensorObj_unit_self_duality_collapse` fully sorry-free); cocycle `exists_tensorObj_inverse` full
+    iso-algebra reduction DERIVED + written in-code; `trivialisation_restrict_compat` not yet typed. 2
+    open sorries (L211, L434).
+- **Leaf sorries (true disk state, after the L219 fix lands):** Substrate 2 (`lhs_tmul`,
+  `mu_appIso_collapse`); TensorObjInverse 2 (`trivialisation_restrict_compat`, cocycle); DualInverse 0.
 
-## Gate status (iter-022)
+## iter-030 decision — break the build-race by sequencing the root-churning lane OUT
 
-- **blueprint-reviewer: SKIPPED with rationale** (see `iter/iter-022/plan.md`). The K1 chapter node
-  `lem:pullback_tensor_map_isiso_open_immersion` cleared the HARD GATE at bpr021 (complete+correct,
-  pin resolves, no must-fix) and tos021 re-confirmed the residual `hcompat` is *exactly* the chapter's
-  stated mate-compatibility obligation. NO blueprint chapter is edited this iter (the prover guidance lives
-  in PROGRESS + `analogies/recon022.md`), so the gate remains satisfied. The tos021 MINOR (port the
-  reduction telescope into the chapter body) is non-blocking → review-phase / next blueprint touch.
-- **mathlib-analogist recon022 (api-alignment): ALIGN_WITH_MATHLIB.** The iter-021 hand-built `e`+`hcompat`
-  reconciliation is reinventing the Mathlib carrier `Adjunction.IsMonoidal`. `hcompat` ⟺ `hadj.IsMonoidal`;
-  NO Mathlib gap (full scaffolding present: `Adjunction.IsMonoidal`, mate (op)lax defs, the `≃` uniqueness
-  `laxMonoidalEquivOplaxMonoidal`, δ-side lemmas). Smallest remaining ingredient = the project-side instance.
-  Persistent recipe: `analogies/recon022.md`.
-- **strategy-critic sc022: SOUND** — independently verified every named Mathlib decl against source
-  (`Adjunction.IsMonoidal` Functor.lean:952, `laxMonoidalEquivOplaxMonoidal`+`right_inv` :1070,
-  `leftAdjointOplaxMonoidal.δ` :1011, `μIso`⇒`IsIso δ` :389/396, `restrictScalarsMonoidalOfBijective`).
-  Note: the sectionwise close may need multi-line `simp`/rewriting after the `homEquiv` transpose, NOT a
-  bare `rfl` (cf. Mathlib mate proofs Functor.lean:1020–1051).
-- **progress-critic pc022: STUCK** — its must-fix corrective ("Mathlib analogy consult BEFORE/INSTEAD OF
-  another prover round") was EXECUTED this iter (recon022, in parallel); its escalation branch ("if NO
-  Mathlib path → user escalation") does NOT fire — recon022 found a concrete project-side path. The
-  post-consult route (build `hadj.IsMonoidal` via the Mathlib carrier) is a genuine technique change, not
-  the reworded mathlib-build re-dispatch the critic (correctly) blocked. Rebuttal-with-action in the sidecar.
+Root cause of iter-029's "nothing landed" was the 3-way race, NOT a math stall (progress-critic pc030
+confirms: real sorry-elimination verified each iter, blocked only on a green build window). Corrective:
+
+1. **Fix the tree (DualInverse one-token) WITHOUT touching the root.** Substrate stays GREEN/untouched, so
+   the fix + the TensorObjInverse work both build against a stable root. This lands the eval-core, hN, and
+   `tensorObj_unit_self_duality_collapse`, and restores ~29 markers.
+2. **Type the paper-complete TensorObjInverse closures** (`trivialisation_restrict_compat` + cocycle) — now
+   that a green window exists. pc030 mandate: close BOTH, NO new helpers; a 3rd PARTIAL → STUCK.
+3. **Defer Substrate `lhs_tmul`/`mu_collapse` to iter-031 as a SOLO root-churning lane.** pc030: this 1-iter
+   deferral is correct sequencing (not avoidance); a 2nd consecutive deferral trips CHURNING-by-avoidance,
+   so iter-031 MUST give `lhs_tmul` its solo lane.
+
+Cheapest reversal signal: if the TensorObjInverse lane still can't get a green window (DualInverse fix
+delayed), fall back to DualInverse-fix-alone next iter (deterministic green), then TensorObjInverse solo.
+
+## Gate status (iter-030)
+
+- **blueprint-reviewer: SKIPPED** — rev029 cleared the HARD GATE for `Picard_TensorObjSubstrate.tex`
+  (`% archon:covers` Substrate + DualInverse + TensorObjInverse); every this-iter target
+  (`presheafdualunitiso_naturality`, `trivialisation_restrict_compat`, `tensorobj_inverse_invertible`, hN
+  `dualunitiso_dualisoofiso`) already has a gate-cleared block. No chapter edited this iter; no live must-fix.
+  (Rationale in `iter/iter-030/plan.md`.)
+- **progress-critic pc030:** Route A (TensorObjInverse) CHURNING but **"planner corrective IS correct"**;
+  Route B (DualInverse) fast-track-CONVERGING; Substrate 1-iter deferral OK; **dispatch=OK**. Must-fix:
+  close BOTH TensorObjInverse sorries with pre-derived algebra (no new helpers); apply the one-token
+  DualInverse fix; iter-031 = `lhs_tmul` solo lane (recorded).
+- **strategy-critic: SKIPPED** — STRATEGY.md substantively unchanged (cosmetic estimate refresh; routes /
+  decomposition / goal identical to the sc024-SOUND state); no route swap this iter (build-fix + same lanes;
+  `lhs_tmul` sequenced, not swapped). (Rationale in `iter/iter-030/plan.md`.)
+- lean-auditor iter029 sole must-fix = the L219 build break (= Objective 1). blueprint-doctor clean; leandag
+  gaps=0, frontier=5.
 
 ## Current Objectives
 
-1. **`AlgebraicJacobian/Picard/TensorObjSubstrate.lean`** — **seed-1 D4′ brick K1 — close `hcompat`,
-   `prove` mode.** Fill the SOLE open sorry at L4219 (inside `hcompat`, inside `hδ`, inside
-   `pullbackTensorMap_isIso_of_isOpenImmersion`, L4139). Closing it makes `chart_isIso` +
-   `pullbackTensorIsoOfLocallyTrivial` (seed-1) axiom-clean — NO other edits needed.
-   Blueprint: `chapters/Picard_TensorObjSubstrate.tex` — `lem:pullback_tensor_map_isiso_open_immersion`
-   (K1, ~L3651). Concrete recipe: `analogies/recon022.md` (mathlib-analogist, this iter).
+1. **`AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean`** — **build-break fix only**,
+   `[prover-mode: prove]`. ONE change: at **line 219**, inside `private lemma linearEndo_apply_comm`, change
+   the rewrite `← map_smul` to `← LinearMap.map_smul` (under full imports the bare `map_smul` resolves to the
+   project-local `Scheme.Modules.map_smul`, whose `ConcreteCategory.hom … • …` pattern does not match the
+   goal `g x = x • g 1`; `LinearMap.map_smul` is the intended one). Verified: the corrected line
+   `rw [← smul_eq_mul, ← LinearMap.map_smul, smul_eq_mul, mul_one]` yields `goals:[]`. Do NOT add or change
+   anything else in this file (it is otherwise sorry-free and complete). Finish ASAP so the import frees for
+   the TensorObjInverse lane. This lands `presheafDualUnitIso_naturality` and (via importers) hN
+   `dualUnitIso_dualIsoOfIso` + `tensorObj_unit_self_duality_collapse`, restoring ~29 markers. Blueprint:
+   `chapters/Picard_TensorObjSubstrate.tex` (`lem:presheafdualunitiso_naturality`).
 
-   **The goal at L4219** (after the `rw` chain at L4207 already fired) is the presheaf-level
-   mate-compatibility equation reducing to: `(leftAdjointOplaxMonoidal hadj).δ M.val N.val = μIsoβ.inv`,
-   i.e. the project lax structure on `pushforward φ'` is the `hadj`-mate of `pushforward β`'s STRONG
-   structure. **recon022 verdict: this is EXACTLY `hadj.IsMonoidal`** (the Mathlib carrier
-   `Adjunction.IsMonoidal`). The iter-021 hand-built `e`+manual reconciliation is reinventing it.
+2. **`AlgebraicJacobian/Picard/TensorObjInverse.lean`** — close the two remaining cocycle-A residuals,
+   `[prover-mode: prove]`. **pc030 must-fix: close BOTH using the pre-derived algebra — add NO new helpers;
+   a 3rd PARTIAL on this route → STUCK.** Both proofs were paper-validated iter-029 but never typed (the
+   build-race denied a green window — which the Objective-1 fix now provides). Build the file with `lake
+   build`/LSP only AFTER the DualInverse import resolves green; reference `presheafDualUnitIso_naturality` by
+   its frozen signature (robust to edits).
+   - **`trivialisation_restrict_compat` (L183, sorry@L211)** — restriction-functor naturality of the
+     trivialisation iso-chain, per-index `image_preimage_of_le` eqToHom bookkeeping. MIRROR proved
+     `restrictIsoUnitOfLE` (TensorObjSubstrate L424; `analogies/cocycle-a.md` §A). Memory
+     [[restrictfunctor-glued-morphism-pattern]]: `SheafOfModules.Hom.ext` before `PresheafOfModules.hom_ext`;
+     conjugate `eqToHom` flanks via `eqToHom_comp_iff` + `exact`-matched naturality; forward `rw [naturality]`
+     fails on the X-vs-restrict defeq (use `erw`/`exact`).
+   - **Cocycle `exists_tensorObj_inverse` (L302, sorry@L434)** — type the in-code `/- Planner strategy -/`
+     reduction (paper-validated iter-029): `erw [trivialisation_restrict_compat …]` reduces both overlap legs
+     to one `t`; `dualIsoOfIso_trans` (order flips) + insert `dual_unit_iso ≪≫ dual_unit_iso.symm = 𝟙` give
+     `dualLeg eMj = dualLeg eMi ≪≫ sConj`; `tensorObjIsoOfIso_trans` factors the RHS; then
+     `tensorObjIsoOfIso t sConj ≪≫ tensorObj_unit_iso = tensorObj_unit_iso` is EXACTLY
+     `tensorObj_unit_self_duality_collapse t` (now sorry-free). The sectionwise goal lifts to this iso
+     equation by `congrArg` on the shared wrapper. NEVER sheafify-the-eval (d.2 dead-end).
+   Closing both closes the terminal (the decoupled half of the cone). Blueprint:
+   `chapters/Picard_TensorObjSubstrate.tex` (`lem:trivialisation_restrict_compat`,
+   `lem:dualunitiso_dualisoofiso`, `lem:tensorobj_inverse_invertible`).
 
-   **RECIPE (recon022 + sc022, all decls verified against Mathlib source this iter):**
-   - **Step 1 — the ONE irreducible step: build `hadj.IsMonoidal`.** `hadj : pushforward β ⊣ pushforward φ'`
-     (already in scope, L4162). `pushforward β` is STRONG monoidal (oplax) via the `μIsoβ` you already built
-     (`restrictScalarsMonoidalOfBijective β' hβ`); `pushforward φ'` is lax via `presheafPushforwardLaxMonoidal φ'`.
-     Provide `haveI : hadj.IsMonoidal` (in-proof; promote to a top-level instance ONLY if cleaner/reused —
-     see Coverage). Prove its two fields (`leftAdjoint_ε`, `leftAdjoint_μ`) **sectionwise**, the
-     `ModuleCat/Monoidal/Adjunction.lean` idiom: transpose by `(hadj.homEquiv _ _).injective`, then close the
-     resulting `PresheafOfModules`-hom equation by `tensor_ext` + sectionwise `ModuleCat` check.
-     `[verified] Adjunction.IsMonoidal` (Mathlib `CategoryTheory/Monoidal/Functor.lean:952`, exactly two fields).
-     ⚠ **sc022 caution:** the field close will likely need multi-line `simp`/rewriting after the transpose,
-     NOT a bare `tensor_ext (fun _ _ ↦ rfl)` — study Mathlib's analogous mate proofs at `Functor.lean:1020–1051`
-     for the post-transpose rewrite shape.
-   - **Step 2 — collapse `hcompat`.** With `[hadj.IsMonoidal]` in scope, the project lax on `pushforward φ'`
-     IS `rightAdjointLaxMonoidal hadj` of `pushforward β`'s strong-oplax, so by the Equiv `right_inv`,
-     `leftAdjointOplaxMonoidal hadj = ` (the strong oplax on `pushforward β`), whose `.δ M N = μIsoβ.inv`
-     via `Functor.Monoidal.μIso`/`μIso_inv`. `[verified] Adjunction.laxMonoidalEquivOplaxMonoidal` +
-     `.right_inv` (`Functor.lean:1070`); `[verified] Functor.Monoidal.μIso`/`δ` (`:389/396`).
-     *Alternative direct route:* rewrite `Adjunction.leftAdjointOplaxMonoidal_δ` with
-     `Adjunction.IsMonoidal.leftAdjoint_μ`, then `Equiv.symm_apply_apply` collapses to the strong δ.
-   - **δ-side lemmas now live** (available once `[hadj.IsMonoidal]`), if needed for the transpose:
-     `[verified] Adjunction.unit_app_tensor_comp_map_δ` (`:973`),
-     `[verified] Adjunction.map_μ_comp_counit_app_tensor` (`:983`) — the δ-twins of the η-side
-     `Adjunction.unit_app_unit_comp_map_η` the project already uses in `presheafUnit_comp_map_eta` (L1476).
-   - **DO NOT** retry the functor-level `Functor.Monoidal.transport` route (carrier diamond; L4159–4171 comment).
-   - **Bar:** close the `hcompat` sorry → K1 axiom-clean → seed-1 `pullbackTensorIsoOfLocallyTrivial` axiom-clean.
-     Partial progress (`hadj.IsMonoidal` fields stated as `have`s, one field closed) is committable (GREEN only).
-   - **Coverage:** prefer the in-proof `haveI : hadj.IsMonoidal` (no new top-level decl → no coverage debt).
-     If a top-level instance/lemma is genuinely cleaner (it IS reusable — DualInverse.lean uses the same
-     `pushforwardPushforwardAdj`+`restrictScalarsMonoidalOfBijective` pair), create it and list it under
-     `## Needs blueprint entry` with `\uses{lem:tensorobj_restrict_iso}` + the pushforward-adjunction deps.
-   - **Reversal signal (genuine, not a checkbox):** if Step-1's field equation does NOT close after the
-     sectionwise transpose — i.e. `presheafPushforwardLaxMonoidal β`'s underlying μ is NOT defeq to
-     `restrictScalarsMonoidalOfBijective β'`'s μ — STOP, report the exact field goal state, and flag that the
-     two lax structures on `pushforward β` genuinely differ (would need a `μ`-component identity lemma first).
-     Do NOT fall back to the `transport` route or hand-build a fresh `e`.
-
-(`exists_tensorObj_inverse` (L734) stays deferred this iter — import-cycle; closes next phase via the
-refactor-MOVE downstream of DualInverse. Seed-3 consumer `RelPicFunctor.lean` stays deferred until seed-1
-+ the terminal close land.)
+(Substrate `lhs_tmul`/`mu_collapse` DEFERRED to iter-031 solo lane — see Build state. RelPicFunctor seed-3
+BLOCKED on seed-1 K1.)
 
 ## Standing deferrals
 
-- **Terminal `exists_tensorObj_inverse` (L734):** import-cycle-deferred; closes NEXT phase by a
-  `refactor`-MOVE of the decl to a file downstream of `DualInverse.lean` (where `dual_isLocallyTrivial`
-  is visible) + repoint `RelPicFunctor.lean`'s import (sole consumer — RE-GREP to confirm before the MOVE).
-  Then a prover closes the gluing proof (bridges B+C done; A = `homOfLocalCompat` descent).
+- **Seed-1 μ-side `lhs_tmul` + `mu_appIso_collapse` — DEFERRED iter-030, MANDATORY iter-031 solo lane.**
+  Must run as the ONLY root-churning (Substrate-editing) lane that iter to avoid the build-race. Recipe in
+  `task_pending.md` Seed-1. pc030: a 2nd consecutive deferral = CHURNING-by-avoidance.
 - **Scaffold target (decl does not exist yet — NOT fill-sorry):** `PicSharp.addCommGroup_via_tensorObj`
-  (seed 3, `RelPicFunctor.lean`); gated on seed-1 (map_add ← comparison iso) + the terminal close.
-  The OnProduct-specialisation `pullback_tensorObj_iso` (`lem:pullback_compatible_with_tensorobj`) lands
-  as an immediate downstream specialisation of seed-1.
-- **Import architecture (in scope):** `LineBundlePullback → TensorObjSubstrate → SliceTransport →
-  DualInverse`; `TensorObjSubstrate → RelPicFunctor`. The terminal MOVE adds
-  `RelPicFunctor → {TensorObjInverse} → DualInverse` (acyclic).
+  (seed 3, `RelPicFunctor.lean`); gated on seed-1 (K1 collapse lemmas) + the terminal. Stays BLOCKED on the
+  critical path (`map_add` rides the seed-1 comparison iso).
+- **Doc-refresh debt (non-blocking):** stale headers/in-proof comments in `TensorObjSubstrate.lean`
+  (L46–47 sorry-location, L162), `DualInverse.lean` (L19/L44 reference a `dual_restrict_iso` Step-4 sorry
+  that no longer exists), premature "closed" comments while RED (lean-auditor iter029). `Vestigial.lean` +
+  dead `section PullbackLanDecomposition`. Fix opportunistically.
+- **Coverage / file-split debt (deferred phase):** ~99 `lean_aux` decls unmatched (bulk pre-existing);
+  `TensorObjSubstrate.lean` (>3600 LOC) split. `linearEndo_apply_comm` is `private` (leaves the scan; no
+  blueprint entry owed). Scheduled `Coverage + file-split` phase; defer until a seed lane lands.
 - **AJC Lan-decomposition block** (`extendScalars`/`pullback0`/`pullbackLanDecomposition`) — NOT ported
-  (confirmed dead code; not in any seed cone).
-- **Blueprint K1 proof-body telescope (tos021 MINOR, non-blocking):** port the L4202–4218 `homEquiv`-
-  transposition + `unit_leftAdjointUniq_hom_app` reduction (and now the recon022 `Adjunction.IsMonoidal`
-  recipe) into the chapter K1 proof body, so the chapter — not a Lean comment — guides the close. Do at
-  the next blueprint-writer touch.
-- **Doc-refresh debt (non-blocking):** stale headers/in-proof comments — `TensorObjSubstrate.lean`
-  L44/L46/L158–159/L4014 + the abandoned-`transport` comment L4159–4171 (describes a superseded route);
-  `DualInverse.lean` L44/L238; `Vestigial.lean`. Fix opportunistically when next touched.
-- **Coverage / file-split debt (deferred phase):** bulk ~105 `lean_aux` decls remain (scheduled
-  `Coverage + file-split` phase); no NEW coverage debt this iter (K1 task result: no new top-level decls).
-  Split `TensorObjSubstrate.lean` (>3600 LOC) deferred until the active seed-1 lane lands.
-- **Extraction note:** module names, file paths, blueprint labels unchanged from the parent so proved
-  seeds merge back cleanly. Sibling extracts (Cech-Cohomology, Quot-Foundations) cover disjoint cones.
+  (dead code; not in any seed cone).
+- **Extraction note:** module names, file paths, blueprint labels unchanged from the parent so proved seeds
+  merge back cleanly. Sibling extracts (Cech-Cohomology, Quot-Foundations) cover disjoint cones.

@@ -21,13 +21,15 @@ For more details, run `archon dashboard <project-name>` for any project in the s
 
 | Project | Role in the scope | Main dependency direction | Status (open `sorry`) |
 | --- | --- | --- | --- | 
-| `Algebraic-Jacobian-Challenge` | Core Jacobian / Picard / curve geometry engine | Provides infrastructure for most downstream projects | 🔄 In progress (93) |
-| `Cech-Cohomology` | Čech comparison and higher direct image machinery | Feeds back into the Jacobian challenge and related papers | ✅ Complete (0) |
-| `Line-Bundle-Comparison-Iso` | Tensor/dual comparison isomorphisms for relative Picard | Unblocks the Jacobian challenge at large scale | 🔄 In progress (2) |
+| `Algebraic-Jacobian-Challenge` | Core Jacobian / Picard / curve geometry engine | Provides infrastructure for most downstream projects | 🔄 In progress (87) ✨ |
+| `Cech-Cohomology` | Čech comparison and higher direct image machinery | Feeds back into the Jacobian challenge and related papers | ✅ Complete (0) — merged back sorry-free into AJC ✨ |
+| `Line-Bundle-Comparison-Iso` | Tensor/dual comparison isomorphisms for relative Picard | Unblocks the Jacobian challenge at large scale | 🔄 In progress (4) ✨ |
 | `Quot-Foundations` | Quot, Grassmannian, and flat-base-change foundations | Supports the secant-bundle paper formalization | 🔄 In progress (21) |
-| `GR-quot_closure` | Grassmannian-quotient representability (H⁰ leg) | Extracted from `Quot-Foundations`; merges back | 🔄 In progress (13) |
-| `FBC-B_SNAP-chain` | Flat-base-change leg + shared SNAP foundation | Extracted from `Quot-Foundations`; merges back | 🔄 In progress (14) |
-| 26 related-paper projects | Formalization of related algebraic-geometry papers | A few consume the AG base (secant/perverse/Mordell–Lang); most are self-contained | 📝 Blueprint only (0 Lean) |
+| `GR-quot_closure` | Grassmannian-quotient representability (H⁰ leg) | Extracted from `Quot-Foundations`; merges back | 🔄 In progress (9) ✨ |
+| `FBC-B_SNAP-chain` | Flat-base-change leg + shared SNAP foundation | Extracted from `Quot-Foundations`; merges back | 🔄 In progress (16) ✨ |
+| 36 related-paper projects | Formalization of related algebraic-geometry papers | A few consume the AG base (secant/perverse/Mordell–Lang); most are self-contained | 📝 Blueprint only (0 Lean) |
+
+> Note: The related papers do not directly contribute to the Jacobian challenge, they are not advanced yet, I included them here because they might indirectly contribute. However, contributors or readers should focus their attention on the AJC and its related subprojects. 
 
 ## Methodology
 

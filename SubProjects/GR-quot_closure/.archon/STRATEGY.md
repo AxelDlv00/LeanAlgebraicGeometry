@@ -26,7 +26,7 @@ kernel-only axioms. Names/labels/paths are the parent's so finished work merges 
 | Phase | Status | Iters left | LOC | Key Mathlib needs | Risks |
 |---|---|---|---|---|---|
 | GR-quot / repr — tautological quotient + representability | ACTIVE | 2–5 | ~300–700 | effective descent for `SheafOfModules`; `Functor.RepresentableBy` | Residue = `tautologicalQuotient_epi` (last GR sorry); `represents` DONE |
-| SNAP-S0 — section graded ring | ACTIVE‖ / shared | 1–3 | ~120–300 | `DirectSum.Ring` assembly | Builds H⁰ `Γ_*(X,L)`; residue = cast-coherence + graded assembly. SHARED with sibling — coordinate before re-proving |
+| SNAP-S0 — section graded ring | ACTIVE‖ / shared | 2–4 | ~150–350 | `Module.Invertible.tensorProductComm_eq_refl`; `DirectSum.G(Comm)Semiring` | General ring = NON-comm `GSemiring` (assoc+units, ∀L); comm is the invertible-only upgrade (`IsInvertible`). Residue: assoc 4-lemma chain (`tensorObjAssoc_eta_factor` hard) + invertibility-gated comm. SHARED with sibling |
 | χ-blocked nodes | DEFERRED | — | — | higher-cohomology engine (absent here) | `hilbert_polynomial`/`quot_functor` filled from cohomology leg at merge |
 
 ## Completed (inherited from the parent, in kept files)
@@ -47,11 +47,19 @@ kernel-only axioms. Names/labels/paths are the parent's so finished work merges 
 image of Nitsure §5 cell-gluing + `GL_d` cocycle; inverse/representability is Archon-original
 (Nitsure leaves it as §5 exercise).
 
-**SNAP-S0 route.** Crux `IsIso(sheafification.map(η_P ▷ Q))`, associator, `tensorPowAdd` all
-CLOSED axiom-clean. Remaining: cast-coherence (`sectionMul_coherent`) → graded assembly
-(`gcommSemiring`/`gmodule`). Produces the H⁰ graded ring `Γ_*(X,L)`. Full `MonoidalCategory
-(SheafOfModules)` NOT needed; stalkwise / "presheaf+Γ-at-end" routes are DEAD. **Shared with the
-sibling — prefer importing finished proofs over re-deriving a divergent encoding.**
+**SNAP-S0 route.** Crux `IsIso(sheafification.map(η_P ▷ Q))`, associator, `tensorPowAdd`,
+right-unit (`sectionsMul_mul_one`) all CLOSED axiom-clean. **iter-011 RE-ANCHOR (decisive):** the
+section ring `⊕ₘΓ(L^{⊗m})` is the FREE TENSOR ALGEBRA on Γ(L) — `sectionsMul_mul_comm` is FALSE for
+general `L` (triple-verified; counterexample `L=𝒪²`). Per Stacks §17.25, `Γ_*` is defined for
+INVERTIBLE sheaves; commutativity holds iff `L` invertible (`β_{L,L}=𝟙`). So the general deliverable
+is a NON-commutative `DirectSum.GSemiring` (assoc + units only); `GCommSemiring` is the upgrade under a
+project-local `IsInvertible L` (locally-free-rank-1, Stacks 01CR), its proof gated on
+`braiding_eq_id_of_invertible` (Mathlib `Module.Invertible.tensorProductComm_eq_refl`, local-to-global).
+Remaining closable work: the assoc 4-lemma chain (`sectionsMul_whiskerRight/Left_unit`,
+`presheafAssociator_top_apply`, `tensorObjAssoc_eta_factor`) → `tensorObjAssoc_hom_sectionsMul` →
+`tensorPowAdd_assoc` (canonical pentagon) → `sectionsMul_mul_assoc`. comm proof is invertibility-gated
+future work (no consumer yet — `GCommSemiring` assembly unbuilt). Full `MonoidalCategory(SheafOfModules)`
+NOT needed; stalkwise routes DEAD. **Shared with sibling — prefer importing finished proofs.**
 
 **χ-blocked route — none here.** `quot_functor`/`hilbert_polynomial` need the χ
 (Euler-characteristic) engine; this i=0 leg does not build it. They remain `sorry` and are
@@ -72,5 +80,8 @@ filled from the cohomology leg at merge.
 ## Mathlib gaps & new material
 
 - GR-quot: effective descent for `SheafOfModules` over `Scheme.GlueData` (project-built).
-- SNAP-S0: H⁰ section graded ring `Γ_*(X,L)` (project-built, `TensorPower.Basic` idiom).
+- SNAP-S0: H⁰ section graded ring `Γ_*(X,L)` (project-built, `TensorPower.Basic` idiom: free tensor
+  algebra ⇒ general `GSemiring`, `GCommSemiring` under invertibility).
+- SNAP-S0: `IsInvertible (L : X.Modules)` (locally-free-rank-1, Stacks 01CR) + `β_{L,L}=𝟙` for
+  invertible `L` (`braiding_eq_id_of_invertible`, via `Module.Invertible.tensorProductComm_eq_refl`).
 - `Grassmannian` (rank-`d` locally-free quotients) + representability as `IsRepresentable`.

@@ -2,7 +2,7 @@
   "files": [
     {
       "path": "AlgebraicJacobian.lean",
-      "size": 3463
+      "size": 3737
     },
     {
       "path": "AlgebraicJacobian/AbelianVarietyRigidity.lean",
@@ -66,15 +66,31 @@
     },
     {
       "path": "AlgebraicJacobian/Cohomology/CechSectionIdentification.lean",
-      "size": 69328
+      "size": 69331
     },
     {
       "path": "AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean",
-      "size": 89262
+      "size": 89246
     },
     {
       "path": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean",
-      "size": 112854
+      "size": 42966
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegAux.lean",
+      "size": 14040
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegMid1.lean",
+      "size": 16766
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegMid2.lean",
+      "size": 12079
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegTop.lean",
+      "size": 33760
     },
     {
       "path": "AlgebraicJacobian/Cohomology/CechTermAcyclic.lean",
@@ -86,7 +102,7 @@
     },
     {
       "path": "AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean",
-      "size": 13894
+      "size": 14559
     },
     {
       "path": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",

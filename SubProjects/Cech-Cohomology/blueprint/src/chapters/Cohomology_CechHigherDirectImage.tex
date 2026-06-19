@@ -15,6 +15,10 @@
 % archon:covers AlgebraicJacobian/Cohomology/CechSectionIdentification.lean
 % archon:covers AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean
 % archon:covers AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean
+% archon:covers AlgebraicJacobian/Cohomology/CechSectionIdentificationLegMid1.lean
+% archon:covers AlgebraicJacobian/Cohomology/CechSectionIdentificationLegMid2.lean
+% archon:covers AlgebraicJacobian/Cohomology/CechSectionIdentificationLegTop.lean
+% archon:covers AlgebraicJacobian/Cohomology/CechSectionIdentificationLegAux.lean
 % archon:covers AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean
 % archon:covers AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean
 % archon:covers AlgebraicJacobian/Cohomology/CechTermAcyclic.lean
@@ -4734,10 +4738,10 @@ that build the keystone; the keystone and the assembly carry out the route.
 \end{proof}
 
 \begin{lemma}
-% NOTE (review iter-080): \leanok REMOVED from statement+proof. This block is UNFORMALIZED
+% NOTE (review iter-080):  REMOVED from statement+proof. This block is UNFORMALIZED
 % (no \lean{}, per the iter-044 NOTE below): only the V=⊤ scalar core tile_scalar_compat is in
 % Lean, not the full natural R_g-linear iso over all V asserted here. The marker was a stale manual
-% \leanok invisible to sync_leanok (sync keys off \lean{}); no node \uses this leaf (impact=0).
+%  invisible to sync_leanok (sync keys off \lean{}); no node \uses this leaf (impact=0).
 [Natural section comparison between the tile and the ambient sheaf]
   \label{lem:tile_section_comparison}
   % NOTE (review iter-044): the residual structure-sheaf ring identity that this proof reduces to
@@ -7206,7 +7210,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 
 \begin{lemma}
 
-\leanok
 [Sheafification of a presheaf that is locally a zero object vanishes]
   \label{lem:isZero_presheafToSheaf_of_locally_isZero}
   \lean{AlgebraicGeometry.isZero_presheafToSheaf_of_locally_isZero}
@@ -7233,7 +7236,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 
 \begin{lemma}
 
-\leanok
 [The augmented {\v C}ech complex is a resolution]
   \label{lem:cech_augmented_resolution}
   \lean{AlgebraicGeometry.cechAugmented_exact}
@@ -7476,7 +7478,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 
 \begin{lemma}
 
-\leanok
 [A contracting homotopy of the identity makes homology vanish]
   \label{lem:isZero_homology_of_homotopy_id_zero}
   \lean{AlgebraicGeometry.isZero_homology_of_homotopy_id_zero}
@@ -7497,7 +7498,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 
 \begin{lemma}
 
-\leanok
 [Homology vanishes after transporting a null-homotopic complex across an isomorphism]
   \label{lem:isZero_homology_of_iso_homotopy_id_zero}
   \lean{AlgebraicGeometry.isZero_homology_of_iso_homotopy_id_zero}
@@ -9137,7 +9137,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 
 \begin{lemma}
 
-\leanok
 [The core comparison intertwines the {\v C}ech differentials]
   \label{lem:coreIso_comm}
   \lean{AlgebraicGeometry.coreIso_comm}
@@ -11803,7 +11802,6 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 
 \begin{lemma}
 
-\leanok
 [{\v C}ech complex computes the higher direct images]
   \label{lem:cech_computes_cohomology}
   \lean{AlgebraicGeometry.cech_computes_higherDirectImage}

@@ -194,17 +194,153 @@ Current scope and live state live in [`PROGRESS.md`](PROGRESS.md) and
   witness `e := (H1.app (M⊗N)).symm ≪≫ μIsoβ.symm ≪≫ tensorIso (H1.app M) (H1.app N)`; `rw [hcompat]; exact e.isIso_hom`.
   `hcompat : δ = e.hom` transposes by `rw [Adjunction.leftAdjointOplaxMonoidal_δ, Equiv.symm_apply_eq, Adjunction.homEquiv_unit]`
   then `unit_leftAdjointUniq_hom_app`. Residual leaf = the two-monoidal-structures reconciliation (see Known Blockers).
+- **Carrier-diamond RESOLVED via defeq-composite re-ascription (iter-023 — broke the 5-iter K1 wall, OVERTURNS
+  the iter-018/020/022 "carrier diamond is a hard substrate wall" verdict):** when a goal needs a
+  `MonoidalCategory`/`Functor.Monoidal` instance on the BAD carrier `PresheafOfModules X.ringCatSheaf.obj`
+  (not synthesizable; the global instance is keyed on `(_ ⋙ forget₂)`), do NOT `letI`/`inferInstanceAs`/
+  `transport` the bad instance in (they ADD the bad carrier). Instead **normalize it away**: rewrite the
+  off-carrier functor as a DEFEQ COMPOSITE that the global instance fires on syntactically — here
+  `Gβ := pushforward₀OfCommRingCat f.opensFunctor X.presheaf ⋙ restrictScalars β'` (its strong tensorator IS
+  `μIsoβ`, so `δ Gβ = μIsoβ.inv` by `rfl`) — then re-ascribe every off-carrier term onto the good carrier by
+  defeq: `have hadj' : Gβ ⊣ pushforward φ' := hadj`, `have H1' : Gβ ≅ pullback φ' := H1`. Run the mate
+  calculus on the unified carrier. ⚠ Rewriting gotchas (the diamond persists at the TACTIC level):
+  plain `rw`/`simp only` key-FAIL on the defeq-but-not-syntactic `≫`/tensor instances; full `simp`
+  **zeta-unfolds** the carrier-normalizing `let`s and reintroduces the diamond (→ `simp (config := {zeta := false})`);
+  `simp` refuses `reassoc_of% hstar` on orientation grounds (→ `erw` is the ONLY tactic that fires `hstar` +
+  the trailing `μ_natural`/`hU` steps). This is the general escape for any remaining off-carrier monoidal goal.
+- **Data-instance opacity trap — `haveI`/`have` block `exact`/ascription unification (iter-025):** `Monoidal`
+  and `Adjunction` are **DATA, not Prop**. A `haveI hMonβ := restrictScalarsMonoidalOfBijective β' hβ` (or
+  `have hadj := pushforwardPushforwardAdj …`) makes the value **opaque**; two distinct opaque copies of the
+  same data are NOT defeq, so a lemma that *rebuilds* the instance in its statement fails to apply by `exact`
+  / type-ascription — it surfaces as a hard **type-mismatch ERROR** (e.g. `η Gβ`/`δ Gβ` mismatch), diagnosable
+  by `convert … using 2` splitting into leaf `rfl`-failures. FIX: convert the EXISTING `haveI→letI` / `have→let`
+  in place (transparent), so the rebuilt instances reduce to the same value. ⚠ This is SAFE and does NOT
+  reintroduce the carrier diamond — the diamond came from introducing a *second* copy via
+  `letI`/`inferInstanceAs`/`transport`; making the *existing* one transparent does not. Verified by `δ Gβ =
+  μIsoβ.inv := rfl` + the full mate block still compiling.
+- **Oplax-monoidal-unit-on-`1` plumbing (K1 η-collapse CLOSED iter-028):** to discharge a goal where the
+  oplax unit `η (restrictScalars α)` must send the section ring `1 ↦ 1`, state the helper's unit element
+  through the **genuine ring** `(S ⋙ forget₂ CommRingCat RingCat).obj W` — NOT `𝟙_ .obj W` (else `OfNat`/`One`
+  won't synthesise). Helper proof = lax `ε(1)=1` (`ModuleCat.restrictScalars_η` + `RingHom.map_one`) then
+  `ε ≫ η = 𝟙` via `Functor.Monoidal.ε_η` fed through `show … = 𝟙 _ from … ; rfl`. Close the use site with
+  `erw [helper, map_one]; rfl` — the `erw` defeq-matches the `(restrictScalars β').map 𝟙 ≫ η` composite
+  against the helper's bare `η`. ⚠ NEVER pre-apply `rw [Functor.map_id]`/`Category.id_comp` (dependent
+  motive failure: the `1` argument's type mentions the rewritten object). `ModuleCat.hom_comp_apply` does
+  NOT exist (two-step `hom_comp` + `comp_apply`). Recipe: `analogies/eta-plumbing.md`.
+- **Carrier-diamond iso-equation collapse (`X.ringCatSheaf.val` vs `X.presheaf ⋙ forget₂` — B2 iter-028):**
+  to push a presheaf-level coherence through `sheafification.map` when the middle object carries the
+  `forget unit` vs `𝟙_` diamond: `erw [Functor.map_comp]` for the sheafification leg + `exact congrArg (· ≫ _)
+  hmap` (defeq-tolerant) for the final collapse. Plain `rw` FAILS on the middle-object diamond. (Used in
+  `tensorObjIsoOfIso_comp_unit_iso`.)
+- **Contravariant-`symm` leg sidestep (B1 N-leg iter-028):** to produce a `(dualIsoOfIso t).symm`-shaped leg,
+  take `congrArg Iso.symm` of the FORWARD identity + `simpa` (with `Iso.trans_symm`/`Iso.symm_symm`), rather
+  than rewriting `(dualIsoOfIso t).symm = dualIsoOfIso t.symm`. The latter is DEAD — `Iso.self_symm_id`
+  reports "pattern not found" on `dualIsoOfIso (t ≪≫ t.symm)` though the subterm is present.
+- **⚠ UNQUALIFIED-NAME SHADOWING = false-green pitfall (iter-029, cost a whole iter + 29 stripped markers):**
+  a proof that closes under `lean_diagnostic_messages` (LSP) AND under an isolated `lake env lean <scratch>`
+  can STILL fail the real `lake build` of its owning module, when the proof uses an UNQUALIFIED lemma name
+  that a project-local declaration shadows ONLY under the full import set. Concrete instance:
+  `linearEndo_apply_comm` (DualInverse.lean:219) `rw [← smul_eq_mul, ← map_smul, …]` — `map_smul` resolved to
+  the project-local `AlgebraicGeometry.Scheme.Modules.map_smul` instead of `LinearMap.map_smul` (absent from
+  the thin scratch's imports) → "did not find an occurrence of the pattern". FIX: always **fully-qualify**
+  lemma names in closing rewrites that touch Mathlib generics (`← LinearMap.map_smul`), and VERIFY a closure
+  with a real `lake build <Module>` of the owning module, NOT just LSP + a minimal scratch.
+- **B1 eval-core ★' `presheafDualUnitIso_naturality` close (iter-029 recipe, honest mod the L219 fix):**
+  `apply Iso.ext; apply PresheafOfModules.hom_ext; intro X; apply ModuleCat.hom_ext; ext φ; simp only
+  [Iso.trans_hom, PresheafOfModules.comp_app, ModuleCat.hom_comp, LinearMap.comp_apply]` → two defeq `change`s
+  reshape to `evalLin φ ((ŝ.app X) 1) = (ŝ.app X) (evalLin φ 1)` → `exact linearEndo_apply_comm _ _` (S-linear
+  endos of the regular module `S` commute on `1`; needs `LinearMap.map_smul` qualified).
+- **hN N-square close (`dualUnitIso_dualIsoOfIso`, iter-029, verified `goals:[]`):** `apply Iso.ext; unfold
+  dualIsoOfIso dual_unit_iso; simp only [Iso.trans_hom, Functor.mapIso_hom, Category.assoc]; have hcore :=
+  congrArg Iso.hom (presheafDualUnitIso_naturality …); simp only [Iso.trans_hom] at hcore; rw [← Category.assoc];
+  erw [← Functor.map_comp, hcore, Functor.map_comp, Category.assoc]; erw [counit.naturality s.hom]; simp`.
+  ⚠ `erw` (NOT `rw`) is required to combine/split the two `sheafification.map` legs (defeq, not syntactic);
+  every `rw [← Functor.map_comp/map_comp_assoc/mapIso_trans, hcore]` fails to key-match.
+- **Pure-tensor μ-value lemma binder trap (iter-029):** a `((LaxMonoidal.μ F M₁ M₂).app W).hom (m ⊗ₜ n) = m ⊗ₜ n`
+  lemma elaborates ONLY with ABSTRACT object binders (`M₁ M₂ : PresheafOfModules (T₀ ⋙ forget₂ …)`, `m : M₁.obj W`)
+  + `set_option backward.isDefEq.respectTransparency false in`. Concrete `functor.obj X .obj W` binders fail
+  `Module`-synth. The K1 application threads through by defeq (`pushforward_μ_eq` is `rfl`). For the LHS mate
+  side, package as a per-section morphism COMPARISON with `tensor_ext` inside; the parent assembles via
+  `PresheafOfModules.hom_ext`. (Used: `pushforward_lax_mu_comparison_{rhs,lhs}_tmul`.)
 
 ### Known Blockers (do not retry without a structural change)
-- **K1 `pullbackTensorMap_isIso_of_isOpenImmersion` residual `hcompat` (L4219, OPEN iter-021):** the scaffold
-  (above) reduces it to the strong-monoidal mate compatibility — `μIsoβ.inv` (strong tensorator of `pushforward β`)
-  = the `hadj`-mate of `μ (pushforward φ')`; equivalently `presheafPushforwardLaxMonoidal φ'` agrees through `hadj`
-  with `rightAdjointLaxMonoidal hadj` (= `(Adjunction.leftAdjointOplaxMonoidal hadj).δ = μIsoβ.inv`). ⚠ Do NOT
-  `prove`-pass it (not a tactic-search gap) and do NOT retry functor-level `Functor.Monoidal.transport` (carrier
-  diamond, dead 4×). `Adjunction.IsMonoidal.leftAdjoint_μ` CANNOT fire (μ only at pushed-forward objects `G X, G Y`,
-  not arbitrary `M.val, N.val`); `instIsMonoidal hadj` gives only the mate lax structure, not the project's explicit
-  composite. Route: `mathlib-build`/`effort-breaker` on the named reconciliation lemma (likely via
-  `laxMonoidalEquivOplaxMonoidal` + `natTransIsMonoidal_of_transport`). δ-side analogue of D2′ `presheafUnit_comp_map_eta`.
+- **K1 `pushforward_lax_mu_comparison` — mate route CIRCULAR (re-confirmed iter-028):** the lemma compares
+  the adjunction **mate** `Adjunction.rightAdjointLaxMonoidal hadj'` (LHS) against the **composition**
+  structure `presheafPushforwardLaxMonoidal φ'` (RHS) on the SAME functor `pushforward φ'`. Unfolding the
+  mate (`rightAdjointLaxMonoidal_μ` + `homEquiv_unit`) gives a residual = `Adjunction.IsMonoidal.leftAdjoint_μ`
+  = K1's `hmon`, which CONSUMES this lemma → any `IsMonoidal`/`unit_app_tensor_comp_map_δ` route is circular.
+  Also it is NOT a 1-to-1 port of `pushforwardComp_lax_μ` (that compares two *composition* structures, so
+  mirroring it only reduces the RHS). ONLY route: compute BOTH sides sectionwise to `m ⊗ₜ n` independently
+  (reduce RHS at morphism level via `pushforward_μ_eq` BEFORE `hom_ext`; the mate LHS via unit/δ/counit value
+  lemmas). Genuine multi-hundred-LOC seam.
+  **iter-029 UPDATE — DECOMPOSED; residual narrowed to ONE sub-lemma.** `pushforward_lax_mu_comparison` is now
+  PROVEN as an assembly (`hom_ext` to per-section, defer to `lhs_tmul`); the RHS half
+  `pushforward_lax_mu_comparison_rhs_tmul` is PROVEN (`= restrictScalars_μ_app_tmul φ'` by defeq). The SOLE
+  open μ-side residual is `pushforward_lax_mu_comparison_lhs_tmul` (sorry@L4353) = the LHS mate
+  (adjoint-transported) pure-tensor value: unfold `rightAdjointLaxMonoidal_μ` + `homEquiv_unit` to
+  `unit ≫ map(δ Gβ ≫ counit⊗counit)`, evaluate at `m ⊗ₜ n`. Downstream `pushforward_mu_appIso_collapse`
+  (sorry@L4506) consumes the comparison at morphism level once lhs_tmul lands — do NOT retry its IsMonoidal route.
+- ~~**K1 `pullbackTensorMap_isIso_of_isOpenImmersion` carrier diamond**~~: **RESOLVED iter-023** — see the
+  "Carrier-diamond RESOLVED via defeq-composite re-ascription" Proof Pattern above (Gβ composite +
+  `zeta:=false` + `erw`). The full K1 mate calculus is now PROVEN and compiles; the SOLE residual is
+  `hmon : hadj'.IsMonoidal` (L~4226) — GENUINE math (δ/μ-side twin of the proved D2′ η-bridge
+  `presheafUnit_comp_map_eta`; open-immersion analogue of `pushforwardComp_lax_μ`), NOT a wall. NORMAL
+  ~100–200 LOC sectionwise prove: `refine ⟨?_,?_⟩` the two fields (`leftAdjoint_ε`, `leftAdjoint_μ`), each
+  via `PresheafOfModules.hom_ext` + `ModuleCat.MonoidalCategory.tensor_ext`, reusing the in-file D3′
+  machinery `pushforward_μ_eq`/`restrictScalars_μ_app`/`forget₂_restrictScalars_μ_hom_tmul`/
+  `pushforward_map_restrictScalars_μ_app_tmul` (Gβ is the same `restrictScalars`-composite shape they
+  collapse on pure tensors). Do NOT re-open the diamond / `transport` / `letI`-the-bad-carrier — exhausted
+  AND unnecessary. (The two iter-022 "substrate exits" are obsolete; the composite-re-ascription beat both.)
+  **iter-024 UPDATE — `hmon` mate-transport is a DEAD-END (circular); do NOT repeat it.** iter-024 did NOT
+  prove the two `IsMonoidal` fields directly; it transported them across `H1 = leftAdjointUniq` from known
+  `adj₀.IsMonoidal` (reusing `presheafUnit_comp_map_eta` for ε), leaving residuals `hηcompat` (L~4244) /
+  `hδcompat` (L~4262) = "`H1` is a monoidal natural iso". The prover honestly confirms `hδcompat ⟺ the
+  original `hcompat`** — a RE-EXPRESSION, not a reduction. The fundamental obligation is unchanged = the
+  sectionwise pure-tensor `f.appIso` collapse. CRUX WRINKLE blocking the direct route too: `Gβ.obj (A⊗B)` is
+  a **pushforward of a tensor, NOT a syntactic tensor**, so `tensor_ext` does NOT fire after `hom_ext`
+  ("CommRing metavar stuck") — the pure-tensor extensionality must thread through `pushforward₀OfCommRingCat`
+  sections (the `pushforwardComp_lax_μ` helper family), exactly as that sibling composite did. Next: close
+  `hδcompat`/`hηcompat` sectionwise on pure tensors via those helpers; effort-break `hmon` into ε/μ fields if
+  it stalls. NO more mate-transport / carrier reshuffles.
+  **iter-025 UPDATE — K1 body now FULLY PROVED; obstacle cleanly reduced to TWO top-level collapse lemmas.**
+  The effort-breaker extracted `hmon`'s two obligations to top-level lemmas `pushforward_eta_appIso_collapse`
+  (η-side, L~4158, effort 765) and `pushforward_mu_appIso_collapse` (μ/δ-side, L~4239, the multi-hundred-LOC
+  load-bearing residual). Their first wiring ERRORED (data-instance opacity — see Proof Pattern); fixed by
+  `haveI→letI` (×5) + `have hadj→let hadj`. Now `hmon : hadj'.IsMonoidal` is a REAL proof (L4380) consuming
+  the two lemmas, so K1 is transitively sorry ONLY through their bodies. **Prove the μ-collapse DIRECTLY**
+  (goal confirmed `δ(pullback φ') A B = e.hom` per A B; mirror `pushforwardComp_lax_μ` ONE-TO-ONE) — routing
+  it through `hmon`/`Adjunction.IsMonoidal` is **CIRCULAR** (`hmon` consumes it). η-twin is the smaller
+  `𝟙_`-module collapse; thread `pushforward₀OfCommRingCat` sections, NOT `tensor_ext`.
+  **iter-026 UPDATE — μ-circularity EMPIRICALLY CONFIRMED; η-side NEARLY CLOSED.** The mate route
+  (`Adjunction.unit_app_tensor_comp_map_δ (adj := hadj')` / η-twin `unit_app_unit_comp_map_η hadj'`) FAILS:
+  both error "failed to synthesize `hadj'.IsMonoidal`" = the very `hmon` they'd build. **Do NOT attempt the
+  mate route for either collapse lemma.** The genuine μ-residual (L4287) = the BARE tensorator comparison
+  `μ(rightAdjointLaxMonoidal hadj') = μ(presheafPushforwardLaxMonoidal)` on `Gβ A, Gβ B`, proved DIRECTLY
+  sectionwise on `pushforward₀OfCommRingCat` pure tensors (mirror `pushforwardComp_lax_μ` L2197; multi-hundred
+  LOC; mathlib-analogist / effort-break first). **η-side (L4182) is one step from done:** transposed across
+  `hadj'` (needs `have hadj`→`let hadj` so `erw` key-matches the zeta-unfolded `H1`) + `presheafUnit_comp_map_eta`
+  + `epsilonPresheafToSheafUnit` reduce it to the single ring identity `LHS(1)=(φ'.app U)(1)`; the only missing
+  piece is a presheaf-level `pushforwardPushforwardAdj.unit` sectionwise value lemma (`rfl`-shaped, orientation
+  per `PresheafInternalHom.lean:442`), then `erw` it + `ModuleCat.restrictScalars_η` + `map_one`.
+  **iter-027 UPDATE — η STILL NOT CLOSED (13th iter at sorry~3); blocker is now pure Lean PLUMBING, not
+  math.** The presheaf-level unit value lemma was added as a `rfl` helper
+  `pushforwardPushforwardAdj_unit_app_app_apply` (generic `adj`, ~L4094): `(((unit.app M).app U).hom x =
+  (M.map (adj.counit.app U.unop).op).hom x)`. ⚠ At the η use site (L4211) the `simp only
+  [pushforwardPushforwardAdj_unit_app_app_apply]` is a **NO-OP** (auditor: unused simp arg; goal identical
+  before/after) — the prior `pushforward_map_app_apply` already landed the goal in the form the next
+  `erw [unit_map_one]` closes. So the helper is NOT load-bearing here; the genuine residual after the
+  reduction chain is the single ring-unit identity
+  `((restrictScalars β').map 𝟙 ≫ η (restrictScalars β')).app W).hom 1 = (φ'.app U) 1` (`W := op (f ⁻¹ᵁ U)`),
+  both sides `= 1`. TWO independent STATING/COERCION obstacles block it (math is settled — `Functor.Monoidal.ε_η`
+  + injective `ε.app W` + `restrictScalars_η`): (a) `map_one` won't fire on `ConcreteCategory.hom (φ'.app U)`
+  (RingCat-coercion `DFunLike.coe (fun X Y ↦ RingHom.instFunLike)`) — need a RingCat-flavoured `map_one` or
+  expose the bare `RingHom`; (b) cannot even STATE `1 : (𝟙_ _).obj W` (`OfNat` synth won't reduce `𝟙_ =
+  unit _`) — a drafted `restrictScalars_oplaxMonoidal_η_app_one` could not be written for this reason; FIX =
+  phrase the unit element via `PresheafOfModules.unit` (carrier `R.obj W`, a real ring), transport along
+  `𝟙_ = unit` defeq. **NEXT: effort-break η into these two sub-lemmas (do NOT re-run a plain prove lane —
+  3 iters no close). Also DELETE the dead simp step + fix the inaccurate crediting comments L4208–4214.**
+  μ-side untouched iter-027 (`pushforward_lax_mu_comparison` still a bare ORPHANED sorry — not wired to its
+  consumer `pushforward_mu_appIso_collapse`; mirror `pushforwardComp_lax_μ`, multi-hundred LOC; NEVER via `hmon`).
 - ~~**`DualInverse.lean` is RED**~~: RESOLVED iter-007 (repaired to GREEN + split into
   `DualInverse/SliceTransport.lean`; forward naturality then closed). The DUAL chain is now an
   ordinary proving task, not a regression. Dead approaches that remain DEAD: `ext z`+`exact hφ z`
@@ -227,8 +363,47 @@ Current scope and live state live in [`PROGRESS.md`](PROGRESS.md) and
   chain 8322 jobs). right_inv = 3-step mirror of left_inv (ring-identity collapse via
   `appIso_inv_naturality` → ψ-naturality `hψ` → `Y.presheaf` round-trip `hmaps`); the real blocker turned
   out to be a heartbeat overflow, not a math wall (see Proof Patterns). Retire the DUAL lane.
-- `exists_tensorObj_inverse` (L734): import-cycle — closes downstream via a refactor-MOVE downstream of
-  DualInverse (RelPicFunctor sole consumer), never by direct in-place assignment.
+- **`exists_tensorObj_inverse` — MOVED to `TensorObjInverse.lean` iter-023 (import-cycle resolved); descent
+  skeleton built, TWO residuals.** The refactor-MOVE (downstream of DualInverse; RelPicFunctor repointed,
+  build GREEN) un-gated the proof; the bare sorry is now the full `rem:dual_discharges_inverse` descent
+  (object `dual L` + C-bridge `dual_isLocallyTrivial` CLOSED; local data `eM`/`eN`/`e`/`uι`/`f` + glued `ε`
+  via `homOfLocalCompat` + B-bridge `isIso_of_isIso_restrict` + `asIso` all built and compile). Residuals:
+  (A) cocycle `hf` (L~121) — the `g·g⁻¹=1` transition-unit cancellation through `tensorObj_restrict_iso`/
+  `tensorObjIsoOfIso`/`dualIsoOfIso`; GENUINE ab-group section maps, `subsingleton` is the WRONG tool
+  (verified); large, self-contained, d.2-free. Cleaner abstract route (iter-024): `dualIsoOfIso`
+  contravariant functoriality + `tensorObjIsoOfIso` bifunctoriality + unit self-duality cancellation
+  (`a ⊗ dual(a)⁻¹ ≫ tensorObj_unit_iso = tensorObj_unit_iso`) — candidate for effort-break. (B)
+  restriction-connector — iter-024 REDUCED to the exact equation `key` (L~139): `rw [key]; exact hfiso x`
+  compiles, so B is **one line from done**. `key`'s body = the missing lemma in `DualInverse.lean`:
+  `homOfLocalCompat_restrictFunctor_map : (restrictFunctor (U i).ι).map (homOfLocalCompat U hU f hf) = f i`
+  (~40–80 LOC reusing the def's internal `hconn`/`IsGluing`; frontier node `lem:hom_of_local_compat_restrict`).
+  **It was scheduled iter-024 but the lane produced NO edit — still does not exist; re-dispatch it standalone
+  on `DualInverse.lean` (cheapest remaining win).** Type trap: `(SheafOfModules.unit …).restrict` dot-notation
+  resolves to the `SheafOfModules` head → use function form `restrict (unit …) (U x).ι`.
+  **iter-025 UPDATE — connector STILL undelivered (3rd consecutive iter: 023/024/025); DualInverse.lean was
+  never edited again.** This is now an EXECUTION-DISPATCH failure, not a math wall — force a dedicated,
+  non-co-assigned prover onto DualInverse.lean and confirm it runs. Progress made on residual A instead: the
+  6 abstract-route ingredients (1)(2) now EXIST as axiom-clean helpers in `TensorObjInverse.lean`
+  (`tensorObjIsoOfIso_{trans,refl}`, `presheaf_dualIsoOfIso_{trans,refl}`, `dualIsoOfIso_{trans,refl}` — contra-
+  variant `dualIsoOfIso` functoriality + bifunctorial `tensorObjIsoOfIso`). Residual A's remaining hard core =
+  ingredient (3), the eval-pairing self-duality cancellation at the `dualPrecompEquiv`/`internalHomEval`
+  SECTION level (global eval map deliberately never built), + an iso→section bridge. Reusable: functoriality
+  rewrites on `(SheafOfModules.forget _).mapIso e` (carrier `presheaf⋙forget₂`) need `erw`+trailing `rfl`.
+  **iter-026 UPDATE — connector RESOLVED + residual B CLOSED.** Root cause of the 3-iter connector
+  non-delivery: plan-validate DROPPED the DualInverse objective every iter because the file had 0 sorries
+  (prover never dispatched, not "delivered nothing"). FIX: scaffold the stub in the SAME plan phase so the
+  lane dispatches. The prover then CLOSED `homOfLocalCompat_restrictFunctor_map` (axiom-clean) — reconstruct
+  the gluing internals defeq + `change` to `g`-form + a morphism-level `key` lemma collapsing the
+  eqToHom-conjugation via `eqToHom_comp_iff` + `exact`-matched `naturality` (`rw` of naturality fails on
+  X-vs-restrict defeq; `(U i).ι ''ᵁ P ≤ U i` is `Scheme.Opens.ι_image_le`, NOT `image_le_range` which doesn't
+  exist). Residual B then closed one-line: `exact homOfLocalCompat_restrictFunctor_map U _ f _ x`. **Residual
+  A (cocycle) is now the SOLE terminal residual — and it is BLUEPRINT-GATED, not prover-ready:** ingredient
+  (3) decomposes into two helper lemmas that exist ONLY as prose in `rem:dual_discharges_inverse` (lvb-inverse026
+  major) — (A) further-restriction compatibility of `tensorObj_restrict_iso`/`restrictFunctorIsoPullback`/
+  `pullbackUnitIso`, (B) the unit self-duality eval collapse `tensorObjIsoOfIso t (dualIsoOfIso t)⁻¹ ≫
+  tensorObj_unit_iso = tensorObj_unit_iso`. Author their `\lean{}` blocks (blueprint-writer) BEFORE any prover
+  lane; a plain prover re-hits the section-vs-iso-level wall (verified: `rfl`/`simp[_trans/_refl]`/`congr 1`/
+  `hom_ext` all fail on the post-`simp` cocycle goal — distinct opaque trivialisations `eM i.some`/`eM j.some`).
 - **`pullbackTensorMap_isIso_of_isOpenImmersion` (K1, L4172) — open-immersion δ-iso (iter-020):** the
   sole open D4′ brick. Do NOT retry the in-file `Functor.Monoidal.transport` route: it fails on two
   Mathlib-absent instance diamonds — (1) `MonoidalCategory (PresheafOfModules X.ringCatSheaf.obj)` not
@@ -257,6 +432,74 @@ Current scope and live state live in [`PROGRESS.md`](PROGRESS.md) and
   similarly truncated — worth a one-shot sweep.**
 
 ## Last Updated
+2026-06-19T13:45:00Z (iter-029 review — **NET REGRESSION: build went RED, sync_leanok +3/−29.** A single
+unqualified-name bug in the new helper `linearEndo_apply_comm` (DualInverse.lean:219 — `← map_smul` resolves
+to project-local `Scheme.Modules.map_smul`, not `LinearMap.map_smul`, under full imports) broke DualInverse →
+TensorObjInverse → RelPicFunctor. The math in all lanes is HONEST + structurally correct (lean-auditor), but
+the intended closures (B1 eval-core `presheafDualUnitIso_naturality`, hN `dualUnitIso_dualIsoOfIso`, cocycle-A
+assembly) are written-but-RED and did NOT land; they land with the one-token fix `← LinearMap.map_smul`. Only
+buildable progress: TensorObjSubstrate μ-decomposition — `pushforward_lax_mu_comparison_rhs_tmul` PROVEN +
+`pushforward_lax_mu_comparison` assembly PROVEN (mod `lhs_tmul`), narrowing the μ-side to ONE residual
+(`pushforward_lax_mu_comparison_lhs_tmul`, the LHS mate pure-tensor value). TensorObjSubstrate builds
+green-mod-sorry (lhs_tmul + mu_appIso_collapse). Reviewers: lean-auditor iter029 (1 must-fix L219 root cause/2
+major premature-closed comments/2 minor), lvb substrate029 (0 must-fix/1 major lhs_tmul statement-shape drift
+value-vs-comparison/1 minor). KB updated: shadowing pitfall + B1/hN recipes + binder trap + μ-decomposition.
+Doctor clean, gaps=0, frontier=5, unmatched=105 (+`linearEndo_apply_comm` coverage debt). Narrative →
+`iter/iter-029/review.md`.)
+2026-06-19T11:30:00Z (iter-028 review — **η CLOSED**: `pushforward_eta_appIso_collapse` sorry-free + axiom-clean (first K1 elimination since ~14-iter η stall); cocycle-A collapse mechanism PROVEN mod B1 (2 new helpers `tensorHom_inv_comp_leftUnitor`+`tensorObjIsoOfIso_comp_unit_iso`); B1 reduced to a single naturality square (N); μ-comparison mate route re-confirmed CIRCULAR. KB updated above. Narrative → `iter/iter-028/review.md`.)
+2026-06-19T09:45:31Z (iter-027 review — **no sorry eliminated; 13th iter at "sorry ~3".** η must-close
+REDUCED but not closed: a new `rfl` helper `pushforwardPushforwardAdj_unit_app_app_apply` was added but is a
+NO-OP at its η use site (auditor: dead simp arg L4211); residual is one ring-unit identity blocked by pure
+PLUMBING — (a) RingCat-coercion `map_one` won't fire, (b) `1 : (𝟙_ _).obj W` won't `OfNat`-synth (can't even
+STATE the fix). Math settled (`ε_η`+injective `ε`+`restrictScalars_η`). **Effort-break η into the two
+sub-lemmas; do NOT re-run a plain prove lane (3 iters no close); delete the dead simp step.** μ pair untouched
+(`pushforward_lax_mu_comparison` a bare ORPHANED sorry, not wired to its consumer; mirror `pushforwardComp_lax_μ`,
+multi-hundred LOC, never via `hmon`). Build GREEN, axiom-clean, sync +1/−0 (new μ-comparison stmt block), doctor
+clean, gaps=0, frontier=5, unmatched=105 (+new helper `pushforwardPushforwardAdj_unit_app_app_apply`, coverage
+debt). Reviewers: lean-auditor iter027 (0 crit/3 major: dead simp step, orphaned μ-comparison, stale header
+L46-50/3 minor; NO circularity — no collapse lemma touches `hmon`), lvb substrate027 (0 must-fix/3 honest
+sorries/2 minor: helper no `\lean{}` block, targets `private` but pinned). No manual markers. Narrative in
+`iter/iter-027/review.md`.)
+2026-06-19T07:33:00Z (iter-026 review — **FIRST sorry elimination after ~12 iters: leaf sorries 5→3.** The
+3-iter connector "non-delivery" was a DISPATCH bug (plan-validate dropped the 0-sorry DualInverse objective so
+the prover never ran); fixed by scaffolding the stub in-phase. Prover then CLOSED the connector
+`homOfLocalCompat_restrictFunctor_map` (axiom-clean) → terminal residual B closed one-line via it. K1: η-collapse
+reduced to one `rfl`-shaped residual (nearly closed); μ-collapse mate route EMPIRICALLY CONFIRMED circular →
+real residual is the bare sectionwise μ-comparison (mirror `pushforwardComp_lax_μ`). Remaining 3 leaf sorries:
+terminal cocycle A (blueprint-gated: author 2 helper `\lean{}` blocks first), K1 η (short lane), K1 μ
+(mathlib-analogist/effort-break). Build GREEN, axiom-clean, sync +2/−0, doctor clean, gaps=0, frontier=3,
+unmatched 110→104. Reviewers: lean-auditor iter026 (0 crit/11 major all STALE comments/4 minor — no live defect),
+lvb dualinverse026 (faithful, 1 major stale comments), lvb inverse026 (faithful, 1 major: A's helpers prose-only),
+lvb substrate026 (PASS). K1 `% NOTE` refreshed to iter-026. Narrative in `iter/iter-026/review.md`.)
+2026-06-19T13:45:00Z (iter-025 review — **no sorry eliminated; 11th iter at "sorry ~2".** Real structural
+progress: K1 wiring bug (data-instance opacity — `haveI` opaque `Monoidal`/adjunction not defeq to the rebuilt
+lemma's; fixed `haveI→letI` ×5 + `have hadj→let hadj`) → K1 body now FULLY PROVED, transitively sorry ONLY via
+the two extracted collapse lemmas `pushforward_{eta,mu}_appIso_collapse` (μ-side = the load-bearing residual,
+prove DIRECTLY not via `hmon` — circular). Terminal: 6 axiom-clean functoriality helpers delivered (residual A
+ingredients 1&2); residual A still needs ingredient 3 (eval-cancellation, section-level); residual B one-line
+from done. **Connector `homOfLocalCompat_restrictFunctor_map` UNDELIVERED 3rd iter — DualInverse never edited;
+execution-dispatch failure, force a dedicated prover.** Builds GREEN, axiom-clean, sync +3/−0, doctor clean,
+gaps=0, frontier=4, unmatched=110 (+6 helpers, coverage debt). Reviewers: aud iter025 (0 must-fix/1 major stale
+header/1 minor), lvb substrate025 (0 must-fix/3 minor), lvb inverse025 (0 must-fix/2 major: helpers no `\lean{}`
+nodes, `rem:dual_discharges_inverse` thin). K1 `% NOTE` refreshed to iter-025. Narrative in `iter/iter-025/review.md`.)
+2026-06-19T12:00:00Z (iter-024 review — **no sorry eliminated; 10th iter at "sorry ~2".** K1 `hmon` 1→2: the
+prover transported the two `IsMonoidal` fields across `H1=leftAdjointUniq` instead of proving them directly,
+leaving `hηcompat`/`hδcompat` — but `hδcompat ⟺ the prior `hcompat`** (re-expression, not reduction). KB K1
+blocker updated: mate-transport is a DEAD-END, the real obligation is the sectionwise pure-tensor collapse with
+the `Gβ.obj(A⊗B)`-not-syntactic-tensor wrinkle. Terminal: B reduced to a one-line `key` swap pending the
+connector; A cocycle reduction added. **Connector lane (`homOfLocalCompat_restrictFunctor_map`, frontier, cheapest
+win) was scheduled but produced NO edit — re-prioritised.** Builds GREEN, axiom-clean, sync +0/−0, doctor clean,
+gaps=0, unmatched=0. Reviewers aud024 (0 must-fix/3 major stale-comments), substrate024 (prose describes wrong
+residual route), inverse024 (PASS). K1 `% NOTE` refreshed to iter-024. Narrative in `iter/iter-024/review.md`.)
+2026-06-19T11:00:00Z (iter-023 review — **5-iter K1 CARRIER DIAMOND BROKEN.** Resolved via defeq-composite
+re-ascription (Gβ + `zeta:=false` + `erw`); new Proof Pattern added, K1 Known-Blocker marked RESOLVED, sole
+residual now the sectionwise `hmon : hadj'.IsMonoidal`. Terminal `exists_tensorObj_inverse` MOVED to
+`TensorObjInverse.lean` + descent skeleton built (2 residuals: cocycle + a needed `DualInverse.lean`
+connector). Sorry 2→3, both files GREEN, 0 axioms. Reviewers aud023/substrate023/inverse023 all 0 must-fix.
+Carrier-diamond `% NOTE` refreshed to iter-023. Session narrative in `iter/iter-023/review.md`.)
+2026-06-18T11:45:00Z (iter-022 review — recon022 K1 mate route EXHAUSTED; `hcompat` reduced to ★ but blocked
+by the carrier diamond at instance synthesis. Known Blockers K1 entry rewritten with the two substrate exits;
+session narrative in `iter/iter-022/review.md`.)
 2026-06-18T10:25:00Z (iter-021 review — K1 scaffolded; session narrative in `iter/iter-021/review.md`,
 Knowledge Base updated above with the presheaf-δ mate-witness pattern + the `hcompat` blocker.)
 

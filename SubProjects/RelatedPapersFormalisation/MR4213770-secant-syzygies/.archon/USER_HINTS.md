@@ -30,3 +30,4 @@ comments inside that file — NOT here.
 
 ## Persistent hints
 
+- You need to build the blueprints for the whole paper, keeping very close to the original paper. The proofs should not only be sketches, but the full proofs when possible. The statements should say close to how they are set in the paper. 

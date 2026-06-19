@@ -39,5 +39,11 @@ Formalize the geometric content as named axioms (see STRATEGY.md for sub-phase d
 5. `def:tautological_ring` → `MR4628606.TautologicalRing`
 
 After both lanes complete:
-- Formalize invariance lemmas (`lem:invariance_dualizing`, `lem:invariance_unweighted_marking`, `lem:invariance_weight_translation`)
-- Formalize `thm:dr_existence`, `thm:main`, `thm:vanishing`, `thm:twisted_differentials`
+- Formalize the six invariance lemmas of Section 0.3: `lem:invariance_dualizing` (I),
+  `lem:invariance_unweighted_marking` (II), `lem:invariance_weight_translation` (III),
+  `lem:invariance_twisting_pullback` (IV), `lem:invariance_vertical_twisting` (V),
+  `lem:invariance_partial_stabilization` (VI). Note: I, IV, V are independent deliverables
+  (DAG leaves); only II, III, VI feed `thm:main` (II+III reduce to the universal case, VI is
+  used inside it).
+- Formalize `thm:dr_existence`, `thm:main`, `thm:vanishing`, `thm:twisted_differentials`,
+  and the degree-0 specialization `thm:universal_deg0` (Section 0.7).

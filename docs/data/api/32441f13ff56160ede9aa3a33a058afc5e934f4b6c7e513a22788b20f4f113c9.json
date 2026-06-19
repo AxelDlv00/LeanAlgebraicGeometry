@@ -1,8 +1,10 @@
 {
   "stage": "prover",
   "objectives": [
-    "**`AlgebraicJacobian/Cohomology/FlatBaseChange.lean`** — close the FBC (b) crux.",
-    "**`AlgebraicJacobian/Picard/SectionGradedRing.lean`** — build the bridge layer + close the coherences."
+    "**`Cohomology/FlatBaseChange.lean`** — close the foundation by building 2 exposure lemmas + the comp",
+    "**`moduleSpecΓFunctor.map` exposure** — `moduleSpecΓFunctor.map g` underlying =",
+    "**`eqToHom`-on-carrier cast** — `(ConcreteCategory.hom (eqToHom E)) x = x` for `ModuleCat` (true",
+    "**`Picard/SectionGradedRing.lean`** — derive the well-typed common form `K`, prove the 2 isolated hK"
   ],
   "checklist": [
     {

@@ -402,7 +402,8 @@ through the main theorems.
   \lean{MR4628606.TODO.PixtonFormulaR}
   \uses{def:prestable_graph_degree, def:weighting_mod_r, def:tautological_classes,
         def:aut_prestable_graph_degree, def:operational_chow, def:picard_stack,
-        def:boundary_map_j, def:decorated_prestable_graph}
+        def:boundary_map_j, def:decorated_prestable_graph,
+        lem:prestable_graph_finite_isom_classes}
   % SOURCE: [Bae--Holmes--Pandharipande--Schmitt--Schwarz], Section 0.2.4 (read from references/MR4628606-picard-stack.tex)
   % SOURCE QUOTE: "We denote by
 % $\P_{g,A,d}^{c,r}\in \mathsf{CH}^c_{\mathsf{op}}(\Picabs_{g,n,d})$
@@ -442,7 +443,8 @@ through the main theorems.
 \begin{proposition}[Polynomiality of Pixton's formula]
   \label{prop:pixton_polynomiality}
   \lean{MR4628606.TODO.pixtonPolynomiality}
-  \uses{def:pixton_formula_r, def:decorated_prestable_graph, def:weighting_mod_r}
+  \uses{def:pixton_formula_r, def:decorated_prestable_graph, def:weighting_mod_r,
+        lem:weightings_cardinality}
   % SOURCE: [Bae--Holmes--Pandharipande--Schmitt--Schwarz], Proposition in Section 0.2.4 (read from references/MR4628606-picard-stack.tex)
   % SOURCE QUOTE: "For fixed $g$, $A$, $d$, and $c$ and a decorated graph $[\Gamma_\delta, \gamma]$ of
 % degree $d$, the coefficient of $j_{\Gamma_\delta*} [\gamma]$ in the
@@ -487,7 +489,9 @@ through the main theorems.
   \label{thm:main}
   \lean{MR4628606.TODO.mainTheorem}
   \uses{thm:dr_existence, def:pixton_formula, prop:pixton_polynomiality,
-        def:tautological_classes, def:tautological_ring}
+        def:tautological_classes, def:tautological_ring,
+        lem:invariance_unweighted_marking, lem:invariance_weight_translation,
+        lem:invariance_partial_stabilization}
   % SOURCE: [Bae--Holmes--Pandharipande--Schmitt--Schwarz], Theorem 2 (read from references/MR4628606-picard-stack.tex)
   % SOURCE QUOTE: "Let $g\geq 0$ and $d\in \mathbb{Z}$.
 % Let $A=(a_1,\ldots,a_n)$ be a vector of integers with
@@ -505,13 +509,21 @@ through the main theorems.
 
 \begin{proof}
   \uses{thm:dr_existence, def:pixton_formula, prop:pixton_polynomiality,
-        lem:invariance_weight_translation, lem:invariance_unweighted_marking}
-  By the weight-translation and unweighted-marking invariances of both sides (see
-  \cref{lem:invariance_weight_translation,lem:invariance_unweighted_marking}),
-  it suffices to prove the case $d = 0$, $n = 0$.  In that case, the DR cycle is
-  realized as the Abel-Jacobi image in an ambient $\mathbb{P}^N$ via the formula
-  for DR cycles on target varieties (Janda--Pandharipande--Pixton--Zvonkine 2018);
-  taking $N \to \infty$ and comparing with Pixton's formula gives the identity.
+        lem:invariance_unweighted_marking, lem:invariance_weight_translation,
+        lem:invariance_partial_stabilization}
+  Both $\DRop_{g,A}$ and Pixton's formula $\Pix^g_{g,A,d}$ satisfy the unweighted-marking
+  invariance (\cref{lem:invariance_unweighted_marking}) and the weight-translation
+  invariance (\cref{lem:invariance_weight_translation}) of Section 0.3.  Using these two
+  invariances of both sides, the identity is reduced to the universal case $d = 0$,
+  $n = 0$: the unweighted-marking invariance gives
+  $F^*\DRop_{g,\emptyset} = \DRop_{g,\mathbf{0}}$, and the weight-translation invariance
+  gives $\tau_{-A}^*\DRop_{g,\mathbf{0}} = \DRop_{g,A}$.
+  In the universal case, the partial-stabilization invariance
+  (\cref{lem:invariance_partial_stabilization}) reduces the comparison to a stabilized
+  family, where the DR cycle is realized as the Abel-Jacobi image in an ambient
+  $\mathbb{P}^N$ via the formula for DR cycles on target varieties
+  (Janda--Pandharipande--Pixton--Zvonkine 2018); taking $N \to \infty$ and comparing
+  with Pixton's formula gives the identity.
 \end{proof}
 
 \subsection{Vanishing}
@@ -804,7 +816,7 @@ through the main theorems.
   \lean{MR4628606.TODO.universalDeg0}
   \uses{thm:main, def:pixton_formula, def:tautological_classes, def:operational_chow,
         def:picard_stack, def:boundary_map_j, lem:invariance_unweighted_marking,
-        lem:invariance_dualizing}
+        lem:invariance_weight_translation}
   % SOURCE: [Bae--Holmes--Pandharipande--Schmitt--Schwarz], Section 0.7 (sec:intro_deg_0) (read from references/MR4628606-picard-stack.tex)
   % SOURCE QUOTE: "The specialization of Theorem \ref{Thm:main} to $d=0$ calculates $\DRop_{g,\emptyset}$ as
 % the value at $r=0$ of the degree $g$ part of
@@ -870,15 +882,15 @@ through the main theorems.
 \end{theorem}
 
 \begin{proof}
-  \uses{thm:main, def:pixton_formula, lem:invariance_unweighted_marking, lem:invariance_dualizing}
+  \uses{thm:main, def:pixton_formula, lem:invariance_unweighted_marking, lem:invariance_weight_translation}
   The displayed degree-$0$ formula is the specialization of the definition of
   $\Pix^g_{g,\emptyset,0}$ to $\GG_{g,0,0}$, where the leg factors are absent and the vertex
   factors $\prod_v e^{-\frac{1}{2}\eta(v)}$ collapse to the global factor $e^{-\frac{1}{2}\eta}$;
   the equality with $\DRop_{g,\emptyset}$ is \cref{thm:main}.  For the reconstruction of the
   general case, the unweighted-marking invariance (\cref{lem:invariance_unweighted_marking})
   gives $F^*\DRop_{g,\emptyset} = \DRop_{g,\mathbf{0}}$ for the zero vector
-  $\mathbf{0} \in \mathbb{Z}^n$, and the dualizing/weight-translation invariance applied to the
-  map $\tau_{-A}$ (\cref{lem:invariance_dualizing}) gives
+  $\mathbf{0} \in \mathbb{Z}^n$, and the weight-translation invariance applied to the
+  map $\tau_{-A}$ (\cref{lem:invariance_weight_translation}) gives
   $\tau_{-A}^*\DRop_{g,\mathbf{0}} = \DRop_{g,A}$; composing yields the general formula, and
   the parallel symmetries of Pixton's formula give $\tau_{-A}^*F^*\Pix^g_{g,\emptyset,0} =
   \Pix^g_{g,A,d}$.  Over the compact-type locus, every $h^1$ contribution comes from

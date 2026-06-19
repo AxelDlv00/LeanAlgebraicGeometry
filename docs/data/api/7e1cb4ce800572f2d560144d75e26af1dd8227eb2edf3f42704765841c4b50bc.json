@@ -1,0 +1,154 @@
+[
+  {
+    "timestamp": "2026-06-19T07:33:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "homOfLocalCompat_restrictFunctor_map"
+    },
+    "session": {
+      "id": "session_26",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "SheafOfModules.Hom.ext",
+        "PresheafOfModules.hom_ext",
+        "ModuleCat.hom_ext",
+        "topSectionToHom_app",
+        "Scheme.Opens.ι_image_le",
+        "Scheme.Hom.preimage_image_eq",
+        "eqToHom_comp_iff",
+        "Hom.naturality"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Reconstruct homOfLocalCompat gluing internals (H, hsup, hglue, hcompat, g, hconn) defeq to the body; sectionwise faithfulness; change LHS to g.app form; rw hconn + key eqToHom-collapse",
+        "code_tried": "apply SheafOfModules.Hom.ext; refine PresheafOfModules.hom_ext (fun P => ?_); obtain ⟨P⟩ := P; apply ModuleCat.hom_ext; ext m; change (ConcreteCategory.hom (g.app (op ((U i).ι ''ᵁ P)))) m = ...; rw [hconn i ((U i).ι ''ᵁ P) ((U i).ι_image_le P), key]; rfl  -- key closed by eqToHom_comp_iff + α.naturality (eqToHom hh)",
+        "line_number": "665",
+        "lean_error": "",
+        "result": "success",
+        "insight": "rw of naturality fails (X-level vs restrict-level only defeq, not syntactic); fix is morphism-level `key` lemma + simp[eqToHom_map] to normalize flanks, then eqToHom_comp_iff + manually-instantiated α.naturality matched by `exact` not `rw`. (U i).ι ''ᵁ P ≤ U i is `Scheme.Opens.ι_image_le` NOT `image_le_range` (doesn't exist). Ring coercion needs `(U i).toScheme.ringCatSheaf.obj`."
+      }
+    ],
+    "next_steps": "Done — file sorry-free, axiom-clean {propext, Classical.choice, Quot.sound}. Unblocks terminal residual B."
+  },
+  {
+    "timestamp": "2026-06-19T07:33:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "exists_tensorObj_inverse"
+    },
+    "session": {
+      "id": "session_26",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "Residual A (overlap cocycle hf): needs two absent infra lemmas — (A) further-restriction compatibility of tensorObj_restrict_iso/restrictFunctorIsoPullback/pullbackUnitIso, (B) unit self-duality eval collapse tensorObjIsoOfIso t (dualIsoOfIso t)⁻¹ ≫ tensorObj_unit_iso = tensorObj_unit_iso",
+      "key_lemmas_used": [
+        "homOfLocalCompat_restrictFunctor_map",
+        "tensorObjIsoOfIso_trans",
+        "dualIsoOfIso_trans"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Residual B: close via the newly-available connector",
+        "code_tried": "exact homOfLocalCompat_restrictFunctor_map U _ f _ x",
+        "line_number": "240",
+        "lean_error": "",
+        "result": "success",
+        "insight": "B closes transitively via the connector STUB independent of whether the connector body lands; the `_` slots unify with cover-witness (fun x => ⟨x, hxU x⟩) and the cocycle hyp used in ε. (Connector body did land same iter.)"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Residual A: probe whether iter-025 functoriality lemmas close the post-simp cocycle goal",
+        "code_tried": "rfl  /  simp only [tensorObjIsoOfIso_trans, tensorObjIsoOfIso_refl, dualIsoOfIso_trans, dualIsoOfIso_refl]  /  congr 1  /  apply Scheme.Modules.hom_ext",
+        "line_number": "239",
+        "lean_error": "rfl fails (distinct opaque trivialisations eM i.some vs eM j.some); simp makes no progress (iso-level eqns vs .val.app SECTION goal); congr 1 → HEq with opaque trivs; hom_ext fails (section-map eqn not morphism eqn)",
+        "result": "failed",
+        "insight": "Iso-level functoriality lemmas cannot fire at the section level. Need (A) to lift goal to restricted-morphism equation, then (B) eval-at-1 self-duality collapse. Both multi-hundred LOC, ABSENT. subsingleton is WRONG (genuine ab-group maps). Never sheafify-the-eval."
+      }
+    ],
+    "next_steps": "ESCALATED. Author (A) further-restriction compat + (B) unit self-duality eval collapse as named helper lemmas WITH \\lean{} blueprint blocks (inverse026 lvb major: rem:dual_discharges_inverse only describes them in prose). mathlib-analogist/mathlib-build lane. Do NOT re-dispatch a plain prover on A without these."
+  },
+  {
+    "timestamp": "2026-06-19T07:33:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pushforward_eta_appIso_collapse"
+    },
+    "session": {
+      "id": "session_26",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "Needs a presheaf-level pushforwardPushforwardAdj.unit sectionwise value lemma (rfl-shaped); project carries only the SHEAF-level pushforwardPushforwardAdj_unit_app_val_app",
+      "key_lemmas_used": [
+        "Adjunction.homEquiv_unit",
+        "Adjunction.unit_leftAdjointUniq_hom_app",
+        "presheafUnit_comp_map_eta",
+        "epsilonPresheafToSheafUnit",
+        "unitToPushforwardObjUnit_val_app_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Mate transposition across hadj' to a single ε-comparison (★η); have→let hadj + erw to key-match the zeta-unfolded H1",
+        "code_tried": "apply (hadj'.homEquiv _ _).injective; rw [homEquiv_unit, homEquiv_unit, Functor.map_comp]; erw [reassoc_of% (Adjunction.unit_leftAdjointUniq_hom_app hadj' (pullbackPushforwardAdjunction φ') (𝟙_ _))]; erw [presheafUnit_comp_map_eta f]",
+        "line_number": "4163",
+        "lean_error": "(early) rw 'motive is not type correct' / 'did not find pattern' until have→let hadj made H1 transparent; then erw fires",
+        "result": "partial",
+        "insight": "have hadj is OPAQUE so erw/rw fail; let hadj (transparent) lets erw key-match the unfolded pushforwardPushforwardAdj. erw (not rw) needed (folded φ' let vs unfolded (toRingCatSheafHom f).hom)."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Sectionwise reduction of (★η): ε→unitToPushforwardObjUnit (epsilonPresheafToSheafUnit), hom_ext + LinearMap.ext_ring (value on 1)",
+        "code_tried": "erw [epsilonPresheafToSheafUnit f]; refine PresheafOfModules.hom_ext (fun U => ?_); apply ModuleCat.hom_ext; ext r; ... erw [unitToPushforwardObjUnit_val_app_apply]",
+        "line_number": "4182",
+        "lean_error": "",
+        "result": "partial",
+        "insight": "Reduced to clean isolated sectionwise ring identity ((hadj'.unit 𝟙ᵖ ≫ (pushforward φ').map (η Gβ)).app U) 1 = (φ'.app U) 1. RHS=1; LHS=rightAdjointLaxMonoidal ε on 1 =1. Tried generic helper pushforwardPushforwardAdj_unit_app_app_apply := rfl but F/G orientation+universe mismatch; removed to keep file clean."
+      }
+    ],
+    "next_steps": "Add presheaf-level pushforwardPushforwardAdj_unit_app_app_apply (rfl-shaped, orientation per PresheafInternalHom.lean:442 adj:F⊣G, φ:S⟶F.op⋙R, ψ:R⟶G.op⋙S), then erw it + ModuleCat.restrictScalars_η + map_one. NEARLY CLOSED."
+  },
+  {
+    "timestamp": "2026-06-19T07:33:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pushforward_mu_appIso_collapse"
+    },
+    "session": {
+      "id": "session_26",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "CIRCULARITY (empirically confirmed): the clean mate route needs Adjunction.unit_app_tensor_comp_map_δ (adj:=hadj') which requires hadj'.IsMonoidal = K1's hmon, which CONSUMES this very lemma. Genuine residual is the BARE tensorator comparison μ(rightAdjointLaxMonoidal hadj')=μ(presheafPushforwardLaxMonoidal) on Gβ A,Gβ B, proved sectionwise on pushforward₀OfCommRingCat pure tensors (NOT via mate calculus)",
+      "key_lemmas_used": [
+        "pushforwardComp_lax_μ (analogue)",
+        "restrictScalars_μ_app",
+        "forget₂_restrictScalars_μ_hom_tmul"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Mate reduction mirroring pullbackComp_δ: cancel H1.hom(A⊗B), transpose across adj₀, RHS via unit_app_tensor_comp_map_δ, LHS via δ Gβ = μIsoβ.inv (rfl)",
+        "code_tried": "exact Adjunction.unit_app_tensor_comp_map_δ (adj := hadj') M.val N.val   /   exact Adjunction.unit_app_unit_comp_map_η hadj'",
+        "line_number": "4287",
+        "lean_error": "failed to synthesize instance of type class hadj'.IsMonoidal",
+        "result": "failed",
+        "insight": "CIRCULAR: hstar = unit_app_tensor_comp_map_δ (adj:=hadj') needs hadj'.IsMonoidal w.r.t. presheafPushforwardLaxMonoidal = K1's hmon, which consumes this lemma. Both δ and η twins error identically. The mate route is a dead-end for these collapse lemmas."
+      }
+    ],
+    "next_steps": "Prove the BARE μ-comparison sectionwise (mirror pushforwardComp_lax_μ L2197) WITHOUT assuming hadj'.IsMonoidal: thread pure-tensor extensionality through pushforward₀OfCommRingCat sections (Gβ.obj(A⊗B) not syntactic → tensor_ext won't fire); via erw on the D3′ μ-helper family. mathlib-analogist consult flagged. Multi-hundred LOC."
+  }
+]

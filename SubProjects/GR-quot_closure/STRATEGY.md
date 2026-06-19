@@ -38,7 +38,7 @@ cleanly.
 
 | Phase | Status | Iters left | LOC | Key Mathlib needs | Risks |
 |---|---|---|---|---|---|
-| SNAP-S0 — section graded ring residue | ACTIVE | 2–3 | ~140–300 | monoidal-localization transport (`MorphismProperty.IsMonoidal` + `LocalizedMonoidal`); `DirectSum.GCommRing` assembly | iter-007 pivot: inherit `MonoidalCategory`/`SymmetricCategory X.Modules` (assoc/pentagon/triangle/hexagon FREE) vs. hand-rolled coherence; merge-dedup moot (sibling stuck on same wall) |
+| SNAP-S0 — section graded ring assoc legs | ACTIVE (live: ★ placement gating B4/B5, + B6/B7; +3 comm-gated future) | 1 (★ closes via head-pin → B4/B5 auto-clean + B6/B7 same lane; if head-pin AND uniform-synonym restatement BOTH fail → user escalation, no further non-user variants) | ~50–120 | inherited monoidal structure + bridges DONE; `tensorPowAdd_zero_right`/B1/B2/B3/B5-assembly/B4-reduction DONE; ★'s residual generic coherence PROVEN axiom-clean (iter-016); `MonoidalCategory.pentagon`; in-synonym `Localization.Monoidal.μ_natural_*(_assoc)`/`associator_naturality`; `DirectSum.GSemiring` assembly | LIVE = assoc chain only. iter-013 REDUCED B4 to the isolated ★ `tensorObjAssoc_eta_factor_sheaf` (closing ★ auto-cleans B4+B5). iter-015 comp-bridge `hc` ⇒ ★ prefix compiles; iter-016 PROVED ★'s residual as a generic `[MonoidalCategory M]` coherence (axiom-clean) — math DONE — but ★'s placement `exact` blew >4M heartbeats. **progress-critic iter-017 STUCK** (6→6 ×4); corrective = mathlib-analogist consult (DONE), which **re-diagnosed: the wall is HEAD-MISALIGNMENT, not term size** — the failing `exact` lets the generic's `M` default to native `X.Modules`-comp while the `hc`-normalized goal carries the `LocalizedMonoidal` head ⇒ no `isDefEq` short-circuit, full 1.2M-char diamond traversal. FIX = pin `M` to the synonym (1-line); fallback = restate ★ uniformly in LocalizedMonoidal-comp. Then B6 `tensorPowAdd_assoc` (canonical pentagon, diamond-free, COMMITTED), B7 `sectionsMul_mul_assoc`. comm = invertibility-gated FUTURE, no consumer. |
 | χ-blocked nodes | DEFERRED | — | — | higher-cohomology engine (absent here) | `hilbert_polynomial`/`quot_functor` filled from cohomology leg at merge |
 
 **Leg status: GR-seed cone DELIVERED (iter-001); SNAP-S0 residue ACTIVE (iter-006).** Per user
@@ -70,10 +70,14 @@ invariant verified (seeds use 0 SNAP/χ sorry nodes). Faithful Lean image of Nit
 
 **SNAP-S0 route — ACTIVE (iter-006; approach pivoted iter-007).** Not in the GR-seed cone
 (disjoint, cannot disturb the delivered seed). Cast machinery + graded `GMul`/`GOne` + left-unit
-law CLOSED axiom-clean (iter-006, 9→3 sorries). **iter-007 pivot (mathlib-analogist
-ALIGN_WITH_MATHLIB, `analogies/tensorobjassoc.md`):** the 3 residual coherence laws
-(`tensorPowAdd_zero_right` succ, `sectionsMul_mul_assoc/_comm`) are NOT hand-proved over the
-hand-rolled (obfuscated double-braiding) `tensorObjAssoc`; instead BUILD the full
+law CLOSED axiom-clean (iter-006, 9→3 sorries). **iter-010/011 re-anchor:** `sectionsMul_mul_comm` is
+FALSE for general `L` (free tensor algebra) — re-signed `[IsInvertible L]` (Stacks 01CR); comm proof +
+its `tensorBraiding_self_eq_id_of_isInvertible`/`tensorPowAdd_comm` deps are invertibility-gated FUTURE
+work with NO consumer (`GCommSemiring` unbuilt), so OUT of active scope. **Live = the assoc chain only**
+(∀L, TRUE): B1 `presheafAssociator_top_apply` DONE; B2→B7 remaining, blocked on the `⊗ₜ`/`forget₂`
+instance diamond (FIX = morphism-level statements, proven on B1; blueprint rewritten iter-012). **iter-007
+pivot (mathlib-analogist ALIGN_WITH_MATHLIB, `analogies/tensorobjassoc.md`):** the residual coherence laws
+are NOT hand-proved over the hand-rolled (obfuscated double-braiding) `tensorObjAssoc`; instead BUILD the full
 `MonoidalCategory`/`SymmetricCategory X.Modules` via Mathlib monoidal localization —
 `(J.W.inverseImage (toPresheaf R₀)).IsMonoidal` (whiskerRight = `ztensor_whisker_localIso` DONE;
 whiskerLeft by braiding-conjugation, presheaves symmetric) + `LocalizedMonoidal` — so

@@ -1,0 +1,19 @@
+[
+  {
+    "timestamp": "2026-06-19T01:45:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean",
+      "theorem": "cech_computes_higherDirectImage"
+    },
+    "session": {
+      "id": "session_91",
+      "model": "claude-sonnet-4-6"
+    },
+    "findings": {
+      "blocker": "no_prover_lane: build gate pending; CSILeg split chain (Mid1/Mid2/Top/Aux) not yet fully elaborated; CechToHigherDirectImage.olean absent; sync_leanok added=0"
+    },
+    "attempts": [],
+    "next_steps": "Continue no-dispatch until all split-chain oleans present; once sync_leanok confirms leanok for main theorem, advance to polish stage."
+  }
+]

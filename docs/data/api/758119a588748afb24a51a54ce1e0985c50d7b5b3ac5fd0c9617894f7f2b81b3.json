@@ -1,0 +1,252 @@
+[
+  {
+    "timestamp": "2026-06-19T09:46:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.Scheme.ringCatSheaf_commRing"
+    },
+    "session": {
+      "id": "session_12",
+      "model": "prover"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "inferInstanceAs",
+        "forget₂ CommRingCat RingCat"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "transport CommRing from CommRingCat-valued structure sheaf: carriers ↥(X.ringCatSheaf.presheaf.obj U) = ↥(X.presheaf.obj U) defeq, CommRing via inferInstanceAs (CommRing (X.presheaf.obj U))",
+        "code_tried": "noncomputable def Scheme.ringCatSheaf_commRing (X : Scheme.{u}) (U : (Opens X)ᵒᵖ) : CommRing _ := inferInstanceAs (CommRing (X.presheaf.obj U))",
+        "line_number": "425",
+        "lean_error": "warning: Definition of class type must be marked with @[reducible] or @[implicit_reducible]",
+        "result": "partial",
+        "insight": "class-typed def needs @[reducible] to be usable as a letI-level instance; made @[reducible] noncomputable def (NOT global instance) to avoid Ring-diamond vs the RingCat-level ring"
+      },
+      {
+        "attempt": 2,
+        "strategy": "add @[reducible]",
+        "code_tried": "@[reducible] noncomputable def Scheme.ringCatSheaf_commRing (X : Scheme.{u}) (U : (Opens X)ᵒᵖ) :",
+        "line_number": "425",
+        "lean_error": "",
+        "result": "success",
+        "insight": "clean; used .presheaf not deprecated .val (defeq, warning-free)"
+      }
+    ],
+    "next_steps": "downstream uses via letI to get CommRing (R.obj U) for the openwise exterior/sym power"
+  },
+  {
+    "timestamp": "2026-06-19T09:46:01Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "SymmetricPower.baseChange"
+    },
+    "session": {
+      "id": "session_12",
+      "model": "prover"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "PiTensorProduct.lift",
+        "MultilinearMap.restrictScalars",
+        "AddCon.lift",
+        "tprod_equiv"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "mirror existing SymmetricPower.map: baseChangeAux := PiTensorProduct.lift ((tprod B).restrictScalars A), perm-invariant via baseChangeAux_respects (tprod_equiv over B), descend through addConGen (Rel A ι N) by AddCon.lift; map_smul' via AddCon.induction_on",
+        "code_tried": "noncomputable def baseChangeAux ... := PiTensorProduct.lift ((SymmetricPower.tprod B ι N).restrictScalars A); baseChange := AddCon.lift _ baseChangeAux baseChangeAux_respects",
+        "line_number": "586,616",
+        "lean_error": "",
+        "result": "success",
+        "insight": "A-structures on target Sym[B] ι N must be EXPLICIT binders [Module A (Sym[B] ι N)] [IsScalarTower A B (Sym[B] ι N)] — do NOT synth from [Algebra A B][Module B _]"
+      }
+    ],
+    "next_steps": "wrap categorically as symmetricPower.baseChangeMap"
+  },
+  {
+    "timestamp": "2026-06-19T09:46:02Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "ModuleCat.exteriorPower.baseChange"
+    },
+    "session": {
+      "id": "session_12",
+      "model": "prover"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "exteriorPower.alternatingMapLinearEquiv",
+        "MultilinearMap.restrictScalars",
+        "map_eq_zero_of_eq",
+        "alternatingMapLinearEquiv_apply_ιMulti"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "AlternatingMap.restrictScalars route",
+        "code_tried": "#check @AlternatingMap.restrictScalars",
+        "line_number": "0",
+        "lean_error": "Unknown constant `AlternatingMap.restrictScalars`",
+        "result": "failed",
+        "insight": "no AlternatingMap.restrictScalars; only MultilinearMap.restrictScalars exists"
+      },
+      {
+        "attempt": 2,
+        "strategy": "baseChangeAlt = B-alternating ιMulti restricted to A (MultilinearMap.restrictScalars A + alternating preserved via map_eq_zero_of_eq); then alternatingMapLinearEquiv over A gives ⋀[A]^n N →ₗ[A] ⋀[B]^n N",
+        "code_tried": "baseChangeAlt := ... ; baseChange := exteriorPower.alternatingMapLinearEquiv baseChangeAlt",
+        "line_number": "656,673",
+        "lean_error": "",
+        "result": "success",
+        "insight": "baseChange_apply_ιMulti closes via alternatingMapLinearEquiv_apply_ιMulti"
+      }
+    ],
+    "next_steps": "wrap as exteriorPower.baseChangeMap"
+  },
+  {
+    "timestamp": "2026-06-19T09:46:03Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "ModuleCat.exteriorPower.baseChangeMap"
+    },
+    "session": {
+      "id": "session_12",
+      "model": "prover"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Module.compHom",
+        "RingHom.toAlgebra",
+        "exteriorPower.map",
+        "exteriorPower.map_apply_ιMulti"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "φ-semilinear ⋀[R]^n M →ₛₗ[φ] ⋀[S]^n N: letI Algebra R S := φ.toAlgebra, Module R N := compHom N φ, IsScalarTower R S N; view g R-linear into N↾R, compose baseChange n ∘ exteriorPower.map n gR",
+        "code_tried": "let comp : (⋀[R]^n M) →ₗ[R] (⋀[S]^n N) := (baseChange n).comp (exteriorPower.map n gR)",
+        "line_number": "697",
+        "lean_error": "Application type mismatch: argument gR has type M →ₗ[R] N but expected ℕ — `exteriorPower.map` resolved to categorical ModuleCat.exteriorPower.map (wrong arg order)",
+        "result": "failed",
+        "insight": "NAME-CLASH: inside namespace ModuleCat.exteriorPower, `exteriorPower.map` binds the categorical map; must write _root_.exteriorPower.map"
+      },
+      {
+        "attempt": 2,
+        "strategy": "use _root_.exteriorPower.map; pin R S binders",
+        "code_tried": "noncomputable def baseChangeMap {R S : Type u} [CommRing R] [CommRing S] (φ : R →+* S) ... ; let comp := (baseChange n).comp (_root_.exteriorPower.map n gR)",
+        "line_number": "697",
+        "lean_error": "failed to synthesize NonAssocSemiring R (before pinning R S as explicit Type u with CommRing)",
+        "result": "success",
+        "insight": "explicit {R S : Type u} [CommRing R] [CommRing S] binders fix synth; repackage R-linear-into-restricted map as →ₛₗ[φ]"
+      }
+    ],
+    "next_steps": "needs baseChangeMap_id / baseChangeMap_comp (NOT attempted) for the PresheafOfModules.mk coherence laws"
+  },
+  {
+    "timestamp": "2026-06-19T09:46:04Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "ModuleCat.symmetricPower.baseChangeMap"
+    },
+    "session": {
+      "id": "session_12",
+      "model": "prover"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "SymmetricPower.baseChange",
+        "SymmetricPower.map",
+        "SymmetricPower.map_tprod",
+        "SymmetricPower.baseChange_tprod"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "identical recipe to exterior: _root_.SymmetricPower.baseChange ∘ _root_.SymmetricPower.map gR; baseChangeMap_tprod generator action via change + map_tprod + baseChange_tprod",
+        "code_tried": "change _root_.SymmetricPower.baseChange (_root_.SymmetricPower.map gR (⨂ₛ[R] i, m i)) = _",
+        "line_number": "770",
+        "lean_error": "typeclass instance problem is stuck: IsScalarTower R ?m.143 Sym[?m.143] ι N (second..sixth args are metavariables)",
+        "result": "failed",
+        "insight": "the `change` left base ring metavariable; IsScalarTower won't resolve on metavars"
+      },
+      {
+        "attempt": 2,
+        "strategy": "pin base/target args on baseChange",
+        "code_tried": "change _root_.SymmetricPower.baseChange (A := R) (B := S) (ι := ι) (N := N) (_root_.SymmetricPower.map (...) (⨂ₛ[R] i, m i)) = _",
+        "line_number": "770",
+        "lean_error": "",
+        "result": "success",
+        "insight": "explicitly pinning (A:=R)(B:=S)(ι:=ι)(N:=N) lets IsScalarTower resolve; rw map_tprod + baseChange_tprod then rfl"
+      }
+    ],
+    "next_steps": "needs symmetric baseChangeMap_id / baseChangeMap_comp for openwise symPower"
+  },
+  {
+    "timestamp": "2026-06-19T09:46:05Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.PresheafOfModules.exteriorPower"
+    },
+    "session": {
+      "id": "session_12",
+      "model": "prover"
+    },
+    "findings": {
+      "blocker": "PresheafOfModules.mk needs map_id/map_comp coherence laws (phrased via restrictScalarsId'/restrictScalarsComp') requiring two NOT-yet-built naturality lemmas baseChangeMap_id, baseChangeMap_comp; no CorePresheafOfModules smart constructor exists; invariant forbids sorry so a partial mk does not compile",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "probed PresheafOfModules.mk signature and CorePresheafOfModules builder",
+        "code_tried": "#check @PresheafOfModules.mk ; lean_local_search PresheafOfModules.BundledCorePresheafOfModules",
+        "line_number": "0",
+        "lean_error": "no CorePresheafOfModules-style builder found; mk requires obj + map + map_id + map_comp",
+        "result": "failed",
+        "insight": "planner-designated STOP: clean next-iter unit. Build baseChangeMap_id/_comp first (statements coupled to restrictScalars{Id',Comp'} form), then the mk assembly; generator-ext route via exteriorPower.map_apply_ιMulti + baseChangeMap_apply_ιMulti"
+      }
+    ],
+    "next_steps": "next iter: build baseChangeMap_id + baseChangeMap_comp (both flavours), then PresheafOfModules.exteriorPower/symPower mk, then sheafify (step 6) via PresheafOfModules.sheafification"
+  },
+  {
+    "timestamp": "2026-06-19T09:46:06Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.PresheafOfModules.symPower"
+    },
+    "session": {
+      "id": "session_12",
+      "model": "prover"
+    },
+    "findings": {
+      "blocker": "same as exteriorPower: needs symmetric baseChangeMap_id/_comp + PresheafOfModules.mk assembly",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "same probe as exterior side",
+        "code_tried": "see PresheafOfModules.exteriorPower entry",
+        "line_number": "0",
+        "lean_error": "same mk coherence-law blocker",
+        "result": "failed",
+        "insight": "build symmetric baseChangeMap_id/_comp first; reuse symmetricPower.baseChangeMap_tprod for generator-ext"
+      }
+    ],
+    "next_steps": "co-built with the exterior openwise functor next iter"
+  }
+]

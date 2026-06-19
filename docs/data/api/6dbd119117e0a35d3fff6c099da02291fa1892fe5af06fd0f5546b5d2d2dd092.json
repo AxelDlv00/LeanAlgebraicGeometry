@@ -1,0 +1,181 @@
+[
+  {
+    "timestamp": "2026-06-19T05:45:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pushforward_eta_appIso_collapse"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "sectionwise f.appIso structure-ring collapse on the unit module (η-twin of pushforwardComp_lax_μ); needs pure-𝟙_-module reduction threading pushforward₀OfCommRingCat sections, NOT tensor_ext (Gβ.obj 𝟙_ is a pushforward of the unit, not a syntactic unit)",
+      "key_lemmas_used": [
+        "PresheafOfModules.hom_ext",
+        "Functor.OplaxMonoidal.η"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "scaffold statement (already present from effort-breaker) + open sectionwise via hom_ext",
+        "code_tried": "refine PresheafOfModules.hom_ext (fun U => ?_); sorry",
+        "line_number": "4158",
+        "lean_error": "none (compiles with sorry)",
+        "result": "partial",
+        "insight": "statement matches blueprint lem:pushforward_eta_appiso_collapse exactly (lvb substrate025)"
+      },
+      {
+        "attempt": 2,
+        "strategy": "automation probes on the reduced goal",
+        "code_tried": "exact?; aesop; simp [Functor.OplaxMonoidal.η]; rw [Functor.comp_obj]",
+        "line_number": "4158",
+        "lean_error": "all fail / no progress to closure",
+        "result": "failed",
+        "insight": "simp DOES reduce LHS to (restrictScalars (f.appIso U).inv).map ((η pushforward₀).app U) ≫ (η (restrictScalars β')).app U and RHS to (H1.hom 𝟙_).app U ≫ ((adj₀.homEquiv _ _).symm (ε (pushforward φ'))).app U — i.e. the η-half of hadj'.IsMonoidal read sectionwise; reduced goal recorded in-code"
+      }
+    ],
+    "next_steps": "Prove DIRECTLY as η-twin of pushforwardComp_lax_μ; smaller than μ-side (effort 765); reduced goal already in-code at L4150-4158."
+  },
+  {
+    "timestamp": "2026-06-19T05:45:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pushforward_mu_appIso_collapse"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "the load-bearing μ/δ-side collapse: δ(pullback φ') A B = e.hom per A B; multi-hundred-LOC sectionwise mate calculus that has churned ~7 iters; must be proved directly (hmon consumes this lemma, so routing through Adjunction.IsMonoidal is circular)",
+      "key_lemmas_used": [
+        "PresheafOfModules.hom_ext",
+        "Functor.Monoidal.μIso",
+        "restrictScalars_μ_app",
+        "pushforward_μ_eq",
+        "forget₂_restrictScalars_μ_hom_tmul",
+        "pushforward_map_restrictScalars_μ_app_tmul"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "scaffold + open sectionwise; document that δ Gβ A B = (Functor.Monoidal.μIso Gβ A B).inv by rfl, so this rearranges to the per-A-B form of the old hcompat",
+        "code_tried": "refine PresheafOfModules.hom_ext (fun U => ?_); sorry",
+        "line_number": "4239",
+        "lean_error": "none (compiles with sorry)",
+        "result": "partial",
+        "insight": "confirmed the goal is δ(pullback φ') = e.hom per A B, provable directly with NO circular hmon route; statement matches blueprint exactly; blueprint μ-side sketch is adequate to guide the body (lvb substrate025)"
+      }
+    ],
+    "next_steps": "Dedicated prove pass: mirror pushforwardComp_lax_μ ONE-TO-ONE via the private D3′ μ-helper family (restrictScalars_μ_app / pushforward_μ_eq / forget₂_restrictScalars_μ_hom_tmul / pushforward_map_restrictScalars_μ_app_tmul, erw, no whnf). This is THE genuine geometric content of K1."
+  },
+  {
+    "timestamp": "2026-06-19T05:45:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pullbackTensorMap_isIso_of_isOpenImmersion"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "K1 body is now FULLY PROVED (hmon is a real proof at L4380); transitively sorry only via the two collapse lemmas",
+      "key_lemmas_used": [
+        "pushforward_eta_appIso_collapse",
+        "pushforward_mu_appIso_collapse",
+        "presheafUnit_comp_map_eta"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "fix the type-mismatch ERRORS (not sorries) at the two collapse-lemma invocations: convert data-valued Monoidal instance + adjunction from opaque haveI/have to transparent letI/let",
+        "code_tried": "haveI hMonβ ... := restrictScalarsMonoidalOfBijective β' hβ  →  letI hMonβ ... (×5); have hadj ... := pushforwardPushforwardAdj ...  →  let hadj ... (×1)",
+        "line_number": "4285",
+        "lean_error": "before fix: type mismatch — pushforward_eta_appIso_collapse f not defeq to the hηcompat ascription (two distinct opaque Monoidal data instances)",
+        "result": "success",
+        "insight": "Monoidal is DATA not Prop; haveI makes it opaque so two rebuilt instances aren't defeq. letI makes them transparent → invocations typecheck. Verified did NOT reintroduce the carrier diamond (hd : δ Gβ = μIsoβ.inv := rfl at L4439 + full mate-calculus block still compile). Auditor confirms correct+necessary, no weakening."
+      }
+    ],
+    "next_steps": "No further work on K1 body; closing the two collapse lemmas makes seed-1 pullbackTensorIsoOfLocallyTrivial axiom-clean."
+  },
+  {
+    "timestamp": "2026-06-19T05:45:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "homOfLocalCompat_restrictFunctor_map"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "co-assigned DualInverse lane delivered NO edit for the 3rd consecutive iter (iter-023/024/025); file unchanged on disk. The connector lemma does not exist. It is a frontier node (lem:hom_of_local_compat_restrict), ready to prove, ~40-80 LOC, and gates terminal residual B (one-line swap once it lands).",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "NOT ATTEMPTED — lane produced no edit (files_edited this iter = TensorObjSubstrate.lean, TensorObjInverse.lean only)",
+        "code_tried": "",
+        "line_number": "after L463 (homOfLocalCompat def)",
+        "lean_error": "",
+        "result": "failed",
+        "insight": "Recurring non-delivery is now the single cheapest sorry-reducing action being repeatedly skipped. Route given: glued top section topSectionToHom (hsup ▸ (hglue hcompat).choose) restricts on U i to homLocalSection U f i via the internal IsGluing datum (topSectionToHom_app / htr hsup / hgl, already exploited at DualInverse L514-551)."
+      }
+    ],
+    "next_steps": "Dispatch a DEDICATED, NON-co-assigned prover on DualInverse.lean in mathlib-build mode for this one lemma; verify a prover actually runs on the file. This unblocks terminal B as a verified one-liner (exact homOfLocalCompat_restrictFunctor_map U _ f _ x)."
+  },
+  {
+    "timestamp": "2026-06-19T05:45:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "exists_tensorObj_inverse"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "residual A (cocycle) needs ingredient (3) the evaluation-pairing self-duality cancellation (sectionwise internalHomEval/presheafDualUnitIso reasoning — global eval map deliberately never built; multi-hundred LOC) + an iso-level→section-level bridge for homOfLocalCompat's section-stated hypothesis; residual B blocked on the missing connector homOfLocalCompat_restrictFunctor_map",
+      "key_lemmas_used": [
+        "tensorObjIsoOfIso_trans",
+        "tensorObjIsoOfIso_refl",
+        "presheaf_dualIsoOfIso_trans",
+        "presheaf_dualIsoOfIso_refl",
+        "dualIsoOfIso_trans",
+        "dualIsoOfIso_refl"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "deliver ingredients (1) contravariant functoriality of dualIsoOfIso and (2) bifunctoriality of tensorObjIsoOfIso as six reusable helper lemmas for residual A's abstract route",
+        "code_tried": "tensorObjIsoOfIso_{trans,refl}; presheaf_dualIsoOfIso_{trans,refl}; dualIsoOfIso_{trans,refl}",
+        "line_number": "new helpers",
+        "lean_error": "none — all six compile, axiom-clean, verified against real defs via full lake build after sibling lane unblocked",
+        "result": "partial",
+        "insight": "Carrier diamond X.ringCatSheaf.val ≡ X.presheaf⋙forget₂ (defeq-not-syntactic): (SheafOfModules.forget _).mapIso e lands in the presheaf⋙forget₂ carrier so Functor.mapIso_trans/map_comp do NOT fire under rw/simp only — use erw then trailing rfl. Section maps are GENUINE ab-group homs; subsingleton is the WRONG tool."
+      },
+      {
+        "attempt": 2,
+        "strategy": "residual B: stage the one-line connector swap",
+        "code_tried": "rw [key]; exact hfiso x  (with key : (restrictFunctor (U x).ι).map ε = f x)",
+        "line_number": "222",
+        "lean_error": "key body remains sorry — connector homOfLocalCompat_restrictFunctor_map not in DualInverse.lean",
+        "result": "partial",
+        "insight": "surrounding rw [key]; exact hfiso x already compiles; B is a true one-liner once the connector exists"
+      }
+    ],
+    "next_steps": "Blueprint the 6 new helpers (coverage debt). Residual A: write ingredient (3) eval-cancellation at the dualPrecompEquiv/internalHomEval section level + iso→section bridge. Residual B: lands automatically once the connector is delivered."
+  }
+]
