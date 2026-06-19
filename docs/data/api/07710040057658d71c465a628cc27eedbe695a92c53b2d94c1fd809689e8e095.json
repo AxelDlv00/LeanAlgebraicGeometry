@@ -1,0 +1,118 @@
+[
+  {
+    "timestamp": "2026-06-19T14:36:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.kernel_module_free_on_basicOpen_cover"
+    },
+    "session": {
+      "id": "session_16",
+      "model": "mathlib-build prover"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "CategoryTheory.ShortComplex.ShortExact.splittingOfProjective",
+        "Module.Projective.of_split",
+        "Module.Finite.of_surjective",
+        "Module.finitePresentation_of_projective",
+        "Module.freeLocus_eq_univ_iff",
+        "Module.mem_freeLocus",
+        "Module.FinitePresentation.exists_free_localizedModule_powers",
+        "isCompact_univ.elim_finite_subcover"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Splitting retraction equation via congrArg+simpa",
+        "code_tried": "have h := congrArg ModuleCat.Hom.hom sp.f_r; simpa using h",
+        "line_number": "1283",
+        "lean_error": "After simplification term h has type True but expected sp.r.hom ∘ₗ S.f.hom = LinearMap.id (sp.f_r is @[simp], simp collapses hypothesis to True)",
+        "result": "failed",
+        "insight": "Do NOT route the split equation through simp/simpa: f_r/s_g carry @[reassoc (attr := simp)]."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Explicit rw chain for retraction equation",
+        "code_tried": "rw [← ModuleCat.hom_comp, sp.f_r, ModuleCat.hom_id]",
+        "line_number": "1284",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Manual rw avoids the @[simp] collapse; clean."
+      }
+    ],
+    "next_steps": "L2 is the BOTTOM (fully-anchored) node of the Core-2 affine chain; complete and axiom-clean. Consumed by L4 (lem:isLocallyFree_kernel_on_affine) once L3 lands."
+  },
+  {
+    "timestamp": "2026-06-19T14:36:20Z",
+    "status": "solved",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.isLocallyFree_of_isLocallyFree_cover"
+    },
+    "session": {
+      "id": "session_16",
+      "model": "mathlib-build prover"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "TopologicalSpace.Opens.mem_iSup",
+        "Scheme.Hom.isoImage",
+        "Scheme.Hom.isoImage_hom_ι",
+        "Scheme.Opens.mem_ι_image_iff",
+        "restrictFunctorComp",
+        "restrictFunctorCongr",
+        "freeIso_of_restrictFunctor_hom_freeIso (new helper)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Build helper freeIso_of_restrictFunctor_hom_freeIso applying restrictFunctorId to T",
+        "code_tried": "restrictFunctorCongr e.inv_hom_id ≪≫ restrictFunctorId T",
+        "line_number": "1341",
+        "lean_error": "Function expected at restrictFunctorId but this term has type restrictFunctor (𝟙 ?m) ≅ 𝟭 (Modules ?m) (X is implicit)",
+        "result": "failed",
+        "insight": "restrictFunctorId takes X implicit — write `restrictFunctorId`, not `restrictFunctorId T`."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Drop explicit arg; assemble pseudo-functorial inverse NI then transport iso0 via isoImage to image open W",
+        "code_tried": "letI NI := (restrictFunctorComp e.inv e.hom).symm ≪≫ restrictFunctorCongr e.inv_hom_id ≪≫ restrictFunctorId; (NI.app A).symm ≪≫ (restrictFunctor e.inv).mapIso hB ≪≫ restrictFunctorObjFreeIso e.inv I; then L1 picks U i ∈ x, V ⊆ U i, W = (U i).ι ''ᵁ V, e := isoImage",
+        "line_number": "1335-1386",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Shared explicit rank I threaded through hypothesis + conclusion is the faithful encoding of 'constant rank r'. isoImage transport (different schemes) is NOT found:locally_free_of_iso (same-scheme module iso)."
+      }
+    ],
+    "next_steps": "L1 (lem:isLocallyFree_local) complete, axiom-clean. Helper freeIso_of_restrictFunctor_hom_freeIso is UNMATCHED coverage debt — needs a blueprint node."
+  },
+  {
+    "timestamp": "2026-06-19T14:38:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.kernel_iso_tilde_of_free_ses_affine"
+    },
+    "session": {
+      "id": "session_16",
+      "model": "mathlib-build prover"
+    },
+    "findings": {
+      "blocker": "tilde.functor R does not preserve kernels: no PreservesFiniteLimits / PreservesKernel / left-exactness instance in Mathlib v4.30.0 (grep-confirmed; tilde.functor has only Additive, Full, Faithful, IsLeftAdjoint, preservesBinaryBiproducts). The final step 𝒦 = ker(tilde φ) ≅ tilde(ker φ) requires tilde left-exactness.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Reasoned (not coded): transport S.g across 𝒢≅tilde R^m, ℋ≅tilde R^n (tildeFinsupp) to tilde R^m → tilde R^n; full faithfulness (tilde.fullyFaithfulFunctor) gives unique φ:R^m→R^n; faithful reflects epi ⇒ φ surjective; K:=ker φ; then 𝒦=ker(tilde φ)≅tilde(ker φ)",
+        "line_number": null,
+        "lean_error": "No code written — blocked at the final kernel-preservation step (tilde left-exactness absent in Mathlib).",
+        "result": "failed",
+        "insight": "Building PreservesFiniteLimits (tilde.functor R) from scratch needs SheafOfModules stalk-of-kernel infrastructure (stalk of categorical kernel = kernel of stalk maps) absent in both project and Mathlib — a multi-lemma project, out of budget after L1+L2. No informal-agent key available (env empty)."
+      }
+    ],
+    "next_steps": "Build, as its own lane, instance PreservesFiniteLimits (tilde.functor R) (or PreservesLimitsOfShape WalkingCospan / a tilde_preserves_kernel lemma). That single instance unblocks L3, then routine full-faithful transport. Do NOT retry L3 without that instance first."
+  }
+]

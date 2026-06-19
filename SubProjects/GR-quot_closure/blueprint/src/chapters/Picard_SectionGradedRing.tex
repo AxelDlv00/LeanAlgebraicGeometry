@@ -403,6 +403,7 @@ Mathlib-absent brick on which the comparison rests.
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{def:schemeModuleSheafification, lem:presheafModule_sheafification_mathlib,
     lem:presheafModule_monoidal_mathlib}
   Module sheafification is the localization functor at the class \(W\) of
@@ -615,6 +616,7 @@ the compatibility hypothesis and read off the resulting structure.
 \end{definition}
 
 \begin{proof}
+  \leanok
   \uses{lem:isIso_sheafification_whiskerRight_unit,
     lem:presheafModule_monoidal_mathlib,
     lem:moduleSheafification_isLocalization_mathlib}
@@ -661,6 +663,7 @@ the compatibility hypothesis and read off the resulting structure.
 \end{definition}
 
 \begin{proof}
+  \leanok
   \uses{def:sheafModule_W_isMonoidal, lem:monoidalLocalization_mathlib}
   By \cref{lem:moduleSheafification_isLocalization_mathlib} the sheafification
   functor is a localization for \(W'\) on the symmetric monoidal source
@@ -747,6 +750,7 @@ the compatibility hypothesis and read off the resulting structure.
 \end{corollary}
 
 \begin{proof}
+  \leanok
   \uses{def:sheafTensorObj, def:sheafModule_monoidalStructure, def:tensorObjIso}
   The associator is the canonical (Mac Lane) associator \(\alpha\) of the inherited
   symmetric monoidal structure on \(X.\Modules\)
@@ -837,6 +841,7 @@ F \otimes_{\mathcal{O}_X} G\) for the bridge \(\mathrm{tensorObjIso}\)
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{def:tensorObjRightUnitor, def:tensorObjIso,
     def:sheafModule_monoidalStructure}
   The transported monoidal structure on \(X.\Modules\) is the one carried across
@@ -873,6 +878,7 @@ F \otimes_{\mathcal{O}_X} G\) for the bridge \(\mathrm{tensorObjIso}\)
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{def:tensorObjUnitIso, def:tensorObjIso,
     def:sheafModule_monoidalStructure}
   Identical in form to \cref{lem:tensorObjRightUnitor_eq} with \(\lambda\) in place
@@ -908,6 +914,7 @@ F \otimes_{\mathcal{O}_X} G\) for the bridge \(\mathrm{tensorObjIso}\)
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{def:tensorBraiding, def:tensorObjIso,
     cor:sheafModule_braided_symmetric, def:sheafModule_monoidalStructure}
   The braiding of the transported structure is the localization transport of the
@@ -942,6 +949,7 @@ F \otimes_{\mathcal{O}_X} G\) for the bridge \(\mathrm{tensorObjIso}\)
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{def:tensorObjIso, def:sheafModule_monoidalStructure}
   Mirror the argument of \cref{lem:tensorBraiding_eq}, replacing the braiding by the
   left whiskering. The relevant naturality is that of the strong-monoidal
@@ -974,6 +982,7 @@ F \otimes_{\mathcal{O}_X} G\) for the bridge \(\mathrm{tensorObjIso}\)
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{def:tensorObjIso, def:sheafModule_monoidalStructure}
   The right-handed analogue of \cref{lem:tensorObjWhiskerLeftIso_eq}, using
   naturality of the strong-monoidal comparison \(\mu\) in its right variable: that
@@ -1017,6 +1026,7 @@ F \otimes_{\mathcal{O}_X} G\) for the bridge \(\mathrm{tensorObjIso}\)
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{def:sheafTensorPow, def:sheafTensorObj, cor:sheafTensorObjAssoc,
     def:tensorObjUnitIso, def:tensorBraiding, def:tensorObjIso,
     def:sheafModule_monoidalStructure, cor:sheafModule_braided_symmetric,
@@ -1160,6 +1170,7 @@ follow the same pattern with the hexagon and pentagon in place of the triangle.
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{def:sheafModule_monoidalStructure, cor:sheafModule_braided_symmetric}
   Because the unit module is the monoidal unit \(\mathbf{1}\), the
   braiding--left-unitor coherence identifies the whiskered braiding factor:
@@ -1194,6 +1205,7 @@ follow the same pattern with the hexagon and pentagon in place of the triangle.
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{lem:sheafTensorPow_add, def:tensorObjRightUnitor, lem:canonical_runit_core,
     lem:tensorObjRightUnitor_eq, lem:tensorBraiding_eq,
     lem:tensorObjWhiskerLeftIso_eq, lem:tensorObjWhiskerRightIso_eq}
@@ -1476,6 +1488,7 @@ tensors of sections.
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{def:sectionMul, def:tensorObjUnitIso}
   The section multiplication is \(\Gamma(X,-)\) applied to the sheafification unit
   \(\eta\) evaluated at the top open on the elementary tensor \(1 \otimes a\). The
@@ -1511,6 +1524,7 @@ tensors of sections.
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{def:sectionMul, def:tensorObjRightUnitor}
   Identical in form to \cref{lem:tensorObjUnitIso_hom_sectionsMul} with the right
   unitor in place of the left. The presheaf-morphism equality
@@ -1541,6 +1555,7 @@ tensors of sections.
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{def:sectionMul, def:tensorBraiding}
   By \(\eta\)-naturality of the lax structure the braiding pushes through
   \(\mathrm{sectionsMul}\): the sheafification unit \(\eta\) commutes with the
@@ -1617,6 +1632,7 @@ the presheaf monoidal product (\cref{lem:presheafModule_monoidal_mathlib}).
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{def:sectionMul, lem:presheafModule_monoidal_mathlib,
     lem:isIso_sheafification_whiskerRight_unit}
   Unfold \(\mathrm{sectionsMul}\) (\cref{def:sectionMul}): the inner product is
@@ -1676,6 +1692,7 @@ the presheaf monoidal product (\cref{lem:presheafModule_monoidal_mathlib}).
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{def:sectionMul, lem:presheafModule_monoidal_mathlib,
     lem:isIso_sheafification_whiskerRight_unit}
   Identical in form to \cref{lem:sectionsMul_whiskerRight_unit} with the second
@@ -1711,6 +1728,7 @@ the presheaf monoidal product (\cref{lem:presheafModule_monoidal_mathlib}).
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{lem:presheafModule_monoidal_mathlib}
   The presheaf-of-modules monoidal structure is defined objectwise: at each open
   \(U\) its associator is the \(\mathrm{ModuleCat}\) associator of the sections at
@@ -1754,10 +1772,11 @@ the presheaf monoidal product (\cref{lem:presheafModule_monoidal_mathlib}).
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{lem:presheafModule_sheafification_mathlib, lem:presheafModule_monoidal_mathlib,
     lem:tensorObjAssoc_eta_factor_sheaf}
-  % NOTE: proof-block  removed (iter-013 review override): own body compiles but carries
-  % sorryAx transitively via lem:tensorObjAssoc_eta_factor_sheaf (★) — not a closed proof.
+  % NOTE (iter-017): CLOSED — once ★ lem:tensorObjAssoc_eta_factor_sheaf closed (iter-017,
+  % axiom-clean), this proof closed automatically; proof-block \leanok restored.
   Write \(L\) for the sheafification functor and \(T\) for its underlying
   presheaf-of-modules functor (so \(T\) sends a morphism of sheaves to its component
   presheaf morphism). The displayed identity is an equality of presheaf morphisms; we
@@ -1802,6 +1821,7 @@ the presheaf monoidal product (\cref{lem:presheafModule_monoidal_mathlib}).
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{lem:presheafModule_sheafification_mathlib}
   This is one of the two triangle identities of the sheafification adjunction. The
   left triangle reads \(L(\eta_P) \circ \varepsilon_{LP} = \mathrm{id}_{LP}\) (the
@@ -1838,20 +1858,18 @@ the presheaf monoidal product (\cref{lem:presheafModule_monoidal_mathlib}).
 % SOURCE QUOTE PROOF: project-bespoke (no external source; bookkeeping of the
 % inherited monoidal-localization structure of \cref{lem:monoidalLocalization_mathlib}).
 \begin{proof}
+  \leanok
   \uses{cor:sheafTensorObjAssoc, def:tensorObjIso,
     lem:isIso_sheafification_whiskerRight_unit, lem:monoidalLocalization_mathlib,
     lem:sheafification_map_unit_eq, lem:tensorPowAdd_zero_right}
-  % NOTE (iter-014): math sketch below is complete, but the FORMALIZATION blocker is a
-  % `CategoryStruct.comp` INSTANCE diamond, not the `restrictScalars(𝟙)` decoration the
-  % iter-014 corrective assumed (that decoration is already erased by sheafification_map_unit_eq).
-  % The split hyps hηL/hηR/hα carry `LocalizedMonoidal`-comp internally (pinned by the type of
-  % `Localization.Monoidal.μ … .inv/.hom`) while the goal's top-level `≫` is `X.Modules`-comp;
-  % the two Category instances are rfl-defeq but syntactically distinct, so positional
-  % rw/simp[Category.assoc] fail to match and `repeat erw[Category.assoc]` hits the 200k-heartbeat
-  % isDefEq timeout. FIX (next prover): restate hηL/hηR/hα with internal `≫` retyped to
-  % `X.Modules`-comp (the μ factors are defeq X.Modules morphisms), then the cheap
-  % tensorPowAdd_zero_right-style `simp only` cancel-recipe + `associator_naturality` closes it
-  % without any erw. See Lean L2571–2594.
+  % NOTE (iter-017): CLOSED, axiom-clean. The iters-013–016 wall was HEAD-MISALIGNMENT (not term
+  % size): the residual is the generic associator-naturality coherence, proven separately as
+  % tensorObjAssoc_associator_counit_coherence; `exact` let its M default to the X.Modules
+  % (native instCategory) comp head while the post-`hc` goal carried the LocalizedMonoidal head,
+  % forcing a full diamond traversal (>4M heartbeats in iter-016). FIX: pin M to the synonym
+  % (`(M := LocalizedMonoidal …)`) so the conclusion instantiates with the goal's head, under
+  % `set_option maxRecDepth 4000 in` (stack-depth bound only — NOT a heartbeat bump). See Lean
+  % L2584–2759; proof-block \leanok restored.
   Unfold \(\mathrm{tensorObjAssoc}\) (\cref{cor:sheafTensorObjAssoc}) into its
   five-segment bridge composite over the inherited canonical tensor: the canonical
   associator \(\alpha\) of \(X.\Modules\) flanked by the four tensor-agreement
@@ -1912,11 +1930,12 @@ the presheaf monoidal product (\cref{lem:presheafModule_monoidal_mathlib}).
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{def:sectionMul, cor:sheafTensorObjAssoc,
     lem:sectionsMul_whiskerRight_unit, lem:sectionsMul_whiskerLeft_unit,
     lem:presheafAssociator_top_apply, lem:tensorObjAssoc_eta_factor}
-  % NOTE: proof-block  removed (iter-013 review override): assembled but carries sorryAx
-  % transitively via B4 → ★ (lem:tensorObjAssoc_eta_factor_sheaf) — not a closed proof.
+  % NOTE (iter-017): CLOSED — closed automatically once B4 → ★ closed (iter-017, axiom-clean);
+  % proof-block \leanok restored.
   Evaluate the factorization \cref{lem:tensorObjAssoc_eta_factor} at the top open on
   \((a \otimes b) \otimes c\). Its left side is the LHS of the claim by
   \cref{lem:sectionsMul_whiskerRight_unit}; its right side is the RHS of the claim
@@ -1994,6 +2013,7 @@ transported equality as an equality of dependent pairs.
 \end{lemma}
 
 \begin{proof}
+  \leanok
 
   The canonical isomorphism
   \(\mathcal{L}^{\otimes i} \cong \mathcal{L}^{\otimes i}\) induced by the
@@ -2019,6 +2039,7 @@ transported equality as an equality of dependent pairs.
 \end{lemma}
 
 \begin{proof}
+  \leanok
   \uses{lem:sectionsCast_refl}
   Substituting \(j = i\) by means of \(h\) reduces the transport to the identity
   (\cref{lem:sectionsCast_refl}), so the hypothesis becomes \(x = y\); the two

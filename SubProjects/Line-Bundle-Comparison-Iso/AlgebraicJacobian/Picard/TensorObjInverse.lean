@@ -361,7 +361,10 @@ lemma exists_tensorObj_inverse {X : Scheme.{u}} {L : X.Modules}
       --   `(tensorObj_restrict_iso ≫ tensorObjIsoOfIso (eM ·) (eN ·) ≫ tensorObj_unit_iso).hom`
       --   `≫ ((restrictFunctorIsoPullback ·).app _ ≫ pullbackUnitIso ·).inv`
       -- evaluated `.val.app` at the overlap open, conjugated by the `eqToHom`s.
-      simp only [hf_def, he, huι, heN, heM]
+      -- NB: we deliberately do NOT unfold `heM` here, so that `eM i` / `eM j` stay folded
+      -- and the goal's two legs match the `eM`-argument of `trivialisation_restrict_compat`
+      -- syntactically (the `erw` below relies on this).
+      simp only [hf_def, he, huι, heN]
       -- REMAINING OBSTACLE (the genuine `g·g⁻¹ = 1` cancellation).  iter-026 probe
       -- (`lean_multi_attempt` at this goal) confirmed the precise state:
       --   * `rfl` FAILS — the two sides carry the *distinct opaque trivialisations*
@@ -431,7 +434,62 @@ lemma exists_tensorObj_inverse {X : Scheme.{u}} {L : X.Modules}
          The sectionwise goal lifts to this iso equation by `congrArg` on the shared
          `(toPresheaf _).map (·).hom ≫ (uι V).inv).val` `.app`-and-eqToHom wrapper.
       -/
-      sorry) with hεdef
+      -- iter-030 TYPED (paper-validated iter-029).  The body below is the full iso-algebra
+      -- reduction; it is wrapped in `first | … | sorry` ONLY because this lane could not obtain a
+      -- green build window this iter (the `DualInverse.lean` import is RED on disk at L219 — the
+      -- one-token Objective-1 fix, owned by a sibling lane, had not landed; I may not edit that
+      -- file).  As soon as `DualInverse` builds green the first branch should fire and the `sorry`
+      -- fallback becomes dead code — the next prover should verify and strip the `first | … |`
+      -- wrapper.  See `task_results/AlgebraicJacobian_Picard_TensorObjInverse.lean.md`.
+      first
+      | (-- Reduce BOTH overlap legs to the single-open-`V` form (`trivialisation_restrict_compat`
+         -- applied to `i` and `j`), killing the `(U i).ι⁻¹` vs `(U j).ι⁻¹` reindexing.
+         erw [trivialisation_restrict_compat hVi (eM i),
+            trivialisation_restrict_compat hVj (eM j)]
+         -- The two legs now differ only in the trivialisation refined to `V`.
+         set eMi := restrictIsoUnitOfLE hVi (eM i) with hMi
+         set eMj := restrictIsoUnitOfLE hVj (eM j) with hMj
+         -- Transition unit `t : 𝒪_V ≅ 𝒪_V` with `eMi ≪≫ t = eMj`.
+         set t : SheafOfModules.unit (V : Scheme).ringCatSheaf ≅
+             SheafOfModules.unit (V : Scheme).ringCatSheaf := eMi.symm ≪≫ eMj with ht_def
+         have ht : eMi ≪≫ t = eMj := by
+           rw [ht_def, ← Iso.trans_assoc, Iso.self_symm_id, Iso.refl_trans]
+         -- Factor the dual leg of `eMj` as `dualLeg eMi ≪≫ sConj` by inserting `du ≪≫ du.symm = 𝟙`.
+         have hfact :
+             dual_restrict_iso V.ι L ≪≫
+                 ((dualIsoOfIso eMi).symm ≪≫ (dualIsoOfIso t).symm) ≪≫ dual_unit_iso
+               = (dual_restrict_iso V.ι L ≪≫ (dualIsoOfIso eMi).symm ≪≫ dual_unit_iso) ≪≫
+                 (dual_unit_iso.symm ≪≫ (dualIsoOfIso t).symm ≪≫ dual_unit_iso) := by
+           apply Iso.ext
+           simp only [Iso.trans_hom, Iso.symm_hom, Category.assoc]
+           rw [Iso.hom_inv_id_assoc]
+         -- Core iso equation: the two `tensorObjIsoOfIso ≪≫ tensorObj_unit_iso` middles agree.
+         -- RHS collapses to LHS via `dualIsoOfIso_trans` (order flips) + `tensorObjIsoOfIso_trans`
+         -- + `tensorObj_unit_self_duality_collapse t` (the `g·g⁻¹ = 1` cancellation).
+         have hiso :
+             tensorObjIsoOfIso eMi
+                 (dual_restrict_iso V.ι L ≪≫ (dualIsoOfIso eMi).symm ≪≫ dual_unit_iso) ≪≫
+               tensorObj_unit_iso
+             = tensorObjIsoOfIso eMj
+                 (dual_restrict_iso V.ι L ≪≫ (dualIsoOfIso eMj).symm ≪≫ dual_unit_iso) ≪≫
+               tensorObj_unit_iso := by
+           rw [← ht, dualIsoOfIso_trans, Iso.trans_symm, hfact, tensorObjIsoOfIso_trans,
+             Iso.trans_assoc, tensorObj_unit_self_duality_collapse t]
+         -- Lift to the shared `tensorObj_restrict_iso ≪≫ … ≪≫ tensorObj_unit_iso` wrapper.
+         have hchain :
+             tensorObj_restrict_iso V.ι L (dual L) ≪≫
+                 tensorObjIsoOfIso eMi
+                   (dual_restrict_iso V.ι L ≪≫ (dualIsoOfIso eMi).symm ≪≫ dual_unit_iso) ≪≫
+                 tensorObj_unit_iso
+               = tensorObj_restrict_iso V.ι L (dual L) ≪≫
+                 tensorObjIsoOfIso eMj
+                   (dual_restrict_iso V.ι L ≪≫ (dualIsoOfIso eMj).symm ≪≫ dual_unit_iso) ≪≫
+                 tensorObj_unit_iso :=
+           congrArg (fun w => tensorObj_restrict_iso V.ι L (dual L) ≪≫ w) hiso
+         -- Both legs are now `((wrapper).hom ≫ (uι V).inv).val.app _` conjugated by the SAME
+         -- `eqToHom`s; rewriting the wrapper iso makes them syntactically identical.
+         rw [hchain])
+      | sorry) with hεdef
   -- `ε` is a global iso since it restricts to the iso `f x` on each cover member `U x`
   -- (**B-bridge** `isIso_of_isIso_restrict`).  The restriction-agreement
   -- `(restrictFunctor (U x).ι).map ε = f x` is the defining gluing property of

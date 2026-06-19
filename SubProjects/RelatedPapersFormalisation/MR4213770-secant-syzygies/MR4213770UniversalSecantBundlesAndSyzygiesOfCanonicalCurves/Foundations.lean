@@ -1251,4 +1251,138 @@ theorem evalShortComplex_shortExact_of_globallyGenerated {X : Scheme.{u}} (F : X
   mono_f := by dsimp only [evalShortComplex, ShortComplex.mk]; infer_instance
   epi_g := hF
 
+/-! ## Project-local Mathlib supplement — kernel of a finite free presentation
+
+L2 of the Core-2 affine-reduction chain (`lem:module_kernel_free_basicOpen_cover`).
+Pure commutative algebra: a short exact sequence `0 → K → R^m → R^n → 0` of
+`R`-modules with finite free middle and free right term forces the kernel `K` to be
+finitely presented and projective, hence locally free on a basic-open cover of
+`Spec R`. -/
+
+/-- Project-local (`lem:module_kernel_free_basicOpen_cover`), L2 of the Core-2
+affine-reduction chain.
+
+Let `S : 0 → K → R^m → R^n → 0` be a short exact sequence of `R`-modules (`R` a
+commutative ring) with `S.X₂` finite free and `S.X₃` free.  Then the kernel `S.X₁`
+is finitely presented and projective (the sequence splits since `S.X₃` is
+projective, exhibiting `S.X₁` as a finite projective summand of `S.X₂`), so its
+free locus is all of `Spec R`; refining the open free locus to basic opens and
+extracting a finite subcover by quasi-compactness of `Spec R` produces a finite
+family `t ⊆ R` whose basic opens cover `Spec R` and on each of which the localized
+kernel `S.X₁` is free of finite rank. -/
+theorem kernel_module_free_on_basicOpen_cover {R : Type u} [CommRing R]
+    (S : ShortComplex (ModuleCat.{u} R)) (hS : S.ShortExact)
+    [Module.Free R S.X₂] [Module.Finite R S.X₂] [Module.Free R S.X₃] :
+    ∃ (t : Finset R),
+      (∀ p : PrimeSpectrum R, ∃ f ∈ t, p ∈ PrimeSpectrum.basicOpen f) ∧
+      ∀ f ∈ t, Module.Free (Localization.Away f) (LocalizedModule.Away f S.X₁) := by
+  classical
+  -- The sequence splits because `S.X₃` is (categorically) projective.
+  have sp : S.Splitting := hS.splittingOfProjective
+  -- The retraction `sp.r : S.X₂ ⟶ S.X₁` realizes `S.X₁` as a projective summand.
+  have hsplit : sp.r.hom ∘ₗ S.f.hom = LinearMap.id := by
+    rw [← ModuleCat.hom_comp, sp.f_r, ModuleCat.hom_id]
+  have hproj : Module.Projective R S.X₁ :=
+    Module.Projective.of_split S.f.hom sp.r.hom hsplit
+  have hsurj : Function.Surjective sp.r.hom :=
+    Function.RightInverse.surjective (g := S.f.hom) (fun x => by
+      have := LinearMap.congr_fun hsplit x; simpa using this)
+  have hfin : Module.Finite R S.X₁ := Module.Finite.of_surjective sp.r.hom hsurj
+  have hfp : Module.FinitePresentation R S.X₁ := Module.finitePresentation_of_projective R S.X₁
+  -- Projectivity makes the free locus all of `Spec R`.
+  have hloc : Module.freeLocus R S.X₁ = Set.univ := Module.freeLocus_eq_univ_iff.mpr hproj
+  -- Pointwise: every prime sits in a basic open with free localized kernel.
+  have hpt : ∀ p : PrimeSpectrum R, ∃ f : R, p ∈ PrimeSpectrum.basicOpen f ∧
+      Module.Free (Localization.Away f) (LocalizedModule.Away f S.X₁) := by
+    intro p
+    have hp : p ∈ Module.freeLocus R S.X₁ := by rw [hloc]; trivial
+    have : Module.Free _ _ := (Module.mem_freeLocus).mp hp
+    obtain ⟨r, hr, hr', _⟩ := Module.FinitePresentation.exists_free_localizedModule_powers
+      p.asIdeal.primeCompl (LocalizedModule.mkLinearMap p.asIdeal.primeCompl S.X₁)
+      (Localization.AtPrime p.asIdeal)
+    exact ⟨r, by simpa [PrimeSpectrum.mem_basicOpen] using hr, hr'⟩
+  -- Choose such an `f` for each prime, then extract a finite subcover.
+  choose g hg hgfree using hpt
+  obtain ⟨tp, htp⟩ := isCompact_univ.elim_finite_subcover
+    (fun p : PrimeSpectrum R => (PrimeSpectrum.basicOpen (g p) : Set (PrimeSpectrum R)))
+    (fun p => (PrimeSpectrum.basicOpen (g p)).isOpen)
+    (fun q _ => Set.mem_iUnion.mpr ⟨q, hg q⟩)
+  refine ⟨tp.image g, ?_, ?_⟩
+  · intro p
+    have hpmem : p ∈ ⋃ q ∈ tp, (PrimeSpectrum.basicOpen (g q) : Set (PrimeSpectrum R)) :=
+      htp (Set.mem_univ p)
+    obtain ⟨q, hq, hpq⟩ := Set.mem_iUnion₂.mp hpmem
+    exact ⟨g q, Finset.mem_image.mpr ⟨q, hq, rfl⟩, hpq⟩
+  · intro f hf
+    obtain ⟨q, _, rfl⟩ := Finset.mem_image.mp hf
+    exact hgfree q
+
+/-! ## Project-local Mathlib supplement — local freeness is local on the base
+
+L1 of the Core-2 affine-reduction chain (`lem:isLocallyFree_local`).  The crux is
+the restrict–restrict bookkeeping: a trivialisation of `𝒦` over an open `V` of a
+cover member `Uᵢ` transports to a trivialisation over the image open
+`Uᵢ.ι ''ᵁ V` of `X`, via the scheme isomorphism `Scheme.Hom.isoImage`. -/
+
+/-- Project-local helper (supports `lem:isLocallyFree_local`).
+
+Transport a free trivialisation across a scheme isomorphism `e : S ≅ T`: if the
+restriction of `A : T.Modules` along `e.hom` is free on `I`, then `A` itself is
+free on `I`.  Inverts `restrictFunctor e.hom` using its pseudo-functorial inverse
+`restrictFunctor e.inv` (`restrictFunctorComp`/`restrictFunctorId`) and the
+restriction-of-free iso `restrictFunctorObjFreeIso` for the open immersion
+`e.inv`. -/
+noncomputable def freeIso_of_restrictFunctor_hom_freeIso {S T : Scheme.{u}} (e : S ≅ T)
+    (A : T.Modules) (I : Type u)
+    (hB : (restrictFunctor e.hom).obj A ≅ SheafOfModules.free (R := S.ringCatSheaf) I) :
+    A ≅ SheafOfModules.free (R := T.ringCatSheaf) I :=
+  letI NI : restrictFunctor e.hom ⋙ restrictFunctor e.inv ≅ 𝟭 T.Modules :=
+    (restrictFunctorComp e.inv e.hom).symm ≪≫
+      restrictFunctorCongr e.inv_hom_id ≪≫ restrictFunctorId
+  (NI.app A).symm ≪≫ (restrictFunctor e.inv).mapIso hB ≪≫
+    restrictFunctorObjFreeIso e.inv I
+
+/-- Project-local (`lem:isLocallyFree_local`), L1 of the Core-2 affine-reduction
+chain.
+
+Local freeness is local on the base.  If `X` is covered by opens `{Uᵢ}` and on
+each `Uᵢ` the restriction `𝒦|_{Uᵢ}` is locally free of the fixed finite rank `I`
+(here phrased as the existence, for each point of `Uᵢ`, of a trivialising open `V`
+of `Uᵢ`), then `𝒦` is locally free of rank `I` on `X`.  Each trivialising `V ⊆ Uᵢ`
+maps isomorphically onto the image open `Uᵢ.ι ''ᵁ V ⊆ X` (`Scheme.Hom.isoImage`),
+along which the trivialisation transports
+(`freeIso_of_restrictFunctor_hom_freeIso`). -/
+theorem isLocallyFree_of_isLocallyFree_cover {X : Scheme.{u}} (𝒦 : X.Modules)
+    {ι : Type*} (U : ι → X.Opens) (hcov : (⨆ i, U i) = ⊤)
+    (I : Type u) [Finite I]
+    (hfree : ∀ i, ∀ y : (U i).toScheme,
+      ∃ (V : (U i).toScheme.Opens) (_ : y ∈ V),
+        Nonempty ((restrictFunctor V.ι).obj ((restrictFunctor (U i).ι).obj 𝒦) ≅
+          SheafOfModules.free (R := V.toScheme.ringCatSheaf) I)) :
+    𝒦.IsLocallyFree := by
+  refine ⟨I, inferInstance, fun x => ?_⟩
+  -- find a cover member `U i` containing `x`
+  have hx : x ∈ (⨆ i, U i) := by rw [hcov]; trivial
+  rw [TopologicalSpace.Opens.mem_iSup] at hx
+  obtain ⟨i, hxi⟩ := hx
+  -- the lift of `x` into `↥(U i)`, and a trivialising open `V` there
+  obtain ⟨V, hyV, ⟨iso0⟩⟩ := hfree i ⟨x, hxi⟩
+  -- the image open `W ⊆ X` and the scheme iso `e : ↥V ≅ ↥W`
+  set W : X.Opens := (U i).ι ''ᵁ V with hW
+  set e : V.toScheme ≅ W.toScheme := (U i).ι.isoImage V with he
+  have hxW : x ∈ W := (Scheme.Opens.mem_ι_image_iff (x := ⟨x, hxi⟩)).mpr hyV
+  refine ⟨W, hxW, ⟨?_⟩⟩
+  -- `e.hom ≫ W.ι = V.ι ≫ (U i).ι`
+  have hj : e.hom ≫ W.ι = V.ι ≫ (U i).ι := (U i).ι.isoImage_hom_ι V
+  -- trivialisation of `𝒦` restricted to `V.ι ≫ (U i).ι`
+  have iso_j : (restrictFunctor (V.ι ≫ (U i).ι)).obj 𝒦 ≅
+      SheafOfModules.free (R := V.toScheme.ringCatSheaf) I :=
+    (restrictFunctorComp V.ι (U i).ι).app 𝒦 ≪≫ iso0
+  -- transport across `e` to land on `W`
+  have hB : (restrictFunctor e.hom).obj ((restrictFunctor W.ι).obj 𝒦) ≅
+      SheafOfModules.free (R := V.toScheme.ringCatSheaf) I :=
+    ((restrictFunctorComp e.hom W.ι).app 𝒦).symm ≪≫
+      (restrictFunctorCongr hj).app 𝒦 ≪≫ iso_j
+  exact freeIso_of_restrictFunctor_hom_freeIso e ((restrictFunctor W.ι).obj 𝒦) I hB
+
 end AlgebraicGeometry.Scheme.Modules

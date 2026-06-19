@@ -1,0 +1,177 @@
+[
+  {
+    "timestamp": "2026-06-19T14:13:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "gammaPushforwardIso_comp"
+    },
+    "session": {
+      "id": "session_12",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "value-ModuleCat / X.Modules object-junction diamond: carrier-rfl cheap but per-junction object-defeq is a whnf kernel bomb; element-wise collapse PROVABLY exhausted (3 routes verified-fail on cold build)",
+      "key_lemmas_used": [
+        "moduleCat_eqToHom_concreteCategory_apply",
+        "gammaPushforwardIso_hom_concreteApply",
+        "restrictScalars_map_concreteApply",
+        "restrictScalarsComp_inv_app_concreteApply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "whole-goal defeq collapse",
+        "code_tried": "exact (gammaPushforwardIso_inv_apply _ _ _).symm",
+        "line_number": "733",
+        "lean_error": "(deterministic) timeout at whnf, 200000 heartbeats (cold build); LSP shows goals:[]",
+        "result": "failed",
+        "insight": "VERIFIED KERNEL BOMB — defeq collapse forces whnf of whole Spec structure-sheaf machinery. DEAD."
+      },
+      {
+        "attempt": 2,
+        "strategy": "exposure lemmas + symbolic cast + monolithic rfl",
+        "code_tried": "rw [gammaPushforwardIso_hom_apply ..., ModuleCat.comp_apply, ModuleCat.comp_apply]; simp only [eqToIso.hom, eqToHom_app, Functor.map_comp, eqToHom_map, ModuleCat.comp_apply]; rw [moduleCat_eqToHom_concreteCategory_apply]; rfl",
+        "line_number": "733",
+        "lean_error": "(kernel) deterministic timeout at L711/733",
+        "result": "failed",
+        "insight": "monolithic rfl after symbolic-cast exposure is still a kernel bomb"
+      },
+      {
+        "attempt": 3,
+        "strategy": "term-mode Eq.trans chain over the 5 carrier-identity wrappers",
+        "code_tried": "Eq.symm ((restrictScalarsComp_inv_app_concreteApply _ _ _ _).trans ...)",
+        "line_number": "733",
+        "lean_error": "elaborates (goals:[]) under LSP but cold-build >1.6M heartbeat timeout",
+        "result": "failed",
+        "insight": "each junction defeq IS the heavy object identity; layered collapse forces one heavy object-defeq per junction no matter the tactic"
+      },
+      {
+        "attempt": 4,
+        "strategy": "simp with the 4 concreteApply helpers",
+        "code_tried": "simp only [restrictScalarsComp_inv_app_concreteApply, restrictScalars_map_concreteApply, gammaPushforwardIso_hom_concreteApply]",
+        "line_number": "733",
+        "lean_error": "only A/inner-gamma_rho fire; gamma_phi and B blocked (motive not type correct without heavy object identity)",
+        "result": "partial",
+        "insight": "rewriting gamma_phi z->z retypes z across the object-junction diamond; rw/simp cannot fire it"
+      },
+      {
+        "attempt": 5,
+        "strategy": "set_option maxHeartbeats 1600000 in (on the theorem)",
+        "code_tried": "set_option maxHeartbeats 1600000 in theorem gammaPushforwardIso_comp ...",
+        "line_number": "733",
+        "lean_error": "still (deterministic) timeout at 1.6M heartbeats; also a syntax error from mis-placement",
+        "result": "failed",
+        "insight": "the timeout is structural, not budget-bounded; raising heartbeats does not help"
+      }
+    ],
+    "next_steps": "iter-013 mathlib-analogist consult: collapse a value-ModuleCat carrier-identity composite WITHOUT forming heavy per-junction object defeqs. Concrete lead: SheafOfModules.pushforwardComp_inv_app_val_app routes through .val.app (op T) at the sheaf level where restrictScalars/globalSections junctions never form. Element-wise route is exhausted — do NOT re-assign element-wise."
+  },
+  {
+    "timestamp": "2026-06-19T09:35:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorObjAssoc_eq_localizedAssociator"
+    },
+    "session": {
+      "id": "session_12",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "none (own body) — transitively gated on the two half-lemmas",
+      "key_lemmas_used": [
+        "tensorObjAssoc_eq_localizedAssociator_hK_lhs",
+        "tensorObjAssoc_eq_localizedAssociator_hK_rhs",
+        "assocCommonForm"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "define well-typed common form K then assemble",
+        "code_tried": ":= (tensorObjAssoc_eq_localizedAssociator_hK_lhs A B C).trans (tensorObjAssoc_eq_localizedAssociator_hK_rhs A B C).symm",
+        "line_number": "1968",
+        "lean_error": "none — typechecks",
+        "result": "success",
+        "insight": "GATING cleared: assocCommonForm (5-factor K with seg-1 inverse-whiskered-unit prefix) typechecks; .trans/.symm confirms K's domain/codomain match both halves. Assembly own-body sorry-FREE."
+      }
+    ],
+    "next_steps": "Bridge closes mechanically once both half-lemmas (hK_lhs, hK_rhs) close."
+  },
+  {
+    "timestamp": "2026-06-19T09:42:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorObjAssoc_eq_localizedAssociator_hK_rhs"
+    },
+    "session": {
+      "id": "session_12",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "mu-pair mu.hom;mu.inv does NOT cancel even on the isolated small goal: keystone inner-comp is Localization.Monoidal localized-category comp, boundary comp is X.Modules synonym comp — defeq NOT syntactic; Category.assoc cannot bridge; simp [Localization.Monoidal.mu] times out at isDefEq",
+      "key_lemmas_used": [
+        "tensorObjAssoc",
+        "tensorObjLocalizedIso",
+        "assocCommonForm",
+        "sheafification_braiding_whiskerRight_unit_eq_whiskerLeft_unit",
+        "sheafification_whiskerLeft_unit_eq_mu'"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "unfold + congrArg prefix-strip + braiding-collapse + keystone",
+        "code_tried": "rw [tensorObjAssoc]; simp only [tensorObjLocalizedIso, assocCommonForm, ...]; refine congrArg (fun t => _ ≫ t) ?_ (x2); slice_lhs 1 3 => erw [hcol]; simp only [Category.assoc]; erw [sheafification_whiskerLeft_unit_eq_mu' ...]",
+        "line_number": "1960",
+        "lean_error": "reaches isolated μ-cancel goal (no error; sorry remains)",
+        "result": "partial",
+        "insight": "two congrArg strip the shared prefix; hcol collapses segments 3-5 to (A ◁ η_bc)^#; keystone places μ.hom adjacent to μ.inv from i_{A,B⊗C} (identical object B.tensorObj C). All verified cold-build."
+      },
+      {
+        "attempt": 2,
+        "strategy": "cancel the adjacent μ-pair",
+        "code_tried": "simp only [Category.assoc, Iso.hom_inv_id_assoc]; erw [Iso.hom_inv_id_assoc]; slice rw [Iso.hom_inv_id]; rw [← Category.assoc, Iso.eq_comp_inv]; simp only [Localization.Monoidal.μ]",
+        "line_number": "1960",
+        "lean_error": "no progress / pattern not found / isDefEq timeout (μ unfold)",
+        "result": "failed",
+        "insight": "corrects iter-011: isolation does NOT dissolve the μ-cancel; the comp-instance mismatch persists on the small goal"
+      }
+    ],
+    "next_steps": "iter-013: canonical instance-agnostic cancel of e.hom;e.inv across the LocalizedMonoidal-synonym/base-comp boundary (change to (L').obj-level comp, or a Localization.Monoidal cancellation idiom). Then + μ_natural_right + counit triangle closes."
+  },
+  {
+    "timestamp": "2026-06-19T09:42:30Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorObjAssoc_eq_localizedAssociator_hK_lhs"
+    },
+    "session": {
+      "id": "session_12",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Localization.Monoidal.associator_hom_app does NOT fire on (α_ A B C).hom — its LHS pattern requires objects literally (L').obj _, but A,B,C are arbitrary",
+      "key_lemmas_used": [
+        "assocCommonForm",
+        "tensorObjLocalizedIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "unfold to isolated localized-side goal",
+        "code_tried": "rw [assocCommonForm]; simp only [tensorObjLocalizedIso, Iso.trans_hom, Iso.symm_hom, MonoidalCategory.tensorIso_hom, Category.assoc]",
+        "line_number": "1903",
+        "lean_error": "reaches isolated goal (no error; sorry remains)",
+        "result": "partial",
+        "insight": "LHS = μ_{(A⊗B)♭,c}.inv ≫ (c_{A⊗B} ⊗ c_C) ≫ ((μ_{a,b}.inv ≫ (c_A⊗c_B)) ▷ C) ≫ (α_ A B C).hom; RHS = K. No whiskered unit on this side."
+      }
+    ],
+    "next_steps": "iter-013: push counit isos c_A,c_B,c_C through α_ A B C via Localization.Monoidal.associator_naturality (+ tensorHom_id/id_tensorHom) to get α_ (L'a)(L'b)(L'c), THEN associator_hom_app makes μ's native + the same μ-cancel idiom as hK_rhs."
+  }
+]

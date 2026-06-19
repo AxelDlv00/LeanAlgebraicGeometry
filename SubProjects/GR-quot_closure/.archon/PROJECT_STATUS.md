@@ -8,6 +8,28 @@
 
 ### Proof Patterns (reusable across targets)
 
+- **Head-pin closes a LARGE concrete monoidal coherence across the comp-diamond — RESOLVES the
+  comp-instance-diamond saga (iter-017, SNAP; ★ `tensorObjAssoc_eta_factor_sheaf` CLOSED axiom-clean,
+  ending the 4-iter 013–016 wall).** When `exact <generic-coherence> …` (here
+  `tensorObjAssoc_associator_counit_coherence`, the proven generic `[MonoidalCategory M]` residual) blows
+  >4M heartbeats on a ~1.2M-char goal, the cause is **HEAD-MISALIGNMENT, not term size**: `exact` lets the
+  generic's `M` default to the native `X.Modules` (`instCategory`) comp head while the (post-`hc`) goal
+  carries the `LocalizedMonoidal` synonym head, so `isDefEq` cannot short-circuit and traverses the whole
+  term across the rfl-diamond. FIX = pin `M` to the synonym so the conclusion instantiates with the goal's
+  head: `exact tensorObjAssoc_associator_counit_coherence (M := LocalizedMonoidal (sheafificationMon X)
+  (sheafificationW X) (localizationUnitIso X)) A.sheafificationCounitIso B.sheafificationCounitIso
+  C.sheafificationCounitIso (sheafification_map_unit_eq _) …` (ALL isos explicit). Then `set_option
+  maxRecDepth 4000 in` above the lemma — the head-aligned `isDefEq` is deep-but-terminating and overflows
+  the default 512 (`maximum recursion depth has been reached`); this is a STACK-DEPTH bound, NOT a
+  heartbeat bump (the head-pin already collapsed the cost). GOTCHA: `set_option … in` must precede the
+  doc-comment, else `unexpected token`. This makes the iter-015 `hc` comp-bridge + bounded-erw route
+  unnecessary for THIS goal. See `analogies/coherence-placement.md`.
+- **Unit-object head defeq (`unitModule X = 𝟙_ X.Modules`) needs `erw`, not `rw` (iter-017, B6 base).**
+  The two are rfl-equal but syntactically distinct, so positional `rw` of canonical unitor lemmas fails
+  "motive is not type correct". Use `erw [MonoidalCategory.leftUnitor_naturality_assoc]`; for triangle
+  collapse, STATE the lemma at `𝟙_ X.Modules` (`have htri : (α_ (𝟙_ _) _ _).hom ≫ (λ_ (_⊗_)).hom =
+  (λ_ _).hom ▷ _ := by simp`) and apply via `erw [reassoc_of% htri]`. Index-reindexing `eqToHom` residues
+  (`0 + m' = m'`) collapse via a dedicated `subst`-based helper (`tensorObjIso_tensorPowAdd_reindex`).
 - **Comp-instance-diamond bridge — CORRECTED (iter-015, SNAP; ★ `tensorObjAssoc_eta_factor_sheaf`
   mechanism found, prefix compiles past the 9-iter wall).** When a goal mixes the native `X.Modules` `≫`
   (used by the structural `sheafification.map _ ≫ tensorObjAssoc.hom`) with `LocalizedMonoidal`-comp
@@ -2663,6 +2685,16 @@
   enforced corrective is a mathlib-analogist consult on the reframing keystone, not a prove round.
 
 ## Last Updated
+2026-06-19T (iter-017 review) — **★ `tensorObjAssoc_eta_factor_sheaf` CLOSED axiom-clean — the 4-iter
+013–016 wall is BROKEN.** Head-pin fix: `exact tensorObjAssoc_associator_counit_coherence (M :=
+LocalizedMonoidal …) …` + `set_option maxRecDepth 4000 in` (the >4M wall was head-misalignment, not term
+size). B4 `tensorObjAssoc_eta_factor` + B5 `tensorObjAssoc_hom_sectionsMul` auto-cleaned. B6
+`tensorPowAdd_assoc` BASE case closed (new helper `tensorObjIso_tensorPowAdd_reindex`), succ open. SNAP
+sorry 6→5 decls; global 10→9. Build green. lean-auditor 0 must-fix (1 major = stale `.lean` comment @3123).
+lean-vs-blueprint-checker 0 must-fix → review RESTORED 24 over-stripped axiom-clean proof-block `\leanok`
+(sync 4th over-strip) + updated 3 stale `% NOTE`s. dag unmatched 331→332 (+1 new helper). Per-iter
+narrative: `iter/iter-017/review.md`. NEXT: B6 succ (pentagon/hexagon, diamond-free) → B7.
+
 2026-06-19T (iter-016 review) — **★ MATH SOLVED (abstract coherence PROVEN, axiom-clean); ★ PLACEMENT
 ESCALATED — a >4M-heartbeat comp-diamond `isDefEq` dead-end.** The DECOMPOSE corrective ran: ★'s residual
 was extracted as a generic `[MonoidalCategory M]` coherence `tensorObjAssoc_associator_counit_coherence`

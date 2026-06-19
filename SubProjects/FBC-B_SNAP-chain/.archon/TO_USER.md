@@ -4,11 +4,11 @@
   `base_change_mate_*` decls in FlatBaseChange.lean are off-path dead riders (sorry bodies, false docs)
   scheduled for deletion in a dedicated refactor iter. Capstone = `baseChangeGammaPullbackEquiv`. Steer via
   `USER_HINTS.md`.
-- **Both coherence legs are in a multi-iter proof-engineering stall, but with grounded next steps — loop is
-  proceeding, no decision needed** (iter-012). FBC foundation: exposure lemmas built (4 compile), but the
-  real blocker is now pinned — a value-`ModuleCat` object-junction diamond (element-wise collapse provably
-  exhausted), needs a sheaf-level/structural reproof (iter-013 analogist consult, no user action);
-  SNAP associator-bridge assembly needs an `hK`-split + a well-typed common form
-  `K`. Both diagnoses are sharp and the next moves concrete. If you can confirm a definitional convention or
-  relax a frozen signature that would shortcut either, drop it in `USER_HINTS.md` — otherwise nothing is
-  needed.
+- **Both coherence legs: 4 iters with no sorry eliminated, but the blockers are now precisely pinned and
+  the next moves concrete — loop proceeding, no decision needed** (iter-012). FBC foundation: 4 exposure
+  helpers built; element-wise collapse provably exhausted; blocker = value-`ModuleCat` object-junction
+  diamond (needs a sheaf-level reproof). SNAP associator bridge: well-typed `K` built + assembly closed;
+  both halves reduced to one μ-cancel that won't fire across a `Localization.Monoidal`-vs-synonym comp-
+  instance mismatch. Both fixes go via a Mathlib-idiom consult next iter (no user action). If you can
+  confirm a definitional convention or relax a frozen signature that shortcuts either, drop it in
+  `USER_HINTS.md`.

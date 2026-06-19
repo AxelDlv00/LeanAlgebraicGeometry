@@ -1677,7 +1677,8 @@ the curve-specific instantiation is taken up in the chapter on universal secant 
   Local freeness of finite rank is \cref{found:trivial_bundle_locally_free}.
 \end{proof}
 
-\begin{lemma}[Restriction of a free module along an open immersion is free]
+\begin{lemma}\leanok
+[Restriction of a free module along an open immersion is free]
   \label{found:restrict_free_iso}
   \lean{AlgebraicGeometry.Scheme.Modules.restrictFunctorObjFreeIso}
   \uses{found:trivial_bundle, mathlib:sheafmod_free}
@@ -1689,6 +1690,7 @@ the curve-specific instantiation is taken up in the chapter on universal secant 
 
 \begin{proof}
   \uses{found:trivial_bundle, mathlib:sheafmod_free}
+  \leanok
   The restriction functor along an open immersion is isomorphic to the inverse-image
   (pullback) functor \(\mathrm{restrictFunctor}\,j\cong\mathrm{pullback}\,j\), whose
   underlying site functor is the preimage \(\mathrm{Opens.map}\,j\).  For an open
@@ -1698,7 +1700,8 @@ the curve-specific instantiation is taken up in the chapter on universal secant 
   isomorphisms gives the claim.
 \end{proof}
 
-\begin{lemma}[Local freeness is invariant under isomorphism]
+\begin{lemma}\leanok
+[Local freeness is invariant under isomorphism]
   \label{found:locally_free_of_iso}
   \lean{AlgebraicGeometry.Scheme.Modules.isLocallyFree_of_iso}
   \uses{found:locally_free}
@@ -1709,6 +1712,7 @@ the curve-specific instantiation is taken up in the chapter on universal secant 
 
 \begin{proof}
   \uses{found:locally_free}
+  \leanok
   Given a trivialising open \(U\) with \((\mathrm{restrictFunctor}\,U).\mathrm{obj}\,
   \mathcal F\cong\mathrm{free}\,I\), transport it along the restriction
   \((\mathrm{restrictFunctor}\,U).\mathrm{mapIso}\) of the isomorphism
@@ -1801,7 +1805,8 @@ the curve-specific instantiation is taken up in the chapter on universal secant 
   with its monomorphism into \(H^0(X,\mathcal F)\otimes_k\cO_X\).
 \end{proof}
 
-\begin{definition}[Evaluation short complex]
+\begin{definition}\leanok
+[Evaluation short complex]
   \label{found:eval_short_complex}
   \lean{AlgebraicGeometry.Scheme.Modules.evalShortComplex}
   \uses{found:eval_morphism, found:eval_kernel_bundle, mathlib:categorical_kernel}
@@ -1818,6 +1823,7 @@ the curve-specific instantiation is taken up in the chapter on universal secant 
 
 \begin{proof}
   \uses{found:eval_morphism, found:eval_kernel_bundle, mathlib:categorical_kernel}
+  \leanok
   The short complex is assembled from the kernel inclusion
   \(\ker(\mathrm{ev}_{\mathcal F})\hookrightarrow H^0\otimes\cO_X\)
   (\cref{mathlib:categorical_kernel}) and \(\mathrm{ev}_{\mathcal F}\) itself; the
@@ -1953,7 +1959,15 @@ the curve-specific instantiation is taken up in the chapter on universal secant 
 % --- Affine reduction sub-lemmas for \cref{found:isLocallyFree_kernel_of_shortExact}.
 %     The Kemeny/Hartshorne source quote lives on that lemma block below. ---
 
-\begin{lemma}[Local freeness is local on the base]
+% NOTE (iter-016 review): L1 is formalized & axiom-clean, but the Lean proof's crux is
+% scheme-iso transport via `Scheme.Hom.isoImage` + the new helper
+% `freeIso_of_restrictFunctor_hom_freeIso` (Foundations.lean:1335, UNMATCHED — needs a
+% blueprint node, e.g. `found:free_iso_of_restrict_iso \uses{found:restrict_free_iso}`).
+% The current `\uses`/sketch mis-attribute the transport to `found:locally_free_of_iso`
+% (a same-scheme module iso, NOT what the proof uses). Planner: add the helper node, cite
+% it from this lemma's `\uses`, and expand the sketch to mention the isoImage transport.
+\begin{lemma}\leanok
+[Local freeness is local on the base]
   \label{lem:isLocallyFree_local}
   \lean{AlgebraicGeometry.Scheme.Modules.isLocallyFree_of_isLocallyFree_cover}
   \uses{found:locally_free, found:locally_free_of_iso}
@@ -1965,6 +1979,7 @@ the curve-specific instantiation is taken up in the chapter on universal secant 
 
 \begin{proof}
   \uses{found:locally_free, found:locally_free_of_iso}
+  \leanok
   Local freeness of rank \(r\) means \(X\) has an open cover trivialising
   \(\mathcal K\) to \(\mathrm{free}\,I\) with \(|I|=r\) (\cref{found:locally_free}).
   Each \(U_\alpha\) carries such a cover for \(\mathcal K|_{U_\alpha}\), equivalently
@@ -1972,7 +1987,8 @@ the curve-specific instantiation is taken up in the chapter on universal secant 
   covers \(X\) and trivialises \(\mathcal K\) on the fixed \(I\).
 \end{proof}
 
-\begin{lemma}[Kernel of a finite free presentation is free on a basic-open cover]
+\begin{lemma}\leanok
+[Kernel of a finite free presentation is free on a basic-open cover]
   \label{lem:module_kernel_free_basicOpen_cover}
   \lean{AlgebraicGeometry.Scheme.Modules.kernel_module_free_on_basicOpen_cover}
   \uses{mathlib:short_exact, mathlib:splittingOfProjective, mathlib:freeLocus, mathlib:isOpen_freeLocus, mathlib:freeLocus_eq_univ_iff, mathlib:basicOpen_subset_freeLocus_iff}
@@ -1985,6 +2001,7 @@ the curve-specific instantiation is taken up in the chapter on universal secant 
 
 \begin{proof}
   \uses{mathlib:short_exact, mathlib:splittingOfProjective, mathlib:freeLocus, mathlib:isOpen_freeLocus, mathlib:freeLocus_eq_univ_iff, mathlib:basicOpen_subset_freeLocus_iff}
+  \leanok
   \(R^n\) is free, hence projective, so the sequence splits
   (\cref{mathlib:splittingOfProjective}) and \(R^m\cong K\oplus R^n\); thus \(K\) is a
   finitely presented projective summand of a finite free module.  Projectivity gives

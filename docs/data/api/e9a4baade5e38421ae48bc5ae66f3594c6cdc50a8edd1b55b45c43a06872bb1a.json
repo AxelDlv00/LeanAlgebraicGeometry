@@ -1,0 +1,193 @@
+[
+  {
+    "timestamp": "2026-06-19T14:24:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorObjAssoc_eta_factor_sheaf"
+    },
+    "session": {
+      "id": "session_17",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "tensorObjAssoc_associator_counit_coherence",
+        "sheafification_map_unit_eq",
+        "sheafificationCounitIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "STEP-A head-pin: pin generic coherence's M to the LocalizedMonoidal synonym so its conclusion instantiates with the post-hc goal's comp head (head-alignment, not term-shrink)",
+        "code_tried": "exact tensorObjAssoc_associator_counit_coherence (M := LocalizedMonoidal (sheafificationMon X) (sheafificationW X) (localizationUnitIso X)) A.sheafificationCounitIso B.sheafificationCounitIso C.sheafificationCounitIso (sheafification_map_unit_eq _) ...",
+        "line_number": "2737",
+        "lean_error": "verified via lean_multi_attempt (closes instantly); lake build then hit 'maximum recursion depth has been reached' at 2728",
+        "result": "partial",
+        "insight": "exact closes the goal but default maxRecDepth=512 too low for the head-aligned isDefEq (deep but terminating, not a heartbeat blowup)"
+      },
+      {
+        "attempt": 2,
+        "strategy": "add set_option maxRecDepth 4000 in above the lemma (stack-depth bound, not heartbeat bump)",
+        "code_tried": "set_option maxRecDepth 4000 in\nprivate lemma tensorObjAssoc_eta_factor_sheaf ...",
+        "line_number": "2578",
+        "lean_error": "first placement attempt: 'unexpected token set_option; expected lemma' (placed mid-docstring); re-placed before the doc-comment block",
+        "result": "success",
+        "insight": "set_option ... in must precede the doc-comment; once correctly placed the build is green and lean_verify = [propext, Classical.choice, Quot.sound]"
+      }
+    ],
+    "next_steps": "B4 (tensorObjAssoc_eta_factor) + B5 (tensorObjAssoc_hom_sectionsMul) auto-cleaned. Remaining assoc work: B6 succ + B7."
+  },
+  {
+    "timestamp": "2026-06-19T14:20:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorPowAdd_assoc"
+    },
+    "session": {
+      "id": "session_17",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "succ case = canonical pentagon/hexagon of the inherited monoidal structure (still sorry @3104)",
+      "key_lemmas_used": [
+        "tensorObjIso_tensorPowAdd_reindex",
+        "MonoidalCategory.leftUnitor_naturality_assoc",
+        "MonoidalCategory.leftUnitor_tensor"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "base case (m=0): simp the bridges to canonical, slide both left-unitors out via leftUnitor_naturality, collapse alpha-unit triangle",
+        "code_tried": "simp only [tensorPowAdd, tensorObjWhiskerRightIso_eq, tensorObjWhiskerLeftIso_eq, tensorObjUnitIso_eq, ..., tensorPow_zero]; erw [MonoidalCategory.leftUnitor_naturality_assoc, MonoidalCategory.leftUnitor_naturality_assoc]; have htri : (α_ (𝟙_ X.Modules) ..).hom ≫ (λ_ (_ ⊗ _)).hom = (λ_ _).hom ▷ _ := by simp; erw [reassoc_of% htri]",
+        "line_number": "3054",
+        "lean_error": "intermediate: 'motive is not type correct' on rw (fixed by erw bridging 𝟙_ = unitModule X head defeq); 'leftUnitor_tensor' rw motive error (fixed by stating htri at 𝟙_ and using erw [reassoc_of% htri])",
+        "result": "success",
+        "insight": "the 0+m'=m' reindexing residue needed a dedicated helper tensorObjIso_tensorPowAdd_reindex (subst-based); erw needed to bridge unitModule X = 𝟙_ X.Modules head defeq"
+      },
+      {
+        "attempt": 2,
+        "strategy": "succ case: tried single apply Iso.ext; simp [...] reduce to MonoidalCategory.pentagon",
+        "code_tried": "apply Iso.ext; simp only [tensorPowAdd, tensorObjWhiskerRightIso_eq, tensorObjWhiskerLeftIso_eq, tensorObjAssoc, ...]",
+        "line_number": "3104",
+        "lean_error": "did not close; left a braided pentagon/hexagon residual",
+        "result": "failed",
+        "insight": "succ case is a genuine pentagon/hexagon coherence of the inherited monoidal structure; deferred (budget), left as honest typed sorry"
+      }
+    ],
+    "next_steps": "Close succ via MonoidalCategory.pentagon (+ associator/whisker telescoping after ih rewrite). Diamond-free; bankable independent of the rest."
+  },
+  {
+    "timestamp": "2026-06-19T14:21:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "sectionsMul_mul_assoc"
+    },
+    "session": {
+      "id": "session_17",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "gated on B6 tensorPowAdd_assoc succ case (still sorry); B5 tensorObjAssoc_hom_sectionsMul now closed",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not attempted this iter (gated on B6 succ); B5 dependency cleared by ★ closure",
+        "code_tried": "n/a",
+        "line_number": "3134",
+        "lean_error": "n/a",
+        "result": "partial",
+        "insight": "B5 (tensorObjAssoc_hom_sectionsMul) auto-cleaned by ★; B7 now blocked only on B6 succ"
+      }
+    ],
+    "next_steps": "After B6 succ closes, assemble B7 from B5 (done) + B6 (done) + sectionsCast reindexing."
+  },
+  {
+    "timestamp": "2026-06-19T14:21:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorBraiding_self_eq_id_of_isInvertible"
+    },
+    "session": {
+      "id": "session_17",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "comm chain (3), [IsInvertible L]-gated FUTURE work, no consumer; deferred",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "deferred (FUTURE, no consumer)",
+        "code_tried": "n/a",
+        "line_number": "3152",
+        "result": "partial",
+        "insight": "honest typed sorry; gated on Module.Invertible.tensorProductComm_eq_refl local-to-global"
+      }
+    ],
+    "next_steps": "Defer until a GCommSemiring consumer exists."
+  },
+  {
+    "timestamp": "2026-06-19T14:21:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorPowAdd_comm"
+    },
+    "session": {
+      "id": "session_17",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "comm chain (3), [IsInvertible L]-gated FUTURE, gated on tensorBraiding_self_eq_id_of_isInvertible",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "deferred (FUTURE, no consumer)",
+        "code_tried": "n/a",
+        "line_number": "3167",
+        "result": "partial",
+        "insight": "honest typed sorry"
+      }
+    ],
+    "next_steps": "Defer."
+  },
+  {
+    "timestamp": "2026-06-19T14:21:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "sectionsMul_mul_comm"
+    },
+    "session": {
+      "id": "session_17",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "comm chain (3), [IsInvertible L]-gated FUTURE, no consumer; section ring is non-comm GSemiring for general L",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "deferred (FUTURE, no consumer)",
+        "code_tried": "n/a",
+        "line_number": "3209",
+        "result": "partial",
+        "insight": "honest typed sorry; stale in-proof comment L3196-3206 (now contradicts the corrected chapter) flagged for prover trim"
+      }
+    ],
+    "next_steps": "Defer until GCommSemiring upgrade is needed."
+  }
+]

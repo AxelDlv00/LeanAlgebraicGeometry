@@ -1554,6 +1554,15 @@ counit isomorphisms (\cref{def:schemeModuleSheafification}).
   with \texttt{show}/\texttt{change} (full-transparency \texttt{isDefEq}, cheap here)
   before \texttt{Iso.hom\_inv\_id\_assoc} fires --- the same cancellation fails on the
   full bridge goal only as a \texttt{whnf}-at-scale artifact.
+  % NOTE: (review iter-012) This "isolation note" is CONTRADICTED by the prover's verified-in-
+  % isolation finding. The μ-pair cancel does NOT fire even on the small isolated goal: the
+  % blocker is NOT a whnf-at-scale artifact but a `CategoryStruct.comp` instance mismatch —
+  % the keystone's inner ≫ is `Localization.Monoidal` localized-category comp, while the boundary
+  % ≫ μ.inv from tensorObjLocalizedIso is the `X.Modules` synonym comp (defeq, NOT syntactic).
+  % `Category.assoc` cannot bridge it and a naive `simp [Localization.Monoidal.μ]` unfold times
+  % out at isDefEq. The open question for iter-013: the canonical instance-agnostic way to cancel
+  % `e.hom ≫ e.inv` across the LocalizedMonoidal-synonym/base-comp boundary. A blueprint-writer
+  % should rewrite this prose. Same residual applies to lem:tensorObjAssoc_hK_rhs below.
 \end{proof}
 
 \begin{lemma}

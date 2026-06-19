@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "path": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves.lean",
+      "size": 152
+    },
+    {
+      "path": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Basic.lean",
+      "size": 3122
+    },
+    {
+      "path": "MR4213770UniversalSecantBundlesAndSyzygiesOfCanonicalCurves/Foundations.lean",
+      "size": 77762
+    }
+  ]
+}

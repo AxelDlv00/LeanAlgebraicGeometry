@@ -834,6 +834,14 @@ right-adjoint functors (Lemma~\ref{lem:gammaPushforwardNatIso}).
   coherence \cref{lem:globalSectionsIso_hom_comp3_specMap_appTop}. Substituting it
   identifies the two sides, while the restrict-scalars and pushforward composition
   identities account for the codomain and domain reorganisations respectively.
+  % NOTE: (review iter-012) This proof prose understates the real Lean blocker. The "unwind both
+  % sides to carriers" step is NOT free: the prover proved (verified cold-build) that the
+  % element-wise collapse is exhausted — the value-`ModuleCat`/`X.Modules` object-junction diamond
+  % makes each per-layer carrier-identity heavy (per-junction object-defeq = whnf kernel bomb;
+  % carrier-rfl is cheap but rw/simp can't fire it without the heavy object identity). The cited
+  % three-fold coherence lem:globalSectionsIso_hom_comp3_specMap_appTop never enters the realised
+  % attempt. iter-013 route is sheaf-level (.val.app (op ⊤), where the junction never forms).
+  % A blueprint-writer should rewrite this proof to the sheaf-level route.
 \end{proof}
 
 \begin{lemma}

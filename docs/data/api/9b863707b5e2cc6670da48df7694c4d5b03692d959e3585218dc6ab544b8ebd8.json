@@ -1,0 +1,44 @@
+{
+  "files": [
+    {
+      "path": "AlgebraicJacobian.lean",
+      "size": 455
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/LineBundlePullback.lean",
+      "size": 16774
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/RelPicFunctor.lean",
+      "size": 32345
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "size": 32984
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "size": 347438
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "size": 54306
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/SliceTransport.lean",
+      "size": 69991
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/PresheafInternalHom.lean",
+      "size": 59279
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/StalkTensor.lean",
+      "size": 30572
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/Vestigial.lean",
+      "size": 29208
+    }
+  ]
+}

@@ -1890,6 +1890,28 @@
   lemma *statement*; restate the bridge as a `.hom` **commuting-square** (`Φ^L ; α^loc = α ; Φ^R`) using
   `MonoidalCategoryStruct.whiskerRight/.whiskerLeft/.associator` (need only `MonoidalCategoryStruct`,
   synthesizes fine). Square ⇔ iso-conjugation by `Iso.ext`; the square IS the blueprint's primary form.
+- **`eqToHom`→symbolic-`cast` exposure to dodge a whnf kernel bomb (iter-012, FBC).** When a goal carries
+  `ConcreteCategory.hom (eqToHom h) x` over a `ModuleCat` and a `change`/`rfl` defeq collapse is a verified
+  kernel bomb (forces whnf of the structure-sheaf machinery), DON'T collapse it — turn it SYMBOLIC:
+  `theorem moduleCat_eqToHom_concreteCategory_apply (h : M = N) (x) : ConcreteCategory.hom (eqToHom h) x =
+  cast (congrArg (↑·) h) x := by subst h; rfl`. `rw [this]` replaces the eqToHom with a `cast` that no
+  longer triggers whnf, isolating the genuine remaining content. Companion `:= rfl` "concreteApply" twins
+  (`gammaPushforwardIso_hom_concreteApply`, `restrictScalars_map_concreteApply`,
+  `restrictScalarsComp_inv_app_concreteApply`) let `simp` fire AFTER `ModuleCat.comp_apply` has rewritten
+  application heads to `ConcreteCategory.hom`. LIMIT: these only fire on SYNTACTIC junctions
+  (`restrictScalars.map`); they do NOT cross the value-`ModuleCat`/`X.Modules` object-junction diamond
+  (motive-not-type-correct) — see the FBC foundation Known Blocker.
+- **SNAP shared-prefix strip via double `congrArg` (iter-012).** To peel a shared composite prefix off both
+  sides of a bridge equation before attacking the hard tail: `rw [tensorObjAssoc]; simp only [<unfold>];
+  refine congrArg (fun t => _ ≫ t) ?_` (apply twice). Reduces `P ≫ tail_lhs = P ≫ tail_rhs` to
+  `tail_lhs = tail_rhs`. Kernel-light (verified cold-build); used to isolate the μ-cancel residual in hK_rhs.
+- **`set_option maxHeartbeats … in` is CONSUMED by a following `/-! … -/` section block (iter-011/012, FBC
+  latent bug).** `set_option … in` scopes to the IMMEDIATELY-following command, and a `/-! … -/` section
+  comment IS a command — so `set_option maxHeartbeats 4000000 in` then a `/-! Seam … -/` block applies the
+  budget to the COMMENT, not the theorem after it (which runs at DEFAULT budget → silent timeout when its
+  sorry is filled). A `/-- … -/` DOCSTRING is fine (it is part of the next decl). FIX: place the
+  `set_option … in` immediately before the theorem, with no `/-! -/` block between. Live at
+  FlatBaseChange.lean L1488 + L1523-1526 (on COMPILE-DEAD mate decls; bundle the fix with mate-excision).
 
 ### Known Blockers (do not retry without a structural change)
 
@@ -1919,6 +1941,27 @@
   counit object-glue on all 4 tensor slots). This is prover/effort-breaker work, NOT a blueprint gap (the
   chapter's `K` is mathematically explicit, snap011 checker confirms). 3 iters at 0 net sorry — do NOT
   re-fire the warm monolithic lane.
+  **iter-012 UPDATE (GATING CLEARED + the cancel premise REFUTED):** the well-typed `K` is BUILT —
+  `assocCommonForm` (SectionGradedRing.lean L1847), a 5-factor composite = the schematic 4 factors PLUS
+  a seg-1 inverse-whiskered-unit prefix `(L'(η_{a⊗b} ▷ c))⁻¹` (the counit object-glue re-basing the
+  domain to `tensorObj (tensorObj A B) C`); typechecks via `@asIso … (isIso_sheafification_whiskerRight_unit …)`.
+  Assembly `tensorObjAssoc_eq_localizedAssociator := hK_lhs.trans hK_rhs.symm` is own-body sorry-FREE.
+  hK_rhs (L1960) reduced through prefix-strip (2×`congrArg (fun t => _ ≫ t)`) + braiding-collapse
+  (`slice_lhs 1 3 => erw [hcol]`) + keystone (`erw [sheafification_whiskerLeft_unit_eq_mu']`) to the
+  single μ-cancel; hK_lhs (L1903) to its isolated localized-side goal. **DECISIVE: the iter-011
+  "isolation will let `Iso.hom_inv_id_assoc` fire" premise is FALSE (verified on the small goal).** The
+  μ-pair `μ.hom ≫ μ.inv` does NOT cancel because the keystone's inner `≫` is the `Localization.Monoidal`
+  localized-category `CategoryStruct.comp` while the boundary `≫ μ.inv` from `tensorObjLocalizedIso` is
+  the `X.Modules`-synonym comp — DEFEQ but NOT SYNTACTIC. `Category.assoc` cannot re-associate across the
+  boundary (no progress); `rw/erw [Iso.hom_inv_id_assoc]`, `slice … rw [Iso.hom_inv_id]`,
+  `rw [← Category.assoc, Iso.eq_comp_inv]` all fail to find the pair; forcing it with
+  `simp only [Localization.Monoidal.μ]` (unfold to `tensorBifunctorIso`) TIMES OUT at isDefEq. STRUCTURAL
+  FIX (iter-013, BOTH halves share it): a canonical instance-agnostic cancel of `e.hom ≫ e.inv` across the
+  `LocalizedMonoidal`-synonym / base-`comp` boundary (a `change` to `(L').obj`-level comp, or a dedicated
+  `Localization.Monoidal` cancellation idiom) — get this from a mathlib-analogist consult, NOT another
+  prover round. Once available: hK_rhs closes with `+ μ_natural_right + counit triangle`; hK_lhs with
+  `+ associator_naturality + associator_hom_app` (the latter won't fire on `α_ A B C` directly — objects
+  must be `(L').obj _`) `+ the same cancel`.
 - **FBC foundation `gammaPushforwardNatIso_comp` is NOT "pointwise reflexivity" AND the monolithic-simp
   proof OVERFLOWS THE KERNEL (iter-009).** The blueprint recipe claiming pointwise `rfl` is WRONG (prover +
   both reviewers): LHS is indexed by the composite `(Spec(φ≫ρ))^♯_⊤`, RHS factors through
@@ -1942,6 +1985,25 @@
   `moduleSpecΓFunctor.map g` not syntactically `g.val.app U`). NEEDED (rw-only, kernel-light): 2 exposure
   lemmas — (a) `moduleSpecΓFunctor.map g` underlying `= (modulesSpecToSheaf.map g).val.app (op ⊤)`; (b)
   `ConcreteCategory.hom (eqToHom _) x = x` for `ModuleCat`. This is the CLOSEST-TO-DONE FBC target.
+  **iter-012 UPDATE (the residual is BROADER than the cast; element-wise FAMILY exhausted):** the
+  exposure lemma (b) was built — `moduleCat_eqToHom_concreteCategory_apply` (L696, `subst h; rfl`) turns
+  the `eqToHom` into a SYMBOLIC carrier `cast` without forcing a whnf — plus 3 more `:= rfl` concreteApply
+  helpers (L706/713/720). The goal is now fully exposed as `x = B(A(γ_φ(Γ_pc(cast x))))`. **DECISIVE
+  REFUTATION:** the residual is NOT just `Γ(cast) x = x` with the outer B/A/γ_φ collapsing freely — every
+  wrapper changes the ModuleCat OBJECT (domain ≠ codomain as objects, agreeing ONLY on the carrier). The
+  obstruction is the value-`ModuleCat`/`X.Modules` OBJECT-JUNCTION DIAMOND: carrier-defeq is CHEAP
+  (`rfl : ↑(Γ(pushforward (Spec(φ≫ρ)) N)) = ↑(Γ(pushforward (Spec ρ ≫ Spec φ) N))` typechecks instantly),
+  but per-junction OBJECT-defeq is HEAVY (whnf kernel bomb). `rw/simp [helper]` fails on γ_φ and B
+  (motive-not-type-correct: rewriting `γ_φ z → z` retypes z across the diamond); only A and inner-γ_ρ fire
+  (they sit under `restrictScalars.map`, a syntactic junction). THREE collapse routes VERIFIED-FAIL on cold
+  build — whole-goal defeq (`exact (gammaPushforwardIso_inv_apply _ _ _).symm`), monolithic `rfl`
+  (`rw [moduleCat_eqToHom…]; rfl`), term-mode `Eq.trans` chain over the 5 wrappers (>1.6M heartbeats). The
+  ENTIRE element-wise-collapse family is provably exhausted. STRUCTURAL FIX (iter-013): route through
+  `.val.app (op ⊤)` at the SHEAF level (`SheafOfModules.pushforwardComp_inv_app_val_app` EXISTS, gives
+  `(((pushforwardComp φ ψ).inv.app M).val.app U) x = x`) where restrictScalars/globalSections object-
+  junctions never form — but expressing B/A/γ_φ (restrictScalars-level) sheaf-level needs a mathlib-analogist
+  consult (likely an `Iso.ext`/inverse-comparison route, or a structural lemma identifying the whole
+  `gammaPushforwardIso` object-wise). Do NOT re-assign element-wise.
 
 - **FBC crux `pullback_spec_tilde_iso_ring_square_natural` `(★)` = `pst` pseudofunctoriality coherence — do
   NOT re-run as a monolithic prover (iter-008, churn pattern, no sorry progress several iters).** The real
@@ -2724,6 +2786,19 @@
   enforced corrective is a mathlib-analogist consult on the reframing keystone, not a prove round.
 
 ## Last Updated
+2026-06-19T (iter-012 review, this subproject) — FIRED BOTH provers. FBC 5→5, SNAP 6→7 (4th consecutive
+0-sorry-ELIMINATION iter on both routes). Decisive diagnostic this iter: BOTH iter-011 "isolation/exposure
+will close it" premises REFUTED (cold-build-verified). FBC `gammaPushforwardIso_comp`: 4 new `:= rfl`
+exposure helpers built; goal fully exposed; element-wise-collapse FAMILY provably exhausted (3 routes
+verified-fail) — blocker = value-`ModuleCat`/`X.Modules` OBJECT-JUNCTION DIAMOND (carrier-rfl cheap,
+object-defeq whnf-bomb). SNAP: well-typed `K`=`assocCommonForm` BUILT + assembly own-body sorry-FREE; both
+halves reduced to the μ-cancel; μ-pair does NOT cancel even ISOLATED — `Localization.Monoidal` comp vs
+`X.Modules`-synonym comp instance mismatch (defeq≠syntactic). BOTH correctives = mathlib-analogist consult
+(key-INDEPENDENT subagent; "no API key" only blocked external informal-agent), THEN blueprint-writer rewrite
+(2 `% NOTE`s added), THEN prover. lean-auditor iter012: 0 must-fix / 5 major (iter-011 maxHeartbeats LATENT
+BUG still unfixed at FBC L1488+L1523-1526; 3 documented sorries) / 3 minor. lvb fbc012/snap012: 0 must-fix,
+2 major each (chapter prose understates the real blockers — flagged via `% NOTE`). sync_leanok +4/-0
+(sha b2e018f). See iter/iter-012/review.md. — PRIOR:
 2026-06-19T (iter-011 review, this subproject) — FIRED BOTH provers. SNAP 6→6, FBC 5→5 (net 0 sorry — 3rd
 consecutive 0-net iter on both routes). REAL structural progress: FBC `gammaPushforwardNatIso_comp` own body
 CLOSED (kernel-light NatIso route) + `globalSectionsIso_hom_comp3` + 2 `:= rfl` helpers PROVED → foundation
