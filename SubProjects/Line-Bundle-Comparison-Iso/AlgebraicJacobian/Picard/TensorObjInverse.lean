@@ -1144,17 +1144,25 @@ private lemma tensorObj_left_unitor_naturality {W : Scheme.{u}} {M M' : W.Module
         ≪≫ tensorObj_left_unitor M'
       = tensorObj_left_unitor M ≪≫ g := by
   apply Iso.ext
+  -- Inner presheaf left-unitor naturality, stated in the syntactic monoidal carrier
+  -- `PresheafOfModules (W.presheaf ⋙ forget₂)` (mirrors `tensorObjIsoOfIso_comp_unit_iso`'s `hpre`),
+  -- proved by `leftUnitor_naturality` modulo `id_tensorHom` and the `𝟙_ = 𝒪.val` defeq.
+  have hpre : MonoidalCategory.tensorHom
+        (C := _root_.PresheafOfModules (W.presheaf ⋙ forget₂ CommRingCat RingCat))
+        (𝟙 ((SheafOfModules.forget W.ringCatSheaf).obj (SheafOfModules.unit W.ringCatSheaf)))
+        ((SheafOfModules.forget W.ringCatSheaf).map g.hom)
+      ≫ (λ_ (C := _root_.PresheafOfModules (W.presheaf ⋙ forget₂ CommRingCat RingCat)) M'.val).hom
+      = (λ_ (C := _root_.PresheafOfModules (W.presheaf ⋙ forget₂ CommRingCat RingCat)) M.val).hom
+        ≫ (SheafOfModules.forget W.ringCatSheaf).map g.hom := by
+    rw [MonoidalCategory.id_tensorHom]
+    exact MonoidalCategory.leftUnitor_naturality
+      ((SheafOfModules.forget W.ringCatSheaf).map g.hom)
   simp only [tensorObjIsoOfIso, tensorObj_left_unitor, Iso.trans_hom, Functor.mapIso_hom,
     MonoidalCategory.tensorIso_hom, Functor.mapIso_refl, Iso.refl_hom, Category.assoc]
-  -- Combine the two sheafification legs, push the presheaf left unitor past `ĝ = forget g.hom` by its
-  -- naturality (`𝟙_ ◁ ĝ ≫ λ_ M' = λ_ M ≫ ĝ`), split, then close with sheafification-counit
-  -- naturality at `g.hom` (same idiom as `dualUnitIso_dualIsoOfIso`).
+  -- Combine the two sheafification legs, rewrite by the inner seam `hpre`, split, then close with
+  -- sheafification-counit naturality at `g.hom` (same idiom as `dualUnitIso_dualIsoOfIso`).
   rw [← Category.assoc]
-  erw [← Functor.map_comp, MonoidalCategory.id_tensorHom]
-  rw [show (SheafOfModules.unit W.ringCatSheaf).val
-        = 𝟙_ (_root_.PresheafOfModules (W.presheaf ⋙ forget₂ CommRingCat RingCat)) from rfl,
-    MonoidalCategory.leftUnitor_naturality]
-  erw [Functor.map_comp, Category.assoc]
+  erw [← Functor.map_comp, hpre, Functor.map_comp, Category.assoc]
   erw [(PresheafOfModules.sheafificationAdjunction (𝟙 W.ringCatSheaf.val)).counit.naturality g.hom]
   rfl
 
