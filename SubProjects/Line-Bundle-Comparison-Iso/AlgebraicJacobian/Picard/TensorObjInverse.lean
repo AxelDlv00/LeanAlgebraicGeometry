@@ -1151,8 +1151,8 @@ private lemma tensorObj_left_unitor_naturality {W : Scheme.{u}} {M M' : W.Module
         (C := _root_.PresheafOfModules (W.presheaf ⋙ forget₂ CommRingCat RingCat))
         (𝟙 ((SheafOfModules.forget W.ringCatSheaf).obj (SheafOfModules.unit W.ringCatSheaf)))
         ((SheafOfModules.forget W.ringCatSheaf).map g.hom)
-      ≫ (λ_ (C := _root_.PresheafOfModules (W.presheaf ⋙ forget₂ CommRingCat RingCat)) M'.val).hom
-      = (λ_ (C := _root_.PresheafOfModules (W.presheaf ⋙ forget₂ CommRingCat RingCat)) M.val).hom
+      ≫ (λ_ (M'.val : _root_.PresheafOfModules (W.presheaf ⋙ forget₂ CommRingCat RingCat))).hom
+      = (λ_ (M.val : _root_.PresheafOfModules (W.presheaf ⋙ forget₂ CommRingCat RingCat))).hom
         ≫ (SheafOfModules.forget W.ringCatSheaf).map g.hom := by
     rw [MonoidalCategory.id_tensorHom]
     exact MonoidalCategory.leftUnitor_naturality
