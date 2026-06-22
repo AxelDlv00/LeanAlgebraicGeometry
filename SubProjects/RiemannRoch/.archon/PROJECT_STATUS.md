@@ -5286,7 +5286,146 @@ RiemannRoch subproject's own iteration counter restarts at iter-001.
   `carrierSheaf_stalk_eq`) as STUBBED/Tier-3. lean-auditor iter-016 0/6/3 — all 6 majors are this stale
   text. Comment-only cleanup owed to the next OcOfD prover (pair with no code change).
 
+## Knowledge Base — RiemannRoch subproject (iter-017 addition)
+
+### Proof patterns (reusable)
+- **Residue-evaluation morphism = adjunction transpose.** Build `coker f ⟶ skyscraperSheaf P.point k̄`
+  as `(stalkSkyscraperSheafAdjunction P.point).homEquiv Co (ModuleCat.of kbar kbar) G2.hom` where
+  `G2 = cokernel_stalk_at_iso_kbar`. The blueprint's "leading-Laurent-coefficient mod 𝔪" prose IS this
+  transpose (the adjunction unit sends a germ to its stalk-map image). No explicit stalkwise residue
+  construction needed. `stalkSkyscraperSheafAdjunction` (NOT `skyscraperSheafStalk…`) is the Mathlib name
+  (`Mathlib.Topology.Sheaves.Skyscraper`): `(forget C X).comp (stalkFunctor C p₀) ⊣ skyscraperSheafFunctor p₀`.
+- **Stalkwise-iso of a sheaf morphism, two zero-stalk halves.** `TopCat.Presheaf.isIso_iff_stalkFunctor_map_iso`,
+  `by_cases x = P.point`. At P: adjunction triangle `htri : F.map csh ≫ counit.app A = G2.hom` (via
+  `adj.homEquiv_counit` + `(adj.homEquiv _ _).symm_apply_apply`), both factors iso ⇒
+  `IsIso.of_isIso_fac_right (f := adj.counit.app A) htri` (NAME `f` explicitly or synth stalls);
+  `IsIso (counit.app A)` via `show counit.app A = (skyscraperPresheafStalkOfSpecializes P A specializes_rfl).hom from rfl`.
+  Away from P: `Limits.IsZero.isIso`; target stalk 0 = `skyscraperPresheafStalkOfNotSpecializesIsTerminal P A hns |>.isZero`
+  (`hns` from `specializes_iff_mem_closure` + `IsClosed.closure_eq {P.point}`); source stalk 0 via left-adjoint
+  cokernel preservation.
+- **Left-adjoint cokernel preservation — manual instance thread (the `cokernelComparison` trap).**
+  `cokernelComparison f G` / `instIsIsoCokernelComparison` FAIL to synth `G.PreservesZeroMorphisms`
+  INSIDE the term on the sheaf category (standalone `inferInstance` succeeds — elaboration-order/universe
+  friction). `PreservesColimitsOfShape J G → PreservesColimit (parallelPair f 0) G` does NOT fire via
+  `inferInstance`. WORKAROUND: `haveI hLadj := adj.isLeftAdjoint; haveI hpzm := Functor.preservesZeroMorphisms_of_isLeftAdjoint _;
+  haveI hpcs : PreservesColimitsOfShape WalkingParallelPair G := inferInstance; haveI hpc2 := hpcs.preservesColimit;`
+  THEN `Limits.PreservesCokernel.iso G f : G.obj (cokernel f) ≅ cokernel (G.map f)` elaborates cleanly
+  (correct direction for `IsZero.of_iso (isZero_cokernel_of_epi (G.map f)) …`).
+
+### Mathlib-API watch
+- Putting `CategoryTheory.inv (h)` in a *statement/goal type* forces an `IsIso h` synth that can hard-error
+  even with a local `haveI` in scope. Reformulate via a factorisation equation + `IsIso.of_isIso_fac_right/left`.
+
+### Documentation-rot watch (CARRIED + WORSE — review cannot edit `.lean`)
+- OcOfD stale docstrings (lean-auditor iter-017 4 majors): `sheafOf` L606–633/L660 claim a residual sorry
+  (body sorry-free since iter-014); S3 header L1025 marks `carrierSheaf_stalk_eq` "STUBBED" (closed iter-016);
+  `cokernel_carrierSheafHom_iso_skyscraper` L1625–1693 still "Deep gap" with G1/G2/G3 open (G1+G3 closed iter-017).
+  Comment-only cleanup owed to the next OcOfD prover (pair with the G2/bridge code lane).
+
+### Coverage debt
+- `sheafOf.stalkFunctor_map_carrierPresheaf_le_hom_epi_of_ne` (OcOfD L1417) — NEW axiom-clean helper, NO
+  blueprint entry (sole OcOfD `dag-query unmatched` node). Away-from-P driver of G3. Planner to author a `lemma` block.
+- (iter-018) `sheafOf.carrierSet_zero_eq` (OcOfD L1730) + `sheafOf.structureSection_mem_carrierSet_zero`
+  (OcOfD L1748) — two NEW axiom-clean S3-bridge helpers, no `\lean{}` block (`dag-query unmatched`). S2 worth
+  its own pinned block (reusable forward inclusion `Γ(U,𝒪_C)→carrier₀`). Planner to author.
+
+## Knowledge Base — Proof patterns (iter-018 addition)
+- **"regular ⟹ no poles" (easy arm of Hartshorne 6.3A) — germ/ordFrac pattern.** For `s ∈ Γ(U,𝒪_C)` and a
+  prime divisor `Q ∈ U`, `germToFunctionField U s = algebraMap 𝒪_{C,Q} K(C) (germ U Q.point s)`: prove via
+  `change` to the generic-point germ + `← TopCat.Presheaf.germ_stalkSpecializes_apply (h := hgen)` where
+  `hgen : genericPoint ⤳ Q.point := (genericPoint_spec C.left).specializes trivial`. Then β≠0 (since image≠0),
+  `Ring.ordFrac_ge_one_of_ne_zero` gives `ordFrac ≥ 1`, and `WithZero.log_le_log` flips to `ord_Q ≥ 0`.
+  Mirrors the proven `key_alpha_ge` argument of `carrierSubmodule`. (`structureSection_mem_carrierSet_zero`.)
+- **`carrierSet 0` unfold.** `unfold sheafOf.carrierSet; simp only [Finsupp.coe_zero, Pi.zero_apply, neg_zero]`
+  reduces the bound `-(0 Q)` to `0` ⇒ order-≥-0 characterisation. (`carrierSet_zero_eq`.)
+- **presheaf-iso → sheaf-iso lift.** `(CategoryTheory.fullyFaithfulSheafToPresheaf J A).preimageIso
+  (NatIso.ofComponents (fun U => component U) naturality)` is the standard, non-laundering way to build a
+  sheaf iso from per-open component isos. Auditor-confirmed non-circular. (`carrierSheaf_zero_iso_toModuleKSheaf`.)
+- **GOTCHA**: `NatIso.ofComponents` demands a component iso at EVERY open ⇒ a `lem` proved only for affine
+  `U=Spec A` is INSUFFICIENT to feed it; the general-`U`→affine-cover locality reduction must exist first
+  (blueprint adequacy gap flagged iter-018 for `lem:carrierSheaf_zero_sections_eq_structureSheaf`).
+
+## Knowledge Base — Known Blockers (iter-018 addition)
+- **S3 bridge inverse = Hartogs / Dedekind-per-chart** (`carrierSheaf_zero_sections_eq_structureSheaf`,
+  OcOfD L1800). `ord_Q g ≥ 0 ∀Q∈U ⟹ g ∈ A=Γ(U,𝒪_C)` needs `IsDedekindDomain A` for an affine chart
+  (smooth ⟹ regular ⟹ integrally-closed Noetherian dim-1 ⟹ Dedekind — NO single-call Mathlib lemma; likely
+  Mathlib-build), then `IsDedekindDomain.HeightOneSpectrum.mem_integers_of_valuation_le_one` (already
+  `\mathlibok`). The P¹ PID route (`WeilDivisor` L1811, `HomogeneousLocalization.Away`) does NOT generalise.
+  Substrate in-tree: `functionField_isFractionRing_of_isAffineOpen`, `Ring.ordFrac_eq_one_of_notMem`,
+  `IsLocallyNoetherian.component_noetherian`. The whole cokernel-iso cone now gated on this + the independent
+  G2 DVR residue (L1509); do NOT re-attempt the bridge blind.
+
+### Documentation-rot watch (CARRIED + WORSE — review cannot edit `.lean`)
+- (iter-018, lean-auditor 7 majors) OcOfD module-header "Status" (L63–71) under-reports active sorries (says 2,
+  actually 6: L771/1509/1800/1819/1960/1966) and falsely tags `sheafOf`/`sheafOf_zero` as "Tier-3 honest typed
+  sorry" — both are sorry-free (closed iter-011/014/016). Stale `iter-181/183/184/185/186` numbering (pre-3-digit
+  reset) in docstrings L606/625/660/692/1868. L1629 "SOLE remaining deep ingredient" now false (≥2 deep gaps).
+  Comment-only cleanup owed to the next OcOfD prover.
+
+## Knowledge Base — Proof patterns (iter-019 addition)
+- **Affine topological Krull-dim = ring Krull-dim bridge.** For affine `V`, `ringKrullDim Γ(V,⊤) =
+  Order.krullDim (α:=V)`: `ringKrullDim R = Order.krullDim (PrimeSpectrum R)` holds by `rfl`; build the carrier
+  homeo `V ≃ₜ PrimeSpectrum Γ(V,⊤)` from `TopCat.homeoOfIso (Scheme.forgetToTop.mapIso V.isoSpec)`, then upgrade
+  to an ORDER-iso `V ≃o (PrimeSpectrum Γ(V,⊤))ᵒᵈ` — scheme specialisation preorder is the DUAL of prime
+  inclusion (`PrimeSpectrum.le_iff_specializes` + `Specializes.map` of the homeo) — and close with
+  `Order.krullDim_eq_of_orderIso` + `Order.krullDim_orderDual` (+ `rfl`). Mirrors `eOrder` in
+  `Albanese/CoheightBridge.lean`. Dead end: `topologicalKrullDim` (= `krullDim` of `IrreducibleCloseds`, needs
+  sobriety). (`ringKrullDim_globalSections_eq_krullDim`, `chart_dimensionLEOne`.)
+- **Dedekind-per-chart via LOCAL route (bypasses absent global smooth⟹integrally-closed).**
+  `IsIntegrallyClosed.of_localization_maximal`: per nonzero-maximal `p`, the stalk at `x = hV.fromSpec ⟨p,_⟩` is
+  `IsLocalization.AtPrime` (via `IsAffineOpen.isLocalization_stalk'`); `coheight x = primeHeight p` from
+  `Scheme.ringKrullDim_stalk_eq_coheight` + `IsLocalization.AtPrime.ringKrullDim_eq_height`; `primeHeight ≤ 1`
+  (MUST pass `(I := P.asIdeal)` or `[IsPrime]` synth is stuck) ∧ `≠ 0` (`Ideal.primeHeight_eq_zero_iff`, nonzero
+  prime ∉ `minimalPrimes` of a domain) ⟹ `=1` in ℕ∞ ⟹ DVR via `Scheme.IsRegularInCodimensionOne.out`;
+  transport DVR across `IsLocalization.algEquiv` (`IsDiscreteValuationRing.RingEquivClass.isDiscreteValuationRing`)
+  ⟹ integrally closed. Assemble `IsDedekindDomain` via `(isDedekindRing_iff Γ(V,⊤) V.functionField).mpr ⟨noeth,
+  dimLEOne, fun hx => IsIntegrallyClosed.algebraMap_eq_of_integral hx⟩` then `haveI : IsDedekindRing; infer_instance`.
+  GOTCHAs: `isDedekindRing_iff`'s 3rd conjunct is the integral-closure PREDICATE not the `IsIntegrallyClosed`
+  class; `IsDedekindDomain` is a DISTINCT class from `IsDedekindRing`. (`CurveChartDedekind.lean`, all 3 axiom-clean.)
+- **Unsealing a colimit-descent germ factorisation (`set`-cast stripping).** To extract the underlying-`K(C)`
+  germ-action of an opaque `private def` iso built via `colimit.desc`: `unfold theDef; simp only [eq_mpr_eq_cast,
+  cast_eq, asIso_hom]` (strips the `set`-generated `Eq.mpr` casts) then `erw [TopCat.Presheaf.germ,
+  ← ModuleCat.comp_apply, Limits.colimit.ι_desc]; rfl`. This is the linchpin that let G2's naturality square close.
+  (`carrierSheaf_stalk_iso_iSup_germ_coe` → `cokernel_stalk_at_naturality`.)
+- **G2 cokernel-stalk reduction.** `coker(stalkMap f) ≅ k̄` via: left-adjoint preserves cokernel
+  (`PreservesCokernel.iso`); identify stalk map with the submodule inclusion under the `carrierSheaf_stalk_eq`
+  identifications (`Limits.cokernel.mapIso _ incl stalk_eq_D stalk_eq_PD naturality`); then
+  `ModuleCat.cokernelIsoRangeQuotient ≪≫` residue equiv. (`cokernel_stalk_at_iso_kbar`.)
+
+## Knowledge Base — Resolved blockers (iter-019 addition)
+- **Dedekind-per-chart crux CLOSED** (`CurveChartDedekind.lean`, NEW decoupled file imports WeilDivisor/CurveKrullDim,
+  NOT OcOfD — no cycle). `chart_dimensionLEOne`/`chart_isIntegrallyClosed`/`chart_isDedekindDomain` all axiom-clean.
+  The S3-bridge inverse "smooth⟹Dedekind for an affine chart" (iter-018 known blocker) is now a landed in-tree
+  fact via the LOCAL route above; OcOfD bridge consumes `chart_isDedekindDomain` next iter.
+- **G2 "deep cokernel iso" categorical content CLOSED** — `cokernel_stalk_at_iso_kbar` body sorry-free (deferred
+  017–018). 6 new axiom-clean helpers.
+
+## Knowledge Base — Known Blockers (iter-019 addition)
+- **SHARED valuation-membership gap blocks TWO cones at once.** The G2 leaf `orderAtP_residue_linearEquiv`
+  (OcOfD L1605, DVR residue equiv) AND the S3 bridge section-inverse (`carrierSheaf_zero_iso_toModuleKSheaf`,
+  ~L1884) are BOTH blocked on `x ∈ (algebraMap R K).range ↔ 1 ≤ Ring.ordFrac R x` for a DVR — the DVR-stalk
+  specialisation of `IsDedekindDomain.HeightOneSpectrum.mem_integers_of_valuation_le_one` (already `\mathlibok`).
+  The forward residue map cannot even be DEFINED without it. Land ONE `mathlib-build` lemma (scaffold the stub
+  FIRST per the plan-validate zero-sorry HAZARD), then ONE `prove` lane closes BOTH. Do NOT re-assign a blind
+  prove lane to either before that lemma lands.
+- **`\leanok` semantics note (no override made iter-019).** ocofd lvb-checker flagged the G2/G3 cokernel-arc
+  proof-blocks (`lem:cokernel_sheafOf_single_add_stalkAtP_iso_kbar`, `def:cokernel_skyscraper_hom`,
+  `lem:cokernel_skyscraper_hom_isIso`) as carrying `\leanok` while transitively `sorryAx`. NOT a marker error:
+  proof-block `\leanok` = "this body has no sorry" (auditor-confirmed true); the sorry lives in the unpinned leaf
+  `orderAtP_residue_linearEquiv`. The fix is PINNING the leaf in the blueprint (no `\leanok`, wired into the arc's
+  `\uses`) so the DAG propagates incompleteness — NOT stripping `\leanok` from sorry-free proofs. Same as iter-017 G3.
+
+### Documentation-rot watch (CARRIED — review cannot edit `.lean`)
+- (iter-019, lean-auditor) OcOfD module status block L51–65 still undercounts sorries (lists 2, actual ~6:
+  L771/1605/1967/1986/2127/2133); L69 "3-tier disclosure" para contradicts the now-accurate `sheafOf` sorry-free
+  claim; `sheafOf` docstring L625–630 falsely says the general branch is an honest typed sorry. **NEW: 11 uses of
+  deprecated `CategoryTheory.Sheaf.val` in the new G2 code** — future Mathlib-bump break risk; worth a refactor
+  migration pass. Comment-only cleanup owed to the next OcOfD prover/refactor.
+
 ## Last Updated
+iter-019 (2026-06-22) — RiemannRoch review phase. **2 parallel lanes; Dedekind-per-chart crux FULLY CLOSED + G2 deep cokernel iso categorical content CLOSED.** Lane 2 NEW `CurveChartDedekind.lean` 3→0 axiom-clean (`chart_dimensionLEOne`/`chart_isIntegrallyClosed`/`chart_isDedekindDomain` via affine-krulldim order-iso bridge + LOCAL `of_localization_maximal`/`isDedekindRing_iff` route — bypasses absent global smooth⟹integrally-closed). Lane 1 OcOfD `cokernel_stalk_at_iso_kbar` body now sorry-free (deferred 017–018) via 6 new axiom-clean helpers (linchpin `cokernel_stalk_at_naturality` + germ-action extraction `carrierSheaf_stalk_iso_iSup_germ_coe`); depth isolated to ONE typed leaf `orderAtP_residue_linearEquiv` (L1605). **KEY: that leaf AND the S3 bridge section-inverse share ONE Mathlib gap** (`mem_integers_of_valuation_le_one` DVR-stalk specialisation) — land it once, close both. RiemannRoch-cone −3 sorry sites. 3 review subagents 0 must-fix (lean-auditor 0/4/13; 2 lvb-checkers 0/3/2 + 0/2/2). No `\leanok` override (G2-arc proofs genuinely sorry-free; defect = unpinned leaf, route to blueprint). blueprint-doctor CLEAN; sync_leanok iter=19 +7/−0. 9 coverage-debt decls → recommendations. Knowledge Base only (per-session narrative → `iter/iter-019/review.md`).
+iter-018 (2026-06-22) — RiemannRoch review phase. **Last deep S3 piece (the bridge `carrierSheaf 0 ≅ toModuleKSheaf C`, Hartshorne II.6.3A) DECOMPOSED — 2 sentence-lemmas CLOSED axiom-clean.** OcOfD: S1 `carrierSet_zero_eq` (carrier bound `-(0 Q)`→0 unfold) + S2 `structureSection_mem_carrierSet_zero` (easy arm regular⟹no-poles via `germ_stalkSpecializes_apply` with `genericPoint⤳Q.point` + `ordFrac_ge_one_of_ne_zero` + `WithZero.log_le_log`; mirrors `key_alpha_ge`) both `{propext, Classical.choice, Quot.sound}` (verified first-hand). S3 `carrierSheaf_zero_sections_eq_structureSheaf` PINNED as documented `sorry` (forward=S2, injective by `germToFunctionField_injective`; inverse = Hartogs/Dedekind-per-chart gap). Bridge `carrierSheaf_zero_iso_toModuleKSheaf` bare-`sorry` → real `(fullyFaithfulSheafToPresheaf …).preimageIso (NatIso.ofComponents … (by sorry))` skeleton — auditor-confirmed non-circular + not laundering, rests on S3 + naturality sorry. File-wide active sorries 6 (L771 off-cone, L1509 G2 residue, L1800 S3, L1819 naturality, L1960/1966 ses corners). lean-auditor 6/7/4 (6 must-fix = the 6 documented `:=sorry` sites, all honest/known-recipe; 7 major = stale header/docstrings, comment-only); lvb-ocofd faithful, 0 gating, 1 MAJOR = **blueprint adequacy gap** (chapter proves affine-`U` only, Lean component lemma consumed for ALL opens via `NatIso.ofComponents`; general-`U` locality/gluing step ABSENT — HARD GATE for next S3 lane). blueprint-doctor CLEAN; sync_leanok iter=18 +1/−0 (S3 statement). Cone now gated on 2 independent deep clusters: S3 Hartogs/Dedekind (L1800→1819→1960/1966) + G2 DVR residue (L1509). Knowledge Base only (per-session narrative → `iter/iter-018/review.md`).
+iter-017 (2026-06-22) — RiemannRoch review phase. **S3 cokernel leaf G3 CLOSED + G2 reduced to one residue sorry.** OcOfD: `cokernel_skyscraper_hom_isIso` (G3) went compile-ERROR→CLOSED (body sorry-free, `sorryAx` only transitive via G2): P.point branch via stalk–skyscraper adjunction triangle + `IsIso.of_isIso_fac_right (f := …)` (dropped a failing `inv`-in-type scaffold); away-from-P branch via left-adjoint `PreservesCokernel.iso` + NEW axiom-clean helper `stalkFunctor_map_carrierPresheaf_le_hom_epi_of_ne` + `skyscraperPresheafStalkOfNotSpecializes`. `cokernel_skyscraper_hom` (def) confirmed already sorry-free (adjunction transpose of G2.hom). G2 `cokernel_stalk_at_iso_kbar` advanced bare-sorry→proven `PreservesCokernel.iso` reduction + ONE focused residue sorry (L1509, `cokernel (G.map f) ≅ k̄`). Whole `cokernel_carrierSheafHom_iso_skyscraper` cone now gated on that single sorry. lean-auditor 0/4/5 (majors = stale docstrings; no laundering); lvb-ocofd 0 must-fix (major = new-helper coverage debt; minor = `\uses` route divergence → `% NOTE:` added). blueprint-doctor CLEAN; sync +1/−0. GOTCHA logged: `cokernelComparison` fails inside-term on sheaf cat (use `PreservesCokernel.iso` via named `hpcs.preservesColimit`). Next: effort-break + prove G2 residue (naturality + DVR quotient); then bridge lane. Knowledge Base only (per-session narrative → `iter/iter-017/review.md`).
 iter-016 (2026-06-21) — RiemannRoch review phase. **S3 carrier-stalk chain FULLY CLOSED axiom-clean.** OcOfD decl-level sorry 11→6: B0 `finite_orderConstraintFail_affine` (pivoted to GLOBAL `principal`-divisor finiteness — blueprint's affine `finite_order_support_affine` is `private`/cross-file; un-omitted `[IsProper C.hom]`), B1 `exists_open_mem_carrierSubmoduleSheaf` (closed prime-divisor points → `W⊓Zᶜ`), B `iSup_…_eq_orderAtPSubmodule`, seam A `carrierSheaf_stalk_iso_iSup` (germ-API `colimit.desc` descent — the stretch goal), binding `carrierSheaf_stalk_eq` (= A ≪≫ eqToIso B, 2 lines). New helper `carrierPresheaf_map_coe` (coverage debt). All axiom-clean `{propext, Classical.choice, Quot.sound}`. lean-auditor 0/6/3 (majors = stale docstrings; assembly non-circular, no laundering); lvb-ocofd 0 must-fix, 1 major = B0 prose divergence (→ `% NOTE:` added, prose/`\uses` rewrite routed to planner). blueprint-doctor CLEAN; sync +5/−0 (5 chain decls). Next: G2/G3 cokernel leaves (now unblocked) + Hartshorne-6.3A bridge as a dedicated lane. Knowledge Base only (per-session narrative → `iter/iter-016/review.md`).
 iter-015 (2026-06-21) — RiemannRoch review phase. **S3 deep cokernel iso DECOMPOSED (effort-break landed).** `cokernel_carrierSheafHom_iso_skyscraper` body now `sorry`-FREE via `haveI := cokernel_skyscraper_hom_isIso D P; asIso (cokernel_skyscraper_hom D P)` (auditor: non-circular). `sheafOf.orderAtPSubmodule` PROVEN axiom-clean (the `π_P^{-n}𝒪` target submodule). 5 faithfully-typed `sorry` stubs created at pinned `\lean{}` names (`carrierSheaf_stalk_eq` [binding, ~200–400 LOC, no Mathlib carrier-stalk API], `cokernel_stalk_at_iso_kbar`, `cokernel_skyscraper_hom`, `cokernel_skyscraper_hom_isIso`, `carrierSheaf_zero_iso_toModuleKSheaf`); 2 `sheafOf_ses_single_add` corners untouched (wiring recipe recorded inline). lean-auditor 0/6/7 (majors = stale docstrings + `Sheaf.val` deprecation in 2 stub types; no laundering); lvb-ocofd 0 must-fix (major = `orderAtPSubmodule` coverage debt, minor = `sheofOf` label typo). blueprint-doctor CLEAN; sync +5/−0 (statement `\leanok` on the 5 new stubs). Next: `mathlib-build`/`prove` lane on `carrierSheaf_stalk_eq` (cascades S-B→S-C→S-D; iso already wired). Knowledge Base only (per-session narrative → `iter/iter-015/review.md`).
 iter-014 (2026-06-21) — RiemannRoch review phase. **S1 DVR-stalk substrate WIRED + CLOSED axiom-clean.** OcOfD sorry 4→3: `sheafOf` L635 cotangent `sorry` GONE via 2 new axiom-clean blueprint-pinned decls (`isDiscreteValuationRing_stalk_of_smooth`, global `instIsRegularInCodimensionOneOfSmooth`) consuming the iter-011 cotangent pin + iter-013 `krullDim_curve_le_one`; `sheafOf`/`sheafOf_zero` axiom-clean. `sheafOf_ses_single_add` main case CLOSED, 2 corner sorries remain (carrierSheaf-0 bridge). lean-auditor 0/5/3 (all majors = stale Lean comments, no laundering); lvb-ocofd 0 must-fix (2 majors = stale blueprint `% NOTE` → FIXED). blueprint-doctor CLEAN; sync +2/−0. Next: S3 cokernel iso (L1086) via iter-015 effort-breaker split. Knowledge Base only (per-session narrative → `iter/iter-014/review.md`).

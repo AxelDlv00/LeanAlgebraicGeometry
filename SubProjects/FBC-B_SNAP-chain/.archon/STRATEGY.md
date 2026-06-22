@@ -20,8 +20,8 @@ Names/labels are the parent's so finished work merges back unchanged.
 
 | Phase | Status | Iters left | LOC | Key Mathlib needs | Risks |
 |---|---|---|---|---|---|
-| FBC-B i=0 — concrete-tilde equalizer (Stacks 02KH) | ACTIVE‖ | 2–4 | ~250–450 | `tensorEqLocusEquiv`; tensor⊗ preserves finite products; qcqs-pushforward-qcoh | heaviest node = MV qcqs gluing (effort 1737); bridge residual = naturality square; verify qcqs-pushforward-qcoh exists else project material |
-| SNAP — section graded ring | ACTIVE‖ | 1–3 | ~120–300 | `DirectSum.Ring` assembly | builds the H⁰ object `Γ_*(X,L)`; residue = cast-coherence + graded assembly |
+| FBC-B i=0 — concrete-tilde equalizer (Stacks 02KH) | ACTIVE | 2–4 | ~250–450 | `tensorEqLocusEquiv`; tensor⊗ preserves finite products; qcqs-pushforward-qcoh (likely project-build) | heaviest node = MV qcqs gluing (effort 1737); glue residual = restriction-naturality of the concrete tilde iso (≠ off-path abstract mate); qcqs-pushforward-qcoh absent from Mathlib |
+| SNAP — section graded ring | ACTIVE | 2–4 | ~120–300 (net DELETION ~900L bridge) | `MonoidalCategory (LocalizedMonoidal)` pentagon/triangle/hexagon; `Functor.Monoidal (L')` | re-prove ~10 coherences after `tensorObj*→⊗_loc` align; RISK = μ-boundary re-summoned inside the re-proofs (see Open Q) |
 
 ## Completed
 
@@ -51,15 +51,43 @@ provably-separated cover intersections) → bridge `flatBaseChange_isIso_iff_gam
 `affineBaseChange_pushforward_iso` decls are dead off-path **riders** (proved Lean legs reference their
 signatures); do NOT re-attempt the mate. Excision step: delete the riders the iter the goal lands.
 
-**SNAP route.** Crux `IsIso(sheafification.map(η_P ▷ Q))`, associator, `tensorPowAdd` all CLOSED
-axiom-clean. Remaining: cast-coherence (`sectionMul_coherent`) → graded assembly
-(`gcommSemiring`/`gmodule`). Produces the H⁰ graded ring `Γ_*(X,L)`. Full `MonoidalCategory
-(SheafOfModules)` NOT needed; stalkwise / "presheaf+Γ-at-end" routes are DEAD.
+**SNAP route — Option A alignment.** The hand-built `tensorObj F G :=
+(F♭⊗_p G♭)^#` + a parallel `MonoidalCategory` proof of its associator coherence
+(`tensorObjAssoc_eq_localizedAssociator`) is a PARALLEL-API anti-pattern: it forced a 10-iter
+dual-`MonoidalCategory`-instance μ-token-divergence wall (analogist `snap-instance-design`,
+verdict ALIGN_WITH_MATHLIB). Pivot: route the 5 structural defs (`tensorObj`, `tensorObjAssoc`,
+`tensorBraiding`, `tensorObjUnitIso`, `tensorObjRightUnitor`) through the single canonical localized
+product `⊗_loc` of `modulesLocalizedMonoidal X` (= Mathlib's `LocalizedMonoidal L W ε`). Then
+`tensorObjAssoc_eq_localizedAssociator` is `rfl` (the open crux is DELETED, not proved), the ~900L
+bridge machinery (`:hK_*`/seam/head lemmas) is deleted, and the ~10 downstream coherences
+(`tensorPowAdd_assoc`, the 3 section cores, `sectionsMul_*`, `sectionMul_coherent`) re-prove cheaply
+via Mathlib pentagon/triangle/hexagon + `Functor.Monoidal (L')` lax-coherences. KEEP the
+localization-precondition machinery (`Wsheaf`/`W_isMonoidal`/`isIso_sheafification_whiskerRight_unit`)
+and BOTH monoidal instances — dual-instance DELETION is REFUTED (load-bearing). Then graded assembly
+(`gcommSemiring`/`gmodule`) → the H⁰ graded ring `Γ_*(X,L)`. Stalkwise / "presheaf+Γ-at-end" routes DEAD.
+
+## Open key strategic questions
+- **SNAP μ-boundary one layer down (sc022 CHALLENGE).** Under Option A, do the ~10 re-proved coherences
+  stay entirely inside the single `⊗_loc` structure, or do any re-summon the localized↔presheaf-instance
+  μ-boundary (the original wall)? Analogist `snap-instance-design` "μ-placement asymmetry" argues NO:
+  μ is spent ONCE, opaque, inside the `sectionsMul`/`tensorObjLocalizedIso` defs; the coherences are pure
+  `⊗_loc` pentagon/triangle/hexagon + `Γ∘L'` lax — neither reconciles two associators. UNVERIFIED until
+  the prover re-proves them. REVERSAL: if ≥2 coherences cold-bomb on the μ-boundary, Option A merely moved
+  the wall → escalate to single-global-instance (give `X.Modules` the localized instance directly).
+- **FBC mate vs naturality (sc022 CHALLENGE).** "Do NOT re-attempt the mate" targets the OFF-PATH abstract
+  `affineBaseChange_pushforward_iso`/`base_change_mate_*` apparatus (a different statement, `\uses`-disjoint
+  from the goal). The ON-PATH glue `..._ring_square_mate_glue` is the restriction-NATURALITY of the concrete,
+  already-proved tilde iso `pullback_spec_tilde_iso` — a TwoSquare nat-trans identity, decomposed by the
+  blueprint into 6 `ring_square_glue_*` sub-lemmas (the 4 Mathlib mate-API lemmas verified present, br021).
+  Distinct obligation, distinct (nat-trans-level) proof; not the dead abstract mate.
+- **qcqs-pushforward-qcoh (Stacks 01XJ) absent from Mathlib (sc022).** Verified MISSING this iter. Required
+  by the DOWNSTREAM bridge `flatBaseChange_isIso_iff_gammaTensorComparison` (not the glue). Plan: build
+  project-side via `[prover-mode: mathlib-build]` when the bridge is reached; budget +1–2 iters / ~80–150 LOC.
 
 ## Mathlib gaps & new material
 
 Gaps to fill:
-- FBC-B concrete chain: scaffold `baseChange_sheafConditionFork_tensorIso`, `flatBaseChange_pushforward_isIso_of_isSeparated`, `flatBaseChange_pushforward_mayerVietoris`, `flatBaseChange_isIso_iff_gammaTensorComparison` (none exist in Lean yet — blueprint blocks present). Mathlib needs (verify each iter): `tensorEqLocusEquiv` (flat∘equalizer), tensor⊗ preserves finite products, qcqs-pushforward-is-qcoh.
+- FBC-B concrete chain: scaffold `baseChange_sheafConditionFork_tensorIso`, `flatBaseChange_pushforward_isIso_of_isSeparated`, `flatBaseChange_pushforward_mayerVietoris`, `flatBaseChange_isIso_iff_gammaTensorComparison` (none exist in Lean yet — blueprint blocks present). Mathlib needs (verify each iter): `tensorEqLocusEquiv` (flat∘equalizer), tensor⊗ preserves finite products. **`qcqs-pushforward-is-qcoh` (Stacks 01XJ): confirmed ABSENT from Mathlib (sc022) → build project-side, `mathlib-build` mode, when the downstream bridge is reached (own scaffold node, +1–2 iters).**
 
 New project material:
 - `FlatBaseChangeGlobal.lean` element-level equalizer presentation (`baseChangeGammaEquiv`; capstone

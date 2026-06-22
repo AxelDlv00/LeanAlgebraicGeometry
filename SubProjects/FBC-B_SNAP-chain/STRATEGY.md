@@ -17,8 +17,8 @@ End-state: zero project `sorry` in these two cones, zero axioms (kernel-only).
 
 | Phase | Status | Iters left | LOC | Key Mathlib needs | Risks |
 |---|---|---|---|---|---|
-| FBC-B — global H⁰ iso (concrete-tilde equalizer chain) | ACTIVE (foundation DONE iter-016; BOTH mate legs CLOSED iter-018; glue + crux rewire + seeds next) | 4–6 (16 elapsed since iter-003) | ~150–300 | `iterated_mateEquiv_conjugateEquiv` (TwoSquare-valued); `TensorProduct.piRight`; Stacks 01XJ (unconfirmed) | CONVERGING (pc019). Foundation + both b2 mate legs closed (engine = `← conjugateEquiv_comp` split ×2 + `simp[…eq_mpr_eq_cast,cast_eq]` to dissolve the `letI`-`Eq.mpr` casts). Frontier = glue `pullback_spec_tilde_iso_ring_square_mate_glue` (both legs live → pure iterated-mate assembly; risk = `iterated_mateEquiv_conjugateEquiv` TwoSquare transposition whnf). Then crux rewire + 2 seeds + global assembly + separated→MV→bridge→goal (01XJ gate). Dead-mate apparatus excision queued. |
-| SNAP — `Γ_*(X,L)` graded comm ring assembly | STUCK (pc019; `hK_lhs` — suffix-abstraction is the LAST automated attempt; refactor pivot pre-committed if it fails) | 1 if suffix route lands (hK_lhs+assembly) → +1 cascade; else 3–5 refactor pivot (13 elapsed since iter-005) | ~100–220 | `CategoryTheory.Localization.Monoidal`; `Mathlib.Tactic.CategoryTheory.Reassoc` (`@[reassoc]`/`reassoc_of%`); `DirectSum.GCommSemiring`/`Gmodule` | iter-018 native lemma broke the 7-iter reassoc wall; chain runs bomb-free to the head lemma. RESIDUAL WALL = applying the head lemma over the full-`tail` goal whnf-bombs (heavy μ in `tail`). FIX (analogist `snap-suffix-cancel`, PROCEED) = remove the heavy suffix before applying head: `@[reassoc]`/sibling `_head_assoc` + `exact … _` after `conv_rhs` tail-alignment (generalize fallback); residual prefix may need the head's `show`-to-uniform recast. If this bombs → REFACTOR PIVOT (rewire onto `LocalizedMonoidal` synonym ⊗, glue Option A — making bridges definitional), NOT user escalation (standing directive). Dual-instance DELETION refuted (load-bearing). |
+| FBC-B — global H⁰ iso (concrete-tilde equalizer chain) | ACTIVE (foundation DONE iter-016; BOTH mate legs CLOSED iter-018; glue decomposed into 6-lemma scaffold iter-022) | 4–6 (16 elapsed since iter-003) | ~150–300 | `iterated_mateEquiv_conjugateEquiv` (REAL, Mates.lean:450; TwoSquare-valued); `mateEquiv_vcomp`; `TensorProduct.piRight`; Stacks 01XJ (unconfirmed) | CHURNING→decomposed (pc022). Foundation + both b2 mate legs closed (engine = `← conjugateEquiv_comp` split ×2 + `simp[…eq_mpr_eq_cast,cast_eq]` cast-dissolve). Frontier glue `pullback_spec_tilde_iso_ring_square_mate_glue` was monolithic-churning 3 iters → SPLIT into 6 `ring_square_glue_*` sub-lemmas (5 tractable: whisker lifts + geom/alg-leg nats + natTrans; 1 linchpin `pst_iterated_mate` via the now-confirmed-REAL `iterated_mateEquiv_conjugateEquiv`). Then crux rewire + 2 seeds + global assembly + separated→MV→bridge→goal (01XJ gate). Dead-mate apparatus excision queued. |
+| SNAP — `Γ_*(X,L)` graded comm ring assembly | ACTIVE (Option A alignment — re-base structural defs onto Mathlib `⊗_loc`) | 3–5 (refactor + cascade; assoc-bridge route abandoned after ~10 STUCK iters) | ~120–300 (net DELETION ~900L bridge machinery) | `CategoryTheory.Localization.Monoidal` (`LocalizedMonoidal`/`toMonoidalCategory`/`L.Monoidal`, all VERIFIED present); `DirectSum.GCommSemiring`/`Gmodule` | STUCK (pc022, ~14 iters over budget on the associator bridge). PIVOT: the hand-built parallel product `tensorObj`/`tensorObjAssoc` + its μ-conjugated bridge to `⊗_loc` is the parallel-API anti-pattern that caused the dual-`MonoidalCategory`-instance μ-token-divergence wall. Re-base `tensorObj := ⊗_loc` (synonym defeq → same object spellings) so `tensorObjAssoc_eq_localizedAssociator` becomes `rfl` — the stuck crux is DELETED, not proved; ~900L hK/seam/head machinery removed. μ then lives ONLY opaque inside `sectionsMul`/`tensorObjLocalizedIso`. Downstream coherences re-prove via Mathlib pentagon/triangle/hexagon + `Functor.Monoidal L` lax-coherences. Design: `analogies/snap-instance-design.md` (verdict ALIGN_WITH_MATHLIB). RISK (sc022): section-level coherences (`sectionsMul_*`, `sectionMul_coherent`) cross to Γ/section level — if one re-summons the μ-boundary, the wall moved one layer down (cheap signal: a stubborn post-refactor sorry). Dual-instance DELETION refuted (load-bearing). |
 
 ## Completed
 
@@ -60,24 +60,43 @@ FALSE. Excision is deferred only for HYGIENE sequencing — it must run in a ded
 the same iter as the FBC crux prover, to avoid file-instability), and must sync the blueprint `\uses`
 web the same iter. The seeds keep clean `sorry` stubs until the concrete chain fills them.
 
-**SNAP route — sheaf tensor powers ⟹ graded ring, coherence by monoidal localization.** `Γ_*(X,L)` is
-the direct sum of section groups of `L^{⊗n}`, with multiplication from the lax-monoidal section pairing
-`sectionsMul` plus the `tensorPowAdd` index-addition isos; the graded structure rides
-`DirectSum.GCommSemiring`. The monoidal bricks (`sectionsMul`, `tensorObj{Assoc,UnitIso,RightUnitor}`,
-`tensorBraiding`, `tensorPowAdd`) and 3 of the section coherences are DONE. The remaining 5 sorries all
-reduce to Mac Lane coherence transfer through the comparison isos — a multi-hundred-LOC hand-proof now
-AVOIDED: Mathlib's `CategoryTheory.Localization.Monoidal` builds a full symmetric `MonoidalCategory`
-(pentagon/triangle/hexagon) on the type synonym `LocalizedMonoidal L W ε` of the localized category,
-with `L = PresheafOfModules.sheafification`, `[L.IsLocalization W]` already a Mathlib instance,
-`C = PresheafOfModules` symmetric monoidal, and the only new obligation `W.IsMonoidal` discharged by the
-proved `ztensor_whisker_localIso`. The remaining work is real but bounded: instantiate the synonym,
-then BRIDGE each hand-built coherence morphism to the synonym's structure morphism (glue option B,
-blueprinted) — or rewire the hand-built defs onto the synonym's `⊗` (glue option A, a refactor that
-makes the bridges definitional); the 5 coherences then follow from the Mathlib laws. The synonym sits
-on a type synonym, not on `X.Modules` directly, which is what dodges the dead full-instance diamond.
+**SNAP route — sheaf tensor powers ⟹ graded ring, coherence by monoidal localization (Option A).**
+`Γ_*(X,L)` is the direct sum of section groups of `L^{⊗n}`, with multiplication from the lax-monoidal
+section pairing `sectionsMul` plus the `tensorPowAdd` index-addition isos; the graded structure rides
+`DirectSum.GCommSemiring`. Mathlib's `CategoryTheory.Localization.Monoidal` builds a full symmetric
+`MonoidalCategory` (pentagon/triangle/hexagon) on the type synonym `LocalizedMonoidal L W ε`
+(`= modulesLocalizedMonoidal X`), with `L = PresheafOfModules.sheafification`, `W.IsMonoidal` discharged
+by the proved `ztensor_whisker_localIso`. **Option B (bridge the hand-built product to `⊗_loc` via the
+μ-conjugated iso) is ABANDONED** — its bridge coherence `tensorObjAssoc_eq_localizedAssociator` was STUCK
+~10 iters on a dual-`MonoidalCategory`-instance μ-token-divergence (classic parallel-API anti-pattern;
+the hand-built `tensorObj`/`tensorObjAssoc` and `⊗_loc` are two products on defeq copies of the same
+category, irreconcilable syntactically). **Option A (CHOSEN iter-022):** re-base the hand-built defs
+DIRECTLY onto `⊗_loc` (`tensorObj := MonoidalCategory.tensorObj (C := modulesLocalizedMonoidal X)`,
+similarly the unitor/braiding/associator). Because the synonym is defeq to `X.Modules` and its unit IS
+`unitModule X` (via ε), the object spellings are unchanged, so `tensorObjAssoc_eq_localizedAssociator`
+(and the unit/braiding bridges) become `rfl` — the stuck crux is DELETED. μ then lives only opaque
+inside `sectionsMul`/`tensorObjLocalizedIso` (now `Iso.refl`); it is never again syntactically reconciled
+with a second associator, so the structural-layer bomb cannot recur. ~900L of hK/seam/head bridge
+machinery is removed. The downstream coherences (`tensorPowAdd_*`, the section cores, `sectionsMul_*`,
+`sectionMul_coherent`) re-prove from the Mathlib monoidal laws + `Functor.Monoidal L` lax-coherences.
+BOTH monoidal instances are KEPT — the presheaf `pshModMonoidal` is load-bearing (`LocalizedMonoidal` is
+built from it); dual-instance DELETION is refuted. Design: `analogies/snap-instance-design.md`.
 
 ## Open strategic questions
 
+- **SNAP Option A — does the μ-boundary reappear in the section-level coherences? (sc022 CHALLENGE).**
+  The structural coherences (associator/unitors/braiding) are now `rfl` inside `⊗_loc`. The risk is the
+  Γ/section-level coherences (`sectionsMul_*`, `sectionMul_coherent`): if any must relate an `⊗_loc`
+  coherence to the section structure across the same defeq-not-syntactic boundary, the wall moved one
+  layer down. Cheap signal = a stubborn post-refactor sorry that resists the Mathlib-law re-prove. The
+  refactor inserts typed sorries there (it does NOT prove them); next-iter prover probes them and we learn.
+- **FBC on-path glue vs. dead mate — distinct? (sc022 CHALLENGE, RESOLVED).** The on-path iterated-mate
+  glue uses the CONCRETE-tilde leg mates (`chartBaseChangeGeometricComparison_mate` +
+  `chartBaseChangeModuleReassoc_extendScalarsComp`, both CLOSED iter-018) assembled via
+  `iterated_mateEquiv_conjugateEquiv`. The "do NOT re-attempt the mate" prohibition targets the dead
+  SHEAF-level adjoint-mate apparatus (`base_change_mate_{legs_conj,gstar_transpose,sections_direct}`) —
+  a different construction (it tried to prove the SEED directly via a sheaf-level mate). No contradiction:
+  closed concrete-tilde leg mates ≠ the abandoned sheaf-level seed-mate.
 - **FBC chain signatures.** The scaffolded chain decls (`baseChange_sheafConditionFork_tensorIso`,
   `baseChangeEqLocusToPullbackGamma`, `baseChangeGammaPullbackEquiv`) currently omit
   `[IsSeparated X]`/finiteness/`[F.IsQuasicoherent]`. These must be added (not protected — re-sign
@@ -92,11 +111,13 @@ on a type synonym, not on `X.Modules` directly, which is what dodges the dead fu
   `ztensor_whisker_localIso`, `whiskerLeft` by braiding conjugation (symmetric `C`), multiplicativity
   + RespectsIso from Mathlib on `inverseImage`. `localizedMonoidalUnitIso` + `modulesLocalizedMonoidal`
   also landed → symmetric `MonoidalCategory` for free.
-- **SNAP glue choice — RESOLVED → Option B (iter-005).** Option A (redefine `tensorObj := ⊗_loc`)
-  REJECTED: `tensorObj` feeds `tensorPow`/`moduleTensorPow`/`sectionsMul` via `(F♭⊗_p G♭)(⊤)` defeq —
-  redefinition has a large defeq blast radius. Option B: keep hand-built defs, bridge via the
-  object-identification iso `tensorObjLocalizedIso = μ⁻¹;counit` (the localized `⊗_loc` is NOT defeq to
-  `tensorObj`, so the 4 bridges are object-iso-CONJUGATED commuting squares, not bare equalities).
+- **SNAP glue choice — RE-DECIDED → Option A (iter-022), Option B ABANDONED.** Option B (keep hand-built
+  defs, bridge via `tensorObjLocalizedIso = μ⁻¹;counit`) was chosen iter-005 to avoid Option A's defeq
+  blast radius, but its bridge coherence `tensorObjAssoc_eq_localizedAssociator` STUCK ~10 iters on the
+  dual-instance μ-token-divergence. Option A (re-base `tensorObj := ⊗_loc`) now CHOSEN: the blast radius
+  is handled by the refactor (sorry at broken sites) + a cheap Mathlib-law re-prove, and it DELETES the
+  stuck bridge (it becomes `rfl`). The iter-005 "large defeq blast radius" objection stands but is now a
+  one-time cost worth paying vs. an unbounded stuck bridge.
 
 ## Mathlib gaps & new material
 
@@ -106,17 +127,13 @@ Gaps to fill:
   (a) = Mathlib `TensorProduct.AlgebraTensorModule.cancelBaseChange` (verified, `…TensorProduct.Tower`)
   or project `regroupEquiv` (DONE). `TensorProduct.piRight` present (loogle); `tensorEqLocusEquiv`
   present. qcqs-pushforward-QC (01XJ) UNCONFIRMED — see Open Q.
-- SNAP coherence: use Mathlib `CategoryTheory.Localization.Monoidal` (`LocalizedMonoidal L W ε`) —
-  full symmetric monoidal + pentagon/triangle/hexagon for free. New project material: the
-  `W.IsMonoidal` instance (from `ztensor_whisker_localIso` + braiding-conjugate), the unit iso `ε`, and
-  the synonym instantiation/bridges. `β_{𝟙𝟙}=𝟙` = `braiding_tensorUnit_left`+`unitors_equal`. The
-  CLOSED bridge set (iter-007 analogist `analogies/snap-bridge-api.md`): structural
-  `tensorObjAssoc_eq_localizedAssociator` (`associator_hom_app`), `tensorObjUnitor_eq_localized`
-  (`leftUnitor_hom_app`), `tensorObjRightUnitor_eq_localized` (FREE: braiding∘unitor), + whiskering
-  `tensorObjWhiskerRight_eq_loc` (`μ_natural_left`), `tensorObjWhiskerLeft_eq_loc` (`μ_natural_right`).
-  Then iso-coherences close by `rw bridges; Iso.ext; telescope; exact pentagon/triangle/hexagon`.
-  KEY: iso-level obstacle is the missing whiskering bridges (the `i`'s telescope formally), NOT a
-  "comparison-acts-trivially" step — that conflation drove the prior churn.
+- SNAP coherence (Option A): re-base `tensorObj`/unitor/braiding/associator DIRECTLY onto Mathlib
+  `⊗_loc` (`modulesLocalizedMonoidal X = LocalizedMonoidal L W ε`) — full symmetric monoidal +
+  pentagon/triangle/hexagon for free. The bridges (`tensorObjAssoc_eq_localizedAssociator` et al.)
+  become `rfl` (their μ-conjugated proof machinery is DELETED). Downstream coherences (`tensorPowAdd_*`,
+  section cores, `sectionsMul_*`, `sectionMul_coherent`) re-prove from the Mathlib monoidal laws +
+  `Functor.Monoidal L` lax-coherences (the localization functor's `associativity`/`left_unitality`/
+  `right_unitality` fields ARE the lax coherences a section-level multiplication needs).
 
 New project material:
 - FBC concrete chain (per-chart iso + restriction naturality + finite-product commutation + assembly).

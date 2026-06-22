@@ -56,6 +56,15 @@ import AlgebraicJacobian.Picard.IdentityComponent
 import AlgebraicJacobian.Picard.Pic0AbelianVariety
 import AlgebraicJacobian.Picard.FlatteningStratification
 import AlgebraicJacobian.Picard.QuotScheme
+-- Grassmannian/Quot representability development merged from the
+-- GR-quot_closure subproject (union merge, 2026-06-22). Headline:
+-- AlgebraicGeometry.Grassmannian.represents (rank-d quotient functor
+-- representability) + the section graded ring/module lane, all sorry-free.
+import AlgebraicJacobian.Picard.GradedHilbertSerre
+import AlgebraicJacobian.Picard.SectionGradedRing
+import AlgebraicJacobian.Picard.GrassmannianCells
+import AlgebraicJacobian.Picard.GlueDescent
+import AlgebraicJacobian.Picard.GrassmannianQuot
 import AlgebraicJacobian.Picard.LineBundleCoherence
 import AlgebraicJacobian.RiemannRoch.WeilDivisor
 import AlgebraicJacobian.RiemannRoch.H1Vanishing

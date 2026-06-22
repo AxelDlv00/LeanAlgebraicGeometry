@@ -1407,6 +1407,59 @@ private noncomputable def sheafOf.carrierSheaf_stalk_eq
   sheafOf.carrierSheaf_stalk_iso_iSup (C := C) D P ≪≫
     eqToIso (by rw [sheafOf.iSup_carrierSubmoduleSheaf_eq_orderAtPSubmodule])
 
+/-- **Germ action of the stalk-≅-iSup isomorphism on underlying `K(C)` values.**
+The descent isomorphism `carrierSheaf_stalk_iso_iSup` sends the germ of a section
+`s` to the element of the supremum submodule whose underlying `K(C)`-value is
+`s.1` (it is "the identity on `K(C)`"). This exposes the germ-factorisation
+`colimit.ι ≫ colimit.desc = leg` of the descent cocone built inside
+`carrierSheaf_stalk_iso_iSup`. -/
+private lemma sheafOf.carrierSheaf_stalk_iso_iSup_germ_coe
+    [IsLocallyNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left]
+    (D : C.left.PrimeDivisor →₀ ℤ) (P : C.left.PrimeDivisor)
+    (U : TopologicalSpace.OpenNhds P.point)
+    (s : (sheafOf.carrierSheaf (C := C) D).val.obj (Opposite.op U.1)) :
+    (((sheafOf.carrierSheaf_stalk_iso_iSup (C := C) D P).hom.hom)
+      ((TopCat.Presheaf.germ (sheafOf.carrierSheaf (C := C) D).val
+        U.1 P.point U.2).hom s)).1 = (s.1 : C.left.functionField) := by
+  classical
+  unfold sheafOf.carrierSheaf_stalk_iso_iSup
+  simp only [eq_mpr_eq_cast, cast_eq, asIso_hom]
+  erw [TopCat.Presheaf.germ, ← ModuleCat.comp_apply, Limits.colimit.ι_desc]
+  rfl
+
+/-- **An `eqToHom` between submodule-modules preserves underlying `K(C)`-values.**
+For equal submodules `M₁ = M₂` of `K(C)`, the induced `ModuleCat` cast is the
+identity on the underlying element of `K(C)`. -/
+private lemma sheafOf.coe_eqToHom_of_submodule_eq
+    {M₁ M₂ : Submodule kbar C.left.functionField} (hsub : M₁ = M₂)
+    (y : (ModuleCat.of kbar M₁ : ModuleCat.{u} kbar)) :
+    (((ConcreteCategory.hom
+        (eqToHom (show (ModuleCat.of kbar M₁ : ModuleCat.{u} kbar)
+          = ModuleCat.of kbar M₂ from by rw [hsub]))) y : M₂) :
+        C.left.functionField) = ((y : M₁) : C.left.functionField) := by
+  subst hsub
+  rfl
+
+/-- **Germ action of `carrierSheaf_stalk_eq` on underlying `K(C)` values.**
+The stalk identification `carrierSheaf_stalk_eq` (`= carrierSheaf_stalk_iso_iSup`
+post-composed with the `eqToIso` casting `iSup → orderAtP`) sends the germ of a
+section `s` to the element of `orderAtP D P` whose underlying `K(C)`-value is
+`s.1`. The `eqToIso` cast preserves the underlying value, so this reduces to
+`carrierSheaf_stalk_iso_iSup_germ_coe`. -/
+private lemma sheafOf.carrierSheaf_stalk_eq_hom_germ_coe
+    [IsLocallyNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left]
+    (D : C.left.PrimeDivisor →₀ ℤ) (P : C.left.PrimeDivisor)
+    (U : TopologicalSpace.OpenNhds P.point)
+    (s : (sheafOf.carrierSheaf (C := C) D).val.obj (Opposite.op U.1)) :
+    (((sheafOf.carrierSheaf_stalk_eq (C := C) D P).hom.hom)
+      ((TopCat.Presheaf.germ (sheafOf.carrierSheaf (C := C) D).val
+        U.1 P.point U.2).hom s)).1 = (s.1 : C.left.functionField) := by
+  rw [← sheafOf.carrierSheaf_stalk_iso_iSup_germ_coe (C := C) D P U s]
+  rw [sheafOf.carrierSheaf_stalk_eq, Iso.trans_hom, eqToIso.hom, ModuleCat.comp_apply]
+  -- the `eqToIso` cast on the underlying `K(C)` value is the identity.
+  exact sheafOf.coe_eqToHom_of_submodule_eq
+    (sheafOf.iSup_carrierSubmoduleSheaf_eq_orderAtPSubmodule (C := C) D P) _
+
 /-- **The stalk of the carrier inclusion `𝒪_C(D) ↪ 𝒪_C([P]+D)` is epi away from
 `P`.** For `x ≠ P.point`, the stalk map at `x` of `carrierPresheaf_le_hom` is
 surjective: any germ at `x` is represented on a small open `V ∋ x` avoiding the
@@ -1460,6 +1513,383 @@ private lemma sheafOf.stalkFunctor_map_carrierPresheaf_le_hom_epi_of_ne
     (TopCat.Presheaf.germ (sheafOf.carrierPresheaf (C := C) (Finsupp.single P 1 + D)) V x hxV)) y)
     (hcompat.trans hs'def)).trans e2
 
+/-- **Monotonicity of the order submodule under `D ↦ [P]+D`.** Adding the prime
+divisor `P` only *relaxes* the order constraint at `P` (from `-(D P)` to
+`-(D P) - 1`), so `orderAtP D P ⊆ orderAtP ([P]+D) P` inside `K(C)`. This is the
+submodule inclusion that the stalk map `f_P` is identified with. -/
+private lemma sheafOf.orderAtPSubmodule_le_single_add
+    [IsLocallyNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left]
+    (D : C.left.PrimeDivisor →₀ ℤ) (P : C.left.PrimeDivisor) :
+    sheafOf.orderAtPSubmodule (C := C) D P ≤
+      sheafOf.orderAtPSubmodule (C := C) (Finsupp.single P 1 + D) P := by
+  intro f hf
+  rcases hf with rfl | hf
+  · exact Or.inl rfl
+  · refine Or.inr ?_
+    rw [Finsupp.add_apply, Finsupp.single_eq_same]
+    have hle : -((1 : ℤ) + D P) ≤ -(D P) := by linarith
+    exact le_trans (by exact_mod_cast hle) hf
+
+/-- **Naturality square for the stalk map under the `carrierSheaf_stalk_eq`
+identifications.** Under the stalk identifications, the stalk map of the carrier
+inclusion `𝒪_C(D) ↪ 𝒪_C([P]+D)` at `P.point` is exactly the submodule inclusion
+`orderAtP D P ⊆ orderAtP ([P]+D) P` inside `K(C)`. Both the stalk map and the
+identifications act as the identity on the underlying `K(C)`-value of a germ, so
+the square commutes; the equality is checked on germs (which generate the stalk)
+through the underlying values via `carrierSheaf_stalk_eq_hom_germ_coe`. -/
+private lemma sheafOf.cokernel_stalk_at_naturality
+    [IsLocallyNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left]
+    (D : C.left.PrimeDivisor →₀ ℤ) (P : C.left.PrimeDivisor) :
+    (Sheaf.forget (ModuleCat.{u} kbar) C.left.toPresheafedSpace ⋙
+          TopCat.Presheaf.stalkFunctor (ModuleCat.{u} kbar) P.point).map
+        (sheafOf.carrierSheafHom_le_add_single (C := C) D P) ≫
+      (sheafOf.carrierSheaf_stalk_eq (C := C) (Finsupp.single P 1 + D) P).hom =
+    (sheafOf.carrierSheaf_stalk_eq (C := C) D P).hom ≫
+      ModuleCat.ofHom (Submodule.inclusion
+        (sheafOf.orderAtPSubmodule_le_single_add (C := C) D P)) := by
+  apply ModuleCat.hom_ext
+  apply LinearMap.ext
+  intro t
+  obtain ⟨U, hU, s, rfl⟩ := TopCat.Presheaf.germ_exist
+    (F := (sheafOf.carrierSheaf (C := C) D).val) P.point t
+  apply Subtype.ext
+  -- LHS: the stalk map sends `germ_D s` to `germ_{[P]+D} ((le_hom).app s)`,
+  -- whose underlying value is `s.1` (`le_hom` is the identity on `K(C)`).
+  have hL : ((Sheaf.forget (ModuleCat.{u} kbar) C.left.toPresheafedSpace ⋙
+        TopCat.Presheaf.stalkFunctor (ModuleCat.{u} kbar) P.point).map
+        (sheafOf.carrierSheafHom_le_add_single (C := C) D P)).hom
+        ((TopCat.Presheaf.germ (sheafOf.carrierSheaf (C := C) D).val
+          U P.point hU).hom s) =
+      (TopCat.Presheaf.germ (sheafOf.carrierSheaf (C := C) (Finsupp.single P 1 + D)).val
+          U P.point hU).hom
+        (((sheafOf.carrierPresheaf_le_hom (C := C) D P).app (Opposite.op U)).hom s) := by
+    exact TopCat.Presheaf.stalkFunctor_map_germ_apply (C := ModuleCat.{u} kbar) U P.point hU
+      (sheafOf.carrierPresheaf_le_hom (C := C) D P) s
+  -- Decompose both composites, rewrite the stalk map by `hL`, then identify both
+  -- underlying values with `s.1` through `carrierSheaf_stalk_eq_hom_germ_coe`.
+  rw [ModuleCat.hom_comp, LinearMap.comp_apply, hL]
+  erw [sheafOf.carrierSheaf_stalk_eq_hom_germ_coe (C := C) (Finsupp.single P 1 + D) P ⟨U, hU⟩
+      (((sheafOf.carrierPresheaf_le_hom (C := C) D P).app (Opposite.op U)).hom s)]
+  conv_rhs => erw [ModuleCat.hom_comp, LinearMap.comp_apply]
+  erw [Submodule.coe_inclusion,
+    sheafOf.carrierSheaf_stalk_eq_hom_germ_coe (C := C) D P ⟨U, hU⟩ s]
+  -- Remaining: the section-level inclusion `≤` side condition.
+  exact sheafOf.carrierSubmoduleSheaf_le_add_single (C := C) D P (Opposite.op U)
+
+/-- **Residue isomorphism of fractional ideals (DVR core).** Multiplication by a
+uniformiser power `π_P^{n+1}` carries the fractional-ideal quotient
+`π_P^{-(n+1)}𝒪_{C,P} / π_P^{-n}𝒪_{C,P}` (i.e. `orderAtP ([P]+D) P` modulo the
+range of the inclusion of `orderAtP D P`) isomorphically onto the residue field
+`𝒪_{C,P}/𝔪_P = k̄` (`residueField_eq_of_coheight_eq_one`,
+`codimOne_point_residueField_eq_kbar`). This is the purely algebraic residue
+computation at the codimension-one DVR stalk.
+
+**iter-020: CLOSED (axiom-clean).** The equivalence is built as the inverse of
+the manifestly `k̄`-linear surjection `fromKbar : c ↦ [π_P^{-(n+1)} · c]`
+(`k̄ → ↥M₂ / N`), shown bijective. The DVR-valuation core is realised by:
+(i) a uniformiser `π_P` with `ord_P π_P = 1` (`IsDiscreteValuationRing.exists_irreducible`
++ `Ring.ordFrac_irreducible`), giving the shift `t = π_P^{n+1}` of order `n+1`;
+(ii) the lift `ord_P x ≥ 0 ⟹ x ∈ 𝒪_{C,P}` (`IsDiscreteValuationRing.exists_lift_of_le_one`
+via `Ring.ordFrac_eq_valuation_inv` + `inv_le_one₀`); and (iii) the residue-field
+rationality `𝒪_{C,P}/𝔪_P = k̄` (`residueField_eq_of_coheight_eq_one`), connected to
+the constant section `c` through `Scheme.Γevaluation_naturality_apply` and
+`Scheme.Spec.algebraMap_residueFieldIso_inv` (the `hconst` compatibility). Injectivity
+uses that nonzero constants have order `0`; surjectivity uses (ii)+(iii) (`hrat`). -/
+private noncomputable def sheafOf.orderAtP_residue_linearEquiv
+    [IsLocallyNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left]
+    (D : C.left.PrimeDivisor →₀ ℤ) (P : C.left.PrimeDivisor) :
+    (↥(sheafOf.orderAtPSubmodule (C := C) (Finsupp.single P 1 + D) P) ⧸
+        (ModuleCat.Hom.hom (ModuleCat.ofHom (Submodule.inclusion
+          (sheafOf.orderAtPSubmodule_le_single_add (C := C) D P)))).range)
+      ≃ₗ[kbar] kbar := by
+  classical
+  set R := C.left.presheaf.stalk P.point with hR
+  set K := C.left.functionField with hK
+  set n : ℤ := D P with hn
+  -- `v x ≠ 0` for `x ≠ 0` (the `ordFrac` monoid-with-zero hom on the field `K`).
+  have hvne : ∀ x : K, x ≠ 0 → Ring.ordFrac R x ≠ 0 := fun x hx => by simp [hx]
+  -- `WithZero`-log facts: nonneg/positive from `≥ 1` / `> 1`.
+  have hlog_ge_zero : ∀ x : WithZero (Multiplicative ℤ), x ≠ 0 → (1 : _) ≤ x → 0 ≤ x.log := by
+    intro x hx0 hx1
+    rw [← WithZero.log_one]; exact (WithZero.log_le_log one_ne_zero hx0).mpr hx1
+  have hlog_ge_one : ∀ x : WithZero (Multiplicative ℤ), x ≠ 0 → (1 : _) ≤ x → x ≠ 1 →
+      1 ≤ x.log := by
+    intro x hx0 hx1 hxne
+    have hle := hlog_ge_zero x hx0 hx1
+    have hne : x.log ≠ 0 := by
+      intro h; apply hxne
+      rw [← WithZero.exp_log hx0, h, WithZero.exp_zero]
+    omega
+  -- A uniformiser `π ∈ R` (irreducible in the DVR stalk) and its order.
+  set π : R := (IsDiscreteValuationRing.exists_irreducible (R := (R : Type u))).choose with hπdef
+  have hπ : Irreducible π :=
+    (IsDiscreteValuationRing.exists_irreducible (R := (R : Type u))).choose_spec
+  have hπK : (algebraMap R K) π ≠ 0 := by
+    rw [Ne, IsFractionRing.to_map_eq_zero_iff]; exact hπ.ne_zero
+  have hordπ : Scheme.RationalMap.order P ((algebraMap R K) π) = 1 := by
+    unfold Scheme.RationalMap.order
+    rw [Ring.ordFrac_irreducible hπ, WithZero.log_exp]
+  -- The shift element `t = π^(n+1)` (zpow in the field `K`), with `ord t = n+1`.
+  set t : K := (algebraMap R K π) ^ (n + 1) with ht
+  have htne : t ≠ 0 := zpow_ne_zero _ hπK
+  have hordt : Scheme.RationalMap.order P t = n + 1 := by
+    rw [ht]
+    unfold Scheme.RationalMap.order
+    rw [map_zpow₀, WithZero.log_zpow]
+    have hπ1 : (Ring.ordFrac R ((algebraMap R K) π)).log = 1 := hordπ
+    rw [hπ1]; simp
+  -- The constant `c ∈ k̄` lifts to the stalk `R` as the germ of the global
+  -- constant section at `P` (reusing the generic-point comparison of `sheafOf`).
+  set βfun : kbar → R := fun c =>
+    (C.left.presheaf.germ (⊤ : C.left.Opens) P.point trivial).hom
+      ((Scheme.toModuleKSheaf.kToSection C
+        (Opposite.op (⊤ : C.left.Opens))).hom c) with hβfun
+  have hβ : ∀ c : kbar, algebraMap R K (βfun c) = algebraMap kbar K c := by
+    intro c
+    symm
+    change ((Scheme.germToFunctionField C.left (⊤ : C.left.Opens)).hom
+        ((Scheme.toModuleKSheaf.kToSection C
+            (Opposite.op (⊤ : C.left.Opens))).hom c)) =
+        (C.left.presheaf.stalkSpecializes
+          ((genericPoint_spec C.left).specializes trivial)).hom (βfun c)
+    rw [← TopCat.Presheaf.germ_stalkSpecializes_apply
+      (h := (genericPoint_spec C.left).specializes trivial)]
+  have halgK_inj : Function.Injective (algebraMap kbar K) :=
+    FaithfulSMul.algebraMap_injective kbar K
+  have halgK_ne : ∀ {c : kbar}, c ≠ 0 → algebraMap kbar K c ≠ 0 := by
+    intro c hc; simpa using halgK_inj.ne_iff.mpr hc
+  -- Constants have nonnegative order at `P` (they are units of the stalk away
+  -- from zero, of order `0`).
+  have horder_const_ge : ∀ c : kbar, 0 ≤ Scheme.RationalMap.order P (algebraMap kbar K c) := by
+    intro c
+    rcases eq_or_ne c 0 with rfl | hc
+    · simp
+    · have hβc : βfun c ≠ 0 := fun h => (halgK_ne hc) (by rw [← hβ c, h, map_zero])
+      have hge : (1 : WithZero (Multiplicative ℤ)) ≤ Ring.ordFrac R (algebraMap kbar K c) := by
+        rw [← hβ c]; exact Ring.ordFrac_ge_one_of_ne_zero hβc
+      have hne : Ring.ordFrac R (algebraMap kbar K c) ≠ 0 := hvne _ (halgK_ne hc)
+      change (0 : ℤ) ≤ (Ring.ordFrac R (algebraMap kbar K c)).log
+      rw [← WithZero.log_one]
+      exact (WithZero.log_le_log one_ne_zero hne).mpr hge
+  -- Nonzero constants have order exactly `0`.
+  have horder_const_eq : ∀ c : kbar, c ≠ 0 →
+      Scheme.RationalMap.order P (algebraMap kbar K c) = 0 := by
+    intro c hc
+    have hci : c⁻¹ ≠ 0 := inv_ne_zero hc
+    have hmul : algebraMap kbar K c * algebraMap kbar K c⁻¹ = 1 := by
+      rw [← map_mul, mul_inv_cancel₀ hc, map_one]
+    have h0 : Scheme.RationalMap.order P (algebraMap kbar K c)
+        + Scheme.RationalMap.order P (algebraMap kbar K c⁻¹) = 0 := by
+      rw [← Scheme.RationalMap.order_mul_of_ne_zero P (halgK_ne hc) (halgK_ne hci), hmul]
+      simp [Scheme.RationalMap.order]
+    have h1 := horder_const_ge c
+    have h2 := horder_const_ge c⁻¹
+    omega
+  -- The two fractional-ideal submodules and their inclusion `M₁ ≤ M₂`.
+  set M₂ : Submodule kbar K := sheafOf.orderAtPSubmodule (C := C) ((fun₀ | P => 1) + D) P with hM₂
+  set M₁ : Submodule kbar K := sheafOf.orderAtPSubmodule (C := C) D P with hM₁
+  have hle : M₁ ≤ M₂ := sheafOf.orderAtPSubmodule_le_single_add (C := C) D P
+  have hcoef : ((fun₀ | P => 1) + D) P = 1 + n := by
+    rw [Finsupp.add_apply, Finsupp.single_eq_same, hn]
+  -- `t⁻¹ · c` lies in `M₂` (order `≥ -(n+1)`).
+  have hmem2 : ∀ c : kbar, t⁻¹ * algebraMap kbar K c ∈ M₂ := by
+    intro c
+    rcases eq_or_ne c 0 with rfl | hc
+    · rw [map_zero, mul_zero]; exact M₂.zero_mem
+    · refine Or.inr ?_
+      rw [hcoef]
+      have hword : Scheme.RationalMap.order P (t⁻¹ * algebraMap kbar K c)
+          = -(n + 1) + Scheme.RationalMap.order P (algebraMap kbar K c) := by
+        rw [Scheme.RationalMap.order_mul_of_ne_zero P (inv_ne_zero htne) (halgK_ne hc),
+            Scheme.RationalMap.order_inv, hordt]
+      rw [hword, horder_const_eq c hc]; omega
+  -- The kbar-linear map `c ↦ t⁻¹ · c : k̄ → ↥M₂`.
+  set ψ : kbar →ₗ[kbar] K :=
+    (LinearMap.mulLeft kbar t⁻¹).comp (Algebra.linearMap kbar K) with hψ
+  have hψval : ∀ c : kbar, ψ c = t⁻¹ * algebraMap kbar K c := fun c => rfl
+  set φ : kbar →ₗ[kbar] M₂ := LinearMap.codRestrict M₂ ψ hmem2 with hφ
+  have hφval : ∀ c : kbar, ((φ c : M₂) : K) = t⁻¹ * algebraMap kbar K c := fun c => rfl
+  -- The natural surjection `k̄ → ↥M₂ / N`, `c ↦ [t⁻¹ · c]`.
+  set N' : Submodule kbar M₂ := Submodule.comap M₂.subtype M₁ with hN'
+  set fromKbar : kbar →ₗ[kbar] (M₂ ⧸ N') := N'.mkQ.comp φ with hfromKbar
+  -- THE crux: residue-field rationality (`κ(P) = k̄`) in `K`-terms.
+  -- For every integral `y` (order `≥ 0`), a constant `c` matches `y` modulo `𝔪_P`.
+  have hrat : ∀ y : K, (y = 0 ∨ 0 ≤ Scheme.RationalMap.order P y) →
+      ∃ c : kbar, y - algebraMap kbar K c = 0 ∨
+        1 ≤ Scheme.RationalMap.order P (y - algebraMap kbar K c) := by
+    haveI : LocallyOfFiniteType C.hom := IsProper.toLocallyOfFiniteType
+    -- Residue-field rationality: `algebraMap k̄ → κ(P)` is bijective.
+    obtain ⟨_, hbij⟩ :=
+      residueField_eq_of_coheight_eq_one (C := C) P.point P.coheight krullDim_curve_le_one
+    intro y hy
+    rcases hy with rfl | hyord
+    · exact ⟨0, Or.inl (by simp)⟩
+    · -- `valuation y ≤ 1`, so `y` lifts to `r ∈ R`.
+      have hval : (IsDedekindDomain.HeightOneSpectrum.valuation K
+          (IsDiscreteValuationRing.maximalIdeal R)) y ≤ 1 := by
+        rcases eq_or_ne y 0 with rfl | hyne
+        · simp
+        · have hofne : Ring.ordFrac R y ≠ 0 := hvne y hyne
+          have h1 : (1 : WithZero (Multiplicative ℤ)) ≤ Ring.ordFrac R y := by
+            have hh : ((1 : WithZero (Multiplicative ℤ))).log ≤ (Ring.ordFrac R y).log := by
+              rw [WithZero.log_one]; exact hyord
+            exact (WithZero.log_le_log one_ne_zero hofne).mp hh
+          have hvy : (IsDedekindDomain.HeightOneSpectrum.valuation K
+              (IsDiscreteValuationRing.maximalIdeal R)) y = (Ring.ordFrac R y)⁻¹ := by
+            rw [Ring.ordFrac_eq_valuation_inv, inv_inv]
+          rw [hvy]
+          exact (inv_le_one₀ (zero_lt_iff.mpr hofne)).mpr h1
+      obtain ⟨r, hr⟩ := IsDiscreteValuationRing.exists_lift_of_le_one (A := R) (K := K) hval
+      obtain ⟨c, hc⟩ := hbij.2 (IsLocalRing.residue R r)
+      -- The crux compatibility: the residue of the constant `β c` equals its residue-field image.
+      have hconst : IsLocalRing.residue R (βfun c)
+          = (@algebraMap kbar (C.left.residueField P.point) _ _
+              (residueFieldAlgebra (C := C) P.point)) c := by
+        -- `residue (β c)` is the value at `P` of the global constant section `c`,
+        -- i.e. `Γevaluation_{C} P (kToSection c)`. The structure-section
+        -- `kToSection c` is the structure-map pullback of the Spec-side constant
+        -- `(ΓSpecIso).inv c`, up to the trivial `⊤ → ⊤` restriction (absorbed into
+        -- the germ by `germ_res_apply`). Naturality of `Γevaluation`
+        -- (`Γevaluation_naturality_apply`) then moves the evaluation across the
+        -- structure morphism, reducing the claim to the purely Spec-side identity
+        -- below (the residue-field comparison `residueFieldAlgebra` is built from).
+        have hwash : (C.left.Γevaluation P.point).hom
+            ((Scheme.toModuleKSheaf.kToSection C
+              (Opposite.op (⊤ : C.left.Opens))).hom c)
+            = (C.left.Γevaluation P.point).hom
+              ((Scheme.Hom.appTop C.hom).hom
+                ((Scheme.ΓSpecIso (CommRingCat.of kbar)).inv.hom c)) :=
+          congrArg (IsLocalRing.residue (R : Type u))
+            (TopCat.Presheaf.germ_res_apply C.left.presheaf (homOfLE le_top) P.point
+              (by trivial)
+              ((Scheme.Hom.appTop C.hom).hom
+                ((Scheme.ΓSpecIso (CommRingCat.of kbar)).inv.hom c)))
+        rw [show IsLocalRing.residue R (βfun c)
+            = (C.left.Γevaluation P.point).hom
+                ((Scheme.toModuleKSheaf.kToSection C
+                  (Opposite.op (⊤ : C.left.Opens))).hom c) from rfl,
+          hwash,
+          ← Scheme.Γevaluation_naturality_apply C.hom P.point
+            ((Scheme.ΓSpecIso (CommRingCat.of kbar)).inv.hom c)]
+        -- Unfold `residueFieldAlgebra` and cancel the common `residueFieldMap`,
+        -- reducing to the Spec-side identity, which is exactly
+        -- `Scheme.Spec.algebraMap_residueFieldIso_inv` applied to `c`.
+        rw [show (@algebraMap kbar (C.left.residueField P.point) _ _
+              (residueFieldAlgebra (C := C) P.point)) c
+            = (Scheme.Hom.residueFieldMap C.hom P.point).hom
+                ((Scheme.Spec.residueFieldIso (CommRingCat.of kbar)
+                  (C.hom.base P.point)).inv.hom
+                  (algebraMap kbar (C.hom.base P.point).asIdeal.ResidueField c))
+              from rfl]
+        refine congrArg _ ?_
+        have key := Scheme.Spec.algebraMap_residueFieldIso_inv
+          (CommRingCat.of kbar) (C.hom.base P.point)
+        exact (congrArg (fun m => (CommRingCat.Hom.hom m) c) key).symm
+      have hres0 : IsLocalRing.residue R (r - βfun c) = 0 := by
+        rw [map_sub, hconst, hc, sub_self]
+      have hmem : r - βfun c ∈ IsLocalRing.maximalIdeal R :=
+        (IsLocalRing.residue_eq_zero_iff _).mp hres0
+      have hykey : y - algebraMap kbar K c = algebraMap R K (r - βfun c) := by
+        rw [map_sub, hr, hβ c]
+      refine ⟨c, ?_⟩
+      rcases eq_or_ne (r - βfun c) 0 with hz | hnz
+      · left; rw [hykey, hz, map_zero]
+      · right
+        rw [hykey]
+        have hne' : algebraMap R K (r - βfun c) ≠ 0 := by
+          rw [Ne, IsFractionRing.to_map_eq_zero_iff]; exact hnz
+        have hge1 : (1 : WithZero (Multiplicative ℤ)) ≤
+            Ring.ordFrac R (algebraMap R K (r - βfun c)) :=
+          Ring.ordFrac_ge_one_of_ne_zero hnz
+        have hnotunit : ¬ IsUnit (r - βfun c) := by
+          rw [← mem_nonunits_iff, ← IsLocalRing.mem_maximalIdeal]; exact hmem
+        have hne1 : Ring.ordFrac R (algebraMap R K (r - βfun c)) ≠ 1 := fun h =>
+          hnotunit (Ring.isUnit_iff_ordFrac_one_of_isDiscreteValuationRing.mpr h)
+        change 1 ≤ (Ring.ordFrac R (algebraMap R K (r - βfun c))).log
+        exact hlog_ge_one _ (hvne _ hne') hge1 hne1
+  -- Surjectivity input: every `g ∈ M₂` agrees with some `t⁻¹·c` modulo `M₁`.
+  have hsurj_aux : ∀ g : K, g ∈ M₂ →
+      ∃ c : kbar, g - t⁻¹ * algebraMap kbar K c ∈ M₁ := by
+    intro g hg
+    -- `y = t · g` is integral (order `≥ 0`).
+    have hy : (t * g = 0 ∨ 0 ≤ Scheme.RationalMap.order P (t * g)) := by
+      rcases hg with rfl | hgord
+      · left; rw [mul_zero]
+      · rcases eq_or_ne g 0 with rfl | hgne
+        · left; rw [mul_zero]
+        · right
+          rw [Scheme.RationalMap.order_mul_of_ne_zero P htne hgne, hordt]
+          rw [hcoef] at hgord; omega
+    obtain ⟨c, hc⟩ := hrat (t * g) hy
+    refine ⟨c, ?_⟩
+    -- `g - t⁻¹·c = t⁻¹ · (t·g - c)`.
+    have hfactor : g - t⁻¹ * algebraMap kbar K c = t⁻¹ * (t * g - algebraMap kbar K c) := by
+      rw [mul_sub, ← mul_assoc, inv_mul_cancel₀ htne, one_mul]
+    rcases hc with hzero | hcord
+    · rw [hfactor, hzero, mul_zero]; exact M₁.zero_mem
+    · refine Or.inr ?_
+      have hne : t * g - algebraMap kbar K c ≠ 0 := by
+        intro h; rw [h] at hcord; simp at hcord
+      rw [hfactor,
+        Scheme.RationalMap.order_mul_of_ne_zero P (inv_ne_zero htne) hne,
+        Scheme.RationalMap.order_inv, hordt]
+      omega
+  -- Injectivity of `fromKbar`.
+  have hinj : Function.Injective fromKbar := by
+    rw [injective_iff_map_eq_zero]
+    intro c hc
+    by_contra hcne
+    have hmem : ((φ c : M₂) : K) ∈ M₁ := by
+      have hq : φ c ∈ N' := by
+        have : N'.mkQ (φ c) = 0 := hc
+        rwa [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero] at this
+      exact hq
+    rw [hφval] at hmem
+    rcases hmem with h0 | hord_ge
+    · exact (mul_ne_zero (inv_ne_zero htne) (halgK_ne hcne)) h0
+    · have hword : Scheme.RationalMap.order P (t⁻¹ * algebraMap kbar K c)
+          = -(n + 1) + Scheme.RationalMap.order P (algebraMap kbar K c) := by
+        rw [Scheme.RationalMap.order_mul_of_ne_zero P (inv_ne_zero htne) (halgK_ne hcne),
+            Scheme.RationalMap.order_inv, hordt]
+      rw [hword, horder_const_eq c hcne] at hord_ge
+      -- `-(D P) ≤ -(n+1)` is `-n ≤ -(n+1)`, impossible.
+      rw [hn] at hord_ge; omega
+  -- Surjectivity of `fromKbar`.
+  have hsurj : Function.Surjective fromKbar := by
+    intro q
+    obtain ⟨g, rfl⟩ := N'.mkQ_surjective q
+    obtain ⟨c, hc⟩ := hsurj_aux (g : K) g.2
+    refine ⟨c, ?_⟩
+    rw [hfromKbar, LinearMap.comp_apply, Submodule.mkQ_apply, Submodule.mkQ_apply,
+      Submodule.Quotient.eq]
+    -- `φ c - g ∈ N'`, i.e. `(φc).1 - g.1 ∈ M₁`.
+    change φ c - g ∈ N'
+    rw [hN', Submodule.mem_comap]
+    have : ((φ c : M₂) : K) - (g : K) ∈ M₁ := by
+      rw [hφval]
+      have := M₁.neg_mem hc
+      simpa [neg_sub] using this
+    simpa [Submodule.coe_sub] using this
+  -- Assemble: `(↥M₂ ⧸ N) ≃ (↥M₂ ⧸ N') ≃ k̄`.
+  have hNeq : (ModuleCat.Hom.hom (ModuleCat.ofHom (Submodule.inclusion hle))).range = N' := by
+    rw [ModuleCat.hom_ofHom, hN']
+    exact Submodule.range_inclusion M₁ M₂ hle
+  exact (Submodule.quotEquivOfEq _ _ hNeq) ≪≫ₗ
+    (LinearEquiv.ofBijective fromKbar ⟨hinj, hsurj⟩).symm
+
+/-- **The cokernel of the fractional-ideal inclusion is `k̄`.** Assembles
+`ModuleCat.cokernelIsoRangeQuotient` (cokernel = quotient by the range of the
+inclusion) with the residue linear equivalence `orderAtP_residue_linearEquiv`. -/
+private noncomputable def sheafOf.orderAtP_quotient_iso_kbar
+    [IsLocallyNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left]
+    (D : C.left.PrimeDivisor →₀ ℤ) (P : C.left.PrimeDivisor) :
+    CategoryTheory.Limits.cokernel
+        (ModuleCat.ofHom (Submodule.inclusion
+          (sheafOf.orderAtPSubmodule_le_single_add (C := C) D P))) ≅
+      ModuleCat.of kbar kbar :=
+  ModuleCat.cokernelIsoRangeQuotient _ ≪≫
+    (sheafOf.orderAtP_residue_linearEquiv (C := C) D P).toModuleIso
+
 /-- **At `P` the cokernel stalk is `k̄`.** Writing `n = D P`, the stalk
 inclusion is `π_P^{-n}𝒪_{C,P} ⊆ π_P^{-(n+1)}𝒪_{C,P}`; multiplication by
 `π_P^{n+1}` carries it onto `𝔪_P ⊆ 𝒪_{C,P}`, whose quotient is the residue
@@ -1467,17 +1897,56 @@ field `𝒪_{C,P}/𝔪_P = k̄` (codimension-one ⟹ `k̄`-rational,
 `residueField_eq_of_coheight_eq_one`). Blueprint:
 `lem:cokernel_sheafOf_single_add_stalkAtP_iso_kbar`.
 
-**STUBBED (iter-015 plan).** Depends on `carrierSheaf_stalk_eq`; the
-multiplication-by-`π^{n+1}` automorphism and the residue identification are the
-next-iter `mathlib-build` task once the binding stalk leaf lands. -/
+**iter-019: this def is now `sorry`-free.** Step 1: `G = forget ⋙ stalkFunctor
+P.point` is a left adjoint (via `stalkSkyscraperSheafAdjunction`), so it preserves
+the cokernel: `stalk_P (coker f) ≅ coker (stalk_P f)` (`PreservesCokernel.iso`).
+Step 2: under the `carrierSheaf_stalk_eq` identifications the stalk map IS the
+fractional-ideal inclusion `orderAtP D P ⊆ orderAtP ([P]+D) P`
+(`cokernel_stalk_at_naturality`, proven via the germ-action lemmas
+`carrierSheaf_stalk_eq_hom_germ_coe`); `cokernel.mapIso` transports the cokernel,
+and `orderAtP_quotient_iso_kbar` (= `cokernelIsoRangeQuotient` ≪≫ the residue
+linear equivalence) finishes. The *only* remaining algebraic leaf is
+`orderAtP_residue_linearEquiv` (the DVR residue equivalence, gated on the
+valuation-membership Mathlib gap `mem_integers_of_valuation_le_one`). -/
 private noncomputable def sheafOf.cokernel_stalk_at_iso_kbar
     [IsLocallyNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left]
     (D : C.left.PrimeDivisor →₀ ℤ) (P : C.left.PrimeDivisor) :
     TopCat.Presheaf.stalk
         (CategoryTheory.Limits.cokernel
           (sheafOf.carrierSheafHom_le_add_single (C := C) D P)).val P.point ≅
-      ModuleCat.of kbar kbar :=
-  sorry
+      ModuleCat.of kbar kbar := by
+  -- `G = forget ⋙ stalkFunctor P.point` is a left adjoint, hence preserves the cokernel.
+  haveI hLadj : (Sheaf.forget (ModuleCat.{u} kbar) C.left.toPresheafedSpace ⋙
+      TopCat.Presheaf.stalkFunctor (ModuleCat.{u} kbar) P.point).IsLeftAdjoint :=
+    (stalkSkyscraperSheafAdjunction (C := ModuleCat.{u} kbar) P.point).isLeftAdjoint
+  haveI hpzm : (Sheaf.forget (ModuleCat.{u} kbar) C.left.toPresheafedSpace ⋙
+      TopCat.Presheaf.stalkFunctor (ModuleCat.{u} kbar) P.point).PreservesZeroMorphisms :=
+    CategoryTheory.Functor.preservesZeroMorphisms_of_isLeftAdjoint _
+  haveI hpcs : Limits.PreservesColimitsOfShape Limits.WalkingParallelPair
+      (Sheaf.forget (ModuleCat.{u} kbar) C.left.toPresheafedSpace ⋙
+        TopCat.Presheaf.stalkFunctor (ModuleCat.{u} kbar) P.point) :=
+    inferInstance
+  haveI hpc2 : Limits.PreservesColimit
+      (Limits.parallelPair (sheafOf.carrierSheafHom_le_add_single (C := C) D P) 0)
+      (Sheaf.forget (ModuleCat.{u} kbar) C.left.toPresheafedSpace ⋙
+        TopCat.Presheaf.stalkFunctor (ModuleCat.{u} kbar) P.point) :=
+    hpcs.preservesColimit
+  -- Step 1 (proven): `stalk_P (coker f) ≅ coker (stalk_P f)`.
+  refine Limits.PreservesCokernel.iso
+    (Sheaf.forget (ModuleCat.{u} kbar) C.left.toPresheafedSpace ⋙
+      TopCat.Presheaf.stalkFunctor (ModuleCat.{u} kbar) P.point)
+    (sheafOf.carrierSheafHom_le_add_single (C := C) D P) ≪≫ ?_
+  -- Step 2: under the `carrierSheaf_stalk_eq` identifications (naturality square
+  -- `cokernel_stalk_at_naturality`), the stalk map is the fractional-ideal
+  -- inclusion `orderAtP D P ⊆ orderAtP ([P]+D) P`; reduce the cokernel via
+  -- `cokernel.mapIso` and finish with the residue quotient iso `≅ k̄`.
+  exact (Limits.cokernel.mapIso _
+      (ModuleCat.ofHom (Submodule.inclusion
+        (sheafOf.orderAtPSubmodule_le_single_add (C := C) D P)))
+      (sheafOf.carrierSheaf_stalk_eq (C := C) D P)
+      (sheafOf.carrierSheaf_stalk_eq (C := C) (Finsupp.single P 1 + D) P)
+      (sheafOf.cokernel_stalk_at_naturality (C := C) D P)) ≪≫
+    sheafOf.orderAtP_quotient_iso_kbar (C := C) D P
 
 /-- **The residue-evaluation comparison morphism** `coker f ⟶ k(P)`. On a small
 open `U ∋ P.point` it sends the class of `g ∈ 𝒪_C([P]+D)(U)` to its leading
@@ -1541,20 +2010,56 @@ private lemma sheafOf.cokernel_skyscraper_hom_isIso
         rw [show adj.counit.app A
             = (skyscraperPresheafStalkOfSpecializes P.point A specializes_rfl).hom from rfl]
         infer_instance
-      -- Hence the transpose's stalk map equals `G2 ≫ counit⁻¹`, an iso.
+      -- `htri : F.map csh ≫ counit.app A = G2.hom` with both `counit.app A` and
+      -- `G2.hom` isos, so `F.map csh` is an iso by the two-out-of-three cancellation.
+      haveI hG2 : IsIso (sheafOf.cokernel_stalk_at_iso_kbar (C := C) D P).hom :=
+        inferInstance
       have key : IsIso ((Sheaf.forget (ModuleCat.{u} kbar) _ ⋙
           TopCat.Presheaf.stalkFunctor (ModuleCat.{u} kbar) P.point).map
-          (sheafOf.cokernel_skyscraper_hom (C := C) D P)) := by
-        have heq : (Sheaf.forget (ModuleCat.{u} kbar) _ ⋙
-            TopCat.Presheaf.stalkFunctor (ModuleCat.{u} kbar) P.point).map
-            (sheafOf.cokernel_skyscraper_hom (C := C) D P)
-            = (sheafOf.cokernel_stalk_at_iso_kbar (C := C) D P).hom ≫
-              CategoryTheory.inv (adj.counit.app A) := by
-          rw [← htri, Category.assoc, IsIso.hom_inv_id, Category.comp_id]
-        rw [heq]; infer_instance
+          (sheafOf.cokernel_skyscraper_hom (C := C) D P)) :=
+        IsIso.of_isIso_fac_right (f := adj.counit.app A) htri
       exact key
-    · -- Away from `P.point`: both stalks vanish.
-      sorry
+    · -- Away from `P.point`: both stalks vanish, so the map is between zero objects.
+      have hns : ¬ P.point ⤳ x := by
+        intro h
+        rw [specializes_iff_mem_closure,
+          (isClosed_singleton_of_coheight_eq_one P.point P.coheight
+            krullDim_curve_le_one).closure_eq] at h
+        exact hx (Set.mem_singleton_iff.mp h)
+      refine Limits.IsZero.isIso ?_ ?_ _
+      · -- Source: the stalk functor `G = forget ⋙ stalkFunctor x` is a left adjoint,
+        -- so it preserves the cokernel; the cokernel of the epi stalk map is zero.
+        haveI hLadj : (Sheaf.forget (ModuleCat.{u} kbar) C.left.toPresheafedSpace ⋙
+            TopCat.Presheaf.stalkFunctor (ModuleCat.{u} kbar) x).IsLeftAdjoint :=
+          (stalkSkyscraperSheafAdjunction (C := ModuleCat.{u} kbar) x).isLeftAdjoint
+        haveI hpzm : (Sheaf.forget (ModuleCat.{u} kbar) C.left.toPresheafedSpace ⋙
+            TopCat.Presheaf.stalkFunctor (ModuleCat.{u} kbar) x).PreservesZeroMorphisms :=
+          CategoryTheory.Functor.preservesZeroMorphisms_of_isLeftAdjoint _
+        haveI hpcs : Limits.PreservesColimitsOfShape Limits.WalkingParallelPair
+            (Sheaf.forget (ModuleCat.{u} kbar) C.left.toPresheafedSpace ⋙
+              TopCat.Presheaf.stalkFunctor (ModuleCat.{u} kbar) x) :=
+          inferInstance
+        haveI hpc2 : Limits.PreservesColimit
+            (Limits.parallelPair (sheafOf.carrierSheafHom_le_add_single (C := C) D P) 0)
+            (Sheaf.forget (ModuleCat.{u} kbar) C.left.toPresheafedSpace ⋙
+              TopCat.Presheaf.stalkFunctor (ModuleCat.{u} kbar) x) :=
+          hpcs.preservesColimit
+        haveI hepi : CategoryTheory.Epi
+            ((Sheaf.forget (ModuleCat.{u} kbar) C.left.toPresheafedSpace ⋙
+              TopCat.Presheaf.stalkFunctor (ModuleCat.{u} kbar) x).map
+              (sheafOf.carrierSheafHom_le_add_single (C := C) D P)) :=
+          sheafOf.stalkFunctor_map_carrierPresheaf_le_hom_epi_of_ne (C := C) D P x hx
+        exact Limits.IsZero.of_iso
+          (Limits.isZero_cokernel_of_epi
+            ((Sheaf.forget (ModuleCat.{u} kbar) C.left.toPresheafedSpace ⋙
+              TopCat.Presheaf.stalkFunctor (ModuleCat.{u} kbar) x).map
+              (sheafOf.carrierSheafHom_le_add_single (C := C) D P)))
+          (Limits.PreservesCokernel.iso
+            (Sheaf.forget (ModuleCat.{u} kbar) C.left.toPresheafedSpace ⋙
+              TopCat.Presheaf.stalkFunctor (ModuleCat.{u} kbar) x)
+            (sheafOf.carrierSheafHom_le_add_single (C := C) D P))
+      · -- Target: the skyscraper stalk vanishes away from its support point.
+        exact (skyscraperPresheafStalkOfNotSpecializesIsTerminal P.point A hns).isZero
   exact TopCat.Presheaf.isIso_of_stalkFunctor_map_iso _
 
 /-- **The cokernel of the carrier-level inclusion `𝒪_C(D) ↪ 𝒪_C([P]+D)` is the
@@ -1638,23 +2143,120 @@ private noncomputable def sheafOf.cokernel_carrierSheafHom_iso_skyscraper
   haveI := sheafOf.cokernel_skyscraper_hom_isIso (C := C) D P
   asIso (sheafOf.cokernel_skyscraper_hom (C := C) D P)
 
-/-- **The carrier sheaf of the zero divisor is the structure sheaf.**
-`carrierSheaf 0 ≅ toModuleKSheaf C` in `Sh(C, Mod k̄)`. Over an open `U` the
-carrier sections of the zero divisor are the rational functions with `ord_Q ≥ 0`
-at every prime divisor `Q ∈ U`; on a smooth (hence normal) curve these are
-exactly the regular functions `Γ(U, 𝒪_C)` (Hartshorne II.6.3A,
-`A = ⋂_{ht 𝔭 = 1} A_𝔭`), and the identifications are compatible with restriction.
-Blueprint: `lem:carrierSheaf_zero_iso_toModuleKSheaf`.
+/-! ### Bridge `carrierSheaf 0 ≅ toModuleKSheaf C` — fine-grained decomposition (iter-018)
 
-**STUBBED (iter-015 plan).** The regular-functions = order-`≥ 0`-everywhere
-identification (Hartshorne 6.3A on the normal curve) has no single-call Mathlib
-form; this corner bridge is the deep input to the `D = 0` / `[P]+D = 0` corner
-cases of `sheafOf_ses_single_add`. Created here at the pinned name; the
-section-wise equality + sheaf-iso assembly is the next-iter lane. -/
+Sentence-level atomisation of `lem:carrierSheaf_zero_iso_toModuleKSheaf` and its
+section-wise input `lem:carrierSheaf_zero_sections_eq_structureSheaf`
+(Hartshorne II.6.3A, "algebraic Hartogs"). See the blueprint chapter
+`chapters/RiemannRoch_OcOfD.tex`. The proof of the section identification has two
+arms over an affine open `U = Spec A`:
+
+* **(easy)** regular functions `g ∈ Γ(U, 𝒪_C)` have `ord_Q g ≥ 0` at every prime
+  divisor `Q ∈ U` — closed below as `structureSection_mem_carrierSet_zero` (the
+  germ at `Q.point` is a preimage in the local ring `𝒪_{C,Q}`, so `ordFrac ≥ 1`).
+* **(deep)** the converse "Hartogs" direction `ord_Q g ≥ 0 ∀ Q ∈ U ⟹ g ∈ A`,
+  Hartshorne 6.3A `A = ⋂_{ht 𝔭 = 1} A_𝔭`: needs `IsDedekindDomain A` for a chart
+  (smooth ⟹ regular ⟹ integrally-closed Noetherian dim-1 ⟹ Dedekind), then the
+  Mathlib anchor `IsDedekindDomain.HeightOneSpectrum.mem_integers_of_valuation_le_one`.
+  This is the genuine Mathlib gap (no single-call Dedekind-per-chart lemma) and is
+  left as a documented `sorry`. -/
+
+omit [IsAlgClosed kbar] [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom]
+  [GeometricallyIrreducible C.hom] in
+/-- **S1 — order constraint at the zero divisor.** For `D = 0` the carrier set
+over `U` is exactly the rational functions that are `0` or have non-negative
+order at every prime divisor meeting `U` (the bound `-(0 Q) = 0`). Blueprint:
+first sentence of `lem:carrierSheaf_zero_sections_eq_structureSheaf`. -/
+private lemma sheafOf.carrierSet_zero_eq
+    [IsLocallyNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left]
+    (U : (TopologicalSpace.Opens C.left.toTopCat)ᵒᵖ) :
+    sheafOf.carrierSet (C := C) 0 U =
+      { f : C.left.functionField | f = 0 ∨ ∀ Q : C.left.PrimeDivisor,
+          Q.point ∈ U.unop.1 → 0 ≤ Scheme.RationalMap.order Q f } := by
+  unfold sheafOf.carrierSet
+  simp only [Finsupp.coe_zero, Pi.zero_apply, neg_zero]
+
+omit [IsAlgClosed kbar] [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom]
+  [GeometricallyIrreducible C.hom] in
+/-- **S2 — the easy arm: regular ⟹ order ≥ 0.** The image in `K(C)` of a
+structure-sheaf section `s ∈ Γ(U, 𝒪_C)` (`germToFunctionField`) lies in the
+carrier set of the zero divisor over `U`: at every prime divisor `Q ∈ U` it is
+the image of the germ of `s` at `Q.point`, hence an element of the local ring
+`𝒪_{C,Q}`, so `ordFrac ≥ 1` and `ord_Q ≥ 0`. Mirrors the `key_alpha_ge` germ
+argument of `carrierSubmodule`. Blueprint: the "regular ⟹ no poles" half of
+`lem:carrierSheaf_zero_sections_eq_structureSheaf`. -/
+private lemma sheafOf.structureSection_mem_carrierSet_zero
+    [IsLocallyNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left]
+    (U : C.left.Opens) [Nonempty U]
+    (s : Γ(C.left, U)) :
+    (Scheme.germToFunctionField C.left U).hom s ∈
+      sheafOf.carrierSet (C := C) 0 (Opposite.op U) := by
+  set f := (Scheme.germToFunctionField C.left U).hom s with hf
+  by_cases hf0 : f = 0
+  · exact Or.inl hf0
+  refine Or.inr (fun Q hQ => ?_)
+  set R := C.left.presheaf.stalk Q.point with hR
+  have hQU : Q.point ∈ U := hQ
+  set β : R := (C.left.presheaf.germ U Q.point hQU).hom s with hβ
+  have hgen : (genericPoint C.left) ⤳ Q.point :=
+    (genericPoint_spec C.left).specializes trivial
+  have hα_eq : f = algebraMap R C.left.functionField β := by
+    rw [hf, hβ]
+    change (C.left.presheaf.germ U (genericPoint C.left)
+        (((genericPoint_spec C.left).mem_open_set_iff U.isOpen).mpr
+          (by simpa using ‹Nonempty U›))).hom s
+        = (C.left.presheaf.stalkSpecializes hgen).hom
+            ((C.left.presheaf.germ U Q.point hQU).hom s)
+    rw [← TopCat.Presheaf.germ_stalkSpecializes_apply (h := hgen)]
+  have hβne : β ≠ 0 := fun h => hf0 (by rw [hα_eq, h, map_zero])
+  have hMNZ : Ring.ordFrac R f ≠ 0 := by simp [hf0]
+  have hge : (1 : WithZero (Multiplicative ℤ)) ≤ Ring.ordFrac R f := by
+    rw [hα_eq]; exact Ring.ordFrac_ge_one_of_ne_zero hβne
+  change -((0 : C.left.PrimeDivisor →₀ ℤ) Q) ≤ Scheme.RationalMap.order Q f
+  simp only [Finsupp.coe_zero, Pi.zero_apply, neg_zero]
+  unfold Scheme.RationalMap.order
+  rw [show (0 : ℤ) = WithZero.log (1 : WithZero (Multiplicative ℤ)) by simp]
+  exact (WithZero.log_le_log (by norm_num) hMNZ).mpr hge
+
+/-- **S3 (pinned) — sections of the zero carrier sheaf are the structure sheaf.**
+Over each open `U`, the carrier-sheaf module of the zero divisor is isomorphic, as
+a `k̄`-module, to the structure-sheaf module `Γ(U, 𝒪_C)`. Blueprint:
+`lem:carrierSheaf_zero_sections_eq_structureSheaf` (Hartshorne II.6.3A).
+
+**PARTIAL (iter-018).** The easy arm `structureSection_mem_carrierSet_zero` gives
+the forward map `Γ(U, 𝒪_C) → carrierSubmoduleSheaf 0 U` (regular ⟹ no poles), and
+`germToFunctionField_injective` makes it injective. The inverse (surjectivity =
+Hartshorne 6.3A `A = ⋂_{ht 𝔭 = 1} A_𝔭`) requires `IsDedekindDomain` of an affine
+chart `A = Γ(U, 𝒪_C)` (smooth ⟹ regular ⟹ integrally-closed dim-1 ⟹ Dedekind, a
+Mathlib gap) followed by `mem_integers_of_valuation_le_one`. Left as a documented
+`sorry`; the available affine substrate is
+`functionField_isFractionRing_of_isAffineOpen` /
+`Ring.ordFrac_eq_one_of_notMem`. -/
+private noncomputable def sheafOf.carrierSheaf_zero_sections_eq_structureSheaf
+    [IsLocallyNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left]
+    (U : (TopologicalSpace.Opens C.left.toTopCat)ᵒᵖ) :
+    (sheafOf.carrierSheaf (C := C) 0).val.obj U ≅
+      (Scheme.toModuleKSheaf C).val.obj U :=
+  sorry
+
+/-- **The carrier sheaf of the zero divisor is the structure sheaf.**
+`carrierSheaf 0 ≅ toModuleKSheaf C` in `Sh(C, Mod k̄)`. Assembled from the
+per-open section isomorphisms `carrierSheaf_zero_sections_eq_structureSheaf` via
+`NatIso.ofComponents`, lifted from a presheaf iso to a sheaf iso through the fully
+faithful `sheafToPresheaf`. Blueprint: `lem:carrierSheaf_zero_iso_toModuleKSheaf`.
+
+**PARTIAL (iter-018).** The sheaf-iso assembly skeleton is in place; it rests on
+the per-open component iso `carrierSheaf_zero_sections_eq_structureSheaf` (whose
+inverse is the Hartshorne 6.3A gap) and the `NatIso` naturality square (identity
+on `K(C)` on both sides), left as a `sorry`. -/
 private noncomputable def sheafOf.carrierSheaf_zero_iso_toModuleKSheaf
     [IsLocallyNoetherian C.left] [Scheme.IsRegularInCodimensionOne C.left] :
     sheafOf.carrierSheaf (C := C) 0 ≅ Scheme.toModuleKSheaf C :=
-  sorry
+  (CategoryTheory.fullyFaithfulSheafToPresheaf
+      (Opens.grothendieckTopology C.left.toTopCat) (ModuleCat.{u} kbar)).preimageIso
+    (CategoryTheory.NatIso.ofComponents
+      (fun U => sheafOf.carrierSheaf_zero_sections_eq_structureSheaf (C := C) U)
+      (by sorry))
 
 /-- **Short exact sequence for `D ↝ D + [P]` at the carrier-sheaf level.**
 The canonical mono–cokernel short exact sequence attached to the monomorphism

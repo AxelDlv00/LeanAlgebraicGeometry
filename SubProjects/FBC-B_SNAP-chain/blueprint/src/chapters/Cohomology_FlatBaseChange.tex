@@ -2163,6 +2163,35 @@ supplied verbatim by Mathlib, recorded here as a dependency anchor.
 \end{lemma}
 
 \begin{lemma}
+[(b2-alg) Component bridge for the algebraic reassociation]
+  \label{lem:chartBaseChangeModuleReassoc_eq_natApp}
+  \lean{AlgebraicGeometry.chartBaseChangeModuleReassoc_eq_natApp}
+  \uses{lem:chartBaseChangeModuleReassoc}
+  The per-module algebraic reassociation \cref{lem:chartBaseChangeModuleReassoc} is the \(M\)-component
+  of its natural-transformation form \(\mathrm{chartBaseChangeModuleReassocNat}\): for every module
+  \(M\),
+  \[
+    \mathrm{chartBaseChangeModuleReassoc}\,M
+      = \bigl(\mathrm{chartBaseChangeModuleReassocNat}\bigr).\mathrm{app}\,M .
+  \]
+  This identifies the pointwise reassociation isomorphism with the component at \(M\) of its packaged
+  natural-transformation form, so a natural-transformation-level identity built from
+  \(\mathrm{chartBaseChangeModuleReassocNat}\) may be evaluated at \(M\) without re-deriving the
+  reassociation.
+  \begin{proof}
+    \uses{lem:chartBaseChangeModuleReassoc}
+    Both sides are isomorphisms of extend-scalars modules, so it suffices to compare their forward
+    maps. The natural transformation \(\mathrm{chartBaseChangeModuleReassocNat}\) is obtained by
+    transporting \cref{lem:chartBaseChangeModuleReassoc} along the base-change ring equality through
+    the canonical isomorphism across that equality; evaluating the component at \(M\) distributes over
+    this composite of an isomorphism, its inverse, and the equality-isomorphism, the last contributing
+    only the canonical map across the equal objects at \(M\). The goal reduces to the equality of the
+    two ring-square witnesses, which holds by proof irrelevance. Since the carriers are extend-scalars
+    modules — no sheafification is involved — the identification stays purely algebraic.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}
 
 \leanok
 [(b2) Geometric-leg coherence: the geometric comparison is the mate of the pushforward coherence]
@@ -2413,15 +2442,177 @@ Mathlib results they rest on as dependency anchors. We also record one bespoke
   \end{proof}
 \end{lemma}
 
+% ============================================================================
+% (b2 glue) Decomposition of the iterated-mate assembly into nat-trans-level steps.
+% Each sub-lemma below is closable WITHOUT reassembling the four-leg telescope: the
+% pointwise `.app M` route forces the composite-adjunction unit to weak-head-normal
+% form (the documented kernel timeout). Steps 1-2 are definitional whiskering lifts
+% that fold `.app M` back into whiskered nat-transes; step 3 recognises a SINGLE
+% dictionary leg as an iterated single-step mate; steps 4-5 wire the two already-closed
+% per-leg mate coherences to the nat-trans level by a single TwoSquare pasting each;
+% step 6 is the assembly skeleton, performed entirely at the nat-trans/TwoSquare level
+% so no component is ever evaluated.
+% ============================================================================
+
+\begin{lemma}
+[(b2 glue) Whisker-right lift of a pushforward-wrapped leg]
+  \label{lem:ring_square_glue_whiskerRight_lift}
+  \lean{AlgebraicGeometry.ring_square_glue_whiskerRight_lift}
+  Let \(\Phi : F \Rightarrow G\) be a natural transformation between functors
+  \(\mathrm{ModuleCat}\,R \to (\operatorname{Spec} S).\mathrm{Modules}\), and let \(g : Y \to Z\) be a
+  morphism of schemes. For every object \(M\) the pushforward of the component,
+  \(\mathrm{pushforward}(g).\mathrm{map}(\Phi_M)\), equals the \(M\)-component of the right-whiskered
+  transformation \((\Phi \rhd \mathrm{pushforward}(g))_M\).
+  \begin{proof}
+    This is the definitional component formula for right whiskering, Mathlib's
+    \texttt{CategoryTheory.whiskerRight\_app}: \((\Phi \rhd H)_M = H.\mathrm{map}(\Phi_M)\) by
+    definition. No content beyond unfolding the whiskering; in particular no component of \(\Phi\) is
+    expanded, so the leg's composite unit stays folded.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}
+[(b2 glue) Whisker-left lift of an extend-scalars-wrapped leg]
+  \label{lem:ring_square_glue_whiskerLeft_lift}
+  \lean{AlgebraicGeometry.ring_square_glue_whiskerLeft_lift}
+  Let \(\Phi : F \Rightarrow G\) be a natural transformation of functors out of
+  \(\mathrm{ModuleCat}\,R'\), and let \(\mathrm{extendScalars}\,\varphi : \mathrm{ModuleCat}\,R \to
+  \mathrm{ModuleCat}\,R'\). For every \(M\) the component
+  \(\Phi_{(\mathrm{extendScalars}\,\varphi)(M)}\) equals the \(M\)-component of the left-whiskered
+  transformation \((\mathrm{extendScalars}\,\varphi \lhd \Phi)_M\).
+  \begin{proof}
+    This is the definitional component formula for left whiskering, Mathlib's
+    \texttt{CategoryTheory.whiskerLeft\_app}: \((F \lhd \Phi)_M = \Phi_{F(M)}\) by definition. No
+    content; the wrapped leg becomes a whiskered nat-trans with no component forced.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}
+[(b2 glue) Iterated single-step-mate recognition of one dictionary leg]
+  \label{lem:ring_square_glue_pst_iterated_mate}
+  \lean{AlgebraicGeometry.ring_square_glue_pst_iterated_mate}
+  \uses{lem:pullback_spec_tilde_iso, lem:gammaPushforwardNatIso}
+  For a ring map \(\varphi : R \to R'\), the inverse natural transformation underlying the affine
+  dictionary \cref{lem:pullback_spec_tilde_iso} --- the conjugate
+  \((\mathrm{conjugateEquiv}\,\mathrm{adj}_L\,\mathrm{adj}_R)^{-1}(\mathrm{gammaPushforwardNatIso}\,\varphi)\)
+  over the binary composite adjunctions
+  \(\mathrm{adj}_L = (\widetilde{(-)}\dashv\Gamma).\mathrm{comp}\,(\mathrm{pullback}\dashv\mathrm{pushforward})\)
+  and
+  \(\mathrm{adj}_R = (\mathrm{extendScalars}\dashv\mathrm{restrictScalars}).\mathrm{comp}\,(\widetilde{(-)}\dashv\Gamma)\)
+  --- is the \emph{iterated single-step mate} of \(\mathrm{gammaPushforwardNatIso}\,\varphi\).
+  \begin{proof}
+    \uses{lem:pullback_spec_tilde_iso, lem:gammaPushforwardNatIso}
+    The recognition is an instance of the \emph{mate-of-a-vertically-composed-adjunction} law: the mate
+    of a horizontally pasted square taken over a vertical composite of adjunctions equals the vertical
+    composite of the two single-step mates of its factors. This is Mathlib's
+    \texttt{CategoryTheory.mateEquiv\_vcomp}: for a horizontal paste \(\alpha \ast \beta\) over the
+    composite adjunctions, \(\mathrm{mateEquiv}\,\mathrm{adj}_1\,\mathrm{adj}_3\,(\alpha \ast \beta)\)
+    is the vertical composite of \(\mathrm{mateEquiv}\,\mathrm{adj}_1\,\mathrm{adj}_2\,\alpha\) and
+    \(\mathrm{mateEquiv}\,\mathrm{adj}_2\,\mathrm{adj}_3\,\beta\). Specialised to the two binary
+    composite adjunctions \(\mathrm{adj}_L,\mathrm{adj}_R\) and read in the inverse (\(\mathrm{.symm}\))
+    direction, it exhibits the conjugate
+    \((\mathrm{conjugateEquiv}\,\mathrm{adj}_L\,\mathrm{adj}_R)^{-1}(\mathrm{gammaPushforwardNatIso}\,\varphi)\)
+    as the vertical composite of the two single-step mates of its factors; the conjugate--mate vcomp
+    coherences \texttt{CategoryTheory.conjugateEquiv\_mateEquiv\_vcomp} and
+    \texttt{CategoryTheory.mateEquiv\_conjugateEquiv\_vcomp} re-express each factor's conjugate as a
+    mate, so the pasting closes. In the project's toolchain this composite identity is packaged exactly
+    as \texttt{CategoryTheory.iterated\_mateEquiv\_conjugateEquiv} (its \texttt{\_symm} branch for the
+    inverse direction), whose underlying natural transformation is recovered through
+    \texttt{TwoSquare.equivNatTrans} (the \texttt{.natTrans} accessor). Because the whole step is a
+    structural identity of \(\mathrm{TwoSquare}\) pastings, touching only the \emph{single} composite
+    adjunction of one leg, it exposes the iterated-mate structure without evaluating any component, so
+    the composite unit is never forced to weak-head normal form.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}
+[(b2 glue) Geometric leg at the natural-transformation level]
+  \label{lem:ring_square_glue_geom_leg_nat}
+  \lean{AlgebraicGeometry.ring_square_glue_geom_leg_nat}
+  \uses{lem:chartBaseChangeGeometricComparison_mate}
+  Pasting the closed geometric mate coherence
+  \cref{lem:chartBaseChangeGeometricComparison_mate} into the iterated-mate square replaces the
+  geometric comparison \(\mathrm{chartBaseChangeGeometricComparisonNat}\) (built from
+  \(\mathrm{pullbackComp}\)) by the pushforward comparison
+  \(\mathrm{chartBaseChangePushforwardNat}\) (built from \(\mathrm{pushforwardComp}\)), as natural
+  transformations of the right adjoints, with no component evaluated.
+  \begin{proof}
+    \uses{lem:chartBaseChangeGeometricComparison_mate}
+    Apply \texttt{CategoryTheory.conjugateEquiv\_mateEquiv\_vcomp} (vertical pasting of a conjugate
+    into a mate \(\mathrm{TwoSquare}\)) to the already-closed
+    \cref{lem:chartBaseChangeGeometricComparison_mate}. The vcomp lemma operates on
+    \(\mathrm{TwoSquare}\) pastings, so the rewrite is structural: it unifies adjunction and iso
+    arguments only and never normalises the composite unit to component form.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}
+[(b2 glue) Algebraic leg at the natural-transformation level]
+  \label{lem:ring_square_glue_alg_leg_nat}
+  \lean{AlgebraicGeometry.ring_square_glue_alg_leg_nat}
+  \uses{lem:chartBaseChangeModuleReassoc_extendScalarsComp}
+  Pasting the closed algebraic mate coherence
+  \cref{lem:chartBaseChangeModuleReassoc_extendScalarsComp} into the iterated-mate square replaces the
+  extend-scalars reassociation \(\mathrm{chartBaseChangeModuleReassocNat}\) by the matching
+  restrict-scalars reassociation \(\mathrm{chartBaseChangeRestrictReassocNat}\), at the
+  natural-transformation level.
+  \begin{proof}
+    \uses{lem:chartBaseChangeModuleReassoc_extendScalarsComp}
+    Apply \texttt{CategoryTheory.mateEquiv\_conjugateEquiv\_vcomp} --- \emph{not} the same-category
+    \texttt{conjugateEquiv\_comp}, whose source/target categories mismatch the legs --- to the
+    already-closed \cref{lem:chartBaseChangeModuleReassoc_extendScalarsComp}. As a
+    \(\mathrm{TwoSquare}\) pasting it is structural and forces no component.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}
+[(b2 glue) The composite-functor natural-transformation equation]
+  \label{lem:ring_square_glue_natTrans}
+  \lean{AlgebraicGeometry.ring_square_glue_natTrans}
+  \uses{lem:ring_square_glue_pst_iterated_mate, lem:ring_square_glue_geom_leg_nat,
+        lem:ring_square_glue_alg_leg_nat, lem:pullback_spec_tilde_iso_inv_unit_triangle,
+        lem:gammaPushforwardNatIso_comp}
+  The two composite functors
+  \(\mathrm{extendScalars}\,\rho \ggg \widetilde{(-)} \ggg \mathrm{pullback}(\operatorname{Spec}\iota_{R'})\)
+  and
+  \(\widetilde{(-)} \ggg \mathrm{pullback}(\operatorname{Spec}\iota_R) \ggg \mathrm{pullback}(\operatorname{Spec}\rho_B)\)
+  --- both functors \(\mathrm{ModuleCat}\,R \to (\operatorname{Spec}(R'\otimes_A B)).\mathrm{Modules}\)
+  --- carry equal natural transformations: the one assembled from the geometric comparison
+  \cref{lem:chartBaseChangeGeometricComparison} and the dictionary leg
+  \cref{lem:pullback_spec_tilde_iso} for \(\rho\) agrees with the one assembled from the dictionary
+  legs for \(\iota_R,\rho_B,\iota_{R'}\) and the algebraic reassociation
+  \cref{lem:chartBaseChangeModuleReassoc}. This is the natural-transformation form of the target's
+  component equation.
+  \begin{proof}
+    \uses{lem:ring_square_glue_pst_iterated_mate, lem:ring_square_glue_geom_leg_nat,
+          lem:ring_square_glue_alg_leg_nat, lem:pullback_spec_tilde_iso_inv_unit_triangle,
+          lem:gammaPushforwardNatIso_comp}
+    Recognise each of the four \(\mathrm{pst}\) legs (for \(\iota_R,\rho,\rho_B,\iota_{R'}\)) as an
+    iterated single-step mate by \cref{lem:ring_square_glue_pst_iterated_mate}, and use the per-leg
+    unit triangle \cref{lem:pullback_spec_tilde_iso_inv_unit_triangle} to identify each with the
+    conjugate of the corresponding \(\mathrm{gammaPushforwardNatIso}\). Telescope the four conjugates
+    with \texttt{CategoryTheory.conjugateEquiv\_symm\_comp} (vertical fusion of conjugates over a common
+    adjunction pair), discharging the geometric and algebraic legs by the two vcomp identities
+    \cref{lem:ring_square_glue_geom_leg_nat} and \cref{lem:ring_square_glue_alg_leg_nat}. The residual
+    is a single conjugate of the composite comparison
+    \(\mathrm{gammaPushforwardNatIso}(\iota_R \cdot \rho_B) =
+    \mathrm{gammaPushforwardNatIso}(\rho \cdot \iota_{R'})\) (the two sides of the base-change ring
+    square \cref{lem:chartBaseChange_ring_square}), which closes on the composition coherence
+    \cref{lem:gammaPushforwardNatIso_comp}. Every step is carried out at the
+    natural-transformation/\(\mathrm{TwoSquare}\) level, so no \(\mathrm{.app}\,M\) is evaluated and the
+    composite-adjunction unit is never forced --- this is precisely what avoids the weak-head-normal-form
+    kernel timeout of the pointwise four-leg route.
+  \end{proof}
+\end{lemma}
+
 \begin{lemma}
 
 \leanok
 [(b2) Iterated-mate glue of the ring-square naturality]
   \label{lem:pullback_spec_tilde_iso_ring_square_mate_glue}
   \lean{AlgebraicGeometry.pullback_spec_tilde_iso_ring_square_mate_glue}
-  \uses{lem:pullback_spec_tilde_iso_inv_unit_triangle, lem:chartBaseChangeGeometricComparison_mate,
-        lem:chartBaseChangeModuleReassoc_extendScalarsComp, lem:gammaPushforwardNatIso,
-        lem:gammaPushforwardNatIso_comp}
+  \uses{lem:ring_square_glue_whiskerRight_lift, lem:ring_square_glue_whiskerLeft_lift,
+        lem:ring_square_glue_natTrans, lem:pullback_spec_tilde_iso}
   After the ring-square equation of \cref{lem:pullback_spec_tilde_iso_ring_square_natural} is
   transposed through the three adjunctions of the composite left adjoint
   \(L_{\mathrm{tot}} = \widetilde{(-)} \ggg \mathrm{pullback}(\operatorname{Spec}\iota_R) \ggg
@@ -2435,9 +2626,9 @@ Mathlib results they rest on as dependency anchors. We also record one bespoke
   nested \(\mathrm{pushforward}.\mathrm{map}\)/\(\Gamma.\mathrm{map}\) wrappers and closed on the
   composition coherence \cref{lem:gammaPushforwardNatIso_comp}.
   \begin{proof}
-    \uses{lem:pullback_spec_tilde_iso_inv_unit_triangle, lem:chartBaseChangeGeometricComparison_mate,
-          lem:chartBaseChangeModuleReassoc_extendScalarsComp, lem:gammaPushforwardNatIso,
-          lem:gammaPushforwardNatIso_comp}
+    \uses{lem:ring_square_glue_whiskerRight_lift, lem:ring_square_glue_whiskerLeft_lift,
+          lem:ring_square_glue_natTrans, lem:pullback_spec_tilde_iso,
+          lem:chartBaseChangeModuleReassoc_eq_natApp}
     \emph{Mathlib API note (current pin, v4.30.0-rc2).} The mate equivalence is
     \(\mathrm{TwoSquare}\)-valued: \texttt{mateEquiv adj₁ adj₂} maps
     \(\mathrm{TwoSquare}\,G\,L_1\,L_2\,H\) to \(\mathrm{TwoSquare}\,R_1\,H\,G\,R_2\), where
@@ -2449,25 +2640,20 @@ Mathlib results they rest on as dependency anchors. We also record one bespoke
     \texttt{Functor.whiskerLeft} on bare \(\mathrm{NatTrans}\). (Feeding bare \(\mathrm{NatTrans}\)
     into these lemmas is the type-mismatch that stalled the earlier hand-peel attempts.)
 
-    Because \(\mathrm{pst}\) is built from \(\mathrm{conjugateIsoEquiv}\,\mathrm{adj}_L\,\mathrm{adj}_R\)
-    over the \emph{binary composite} adjunctions
-    \(\mathrm{adj}_L = (\widetilde{(-)}\dashv\Gamma).\mathrm{comp}\,(\mathrm{pullback}\dashv\mathrm{pushforward})\)
-    and the analogous \(\mathrm{adj}_R\), lift each \(\mathrm{pst}\) factor from the iso level to the hom
-    level by \texttt{conjugateIsoEquiv\_apply\_hom}/\texttt{\_apply\_inv}, then rewrite the
-    conjugate-over-composite-adjunctions by
-    \texttt{CategoryTheory.iterated\_mateEquiv\_conjugateEquiv} (its \texttt{\_symm} direction, since
-    \(\mathrm{pst}\) is the \(\mathrm{.symm}\)) to expose it as an \emph{iterated single-step mate}.
-    Discharge the geometric leg with \texttt{CategoryTheory.conjugateEquiv\_mateEquiv\_vcomp}
-    (whiskering a conjugate into a mate square, replacing each \(\mathrm{pullbackComp}\) by its
-    \(\mathrm{pushforwardComp}\) mate) and the algebraic leg with
-    \texttt{CategoryTheory.mateEquiv\_conjugateEquiv\_vcomp} (\emph{not} the same-category
-    \texttt{conjugateEquiv\_comp}, which mismatches the source/target categories of the legs). All
-    constituents are identity-on-elements, so the residual \(\mathrm{ModuleCat}\,R\) equation reduces to
-    the composition coherence \cref{lem:gammaPushforwardNatIso_comp}, on which it closes. That coherence
-    is \emph{not} a pointwise identity: it is assembled component by component, by extensionality of
-    natural transformations, from the three-fold global-sections ring coherence
-    \cref{lem:globalSectionsIso_hom_comp3_specMap_appTop}, which reconciles the composite
-    \(\operatorname{Spec}\)-contravariance indexing with the pasting of the two single-map comparisons.
+    Reduce the equality of isomorphisms to the underlying inverse natural-transformation equality. Each
+    of the four \cref{lem:pullback_spec_tilde_iso} dictionary legs sits inside a
+    \(\mathrm{pushforward}.\mathrm{map}\)/\(\Gamma.\mathrm{map}\) wrapper or an
+    \(\mathrm{extendScalars}\) layer; rewrite those wrappers as whiskerings of natural transformations
+    by \cref{lem:ring_square_glue_whiskerRight_lift} and \cref{lem:ring_square_glue_whiskerLeft_lift},
+    so that the whole goal becomes the \(M\)-component of an equation between two composite \emph{natural
+    transformations}. That equation is exactly \cref{lem:ring_square_glue_natTrans}; evaluating it at
+    \(M\) closes the goal. The entire telescoping --- the iterated single-step-mate recognition of the
+    four \(\mathrm{pst}\) legs, the two vcomp leg-coherences, and the closing on
+    \cref{lem:gammaPushforwardNatIso_comp} --- is isolated inside
+    \cref{lem:ring_square_glue_natTrans}, where it is carried out at the
+    natural-transformation/\(\mathrm{TwoSquare}\) level so that no component is forced and the
+    composite-adjunction unit never reaches weak-head-normal form (the kernel-timeout the pointwise
+    route hits).
   \end{proof}
 \end{lemma}
 
@@ -2499,9 +2685,11 @@ Mathlib results they rest on as dependency anchors. We also record one bespoke
     by \(\mathrm{homEquiv}\)-injectivity: that route strands the goal as a unit-prefixed equation with no
     finisher and never reaches the mate API (it is the dead end of the earlier attempts). Instead lift
     each \(\mathrm{pst}\) factor to the hom level by
-    \texttt{conjugateIsoEquiv\_apply\_hom}/\texttt{\_apply\_inv} and recognise it, via
-    \texttt{CategoryTheory.iterated\_mateEquiv\_conjugateEquiv}, as an iterated single-step mate over the
-    composite adjunctions \(\mathrm{adj}_L,\mathrm{adj}_R\). The resulting equation is exactly the
+    \texttt{conjugateIsoEquiv\_apply\_hom}/\texttt{\_apply\_inv} and recognise it, via the
+    mate-of-composite law \texttt{CategoryTheory.mateEquiv\_vcomp} (the mate over a vertical composite
+    of adjunctions is the vertical composite of the single-step mates, packaged in this toolchain as
+    \texttt{CategoryTheory.iterated\_mateEquiv\_conjugateEquiv}), as an iterated single-step mate over
+    the composite adjunctions \(\mathrm{adj}_L,\mathrm{adj}_R\). The resulting equation is exactly the
     iterated-mate glue \cref{lem:pullback_spec_tilde_iso_ring_square_mate_glue}, which combines the
     per-leg conjugate identity \cref{lem:pullback_spec_tilde_iso_inv_unit_triangle}, the geometric-leg
     coherence \cref{lem:chartBaseChangeGeometricComparison_mate}, and the algebraic-leg coherence

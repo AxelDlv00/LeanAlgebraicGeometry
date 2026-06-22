@@ -7157,7 +7157,7 @@ recorded here as load-bearing nodes.
     lem:conjugate_equiv_restrictfunctorcomp_inv, lem:conjugateequiv_pullbackcomp_hom,
     lem:conjugateequiv_restrictfunctorisopullback_whiskerright,
     lem:conjugateequiv_restrictfunctorisopullback_whiskerleft, lem:conjugateequiv_reindexcongr,
-    lem:unit_leftadjointuniq_hom_app}
+    lem:unit_leftadjointuniq_hom_app, lem:sheaf_pullback_unit_forget_eq}
   Let \(f : Y \hookrightarrow X\) be an open immersion presented by the presheaf-ring map
   \(\varphi'\), and let \(M \in \Scheme.\mathtt{Modules}\,X\). Write \(H_1\) for the presheaf-level
   left-adjoint-uniqueness comparison \(\mathtt{pushforward}\,\beta \cong
@@ -7184,7 +7184,7 @@ recorded here as load-bearing nodes.
     lem:conjugate_equiv_restrictfunctorcomp_inv, lem:conjugateequiv_pullbackcomp_hom,
     lem:conjugateequiv_restrictfunctorisopullback_whiskerright,
     lem:conjugateequiv_restrictfunctorisopullback_whiskerleft, lem:conjugateequiv_reindexcongr,
-    lem:unit_leftadjointuniq_hom_app}
+    lem:unit_leftadjointuniq_hom_app, lem:sheaf_pullback_unit_forget_eq}
   Both sides are maps \((\mathtt{pullback}\,\varphi').\mathrm{obj}\,M^{\mathrm p} \to
   (\mathtt{pushforward}\,\beta).\mathrm{obj}\,M^{\mathrm p}\), and \(H_1.\mathrm{inv}\) is itself a
   \(\mathtt{leftAdjointUniq}\) hom of the presheaf adjunction onto \(\mathtt{pushforward}\,\varphi'\);
@@ -7208,6 +7208,97 @@ recorded here as load-bearing nodes.
   (\cref{lem:conjugateequiv_restrictfunctorisopullback_whiskerright},
   \cref{lem:conjugateequiv_restrictfunctorisopullback_whiskerleft},
   \cref{lem:conjugateequiv_reindexcongr}, \cref{lem:conjugateequiv_pullbackcomp_hom}).
+  In the realized formalization this comparison is split as a four-part \(\mathtt{forget}\)-transport
+  of the sheaf \(\mathtt{unit\_leftAdjointUniq}\) triangle, whose genuine sheafification-boundary
+  content is isolated in Part~III (\cref{lem:sheaf_pullback_unit_forget_eq}).
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Bridge B1 crux, Part III: the sheaf pullback unit, forget-transported, factors through sheafification]
+  \label{lem:sheaf_pullback_unit_forget_eq}
+  \lean{AlgebraicGeometry.Scheme.Modules.sheafPullbackUnit_forget_eq}
+  \uses{def:pullback_val_iso, lem:sheafification_comp_pullback_eq_leftadjointuniq}
+  Let \(f : Y \hookrightarrow X\) be an open immersion presented by the presheaf-ring map
+  \(\varphi'\), and let \(M \in \Scheme.\mathtt{Modules}\,X\). The unit of the \emph{sheaf}-level
+  pullback--pushforward adjunction \(\mathtt{pullbackPushforwardAdjunction}\,f\), transported through
+  the forgetful functor \(\mathtt{forget} : \Scheme.\mathtt{Modules}\,Y \to \mathtt{PresheafOfModules}\),
+  equals the \emph{presheaf}-level pullback--pushforward unit followed by the sheafification unit and
+  the pullback comparison \(\mathtt{pullbackValIso}\) (\cref{def:pullback_val_iso}):
+  \[
+    \mathtt{forget}\bigl((\mathtt{pullbackPushforwardAdjunction}\,f).\mathrm{unit}.\mathrm{app}\,M\bigr)
+      = (\mathtt{pullbackPushforwardAdjunction}\,\varphi').\mathrm{unit}.\mathrm{app}\,M^{\mathrm p}
+        \mathbin{;} (\mathtt{pushforward}\,\varphi').\mathrm{map}\bigl(
+          \eta_{(\mathtt{pullback}\,\varphi')\,M^{\mathrm p}}
+          \mathbin{;} \mathtt{forget}((\mathtt{pullbackValIso}\,f\,M).\mathrm{hom})\bigr),
+  \]
+  where \(\eta\) is the unit of the sheafification adjunction on \(Y\) and \(M^{\mathrm p}\) is the
+  underlying presheaf of \(M\). This is the lone sheafification-boundary residual of the Bridge~B1
+  crux \(H_1\) (\cref{lem:h1inv_app_eq_pullbackval_restrict}); the other three parts of that crux are
+  definitional \(\mathtt{forget}\)/\(\mathtt{pushforward}\) functoriality identities.
+\end{lemma}
+\begin{proof}
+  \uses{def:pullback_val_iso, lem:sheafification_comp_pullback_eq_leftadjointuniq,
+    lem:unit_leftadjointuniq_hom_app}
+  As shown in the Lean development the identity is, after computing the opaque sheaf unit via the
+  concrete \(\mathtt{PullbackConstruction.adjunction}\) (using Mathlib's
+  \(\mathtt{pullbackIso}\,\varphi = \mathtt{leftAdjointUniq}(\mathtt{pullbackPushforwardAdjunction}\,\varphi)\,
+  (\mathtt{PullbackConstruction.adjunction}\,\varphi)\)), equivalent to the single comparison identity
+  \[
+    (\mathtt{pullbackIso}\,\varphi).\mathrm{inv}.\mathrm{app}\,M
+      = (\mathtt{pullbackValIso}\,f\,M).\mathrm{hom}
+      = \mathtt{sheafificationCompPullback}.\mathrm{inv}.\mathrm{app}\,M^{\mathrm p}
+        \mathbin{;} (\mathtt{pullback}\,\varphi).\mathrm{map}\,
+          (\varepsilon_M), \qquad \varepsilon := (\mathtt{sheafAdj}_X).\mathrm{counit},
+  \]
+  i.e.\ the two \(\mathtt{leftAdjointUniq}\) comparison isos --- one over the right adjoint
+  \(\mathtt{pushforward}\,\varphi\), the other (\(\mathtt{sheafificationCompPullback}\)) over the
+  composite right adjoint \(\mathtt{pushforward}\,\varphi \circ \mathtt{forget}\) --- agree on \(M\).
+  Transposing along the \emph{whole composite} \(\mathtt{homEquiv}\) is circular (it returns the parent
+  goal), and \(\mathtt{leftAdjointUniq\_trans}\) does not apply (distinct right adjoints).
+
+  The identity is the \(\mathtt{SheafOfModules}\) analogue of Mathlib's
+  \(\mathtt{Functor.toSheafify\_pullbackSheafificationCompatibility}\)
+  (\(\mathtt{Sites/CoverLifting.lean}\): \(362\)--\(382\)), which proves the literal twin --- a
+  \(\mathtt{leftAdjointUniq}\) of two \emph{composite} adjunctions, pushed through the forgetful functor
+  \(\mathtt{sheafToPresheaf}\) and matched against the sheafification unit \(\mathtt{toSheafify}\). Its
+  proof skeleton ports directly:
+  % NOTE: (iter-053, review) The lemma is now CLOSED in Lean, but the REALIZED proof does NOT follow
+  % the steps 1--4 below. It uses forget-faithfulness (fullyFaithfulForget.map_injective) + an inner
+  % presheaf-pullback transpose telescope + the INVERSE-leftAdjointUniq triangle (hAcancel via
+  % leftAdjointUniq_inv_app + unit_leftAdjointUniq_hom_app) + sheafificationCompPullback_eq_leftAdjointUniq.
+  % It never invokes Adjunction.comp_unit_app (step 3) and leaves hpin dead. The intro paragraph and the
+  % reduction-to-hKEY ARE faithful; only steps 1--4 are stale. Planner: dispatch blueprint-writer to
+  % rewrite this enumerate to the realized route. See task_results/lean-vs-blueprint-checker-iter053.md.
+  \begin{enumerate}
+    \item Transpose along the \emph{innermost} adjunction
+      \(\mathtt{pullbackPushforwardAdjunction}\,\varphi'\) (the presheaf-level one whose
+      \(\mathtt{homEquiv}\) the crux \(H_1\) already uses), via
+      \(\bigl((\mathtt{pullbackPushforwardAdjunction}\,\varphi').\mathtt{homEquiv}\,\_\,\_\bigr).\mathtt{injective}\)
+      --- supplying the two objects explicitly --- \emph{not} the composite. This is the step that
+      breaks circularity.
+    \item Feed the defining unit triangle of the composite comparison,
+      \(\mathtt{hpin} := \mathtt{unit\_leftAdjointUniq\_hom\_app}\,A\,B\,M^{\mathrm p}\)
+      (\cref{lem:unit_leftadjointuniq_hom_app}), where
+      \(A = \mathtt{sheafAdj}_X \mathbin{.}\!\mathtt{comp}\,\mathtt{pullbackPPAdj}_{\mathrm{sheaf}}\) and
+      \(B = \mathtt{pullbackPPAdj}_{\mathrm{pre}} \mathbin{.}\!\mathtt{comp}\,\mathtt{sheafAdj}_Y\)
+      (the two composite adjunctions whose left-adjoint comparison \emph{is}
+      \(\mathtt{sheafificationCompPullback}\), \cref{lem:sheafification_comp_pullback_eq_leftadjointuniq}).
+    \item Expand both composite units with \(\mathtt{Adjunction.comp\_unit\_app}\) (applied twice),
+      exposing the sheafification unit \(\eta\) as an explicit separate factor --- the factor that is
+      invisible from the composite \(\mathtt{homEquiv}\) and the reason the naive route is circular.
+    \item Transpose back (\(\mathtt{homEquiv\_unit}\)/\(\mathtt{homEquiv\_counit}\) together with unit
+      naturality), and discharge the residual sheafification--pullback leg with the \(X\)-counit
+      naturality square
+      \(\mathtt{hnat}\): \(\varepsilon_M \mathbin{;} \eta_M
+      = \eta_{(\mathtt{a}_X)\,M^{\mathrm p}} \mathbin{;} (\mathtt{pushforward}\,\varphi).\mathrm{map}
+      ((\mathtt{pullback}\,\varphi).\mathrm{map}\,\varepsilon_M)\).
+  \end{enumerate}
+  Both non-circular inputs \(\mathtt{hpin}\) (step~2) and \(\mathtt{hnat}\) (step~4) are exactly the two
+  inputs the Mathlib precedent uses, and are already typed and compiling in the file. The remaining
+  three parts of the crux \(H_1\) (\cref{lem:h1inv_app_eq_pullbackval_restrict}) are definitional
+  \(\mathtt{forget}\)/\(\mathtt{pushforward}\) functoriality identities.
 \end{proof}
 
 \begin{lemma}
@@ -7401,6 +7492,17 @@ recorded here as load-bearing nodes.
   flanks. The trivialisation step's \((\mathtt{dualIsoOfIso}\,e^M)^{-1}\) transport and the datum
   refinement \(e^M \mapsto \mathtt{restrictIsoUnitOfLE}\,h_{VU}\,e^M\) are \emph{not} part of this
   square; they telescope in the parent (\cref{lem:trivialisation_restrict_compat}).
+
+  \emph{Open prerequisite (iter-054).} The ``dual analogue of Bridge B1'' invoked above ---
+  the identification of \(\mathtt{dual\_restrict\_iso}\) with a
+  \(\mathtt{restrictFunctorIsoPullback}\)-conjugate of an internal-hom \emph{pullback}
+  comparison \(f^{*}\mathcal{H}om(M,\mathcal{O}) \to \mathcal{H}om(f^{*}M, f^{*}\mathcal{O})\)
+  --- is \emph{not yet realised in Lean}: there is no \(\mathtt{pullbackDualMap}\) /
+  internal-hom base-change comparison declaration mirroring the tensor-side
+  \(\mathtt{pullbackTensorMap}\) cone. Hence S3 is \emph{deferred} pending that
+  infrastructure (the tensor flank S2/S4b, whose B1 cone is complete, is proved first; the
+  dual flank then mirrors it). Until the dual base-change comparison and its composition law
+  exist, this square has no concrete formalisation route.
 \end{proof}
 
 \begin{lemma}
@@ -7435,6 +7537,10 @@ recorded here as load-bearing nodes.
   \(\varrho = \mathtt{restrictCompReindex}\,j\) (\cref{def:restrictcompreindex},
   \cref{lem:image_preimage_of_le}) through the unit comparison gives the claim. As with S3, this
   rests on the bounded-depth dual analogue of Bridge B1, not on any sheaf-level monoidal structure.
+
+  \emph{Open prerequisite.} Like S3, this square depends on the not-yet-realised dual analogue of
+  Bridge B1 (no \(\mathtt{pullbackDualMap}\)/internal-hom base-change comparison exists in Lean).
+  S4a is therefore \emph{deferred} together with S3, after the tensor flank lands.
 \end{proof}
 
 \begin{lemma}
@@ -7453,23 +7559,69 @@ recorded here as load-bearing nodes.
     (\mathtt{restrict}\,j)\,(\mathtt{tensorObj\_unit\_iso}\ \text{over}\ U)
       \;=\; \mathtt{tensorObj\_unit\_iso}\ \text{over}\ V.
   \]
+  Unlike the tensor-restriction comparison \(\mathtt{tensorObj\_restrict\_iso}\), the contraction
+  \(\mathtt{tensorObj\_unit\_iso}\) is \emph{not} built from the abstract pullback: by definition it
+  is the \emph{sheafification of the presheaf-level left unitor at the unit}, followed by the
+  sheafification-adjunction counit (\cref{lem:tensorobj_unit_iso}). Bridge B1 therefore does not
+  apply directly, and the square is established by hand below.
 \end{lemma}
 \begin{proof}
-  \uses{lem:tensorobj_restrict_iso_eq_pullback_tensor_map, lem:pullback_tensor_map_basechange, lem:pullback_tensor_map_natural, lem:trivialisation_uiota_restrict_compat, def:unitrestrictiso, def:restrictcompreindex, lem:image_preimage_of_le}
-  This is the \emph{unit} companion of S2, and like S2 it is base-change bookkeeping on Bridge B1.
-  The left unitor at the unit, \(\mathtt{tensorObj\_unit\_iso}\), is the unit-evaluation of the same
-  base-change tensor comparison whose restriction-naturality is governed by B1
-  (\cref{lem:tensorobj_restrict_iso_eq_pullback_tensor_map}): substituting B1 and the unit
-  identification \(u_\iota = \mathtt{unitRestrictIso}\,j\) (\cref{def:unitrestrictiso}) expresses
-  both the \(U\)- and \(V\)-built contractions as \(\mathtt{restrictFunctorIsoPullback}\)-conjugates
-  in the pullback world. There the equation is again the composition law
-  \(\mathtt{pullbackTensorMap\_restrict}\) (\cref{lem:pullback_tensor_map_basechange}) for the
-  factorisation \(j \mathbin{;} \iota_U = \iota_V\), evaluated at the unit, together with naturality
-  of \(\mathtt{pullbackTensorMap}\) (\cref{lem:pullback_tensor_map_natural}); the \(V\)-side unit leg
-  is supplied by \(u_\iota\) (\cref{lem:trivialisation_uiota_restrict_compat}). The reindexing
-  \(\varrho = \mathtt{restrictCompReindex}\,j\) (\cref{def:restrictcompreindex}) is absorbed exactly
-  as in S2 by \(\mathtt{restrictFunctorCongr}\) along \(j \mathbin{;} \iota_U = \iota_V\)
-  (\cref{lem:image_preimage_of_le}). No sheaf-level monoidal structure is involved.
+  \uses{lem:tensorobj_restrict_iso_restrict_compat, lem:trivialisation_uiota_restrict_compat, lem:pullback_unit_iso, def:unitrestrictiso, def:restrictcompreindex, lem:image_preimage_of_le}
+  This is the \emph{unit} companion of S2, but, in contrast to S2, it is \emph{not} base-change
+  bookkeeping on Bridge B1. The contraction \(\mathtt{tensorObj\_unit\_iso}\) is the sheafified
+  presheaf left unitor at the unit (\cref{lem:tensorobj_unit_iso}); it carries no abstract pullback,
+  so the comparison must be assembled from the unitor coherence directly. Because the unit object is
+  fixed --- there is no module argument --- the square has \emph{no} naturality-in-\(M\) component,
+  which makes it strictly simpler than B1.
+
+  \emph{Peeling the contraction.} Write
+  \(\mathtt{tensorObj\_unit\_iso} = \mathtt{sheafification.mapIso}(\lambda_{\mathbf 1})
+  \mathbin{;} \varepsilon\), where \(\lambda_{\mathbf 1}\) is the presheaf-level left unitor of
+  \(\mathtt{PresheafOfModules}\) evaluated at the tensor unit \(\mathbf 1 = \mathcal{O}\), and
+  \(\varepsilon\) is the sheafification-adjunction counit identifying the sheafified structure-sheaf
+  presheaf with \(\mathcal{O}\). Both the \(U\)- and the \(V\)-built contractions have this form;
+  restriction along \(j\) commutes through the outer sheafification and counit legs by functoriality,
+  so the square reduces to two independent seams: an \emph{inner} presheaf-unitor seam and an
+  \emph{outer} sheafify--counit seam.
+
+  \emph{Inner seam (presheaf left-unitor coherence).} Pushing the presheaf left unitor
+  \(\lambda_{\mathbf 1}\) past the restriction functor follows the left-unitor coherence of a monoidal
+  functor: for a (lax) monoidal functor \(F\) one has
+  \(F(\lambda_X) = \delta_{\mathbf 1, X} \mathbin{;} (\eta \rhd F X) \mathbin{;} \lambda_{F X}\), where
+  \(\delta\) is the tensorator and \(\eta\) the unit comparison. The restriction functor carries no
+  registered monoidal-functor structure, so this identity is used only as the \emph{shape} of the
+  argument, instantiated by hand at the project's own comparison data:
+  \begin{itemize}
+    \item the tensorator leg \(\delta\) is the tensor-restriction comparison evaluated at the unit
+      pair \((\mathcal{O}, \mathcal{O})\), whose restriction-naturality is exactly S2
+      (\cref{lem:tensorobj_restrict_iso_restrict_compat});
+    \item the unit-comparison leg \(\eta\) is the structure-sheaf comparison
+      \(\mathtt{pullbackUnitIso}\) (\cref{lem:pullback_unit_iso}), packaged as
+      \(\mathtt{unitRestrictIso}\,j\) (\cref{def:unitrestrictiso}), whose restriction-coherence is
+      exactly the already-proven S4c (\cref{lem:trivialisation_uiota_restrict_compat}).
+  \end{itemize}
+  Substituting these two legs makes both flanks of the inner square agree: the \(U\)- and \(V\)-side
+  presheaf unitors are carried into one another by the \(\delta\)- and \(\eta\)-coherences along the
+  factorisation \(j \mathbin{;} \iota_U = \iota_V\).
+
+  \emph{Outer seam (sheafify and counit).} The remaining legs are formal. The sheafification functor
+  acts on the inner unitor square by \(\mathtt{Functor.mapIso}\), and the sheafification unit
+  \(\mathtt{toSheafify}\) is natural, so the sheafified squares commute whenever the inner ones do.
+  The counit \(\varepsilon\) of the sheafification adjunction is a natural transformation, hence its
+  naturality square against the restriction-induced morphism is free. Composing the inner agreement
+  with these two formal squares yields the equality of the two contractions.
+
+  \emph{Reindexing.} Finally the reindexing \(\varrho = \mathtt{restrictCompReindex}\,j\)
+  (\cref{def:restrictcompreindex}) threads the equality of opens
+  \(j \mathbin{;} \iota_U = \iota_V\) (\cref{lem:image_preimage_of_le}) through both flanks, absorbing
+  the \(\mathtt{restrictFunctorCongr}\) congruence exactly as in S2 and S4c, and giving the displayed
+  identity. No sheaf-level monoidal structure is involved.
+
+  % NOTE (future refactor): the inner seam above re-derives by hand the left-unitor coherence
+  % \(F(\lambda) = \delta \mathbin{;} (\eta \rhd F X) \mathbin{;} \lambda_{FX}\). Registering
+  % \(\mathtt{Functor.Monoidal}\,(\mathtt{PresheafOfModules.pullback}\,\varphi)\) from the
+  % tensorator \(\delta = \mathtt{pullbackTensorMap}\) and unit \(\eta = \mathtt{pullbackUnitIso}\)
+  % would collapse all four tensor/dual unitor squares into a single monoidal-coherence instance.
 \end{proof}
 
 \begin{lemma}

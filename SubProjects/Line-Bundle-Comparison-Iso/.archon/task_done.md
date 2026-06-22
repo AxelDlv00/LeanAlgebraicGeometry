@@ -1,6 +1,27 @@
 # Done Tasks
 <!-- Resolved items, last-known state only. Per-attempt detail → iter sidecars. -->
 
+- **B1-crux ENGINE `H1inv_app_eq_pullbackVal_restrict` + `sheafPullbackUnit_forget_eq` (`TensorObjInverse.lean`) —
+  CLOSED iter-053, sorry-free + axiom-clean.** The 050–052 plateau (whole-composite homEquiv PROVEN circular) broken
+  via forget-faithful (`fullyFaithfulForget.map_injective`) + INNER presheaf-pullback transpose + INVERSE-`leftAdjointUniq`
+  triangle (`hAcancel`=`leftAdjointUniq_inv_app`+`unit_leftAdjointUniq_hom_app`) + `sheafificationCompPullback_eq_leftAdjointUniq`;
+  term-mode assembly across the `SheafOfModules ≫` seam. Unblock = mathlib-analogist cross-domain
+  (`analogies/ofisrightadjoint-unit.md`, `Functor.toSheafify_pullbackSheafificationCompatibility` precedent).
+  With B2 (iter-050) the entire B1/B2 engine layer is done; remaining = the 5 immersion-naturality squares.
+- **S2 tensor-flank square `tensorObj_restrict_iso_restrict_compat` (`TensorObjInverse.lean`, L1027) — CLOSED
+  iter-054, sorry-free + axiom-clean** (file 5→4). First close on the squares. B1-route exactly as blueprint:
+  `simp [tensorObj_restrict_iso_eq_pullbackTensorMap]` (B1) → B2 expands the leading RFIP at `M⊗N` only → cancel
+  prefixes → `Iso.ext` + RFIP-j naturality → pre-cancelled composition law `pullbackTensorMap_restrict_cancel` +
+  `pullbackTensorMap_natural` → merge two 3-fold `tensorObj_functoriality` composites via
+  `tensorObj_functoriality_comp3` (EXPLICIT morphism args) → discharge each leg by
+  `restrictFunctorIsoPullback_comp_compat_leg`. Needs `maxHeartbeats 6400000`. **whnf-seam idiom (KB):** prefer
+  `exact`/`refine` of a FULLY-APPLIED generic lemma over `erw`/placeholder-`refine` on sheafification-carrier goals.
+  9 new private helpers (coverage debt, deferred to cleanup phase).
+- **D3′ composition law `pullbackTensorMap_restrict` (`TensorObjSubstrate.lean`, L3451) — CLOSED + axiom-clean
+  (re-verified iter-054).** Despite stale in-proof comments "Typed sorry retained" (L3480/3541, parent-iter-261
+  leftovers that FALSE-ALARMED a blueprint-reviewer iter-054), the proof CLOSES at L3982 (`exact pullbackValIso_comp_leg`);
+  axiom check `{propext, Classical.choice, Quot.sound}`. Unblocks the tensor-flank squares S2/S4b.
+
 - **SHARED KEYSTONE `conjugateEquiv_restrictFunctorComp_inv` (`TensorObjSubstrate.lean`, ~L4943) — CLOSED iter-048,
   PUBLIC, axiom-clean (lake EXIT 0, 8321 jobs).** The multi-iter (044–047) terminal blocker — restrict-side mirror
   of Mathlib `conjugateEquiv_pullbackComp_inv`; BOTH B2 + B1-crux reduce to it. iter-046's "irreducible to library

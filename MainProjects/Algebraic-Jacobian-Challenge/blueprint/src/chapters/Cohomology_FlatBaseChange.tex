@@ -1329,3 +1329,33 @@ abstract adjoint mate with the concrete cancellation isomorphism.
   sequence entirely and argue by Mayer--Vietoris induction on the number \(t\) of
   cover members, reducing each step to the separated case.)
 \end{proof}
+
+%% ===========================================================================
+%% UNION MERGE (2026-06-22): two Mathlib-backed stub nodes ported from the
+%% GR-quot_closure subproject's Cohomology_FlatBaseChange.tex. They are
+%% \uses-referenced by the imported GlueDescent / GrassmannianQuot development
+%% (def:gr_modules_glueHom, lem:gr_tautologicalQuotientComponent_transpose).
+%% ===========================================================================
+\section{Mathlib stubs imported for the Grassmannian/Quot descent (union merge)}
+\label{sec:fbc_gr_union_stubs}
+
+\begin{lemma}[The pullback--pushforward conjugate sends the pullback coherence to the pushforward coherence]
+  \label{lem:conjugateEquiv_pullbackComp_inv_mathlib}
+  \lean{AlgebraicGeometry.Scheme.Modules.conjugateEquiv_pullbackComp_inv}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Under the conjugation (mate) bijection between the composite pullback--pushforward
+  adjunction \((g^{*}\dashv g_{*}) . (f^{*}\dashv f_{*})\) and the adjunction for the
+  composite \(\bigl((f\circ g)^{*} \dashv (f\circ g)_{*}\bigr)\), the inverse
+  pullback-composition coherence is carried to the pushforward-composition coherence.
+\end{lemma}
+
+\begin{lemma}[Sheaf gluing: a compatible family has a unique amalgamation]
+  \label{lem:sheaf_existsUnique_gluing_mathlib}
+  \lean{TopCat.Sheaf.existsUnique_gluing'}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Let \(\mathcal{G}\) be a sheaf on \(X\), \(U : \iota \to \mathrm{Opens}(X)\) a family covering an
+  open \(V\), and \((s_i)_i\) a compatible family of sections. Then there is a unique
+  \(s \in \mathcal{G}(V)\) restricting to each \(s_i\) --- the gluing half of the sheaf condition.
+\end{lemma}

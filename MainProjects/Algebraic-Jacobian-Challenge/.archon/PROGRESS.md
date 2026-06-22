@@ -17,6 +17,37 @@ prover
 **pointed vs. unpointed**. 0 project axioms. Operative posture: option (c)
 under the USER ROUTE C PAUSE. Full framing in STRATEGY.md.
 
+## Merge note — 2026-06-22 (GR-quot_closure UNION merge)
+
+The **Grassmannian/Quot representability lane** (A.2.c representability scaffolding;
+previously HELD behind A.1.c with ~600–800 LOC remaining) received a **union merge of
+the `GR-quot_closure` subproject** — a leg extracted from this project on 2026-06-05 and
+returned in a "delivered / awaiting-merge" state. Imported wholesale (all sorry-free):
+- 5 new Lean files — `GrassmannianCells` (2045 L), `GlueDescent` (3408 L),
+  `GrassmannianQuot` (5623 L), `GradedHilbertSerre` (1287 L), `SectionGradedRing` (4203 L).
+- Headline deliverable `AlgebraicGeometry.Grassmannian.represents` (rank-`d` quotient
+  functor representability, `thm:grassmannian_universal_property`), plus
+  `tautologicalQuotient_epi`, the SNAP associativity chain, the ∀L section graded
+  **semiring** `sectionGradedRing_gsemiring` (Stacks 01CV), the invertible-`L` graded
+  **commutative semiring** `sectionGradedRing_gcommSemiring`, and the SNAP-S1 graded
+  **module** `sectionGradedModule_gmodule` — all axiom-clean in the source.
+
+**Scope was `enrich` as configured, but enrich was a no-op here** (all 26 shared
+declarations were byte-identical, target-stronger, or already-proved infra; the
+graph's "source-stronger" rows were stale `\leanok` annotations on a byte-identical
+`RelativeSpec.lean`). The user opted into **`union`** to capture the subproject's
+real, non-shared deliverable. **Both sides' work preserved:** `QuotScheme.lean` was
+reconciled as a *union* — this project's base-change cohomology lane
+(`canonicalBaseChangeMap`, `flatBaseChangeCohomology`, `pullback_app_isoTensor`) kept
+intact above the merge banner, the subproject's quasi-coherent descent machinery
+(`isLocalizedModule_*`, `isIso_fromTildeΓ_*`, `annihilator`, `schematicSupport`)
+appended below it. Two Mathlib-stub nodes (`conjugateEquiv_pullbackComp_inv_mathlib`,
+`sheaf_existsUnique_gluing_mathlib`) ported into `Cohomology_FlatBaseChange.tex`.
+
+DAG: blueprint nodes 1235→1598, proved 738→1041, mathlib 70→116, **0 broken `\uses`**.
+`with sorry` unchanged at 85 (the import added no sorries). Kernel state verified by
+`lake build` (lake_mode set to `build` for this merge's verify gate).
+
 ## Merge note — 2026-06-18 (Cech-Cohomology enrich merge)
 
 The **A.2.c-engine `Rⁱf_*` Čech lane** (previously the dominant open pole; the

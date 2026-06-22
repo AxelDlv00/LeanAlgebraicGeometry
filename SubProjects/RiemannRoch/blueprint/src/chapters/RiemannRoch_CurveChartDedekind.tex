@@ -1,0 +1,343 @@
+% archon:covers AlgebraicJacobian/RiemannRoch/CurveChartDedekind.lean
+
+\chapter{An affine chart of a smooth curve is a Dedekind domain}
+\label{chap:RiemannRoch_CurveChartDedekind}
+
+\providecommand{\Spec}{\operatorname{Spec}}
+\providecommand{\krullDim}{\dim}
+\providecommand{\coheight}{\operatorname{coheight}}
+\providecommand{\Frac}{\operatorname{Frac}}
+\providecommand{\Over}{\operatorname{Over}}
+
+% SOURCE: [Hartshorne], I.6, p. 40 (Theorem 6.2A and the Definition of a
+% Dedekind domain) and p. 41 (the nonsingular-curve discussion). Read from
+% references/hartshorne-algebraic-geometry.pdf.
+
+\section{Purpose and standing hypotheses}
+
+This chapter isolates the single commutative-algebra crux on which the
+structure-sheaf bridge of \cref{chap:RiemannRoch_OcOfD} rests: the coordinate
+ring of an affine chart of a smooth proper curve is a \emph{Dedekind domain}.
+That fact is what licenses the identification, on each affine open, of the
+sections of the zero carrier sheaf with the structure sheaf via the
+algebraic-Hartogs principle \cref{lem:mem_integers_of_valuation_le_one} (which
+demands a Dedekind base ring). Isolating the crux in its own chapter gives the
+bridge a clean \(\texttt{IsDedekindDomain}\) interface and lets
+the Dedekind argument be developed independently of the sheaf-gluing work.
+
+\paragraph{Standing hypotheses.} Throughout, \(\bar k\) is an algebraically
+closed field and \(C : \Over(\Spec \bar k)\) is a curve over \(\bar k\) whose
+structure morphism \(C.\mathrm{hom} : C \to \Spec \bar k\) is smooth of
+relative dimension one (\(\texttt{SmoothOfRelativeDimension}\ 1\ C.\mathrm{hom}\))
+and locally of finite type (\(\texttt{LocallyOfFiniteType}\ C.\mathrm{hom}\)),
+and whose underlying scheme \(C.\mathrm{left}\) is integral
+(\(\texttt{IsIntegral}\ C.\mathrm{left}\)). Fix a nonempty affine open
+\(U \subseteq C\) (\(\texttt{IsAffineOpen}\ U\)) and write
+\[
+  A \;=\; \Gamma(C, U)
+\]
+for its coordinate ring, so that \(U \cong \Spec A\). Because \(C.\mathrm{left}\)
+is integral and \(U\) is a nonempty open, \(A\) is an integral domain
+(\(\texttt{IsDomain}\ A\)), and its fraction field is the function field of the
+curve, \(\Frac(A) = K(C)\) (\(\texttt{IsFractionRing}\ A\ K(C)\)).
+
+\paragraph{Strategy.} We verify the three defining properties of a Dedekind
+domain separately and then assemble them through Mathlib's characterisation
+\(\texttt{isDedekindRing\_iff}\):
+\begin{enumerate}
+  \item \emph{Dimension at most one.} The Krull dimension of \(A\) is bounded
+    by the Krull dimension of the curve, which is at most one by the project
+    bound \cref{thm:krullDim_curve_le_one}; hence every nonzero prime of \(A\)
+    is maximal.
+  \item \emph{Integral closure.} Integral-closedness is a local property
+    (\cref{lem:isIntegrallyClosed_of_localization_maximal_mathlib}); at each
+    nonzero maximal ideal the localisation is the curve stalk at a
+    codimension-one point, which is a discrete valuation ring
+    (\cref{lem:stalk_isDVR_of_smooth}) and therefore integrally closed.
+  \item \emph{Noetherianity} comes for free from local Noetherianity of the
+    curve, the structure morphism being locally of finite type over the field
+    \(\bar k\).
+\end{enumerate}
+
+\section{Mathlib dependency anchors}
+
+\begin{theorem}[Dedekind characterisation of a domain]
+  \label{lem:isDedekindRing_iff_mathlib}
+  \lean{isDedekindRing_iff}
+  \mathlibok
+  \textit{Provided by Mathlib (\texttt{Mathlib.RingTheory.DedekindDomain.Basic}).}
+  Let \(A\) be a commutative ring and \(K\) a fraction field of \(A\)
+  (\(\texttt{IsFractionRing}\ A\ K\)). Then \(A\) is a Dedekind ring if and
+  only if it is Noetherian, of dimension at most one, and integrally closed in
+  \(K\):
+  \[
+    \texttt{IsDedekindRing}\ A \;\Longleftrightarrow\;
+    \texttt{IsNoetherianRing}\ A \;\wedge\;
+    \texttt{Ring.DimensionLEOne}\ A \;\wedge\;
+    \bigl(\forall\, x \in K,\ \text{$x$ integral over $A$}
+      \Rightarrow x \in (\operatorname{algebraMap} A\,K).\mathrm{range}\bigr).
+  \]
+\end{theorem}
+
+\begin{lemma}[Integral closure is a local property at maximal ideals]
+  \label{lem:isIntegrallyClosed_of_localization_maximal_mathlib}
+  \lean{IsIntegrallyClosed.of_localization_maximal}
+  \mathlibok
+  \textit{Provided by Mathlib
+    (\texttt{Mathlib.RingTheory.LocalProperties.IntegrallyClosed}).}
+  Let \(R\) be an integral domain. Suppose that for every nonzero maximal ideal
+  \(\mathfrak p \subseteq R\) the localisation \(\texttt{Localization.AtPrime}\
+  \mathfrak p\) is integrally closed. Then \(R\) is integrally closed
+  (\(\texttt{IsIntegrallyClosed}\ R\)).
+\end{lemma}
+
+\section{Dimension at most one}
+
+\begin{lemma}\leanok
+[The chart ring has dimension at most one]
+  \label{lem:chart_dimensionLEOne}
+  \lean{AlgebraicGeometry.chart_dimensionLEOne}
+  \uses{thm:krullDim_curve_le_one}
+  Under the standing hypotheses, the coordinate ring \(A = \Gamma(C, U)\) of a
+  nonempty affine open of the smooth curve \(C\) has Krull dimension at most
+  one: every nonzero prime ideal of \(A\) is maximal
+  (\(\texttt{Ring.DimensionLEOne}\ A\)).
+\end{lemma}
+
+\begin{proof}
+  \uses{thm:krullDim_curve_le_one}
+  \leanok
+  The affine open \(U\) is homeomorphic to \(\Spec A\), and the inclusion
+  \(U \hookrightarrow C.\mathrm{left}\) is an open immersion of topological
+  spaces. The Krull dimension of a topological space does not increase under
+  passage to a subspace, so
+  \[
+    \krullDim(\Spec A) \;=\; \krullDim U \;\le\; \krullDim C.\mathrm{left}.
+  \]
+  By the project bound \cref{thm:krullDim_curve_le_one} the right-hand side is
+  at most one, whence \(\krullDim A \le 1\). For a ring this bound is exactly
+  the statement that every nonzero prime ideal is maximal: a chain
+  \(\mathfrak p_0 \subsetneq \mathfrak p_1 \subsetneq \mathfrak p_2\) of primes
+  would witness Krull dimension at least two, so a nonzero prime
+  \(\mathfrak p\) (which strictly contains the zero prime, \(A\) being a
+  domain) admits no prime strictly above it and is therefore maximal. This is
+  \(\texttt{Ring.DimensionLEOne}\ A\).
+\end{proof}
+
+\section{Integral closure}
+
+\begin{lemma}\leanok
+[The chart ring is integrally closed]
+  \label{lem:chart_isIntegrallyClosed}
+  \lean{AlgebraicGeometry.chart_isIntegrallyClosed}
+  \uses{lem:isIntegrallyClosed_of_localization_maximal_mathlib,
+        lem:stalk_isDVR_of_smooth}
+  % SOURCE: [Hartshorne], I.6, Theorem 6.2A, p. 40 (read from
+  % references/hartshorne-algebraic-geometry.pdf): a noetherian local domain of
+  % dimension one is integrally closed iff it is a discrete valuation ring;
+  % equivalently a discrete valuation ring is integrally closed.
+  % SOURCE QUOTE: "Theorem 6.2A. Let $A$ be a noetherian local domain of
+  % dimension one, with maximal ideal $\mathfrak m$. Then the following
+  % conditions are equivalent: (i) $A$ is a discrete valuation ring; (ii) $A$
+  % is integrally closed; (iii) $A$ is a regular local ring; (iv) $\mathfrak m$
+  % is a principal ideal."
+  \textit{Source: Hartshorne, I.6, Theorem 6.2A.}
+  Under the standing hypotheses, the coordinate ring \(A = \Gamma(C, U)\) is
+  integrally closed in its fraction field
+  (\(\texttt{IsIntegrallyClosed}\ A\)).
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:isIntegrallyClosed_of_localization_maximal_mathlib,
+        lem:stalk_isDVR_of_smooth}
+        \leanok
+  Since \(A\) is an integral domain, by
+  \cref{lem:isIntegrallyClosed_of_localization_maximal_mathlib} it suffices to
+  prove that for every nonzero maximal ideal \(\mathfrak p \subseteq A\) the
+  localisation \(A_{\mathfrak p} = \texttt{Localization.AtPrime}\ \mathfrak p\)
+  is integrally closed.
+
+  Fix such a \(\mathfrak p\). Under the homeomorphism \(U \cong \Spec A\) the
+  maximal ideal \(\mathfrak p\) corresponds to a closed point
+  \(x \in U \subseteq C\), and the localisation of the coordinate ring of an
+  affine open at the prime of a point is canonically the stalk of the structure
+  sheaf there:
+  \[
+    A_{\mathfrak p} \;\cong\; \mathcal O_{C, x}.
+  \]
+  Because \(x\) is a closed point of the one-dimensional integral curve \(C\),
+  its local ring has Krull dimension one, i.e.\ \(x\) is a codimension-one
+  point (\(\coheight x = 1\)). The smooth-curve discrete-valuation witness
+  \cref{lem:stalk_isDVR_of_smooth} then makes \(\mathcal O_{C, x}\) a discrete
+  valuation ring. A discrete valuation ring is a principal ideal domain, hence
+  integrally closed; transporting along the isomorphism above,
+  \(A_{\mathfrak p}\) is integrally closed. As \(\mathfrak p\) was an arbitrary
+  nonzero maximal ideal, \cref{lem:isIntegrallyClosed_of_localization_maximal_mathlib}
+  yields \(\texttt{IsIntegrallyClosed}\ A\).
+\end{proof}
+
+\section{The chart ring is a Dedekind domain}
+
+\begin{theorem}\leanok
+[An affine chart of a smooth curve is a Dedekind domain]
+  \label{thm:chart_isDedekindDomain}
+  \lean{AlgebraicGeometry.chart_isDedekindDomain}
+  \uses{lem:chart_dimensionLEOne, lem:chart_isIntegrallyClosed,
+        lem:isDedekindRing_iff_mathlib}
+  % SOURCE: [Hartshorne], I.6, p. 40 (Definition of a Dedekind domain) and
+  % p. 41 (nonsingular curves have Dedekind coordinate rings) (read from
+  % references/hartshorne-algebraic-geometry.pdf).
+  % SOURCE QUOTE: "Definition. A Dedekind domain is an integrally closed
+  % noetherian domain of dimension one."
+  % SOURCE QUOTE: "If $P$ is a point on a nonsingular curve $Y$, then by (5.1)
+  % the local ring $\mathcal{O}_P$ is a regular local ring of dimension one,
+  % and so by (6.2A) it is a discrete valuation ring. Its quotient field is the
+  % function field $K$ of $Y$, and since $k \subseteq \mathcal{O}_P$, it is a
+  % valuation ring of $K/k$."
+  \textit{Source: Hartshorne, I.6, Definition (Dedekind domain) and p. 41.}
+  Under the standing hypotheses, the coordinate ring \(A = \Gamma(C, U)\) of a
+  nonempty affine open of the smooth proper curve \(C\) is a Dedekind domain
+  (\(\texttt{IsDedekindDomain}\ A\), equivalently \(\texttt{IsDedekindRing}\ A\)),
+  with fraction field the function field \(K(C)\).
+\end{theorem}
+
+\begin{proof}
+  \uses{lem:chart_dimensionLEOne, lem:chart_isIntegrallyClosed,
+        lem:isDedekindRing_iff_mathlib}
+        \leanok
+  We apply the Dedekind characterisation
+  \cref{lem:isDedekindRing_iff_mathlib} to \(A\) with its fraction field
+  \(K = K(C)\) (\(\texttt{IsFractionRing}\ A\ K(C)\), since \(K(C)\) is the
+  function field of the integral curve and \(A\) is the section ring of a
+  nonempty affine open). It remains to verify the three conjuncts.
+
+  \emph{Noetherian.} The structure morphism \(C.\mathrm{hom}\) is locally of
+  finite type over the field \(\bar k\), so \(C.\mathrm{left}\) is locally
+  Noetherian; the coordinate ring of an affine open of a locally Noetherian
+  scheme is a Noetherian ring, giving \(\texttt{IsNoetherianRing}\ A\).
+
+  \emph{Dimension at most one.} This is \cref{lem:chart_dimensionLEOne}:
+  \(\texttt{Ring.DimensionLEOne}\ A\).
+
+  \emph{Integrally closed in \(K(C)\).} By
+  \cref{lem:chart_isIntegrallyClosed} the ring \(A\) is integrally closed,
+  which is exactly the third conjunct: every \(x \in K(C)\) integral over \(A\)
+  lies in the image of \(A \hookrightarrow K(C)\).
+
+  The three conjuncts assembled through
+  \cref{lem:isDedekindRing_iff_mathlib} give \(\texttt{IsDedekindRing}\ A\);
+  together with the domain structure on \(A\) this is
+  \(\texttt{IsDedekindDomain}\ A\). The fraction field is \(K(C)\) by
+  construction.
+\end{proof}
+
+\section{Algebraic Hartogs on a Dedekind chart}
+
+The Dedekind structure of the previous section delivers the converse of the
+``regular \(\Rightarrow\) no poles'' inclusion: a rational function that is
+\emph{pole-free} on the chart is in fact regular there. We package this
+algebraic-Hartogs statement at the level of the coordinate ring, decoupled from
+the structure-sheaf gluing of \cref{chap:RiemannRoch_OcOfD}, so that the
+sheaf bridge can consume it as a single self-contained fact. It is the affine,
+codimension-one shadow of the principle ``intersection of localisations \(=\)
+the ring'' (Hartshorne~II.6.3A).
+
+\begin{lemma}\leanok
+[Pole-free at a prime divisor gives bounded adic valuation]
+  \label{lem:chart_valuation_le_one_of_order_nonneg}
+  \lean{AlgebraicGeometry.chart_valuation_le_one_of_order_nonneg}
+  \uses{def:order_at_point, lem:stalk_isDVR_of_smooth}
+  Let \(V\) be an affine integral scheme that is regular in codimension one, and
+  write \(A = \Gamma(V, \top)\) for its coordinate ring and \(K = K(V) =
+  \Frac(A)\) for its function field. Let \(Z\) be a prime divisor of \(V\),
+  i.e.\ a codimension-one point, and let \(\mathfrak p \subseteq A\) be the
+  corresponding height-one prime, so that the localisation \(A_{\mathfrak p}\)
+  is the stalk \(\struct{V, Z}\), a discrete valuation ring
+  (\cref{lem:stalk_isDVR_of_smooth}). Then for every \(g \in K\),
+  \[
+    \ord_Z(g) \ge 0 \;\Longrightarrow\;
+    v_{\mathfrak p}(g) \le 1,
+  \]
+  where \(v_{\mathfrak p} = \texttt{HeightOneSpectrum.valuation}\) is the
+  \(\mathfrak p\)-adic valuation of the Dedekind domain \(A\).
+\end{lemma}
+
+\begin{proof}
+  \uses{def:order_at_point, lem:stalk_isDVR_of_smooth}
+  \leanok
+  By definition (\cref{def:order_at_point}), \(\ord_Z(g) \ge 0\) if and only
+  if \(\operatorname{ordFrac}_{A_{\mathfrak p}}(g) \ge 1\) in the discrete
+  valuation ring \(\struct{V, Z} = A_{\mathfrak p}\). On a discrete valuation
+  ring the fractional order and the adic valuation are reciprocal,
+  \(\operatorname{ordFrac} = (-)^{-1} \circ v\) in the value group; hence
+  \(\operatorname{ordFrac}(g) \ge 1\) if and only if \(v(g) \le 1\) for the
+  valuation of the localisation \(A_{\mathfrak p}\). Finally the
+  \(\mathfrak p\)-adic valuation \(v_{\mathfrak p}\) of the Dedekind domain
+  \(A\) at the height-one prime \(\mathfrak p\) agrees with the valuation of its
+  localisation \(A_{\mathfrak p}\), so \(v_{\mathfrak p}(g) \le 1\).
+\end{proof}
+
+\begin{theorem}\leanok
+[Algebraic Hartogs on a Dedekind chart]
+  \label{thm:chart_mem_range_of_forall_order_nonneg}
+  \lean{AlgebraicGeometry.chart_mem_range_of_forall_order_nonneg}
+  \uses{thm:chart_isDedekindDomain, lem:mem_integers_of_valuation_le_one,
+        def:order_at_point, lem:stalk_isDVR_of_smooth,
+        lem:chart_valuation_le_one_of_order_nonneg}
+  % SOURCE: [Hartshorne], II.6, Proposition 6.3A, p.~132 (read from
+  % references/hartshorne-algebraic-geometry.pdf, PDF page 149 = doc p.132;
+  % scanned-image page, transcribed character-by-character from the rendered
+  % page).
+  % SOURCE QUOTE: "Proposition 6.3A. Let $A$ be an integrally closed noetherian
+  % domain. Then
+  % $A = \bigcap_{\mathrm{ht}\,\mathfrak p = 1} A_{\mathfrak p}$
+  % where the intersection is taken over all prime ideals of height 1.
+  % PROOF. Matsumura [2, Th. 38, p. 124]."
+  \textit{Source: Hartshorne, II.6, Proposition 6.3A, p.~132.}
+  Let \(V\) be an affine, integral, locally Noetherian scheme that is regular in
+  codimension one and satisfies \(\krullDim V \le 1\) (\(\texttt{Order.krullDim}\
+  V \le 1\)). Write \(A = \Gamma(V, \top)\) for its coordinate ring and
+  \(K = K(V) = \Frac(A)\) for its function field. Let \(g \in K\). If
+  \[
+    \ord_Z(g) \ge 0 \qquad \text{at every prime divisor } Z \text{ of } V,
+  \]
+  then \(g\) lies in the image of the structure map
+  \(\Gamma(V, \top) \to K(V)\); that is, \(g\) is a global regular function,
+  \(g \in (\operatorname{algebraMap} A\,K).\mathrm{range}\).
+\end{theorem}
+
+% SOURCE QUOTE PROOF: "PROOF. Matsumura [2, Th. 38, p. 124]."
+\begin{proof}
+  \uses{thm:chart_isDedekindDomain, lem:mem_integers_of_valuation_le_one,
+        lem:chart_valuation_le_one_of_order_nonneg, def:order_at_point}
+        \leanok
+  By \cref{thm:chart_isDedekindDomain} the coordinate ring \(A = \Gamma(V,
+  \top)\) is a Dedekind domain whose fraction field is the function field
+  \(K = K(V)\). The algebraic-Hartogs anchor
+  \cref{lem:mem_integers_of_valuation_le_one} then reduces the claim to a bound
+  on adic valuations: if \(v_{\mathfrak p}(g) \le 1\) at every height-one prime
+  \(\mathfrak p\) of \(A\), then \(g \in (\operatorname{algebraMap} A\,K).\mathrm{range}\).
+  So it suffices to verify \(v_{\mathfrak p}(g) \le 1\) for every such
+  \(\mathfrak p\).
+
+  Fix a height-one prime \(\mathfrak p\) of \(A\). Under the homeomorphism
+  \(V \cong \Spec A\) the height-one primes of \(A\) correspond exactly to the
+  codimension-one points of \(V\), i.e.\ to the prime divisors \(Z\) of \(V\)
+  (the same correspondence underlying the finiteness of the order support on an
+  affine chart): the localisation \(A_{\mathfrak p}\) is the stalk
+  \(\struct{V, Z}\), a discrete valuation ring by regularity in codimension one
+  (\cref{lem:stalk_isDVR_of_smooth}). The hypothesis gives \(\ord_Z(g) \ge 0\)
+  at this prime divisor, and the per-prime translation
+  \cref{lem:chart_valuation_le_one_of_order_nonneg} converts it to
+  \(v_{\mathfrak p}(g) \le 1\): the divisorial order is the logarithm of the
+  fractional order in \(\struct{V, Z}\) (\cref{def:order_at_point}), and on a
+  discrete valuation ring \(\operatorname{ordFrac} = (-)^{-1} \circ v\), so
+  \(\ord_Z(g) \ge 0 \Leftrightarrow \operatorname{ordFrac}(g) \ge 1
+  \Leftrightarrow v(g) \le 1\), the adic valuation of \(A\) at \(\mathfrak p\)
+  agreeing with that of its localisation \(A_{\mathfrak p}\).
+
+  As \(\mathfrak p\) was an arbitrary height-one prime, \(v_{\mathfrak p}(g) \le
+  1\) for all of them; \cref{lem:mem_integers_of_valuation_le_one} then yields
+  \(g \in (\operatorname{algebraMap} A\,K).\mathrm{range}\), i.e.\ \(g\) is a
+  global regular function on \(V\).
+\end{proof}

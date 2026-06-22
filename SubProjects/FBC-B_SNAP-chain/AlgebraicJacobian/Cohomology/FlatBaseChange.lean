@@ -1746,6 +1746,43 @@ theorem chartBaseChangeGeometricComparison_mate {A R R' B : CommRingCat.{u}}
     conjugateEquiv_pullbackComp_inv, conjugateEquiv_pullbackCongr, f3,
     pushforwardCongr_inv_eq, Category.assoc]
 
+-- NOTE (iter-021, kernel-verified): the analogous GEOMETRIC component bridge
+-- `chartBaseChangeGeometricComparison ψ φ ρ M = (chartBaseChangeGeometricComparisonNat ψ φ ρ).app
+-- (tilde M)` is NOT kernel-safe at any close: the structural simp set
+-- `[…NatIso.trans_app, Iso.app_hom, …]` correctly reduces both sides to a SINGLE proof-irrelevance
+-- residual (`pullbackCongr P₁ = pullbackCongr P₂`, both sides otherwise token-identical; verified via
+-- LSP `goals_after = []` under `rfl`/`congr 1`), yet a cold `lake build` `(kernel) deterministic
+-- timeout`s. ROOT CAUSE (sharpening iter-020): the residual morphisms have `tilde M`-evaluated TYPES
+-- (`(pullback (Spec _)).obj (tilde M)`), and the kernel must whnf the heavy `tilde M` sheafification
+-- carrier to typecheck the congruence/rfl proof term. This is INHERENT to any proof obligation that
+-- equates two presentations at `.app (tilde M)`. The ALGEBRAIC bridge below is kernel-safe ONLY
+-- because its carriers are `ModuleCat.extendScalars` (no sheafification). The kernel-safe route for the
+-- geometric side must avoid `.app (tilde M)` in the proof entirely (prove generically at a variable
+-- `N : (Spec R).Modules` — where `pullback.obj N` does not whnf — then instantiate at `tilde M` by
+-- substitution, which the kernel does without whnf); see the glue `sorry` note below.
+
+/-- **Component bridge for the algebraic reassociation** (kernel-safe). The `M`-component of the
+natural-iso form `chartBaseChangeModuleReassocNat` is the per-`M` reassociation
+`chartBaseChangeModuleReassoc`. As with the geometric bridge, the structural component-distribution simp
+set (plus `eqToHom_app` for the middle `eqToIso` of the ring square) discharges it without forcing the
+extend-scalars carriers to whnf. Project-local; feeds
+`pullback_spec_tilde_iso_ring_square_mate_glue`. -/
+lemma chartBaseChangeModuleReassoc_eq_natApp {A R R' B : CommRingCat.{u}}
+    (ψ : A ⟶ B) (φ : A ⟶ R) (ρ : R ⟶ R') (M : ModuleCat.{u} R) :
+    letI : Algebra (A : Type u) (R : Type u) := φ.hom.toAlgebra
+    letI : Algebra (A : Type u) (R' : Type u) := (φ ≫ ρ).hom.toAlgebra
+    letI : Algebra (A : Type u) (B : Type u) := ψ.hom.toAlgebra
+    chartBaseChangeModuleReassoc ψ φ ρ M
+      = (chartBaseChangeModuleReassocNat ψ φ ρ).app M := by
+  letI : Algebra (A : Type u) (R : Type u) := φ.hom.toAlgebra
+  letI : Algebra (A : Type u) (R' : Type u) := (φ ≫ ρ).hom.toAlgebra
+  letI : Algebra (A : Type u) (B : Type u) := ψ.hom.toAlgebra
+  apply Iso.ext
+  simp only [chartBaseChangeModuleReassoc, chartBaseChangeModuleReassocNat,
+    eq_mpr_eq_cast, cast_eq, Iso.trans_hom, Iso.symm_hom, Iso.app_hom, Iso.app_inv,
+    NatTrans.comp_app, NatIso.trans_app, eqToIso.hom, eqToHom_app]
+  congr 1
+
 /-- **(b2) Iterated-mate glue of the ring-square naturality** (blueprint
 `lem:pullback_spec_tilde_iso_ring_square_mate_glue`). The iterated-mate assembly of the per-leg unit
 triangle `pullback_spec_tilde_iso_inv_unit_triangle`, the two mate legs
@@ -1817,6 +1854,49 @@ theorem pullback_spec_tilde_iso_ring_square_mate_glue {A R R' B : CommRingCat.{u
   -- naively over the whole goal). The Mathlib-aligned escape is to drive each factor by the closed
   -- coherence lemmas (as the two legs themselves were closed in iter-018), never `unit_conjugateEquiv`
   -- over the composite — but that telescoping at the COMBINED four-leg level is the open assembly.
+  --
+  -- iter-020 NOTE (REVERTED — kernel-verified dead end, do NOT re-attempt): bridging the two non-`pst`
+  -- legs to their NATURAL-ISO forms via `have hg : chartBaseChangeGeometricComparison ψ φ ρ M =
+  -- (chartBaseChangeGeometricComparisonNat ψ φ ρ).app (tilde M) := by apply Iso.ext; rfl` (and the
+  -- analogous `hr` for the algebraic reassoc) ELABORATES cleanly in the LSP/`lean_multi_attempt` REPL
+  -- (the `Iso.ext` reduces to a `.hom`-only `rfl`, which the elaborator accepts), and the subsequent
+  -- `rw [hg, hr]` exposes `geomNat`/`reassocNat` so that `chartBaseChangeGeometricComparison_mate` and
+  -- `chartBaseChangeModuleReassoc_extendScalarsComp` both apply syntactically AND elaborate into context
+  -- without bombing. BUT a cold `lake build` shows the `hg` `.hom`-`rfl` proof term `(kernel)
+  -- deterministic timeout`s (the `tilde M`/pullback carrier whnf, hidden by the LSP). So the geometric
+  -- Nat bridge is NOT kernel-safe. A kernel-safe geometric bridge must avoid the `tilde M` carrier
+  -- whnf entirely (e.g. a `@[simp]`-tagged structural `NatIso`-component lemma proven once at functor
+  -- level, OR keep the whole telescoping at NAT-TRANS level so `.app (tilde M)` is never forced).
+  --
+  -- iter-021 FINDING (SHARPENED, kernel-verified — this narrows the obstacle precisely):
+  -- The geometric Nat bridge was retried with the STRUCTURAL component-distribution simp set
+  -- `simp only [chartBaseChangeGeometricComparison, chartBaseChangeGeometricComparisonNat,
+  --   eq_mpr_eq_cast, cast_eq, Iso.trans_hom, Iso.symm_hom, Iso.app_hom, Iso.app_inv,
+  --   NatTrans.comp_app, NatIso.trans_app]` (NOT the iter-020 `Iso.ext; rfl`). The LSP confirms this
+  -- reduces BOTH sides to a SINGLE proof-irrelevance residual — token-identical except the hidden
+  -- `pullbackCongr P₁` vs `pullbackCongr P₂` proof args — closed by `rfl`/`congr 1` with
+  -- `goals_after = []`. YET a cold `lake build` STILL `(kernel) deterministic timeout`s at the bridge.
+  -- ROOT CAUSE: the close tactic is IRRELEVANT; the residual morphisms have `tilde M`-EVALUATED types
+  -- (`(pullback (Spec _)).obj (tilde M)`), and the kernel must whnf the heavy `tilde`-sheafification
+  -- carrier to typecheck ANY congruence/`rfl`/`congr`/`rw`-generated proof term over them. This is
+  -- INHERENT to every proof obligation that EQUATES two presentations at `.app (tilde M)` — and it
+  -- already bombs with `M` a free variable (so the "prove generically at a variable `N`, instantiate at
+  -- `tilde M`" escape does NOT help: the heaviness is the symbolic `pullback ∘ tilde` whnf, not a closed
+  -- `tilde M`). Critically, the GLUE STATEMENT itself typechecks (`sorry` body), and the delegation
+  -- `exact pullback_spec_tilde_iso_ring_square_mate_glue ψ φ ρ M` from `_ring_square_natural` is
+  -- kernel-light — i.e. a DIRECT `exact <closed-lemma> ψ φ ρ M` over a `.obj (tilde M)` type is fine;
+  -- only `simp`/`congr`/`rw`/`rfl` steps that FORCE a defeq check at a `.obj (tilde M)` type bomb.
+  -- CONSEQUENCE for the route: the four-leg telescoping cannot be assembled by tactic massaging that
+  -- evaluates the closed (functor-level) legs at `.app (tilde M)`. The viable assembly must be PURE
+  -- TERM-MODE — build the glue iso as one closed term from the per-leg unit triangles
+  -- `pullback_spec_tilde_iso_inv_unit_triangle` (already kernel-safe, M-component level) and
+  -- `gammaPushforwardNatIso_comp` (a `ModuleCat`-level equation, sheaf-free), composed with `≫`/`Iso`
+  -- combinators so the kernel never runs a defeq check at a `.obj (tilde M)` type — equivalently, prove
+  -- the underlying NAT-ISO equation entirely at nat-transformation level (via `natTrans_ext_of_unit` +
+  -- the closed legs, exactly as the two legs were closed) and obtain the `.app M` conclusion by a single
+  -- final `exact`, never an intermediate `.app (tilde M)` rewrite. The kernel-SAFE algebraic component
+  -- bridge `chartBaseChangeModuleReassoc_eq_natApp` (above; carriers are `ModuleCat.extendScalars`, no
+  -- sheafification — it builds) is the algebraic-leg half of that nat-level assembly already in place.
   sorry
 
 /-- **(b2) Ring-square naturality of the tilde-pullback dictionary**

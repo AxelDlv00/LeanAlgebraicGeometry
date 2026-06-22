@@ -1122,7 +1122,8 @@ discrete valuation ring and \(\ord_Q\) is its valuation.
   the section module is \(\{0\}\), so both composites agree.
 \end{definition}
 
-\begin{lemma}[Carrier-presheaf restrictions are the identity on rational functions]
+\begin{lemma}\leanok
+[Carrier-presheaf restrictions are the identity on rational functions]
   \label{lem:carrierPresheaf_map_coe}
   \lean{AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.carrierPresheaf_map_coe}
   \uses{def:sheafOf_carrierPresheaf}
@@ -1393,6 +1394,20 @@ discrete valuation ring and \(\ord_Q\) is its valuation.
   \(\mathbf{Sh}(C, \mathbf{Mod}_{\bar k})\): the residue field \(\bar k\)
   placed at the closed point \(P\).
 \end{definition}
+
+\begin{lemma}[Stalk--skyscraper adjunction]
+  \label{lem:stalkSkyscraperSheafAdjunction_mathlib}
+  \lean{stalkSkyscraperSheafAdjunction}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For a point \(p_0\) of a topological space \(X\) and a category \(C\) with a
+  terminal object and all colimits, the composite functor
+  \(\mathrm{Sheaf.forget} \mathbin{⋙} \mathrm{stalkFunctor}\,p_0\) sending a
+  sheaf to its stalk at \(p_0\) is \emph{left adjoint} to the skyscraper-sheaf
+  functor \(A \mapsto \texttt{skyscraperSheaf}\,p_0\,A\). In particular this
+  stalk functor, being a left adjoint, preserves all colimits --- in particular
+  cokernels.
+\end{lemma}
 
 \begin{lemma}
 
@@ -1917,8 +1932,39 @@ sections]
 
 \begin{proof}
   \uses{lem:carrierSheaf_stalk_eq_fractionalIdeal, lem:stalk_isDVR_of_smooth,
-        lem:codimOne_point_residueField_eq_kbar}
-  By \cref{lem:carrierSheaf_stalk_eq_fractionalIdeal} the two stalks are
+        lem:codimOne_point_residueField_eq_kbar,
+        lem:stalkSkyscraperSheafAdjunction_mathlib,
+        lem:cokernel_stalk_at_naturality, lem:orderAtP_quotient_iso_kbar}
+  \emph{Reduction to the cokernel of a stalk map.} The stalk functor at
+  \(P.\mathrm{point}\) is a left adjoint --- to the skyscraper-sheaf functor ---
+  by \cref{lem:stalkSkyscraperSheafAdjunction_mathlib}. A left adjoint preserves
+  colimits, in particular cokernels, so the stalk at \(P.\mathrm{point}\) of
+  \(\operatorname{coker} f\) is canonically isomorphic to the cokernel of the
+  stalk map \(f_{P.\mathrm{point}}\):
+  \[
+    (\operatorname{coker} f)_{P.\mathrm{point}} \;\cong\;
+    \operatorname{coker}\!\bigl(f_{P.\mathrm{point}}\bigr).
+  \]
+  It therefore suffices to compute \(\operatorname{coker}(f_{P.\mathrm{point}})\).
+
+  \emph{Identification of the stalk map with a submodule inclusion.} Under the
+  stalk identifications of \cref{lem:carrierSheaf_stalk_eq_fractionalIdeal}
+  applied to \(D\) and to \([P]+D\), the source and target stalks are the order
+  submodules \(\mathrm{orderAtP}_D(P)\) and \(\mathrm{orderAtP}_{[P]+D}(P)\),
+  i.e.\ the fractional ideals \(\pi_P^{-n}\mathcal O_{C,P}\) and
+  \(\pi_P^{-(n+1)}\mathcal O_{C,P}\) inside \(K(C)\). Under these
+  identifications the stalk map \(f_{P.\mathrm{point}}\) is exactly the submodule
+  inclusion
+  \(\mathrm{orderAtP}_D(P) \subseteq \mathrm{orderAtP}_{[P]+D}(P)\) in \(K(C)\)
+  (the inclusion of \cref{lem:orderAtPSubmodule_le_single_add}): the restriction
+  maps defining the stalk act as the identity on \(K(C)\), so the carrier
+  inclusion \(f\) induces precisely the inclusion of the limiting submodules.
+  This commuting identification of the stalk map with the submodule inclusion is
+  the content of the naturality square
+  \cref{lem:cokernel_stalk_at_naturality}. The remaining task is thus the
+  cokernel of this inclusion of fractional ideals.
+
+  \emph{DVR residue computation.} The two stalks are
   \(\pi_P^{-n}\mathcal O_{C,P}\) and \(\pi_P^{-(n+1)}\mathcal O_{C,P}\), and the
   stalk of the inclusion is the inclusion of these fractional ideals (the
   restriction maps being the identity on \(K(C)\)). In the discrete valuation
@@ -1929,7 +1975,253 @@ sections]
   induces an isomorphism of quotient \(\bar k\)-modules
   \(\pi_P^{-(n+1)}\mathcal O_{C,P}/\pi_P^{-n}\mathcal O_{C,P} \cong \mathcal
   O_{C,P}/\mathfrak m_P\). The right-hand quotient is the residue field at \(P\),
-  equal to \(\bar k\) by \cref{lem:codimOne_point_residueField_eq_kbar}.
+  equal to \(\bar k\) by \cref{lem:codimOne_point_residueField_eq_kbar}. This
+  residue computation is carried formally by the linear equivalence
+  \cref{lem:orderAtP_residue_linearEquiv}, assembled into the quotient
+  isomorphism \cref{lem:orderAtP_quotient_iso_kbar}; the lift of
+  \(\pi_P^{\,n+1} g\) (which has \(\ord_P \ge 0\)) into \(\mathcal O_{C,P}\) is
+  supplied by the discrete-valuation-ring membership criterion
+  \cref{lem:dvr_exists_lift_of_le_one}.
+\end{proof}
+
+\begin{lemma}[Lift of a non-negative-order element across a DVR]
+  \label{lem:dvr_exists_lift_of_le_one}
+  \lean{IsDiscreteValuationRing.exists_lift_of_le_one}
+  \mathlibok
+  \textit{Provided by Mathlib
+  (\texttt{Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing}).}
+  Let \(A\) be a discrete valuation ring with fraction field
+  \(K = \operatorname{Frac}(A)\), and let \(x \in K\). If the height-one adic
+  valuation \(v_{\mathfrak m}\) at the maximal ideal \(\mathfrak m\) of \(A\)
+  satisfies \(v_{\mathfrak m}(x) \le 1\) --- equivalently the order is
+  non-negative, \(\ord(x) \ge 0\) --- then \(x\) lifts to \(A\): there exists
+  \(a \in A\) with \(\operatorname{algebraMap}_A^K(a) = x\). This is the
+  single-DVR specialisation of the algebraic-Hartogs membership criterion: a
+  function with no pole at the closed point of \(\operatorname{Spec} A\) is
+  regular there.
+\end{lemma}
+
+\begin{lemma}[Order is the inverse of the adic valuation on a DVR]
+  \label{lem:ordFrac_eq_inverse_valuation}
+  \lean{Ring.ordFrac_eq_inverse_comp_valuation}
+  \mathlibok
+  \textit{Provided by Mathlib
+  (\texttt{Mathlib.RingTheory.OrderOfVanishing.Noetherian}).}
+  Let \(A\) be a discrete valuation ring with fraction field
+  \(K = \operatorname{Frac}(A)\). Then the fractional order
+  \(\operatorname{ordFrac}_A\) factors through the height-one adic valuation
+  \(v_{\mathfrak m}\) at the maximal ideal \(\mathfrak m\) of \(A\):
+  \[
+    \operatorname{ordFrac}_A \;=\;
+    \texttt{MonoidWithZero.inverse} \,\circ\, v_{\mathfrak m}.
+  \]
+  This is the order \(\leftrightarrow\) valuation dictionary on a DVR; under it
+  \(\operatorname{ordFrac}_A(x) \ge 1\) (i.e.\ \(\ord(x) \ge 0\)) is equivalent
+  to \(v_{\mathfrak m}(x) \le 1\), translating the non-negative-order hypothesis
+  of \cref{lem:dvr_exists_lift_of_le_one} into its valuation form.
+\end{lemma}
+
+\begin{lemma}\leanok
+[Order submodule is monotone under \(D \rightsquigarrow [P]+D\)]
+  \label{lem:orderAtPSubmodule_le_single_add}
+  \lean{AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.orderAtPSubmodule_le_single_add}
+  \uses{def:sheafOf_orderAtPSubmodule, def:order_at_point,
+        def:divisor_closed_point}
+  With \(C, D, P\) as above and \(n = D\,P\), the order submodule at \(P\) for
+  the divisor \(D\) is contained in that for \([P]+D\):
+  \[
+    \mathrm{orderAtP}_D(P) \;\subseteq\; \mathrm{orderAtP}_{[P]+D}(P)
+    \qquad\text{in } K(C).
+  \]
+  Indeed \(([P]+D)\,P = n+1\), so the single order constraint at \(P\) relaxes
+  from \(\ord_P(g) \ge -n\) to \(\ord_P(g) \ge -(n+1)\), which is the weaker
+  condition; the \(g = 0\) clause is common to both.
+\end{lemma}
+
+\begin{proof}
+  \uses{def:sheafOf_orderAtPSubmodule, def:order_at_point}
+  A nonzero \(g \in \mathrm{orderAtP}_D(P)\) satisfies \(\ord_P(g) \ge -n \ge
+  -(n+1)\), hence lies in \(\mathrm{orderAtP}_{[P]+D}(P)\); the zero element lies
+  in both by the \(g = 0\) clause.
+\end{proof}
+
+\begin{lemma}\leanok
+[Germ action of the stalk--supremum isomorphism]
+  \label{lem:carrierSheaf_stalk_iso_iSup_germ_coe}
+  \lean{AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.carrierSheaf_stalk_iso_iSup_germ_coe}
+  \uses{lem:carrierSheaf_stalk_iso_iSup, def:sheafOf_carrierSubmoduleSheaf}
+  With \(C, D, P\) as above, the descent isomorphism
+  \cref{lem:carrierSheaf_stalk_iso_iSup} acts on germs by the identity on the
+  underlying rational function: for a section
+  \(s \in \mathrm{carrierSubmoduleSheaf}_D(U)\) over an open
+  \(U \ni P.\mathrm{point}\), the image of the germ of \(s\) under the
+  isomorphism is \(s\) itself, viewed inside the directed supremum
+  \(\bigsqcup_{U \ni P.\mathrm{point}} \mathrm{carrierSubmoduleSheaf}_D(U)
+  \subseteq K(C)\). In particular it preserves the underlying \(K(C)\)-value.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:carrierSheaf_stalk_iso_iSup}
+  The isomorphism of \cref{lem:carrierSheaf_stalk_iso_iSup} is built by the
+  universal property of the colimit defining the stalk: each section leg
+  \(\mathrm{carrierSubmoduleSheaf}_D(U) \hookrightarrow
+  \bigsqcup_{U} \mathrm{carrierSubmoduleSheaf}_D(U)\) is the canonical inclusion
+  into the supremum, so the induced map factors the germ of \(s\) through that
+  inclusion, sending it to \(s\) viewed in the supremum --- the identity on the
+  underlying element of \(K(C)\).
+\end{proof}
+
+% NOTE: the auxiliary cast lemma
+% \lean{AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.coe_eqToHom_of_submodule_eq}
+% (an \texttt{eqToHom} between equal submodule-modules preserves the underlying
+% \(K(C)\)-value) is an internal coercion detail used only inside the proof of
+% \cref{lem:carrierSheaf_stalk_eq_hom_germ_coe}; it carries no standalone
+% mathematical content and is not given its own block.
+
+\begin{lemma}\leanok
+[Germ action of the fractional-ideal stalk identification]
+  \label{lem:carrierSheaf_stalk_eq_hom_germ_coe}
+  \lean{AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.carrierSheaf_stalk_eq_hom_germ_coe}
+  \uses{lem:carrierSheaf_stalk_iso_iSup_germ_coe,
+        lem:iSup_carrierSubmoduleSheaf_eq_orderAtPSubmodule,
+        lem:carrierSheaf_stalk_eq_fractionalIdeal}
+  With \(C, D, P\) as above, the stalk identification
+  \cref{lem:carrierSheaf_stalk_eq_fractionalIdeal} --- the composite of the
+  descent isomorphism \cref{lem:carrierSheaf_stalk_iso_iSup} with the supremum
+  equality \cref{lem:iSup_carrierSubmoduleSheaf_eq_orderAtPSubmodule} --- acts on
+  germs by the identity on the underlying rational function: the germ of a
+  section \(s\) over \(U \ni P.\mathrm{point}\) is sent to \(s\) viewed as an
+  element of \(\mathrm{orderAtP}_D(P) \subseteq K(C)\).
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:carrierSheaf_stalk_iso_iSup_germ_coe,
+        lem:iSup_carrierSubmoduleSheaf_eq_orderAtPSubmodule}
+  The identification is the descent isomorphism followed by the cast along the
+  supremum equality \(\bigsqcup_{U} \mathrm{carrierSubmoduleSheaf}_D(U) =
+  \mathrm{orderAtP}_D(P)\) of
+  \cref{lem:iSup_carrierSubmoduleSheaf_eq_orderAtPSubmodule}. The descent
+  isomorphism sends the germ of \(s\) to \(s\) on underlying values by
+  \cref{lem:carrierSheaf_stalk_iso_iSup_germ_coe}, and the cast between equal
+  \(\bar k\)-submodules of \(K(C)\) is the identity on underlying values; the
+  composite therefore preserves the \(K(C)\)-value of \(s\).
+\end{proof}
+
+\begin{lemma}\leanok
+[The stalk map is the order-submodule inclusion (naturality square)]
+  \label{lem:cokernel_stalk_at_naturality}
+  \lean{AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.cokernel_stalk_at_naturality}
+  \uses{lem:carrierSheaf_stalk_eq_hom_germ_coe,
+        lem:orderAtPSubmodule_le_single_add,
+        def:sheafOf_carrierSheafHom_le_add_single}
+  With \(C, D, P\) as above and \(n = D\,P\), let
+  \(f : \texttt{carrierSheaf}_D \to \texttt{carrierSheaf}_{[P]+D}\) be the
+  carrier inclusion (\cref{def:sheafOf_carrierSheafHom_le_add_single}). Then the
+  square comparing the stalk map of \(f\) at \(P.\mathrm{point}\) with the
+  order-submodule inclusion \cref{lem:orderAtPSubmodule_le_single_add} commutes:
+  \[
+    f_{P.\mathrm{point}} \;\circ\;
+      \bigl(\text{stalk id.\ for } D\bigr)
+    \;=\;
+    \bigl(\text{stalk id.\ for } [P]+D\bigr) \;\circ\;
+      \bigl(\mathrm{orderAtP}_D(P) \hookrightarrow
+            \mathrm{orderAtP}_{[P]+D}(P)\bigr),
+  \]
+  where the two ``stalk id.'' arrows are the identifications
+  \cref{lem:carrierSheaf_stalk_eq_fractionalIdeal} for \(D\) and \([P]+D\). That
+  is, under the stalk identifications the stalk map of the carrier inclusion is
+  exactly the inclusion of order submodules in \(K(C)\).
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:carrierSheaf_stalk_eq_hom_germ_coe,
+        lem:orderAtPSubmodule_le_single_add}
+  Both composites are determined by their action on germs. A germ at
+  \(P.\mathrm{point}\) is represented by a section \(s\) over some
+  \(U \ni P.\mathrm{point}\). The carrier inclusion \(f\) is, on each open, the
+  identity on the underlying rational function in \(K(C)\)
+  (\cref{def:sheafOf_carrierSheafHom_le_add_single}); the order-submodule
+  inclusion \cref{lem:orderAtPSubmodule_le_single_add} is likewise the identity
+  on \(K(C)\)-values; and both stalk identifications send a germ to its
+  underlying value by \cref{lem:carrierSheaf_stalk_eq_hom_germ_coe}. Tracing the
+  germ of \(s\) around either path therefore yields the same element of
+  \(\mathrm{orderAtP}_{[P]+D}(P) \subseteq K(C)\), so the square commutes.
+\end{proof}
+
+\begin{lemma}\leanok
+[Residue linear equivalence of the order-submodule quotient]
+  \label{lem:orderAtP_residue_linearEquiv}
+  \lean{AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.orderAtP_residue_linearEquiv}
+  \uses{lem:dvr_exists_lift_of_le_one, lem:ordFrac_eq_inverse_valuation,
+        lem:stalk_isDVR_of_smooth, lem:codimOne_point_residueField_eq_kbar,
+        lem:orderAtPSubmodule_le_single_add, def:sheafOf_orderAtPSubmodule}
+  With \(C, D, P\) as above and \(n = D\,P\), the quotient of order submodules at
+  \(P\) is \(\bar k\)-linearly isomorphic to \(\bar k\):
+  \[
+    \mathrm{orderAtP}_{[P]+D}(P)
+      \big/ \operatorname{range}\!\bigl(
+        \mathrm{orderAtP}_D(P) \hookrightarrow
+        \mathrm{orderAtP}_{[P]+D}(P)\bigr)
+    \;\cong\; \bar k,
+  \]
+  the inclusion being \cref{lem:orderAtPSubmodule_le_single_add}.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:dvr_exists_lift_of_le_one, lem:ordFrac_eq_inverse_valuation,
+        lem:stalk_isDVR_of_smooth, lem:codimOne_point_residueField_eq_kbar}
+  Work in the discrete valuation ring \(R = \mathcal O_{C,P}\)
+  (\cref{lem:stalk_isDVR_of_smooth}) with fraction field \(K(C)\) and a
+  uniformiser \(\pi_P\). Define a \(\bar k\)-linear map
+  \(\mathrm{orderAtP}_{[P]+D}(P) \to \bar k\) as follows. Given
+  \(g \in \mathrm{orderAtP}_{[P]+D}(P)\) (so \(g = 0\) or
+  \(\ord_P(g) \ge -(n+1)\)), the element \(\pi_P^{\,n+1} g\) has
+  \(\ord_P(\pi_P^{\,n+1} g) \ge 0\). By the order \(\leftrightarrow\) valuation
+  dictionary \cref{lem:ordFrac_eq_inverse_valuation} this is exactly
+  \(v_{\mathfrak m}(\pi_P^{\,n+1} g) \le 1\) at the maximal ideal
+  \(\mathfrak m = \mathfrak m_P\); hence by
+  \cref{lem:dvr_exists_lift_of_le_one} the element \(\pi_P^{\,n+1} g\) lifts to
+  \(R = \mathcal O_{C,P}\). Reducing this lift modulo \(\mathfrak m_P\) lands in
+  the residue field \(\mathcal O_{C,P}/\mathfrak m_P = \bar k\)
+  (\cref{lem:codimOne_point_residueField_eq_kbar}); this is the value of the
+  map at \(g\). It is \(\bar k\)-linear because multiplication by
+  \(\pi_P^{\,n+1}\) and the residue projection are both \(\bar k\)-linear.
+
+  The map is surjective: any \(c \in \bar k\) is the residue of some
+  \(r \in \mathcal O_{C,P}\), and \(g = \pi_P^{-(n+1)} r\) lies in
+  \(\mathrm{orderAtP}_{[P]+D}(P)\) with image \(c\). Its kernel is exactly the
+  range of the inclusion \cref{lem:orderAtPSubmodule_le_single_add}: the residue
+  of \(\pi_P^{\,n+1} g\) vanishes iff \(\pi_P^{\,n+1} g \in \mathfrak m_P =
+  \pi_P\mathcal O_{C,P}\), i.e.\ \(\ord_P(g) \ge -n\), which is precisely
+  membership in \(\mathrm{orderAtP}_D(P)\) (\cref{def:sheafOf_orderAtPSubmodule}).
+  A surjective \(\bar k\)-linear map with this kernel induces the stated
+  isomorphism of the quotient with \(\bar k\).
+\end{proof}
+
+\begin{lemma}\leanok
+[Cokernel of the order-submodule inclusion is \(\bar k\)]
+  \label{lem:orderAtP_quotient_iso_kbar}
+  \lean{AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.orderAtP_quotient_iso_kbar}
+  \uses{lem:orderAtP_residue_linearEquiv,
+        lem:orderAtPSubmodule_le_single_add, def:cokernel_mathlib}
+  With \(C, D, P\) as above, the cokernel in \(\mathbf{Mod}_{\bar k}\) of the
+  order-submodule inclusion
+  \(\mathrm{orderAtP}_D(P) \hookrightarrow \mathrm{orderAtP}_{[P]+D}(P)\)
+  (\cref{lem:orderAtPSubmodule_le_single_add}) is isomorphic to \(\bar k\):
+  \[
+    \operatorname{coker}\!\bigl(
+      \mathrm{orderAtP}_D(P) \hookrightarrow
+      \mathrm{orderAtP}_{[P]+D}(P)\bigr)
+    \;\cong\; \bar k.
+  \]
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:orderAtP_residue_linearEquiv}
+  The cokernel of a module monomorphism is canonically the quotient by its
+  range; composing this canonical identification with the residue linear
+  equivalence \cref{lem:orderAtP_residue_linearEquiv} yields the isomorphism
+  with \(\bar k\).
 \end{proof}
 
 \begin{definition}\leanok
@@ -1956,12 +2248,47 @@ sections]
   cokernel to the skyscraper.
 \end{definition}
 
+\begin{lemma}
+
+\leanok
+[Away from \(P\): the carrier inclusion is epi on stalks]
+  \label{lem:stalkFunctor_map_carrierPresheaf_le_hom_epi_of_ne}
+  \lean{AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.stalkFunctor_map_carrierPresheaf_le_hom_epi_of_ne}
+  \uses{def:sheafOf_carrierSheafHom_le_add_single,
+        lem:carrierSubmoduleSheaf_add_single_eq_of_not_mem,
+        lem:isClosed_singleton_of_coheight_eq_one}
+  With \(C, D, P\) as above and \(x \in C\) with \(x \neq P.\mathrm{point}\), the
+  stalk at \(x\) of the carrier inclusion
+  \(f : \mathcal O_C(D) \hookrightarrow \mathcal O_C([P]+D)\)
+  (\cref{def:sheafOf_carrierSheafHom_le_add_single}) is surjective --- an
+  epimorphism of \(\bar k\)-modules.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:carrierSubmoduleSheaf_add_single_eq_of_not_mem,
+        lem:isClosed_singleton_of_coheight_eq_one}
+  A germ in the stalk at \(x\) is represented by a section on some open
+  \(V \ni x\). The point \(P.\mathrm{point}\) is closed in \(C\): it is a
+  codimension-one point, hence its singleton is closed
+  (\cref{lem:isClosed_singleton_of_coheight_eq_one}). Therefore
+  \(V \setminus \{P.\mathrm{point}\}\) is again an open neighbourhood of \(x\),
+  and after shrinking \(V\) to it we may assume \(P.\mathrm{point} \notin V\).
+  Over such a \(V\) the two carrier submodules coincide,
+  \(\mathrm{carrierSubmoduleSheaf}_{[P]+D}(V) =
+  \mathrm{carrierSubmoduleSheaf}_D(V)\)
+  (\cref{lem:carrierSubmoduleSheaf_add_single_eq_of_not_mem}), so the component
+  of \(f\) over \(V\) is the inclusion of equal submodules, i.e.\ the identity,
+  and in particular surjective. Hence every germ of the target stalk at \(x\)
+  is represented by a germ in the image, so the stalk map is an epimorphism.
+\end{proof}
+
 \begin{lemma}\leanok
 [The residue-evaluation morphism is an isomorphism]
   \label{lem:cokernel_skyscraper_hom_isIso}
   \lean{AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.cokernel_skyscraper_hom_isIso}
   \uses{def:cokernel_skyscraper_hom,
-        lem:carrierPresheaf_le_hom_app_isIso_of_not_mem,
+        lem:stalkFunctor_map_carrierPresheaf_le_hom_epi_of_ne,
+        lem:stalkSkyscraperSheafAdjunction_mathlib,
         lem:cokernel_sheafOf_single_add_stalkAtP_iso_kbar,
         def:skyscraperSheaf_mathlib}
   The residue-evaluation morphism \cref{def:cokernel_skyscraper_hom} induces an
@@ -1976,15 +2303,19 @@ sections]
 \end{lemma}
 
 \begin{proof}
-  \uses{lem:carrierPresheaf_le_hom_app_isIso_of_not_mem,
+  \uses{lem:stalkFunctor_map_carrierPresheaf_le_hom_epi_of_ne,
+        lem:stalkSkyscraperSheafAdjunction_mathlib,
         lem:cokernel_sheafOf_single_add_stalkAtP_iso_kbar}
-  Stalks are checked pointwise. At a point \(Q \neq P.\mathrm{point}\): on a
-  small open \(U \ni Q\) with \(P.\mathrm{point} \notin U\) the inclusion \(f\) is
-  an isomorphism on sections by
-  \cref{lem:carrierPresheaf_le_hom_app_isIso_of_not_mem}, so \(\operatorname{coker}
-  f\) has zero stalk at \(Q\); the skyscraper likewise has zero (terminal) stalk
-  away from \(P.\mathrm{point}\), and the morphism between zero modules is an
-  isomorphism. At \(Q = P.\mathrm{point}\): the stalk of \(\operatorname{coker}
+  Stalks are checked pointwise. At a point \(Q \neq P.\mathrm{point}\): the stalk
+  map \(f_Q\) is an epimorphism by
+  \cref{lem:stalkFunctor_map_carrierPresheaf_le_hom_epi_of_ne}. The stalk functor
+  at \(Q\) is a left adjoint
+  (\cref{lem:stalkSkyscraperSheafAdjunction_mathlib}), so it preserves the
+  cokernel: \((\operatorname{coker} f)_Q \cong
+  \operatorname{coker}(f_Q)\). The cokernel of an epimorphism is
+  zero, hence \(\operatorname{coker} f\) has zero stalk at \(Q\). The skyscraper
+  likewise has zero (terminal) stalk away from \(P.\mathrm{point}\), and the
+  morphism between zero modules is an isomorphism. At \(Q = P.\mathrm{point}\): the stalk of \(\operatorname{coker}
   f\) is \(\bar k\) by
   \cref{lem:cokernel_sheafOf_single_add_stalkAtP_iso_kbar}, and the
   residue-evaluation morphism realises precisely the residue isomorphism
@@ -2120,6 +2451,38 @@ sections]
   Hartshorne's Proposition~6.3A on a normal Noetherian domain.
 \end{lemma}
 
+\begin{lemma}\leanok
+[Regular sections have non-negative order]
+  \label{lem:structureSection_mem_carrierSet_zero}
+  \lean{AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.structureSection_mem_carrierSet_zero}
+  \uses{def:sheafOf_carrierSet, def:order_at_point}
+  Let \(C\) be a smooth proper geometrically irreducible curve over \(\bar k\)
+  and let \(U \subseteq C\) be a nonempty open. For a structure-sheaf section
+  \(s \in \Gamma(U, \struct C)\), its image \(g\) in the function field
+  \(K(C)\) (via \(\texttt{germToFunctionField}\)) lies in the carrier set of the
+  zero divisor over \(U\):
+  \[
+    g \in \texttt{carrierSet}_0(U),
+  \]
+  i.e.\ at every prime divisor \(Q \in U\) one has \(\ord_Q(g) \ge 0\). This is
+  the "regular \(\Rightarrow\) no poles" forward inclusion of
+  \cref{lem:carrierSheaf_zero_sections_eq_structureSheaf}.
+\end{lemma}
+
+\begin{proof}
+  \uses{def:sheafOf_carrierSet, def:order_at_point}
+  If the image \(g\) is \(0\) it lies in \(\texttt{carrierSet}_0(U)\) by the
+  \(g = 0\) clause of the carrier set. Otherwise fix a prime divisor
+  \(Q \in U\), with local ring \(R = \struct{C,Q}\) and fraction field
+  \(K(C)\). The germ \(\beta\) of \(s\) at \(Q\) is a nonzero element of \(R\),
+  and \(g\) is the image of \(\beta\) under the localisation map
+  \(R \hookrightarrow K(C)\) (compatibility of germs along the specialisation
+  of the generic point to \(Q\)). Hence the fractional order satisfies
+  \(\operatorname{ordFrac}_R(g) \ge 1\), which is exactly \(\ord_Q(g) \ge 0\)
+  (\cref{def:order_at_point}). As \(Q\) was arbitrary,
+  \(g \in \texttt{carrierSet}_0(U)\).
+\end{proof}
+
 \begin{lemma}[Sections of the zero carrier sheaf are the structure sheaf]
   \label{lem:carrierSheaf_zero_sections_eq_structureSheaf}
   % NOTE: `\lean{}` names the EXPECTED Lean target for the section-wise
@@ -2139,14 +2502,21 @@ sections]
   % PROOF. Matsumura [2, Th. 38, p. 124]."
   \textit{Source: Hartshorne, II.6, Proposition 6.3A, p.~132.}
   \uses{lem:mem_integers_of_valuation_le_one, def:order_at_point,
-        def:sheafOf_carrierSheaf}
+        def:sheafOf_carrierSheaf, def:Scheme_toModuleKSheaf,
+        lem:sheafOf_carrierSet_mono}
   Let \(C\) be a smooth proper geometrically irreducible curve over \(\bar k\)
-  and let \(U = \operatorname{Spec} A \subseteq C\) be an affine open with
-  coordinate ring \(A\). Then the section module of the carrier sheaf of the
-  zero divisor coincides with the regular functions on \(U\):
+  and let \(U \subseteq C\) be \emph{any} open subset. Then the section module
+  of the carrier sheaf of the zero divisor over \(U\) coincides, as a
+  \(\bar k\)-submodule of the constant function-field sheaf \(K(C)\), with the
+  regular functions on \(U\):
   \[
-    \Gamma(U, \texttt{carrierSheaf}_0) \;=\; \Gamma(U, \struct C).
+    \Gamma(U, \texttt{carrierSheaf}_0) \;=\; \Gamma(U, \struct C),
   \]
+  the identification being the \emph{identity on the underlying rational
+  functions} in \(K(C)\). (Realising the right-hand side as the \(\bar k\)-module
+  sheaf \(\toModuleKSheaf C\) of \cref{def:Scheme_toModuleKSheaf}, this is the
+  per-open component isomorphism assembled in
+  \cref{lem:carrierSheaf_zero_iso_toModuleKSheaf}.)
 \end{lemma}
 
 % SOURCE QUOTE PROOF: "Proposition 6.3A. Let \(A\) be an integrally closed
@@ -2155,9 +2525,11 @@ sections]
 % where the intersection is taken over all prime ideals of height 1.
 % PROOF. Matsumura [2, Th. 38, p. 124]."
 \begin{proof}
-  \uses{lem:mem_integers_of_valuation_le_one, def:order_at_point,
-        def:sheafOf_carrierSheaf}
-  Over the affine open \(U = \operatorname{Spec} A\) the section module of
+  \uses{thm:chart_isDedekindDomain, lem:mem_integers_of_valuation_le_one,
+        lem:structureSection_mem_carrierSet_zero, lem:sheafOf_carrierSet_mono,
+        def:order_at_point, def:sheafOf_carrierSheaf}
+  \emph{Affine case.} Over an affine open
+  \(U = \operatorname{Spec} A \subseteq C\) the section module of
   \(\texttt{carrierSheaf}_0\) is the set of rational functions with no poles on
   \(U\):
   \[
@@ -2165,20 +2537,48 @@ sections]
     \{\, g \in K(C) : \ord_Q(g) \geq 0 \text{ for every prime divisor }
     Q \in U \,\},
   \]
-  the order constraint at the zero divisor (\cref{def:order_at_point}). A smooth
-  curve is regular, hence normal, so the coordinate ring \(A\) is an integrally
-  closed Noetherian domain; being one-dimensional it is a Dedekind domain, with
-  fraction field \(K(C)\). On the smooth curve the codimension-one points of
-  \(U\) are precisely the prime divisors meeting \(U\), and under this
-  identification the \(\mathfrak p\)-adic valuation
-  \(v_{\mathfrak p} = \texttt{HeightOneSpectrum.valuation}\) at a height-one
-  prime \(\mathfrak p\) agrees with the divisorial order \(\ord_Q\) at the
-  corresponding prime divisor \(Q\). Thus a rational function \(g\) has
-  \(\ord_Q(g) \ge 0\) at every prime divisor of \(U\) precisely when
+  the order constraint at the zero divisor (\cref{def:order_at_point}). The
+  forward inclusion \(\Gamma(U, \struct C) \subseteq \Gamma(U,
+  \texttt{carrierSheaf}_0)\) is the "regular \(\Rightarrow\) no poles" half
+  recorded in \cref{lem:structureSection_mem_carrierSet_zero}. For the reverse
+  inclusion, the coordinate ring \(A = \Gamma(U, \struct C)\) is a Dedekind
+  domain with fraction field \(K(C)\) by \cref{thm:chart_isDedekindDomain}. On
+  the smooth curve the codimension-one points of \(U\) are precisely the prime
+  divisors meeting \(U\), and under this identification the \(\mathfrak p\)-adic
+  valuation \(v_{\mathfrak p} = \texttt{HeightOneSpectrum.valuation}\) at a
+  height-one prime \(\mathfrak p\) agrees with the divisorial order
+  \(\ord_Q\) at the corresponding prime divisor \(Q\). Thus a rational function
+  \(g\) has \(\ord_Q(g) \ge 0\) at every prime divisor of \(U\) precisely when
   \(v_{\mathfrak p}(g) \le 1\) at every height-one prime of \(A\); by the
   algebraic-Hartogs anchor \cref{lem:mem_integers_of_valuation_le_one} this
   holds exactly when \(g\) lies in \(A = \Gamma(U, \struct C)\). Hence the two
-  section modules coincide.
+  section modules coincide over every affine open, as \(\bar k\)-submodules of
+  \(K(C)\), via the identity on rational functions.
+
+  \emph{General open.} Let \(U \subseteq C\) be arbitrary and choose an affine
+  open cover \(U = \bigcup_i U_i\) by affine opens \(U_i = \operatorname{Spec}
+  A_i\). Both \(\texttt{carrierSheaf}_0\) and \(\struct C\) (the latter viewed
+  as the \(\bar k\)-module sheaf \(\toModuleKSheaf C\)) are sheaves whose
+  sections are realised as \(\bar k\)-submodules of the constant sheaf
+  \(K(C)\), with restriction maps the identity on \(K(C)\). The defining order
+  condition of \(\texttt{carrierSet}_0\) is \emph{local}: a function
+  \(g \in K(C)\) lies in \(\Gamma(U, \texttt{carrierSheaf}_0)\) iff
+  \(\ord_Q(g) \ge 0\) at every prime divisor \(Q \in U\); since every such
+  \(Q\) lies in some \(U_i\), this is equivalent to \(g \in \Gamma(U_i,
+  \texttt{carrierSheaf}_0)\) for all \(i\) (monotonicity of the carrier sets,
+  \cref{lem:sheafOf_carrierSet_mono}, controls the passage between an open and
+  a sub-cover). Equally, by the sheaf property of \(\struct C\), a function
+  lies in \(\Gamma(U, \struct C)\) iff it lies in every \(\Gamma(U_i,
+  \struct C)\). By the affine case \(\Gamma(U_i, \texttt{carrierSheaf}_0) =
+  \Gamma(U_i, \struct C)\) inside \(K(C)\) for each \(i\); intersecting over
+  \(i\) yields \(\Gamma(U, \texttt{carrierSheaf}_0) = \Gamma(U, \struct C)\) as
+  \(\bar k\)-submodules of \(K(C)\). The identification is again the identity on
+  the underlying rational functions, hence compatible with restriction and equal
+  to the asserted isomorphism. This pins the per-open component of
+  \cref{lem:carrierSheaf_zero_iso_toModuleKSheaf} to the canonical map (the
+  inclusion \(\struct C \hookrightarrow \mathcal K_C\)), not an arbitrary module
+  isomorphism, so the naturality square of the assembly commutes by being the
+  identity on \(K(C)\) on both sides.
 \end{proof}
 
 \begin{lemma}\leanok
@@ -2448,7 +2848,7 @@ the cocycle is in \(\mathcal O_C^{\times}\) and the sheaf is invertible.
     rather than by tensoring. The general tensor-additivity statement
     $\mathcal O_C(D) \otimes \mathcal O_C(D') \cong \mathcal O_C(D + D')$
     for arbitrary divisors \(D, D'\) is not established in this chapter;
-    it is queued for the a subsequent chapter.
+    it is queued for a subsequent chapter.
   \item \textbf{Pullback of \(\mathcal O_C(D)\) along a morphism.} The
     pullback \(f^* \mathcal O_C(D) \cong \mathcal O_{C'}(f^* D)\) for
     a morphism of curves \(f : C' \to C\), used in degree-computation

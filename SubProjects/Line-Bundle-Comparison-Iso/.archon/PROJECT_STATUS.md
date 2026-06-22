@@ -25,6 +25,68 @@ Current scope and live state live in [`PROGRESS.md`](PROGRESS.md) and
 ## Knowledge Base
 
 ### Proof Patterns (reusable across targets)
+- **Whnf-seam idiom on sheafification-carrier goals (iter-054, closed S2 `tensorObj_restrict_iso_restrict_compat`).**
+  A `pullbackTensorMap`-laden goal can type-check under LSP yet **whnf-bomb the kernel/full-elaboration at ANY
+  heartbeat budget** (S2 timed out at `whnf` even at 6.4M) when seam idioms force a defeq unfold of
+  `pullbackTensorMap`→sheafification. Two specific killers + fixes: (1) `erw [Iso.hom_inv_id_app_assoc]` on a
+  post-`pullbackTensorMap_restrict` term → **isolate the `pullbackComp.hom ≫ .inv` cancellation into a tiny
+  helper** (e.g. `pullbackTensorMap_restrict_cancel`) discharged by a generic single-`[Category C]`
+  `natIso_hom_inv_id_app_assoc` via `exact`, so the big goal never builds the hom-inv adjacency. (2)
+  `refine Eq.trans (tensorObj_functoriality_comp _ _ _ _) ?_` with **placeholder object args** → unifying
+  `TF _ _ ≫ TF _ _` whnf-bombs; **supply morphism args EXPLICITLY** (objects come cheaply from morphism types).
+  General rule: prefer `exact`/`refine` of a FULLY-APPLIED generic lemma over `erw`/placeholder-`refine`.
+  S2 route = B1-promote → B2 expand at `M⊗N` only (keep legs folded) → cancel prefixes → `Iso.ext` + `RFIP j`
+  naturality → pre-cancelled comp law → `pullbackTensorMap_natural` (D1′) → merge `tensorObj_functoriality_comp3`.
+- **Close an opaque-`ofIsRightAdjoint`-unit comparison via forget-faithful + INNER-adjunction transpose
+  (iter-053, the B1-crux residual `sheafPullbackUnit_forget_eq` — broke the 050-052 plateau).** When the
+  whole-composite `homEquiv`/`forget.map_injective` transposition is circular (iter-052 dead-end), do NOT
+  transpose along the composite. Route: (1) `apply (fullyFaithfulForget _).map_injective` to land in the
+  presheaf world. (2) **hLHS ε-cancellation telescope:** `congrArg forget.map hnat` (the X-counit `ε`
+  naturality of the sheaf unit), split via `erw [Functor.map_comp]`, cancel the `ε ≫ η` round-trip with the
+  sheafification `right_triangle_components` (retype it cleanly by defeq `:= htri2`); the
+  `rw [← Category.assoc, htri2', id_comp]` route FAILS (*"did not find (?f ≫ ?g) ≫ ?h"*) → close **term-mode**
+  `(Category.assoc _ _ _).trans (congrArg (η ≫ ·) hfn)`. (3) **hAcomp `:= rfl`** the composite-unit identity
+  — state it BEFORE any `set` (else bare `rfl` can't zeta-unfold `Adjunction.comp`). (4) **hAcancel** via the
+  INVERSE triangle `Adjunction.leftAdjointUniq_inv_app` + `(unit_leftAdjointUniq_hom_app B A x).symm`
+  (supersedes the failed `Iso.hom_inv_id_app` cancellation; `NatIso.app_hom`/`app_inv` are unknown idents).
+  (5) **defeq-bridge** the explicit `leftAdjointUniq` back to `sheafificationCompPullback` with a `have ... :=
+  (sheafificationCompPullback_eq_leftAdjointUniq f).symm` — a direct `rw ←` of that lemma MISSES because of a
+  proof-local `set φ := Hom.toRingCatSheafHom f`. (6) Assemble term-mode; the final `B.unit = ppP.unit ≫
+  pushforward.map η_Y` step is discharged by **defeq `exact`**, not `rw`/`erw` (which leave unsolved goals).
+  ⚠ `set` is HAZARDOUS over the sheafification seam (breaks zeta-`rfl`, folds hyps inconsistently); final
+  proof used NO `set`. Heartbeats: two `whnf`-defeq `rfl`s on composite sheaf-pullback units needed 4M.
+- **Compute an opaque `Adjunction.ofIsRightAdjoint` unit by routing through a concrete sibling adjunction
+  (iter-052, the `sheafPullbackUnit_forget_eq` restructure).** When a proof needs the value of a unit built
+  by `Adjunction.ofIsRightAdjoint` (opaque to `simp`/`aesop`), find the Mathlib comparison iso
+  `someIso = leftAdjointUniq (opaqueAdj) (concreteAdj)` (here `SheafOfModules.pullbackIso φ =
+  leftAdjointUniq (pullbackPushforwardAdjunction φ) (PullbackConstruction.adjunction φ)`,
+  `PullbackContinuous.lean:105`). Then: `htri := Adjunction.unit_leftAdjointUniq_hom_app _ _ M` (the triangle);
+  `hcancel` (the `pushforward.map iso.hom ≫ pushforward.map iso.inv = 𝟙` cancel, term-mode across the
+  `SheafOfModules ≫` seam); `hA` solves the triangle for `opaqueAdj.unit.app M = concreteAdj.unit.app M ≫
+  pushforward.map (iso.inv.app M)`; and `hUNIT` computes the CONCRETE `mkOfHomEquiv` unit. ⚠ The nested
+  `mkOfHomEquiv` homEquiv coercion matches ONLY `erw`: `simp only [PullbackConstruction.adjunction,
+  mkOfHomEquiv_unit_app]` then `erw [Equiv.trans_apply, Equiv.trans_apply, Adjunction.homEquiv_unit,
+  Adjunction.homEquiv_unit, Functor.map_id, Category.comp_id, (fullyFaithfulForget _).map_preimage]; rfl`;
+  `rw`/`simp only [Equiv.trans_apply]`/`Equiv.coe_trans`/`Equiv.apply_symm_apply` all report "unused"/MISS.
+  `apply concreteAdj.homEquiv _ _ |>.injective` needs the objects EXPLICIT (`homEquiv M ((pullback φ).obj M)`)
+  or metavars stall. ⚠ DEAD END for the RESIDUAL: when the two `leftAdjointUniq` isos are over DIFFERENT
+  right adjoints (`G` vs `G ⋙ forget`), `leftAdjointUniq_trans` does NOT apply and every further `homEquiv`/
+  `forget.map_injective` transposition is CIRCULAR — that residual is a mathlib-analogist / effort-break
+  target, not a prove target (see Known Blockers `sheafPullbackUnit_forget_eq`).
+- **`forget`-transport of a sheaf `unit_leftAdjointUniq` triangle (iter-051, closes B1-crux `H1inv` body).**
+  When a presheaf-level `leftAdjointUniq.inv.app M.val` must equal a sheafification-laced composite, do NOT
+  treat it as a B2 conjugate telescope. It is the `SheafOfModules.forget`-image of the SHEAF-level
+  `unit_leftAdjointUniq` triangle. Decompose into 4 named parts: (I) `presheaf adj unit = forget (sheaf adj
+  unit)` `rfl` (the presheaf `pushforwardPushforwardAdj` is the `forget`-image of the sheaf one), (II) sheaf
+  `Adjunction.unit_leftAdjointUniq_hom_app` (gives `restrictAdj.unit = pullbackAdj.unit ≫ ρ⁻¹`, term-mode),
+  (III) isolate the genuine sheafification leg in ONE helper (`forget (sheaf pullback unit) = presheaf pullback
+  unit ≫ pushforward.map (η ≫ forget pbv)`), (IV) `forget∘pushforward = pushforward φ'∘forget` `rfl`. Assemble
+  I→II→IV→III + `map_comp`/`assoc` ALL TERM-MODE (`Eq.trans`/`congrArg`/`:=`) — `rw`/`simp` of category lemmas
+  MISS the `SheafOfModules ≫` defeq-not-syntactic seam (re-confirmed: 6 `rewrite failed: did not find pattern`
+  diagnostics this iter). `Adjunction.eq_unit_comp_map_iff` is the clean transposer (avoids `rw [← homEquiv_unit]`
+  higher-order-unification failure). `Functor.map_comp`/`map_id` need `CategoryTheory.` qualification.
+  ⚠ The residual helper's blocker = the abstract `Adjunction.ofIsRightAdjoint` unit is opaque to `simp`/`aesop`;
+  must bridge to the concrete `PullbackConstruction.adjunction` via `Scheme.Modules.pullbackIso` (see Known Blockers).
 - **Conjugate-telescope CLOSED Bridge B2 (iter-050) — the leg-by-leg recipe, fully landed.** Confirms the
   iter-049 prediction (`mateEquiv_hcomp`/`vcomp` NOT needed). To prove a NatTrans equality between two left
   adjoints of a common right adjoint G whose RHS chain has fixed `(C,D)`: `apply (conjugateEquiv (pPA …)
@@ -442,18 +504,38 @@ Current scope and live state live in [`PROGRESS.md`](PROGRESS.md) and
   `tensorObj_restrict_iso_eq_pullbackTensorMap` (iso↔map) which is ROOT-PRIVACY blocked — see Known Blockers.
 
 ### Known Blockers (do not retry without a structural change)
+- **~~S2 tensor-flank square `tensorObj_restrict_iso_restrict_compat`~~ — CLOSED iter-054** (sorry 5→4,
+  `lake build` EXIT 0). First square done; B1-route template VALIDATED on the tensor flank. Do NOT re-open.
+- **S4b `tensorObj_unit_iso_restrict_compat` (L1129) — infrastructure-gated, NOT proof-tactic gated.**
+  `tensorObj_unit_iso = sheafification.map (λ_ 𝟙) ≫ counit`; needs a NEW **left-unitor / pullback-unit-coherence
+  lemma** (immersion-naturality of the presheaf left unitor `λ_` under sheafification + `pullbackUnitIso`/`counit`
+  interplay) — the unit analogue of `pullbackTensorMap` base-change, B1-comparable depth, NOT yet built. Do NOT
+  send a bare prove lane: scaffold the `presheaf_leftUnitor` coherence lemma FIRST, then S4b follows the S2 template.
+- **S3 `dual_restrict_iso_restrict_compat` (L1088) / S4a `dual_unit_iso_restrict_compat` (L1113) — DUAL-B1 GAP.**
+  The dual analogue of Bridge B1 (`pullbackDualMap` / internal-hom base-change cone) does NOT exist (grep-empty:
+  `pullbackDualMap`, `internalHomPullback`, `dual_restrict_iso_eq`). Genuine missing construction. Decide the
+  dual-flank route (build the cone — mirror of tensor B1 — vs the unproven subsingleton route) before any prove
+  lane. `trivialisation_restrict_compat` (L1201) is the telescope of all 5 squares, transitively gated.
 - **~~Bridge B2 (`restrictFunctorIsoPullback_comp_compat`/`_hom`)~~ — CLOSED iter-050.** The multi-iter
   (044–049) terminal blocker is gone: `_hom` is sorry-free + axiom-clean, consumer already closed. The
   fine-grained conjugate-telescope corrective worked (see Proof Patterns). Sorry 7→6. Do NOT re-open or
   re-dispatch any B2 round.
-- **LIVE: B1 crux `H1inv_app_eq_pullbackVal_restrict` (TensorObjInverse L437, sorry@493) — sheafification
-  boundary, NOT the B2 family.** It is now the sole "engine" sorry; squares S2–S4b + cocycle all ride it.
-  Advanced to the isolated unit-coherence goal (`refine Eq.trans (unit_leftAdjointUniq_hom_app _ hadj
-  M.val) ?_`). The residual crosses the presheaf/sheaf boundary (`pushforwardPushforwardAdj` vs
-  `pullbackPushforwardAdjunction` vs `sheafificationAdjunction`) — do NOT chase it as a verbatim B2 copy.
-  Route: `rw [pullbackValIso, restrictFunctorIsoPullback]` + `simp` + `sheafificationCompPullback_eq_leftAdjointUniq`
-  + `leftAdjointUniqUnitEta`. First real `prove` attempt is warranted (single isolated goal); fine-grain the
-  sheafification leg only if it churns one round.
+- **B1 crux `H1inv_app_eq_pullbackVal_restrict` — BODY CLOSED iter-051; residual relocated to a named
+  helper.** `H1inv` body is now sorry-free (genuine term-mode proof) — the crux is the `forget`-transport
+  of the SHEAF-level `unit_leftAdjointUniq` triangle for `restrictFunctorIsoPullback` (NOT a B2-style
+  conjugate telescope). Proved via 4 named parts: (I) `presheaf unit = forget (sheaf unit)` `rfl`,
+  (II) sheaf `unit_leftAdjointUniq_hom_app`, (III) NEW helper `sheafPullbackUnit_forget_eq`, (IV)
+  `forget∘pushforward = pushforward φ'∘forget` `rfl` — assembled ALL term-mode. **Now FULLY sorry-free
+  (iter-053): part (III) `sheafPullbackUnit_forget_eq` is closed, so `H1inv` no longer rides any sorry.**
+- **~~`sheafPullbackUnit_forget_eq` (TensorObjInverse) — the B1-crux sheafification residual~~ — CLOSED iter-053.**
+  The whole B1/B2 engine layer is done; sorry 6→5, `lake build` EXIT 0, axiom-clean. The iter-052 "prove
+  route EXHAUSTED / circular" verdict held only for the WHOLE-COMPOSITE homEquiv route — the close came from
+  a DIFFERENT realized route (planner escalation `analogies/ofisrightadjoint-unit.md`, precedent
+  `Functor.toSheafify_pullbackSheafificationCompatibility`, but ported via forget-faithfulness + the INNER
+  presheaf-pullback transpose + the inverse-`leftAdjointUniq` triangle — NOT the sketched
+  `comp_unit_app`-of-composite). See Proof Patterns (iter-053). Do NOT re-open. `hnat` is consumed by the
+  realized hLHS ε-cancellation telescope; `hpin` is now dead. (Blueprint prose steps 1-4 still narrate the
+  abandoned route — `% NOTE:` added iter-053; blueprint-writer reconciliation pending.)
 - **~~CARRIER-DIAMOND GAP-FILL ESCALATION (iter-046, HARD STOP)~~ — RESOLVED iter-048.**
   `conjugateEquiv_restrictFunctorComp_inv` is **PROVED, public, axiom-clean in root
   `TensorObjSubstrate.lean`** (L4943; `lake build` EXIT 0 8321 jobs; `#print axioms` =
@@ -807,7 +889,10 @@ Current scope and live state live in [`PROGRESS.md`](PROGRESS.md) and
   similarly truncated — worth a one-shot sweep.**
 
 ## Last Updated
-2026-06-21T11:50:00Z (iter-050)
+2026-06-22T07:00:00Z (iter-054 review — **S2 tensor-flank square `tensorObj_restrict_iso_restrict_compat` CLOSED; sorry 5→4.** `lake build …TensorObjInverse` EXIT 0 (re-run this review; not stale-green — attempts 84/95/97 whnf-bombed at 6.4M but FINAL isolated-helper+`exact` edits fixed it). B1-route template VALIDATED on the tensor flank. 9 new proven helpers (coverage debt → 114 unmatched). NEW KB pattern: the whnf-seam idiom (prefer fully-applied-`exact` over `erw`/placeholder-`refine`; isolate seam `erw` into a tiny helper). Remaining 4 sorries are INFRASTRUCTURE-gated: S4b needs a NEW left-unitor/pullback-unit-coherence lemma; S3/S4a need the non-existent dual-B1 cone (`pullbackDualMap`, grep-empty); trivialisation telescopes all 5. Both auditors clean (no laundering; 0 must-fix). Auditor majors = stale-narrative/dead-code only (dead helper pair `map_tensorHom_comp2`/`tensorObj_functoriality_comp`, stale ESCALATION L501–539, stale STATUS L830–841, iter-number drift). No marker override (S2 statement-`\leanok` present; proof-block `\leanok` absent by chapter convention). Blueprint doctor clean. See `iter/iter-054/review.md`.)
+2026-06-22T03:30:00Z (iter-053 review — **B1-crux residual `sheafPullbackUnit_forget_eq` CLOSED; `H1inv` now fully sorry-free; sorry 6→5.** `lake build …TensorObjInverse` EXIT 0, axiom-clean. The whole B1/B2 engine layer is done. Realized route = forget-faithful + INNER presheaf-pullback transpose + inverse-`leftAdjointUniq` triangle (NOT the iter-052-exhausted whole-composite homEquiv, NOT the analogist's sketched `comp_unit_app`-of-composite). Next frontier = S2 `tensorObj_restrict_iso_restrict_compat` (the deepest immersion-naturality square; S3/S4a/S4b/trivialisation ride it) — recommend effort-breaker before any prove round. Both auditors clean (no laundering; 0 must-fix). Major non-blocking: blueprint proof prose of `lem:sheaf_pullback_unit_forget_eq` still narrates the abandoned route (`% NOTE:` added) + cross-session iter-number drift in several docstrings. Blueprint doctor clean. See `iter/iter-053/review.md`.)
+2026-06-21T22:20:00Z (iter-052 review — **`sheafPullbackUnit_forget_eq` reduced to ONE iso identity; sorry 6→6 flat 3rd iter; prove/transposition route PROVEN EXHAUSTED (circular).** `lake build …TensorObjInverse` EXIT 0, 0 axioms; 4 in-proof sub-lemmas (htri/hcancel/hA/hUNIT) compute the opaque `ofIsRightAdjoint` sheaf unit via the Mathlib `pullbackIso` bridge; residual `hKEY`/`hA2` is the un-API'd coherence between two `leftAdjointUniq` over different right adjoints — pivot to mathlib-analogist cross-domain / effort-break the ε-counit telescope, NOT another prove round. Both auditors clean (no laundering). Blueprint doctor clean. See `iter/iter-052/review.md`.)
+2026-06-21T21:10:00Z (iter-051)
 
 2026-06-21T10:30:00Z (iter-049 review — **collision RED cleared; B2 PROVED mod helper; sorry 8→7.**
 `lake build …TensorObjInverse` EXIT 0 (8324 jobs, 7 sorries, 0 axioms, re-verified). Deleted the iter-046

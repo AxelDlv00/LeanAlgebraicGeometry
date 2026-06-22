@@ -26,6 +26,14 @@ See [`references/summary.md`](references/summary.md) for a description of each s
   development (Čech nerve, relative Čech complex, acyclic resolution, and the
   comparison `cech_computes_higherDirectImage`) was merged in from the
   `Cech-Cohomology` subproject (2026-06-18)
+- `AlgebraicJacobian/Picard/` — relative Picard substrate (relative Spec, Quot scheme,
+  flattening stratification, `Pic⁰`). The **Grassmannian/Quot representability**
+  development (`Grassmannian.represents`, the section graded ring/module lane
+  `Γ_*(X,L)` through `GCommSemiring`, graded Hilbert–Serre, Grassmannian cell
+  charts, glue-descent, and the tautological-quotient epi) was merged in from the
+  `GR-quot_closure` subproject (union merge, 2026-06-22; files `GrassmannianCells`,
+  `GlueDescent`, `GrassmannianQuot`, `GradedHilbertSerre`, `SectionGradedRing`, all
+  sorry-free)
 - `blueprint/` — leanblueprint source (build with `leanblueprint pdf` and `leanblueprint web`)
 - `references/` — original challenge file and informal sources backing the formalization
 - `archon-protected.yaml` — declarations agents must not modify

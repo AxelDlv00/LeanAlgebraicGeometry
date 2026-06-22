@@ -1673,12 +1673,12 @@ counit isomorphisms (\cref{def:schemeModuleSheafification}).
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_hK_lhs_native}
   \uses{lem:localizationMonoidal_mu_mathlib, def:tensorObjLocalizedIso,
     lem:tensorObjAssoc_hK_lhs_head, thm:localizedMonoidal_mathlib}
-  The reassociation-and-associator step of \cref{lem:tensorObjAssoc_hK_lhs}, stated entirely with its
-  comparison \(\mu\) object-arguments in \emph{unfolded image form}: every inner presheaf tensor is
-  written as \(L'(a\otimes_p b)\) (\(=\texttt{sheafification.obj}(\texttt{tensorObj}\,(C:=\texttt{MonoidalPresheaf}\,X)\,a\,b)\)),
-  never as the folded \(\mathcal A.\texttt{tensorObj}\,\mathcal B\). With objects in this form the
-  right-association \((W;T);\alpha = W;(T;\alpha)\), the localized associator naturality and
-  \texttt{associator\_hom\_app} all match \emph{syntactically}.
+  The reassociation-and-associator step of \cref{lem:tensorObjAssoc_hK_lhs}. The Lean \emph{statement}
+  is in \emph{folded} form (inner tensors as \(\mathcal A.\texttt{tensorObj}\,\mathcal B\)); the proof's
+  first line image-ises the goal (\texttt{simp only [tensorObj]}) so that every inner presheaf tensor
+  becomes \(L'(a\otimes_p b)\) (\(=\texttt{sheafification.obj}(\texttt{tensorObj}\,(C:=\texttt{MonoidalPresheaf}\,X)\,a\,b)\)).
+  With objects in this image form the right-association \((W;T);\alpha = W;(T;\alpha)\), the localized
+  associator naturality and \texttt{associator\_hom\_app} all match \emph{syntactically}.
 \end{lemma}
 
 \begin{proof}
@@ -1696,7 +1696,7 @@ counit isomorphisms (\cref{def:schemeModuleSheafification}).
   % NOTE: (iter-019) NOT yet fully closed. The reassoc -> naturalise -> associator-expand ->
   % whisker-merge -> mu-cancel chain above is proven bomb-free (cold-build GREEN), but the FINAL step
   % -- applying the proven head lemma to the reduced `tail` goal -- bombs (localized-comp isDefEq
-  % timeout, 200000 hb). One documented `sorry` remains in `tensorObjAssoc_hK_lhs_native` (Lean L2219).
+  % timeout, 200000 hb). One documented `sorry` remains in `tensorObjAssoc_hK_lhs_native` (Lean L2314).
   % iter-019 UPDATE: the iter-018 suffix-peel plan FAILED. `cancel_mono` itself bombs at the rewrite
   % (matching `?g ≫ ?f` forces an assoc-reconciliation isDefEq that whnf-unfolds μ); all FOUR bridge
   % routes (folded `_head_assoc`, image-form `_head_img_assoc`, `simp at key`+`reassoc_of%`, and
@@ -1704,8 +1704,23 @@ counit isomorphisms (\cref{def:schemeModuleSheafification}).
   % μ-token-divergence (analogies/snap-mu-identity.md, snap-reassoc-pin.md). This route is now STUCK;
   % the standing directive (pc019) is the iter-020 REFACTOR PIVOT (glue Option A: rewire the hand-built
   % `tensorObj*` defs onto the `LocalizedMonoidal` synonym so the comp-instance boundary vanishes), NOT
-  % another prover round. The chapter convention is statement-`\leanok` only; this caveat is the honest
+  % another prover round. The chapter convention is statement-`` only; this caveat is the honest
   % open-proof signal.
+  % iter-020 UPDATE: prover (no sorry closed) cold/LSP-verified THREE further dead routes, all reducing
+  % to the same `toMonoidalCategory`-over-mu whnf bomb: (1) `congr 1` splits prefix/tail but its `rfl`
+  % re-incurs the divergence at the decl head; (2) dropping `toMonoidalCategory` from the merge simp is
+  % load-bearing (erw merge + mu-cancel then fail); (3) `simp [<native set>] at h` on the head equation
+  % itself whnf-bombs. Mechanism nailed: the goal's divergent `▷` spelling is an artefact of the
+  % PRODUCTIVE native-chain simp redexes and is NOT reproducible on the head equation in isolation, so
+  % neither side can be matched without a `toMonoidalCategory` unfold over mu. Resolution unchanged =
+  % the structural refactor pivot. Substance of this NOTE is current as of iter-020.
+  % iter-021 UPDATE: cold-build-verified the most-surgical remaining route DEAD — an ISOLATED local
+  % `change` of JUST the single `c_{A⊗B} ▷ L'C♭` whisker to the `modulesLocalizedMonoidal X` synonym
+  % instance (no mu syntactically inside it) times out at `isDefEq` (200000 hb) ALL BY ITSELF. So
+  % reconciling the two `whiskerRight` *instances* is the irreducible bomb, independent of any heavy
+  % tail; refactor pivot reconfirmed as the only route. Independently, the unitor bridge
+  % `lem:tensorObjUnitor_eq_localized` was CLOSED this iter (sorry-free, axiom-clean) — it does NOT
+  % depend on this associator wall.
 \end{proof}
 
 \begin{lemma}
@@ -1885,7 +1900,8 @@ counit isomorphisms (\cref{def:schemeModuleSheafification}).
   follows.
 \end{proof}
 
-\begin{lemma}[The hand-built left unitor is the localized left unitor]
+\begin{lemma}\leanok
+[The hand-built left unitor is the localized left unitor]
   \label{lem:tensorObjUnitor_eq_localized}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObjUnitIso_eq_localizedLeftUnitor}
   \uses{def:tensorObjUnitIso, def:modulesLocalizedMonoidal,

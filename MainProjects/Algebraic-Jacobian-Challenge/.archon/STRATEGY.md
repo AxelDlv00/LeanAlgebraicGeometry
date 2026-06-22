@@ -22,6 +22,22 @@ now imported and wired in, replacing the target's orphaned stub. The `pushPullMa
 Rel Proj / representability (A.2.c) and discharge the residual `coreIso_comm_leg`
 sorry inside the imported development.
 
+**Merge update (2026-06-22).** The **A.2.c representability scaffolding** (held behind
+A.1.c, ~600–800 LOC remaining) has been substantially advanced by a **union merge of the
+`GR-quot_closure` subproject**, which delivers `AlgebraicGeometry.Grassmannian.represents`
+(rank-`d` quotient functor representability) sorry-free + axiom-clean, together with the
+section graded ring/module substrate (`Γ_*(X,L)` through `GCommSemiring`, the SNAP module
+lane), graded Hilbert–Serre rationality, the Grassmannian cell-chart atlas, glue-descent,
+and `tautologicalQuotient_epi`. Five new sorry-free files (`GrassmannianCells`,
+`GlueDescent`, `GrassmannianQuot`, `GradedHilbertSerre`, `SectionGradedRing`). The
+subproject's quasi-coherent descent machinery (localized-module / `fromTildeΓ`
+isomorphism criteria, schematic support) was unioned into `QuotScheme.lean` *alongside*
+this project's base-change cohomology lane — neither displaced. Remaining engine work for
+A.2.c: connect `represents`/the Quot construction to `Pic⁰` representability and discharge
+the χ-blocked `hilbertPolynomial`/`QuotFunctor`/`Grassmannian.representable` stubs (still
+`sorry`, awaiting the cohomology engine) now that the graded/representability substrate is
+in scope.
+
 ## Phases & estimations
 
 | Phase | Status | Iters left | LOC (rem · /it) | Key Mathlib needs | Risks |

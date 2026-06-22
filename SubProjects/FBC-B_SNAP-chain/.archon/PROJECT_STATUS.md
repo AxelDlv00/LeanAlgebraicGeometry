@@ -8,6 +8,20 @@
 
 ### Proof Patterns (reusable across targets)
 
+- **SNAP unitor bridge over the localized-monoidal boundary — `tensorObjUnitIso_eq_localizedLeftUnitor`
+  (iter-021, CLOSED sorry-free, cold-green, axiom-clean; the leandag-READY net-progress bridge NOT gated on
+  the blocked associator).** To prove `(hand-built unitor iso) = (object iso) ≫ (localized λ^loc)` between the
+  `modulesLocalizedMonoidal X` synonym and the `LocalizedMonoidal` comp-instance: `apply Iso.ext`; `symm; rw
+  [← Iso.eq_inv_comp]` isolate the localized unitor; `cancel_epi (𝟙 ◁ c_G)`; **`erw [MonoidalCategory.leftUnitor_naturality]`**
+  to bridge `unitModule X` vs `𝟙_` and reduce a GENERAL object `G` to `L'G♭` along the counit `c_G` (REQUIRED —
+  `Localization.Monoidal.leftUnitor_hom_app`/`rightUnitor_hom_app` fire ONLY at `(L').obj _`); then `rw
+  [leftUnitor_hom_app]`; collapse the `c_G`/`c_G⁻¹` pair via `← id_tensorHom` + **`erw [tensorHom_comp_tensorHom_assoc]`**
+  + `Iso.hom_inv_id` + `tensorHom_id`; `rfl` closes the light residual (`toMonoidalCategory=sheafification`,
+  `𝟙_psh=(unitModule X)♭`, μ object-args). **REUSABLE:** the `unitModule X`↔`𝟙_` token-divergence AND the
+  `modulesLocalizedMonoidal`↔`LocalizedMonoidal` comp-instance divergence BOTH block `rw`/`cancel_epi`/`Category.assoc`
+  EXACTLY like the μ-divergence; **`erw` bridges both**, and the final assoc/object residual closes by plain `rfl`
+  because the goal is LIGHT (no deep μ nesting — contrast the associator wall). `MonoidalCategory.braiding_leftUnitor
+  (X) : (β_ X 𝟙).hom ≫ (λ_ X).hom = (ρ_ X).hom` is REAL — the key for the right-unitor bridge.
 - **FBC mate-leg engine — `← conjugateEquiv_comp` split over per-piece coherences (iter-018, CLOSED BOTH b2
   mate legs `chartBaseChangeGeometricComparison_mate` + `chartBaseChangeModuleReassoc_extendScalarsComp`
   cold-green + axiom-clean, review-verified sorryAx-free).** To prove a 3-factor mate identity
@@ -2056,7 +2070,26 @@
   the hand-built `tensorObj*` defs onto the `LocalizedMonoidal` synonym ⊗ so the comp-instance boundary — the
   SOLE source of the spelling divergence — disappears and the bridges become definitional). NOT another prover
   round; NOT dual-instance deletion (refuted load-bearing, 51-site cascade).** `tensorObjAssoc_hK_lhs_head_img`
-  (image-form head, `@[reassoc]`, sorry-free) is staged for the pivot.
+  (image-form head, `@[reassoc]`, sorry-free) is staged for the pivot. **iter-020 (≈9th iter, 0 elim; refactor
+  pivot was PLANNED but a PROVER was dispatched again — re-confirmed exhaustion): 3 MORE routes cold/LSP-dead,
+  pinning the SOLE mechanism. (1) `congr 1` splits prefix/tail and LSP closes it, but cold build whnf-bombs at
+  the decl head (`rfl` re-incurs the divergence). (2) Dropping `toMonoidalCategory` from the merge `simp only`
+  (to keep the goal `▷` folded-synonym, matching head_img) — `toMonoidalCategory` is LOAD-BEARING: the
+  `erw [← whiskerRight_comp_assoc]` merge + μ-cancel then break. (3) `simp [<native set>] at h` to match the
+  head equation's `▷` spelling to the goal's — the `simp … at h` ITSELF whnf-bombs. **MECHANISM (definitive):
+  the goal's divergent `toMonoidalCategory`-unfolded `▷` is an ARTEFACT of the PRODUCTIVE native-chain simp
+  redexes (`μ.hom⊗1→▷` / `1⊗μ.inv→◁` from `associator_hom_app`) which simp rewrites WITHOUT whnf'ing deep μ;
+  head_img has no such redexes, so any `toMonoidalCategory` unfold on it goes structural over μ → bomb. The
+  divergent spelling is therefore producible ONLY via the productive native chain and NEVER reproducible on the
+  head equation in isolation → NEITHER side is matchable without a μ-unfold. No tactic route survives; only the
+  refactor.** iter-021 MUST dispatch the `refactor` subagent, NOT a prover. **iter-021 (≈10th iter, 0 elim;
+  a prover was dispatched AGAIN for the net-progress fallback — see below — but ALSO re-probed the wall):
+  the most-surgical remaining route is cold-build DEAD — an ISOLATED local `change` of JUST the single
+  `c_{A⊗B} ▷ L'C♭` whisker to the `(C := modulesLocalizedMonoidal X)` synonym instance (no μ syntactically
+  inside it) times out at `isDefEq` (200000 hb) ALL BY ITSELF. So reconciling the two `whiskerRight`
+  INSTANCES is the irreducible bomb, INDEPENDENT of any heavy tail (`toMonoidalCategory`'s `whiskerRight`
+  field is the localization lift → comparing it to the synonym whnf's the localized μ). iter-022 = REFACTOR
+  PIVOT, no exceptions.**
 - **FBC iterated-mate glue — TwoSquare vcomp lemmas BOMB over the whole combined goal (iter-019).** The glue
   `pullback_spec_tilde_iso_ring_square_mate_glue` stages cleanly into uniform conjugate form (via the new `rfl`
   bridges `pullback_spec_tilde_iso_{inv,hom}_conjugateEquiv`: `apply Iso.ext; rw [← Iso.inv_eq_inv]; simp only
@@ -2065,6 +2098,39 @@
   Mates.lean L450-485) over the COMBINED 4-leg goal forces the composite-adjunction unit to whnf → 200k-hb
   kernel bomb. FIX: telescope PER-FACTOR via `← conjugateEquiv_comp` splits with explicit midpoint adjunctions
   (mirror the iter-018 closed legs), substitute the 2 closed mate legs, close residual on `gammaPushforwardNatIso_comp`.
+  **iter-020: also confirmed the one-shot leg→Nat staging bridges KERNEL-BOMB.** Exposing the closed mate legs
+  via `hg : chartBaseChangeGeometricComparison .. = (…Nat).app (tilde M) := by apply Iso.ext; rfl` + `hr := rfl`
+  + `rw [hg, hr]` ELABORATES in the REPL (and both mate facts `have`-elaborate) but cold `lake build` →
+  `1757:8 (kernel) deterministic timeout`: `hg`'s `.hom`-`rfl` term forces the `tilde M`/pullback `X.Modules`-
+  junction whnf at kernel-check (LSP hides it). The bridges are real-in-elaborator, NOT kernel-safe. The genuine
+  remaining work is the multi-hundred-step NAT-TRANS-level telescoping (never force `.app (tilde M)`; lift each
+  factor to `whiskerLeft`/`whiskerRight`, `suffices` a NatTrans eq over the two composite functors, drive by
+  closed coherences) — a DEDICATED lane (+ effort-breaker), not a one-shot prover round. `lean_goal` times out
+  on this theorem; use `lean_multi_attempt` (line-based) to drive it; cold-build EVERY candidate.
+  **iter-021 SHARPENING (kernel-verified, supersedes the iter-020 framing): the GEOMETRIC `.app (tilde M)`
+  Nat-bridge is kernel-unsafe by ANY tactic** (`simp only […NatIso.trans_app, Iso.app_hom/inv, eqToHom_app];
+  congr 1` / `rfl` / `rw`) — the LSP shows a single proof-irrelevance residual (`pullbackCongr P₁ =
+  pullbackCongr P₂`, `goals_after=[]`) but cold `lake build` `(kernel) deterministic timeout`s regardless of
+  the close tactic, because the residual morphism types are `tilde M`-EVALUATED (`(pullback (Spec _)).obj
+  (tilde M)`) → the kernel must whnf the heavy `pullback ∘ tilde` sheafification. It **bombs even with `M` a
+  FREE VARIABLE**, so the "prove generically at variable `N`, instantiate at `tilde M`" escape is REFUTED.
+  Only carriers WITHOUT sheafification (`ModuleCat.extendScalars` — the ALGEBRAIC leg) admit the structural
+  bridge: `chartBaseChangeModuleReassoc_eq_natApp` (NEW iter-021, KEPT, kernel-safe, axiom-clean) is the
+  algebraic half. A direct `exact <closed-lemma> ψ φ ρ M` over a `.obj (tilde M)` type IS kernel-light — only
+  `simp`/`congr`/`rw`/`rfl` defeq-CHECKS at that type bomb → the assembly must be PURE TERM-MODE / nat-level
+  with a SINGLE final `.app M` `exact`, never an intermediate `.app (tilde M)` rewrite.
+- **FBC `base_change_mate_gstar_transpose` sorry body carries a FALSE-STATUS comment + dangling refs — do NOT
+  trust it (iter-020, auditor CRITICAL + lvbc-fbc020).** `FlatBaseChange.lean:2116-2118` asserts crux sub-(b)
+  is "PROVEN and axiom-clean as the standalone lemma `base_change_mate_extendScalars_inner_value_counit`" — that
+  lemma DOES NOT EXIST anywhere in the project (grep: only this comment). L2112-2115 names ~3 more non-existent
+  decls (`…_fstar_reindex_legs_unitExpand` @~1273, `…_gammaDistribute` @~1304, `pullbackPushforward_unit_comp`
+  @~1144). A prover reading these would hunt phantom theorems. **STRATEGIC TENSION:** ARCHON_MEMORY records the
+  `base_change_mate_*` apparatus as SHEAF-LEVEL-route DEAD / slated for excision, yet `base_change_mate_gstar_transpose`
+  (sorry L2125) is STILL wired into the LIVE seeds via `pushforward_base_change_mate_cancelBaseChange` (and the
+  chapter's dead phantom `lem:pushforward_base_change_mate_sections_direct` is still cited by the live
+  `cancelBaseChange` proof, chapter L1770). Either excise the apparatus AND re-route the seeds onto the
+  concrete-tilde/glue path, or the "dead" classification is stale. Resolve in the dedicated excision iter
+  (planner/refactor decision, NOT a prover); fix the false-status comment then.
 - **[RESOLVED iter-018] FBC geometric leg `chartBaseChangeGeometricComparison_mate` — CLOSED cold-green +
   axiom-clean.** The iter-017 "`conjugateEquiv_pullbackComp_inv` is comment-fiction" claim was FALSE: it IS
   real Mathlib (`Scheme.Modules`, Sheaf.lean:238, @[simp]). The whnf-bomb was avoided by driving via CLOSED
@@ -3004,7 +3070,29 @@
   enforced corrective is a mathlib-analogist consult on the reframing keystone, not a prove round.
 
 ## Last Updated
-2026-06-21T (iter-019 review, this subproject) — **FBC: glue `pullback_spec_tilde_iso_ring_square_mate_glue`
+2026-06-22T (iter-021 review, this subproject) — **0 net frontier elim but +2 NEW sorry-free decls (1/file);
+both files cold-build GREEN (review-verified firsthand, exit 0: FBC 8318 jobs / 4 sorry, SNAP 2441 jobs /
+5 sorry-decls), 0 kernel timeouts, 0 axioms, blueprint-doctor 0.** SNAP CLOSED net-progress unitor bridge
+`tensorObjUnitIso_eq_localizedLeftUnitor` (axiom-clean) + reconfirmed the `native` associator wall irreducible
+(isolated single-whisker `change` bombs alone). FBC KEPT new algebraic component bridge
+`chartBaseChangeModuleReassoc_eq_natApp` (kernel-safe) + kernel-verified the geometric `.app (tilde M)` bridge
+DEAD (refuted at free `M`); glue route = pure term-mode/nat-level. Auditor: 4 majors = FBC mate-apparatus
+cleanup (misplaced/redundant `set_option`, dangling `@~` refs to non-existent lemmas) → deferred excision iter.
+SNAP `native` → iter-022 REFACTOR PIVOT (no more provers). Prior iter-020:
+2026-06-22T (iter-020 review, this subproject) — **0 net elim; both files cold-build GREEN (review-verified
+firsthand, exit 0: FBC 8318 jobs / 4 sorry, SNAP 2441 jobs / 5 sorry-decls), 0 axioms, blueprint-doctor 0.**
+FBC: glue one-shot leg→Nat bridge ELABORATES but cold-build KERNEL-BOMBS (`1757:8` whnf; LSP hides) → reverted;
+genuine wall = the multi-hundred-step nat-trans telescoping (dedicated lane + effort-breaker). SNAP: ≈9th iter
+on `tensorObjAssoc_hK_lhs_native`, 0 elim — the iter-020 refactor pivot was PLANNED but a PROVER was dispatched
+again; it re-confirmed exhaustion with 3 more dead routes and the SOLE mechanism is now nailed (the divergent
+`▷` spelling is a PRODUCTIVE-native-chain-simp artefact, NOT reproducible on the head equation → neither side
+matchable without a μ-unfold). **iter-021 MUST dispatch the `refactor` subagent for SNAP (glue Option A), NOT a
+prover.** Auditor CRITICAL: FBC crux sorry body cites a NON-EXISTENT lemma (`base_change_mate_extendScalars_inner_value_counit`)
++ the "dead" `base_change_mate_*` apparatus is still wired into the live seeds (excision-iter decision pending).
+3 SNAP `% NOTE` staleness items fixed (review-owned). Process lesson held: cold-built both files (LSP `lean_goal`
+times out on both targets). See `iter/iter-020/review.md`.
+
+### Prior: 2026-06-21T (iter-019 review, this subproject) — **FBC: glue `pullback_spec_tilde_iso_ring_square_mate_glue`
 STAGED into uniform conjugate form (2 new `rfl` bridges) + crux consolidated to delegate to it (direct sorry
 −1); residual = per-factor iterated-mate telescoping. SNAP: file was RED on entry (iter-018 left 2 hard
 compile errors that the iter-018 review FALSELY certified green); iter-019 un-RED-ed it and fully characterised
