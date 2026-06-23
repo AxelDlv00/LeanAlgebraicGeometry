@@ -1,0 +1,91 @@
+[
+  {
+    "timestamp": "2026-06-22T15:30:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "pullback_spec_tilde_iso_ring_square_mate_glue"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "EVERY carrier-bearing glue presentation is genuine STUCK (iter-024 confirmed: statement bombs >200k-hb at tilde.functor whisker seam; any tactic forcing defeq at .obj (tilde M) kernel-bombs). Route pivoted to abstract carrier-free cocycle.",
+      "key_lemmas_used": [
+        "conjugateEquiv_comp",
+        "conjugateEquiv_symm_comp",
+        "conjugateIsoEquiv_apply_hom",
+        "Iso.ext",
+        "Equiv.eq_symm_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Land the Iso-level companion of Mathlib's conjugateEquiv_comp (the cocycle's 're-upgrade to isomorphisms' step; Mathlib lacks it)",
+        "code_tried": "theorem conjugateIsoEquiv_comp ... := by apply Iso.ext; simp only [Iso.trans_hom, conjugateIsoEquiv_apply_hom]; rw [conjugateEquiv_comp]",
+        "line_number": "1903",
+        "lean_error": "",
+        "result": "success",
+        "insight": "NEW, cold-green, axiom-clean. Carrier-free (abstract C D : Type*) => no kernel-bomb risk."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Land the inverse-direction companion (the four pst dictionary legs are (conjugateIsoEquiv).symm γ)",
+        "code_tried": "theorem conjugateIsoEquiv_symm_comp ... := by rw [Equiv.eq_symm_apply, ← conjugateIsoEquiv_comp, Equiv.apply_symm_apply, Equiv.apply_symm_apply]",
+        "line_number": "1918",
+        "lean_error": "",
+        "result": "success",
+        "insight": "NEW, cold-green, axiom-clean. Precise primitive the 4-leg pst telescope consumes."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Verify all Mathlib mate-calculus lemmas the cocycle route cites actually exist",
+        "code_tried": "lean_run_code probes of mateEquiv_vcomp, mateEquiv_hcomp, conjugateEquiv_symm_comp, iterated_mateEquiv_conjugateEquiv, conjugateIsoEquiv_apply_hom",
+        "line_number": "n/a",
+        "lean_error": "",
+        "result": "success",
+        "insight": "All five REAL with expected signatures. conjugateIsoEquiv_comp/_symm do NOT exist in Mathlib (hence S1/S2 needed project-side)."
+      },
+      {
+        "attempt": 4,
+        "strategy": "Author lem:ring_square_cocycle (abstract carrier-free telescoping) itself",
+        "code_tried": "(scoped: 4 adjunction columns + 6 comparison isos + 4 hyps; conclusion must exact-unify with glue's 6-iso telescope)",
+        "line_number": "~2805 (blueprint)",
+        "lean_error": "",
+        "result": "partial",
+        "insight": "Cocycle fully scoped + all primitives in place + all 4 hyps discharged by closed lemmas, but the single large abstract statement (designed to exact-unify with the glue) exceeds one fine-grained round. A botched statement would be worse than clean handoff. Left as STUCK-sanctioned typed sorry on the glue."
+      }
+    ],
+    "next_steps": "Dedicated `prove` (NOT fine-grained) lane on ring_square_cocycle: author abstract statement mirroring glue's 6-iso telescope (explicit functor+iso+adjunction params for structural exact), prove via conjugateIsoEquiv_symm_comp + iterated_mateEquiv_conjugateEquiv recognition + mateEquiv_vcomp/_hcomp pasting, close on gammaPushforwardNatIso_comp; THEN cold-build with `exact ring_square_cocycle …` wired into glue (the decisive kernel-light test — LSP hides the timeout). Analogist analogies/fbc-glue-carrier-whnf.md adds CatCommSq.hComp as alternative pasting primitive."
+  },
+  {
+    "timestamp": "2026-06-22T15:30:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorObjAssoc_hK_lhs_native"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "refactor (Option-A re-base)"
+    },
+    "findings": {
+      "blocker": "REGRESSION: the Option-A re-base (re-base tensorObj/unitor/braiding/associator onto ⊗_loc) landed PARTIALLY and BROKE the cold build — ~25 cascading errors (type mismatches + Unknown identifier `tensorObjAssoc_hK_lhs_head` @L907). 3 refactor lanes (snap-optiona, -rebase, -staged) all dispatched, NONE recorded dispatch_end (timed out, consistent with iter-022/023 3× monolithic-timeout history); a half-migrated file was left committed.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Option-A re-base of tensorObj and friends onto MonoidalCategory.tensorObj (C := modulesLocalizedMonoidal X), staged as 5 def re-bases",
+        "code_tried": "(refactor subagent — partial edits to def bodies; no full report; lanes timed out)",
+        "line_number": "107,120,163,189,217,232,907,924,1126,1258,...",
+        "lean_error": "Application type mismatch / Type mismatch (×~20); Unknown identifier `tensorObjAssoc_hK_lhs_head` @L907:12; typeclass instance problem is stuck @L1258; 'show' tactic failed @L1865/1881",
+        "result": "failed",
+        "insight": "The re-base touched object/unitor definitions but left consumers referencing the OLD hand-built API (tensorObjAssoc_hK_lhs_head removed/renamed) → 25 unknown-id + type-mismatch errors. Build is RED. This is the 4th consecutive SNAP iter where the refactor mechanism fails to land cleanly."
+      }
+    ],
+    "next_steps": "DO NOT add another monolithic Option-A refactor lane. Cheapest recovery = revert SectionGradedRing.lean to the green presplit/iter-024 state (backup `SectionGradedRing.lean.presplit-backup` is iter-021-green; or restore the iter-024 cold-green version) to stop the bleed, THEN either (a) decompose Option-A into per-def cold-build-gated micro-refactors with mandatory CONSUMER cold-build after EACH def, or (b) escalate to the user via TO_USER.md (4th failed refactor mechanism = budget exhausted, pc025 conditional flag fired)."
+  }
+]

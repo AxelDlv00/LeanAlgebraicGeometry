@@ -1,0 +1,245 @@
+[
+  {
+    "timestamp": "2026-06-22T14:14:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/SerreFiniteness.lean",
+      "theorem": "HModule_flasque_one_subsingleton"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "injectiveSES_shortExact",
+        "ext_one_eq_zero_of_hom_surjective_of_injective",
+        "IsFlasque.shortExact_app_surjective",
+        "constantSheafAdj",
+        "Injective.injective_under"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Subsingleton strengthening of public HModule_flasque_one_eq_zero (clean i=1 route, AVOIDS S5-gated general HModule_flasque_eq_zero). Replicate the hsub block: injective-hull SES + Ext-vanishing along Hom-surjective injective term; lift flasque section-surjectivity through constantSheaf⊣sheafSections adjunction.",
+        "code_tried": "refine ⟨fun x y => ?_⟩; have hSES := injectiveSES_shortExact F; ... rw [ext_one_eq_zero_of_hom_surjective_of_injective _ hSES hsurj x, ... y]",
+        "line_number": "216",
+        "result": "success",
+        "insight": "verified #print axioms = {propext, Classical.choice, Quot.sound}, NO sorryAx — the central S5 hazard of the iter was AVOIDED. omit on the curve instances is sound (abstract sheaf lemma)."
+      }
+    ],
+    "next_steps": "Add blueprint block (coverage debt); fix deprecated CategoryTheory.Sheaf.val (3 sites)."
+  },
+  {
+    "timestamp": "2026-06-22T14:14:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/SerreFiniteness.lean",
+      "theorem": "HModule_skyscraper_finite"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "HModule_zero_linearEquiv",
+        "constantSheafGammaHom_linearEquiv",
+        "homFromOne_linearEquiv",
+        "SheafGammaObj_linearEquiv_top",
+        "skyscraperPresheaf_obj",
+        "HModule_flasque_one_subsingleton"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "interval_cases i. Deg 0: four-step k̄-linear-equiv chain to skyscraper presheaf eval at ⊤ = k̄ (finite). Deg 1: flasque ⇒ Subsingleton via the new helper.",
+        "code_tried": "interval_cases i; · let LE := ((LE1.trans LE2).trans LE3).trans LE4; ... rw [skyscraperPresheaf_obj]; simp only [Opposite.unop_op]; rw [if_pos] <;> first | infer_instance | trivial; exact hfin.equiv LE.symm; · haveI : Subsingleton ... := HModule_flasque_one_subsingleton (skyscraperSheaf_isFlasque C P); infer_instance",
+        "line_number": "269",
+        "result": "success",
+        "insight": "Re-derives the private RRFormula.H0_skyscraperSheaf_finrank_eq_one chain (which is private/unusable). rw [if_pos] <;> first | infer_instance | trivial handles P.point ∈ ⊤ uniformly. Axiom-clean."
+      }
+    ],
+    "next_steps": "none (done)."
+  },
+  {
+    "timestamp": "2026-06-22T14:14:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/SerreFiniteness.lean",
+      "theorem": "HModule_finite_of_ses"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Abelian.Ext.covariant_sequence_exact₂",
+        "Function.Exact.linearMap_ker_eq",
+        "Module.Finite.of_submodule_quotient",
+        "LinearMap.surjective_rangeRestrict",
+        "LinearMap.quotKerEquivRange"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Middle-term 2-of-3 sandwich: f=postcomp(mk₀ S.f), g=postcomp(mk₀ S.g); exactness ker g = range f via covariant Ext-LES; range f finite (surjective image of finite Hⁱ(F₁)); quotient ≅ range g ⊆ finite Hⁱ(F₃); extension finite.",
+        "code_tried": "have hexact : Function.Exact f g := by intro y; constructor; · intro hy; exact Abelian.Ext.covariant_sequence_exact₂ ...; · rintro ⟨x, rfl⟩; simp only [comp_assoc_of_third_deg_zero, mk₀_comp_mk₀, ShortComplex.zero, ...]; ... exact Module.Finite.of_submodule_quotient (LinearMap.ker g)",
+        "line_number": "323",
+        "result": "success",
+        "insight": "leansearch found Module.Finite.of_submodule_quotient (N finite + M/N finite ⇒ M finite) — the extension closure. Axiom-clean. Only formalizes MIDDLE direction (blueprint lem:HModule_finite_of_ses claims full 2-of-3; left direction is separate helper HModule_finite_X₁_of_ses)."
+      }
+    ],
+    "next_steps": "Blueprint should reference both this and HModule_finite_X₁_of_ses (major mapping defect)."
+  },
+  {
+    "timestamp": "2026-06-22T14:14:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/SerreFiniteness.lean",
+      "theorem": "HModule_finite_X₁_of_ses"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Abelian.Ext.covariant_sequence_exact₁",
+        "Abelian.Ext.postcomp_mk₀_injective_of_mono",
+        "ShortComplex.ShortExact.extClass_comp",
+        "Module.Finite.of_submodule_quotient"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Left-term 2-of-3, match on i. i=0: S.f mono ⇒ H⁰(F₁) ↪ H⁰(F₂) injective ⇒ finite. i=j+1: window Hʲ(F₃) →δ Hʲ⁺¹(F₁) →f Hʲ⁺¹(F₂) exact via covariant_sequence_exact₁, same range/ker/quotient sandwich.",
+        "code_tried": "match i with | 0 => haveI : Mono S.f := hSE.mono_f; ... exact Module.Finite.of_injective f hf | (j+1) => let δ := hSE.extClass.postcompOfLinear ...; have hexact : Function.Exact δ f := ...; exact Module.Finite.of_submodule_quotient (LinearMap.ker f)",
+        "line_number": "377",
+        "result": "success",
+        "insight": "Verified axiom-clean (lean_verify: no sorryAx). New helper — coverage debt. Drives the remove-a-point direction of the divisor induction."
+      }
+    ],
+    "next_steps": "Add blueprint block."
+  },
+  {
+    "timestamp": "2026-06-22T14:14:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/SerreFiniteness.lean",
+      "theorem": "HModule_sheafOf_finite"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Body complete but carries sorryAx transitively (verified lean_verify) — bottoms out at the 7 deep leaves, principally HModule_affine_acyclic.",
+      "key_lemmas_used": [
+        "HModule_sheafOf_higher_vanish",
+        "sheafOf_finite_of_le_one",
+        "sheafOf_finite_single_add_aux",
+        "HModule_finite_of_ses",
+        "HModule_finite_X₁_of_ses",
+        "sheafOf_ses_single_add"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Headline producer for RRFormula's 4 S2 sorries. match i: (n+2) → higher-vanish Subsingleton; {0,1} → sheafOf_finite_of_le_one (Finsupp.induction on D, single-point SES + 2-of-3). Full induction layer (sheafOf_finite_single_add_aux via Int.induction_on, sheafOf_finite_of_le_one) assembled with complete bodies.",
+        "code_tried": "match i with | (n+2) => haveI : Subsingleton ... := HModule_sheafOf_higher_vanish ...; infer_instance | 0 => exact sheafOf_finite_of_le_one 0 (by omega) D | 1 => exact sheafOf_finite_of_le_one 1 (by omega) D",
+        "line_number": "577",
+        "result": "partial",
+        "insight": "Divisor reassociation needs congrArg(...).mpr (plain rw fails on WeilDivisor-vs-Finsupp +/single instance head); skyscraper finiteness transported through SES iso via key.equiv e.symm (dot notation + exact full-defeq, instance synth fails on Classical decidability head)."
+      }
+    ],
+    "next_steps": "Wire into RRFormula's 4 FiniteDimensional sorries (eulerCharacteristic_sheafOf_succ) once leaves land."
+  },
+  {
+    "timestamp": "2026-06-22T14:14:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/SerreFiniteness.lean",
+      "theorem": "HModule_affine_acyclic"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "SIGNATURE UNSOUND AS TYPED (must-fix, 2 independent audits). Quantifies over arbitrary sheaf F with NO quasi-coherence hypothesis; only side condition hAffine : ∃ A, Nonempty (X ≅ (Spec A).toTopCat) is a purely topological homeomorphism. Hartshorne III.3.5 is FALSE without quasi-coherence — cannot be closed honestly. Docstring excuse-comment falsely claims qcoh 'carried abstractly by hAffine/hp'.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Typed-sorry leaf (interface for the Stacks 01EW/01X9/01XB Čech/Koszul build). Left as sorry with proof-sketch comment.",
+        "code_tried": "theorem HModule_affine_acyclic (F : Sheaf ...) (hAffine : ∃ A, Nonempty (X ≅ (Spec A).toTopCat)) (p : ℕ) (hp : 0 < p) : Subsingleton (Scheme.HModule kbar F p) := by sorry",
+        "line_number": "71",
+        "result": "failed",
+        "insight": "Not protected → repairable. Fix = add a Module-k̄ sheaf-category quasi-coherence predicate on F + replace hAffine with a scheme iso. Blocks HModule_structureSheaf_higher_vanish, HModule_sheafOf_higher_vanish, HModule_one_iso_cechH1 (5 downstream decls can never de-sorryfy until corrected). Blueprint % NOTE added this iter."
+      }
+    ],
+    "next_steps": "DO NOT send a prover at this leaf until the signature is re-typed with a qcoh predicate (chapter must pin the predicate first)."
+  },
+  {
+    "timestamp": "2026-06-22T14:14:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/SerreFiniteness.lean",
+      "theorem": "cechH1_finiteDimensional"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Deepest leaf — Riemann inequality / Serre III.5.2 finiteness. Also: cechH1OfTwoAffine (L120) is a data-sorry def (opaque junk object); cechH1_finiteDimensional + HModule_one_iso_cechH1 prove properties of it → cannot be de-sorryed piecemeal (vacuous-proof risk).",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Typed-sorry leaf with proof-sketch comment (polar-parts / Riemann inequality).",
+        "code_tried": "theorem cechH1_finiteDimensional : FiniteDimensional kbar (cechH1OfTwoAffine C) := by sorry",
+        "line_number": "152",
+        "result": "failed",
+        "insight": "Interdependent cluster with cechH1OfTwoAffine (def := sorry) + HModule_one_iso_cechH1; must be resolved together AFTER HModule_affine_acyclic signature fixed."
+      }
+    ],
+    "next_steps": "Define cechH1OfTwoAffine as a real cokernel first, then prove finiteness; gated on exists_two_affine_open_cover + fixed affine acyclicity."
+  },
+  {
+    "timestamp": "2026-06-22T14:14:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/SerreFiniteness.lean",
+      "theorem": "exists_two_affine_open_cover"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Independent geometric lane — Hartshorne IV.1.3 (non-proper curve is affine). Signature SOUND (auditor: legitimate placeholder).",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Typed-sorry leaf. ∃ U V affine covering C with affine intersection; concretely complements of two distinct closed points.",
+        "code_tried": "theorem exists_two_affine_open_cover : ∃ U V, IsAffineOpen U ∧ IsAffineOpen V ∧ U ⊔ V = ⊤ ∧ IsAffineOpen (U ⊓ V) := by sorry",
+        "line_number": "95",
+        "result": "failed",
+        "insight": "Signature is a true strengthening of the blueprint statement (adds U⊓V affine). Provable in principle; cleanest standalone next lane."
+      }
+    ],
+    "next_steps": "Dedicated lane: non-proper-curve-is-affine (Hart IV.1.3). Chapter should record the U⊓V conjunct."
+  }
+]

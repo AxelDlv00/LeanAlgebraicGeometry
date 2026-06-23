@@ -1,0 +1,169 @@
+[
+  {
+    "timestamp": "2026-06-22T16:44:34Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Functors.lean",
+      "theorem": "grassmannian_separated"
+    },
+    "session": {
+      "id": "session_11",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "grassmannian_separated itself has no own sorry (reduced via terminal.from), but rests on grassmannianScheme_isSeparated which carries 1 isolated geometric sorry (diagonal closed-immersion assembly). Blocked by (a) Mathlib has no Scheme.GlueData -> IsSeparated; cover criterion isClosedImmersion_diagonal_restrict_diagonalCoverDiagonalRange only handles diagonal blocks U^I x U^I, not off-diagonal I != J; (b) the ZZ tensor module diamond prevents naming the chart-product ring ZZ[X^I] tensor_ZZ ZZ[X^J].",
+      "key_lemmas_used": [
+        "Scheme.IsSeparated.isSeparated_terminal_from",
+        "Scheme.isSeparated_iff",
+        "AlgebraicGeometry.isSeparated_iff",
+        "IsLocalization.Away.surj",
+        "grassTransAux_minor",
+        "grassMinor_self",
+        "grassMinorMatrixLoc_det",
+        "Ring.mul_inverse_cancel"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Reduce IsSeparated(structureMorphism) to absolute scheme separatedness via terminal.from",
+        "code_tried": "unfold grassmannianScheme.structureMorphism; exact Scheme.IsSeparated.isSeparated_terminal_from (with haveI : (grassmannianScheme r d).IsSeparated)",
+        "line_number": "~1196",
+        "lean_error": "(earlier variant) exact failed before unfold; resolved by unfold then exact",
+        "result": "success",
+        "insight": "grassmannian_separated now carries NO own sorry; it exact's the terminal-from instance off a haveI of grassmannianScheme_isSeparated."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Prove the algebraic core: diagonal ring map ZZ[X^I] (x) ZZ[X^J] -> ZZ[X^I,1/P^I_J] is surjective",
+        "code_tried": "grassDiagRing_surjective: IsLocalization.Away.surj then cancel via grassTransAux_minor_self_mul (theta_{I,J}(P^J_I) = (P^I_J)^{-1})",
+        "line_number": "~1252",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Surjectivity stated WITHOUT naming the tensor (to dodge the ZZ diamond). Axiom-clean (propext/Classical.choice/Quot.sound)."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Reduce absolute separatedness to diagonal closed-immersion",
+        "code_tried": "rw [Scheme.isSeparated_iff, AlgebraicGeometry.isSeparated_iff] -- goal: IsClosedImmersion (pullback.diagonal (terminal.from X))",
+        "line_number": "~1265",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "Reduction compiles; remaining diagonal-closed-immersion step left as the single isolated sorry (line ~1270). Naming ZZ[X^I] (x)_ZZ ZZ[X^J] fails: Semiring instance does not synth for base ZZ (Algebra ZZ module vs AddCommGroup.intModule diamond); confirmed by isolated example failing."
+      }
+    ],
+    "next_steps": "Do NOT re-dispatch the same blind route. The geometric assembly needs a diamond-safe identification of U^I x_top U^J (via pullbackSpecIso / coproduct-of-Spec or tensoring over a non-ZZ base), then grassDiagRing_surjective + IsClosedImmersion.spec_of_surjective, assembled over the product cover via IsZariskiLocalAtTarget @IsClosedImmersion. Consider enabling mathlib-analogist for the diamond / GlueData->IsSeparated design."
+  },
+  {
+    "timestamp": "2026-06-22T16:44:34Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Functors.lean",
+      "theorem": "grassmannian_proper"
+    },
+    "session": {
+      "id": "session_11",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Body restructured to `refine valuativeCriterion_proper _ ?_` after a haveI for LocallyOfFiniteType; 2 sorries remain: (1) LocallyOfFiniteType (top_Scheme is only iso, not defeq, to Spec ZZ, so terminal.from (Spec A) is not literally Spec.map); (2) ValuativeCriterion (deep Nitsure DVR lifting argument).",
+      "key_lemmas_used": [
+        "valuativeCriterion_proper",
+        "Scheme.OpenCover.compactSpace",
+        "compactSpace_iff_quasiCompact",
+        "IsSeparated.instQuasiSeparated"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Land CompactSpace on the glued scheme",
+        "code_tried": "grassmannianScheme_compactSpace: (grassGlueData r d).openCover.compactSpace with haveI Finite index (ULift (Fin d -> Fin r)) + per-chart CompactSpace via grassChart affine",
+        "line_number": "~1296",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Axiom-clean (verified via lean_verify)."
+      },
+      {
+        "attempt": 2,
+        "strategy": "QuasiCompact of structure morphism",
+        "code_tried": "grassmannian_structureMorphism_quasiCompact: via <- compactSpace_iff_quasiCompact",
+        "line_number": "~1310",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Axiom-clean (verified via lean_verify)."
+      },
+      {
+        "attempt": 3,
+        "strategy": "QuasiSeparated free from separatedness",
+        "code_tried": "grassmannian_structureMorphism_quasiSeparated: IsSeparated.instQuasiSeparated",
+        "line_number": "~1318",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Genuine, but transitively depends on the grassmannianScheme_isSeparated sorry."
+      },
+      {
+        "attempt": 4,
+        "strategy": "Assemble proper via valuative criterion",
+        "code_tried": "haveI : LocallyOfFiniteType (...) := by sorry; refine valuativeCriterion_proper _ ?_; sorry",
+        "line_number": "~1336/1339",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "Restructured into 2 narrow sorries with concrete routes; 3 finiteness instances landed."
+      }
+    ],
+    "next_steps": "LocallyOfFiniteType: source-local criterion on openCover + Algebra.FiniteType ZZ of chart rings, transporting through top_Scheme ~ Spec ZZ iso. ValuativeCriterion: the substantial Nitsure DVR argument (verbatim source quote in blueprint). Both are next-iter targets once separated's geometric sorry is closed."
+  },
+  {
+    "timestamp": "2026-06-22T16:44:34Z",
+    "status": "solved",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Functors.lean",
+      "theorem": "grassTransAux_minor_self_mul"
+    },
+    "session": {
+      "id": "session_11",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "grassTransAux_minor",
+        "grassMinor_self",
+        "grassMinorMatrixLoc_det",
+        "grassMinorMatrixLoc_isUnit_det",
+        "Ring.mul_inverse_cancel"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Prove algebraMap(P^I_J) * theta_{I,J}(P^J_I) = 1",
+        "code_tried": "grassTransAux_minor (K=I) + grassMinor_self + grassMinorMatrixLoc_det + Ring.mul_inverse_cancel",
+        "line_number": "~1235",
+        "lean_error": null,
+        "result": "success",
+        "insight": "theta_{I,J}(P^J_I) = (P^I_J)^{-1}; axiom-clean reusable lemma underpinning grassDiagRing_surjective."
+      }
+    ],
+    "next_steps": "Blueprint this helper (coverage debt)."
+  },
+  {
+    "timestamp": "2026-06-22T16:44:34Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Functors.lean",
+      "theorem": "grassmannianUniversalQuotient / grassmannian_very_ample / grassmannian_represents"
+    },
+    "session": {
+      "id": "session_11",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Gap-blocked, not in this lane. very_ample/universalQuotient need IsLocallyFreeOfRank/det (=wedge^d) stubs; represents needs the deep glued functor-of-points. Untouched per PROGRESS.",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Remain deferred until the locally-free / determinant foundational stubs land."
+  }
+]

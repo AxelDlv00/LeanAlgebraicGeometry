@@ -14,8 +14,10 @@ prover
 
 **Zero inline `sorry` in the dependency cone of each protected declaration
 + kernel-only axioms** for Christian Merten's Jacobian challenge. Spine =
-**pointed vs. unpointed**. 0 project axioms. Operative posture: option (c)
-under the USER ROUTE C PAUSE. Full framing in STRATEGY.md.
+**pointed vs. unpointed**. 0 project axioms. Operative posture: the Jacobian
+is built **uniformly** as `J = Pic⁰_{C/k}` (`picardJacobianWitness`); the
+genus-0 lane was deleted 2026-06-23 (no more genus split). Full framing in
+STRATEGY.md.
 
 ## Merge note — 2026-06-22 (GR-quot_closure UNION merge)
 

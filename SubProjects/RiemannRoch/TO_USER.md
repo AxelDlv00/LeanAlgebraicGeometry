@@ -1,5 +1,0 @@
-<!-- Shared notice board. Keep to <=2-3 short bullets; delete bullets no longer true. -->
-
-- **Decision in force (iter-001):** the standing parent-Jacobian hints (`ROUTE C PAUSE`, `Pic_{C/k}` representability, `Route A`) are treated as stale carryovers — this extracted subproject *is* the Riemann-Roch / Route-C work, so the loop proceeds bottom-up on headline #1. To re-scope, add a hint to `USER_HINTS.md`; no reply needed.
-- **Progress (iter-020):** the supposed "Mathlib gap" that stalled S3 for three iters is NOT a gap — the DVR valuation-membership lemmas (`exists_lift_of_le_one`, `mem_integers_of_valuation_le_one`) already exist in Mathlib; it was a search miss. Both remaining S3 leaves (G2 residue + the algebraic-Hartogs bridge input) are now parallel prove lanes consuming existing Mathlib, with the sheaf bridge assembly following next iter. No user action needed.
-- **Optional credential:** no LLM API key is set (`DEEPSEEK_API_KEY` / `MOONSHOT_API_KEY` / `OPENROUTER_API_KEY` / `OPENAI_API_KEY` / `GEMINI_API_KEY` all empty), so the informal-proof second-opinion agent is unavailable. The loop proceeds without it.

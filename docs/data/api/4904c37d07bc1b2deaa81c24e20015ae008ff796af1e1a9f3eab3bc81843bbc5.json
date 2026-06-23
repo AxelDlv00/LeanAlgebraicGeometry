@@ -1,0 +1,201 @@
+[
+  {
+    "timestamp": "2026-06-22T12:55:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Basic.lean",
+      "theorem": "relativeProj (single-chart model)"
+    },
+    "session": {
+      "id": "session_7",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "cross-S gluing (trivialising affine cover of S) + Proj.map transition isos not yet built; relativeProj stub itself NOT re-signed (kept sorry to avoid breaking downstream)",
+      "key_lemmas_used": [
+        "AlgebraicGeometry.Proj.toSpecZero",
+        "AlgebraicGeometry.Proj.isSeparated",
+        "Algebra.FiniteType.of_restrictScalars_finiteType",
+        "MvPolynomial.homogeneousSubmodule_zero",
+        "Submodule.one_eq_range",
+        "RingEquiv.toCommRingCatIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "define projChartGrading = homogeneousSubmodule (Fin (n+1)) A, projChart = Proj of it, projChartToSpecZero = Proj.toSpecZero",
+        "code_tried": "abbrev projChartGrading ...; def projChart := Proj ...; def projChartToSpecZero := Proj.toSpecZero _",
+        "result": "success",
+        "insight": "Proj.toSpecZero/isSeparated present unconditionally; chart model is free from Mathlib"
+      },
+      {
+        "attempt": 2,
+        "strategy": "obtain Algebra.FiniteType (𝒜 0) A[t•] for the Proj IsProper instance",
+        "code_tried": "example : Algebra.FiniteType (projChartGrading A n 0) (MvPolynomial (Fin (n+1)) A) := by infer_instance",
+        "line_number": "after projChartToSpecZero",
+        "lean_error": "failed to synthesize Algebra.FiniteType (↥(projChartGrading A n 0)) (MvPolynomial (Fin (n+1)) A)",
+        "result": "failed",
+        "insight": "Mathlib only gives finite-type over the BASE A, not over the grade-zero part"
+      },
+      {
+        "attempt": 3,
+        "strategy": "build IsScalarTower A (𝒜 0) A[t•] then transfer finiteness down",
+        "code_tried": "instance : IsScalarTower A (projChartGrading A n 0) (MvPolynomial (Fin (n+1)) A) := IsScalarTower.of_algebraMap_eq ...; instance projChart_finiteType := Algebra.FiniteType.of_restrictScalars_finiteType A _ _",
+        "result": "success",
+        "insight": "of_restrictScalars_finiteType down the tower A → 𝒜0 → A[t•] supplies the missing instance; then Proj IsProper fires"
+      },
+      {
+        "attempt": 4,
+        "strategy": "retarget structure morphism onto honest Spec A via 𝒜0 ≅ A iso",
+        "code_tried": "Scheme.Spec.mapIso (CommRingCat.ofHom (projChartGradeZeroEquiv A n).symm.toRingHom).asIso.op",
+        "lean_error": "Invalid field `asIso`: environment does not contain `CommRingCat.Hom.asIso`",
+        "result": "failed",
+        "insight": "CommRingCat.Hom.asIso does not exist"
+      },
+      {
+        "attempt": 5,
+        "strategy": "use asIso of Spec.map of RingEquiv.toCommRingCatIso",
+        "code_tried": "noncomputable def specGradeZeroIsoSpecBase := asIso (Spec.map (projChartGradeZeroEquiv A n).toCommRingCatIso.hom)",
+        "result": "success",
+        "insight": "IsIso (Spec.map _) auto-inferred from IsIso of the CommRingCat iso hom; projChartToSpecBase_isSeparated/_isProper follow by composition with iso"
+      }
+    ],
+    "next_steps": "Build Proj.map-based transition isos (frame-change GradedRingHom via aeval) + trivialising affine cover of S, assemble Scheme.GlueData, then relativeProj S V := D.glued. Proj.map functoriality confirmed present in Mathlib ProjectiveSpectrum/Functor.lean."
+  },
+  {
+    "timestamp": "2026-06-22T12:55:30Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Functors.lean",
+      "theorem": "grassmannianScheme"
+    },
+    "session": {
+      "id": "session_7",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "t'/t_fac/cocycle triple-overlap GlueData fields require pullbackSpecIso identification of pullback(f I J)(f I K) with Spec of the double localisation + double awayLift transition; all-or-nothing (sorry in any GlueData field = banned junk scheme)",
+      "key_lemmas_used": [
+        "AlgebraicGeometry.isIso_SpecMap_iff",
+        "IsLocalization.atUnit",
+        "MvPolynomial.ringHom_ext",
+        "IsLocalization.Away.lift_comp",
+        "RingHom.map_det",
+        "Matrix.det_mul",
+        "grassmannian_cocycle"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "f_id: reduce IsIso (f I I) to bijectivity of algebra map then use atUnit",
+        "code_tried": "rw [grassInclusion, isIso_SpecMap_iff]",
+        "line_number": "~492",
+        "lean_error": "Tactic `rewrite` failed: Did not find an occurrence of the pattern @IsIso ... (Spec.map ?m) in the target @IsIso ... (grassOverlap r d I I) ...",
+        "result": "failed",
+        "insight": "isIso_SpecMap_iff needs syntactic Spec _; grassChart/grassOverlap defs wrap Spec but are not syntactically Spec"
+      },
+      {
+        "attempt": 2,
+        "strategy": "unfold the chart defs first to expose Spec.map",
+        "code_tried": "unfold grassInclusion grassOverlap grassChart grassChartRing; rw [isIso_SpecMap_iff]; ... IsLocalization.atUnit ... (grassMinor_self gives P^I_I=1 unit)",
+        "result": "success",
+        "insight": "after unfold, atUnit gives AlgEquiv whose coercion IS the algebra map ⟹ bijective; this is GlueData f_id"
+      },
+      {
+        "attempt": 3,
+        "strategy": "t_id chain: grassTransMorphism_self via grassTrans_self = RingHom.id",
+        "code_tried": "rw [grassTransMorphism, grassTrans_self, CommRingCat.ofHom_id, Spec.map_id]",
+        "line_number": "~548",
+        "lean_error": "unsolved goals ⊢ 𝟙 (Spec (CommRingCat.of (grassOverlapRing r d I I))) = 𝟙 (grassOverlap r d I I)",
+        "result": "partial",
+        "insight": "needs trailing rfl to close the defeq between the two identity morphisms"
+      },
+      {
+        "attempt": 4,
+        "strategy": "add rfl after Spec.map_id",
+        "code_tried": "rw [grassTransMorphism, grassTrans_self, CommRingCat.ofHom_id, Spec.map_id]; rfl",
+        "result": "success",
+        "insight": "t_id = grassTransMorphism_self now axiom-clean"
+      },
+      {
+        "attempt": 5,
+        "strategy": "grassTransAux_minor: θ_{I,J}(P^J_K) = det((X^I_J)⁻¹)·P^I_K via det/submatrix commuting",
+        "code_tried": "rw [hmul, Matrix.det_mul]; congr 1; rw [grassMinor, grassFrameLoc, Matrix.submatrix_map]; exact (RingHom.map_det _ _).symm",
+        "line_number": "~582",
+        "lean_error": "Failed to rewrite using equation theorems for `grassMinor`",
+        "result": "failed",
+        "insight": "rw fails on plain def grassMinor; must change to the unfolded goal shape"
+      },
+      {
+        "attempt": 6,
+        "strategy": "use change to the explicit submatrix-det goal instead of rw on grassMinor",
+        "code_tried": "congr 1; change ((grassFrameLoc r d I J).submatrix id ⇑K).det = algebraMap _ _ ((grassFrame r d I).submatrix id ⇑K).det; rw [grassFrameLoc, Matrix.submatrix_map]; exact (RingHom.map_det _ _).symm",
+        "result": "success",
+        "insight": "grassTransAux_minor done; grassTransAux_minor_isUnit_of (parametric t' gate) follows: det((X^I_J)⁻¹) always a unit, P^I_K a unit by hypothesis"
+      }
+    ],
+    "next_steps": "Build t' via pullbackSpecIso + IsLocalization.Away.tensor/.mul' + double Localization.awayLift (gate = grassTransAux_minor_isUnit_of); t_fac/cocycle reduce to IsLocalization.ringHom_ext + proven grassmannian_cocycle. Then grassmannianScheme := (D r d).glued. Do NOT use IsOpenImmersion.lift route (harder basicOpen range arg)."
+  },
+  {
+    "timestamp": "2026-06-22T12:50:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Functors.lean",
+      "theorem": "grassInclusion_self_isIso"
+    },
+    "session": {
+      "id": "session_7",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "isIso_SpecMap_iff",
+        "IsLocalization.atUnit",
+        "grassMinor_self"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "GlueData f_id field — see grassmannianScheme attempts 1-2",
+        "code_tried": "unfold grassInclusion grassOverlap grassChart grassChartRing; rw [isIso_SpecMap_iff]; exact (IsLocalization.atUnit ...).bijective",
+        "result": "success",
+        "insight": "axiom-clean GlueData f_id"
+      }
+    ],
+    "next_steps": "Plug into the assembled GlueData."
+  },
+  {
+    "timestamp": "2026-06-22T12:50:30Z",
+    "status": "solved",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Functors.lean",
+      "theorem": "grassTransMorphism_self"
+    },
+    "session": {
+      "id": "session_7",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "grassTrans_self",
+        "CommRingCat.ofHom_id",
+        "Spec.map_id",
+        "MvPolynomial.ringHom_ext",
+        "IsLocalization.Away.lift_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "GlueData t_id field via grassTrans_self = id — see grassmannianScheme attempts 3-4",
+        "code_tried": "rw [grassTransMorphism, grassTrans_self, CommRingCat.ofHom_id, Spec.map_id]; rfl",
+        "result": "success",
+        "insight": "axiom-clean GlueData t_id; underlying chain grassMinorMatrixLoc_self/grassTransMatrix_self/grassTransAux_self/grassTrans_self all proven"
+      }
+    ],
+    "next_steps": "Plug into the assembled GlueData."
+  }
+]

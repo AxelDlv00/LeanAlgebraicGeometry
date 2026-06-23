@@ -35,15 +35,8 @@ import AlgebraicJacobian.Cohomology.CechToHigherDirectImage
 -- Target-local roadmap nodes preserved across the merge (unconditional Rⁱf_*
 -- packaging + Čech flat base change, Stacks 02KH) — see file header.
 import AlgebraicJacobian.Cohomology.CechHigherDirectImageUnconditional
-import AlgebraicJacobian.Cotangent.GrpObj
-import AlgebraicJacobian.Cotangent.ChartAlgebra
-import AlgebraicJacobian.Differentials
-import AlgebraicJacobian.Rigidity
-import AlgebraicJacobian.RigidityKbar
 import AlgebraicJacobian.Genus
-import AlgebraicJacobian.Genus0BaseObjects
 import AlgebraicJacobian.RigidityLemma
-import AlgebraicJacobian.AbelianVarietyRigidity
 import AlgebraicJacobian.Jacobian
 import AlgebraicJacobian.AbelJacobi
 import AlgebraicJacobian.Picard.RelativeSpec
@@ -67,10 +60,6 @@ import AlgebraicJacobian.Picard.GlueDescent
 import AlgebraicJacobian.Picard.GrassmannianQuot
 import AlgebraicJacobian.Picard.LineBundleCoherence
 import AlgebraicJacobian.RiemannRoch.WeilDivisor
-import AlgebraicJacobian.RiemannRoch.H1Vanishing
-import AlgebraicJacobian.RiemannRoch.RRFormula
-import AlgebraicJacobian.RiemannRoch.OCofP
-import AlgebraicJacobian.RiemannRoch.RationalCurveIso
 import AlgebraicJacobian.Albanese.AlbaneseUP
 import AlgebraicJacobian.Albanese.AuslanderBuchsbaum
 import AlgebraicJacobian.Albanese.CodimOneExtension

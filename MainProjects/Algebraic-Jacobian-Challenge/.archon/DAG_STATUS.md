@@ -1,5 +1,9 @@
 ## Status: COMPLETE
 
+> **2026-06-23 update:** the genus-0 lane (cotangent / RR-genus-0 / rigidity-chart leaves
+> mentioned below) was removed; the Jacobian is built uniformly as `Pic⁰_{C/k}`. Those leaves
+> are no longer in the goal cone. See `STRATEGY.md` and `memory/genus-split-removed-uniform-pic0.md`.
+
 ## Headline (iter-302) — the USER's connectivity directive is DONE, and it flips the
 last deferred gate criterion to PASS.
 The prior iterations (284–301) held criterion 5 (1-to-1 Lean↔blueprint coverage)

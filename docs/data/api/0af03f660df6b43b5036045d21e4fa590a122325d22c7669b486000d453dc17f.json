@@ -1,0 +1,5 @@
+{
+  "path": "MR0555258CompactifyingPicard/Basic.lean",
+  "size": 68,
+  "content": "import Mathlib\n\n/-!\n# MR0555258: Compactifying the Picard scheme\n-/\n"
+}

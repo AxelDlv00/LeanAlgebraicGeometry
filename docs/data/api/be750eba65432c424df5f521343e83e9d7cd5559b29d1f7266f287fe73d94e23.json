@@ -1,0 +1,233 @@
+[
+  {
+    "timestamp": "2026-06-22T16:00:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Functors.lean",
+      "theorem": "grassmannianScheme"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "grassGlueData",
+        "grassTransMorphism2_tfac",
+        "grassTripleIso_inv_fst",
+        "grassTripleIso_inv_snd",
+        "grassTrans2_proj_snd_eq",
+        "pullbackSpecIso_inv_fst'",
+        "Spec.map_comp",
+        "CategoryTheory.GlueData.glued"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Land geometric projection lemma grassTripleIso_inv_fst: rw [grassTripleIso, Iso.trans_inv, Category.assoc, pullbackSpecIso_inv_fst']",
+        "code_tried": "rw [grassTripleIso, Iso.trans_inv, Category.assoc, pullbackSpecIso_inv_fst']",
+        "line_number": "~1138",
+        "lean_error": "rewrite failed: pattern (pullbackSpecIso ?R ?S ?T).inv ≫ pullback.fst (Spec.map (ofHom (algebraMap ?R ?S))) … not found (grassInclusion not unfolded to algebraMap form)",
+        "result": "failed",
+        "insight": "grassInclusion wraps algebraMap; pattern doesn't match until exposed."
+      },
+      {
+        "attempt": 2,
+        "strategy": "simp only [grassInclusion] then rw [pullbackSpecIso_inv_fst']",
+        "code_tried": "rw [grassTripleIso, Iso.trans_inv, Category.assoc]; simp only [grassInclusion]; rw [pullbackSpecIso_inv_fst']",
+        "line_number": "~1138",
+        "lean_error": "rewrite failed: same pattern not found — Localization.Away Algebra-instance diamond after exposing algebraMap",
+        "result": "failed",
+        "insight": "plain rw cannot see through the Localization.Away Algebra-instance diamond (the 2-iter blocker)."
+      },
+      {
+        "attempt": 3,
+        "strategy": "erw past the instance diamond (planner fix-list option a)",
+        "code_tried": "rw [grassTripleIso, Iso.trans_inv, Category.assoc]; erw [pullbackSpecIso_inv_fst']; erw [← Spec.map_comp, ← CommRingCat.ofHom_comp]; rfl",
+        "line_number": "~1138",
+        "lean_error": null,
+        "result": "success",
+        "insight": "erw sees through the diamond where rw cannot. The ← Spec.map_comp COMBINE step ALSO needs erw (middle object CommRingCat.of (S⊗T) is defeq-but-not-syntactic). Resolves the iter-008/009 t_fac blocker."
+      },
+      {
+        "attempt": 4,
+        "strategy": "Assemble grassTransMorphism2_tfac then grassGlueData, re-sign grassmannianScheme := D.glued",
+        "code_tried": "noncomputable def grassmannianScheme (r d : ℕ) : Scheme.{u} := (grassGlueData.{u} r d).glued",
+        "line_number": "~1190",
+        "lean_error": null,
+        "result": "success",
+        "insight": "t_fac closes via ← cancel_epi (grassTripleIso).inv, Iso.inv_hom_id_assoc, the two projection lemmas, then ring identity grassTrans2_proj_snd_eq (IsLocalization.ringHom_ext). #print axioms grassmannianScheme = {propext, Classical.choice, Quot.sound} — genuine sorry-free scheme."
+      }
+    ],
+    "next_steps": "Grassmannian downstream now UNBLOCKED: grassmannian_separated, grassmannian_proper, grassmannianUniversalQuotient, grassmannian_very_ample, grassmannian_represents. Dispatch these next iter."
+  },
+  {
+    "timestamp": "2026-06-22T16:00:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Basic.lean",
+      "theorem": "projMap_toSpecZero"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "Proj.mapAffineOpenCover",
+        "Proj.awayι_comp_map_assoc",
+        "Proj.awayι_toSpecZero",
+        "Proj.awayι_toSpecZero_assoc",
+        "awayMap_comp_fromZeroRingHom",
+        "Spec.map_comp",
+        "CommRingCat.ofHom_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Build Mathlib-absent naturality of Proj.toSpecZero along Proj.map; check on Proj.mapAffineOpenCover via openCover.hom_ext, reduce each chart by awayι lemmas in ONE rw",
+        "code_tried": "rw [← Category.assoc, Proj.awayι_comp_map f hf s.1.2 _ s.2.2, Category.assoc, Proj.awayι_toSpecZero, ← Category.assoc, Proj.awayι_toSpecZero, ← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp, awayMap_comp_fromZeroRingHom]",
+        "line_number": "~719",
+        "lean_error": "rewrite failed: pattern Proj.awayι ℬ (f ↑s.snd) … ≫ Proj.map f hf not found (proof-term args f_deg/hm only defeq)",
+        "result": "failed",
+        "insight": "cover's awayι carries f_deg/hm proof-term args only defeq to awayι_comp_map's; rw keyed-matching fails."
+      },
+      {
+        "attempt": 2,
+        "strategy": "erw the whole chain in one call",
+        "code_tried": "erw [Proj.awayι_comp_map_assoc f hf s.1.2 _ s.2.2, Proj.awayι_toSpecZero, Proj.awayι_toSpecZero_assoc]; rw [← Spec.map_comp, …, awayMap_comp_fromZeroRingHom]",
+        "line_number": "~719",
+        "lean_error": "(deterministic) timeout at whnf, 200000 heartbeats (also times out at 1000000)",
+        "result": "failed",
+        "insight": "erw of all three awayι lemmas at once blows the heartbeat budget."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Split: erw only the two cover-side steps, plain rw the lemma-side step",
+        "code_tried": "erw [Proj.awayι_comp_map_assoc f hf s.1.2 _ s.2.2]; rw [Proj.awayι_toSpecZero]; erw [Proj.awayι_toSpecZero_assoc]; rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp, awayMap_comp_fromZeroRingHom]",
+        "line_number": "~719",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Splitting erw (defeq-sensitive cover steps) from rw (syntactic lemma step) is fast and axiom-clean. awayMap_comp_fromZeroRingHom closed by ext a; simp [fromZeroRingHom, Away.map, HomogeneousLocalization.map_mk]."
+      }
+    ],
+    "next_steps": "Consumed by step-5 chart compat lemmas projChartFrameMap_toSpecBase + projChartBaseMap_toSpecBase (both solved this iter). Suggest non-private blueprint node lem:proj-map-tospeczero feeding both."
+  },
+  {
+    "timestamp": "2026-06-22T16:00:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Basic.lean",
+      "theorem": "projChartBaseMap_toSpecBase"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "projMap_toSpecZero",
+        "specMap_gradedZeroRingHom_projChartBaseHom",
+        "gradedZeroRingHom_projChartBaseHom_comp",
+        "specGradeZeroIsoSpecBase",
+        "RingEquiv.toCommRingCatIso_hom"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Unfold defs, ← Category.assoc, erw projMap_toSpecZero, then rw [Category.assoc, Category.assoc]; congr 1",
+        "code_tried": "erw [projMap_toSpecZero …]; rw [Category.assoc, Category.assoc]; congr 1; rw [specGradeZeroIsoSpecBase, asIso_hom, …]",
+        "line_number": "~812",
+        "lean_error": "rewrite failed: pattern (?f ≫ ?g) ≫ ?h not found; congr 1 splits into HETEROGENEOUS goals (Spec(𝒜₀) vs Spec(𝒜'₀))",
+        "result": "failed",
+        "insight": "bundled IsIso/asIso instance args of specGradeZeroIsoSpecBase.hom defeat rw [Category.assoc] keyed matching; congr 1 yields heterogeneous goals."
+      },
+      {
+        "attempt": 2,
+        "strategy": "simp only [Category.assoc]; congr 1; simp only [specGradeZeroIsoSpecBase, asIso_hom]",
+        "code_tried": "simp only [Category.assoc]; congr 1; simp only [specGradeZeroIsoSpecBase, asIso_hom]; rw […]",
+        "line_number": "~808",
+        "lean_error": "simp made no progress / Failed to rewrite using equation theorems for specGradeZeroIsoSpecBase (plain def)",
+        "result": "failed",
+        "insight": "specGradeZeroIsoSpecBase is a plain def — rw/simp only on it fails."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Factor Spec-level half into private lemma specMap_gradedZeroRingHom_projChartBaseHom; reassociate in term mode",
+        "code_tried": "erw [projMap_toSpecZero …]; refine (Category.assoc _ _ _).trans ?_; rw [specMap_gradedZeroRingHom_projChartBaseHom]; exact (Category.assoc _ _ _).symm",
+        "line_number": "~812",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Term-mode reassociation (Category.assoc _ _ _).trans/.symm unifies where rw cannot. Isolate the specGradeZeroIsoSpecBase unfold into a private lemma where the goal is clean enough for simp only [specGradeZeroIsoSpecBase, asIso_hom]."
+      }
+    ],
+    "next_steps": "Step-5 compat complete (both halves). Cross-S GlueData remains gap-blocked on absent S.Modules→(cover,frames) adapter."
+  },
+  {
+    "timestamp": "2026-06-22T16:00:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Basic.lean",
+      "theorem": "projChartFrameMap_toSpecBase"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "projMap_toSpecZero",
+        "gradedZeroRingHom_projChartFrameHom",
+        "CommRingCat.ofHom_id",
+        "Spec.map_id"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Unfold, ← Category.assoc, erw projMap_toSpecZero, collapse deg-0 hom to id",
+        "code_tried": "rw [projChartFrameMap, projChartToSpecBase, projChartToSpecZero, ← Category.assoc]; erw [projMap_toSpecZero (projChartFrameHom A n g) …]; rw [gradedZeroRingHom_projChartFrameHom, CommRingCat.ofHom_id, Spec.map_id, Category.comp_id]",
+        "line_number": "~764",
+        "lean_error": null,
+        "result": "success",
+        "insight": "erw needed: projChartFrameMap's baked-in Proj.map proof arg only defeq to projMap_toSpecZero's. gradedZeroRingHom_projChartFrameHom (frame hom = id on deg 0, via RingHom.ext/Subtype.ext + homogeneousSubmodule_zero + Submodule.one_eq_range + aeval_C) collapses to id."
+      }
+    ],
+    "next_steps": "Done; consumed by cross-S relativeProj GlueData (gap-blocked)."
+  },
+  {
+    "timestamp": "2026-06-22T16:00:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Basic.lean",
+      "theorem": "relativeProj"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Absent Mathlib: S.Modules → (trivialising affine cover, per-overlap frame matrices) adapter (local triviality of a locally-free sheaf / sheaf-Sym). Needs planner-level design decision, not a blind dispatch.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — deferred per plan (cover-independent step-5 compat done instead; cross-S glue needs absent adapter + Grassmannian GlueData template, now landed)",
+        "code_tried": "n/a",
+        "line_number": "n/a",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "Chart model + both transition halves + step-5 compat now ALL axiom-clean. Only the cross-S assembly remains, gated on the absent cover/frame adapter."
+      }
+    ],
+    "next_steps": "Planner: design explicit cover + GLₙ₊₁ frame-cocycle data structure mirroring the now-proven grassGlueData; do NOT dispatch blind (thrashes building Sym-of-a-sheaf)."
+  }
+]

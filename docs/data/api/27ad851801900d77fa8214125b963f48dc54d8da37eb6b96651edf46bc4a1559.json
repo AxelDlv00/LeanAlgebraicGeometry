@@ -1,0 +1,17 @@
+{
+  "commits": [
+    {
+      "sha": "2c84fba86794cc241e4e8da28eb906e5c7e44a5c",
+      "shortSha": "2c84fba",
+      "subject": "archon[000/init]: initial state",
+      "date": "2026-06-23 09:29:55 +0800",
+      "parents": [],
+      "refs": [
+        "HEAD -> main"
+      ],
+      "iteration": "iter-000",
+      "phase": "init",
+      "branch": "main"
+    }
+  ]
+}

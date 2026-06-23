@@ -1,0 +1,128 @@
+[
+  {
+    "timestamp": "2026-06-22T13:02:50Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackTensorMap_left_unitality"
+    },
+    "session": {
+      "id": "session_57",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Residual sorry (L1365) = combined Cone A sub-lemma 3 (η-whisker leg) + sub-lemma 2 (λ leg); B1-scale, needs effort-break into 3a/3b",
+      "key_lemmas_used": [
+        "pullbackTensorMap_eq_sheafify_delta",
+        "pullback_map_tensorObj_left_unitor_eq",
+        "Functor.OplaxMonoidal.left_unitality_hom",
+        "pullbackUnitIso_eq_sheafify_eta"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Wire bridge-3 assembly: rw bridge-2 δ-expansion + RHS reconciliation 1′, build hHLU (sheafified presheaf left_unitality), erw [← hHLU] to expose δ/η/λ legs, leave residual sorry",
+        "code_tried": "rw [pullbackTensorMap_eq_sheafify_delta f (SheafOfModules.unit X.ringCatSheaf) M, pullback_map_tensorObj_left_unitor_eq f M]; have hlu := Functor.OplaxMonoidal.left_unitality_hom (PresheafOfModules.pullback φ') M.val; have hHLU : ... := by rw [← Functor.map_comp, ← Functor.map_comp]; exact congrArg _ hlu; erw [← hHLU]; sorry",
+        "line_number": "1305",
+        "lean_error": "none (compiles green-mod-sorry)",
+        "goal_before": "pullbackTensorMap f 𝒪 M ≫ (tensorObjIsoOfIso (pullbackUnitIso f) (refl _)).hom ≫ (tensorObj_left_unitor (f^*M)).hom = f^*(tensorObj_left_unitor M).hom",
+        "goal_after": "Residual: scp.hom ≫ a_Y.map δ ≫ (sheafifyTensorUnitIso ≫ a_Y.map(pbv⊗pbv)) ≫ tensorObjIsoOfIso η ≫ λ_{f^*M} = scp.hom ≫ a_Y.map δ ≫ a_Y.map(η ▷ FM) ≫ a_Y.map λ_{FM} ≫ pbv_M",
+        "result": "partial",
+        "insight": "hHLU + RHS reconciliation collapse the leading scp.hom ≫ a_Y.map δ on both sides; residual is exactly the η-whisker + λ legs (sub-lemmas 3 + 2)"
+      }
+    ],
+    "next_steps": "Effort-break the L1365 residual into 3a (bridge-1 pullbackUnitIso_eq_sheafify_eta substitution + η▷ whisker functoriality expansion) and 3b (cancel sheafifyTensorUnitIso/pullbackValIso left-factor devices against the tensorObjIsoOfIso whisker, identify λ leg with tensorObj_left_unitor (f^*M)). Atom + sub-lemma 1 + 1′ + hHLU all in place."
+  },
+  {
+    "timestamp": "2026-06-22T13:02:50Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackValIso_naturality"
+    },
+    "session": {
+      "id": "session_57",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "sheafificationAdjunction counit naturality",
+        "sheafificationCompPullback inv naturality",
+        "Category.assoc (term-mode)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Unfold pullbackValIso into scp.symm ≪≫ f^*(counit), push counit past g, slide scp.inv by inverse naturality, reassociate term-mode",
+        "code_tried": "rw [pullbackValIso, pullbackValIso]; simp only [Iso.trans_hom, ...]; erw [← Functor.map_comp, ← counit.naturality g, Functor.map_comp]; have hkey := (sheafificationCompPullback ...).inv.naturality (...).symm; exact (Category.assoc _ _ _).symm.trans ((congrArg (· ≫ _) hkey).trans (Category.assoc _ _ _))",
+        "line_number": "1211",
+        "lean_error": "none",
+        "result": "success",
+        "insight": "rw-reassoc / reassoc_of% / slice / conv all MISS: middle object has two non-syntactic forms ((a_X ⋙ pullback φ).obj vs (pullback f).obj (a_X.obj ·)); only term-mode Category.assoc (infers objects from explicit morphisms by defeq) reassociates across this seam"
+      }
+    ],
+    "next_steps": "Reusable atom; consumed by pullbackValIso_naturality_leftUnitor."
+  },
+  {
+    "timestamp": "2026-06-22T13:02:50Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackValIso_naturality_leftUnitor"
+    },
+    "session": {
+      "id": "session_57",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "pullbackValIso_naturality"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "One-line specialisation of the atom at g = (tensorObj_left_unitor M).hom",
+        "code_tried": "pullbackValIso_naturality f (tensorObj_left_unitor M).hom",
+        "line_number": "1253",
+        "lean_error": "none",
+        "result": "success",
+        "insight": "Sub-lemma 1 (lem:pullback_val_iso_naturality_left_unitor). Currently a dead helper — not yet consumed by bridge 3 (which uses the assembly-form 1′ instead); kept for the planned 3a/3b break."
+      }
+    ],
+    "next_steps": "Either consume in the 3a/3b break or note as scaffolding."
+  },
+  {
+    "timestamp": "2026-06-22T13:02:50Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullback_map_tensorObj_left_unitor_eq"
+    },
+    "session": {
+      "id": "session_57",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Iso.hom_inv_id_app_assoc",
+        "sheafificationCompPullback hom naturality",
+        "Category.assoc (term-mode)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Assembly-form RHS reconciliation: unfold tensorObj_left_unitor, replace f^*(counit) by scp.hom ≫ pbv_M, slide scp.hom past a_X.map λ by scp naturality",
+        "code_tried": "rw [tensorObj_left_unitor]; simp only [...]; erw [Functor.map_comp]; have hc : f^*(counit_M) = scp.hom.app M.val ≫ (pbv_M).hom := by rw [pullbackValIso, ...]; exact Eq.symm (Iso.hom_inv_id_app_assoc _ _ _); have hnat := scp.hom.naturality (leftUnitor M.val).hom; erw [hc]; exact (Category.assoc _ _ _).symm.trans ((congrArg (· ≫ (pbv_M).hom) hnat).trans (Category.assoc _ _ _))",
+        "line_number": "1270",
+        "lean_error": "none",
+        "result": "success",
+        "insight": "Sub-lemma 1′. scp.hom-headed form matches pullbackTensorMap's leading sheafificationCompPullback factor; avoids the pbv_{𝒪⊗M} inner-sheafification carrier gap that the literal blueprint L1 statement hides. This is the lemma bridge-3 actually rw's with. UNCOVERED in blueprint (coverage debt)."
+      }
+    ],
+    "next_steps": "Add blueprint node; repoint bridge-3 RHS-leg \\uses."
+  }
+]

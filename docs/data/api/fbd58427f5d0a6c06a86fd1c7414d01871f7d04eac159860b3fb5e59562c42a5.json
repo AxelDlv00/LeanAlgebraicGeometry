@@ -1,0 +1,688 @@
+[
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/QuotConstruction.lean",
+      "theorem": "ProjectiveMorphism"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "relativeProj",
+        "IsClosedImmersion",
+        "relativeProj.structureMorphism"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "def: ∃ quasicoherent E + closed immersion X ↪ relativeProj S E over S",
+        "code_tried": "def ProjectiveMorphism (f) := ∃ E : S.Modules, E.IsQuasicoherent ∧ ∃ i, IsClosedImmersion i ∧ i ≫ relativeProj.structureMorphism S E = f",
+        "line_number": "83",
+        "result": "success",
+        "insight": "sorry-free def; 'coherent'↦'quasi-coherent', ℙ(E)↦relativeProj stub"
+      }
+    ],
+    "next_steps": "blueprint already has def:projective-morphism; sync owns \\leanok"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/QuotConstruction.lean",
+      "theorem": "StronglyProjective"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "IsLocallyFreeOfRank",
+        "relativeProj",
+        "IsClosedImmersion"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "def: ProjectiveMorphism with E locally free of rank d (vector bundle)",
+        "code_tried": "def StronglyProjective (f) := ∃ E d, IsLocallyFreeOfRank d E ∧ ∃ i, IsClosedImmersion i ∧ i ≫ relativeProj.structureMorphism S E = f",
+        "line_number": "99",
+        "result": "success",
+        "insight": "sorry-free; 'vector bundle'↦IsLocallyFreeOfRank (Functors gap-predicate)"
+      }
+    ],
+    "next_steps": "sync owns \\leanok"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/QuotConstruction.lean",
+      "theorem": "quot_grothendieck"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "EGA-III §7 gap (coherent cohomology, Serre twist); proof is downstream assembly",
+      "key_lemmas_used": [
+        "quotFunctorPhi",
+        "pointsFunctor",
+        "ProjectiveMorphism"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "statement scaffold: representable by projective S-scheme via functor-of-points iso",
+        "code_tried": "theorem quot_grothendieck ... : ∃ Q : Over S, ProjectiveMorphism Q.hom ∧ Nonempty (quotFunctorPhi π E L Φ ≅ pointsFunctor Q) := sorry",
+        "line_number": "116",
+        "lean_error": "declaration uses sorry (warning only)",
+        "result": "partial",
+        "insight": "representability rendered as ≅ pointsFunctor Q; reduces to quot_altmanKleiman"
+      }
+    ],
+    "next_steps": "gap-blocked; do not assign body until EGA-III foundations exist"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/QuotConstruction.lean",
+      "theorem": "quot_altmanKleiman"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "PROJECT GOAL. EGA-III §7 gap; body is assembly of reduction/regularity/grassmannian/flattening/properness lemmas",
+      "key_lemmas_used": [
+        "quotFunctorPhi",
+        "pointsFunctor",
+        "StronglyProjective",
+        "IsLocallyFreeOfRank",
+        "relativeProj"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "statement scaffold of project goal: X closed in ℙ(V), E coherent quotient of π*(W)(ν), Φ ∈ ℚ[λ] ⟹ Quot representable + strongly projective",
+        "code_tried": "theorem quot_altmanKleiman (V dV hV : IsLocallyFreeOfRank dV V)(jX hjX)(π hπ)(L hL : RelativelyVeryAmple)(W dW hW)(ν)(EWν E hE qE hqE : Epi qE)(Φ) : ∃ Q, StronglyProjective Q.hom ∧ Nonempty (quotFunctorPhi π E L Φ ≅ pointsFunctor Q) := sorry",
+        "line_number": "140",
+        "lean_error": "declaration uses sorry (warning only)",
+        "result": "partial",
+        "insight": "FAITHFUL, NON-VACUOUS statement of the goal now exists & typechecks. Bundle F=⋀^Φ(r)(W⊗Sym^r V) captured up to existence inside StronglyProjective; twist π*(W)(ν) as abstract input EWν surjecting onto E"
+      }
+    ],
+    "next_steps": "MILESTONE: goal node statement-backed. Body gap-blocked; assemble from 5 lemmas only after EGA-III foundations"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/QuotConstruction.lean",
+      "theorem": "quot_projectiveSpace"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "trivial-bundle case of quot_altmanKleiman; EGA-III gap",
+      "key_lemmas_used": [
+        "projectiveSpace",
+        "projectiveSpace.structureMorphism",
+        "quotFunctorPhi",
+        "pointsFunctor"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "statement scaffold: X closed in ℙⁿ_S, E quotient of ⊕^p O_X(ν) ⟹ Quot closed-embeds in ℙ^r_S",
+        "code_tried": "theorem quot_projectiveSpace ... : ∃ Q r i, IsClosedImmersion i ∧ ... ∧ Nonempty (quotFunctorPhi π E L Φ ≅ pointsFunctor Q) := sorry",
+        "line_number": "162",
+        "lean_error": "declaration uses sorry (warning only)",
+        "result": "partial",
+        "insight": "V=O_S^{n+1}, W=O_S^p case; twist ⊕^p O_X(ν) as abstract EOpν"
+      }
+    ],
+    "next_steps": "gap-blocked; derive from quot_altmanKleiman"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/QuotConstruction.lean",
+      "theorem": "quot_reduction"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Serre twist E(ν) gap",
+      "key_lemmas_used": [
+        "quotFunctorPhi",
+        "Polynomial.comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "statement: (i) ∃ Eν with functor iso to Quot at Ψ=Φ.comp(X+Cν); (ii) Epi φ ⟹ Mono of functors",
+        "code_tried": "theorem quot_reduction ... : (∀ ν, ∃ Eν, Nonempty (quotFunctorPhi π E L Φ ≅ quotFunctorPhi π Eν L (Φ.comp (X+C ν)))) ∧ (∀ G φ, Epi φ → ∃ η, Mono η) := sorry",
+        "line_number": "188",
+        "lean_error": "declaration uses sorry (warning only)",
+        "result": "partial",
+        "insight": "twist E(ν) phrased existentially; 'closed embedding of functors'↦Mono η"
+      }
+    ],
+    "next_steps": "gap-blocked"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/QuotConstruction.lean",
+      "theorem": "quot_uniformRegularity"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Serre twist + coherent cohomology (Rⁱπ_*) gap; depends on mumford_regularity (itself sorry)",
+      "key_lemmas_used": [
+        "IsLocallyFreeOfRank",
+        "Scheme.Modules.pushforward",
+        "projectiveSpace.structureMorphism"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "statement: ∃ uniform m s.t. r≥m ⟹ pushforwards of abstract twists are locally free of fixed rank",
+        "code_tried": "theorem quot_uniformRegularity (n p Φ) : ∃ m, ∀ T φT (twistE twistF twistG : ℤ → (ℙⁿ_T).Modules) r, m≤r → (∃ dE, IsLocallyFreeOfRank dE (pushforward.obj (twistE r))) ∧ ... := sorry",
+        "line_number": "216",
+        "lean_error": "declaration uses sorry (warning only)",
+        "result": "partial",
+        "insight": "twist families as abstract input ℤ → Modules; precise ranks Φ(r), W⊗Sym^r V deferred"
+      }
+    ],
+    "next_steps": "gap-blocked"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/QuotConstruction.lean",
+      "theorem": "quot_embedGrassmannian"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "relative Grassmannian of a bundle Grass(W⊗Sym^r V, Φ(r)) is a Mathlib gap",
+      "key_lemmas_used": [
+        "quotFunctorPhi",
+        "pointsFunctor",
+        "grassmannian_represents"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "statement: ∃ r≥m, Grassmannian target Gr:Over S and Mono nat-transf α into pointsFunctor Gr",
+        "code_tried": "theorem quot_embedGrassmannian ... : ∃ r, m≤r ∧ ∃ Gr (α : quotFunctorPhi π E L Φ ⟶ pointsFunctor Gr), Mono α := sorry",
+        "line_number": "247",
+        "lean_error": "declaration uses sorry (warning only)",
+        "result": "partial",
+        "insight": "relative Grass abstracted as Gr:Over S; 'injective morphism of functors'↦Mono α"
+      }
+    ],
+    "next_steps": "gap-blocked"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/QuotConstruction.lean",
+      "theorem": "quot_flatteningStratum"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "exterior/symmetric powers of bundles (F=⋀^Φ(r)(W⊗Sym^r V)) gap",
+      "key_lemmas_used": [
+        "quotFunctorPhi",
+        "pointsFunctor",
+        "flatteningStratification",
+        "relativeProj",
+        "IsImmersion",
+        "IsSeparated",
+        "LocallyOfFiniteType"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "statement: Quot represented by locally closed subscheme, IsImmersion into relativeProj S F, separated + finite type",
+        "code_tried": "theorem quot_flatteningStratum ... : ∃ Q F, Nonempty (... ≅ pointsFunctor Q) ∧ (∃ i, IsImmersion i ∧ ...) ∧ IsSeparated Q.hom ∧ LocallyOfFiniteType Q.hom := sorry",
+        "line_number": "269",
+        "lean_error": "declaration uses sorry (warning only)",
+        "result": "partial",
+        "insight": "ℙ(F) shadowed by relativeProj S F with F existential; 'locally closed embedding'↦IsImmersion"
+      }
+    ],
+    "next_steps": "gap-blocked"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/QuotConstruction.lean",
+      "theorem": "quot_properness"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "second conjunct (proper locally-closed immersion ⟹ closed immersion) is a deferred geometric fact",
+      "key_lemmas_used": [
+        "valuativeCriterion_proper",
+        "IsProper.of_valuativeCriterion"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "PARTIAL PROOF: first conjunct IsProper via valuativeCriterion_proper; second conjunct sorry",
+        "code_tried": "⟨valuativeCriterion_proper Q.hom hvc, sorry⟩",
+        "line_number": "293",
+        "lean_error": "declaration uses sorry (warning only, second conjunct)",
+        "result": "partial",
+        "insight": "IsProper half genuinely discharged via Basic.valuativeCriterion_proper (Mathlib-backed); only the closed-immersion half remains"
+      }
+    ],
+    "next_steps": "first conjunct DONE; second conjunct needs 'proper immersion ⟹ closed immersion' lemma (Mathlib search candidate)"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Variants.lean",
+      "theorem": "quot_open_subfunctor"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "schematic support of a coherent sheaf is a Mathlib gap",
+      "key_lemmas_used": [
+        "IsProper",
+        "IsClosed",
+        "S.Opens"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "statement: properness⟹closed image; open S'=(π''(suppF∩Y))ᶜ with point-set universal property",
+        "code_tried": "theorem quot_open_subfunctor ... : ∃ U : S.Opens, ↑U = (π.base ''(suppF∩Y))ᶜ ∧ ∀ g, (range ⊆ U) ↔ (range ∩ image = ∅) := sorry",
+        "line_number": "95",
+        "lean_error": "declaration uses sorry (warning only)",
+        "result": "partial",
+        "insight": "support taken as abstract closed suppF; expressible heart = properness⟹closed map"
+      }
+    ],
+    "next_steps": "gap-blocked"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Variants.lean",
+      "theorem": "stronglyQuasiprojectiveQuot"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Serre twist O(1)/(ν), depends on QuotConstruction.quot_altmanKleiman (not yet imported)",
+      "key_lemmas_used": [
+        "RepresentsFunctor",
+        "quotFunctorPhi",
+        "relativeProj",
+        "IsImmersion"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "statement: X locally closed in ℙ(V) ⟹ Quot representable + IsImmersion into ℙ(F)",
+        "code_tried": "theorem stronglyQuasiprojectiveQuot ... : ∃ F Q i, RepresentsFunctor (quotFunctorPhi π E L Φ) Q ∧ IsImmersion i ∧ ... := sorry",
+        "line_number": "117",
+        "lean_error": "declaration uses sorry (warning only)",
+        "result": "partial",
+        "insight": "uses RepresentsFunctor shadow (universe-gap workaround); W,ν retained as input"
+      }
+    ],
+    "next_steps": "gap-blocked; reconnect to quot_altmanKleiman after import wired"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Variants.lean",
+      "theorem": "coherent_prolongation"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "coherence↦quasi-coherence approximation; prolongation construction deferred",
+      "key_lemmas_used": [
+        "IsQuasicoherent",
+        "Scheme.Modules.pullback",
+        "S.Opens"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "statement: coherent F on open U ⟹ ∃ quasicoherent G on S with U.ι^* G ≅ F",
+        "code_tried": "theorem coherent_prolongation ... : ∃ G : S.Modules, G.IsQuasicoherent ∧ Nonempty ((Scheme.Modules.pullback U.ι).obj G ≅ F) := sorry",
+        "line_number": "136",
+        "lean_error": "declaration uses sorry (warning only)",
+        "result": "partial",
+        "insight": "restriction via Scheme.Modules.pullback U.ι"
+      }
+    ],
+    "next_steps": "gap-blocked"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Variants.lean",
+      "theorem": "quasiprojectiveQuot"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "EGA-III gap; downstream of quot_grothendieck",
+      "key_lemmas_used": [
+        "RepresentsFunctor",
+        "quotFunctorPhi",
+        "RelativelyVeryAmple",
+        "relativeProj",
+        "IsImmersion"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "statement: X quasi-projective ⟹ Quot representable by quasi-projective Q",
+        "code_tried": "theorem quasiprojectiveQuot ... : ∃ Q, RepresentsFunctor (quotFunctorPhi π E L Φ) Q ∧ (∃ V i, IsImmersion i ∧ ...) := sorry",
+        "line_number": "151",
+        "lean_error": "declaration uses sorry (warning only)",
+        "result": "partial",
+        "insight": "quasi-projectivity = IsImmersion into relativeProj shadow"
+      }
+    ],
+    "next_steps": "gap-blocked"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Variants.lean",
+      "theorem": "hilbertScheme"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "quotFunctorPhi",
+        "freeModule"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "def: Hilbert functor = Quot of O_X = quotFunctorPhi π (freeModule X 1) L Φ",
+        "code_tried": "noncomputable def hilbertScheme (π L Φ) := quotFunctorPhi π (freeModule X 1) L Φ",
+        "line_number": "172",
+        "result": "success",
+        "insight": "sorry-free def; O_X realised as rank-1 freeModule X 1"
+      }
+    ],
+    "next_steps": "sync owns \\leanok"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Variants.lean",
+      "theorem": "hilbertScheme_exists"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "EGA-III gap; downstream of quot_altmanKleiman (O_X case)",
+      "key_lemmas_used": [
+        "RepresentsFunctor",
+        "hilbertScheme",
+        "relativeProj",
+        "IsClosedImmersion"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "statement: X strongly projective ⟹ Hilbert functor representable + closed immersion into ℙ(F)",
+        "code_tried": "theorem hilbertScheme_exists ... : ∃ F Q i, RepresentsFunctor (hilbertScheme π L Φ) Q ∧ IsClosedImmersion i ∧ ... := sorry",
+        "line_number": "185",
+        "lean_error": "declaration uses sorry (warning only)",
+        "result": "partial",
+        "insight": "Hilbert = O_X case of Altman-Kleiman"
+      }
+    ],
+    "next_steps": "gap-blocked"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Variants.lean",
+      "theorem": "flatness_local_criterion"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "part (3) fibrewise local criterion needs scheme-theoretic fibre (deferred, literature citation A-K Ch.V)",
+      "key_lemmas_used": [
+        "LocallyOfFiniteType",
+        "Flat",
+        "IsOpenMap",
+        "RingHom.Flat",
+        "Scheme.stalkMap"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "statement: (1) finite-type flat ⟹ IsOpenMap; (2) flat locus {y | RingHom.Flat (stalkMap)} open",
+        "code_tried": "theorem flatness_local_criterion : (∀ f [LocallyOfFiniteType][Flat], IsOpenMap f.base) ∧ (∀ f [LocallyOfFiniteType], IsOpen {y | RingHom.Flat (f.stalkMap y).hom}) := sorry",
+        "line_number": "207",
+        "lean_error": "declaration uses sorry (warning only)",
+        "result": "partial",
+        "insight": "parts (1),(2) expressible via Mathlib primitives; (3) omitted as citation"
+      }
+    ],
+    "next_steps": "gap-blocked; (1)/(2) may be Mathlib-searchable individually"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Variants.lean",
+      "theorem": "isomorphism_is_open"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "EGA-III / cohomology-and-base-change gap",
+      "key_lemmas_used": [
+        "S.Opens",
+        "Flat",
+        "IsIso",
+        "pullback.map"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "statement: ∃ opens S₂≤S₁ with universal props (a) π_T Flat iff factors S₁; (b) π_T IsIso iff factors S₂",
+        "code_tried": "theorem isomorphism_is_open ... : ∃ S₁ S₂, S₂≤S₁ ∧ (∀ φ, range⊆S₁ ↔ Flat (pullback.map ...)) ∧ (∀ φ, range⊆S₂ ↔ IsIso (pullback.map ...)) := sorry",
+        "line_number": "226",
+        "lean_error": "declaration uses sorry (warning only)",
+        "result": "partial",
+        "insight": "base change via pullback.map with by simp coherence proofs; 'projective'↦IsProper"
+      }
+    ],
+    "next_steps": "gap-blocked"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Variants.lean",
+      "theorem": "schemeOfMorphisms"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "depends on hilbertScheme_exists + morFunctor (functorial action stubbed)",
+      "key_lemmas_used": [
+        "RepresentsFunctor",
+        "morFunctor",
+        "hilbertScheme",
+        "IsOpenImmersion",
+        "pullback"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "statement: Mor_S(X,Y) represented by open subscheme M of Hilbert scheme of graphs of X×_S Y",
+        "code_tried": "theorem schemeOfMorphisms ... : ∃ M, RepresentsFunctor (morFunctor X Y) M ∧ ∃ L Φ H, RepresentsFunctor (hilbertScheme ...) H ∧ ∃ i, IsOpenImmersion i ∧ ... := sorry",
+        "line_number": "261",
+        "lean_error": "declaration uses sorry (warning only)",
+        "result": "partial",
+        "insight": "Mor_S via morFunctor helper; open subscheme of Hilbert of graphs"
+      }
+    ],
+    "next_steps": "gap-blocked"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Variants.lean",
+      "theorem": "descent_of_subschemes"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "scheme-structure (ideal-sheaf) fppf descent is the faithicallyFlatDescent gap of Basic.lean",
+      "key_lemmas_used": [
+        "Flat",
+        "QuasiCompact",
+        "IsColimit",
+        "Cofork.ofπ",
+        "pullback.condition"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "statement: (1) ffqc f ⟹ IsColimit coequaliser cofork; (2) set-level descent of closed Z to unique closed Q",
+        "code_tried": "theorem descent_of_subschemes : (∀ f [Flat][QuasiCompact] surj, Nonempty (IsColimit (Cofork.ofπ f ...))) ∧ (∀ p ... Z hZ hdesc, ∃! Q, IsClosed Q ∧ Z = p.base ⁻¹' Q) := sorry",
+        "line_number": "287",
+        "lean_error": "declaration uses sorry (warning only)",
+        "result": "partial",
+        "insight": "(1) faithful IsColimit; (2) topological shadow at level of underlying sets"
+      }
+    ],
+    "next_steps": "gap-blocked"
+  },
+  {
+    "timestamp": "2026-06-22T11:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Variants.lean",
+      "theorem": "projectiveFlatQuotient"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "EGA-III + fppf descent gap; capstone of §6",
+      "key_lemmas_used": [
+        "relativeProj",
+        "IsImmersion",
+        "Flat",
+        "IsProper",
+        "IsColimit",
+        "Cofork.ofπ",
+        "pullback.lift",
+        "IsIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "statement: schematic equiv relation R⟶X×_S X (proper flat projections) ⟹ ∃ quotient q:X⟶Q quasi-projective, ffl+projective, effective IsIso",
+        "code_tried": "theorem projectiveFlatQuotient ... : ∃ Q q, q≫Q.hom=sX ∧ (∃ V i, IsImmersion ...) ∧ Flat q ∧ Surjective q.base ∧ IsProper q ∧ ∃ hq, Nonempty (IsColimit (Cofork.ofπ q hq)) ∧ IsIso (pullback.lift ...) := sorry",
+        "line_number": "313",
+        "lean_error": "declaration uses sorry (warning only)",
+        "result": "partial",
+        "insight": "equiv relation encoded by Mono f:R⟶X×_S X; 'effective'↦IsIso of induced R⟶X×_Q X"
+      }
+    ],
+    "next_steps": "gap-blocked"
+  }
+]

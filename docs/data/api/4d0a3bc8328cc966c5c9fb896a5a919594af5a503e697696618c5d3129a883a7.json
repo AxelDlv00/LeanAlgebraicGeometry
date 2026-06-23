@@ -1,0 +1,66 @@
+[
+  {
+    "timestamp": "2026-06-22T13:10:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "ring_square_glue_natTrans"
+    },
+    "session": {
+      "id": "session_24",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "STATEMENT itself fails to elaborate within the 200000-heartbeat budget: (deterministic) timeout at isDefEq (metavar form) / whnf (pinned form) @L1942 at the `Functor.isoWhiskerRight (chartBaseChangeModuleReassocNat ψ φ ρ) (tilde.functor …)` seam — matching the alg-reassoc nat-iso codomain `ModuleCat (extendScalars …)` against `tilde.functor`'s source forces whnf of the extendScalars/ModuleCat diamond. Decisive: with maxHeartbeats 800000 the statement DOES elaborate (over-budget, not ill-typed). maxHeartbeats forbidden ⇒ not committable. Preserved as a `/- … -/` comment block (L1911–1970).",
+      "key_lemmas_used": [
+        "iterated_mateEquiv_conjugateEquiv",
+        "conjugateEquiv_symm_comp",
+        "gammaPushforwardNatIso_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "State the four-leg composite-functor nat-iso equation as a functor-level `≪≫`-chain Iso equality (LHS: isoWhiskerLeft tilde geomComparisonNat ≪≫ isoWhiskerRight pullbackSpecTildeNatIso pullback; RHS: three dictionary whiskers ≪≫ alg-reassoc whisker), body `sorry`.",
+        "code_tried": "lemma ring_square_glue_natTrans … : Functor.isoWhiskerLeft (tilde.functor R) (chartBaseChangeGeometricComparisonNat ψ φ ρ) ≪≫ … = … ≪≫ Functor.isoWhiskerRight (chartBaseChangeModuleReassocNat ψ φ ρ) (tilde.functor (CommRingCat.of (TensorProduct A R' B))) ≪≫ … := by … sorry",
+        "line_number": "1942",
+        "lean_error": "(deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached (L1942); pinning the whisker target converts isDefEq→whnf, same bomb",
+        "result": "failed",
+        "insight": "The statement is over-budget at the whisker seam (extendScalars/ModuleCat diamond whnf), independent of the proof body. Confirmed elaborable at 800000 hb. Route is over-budget, not ill-typed."
+      }
+    ],
+    "next_steps": "iter-025 STRUCTURAL escalation: a statement phrasing whose `tilde.functor` whisker seam does not whnf the extendScalars/ModuleCat diamond, OR a component-free glue assembly that never forces the diamond. NOT another helper/telescope round."
+  },
+  {
+    "timestamp": "2026-06-22T13:11:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "pullback_spec_tilde_iso_ring_square_mate_glue"
+    },
+    "session": {
+      "id": "session_24",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "The `.app M` fold of the functor-level natTrans equation bombs: (deterministic) timeout at whnf @200000hb at the closing `exact`. `congrArg (Iso.app · M)` produces `(natLHS).app M = (natRHS).app M`; the `exact` defeq-checks this against the glue goal, forcing the Iso.app/≪≫ distribution to whnf the `pullback (Spec _).obj (tilde M)` sheafification carriers. The plan-phase fbc-geom-reorder made the GEOM leg syntactic (chartBaseChangeGeometricComparison re-based on `…Nat.app (tilde M)`), removing 1 of 4 crossings — but the other three pullbackSpecTildeNatIso legs' `.app M` fold still re-crosses `.obj (tilde M)`. Reverted to a typed sorry @L2163.",
+      "key_lemmas_used": [
+        "chartBaseChangeModuleReassoc_eq_natApp",
+        "pullbackSpecTildeNatIso_app",
+        "ring_square_glue_natTrans (commented)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Fold the functor-level natTrans equation at M: rewrite the algebraic reassoc leg via the kernel-safe natApp bridge, then close by `congrArg (Iso.app · M)` of `ring_square_glue_natTrans`.",
+        "code_tried": "rw [chartBaseChangeModuleReassoc_eq_natApp ψ φ ρ M]; exact congrArg (fun i => Iso.app i M) (ring_square_glue_natTrans ψ φ ρ)",
+        "line_number": "2163",
+        "lean_error": "(deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached (closing `exact`, was L2132)",
+        "result": "failed",
+        "insight": "Geom leg now folds by defeq (re-base), but the three non-geom pullbackSpecTildeNatIso legs each cross the `.obj (tilde M)` sheafification junction in the `.app M` distribution → whnf bomb. The reorder removed one crossing, not the wall. Both ends of the route (statement + fold) are over the 200k-hb budget ⇒ genuine STUCK."
+      }
+    ],
+    "next_steps": "iter-025: give the three non-geom pullbackSpecTildeNatIso legs the same syntactic-`.app M`-by-construction treatment the geom leg got, OR assemble the glue iso as one closed term so no `.obj (tilde M)` defeq is ever forced. Structural change, not a helper round."
+  }
+]

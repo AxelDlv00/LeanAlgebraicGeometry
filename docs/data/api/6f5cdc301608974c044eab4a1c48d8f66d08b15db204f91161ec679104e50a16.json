@@ -1,0 +1,119 @@
+[
+  {
+    "timestamp": "2026-06-22T08:15:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/RiemannRoch/CurveChartDedekind.lean",
+      "theorem": "chart_valuation_le_one_of_order_nonneg"
+    },
+    "session": {
+      "id": "session_20",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "IsLocalization.mk'_surjective",
+        "IsDedekindDomain.HeightOneSpectrum.intValuation_eq_one_iff_mem_primeCompl",
+        "IsDedekindDomain.HeightOneSpectrum.intValuation_le_one",
+        "Ring.ordFrac_eq_valuation_inv",
+        "IsScalarTower.algebraMap_apply",
+        "Scheme.IsRegularInCodimensionOne.out"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Repair the handed-in scaffold (planner claimed '2 expected sorrys / compiles' but lemma had 4 hard elaboration errors)",
+        "code_tried": "obtain ⟨a, d, hmk⟩ := IsLocalization.mk'_surjective ... ; rw [map_mul, hs, IsScalarTower.algebraMap_apply ...] ; (... v).mpr ...; rw[hZv]; exact d.2",
+        "line_number": "353-411",
+        "lean_error": "Unknown identifier `s`/`d`; Application type mismatch; rewrite pattern not found; motive not type correct",
+        "goal_before": "valuation V.functionField v g ≤ 1",
+        "goal_after": "closed",
+        "result": "success",
+        "insight": "Four plumbing bugs: (1) mk'_surjective returns ∃(x:R×M), so destructure ⟨⟨a,d⟩,hmk⟩ not ⟨a,d,hmk⟩; (2) IsScalarTower.algebraMap_apply rewrites needed REVERSE direction (← ) since `this` already has algebraMap S K (algebraMap Γ S ·) shape; (3) intValuation_eq_one_iff_mem_primeCompl is ∀r, apply to both v and element; (4) hd_mem motive-not-type-correct (d's type mentions the ideal) worked around by `change (d) ∉ v.asIdeal; rw[hZv]; exact d.2`. The order↔valuation arithmetic in scaffold was already correct."
+      }
+    ],
+    "next_steps": "Consumed by chart_mem_range_of_forall_order_nonneg; file fully sorry-free."
+  },
+  {
+    "timestamp": "2026-06-22T08:15:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/RiemannRoch/CurveChartDedekind.lean",
+      "theorem": "chart_mem_range_of_forall_order_nonneg"
+    },
+    "session": {
+      "id": "session_20",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "IsDedekindDomain.HeightOneSpectrum.mem_integers_of_valuation_le_one",
+        "chart_isDedekindDomain",
+        "functionField_isFractionRing_of_isAffineOpen",
+        "chart_valuation_le_one_of_order_nonneg",
+        "IsAffineOpen.fromSpec_primeIdealOf",
+        "IsAffineOpen.fromSpec (.isOpenEmbedding.injective)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Blueprint route verbatim: Dedekind+fraction-field setup → mem_integers_of_valuation_le_one → per height-one prime build the point via fromSpec, coheight-one computation, apply per-prime lemma",
+        "code_tried": "apply mem_integers_of_valuation_le_one; intro v; set P := ⟨v.asIdeal, v.isPrime⟩; y := hV.fromSpec P; Z := ⟨y, hco⟩; have hZv via round-trip; exact chart_valuation_le_one_of_order_nonneg hdim g Z v hZv (h Z)",
+        "line_number": "444-end",
+        "lean_error": "needed reverse round-trip primeIdealOf(fromSpec P)=P (Mathlib only ships forward fromSpec_primeIdealOf)",
+        "goal_before": "g ∈ (algebraMap Γ(V,⊤) V.functionField).range",
+        "goal_after": "closed",
+        "result": "success",
+        "insight": "hZv round-trip closed by injectivity of the open immersion: `apply hV.fromSpec.isOpenEmbedding.injective; rw [hV.fromSpec_primeIdealOf]`. Dead end: (IsAffineOpen.isOpenImmersion_fromSpec hV).base_injective — no such field at PresheafedSpace.IsOpenImmersion level; the scheme-Hom-level .isOpenEmbedding.injective is the right handle."
+      }
+    ],
+    "next_steps": "Axiom-clean. Ready for OcOfD bridge-assembly lane (next iter imports this)."
+  },
+  {
+    "timestamp": "2026-06-22T08:15:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/RiemannRoch/OcOfD.lean",
+      "theorem": "sheafOf.orderAtP_residue_linearEquiv"
+    },
+    "session": {
+      "id": "session_20",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "LinearEquiv.ofBijective",
+        "Submodule.quotEquivOfEq",
+        "Submodule.range_inclusion",
+        "IsDiscreteValuationRing.exists_lift_of_le_one",
+        "Ring.ordFrac_irreducible",
+        "Ring.ordFrac_eq_valuation_inv",
+        "residueField_eq_of_coheight_eq_one",
+        "Scheme.Γevaluation_naturality_apply",
+        "Scheme.Spec.algebraMap_residueFieldIso_inv",
+        "TopCat.Presheaf.germ_res_apply",
+        "WithZero.log_zpow",
+        "map_zpow₀"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Build the equivalence as the INVERSE of a manifestly k̄-linear surjection fromKbar : k̄ →ₗ[k̄] (M₂⧸N'), c ↦ [t⁻¹·algebraMap k̄ K c], t=π_P^{n+1}; prove bijective; assemble via quotEquivOfEq ≪≫ (ofBijective fromKbar).symm",
+        "code_tried": "set R := stalk; π = (exists_irreducible R).choose; t = π^(n+1); βfun c = germ of constant section; hconst: residue R (βfun c) = algebraMap k̄ κ(P) c via Γevaluation_naturality; hrat: ord≥0 ⟹ lift to R; injectivity (t⁻¹c∈M₁ impossible for nonzero const); surjectivity via hrat(t·g)",
+        "line_number": "1598-1878",
+        "lean_error": "intermediate: zpow order shape, ordFrac_eq_valuation_inv direction, hπK nonzero (IsFractionRing.to_map_eq_zero_iff param is (R:=) not (A:=))",
+        "goal_before": "(orderAtP ([P]+D) P ⧸ range(inclusion orderAtP D P)) ≃ₗ[kbar] kbar",
+        "goal_after": "closed",
+        "result": "success",
+        "insight": "Inverse-of-surjection avoids defining any partial lift function — all content in bijectivity. GOTCHAS logged: building data in by-elaborated def use .choose NOT obtain/rcases (Prop-elimination); Algebra k̄/SMul k̄ on the stalk are NOT synthesizable — proof structured to never need a k̄-module on the stalk; only IsFractionRing(stalk)K + IsDiscreteValuationRing(stalk). hconst is the genuine scheme-compat crux (residue of constant section = residueFieldAlgebra image)."
+      }
+    ],
+    "next_steps": "Closing this sole leaf makes the WHOLE cokernel-iso chain axiom-clean (orderAtP_quotient_iso_kbar, cokernel_stalk_at_iso_kbar, cokernel_skyscraper_hom(_isIso), cokernel_carrierSheafHom_iso_skyscraper). Next: bridge assembly + 2 SES corners."
+  }
+]

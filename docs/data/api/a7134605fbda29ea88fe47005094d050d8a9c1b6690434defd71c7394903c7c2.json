@@ -1,0 +1,22 @@
+{
+  "stage": "init",
+  "objectives": [],
+  "checklist": [
+    {
+      "label": "init",
+      "done": false
+    },
+    {
+      "label": "autoformalize",
+      "done": false
+    },
+    {
+      "label": "prover",
+      "done": false
+    },
+    {
+      "label": "polish",
+      "done": false
+    }
+  ]
+}

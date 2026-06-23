@@ -1,0 +1,6 @@
+{
+  "nodes": [],
+  "edges": [],
+  "meta": {},
+  "error": "Could not compute the blueprint DAG. Ensure `archon` (with leandag) is installed and the project has a blueprint under blueprint/src/."
+}

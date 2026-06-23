@@ -1,0 +1,102 @@
+[
+  {
+    "timestamp": "2026-06-22T12:24:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Functors.lean",
+      "theorem": "grassmannianScheme"
+    },
+    "session": {
+      "id": "session_6",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Scheme.GlueData needs the t' triple-overlap DATA field; a sorry in any data field ships a junk scheme (banned). Bottom data layer (U/V/f/t + open-immersion + transition gate) built; t'/t_fac/cocycle/f_id/t_id remain.",
+      "key_lemmas_used": [
+        "AlgebraicGeometry.Scheme.GlueData",
+        "Localization.awayLift",
+        "RingHom.map_det",
+        "Matrix.det_nonsing_inv",
+        "IsUnit.ringInverse",
+        "MvPolynomial.eval₂Hom_X'",
+        "Matrix.nonsing_inv_mul",
+        "instIsOpenImmersionMapOfHomAwayAlgebraMap"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "grassFrame_minor_self: prove (grassFrame I).submatrix id ⇑I = 1 by ext over MvPolynomial matrix",
+        "code_tried": "ext p s; rw [Matrix.submatrix_apply, Matrix.one_apply]; show grassFrame r d I p (I s) = _; unfold grassFrame",
+        "line_number": "312",
+        "lean_error": "'show' tactic failed, pattern ... not definitionally equal; ext over-recurses into MvPolynomial.coeff",
+        "result": "failed",
+        "insight": "ext recurses into MvPolynomial.coeff on poly-valued matrices; use `refine Matrix.ext fun p s => ?_` and `change` not `show`."
+      },
+      {
+        "attempt": 2,
+        "strategy": "same lemma with Matrix.ext + change",
+        "code_tried": "refine Matrix.ext fun p s => ?_; rw [Matrix.submatrix_apply, Matrix.one_apply]; change grassFrame r d I p (I s) = _; unfold grassFrame",
+        "line_number": "312",
+        "lean_error": null,
+        "result": "success",
+        "insight": "`change` over `show` avoids the readability warning and matches defeq."
+      },
+      {
+        "attempt": 3,
+        "strategy": "grassMinorMatrixLoc_det via rw chain",
+        "code_tried": "rw [grassMinorMatrixLoc, grassFrameLoc, Matrix.submatrix_map, grassMinor, ← RingHom.map_det]; rfl",
+        "line_number": "347",
+        "lean_error": "Failed to rewrite using equation theorems for `grassMinor`",
+        "result": "failed",
+        "insight": "plain `def`s have no rw equation lemmas; use `unfold` / `simp only [theDef]` / `show … from rfl`."
+      },
+      {
+        "attempt": 4,
+        "strategy": "grassMinorMatrixLoc_det via unfold",
+        "code_tried": "unfold grassMinorMatrixLoc grassFrameLoc grassMinor; rw [Matrix.submatrix_map]; exact (RingHom.map_det _ _).symm",
+        "line_number": "347",
+        "lean_error": null,
+        "result": "success",
+        "insight": "unfold exposes def bodies where rw cannot."
+      },
+      {
+        "attempt": 5,
+        "strategy": "grassTransAux_mapMatrix_frame using RingHom.mapMatrix on the d×r frame",
+        "code_tried": "(grassTransAux r d I J).mapMatrix (grassFrame r d J) = grassTransMatrix r d I J",
+        "line_number": "401",
+        "lean_error": "Type mismatch: grassTransMatrix has type Matrix (Fin d) (Fin r) _ but mapMatrix expects square Matrix ?m ?m",
+        "result": "failed",
+        "insight": "RingHom.mapMatrix is SQUARE-only (matrices form a ring only when square); for the non-square Fin d × Fin r frame use plain entrywise Matrix.map. Renamed lemma → grassTransAux_map_frame."
+      },
+      {
+        "attempt": 6,
+        "strategy": "grassTransAux_map_frame via Matrix.map + case split on identity vs free columns",
+        "code_tried": "refine Matrix.ext fun p q => ?_; rw [Matrix.map_apply]; by_cases hq : ∃ s, J s = q; (identity col via grassTransMatrix_submatrix_self) / (free col: unfold grassTransAux grassFrame; rw [dif_neg hq, MvPolynomial.eval₂Hom_X'])",
+        "line_number": "401",
+        "lean_error": "intermediate: unsolved `grassTransMatrix (id p) q = grassTransMatrix p q`; proof-irrelevant `X ⟨q,a⟩ = X ⟨q,b⟩` not auto-closed by simp only [grassFrame, dif_neg]",
+        "result": "partial",
+        "insight": "Sidestep proof-irrelevant subtype mismatch by NOT asserting the subtype proof: `unfold grassTransAux grassFrame; rw [dif_neg hq, eval₂Hom_X']` carries the proof symbolically and closes by defeq."
+      },
+      {
+        "attempt": 7,
+        "strategy": "grassTransAux_minor_isUnit gate: θ(P^J_I) is a unit",
+        "code_tried": "θ(P^J_I)=det(θ·X^J_I)=det((grassTransMatrix)_I)=det((X^I_J)⁻¹)=Ring.inverse(unit) via RingHom.map_det, Matrix.det_nonsing_inv, IsUnit.ringInverse, grassFrame_minor_self",
+        "line_number": "~430",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Closed the single hardest algebraic obstacle — transition-map well-definedness; lets grassTransMorphism (GlueData t) be a real morphism via Localization.awayLift."
+      },
+      {
+        "attempt": 8,
+        "strategy": "open Classical in before grassFrame def",
+        "code_tried": "open Classical in\nnoncomputable def grassFrame ...",
+        "line_number": "288",
+        "lean_error": "unexpected token 'open'; expected 'lemma' (cannot sit between doc-comment and def)",
+        "result": "failed",
+        "insight": "Not needed: Decidable (∃ s, I s = q) resolves via the Fintype instance; removed the open."
+      }
+    ],
+    "next_steps": "Finish grassmannianScheme := D.glued: f_id (P^I_I=1 ⟹ localization away from unit is iso), t_id (grassTransMatrix I I = X^I ⟹ grassTrans I I = id), and build t' triple-overlap morphism + discharge t_fac/cocycle entrywise from already-proven grassmannian_cocycle. f_hasPullback automatic (open immersions)."
+  }
+]

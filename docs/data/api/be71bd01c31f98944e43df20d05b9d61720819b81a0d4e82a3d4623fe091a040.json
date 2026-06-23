@@ -1,0 +1,150 @@
+[
+  {
+    "timestamp": "2026-06-22T14:54:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Functors.lean",
+      "theorem": "grassmannianScheme"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "t_fac GlueData Prop field: geometric projection lemma grassTripleIso_inv_fst won't rw via pullbackSpecIso_inv_fst (Localization.Away Algebra-instance diamond after unfold grassInclusion); ring identity itself is clean",
+      "key_lemmas_used": [
+        "grassTrans2_cocycle",
+        "grassTransMorphism2_cocycle"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "build the cocycle GlueData Prop field by reducing to a ring identity",
+        "code_tried": "lemma grassTransMorphism2_cocycle ... := simp only [grassTransMorphism2, Category.assoc, Iso.inv_hom_id_assoc]; slice_lhs 2 4 => rw [← Spec.map_comp, ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← CommRingCat.ofHom_comp, grassTrans2_cocycle, CommRingCat.ofHom_id, Spec.map_id]; simp",
+        "line_number": "988",
+        "lean_error": "",
+        "goal_before": "(grassTripleIso r d I J K).hom ≫ Spec.map(...) ≫ Spec.map(...) ≫ Spec.map(...) ≫ (grassTripleIso r d I J K).inv = 𝟙 (pullback ...)",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "iso-cancellation collapses geometric cocycle to grassTrans2_cocycle (Spec.map id = 𝟙); axiom-clean"
+      },
+      {
+        "attempt": 2,
+        "strategy": "land t_fac projection lemma grassTripleIso_inv_fst as a scaffold",
+        "code_tried": "rw [grassTripleIso, Iso.trans_inv, Category.assoc]; unfold grassInclusion; rw [pullbackSpecIso_inv_fst]",
+        "line_number": "1002",
+        "lean_error": "rw pullbackSpecIso_inv_fst fails to fire — Algebra instance diamond on Localization.Away vs lemma-expected instance",
+        "goal_before": "(grassTripleIso I J K).inv ≫ pullback.fst (grassInclusion I J) (grassInclusion I K) = Spec.map (ofHom (grassOverlapToTriple I J K))",
+        "goal_after": "",
+        "result": "failed",
+        "insight": "scaffold REMOVED rather than shipped with sorry (no junk-field). Needs erw/convert/explicit-instance; ring side is clean (both proj maps reduce to grassTransAuxTriple via IsLocalization.ringHom_ext)"
+      }
+    ],
+    "next_steps": "Re-dispatch Functors lane targeting t_fac: land grassTripleIso_inv_fst + _snd via erw/convert/explicit Algebra instance on pullbackSpecIso_inv_fst, then ring identity by IsLocalization.ringHom_ext, then grassGlueData + grassmannianScheme := D.glued."
+  },
+  {
+    "timestamp": "2026-06-22T14:42:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Functors.lean",
+      "theorem": "grassTrans2_cocycle"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "",
+      "key_lemmas_used": [
+        "grassmannian_cocycle",
+        "IsLocalization.ringHom_ext",
+        "MvPolynomial.ringHom_ext",
+        "Matrix.map_mul",
+        "Matrix.invertibleOfIsUnitDet"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "ringHom_ext → MvPolynomial.ringHom_ext frame chase; reduce triple composite to id via grassmannian_cocycle lifted through 3 localisations",
+        "code_tried": "grassTransStep ×2 (B=I) + cocycle_nonsing_inv (= grassmannian_cocycle repackaged with ⁻¹/IsUnit); RingHom.mapMatrix → Matrix.map ⇑f for non-square frames",
+        "line_number": "892",
+        "lean_error": "intermediate: typeclass IsScalarTower stuck; RingHom.mapMatrix square-only mismatch; resolved with Matrix.map + Matrix.submatrix_map (forward)",
+        "goal_before": "((grassTrans2 r d I J K).comp ((grassTrans2 r d J K I).comp (grassTrans2 r d K I J))).comp (algebraMap ...) = (RingHom.id ...).comp (algebraMap ...)",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "axiom-clean keystone. KEY: RingHom.mapMatrix is square-only in v4.30; use Matrix.map ⇑f for non-square (Fin d × Fin r) frames"
+      }
+    ],
+    "next_steps": "Consume in grassTransMorphism2_cocycle (done) and t_fac."
+  },
+  {
+    "timestamp": "2026-06-22T14:06:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Basic.lean",
+      "theorem": "projChartBaseMap"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "",
+      "key_lemmas_used": [
+        "Proj.map",
+        "MvPolynomial.map",
+        "MvPolynomial.IsHomogeneous.map",
+        "MvPolynomial.mem_ideal_span_X_image",
+        "MvPolynomial.map_map",
+        "Proj.map_comp",
+        "MvPolynomial.map_id"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "base-change graded hom A[t•]→+*ᵍ A'[t•] via MvPolynomial.map φ + Proj.map",
+        "code_tried": "projChartBaseHom (toRingHom := MvPolynomial.map φ; map_mem from IsHomogeneous.map); projChartBaseHom_irrelevant_le via mem_ideal_span_X_image; projChartBaseMap := Proj.map ...; _comp via MvPolynomial.map_map + Proj.map_comp; _id via MvPolynomial.map_id",
+        "line_number": "525-650",
+        "lean_error": "transient: HomogeneousIdeal.mem_irrelevant_of_mem arg order; ext over-applies into coeff (fixed with GradedRingHom.ext); rw [← Proj.map_comp] dependent-motive (used Eq.trans ?_ (Proj.map_comp …) no .symm)",
+        "goal_before": "construct Proj A'[t•] ⟶ Proj A[t•] (contravariant)",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "9 axiom-clean decls; both transition halves (frame iter-008, base iter-009) now complete + functorial. irrelevant condition is irrelevant 𝒜' ≤ (irrelevant 𝒜).map f (PROGRESS shorthand was loose)"
+      }
+    ],
+    "next_steps": "Blueprint 9 base-change helpers; cross-S GlueData still gap-blocked on absent S.Modules→(cover,frames) adapter."
+  },
+  {
+    "timestamp": "2026-06-22T14:54:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Basic.lean",
+      "theorem": "relativeProj"
+    },
+    "session": {
+      "id": "session_9",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "cross-S Scheme.GlueData assembly needs genuinely-absent Mathlib adapter: V:S.Modules → (explicit trivialising affine cover, frame 1-cocycle) i.e. local triviality of locally-free sheaf / sheaf-Sym. Directive forbids attempting.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not attempted — gap-blocked per directive; built the base-change transition ingredient instead",
+        "code_tried": "",
+        "line_number": "73",
+        "lean_error": "",
+        "goal_before": "",
+        "goal_after": "",
+        "result": "partial",
+        "insight": "Both transition halves now complete + functorial; only the cover/frame adapter (planner-level design decision) remains. Do NOT dispatch blind."
+      }
+    ],
+    "next_steps": "Planner-level decision on cross-S cover/frame extraction; do NOT re-assign as a blind tactic target."
+  }
+]

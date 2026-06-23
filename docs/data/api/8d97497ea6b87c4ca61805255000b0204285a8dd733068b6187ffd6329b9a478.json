@@ -1,10 +1,10 @@
 {
   "stage": "prover",
   "objectives": [
-    "**`AlgebraicJacobian/Picard/TensorObjInverse.lean`** — **TERMINAL lane, SOLO. Close the TENSOR-flank",
-    "Peel `tensorObj_unit_iso = sheafification.mapIso (λ_ 𝟙_) ≪≫ counit` (root def L310). Both U- and",
-    "**Inner seam:** push the presheaf left unitor `λ_ 𝟙_` past restriction using the SHAPE of Mathlib's",
-    "**Outer seam (formal):** close via `Functor.mapIso` / `toSheafify` naturality [`toSheafify_naturality`"
+    "**`AlgebraicJacobian/Picard/TensorObjInverse.lean`** — **TERMINAL lane, SOLO. Close S4b: formalize",
+    "`pullbackValIso_naturality_leftUnitor` (`lem:pullback_val_iso_naturality_left_unitor`) — RHS",
+    "`tensorObj_left_unitor_pullback_eq_sheafify` (`lem:tensorobj_left_unitor_pullback_eq_sheafify`) —",
+    "`pullbackUnitIso_whisker_eq_sheafify_eta_whisker` (`lem:pullback_unit_iso_whisker_eq_sheafify_eta_whisker`) —"
   ],
   "checklist": [
     {

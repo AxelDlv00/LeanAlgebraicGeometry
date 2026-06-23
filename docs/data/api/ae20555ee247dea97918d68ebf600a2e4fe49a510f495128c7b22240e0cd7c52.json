@@ -1,0 +1,67 @@
+[
+  {
+    "timestamp": "2026-06-23T02:14:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "pullback_spec_tilde_iso_ring_square_mate_glue"
+    },
+    "session": {
+      "id": "session_26",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Abstract carrier-free cocycle fold REFUTED in-file: `exact ring_square_cocycle_probe …` whnf-timeout (200k hb) at fold seam L2235 → cold build RED. The `exact`-binds-carriers-to-metavars premise is FALSE: unification still whnf's the concrete goal side to match the abstract cocycle conclusion. Bomb is at the FOLD, not in the cocycle proof.",
+      "key_lemmas_used": [
+        "ring_square_cocycle_probe",
+        "chartBaseChangeGeometricComparison",
+        "pullback_spec_tilde_iso",
+        "chartBaseChangeModuleReassoc"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Author a fully abstract carrier-free cocycle skeleton (theorem ring_square_cocycle_probe over {𝒵}[Category 𝒵]{X1..X6} with six Isos, conclusion g ≪≫ pρ = qincl ≪≫ dρB ≪≫ sr ≪≫ dincl'.symm, sorry body) and instantiate it at the heavy glue data via `exact ring_square_cocycle_probe (chartBaseChangeGeometricComparison …) … `. Goal: test whether the blueprint lem:ring_square_cocycle escape route's fold is kernel-light in-file (scratch REPL was suspected to inflate carrier inference).",
+        "code_tried": "theorem ring_square_cocycle_probe {𝒵}[Category 𝒵]{X1 X2 X3 X4 X5 X6:𝒵}(g:X1≅X2)(pρ:X2≅X5)(qincl:X1≅X3)(dρB:X3≅X4)(sr:X4≅X6)(dincl':X5≅X6): g ≪≫ pρ = qincl ≪≫ dρB ≪≫ sr ≪≫ dincl'.symm := by sorry  -- then: exact ring_square_cocycle_probe (chartBaseChangeGeometricComparison ψ φ ρ M) ((Scheme.Modules.pullback …).mapIso (pullback_spec_tilde_iso ρ M)) …",
+        "line_number": "2233",
+        "lean_error": "(deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached (FlatBaseChange.lean:2235)",
+        "goal_before": "chartBaseChangeGeometricComparison ψ φ ρ M ≪≫ (…).mapIso (pullback_spec_tilde_iso ρ M) = (…).mapIso (…) ≪≫ pullback_spec_tilde_iso (…) ≪≫ (tilde.functor _).mapIso (chartBaseChangeModuleReassoc ψ φ ρ M) ≪≫ pullback_spec_tilde_iso (…)",
+        "goal_after": "",
+        "result": "failed",
+        "insight": "Carrier-free cocycle does NOT dodge the whnf bomb: the `exact` must whnf the concrete goal to unify it against the abstract conclusion structure (RHS last factor is not syntactically `_.symm`). REFUTES the iter-025/026 blueprint escape route lem:ring_square_cocycle. Build left RED — probe must be reverted."
+      }
+    ],
+    "next_steps": "REVERT probe (delete ring_square_cocycle_probe @L2017, restore glue body @L2032 to plain `sorry`) → restore green. Route comprehensively STUCK: carrier-bearing (iter-024) AND carrier-free-cocycle (iter-026) both whnf-bomb. Escalate to USER for structural pivot — NOT another helper/probe round."
+  },
+  {
+    "timestamp": "2026-06-23T02:14:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "tensorObjAssoc_hK_lhs_native"
+    },
+    "session": {
+      "id": "session_26",
+      "model": "n/a"
+    },
+    "findings": {
+      "blocker": "Associator wall untouched this iter. SNAP was a plan-phase REVERT (no prover lane): iter-025's broken Option-A re-base reverted to the iter-021 green MONOLITH (byte-identical to .presplit-backup, 6 sorries). Dual-MonoidalCategory-instance μ-token-divergence wall persists.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "No prover attempt this iter — SNAP reverted to last-known-green monolith after 4-5 consecutive Option-A refactor-mechanism failures (timeouts leaving broken half-migrations).",
+        "code_tried": "git/file revert SectionGradedRing.lean ← SectionGradedRing.lean.presplit-backup; remove SectionGradedRingLocalized import from root",
+        "line_number": "2314",
+        "lean_error": "n/a (no prover attempt)",
+        "goal_before": "",
+        "goal_after": "",
+        "result": "partial",
+        "insight": "Revert restored green (build verified: byte-identical to iter-021 monolith). Split undone (Localized.lean unimported, still on disk sorry-free). Wall remains the documented irreducible dual-instance obstacle."
+      }
+    ],
+    "next_steps": "Associator wall is 17+ iters over the 1-3 estimate; Option-A re-base failed 4-5×. Escalate to USER (TO_USER.md) — needs either a frozen-signature relaxation or a single-agent SKELETON-refactor + separate PROVER fill (never concurrent writers on one file)."
+  }
+]

@@ -48,7 +48,7 @@ in scope.
 | A.2.c-engine — Quot/Cartier (RR-free) | `Rⁱf_*` Čech lane OPEN; DE-COUPLED from D3′. `pushPullMap_id`+`pushPull_unit_mate` LANDED; `pushPullMap_comp` blocked by a KERNEL whnf blow-up on the `eqToHom` over-triangle transports in `pushPullMap`'s def → next = kernel-cheap generalized eqToHom-cancellation lemma (option b), escalate to transport-light def refactor (option a) if it persists | ≈85–140 (undemonstrated ~40/it) | ~3400–5500 · 0/it | `Rⁱf_*` (Čech ~800–1200), Rel Proj, CM-regularity, flattening | DOMINANT pole + rate-limiter; weight lanes here; comp blocker is DEFINITIONAL not mathematical |
 | A.3 — tangent + Pic⁰ AV-structure | gated A.2.c | ~26–45 | ~1100–2100 · 0/it | scheme tangent space; Hilbert poly | absent in Mathlib; likely under-counted |
 | A.4 — Albanese UP (Route 1 RR-free primary) | gated A.2.c | ~12–20 | ~600–1000 · 0/it | Milne 3.2/3.10 rigidity + rational-map extension | Route-2 autoduality contingent (RR-freeness unverified) |
-| genusZero + witness body | gated A.3 | ~5–7 | ~250–450 · 0/it | tangent-iso + connectedness | hidden A.2.c transit |
+| witness body (uniform Pic⁰ wrap) | gated A.3 | ~5–7 | ~250–450 · 0/it | tangent-iso + connectedness; genus 0 ⇒ Pic⁰=Spec k automatically | hidden A.2.c transit |
 
 **Total Route A**: ~120–230 iters / ~4300–7500 LOC (RR-free engine path; the A.2.c engine dominates
 the count — see its row for the reconciled estimate). The ⊗-group law is DONE (`picCommGroup`
@@ -94,20 +94,24 @@ on the A.2.c critical path — decided at A.2.c entry, conservatively budgeted a
 
 **A.4 — Albanese UP.** PRIMARY = Route 1 (RR-free, substrated in-tree): Weil's `φ:Pic⁰→A` via the
 divisor-sum map; well-definedness from `Mor(ℙ¹,A)` constant (Milne 3.2/3.10, bare rigidity, no Serre
-duality); regularity from the rational-map-into-AV extension (`Albanese/*`, `AbelianVarietyRigidity` —
+duality); regularity from the rational-map-into-AV extension (`Albanese/*`, `RigidityLemma` —
 char-free). CONTINGENT = Route 2 (UP via Kleiman `rmk:Alb` on `J^∨`, by autoduality `J^∨≅J` + Galois
 descent) — autoduality is classically RR-dependent (theta polarization), UNVERIFIED RR-free; a Milne
 §III.6 check (open questions) can promote it. NB: verify Route 1's divisor↔Pic cone is disjoint from
 the paused RR chapters (open questions).
 
 **Route C — Riemann–Roch — PAUSED (USER, permanent).** Imported with inline sorries. The RR-free
-route (A.2.c engine + A.4 Route 1 + genus-0 arm (a)) discharges ALL THREE protected Goal nodes
+route (A.2.c engine + A.4 Route 1) discharges ALL THREE protected Goal nodes
 WITHOUT RR — RR is never on the critical path to the goal under this architecture. RR would only
 unlock the OPTIONAL cheap curve route (a shortcut, not a prerequisite). Pause cost: the ~3400+ LOC
 engine and the autoduality contingency exist solely to provide that RR-free path.
 
-**Genus-0 arm.** (a) Route-A Pic⁰-via-AV-wrap (transits A.2.c); (b) direct `J := Spec k` (Mumford
-rigidity) — PAUSED (USER).
+**Genus 0 (no separate arm).** Handled uniformly by the Pic⁰ witness: when `genus C = 0`,
+`H¹(C,𝒪_C)=0` so `Pic⁰_{C/k}=Spec k` automatically. The former direct `J := Spec k` Mumford-rigidity
+arm — and its whole `RigidityKbar`/cotangent/`Differentials`/`Genus0BaseObjects`/genus-0-RR lane —
+was **removed** (2026-06-23); the witness is now a single uniform `picardJacobianWitness`. The
+genus-0 `RiemannRoch` subproject is correspondingly obsolete (renamed `RiemannRoch-[obsolete]`).
+See `memory/genus-split-removed-uniform-pic0.md`.
 
 ## Open strategic questions
 
@@ -189,7 +193,7 @@ rigidity) — PAUSED (USER).
 - A.3 / A.4: scheme tangent space, Hilbert poly, Pic⁰ AV-structure; `rmk:Alb` UP, autoduality, Galois
   descent.
 
-**New project material.** AbelianVarietyRigidity, RigidityLemma, Genus0BaseObjects/*, RiemannRoch/*
-(paused), Picard/{RelativeSpec, LineBundlePullback, RelPicFunctor, FGAPicRepresentability,
+**New project material.** RigidityLemma, WeilDivisor (general divisor theory), Albanese/*,
+Picard/{RelativeSpec, LineBundlePullback, RelPicFunctor, FGAPicRepresentability,
 IdentityComponent, Pic0AbelianVariety, QuotScheme, FlatteningStratification, TensorObjSubstrate},
 Albanese/AlbaneseUP. Route-1 cone retained reversibly.

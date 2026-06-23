@@ -10,34 +10,33 @@ import AlgebraicJacobian.Genus
 The Jacobian of a smooth, proper, geometrically irreducible curve over a field, equipped with
 its structure as an abelian variety.
 
-## Status (Phase C scaffolding)
+## Status
 
 The Jacobian is defined uniformly as the underlying scheme of an Albanese witness
 (`JacobianWitness`) for the curve `C`; the four protected instances on `Jacobian C` all
 project from the witness directly.
 
-This file currently contains TWO `sorry`-bodied declarations (the Phase-C scaffolding
-inventory):
+The construction is **uniform in the genus**: the witness is the Picard identity
+component `Pic⁰_{C/k}` (`picardJacobianWitness`), an abelian variety of dimension
+`genus C` built by the FGA route (`AlgebraicJacobian.Picard.*` +
+`AlgebraicJacobian.Albanese.*`). There is **no** genus `= 0` / genus `> 0` split: when
+`genus C = 0` the tangent space `H¹(C, 𝒪_C)` is `0`-dimensional, so `Pic⁰_{C/k} = Spec k`
+falls out automatically. The former separate `genusZeroWitness` lane (with its
+`RigidityKbar` / cotangent-vanishing / Frobenius / `ℙ¹`-identification machinery) was a
+pre-FGA local optimisation and has been removed.
 
-1. `genusZeroWitness` (iter-127 scaffold): a `JacobianWitness C` for a genus-`0` curve,
-   with underlying scheme `Spec k`. The body is a `sorry` to be closed once pieces
-   (i)+(ii)+(iii) of the shared cotangent-vanishing pile land (iter-138+); the
-   substantive mathematical content is the genus-`0` rigidity statement
-   `rigidity_over_kbar` (M2.a; `AlgebraicJacobian.RigidityKbar`).
-2. `nonempty_jacobianWitness` (Phase-C OFF-LIMITS sorry): existence of an Albanese
-   witness for an arbitrary smooth proper geometrically irreducible curve; gated on
-   M2 + M3 closure (Albanese existence in genus `≥ 1` plus genus-`0` rigidity).
+This file contains exactly ONE `sorry`-bodied mathematical declaration,
+`picardJacobianWitness`, whose closure is the FGA construction of `Pic⁰_{C/k}` as an
+abelian variety with its Albanese universal property.
 
 The file contains:
 - `IsAlbanese`: the Albanese universal property for a pointed curve.
 - `IsAlbanese.unique`: uniqueness of the Albanese object up to canonical isomorphism.
 - `JacobianWitness`: a bundled candidate Albanese object together with the universal
   property uniformly over the choice of $k$-rational marked point.
-- `genusZeroWitness`: an Albanese witness for a genus-`0` curve, body `sorry`
-  (iter-127 scaffold; closure deferred to iter-138+).
-- `nonempty_jacobianWitness`: existence of an Albanese witness for every curve —
-  the headline Phase-C sorry, absorbing both higher-genus Albanese existence and
-  genus-`0` rigidity.
+- `picardJacobianWitness`: the Albanese witness `J = Pic⁰_{C/k}`, body `sorry`.
+- `nonempty_jacobianWitness`: existence of an Albanese witness for every curve,
+  delegating to `picardJacobianWitness`.
 - `Jacobian` and its four protected instances, each obtained by projection from the
   Albanese witness.
 
@@ -48,8 +47,8 @@ i.e. `Spec k`) compiles and discharges three of the four instances for free, but
 fourth instance `SmoothOfRelativeDimension (genus C) (𝟙_ _).hom` would force `genus C = 0`,
 which is mathematically wrong for any curve of genus `≥ 1`. The terminal-object definition
 is therefore forbidden when `genus C > 0`. The witness-based definition avoids this
-issue: in genus `0` the witness's underlying scheme `J` is `Spec k`, and in genus `> 0`
-the witness's `J` is the honest Albanese object.
+issue: the witness's `J` is `Pic⁰_{C/k}`, which is `Spec k` exactly when `genus C = 0`
+and the honest Albanese object otherwise.
 -/
 
 set_option autoImplicit false
@@ -129,16 +128,6 @@ theorem unique {k : Type u} [Field k] {C : Over (Spec (.of k))} {P : 𝟙_ _ ⟶
 
 end IsAlbanese
 
-/-- The identity morphism on `Spec k` is geometrically irreducible.
-This is a small helper needed for the genus-0 case of `Jacobian`. -/
-lemma geometricallyIrreducible_id_Spec (k : Type u) [Field k] :
-    GeometricallyIrreducible (𝟙 (Spec (.of k))) where
-  geometrically_irreducibleSpace := by
-    intro K _ y Z fst snd h
-    haveI : IsIso snd := h.isIso_snd_of_isIso
-    exact ObjectProperty.prop_of_iso (P := (IrreducibleSpace · : ObjectProperty Scheme))
-      (asIso snd).symm inferInstance
-
 /-- A bundled Albanese witness for the smooth proper geometrically irreducible curve
 `C`: a candidate group scheme `J` (with proper, smooth, geometrically irreducible
 structure, smooth of relative dimension `genus C`), and a proof that `J` satisfies
@@ -173,136 +162,43 @@ structure JacobianWitness (C : Over (Spec (.of k)))
   structure satisfies the Albanese universal property for the pointed curve `(C, P)`. -/
   isAlbaneseFor : ∀ (P : 𝟙_ _ ⟶ C), @IsAlbanese k _ C P J grpObj proper smooth geomIrred
 
-/-- Genus-`0` Albanese witness. The witness object is the trivial terminal scheme
-`𝟙_ (Over (Spec k))`; the `JacobianWitness` structural fields (proper, smooth,
-geometrically irreducible, genus-stable, group-object) reduce to the
-corresponding trivialities on `Spec k` via the structural cluster
-`(𝟙_).hom = 𝟙 (Spec k)`. The `isAlbaneseFor` field consumes the **genus-0
-abelian-variety rigidity** statement: for every pointed `(C, P)` and every
-target group scheme `(A, η[A])`, the genus-0 hypothesis forces a morphism
-`f : C ⟶ A` with `P ≫ f = η[A]` to equal `toUnit C ≫ η[A]`. Over an
-algebraically closed base `k̄` this is
-`AlgebraicGeometry.rigidity_genus0_curve_to_grpScheme` (in
-`AlgebraicJacobian.AbelianVarietyRigidity`, char-free, route-C, iter-163).
-For a general `[Field k]` base the keystone is consumed via pullback to
-`Spec k̄` + descent of the morphism equality along the faithfully-flat
-surjection `Spec k̄ → Spec k`. The uniqueness clause cancels the epimorphism
-`toUnit C` via `Flat.epi_of_flat_of_surjective` (smooth ⟹ flat,
-geometrically irreducible ⟹ surjective on `Spec k`).
 
-**Status (iter-172):** the `key` body remains `sorry`; the rigidity consumer
-exists (declared) but still propagates upstream sorries from the iter-171
-body skeleton in `Genus0BaseObjects.lean`. Wiring closes once
-(i) the `Genus0BaseObjects` body-skeleton internal sorries discharge, and
-(ii) the `k → k̄` pullback / descent step is filled. -/
-noncomputable def genusZeroWitness (C : Over (Spec (.of k)))
-    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]
-    (h : genus C = 0) :
-    JacobianWitness C where
-  J := 𝟙_ (Over (Spec (.of k)))
-  grpObj := inferInstance
-  -- `(𝟙_).hom` is defeq `𝟙 (Spec k)`, but instance search does not unfold it;
-  -- supply each instance for the identity and let term-elaboration close by defeq.
-  proper := (inferInstance : IsProper (𝟙 (Spec (.of k))))
-  smooth := (inferInstance : Smooth (𝟙 (Spec (.of k))))
-  geomIrred := geometricallyIrreducible_id_Spec k
-  smoothGenus := by
-    rw [h]; exact (inferInstance : SmoothOfRelativeDimension 0 (𝟙 (Spec (.of k))))
-  isAlbaneseFor := by
-    -- For every `k`-rational marked point `P`, exhibit the Albanese datum for
-    -- the pointed curve `(C, P)` with `J = 𝟙_` (blueprint C.2 / C.3).
-    intro P
-    -- The universal pointed morphism is the unique terminal map `toUnit C`.
-    refine ⟨toUnit C, ?_, ?_⟩
-    · -- Pointed condition: both `P ≫ toUnit C` and `η[𝟙_]` are maps `𝟙_ ⟶ 𝟙_`,
-      -- equal by uniqueness of morphisms into the terminal object.
-      exact toUnit_unique _ _
-    · -- Universal factorisation: given `f : C ⟶ A` with `P ≫ f = η[A]`, the
-      -- factoring morphism `𝟙_ ⟶ A` is the identity element `η[A]`.
-      intro A _ _ _ _ f _hf
-      -- Genus-0 RIGIDITY (C.2): `f` equals the constant morphism at the identity.
-      -- The route-C content `rigidity_genus0_curve_to_grpScheme` (declared in
-      -- `AlgebraicJacobian.AbelianVarietyRigidity`) is char-free and import-clean
-      -- (proven iter-163 onward). To consume it for the general `[Field k]` goal,
-      -- this body needs to pull back `(C, A, f, P)` along an algebraic closure
-      -- `Spec k̄ → Spec k`, apply `rigidity_genus0_curve_to_grpScheme` in the
-      -- pulled-back setting, then descend the morphism equality along the
-      -- faithfully-flat surjection (the descent step itself is
-      -- `Flat.epi_of_flat_of_surjective`, already used below to cancel the
-      -- terminal epimorphism). The pullback functor + the descent of a morphism
-      -- equality is the residual sub-build; it is real but is not gated on
-      -- any out-of-file plan-level decision.
-      have key : f = toUnit C ≫ η[A] := by
-        sorry
-      refine ⟨η[A], key, ?_⟩
-      -- Uniqueness: any `g'` with `f = toUnit C ≫ g'` equals `η[A]`, by cancelling
-      -- the epimorphism `toUnit C`. Its underlying scheme morphism is `C.hom`
-      -- (`Over.toUnit_left`), which is faithfully flat (smooth ⟹ flat) and
-      -- surjective (a geometrically irreducible curve over a field is nonempty and
-      -- `Spec k` is a single point), hence an epimorphism (`Flat.epi_of_flat_of_surjective`).
-      intro g' hg'
-      have hcancel : toUnit C ≫ g' = toUnit C ≫ η[A] := by rw [← hg', ← key]
-      have hepiL : Epi (toUnit C).left := by
-        rw [Over.toUnit_left]; exact Flat.epi_of_flat_of_surjective C.hom
-      haveI : Epi (toUnit C) := Over.epi_of_epi_left _
-      exact (cancel_epi (toUnit C)).mp hcancel
+/-- The Albanese witness for a smooth proper geometrically irreducible curve `C`,
+constructed **uniformly in the genus** as the identity component `Pic⁰_{C/k}` of the
+Picard scheme of `C`.
 
-/-- The Albanese witness for a smooth proper geometrically irreducible curve `C`
-of positive genus `g ≥ 1` over `k`. The underlying scheme is the Albanese
-variety of `C` — classically the connected component of the identity of
-`Pic_{C/k}`, or equivalently the Stein factorisation of the Abel–Jacobi
-morphism on `Sym^g(C)`. Both constructions require infrastructure not yet
-in Mathlib (FGA representability of the Picard functor for Route A;
-symmetric powers + finite-group quotients + Stein factorisation +
-Brill–Noether–Riemann–Roch for Route B); the iter-123 M3 route audit
-(`analogies/m3-route-audit.md`) records both at midpoint ~6500 and
-~9000 LOC respectively.
+By the FGA route (`AlgebraicJacobian.Picard.*`), `Pic⁰_{C/k}` is representable
+(`Scheme.PicScheme.representable`) and is an abelian variety of dimension `genus C`:
+its tangent space at the identity is `H¹(C, 𝒪_C)` (`Scheme.Pic0.tangentSpaceIso`),
+giving smoothness of relative dimension `genus C` (`Scheme.Pic0.smooth`), properness
+(`Scheme.Pic0.proper`), and geometric irreducibility
+(`Scheme.Pic0.geometricallyIrreducible`); the Albanese universal property is the
+Abel–Jacobi factorisation of `AlgebraicJacobian.Albanese.AlbaneseUP`.
 
-**Status**: iter-134 scaffold — body is `sorry`. The body closure is M3
-work, currently OFF-CRITICAL-PATH until M2 closes (per STRATEGY.md
-§ M3, user-escalation-pending).
-
-**Iter-135**: the genus-stratified body restructure of
-`nonempty_jacobianWitness` is now in place (Change 2.1 of iter-135
-refactor); this scaffold is the positive-genus arm. Body closure
-remains M3 work (off-critical-path; user-escalation-pending per
-`analogies/m3-route-audit.md`). -/
-noncomputable def positiveGenusWitness (C : Over (Spec (.of k)))
-    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]
-    (hg : 0 < genus C) :
+The genus-`0` case is **not** special and needs no separate construction: when
+`genus C = 0` the tangent space is `0`-dimensional, so `Pic⁰_{C/k} = Spec k`
+automatically, and the universal property degenerates to the (then trivial) statement
+that every pointed morphism `C ⟶ A` into an abelian variety is constant. The former
+`genusZeroWitness` / `positiveGenusWitness` genus split — together with its bespoke
+rigidity / cotangent-vanishing / Frobenius / `ℙ¹`-identification machinery — has been
+removed in favour of this single uniform witness. -/
+noncomputable def picardJacobianWitness (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
     JacobianWitness C :=
   sorry
 
 /-- Existence of an Albanese witness for every smooth proper geometrically irreducible
-curve. This is one of the two open mathematical sorries of the Phase-C Jacobian
-scaffolding (the other being `genusZeroWitness`); both are scheduled for body
-closure post M2 + M3 per STRATEGY.md. It packages all five protected sorries
-(`Jacobian`, `instGrpObj`, `smoothOfRelativeDimension_genus`, `instIsProper`,
-`instGeometricallyIrreducible`) into a single existence hypothesis, *and* records
-that the Albanese property of the underlying scheme `J` is uniform over every
-choice of $k$-rational marked point `P : 𝟙_ _ ⟶ C` (via the `isAlbaneseFor`
-field of `JacobianWitness`).
-
-Mathematically this corresponds to the construction of the Albanese variety of `C`,
-classically via symmetric powers $\mathrm{Sym}^g(C)$ and the Abel--Jacobi map
-(Brill--Noether--Riemann--Roch), or equivalently as the identity component of the
-Picard scheme. Both routes require infrastructure not yet available in Mathlib
-(quotients of schemes by finite group actions; FGA representability), so the
-existence is assumed.
-
-**Iter-135 body restructure**: the body is now a `by_cases h :
-genus C = 0` decomposition consuming `genusZeroWitness` (genus-0 arm)
-and `positiveGenusWitness` (positive-genus arm). Both arms' bodies
-remain `sorry` (M2.b body closure iter-138+; M3 body closure
-off-critical-path); the restructure converts the inline `sorry` here
-into honest delegation to the two scaffolds, removing one inline-`sorry`
-site without prejudging either arm's body closure. -/
+curve, uniformly in the genus via the Picard identity component `Pic⁰_{C/k}`
+(`picardJacobianWitness`). This packages all five protected sorries (`Jacobian`,
+`instGrpObj`, `smoothOfRelativeDimension_genus`, `instIsProper`,
+`instGeometricallyIrreducible`) into a single existence statement, and records that the
+Albanese property of the underlying scheme `J` is uniform over every choice of
+`k`-rational marked point `P : 𝟙_ _ ⟶ C` (via the `isAlbaneseFor` field of
+`JacobianWitness`). -/
 theorem nonempty_jacobianWitness (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :
-    Nonempty (JacobianWitness C) := by
-  by_cases h : genus C = 0
-  · exact ⟨genusZeroWitness C h⟩
-  · exact ⟨positiveGenusWitness C (Nat.pos_of_ne_zero h)⟩
+    Nonempty (JacobianWitness C) :=
+  ⟨picardJacobianWitness C⟩
 
 /-- A choice of Albanese witness for `C`, extracted via `Classical.choice`.
 Used to define `Jacobian C` and to discharge each of the four protected instances
@@ -317,14 +213,14 @@ noncomputable def jacobianWitness (C : Over (Spec (.of k)))
 
 The Jacobian is the underlying scheme of an Albanese witness for `C` (see
 `JacobianWitness` and `nonempty_jacobianWitness`); the existence of such a
-witness is one of the two open mathematical sorries of the Phase-C scaffolding
-(the other being `genusZeroWitness`), both scheduled for body closure post
-M2 + M3 per STRATEGY.md. The genus-`0` specialisation is implicit in the
-witness — a smooth proper geometrically irreducible group scheme over `k` of
-relative dimension `0` is `Spec k` — and the genus-`0` rigidity content is
-absorbed into `nonempty_jacobianWitness`. -/
-noncomputable def Jacobian (C : Over (Spec (.of k))) [IsProper C.hom] [SmoothOfRelativeDimension 1 C.hom]
-    [GeometricallyIrreducible C.hom] : Over (Spec (.of k)) :=
+witness (`picardJacobianWitness`, `J = Pic⁰_{C/k}`) is the single open
+mathematical sorry, closed by the FGA construction. The genus-`0`
+specialisation is implicit in the witness — a smooth proper geometrically
+irreducible group scheme over `k` of relative dimension `0` is `Spec k` — so
+no separate genus-`0` construction is needed. -/
+noncomputable def Jacobian (C : Over (Spec (.of k))) [IsProper C.hom]
+    [SmoothOfRelativeDimension 1 C.hom] [GeometricallyIrreducible C.hom] :
+    Over (Spec (.of k)) :=
   (jacobianWitness C).J
 
 namespace Jacobian

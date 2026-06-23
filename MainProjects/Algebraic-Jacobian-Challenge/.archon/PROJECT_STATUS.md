@@ -1,5 +1,16 @@
 # Project Status
 
+> **2026-06-23 — genus split removed (uniform Pic⁰).** The Jacobian is now built
+> uniformly as `J = Pic⁰_{C/k}` via a single `picardJacobianWitness`; the genus = 0 vs
+> genus > 0 split is gone. The genus-0 lane (`genusZeroWitness`, `RigidityKbar`,
+> `AbelianVarietyRigidity`, `Rigidity`, `Differentials`, `Cotangent/*`,
+> `Genus0BaseObjects/*`, and `RiemannRoch/{RationalCurveIso,RRFormula,H1Vanishing,OCofP,OcOfD}`)
+> was deleted; `RigidityLemma` and the general `WeilDivisor` were kept. The blueprint and
+> `STRATEGY.md` are updated; the genus-0 `RiemannRoch` subproject is renamed
+> `RiemannRoch-[obsolete]`. **Genus-0 / M2 / cotangent / RR-genus-0 entries below this line
+> are historical** and no longer on the critical path. See
+> `memory/genus-split-removed-uniform-pic0.md`.
+
 ## Overall Progress
 
 - **Total active syntactic sorry sites**: **14** (compile-verified

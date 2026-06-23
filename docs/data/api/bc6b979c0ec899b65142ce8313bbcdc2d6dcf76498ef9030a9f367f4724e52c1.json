@@ -1,0 +1,12 @@
+{
+  "files": [
+    {
+      "path": "MR0555258CompactifyingPicard.lean",
+      "size": 42
+    },
+    {
+      "path": "MR0555258CompactifyingPicard/Basic.lean",
+      "size": 68
+    }
+  ]
+}

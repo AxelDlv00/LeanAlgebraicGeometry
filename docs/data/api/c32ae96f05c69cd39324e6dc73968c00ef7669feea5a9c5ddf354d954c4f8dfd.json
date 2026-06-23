@@ -1,0 +1,92 @@
+[
+  {
+    "timestamp": "2026-06-22T11:36:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/RiemannRoch/OcOfD.lean",
+      "theorem": "sheafOf.exists_section_of_mem_carrierSubmoduleSheaf_zero"
+    },
+    "session": {
+      "id": "session_23",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "TopCat.Sheaf.existsUnique_gluing'",
+        "AlgebraicGeometry.isBasis_affineOpens",
+        "TopologicalSpace.Opens.isBasis_iff_nbhd",
+        "Scheme.germToFunctionField_injective",
+        "TopCat.Presheaf.germ_res_apply",
+        "genericPoint_spec",
+        "exists_section_of_forall_order_nonneg_affineOpen"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Hartshorne II.6.3A affine-cover amalgamation via existsUnique_gluing'; f=0 -> s=0; else extract hord (∀ Q∈U, 0≤ord_Q f) from (Submodule.mem_inf.mp hf).1; cover ι={W//IsAffineOpen∧Nonempty∧W≤U} (basis isBasis_affineOpens+isBasis_iff_nbhd); per-piece sections from affine arm; compatibility FREE because irreducible curve's generic point lies in every nonempty open => overlap nonempty => germToFunctionField_injective+germ_res_apply reduce both restrictions to f; glue + identify germ via affine nbhd of generic point",
+        "code_tried": "by_cases hf0 : f = 0; ... C.left.sheaf.existsUnique_gluing'",
+        "line_number": "2370",
+        "lean_error": "intermediate: 'failed to synthesize Nonempty ↥↑(Ufam i)' (coercion ↥ vs ↥↑); 'Min (Type u)' on Nonempty (Ufam i ⊓ Ufam j)",
+        "result": "success",
+        "insight": "germToFunctionField in a Pi-type statement needs the Nonempty instance registered BEFORE the statement (haveI : ∀ i, Nonempty (Ufam i)); the meet ⊓ must be annotated (… : C.left.Opens) to avoid elaborating at Type level. Irreducibility makes gluing-compatibility trivial — generic point in every overlap, no empty-overlap case."
+      }
+    ],
+    "next_steps": "Closed axiom-clean. No further work."
+  },
+  {
+    "timestamp": "2026-06-22T11:36:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/RiemannRoch/OcOfD.lean",
+      "theorem": "sheafOf.carrierSheaf_zero_iso_toModuleKSheaf"
+    },
+    "session": {
+      "id": "session_23",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "CategoryTheory.NatIso.ofComponents",
+        "fullyFaithfulSheafToPresheaf",
+        "TopCat.Sheaf.isTerminalOfEqEmpty",
+        "IsTerminal.hom_ext",
+        "ModuleCat.hom_ext",
+        "Scheme.germToFunctionField_injective",
+        "TopCat.Presheaf.germ_res_apply",
+        "carrierSheaf_zero_sections_eq_structureSheaf_inv_coe",
+        "carrierSheaf_zero_sections_eq_structureSheaf_hom_coe"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Keep NatIso.ofComponents (fun U => carrierSheaf_zero_sections_eq_structureSheaf U); discharge naturality square via two new value-characterisation helpers (_inv_coe, _hom_coe). ⊥ target: codomain terminal -> IsTerminal.hom_ext. nonempty target (Y≠⊥⟹X≠⊥ since Y≤X): ModuleCat.hom_ext + LinearMap.ext, germToFunctionField_injective reduces to K(C)-value equality; LHS=c.val via _hom_coe+carrierPresheaf_map_coe, RHS=c.val via germ_res_apply+_hom_coe",
+        "code_tried": "CategoryTheory.NatIso.ofComponents (fun U => ...) (by intro X Y g; by_cases hY : Y.unop = ⊥; ...)",
+        "line_number": "2454",
+        "lean_error": "intermediate: 'Nonempty ↥↑(Opposite.unop Y)' synth failure; 'Tactic rewrite failed: did not find pattern' on _coe helpers; 'Invalid argument name h'",
+        "result": "success",
+        "insight": "The planner-suggested 'fresh forward morphism + invert' was UNNECESSARY — reusing the existing component iso with the two _coe helpers worked. COERCION TRAP: germToFunctionField/_injective want Nonempty ↥↑U (Set-coe), but [Nonempty U.unop] binders elaborate to Nonempty ↥U (Opens-coe); synthesis does NOT bridge — pass instance explicitly (@... hYne') or use Set.Nonempty.to_subtype. rw of _coe helpers fails on syntactic mismatch (.val vs sheafToPresheaf.obj); use 'have hL/hR := lemma'; exact hL.trans hR.symm (defeq via exact)."
+      }
+    ],
+    "next_steps": "Closed axiom-clean. S3 zero-carrier bridge fully sorry-free end-to-end."
+  },
+  {
+    "timestamp": "2026-06-22T11:36:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/RiemannRoch/OcOfD.lean",
+      "theorem": "sheafOf_singlePoint_iso"
+    },
+    "session": {
+      "id": "session_23",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Off-cone (dag used-by 0). RHS lineBundleAtClosedPoint bundled from OCofP's private carrierPresheaf/carrierSubmoduleSheaf defs — per-open section submodule unnameable from OcOfD; no morphism into/out of it constructible here. Awaiting OCofP exposing a public carrier identification or public inclusion into the constant K_C sheaf.",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Do NOT assign. Off-cone; needs OCofP API exposure first, or leave as typed Nonempty(≅) placeholder."
+  }
+]

@@ -12,5 +12,9 @@ read:
   - ./SubProjects/*
   - ./SubProjects/RelatedPapersFormalisation/*
 
-no-access: []
+no-access:
+  # Exclude the local pre-refactor backup copy of the main project (the genus-0
+  # snapshot `Algebraic-Jacobian-Challenge-[paused-because-genus0-split]`). It is a
+  # full duplicate and must not pollute the scope roadmap / merge DAG.
+  - ./MainProjects/Algebraic-Jacobian-Challenge-*
   # - ./scratch

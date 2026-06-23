@@ -1,0 +1,1069 @@
+\chapter{Finiteness of cohomology of line bundles on a proper curve (S2)}
+\label{chap:Cohomology_SerreFiniteness}
+
+% Chapter-local shorthands (report to plan agent for promotion to
+% macros/common.tex if shared across chapters).
+\providecommand{\cechHI}{\mathtt{cechH1}}
+\providecommand{\FiniteDimensional}{\mathrm{FiniteDimensional}}
+
+% SOURCE: Hartshorne, \emph{Algebraic Geometry}, GTM 52 (1977): III.3,
+% Theorem~3.5 (vanishing of higher cohomology of a quasi-coherent sheaf
+% on a noetherian affine scheme); III.4, Theorem~4.5 (\v{C}ech agrees
+% with derived cohomology on an open affine cover of a noetherian
+% separated scheme); III.5, Theorem~5.2 (Serre's coherent-cohomology
+% finiteness on a projective scheme); IV.1, Proposition~1.1 (the genus
+% $g = \dim_k H^1(X, \mathcal O_X)$) and Exercise~1.3 (a non-proper
+% curve is affine). All verbatim quotes in the blocks below were read
+% off the rendered scanned page images of
+% references/hartshorne-algebraic-geometry.pdf and transcribed
+% character-by-character (PDF page 232 = doc p.215 for III.3.5; PDF page
+% 239 = doc p.222 for III.4.5; PDF page 245 = doc p.228 for III.5.2; PDF
+% page 311 = doc p.294 for IV.1.1; PDF page 314 = doc p.297 for IV.1.3);
+% the PDF has no text layer.
+
+\section{Setup and motivation}
+
+This chapter supplies the \texttt{S2} finiteness obligation of the
+genus-\(0\) Riemann--Roch arm: \emph{for every Weil divisor \(D\) on a
+smooth proper geometrically irreducible curve \(C / \bar k\), the
+sheaf-cohomology groups \(H^i(C, \mathcal O_C(D))\) are
+finite-dimensional \(\bar k\)-vector spaces}. These finiteness facts are
+exactly what makes the \(\ell\)-invariant \(\ell(D) = \dim_{\bar k}
+H^0(C, \mathcal O_C(D))\) (\cref{def:l_invariant}) and the Euler
+characteristic \(\chi(\mathcal O_C(D)) = \dim_{\bar k} H^0 -
+\dim_{\bar k} H^1\) (\cref{def:eulerChar_curve}) honest integers, and
+they discharge the four finite-dimensionality side-conditions consumed
+by the \(\chi\)-inductive step
+\cref{lem:euler_char_sheafOf_succ} of \cref{chap:RiemannRoch_RRFormula}.
+
+\paragraph{Strategy of the chapter (the SES-induction route).} Rather
+than formalising Serre's general coherent-cohomology finiteness theorem
+(the projective-dévissage statement), the chapter reduces \emph{all} the
+finiteness it needs to a single base \emph{computation} and one
+structural induction, using supporting results proved in related
+chapters:
+\begin{enumerate}
+  \item the closed-point skyscraper \(k(P)\) has finite cohomology in
+    the only degrees the chapter consumes it, namely \(\{0, 1\}\): the
+    degree-\(0\) skyscraper computation gives \(H^0(C, k(P)) \cong
+    \bar k\), and the degree-one flasque vanishing gives
+    \(H^1(C, k(P)) = 0\)
+    (\cref{sec:SerreFiniteness_skyscraper});
+  \item finiteness is a \emph{2-of-3} property along a short exact
+    sequence of sheaves, via the long exact cohomology sequence
+    (\cref{lem:HModule_finite_of_ses});
+  \item the base case is the structure sheaf \(\mathcal O_C\)
+    (\cref{lem:HModule_structureSheaf_finite}); its \(H^1\) finiteness
+    is computed \emph{directly} from a two-affine Čech cover
+    (\cref{lem:HModule_structureSheaf_H1_finite}): writing
+    \(C = U \cup V\) with \(U, V\) affine opens, one has
+    \(H^1(C, \mathcal O_C) \cong
+    \operatorname{coker}\bigl(\mathcal O_C(U) \oplus \mathcal O_C(V)
+    \to \mathcal O_C(U \cap V)\bigr)\), and this explicit cokernel is a
+    finite-dimensional \(\bar k\)-vector space;
+  \item every line bundle \(\mathcal O_C(D)\) is reached from
+    \(\mathcal O_C\) by repeatedly adding and removing single closed
+    points, along the closed-point short exact sequence
+    \cref{lem:sheafOf_ses_single_add}; finiteness propagates by the
+    2-of-3 property (\cref{thm:HModule_lineBundle_finite}).
+\end{enumerate}
+This keeps the entire \texttt{S2} obligation reduced to one base
+computation --- the \(H^1\) of \(\mathcal O_C\) read off a two-affine
+Čech cover --- together with one structural induction, and avoids the
+proper-pushforward / projective dévissage machinery not available at the
+\(\HModule \bar k\) cohomology level. No general ``\(H^{\ge 2} = 0\) for
+all sheaves'' gate is invoked: the degrees \(\ge 2\) are controlled
+\emph{sheaf by sheaf} by the two-affine acyclic Čech cover. The
+structure sheaf \(\mathcal O_C\) has \(H^{\ge 2}(C, \mathcal O_C) = 0\)
+because the Čech complex of the two-element cover is concentrated in
+degrees \(\{0, 1\}\) and computes derived cohomology there
+(\cref{lem:HModule_structureSheaf_higher_vanish}); \emph{every} line
+bundle \(\mathcal O_C(D)\) has \(H^{\ge 2}(C, \mathcal O_C(D)) = 0\) by
+the same two-affine Čech truncation applied directly to the
+quasi-coherent sheaf \(\mathcal O_C(D)\)
+(\cref{lem:HModule_sheafOf_higher_vanish}); and the skyscraper
+\(k(P)\) is used only in degrees \(\{0, 1\}\)
+(\cref{lem:HModule_skyscraper_finite}). The per-degree 2-of-3 property
+then propagates finiteness only in degrees \(\{0, 1\}\), the degrees
+\(\ge 2\) being already pinned to zero by the per-sheaf truncation.
+
+\paragraph{Standing hypotheses.} Throughout, \(\bar k\) is an
+algebraically closed field and \(C\) is a smooth proper geometrically
+irreducible curve over \(\bar k\).
+Cohomology is the \(\Module \bar k\)-flavoured \(\Ext\)
+cohomology \(\HModule\;\bar k\;\mathcal F\;i\)
+(\cref{def:Scheme_HModule}); we write
+\(H^i(C, \mathcal F) := \HModule\;\bar k\;\mathcal F\;i\). For a sheaf
+\(\mathcal F\) of \(\bar k\)-modules, ``\(\mathcal F\) has finite
+cohomology'' abbreviates: \(H^i(C, \mathcal F)\) is a finite
+\(\bar k\)-module (\(\Module.\mathtt{Finite}\;\bar k\)) for every
+\(i\); since \(\bar k\) is a field this is the same as each
+\(H^i(C, \mathcal F)\) being a finite-dimensional \(\bar k\)-vector
+space.
+
+
+\section{Controlling the higher degrees}
+\label{sec:SerreFiniteness_inputs}
+
+There is \emph{no} appeal in this chapter to a general
+``\(H^{\ge 2} = 0\) for all sheaves on a one-dimensional space'' gate
+(Grothendieck vanishing): such a statement would have to be transported
+across the \(\HModule \bar k\)-versus-classical-cohomology bridge, which
+is not available off the shelf. Instead the degrees \(\ge 2\) are
+controlled \emph{one sheaf at a time}, by the two-affine acyclic Čech
+cover, for the two quasi-coherent sheaves whose degree-\(\ge 2\)
+vanishing the chapter needs:
+\begin{itemize}
+  \item the structure sheaf \(\mathcal O_C\) has
+    \(H^i(C, \mathcal O_C) = 0\) for every \(i \ge 2\), because the
+    Čech complex of the two-element affine cover has no cochains in
+    degree \(\ge 2\) and computes derived cohomology there
+    (\cref{lem:HModule_structureSheaf_higher_vanish});
+  \item every line bundle \(\mathcal O_C(D)\) has
+    \(H^i(C, \mathcal O_C(D)) = 0\) for every \(i \ge 2\) by the
+    \emph{same} two-element Čech truncation, applied directly to the
+    quasi-coherent sheaf \(\mathcal O_C(D)\): the two cover members and
+    their intersection are affine, so \(\mathcal O_C(D)\) is acyclic on
+    each, and the two-element Čech complex computing its cohomology has
+    no cochains in degree \(\ge 2\)
+    (\cref{lem:HModule_sheafOf_higher_vanish}).
+\end{itemize}
+The closed-point skyscraper \(k(P)\) is used only in degrees
+\(\{0, 1\}\) (\cref{lem:HModule_skyscraper_finite}); the per-degree
+2-of-3 property \cref{lem:HModule_finite_of_ses} along the single-point
+short exact sequences then transports finiteness only in degrees
+\(\{0, 1\}\), the degrees \(\ge 2\) being already controlled by the
+per-sheaf truncation above.
+The single base obligation that carries genuine content --- finiteness
+of \(H^1(C, \mathcal O_C)\) --- is discharged \emph{internally} by the
+two-affine Čech computation of \cref{sec:SerreFiniteness_cech}, not
+admitted as a gap.
+
+\section{Finiteness for the closed-point skyscraper}
+\label{sec:SerreFiniteness_skyscraper}
+
+\begin{lemma}
+
+\leanok
+[Finiteness of the cohomology of a closed-point skyscraper]
+  \label{lem:HModule_skyscraper_finite}
+  \lean{AlgebraicGeometry.Scheme.HModule_skyscraper_finite}
+  \uses{lem:H0_skyscraperSheaf_finrank_eq_one,
+        lem:H1_flasque_eq_zero, lem:skyscraperSheaf_isFlasque,
+        def:Scheme_HModule}
+  Let \(C\) be a smooth proper geometrically irreducible curve over
+  \(\bar k\) and let \(P \in C\) be a closed point. Write
+  \[
+    k(P) \;:=\; \mathtt{skyscraperSheaf}\;P\;
+      (\Module.\mathtt{of}\;\bar k\;\bar k)
+  \]
+  for the closed-point skyscraper sheaf. Then the cohomology of
+  \(k(P)\) is finite-dimensional in degrees \(0\) and \(1\): concretely
+  \(H^0(C, k(P)) \cong \bar k\) (so \(\dim_{\bar k} H^0 = 1\)) and
+  \(H^1(C, k(P)) = 0\). These are the only degrees in which the chapter
+  consumes the skyscraper cohomology (the single-point short exact
+  sequences of \cref{thm:HModule_lineBundle_finite} feed
+  \cref{lem:HModule_finite_of_ses} only at degrees \(\{0, 1\}\), the
+  degrees \(\ge 2\) being controlled per line bundle by
+  \cref{lem:HModule_sheafOf_higher_vanish}).
+
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:H0_skyscraperSheaf_finrank_eq_one,
+        lem:H1_flasque_eq_zero, lem:skyscraperSheaf_isFlasque}
+        \leanok
+  We treat the two degrees separately.
+
+  \emph{Degree \(0\).} The skyscraper evaluation
+  \cref{lem:H0_skyscraperSheaf_finrank_eq_one} of
+  \cref{chap:RiemannRoch_RRFormula} gives
+  \(\dim_{\bar k} H^0(C, k(P)) = 1\): a global section of the skyscraper
+  at \(P\) is precisely an element of its stalk \(\bar k\), since
+  \(P\) lies in every open whose section group is non-trivial. Hence
+  \(H^0(C, k(P)) \cong \bar k\) is one-dimensional, in particular a
+  finite \(\bar k\)-module.
+
+  \emph{Degree \(1\).} The closed-point skyscraper \(k(P)\) is
+  flasque (\cref{lem:skyscraperSheaf_isFlasque} of
+  \cref{chap:RR_H1Vanishing}): it is the pushforward of a sheaf along
+  the closed immersion of \(\{P\}\), and on a constant restriction
+  pattern its restriction maps are surjective. The degree-one
+  flasque-vanishing export \cref{lem:H1_flasque_eq_zero} of
+  \cref{chap:RR_H1Vanishing} then gives
+  \(H^1(C, k(P)) = \HModule\;\bar k\;k(P)\;1 = 0\), and the zero module
+  is finite.
+
+  In each of the degrees \(0\) and \(1\), \(H^i(C, k(P))\) is therefore
+  a finite-dimensional \(\bar k\)-vector space.
+\end{proof}
+
+\section{Finiteness is a 2-of-3 property along a short exact sequence}
+
+\begin{lemma}
+
+\leanok
+[Two-out-of-three (middle term) for finite cohomology along a short exact sequence]
+  \label{lem:HModule_finite_of_ses}
+  \lean{AlgebraicGeometry.Scheme.HModule_finite_of_ses}
+  \uses{def:Scheme_HModule}
+  Let \(C\) be a smooth proper geometrically irreducible curve over
+  \(\bar k\) and let
+  \[
+    0 \;\longrightarrow\; \mathcal F_1 \;\longrightarrow\;
+    \mathcal F_2 \;\longrightarrow\; \mathcal F_3 \;\longrightarrow\; 0
+  \]
+  be a short exact sequence of sheaves of \(\bar k\)-modules on \(C\). Fix
+  a degree \(i\). If \(H^i(C, \mathcal F_1)\) and \(H^i(C, \mathcal F_3)\)
+  are finite-dimensional \(\bar k\)-vector spaces, then so is the middle
+  term \(H^i(C, \mathcal F_2)\).
+
+\end{lemma}
+
+\begin{proof}
+  \uses{def:Scheme_HModule}
+  \leanok
+  The short exact sequence induces, through the \(\HModule \bar k\)
+  cohomology functor (a \(\delta\)-functor on the \(\bar k\)-linear abelian
+  sheaf category; the same long exact sequence used for \(\chi\)-additivity
+  in \cref{chap:RiemannRoch_RRFormula}), a long exact sequence of
+  \(\bar k\)-vector spaces, in which the degree-\(i\) three-term window
+  \[
+    H^{i}(C, \mathcal F_1) \xrightarrow{\;f\;} H^{i}(C, \mathcal F_2)
+      \xrightarrow{\;g\;} H^{i}(C, \mathcal F_3)
+  \]
+  is exact. The image of \(f\) is a quotient of the finite-dimensional
+  \(H^i(C, \mathcal F_1)\), hence finite-dimensional; it equals
+  \(\ker g\). The quotient \(H^i(C, \mathcal F_2)/\ker g\) is isomorphic
+  to \(\operatorname{im} g\), a subspace of the finite-dimensional
+  \(H^i(C, \mathcal F_3)\), hence finite-dimensional. An extension of
+  two finite-dimensional spaces is finite-dimensional, so
+  \(H^i(C, \mathcal F_2)\) is finite-dimensional. The argument is purely
+  local in the degree, and is the middle-term direction of the 2-of-3
+  property; in the application to \cref{thm:HModule_lineBundle_finite} it
+  is invoked \emph{only} at the degrees \(\{0, 1\}\), the degree-\(\ge 2\)
+  vanishing of every line bundle being supplied separately by the
+  per-sheaf two-affine Čech truncation
+  \cref{lem:HModule_sheafOf_higher_vanish}.
+\end{proof}
+
+\begin{lemma}
+[Two-out-of-three (left term) for finite cohomology along a short exact sequence]
+  \label{lem:HModule_finite_X1_of_ses}
+  \lean{AlgebraicGeometry.Scheme.HModule_finite_X₁_of_ses}
+  \uses{def:Scheme_HModule}
+  With \(C\) and the short exact sequence
+  \(0 \to \mathcal F_1 \to \mathcal F_2 \to \mathcal F_3 \to 0\) as above,
+  fix a degree \(i\). If \(H^i(C, \mathcal F_2)\) is finite-dimensional
+  and \(H^{i-1}(C, \mathcal F_3)\) is finite-dimensional, then the left
+  term \(H^i(C, \mathcal F_1)\) is finite-dimensional. This is the
+  direction consumed by the remove-a-point step of the induction in
+  \cref{thm:HModule_lineBundle_finite}.
+\end{lemma}
+
+\begin{proof}
+  \uses{def:Scheme_HModule}
+  Two cases. At \(i = 0\) the map \(\mathcal F_1 \to \mathcal F_2\) is a
+  monomorphism, so the induced map
+  \(H^0(C, \mathcal F_1) \to H^0(C, \mathcal F_2)\) is injective; a
+  submodule of the finite-dimensional \(H^0(C, \mathcal F_2)\) is
+  finite-dimensional. At \(i = j+1\) the long exact sequence supplies the
+  exact window
+  \[
+    H^{j}(C, \mathcal F_3) \xrightarrow{\;\delta\;}
+      H^{j+1}(C, \mathcal F_1) \xrightarrow{\;f\;}
+      H^{j+1}(C, \mathcal F_2),
+  \]
+  with the connecting map \(\delta\). Here \(\operatorname{im}\delta =
+  \ker f\) is a quotient of the finite-dimensional
+  \(H^{j}(C, \mathcal F_3) = H^{i-1}(C, \mathcal F_3)\), hence
+  finite-dimensional, and \(H^{i}(C, \mathcal F_1)/\ker f \cong
+  \operatorname{im} f\) embeds into the finite-dimensional
+  \(H^{i}(C, \mathcal F_2)\); an extension of two finite-dimensional
+  spaces is finite-dimensional. Only the middle-term and this left-term
+  direction of the 2-of-3 property are formalised, because the
+  finiteness induction of \cref{thm:HModule_lineBundle_finite} uses only
+  these two (the right-term direction is never needed).
+\end{proof}
+
+\section{The base case via a two-affine Čech cover}
+\label{sec:SerreFiniteness_cech}
+
+The single base obligation left by the degree bound is the
+finite-dimensionality of \(H^1(C, \mathcal O_C)\). We discharge it
+\emph{internally}, by computing that group as the cokernel of an
+explicit \(\bar k\)-linear map: a smooth proper curve is covered by two
+affine opens, the Čech complex of a two-element cover has only two
+terms, and on such an affine cover Čech cohomology agrees with derived
+cohomology.
+
+\begin{lemma}
+
+\leanok
+[A smooth proper curve has a two-affine open cover]
+  \label{lem:exists_two_affine_cover}
+  \lean{AlgebraicGeometry.Scheme.exists_two_affine_open_cover}
+  % SOURCE: [Hartshorne], IV.1, Exercise~1.3 (a non-proper curve is
+  % affine) together with the IV.1 standing convention that a curve is
+  % proper, hence projective (read from
+  % references/hartshorne-algebraic-geometry.pdf, PDF page 314 = doc
+  % p.297, and PDF page 311 = doc p.294).
+  % SOURCE QUOTE: "1.3. Let $X$ be an integral, separated, regular,
+  % one-dimensional scheme of finite type over $k$, which is \emph{not}
+  % proper over $k$. Then $X$ is affine. [\emph{Hint:} Embed $X$ in a
+  % (proper) curve $\bar X$ over $k$, and use (Ex. 1.2) to construct a
+  % morphism $f \colon \bar X \to \mathbf{P}^1$ such that
+  % $f^{-1}(\mathbf{A}^1) = X$.]"
+  % SOURCE QUOTE: "In this chapter we will use the word \emph{curve} to
+  % mean a complete, nonsingular curve over an algebraically closed
+  % field $k$. In other words (II, \S6), a curve is an integral scheme
+  % of dimension 1, proper over $k$, all of whose local rings are
+  % regular. ... Such a curve is necessarily projective (II, 6.7)."
+  \textit{Source: Hartshorne, IV.1, Exercise~1.3, p.~297, and the IV.1
+  curve convention, p.~294.}
+  Let \(C\) be a smooth proper geometrically irreducible curve over
+  \(\bar k\). Then there exist two distinct closed points
+  \(P_0 \ne Q_0 \in C\) such that, setting
+  \[
+    U \;:=\; C \setminus \{P_0\}, \qquad V \;:=\; C \setminus \{Q_0\},
+  \]
+  the opens \(U\), \(V\), \emph{and their intersection} \(U \cap V\) are
+  all affine (\(\IsAffineOpen\)) and \(\{U, V\}\) is an open cover of
+  \(C\), i.e.\ \(U \cup V = C\). The affineness of the intersection
+  \(U \cap V = C \setminus \{P_0, Q_0\}\) is recorded explicitly because
+  the Čech-acyclicity of the cover (\cref{lem:isCechAcyclicCover_twoAffine})
+  needs all cover members \emph{and} their pairwise intersection to be
+  affine.
+\end{lemma}
+
+\begin{proof}
+  Since \(C\) is a positive-dimensional integral curve over the
+  algebraically closed field \(\bar k\), it has infinitely many closed
+  points; choose two distinct ones \(P_0 \ne Q_0\). Each of
+  \(U = C \setminus \{P_0\}\) and \(V = C \setminus \{Q_0\}\) is a
+  non-empty open subscheme of \(C\), hence is itself integral,
+  separated, regular, one-dimensional, and of finite type over
+  \(\bar k\). Neither is proper over \(\bar k\): a proper curve minus a
+  closed point is no longer complete. By Hartshorne's Exercise~IV.1.3 a
+  scheme with exactly these properties is affine, so \(U\) and \(V\) are
+  affine opens. Their intersection \(U \cap V = C \setminus \{P_0, Q_0\}\)
+  is the open complement of the two-point set, again integral, separated,
+  regular, one-dimensional, of finite type, and non-proper over
+  \(\bar k\), so by the same Exercise~IV.1.3 it is affine as well
+  (equivalently, it is an intersection of two affine opens of a separated
+  scheme). Finally \(\{U, V\}\) covers \(C\): a point other than
+  \(P_0\) lies in \(U\), the point \(P_0\) (being distinct from
+  \(Q_0\)) lies in \(V\), so every point of \(C\) lies in \(U\) or
+  \(V\); hence \(U \cup V = C\).
+\end{proof}
+
+\begin{lemma}
+[The structure sheaf satisfies affine \(\HModule \bar k\)-vanishing]
+  \label{lem:isAffineHModuleVanishing_toModuleKSheaf}
+  \lean{AlgebraicGeometry.Scheme.isAffineHModuleVanishing_toModuleKSheaf}
+  \uses{def:IsAffineHModuleVanishing, def:Scheme_HModule}
+  % SOURCE: [Hartshorne], III.3, Theorem~3.5 (read from
+  % references/hartshorne-algebraic-geometry.pdf, PDF page 232 = doc
+  % p.215).
+  % SOURCE QUOTE: "Theorem 3.5. \emph{Let $X = \Spec A$ be the spectrum
+  % of a noetherian ring $A$. Then for all quasi-coherent sheaves
+  % $\mathscr{F}$ on $X$, and for all $i > 0$, we have
+  % $H^i(X,\mathscr{F}) = 0$.}"
+  \textit{Source: Hartshorne, III.3, Theorem~3.5, p.~215.}
+  The structure sheaf \(\mathcal O_C\), viewed in its \(\Module \bar k\)
+  carrier \(\toModuleKSheaf C\), satisfies the affine-vanishing predicate
+  \(\IsAffineHModuleVanishing\) (\cref{def:IsAffineHModuleVanishing}): for
+  \emph{every} affine open \(U \subseteq C\) and every degree \(i > 0\),
+  the open-evaluation cohomology
+  \(\HModule'\;\bar k\;(\toModuleKSheaf C)\;i\;U\) is a subsingleton
+  (the zero \(\bar k\)-module). This is the honest, per-sheaf replacement
+  of the false universal ``affine acyclicity'' claim: it is asserted only
+  of the quasi-coherent sheaf \(\mathcal O_C\), where Hartshorne's affine
+  vanishing theorem III.3.5 applies, and is supplied as a typeclass
+  instance rather than as a theorem about an arbitrary sheaf of
+  \(\bar k\)-modules (for which it is simply false --- a non-quasi-coherent
+  sheaf on \(\Spec A\) can carry nonzero higher cohomology).
+\end{lemma}
+
+% SOURCE: [Stacks Project], Tag 01EJ (cohomology-lemma-cech-exact-presheaves,
+% Čech complex exact on presheaves), Tag 01EW (lemma-cech-vanish-basis,
+% acyclic-basis principle), Tag 01X9 (lemma-cech-cohomology-quasi-coherent-trivial,
+% Koszul homotopy), and Tag 01XB
+% (lemma-quasi-coherent-affine-cohomology-zero) (read from
+% references/stacks-affine-qcoh-vanishing-cohomology.tex, lines
+% 1048--1063 and 1695--1714, and
+% references/stacks-affine-qcoh-vanishing-coherent.tex, lines 44--174).
+% SOURCE QUOTE (01EJ): "The functor given by Equation
+% (\ref{equation-cech-functor}) is an exact functor (see Homology, Lemma
+% \ref{homology-lemma-exact-functor})."
+% SOURCE QUOTE PROOF (01EJ): "For any open $W \subset U$ the functor
+% $\mathcal{F} \mapsto \mathcal{F}(W)$ is an additive exact functor from
+% $\textit{PMod}(\mathcal{O}_X)$ to $\text{Mod}_{\mathcal{O}_X(U)}$. The
+% terms $\check{\mathcal{C}}^p(\mathcal{U}, \mathcal{F})$ of the complex
+% are products of these exact functors and hence exact. Moreover a
+% sequence of complexes is exact if and only if the sequence of terms in
+% a given degree is exact. Hence the lemma follows."
+% SOURCE QUOTE PROOF (01X9/01XB): "Write $U = \Spec(A)$ for some ring $A$. In other
+% words, $f_1, \ldots, f_n$ are elements of $A$ which generate the unit
+% ideal of $A$. Write $\mathcal{F}|_U = \widetilde{M}$ for some
+% $A$-module $M$. ... We are asked to show that the extended complex ...
+% is exact. It suffices to show that (\ref{equation-extended}) is exact
+% after localizing at a prime $\mathfrak p$ ... In fact we will show
+% that the extended complex localized at $\mathfrak p$ is homotopic to
+% zero. There exists an index $i$ such that $f_i \not \in \mathfrak p$.
+% Choose and fix such an element $i_{\text{fix}}$. ... Let us define a
+% homotopy ... by the rule $h(s)_{i_0 \ldots i_p} = s_{i_{\text{fix}}
+% i_0 \ldots i_p}$ ... We compute $(dh + hd)(s)_{i_0 \ldots i_p} = ... =
+% s_{i_0 \ldots i_p}$. This proves the identity map is homotopic to zero
+% as desired."
+% SOURCE QUOTE PROOF (01XB): "We are going to apply Cohomology, Lemma
+% \ref{cohomology-lemma-cech-vanish-basis}. As our basis $\mathcal{B}$
+% for the topology of $X$ we are going to use the affine opens of $X$.
+% As our set $\text{Cov}$ of open coverings we are going to use the
+% standard open coverings of affine opens of $X$. ... condition (3) of
+% the lemma follows from Lemma
+% \ref{lemma-cech-cohomology-quasi-coherent-trivial}."
+\begin{proof}
+  \uses{def:IsAffineHModuleVanishing, def:Scheme_HModule}
+  Fix an affine open \(U = \Spec A \subseteq C\). Since \(C\) is a
+  noetherian scheme, \(A\) is a noetherian ring, and \(\mathcal O_C\)
+  restricts to the quasi-coherent sheaf \(\widetilde A\) on \(U\). We
+  must show \(\HModule'\;\bar k\;(\toModuleKSheaf C)\;i\;U = 0\) for
+  \(i > 0\); this is the \(\Module \bar k\)-flavoured form of
+  Hartshorne~III.3.5, proved by the Stacks Project's flasque-free
+  Čech/Koszul argument. The distinguished opens \(D(f_j)\), with
+  \(f_1, \dots, f_n \in A\) generating the unit ideal, form the standard
+  cover \(\mathfrak D : U = \bigcup_j D(f_j)\). For a quasi-coherent
+  \(\mathcal F = \widetilde M\) the alternating Čech complex of
+  \(\mathfrak D\) is the complex of localisations
+  \[
+    \prod_{i_0} M_{f_{i_0}} \to
+    \prod_{i_0 i_1} M_{f_{i_0} f_{i_1}} \to
+    \prod_{i_0 i_1 i_2} M_{f_{i_0} f_{i_1} f_{i_2}} \to \cdots,
+  \]
+  and the \emph{augmented} complex \(0 \to M \to \prod_{i_0} M_{f_{i_0}}
+  \to \cdots\) is exact: exactness may be checked after localising at a
+  prime \(\mathfrak p\), and there, choosing an index \(i_{\mathrm{fix}}\)
+  with \(f_{i_{\mathrm{fix}}} \notin \mathfrak p\), the contraction
+  \(h(s)_{i_0 \dots i_p} = s_{i_{\mathrm{fix}} i_0 \dots i_p}\) is a
+  homotopy with \(dh + hd = \mathrm{id}\) (the algebraic Koszul
+  contraction homotopy). Hence \(\check H^p(\mathfrak D, \mathcal F) = 0\)
+  for all \(p > 0\), and the same holds for every standard cover of
+  every affine open. The standard covers form a cofinal system of
+  coverings closed under refinement and pairwise intersection, so the
+  acyclic-basis principle (vanishing Čech cohomology on a cofinal basis
+  forces vanishing derived cohomology) upgrades this to
+  \(\HModule'\;\bar k\;(\toModuleKSheaf C)\;i\;U = 0\) for all \(i > 0\),
+  which is exactly the predicate \cref{def:IsAffineHModuleVanishing} for
+  \(\toModuleKSheaf C\).
+
+  % NOTE: No Mathlib lemma supplies affine-qcoh higher-cohomology
+  % vanishing in the $\Module \bar k$ sheaf category. The proof
+  % has three steps, all flasque-free:
+  % (i) identify the alternating Čech complex of a standard cover of
+  % $\Spec A$ with the localisation complex of $M = \Gamma(\Spec A,
+  % \mathcal F)$; (ii) the algebraic Koszul contraction homotopy
+  % (Stacks Tag~01X9) giving $\check H^p(\mathfrak D, \mathcal F) = 0$
+  % for $p > 0$; (iii) the acyclic-basis principle (Stacks Tag~01EW)
+  % upgrading vanishing Čech to vanishing derived cohomology. The
+  % exactness of the Čech complex functor on presheaves (Stacks
+  % Tag~01EJ) supplies the long exact sequence needed in step~(iii).
+  % This is the input on which the two-affine acyclicity
+  % \cref{lem:isCechAcyclicCover_twoAffine} and the Čech-vs-derived
+  % comparison \cref{lem:cechCohomology_iso_HModule'} both rest.
+\end{proof}
+
+\begin{lemma}
+[Čech cohomology agrees with \(\HModule \bar k\)-cohomology on an acyclic cover]
+  \label{lem:cechCohomology_iso_HModule'}
+  \lean{AlgebraicGeometry.Scheme.cechCohomology_iso_HModule'}
+  \uses{def:Scheme_cechCohomology, def:Scheme_HModule,
+        lem:isAffineHModuleVanishing_toModuleKSheaf}
+  % SOURCE: [Hartshorne], III.4, Theorem~4.5 (Čech cohomology on an open
+  % affine cover of a noetherian separated scheme agrees with derived
+  % cohomology) (read from
+  % references/hartshorne-algebraic-geometry.pdf, PDF page 239 = doc
+  % p.222).
+  % SOURCE QUOTE: "Theorem 4.5. \emph{Let $X$ be a noetherian separated
+  % scheme, let $\mathfrak{U}$ be an open affine cover of $X$, and let
+  % $\mathscr{F}$ be a quasi-coherent sheaf on $X$. Then for all $p \geq
+  % 0$, the natural maps $(4.4)$ give isomorphisms}
+  % $\check{H}^p(\mathfrak{U},\mathscr{F}) \xrightarrow{\sim}
+  % H^p(X,\mathscr{F})$."
+  \textit{Source: Hartshorne, III.4, Theorem~4.5, p.~222.}
+  Let \(\mathcal F\) be a sheaf of \(\bar k\)-modules and let
+  \(\mathfrak U = \{U_i\}\) be an open cover that is acyclic for
+  \(\mathcal F\) (each member and finite intersection carries no higher
+  open-evaluation cohomology of \(\mathcal F\), e.g.\ by
+  \cref{lem:isAffineHModuleVanishing_toModuleKSheaf} when the cover is
+  affine and \(\mathcal F = \toModuleKSheaf C\)). Then for every degree
+  \(n\) there is a \(\bar k\)-linear isomorphism between the degree-\(n\)
+  Čech cohomology of \cref{def:Scheme_cechCohomology} and the
+  open-evaluation \(\HModule \bar k\)-cohomology evaluated at the union of
+  the cover:
+  \[
+    \mathtt{cechCohomology}\;C\;\mathcal F\;\mathfrak U\;n
+      \;\cong\;
+    \HModule'\;\bar k\;\mathcal F\;n\;\Bigl(\bigsqcup_i U_i\Bigr).
+  \]
+\end{lemma}
+
+% SOURCE QUOTE PROOF: "PROOF. For $p = 0$ we have an isomorphism by
+% (4.1). For the general case, embed $\mathscr{F}$ in a flasque,
+% quasi-coherent sheaf $\mathscr{G}$ (3.6), and let $\mathscr{R}$ be the
+% quotient: $0 \to \mathscr{F} \to \mathscr{G} \to \mathscr{R} \to 0$.
+% For each $i_0 < \ldots < i_p$, the open set $U_{i_0,\ldots,i_p}$ is
+% affine, since it is an intersection of affine open subsets of a
+% separated scheme (II, Ex. 4.3). Since $\mathscr{F}$ is
+% quasi-coherent, we therefore have an exact sequence ... Therefore we
+% get its long exact sequence of Čech cohomology groups. Since
+% $\mathscr{G}$ is flasque, its Čech cohomology vanishes for $p > 0$ by
+% (4.3) ... we conclude that the natural map
+% $\check{H}^1(\mathfrak{U},\mathscr{F}) \xrightarrow{\sim}
+% H^1(X,\mathscr{F})$ is an isomorphism. But $\mathscr{R}$ is also
+% quasi-coherent (II, 5.7), so we obtain the result for all $p$ by
+% induction."
+\begin{proof}
+  \uses{def:Scheme_cechCohomology, def:Scheme_HModule,
+        lem:isAffineHModuleVanishing_toModuleKSheaf}
+  This is the Cartan--Leray / acyclic-cover comparison, internal to the
+  \(\Module \bar k\)-flavoured \(\Ext\) cohomology (the comparison is not
+  available off the shelf as a Mathlib lemma in this sheaf category). For
+  a cover acyclic for \(\mathcal F\), the augmented Čech double complex of
+  \(\mathcal F\) computes \(\HModule'\;\bar k\;\mathcal F\) at the union
+  of the cover --- the acyclicity input being exactly the affine vanishing
+  \cref{lem:isAffineHModuleVanishing_toModuleKSheaf} when the cover
+  members and their intersections are affine. The degree-\(n\) cohomology
+  of the alternating Čech complex (\cref{def:Scheme_cechCohomology}) is
+  then \(\bar k\)-linearly isomorphic to
+  \(\HModule'\;\bar k\;\mathcal F\;n\;(\bigsqcup_i U_i)\). Concretely it
+  is the comparison datum \(\mathtt{compIso}\,n\) consumed by
+  \cref{lem:subsingleton_HModule_supr_of_cechAcyclic} of
+  \cref{chap:Cohomology_StructureSheafModuleK}.
+\end{proof}
+
+\begin{lemma}
+[The two-affine cover is Čech-acyclic for \(\mathcal O_C\)]
+  \label{lem:isCechAcyclicCover_twoAffine}
+  \lean{AlgebraicGeometry.Scheme.isCechAcyclicCover_twoAffine}
+  \uses{def:IsCechAcyclicCover, lem:isAffineHModuleVanishing_toModuleKSheaf,
+        lem:exists_two_affine_cover}
+  With the two-element cover \(\mathfrak U = \{U, V\}\) of
+  \cref{lem:exists_two_affine_cover}, the cover is Čech-acyclic for the
+  structure sheaf \(\toModuleKSheaf C\) in the sense of
+  \(\IsCechAcyclicCover\) (\cref{def:IsCechAcyclicCover}): the
+  positive-degree Čech cohomology
+  \(\mathtt{cechCohomology}\;C\;(\toModuleKSheaf C)\;\mathfrak U\;n\)
+  vanishes for every \(n > 0\).
+\end{lemma}
+
+\begin{proof}
+  \uses{def:IsCechAcyclicCover, lem:isAffineHModuleVanishing_toModuleKSheaf,
+        lem:exists_two_affine_cover}
+  By \cref{lem:exists_two_affine_cover} the two members
+  \(U = C \setminus \{P_0\}\), \(V = C \setminus \{Q_0\}\) and their
+  intersection \(U \cap V = C \setminus \{P_0, Q_0\}\) are all affine.
+  Hence by \cref{lem:isAffineHModuleVanishing_toModuleKSheaf} the
+  structure sheaf has no higher open-evaluation cohomology on any of
+  them: the cover is acyclic for \(\toModuleKSheaf C\). The Čech
+  cohomology of an acyclic cover vanishes in positive degree, which is
+  exactly the class field of \(\IsCechAcyclicCover\)
+  (\cref{def:IsCechAcyclicCover}). (For the two-element cover this is also
+  visible combinatorially: there are no \((n{+}1)\)-fold intersections for
+  \(n \ge 2\), so the Čech complex is concentrated in degrees
+  \(\{0, 1\}\).)
+\end{proof}
+
+\begin{lemma}
+[Every line bundle \(\mathcal O_C(D)\) satisfies affine \(\HModule \bar k\)-vanishing]
+  \label{lem:isAffineHModuleVanishing_sheafOf}
+  \lean{AlgebraicGeometry.Scheme.isAffineHModuleVanishing_sheafOf}
+  \uses{def:IsAffineHModuleVanishing, lem:isAffineHModuleVanishing_toModuleKSheaf,
+        def:sheafOf}
+  For every Weil divisor \(D \in \mathrm{Div}(C)\) the line bundle
+  \(\mathcal O_C(D)\) of \cref{def:sheafOf}, viewed as a sheaf of
+  \(\bar k\)-modules, satisfies the affine-vanishing predicate
+  \(\IsAffineHModuleVanishing\) (\cref{def:IsAffineHModuleVanishing}): for
+  every affine open \(U \subseteq C\) and every \(i > 0\), the
+  open-evaluation cohomology
+  \(\HModule'\;\bar k\;(\mathtt{sheafOf}\;D)\;i\;U\) is a subsingleton.
+\end{lemma}
+
+\begin{proof}
+  \uses{def:IsAffineHModuleVanishing, lem:isAffineHModuleVanishing_toModuleKSheaf}
+  The line bundle \(\mathcal O_C(D)\) is an invertible
+  \(\mathcal O_C\)-module, hence quasi-coherent, and on any affine open
+  \(U = \Spec A\) it is the sheaf associated to a finitely generated
+  \(A\)-module; locally it is even isomorphic to \(\mathcal O_C\). The
+  affine vanishing of \cref{lem:isAffineHModuleVanishing_toModuleKSheaf}
+  is the special case \(D = 0\), and the same Čech/Koszul argument applies
+  verbatim to the quasi-coherent \(\mathcal O_C(D)\): for every affine
+  open \(U\) and \(i > 0\) the higher open-evaluation cohomology vanishes.
+  This discharges \cref{def:IsAffineHModuleVanishing} for
+  \(\mathtt{sheafOf}\;D\).
+\end{proof}
+
+\begin{lemma}
+[Whole-space cohomology equals open-evaluation cohomology at \(\top\)]
+  \label{lem:HModule_iso_HModule'_top}
+  \lean{AlgebraicGeometry.Scheme.HModule_iso_HModule'_top}
+  \uses{def:Scheme_HModule}
+  Let \(\mathcal F\) be a sheaf of \(\bar k\)-modules on \(C\). Then for
+  every degree \(n\) there is a \(\bar k\)-linear isomorphism between the
+  whole-space cohomology \(\HModule\;\bar k\;\mathcal F\;n\)
+  (\cref{def:Scheme_HModule}) and the open-evaluation cohomology
+  \(\HModule'\;\bar k\;\mathcal F\;n\) at the top open \(\top\):
+  \[
+    \HModule\;\bar k\;\mathcal F\;n
+      \;\cong\;
+    \HModule'\;\bar k\;\mathcal F\;n\;\top .
+  \]
+\end{lemma}
+
+\begin{proof}
+  \uses{def:Scheme_HModule}
+  Both sides are \(\Ext^n(-, \mathcal F)\) of a sheaf in the first
+  argument: the whole-space cohomology uses the constant sheaf at
+  \(\bar k\), while the open-evaluation cohomology at \(X\) uses the
+  sheafification of the free \(\bar k\)-module on the representable
+  presheaf \(\mathbf y(X)\). At \(X = \top\) the representable
+  \(\mathbf y(\top)\) is the terminal presheaf, so the free
+  \(\bar k\)-module on it is the constant presheaf at \(\bar k\), whose
+  sheafification is precisely the constant sheaf at \(\bar k\). The two
+  \(\Ext\)-source objects therefore agree,
+  \((\mathtt{presheafToSheaf})((\mathbf y \circ \mathrm{free}\,\bar k)(\top))
+  \cong (\mathtt{constantSheaf})(\bar k)\), and contravariant
+  functoriality of \(\Ext\) in the first argument transports the
+  isomorphism of sources to a \(\bar k\)-linear isomorphism of the two
+  cohomology groups (the same transport pattern that turns an
+  isomorphism of sheaves into a \(\bar k\)-linear isomorphism of
+  \(\HModule \bar k\)-groups).
+\end{proof}
+
+\begin{lemma}
+[The two-affine degree-\(1\) Čech cohomology is finite-dimensional]
+  \label{lem:cech_H1_two_affine_finiteDimensional}
+  \lean{AlgebraicGeometry.Scheme.cechCohomology_finiteDimensional}
+  \uses{def:Scheme_cechCohomology, lem:exists_two_affine_cover}
+  % SOURCE: [Hartshorne], III.5, Theorem~5.2(a) (Serre finiteness) and
+  % IV.1, Proposition~1.1 (genus) (read from
+  % references/hartshorne-algebraic-geometry.pdf, PDF page 245 = doc
+  % p.228 for III.5.2; PDF page 311 = doc p.294 for IV.1.1).
+  % SOURCE QUOTE: "Theorem 5.2 (Serre [3]). \emph{Let $X$ be a projective
+  % scheme over a noetherian ring $A$, and let $\mathcal{O}_X(1)$ be a
+  % very ample invertible sheaf on $X$ over $\Spec A$. Let $\mathscr{F}$
+  % be a coherent sheaf on $X$. Then:} (a) \emph{for each $i \geq 0$,
+  % $H^i(X,\mathscr{F})$ is a finitely generated $A$-module;}"
+  % SOURCE QUOTE: "Proposition 1.1. \emph{If $X$ is a curve, then $p_a(X)
+  % = p_g(X) = \dim_k H^1(X,\mathscr{O}_X)$,} so we call this number
+  % simply the genus of $X$, and denote it by $g$."
+  \textit{Source: Hartshorne, III.5, Theorem~5.2(a), p.~228, and IV.1,
+  Proposition~1.1, p.~294.}
+  With the two-element cover \(\mathfrak U_2 = \{U, V\}\) of
+  \cref{lem:exists_two_affine_cover}, write \(\cechHI :=
+  \mathtt{cechCohomology}\;C\;(\toModuleKSheaf C)\;\mathfrak U_2\;1\)
+  (\cref{def:Scheme_cechCohomology}) for the degree-\(1\) Čech cohomology
+  of the structure sheaf for this cover. Since the cover has only two
+  members there are no \(2\)-fold-or-higher intersections, so the Čech
+  complex is concentrated in degrees \(\{0, 1\}\) and \(\cechHI\) is the
+  cokernel of the single \(\bar k\)-linear map
+  \(\mathcal O_C(U) \oplus \mathcal O_C(V) \to \mathcal O_C(U \cap V)\),
+  \((s, t) \mapsto s|_{U \cap V} - t|_{U \cap V}\). This module is a
+  finite-dimensional \(\bar k\)-vector space:
+  \(\FiniteDimensional\;\bar k\;\cechHI\), equivalently
+  \(\Module.\Finite\;\bar k\;\cechHI\). Its dimension equals
+  \(\dim_{\bar k} H^1(C, \mathcal O_C)\) (via
+  \cref{lem:cechCohomology_iso_HModule'} at \(n = 1\) and the whole-space
+  bridge \cref{lem:HModule_iso_HModule'_top}), which classically is the
+  genus \(g\) of \(C\) (Hartshorne~IV.1.1); the present lemma is exactly
+  the assertion that this invariant is finite. This is the deepest leaf
+  of the chapter --- the single genuine input of Riemann's inequality.
+\end{lemma}
+
+\begin{proof}
+  \uses{def:Scheme_cechCohomology, lem:exists_two_affine_cover}
+  Write \(W = U \cap V = C \setminus \{P_0, Q_0\}\), so that
+  \[
+    \cechHI \;=\; \mathcal O_C(W) \big/
+      \bigl(\mathcal O_C(U) + \mathcal O_C(V)\bigr)
+  \]
+  is the obstruction to writing a function regular on \(W\) as a sum of
+  a function regular on \(U = C \setminus \{P_0\}\) and one regular on
+  \(V = C \setminus \{Q_0\}\). We organise the finiteness around the two
+  excised points, each of which is a smooth closed point with a discrete
+  valuation ring \(\mathcal O_{C,P_0}\), \(\mathcal O_{C,Q_0}\) and
+  fraction field \(K = \bar k(C)\).
+
+  \emph{Step 1: localise to principal parts.} A function in
+  \(\mathcal O_C(W)\) is regular on all of \(C\) except possibly at
+  \(P_0\) and \(Q_0\), where it may have a pole of finite order. Sending
+  a function to its pair of \emph{principal parts} (its images in the
+  truncated Laurent quotients \(K / \mathcal O_{C,P_0}\) and
+  \(K / \mathcal O_{C,Q_0}\)) gives a \(\bar k\)-linear map
+  \[
+    \rho \colon \mathcal O_C(W) \longrightarrow
+      \bigl(K / \mathcal O_{C,P_0}\bigr) \oplus
+      \bigl(K / \mathcal O_{C,Q_0}\bigr).
+  \]
+  Its kernel is the functions with no pole at either point, i.e.\ the
+  global regular functions \(\mathcal O_C(C) = \bar k\) (constants, as
+  \(C\) is proper and geometrically integral).
+
+  \emph{Step 2: the cover absorbs one puncture at a time.}
+  \(\mathcal O_C(U)\) consists of functions regular at \(Q_0\), so its
+  image under \(\rho\) lies in the first summand; \(\mathcal O_C(V)\)
+  consists of functions regular at \(P_0\), so its image lies in the
+  second. Hence \(\cechHI\) is the cokernel of \(\rho\) restricted to
+  the two single-point principal-part spaces: a class survives only
+  through the principal parts \emph{not} realised by a function regular
+  on the complementary affine.
+
+  \emph{Step 3: boundedness.} Each principal-part space at a fixed pole
+  order \(\le n\) is finite-dimensional, and the surviving classes are
+  bounded \emph{independently of \(n\)}: this independence is precisely
+  Riemann's inequality / the finiteness of the genus, the deep input.
+  Classically it is guaranteed by Serre's coherent-cohomology
+  finiteness (Hartshorne~III.5.2(a)): \(C\) is projective over the field
+  \(\bar k\) and \(\mathcal O_C\) is coherent, so
+  \(H^1(C, \mathcal O_C)\) --- and therefore the isomorphic
+  \(\cechHI\) --- is a finitely generated \(\bar k\)-module, i.e.\
+  finite-dimensional. Equivalently, \(\dim_{\bar k} \cechHI = g\) is the
+  finite genus of \(C\) (Hartshorne~IV.1.1).
+
+  % NOTE: Highest-effort build in the chapter. The formalizable route is
+  % the polar-parts argument of Steps 1--3; the only genuinely deep step
+  % is the $n$-independent boundedness (Riemann's inequality), not in
+  % Mathlib. Two paths: (i) a direct Riemann-inequality development, or
+  % (ii) importing Serre finiteness (III.5.2) at the coherent-sheaf
+  % level and transporting across the $\HModule \bar k$-versus-classical
+  % comparison. The cited III.5.2 and IV.1.1 are the classical guarantee
+  % that the genus is finite.
+\end{proof}
+
+\begin{lemma}
+[Finiteness of \(H^1\) of the structure sheaf]
+  \label{lem:HModule_structureSheaf_H1_finite}
+  \lean{AlgebraicGeometry.Scheme.HModule_structureSheaf_H1_finite}
+  \uses{lem:cech_H1_two_affine_finiteDimensional,
+        lem:cechCohomology_iso_HModule', lem:HModule_iso_HModule'_top,
+        lem:isCechAcyclicCover_twoAffine}
+  Let \(C\) be a smooth proper geometrically irreducible curve over
+  \(\bar k\). Then \(H^1(C, \mathcal O_C) =
+  \HModule\;\bar k\;(\toModuleKSheaf C)\;1\) is a finite-dimensional
+  \(\bar k\)-vector space:
+  \(\FiniteDimensional\;\bar k\;\bigl(\HModule\;\bar k\;
+  (\toModuleKSheaf C)\;1\bigr)\). This is the real base obligation of
+  the chapter, replacing any appeal to general Serre finiteness.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:cech_H1_two_affine_finiteDimensional,
+        lem:cechCohomology_iso_HModule', lem:HModule_iso_HModule'_top,
+        lem:isCechAcyclicCover_twoAffine}
+  The two-affine cover \(\mathfrak U_2 = \{U, V\}\) is Čech-acyclic for
+  \(\mathcal O_C\) (\cref{lem:isCechAcyclicCover_twoAffine}) and covers
+  all of \(C\), so \(\bigsqcup \mathfrak U_2 = \top\). The comparison
+  \cref{lem:cechCohomology_iso_HModule'} at \(n = 1\) gives a
+  \(\bar k\)-linear isomorphism
+  \(\mathtt{cechCohomology}\;C\;(\toModuleKSheaf C)\;\mathfrak U_2\;1
+  \cong \HModule'\;\bar k\;(\toModuleKSheaf C)\;1\;\top\), and the
+  whole-space bridge \cref{lem:HModule_iso_HModule'_top} identifies the
+  right-hand side with
+  \(\HModule\;\bar k\;(\toModuleKSheaf C)\;1 = H^1(C, \mathcal O_C)\).
+  Composing, \(H^1(C, \mathcal O_C) \cong \cechHI\). By
+  \cref{lem:cech_H1_two_affine_finiteDimensional} the source \(\cechHI\)
+  is a finite-dimensional \(\bar k\)-vector space; finite-dimensionality
+  transports across the linear isomorphism, so \(H^1(C, \mathcal O_C)\)
+  is finite-dimensional over \(\bar k\).
+\end{proof}
+
+\begin{lemma}
+[Higher cohomology of the structure sheaf vanishes]
+  \label{lem:HModule_structureSheaf_higher_vanish}
+  \lean{AlgebraicGeometry.Scheme.HModule_structureSheaf_higher_vanish}
+  \uses{lem:isCechAcyclicCover_twoAffine,
+        lem:subsingleton_HModule_supr_of_cechAcyclic,
+        lem:cechCohomology_iso_HModule', lem:HModule_iso_HModule'_top,
+        def:Scheme_HModule}
+  Let \(C\) be a smooth proper geometrically irreducible curve over
+  \(\bar k\). Then \(H^i(C, \mathcal O_C) =
+  \HModule\;\bar k\;(\toModuleKSheaf C)\;i = 0\) for every \(i \ge 2\).
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:isCechAcyclicCover_twoAffine,
+        lem:subsingleton_HModule_supr_of_cechAcyclic,
+        lem:cechCohomology_iso_HModule', lem:HModule_iso_HModule'_top}
+  The two-element cover \(\mathfrak U_2 = \{U, V\}\) of
+  \cref{lem:exists_two_affine_cover} is Čech-acyclic for \(\mathcal O_C\)
+  (\cref{lem:isCechAcyclicCover_twoAffine}) and covers \(C\), so
+  \(\bigsqcup \mathfrak U_2 = \top\). For any \(n \ge 2\) the substrate
+  consumer \cref{lem:subsingleton_HModule_supr_of_cechAcyclic}, fed the
+  comparison datum \cref{lem:cechCohomology_iso_HModule'} at degree \(n\),
+  yields \(\mathtt{Subsingleton}\;(\HModule'\;\bar k\;(\toModuleKSheaf
+  C)\;n\;\top)\): the degree-\(n\) Čech cohomology of a two-element cover
+  vanishes (there are no \((n{+}1)\)-fold intersections, so \(C^n = 0\)
+  for \(n \ge 2\) and the complex is concentrated in degrees
+  \(\{0, 1\}\)), and acyclicity transports this to the open-evaluation
+  cohomology at \(\top\). The whole-space bridge
+  \cref{lem:HModule_iso_HModule'_top} then transports the subsingleton to
+  \(\HModule\;\bar k\;(\toModuleKSheaf C)\;n\), i.e.\
+  \(H^n(C, \mathcal O_C) = 0\). This replaces any appeal to a general
+  Grothendieck vanishing gate: the degree-\(\ge 2\) vanishing for
+  \(\mathcal O_C\) is read off the concentration of the two-affine Čech
+  complex.
+\end{proof}
+
+\begin{lemma}
+[Higher cohomology of \(\mathcal O_C(D)\) vanishes, for every Weil divisor]
+  \label{lem:HModule_sheafOf_higher_vanish}
+  \lean{AlgebraicGeometry.Scheme.HModule_sheafOf_higher_vanish}
+  \uses{lem:isAffineHModuleVanishing_sheafOf, lem:exists_two_affine_cover,
+        lem:subsingleton_HModule_supr_of_cechAcyclic,
+        lem:cechCohomology_iso_HModule', lem:HModule_iso_HModule'_top,
+        def:sheafOf, def:Scheme_HModule}
+  Let \(C\) be a smooth proper geometrically irreducible curve over
+  \(\bar k\) and let \(D \in \mathrm{Div}(C)\) be any Weil divisor. Then
+  the line bundle \(\mathcal O_C(D)\) of \cref{def:sheafOf} satisfies
+  \[
+    H^i(C, \mathcal O_C(D)) \;=\;
+    \HModule\;\bar k\;(\mathtt{sheafOf}\;D)\;i \;=\; 0
+    \qquad\text{for every } i \ge 2.
+  \]
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:isAffineHModuleVanishing_sheafOf, lem:exists_two_affine_cover,
+        lem:subsingleton_HModule_supr_of_cechAcyclic,
+        lem:cechCohomology_iso_HModule', lem:HModule_iso_HModule'_top}
+  This is the two-affine truncation argument of
+  \cref{lem:HModule_structureSheaf_higher_vanish}, applied
+  \emph{directly to the quasi-coherent sheaf} \(\mathcal O_C(D)\) rather
+  than only to the structure sheaf. The line bundle \(\mathcal O_C(D)\)
+  is an invertible \(\mathcal O_C\)-module, hence quasi-coherent, and it
+  satisfies the affine-vanishing predicate
+  \cref{lem:isAffineHModuleVanishing_sheafOf}. With the two-element cover
+  \(\mathfrak U_2 = \{U, V\}\) of \cref{lem:exists_two_affine_cover}, the
+  opens \(U = C \setminus \{P_0\}\), \(V = C \setminus \{Q_0\}\), and
+  \(U \cap V = C \setminus \{P_0, Q_0\}\) are all affine, so by that
+  affine-vanishing the cover is Čech-acyclic for \(\mathcal O_C(D)\)
+  (exactly as in \cref{lem:isCechAcyclicCover_twoAffine}, now for the
+  sheaf \(\mathtt{sheafOf}\;D\)). For \(n \ge 2\) the substrate consumer
+  \cref{lem:subsingleton_HModule_supr_of_cechAcyclic}, fed the comparison
+  \cref{lem:cechCohomology_iso_HModule'} at degree \(n\), gives
+  \(\mathtt{Subsingleton}\;(\HModule'\;\bar k\;(\mathtt{sheafOf}\;D)\;n\;
+  \top)\): the two-element Čech complex has \(C^n = 0\) for \(n \ge 2\)
+  (no \((n{+}1)\)-fold intersections), so its degree-\(n\) cohomology
+  vanishes, and acyclicity transports this to the open-evaluation
+  cohomology at \(\top = \bigsqcup \mathfrak U_2\). The whole-space bridge
+  \cref{lem:HModule_iso_HModule'_top} transports the subsingleton to
+  \(\HModule\;\bar k\;(\mathtt{sheafOf}\;D)\;n\). Hence
+  \(H^i(C, \mathcal O_C(D)) = 0\) for all \(i \ge 2\).
+
+  % NOTE: This lemma closes the degree-$\ge 2$ vanishing obligation for
+  % $\mathcal O_C(D)$ via the per-sheaf affine-vanishing instance
+  % \cref{lem:isAffineHModuleVanishing_sheafOf}, the Čech substrate
+  % consumer \cref{lem:subsingleton_HModule_supr_of_cechAcyclic}, the
+  % comparison \cref{lem:cechCohomology_iso_HModule'}, and the
+  % whole-space bridge \cref{lem:HModule_iso_HModule'_top}.
+\end{proof}
+
+\section{The base case: finiteness for the structure sheaf}
+
+\begin{lemma}
+
+\leanok
+[Finiteness of the cohomology of the structure sheaf]
+  \label{lem:HModule_structureSheaf_finite}
+  \lean{AlgebraicGeometry.Scheme.HModule_structureSheaf_finite}
+  \uses{lem:finrank_H0_toModuleKSheaf_eq_one,
+        lem:HModule_structureSheaf_H1_finite,
+        lem:HModule_structureSheaf_higher_vanish,
+        def:Scheme_HModule}
+  Let \(C\) be a smooth proper geometrically irreducible curve over
+  \(\bar k\). Then the structure sheaf \(\mathcal O_C\) (in its
+  \(\Module \bar k\)-flavoured carrier \(\toModuleKSheaf C\)) has finite
+  cohomology: \(H^i(C, \mathcal O_C)\) is a finite-dimensional
+  \(\bar k\)-vector space for every \(i\).
+
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:finrank_H0_toModuleKSheaf_eq_one,
+        lem:HModule_structureSheaf_H1_finite,
+        lem:HModule_structureSheaf_higher_vanish}
+        \leanok
+  We treat the three degree-regimes; no general Grothendieck vanishing
+  gate is used.
+
+  \emph{Degree \(0\).} On the proper geometrically integral curve
+  \(C / \bar k\) the global functions are exactly the constants:
+  \(\dim_{\bar k} H^0(C, \mathcal O_C) = 1\)
+  (\cref{lem:finrank_H0_toModuleKSheaf_eq_one}). Hence
+  \(H^0(C, \mathcal O_C) \cong \bar k\) is finite-dimensional.
+
+  \emph{Degree \(1\).} The structure sheaf \(H^1\) is finite-dimensional
+  by the two-affine Čech computation
+  \cref{lem:HModule_structureSheaf_H1_finite}: \(H^1(C, \mathcal O_C)\)
+  is isomorphic to the explicit Čech cokernel \(\cechHI\), which is a
+  finite-dimensional \(\bar k\)-vector space. No appeal to general Serre
+  finiteness is made; this base case is proven internally.
+
+  \emph{Degrees \(i \ge 2\).} By
+  \cref{lem:HModule_structureSheaf_higher_vanish} the structure-sheaf
+  cohomology vanishes there, \(H^i(C, \mathcal O_C) = 0\), because the
+  two-affine Čech complex is concentrated in degrees \(\{0, 1\}\); the
+  zero module is finite.
+
+  Combining the three regimes, \(\mathcal O_C\) has finite cohomology.
+\end{proof}
+
+\section{Finiteness for every line bundle \(\mathcal O_C(D)\)}
+
+\begin{theorem}
+
+\leanok
+[Finiteness of the cohomology of \(\mathcal O_C(D)\) for every Weil divisor]
+  \label{thm:HModule_lineBundle_finite}
+  \lean{AlgebraicGeometry.Scheme.HModule_sheafOf_finite}
+  \uses{lem:HModule_finite_of_ses, lem:HModule_skyscraper_finite,
+        lem:HModule_structureSheaf_finite, lem:sheafOf_ses_single_add,
+        def:sheafOf, def:codim1_cycles}
+  Let \(C\) be a smooth proper geometrically irreducible curve over
+  \(\bar k\) and let \(D \in \mathrm{Div}(C)\) be any Weil divisor
+  (\cref{def:codim1_cycles}). Then the invertible sheaf
+  \(\mathcal O_C(D)\) of \cref{def:sheafOf} has finite cohomology:
+  \(H^i(C, \mathcal O_C(D))\) is a finite-dimensional \(\bar k\)-vector
+  space for every \(i\).
+
+\end{theorem}
+
+\begin{proof}
+  \uses{lem:HModule_finite_of_ses, lem:HModule_skyscraper_finite,
+        lem:HModule_structureSheaf_finite,
+        lem:HModule_sheafOf_higher_vanish,
+        lem:sheafOf_ses_single_add}
+        \leanok
+  The degrees split cleanly. The degree-\(\ge 2\) vanishing
+  \(H^{\ge 2}(C, \mathcal O_C(D)) = 0\) holds \emph{directly}, for every
+  Weil divisor \(D\), by the per-sheaf two-affine Čech truncation
+  \cref{lem:HModule_sheafOf_higher_vanish}; it is \emph{not} obtained
+  from any sandwich across the short exact sequence, and uses no
+  Grothendieck vanishing gate. It remains to prove finiteness of
+  \(H^0\) and \(H^1\); this is done by induction on \(D\), applying the
+  2-of-3 property \cref{lem:HModule_finite_of_ses} \emph{only} at the
+  two degrees \(\{0, 1\}\). (Since the degrees \(\ge 2\) are already
+  pinned to zero, the conclusion ``finite cohomology in every degree''
+  follows by combining the per-sheaf vanishing with the
+  \(\{0, 1\}\)-induction.)
+
+  \emph{Base case \(D = 0\).} The line bundle of the zero divisor is the
+  structure sheaf, \(\mathcal O_C(0) = \mathcal O_C\)
+  (\cref{lem:sheafOf_zero}). Its cohomology is finite by
+  \cref{lem:HModule_structureSheaf_finite}.
+
+  \emph{Inductive step: add or remove one closed point.} A Weil divisor
+  is a finite \(\mathbb Z\)-combination of closed points
+  (\cref{def:codim1_cycles}), so it is reached from \(0\) by finitely
+  many moves \(D' \rightsquigarrow D' + [P]\) and their inverses, for
+  closed points \(P \in C\). For each such move, the closed-point short
+  exact sequence \cref{lem:sheafOf_ses_single_add} of
+  \cref{chap:RiemannRoch_OcOfD} provides
+  \[
+    0 \;\longrightarrow\; \mathcal O_C(D')
+    \;\longrightarrow\; \mathcal O_C(D' + [P])
+    \;\longrightarrow\; k(P)
+    \;\longrightarrow\; 0
+  \]
+  in the category of sheaves of \(\bar k\)-modules, whose cokernel is
+  the closed-point skyscraper \(k(P)\). The skyscraper has
+  finite-dimensional cohomology in degrees \(\{0, 1\}\)
+  (\cref{lem:HModule_skyscraper_finite}) --- the only degrees the
+  induction touches. Hence two of the three terms of this short exact
+  sequence have finite cohomology at degrees \(\{0, 1\}\):
+  \begin{itemize}
+    \item to pass from \(D'\) to \(D' + [P]\): the left term
+      \(\mathcal O_C(D')\) (inductive hypothesis) and the right term
+      \(k(P)\) are finite, so the middle term
+      \(\mathcal O_C(D' + [P])\) is finite by
+      \cref{lem:HModule_finite_of_ses};
+    \item to pass from \(D' + [P]\) to \(D'\) (the inverse move): the
+      middle term \(\mathcal O_C(D' + [P])\) (inductive hypothesis) and
+      the right term \(k(P)\) are finite, so the left term
+      \(\mathcal O_C(D')\) is finite by
+      \cref{lem:HModule_finite_of_ses}.
+  \end{itemize}
+  Either direction of the 2-of-3 property therefore transports
+  finiteness of \(H^0\) and \(H^1\) across a single-point change of the
+  divisor. Starting from the finite base case \(D = 0\) and applying the
+  step finitely many times reaches an arbitrary \(D \in \mathrm{Div}(C)\),
+  so \(H^0(C, \mathcal O_C(D))\) and \(H^1(C, \mathcal O_C(D))\) are
+  finite-dimensional. Combined with
+  \(H^i(C, \mathcal O_C(D)) = 0\) for \(i \ge 2\)
+  (\cref{lem:HModule_sheafOf_higher_vanish}), the line bundle
+  \(\mathcal O_C(D)\) has finite cohomology in every degree.
+\end{proof}
+
+\section{Downstream finite-dimensionality instances}
+\label{sec:SerreFiniteness_instances}
+
+The finiteness theorem \cref{thm:HModule_lineBundle_finite} is the
+producer of the \(\bar k\)-finite-dimensionality facts that the
+Riemann--Roch chapters consume as typeclass instances. Each of the
+following follows immediately by specialising
+\cref{thm:HModule_lineBundle_finite} to the relevant sheaf and degree
+(and, for the zero divisor, to \cref{lem:HModule_structureSheaf_finite});
+no further mathematical content is involved.
+
+\begin{itemize}
+  \item \emph{The \(\ell\)-invariant is well defined.} The instance
+    \(\Module.\mathtt{Finite}\;\bar k\;\bigl(H^0(C, \mathcal O_C(D))\bigr)\)
+    --- equivalently
+    \(\mathtt{FiniteDimensional}\;\bar k\;(\HModule\;\bar k\;
+    (\mathtt{sheafOf}\;D)\;0)\) --- is the \(i = 0\) case of
+    \cref{thm:HModule_lineBundle_finite}. It makes
+    \(\ell(D) = \dim_{\bar k} H^0(C, \mathcal O_C(D))\)
+    (\cref{def:l_invariant}) an honest natural number.
+  \item \emph{The Euler characteristic is well defined.} The instances
+    in degrees \(0\) and \(1\) make both terms of
+    \(\chi(\mathcal O_C(D)) = \dim_{\bar k} H^0 - \dim_{\bar k} H^1\)
+    (\cref{def:eulerChar_curve}) finite, so the difference is a
+    well-defined integer.
+  \item \emph{The genus is well defined.} The \(i = 1\) instance for the
+    structure sheaf, \(\mathtt{FiniteDimensional}\;\bar k\;
+    (\HModule\;\bar k\;(\toModuleKSheaf C)\;1)\), comes from
+    \cref{lem:HModule_structureSheaf_finite}; it makes
+    \(g(C) = \dim_{\bar k} H^1(C, \mathcal O_C)\) (\cref{def:genus}) a
+    genuine natural number.
+  \item \emph{The four \texttt{S2} side-conditions of the
+    \(\chi\)-induction.} These four instances ---
+    \(\bar k\)-finite-dimensionality of
+    \(H^0(C, \mathcal O_C(D))\), \(H^1(C, \mathcal O_C(D))\),
+    \(H^0(C, \mathcal O_C(D + [P]))\), and
+    \(H^1(C, \mathcal O_C(D + [P]))\) --- are exactly the finiteness
+    hypotheses appearing in the \(\chi\)-additive inductive step
+    \cref{lem:euler_char_sheafOf_succ} of
+    \cref{chap:RiemannRoch_RRFormula}, and are all discharged by
+    \cref{thm:HModule_lineBundle_finite}.
+\end{itemize}
+
+\section{Out of scope}
+
+The chapter is deliberately narrow. The following are \emph{not} part of
+the \texttt{S2} build:
+\begin{itemize}
+  \item \emph{General Serre coherent-cohomology finiteness.} The full
+    projective-dévissage / proper-pushforward proof of Serre's
+    finiteness theorem is not formalised. Instead the chapter computes
+    the single base case \(H^1(C, \mathcal O_C)\) directly from a
+    two-affine Čech cover (\cref{lem:HModule_structureSheaf_H1_finite})
+    and propagates finiteness from it by the formalised 2-of-3 and
+    induction arguments. The chapter does not build a proper-pushforward
+    or coherent-cohomology-finiteness theory.
+  \item \emph{Computing the dimensions.} This chapter proves only
+    \emph{finiteness}; the actual values \(\ell(D)\), \(\chi(\mathcal
+    O_C(D)) = \deg D + 1 - g\), and the genus-\(0\) formula
+    \(\ell(D) = \deg D + 1\) are the business of
+    \cref{chap:RiemannRoch_RRFormula} and its
+    \(\chi\)-identity, which consume the present finiteness instances.
+\end{itemize}

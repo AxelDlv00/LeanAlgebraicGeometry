@@ -1,0 +1,205 @@
+[
+  {
+    "timestamp": "2026-06-22T10:29:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/RiemannRoch/OcOfD.lean",
+      "theorem": "AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.exists_section_of_forall_order_nonneg_affineOpen"
+    },
+    "session": {
+      "id": "session_22",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "sheafOf.germToFunctionField_topIso_square",
+        "Scheme.Opens.functionFieldIso",
+        "Scheme.Opens.topIso",
+        "TopCat.Presheaf.germ_res'",
+        "TopCat.Presheaf.germ_stalkSpecializes",
+        "commRingCatIsoToRingEquiv"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Add reusable open-immersion compatibility square germToFunctionField_topIso_square, then close B1 by transporting r along it",
+        "code_tried": "refine ⟨(Scheme.Opens.topIso W).hom.hom r, ?_⟩; have hsq := sheafOf.germToFunctionField_topIso_square (C := C) W; rw [← hfg, ← hr]; have := congrArg (fun φ => φ.hom r) hsq; simpa [CommRingCat.comp_apply] using this",
+        "line_number": "2284",
+        "lean_error": null,
+        "goal_before": "∃ s, (germToFunctionField C.left W).hom s = f",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "B1 reduces to one morphism-level square applied to r; the square is the genuine reusable content."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Prove the square by simp+rw of germ/stalk lemmas",
+        "code_tried": "simp only [germToFunctionField, functionFieldIso, Iso.trans_hom, topIso_hom, stalkCongr_hom, germ_stalkIso_hom_assoc]; rw [germ_stalkSpecializes, germ_res']",
+        "line_number": "2237",
+        "lean_error": "rw failed to match (reducible-transparency / eqToHom defeq on CommRingCat.Hom.hom-coerced terms)",
+        "goal_before": "map (eqToHom ..).op ⊙ germ W gp = germ (W.ι ''ᵁ ⊤) gp ⊙ stalkSpecializes ..",
+        "goal_after": "unchanged",
+        "result": "failed",
+        "insight": "Plain rw/simp only do not match germ_res'/germ_stalkSpecializes/Category.assoc on these coerced objects."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Use erw for the germ/stalk rewrites where rw fails",
+        "code_tried": "simp only [...germ_stalkIso_hom_assoc]; erw [TopCat.Presheaf.germ_res', TopCat.Presheaf.germ_stalkSpecializes]",
+        "line_number": "2237",
+        "lean_error": null,
+        "goal_before": "same square",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "erw matches where rw/simp fail — recurring GOTCHA all session for germ/stalk/assoc/map_mul/kToSection_naturality on CommRingCat.Hom.hom applications."
+      }
+    ],
+    "next_steps": "Done; axiom-clean. sync added \\leanok to lem:exists_section_of_forall_order_nonneg_affineOpen."
+  },
+  {
+    "timestamp": "2026-06-22T10:29:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/RiemannRoch/OcOfD.lean",
+      "theorem": "AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.carrierSheaf_zero_sections_eq_structureSheaf"
+    },
+    "session": {
+      "id": "session_22",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "surjectivity (reverse inclusion) extracted to exists_section_of_mem_carrierSubmoduleSheaf_zero, still sorry (affine-cover gluing)",
+      "key_lemmas_used": [
+        "TopCat.Sheaf.isTerminalOfEqEmpty",
+        "IsTerminal.uniqueUpToIso",
+        "LinearEquiv.ofBijective",
+        "germToFunctionField_injective",
+        "structureSection_mem_carrierSet_zero",
+        "sheafOf.germToFunctionField_algebraMap"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "by_cases U=⊥: terminal-uniqueness; else build forward k̄-linear bijection and invert",
+        "code_tried": "by_cases hbot : U.unop = ⊥; · exact (isTerminalOfEqEmpty (carrierSheaf 0) hbot).uniqueUpToIso (isTerminalOfEqEmpty (toModuleKSheaf C) hbot); · ... fwd : Γ(C.left,U) →ₗ[kbar] carrierSubmoduleSheaf 0 U := germToFunctionField corestricted; (LinearEquiv.ofBijective fwd ⟨inj,surj⟩).symm.toModuleIso",
+        "line_number": "2312",
+        "lean_error": null,
+        "goal_before": "(carrierSheaf 0).val.obj U ≅ (toModuleKSheaf C).val.obj U",
+        "goal_after": "remaining: surjectivity sorry",
+        "result": "partial",
+        "insight": "⊥ case clean via op U.unop = U defeq; nonempty case fully assembled bar surjectivity."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Provide both Nonempty coercions for germToFunctionField vs structureSection_mem",
+        "code_tried": "haveI := (Scheme.Opens.nonempty_iff (U := U.unop)).mpr hne_set; haveI : Nonempty U.unop := ⟨⟨hne_set.choose, hne_set.choose_spec⟩⟩",
+        "line_number": "2370",
+        "lean_error": "earlier: cannot coerce ↑↑U.unop to sort when annotated",
+        "goal_before": "Nonempty instances missing",
+        "goal_after": "instances available",
+        "result": "success",
+        "insight": "germToFunctionField needs Nonempty ↑↑U.unop; structureSection_mem needs Nonempty ↑U.unop; supply both, do not annotate the ↑↑ source."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Prove map_smul' via Algebra.smul_def + germToFunctionField_algebraMap",
+        "code_tried": "change germToFunctionField .hom (c • s) = c • germToFunctionField .hom s; rw [Algebra.smul_def]; erw [map_mul .., germToFunctionField_algebraMap ..]; rw [← Algebra.smul_def]",
+        "line_number": "2410",
+        "lean_error": "rw [map_mul,...] failed to match (coercion); fixed with erw",
+        "goal_before": "k̄-linearity of the forward map",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "map_mul also needs erw on these coerced objects."
+      }
+    ],
+    "next_steps": "Close exists_section_of_mem_carrierSubmoduleSheaf_zero (affine-cover gluing) to make this fully \\leanok."
+  },
+  {
+    "timestamp": "2026-06-22T10:29:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/RiemannRoch/OcOfD.lean",
+      "theorem": "AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.exists_section_of_mem_carrierSubmoduleSheaf_zero"
+    },
+    "session": {
+      "id": "session_22",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Hartshorne 6.3A global step: ~150 lines of structure-sheaf amalgamation API (existsUnique_gluing over an affine cover); high regression risk to the clean file given pervasive erw/coercion friction; not attempted to full compile",
+      "key_lemmas_used": [
+        "exists_section_of_forall_order_nonneg_affineOpen",
+        "sheafOf_carrierSet_mono",
+        "C.left.sheaf.existsUnique_gluing"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Extract the general-U surjectivity into a named, documented lemma with sorry; affine arm it consumes is proven",
+        "code_tried": "theorem exists_section_of_mem_carrierSubmoduleSheaf_zero ... := by /- cover U by affine opens; affine arm per piece (order restricts by carrierSet_mono); glue via structure-sheaf existsUnique_gluing; overlaps agree by germToFunctionField injectivity -/ sorry",
+        "line_number": "2370",
+        "lean_error": null,
+        "goal_before": "f ∈ carrierSubmoduleSheaf 0 U → ∃ s, germToFunctionField .hom s = f",
+        "goal_after": "sorry",
+        "result": "partial",
+        "insight": "Isolated as a single named leaf; affine arm proven; gluing kernel is the genuine remaining volume."
+      }
+    ],
+    "next_steps": "Prove the gluing via C.left.sheaf.existsUnique_gluing over an affine cover; pieces agree on overlaps by germToFunctionField_injective."
+  },
+  {
+    "timestamp": "2026-06-22T10:29:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/RiemannRoch/OcOfD.lean",
+      "theorem": "AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.carrierSheaf_zero_iso_toModuleKSheaf"
+    },
+    "session": {
+      "id": "session_22",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "NatIso.ofComponents naturality square: per-U component is the .symm.toModuleIso of an ofBijective whose action is not cleanly unfoldable, so the injective-reduction stalls on unfolding the by_cases-def component",
+      "key_lemmas_used": [
+        "NatIso.ofComponents",
+        "germToFunctionField_injective"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Build NatIso from the now-complete components; reduce naturality to germ_res' via injectivity",
+        "code_tried": "NatIso.ofComponents carrierSheaf_zero_sections_eq_structureSheaf (by sorry)",
+        "line_number": "2454",
+        "lean_error": null,
+        "goal_before": "naturality square of the component isos",
+        "goal_after": "sorry",
+        "result": "partial",
+        "insight": "Components built, but .symm.toModuleIso of ofBijective is not action-unfoldable; FORWARD-morphism restructure (asIso α).symm with α : toModuleKPresheaf ⟶ carrierPresheaf 0 makes naturality computational (germ_res')."
+      }
+    ],
+    "next_steps": "Adopt the FORWARD presheaf-morphism restructure: build α with explicit germToFunctionField-into-carrier components (⊥-branch = zero map); naturality is then germ_res', each α.app U iso by section-iso content."
+  },
+  {
+    "timestamp": "2026-06-22T10:29:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/RiemannRoch/OcOfD.lean",
+      "theorem": "AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.sheafOf_singlePoint_iso"
+    },
+    "session": {
+      "id": "session_22",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "off-cone (L772); planner directive: do not touch",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Out-of-cone; leave deferred."
+  }
+]

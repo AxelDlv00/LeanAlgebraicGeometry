@@ -6,7 +6,7 @@
     },
     {
       "path": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
-      "size": 165983
+      "size": 192312
     },
     {
       "path": "AlgebraicJacobian/Cohomology/FlatBaseChangeGlobal.lean",
@@ -19,6 +19,10 @@
     {
       "path": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
       "size": 216852
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/SectionGradedRingLocalized.lean",
+      "size": 72990
     }
   ]
 }

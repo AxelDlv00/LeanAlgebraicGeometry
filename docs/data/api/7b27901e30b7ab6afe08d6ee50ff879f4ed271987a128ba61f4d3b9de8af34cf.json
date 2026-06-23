@@ -1,0 +1,36 @@
+{
+  "files": [
+    {
+      "path": "MR2223407ConstructionHilbertQuot.lean",
+      "size": 46
+    },
+    {
+      "path": "MR2223407ConstructionHilbertQuot/Basic.lean",
+      "size": 45839
+    },
+    {
+      "path": "MR2223407ConstructionHilbertQuot/FlatteningStratification.lean",
+      "size": 5353
+    },
+    {
+      "path": "MR2223407ConstructionHilbertQuot/Functors.lean",
+      "size": 80881
+    },
+    {
+      "path": "MR2223407ConstructionHilbertQuot/QuotConstruction.lean",
+      "size": 18315
+    },
+    {
+      "path": "MR2223407ConstructionHilbertQuot/Regularity.lean",
+      "size": 11157
+    },
+    {
+      "path": "MR2223407ConstructionHilbertQuot/SemicontinuityBaseChange.lean",
+      "size": 11982
+    },
+    {
+      "path": "MR2223407ConstructionHilbertQuot/Variants.lean",
+      "size": 22351
+    }
+  ]
+}

@@ -1,0 +1,212 @@
+[
+  {
+    "timestamp": "2026-06-22T11:35:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Functors.lean",
+      "theorem": "grassmannian_cocycle"
+    },
+    "session": {
+      "id": "session_5",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Matrix.mul_apply",
+        "Matrix.submatrix_apply",
+        "Matrix.mul_assoc",
+        "Matrix.one_mul",
+        "mul_invOf_self",
+        "invOf_mul_self",
+        "invertibleMul"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "discharge embedded `haveI : Invertible M_K := by sorry` in the type via column-minor identity hcol, then `exact invertibleMul _ _`",
+        "code_tried": "have hcol : (⅟M_J*M).submatrix id K = ⅟M_J*(M.submatrix id K) := by ext i j; simp [Matrix.mul_apply, Matrix.submatrix_apply]; M_K = M_J*(⅟M_J*M)_K so invertibleMul",
+        "line_number": "282",
+        "lean_error": "failed to synthesize Invertible (M.submatrix id K) (locally-built instance not defeq to type's baked one)",
+        "result": "partial",
+        "insight": "the type's baked Invertible instance is NOT in local ctx; freshly-built one is structurally distinct"
+      },
+      {
+        "attempt": 2,
+        "strategy": "finish main equation with `exact h`",
+        "code_tried": "exact h",
+        "line_number": "337",
+        "lean_error": "Type mismatch: h has @Invertible.invOf ... this vs the type's instance",
+        "result": "failed",
+        "insight": "exact fails on the differing Invertible.invOf instance subterm"
+      },
+      {
+        "attempt": 3,
+        "strategy": "use `convert h using 3` to descend to instance subterm, closed by subsingleton",
+        "code_tried": "convert h using 3",
+        "line_number": "337",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Invertible is Subsingleton; convert using N discharges the baked-instance mismatch cleanly — canonical pattern for planner-written haveI:=by sorry in statement"
+      }
+    ],
+    "next_steps": "cocycle now powers transition-iso gluing for grassmannianScheme BUILD (step 5 of handed-off decomposition)"
+  },
+  {
+    "timestamp": "2026-06-22T11:35:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Functors.lean",
+      "theorem": "grassmannianScheme"
+    },
+    "session": {
+      "id": "session_5",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "multi-iter Scheme.GlueData BUILD; honest partial impossible — sorry in data fields (U,V,f,t) ships junk schemes (banned weaken-type pattern)"
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "assess GlueData skeleton vs clean typed sorry; chose clean sorry + handed off 6-step decomposition",
+        "code_tried": "(no edit) kept `grassmannianScheme r d := sorry : Scheme.{u}`",
+        "line_number": "263",
+        "lean_error": "",
+        "result": "partial",
+        "insight": "GlueData data fields are Scheme/morphism-valued; sorry there = junk schemes, strictly worse than clean typed sorry. Decomposition: Fin d ↪ Fin r charts, frame matrix X^I over MvPolynomial, U^I=Spec, overlaps D(P^I_J), transition maps θ via cocycle (now proven), assemble GlueData.glued"
+      }
+    ],
+    "next_steps": "mathlib-build lane: assemble Scheme.GlueData per 6-step decomposition; cocycle lemma ready to power t-fields"
+  },
+  {
+    "timestamp": "2026-06-22T11:28:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/QuotConstruction.lean",
+      "theorem": "quot_properness"
+    },
+    "session": {
+      "id": "session_5",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "IsSeparated (relativeProj.structureMorphism S F) — unprovable for sorryAx-valued stub; a corollary of the relativeProj BUILD (EGA-III). Planner mis-tagged as 'reachable, no EGA-III needed'",
+      "key_lemmas_used": [
+        "valuativeCriterion_proper",
+        "IsProper.of_comp",
+        "IsProper.toUniversallyClosed",
+        "Scheme.Hom.isClosedMap",
+        "IsClosedMap.isClosed_range",
+        "IsImmersion.toIsPreimmersion",
+        "IsClosedImmersion.of_isPreimmersion"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "first conjunct via valuativeCriterion; second via proper-immersion⟹closed-immersion cancellation chain",
+        "code_tried": "refine ⟨valuativeCriterion_proper Q.hom hvc, ?_⟩; ...; haveI hiProper := IsProper.of_comp_of_isSeparated i p",
+        "line_number": "302",
+        "lean_error": "Unknown constant `AlgebraicGeometry.IsProper.of_comp_of_isSeparated`",
+        "result": "failed",
+        "insight": "leansearch surfaced a non-existent name; only IsProper.of_comp (with [IsSeparated g] hyp) is real"
+      },
+      {
+        "attempt": 2,
+        "strategy": "switch to IsProper.of_comp",
+        "code_tried": "haveI hiProper : IsProper i := IsProper.of_comp i (relativeProj.structureMorphism S F)",
+        "line_number": "324",
+        "lean_error": "",
+        "result": "partial",
+        "insight": "whole chain compiles except the needed instance [IsSeparated (relativeProj.structureMorphism S F)] — isolated as single named `haveI hsep := sorry`. Separatedness is load-bearing (non-separated p gives merely locally-closed image), cannot be routed around"
+      }
+    ],
+    "next_steps": "DO NOT re-assign until relativeProj BUILT — add `IsSeparated (relativeProj.structureMorphism S V)` to relativeProj anchor obligations"
+  },
+  {
+    "timestamp": "2026-06-22T11:37:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Variants.lean",
+      "theorem": "flatness_local_criterion"
+    },
+    "session": {
+      "id": "session_5",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "part(2) openness of flat locus = EGA IV 11.1.1/11.3.1, absent from Mathlib (only Algebra.isOpen_smoothLocus and Module.freeLocus exist; neither covers stalk-map flat locus)",
+      "key_lemmas_used": [
+        "LocallyOfFinitePresentation (from IsLocallyNoetherian+LocallyOfFiniteType)",
+        "UniversallyOpen.of_flat",
+        "Scheme.Hom.isOpenMap"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "restore faithful [IsLocallyNoetherian X] (blueprint+source say 'noetherian schemes'); part(1) via finite-type⟹finite-presentation over noetherian then UniversallyOpen.of_flat",
+        "code_tried": "have : LocallyOfFinitePresentation f := inferInstance; have : UniversallyOpen f := inferInstance; exact f.isOpenMap",
+        "line_number": "208",
+        "lean_error": "",
+        "result": "success",
+        "insight": "part(1) RESOLVED; signature gained [IsLocallyNoetherian X] on both conjuncts — faithfulness restoration, not weakening (flat+finite-type open needs finite presentation)"
+      },
+      {
+        "attempt": 2,
+        "strategy": "part(2) flat-locus openness — searched smoothLocus/freeLocus",
+        "code_tried": "(structured by-block sorry with gap named inline)",
+        "line_number": "208",
+        "lean_error": "",
+        "result": "failed",
+        "insight": "genuine Mathlib gap (EGA IV 11.1.1); not ~100 LOC; no informal-agent key present. Wrote informal/flatness_local_criterion_flat_locus.md memo"
+      }
+    ],
+    "next_steps": "part(2) blocked on flat-locus-openness Mathlib gap — open a BUILD objective; do not re-assign as a tactic target"
+  },
+  {
+    "timestamp": "2026-06-22T11:35:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Variants.lean",
+      "theorem": "descent_of_subschemes"
+    },
+    "session": {
+      "id": "session_5",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "EffectiveEpi (Sites/Fpqc instance from QuasiCompact+Surjective+Flat)",
+        "isColimitCoforkOfEffectiveEpi",
+        "pullback.isLimit",
+        "Flat.isQuotientMap_of_surjective",
+        "Topology.isQuotientMap_iff_isClosed",
+        "Scheme.Pullback.exists_preimage_pullback",
+        "Set.image_preimage_eq"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "part(1) ffqc⟹IsColimit kernel-pair cofork via EffectiveEpi",
+        "code_tried": "haveI : Surjective f := ⟨hf⟩; ⟨isColimitCoforkOfEffectiveEpi f _ (pullback.isLimit f f)⟩",
+        "line_number": "299",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Fpqc instance gives EffectiveEpi from QC+Surj+Flat; isColimitCoforkOfEffectiveEpi yields the cofork colimit directly"
+      },
+      {
+        "attempt": 2,
+        "strategy": "part(2) (planner-deferred 'gap-blocked') set-level descent: Q := p''Z via quotient map + pullback carrier surjectivity",
+        "code_tried": "obtain ⟨z,hz1,hz2⟩ := Scheme.Pullback.exists_preimage_pullback (f:=p)(g:=p) d d' hpd.symm; change (pullback.snd p p).base z ∈ Z; rw [hz2]; exact hd'",
+        "line_number": "331",
+        "lean_error": "Unknown identifier `exists_preimage_pullback` (needed namespace Scheme.Pullback.); `show` warned, switched to `change`",
+        "result": "success",
+        "insight": "set-level statement is NOT EGA-blocked (only scheme-structure ideal-sheaf descent is). Flat.isQuotientMap_of_surjective + pullback carrier surjectivity close it; planner's 'do not attempt' tag was wrong here"
+      }
+    ],
+    "next_steps": "fully closed, axiom-clean; scheme-structure (ideal-sheaf fppf) descent remains separate thm:ffdescent gap"
+  }
+]

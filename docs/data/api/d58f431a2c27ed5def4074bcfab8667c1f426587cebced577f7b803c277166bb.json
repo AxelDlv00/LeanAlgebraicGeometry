@@ -1,0 +1,156 @@
+[
+  {
+    "timestamp": "2026-06-22T13:40:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Basic.lean",
+      "theorem": "projChartFrameMapIso"
+    },
+    "session": {
+      "id": "session_8",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "AlgebraicGeometry.Proj.map",
+        "Proj.map_comp",
+        "Proj.map_id",
+        "MvPolynomial.IsHomogeneous.aeval",
+        "MvPolynomial.comp_aeval",
+        "HomogeneousIdeal.toIdeal_map",
+        "Ideal.mem_map_of_mem"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "frame substitution composes by matrix mult (projChartFrameSubst_comp): simp + Finset.sum_congr then rw map_mul,mul_assoc",
+        "code_tried": "rw [Finset.sum_comm]; refine Finset.sum_congr rfl ...; rw [map_mul, mul_assoc]",
+        "line_number": "363",
+        "lean_error": "Type mismatch: Finset.sum_congr rfl ... has type sum=sum but expected C(g1 i k)*sum... = sum...",
+        "result": "failed",
+        "insight": "sum_mul/mul_sum orientation wrong; need conv_rhs => rw[Finset.sum_comm] and Finset.mul_sum"
+      },
+      {
+        "attempt": 2,
+        "strategy": "reorient with Finset.mul_sum + conv_rhs sum_comm, drop the stray map_mul",
+        "code_tried": "simp only [..., Finset.sum_mul, Finset.mul_sum]; conv_rhs => rw [Finset.sum_comm]; refine ...; rw [mul_assoc]",
+        "line_number": "363",
+        "lean_error": null,
+        "result": "success",
+        "insight": "after Finset.mul_sum the product is already C*C*X; only mul_assoc needed, not map_mul"
+      },
+      {
+        "attempt": 3,
+        "strategy": "projChartFrameHom_irrelevant_le: show frameHom g (frameHom h a) in irrelevant.map via HomogeneousIdeal.mem_iff + toIdeal_map",
+        "code_tried": "rw [HomogeneousIdeal.mem_iff, HomogeneousIdeal.toIdeal_map]; exact Ideal.mem_map_of_mem _ hb_irr",
+        "line_number": "403",
+        "lean_error": "rewrite failed: pattern ?m ∈ HomogeneousIdeal.toIdeal ?  not found",
+        "result": "failed",
+        "insight": "state membership directly in .toIdeal of the mapped ideal; rw only toIdeal_map"
+      },
+      {
+        "attempt": 4,
+        "strategy": "projChartFrameMapIso.hom_inv_id via rw [← Proj.map_comp] fully instantiated",
+        "code_tried": "rw [← Proj.map_comp (projChartFrameHom A n (⅟g)) (projChartFrameHom A n g) _ _]",
+        "line_number": "470",
+        "lean_error": "rewrite failed: Did not find an occurrence of pattern Proj.map ?g ?hg ≫ Proj.map ?f ?hf (dependent Prop proof args make motive ill-formed)",
+        "result": "failed",
+        "insight": "DEAD-END: rw [← Proj.map_comp] never matches on Proj.map _≫Proj.map _ = 𝟙. Use term-mode ((Proj.map_comp f g _ _).symm).trans ?_"
+      },
+      {
+        "attempt": 5,
+        "strategy": "term-mode comp + projChartFrameMap_congr (proof-irrelevant hyp) + Proj.map_id",
+        "code_tried": "refine ((Proj.map_comp ... ).symm).trans ?_; refine (projChartFrameMap_congr A n _ HomogeneousIdeal.map_id.ge ?_).trans Proj.map_id; rw [projChartFrameHom_comp, invOf_mul_self, projChartFrameHom_one]",
+        "line_number": "470",
+        "lean_error": "Function expected at HomogeneousIdeal.map_id (was applied to _)",
+        "result": "partial",
+        "insight": "HomogeneousIdeal.map_id takes NO explicit args: write HomogeneousIdeal.map_id.ge not (HomogeneousIdeal.map_id _).ge"
+      },
+      {
+        "attempt": 6,
+        "strategy": "sed-fix the map_id arg form across file",
+        "code_tried": "s/(HomogeneousIdeal.map_id _).ge/HomogeneousIdeal.map_id.ge/g",
+        "line_number": "470",
+        "lean_error": null,
+        "result": "success",
+        "insight": "iso both directions close; lean_verify = {propext, Classical.choice, Quot.sound}"
+      }
+    ],
+    "next_steps": "Cross-S GlueData assembly of charts into relativeProj S V is blocked on the genuinely-absent trivialising affine cover / per-overlap frame extraction from an S.Modules (sheaf-Sym machinery, not Basic.lean-local). t-field (projChartFrameMap) + cocycle (projChartFrameMap_comp) are ready to consume once that layer exists. Do NOT re-dispatch the cover step blind."
+  },
+  {
+    "timestamp": "2026-06-22T13:40:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Functors.lean",
+      "theorem": "grassmannianScheme"
+    },
+    "session": {
+      "id": "session_8",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "grassmannianScheme := D.glued still needs the two GlueData Prop fields t_fac and cocycle; both reduced to ring-level identities about grassTrans2 but the cocycle ring lemma is a ~150-line three-localisation IsLocalization.ringHom_ext + MvPolynomial.ringHom_ext chase, judged too large to land reliably this session.",
+      "key_lemmas_used": [
+        "IsLocalization.Away.awayToAwayRight",
+        "Localization.awayLift",
+        "IsLocalization.Away.mul'",
+        "IsLocalization.algEquiv",
+        "AlgebraicGeometry.pullbackSpecIso",
+        "IsLocalization.Away.lift_comp",
+        "isUnit_of_mul_isUnit_right",
+        "IsLocalization.Away.algebraMap_isUnit"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Build t' data field stack: grassOverlapRing2 (Away(P^I_J·P^I_K)), grassOverlapToTriple, grassTransAuxTriple, gate isUnit, grassTrans2 (awayLift), grassTripleRingEquiv (tensor=Away of product)",
+        "code_tried": "noncomputable def grassTripleRingEquiv ... := by haveI : IsLocalization.Away (grassMinor I J * grassMinor I K) ...",
+        "line_number": "672",
+        "lean_error": "failed to synthesize IsScalarTower (MvPolynomial ... ℤ) (grassOverlapRing I J) (grassOverlapRing I J ⊗ grassOverlapRing I K)",
+        "result": "failed",
+        "insight": "IsScalarTower/Away synthesis over MvPolynomial base + grassOverlapRing abbrev unfolding exceeds default synth budget"
+      },
+      {
+        "attempt": 2,
+        "strategy": "bump synth budget with set_option synthInstance.maxHeartbeats 1000000 in",
+        "code_tried": "set_option synthInstance.maxHeartbeats 1000000 in\nnoncomputable def grassTripleRingEquiv ...",
+        "line_number": "672",
+        "lean_error": "unexpected token 'set_option'; expected 'lemma' (set_option placed wrong relative to docstring) + later 'add a comment explaining the maxHeartbeat' linter warning",
+        "result": "partial",
+        "insight": "set_option … in must precede the docstring; the explanatory linter comment must FOLLOW the set_option line, not precede it"
+      },
+      {
+        "attempt": 3,
+        "strategy": "correct ordering: set_option line, then linter comment, then docstring, then def; build grassTripleIso via pullbackSpecIso ≪≫ Spec.mapIso, grassTransMorphism2 = t'",
+        "code_tried": "set_option synthInstance.maxHeartbeats 1000000 in\n-- comment\n/-- doc -/\nnoncomputable def grassTripleRingEquiv ...",
+        "line_number": "672",
+        "lean_error": null,
+        "result": "success",
+        "insight": "9 axiom-clean decls land; t' data field grassTransMorphism2 complete; lean_verify = {propext, Classical.choice, Quot.sound}"
+      },
+      {
+        "attempt": 4,
+        "strategy": "attempt cocycle ring lemma grassTrans2 triple-composite = id via IsLocalization.ringHom_ext",
+        "code_tried": "lemma grassTrans2_cocycle_SCRATCH ... := by apply IsLocalization.ringHom_ext (Submonoid.powers (grassMinor I J * grassMinor I K)); sorry",
+        "line_number": "680",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "ringHom_ext reduces goal to (triple-composite).comp (algebraMap A_I gor2IJK) = algebraMap (goal verified); residual needs a recursive stack of comp-laws through 3 localisations bottoming at MvPolynomial.ringHom_ext + grassmannian_cocycle — ~150 lines"
+      },
+      {
+        "attempt": 5,
+        "strategy": "remove the scratch sorry rather than commit incomplete proof; keep grassTrans2_comp_algebraMap (the comp-law lemma) as reusable",
+        "code_tried": "(deleted grassTrans2_cocycle_SCRATCH; retained grassTrans2_comp_algebraMap)",
+        "line_number": "680",
+        "lean_error": null,
+        "result": "success",
+        "insight": "no new sorry committed; final lake build green with only pre-existing stub sorries"
+      }
+    ],
+    "next_steps": "Next prover: prove ring-cocycle lemma (grassTrans2 I J K).comp((grassTrans2 J K I).comp(grassTrans2 K I J)) = RingHom.id, then t_fac ring identity, then assemble grassGlueData + grassmannianScheme := D.glued. cocycle collapses to this single ring lemma by iso-cancellation (grassmannian_cocycle already proven, lifted through 3 localisations). All data fields exist."
+  }
+]

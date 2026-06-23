@@ -1,0 +1,378 @@
+{
+  "files": [
+    {
+      "file": "MR2223407ConstructionHilbertQuot/Basic.lean",
+      "count": 6,
+      "lines": [
+        74,
+        79,
+        113,
+        135,
+        154,
+        183
+      ],
+      "occurrences": [
+        {
+          "line": 74,
+          "column": 3
+        },
+        {
+          "line": 79,
+          "column": 3
+        },
+        {
+          "line": 113,
+          "column": 3
+        },
+        {
+          "line": 135,
+          "column": 3
+        },
+        {
+          "line": 154,
+          "column": 3
+        },
+        {
+          "line": 183,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "MR2223407ConstructionHilbertQuot/FlatteningStratification.lean",
+      "count": 3,
+      "lines": [
+        53,
+        74,
+        112
+      ],
+      "occurrences": [
+        {
+          "line": 53,
+          "column": 3
+        },
+        {
+          "line": 74,
+          "column": 3
+        },
+        {
+          "line": 112,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "MR2223407ConstructionHilbertQuot/Functors.lean",
+      "count": 24,
+      "lines": [
+        64,
+        70,
+        98,
+        99,
+        100,
+        130,
+        131,
+        132,
+        165,
+        166,
+        167,
+        193,
+        202,
+        220,
+        221,
+        222,
+        235,
+        252,
+        1270,
+        1336,
+        1339,
+        1359,
+        1374,
+        1394
+      ],
+      "occurrences": [
+        {
+          "line": 64,
+          "column": 78
+        },
+        {
+          "line": 70,
+          "column": 78
+        },
+        {
+          "line": 98,
+          "column": 12
+        },
+        {
+          "line": 99,
+          "column": 15
+        },
+        {
+          "line": 100,
+          "column": 19
+        },
+        {
+          "line": 130,
+          "column": 12
+        },
+        {
+          "line": 131,
+          "column": 15
+        },
+        {
+          "line": 132,
+          "column": 19
+        },
+        {
+          "line": 165,
+          "column": 12
+        },
+        {
+          "line": 166,
+          "column": 15
+        },
+        {
+          "line": 167,
+          "column": 19
+        },
+        {
+          "line": 193,
+          "column": 3
+        },
+        {
+          "line": 202,
+          "column": 3
+        },
+        {
+          "line": 220,
+          "column": 12
+        },
+        {
+          "line": 221,
+          "column": 15
+        },
+        {
+          "line": 222,
+          "column": 19
+        },
+        {
+          "line": 235,
+          "column": 3
+        },
+        {
+          "line": 252,
+          "column": 3
+        },
+        {
+          "line": 1270,
+          "column": 3
+        },
+        {
+          "line": 1336,
+          "column": 5
+        },
+        {
+          "line": 1339,
+          "column": 3
+        },
+        {
+          "line": 1359,
+          "column": 3
+        },
+        {
+          "line": 1374,
+          "column": 3
+        },
+        {
+          "line": 1394,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "MR2223407ConstructionHilbertQuot/QuotConstruction.lean",
+      "count": 8,
+      "lines": [
+        121,
+        150,
+        172,
+        195,
+        230,
+        251,
+        276,
+        319
+      ],
+      "occurrences": [
+        {
+          "line": 121,
+          "column": 3
+        },
+        {
+          "line": 150,
+          "column": 3
+        },
+        {
+          "line": 172,
+          "column": 3
+        },
+        {
+          "line": 195,
+          "column": 3
+        },
+        {
+          "line": 230,
+          "column": 3
+        },
+        {
+          "line": 251,
+          "column": 3
+        },
+        {
+          "line": 276,
+          "column": 3
+        },
+        {
+          "line": 319,
+          "column": 68
+        }
+      ]
+    },
+    {
+      "file": "MR2223407ConstructionHilbertQuot/Regularity.lean",
+      "count": 5,
+      "lines": [
+        115,
+        132,
+        155,
+        180,
+        214
+      ],
+      "occurrences": [
+        {
+          "line": 115,
+          "column": 3
+        },
+        {
+          "line": 132,
+          "column": 3
+        },
+        {
+          "line": 155,
+          "column": 3
+        },
+        {
+          "line": 180,
+          "column": 3
+        },
+        {
+          "line": 214,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "MR2223407ConstructionHilbertQuot/SemicontinuityBaseChange.lean",
+      "count": 5,
+      "lines": [
+        67,
+        128,
+        155,
+        184,
+        219
+      ],
+      "occurrences": [
+        {
+          "line": 67,
+          "column": 3
+        },
+        {
+          "line": 128,
+          "column": 3
+        },
+        {
+          "line": 155,
+          "column": 3
+        },
+        {
+          "line": 184,
+          "column": 3
+        },
+        {
+          "line": 219,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "MR2223407ConstructionHilbertQuot/Variants.lean",
+      "count": 12,
+      "lines": [
+        102,
+        126,
+        141,
+        159,
+        191,
+        235,
+        259,
+        270,
+        271,
+        272,
+        292,
+        391
+      ],
+      "occurrences": [
+        {
+          "line": 102,
+          "column": 3
+        },
+        {
+          "line": 126,
+          "column": 3
+        },
+        {
+          "line": 141,
+          "column": 3
+        },
+        {
+          "line": 159,
+          "column": 3
+        },
+        {
+          "line": 191,
+          "column": 3
+        },
+        {
+          "line": 235,
+          "column": 5
+        },
+        {
+          "line": 259,
+          "column": 3
+        },
+        {
+          "line": 270,
+          "column": 12
+        },
+        {
+          "line": 271,
+          "column": 15
+        },
+        {
+          "line": 272,
+          "column": 19
+        },
+        {
+          "line": 292,
+          "column": 3
+        },
+        {
+          "line": 391,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "total": 63,
+  "partial": false,
+  "warnings": []
+}

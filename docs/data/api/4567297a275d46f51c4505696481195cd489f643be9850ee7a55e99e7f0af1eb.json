@@ -1,0 +1,28 @@
+{
+  "stage": "prover",
+  "objectives": [
+    "**`MR2223407ConstructionHilbertQuot/Functors.lean`** — **Prove Grassmannian separatedness, then"
+  ],
+  "checklist": [
+    {
+      "label": "init",
+      "done": true
+    },
+    {
+      "label": "dag",
+      "done": true
+    },
+    {
+      "label": "autoformalize",
+      "done": true
+    },
+    {
+      "label": "prover",
+      "done": false
+    },
+    {
+      "label": "polish",
+      "done": false
+    }
+  ]
+}

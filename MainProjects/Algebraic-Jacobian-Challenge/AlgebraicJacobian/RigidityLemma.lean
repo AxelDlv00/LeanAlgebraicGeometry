@@ -8,14 +8,14 @@ import AlgebraicJacobian.Genus
 /-!
 # Mumford Rigidity Lemma and its Milne §I.1 corollaries
 
-This file is the **abstract rigidity foundation** of the project's genus-`0` route. It hosts the
-proven, axiom-clean **Mumford Rigidity Lemma (Form I)** and the two Milne §I.1 corollaries it
+This file is the **abstract rigidity foundation** (Milne §I.1). It hosts the proven,
+axiom-clean **Mumford Rigidity Lemma (Form I)** and the two Milne §I.1 corollaries it
 implies — the additive decomposition of a morphism out of a product (Cor 1.5) and the fact that
 a pointed regular map of abelian varieties is a homomorphism (Cor 1.2).
 
-The genus-`0` final assembly (the `ℙ¹`-scaling shortcut, the headline
-`rigidity_genus0_curve_to_grpScheme`, the Riemann–Roch bridge `genusZero_curve_iso_P1`) lives
-downstream in `AlgebraicJacobian.AbelianVarietyRigidity`, which imports this file.
+It is general infrastructure for the abelian-variety theory underlying the Jacobian; the
+Albanese universal property of `Pic⁰_{C/k}` (`AlgebraicJacobian.Albanese.AlbaneseUP`)
+consumes the rigidity lemma `rigidity_lemma` and its corollaries.
 
 ## Contents
 

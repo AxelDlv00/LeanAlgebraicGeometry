@@ -1,0 +1,148 @@
+[
+  {
+    "timestamp": "2026-06-22T09:19:57Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/RiemannRoch/OcOfD.lean",
+      "theorem": "AlgebraicGeometry.Scheme.WeilDivisor.sheafOf_ses_single_add (corner cases D=0, [P]+D=0)"
+    },
+    "session": {
+      "id": "session_21",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "sheafOf.carrierSheaf_ses_single_add",
+        "sheafOf.carrierSheaf_zero_iso_toModuleKSheaf",
+        "CategoryTheory.ShortComplex.shortExact_of_iso",
+        "CategoryTheory.ShortComplex.isoMk",
+        "sheafOf_eq_carrier_of_ne_zero",
+        "Finsupp.single_ne_zero"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Transport carrier-level SES along bridge iso carrierSheaf_zero_iso_toModuleKSheaf (usable as a term despite its own internal sorry).",
+        "code_tried": "subst hD; obtain ⟨S₀,hSE₀,h1,h2,h3⟩ := carrierSheaf_ses_single_add 0 P; let e := eqToIso h1 ≪≫ carrierSheaf_zero_iso_toModuleKSheaf; S₂ := ShortComplex.mk (e.inv ≫ S₀.f) S₀.g _; ShortComplex.isoMk e₁ (Iso.refl _) (Iso.refl _); ShortComplex.shortExact_of_iso",
+        "line_number": "2400",
+        "result": "success",
+        "insight": "The bridge iso is a term of type ≅ regardless of its body sorry, so corners compile independently."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Discharge `single P 1 + 0 ≠ 0` and the `if`-condition `[P]+D=0`.",
+        "code_tried": "rw [add_zero]; intro h; exact one_ne_zero (Finsupp.single_eq_zero.mp h) -- FAILED: rw cannot match (WeilDivisor is a plain def, +/0 defeq-not-syntactic). FIX: change (... : C.left.PrimeDivisor →₀ ℤ) ≠ 0 then rw [add_zero]; Finsupp.single_ne_zero.mpr one_ne_zero. For if-cond: unfold sheafOf; exact if_pos hPD.",
+        "line_number": "2406",
+        "lean_error": "motive is not type correct / rw failed to match on WeilDivisor view",
+        "result": "success",
+        "insight": "WeilDivisor X := X.PrimeDivisor →₀ ℤ is a `def`; must `change`/`unfold` to the →₀ view before `rw [add_zero]` or `if_pos`."
+      }
+    ],
+    "next_steps": "Corners now transitively depend on the still-sorry bridge iso; they become axiom-clean once B1 + section-iso land."
+  },
+  {
+    "timestamp": "2026-06-22T09:19:57Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/RiemannRoch/OcOfD.lean",
+      "theorem": "AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.exists_section_of_forall_order_nonneg_affineOpen"
+    },
+    "session": {
+      "id": "session_21",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "B1: germ-at-generic-point naturality square for open immersion W.ι — transport r ∈ Γ(W.toScheme,⊤) to s ∈ Γ(C.left,W) and prove germToFunctionField s = f (~50-100 line diagram chase). NOT a Mathlib gap.",
+      "key_lemmas_used": [
+        "CurveChartDedekind.chart_mem_range_of_forall_order_nonneg",
+        "Scheme.PrimeDivisor.order_eq_order_restrict",
+        "Scheme.Opens.functionFieldIso",
+        "krullDim_curve_le_one",
+        "Order.krullDim_le_of_strictMono",
+        "instIsLocallyNoetherianToScheme"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "New helper: affine algebraic Hartogs (Hartshorne II.6.3A reverse inclusion). Build all substrate sorry-free, isolate B1.",
+        "code_tried": "g := (functionFieldIso W).commRingCatIsoToRingEquiv.symm f; hdim via Order.krullDim_le_of_strictMono (z↦z.1) + W.isOpenEmbedding.isInducing.specializes_iff + krullDim_curve_le_one; hord via order_eq_order_restrict with Y:=ofOpen W Z; chart_mem_range_of_forall_order_nonneg hdim g hord gives ⟨r,hr⟩.",
+        "line_number": "2245",
+        "result": "partial",
+        "insight": "Order-transport + Krull-dim + instances all sorry-free. lt_iff_le_not_le renamed → lt_iff_le_not_ge. restrictToOpen W (ofOpen W Z) _ = Z holds by rfl."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Close B1 (germ naturality).",
+        "code_tried": "Candidate tools located: LocallyRingedSpace.restrictStalkIso_hom_eq_germ, Scheme.Modules.germ_restrictStalkNatIso_hom_app, functionFieldIso/germToFunctionField defs.",
+        "line_number": "2284",
+        "lean_error": "(not attempted to completion — deferred as a focused sorry)",
+        "result": "partial",
+        "insight": "Genuine diagram chase via IsOpenImmersion.ΓIsoTop W.ι (opensRange W.ι = W); deferred to a dedicated lane."
+      }
+    ],
+    "next_steps": "B1 = own helper lane next iter (germ-at-generic-point naturality for open immersion). Substrate verified."
+  },
+  {
+    "timestamp": "2026-06-22T09:19:57Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/RiemannRoch/OcOfD.lean",
+      "theorem": "AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.carrierSheaf_zero_sections_eq_structureSheaf"
+    },
+    "session": {
+      "id": "session_21",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Needs (i) B1 closed; (ii) general-U affine-cover gluing through 𝒪_C sheaf property (carrierSet_mono + germToFunctionField injectivity); (iii) U=⊥ corner (both sides zero k̄-module).",
+      "key_lemmas_used": [
+        "sheafOf.exists_section_of_forall_order_nonneg_affineOpen (affine case)",
+        "germToFunctionField_injective",
+        "structureSection_mem_carrierSet_zero"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Decompose surjectivity into the affine helper; section iso left as documented sorry pending B1 + gluing + ⊥-corner.",
+        "code_tried": "(section iso body remains `sorry`; affine arm now packaged in exists_section_of_forall_order_nonneg_affineOpen)",
+        "line_number": "2312",
+        "result": "partial",
+        "insight": "Surjectivity now reduces to affine helper + sheaf-locality gluing, not a monolithic gap."
+      }
+    ],
+    "next_steps": "After B1: glue affine helper across an affine cover; handle U=⊥. Prover recommends building a FORWARD sheaf morphism toModuleKSheaf C ⟶ carrierSheaf 0 (component germToFunctionField, naturality = identity-on-K(C)), prove each component iso, then NatIso is automatic — makes naturality free."
+  },
+  {
+    "timestamp": "2026-06-22T09:19:57Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/RiemannRoch/OcOfD.lean",
+      "theorem": "AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.carrierSheaf_zero_iso_toModuleKSheaf"
+    },
+    "session": {
+      "id": "session_21",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "NatIso.ofComponents naturality square (inner `(by sorry)` at L2331) not provable while component carrierSheaf_zero_sections_eq_structureSheaf is an opaque sorry; gated on the section iso.",
+      "key_lemmas_used": [
+        "NatIso.ofComponents",
+        "preimageIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Keep skeleton (real preimageIso/NatIso.ofComponents from iter-018), naturality remains sorry.",
+        "code_tried": "(NatIso.ofComponents ... (by sorry))",
+        "line_number": "2331",
+        "result": "partial",
+        "insight": "Naturality is gated; restructure to a forward sheaf-morphism (per prover rec) makes it free."
+      }
+    ],
+    "next_steps": "Adopt the forward-sheaf-morphism restructure: both pinned decls derive by extracting .app U; naturality = identity-on-K(C)."
+  }
+]

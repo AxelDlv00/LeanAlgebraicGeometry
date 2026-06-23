@@ -1,0 +1,230 @@
+{
+  "files": [
+    {
+      "file": "AlgebraicJacobian/AbelianVarietyRigidity.lean",
+      "count": 1,
+      "lines": [
+        57
+      ],
+      "occurrences": [
+        {
+          "line": 57,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/Cohomology/SerreFiniteness.lean",
+      "count": 7,
+      "lines": [
+        85,
+        104,
+        126,
+        144,
+        159,
+        187,
+        201
+      ],
+      "occurrences": [
+        {
+          "line": 85,
+          "column": 3
+        },
+        {
+          "line": 104,
+          "column": 3
+        },
+        {
+          "line": 126,
+          "column": 3
+        },
+        {
+          "line": 144,
+          "column": 3
+        },
+        {
+          "line": 159,
+          "column": 3
+        },
+        {
+          "line": 187,
+          "column": 3
+        },
+        {
+          "line": 201,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/Genus0BaseObjects/BareScheme.lean",
+      "count": 1,
+      "lines": [
+        220
+      ],
+      "occurrences": [
+        {
+          "line": 220,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/Genus0BaseObjects/GmScaling.lean",
+      "count": 2,
+      "lines": [
+        771,
+        944
+      ],
+      "occurrences": [
+        {
+          "line": 771,
+          "column": 5
+        },
+        {
+          "line": 944,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/RiemannRoch/H1Vanishing.lean",
+      "count": 1,
+      "lines": [
+        784
+      ],
+      "occurrences": [
+        {
+          "line": 784,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/RiemannRoch/OCofP.lean",
+      "count": 3,
+      "lines": [
+        1154,
+        1219,
+        1548
+      ],
+      "occurrences": [
+        {
+          "line": 1154,
+          "column": 3
+        },
+        {
+          "line": 1219,
+          "column": 3
+        },
+        {
+          "line": 1548,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/RiemannRoch/OcOfD.lean",
+      "count": 1,
+      "lines": [
+        772
+      ],
+      "occurrences": [
+        {
+          "line": 772,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/RiemannRoch/RRFormula.lean",
+      "count": 5,
+      "lines": [
+        469,
+        770,
+        771,
+        772,
+        773
+      ],
+      "occurrences": [
+        {
+          "line": 469,
+          "column": 5
+        },
+        {
+          "line": 770,
+          "column": 66
+        },
+        {
+          "line": 771,
+          "column": 66
+        },
+        {
+          "line": 772,
+          "column": 66
+        },
+        {
+          "line": 773,
+          "column": 66
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/RiemannRoch/RationalCurveIso.lean",
+      "count": 3,
+      "lines": [
+        477,
+        919,
+        976
+      ],
+      "occurrences": [
+        {
+          "line": 477,
+          "column": 3
+        },
+        {
+          "line": 919,
+          "column": 3
+        },
+        {
+          "line": 976,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/RiemannRoch/SmoothRegular.lean",
+      "count": 1,
+      "lines": [
+        140
+      ],
+      "occurrences": [
+        {
+          "line": 140,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/RiemannRoch/WeilDivisor.lean",
+      "count": 2,
+      "lines": [
+        1438,
+        2035
+      ],
+      "occurrences": [
+        {
+          "line": 1438,
+          "column": 5
+        },
+        {
+          "line": 2035,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "total": 27,
+  "partial": false,
+  "warnings": []
+}

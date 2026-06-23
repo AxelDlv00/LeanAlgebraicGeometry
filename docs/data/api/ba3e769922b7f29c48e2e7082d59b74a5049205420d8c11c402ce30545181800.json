@@ -1,18 +1,109 @@
 {
   "commits": [
     {
-      "sha": "4d1bf80a86b981935b0808493f7869dae7044258",
-      "shortSha": "4d1bf80",
-      "subject": "archon[055/plan]: stage=prover (1743s)",
-      "date": "2026-06-22 15:53:08 +0800",
+      "sha": "d86f200f29f6501616cbc0a44b58a813a02eb734",
+      "shortSha": "d86f200",
+      "subject": "archon[062/finalize]: stage=prover sorry=6",
+      "date": "2026-06-22 23:20:56 +0800",
       "parents": [
-        "1eb663b2671c0cd2fcf6ce5c406b5ee79f22c841"
+        "c0e28ac2db670961052b5a0004ea148ad572d503"
       ],
       "refs": [
         "HEAD -> main"
       ],
+      "iteration": "iter-062",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "c0e28ac2db670961052b5a0004ea148ad572d503",
+      "shortSha": "c0e28ac",
+      "subject": "archon[061/finalize]: stage=prover sorry=6",
+      "date": "2026-06-22 23:19:51 +0800",
+      "parents": [
+        "d606f40859569a2ca6be210b73b69e00e6bea458"
+      ],
+      "refs": [],
+      "iteration": "iter-061",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "d606f40859569a2ca6be210b73b69e00e6bea458",
+      "shortSha": "d606f40",
+      "subject": "archon[060/finalize]: stage=prover sorry=6",
+      "date": "2026-06-22 23:18:44 +0800",
+      "parents": [
+        "5d3af8c9dc555ea1689836f92bcbec7d08fcec12"
+      ],
+      "refs": [],
+      "iteration": "iter-060",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "5d3af8c9dc555ea1689836f92bcbec7d08fcec12",
+      "shortSha": "5d3af8c",
+      "subject": "archon[059/finalize]: stage=prover sorry=6",
+      "date": "2026-06-22 23:17:37 +0800",
+      "parents": [
+        "bff7a6742d786b1791e60afdf7c376a9ea9840f6"
+      ],
+      "refs": [],
+      "iteration": "iter-059",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "bff7a6742d786b1791e60afdf7c376a9ea9840f6",
+      "shortSha": "bff7a67",
+      "subject": "archon[058/finalize]: stage=prover sorry=6",
+      "date": "2026-06-22 23:16:27 +0800",
+      "parents": [
+        "922387a67f3e53b7afee87346a25328009200b33"
+      ],
+      "refs": [],
+      "iteration": "iter-058",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "922387a67f3e53b7afee87346a25328009200b33",
+      "shortSha": "922387a",
+      "subject": "archon[057/finalize]: stage=prover sorry=4",
+      "date": "2026-06-22 21:06:47 +0800",
+      "parents": [
+        "555c9da0bf2e8454973b982406eea71c16abfce1"
+      ],
+      "refs": [],
+      "iteration": "iter-057",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "555c9da0bf2e8454973b982406eea71c16abfce1",
+      "shortSha": "555c9da",
+      "subject": "archon[056/finalize]: stage=prover sorry=4",
+      "date": "2026-06-22 18:43:54 +0800",
+      "parents": [
+        "6034c7d5a66a911f6676126fdda29bf295b06af0"
+      ],
+      "refs": [],
+      "iteration": "iter-056",
+      "phase": "finalize",
+      "branch": "main"
+    },
+    {
+      "sha": "6034c7d5a66a911f6676126fdda29bf295b06af0",
+      "shortSha": "6034c7d",
+      "subject": "archon[055/finalize]: stage=prover sorry=4",
+      "date": "2026-06-22 17:12:42 +0800",
+      "parents": [
+        "1eb663b2671c0cd2fcf6ce5c406b5ee79f22c841"
+      ],
+      "refs": [],
       "iteration": "iter-055",
-      "phase": "plan",
+      "phase": "finalize",
       "branch": "main"
     },
     {

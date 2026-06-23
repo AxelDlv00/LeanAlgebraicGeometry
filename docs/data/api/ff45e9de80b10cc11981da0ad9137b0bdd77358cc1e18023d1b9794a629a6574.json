@@ -35,6 +35,16 @@
       "has_dag": true
     },
     {
+      "name": "MR0555258-compactifying-picard",
+      "path": "SubProjects/RelatedPapersFormalisation/MR0555258-compactifying-picard",
+      "has_dag": false
+    },
+    {
+      "name": "MR2223407-construction-hilbert-quot",
+      "path": "SubProjects/RelatedPapersFormalisation/MR2223407-construction-hilbert-quot",
+      "has_dag": true
+    },
+    {
       "name": "MR4199442-abelian-fourfolds",
       "path": "SubProjects/RelatedPapersFormalisation/MR4199442-abelian-fourfolds",
       "has_dag": true
@@ -165,8 +175,8 @@
       "has_dag": true
     },
     {
-      "name": "RiemannRoch",
-      "path": "SubProjects/RiemannRoch",
+      "name": "RiemannRoch-[obsolete]",
+      "path": "SubProjects/RiemannRoch-[obsolete]",
       "has_dag": true
     }
   ]

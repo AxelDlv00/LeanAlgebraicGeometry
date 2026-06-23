@@ -1,0 +1,205 @@
+[
+  {
+    "timestamp": "2026-06-22T10:30:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "tensorObj_unit_iso_restrict_compat_inner"
+    },
+    "session": {
+      "id": "session_56",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "pullbackTensorMap_left_unitality",
+        "tensorObj_restrict_iso_eq_pullbackTensorMap",
+        "restrictFunctorIsoPullback",
+        "unitRestrictIso",
+        "tensorObjIsoOfIso_eq_comp",
+        "tensorObj_left_unitor_naturality"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Cone A iso-algebra: bridge to pullback world via restrictFunctorIsoPullback j, promote tensor leg by B1, reduce to sheaf-level pullbackTensorMap_left_unitality at M=O_U",
+        "code_tried": "rw [tensorObj_unit_iso_eq_left_unitor, tensorObj_restrict_iso_eq_pullbackTensorMap j ...]; hbr (Iso.ext + simp + exact pullbackTensorMap_left_unitality); hconj (RFIP naturality conjugation); rw[hconj, ← hbr]; simp[Iso.trans_assoc]; congr 1; congr 1; hcore (cancel RFIP.symm≪≫RFIP in unitRestrictIso, tensorObjIsoOfIso_eq_comp, erw tensorObj_left_unitor_naturality)",
+        "line_number": "1262",
+        "lean_error": "none (kernel-verified, lake build EXIT 0)",
+        "result": "success",
+        "insight": "tensorObj_left_unitor_naturality MUST be applied with erw (codomain (restrictFunctor j).obj O vs goal restrict O j = defeq not syntactic); hconj must NOT carry a leading Category.assoc (simp already right-associates RHS); hjι unused on Cone A route (renamed _hjι)."
+      }
+    ],
+    "next_steps": "Inner seam fully closed mod bridge 3. Whole S4b flank now reduced to pullbackTensorMap_left_unitality."
+  },
+  {
+    "timestamp": "2026-06-22T10:30:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackUnitIso_eq_sheafify_eta"
+    },
+    "session": {
+      "id": "session_56",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "pullbackEtaUnitSquare",
+        "pullbackValIso",
+        "sheafifyUnitIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Bridge 1 (η mate-identification): the sheaf unit comparison IS the proven presheaf η-square rearranged",
+        "code_tried": "exact (pullbackEtaUnitSquare f).symm",
+        "line_number": "1171",
+        "lean_error": "none",
+        "result": "success",
+        "insight": "(pullbackUnitIso f).hom defeq pullbackObjUnitToUnit f.toRingCatSheafHom; the root square pullbackEtaUnitSquare is already proven. Axiom-clean."
+      }
+    ],
+    "next_steps": "Consumed by bridge 3."
+  },
+  {
+    "timestamp": "2026-06-22T10:30:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackTensorMap_eq_sheafify_delta"
+    },
+    "session": {
+      "id": "session_56",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Bridge 2 (δ-identification): definitional unfolding of pullbackTensorMap",
+        "code_tried": "rfl",
+        "line_number": "1184",
+        "lean_error": "none",
+        "result": "success",
+        "insight": "pullbackTensorMap unfolds to scp.hom ≫ a_Y.map δ ≫ sheafifyTensorUnitIso.hom ≫ a_Y.map (pbv⊗ₘpbv). Axiom-clean."
+      }
+    ],
+    "next_steps": "Consumed by bridge 3 + inner seam."
+  },
+  {
+    "timestamp": "2026-06-22T10:30:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "tensorObjIsoOfIso_eq_comp"
+    },
+    "session": {
+      "id": "session_56",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "tensorObjIsoOfIso_trans"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Split tensorObjIsoOfIso into single-leg factors",
+        "code_tried": "rw [← tensorObjIsoOfIso_trans, Iso.trans_refl, Iso.refl_trans]",
+        "line_number": "1248",
+        "lean_error": "none",
+        "result": "success",
+        "insight": "Axiom-clean helper. Coverage debt: no blueprint block yet."
+      }
+    ],
+    "next_steps": "Add blueprint entry."
+  },
+  {
+    "timestamp": "2026-06-22T10:30:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackTensorMap_left_unitality"
+    },
+    "session": {
+      "id": "session_56",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "B1-scale sheafification-boundary reconciliation of sheafified-δ legs against congrArg a_Y.map hlu, threading bridge 1 (η-identification), pullbackValIso/sheafifyUnitIso/sheafifyTensorUnitIso naturality + sheafificationCompPullback/counit squares; RHS leg f^*(λ_M) needs pullbackValIso naturality against (tensorObj_left_unitor M).hom",
+      "key_lemmas_used": [
+        "pullbackTensorMap_eq_sheafify_delta",
+        "Functor.OplaxMonoidal.left_unitality_hom"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Sheaf-level transport of presheaf left_unitality_hom (pullback φ') M.val",
+        "code_tried": "rw [pullbackTensorMap_eq_sheafify_delta]; have hlu := ...left_unitality_hom (pullback φ') M.val; sorry",
+        "line_number": "1244",
+        "lean_error": "compiling partial (bridge-2 rewrite + spine hlu committed; reconciliation sorried)",
+        "result": "partial",
+        "insight": "Same depth as Bridge B1 (took many iters + helpers pushforward_mu_appIso_collapse, H1inv...). No informal-agent API key available for a second opinion. Reversal signal designates effort-break next iter."
+      }
+    ],
+    "next_steps": "EFFORT-BREAK into the δ/η mate-identifications vs the unitality assembly (iter-057)."
+  },
+  {
+    "timestamp": "2026-06-22T10:30:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_restrict_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_56",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "S3 — Cone B (bespoke internal-hom base-change; no Mathlib dual-preservation API for f^*); deferred to iter-057, not attempted this iter"
+    },
+    "attempts": [],
+    "next_steps": "Cone B: generalize presheafDualUnitIso_naturality to immersion j."
+  },
+  {
+    "timestamp": "2026-06-22T10:30:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_56",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "S4a — Cone B (same dual base-change gap as S3); deferred to iter-057, not attempted this iter"
+    },
+    "attempts": [],
+    "next_steps": "Cone B."
+  },
+  {
+    "timestamp": "2026-06-22T10:30:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_56",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Telescope of all 5 squares; transitively gated on bridge 3 + S3 + S4a"
+    },
+    "attempts": [],
+    "next_steps": "Gated; close bridge 3, S3, S4a first."
+  }
+]

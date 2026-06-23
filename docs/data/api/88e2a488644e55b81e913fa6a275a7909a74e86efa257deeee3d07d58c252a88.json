@@ -2,12 +2,14 @@
   "files": [
     {
       "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
-      "count": 4,
+      "count": 6,
       "lines": [
         1099,
         1123,
-        1190,
-        1357
+        1329,
+        1373,
+        1443,
+        1700
       ],
       "occurrences": [
         {
@@ -19,17 +21,25 @@
           "column": 3
         },
         {
-          "line": 1190,
+          "line": 1329,
           "column": 3
         },
         {
-          "line": 1357,
+          "line": 1373,
+          "column": 3
+        },
+        {
+          "line": 1443,
+          "column": 3
+        },
+        {
+          "line": 1700,
           "column": 3
         }
       ]
     }
   ],
-  "total": 4,
+  "total": 6,
   "partial": false,
   "warnings": []
 }

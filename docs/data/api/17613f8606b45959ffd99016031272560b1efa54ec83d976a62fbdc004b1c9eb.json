@@ -1,0 +1,143 @@
+[
+  {
+    "timestamp": "2026-06-22T10:42:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Functors.lean",
+      "theorem": "Functors-chapter-scaffold (15 blocks)"
+    },
+    "session": {
+      "id": "session_3",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "EGA-III gaps: coherent cohomology Hⁱ/χ, sheaf flat-over-base predicate, IsLocallyFreeOfRank, det of locally-free sheaf — all absent in mathlib v4.30.0",
+      "key_lemmas_used": [
+        "Module.Grassmannian",
+        "SheafOfModules.free",
+        "AlgebraicGeometry.Proj"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Create file (imports Basic only) and scaffold all 15 \\lean-tagged blocks as compiling sorry stubs; back grassmannian_represents value type with Module.Grassmannian; define hilbertFunctor := quotFunctor π (freeModule X 1)",
+        "code_tried": "Write Functors.lean — 15 decls + helpers freeModule/SheafFlatOver/IsLocallyFreeOfRank/fibreHilbertPolynomial + structs HilbertFamilyPn/QuotFamilyPn/QuotFamily/QuotFamilyPhi/GrassmannianTautological/grassmannianScheme.structureMorphism",
+        "line_number": "1-380",
+        "lean_error": "none (only `declaration uses sorry` warnings)",
+        "result": "partial",
+        "insight": "lake build of module succeeds; no axiom. grassmannian_represents stays an Archon obligation (representability), only its moduli set is Mathlib's."
+      }
+    ],
+    "next_steps": "Blueprint the 8 unmatched helper/struct decls; discharge grassmannianScheme glueing as a BUILD item; wire real hilbertPolynomial once cohomology layer lands."
+  },
+  {
+    "timestamp": "2026-06-22T10:42:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/Regularity.lean",
+      "theorem": "Regularity-chapter-scaffold (7 blocks)"
+    },
+    "session": {
+      "id": "session_3",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "coherent cohomology Hⁱ(ℙⁿ,F(r)) absent; abstracted H : ℕ → ℤ → ModuleCat k with IsZero-vanishing",
+      "key_lemmas_used": [
+        "Ring.choose",
+        "CategoryTheory.Limits.IsZero",
+        "ModuleCat monoidal ⊗",
+        "SheafOfModules.free"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Create file (Basic only) scaffolding 7 blocks; abstract cohomology H, twists, Euler char chi as input data per serre_vanishing convention; prove isMRegular_restrict_hyperplane outright by taking the hyperplane-LES vanishing as hypothesis hles",
+        "code_tried": "Write Regularity.lean — IsMRegular (∀ i≥1, IsZero (H i (m-i))), isMRegular_restrict_hyperplane (no sorry), castelnuovo_vanishing/surjective/globally_generated/castelnuovo/mumford_regularity (sorry)",
+        "line_number": "1-300",
+        "lean_error": "none (5 sorry warnings, 0 errors)",
+        "result": "partial",
+        "insight": "isMRegular_restrict_hyperplane is a genuine provable implication once the LES vanishing is a hypothesis — only fully-proved decl in the chapter. mumford_regularity carries the real content: a single integer polynomial Fpn uniform in k and the subsheaf."
+      }
+    ],
+    "next_steps": "Blueprint nothing new (all 7 matched); discharge castelnuovo_* / mumford once cohomology gap closes."
+  },
+  {
+    "timestamp": "2026-06-22T10:42:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/SemicontinuityBaseChange.lean",
+      "theorem": "SemicontinuityBaseChange-chapter-scaffold (6 blocks)"
+    },
+    "session": {
+      "id": "session_3",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "mathlib v4.30.0 lacks: SheafOfModules.IsLocallyFree, MonoidalCategory/MonoidalClosed on S.Modules (no sheaf ⊗ / internal Hom), flat-sheaf predicate, Rⁱπ_*/fibre cohomology",
+      "key_lemmas_used": [
+        "cohomology_and_base_change (Basic anchor)",
+        "UpperSemicontinuous",
+        "IsLocallyConstant",
+        "Scheme.Modules.pushforward/pullback",
+        "LinearMap.bijective_of_surjective_of_bijective_of_right_exact"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Probe S.Modules API via #check block to discover available structure before stating shadows",
+        "code_tried": "section Probe ... #check (F.IsLocallyFree : Prop); #check (F ⊗ G); #check (CategoryTheory.ihom F G) ...",
+        "line_number": "93-105",
+        "lean_error": "Unknown constant `SheafOfModules.IsLocallyFree`; failed to synthesize MonoidalCategory S.Modules / MonoidalClosed S.Modules",
+        "result": "failed",
+        "insight": "Confirmed (not assumed) the three gaps: no IsLocallyFree, no monoidal/closed structure, no sheaf tensor/internal-Hom in this rev. Probe block deleted after."
+      },
+      {
+        "attempt": 2,
+        "strategy": "State 6 blocks as honest shadows over the confirmed-available API; discharge grothendieck_complex directly from Basic.cohomology_and_base_change (p=0, affine base); specialise cokernel_of_dual to F=O_X via Yoneda on Hom-sets",
+        "code_tried": "Write/Edit final SemicontinuityBaseChange.lean — base_change_without_flatness, flatness_of_locally_free_direct_image (via DirectImageCommutesBaseChange proxy), grothendieck_complex (no sorry), cokernel_of_dual, semicontinuity_fibre_cohomology, base_change_for_flat_sheaves",
+        "line_number": "1-260",
+        "lean_error": "none (lake env lean exit 0, 5 sorry warnings)",
+        "result": "partial",
+        "insight": "grothendieck_complex provable from the existing anchor with no new sorry. Five-lemma blueprint pointer verified correct (Mathlib.Algebra.FiveLemma); lean_local_search misses Mathlib decls — use loogle."
+      }
+    ],
+    "next_steps": "Blueprint helper DirectImageCommutesBaseChange; revisit when monoidal-closed SheafOfModules + Rⁱ land."
+  },
+  {
+    "timestamp": "2026-06-22T10:34:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR2223407ConstructionHilbertQuot/FlatteningStratification.lean",
+      "theorem": "FlatteningStratification-chapter-scaffold (3 blocks)"
+    },
+    "session": {
+      "id": "session_3",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "sheaf flat-over-base predicate absent (only morphism AlgebraicGeometry.Flat); fibrewise Hilbert polynomial is a cohomology gap",
+      "key_lemmas_used": [
+        "AlgebraicGeometry.Flat",
+        "IsLocallyClosed",
+        "Set.Finite",
+        "Module.freeLocus (candidate)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Create file (Basic only) scaffolding 3 blocks; keep genericFlatness_algebra as faithful pure-commutative-algebra (no gap); abstract fibrewise Hilbert poly as input hilb : S → ℚ[λ]",
+        "code_tried": "Write FlatteningStratification.lean — genericFlatness_algebra (∃f≠0, Module.Free after Away-localization; faithful), genericFlatness (F=O_X shadow: ∃ nonempty open U, Flat (p∣_U)), flatteningStratification ((Set.range hilb).Finite ∧ strata IsLocallyClosed ∧ closure order)",
+        "line_number": "1-150",
+        "lean_error": "none (3 sorry warnings, 0 errors)",
+        "result": "partial",
+        "insight": "genericFlatness_algebra is gap-free; may already be in mathlib (Module.freeLocus / RingTheory.Flat.*) but no exact named packaging found. Imported Basic only (Functors/Semicont not yet on disk) — abstracted upstream notions as inputs to decouple from sibling timing."
+      }
+    ],
+    "next_steps": "Reviewer/analogist to confirm whether genericFlatness_algebra has an exact Mathlib match → \\mathlibok if so; blueprint SheafFlatOver dependency; optional cheap follow-up: add Functors/Semicont imports now that they compile."
+  }
+]
