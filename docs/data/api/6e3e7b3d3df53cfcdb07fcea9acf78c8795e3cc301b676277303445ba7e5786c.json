@@ -1,0 +1,163 @@
+[
+  {
+    "timestamp": "2026-06-23T21:28:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "sheafificationCompPullback_restrict"
+    },
+    "session": {
+      "id": "session_68",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "Sq1 `sheafificationCompPullback_comp` (+ tail helpers) are `private` in TensorObjSubstrate.lean — Unknown identifier across import boundary",
+      "key_lemmas_used": [
+        "sheafificationCompPullback_comp (private, inaccessible)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Create named bridge-(b) target (SCP composition law over j;ι_U=ι_V, generic presheaf P) and close via one-line specialisation of proven Sq1",
+        "code_tried": "exact sheafificationCompPullback_comp j U.ι M.val.dual",
+        "line_number": "1128",
+        "lean_error": "Unknown identifier `sheafificationCompPullback_comp`",
+        "goal_before": "(SCP (j ≫ U.ι)).app P).hom = pullbackComp⁻¹ ; (pullback j)(SCP U.ι) ; (SCP j) ; sheafify(pullbackComp.hom)",
+        "goal_after": "unchanged (sorry)",
+        "result": "failed",
+        "insight": "Sq1 + its tail helpers (sheafificationCompPullback_comp_tail, sheaf_unit_comp_pushforward_pullbackComp_inv) are private; only public SCP handle is sheafificationCompPullback_eq_leftAdjointUniq (definitional, not a composition law). Fix = un-private Sq1 or relocate (b) into TensorObjSubstrate.lean."
+      }
+    ],
+    "next_steps": "Planner: un-`private` sheafificationCompPullback_comp (+2 tail helpers) OR move bridge (b) into TensorObjSubstrate.lean — then (b) closes in one line."
+  },
+  {
+    "timestamp": "2026-06-23T21:28:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "presheafDualPullbackComparison_restrict (bridge-c)"
+    },
+    "session": {
+      "id": "session_68",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "Cannot even be STATED in-file: the three θ's do not defeq-align; needs missing identification (pushforward β_{ι_U}).obj M.val ≅ (M.restrict U.ι).val",
+      "key_lemmas_used": [
+        "presheafDual_pullback_restrict_natural (crux — single-immersion only, insufficient)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "State the θ-cocycle over pullbackComp j ι_U chaining θ_{ι_V}, (pullback j)(θ_{ι_U}), θ_{j,M|U}",
+        "code_tried": "(blueprint cocycle eq 7786-7790) — not added as a lemma",
+        "line_number": "1175 (documented in S3 comment)",
+        "lean_error": "object mismatch: codomain (pullback φ_j).obj (dual ((pushforward β_{ι_U}).obj M.val)) ≠ domain (pullback φ_j).obj (dual (M.restrict U.ι).val)",
+        "goal_before": "n/a (cannot type the statement)",
+        "goal_after": "n/a",
+        "result": "failed",
+        "insight": "Crux is θ's single-immersion `_natural` law (per-open), supplies neither the _restrict composition nor the object-identification iso. Sanctioned reversal: build θ-composition + object-id infra in sibling DualInverse/PresheafDualPullback.lean first."
+      }
+    ],
+    "next_steps": "Planner: dispatch SIBLING lane on DualInverse/PresheafDualPullback.lean to build θ-cocycle + (pushforward β).obj M.val ≅ (M.restrict f).val identification; SOLO vs S3 lane (build race)."
+  },
+  {
+    "timestamp": "2026-06-23T21:28:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_restrict_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_68",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "Residual case e_β needs bridges (b)+(c), both blocked",
+      "key_lemmas_used": [
+        "dual_restrict_iso_eq_comparison",
+        "restrictFunctorIsoPullback_comp_compat"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Promote each dual_restrict_iso to RFIP;SCP;sheafify-θ via dual-B1, expand leading RFIP_V by B2, cancel shared ρ_{M.dual} prefix",
+        "code_tried": "rw [dual_restrict_iso_eq_comparison V.ι M, dual_restrict_iso_eq_comparison U.ι M, dual_restrict_iso_eq_comparison j (M.restrict U.ι), restrictFunctorIsoPullback_comp_compat j hjι M.dual]; simp only [Iso.trans_assoc]; congr 1",
+        "line_number": "1186",
+        "lean_error": "none (reaches genuine residual, then sorry)",
+        "goal_before": "dual_restrict_iso V.ι M = ρ ≪≫ (restrictFunctor j)(dual_restrict_iso U.ι M) ≪≫ dual_restrict_iso j (M.restrict U.ι) ≪≫ dualIsoOfIso ρ",
+        "goal_after": "case e_β: LHS RFIP_j;pullbackComp;pullbackCongr;SCP_V;sheafify θ_V  =  RHS (restrict j)(SCP_U;sheafify θ_U);RFIP_j;SCP_j;sheafify θ_j;dualIsoOfIso ρ",
+        "result": "partial",
+        "insight": "B1+B2 legs fully discharged; residual is precisely the (b) SCP-composition seam paired with the (c) θ-cocycle. NOT a depth-mirror of S2 (iter-067 reversal re-confirmed)."
+      }
+    ],
+    "next_steps": "Blocked transitively on (b)+(c). Partial already reaches exact residual — re-dispatch to assemble once (b)+(c) exist."
+  },
+  {
+    "timestamp": "2026-06-23T21:28:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_68",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "Downstream of S3 + same SCP seam (b) + θ-unit identification",
+      "key_lemmas_used": [
+        "dual_unit_iso",
+        "dual_restrict_iso_eq_comparison",
+        "presheafDualUnitIso_naturality (template)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Unfold dual_unit_iso on V/U sides; promote dual_restrict_iso j (unit U) via dual-B1",
+        "code_tried": "simp only [dual_unit_iso, dual_restrict_iso_eq_comparison]",
+        "line_number": "1222",
+        "lean_error": "none (reaches residual, then sorry)",
+        "goal_before": "dual_unit_iso (Y:=V) = dualIsoOfIso(unitRestrictIso j) ≪≫ (dual_restrict_iso j (unit U)).symm ≪≫ (restrictFunctor j)(dual_unit_iso (Y:=U)) ≪≫ unitRestrictIso j",
+        "goal_after": "LHS sheafify(presheafDualUnitIso_V);counit_V = RHS dualIsoOfIso(unitRestrictIso j);(RFIP_j;SCP_j;sheafify θ_j).symm;(restrict j)(sheafify presheafDualUnitIso_U;counit_U);unitRestrictIso j",
+        "result": "partial",
+        "insight": "Pre-existing partial unchanged; rides on S3 + bridge (b) + presheafDualUnitIso_naturality promoted to j. Blocked transitively."
+      }
+    ],
+    "next_steps": "Gated on S3 (b)+(c). Do not re-assign flat until S3 closes."
+  },
+  {
+    "timestamp": "2026-06-23T21:28:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_68",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "Telescope wiring all 5 squares; gated on S3/S4a",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted (STRETCH, gated)",
+        "code_tried": "n/a",
+        "line_number": "1990",
+        "lean_error": "n/a",
+        "goal_before": "n/a",
+        "goal_after": "n/a",
+        "result": "partial",
+        "insight": "Master assembly pending S3+S4a; correctly deferred."
+      }
+    ],
+    "next_steps": "Gated on S3+S4a closing."
+  }
+]

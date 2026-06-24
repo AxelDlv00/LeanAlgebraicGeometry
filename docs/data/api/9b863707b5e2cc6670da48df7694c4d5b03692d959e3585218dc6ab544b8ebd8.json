@@ -14,15 +14,19 @@
     },
     {
       "path": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
-      "size": 136573
+      "size": 158277
     },
     {
       "path": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
-      "size": 355902
+      "size": 355878
     },
     {
       "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
       "size": 53744
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "size": 47266
     },
     {
       "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/SliceTransport.lean",

@@ -1,0 +1,112 @@
+[
+  {
+    "timestamp": "2026-06-23T15:22:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "extGroup"
+    },
+    "session": {
+      "id": "session_11",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "HasDerivedCategory.standard",
+        "CategoryTheory.hasExt_of_hasDerivedCategory",
+        "CategoryTheory.Abelian.Ext",
+        "Scheme.Modules.instAbelian",
+        "AddCommGrpCat.of"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Relax frozen sig Ab.{u}->Ab.{u+1}; realize via standard derived category of the abelian cat Y.Modules",
+        "code_tried": "letI : HasDerivedCategory Y.Modules := HasDerivedCategory.standard Y.Modules; haveI := CategoryTheory.hasExt_of_hasDerivedCategory Y.Modules; AddCommGrp.of (CategoryTheory.Abelian.Ext M N q)",
+        "line_number": "383-386",
+        "lean_error": "Unknown identifier `AddCommGrp.of`",
+        "goal_before": "opaque extGroup ... : Ab.{u}",
+        "goal_after": "",
+        "result": "failed",
+        "insight": "Packaging constructor is AddCommGrpCat.of, not AddCommGrp.of; Ab is reducible alias of AddCommGrpCat"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Same route, correct constructor name",
+        "code_tried": "... AddCommGrpCat.of (CategoryTheory.Abelian.Ext M N q)",
+        "line_number": "386",
+        "lean_error": null,
+        "goal_before": "",
+        "goal_after": "",
+        "result": "success",
+        "insight": "Abelian.Ext M N q : Type (u+1) so lands in Ab.{u+1}; HasDerivedCategory.standard is NOT a dead end once the universe is unpinned (iter-010 KB wrongly froze it as dead-end). Axiom-clean {propext, Classical.choice, Quot.sound}"
+      }
+    ],
+    "next_steps": "P1b-iii(a) complete. Next is deep P1b-iii(b): relExt / proper-base-change / R^q f_* (absent Mathlib brick)."
+  },
+  {
+    "timestamp": "2026-06-23T15:22:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "sheafCohomology"
+    },
+    "session": {
+      "id": "session_11",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "extGroup",
+        "SheafOfModules.unit",
+        "Scheme.ringCatSheaf"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Relax sig to Ab.{u+1}; define as absolute Ext^q_U(O_U, F) = Ext against the monoidal unit",
+        "code_tried": "extGroup q (𝟙_ U.Modules) F",
+        "line_number": "393-394",
+        "lean_error": "unexpected token '_' (𝟙_ monoidal notation not in scope / no MonoidalCategory instance on U.Modules)",
+        "goal_before": "opaque sheafCohomology ... : Ab.{u}",
+        "goal_after": "",
+        "result": "failed",
+        "insight": "U.Modules has no surfaced MonoidalCategory instance; 𝟙_ does not parse"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Use explicit unit module; reorder extGroup above sheafCohomology",
+        "code_tried": "extGroup q (SheafOfModules.unit U.ringCatSheaf) F",
+        "line_number": "394",
+        "lean_error": null,
+        "goal_before": "",
+        "goal_after": "",
+        "result": "success",
+        "insight": "SheafOfModules.unit U.ringCatSheaf : U.Modules is the structure sheaf as a module; axiom-clean. Use site (IsZero) is universe-agnostic so Ab.{u+1} is transparent"
+      }
+    ],
+    "next_steps": "Same as extGroup. Both use-sites (lines 447, 543) typecheck unchanged under IsZero."
+  },
+  {
+    "timestamp": "2026-06-23T15:22:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "relExt / FiberExtVanishes / IsLFPAndFlatOn (P1b-iii(b) deep layer)"
+    },
+    "session": {
+      "id": "session_11",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Needs scheme-theoretic higher direct images R^q f_* / relative Ext sheaf / proper base change — absent from Mathlib. Explicitly scoped OUT of this iter.",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Multi-iter mathlib-build brick. Not a shortcut. Plan agent should decide whether to fund it or pivot to the paused monoidal route."
+  }
+]

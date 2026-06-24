@@ -1,11 +1,11 @@
 {
   "commit": {
-    "sha": "2c84fba86794cc241e4e8da28eb906e5c7e44a5c",
-    "shortSha": "2c84fba",
-    "subject": "archon[000/init]: initial state",
-    "date": "2026-06-23 09:29:55 +0800",
+    "sha": "0659202792c760638264228266aa072d9b4458fe",
+    "shortSha": "0659202",
+    "subject": "archon[021/plan]: stage=prover (661s)",
+    "date": "2026-06-24 14:36:36 +0800",
     "branch": "main",
-    "iteration": "iter-000",
-    "phase": "init"
+    "iteration": "iter-021",
+    "phase": "plan"
   }
 }

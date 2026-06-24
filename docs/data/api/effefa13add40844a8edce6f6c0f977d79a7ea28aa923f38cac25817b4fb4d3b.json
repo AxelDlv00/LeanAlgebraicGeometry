@@ -1,0 +1,171 @@
+[
+  {
+    "timestamp": "2026-06-23T09:14:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "pullback_spec_tilde_iso_ring_square_natural_catCommSq"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "object .app M extraction VERIFIED CORRECT but needs >350k heartbeats (>200k/decl budget); also gated on pullbackSpecTilde_ringSquare_vcomp_glue (sorry)",
+      "key_lemmas_used": [
+        "CatCommSq.vComp",
+        "pullbackSpecTildeNatIso",
+        "chartBaseChangeGeometricComparison_eq_natApp",
+        "NatTrans.congr_app"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "dictionary as CatCommSq instance: @[reducible] def dictSq φ := ⟨pullbackSpecTildeNatIso φ⟩",
+        "code_tried": "@[reducible] noncomputable def dictSq {R R'} (φ : R ⟶ R') : CatCommSq (tilde.functor R) (ModuleCat.extendScalars φ.hom) (Scheme.Modules.pullback (Spec.map φ)) (tilde.functor R') := ⟨pullbackSpecTildeNatIso φ⟩",
+        "line_number": "scratch",
+        "result": "success",
+        "insight": "must be @[reducible] (class-type def warning); elaborates 8s"
+      },
+      {
+        "attempt": 2,
+        "strategy": "state functor-level glue goal via CatCommSq.vComp paste + sorry, then .app M extraction with congrArg Iso.hom + simp CatCommSq.vComp_iso_hom_app",
+        "code_tried": "have key := congrArg (fun η => η.hom.app M) goal; simp only [...CatCommSq.vComp_iso_hom_app...] at key",
+        "line_number": "scratch 41",
+        "lean_error": "Invalid field notation η.hom (metavariable); then unsolved goals",
+        "result": "failed",
+        "insight": "use NatTrans.congr_app (congrArg Iso.hom goal) M instead"
+      },
+      {
+        "attempt": 3,
+        "strategy": "extraction: rw geom/reassoc eq_natApp bridges, Iso.ext, key via NatTrans.congr_app, reassoc with Iso.eq_comp_inv, exact key.symm",
+        "code_tried": "rw [chartBaseChangeModuleReassoc_eq_natApp]; ... rw [← Category.assoc, ← Category.assoc, Iso.eq_comp_inv, Category.assoc]; exact key.symm",
+        "line_number": "scratch 49",
+        "lean_error": "Type mismatch (Eq.symm key) — defeq-not-syntactic between CatCommSq.iso and pullback_spec_tilde_iso forms",
+        "result": "failed",
+        "insight": "needs the pullbackSpecTildeVCompIso_hom_app bridge + geomBridge"
+      },
+      {
+        "attempt": 4,
+        "strategy": "convert key.symm <;> rfl at depths 2,3,4",
+        "code_tried": "convert key.symm using 2 <;> rfl",
+        "line_number": "scratch 52",
+        "lean_error": "(deterministic) timeout at whnf, 200000 heartbeats",
+        "result": "failed",
+        "insight": "rfl on leaves forces heavy carrier whnf"
+      },
+      {
+        "attempt": 5,
+        "strategy": "dictionary as instance (not def) for typeclass synth",
+        "code_tried": "noncomputable instance dictSq ... := ⟨pullbackSpecTildeNatIso φ⟩",
+        "line_number": "scratch 53",
+        "lean_error": "failed to synthesize CatCommSq (tilde.functor R) (extendScalars inclR.hom) ...",
+        "result": "failed",
+        "insight": "instance synth does not fire for these; revert to explicit @CatCommSq.vComp positional instances"
+      },
+      {
+        "attempt": 6,
+        "strategy": "letI dictSq instances inside proof",
+        "code_tried": "letI d_inclR := dictSq inclR; ...",
+        "line_number": "scratch 63",
+        "lean_error": "(deterministic) timeout at whnf 200000",
+        "result": "failed",
+        "insight": "letI → transparent → vComp statement whnf-bombs; haveI → opaque (d.iso won't reduce). Resolution: semireducible def pullbackSpecTildeVCompIso returning Iso (not class)"
+      },
+      {
+        "attempt": 7,
+        "strategy": "iso-level geometric bridge chartBaseChangeGeometricComparison = geomCompNat.app (tilde M) by rfl",
+        "code_tried": "theorem geomBridge ... : chartBaseChangeGeometricComparison ψ φ ρ M = (chartBaseChangeGeometricComparisonNat ψ φ ρ).app (tilde M) := by ... rfl",
+        "line_number": "scratch 83",
+        "result": "success",
+        "insight": "iso-level rfl is heavy (~61s) but FITS 200000hb; the .hom-level rfl is the kernel-unsafe iter-021 wall. Landed as chartBaseChangeGeometricComparison_eq_natApp"
+      },
+      {
+        "attempt": 8,
+        "strategy": "full extraction recipe with hg/hr congrArg bridges + rw at key",
+        "code_tried": "rw [geomBridge, chartBaseChangeModuleReassoc_eq_natApp]; apply Iso.ext; have key := NatTrans.congr_app ...; simp [...pullbackSpecTildeVCompIso_hom_app...] at key; rw [← Category.assoc, ← Category.assoc, Iso.eq_comp_inv, Category.assoc]; exact key.symm",
+        "line_number": "scratch",
+        "lean_error": "(deterministic) timeout at whnf 200000 (whole decl)",
+        "result": "partial",
+        "insight": "the recipe is CORRECT but over budget"
+      },
+      {
+        "attempt": 9,
+        "strategy": "verify extraction correctness at maxHeartbeats 2000000",
+        "code_tried": "set_option maxHeartbeats 2000000 (scratch only)",
+        "line_number": "scratch 94",
+        "result": "success",
+        "insight": "extraction VERIFIED CORRECT (whole file 1m55s). Thresholds: FAILS at 350000 (whnf), at 400000 isDefEq timeout; PASSES at 2000000. Heavy pullback∘tilde carriers incur ~130k-200k hb whnf each and accumulate; sub-lemma splitting re-incurs carrier whnf at exact/statement boundary"
+      }
+    ],
+    "next_steps": "Prove pullbackSpecTilde_ringSquare_vcomp_glue (conjugate of gammaPushforwardNatIso_comp via conjugateIsoEquiv/mateEquiv_vcomp); then decide extraction budget — sanctioned per-decl heartbeat allowance for catCommSq OR lighter-carrier tilde/pullback reformulation. Route B (concrete) untouched, still viable."
+  },
+  {
+    "timestamp": "2026-06-23T09:14:30Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "pullbackSpecTilde_ringSquare_vcomp_glue"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "mate cocycle content not attempted in depth (the genuine ~10-iter wall); STATEMENT now elaborates bomb-free (decisive iter-024 wall break)",
+      "key_lemmas_used": [
+        "CatCommSq.vComp",
+        "pullbackSpecTildeVCompIso",
+        "conjugateIsoEquiv",
+        "gammaPushforwardNatIso_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "state the functor-level mate cocycle via pullbackSpecTildeVCompIso so the reassoc adjacency is syntactic (codomain already (ext ι_R ⋙ ext ρ_B) ⋙ tilde)",
+        "code_tried": "theorem pullbackSpecTilde_ringSquare_vcomp_glue : vCompIso(ι_R,ρ_B) ≪≫ isoWhiskerRight reassocNat tilde = isoWhiskerLeft tilde geomCompNat ≪≫ vCompIso(ρ,ι_R') := sorry",
+        "line_number": "2339",
+        "result": "partial",
+        "insight": "STATEMENT elaborates bomb-free (verified cold) — DECISIVE break of iter-024 wall where isoWhiskerRight reassocNat (tilde.functor _) whnf-bombs inside a 4-fold ≪≫ telescope. Body = typed sorry"
+      },
+      {
+        "attempt": 2,
+        "strategy": "probe Iso.ext tractability of the glue",
+        "code_tried": "Iso.ext + per-component descent (glueProbe scratch)",
+        "line_number": "scratch 111",
+        "result": "partial",
+        "insight": "Iso.ext reachable (73s) but per-component descent hits heavy carriers. The proof is the conjugate via conjugateIsoEquiv of gammaPushforwardNatIso_comp (PROVEN); legs dischargeable by chartBaseChangeGeometricComparison_mate + chartBaseChangeModuleReassoc_extendScalarsComp (iter-018). Not attempted in depth (multi-hour mate assembly)"
+      }
+    ],
+    "next_steps": "Assign as a dedicated clean functor-level mate target: conjugateEquiv_comp splits + mateEquiv_vcomp tying pullbackSpecTildeVCompIso to dictionary of composite ring map (pseudofunctoriality of pullbackSpecTildeNatIso). Drive by conjugateEquiv_comp SPLITS, never unit_conjugateEquiv over composite."
+  },
+  {
+    "timestamp": "2026-06-23T09:14:45Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "pullback_spec_tilde_iso_ring_square_natural_concrete"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "not attempted this iter — chose Route A first per directive (more tractable)",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Route B (basic-open D(a) localization, Stacks 01I9) — deferred",
+        "code_tried": "n/a",
+        "line_number": "2452",
+        "result": "partial",
+        "insight": "untouched; remains a viable independent alternative to Route A"
+      }
+    ],
+    "next_steps": "Available as fallback if Route A's vcomp_glue + extraction-budget pair both stall."
+  }
+]

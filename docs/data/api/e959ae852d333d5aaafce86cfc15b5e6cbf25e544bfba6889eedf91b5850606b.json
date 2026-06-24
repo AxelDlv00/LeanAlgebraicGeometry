@@ -1,0 +1,160 @@
+[
+  {
+    "timestamp": "2026-06-23T12:35:36Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "tensorBaseChangeFunctor"
+    },
+    "session": {
+      "id": "session_6",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "AlgebraicGeometry.Scheme.Modules.pullback",
+        "tensorLeft"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Replace opaque decl with real def: pullback f ⋙ tensorLeft F",
+        "code_tried": "noncomputable def tensorBaseChangeFunctor {X S} (f : X ⟶ S) (F : X.Modules) : S.Modules ⥤ X.Modules := Scheme.Modules.pullback f ⋙ tensorLeft F",
+        "line_number": "135",
+        "lean_error": null,
+        "goal_before": "opaque (no body)",
+        "goal_after": "axiom-clean def",
+        "result": "success",
+        "insight": "Scheme.Modules.pullback f : S.Modules ⥤ X.Modules verified present with rich API; composes cleanly with the hand-built tensorLeft endofunctor. #print axioms = {propext, Classical.choice, Quot.sound}."
+      }
+    ],
+    "next_steps": "1.1.2 H_tensor_invertible / 1.1.3 H_tensor now un-gated (homTensorFunctor concrete); P1b-ii prove targets."
+  },
+  {
+    "timestamp": "2026-06-23T12:35:36Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "tensorLeft"
+    },
+    "session": {
+      "id": "session_6",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "tensorMod",
+        "PresheafOfModules.Monoidal.tensorHom",
+        "PresheafOfModules.sheafification",
+        "MonoidalCategory.id_tensorHom_id",
+        "MonoidalCategory.id_tensor_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Compose honest functors forget ⋙ presheafTensorLeft ⋙ sheafification to get functor laws for free",
+        "code_tried": "SheafOfModules.forget X.ringCatSheaf ⋙ presheafTensorLeft F.val ⋙ PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)",
+        "line_number": "107",
+        "lean_error": "failed to synthesize instance Presheaf.IsLocallyInjective (Opens.grothendieckTopology ↥X) (𝟙 X.ringCatSheaf.obj)",
+        "result": "failed",
+        "insight": "The ⋙ boundary forces unification X.presheaf.comp (forget₂) =?= X.ringCatSheaf.obj (defeq but not syntactic), derailing TC synthesis of IsLocallyInjective. tensorMod avoids this by applying sheafification.obj (keeps R₀ concrete); a bare ⋙ does not. Reverted presheafTensorLeft, removed it."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Functor literal; prove map_id via have h : tensorHom (𝟙 F.val) (𝟙 N).val = 𝟙 (tensorObj ..), then simp [SheafOfModules.id_val, h, Functor.map_id]",
+        "code_tried": "map_id N := by have h : ... := by ext1 Y; simp [tensorHom_app]; simp only [SheafOfModules.id_val, h, Functor.map_id]",
+        "line_number": "113",
+        "lean_error": "Invalid field notation: 𝟙 N has type CategoryStruct.toQuiver.1 N N which does not have the necessary form (on (𝟙 N).val)",
+        "result": "failed",
+        "insight": "(𝟙 N).val field projection fails; switched to 𝟙 N.val inside the have."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Inner have via simp [tensorHom_app, id_app, tensorObj_obj, id_tensorHom_id]",
+        "code_tried": "ext1 Y; simp [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.id_app, PresheafOfModules.Monoidal.tensorObj_obj, MonoidalCategory.id_tensorHom_id]",
+        "line_number": "113",
+        "lean_error": "unsolved goals: tensorHom ((𝟙 F.val).app Y) ((𝟙 N.val).app Y) = 𝟙 (tensorObj (F.val.obj Y) (N.val.obj Y))",
+        "result": "failed",
+        "insight": "simp leaves the per-section monoidal identity; needs explicit id_tensorHom_id applied as exact, not as simp lemma."
+      },
+      {
+        "attempt": 4,
+        "strategy": "rw chain then rfl, including id_tensorHom_id in the rw set",
+        "code_tried": "rw [tensorHom_app, id_app, id_app, id_app, MonoidalCategory.id_tensorHom_id]; rfl",
+        "line_number": "113",
+        "lean_error": "rewrite failed: pattern tensorHom (𝟙 ?X₁) (𝟙 ?X₂) not found in tensorHom (𝟙 (F.val.obj Y)) (𝟙 (N.val.obj Y)) = 𝟙 (...)",
+        "result": "failed",
+        "insight": "id_tensorHom_id does not rewrite under rw (motive/pattern), must be discharged with exact."
+      },
+      {
+        "attempt": 5,
+        "strategy": "rw to expose section-level goal, then exact id_tensorHom_id; map_comp symmetrically with comp_app + id_tensor_comp",
+        "code_tried": "ext1 Y; rw [tensorHom_app, id_app, id_app, id_app]; exact MonoidalCategory.id_tensorHom_id _ _   -- map_comp: rw [tensorHom_app, comp_app, comp_app, tensorHom_app, tensorHom_app, id_app]; exact MonoidalCategory.id_tensor_comp _ _",
+        "line_number": "113",
+        "lean_error": "simp made no progress (on the outer simp only [SheafOfModules.id_val, h, Functor.map_id])",
+        "result": "partial",
+        "insight": "Inner have h closed, but outer simp only [SheafOfModules.id_val/comp_val, h, ...] makes no progress: id_val/comp_val stated for SheafOfModules R category, but 𝟙 N / φ ≫ ψ here use the defeq-but-syntactically-distinct X.Modules instance ⇒ no rw match."
+      },
+      {
+        "attempt": 6,
+        "strategy": "Close outer goal via congrArg + map_id/map_comp (defeq-tolerant exact)",
+        "code_tried": "exact (congrArg G.map h).trans (G.map_id _)   -- map_comp: ... (G.map_comp _ _)",
+        "line_number": "119",
+        "lean_error": null,
+        "result": "success",
+        "insight": "exact matches up to defeq ((𝟙 N).val ≡ 𝟙 N.val, (φ≫ψ).val ≡ φ.val ≫ ψ.val, tensorMod F N ≡ G.obj (tensorObj F.val N.val)), sidestepping the syntactic mismatch that blocks rw/simp. Build exit 0, axiom-clean."
+      }
+    ],
+    "next_steps": "Add blueprint entry (coverage debt — unmatched). Folds into def:tensorBaseChangeFunctor as middle stage."
+  },
+  {
+    "timestamp": "2026-06-23T12:33:43Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "instNonemptyModulesFunctor (removed)"
+    },
+    "session": {
+      "id": "session_6",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Delete the now-obsolete Nonempty instance for the functor-returning placeholder",
+        "code_tried": "(removed) private instance instNonemptyModulesFunctor : Nonempty (S.Modules ⥤ X.Modules) := ⟨0⟩",
+        "line_number": "~80",
+        "lean_error": null,
+        "result": "success",
+        "insight": "No longer needed once tensorBaseChangeFunctor became a real def (its return type no longer requires opaque Nonempty synthesis). instNonemptyModules KEPT — still required by opaque relExt."
+      }
+    ],
+    "next_steps": "Clears one of the two unmatched coverage-debt nodes from prior iters."
+  },
+  {
+    "timestamp": "2026-06-23T12:36:14Z",
+    "status": "not_started",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor / H_tensor_invertible / exists_free_resolution_step / exists_acyclic_surjection / H_locallyFree_of_ext_vanishing / ext_finite_flat"
+    },
+    "session": {
+      "id": "session_6",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Out of scope this iter (single objective = realize tensorBaseChangeFunctor). 0 goal-checks on any of these.",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "P1b-ii: H_tensor / H_tensor_invertible now un-gated (homTensorFunctor concrete). The other 4 remain opaque-blocked or need free-presentation infra."
+  }
+]

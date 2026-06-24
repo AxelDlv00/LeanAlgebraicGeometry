@@ -1,0 +1,127 @@
+[
+  {
+    "timestamp": "2026-06-23T20:22:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_restrict_iso_eq_comparison"
+    },
+    "session": {
+      "id": "session_67",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "presheafDualPullbackComparison",
+        "restrictFunctorIsoPullback",
+        "SheafOfModules.sheafificationCompPullback"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "State dual_restrict_iso f M = RFIP.app(dual M) ≪≫ SCP.app(dual M.val) ≪≫ sheafification.mapIso(presheafDualPullbackComparison f M); close by rfl (dual analogue of Bridge B1)",
+        "code_tried": "rfl",
+        "line_number": "1085",
+        "result": "success",
+        "insight": "presheafDualPullbackComparison (the closed crux's θ) is literally the Step-4 factor of dual_restrict_iso (DualInverse.lean:166); rfl confirms it. This is the linchpin letting S3/S4a be rewritten into named-factor cocycle form. Auditor confirmed honest (θ extracted verbatim), not vacuous."
+      }
+    ],
+    "next_steps": "Needs blueprint entry lem:dual_restrict_iso_eq_comparison (UNMATCHED). Consumed by S3 and S4a."
+  },
+  {
+    "timestamp": "2026-06-23T20:22:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_restrict_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_67",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "Residual after B1+B2 needs TWO new composition bridges not supplied by the single-immersion crux: (b) sheafificationCompPullback (SCP) composition law over j ≫ U.ι = V.ι, (c) θ-cocycle law relating θ_{V.ι,M},(pullback j)θ_{U.ι,M},θ_{j,M|U} via pullbackComp",
+      "key_lemmas_used": [
+        "dual_restrict_iso_eq_comparison",
+        "restrictFunctorIsoPullback_comp_compat"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Mirror S2: promote all three dual_restrict_iso to RFIP≪≫SCP≪≫sheafify θ via dual-B1, expand leading RFIP_{V.ι} by Bridge B2 at M.dual, reassociate, cancel shared leading reindex ρ_{M.dual}",
+        "code_tried": "rw [dual_restrict_iso_eq_comparison V.ι M, dual_restrict_iso_eq_comparison U.ι M, dual_restrict_iso_eq_comparison j (M.restrict U.ι), restrictFunctorIsoPullback_comp_compat j hjι M.dual]; simp only [Iso.trans_assoc]; congr 1",
+        "line_number": "1117",
+        "result": "partial",
+        "insight": "B2 (RFIP) flank + dual-B1 promotion + ρ cancellation fully discharge; residual is exactly the 'sheaf-transport residual ≠ S2' the planner reversal signal anticipated. Auditor: partial reduces goal non-trivially, not a no-op."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Tried to also distribute RHS (restrictFunctor j).mapIso and cancel the RFIP_U leg via second congr 1",
+        "code_tried": "simp only [Functor.mapIso_trans, Iso.trans_assoc]; congr 1; congr 1",
+        "line_number": "1117",
+        "lean_error": "Functor.mapIso_trans reported 'unused' on RHS (does not distribute like S2); rw [Functor.mapIso_trans] hits LHS single-mapIso first and errors. Build EXIT 1.",
+        "result": "failed",
+        "insight": "Unlike S2, simp does not distribute the RHS mapIso here; need conv_rhs to target. Committed proof stops at first congr 1 for robustness (EXIT 0)."
+      }
+    ],
+    "next_steps": "Effort-break into dual L1/L2/L3 (mirror Cone A): L1=sheafificationCompPullback_comp_compat (SCP composition over j≫U.ι; template = pullbackValIso reconciliation idiom ~L507-652); L2=presheafDualPullbackComparison_restrict (θ-cocycle over pullbackComp, consumes crux); L3=assemble. Do NOT re-grind without these bridges built first."
+  },
+  {
+    "timestamp": "2026-06-23T20:22:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_67",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "Downstream of S3: needs (i) same SCP composition seam (b) as S3, and (ii) unit identification of θ — presheafDualPullbackComparison j (unit U) at structure sheaf coincides (mod unitRestrictIso j) with proven presheafDualUnitIso_naturality promoted to j",
+      "key_lemmas_used": [
+        "dual_unit_iso",
+        "dual_restrict_iso_eq_comparison"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Unfold dual_unit_iso = sheafify(presheafDualUnitIso) ≪≫ counit on V/U sides; promote RHS dual_restrict_iso j (unit U) to θ-decomposition",
+        "code_tried": "simp only [dual_unit_iso, dual_restrict_iso_eq_comparison]",
+        "line_number": "1165",
+        "result": "partial",
+        "insight": "Structurally unfolds to explicit residual (LHS: sheafify(presheafDualUnitIso_V)≪≫counit_V; RHS: dualIsoOfIso(unitRestrictIso j)≪≫(RFIP_j≪≫SCP_j≪≫sheafify θ).symm≪≫(restrict j)(...)≪≫unitRestrictIso j). S4a 'rides on S3'; cannot precede S3's (b) seam. Auditor confirms genuine partial."
+      }
+    ],
+    "next_steps": "After S3 (b) seam built: close via L1 + θ-unit identification (presheafDualUnitIso_naturality). Do not re-assign before S3 effort-break lands."
+  },
+  {
+    "timestamp": "2026-06-23T20:22:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_67",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "Telescope gated on all 5 squares; S3/S4a still open"
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted (correct per directive: stretch only if S3+S4a both close)",
+        "code_tried": "",
+        "line_number": "1907",
+        "result": "partial",
+        "insight": "Untouched; remains gated transitively on S3/S4a."
+      }
+    ],
+    "next_steps": "Attempt only after S3+S4a close."
+  }
+]

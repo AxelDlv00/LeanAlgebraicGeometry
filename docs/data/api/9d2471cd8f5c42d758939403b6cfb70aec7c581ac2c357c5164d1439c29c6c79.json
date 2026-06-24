@@ -1,0 +1,106 @@
+[
+  {
+    "timestamp": "2026-06-23T23:51:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "presheafDualH1Cocycle"
+    },
+    "session": {
+      "id": "session_70",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "",
+      "key_lemmas_used": [
+        "leftAdjointUniq_leftAdjointCompIso_comm",
+        "pushforwardComp",
+        "pullbackPushforwardAdjunction",
+        "pushforwardPushforwardAdj"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Prove a GENERIC mate-calculus cocycle lemma once, then instantiate. New `CategoryTheory.Adjunction.leftAdjointUniq_leftAdjointCompIso_comm`: for two families of left adjoints F-,P- sharing right adjoints level-by-level + shared right-adjoint comp iso e, the H1=leftAdjointUniq isos satisfy FC.hom ; H1_02.hom = (H1_01.hom |> F12) ; (P01 <| H1_12.hom) ; PC.hom.",
+        "code_tried": "apply (conjugateEquiv adjP02 (adjF01.comp adjF12)).injective; rw [← conjugateEquiv_comp ...]; conjugateEquiv_whiskerLeft/Right + conjugateEquiv_leftAdjointUniq_hom + conjugateEquiv_leftAdjointCompIso_hom (both mates compute to e.inv)",
+        "line_number": "90 (generic), 624 (a)",
+        "lean_error": "",
+        "goal_before": "FC.hom ≫ H1₀₂.hom = whiskerRight H1₀₁.hom F₁₂ ≫ whiskerLeft P₀₁ H1₁₂.hom ≫ PC.hom",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "Dual-flank analogue of the project keystone conjugateEquiv_restrictFunctorComp_inv, generalised away from the restrict world. `← conjugateEquiv_comp` SPLITS a conjugate-of-composite (simp lemma only combines). Must use `Functor.whiskerRight/Left` (bare names shadowed to monoidal whiskering by `open MonoidalCategory` → MonoidalCategoryStruct failure). Composite-immersion αhf needs EXPLICIT `naturality := (h≫f).appIso_inv_naturality i` (aesop default fails for h≫f)."
+      }
+    ],
+    "next_steps": "(a) closed sorry-free + axiom-clean. Feeds c.2, but does NOT slot in directly (see c.2 milestone)."
+  },
+  {
+    "timestamp": "2026-06-23T23:49:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "presheafDualPullbackComparison_restrict"
+    },
+    "session": {
+      "id": "session_70",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Two-immersion interleaved merge: the H1 factors and the sliceDualTransport factors are INTERLEAVED in the c.2 goal; (a) does not slot in without sliding the sDT factors past the H1 factors via the single-immersion crux. Mirrors the ~600-line proven tensor pullbackTensorMap_restrict (hslide/comp_cancel_mid).",
+      "key_lemmas_used": [
+        "presheafDualH1Cocycle",
+        "presheafDual_pullback_restrict_natural"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Invert (a) to H1_{h;f}.inv = pullbackComp.inv ; (pullback φR_f <| H1_h.inv) ; (H1_f.inv |> pushforward β_h) ; FC.hom, substitute into LHS of elementwise c.2 goal, identify residual with RHS sliceDualTransport chain.",
+        "code_tried": "rw inverted (a) into c.2 elementwise goal (LSP goal extracted at L717)",
+        "line_number": "720",
+        "lean_error": "no error (sorry retained per directive)",
+        "goal_before": "c.2 elementwise: (H1_{h;f}.inv ; sDT_{h;f}) φ = (pullbackComp.symm ; pullbackφR_h.map(H1_f.inv;sDT_f) ; ...) φ",
+        "goal_after": "functor mismatch on middle leg: leg-2 applies OUTER (pullback φR_h) to whole θ_f so H1-part is (pullback φR_h).map H1_f.inv, but natural (a)-inverse groups it as H1_f.inv |> pushforward β_h = (pushforward β_h).map H1_f.inv — DIFFERENT functor (pullback φR_h vs pushforward β_h)",
+        "result": "partial",
+        "insight": "c.2 is NOT '(a) then (b)' as two independent factor-identities. (a) closes independently; the sliceDualTransport flank (b) is ENTANGLED with the merge and only becomes well-posed once the slide is fixed. Reconciling the middle-leg functor mismatch requires sliding sDT factors past H1 via per-open crux presheafDual_pullback_restrict_natural (CLOSED iter-066)."
+      }
+    ],
+    "next_steps": "Re-spec: do NOT keep (b) standalone. Prove c.2 by (i) rw inverted (a) for H1's, (ii) slide each sliceDualTransport factor with presheafDual_pullback_restrict_natural, mirroring pullbackTensorMap_restrict's hslide/comp_cancel_mid. (b) should be the SPECIFIC slide identity step (ii) needs, in the goal's exact spelling, NOT an abstract sDT composition law."
+  },
+  {
+    "timestamp": "2026-06-23T23:42:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "leftAdjointUniq_leftAdjointCompIso_comm"
+    },
+    "session": {
+      "id": "session_70",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "",
+      "key_lemmas_used": [
+        "conjugateEquiv_comp",
+        "conjugateEquiv_whiskerLeft",
+        "conjugateEquiv_whiskerRight",
+        "conjugateEquiv_leftAdjointUniq_hom",
+        "conjugateEquiv_leftAdjointCompIso_hom"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Generic abstract mate-calculus crux (3-category, two adjoint families). Plus 2 helper mate facts: conjugateEquiv_leftAdjointUniq_hom (mate of leftAdjointUniq = id), conjugateEquiv_leftAdjointCompIso_hom (mate of leftAdjointCompIso.hom = e.inv).",
+        "code_tried": "conjugateEquiv_leftAdjointUniq_hom by: rw [leftAdjointUniq, Iso.symm_hom, conjugateIsoEquiv_symm_apply_inv, Iso.refl_inv, Equiv.apply_symm_apply]",
+        "line_number": "60, 71, 90",
+        "lean_error": "Initial: MonoidalCategoryStruct (C0 ⥤ C1) failure (bare whiskerRight shadowed); fixed via Functor.whiskerRight/Left",
+        "goal_before": "mate identities reduce both sides to e.inv",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "Reusable axiom-clean Mathlib-style supplement (namespace CategoryTheory.Adjunction). These 3 generic lemmas have NO blueprint block yet — coverage debt."
+      }
+    ],
+    "next_steps": "Add blueprint \\lean blocks for the 3 generic Adjunction lemmas (planner/writer)."
+  }
+]

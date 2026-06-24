@@ -1,0 +1,117 @@
+[
+  {
+    "timestamp": "2026-06-23T14:11:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "sheafification_map_isIso_of_locallyBijective"
+    },
+    "session": {
+      "id": "session_8",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "CategoryTheory.Localization.inverts",
+        "GrothendieckTopology.W_of_isLocallyBijective",
+        "PresheafOfModules.sheafification (as localization at J.W.inverseImage toPresheaf)",
+        "GrothendieckTopology.WEqualsLocallyBijective"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "local-bijectivity facts as [instance] hypotheses",
+        "code_tried": "{P P' : PresheafOfModules R₀} (g) [IsLocallyInjective J g] [IsLocallySurjective J g] : IsIso ((sheafification α).map g)",
+        "line_number": "220",
+        "lean_error": "typeclass instance problem is stuck ... Presheaf.IsLocallySurjective (Opens.grothendieckTopology X) (𝟙 X.ringCatSheaf.obj) — synthesis sticks on J metavariable when applied at α = 𝟙",
+        "result": "failed",
+        "insight": "instance args make J a metavariable at the unit application site"
+      },
+      {
+        "attempt": 2,
+        "strategy": "take local-bijectivity as explicit args, re-introduce with haveI",
+        "code_tried": "(hi : IsLocallyInjective J g) (hs : IsLocallySurjective J g) : ... := by haveI := hi; haveI := hs; have hW : J.W (...map g) := J.W_of_isLocallyBijective _; exact Localization.inverts (sheafification α) (J.W.inverseImage (toPresheaf R₀)) g hW",
+        "line_number": "220",
+        "lean_error": null,
+        "result": "success",
+        "insight": "explicit args + haveI sidesteps stuck synthesis; sheafification is a localization functor so Localization.inverts closes it. Axiom-clean {propext,Classical.choice,Quot.sound}."
+      }
+    ],
+    "next_steps": "Unconditional brick is done and reusable. Feeds both comparison decls."
+  },
+  {
+    "timestamp": "2026-06-23T14:11:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "sheafifyTensorComparison"
+    },
+    "session": {
+      "id": "session_8",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Unconditional version requires 'tensoring by fixed Q preserves local bijectivity of η'. Local SURJECTIVITY is true & presheaf-provable; local INJECTIVITY is FALSE at presheaf level (- ⊗ Q not left exact; counterexample ℤ/2 ⊗ (·2:ℤ→ℤ)). Needs stalks or MonoidalClosed(PresheafOfModules R) — both absent from Mathlib.",
+      "key_lemmas_used": [
+        "sheafification_map_isIso_of_locallyBijective",
+        "PresheafOfModules.Monoidal.tensorHom",
+        "PresheafOfModules.sheafificationAdjunction (unit)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "scratch the comparison as (sheafification 𝟙).map (η_P ⊗ 𝟙_Q) then invert via brick #1, gating local-bijectivity behind explicit hypotheses",
+        "code_tried": "scratchUnit := (sheafificationAdjunction (𝟙)).unit.app P ; scratchTensorMap := tensorHom scratchUnit (𝟙 Q) ; scratchComparison := asIso ((sheafification 𝟙).map scratchTensorMap) using sheafification_map_isIso_of_locallyBijective ... ‹_› ‹_›",
+        "line_number": "270",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "Comparison fully assembles AXIOM-CLEAN once local inj/surj of η⊗𝟙 are taken as hypotheses (hi/hs). Promoted scratch → sheafifyTensorComparisonOfLocallyBijective. Unconditional name sheafifyTensorComparison NOT created."
+      }
+    ],
+    "next_steps": "Either (a) restate blueprint lemma WITH local-bijectivity hypotheses to match the conditional decl, or (b) build MonoidalClosed(PresheafOfModules X.presheaf) ⟹ (Opens.grothendieckTopology X).W.IsMonoidal (mimic Mathlib/CategoryTheory/Sites/Monoidal.lean) to discharge the gap unconditionally."
+  },
+  {
+    "timestamp": "2026-06-23T14:11:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "tensorAssoc"
+    },
+    "session": {
+      "id": "session_8",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Depends on unconditional sheafifyTensorComparison (both handedness), itself blocked on tensor-preserves-local-injectivity gap.",
+      "key_lemmas_used": [
+        "sheafifyTensorComparisonOfLocallyBijective",
+        "sheafifyTensorComparisonLeftOfLocallyBijective",
+        "MonoidalCategory.associator (presheaf-level)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "blueprint chain ((A⊗B)~⊗C)~ ≅ ((A⊗B)⊗C)~ ≅ (A⊗(B⊗C))~ ≅ (A⊗(B⊗C)~)~ with presheaf associator in the middle",
+        "code_tried": "(sheafification (𝟙)).mapIso (MonoidalCategory.associator A.val B.val C.val)",
+        "line_number": "338",
+        "lean_error": "failed to synthesize MonoidalCategoryStruct (PresheafOfModules X.ringCatSheaf.obj)",
+        "result": "failed",
+        "insight": "presheaf associator needs the R⋙forget₂ form of the ring presheaf for instance synthesis"
+      },
+      {
+        "attempt": 2,
+        "strategy": "pin the monoidal category type explicitly",
+        "code_tried": "MonoidalCategory.associator (C := PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) A.val B.val C.val",
+        "line_number": "338",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "Defeq with X.ringCatSheaf.obj but synthesis needs the R⋙forget₂ form. Associator assembles axiom-clean conditionally as tensorAssocOfLocallyBijective (hyps hiR hsR hiL hsL). Unconditional tensorAssoc NOT created."
+      }
+    ],
+    "next_steps": "Blocked behind sheafifyTensorComparison. Per planner's HARD REVERSAL signal (sorry flat 6 across iters 005–008, unconditional comparison did not land), iter-009 should pivot OFF the monoidal route to P1b-iii OR commit to route (b) MonoidalClosed."
+  }
+]

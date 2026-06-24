@@ -1,0 +1,99 @@
+[
+  {
+    "timestamp": "2026-06-24T04:48:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "pullback_isFreeMod"
+    },
+    "session": {
+      "id": "session_17",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "External.pullback_isFreeMod"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Anchor the residual as a new External.* axiom (planner recipe STEP A+C); make project lemma a thin term-mode wrapper",
+        "code_tried": "axiom External.pullback_isFreeMod {X Y : Scheme.{u}} (p : X ⟶ Y) {M : Y.Modules} (h : IsFreeMod M) : IsFreeMod ((Scheme.Modules.pullback p).obj M); body := External.pullback_isFreeMod p h",
+        "line_number": "566 (axiom), ~960 (wrapper)",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Reduces to (Scheme.Modules.pullback p).obj 𝒪_Y ≅ 𝒪_X (structure-sheaf pullback) + pullback-preserves-coproducts; pullbackObjFreeIso needs [(Opens.map p.base).Final] (absent v4.30.0), so anchored rather than built"
+      }
+    ],
+    "next_steps": "Build the structure-sheaf-pullback iso upstream to discharge this anchor; or protect it"
+  },
+  {
+    "timestamp": "2026-06-24T04:48:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "pullback_isLFP"
+    },
+    "session": {
+      "id": "session_17",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "External.pullback_isLFP"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Anchor the residual as a new External.* axiom (planner recipe STEP B+C); thin wrapper",
+        "code_tried": "axiom External.pullback_isLFP {X Y : Scheme.{u}} (p : X ⟶ Y) {M : Y.Modules} (h : IsLFP M) : IsLFP ((Scheme.Modules.pullback p).obj M); body := External.pullback_isLFP p h",
+        "line_number": "577 (axiom), ~976 (wrapper)",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Base-change stability of finite presentation for SheafOfModules; needs fp-globalization absent from Mathlib (infer_instance fails per iter-016)"
+      }
+    ],
+    "next_steps": "Discharge via SheafOfModules.IsFinitePresentation base-change once structure-sheaf pullback iso exists"
+  },
+  {
+    "timestamp": "2026-06-24T04:48:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "exists_free_resolution_step"
+    },
+    "session": {
+      "id": "session_17",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "External.descent_noetherian",
+        "External.tilde_isFP",
+        "External.flat_pullback_exact",
+        "External.affine_fp_tilde",
+        "External.pullback_isFreeMod",
+        "External.pullback_isLFP",
+        "fp_sheaf_affine_tilde",
+        "tilde_exact"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Close the two residual wrappers (above) so the @016-assembled 1.4 body becomes sorryAx-free",
+        "code_tried": "#print axioms MR0555258CompactifyingPicard.exists_free_resolution_step (via lean_verify)",
+        "line_number": "990",
+        "lean_error": null,
+        "result": "success",
+        "insight": "1.4 now axiom-clean modulo 6 External.* anchors + propext/Classical.choice/Quot.sound. NO sorryAx. First §1 deep-theorem closure. Cost: +2 External axioms (9→11)"
+      }
+    ],
+    "next_steps": "Pivot to the 5 remaining §1 sorries (H_tensor_invertible, H_tensor, exists_acyclic_surjection, H_locallyFree_of_ext_vanishing, ext_finite_flat) — each gated on a distinct absent brick"
+  }
+]

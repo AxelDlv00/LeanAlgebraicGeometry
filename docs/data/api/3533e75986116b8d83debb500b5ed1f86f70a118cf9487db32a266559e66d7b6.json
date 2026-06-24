@@ -1,0 +1,150 @@
+[
+  {
+    "timestamp": "2026-06-24T06:20:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.restrictFunctor_preservesLimits"
+    },
+    "session": {
+      "id": "session_20",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "extensionByZeroAdjunction",
+        "Adjunction.rightAdjoint_preservesLimits"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "j^* = restrictFunctor j is the RIGHT adjoint of extensionByZeroAdjunction (j_! ⊣ j^*); right adjoints preserve limits",
+        "code_tried": "noncomputable instance restrictFunctor_preservesLimits : PreservesLimitsOfSize.{u, u} (Scheme.Modules.restrictFunctor j) := (extensionByZeroAdjunction j).rightAdjoint_preservesLimits",
+        "line_number": "1124",
+        "lean_error": "",
+        "result": "success",
+        "insight": "j^* is ALSO a left adjoint (Mathlib restrictAdjunction : j^* ⊣ j_*) ⇒ preserves colimits too ⇒ j^* fully EXACT, unconditional. This is the j^*-exactness half of the iter-020 objective."
+      }
+    ],
+    "next_steps": "Blueprint as lem:restrictFunctor_exact \\uses{lem:extensionByZeroAdjunction}."
+  },
+  {
+    "timestamp": "2026-06-24T06:20:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.extensionByZero_preservesFiniteLimits_of_preservesMono"
+    },
+    "session": {
+      "id": "session_20",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Functor.preservesFiniteLimits_iff_forall_exact_map_and_mono",
+        "Adjunction.left_adjoint_additive",
+        "Functor.additive_of_preserves_binary_products",
+        "extensionByZeroAdjunction"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Mirror tilde_preservesFiniteLimits: j_! left adjoint ⇒ right exact; preservesFiniteLimits ⟺ mono-preservation for additive right-exact functor",
+        "code_tried": "rw [Functor.preservesFiniteLimits_iff_forall_exact_map_and_mono]",
+        "line_number": "1143",
+        "lean_error": "failed to synthesize (extensionByZero j).Additive",
+        "result": "partial",
+        "insight": "The criterion needs Additive side-condition discharged explicitly."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Discharge Additive: j^* additive via additive_of_preserves_binary_products (uses new restrictFunctor_preservesLimits), then j_! additive via left_adjoint_additive",
+        "code_tried": "haveI : (Scheme.Modules.restrictFunctor j).Additive := Functor.additive_of_preserves_binary_products _\n  haveI : (extensionByZero j).Additive := (extensionByZeroAdjunction j).left_adjoint_additive\n  rw [Functor.preservesFiniteLimits_iff_forall_exact_map_and_mono]",
+        "line_number": "1143",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Conditional on [(extensionByZero j).PreservesMonomorphisms]. Isolates the SINGLE missing brick for unconditional j_! exactness."
+      }
+    ],
+    "next_steps": "Blueprint as lem:extensionByZero_exact_of_mono. Unconditional needs the PreservesMonomorphisms instance."
+  },
+  {
+    "timestamp": "2026-06-24T06:20:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.extensionByZero_preservesFiniteLimits"
+    },
+    "session": {
+      "id": "session_20",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Sole missing ingredient = (extensionByZero j).PreservesMonomorphisms — the open-immersion stalkwise content; absent in Mathlib v4.30.0",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Abstract category theory: derive mono-preservation from adjoint triple j_! ⊣ j^* ⊣ j_*",
+        "code_tried": "(reasoning, not committed)",
+        "line_number": "1143",
+        "lean_error": "",
+        "result": "failed",
+        "insight": "j^* exact and j^* j_! ≅ id, but j^* NOT faithful for open immersion (kills sheaves supported off U) ⇒ does not reflect monos. Exactness of j_! in a recollement is genuine gluing data, not formal from the triple."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Decompose via SheafOfModules.pullbackIso into forget ≫ PresheafOfModules.pullback ≫ sheafification",
+        "code_tried": "(reasoning, not committed)",
+        "line_number": "1143",
+        "lean_error": "",
+        "result": "failed",
+        "insight": "sheafification preserves finite limits/monos (instPreservesFiniteLimitsSheafOfModulesSheafification), forget faithful, but irreducible gap = (PresheafOfModules.pullback φ.hom).PreservesMonomorphisms — no Mathlib mono/finite-limit instance for PresheafOfModules.pullback (built as left adjoint ⇒ only right-exact a priori)."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Stalkwise (blueprint's intended route): stalk functor for SheafOfModules over X with joint conservativity + stalk computation of pullback φ = extension by zero",
+        "code_tried": "(reasoning, not committed)",
+        "line_number": "1143",
+        "lean_error": "",
+        "result": "failed",
+        "insight": "Needs SheafOfModules-over-a-scheme stalk functor + mono_of_stalk_mono + stalk computation of SheafOfModules.pullback — none exist in Mathlib v4.30.0. Recurring 'stalks absent' blocker (same family as paused monoidal associator + p^*𝒪≅𝒪). Multi-iter build."
+      }
+    ],
+    "next_steps": "Build instance : (extensionByZero j).PreservesMonomorphisms from a stalk computation + mono_of_stalk_mono for SheafOfModules X.ringCatSheaf. Once supplied, feed to extensionByZero_preservesFiniteLimits_of_preservesMono for unconditional exactness. DO NOT re-attempt abstract/decompose routes."
+  },
+  {
+    "timestamp": "2026-06-24T06:20:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.extensionByZero_ext_adjunction"
+    },
+    "session": {
+      "id": "session_20",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Doubly blocked: needs unconditional j_! exactness (above) AND derived-adjunction derivability data (absent)",
+      "key_lemmas_used": [
+        "CategoryTheory.Adjunction.derived",
+        "CategoryTheory.Abelian.Ext.mapExactFunctor"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "STRETCH: assemble Ext^q_X(j_!M,F) ≅ Ext^q_U(M,j^*F) via Adjunction.derived + Ext.mapExactFunctor",
+        "code_tried": "(searched; not committed)",
+        "line_number": "n/a",
+        "lean_error": "",
+        "result": "failed",
+        "insight": "Adjunction.derived EXISTS but requires heavy explicit derivability data (localizers W₁,W₂, derived functors L₁,L₂, IsLeftDerivedFunctor/calculus instances for these SheafOfModules localizations — all absent). Ext.mapExactFunctor only gives the MAP, not the ISO. Not assemblable this iter."
+      }
+    ],
+    "next_steps": "Needs unconditional j_! exactness first, then the derived-category derivability instances. Defer until both are in. Planner: dedicated iter."
+  }
+]

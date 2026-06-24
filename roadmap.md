@@ -15,13 +15,14 @@ source tree, comments/docstrings excluded; 2026-06-22):*
 | --- | --- | --- |
 | Algebraic-Jacobian-Challenge | prover | 86 ✨ |
 | Cech-Cohomology | ✅ complete | 0 ✨ |
-| Line-Bundle-Comparison-Iso | prover | 6 ✨ |
+| Line-Bundle-Comparison-Iso | prover | 4 ✨ |
 | Albanese | prover | 17 ✨ |
 | RiemannRoch | prover | 25 ✨ |
 | Quot-Foundations | ⏸️ deferred | 21 |
 | GR-quot_closure | ✅ complete · merged → AJC | 0 ✨ |
-| FBC-B_SNAP-chain | prover | 14 ✨ |
-| 36 related-paper projects | 📝 blueprint only | 0 Lean (stub aggregators) |
+| FBC-B_SNAP-chain | prover | 20 ✨ |
+| MR0555258-compactifying-picard | prover | 5 ✨ |
+| 35 related-paper projects | 📝 blueprint only | 0 Lean (stub aggregators) |
 
 > **Which related papers can be formalized now (or almost)?** See
 > [Formalization-readiness ordering](#formalization-readiness-ordering--what-can-be-formalized-now-or-almost):
@@ -125,7 +126,7 @@ complex computes `Rⁱf_* F`. Unconditional (no enough-injectives appeal).
 - [x] **PushPull functoriality** — `pushPullMap` composition, leg coherence, pentagon
 - [x] **Comparison theorem `cech_computes_higherDirectImage`** *(proved iter-079, 0 sorries)*
 
-## Line-Bundle-Comparison-Iso  *(prover stage — extraction hub → Jacobian, 6 open `sorry`)* ✨
+## Line-Bundle-Comparison-Iso  *(prover stage — extraction hub → Jacobian, 4 open `sorry`)* ✨
 
 **Goal:** the comparison-isomorphism substrate giving `Pic♯_{C/k}` its abelian-group
 structure (the A.1.c.sub package; merges back into the Jacobian challenge).
@@ -134,7 +135,7 @@ structure (the A.1.c.sub package; merges back into the Jacobian challenge).
 - [x] **Slice-dual transport iso (DUAL route)** — `TensorObjSubstrate/DualInverse`, `DualInverse/SliceTransport` **sorry-free**
 - [x] **Line-bundle pullback / relative Pic functor** — `LineBundlePullback`, `RelPicFunctor` **sorry-free**; seed `pullback_tensor_iso_loctriv` delivered ✨
 - [x] **Bridge B2 terminal blocker** — `TensorObjInverse.restrictFunctorIsoPullback_comp_compat` is closed axiom-clean; `TensorObjInverse.lean` builds green with the blocker gone ✨
-- [~] **Terminal comparison inverse** — `TensorObjInverse` (×6): B1 crux, immersion-compatibility squares, and final trivialisation restriction compatibility
+- [~] **Terminal comparison inverse** — `TensorObjInverse` (×4): B1 crux, immersion-compatibility squares, and final trivialisation restriction compatibility ✨
 
 ## Albanese  *(prover stage — extraction → Jacobian, 17 open `sorry`)* ✨
 
@@ -199,7 +200,7 @@ imported copies.)*
 - [x] **Section graded ring (SNAP)** — `Picard/SectionGradedRing` **sorry-free** through the graded ring and module stretch ✨ *(now also in AJC)*
 - [x] **Quot scheme** — `QuotScheme` **sorry-free** ✨ *(2026-06-22)*: the four χ-blocked endgame stubs (`hilbertPolynomial`, `QuotFunctor`, the `Grassmannian` functor def, `Grassmannian.representable` — the Hilbert-polynomial/χ formulation, distinct from the proved `Grassmannian.represents`) were **removed** from this leg, since they need the cohomology / Euler-characteristic engine that is out of scope for the H⁰ Grassmannian deliverable; the file's sorry-free quasi-coherent-descent machinery is retained and `lake build` is green (8317 jobs). *(The same stubs still live in the AJC tree's own `Picard/QuotScheme` copy — see the AJC §"Picard representability cone" line — and remain open there.)*
 
-## FBC-B_SNAP-chain  *(prover stage — 14 open `sorry`)* ✨
+## FBC-B_SNAP-chain  *(prover stage — 20 open `sorry`)* ✨
 
 **Goal:** the flat-base-change (FBC-B) leg of the Quot/Picard-representability cone, sharing the
 SNAP section-graded-ring foundation with `GR-quot_closure`. *(Lean scaffolding has been
@@ -207,7 +208,7 @@ generated — this is no longer an empty extraction skeleton.)*
 
 - [x] **Regroup helper** — `Cohomology/RegroupHelper` **sorry-free**
 - [x] **FBC ring-square mate legs** — geometric and algebraic mate legs in `Cohomology/FlatBaseChange` are closed axiom-clean ✨
-- [~] **Flat base change (FBC-B)** — `Cohomology/FlatBaseChange` (×4), `FlatBaseChangeGlobal` (×4): pushforward flat base-change leg
+- [~] **Flat base change (FBC-B)** — `Cohomology/FlatBaseChange` (×10), `FlatBaseChangeGlobal` (×4): pushforward flat base-change leg ✨
 - [~] **Section graded ring (SNAP)** — `Picard/SectionGradedRing` (×6): shared foundation with `GR-quot_closure`
 
 ---
@@ -215,7 +216,7 @@ generated — this is no longer an empty extraction skeleton.)*
 
 ## Related papers  *(📝 blueprint stage — scaffold blueprints at varying depth; Lean formalization not begun)*
 
-All 36 related-paper projects below are blueprint-only: their Lean targets are stub
+All 35 remaining related-paper projects below are blueprint-only: their Lean targets are stub
 aggregators (0 real declarations), so every Lean item is `[ ]`.
 
 > **Blueprints are NOT complete.** Each is a **scaffold / overview** of its (often 50–150-page)
@@ -410,12 +411,13 @@ just not as short-term Lean proofs.
 - [ ] **Picard functor representability** — representability theorem
 
 #### MR0555258 — Compactifying the Picard scheme  ·  **AJC #28**  ·  tier 2  ·  **R1**
+*Prover stage — 5 open `sorry`* ✨
 *Blueprint: skeleton, **Lean targets all `TODO` placeholders** — 1 ch, 1 statement, 1 proof sketch.*
 **Main theorem:** Construction and representability of the compactified Picard scheme for reduced curves.
 
 - [~] **Requires (scope):** Sch, LB/Pic, Mod, Flat.
-- [ ] **New infra:** compactified Picard functor, torsion-free rank-one sheaves.
-- [ ] **Compactification of Picard** — representability and properties
+- [~] **New infra:** compactified Picard functor, torsion-free rank-one sheaves.
+- [~] **Compactification of Picard** — representability and properties
 
 #### MR1822457 — Compactifying the relative Jacobian over families of reduced curves  ·  **AJC #29**  ·  tier 2  ·  **R1**
 *Blueprint: skeleton, **Lean targets all `TODO` placeholders** — 1 ch, 1 statement, 1 proof sketch.*

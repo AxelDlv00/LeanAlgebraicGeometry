@@ -1,0 +1,87 @@
+[
+  {
+    "timestamp": "2026-06-23T05:06:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "pullback_spec_tilde_iso_ring_square_mate_glue"
+    },
+    "session": {
+      "id": "session_27",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "eqToIso boundary-bridge cocycle FOLD refuted by two cold builds — relocates but cannot eliminate the compounded telescope-adjacency defeq; inline-rfl bridges accumulate past 200000-hb, fvar bridges are un-collapsible (eqToIso_refl fires only on syntactic X=X). 9 iters stuck on this frontier.",
+      "key_lemmas_used": [
+        "ring_square_cocycle (skeleton, sorry)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Restore green: delete dead commented ring_square_glue_natTrans block + temporary ring_square_cocycle_probe + the iter-026 bombing exact-fold; revert glue body to typed sorry",
+        "code_tried": "sorry",
+        "line_number": "2041",
+        "lean_error": "none — cold build EXIT=0, 5 sorries",
+        "result": "success",
+        "insight": "iter-026 RED (unreverted fold whnf-timeout) FIXED; file green-with-sorries"
+      },
+      {
+        "attempt": 2,
+        "strategy": "eqToIso boundary-bridge cocycle (4 boundaries e2/e3/e4/e6 bridged, shared X1/X5 ends unbridged)",
+        "code_tried": "have key := ring_square_cocycle g pρ qincl dρB sr dincl' rfl rfl rfl rfl; simp only [eqToIso_refl, Iso.refl_trans, Iso.trans_assoc] at key; exact key",
+        "line_number": "2249",
+        "lean_error": "(kernel) deterministic timeout at isDefEq, 200000 heartbeats — at the qincl arg (shared X1 start boundary g.source ≟ qincl.source unbridged, forcing cross-unification)",
+        "result": "failed",
+        "insight": "the unbridged shared-object ends force the compounded defeq the bridges were meant to remove"
+      },
+      {
+        "attempt": 3,
+        "strategy": "6-boundary bridge — split X1/X5 ends too (X1→X1', X5→X5', e1..e6, all six isos share no implicit object)",
+        "code_tried": "ring_square_cocycle ... rfl rfl rfl rfl rfl rfl; simp only [eqToIso_refl, Iso.refl_trans, Iso.trans_refl, Iso.trans_assoc] at key ⊢; exact key",
+        "line_number": "2258",
+        "lean_error": "(kernel) deterministic timeout at isDefEq, 200000 heartbeats — now builds PAST qincl (all six heavy isos elaborate) but bombs at the trailing six inline rfls",
+        "result": "failed",
+        "insight": "it is ACCUMULATION (6 boundary defeqs + 6 heavy iso elaborations > per-declaration 200000-hb budget), not one pathological boundary; splitting rfls into separate haves does not help (heartbeat budget is per-declaration); maxHeartbeats 1e6 forbidden"
+      },
+      {
+        "attempt": 4,
+        "strategy": "fvar / pre-proven boundary-lemma alternative (own budget per boundary) — LSP probe via lean_run_code",
+        "code_tried": "with fvar e2 : objA = objB, simp only [eqToIso_refl, Iso.refl_trans] (to collapse bridges)",
+        "line_number": "n/a (lean_run_code)",
+        "lean_error": "no-op — both simp lemmas reported unused; eqToIso_refl fires only on syntactic X=X, never on a defeq-not-syntactic boundary objA=objB; no Mathlib lemma collapses eqToIso (h:objA=objB) for objA≠objB syntactically",
+        "result": "failed",
+        "insight": "cheap build but un-collapsible — reconciling the bridged key with the unbridged goal forces the boundary whnf back, compounded, at the final exact. Both branches dead."
+      }
+    ],
+    "next_steps": "DEAD END — do NOT re-attempt the eqToIso boundary-bridge fold (either inline-rfl or pre-proven-boundary-lemma form). iter-028 escalate to CategoryTheory.CatCommSq.hComp (analogies/fbc-fold-adjacency.md): register each leg as a CatCommSq instance, paste via hComp/vComp, extract .app M ONCE at the end by congrArg (·.hom.app M) — composition adjacency is the shared FUNCTOR matched structurally by Functor.comp congruence, no heavy OBJECT defeq forced. If that also fails → glue genuinely stuck after 10 iters, pivot to a different proof of the crux pullback_spec_tilde_iso_ring_square_natural."
+  },
+  {
+    "timestamp": "2026-06-23T05:06:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "ring_square_cocycle"
+    },
+    "session": {
+      "id": "session_27",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Skeleton compiles (cold-green) with a typed sorry body, but as a carrier-free 6-iso + 6-eqToIso-bridge telescope it DROPS the mate hypotheses (i)-(iv) the blueprint states, so after subst it reduces to an arbitrary-iso equality that is FALSE-in-general — sorry-patched. It is not the blueprint theorem; built solely to host the (now-refuted) fold.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Author carrier-free 6-boundary-bridged telescope skeleton replacing ring_square_cocycle_probe",
+        "code_tried": "theorem ring_square_cocycle {𝒵}[Category 𝒵]{X1 X1' .. X6 X6'} (g pρ qincl dρB sr dincl' : isos)(e1..e6 : obj eqs) : g ≪≫ eqToIso e2 ≪≫ pρ ≪≫ eqToIso e5 = eqToIso e1 ≪≫ qincl ≪≫ eqToIso e3 ≪≫ dρB ≪≫ eqToIso e4 ≪≫ sr ≪≫ eqToIso e6 ≪≫ dincl'.symm := by subst e1..e6; sorry",
+        "line_number": "2017",
+        "lean_error": "none — compiles (sorry)",
+        "result": "partial",
+        "insight": "skeleton compiles but is a weaker/false-as-written statement than blueprint lem:ring_square_cocycle (lvbc-fbc027 must-fix). Built only to host the refuted fold; repurpose for CatCommSq route or mark documented dead-end skeleton."
+      }
+    ],
+    "next_steps": "Reconcile with blueprint: either upgrade the Lean signature to carry hypotheses (i)-(iv) (mate-calculus form) or downgrade the blueprint statement to the bare bridged-telescope skeleton. Likely superseded by the CatCommSq.hComp route in iter-028. Blueprint % NOTE markers added this iter flagging the mismatch."
+  }
+]

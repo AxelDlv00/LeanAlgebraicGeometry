@@ -1,6 +1,40 @@
 {
-  "files": [],
-  "total": 0,
+  "files": [
+    {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "count": 5,
+      "lines": [
+        634,
+        642,
+        652,
+        661,
+        684
+      ],
+      "occurrences": [
+        {
+          "line": 634,
+          "column": 3
+        },
+        {
+          "line": 642,
+          "column": 3
+        },
+        {
+          "line": 652,
+          "column": 3
+        },
+        {
+          "line": 661,
+          "column": 3
+        },
+        {
+          "line": 684,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "total": 5,
   "partial": false,
   "warnings": []
 }

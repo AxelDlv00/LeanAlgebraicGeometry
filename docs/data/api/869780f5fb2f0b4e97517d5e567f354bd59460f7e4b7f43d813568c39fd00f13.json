@@ -7198,5 +7198,1497 @@
         "next_steps": "Add blueprint node; repoint bridge-3 RHS-leg \\uses."
       }
     ]
+  },
+  {
+    "sessionId": "session_63",
+    "milestones": [
+      {
+        "timestamp": "2026-06-23T08:43:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "tensorObj_left_unitor_pullback_eq_sheafify"
+        },
+        "session": {
+          "id": "session_63",
+          "model": "opus-4.8"
+        },
+        "findings": {
+          "blocker": "residual STU-collapse coherence: STU.hom ≫ (tensorObjIsoOfIso sheafifyUnitIso 𝟙).hom ≫ tensorObj_left_unitor(a_Y(F M.val)).hom = a_Y.map λ_{F M.val}",
+          "key_lemmas_used": [
+            "tensorObjIsoOfIso_eq_comp",
+            "tensorObj_left_unitor_naturality",
+            "Iso.trans_hom",
+            "Category.assoc"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "fold reconciliation wrapper tensor leg to (tensorObjIsoOfIso sheafifyUnitIso pbv_M).hom via a `show` restating the goal",
+            "code_tried": "show (sheafifyTensorUnitIso ...).hom ≫ (tensorObjIsoOfIso (sheafifyUnitIso) (pullbackValIso f M)).hom ≫ ...",
+            "line_number": "1329",
+            "lean_error": "type mismatch: RHS has sheafToPresheaf-obj carrier, goal has Y.presheaf⋙forget carrier",
+            "result": "failed",
+            "insight": "the `show` restatement exposes the carrier defeq seam; not syntactically equal"
+          },
+          {
+            "attempt": 2,
+            "strategy": "isolate `hw` (rfl: wrapper leg = tensorObjIsoOfIso .hom), then erw [hw, tensorObjIsoOfIso_eq_comp, Iso.trans_hom, Category.assoc, hnat]",
+            "code_tried": "erw [hw, tensorObjIsoOfIso_eq_comp, Iso.trans_hom, Category.assoc, hnat]",
+            "line_number": "1351",
+            "lean_error": "Unknown identifier `tensorObjIsoOfIso_eq_comp` (defined later in file) / then `rewrite failed: Did not find an occurrence of the pattern`",
+            "result": "failed",
+            "insight": "tensorObjIsoOfIso_eq_comp lived after L2; relocated it earlier. broad Iso.trans_hom unfolds STU's own internal ≪≫ first; targeting the split arg still misses on the SheafOfModules ≫ seam"
+          },
+          {
+            "attempt": 3,
+            "strategy": "combine split + hnat in an isolated STU-free `have hcomb`, fold via term-mode congrArg",
+            "code_tried": "have hcomb : (tensorObjIsoOfIso sheafifyUnitIso (pullbackValIso f M)).hom ≫ (tensorObj_left_unitor ((pullback f).obj M)).hom = ... := by rw [tensorObjIsoOfIso_eq_comp, Iso.trans_hom, Category.assoc]; exact congrArg (_ ≫ ·) hnat\n  erw [hw, hcomb]",
+            "line_number": "1351",
+            "lean_error": "none — compiles",
+            "result": "partial",
+            "insight": "WORKING IDIOM: across the SheafOfModules ≫ defeq-not-syntactic seam, isolate split+rewrite in an STU-free `have`, then fold term-mode via `congrArg (_ ≫ ·) h` / `Eq.trans`. `rw [hnat]` and `simp only [Category.assoc]` both MISS on the seam; congrArg lands by defeq. Reduced bare sorry to a single named STU-coherence residual."
+          }
+        ],
+        "next_steps": "Do NOT keep grinding the seam idiom. Author a dedicated STU-collapse atom (`sheafifyTensorUnitIso_hom_whisker_eq`) unfolding STU into its asIso(a_Y.map (η▷)/(◁η)) legs; this residual then closes mechanically. Shared with L3-3a-step-2."
+      },
+      {
+        "timestamp": "2026-06-23T08:36:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "pullbackUnitIso_whisker_eq_sheafify_eta_whisker"
+        },
+        "session": {
+          "id": "session_63",
+          "model": "opus-4.8"
+        },
+        "findings": {
+          "blocker": "3a-step-2 (central leg TF(a_Y.map η) 𝟙 ↔ a_Y.map(η F ▷ F M.val) via STU reconciliation — the hard STU coherence) + 3b flanking-leg cancellation",
+          "key_lemmas_used": [
+            "tensorObjIsoOfIso_hom",
+            "pullbackUnitIso_eq_sheafify_eta",
+            "Iso.refl_hom",
+            "tensorObj_functoriality_comp3"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "unfold whisker to tensorObj_functoriality then substitute bridge-1 (pullbackUnitIso = (pbv 𝟙).inv ≫ a_Y.map η ≫ sheafifyUnitIso.hom)",
+            "code_tried": "rw [tensorObjIsoOfIso_hom, pullbackUnitIso_eq_sheafify_eta f, Iso.refl_hom]",
+            "line_number": "1420",
+            "lean_error": "none — compiles (both rewrites LSP-confirmed via lean_multi_attempt)",
+            "result": "partial",
+            "insight": "LHS whisker now `tensorObj_functoriality ((pbv 𝟙).inv ≫ a_Y.map η ≫ sheafifyUnitIso.hom) 𝟙`. The 3a *mechanical* step (step 1) is done; the residual is 3a-step-2 + 3b."
+          },
+          {
+            "attempt": 2,
+            "strategy": "tried full split via tensorObj_functoriality_comp3 + central-leg identification (explored, not committed)",
+            "code_tried": "rw [tensorObjIsoOfIso_hom, pullbackUnitIso_eq_sheafify_eta f, Iso.refl_hom, show (𝟙 ((pullback f).obj M)) = 𝟙 _ ≫ 𝟙 _ ≫ 𝟙 _ from by simp, ← tensorObj_functoriality_comp3]",
+            "line_number": "1420",
+            "lean_error": "rw [← tensorObj_functoriality_comp3] MISSES on the seam (must be done in isolated STU-free have + term-mode fold)",
+            "result": "failed",
+            "insight": "the split must use the same isolated-have + term-mode-fold idiom as L2; the central-leg identification is the shared STU coherence (hard)."
+          }
+        ],
+        "next_steps": "Gated on the STU-collapse atom (same as L2). Once that exists, the functoriality split + flanking cancellation are mechanical. Blueprint 3a/3b standalone decls do NOT exist in Lean (inlined here) — flagged with % NOTE."
+      },
+      {
+        "timestamp": "2026-06-23T08:38:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "pullbackTensorMap_left_unitality"
+        },
+        "session": {
+          "id": "session_63",
+          "model": "opus-4.8"
+        },
+        "findings": {
+          "blocker": "assembly route fully derived + verified on goal shape but GATED on L2 and L3 closing (their STU residuals)",
+          "key_lemmas_used": [
+            "pullbackTensorMap_eq_sheafify_delta",
+            "pullback_map_tensorObj_left_unitor_eq",
+            "hHLU (sheafified presheaf left_unitality_hom)"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "inspect post-`erw [← hHLU]` goal and derive the closing calc: cancel common leading scp ≫ a_Yδ (epi); apply (i) L3 STU≫a_Y(pbv⊗pbv)≫whisk = a_Y(η▷FM)≫Wλ; (ii) L2 Wλ≫tensorObj_left_unitor(f^*M) = a_Yλ_{FM}≫pbv M; chain",
+            "code_tried": "-- residual comment only; route recorded verbatim, no new tactic committed (gated)",
+            "line_number": "1500",
+            "lean_error": "none (sorry retained); exposing STU≫a_Y(pbv⊗pbv)≫whisk contiguously needs a reassoc across the seam (simp [Category.assoc] no-progress) — use isolated-have + term-mode fold",
+            "result": "partial",
+            "insight": "the assembly is purely a chain of L2+L3; no independent math content remains. Closes the moment L2/L3 close."
+          }
+        ],
+        "next_steps": "Assembly-only. Unblocks automatically once L2/L3 STU residuals close."
+      },
+      {
+        "timestamp": "2026-06-23T08:43:00Z",
+        "status": "not_started",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "dual_restrict_iso_restrict_compat"
+        },
+        "session": {
+          "id": "session_63",
+          "model": "opus-4.8"
+        },
+        "findings": {
+          "blocker": "Cone B (dual squares S3) — not this lane; solo Cone-A lane this iter",
+          "key_lemmas_used": []
+        },
+        "attempts": [],
+        "next_steps": "Deferred. Cone B internal-hom route; separate file (PresheafDualPullback.lean) never created."
+      },
+      {
+        "timestamp": "2026-06-23T08:43:00Z",
+        "status": "not_started",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "dual_unit_iso_restrict_compat"
+        },
+        "session": {
+          "id": "session_63",
+          "model": "opus-4.8"
+        },
+        "findings": {
+          "blocker": "Cone B (dual squares S4a) — not this lane",
+          "key_lemmas_used": []
+        },
+        "attempts": [],
+        "next_steps": "Deferred. Cone B."
+      },
+      {
+        "timestamp": "2026-06-23T08:43:00Z",
+        "status": "not_started",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "trivialisation_restrict_compat"
+        },
+        "session": {
+          "id": "session_63",
+          "model": "opus-4.8"
+        },
+        "findings": {
+          "blocker": "telescope lemma; depends on the square compat lemmas above",
+          "key_lemmas_used": []
+        },
+        "attempts": [],
+        "next_steps": "Deferred until the square compat lemmas close."
+      }
+    ]
+  },
+  {
+    "sessionId": "session_64",
+    "milestones": [
+      {
+        "timestamp": "2026-06-23T12:59:00Z",
+        "status": "solved",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "tensorObj_left_unitor_image_collapse"
+        },
+        "session": {
+          "id": "session_64",
+          "model": "claude-opus"
+        },
+        "findings": {
+          "blocker": null,
+          "key_lemmas_used": [
+            "sheafifyTensorUnitIso_hom_eq'",
+            "tensorObj_functoriality",
+            "MonoidalCategory.tensorHom_comp_tensorHom",
+            "Adjunction.right_triangle_components",
+            "Adjunction.left_triangle_components",
+            "MonoidalCategory.leftUnitor_naturality",
+            "Functor.map_comp_assoc"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Reduce to presheaf identity hpre, prove the (η_𝟙⊗η_P);(ε⊗𝟙);λ collapse via tensorHom_comp_tensorHom + htri (right-triangle) then close with leftUnitor_naturality",
+            "code_tried": "rw [MonoidalCategory.tensorHom_comp_tensorHom, htri, Category.comp_id]; exact MonoidalCategory.leftUnitor_naturality _",
+            "line_number": "1360",
+            "lean_error": "simp made no progress / rewrite failed: htri codomain 𝟙_ vs unit.val defeq-not-syntactic",
+            "goal_before": "(η_𝟙 ⊗ₘ η_P) ≫ (ε.val ⊗ₘ 𝟙) ≫ λ_(aP) = λ_P ≫ η_P",
+            "goal_after": "",
+            "result": "failed",
+            "insight": "rw[htri]/simp[htri] both MISS: codomain mismatch on the defeq seam"
+          },
+          {
+            "attempt": 2,
+            "strategy": "Use congrArg₂ term-mode to absorb the defeq seam on the tensorHom of the two collapsed factors",
+            "code_tried": "rw [MonoidalCategory.tensorHom_comp_tensorHom, ← MonoidalCategory.leftUnitor_naturality]; congr 1; exact congrArg₂ (fun a b => MonoidalCategory.tensorHom (C:=𝒫) a b) htri (Category.comp_id _)",
+            "line_number": "1360",
+            "lean_error": "none (after htri itself rebuilt via rw[sheafifyUnitIso]; simpa [Iso.app_hom, asIso_hom] using right_triangle_components)",
+            "goal_before": "tensorHom A B = tensorHom C D",
+            "goal_after": "no goals",
+            "result": "success",
+            "insight": "congrArg₂ on tensorHom absorbs the 𝟙_/unit.val seam where rw/simp miss"
+          },
+          {
+            "attempt": 3,
+            "strategy": "Merge the three a.map legs and apply hpre term-mode, then cancel trailing counit by left-triangle",
+            "code_tried": "erw [← Functor.map_comp_assoc, ← Functor.map_comp_assoc]; refine Eq.trans (congrArg (fun m => a.map m ≫ counit) hpre) ?_; beta_reduce; erw [Functor.map_comp_assoc]; have htr := (...).left_triangle_components P; exact (congrArg (fun z => a.map (λ_ P).hom ≫ z) htr).trans (Category.comp_id _)",
+            "line_number": "1372",
+            "lean_error": "earlier: rw[← Category.assoc]/rw[← Functor.map_comp] MISS (goal LEFT-assoc); erw whnf-bomb on left-triangle (counit codomain has 𝟭.obj wrapper)",
+            "goal_before": "a.map((η_𝟙⊗η_P);(ε⊗𝟙)) ≫ a.map(λ_aP) ≫ counit = a.map λ_P",
+            "goal_after": "no goals",
+            "result": "success",
+            "insight": "map_comp_assoc for the merge; left factor must be EXPLICIT in congrArg (a `_` hole becomes z-dependent and fails)"
+          }
+        ],
+        "next_steps": "Keystone proven; unblocks L2. The analogous arg-1 STU naturality (sheafifyTensorUnitIso_naturality_left) is the next core for L3."
+      },
+      {
+        "timestamp": "2026-06-23T12:59:00Z",
+        "status": "solved",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "tensorObj_left_unitor_pullback_eq_sheafify"
+        },
+        "session": {
+          "id": "session_64",
+          "model": "claude-opus"
+        },
+        "findings": {
+          "blocker": null,
+          "key_lemmas_used": [
+            "tensorObj_left_unitor_image_collapse",
+            "tensorObj_left_unitor_naturality",
+            "tensorObjIsoOfIso_eq_comp"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "After existing hw/hnat/hcomb reductions the residual is exactly image_collapse at P=F M.val post-composed with the trailing pbv_M",
+            "code_tried": "simpa only [Category.assoc] using congrArg (· ≫ (pullbackValIso f M).hom) (tensorObj_left_unitor_image_collapse (Y := Y) ((PresheafOfModules.pullback (f.toRingCatSheafHom).hom).obj M.val))",
+            "line_number": "1453",
+            "lean_error": "none",
+            "goal_before": "μ ≫ a.map(ε ⊗ pbv M) ≫ λ_(f*M) = a.map λ_(FM) ≫ pbv_M",
+            "goal_after": "no goals",
+            "result": "success",
+            "insight": "L2 reduces cleanly to the keystone L1; not circular (L1 proved first). sorry 6→5"
+          }
+        ],
+        "next_steps": "L2 closed. Ready for proof-block \\leanok (sync under-marked; review added it)."
+      },
+      {
+        "timestamp": "2026-06-23T12:59:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "pullbackUnitIso_whisker_eq_sheafify_eta_whisker"
+        },
+        "session": {
+          "id": "session_64",
+          "model": "claude-opus"
+        },
+        "findings": {
+          "blocker": "needs a SECOND coherence core: sheafifyTensorUnitIso naturality in arg-1 along the oplax unit η (reduces, same toolkit as image_collapse, to sheafification-UNIT naturality + tensorHom_comp_tensorHom), then mechanical 3a/3b bifunctorial split + flank cancellation",
+          "key_lemmas_used": [
+            "tensorObjIsoOfIso_hom",
+            "pullbackUnitIso_eq_sheafify_eta",
+            "Iso.refl_hom"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "3a step-1 reduction in place; remaining 3a-step2 + 3b sorry'd with full route documented",
+            "code_tried": "rw [tensorObjIsoOfIso_hom, pullbackUnitIso_eq_sheafify_eta f, Iso.refl_hom]",
+            "line_number": "1496",
+            "lean_error": "n/a (sorry at 1509)",
+            "goal_before": "W ≫ (tensorObjIsoOfIso (pullbackUnitIso f) 𝟙).hom = a.map(η ▷ FM) ≫ Wλ",
+            "goal_after": "residual needs STU-naturality-in-arg-1",
+            "result": "partial",
+            "insight": "central-leg STU coherence is the genuinely hard step (NOT definitional); name it sheafifyTensorUnitIso_naturality_left and prove it first via unit naturality"
+          }
+        ],
+        "next_steps": "Prove sheafifyTensorUnitIso_naturality_left (analogue of image_collapse via sheafification-unit naturality), then wire 3a/3b."
+      },
+      {
+        "timestamp": "2026-06-23T12:59:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "pullbackTensorMap_left_unitality"
+        },
+        "session": {
+          "id": "session_64",
+          "model": "claude-opus"
+        },
+        "findings": {
+          "blocker": "ASSEMBLY ONLY, now gated solely on L3 (L2 closed this iter). Residual = reassoc across SheafOfModules seam + chain L3→L2",
+          "key_lemmas_used": [
+            "pullbackTensorMap_eq_sheafify_delta",
+            "pullback_map_tensorObj_left_unitor_eq",
+            "tensorObj_left_unitor_pullback_eq_sheafify"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Assembly: δ-leg via eq_sheafify_delta, build hHLU oplax left-unitality, erw[← hHLU]; residual chains L3/L2",
+            "code_tried": "rw [pullbackTensorMap_eq_sheafify_delta, pullback_map_tensorObj_left_unitor_eq]; erw [← hHLU]",
+            "line_number": "1583",
+            "lean_error": "n/a (sorry, gated on L3)",
+            "goal_before": "pullbackTensorMap ; (tensorObjIsoOfIso (pullbackUnitIso f) 𝟙).hom ; λ_(f*M) = (pullback f).map λ_M",
+            "goal_after": "residual gated on L3",
+            "result": "partial",
+            "insight": "L2 now available; once L3 closes this assembly is mechanical (S4b: sorry 5→3)"
+          }
+        ],
+        "next_steps": "Close L3 first, then this assembly closes S4b."
+      },
+      {
+        "timestamp": "2026-06-23T12:59:00Z",
+        "status": "blocked",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "dual_restrict_iso_restrict_compat"
+        },
+        "session": {
+          "id": "session_64",
+          "model": "claude-opus"
+        },
+        "findings": {
+          "blocker": "Cone B (S3) — not in this lane; needs immersion-naturality of dual_restrict_iso (independent internal-hom construction). Cone B sibling file PresheafDualPullback.lean never created.",
+          "key_lemmas_used": []
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "not attempted this session (deferred — Cone A lane)",
+            "code_tried": "n/a",
+            "line_number": "1099",
+            "lean_error": "n/a",
+            "goal_before": "",
+            "goal_after": "",
+            "result": "partial",
+            "insight": "Genuine open obligation (auditor-confirmed), deferred"
+          }
+        ],
+        "next_steps": "Cone B lane: build presheafDual_pullback_restrict_natural; consider creating the PresheafDualPullback.lean sibling for true parallelism."
+      },
+      {
+        "timestamp": "2026-06-23T12:59:00Z",
+        "status": "blocked",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "dual_unit_iso_restrict_compat"
+        },
+        "session": {
+          "id": "session_64",
+          "model": "claude-opus"
+        },
+        "findings": {
+          "blocker": "Cone B (S4a) — depends on S3; route via presheafDualUnitIso_naturality + dual_restrict_iso naturality",
+          "key_lemmas_used": []
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "not attempted (deferred — Cone A lane)",
+            "code_tried": "n/a",
+            "line_number": "1123",
+            "lean_error": "n/a",
+            "goal_before": "",
+            "goal_after": "",
+            "result": "partial",
+            "insight": "Genuine open obligation, depends on S3"
+          }
+        ],
+        "next_steps": "After S3; mirror via presheafDualUnitIso_naturality."
+      },
+      {
+        "timestamp": "2026-06-23T12:59:00Z",
+        "status": "blocked",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "trivialisation_restrict_compat"
+        },
+        "session": {
+          "id": "session_64",
+          "model": "claude-opus"
+        },
+        "findings": {
+          "blocker": "master cocycle telescope; depends on S2-S4c squares (S3/S4a/S4b) closing",
+          "key_lemmas_used": []
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "not attempted (depends on the squares)",
+            "code_tried": "n/a",
+            "line_number": "1832",
+            "lean_error": "n/a",
+            "goal_before": "",
+            "goal_after": "",
+            "result": "partial",
+            "insight": "Charter-immersion j and hjι/hji constructed; sorry stands for the 5-constituent telescope"
+          }
+        ],
+        "next_steps": "Close the squares first."
+      }
+    ]
+  },
+  {
+    "sessionId": "session_65",
+    "milestones": [
+      {
+        "timestamp": "2026-06-23T16:57:48Z",
+        "status": "solved",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "pullbackTensorMap_left_unitality"
+        },
+        "session": {
+          "id": "session_65",
+          "model": "claude-opus-4-8"
+        },
+        "findings": {
+          "blocker": null,
+          "key_lemmas_used": [
+            "pullbackUnitIso_whisker_eq_sheafify_eta_whisker",
+            "tensorObj_left_unitor_pullback_eq_sheafify",
+            "reassoc_of%",
+            "Category.assoc",
+            "presheafPullbackOplaxMonoidal.left_unitality_hom"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Diagnose why the pre-written 'iter-066' bridge-3 body was RED under lake build (LSP showed clean — STALE-GREEN trap)",
+            "code_tried": "lake build AlgebraicJacobian.Picard.TensorObjInverse",
+            "line_number": "1556",
+            "lean_error": "(deterministic) timeout at whnf, 200000 heartbeats; then unknown constant downstream at L1640",
+            "result": "partial",
+            "insight": "Lemma had NO set_option maxHeartbeats; default budget exhausted at whnf before body ran. Every sheafification-laden lemma in this file needs the override."
+          },
+          {
+            "attempt": 2,
+            "strategy": "Add heartbeat override matching sheafPullbackUnit_forget_eq precedent",
+            "code_tried": "set_option maxHeartbeats 4000000 in",
+            "line_number": "1555",
+            "lean_error": "Application type mismatch at exact (~L1631): Eq.symm (Category.assoc _ _ _) has type a≫b≫c=(a≫b)≫c but expected a different split",
+            "result": "partial",
+            "insight": "The bare-`_` placeholders in the term-mode `exact` chain `(((reassoc_of% hL3) _).trans (congrArg (fun t => _ ≫ t) hL2)).trans (Category.assoc _ _ _).symm` were mutually under-determined: hL3's RHS has no trailing unitor leg, so reassoc_of%'s appended k and the congrArg prefix unified to the wrong split across the SheafOfModules ≫ defeq-not-syntactic seam."
+          },
+          {
+            "attempt": 3,
+            "strategy": "Try rw instead of term-mode to pin the pattern",
+            "code_tried": "rw [reassoc_of% hL3, hL2]; exact (Category.assoc _ _ _).symm",
+            "line_number": "1635",
+            "lean_error": "Tactic `rewrite` failed: Did not find an occurrence of the pattern",
+            "result": "failed",
+            "insight": "rw/simp of reassoc/hL2 MISS across the SheafOfModules ≫ seam (ARCHON_MEMORY seam note); only term-mode .trans/congrArg bridge it via isDefEq."
+          },
+          {
+            "attempt": 4,
+            "strategy": "Pin k=ulit and the a_Y(η▷FM) prefix explicitly in the term-mode chain",
+            "code_tried": "refine (Category.assoc _ _ _).trans ?_; exact (((reassoc_of% hL3) ulit).trans (congrArg (fun t => a_Y(η▷FM) ≫ t) hL2)).trans (Category.assoc _ _ _).symm  [k/prefix written out]",
+            "line_number": "1638",
+            "lean_error": null,
+            "result": "success",
+            "insight": "With k and prefix pinned explicitly, the .trans/congrArg chain bridges the seam by isDefEq and closes. Build EXIT 0, axiom-clean {propext, Classical.choice, Quot.sound}. S4b CLOSED, sorry 5→3."
+          }
+        ],
+        "next_steps": "Cone A complete. Open Cone B parallel lane (S3 dual_restrict_iso_restrict_compat L1088, S4a dual_unit_iso_restrict_compat L1113) — recommend file-split into sibling PresheafDualPullback.lean. Telescope trivialisation_restrict_compat (L1822) remains."
+      },
+      {
+        "timestamp": "2026-06-23T16:57:48Z",
+        "status": "solved",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "pullbackUnitIso_whisker_eq_sheafify_eta_whisker"
+        },
+        "session": {
+          "id": "session_65",
+          "model": "claude-opus-4-8"
+        },
+        "findings": {
+          "blocker": null,
+          "key_lemmas_used": [
+            "sheafifyTensorUnitIso_hom_natural",
+            "tensorObj_functoriality",
+            "Functor.map_comp",
+            "MonoidalCategory.tensorHom_comp_tensorHom",
+            "SheafOfModules.comp_val",
+            "Iso.hom_inv_id"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Confirm whether the pre-written L3 body actually compiles (planner asserted central leg = arg-1 q=𝟙 specialization of the already-proven 2-arg naturality sheafifyTensorUnitIso_hom_natural)",
+            "code_tried": "lake build + lean_verify on pullbackUnitIso_whisker_eq_sheafify_eta_whisker",
+            "line_number": "1467",
+            "lean_error": null,
+            "result": "success",
+            "insight": "L3 body was already complete and sorry-free; central leg uses sheafifyTensorUnitIso_hom_natural at (p:=η F, q:=𝟙) with Functor.map_id collapsing the right whisker. Planner's REUSE-don't-rebuild cross-check (iter-065 plan) was correct. Axiom-clean. The earlier-iter view that a new core sheafifyTensorUnitIso_naturality_left had to be BUILT was false."
+          }
+        ],
+        "next_steps": "Consumed by bridge-3 assembly (now closed). No further work."
+      },
+      {
+        "timestamp": "2026-06-23T16:57:48Z",
+        "status": "blocked",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "dual_restrict_iso_restrict_compat"
+        },
+        "session": {
+          "id": "session_65",
+          "model": "claude-opus-4-8"
+        },
+        "findings": {
+          "blocker": "Cone B internal-hom/dual machinery — out of this iter's solo Cone A lane scope; not attempted.",
+          "key_lemmas_used": []
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Deferred — not in PROGRESS objectives this iter (Cone A only)",
+            "code_tried": "n/a",
+            "line_number": "1088",
+            "lean_error": null,
+            "result": "partial",
+            "insight": "S3 (Cone B). Recommended next: file-split dual machinery into sibling PresheafDualPullback.lean and open a true parallel lane. Crux presheafDual_pullback_restrict_natural per iter-057 break."
+          }
+        ],
+        "next_steps": "Open Cone B lane next iter (after blueprint gate confirms the dual chapter)."
+      },
+      {
+        "timestamp": "2026-06-23T16:57:48Z",
+        "status": "blocked",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "dual_unit_iso_restrict_compat"
+        },
+        "session": {
+          "id": "session_65",
+          "model": "claude-opus-4-8"
+        },
+        "findings": {
+          "blocker": "Cone B internal-hom/dual machinery — out of this iter's solo Cone A lane scope; not attempted.",
+          "key_lemmas_used": []
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Deferred — not in PROGRESS objectives this iter (Cone A only)",
+            "code_tried": "n/a",
+            "line_number": "1113",
+            "lean_error": null,
+            "result": "partial",
+            "insight": "S4a (Cone B), mirror of S3 via presheafDualUnitIso_naturality."
+          }
+        ],
+        "next_steps": "Open Cone B lane next iter."
+      },
+      {
+        "timestamp": "2026-06-23T16:57:48Z",
+        "status": "blocked",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "trivialisation_restrict_compat"
+        },
+        "session": {
+          "id": "session_65",
+          "model": "claude-opus-4-8"
+        },
+        "findings": {
+          "blocker": "Telescope gluing lemma — gated; out of this iter's Cone A scope; not attempted.",
+          "key_lemmas_used": []
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Deferred — not in PROGRESS objectives this iter",
+            "code_tried": "n/a",
+            "line_number": "1822",
+            "lean_error": null,
+            "result": "partial",
+            "insight": "Telescope (pushforwardcomp reindex). Rides on the closed bridges; assembly-level."
+          }
+        ],
+        "next_steps": "Assess after Cone B closes; may be mechanical once the dual squares land."
+      }
+    ]
+  },
+  {
+    "sessionId": "session_66",
+    "milestones": [
+      {
+        "timestamp": "2026-06-23T18:38:05Z",
+        "status": "solved",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+          "theorem": "presheafDual_pullback_restrict_natural"
+        },
+        "session": {
+          "id": "session_66",
+          "model": "opus"
+        },
+        "findings": {
+          "key_lemmas_used": [
+            "PresheafOfModules.naturality_apply"
+          ],
+          "insight": "crux = theta.hom built-in PresheafOfModules.Hom naturality; needs NO L1/L2/L3a chain"
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "close crux directly by theta.hom built-in naturality, bypassing blueprint L1;L2;L3a decomposition",
+            "code_tried": "funext φ; exact PresheafOfModules.naturality_apply (presheafDualPullbackComparison f M).hom (homOfLE j).op φ",
+            "line_number": "~262",
+            "result": "success",
+            "insight": "θ.hom is a genuine PresheafOfModules.Hom, hence natural by construction; axiom-clean {propext, Classical.choice, Quot.sound}. This is the lemma S3/S4a consume."
+          }
+        ],
+        "next_steps": "Wire S3/S4a in TensorObjInverse.lean to import PresheafDualPullback and apply this crux."
+      },
+      {
+        "timestamp": "2026-06-23T18:38:05Z",
+        "status": "solved",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+          "theorem": "presheafDual_pullback_restrict_natural_apply"
+        },
+        "session": {
+          "id": "session_66",
+          "model": "opus"
+        },
+        "findings": {
+          "key_lemmas_used": [
+            "PresheafOfModules.naturality_apply",
+            "congrArg"
+          ],
+          "insight": "L3b reproven directly from θ.hom naturality, not through L1/L2/L3a"
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "RED statement had invalid `.1.app` on an eval result; restate to dual-section restriction then prove from θ.hom naturality",
+            "code_tried": "congrArg (evalLin _ (op V) · s) (naturality_apply θ.hom (homOfLE j).op φ)",
+            "line_number": "~340",
+            "result": "success",
+            "insight": "axiom-clean; independent of both sorry legs (L1, L3a)."
+          }
+        ],
+        "next_steps": "none — closed"
+      },
+      {
+        "timestamp": "2026-06-23T18:38:05Z",
+        "status": "solved",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+          "theorem": "dualPrecompHom"
+        },
+        "session": {
+          "id": "session_66",
+          "model": "opus"
+        },
+        "findings": {
+          "key_lemmas_used": [
+            "ModuleCat.ofHom",
+            "internalHomObjModule",
+            "cat_disch"
+          ],
+          "insight": "ofHom needs BOTH carrier-forms (internalHomPresheaf-form + dual-form) of each Module instance supplied via letI; build LinearMap over R₀.obj (op U.unop) with explicit ascription"
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "define app from dualPrecompEquiv forward leg (φ ↦ pushforward₀.map g ≫ φ)",
+            "code_tried": "app U := ModuleCat.ofHom { toFun := fun φ => (pushforward₀ (Over.forget U.unop) _).map g ≫ φ, ... }",
+            "line_number": "~94",
+            "lean_error": "failed to synthesize Module ((R₀⋙forget₂).obj U) ((internalHomPresheaf M' 𝟙_).obj U)",
+            "result": "failed",
+            "insight": "carrier whnf-reduces to internalHomPresheaf form on one side, dual form on the other; typeclass search finds neither from internalHomObjModule alone"
+          },
+          {
+            "attempt": 2,
+            "strategy": "supply BOTH carrier-forms of each module instance via 4 letI + explicit (R := R₀.obj (op U.unop)) ascription on ofHom; close naturality field by cat_disch",
+            "code_tried": "letI : Module (R₀.obj (op U.unop)) ((dual M').obj U) := ...; letI : Module ... ((InternalHom.internalHomPresheaf M' 𝟙_).obj U) := ...; ModuleCat.ofHom (R := R₀.obj (op U.unop)) ...; naturality := by cat_disch",
+            "line_number": "~94",
+            "result": "success",
+            "insight": "mirrors dualIsoOfIso's toModuleIso; cat_disch closes the precomp-vs-restriction square (same one isoMk discharges for dualIsoOfIso)"
+          }
+        ],
+        "next_steps": "none — def + naturality axiom-clean"
+      },
+      {
+        "timestamp": "2026-06-23T18:38:05Z",
+        "status": "solved",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+          "theorem": "dualPrecompHom_restrict_apply"
+        },
+        "session": {
+          "id": "session_66",
+          "model": "opus"
+        },
+        "findings": {
+          "key_lemmas_used": [],
+          "insight": "L2 is rfl once dualPrecompHom def lands"
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "rfl after dualPrecompHom app component unfolds to the RHS",
+            "code_tried": ":= rfl",
+            "line_number": "~127",
+            "result": "success",
+            "insight": "definitionally honest (auditor confirmed)"
+          }
+        ],
+        "next_steps": "none — closed"
+      },
+      {
+        "timestamp": "2026-06-23T18:38:05Z",
+        "status": "blocked",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+          "theorem": "evalLin_restrict_commute_aux"
+        },
+        "session": {
+          "id": "session_66",
+          "model": "opus"
+        },
+        "findings": {
+          "blocker": "naturality_apply (internalHomEval N) (s ⊗ₜ φ) + erw [tensorObj_map_tmul, internalHomEvalApp_tmul ×2] whnf-bombs the TensorProduct.lift machinery even at maxHeartbeats 1.6M; non-bombing route needs the PRIVATE restr_map_homMk / hom_app_heq in PresheafInternalHom.lean re-exposed",
+          "key_lemmas_used": [
+            "PresheafOfModules.naturality_apply",
+            "internalHomEval"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "inline naturality_apply (internalHomEval N) on N = (pullback φR).obj M.val",
+            "code_tried": "have key := naturality_apply (internalHomEval N) (homOfLE j).op (s ⊗ₜ φ); erw [tensorObj_map_tmul, internalHomEvalApp_tmul, internalHomEvalApp_tmul] at key; exact key.symm",
+            "line_number": "~336",
+            "lean_error": "(deterministic) timeout at isDefEq, maximum number of heartbeats (1600000) has been reached",
+            "result": "failed",
+            "insight": "the heavy pullback object whnf-bombs at isDefEq"
+          },
+          {
+            "attempt": 2,
+            "strategy": "extract generic helper over a VARIABLE N (heavy pullback object only appears as argument, never whnf-ed)",
+            "code_tried": "private lemma evalLin_restrict_commute_aux {D} ... (N : PresheafOfModules ...) (j : V ⟶ U) ... ; same naturality_apply+erw route",
+            "line_number": "~324",
+            "lean_error": "(deterministic) timeout at whnf, maximum number of heartbeats (1600000) — the erw [tensorObj_map_tmul] still forces whnf of TensorProduct.lift",
+            "result": "failed",
+            "insight": "generalizing N moved the bomb off isDefEq but the erw on tmul still whnf-bombs; left as documented sorry"
+          }
+        ],
+        "next_steps": "Re-expose (or re-prove inline — both rfl/subst) restr_map_homMk + hom_app_heq from PresheafInternalHom.lean; use the φ-naturality reduction used inside internalHomEval's own naturality field. OFF critical path (crux bypasses L3a)."
+      },
+      {
+        "timestamp": "2026-06-23T18:38:05Z",
+        "status": "blocked",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+          "theorem": "presheafDual_pullback_comparison_eval_apply"
+        },
+        "session": {
+          "id": "session_66",
+          "model": "opus"
+        },
+        "findings": {
+          "blocker": "evalLin _ V ((sliceDualTransport f M V).hom φ) s does not expose dualUnitRingSwap for rw [dualUnitRingSwap_apply] — the swap is buried in the unevaluated sliceDualTransport.hom app. Needs a FORWARD sliceDualTransport_app_apply lemma in SliceTransport.lean (only inverse sliceDualTransportInv_app_apply exists, SliceTransport.lean:563); SliceTransport.lean NOT owned by this lane",
+          "key_lemmas_used": [
+            "dualUnitRingSwap_apply"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "RED stmt fix then rw [dualUnitRingSwap_apply]; rfl",
+            "code_tried": "rw [dualUnitRingSwap_apply]",
+            "line_number": "~294",
+            "lean_error": "Tactic `rewrite` failed: Did not find an occurrence of the pattern (ModuleCat.Hom.hom (dualUnitRingSwap ?f ?W')) ?x",
+            "result": "failed",
+            "insight": "forward sliceDualTransport app at terminal slice = (restrictScalars β_V).map (φ.app (op (Over.mk 𝟙))) ≫ dualUnitRingSwap f V.unop; the swap is unexposed without a forward app lemma"
+          }
+        ],
+        "next_steps": "Add forward sliceDualTransport_app_apply to SliceTransport.lean, then L1 closes by rw [that, dualUnitRingSwap_apply]. OFF critical path (crux bypasses L1)."
+      }
+    ]
+  },
+  {
+    "sessionId": "session_67",
+    "milestones": [
+      {
+        "timestamp": "2026-06-23T20:22:00Z",
+        "status": "solved",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "dual_restrict_iso_eq_comparison"
+        },
+        "session": {
+          "id": "session_67",
+          "model": "opus-4.8"
+        },
+        "findings": {
+          "key_lemmas_used": [
+            "presheafDualPullbackComparison",
+            "restrictFunctorIsoPullback",
+            "SheafOfModules.sheafificationCompPullback"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "State dual_restrict_iso f M = RFIP.app(dual M) ≪≫ SCP.app(dual M.val) ≪≫ sheafification.mapIso(presheafDualPullbackComparison f M); close by rfl (dual analogue of Bridge B1)",
+            "code_tried": "rfl",
+            "line_number": "1085",
+            "result": "success",
+            "insight": "presheafDualPullbackComparison (the closed crux's θ) is literally the Step-4 factor of dual_restrict_iso (DualInverse.lean:166); rfl confirms it. This is the linchpin letting S3/S4a be rewritten into named-factor cocycle form. Auditor confirmed honest (θ extracted verbatim), not vacuous."
+          }
+        ],
+        "next_steps": "Needs blueprint entry lem:dual_restrict_iso_eq_comparison (UNMATCHED). Consumed by S3 and S4a."
+      },
+      {
+        "timestamp": "2026-06-23T20:22:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "dual_restrict_iso_restrict_compat"
+        },
+        "session": {
+          "id": "session_67",
+          "model": "opus-4.8"
+        },
+        "findings": {
+          "blocker": "Residual after B1+B2 needs TWO new composition bridges not supplied by the single-immersion crux: (b) sheafificationCompPullback (SCP) composition law over j ≫ U.ι = V.ι, (c) θ-cocycle law relating θ_{V.ι,M},(pullback j)θ_{U.ι,M},θ_{j,M|U} via pullbackComp",
+          "key_lemmas_used": [
+            "dual_restrict_iso_eq_comparison",
+            "restrictFunctorIsoPullback_comp_compat"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Mirror S2: promote all three dual_restrict_iso to RFIP≪≫SCP≪≫sheafify θ via dual-B1, expand leading RFIP_{V.ι} by Bridge B2 at M.dual, reassociate, cancel shared leading reindex ρ_{M.dual}",
+            "code_tried": "rw [dual_restrict_iso_eq_comparison V.ι M, dual_restrict_iso_eq_comparison U.ι M, dual_restrict_iso_eq_comparison j (M.restrict U.ι), restrictFunctorIsoPullback_comp_compat j hjι M.dual]; simp only [Iso.trans_assoc]; congr 1",
+            "line_number": "1117",
+            "result": "partial",
+            "insight": "B2 (RFIP) flank + dual-B1 promotion + ρ cancellation fully discharge; residual is exactly the 'sheaf-transport residual ≠ S2' the planner reversal signal anticipated. Auditor: partial reduces goal non-trivially, not a no-op."
+          },
+          {
+            "attempt": 2,
+            "strategy": "Tried to also distribute RHS (restrictFunctor j).mapIso and cancel the RFIP_U leg via second congr 1",
+            "code_tried": "simp only [Functor.mapIso_trans, Iso.trans_assoc]; congr 1; congr 1",
+            "line_number": "1117",
+            "lean_error": "Functor.mapIso_trans reported 'unused' on RHS (does not distribute like S2); rw [Functor.mapIso_trans] hits LHS single-mapIso first and errors. Build EXIT 1.",
+            "result": "failed",
+            "insight": "Unlike S2, simp does not distribute the RHS mapIso here; need conv_rhs to target. Committed proof stops at first congr 1 for robustness (EXIT 0)."
+          }
+        ],
+        "next_steps": "Effort-break into dual L1/L2/L3 (mirror Cone A): L1=sheafificationCompPullback_comp_compat (SCP composition over j≫U.ι; template = pullbackValIso reconciliation idiom ~L507-652); L2=presheafDualPullbackComparison_restrict (θ-cocycle over pullbackComp, consumes crux); L3=assemble. Do NOT re-grind without these bridges built first."
+      },
+      {
+        "timestamp": "2026-06-23T20:22:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "dual_unit_iso_restrict_compat"
+        },
+        "session": {
+          "id": "session_67",
+          "model": "opus-4.8"
+        },
+        "findings": {
+          "blocker": "Downstream of S3: needs (i) same SCP composition seam (b) as S3, and (ii) unit identification of θ — presheafDualPullbackComparison j (unit U) at structure sheaf coincides (mod unitRestrictIso j) with proven presheafDualUnitIso_naturality promoted to j",
+          "key_lemmas_used": [
+            "dual_unit_iso",
+            "dual_restrict_iso_eq_comparison"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Unfold dual_unit_iso = sheafify(presheafDualUnitIso) ≪≫ counit on V/U sides; promote RHS dual_restrict_iso j (unit U) to θ-decomposition",
+            "code_tried": "simp only [dual_unit_iso, dual_restrict_iso_eq_comparison]",
+            "line_number": "1165",
+            "result": "partial",
+            "insight": "Structurally unfolds to explicit residual (LHS: sheafify(presheafDualUnitIso_V)≪≫counit_V; RHS: dualIsoOfIso(unitRestrictIso j)≪≫(RFIP_j≪≫SCP_j≪≫sheafify θ).symm≪≫(restrict j)(...)≪≫unitRestrictIso j). S4a 'rides on S3'; cannot precede S3's (b) seam. Auditor confirms genuine partial."
+          }
+        ],
+        "next_steps": "After S3 (b) seam built: close via L1 + θ-unit identification (presheafDualUnitIso_naturality). Do not re-assign before S3 effort-break lands."
+      },
+      {
+        "timestamp": "2026-06-23T20:22:00Z",
+        "status": "not_started",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "trivialisation_restrict_compat"
+        },
+        "session": {
+          "id": "session_67",
+          "model": "opus-4.8"
+        },
+        "findings": {
+          "blocker": "Telescope gated on all 5 squares; S3/S4a still open"
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Not attempted (correct per directive: stretch only if S3+S4a both close)",
+            "code_tried": "",
+            "line_number": "1907",
+            "result": "partial",
+            "insight": "Untouched; remains gated transitively on S3/S4a."
+          }
+        ],
+        "next_steps": "Attempt only after S3+S4a close."
+      }
+    ]
+  },
+  {
+    "sessionId": "session_68",
+    "milestones": [
+      {
+        "timestamp": "2026-06-23T21:28:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "sheafificationCompPullback_restrict"
+        },
+        "session": {
+          "id": "session_68",
+          "model": "opus-4.8"
+        },
+        "findings": {
+          "blocker": "Sq1 `sheafificationCompPullback_comp` (+ tail helpers) are `private` in TensorObjSubstrate.lean — Unknown identifier across import boundary",
+          "key_lemmas_used": [
+            "sheafificationCompPullback_comp (private, inaccessible)"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Create named bridge-(b) target (SCP composition law over j;ι_U=ι_V, generic presheaf P) and close via one-line specialisation of proven Sq1",
+            "code_tried": "exact sheafificationCompPullback_comp j U.ι M.val.dual",
+            "line_number": "1128",
+            "lean_error": "Unknown identifier `sheafificationCompPullback_comp`",
+            "goal_before": "(SCP (j ≫ U.ι)).app P).hom = pullbackComp⁻¹ ; (pullback j)(SCP U.ι) ; (SCP j) ; sheafify(pullbackComp.hom)",
+            "goal_after": "unchanged (sorry)",
+            "result": "failed",
+            "insight": "Sq1 + its tail helpers (sheafificationCompPullback_comp_tail, sheaf_unit_comp_pushforward_pullbackComp_inv) are private; only public SCP handle is sheafificationCompPullback_eq_leftAdjointUniq (definitional, not a composition law). Fix = un-private Sq1 or relocate (b) into TensorObjSubstrate.lean."
+          }
+        ],
+        "next_steps": "Planner: un-`private` sheafificationCompPullback_comp (+2 tail helpers) OR move bridge (b) into TensorObjSubstrate.lean — then (b) closes in one line."
+      },
+      {
+        "timestamp": "2026-06-23T21:28:00Z",
+        "status": "blocked",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "presheafDualPullbackComparison_restrict (bridge-c)"
+        },
+        "session": {
+          "id": "session_68",
+          "model": "opus-4.8"
+        },
+        "findings": {
+          "blocker": "Cannot even be STATED in-file: the three θ's do not defeq-align; needs missing identification (pushforward β_{ι_U}).obj M.val ≅ (M.restrict U.ι).val",
+          "key_lemmas_used": [
+            "presheafDual_pullback_restrict_natural (crux — single-immersion only, insufficient)"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "State the θ-cocycle over pullbackComp j ι_U chaining θ_{ι_V}, (pullback j)(θ_{ι_U}), θ_{j,M|U}",
+            "code_tried": "(blueprint cocycle eq 7786-7790) — not added as a lemma",
+            "line_number": "1175 (documented in S3 comment)",
+            "lean_error": "object mismatch: codomain (pullback φ_j).obj (dual ((pushforward β_{ι_U}).obj M.val)) ≠ domain (pullback φ_j).obj (dual (M.restrict U.ι).val)",
+            "goal_before": "n/a (cannot type the statement)",
+            "goal_after": "n/a",
+            "result": "failed",
+            "insight": "Crux is θ's single-immersion `_natural` law (per-open), supplies neither the _restrict composition nor the object-identification iso. Sanctioned reversal: build θ-composition + object-id infra in sibling DualInverse/PresheafDualPullback.lean first."
+          }
+        ],
+        "next_steps": "Planner: dispatch SIBLING lane on DualInverse/PresheafDualPullback.lean to build θ-cocycle + (pushforward β).obj M.val ≅ (M.restrict f).val identification; SOLO vs S3 lane (build race)."
+      },
+      {
+        "timestamp": "2026-06-23T21:28:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "dual_restrict_iso_restrict_compat"
+        },
+        "session": {
+          "id": "session_68",
+          "model": "opus-4.8"
+        },
+        "findings": {
+          "blocker": "Residual case e_β needs bridges (b)+(c), both blocked",
+          "key_lemmas_used": [
+            "dual_restrict_iso_eq_comparison",
+            "restrictFunctorIsoPullback_comp_compat"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Promote each dual_restrict_iso to RFIP;SCP;sheafify-θ via dual-B1, expand leading RFIP_V by B2, cancel shared ρ_{M.dual} prefix",
+            "code_tried": "rw [dual_restrict_iso_eq_comparison V.ι M, dual_restrict_iso_eq_comparison U.ι M, dual_restrict_iso_eq_comparison j (M.restrict U.ι), restrictFunctorIsoPullback_comp_compat j hjι M.dual]; simp only [Iso.trans_assoc]; congr 1",
+            "line_number": "1186",
+            "lean_error": "none (reaches genuine residual, then sorry)",
+            "goal_before": "dual_restrict_iso V.ι M = ρ ≪≫ (restrictFunctor j)(dual_restrict_iso U.ι M) ≪≫ dual_restrict_iso j (M.restrict U.ι) ≪≫ dualIsoOfIso ρ",
+            "goal_after": "case e_β: LHS RFIP_j;pullbackComp;pullbackCongr;SCP_V;sheafify θ_V  =  RHS (restrict j)(SCP_U;sheafify θ_U);RFIP_j;SCP_j;sheafify θ_j;dualIsoOfIso ρ",
+            "result": "partial",
+            "insight": "B1+B2 legs fully discharged; residual is precisely the (b) SCP-composition seam paired with the (c) θ-cocycle. NOT a depth-mirror of S2 (iter-067 reversal re-confirmed)."
+          }
+        ],
+        "next_steps": "Blocked transitively on (b)+(c). Partial already reaches exact residual — re-dispatch to assemble once (b)+(c) exist."
+      },
+      {
+        "timestamp": "2026-06-23T21:28:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "dual_unit_iso_restrict_compat"
+        },
+        "session": {
+          "id": "session_68",
+          "model": "opus-4.8"
+        },
+        "findings": {
+          "blocker": "Downstream of S3 + same SCP seam (b) + θ-unit identification",
+          "key_lemmas_used": [
+            "dual_unit_iso",
+            "dual_restrict_iso_eq_comparison",
+            "presheafDualUnitIso_naturality (template)"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Unfold dual_unit_iso on V/U sides; promote dual_restrict_iso j (unit U) via dual-B1",
+            "code_tried": "simp only [dual_unit_iso, dual_restrict_iso_eq_comparison]",
+            "line_number": "1222",
+            "lean_error": "none (reaches residual, then sorry)",
+            "goal_before": "dual_unit_iso (Y:=V) = dualIsoOfIso(unitRestrictIso j) ≪≫ (dual_restrict_iso j (unit U)).symm ≪≫ (restrictFunctor j)(dual_unit_iso (Y:=U)) ≪≫ unitRestrictIso j",
+            "goal_after": "LHS sheafify(presheafDualUnitIso_V);counit_V = RHS dualIsoOfIso(unitRestrictIso j);(RFIP_j;SCP_j;sheafify θ_j).symm;(restrict j)(sheafify presheafDualUnitIso_U;counit_U);unitRestrictIso j",
+            "result": "partial",
+            "insight": "Pre-existing partial unchanged; rides on S3 + bridge (b) + presheafDualUnitIso_naturality promoted to j. Blocked transitively."
+          }
+        ],
+        "next_steps": "Gated on S3 (b)+(c). Do not re-assign flat until S3 closes."
+      },
+      {
+        "timestamp": "2026-06-23T21:28:00Z",
+        "status": "blocked",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "trivialisation_restrict_compat"
+        },
+        "session": {
+          "id": "session_68",
+          "model": "opus-4.8"
+        },
+        "findings": {
+          "blocker": "Telescope wiring all 5 squares; gated on S3/S4a",
+          "key_lemmas_used": []
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Not attempted (STRETCH, gated)",
+            "code_tried": "n/a",
+            "line_number": "1990",
+            "lean_error": "n/a",
+            "goal_before": "n/a",
+            "goal_after": "n/a",
+            "result": "partial",
+            "insight": "Master assembly pending S3+S4a; correctly deferred."
+          }
+        ],
+        "next_steps": "Gated on S3+S4a closing."
+      }
+    ]
+  },
+  {
+    "sessionId": "session_69",
+    "milestones": [
+      {
+        "timestamp": "2026-06-23T22:51:19Z",
+        "status": "solved",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+          "theorem": "pushforwardObjValRestrictIso"
+        },
+        "session": {
+          "id": "session_69",
+          "model": "opus"
+        },
+        "findings": {
+          "key_lemmas_used": [
+            "Scheme.Modules.restrictFunctor (defeq)",
+            "SheafOfModules.pushforward.obj.val",
+            "Iso.refl"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Inspect Mathlib restrictFunctor def before building the blueprint H1∘(RFIP;SCP) composite; discover (M.restrict f).val is DEFINITIONALLY (pushforward β).obj M.val since restrictFunctor f := SheafOfModules.pushforward (F:=f.opensFunctor) ⟨whiskerRight α (forget₂ …)⟩",
+            "code_tried": "noncomputable def pushforwardObjValRestrictIso ... := Iso.refl _",
+            "line_number": "530",
+            "result": "success",
+            "insight": "The blueprint's abstract H1∘(RFIP;SCP) collapses to identity once Mathlib's concrete restrictFunctor=pushforward defeq is used; axiom-clean {propext, Classical.choice, Quot.sound}, no sorryAx. Both auditors confirm genuine defeq, not placeholder."
+          }
+        ],
+        "next_steps": "c.1 is closed; feeds c.2 leg-3 (middle θ at the pushforward obj) by defeq."
+      },
+      {
+        "timestamp": "2026-06-23T22:51:19Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+          "theorem": "presheafDualPullbackComparison_restrict"
+        },
+        "session": {
+          "id": "session_69",
+          "model": "opus"
+        },
+        "findings": {
+          "blocker": "Elementwise residual is a genuine TWO-immersion pseudofunctoriality identity; NOT supplied by the single-immersion crux presheafDual_pullback_restrict_natural. Factors into (a) H1=leftAdjointUniq cocycle + (b) sliceDualTransport composition law over image_preimage_of_le.",
+          "key_lemmas_used": [
+            "presheafDualPullbackComparison",
+            "PresheafOfModules.pullbackComp",
+            "Scheme.Modules.restrictFunctorComp",
+            "PresheafOfModules.dualIsoOfIso",
+            "toRingCatSheafHom_comp_hom_reconcile (rfl)"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "State as exact dual of proven tensor pullbackTensorMap_restrict; leg-4 = blueprint-literal dualIsoOfIso((pushforwardComp β_h β_f).symm.app M.val)",
+            "code_tried": "... ≪≫ PresheafOfModules.dualIsoOfIso ((PresheafOfModules.pushforwardComp (whiskerRight {appIso h inv} …) (whiskerRight {appIso f inv} …)).symm.app M.val)",
+            "line_number": "561",
+            "lean_error": "deterministic whnf timeout even at maxHeartbeats 3200000 + backward.isDefEq.respectTransparency false — pushforwardComp at concrete Scheme.presheaf β forces Iso.refl defeq through heavy f.opensFunctor/appIso machinery",
+            "result": "failed",
+            "insight": "DEAD END: do not build pushforwardComp at concrete β; whnf-bombs."
+          },
+          {
+            "attempt": 2,
+            "strategy": "Replace leg-4 with light eqToHom-based Mathlib iso restrictFunctorComp, pushed to presheaves via forget.mapIso then dualIsoOfIso",
+            "code_tried": "... ≪≫ PresheafOfModules.dualIsoOfIso ((SheafOfModules.forget Z.ringCatSheaf).mapIso ((Scheme.Modules.restrictFunctorComp h f).app M))",
+            "line_number": "561",
+            "result": "success",
+            "insight": "Statement now typechecks clean. Legs 1-3 chain by defeq (toRingCatSheafHom_comp_hom_reconcile rfl + c.1 Iso.refl)."
+          },
+          {
+            "attempt": 3,
+            "strategy": "Sectionwise proof attempt: Iso.ext; PresheafOfModules.hom_ext; intro W; ModuleCat.hom_ext; ext φ; then simp only to expose θ internal structure",
+            "code_tried": "apply Iso.ext; apply PresheafOfModules.hom_ext; intro W; apply ModuleCat.hom_ext; ext φ; simp only [presheafDualPullbackComparison, Iso.trans_hom, Iso.symm_hom, Functor.mapIso_hom, PresheafOfModules.comp_app]; sorry",
+            "line_number": "597",
+            "result": "partial",
+            "insight": "simp only applies cleanly (verified by LSP goal diff — real structural reduction, not cosmetic), exposing both sides as H1_g.inv ≫ (isoMk (sliceDualTransport g ·)).hom. Residual = two-immersion pseudofunctoriality = (a)+(b). CONFIRMS planner's armed reversal signal. Did NOT grind per directive."
+          }
+        ],
+        "next_steps": "Planner: effort-break c.2 into (a) H1 leftAdjointUniq cocycle (dual of conjugateEquiv_pullbackComp_inv / conjugateEquiv_restrictFunctorComp_inv) + (b) sliceDualTransport composition law. Also reconcile blueprint leg-4 (says dual((pullbackComp).hom), Lean realized restrictFunctorComp route) + add missing \\uses edges (lvb-checker major)."
+      },
+      {
+        "timestamp": "2026-06-23T22:51:19Z",
+        "status": "blocked",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "dual_restrict_iso_restrict_compat (S3)"
+        },
+        "session": {
+          "id": "session_69",
+          "model": "opus"
+        },
+        "findings": {
+          "blocker": "Consumes c.2 presheafDualPullbackComparison_restrict (still sorry) + bridge-(b) sheafificationCompPullback_restrict (still sorry, needs un-private Sq1). Not attempted this iter — gated on the sibling lane."
+        },
+        "attempts": [],
+        "next_steps": "Deferred until c.2 (a)+(b) land and bridge-(b) Sq1 is un-privated."
+      },
+      {
+        "timestamp": "2026-06-23T22:51:19Z",
+        "status": "blocked",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+          "theorem": "dual_unit_iso_restrict_compat (S4a)"
+        },
+        "session": {
+          "id": "session_69",
+          "model": "opus"
+        },
+        "findings": {
+          "blocker": "Rides on S3 + bridge-(b) + θ-unit presheafDualUnitIso_naturality. Gated transitively."
+        },
+        "attempts": [],
+        "next_steps": "Deferred; gated on S3."
+      }
+    ]
+  },
+  {
+    "sessionId": "session_70",
+    "milestones": [
+      {
+        "timestamp": "2026-06-23T23:51:00Z",
+        "status": "solved",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+          "theorem": "presheafDualH1Cocycle"
+        },
+        "session": {
+          "id": "session_70",
+          "model": "opus"
+        },
+        "findings": {
+          "blocker": "",
+          "key_lemmas_used": [
+            "leftAdjointUniq_leftAdjointCompIso_comm",
+            "pushforwardComp",
+            "pullbackPushforwardAdjunction",
+            "pushforwardPushforwardAdj"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Prove a GENERIC mate-calculus cocycle lemma once, then instantiate. New `CategoryTheory.Adjunction.leftAdjointUniq_leftAdjointCompIso_comm`: for two families of left adjoints F-,P- sharing right adjoints level-by-level + shared right-adjoint comp iso e, the H1=leftAdjointUniq isos satisfy FC.hom ; H1_02.hom = (H1_01.hom |> F12) ; (P01 <| H1_12.hom) ; PC.hom.",
+            "code_tried": "apply (conjugateEquiv adjP02 (adjF01.comp adjF12)).injective; rw [← conjugateEquiv_comp ...]; conjugateEquiv_whiskerLeft/Right + conjugateEquiv_leftAdjointUniq_hom + conjugateEquiv_leftAdjointCompIso_hom (both mates compute to e.inv)",
+            "line_number": "90 (generic), 624 (a)",
+            "lean_error": "",
+            "goal_before": "FC.hom ≫ H1₀₂.hom = whiskerRight H1₀₁.hom F₁₂ ≫ whiskerLeft P₀₁ H1₁₂.hom ≫ PC.hom",
+            "goal_after": "no goals",
+            "result": "success",
+            "insight": "Dual-flank analogue of the project keystone conjugateEquiv_restrictFunctorComp_inv, generalised away from the restrict world. `← conjugateEquiv_comp` SPLITS a conjugate-of-composite (simp lemma only combines). Must use `Functor.whiskerRight/Left` (bare names shadowed to monoidal whiskering by `open MonoidalCategory` → MonoidalCategoryStruct failure). Composite-immersion αhf needs EXPLICIT `naturality := (h≫f).appIso_inv_naturality i` (aesop default fails for h≫f)."
+          }
+        ],
+        "next_steps": "(a) closed sorry-free + axiom-clean. Feeds c.2, but does NOT slot in directly (see c.2 milestone)."
+      },
+      {
+        "timestamp": "2026-06-23T23:49:00Z",
+        "status": "blocked",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+          "theorem": "presheafDualPullbackComparison_restrict"
+        },
+        "session": {
+          "id": "session_70",
+          "model": "opus"
+        },
+        "findings": {
+          "blocker": "Two-immersion interleaved merge: the H1 factors and the sliceDualTransport factors are INTERLEAVED in the c.2 goal; (a) does not slot in without sliding the sDT factors past the H1 factors via the single-immersion crux. Mirrors the ~600-line proven tensor pullbackTensorMap_restrict (hslide/comp_cancel_mid).",
+          "key_lemmas_used": [
+            "presheafDualH1Cocycle",
+            "presheafDual_pullback_restrict_natural"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Invert (a) to H1_{h;f}.inv = pullbackComp.inv ; (pullback φR_f <| H1_h.inv) ; (H1_f.inv |> pushforward β_h) ; FC.hom, substitute into LHS of elementwise c.2 goal, identify residual with RHS sliceDualTransport chain.",
+            "code_tried": "rw inverted (a) into c.2 elementwise goal (LSP goal extracted at L717)",
+            "line_number": "720",
+            "lean_error": "no error (sorry retained per directive)",
+            "goal_before": "c.2 elementwise: (H1_{h;f}.inv ; sDT_{h;f}) φ = (pullbackComp.symm ; pullbackφR_h.map(H1_f.inv;sDT_f) ; ...) φ",
+            "goal_after": "functor mismatch on middle leg: leg-2 applies OUTER (pullback φR_h) to whole θ_f so H1-part is (pullback φR_h).map H1_f.inv, but natural (a)-inverse groups it as H1_f.inv |> pushforward β_h = (pushforward β_h).map H1_f.inv — DIFFERENT functor (pullback φR_h vs pushforward β_h)",
+            "result": "partial",
+            "insight": "c.2 is NOT '(a) then (b)' as two independent factor-identities. (a) closes independently; the sliceDualTransport flank (b) is ENTANGLED with the merge and only becomes well-posed once the slide is fixed. Reconciling the middle-leg functor mismatch requires sliding sDT factors past H1 via per-open crux presheafDual_pullback_restrict_natural (CLOSED iter-066)."
+          }
+        ],
+        "next_steps": "Re-spec: do NOT keep (b) standalone. Prove c.2 by (i) rw inverted (a) for H1's, (ii) slide each sliceDualTransport factor with presheafDual_pullback_restrict_natural, mirroring pullbackTensorMap_restrict's hslide/comp_cancel_mid. (b) should be the SPECIFIC slide identity step (ii) needs, in the goal's exact spelling, NOT an abstract sDT composition law."
+      },
+      {
+        "timestamp": "2026-06-23T23:42:00Z",
+        "status": "solved",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+          "theorem": "leftAdjointUniq_leftAdjointCompIso_comm"
+        },
+        "session": {
+          "id": "session_70",
+          "model": "opus"
+        },
+        "findings": {
+          "blocker": "",
+          "key_lemmas_used": [
+            "conjugateEquiv_comp",
+            "conjugateEquiv_whiskerLeft",
+            "conjugateEquiv_whiskerRight",
+            "conjugateEquiv_leftAdjointUniq_hom",
+            "conjugateEquiv_leftAdjointCompIso_hom"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Generic abstract mate-calculus crux (3-category, two adjoint families). Plus 2 helper mate facts: conjugateEquiv_leftAdjointUniq_hom (mate of leftAdjointUniq = id), conjugateEquiv_leftAdjointCompIso_hom (mate of leftAdjointCompIso.hom = e.inv).",
+            "code_tried": "conjugateEquiv_leftAdjointUniq_hom by: rw [leftAdjointUniq, Iso.symm_hom, conjugateIsoEquiv_symm_apply_inv, Iso.refl_inv, Equiv.apply_symm_apply]",
+            "line_number": "60, 71, 90",
+            "lean_error": "Initial: MonoidalCategoryStruct (C0 ⥤ C1) failure (bare whiskerRight shadowed); fixed via Functor.whiskerRight/Left",
+            "goal_before": "mate identities reduce both sides to e.inv",
+            "goal_after": "no goals",
+            "result": "success",
+            "insight": "Reusable axiom-clean Mathlib-style supplement (namespace CategoryTheory.Adjunction). These 3 generic lemmas have NO blueprint block yet — coverage debt."
+          }
+        ],
+        "next_steps": "Add blueprint \\lean blocks for the 3 generic Adjunction lemmas (planner/writer)."
+      }
+    ]
+  },
+  {
+    "sessionId": "session_71",
+    "milestones": [
+      {
+        "timestamp": "2026-06-24T02:00:00Z",
+        "status": "partial",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+          "theorem": "presheafDualPullbackComparison_restrict"
+        },
+        "session": {
+          "id": "session_71",
+          "model": "claude-opus"
+        },
+        "findings": {
+          "blocker": "abstract H1-cancellation tail whnf-bombs at maxHeartbeats 3.2M across the PresheafOfModules-over-Z defeq-but-not-syntactic ≫ seam (even rw[Iso.inv_comp_eq]/cancel_epi/set bomb); residual (**) needs cross-file FORWARD sliceDualTransport_app_apply in SliceTransport.lean (only inverse exists)",
+          "key_lemmas_used": [
+            "presheafDualH1Cocycle",
+            "PresheafOfModules.pushforwardPushforwardAdj",
+            "Scheme.Hom.appIso_inv_naturality"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "apply Iso.ext then drop hom_ext/ModuleCat.hom_ext/ext φ to stay at morphism (not elementwise) level",
+            "code_tried": "apply Iso.ext  (removed: apply PresheafOfModules.hom_ext; intro W; apply ModuleCat.hom_ext; ext φ)",
+            "line_number": "686",
+            "result": "partial",
+            "insight": "morphism-level goal is the clean factorization target; elementwise φ-form bloats the goal"
+          },
+          {
+            "attempt": 2,
+            "strategy": "reconstruct the composite-immersion adjunction αhf inline inside whiskerRight with only app field",
+            "code_tried": "Functor.whiskerRight ({ app := fun U => ((h ≫ f).appIso U.unop).inv } : ...) ...",
+            "line_number": "724",
+            "lean_error": "could not synthesize default value for field 'naturality' of 'CategoryTheory.NatTrans' using tactics (aesop failed)",
+            "result": "failed",
+            "insight": "the COMPOSITE (h≫f) appIso-inverse NatTrans cannot auto-synth its naturality (unlike the single-immersion f/h ones)"
+          },
+          {
+            "attempt": 3,
+            "strategy": "add explicit naturality field inline in the whiskerRight structure literal",
+            "code_tried": "{ app := fun U => ((h ≫ f).appIso U.unop).inv naturality := fun _ _ i => (h ≫ f).appIso_inv_naturality i }",
+            "line_number": "724",
+            "lean_error": "unexpected identifier; expected '}' (missing comma, then col-78 parse error)",
+            "result": "failed",
+            "insight": "structure-literal field separator issue inside whiskerRight arg"
+          },
+          {
+            "attempt": 4,
+            "strategy": "hoist αhf out into a named let with explicit naturality, pass to whiskerRight",
+            "code_tried": "let αhf : Z.presheaf ⟶ (h ≫ f).opensFunctor.op ⋙ X.presheaf := { app := fun U => ((h ≫ f).appIso U.unop).inv  naturality := fun _ _ i => (h ≫ f).appIso_inv_naturality i }",
+            "line_number": "723",
+            "result": "success",
+            "insight": "the let-hoisted αhf with explicit naturality compiles; reusable pattern for the composite adjunction"
+          },
+          {
+            "attempt": 5,
+            "strategy": "have hcoc := presheafDualH1Cocycle h f hadjf hadjh hadjhf with let-transparent adjunctions so H1/FC terms are defeq to the goal",
+            "code_tried": "have hcoc := presheafDualH1Cocycle h f hadjf hadjh hadjhf",
+            "line_number": "732",
+            "result": "success",
+            "insight": "VERIFIED the (a) cocycle is consumable in-context — load-bearing: confirms c.2 = (a) + (**)"
+          },
+          {
+            "attempt": 6,
+            "strategy": "run the abstract reduction by rw [Iso.inv_comp_eq, ← cancel_epi (FC.hom.app dM), hstar] / set FC := ...",
+            "code_tried": "rw [Iso.inv_comp_eq, ← cancel_epi (FC.hom.app M.val.dual), hstar]",
+            "line_number": "763",
+            "lean_error": "(deterministic) timeout at `whnf`, maximum number of heartbeats (3200000) reached at L672",
+            "result": "failed",
+            "insight": "every rw/erw/cancel_epi/set/show across the seam whnf-bombs on full lake build (LSP lean_multi_attempt typechecks them — LSP-green ≠ build-green); cure = local copies of private comp_cancel_mid/comp_slide_nested/comp_cancel_three_lr applied by exact"
+          },
+          {
+            "attempt": 7,
+            "strategy": "leave abstract tail as sorry on the compiling scaffold rather than a whnf-timeout (build-failing) state",
+            "code_tried": "sorry",
+            "line_number": "764",
+            "result": "partial",
+            "insight": "scaffold (let adjunctions + hcoc + documented reduction) compiles green-mod-sorry; build EXIT 0 (8324 jobs), 0 axioms"
+          }
+        ],
+        "next_steps": "Next iter: (1) add LOCAL copies of private generic bricks comp_cancel_mid/comp_slide_nested/comp_cancel_three_lr (from TensorObjSubstrate.lean:2981-3055) and run reduction steps by exact/refine ONLY (no rw/cancel_epi across seam); (2) SEPARATE SliceTransport.lean lane to add FORWARD sliceDualTransport_app_apply (mirror of inverse L563-585) to close (**). If brick-scaffold itself whnf-bombs, escalate (raise maxHeartbeats / restructure)."
+      },
+      {
+        "timestamp": "2026-06-24T02:00:00Z",
+        "status": "blocked",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+          "theorem": "presheafDual_pullback_comparison_eval_apply"
+        },
+        "session": {
+          "id": "session_71",
+          "model": "claude-opus"
+        },
+        "findings": {
+          "blocker": "off-path (L1, eval_apply); cross-file blocked, scheduled for cleanup deletion; directed off-limits this lane",
+          "key_lemmas_used": []
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "untouched per directive",
+            "code_tried": "sorry",
+            "line_number": "377",
+            "result": "partial",
+            "insight": "off critical path; left as-is"
+          }
+        ],
+        "next_steps": "Cleanup deletion candidate; do NOT re-assign."
+      },
+      {
+        "timestamp": "2026-06-24T02:00:00Z",
+        "status": "blocked",
+        "target": {
+          "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+          "theorem": "evalLin_restrict_commute_aux"
+        },
+        "session": {
+          "id": "session_71",
+          "model": "claude-opus"
+        },
+        "findings": {
+          "blocker": "off-path (L3a); cross-file blocked, scheduled for cleanup deletion; directed off-limits this lane",
+          "key_lemmas_used": []
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "untouched per directive",
+            "code_tried": "sorry",
+            "line_number": "434",
+            "result": "partial",
+            "insight": "off critical path; left as-is"
+          }
+        ],
+        "next_steps": "Cleanup deletion candidate; do NOT re-assign."
+      }
+    ]
   }
 ]

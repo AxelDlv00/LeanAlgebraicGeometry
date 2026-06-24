@@ -1,7 +1,7 @@
 {
   "stage": "prover",
   "objectives": [
-    "**`Cohomology/FlatBaseChange.lean`** — author + prove the abstract `ring_square_cocycle`"
+    "**`Cohomology/FlatBaseChange.lean`** — **SCAFFOLD the 2 re-scoped decls; then ATTEMPT the light"
   ],
   "checklist": [
     {

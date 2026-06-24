@@ -1,0 +1,154 @@
+[
+  {
+    "timestamp": "2026-06-24T02:22:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "tilde_exact"
+    },
+    "session": {
+      "id": "session_13",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "ShortComplex.ShortExact.map_of_exact",
+        "tilde_preservesFiniteLimits",
+        "Functor.preservesFiniteColimits (left adjoint)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Reduce SES-preservation to finite-(co)limit preservation via ShortExact.map_of_exact",
+        "code_tried": "theorem tilde_exact (S : ShortComplex (ModuleCat.{u} R)) (hS : S.ShortExact) : (S.map (tilde.functor R)).ShortExact := hS.map_of_exact (tilde.functor R)",
+        "line_number": "749",
+        "lean_error": null,
+        "goal_before": "(S.map (tilde.functor R)).ShortExact",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "Once PreservesFiniteLimits + PreservesFiniteColimits both in scope, exactness is a one-liner. Axiom-clean {propext, Classical.choice, Quot.sound}."
+      }
+    ],
+    "next_steps": "Downstream consumers: fp_sheaf_affine_tilde (next real brick), free_resolution_step 1.4."
+  },
+  {
+    "timestamp": "2026-06-24T02:18:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "tilde_mono"
+    },
+    "session": {
+      "id": "session_13",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "SpecModulesToSheafFullyFaithful",
+        "Functor.mono_of_mono_map",
+        "TopCat.Presheaf.mono_of_stalk_mono",
+        "stalkFunctor_map_injective_of_isBasis",
+        "tilde.toOpen_map_app",
+        "IsLocalizedModule.map_injective",
+        "IsLocalizedModule.linearMap_ext",
+        "PrimeSpectrum.isBasis_basic_opens"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Reflect Mono through fully-faithful modulesSpecToSheaf; detect stalkwise; basic-open section injectivity = localization-of-f injective",
+        "code_tried": "apply modulesSpecToSheaf.mono_of_mono_map; ... stalkFunctor_map_injective_of_isBasis hB hsec; mono_of_stalk_mono",
+        "line_number": "681",
+        "lean_error": "intermediate: 'failed to synthesize Mono ((tilde.functor R).map f)' timeout (20000 heartbeats) on direct synth route; resolved by manual stalk proof",
+        "goal_before": "Mono (tilde.map f)",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "The single genuinely-missing brick of the whole 'absent stalk-exactness layer' is PreservesMonomorphisms. Per basic open D(g), tilde's section map = IsLocalizedModule.map (.powers g) f.hom, injective via IsLocalizedModule.map_injective."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Gotcha: basis ascription + universe-annotated binder",
+        "code_tried": "have hB : Opens.IsBasis (α := ↥(Spec R)) (Set.range PrimeSpectrum.basicOpen) := PrimeSpectrum.isBasis_basic_opens ; haveI hstalk : ∀ (x : ↥(Spec R)), Mono ...",
+        "line_number": "686,716",
+        "lean_error": "Function.Injective.{u+1,u+1} vs .{1,1} mismatch when binder un-annotated; apply strict on defeq ↥(Spec R)=PrimeSpectrum R",
+        "goal_before": "stalk mono hypothesis",
+        "goal_after": "resolved",
+        "result": "success",
+        "insight": "∀ (x : ↥(Spec R)) annotation MANDATORY else x defaults to universe 0. Do NOT simpa on toOpen_map_app (it is @[simp], collapses hyp to True) — use explicit rw [ModuleCat.hom_comp]."
+      }
+    ],
+    "next_steps": "Packaged as tilde_preservesMono instance."
+  },
+  {
+    "timestamp": "2026-06-24T02:18:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "tilde_preservesMono"
+    },
+    "session": {
+      "id": "session_13",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "tilde_mono",
+        "AlgebraicGeometry.tilde.functor_map"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Package tilde_mono as PreservesMonomorphisms instance",
+        "code_tried": "instance tilde_preservesMono : (tilde.functor R).PreservesMonomorphisms where preserves f hf := by rw [tilde.functor_map]; exact tilde_mono f",
+        "line_number": "725",
+        "lean_error": null,
+        "goal_before": "Mono ((tilde.functor R).map f)",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "tilde.functor_map rewrites functor action to tilde.map."
+      }
+    ],
+    "next_steps": "Feeds tilde_preservesFiniteLimits."
+  },
+  {
+    "timestamp": "2026-06-24T02:18:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "tilde_preservesFiniteLimits"
+    },
+    "session": {
+      "id": "session_13",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "Functor.preservesFiniteLimits_iff_forall_exact_map_and_mono",
+        "Functor.preservesFiniteColimits_iff_forall_exact_map_and_epi",
+        "tilde_preservesMono",
+        "Functor.map_mono"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Left-exact = right-exact (free, left adjoint) + mono-preservation, via ExactFunctor TFAE",
+        "code_tried": "rw [preservesFiniteLimits_iff_forall_exact_map_and_mono]; intro S hS; refine ⟨(preservesFiniteColimits_iff_forall_exact_map_and_epi ...).mp inferInstance S hS).1, ?_⟩; haveI := hS.mono_f; exact (tilde.functor R).map_mono S.f",
+        "line_number": "734",
+        "lean_error": null,
+        "goal_before": "PreservesFiniteLimits (tilde.functor R)",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "KEY DECOMPOSITION: Mathlib.Algebra.Homology.ShortComplex.ExactFunctor reduces exactness to PreservesMonomorphisms — overturns the planner's 'build a SheafOfModules stalk-exactness layer' framing."
+      }
+    ],
+    "next_steps": "Feeds tilde_exact directly."
+  }
+]

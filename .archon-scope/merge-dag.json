@@ -7230,6 +7230,7 @@
       "path": "/AI4M/users/Axel/LeanAlgebraicGeometry/SubProjects/FBC-B_SNAP-chain",
       "has_dag": true,
       "declared": [
+        "Algebra.IsPushout.cancelBaseChange",
         "AlgebraicGeometry.IsLocalizedModule.powers_restrictScalars",
         "AlgebraicGeometry.Modules.baseChangeEqLocusToPullbackGamma",
         "AlgebraicGeometry.Modules.baseChangeGammaPullbackEquiv",
@@ -7272,6 +7273,7 @@
         "AlgebraicGeometry.Scheme.Modules.assocCommonForm",
         "AlgebraicGeometry.Scheme.Modules.braiding_unit_unit",
         "AlgebraicGeometry.Scheme.Modules.domWhisker",
+        "AlgebraicGeometry.Scheme.Modules.fullyFaithfulToPresheafOfModules",
         "AlgebraicGeometry.Scheme.Modules.gMul_def",
         "AlgebraicGeometry.Scheme.Modules.gradedMonoid_eq_of_cast",
         "AlgebraicGeometry.Scheme.Modules.instGCommSemiring",
@@ -7283,6 +7285,8 @@
         "AlgebraicGeometry.Scheme.Modules.laxMonoidal_\u03bc_eq",
         "AlgebraicGeometry.Scheme.Modules.localIso_toPresheaf_map_unit",
         "AlgebraicGeometry.Scheme.Modules.localizedMonoidalUnitIso",
+        "AlgebraicGeometry.Scheme.Modules.localizedSheafification",
+        "AlgebraicGeometry.Scheme.Modules.localizedSheafificationAdjunction",
         "AlgebraicGeometry.Scheme.Modules.modToAb",
         "AlgebraicGeometry.Scheme.Modules.moduleTensorPow",
         "AlgebraicGeometry.Scheme.Modules.modulesLocalizedMonoidal",
@@ -7296,6 +7300,8 @@
         "AlgebraicGeometry.Scheme.Modules.pshModBraided",
         "AlgebraicGeometry.Scheme.Modules.pshModMonoidal",
         "AlgebraicGeometry.Scheme.Modules.pshModSymmetric",
+        "AlgebraicGeometry.Scheme.Modules.pullbackComp",
+        "AlgebraicGeometry.Scheme.Modules.pullbackCongr",
         "AlgebraicGeometry.Scheme.Modules.relTensorActL",
         "AlgebraicGeometry.Scheme.Modules.relTensorActL_proj_eq",
         "AlgebraicGeometry.Scheme.Modules.relTensorActR",
@@ -7312,10 +7318,13 @@
         "AlgebraicGeometry.Scheme.Modules.sectionsCast_eq_eqToIso",
         "AlgebraicGeometry.Scheme.Modules.sectionsCast_refl",
         "AlgebraicGeometry.Scheme.Modules.sectionsMul",
+        "AlgebraicGeometry.Scheme.Modules.sectionsMul_eq_laxTensorator",
         "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_assoc",
         "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_comm",
         "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_one",
         "AlgebraicGeometry.Scheme.Modules.sectionsMul_one_mul",
+        "AlgebraicGeometry.Scheme.Modules.sectionsMul_whiskerLeft",
+        "AlgebraicGeometry.Scheme.Modules.sectionsMul_whiskerRight",
         "AlgebraicGeometry.Scheme.Modules.sheafification",
         "AlgebraicGeometry.Scheme.Modules.sheafificationCounitIso",
         "AlgebraicGeometry.Scheme.Modules.sheafification_braiding_whiskerRight_unit_eq_whiskerLeft_unit",
@@ -7354,6 +7363,10 @@
         "AlgebraicGeometry.Scheme.Modules.tensorPowAdd_braiding",
         "AlgebraicGeometry.Scheme.Modules.tensorPowAdd_rightUnit",
         "AlgebraicGeometry.Scheme.Modules.tensorPowAdd_zero",
+        "AlgebraicGeometry.Scheme.Modules.tensorPowComparison",
+        "AlgebraicGeometry.Scheme.Modules.tensorPowPsh",
+        "AlgebraicGeometry.Scheme.Modules.toPresheafLocalized",
+        "AlgebraicGeometry.Scheme.Modules.toPresheafLocalized_laxMonoidal",
         "AlgebraicGeometry.Scheme.Modules.toULiftIntLinearMap",
         "AlgebraicGeometry.Scheme.Modules.tripWhisker",
         "AlgebraicGeometry.Scheme.Modules.uDomIso",
@@ -7383,6 +7396,9 @@
         "AlgebraicGeometry.base_change_regroup_linearEquiv",
         "AlgebraicGeometry.chartBaseChangeGeometricComparison",
         "AlgebraicGeometry.chartBaseChangeGeometricComparisonNat",
+        "AlgebraicGeometry.chartBaseChangeGeometricComparisonNat_unfold",
+        "AlgebraicGeometry.chartBaseChangeGeometricComparison_dictionary_glue",
+        "AlgebraicGeometry.chartBaseChangeGeometricComparison_eq_natApp",
         "AlgebraicGeometry.chartBaseChangeGeometricComparison_mate",
         "AlgebraicGeometry.chartBaseChangeModuleReassoc",
         "AlgebraicGeometry.chartBaseChangeModuleReassocNat",
@@ -7391,6 +7407,7 @@
         "AlgebraicGeometry.chartBaseChangePushforwardNat",
         "AlgebraicGeometry.chartBaseChangeRestrictReassocNat",
         "AlgebraicGeometry.chartBaseChangeRingMap",
+        "AlgebraicGeometry.chartBaseChange_extendScalars_cocycle",
         "AlgebraicGeometry.chartBaseChange_ring_square",
         "AlgebraicGeometry.chartRestrictionAlgHom",
         "AlgebraicGeometry.conjugateEquiv_extendScalarsComp",
@@ -7429,8 +7446,14 @@
         "AlgebraicGeometry.natTrans_ext_of_unit",
         "AlgebraicGeometry.pullbackIsoEquivalenceOfIso",
         "AlgebraicGeometry.pullbackSpecIso",
+        "AlgebraicGeometry.pullbackSpecTildeCatCommSq",
+        "AlgebraicGeometry.pullbackSpecTildeComp",
+        "AlgebraicGeometry.pullbackSpecTildeComp_eq_composite",
         "AlgebraicGeometry.pullbackSpecTildeNatIso",
         "AlgebraicGeometry.pullbackSpecTildeNatIso_app",
+        "AlgebraicGeometry.pullbackSpecTildeVCompIso",
+        "AlgebraicGeometry.pullbackSpecTildeVCompIso_hom_app",
+        "AlgebraicGeometry.pullbackSpecTilde_ringSquare_vcomp_glue",
         "AlgebraicGeometry.pullback_fst_snd_specMap_tensor",
         "AlgebraicGeometry.pullback_isEquivalence_of_iso",
         "AlgebraicGeometry.pullback_spec_tilde_iso",
@@ -7440,6 +7463,9 @@
         "AlgebraicGeometry.pullback_spec_tilde_iso_restriction_naturality",
         "AlgebraicGeometry.pullback_spec_tilde_iso_ring_square_mate_glue",
         "AlgebraicGeometry.pullback_spec_tilde_iso_ring_square_natural",
+        "AlgebraicGeometry.pullback_spec_tilde_iso_ring_square_natural_catCommSq",
+        "AlgebraicGeometry.pullback_spec_tilde_iso_ring_square_natural_concrete",
+        "AlgebraicGeometry.pullback_spec_tilde_iso_ring_square_natural_extendScalarsCocycle",
         "AlgebraicGeometry.pushforwardBaseChangeMap",
         "AlgebraicGeometry.pushforwardCongr_inv_eq",
         "AlgebraicGeometry.pushforward_base_change_mate_cancelBaseChange",
@@ -7461,8 +7487,18 @@
         "AlgebraicGeometry.tildeRestriction_isLocalizedModule",
         "AlgebraicGeometry.toCover",
         "AlgebraicGeometry.toCoverEqLocus",
+        "CategoryTheory.Adjunction.rightAdjointLaxMonoidal",
         "CategoryTheory.Adjunction.right_triangle_components",
         "CategoryTheory.BraidedCategory.hexagon_forward",
+        "CategoryTheory.CatCommSq",
+        "CategoryTheory.CatCommSq.hComp",
+        "CategoryTheory.CatCommSq.vComp",
+        "CategoryTheory.Functor.LaxBraided.braided",
+        "CategoryTheory.Functor.LaxMonoidal.associativity",
+        "CategoryTheory.Functor.LaxMonoidal.left_unitality",
+        "CategoryTheory.Functor.LaxMonoidal.right_unitality",
+        "CategoryTheory.Functor.LaxMonoidal.\u03bc_natural_left",
+        "CategoryTheory.Functor.LaxMonoidal.\u03bc_natural_right",
         "CategoryTheory.Limits.evaluationJointlyReflectsColimits",
         "CategoryTheory.Localization.Monoidal.\u03bc",
         "CategoryTheory.LocalizedMonoidal",
@@ -7478,9 +7514,13 @@
         "CategoryTheory.mateEquiv_hcomp",
         "CategoryTheory.mateEquiv_vcomp",
         "CategoryTheory.unit_conjugateEquiv",
+        "CommRingCat.moduleCatExtendScalarsPseudofunctor",
         "DirectSum.GCommSemiring",
         "DirectSum.Gmodule",
+        "IsBaseChange",
         "LinearMap.tensorEqLocusEquiv",
+        "ModuleCat.extendScalarsComp",
+        "ModuleCat.extendScalars_assoc'",
         "ModuleCat.homEquiv_extendScalarsComp",
         "PresheafOfModules.Monoidal.tensorObj_obj",
         "PresheafOfModules.inverseImage_W_toPresheaf_eq_inverseImage_isomorphisms",
@@ -7495,6 +7535,7 @@
         "TopCat.Sheaf.existsUnique_gluing'"
       ],
       "available": [
+        "Algebra.IsPushout.cancelBaseChange",
         "AlgebraicGeometry.IsLocalizedModule.powers_restrictScalars",
         "AlgebraicGeometry.Modules.baseChangeEqLocusToPullbackGamma",
         "AlgebraicGeometry.Modules.baseChangeGammaPullbackEquiv",
@@ -7534,9 +7575,12 @@
         "AlgebraicGeometry.Scheme.Modules.Wsheaf",
         "AlgebraicGeometry.Scheme.Modules.actL_domWhisker",
         "AlgebraicGeometry.Scheme.Modules.actR_domWhisker",
+        "AlgebraicGeometry.Scheme.Modules.assocCommonForm",
         "AlgebraicGeometry.Scheme.Modules.braiding_unit_unit",
         "AlgebraicGeometry.Scheme.Modules.domWhisker",
+        "AlgebraicGeometry.Scheme.Modules.fullyFaithfulToPresheafOfModules",
         "AlgebraicGeometry.Scheme.Modules.gMul_def",
+        "AlgebraicGeometry.Scheme.Modules.gradedMonoid_eq_of_cast",
         "AlgebraicGeometry.Scheme.Modules.instGCommSemiring",
         "AlgebraicGeometry.Scheme.Modules.instGMonoid",
         "AlgebraicGeometry.Scheme.Modules.instGSemiring",
@@ -7546,7 +7590,10 @@
         "AlgebraicGeometry.Scheme.Modules.laxMonoidal_\u03bc_eq",
         "AlgebraicGeometry.Scheme.Modules.localIso_toPresheaf_map_unit",
         "AlgebraicGeometry.Scheme.Modules.localizedMonoidalUnitIso",
+        "AlgebraicGeometry.Scheme.Modules.localizedSheafification",
+        "AlgebraicGeometry.Scheme.Modules.localizedSheafificationAdjunction",
         "AlgebraicGeometry.Scheme.Modules.modToAb",
+        "AlgebraicGeometry.Scheme.Modules.moduleTensorPow",
         "AlgebraicGeometry.Scheme.Modules.modulesLocalizedMonoidal",
         "AlgebraicGeometry.Scheme.Modules.objRestrict",
         "AlgebraicGeometry.Scheme.Modules.objRestrict_apply",
@@ -7558,6 +7605,8 @@
         "AlgebraicGeometry.Scheme.Modules.pshModBraided",
         "AlgebraicGeometry.Scheme.Modules.pshModMonoidal",
         "AlgebraicGeometry.Scheme.Modules.pshModSymmetric",
+        "AlgebraicGeometry.Scheme.Modules.pullbackComp",
+        "AlgebraicGeometry.Scheme.Modules.pullbackCongr",
         "AlgebraicGeometry.Scheme.Modules.relTensorActL",
         "AlgebraicGeometry.Scheme.Modules.relTensorActL_proj_eq",
         "AlgebraicGeometry.Scheme.Modules.relTensorActR",
@@ -7565,16 +7614,59 @@
         "AlgebraicGeometry.Scheme.Modules.relTensorProj",
         "AlgebraicGeometry.Scheme.Modules.relTensorTriplePresheaf",
         "AlgebraicGeometry.Scheme.Modules.relativeTensorCoequalizerIso",
+        "AlgebraicGeometry.Scheme.Modules.sectionDeg",
+        "AlgebraicGeometry.Scheme.Modules.sectionMul_assoc_core",
+        "AlgebraicGeometry.Scheme.Modules.sectionMul_braiding_core",
+        "AlgebraicGeometry.Scheme.Modules.sectionMul_rightUnitor_core",
+        "AlgebraicGeometry.Scheme.Modules.sectionsCast",
         "AlgebraicGeometry.Scheme.Modules.sectionsCast_eqToIso_cancel",
         "AlgebraicGeometry.Scheme.Modules.sectionsCast_eq_eqToIso",
+        "AlgebraicGeometry.Scheme.Modules.sectionsCast_refl",
+        "AlgebraicGeometry.Scheme.Modules.sectionsMul",
+        "AlgebraicGeometry.Scheme.Modules.sectionsMul_eq_laxTensorator",
+        "AlgebraicGeometry.Scheme.Modules.sectionsMul_whiskerLeft",
+        "AlgebraicGeometry.Scheme.Modules.sectionsMul_whiskerRight",
         "AlgebraicGeometry.Scheme.Modules.sheafification",
         "AlgebraicGeometry.Scheme.Modules.sheafificationCounitIso",
+        "AlgebraicGeometry.Scheme.Modules.sheafification_braiding_whiskerRight_unit_eq_whiskerLeft_unit",
+        "AlgebraicGeometry.Scheme.Modules.sheafification_mapIso_associator_eq_localizationMap",
         "AlgebraicGeometry.Scheme.Modules.sheafification_map_unit_comp_counitIso_hom",
+        "AlgebraicGeometry.Scheme.Modules.sheafification_map_unit_top",
+        "AlgebraicGeometry.Scheme.Modules.sheafification_map_unit_top_inv",
+        "AlgebraicGeometry.Scheme.Modules.sheafification_whiskerLeft_unit_eq_mu",
+        "AlgebraicGeometry.Scheme.Modules.sheafification_whiskerLeft_unit_eq_mu'",
+        "AlgebraicGeometry.Scheme.Modules.sheafification_whiskerRight_unit_eq_mu",
+        "AlgebraicGeometry.Scheme.Modules.sheafification_whiskerRight_unit_eq_mu'",
+        "AlgebraicGeometry.Scheme.Modules.tensorBraiding",
+        "AlgebraicGeometry.Scheme.Modules.tensorBraiding_eq_localizedBraiding",
         "AlgebraicGeometry.Scheme.Modules.tensorBraiding_symm",
         "AlgebraicGeometry.Scheme.Modules.tensorBraiding_unitModule",
+        "AlgebraicGeometry.Scheme.Modules.tensorObj",
+        "AlgebraicGeometry.Scheme.Modules.tensorObjAssoc",
+        "AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_eq_localizedAssociator",
+        "AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_eq_localizedAssociator_hK_lhs",
+        "AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_eq_localizedAssociator_hK_rhs",
+        "AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_hK_lhs_head",
         "AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_hK_lhs_head_img",
+        "AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_hK_lhs_native",
+        "AlgebraicGeometry.Scheme.Modules.tensorObjLocalizedIso",
+        "AlgebraicGeometry.Scheme.Modules.tensorObjRightUnitor",
+        "AlgebraicGeometry.Scheme.Modules.tensorObjRightUnitor_hom",
+        "AlgebraicGeometry.Scheme.Modules.tensorObjUnitIso",
+        "AlgebraicGeometry.Scheme.Modules.tensorObjUnitIso_eq_localizedLeftUnitor",
+        "AlgebraicGeometry.Scheme.Modules.tensorObjUnitIso_hom",
         "AlgebraicGeometry.Scheme.Modules.tensorObjWhiskerLeftIso",
         "AlgebraicGeometry.Scheme.Modules.tensorObjWhiskerRightIso",
+        "AlgebraicGeometry.Scheme.Modules.tensorPow",
+        "AlgebraicGeometry.Scheme.Modules.tensorPowAdd",
+        "AlgebraicGeometry.Scheme.Modules.tensorPowAdd_assoc",
+        "AlgebraicGeometry.Scheme.Modules.tensorPowAdd_braiding",
+        "AlgebraicGeometry.Scheme.Modules.tensorPowAdd_rightUnit",
+        "AlgebraicGeometry.Scheme.Modules.tensorPowAdd_zero",
+        "AlgebraicGeometry.Scheme.Modules.tensorPowComparison",
+        "AlgebraicGeometry.Scheme.Modules.tensorPowPsh",
+        "AlgebraicGeometry.Scheme.Modules.toPresheafLocalized",
+        "AlgebraicGeometry.Scheme.Modules.toPresheafLocalized_laxMonoidal",
         "AlgebraicGeometry.Scheme.Modules.toULiftIntLinearMap",
         "AlgebraicGeometry.Scheme.Modules.tripWhisker",
         "AlgebraicGeometry.Scheme.Modules.uDomIso",
@@ -7586,6 +7678,8 @@
         "AlgebraicGeometry.Scheme.Modules.uTripIso",
         "AlgebraicGeometry.Scheme.Modules.uTripleEquiv",
         "AlgebraicGeometry.Scheme.Modules.unitModule",
+        "AlgebraicGeometry.Scheme.Modules.unitor_sectionsMul",
+        "AlgebraicGeometry.Scheme.Modules.val_app_top_comp",
         "AlgebraicGeometry.Scheme.Modules.ztensor_whisker_localIso",
         "AlgebraicGeometry.Scheme.exists_finite_affineCover_inter_isQuasiCompact",
         "AlgebraicGeometry.affineBaseChange_pushforward_iso",
@@ -7600,6 +7694,7 @@
         "AlgebraicGeometry.base_change_regroup_linearEquiv",
         "AlgebraicGeometry.chartBaseChangeGeometricComparison",
         "AlgebraicGeometry.chartBaseChangeGeometricComparisonNat",
+        "AlgebraicGeometry.chartBaseChangeGeometricComparison_eq_natApp",
         "AlgebraicGeometry.chartBaseChangeGeometricComparison_mate",
         "AlgebraicGeometry.chartBaseChangeModuleReassoc",
         "AlgebraicGeometry.chartBaseChangeModuleReassocNat",
@@ -7608,6 +7703,7 @@
         "AlgebraicGeometry.chartBaseChangePushforwardNat",
         "AlgebraicGeometry.chartBaseChangeRestrictReassocNat",
         "AlgebraicGeometry.chartBaseChangeRingMap",
+        "AlgebraicGeometry.chartBaseChange_extendScalars_cocycle",
         "AlgebraicGeometry.chartBaseChange_ring_square",
         "AlgebraicGeometry.chartRestrictionAlgHom",
         "AlgebraicGeometry.conjugateEquiv_extendScalarsComp",
@@ -7646,8 +7742,11 @@
         "AlgebraicGeometry.natTrans_ext_of_unit",
         "AlgebraicGeometry.pullbackIsoEquivalenceOfIso",
         "AlgebraicGeometry.pullbackSpecIso",
+        "AlgebraicGeometry.pullbackSpecTildeCatCommSq",
         "AlgebraicGeometry.pullbackSpecTildeNatIso",
         "AlgebraicGeometry.pullbackSpecTildeNatIso_app",
+        "AlgebraicGeometry.pullbackSpecTildeVCompIso",
+        "AlgebraicGeometry.pullbackSpecTildeVCompIso_hom_app",
         "AlgebraicGeometry.pullback_fst_snd_specMap_tensor",
         "AlgebraicGeometry.pullback_isEquivalence_of_iso",
         "AlgebraicGeometry.pullback_spec_tilde_iso",
@@ -7657,6 +7756,9 @@
         "AlgebraicGeometry.pullback_spec_tilde_iso_restriction_naturality",
         "AlgebraicGeometry.pullback_spec_tilde_iso_ring_square_mate_glue",
         "AlgebraicGeometry.pullback_spec_tilde_iso_ring_square_natural",
+        "AlgebraicGeometry.pullback_spec_tilde_iso_ring_square_natural_catCommSq",
+        "AlgebraicGeometry.pullback_spec_tilde_iso_ring_square_natural_concrete",
+        "AlgebraicGeometry.pullback_spec_tilde_iso_ring_square_natural_extendScalarsCocycle",
         "AlgebraicGeometry.pushforwardBaseChangeMap",
         "AlgebraicGeometry.pushforwardCongr_inv_eq",
         "AlgebraicGeometry.pushforward_base_change_mate_cancelBaseChange",
@@ -7667,16 +7769,28 @@
         "AlgebraicGeometry.rhoU",
         "AlgebraicGeometry.rhoU_comp",
         "AlgebraicGeometry.rightRes",
+        "AlgebraicGeometry.ring_square_cocycle",
         "AlgebraicGeometry.ring_square_glue_alg_leg_nat",
         "AlgebraicGeometry.ring_square_glue_geom_leg_nat",
         "AlgebraicGeometry.ring_square_glue_pst_iterated_mate",
         "AlgebraicGeometry.ring_square_glue_whiskerLeft_lift",
         "AlgebraicGeometry.ring_square_glue_whiskerRight_lift",
+        "AlgebraicGeometry.sectionGradedRing_gcommSemiring",
         "AlgebraicGeometry.tildeRestriction_isLocalizedModule",
         "AlgebraicGeometry.toCover",
         "AlgebraicGeometry.toCoverEqLocus",
+        "CategoryTheory.Adjunction.rightAdjointLaxMonoidal",
         "CategoryTheory.Adjunction.right_triangle_components",
         "CategoryTheory.BraidedCategory.hexagon_forward",
+        "CategoryTheory.CatCommSq",
+        "CategoryTheory.CatCommSq.hComp",
+        "CategoryTheory.CatCommSq.vComp",
+        "CategoryTheory.Functor.LaxBraided.braided",
+        "CategoryTheory.Functor.LaxMonoidal.associativity",
+        "CategoryTheory.Functor.LaxMonoidal.left_unitality",
+        "CategoryTheory.Functor.LaxMonoidal.right_unitality",
+        "CategoryTheory.Functor.LaxMonoidal.\u03bc_natural_left",
+        "CategoryTheory.Functor.LaxMonoidal.\u03bc_natural_right",
         "CategoryTheory.Limits.evaluationJointlyReflectsColimits",
         "CategoryTheory.Localization.Monoidal.\u03bc",
         "CategoryTheory.LocalizedMonoidal",
@@ -7692,9 +7806,13 @@
         "CategoryTheory.mateEquiv_hcomp",
         "CategoryTheory.mateEquiv_vcomp",
         "CategoryTheory.unit_conjugateEquiv",
+        "CommRingCat.moduleCatExtendScalarsPseudofunctor",
         "DirectSum.GCommSemiring",
         "DirectSum.Gmodule",
+        "IsBaseChange",
         "LinearMap.tensorEqLocusEquiv",
+        "ModuleCat.extendScalarsComp",
+        "ModuleCat.extendScalars_assoc'",
         "ModuleCat.homEquiv_extendScalarsComp",
         "PresheafOfModules.Monoidal.tensorObj_obj",
         "PresheafOfModules.inverseImage_W_toPresheaf_eq_inverseImage_isomorphisms",
@@ -7709,57 +7827,19 @@
         "TopCat.Sheaf.existsUnique_gluing'"
       ],
       "needed": [
-        "AlgebraicGeometry.Scheme.Modules.assocCommonForm",
-        "AlgebraicGeometry.Scheme.Modules.gradedMonoid_eq_of_cast",
-        "AlgebraicGeometry.Scheme.Modules.moduleTensorPow",
-        "AlgebraicGeometry.Scheme.Modules.sectionDeg",
-        "AlgebraicGeometry.Scheme.Modules.sectionMul_assoc_core",
-        "AlgebraicGeometry.Scheme.Modules.sectionMul_braiding_core",
-        "AlgebraicGeometry.Scheme.Modules.sectionMul_rightUnitor_core",
-        "AlgebraicGeometry.Scheme.Modules.sectionsCast",
-        "AlgebraicGeometry.Scheme.Modules.sectionsCast_refl",
-        "AlgebraicGeometry.Scheme.Modules.sectionsMul",
         "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_assoc",
         "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_comm",
         "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_one",
         "AlgebraicGeometry.Scheme.Modules.sectionsMul_one_mul",
-        "AlgebraicGeometry.Scheme.Modules.sheafification_braiding_whiskerRight_unit_eq_whiskerLeft_unit",
-        "AlgebraicGeometry.Scheme.Modules.sheafification_mapIso_associator_eq_localizationMap",
-        "AlgebraicGeometry.Scheme.Modules.sheafification_map_unit_top",
-        "AlgebraicGeometry.Scheme.Modules.sheafification_map_unit_top_inv",
-        "AlgebraicGeometry.Scheme.Modules.sheafification_whiskerLeft_unit_eq_mu",
-        "AlgebraicGeometry.Scheme.Modules.sheafification_whiskerLeft_unit_eq_mu'",
-        "AlgebraicGeometry.Scheme.Modules.sheafification_whiskerRight_unit_eq_mu",
-        "AlgebraicGeometry.Scheme.Modules.sheafification_whiskerRight_unit_eq_mu'",
-        "AlgebraicGeometry.Scheme.Modules.tensorBraiding",
-        "AlgebraicGeometry.Scheme.Modules.tensorBraiding_eq_localizedBraiding",
-        "AlgebraicGeometry.Scheme.Modules.tensorObj",
-        "AlgebraicGeometry.Scheme.Modules.tensorObjAssoc",
-        "AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_eq_localizedAssociator",
-        "AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_eq_localizedAssociator_hK_lhs",
-        "AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_eq_localizedAssociator_hK_rhs",
-        "AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_hK_lhs_head",
-        "AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_hK_lhs_native",
-        "AlgebraicGeometry.Scheme.Modules.tensorObjLocalizedIso",
-        "AlgebraicGeometry.Scheme.Modules.tensorObjRightUnitor",
         "AlgebraicGeometry.Scheme.Modules.tensorObjRightUnitor_eq_localizedRightUnitor",
-        "AlgebraicGeometry.Scheme.Modules.tensorObjRightUnitor_hom",
-        "AlgebraicGeometry.Scheme.Modules.tensorObjUnitIso",
-        "AlgebraicGeometry.Scheme.Modules.tensorObjUnitIso_eq_localizedLeftUnitor",
-        "AlgebraicGeometry.Scheme.Modules.tensorObjUnitIso_hom",
-        "AlgebraicGeometry.Scheme.Modules.tensorPow",
-        "AlgebraicGeometry.Scheme.Modules.tensorPowAdd",
-        "AlgebraicGeometry.Scheme.Modules.tensorPowAdd_assoc",
-        "AlgebraicGeometry.Scheme.Modules.tensorPowAdd_braiding",
-        "AlgebraicGeometry.Scheme.Modules.tensorPowAdd_rightUnit",
-        "AlgebraicGeometry.Scheme.Modules.tensorPowAdd_zero",
-        "AlgebraicGeometry.Scheme.Modules.unitor_sectionsMul",
-        "AlgebraicGeometry.Scheme.Modules.val_app_top_comp",
         "AlgebraicGeometry.baseChange_sheafConditionFork_tensorIso",
         "AlgebraicGeometry.base_change_mate_gstar_transpose",
-        "AlgebraicGeometry.ring_square_cocycle",
-        "AlgebraicGeometry.sectionGradedModule_gmodule",
-        "AlgebraicGeometry.sectionGradedRing_gcommSemiring"
+        "AlgebraicGeometry.chartBaseChangeGeometricComparisonNat_unfold",
+        "AlgebraicGeometry.chartBaseChangeGeometricComparison_dictionary_glue",
+        "AlgebraicGeometry.pullbackSpecTildeComp",
+        "AlgebraicGeometry.pullbackSpecTildeComp_eq_composite",
+        "AlgebraicGeometry.pullbackSpecTilde_ringSquare_vcomp_glue",
+        "AlgebraicGeometry.sectionGradedModule_gmodule"
       ]
     },
     {
@@ -9290,7 +9370,6 @@
         "AlgebraicGeometry.Scheme.Modules.dual",
         "AlgebraicGeometry.Scheme.Modules.dualIsoOfIso",
         "AlgebraicGeometry.Scheme.Modules.dualIsoOfIso_refl",
-        "AlgebraicGeometry.Scheme.Modules.dualIsoOfIso_restrict_precomp_apply",
         "AlgebraicGeometry.Scheme.Modules.dualIsoOfIso_trans",
         "AlgebraicGeometry.Scheme.Modules.dualUnitIso_dualIsoOfIso",
         "AlgebraicGeometry.Scheme.Modules.dualUnitRingSwap",
@@ -9302,10 +9381,12 @@
         "AlgebraicGeometry.Scheme.Modules.dualUnitRingSwap_comp_dualUnitRingSwapInv",
         "AlgebraicGeometry.Scheme.Modules.dual_isLocallyTrivial",
         "AlgebraicGeometry.Scheme.Modules.dual_restrict_iso",
+        "AlgebraicGeometry.Scheme.Modules.dual_restrict_iso_eq_comparison",
         "AlgebraicGeometry.Scheme.Modules.dual_restrict_iso_restrict_compat",
         "AlgebraicGeometry.Scheme.Modules.dual_unit_iso",
         "AlgebraicGeometry.Scheme.Modules.dual_unit_iso_restrict_compat",
         "AlgebraicGeometry.Scheme.Modules.epsilonPresheafToSheafUnit",
+        "AlgebraicGeometry.Scheme.Modules.evalLin_restrict_commute_aux",
         "AlgebraicGeometry.Scheme.Modules.exists_tensorObj_inverse",
         "AlgebraicGeometry.Scheme.Modules.forget_map_pushforward_map",
         "AlgebraicGeometry.Scheme.Modules.forget\u2082_restrictScalars_\u03bc_hom_tmul",
@@ -9340,6 +9421,9 @@
         "AlgebraicGeometry.Scheme.Modules.picInv",
         "AlgebraicGeometry.Scheme.Modules.picMul",
         "AlgebraicGeometry.Scheme.Modules.picSetoid",
+        "AlgebraicGeometry.Scheme.Modules.presheafDualH1Cocycle",
+        "AlgebraicGeometry.Scheme.Modules.presheafDualPullbackComparison",
+        "AlgebraicGeometry.Scheme.Modules.presheafDualPullbackComparison_restrict",
         "AlgebraicGeometry.Scheme.Modules.presheafDualUnitIso",
         "AlgebraicGeometry.Scheme.Modules.presheafDualUnitIso_naturality",
         "AlgebraicGeometry.Scheme.Modules.presheafDual_eval_restrict_commute_apply",
@@ -9370,8 +9454,6 @@
         "AlgebraicGeometry.Scheme.Modules.pullbackUnitIso",
         "AlgebraicGeometry.Scheme.Modules.pullbackUnitIso_eq_sheafify_eta",
         "AlgebraicGeometry.Scheme.Modules.pullbackUnitIso_whisker_eq_sheafify_eta_whisker",
-        "AlgebraicGeometry.Scheme.Modules.pullbackUnitIso_whisker_eq_sheafify_eta_whisker_3a",
-        "AlgebraicGeometry.Scheme.Modules.pullbackUnitIso_whisker_eq_sheafify_eta_whisker_3b",
         "AlgebraicGeometry.Scheme.Modules.pullbackValIso",
         "AlgebraicGeometry.Scheme.Modules.pullbackValIso_comp_leg",
         "AlgebraicGeometry.Scheme.Modules.pullbackValIso_hom_natural",
@@ -9379,6 +9461,7 @@
         "AlgebraicGeometry.Scheme.Modules.pullbackValIso_naturality_leftUnitor",
         "AlgebraicGeometry.Scheme.Modules.pullback_map_tensorObj_left_unitor_eq",
         "AlgebraicGeometry.Scheme.Modules.pushforwardComp_lax_\u03bc",
+        "AlgebraicGeometry.Scheme.Modules.pushforwardObjValRestrictIso",
         "AlgebraicGeometry.Scheme.Modules.pushforwardPushforwardAdj_counit_app_app_apply",
         "AlgebraicGeometry.Scheme.Modules.pushforwardPushforwardAdj_unit_app_app_apply",
         "AlgebraicGeometry.Scheme.Modules.pushforward_eta_appIso_collapse",
@@ -9389,6 +9472,7 @@
         "AlgebraicGeometry.Scheme.Modules.pushforward_mu_appIso_collapse",
         "AlgebraicGeometry.Scheme.Modules.pushforward_\u03bc_eq",
         "AlgebraicGeometry.Scheme.Modules.restrictCompReindex",
+        "AlgebraicGeometry.Scheme.Modules.restrictFunctorComp",
         "AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback",
         "AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback_comp_compat",
         "AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback_comp_compat_hom",
@@ -9407,6 +9491,7 @@
         "AlgebraicGeometry.Scheme.Modules.sheafificationCompPullback_comp_natTrans",
         "AlgebraicGeometry.Scheme.Modules.sheafificationCompPullback_comp_tail",
         "AlgebraicGeometry.Scheme.Modules.sheafificationCompPullback_eq_leftAdjointUniq",
+        "AlgebraicGeometry.Scheme.Modules.sheafificationCompPullback_restrict",
         "AlgebraicGeometry.Scheme.Modules.sheafifyIdOf",
         "AlgebraicGeometry.Scheme.Modules.sheafifyMap_pullbackComp_hom_inv_id",
         "AlgebraicGeometry.Scheme.Modules.sheafifyMap_\u03b4comp_split",
@@ -9419,6 +9504,7 @@
         "AlgebraicGeometry.Scheme.Modules.sliceDualTransportInv",
         "AlgebraicGeometry.Scheme.Modules.sliceDualTransportInv_app_apply",
         "AlgebraicGeometry.Scheme.Modules.sliceDualTransportInv_naturality_apply",
+        "AlgebraicGeometry.Scheme.Modules.sliceDualTransport_app_apply",
         "AlgebraicGeometry.Scheme.Modules.sliceDualTransport_naturality_apply",
         "AlgebraicGeometry.Scheme.Modules.tensorHom_collapse_3_4",
         "AlgebraicGeometry.Scheme.Modules.tensorHom_comp3",
@@ -9440,6 +9526,7 @@
         "AlgebraicGeometry.Scheme.Modules.tensorObj_functoriality_id",
         "AlgebraicGeometry.Scheme.Modules.tensorObj_isLocallyTrivial",
         "AlgebraicGeometry.Scheme.Modules.tensorObj_left_unitor",
+        "AlgebraicGeometry.Scheme.Modules.tensorObj_left_unitor_image_collapse",
         "AlgebraicGeometry.Scheme.Modules.tensorObj_left_unitor_naturality",
         "AlgebraicGeometry.Scheme.Modules.tensorObj_left_unitor_pullback_eq_sheafify",
         "AlgebraicGeometry.Scheme.Modules.tensorObj_middleFour",
@@ -9471,9 +9558,14 @@
         "AlgebraicGeometry.Scheme.PicSharp.relNeg",
         "AlgebraicGeometry.Scheme.PicSharp.relTensorObj",
         "AlgebraicGeometry.Scheme.RelPicPresheaf.preimage_subgroup",
+        "CategoryTheory.Adjunction.conjugateEquiv_leftAdjointCompIso_hom",
+        "CategoryTheory.Adjunction.conjugateEquiv_leftAdjointUniq_hom",
+        "CategoryTheory.Adjunction.leftAdjointUniq_leftAdjointCompIso_comm",
         "CategoryTheory.Adjunction.leftAdjointUniq_trans",
         "CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app",
         "CategoryTheory.Functor.Monoidal.\u03bcIso",
+        "CategoryTheory.Localization.Monoidal.leftUnitor_hom_app",
+        "CategoryTheory.Localization.liftNatTrans_app",
         "CategoryTheory.conjugateEquiv_comp",
         "CategoryTheory.mateEquiv_vcomp",
         "PresheafOfModules.InternalHom.globalSMul",
@@ -9505,6 +9597,8 @@
         "PresheafOfModules.dual",
         "PresheafOfModules.dualIsoOfIso",
         "PresheafOfModules.dualPrecompEquiv",
+        "PresheafOfModules.dualPrecompHom",
+        "PresheafOfModules.dualPrecompHom_restrict_apply",
         "PresheafOfModules.dualUnitIsoGen",
         "PresheafOfModules.evalLin",
         "PresheafOfModules.evalLin_add",
@@ -9523,6 +9617,7 @@
         "PresheafOfModules.isLocallyInjective_of_injective_stalk",
         "PresheafOfModules.isLocallyInjective_whiskerLeft_of_W",
         "PresheafOfModules.isLocallySurjective_whiskerLeft",
+        "PresheafOfModules.pullbackComp",
         "PresheafOfModules.pushforwardCongr",
         "PresheafOfModules.pushforwardNatTrans",
         "PresheafOfModules.pushforwardPushforwardAdj",
@@ -9541,6 +9636,7 @@
         "PresheafOfModules.revInner_germ",
         "PresheafOfModules.revOuterLeg",
         "PresheafOfModules.revOuterLeg_apply",
+        "PresheafOfModules.sheafification",
         "PresheafOfModules.stalkLinearEquivOfIsIso",
         "PresheafOfModules.stalkLinearMap",
         "PresheafOfModules.stalkLinearMap_bijective_of_isIso",
@@ -9614,6 +9710,7 @@
         "AlgebraicGeometry.Scheme.Modules.dualUnitRingSwap_comp_dualUnitRingSwapInv",
         "AlgebraicGeometry.Scheme.Modules.dual_isLocallyTrivial",
         "AlgebraicGeometry.Scheme.Modules.dual_restrict_iso",
+        "AlgebraicGeometry.Scheme.Modules.dual_restrict_iso_eq_comparison",
         "AlgebraicGeometry.Scheme.Modules.dual_restrict_iso_restrict_compat",
         "AlgebraicGeometry.Scheme.Modules.dual_unit_iso",
         "AlgebraicGeometry.Scheme.Modules.dual_unit_iso_restrict_compat",
@@ -9651,8 +9748,15 @@
         "AlgebraicGeometry.Scheme.Modules.picInv",
         "AlgebraicGeometry.Scheme.Modules.picMul",
         "AlgebraicGeometry.Scheme.Modules.picSetoid",
+        "AlgebraicGeometry.Scheme.Modules.presheafDualH1Cocycle",
+        "AlgebraicGeometry.Scheme.Modules.presheafDualPullbackComparison",
+        "AlgebraicGeometry.Scheme.Modules.presheafDualPullbackComparison_restrict",
         "AlgebraicGeometry.Scheme.Modules.presheafDualUnitIso",
         "AlgebraicGeometry.Scheme.Modules.presheafDualUnitIso_naturality",
+        "AlgebraicGeometry.Scheme.Modules.presheafDual_eval_restrict_commute_apply",
+        "AlgebraicGeometry.Scheme.Modules.presheafDual_pullback_comparison_eval_apply",
+        "AlgebraicGeometry.Scheme.Modules.presheafDual_pullback_restrict_natural",
+        "AlgebraicGeometry.Scheme.Modules.presheafDual_pullback_restrict_natural_apply",
         "AlgebraicGeometry.Scheme.Modules.presheafPullbackOplaxMonoidal",
         "AlgebraicGeometry.Scheme.Modules.presheafPushforwardLaxMonoidal",
         "AlgebraicGeometry.Scheme.Modules.presheafUnit_comp_map_eta",
@@ -9676,6 +9780,7 @@
         "AlgebraicGeometry.Scheme.Modules.pullbackTensorMap_unit_isIso",
         "AlgebraicGeometry.Scheme.Modules.pullbackUnitIso",
         "AlgebraicGeometry.Scheme.Modules.pullbackUnitIso_eq_sheafify_eta",
+        "AlgebraicGeometry.Scheme.Modules.pullbackUnitIso_whisker_eq_sheafify_eta_whisker",
         "AlgebraicGeometry.Scheme.Modules.pullbackValIso",
         "AlgebraicGeometry.Scheme.Modules.pullbackValIso_comp_leg",
         "AlgebraicGeometry.Scheme.Modules.pullbackValIso_hom_natural",
@@ -9683,6 +9788,7 @@
         "AlgebraicGeometry.Scheme.Modules.pullbackValIso_naturality_leftUnitor",
         "AlgebraicGeometry.Scheme.Modules.pullback_map_tensorObj_left_unitor_eq",
         "AlgebraicGeometry.Scheme.Modules.pushforwardComp_lax_\u03bc",
+        "AlgebraicGeometry.Scheme.Modules.pushforwardObjValRestrictIso",
         "AlgebraicGeometry.Scheme.Modules.pushforwardPushforwardAdj_counit_app_app_apply",
         "AlgebraicGeometry.Scheme.Modules.pushforwardPushforwardAdj_unit_app_app_apply",
         "AlgebraicGeometry.Scheme.Modules.pushforward_eta_appIso_collapse",
@@ -9693,6 +9799,7 @@
         "AlgebraicGeometry.Scheme.Modules.pushforward_mu_appIso_collapse",
         "AlgebraicGeometry.Scheme.Modules.pushforward_\u03bc_eq",
         "AlgebraicGeometry.Scheme.Modules.restrictCompReindex",
+        "AlgebraicGeometry.Scheme.Modules.restrictFunctorComp",
         "AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback",
         "AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback_comp_compat",
         "AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback_comp_compat_hom",
@@ -9711,6 +9818,7 @@
         "AlgebraicGeometry.Scheme.Modules.sheafificationCompPullback_comp_natTrans",
         "AlgebraicGeometry.Scheme.Modules.sheafificationCompPullback_comp_tail",
         "AlgebraicGeometry.Scheme.Modules.sheafificationCompPullback_eq_leftAdjointUniq",
+        "AlgebraicGeometry.Scheme.Modules.sheafificationCompPullback_restrict",
         "AlgebraicGeometry.Scheme.Modules.sheafifyIdOf",
         "AlgebraicGeometry.Scheme.Modules.sheafifyMap_pullbackComp_hom_inv_id",
         "AlgebraicGeometry.Scheme.Modules.sheafifyMap_\u03b4comp_split",
@@ -9743,7 +9851,9 @@
         "AlgebraicGeometry.Scheme.Modules.tensorObj_functoriality_comp3",
         "AlgebraicGeometry.Scheme.Modules.tensorObj_functoriality_id",
         "AlgebraicGeometry.Scheme.Modules.tensorObj_isLocallyTrivial",
+        "AlgebraicGeometry.Scheme.Modules.tensorObj_left_unitor_image_collapse",
         "AlgebraicGeometry.Scheme.Modules.tensorObj_left_unitor_naturality",
+        "AlgebraicGeometry.Scheme.Modules.tensorObj_left_unitor_pullback_eq_sheafify",
         "AlgebraicGeometry.Scheme.Modules.tensorObj_middleFour",
         "AlgebraicGeometry.Scheme.Modules.tensorObj_restrict_iso",
         "AlgebraicGeometry.Scheme.Modules.tensorObj_restrict_iso_eq_pullbackTensorMap",
@@ -9771,9 +9881,14 @@
         "AlgebraicGeometry.Scheme.PicSharp.relNeg",
         "AlgebraicGeometry.Scheme.PicSharp.relTensorObj",
         "AlgebraicGeometry.Scheme.RelPicPresheaf.preimage_subgroup",
+        "CategoryTheory.Adjunction.conjugateEquiv_leftAdjointCompIso_hom",
+        "CategoryTheory.Adjunction.conjugateEquiv_leftAdjointUniq_hom",
+        "CategoryTheory.Adjunction.leftAdjointUniq_leftAdjointCompIso_comm",
         "CategoryTheory.Adjunction.leftAdjointUniq_trans",
         "CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app",
         "CategoryTheory.Functor.Monoidal.\u03bcIso",
+        "CategoryTheory.Localization.Monoidal.leftUnitor_hom_app",
+        "CategoryTheory.Localization.liftNatTrans_app",
         "CategoryTheory.conjugateEquiv_comp",
         "CategoryTheory.mateEquiv_vcomp",
         "PresheafOfModules.InternalHom.globalSMul",
@@ -9805,6 +9920,8 @@
         "PresheafOfModules.dual",
         "PresheafOfModules.dualIsoOfIso",
         "PresheafOfModules.dualPrecompEquiv",
+        "PresheafOfModules.dualPrecompHom",
+        "PresheafOfModules.dualPrecompHom_restrict_apply",
         "PresheafOfModules.dualUnitIsoGen",
         "PresheafOfModules.evalLin",
         "PresheafOfModules.evalLin_add",
@@ -9823,6 +9940,7 @@
         "PresheafOfModules.isLocallyInjective_of_injective_stalk",
         "PresheafOfModules.isLocallyInjective_whiskerLeft_of_W",
         "PresheafOfModules.isLocallySurjective_whiskerLeft",
+        "PresheafOfModules.pullbackComp",
         "PresheafOfModules.pushforwardCongr",
         "PresheafOfModules.pushforwardNatTrans",
         "PresheafOfModules.pushforwardPushforwardAdj",
@@ -9841,6 +9959,7 @@
         "PresheafOfModules.revInner_germ",
         "PresheafOfModules.revOuterLeg",
         "PresheafOfModules.revOuterLeg_apply",
+        "PresheafOfModules.sheafification",
         "PresheafOfModules.stalkLinearEquivOfIsIso",
         "PresheafOfModules.stalkLinearMap",
         "PresheafOfModules.stalkLinearMap_bijective_of_isIso",
@@ -9872,17 +9991,10 @@
       "needed": [
         "AlgebraicGeometry.LineBundle.OnProduct.pullback_tensorObj_iso",
         "AlgebraicGeometry.Scheme.Modules.PicGroup",
-        "AlgebraicGeometry.Scheme.Modules.dualIsoOfIso_restrict_precomp_apply",
+        "AlgebraicGeometry.Scheme.Modules.evalLin_restrict_commute_aux",
         "AlgebraicGeometry.Scheme.Modules.picCommGroup",
-        "AlgebraicGeometry.Scheme.Modules.presheafDual_eval_restrict_commute_apply",
-        "AlgebraicGeometry.Scheme.Modules.presheafDual_pullback_comparison_eval_apply",
-        "AlgebraicGeometry.Scheme.Modules.presheafDual_pullback_restrict_natural",
-        "AlgebraicGeometry.Scheme.Modules.presheafDual_pullback_restrict_natural_apply",
-        "AlgebraicGeometry.Scheme.Modules.pullbackUnitIso_whisker_eq_sheafify_eta_whisker",
-        "AlgebraicGeometry.Scheme.Modules.pullbackUnitIso_whisker_eq_sheafify_eta_whisker_3a",
-        "AlgebraicGeometry.Scheme.Modules.pullbackUnitIso_whisker_eq_sheafify_eta_whisker_3b",
+        "AlgebraicGeometry.Scheme.Modules.sliceDualTransport_app_apply",
         "AlgebraicGeometry.Scheme.Modules.tensorObj_left_unitor",
-        "AlgebraicGeometry.Scheme.Modules.tensorObj_left_unitor_pullback_eq_sheafify",
         "AlgebraicGeometry.Scheme.Modules.tensorObj_right_unitor",
         "AlgebraicGeometry.Scheme.PicSharp.addCommGroup_via_tensorObj"
       ]
@@ -11603,10 +11715,117 @@
     {
       "name": "MR0555258-compactifying-picard",
       "path": "/AI4M/users/Axel/LeanAlgebraicGeometry/SubProjects/RelatedPapersFormalisation/MR0555258-compactifying-picard",
-      "has_dag": false,
-      "declared": [],
-      "available": [],
-      "needed": []
+      "has_dag": true,
+      "declared": [
+        "MR0555258CompactifyingPicard.Admissible",
+        "MR0555258CompactifyingPicard.External.H_existence",
+        "MR0555258CompactifyingPicard.External.adjunction",
+        "MR0555258CompactifyingPicard.External.basechange_q0",
+        "MR0555258CompactifyingPicard.External.descent_noetherian",
+        "MR0555258CompactifyingPicard.External.ext_affine_acyclic",
+        "MR0555258CompactifyingPicard.External.ext_coherent_fp",
+        "MR0555258CompactifyingPicard.External.ext_vanishing_open",
+        "MR0555258CompactifyingPicard.External.halfexact_free",
+        "MR0555258CompactifyingPicard.External.nakayama_iso",
+        "MR0555258CompactifyingPicard.H",
+        "MR0555258CompactifyingPicard.H_locallyFree_of_ext_vanishing",
+        "MR0555258CompactifyingPicard.H_represents",
+        "MR0555258CompactifyingPicard.H_tensor",
+        "MR0555258CompactifyingPicard.H_tensor_invertible",
+        "MR0555258CompactifyingPicard.IsFreeMod",
+        "MR0555258CompactifyingPicard.IsHalfExact",
+        "MR0555258CompactifyingPicard.IsInvertibleMod",
+        "MR0555258CompactifyingPicard.IsLFP",
+        "MR0555258CompactifyingPicard.IsLocallyFreeOfFiniteRankOn",
+        "MR0555258CompactifyingPicard.IsRetrocompact",
+        "MR0555258CompactifyingPicard.IsSFlat",
+        "MR0555258CompactifyingPicard.exchange",
+        "MR0555258CompactifyingPicard.exists_acyclic_surjection",
+        "MR0555258CompactifyingPicard.exists_free_resolution_step",
+        "MR0555258CompactifyingPicard.extBaseChangeMap",
+        "MR0555258CompactifyingPicard.extGroup",
+        "MR0555258CompactifyingPicard.ext_adjunction",
+        "MR0555258CompactifyingPicard.ext_basechange_algebra",
+        "MR0555258CompactifyingPicard.ext_finite_flat",
+        "MR0555258CompactifyingPicard.ext_limit",
+        "MR0555258CompactifyingPicard.h",
+        "MR0555258CompactifyingPicard.homTensorFunctor",
+        "MR0555258CompactifyingPicard.instNonemptyModules",
+        "MR0555258CompactifyingPicard.presheafLeftUnitor",
+        "MR0555258CompactifyingPicard.presheafTensorBraiding",
+        "MR0555258CompactifyingPicard.sheafCohomology",
+        "MR0555258CompactifyingPicard.sheafification_map_isIso_of_locallyBijective",
+        "MR0555258CompactifyingPicard.sheafifyTensorComparisonLeftOfLocallyBijective",
+        "MR0555258CompactifyingPicard.sheafifyTensorComparisonOfLocallyBijective",
+        "MR0555258CompactifyingPicard.sheafifyTensorUnitWhiskerLeft",
+        "MR0555258CompactifyingPicard.sheafifyTensorUnitWhiskerRight",
+        "MR0555258CompactifyingPicard.sheafifyUnit",
+        "MR0555258CompactifyingPicard.sheafifyValIso",
+        "MR0555258CompactifyingPicard.tensorAssocOfLocallyBijective",
+        "MR0555258CompactifyingPicard.tensorBC",
+        "MR0555258CompactifyingPicard.tensorBaseChangeFunctor",
+        "MR0555258CompactifyingPicard.tensorBraiding",
+        "MR0555258CompactifyingPicard.tensorLeft",
+        "MR0555258CompactifyingPicard.tensorLeftUnitor",
+        "MR0555258CompactifyingPicard.tensorMod",
+        "MR0555258CompactifyingPicard.tensorRightUnitor"
+      ],
+      "available": [
+        "MR0555258CompactifyingPicard.Admissible",
+        "MR0555258CompactifyingPicard.H",
+        "MR0555258CompactifyingPicard.H_locallyFree_of_ext_vanishing",
+        "MR0555258CompactifyingPicard.H_represents",
+        "MR0555258CompactifyingPicard.H_tensor",
+        "MR0555258CompactifyingPicard.H_tensor_invertible",
+        "MR0555258CompactifyingPicard.IsFreeMod",
+        "MR0555258CompactifyingPicard.IsHalfExact",
+        "MR0555258CompactifyingPicard.IsInvertibleMod",
+        "MR0555258CompactifyingPicard.IsLFP",
+        "MR0555258CompactifyingPicard.IsLocallyFreeOfFiniteRankOn",
+        "MR0555258CompactifyingPicard.IsRetrocompact",
+        "MR0555258CompactifyingPicard.IsSFlat",
+        "MR0555258CompactifyingPicard.exists_acyclic_surjection",
+        "MR0555258CompactifyingPicard.exists_free_resolution_step",
+        "MR0555258CompactifyingPicard.extGroup",
+        "MR0555258CompactifyingPicard.ext_finite_flat",
+        "MR0555258CompactifyingPicard.h",
+        "MR0555258CompactifyingPicard.homTensorFunctor",
+        "MR0555258CompactifyingPicard.instNonemptyModules",
+        "MR0555258CompactifyingPicard.presheafLeftUnitor",
+        "MR0555258CompactifyingPicard.presheafTensorBraiding",
+        "MR0555258CompactifyingPicard.sheafCohomology",
+        "MR0555258CompactifyingPicard.sheafification_map_isIso_of_locallyBijective",
+        "MR0555258CompactifyingPicard.sheafifyTensorComparisonLeftOfLocallyBijective",
+        "MR0555258CompactifyingPicard.sheafifyTensorComparisonOfLocallyBijective",
+        "MR0555258CompactifyingPicard.sheafifyTensorUnitWhiskerLeft",
+        "MR0555258CompactifyingPicard.sheafifyTensorUnitWhiskerRight",
+        "MR0555258CompactifyingPicard.sheafifyUnit",
+        "MR0555258CompactifyingPicard.sheafifyValIso",
+        "MR0555258CompactifyingPicard.tensorAssocOfLocallyBijective",
+        "MR0555258CompactifyingPicard.tensorBC",
+        "MR0555258CompactifyingPicard.tensorBaseChangeFunctor",
+        "MR0555258CompactifyingPicard.tensorBraiding",
+        "MR0555258CompactifyingPicard.tensorLeft",
+        "MR0555258CompactifyingPicard.tensorLeftUnitor",
+        "MR0555258CompactifyingPicard.tensorMod",
+        "MR0555258CompactifyingPicard.tensorRightUnitor"
+      ],
+      "needed": [
+        "MR0555258CompactifyingPicard.External.H_existence",
+        "MR0555258CompactifyingPicard.External.adjunction",
+        "MR0555258CompactifyingPicard.External.basechange_q0",
+        "MR0555258CompactifyingPicard.External.descent_noetherian",
+        "MR0555258CompactifyingPicard.External.ext_affine_acyclic",
+        "MR0555258CompactifyingPicard.External.ext_coherent_fp",
+        "MR0555258CompactifyingPicard.External.ext_vanishing_open",
+        "MR0555258CompactifyingPicard.External.halfexact_free",
+        "MR0555258CompactifyingPicard.External.nakayama_iso",
+        "MR0555258CompactifyingPicard.exchange",
+        "MR0555258CompactifyingPicard.extBaseChangeMap",
+        "MR0555258CompactifyingPicard.ext_adjunction",
+        "MR0555258CompactifyingPicard.ext_basechange_algebra",
+        "MR0555258CompactifyingPicard.ext_limit"
+      ]
     },
     {
       "name": "MR2223407-construction-hilbert-quot",
@@ -15390,13 +15609,15 @@
     {
       "lean_name": "Algebra.IsPushout.cancelBaseChange",
       "declared_by": [
+        "FBC-B_SNAP-chain",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
       "satisfied_by": [
+        "FBC-B_SNAP-chain",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
       "needed_by": [],
-      "shared": false
+      "shared": true
     },
     {
       "lean_name": "Algebra.IsRegularLocalRing_of_smooth",
@@ -24712,10 +24933,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -25294,17 +25515,6 @@
       "shared": false
     },
     {
-      "lean_name": "AlgebraicGeometry.Scheme.Modules.dualIsoOfIso_restrict_precomp_apply",
-      "declared_by": [
-        "Line-Bundle-Comparison-Iso"
-      ],
-      "satisfied_by": [],
-      "needed_by": [
-        "Line-Bundle-Comparison-Iso"
-      ],
-      "shared": false
-    },
-    {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.dualIsoOfIso_trans",
       "declared_by": [
         "Line-Bundle-Comparison-Iso"
@@ -25445,6 +25655,17 @@
       "shared": true
     },
     {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.dual_restrict_iso_eq_comparison",
+      "declared_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "satisfied_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.dual_restrict_iso_restrict_compat",
       "declared_by": [
         "Line-Bundle-Comparison-Iso"
@@ -25524,6 +25745,17 @@
       "satisfied_by": [],
       "needed_by": [
         "MR4213770-secant-syzygies"
+      ],
+      "shared": false
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.evalLin_restrict_commute_aux",
+      "declared_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "Line-Bundle-Comparison-Iso"
       ],
       "shared": false
     },
@@ -25698,6 +25930,17 @@
       ],
       "needed_by": [],
       "shared": true
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.fullyFaithfulToPresheafOfModules",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
     },
     {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.gMul_def",
@@ -26672,10 +26915,10 @@
       ],
       "satisfied_by": [
         "Algebraic-Jacobian-Challenge",
+        "FBC-B_SNAP-chain",
         "GR-quot_closure_[completed]"
       ],
       "needed_by": [
-        "FBC-B_SNAP-chain",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
       "shared": true
@@ -27616,6 +27859,28 @@
       "shared": false
     },
     {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.localizedSheafification",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.localizedSheafificationAdjunction",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.map_comp4_eq_comp5",
       "declared_by": [
         "Line-Bundle-Comparison-Iso"
@@ -27846,12 +28111,11 @@
       ],
       "satisfied_by": [
         "Algebraic-Jacobian-Challenge",
+        "FBC-B_SNAP-chain",
         "GR-quot_closure_[completed]",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
-      "needed_by": [
-        "FBC-B_SNAP-chain"
-      ],
+      "needed_by": [],
       "shared": true
     },
     {
@@ -28436,6 +28700,39 @@
       "shared": true
     },
     {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.presheafDualH1Cocycle",
+      "declared_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "satisfied_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.presheafDualPullbackComparison",
+      "declared_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "satisfied_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.presheafDualPullbackComparison_restrict",
+      "declared_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "satisfied_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.presheafDualUnitIso",
       "declared_by": [
         "Algebraic-Jacobian-Challenge",
@@ -28465,10 +28762,10 @@
       "declared_by": [
         "Line-Bundle-Comparison-Iso"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "Line-Bundle-Comparison-Iso"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -28476,10 +28773,10 @@
       "declared_by": [
         "Line-Bundle-Comparison-Iso"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "Line-Bundle-Comparison-Iso"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -28487,10 +28784,10 @@
       "declared_by": [
         "Line-Bundle-Comparison-Iso"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "Line-Bundle-Comparison-Iso"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -28498,10 +28795,10 @@
       "declared_by": [
         "Line-Bundle-Comparison-Iso"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "Line-Bundle-Comparison-Iso"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -28706,12 +29003,14 @@
       "lean_name": "AlgebraicGeometry.Scheme.Modules.pullbackComp",
       "declared_by": [
         "Algebraic-Jacobian-Challenge",
+        "FBC-B_SNAP-chain",
         "GR-quot_closure_[completed]",
         "Quot-Foundations-[deferred_to_subprojects]",
         "MR4213770-secant-syzygies"
       ],
       "satisfied_by": [
         "Algebraic-Jacobian-Challenge",
+        "FBC-B_SNAP-chain",
         "GR-quot_closure_[completed]",
         "Quot-Foundations-[deferred_to_subprojects]",
         "MR4213770-secant-syzygies"
@@ -28837,6 +29136,17 @@
         "Algebraic-Jacobian-Challenge"
       ],
       "shared": true
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.pullbackCongr",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
     },
     {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.pullbackCongr_hom_app_eqToHom",
@@ -29330,32 +29640,10 @@
       "declared_by": [
         "Line-Bundle-Comparison-Iso"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "Line-Bundle-Comparison-Iso"
       ],
-      "shared": false
-    },
-    {
-      "lean_name": "AlgebraicGeometry.Scheme.Modules.pullbackUnitIso_whisker_eq_sheafify_eta_whisker_3a",
-      "declared_by": [
-        "Line-Bundle-Comparison-Iso"
-      ],
-      "satisfied_by": [],
-      "needed_by": [
-        "Line-Bundle-Comparison-Iso"
-      ],
-      "shared": false
-    },
-    {
-      "lean_name": "AlgebraicGeometry.Scheme.Modules.pullbackUnitIso_whisker_eq_sheafify_eta_whisker_3b",
-      "declared_by": [
-        "Line-Bundle-Comparison-Iso"
-      ],
-      "satisfied_by": [],
-      "needed_by": [
-        "Line-Bundle-Comparison-Iso"
-      ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -29627,6 +29915,17 @@
         "Cech-Cohomology-[completed]"
       ],
       "shared": true
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.pushforwardObjValRestrictIso",
+      "declared_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "satisfied_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "needed_by": [],
+      "shared": false
     },
     {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.pushforwardPushforwardAdj_counit_app_app_apply",
@@ -29970,6 +30269,17 @@
       "shared": true
     },
     {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.restrictFunctorComp",
+      "declared_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "satisfied_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.restrictFunctorCongr_rfl_hom_app",
       "declared_by": [
         "Algebraic-Jacobian-Challenge",
@@ -30298,11 +30608,10 @@
       ],
       "satisfied_by": [
         "Algebraic-Jacobian-Challenge",
+        "FBC-B_SNAP-chain",
         "GR-quot_closure_[completed]"
       ],
-      "needed_by": [
-        "FBC-B_SNAP-chain"
-      ],
+      "needed_by": [],
       "shared": true
     },
     {
@@ -30388,10 +30697,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -30399,10 +30708,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -30410,10 +30719,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -30473,10 +30782,10 @@
       ],
       "satisfied_by": [
         "Algebraic-Jacobian-Challenge",
+        "FBC-B_SNAP-chain",
         "GR-quot_closure_[completed]"
       ],
       "needed_by": [
-        "FBC-B_SNAP-chain",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
       "shared": true
@@ -30526,10 +30835,10 @@
       ],
       "satisfied_by": [
         "Algebraic-Jacobian-Challenge",
+        "FBC-B_SNAP-chain",
         "GR-quot_closure_[completed]"
       ],
       "needed_by": [
-        "FBC-B_SNAP-chain",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
       "shared": true
@@ -30570,13 +30879,23 @@
       ],
       "satisfied_by": [
         "Algebraic-Jacobian-Challenge",
+        "FBC-B_SNAP-chain",
         "GR-quot_closure_[completed]",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
-      "needed_by": [
+      "needed_by": [],
+      "shared": true
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.sectionsMul_eq_laxTensorator",
+      "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "shared": true
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
     },
     {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_assoc",
@@ -30647,6 +30966,17 @@
       "shared": true
     },
     {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.sectionsMul_whiskerLeft",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.sectionsMul_whiskerLeft_natural",
       "declared_by": [
         "Algebraic-Jacobian-Challenge",
@@ -30671,6 +31001,17 @@
       ],
       "needed_by": [],
       "shared": true
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.sectionsMul_whiskerRight",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
     },
     {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.sectionsMul_whiskerRight_natural",
@@ -30815,6 +31156,17 @@
       "shared": true
     },
     {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.sheafificationCompPullback_restrict",
+      "declared_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "satisfied_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.sheafificationCounitIso",
       "declared_by": [
         "Algebraic-Jacobian-Challenge",
@@ -30875,10 +31227,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -30886,10 +31238,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -30921,10 +31273,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -30932,10 +31284,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -30943,10 +31295,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -30954,10 +31306,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -30965,10 +31317,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -30976,10 +31328,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -31164,6 +31516,17 @@
       "shared": false
     },
     {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.sliceDualTransport_app_apply",
+      "declared_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "shared": false
+    },
+    {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.sliceDualTransport_naturality_apply",
       "declared_by": [
         "Line-Bundle-Comparison-Iso"
@@ -31208,12 +31571,11 @@
       ],
       "satisfied_by": [
         "Algebraic-Jacobian-Challenge",
+        "FBC-B_SNAP-chain",
         "GR-quot_closure_[completed]",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
-      "needed_by": [
-        "FBC-B_SNAP-chain"
-      ],
+      "needed_by": [],
       "shared": true
     },
     {
@@ -31234,10 +31596,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -31349,13 +31711,12 @@
       ],
       "satisfied_by": [
         "Algebraic-Jacobian-Challenge",
+        "FBC-B_SNAP-chain",
         "GR-quot_closure_[completed]",
         "Line-Bundle-Comparison-Iso",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
-      "needed_by": [
-        "FBC-B_SNAP-chain"
-      ],
+      "needed_by": [],
       "shared": true
     },
     {
@@ -31368,12 +31729,11 @@
       ],
       "satisfied_by": [
         "Algebraic-Jacobian-Challenge",
+        "FBC-B_SNAP-chain",
         "GR-quot_closure_[completed]",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
-      "needed_by": [
-        "FBC-B_SNAP-chain"
-      ],
+      "needed_by": [],
       "shared": true
     },
     {
@@ -31446,10 +31806,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -31457,10 +31817,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -31468,10 +31828,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -31505,10 +31865,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -31527,10 +31887,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -31659,10 +32019,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -31688,12 +32048,11 @@
       ],
       "satisfied_by": [
         "Algebraic-Jacobian-Challenge",
+        "FBC-B_SNAP-chain",
         "GR-quot_closure_[completed]",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
-      "needed_by": [
-        "FBC-B_SNAP-chain"
-      ],
+      "needed_by": [],
       "shared": true
     },
     {
@@ -31738,10 +32097,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -31767,12 +32126,11 @@
       ],
       "satisfied_by": [
         "Algebraic-Jacobian-Challenge",
+        "FBC-B_SNAP-chain",
         "GR-quot_closure_[completed]",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
-      "needed_by": [
-        "FBC-B_SNAP-chain"
-      ],
+      "needed_by": [],
       "shared": true
     },
     {
@@ -31793,10 +32151,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -31804,10 +32162,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -32086,6 +32444,17 @@
       "shared": true
     },
     {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.tensorObj_left_unitor_image_collapse",
+      "declared_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "satisfied_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.tensorObj_left_unitor_naturality",
       "declared_by": [
         "Line-Bundle-Comparison-Iso"
@@ -32101,10 +32470,10 @@
       "declared_by": [
         "Line-Bundle-Comparison-Iso"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "Line-Bundle-Comparison-Iso"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -32237,12 +32606,11 @@
       ],
       "satisfied_by": [
         "Algebraic-Jacobian-Challenge",
+        "FBC-B_SNAP-chain",
         "GR-quot_closure_[completed]",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
-      "needed_by": [
-        "FBC-B_SNAP-chain"
-      ],
+      "needed_by": [],
       "shared": true
     },
     {
@@ -32255,12 +32623,11 @@
       ],
       "satisfied_by": [
         "Algebraic-Jacobian-Challenge",
+        "FBC-B_SNAP-chain",
         "GR-quot_closure_[completed]",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
-      "needed_by": [
-        "FBC-B_SNAP-chain"
-      ],
+      "needed_by": [],
       "shared": true
     },
     {
@@ -32272,11 +32639,10 @@
       ],
       "satisfied_by": [
         "Algebraic-Jacobian-Challenge",
+        "FBC-B_SNAP-chain",
         "GR-quot_closure_[completed]"
       ],
-      "needed_by": [
-        "FBC-B_SNAP-chain"
-      ],
+      "needed_by": [],
       "shared": true
     },
     {
@@ -32297,10 +32663,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -32334,10 +32700,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -32397,10 +32763,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -32428,6 +32794,28 @@
       ],
       "needed_by": [],
       "shared": true
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.tensorPowComparison",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.tensorPowPsh",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
     },
     {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.tensorPow_succ",
@@ -32609,6 +32997,28 @@
       ],
       "satisfied_by": [
         "MR4213770-secant-syzygies"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.toPresheafLocalized",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.toPresheafLocalized_laxMonoidal",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
       ],
       "needed_by": [],
       "shared": false
@@ -33047,10 +33457,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -33058,10 +33468,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -40884,6 +41294,39 @@
       "shared": false
     },
     {
+      "lean_name": "AlgebraicGeometry.chartBaseChangeGeometricComparisonNat_unfold",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "shared": false
+    },
+    {
+      "lean_name": "AlgebraicGeometry.chartBaseChangeGeometricComparison_dictionary_glue",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "shared": false
+    },
+    {
+      "lean_name": "AlgebraicGeometry.chartBaseChangeGeometricComparison_eq_natApp",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
       "lean_name": "AlgebraicGeometry.chartBaseChangeGeometricComparison_mate",
       "declared_by": [
         "FBC-B_SNAP-chain"
@@ -40962,6 +41405,17 @@
     },
     {
       "lean_name": "AlgebraicGeometry.chartBaseChangeRingMap",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "AlgebraicGeometry.chartBaseChange_extendScalars_cocycle",
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
@@ -47061,6 +47515,39 @@
       "shared": true
     },
     {
+      "lean_name": "AlgebraicGeometry.pullbackSpecTildeCatCommSq",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "AlgebraicGeometry.pullbackSpecTildeComp",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "shared": false
+    },
+    {
+      "lean_name": "AlgebraicGeometry.pullbackSpecTildeComp_eq_composite",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "shared": false
+    },
+    {
       "lean_name": "AlgebraicGeometry.pullbackSpecTildeNatIso",
       "declared_by": [
         "FBC-B_SNAP-chain"
@@ -47080,6 +47567,39 @@
         "FBC-B_SNAP-chain"
       ],
       "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "AlgebraicGeometry.pullbackSpecTildeVCompIso",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "AlgebraicGeometry.pullbackSpecTildeVCompIso_hom_app",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "AlgebraicGeometry.pullbackSpecTilde_ringSquare_vcomp_glue",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "FBC-B_SNAP-chain"
+      ],
       "shared": false
     },
     {
@@ -47276,6 +47796,39 @@
     },
     {
       "lean_name": "AlgebraicGeometry.pullback_spec_tilde_iso_ring_square_natural",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "AlgebraicGeometry.pullback_spec_tilde_iso_ring_square_natural_catCommSq",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "AlgebraicGeometry.pullback_spec_tilde_iso_ring_square_natural_concrete",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "AlgebraicGeometry.pullback_spec_tilde_iso_ring_square_natural_extendScalarsCocycle",
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
@@ -48686,10 +49239,10 @@
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
-      "satisfied_by": [],
-      "needed_by": [
+      "satisfied_by": [
         "FBC-B_SNAP-chain"
       ],
+      "needed_by": [],
       "shared": false
     },
     {
@@ -49201,9 +49754,10 @@
         "FBC-B_SNAP-chain",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
-      "satisfied_by": [],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
       "needed_by": [
-        "FBC-B_SNAP-chain",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
       "shared": true
@@ -51094,12 +51648,34 @@
       "shared": false
     },
     {
+      "lean_name": "CategoryTheory.Adjunction.conjugateEquiv_leftAdjointCompIso_hom",
+      "declared_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "satisfied_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
       "lean_name": "CategoryTheory.Adjunction.conjugateEquiv_leftAdjointCompIso_inv",
       "declared_by": [
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
       "satisfied_by": [
         "Quot-Foundations-[deferred_to_subprojects]"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "CategoryTheory.Adjunction.conjugateEquiv_leftAdjointUniq_hom",
+      "declared_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "satisfied_by": [
+        "Line-Bundle-Comparison-Iso"
       ],
       "needed_by": [],
       "shared": false
@@ -51144,6 +51720,17 @@
       "shared": true
     },
     {
+      "lean_name": "CategoryTheory.Adjunction.leftAdjointUniq_leftAdjointCompIso_comm",
+      "declared_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "satisfied_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
       "lean_name": "CategoryTheory.Adjunction.leftAdjointUniq_trans",
       "declared_by": [
         "Line-Bundle-Comparison-Iso"
@@ -51168,6 +51755,17 @@
       ],
       "needed_by": [],
       "shared": true
+    },
+    {
+      "lean_name": "CategoryTheory.Adjunction.rightAdjointLaxMonoidal",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
     },
     {
       "lean_name": "CategoryTheory.Adjunction.right_adjoint_linear",
@@ -51212,6 +51810,39 @@
     },
     {
       "lean_name": "CategoryTheory.BraidedCategory.hexagon_forward",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "CategoryTheory.CatCommSq",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "CategoryTheory.CatCommSq.hComp",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "CategoryTheory.CatCommSq.vComp",
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
@@ -51458,6 +52089,72 @@
       ],
       "needed_by": [],
       "shared": true
+    },
+    {
+      "lean_name": "CategoryTheory.Functor.LaxBraided.braided",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "CategoryTheory.Functor.LaxMonoidal.associativity",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "CategoryTheory.Functor.LaxMonoidal.left_unitality",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "CategoryTheory.Functor.LaxMonoidal.right_unitality",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "CategoryTheory.Functor.LaxMonoidal.\u03bc_natural_left",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "CategoryTheory.Functor.LaxMonoidal.\u03bc_natural_right",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
     },
     {
       "lean_name": "CategoryTheory.Functor.Monoidal.\u03bcIso",
@@ -52440,12 +53137,34 @@
       "shared": true
     },
     {
+      "lean_name": "CategoryTheory.Localization.Monoidal.leftUnitor_hom_app",
+      "declared_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "satisfied_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
       "lean_name": "CategoryTheory.Localization.Monoidal.\u03bc",
       "declared_by": [
         "FBC-B_SNAP-chain"
       ],
       "satisfied_by": [
         "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "CategoryTheory.Localization.liftNatTrans_app",
+      "declared_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "satisfied_by": [
+        "Line-Bundle-Comparison-Iso"
       ],
       "needed_by": [],
       "shared": false
@@ -53200,6 +53919,17 @@
       ],
       "satisfied_by": [
         "Quot-Foundations-[deferred_to_subprojects]"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "CommRingCat.moduleCatExtendScalarsPseudofunctor",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
       ],
       "needed_by": [],
       "shared": false
@@ -54459,6 +55189,17 @@
       "shared": false
     },
     {
+      "lean_name": "IsBaseChange",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
       "lean_name": "IsDedekindDomain.HeightOneSpectrum.mem_integers_of_valuation_le_one",
       "declared_by": [
         "RiemannRoch-[obsolete]"
@@ -55631,6 +56372,578 @@
       ],
       "needed_by": [],
       "shared": true
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.Admissible",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.External.H_existence",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.External.adjunction",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.External.basechange_q0",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.External.descent_noetherian",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.External.ext_affine_acyclic",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.External.ext_coherent_fp",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.External.ext_vanishing_open",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.External.halfexact_free",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.External.nakayama_iso",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.H",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.H_locallyFree_of_ext_vanishing",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.H_represents",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.H_tensor",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.H_tensor_invertible",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.IsFreeMod",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.IsHalfExact",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.IsInvertibleMod",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.IsLFP",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.IsLocallyFreeOfFiniteRankOn",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.IsRetrocompact",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.IsSFlat",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.exchange",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.exists_acyclic_surjection",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.exists_free_resolution_step",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.extBaseChangeMap",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.extGroup",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.ext_adjunction",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.ext_basechange_algebra",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.ext_finite_flat",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.ext_limit",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [],
+      "needed_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.h",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.homTensorFunctor",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.instNonemptyModules",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.presheafLeftUnitor",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.presheafTensorBraiding",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.sheafCohomology",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.sheafification_map_isIso_of_locallyBijective",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.sheafifyTensorComparisonLeftOfLocallyBijective",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.sheafifyTensorComparisonOfLocallyBijective",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.sheafifyTensorUnitWhiskerLeft",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.sheafifyTensorUnitWhiskerRight",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.sheafifyUnit",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.sheafifyValIso",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.tensorAssocOfLocallyBijective",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.tensorBC",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.tensorBaseChangeFunctor",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.tensorBraiding",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.tensorLeft",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.tensorLeftUnitor",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.tensorMod",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "MR0555258CompactifyingPicard.tensorRightUnitor",
+      "declared_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "satisfied_by": [
+        "MR0555258-compactifying-picard"
+      ],
+      "needed_by": [],
+      "shared": false
     },
     {
       "lean_name": "MR2223407ConstructionHilbertQuot.DirectImageCommutesBaseChange",
@@ -65073,6 +66386,28 @@
       "shared": false
     },
     {
+      "lean_name": "ModuleCat.extendScalarsComp",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "ModuleCat.extendScalars_assoc'",
+      "declared_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "satisfied_by": [
+        "FBC-B_SNAP-chain"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
       "lean_name": "ModuleCat.exteriorPower.baseChange",
       "declared_by": [
         "MR4213770-secant-syzygies"
@@ -65880,6 +67215,28 @@
       "shared": true
     },
     {
+      "lean_name": "PresheafOfModules.dualPrecompHom",
+      "declared_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "satisfied_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
+      "lean_name": "PresheafOfModules.dualPrecompHom_restrict_apply",
+      "declared_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "satisfied_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
       "lean_name": "PresheafOfModules.dualUnitIsoGen",
       "declared_by": [
         "Algebraic-Jacobian-Challenge",
@@ -66191,6 +67548,17 @@
       "shared": true
     },
     {
+      "lean_name": "PresheafOfModules.pullbackComp",
+      "declared_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "satisfied_by": [
+        "Line-Bundle-Comparison-Iso"
+      ],
+      "needed_by": [],
+      "shared": false
+    },
+    {
       "lean_name": "PresheafOfModules.pushforwardCongr",
       "declared_by": [
         "Algebraic-Jacobian-Challenge",
@@ -66480,6 +67848,7 @@
         "Algebraic-Jacobian-Challenge",
         "FBC-B_SNAP-chain",
         "GR-quot_closure_[completed]",
+        "Line-Bundle-Comparison-Iso",
         "Quot-Foundations-[deferred_to_subprojects]",
         "MR4213770-secant-syzygies"
       ],
@@ -66487,6 +67856,7 @@
         "Algebraic-Jacobian-Challenge",
         "FBC-B_SNAP-chain",
         "GR-quot_closure_[completed]",
+        "Line-Bundle-Comparison-Iso",
         "Quot-Foundations-[deferred_to_subprojects]",
         "MR4213770-secant-syzygies"
       ],

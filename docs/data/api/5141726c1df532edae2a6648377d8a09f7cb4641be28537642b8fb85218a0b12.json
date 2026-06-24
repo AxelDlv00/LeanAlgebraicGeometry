@@ -1,0 +1,153 @@
+[
+  {
+    "timestamp": "2026-06-24T04:28:40Z",
+    "status": "partial",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "exists_free_resolution_step"
+    },
+    "session": {
+      "id": "session_16",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "Two residual sorries pullback_isFreeMod/pullback_isLFP reduce to a single absent Mathlib fact: (Scheme.Modules.pullback p).obj 𝒪_Y ≅ 𝒪_X (structure-sheaf pullback iso). pullbackObjFreeIso exists but needs (Opens.map p.base).Final, absent for general scheme morphisms. Theorem transitively uses sorryAx — NOT actually closed.",
+      "key_lemmas_used": [
+        "External.descent_noetherian (re-signed data-form)",
+        "fp_sheaf_affine_tilde",
+        "exists_finiteFreePresentation_of_noetherian",
+        "tilde_exact",
+        "tilde_free_fin",
+        "tilde_isFP",
+        "External.flat_pullback_exact",
+        "ShortComplex.exact_kernel",
+        "ShortComplex.ShortExact.mk"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "STEP 0: re-sign External.descent_noetherian to data-descent form delivering literal Spec A₀ (no X→Spec transport)",
+        "code_tried": "axiom External.descent_noetherian (hS : IsAffine S) (f : X ⟶ S) (haX) (I : X.Modules) (hI : IsLFP I) (hflat : IsSFlat f I) : ∃ A₀ (_ : IsNoetherianRing ↑A₀) (p : X ⟶ Spec A₀) (I₀ : (Spec A₀).Modules), I₀.IsFinitePresentation ∧ Nonempty (I ≅ (Scheme.Modules.pullback p).obj I₀)",
+        "line_number": "466",
+        "lean_error": "none (clean)",
+        "result": "success",
+        "insight": "Re-signing referenced-only-at-def-site axiom is safe; dissolves the prior X→Spec transport gap."
+      },
+      {
+        "attempt": 2,
+        "strategy": "STEP 1: anchor External.tilde_isFP (forward 01PC). Universe/coercion fixes needed",
+        "code_tried": "axiom External.tilde_isFP (M : ModuleCat.{u} ↑R) [Module.FinitePresentation ↑R M] : IsLFP (AlgebraicGeometry.tilde M : (Spec R).Modules)",
+        "line_number": "539",
+        "lean_error": "First: 'tilde M has type ModuleCat.{u,u} but expected ModuleCat.{0,0}'; then 'tilde M has type (Spec R).Modules but expected SheafOfModules ?m' — fixed by ascribing : (Spec R).Modules and using IsLFP not SheafOfModules.IsFinitePresentation",
+        "result": "success",
+        "insight": "Constructive route (Presentation(~M) from Module.FinitePresentation + Presentation.IsFinite⇒IsFinitePresentation) absent from Mathlib; anchored per plan fallback."
+      },
+      {
+        "attempt": 3,
+        "strategy": "STEP 2: anchor External.flat_pullback_exact (flat pullback preserves SES at sheaf level)",
+        "code_tried": "axiom External.flat_pullback_exact (f : X ⟶ S) (p : X ⟶ X₀) (sc₀ : ShortComplex X₀.Modules) (hsc : sc₀.ShortExact) (I : X.Modules) (hflat : IsSFlat f I) (e : I ≅ (Scheme.Modules.pullback p).obj sc₀.X₃) : (sc₀.map (Scheme.Modules.pullback p)).ShortExact",
+        "line_number": "~480",
+        "lean_error": "none",
+        "result": "success",
+        "insight": "Mathlib has only module-level Module.Flat.lTensor_shortComplex_exact; iso e absorbs transport."
+      },
+      {
+        "attempt": 4,
+        "strategy": "helper tilde_free_fin: tilde of Fin n →₀ R is free via ULift reindex",
+        "code_tried": "refine (tilde.functor R).mapIso (LinearEquiv.toModuleIso (Finsupp.domLCongr (Equiv.ulift.{u,0} (α := Fin n)).symm)) ≪≫ tildeFinsupp (ULift.{u} (Fin n))",
+        "line_number": "922",
+        "lean_error": "none (clean)",
+        "result": "success",
+        "insight": "tildeFinsupp index lives in Type u; Fin n in Type 0 must be ULifted via Finsupp.domLCongr."
+      },
+      {
+        "attempt": 5,
+        "strategy": "STEP 3 assembly: tilde the module SES then flat-pullback it. PreservesZeroMorphisms synthesis failed on re-wrapped ShortComplex.map",
+        "code_tried": "have hSEpull := External.flat_pullback_exact f p ((ShortComplex.mk (kernel.ι q) q (kernel.condition q)).map (tilde.functor A₀)) htilde I hflat e",
+        "line_number": "1006",
+        "lean_error": "failed to synthesize (tilde.functor A₀).PreservesZeroMorphisms",
+        "result": "failed",
+        "insight": "Re-passing the mapped ShortComplex re-triggers instance synthesis; pass sc₀ as _ so it is inferred from htilde and the instance is reused."
+      },
+      {
+        "attempt": 6,
+        "strategy": "STEP 3 fix: let sc₀ be inferred from htilde via underscore",
+        "code_tried": "have hSEpull := External.flat_pullback_exact f p _ htilde I hflat e; refine ⟨_, hSEpull, ⟨e.symm⟩, ?_, ?_, ?_⟩",
+        "line_number": "1006",
+        "lean_error": "none (clean build, exit 0)",
+        "result": "partial",
+        "insight": "Assembly compiles; ShortExact + X₃≅I closed genuinely; IsFreeMod/IsLFP conjuncts reduced to pullback_isFreeMod/pullback_isLFP."
+      },
+      {
+        "attempt": 7,
+        "strategy": "residual pullback_isFreeMod: reduce to (pullback p).obj (free Λ) ≅ free Λ via pullbackObjFreeIso",
+        "code_tried": "SheafOfModules.pullbackObjFreeIso p.toRingCatSheafHom Λ",
+        "line_number": "945",
+        "lean_error": "failed to synthesize instance (TopologicalSpace.Opens.map p.base).Final",
+        "result": "failed",
+        "insight": "pullbackObjFreeIso needs the site functor Opens.map.Final — absent for general scheme morphisms. Left as documented sorry; reduces goal to the precise missing structure-sheaf-pullback iso."
+      }
+    ],
+    "next_steps": "Build SheafOfModules.pullbackObjUnitIso / pullback_unit_iso for Scheme.Modules.pullback (p* 𝒪_Y ≅ 𝒪_X) → closes pullback_isFreeMod directly. pullback_isLFP additionally needs the fp-globalization brick (or anchor both as standard AG facts). Only then does exists_free_resolution_step become sorry-free."
+  },
+  {
+    "timestamp": "2026-06-24T04:28:40Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "pullback_isFreeMod"
+    },
+    "session": {
+      "id": "session_16",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "pullbackObjFreeIso requires (Opens.map p.base).Final, absent for general scheme morphisms; structure-sheaf pullback iso p* 𝒪_Y ≅ 𝒪_X not wired up in Mathlib v4.30.0 for Scheme.Modules.pullback.",
+      "key_lemmas_used": [
+        "SheafOfModules.pullbackObjFreeIso",
+        "Scheme.Modules.pullback.mapIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "reduce to (pullback p).obj (free Λ) ≅ free Λ and apply pullbackObjFreeIso",
+        "code_tried": "obtain ⟨Λ, ⟨e⟩⟩ := h; refine ⟨Λ, ⟨(Scheme.Modules.pullback p).mapIso e ≪≫ ?_⟩⟩; exact SheafOfModules.pullbackObjFreeIso p.toRingCatSheafHom Λ",
+        "line_number": "945",
+        "lean_error": "failed to synthesize (TopologicalSpace.Opens.map p.base).Final",
+        "result": "failed",
+        "insight": "Left as documented sorry after reducing the goal to exactly the missing iso. pullback IsLeftAdjoint IS an instance, so given the unit iso, free-pullback follows via the coproduct free Λ = ∐ unit."
+      }
+    ],
+    "next_steps": "Supply (Scheme.Modules.pullback p).obj (unit Y.ringCatSheaf) ≅ unit X.ringCatSheaf, then derive via left-adjoint coproduct preservation."
+  },
+  {
+    "timestamp": "2026-06-24T04:28:40Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "pullback_isLFP"
+    },
+    "session": {
+      "id": "session_16",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "No Mathlib instance/lemma supplies SheafOfModules.IsFinitePresentation ((Scheme.Modules.pullback p).obj M) from M.IsFinitePresentation; infer_instance fails.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "infer fp-preservation under pullback",
+        "code_tried": "haveI : SheafOfModules.IsFinitePresentation M := h; infer_instance",
+        "line_number": "959",
+        "lean_error": "instance synthesis fails (no pullback-preserves-IsFinitePresentation)",
+        "result": "failed",
+        "insight": "fp-preservation reduces to free-pullback + right-exactness + QuasicoherentData reconstruction; bare sorry left."
+      }
+    ],
+    "next_steps": "Either build the fp-globalization brick on top of pullback_isFreeMod, or anchor as a standard AG fact (not authorized iter-016)."
+  }
+]

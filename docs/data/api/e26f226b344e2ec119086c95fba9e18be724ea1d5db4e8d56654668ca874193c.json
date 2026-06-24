@@ -1,0 +1,156 @@
+[
+  {
+    "timestamp": "2026-06-24T01:42:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "tilde_free"
+    },
+    "session": {
+      "id": "session_12",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "AlgebraicGeometry.tildeFinsupp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Package Mathlib tildeFinsupp iso into project IsFreeMod predicate",
+        "code_tried": "theorem tilde_free {R : CommRingCat.{u}} (Λ : Type u) [Finite Λ] : IsFreeMod (AlgebraicGeometry.tilde (ModuleCat.of ↑R (Λ →₀ ↑R))) := ⟨Λ, ⟨AlgebraicGeometry.tildeFinsupp Λ⟩⟩",
+        "line_number": "626",
+        "lean_error": null,
+        "goal_before": "IsFreeMod (tilde (ModuleCat.of ↑R (Λ →₀ ↑R)))",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "tildeFinsupp ι : tilde (ι →₀ R) ≅ SheafOfModules.free ι exists directly; [Finite Λ] kept only to match blueprint, not needed by IsFreeMod. Axiom-clean."
+      }
+    ],
+    "next_steps": "Done. Needs sync \\leanok on lem:tilde_free (sync added it, iter=12 added=1)."
+  },
+  {
+    "timestamp": "2026-06-24T01:42:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "tilde_of_presentation"
+    },
+    "session": {
+      "id": "session_12",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "AlgebraicGeometry.isIso_fromTildeΓ_of_presentation",
+        "Scheme.Modules.fromTildeΓ",
+        "asIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Use Mathlib counit-iso-from-global-presentation lemma, wrap counit as iso",
+        "code_tried": "noncomputable def tilde_of_presentation {R : CommRingCat.{u}} (M : (Spec R).Modules) (P : M.Presentation) : AlgebraicGeometry.tilde ((modulesSpecToSheaf.obj M).presheaf.obj (.op ⊤)) ≅ M := haveI := isIso_fromTildeΓ_of_presentation M P; asIso M.fromTildeΓ",
+        "line_number": "641",
+        "lean_error": null,
+        "goal_before": "tilde (Γ M) ≅ M",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "Essential-surjectivity half of affine equivalence, CONDITIONAL on a global M.Presentation. Mathlib supplies the counit-iso brick the plan feared was absent. New lean_aux node — needs blueprint block (unmatched=1)."
+      }
+    ],
+    "next_steps": "Planner must author a blueprint block (e.g. lem:tilde_counit_of_pres) and wire into lem:fp_sheaf_affine_tilde \\uses."
+  },
+  {
+    "timestamp": "2026-06-24T01:42:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "tilde_exact"
+    },
+    "session": {
+      "id": "session_12",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "PreservesFiniteLimits (tilde.functor R) fails to synthesize — reduces to tilde-preserves-kernels, which needs SheafOfModules stalk-based exactness/kernel detection (absent from Mathlib).",
+      "key_lemmas_used": [
+        "ShortComplex.ShortExact.map_of_exact",
+        "Functor.preservesFiniteLimits_of_preservesKernels"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Map ShortExact through tilde via ShortExact.map_of_exact",
+        "code_tried": "ShortExact.map_of_exact route requires [PreservesFiniteLimits (tilde.functor R)] [PreservesFiniteColimits ...]",
+        "line_number": "n/a",
+        "lean_error": "failed to synthesize instance PreservesFiniteLimits (tilde.functor R)",
+        "goal_before": "(S.map tilde.functor).ShortExact",
+        "goal_after": null,
+        "result": "failed",
+        "insight": "PreservesZeroMorphisms ✓ (Additive), PreservesFiniteColimits ✓ (left adjoint), PreservesFiniteLimits ✗ — this IS left-exactness of tilde."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Reduce PreservesFiniteLimits to preserving kernels",
+        "code_tried": "Functor.preservesFiniteLimits_of_preservesKernels reduces to ∀ f, PreservesLimit (parallelPair f 0) (tilde.functor R)",
+        "line_number": "n/a",
+        "lean_error": "instance absent",
+        "goal_before": "PreservesFiniteLimits (tilde.functor R)",
+        "goal_after": null,
+        "result": "failed",
+        "insight": "Reduces to tilde-preserves-kernels. Proving it needs stalk-exactness detection for SheafOfModules (stalk=localization, exact) — Mathlib/Algebra/Category/ModuleCat/Sheaf/ has only Limits.lean, no stalk lemmas. General sheaf stalkFunctor mono-detection exists but is not wired to SheafOfModules/tilde."
+      }
+    ],
+    "next_steps": "Build `instance : PreservesFiniteLimits (AlgebraicGeometry.tilde.functor R)` via tilde-preserves-kernels, itself requiring a SheafOfModules stalk-exactness detection lemma. Do NOT route through ShortExact.map hoping Mono(tilde.map f) is cheap — same obstruction."
+  },
+  {
+    "timestamp": "2026-06-24T01:42:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "fp_sheaf_affine_tilde"
+    },
+    "session": {
+      "id": "session_12",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "SheafOfModules.IsFinitePresentation gives only LOCAL QuasicoherentData over a cover, not a GLOBAL I.Presentation on Spec R; the converse essImage tilde = quasi-coherent is unproven in Mathlib.",
+      "key_lemmas_used": [
+        "AlgebraicGeometry.isIso_fromTildeΓ_of_presentation",
+        "tilde_of_presentation"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Apply tilde_of_presentation once a global presentation of I is in hand",
+        "code_tried": "isIso_fromTildeΓ_of_presentation needs P : I.Presentation (global); IsFinitePresentation only supplies QuasicoherentData (cover-based class, Quasicoherent.lean l.236/263)",
+        "line_number": "n/a",
+        "lean_error": "no global I.Presentation available from IsFinitePresentation",
+        "goal_before": "∃ M, FinitePresentation ∧ I ≅ tilde M",
+        "goal_after": null,
+        "result": "failed",
+        "insight": "Counit-iso half SOLVED (tilde_of_presentation). Missing brick: theorem (I : (Spec R).Modules) [I.IsFinitePresentation] : Nonempty I.Presentation (= essImage tilde = quasi-coherent, flagged 'We will later show…' in Mathlib, unproven)."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Probe reverse direction Module.FinitePresentation → IsFinitePresentation (tilde M)",
+        "code_tried": "infer_instance for SheafOfModules.IsFinitePresentation (tilde M)",
+        "line_number": "n/a",
+        "lean_error": "no backing instance",
+        "goal_before": "SheafOfModules.IsFinitePresentation (tilde M)",
+        "goal_after": null,
+        "result": "failed",
+        "insight": "No Mathlib bridge Presentation.IsFinite → SheafOfModules.IsFinitePresentation. Off 1.4 path (needs reflecting direction) — deprioritized."
+      }
+    ],
+    "next_steps": "Build affine essential-surjectivity: [I.IsFinitePresentation] → Nonempty I.Presentation (global presentation on Spec R). Closes via already-landed tilde_of_presentation. Highest-leverage single-target next iter."
+  }
+]

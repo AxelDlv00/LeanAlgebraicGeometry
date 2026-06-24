@@ -1,0 +1,169 @@
+[
+  {
+    "timestamp": "2026-06-23T14:46:39Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "IsRetrocompact"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "QuasiCompact",
+        "Scheme.Opens.ι"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "opaque→def: retrocompact open = quasi-compact inclusion",
+        "code_tried": "def IsRetrocompact {S : Scheme.{u}} (U : S.Opens) : Prop := QuasiCompact U.ι",
+        "line_number": "389",
+        "lean_error": "",
+        "result": "success",
+        "insight": "QuasiCompact : {X Y : Scheme} → (X ⟶ Y) → Prop; U.ι : ↑U ⟶ S is the open inclusion. Axiom-clean."
+      }
+    ],
+    "next_steps": "Done; eligible for \\leanok (sync added it)."
+  },
+  {
+    "timestamp": "2026-06-23T14:46:39Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "IsLocallyFreeOfFiniteRankOn"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Scheme.Modules.pullback",
+        "SheafOfModules.free",
+        "Scheme.Opens.ι",
+        "Finite"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "opaque→def: faithful local definition (neighbourhood-wise iso to finite free sheaf)",
+        "code_tried": "def IsLocallyFreeOfFiniteRankOn {S} (M : S.Modules) (U : S.Opens) : Prop := ∀ x ∈ U, ∃ V : S.Opens, x ∈ V ∧ V ≤ U ∧ ∃ Λ, Finite Λ ∧ Nonempty ((Scheme.Modules.pullback V.ι).obj M ≅ SheafOfModules.free (R := (↑V).ringCatSheaf) Λ)",
+        "line_number": "385",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Restriction = pullback along open immersion V.ι; uses S.Modules = SheafOfModules S.ringCatSheaf defeq. Stronger/more faithful than the iter-009 'globally free on U' sketch. Axiom-clean."
+      }
+    ],
+    "next_steps": "Done; eligible for \\leanok (sync added it)."
+  },
+  {
+    "timestamp": "2026-06-23T14:46:39Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "IsHalfExact"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "ShortComplex.ShortExact",
+        "ShortComplex.map",
+        "ShortComplex.Exact",
+        "Functor.Additive"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "opaque→def: half-exact = every SES maps to a middle-exact short complex",
+        "code_tried": "def IsHalfExact {A}[CommRing A] (T : ModuleCat.{u} A ⥤ ModuleCat.{u} A) : Prop := ∀ [T.Additive] (S : ShortComplex (ModuleCat A)), S.ShortExact → (S.map T).Exact",
+        "line_number": "409",
+        "lean_error": "",
+        "result": "success",
+        "insight": "ShortComplex.map needs T.PreservesZeroMorphisms; bind T.Additive as instance-implicit ∀ [T.Additive] so additive⇒preservesZero fires inside. No packaged Mathlib predicate. Axiom-clean."
+      }
+    ],
+    "next_steps": "Done; eligible for \\leanok (sync added it)."
+  },
+  {
+    "timestamp": "2026-06-23T14:46:39Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "extGroup"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "No HasExt.{u,u,u+1} Y.Modules in Mathlib. Universe-fitting route needs an IsGrothendieckAbelian.{u,u,u+1} (SheafOfModules R) instance whose AB5OfSize and HasSeparator fields are genuinely absent for SheafOfModules.",
+      "key_lemmas_used": [
+        "Abelian.Ext",
+        "AddCommGrpCat.of",
+        "HasDerivedCategory.standard",
+        "IsGrothendieckAbelian.hasExt"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "HasDerivedCategory.standard Y.Modules ⇒ HasExt ⇒ AddCommGrpCat.of (Abelian.Ext M N q)",
+        "code_tried": "letI := HasDerivedCategory.standard Y.Modules; AddCommGrpCat.of (Abelian.Ext M N q)",
+        "line_number": "381",
+        "lean_error": "universe mismatch: Y.Modules : Category.{u,u+1} ⇒ HasExt.{u+1,u,u+1} ⇒ Abelian.Ext : Type (u+1) ⇒ Ab.{u+1} ≠ Ab.{u}",
+        "result": "failed",
+        "insight": "standard route pinned to u+1; cannot fit frozen Ab.{u} signature. DEAD END — do not retry."
+      },
+      {
+        "attempt": 2,
+        "strategy": "IsGrothendieckAbelian.hasExt (free Ext-universe w) at [IsGrothendieckAbelian.{u,u,u+1} Y.Modules]",
+        "code_tried": "letI := IsGrothendieckAbelian.hasExt Y.Modules; AddCommGrpCat.of (Abelian.Ext M N q)  -- requires IsGrothendieckAbelian.{u,u,u+1} Y.Modules",
+        "line_number": "381",
+        "lean_error": "failed to synthesize IsGrothendieckAbelian.{u,u,u+1} Y.Modules; fields AB5OfSize.{u,u,u,u+1} Y.Modules and HasSeparator Y.Modules MISSING (LocallySmall + HasFilteredColimitsOfSize synthesize)",
+        "result": "failed",
+        "insight": "Correct universe route but instance absent. Reduce blocker to: build instance IsGrothendieckAbelian.{u,u,u+1} (SheafOfModules R) — two absent fields AB5OfSize (filtered colimits exact) + HasSeparator (free-sheaf separating family)."
+      }
+    ],
+    "next_steps": "Do NOT re-dispatch as realize/prove. Fund the IsGrothendieckAbelian (SheafOfModules R) instance as a mathlib-build brick (AB5OfSize + HasSeparator), OR keep extGroup opaque and pivot elsewhere."
+  },
+  {
+    "timestamp": "2026-06-23T14:46:39Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "sheafCohomology"
+    },
+    "session": {
+      "id": "session_10",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Depends on extGroup, blocked on the same HasExt.{u} / IsGrothendieckAbelian (SheafOfModules R) instance gap.",
+      "key_lemmas_used": [
+        "extGroup",
+        "SheafOfModules.unit"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "sheafCohomology q F := extGroup q (unit) F",
+        "code_tried": "def sheafCohomology q F := extGroup q (SheafOfModules.unit ..) F",
+        "line_number": "377",
+        "lean_error": "blocked: extGroup not realized",
+        "result": "blocked",
+        "insight": "Realize only after extGroup lands."
+      }
+    ],
+    "next_steps": "Gated on extGroup → same instance gap. Do not re-dispatch standalone."
+  }
+]

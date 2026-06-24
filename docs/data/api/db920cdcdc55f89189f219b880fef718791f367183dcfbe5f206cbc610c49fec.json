@@ -1,0 +1,103 @@
+[
+  {
+    "timestamp": "2026-06-24T05:51:32Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.extensionByZero"
+    },
+    "session": {
+      "id": "session_19",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "SheafOfModules.pullback",
+        "SheafOfModules.pullbackPushforwardAdjunction",
+        "Scheme.Modules.restrictFunctor"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Planned Kan-extension route: presheaf Functor.lan along Opens(U)->Opens(X) + lanAdjunction, then PresheafOfModules.sheafification",
+        "code_tried": "Functor.lan / lanAdjunction route",
+        "line_number": "~1041",
+        "lean_error": "abandoned — found strictly cleaner route",
+        "result": "partial",
+        "insight": "Not needed; restrictFunctor is defeq to a pushforward whose left adjoint already exists."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Identify restrictFunctor j with SheafOfModules.pushforward phi (defeq) and define j_! := SheafOfModules.pullback phi",
+        "code_tried": "def extensionByZero j := SheafOfModules.pullback.{u} (restrictionRingSheafHom j)",
+        "line_number": "~1090",
+        "lean_error": null,
+        "result": "success",
+        "insight": "restrictFunctor_eq_pushforward is rfl; #print axioms = {propext, Classical.choice, Quot.sound}. Gotcha: unfold+infer_instance FAILS (higher-order unif blocks F.op ⋙ ?R); must give phi its proper Sheaf.Hom type via anonymous constructor (restrictionRingSheafHom)."
+      }
+    ],
+    "next_steps": "j_! infra complete. 1.2 next needs base-change (pullback ∘ j_! ≅ j_! ∘ pullback) + acyclicity Ext^q(j_!𝒪,F)≅H^q(U,F) via derived adjunction — both deeper, multi-iter."
+  },
+  {
+    "timestamp": "2026-06-24T05:51:32Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.extensionByZeroAdjunction"
+    },
+    "session": {
+      "id": "session_19",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "SheafOfModules.pullbackPushforwardAdjunction",
+        "Adjunction.isLeftAdjoint",
+        "Adjunction.leftAdjoint_preservesColimits"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Adjunction j_! ⊣ j^* = pullbackPushforwardAdjunction phi re-read through defeq restrictFunctor = pushforward phi",
+        "code_tried": "def extensionByZeroAdjunction j := SheafOfModules.pullbackPushforwardAdjunction.{u} (restrictionRingSheafHom j)",
+        "line_number": "~1100",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Stated type extensionByZero j ⊣ restrictFunctor j holds by defeq. Added instances (extensionByZero j).IsLeftAdjoint and PreservesColimitsOfSize.{u,u} (extensionByZero j) — the 'commutes with direct sums' fact 1.2 needs."
+      }
+    ],
+    "next_steps": "Sheaf-level IsRightAdjoint for pushforward fires from presheaf instance (small Opens sites) + HasWeakSheafify + WEqualsLocallyBijective. SAFT route (isRightAdjoint_of_preservesLimits) rejected: WellPowered/HasCoseparator/IsGrothendieckAbelian X.Modules all fail to synthesize."
+  },
+  {
+    "timestamp": "2026-06-24T05:51:32Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "MR0555258CompactifyingPicard.exists_acyclic_surjection"
+    },
+    "session": {
+      "id": "session_19",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Needs base-change iso (pullback ∘ j_! ≅ j_! ∘ pullback) + derived acyclicity Ext^q_Y(g^*(j_!𝒪),F)=H^q(g⁻¹U,F); both multi-iter derived-category machinery, out of mathlib-build lane scope.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — objective forbade touching the 5 sorried theorems; j_! infra is the prerequisite delivered this iter.",
+        "code_tried": "n/a",
+        "line_number": "634",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "j_! + adjunction + PreservesColimits now in place; the two remaining bricks for 1.2 are base-change compat and a derived-Ext-of-adjunction lemma (overlaps relExt strand)."
+      }
+    ],
+    "next_steps": "Dedicated iter once a derived-Ext-of-adjunction lemma + pullback/j_! base-change iso exist."
+  }
+]

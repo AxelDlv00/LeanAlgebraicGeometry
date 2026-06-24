@@ -1,0 +1,182 @@
+[
+  {
+    "timestamp": "2026-06-23T16:57:48Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackTensorMap_left_unitality"
+    },
+    "session": {
+      "id": "session_65",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "pullbackUnitIso_whisker_eq_sheafify_eta_whisker",
+        "tensorObj_left_unitor_pullback_eq_sheafify",
+        "reassoc_of%",
+        "Category.assoc",
+        "presheafPullbackOplaxMonoidal.left_unitality_hom"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Diagnose why the pre-written 'iter-066' bridge-3 body was RED under lake build (LSP showed clean — STALE-GREEN trap)",
+        "code_tried": "lake build AlgebraicJacobian.Picard.TensorObjInverse",
+        "line_number": "1556",
+        "lean_error": "(deterministic) timeout at whnf, 200000 heartbeats; then unknown constant downstream at L1640",
+        "result": "partial",
+        "insight": "Lemma had NO set_option maxHeartbeats; default budget exhausted at whnf before body ran. Every sheafification-laden lemma in this file needs the override."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Add heartbeat override matching sheafPullbackUnit_forget_eq precedent",
+        "code_tried": "set_option maxHeartbeats 4000000 in",
+        "line_number": "1555",
+        "lean_error": "Application type mismatch at exact (~L1631): Eq.symm (Category.assoc _ _ _) has type a≫b≫c=(a≫b)≫c but expected a different split",
+        "result": "partial",
+        "insight": "The bare-`_` placeholders in the term-mode `exact` chain `(((reassoc_of% hL3) _).trans (congrArg (fun t => _ ≫ t) hL2)).trans (Category.assoc _ _ _).symm` were mutually under-determined: hL3's RHS has no trailing unitor leg, so reassoc_of%'s appended k and the congrArg prefix unified to the wrong split across the SheafOfModules ≫ defeq-not-syntactic seam."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Try rw instead of term-mode to pin the pattern",
+        "code_tried": "rw [reassoc_of% hL3, hL2]; exact (Category.assoc _ _ _).symm",
+        "line_number": "1635",
+        "lean_error": "Tactic `rewrite` failed: Did not find an occurrence of the pattern",
+        "result": "failed",
+        "insight": "rw/simp of reassoc/hL2 MISS across the SheafOfModules ≫ seam (ARCHON_MEMORY seam note); only term-mode .trans/congrArg bridge it via isDefEq."
+      },
+      {
+        "attempt": 4,
+        "strategy": "Pin k=ulit and the a_Y(η▷FM) prefix explicitly in the term-mode chain",
+        "code_tried": "refine (Category.assoc _ _ _).trans ?_; exact (((reassoc_of% hL3) ulit).trans (congrArg (fun t => a_Y(η▷FM) ≫ t) hL2)).trans (Category.assoc _ _ _).symm  [k/prefix written out]",
+        "line_number": "1638",
+        "lean_error": null,
+        "result": "success",
+        "insight": "With k and prefix pinned explicitly, the .trans/congrArg chain bridges the seam by isDefEq and closes. Build EXIT 0, axiom-clean {propext, Classical.choice, Quot.sound}. S4b CLOSED, sorry 5→3."
+      }
+    ],
+    "next_steps": "Cone A complete. Open Cone B parallel lane (S3 dual_restrict_iso_restrict_compat L1088, S4a dual_unit_iso_restrict_compat L1113) — recommend file-split into sibling PresheafDualPullback.lean. Telescope trivialisation_restrict_compat (L1822) remains."
+  },
+  {
+    "timestamp": "2026-06-23T16:57:48Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackUnitIso_whisker_eq_sheafify_eta_whisker"
+    },
+    "session": {
+      "id": "session_65",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "sheafifyTensorUnitIso_hom_natural",
+        "tensorObj_functoriality",
+        "Functor.map_comp",
+        "MonoidalCategory.tensorHom_comp_tensorHom",
+        "SheafOfModules.comp_val",
+        "Iso.hom_inv_id"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Confirm whether the pre-written L3 body actually compiles (planner asserted central leg = arg-1 q=𝟙 specialization of the already-proven 2-arg naturality sheafifyTensorUnitIso_hom_natural)",
+        "code_tried": "lake build + lean_verify on pullbackUnitIso_whisker_eq_sheafify_eta_whisker",
+        "line_number": "1467",
+        "lean_error": null,
+        "result": "success",
+        "insight": "L3 body was already complete and sorry-free; central leg uses sheafifyTensorUnitIso_hom_natural at (p:=η F, q:=𝟙) with Functor.map_id collapsing the right whisker. Planner's REUSE-don't-rebuild cross-check (iter-065 plan) was correct. Axiom-clean. The earlier-iter view that a new core sheafifyTensorUnitIso_naturality_left had to be BUILT was false."
+      }
+    ],
+    "next_steps": "Consumed by bridge-3 assembly (now closed). No further work."
+  },
+  {
+    "timestamp": "2026-06-23T16:57:48Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_restrict_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_65",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Cone B internal-hom/dual machinery — out of this iter's solo Cone A lane scope; not attempted.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Deferred — not in PROGRESS objectives this iter (Cone A only)",
+        "code_tried": "n/a",
+        "line_number": "1088",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "S3 (Cone B). Recommended next: file-split dual machinery into sibling PresheafDualPullback.lean and open a true parallel lane. Crux presheafDual_pullback_restrict_natural per iter-057 break."
+      }
+    ],
+    "next_steps": "Open Cone B lane next iter (after blueprint gate confirms the dual chapter)."
+  },
+  {
+    "timestamp": "2026-06-23T16:57:48Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_65",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Cone B internal-hom/dual machinery — out of this iter's solo Cone A lane scope; not attempted.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Deferred — not in PROGRESS objectives this iter (Cone A only)",
+        "code_tried": "n/a",
+        "line_number": "1113",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "S4a (Cone B), mirror of S3 via presheafDualUnitIso_naturality."
+      }
+    ],
+    "next_steps": "Open Cone B lane next iter."
+  },
+  {
+    "timestamp": "2026-06-23T16:57:48Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_65",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Telescope gluing lemma — gated; out of this iter's Cone A scope; not attempted.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Deferred — not in PROGRESS objectives this iter",
+        "code_tried": "n/a",
+        "line_number": "1822",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "Telescope (pushforwardcomp reindex). Rides on the closed bridges; assembly-level."
+      }
+    ],
+    "next_steps": "Assess after Cone B closes; may be mechanical once the dual squares land."
+  }
+]

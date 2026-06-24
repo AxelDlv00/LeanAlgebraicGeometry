@@ -1,0 +1,254 @@
+[
+  {
+    "timestamp": "2026-06-23T12:59:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "tensorObj_left_unitor_image_collapse"
+    },
+    "session": {
+      "id": "session_64",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "sheafifyTensorUnitIso_hom_eq'",
+        "tensorObj_functoriality",
+        "MonoidalCategory.tensorHom_comp_tensorHom",
+        "Adjunction.right_triangle_components",
+        "Adjunction.left_triangle_components",
+        "MonoidalCategory.leftUnitor_naturality",
+        "Functor.map_comp_assoc"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Reduce to presheaf identity hpre, prove the (η_𝟙⊗η_P);(ε⊗𝟙);λ collapse via tensorHom_comp_tensorHom + htri (right-triangle) then close with leftUnitor_naturality",
+        "code_tried": "rw [MonoidalCategory.tensorHom_comp_tensorHom, htri, Category.comp_id]; exact MonoidalCategory.leftUnitor_naturality _",
+        "line_number": "1360",
+        "lean_error": "simp made no progress / rewrite failed: htri codomain 𝟙_ vs unit.val defeq-not-syntactic",
+        "goal_before": "(η_𝟙 ⊗ₘ η_P) ≫ (ε.val ⊗ₘ 𝟙) ≫ λ_(aP) = λ_P ≫ η_P",
+        "goal_after": "",
+        "result": "failed",
+        "insight": "rw[htri]/simp[htri] both MISS: codomain mismatch on the defeq seam"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Use congrArg₂ term-mode to absorb the defeq seam on the tensorHom of the two collapsed factors",
+        "code_tried": "rw [MonoidalCategory.tensorHom_comp_tensorHom, ← MonoidalCategory.leftUnitor_naturality]; congr 1; exact congrArg₂ (fun a b => MonoidalCategory.tensorHom (C:=𝒫) a b) htri (Category.comp_id _)",
+        "line_number": "1360",
+        "lean_error": "none (after htri itself rebuilt via rw[sheafifyUnitIso]; simpa [Iso.app_hom, asIso_hom] using right_triangle_components)",
+        "goal_before": "tensorHom A B = tensorHom C D",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "congrArg₂ on tensorHom absorbs the 𝟙_/unit.val seam where rw/simp miss"
+      },
+      {
+        "attempt": 3,
+        "strategy": "Merge the three a.map legs and apply hpre term-mode, then cancel trailing counit by left-triangle",
+        "code_tried": "erw [← Functor.map_comp_assoc, ← Functor.map_comp_assoc]; refine Eq.trans (congrArg (fun m => a.map m ≫ counit) hpre) ?_; beta_reduce; erw [Functor.map_comp_assoc]; have htr := (...).left_triangle_components P; exact (congrArg (fun z => a.map (λ_ P).hom ≫ z) htr).trans (Category.comp_id _)",
+        "line_number": "1372",
+        "lean_error": "earlier: rw[← Category.assoc]/rw[← Functor.map_comp] MISS (goal LEFT-assoc); erw whnf-bomb on left-triangle (counit codomain has 𝟭.obj wrapper)",
+        "goal_before": "a.map((η_𝟙⊗η_P);(ε⊗𝟙)) ≫ a.map(λ_aP) ≫ counit = a.map λ_P",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "map_comp_assoc for the merge; left factor must be EXPLICIT in congrArg (a `_` hole becomes z-dependent and fails)"
+      }
+    ],
+    "next_steps": "Keystone proven; unblocks L2. The analogous arg-1 STU naturality (sheafifyTensorUnitIso_naturality_left) is the next core for L3."
+  },
+  {
+    "timestamp": "2026-06-23T12:59:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "tensorObj_left_unitor_pullback_eq_sheafify"
+    },
+    "session": {
+      "id": "session_64",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "tensorObj_left_unitor_image_collapse",
+        "tensorObj_left_unitor_naturality",
+        "tensorObjIsoOfIso_eq_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "After existing hw/hnat/hcomb reductions the residual is exactly image_collapse at P=F M.val post-composed with the trailing pbv_M",
+        "code_tried": "simpa only [Category.assoc] using congrArg (· ≫ (pullbackValIso f M).hom) (tensorObj_left_unitor_image_collapse (Y := Y) ((PresheafOfModules.pullback (f.toRingCatSheafHom).hom).obj M.val))",
+        "line_number": "1453",
+        "lean_error": "none",
+        "goal_before": "μ ≫ a.map(ε ⊗ pbv M) ≫ λ_(f*M) = a.map λ_(FM) ≫ pbv_M",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "L2 reduces cleanly to the keystone L1; not circular (L1 proved first). sorry 6→5"
+      }
+    ],
+    "next_steps": "L2 closed. Ready for proof-block \\leanok (sync under-marked; review added it)."
+  },
+  {
+    "timestamp": "2026-06-23T12:59:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackUnitIso_whisker_eq_sheafify_eta_whisker"
+    },
+    "session": {
+      "id": "session_64",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "needs a SECOND coherence core: sheafifyTensorUnitIso naturality in arg-1 along the oplax unit η (reduces, same toolkit as image_collapse, to sheafification-UNIT naturality + tensorHom_comp_tensorHom), then mechanical 3a/3b bifunctorial split + flank cancellation",
+      "key_lemmas_used": [
+        "tensorObjIsoOfIso_hom",
+        "pullbackUnitIso_eq_sheafify_eta",
+        "Iso.refl_hom"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "3a step-1 reduction in place; remaining 3a-step2 + 3b sorry'd with full route documented",
+        "code_tried": "rw [tensorObjIsoOfIso_hom, pullbackUnitIso_eq_sheafify_eta f, Iso.refl_hom]",
+        "line_number": "1496",
+        "lean_error": "n/a (sorry at 1509)",
+        "goal_before": "W ≫ (tensorObjIsoOfIso (pullbackUnitIso f) 𝟙).hom = a.map(η ▷ FM) ≫ Wλ",
+        "goal_after": "residual needs STU-naturality-in-arg-1",
+        "result": "partial",
+        "insight": "central-leg STU coherence is the genuinely hard step (NOT definitional); name it sheafifyTensorUnitIso_naturality_left and prove it first via unit naturality"
+      }
+    ],
+    "next_steps": "Prove sheafifyTensorUnitIso_naturality_left (analogue of image_collapse via sheafification-unit naturality), then wire 3a/3b."
+  },
+  {
+    "timestamp": "2026-06-23T12:59:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackTensorMap_left_unitality"
+    },
+    "session": {
+      "id": "session_64",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "ASSEMBLY ONLY, now gated solely on L3 (L2 closed this iter). Residual = reassoc across SheafOfModules seam + chain L3→L2",
+      "key_lemmas_used": [
+        "pullbackTensorMap_eq_sheafify_delta",
+        "pullback_map_tensorObj_left_unitor_eq",
+        "tensorObj_left_unitor_pullback_eq_sheafify"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Assembly: δ-leg via eq_sheafify_delta, build hHLU oplax left-unitality, erw[← hHLU]; residual chains L3/L2",
+        "code_tried": "rw [pullbackTensorMap_eq_sheafify_delta, pullback_map_tensorObj_left_unitor_eq]; erw [← hHLU]",
+        "line_number": "1583",
+        "lean_error": "n/a (sorry, gated on L3)",
+        "goal_before": "pullbackTensorMap ; (tensorObjIsoOfIso (pullbackUnitIso f) 𝟙).hom ; λ_(f*M) = (pullback f).map λ_M",
+        "goal_after": "residual gated on L3",
+        "result": "partial",
+        "insight": "L2 now available; once L3 closes this assembly is mechanical (S4b: sorry 5→3)"
+      }
+    ],
+    "next_steps": "Close L3 first, then this assembly closes S4b."
+  },
+  {
+    "timestamp": "2026-06-23T12:59:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_restrict_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_64",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "Cone B (S3) — not in this lane; needs immersion-naturality of dual_restrict_iso (independent internal-hom construction). Cone B sibling file PresheafDualPullback.lean never created.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not attempted this session (deferred — Cone A lane)",
+        "code_tried": "n/a",
+        "line_number": "1099",
+        "lean_error": "n/a",
+        "goal_before": "",
+        "goal_after": "",
+        "result": "partial",
+        "insight": "Genuine open obligation (auditor-confirmed), deferred"
+      }
+    ],
+    "next_steps": "Cone B lane: build presheafDual_pullback_restrict_natural; consider creating the PresheafDualPullback.lean sibling for true parallelism."
+  },
+  {
+    "timestamp": "2026-06-23T12:59:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_64",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "Cone B (S4a) — depends on S3; route via presheafDualUnitIso_naturality + dual_restrict_iso naturality",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not attempted (deferred — Cone A lane)",
+        "code_tried": "n/a",
+        "line_number": "1123",
+        "lean_error": "n/a",
+        "goal_before": "",
+        "goal_after": "",
+        "result": "partial",
+        "insight": "Genuine open obligation, depends on S3"
+      }
+    ],
+    "next_steps": "After S3; mirror via presheafDualUnitIso_naturality."
+  },
+  {
+    "timestamp": "2026-06-23T12:59:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_64",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "master cocycle telescope; depends on S2-S4c squares (S3/S4a/S4b) closing",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not attempted (depends on the squares)",
+        "code_tried": "n/a",
+        "line_number": "1832",
+        "lean_error": "n/a",
+        "goal_before": "",
+        "goal_after": "",
+        "result": "partial",
+        "insight": "Charter-immersion j and hjι/hji constructed; sorry stands for the 5-constituent telescope"
+      }
+    ],
+    "next_steps": "Close the squares first."
+  }
+]

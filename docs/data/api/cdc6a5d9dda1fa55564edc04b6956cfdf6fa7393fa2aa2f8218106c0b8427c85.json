@@ -1,0 +1,227 @@
+[
+  {
+    "timestamp": "2026-06-23T11:26:34Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "h"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "CategoryTheory.Functor.coreprx",
+        "External.H_existence"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Universal element of the corepresentable homTensorFunctor; defeq to target after unfolding homTensorFunctor/tensorBC/H",
+        "code_tried": "haveI := External.H_existence f I F ha\n  (homTensorFunctor f I F).coreprx",
+        "line_number": "209",
+        "lean_error": "",
+        "result": "success",
+        "insight": "With IsCorepresentable in scope, coreprx : F.obj coreprX is defeq to I ⟶ tensorBC f F (H f I F ha). No `sorry`, builds."
+      }
+    ],
+    "next_steps": "Done. Statement+def \\leanok already present."
+  },
+  {
+    "timestamp": "2026-06-23T11:26:37Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_represents"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "CategoryTheory.Functor.coreprW",
+        "External.H_existence"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Wrap the corepresentation natural iso coreprW in Nonempty; H is defined as coreprX so goal holds up to defeq",
+        "code_tried": "haveI := External.H_existence f I F ha\n  ⟨(homTensorFunctor f I F).coreprW⟩",
+        "line_number": "217",
+        "lean_error": "",
+        "result": "success",
+        "insight": "coreprW : coyoneda.obj (op coreprX) ≅ F. Since H := coreprX, ⟨coreprW⟩ inhabits Nonempty(coyoneda.obj (op (H ..)) ≅ homTensorFunctor ..). Found via leansearch query 'corepresentable functor universal element coyoneda'."
+      }
+    ],
+    "next_steps": "Done. Manual \\leanok override applied to proof block (axiom-backed, no sorry, builds)."
+  },
+  {
+    "timestamp": "2026-06-23T11:26:40Z",
+    "status": "partial",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_finite_flat"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Second conjunct concludes IsLFPAndFlatOn, an opaque Prop with no constructor; underivable until P1b gives it a real definition.",
+      "key_lemmas_used": [
+        "External.ext_vanishing_open"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Split conjunction; first conjunct (openness of Ext-vanishing locus) = External.ext_vanishing_open; second left as sorry",
+        "code_tried": "⟨External.ext_vanishing_open q f I F, by\n    -- blocked: IsLFPAndFlatOn is opaque (no constructor); needs P1b infra\n    sorry⟩",
+        "line_number": "274",
+        "lean_error": "",
+        "result": "partial",
+        "insight": "First conjunct (paper 1.10(i) openness) closes exactly via the External axiom. Second conjunct structurally unprovable while IsLFPAndFlatOn is opaque."
+      }
+    ],
+    "next_steps": "Hold until P1b replaces opaque IsLFPAndFlatOn with a real def; do not re-attempt the inner sorry."
+  },
+  {
+    "timestamp": "2026-06-23T11:27:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor_invertible"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Concludes Nonempty(≅) between opaque objects H/tensorMod; opaque has no constructor ⇒ no inhabiting term except sorry/axiom. Needs P1b.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — provability triage flagged opaque-conclusion (guaranteed churn)",
+        "code_tried": "sorry (untouched)",
+        "line_number": "225",
+        "result": "partial",
+        "insight": "Do not assign until P1b."
+      }
+    ],
+    "next_steps": "Defer to P1b."
+  },
+  {
+    "timestamp": "2026-06-23T11:27:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Nonempty(≅) between opaque tensorMod/H; underivable until P1b.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — opaque-conclusion triage",
+        "code_tried": "sorry (untouched)",
+        "line_number": "234",
+        "result": "partial",
+        "insight": "Do not assign until P1b."
+      }
+    ],
+    "next_steps": "Defer to P1b."
+  },
+  {
+    "timestamp": "2026-06-23T11:27:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "exists_acyclic_surjection"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Existence over extGroup of pullback; no constructive infra (acyclic resolution) in Mathlib. Needs P1b.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — opaque/infra triage",
+        "code_tried": "sorry (untouched)",
+        "line_number": "242",
+        "result": "partial",
+        "insight": "Do not assign until P1b."
+      }
+    ],
+    "next_steps": "Defer to P1b."
+  },
+  {
+    "timestamp": "2026-06-23T11:27:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_locallyFree_of_ext_vanishing"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Concludes opaque IsLocallyFreeOfFiniteRankOn; no constructor. Needs P1b + External.halfexact_free + H_represents.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — opaque-conclusion triage",
+        "code_tried": "sorry (untouched)",
+        "line_number": "252",
+        "result": "partial",
+        "insight": "Do not assign until P1b. Intended route: External.halfexact_free + H_represents once IsLocallyFreeOfFiniteRankOn is a real def."
+      }
+    ],
+    "next_steps": "Defer to P1b."
+  },
+  {
+    "timestamp": "2026-06-23T11:27:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "exists_free_resolution_step"
+    },
+    "session": {
+      "id": "session_4",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Concludes opaque IsFreeMod / IsLFP within a ShortExact; no constructor. Needs P1b.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — opaque-conclusion triage",
+        "code_tried": "sorry (untouched)",
+        "line_number": "263",
+        "result": "partial",
+        "insight": "Do not assign until P1b."
+      }
+    ],
+    "next_steps": "Defer to P1b."
+  }
+]

@@ -1,0 +1,163 @@
+[
+  {
+    "timestamp": "2026-06-23T10:07:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "scaffold_section1"
+    },
+    "session": {
+      "id": "session_2",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Full `lake build` dies exit 137 (SIGKILL/timeout) even at 1700s: `lake exe cache get` reports mismatched dependency pins (Cli project 406ebb8c8e2f vs mathlib 6b907cf12b2e) -> wrong cache hashes -> from-source Mathlib compile exceeds timeout. LSP `lean_diagnostic_messages` reports clean, but build never verified end-to-end.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Diagnose then fix toolchain mismatch: project pinned v4.32.0-rc1 but mathlib/batteries pin v4.30.0; rewrote lean-toolchain to v4.30.0 and ran `lake exe cache get`.",
+        "code_tried": "printf 'leanprover/lean4:v4.30.0\\n' > lean-toolchain; lake exe cache get",
+        "line_number": "lean-toolchain",
+        "lean_error": "cache get warned: project pins different dep versions than Mathlib -> wrong hashes; subsequent `lake build MR0555258CompactifyingPicard.Basic` -> Exit code 137",
+        "result": "partial",
+        "insight": "Toolchain aligned to v4.30.0, but dependency-pin mismatch defeats the prebuilt Mathlib cache, forcing a from-source compile that never finishes in budget. This is the headline infra blocker; sync_leanok (also `lake build`) therefore added 0 markers."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Scaffold all 23 blueprint nodes in Basic.lean: 6 EGA/OB External axioms, project-local opaque defs for Mathlib gaps, Admissible structure, H/h/H_represents/strand theorems; 8 deepest nodes left as marked TODO blocks rather than wrong-typed stubs.",
+        "code_tried": "Write Basic.lean (13.3 KB); Edit add `opaque IsHalfExact`; Edit fix `IsNoetherian` -> `AlgebraicGeometry.IsNoetherian` in External.descent_noetherian",
+        "line_number": "1-283",
+        "lean_error": "none (lean_diagnostic_messages clean, 0 errors/0 warnings)",
+        "result": "partial",
+        "insight": "File is well-formed per LSP. The 0-warning result despite 8 sorries is suspect (sorry normally warns) and likely reflects LSP not fully elaborating against an unbuilt Mathlib -- not positive verification. Statement-level scaffold complete; proof bodies are sorry."
+      }
+    ],
+    "next_steps": "Resolve the dependency-pin/cache mismatch so `lake build` and sync_leanok can verify. Do NOT assign proof-filling until a green full build exists. After green build, prioritize def-level decls (H already body-complete) then strand-(a) theorems."
+  },
+  {
+    "timestamp": "2026-06-23T10:07:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_locallyFree_of_ext_vanishing"
+    },
+    "session": {
+      "id": "session_2",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Statement formalized; proof body `sorry`. Goal thm 1.3 (thm:H_locallyFree). Depends on External.halfexact_free + H representability + retrocompact-open machinery.",
+      "key_lemmas_used": [
+        "External.halfexact_free",
+        "FiberExtVanishes",
+        "IsLocallyFreeOfFiniteRankOn"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Transcribe AK (1.3): if Ext^1_{X(s)}(I(s),F(s))=0 then H(I,F) locally free of finite rank on a retrocompact open nbhd of s.",
+        "code_tried": "theorem H_locallyFree_of_ext_vanishing (f : X ⟶ S) (I F : X.Modules) (ha : Admissible f I F) (s : S) (hs : FiberExtVanishes 1 f I F s) : ∃ U : S.Opens, s ∈ U ∧ IsRetrocompact U ∧ IsLocallyFreeOfFiniteRankOn (H f I F ha) U := sorry",
+        "line_number": "235",
+        "lean_error": "none (scaffold)",
+        "result": "partial",
+        "insight": "Statement faithful to paper. Proof needs the half-exact-functor argument (External.halfexact_free) applied to the base-change functor T(M)=Hom_X(I,F⊗M); blocked behind a green build first."
+      }
+    ],
+    "next_steps": "After green build, attempt via External.halfexact_free + H_represents. Not ready for proof-filling until build verifies."
+  },
+  {
+    "timestamp": "2026-06-23T10:07:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_finite_flat"
+    },
+    "session": {
+      "id": "session_2",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Statement formalized; proof body `sorry`. Goal thm 1.10. Depends on External.ext_vanishing_open + External.ext_coherent_fp.",
+      "key_lemmas_used": [
+        "External.ext_vanishing_open",
+        "External.ext_coherent_fp",
+        "FiberExtVanishes",
+        "IsLFPAndFlatOn"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Transcribe AK (1.10)(i): vanishing locus open+retrocompact; sExt^c restricted where sExt^{c±1} vanish is LFP and flat.",
+        "code_tried": "theorem ext_finite_flat (f : X ⟶ S) (I F : X.Modules) (q c : ℕ) (hfp : LocallyOfFinitePresentation f) (hproper : IsProper f) (hF : IsSFlat f F) : IsOpen {s : S | FiberExtVanishes q f I F s} ∧ ∀ V : S.Opens, (∀ s ∈ V, FiberExtVanishes (c + 1) f I F s ∧ FiberExtVanishes (c - 1) f I F s) → IsLFPAndFlatOn c f I F V := sorry",
+        "line_number": "257",
+        "lean_error": "none (scaffold)",
+        "result": "partial",
+        "insight": "Statement faithful. First conjunct is literally External.ext_vanishing_open; second is the LFP+flat exchange conclusion. Blocked behind green build."
+      }
+    ],
+    "next_steps": "After green build, the IsOpen conjunct closes by `External.ext_vanishing_open`; the second needs the exchange/base-change-map infrastructure still deferred (extBaseChangeMap, exchange TODOs)."
+  },
+  {
+    "timestamp": "2026-06-23T10:07:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H"
+    },
+    "session": {
+      "id": "session_2",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "",
+      "key_lemmas_used": [
+        "External.H_existence",
+        "Functor.IsCorepresentable.coreprX"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Define H(I,F) as the corepresenting object of homTensorFunctor, supplied by External.H_existence.",
+        "code_tried": "noncomputable def H (f : X ⟶ S) (I F : X.Modules) (ha : Admissible f I F) : S.Modules := haveI := External.H_existence f I F ha; (homTensorFunctor f I F).coreprX",
+        "line_number": "188",
+        "lean_error": "none",
+        "result": "success",
+        "insight": "Body complete (no sorry) — uses Mathlib `IsCorepresentable.coreprX`. Verification pending only on the global build blocker."
+      }
+    ],
+    "next_steps": "None for the def itself; unverified only because of the build blocker."
+  },
+  {
+    "timestamp": "2026-06-23T10:07:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "h_H_represents_H_tensor_strand"
+    },
+    "session": {
+      "id": "session_2",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "5 strand-(a/b) theorems statement-scaffolded with sorry bodies: h, H_represents, H_tensor_invertible, H_tensor, exists_acyclic_surjection, exists_free_resolution_step.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Transcribe (1.1)-(1.4) strand lemmas as theorem statements with sorry bodies, using project-local opaque predicates (IsInvertibleMod, tensorMod, tensorBC, IsFreeMod) for Mathlib gaps.",
+        "code_tried": "theorem H_represents ... := sorry; theorem H_tensor_invertible ... := sorry; theorem H_tensor ... := sorry; theorem exists_acyclic_surjection ... := sorry; theorem exists_free_resolution_step ... := sorry; noncomputable def h ... := sorry",
+        "line_number": "194-251",
+        "lean_error": "none (scaffold)",
+        "result": "partial",
+        "insight": "All statements faithful to paper §1. h is a `def` with sorry body (universal element) — needs the corepresentability counit. Proofs blocked behind green build."
+      }
+    ],
+    "next_steps": "Blueprint these and attempt after green build. h's body should come from `coreprx`/counit of External.H_existence."
+  }
+]

@@ -1,0 +1,151 @@
+[
+  {
+    "timestamp": "2026-06-23T06:33:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.sectionsMul_whiskerRight"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "sheafification_map_unit_top",
+        "MonoidalCategory.whiskerRight"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Right-whisker naturality of sectionsMul as a pure unit-naturality square of η against the presheaf whiskering f♭▷B♭; phrase transported factor as (f.val.app ⊤).hom a (rfl-bridged to (toPresheafOfModules X).map f) so it rw-matches the Γ(μ) form downstream",
+        "code_tried": "(sheafification_map_unit_top (whiskerRight ((toPresheafOfModules X).map f) ((toPresheafOfModules X).obj B)) (a⊗ₜb)).symm",
+        "line_number": "2999",
+        "lean_error": "first attempt with `rw [sheafification_map_unit_top …]` failed: 'rewrite did not find pattern' (sectionsMul form is defeq-not-syntactic to the unit form)",
+        "result": "success",
+        "insight": "Use `exact …symm` not `rw` — goal carries sectionsMul form, lemma the unit form; defeq-not-syntactic so rw fails but exact closes by defeq. No μ-boundary whnf bomb (the iter-028 WATCH did NOT trigger)."
+      }
+    ],
+    "next_steps": "Add \\lean{} blueprint block; reuse as naturality engine of muGamma_collapse."
+  },
+  {
+    "timestamp": "2026-06-23T06:33:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.sectionsMul_whiskerLeft"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "sheafification_map_unit_top",
+        "MonoidalCategory.whiskerLeft"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Dual of whiskerRight: single η-naturality square against presheaf left-whiskering A♭▷g♭",
+        "code_tried": "(sheafification_map_unit_top (whiskerLeft ((toPresheafOfModules X).obj A) ((toPresheafOfModules X).map g)) (a⊗ₜb)).symm",
+        "line_number": "3017",
+        "lean_error": "none (after fixing paren-placement on .val.app)",
+        "result": "success",
+        "insight": "Symmetric to whiskerRight; same exact-not-rw discipline."
+      }
+    ],
+    "next_steps": "Add \\lean{} blueprint block."
+  },
+  {
+    "timestamp": "2026-06-23T06:33:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.tensorPowPsh"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Flattened presheaf k-fold tensor power P^(k): P^(0)=(unitModule)♭, P^(k+1)=P^(k) ⊗_p L♭ (right-folding to match tensorPow L (k+1)=tensorObj (tensorPow L k) L)",
+        "code_tried": "noncomputable def tensorPowPsh (L : X.Modules) : ℕ → X.PresheafOfModules | 0 => (toPresheafOfModules X).obj (unitModule X) | (k+1) => MonoidalCategory.tensorObj (C := MonoidalPresheaf X) (tensorPowPsh L k) ((toPresheafOfModules X).obj L)",
+        "line_number": "3125",
+        "lean_error": "none",
+        "result": "success",
+        "insight": "On-route foundation for muGamma_collapse; no inner sheafification — the flattening that the blueprint's pentagon-avoidance rests on."
+      }
+    ],
+    "next_steps": "Add \\lean{} def block; build τ concatenation map next."
+  },
+  {
+    "timestamp": "2026-06-23T06:33:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.tensorPowComparison"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "PresheafOfModules.sheafificationAdjunction"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Comparison η_k : tensorPowPsh L k ⟶ (tensorPow L k)♭; η_0=𝟙, η_{k+1}=(η_k ▷ L♭) ≫ η^shf (sheafification unit at (L^k)♭⊗L♭)",
+        "code_tried": "noncomputable def tensorPowComparison … | 0 => 𝟙 _ | (k+1) => whiskerRight (tensorPowComparison L k) … ≫ (sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).unit.app (tensorObj ((toPresheafOfModules X).obj (tensorPow L k)) ((toPresheafOfModules X).obj L))",
+        "line_number": "3135",
+        "lean_error": "none — codomain defeq (toPresheafOfModules X).obj (tensorPow L (k+1)) = (sheafification⋙forget).obj ((L^k)♭⊗L♭) held cleanly, no whnf trouble",
+        "result": "success",
+        "insight": "η_0 identity from P^(0)=(tensorPow L 0)♭ defeq; succ inserts exactly one η at the new factor."
+      }
+    ],
+    "next_steps": "Add \\lean{} def block."
+  },
+  {
+    "timestamp": "2026-06-23T06:33:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "theorem": "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_assoc"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "the section-level reduction lands on the object-level sheaf pentagon (inner `hM` sorry = tensorPowAdd_assoc at morphism level), which is OFF the critical path; the pentagon-free muGamma_collapse/τ route is not yet built",
+      "key_lemmas_used": [
+        "sectionsMul_whiskerRight",
+        "sectionsMul_whiskerLeft",
+        "sectionMul_assoc_core",
+        "sectionsCast_eq_eqToIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "simp only [gMul_def]; rw the two whiskering bricks to commute inner μ out of both sectionsMul; ← sectionMul_assoc_core to intertwine through sheaf associator α; sectionsCast_eq_eqToIso for outer transport; exact congrArg (fun φ => Γ(φ)(W)) hM",
+        "code_tried": "have hM : WR.hom ≫ μ_{na+nb,nc} ≫ eqToIso = α.hom ≫ WL.hom ≫ μ_{na,nb+nc} := by sorry",
+        "line_number": "3337",
+        "lean_error": "none (hM left as self-contained sorry; all section-level η/whiskering/cast bookkeeping above it verified, cold build green)",
+        "result": "partial",
+        "insight": "DECISIVE: hM is exactly tensorPowAdd_assoc rearranged (the sheaf pentagon). The natural (un-flattened) reduction provably re-summons the off-path pentagon. Pentagon-avoidance is REAL but carried ENTIRELY by the τ-flattening (muGamma_collapse), which is the piece still to build. hM deliberately NOT closed by citing tensorPowAdd_assoc (would resurrect the dead off-path decl into the live cone)."
+      }
+    ],
+    "next_steps": "Build muGamma_collapse: define τ_{m,m'} : Γ(L^m)⊗Γ(L^m')→Γ(P^{m+m'}) (NOT a plain concatenation — Γ(L^m)≠Γ(L)^⊗m, not η-inverse-derived) + a presheaf-level whiskering brick. Route through analogist (snap-gradedring-route.md) BEFORE more prover budget (2-iter HARD CAP)."
+  }
+]

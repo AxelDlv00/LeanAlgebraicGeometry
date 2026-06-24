@@ -1,0 +1,116 @@
+[
+  {
+    "timestamp": "2026-06-23T22:51:19Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "pushforwardObjValRestrictIso"
+    },
+    "session": {
+      "id": "session_69",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Scheme.Modules.restrictFunctor (defeq)",
+        "SheafOfModules.pushforward.obj.val",
+        "Iso.refl"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Inspect Mathlib restrictFunctor def before building the blueprint H1∘(RFIP;SCP) composite; discover (M.restrict f).val is DEFINITIONALLY (pushforward β).obj M.val since restrictFunctor f := SheafOfModules.pushforward (F:=f.opensFunctor) ⟨whiskerRight α (forget₂ …)⟩",
+        "code_tried": "noncomputable def pushforwardObjValRestrictIso ... := Iso.refl _",
+        "line_number": "530",
+        "result": "success",
+        "insight": "The blueprint's abstract H1∘(RFIP;SCP) collapses to identity once Mathlib's concrete restrictFunctor=pushforward defeq is used; axiom-clean {propext, Classical.choice, Quot.sound}, no sorryAx. Both auditors confirm genuine defeq, not placeholder."
+      }
+    ],
+    "next_steps": "c.1 is closed; feeds c.2 leg-3 (middle θ at the pushforward obj) by defeq."
+  },
+  {
+    "timestamp": "2026-06-23T22:51:19Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "presheafDualPullbackComparison_restrict"
+    },
+    "session": {
+      "id": "session_69",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Elementwise residual is a genuine TWO-immersion pseudofunctoriality identity; NOT supplied by the single-immersion crux presheafDual_pullback_restrict_natural. Factors into (a) H1=leftAdjointUniq cocycle + (b) sliceDualTransport composition law over image_preimage_of_le.",
+      "key_lemmas_used": [
+        "presheafDualPullbackComparison",
+        "PresheafOfModules.pullbackComp",
+        "Scheme.Modules.restrictFunctorComp",
+        "PresheafOfModules.dualIsoOfIso",
+        "toRingCatSheafHom_comp_hom_reconcile (rfl)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "State as exact dual of proven tensor pullbackTensorMap_restrict; leg-4 = blueprint-literal dualIsoOfIso((pushforwardComp β_h β_f).symm.app M.val)",
+        "code_tried": "... ≪≫ PresheafOfModules.dualIsoOfIso ((PresheafOfModules.pushforwardComp (whiskerRight {appIso h inv} …) (whiskerRight {appIso f inv} …)).symm.app M.val)",
+        "line_number": "561",
+        "lean_error": "deterministic whnf timeout even at maxHeartbeats 3200000 + backward.isDefEq.respectTransparency false — pushforwardComp at concrete Scheme.presheaf β forces Iso.refl defeq through heavy f.opensFunctor/appIso machinery",
+        "result": "failed",
+        "insight": "DEAD END: do not build pushforwardComp at concrete β; whnf-bombs."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Replace leg-4 with light eqToHom-based Mathlib iso restrictFunctorComp, pushed to presheaves via forget.mapIso then dualIsoOfIso",
+        "code_tried": "... ≪≫ PresheafOfModules.dualIsoOfIso ((SheafOfModules.forget Z.ringCatSheaf).mapIso ((Scheme.Modules.restrictFunctorComp h f).app M))",
+        "line_number": "561",
+        "result": "success",
+        "insight": "Statement now typechecks clean. Legs 1-3 chain by defeq (toRingCatSheafHom_comp_hom_reconcile rfl + c.1 Iso.refl)."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Sectionwise proof attempt: Iso.ext; PresheafOfModules.hom_ext; intro W; ModuleCat.hom_ext; ext φ; then simp only to expose θ internal structure",
+        "code_tried": "apply Iso.ext; apply PresheafOfModules.hom_ext; intro W; apply ModuleCat.hom_ext; ext φ; simp only [presheafDualPullbackComparison, Iso.trans_hom, Iso.symm_hom, Functor.mapIso_hom, PresheafOfModules.comp_app]; sorry",
+        "line_number": "597",
+        "result": "partial",
+        "insight": "simp only applies cleanly (verified by LSP goal diff — real structural reduction, not cosmetic), exposing both sides as H1_g.inv ≫ (isoMk (sliceDualTransport g ·)).hom. Residual = two-immersion pseudofunctoriality = (a)+(b). CONFIRMS planner's armed reversal signal. Did NOT grind per directive."
+      }
+    ],
+    "next_steps": "Planner: effort-break c.2 into (a) H1 leftAdjointUniq cocycle (dual of conjugateEquiv_pullbackComp_inv / conjugateEquiv_restrictFunctorComp_inv) + (b) sliceDualTransport composition law. Also reconcile blueprint leg-4 (says dual((pullbackComp).hom), Lean realized restrictFunctorComp route) + add missing \\uses edges (lvb-checker major)."
+  },
+  {
+    "timestamp": "2026-06-23T22:51:19Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_restrict_iso_restrict_compat (S3)"
+    },
+    "session": {
+      "id": "session_69",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Consumes c.2 presheafDualPullbackComparison_restrict (still sorry) + bridge-(b) sheafificationCompPullback_restrict (still sorry, needs un-private Sq1). Not attempted this iter — gated on the sibling lane."
+    },
+    "attempts": [],
+    "next_steps": "Deferred until c.2 (a)+(b) land and bridge-(b) Sq1 is un-privated."
+  },
+  {
+    "timestamp": "2026-06-23T22:51:19Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_compat (S4a)"
+    },
+    "session": {
+      "id": "session_69",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Rides on S3 + bridge-(b) + θ-unit presheafDualUnitIso_naturality. Gated transitively."
+    },
+    "attempts": [],
+    "next_steps": "Deferred; gated on S3."
+  }
+]

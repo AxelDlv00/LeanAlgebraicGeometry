@@ -1,17 +1,23 @@
 {
-  "stage": "init",
-  "objectives": [],
+  "stage": "prover",
+  "objectives": [
+    "**`MR0555258CompactifyingPicard/Basic.lean`** — Build, axiom-clean, **mono-preservation of"
+  ],
   "checklist": [
     {
       "label": "init",
-      "done": false
+      "done": true
     },
     {
-      "label": "autoformalize",
-      "done": false
+      "label": "dag (blueprint graph complete: 0 ∞-sources, 0 broken refs)",
+      "done": true
     },
     {
-      "label": "prover",
+      "label": "autoformalize (Basic.lean compiles green; sorry stubs; External.* axioms)",
+      "done": true
+    },
+    {
+      "label": "prover  ← P1a done; P1b-i/i′ done; braiding+unitors done (associator PAUSED);",
       "done": false
     },
     {

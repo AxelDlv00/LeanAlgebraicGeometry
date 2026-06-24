@@ -1,0 +1,138 @@
+[
+  {
+    "timestamp": "2026-06-24T02:00:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "presheafDualPullbackComparison_restrict"
+    },
+    "session": {
+      "id": "session_71",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "abstract H1-cancellation tail whnf-bombs at maxHeartbeats 3.2M across the PresheafOfModules-over-Z defeq-but-not-syntactic ≫ seam (even rw[Iso.inv_comp_eq]/cancel_epi/set bomb); residual (**) needs cross-file FORWARD sliceDualTransport_app_apply in SliceTransport.lean (only inverse exists)",
+      "key_lemmas_used": [
+        "presheafDualH1Cocycle",
+        "PresheafOfModules.pushforwardPushforwardAdj",
+        "Scheme.Hom.appIso_inv_naturality"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "apply Iso.ext then drop hom_ext/ModuleCat.hom_ext/ext φ to stay at morphism (not elementwise) level",
+        "code_tried": "apply Iso.ext  (removed: apply PresheafOfModules.hom_ext; intro W; apply ModuleCat.hom_ext; ext φ)",
+        "line_number": "686",
+        "result": "partial",
+        "insight": "morphism-level goal is the clean factorization target; elementwise φ-form bloats the goal"
+      },
+      {
+        "attempt": 2,
+        "strategy": "reconstruct the composite-immersion adjunction αhf inline inside whiskerRight with only app field",
+        "code_tried": "Functor.whiskerRight ({ app := fun U => ((h ≫ f).appIso U.unop).inv } : ...) ...",
+        "line_number": "724",
+        "lean_error": "could not synthesize default value for field 'naturality' of 'CategoryTheory.NatTrans' using tactics (aesop failed)",
+        "result": "failed",
+        "insight": "the COMPOSITE (h≫f) appIso-inverse NatTrans cannot auto-synth its naturality (unlike the single-immersion f/h ones)"
+      },
+      {
+        "attempt": 3,
+        "strategy": "add explicit naturality field inline in the whiskerRight structure literal",
+        "code_tried": "{ app := fun U => ((h ≫ f).appIso U.unop).inv naturality := fun _ _ i => (h ≫ f).appIso_inv_naturality i }",
+        "line_number": "724",
+        "lean_error": "unexpected identifier; expected '}' (missing comma, then col-78 parse error)",
+        "result": "failed",
+        "insight": "structure-literal field separator issue inside whiskerRight arg"
+      },
+      {
+        "attempt": 4,
+        "strategy": "hoist αhf out into a named let with explicit naturality, pass to whiskerRight",
+        "code_tried": "let αhf : Z.presheaf ⟶ (h ≫ f).opensFunctor.op ⋙ X.presheaf := { app := fun U => ((h ≫ f).appIso U.unop).inv  naturality := fun _ _ i => (h ≫ f).appIso_inv_naturality i }",
+        "line_number": "723",
+        "result": "success",
+        "insight": "the let-hoisted αhf with explicit naturality compiles; reusable pattern for the composite adjunction"
+      },
+      {
+        "attempt": 5,
+        "strategy": "have hcoc := presheafDualH1Cocycle h f hadjf hadjh hadjhf with let-transparent adjunctions so H1/FC terms are defeq to the goal",
+        "code_tried": "have hcoc := presheafDualH1Cocycle h f hadjf hadjh hadjhf",
+        "line_number": "732",
+        "result": "success",
+        "insight": "VERIFIED the (a) cocycle is consumable in-context — load-bearing: confirms c.2 = (a) + (**)"
+      },
+      {
+        "attempt": 6,
+        "strategy": "run the abstract reduction by rw [Iso.inv_comp_eq, ← cancel_epi (FC.hom.app dM), hstar] / set FC := ...",
+        "code_tried": "rw [Iso.inv_comp_eq, ← cancel_epi (FC.hom.app M.val.dual), hstar]",
+        "line_number": "763",
+        "lean_error": "(deterministic) timeout at `whnf`, maximum number of heartbeats (3200000) reached at L672",
+        "result": "failed",
+        "insight": "every rw/erw/cancel_epi/set/show across the seam whnf-bombs on full lake build (LSP lean_multi_attempt typechecks them — LSP-green ≠ build-green); cure = local copies of private comp_cancel_mid/comp_slide_nested/comp_cancel_three_lr applied by exact"
+      },
+      {
+        "attempt": 7,
+        "strategy": "leave abstract tail as sorry on the compiling scaffold rather than a whnf-timeout (build-failing) state",
+        "code_tried": "sorry",
+        "line_number": "764",
+        "result": "partial",
+        "insight": "scaffold (let adjunctions + hcoc + documented reduction) compiles green-mod-sorry; build EXIT 0 (8324 jobs), 0 axioms"
+      }
+    ],
+    "next_steps": "Next iter: (1) add LOCAL copies of private generic bricks comp_cancel_mid/comp_slide_nested/comp_cancel_three_lr (from TensorObjSubstrate.lean:2981-3055) and run reduction steps by exact/refine ONLY (no rw/cancel_epi across seam); (2) SEPARATE SliceTransport.lean lane to add FORWARD sliceDualTransport_app_apply (mirror of inverse L563-585) to close (**). If brick-scaffold itself whnf-bombs, escalate (raise maxHeartbeats / restructure)."
+  },
+  {
+    "timestamp": "2026-06-24T02:00:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "presheafDual_pullback_comparison_eval_apply"
+    },
+    "session": {
+      "id": "session_71",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "off-path (L1, eval_apply); cross-file blocked, scheduled for cleanup deletion; directed off-limits this lane",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "untouched per directive",
+        "code_tried": "sorry",
+        "line_number": "377",
+        "result": "partial",
+        "insight": "off critical path; left as-is"
+      }
+    ],
+    "next_steps": "Cleanup deletion candidate; do NOT re-assign."
+  },
+  {
+    "timestamp": "2026-06-24T02:00:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "evalLin_restrict_commute_aux"
+    },
+    "session": {
+      "id": "session_71",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "off-path (L3a); cross-file blocked, scheduled for cleanup deletion; directed off-limits this lane",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "untouched per directive",
+        "code_tried": "sorry",
+        "line_number": "434",
+        "result": "partial",
+        "insight": "off critical path; left as-is"
+      }
+    ],
+    "next_steps": "Cleanup deletion candidate; do NOT re-assign."
+  }
+]

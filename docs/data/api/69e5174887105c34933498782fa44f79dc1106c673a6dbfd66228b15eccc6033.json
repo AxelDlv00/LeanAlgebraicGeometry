@@ -1,0 +1,179 @@
+[
+  {
+    "timestamp": "2026-06-23T13:26:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "tensorBraiding"
+    },
+    "session": {
+      "id": "session_7",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "PresheafOfModules.isoMk",
+        "PresheafOfModules.Monoidal.tensorObj_map_tmul",
+        "ModuleCat.MonoidalCategory.braiding_hom_apply",
+        "PresheafOfModules.sheafification.mapIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "presheafTensorBraiding via isoMk with pointwise β_ (M.obj X) (N.obj X); naturality by `intro X Y f; ext x; simp [tensorObj_map_tmul]`",
+        "code_tried": "PresheafOfModules.isoMk (fun X => β_ (M.obj X) (N.obj X)) (by intro X Y f; ext x; simp [PresheafOfModules.Monoidal.tensorObj_map_tmul])",
+        "line_number": "133",
+        "lean_error": "unsolved goals case hf.h (induction on tensor element required)",
+        "result": "failed",
+        "insight": "ext x leaves a TensorProduct elt goal that simp cannot close directly"
+      },
+      {
+        "attempt": 2,
+        "strategy": "TensorProduct.induction_on then simp per case with braiding_hom_apply",
+        "code_tried": "refine TensorProduct.induction_on x ?_ (fun m n => ?_) (fun a b ha hb => ?_); · simp; · simp [tensorObj_map_tmul, braiding_hom_apply]; · simp_all",
+        "line_number": "138",
+        "lean_error": "unsolved goals case hf.h.refine_1 (zero case + simp mismatch ModuleCat.Hom.hom vs ConcreteCategory.hom)",
+        "result": "failed",
+        "insight": "tensorObj_map_tmul uses ModuleCat.Hom.hom while braiding_hom_apply uses ConcreteCategory.hom; simp's comp-splitting never reaches a form where both fire"
+      },
+      {
+        "attempt": 3,
+        "strategy": "switch to ModuleCat.hom_ext + TensorProduct.ext'; close with single erw bridging the two .hom forms up to defeq",
+        "code_tried": "apply ModuleCat.hom_ext; apply TensorProduct.ext'; intro m n; erw [PresheafOfModules.Monoidal.tensorObj_map_tmul]",
+        "line_number": "143",
+        "lean_error": "",
+        "result": "success",
+        "insight": "ModuleCat braiding is DEFEQ to the swap on pure tensors, so after ONE erw both sides are defeq and erw's rfl-closing finishes; plain simp/simp only never closes it"
+      },
+      {
+        "attempt": 4,
+        "strategy": "tensorBraiding = sheafification.mapIso of the presheaf braiding (mirror tensorMod idiom, never compose across ⋙ sheafify boundary)",
+        "code_tried": "(PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).mapIso (presheafTensorBraiding (R := X.presheaf) A.val B.val)",
+        "line_number": "165",
+        "lean_error": "",
+        "result": "success",
+        "insight": "matches lem:tensorMod_braiding \\lean pin; axiom-clean {propext, Classical.choice, Quot.sound}"
+      }
+    ],
+    "next_steps": "Done. Ready for proof-block \\leanok (sync applied)."
+  },
+  {
+    "timestamp": "2026-06-23T13:26:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "tensorLeftUnitor"
+    },
+    "session": {
+      "id": "session_7",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "MonoidalCategory.leftUnitor",
+        "PresheafOfModules.unit",
+        "SheafOfModules.unit_val",
+        "PresheafOfModules.sheafificationAdjunction",
+        "asIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "presheafLeftUnitor := MonoidalCategory.leftUnitor M with stated type tensorObj (unit) M ≅ M",
+        "code_tried": "noncomputable def presheafLeftUnitor ... := MonoidalCategory.leftUnitor M",
+        "line_number": "169",
+        "lean_error": "(initial) `λ_ A.val` parsed λ as lambda: unexpected token ')'; expected '↦'",
+        "result": "partial",
+        "insight": "must write MonoidalCategory.leftUnitor, NOT λ_ notation, in term position; 𝟙_(PresheafOfModules) is defeq to PresheafOfModules.unit"
+      },
+      {
+        "attempt": 2,
+        "strategy": "sheafifyValIso A := asIso of sheafificationAdjunction counit; pin explicit type sheafification.obj A.val ≅ A",
+        "code_tried": "noncomputable def sheafifyValIso (A) : (sheafification (R:=X.ringCatSheaf) (𝟙 _)).obj A.val ≅ A := asIso (...counit.app A)",
+        "line_number": "185",
+        "lean_error": "failed to synthesize IsIso ((sheafificationAdjunction (𝟙 X.ringCatSheaf.obj)).counit.app A)",
+        "result": "failed",
+        "insight": "pinning the type re-synthesizes sheafification's [HasWeakSheafify]/[WEqualsLocallyBijective] on a DIFFERENT path than the adjunction's internal one, so IsIso (keyed on exact morphism term) fails"
+      },
+      {
+        "attempt": 3,
+        "strategy": "leave sheafifyValIso type INFERRED from the counit (no annotation)",
+        "code_tried": "noncomputable def sheafifyValIso (A) := asIso ((sheafificationAdjunction (R:=X.ringCatSheaf) (𝟙 _)).counit.app A)",
+        "line_number": "185",
+        "lean_error": "",
+        "result": "success",
+        "insight": "reflective adjunction ⇒ counit IsIso by infer_instance, but ONLY when the type is not re-pinned"
+      },
+      {
+        "attempt": 4,
+        "strategy": "tensorLeftUnitor := sheafification.mapIso (presheafLeftUnitor A.val) ≪≫ sheafifyValIso A",
+        "code_tried": "(sheafification (R:=X.ringCatSheaf) (𝟙 _)).mapIso (presheafLeftUnitor (R:=X.presheaf) A.val) ≪≫ sheafifyValIso A",
+        "line_number": "189",
+        "lean_error": "",
+        "result": "success",
+        "insight": "≪≫ succeeds because sheafifyValIso's inferred domain is defeq to mapIso codomain; matches lem:tensorMod_unitor pin; axiom-clean"
+      }
+    ],
+    "next_steps": "Done. Ready for proof-block \\leanok (sync applied)."
+  },
+  {
+    "timestamp": "2026-06-23T13:26:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "tensorRightUnitor"
+    },
+    "session": {
+      "id": "session_7",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "tensorBraiding",
+        "tensorLeftUnitor"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "right unitor by braiding then left unitor (as blueprint derives)",
+        "code_tried": "tensorBraiding A (SheafOfModules.unit ..) ≪≫ tensorLeftUnitor A",
+        "line_number": "195",
+        "lean_error": "",
+        "result": "success",
+        "insight": "A ⊗ 𝒪_X ≅ 𝒪_X ⊗ A ≅ A; axiom-clean; lean_aux helper (no blueprint block yet)"
+      }
+    ],
+    "next_steps": "Planner: blueprint (fold into lem:tensorMod_unitor or own block)."
+  },
+  {
+    "timestamp": "2026-06-23T13:26:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "tensorAssoc"
+    },
+    "session": {
+      "id": "session_7",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Needs the module-sheafification monoidal comparison (sheafify P) ⊗ Q ≅ sheafify (P ⊗ Q) — VERIFIED absent from Mathlib (loogle PresheafOfModules.sheafification,MonoidalCategory → none; SheafOfModules,MonoidalCategory → none). Mathlib presheafToSheaf.Monoidal only for Sheaf J A, not SheafOfModules over a sheaf of rings.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Inspected unfold: tensorMod (tensorMod A B) C sheafifies a tensor one of whose factors is itself sheafified; cannot transport MonoidalCategory.associator across the ⋙ sheafify boundary without the comparison iso",
+        "code_tried": "(not attempted in source — verified blocker by unfolding + 2 loogle existence-checks)",
+        "line_number": "n/a",
+        "lean_error": "n/a (construction missing, not a tactic failure)",
+        "result": "partial",
+        "insight": "next brick: sheafifyTensorComparison : Monoidal.tensorObj (sheafify P).val (sheafify Q).val ≅ (sheafify (Monoidal.tensorObj P Q)).val; with it + presheaf associator + sheafifyValIso, tensorAssoc assembles like tensorLeftUnitor"
+      }
+    ],
+    "next_steps": "Build sheafifyTensorComparison first (substantial — sheafification preserves tensor). Do NOT shortcut through the ⋙ sheafify boundary."
+  }
+]

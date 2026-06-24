@@ -1,0 +1,91 @@
+[
+  {
+    "timestamp": "2026-06-24T05:13:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "FiberExtVanishes"
+    },
+    "session": {
+      "id": "session_18",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "AlgebraicGeometry.Scheme.Hom.fiber",
+        "AlgebraicGeometry.Scheme.Hom.fiberι",
+        "Scheme.Modules.pullback",
+        "extGroup",
+        "IsZero"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Replace opaque stub with real def: absolute Ext on the scheme-theoretic fibre X(s)=f.fiber s of the restrictions I(s)=j*I, F(s)=j*F along j=f.fiberι s, wrapped in IsZero",
+        "code_tried": "def FiberExtVanishes {X S : Scheme.{u}} (q : ℕ) (f : X ⟶ S) (I F : X.Modules) (s : S) : Prop := IsZero (extGroup q ((Scheme.Modules.pullback (f.fiberι s)).obj I) ((Scheme.Modules.pullback (f.fiberι s)).obj F))",
+        "line_number": "422",
+        "lean_error": null,
+        "result": "success",
+        "insight": "(s : S) feeds f.fiberι s directly — Lean auto-inserts the ↥S point coercion; signature byte-identical so all 3 downstream users (External.ext_vanishing_open, H_locallyFree_of_ext_vanishing, ext_finite_flat) stay well-typed. lean_verify: {propext, Classical.choice, Quot.sound}, no sorryAx."
+      }
+    ],
+    "next_steps": "Strand-(b) def layer: FiberExtVanishes now real; relExt/IsLFPAndFlatOn remain opaque pending R^q f_* + internal ℰxt."
+  },
+  {
+    "timestamp": "2026-06-24T05:13:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "relExt"
+    },
+    "session": {
+      "id": "session_18",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Two absent Mathlib bricks: (1) internal Ext sheaf ℰxt^q_X(I,F):X.Modules — no internalHom/sheafHom on SheafOfModules/Scheme.Modules (grep over ModuleCat/Sheaf + Sheaf/Modules empty); only the group Abelian.Ext exists. (2) higher direct image R^q f_* — abstract Functor.Derived.RightDerived exists but is NOT instantiated for Scheme.Modules.pushforward (needs enough injectives in X.Modules + derivability structure).",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Reconnaissance: searched for both required bricks before leaving opaque",
+        "code_tried": "lean_loogle \"higherDirectImage\"; \"directImage\",\"derived\"; \"Sheaf\",\"Ext\"; \"rightDerivedFunctor\"; SheafOfModules,\"internalHom\"; leansearch 'higher direct image R^q f_*'; grep ModuleCat/Sheaf for internalHom/sheafHom",
+        "line_number": "373",
+        "lean_error": "no results — both R^q f_* and internal ℰxt confirmed absent v4.30.0",
+        "result": "failed",
+        "insight": "Blocked at TWO levels: cannot even form the R^q f_* argument (the internal-Ext object) before applying a (also-absent) derived pushforward. Multi-iter from-scratch layer, or anchor whole relExt as External.*."
+      }
+    ],
+    "next_steps": "Either build internal Hom ℰxt(I,F):X.Modules (overlaps PAUSED monoidal strand) + its right-derived sheaf AND instantiate R^q f_* (enough injectives), or anchor relExt as External.* EGA input. Do NOT force with axiom/sorry."
+  },
+  {
+    "timestamp": "2026-06-24T05:13:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "IsLFPAndFlatOn"
+    },
+    "session": {
+      "id": "session_18",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Transitively blocked on relExt: it is a predicate (LFP+flat over V⊆S) ABOUT relExt c f I F, which cannot be realized (R^q f_* + internal ℰxt absent). The LFP/flat predicates themselves (IsLocallyFreeOfFiniteRankOn, IsLFP, IsSFlat) DO exist as project defs, so this un-blocks immediately once relExt is real.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Determined transitively blocked on relExt; left opaque",
+        "code_tried": "(analysis only — no edit)",
+        "line_number": "429",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "Stub un-blocks the moment relExt is realized; LFP/flat predicates already exist project-side."
+      }
+    ],
+    "next_steps": "Realize together with relExt (same R^q f_* infrastructure)."
+  }
+]

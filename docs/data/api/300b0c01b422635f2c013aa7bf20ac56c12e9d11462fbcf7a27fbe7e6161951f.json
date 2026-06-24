@@ -1,0 +1,181 @@
+[
+  {
+    "timestamp": "2026-06-23T08:43:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "tensorObj_left_unitor_pullback_eq_sheafify"
+    },
+    "session": {
+      "id": "session_63",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "residual STU-collapse coherence: STU.hom ≫ (tensorObjIsoOfIso sheafifyUnitIso 𝟙).hom ≫ tensorObj_left_unitor(a_Y(F M.val)).hom = a_Y.map λ_{F M.val}",
+      "key_lemmas_used": [
+        "tensorObjIsoOfIso_eq_comp",
+        "tensorObj_left_unitor_naturality",
+        "Iso.trans_hom",
+        "Category.assoc"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "fold reconciliation wrapper tensor leg to (tensorObjIsoOfIso sheafifyUnitIso pbv_M).hom via a `show` restating the goal",
+        "code_tried": "show (sheafifyTensorUnitIso ...).hom ≫ (tensorObjIsoOfIso (sheafifyUnitIso) (pullbackValIso f M)).hom ≫ ...",
+        "line_number": "1329",
+        "lean_error": "type mismatch: RHS has sheafToPresheaf-obj carrier, goal has Y.presheaf⋙forget carrier",
+        "result": "failed",
+        "insight": "the `show` restatement exposes the carrier defeq seam; not syntactically equal"
+      },
+      {
+        "attempt": 2,
+        "strategy": "isolate `hw` (rfl: wrapper leg = tensorObjIsoOfIso .hom), then erw [hw, tensorObjIsoOfIso_eq_comp, Iso.trans_hom, Category.assoc, hnat]",
+        "code_tried": "erw [hw, tensorObjIsoOfIso_eq_comp, Iso.trans_hom, Category.assoc, hnat]",
+        "line_number": "1351",
+        "lean_error": "Unknown identifier `tensorObjIsoOfIso_eq_comp` (defined later in file) / then `rewrite failed: Did not find an occurrence of the pattern`",
+        "result": "failed",
+        "insight": "tensorObjIsoOfIso_eq_comp lived after L2; relocated it earlier. broad Iso.trans_hom unfolds STU's own internal ≪≫ first; targeting the split arg still misses on the SheafOfModules ≫ seam"
+      },
+      {
+        "attempt": 3,
+        "strategy": "combine split + hnat in an isolated STU-free `have hcomb`, fold via term-mode congrArg",
+        "code_tried": "have hcomb : (tensorObjIsoOfIso sheafifyUnitIso (pullbackValIso f M)).hom ≫ (tensorObj_left_unitor ((pullback f).obj M)).hom = ... := by rw [tensorObjIsoOfIso_eq_comp, Iso.trans_hom, Category.assoc]; exact congrArg (_ ≫ ·) hnat\n  erw [hw, hcomb]",
+        "line_number": "1351",
+        "lean_error": "none — compiles",
+        "result": "partial",
+        "insight": "WORKING IDIOM: across the SheafOfModules ≫ defeq-not-syntactic seam, isolate split+rewrite in an STU-free `have`, then fold term-mode via `congrArg (_ ≫ ·) h` / `Eq.trans`. `rw [hnat]` and `simp only [Category.assoc]` both MISS on the seam; congrArg lands by defeq. Reduced bare sorry to a single named STU-coherence residual."
+      }
+    ],
+    "next_steps": "Do NOT keep grinding the seam idiom. Author a dedicated STU-collapse atom (`sheafifyTensorUnitIso_hom_whisker_eq`) unfolding STU into its asIso(a_Y.map (η▷)/(◁η)) legs; this residual then closes mechanically. Shared with L3-3a-step-2."
+  },
+  {
+    "timestamp": "2026-06-23T08:36:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackUnitIso_whisker_eq_sheafify_eta_whisker"
+    },
+    "session": {
+      "id": "session_63",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "3a-step-2 (central leg TF(a_Y.map η) 𝟙 ↔ a_Y.map(η F ▷ F M.val) via STU reconciliation — the hard STU coherence) + 3b flanking-leg cancellation",
+      "key_lemmas_used": [
+        "tensorObjIsoOfIso_hom",
+        "pullbackUnitIso_eq_sheafify_eta",
+        "Iso.refl_hom",
+        "tensorObj_functoriality_comp3"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "unfold whisker to tensorObj_functoriality then substitute bridge-1 (pullbackUnitIso = (pbv 𝟙).inv ≫ a_Y.map η ≫ sheafifyUnitIso.hom)",
+        "code_tried": "rw [tensorObjIsoOfIso_hom, pullbackUnitIso_eq_sheafify_eta f, Iso.refl_hom]",
+        "line_number": "1420",
+        "lean_error": "none — compiles (both rewrites LSP-confirmed via lean_multi_attempt)",
+        "result": "partial",
+        "insight": "LHS whisker now `tensorObj_functoriality ((pbv 𝟙).inv ≫ a_Y.map η ≫ sheafifyUnitIso.hom) 𝟙`. The 3a *mechanical* step (step 1) is done; the residual is 3a-step-2 + 3b."
+      },
+      {
+        "attempt": 2,
+        "strategy": "tried full split via tensorObj_functoriality_comp3 + central-leg identification (explored, not committed)",
+        "code_tried": "rw [tensorObjIsoOfIso_hom, pullbackUnitIso_eq_sheafify_eta f, Iso.refl_hom, show (𝟙 ((pullback f).obj M)) = 𝟙 _ ≫ 𝟙 _ ≫ 𝟙 _ from by simp, ← tensorObj_functoriality_comp3]",
+        "line_number": "1420",
+        "lean_error": "rw [← tensorObj_functoriality_comp3] MISSES on the seam (must be done in isolated STU-free have + term-mode fold)",
+        "result": "failed",
+        "insight": "the split must use the same isolated-have + term-mode-fold idiom as L2; the central-leg identification is the shared STU coherence (hard)."
+      }
+    ],
+    "next_steps": "Gated on the STU-collapse atom (same as L2). Once that exists, the functoriality split + flanking cancellation are mechanical. Blueprint 3a/3b standalone decls do NOT exist in Lean (inlined here) — flagged with % NOTE."
+  },
+  {
+    "timestamp": "2026-06-23T08:38:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackTensorMap_left_unitality"
+    },
+    "session": {
+      "id": "session_63",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "assembly route fully derived + verified on goal shape but GATED on L2 and L3 closing (their STU residuals)",
+      "key_lemmas_used": [
+        "pullbackTensorMap_eq_sheafify_delta",
+        "pullback_map_tensorObj_left_unitor_eq",
+        "hHLU (sheafified presheaf left_unitality_hom)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "inspect post-`erw [← hHLU]` goal and derive the closing calc: cancel common leading scp ≫ a_Yδ (epi); apply (i) L3 STU≫a_Y(pbv⊗pbv)≫whisk = a_Y(η▷FM)≫Wλ; (ii) L2 Wλ≫tensorObj_left_unitor(f^*M) = a_Yλ_{FM}≫pbv M; chain",
+        "code_tried": "-- residual comment only; route recorded verbatim, no new tactic committed (gated)",
+        "line_number": "1500",
+        "lean_error": "none (sorry retained); exposing STU≫a_Y(pbv⊗pbv)≫whisk contiguously needs a reassoc across the seam (simp [Category.assoc] no-progress) — use isolated-have + term-mode fold",
+        "result": "partial",
+        "insight": "the assembly is purely a chain of L2+L3; no independent math content remains. Closes the moment L2/L3 close."
+      }
+    ],
+    "next_steps": "Assembly-only. Unblocks automatically once L2/L3 STU residuals close."
+  },
+  {
+    "timestamp": "2026-06-23T08:43:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_restrict_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_63",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "Cone B (dual squares S3) — not this lane; solo Cone-A lane this iter",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Deferred. Cone B internal-hom route; separate file (PresheafDualPullback.lean) never created."
+  },
+  {
+    "timestamp": "2026-06-23T08:43:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_63",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "Cone B (dual squares S4a) — not this lane",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Deferred. Cone B."
+  },
+  {
+    "timestamp": "2026-06-23T08:43:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_63",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "telescope lemma; depends on the square compat lemmas above",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Deferred until the square compat lemmas close."
+  }
+]

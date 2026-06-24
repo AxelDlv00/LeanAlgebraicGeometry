@@ -1,0 +1,133 @@
+[
+  {
+    "timestamp": "2026-06-24T03:43:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "fp_sheaf_affine_tilde"
+    },
+    "session": {
+      "id": "session_15",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "External.affine_fp_tilde",
+        "SheafOfModules.IsFinitePresentation",
+        "IsLFP"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Anchor the affine essential-surjectivity (reverse Stacks 01IA+01PC) as External.affine_fp_tilde, then restate project-facing fp_sheaf_affine_tilde from it",
+        "code_tried": "axiom External.affine_fp_tilde {R : CommRingCat.{u}} (I : (Spec R).Modules) [I.IsFinitePresentation] : ∃ (M : ModuleCat.{u} ↑R), Module.FinitePresentation ↑R M ∧ Nonempty (AlgebraicGeometry.tilde M ≅ I) ; theorem fp_sheaf_affine_tilde ... (hI : IsLFP I) := by haveI : I.IsFinitePresentation := hI; exact External.affine_fp_tilde I",
+        "line_number": "786",
+        "lean_error": null,
+        "goal_before": "IsLFP I ⊢ ∃ M, Module.FinitePresentation R M ∧ Nonempty (tilde M ≅ I)",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "SheafOfModules.IsFinitePresentation I written explicitly mis-infers implicit R (sort mismatch); dot notation I.IsFinitePresentation resolves it. IsLFP I is defeq I.IsFinitePresentation so haveI coercion is direct. Build exit 0; axiom profile = {propext, Classical.choice, Quot.sound, External.affine_fp_tilde}."
+      }
+    ],
+    "next_steps": "Bridge complete. The FORWARD direction (M fp ⇒ IsLFP (tilde M), Stacks 01PC forward) is a separate absent ingredient needed by 1.4 — consider anchor External.tilde_isFP."
+  },
+  {
+    "timestamp": "2026-06-24T03:43:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "External.affine_fp_tilde"
+    },
+    "session": {
+      "id": "session_15",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Mathlib gap: tilde.functor has Full/Faithful/IsLeftAdjoint but NO EssSurj/essImage; SheafOfModules.IsFinitePresentation unfolds only to LOCAL QuasicoherentData. Anchored as External boundary axiom (Stacks 01IA+01PC) after 3-iter from-scratch build attempt (iter-012..014).",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Add planner-pre-committed boundary axiom (reversal trigger from iter-014 fired)",
+        "code_tried": "axiom External.affine_fp_tilde {R : CommRingCat.{u}} (I : (Spec R).Modules) [I.IsFinitePresentation] : ∃ (M : ModuleCat.{u} ↑R), Module.FinitePresentation ↑R M ∧ Nonempty (AlgebraicGeometry.tilde M ≅ I)",
+        "line_number": "~620 (External anchor block, after ext_coherent_fp)",
+        "lean_error": null,
+        "goal_before": null,
+        "goal_after": null,
+        "result": "success",
+        "insight": "7th External.* boundary anchor. Doctor re-flags it (expected). Recommend protecting in archon-protected.yaml (user-only)."
+      }
+    ],
+    "next_steps": "User: mark protected. Build/upstream the affine equivalence to Mathlib later (STRATEGY.md gap)."
+  },
+  {
+    "timestamp": "2026-06-24T03:43:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "exists_finiteFreePresentation_of_noetherian"
+    },
+    "session": {
+      "id": "session_15",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "Module.Finite.exists_fin",
+        "Finsupp.linearCombination",
+        "Finsupp.range_linearCombination",
+        "ModuleCat.kernelIsoKer",
+        "Module.Finite.equiv",
+        "Module.finitePresentation_of_finite"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Module-theoretic core of 1.4: over Noetherian R, a finite module M has surjection Rⁿ↠M with fp kernel",
+        "code_tried": "obtain ⟨n, s, hs⟩ := Module.Finite.exists_fin (R:=R)(M:=M); refine ⟨n, ModuleCat.ofHom (Finsupp.linearCombination R s), ?_, ?_⟩ ... ∃ (n) (p : ModuleCat.of R (Fin n →₀ R) ⟶ M), Epi p ∧ Module.FinitePresentation R ↑(kernel p)",
+        "line_number": "~840",
+        "lean_error": "Epi via ModuleCat.epi_iff_surjective needed `simp only [ModuleCat.hom_ofHom]` before LinearMap.range_eq_top.mp; `kernel p` in Type-expecting position failed HasZeroMorphisms (Type _) — fix `↑(kernel p)`",
+        "goal_before": "⊢ ∃ n p, Epi p ∧ Module.FinitePresentation R ↑(kernel p)",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "kernel-fp via ModuleCat.kernelIsoKer transport: kernel is submodule of finite module over Noetherian ⇒ Module.Finite ⇒ Module.finitePresentation_of_finite. Axiom-clean. Reusable; tilde-transports to sheaf sequence over Spec R."
+      }
+    ],
+    "next_steps": "Add blueprint block (coverage debt). Combine w/ tilde_free+tilde_exact to build the Spec-R free-resolution sequence."
+  },
+  {
+    "timestamp": "2026-06-24T03:43:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "exists_free_resolution_step"
+    },
+    "session": {
+      "id": "session_15",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "4 absent ingredients: (1) general-affine X → Spec R transport (module pullback along X.isoSpec, IsLFP/IsFreeMod preservation); (2) descent_noetherian data-form re-sign (needs fibre products X₀×_{S₀}S + module base change); (3) FORWARD Stacks 01PC: M fp module ⇒ IsLFP (tilde M) — absent (affine_fp_tilde is reverse only); (4) flat pullback of a SES of SheafOfModules is exact (Mathlib has only module-level Module.Flat.lTensor_exact, not Scheme.Modules.pullback).",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Audit whether 1.4 closes from the now-complete bridge (tilde_free/tilde_exact/fp_sheaf_affine_tilde) + new helper",
+        "code_tried": "leansearch/loogle for flat pullback of SES of sheaves, tilde fp instance, X→Spec transport — all absent",
+        "line_number": "580",
+        "lean_error": "n/a (audit; left sorried per directive — closing would require new sorries/unauthorized anchors)",
+        "goal_before": null,
+        "goal_after": null,
+        "result": "partial",
+        "insight": "Bridge alone is insufficient; 3 of the 4 gaps are multi-iter Mathlib/anchor layers. Honest stop: landed module-core helper + precisely named the 4 gaps."
+      }
+    ],
+    "next_steps": "Planner: decide anchor-vs-build for forward 01PC (External.tilde_isFP) + flat-pullback-of-sheaves exactness + data-form descent re-sign; sequence the fibre-product/base-change layer."
+  }
+]

@@ -1,0 +1,198 @@
+[
+  {
+    "timestamp": "2026-06-23T18:38:05Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "presheafDual_pullback_restrict_natural"
+    },
+    "session": {
+      "id": "session_66",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "PresheafOfModules.naturality_apply"
+      ],
+      "insight": "crux = theta.hom built-in PresheafOfModules.Hom naturality; needs NO L1/L2/L3a chain"
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "close crux directly by theta.hom built-in naturality, bypassing blueprint L1;L2;L3a decomposition",
+        "code_tried": "funext φ; exact PresheafOfModules.naturality_apply (presheafDualPullbackComparison f M).hom (homOfLE j).op φ",
+        "line_number": "~262",
+        "result": "success",
+        "insight": "θ.hom is a genuine PresheafOfModules.Hom, hence natural by construction; axiom-clean {propext, Classical.choice, Quot.sound}. This is the lemma S3/S4a consume."
+      }
+    ],
+    "next_steps": "Wire S3/S4a in TensorObjInverse.lean to import PresheafDualPullback and apply this crux."
+  },
+  {
+    "timestamp": "2026-06-23T18:38:05Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "presheafDual_pullback_restrict_natural_apply"
+    },
+    "session": {
+      "id": "session_66",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "PresheafOfModules.naturality_apply",
+        "congrArg"
+      ],
+      "insight": "L3b reproven directly from θ.hom naturality, not through L1/L2/L3a"
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "RED statement had invalid `.1.app` on an eval result; restate to dual-section restriction then prove from θ.hom naturality",
+        "code_tried": "congrArg (evalLin _ (op V) · s) (naturality_apply θ.hom (homOfLE j).op φ)",
+        "line_number": "~340",
+        "result": "success",
+        "insight": "axiom-clean; independent of both sorry legs (L1, L3a)."
+      }
+    ],
+    "next_steps": "none — closed"
+  },
+  {
+    "timestamp": "2026-06-23T18:38:05Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "dualPrecompHom"
+    },
+    "session": {
+      "id": "session_66",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "ModuleCat.ofHom",
+        "internalHomObjModule",
+        "cat_disch"
+      ],
+      "insight": "ofHom needs BOTH carrier-forms (internalHomPresheaf-form + dual-form) of each Module instance supplied via letI; build LinearMap over R₀.obj (op U.unop) with explicit ascription"
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "define app from dualPrecompEquiv forward leg (φ ↦ pushforward₀.map g ≫ φ)",
+        "code_tried": "app U := ModuleCat.ofHom { toFun := fun φ => (pushforward₀ (Over.forget U.unop) _).map g ≫ φ, ... }",
+        "line_number": "~94",
+        "lean_error": "failed to synthesize Module ((R₀⋙forget₂).obj U) ((internalHomPresheaf M' 𝟙_).obj U)",
+        "result": "failed",
+        "insight": "carrier whnf-reduces to internalHomPresheaf form on one side, dual form on the other; typeclass search finds neither from internalHomObjModule alone"
+      },
+      {
+        "attempt": 2,
+        "strategy": "supply BOTH carrier-forms of each module instance via 4 letI + explicit (R := R₀.obj (op U.unop)) ascription on ofHom; close naturality field by cat_disch",
+        "code_tried": "letI : Module (R₀.obj (op U.unop)) ((dual M').obj U) := ...; letI : Module ... ((InternalHom.internalHomPresheaf M' 𝟙_).obj U) := ...; ModuleCat.ofHom (R := R₀.obj (op U.unop)) ...; naturality := by cat_disch",
+        "line_number": "~94",
+        "result": "success",
+        "insight": "mirrors dualIsoOfIso's toModuleIso; cat_disch closes the precomp-vs-restriction square (same one isoMk discharges for dualIsoOfIso)"
+      }
+    ],
+    "next_steps": "none — def + naturality axiom-clean"
+  },
+  {
+    "timestamp": "2026-06-23T18:38:05Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "dualPrecompHom_restrict_apply"
+    },
+    "session": {
+      "id": "session_66",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [],
+      "insight": "L2 is rfl once dualPrecompHom def lands"
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "rfl after dualPrecompHom app component unfolds to the RHS",
+        "code_tried": ":= rfl",
+        "line_number": "~127",
+        "result": "success",
+        "insight": "definitionally honest (auditor confirmed)"
+      }
+    ],
+    "next_steps": "none — closed"
+  },
+  {
+    "timestamp": "2026-06-23T18:38:05Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "evalLin_restrict_commute_aux"
+    },
+    "session": {
+      "id": "session_66",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "naturality_apply (internalHomEval N) (s ⊗ₜ φ) + erw [tensorObj_map_tmul, internalHomEvalApp_tmul ×2] whnf-bombs the TensorProduct.lift machinery even at maxHeartbeats 1.6M; non-bombing route needs the PRIVATE restr_map_homMk / hom_app_heq in PresheafInternalHom.lean re-exposed",
+      "key_lemmas_used": [
+        "PresheafOfModules.naturality_apply",
+        "internalHomEval"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "inline naturality_apply (internalHomEval N) on N = (pullback φR).obj M.val",
+        "code_tried": "have key := naturality_apply (internalHomEval N) (homOfLE j).op (s ⊗ₜ φ); erw [tensorObj_map_tmul, internalHomEvalApp_tmul, internalHomEvalApp_tmul] at key; exact key.symm",
+        "line_number": "~336",
+        "lean_error": "(deterministic) timeout at isDefEq, maximum number of heartbeats (1600000) has been reached",
+        "result": "failed",
+        "insight": "the heavy pullback object whnf-bombs at isDefEq"
+      },
+      {
+        "attempt": 2,
+        "strategy": "extract generic helper over a VARIABLE N (heavy pullback object only appears as argument, never whnf-ed)",
+        "code_tried": "private lemma evalLin_restrict_commute_aux {D} ... (N : PresheafOfModules ...) (j : V ⟶ U) ... ; same naturality_apply+erw route",
+        "line_number": "~324",
+        "lean_error": "(deterministic) timeout at whnf, maximum number of heartbeats (1600000) — the erw [tensorObj_map_tmul] still forces whnf of TensorProduct.lift",
+        "result": "failed",
+        "insight": "generalizing N moved the bomb off isDefEq but the erw on tmul still whnf-bombs; left as documented sorry"
+      }
+    ],
+    "next_steps": "Re-expose (or re-prove inline — both rfl/subst) restr_map_homMk + hom_app_heq from PresheafInternalHom.lean; use the φ-naturality reduction used inside internalHomEval's own naturality field. OFF critical path (crux bypasses L3a)."
+  },
+  {
+    "timestamp": "2026-06-23T18:38:05Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "presheafDual_pullback_comparison_eval_apply"
+    },
+    "session": {
+      "id": "session_66",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "evalLin _ V ((sliceDualTransport f M V).hom φ) s does not expose dualUnitRingSwap for rw [dualUnitRingSwap_apply] — the swap is buried in the unevaluated sliceDualTransport.hom app. Needs a FORWARD sliceDualTransport_app_apply lemma in SliceTransport.lean (only inverse sliceDualTransportInv_app_apply exists, SliceTransport.lean:563); SliceTransport.lean NOT owned by this lane",
+      "key_lemmas_used": [
+        "dualUnitRingSwap_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "RED stmt fix then rw [dualUnitRingSwap_apply]; rfl",
+        "code_tried": "rw [dualUnitRingSwap_apply]",
+        "line_number": "~294",
+        "lean_error": "Tactic `rewrite` failed: Did not find an occurrence of the pattern (ModuleCat.Hom.hom (dualUnitRingSwap ?f ?W')) ?x",
+        "result": "failed",
+        "insight": "forward sliceDualTransport app at terminal slice = (restrictScalars β_V).map (φ.app (op (Over.mk 𝟙))) ≫ dualUnitRingSwap f V.unop; the swap is unexposed without a forward app lemma"
+      }
+    ],
+    "next_steps": "Add forward sliceDualTransport_app_apply to SliceTransport.lean, then L1 closes by rw [that, dualUnitRingSwap_apply]. OFF critical path (crux bypasses L1)."
+  }
+]

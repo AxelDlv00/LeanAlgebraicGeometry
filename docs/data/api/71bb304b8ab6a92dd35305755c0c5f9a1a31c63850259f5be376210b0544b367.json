@@ -2,28 +2,53 @@
   "files": [
     {
       "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
-      "count": 4,
+      "count": 9,
       "lines": [
-        2022,
-        2536,
-        2717,
-        2739
+        2031,
+        2265,
+        2355,
+        2423,
+        2508,
+        2671,
+        2918,
+        3099,
+        3121
       ],
       "occurrences": [
         {
-          "line": 2022,
+          "line": 2031,
           "column": 3
         },
         {
-          "line": 2536,
+          "line": 2265,
           "column": 3
         },
         {
-          "line": 2717,
+          "line": 2355,
           "column": 3
         },
         {
-          "line": 2739,
+          "line": 2423,
+          "column": 3
+        },
+        {
+          "line": 2508,
+          "column": 5
+        },
+        {
+          "line": 2671,
+          "column": 3
+        },
+        {
+          "line": 2918,
+          "column": 3
+        },
+        {
+          "line": 3099,
+          "column": 3
+        },
+        {
+          "line": 3121,
           "column": 3
         }
       ]
@@ -60,42 +85,42 @@
       "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
       "count": 6,
       "lines": [
-        2314,
-        3143,
-        3165,
-        3180,
-        3183,
-        3243
+        2397,
+        3296,
+        3318,
+        3333,
+        3336,
+        3420
       ],
       "occurrences": [
         {
-          "line": 2314,
+          "line": 2397,
           "column": 3
         },
         {
-          "line": 3143,
+          "line": 3296,
           "column": 5
         },
         {
-          "line": 3165,
+          "line": 3318,
           "column": 5
         },
         {
-          "line": 3180,
+          "line": 3333,
           "column": 5
         },
         {
-          "line": 3183,
+          "line": 3336,
           "column": 5
         },
         {
-          "line": 3243,
-          "column": 3
+          "line": 3420,
+          "column": 5
         }
       ]
     }
   ],
-  "total": 14,
+  "total": 19,
   "partial": false,
   "warnings": []
 }

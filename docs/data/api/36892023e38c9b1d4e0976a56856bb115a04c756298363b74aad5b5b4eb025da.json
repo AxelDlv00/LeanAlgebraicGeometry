@@ -1,0 +1,144 @@
+[
+  {
+    "timestamp": "2026-06-24T03:07:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "affine_global_presentation"
+    },
+    "session": {
+      "id": "session_14",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Needs the affine quasi-coherence comparison Γ(D(g),I)≅Γ(I)_g (= essential surjectivity of tilde.functor R onto QCoh). Absent from Mathlib v4.30.0 (verified 4 ways). IsFinitePresentation unfolds only to a LOCAL QuasicoherentData; no globalization lemma exists.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Planner route: global generation O^n↠I + finite kernel from local QuasicoherentData",
+        "code_tried": "[I.IsFinitePresentation] ⊢ IsIso I.fromTildeΓ := by infer_instance",
+        "line_number": "scratch",
+        "lean_error": "failed to synthesize instance IsIso I.fromTildeΓ",
+        "result": "failed",
+        "insight": "isIso_fromTildeΓ_iff is only the REDUCTION (IsIso ↔ essImage), not surjectivity; isIso_fromTildeΓ_of_presentation needs a GLOBAL presentation — circular. The atom Γ(D(g),I)=I_g is absent."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Reverse module→sheaf direction tilde_isFinitePresentation (off critical path) via presentationTilde",
+        "code_tried": "obtain ⟨sfin,hs,hker⟩ := (‹Module.FinitePresentation ↑R ↥M›).out; have P := presentationTilde M s hs t ht; (discharge P.IsFinite)",
+        "line_number": "scratch",
+        "lean_error": "P.generators.I does not reduce to ↥s (change/exact/simp/unfold/rw all fail); presentationTilde is a tactic def with backward.isDefEq.respectTransparency false",
+        "result": "failed",
+        "insight": "presentationTilde opacity blocks IsFinite discharge; separately Presentation.quasicoherentData route times out at typeclass (20000 heartbeats) on (sheafToPresheaf (J.over X)).IsRightAdjoint. Off critical path anyway (gap is the reverse direction)."
+      }
+    ],
+    "next_steps": "iter-015: execute planner's pre-authorized reversal — anchor External.affine_essImage (Hartshorne II.5.5) supplying [I.IsFinitePresentation]→Nonempty I.Presentation, OR (tilde.functor R).EssSurj. Then fp_sheaf_affine_tilde lands by assembly with the lemmas landed this iter. Do NOT re-attempt the from-scratch build."
+  },
+  {
+    "timestamp": "2026-06-24T03:07:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "fp_sheaf_affine_tilde"
+    },
+    "session": {
+      "id": "session_14",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Downstream consumer of affine_global_presentation; cannot land until that brick or the External.affine_essImage anchor is in place.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Pure assembly via tilde_of_presentation once a global presentation is in hand",
+        "code_tried": "(not attempted directly — blocked on its input affine_global_presentation)",
+        "line_number": "n/a",
+        "lean_error": "",
+        "result": "partial",
+        "insight": "Assembly is ready; only the global-presentation input is missing. exists_free_presentation_of_presentation + tilde_of_presentation already provide the assembly chain."
+      }
+    ],
+    "next_steps": "Lands by assembly once the ess-surj anchor supplies Nonempty I.Presentation."
+  },
+  {
+    "timestamp": "2026-06-24T03:07:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "free_isFreeMod"
+    },
+    "session": {
+      "id": "session_14",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "IsFreeMod (def)",
+        "Iso.refl",
+        "SheafOfModules.free"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Recognize Mathlib's free sheaf of modules as the project IsFreeMod predicate",
+        "code_tried": "theorem free_isFreeMod (Λ : Type u) : IsFreeMod (SheafOfModules.free (R := X.ringCatSheaf) Λ) := ⟨Λ, ⟨Iso.refl _⟩⟩",
+        "line_number": "776",
+        "lean_error": "",
+        "goal_before": "IsFreeMod (SheafOfModules.free Λ)",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "axiom-clean {propext, Classical.choice, Quot.sound}. Connective lemma: every Presentation's generators/relations are SheafOfModules.free, so this bridges Mathlib presentations to project IsFreeMod/IsLFP."
+      }
+    ],
+    "next_steps": "Blueprint debt: needs lem:free_isFreeMod \\uses{def:isFreeMod}."
+  },
+  {
+    "timestamp": "2026-06-24T03:07:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "exists_free_presentation_of_presentation"
+    },
+    "session": {
+      "id": "session_14",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "SheafOfModules.Presentation.generators.π/.epi",
+        "Presentation.relations.π/.epi",
+        "free_isFreeMod"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Cokernel (right-exact IsColimit) form via P.isColimit",
+        "code_tried": "re-wrap CokernelCofork.ofπ g w via P.isColimit",
+        "line_number": "scratch",
+        "lean_error": "(deterministic) timeout at isDefEq, maximum number of heartbeats (200000)",
+        "result": "failed",
+        "insight": "Re-wrapping the cofork forces a heavy proof-irrelevance defeq against Presentation.isColimit's own cofork. DO NOT retry the cokernel-reconstruction route."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Epi form: extract generators/relations epimorphisms directly",
+        "code_tried": "⟨_, _, free_isFreeMod _, free_isFreeMod _, P.generators.π, P.generators.epi, P.relations.π, P.relations.epi⟩",
+        "line_number": "788",
+        "lean_error": "",
+        "goal_before": "∃ K G (_:IsFreeMod K)(_:IsFreeMod G)(g:G⟶M)(_:Epi g)(k:K⟶kernel g), Epi k",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "axiom-clean. Captures the same free-presentation content cheaply via Epi; exactly what 1.4 consumes on affine charts. Parameterized by P like tilde_of_presentation — independent of the blocked globalization."
+      }
+    ],
+    "next_steps": "Blueprint debt: needs lem:exists_free_presentation_of_presentation \\uses{def:isFreeMod, lem:free_isFreeMod}."
+  }
+]

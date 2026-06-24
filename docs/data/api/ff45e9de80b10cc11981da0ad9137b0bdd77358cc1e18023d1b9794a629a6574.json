@@ -37,7 +37,7 @@
     {
       "name": "MR0555258-compactifying-picard",
       "path": "SubProjects/RelatedPapersFormalisation/MR0555258-compactifying-picard",
-      "has_dag": false
+      "has_dag": true
     },
     {
       "name": "MR2223407-construction-hilbert-quot",

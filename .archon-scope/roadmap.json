@@ -4,9 +4,11 @@
     "Albanese",
     "Cech-Cohomology-[completed]",
     "FBC-B_SNAP-chain",
-    "GR-quot_closure",
+    "GR-quot_closure_[completed]",
     "Line-Bundle-Comparison-Iso",
     "Quot-Foundations-[deferred_to_subprojects]",
+    "MR0555258-compactifying-picard",
+    "MR2223407-construction-hilbert-quot",
     "MR4199442-abelian-fourfolds",
     "MR4213770-secant-syzygies",
     "MR4228499-perverse-stalk-bounds",
@@ -33,7 +35,7 @@
     "MR4717077-surface-groups",
     "MR4736527-local-systems-isomonodromy",
     "MR4792069-pw-gln",
-    "RiemannRoch"
+    "RiemannRoch-[obsolete]"
   ],
   "unblock": [
     {
@@ -162,7 +164,7 @@
       ]
     },
     {
-      "provider": "GR-quot_closure",
+      "provider": "Algebraic-Jacobian-Challenge",
       "consumer": "Quot-Foundations-[deferred_to_subprojects]",
       "names": [
         "AlgebraicGeometry.Grassmannian.RankQuotient",
@@ -280,7 +282,125 @@
       ]
     },
     {
-      "provider": "RiemannRoch",
+      "provider": "GR-quot_closure_[completed]",
+      "consumer": "Quot-Foundations-[deferred_to_subprojects]",
+      "names": [
+        "AlgebraicGeometry.Grassmannian.RankQuotient",
+        "AlgebraicGeometry.Grassmannian.RankQuotient.Rel",
+        "AlgebraicGeometry.Grassmannian.RankQuotient.rel_refl",
+        "AlgebraicGeometry.Grassmannian.RankQuotient.rel_symm",
+        "AlgebraicGeometry.Grassmannian.RankQuotient.rel_trans",
+        "AlgebraicGeometry.Grassmannian.baseChange_bridge",
+        "AlgebraicGeometry.Grassmannian.baseChange_bridge_gammaSpec",
+        "AlgebraicGeometry.Grassmannian.baseChange_bridge_left",
+        "AlgebraicGeometry.Grassmannian.baseChange_bridge_right",
+        "AlgebraicGeometry.Grassmannian.baseChange_bridge_transition",
+        "AlgebraicGeometry.Grassmannian.bundleTransition",
+        "AlgebraicGeometry.Grassmannian.bundleTransitionData",
+        "AlgebraicGeometry.Grassmannian.bundleTransition_cocycle",
+        "AlgebraicGeometry.Grassmannian.bundleTransition_cocycle_matrix",
+        "AlgebraicGeometry.Grassmannian.bundleTransition_cocycle_transport",
+        "AlgebraicGeometry.Grassmannian.bundleTransition_self",
+        "AlgebraicGeometry.Grassmannian.chartComposite",
+        "AlgebraicGeometry.Grassmannian.chartComposite_rqPullback",
+        "AlgebraicGeometry.Grassmannian.chartLocus",
+        "AlgebraicGeometry.Grassmannian.chartLocus_isOpenCover",
+        "AlgebraicGeometry.Grassmannian.chartLocus_rqPullback",
+        "AlgebraicGeometry.Grassmannian.chartMatrix",
+        "AlgebraicGeometry.Grassmannian.chartMatrix_eq_presentedMatrix",
+        "AlgebraicGeometry.Grassmannian.chartMorphism",
+        "AlgebraicGeometry.Grassmannian.chartMorphism_glue_compat",
+        "AlgebraicGeometry.Grassmannian.chartQuotientMap",
+        "AlgebraicGeometry.Grassmannian.chartQuotientMap_epi",
+        "AlgebraicGeometry.Grassmannian.chartQuotientMap_\u03b9Free",
+        "AlgebraicGeometry.Grassmannian.chart_point_eq",
+        "AlgebraicGeometry.Grassmannian.comp_chartMorphism",
+        "AlgebraicGeometry.Grassmannian.exists_isUnit_submatrix",
+        "AlgebraicGeometry.Grassmannian.exists_rightInverse_of_epi_matrixEndRect",
+        "AlgebraicGeometry.Grassmannian.exists_rightInverse_of_epi_matrixEndRect_spec",
+        "AlgebraicGeometry.Grassmannian.exists_section_of_epi_free_spec",
+        "AlgebraicGeometry.Grassmannian.freeMap_matrixEndRect",
+        "AlgebraicGeometry.Grassmannian.functor",
+        "AlgebraicGeometry.Grassmannian.globalUnitSection",
+        "AlgebraicGeometry.Grassmannian.grPointOfRankQuotient",
+        "AlgebraicGeometry.Grassmannian.imageMatrix_map_ringHom",
+        "AlgebraicGeometry.Grassmannian.isIso_pullback_isoLocus_map",
+        "AlgebraicGeometry.Grassmannian.isIso_pullback_map_comp",
+        "AlgebraicGeometry.Grassmannian.isUnit_of_isIso_matrixEndRect",
+        "AlgebraicGeometry.Grassmannian.isoLocus",
+        "AlgebraicGeometry.Grassmannian.matrixEnd",
+        "AlgebraicGeometry.Grassmannian.matrixEndRect",
+        "AlgebraicGeometry.Grassmannian.matrixEndRect_comp",
+        "AlgebraicGeometry.Grassmannian.matrixEndRect_comp_rect",
+        "AlgebraicGeometry.Grassmannian.matrixEndRect_injective",
+        "AlgebraicGeometry.Grassmannian.matrixEndRect_one",
+        "AlgebraicGeometry.Grassmannian.matrixEndRect_presentedMatrix",
+        "AlgebraicGeometry.Grassmannian.matrixEndRect_presentedMatrix_minor",
+        "AlgebraicGeometry.Grassmannian.matrixEndRect_pullback",
+        "AlgebraicGeometry.Grassmannian.matrixEnd_comp",
+        "AlgebraicGeometry.Grassmannian.matrixEnd_eq_matrixEndRect",
+        "AlgebraicGeometry.Grassmannian.matrixEnd_one",
+        "AlgebraicGeometry.Grassmannian.matrixEnd_pullback",
+        "AlgebraicGeometry.Grassmannian.matrixToFreeIso",
+        "AlgebraicGeometry.Grassmannian.matrixToFreeIso_hom",
+        "AlgebraicGeometry.Grassmannian.matrixToFreeIso_mul",
+        "AlgebraicGeometry.Grassmannian.presentedMatrix",
+        "AlgebraicGeometry.Grassmannian.presentedMatrix_changeOfBasis",
+        "AlgebraicGeometry.Grassmannian.presentedMatrix_comp",
+        "AlgebraicGeometry.Grassmannian.presentedMatrix_congr",
+        "AlgebraicGeometry.Grassmannian.presentedMatrix_submatrix_self",
+        "AlgebraicGeometry.Grassmannian.pullbackFreeIso_inv_freeMap",
+        "AlgebraicGeometry.Grassmannian.represents",
+        "AlgebraicGeometry.Grassmannian.rqPullback",
+        "AlgebraicGeometry.Grassmannian.rqPullback_rel",
+        "AlgebraicGeometry.Grassmannian.rqSetoid",
+        "AlgebraicGeometry.Grassmannian.scalarEnd",
+        "AlgebraicGeometry.Grassmannian.scalarEnd_add",
+        "AlgebraicGeometry.Grassmannian.scalarEnd_comp",
+        "AlgebraicGeometry.Grassmannian.scalarEnd_one",
+        "AlgebraicGeometry.Grassmannian.scalarEnd_pullback",
+        "AlgebraicGeometry.Grassmannian.scalarEnd_sum",
+        "AlgebraicGeometry.Grassmannian.scalarEnd_zero",
+        "AlgebraicGeometry.Grassmannian.tautologicalQuotient",
+        "AlgebraicGeometry.Grassmannian.tautologicalQuotientComponent_transpose",
+        "AlgebraicGeometry.Grassmannian.tautologicalQuotient_epi",
+        "AlgebraicGeometry.Grassmannian.tautologicalQuotient_overlap",
+        "AlgebraicGeometry.Grassmannian.tautologicalRankQuotient",
+        "AlgebraicGeometry.Grassmannian.universalMatrix_map_presentedMatrix",
+        "AlgebraicGeometry.Grassmannian.universalMinorInv_self",
+        "AlgebraicGeometry.Grassmannian.universalQuotient",
+        "AlgebraicGeometry.Grassmannian.universalQuotient_isLocallyFreeOfRank",
+        "AlgebraicGeometry.Grassmannian.universalQuotient_restrictionIso",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.aL",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.aR",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.actLmap",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.actLmap_tmul",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.actM",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.actN",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.actRmap",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.actRmap_tmul",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.coeq_condition",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.cofork",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.descFac",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.descHom",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.descHom_tmul",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.descMor",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.isColimitCofork",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.piMor",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.piMor_apply",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.piMor_epi",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.projL",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.projL_comp_act",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.projL_surjective",
+        "AlgebraicGeometry.Scheme.Modules.RelativeTensorCoequalizer.projL_tmul",
+        "AlgebraicGeometry.Scheme.Modules.gradedMonoid_eq_of_cast",
+        "AlgebraicGeometry.Scheme.Modules.section_localization_hfr_basicOpen",
+        "AlgebraicGeometry.Scheme.Modules.sectionsCast",
+        "AlgebraicGeometry.Scheme.Modules.sectionsCast_refl"
+      ]
+    },
+    {
+      "provider": "RiemannRoch-[obsolete]",
       "consumer": "Algebraic-Jacobian-Challenge",
       "names": [
         "AlgebraicGeometry.Ga",
@@ -479,7 +599,7 @@
       ]
     },
     {
-      "provider": "GR-quot_closure",
+      "provider": "GR-quot_closure_[completed]",
       "consumer": "Algebraic-Jacobian-Challenge",
       "names": [
         "AlgebraicGeometry.Scheme.QcohAlgebra.pullback_coequifibered",
@@ -492,8 +612,31 @@
       ]
     },
     {
+      "provider": "Algebraic-Jacobian-Challenge",
+      "consumer": "RiemannRoch-[obsolete]",
+      "names": [
+        "AlgebraicGeometry.Scheme.IsAffineHModuleVanishing",
+        "AlgebraicGeometry.Scheme.IsCechAcyclicCover",
+        "AlgebraicGeometry.Scheme.cechCohomology",
+        "AlgebraicGeometry.Scheme.subsingleton_HModule'_supr_of_isCechAcyclicCover",
+        "AlgebraicGeometry.gmScalingP1_chart_agreement_cross01",
+        "AlgebraicGeometry.gmScalingP1_collapse_at_zero"
+      ]
+    },
+    {
+      "provider": "Albanese",
+      "consumer": "RiemannRoch-[obsolete]",
+      "names": [
+        "AlgebraicGeometry.Scheme.IsAffineHModuleVanishing",
+        "AlgebraicGeometry.Scheme.IsCechAcyclicCover",
+        "AlgebraicGeometry.Scheme.RationalMap.order_zero",
+        "AlgebraicGeometry.Scheme.cechCohomology",
+        "AlgebraicGeometry.Scheme.subsingleton_HModule'_supr_of_isCechAcyclicCover"
+      ]
+    },
+    {
       "provider": "Quot-Foundations-[deferred_to_subprojects]",
-      "consumer": "GR-quot_closure",
+      "consumer": "GR-quot_closure_[completed]",
       "names": [
         "AlgebraicGeometry.Scheme.Modules.glueData_bridge_mid",
         "AlgebraicGeometry.Scheme.Modules.glueData_bridge_src",
@@ -513,13 +656,22 @@
       ]
     },
     {
-      "provider": "RiemannRoch",
+      "provider": "RiemannRoch-[obsolete]",
       "consumer": "Albanese",
       "names": [
         "AlgebraicGeometry.ProjectiveLineBar",
         "AlgebraicGeometry.Scheme.IsRegularInCodimensionOne.instIsDiscreteValuationRingStalk",
         "AlgebraicGeometry.Scheme.IsRegularInCodimensionOne.instKrullDimLEStalk",
         "AlgebraicGeometry.projectiveLineBar_isProper"
+      ]
+    },
+    {
+      "provider": "Quot-Foundations-[deferred_to_subprojects]",
+      "consumer": "Algebraic-Jacobian-Challenge",
+      "names": [
+        "AlgebraicGeometry.Scheme.Modules.glueData_bridge_mid",
+        "AlgebraicGeometry.Scheme.Modules.glueData_bridge_src",
+        "AlgebraicGeometry.Scheme.Modules.glueData_bridge_tgt"
       ]
     },
     {
@@ -532,7 +684,7 @@
     },
     {
       "provider": "Algebraic-Jacobian-Challenge",
-      "consumer": "GR-quot_closure",
+      "consumer": "GR-quot_closure_[completed]",
       "names": [
         "AlgebraicGeometry.Scheme.RelativeSpec.UniversalProperty",
         "AlgebraicGeometry.Scheme.RelativeSpec.affine_base_iff"
@@ -547,25 +699,10 @@
       ]
     },
     {
-      "provider": "Algebraic-Jacobian-Challenge",
-      "consumer": "RiemannRoch",
-      "names": [
-        "AlgebraicGeometry.gmScalingP1_chart_agreement_cross01",
-        "AlgebraicGeometry.gmScalingP1_collapse_at_zero"
-      ]
-    },
-    {
       "provider": "Albanese",
       "consumer": "MR4228499-perverse-stalk-bounds",
       "names": [
         "AlgebraicGeometry.Scheme.WeilDivisor"
-      ]
-    },
-    {
-      "provider": "Albanese",
-      "consumer": "RiemannRoch",
-      "names": [
-        "AlgebraicGeometry.Scheme.RationalMap.order_zero"
       ]
     },
     {
@@ -625,7 +762,7 @@
       ]
     },
     {
-      "provider": "RiemannRoch",
+      "provider": "RiemannRoch-[obsolete]",
       "consumer": "MR4228499-perverse-stalk-bounds",
       "names": [
         "AlgebraicGeometry.Scheme.WeilDivisor"
@@ -636,8 +773,9 @@
     {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_assoc",
       "needed_by": [
+        "Algebraic-Jacobian-Challenge",
         "FBC-B_SNAP-chain",
-        "GR-quot_closure",
+        "GR-quot_closure_[completed]",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
       "satisfied_by": []
@@ -645,8 +783,9 @@
     {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_comm",
       "needed_by": [
+        "Algebraic-Jacobian-Challenge",
         "FBC-B_SNAP-chain",
-        "GR-quot_closure",
+        "GR-quot_closure_[completed]",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
       "satisfied_by": []
@@ -654,8 +793,9 @@
     {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_one",
       "needed_by": [
+        "Algebraic-Jacobian-Challenge",
         "FBC-B_SNAP-chain",
-        "GR-quot_closure",
+        "GR-quot_closure_[completed]",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
       "satisfied_by": []
@@ -663,8 +803,87 @@
     {
       "lean_name": "AlgebraicGeometry.Scheme.Modules.sectionsMul_one_mul",
       "needed_by": [
+        "Algebraic-Jacobian-Challenge",
         "FBC-B_SNAP-chain",
-        "GR-quot_closure",
+        "GR-quot_closure_[completed]",
+        "Quot-Foundations-[deferred_to_subprojects]"
+      ],
+      "satisfied_by": []
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.glueData_bridge_mid",
+      "needed_by": [
+        "Algebraic-Jacobian-Challenge",
+        "GR-quot_closure_[completed]",
+        "Quot-Foundations-[deferred_to_subprojects]"
+      ],
+      "satisfied_by": [
+        "Quot-Foundations-[deferred_to_subprojects]"
+      ]
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.glueData_bridge_src",
+      "needed_by": [
+        "Algebraic-Jacobian-Challenge",
+        "GR-quot_closure_[completed]",
+        "Quot-Foundations-[deferred_to_subprojects]"
+      ],
+      "satisfied_by": [
+        "Quot-Foundations-[deferred_to_subprojects]"
+      ]
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.glueData_bridge_tgt",
+      "needed_by": [
+        "Algebraic-Jacobian-Challenge",
+        "GR-quot_closure_[completed]",
+        "Quot-Foundations-[deferred_to_subprojects]"
+      ],
+      "satisfied_by": [
+        "Quot-Foundations-[deferred_to_subprojects]"
+      ]
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.glueHom",
+      "needed_by": [
+        "Algebraic-Jacobian-Challenge",
+        "GR-quot_closure_[completed]",
+        "Quot-Foundations-[deferred_to_subprojects]"
+      ],
+      "satisfied_by": []
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.hilbertPolynomialOfSectionModule",
+      "needed_by": [
+        "Algebraic-Jacobian-Challenge",
+        "GR-quot_closure_[completed]",
+        "Quot-Foundations-[deferred_to_subprojects]"
+      ],
+      "satisfied_by": []
+    },
+    {
+      "lean_name": "AlgebraicGeometry.sectionGradedModule",
+      "needed_by": [
+        "Algebraic-Jacobian-Challenge",
+        "GR-quot_closure_[completed]",
+        "Quot-Foundations-[deferred_to_subprojects]"
+      ],
+      "satisfied_by": []
+    },
+    {
+      "lean_name": "AlgebraicGeometry.sectionGradedModule_fg",
+      "needed_by": [
+        "Algebraic-Jacobian-Challenge",
+        "GR-quot_closure_[completed]",
+        "Quot-Foundations-[deferred_to_subprojects]"
+      ],
+      "satisfied_by": []
+    },
+    {
+      "lean_name": "AlgebraicGeometry.sectionGradedRing",
+      "needed_by": [
+        "Algebraic-Jacobian-Challenge",
+        "GR-quot_closure_[completed]",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
       "satisfied_by": []
@@ -1159,7 +1378,7 @@
         "Albanese"
       ],
       "satisfied_by": [
-        "RiemannRoch"
+        "RiemannRoch-[obsolete]"
       ]
     },
     {
@@ -1169,7 +1388,7 @@
         "Albanese"
       ],
       "satisfied_by": [
-        "RiemannRoch"
+        "RiemannRoch-[obsolete]"
       ]
     },
     {
@@ -1179,7 +1398,7 @@
         "Albanese"
       ],
       "satisfied_by": [
-        "RiemannRoch"
+        "RiemannRoch-[obsolete]"
       ]
     },
     {
@@ -1194,40 +1413,50 @@
       ]
     },
     {
-      "lean_name": "AlgebraicGeometry.Scheme.Modules.glueData_bridge_mid",
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.braidedCategory",
       "needed_by": [
-        "GR-quot_closure",
-        "Quot-Foundations-[deferred_to_subprojects]"
+        "Algebraic-Jacobian-Challenge",
+        "GR-quot_closure_[completed]"
       ],
-      "satisfied_by": [
-        "Quot-Foundations-[deferred_to_subprojects]"
-      ]
+      "satisfied_by": []
     },
     {
-      "lean_name": "AlgebraicGeometry.Scheme.Modules.glueData_bridge_src",
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.instGMulNatSectionDeg",
       "needed_by": [
-        "GR-quot_closure",
-        "Quot-Foundations-[deferred_to_subprojects]"
+        "Algebraic-Jacobian-Challenge",
+        "GR-quot_closure_[completed]"
       ],
-      "satisfied_by": [
-        "Quot-Foundations-[deferred_to_subprojects]"
-      ]
+      "satisfied_by": []
     },
     {
-      "lean_name": "AlgebraicGeometry.Scheme.Modules.glueData_bridge_tgt",
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.instGOneNatSectionDeg",
       "needed_by": [
-        "GR-quot_closure",
-        "Quot-Foundations-[deferred_to_subprojects]"
+        "Algebraic-Jacobian-Challenge",
+        "GR-quot_closure_[completed]"
       ],
-      "satisfied_by": [
-        "Quot-Foundations-[deferred_to_subprojects]"
-      ]
+      "satisfied_by": []
     },
     {
-      "lean_name": "AlgebraicGeometry.Scheme.Modules.glueHom",
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.instGSMulNatSectionDegModuleSectionDeg",
       "needed_by": [
-        "GR-quot_closure",
-        "Quot-Foundations-[deferred_to_subprojects]"
+        "Algebraic-Jacobian-Challenge",
+        "GR-quot_closure_[completed]"
+      ],
+      "satisfied_by": []
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.moduleSectionAction_mul_smul",
+      "needed_by": [
+        "Algebraic-Jacobian-Challenge",
+        "GR-quot_closure_[completed]"
+      ],
+      "satisfied_by": []
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.moduleSectionAction_one_smul",
+      "needed_by": [
+        "Algebraic-Jacobian-Challenge",
+        "GR-quot_closure_[completed]"
       ],
       "satisfied_by": []
     },
@@ -1254,6 +1483,14 @@
       "needed_by": [
         "Algebraic-Jacobian-Challenge",
         "Cech-Cohomology-[completed]"
+      ],
+      "satisfied_by": []
+    },
+    {
+      "lean_name": "AlgebraicGeometry.Scheme.Modules.symmetricCategory",
+      "needed_by": [
+        "Algebraic-Jacobian-Challenge",
+        "GR-quot_closure_[completed]"
       ],
       "satisfied_by": []
     },
@@ -1309,7 +1546,7 @@
       "lean_name": "AlgebraicGeometry.Scheme.RationalMap.order_inv",
       "needed_by": [
         "Algebraic-Jacobian-Challenge",
-        "RiemannRoch"
+        "RiemannRoch-[obsolete]"
       ],
       "satisfied_by": []
     },
@@ -1317,7 +1554,7 @@
       "lean_name": "AlgebraicGeometry.Scheme.RationalMap.order_mul_of_ne_zero",
       "needed_by": [
         "Algebraic-Jacobian-Challenge",
-        "RiemannRoch"
+        "RiemannRoch-[obsolete]"
       ],
       "satisfied_by": []
     },
@@ -1325,7 +1562,7 @@
       "lean_name": "AlgebraicGeometry.Scheme.RationalMap.order_neg",
       "needed_by": [
         "Algebraic-Jacobian-Challenge",
-        "RiemannRoch"
+        "RiemannRoch-[obsolete]"
       ],
       "satisfied_by": []
     },
@@ -1333,7 +1570,7 @@
       "lean_name": "AlgebraicGeometry.Scheme.RationalMap.order_one",
       "needed_by": [
         "Algebraic-Jacobian-Challenge",
-        "RiemannRoch"
+        "RiemannRoch-[obsolete]"
       ],
       "satisfied_by": []
     },
@@ -1341,7 +1578,7 @@
       "lean_name": "AlgebraicGeometry.Scheme.RationalMap.order_pow_of_ne_zero",
       "needed_by": [
         "Algebraic-Jacobian-Challenge",
-        "RiemannRoch"
+        "RiemannRoch-[obsolete]"
       ],
       "satisfied_by": []
     },
@@ -1349,7 +1586,7 @@
       "lean_name": "AlgebraicGeometry.Scheme.RationalMap.order_units_inv",
       "needed_by": [
         "Algebraic-Jacobian-Challenge",
-        "RiemannRoch"
+        "RiemannRoch-[obsolete]"
       ],
       "satisfied_by": []
     },
@@ -1357,7 +1594,7 @@
       "lean_name": "AlgebraicGeometry.Scheme.RationalMap.order_zero",
       "needed_by": [
         "Algebraic-Jacobian-Challenge",
-        "RiemannRoch"
+        "RiemannRoch-[obsolete]"
       ],
       "satisfied_by": [
         "Albanese"
@@ -1376,14 +1613,6 @@
       "needed_by": [
         "Algebraic-Jacobian-Challenge",
         "Albanese"
-      ],
-      "satisfied_by": []
-    },
-    {
-      "lean_name": "AlgebraicGeometry.Scheme.hilbertPolynomialOfSectionModule",
-      "needed_by": [
-        "GR-quot_closure",
-        "Quot-Foundations-[deferred_to_subprojects]"
       ],
       "satisfied_by": []
     },
@@ -3151,7 +3380,7 @@
       "lean_name": "AlgebraicGeometry.gmScalingP1_chart_agreement_cross01",
       "needed_by": [
         "Albanese",
-        "RiemannRoch"
+        "RiemannRoch-[obsolete]"
       ],
       "satisfied_by": [
         "Algebraic-Jacobian-Challenge"
@@ -3161,7 +3390,7 @@
       "lean_name": "AlgebraicGeometry.gmScalingP1_collapse_at_zero",
       "needed_by": [
         "Albanese",
-        "RiemannRoch"
+        "RiemannRoch-[obsolete]"
       ],
       "satisfied_by": [
         "Algebraic-Jacobian-Challenge"
@@ -4163,7 +4392,7 @@
       "lean_name": "AlgebraicGeometry.projectiveLineBar_geomIrred",
       "needed_by": [
         "Algebraic-Jacobian-Challenge",
-        "RiemannRoch"
+        "RiemannRoch-[obsolete]"
       ],
       "satisfied_by": []
     },
@@ -4174,7 +4403,7 @@
         "Albanese"
       ],
       "satisfied_by": [
-        "RiemannRoch"
+        "RiemannRoch-[obsolete]"
       ]
     },
     {
@@ -4866,33 +5095,9 @@
       "satisfied_by": []
     },
     {
-      "lean_name": "AlgebraicGeometry.sectionGradedModule",
-      "needed_by": [
-        "GR-quot_closure",
-        "Quot-Foundations-[deferred_to_subprojects]"
-      ],
-      "satisfied_by": []
-    },
-    {
-      "lean_name": "AlgebraicGeometry.sectionGradedModule_fg",
-      "needed_by": [
-        "GR-quot_closure",
-        "Quot-Foundations-[deferred_to_subprojects]"
-      ],
-      "satisfied_by": []
-    },
-    {
       "lean_name": "AlgebraicGeometry.sectionGradedModule_gmodule",
       "needed_by": [
         "FBC-B_SNAP-chain",
-        "Quot-Foundations-[deferred_to_subprojects]"
-      ],
-      "satisfied_by": []
-    },
-    {
-      "lean_name": "AlgebraicGeometry.sectionGradedRing",
-      "needed_by": [
-        "GR-quot_closure",
         "Quot-Foundations-[deferred_to_subprojects]"
       ],
       "satisfied_by": []
@@ -6077,7 +6282,7 @@
       "lean_name": "Finsupp.sum_max_zero_eq_sum_filter_pos",
       "needed_by": [
         "Algebraic-Jacobian-Challenge",
-        "RiemannRoch"
+        "RiemannRoch-[obsolete]"
       ],
       "satisfied_by": []
     },
@@ -6108,7 +6313,20 @@
   ],
   "leverage": [
     {
-      "member": "GR-quot_closure",
+      "member": "Algebraic-Jacobian-Challenge",
+      "unblock_count": 129,
+      "consumers": [
+        "Albanese",
+        "Cech-Cohomology-[completed]",
+        "GR-quot_closure_[completed]",
+        "Line-Bundle-Comparison-Iso",
+        "MR4228499-perverse-stalk-bounds",
+        "Quot-Foundations-[deferred_to_subprojects]",
+        "RiemannRoch-[obsolete]"
+      ]
+    },
+    {
+      "member": "GR-quot_closure_[completed]",
       "unblock_count": 119,
       "consumers": [
         "Algebraic-Jacobian-Challenge",
@@ -6123,7 +6341,7 @@
       ]
     },
     {
-      "member": "RiemannRoch",
+      "member": "RiemannRoch-[obsolete]",
       "unblock_count": 117,
       "consumers": [
         "Albanese",
@@ -6133,11 +6351,11 @@
     },
     {
       "member": "Albanese",
-      "unblock_count": 41,
+      "unblock_count": 45,
       "consumers": [
         "Algebraic-Jacobian-Challenge",
         "MR4228499-perverse-stalk-bounds",
-        "RiemannRoch"
+        "RiemannRoch-[obsolete]"
       ]
     },
     {
@@ -6148,23 +6366,12 @@
       ]
     },
     {
-      "member": "Algebraic-Jacobian-Challenge",
-      "unblock_count": 13,
-      "consumers": [
-        "Albanese",
-        "Cech-Cohomology-[completed]",
-        "GR-quot_closure",
-        "Line-Bundle-Comparison-Iso",
-        "MR4228499-perverse-stalk-bounds",
-        "RiemannRoch"
-      ]
-    },
-    {
       "member": "Quot-Foundations-[deferred_to_subprojects]",
-      "unblock_count": 6,
+      "unblock_count": 9,
       "consumers": [
+        "Algebraic-Jacobian-Challenge",
         "FBC-B_SNAP-chain",
-        "GR-quot_closure"
+        "GR-quot_closure_[completed]"
       ]
     },
     {
@@ -15420,8 +15627,34 @@
         "AlgebraicGeometry.TODO.flatLocusOpen",
         "AlgebraicGeometry.TODO.nonflatLocusProper"
       ],
+      "AlgebraicGeometry.sectionGradedModule": [
+        "AlgebraicGeometry.sectionGradedRing"
+      ],
+      "AlgebraicGeometry.sectionGradedModule_fg": [
+        "AlgebraicGeometry.sectionGradedModule",
+        "AlgebraicGeometry.sectionGradedRing"
+      ],
+      "AlgebraicGeometry.Scheme.hilbertPolynomialOfSectionModule": [
+        "AlgebraicGeometry.sectionGradedModule_fg"
+      ],
       "AlgebraicGeometry.TODO.quotAlphaInjective": [
         "AlgebraicGeometry.TODO.quotBoundedness"
+      ],
+      "AlgebraicGeometry.Scheme.Modules.sectionsMul_one_mul": [
+        "AlgebraicGeometry.Scheme.Modules.instGMulNatSectionDeg",
+        "AlgebraicGeometry.Scheme.Modules.instGOneNatSectionDeg"
+      ],
+      "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_one": [
+        "AlgebraicGeometry.Scheme.Modules.instGMulNatSectionDeg",
+        "AlgebraicGeometry.Scheme.Modules.instGOneNatSectionDeg"
+      ],
+      "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_assoc": [
+        "AlgebraicGeometry.Scheme.Modules.instGMulNatSectionDeg",
+        "AlgebraicGeometry.Scheme.Modules.instGOneNatSectionDeg"
+      ],
+      "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_comm": [
+        "AlgebraicGeometry.Scheme.Modules.instGMulNatSectionDeg",
+        "AlgebraicGeometry.Scheme.Modules.instGOneNatSectionDeg"
       ],
       "AlgebraicGeometry.Scheme.Pic0Scheme.isAbelianVariety": [
         "AlgebraicGeometry.GroupScheme.IdentityComponent.isOpenSubgroupScheme"
@@ -24292,8 +24525,13 @@
       ]
     },
     "FBC-B_SNAP-chain": {
-      "AlgebraicGeometry.Scheme.Modules.tensorObjRightUnitor_eq_localizedRightUnitor": [
-        "AlgebraicGeometry.Scheme.Modules.tensorObjUnitIso_eq_localizedLeftUnitor"
+      "AlgebraicGeometry.pullbackSpecTildeComp_eq_composite": [
+        "AlgebraicGeometry.pullbackSpecTildeComp"
+      ],
+      "AlgebraicGeometry.chartBaseChangeGeometricComparison_dictionary_glue": [
+        "AlgebraicGeometry.chartBaseChangeGeometricComparisonNat_unfold",
+        "AlgebraicGeometry.pullbackSpecTildeComp",
+        "AlgebraicGeometry.pullbackSpecTildeComp_eq_composite"
       ],
       "AlgebraicGeometry.sectionGradedModule_gmodule": [
         "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_assoc",
@@ -24302,7 +24540,7 @@
         "AlgebraicGeometry.Scheme.Modules.sectionsMul_one_mul"
       ]
     },
-    "GR-quot_closure": {
+    "GR-quot_closure_[completed]": {
       "AlgebraicGeometry.Scheme.RelativeSpec.UniversalProperty": [
         "AlgebraicGeometry.Scheme.RelativeSpec.affine_base_iff"
       ],
@@ -24322,35 +24560,7 @@
         "AlgebraicGeometry.Scheme.Modules.instGMulNatSectionDeg",
         "AlgebraicGeometry.Scheme.Modules.instGOneNatSectionDeg"
       ],
-      "AlgebraicGeometry.Scheme.Modules.moduleSectionsCast": [
-        "AlgebraicGeometry.Scheme.Modules.moduleSectionDeg"
-      ],
-      "AlgebraicGeometry.Scheme.Modules.moduleSectionsCast_refl": [
-        "AlgebraicGeometry.Scheme.Modules.moduleSectionsCast"
-      ],
-      "AlgebraicGeometry.Scheme.Modules.moduleGradedMonoid_eq_of_cast": [
-        "AlgebraicGeometry.Scheme.Modules.moduleSectionsCast",
-        "AlgebraicGeometry.Scheme.Modules.moduleSectionsCast_refl"
-      ],
-      "AlgebraicGeometry.Scheme.Modules.instGSMulNatSectionDegModuleSectionDeg": [
-        "AlgebraicGeometry.Scheme.Modules.moduleSectionDeg"
-      ],
-      "AlgebraicGeometry.Scheme.Modules.moduleSectionAction_one_smul": [
-        "AlgebraicGeometry.Scheme.Modules.moduleTensorPowAdd_zero_left"
-      ],
-      "AlgebraicGeometry.Scheme.Modules.moduleSectionAction_mul_smul": [
-        "AlgebraicGeometry.Scheme.Modules.moduleTensorPowAdd_zero_left"
-      ],
-      "AlgebraicGeometry.Scheme.Modules.sectionGradedModule_gmodule": [
-        "AlgebraicGeometry.Scheme.Modules.instGSMulNatSectionDegModuleSectionDeg",
-        "AlgebraicGeometry.Scheme.Modules.moduleGradedMonoid_eq_of_cast",
-        "AlgebraicGeometry.Scheme.Modules.moduleSectionAction_mul_smul",
-        "AlgebraicGeometry.Scheme.Modules.moduleSectionAction_one_smul",
-        "AlgebraicGeometry.Scheme.Modules.moduleSectionDeg",
-        "AlgebraicGeometry.Scheme.Modules.moduleSectionsCast"
-      ],
       "AlgebraicGeometry.sectionGradedModule": [
-        "AlgebraicGeometry.Scheme.Modules.sectionGradedModule_gmodule",
         "AlgebraicGeometry.sectionGradedRing"
       ],
       "AlgebraicGeometry.sectionGradedModule_fg": [
@@ -24376,22 +24586,6 @@
         "AlgebraicGeometry.Scheme.Modules.picCommGroup",
         "AlgebraicGeometry.Scheme.Modules.tensorObj_left_unitor",
         "AlgebraicGeometry.Scheme.Modules.tensorObj_right_unitor"
-      ],
-      "AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback_comp_compat_hom": [
-        "AlgebraicGeometry.Scheme.Modules.conjugateEquiv_pullbackComp_hom",
-        "AlgebraicGeometry.Scheme.Modules.conjugateEquiv_reindexCongr",
-        "AlgebraicGeometry.Scheme.Modules.conjugateEquiv_restrictFunctorIsoPullback_whiskerLeft",
-        "AlgebraicGeometry.Scheme.Modules.conjugateEquiv_restrictFunctorIsoPullback_whiskerRight",
-        "AlgebraicGeometry.Scheme.Modules.pushforwardComp_reindex_telescope"
-      ],
-      "AlgebraicGeometry.Scheme.Modules.pushforwardComp_reindex_telescope": [
-        "AlgebraicGeometry.Scheme.Modules.conjugateEquiv_pullbackComp_hom"
-      ],
-      "AlgebraicGeometry.Scheme.Modules.H1inv_app_eq_pullbackVal_restrict": [
-        "AlgebraicGeometry.Scheme.Modules.conjugateEquiv_pullbackComp_hom",
-        "AlgebraicGeometry.Scheme.Modules.conjugateEquiv_reindexCongr",
-        "AlgebraicGeometry.Scheme.Modules.conjugateEquiv_restrictFunctorIsoPullback_whiskerLeft",
-        "AlgebraicGeometry.Scheme.Modules.conjugateEquiv_restrictFunctorIsoPullback_whiskerRight"
       ]
     },
     "Quot-Foundations-[deferred_to_subprojects]": {
@@ -24830,6 +25024,29 @@
         "AlgebraicGeometry.Grassmannian.universalQuotient"
       ]
     },
+    "MR0555258-compactifying-picard": {
+      "MR0555258CompactifyingPicard.ext_limit": [
+        "MR0555258CompactifyingPicard.External.basechange_q0"
+      ],
+      "MR0555258CompactifyingPicard.ext_basechange_algebra": [
+        "MR0555258CompactifyingPicard.ext_limit"
+      ],
+      "MR0555258CompactifyingPicard.ext_adjunction": [
+        "MR0555258CompactifyingPicard.External.adjunction",
+        "MR0555258CompactifyingPicard.ext_limit"
+      ],
+      "MR0555258CompactifyingPicard.extBaseChangeMap": [
+        "MR0555258CompactifyingPicard.ext_adjunction",
+        "MR0555258CompactifyingPicard.ext_basechange_algebra"
+      ],
+      "MR0555258CompactifyingPicard.exchange": [
+        "MR0555258CompactifyingPicard.External.halfexact_free",
+        "MR0555258CompactifyingPicard.External.nakayama_iso",
+        "MR0555258CompactifyingPicard.extBaseChangeMap",
+        "MR0555258CompactifyingPicard.ext_limit"
+      ]
+    },
+    "MR2223407-construction-hilbert-quot": {},
     "MR4199442-abelian-fourfolds": {
       "MR4199442StandardConjecturesForAbelianFourfolds.ChowMotives": [
         "MR4199442StandardConjecturesForAbelianFourfolds.Variety"
@@ -28471,28 +28688,13 @@
         "MR4792069ThePwConjectureForGln.StrongPerversity"
       ]
     },
-    "RiemannRoch": {
-      "AlgebraicGeometry.Scheme.cechH1OfTwoAffine": [
-        "AlgebraicGeometry.Scheme.exists_two_affine_open_cover"
+    "RiemannRoch-[obsolete]": {
+      "AlgebraicGeometry.Scheme.IsCechAcyclicCover": [
+        "AlgebraicGeometry.Scheme.cechCohomology"
       ],
-      "AlgebraicGeometry.Scheme.HModule_one_iso_cechH1": [
-        "AlgebraicGeometry.Scheme.cechH1OfTwoAffine",
-        "AlgebraicGeometry.Scheme.exists_two_affine_open_cover"
-      ],
-      "AlgebraicGeometry.Scheme.cechH1_finiteDimensional": [
-        "AlgebraicGeometry.Scheme.cechH1OfTwoAffine"
-      ],
-      "AlgebraicGeometry.Scheme.HModule_structureSheaf_H1_finite": [
-        "AlgebraicGeometry.Scheme.HModule_one_iso_cechH1",
-        "AlgebraicGeometry.Scheme.cechH1_finiteDimensional"
-      ],
-      "AlgebraicGeometry.Scheme.HModule_structureSheaf_finite": [
-        "AlgebraicGeometry.Scheme.HModule_structureSheaf_H1_finite"
-      ],
-      "AlgebraicGeometry.Scheme.HModule_sheafOf_finite": [
-        "AlgebraicGeometry.Scheme.HModule_finite_of_ses",
-        "AlgebraicGeometry.Scheme.HModule_skyscraper_finite",
-        "AlgebraicGeometry.Scheme.HModule_structureSheaf_finite"
+      "AlgebraicGeometry.Scheme.subsingleton_HModule'_supr_of_isCechAcyclicCover": [
+        "AlgebraicGeometry.Scheme.IsCechAcyclicCover",
+        "AlgebraicGeometry.Scheme.cechCohomology"
       ],
       "AlgebraicGeometry.Scheme.RationalMap.order_units_inv": [
         "AlgebraicGeometry.Scheme.RationalMap.order_inv"
@@ -28601,6 +28803,7 @@
       "AlgebraicGeometry.Scheme.Modules.baseMap_pullbackComp_apply",
       "AlgebraicGeometry.Scheme.Modules.baseMap_pullbackCongr_apply",
       "AlgebraicGeometry.Scheme.Modules.baseMap_pullback_comp_apply",
+      "AlgebraicGeometry.Scheme.Modules.braidedCategory",
       "AlgebraicGeometry.Scheme.Modules.dualUnitRingSwap",
       "AlgebraicGeometry.Scheme.Modules.dualUnitRingSwapHom",
       "AlgebraicGeometry.Scheme.Modules.dualUnitRingSwapInv",
@@ -28610,13 +28813,22 @@
       "AlgebraicGeometry.Scheme.Modules.extendScalarsAdjunction",
       "AlgebraicGeometry.Scheme.Modules.forget_map_pushforward_map",
       "AlgebraicGeometry.Scheme.Modules.forget\u2082_restrictScalars_\u03bc_hom_tmul",
+      "AlgebraicGeometry.Scheme.Modules.glueData_bridge_mid",
+      "AlgebraicGeometry.Scheme.Modules.glueData_bridge_src",
+      "AlgebraicGeometry.Scheme.Modules.glueData_bridge_tgt",
+      "AlgebraicGeometry.Scheme.Modules.glueHom",
       "AlgebraicGeometry.Scheme.Modules.image_preimage_of_le",
+      "AlgebraicGeometry.Scheme.Modules.instGMulNatSectionDeg",
+      "AlgebraicGeometry.Scheme.Modules.instGOneNatSectionDeg",
+      "AlgebraicGeometry.Scheme.Modules.instGSMulNatSectionDegModuleSectionDeg",
       "AlgebraicGeometry.Scheme.Modules.isIso_pbu_of_final",
       "AlgebraicGeometry.Scheme.Modules.isIso_pullbackTensorMap_unitPair_of_isIso_sheafifyEta",
       "AlgebraicGeometry.Scheme.Modules.isIso_sheafifyDelta_unitPair_of_isIso_sheafifyEta",
       "AlgebraicGeometry.Scheme.Modules.isIso_sheafify_tensorHom_pullbackValIso",
       "AlgebraicGeometry.Scheme.Modules.isIso_\u03b5_restrictScalars_appIso",
       "AlgebraicGeometry.Scheme.Modules.isIso_\u03b5_restrictScalars_appIso_hom",
+      "AlgebraicGeometry.Scheme.Modules.moduleSectionAction_mul_smul",
+      "AlgebraicGeometry.Scheme.Modules.moduleSectionAction_one_smul",
       "AlgebraicGeometry.Scheme.Modules.overEquivInverseIsDenseSubsite",
       "AlgebraicGeometry.Scheme.Modules.overEquiv_image_cover_iff",
       "AlgebraicGeometry.Scheme.Modules.picCommGroup",
@@ -28645,6 +28857,10 @@
       "AlgebraicGeometry.Scheme.Modules.restrictScalarsIsRightAdjoint",
       "AlgebraicGeometry.Scheme.Modules.restrictScalars_\u03bc_app",
       "AlgebraicGeometry.Scheme.Modules.restrictScalars_\u03bc_app_tmul",
+      "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_assoc",
+      "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_comm",
+      "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_one",
+      "AlgebraicGeometry.Scheme.Modules.sectionsMul_one_mul",
       "AlgebraicGeometry.Scheme.Modules.sheaf_unit_comp_pushforward_pullbackComp_inv",
       "AlgebraicGeometry.Scheme.Modules.sheafificationCompPullback_comp",
       "AlgebraicGeometry.Scheme.Modules.sheafificationCompPullback_comp_tail",
@@ -28653,6 +28869,7 @@
       "AlgebraicGeometry.Scheme.Modules.sheafifyTensorUnitIso_hom_eq'",
       "AlgebraicGeometry.Scheme.Modules.sheafifyUnitIso",
       "AlgebraicGeometry.Scheme.Modules.sliceDualTransportInv",
+      "AlgebraicGeometry.Scheme.Modules.symmetricCategory",
       "AlgebraicGeometry.Scheme.Modules.tensorObjIsoOfIso",
       "AlgebraicGeometry.Scheme.Modules.tensorObj_left_unitor",
       "AlgebraicGeometry.Scheme.Modules.tensorObj_middleFour",
@@ -28708,6 +28925,7 @@
       "AlgebraicGeometry.Scheme.eulerCharacteristic_sheafOf_zero",
       "AlgebraicGeometry.Scheme.finrank_H0_toModuleKSheaf_eq_one",
       "AlgebraicGeometry.Scheme.finrank_residueField_tensor_kaehlerDifferential_of_isStandardSmoothOfRelativeDimension",
+      "AlgebraicGeometry.Scheme.hilbertPolynomialOfSectionModule",
       "AlgebraicGeometry.Scheme.injectiveSES",
       "AlgebraicGeometry.Scheme.injectiveSES_shortExact",
       "AlgebraicGeometry.Scheme.lineBundleAtClosedPoint.algebraMap_bijective_of_finite_isDomain_isAlgClosed",
@@ -29225,6 +29443,9 @@
       "AlgebraicGeometry.sectionCech_objD_exact_of_isZero_homology",
       "AlgebraicGeometry.sectionCech_one_coboundary_of_isZero_homology",
       "AlgebraicGeometry.sectionFunctorV",
+      "AlgebraicGeometry.sectionGradedModule",
+      "AlgebraicGeometry.sectionGradedModule_fg",
+      "AlgebraicGeometry.sectionGradedRing",
       "AlgebraicGeometry.sectionProdAddEquiv",
       "AlgebraicGeometry.sectionProdEquiv_symm_apply",
       "AlgebraicGeometry.sectionToModuleAddEquiv",
@@ -30124,12 +30345,16 @@
       "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_one",
       "AlgebraicGeometry.Scheme.Modules.sectionsMul_one_mul",
       "AlgebraicGeometry.Scheme.Modules.tensorObjRightUnitor_eq_localizedRightUnitor",
-      "AlgebraicGeometry.Scheme.Modules.tensorObjUnitIso_eq_localizedLeftUnitor",
       "AlgebraicGeometry.baseChange_sheafConditionFork_tensorIso",
       "AlgebraicGeometry.base_change_mate_gstar_transpose",
+      "AlgebraicGeometry.chartBaseChangeGeometricComparisonNat_unfold",
+      "AlgebraicGeometry.chartBaseChangeGeometricComparison_dictionary_glue",
+      "AlgebraicGeometry.pullbackSpecTildeComp",
+      "AlgebraicGeometry.pullbackSpecTildeComp_eq_composite",
+      "AlgebraicGeometry.pullbackSpecTilde_ringSquare_vcomp_glue",
       "AlgebraicGeometry.sectionGradedModule_gmodule"
     ],
-    "GR-quot_closure": [
+    "GR-quot_closure_[completed]": [
       "AlgebraicGeometry.Scheme.Modules.braidedCategory",
       "AlgebraicGeometry.Scheme.Modules.glueData_bridge_mid",
       "AlgebraicGeometry.Scheme.Modules.glueData_bridge_src",
@@ -30138,14 +30363,8 @@
       "AlgebraicGeometry.Scheme.Modules.instGMulNatSectionDeg",
       "AlgebraicGeometry.Scheme.Modules.instGOneNatSectionDeg",
       "AlgebraicGeometry.Scheme.Modules.instGSMulNatSectionDegModuleSectionDeg",
-      "AlgebraicGeometry.Scheme.Modules.moduleGradedMonoid_eq_of_cast",
       "AlgebraicGeometry.Scheme.Modules.moduleSectionAction_mul_smul",
       "AlgebraicGeometry.Scheme.Modules.moduleSectionAction_one_smul",
-      "AlgebraicGeometry.Scheme.Modules.moduleSectionDeg",
-      "AlgebraicGeometry.Scheme.Modules.moduleSectionsCast",
-      "AlgebraicGeometry.Scheme.Modules.moduleSectionsCast_refl",
-      "AlgebraicGeometry.Scheme.Modules.moduleTensorPowAdd_zero_left",
-      "AlgebraicGeometry.Scheme.Modules.sectionGradedModule_gmodule",
       "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_assoc",
       "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_comm",
       "AlgebraicGeometry.Scheme.Modules.sectionsMul_mul_one",
@@ -30160,15 +30379,10 @@
     ],
     "Line-Bundle-Comparison-Iso": [
       "AlgebraicGeometry.LineBundle.OnProduct.pullback_tensorObj_iso",
-      "AlgebraicGeometry.Scheme.Modules.H1inv_app_eq_pullbackVal_restrict",
       "AlgebraicGeometry.Scheme.Modules.PicGroup",
-      "AlgebraicGeometry.Scheme.Modules.conjugateEquiv_pullbackComp_hom",
-      "AlgebraicGeometry.Scheme.Modules.conjugateEquiv_reindexCongr",
-      "AlgebraicGeometry.Scheme.Modules.conjugateEquiv_restrictFunctorIsoPullback_whiskerLeft",
-      "AlgebraicGeometry.Scheme.Modules.conjugateEquiv_restrictFunctorIsoPullback_whiskerRight",
+      "AlgebraicGeometry.Scheme.Modules.evalLin_restrict_commute_aux",
       "AlgebraicGeometry.Scheme.Modules.picCommGroup",
-      "AlgebraicGeometry.Scheme.Modules.pushforwardComp_reindex_telescope",
-      "AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback_comp_compat_hom",
+      "AlgebraicGeometry.Scheme.Modules.sliceDualTransport_app_apply",
       "AlgebraicGeometry.Scheme.Modules.tensorObj_left_unitor",
       "AlgebraicGeometry.Scheme.Modules.tensorObj_right_unitor",
       "AlgebraicGeometry.Scheme.PicSharp.addCommGroup_via_tensorObj"
@@ -30308,6 +30522,25 @@
       "AlgebraicGeometry.sectionGradedModule_gmodule",
       "AlgebraicGeometry.sectionGradedRing",
       "AlgebraicGeometry.sectionGradedRing_gcommSemiring"
+    ],
+    "MR0555258-compactifying-picard": [
+      "MR0555258CompactifyingPicard.External.H_existence",
+      "MR0555258CompactifyingPicard.External.adjunction",
+      "MR0555258CompactifyingPicard.External.basechange_q0",
+      "MR0555258CompactifyingPicard.External.descent_noetherian",
+      "MR0555258CompactifyingPicard.External.ext_affine_acyclic",
+      "MR0555258CompactifyingPicard.External.ext_coherent_fp",
+      "MR0555258CompactifyingPicard.External.ext_vanishing_open",
+      "MR0555258CompactifyingPicard.External.halfexact_free",
+      "MR0555258CompactifyingPicard.External.nakayama_iso",
+      "MR0555258CompactifyingPicard.exchange",
+      "MR0555258CompactifyingPicard.extBaseChangeMap",
+      "MR0555258CompactifyingPicard.ext_adjunction",
+      "MR0555258CompactifyingPicard.ext_basechange_algebra",
+      "MR0555258CompactifyingPicard.ext_limit"
+    ],
+    "MR2223407-construction-hilbert-quot": [
+      "MR2223407ConstructionHilbertQuot.grassmannianScheme_isSeparated"
     ],
     "MR4199442-abelian-fourfolds": [
       "MR4199442StandardConjecturesForAbelianFourfolds.AbelianTypeRank",
@@ -31293,13 +31526,9 @@
       "MR4792069ThePwConjectureForGln.StrongPerversityChern",
       "MR4792069ThePwConjectureForGln.WeightFiltration"
     ],
-    "RiemannRoch": [
-      "AlgebraicGeometry.Scheme.HModule_finite_of_ses",
-      "AlgebraicGeometry.Scheme.HModule_one_iso_cechH1",
-      "AlgebraicGeometry.Scheme.HModule_sheafOf_finite",
-      "AlgebraicGeometry.Scheme.HModule_skyscraper_finite",
-      "AlgebraicGeometry.Scheme.HModule_structureSheaf_H1_finite",
-      "AlgebraicGeometry.Scheme.HModule_structureSheaf_finite",
+    "RiemannRoch-[obsolete]": [
+      "AlgebraicGeometry.Scheme.IsAffineHModuleVanishing",
+      "AlgebraicGeometry.Scheme.IsCechAcyclicCover",
       "AlgebraicGeometry.Scheme.RationalMap.order_inv",
       "AlgebraicGeometry.Scheme.RationalMap.order_mul_of_ne_zero",
       "AlgebraicGeometry.Scheme.RationalMap.order_neg",
@@ -31308,11 +31537,8 @@
       "AlgebraicGeometry.Scheme.RationalMap.order_units_inv",
       "AlgebraicGeometry.Scheme.RationalMap.order_zero",
       "AlgebraicGeometry.Scheme.WeilDivisor.idealSheaf_ses_closedPoint",
-      "AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.carrierPresheaf_map_coe",
-      "AlgebraicGeometry.Scheme.WeilDivisor.sheafOf.carrierSheaf_zero_sections_eq_structureSheaf",
-      "AlgebraicGeometry.Scheme.cechH1OfTwoAffine",
-      "AlgebraicGeometry.Scheme.cechH1_finiteDimensional",
-      "AlgebraicGeometry.Scheme.exists_two_affine_open_cover",
+      "AlgebraicGeometry.Scheme.cechCohomology",
+      "AlgebraicGeometry.Scheme.subsingleton_HModule'_supr_of_isCechAcyclicCover",
       "AlgebraicGeometry.gmScalingP1_chart_agreement_cross01",
       "AlgebraicGeometry.gmScalingP1_collapse_at_zero",
       "AlgebraicGeometry.kaehlerDifferential_locallyFree_rank_one_of_smooth",
