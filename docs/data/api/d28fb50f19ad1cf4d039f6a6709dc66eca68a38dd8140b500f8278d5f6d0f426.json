@@ -106,5 +106,17 @@
     "hasMilestones": true,
     "hasSummary": true,
     "hasRecommendations": true
+  },
+  {
+    "id": "session_21",
+    "hasMilestones": true,
+    "hasSummary": true,
+    "hasRecommendations": true
+  },
+  {
+    "id": "session_22",
+    "hasMilestones": false,
+    "hasSummary": false,
+    "hasRecommendations": false
   }
 ]

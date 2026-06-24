@@ -15,8 +15,8 @@
       "has_dag": true
     },
     {
-      "name": "FBC-B_SNAP-chain",
-      "path": "SubProjects/FBC-B_SNAP-chain",
+      "name": "FBC-B_SNAP-chain-[paused-superseded-by-cech-route]",
+      "path": "SubProjects/FBC-B_SNAP-chain-[paused-superseded-by-cech-route]",
       "has_dag": true
     },
     {

@@ -2414,7 +2414,7 @@ is `pushforwardComp.hom`); it is the cheap, sheafification-free piece of the Sq1
 peels the leading `R0 = pullbackComp.inv` factor.  Extracted from the inline `conj` of
 `pullbackObjUnitToUnit_comp` so the (expensive, sheafification-laden) Sq1 reassembly can cite it
 directly.  Project-local. -/
-private lemma sheaf_unit_comp_pushforward_pullbackComp_inv {X Y Z : Scheme.{u}}
+lemma sheaf_unit_comp_pushforward_pullbackComp_inv {X Y Z : Scheme.{u}}
     (h : Z ⟶ Y) (f : Y ⟶ X) (Q : X.Modules) :
     (SheafOfModules.pullbackPushforwardAdjunction (Scheme.Hom.toRingCatSheafHom (h ≫ f))).unit.app Q ≫
         (SheafOfModules.pushforward (Scheme.Hom.toRingCatSheafHom (h ≫ f))).map
@@ -2698,7 +2698,7 @@ and `R5 = (sheafCompPb h .app (PrPb_f P)).hom` as `B_f`/`B_h` units via
 `homEquiv_leftAdjointUniq_hom_app` on their `sheafificationCompPullback_eq_leftAdjointUniq` form,
 slide `(pushforwardComp h f).hom` past them by `(pushforwardComp h f).hom.naturality`, and collapse
 `comp_unit_app` + `Adjunction.unit_naturality` to `B_{h≫f}.unit`.  Project-local. -/
-private lemma sheafificationCompPullback_comp_tail {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X)
+lemma sheafificationCompPullback_comp_tail {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X)
     (P : _root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) :
     (PresheafOfModules.pullbackPushforwardAdjunction (Hom.toRingCatSheafHom (h ≫ f)).hom).unit.app P ≫
         (PresheafOfModules.pushforward (Hom.toRingCatSheafHom (h ≫ f)).hom).map
@@ -2785,7 +2785,7 @@ the S1-foundational composition coherence consumed by `pullbackTensorMap_restric
 isos are `leftAdjointUniq` of composite adjunctions (`sheafificationCompPullback_eq_leftAdjointUniq`),
 so the coherence is proved by the adjunction-mate calculus, transposing under the composite
 `A_{h≫f} = (sheafAdj_X).comp (pullbackPushforwardAdjunction (h≫f))`. -/
-private lemma sheafificationCompPullback_comp {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X)
+lemma sheafificationCompPullback_comp {X Y Z : Scheme.{u}} (h : Z ⟶ Y) (f : Y ⟶ X)
     (P : _root_.PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) :
     ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom (h ≫ f))).app P).hom =
       (SheafOfModules.pullbackComp (Hom.toRingCatSheafHom f) (Hom.toRingCatSheafHom h)).inv.app

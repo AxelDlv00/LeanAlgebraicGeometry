@@ -12049,8 +12049,14 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 % package them. They are reinstated here (Lean in
 % Cohomology/CechHigherDirectImageUnconditional.lean) so the target's blueprint
 % scope and \uses{} graph are preserved. `def:cech_higher_direct_image` is
-% sorry-free; `lem:cech_flat_base_change` remains the target's roadmap sorry
-% (\leanok intentionally dropped — it carries a `sorry`).
+% sorry-free. `lem:cech_flat_base_change`: the ASSEMBLY is now sorry-free (it
+% reduces to the two leaves below), but \leanok is still dropped because it
+% depends transitively on two genuine open gaps —
+% `lem:pullback_preserves_finite_limits` (flat ⇒ g^* left-exact) and
+% `def:cech_complex_base_change_iso` (Stacks 02KG, via the still-`sorry`
+% `affineBaseChange_pushforward_iso`). The homology-side machinery
+% (`lem:map_hc_homology_iso`, `lem:pullback_preserves_finite_colimits`,
+% `lem:pullback_preserves_homology`, `lem:pullback_mapHC_homologyIso`) IS sorry-free.
 % =====================================================================
 
 \section{The unconditional higher direct image}
@@ -12116,3 +12122,273 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   \(B\)-modules \(H^i(X, \mathcal{F}) \otimes_A B \to H^i(X', \mathcal{F}')\) is an
   isomorphism.
 \end{lemma}
+
+\begin{proof}
+  \uses{lem:pullback_mapHC_homologyIso, def:cech_complex_base_change_iso}
+  This is the \emph{separated} case of Stacks Tag 02KH; following the source, it needs
+  \emph{no} spectral sequence (the {\v C}ech-to-cohomology spectral sequence enters
+  only in the separated~\(\to\) general quasi-separated promotion). Write
+  \(\check{\mathcal{C}}^\bullet = \check{\mathcal{C}}^\bullet(\mathfrak{U},\mathcal{F})\)
+  for the relative {\v C}ech complex in \(\operatorname{QCoh}(S)\), so that
+  \(R^i f_*\mathcal{F} = H^i(\check{\mathcal{C}}^\bullet)\) by
+  Definition~\ref{def:cech_higher_direct_image}. The proof is the two-step composite
+  \[
+    g^*\bigl(H^i(\check{\mathcal{C}}^\bullet)\bigr)
+      \;\xrightarrow[\ \sim\ ]{(1)}\;
+    H^i\bigl(g^*\check{\mathcal{C}}^\bullet\bigr)
+      \;\xrightarrow[\ \sim\ ]{(2)}\;
+    H^i\bigl(\check{\mathcal{C}}^\bullet(\mathfrak{U}', \mathcal{F}')\bigr)
+      = R^i f'_*\mathcal{F}'.
+  \]
+  Step~(1) is Lemma~\ref{lem:pullback_mapHC_homologyIso}: since \(g\) is flat the
+  pullback \(g^*\) is exact, hence commutes with taking the \(i\)-th cohomology of a
+  complex. Step~(2) is Definition~\ref{def:cech_complex_base_change_iso}: applying
+  \(g^*\) degreewise to \(\check{\mathcal{C}}^\bullet\) recovers the {\v C}ech complex
+  of the base-changed data \((\mathfrak{U}', \mathcal{F}')\), the {\v C}ech complex
+  transforming tensorially under base change (Stacks Tag 02KG). Functoriality of
+  \(H^i\) (\texttt{HomologicalComplex.homologyMapIso}) turns the complex isomorphism
+  of~(2) into the homology isomorphism. Composing the two gives the claim.
+\end{proof}
+
+\section{Homology-side machinery for {\v C}ech flat base change}
+
+The {\v C}ech flat-base-change lemma factors through two ingredients: exactness of the
+flat pullback \(g^*\) (so it commutes with cohomology) and the tensorial base change of
+the {\v C}ech complex itself. We record both here. The homology-side pieces are
+sorry-free; the genuine open content is isolated in the two clearly-flagged gaps below.
+
+\begin{lemma}
+\leanok
+[Exact functor commutes with complex homology]
+  \label{lem:map_hc_homology_iso}
+  \lean{AlgebraicGeometry.mapHomologicalComplexHomologyIso}
+  Let \(F : \mathcal{C} \to \mathcal{D}\) be an additive functor between categories
+  with homology that preserves homology (i.e.\ preserves kernels and cokernels). Then
+  for every cochain complex \(K\) and index \(i\) there is a canonical isomorphism
+  \[
+    H^i\bigl((F\text{-applied degreewise to } K)\bigr) \;\cong\; F\bigl(H^i(K)\bigr).
+  \]
+  This is the complex-level upgrade of \texttt{ShortComplex.mapHomologyIso}: the
+  degree-\(i\) short complex of \(F\) applied to \(K\) is definitionally \(F\) applied
+  to the degree-\(i\) short complex of \(K\).
+\end{lemma}
+
+\begin{lemma}
+\leanok
+[Flat pullback preserves finite colimits]
+  \label{lem:pullback_preserves_finite_colimits}
+  \lean{AlgebraicGeometry.pullback_preservesFiniteColimits}
+  For any morphism \(g : S' \to S\) the pullback \(g^* : \operatorname{QCoh}(S) \to
+  \operatorname{QCoh}(S')\) preserves finite colimits, being a left adjoint.
+\end{lemma}
+
+\subsection{Left-exactness of the flat pullback: the factorisation and its frontier}
+\label{sec:pullback_pfl_decomposition}
+
+The pullback \(g^* = \texttt{SheafOfModules.pullback}\,\varphi\) (with \(\varphi\)
+the ring-sheaf hom underlying \(g\)) is \emph{not} a primitive functor: Mathlib
+factors it, on any site, through the presheaf level. The next four blocks record the
+factorisation and the three factors Mathlib already controls; the genuine open
+content is then isolated in a single middle factor.
+
+\begin{lemma}[Factorisation of the sheaf-of-modules pullback]
+  \label{lem:sheafOfModules_pullbackIso}
+  \lean{SheafOfModules.pullbackIso}
+  \mathlibok
+  \textit{Provided by Mathlib (\texttt{Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackContinuous}).}
+  For a continuous morphism of ringed sites carried by a ring-sheaf hom
+  \(\varphi\), the pullback of sheaves of modules factors as the composite of three
+  functors
+  \[
+    \texttt{SheafOfModules.pullback}\,\varphi \;\cong\;
+      \operatorname{forget} \;\circ\;
+      \bigl(\texttt{PresheafOfModules.pullback}\,\varphi_{\mathrm{hom}}\bigr) \;\circ\;
+      \texttt{PresheafOfModules.sheafification},
+  \]
+  i.e.\ forget the sheaf condition, take the presheaf-level pullback, then
+  re-sheafify. For the scheme pullback \(g^*\) on the genuine scheme site this is the
+  factorisation through which finite-limit preservation must be verified; the site's
+  \(\operatorname{HasSheafify}\), weak-sheafification and
+  \(\mathcal{W}\)-locally-bijective instances, and the right-adjointness of the
+  presheaf pushforward, are all present there by typeclass inference.
+\end{lemma}
+
+\begin{lemma}[Forgetful functor is left-exact]
+  \label{lem:forget_sheafOfModules_pfl_mathlib}
+  \lean{SheafOfModules.forget}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  The forgetful functor \(\operatorname{forget}\) from sheaves of modules to the
+  underlying sheaves of abelian groups preserves finite limits. On the genuine
+  scheme site the corresponding \(\operatorname{PreservesFiniteLimits}\) instance is
+  supplied by typeclass inference (the functor being, in particular, a right adjoint
+  to sheafification).
+\end{lemma}
+
+\begin{lemma}[Sheafification of presheaves of modules is left-exact]
+  \label{lem:sheafification_pfl_mathlib}
+  \lean{PresheafOfModules.sheafification}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Sheafification of presheaves of modules is a left-exact reflector, hence preserves
+  finite limits. On the genuine scheme site, where the requisite
+  \(\operatorname{HasSheafify}\)/weak-sheafification instances hold, the
+  \(\operatorname{PreservesFiniteLimits}\) instance is supplied by typeclass
+  inference.
+\end{lemma}
+
+\begin{lemma}[Flat extension of scalars is left-exact]
+  \label{lem:extendScalars_pfl_flat_mathlib}
+  \lean{ModuleCat.preservesFiniteLimits_extendScalars_of_flat}
+  \mathlibok
+  \textit{Provided by Mathlib (\texttt{Mathlib.Algebra.Category.ModuleCat.Descent}).}
+  If \(A \to B\) is a flat ring homomorphism then the extension-of-scalars functor
+  \(\operatorname{extendScalars} : \operatorname{Mod}_A \to \operatorname{Mod}_B\),
+  \(M \mapsto B \otimes_A M\), preserves finite limits.
+\end{lemma}
+
+The two outer factors of Lemma~\ref{lem:sheafOfModules_pullbackIso}
+(Lemmas~\ref{lem:forget_sheafOfModules_pfl_mathlib}
+and~\ref{lem:sheafification_pfl_mathlib}) are left-exact unconditionally. The entire
+flatness-dependent content of left-exactness is therefore concentrated in the
+\emph{middle} factor, the presheaf-level pullback. This is the genuine frontier, and
+it does not yield to a stalkwise argument.
+
+\begin{definition}[Inverse-image model of the presheaf pullback \textnormal{(FRONTIER)}]
+  \label{def:presheaf_pullback_inverseImage_model}
+  The concrete candidate model for the presheaf-level pullback along \(\varphi_{\mathrm{hom}}\):
+  the inverse-image functor \(g^{-1}\) on presheaves of modules followed by degreewise
+  extension of scalars along the underlying flat ring map, i.e.\ the composite
+  \(g^{-1} \;\circ\; \operatorname{extendScalars}\), assembled sectionwise from the
+  presheaf inverse image and Mathlib's \(\operatorname{extendScalars}\). Unlike
+  \texttt{PresheafOfModules.pullback} itself (defined purely as an abstract left
+  adjoint), this model is computed pointwise and so exposes the data needed for an
+  exactness argument.
+\end{definition}
+
+\begin{lemma}[The inverse-image model computes the presheaf pullback \textnormal{(FRONTIER)}]
+  \label{lem:presheaf_pullback_inverseImage_adjoint}
+  \uses{def:presheaf_pullback_inverseImage_model}
+  The model \(g^{-1} \circ \operatorname{extendScalars}\) of
+  Definition~\ref{def:presheaf_pullback_inverseImage_model} is left adjoint to
+  \(\texttt{PresheafOfModules.pushforward}\,\varphi_{\mathrm{hom}}\); by uniqueness of
+  adjoints it is therefore canonically isomorphic to
+  \(\texttt{PresheafOfModules.pullback}\,\varphi_{\mathrm{hom}}
+  = (\texttt{PresheafOfModules.pushforward}\,\varphi_{\mathrm{hom}})^{\mathrm{L}}\).
+  \emph{Proof sketch.} Exhibit the unit and counit by composing, sectionwise, the
+  inverse-image/direct-image adjunction with the extension-of-scalars/restriction-of-scalars
+  adjunction; verify the triangle identities; conclude by uniqueness of left adjoints.
+\end{lemma}
+
+\begin{lemma}[Presheaf inverse image is exact \textnormal{(FRONTIER)}]
+  \label{lem:presheaf_inverseImage_exact}
+  The inverse-image functor \(g^{-1}\) on presheaves of modules is exact, hence
+  preserves finite limits. \emph{Proof sketch.} On presheaves the inverse image is
+  computed by a filtered colimit over the comma category of the structure map; filtered
+  colimits are exact in an abelian category, so \(g^{-1}\) preserves both finite limits
+  and finite colimits.
+\end{lemma}
+
+\begin{lemma}[Presheaf pullback is left-exact under flat \textnormal{(FRONTIER)}]
+  \label{lem:presheaf_pullback_pfl_flat}
+  \uses{lem:presheaf_pullback_inverseImage_adjoint, lem:presheaf_inverseImage_exact,
+        lem:extendScalars_pfl_flat_mathlib}
+  Let \(\varphi_{\mathrm{hom}}\) be the ring-sheaf hom underlying a flat morphism
+  \(g\). Then \(\texttt{PresheafOfModules.pullback}\,\varphi_{\mathrm{hom}}\) preserves
+  finite limits.
+
+  \emph{This is the irreducible open frontier of \cref{sec:pullback_pfl_decomposition}.}
+  Mathlib defines the presheaf pullback purely as the left adjoint of the pushforward,
+  \(\texttt{PresheafOfModules.pullback} =
+  (\texttt{PresheafOfModules.pushforward}\,\varphi_{\mathrm{hom}})^{\mathrm{L}}\), with
+  \emph{no} pointwise, sectionwise, or stalkwise description, and there is no stalk
+  functor for (pre)sheaves of modules in Mathlib. The naive stalkwise route — ``the
+  stalk of the pullback is the flat extension of scalars of the stalk, hence
+  left-exact pointwise'' — therefore has nothing to run against: there is no stalk
+  functor to take. The only viable route is to build a concrete model of the adjoint
+  and transport left-exactness through it, which is the sub-decomposition above; it is
+  a multi-hundred-line development, not a one-iteration target.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:presheaf_pullback_inverseImage_adjoint, lem:presheaf_inverseImage_exact,
+        lem:extendScalars_pfl_flat_mathlib}
+  By Lemma~\ref{lem:presheaf_pullback_inverseImage_adjoint} it suffices to prove that
+  the model \(g^{-1} \circ \operatorname{extendScalars}\) preserves finite limits. The
+  inverse image \(g^{-1}\) is exact by
+  Lemma~\ref{lem:presheaf_inverseImage_exact}, hence preserves finite limits; the
+  extension of scalars along the flat ring map preserves finite limits by
+  Lemma~\ref{lem:extendScalars_pfl_flat_mathlib}. A composite of two
+  finite-limit-preserving functors preserves finite limits, and a functor isomorphic
+  to such a composite does as well.
+\end{proof}
+
+\begin{lemma}
+[Flat pullback is left-exact \textnormal{(OPEN)}]
+  \label{lem:pullback_preserves_finite_limits}
+  \lean{AlgebraicGeometry.pullback_preservesFiniteLimits}
+  If \(g\) is flat then \(g^*\) preserves finite limits. The flatness-dependent
+  content reduces, via the factorisation of
+  Lemma~\ref{lem:sheafOfModules_pullbackIso}, to the single middle factor
+  (Lemma~\ref{lem:presheaf_pullback_pfl_flat}); the two outer factors are left-exact
+  unconditionally.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:sheafOfModules_pullbackIso, lem:forget_sheafOfModules_pfl_mathlib,
+        lem:sheafification_pfl_mathlib, lem:presheaf_pullback_pfl_flat}
+  By Lemma~\ref{lem:sheafOfModules_pullbackIso}, on the genuine scheme site \(g^*\)
+  factors as the composite
+  \(\operatorname{forget} \circ
+  (\texttt{PresheafOfModules.pullback}\,\varphi_{\mathrm{hom}}) \circ
+  \texttt{PresheafOfModules.sheafification}\). The outer two factors preserve finite
+  limits unconditionally (Lemmas~\ref{lem:forget_sheafOfModules_pfl_mathlib}
+  and~\ref{lem:sheafification_pfl_mathlib}, both supplied by Mathlib on the scheme
+  site). The middle factor preserves finite limits because \(g\) is flat
+  (Lemma~\ref{lem:presheaf_pullback_pfl_flat}). A composite of
+  finite-limit-preserving functors preserves finite limits, so \(g^*\) does.
+  \emph{The single irreducible step is the middle factor,
+  Lemma~\ref{lem:presheaf_pullback_pfl_flat}: the genuine multi-hundred-line frontier;
+  every other ingredient is supplied by Mathlib on the scheme site.}
+\end{proof}
+
+\begin{lemma}
+\leanok
+[Flat pullback preserves homology]
+  \label{lem:pullback_preserves_homology}
+  \lean{AlgebraicGeometry.pullback_preservesHomology}
+  \uses{lem:pullback_preserves_finite_colimits, lem:pullback_preserves_finite_limits}
+  For \(g\) flat, \(g^*\) preserves homology. Derived from left-exactness and
+  left-adjointness via \texttt{Functor.preservesHomologyOfExact}.
+\end{lemma}
+
+\begin{lemma}
+\leanok
+[Flat pullback commutes with {\v C}ech homology]
+  \label{lem:pullback_mapHC_homologyIso}
+  \lean{AlgebraicGeometry.pullback_mapHC_homologyIso}
+  \uses{lem:map_hc_homology_iso, lem:pullback_preserves_homology}
+  For \(g\) flat, applying \(g^*\) to the \(i\)-th cohomology of a cochain complex of
+  \(\mathcal{O}_S\)-modules agrees with the \(i\)-th cohomology of the degreewise
+  pullback complex: \(g^*(H^i(K)) \cong H^i(g^* K)\). A direct specialisation of
+  Lemma~\ref{lem:map_hc_homology_iso} to \(g^*\).
+\end{lemma}
+
+\begin{definition}
+[Tensorial base change of the {\v C}ech complex \textnormal{(Stacks 02KG, OPEN)}]
+  \label{def:cech_complex_base_change_iso}
+  \lean{AlgebraicGeometry.cechComplex_baseChange_iso}
+  \uses{def:cech_complex}
+  \textit{Source: Stacks Project, Cohomology of Schemes, Tag 02KG
+  (\texttt{lemma-cech-complex-base-change}).}
+  Applying \(g^*\) degreewise to the relative {\v C}ech complex
+  \(\check{\mathcal{C}}^\bullet(\mathfrak{U}, \mathcal{F})\) yields the relative
+  {\v C}ech complex \(\check{\mathcal{C}}^\bullet(\mathfrak{U}', (g')^*\mathcal{F})\) of
+  the base-changed data, with \(\mathfrak{U}'\) the base change of \(\mathfrak{U}\)
+  along \(g'\). \emph{This is the load-bearing open content.} Termwise it is the affine
+  \(i = 0\) base change over each finite affine intersection
+  (\texttt{affineBaseChange\_pushforward\_iso}, itself still carrying a \texttt{sorry}
+  in \texttt{Cohomology/FlatBaseChange.lean}: the affine reduction and the adjoint-mate
+  \(\leftrightarrow\) \texttt{cancelBaseChange} identification are both Mathlib-absent),
+  made compatible with the alternating {\v C}ech differentials.
+\end{definition}

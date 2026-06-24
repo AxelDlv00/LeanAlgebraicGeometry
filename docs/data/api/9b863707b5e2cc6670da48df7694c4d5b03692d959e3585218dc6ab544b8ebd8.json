@@ -30,7 +30,7 @@
     },
     {
       "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/SliceTransport.lean",
-      "size": 69991
+      "size": 71575
     },
     {
       "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/PresheafInternalHom.lean",

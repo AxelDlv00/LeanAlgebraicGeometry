@@ -1023,6 +1023,29 @@ noncomputable def sliceDualTransport {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImm
       exact Y.presheaf.map_id _
     exact ConcreteCategory.congr_hom hmaps ((ψ.app W).hom z)
 
+open PresheafOfModules InternalHom Opposite in
+/-- **Clean pointwise form of the forward-transport component.**  The `app` component of
+`sliceDualTransport f M V` (the forward per-slice dual-transport family) evaluated at a dual
+section `φ` equals its explicit forward-transport formula: the reindexed component `φ.app` at the
+`f`-image of `W` followed by the codomain unit ring-swap `dualUnitRingSwap f W'`.  The intervening
+`restrictScalars` leg is a definitional identity on carriers, so the equation holds by `rfl`.
+Forward mirror of `sliceDualTransportInv_app_apply`; the sectionwise tool that closes the
+pushforward-flank residual of `presheafDualPullbackComparison_restrict`. -/
+lemma sliceDualTransport_app_apply {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
+    (M : X.Modules) (V : (TopologicalSpace.Opens ↥Y)ᵒᵖ)
+    (φ : letI α : Y.presheaf ⟶ f.opensFunctor.op ⋙ X.presheaf :=
+           { app := fun U => (f.appIso U.unop).inv }
+         letI β : Y.ringCatSheaf.obj ⟶ f.opensFunctor.op ⋙ X.ringCatSheaf.obj :=
+           Functor.whiskerRight α (forget₂ CommRingCat RingCat)
+         (((PresheafOfModules.pushforward β).obj
+            (PresheafOfModules.dual (R₀ := X.presheaf) M.val)).obj V))
+    (W : (Over (unop V))ᵒᵖ)
+    (z : (M.val.obj (op ((Hom.opensFunctor f).obj (unop W).left)) : Type u)) :
+    (ModuleCat.Hom.hom
+        (((ModuleCat.Hom.hom (sliceDualTransport f M V).hom) φ).app W)) z
+      = (dualUnitRingSwap f (unop W).left).hom
+          ((φ.app (op (Over.mk ((Hom.opensFunctor f).map (unop W).hom)))).hom z) := rfl
+
 end Modules
 
 end Scheme

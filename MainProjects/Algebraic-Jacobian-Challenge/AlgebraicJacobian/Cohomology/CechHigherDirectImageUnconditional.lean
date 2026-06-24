@@ -46,6 +46,127 @@ noncomputable def cechHigherDirectImage (f : X ⟶ S) (𝒰 : X.OpenCover)
     (F : X.Modules) (i : ℕ) : S.Modules :=
   (CechComplex f 𝒰 F).homology i
 
+/-! ### Skeleton for `cech_flatBaseChange` (Stacks 02KH, separated case)
+
+The proof decomposes into the following pieces, assembled in `cech_flatBaseChange`:
+
+1. **Homology side — DONE (modulo flat left-exactness).** The pullback `g^*` is exact,
+   so it commutes with `HomologicalComplex.homology`:
+   * `pullback_preservesFiniteColimits` — free, `g^*` is a left adjoint;
+   * `pullback_preservesFiniteLimits` — **the one genuine homology-side gap**: `g`
+     flat ⇒ `g^*` is left-exact (Mathlib has this affine-locally for `extendScalars`,
+     `ModuleCat.preservesFiniteLimits_extendScalars_of_flat`, but not yet lifted
+     through sheafification to `SheafOfModules.pullback`);
+   * `pullback_preservesHomology` — then *derived* (no `sorry`) via
+     `Functor.preservesHomologyOfExact`;
+   * `mapHomologicalComplexHomologyIso` / `pullback_mapHC_homologyIso` — the
+     complex-level upgrade of `ShortComplex.mapHomologyIso`, **sorry-free**.
+2. **`cechComplex_baseChange_iso` (load-bearing, Stacks 02KG) — STILL OPEN.** Applying
+   `g^*` degreewise to `Č•(𝒰, F)` recovers `Č•(𝒰', g'^* F)`. Termwise this is the
+   affine `i = 0` base change `affineBaseChange_pushforward_iso`, which is *itself*
+   `sorry` in `Cohomology/FlatBaseChange.lean` (two documented Mathlib-absent
+   obligations: the affine reduction and the adjoint-mate ↔ `cancelBaseChange`
+   identification), and must additionally be made compatible with the alternating Čech
+   differentials and the cover base change. This is the genuine research frontier.
+3. Assembly `cech_flatBaseChange` — **sorry-free**, reduces to 1 + 2.
+
+No spectral sequence is needed here: this is the *separated* case (`[IsSeparated f]`).
+The Čech-to-cohomology spectral sequence enters only in the separated → general
+quasi-separated promotion of Stacks 02KH, which is **not** this lemma. -/
+
+section HomologyComm
+
+variable {C D : Type*} [Category.{u} C] [Category.{u} D] [Preadditive C] [Preadditive D]
+  [CategoryWithHomology C] [CategoryWithHomology D]
+
+/-- **Complex-level upgrade of `ShortComplex.mapHomologyIso`.** An additive functor `F`
+that preserves homology commutes with `HomologicalComplex.homology`. The degree-`i`
+short complex of `(F.mapHomologicalComplex c).obj K` is *definitionally* `F` applied to
+the degree-`i` short complex `K.sc i` of `K` (both have `Xⱼ = F.obj (K.Xⱼ)` and
+`d = F.map (K.d)`), so this is exactly `ShortComplex.mapHomologyIso (K.sc i) F`. -/
+noncomputable def mapHomologicalComplexHomologyIso (F : C ⥤ D) [F.Additive]
+    [F.PreservesHomology] {ι : Type*} {c : ComplexShape ι} (K : HomologicalComplex C c) (i : ι) :
+    ((F.mapHomologicalComplex c).obj K).homology i ≅ F.obj (K.homology i) :=
+  ShortComplex.mapHomologyIso (K.sc i) F
+
+end HomologyComm
+
+/-- **Flat base change has left-adjoint pullback**, hence `g^*` preserves finite
+colimits (free: `g^* = pullback g` is a left adjoint). -/
+instance pullback_preservesFiniteColimits (g : S' ⟶ S) :
+    Limits.PreservesFiniteColimits (Scheme.Modules.pullback g) := inferInstance
+
+/-- **Flat ⇒ `g^*` is left-exact** *(STUB — the one genuine homology-side gap)*.
+
+The mathematical reduction is verified and worth recording. By
+`SheafOfModules.pullbackIso`, the pullback factors as
+`g^* ≅ forget ⋙ (PresheafOfModules.pullback φ.hom ⋙ PresheafOfModules.sheafification)`.
+Two of the three factors preserve finite limits *in Mathlib already*:
+* `SheafOfModules.forget` — `SheafOfModules.forgetPreservesFiniteLimits` (it is a right
+  adjoint to sheafification);
+* `PresheafOfModules.sheafification` — the instance in
+  `Mathlib/Algebra/Category/ModuleCat/Presheaf/Sheafification.lean` (sheafification is a
+  left-exact reflector; needs `HasSheafify J AddCommGrpCat`, which holds for the scheme
+  site since `X.Modules` is abelian).
+
+So the *only* irreducible content is that the **presheaf-level** pullback
+`PresheafOfModules.pullback φ.hom` preserves finite limits when `g` is flat. Mathlib
+defines this presheaf pullback purely as `(pushforward φ).leftAdjoint` with **no
+pointwise description**; mathematically it is the inverse image `g⁻¹` (exact) followed
+by extension of scalars along the flat ring map (left-exact, cf.
+`ModuleCat.preservesFiniteLimits_extendScalars_of_flat`), but neither this factorisation
+nor its left-exactness is packaged. Closing it is a genuine multi-hundred-LOC Mathlib
+development (assembling it via `pullbackIso` additionally requires resolving the
+`sheafification`/`HasSheafify` instances for the concrete scheme site). -/
+/- USER (Stacks 02KH leaf 1/2): close via the reduction proved out in the docstring —
+   transfer along `SheafOfModules.pullbackIso` and discharge `forget` + `sheafification`
+   (both already preserve finite limits in Mathlib: `SheafOfModules.forgetPreservesFiniteLimits`,
+   the `sheafification` instance in `Presheaf/Sheafification.lean`). The irreducible core is
+   that `PresheafOfModules.pullback` is left-exact under flat (mathematically `g⁻¹` exact,
+   then flat `extendScalars` left-exact via `ModuleCat.preservesFiniteLimits_extendScalars_of_flat`).
+   Likely path: stalkwise (stalk of pullback = `extendScalars` of stalk + pointwise flat
+   exactness). This is pure exactness of flat pullback — no Čech/cohomology or spectral
+   sequence is involved here (those belong to the base-change *assembly*, not this leaf).
+   Reference: Stacks 02KH (the flatness input). -/
+instance pullback_preservesFiniteLimits (g : S' ⟶ S) [Flat g] :
+    Limits.PreservesFiniteLimits (Scheme.Modules.pullback g) := sorry
+
+/-- **Flat ⇒ `g^*` preserves homology** — *derived* from left-exactness +
+left-adjointness via `Functor.preservesHomologyOfExact`. No `sorry` of its own. -/
+instance pullback_preservesHomology (g : S' ⟶ S) [Flat g] :
+    (Scheme.Modules.pullback g).PreservesHomology := inferInstance
+
+/-- **`g^*` commutes with Čech homology** (flat exactness, complex level). **Sorry-free:**
+a direct specialisation of `mapHomologicalComplexHomologyIso` to `g^* = pullback g`,
+which is additive and (for `g` flat) preserves homology. -/
+noncomputable def pullback_mapHC_homologyIso (g : S' ⟶ S) [Flat g]
+    (K : CochainComplex S.Modules ℕ) (i : ℕ) :
+    (((Scheme.Modules.pullback g).mapHomologicalComplex (ComplexShape.up ℕ)).obj K).homology i
+      ≅ (Scheme.Modules.pullback g).obj (K.homology i) :=
+  mapHomologicalComplexHomologyIso (Scheme.Modules.pullback g) K i
+
+/-- **Tensorial base change of the Čech complex** (Stacks 02KG; *load-bearing*, OPEN).
+Applying `g^*` degreewise to the relative Čech complex `Č•(𝒰, F)` yields the relative
+Čech complex `Č•(𝒰', g'^* F)` of the base-changed data. Termwise this is the affine
+`i = 0` base change `affineBaseChange_pushforward_iso` over each finite affine
+intersection — which is *itself* `sorry` in `Cohomology/FlatBaseChange.lean` — assembled
+into a chain isomorphism compatible with the alternating Čech differentials, with `𝒰'`
+the base change of `𝒰` along `g'` (or via cover-independence). *(STUB — depends on the
+still-open `affineBaseChange_pushforward_iso`; the genuine open content of 02KH/02KG.)* -/
+/- USER (Stacks 02KH leaf 2/2 — the LOAD-BEARING one, Stacks 02KG): close
+   `affineBaseChange_pushforward_iso` (`Cohomology/FlatBaseChange.lean`) FIRST — that is
+   the termwise affine `i = 0` base change over each finite affine intersection — then
+   assemble the per-degree isos into a chain isomorphism compatible with the alternating
+   Čech differentials, taking `𝒰'` = base change of `𝒰` along `g'`. Reference: Stacks
+   02KG/02KH. Use the concrete-tilde isos, NOT the adjoint-mate machinery that walled FBC-B. -/
+noncomputable def cechComplex_baseChange_iso
+    (f : X ⟶ S) (g : S' ⟶ S) (f' : X' ⟶ S') (g' : X' ⟶ X)
+    (h : IsPullback g' f' f g) [QuasiCompact f] [IsSeparated f]
+    (𝒰 : X.OpenCover) (𝒰' : X'.OpenCover) (F : X.Modules) :
+    ((Scheme.Modules.pullback g).mapHomologicalComplex (ComplexShape.up ℕ)).obj
+        (CechComplex f 𝒰 F)
+      ≅ CechComplex f' 𝒰' ((Scheme.Modules.pullback g').obj F) := sorry
+
 /-- **Flat base change for the Čech higher direct images** (Stacks 02KH,
 `lemma-flat-base-change-cohomology`).
 
@@ -74,11 +195,17 @@ theorem cech_flatBaseChange
     (F : X.Modules) (hF : F.IsQuasicoherent) (i : ℕ) :
     Nonempty ((Scheme.Modules.pullback g).obj (cechHigherDirectImage f 𝒰 F i) ≅
       cechHigherDirectImage f' 𝒰' ((Scheme.Modules.pullback g').obj F) i) := by
-  -- Proof (Stacks 02KH): local on `S'`, reduce to `S = Spec A`, `S' = Spec B`,
-  -- `A → B` flat; base change of the cover and the affine `i = 0` base change give
-  -- `Č•(𝒰_B, F_B) ≅ Č•(𝒰, F) ⊗_A B`, and flatness makes `- ⊗_A B` commute with
-  -- `Hⁱ`. Needs the term-wise affine base change of the Čech complex and exactness
-  -- of `- ⊗_A B` on `Scheme.Modules`, currently absent from Mathlib.
-  sorry
+  -- Assembly (Stacks 02KH, separated case): `g^*` commutes with `Hⁱ` (flat
+  -- exactness, `pullback_mapHC_homologyIso`), and the Čech complex transforms
+  -- tensorially under base change (`cechComplex_baseChange_iso`, Stacks 02KG).
+  refine ⟨?_⟩
+  calc (Scheme.Modules.pullback g).obj (cechHigherDirectImage f 𝒰 F i)
+      ≅ (((Scheme.Modules.pullback g).mapHomologicalComplex (ComplexShape.up ℕ)).obj
+            (CechComplex f 𝒰 F)).homology i :=
+        (pullback_mapHC_homologyIso g (CechComplex f 𝒰 F) i).symm
+    _ ≅ (CechComplex f' 𝒰' ((Scheme.Modules.pullback g').obj F)).homology i :=
+        HomologicalComplex.homologyMapIso
+          (cechComplex_baseChange_iso f g f' g' h 𝒰 𝒰' F) i
+    _ = cechHigherDirectImage f' 𝒰' ((Scheme.Modules.pullback g').obj F) i := rfl
 
 end AlgebraicGeometry

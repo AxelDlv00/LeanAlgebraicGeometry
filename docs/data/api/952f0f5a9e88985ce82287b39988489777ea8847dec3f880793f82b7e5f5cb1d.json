@@ -86,14 +86,19 @@
     },
     {
       "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
-      "count": 1,
+      "count": 2,
       "lines": [
-        82
+        132,
+        168
       ],
       "occurrences": [
         {
-          "line": 82,
-          "column": 3
+          "line": 132,
+          "column": 65
+        },
+        {
+          "line": 168,
+          "column": 68
         }
       ]
     },
@@ -101,16 +106,16 @@
       "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
       "count": 2,
       "lines": [
-        742,
-        764
+        750,
+        772
       ],
       "occurrences": [
         {
-          "line": 742,
+          "line": 750,
           "column": 3
         },
         {
-          "line": 764,
+          "line": 772,
           "column": 3
         }
       ]
@@ -443,7 +448,7 @@
       ]
     }
   ],
-  "total": 66,
+  "total": 67,
   "partial": false,
   "warnings": []
 }

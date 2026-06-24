@@ -2993,5 +2993,99 @@
         "next_steps": "Needs unconditional j_! exactness first, then the derived-category derivability instances. Defer until both are in. Planner: dedicated iter."
       }
     ]
+  },
+  {
+    "sessionId": "session_21",
+    "milestones": [
+      {
+        "timestamp": "2026-06-24T07:16:00Z",
+        "status": "partial",
+        "target": {
+          "file": "MR0555258CompactifyingPicard/Basic.lean",
+          "theorem": "extensionByZero_preservesMonomorphisms (unconditional j_! mono)"
+        },
+        "session": {
+          "id": "session_21",
+          "model": "claude-opus-4-8"
+        },
+        "findings": {
+          "blocker": "PresheafOfModules.pullback is a partial-adjoint with NO pointwise colimit/Lan formula; off-U stalk vanishing (S1) and presheaf-pullback mono both need that absent formula. Landed the CONDITIONAL reduction instead.",
+          "key_lemmas_used": [
+            "SheafOfModules.pullbackIso",
+            "Functor.preservesMonomorphisms.iso_iff",
+            "Functor.preservesMonomorphisms_comp",
+            "preservesMonomorphisms_of_preservesLimitsOfShape",
+            "preservesLimitsOfShapeOfPreservesFiniteLimits"
+          ]
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Plan S2 on-U route: test whether j_!⊣j^* unit is iso (j_! fully faithful) via infer_instance",
+            "code_tried": "example {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] : IsIso (extensionByZeroAdjunction j).unit := by infer_instance",
+            "line_number": "1160",
+            "lean_error": "failed to synthesize instance IsIso (extensionByZeroAdjunction j).unit; also (Scheme.Hom.opensFunctor j).Full absent",
+            "result": "failed",
+            "insight": "j_! full-faithfulness is gated on the same presheaf-Lan handle; opensFunctor not known Full to TC."
+          },
+          {
+            "attempt": 2,
+            "strategy": "pullbackIso decomposition route: factor j_! = forget ⋙ PresheafOfModules.pullback φ.hom ⋙ sheafification; reduce mono-preservation to the middle factor",
+            "code_tried": "have e := SheafOfModules.pullbackIso.{u} (restrictionRingSheafHom j); refine (Functor.preservesMonomorphisms.iso_iff e).mpr ?_; refine @Functor.preservesMonomorphisms_comp _ _ _ _ _ _ _ _ ?_ ?_",
+            "line_number": "1183",
+            "lean_error": "iterated: universe mismatch max u 1 vs u+1 when e annotated; R₀-metavar 'failed to synthesize PreservesLimitsOfShape WalkingCospan sheafification'",
+            "result": "partial",
+            "insight": "Must NOT annotate e's type (let pullbackIso pin universes); sheafification mono needs explicit (R₀ := X.ringCatSheaf.obj)."
+          },
+          {
+            "attempt": 3,
+            "strategy": "Discharge forget/sheafification mono-preservation against the goal-pinned composite with explicit functor + R₀",
+            "code_tried": "exact preservesMonomorphisms_of_preservesLimitsOfShape (PresheafOfModules.sheafification (R₀ := X.ringCatSheaf.obj) (𝟙 X.ringCatSheaf.obj))  -- + maxHeartbeats 1000000, synthInstance.maxHeartbeats 1000000",
+            "line_number": "1183",
+            "lean_error": "(none — clean)",
+            "result": "success",
+            "insight": "Conditional lemma lands axiom-clean: assuming presheaf-pullback mono, j_! preserves monos. Needs raised heartbeats (deep abelian/sheafification TC stack)."
+          },
+          {
+            "attempt": 4,
+            "strategy": "Chain conditional mono-preservation into @020 reduction for conditional finite-limit preservation (j_! exactness, conditional)",
+            "code_tried": "haveI := extensionByZero_preservesMonomorphisms_of_presheafPullback j; extensionByZero_preservesFiniteLimits_of_preservesMono j",
+            "line_number": "1204",
+            "lean_error": "(none — clean)",
+            "result": "success",
+            "insight": "extensionByZero_preservesFiniteLimits_of_presheafPullback lands; with @019 colimit-preservation, j_! is exact CONDITIONALLY on the one presheaf brick."
+          }
+        ],
+        "next_steps": "Build/upstream a pointwise description of PresheafOfModules.pullback φ.hom along j.opensFunctor: (pullback φ.hom Q).obj (op W) ≅ Q.obj(op j⁻¹ᵁW) if W⊆range j else 0. With it, presheaf-pullback mono follows sectionwise and BOTH conditional lemmas become unconditional, closing 1.2 sub-brick (1). Do NOT re-assign the stalk route or the unconditional form without that API."
+      },
+      {
+        "timestamp": "2026-06-24T07:16:00Z",
+        "status": "blocked",
+        "target": {
+          "file": "MR0555258CompactifyingPicard/Basic.lean",
+          "theorem": "extensionByZero_stalk_isZero_of_notMem (S1: off-U stalk vanishing)"
+        },
+        "session": {
+          "id": "session_21",
+          "model": "claude-opus-4-8"
+        },
+        "findings": {
+          "blocker": "Stalk of PresheafOfModules.pullback φ at x∉range j is not computable: pullback is a partial-adjoint with no pointwise colimit/Lan formula. The plan's S1 (the 'one genuinely new sub-brick') was intractable at the module layer. Refutes the iter-021 plan's claim that the stalk layer suffices — the stalk layer is present but cannot be applied without the absent pullback formula.",
+          "key_lemmas_used": []
+        },
+        "attempts": [
+          {
+            "attempt": 1,
+            "strategy": "Reconnaissance of the Mathlib stalk layer the plan cited (toPresheaf, restrictStalkNatIso, mono_of_stalk_mono) and whether SheafOfModules.pullback has a stalk handle",
+            "code_tried": "lean_loogle 'SheafOfModules.pullback, TopCat.Presheaf.stalk'; leansearch 'extension by zero along open immersion vanishing stalk'",
+            "line_number": "n/a",
+            "lean_error": "loogle empty; leansearch returns only restrictStalkNatIso (j^* stalk, not j_!)",
+            "result": "failed",
+            "insight": "The stalk layer exists for j^* but there is NO stalk/colimit computation for j_! = SheafOfModules.pullback φ. S1 cannot be built without a pointwise Lan formula for PresheafOfModules.pullback."
+          }
+        ],
+        "next_steps": "Do NOT re-assign S1 (off-U stalk vanishing) — it requires the same absent PresheafOfModules.pullback pointwise formula as the presheaf-pullback mono brick. Build/upstream that formula first, then S1 becomes a trivial colimit-of-zero."
+      }
+    ]
   }
 ]

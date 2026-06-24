@@ -1,6 +1,21 @@
 {
   "commits": [
     {
+      "sha": "86d8ed218827a36599804a39a2f6198a1d817fc0",
+      "shortSha": "86d8ed2",
+      "subject": "archon[073/prover]: all-provers sorry=7 (2831s)",
+      "date": "2026-06-24 23:58:04 +0800",
+      "parents": [
+        "c24a2b78c23068fe1af2a504a50eace40dde01e6"
+      ],
+      "refs": [
+        "HEAD -> main"
+      ],
+      "iteration": "iter-073",
+      "phase": "prover",
+      "branch": "main"
+    },
+    {
       "sha": "c24a2b78c23068fe1af2a504a50eace40dde01e6",
       "shortSha": "c24a2b7",
       "subject": "archon[072/plan]: stage=prover (1415s)",
@@ -8,9 +23,7 @@
       "parents": [
         "96c49c068260df7b288b6290c33e6436917e5cc2"
       ],
-      "refs": [
-        "HEAD -> main"
-      ],
+      "refs": [],
       "iteration": "iter-072",
       "phase": "plan",
       "branch": "main"

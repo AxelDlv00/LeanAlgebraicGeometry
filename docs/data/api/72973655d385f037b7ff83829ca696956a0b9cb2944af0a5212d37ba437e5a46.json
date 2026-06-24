@@ -2,13 +2,12 @@
   "files": [
     {
       "file": "MR0555258CompactifyingPicard/Basic.lean",
-      "count": 5,
+      "count": 4,
       "lines": [
         634,
         642,
-        652,
-        661,
-        684
+        657,
+        680
       ],
       "occurrences": [
         {
@@ -20,21 +19,17 @@
           "column": 3
         },
         {
-          "line": 652,
+          "line": 657,
           "column": 3
         },
         {
-          "line": 661,
-          "column": 3
-        },
-        {
-          "line": 684,
+          "line": 680,
           "column": 5
         }
       ]
     }
   ],
-  "total": 5,
+  "total": 4,
   "partial": false,
   "warnings": []
 }

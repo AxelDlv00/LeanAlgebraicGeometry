@@ -1,6 +1,31 @@
 # Done Tasks
 <!-- Resolved items, last-known state only. Per-attempt detail → iter sidecars. -->
 
+- **Cone B c.2(a) `presheafDualH1Cocycle` (`lem:presheafdual_h1_cocycle`) — CLOSED iter-070 sorry-free,
+  axiom-clean** (`{propext, Classical.choice, Quot.sound}`). The H1=`leftAdjointUniq` cocycle over the
+  immersion factorisation. Realized as a one-line `exact` instantiation of a NEW generic mate-calculus
+  engine **`CategoryTheory.Adjunction.leftAdjointUniq_leftAdjointCompIso_comm`** (+ 2 new mate helpers
+  `conjugateEquiv_leftAdjointUniq_hom` = `𝟙 G`, `conjugateEquiv_leftAdjointCompIso_hom` = `e.inv`), all
+  axiom-clean — the dual-flank analogue of the project keystone `conjugateEquiv_restrictFunctorComp_inv`,
+  generalised away from the restrict world. Engine proof: `conjugateEquiv.injective`, both mates collapse
+  to `e.inv` via `← conjugateEquiv_comp` (SPLIT a conjugate-of-composite — the simp lemma only COMBINES),
+  `conjugateEquiv_whiskerLeft/Right`. Idioms: use `Functor.whiskerRight/Left` (bare names shadowed to
+  monoidal whiskering by `open MonoidalCategory`); composite-immersion `αhf` needs an EXPLICIT
+  `naturality := fun _ _ i => (h ≫ f).appIso_inv_naturality i` (aesop default fails for `h ≫ f`). The (a)
+  statement ∀-quantifies the three `pushforward β` adjunctions (faithful strengthening). **The blueprint
+  c.2 finding (iter-070): c.2 is NOT "(a)+(b) paste" — it is the interleaved dual of proven
+  `pullbackTensorMap_restrict`; (a) is the H1-recombination factor inside that merge.** (Reversal-armed
+  trip-wire RESOLVED: (a) closed, not PARTIAL.)
+
+- **Cone B CRUX `presheafDual_pullback_restrict_natural` (`…/DualInverse/PresheafDualPullback.lean`) — CLOSED
+  iter-066, sorry-free + axiom-clean `{propext, Classical.choice, Quot.sound}`.** This is the lemma the dual
+  flank S3/S4a consume. KEY FINDING: it closes in ONE line by θ.hom's BUILT-IN `PresheafOfModules.Hom`
+  naturality (`funext φ; naturality_apply θ.hom (homOfLE j).op φ`), NOT the effort-broken L1;L2;L3a chain —
+  the whole L1/L3a decomposition was unnecessary (now 2 abandoned off-path sorries in the sibling). Also
+  closed iter-066: L3b `_apply`, L2 `dualPrecompHom_restrict_apply`, the `dualPrecompHom` def (dual-carrier
+  `ofHom` instance trick: 4 `letI`s both carrier forms + explicit ring ascription), and the θ-def
+  `presheafDualPullbackComparison`. File RED→green-mod-sorry (2). **Unblocks S3/S4a (iter-067 lane).**
+
 - **B1-crux ENGINE `H1inv_app_eq_pullbackVal_restrict` + `sheafPullbackUnit_forget_eq` (`TensorObjInverse.lean`) —
   CLOSED iter-053, sorry-free + axiom-clean.** The 050–052 plateau (whole-composite homEquiv PROVEN circular) broken
   via forget-faithful (`fullyFaithfulForget.map_injective`) + INNER presheaf-pullback transpose + INVERSE-`leftAdjointUniq`
@@ -100,3 +125,7 @@
 
 - **Shared keystone `conjugateEquiv_restrictFunctorComp_inv` (root) — CLOSED iter-048.** Public, axiom-clean (`lake build` EXIT 0). The 044–047 terminal blocker. iter-046's "irreducible" verdict OVERTURNED: INSTANTIATE `Adjunction.leftAdjointCompIso` on `pushforwardComp` (do NOT equate with `restrictFunctorComp`); `exact conjugateEquiv_leftAdjointCompIso_inv`, residual concrete iso-hom eq by MAP-level merge (`← presheaf.map_comp`) + `Subsingleton.elim`. **The whnf-bomb was `ext` on the conjugate-headed goal — NEVER `ext` before the abstract rewrite.** Consumed by terminal iter-049 (deleted the colliding private sorry-stub of the same FQ name).
 - **Bridge B2 `restrictFunctorIsoPullback_comp_compat` (terminal) — FULLY CLOSED iter-050.** The multi-iter 044–049 blocker, eliminated. Sorry 7→6, axiom-clean. 6 new public lemmas: LHS-collapse keystone `conjugateEquiv_restrictFunctorIsoPullback_hom` (= 𝟙), `conjugateEquiv_pullbackComp_hom` (c₅), `…_whiskerRight` (c₃), `…_whiskerLeft` (c₄), `conjugateEquiv_reindexCongr` (c₁/c₆), and the assembled `restrictFunctorIsoPullback_comp_compat_hom`. **Recipe:** `conjugateEquiv.injective` → LHS-collapse keystone → N explicit `← conjugateEquiv_comp` splits over the FIXED `(C,D)=(X.Mod,V.Mod)` through G₀..G₆ → per-leg pushforward-world values (c₂ = root keystone) → cancel `pushforwardComp` pair → `conjugateEquiv_reindexCongr`. **`mateEquiv_hcomp`/`vcomp` confirmed UNNEEDED** (all legs share (C,D); leg-by-leg `conjugateEquiv_comp` suffices). The breakthrough was fine-grained'ing the telescope into atomic per-leg sub-lemmas after CHURNING on the whole-`hNat`. Blueprint blocks for all 5 per-leg lemmas + the LHS-collapse keystone present (the keystone block + dangling-pin cleanup done iter-051).
+- **B1-crux engine `H1inv_app_eq_pullbackVal_restrict` + `sheafPullbackUnit_forget_eq` (terminal) — CLOSED iter-053.** Sheafification-boundary unit coherence, axiom-clean. forget-faithful (`fullyFaithfulForget.map_injective`) + INNER presheaf-pullback transpose + INVERSE-`leftAdjointUniq` triangle + `sheafificationCompPullback_eq_leftAdjointUniq`; whole-composite homEquiv route was PROVEN CIRCULAR (mathlib-analogist `analogies/ofisrightadjoint-unit.md` unblock). **S2 CLOSED iter-054.**
+- **Cone A (S4b square) — CLOSED end-to-end iters 054–065; the tensor-flank left-unitality.** Sequence: S2 (054); S4b body (055) + inner seam (056) → whole S4b rides on bridge-3 `pullbackTensorMap_left_unitality`; effort-broken (057) into L1/L2/L3 chain. **iter-064:** STU-collapse keystone `tensorObj_left_unitor_image_collapse` (sorry-free; by-hand presheaf reduction across the `restrictScalars 𝟙`/`𝟭.obj` defeq seam — NOT the localization-monoidal API; term-mode `congrArg₂`/right-triangle `htri`/`map_comp_assoc` merge/explicit-left-factor) + L2 `tensorObj_left_unitor_pullback_eq_sheafify` (sorry 6→5). **iter-065:** L3 `pullbackUnitIso_whisker_eq_sheafify_eta_whisker` (central leg = arg-1 q=𝟙 specialization of the ALREADY-PROVEN `sheafifyTensorUnitIso_hom_natural`, root `:1896` — REUSE not rebuild; the iter-065 plan cross-check killed the iter-064 "must build a 2nd core" plan) + bridge-3 assembly `pullbackTensorMap_left_unitality` (sorry 5→3; fixed a STALE-GREEN pre-written body: missing `maxHeartbeats` whnf-timeout + bare-`_` mis-unification of `reassoc_of%`'s `k`/`congrArg` prefix across the `SheafOfModules ≫` seam — both pinned explicitly; `rw [reassoc_of% …]` MISSES the seam, term-mode only). **Cone A is DONE; only the dual flank (Cone B) + telescope remain.** Memory `stu-collapse-keystone.md`, `seam-split-fold-idiom.md`.
+
+- **Cone B c.1 `pushforwardObjValRestrictIso` (`def:pushforward_obj_val_restrict_iso`) — CLOSED iter-069 sorry-free, axiom-clean** (`{propext, Classical.choice, Quot.sound}`, no `sorryAx`). The foundational object-id iso `(pushforward β).obj M.val ≅ (M.restrict f).val`. Realized as **`Iso.refl _`**: Mathlib's `Scheme.Modules.restrictFunctor f` is *defined* as `SheafOfModules.pushforward ⟨whiskerRight α (forget₂ …)⟩` whose object action is `{ val := (PresheafOfModules.pushforward β).obj M.val, … }`, so `(M.restrict f).val` is DEFINITIONALLY `(pushforward β).obj M.val` — the blueprint's abstract H1∘(RFIP;SCP) composite IS the identity once the concrete `restrictFunctor` defeq is used. Inspect the Mathlib def BEFORE building a composite. c.2 (the cocycle consuming c.1) effort-broken into (a)+(b) iter-070 → see task_pending.

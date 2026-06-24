@@ -20,7 +20,7 @@ source tree, comments/docstrings excluded; 2026-06-22):*
 | RiemannRoch | prover | 25 ✨ |
 | Quot-Foundations | ⏸️ deferred | 21 |
 | GR-quot_closure | ✅ complete · merged → AJC | 0 ✨ |
-| FBC-B_SNAP-chain | prover | 20 ✨ |
+| FBC-B_SNAP-chain | ⏸️ paused (mate route superseded; reusable salvaged → AJC) | 20 (preserved) ✨ |
 | MR0555258-compactifying-picard | prover | 5 ✨ |
 | 35 related-paper projects | 📝 blueprint only | 0 Lean (stub aggregators) |
 
@@ -100,7 +100,7 @@ relative dimension = genus, proper, geometrically irreducible, and the Albanese 
 - [x] **Line-bundle coherence substrate** — `Picard/LineBundleCoherence`, `Picard/LineBundlePullback`, `Picard/RelPicFunctor`, `Picard/RelativeSpec` **sorry-free** (local triviality, pullback-tensor compatibility)
 - [x] **Čech higher-direct-image engine (A.2.c)** — the comparison theorem `cech_computes_higherDirectImage` and `pushPull` functoriality (`pushPullFunctor`, `pushPullMap_comp`) are **proved sorry-free in `Cech-Cohomology`** and merged in **sorry-free** ✨; `cechHigherDirectImage` is sorry-free in the AJC tree. *(The Čech theorem itself has no open mathematical gap.)*
 - [x] **Čech merge-back RESTORED** ✨ *(2026-06-19)* — the former **7 MERGE-STUBs** (`CechSectionIdentificationLeg` ×5, `CechToHigherDirectImage` ×2, `sorry`-ed during the merge to dodge build-time elaboration blow-ups) are now **replaced with the working proofs from `Cech-Cohomology` and build clean**: the monolithic `…Leg` was split to match the subproject (`…Mid1/Mid2/Top/Aux`) and the `cechAugmented_to_acyclicResolutionInput` iso proof was given a term-shrinking rewrite. AJC's full `lake build` is green; the AJC capstone `cech_computes_higherDirectImage` depends only on `[propext, Classical.choice, Quot.sound]`.
-- [~] **Flat base change (Stacks 02KH)** — the genuinely-open Čech *consumer* still has `sorry`: `flatBaseChange_pushforward_isIso` (`FlatBaseChange`), `cech_flatBaseChange` (`CechHigherDirectImageUnconditional`). *(Not a gap in the Čech engine itself.)*
+- [~] **Flat base change (Stacks 02KH)** ✨ *(2026-06-24, Čech route)* — `cech_flatBaseChange` (`CechHigherDirectImageUnconditional`): the top-level assembly **and all homology machinery are now sorry-free** (separated case — **no spectral sequence**: `mapHomologicalComplexHomologyIso`, flat-pullback `PreservesHomology` derived via `preservesHomologyOfExact`, `pullback_mapHC_homologyIso`). **Two** genuine open leaves remain: `pullback_preservesFiniteLimits` (flat ⇒ `g^*` left-exact — verified-reduced to presheaf-pullback left-exactness; `forget`+`sheafification` already preserve finite limits in Mathlib) and `cechComplex_baseChange_iso` (Stacks 02KG, the termwise affine base change, via the still-open `affineBaseChange_pushforward_iso` in `FlatBaseChange`). Reusable FBC-B foundations salvaged in-tree sorry-free (`Cohomology/RegroupHelper`, `Cohomology/FlatBaseChangeGlobal` prefix: `gammaTopEquivEqLocus`, `baseChangeGammaEquiv`). *(Not a gap in the Čech engine itself; full general/qcqs 02KH would additionally need the Čech-to-cohomology spectral sequence — present only abstractly in Mathlib.)*
 - [~] **Group schemes** — `Ga`, `Gm`, `ProjectiveLineBar` (ℙ¹) **defined**; `Genus0BaseObjects` carries **2 residual `sorry`** (`BareScheme`, `GmScaling`) *(was previously mismarked "not started")*
 - [~] **Tensor/dual comparison substrate + Picard group (A.1.c.sub)** — `Picard/TensorObjSubstrate` defines `PicGroup`/`picCommGroup` and the slice-dual transport; **3 residual `sorry`** *(shared with `Line-Bundle-Comparison-Iso`)*
 - [~] **Weil divisors & Riemann–Roch core** — order valuation, degree homomorphism, principal divisors, skyscraper SES (`RiemannRoch/*`, **15 `sorry`**: `RationalCurveIso`, `OcOfD`, `OCofP`, `WeilDivisor` ×3 each; `H1Vanishing` ×2; `RRFormula` ×1)
@@ -200,16 +200,20 @@ imported copies.)*
 - [x] **Section graded ring (SNAP)** — `Picard/SectionGradedRing` **sorry-free** through the graded ring and module stretch ✨ *(now also in AJC)*
 - [x] **Quot scheme** — `QuotScheme` **sorry-free** ✨ *(2026-06-22)*: the four χ-blocked endgame stubs (`hilbertPolynomial`, `QuotFunctor`, the `Grassmannian` functor def, `Grassmannian.representable` — the Hilbert-polynomial/χ formulation, distinct from the proved `Grassmannian.represents`) were **removed** from this leg, since they need the cohomology / Euler-characteristic engine that is out of scope for the H⁰ Grassmannian deliverable; the file's sorry-free quasi-coherent-descent machinery is retained and `lake build` is green (8317 jobs). *(The same stubs still live in the AJC tree's own `Picard/QuotScheme` copy — see the AJC §"Picard representability cone" line — and remain open there.)*
 
-## FBC-B_SNAP-chain  *(prover stage — 20 open `sorry`)* ✨
+## FBC-B_SNAP-chain  *(⏸️ PAUSED 2026-06-24 — dir renamed `…-[paused-superseded-by-cech-route]`)* ✨
 
-**Goal:** the flat-base-change (FBC-B) leg of the Quot/Picard-representability cone, sharing the
-SNAP section-graded-ring foundation with `GR-quot_closure`. *(Lean scaffolding has been
-generated — this is no longer an empty extraction skeleton.)*
+**Status:** **PAUSED.** The FBC adjoint-mate route to `affineBaseChange_pushforward_iso` /
+`flatBaseChange_pushforward_isIso` walled (~30 iters; kernel timeouts; missing
+`tilde ↔ extendScalars` bridge). Stacks 02KH is now pursued via the **Čech route in AJC**
+(see AJC §"Flat base change (Stacks 02KH)"). Work is preserved (files on disk + pushed to
+GitHub); reusable sorry-free pieces were **salvaged into AJC** (`Cohomology/RegroupHelper`
+whole, `Cohomology/FlatBaseChangeGlobal` sorry-free prefix). Pausing also dormanted the SNAP
+leg (bundled in the same subproject). See the subproject's `PAUSED.md`.
 
-- [x] **Regroup helper** — `Cohomology/RegroupHelper` **sorry-free**
-- [x] **FBC ring-square mate legs** — geometric and algebraic mate legs in `Cohomology/FlatBaseChange` are closed axiom-clean ✨
-- [~] **Flat base change (FBC-B)** — `Cohomology/FlatBaseChange` (×10), `FlatBaseChangeGlobal` (×4): pushforward flat base-change leg ✨
-- [~] **Section graded ring (SNAP)** — `Picard/SectionGradedRing` (×6): shared foundation with `GR-quot_closure`
+- [x] **Regroup helper** — `Cohomology/RegroupHelper` **sorry-free** *(salvaged → AJC ✨)*
+- [x] **FBC ring-square mate legs** — geometric and algebraic mate legs in `Cohomology/FlatBaseChange` are closed axiom-clean *(preserved; route superseded)*
+- [⏸️] **Flat base change (FBC-B)** — mate route walled; superseded by the AJC Čech route. The sorry-free `FlatBaseChangeGlobal` equalizer/flat-tensor foundation salvaged → AJC ✨
+- [⏸️] **Section graded ring (SNAP)** — `Picard/SectionGradedRing` (×11) + `SectionGradedRingLocalized` (sorry-free): paused with the subproject (preserved, not merged)
 
 ---
 

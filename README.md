@@ -28,7 +28,7 @@ For more details, run `archon dashboard <project-name>` for any project in the s
 | `RiemannRoch` | Weil divisors, `O(D)`/`O(P)`, `H¹`-vanishing and the RR formula core | Extracted from `Algebraic-Jacobian-Challenge`; merges back | 🔄 In progress (25) ✨ |
 | `Quot-Foundations` | Quot, Grassmannian, and flat-base-change foundations | Deferred — active work moved to the `GR-quot_closure` / `FBC-B_SNAP-chain` extractions | ⏸️ Deferred (21) |
 | `GR-quot_closure` | Grassmannian-quotient representability (H⁰ leg) | Extracted from `Quot-Foundations`; **merged sorry-free into AJC ✨ 2026-06-22** | ✅ Complete (0) — merged sorry-free into AJC ✨ |
-| `FBC-B_SNAP-chain` | Flat-base-change leg + shared SNAP foundation | Extracted from `Quot-Foundations`; merges back | 🔄 In progress (20) ✨ |
+| `FBC-B_SNAP-chain` | Flat-base-change leg + shared SNAP foundation | ⏸️ **Paused 2026-06-24** — mate route superseded by the Čech route in AJC; reusable foundations salvaged into AJC (`RegroupHelper`, `FlatBaseChangeGlobal` prefix); dir renamed `…-[paused-superseded-by-cech-route]` | ⏸️ Paused (20, preserved) ✨ |
 | `MR0555258-compactifying-picard` | Compactifying the Picard scheme | Formalization of the paper | 🔄 In progress (5) ✨ |
 | 35 related-paper projects | Formalization of related algebraic-geometry papers | A few consume the AG base (secant/perverse/Mordell–Lang); most are self-contained | 📝 Blueprint only (0 Lean) |
 

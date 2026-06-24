@@ -1,7 +1,7 @@
 {
   "stage": "prover",
   "objectives": [
-    "**`MR0555258CompactifyingPicard/Basic.lean`** — Build, axiom-clean, **mono-preservation of"
+    "**`MR0555258CompactifyingPicard/Basic.lean`** — **Add two `External.*` anchor"
   ],
   "checklist": [
     {
@@ -9,7 +9,7 @@
       "done": true
     },
     {
-      "label": "dag (blueprint graph complete: 0 ∞-sources, 0 broken refs)",
+      "label": "dag (blueprint graph complete)",
       "done": true
     },
     {

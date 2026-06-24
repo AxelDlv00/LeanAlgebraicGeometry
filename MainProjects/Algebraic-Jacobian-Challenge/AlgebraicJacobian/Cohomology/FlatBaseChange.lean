@@ -698,6 +698,14 @@ affine-local picture this is the associativity isomorphism
 `(R' ⊗_R A) ⊗_A M ≅ R' ⊗_R M`, which needs no flatness.
 
 Source: Stacks Project, Cohomology of Schemes, Lemma "Affine base change". -/
+/- USER: UPSTREAM gap for Stacks 02KG/02KH `cechComplex_baseChange_iso`
+   (`Cohomology/CechHigherDirectImageUnconditional.lean`) and a PREREQUISITE of Kleiman 4.8
+   Step-1 strata-openness. Close via the CONCRETE-TILDE dictionary, NOT the adjoint-mate
+   route (walled ~30 iters in FBC-B): the sorry-free `pushforward_spec_tilde_iso` /
+   `pullback_spec_tilde_iso` + `regroupEquiv` + `TensorProduct.AlgebraTensorModule.cancelBaseChange`
+   give the affine-local iso. Two obligations remain: (1) the affine reduction (locality on
+   S and S'), (2) the mate ↔ `cancelBaseChange` identification. Reference: Stacks Project,
+   "Affine base change" + Tag 02KH. -/
 theorem affineBaseChange_pushforward_iso (h : IsPullback g' f' f g) [IsAffineHom f]
     (F : X.Modules) [F.IsQuasicoherent] :
     IsIso (pushforwardBaseChangeMap f g f' g' h.w F) := by

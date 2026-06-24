@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Blueprint dependency graph</title>
+<link rel="stylesheet" href="https://unpkg.com/katex@0.16.9/dist/katex.min.css">
+<script src="https://unpkg.com/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+<style>
+:root {
+  --sidebar-bg: #0f172a;
+  --toolbar-bg: #1e293b;
+  --surface:    #1a2744;
+  --border:     #1e3a5f;
+  --text:       #e2e8f0;
+  --muted:      #64748b;
+  --accent:     #60a5fa;
+  --green:      #4ade80;
+  --green-bg:   rgba(74,222,128,.12);
+  --red:        #f87171;
+  --red-bg:     rgba(248,113,113,.12);
+  --orange:     #fb923c;
+  --orange-bg:  rgba(251,146,60,.12);
+  --code-bg:    #090d16;
+  --radius:     7px;
+  --mono: 'JetBrains Mono','Fira Code','Cascadia Code','Consolas','Monaco',monospace;
+  --sans: -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+}
+
+html { margin:0; padding:0; height:100%; overflow:hidden; }
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:var(--sans); display:flex; flex-direction:column;
+       height:100%; background:#f8fafc; color:var(--text); }
+
+/* ── Toolbar ─────────────────────────────────────────────────── */
+#toolbar {
+  background:var(--toolbar-bg); height:44px; padding:0 16px;
+  display:flex; align-items:center; gap:14px; flex-shrink:0;
+  border-bottom:1px solid #263045;
+}
+.brand { font-size:13px; font-weight:700; color:#f1f5f9; letter-spacing:.03em; }
+.stat  { font-size:12px; color:#64748b; white-space:nowrap; }
+.legend { display:flex; gap:6px; align-items:center; flex-wrap:wrap; }
+.leg-dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
+.leg-bar {
+  width:54px; height:8px; border-radius:4px; display:inline-block;
+  background:linear-gradient(90deg,#facc15,#f59e0b,#f97316);
+}
+.leg-txt { font-size:10px; font-weight:600; color:#94a3b8; }
+.sym-legend { padding-left:10px; margin-left:4px; border-left:1px solid #334155; gap:8px; }
+.hint { margin-left:auto; font-size:11px; color:#334155; white-space:nowrap; }
+
+/* ── Controls bar ────────────────────────────────────────────── */
+#controls {
+  background:#16233b; min-height:40px; padding:6px 16px;
+  display:flex; align-items:center; gap:10px; flex-shrink:0;
+  border-bottom:1px solid #263045; flex-wrap:wrap;
+}
+#controls input[type=text], #controls select {
+  background:#0f1f3d; color:var(--text); border:1px solid #1e3a5f;
+  border-radius:5px; font-size:12px; padding:5px 8px;
+  font-family:var(--sans); outline:none;
+}
+#controls input[type=text] { width:200px; }
+#controls input[type=text]:focus, #controls select:focus { border-color:var(--accent); }
+#controls select { max-width:260px; cursor:pointer; }
+#controls .chk { font-size:12px; color:#94a3b8; display:flex; align-items:center; gap:5px; cursor:pointer; user-select:none; }
+.btn {
+  background:#1e293b; color:#cbd5e1; border:1px solid #334155;
+  border-radius:5px; font-size:12px; padding:5px 12px; cursor:pointer;
+}
+.btn:hover { background:#263045; }
+.pill {
+  display:inline-flex; align-items:center; gap:7px;
+  background:#172554; color:#93c5fd; border:1px solid #1e3a8a;
+  border-radius:12px; font-size:11px; padding:3px 4px 3px 11px; cursor:pointer;
+  max-width:280px;
+}
+.pill .lbl { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.pill .x { font-weight:700; padding:0 6px; border-radius:9px; }
+.pill:hover .x { background:#1e3a8a; }
+
+/* ── Main layout ─────────────────────────────────────────────── */
+#main  { display:flex; flex:1; overflow:hidden; min-height:0; position:relative; }
+#graph { flex:1; min-height:0; background:#f8fafc; }
+
+/* ── Project-stats overlay ───────────────────────────────────── */
+#stats-panel {
+  position:absolute; top:12px; left:12px; z-index:5;
+  background:rgba(15,23,42,.9); border:1px solid #1e3a5f; border-radius:8px;
+  padding:10px 12px; min-width:188px; backdrop-filter:blur(3px);
+  font-size:11px; color:#cbd5e1; box-shadow:0 4px 16px rgba(0,0,0,.25);
+}
+#stats-panel h4 {
+  font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  color:#64748b; margin-bottom:7px;
+}
+#stats-panel .row { display:flex; justify-content:space-between; gap:14px; line-height:1.7; }
+#stats-panel .row .v { font-family:var(--mono); color:#f1f5f9; }
+#stats-panel .v.done { color:var(--green); }
+#stats-panel .v.work { color:var(--orange); }
+#stats-panel .v.inf  { color:var(--red); }
+#stats-panel .bar {
+  height:6px; border-radius:3px; background:#1e293b; margin:7px 0 3px; overflow:hidden;
+}
+#stats-panel .bar > span { display:block; height:100%; background:var(--green); }
+#stats-panel .sep { border-top:1px solid #1e3a5f; margin:7px 0; }
+#graph canvas { display:block; }
+
+/* ── File-view colour legend ─────────────────────────────────── */
+#file-legend {
+  position:absolute; bottom:12px; left:12px; z-index:5;
+  background:rgba(15,23,42,.9); border:1px solid #1e3a5f; border-radius:8px;
+  padding:9px 11px; max-width:280px; max-height:42%; overflow-y:auto;
+  backdrop-filter:blur(3px); font-size:11px; color:#cbd5e1;
+  box-shadow:0 4px 16px rgba(0,0,0,.25);
+}
+#file-legend::-webkit-scrollbar { width:4px; }
+#file-legend::-webkit-scrollbar-thumb { background:#1e3a5f; border-radius:2px; }
+#file-legend h4 {
+  font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  color:#64748b; margin-bottom:7px;
+}
+#file-legend .fl-row { display:flex; align-items:center; gap:7px; line-height:1.9; }
+#file-legend .fl-sw { width:11px; height:11px; border-radius:3px; flex-shrink:0;
+  border:1px solid rgba(255,255,255,.18); }
+#file-legend .fl-name {
+  font-family:var(--mono); font-size:10px; color:#cbd5e1;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1;
+}
+#file-legend .fl-n { font-family:var(--mono); font-size:10px; color:#64748b; }
+#file-legend .fl-empty { font-style:italic; color:#475569; }
+
+/* ── Sidebar ─────────────────────────────────────────────────── */
+#sidebar {
+  width:340px; flex-shrink:0;
+  background:var(--sidebar-bg);
+  border-left:1px solid #1e293b;
+  display:flex; flex-direction:column; overflow:hidden;
+}
+#sidebar-empty {
+  flex:1; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:10px;
+}
+#sidebar-empty svg { opacity:.2; }
+#sidebar-empty p { font-size:13px; color:#334155; }
+#sidebar-content {
+  flex:1; overflow-y:auto; padding:10px;
+  display:flex; flex-direction:column; gap:8px;
+}
+#sidebar-content::-webkit-scrollbar { width:4px; }
+#sidebar-content::-webkit-scrollbar-thumb { background:#1e3a5f; border-radius:2px; }
+
+/* ── Cards ───────────────────────────────────────────────────── */
+.card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:12px;
+}
+.card-title {
+  font-size:10px; font-weight:700; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:10px;
+}
+.btn-focus {
+  width:100%; margin-top:10px; background:#172554; color:#93c5fd;
+  border:1px solid #1e3a8a; border-radius:5px; font-size:11px;
+  font-weight:600; padding:7px; cursor:pointer; letter-spacing:.02em;
+}
+.btn-focus:hover { background:#1e3a8a; color:#bfdbfe; }
+
+/* ── Header card ─────────────────────────────────────────────── */
+.node-badges { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:8px; }
+.badge {
+  display:inline-block; padding:2px 8px; border-radius:10px;
+  font-size:10px; font-weight:700; letter-spacing:.04em;
+}
+.badge-type    { background:#172554; color:#93c5fd; border:1px solid #1e3a8a44; }
+.badge-proved  { background:var(--green-bg);  color:var(--green);  border:1px solid rgba(74,222,128,.25); }
+.badge-sorry   { background:var(--orange-bg); color:var(--orange); border:1px solid rgba(251,146,60,.25); }
+.badge-unproved{ background:var(--red-bg);    color:var(--red);    border:1px solid rgba(248,113,113,.25); }
+.node-title   { font-size:15px; font-weight:600; color:#f1f5f9; line-height:1.35; margin-bottom:5px; }
+.node-id      { font-family:var(--mono); font-size:11px; color:#475569; }
+.node-chapter { font-size:11px; color:#334155; margin-top:3px; }
+.lean-ref     { font-size:11px; color:var(--muted); margin-top:6px; }
+.lean-ref code{ font-family:var(--mono); color:var(--accent); }
+
+/* ── Structure card ──────────────────────────────────────────── */
+.degrees { display:flex; gap:20px; margin-bottom:10px; }
+.degree  { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.degree-val   { font-size:22px; font-weight:700; color:#f1f5f9; line-height:1; }
+.degree-label { font-size:10px; color:var(--muted); text-align:center; }
+.deps-list  { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:8px; }
+.deps-sub   { font-size:10px; color:var(--muted); margin:6px 0 4px; letter-spacing:.03em; }
+.dep-chip {
+  font-family:var(--mono); font-size:10px; padding:3px 7px;
+  background:#0f1f3d; border:1px solid #1e3a5f;
+  border-radius:4px; color:var(--accent); cursor:pointer; transition:background .15s;
+}
+.dep-chip:hover { background:#172554; }
+.no-deps { font-size:12px; color:var(--muted); font-style:italic; }
+
+/* ── Metrics card ────────────────────────────────────────────── */
+.metrics-grid {
+  display:grid; grid-template-columns:auto 1fr 1fr;
+  gap:5px 10px; align-items:center;
+}
+.col-head { font-size:10px; color:#334155; text-align:right; font-weight:600; }
+.m-label  { font-size:11px; color:var(--muted); }
+.m-val    { font-family:var(--mono); font-size:12px; color:#94a3b8; text-align:right; }
+.m-done   { color:var(--green); font-weight:700; }
+.m-inf    { color:var(--red);   font-weight:700; }
+.m-work   { color:var(--orange); }
+
+/* ── Section header ──────────────────────────────────────────── */
+.sec-hdr {
+  display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;
+}
+.chars-pair { font-family:var(--mono); font-size:10px; color:#334155; }
+.chars-inf  { color:var(--red); }
+.chars-val  { color:#475569; }
+
+/* ── LaTeX rendered block ────────────────────────────────────── */
+.latex-rendered {
+  font-family:var(--sans); font-size:13px; line-height:1.7;
+  color:#94a3b8; overflow-x:auto; min-height:1.5em;
+}
+.latex-rendered .katex-display { margin:6px 0; overflow-x:auto; }
+.latex-rendered em { font-style:italic; color:#cbd5e1; }
+.latex-rendered strong { font-weight:600; color:#cbd5e1; }
+.latex-rendered.empty { color:#1e3a5f; font-style:italic; }
+
+/* ── Lean code block ─────────────────────────────────────────── */
+.code-block {
+  font-family:var(--mono); font-size:11px; line-height:1.6;
+  background:var(--code-bg); color:#abb2bf;
+  border:1px solid #1a2744; border-radius:5px;
+  padding:10px 12px; white-space:pre; overflow:auto;
+  max-height:220px;
+}
+.code-block::-webkit-scrollbar { width:4px; height:4px; }
+.code-block::-webkit-scrollbar-thumb { background:#1e3a5f; border-radius:2px; }
+.code-block.empty { color:#1e3a5f; font-style:italic; white-space:normal; }
+
+/* ── Lean syntax colours (One Dark palette) ──────────────────── */
+.hl-kw      { color:#c678dd; }
+.hl-tactic  { color:#61afef; }
+.hl-type    { color:#e5c07b; }
+.hl-comment { color:#5c6370; font-style:italic; }
+.hl-str     { color:#98c379; }
+.hl-num     { color:#d19a66; }
+</style>
+</head>
+<body>
+<div id="toolbar">
+  <span class="brand">Blueprint DAG</span>
+  <span class="stat" id="stat">23 nodes &middot; 28 edges</span>
+  <span class="legend"><span class="leg-dot" style="background:#22c55e"></span><span class="leg-txt">done</span><span class="leg-dot" style="background:#3b82f6"></span><span class="leg-txt">mathlib</span><span class="leg-bar"></span><span class="leg-txt">more effort</span><span class="leg-dot" style="background:#ef4444"></span><span class="leg-txt">∞ no proof</span></span>
+  <span class="legend sym-legend">
+    <span class="leg-txt">✓ Lean proof</span>
+    <span class="leg-txt">⚠ sorry</span>
+    <span class="leg-txt">ⓜ mathlib</span>
+    <span class="leg-txt">λ Lean decl</span>
+    <span class="leg-txt">★ LaTeX proof</span>
+    <span class="leg-txt">§ statement</span>
+  </span>
+  <span class="hint">click = highlight cone &middot; double-click = focus &middot; ctrl+scroll = zoom</span>
+</div>
+<div id="controls">
+  <input id="search" type="text" list="node-ids" placeholder="Search node id…" autocomplete="off" spellcheck="false">
+  <datalist id="node-ids"></datalist>
+  <select id="nodeset" title="Which declarations to include">
+    <option value="union">All declarations</option>
+    <option value="blueprint">Blueprint only</option>
+    <option value="lean">Lean only</option>
+  </select>
+  <select id="component"><option value="">All components</option></select>
+  <select id="chapter"><option value="">All chapters</option></select>
+  <select id="fileview" title="Tint the background by source file">
+    <option value="off">File view: off</option>
+    <option value="lean">File view: Lean files</option>
+    <option value="tex">File view: LaTeX files</option>
+  </select>
+  <label class="chk"><input type="checkbox" id="orphans"> show isolated <span id="iso-count"></span></label>
+  <span id="focus-pill" class="pill" style="display:none" title="Clear focus">
+    <span class="lbl"></span><span class="x">&times;</span>
+  </span>
+  <button id="reset" class="btn">Reset view</button>
+</div>
+<div id="main">
+  <div id="graph"></div>
+  <div id="stats-panel"></div>
+  <div id="file-legend" style="display:none"></div>
+  <aside id="sidebar">
+    <div id="sidebar-empty">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+           stroke="#334155" stroke-width="1.2" stroke-linecap="round">
+        <path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+        <line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/>
+      </svg>
+      <p>Click a node to inspect it</p>
+    </div>
+    <div id="sidebar-content" style="display:none"></div>
+  </aside>
+</div>
+
+<script>
+const graphData = {"nodes": [{"id": "thm:ega_H_existence", "label": "ega_H_existence\n★", "shape": "dot", "size": 11, "color": {"background": "#deb339", "border": "#9b7c26", "highlight": {"background": "#deb339", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:ega_ext_affine_acyclic", "label": "ega_ext_affine_acyclic\n★", "shape": "dot", "size": 11, "color": {"background": "#deb339", "border": "#9b7c26", "highlight": {"background": "#deb339", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:ega_descent_noetherian", "label": "ega_descent_noetherian\n★", "shape": "dot", "size": 11, "color": {"background": "#deb339", "border": "#9b7c26", "highlight": {"background": "#deb339", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:ega_basechange_q0", "label": "ega_basechange_q0\n★", "shape": "dot", "size": 11, "color": {"background": "#deb939", "border": "#9b8026", "highlight": {"background": "#deb939", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:ega_adjunction", "label": "ega_adjunction\n★", "shape": "dot", "size": 11, "color": {"background": "#deb939", "border": "#9b8026", "highlight": {"background": "#deb939", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:ob_halfexact_free", "label": "ob_halfexact_free\n★", "shape": "dot", "size": 11, "color": {"background": "#deb839", "border": "#9b7f26", "highlight": {"background": "#deb839", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:ob_nakayama_iso", "label": "ob_nakayama_iso\n★", "shape": "dot", "size": 11, "color": {"background": "#deba39", "border": "#9b8126", "highlight": {"background": "#deba39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:ega_ext_vanishing_open", "label": "ega_ext_vanishing_open\n★", "shape": "dot", "size": 11, "color": {"background": "#deb939", "border": "#9b8026", "highlight": {"background": "#deb939", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:ega_ext_coherent_fp", "label": "ega_ext_coherent_fp\n★", "shape": "dot", "size": 11, "color": {"background": "#deb939", "border": "#9b8026", "highlight": {"background": "#deb939", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "def:H", "label": "H\n§", "shape": "dot", "size": 11, "color": {"background": "#de9e39", "border": "#9b6d26", "highlight": {"background": "#de9e39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "def:h", "label": "h\n§", "shape": "dot", "size": 11, "color": {"background": "#deaa39", "border": "#9b7626", "highlight": {"background": "#deaa39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:H_represents", "label": "H_represents\n★", "shape": "dot", "size": 11, "color": {"background": "#de9a39", "border": "#9b6a26", "highlight": {"background": "#de9a39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:H_tensor_invertible", "label": "H_tensor_invertible\n★", "shape": "dot", "size": 11, "color": {"background": "#dea639", "border": "#9b7326", "highlight": {"background": "#dea639", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:H_tensor", "label": "H_tensor\n★", "shape": "dot", "size": 11, "color": {"background": "#deaa39", "border": "#9b7626", "highlight": {"background": "#deaa39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:acyclic_surjection", "label": "acyclic_surjection\n★", "shape": "dot", "size": 11, "color": {"background": "#de9439", "border": "#9b6626", "highlight": {"background": "#de9439", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:H_locallyFree", "label": "H_locallyFree\n★", "shape": "dot", "size": 11, "color": {"background": "#de7b39", "border": "#9b5526", "highlight": {"background": "#de7b39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:free_resolution_step", "label": "free_resolution_step\n★", "shape": "dot", "size": 11, "color": {"background": "#dea039", "border": "#9b6e26", "highlight": {"background": "#dea039", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:ext_limit", "label": "ext_limit\n★", "shape": "dot", "size": 11, "color": {"background": "#de8f39", "border": "#9b6226", "highlight": {"background": "#de8f39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:ext_algebra_basechange", "label": "ext_algebra_basechange\n★", "shape": "dot", "size": 11, "color": {"background": "#deaa39", "border": "#9b7626", "highlight": {"background": "#deaa39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "lem:ext_adjunction", "label": "ext_adjunction\n★", "shape": "dot", "size": 11, "color": {"background": "#dea839", "border": "#9b7426", "highlight": {"background": "#dea839", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "def:extBaseChangeMap", "label": "extBaseChangeMap\n★", "shape": "dot", "size": 11, "color": {"background": "#de7d39", "border": "#9b5626", "highlight": {"background": "#de7d39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:exchange", "label": "exchange\n★", "shape": "dot", "size": 11, "color": {"background": "#de7d39", "border": "#9b5626", "highlight": {"background": "#de7d39", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}, {"id": "thm:ext_finite_flat", "label": "ext_finite_flat\n★", "shape": "dot", "size": 11, "color": {"background": "#de9339", "border": "#9b6526", "highlight": {"background": "#de9339", "border": "#0f172a"}}, "borderWidth": 2, "font": {"size": 11, "multi": false, "face": "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", "color": "#334155"}, "shapeProperties": {}}], "edges": [{"from": "thm:ega_H_existence", "to": "def:H", "arrows": "to"}, {"from": "def:H", "to": "def:h", "arrows": "to"}, {"from": "def:H", "to": "thm:H_represents", "arrows": "to"}, {"from": "def:h", "to": "thm:H_represents", "arrows": "to"}, {"from": "def:H", "to": "lem:H_tensor_invertible", "arrows": "to"}, {"from": "def:H", "to": "lem:H_tensor", "arrows": "to"}, {"from": "thm:ega_ext_affine_acyclic", "to": "lem:acyclic_surjection", "arrows": "to"}, {"from": "def:H", "to": "thm:H_locallyFree", "arrows": "to"}, {"from": "thm:H_represents", "to": "thm:H_locallyFree", "arrows": "to"}, {"from": "lem:acyclic_surjection", "to": "thm:H_locallyFree", "arrows": "to"}, {"from": "thm:ob_halfexact_free", "to": "thm:H_locallyFree", "arrows": "to"}, {"from": "thm:ega_descent_noetherian", "to": "thm:H_locallyFree", "arrows": "to"}, {"from": "thm:ega_adjunction", "to": "thm:H_locallyFree", "arrows": "to"}, {"from": "thm:ega_descent_noetherian", "to": "lem:free_resolution_step", "arrows": "to"}, {"from": "lem:free_resolution_step", "to": "lem:ext_limit", "arrows": "to"}, {"from": "thm:ega_basechange_q0", "to": "lem:ext_limit", "arrows": "to"}, {"from": "lem:ext_limit", "to": "lem:ext_algebra_basechange", "arrows": "to"}, {"from": "thm:ega_adjunction", "to": "lem:ext_adjunction", "arrows": "to"}, {"from": "lem:ext_limit", "to": "lem:ext_adjunction", "arrows": "to"}, {"from": "lem:ext_adjunction", "to": "def:extBaseChangeMap", "arrows": "to"}, {"from": "lem:ext_algebra_basechange", "to": "def:extBaseChangeMap", "arrows": "to"}, {"from": "def:extBaseChangeMap", "to": "thm:exchange", "arrows": "to"}, {"from": "lem:ext_limit", "to": "thm:exchange", "arrows": "to"}, {"from": "thm:ob_nakayama_iso", "to": "thm:exchange", "arrows": "to"}, {"from": "thm:ob_halfexact_free", "to": "thm:exchange", "arrows": "to"}, {"from": "thm:exchange", "to": "thm:ext_finite_flat", "arrows": "to"}, {"from": "thm:ega_ext_vanishing_open", "to": "thm:ext_finite_flat", "arrows": "to"}, {"from": "thm:ega_ext_coherent_fp", "to": "thm:ext_finite_flat", "arrows": "to"}]};
+const allNodes  = {"thm:ega_H_existence": {"id": "thm:ega_H_existence", "type": "theorem", "title": "Existence of the representing module $H$ (EGA)", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: as invoked in Altman--Kleiman, §1, ref [EGA III$_2$, 7.7.8].}\n  Let $f : X \\to S$ be a finitely presented, proper morphism of schemes, and let\n  $I$, $F$ be locally finitely presented $\\Ox$-modules with $F$ flat over $S$.\n  Then over a Noetherian base the functor $M \\mapsto \\Hom_X(I, F \\tensor_S M)$ on\n  quasi-coherent $\\Os$-modules is representable by a locally finitely presented\n  $\\Os$-module, and the representing object's formation commutes with locally\n  Noetherian base change.\n  \\begin{proof}\n    Established in [EGA III$_2$, 7.7.8/7.7.9] (and [ASDS, (12)] for the\n    base-change compatibility); used here as an external input.\n  \\end{proof}", "uses": [], "lean_name": "MR0555258CompactifyingPicard.External.H_existence", "proved": false, "mathlib_ok": false, "proof_tex": "\n    Established in [EGA III$_2$, 7.7.8/7.7.9] (and [ASDS, (12)] for the\n    base-change compatibility); used here as an external input.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 0, "rdep_count": 1, "descendant_count": 6, "proof_size_tex": 131, "effort_local": 131, "proof_size_tex_total": 131, "proof_size_lean_total": null, "effort_total": 131}, "thm:ega_ext_affine_acyclic": {"id": "thm:ega_ext_affine_acyclic", "type": "theorem", "title": "Acyclicity of quasi-coherent sheaves on affines (EGA)", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: as invoked in Altman--Kleiman, §1, in the proof of (1.2).}\n  For an affine scheme $U$ and a quasi-coherent $\\mathcal{O}_U$-module $F$ one has\n  $H^q(U, F) = 0$ for all $q > 0$.\n  \\begin{proof}\n    Established in [Serre / EGA] (vanishing of higher cohomology of\n    quasi-coherent sheaves on affines); used here as an external input.\n  \\end{proof}", "uses": [], "lean_name": "MR0555258CompactifyingPicard.External.ext_affine_acyclic", "proved": false, "mathlib_ok": false, "proof_tex": "\n    Established in [Serre / EGA] (vanishing of higher cohomology of\n    quasi-coherent sheaves on affines); used here as an external input.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 0, "rdep_count": 1, "descendant_count": 2, "proof_size_tex": 135, "effort_local": 135, "proof_size_tex_total": 135, "proof_size_lean_total": null, "effort_total": 135}, "thm:ega_descent_noetherian": {"id": "thm:ega_descent_noetherian", "type": "theorem", "title": "Descent of finitely presented data to a Noetherian base (EGA)", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: as invoked in Altman--Kleiman, §1, ref [EGA IV$_3$, Sect. 8].}\n  Finitely presented data over a (possibly large) affine base $S$ — a finitely\n  presented morphism $f : X \\to S$ together with locally finitely presented\n  $\\Ox$-modules and finitely presented maps between them — descends to a\n  finitely presented $\\mathbf{Z}$-scheme $S_0$; one may therefore reduce\n  statements about such data to the case where $S$ is Noetherian.\n  \\begin{proof}\n    Established in [EGA IV$_3$, §8] (and 8.2, 8.5.2, 8.10.5, 11.2.6 for the\n    individual descent statements); used here as an external input.\n  \\end{proof}", "uses": [], "lean_name": "MR0555258CompactifyingPicard.External.descent_noetherian", "proved": false, "mathlib_ok": false, "proof_tex": "\n    Established in [EGA IV$_3$, §8] (and 8.2, 8.5.2, 8.10.5, 11.2.6 for the\n    individual descent statements); used here as an external input.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 0, "rdep_count": 2, "descendant_count": 8, "proof_size_tex": 139, "effort_local": 139, "proof_size_tex_total": 139, "proof_size_lean_total": null, "effort_total": 139}, "thm:ega_basechange_q0": {"id": "thm:ega_basechange_q0", "type": "theorem", "title": "Flat base change / limit isomorphism for $\\Hom$, $q=0$ (EGA)", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: as invoked in Altman--Kleiman, §1, ref [EGA IV$_3$, 8.5.2(i)].}\n  For a projective limit $S = \\varprojlim S_\\lambda$ of $S_0$-schemes with the\n  flatness/finite-presentation hypotheses of \\cref{lem:ext_limit}, the canonical\n  map $\\varprojlim \\Hom_{X_\\lambda}(I_\\lambda, F_\\lambda) \\to \\Hom_X(I,F)$ is an\n  isomorphism (the case $q=0$ of the $\\sExt$ limit isomorphism).\n  \\begin{proof}\n    Established in [EGA IV$_3$, 8.5.2(i)]; used here as an external input.\n  \\end{proof}", "uses": [], "lean_name": "MR0555258CompactifyingPicard.External.basechange_q0", "proved": false, "mathlib_ok": false, "proof_tex": "\n    Established in [EGA IV$_3$, 8.5.2(i)]; used here as an external input.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 0, "rdep_count": 1, "descendant_count": 6, "proof_size_tex": 70, "effort_local": 70, "proof_size_tex_total": 70, "proof_size_lean_total": null, "effort_total": 70}, "thm:ega_adjunction": {"id": "thm:ega_adjunction", "type": "theorem", "title": "Adjunction isomorphism for $\\Hom$ (EGA)", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: as invoked in Altman--Kleiman, §1, ref [EGA O$_I$, 4.4.3.1].}\n  For a base change $g : T \\to S$ and a quasi-coherent $\\Ot$-module $N$ there is a\n  canonical adjunction isomorphism\n  $\\Hom_X(I, (1\\times g)_* N) \\cong (1\\times g)_* \\Hom_{X_T}(I_T, N)$.\n  \\begin{proof}\n    Established in [EGA O$_I$, 4.4.3.1]; used here as an external input.\n  \\end{proof}", "uses": [], "lean_name": "MR0555258CompactifyingPicard.External.adjunction", "proved": false, "mathlib_ok": false, "proof_tex": "\n    Established in [EGA O$_I$, 4.4.3.1]; used here as an external input.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 0, "rdep_count": 2, "descendant_count": 5, "proof_size_tex": 68, "effort_local": 68, "proof_size_tex_total": 68, "proof_size_lean_total": null, "effort_total": 68}, "thm:ob_halfexact_free": {"id": "thm:ob_halfexact_free", "type": "theorem", "title": "Vanishing of a half-exact functor over a Noetherian local ring (OB)", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: as invoked in Altman--Kleiman, §1, ref [OB, 2.1] / [EGA III$_2$, 7.5.3].}\n  Let $A$ be a Noetherian local ring with residue field $k$, and let $T$ be a\n  half-exact, additive functor from finitely generated $A$-modules to finitely\n  generated $A$-modules. If $T(k) = 0$ then $T(M) = 0$ for every finitely\n  generated $A$-module $M$; consequently the adjacent ($\\Hom$-side) functor is\n  exact, and the corresponding finitely presented $A$-module is free.\n  \\begin{proof}\n    Established in [OB, 2.1] / [EGA III$_2$, 7.5.3]; used here as an external input.\n  \\end{proof}", "uses": [], "lean_name": "MR0555258CompactifyingPicard.External.halfexact_free", "proved": false, "mathlib_ok": false, "proof_tex": "\n    Established in [OB, 2.1] / [EGA III$_2$, 7.5.3]; used here as an external input.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 0, "rdep_count": 2, "descendant_count": 3, "proof_size_tex": 80, "effort_local": 80, "proof_size_tex_total": 80, "proof_size_lean_total": null, "effort_total": 80}, "thm:ob_nakayama_iso": {"id": "thm:ob_nakayama_iso", "type": "theorem", "title": "Nakayama-type isomorphism for a limit-preserving functor (OB)", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: as invoked in Altman--Kleiman, §1, ref [OB, 4.1].}\n  Let $R$ be an additive functor from $\\mathcal{O}_s$-modules to\n  $\\mathcal{O}_s$-modules that commutes with direct limits and sends finitely\n  generated modules to finitely generated modules, where $\\mathcal{O}_s$ is a\n  local ring. If the natural map $R(\\mathcal{O}_s) \\tensor_{\\mathcal{O}_s} k(s)\n  \\to R(k(s))$ is surjective, then the natural map\n  $R(\\mathcal{O}_s) \\tensor_{\\mathcal{O}_s} N \\to R(N)$ is an isomorphism for\n  every $\\mathcal{O}_s$-module $N$.\n  \\begin{proof}\n    Established in [OB, 4.1]; used here as an external input.\n  \\end{proof}", "uses": [], "lean_name": "MR0555258CompactifyingPicard.External.nakayama_iso", "proved": false, "mathlib_ok": false, "proof_tex": "\n    Established in [OB, 4.1]; used here as an external input.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 0, "rdep_count": 1, "descendant_count": 2, "proof_size_tex": 57, "effort_local": 57, "proof_size_tex_total": 57, "proof_size_lean_total": null, "effort_total": 57}, "thm:ega_ext_vanishing_open": {"id": "thm:ega_ext_vanishing_open", "type": "theorem", "title": "Openness of the local Ext-vanishing locus (EGA)", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: as invoked in Altman--Kleiman §1 (Thm 1.10), ref [EGA IV$_3$ 12.3.4].}\n  Under the hypotheses of \\cref{thm:ext_finite_flat} (so $f : X \\to S$ finitely\n  presented, $I, F$ locally finitely presented with $F$ $S$-flat, and the flatness\n  hypotheses on $I, f$ in the relevant degrees), the locus\n  \\[\n    \\{\\, s \\in S : \\sExt^q_{X(s)}\\!\\big(I(s), F(s)\\big) = 0 \\,\\}\n  \\]\n  is open and retrocompact in $S$.\n  \\begin{proof}\n    Established in [EGA IV$_3$, 12.3.4]; used here as an external input.\n  \\end{proof}", "uses": [], "lean_name": "MR0555258CompactifyingPicard.External.ext_vanishing_open", "proved": false, "mathlib_ok": false, "proof_tex": "\n    Established in [EGA IV$_3$, 12.3.4]; used here as an external input.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 0, "rdep_count": 1, "descendant_count": 1, "proof_size_tex": 68, "effort_local": 68, "proof_size_tex_total": 68, "proof_size_lean_total": null, "effort_total": 68}, "thm:ega_ext_coherent_fp": {"id": "thm:ega_ext_coherent_fp", "type": "theorem", "title": "Coherence / local finite presentation of local Ext (EGA)", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: as invoked in Altman--Kleiman §1 (Thm 1.10), ref [EGA III$_2$ 12.3.3].}\n  Over a Noetherian (affine) base $S$, with $f : X \\to S$ finitely presented and\n  proper and $I, F$ locally finitely presented, the relative local Ext module\n  $\\sExt^c_X(I, F)$ is coherent, i.e. locally finitely presented.\n  \\begin{proof}\n    Established in [EGA III$_2$, 12.3.3]; used here as an external input.\n  \\end{proof}", "uses": [], "lean_name": "MR0555258CompactifyingPicard.External.ext_coherent_fp", "proved": false, "mathlib_ok": false, "proof_tex": "\n    Established in [EGA III$_2$, 12.3.3]; used here as an external input.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 0, "rdep_count": 1, "descendant_count": 1, "proof_size_tex": 69, "effort_local": 69, "proof_size_tex_total": 69, "proof_size_lean_total": null, "effort_total": 69}, "def:H": {"id": "def:H", "type": "definition", "title": "The $\\Os$-module $H(I,F)$", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: Altman--Kleiman, §1, (1.1), p. 54.}\n  Let $f : X \\to S$ be a finitely presented, proper morphism of schemes, and let\n  $I$ and $F$ be locally finitely presented $\\Ox$-modules with $F$ flat over $S$.\n  Then $\\HIF(I,F)$ denotes the locally finitely presented $\\Os$-module that\n  represents the covariant functor\n  \\[\n    M \\;\\longmapsto\\; \\Hom_X(I, F \\tensor_S M)\n  \\]\n  on the category of quasi-coherent $\\Os$-modules, whose existence is supplied by\n  \\cref{thm:ega_H_existence} (over a Noetherian base) together with descent.", "uses": ["thm:ega_H_existence"], "lean_name": "MR0555258CompactifyingPicard.H", "proved": false, "mathlib_ok": false, "proof_tex": "", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 5, "descendant_count": 5, "proof_size_tex": null, "effort_local": 541, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 672}, "def:h": {"id": "def:h", "type": "definition", "title": "The universal element $h(I,F)$", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: Altman--Kleiman, §1, (1.1), p. 54.}\n  The universal element $h(I,F) \\in \\Hom_X\\!\\big(I, F \\tensor_S \\HIF(I,F)\\big)$ is\n  the element corresponding, under the representing isomorphism of \\cref{def:H}\n  for $M = \\HIF(I,F)$, to the identity of $\\HIF(I,F)$.", "uses": ["def:H"], "lean_name": "MR0555258CompactifyingPicard.h", "proved": false, "mathlib_ok": false, "proof_tex": "", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 1, "descendant_count": 2, "proof_size_tex": null, "effort_local": 269, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 941}, "thm:H_represents": {"id": "thm:H_represents", "type": "theorem", "title": "Representability and base-change compatibility of $(H,h)$", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: Altman--Kleiman, §1, (1.1.1), p. 54.}\n  For every $S$-scheme $T$ and every quasi-coherent $\\Ot$-module $M$, the Yoneda\n  map defined by $h(I,F)$,\n  \\[\n    y : \\Hom_T\\!\\big(\\HIF(I,F)_T, M\\big) \\;\\longrightarrow\\;\n        \\Hom_{X_T}\\!\\big(I_T, F \\tensor_S M\\big),\n        \\tag{1.1.1}\n  \\]\n  is an isomorphism. Equivalently, the formation of the pair $(\\HIF(I,F), h(I,F))$\n  commutes with base change: for $g : T \\to S$ one has\n  $\\HIF(I,F)_T \\cong \\HIF(I_T, F_T)$ compatibly with the universal elements.\n  \\begin{proof}\n    \n    Representability is local on the base $S$, so we may assume $S$ affine; by\n    \\cref{thm:ega_descent_noetherian} the data $X, I, F$ descend to a finite-type\n    $\\mathbf{Z}$-scheme $S_0$. Over the Noetherian base $S_0$ the pair\n    $(\\HIF(I_0, F_0), h(I_0,F_0))$ exists and its formation commutes with\n    arbitrary base change (\\cref{thm:ega_H_existence}). Base-changing back to $S$\n    and using the universal property of $h$ gives the Yoneda isomorphism\n    \\textnormal{(1.1.1)} for all $T$ and $M$; its naturality in $T$ is exactly the\n    asserted base-change compatibility.\n  \\end{proof}", "uses": ["def:H", "def:h"], "lean_name": "MR0555258CompactifyingPicard.H_represents", "proved": false, "mathlib_ok": false, "proof_tex": "\n    \\uses{thm:ega_H_existence, thm:ega_descent_noetherian}\n    Representability is local on the base $S$, so we may assume $S$ affine; by\n    \\cref{thm:ega_descent_noetherian} the data $X, I, F$ descend to a finite-type\n    $\\mathbf{Z}$-scheme $S_0$. Over the Noetherian base $S_0$ the pair\n    $(\\HIF(I_0, F_0), h(I_0,F_0))$ exists and its formation commutes with\n    arbitrary base change (\\cref{thm:ega_H_existence}). Base-changing back to $S$\n    and using the universal property of $h$ gives the Yoneda isomorphism\n    \\textnormal{(1.1.1)} for all $T$ and $M$; its naturality in $T$ is exactly the\n    asserted base-change compatibility.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 2, "rdep_count": 1, "descendant_count": 1, "proof_size_tex": 638, "effort_local": 638, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1579}, "lem:H_tensor_invertible": {"id": "lem:H_tensor_invertible", "type": "lemma", "title": "Invariance of $H$ under twist by an invertible sheaf", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: Altman--Kleiman, §1, (1.1.2), p. 54--55.}\n  For any invertible $\\Ox$-module $L$ there is a canonical isomorphism\n  \\[\n    \\HIF(I \\tensor L,\\; F \\tensor L) \\;=\\; \\HIF(I,F).\n    \\tag{1.1.2}\n  \\]\n  \\begin{proof}\n    Tensoring a homomorphism by $L$ gives a map\n    $\\Hom_X(I, F \\tensor_S M) \\to \\Hom_X(I \\tensor L, (F \\tensor L) \\tensor_S M)$,\n    natural in $M$, with inverse given by tensoring by $L^{-1}$. Thus the two\n    functors represented by $\\HIF(I,F)$ and $\\HIF(I\\tensor L, F \\tensor L)$ are\n    canonically isomorphic, whence the asserted identity by Yoneda.\n  \\end{proof}", "uses": ["def:H"], "lean_name": "MR0555258CompactifyingPicard.H_tensor_invertible", "proved": false, "mathlib_ok": false, "proof_tex": "\n    Tensoring a homomorphism by $L$ gives a map\n    $\\Hom_X(I, F \\tensor_S M) \\to \\Hom_X(I \\tensor L, (F \\tensor L) \\tensor_S M)$,\n    natural in $M$, with inverse given by tensoring by $L^{-1}$. Thus the two\n    functors represented by $\\HIF(I,F)$ and $\\HIF(I\\tensor L, F \\tensor L)$ are\n    canonically isomorphic, whence the asserted identity by Yoneda.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 0, "descendant_count": 0, "proof_size_tex": 352, "effort_local": 352, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 1024}, "lem:H_tensor": {"id": "lem:H_tensor", "type": "lemma", "title": "Right exactness of $H$ in the second-variable tensor", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: Altman--Kleiman, §1, (1.1.3), p. 55.}\n  The $\\Os$-module $\\HIF(I,F)$ is functorial in $I$ and $F$ (covariant in $I$,\n  contravariant in $F$) and right exact in each variable. In particular, for a\n  quasi-coherent $\\Os$-module $N$ there is a canonical isomorphism\n  \\[\n    \\HIF(I,F) \\tensor N \\;=\\; \\HIF(I \\tensor_S N,\\; F).\n    \\tag{1.1.3}\n  \\]\n  \\begin{proof}\n    The functor $N \\mapsto \\HIF(I \\tensor_S N, F)$ is covariant and right exact,\n    as is $N \\mapsto \\HIF(I,F) \\tensor N$; both agree on $N = \\Os$ and commute\n    with arbitrary direct sums, hence are canonically isomorphic by right\n    exactness, giving \\textnormal{(1.1.3)}.\n  \\end{proof}", "uses": ["def:H"], "lean_name": "MR0555258CompactifyingPicard.H_tensor", "proved": false, "mathlib_ok": false, "proof_tex": "\n    The functor $N \\mapsto \\HIF(I \\tensor_S N, F)$ is covariant and right exact,\n    as is $N \\mapsto \\HIF(I,F) \\tensor N$; both agree on $N = \\Os$ and commute\n    with arbitrary direct sums, hence are canonically isomorphic by right\n    exactness, giving \\textnormal{(1.1.3)}.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 0, "descendant_count": 0, "proof_size_tex": 273, "effort_local": 273, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 945}, "lem:acyclic_surjection": {"id": "lem:acyclic_surjection", "type": "lemma", "title": "Existence of an acyclic surjection", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: Altman--Kleiman, §1, (1.2), p. 55.}\n  Let $X$ be a scheme and $I$ an arbitrary $\\Ox$-module. Then there is a\n  surjection $J \\to I$ with $J$ an $\\Ox$-module such that for every affine\n  morphism $g : Y \\to X$ and every quasi-coherent $\\Oy$-module $F$, the pullback\n  $g^* J$ is acyclic for $\\Hom_Y(-,F)$; that is, $\\Ext^q_Y(g^* J, F) = 0$ for\n  $q > 0$.\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \\begin{proof}\n    \n    For each section of $I$ choose an affine open $U \\subseteq X$ over which it\n    extends; the inclusion $j_U : U \\hookrightarrow X$ gives the extension by zero\n    $J_U = (j_U)_!(\\Ox|U)$. Taking $J = \\coprod_U J_U$ over this family of affine\n    opens yields a surjection $J \\to I$. For an affine morphism $g : Y \\to X$,\n    pullback commutes with direct sums and with extension by zero, so\n    $g^* J = \\coprod_U J_{g^{-1}U}$ with $g^{-1}U$ affine. Hence\n    \\[\n      \\Hom_Y(g^* J, F) = \\prod_U \\Hom_{g^{-1}U}(\\mathcal{O}_{g^{-1}U},\n        F|g^{-1}U) = \\prod_U \\Gamma(g^{-1}U, F),\n    \\]\n    and therefore $\\Ext^q_Y(g^* J, F) = \\prod_U H^q(g^{-1}U, F|g^{-1}U)$. Since\n    each $g^{-1}U$ is affine and $F$ is quasi-coherent, this vanishes for $q>0$ by\n    \\cref{thm:ega_ext_affine_acyclic}.\n  \\end{proof}", "uses": ["thm:ega_ext_affine_acyclic"], "lean_name": "MR0555258CompactifyingPicard.exists_acyclic_surjection", "proved": false, "mathlib_ok": false, "proof_tex": "\n    \\uses{thm:ega_ext_affine_acyclic}\n    For each section of $I$ choose an affine open $U \\subseteq X$ over which it\n    extends; the inclusion $j_U : U \\hookrightarrow X$ gives the extension by zero\n    $J_U = (j_U)_!(\\Ox|U)$. Taking $J = \\coprod_U J_U$ over this family of affine\n    opens yields a surjection $J \\to I$. For an affine morphism $g : Y \\to X$,\n    pullback commutes with direct sums and with extension by zero, so\n    $g^* J = \\coprod_U J_{g^{-1}U}$ with $g^{-1}U$ affine. Hence\n    \\[\n      \\Hom_Y(g^* J, F) = \\prod_U \\Hom_{g^{-1}U}(\\mathcal{O}_{g^{-1}U},\n        F|g^{-1}U) = \\prod_U \\Gamma(g^{-1}U, F),\n    \\]\n    and therefore $\\Ext^q_Y(g^* J, F) = \\prod_U H^q(g^{-1}U, F|g^{-1}U)$. Since\n    each $g^{-1}U$ is affine and $F$ is quasi-coherent, this vanishes for $q>0$ by\n    \\cref{thm:ega_ext_affine_acyclic}.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 1, "descendant_count": 1, "proof_size_tex": 828, "effort_local": 828, "proof_size_tex_total": 963, "proof_size_lean_total": null, "effort_total": 963}, "thm:H_locallyFree": {"id": "thm:H_locallyFree", "type": "theorem", "title": "Local freeness of $H(I,F)$", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: Altman--Kleiman, §1, (1.3), p. 55--56.}\n  Let $f : X \\to S$ be a finitely presented, proper morphism, and let $I$, $F$ be\n  locally finitely presented, $S$-flat $\\Ox$-modules. If\n  \\[\n    \\Ext^1_{X(s)}\\!\\big(I(s), F(s)\\big) = 0\n  \\]\n  for some point $s \\in S$, then there is an open, retrocompact neighbourhood $U$\n  of $s$ such that $\\HIF(I,F)|U$ is locally free of finite rank.\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \\begin{proof}\n    \n    The notion of retrocompact (the inclusion is quasi-compact) is stable under\n    base change, and every subset of a locally Noetherian space is retrocompact;\n    the assertion is local on $S$, so we may assume $S$ affine. Using\n    \\cref{thm:ega_descent_noetherian} together with the base-change compatibility\n    of $\\HIF(I,F)$ (\\cref{thm:H_represents}) we reduce to $S$ Noetherian. Since\n    $\\HIF(I,F)$ is locally finitely presented, it suffices to prove it is free at\n    $s$; so let $S = \\Spec A$ with $A$ Noetherian local and $s$ its closed point.\n\n    Consider $T(M) = \\Ext^1_X(I, F \\tensor_S \\widetilde M)$ as a functor on\n    finitely generated $A$-modules; $T(M)$ is finitely generated since $f$ is\n    proper and $S$ is Noetherian. We show $T(k(s)) = 0$. Take an exact sequence\n    $0 \\to K \\to J \\to I \\to 0$ with $J$ as in \\cref{lem:acyclic_surjection};\n    since $I$ is $S$-flat it stays exact on the closed fibre $X(s)$. Writing $j$\n    for the inclusion $X(s) \\hookrightarrow X$ and using the adjunction\n    isomorphisms (the vertical maps below), one gets a commutative diagram with\n    exact rows comparing $\\Hom_X(-, j_*F(s))$ and $\\Hom_{X(s)}(j^*-, F(s))$. As\n    $j^* I = I(s)$ and $\\Ext^1_{X(s)}(I(s),F(s)) = 0$, it follows that\n    $\\Ext^1_X(I, j_*F(s)) = 0$; but this group is exactly $T(k(s))$.\n\n    Now $T$ is half-exact and $T(k(s)) = 0$, so by \\cref{thm:ob_halfexact_free}\n    $T(M) = 0$ for every finitely generated $A$-module $M$. Hence\n    $M \\mapsto \\Hom_X(I, F \\tensor_S \\widetilde M)$ is exact, i.e.\n    $M \\mapsto \\Hom_S(\\HIF(I,F), \\widetilde M)$ is exact, and therefore\n    $\\HIF(I,F)$ is free at $s$.\n  \\end{proof}", "uses": ["def:H", "thm:H_represents", "lem:acyclic_surjection", "thm:ob_halfexact_free", "thm:ega_descent_noetherian", "thm:ega_adjunction"], "lean_name": "MR0555258CompactifyingPicard.H_locallyFree_of_ext_vanishing", "proved": false, "mathlib_ok": false, "proof_tex": "\n    \\uses{def:H, thm:H_represents, lem:acyclic_surjection, thm:ob_halfexact_free, thm:ega_descent_noetherian, thm:ega_adjunction}\n    The notion of retrocompact (the inclusion is quasi-compact) is stable under\n    base change, and every subset of a locally Noetherian space is retrocompact;\n    the assertion is local on $S$, so we may assume $S$ affine. Using\n    \\cref{thm:ega_descent_noetherian} together with the base-change compatibility\n    of $\\HIF(I,F)$ (\\cref{thm:H_represents}) we reduce to $S$ Noetherian. Since\n    $\\HIF(I,F)$ is locally finitely presented, it suffices to prove it is free at\n    $s$; so let $S = \\Spec A$ with $A$ Noetherian local and $s$ its closed point.\n\n    Consider $T(M) = \\Ext^1_X(I, F \\tensor_S \\widetilde M)$ as a functor on\n    finitely generated $A$-modules; $T(M)$ is finitely generated since $f$ is\n    proper and $S$ is Noetherian. We show $T(k(s)) = 0$. Take an exact sequence\n    $0 \\to K \\to J \\to I \\to 0$ with $J$ as in \\cref{lem:acyclic_surjection};\n    since $I$ is $S$-flat it stays exact on the closed fibre $X(s)$. Writing $j$\n    for the inclusion $X(s) \\hookrightarrow X$ and using the adjunction\n    isomorphisms (the vertical maps below), one gets a commutative diagram with\n    exact rows comparing $\\Hom_X(-, j_*F(s))$ and $\\Hom_{X(s)}(j^*-, F(s))$. As\n    $j^* I = I(s)$ and $\\Ext^1_{X(s)}(I(s),F(s)) = 0$, it follows that\n    $\\Ext^1_X(I, j_*F(s)) = 0$; but this group is exactly $T(k(s))$.\n\n    Now $T$ is half-exact and $T(k(s)) = 0$, so by \\cref{thm:ob_halfexact_free}\n    $T(M) = 0$ for every finitely generated $A$-module $M$. Hence\n    $M \\mapsto \\Hom_X(I, F \\tensor_S \\widetilde M)$ is exact, i.e.\n    $M \\mapsto \\Hom_S(\\HIF(I,F), \\widetilde M)$ is exact, and therefore\n    $\\HIF(I,F)$ is free at $s$.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 6, "rdep_count": 0, "descendant_count": 0, "proof_size_tex": 1766, "effort_local": 1766, "proof_size_tex_total": null, "proof_size_lean_total": null, "effort_total": 4595}, "lem:free_resolution_step": {"id": "lem:free_resolution_step", "type": "lemma", "title": "Free resolution step over an affine base", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: Altman--Kleiman, §1, (1.4), p. 56--57.}\n  Let $f : X \\to S$ be a finitely presented morphism of affine schemes and let\n  $I$ be an $S$-flat, finitely presented $\\Ox$-module. Then there is an exact\n  sequence\n  \\[\n    0 \\to K \\to J \\to I \\to 0\n    \\tag{1.4.1}\n  \\]\n  with $K$ and $J$ finitely presented and $J$ free.\n  \n  \n  \n  \n  \n  \n  \\begin{proof}\n    \n    By \\cref{thm:ega_descent_noetherian} all data descend to a Noetherian affine\n    $S_0$, where $X_0$ is Noetherian. A finite free presentation provides a\n    sequence as in \\textnormal{(1.4.1)} over $X_0$ with $K, J$ finitely presented\n    (over a Noetherian scheme finitely generated implies finitely presented).\n    Since $I$ is flat over $S$, pulling this sequence back along $S \\to S_0$\n    preserves exactness and yields the desired sequence on $X$.\n  \\end{proof}", "uses": ["thm:ega_descent_noetherian"], "lean_name": "MR0555258CompactifyingPicard.exists_free_resolution_step", "proved": false, "mathlib_ok": false, "proof_tex": "\n    \\uses{thm:ega_descent_noetherian}\n    By \\cref{thm:ega_descent_noetherian} all data descend to a Noetherian affine\n    $S_0$, where $X_0$ is Noetherian. A finite free presentation provides a\n    sequence as in \\textnormal{(1.4.1)} over $X_0$ with $K, J$ finitely presented\n    (over a Noetherian scheme finitely generated implies finitely presented).\n    Since $I$ is flat over $S$, pulling this sequence back along $S \\to S_0$\n    preserves exactness and yields the desired sequence on $X$.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 1, "descendant_count": 6, "proof_size_tex": 491, "effort_local": 491, "proof_size_tex_total": 630, "proof_size_lean_total": null, "effort_total": 630}, "lem:ext_limit": {"id": "lem:ext_limit", "type": "lemma", "title": "Local Ext commutes with limits", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: Altman--Kleiman, §1, (1.5), p. 57.}\n  Let $X_0$ be affine and $S = \\varprojlim S_\\lambda$ a projective limit of\n  $S_0$-schemes. Let $f_0 : X_0 \\to S_0$ be finitely presented, let $I_0, F_0$ be\n  locally finitely presented $\\mathcal{O}_{X_0}$-modules, and form the induced\n  limits $X = \\varprojlim X_\\lambda$, $I = \\varprojlim I_\\lambda$,\n  $F = \\varprojlim F_\\lambda$. Fix $q$, and assume $I_0$ is $S_0$-flat if\n  $q \\geq 1$ and $X_0$ is $S_0$-flat if $q \\geq 2$. Then there is a canonical\n  isomorphism\n  \\[\n    \\varprojlim \\sExt^q_{X_\\lambda}(I_\\lambda, F_\\lambda)\n      \\;=\\; \\sExt^q_X(I,F).\n  \\]\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \\begin{proof}\n    \n    The assertion is local, so we may assume the $S_\\lambda$ affine, and we\n    induct on $q$. For $q = 0$ it is \\cref{thm:ega_basechange_q0}. For $q=1$,\n    \\cref{lem:free_resolution_step} gives an exact sequence\n    $0 \\to K_0 \\to J_0 \\to I_0 \\to 0$ on $X_0$ with $J_0$ free; since $I_0$ is\n    $S_0$-flat this stays exact after base change, producing compatible exact\n    $\\Hom$-to-$\\sExt^1$ sequences whose $q=0$ terms agree in the limit by the\n    previous case, forcing the $\\sExt^1$ terms to agree. For $q \\geq 2$, freeness\n    of $J_0$ makes $\\sExt^{\\geq 1}(J_0, -)$ vanish, so the connecting maps give\n    $\\sExt^{q-1}(K_\\lambda, -) \\cong \\sExt^q(I_\\lambda, -)$; flatness of $X_0$\n    makes $J_0$, hence $K_0$, flat, and the inductive hypothesis applied to $K$\n    in degree $q-1$ gives the isomorphism in degree $q$. The induced maps are\n    independent of the chosen sequence since any two free presentations are\n    homotopic.\n  \\end{proof}", "uses": ["lem:free_resolution_step", "thm:ega_basechange_q0"], "lean_name": "MR0555258CompactifyingPicard.ext_limit", "proved": false, "mathlib_ok": false, "proof_tex": "\n    \\uses{lem:free_resolution_step, thm:ega_basechange_q0}\n    The assertion is local, so we may assume the $S_\\lambda$ affine, and we\n    induct on $q$. For $q = 0$ it is \\cref{thm:ega_basechange_q0}. For $q=1$,\n    \\cref{lem:free_resolution_step} gives an exact sequence\n    $0 \\to K_0 \\to J_0 \\to I_0 \\to 0$ on $X_0$ with $J_0$ free; since $I_0$ is\n    $S_0$-flat this stays exact after base change, producing compatible exact\n    $\\Hom$-to-$\\sExt^1$ sequences whose $q=0$ terms agree in the limit by the\n    previous case, forcing the $\\sExt^1$ terms to agree. For $q \\geq 2$, freeness\n    of $J_0$ makes $\\sExt^{\\geq 1}(J_0, -)$ vanish, so the connecting maps give\n    $\\sExt^{q-1}(K_\\lambda, -) \\cong \\sExt^q(I_\\lambda, -)$; flatness of $X_0$\n    makes $J_0$, hence $K_0$, flat, and the inductive hypothesis applied to $K$\n    in degree $q-1$ gives the isomorphism in degree $q$. The induced maps are\n    independent of the chosen sequence since any two free presentations are\n    homotopic.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 2, "rdep_count": 3, "descendant_count": 5, "proof_size_tex": 993, "effort_local": 993, "proof_size_tex_total": 1693, "proof_size_lean_total": null, "effort_total": 1693}, "lem:ext_algebra_basechange": {"id": "lem:ext_algebra_basechange", "type": "lemma", "title": "Affine base change for Ext-modules", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: Altman--Kleiman, §1, (1.6), p. 58.}\n  Let $A$ be a ring, $B$ a finitely presented $A$-algebra, and $M, N$ finitely\n  presented $B$-modules. Fix $q$, and assume $M$ is $A$-flat if $q \\geq 1$ and $B$\n  is $A$-flat if $q \\geq 2$. Then there is a canonical isomorphism of sheaves on\n  $\\Spec B$,\n  \\[\n    \\widetilde{\\Ext^q_A(M, N)} \\;=\\; \\sExt^q_B(\\widetilde M, \\widetilde N).\n  \\]\n  \n  \n  \n  \\begin{proof}\n    \n    The case $q = 0$ is [EGA I, 1.3.12(ii)]. The general case is proved exactly\n    as \\cref{lem:ext_limit}: take a finite free presentation of $M$ as a\n    $B$-module and induct on $q$, using the flatness hypotheses to keep the\n    syzygies flat.\n  \\end{proof}", "uses": ["lem:ext_limit"], "lean_name": "MR0555258CompactifyingPicard.ext_basechange_algebra", "proved": false, "mathlib_ok": false, "proof_tex": "\n    \\uses{lem:ext_limit}\n    The case $q = 0$ is [EGA I, 1.3.12(ii)]. The general case is proved exactly\n    as \\cref{lem:ext_limit}: take a finite free presentation of $M$ as a\n    $B$-module and induct on $q$, using the flatness hypotheses to keep the\n    syzygies flat.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 1, "rdep_count": 1, "descendant_count": 3, "proof_size_tex": 268, "effort_local": 268, "proof_size_tex_total": 1961, "proof_size_lean_total": null, "effort_total": 1961}, "lem:ext_adjunction": {"id": "lem:ext_adjunction", "type": "lemma", "title": "Adjunction for local Ext under base change", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: Altman--Kleiman, §1, (1.7), p. 58.}\n  Let $f : X \\to S$ be finitely presented and $I, F$ locally finitely presented\n  $\\Ox$-modules. Fix $q$, and assume $I$ is $S$-flat if $q \\geq 1$ and $f$ is flat\n  if $q \\geq 2$. Then for each base change $g : T \\to S$ and each quasi-coherent\n  $\\Ot$-module $M$ there is a canonical adjunction isomorphism\n  \\[\n    \\sExt^q_X\\!\\big(I, (1\\times g)_*(F \\tensor_S M)\\big)\n      \\;\\xrightarrow{\\;\\sim\\;}\\;\n      (1\\times g)_* \\sExt^q_{X_T}\\!\\big(I_T, F \\tensor_S M\\big),\n      \\tag{1.7.1}\n  \\]\n  compatible with further base change and with passage to limits as in\n  \\cref{lem:ext_limit}.\n  \n  \n  \n  \n  \n  \\begin{proof}\n    \n    For $q = 0$ this is the usual adjunction isomorphism\n    (\\cref{thm:ega_adjunction}). For general $q$ one builds the map by the method\n    of \\cref{lem:ext_limit} (a free presentation of $I$ and induction on $q$),\n    and the compatibilities reduce to those for $q = 0$.\n  \\end{proof}", "uses": ["thm:ega_adjunction", "lem:ext_limit"], "lean_name": "MR0555258CompactifyingPicard.ext_adjunction", "proved": false, "mathlib_ok": false, "proof_tex": "\n    \\uses{thm:ega_adjunction, lem:ext_limit}\n    For $q = 0$ this is the usual adjunction isomorphism\n    (\\cref{thm:ega_adjunction}). For general $q$ one builds the map by the method\n    of \\cref{lem:ext_limit} (a free presentation of $I$ and induction on $q$),\n    and the compatibilities reduce to those for $q = 0$.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 2, "rdep_count": 1, "descendant_count": 3, "proof_size_tex": 315, "effort_local": 315, "proof_size_tex_total": 2076, "proof_size_lean_total": null, "effort_total": 2076}, "def:extBaseChangeMap": {"id": "def:extBaseChangeMap", "type": "definition", "title": "The base-change map for local Ext's", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: Altman--Kleiman, §1, (1.8), p. 58--59.}\n  Let $f : X \\to S$ be finitely presented, $I, F$ locally finitely presented\n  $\\Ox$-modules, $g : T \\to S$ a morphism, and $M$ a quasi-coherent $\\Ot$-module.\n  The canonical map $F \\to (1\\times g)_*(1\\times g)^* F$ induces\n  \\[\n    \\sExt^q_X(I,F) \\tensor_S M \\to\n      \\sExt^q_X\\!\\big(I, (1\\times g)_*(1\\times g)^* F\\big) \\tensor_S M,\n      \\tag{1.8.1}\n  \\]\n  and writing out the canonical map $R(\\Ot) \\tensor_S M \\to R(M)$ with\n  $R(M) = (1\\times g)^* \\sExt^q_X(I, (1\\times g)_*(F \\tensor_S M))$ gives\n  \\[\n    \\sExt^q_X\\!\\big(I, (1\\times g)_*(1\\times g)^* F\\big) \\tensor_S M \\to\n      (1\\times g)^* \\sExt^q_X\\!\\big(I, (1\\times g)_*(F \\tensor_S M)\\big).\n      \\tag{1.8.2}\n  \\]\n  Assuming $I$ is $S$-flat for $q \\geq 1$ and $f$ flat for $q \\geq 2$, composing\n  \\textnormal{(1.8.1)} and \\textnormal{(1.8.2)} with the adjoint of\n  \\textnormal{(1.7.1)} (\\cref{lem:ext_adjunction}) defines the canonical\n  base-change map\n  \\[\n    b^q(M) : \\sExt^q_X(I,F) \\tensor_S M \\to\n      \\sExt^q_{X_T}\\!\\big(I_T, F \\tensor_S M\\big).\n  \\]\n  It commutes with restriction to open subschemes, to $\\Spec(\\Os)$, and to other\n  localizations of $S$, is compatible with further base change and limits as in\n  \\cref{lem:ext_limit}, and when $g$ is flat, $b^q(\\Ot)$ is an isomorphism.\n  \\begin{proof}\n    \n    The map is the composite \\textnormal{(1.8.1)}, \\textnormal{(1.8.2)}, adjoint\n    of \\textnormal{(1.7.1)}, well defined under the stated flatness hypotheses.\n    For flat $g$ the isomorphism $b^q(\\Ot)$ is local on $S, X, T$ and holds in\n    the affine case by \\cref{lem:ext_algebra_basechange} and flat base change for\n    modules.\n  \\end{proof}", "uses": ["lem:ext_adjunction", "lem:ext_algebra_basechange"], "lean_name": "MR0555258CompactifyingPicard.extBaseChangeMap", "proved": false, "mathlib_ok": false, "proof_tex": "\n    \\uses{lem:ext_adjunction, lem:ext_algebra_basechange}\n    The map is the composite \\textnormal{(1.8.1)}, \\textnormal{(1.8.2)}, adjoint\n    of \\textnormal{(1.7.1)}, well defined under the stated flatness hypotheses.\n    For flat $g$ the isomorphism $b^q(\\Ot)$ is local on $S, X, T$ and holds in\n    the affine case by \\cref{lem:ext_algebra_basechange} and flat base change for\n    modules.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 2, "rdep_count": 1, "descendant_count": 2, "proof_size_tex": 388, "effort_local": 1686, "proof_size_tex_total": 2732, "proof_size_lean_total": null, "effort_total": 4030}, "thm:exchange": {"id": "thm:exchange", "type": "theorem", "title": "Property of exchange for local Ext's", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: Altman--Kleiman, §1, (1.9), p. 59--61.}\n  Let $f : X \\to S$ be finitely presented and $I, F$ locally finitely presented\n  $\\Ox$-modules with $F$ $S$-flat. Fix $q$ and assume $I$ is $S$-flat if\n  $q \\geq 1$ and $f$ flat if $q \\geq 2$. Fix $s \\in S$ and $x \\in X(s)$, and\n  assume the base-change map to the fibre\n  \\[\n    b^q(k(s)) : \\sExt^q_X(I,F) \\tensor_S k(s) \\to\n      \\sExt^q_{X(s)}\\!\\big(I(s), F(s)\\big)\n  \\]\n  is surjective at $x$. Then:\n  \\begin{enumerate}\n    \\item[(i)] for every $g : T \\to S$ and every quasi-coherent $\\Ot$-module $M$,\n      $b^q(M)$ is an isomorphism at every point of $(1\\times g)^{-1}(x)$;\n    \\item[(ii)] the following are equivalent: \\textnormal{(1)} $b^{q-1}(k(s))$ is\n      surjective at $x$; \\textnormal{(2)} $b^{q-1}(M)$ is an isomorphism at every\n      point of $(1\\times g)^{-1}(x)$ for all $g, M$; \\textnormal{(3)}\n      $\\sExt^q_X(I,F)$ is $S$-flat at $x$.\n  \\end{enumerate}\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \\begin{proof}\n    \n    \\emph{(i)} We may assume $S, X$ affine and, writing $S = \\varprojlim\n    S_\\lambda$ over finitely generated $\\mathbf{Z}$-algebras, descend the data; by\n    \\cref{lem:ext_limit} the fibre maps $b^q(k(s_\\lambda))$ have limit\n    $b^q(k(s))$, so the hypotheses descend and we may take $S$ Noetherian. Set\n    $R(N) = \\Ext^q_{\\mathcal{O}_x}(I_x, F_x \\tensor_{\\mathcal{O}_x} N)$ on\n    $\\mathcal{O}_s$-modules; $R$ commutes with direct limits and preserves finite\n    generation. Surjectivity of $b^q(k(s))$ at $x$ makes\n    $R(\\mathcal{O}_s) \\tensor k(s) \\to R(k(s))$ surjective, and since the maximal\n    ideal of $\\mathcal{O}_x$ contracts to that of $\\mathcal{O}_s$,\n    \\cref{thm:ob_nakayama_iso} gives that $R(\\mathcal{O}_s)\\tensor N \\to R(N)$ is\n    an isomorphism for all $N$. Taking $N = M_t$ and comparing with the stalk of\n    the adjunction isomorphism \\textnormal{(1.7.1)} shows $b^q(M)$ is an\n    isomorphism at $x$, hence at every point of $(1\\times g)^{-1}(x)$.\n\n    \\emph{(ii)} The implication $(1)\\Rightarrow(2)$ is part (i) applied in degree\n    $q-1$. For the rest assume $S = \\Spec(\\mathcal{O}_s)$ and apply $b^\\bullet$ to\n    an exact sequence $0 \\to M' \\to M \\to M'' \\to 0$: by (i) the maps $b^q(M')$\n    and $b^q(M)$ are isomorphisms at $x$, and a diagram chase using\n    right-exactness of $\\tensor$ yields $(2)\\Rightarrow(3)$ (flatness of\n    $\\sExt^q_X(I,F)$ at $x$) and $(3)\\Rightarrow(1)$ (taking $M = \\mathcal{O}_s$,\n    $M'' = k(s)$). The half-exactness input of \\cref{thm:ob_halfexact_free}\n    underlies the identification of the relevant functors.\n  \\end{proof}", "uses": ["def:extBaseChangeMap", "lem:ext_limit", "thm:ob_nakayama_iso", "thm:ob_halfexact_free"], "lean_name": "MR0555258CompactifyingPicard.exchange", "proved": false, "mathlib_ok": false, "proof_tex": "\n    \\uses{def:extBaseChangeMap, lem:ext_limit, thm:ob_nakayama_iso, thm:ob_halfexact_free, lem:ext_adjunction}\n    \\emph{(i)} We may assume $S, X$ affine and, writing $S = \\varprojlim\n    S_\\lambda$ over finitely generated $\\mathbf{Z}$-algebras, descend the data; by\n    \\cref{lem:ext_limit} the fibre maps $b^q(k(s_\\lambda))$ have limit\n    $b^q(k(s))$, so the hypotheses descend and we may take $S$ Noetherian. Set\n    $R(N) = \\Ext^q_{\\mathcal{O}_x}(I_x, F_x \\tensor_{\\mathcal{O}_x} N)$ on\n    $\\mathcal{O}_s$-modules; $R$ commutes with direct limits and preserves finite\n    generation. Surjectivity of $b^q(k(s))$ at $x$ makes\n    $R(\\mathcal{O}_s) \\tensor k(s) \\to R(k(s))$ surjective, and since the maximal\n    ideal of $\\mathcal{O}_x$ contracts to that of $\\mathcal{O}_s$,\n    \\cref{thm:ob_nakayama_iso} gives that $R(\\mathcal{O}_s)\\tensor N \\to R(N)$ is\n    an isomorphism for all $N$. Taking $N = M_t$ and comparing with the stalk of\n    the adjunction isomorphism \\textnormal{(1.7.1)} shows $b^q(M)$ is an\n    isomorphism at $x$, hence at every point of $(1\\times g)^{-1}(x)$.\n\n    \\emph{(ii)} The implication $(1)\\Rightarrow(2)$ is part (i) applied in degree\n    $q-1$. For the rest assume $S = \\Spec(\\mathcal{O}_s)$ and apply $b^\\bullet$ to\n    an exact sequence $0 \\to M' \\to M \\to M'' \\to 0$: by (i) the maps $b^q(M')$\n    and $b^q(M)$ are isomorphisms at $x$, and a diagram chase using\n    right-exactness of $\\tensor$ yields $(2)\\Rightarrow(3)$ (flatness of\n    $\\sExt^q_X(I,F)$ at $x$) and $(3)\\Rightarrow(1)$ (taking $M = \\mathcal{O}_s$,\n    $M'' = k(s)$). The half-exactness input of \\cref{thm:ob_halfexact_free}\n    underlies the identification of the relevant functors.\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 4, "rdep_count": 1, "descendant_count": 1, "proof_size_tex": 1686, "effort_local": 1686, "proof_size_tex_total": 4555, "proof_size_lean_total": null, "effort_total": 5853}, "thm:ext_finite_flat": {"id": "thm:ext_finite_flat", "type": "theorem", "title": "Finiteness and flatness of local Ext", "chapter": "Base-change theory (\\S1)", "statement": "\\textit{Source: Altman--Kleiman, §1, (1.10), p. 61.}\n  Let $f : X \\to S$ be finitely presented and proper, and $I, F$ locally finitely\n  presented $\\Ox$-modules with $F$ $S$-flat. Fix $q$ and assume $I$ is $S$-flat if\n  $q \\geq 1$ and $f$ flat if $q \\geq 2$. Then:\n  \\begin{enumerate}\n    \\item[(i)] the set $V = \\{ s \\in S : \\sExt^q_{X(s)}(I(s),F(s)) = 0 \\}$ is open\n      and retrocompact, and for each base change $g : T \\to S$ factoring through\n      $V$ and each quasi-coherent $\\Ot$-module $M$ one has\n      $\\sExt^q_{X_T}(I_T, F \\tensor_S M) = 0$;\n    \\item[(ii)] fixing $c$, the set $V$ of $s$ with\n      $\\sExt^p_{X(s)}(I(s),F(s)) = 0$ for $p = c+1, c-1$ is open and retrocompact;\n      on it the restriction $\\sExt^c_X(I,F)|f^{-1}(V)$ is locally finitely\n      presented and flat over $V$, and $b^c(M)$ is an isomorphism for every base\n      change $g : T \\to S$ and every quasi-coherent $\\Ot$-module $M$.\n  \\end{enumerate}\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \\begin{proof}\n    \n    \\emph{(i)} Let $U = \\{ x \\in X : \\sExt^q_{X(f(x))}(I(f(x)),F(f(x))) = 0 \\}$;\n    the argument of [EGA IV$_3$, 12.3.4] shows $U$ is open and retrocompact. As\n    $f$ is proper and finitely presented, the set $V$ of $s$ with $f^{-1}(s)\n    \\subseteq U$ is open and retrocompact, and the vanishing statement follows\n    from \\cref{thm:exchange}(i).\n\n    \\emph{(ii)} By (i), $V$ is open and retrocompact. Applying\n    \\cref{thm:exchange}(ii) twice — first in degree $c+1$, then in degree $c$ —\n    shows $\\sExt^c_X(I,F)$ is flat over $V$ and $b^c(M)$ is an isomorphism for all\n    $g$ factoring through $V$ and all $M$. Local finite presentation is local on\n    $S$ and base-change compatible, so one reduces to $S$ affine Noetherian, where\n    it is [EGA III$_2$, 12.3.3].\n  \\end{proof}", "uses": ["thm:exchange", "thm:ega_ext_vanishing_open", "thm:ega_ext_coherent_fp"], "lean_name": "MR0555258CompactifyingPicard.ext_finite_flat", "proved": false, "mathlib_ok": false, "proof_tex": "\n    \\uses{thm:exchange, thm:ega_ext_vanishing_open, thm:ega_ext_coherent_fp}\n    \\emph{(i)} Let $U = \\{ x \\in X : \\sExt^q_{X(f(x))}(I(f(x)),F(f(x))) = 0 \\}$;\n    the argument of [EGA IV$_3$, 12.3.4] shows $U$ is open and retrocompact. As\n    $f$ is proper and finitely presented, the set $V$ of $s$ with $f^{-1}(s)\n    \\subseteq U$ is open and retrocompact, and the vanishing statement follows\n    from \\cref{thm:exchange}(i).\n\n    \\emph{(ii)} By (i), $V$ is open and retrocompact. Applying\n    \\cref{thm:exchange}(ii) twice — first in degree $c+1$, then in degree $c$ —\n    shows $\\sExt^c_X(I,F)$ is flat over $V$ and $b^c(M)$ is an isomorphism for all\n    $g$ factoring through $V$ and all $M$. Local finite presentation is local on\n    $S$ and base-change compatible, so one reduces to $S$ affine Noetherian, where\n    it is [EGA III$_2$, 12.3.3].\n  ", "lean_source": "", "proof_size_lean": null, "has_sorry": false, "tex_file": "chapters/MR0555258CompactifyingPicard_Basic.tex", "lean_file": "", "dep_count": 3, "rdep_count": 0, "descendant_count": 0, "proof_size_tex": 846, "effort_local": 846, "proof_size_tex_total": 5538, "proof_size_lean_total": null, "effort_total": 6836}};
+const katexMacros = {};   // blueprint-defined \newcommand etc.
+
+const $ = id => document.getElementById(id);
+
+// ── Graph structure: adjacency, degree, components ──────────────────────────
+
+const succ = {}, pred = {}, deg = {};
+for (const id in allNodes) { succ[id] = []; pred[id] = []; deg[id] = 0; }
+for (const e of graphData.edges) {
+  if (succ[e.from]) succ[e.from].push(e.to);
+  if (pred[e.to])   pred[e.to].push(e.from);
+  deg[e.from] = (deg[e.from] || 0) + 1;
+  deg[e.to]   = (deg[e.to]   || 0) + 1;
+}
+const isOrphan = id => !(deg[id] > 0);
+
+// weakly-connected components via union-find (orphans excluded)
+const parent = {};
+function find(x) { while (parent[x] !== x) x = parent[x] = parent[parent[x]]; return x; }
+for (const id in allNodes) parent[id] = id;
+for (const e of graphData.edges)
+  if (parent[e.from] !== undefined && parent[e.to] !== undefined)
+    parent[find(e.from)] = find(e.to);
+
+const compMembers = {};
+for (const id in allNodes) {
+  if (isOrphan(id)) continue;
+  const r = find(id);
+  (compMembers[r] = compMembers[r] || []).push(id);
+}
+const components = Object.values(compMembers).sort((a, b) => b.length - a.length);
+const compOf = {};
+components.forEach((m, i) => m.forEach(id => compOf[id] = i));
+
+// Isolated nodes are kept out of the force simulation (they'd only drift under
+// repulsion); layoutOrphans() grid-places them after each settle instead.
+for (const vn of graphData.nodes) if (isOrphan(vn.id)) vn.physics = false;
+
+// Surface the isolated-node count right on the toggle, so it's obvious how many
+// there are (and that they exist) without having to switch the view on.
+const _isoCount = Object.keys(allNodes).filter(isOrphan).length;
+$("iso-count").textContent = `(${_isoCount})`;
+if (!_isoCount) $("orphans").disabled = true;
+
+// ── Project-stats overlay ────────────────────────────────────────────────────
+
+// A node needs no more work if it's leanok, in mathlib, or already has a Lean
+// proof (effort 0).
+const isDone = n => n.proved || n.mathlib_ok || n.effort_local === 0;
+
+function renderStats() {
+  const vals = Object.values(allNodes);
+  const bp   = vals.filter(n => n.type !== "lean_aux");
+  const proved  = bp.filter(n => n.proved).length;
+  const mathlib = bp.filter(n => n.mathlib_ok).length;
+  const sorry  = vals.filter(n => n.has_sorry).length;
+  const doneIds = new Set(vals.filter(isDone).map(n => n.id));
+  const ready = bp.filter(n => !isDone(n) &&
+                  n.uses.every(d => !(d in allNodes) || doneIds.has(d))).length;
+  const gaps   = bp.filter(n => !n.lean_name && !n.mathlib_ok).length;
+  const leanok = bp.filter(n => !n.proved && !n.mathlib_ok && n.effort_local === 0).length;
+  const isolated   = vals.filter(n => isOrphan(n.id)).length;
+  const isolatedBp = bp.filter(n => isOrphan(n.id)).length;
+
+  let done = 0, remLower = 0, infNodes = 0;
+  for (const n of vals) {
+    if (n.proof_size_lean != null) done += n.proof_size_lean;
+    if (n.effort_local == null) infNodes++; else remLower += n.effort_local;
+  }
+  const pct = bp.length ? Math.round(100 * proved / bp.length) : 0;
+  const fmt = v => v.toLocaleString();
+
+  $("stats-panel").innerHTML = `
+    <h4>Project</h4>
+    <div class="row"><span>Proved (leanok)</span><span class="v done">${proved}/${bp.length} · ${pct}%</span></div>
+    <div class="bar"><span style="width:${pct}%"></span></div>
+    ${mathlib ? `<div class="row"><span>Mathlib-backed</span><span class="v done">${mathlib}</span></div>` : ''}
+    <div class="row"><span>With sorry</span><span class="v ${sorry ? 'inf' : ''}">${sorry}</span></div>
+    <div class="row"><span>Ready to formalize</span><span class="v">${ready}</span></div>
+    <div class="row"><span>Needs \\lean{}</span><span class="v">${gaps}</span></div>
+    <div class="row"><span>Needs \\leanok</span><span class="v">${leanok}</span></div>
+    <div class="row" title="Declarations with no \\uses{} in or out — never linked into the graph"><span>Isolated</span><span class="v ${isolated ? 'inf' : ''}">${isolated}${isolatedBp !== isolated ? ` (${isolatedBp} bp)` : ''}</span></div>
+    <div class="sep"></div>
+    <h4>Effort (chars)</h4>
+    <div class="row"><span>Done</span><span class="v done">${fmt(done)}</span></div>
+    <div class="row"><span>Remaining ≥</span><span class="v work">${fmt(remLower)}</span></div>
+    <div class="row"><span>∞ nodes</span><span class="v inf">${infNodes}</span></div>
+  `;
+}
+renderStats();
+
+// a human label for each component: its highest-degree member
+function compRepr(members) {
+  let best = members[0];
+  for (const id of members) if ((deg[id] || 0) > (deg[best] || 0)) best = id;
+  return best.split(":").pop();
+}
+
+const chapters = [...new Set(
+  Object.values(allNodes).map(n => n.chapter).filter(Boolean)
+)].sort();
+
+// ── Populate controls ───────────────────────────────────────────────────────
+
+$("node-ids").innerHTML =
+  Object.keys(allNodes).sort().map(id => `<option value="${id}">`).join("");
+
+$("component").insertAdjacentHTML("beforeend",
+  components.map((m, i) =>
+    `<option value="${i}">#${i + 1} · ${m.length} nodes · ${compRepr(m)}</option>`
+  ).join(""));
+
+$("chapter").insertAdjacentHTML("beforeend",
+  chapters.map(c => `<option value="${c.replace(/"/g, "&quot;")}">${c}</option>`).join(""));
+
+// ── Visible-set state & computation ─────────────────────────────────────────
+
+const state = { showOrphans: false, focus: null, component: null, chapter: null,
+                nodeset: "union", fileview: "off" };
+
+// Which universe a node belongs to. A node "has Lean" if it carries Lean source
+// (lean_aux nodes always do; blueprint nodes do once their \lean{} resolved).
+const hasLean    = n => n.type === "lean_aux" || !!(n.lean_source && n.lean_source.length);
+const inBlueprint = n => n.type !== "lean_aux";
+function inNodeset(id) {
+  const n = allNodes[id];
+  if (state.nodeset === "blueprint") return inBlueprint(n);
+  if (state.nodeset === "lean")      return hasLean(n);
+  return true;                                   // union
+}
+
+function coneOf(id) {
+  const out = new Set([id]);
+  const walk = (adj, start) => {
+    const st = [start];
+    while (st.length) {
+      const x = st.pop();
+      for (const y of (adj[x] || [])) if (!out.has(y)) { out.add(y); st.push(y); }
+    }
+  };
+  walk(pred, id);   // everything this node (transitively) depends on
+  walk(succ, id);   // everything that (transitively) depends on it
+  return out;
+}
+
+// all transitive predecessors of id (its full upstream dependency set)
+function ancestorsOf(id) {
+  const out = new Set();
+  const st = [...(pred[id] || [])];
+  while (st.length) {
+    const x = st.pop();
+    if (!out.has(x)) { out.add(x); for (const y of (pred[x] || [])) st.push(y); }
+  }
+  return out;
+}
+
+function visibleSet() {
+  if (state.focus && allNodes[state.focus]) {
+    return new Set([...coneOf(state.focus)].filter(inNodeset));
+  }
+  let ids = Object.keys(allNodes).filter(inNodeset);
+  if (!state.showOrphans)      ids = ids.filter(id => !isOrphan(id));
+  if (state.component !== null) ids = ids.filter(id => compOf[id] === state.component);
+  if (state.chapter)            ids = ids.filter(id => allNodes[id].chapter === state.chapter);
+  return new Set(ids);
+}
+
+// ── Network ─────────────────────────────────────────────────────────────────
+
+const nodesDS = new vis.DataSet();
+const edgesDS = new vis.DataSet();
+
+// Force-directed layout: connected nodes attract, so each declaration settles
+// next to what it depends on. Direction is conveyed by the arrows, not columns.
+const N_TOTAL = graphData.nodes.length;
+const PHYSICS_OPTS = {
+  enabled: true,
+  solver: "forceAtlas2Based",
+  forceAtlas2Based: {
+    gravitationalConstant: -45, centralGravity: 0.012,
+    springLength: 85, springConstant: 0.08,
+    damping: 0.45, avoidOverlap: 0.7,
+  },
+  stabilization: { enabled: true, iterations: 300, updateInterval: 25, fit: false },
+  minVelocity: 0.75, maxVelocity: 30,
+};
+
+const network = new vis.Network(
+  $("graph"),
+  { nodes: nodesDS, edges: edgesDS },
+  {
+    // physics does the placement; improvedLayout seeds it (skip on huge graphs)
+    layout: { improvedLayout: N_TOTAL <= 250 },
+    physics: { enabled: false },   // enabled per-apply, then frozen once settled
+    edges: {
+      smooth: { enabled: false },
+      color: { color: "#cbd5e1", highlight: "#64748b" },
+      arrows: { to: { scaleFactor: .55 } },
+      width: 1,
+    },
+    nodes: { shape: "dot" },
+    interaction: { hover: true, tooltipDelay: 150, zoomView: false },
+  }
+);
+
+// Once a settle finishes, freeze the simulation (so the view is stable and
+// draggable) and frame the result.
+network.on("stabilizationIterationsDone", () => {
+  network.setOptions({ physics: false });
+  layoutOrphans();
+  fitFloored();
+});
+
+// ── Isolated-node layout ──────────────────────────────────────────────────────
+// Isolated nodes (no edges) are excluded from the force simulation — under pure
+// repulsion they'd drift to the far edges and vanish at fit-zoom. Instead they
+// are parked on a tidy grid beside the connected graph so they stay visible.
+
+function layoutOrphans() {
+  if (state.focus || !state.showOrphans) return;
+  const ids = nodesDS.getIds().filter(id => isOrphan(id));
+  if (!ids.length) return;
+  const pos  = network.getPositions();
+  const conn = nodesDS.getIds().filter(id => !isOrphan(id));
+  const spacing = 46;
+  const cols = Math.max(1, Math.ceil(Math.sqrt(ids.length)));
+  const gridW = (cols - 1) * spacing;
+  let centerX, topY;
+  if (conn.length) {
+    const xs = conn.map(id => pos[id].x), ys = conn.map(id => pos[id].y);
+    centerX = (Math.min(...xs) + Math.max(...xs)) / 2;
+    topY    = Math.max(...ys) + 120;     // a tidy block just below the cluster
+  } else { centerX = 0; topY = 0; }
+  const startX = centerX - gridW / 2;    // centred, so a full fit frames it all
+  ids.sort();
+  ids.forEach((id, i) =>
+    network.moveNode(id, startX + (i % cols) * spacing,
+                         topY + Math.floor(i / cols) * spacing));
+}
+
+// ── File-view background ──────────────────────────────────────────────────────
+// An optional, subtle background tint that groups nodes by their source file.
+// Each node seeds its file's colour; every background pixel takes the colour of
+// the nearest node — an exact Voronoi map (spatial-hash accelerated) rendered at
+// high resolution for clean, anti-aliased borders, then drawn behind the graph
+// and extended to the whole viewport. Nodes keep their effort colours on top.
+
+const fileOf = (n, mode) => mode === "lean" ? (n.lean_file || "") : (n.tex_file || "");
+
+// A curated, perceptually-distinct palette (d3 category20-style). A file's
+// colour is chosen by hashing its *name*, so it is stable no matter how the
+// graph is filtered, focused or re-laid out — and adjacent files stay easy to
+// tell apart. Projects with more files than the palette wrap to a darker /
+// lighter tier so the wrapped entries remain distinguishable.
+const FILE_PALETTE = [
+  [31,119,180],[255,127,14],[44,160,44],[214,39,40],[148,103,189],
+  [140,86,75],[227,119,194],[188,189,34],[23,190,207],[127,205,187],
+  [174,199,232],[255,187,120],[152,223,138],[255,152,150],[197,176,213],
+  [196,156,148],[247,182,210],[252,146,114],[219,219,141],[158,218,229],
+];
+function hashStr(s) {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return h >>> 0;
+}
+const _SLOTS = FILE_PALETTE.length * 3;          // 20 hues × 3 lightness tiers
+function slotColor(slot) {
+  const base = FILE_PALETTE[slot % FILE_PALETTE.length];
+  const tier = Math.floor(slot / FILE_PALETTE.length) % 3;   // 0 normal · 1 dark · 2 light
+  return tier === 1 ? base.map(v => Math.round(v * 0.68))
+       : tier === 2 ? base.map(v => Math.round(v + (255 - v) * 0.45))
+       : base.slice();
+}
+// Per-mode slot assignment: each file's preferred slot is its name-hash; exact
+// collisions within the same mode are bumped to the next free slot. So every
+// file in a mode gets a distinct colour (up to _SLOTS files), the colour is
+// driven by the name, and it never shifts under focus/reset/filtering (the file
+// set is fixed for the session, and the map is cached).
+const _fileSlots = {};
+function ensureFileSlots(mode) {
+  if (_fileSlots[mode]) return _fileSlots[mode];
+  const files = Object.keys(fileCounts(mode)).sort();
+  const used = new Set(), map = {};
+  for (const f of files) {
+    let slot = hashStr(f) % _SLOTS, t = 0;
+    while (used.has(slot) && t < _SLOTS) { slot = (slot + 1) % _SLOTS; t++; }
+    used.add(slot); map[f] = slot;
+  }
+  return (_fileSlots[mode] = map);
+}
+function colorRGB(file) {
+  const map = ensureFileSlots(state.fileview);
+  const slot = (file in map) ? map[file] : hashStr(file) % _SLOTS;
+  return slotColor(slot);
+}
+
+function fileCounts(mode) {
+  const counts = {};
+  for (const id in allNodes) {
+    const f = fileOf(allNodes[id], mode);
+    if (f) counts[f] = (counts[f] || 0) + 1;
+  }
+  return counts;
+}
+
+let fileBg = null;            // {canvas, minX, minY, w, h, W, H} in graph coords
+
+function rebuildFileBg(quick) {
+  const mode = state.fileview;
+  if (mode === "off") { fileBg = null; network.redraw(); renderFileLegend(); return; }
+
+  const pos = network.getPositions();
+  const ids = Object.keys(pos).filter(id => allNodes[id] && fileOf(allNodes[id], mode));
+  if (!ids.length) { fileBg = null; network.redraw(); renderFileLegend(); return; }
+
+  const xs = ids.map(id => pos[id].x), ys = ids.map(id => pos[id].y);
+  const pad = 70;
+  const minX = Math.min(...xs) - pad, maxX = Math.max(...xs) + pad;
+  const minY = Math.min(...ys) - pad, maxY = Math.max(...ys) + pad;
+  const wG = Math.max(1, maxX - minX), hG = Math.max(1, maxY - minY);
+
+  // High-res grid → straight, finely anti-aliased borders; a coarser grid is
+  // used for the live updates while nodes are still moving, for speed.
+  const target = quick ? 224 : 512;
+  const scale  = target / Math.max(wG, hG);
+  const W = Math.max(1, Math.round(wG * scale)), H = Math.max(1, Math.round(hG * scale));
+
+  const seeds = ids.map(id => {
+    const [r, g, b] = colorRGB(fileOf(allNodes[id], mode));
+    return { x: pos[id].x, y: pos[id].y, r, g, b };
+  });
+
+  // Bucket the seeds so each pixel's nearest-seed search is ~O(1).
+  const gcols = Math.max(1, Math.round(Math.sqrt(seeds.length)));
+  const grows = gcols;
+  const cw = wG / gcols, ch = hG / grows;
+  const buckets = Array.from({ length: gcols * grows }, () => []);
+  const clampC = (v, hi) => Math.min(hi, Math.max(0, v));
+  for (const s of seeds) {
+    const cx = clampC(Math.floor((s.x - minX) / cw), gcols - 1);
+    const cy = clampC(Math.floor((s.y - minY) / ch), grows - 1);
+    buckets[cy * gcols + cx].push(s);
+  }
+  const cellMin = Math.min(cw, ch), maxR = Math.max(gcols, grows);
+  function nearest(wx, wy) {
+    const cx = clampC(Math.floor((wx - minX) / cw), gcols - 1);
+    const cy = clampC(Math.floor((wy - minY) / ch), grows - 1);
+    let best = Infinity, bs = seeds[0];
+    for (let r = 0; r <= maxR; r++) {
+      const x0 = Math.max(0, cx - r), x1 = Math.min(gcols - 1, cx + r);
+      const y0 = Math.max(0, cy - r), y1 = Math.min(grows - 1, cy + r);
+      for (let yy = y0; yy <= y1; yy++) {
+        const edgeRow = (yy === cy - r || yy === cy + r);
+        for (let xx = x0; xx <= x1; xx++) {
+          if (r > 0 && !edgeRow && xx !== cx - r && xx !== cx + r) continue;
+          for (const s of buckets[yy * gcols + xx]) {
+            const dx = s.x - wx, dy = s.y - wy, d = dx * dx + dy * dy;
+            if (d < best) { best = d; bs = s; }
+          }
+        }
+      }
+      // Stop once the closest hit is nearer than any not-yet-scanned ring.
+      if (best < Infinity && Math.sqrt(best) <= r * cellMin) break;
+    }
+    return bs;
+  }
+
+  const cv = document.createElement("canvas");
+  cv.width = W; cv.height = H;
+  const ctx = cv.getContext("2d");
+  const img = ctx.createImageData(W, H), data = img.data;
+  for (let gy = 0; gy < H; gy++) {
+    const wy = minY + (gy + 0.5) / H * hG;
+    for (let gx = 0; gx < W; gx++) {
+      const wx = minX + (gx + 0.5) / W * wG;
+      const s = nearest(wx, wy);
+      const o = (gy * W + gx) * 4;
+      data[o] = s.r; data[o + 1] = s.g; data[o + 2] = s.b; data[o + 3] = 255;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+  fileBg = { canvas: cv, minX, minY, w: wG, h: hG, W, H };
+  network.redraw();
+  renderFileLegend();
+}
+
+// beforeDrawing runs in graph coordinates, so the cached bitmap pans and zooms
+// with the view automatically. The seed bbox is filled with the Voronoi map, and
+// the colours of its edge pixels are extended outward to cover the *whole*
+// viewport — so the tint follows the nearest-node rule everywhere, not just a
+// central square.
+network.on("beforeDrawing", ctx => {
+  if (!fileBg) return;
+  const c = fileBg.canvas, W = fileBg.W, H = fileBg.H;
+  const x0 = fileBg.minX, y0 = fileBg.minY, x1 = x0 + fileBg.w, y1 = y0 + fileBg.h;
+  const tl = network.DOMtoCanvas({ x: 0, y: 0 });
+  const br = network.DOMtoCanvas({ x: $("graph").clientWidth, y: $("graph").clientHeight });
+  const L = Math.min(tl.x, br.x), R = Math.max(tl.x, br.x);
+  const T = Math.min(tl.y, br.y), B = Math.max(tl.y, br.y);
+
+  ctx.save();
+  ctx.globalAlpha = 0.32;                 // visible but still a background tint
+  ctx.imageSmoothingEnabled = true;
+  ctx.drawImage(c, x0, y0, fileBg.w, fileBg.h);                          // centre
+  if (L < x0) ctx.drawImage(c, 0, 0, 1, H, L, y0, x0 - L, fileBg.h);     // left
+  if (R > x1) ctx.drawImage(c, W - 1, 0, 1, H, x1, y0, R - x1, fileBg.h);// right
+  if (T < y0) ctx.drawImage(c, 0, 0, W, 1, x0, T, fileBg.w, y0 - T);     // top
+  if (B > y1) ctx.drawImage(c, 0, H - 1, W, 1, x0, y1, fileBg.w, B - y1);// bottom
+  if (L < x0 && T < y0) ctx.drawImage(c, 0, 0, 1, 1, L, T, x0 - L, y0 - T);
+  if (R > x1 && T < y0) ctx.drawImage(c, W - 1, 0, 1, 1, x1, T, R - x1, y0 - T);
+  if (L < x0 && B > y1) ctx.drawImage(c, 0, H - 1, 1, 1, L, y1, x0 - L, B - y1);
+  if (R > x1 && B > y1) ctx.drawImage(c, W - 1, H - 1, 1, 1, x1, y1, R - x1, B - y1);
+  ctx.restore();
+});
+
+function renderFileLegend() {
+  const panel = $("file-legend"), mode = state.fileview;
+  if (mode === "off") { panel.style.display = "none"; return; }
+  panel.style.display = "block";
+  const label = mode === "lean" ? "Lean" : "LaTeX";
+  const counts = fileCounts(mode);
+  const files = Object.keys(counts).sort();
+  if (!files.length) {
+    panel.innerHTML = `<h4>${label} files</h4>` +
+      `<div class="fl-empty">no ${label} file info available</div>`;
+    return;
+  }
+  panel.innerHTML = `<h4>${label} files · ${files.length}</h4>` + files.map(f => {
+    const [r, g, b] = colorRGB(f);
+    return `<div class="fl-row">` +
+      `<span class="fl-sw" style="background:rgb(${r},${g},${b})"></span>` +
+      `<span class="fl-name" title="${esc(f)}">${esc(f)}</span>` +
+      `<span class="fl-n">${counts[f]}</span></div>`;
+  }).join("");
+}
+
+// Recompute the tint *while* the layout changes, so the regions move with the
+// nodes rather than snapping only once at the end: throttled coarse rebuilds
+// during stabilization and dragging, then a final full-resolution pass.
+let _liveLast = 0;
+function liveFileBg() {
+  if (state.fileview === "off") return;
+  const now = Date.now();
+  if (now - _liveLast < 110) return;
+  _liveLast = now;
+  rebuildFileBg(true);
+}
+network.on("stabilizationProgress", liveFileBg);
+network.on("dragging", liveFileBg);
+network.on("dragEnd", () => { if (state.fileview !== "off") rebuildFileBg(); });
+
+// ── Navigation: swipe = pan · Ctrl+scroll / pinch = zoom ─────────────────────
+
+let ZOOM_MIN = 0.05;
+const ZOOM_MAX = 3.0;
+const FIT_FLOOR = 0.34;          // never auto-zoom below this — keeps nodes legible
+let graphBounds = null;
+
+function recomputeBounds() {
+  const pts = Object.values(network.getPositions());
+  if (pts.length) {
+    const pad = 200;
+    graphBounds = {
+      left:   Math.min(...pts.map(p => p.x)) - pad,
+      right:  Math.max(...pts.map(p => p.x)) + pad,
+      top:    Math.min(...pts.map(p => p.y)) - pad,
+      bottom: Math.max(...pts.map(p => p.y)) + pad,
+    };
+  } else graphBounds = null;
+}
+
+function fitFloored() {
+  network.fit({ animation: false });
+  const fitScale = network.getScale();
+  // The most-zoomed-out limit tracks the graph's actual extent — a little past
+  // the scale at which everything fits — instead of a fixed floor. So a small
+  // graph can't be shrunk to a speck, and a huge one can still reach overview.
+  ZOOM_MIN = Math.max(0.02, Math.min(fitScale * 0.7, ZOOM_MAX));
+  // For very large graphs `fit` is sub-pixel; don't *start* there (keeps nodes
+  // legible) but still allow zooming out to it. When isolated nodes are shown we
+  // fully fit instead, so their (potentially large) block is actually visible.
+  if (!state.showOrphans && fitScale < FIT_FLOOR)
+    network.moveTo({ scale: FIT_FLOOR, animation: false });
+  recomputeBounds();
+  rebuildFileBg();   // node positions just changed — refresh the file tint
+}
+
+$("graph").addEventListener("wheel", e => {
+  e.preventDefault();
+  e.stopPropagation();
+  const pos = network.getViewPosition();
+  const sc  = network.getScale();
+  if (e.ctrlKey) {
+    const f        = e.deltaY > 0 ? 0.9 : 1 / 0.9;
+    const newScale = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, sc * f));
+    network.moveTo({ scale: newScale, animation: false });
+  } else {
+    let nx = pos.x + e.deltaX / sc;
+    let ny = pos.y + e.deltaY / sc;
+    if (graphBounds) {
+      nx = Math.max(graphBounds.left, Math.min(graphBounds.right,  nx));
+      ny = Math.max(graphBounds.top,  Math.min(graphBounds.bottom, ny));
+    }
+    network.moveTo({ position: { x: nx, y: ny }, animation: false });
+  }
+}, { capture: true, passive: false });
+
+// ── Apply current filter state to the canvas ────────────────────────────────
+
+function apply() {
+  const vis   = visibleSet();
+  const nodes = graphData.nodes.filter(n => vis.has(n.id));
+  const edges = graphData.edges.filter(e => vis.has(e.from) && vis.has(e.to));
+
+  nodesDS.clear(); edgesDS.clear();
+  nodesDS.add(nodes); edgesDS.add(edges);
+
+  $("stat").innerHTML =
+    `${nodes.length} / ${graphData.nodes.length} nodes &middot; ${edges.length} edges`;
+
+  const pill = $("focus-pill");
+  if (state.focus) {
+    pill.style.display = "inline-flex";
+    pill.querySelector(".lbl").textContent = "focus: " + state.focus.split(":").pop();
+  } else {
+    pill.style.display = "none";
+  }
+
+  // Re-settle the now-visible subset; the stabilization handler freezes and
+  // fits when it finishes. With nothing to simulate (a lone node, or only
+  // isolated nodes — which are physics:false) we lay out and fit directly.
+  const anyPhysics = nodes.some(n => n.physics !== false);
+  if (nodes.length > 1 && anyPhysics) {
+    network.setOptions({ physics: PHYSICS_OPTS });
+  } else {
+    setTimeout(() => { layoutOrphans(); fitFloored(); }, 0);
+  }
+}
+
+function syncControls() {
+  $("orphans").checked  = state.showOrphans;
+  $("nodeset").value    = state.nodeset;
+  $("fileview").value   = state.fileview;
+  $("component").value  = state.component === null ? "" : String(state.component);
+  $("chapter").value    = state.chapter || "";
+}
+
+// ── Reveal-aware navigation ─────────────────────────────────────────────────
+
+function goTo(id) {
+  if (!allNodes[id]) return;
+  if (!visibleSet().has(id)) {            // relax filters until the node is shown
+    state.focus = null;
+    state.component = null;
+    state.chapter = null;
+    if (!inNodeset(id)) state.nodeset = "union";
+    if (isOrphan(id)) state.showOrphans = true;
+    syncControls();
+    apply();
+  }
+  setTimeout(() => jumpTo(id), 70);
+}
+
+function jumpTo(id) {
+  if (!allNodes[id]) return;
+  network.selectNodes([id]);
+  network.focus(id, { scale: 1.2, animation: { duration: 400, easingFunction: "easeInOutQuad" } });
+  renderNode(id);
+  highlightCone(id);
+}
+
+function setFocus(id) {
+  if (!allNodes[id]) return;
+  state.focus = id;
+  apply();
+  renderNode(id);
+  setTimeout(() => jumpTo(id), 70);
+}
+
+function clearFocus() { state.focus = null; apply(); }
+
+function resetView() {
+  state.showOrphans = false;
+  state.focus = null;
+  state.component = null;
+  state.chapter = null;
+  state.nodeset = "union";
+  $("search").value = "";
+  syncControls();
+  apply();
+}
+
+// ── Control wiring ──────────────────────────────────────────────────────────
+
+$("orphans").addEventListener("change", e => {
+  state.showOrphans = e.target.checked; state.focus = null; apply();
+});
+$("nodeset").addEventListener("change", e => {
+  state.nodeset = e.target.value; state.focus = null; apply();
+});
+$("component").addEventListener("change", e => {
+  state.component = e.target.value === "" ? null : Number(e.target.value);
+  state.focus = null; apply();
+});
+$("chapter").addEventListener("change", e => {
+  state.chapter = e.target.value || null; state.focus = null; apply();
+});
+$("fileview").addEventListener("change", e => {
+  state.fileview = e.target.value; rebuildFileBg();
+});
+$("search").addEventListener("change", e => {
+  const v = e.target.value.trim();
+  if (allNodes[v]) goTo(v);
+});
+$("reset").addEventListener("click", resetView);
+$("focus-pill").addEventListener("click", clearFocus);
+
+// ── Lean syntax highlighter ─────────────────────────────────────────────────
+
+function esc(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+const _KW      = /\b(def|lemma|theorem|instance|class|structure|inductive|abbrev|noncomputable|private|protected|section|namespace|end|open|variable|where|do|let|have|show|suffices|calc|if|then|else|return|for|in|fun|match|with|by|sorry)\b/g;
+const _TACTIC  = /\b(simp|ext|rfl|exact|intro|intros|apply|refine|constructor|use|rw|rewrite|rcases|rintro|obtain|push_neg|norm_num|ring|group|linarith|omega|decide|trivial|assumption|congr|tauto|aesop|cases|induction|revert|clear|next|all_goals|repeat|try|first|solve|fin_cases|positivity|gcongr|field_simp)\b/g;
+const _TYPE    = /\b(Nat|Int|Bool|String|List|Array|Option|Type|Prop|Sort|True|False|And|Or|Not|Iff|Eq|Subgroup|Group|Ring|Field|Fintype|Finite)\b/g;
+const _NUM     = /\b(\d+)\b/g;
+const _STR     = /("(?:[^"\\]|\\.)*")/g;
+
+function highlightLean(raw) {
+  return raw.split('\n').map(line => {
+    let commentAt = -1;
+    let inStr = false;
+    for (let i = 0; i < line.length - 1; i++) {
+      if (line[i] === '"' && (i === 0 || line[i-1] !== '\\')) inStr = !inStr;
+      if (!inStr && line[i] === '-' && line[i+1] === '-') { commentAt = i; break; }
+    }
+    const code    = commentAt >= 0 ? line.slice(0, commentAt) : line;
+    const comment = commentAt >= 0 ? line.slice(commentAt)    : '';
+    let h = esc(code);
+    h = h.replace(_STR,    m => `<span class="hl-str">${m}</span>`);
+    h = h.replace(_KW,     m => `<span class="hl-kw">${m}</span>`);
+    h = h.replace(_TACTIC, m => `<span class="hl-tactic">${m}</span>`);
+    h = h.replace(_TYPE,   m => `<span class="hl-type">${m}</span>`);
+    h = h.replace(_NUM,    m => `<span class="hl-num">${m}</span>`);
+    const commentHtml = comment ? `<span class="hl-comment">${esc(comment)}</span>` : '';
+    return h + commentHtml;
+  }).join('\n');
+}
+
+// ── LaTeX renderer ───────────────────────────────────────────────────────────
+
+function processNonMath(s) {
+  return esc(s)
+    .replace(/\\emph\{([^}]*)\}/g,   '<em>$1</em>')
+    .replace(/\\textbf\{([^}]*)\}/g, '<strong>$1</strong>')
+    .replace(/\\textit\{([^}]*)\}/g, '<em>$1</em>')
+    .replace(/\\text\{([^}]*)\}/g,   '$1');
+}
+
+function renderLatex(el, text) {
+  if (!text || !text.trim()) {
+    el.classList.add('empty'); el.textContent = '—'; return;
+  }
+  // Match every math delimiter style leanblueprint uses: $$…$$ and \[…\]
+  // (display) and \(…\) and $…$ (inline). $$ and \[ \] come first so the
+  // single-$ branch can't grab a $$ opener.
+  const re = /(\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]|\\\([\s\S]*?\\\)|\$(?:[^$\\]|\\.)+?\$)/g;
+  let html = '', last = 0, m;
+  while ((m = re.exec(text)) !== null) {
+    html += processNonMath(text.slice(last, m.index));
+    const raw = m[0];
+    let disp, math;
+    if      (raw.startsWith('$$'))  { disp = true;  math = raw.slice(2, -2); }
+    else if (raw.startsWith('\\[')) { disp = true;  math = raw.slice(2, -2); }
+    else if (raw.startsWith('\\(')) { disp = false; math = raw.slice(2, -2); }
+    else                            { disp = false; math = raw.slice(1, -1); }
+    if (window.katex) {
+      try {
+        html += katex.renderToString(math, {
+          displayMode: disp, throwOnError: false, macros: katexMacros,
+        });
+      }
+      catch (_) { html += esc(raw); }
+    } else {
+      html += `<span style="color:#94a3b8">${esc(raw)}</span>`;
+    }
+    last = re.lastIndex;
+  }
+  html += processNonMath(text.slice(last));
+  el.innerHTML = html;
+}
+
+// ── Sidebar rendering ────────────────────────────────────────────────────────
+
+function charVal(v) {
+  if (v === null || v === undefined) return '<span class="m-val m-inf">∞</span>';
+  return `<span class="m-val">${v.toLocaleString()}</span>`;
+}
+function workVal(v) {
+  if (v === null || v === undefined) return '<span class="m-val m-inf">∞</span>';
+  if (v === 0) return '<span class="m-val m-done">0 ✓</span>';
+  return `<span class="m-val m-work">${v.toLocaleString()}</span>`;
+}
+function charsPair(rel, cum) {
+  const f = v => (v === null || v === undefined)
+    ? '<span class="chars-inf">∞</span>'
+    : `<span class="chars-val">${v}</span>`;
+  return `<span class="chars-pair">ℓ<sub>local</sub>=${f(rel)} &nbsp; ℓ<sub>total</sub>=${f(cum)}</span>`;
+}
+
+function renderNode(id) {
+  const n = allNodes[id];
+  if (!n) return;
+
+  $("sidebar-empty").style.display = "none";
+  const content = $("sidebar-content");
+  content.style.display = "flex";
+
+  const statusBadge = n.proved
+    ? '<span class="badge badge-proved">✓ leanok</span>'
+    : (n.mathlib_ok
+        ? '<span class="badge badge-proved">ⓜ mathlib</span>'
+        : (n.has_sorry
+            ? '<span class="badge badge-sorry">sorry</span>'
+            : '<span class="badge badge-unproved">unproved</span>'));
+
+  const mkChip = u => `<span class="dep-chip" onclick="goTo('${esc(u)}')">${esc(u)}</span>`;
+  const depsHtml = n.uses.length
+    ? n.uses.map(mkChip).join('')
+    : '<span class="no-deps">none — axiom</span>';
+
+  // full transitive upstream, with the direct deps split out
+  const anc       = ancestorsOf(id);
+  const directSet = new Set(n.uses);
+  const indirect  = [...anc].filter(x => !directSet.has(x)).sort();
+  const transHtml = indirect.length
+    ? indirect.map(mkChip).join('')
+    : '<span class="no-deps">none beyond the direct ones</span>';
+
+  const focusLabel = state.focus === id ? 'Clear focus' : 'Focus dependency cone';
+  const focusCall  = state.focus === id ? 'clearFocus()' : `setFocus('${esc(id)}')`;
+
+  content.innerHTML = `
+    <div class="card">
+      <div class="node-badges">
+        <span class="badge badge-type">${n.type.toUpperCase()}</span>${statusBadge}
+      </div>
+      <div class="node-title">${esc(n.title || n.id)}</div>
+      <div class="node-id">${esc(n.id)}</div>
+      ${n.chapter   ? `<div class="node-chapter">§ ${esc(n.chapter)}</div>` : ''}
+      ${n.lean_name ? `<div class="lean-ref">Lean: <code>${esc(n.lean_name)}</code></div>` : ''}
+      ${n.tex_file  ? `<div class="lean-ref">tex: <code>${esc(n.tex_file)}</code></div>` : ''}
+      ${n.lean_file ? `<div class="lean-ref">file: <code>${esc(n.lean_file)}</code></div>` : ''}
+      <button class="btn-focus" onclick="${focusCall}">⊙ ${focusLabel}</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Structure</div>
+      <div class="degrees">
+        <div class="degree">
+          <span class="degree-val">${n.dep_count}</span>
+          <span class="degree-label">direct deps</span>
+        </div>
+        <div class="degree">
+          <span class="degree-val">${anc.size}</span>
+          <span class="degree-label">total upstream</span>
+        </div>
+        <div class="degree">
+          <span class="degree-val">${n.rdep_count}</span>
+          <span class="degree-label">used by</span>
+        </div>
+      </div>
+      <div class="deps-sub">direct dependencies</div>
+      <div class="deps-list">${depsHtml}</div>
+      <div class="deps-sub">indirect (transitive) dependencies</div>
+      <div class="deps-list">${transHtml}</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Complexity</div>
+      <div class="metrics-grid">
+        <span></span>
+        <span class="col-head">local</span>
+        <span class="col-head">total</span>
+        <span class="m-label">LaTeX ℓ</span>${charVal(n.proof_size_tex)}${charVal(n.proof_size_tex_total)}
+        <span class="m-label">Lean ℓ</span>${charVal(n.proof_size_lean)}${charVal(n.proof_size_lean_total)}
+        <span class="m-label">Effort</span>${workVal(n.effort_local)}${workVal(n.effort_total)}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="sec-hdr"><span class="card-title" style="margin:0">LaTeX statement</span></div>
+      <div class="latex-rendered" id="latex-stmt"></div>
+    </div>
+
+    <div class="card">
+      <div class="sec-hdr">
+        <span class="card-title" style="margin:0">LaTeX proof</span>
+        ${charsPair(n.proof_size_tex, n.proof_size_tex_total)}
+      </div>
+      <div class="latex-rendered" id="latex-proof"></div>
+    </div>
+
+    <div class="card">
+      <div class="sec-hdr">
+        <span class="card-title" style="margin:0">Lean code</span>
+        ${charsPair(n.proof_size_lean, n.proof_size_lean_total)}
+      </div>
+      <pre class="code-block" id="lean-code"></pre>
+    </div>
+  `;
+
+  renderLatex($('latex-stmt'),  n.statement);
+  renderLatex($('latex-proof'), n.proof_tex ? n.proof_tex.trim() : '');
+
+  const leanEl = $('lean-code');
+  if (n.lean_source) {
+    leanEl.innerHTML = highlightLean(n.lean_source);
+  } else {
+    leanEl.classList.add('empty');
+    leanEl.textContent = 'declaration not found';
+  }
+}
+
+// ── Cone highlighting on click ───────────────────────────────────────────────
+// Selecting a node lights up its WHOLE transitive cone — every ancestor and
+// descendant and the edges between them — while everything else fades back.
+
+const baseNodeById = {};
+for (const vn of graphData.nodes) baseNodeById[vn.id] = vn;
+
+const EDGE_BASE = { color: "#cbd5e1", highlight: "#64748b" };
+
+function highlightCone(id) {
+  const cone = coneOf(id);   // {id} ∪ ancestors ∪ descendants
+  nodesDS.update(nodesDS.getIds().map(nid =>
+    cone.has(nid)
+      ? baseNodeById[nid]                                   // full styling
+      : { id: nid, color: { background: "#e5e7eb", border: "#d1d5db" },
+          font: { color: "#cbd5e1" } }                      // faded
+  ));
+  edgesDS.update(edgesDS.get().map(e => {
+    const on = cone.has(e.from) && cone.has(e.to);
+    return { id: e.id,
+             color: on ? { color: "#475569", highlight: "#334155" } : { color: "#edf0f4" },
+             width: on ? 2.5 : 1 };
+  }));
+}
+
+function clearHighlight() {
+  nodesDS.update(nodesDS.getIds().map(nid => baseNodeById[nid]));
+  edgesDS.update(edgesDS.get().map(e => ({ id: e.id, color: EDGE_BASE, width: 1 })));
+}
+
+network.on("click", params => {
+  if (params.nodes.length) { renderNode(params.nodes[0]); highlightCone(params.nodes[0]); }
+  else                     { clearHighlight(); }
+});
+network.on("doubleClick", params => { if (params.nodes.length) setFocus(params.nodes[0]); });
+
+// ── Initial render ───────────────────────────────────────────────────────────
+
+apply();
+</script>
+</body>
+</html>

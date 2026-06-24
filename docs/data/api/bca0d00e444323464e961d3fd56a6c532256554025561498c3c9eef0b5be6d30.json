@@ -1,0 +1,126 @@
+{
+  "files": [
+    {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "count": 9,
+      "lines": [
+        2031,
+        2265,
+        2355,
+        2423,
+        2508,
+        2734,
+        3046,
+        3227,
+        3249
+      ],
+      "occurrences": [
+        {
+          "line": 2031,
+          "column": 3
+        },
+        {
+          "line": 2265,
+          "column": 3
+        },
+        {
+          "line": 2355,
+          "column": 3
+        },
+        {
+          "line": 2423,
+          "column": 3
+        },
+        {
+          "line": 2508,
+          "column": 5
+        },
+        {
+          "line": 2734,
+          "column": 3
+        },
+        {
+          "line": 3046,
+          "column": 3
+        },
+        {
+          "line": 3227,
+          "column": 3
+        },
+        {
+          "line": 3249,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChangeGlobal.lean",
+      "count": 4,
+      "lines": [
+        288,
+        420,
+        440,
+        469
+      ],
+      "occurrences": [
+        {
+          "line": 288,
+          "column": 3
+        },
+        {
+          "line": 420,
+          "column": 3
+        },
+        {
+          "line": 440,
+          "column": 3
+        },
+        {
+          "line": 469,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "count": 6,
+      "lines": [
+        2362,
+        3261,
+        3283,
+        3298,
+        3301,
+        3385
+      ],
+      "occurrences": [
+        {
+          "line": 2362,
+          "column": 3
+        },
+        {
+          "line": 3261,
+          "column": 5
+        },
+        {
+          "line": 3283,
+          "column": 5
+        },
+        {
+          "line": 3298,
+          "column": 5
+        },
+        {
+          "line": 3301,
+          "column": 5
+        },
+        {
+          "line": 3385,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "total": 19,
+  "partial": false,
+  "warnings": []
+}

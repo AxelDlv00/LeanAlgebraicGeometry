@@ -1,7 +1,7 @@
 {
   "stage": "prover",
   "objectives": [
-    "**`AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/SliceTransport.lean`** — **DUAL flank Cone"
+    "**`AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/SliceTransport.lean`** — scaffold the forward apply declaration (it does not exist yet) and prove it; SOLO `mathlib-build` lane."
   ],
   "checklist": [
     {

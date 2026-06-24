@@ -1,0 +1,12 @@
+# Lake build artifacts
+.lake/
+/.lake
+
+# Ignore local git-dir databases (large pack files)
+.archon/git-dir/
+
+# Archon state directory
+.archon/
+
+# stray git-db backup (not part of the project)
+.git-backup/

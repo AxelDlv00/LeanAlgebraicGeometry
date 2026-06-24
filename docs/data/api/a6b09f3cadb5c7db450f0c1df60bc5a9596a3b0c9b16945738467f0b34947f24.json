@@ -11278,6 +11278,11 @@
       "lean:restrictScalars_isIso_μ",
       "lean:restrictScalars_isIso_μ_of_bijective"
     ],
+    "entry": "blueprint/src/web.tex",
+    "has_blueprint": true,
+    "total_lean_decls": 313,
+    "total_blueprint_decls": 216,
+    "duplicate_ids": [],
     "macros": {
       "\\Abelian": "\\mathrm{Abelian}",
       "\\AddCommGrpCat": "\\mathrm{AddCommGrpCat}",
@@ -11398,69 +11403,7 @@
       "\\Div": "\\operatorname{Div}",
       "\\Alb": "\\operatorname{Alb}",
       "\\rank": "\\operatorname{rank}"
-    },
-    "unmatched_lean": [
-      [
-        "lem:pullback_compatible_with_tensorobj",
-        "AlgebraicGeometry.LineBundle.OnProduct.pullback_tensorObj_iso"
-      ],
-      [
-        "thm:rel_pic_addcommgroup_via_tensorobj",
-        "AlgebraicGeometry.Scheme.PicSharp.addCommGroup_via_tensorObj"
-      ],
-      [
-        "lem:slice_dual_transport_app_apply",
-        "AlgebraicGeometry.Scheme.Modules.sliceDualTransport_app_apply"
-      ],
-      [
-        "lem:adjunction_leftadjointuniq_trans",
-        "CategoryTheory.Adjunction.leftAdjointUniq_trans"
-      ],
-      [
-        "lem:mateequiv_vcomp",
-        "CategoryTheory.mateEquiv_vcomp"
-      ],
-      [
-        "lem:conjugateequiv_comp",
-        "CategoryTheory.conjugateEquiv_comp"
-      ],
-      [
-        "lem:conjugate_equiv_pullbackcomp_inv",
-        "AlgebraicGeometry.Scheme.Modules.conjugateEquiv_pullbackComp_inv"
-      ],
-      [
-        "lem:unit_leftadjointuniq_hom_app",
-        "CategoryTheory.Adjunction.unit_leftAdjointUniq_hom_app"
-      ],
-      [
-        "def:restrictfunctorisopullback",
-        "AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback"
-      ],
-      [
-        "lem:functor_monoidal_muiso",
-        "CategoryTheory.Functor.Monoidal.μIso"
-      ],
-      [
-        "lem:presheafofmodules_pullbackcomp",
-        "PresheafOfModules.pullbackComp"
-      ],
-      [
-        "lem:scheme_modules_restrictfunctorcomp",
-        "AlgebraicGeometry.Scheme.Modules.restrictFunctorComp"
-      ],
-      [
-        "lem:localization_monoidal_left_unitor_hom_app",
-        "CategoryTheory.Localization.Monoidal.leftUnitor_hom_app"
-      ],
-      [
-        "lem:localization_lift_nat_trans_app",
-        "CategoryTheory.Localization.liftNatTrans_app"
-      ],
-      [
-        "lem:presheaf_sheafification_is_localization",
-        "PresheafOfModules.sheafification"
-      ]
-    ]
+    }
   },
   "error": null
 }

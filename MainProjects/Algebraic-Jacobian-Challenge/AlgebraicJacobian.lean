@@ -1,4 +1,6 @@
 import AlgebraicJacobian.Cohomology.FlatBaseChange
+import AlgebraicJacobian.Cohomology.FlatBaseChangeGlobal
+import AlgebraicJacobian.Cohomology.RegroupHelper
 import AlgebraicJacobian.Cohomology.SheafCompose
 import AlgebraicJacobian.Cohomology.StructureSheafAb
 import AlgebraicJacobian.Cohomology.StructureSheafModuleK

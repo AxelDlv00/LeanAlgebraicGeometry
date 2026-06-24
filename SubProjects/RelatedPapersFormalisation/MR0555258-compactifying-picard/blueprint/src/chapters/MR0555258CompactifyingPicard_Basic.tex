@@ -1,0 +1,2002 @@
+% archon:covers MR0555258CompactifyingPicard/Basic.lean
+
+\chapter{Base-change theory (\S1)}
+
+% This chapter formalizes Section 1 ("Some Base-Change Theory") of
+% Altman--Kleiman, "Compactifying the Picard Scheme", Adv. Math. 35 (1980),
+% pp. 54--63. Throughout, $f : X \to S$ is a finitely presented morphism of
+% schemes (proper where stated); $I$ and $F$ are locally finitely presented
+% $\Ox$-modules; $F$ is $S$-flat where stated. We write $\sExt^q_X(I,F)$ for the
+% relative (local) Ext sheaves, $X(s)$ for the fibre over $s \in S$, $k(s)$ for
+% the residue field, and $(1 \times g) : X_T \to X$ for the base change of $X$
+% along $g : T \to S$.
+
+%==============================================================================
+% External dependency anchors (leaves of the dependency graph).
+% These are results the paper CITES; they are not proved here.
+%==============================================================================
+
+\begin{theorem}[Existence of the representing module $H$ (EGA)]
+  \label{thm:ega_H_existence}
+  \lean{MR0555258CompactifyingPicard.External.H_existence}
+  % SOURCE: [Altman--Kleiman], §1, (1.1), p. 54 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "(The representability results from [EGA III_2, 7.7.8, 7.7.9]
+  % in case f is locally projective, and its compatibility with locally
+  % Noetherian base-changes is proved in [EGA III_2, 7.7.9]. See [ASDS, (12)]
+  % for a proof that the formation of Q(F) = H(O_X, F) commutes with arbitrary
+  % base-change; the proof for H(I,F) is analogous.)"
+  \textit{Source: as invoked in Altman--Kleiman, §1, ref [EGA III$_2$, 7.7.8].}
+  Let $f : X \to S$ be a finitely presented, proper morphism of schemes, and let
+  $I$, $F$ be locally finitely presented $\Ox$-modules with $F$ flat over $S$.
+  Then over a Noetherian base the functor $M \mapsto \Hom_X(I, F \tensor_S M)$ on
+  quasi-coherent $\Os$-modules is representable by a locally finitely presented
+  $\Os$-module, and the representing object's formation commutes with locally
+  Noetherian base change.
+  \begin{proof}
+    Established in [EGA III$_2$, 7.7.8/7.7.9] (and [ASDS, (12)] for the
+    base-change compatibility); used here as an external input.
+  \end{proof}
+\end{theorem}
+
+\begin{theorem}[Acyclicity of quasi-coherent sheaves on affines (EGA)]
+  \label{thm:ega_ext_affine_acyclic}
+  \lean{MR0555258CompactifyingPicard.External.ext_affine_acyclic}
+  % SOURCE: [Altman--Kleiman], §1, (1.2), p. 55 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "Since g^{-1}U is affine and F is quasi-coherent, the
+  % right-hand side is equal to zero for q > 0."
+  \textit{Source: as invoked in Altman--Kleiman, §1, in the proof of (1.2).}
+  For an affine scheme $U$ and a quasi-coherent $\mathcal{O}_U$-module $F$ one has
+  $H^q(U, F) = 0$ for all $q > 0$.
+  \begin{proof}
+    Established in [Serre / EGA] (vanishing of higher cohomology of
+    quasi-coherent sheaves on affines); used here as an external input.
+  \end{proof}
+\end{theorem}
+
+\begin{theorem}[Descent of finitely presented data to a Noetherian base (EGA)]
+  \label{thm:ega_descent_noetherian}
+  \lean{MR0555258CompactifyingPicard.External.descent_noetherian}
+  % SOURCE: [Altman--Kleiman], §1, (1.1) p. 54 and (1.4) proof p. 57 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "By [EGA IV_3, Sect. 8], there exists a Noetherian affine
+  % scheme such that all the data descend to S_0."
+  \textit{Source: as invoked in Altman--Kleiman, §1, ref [EGA IV$_3$, Sect. 8].}
+  % NOTE (iter-016): re-signed to the DATA-descent form actually consumed by the
+  % 1.4 free-resolution step. The earlier Lean signature recorded only the
+  % reduction-to-Noetherian conclusion (a base S₀ + a morphism S → S₀); the
+  % source quote ("all the data descend to S₀") covers the full data, so this
+  % strengthening is FAITHFUL, not a new axiom. To keep the affine bridge directly
+  % applicable, the descended base is delivered as a literal Spec of a Noetherian
+  % ring A₀ (EGA descent produces a finitely generated ℤ-algebra), so X₀ = Spec A₀
+  % and no scheme→Spec transport is needed downstream.
+  Let $S$ be an affine scheme, $f : X \to S$ a finitely presented morphism with
+  $X$ affine, and $I$ an $S$-flat, finitely presented $\Ox$-module. Then the data
+  descend to a Noetherian base: there exist a Noetherian commutative ring $A_0$,
+  a morphism $p : X \to \Spec A_0$, and a finitely presented
+  $\mathcal{O}_{\Spec A_0}$-module $I_0$ with $I \cong p^* I_0$ (pullback of
+  $I_0$ along $p$). In particular one may reduce statements about $(X,I)$ to the
+  Noetherian affine $X_0 = \Spec A_0$, where $I_0$ is finitely presented.
+  \begin{proof}
+    Established in [EGA IV$_3$, §8] (and 8.2, 8.5.2, 8.10.5, 11.2.6 for the
+    individual descent statements): the morphism $f$, the module $I$, and the
+    flatness/finite-presentation data all descend to a finitely generated
+    $\mathbf{Z}$-subalgebra $A_0$ of the global sections of $S$, which is
+    Noetherian; $X_0 = \Spec A_0$ carries the descended fp module $I_0$ and
+    $X = X \times_{S} S$ is the base change recovering $I = p^* I_0$. Used here
+    as an external input.
+  \end{proof}
+\end{theorem}
+
+\begin{theorem}[Flat pullback preserves short exactness (standard)]
+  \label{thm:flat_pullback_exact}
+  \lean{MR0555258CompactifyingPicard.External.flat_pullback_exact}
+  % NOTE (iter-016): standard commutative algebra / sheaf theory — pullback
+  % (inverse image with the tensor) of modules is right exact always, and is
+  % LEFT exact (hence preserves short-exact sequences) when the term being killed
+  % is flat over the base. Mathlib HAS this at the module level
+  % (Module.Flat.lTensor_shortComplex_exact / lTensor_exact) but NOT for
+  % Scheme.Modules.pullback of a ShortComplex of sheaves of modules
+  % (verified absent via leansearch/loogle, iter-015). Anchored as the genuine
+  % EGA/standard input used in the last step of the 1.4 proof ("since I is flat,
+  % the pullback of the sequence ... is the desired sequence"); flagged buildable
+  % from the module-level lemma + stalkwise flatness, to build/upstream later.
+  % SOURCE: [Altman--Kleiman], §1, (1.4) proof p. 57 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "Since I is flat, the pullback of the sequence on X_0 is the
+  % desired sequence on X."
+  \textit{Source: as invoked in Altman--Kleiman, §1, (1.4) proof p. 57.}
+  Let $p : X \to X_0$ be a morphism of schemes and let
+  $0 \to K_0 \to J_0 \to I_0 \to 0$ be a short exact sequence of
+  $\mathcal{O}_{X_0}$-modules such that the pullback $p^* I_0$ is flat over the
+  relevant base. Then the pulled-back sequence
+  $0 \to p^* K_0 \to p^* J_0 \to p^* I_0 \to 0$ is again short exact.
+  \begin{proof}
+    Pullback is right exact (it is a left adjoint composed with the tensor with
+    $\mathcal{O}_X$), so the surjection and the middle exactness are preserved;
+    flatness of the right-hand term forces the left-hand map to remain a
+    monomorphism. Established in standard commutative algebra / EGA (the module
+    case is \texttt{Module.Flat.lTensor\_shortComplex\_exact}); used here as an
+    external input at the sheaf level.
+  \end{proof}
+\end{theorem}
+
+\begin{theorem}[Pullback preserves freeness (standard)]
+  \label{thm:pullback_preserves_free}
+  \lean{MR0555258CompactifyingPicard.External.pullback_isFreeMod}
+  % NOTE (iter-017): residual of the 1.4 assembly. The pullback of a free
+  % $\mathcal{O}_Y$-module along a scheme morphism $p : X \to Y$ is free because
+  % $p^* \mathcal{O}_Y \cong \mathcal{O}_X$ (structure-sheaf pullback) and pullback,
+  % being a left adjoint, preserves the coproduct defining $\free$. Mathlib v4.30.0
+  % proves $p^*\mathcal{O}_Y \cong \mathcal{O}_X$ for Scheme.Modules.pullback only
+  % under the auxiliary hypothesis that the site functor Opens.map p.base is FINAL
+  % (SheafOfModules.pullbackObjFreeIso / pullbackObjUnitToUnit), which is absent for
+  % a general scheme morphism (verified iter-016: failed to synthesize
+  % (Opens.map p.base).Final). Anchored as the standard input the 1.4 proof uses
+  % implicitly in its last step; flagged buildable from the structure-sheaf
+  % pullback iso, to build/upstream later.
+  % SOURCE: [Altman--Kleiman], §1, (1.4) proof p. 57 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "Since I is flat, the pullback of the sequence on X_0 is the
+  % desired sequence on X."
+  \textit{Source: as invoked in Altman--Kleiman, §1, (1.4) proof p. 57.}
+  Let $p : X \to Y$ be a morphism of schemes and let $M$ be a free
+  $\mathcal{O}_Y$-module (\cref{def:isFreeMod}). Then $p^* M$ is a free
+  $\mathcal{O}_X$-module.
+  \begin{proof}
+    Immediate from $p^*\mathcal{O}_Y \cong \mathcal{O}_X$ and the fact that
+    pullback preserves direct sums (it is a left adjoint). Used here as an
+    external input at the sheaf level.
+  \end{proof}
+\end{theorem}
+
+\begin{theorem}[Pullback preserves finite presentation (standard)]
+  \label{thm:pullback_preserves_fp}
+  \lean{MR0555258CompactifyingPicard.External.pullback_isLFP}
+  % NOTE (iter-017): residual of the 1.4 assembly. Finite presentation of a sheaf
+  % of modules is preserved by pullback (base change): a local presentation
+  % $\mathcal{O}^{(\Lambda')} \to \mathcal{O}^{(\Lambda)} \to M \to 0$ pulls back to
+  % a presentation of $p^*M$ since pullback is right exact and carries finite free
+  % to finite free. Mathlib v4.30.0 has no instance/lemma supplying
+  % SheafOfModules.IsFinitePresentation ((Scheme.Modules.pullback p).obj M) from
+  % M.IsFinitePresentation (verified iter-016: infer_instance fails; the
+  % local-presentation reconstruction through pullback is absent). Anchored as the
+  % standard input the 1.4 proof uses implicitly; flagged buildable, to
+  % build/upstream later.
+  % SOURCE: [Altman--Kleiman], §1, (1.4) proof p. 57 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "Since I is flat, the pullback of the sequence on X_0 is the
+  % desired sequence on X."
+  \textit{Source: as invoked in Altman--Kleiman, §1, (1.4) proof p. 57.}
+  Let $p : X \to Y$ be a morphism of schemes and let $M$ be a finitely presented
+  $\mathcal{O}_Y$-module (\cref{def:isLFP}). Then $p^* M$ is a finitely presented
+  $\mathcal{O}_X$-module.
+  \begin{proof}
+    A local finite free presentation of $M$ pulls back, via the right-exact
+    functor $p^*$ which sends finite free to finite free, to a local finite free
+    presentation of $p^* M$. Standard (finite presentation is stable under base
+    change); used here as an external input at the sheaf level.
+  \end{proof}
+\end{theorem}
+
+\begin{theorem}[Flat base change / limit isomorphism for $\Hom$, $q=0$ (EGA)]
+  \label{thm:ega_basechange_q0}
+  \lean{MR0555258CompactifyingPicard.External.basechange_q0}
+  % NOTE: deferred — Lean decl not yet scaffolded (TODO block in Basic.lean); needs projective limits of schemes/modules + the comparison map, absent from Mathlib.
+  % SOURCE: [Altman--Kleiman], §1, (1.5) proof p. 57 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "For q = 0, the assertion results from [EGA IV_3, 8.5.2 (i)]."
+  \textit{Source: as invoked in Altman--Kleiman, §1, ref [EGA IV$_3$, 8.5.2(i)].}
+  For a projective limit $S = \varprojlim S_\lambda$ of $S_0$-schemes with the
+  flatness/finite-presentation hypotheses of \cref{lem:ext_limit}, the canonical
+  map $\varprojlim \Hom_{X_\lambda}(I_\lambda, F_\lambda) \to \Hom_X(I,F)$ is an
+  isomorphism (the case $q=0$ of the $\sExt$ limit isomorphism).
+  \begin{proof}
+    Established in [EGA IV$_3$, 8.5.2(i)]; used here as an external input.
+  \end{proof}
+\end{theorem}
+
+\begin{theorem}[Adjunction isomorphism for $\Hom$ (EGA)]
+  \label{thm:ega_adjunction}
+  \lean{MR0555258CompactifyingPicard.External.adjunction}
+  % NOTE: deferred — Lean decl not yet scaffolded (TODO block in Basic.lean); needs fibre products X_T = X ×_S T, the projection 1×g, and pushforward along it, absent from Mathlib.
+  % SOURCE: [Altman--Kleiman], §1, (1.7) proof p. 58 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "For q = 0, the isomorphism (1.7.1) comes from the usual
+  % adjunction isomorphism [EGA O_I, 4.4.3.1]."
+  \textit{Source: as invoked in Altman--Kleiman, §1, ref [EGA O$_I$, 4.4.3.1].}
+  For a base change $g : T \to S$ and a quasi-coherent $\Ot$-module $N$ there is a
+  canonical adjunction isomorphism
+  $\Hom_X(I, (1\times g)_* N) \cong (1\times g)_* \Hom_{X_T}(I_T, N)$.
+  \begin{proof}
+    Established in [EGA O$_I$, 4.4.3.1]; used here as an external input.
+  \end{proof}
+\end{theorem}
+
+\begin{theorem}[Vanishing of a half-exact functor over a Noetherian local ring (OB)]
+  \label{thm:ob_halfexact_free}
+  \lean{MR0555258CompactifyingPicard.External.halfexact_free}
+  % SOURCE: [Altman--Kleiman], §1, (1.3) proof p. 56 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "Since T is half-exact and since T(k(s)) is equal to zero,
+  % T(M) is equal to zero for every finitely generated A-module M [OB, 2.1] or
+  % [EGA III_2, 7.5.3])."
+  \textit{Source: as invoked in Altman--Kleiman, §1, ref [OB, 2.1] / [EGA III$_2$, 7.5.3].}
+  Let $A$ be a Noetherian local ring with residue field $k$, and let $T$ be a
+  half-exact, additive functor from finitely generated $A$-modules to finitely
+  generated $A$-modules. If $T(k) = 0$ then $T(M) = 0$ for every finitely
+  generated $A$-module $M$; consequently the adjacent ($\Hom$-side) functor is
+  exact, and the corresponding finitely presented $A$-module is free.
+  \begin{proof}
+    Established in [OB, 2.1] / [EGA III$_2$, 7.5.3]; used here as an external input.
+  \end{proof}
+\end{theorem}
+
+\begin{theorem}[Nakayama-type isomorphism for a limit-preserving functor (OB)]
+  \label{thm:ob_nakayama_iso}
+  \lean{MR0555258CompactifyingPicard.External.nakayama_iso}
+  % NOTE: deferred — Lean decl not yet scaffolded (TODO block in Basic.lean); phrasable in pure module theory but needs the explicit base-change comparison natural transformation to state faithfully.
+  % SOURCE: [Altman--Kleiman], §1, (1.9) proof p. 60 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "Therefore, by [OB, 4.1], the map, R(O_s) \otimes_{O_s} N ->
+  % R(N), (1.9.1)"
+  \textit{Source: as invoked in Altman--Kleiman, §1, ref [OB, 4.1].}
+  Let $R$ be an additive functor from $\mathcal{O}_s$-modules to
+  $\mathcal{O}_s$-modules that commutes with direct limits and sends finitely
+  generated modules to finitely generated modules, where $\mathcal{O}_s$ is a
+  local ring. If the natural map $R(\mathcal{O}_s) \tensor_{\mathcal{O}_s} k(s)
+  \to R(k(s))$ is surjective, then the natural map
+  $R(\mathcal{O}_s) \tensor_{\mathcal{O}_s} N \to R(N)$ is an isomorphism for
+  every $\mathcal{O}_s$-module $N$.
+  \begin{proof}
+    Established in [OB, 4.1]; used here as an external input.
+  \end{proof}
+\end{theorem}
+
+\begin{theorem}[Openness of the local Ext-vanishing locus (EGA)]
+  \label{thm:ega_ext_vanishing_open}
+  \lean{MR0555258CompactifyingPicard.External.ext_vanishing_open}
+  % SOURCE: [Altman--Kleiman], §1, (1.10) proof p. 61, ref [EGA IV_3, 12.3.4] (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "Then the proof of [EGA IV_3, 12.3.4] shows that U is open and
+  % retrocompact, although this is not fully stated."
+  \textit{Source: as invoked in Altman--Kleiman §1 (Thm 1.10), ref [EGA IV$_3$ 12.3.4].}
+  Under the hypotheses of \cref{thm:ext_finite_flat} (so $f : X \to S$ finitely
+  presented, $I, F$ locally finitely presented with $F$ $S$-flat, and the flatness
+  hypotheses on $I, f$ in the relevant degrees), the locus
+  \[
+    \{\, s \in S : \sExt^q_{X(s)}\!\big(I(s), F(s)\big) = 0 \,\}
+  \]
+  is open and retrocompact in $S$.
+  \begin{proof}
+    Established in [EGA IV$_3$, 12.3.4]; used here as an external input.
+  \end{proof}
+\end{theorem}
+
+\begin{theorem}[Coherence / local finite presentation of local Ext (EGA)]
+  \label{thm:ega_ext_coherent_fp}
+  \lean{MR0555258CompactifyingPicard.External.ext_coherent_fp}
+  % SOURCE: [Altman--Kleiman], §1, (1.10) proof p. 61, ref [EGA III_2, 12.3.3] (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "Finally, the assertion of local finite presentation is local on
+  % S and is compatible with base-change. So we may assume S is affine and by
+  % [EGA IV_3, Sects. 8, 11] Noetherian. Then the assertion holds by
+  % [EGA III_2, 12.3.3]."
+  \textit{Source: as invoked in Altman--Kleiman §1 (Thm 1.10), ref [EGA III$_2$ 12.3.3].}
+  Over a Noetherian (affine) base $S$, with $f : X \to S$ finitely presented and
+  proper and $I, F$ locally finitely presented, the relative local Ext module
+  $\sExt^c_X(I, F)$ is coherent, i.e. locally finitely presented.
+  \begin{proof}
+    Established in [EGA III$_2$, 12.3.3]; used here as an external input.
+  \end{proof}
+\end{theorem}
+
+%==============================================================================
+% Project-local scaffolding (notation of (1.1)): the admissibility hypotheses,
+% the base-change tensor F ⊗_S M, and the corepresented functor. These carry no
+% mathematical content beyond the paper's (1.1) setup; they exist so the §1
+% statements can be transcribed in the project's notation.
+%==============================================================================
+
+% The five blocks below name the standard sheaf-module notions Altman--Kleiman
+% use in (1.1) (locally finitely presented, $S$-flat, free, invertible, and the
+% tensor product of two $\Ox$-modules). They carry no content beyond their
+% standard meaning; we record them with their intended Mathlib realization so the
+% §1 statements have honest, constructible underpinnings (replacing the earlier
+% opaque placeholders).
+
+\begin{definition}
+
+\leanok
+\mathlibok
+[Locally finitely presented $\Ox$-module]
+  \label{def:isLFP}
+  \lean{MR0555258CompactifyingPicard.IsLFP}
+  An $\Ox$-module $M$ is \emph{locally finitely presented} when it admits, locally
+  on $X$, a finite presentation $\mathcal{O}_X^{\,p} \to \mathcal{O}_X^{\,q} \to M
+  \to 0$. Realized via Mathlib's \texttt{SheafOfModules.IsFinitePresentation} for
+  the sheaf of modules underlying $M : X.\mathrm{Modules}$.
+\end{definition}
+
+\begin{definition}
+
+\leanok
+[$S$-flat $\Ox$-module]
+  \label{def:isSFlat}
+  \lean{MR0555258CompactifyingPicard.IsSFlat}
+  For $f : X \to S$, an $\Ox$-module $M$ is \emph{flat over $S$} (along $f$) when,
+  on affine opens $V = \Spec A \subseteq X$ over $U = \Spec R \subseteq S$, the
+  $A$-module $M(V)$ is flat over $R$. Realized via stalkwise/affine-local flatness
+  of the module over the base ring maps (cf.\ Mathlib's morphism-flatness
+  \texttt{AlgebraicGeometry.Flat}, transported to module-level flatness over $f$).
+\end{definition}
+
+\begin{definition}
+
+\leanok
+[Tensor product of $\Ox$-modules $M \tensor N$]
+  \label{def:tensorMod}
+  \lean{MR0555258CompactifyingPicard.tensorMod}
+  For $\Ox$-modules $M, N$ their tensor product $M \tensor_{\Ox} N$ is the
+  sheafification of the presheaf tensor product. Realized via Mathlib's
+  presheaf-level monoidal tensor \texttt{PresheafOfModules.Monoidal.tensorObj}
+  followed by sheafification; note Mathlib has no \texttt{MonoidalCategory}
+  instance on $X.\mathrm{Modules}$ directly, so the tensor must be assembled
+  from the presheaf monoidal structure.
+\end{definition}
+
+%==============================================================================
+% Symmetric monoidal scaffolding for the tensor of \cref{def:tensorMod}.
+% PROJECT-BESPOKE (no external source): Mathlib supplies the monoidal structure
+% on PRESHEAVES of modules (PresheafOfModules.monoidalCategory, with associators
+% and unitors) but NOT on SheafOfModules over a sheaf of rings, and registers no
+% braided/symmetric instance even at the presheaf level. These isomorphisms are
+% built by transporting the pointwise module-level structure (TensorProduct.comm
+% / .assoc / .lid) through the presheaf tensor and sheafification. They are the
+% algebraic engine of the H-twist isomorphisms (1.1.2)/(1.1.3).
+%==============================================================================
+
+\begin{lemma}\leanok
+[Braiding (symmetry) of the $\Ox$-tensor]
+  \label{lem:tensorMod_braiding}
+  \lean{MR0555258CompactifyingPicard.tensorBraiding}
+  \uses{def:tensorMod, def:presheafTensorBraiding}
+  For $\Ox$-modules $A, B$ there is a natural isomorphism
+  $A \tensor_{\Ox} B \cong B \tensor_{\Ox} A$, the symmetry of the tensor.
+  \begin{proof}
+    The rings $\mathcal{O}_X(U)$ are commutative, so at the presheaf level the
+    pointwise swap $m \tensor n \mapsto n \tensor m$ (\texttt{TensorProduct.comm})
+    assembles into an isomorphism of presheaves of modules
+    (\cref{def:presheafTensorBraiding}); applying sheafification (a functor) gives
+    the asserted isomorphism of the sheafified tensors of \cref{def:tensorMod},
+    natural in $A$ and $B$.
+  \end{proof}
+\end{lemma}
+
+\begin{definition}
+
+\leanok
+[Presheaf-level braiding]
+  \label{def:presheafTensorBraiding}
+  \lean{MR0555258CompactifyingPicard.presheafTensorBraiding}
+  For presheaves of modules $M, N$ over a presheaf of commutative rings, the
+  presheaf-level swap $M \tensor N \cong N \tensor M$ of the monoidal tensor
+  \texttt{PresheafOfModules.Monoidal.tensorObj}. Mathlib registers no
+  braided/symmetric instance on \texttt{PresheafOfModules}, so it is built by hand:
+  each section ring $R(U)$ is commutative, so the pointwise tensor carries the
+  \texttt{ModuleCat} symmetric braiding $\beta$; these assemble (via
+  \texttt{PresheafOfModules.isoMk}) into an isomorphism of presheaves of modules,
+  naturality reducing on pure tensors to the defining swap.
+\end{definition}
+
+\begin{lemma}\leanok
+[Associativity of the $\Ox$-tensor (conditional)]
+  \label{lem:tensorMod_assoc}
+  \lean{MR0555258CompactifyingPicard.tensorAssocOfLocallyBijective}
+  \uses{def:tensorMod, lem:sheafifyTensorComparison, lem:sheafifyTensorComparisonLeft}
+  For $\Ox$-modules $A, B, C$, \emph{given} that the four sheafification-unit
+  whiskerings $\eta_{A\tensor B}\tensor\id_C$, $\id_A\tensor\eta_{B\tensor C}$
+  (both handednesses) are locally bijective, there is a natural isomorphism
+  $(A \tensor_{\Ox} B) \tensor_{\Ox} C \cong A \tensor_{\Ox} (B \tensor_{\Ox} C)$.
+  (Project-bespoke; the local-bijectivity hypotheses isolate the genuine Mathlib
+  gap — see \cref{lem:sheafifyTensorComparison}. The unconditional associator
+  would follow from a $\texttt{MonoidalClosed (PresheafOfModules }R)$ instance.)
+  \begin{proof}
+    Mathlib's monoidal structure on presheaves of modules supplies the pointwise
+    associator (\texttt{TensorProduct.assoc}). Because \cref{def:tensorMod}
+    sheafifies the presheaf tensor, $(A \tensor B)\tensor C$ unfolds to the
+    sheafification of a presheaf tensor one of whose factors,
+    $(\widetilde{A\tensor B})$, is itself sheafified. The comparison
+    \cref{lem:sheafifyTensorComparison} rewrites this back to the sheafification of
+    the un-presheafified tensor; the presheaf associator then applies, and a second
+    use of \cref{lem:sheafifyTensorComparison} on the other side reassembles the
+    target. Concretely the chain is
+    $\widetilde{(\widetilde{A\tensor B})\tensor C}
+       \cong \widetilde{(A\tensor B)\tensor C}
+       \cong \widetilde{A\tensor(B\tensor C)}
+       \cong \widetilde{A\tensor(\widetilde{B\tensor C})}$.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}\leanok
+[Sheafification commutes with the presheaf tensor (conditional, right)]
+  \label{lem:sheafifyTensorComparison}
+  \lean{MR0555258CompactifyingPicard.sheafifyTensorComparisonOfLocallyBijective}
+  \uses{def:tensorMod, lem:sheafification_map_isIso, def:sheafifyTensorUnitWhiskerRight}
+  For presheaves of modules $P, Q$, \emph{given} that the whiskered unit
+  $\eta_P \tensor \id_Q$ is locally injective and locally surjective, the induced
+  map exhibits an isomorphism
+  $\widetilde{\,(\widetilde{P}) \tensor Q\,} \cong \widetilde{P \tensor Q}$.
+  \begin{proof}
+    \uses{lem:sheafification_map_isIso, def:sheafifyTensorUnitWhiskerRight}
+    The comparison map is the sheafification of the whiskered unit
+    $\eta_P \tensor \id_Q : P \tensor Q \to (\widetilde{P}) \tensor Q$
+    (\cref{def:sheafifyTensorUnitWhiskerRight}). By the local-bijectivity
+    hypotheses this whiskered map is a local isomorphism, so by
+    \cref{lem:sheafification_map_isIso} its sheafification is an isomorphism; take
+    its inverse.
+
+    \textbf{Why the hypotheses cannot be discharged (iter-008 finding).} One would
+    like ``tensoring by a fixed $Q$ sends local isomorphisms to local
+    isomorphisms.'' This holds for local \emph{surjectivity} (right exactness of
+    $-\tensor Q$ on sections), but is \emph{false} for local \emph{injectivity}:
+    $-\tensor Q$ is not left exact (e.g.\ $\mathbb{Z}/2 \tensor (\cdot 2:
+    \mathbb{Z}\to\mathbb{Z})$ is not injective). At the presheaf level the
+    injectivity half genuinely fails; it is recovered only stalkwise or via a
+    $\texttt{MonoidalClosed (PresheafOfModules }R)$ instance, neither of which is in
+    Mathlib. Hence the hypotheses are left explicit. The unconditional engine
+    \cref{lem:sheafification_map_isIso} \emph{is} proven outright.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}\leanok
+[Sheafification--tensor comparison, left handedness (conditional)]
+  \label{lem:sheafifyTensorComparisonLeft}
+  \lean{MR0555258CompactifyingPicard.sheafifyTensorComparisonLeftOfLocallyBijective}
+  \uses{def:tensorMod, lem:sheafification_map_isIso, def:sheafifyTensorUnitWhiskerLeft}
+  Symmetric to \cref{lem:sheafifyTensorComparison} on the left factor: given that
+  $\id_P \tensor \eta_Q$ is locally bijective, the induced map exhibits
+  $\widetilde{\,P \tensor (\widetilde{Q})\,} \cong \widetilde{P \tensor Q}$.
+  \begin{proof}
+    \uses{lem:sheafification_map_isIso, def:sheafifyTensorUnitWhiskerLeft}
+    Identical to \cref{lem:sheafifyTensorComparison} with the whiskering on the left
+    factor (\cref{def:sheafifyTensorUnitWhiskerLeft}).
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}\leanok
+[Sheafification inverts locally bijective maps]
+  \label{lem:sheafification_map_isIso}
+  \lean{MR0555258CompactifyingPicard.sheafification_map_isIso_of_locallyBijective}
+  For a locally bijective morphism of sheaves of rings and a presheaf-of-modules
+  map $g$ that is locally injective and locally surjective, the sheafification of
+  $g$ is an isomorphism. This is the unconditional ``sheafify inverts local isos''
+  engine underlying both comparison lemmas.
+  \begin{proof}
+    Module sheafification $\widetilde{(-)}$ is a localization functor at the class
+    $J.W$ of locally bijective maps (\texttt{ModuleCat.Sheaf.Localization}). A
+    locally injective + locally surjective $g$ lies in $J.W$
+    (\texttt{W\_of\_isLocallyBijective}, via \texttt{WEqualsLocallyBijective}), and a
+    localization functor inverts its class (\texttt{Localization.inverts}); hence
+    $\widetilde{g}$ is an isomorphism.
+  \end{proof}
+\end{lemma}
+
+\begin{definition}\leanok
+[Sheafification unit on a presheaf of modules]
+  \label{def:sheafifyUnit}
+  \lean{MR0555258CompactifyingPicard.sheafifyUnit}
+  \uses{def:tensorMod}
+  For a presheaf of modules $P$, the unit $\eta_P : P \to (\widetilde{P}).\mathrm{val}$
+  of the module-sheafification adjunction (\texttt{PresheafOfModules.toSheafify}).
+\end{definition}
+
+\begin{definition}\leanok
+[Whiskered sheafification unit, right]
+  \label{def:sheafifyTensorUnitWhiskerRight}
+  \lean{MR0555258CompactifyingPicard.sheafifyTensorUnitWhiskerRight}
+  \uses{def:sheafifyUnit}
+  The map $\eta_P \tensor \id_Q : P \tensor Q \to (\widetilde{P}) \tensor Q$
+  obtained by whiskering the sheafification unit \cref{def:sheafifyUnit} on the
+  right by $Q$ (\texttt{Monoidal.whiskerRight}).
+\end{definition}
+
+\begin{definition}\leanok
+[Whiskered sheafification unit, left]
+  \label{def:sheafifyTensorUnitWhiskerLeft}
+  \lean{MR0555258CompactifyingPicard.sheafifyTensorUnitWhiskerLeft}
+  \uses{def:sheafifyUnit}
+  The map $\id_P \tensor \eta_Q : P \tensor Q \to P \tensor (\widetilde{Q})$
+  obtained by whiskering \cref{def:sheafifyUnit} on the left by $P$.
+\end{definition}
+
+\begin{lemma}\leanok
+[Unitor of the $\Ox$-tensor]
+  \label{lem:tensorMod_unitor}
+  \lean{MR0555258CompactifyingPicard.tensorLeftUnitor}
+  \uses{def:tensorMod, def:presheafLeftUnitor, def:sheafifyValIso}
+  For an $\Ox$-module $A$ there is a natural isomorphism
+  $\mathcal{O}_X \tensor_{\Ox} A \cong A$ with the structure sheaf
+  (\texttt{SheafOfModules.unit}) as tensor unit; the right unitor
+  $A \tensor_{\Ox} \mathcal{O}_X \cong A$ follows by \cref{lem:tensorMod_braiding}.
+  \begin{proof}
+    Sheafify the presheaf-level left unitor (\cref{def:presheafLeftUnitor}, the
+    pointwise $R(U) \tensor_{R(U)} M \cong M$, \texttt{TensorProduct.lid}), then
+    identify the sheafification of the sheaf $A$ with $A$ itself
+    (\cref{def:sheafifyValIso}).
+  \end{proof}
+\end{lemma}
+
+\begin{definition}
+
+\leanok
+[Presheaf-level left unitor]
+  \label{def:presheafLeftUnitor}
+  \lean{MR0555258CompactifyingPicard.presheafLeftUnitor}
+  The presheaf-level left unitor
+  $\mathbf{1} \tensor M \cong M$ of \texttt{PresheafOfModules.Monoidal.tensorObj}.
+  The monoidal unit of \texttt{PresheafOfModules} is definitionally
+  \texttt{PresheafOfModules.unit}, so this is Mathlib's monoidal
+  \texttt{leftUnitor}, restated so that its unit matches the \texttt{.val} of
+  \texttt{SheafOfModules.unit} used by \cref{def:tensorMod}.
+\end{definition}
+
+\begin{definition}
+
+\leanok
+[Sheafification of a sheaf's underlying presheaf]
+  \label{def:sheafifyValIso}
+  \lean{MR0555258CompactifyingPicard.sheafifyValIso}
+  For an $\Ox$-module $A$ (a sheaf of modules), the sheafification of its underlying
+  presheaf is canonically isomorphic to $A$ itself, $\widetilde{A.\mathrm{val}}
+  \cong A$. This is the counit of the reflective module-sheafification adjunction at
+  the sheaf $A$, an isomorphism because the adjunction is reflective. A reusable
+  building block for the unitor and associator.
+\end{definition}
+
+\begin{lemma}
+
+\leanok
+[Right unitor of the $\Ox$-tensor]
+  \label{lem:tensorMod_rightUnitor}
+  \lean{MR0555258CompactifyingPicard.tensorRightUnitor}
+  \uses{lem:tensorMod_braiding, lem:tensorMod_unitor}
+  For an $\Ox$-module $A$ there is a natural isomorphism
+  $A \tensor_{\Ox} \mathcal{O}_X \cong A$.
+  \begin{proof}
+    Compose the braiding $A \tensor \mathcal{O}_X \cong \mathcal{O}_X \tensor A$
+    (\cref{lem:tensorMod_braiding}) with the left unitor (\cref{lem:tensorMod_unitor}).
+  \end{proof}
+\end{lemma}
+
+\begin{definition}\leanok
+[The ``tensor by $F$'' endofunctor]
+  \label{def:tensorLeft}
+  \lean{MR0555258CompactifyingPicard.tensorLeft}
+  \uses{def:tensorMod}
+  For an $\Ox$-module $F$, the endofunctor $\mathrm{tensorLeft}\,F$ on
+  $\Ox$-modules sends $N \mapsto F \tensor_{\Ox} N$ (\cref{def:tensorMod}) and a
+  morphism $\varphi : N \to N'$ to the sheafification of the presheaf tensor
+  $\mathrm{id}_F \tensor \varphi$. It is the functorial form of \cref{def:tensorMod}
+  in its second argument; no \texttt{MonoidalCategory} instance on
+  $X.\mathrm{Modules}$ is required.
+\end{definition}
+
+\begin{definition}\leanok
+[Inhabitedness of $\Ox$-modules]
+  \label{def:nonempty_modules}
+  \lean{MR0555258CompactifyingPicard.instNonemptyModules}
+  The category of $\Ox$-modules is inhabited, the zero module being an object.
+  This is a technical witness (edge-free by design) needed to state the
+  placeholder declarations whose result type is an $\Ox$-module.
+\end{definition}
+
+\begin{definition}
+
+\leanok
+[Free $\Ox$-module]
+  \label{def:isFreeMod}
+  \lean{MR0555258CompactifyingPicard.IsFreeMod}
+  An $\Ox$-module $J$ is \emph{free} when $J \cong \mathcal{O}_X^{(\Lambda)}$ for
+  some index set $\Lambda$. Realized via Mathlib's \texttt{SheafOfModules.free}
+  (existence of an iso to a coproduct of copies of the unit).
+\end{definition}
+
+\begin{definition}
+
+\leanok
+[Invertible $\Ox$-module]
+  \label{def:isInvertibleMod}
+  \uses{def:tensorMod}
+  \lean{MR0555258CompactifyingPicard.IsInvertibleMod}
+  An $\Ox$-module $L$ is \emph{invertible} when it is locally free of rank $1$,
+  equivalently when there is $L^{-1}$ with $L \tensor_{\Ox} L^{-1} \cong
+  \mathcal{O}_X$. Realized as an invertible object for the tensor of
+  \cref{def:tensorMod}.
+\end{definition}
+
+% --- Project-local (Mathlib-gap) predicates of strands (a)/(b). These are the
+% "opaque placeholder" Props of the §1 statements; the bottom-up P1b-iii(a) layer
+% realizes the tractable batch as genuine definitions. The fibrewise condition
+% FiberExtVanishes is realized via the scheme fibre X(s) (Mathlib's
+% Scheme.Hom.fiber) and the absolute Ext group; the relative-Ext sheaf relExt and
+% the LFP+flat-on-an-open predicate IsLFPAndFlatOn stay opaque pending the
+% relative-Ext / proper-pushforward (R^q f_*) infrastructure absent from Mathlib. ---
+
+\begin{definition}\leanok
+[Retrocompact open]
+  \label{def:isRetrocompact}
+  \lean{MR0555258CompactifyingPicard.IsRetrocompact}
+  An open $U \subseteq S$ is \emph{retrocompact} when its inclusion is
+  quasi-compact (equivalently, $U \cap V$ is quasi-compact for every
+  quasi-compact open $V$). Realized via Mathlib's quasi-compactness of the open
+  immersion $U \hookrightarrow S$.
+\end{definition}
+
+\begin{definition}\leanok
+[Locally free of finite rank on an open]
+  \label{def:isLocallyFreeOfFiniteRankOn}
+  \lean{MR0555258CompactifyingPicard.IsLocallyFreeOfFiniteRankOn}
+  \uses{def:isFreeMod}
+  An $\Os$-module $M$ is \emph{locally free of finite rank on} an open
+  $U \subseteq S$ when the restriction $M|_U$ is, locally on $U$, isomorphic to a
+  finite free $\mathcal{O}_U$-module. Realized via Mathlib's
+  \texttt{SheafOfModules.free} on the restriction together with a finiteness
+  condition on the index type.
+\end{definition}
+
+\begin{definition}[Absolute Ext group $\Ext^q_Y(M,N)$]\leanok
+  \label{def:extGroup}
+  \lean{MR0555258CompactifyingPicard.extGroup}
+  The (absolute) Ext group $\Ext^q_Y(M,N)$ of two $\mathcal{O}_Y$-modules, an
+  abelian group, used to phrase acyclicity in \cref{lem:acyclic_surjection}.
+  Realized via Mathlib's \texttt{CategoryTheory.Abelian.Ext} in the abelian
+  category $Y.\mathrm{Modules}$ (the existing \texttt{Scheme.Modules.instAbelian}
+  instance), endowing it with the standard derived category
+  (\texttt{HasDerivedCategory.standard}) and the resulting
+  \texttt{hasExt\_of\_hasDerivedCategory} structure, packaged as an object of
+  \texttt{Ab}. The Ext universe is the object universe of $Y.\mathrm{Modules}$,
+  so the group lands in $\mathtt{Ab}.\{u{+}1\}$; the signature is taken there
+  (every use site phrases only $\mathtt{IsZero}(\cdot)$, which is
+  universe-agnostic, so no dependent constrains the universe). This avoids the
+  \texttt{IsGrothendieckAbelian (SheafOfModules R)} instance entirely (its
+  \texttt{AB5OfSize}/\texttt{HasSeparator} fields are absent from Mathlib).
+\end{definition}
+
+\begin{definition}[Sheaf cohomology $H^q(U,F)$]\leanok
+  \label{def:sheafCohomology}
+  \lean{MR0555258CompactifyingPicard.sheafCohomology}
+  \uses{def:extGroup}
+  The sheaf cohomology $H^q(U,F)$ of an $\mathcal{O}_U$-module $F$, an abelian
+  group, used only to state affine acyclicity (\cref{thm:ega_ext_affine_acyclic}).
+  Realized as $\Ext^q_U(\mathcal{O}_U, F)$ (the derived functor of global sections
+  expressed through \cref{def:extGroup}), with $\mathcal{O}_U$ the unit
+  $\mathcal{O}_U$-module (\texttt{SheafOfModules.unit}). Lands in
+  $\mathtt{Ab}.\{u{+}1\}$, inheriting the universe of \cref{def:extGroup}.
+\end{definition}
+
+\begin{definition}[Relative local Ext sheaf $\sExt^q_{X/S}(I,F)$]
+  \label{def:relExt}
+  \lean{MR0555258CompactifyingPicard.relExt}
+  \textit{Project-local realization of the notation $\sExt^q_{X/S}(I,F)$ of Altman--Kleiman, §1.}
+  The relative local Ext sheaf $\sExt^q_{X/S}(I,F)$, an $\Os$-module, morally
+  $R^q f_*$ of the sheaf-$\Ext$ of $I$ and $F$. \emph{Currently opaque}: a
+  faithful realization requires the higher direct image $R^q f_*$ together with the
+  internal $\sExt$-sheaf of two $\Ox$-modules, both absent from Mathlib v4.30.0; the
+  declaration carries the correct type so the §1 statements that mention it can be
+  transcribed, and is realized when that infrastructure lands.
+\end{definition}
+
+\begin{definition}[Fibrewise Ext-vanishing $\Ext^q_{X(s)}(I(s),F(s)) = 0$]\leanok
+  \label{def:fiberExtVanishes}
+  \lean{MR0555258CompactifyingPicard.FiberExtVanishes}
+  \uses{def:extGroup}
+  \textit{Project-local realization of the fibrewise condition $\Ext^q_{X(s)}(I(s),F(s))=0$ used throughout Altman--Kleiman, §1 (e.g. (1.3), (1.9), (1.10); the (1.3) instance is quoted verbatim in \cref{thm:H_locallyFree}).}
+  The fibrewise vanishing condition $\Ext^q_{X(s)}(I(s),F(s)) = 0$ at a point
+  $s \in S$, where $X(s)$ is the scheme-theoretic fibre of $f$ over $s$ and
+  $I(s), F(s)$ are the restrictions of $I, F$ to $X(s)$. Realized faithfully: take
+  the fibre $X(s) = $ \texttt{Scheme.Hom.fiber}\,$f\,s$ with its inclusion
+  $j = $ \texttt{fiber\(\iota\)}\,$f\,s : X(s) \to X$ (both from Mathlib's
+  \texttt{AlgebraicGeometry.Fiber}); set $I(s) = j^* I$, $F(s) = j^* F$ via
+  \texttt{Scheme.Modules.pullback}; the condition is
+  $\mathtt{IsZero}\big(\Ext^q_{X(s)}(I(s), F(s))\big)$ through the absolute Ext
+  group of \cref{def:extGroup} on the fibre scheme. This replaces the former opaque
+  placeholder by a genuine definition built from existing Mathlib + project pieces.
+\end{definition}
+
+\begin{definition}[Locally finitely presented and flat on an open]
+  \label{def:isLFPAndFlatOn}
+  \lean{MR0555258CompactifyingPicard.IsLFPAndFlatOn}
+  \uses{def:relExt, def:isLFP, def:isSFlat}
+  \textit{Project-local realization of the conclusion of Altman--Kleiman, §1, (1.10)(i).}
+  The predicate that the restriction of the relative Ext sheaf
+  $\sExt^c_{X/S}(I,F)$ (\cref{def:relExt}) to an open $V \subseteq S$ is locally
+  finitely presented and $S$-flat. \emph{Currently opaque}: it references
+  \cref{def:relExt}, whose realization is gated on the absent $R^q f_*$
+  infrastructure; the declaration carries the correct type so (1.10)(i) can be
+  transcribed, and is realized together with \cref{def:relExt}.
+\end{definition}
+
+\begin{definition}\leanok
+[Half-exact additive functor]
+  \label{def:isHalfExact}
+  \lean{MR0555258CompactifyingPicard.IsHalfExact}
+  An additive endofunctor $T$ of finitely generated $A$-modules is
+  \emph{half-exact} when, for every short exact sequence
+  $0 \to A' \to B \to C \to 0$, the middle sequence $T(A') \to T(B) \to T(C)$ is
+  exact at $T(B)$. Realized directly as exactness (at the middle) of the image
+  short complex under $T$ for every short exact \texttt{ShortComplex}; no packaged
+  Mathlib predicate exists, so the definition is given explicitly.
+\end{definition}
+
+\begin{definition}\leanok
+[Admissibility hypotheses of (1.1)]
+  \label{def:admissible}
+  \lean{MR0555258CompactifyingPicard.Admissible}
+  \uses{def:isLFP, def:isSFlat}
+  \textit{Source: Altman--Kleiman, §1, (1.1), p. 54 (standing hypotheses; verbatim quoted in \cref{def:H}).}
+  The data $(f, I, F)$ are \emph{admissible} when $f : X \to S$ is proper and
+  locally of finite presentation, $I$ and $F$ are locally finitely presented
+  $\Ox$-modules, and $F$ is flat over $S$. These are the standing hypotheses of
+  (1.1) under which $\HIF(I,F)$ and $h(I,F)$ are defined.
+\end{definition}
+
+\begin{definition}
+
+\leanok
+[Base-change tensor functor $M \mapsto F \tensor_S M$]
+  \label{def:tensorBaseChangeFunctor}
+  \lean{MR0555258CompactifyingPicard.tensorBaseChangeFunctor}
+  \uses{def:tensorMod, def:tensorLeft}
+  \textit{Source: Altman--Kleiman, §1, (1.1), p. 54 (the functor $M \mapsto F \tensor_S M$).}
+  For $f : X \to S$ and an $\Ox$-module $F$, the \emph{base-change tensor functor}
+  is the covariant functor $\Os\text{-mod} \to \Ox\text{-mod}$ sending an
+  $\Os$-module $M$ to $F \tensor_{\Ox} f^* M$, the tensor over $\Ox$ of $F$ with
+  the pullback $f^* M$. Realized as the composite of Mathlib's pullback functor
+  $f^* = $ \texttt{Scheme.Modules.pullback}\,$f : \Os\text{-mod} \to \Ox\text{-mod}$
+  with the ``tensor by $F$'' endofunctor on $\Ox$-modules built from the presheaf
+  monoidal tensor (\cref{def:tensorMod}, in its functorial form
+  \texttt{Monoidal.tensorHom}) followed by sheafification. (No
+  \texttt{MonoidalCategory} instance on $X.\mathrm{Modules}$ is required.)
+\end{definition}
+
+\begin{definition}\leanok
+[Base-change tensor $F \tensor_S M$]
+  \label{def:tensorBC}
+  \lean{MR0555258CompactifyingPicard.tensorBC}
+  \uses{def:tensorBaseChangeFunctor}
+  \textit{Source: Altman--Kleiman, §1, (1.1), p. 54 (the notation $F \tensor_S M$).}
+  For $f : X \to S$, an $\Ox$-module $F$ and an $\Os$-module $M$, write
+  $F \tensor_S M$ for the $\Ox$-module obtained by pulling $M$ back along $f$ and
+  tensoring with $F$ over $\Ox$. This is the value at $M$ of the base-change
+  tensor functor $M \mapsto F \tensor_S M$ (\cref{def:tensorBaseChangeFunctor})
+  from $\Os$-modules to $\Ox$-modules.
+\end{definition}
+
+\begin{definition}\leanok
+[The corepresented functor $M \mapsto \Hom_X(I, F \tensor_S M)$]
+  \label{def:homTensorFunctor}
+  \lean{MR0555258CompactifyingPicard.homTensorFunctor}
+  \uses{def:tensorBC}
+  \textit{Source: Altman--Kleiman, §1, (1.1), p. 54 (the functor corepresented by $H(I,F)$).}
+  The covariant functor on quasi-coherent $\Os$-modules
+  \[
+    M \;\longmapsto\; \Hom_X(I, F \tensor_S M),
+  \]
+  valued in types. By (1.1) it is corepresentable, and $\HIF(I,F)$ is by
+  definition a corepresenting object.
+\end{definition}
+
+%==============================================================================
+% Strand (a): the representing module H(I,F) and its local-freeness criterion.
+%==============================================================================
+
+\begin{definition}\leanok
+[The $\Os$-module $H(I,F)$]
+  \label{def:H}
+  \lean{MR0555258CompactifyingPicard.H}
+  \uses{thm:ega_H_existence, def:homTensorFunctor, def:admissible}
+  % SOURCE: [Altman--Kleiman], §1, (1.1), p. 54 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "(1.1) (The O_S-Module H(I,F)). Let f : X -> S be a finitely
+  % presented, proper morphism of schemes, and let I and F be two locally
+  % finitely presented O_X-Modules, with F flat over S. Then there exist a
+  % locally finitely presented O_S-Module H(I,F) and an element h(I,F) of
+  % Hom_X(I, F (x)_S H(I,F)) which represent the (covariant) functor,
+  % M |-> Hom_X(I, F (x)_S M), defined on the category of quasi-coherent
+  % O_S-Modules M, and the formation of the pair commutes with base change;"
+  \textit{Source: Altman--Kleiman, §1, (1.1), p. 54.}
+  Let $f : X \to S$ be a finitely presented, proper morphism of schemes, and let
+  $I$ and $F$ be locally finitely presented $\Ox$-modules with $F$ flat over $S$.
+  Then $\HIF(I,F)$ denotes the locally finitely presented $\Os$-module that
+  represents the covariant functor
+  \[
+    M \;\longmapsto\; \Hom_X(I, F \tensor_S M)
+  \]
+  on the category of quasi-coherent $\Os$-modules, whose existence is supplied by
+  \cref{thm:ega_H_existence} (over a Noetherian base) together with descent.
+\end{definition}
+
+\begin{definition}\leanok
+[The universal element $h(I,F)$]
+  \label{def:h}
+  \lean{MR0555258CompactifyingPicard.h}
+  \uses{def:H}
+  \textit{Source: Altman--Kleiman, §1, (1.1), p. 54.}
+  The universal element $h(I,F) \in \Hom_X\!\big(I, F \tensor_S \HIF(I,F)\big)$ is
+  the element corresponding, under the representing isomorphism of \cref{def:H}
+  for $M = \HIF(I,F)$, to the identity of $\HIF(I,F)$.
+\end{definition}
+
+\begin{theorem}\leanok
+[Representability and base-change compatibility of $(H,h)$]
+  \label{thm:H_represents}
+  \lean{MR0555258CompactifyingPicard.H_represents}
+  \uses{def:H, def:h}
+  % SOURCE: [Altman--Kleiman], §1, (1.1.1), p. 54 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "in other words, the Yoneda map defined by h(I,F),
+  % y : Hom_T(H(I,F)_T, M) -> Hom_{X_T}(I_T, F (x)_S M), (1.1.1)
+  % is an isomorphism for every S-scheme T and every quasi-coherent
+  % O_T-Module M."
+  \textit{Source: Altman--Kleiman, §1, (1.1.1), p. 54.}
+  For every $S$-scheme $T$ and every quasi-coherent $\Ot$-module $M$, the Yoneda
+  map defined by $h(I,F)$,
+  \[
+    y : \Hom_T\!\big(\HIF(I,F)_T, M\big) \;\longrightarrow\;
+        \Hom_{X_T}\!\big(I_T, F \tensor_S M\big),
+        \tag{1.1.1}
+  \]
+  is an isomorphism. Equivalently, the formation of the pair $(\HIF(I,F), h(I,F))$
+  commutes with base change: for $g : T \to S$ one has
+  $\HIF(I,F)_T \cong \HIF(I_T, F_T)$ compatibly with the universal elements.
+  \begin{proof}\leanok
+    \uses{thm:ega_H_existence, thm:ega_descent_noetherian}
+    Representability is local on the base $S$, so we may assume $S$ affine; by
+    \cref{thm:ega_descent_noetherian} the data $X, I, F$ descend to a finite-type
+    $\mathbf{Z}$-scheme $S_0$. Over the Noetherian base $S_0$ the pair
+    $(\HIF(I_0, F_0), h(I_0,F_0))$ exists and its formation commutes with
+    arbitrary base change (\cref{thm:ega_H_existence}). Base-changing back to $S$
+    and using the universal property of $h$ gives the Yoneda isomorphism
+    \textnormal{(1.1.1)} for all $T$ and $M$; its naturality in $T$ is exactly the
+    asserted base-change compatibility.
+  \end{proof}
+\end{theorem}
+
+\begin{lemma}\leanok
+[Invariance of $H$ under twist by an invertible sheaf]
+  \label{lem:H_tensor_invertible}
+  \lean{MR0555258CompactifyingPicard.H_tensor_invertible}
+  \uses{def:H, thm:H_represents, def:isInvertibleMod, def:tensorMod, lem:tensorMod_braiding, lem:tensorMod_assoc, lem:tensorMod_unitor}
+  % SOURCE: [Altman--Kleiman], §1, (1.1.2), p. 54--55 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "For any invertible O_X-Module L, there is a canonical
+  % isomorphism, H(I (x) L, F (x) L) = H(I,F), (1.1.2) because tensoring by L
+  % gives a map, Hom_X(I, F (x)_S M) -> Hom_X(I (x) L, (F (x) L) (x)_S M), with
+  % an inverse given by tensoring by L^{-1}."
+  \textit{Source: Altman--Kleiman, §1, (1.1.2), p. 54--55.}
+  For any invertible $\Ox$-module $L$ there is a canonical isomorphism
+  \[
+    \HIF(I \tensor L,\; F \tensor L) \;=\; \HIF(I,F).
+    \tag{1.1.2}
+  \]
+  \begin{proof}
+    Tensoring a homomorphism by $L$ gives a map
+    $\Hom_X(I, F \tensor_S M) \to \Hom_X(I \tensor L, (F \tensor L) \tensor_S M)$,
+    natural in $M$, with inverse given by tensoring by $L^{-1}$. Thus the two
+    functors represented by $\HIF(I,F)$ and $\HIF(I\tensor L, F \tensor L)$ are
+    canonically isomorphic, whence the asserted identity by Yoneda.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}\leanok
+[Right exactness of $H$ in the second-variable tensor]
+  \label{lem:H_tensor}
+  \lean{MR0555258CompactifyingPicard.H_tensor}
+  \uses{def:H, thm:H_represents, def:tensorMod, lem:tensorMod_braiding, lem:tensorMod_assoc, lem:tensorMod_unitor}
+  % SOURCE: [Altman--Kleiman], §1, (1.1.3), p. 55 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "Moreover it is clearly right exact in each variable. In
+  % particular, the functor N |-> H(I (x)_S N, F) is covariant and right exact.
+  % So we have a canonical isomorphism, H(I,F) (x) N = H(I (x)_S N, F). (1.1.3)"
+  \textit{Source: Altman--Kleiman, §1, (1.1.3), p. 55.}
+  The $\Os$-module $\HIF(I,F)$ is functorial in $I$ and $F$ (covariant in $I$,
+  contravariant in $F$) and right exact in each variable. In particular, for a
+  quasi-coherent $\Os$-module $N$ there is a canonical isomorphism
+  \[
+    \HIF(I,F) \tensor N \;=\; \HIF(I \tensor_S N,\; F).
+    \tag{1.1.3}
+  \]
+  \begin{proof}
+    The functor $N \mapsto \HIF(I \tensor_S N, F)$ is covariant and right exact,
+    as is $N \mapsto \HIF(I,F) \tensor N$; both agree on $N = \Os$ and commute
+    with arbitrary direct sums, hence are canonically isomorphic by right
+    exactness, giving \textnormal{(1.1.3)}.
+  \end{proof}
+\end{lemma}
+
+\begin{definition}\leanok
+[Restriction ring-sheaf datum]
+  \label{def:restrictionRingSheafHom}
+  \lean{AlgebraicGeometry.Scheme.Modules.restrictionRingSheafHom}
+  \textit{Project-local Lean realization (supporting \cref{def:extensionByZero}).}
+  For an open immersion $j : U \hookrightarrow X$ of schemes,
+  $\mathtt{restrictionRingSheafHom}\,j$ is the morphism of sheaves of rings
+  $\Ox|U \to (j_*)\,\mathcal{O}_U$ that Mathlib keeps \emph{inline} inside the
+  definition of $\mathtt{restrictFunctor}\,j$, exposed here as a named datum
+  $\varphi$ so that the identification $j^{*} = \mathtt{pushforward}\,\varphi$
+  (\cref{lem:restrictFunctor_eq_pushforward}) can be stated and the
+  extension-by-zero adjunction typed. Built from the inverse structure-sheaf
+  isomorphisms $\mathtt{appIso}$ of $j$ on opens, whiskered through
+  $\mathrm{forget}_2\,\mathsf{CommRing}\,\mathsf{Ring}$. Project-local because
+  Mathlib does not name it.
+\end{definition}
+
+\begin{lemma}\leanok
+[Restriction is pushforward of the ring-sheaf datum]
+  \label{lem:restrictFunctor_eq_pushforward}
+  \lean{AlgebraicGeometry.Scheme.Modules.restrictFunctor_eq_pushforward}
+  \uses{def:restrictionRingSheafHom}
+  \textit{Project-local Lean realization (supporting \cref{lem:extensionByZeroAdjunction}).}
+  For an open immersion $j : U \hookrightarrow X$, the restriction functor
+  $j^{*} = \mathtt{restrictFunctor}\,j$ on sheaves of modules is
+  \emph{definitionally equal} to the sheaf-of-modules pushforward
+  $\mathtt{pushforward}\,(\mathtt{restrictionRingSheafHom}\,j)$ along the
+  continuous open-immersion site map. The proof is $\mathtt{rfl}$. This is the
+  defeq that lets $j_!$ be defined as $\mathtt{pullback}$ of the same datum and
+  the adjunction $j_! \dashv j^{*}$ be read off
+  $\mathtt{pullbackPushforwardAdjunction}$.
+\end{lemma}
+
+\begin{definition}\leanok
+[Extension by zero $j_!$]
+  \label{def:extensionByZero}
+  \lean{AlgebraicGeometry.Scheme.Modules.extensionByZero}
+  For an open immersion $j : U \hookrightarrow X$ of schemes, the
+  \emph{extension by zero} functor
+  $j_! : \ModuleCat(U) \to \ModuleCat(X)$ is the left adjoint of the restriction
+  functor $j^{*} = \mathtt{restrictFunctor}\,j$. Concretely, for an
+  $\mathcal{O}_U$-module $M$, $j_! M$ is the sheafification of the presheaf of
+  modules on $X$ given by
+  \[
+    V \longmapsto
+      \begin{cases} M(V) & V \subseteq U,\\[2pt] 0 & V \not\subseteq U,\end{cases}
+  \]
+  whose stalks are $(j_! M)_x = M_x$ for $x \in U$ and $(j_! M)_x = 0$ for
+  $x \notin U$. This is the Lean realization of the operation $(j_U)_!$ used in
+  \cref{lem:acyclic_surjection}. It is \emph{absent} from Mathlib v4.30.0, which
+  provides $j^{*} = \mathtt{restrictFunctor}\,j$ and its \emph{right} adjoint
+  $j_{*} = \mathtt{pushforward}\,j$ (with $\mathtt{restrictAdjunction}$), but no
+  left adjoint to $j^{*}$.
+\end{definition}
+
+\begin{lemma}\leanok
+[Adjunction $j_! \dashv j^{*}$]
+  \label{lem:extensionByZeroAdjunction}
+  \lean{AlgebraicGeometry.Scheme.Modules.extensionByZeroAdjunction}
+  \uses{def:extensionByZero}
+  For an open immersion $j : U \hookrightarrow X$ there is an adjunction
+  $j_! \dashv j^{*}$, i.e. a natural bijection
+  $\Hom_X(j_! M, F) \cong \Hom_U(M, j^{*} F)$ in $M \in \ModuleCat(U)$ and
+  $F \in \ModuleCat(X)$.
+  \begin{proof}
+    \uses{def:extensionByZero, def:restrictionRingSheafHom, lem:restrictFunctor_eq_pushforward}
+    The adjunction is read off Mathlib's site-pushforward machinery through a
+    definitional identification, avoiding any hand-rolled Kan extension or
+    sheafification. Mathlib's restriction functor $j^{*} =
+    \mathtt{restrictFunctor}\,j$ is, \emph{definitionally}, the sheaf-of-modules
+    pushforward $\mathtt{pushforward}\,\varphi$ along the canonical ring-sheaf
+    morphism $\varphi = \mathtt{restrictionRingSheafHom}\,j$ that $j$ induces (this
+    is \cref{lem:restrictFunctor_eq_pushforward}, which holds by $\mathtt{rfl}$).
+    Because the base sites are the \emph{small} categories $\mathrm{Opens}(U)$,
+    $\mathrm{Opens}(X)$, Mathlib's $\mathtt{PullbackContinuous}$ already equips
+    $\mathtt{pushforward}\,\varphi$ with a left adjoint, namely
+    $\mathtt{pullback}\,\varphi$, together with the adjunction
+    $\mathtt{pullbackPushforwardAdjunction}\,\varphi :
+    \mathtt{pullback}\,\varphi \dashv \mathtt{pushforward}\,\varphi$. Setting
+    $j_! := \mathtt{pullback}\,\varphi$ (this is \cref{def:extensionByZero}), the
+    adjunction $j_! \dashv j^{*}$ is exactly
+    $\mathtt{pullbackPushforwardAdjunction}\,\varphi$ re-read through the defeq
+    $j^{*} = \mathtt{pushforward}\,\varphi$. In particular $j_!$, as a left
+    adjoint, preserves all colimits — used in \cref{lem:acyclic_surjection} to
+    commute $j_!$ past direct sums.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}
+
+\leanok
+[Restriction $j^{*}$ is exact]
+  \label{lem:restrictFunctor_exact}
+  \lean{AlgebraicGeometry.Scheme.Modules.restrictFunctor_preservesLimits}
+  \uses{lem:extensionByZeroAdjunction}
+  \textit{Project-local Lean realization (the $j^{*}$ half of $j_!/j^{*}$ exactness).}
+  For an open immersion $j : U \hookrightarrow X$ the restriction functor
+  $j^{*} = \mathtt{restrictFunctor}\,j$ preserves all limits.
+  \begin{proof}
+    \uses{lem:extensionByZeroAdjunction}
+    $j^{*}$ is the \emph{right} adjoint of the adjunction $j_! \dashv j^{*}$
+    (\cref{lem:extensionByZeroAdjunction}), and right adjoints preserve limits.
+    (Since $j^{*}$ is moreover a left adjoint, $\mathtt{restrictAdjunction} :
+    j^{*} \dashv j_{*}$, it preserves colimits too, hence is exact.)
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}
+
+\leanok
+[$j_!$ exactness reduces to mono-preservation]
+  \label{lem:extensionByZero_exact_of_mono}
+  \lean{AlgebraicGeometry.Scheme.Modules.extensionByZero_preservesFiniteLimits_of_preservesMono}
+  \uses{def:extensionByZero, lem:extensionByZeroAdjunction, lem:restrictFunctor_exact}
+  \textit{Project-local Lean realization (reduction step for \cref{lem:extensionByZero_exact}).}
+  For an open immersion $j$, \emph{if} $j_!$ preserves monomorphisms then $j_!$
+  preserves finite limits.
+  \begin{proof}
+    \uses{lem:extensionByZeroAdjunction, lem:restrictFunctor_exact}
+    $j_!$ is a left adjoint (\cref{lem:extensionByZeroAdjunction}), hence
+    right exact (preserves finite colimits); it is additive ($\mathtt{left\_adjoint\_additive}$),
+    as is $j^{*}$ (additive because it preserves finite products, by
+    \cref{lem:restrictFunctor_exact}). For an additive right-exact functor of
+    abelian categories, preservation of finite limits is equivalent to
+    preservation of monomorphisms
+    ($\mathtt{preservesFiniteLimits\_iff\_forall\_exact\_map\_and\_mono}$).
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}
+
+\leanok
+[$j_!$ preserves monomorphisms (presheaf-pullback reduction)]
+  \label{lem:extensionByZero_preservesMono}
+  \lean{AlgebraicGeometry.Scheme.Modules.extensionByZero_preservesMonomorphisms_of_presheafPullback}
+  \uses{def:extensionByZero, lem:restrictFunctor_exact}
+  \textit{Project-local Lean realization (conditional reduction of $j_!$
+  mono-preservation; Mathlib-gap infra).}
+  For an open immersion $j : U \hookrightarrow X$, \emph{if} the presheaf-level
+  pullback $\mathtt{PresheafOfModules.pullback}\,\varphi$ along
+  $\varphi = \mathtt{restrictionRingSheafHom}\,j$ preserves monomorphisms, then so
+  does $j_!$.
+  \begin{proof}
+    Factor $j_! = \mathtt{pullback}\,\varphi$ through
+    $\mathtt{SheafOfModules.pullbackIso}$ as
+    $\mathtt{forget} \circ \mathtt{PresheafOfModules.pullback}\,\varphi \circ
+    \mathtt{sheafification}$. The forgetful functor is a right adjoint and
+    sheafification is left exact, so both preserve monomorphisms unconditionally;
+    hence $j_!$ preserves monomorphisms as soon as the middle presheaf-pullback
+    factor does.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}
+
+\leanok
+[Extension by zero is exact (presheaf-pullback reduction)]
+  \label{lem:extensionByZero_exact}
+  \lean{AlgebraicGeometry.Scheme.Modules.extensionByZero_preservesFiniteLimits_of_presheafPullback}
+  \uses{def:extensionByZero, lem:extensionByZero_exact_of_mono, lem:extensionByZero_preservesMono, lem:restrictFunctor_exact}
+  \textit{Project-local Lean realization (conditional exactness of $j_!$;
+  Mathlib-gap infra).}
+  For an open immersion $j : U \hookrightarrow X$, \emph{if} the presheaf-level
+  pullback along $\varphi = \mathtt{restrictionRingSheafHom}\,j$ preserves
+  monomorphisms, then $j_!$ preserves finite limits; together with the colimit
+  preservation it has as a left adjoint (\cref{lem:extensionByZeroAdjunction}),
+  $j_!$ is then \emph{exact}. The restriction $j^{*} = \mathtt{restrictFunctor}\,j$
+  is unconditionally exact (\cref{lem:restrictFunctor_exact}).
+  \begin{proof}
+    \uses{lem:extensionByZero_exact_of_mono, lem:extensionByZero_preservesMono}
+    By \cref{lem:extensionByZero_exact_of_mono} it suffices that $j_!$ preserves
+    monomorphisms, which is \cref{lem:extensionByZero_preservesMono} under the
+    same presheaf-pullback hypothesis.
+  \end{proof}
+\end{lemma}
+
+\begin{theorem}[Existence of an extension-by-zero surjection (standard)]
+  \label{thm:exists_extensionByZero_surjection}
+  \lean{MR0555258CompactifyingPicard.External.exists_extensionByZero_surjection}
+  \uses{def:extensionByZero}
+  % SOURCE: [Altman--Kleiman], §1, (1.2) proof, p. 55 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "For any element f in any stalk of I, there is an affine
+  % neighborhood U of the stalk and an element g in Gamma(U, I) whose image in the
+  % stalk is equal to f. So there are a family of affine open sets U and a
+  % surjection J = ||_U J_U -> I, where J_U denotes the extension by zero
+  % (j_U)_!(O_X | U), where j_U denotes the inclusion of U in X."
+  \textit{Source: as invoked in Altman--Kleiman, §1, in the proof of (1.2).}
+  Let $X$ be a scheme and $I$ an arbitrary $\Ox$-module. Then there exist a family
+  $(U_i)_{i \in \iota}$ of affine open subsets of $X$ (with inclusions
+  $j_{U_i} : U_i \hookrightarrow X$) and an epimorphism
+  \[
+    \pi : \;\coprod_{i \in \iota} (j_{U_i})_!\bigl(\mathcal{O}_{U_i}\bigr)
+      \;\longrightarrow\; I .
+  \]
+  \begin{proof}
+    For every point and every germ of $I$ there is an affine open $U$ over which
+    the germ is the image of a section $s \in \Gamma(U, I)$; via the adjunction
+    $j_! \dashv j^{*}$ (\cref{lem:extensionByZeroAdjunction}) the section $s$
+    corresponds to a map $(j_U)_!(\mathcal{O}_U) \to I$. Indexing over all such
+    pairs $(U, s)$ and taking the coproduct of these maps yields a morphism
+    $\pi$ whose image contains every germ of $I$, hence an epimorphism. This is
+    the standard ``sections over affine opens generate'' fact, used by
+    Altman--Kleiman without further comment; it is anchored here as a Mathlib-gap
+    input (the stalkwise surjectivity is not available for
+    $\mathtt{SheafOfModules}$ in Mathlib v4.30.0), to build/upstream later.
+  \end{proof}
+\end{theorem}
+
+\begin{theorem}[Acyclicity of the pullback of an extension-by-zero sum (standard)]
+  \label{thm:extensionByZero_coprod_acyclic}
+  \lean{MR0555258CompactifyingPicard.External.extensionByZero_coprod_acyclic}
+  \uses{def:extensionByZero, def:extGroup, thm:ega_ext_affine_acyclic}
+  % SOURCE: [Altman--Kleiman], §1, (1.2) proof, p. 55 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "Then g*J is equal to ||_U J_{g^{-1}U} because pullback commutes
+  % with direct sum and with extension by zero. Hence we have Hom_Y(g*J, F) = prod
+  % Hom_Y(J_{g^{-1}U}, F) = prod Hom_{g^{-1}U}(O_{g^{-1}U}, F | g^{-1}(U)) = prod
+  % Gamma(g^{-1}U, F). Therefore we have Ext^q_Y(g*J, F) = prod H^q(g^{-1}U, F |
+  % g^{-1}U). Since g^{-1}U is affine and F is quasi-coherent, the right-hand side
+  % is equal to zero for q > 0."
+  \textit{Source: as invoked in Altman--Kleiman, §1, in the proof of (1.2).}
+  Let $(U_i)_{i \in \iota}$ be a family of affine open subsets of a scheme $X$,
+  let $g : Y \to X$ be an affine morphism, let $F$ be a quasi-coherent
+  $\Oy$-module, and let $q > 0$. Writing
+  $J = \coprod_i (j_{U_i})_!(\mathcal{O}_{U_i})$, the pullback $g^{*}J$ is acyclic
+  for $\Hom_Y(-,F)$:
+  \[
+    \Ext^q_Y\bigl(g^{*}J,\; F\bigr) \;=\; 0 .
+  \]
+  \begin{proof}
+    Pullback commutes with coproducts and with extension by zero, so
+    $g^{*}J \cong \coprod_i (j_{g^{-1}U_i})_!(\mathcal{O}_{g^{-1}U_i})$ with each
+    $g^{-1}U_i$ affine. Since $\Ext^q$ turns the coproduct into a product and the
+    adjunction $j_! \dashv j^{*}$ passes to derived categories,
+    $\Ext^q_Y(g^{*}J, F) = \prod_i \Ext^q_{g^{-1}U_i}(\mathcal{O}_{g^{-1}U_i},
+    F|g^{-1}U_i) = \prod_i H^q(g^{-1}U_i, F|g^{-1}U_i)$, which vanishes for $q>0$
+    because each $g^{-1}U_i$ is affine and $F$ quasi-coherent
+    (\cref{thm:ega_ext_affine_acyclic}). This bundles the standard base-change,
+    derived-adjunction and additivity facts Altman--Kleiman invoke without proof;
+    it is anchored as a Mathlib-gap input. The underlying $j_!$-exactness route
+    (\cref{lem:extensionByZero_exact}) reduces to a pointwise Lan formula for
+    $\mathtt{PresheafOfModules.pullback}$ absent from Mathlib v4.30.0, and the
+    derived adjunction needs derivability data ($\mathtt{Adjunction.derived}$)
+    likewise absent for these sheafification localizations — both to
+    build/upstream later.
+  \end{proof}
+\end{theorem}
+
+\begin{lemma}\leanok
+[Existence of an acyclic surjection]
+  \label{lem:acyclic_surjection}
+  \lean{MR0555258CompactifyingPicard.exists_acyclic_surjection}
+  \uses{thm:ega_ext_affine_acyclic, def:extensionByZero, thm:exists_extensionByZero_surjection, thm:extensionByZero_coprod_acyclic}
+  % SOURCE: [Altman--Kleiman], §1, (1.2), p. 55 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "(1.2) LEMMA. Let X be a scheme and let I be an arbitrary
+  % O_X-Module. Then there exists a surjection J -> I in which J is an
+  % O_X-Module such that for each affine morphism g : Y -> X and each
+  % quasi-coherent O_Y-Module F, the pullback g*J is acyclic for the functor
+  % Hom_Y(-, F)."
+  \textit{Source: Altman--Kleiman, §1, (1.2), p. 55.}
+  Let $X$ be a scheme and $I$ an arbitrary $\Ox$-module. Then there is a
+  surjection $J \to I$ with $J$ an $\Ox$-module such that for every affine
+  morphism $g : Y \to X$ and every quasi-coherent $\Oy$-module $F$, the pullback
+  $g^* J$ is acyclic for $\Hom_Y(-,F)$; that is, $\Ext^q_Y(g^* J, F) = 0$ for
+  $q > 0$.
+  % SOURCE QUOTE PROOF: "Proof. For any element f in any stalk of I, there is an
+  % affine neighborhood U of the stalk and an element g in Gamma(U, I) whose
+  % image in the stalk is equal to f. So there are a family of affine open sets
+  % U and a surjection J = ||_U J_U -> I, where J_U denotes the extension by
+  % zero (j_U)_!(O_X | U), where j_U denotes the inclusion of U in X. Then g*J
+  % is equal to ||_U J_{g^{-1}U} because pullback commutes with direct sum and
+  % with extension by zero. Hence we have Hom_Y(g*J, F) = prod Hom_Y(J_{g^{-1}U},
+  % F) = prod Hom_{g^{-1}U}(O_{g^{-1}U}, F | g^{-1}(U)) = prod Gamma(g^{-1}U, F).
+  % Therefore we have Ext^q_Y(g*J, F) = prod H^q(g^{-1}U, F | g^{-1}U). Since
+  % g^{-1}U is affine and F is quasi-coherent, the right-hand side is equal to
+  % zero for q > 0."
+  \begin{proof}
+    \uses{thm:ega_ext_affine_acyclic, def:extensionByZero, thm:exists_extensionByZero_surjection, thm:extensionByZero_coprod_acyclic}
+    For each section of $I$ choose an affine open $U \subseteq X$ over which it
+    extends; the inclusion $j_U : U \hookrightarrow X$ gives the extension by zero
+    $J_U = (j_U)_!(\Ox|U)$. Taking $J = \coprod_U J_U$ over this family of affine
+    opens yields a surjection $J \to I$. For an affine morphism $g : Y \to X$,
+    pullback commutes with direct sums and with extension by zero, so
+    $g^* J = \coprod_U J_{g^{-1}U}$ with $g^{-1}U$ affine. Hence
+    \[
+      \Hom_Y(g^* J, F) = \prod_U \Hom_{g^{-1}U}(\mathcal{O}_{g^{-1}U},
+        F|g^{-1}U) = \prod_U \Gamma(g^{-1}U, F),
+    \]
+    and therefore $\Ext^q_Y(g^* J, F) = \prod_U H^q(g^{-1}U, F|g^{-1}U)$. Since
+    each $g^{-1}U$ is affine and $F$ is quasi-coherent, this vanishes for $q>0$ by
+    \cref{thm:ega_ext_affine_acyclic}.
+  \end{proof}
+\end{lemma}
+
+\begin{theorem}\leanok
+[Local freeness of $H(I,F)$]
+  \label{thm:H_locallyFree}
+  \lean{MR0555258CompactifyingPicard.H_locallyFree_of_ext_vanishing}
+  \uses{def:H, def:isRetrocompact, def:isHalfExact, thm:H_represents, lem:acyclic_surjection, thm:ob_halfexact_free, thm:ega_descent_noetherian, thm:ega_adjunction}
+  % SOURCE: [Altman--Kleiman], §1, (1.3), p. 55--56 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "(1.3) THEOREM. Let f : X -> S be a finitely presented, proper
+  % morphism of schemes, and let I and F be locally finitely presented, S-flat
+  % O_X-modules. Assume the relation, Ext^1_{X(s)}(I(s), F(s)) = 0, holds for
+  % some point s in S. Then there exists an open, retrocompact neighborhood U of
+  % s such that H(I, F) | U is locally free with a finite rank."
+  \textit{Source: Altman--Kleiman, §1, (1.3), p. 55--56.}
+  Let $f : X \to S$ be a finitely presented, proper morphism, and let $I$, $F$ be
+  locally finitely presented, $S$-flat $\Ox$-modules. If
+  \[
+    \Ext^1_{X(s)}\!\big(I(s), F(s)\big) = 0
+  \]
+  for some point $s \in S$, then there is an open, retrocompact neighbourhood $U$
+  of $s$ such that $\HIF(I,F)|U$ is locally free of finite rank.
+  % SOURCE QUOTE PROOF: "Proof. Retrocompact means the inclusion map is
+  % quasi-compact [EGA O_I, 2.4.1]. Obviously the notion is stable under
+  % base-change and obviously every subset of a locally Noetherian space is
+  % retrocompact. The assertion is clearly local on S, so we may assume S is
+  % affine. It then follows from [EGA IV_3, Sect. 8] and the compatibility of
+  % H(I, F) with base-change (1.1) that we may assume S is Noetherian. Finally it
+  % suffices to show H(I, F) is free at s, because it is locally finitely
+  % presented [EGA O_I, 5.4.1]. So we may assume S is the spectrum of a
+  % Noetherian local ring A and s is the closed point of S. Consider the functor,
+  % T(M) = Ext^1_X(I, F (x)_S M~). from the category of finitely generated
+  % A-modules M to itself. (Note that T(M) is finitely generated because f is
+  % proper and S is Noetherian [GD, IV, 3.2, p. 74].) We shall now show that
+  % T(k(s)) is equal to zero. Consider an exact sequence, 0 -> K -> J -> I -> 0,
+  % in which J is as specified in (1.2). Since I is S-flat, the sequence remains
+  % exact when restricted to X(s). So it yields a commutative diagram with exact
+  % rows, [...] where j is the inclusion map of the closed fiber X(s) into X. The
+  % two vertical maps are the adjunction isomorphisms. Now, j*I is equal to I(s),
+  % and Ext^1_{X(s)}(I(s), F(s)) is equal to zero. Hence Ext^1_X(I, j_*F(s)) is
+  % equal to zero. However, the latter Ext is just T(k(s)). Since T is half-exact
+  % and since T(k(s)) is equal to zero, T(M) is equal to zero for every finitely
+  % generated A-module M [OB, 2.1] or [EGA III_2, 7.5.3]). Therefore the functor
+  % M |-> Hom_X(I, F (x)_S M~) is exact. Thus the functor M |-> Hom_S(H(I,F), M~)
+  % is exact. Hence H(I,F) is free."
+  \begin{proof}
+    \uses{def:H, thm:H_represents, lem:acyclic_surjection, thm:ob_halfexact_free, thm:ega_descent_noetherian, thm:ega_adjunction}
+    The notion of retrocompact (the inclusion is quasi-compact) is stable under
+    base change, and every subset of a locally Noetherian space is retrocompact;
+    the assertion is local on $S$, so we may assume $S$ affine. Using
+    \cref{thm:ega_descent_noetherian} together with the base-change compatibility
+    of $\HIF(I,F)$ (\cref{thm:H_represents}) we reduce to $S$ Noetherian. Since
+    $\HIF(I,F)$ is locally finitely presented, it suffices to prove it is free at
+    $s$; so let $S = \Spec A$ with $A$ Noetherian local and $s$ its closed point.
+
+    Consider $T(M) = \Ext^1_X(I, F \tensor_S \widetilde M)$ as a functor on
+    finitely generated $A$-modules; $T(M)$ is finitely generated since $f$ is
+    proper and $S$ is Noetherian. We show $T(k(s)) = 0$. Take an exact sequence
+    $0 \to K \to J \to I \to 0$ with $J$ as in \cref{lem:acyclic_surjection};
+    since $I$ is $S$-flat it stays exact on the closed fibre $X(s)$. Writing $j$
+    for the inclusion $X(s) \hookrightarrow X$ and using the adjunction
+    isomorphisms (the vertical maps below), one gets a commutative diagram with
+    exact rows comparing $\Hom_X(-, j_*F(s))$ and $\Hom_{X(s)}(j^*-, F(s))$. As
+    $j^* I = I(s)$ and $\Ext^1_{X(s)}(I(s),F(s)) = 0$, it follows that
+    $\Ext^1_X(I, j_*F(s)) = 0$; but this group is exactly $T(k(s))$.
+
+    Now $T$ is half-exact and $T(k(s)) = 0$, so by \cref{thm:ob_halfexact_free}
+    $T(M) = 0$ for every finitely generated $A$-module $M$. Hence
+    $M \mapsto \Hom_X(I, F \tensor_S \widetilde M)$ is exact, i.e.
+    $M \mapsto \Hom_S(\HIF(I,F), \widetilde M)$ is exact, and therefore
+    $\HIF(I,F)$ is free at $s$.
+  \end{proof}
+\end{theorem}
+
+%==============================================================================
+% Affine bridge (project infrastructure): the equivalence between
+% quasi-coherent sheaves on an affine scheme and modules over its global
+% sections, realized through Mathlib's tilde construction. These are the
+% project-local Mathlib-gap lemmas that turn module-level finite-presentation
+% facts into sheaf-level ones; they feed the free-resolution step (1.4) and,
+% downstream, the relative-Ext layer. Standard (Hartshorne II.5); stated here
+% as project infrastructure (no external paper source — they support 1.4).
+%==============================================================================
+
+\begin{definition}[Tilde / affine quasi-coherent sheaf]
+  \label{def:tildeMod}
+  \lean{AlgebraicGeometry.tilde}
+  \mathlibok
+  % NOTE: retargeted \lean{ModuleCat.tilde} -> \lean{AlgebraicGeometry.tilde} (iter-012);
+  % ModuleCat.tilde is now a @[deprecated] alias of AlgebraicGeometry.tilde in current Mathlib.
+  For a commutative ring $A$ and an $A$-module $M$, the associated
+  quasi-coherent $\mathcal{O}_{\Spec A}$-module $\widetilde M$ on $\Spec A$.
+  Realized by Mathlib's \texttt{ModuleCat.tilde}; its stalk at a prime
+  $\mathfrak p$ is the localization $M_{\mathfrak p}$
+  (\texttt{ModuleCat.Tilde.stalkIso}).
+\end{definition}
+
+\begin{lemma}\leanok
+[Tilde of a finite free module is a finite free sheaf]
+  \label{lem:tilde_free}
+  \lean{MR0555258CompactifyingPicard.tilde_free}
+  \uses{def:tildeMod, def:isFreeMod}
+  For a finite index type $\Lambda$, the tilde $\widetilde{A^{(\Lambda)}}$ of the
+  free $A$-module on $\Lambda$ is isomorphic, as an
+  $\mathcal{O}_{\Spec A}$-module, to the finite free sheaf
+  $\mathcal{O}_{\Spec A}^{(\Lambda)}$ (\texttt{SheafOfModules.free}). In
+  particular it satisfies \cref{def:isFreeMod}.
+  \begin{proof}
+    \uses{def:tildeMod}
+    Tilde is additive and sends the structure sheaf $A = \widetilde A$ to the
+    unit $\mathcal{O}_{\Spec A}$ and preserves the finite coproduct indexed by
+    $\Lambda$ (a finite biproduct, which tilde, being additive, carries to the
+    corresponding biproduct of copies of the unit). Identifying the latter with
+    \texttt{SheafOfModules.free}~$\Lambda$ gives the isomorphism.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}\leanok
+[Tilde is exact]
+  \label{lem:tilde_exact}
+  \lean{MR0555258CompactifyingPicard.tilde_exact}
+  \uses{def:tildeMod}
+  % NOTE: PROVEN axiom-clean (iter-013). The "absent stalk-exactness detection layer"
+  % collapsed once Mathlib.Algebra.Homology.ShortComplex.ExactFunctor was found: tilde is
+  % already right exact (left adjoint), so left-exactness reduces to PreservesMonomorphisms
+  % (tilde.functor R), supplied by tilde_preservesMono (proved stalkwise via
+  % stalkFunctor_map_injective_of_isBasis + IsLocalizedModule.map_injective). Then
+  % ShortExact.map_of_exact closes it.
+  A short exact sequence $0 \to K \to N \to M \to 0$ of $A$-modules induces a
+  short exact sequence
+  $0 \to \widetilde K \to \widetilde N \to \widetilde M \to 0$ of
+  $\mathcal{O}_{\Spec A}$-modules.
+  \begin{proof}\leanok
+    \uses{def:tildeMod, lem:tilde_preservesFiniteLimits}
+    It suffices to show the tilde functor preserves short exact sequences. The
+    epimorphism $\widetilde N \to \widetilde M$ is automatic: tilde is a left
+    adjoint, hence preserves all colimits, in particular cokernels and
+    epimorphisms. The remaining content is left-exactness, i.e. that tilde
+    preserves the kernel $\widetilde K = \ker(\widetilde N \to \widetilde M)$;
+    equivalently that $\widetilde K \to \widetilde N$ is a monomorphism with the
+    sequence exact in the middle.
+
+    Both are local statements verified on stalks. The stalk of $\widetilde{(-)}$
+    at a prime $\mathfrak p$ is localization $(-)_{\mathfrak p}$ at
+    $\mathfrak p$ (the stalk isomorphism), and localization of $A$-modules is an
+    exact functor: it preserves injectivity and exactness in the middle. Hence at
+    every point the stalk sequence
+    $0 \to K_{\mathfrak p} \to N_{\mathfrak p} \to M_{\mathfrak p} \to 0$ is
+    short exact. A sequence of sheaves of modules is exact precisely when it is
+    exact on all stalks, so the sheaf sequence is short exact, completing the
+    short-exactness. (Monomorphism may also be obtained sectionwise: a map of
+    (pre)sheaves of modules is a monomorphism iff it is injective on each
+    section, and the sections of $\widetilde{(-)}$ over a distinguished open
+    $D(f)$ are the localizations $(-)_f$, on which an injective module map stays
+    injective.)
+  \end{proof}
+\end{lemma}
+
+% ---- supporting lemmas for tilde_exact (coverage of prover helpers) ----
+
+\begin{lemma}\leanok
+[Tilde preserves monomorphisms]
+  \label{lem:tilde_mono}
+  \lean{MR0555258CompactifyingPicard.tilde_mono}
+  \uses{def:tildeMod}
+  For an injective $R$-linear map $f : M \to N$ the induced map of
+  $\mathcal{O}_{\Spec R}$-modules $\widetilde f : \widetilde M \to \widetilde N$
+  is a monomorphism.
+  \begin{proof}
+    \uses{def:tildeMod}
+    Monomorphisms of sheaves of modules are detected on stalks, and a stalk map
+    is detected on a basis of opens. Over a basic open $D(g)$ the section map of
+    $\widetilde f$ is the localization-away-of-$g$ of $f$ (the canonical map
+    $\widetilde{(-)} \to (-)_g$ is the universal localization at the powers of
+    $g$), and localization preserves injectivity. Hence $\widetilde f$ is
+    injective on each basic open, so injective on every stalk, so a monomorphism.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}\leanok
+[Tilde preserves monomorphisms (instance form)]
+  \label{lem:tilde_preservesMono}
+  \lean{MR0555258CompactifyingPicard.tilde_preservesMono}
+  \uses{lem:tilde_mono}
+  The functor $\widetilde{(-)} : \ModuleCat R \to (\Spec R)\text{-mod}$ has the
+  \texttt{PreservesMonomorphisms} property; this is \cref{lem:tilde_mono}
+  repackaged as a typeclass instance.
+  \begin{proof}
+    \uses{lem:tilde_mono}
+    Immediate from \cref{lem:tilde_mono}: a functor preserves monomorphisms iff it
+    carries each mono to a mono, which is exactly that statement.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}\leanok
+[Tilde preserves finite limits]
+  \label{lem:tilde_preservesFiniteLimits}
+  \lean{MR0555258CompactifyingPicard.tilde_preservesFiniteLimits}
+  \uses{def:tildeMod, lem:tilde_mono}
+  The functor $\widetilde{(-)} : \ModuleCat R \to (\Spec R)\text{-mod}$ preserves
+  finite limits. (The instance \texttt{tilde\_preservesMono} packaging
+  \cref{lem:tilde_mono} as a \texttt{PreservesMonomorphisms} typeclass is the
+  load-bearing input.)
+  \begin{proof}
+    \uses{lem:tilde_mono}
+    Tilde is additive and a left adjoint, hence preserves finite colimits and
+    epimorphisms (it is right exact). For an additive functor, preserving finite
+    limits is equivalent to sending every short exact sequence to a left-exact one
+    together with preservation of monomorphisms; the monomorphism half is
+    \cref{lem:tilde_mono} and the rest is the already-available right exactness.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}\leanok
+[Tilde--$\Gamma$ counit is an iso for a presented sheaf]
+  \label{lem:tilde_counit_of_pres}
+  \lean{MR0555258CompactifyingPicard.tilde_of_presentation}
+  \uses{def:tildeMod}
+  Let $M$ be an $\mathcal{O}_{\Spec R}$-module admitting a \emph{global}
+  presentation $P$ (a free presentation by sheaves of modules on the trivial
+  cover). Then the counit $\widetilde{\Gamma(\Spec R, M)} \to M$ of the
+  tilde\,/\,global-sections adjunction is an isomorphism; equivalently
+  $M \cong \widetilde{\Gamma(\Spec R, M)}$.
+  \begin{proof}
+    \uses{def:tildeMod}
+    This is the essential-surjectivity half of the affine equivalence, supplied
+    directly by Mathlib (\texttt{isIso\_fromTildeΓ\_of\_presentation}): a global
+    presentation forces the counit to be an isomorphism, since both source and
+    target then arise from the same generators-and-relations data.
+  \end{proof}
+\end{lemma}
+
+\begin{theorem}[Affine quasi-coherence: a finitely presented sheaf on $\Spec R$ is a tilde of an fp module (Stacks)]
+  \label{thm:stacks_affine_fp_tilde}
+  \lean{MR0555258CompactifyingPicard.External.affine_fp_tilde}
+  % NOTE (iter-015): External anchor. The essential-surjectivity half of the affine
+  % equivalence QCoh(Spec R) ≃ Mod_R is ABSENT from Mathlib v4.30.0 (verified iter-014
+  % four ways + iter-015 leansearch/loogle: tilde.functor has Full/Faithful/IsLeftAdjoint
+  % but NO EssSurj/essImage, and SheafOfModules.IsFinitePresentation unfolds only to LOCAL
+  % QuasicoherentData). It is elementary, buildable AG (Stacks 01IA + 01PC) — anchored here
+  % to unblock the affine bridge after a 3-iter from-scratch-build attempt; flagged as a
+  % Mathlib gap to build/upstream later (STRATEGY.md), and recommended protected (TO_USER).
+  % SOURCE: [Stacks], Lemma 26.7.4 (Tag 01IA) + Lemma 28.17.2 (Tag 01PC) (read from references/stacks-qcoh-affine.md)
+  % SOURCE QUOTE: "Let $(X, \mathcal{O}_X) = (\mathop{\mathrm{Spec}}(R), \mathcal{O}_{\mathop{\mathrm{Spec}}(R)})$
+  % be an affine scheme. Let $\mathcal{F}$ be a quasi-coherent $\mathcal{O}_X$-module. Then
+  % $\mathcal{F}$ is isomorphic to the sheaf associated to the $R$-module $\Gamma(X, \mathcal{F})$."
+  % SOURCE QUOTE: "The quasi-coherent sheaf of $\mathcal{O}_X$-modules $\widetilde M$ is an
+  % $\mathcal{O}_X$-module of finite presentation if and only if $M$ is an $R$-module of finite presentation."
+  \textit{Source: Stacks Project, Lemma 26.7.4 (Tag 01IA) and Lemma 28.17.2 (Tag 01PC).}
+  Let $X = \Spec R$ and let $I$ be a finitely presented (hence quasi-coherent)
+  $\mathcal{O}_X$-module. Then there exists a finitely presented $R$-module $M$
+  with $I \cong \widetilde M$.
+  \begin{proof}
+    By Stacks 01IA the quasi-coherent $I$ is isomorphic to
+    $\widetilde{\Gamma(X, I)}$; take $M = \Gamma(X, I)$. By Stacks 01PC, since
+    $\widetilde M \cong I$ is of finite presentation as an $\mathcal{O}_X$-module,
+    $M$ is of finite presentation as an $R$-module. Used here as an external
+    input (affine quasi-coherence equivalence).
+  \end{proof}
+\end{theorem}
+
+\begin{lemma}\leanok
+[A finitely presented sheaf on an affine scheme is a tilde]
+  \label{lem:fp_sheaf_affine_tilde}
+  \lean{MR0555258CompactifyingPicard.fp_sheaf_affine_tilde}
+  \uses{def:tildeMod, def:isLFP, thm:stacks_affine_fp_tilde}
+  % NOTE (iter-015): now a thin project-facing restatement of the external anchor
+  % thm:stacks_affine_fp_tilde. The earlier sheaf-presentation route (lem:affine_global_presentation,
+  % removed) was a detour: the 1.4 free-resolution step consumes the (module M fp, I ≅ ~M) form
+  % directly, tilde-ing M's MODULE-level free presentation — not a sheaf-level I.Presentation.
+  Let $X = \Spec R$ and $I$ a finitely presented (in particular quasi-coherent)
+  $\mathcal{O}_X$-module. Then there is a finitely presented module $M$ over
+  $\Gamma(X, \mathcal{O}_X) = R$ with $I \cong \widetilde M$.
+  \begin{proof}
+    \uses{thm:stacks_affine_fp_tilde}
+    Immediate from the affine quasi-coherence anchor
+    \cref{thm:stacks_affine_fp_tilde}: it provides a finitely presented
+    $R$-module $M = \Gamma(X, I)$ together with an isomorphism
+    $I \cong \widetilde M$.
+  \end{proof}
+\end{lemma}
+
+% ---- coverage of prover-created helpers (iter-014 lean_aux) ----
+
+\begin{lemma}
+
+\leanok
+[Mathlib's free sheaf of modules is free in the project sense]
+  \label{lem:free_isFreeMod}
+  \lean{MR0555258CompactifyingPicard.free_isFreeMod}
+  \uses{def:isFreeMod}
+  For an index type $\Lambda$, Mathlib's free sheaf of modules
+  \texttt{SheafOfModules.free}~$\Lambda$ on a scheme $X$ satisfies the project
+  predicate \cref{def:isFreeMod}.
+  \begin{proof}
+    \uses{def:isFreeMod}
+    Immediate: \texttt{SheafOfModules.free}~$\Lambda$ is, by definition, the free
+    $\mathcal{O}_X$-module on $\Lambda$, so the identity isomorphism witnesses
+    \cref{def:isFreeMod} with index set $\Lambda$.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}
+
+\leanok
+[A global presentation yields a free presentation in project terms]
+  \label{lem:exists_free_presentation_of_presentation}
+  \lean{MR0555258CompactifyingPicard.exists_free_presentation_of_presentation}
+  \uses{def:isFreeMod, lem:free_isFreeMod}
+  Let $M$ be an $\mathcal{O}_{\Spec R}$-module admitting a global presentation
+  $P$ (a \texttt{SheafOfModules.Presentation}: generators and relations, both
+  free sheaves). Then $M$ has a \emph{free presentation} in project terms: a
+  free module $G$ with an epimorphism $g : G \twoheadrightarrow M$, together with
+  a free module $K$ and an epimorphism $K \twoheadrightarrow \ker g$.
+  \begin{proof}
+    \uses{lem:free_isFreeMod}
+    The presentation $P$ provides its generators as a free sheaf with an
+    epimorphism $G = \mathrm{free}\,\Lambda \twoheadrightarrow M$ and its
+    relations as a free sheaf with an epimorphism
+    $K = \mathrm{free}\,\Lambda' \twoheadrightarrow \ker g$. Both covers are free
+    by \cref{lem:free_isFreeMod}; this is exactly the asserted free presentation.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}\leanok
+[Tilde of a finitely presented module is a finitely presented sheaf (Stacks 01PC, forward)]
+  \label{lem:tilde_isFP}
+  \lean{MR0555258CompactifyingPicard.tilde_isFP}
+  \uses{def:tildeMod, def:isLFP, lem:tilde_free, lem:tilde_exact}
+  % NOTE (iter-016): the Lean proof does NOT follow the constructive
+  % tilde_free+tilde_exact+IsFinitePresentation.mk route written below — it routes
+  % through the new boundary axiom External.tilde_isFP (Stacks 01PC forward). The
+  % constructive route needs (a) building SheafOfModules.Presentation(~M) from a
+  % Module.FinitePresentation and (b) a Presentation.IsFinite ⇒ IsFinitePresentation
+  % brick, both absent from Mathlib v4.30.0. Anchored per the iter-016 plan fallback.
+  % SOURCE: [Stacks], Lemma 28.17.2 (Tag 01PC), forward direction (read from references/stacks-qcoh-affine.md)
+  % SOURCE QUOTE: "The quasi-coherent sheaf of $\mathcal{O}_X$-modules $\widetilde M$ is an
+  % $\mathcal{O}_X$-module of finite presentation if and only if $M$ is an $R$-module of finite presentation."
+  \textit{Source: Stacks Project, Lemma 28.17.2 (Tag 01PC), forward direction.}
+  For a finitely presented module $M$ over a commutative ring $R$, the tilde
+  $\widetilde M$ is a finitely presented $\mathcal{O}_{\Spec R}$-module, i.e. it
+  satisfies \cref{def:isLFP}.
+  \begin{proof}
+    \uses{lem:tilde_free, lem:tilde_exact}
+    Since $M$ is finitely presented it admits a global free presentation
+    $R^{(\Lambda')} \to R^{(\Lambda)} \to M \to 0$ with $\Lambda, \Lambda'$
+    finite. Tilde is exact (\cref{lem:tilde_exact}) and carries finite free
+    modules to finite free sheaves (\cref{lem:tilde_free}), so this tildes to a
+    presentation $\mathcal{O}^{(\Lambda')} \to \mathcal{O}^{(\Lambda)} \to
+    \widetilde M \to 0$ of $\widetilde M$ by finite free sheaves. Such a global
+    presentation by finite free sheaves is exactly a finite-presentation datum
+    for the sheaf of modules (the constructor
+    \texttt{SheafOfModules.IsFinitePresentation.mk} from a quasi-coherent
+    presentation on the trivial cover); hence $\widetilde M$ is finitely
+    presented. This is the forward direction of Stacks 01PC (the affine anchor
+    \cref{thm:stacks_affine_fp_tilde} supplies the reverse direction).
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}\leanok
+[Finite free presentation of a finite module over a Noetherian ring]
+  \label{lem:finiteFreePresentation_noetherian}
+  \lean{MR0555258CompactifyingPicard.exists_finiteFreePresentation_of_noetherian}
+  \uses{def:isFreeMod}
+  Let $R$ be a Noetherian commutative ring and $M$ a finite $R$-module. Then
+  there is a finite free module $R^n$ with a surjection $p : R^n \to M$ whose
+  kernel $\ker p$ is again finitely presented (indeed finite, hence finitely
+  presented because $R$ is Noetherian). This is the module-theoretic core of the
+  free-resolution step \cref{lem:free_resolution_step}.
+  \begin{proof}
+    \uses{def:isFreeMod}
+    A finite generating set of $M$ gives a surjection $p : R^n \to M$ from a
+    finite free module. Its kernel is a submodule of $R^n$, finitely generated
+    because $R$ is Noetherian; a finitely generated module over a Noetherian ring
+    is finitely presented. Transporting through the categorical kernel
+    isomorphism gives the stated finite presentation of $\ker p$.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}\leanok
+[Finite free sheaf of rank $n$ on $\Spec R$]
+  \label{lem:tilde_free_fin}
+  \lean{MR0555258CompactifyingPicard.tilde_free_fin}
+  \uses{def:tildeMod, def:isFreeMod, lem:tilde_free}
+  For a natural number $n$, the tilde $\widetilde{R^n} = \widetilde{(\Fin n \to_0
+  R)}$ of the rank-$n$ finite free module is a free $\mathcal{O}_{\Spec R}$-module
+  (\cref{def:isFreeMod}). This is the rank-$n$ ($\Fin n$-indexed) variant of
+  \cref{lem:tilde_free}, used for the middle term $J_0 = \widetilde{A_0^n}$ of the
+  free-resolution step.
+  \begin{proof}
+    \uses{lem:tilde_free}
+    Reindex $\Fin n \to_0 R$ along the equivalence $\mathrm{ULift}(\Fin n) \simeq
+    \Fin n$ to land the index in the universe used by \cref{lem:tilde_free}, apply
+    tilde, and use that tilde carries a finite-rank free module to a free sheaf.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}\leanok
+[Pullback of a free sheaf is free]
+  \label{lem:pullback_isFreeMod}
+  \lean{MR0555258CompactifyingPicard.pullback_isFreeMod}
+  \uses{def:isFreeMod, thm:pullback_preserves_free}
+  For a scheme morphism $p : X \to Y$ and a free $\mathcal{O}_Y$-module $M$, the
+  pullback $p^* M$ is a free $\mathcal{O}_X$-module (\cref{def:isFreeMod}). A thin
+  restatement of the standard input \cref{thm:pullback_preserves_free}; used for the
+  middle term $p^* J_0$ of the free-resolution step.
+  \begin{proof}
+    \uses{thm:pullback_preserves_free}
+    Immediate from \cref{thm:pullback_preserves_free}.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}\leanok
+[Pullback of a finitely presented sheaf is finitely presented]
+  \label{lem:pullback_isLFP}
+  \lean{MR0555258CompactifyingPicard.pullback_isLFP}
+  \uses{def:isLFP, thm:pullback_preserves_fp}
+  For a scheme morphism $p : X \to Y$ and a finitely presented $\mathcal{O}_Y$-module
+  $M$, the pullback $p^* M$ is finitely presented (\cref{def:isLFP}). A thin
+  restatement of the standard input \cref{thm:pullback_preserves_fp}; used for the
+  terms $p^* \widetilde{K_0}$ and $p^* J_0$ of the free-resolution step.
+  \begin{proof}
+    \uses{thm:pullback_preserves_fp}
+    Immediate from \cref{thm:pullback_preserves_fp}.
+  \end{proof}
+\end{lemma}
+
+%==============================================================================
+% Strand (b): the relative local Ext sheaves, the base-change map, exchange,
+% and the finiteness/flatness theorem.
+%==============================================================================
+
+\begin{lemma}\leanok
+[Free resolution step over an affine base]
+  \label{lem:free_resolution_step}
+  \lean{MR0555258CompactifyingPicard.exists_free_resolution_step}
+  \uses{thm:ega_descent_noetherian, def:isFreeMod, lem:tilde_free, lem:tilde_free_fin, lem:tilde_exact, lem:tilde_isFP, lem:fp_sheaf_affine_tilde, lem:finiteFreePresentation_noetherian, thm:flat_pullback_exact, lem:pullback_isFreeMod, lem:pullback_isLFP}
+  % SOURCE: [Altman--Kleiman], §1, (1.4), p. 56--57 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "(1.4) LEMMA. Let f : X -> S be a finitely presented morphism
+  % of affine schemes, and let I be an S-flat, finitely presented O_X-Module.
+  % Then there exists an exact sequence 0 -> K -> J -> I -> 0, (1.4.1) with K and
+  % J finitely presented and with J free."
+  \textit{Source: Altman--Kleiman, §1, (1.4), p. 56--57.}
+  Let $f : X \to S$ be a finitely presented morphism of affine schemes and let
+  $I$ be an $S$-flat, finitely presented $\Ox$-module. Then there is an exact
+  sequence
+  \[
+    0 \to K \to J \to I \to 0
+    \tag{1.4.1}
+  \]
+  with $K$ and $J$ finitely presented and $J$ free.
+  % SOURCE QUOTE PROOF: "Proof. By [EGA IV_3, Sect. 8], there exists a Noetherian
+  % affine scheme such that all the data descend to S_0. Since X_0 is Noetherian,
+  % there exists a sequence like (1.4.1) on X_0. (On X, we can construct such a
+  % sequence with K finitely generated [CA, I, Sect. 2.8, Lemma 9, p. 21]; on X_0
+  % any finitely generated Module is finitely presented.) Since I is flat, the
+  % pullback of the sequence on X_0 is the desired sequence on X."
+  \begin{proof}
+    \uses{thm:ega_descent_noetherian, lem:tilde_free, lem:tilde_free_fin, lem:tilde_exact, lem:tilde_isFP, lem:fp_sheaf_affine_tilde, lem:finiteFreePresentation_noetherian, thm:flat_pullback_exact, lem:pullback_isFreeMod, lem:pullback_isLFP}
+    \emph{Step 1 (descend to a Noetherian base).} By
+    \cref{thm:ega_descent_noetherian} the data $(X, I)$ descend: there are a
+    Noetherian ring $A_0$, a morphism $p : X \to X_0 = \Spec A_0$, and a finitely
+    presented $\mathcal{O}_{X_0}$-module $I_0$ with $I \cong p^* I_0$.
+
+    \emph{Step 2 (resolve over the Noetherian affine $X_0$).} Since $X_0 = \Spec
+    A_0$ is affine, the affine bridge \cref{lem:fp_sheaf_affine_tilde} writes
+    $I_0 \cong \widetilde{M_0}$ for a finitely presented $A_0$-module $M_0$. As
+    $A_0$ is Noetherian, \cref{lem:finiteFreePresentation_noetherian} gives a
+    finite free module $A_0^n$ with a surjection $A_0^n \twoheadrightarrow M_0$
+    whose kernel $K_0$ is finitely presented, i.e. a short exact sequence
+    $0 \to K_0 \to A_0^n \to M_0 \to 0$ of $A_0$-modules. Applying the exact
+    functor tilde (\cref{lem:tilde_exact}) yields a short exact sequence
+    $0 \to \widetilde{K_0} \to \widetilde{A_0^n} \to I_0 \to 0$ of
+    $\mathcal{O}_{X_0}$-modules in which, by \cref{lem:tilde_free},
+    $J_0 = \widetilde{A_0^n}$ is finite free, and by \cref{lem:tilde_isFP} both
+    $\widetilde{K_0}$ and $J_0$ are finitely presented (the forward direction of
+    Stacks 01PC, since $K_0$ and $A_0^n$ are finitely presented $A_0$-modules).
+
+    \emph{Step 3 (pull back to $X$).} Apply the pullback functor $p^*$ to the
+    sequence over $X_0$. Pullback sends the finite free sheaf $J_0$ to a finite
+    free sheaf $p^* J_0$ (\cref{lem:pullback_isFreeMod}) and preserves finite
+    presentation (\cref{lem:pullback_isLFP}), so $p^* \widetilde{K_0}$
+    and $p^* J_0$ are finitely presented with $p^* J_0$ free. Because $I \cong
+    p^* I_0$ is flat over $S$, \cref{thm:flat_pullback_exact} ensures the
+    pulled-back sequence
+    $0 \to p^* \widetilde{K_0} \to p^* J_0 \to p^* I_0 \to 0$ stays short exact.
+    Transporting along $I \cong p^* I_0$ gives the desired sequence
+    $0 \to K \to J \to I \to 0$ over $X$ with $J = p^* J_0$ free and $K, J$
+    finitely presented.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}[Local Ext commutes with limits]
+  \label{lem:ext_limit}
+  \lean{MR0555258CompactifyingPicard.ext_limit}
+  % NOTE: deferred — Lean decl not yet scaffolded (TODO block in Basic.lean); needs projective limits of schemes and modules, absent from Mathlib.
+  \uses{lem:free_resolution_step, thm:ega_basechange_q0}
+  % SOURCE: [Altman--Kleiman], §1, (1.5), p. 57 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "(1.5) LEMMA. Let X_0 be an affine scheme, and let
+  % S = lim S_lambda be a projective limit of S_0-schemes S. Let f_0 : X_0 -> S_0
+  % be a finitely presented morphism, let I_0 and F_0 be locally finitely
+  % presented O_{X_0}-Modules, and let X = lim(X_lambda), I = lim(I_lambda), and
+  % F = lim(F_lambda) be the natural limits induced. Fix an integer q. Assume
+  % that I_0 is S_0-flat if q >= 1 and that X_0 is S_0-flat if q >= 2. Then there
+  % is a canonical isomorphism, lim Ext^q_{X_lambda}(I_lambda, F_lambda) =
+  % Ext^q_X(I, F)."
+  \textit{Source: Altman--Kleiman, §1, (1.5), p. 57.}
+  Let $X_0$ be affine and $S = \varprojlim S_\lambda$ a projective limit of
+  $S_0$-schemes. Let $f_0 : X_0 \to S_0$ be finitely presented, let $I_0, F_0$ be
+  locally finitely presented $\mathcal{O}_{X_0}$-modules, and form the induced
+  limits $X = \varprojlim X_\lambda$, $I = \varprojlim I_\lambda$,
+  $F = \varprojlim F_\lambda$. Fix $q$, and assume $I_0$ is $S_0$-flat if
+  $q \geq 1$ and $X_0$ is $S_0$-flat if $q \geq 2$. Then there is a canonical
+  isomorphism
+  \[
+    \varprojlim \sExt^q_{X_\lambda}(I_\lambda, F_\lambda)
+      \;=\; \sExt^q_X(I,F).
+  \]
+  % SOURCE QUOTE PROOF: "Proof. The assertion is local, so we may assume X_0 and
+  % the S_lambda are affine. The proof now proceeds by induction on q >= 0. For
+  % q = 0, the assertion results from [EGA IV_3, 8.5.2 (i)]. Consider the case
+  % q = 1. By (1.4) there exists on X_0 an exact sequence, 0 -> K_0 -> J_0 -> I_0
+  % -> 0, (1.5.1) with J_0 and K_0 finitely presented and with J_0 free. [...]
+  % Consider the case q >= 2. The sequence (1.5.1) yields diagrams, [...] Since
+  % X_0 is S_0-flat, the free O_{X_0}-Module J_0 is also S_0-flat. Hence since I_0
+  % is S_0-flat, K_0 is also. Therefore, by induction on q, the left-hand
+  % vertical maps in (1.5.3) induce an isomorphism in the limit, Hence, so do the
+  % right-hand vertical maps. The dotted arrows in (1.5.2) and (1.5.3) do not
+  % depend on the choice of the exact sequence (1.5.1) because any two such
+  % sequences are homotopic since J_0 is free."
+  \begin{proof}
+    \uses{lem:free_resolution_step, thm:ega_basechange_q0}
+    The assertion is local, so we may assume the $S_\lambda$ affine, and we
+    induct on $q$. For $q = 0$ it is \cref{thm:ega_basechange_q0}. For $q=1$,
+    \cref{lem:free_resolution_step} gives an exact sequence
+    $0 \to K_0 \to J_0 \to I_0 \to 0$ on $X_0$ with $J_0$ free; since $I_0$ is
+    $S_0$-flat this stays exact after base change, producing compatible exact
+    $\Hom$-to-$\sExt^1$ sequences whose $q=0$ terms agree in the limit by the
+    previous case, forcing the $\sExt^1$ terms to agree. For $q \geq 2$, freeness
+    of $J_0$ makes $\sExt^{\geq 1}(J_0, -)$ vanish, so the connecting maps give
+    $\sExt^{q-1}(K_\lambda, -) \cong \sExt^q(I_\lambda, -)$; flatness of $X_0$
+    makes $J_0$, hence $K_0$, flat, and the inductive hypothesis applied to $K$
+    in degree $q-1$ gives the isomorphism in degree $q$. The induced maps are
+    independent of the chosen sequence since any two free presentations are
+    homotopic.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}[Affine base change for Ext-modules]
+  \label{lem:ext_algebra_basechange}
+  \lean{MR0555258CompactifyingPicard.ext_basechange_algebra}
+  % NOTE: deferred — Lean decl not yet scaffolded (TODO block in Basic.lean); the affine/algebraic incarnation, needs the comparison over Spec B, absent from Mathlib.
+  \uses{lem:ext_limit}
+  % SOURCE: [Altman--Kleiman], §1, (1.6), p. 58 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "(1.6) LEMMA. Let A be a ring, let B a finitely presented
+  % A-algebra, and let M and N be finitely presented B-modules. Fix an integer q.
+  % Assume that M is A-flat if q >= 1 and that B is A-flat if q >= 2. Then there
+  % is a canonical isomorphism, Ext^q_A(M, N)~ = Ext^q_B(M~, N~)."
+  \textit{Source: Altman--Kleiman, §1, (1.6), p. 58.}
+  Let $A$ be a ring, $B$ a finitely presented $A$-algebra, and $M, N$ finitely
+  presented $B$-modules. Fix $q$, and assume $M$ is $A$-flat if $q \geq 1$ and $B$
+  is $A$-flat if $q \geq 2$. Then there is a canonical isomorphism of sheaves on
+  $\Spec B$,
+  \[
+    \widetilde{\Ext^q_A(M, N)} \;=\; \sExt^q_B(\widetilde M, \widetilde N).
+  \]
+  % SOURCE QUOTE PROOF: "Proof. The case q = 0 is proved in [EGA I, 1.3.12,
+  % (ii)]. The rest of the proof is straightforward and similar to that of the
+  % preceding lemma."
+  \begin{proof}
+    \uses{lem:ext_limit}
+    The case $q = 0$ is [EGA I, 1.3.12(ii)]. The general case is proved exactly
+    as \cref{lem:ext_limit}: take a finite free presentation of $M$ as a
+    $B$-module and induct on $q$, using the flatness hypotheses to keep the
+    syzygies flat.
+  \end{proof}
+\end{lemma}
+
+\begin{lemma}[Adjunction for local Ext under base change]
+  \label{lem:ext_adjunction}
+  \lean{MR0555258CompactifyingPicard.ext_adjunction}
+  % NOTE: deferred — Lean decl not yet scaffolded (TODO block in Basic.lean); needs fibre products X_T and pushforward along 1×g, absent from Mathlib.
+  \uses{thm:ega_adjunction, lem:ext_limit}
+  % SOURCE: [Altman--Kleiman], §1, (1.7), p. 58 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "(1.7) LEMMA. Let f : X -> S be a finitely presented morphism
+  % of schemes, and let I and F be locally finitely presented O_X-Modules. Fix an
+  % integer q. Assume that I is S-flat if q >= 1 and that f is S-flat if q >= 2.
+  % Then there exists, for each base-change morphism g : T -> S and each
+  % quasi-coherent O_T-Module M, a canonical "adjunction" isomorphism,
+  % Ext^q_X(I, (1 x g)_*(F (x)_S M)) ~-> (1 x g)_* Ext^q_{X_T}(I_T, F (x)_S M).
+  % (1.7.1)"
+  \textit{Source: Altman--Kleiman, §1, (1.7), p. 58.}
+  Let $f : X \to S$ be finitely presented and $I, F$ locally finitely presented
+  $\Ox$-modules. Fix $q$, and assume $I$ is $S$-flat if $q \geq 1$ and $f$ is flat
+  if $q \geq 2$. Then for each base change $g : T \to S$ and each quasi-coherent
+  $\Ot$-module $M$ there is a canonical adjunction isomorphism
+  \[
+    \sExt^q_X\!\big(I, (1\times g)_*(F \tensor_S M)\big)
+      \;\xrightarrow{\;\sim\;}\;
+      (1\times g)_* \sExt^q_{X_T}\!\big(I_T, F \tensor_S M\big),
+      \tag{1.7.1}
+  \]
+  compatible with further base change and with passage to limits as in
+  \cref{lem:ext_limit}.
+  % SOURCE QUOTE PROOF: "Proof. For q = 0, the isomorphism (1.7.1) comes from the
+  % usual adjunction isomorphism [EGA O_I, 4.4.3.1]. The compatibilities are
+  % straightforward. For general q, the construction is straightforward,
+  % following the line of reasoning of (1.5). The compatibilities follow,
+  % similarly, from those for q = 0."
+  \begin{proof}
+    \uses{thm:ega_adjunction, lem:ext_limit}
+    For $q = 0$ this is the usual adjunction isomorphism
+    (\cref{thm:ega_adjunction}). For general $q$ one builds the map by the method
+    of \cref{lem:ext_limit} (a free presentation of $I$ and induction on $q$),
+    and the compatibilities reduce to those for $q = 0$.
+  \end{proof}
+\end{lemma}
+
+\begin{definition}[The base-change map for local Ext's]
+  \label{def:extBaseChangeMap}
+  \lean{MR0555258CompactifyingPicard.extBaseChangeMap}
+  % NOTE: deferred — Lean decl not yet scaffolded (TODO block in Basic.lean); needs X_T, the canonical unit/counit maps and the adjoint of (1.7.1), absent from Mathlib.
+  \uses{lem:ext_adjunction, lem:ext_algebra_basechange}
+  % SOURCE: [Altman--Kleiman], §1, (1.8), p. 58--59 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "(1.8) (The base-change map for local Ext's). Let f : X -> S be
+  % a finitely presented morphism of schemes, and let I and F be locally finitely
+  % presented O_X-Modules. Let g : T -> S be a morphism, and let M be a
+  % quasi-coherent O_T-Module. The canonical map, F -> (1 x g)_*(1 x g)*F,
+  % induces a map, Ext^q_X(I, F) (x)_S M -> Ext^q_X(I, (1 x g)_*(1 x g)*F) (x)_S
+  % M. (1.8.1) [...] Assume that I is S-flat if q >= 1 and that f is flat if
+  % q >= 2. Then composing (1.8.1) and (1.8.2) with the adjoint of (1.7.1) yields
+  % a canonical base-change map, b^q(M) : Ext^q_X(I, F) (x)_S M ->
+  % Ext^q_{X_T}(I_T, F (x)_S M). [...] If the base-change g : T -> S is flat, then
+  % the base-change map b^q(O_T) is an isomorphism."
+  \textit{Source: Altman--Kleiman, §1, (1.8), p. 58--59.}
+  Let $f : X \to S$ be finitely presented, $I, F$ locally finitely presented
+  $\Ox$-modules, $g : T \to S$ a morphism, and $M$ a quasi-coherent $\Ot$-module.
+  The canonical map $F \to (1\times g)_*(1\times g)^* F$ induces
+  \[
+    \sExt^q_X(I,F) \tensor_S M \to
+      \sExt^q_X\!\big(I, (1\times g)_*(1\times g)^* F\big) \tensor_S M,
+      \tag{1.8.1}
+  \]
+  and writing out the canonical map $R(\Ot) \tensor_S M \to R(M)$ with
+  $R(M) = (1\times g)^* \sExt^q_X(I, (1\times g)_*(F \tensor_S M))$ gives
+  \[
+    \sExt^q_X\!\big(I, (1\times g)_*(1\times g)^* F\big) \tensor_S M \to
+      (1\times g)^* \sExt^q_X\!\big(I, (1\times g)_*(F \tensor_S M)\big).
+      \tag{1.8.2}
+  \]
+  Assuming $I$ is $S$-flat for $q \geq 1$ and $f$ flat for $q \geq 2$, composing
+  \textnormal{(1.8.1)} and \textnormal{(1.8.2)} with the adjoint of
+  \textnormal{(1.7.1)} (\cref{lem:ext_adjunction}) defines the canonical
+  base-change map
+  \[
+    b^q(M) : \sExt^q_X(I,F) \tensor_S M \to
+      \sExt^q_{X_T}\!\big(I_T, F \tensor_S M\big).
+  \]
+  It commutes with restriction to open subschemes, to $\Spec(\Os)$, and to other
+  localizations of $S$, is compatible with further base change and limits as in
+  \cref{lem:ext_limit}, and when $g$ is flat, $b^q(\Ot)$ is an isomorphism.
+  \begin{proof}
+    \uses{lem:ext_adjunction, lem:ext_algebra_basechange}
+    The map is the composite \textnormal{(1.8.1)}, \textnormal{(1.8.2)}, adjoint
+    of \textnormal{(1.7.1)}, well defined under the stated flatness hypotheses.
+    For flat $g$ the isomorphism $b^q(\Ot)$ is local on $S, X, T$ and holds in
+    the affine case by \cref{lem:ext_algebra_basechange} and flat base change for
+    modules.
+  \end{proof}
+\end{definition}
+
+\begin{theorem}[Property of exchange for local Ext's]
+  \label{thm:exchange}
+  \lean{MR0555258CompactifyingPicard.exchange}
+  % NOTE: deferred — Lean decl not yet scaffolded (TODO block in Basic.lean); built on extBaseChangeMap + the Nakayama iso, both deferred (infra absent from Mathlib).
+  \uses{def:extBaseChangeMap, lem:ext_limit, thm:ob_nakayama_iso, thm:ob_halfexact_free}
+  % SOURCE: [Altman--Kleiman], §1, (1.9), p. 59 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "(1.9) THEOREM (property of exchange for local Ext's). Let
+  % f : X -> S be a finitely presented morphism of schemes, and let I and F be
+  % locally finitely presented O_T-Modules. Assume F is S-flat. Fix an integer q.
+  % Assume (a) I is S-flat if q >= 1 and (b) f is flat if q >= 2. Fix a point s in
+  % S and a point x in X(s). Assume that the base-change map to the fiber,
+  % b^q(k(s)) : Ext^q_X(I, F) (x)_S k(s) -> Ext^q_{X(s)}(I(s), F(s)), is
+  % surjective at x. Then, (i) For every map g : T -> S and every quasi-coherent
+  % O_T-Module M, the base-change map b^q(M) is an isomorphism at every point of
+  % (1 x g)^{-1}(x). (ii) The following three statements are equivalent: (1)
+  % b^{q-1}(k(s)) is surjective at x. (2) b^{q-1}(M) is an isomorphism at every
+  % point of (1 x g)^{-1}(x) for every g and every M. (3) Ext^q_X(I, F) is S-flat
+  % at x."
+  \textit{Source: Altman--Kleiman, §1, (1.9), p. 59--61.}
+  Let $f : X \to S$ be finitely presented and $I, F$ locally finitely presented
+  $\Ox$-modules with $F$ $S$-flat. Fix $q$ and assume $I$ is $S$-flat if
+  $q \geq 1$ and $f$ flat if $q \geq 2$. Fix $s \in S$ and $x \in X(s)$, and
+  assume the base-change map to the fibre
+  \[
+    b^q(k(s)) : \sExt^q_X(I,F) \tensor_S k(s) \to
+      \sExt^q_{X(s)}\!\big(I(s), F(s)\big)
+  \]
+  is surjective at $x$. Then:
+  \begin{enumerate}
+    \item[(i)] for every $g : T \to S$ and every quasi-coherent $\Ot$-module $M$,
+      $b^q(M)$ is an isomorphism at every point of $(1\times g)^{-1}(x)$;
+    \item[(ii)] the following are equivalent: \textnormal{(1)} $b^{q-1}(k(s))$ is
+      surjective at $x$; \textnormal{(2)} $b^{q-1}(M)$ is an isomorphism at every
+      point of $(1\times g)^{-1}(x)$ for all $g, M$; \textnormal{(3)}
+      $\sExt^q_X(I,F)$ is $S$-flat at $x$.
+  \end{enumerate}
+  % SOURCE QUOTE PROOF: "Proof. (i) Clearly we may assume S and X are affine.
+  % Write S as a limit, S = lim S_lambda, where each S_lambda is the spectrum of
+  % a finitely generated Z-algebra. [...] Define a functor from the category of
+  % O_s-modules N to the category of O_s-modules, R(N) = Ext^q_{O_x}(I_x, F_x
+  % (x)_{O_x} N). It is easy to see that R commutes with direct limits. Moreover,
+  % if N is finitely generated, then R(N) is also finitely generated [GD IV, 3.2
+  % (i), p. 74]. Since b^q(k(s))_x is surjective, the natural map, R(O_s) (x)_{O_s}
+  % k(s) -> R(k(s)), is surjective. Moreover, the (unique) maximal ideal of O_x
+  % contracts to the (unique) maximal ideal of O_s. Therefore, by [OB, 4.1], the
+  % map, R(O_s) (x)_{O_s} N -> R(N), (1.9.1) [...] is an isomorphism. [...]
+  % (ii) The implication (1) => (2) holds by (i). For the implications (2) => (3)
+  % and (3) => (1), clearly we may assume S = Spec(O_s). Let 0 -> M' -> M -> M'' ->
+  % 0 be an arbitrary exact sequence of quasi-coherent O_S-Modules, and consider
+  % the following diagram, with two commutative squares and exact lower sequence:
+  % [...] The maps b^q(M') and b^q(M) are isomorphisms at x by (i)."
+  \begin{proof}
+    \uses{def:extBaseChangeMap, lem:ext_limit, thm:ob_nakayama_iso, thm:ob_halfexact_free, lem:ext_adjunction}
+    \emph{(i)} We may assume $S, X$ affine and, writing $S = \varprojlim
+    S_\lambda$ over finitely generated $\mathbf{Z}$-algebras, descend the data; by
+    \cref{lem:ext_limit} the fibre maps $b^q(k(s_\lambda))$ have limit
+    $b^q(k(s))$, so the hypotheses descend and we may take $S$ Noetherian. Set
+    $R(N) = \Ext^q_{\mathcal{O}_x}(I_x, F_x \tensor_{\mathcal{O}_x} N)$ on
+    $\mathcal{O}_s$-modules; $R$ commutes with direct limits and preserves finite
+    generation. Surjectivity of $b^q(k(s))$ at $x$ makes
+    $R(\mathcal{O}_s) \tensor k(s) \to R(k(s))$ surjective, and since the maximal
+    ideal of $\mathcal{O}_x$ contracts to that of $\mathcal{O}_s$,
+    \cref{thm:ob_nakayama_iso} gives that $R(\mathcal{O}_s)\tensor N \to R(N)$ is
+    an isomorphism for all $N$. Taking $N = M_t$ and comparing with the stalk of
+    the adjunction isomorphism \textnormal{(1.7.1)} shows $b^q(M)$ is an
+    isomorphism at $x$, hence at every point of $(1\times g)^{-1}(x)$.
+
+    \emph{(ii)} The implication $(1)\Rightarrow(2)$ is part (i) applied in degree
+    $q-1$. For the rest assume $S = \Spec(\mathcal{O}_s)$ and apply $b^\bullet$ to
+    an exact sequence $0 \to M' \to M \to M'' \to 0$: by (i) the maps $b^q(M')$
+    and $b^q(M)$ are isomorphisms at $x$, and a diagram chase using
+    right-exactness of $\tensor$ yields $(2)\Rightarrow(3)$ (flatness of
+    $\sExt^q_X(I,F)$ at $x$) and $(3)\Rightarrow(1)$ (taking $M = \mathcal{O}_s$,
+    $M'' = k(s)$). The half-exactness input of \cref{thm:ob_halfexact_free}
+    underlies the identification of the relevant functors.
+  \end{proof}
+\end{theorem}
+
+\begin{theorem}\leanok
+[Finiteness and flatness of local Ext]
+  \label{thm:ext_finite_flat}
+  \lean{MR0555258CompactifyingPicard.ext_finite_flat}
+  \uses{thm:exchange, thm:ega_ext_vanishing_open, thm:ega_ext_coherent_fp}
+  % SOURCE: [Altman--Kleiman], §1, (1.10), p. 61 (read from references/MR0555258-compactifying-picard.pdf)
+  % SOURCE QUOTE: "(1.10) THEOREM. Let f : X -> S be a finitely presented, proper
+  % morphism of schemes, and let I and F be locally finitely presented
+  % O_X-Modules. Assume F is S-flat. Fix an integer q. Assume that I is S-flat if
+  % q >= 1 and that f is flat if q >= 2. Then, (i) Let V denote the set of s in S
+  % where we have Ext^q_{X(s)}(I(s), F(s)) = 0. Then V is open and retrocompact,
+  % and for each base-change g : T -> S factoring through V and for each
+  % quasi-coherent O_T-Module M, we have Ext^q_{X_T}(I_T, F (x)_S M) = 0. (ii) Fix
+  % an integer c and let V denote the set of s in S, where we have
+  % Ext^p_{X(s)}(I(s), F(s)) = 0 for p = c + 1, c - 1. Then V is open and
+  % retrocompact, the restriction, Ext^c_X(I, F) | f^{-1}(V), is locally finitely
+  % presented and flat over V, and the map b^p(M) is an isomorphism for every
+  % base-change g : T -> S and for every quasi-coherent O_T-Module M."
+  \textit{Source: Altman--Kleiman, §1, (1.10), p. 61.}
+  Let $f : X \to S$ be finitely presented and proper, and $I, F$ locally finitely
+  presented $\Ox$-modules with $F$ $S$-flat. Fix $q$ and assume $I$ is $S$-flat if
+  $q \geq 1$ and $f$ flat if $q \geq 2$. Then:
+  \begin{enumerate}
+    \item[(i)] the set $V = \{ s \in S : \sExt^q_{X(s)}(I(s),F(s)) = 0 \}$ is open
+      and retrocompact, and for each base change $g : T \to S$ factoring through
+      $V$ and each quasi-coherent $\Ot$-module $M$ one has
+      $\sExt^q_{X_T}(I_T, F \tensor_S M) = 0$;
+    \item[(ii)] fixing $c$, the set $V$ of $s$ with
+      $\sExt^p_{X(s)}(I(s),F(s)) = 0$ for $p = c+1, c-1$ is open and retrocompact;
+      on it the restriction $\sExt^c_X(I,F)|f^{-1}(V)$ is locally finitely
+      presented and flat over $V$, and $b^c(M)$ is an isomorphism for every base
+      change $g : T \to S$ and every quasi-coherent $\Ot$-module $M$.
+  \end{enumerate}
+  % SOURCE QUOTE PROOF: "Proof. (i) Let U denote the set of x in X, where we have
+  % Ext^q_{X(f(x))}(I(f(x)), F(f(x))) = 0. Then the proof of [EGA IV_3, 12.3.4]
+  % shows that U is open and retrocompact, although this is not fully stated. [...]
+  % It is easy to prove that, because f is proper and finitely presented, the set
+  % V of points s such that f^{-1}(x) lies in U is open and retrocompact. The
+  % assertion now follows from (1.9(i)) or from (1.10.1). (ii) By (i) the set V is
+  % open and retrocompact. By (1.9(ii)) applied twice, first with q = c + 1 and
+  % then with q = c, the restricted Ext is flat over V and the map b^q(M) is an
+  % isomorphism for every g factoring through V and for every M. Finally, the
+  % assertion of local finite presentation is local on S and is compatible with
+  % base-change. So we may assume S is affine and by [EGA IV_3, Sects. 8, 11]
+  % Noetherian. Then the assertion holds by [EGA III_2, 12.3.3]."
+  \begin{proof}
+    \uses{thm:exchange, thm:ega_ext_vanishing_open, thm:ega_ext_coherent_fp}
+    \emph{(i)} Let $U = \{ x \in X : \sExt^q_{X(f(x))}(I(f(x)),F(f(x))) = 0 \}$;
+    the argument of [EGA IV$_3$, 12.3.4] shows $U$ is open and retrocompact. As
+    $f$ is proper and finitely presented, the set $V$ of $s$ with $f^{-1}(s)
+    \subseteq U$ is open and retrocompact, and the vanishing statement follows
+    from \cref{thm:exchange}(i).
+
+    \emph{(ii)} By (i), $V$ is open and retrocompact. Applying
+    \cref{thm:exchange}(ii) twice — first in degree $c+1$, then in degree $c$ —
+    shows $\sExt^c_X(I,F)$ is flat over $V$ and $b^c(M)$ is an isomorphism for all
+    $g$ factoring through $V$ and all $M$. Local finite presentation is local on
+    $S$ and base-change compatible, so one reduces to $S$ affine Noetherian, where
+    it is [EGA III$_2$, 12.3.3].
+  \end{proof}
+\end{theorem}
