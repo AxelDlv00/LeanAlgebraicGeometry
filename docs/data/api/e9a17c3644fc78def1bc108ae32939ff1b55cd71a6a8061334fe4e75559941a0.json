@@ -1,0 +1,118 @@
+[
+  {
+    "timestamp": "2026-06-25T07:15:01Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_restrict_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_82",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Typed Scheme-dualIsoOfIso STEP-2 pullbackCongr coherence is UN-TYPABLE: C_f ;; dualIsoOfIso(...) whnf-bombs into the sheafification colimit (infinite whnf) at STATEMENT elaboration; 12.8M HB + backward.isDefEq.respectTransparency=false both fail (lake-verified). Finish needs folded-world rework, NOT a typed transport adjacent to an unfolded SCP/theta leg.",
+      "key_lemmas_used": [
+        "iso_symm_fold_cancel",
+        "dual_restrict_iso_eq_comparison",
+        "restrictCompReindex",
+        "dual_restrict_iso_pullbackCongr"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "STEP-1 collapse: cancel leading RFIP_j.symm ;; RFIP_j on the RHS to the pure j-comparison SCP_j ;; sheafify theta_j",
+        "code_tried": "rw [iso_symm_trans_cancel]",
+        "line_number": "1255",
+        "lean_error": "did not find pattern (the two RFIP_j occurrences are syntactically different; one lives under the c.1 pushforward/restrict defeq seam)",
+        "result": "failed",
+        "insight": "keyed rw of iso_symm_trans_cancel cannot unify across the c.1 seam"
+      },
+      {
+        "attempt": 2,
+        "strategy": "STEP-1 collapse via NEW folded-cancel helper iso_symm_fold_cancel (keep dual_restrict_iso j (M|U) FOLDED so the 2nd RFIP_j is never spelled out; cancel a.symm ;; D ;; h = g ;; h from hD : D = a ;; g, subst hD in abstract [Category C] body)",
+        "code_tried": "rw [iso_symm_fold_cancel _ _ _ (dual_restrict_iso_eq_comparison j (M.restrict U.ι)) (dualIsoOfIso (restrictCompReindex j hjι M))]",
+        "line_number": "1255",
+        "lean_error": null,
+        "result": "success",
+        "insight": "folded-cancel beats the c.1 seam; STEP-1 collapse LANDED, lake-verified (EXIT 0, 3 sorries). Residual is the collapsed star-pb-iso."
+      },
+      {
+        "attempt": 3,
+        "strategy": "STEP-2 as a typed lemma dualComparison_pullbackCongr: (pullbackCongr hf).app M.dual ;; C_g M = C_f M ;; dualIsoOfIso((restrictFunctorCongr hf).app M).symm, proved by subst hf",
+        "code_tried": "private lemma dualComparison_pullbackCongr ... := by subst hf; ...  (then maxHeartbeats 1600000 -> 12800000, then set_option backward.isDefEq.respectTransparency false)",
+        "line_number": "1186",
+        "lean_error": "(deterministic) timeout at whnf/isDefEq, maximum number of heartbeats reached (1600000, then 12800000) --- at STATEMENT elaboration, even with a sorry body",
+        "result": "failed",
+        "insight": "PROVEN IMPOSSIBLE: C_f M codomain = sheafify(presheaf-pushforward-dual), defeq to Scheme dual only through c.1; unifying the two sheafify(...) forces infinite whnf into the sheafification colimit. Same colimit seam that bans rw/simp of category lemmas across SheafOfModules >>. DEAD: any typed coherence whose transport is a Scheme-dualIsoOfIso adjacent to an unfolded SCP/theta leg."
+      },
+      {
+        "attempt": 4,
+        "strategy": "FOLDED coherence brick dual_restrict_iso_pullbackCongr: state the SAME coherence at the FOLDED dual_restrict_iso level (both junctions Scheme-dual <-> Scheme-dual, syntactic, no sheafify whnf)",
+        "code_tried": "(restrictFunctorCongr hf).app M.dual ;; dual_restrict_iso g M = dual_restrict_iso f M ;; dualIsoOfIso((restrictFunctorCongr hf).app M).symm := by subst hf; [restrictFunctorCongr rfl).app = Iso.refl via ext U:3 <;> simp; dualIsoOfIso_refl; refl_trans/trans_refl]",
+        "line_number": "1211",
+        "lean_error": null,
+        "result": "success",
+        "insight": "compiles, lake-verified, axiom-clean, but currently DEAD (zero call sites). Uses restrictFunctorCongr (restrict world); the collapsed goal uses pullbackCongr (pullback world) -> S3 must be reworked to stay folded restrict-world to USE it."
+      }
+    ],
+    "next_steps": "EFFORT-BREAK S3 (do NOT re-attempt a monolithic close). Route 1 (folded-world rework): redo S3 staying in FOLDED dual_restrict_iso form; do all pullbackCongr/restrictFunctorCongr/dualIsoOfIso/restrictCompReindex manipulation at the folded level (seam-free, via dual_restrict_iso_pullbackCongr + dualIsoOfIso_trans + restrictCompReindex), reduce to a pure FOLDED cocycle, THEN unfold each dual_restrict_iso and discharge by proven bridges (b) sheafificationCompPullback_restrict + (c) presheafDualPullbackComparison_restrict + c.1. The early RFIP-cancel-into-pullback-world steps must be REPLACED."
+  },
+  {
+    "timestamp": "2026-06-25T07:15:01Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_82",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Not attempted this iter (trip-wire: S3 did not close -> STOP, do not grind a second tactic family). S4a is the structure-sheaf specialisation of S3 and shares the SAME dual sheafify-colimit seam; likely needs the same folded-world technique once S3's cocycle lands.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not attempted (trip-wire stop after S3 non-close)",
+        "code_tried": "n/a",
+        "line_number": "1360",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "gated on S3 folded-world technique"
+      }
+    ],
+    "next_steps": "Defer until S3 folded cocycle lands; then mirror as structure-sheaf specialisation."
+  },
+  {
+    "timestamp": "2026-06-25T07:15:01Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_82",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Not attempted this iter (telescope rides S3/S4a). Wires the 5 squares; S2/S4b/S4c done.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not attempted (rides S3/S4a)",
+        "code_tried": "n/a",
+        "line_number": "2128",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "terminal assembly; gated on S3+S4a"
+      }
+    ],
+    "next_steps": "Wire the 5 squares once S3 and S4a close."
+  }
+]

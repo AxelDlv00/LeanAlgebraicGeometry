@@ -1,0 +1,111 @@
+{
+  "files": [
+    {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean",
+      "count": 7,
+      "lines": [
+        222,
+        229,
+        305,
+        328,
+        446,
+        454,
+        545
+      ],
+      "occurrences": [
+        {
+          "line": 222,
+          "column": 5
+        },
+        {
+          "line": 229,
+          "column": 5
+        },
+        {
+          "line": 305,
+          "column": 3
+        },
+        {
+          "line": 328,
+          "column": 3
+        },
+        {
+          "line": 446,
+          "column": 5
+        },
+        {
+          "line": 454,
+          "column": 3
+        },
+        {
+          "line": 545,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean",
+      "count": 8,
+      "lines": [
+        560,
+        562,
+        564,
+        929,
+        930,
+        1060,
+        1419,
+        1420
+      ],
+      "occurrences": [
+        {
+          "line": 560,
+          "column": 7
+        },
+        {
+          "line": 562,
+          "column": 7
+        },
+        {
+          "line": 564,
+          "column": 5
+        },
+        {
+          "line": 929,
+          "column": 7
+        },
+        {
+          "line": 930,
+          "column": 7
+        },
+        {
+          "line": 1060,
+          "column": 5
+        },
+        {
+          "line": 1419,
+          "column": 10
+        },
+        {
+          "line": 1420,
+          "column": 14
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/Cohomology/PresheafCech.lean",
+      "count": 1,
+      "lines": [
+        313
+      ],
+      "occurrences": [
+        {
+          "line": 313,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "total": 16,
+  "partial": false,
+  "warnings": []
+}

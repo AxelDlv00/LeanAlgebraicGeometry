@@ -1,6 +1,51 @@
 # Done Tasks
 <!-- Resolved items, last-known state only. Per-attempt detail → iter sidecars. -->
 
+- **Dual-unit FLANK LEAF CLOSED iter-098 (`PresheafDualUnitPullback.lean`) — sorry-free + axiom-clean
+  EXIT 0.** The genuine open math that churned 085–087. File was RED (6 v4.31 α-NatTrans naturality-autoparam
+  errors at L34/40/65/73/98/134, masked by grep's 1-sorry count) + 1 FLANK sorry. STEP 0 recovered the 6
+  sites (`naturality := fun _ _ i => f.appIso_inv_naturality i`). STEP 1 authored + proved the linchpin
+  `pushforwardBetaUnitEpsAppOne` (general-`y` carrier value of `q.hom = εIso(pushforward β)⁻¹ = (f.appIso V).hom`).
+  STEP 2 closed L1′ `presheafDualUnitIso_pullback_natural`: both flank comparators (`q.hom` RHS,
+  `dualUnitRingSwap` LHS) collapse to the same `(f.appIso V).hom`, then an `H1.hom.naturality` telescope.
+  +2 helpers (`restrictScalars_laxMonoidal_ε_app`, `presheafPushforwardUnitIso_inv_app`), both proven +
+  blueprinted iter-099. Sole `dag-query gaps` ∞-source closed (1→0). Unblocks the TensorObjInverse dual cone.
+
+- **v4.31.0 migration: B1 CLOSED iter-094 + K1 file-split DONE iter-095 (`TensorObjInverse.lean`).** B1
+  `tensorObj_restrict_iso_eq_pullbackTensorMap` filled via verbatim v4.30 body (`117100c4` TensorObjInverse
+  L843), ZERO v4.31 fixes (validated iter-093's keystone re-port). `TensorObjInverse` 7→6. iter-095: refactor
+  `k1-leaf-split` relocated K1 `pullbackTensorMap_isIso_of_isOpenImmersion` (name+sig verbatim) into new leaf
+  `TensorObjSubstrate/PullbackTensorMapIso.lean` (imports only TensorObjSubstrate ⇒ monster-free OOM-isolation
+  for the 6.4M-HB fill); TensorObjInverse imports it, stub removed, EXIT 0. Project sorry count unchanged (K1
+  relocated, fill ACTIVE iter-095).
+
+- **v4.31.0 migration: `TensorObjSubstrate.lean` 5→1 — CLOSED iter-090, axiom-clean EXIT 0.** Recovered #1
+  `tensorObj_unit_iso` (leftUnitor-over-`λ_` unit-slot defeq), #2 `tensorObj_restrict_iso` α-nat
+  (`appIso_inv_naturality`), #3 `sheafificationCompPullback_comp` (ported parent `_natTrans` body), #4
+  `pullbackTensorMap_restrict` (ported ~1030 LOC / 15 helpers incl. PUBLIC `pullbackValIso_comp_leg`). Sole
+  remaining sorry = dead private `exists_tensorObj_inverse` dup (delete in cleanup). 3 new fix axes (7–9) →
+  ARCHON_MEMORY. LSP DEAD on this file → `trace_state` in build.
+- **v4.31.0 migration: `DualInverse.lean` 6→0 — CLOSED iter-089, axiom-clean EXIT 0.** First migration-recovery
+  file. Established the reusable 6-axis v4.31 fix pattern (`task_results/…DualInverse.lean.md`). Recovery source =
+  orphan sibling `SliceTransport.lean`, NOT `main`. 2 sorries were non-math (forward-ref ordering bug; thin-poset
+  `subsingleton` naturality).
+
+- **Cone B c.2 ASSEMBLY + L377 + L434 — iter-074 (`DualInverse/PresheafDualPullback.lean`).** PresheafDualPullback
+  sorry **3 → 1**. (1) The iters-067–073 whnf-seam blocker RESOLVED: the entire iter-071 H1-cancellation is
+  realised in COMPILING code via a NEW private generic single-`[Category C]` skeleton `c2_assemble` (8 hyps,
+  axiom-free), `refine`-applied to the c.2 goal — `refine` crosses the `PresheafOfModules`-over-`Z` `≫` seam by
+  metavariable unification with NO whnf bomb (the iter-071 "fictional trio" `comp_cancel_mid/_slide_nested/
+  _three_lr` never existed; superseded). (2) `presheafDual_pullback_comparison_eval_apply` (L377) CLOSED:
+  `unfold evalLin; erw [sliceDualTransport_app_apply, dualUnitRingSwap_apply]; rfl` (erw bridges
+  ConcreteCategory.hom vs ModuleCat.Hom.hom). (3) `evalLin_restrict_commute_aux` (L434, off-path) CLOSED:
+  one-shot term-mode `(naturality_apply (internalHomEval N) j.op (s⊗ₜφ)).symm` (no private re-exposure needed).
+  c.2 reduced to its SOLE residual (★) `hstar` (L855) = pushforward-flank `sliceDualTransport`
+  pseudofunctoriality, blocked on `FC=leftAdjointCompIso` opacity (→ §0 mate route, iter-075). Coverage:
+  `c2_assemble` blueprint block added iter-075 (`lem:c2_assemble`).
+- **Forward apply brick `sliceDualTransport_app_apply` — CLOSED iter-073** (`SliceTransport.lean:1037`, `:= rfl`,
+  axiom-clean). `:= rfl` ONLY with β as a folded `letI` in the φ-binder; concrete-inlined β zeta-bombs at 10M HB
+  in STATEMENT elaboration. The last cross-file brick the c.2 lane needed (iter-072 was a validator no-op).
+
 - **Cone B c.2(a) `presheafDualH1Cocycle` (`lem:presheafdual_h1_cocycle`) — CLOSED iter-070 sorry-free,
   axiom-clean** (`{propext, Classical.choice, Quot.sound}`). The H1=`leftAdjointUniq` cocycle over the
   immersion factorisation. Realized as a one-line `exact` instantiation of a NEW generic mate-calculus
@@ -129,3 +174,64 @@
 - **Cone A (S4b square) — CLOSED end-to-end iters 054–065; the tensor-flank left-unitality.** Sequence: S2 (054); S4b body (055) + inner seam (056) → whole S4b rides on bridge-3 `pullbackTensorMap_left_unitality`; effort-broken (057) into L1/L2/L3 chain. **iter-064:** STU-collapse keystone `tensorObj_left_unitor_image_collapse` (sorry-free; by-hand presheaf reduction across the `restrictScalars 𝟙`/`𝟭.obj` defeq seam — NOT the localization-monoidal API; term-mode `congrArg₂`/right-triangle `htri`/`map_comp_assoc` merge/explicit-left-factor) + L2 `tensorObj_left_unitor_pullback_eq_sheafify` (sorry 6→5). **iter-065:** L3 `pullbackUnitIso_whisker_eq_sheafify_eta_whisker` (central leg = arg-1 q=𝟙 specialization of the ALREADY-PROVEN `sheafifyTensorUnitIso_hom_natural`, root `:1896` — REUSE not rebuild; the iter-065 plan cross-check killed the iter-064 "must build a 2nd core" plan) + bridge-3 assembly `pullbackTensorMap_left_unitality` (sorry 5→3; fixed a STALE-GREEN pre-written body: missing `maxHeartbeats` whnf-timeout + bare-`_` mis-unification of `reassoc_of%`'s `k`/`congrArg` prefix across the `SheafOfModules ≫` seam — both pinned explicitly; `rw [reassoc_of% …]` MISSES the seam, term-mode only). **Cone A is DONE; only the dual flank (Cone B) + telescope remain.** Memory `stu-collapse-keystone.md`, `seam-split-fold-idiom.md`.
 
 - **Cone B c.1 `pushforwardObjValRestrictIso` (`def:pushforward_obj_val_restrict_iso`) — CLOSED iter-069 sorry-free, axiom-clean** (`{propext, Classical.choice, Quot.sound}`, no `sorryAx`). The foundational object-id iso `(pushforward β).obj M.val ≅ (M.restrict f).val`. Realized as **`Iso.refl _`**: Mathlib's `Scheme.Modules.restrictFunctor f` is *defined* as `SheafOfModules.pushforward ⟨whiskerRight α (forget₂ …)⟩` whose object action is `{ val := (PresheafOfModules.pushforward β).obj M.val, … }`, so `(M.restrict f).val` is DEFINITIONALLY `(pushforward β).obj M.val` — the blueprint's abstract H1∘(RFIP;SCP) composite IS the identity once the concrete `restrictFunctor` defeq is used. Inspect the Mathlib def BEFORE building a composite. c.2 (the cocycle consuming c.1) effort-broken into (a)+(b) iter-070 → see task_pending.
+
+- **Cone B brick `sliceDualTransport_app_apply` (forward apply, `lem:slice_dual_transport_app_apply`) — CLOSED iter-073 sorry-free, axiom-clean** (`SliceTransport.lean:1037`, `:= rfl`, kernel-only). The FORWARD mirror of the proven inverse `sliceDualTransportInv_app_apply` (L563). **LESSON:** closes by `rfl` at DEFAULT heartbeats ONLY if β is a folded `letI` in the φ-binder (the consumer's own spelling) — concrete-inlined β zeta-bombs the `whiskerRight`/`toModuleIso` carrier in STATEMENT elaboration (confirmed 200k/4M/10M HB; super-linear, HB does NOT help). Unblocks c.2 (∗∗) + the off-path consumer L377 (`rw [sliceDualTransport_app_apply, dualUnitRingSwap_apply]`). iter-072 was a validator no-op (header "ADD" ≠ scaffold keyword); re-dispatched correctly iter-073.
+
+- **Cone B brick `sliceDualTransport_comp` (`lem:slice_dual_transport_comp`) — LANDED iter-077 sorry-free, axiom-clean** (`SliceTransport.lean:1068`, sectionwise structure-ring split via `sliceDualTransport_app_apply` + `dualUnitRingSwap_apply` + `comp_appIso` + `comp_image`). **BUT it does NOT close the c.2 consumer `case hstar`** — after slice-peeling, the residual is the sectionwise action of `FC = leftAdjointCompIso`, pushforward content not slice content. **iter-078 mathlib-analogist `fc-pushforwardcomp` (STUCK-corrective):** (a) KEEP `FC=leftAdjointCompIso` — Mathlib idiom (`pullbackComp` literally = it; cocycle (a) needs both flanks = `leftAdjointCompIso` of the SAME `e`); (b) swapping FC→concrete `pushforwardComp βf βh` is DIVERGENT-AND-WRONG (codomain differs by `comp_appIso` eqToHom → not type-compatible; breaks cocycle (a)) — DEAD; (c) VALIDATED CLOSE = diamond-free sectionwise `(FC.hom.app dM).app V` via the `change`-to-`X.presheaf.map(·).op` triangle-component idiom (`pushforwardPushforwardAdj_unit/counit_app_app_apply`; idiom @ `PresheafInternalHom.lean:449-461`); `change` NOT `simp` (carrier diamond). Blueprint close-route corrected + HARD GATE CLEARED iter-078 (fast-path); SOLO `prove` lane dispatched iter-078. `analogies/fc-pushforwardcomp.md`.
+
+- **Cone B c.2 `presheafDualPullbackComparison_restrict` `case hstar` (★, `lem:presheafdual_pullback_comparison_restrict`) — CLOSED iter-079 sorry-free, axiom-clean** (`{propext, Classical.choice, Quot.sound}`). **PresheafDualPullback.lean is now fully sorry-free; the entire Cone B DUAL-crux substrate (crux/c.1/(a)/c.2) is COMPLETE.** After the iter-078 sectionwise FC reduction, the residual was φ's presheaf-morphism naturality square along the canonical (thin, UNIQUE) slice morphism `g`; **KEYSTONE = `Over (Opens X)` is a thin poset whose homs are proof-irrelevant ⇒ `homOfLE ≡ eqToHom` DEFINITIONALLY**, so the goal's `eqToIso`/`restrictFunctorComp` reindexes are defeq to `(restr base …).map g` and `convert key using 2` finishes by `rfl` (NO residual `Subsingleton` goals). New private helper `hstar_naturality` (packages `naturality_apply φ g z` with `g` a DECOUPLED explicit arg — an internally-built `g` defeats `convert`'s slice unification). DEAD: `erw [restrictFunctorComp_hom_app_app]` on RHS (geometry `Hom.app` level ≠ goal's ModuleCat `.val.app`); `rw [show RHS = M.val.map(eqToHom).op]` (semilinear restrictScalars carrier diamond). **Unblocks the terminal cone in TensorObjInverse.lean — see task_pending.**
+
+- **Terminal S3 `dual_restrict_iso_restrict_compat` + L1 `dual_restrict_iso_comp` STEP-B — CLOSED iter-084 sorry-free, axiom-clean** (`{propext, Classical.choice, Quot.sound}`; `TensorObjInverse.lean` sorry 3→2). The inline ★pb-iso SCP-cocycle (former L1384) closed → S3 fully sorry-free → the ~15-iter `restrictFunctor j` source-cat instance diamond cone RETIRED on the dual-restriction leg. **REUSABLE winning idiom:** `apply Iso.ext`→syntactic `.hom` flatten (`simp only [Iso.trans_hom, Functor.map_comp, …]`, seam-safe — never touches `θ_g`'s `sliceDualTransport`)→generic abstract `dual_scp_assemble` (NEW pure single-`[Category C]` helper: head-cancel + mid-cancel + SCP naturality) by `exact` (objects opaque ⇒ NO sheafify-colimit whnf bomb — exactly why the iter-080 Scheme-typed `s3_assemble` bombed at 6.4M HB). Five concrete `have`s feed it (bridge (b) `sheafificationCompPullback_comp`, distribute-`sheafify` via `← Functor.map_comp ×3`, two inverse-pair cancels, SCP naturality at `θ_g.hom`). DEAD (lake-verified): `rw [hb]`/`rw [Iso.trans_assoc]` across the `≫` seam (defeq-not-syntactic, "pattern not found"); `erw [hb]` fires but leaves an un-reassociable iso-bracket; `rw [Iso.hom_inv_id_app]` inside `sheafify.map(·≫·)` MISSES (use term-mode `congrArg`). Remaining: S4a (effort-broken iter-085) → telescope.
+
+- **ROOT δ/η-collapse machinery RE-PORT (v4.31 KEYSTONE GAP) — CLOSED iter-093, axiom-clean.** The Jun-27 bump
+  had *DELETED* (not sorry'd) the whole ~690-LOC δ/η-collapse block from ROOT `TensorObjSubstrate` (v4.30
+  `117100c4` L4077–4768). Re-ported as **13 declarations** (TensorObjSubstrate L3906–4629), all
+  `[propext, Classical.choice, Quot.sound]` only (no `sorryAx`): `restrictScalars_δ_app_tmul` (the dropped
+  transitive dep), `isIso_of_isIso_comp4_mid`, `pullbackTensorMap_isIso_of_base_unit`,
+  `pushforwardPushforwardAdj_unit/counit_app_app_apply`, `restrictScalars_oplaxMonoidal_η_app_one`,
+  `pushforward_eta_appIso_collapse`, `pushforward_lax_mu_comparison_rhs_tmul`/`_lhs_tmul` (220-LOC, ported
+  clean, NO OOM — monster-free cone confirmed), `pushforward_lax_mu_comparison`, `deltaConjOfMuComparison`,
+  **`pushforward_mu_appIso_collapse`** (THE keystone EQUATION), `isIso_oplaxδ_of_conj`. `lake build
+  …TensorObjSubstrate` EXIT 0, 8562 jobs. Only 2 v4.31 fixes beyond verbatim: (1) axis-#1 α-naturality field at
+  6 sites (`naturality := fun _ _ i => f.appIso_inv_naturality i`, column-aligned to `app`); (2) NEW axis —
+  `simp [..._δ_assoc]` mate reductions stopped firing in `deltaConjOfMuComparison` → `conv_rhs` + iterated
+  `erw [reassoc_of% …]` (the 3 closing rewrites must be ONE `erw`). Unblocks K1 + B1 in TensorObjInverse.
+  Recipe map: `iter/iter-093/objectives.md`; fix detail: `task_results/…TensorObjSubstrate.lean.md` (archived).
+
+## K1 `pullbackTensorMap_isIso_of_isOpenImmersion` — DONE iter-095 (leaf `TensorObjSubstrate/PullbackTensorMapIso.lean`)
+Relocated (refactor `k1-leaf-split`) from TensorObjInverse into monster-free leaf, then filled verbatim
+v4.30 (`117100c4:TensorObjSubstrate:4790`) with 1 v4.31 fix (α-NatTrans `naturality := f.appIso_inv_naturality`).
+sorry-free, EXIT 0 (8563 jobs, ~13s), axiom-clean. OOM-isolation hypothesis confirmed (13s, no Exit 137).
+Keystone deps `pushforward_mu_appIso_collapse`/`isIso_oplaxδ_of_conj` (re-ported iter-093) compiled as-is.
+
+## S2 `tensorObj_restrict_iso_restrict_compat` (`TensorObjInverse.lean`) — DONE iter-096, axiom-clean
+Filled IN PLACE (6.4M-HB, consumes B1). Verbatim v4.30 (`117100c4`) body + **4 v4.31 fixes (one recurring axis):**
+the `(pullback U.ι ⋙ pullback j).obj X` vs nested `(pullback j).obj ((pullback U.ι).obj X)` spelling is
+defeq-not-syntactic under `instances` transparency → poisons `rw` motives / `congr` / simp-matching. Fixes:
+(1) `refine Eq.trans (pullbackTensorMap_restrict_cancel_assoc … _) ?_` to cross by unification (the verbatim
+`rw [..._assoc]` is DEAD); (2) explicit `rw [Category.assoc]` before `congr 1` (`@[reassoc]` left-bracketed
+head; `simp only [Category.assoc]` won't flatten → spurious HEq); (3) `set_option
+backward.isDefEq.respectTransparency false in` (the durable knob — without it `simp [tensorObjIsoOfIso_hom]`
+is permanently "no progress"); (4) deleted a now-redundant trailing `rfl`. `lake build …TensorObjInverse`
+EXIT 0 (8565 jobs), `[propext, Classical.choice, Quot.sound]` (no `sorryAx`). **OOM caution RETIRED** — the
+filled 6.4M-HB proof built in the monster-importing file without Exit 137 (Lean frees memory between decls;
+monster is a warm upstream olean). **All v4.31 recovery targets (B1/K1/S2) now closed.** TensorObjInverse =
+4 remaining = the genuine-open dual-unit FLANK + terminal (gated on the ∞-source informal proof).
+
+## Dual cone (b)/(d) + keystone (a) — DONE iters 099–102, axiom-clean (`TensorObjInverse.lean`)
+- **(b) `dualUnitIso_dualIsoOfIso` + (d) `exists_tensorObj_inverse` body — iter-099** (4→2). Root block was
+  NOT difficulty: the v4.31 recovery had SILENTLY DROPPED 3 DualInverse helpers (`presheafDualUnitIso_naturality`,
+  `homOfLocalCompat_restrictFunctor_map`, private `linearEndo_apply_comm`) → re-ported as private locals +
+  v4.31 term-mode `eqToHom_comp_iff` fix → v4.30 bodies closed.
+- **keystone (a) `dual_unit_iso_restrict_assemble` — ASSEMBLED iter-100** (monolithic sorry → machine-checked
+  abstract-`[Category]` `unit_assemble`/`hcore_assemble`, body sorry-free), reduced to RES1+RES2.
+- **RES1 `forgetUnitRestrict_eq_pushforwardUnit` — iter-101**, axiom-clean. Breakthrough: collapse at the
+  MORPHISM level FIRST (generic `leftAdjointUniq_hom_app_homEquiv_symm`), then section. Durable v4.31 idioms:
+  term-mode `congrArg (F.map g ≫ ·) (leftAdjointUniq_hom_app_counit …)`; term-mode `(forget _).map_comp`; `erw`
+  for the Scheme.Modules↔SheafOfModules adjunction-spelling seam; `Subsingleton.elim` on `Opens` poset homs.
+- **RES2 `pullbackUnit_sheafify_reconcile` + keystone (a) sorry-free — iter-102.** effort-broke RES2 into L1
+  `pullbackValIso_unit_factor` (concrete rfl) + L2 `presheafPullbackUnitIso_sheafify_reconcile`. L2 closed FULLY
+  via a transpose-free (†)-factorisation reusing `H1inv_app_eq_pullbackVal_restrict` + RES1, capped by generic
+  `adj_unit_counit_collapse`. All axiom-clean, `lake build` EXIT 0. TensorObjInverse now = **1 sorry**:
+  (c) `trivialisation_restrict_compat` (gated until (a); now active). `adj_unit_counit_collapse` +
+  the 3 iter-103 seam lemmas need blueprint entries (coverage debt, cleanup phase).

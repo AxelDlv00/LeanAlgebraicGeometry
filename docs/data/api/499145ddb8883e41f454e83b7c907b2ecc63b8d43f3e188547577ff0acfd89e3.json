@@ -1,9 +1,0 @@
-{
-  "commit": {
-    "sha": "1e28519a90e49ab80c835d6e9aeb1e6edc449fae",
-    "shortSha": "1e28519a",
-    "subject": "merge: finalize — manifest overlaps record conflict resolutions; lake build green (8400 jobs, 0 errors)",
-    "date": "2026-06-22 15:00:53 +0800",
-    "branch": "main"
-  }
-}

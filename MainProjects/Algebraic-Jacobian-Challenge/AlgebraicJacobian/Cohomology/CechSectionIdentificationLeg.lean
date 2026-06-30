@@ -108,6 +108,7 @@ lemma nerveδ_backboneProj (𝒰 : X.OpenCover) (p : ℕ) (k : Fin (p + 2)) (l :
 
 -- The `rfl` unfolds the whiskered augmented-cosimplicial packaging of `CechNerve`, whose
 -- kernel `whnf` exceeds the default budget.
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 /-- The evaluated Čech-nerve coface is the push–pull map of the geometric backbone
 simplicial face (definitional unwinding of `CechNerve`). -/
@@ -414,6 +415,7 @@ private lemma wpEqProd_hom_π (f : (i : ι) → Z i ⟶ S) (m : ℕ) (l : Fin m)
       Pi.π (fun _ : Fin m => Over.mk (Limits.Sigma.desc f)) l = overWPproj f m l :=
   IsLimit.conePointUniqueUpToIso_hom_comp _ _ (Discrete.mk l)
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- The chain unfolds seven layers of distributivity isos; the `whnf` cost on the nested
 -- fibre powers exceeds the default budget.
@@ -621,6 +623,7 @@ private lemma ι_wpci_inv_overWPproj (f : (i : ι) → Z i ⟶ S) (p : ℕ) :
         (prodFinSuccIso_hom_snd_π (fun k : Fin (p + 2) =>
           Over.mk (f (Fin.cons (α := fun _ => ι) i t k))) l')
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 set_option synthInstance.maxHeartbeats 400000 in
 /-- **Combo: reindex layer + distributivity layer in one step.**  The `τ`-summand inclusion

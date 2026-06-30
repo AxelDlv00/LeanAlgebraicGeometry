@@ -128,6 +128,56 @@ noncomputable def tensorLeft {X : Scheme.{u}} (F : X.Modules) : X.Modules ⥤ X.
       ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
         (𝟙 X.ringCatSheaf.obj)).map_comp _ _)
 
+/-- **(`def:tensorRight`)** Project-local (Mathlib gap): the "tensor by `L` on the
+right" endofunctor on `𝒪_X`-modules, `N ↦ N ⊗_{𝒪_X} L`. The right-handed mirror of
+`tensorLeft` [line ~101]: on objects `tensorMod · L`; on a morphism `φ` it sheafifies
+`PresheafOfModules.Monoidal.tensorHom φ.val (𝟙 L.val)`. There is no
+`MonoidalCategory X.Modules` instance in Mathlib, so it is assembled by hand from the
+presheaf monoidal tensor plus sheafification. -/
+noncomputable def tensorRight {X : Scheme.{u}} (L : X.Modules) : X.Modules ⥤ X.Modules where
+  obj N := tensorMod N L
+  map {N N'} φ :=
+    (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map
+      (PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) φ.val (𝟙 L.val))
+  map_id N := by
+    have h : PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (𝟙 N.val) (𝟙 L.val)
+        = 𝟙 (PresheafOfModules.Monoidal.tensorObj (R := X.presheaf) N.val L.val) := by
+      ext1 Y
+      rw [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.id_app,
+        PresheafOfModules.id_app, PresheafOfModules.id_app]
+      exact MonoidalCategory.id_tensorHom_id _ _
+    exact (congrArg (PresheafOfModules.sheafification (R := X.ringCatSheaf)
+      (𝟙 X.ringCatSheaf.obj)).map h).trans
+      ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+        (𝟙 X.ringCatSheaf.obj)).map_id _)
+  map_comp {N N' N''} φ ψ := by
+    have h : PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (φ.val ≫ ψ.val) (𝟙 L.val)
+        = PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) φ.val (𝟙 L.val)
+          ≫ PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) ψ.val (𝟙 L.val) := by
+      ext1 Y
+      rw [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.comp_app,
+        PresheafOfModules.comp_app, PresheafOfModules.Monoidal.tensorHom_app,
+        PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.id_app]
+      exact MonoidalCategory.comp_tensor_id _ _
+    exact (congrArg (PresheafOfModules.sheafification (R := X.ringCatSheaf)
+      (𝟙 X.ringCatSheaf.obj)).map h).trans
+      ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+        (𝟙 X.ringCatSheaf.obj)).map_comp _ _)
+
+/-- Project-local (general category theory, Mathlib gap in the `Type u`-valued form):
+for a fully faithful endofunctor `G : C ⥤ C` and an object `I`, the natural
+isomorphism `G ⋙ coyoneda(op (G.obj I)) ≅ coyoneda(op I)` reflecting the
+full-faithfulness Hom-bijection `(G.obj I ⟶ G.obj Z) ≅ (I ⟶ Z)`, natural in `Z`.
+Mathlib's `Functor.FullyFaithful.homNatIso'` states this only through `uliftCoyoneda`
+(landing in `ULift`-ed homs); this `Type u`-valued form is what the (1.1.2) Yoneda
+step needs to compare the two `homTensorFunctor`s. -/
+noncomputable def coyonedaCompFF {C : Type*} [Category C] {G : C ⥤ C}
+    (hG : G.FullyFaithful) (I : C) :
+    G ⋙ coyoneda.obj (op (G.obj I)) ≅ coyoneda.obj (op I) :=
+  NatIso.ofComponents
+    (fun Z => (hG.homEquiv (X := I) (Y := Z)).symm.toIso)
+    (by aesop_cat)
+
 /-! ## Project-local Mathlib supplement — symmetric-monoidal scaffolding for `tensorMod`
 
 Mathlib provides the monoidal structure on **presheaves** of modules
@@ -166,6 +216,40 @@ noncomputable def tensorBraiding {X : Scheme.{u}} (A B : X.Modules) :
     tensorMod A B ≅ tensorMod B A :=
   (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).mapIso
     (presheafTensorBraiding (R := X.presheaf) A.val B.val)
+
+/-- Project-local (Mathlib gap): **naturality of the presheaf-level braiding**
+`presheafTensorBraiding` in its first factor. For `f : M ⟶ M'` the square
+`(f ⊗ 𝟙_N) ≫ β_{M',N} = β_{M,N} ≫ (𝟙_N ⊗ f)` commutes — it is the pointwise
+`ModuleCat` braiding naturality (`BraidedCategory.braiding_naturality`) assembled
+over the site. Used to make `tensorBraiding` natural (`tensorBraidingNatIso`). -/
+lemma presheafTensorBraiding_naturality {C : Type*} [Category C] {R : Cᵒᵖ ⥤ CommRingCat}
+    {M M' N : PresheafOfModules (R.comp (forget₂ CommRingCat RingCat))} (f : M ⟶ M') :
+    PresheafOfModules.Monoidal.tensorHom f (𝟙 N) ≫ (presheafTensorBraiding M' N).hom
+      = (presheafTensorBraiding M N).hom ≫ PresheafOfModules.Monoidal.tensorHom (𝟙 N) f := by
+  ext1 Y
+  simp only [PresheafOfModules.comp_app, PresheafOfModules.Monoidal.tensorHom_app,
+    PresheafOfModules.id_app, presheafTensorBraiding, PresheafOfModules.isoMk_hom_app]
+  exact BraidedCategory.braiding_naturality (f.app Y) (𝟙 (N.obj Y))
+
+/-- Project-local (Mathlib gap): the braiding `tensorBraiding` of the `𝒪_X`-tensor,
+packaged as a **natural isomorphism of endofunctors** `tensorRight B ≅ tensorLeft B`
+(i.e. `A ⊗ B ≅ B ⊗ A` natural in `A`). Naturality in `A` follows from
+`presheafTensorBraiding_naturality` and functoriality of sheafification; this is the
+first-variable-naturality input to `tensorRearrangeNatIso`. -/
+noncomputable def tensorBraidingNatIso {X : Scheme.{u}} (B : X.Modules) :
+    tensorRight B ≅ tensorLeft B :=
+  NatIso.ofComponents (fun A => tensorBraiding A B) (by
+    intro A A' φ
+    change (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map
+        (PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) φ.val (𝟙 B.val)) ≫
+        ((PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).mapIso
+          (presheafTensorBraiding (R := X.presheaf) A'.val B.val)).hom
+      = ((PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).mapIso
+          (presheafTensorBraiding (R := X.presheaf) A.val B.val)).hom ≫
+        (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map
+          (PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (𝟙 B.val) φ.val)
+    rw [Functor.mapIso_hom, Functor.mapIso_hom, ← Functor.map_comp, ← Functor.map_comp]
+    exact congrArg _ (presheafTensorBraiding_naturality (R := X.presheaf) φ.val))
 
 /-- Project-local (Mathlib gap): the presheaf-level left unitor of the monoidal
 tensor `PresheafOfModules.Monoidal.tensorObj`. The monoidal unit `𝟙_` of
@@ -349,6 +433,558 @@ noncomputable def tensorAssocOfLocallyBijective {X : Scheme.{u}} (A B C : X.Modu
     (sheafifyTensorComparisonLeftOfLocallyBijective A.val
       (PresheafOfModules.Monoidal.tensorObj B.val C.val) hiL hsL).symm
 
+/-! ### (1.1.2 STEP 1) Mathlib-gap anchor: module-sheafification is monoidal
+
+The unconditional sheafification–tensor comparison `~((~P) ⊗ Q) ≅ ~(P ⊗ Q)` (and
+its left-handed twin `~(P ⊗ (~Q)) ≅ ~(P ⊗ Q)`). This is the *true general fact*
+that the module-sheafification functor `~(-)` on `PresheafOfModules` is monoidal
+(a monoidal localization). It is ABSENT from Mathlib for `PresheafOfModules`: the
+naive "tensoring preserves local isomorphisms" route fails on the injectivity half
+(`ℤ/2 ⊗ ·2`; iter-008 finding, recorded at `sheafifyTensorComparisonOfLocallyBijective`)
+and the `CategoryTheory.Localization.Monoidal` route needs `W.IsMonoidal` +
+`L.IsLocalization W` for module sheafification, both absent. It carries **NO
+§1 content** — it is pure category theory, anchored exactly as
+`External.affine_fp_tilde` / `External.flat_tensor_exact` anchor true general facts
+Mathlib lacks at the needed generality. See `lem:sheafifyTensorComparison_uncond`.
+
+These are the unconditional forms of `sheafifyTensorComparisonOfLocallyBijective`
+and `sheafifyTensorComparisonLeftOfLocallyBijective` (their local-bijectivity
+hypotheses, false in general, dropped). -/
+/-- Module sheafification `~(-) : PresheafOfModules → SheafOfModules` on `X`, packaged
+as a named functor. Defined object/morphism-wise from
+`PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)` (the applied `.obj`/`.map`
+form, which drives the `IsLocallyInjective`/`IsLocallySurjective` instance synthesis
+that the bare-functor form leaves as metavariables). Used to build the bifunctorial
+comparison anchors without instance-synthesis-order failures. -/
+noncomputable def moduleSheafification (X : Scheme.{u}) :
+    PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⥤
+      SheafOfModules X.ringCatSheaf where
+  obj P := (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).obj P
+  map f := (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map f
+  map_id P :=
+    (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map_id P
+  map_comp f g :=
+    (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map_comp f g
+
+/-- The "sheafify then forget" endofunctor on presheaves of `𝒪_X`-modules,
+`P ↦ (P̃).val`. Used to phrase the bifunctorial (natural) form of the comparison
+anchors `External.sheafifyTensorComparison{,Left}`. -/
+noncomputable def sheafifyForget (X : Scheme.{u}) :
+    PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⥤
+      PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat) :=
+  moduleSheafification X ⋙ SheafOfModules.forget X.ringCatSheaf
+
+/-- The bifunctor `(P, Q) ↦ ~(P ⊗ Q)` on presheaves of `𝒪_X`-modules: the
+presheaf-level monoidal tensor followed by module sheafification. The common
+right-hand side of both comparison anchors.
+
+Hand-built (rather than `MonoidalCategory.tensor ⋙ moduleSheafification`) with an
+**explicit** action on morphisms `f ↦ ~(f.1 ⊗ f.2)`, so that `(tensorThenSheafify
+X).map (a, b)` reduces *cheaply* (single `rfl`) to the hand-built
+`tensorLeft`/`tensorRight` morphism maps. The `MonoidalCategory.tensor` packaging
+makes that reduction blow up `whnf` (the monoidal-instance `tensorHom` does not
+unfold cheaply), which blocks the (1.1.2) naturality layer. Objects are unchanged,
+so the comparison anchors and `tensorAssoc` (which only use `.app`) are unaffected. -/
+noncomputable def tensorThenSheafify (X : Scheme.{u}) :
+    (PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat) ×
+       PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) ⥤
+      SheafOfModules X.ringCatSheaf where
+  obj P := (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).obj
+    (PresheafOfModules.Monoidal.tensorObj P.1 P.2)
+  map {P P'} f :=
+    (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map
+      (PresheafOfModules.Monoidal.tensorHom f.1 f.2)
+  map_id P := by
+    refine Eq.trans ?_
+      ((PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map_id _)
+    congr 1
+    ext1 Y
+    simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.id_app, prod_id_fst,
+      prod_id_snd]
+    exact MonoidalCategory.id_tensorHom_id _ _
+  map_comp {P P' P''} f g := by
+    refine Eq.trans ?_
+      ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+        (𝟙 X.ringCatSheaf.obj)).map_comp _ _)
+    congr 1
+    ext1 Y
+    simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.comp_app, prod_comp_fst,
+      prod_comp_snd]
+    exact (MonoidalCategory.tensorHom_comp_tensorHom _ _ _ _).symm
+
+/-- The bifunctor `(P, Q) ↦ ~((~P).val ⊗ Q)` — sheafify the first factor, then
+`tensorThenSheafify`. The left-hand side of `External.sheafifyTensorComparison`.
+Hand-built (explicit `obj`/`map`) so that `.obj`/`.map` reduce cheaply to the
+`tensorMod`/`tensorRight`-`tensorLeft` forms used by the (1.1.2) naturality layer. -/
+noncomputable def sheafifyFstTensorThenSheafify (X : Scheme.{u}) :
+    (PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat) ×
+       PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) ⥤
+      SheafOfModules X.ringCatSheaf where
+  obj P := (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).obj
+    (PresheafOfModules.Monoidal.tensorObj
+      ((PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).obj P.1).val
+      P.2)
+  map {P P'} f :=
+    (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map
+      (PresheafOfModules.Monoidal.tensorHom
+        ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+          (𝟙 X.ringCatSheaf.obj)).map f.1).val
+        f.2)
+  map_id P := by
+    refine Eq.trans ?_
+      ((PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map_id _)
+    congr 1
+    rw [prod_id_fst, prod_id_snd]
+    have hv : ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+        (𝟙 X.ringCatSheaf.obj)).map (𝟙 P.1)).val
+        = 𝟙 ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+          (𝟙 X.ringCatSheaf.obj)).obj P.1).val := by
+      erw [CategoryTheory.Functor.map_id]
+      rw [SheafOfModules.id_val]
+    rw [hv]
+    ext1 Y
+    simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.id_app]
+    exact MonoidalCategory.id_tensorHom_id _ _
+  map_comp {P P' P''} f g := by
+    refine Eq.trans ?_
+      ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+        (𝟙 X.ringCatSheaf.obj)).map_comp _ _)
+    congr 1
+    have hv : ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+        (𝟙 X.ringCatSheaf.obj)).map (f ≫ g).1).val
+        = ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).map f.1).val ≫
+          ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).map g.1).val := by
+      rw [prod_comp_fst]
+      erw [Functor.map_comp]
+      rw [SheafOfModules.comp_val]
+    rw [hv, prod_comp_snd]
+    ext1 Y
+    simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.comp_app]
+    exact (MonoidalCategory.tensorHom_comp_tensorHom _ _ _ _).symm
+
+/-- The bifunctor `(P, Q) ↦ ~(P ⊗ (~Q).val)` — sheafify the second factor, then
+`tensorThenSheafify`. The left-hand side of `External.sheafifyTensorComparisonLeft`.
+Hand-built (explicit `obj`/`map`), the left-handed mirror of
+`sheafifyFstTensorThenSheafify`. -/
+noncomputable def sheafifySndTensorThenSheafify (X : Scheme.{u}) :
+    (PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat) ×
+       PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) ⥤
+      SheafOfModules X.ringCatSheaf where
+  obj P := (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).obj
+    (PresheafOfModules.Monoidal.tensorObj P.1
+      ((PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).obj P.2).val)
+  map {P P'} f :=
+    (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map
+      (PresheafOfModules.Monoidal.tensorHom f.1
+        ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+          (𝟙 X.ringCatSheaf.obj)).map f.2).val)
+  map_id P := by
+    refine Eq.trans ?_
+      ((PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map_id _)
+    congr 1
+    rw [prod_id_fst, prod_id_snd]
+    have hv : ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+        (𝟙 X.ringCatSheaf.obj)).map (𝟙 P.2)).val
+        = 𝟙 ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+          (𝟙 X.ringCatSheaf.obj)).obj P.2).val := by
+      erw [CategoryTheory.Functor.map_id]
+      rw [SheafOfModules.id_val]
+    rw [hv]
+    ext1 Y
+    simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.id_app]
+    exact MonoidalCategory.id_tensorHom_id _ _
+  map_comp {P P' P''} f g := by
+    refine Eq.trans ?_
+      ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+        (𝟙 X.ringCatSheaf.obj)).map_comp _ _)
+    congr 1
+    have hv : ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+        (𝟙 X.ringCatSheaf.obj)).map (f ≫ g).2).val
+        = ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).map f.2).val ≫
+          ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).map g.2).val := by
+      rw [prod_comp_snd]
+      erw [Functor.map_comp]
+      rw [SheafOfModules.comp_val]
+    rw [hv, prod_comp_fst]
+    ext1 Y
+    simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.comp_app]
+    exact (MonoidalCategory.tensorHom_comp_tensorHom _ _ _ _).symm
+
+/-- **(1.1.2 STEP 1, natural form)** Mathlib-gap anchor: module sheafification is
+monoidal, stated as a **natural isomorphism of bifunctors**
+`((P,Q) ↦ ~((~P).val ⊗ Q)) ≅ ((P,Q) ↦ ~(P ⊗ Q))`. The object-level comparison
+`~((~P).val ⊗ Q) ≅ ~(P ⊗ Q)` is recovered as `(… ).app (P, Q)`; naturality (the
+new content over the iter-031 object-level axiom) is exactly what the (1.1.2)
+naturality layer needs. Net axiom count is unchanged — this *replaces* the
+object-level `External.sheafifyTensorComparison`. See
+`lem:sheafifyTensorComparison_uncond`. -/
+axiom External.sheafifyTensorComparison {X : Scheme.{u}} :
+    sheafifyFstTensorThenSheafify X ≅ tensorThenSheafify X
+
+/-- Left-handed companion of `External.sheafifyTensorComparison` (natural form):
+`((P,Q) ↦ ~(P ⊗ (~Q).val)) ≅ ((P,Q) ↦ ~(P ⊗ Q))`. See its doc. -/
+axiom External.sheafifyTensorComparisonLeft {X : Scheme.{u}} :
+    sheafifySndTensorThenSheafify X ≅ tensorThenSheafify X
+
+/-- **(1.1.2 STEP 2)** Project-local (built on the STEP-1 anchor): the
+**unconditional associator** of the `𝒪_X`-tensor `tensorMod`,
+`(A ⊗ B) ⊗ C ≅ A ⊗ (B ⊗ C)`. This is `tensorAssocOfLocallyBijective` run with the
+unconditional comparisons `External.sheafifyTensorComparison{,Left}` (STEP 1, now
+natural) in place of the conditional (false-hypothesis) ones; the middle step is the
+sheafification of Mathlib's presheaf-level `MonoidalCategory.associator`
+(`TensorProduct.assoc` pointwise). The comparison object-isos are extracted from the
+natural anchors via `NatIso.app`. See `lem:tensorMod_assoc_uncond`. -/
+noncomputable def tensorAssoc {X : Scheme.{u}} (A B C : X.Modules) :
+    tensorMod (tensorMod A B) C ≅ tensorMod A (tensorMod B C) :=
+  External.sheafifyTensorComparison.app
+      (PresheafOfModules.Monoidal.tensorObj A.val B.val, C.val) ≪≫
+    (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).mapIso
+      (MonoidalCategory.associator
+        (C := PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat))
+        A.val B.val C.val) ≪≫
+    (External.sheafifyTensorComparisonLeft.app
+      (A.val, PresheafOfModules.Monoidal.tensorObj B.val C.val)).symm
+
+/-- **(1.1.2 STEP 3)** Project-local: the **rearrangement** of three `𝒪_X`-modules
+`(F ⊗ Y) ⊗ L ≅ (F ⊗ L) ⊗ Y`, built from the unconditional associator `tensorAssoc`
+(STEP 2) and the braiding `tensorBraiding` (swapping the inner `Y` and `L`). This is
+the algebraic core that, instantiated at `Y = f^* M`, gives the rearrangement
+`(F ⊗_S M) ⊗ L ≅ (F ⊗ L) ⊗_S M` of the (1.1.2) twist. The chain is
+`(F ⊗ Y) ⊗ L ≅ F ⊗ (Y ⊗ L) ≅ F ⊗ (L ⊗ Y) ≅ (F ⊗ L) ⊗ Y`. -/
+noncomputable def tensorRearrange {X : Scheme.{u}} (F Y L : X.Modules) :
+    tensorMod (tensorMod F Y) L ≅ tensorMod (tensorMod F L) Y :=
+  tensorAssoc F Y L ≪≫
+    (tensorLeft F).mapIso (tensorBraiding Y L) ≪≫
+    (tensorAssoc F L Y).symm
+
+/-- **[internal-monoidal coherence: right-unitor triangle of `tensorMod`]** The
+right-unitality triangle of the hand-built sheafified-tensor monoidal structure on
+`X.Modules`: for `M N : X.Modules`, reassociating `(M ⊗ N) ⊗ 𝒪_X` to `M ⊗ (N ⊗ 𝒪_X)`
+and then collapsing the inner `N ⊗ 𝒪_X` by the right unitor `ρ_N` equals collapsing
+`(M ⊗ N) ⊗ 𝒪_X` directly by the right unitor `ρ_{M ⊗ N}`:
+`α_{M,N,𝒪_X} ; (M ◁ ρ_N) = ρ_{M ⊗ N}`.
+
+This is the standard monoidal right-unitor triangle, true in **any** monoidal
+category. It is absent here only because Mathlib v4.30.0 carries **no**
+`MonoidalCategory X.Modules` instance: the associator `tensorAssoc` and the unitors
+`tensorRightUnitor` are assembled by hand on top of the anchored module-sheafification
+comparisons `External.sheafifyTensorComparison{,Left}`, so their coherences are not
+available from a Mathlib instance. The two sides cannot be reconciled by `coherence`/
+`monoidal_coherence`/`aesop`: the LHS carries the opaque `sheafifyTensorComparison{,Left}`
+(inside `tensorAssoc`) while the RHS (`tensorRightUnitor` = braiding ≫ presheaf left
+unitor ≫ sheafification counit) is comparison-free, so the equation is recorded here as
+an external input, in-family with `External.sheafifyTensorComparison{,Left}` (the whole
+monoidal layer on `X.Modules` is anchor-backed). It mentions neither `H` nor
+admissibility nor `f^*` nor Eilenberg–Watts, so it is strictly weaker than `H_tensor`.
+See `lem:internal_tensorMod_rightUnitality`. -/
+axiom External.tensorMod_rightUnitality {X : Scheme.{u}} (M N : X.Modules) :
+    (tensorAssoc M N (SheafOfModules.unit X.ringCatSheaf)).hom
+        ≫ (tensorLeft M).map (tensorRightUnitor N).hom
+      = (tensorRightUnitor (tensorMod M N)).hom
+
+/-! ### (1.1.2 naturality layer) — naturality of `tensorAssoc`, `tensorRearrangeNatIso`
+
+The naturality of `tensorAssoc` in each variable is the `NatTrans.naturality` of the
+comparison anchors `External.sheafifyTensorComparison{,Left}` (now `NatIso`s of bifunctors).
+To *use* that naturality one identifies the anchor-bifunctor's action
+`(sheafifyFstTensorThenSheafify X).map (a,b)` with the hand-built
+`(tensorRight L).map ((tensorLeft F).map φ)`. Because `sheafifyFst/SndTensorThenSheafify`
+and `tensorThenSheafify` are now **hand-built** (explicit `obj`/`map`, above), both the
+object types and the morphism actions reduce *cheaply* (single `rfl`) to the `tensorMod`/
+`tensorLeft`/`tensorRight` forms — the bridge lemmas below are therefore cheap `rfl`s. -/
+
+/-- Cheap single-unfold of `tensorLeft`'s action on morphisms. -/
+private lemma tensorLeft_map_eq {X : Scheme.{u}} (F : X.Modules) {N N' : X.Modules} (φ : N ⟶ N') :
+    (tensorLeft F).map φ =
+      (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map
+        (PresheafOfModules.Monoidal.tensorHom (𝟙 F.val) φ.val) := rfl
+
+/-- Cheap single-unfold of `tensorRight`'s action on morphisms. -/
+private lemma tensorRight_map_eq {X : Scheme.{u}} (L : X.Modules) {N N' : X.Modules} (φ : N ⟶ N') :
+    (tensorRight L).map φ =
+      (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map
+        (PresheafOfModules.Monoidal.tensorHom φ.val (𝟙 L.val)) := rfl
+
+/-- Cheap single-unfold of the hand-built bifunctor `sheafifyFstTensorThenSheafify`
+(generic morphism `f`, so both sides are syntactically `~(…)` — avoids the `isDefEq`
+blowup that the pair form `(a,b)` triggers). -/
+private lemma sheafifyFst_map_eq {X : Scheme.{u}}
+    {P P' : PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat) ×
+      PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)} (f : P ⟶ P') :
+    (sheafifyFstTensorThenSheafify X).map f
+    = (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map
+        (PresheafOfModules.Monoidal.tensorHom
+          ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).map f.1).val f.2) := rfl
+
+/-- Cheap single-unfold of the hand-built bifunctor `sheafifySndTensorThenSheafify`. -/
+private lemma sheafifySnd_map_eq {X : Scheme.{u}}
+    {P P' : PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat) ×
+      PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)} (f : P ⟶ P') :
+    (sheafifySndTensorThenSheafify X).map f
+    = (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map
+        (PresheafOfModules.Monoidal.tensorHom f.1
+          ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).map f.2).val) := rfl
+
+/-- The presheaf-level tensor of two identities is the identity (assembled pointwise
+from the `ModuleCat`-level `id_tensorHom_id`). Used to collapse the outer `F ⊗ L`
+factor in the last-factor associator naturality. -/
+private lemma presheaf_id_tensorHom_id {X : Scheme.{u}}
+    (M N : PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) :
+    PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (𝟙 M) (𝟙 N)
+      = 𝟙 (PresheafOfModules.Monoidal.tensorObj (R := X.presheaf) M N) := by
+  ext1 Z
+  simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.id_app]
+  exact MonoidalCategory.id_tensorHom_id _ _
+
+/-- The underlying presheaf morphism of the sheafification of an identity is the
+identity. Bridges `(~(𝟙 P)).val` to `𝟙 (~P).val` in the last-factor naturality. -/
+private lemma sheafify_map_id_val {X : Scheme.{u}}
+    (P : PresheafOfModules X.ringCatSheaf.obj) :
+    ((PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map
+        (𝟙 P)).val
+      = 𝟙 ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+        (𝟙 X.ringCatSheaf.obj)).obj P).val := by
+  rw [CategoryTheory.Functor.map_id, SheafOfModules.id_val]
+
+/-- Cheap single-unfold of the hand-built bifunctor `tensorThenSheafify`. -/
+private lemma tensorThenSheafify_map_eq {X : Scheme.{u}}
+    {P P' : PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat) ×
+      PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)} (f : P ⟶ P') :
+    (tensorThenSheafify X).map f
+    = (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map
+        (PresheafOfModules.Monoidal.tensorHom f.1 f.2) := rfl
+
+/-- Index functor `Y ↦ (F.val ⊗ Y.val, L.val)` from `𝒪_X`-modules to the
+presheaf-of-modules product, used to express the middle-factor naturality of
+`tensorAssoc` as a whiskered comparison anchor. Hand-built (explicit `obj`/`map`
+with `tensorHom`) to match the file's `tensorHom`-based conventions. -/
+private noncomputable def assocIdxL {X : Scheme.{u}} (F L : X.Modules) :
+    X.Modules ⥤ (PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat) ×
+      PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) where
+  obj Y := (PresheafOfModules.Monoidal.tensorObj F.val Y.val, L.val)
+  map {Y Y'} φ := (PresheafOfModules.Monoidal.tensorHom (𝟙 F.val) φ.val, 𝟙 L.val)
+  map_id Y := by
+    refine Prod.ext ?_ rfl
+    change PresheafOfModules.Monoidal.tensorHom (𝟙 F.val) (𝟙 Y.val) = 𝟙 _
+    ext1 Z
+    simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.id_app]
+    exact MonoidalCategory.id_tensorHom_id _ _
+  map_comp {Y Y' Y''} φ ψ := by
+    refine Prod.ext ?_ (Category.id_comp _).symm
+    change PresheafOfModules.Monoidal.tensorHom (𝟙 F.val) (φ.val ≫ ψ.val)
+        = PresheafOfModules.Monoidal.tensorHom (𝟙 F.val) φ.val
+          ≫ PresheafOfModules.Monoidal.tensorHom (𝟙 F.val) ψ.val
+    ext1 Z
+    simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.comp_app,
+      PresheafOfModules.id_app]
+    exact MonoidalCategory.id_tensor_comp _ _
+
+/-- Index functor `Y ↦ (F.val, Y.val ⊗ L.val)`, the right-handed mirror of
+`assocIdxL`, used for the last-factor naturality of `tensorAssoc`. -/
+private noncomputable def assocIdxR {X : Scheme.{u}} (F L : X.Modules) :
+    X.Modules ⥤ (PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat) ×
+      PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) where
+  obj Y := (F.val, PresheafOfModules.Monoidal.tensorObj Y.val L.val)
+  map {Y Y'} φ := (𝟙 F.val, PresheafOfModules.Monoidal.tensorHom φ.val (𝟙 L.val))
+  map_id Y := by
+    refine Prod.ext rfl ?_
+    change PresheafOfModules.Monoidal.tensorHom (𝟙 Y.val) (𝟙 L.val) = 𝟙 _
+    ext1 Z
+    simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.id_app]
+    exact MonoidalCategory.id_tensorHom_id _ _
+  map_comp {Y Y' Y''} φ ψ := by
+    refine Prod.ext (Category.id_comp _).symm ?_
+    change PresheafOfModules.Monoidal.tensorHom (φ.val ≫ ψ.val) (𝟙 L.val)
+        = PresheafOfModules.Monoidal.tensorHom φ.val (𝟙 L.val)
+          ≫ PresheafOfModules.Monoidal.tensorHom ψ.val (𝟙 L.val)
+    ext1 Z
+    simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.comp_app,
+      PresheafOfModules.id_app]
+    exact MonoidalCategory.comp_tensor_id _ _
+
+/-- **(1.1.2 naturality, middle factor)** Naturality of the unconditional associator
+`tensorAssoc F · L` in its middle factor, packaged as a natural isomorphism of
+endofunctors `tensorLeft F ⋙ tensorRight L ≅ tensorRight L ⋙ tensorLeft F`
+(`Y ↦ ((F ⊗ Y) ⊗ L ≅ F ⊗ (Y ⊗ L))`). Built as the composite of three natural
+isomorphisms — the two comparison anchors (`External.sheafifyTensorComparison{,Left}`,
+now `NatIso`s of bifunctors), whiskered by the index functors `assocIdxL`/`assocIdxR`,
+and the sheafified presheaf associator. Each leg's naturality is a single square proved
+through the generic bridge lemmas (objects stay abstract, so the concrete-object
+`isDefEq` blowup is avoided); composing at the `Iso` level (`≪≫`) handles the object
+identifications at full transparency. See `lem:tensorAssocNatIso2`. -/
+noncomputable def tensorAssocNatIso₂ {X : Scheme.{u}} (F L : X.Modules) :
+    tensorLeft F ⋙ tensorRight L ≅ tensorRight L ⋙ tensorLeft F :=
+  -- leg 1: the first comparison anchor, whiskered, as a natural iso
+  (NatIso.ofComponents
+    (fun Y => (External.sheafifyTensorComparison (X := X)).app
+      (PresheafOfModules.Monoidal.tensorObj F.val Y.val, L.val)) (by
+      intro Y Y' φ
+      have h := (External.sheafifyTensorComparison (X := X)).hom.naturality
+        ((PresheafOfModules.Monoidal.tensorHom (𝟙 F.val) φ.val, 𝟙 L.val) :
+          (PresheafOfModules.Monoidal.tensorObj F.val Y.val, L.val) ⟶
+            (PresheafOfModules.Monoidal.tensorObj F.val Y'.val, L.val))
+      simp only [assocIdxL, sheafifyFst_map_eq, tensorRight_map_eq, tensorLeft_map_eq,
+        tensorThenSheafify_map_eq, Iso.app_hom, Functor.comp_map] at h ⊢
+      exact h) :
+    tensorLeft F ⋙ tensorRight L ≅ assocIdxL F L ⋙ tensorThenSheafify X) ≪≫
+  -- leg 2: the sheafified presheaf associator, as a natural iso
+  (NatIso.ofComponents
+    (fun Y => (PresheafOfModules.sheafification (R := X.ringCatSheaf)
+      (𝟙 X.ringCatSheaf.obj)).mapIso
+        (MonoidalCategory.associator
+          (C := PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat))
+          F.val Y.val L.val)) (by
+      intro Y Y' φ
+      simp only [assocIdxL, assocIdxR, Functor.comp_map, tensorThenSheafify_map_eq,
+        Functor.mapIso_hom]
+      exact ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+          (𝟙 X.ringCatSheaf.obj)).map_comp _ _).symm.trans
+        (((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).congr_map
+          (MonoidalCategory.associator_naturality
+            (C := PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat))
+            (𝟙 F.val) φ.val (𝟙 L.val))).trans
+        ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).map_comp _ _))) :
+    assocIdxL F L ⋙ tensorThenSheafify X ≅ assocIdxR F L ⋙ tensorThenSheafify X) ≪≫
+  -- leg 3: the last (left) comparison anchor, whiskered and inverted
+  (NatIso.ofComponents
+    (fun Y => ((External.sheafifyTensorComparisonLeft (X := X)).app
+      (F.val, PresheafOfModules.Monoidal.tensorObj Y.val L.val)).symm) (by
+      intro Y Y' φ
+      have h := (External.sheafifyTensorComparisonLeft (X := X)).inv.naturality
+        ((𝟙 F.val, PresheafOfModules.Monoidal.tensorHom φ.val (𝟙 L.val)) :
+          (F.val, PresheafOfModules.Monoidal.tensorObj Y.val L.val) ⟶
+            (F.val, PresheafOfModules.Monoidal.tensorObj Y'.val L.val))
+      simp only [assocIdxR, sheafifySnd_map_eq, tensorRight_map_eq, tensorLeft_map_eq,
+        tensorThenSheafify_map_eq, Iso.app_inv, Iso.symm_hom, Functor.comp_map] at h ⊢
+      exact h) :
+    assocIdxR F L ⋙ tensorThenSheafify X ≅ tensorRight L ⋙ tensorLeft F)
+
+/-- Index functor `Y ↦ (F.val ⊗ L.val, Y.val)`, the last-factor analogue of
+`assocIdxL` (here the *last* tensor slot `Y` varies). -/
+private noncomputable def assocIdxL₃ {X : Scheme.{u}} (F L : X.Modules) :
+    X.Modules ⥤ (PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat) ×
+      PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) where
+  obj Y := (PresheafOfModules.Monoidal.tensorObj F.val L.val, Y.val)
+  map {Y Y'} φ :=
+    (PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (𝟙 F.val) (𝟙 L.val), φ.val)
+  map_id Y := by
+    refine Prod.ext (presheaf_id_tensorHom_id F.val L.val) ?_
+    exact SheafOfModules.id_val Y
+  map_comp {Y Y' Y''} φ ψ := by
+    refine Prod.ext ?_ (SheafOfModules.comp_val φ ψ)
+    have e := presheaf_id_tensorHom_id (X := X) F.val L.val
+    change PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (𝟙 F.val) (𝟙 L.val)
+        = PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (𝟙 F.val) (𝟙 L.val)
+          ≫ PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (𝟙 F.val) (𝟙 L.val)
+    exact (Category.id_comp _).symm.trans
+      (congrArg (· ≫ PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (𝟙 F.val) (𝟙 L.val))
+        e.symm)
+
+/-- Index functor `Y ↦ (F.val, L.val ⊗ Y.val)`, the last-factor analogue of
+`assocIdxR`. -/
+private noncomputable def assocIdxR₃ {X : Scheme.{u}} (F L : X.Modules) :
+    X.Modules ⥤ (PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat) ×
+      PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) where
+  obj Y := (F.val, PresheafOfModules.Monoidal.tensorObj L.val Y.val)
+  map {Y Y'} φ := (𝟙 F.val, PresheafOfModules.Monoidal.tensorHom (𝟙 L.val) φ.val)
+  map_id Y := by
+    refine Prod.ext rfl ?_
+    change PresheafOfModules.Monoidal.tensorHom (𝟙 L.val) (𝟙 Y.val) = 𝟙 _
+    ext1 Z
+    simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.id_app]
+    exact MonoidalCategory.id_tensorHom_id _ _
+  map_comp {Y Y' Y''} φ ψ := by
+    refine Prod.ext (Category.id_comp _).symm ?_
+    change PresheafOfModules.Monoidal.tensorHom (𝟙 L.val) (φ.val ≫ ψ.val)
+        = PresheafOfModules.Monoidal.tensorHom (𝟙 L.val) φ.val
+          ≫ PresheafOfModules.Monoidal.tensorHom (𝟙 L.val) ψ.val
+    ext1 Z
+    simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.comp_app,
+      PresheafOfModules.id_app]
+    exact MonoidalCategory.id_tensor_comp _ _
+
+/-- **(1.1.2 naturality, last factor)** Naturality of the unconditional associator
+`tensorAssoc F L ·` in its last factor, packaged as a natural isomorphism of
+endofunctors `tensorLeft L ⋙ tensorLeft F ≅ tensorLeft (F ⊗ L)`
+(`Y ↦ (F ⊗ (L ⊗ Y) ≅ (F ⊗ L) ⊗ Y)`). The mirror of `tensorAssocNatIso₂`, built as the
+`.symm` of the composite of the three legs `tensorLeft (F ⊗ L) ≅ … ≅ tensorLeft L ⋙
+tensorLeft F` (comparison anchors whiskered by `assocIdxL₃`/`assocIdxR₃` + sheafified
+associator). See `lem:tensorAssocNatIso3`. -/
+noncomputable def tensorAssocNatIso₃ {X : Scheme.{u}} (F L : X.Modules) :
+    tensorLeft L ⋙ tensorLeft F ≅ tensorLeft (tensorMod F L) :=
+  ((NatIso.ofComponents
+    (fun Y => (External.sheafifyTensorComparison (X := X)).app
+      (PresheafOfModules.Monoidal.tensorObj F.val L.val, Y.val)) (by
+      intro Y Y' φ
+      have h := (External.sheafifyTensorComparison (X := X)).hom.naturality
+        ((PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (𝟙 F.val) (𝟙 L.val), φ.val) :
+          (PresheafOfModules.Monoidal.tensorObj F.val L.val, Y.val) ⟶
+            (PresheafOfModules.Monoidal.tensorObj F.val L.val, Y'.val))
+      simp only [assocIdxL₃, sheafifyFst_map_eq, tensorLeft_map_eq, tensorThenSheafify_map_eq,
+        Iso.app_hom, Functor.comp_map] at h ⊢
+      convert h using 4
+      exact congrArg
+        (fun a => (PresheafOfModules.sheafification (R := X.ringCatSheaf)
+          (𝟙 X.ringCatSheaf.obj)).map
+            (PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) a φ.val))
+        (((congrArg (fun m => ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+          (𝟙 X.ringCatSheaf.obj)).map m).val) (presheaf_id_tensorHom_id F.val L.val)).trans
+            (sheafify_map_id_val _)).symm)) :
+    tensorLeft (tensorMod F L) ≅ assocIdxL₃ F L ⋙ tensorThenSheafify X) ≪≫
+  (NatIso.ofComponents
+    (fun Y => (PresheafOfModules.sheafification (R := X.ringCatSheaf)
+      (𝟙 X.ringCatSheaf.obj)).mapIso
+        (MonoidalCategory.associator
+          (C := PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat))
+          F.val L.val Y.val)) (by
+      intro Y Y' φ
+      simp only [assocIdxL₃, assocIdxR₃, Functor.comp_map, tensorThenSheafify_map_eq,
+        Functor.mapIso_hom]
+      exact ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+          (𝟙 X.ringCatSheaf.obj)).map_comp _ _).symm.trans
+        (((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).congr_map
+          (MonoidalCategory.associator_naturality
+            (C := PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat))
+            (𝟙 F.val) (𝟙 L.val) φ.val)).trans
+        ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).map_comp _ _))) :
+    assocIdxL₃ F L ⋙ tensorThenSheafify X ≅ assocIdxR₃ F L ⋙ tensorThenSheafify X) ≪≫
+  (NatIso.ofComponents
+    (fun Y => ((External.sheafifyTensorComparisonLeft (X := X)).app
+      (F.val, PresheafOfModules.Monoidal.tensorObj L.val Y.val)).symm) (by
+      intro Y Y' φ
+      have h := (External.sheafifyTensorComparisonLeft (X := X)).inv.naturality
+        ((𝟙 F.val, PresheafOfModules.Monoidal.tensorHom (𝟙 L.val) φ.val) :
+          (F.val, PresheafOfModules.Monoidal.tensorObj L.val Y.val) ⟶
+            (F.val, PresheafOfModules.Monoidal.tensorObj L.val Y'.val))
+      simp only [assocIdxR₃, sheafifySnd_map_eq, tensorLeft_map_eq, tensorThenSheafify_map_eq,
+        Iso.app_inv, Iso.symm_hom, Functor.comp_map] at h ⊢
+      exact h) :
+    assocIdxR₃ F L ⋙ tensorThenSheafify X ≅ tensorLeft L ⋙ tensorLeft F)).symm
+
+/-- **(1.1.2 STEP C-iii)** Naturality of the rearrangement `tensorRearrange F · L`,
+packaged as a natural isomorphism of endofunctors
+`tensorLeft F ⋙ tensorRight L ≅ tensorLeft (F ⊗ L)`
+(`Y ↦ ((F ⊗ Y) ⊗ L ≅ (F ⊗ L) ⊗ Y)`). Composes the three natural steps: the
+middle-factor associator naturality `tensorAssocNatIso₂`, the inner braiding
+naturality `tensorBraidingNatIso L` (whiskered into `tensorLeft F`, swapping `Y` and
+`L`), and the last-factor associator naturality `tensorAssocNatIso₃`. See
+`lem:tensorRearrange_natIso`. -/
+noncomputable def tensorRearrangeNatIso {X : Scheme.{u}} (F L : X.Modules) :
+    tensorLeft F ⋙ tensorRight L ≅ tensorLeft (tensorMod F L) :=
+  tensorAssocNatIso₂ F L ≪≫
+    Functor.isoWhiskerRight (tensorBraidingNatIso L) (tensorLeft F) ≪≫
+    tensorAssocNatIso₃ F L
+
 /-- Project-local (Mathlib gap): the base-change tensor functor
 `M ↦ F ⊗_S M` from `𝒪_S`-modules to `𝒪_X`-modules (pull `M` back along `f` and
 tensor with `F` over `𝒪_X`). Realized as the composite of Mathlib's pullback
@@ -366,6 +1002,151 @@ noncomputable def tensorBC (f : X ⟶ S) (F : X.Modules) (M : S.Modules) : X.Mod
 corepresenting this functor. -/
 noncomputable def homTensorFunctor (f : X ⟶ S) (I F : X.Modules) : S.Modules ⥤ Type u :=
   tensorBaseChangeFunctor f F ⋙ coyoneda.obj (op I)
+
+/-! ## Project-local Mathlib supplement — InternalHom (brick 1 foundation)
+
+Infrastructure toward the internal-hom sheaf `internalHom I : X.Modules ⥤ X.Modules`
+(`def:internalHom`), the first foundational brick of the relative-Ext build (`def:relExt`).
+
+The **section module** of `ℋom_{𝒪_X}(I,M)` over an open `U` is the `𝒪_X(U)`-linear
+maps `I|_U ⟶ M|_U`, i.e. a hom-set in `(↑U).Modules` carrying a `Γ(↑U,⊤) = 𝒪_X(U)`-module
+structure. That per-section module structure — `Module Γ(Y,⊤) (M ⟶ N)` for `M N : Y.Modules`
+— is *not* in Mathlib (the structure-sheaf sections form a `RingCat`, which forgets
+commutativity, so the `Linear`-over-a-`CommRing` structure on `ModuleCat` hom-sets is not
+directly available on `SheafOfModules` hom-sets). We build it here from scratch: a global
+section `r : Γ(Y,⊤)` acts on `φ : M ⟶ N` by scaling each `φ.val.app U` by the restriction
+`r|_U`, the resulting family being natural (semilinear-restriction compatible). This is the
+atom each `internalHom` section module is an instance of (take `Y := ↑U`). -/
+
+/-- Restrict a global section `r : Γ(Y,⊤)` of the structure sheaf to the open `U.unop`,
+landing in the section ring `↑(Y.ringCatSheaf.obj.obj U)` (`= Γ(Y, U.unop)`). -/
+private noncomputable def globalSectionRestrict {Y : Scheme.{u}} (r : Γ(Y, ⊤))
+    (U : (TopologicalSpace.Opens ↑Y)ᵒᵖ) : ↑(Y.ringCatSheaf.obj.obj U) :=
+  (Y.ringCatSheaf.obj.map (homOfLE (le_top : U.unop ≤ ⊤)).op) r
+
+private lemma globalSectionRestrict_one {Y : Scheme.{u}}
+    (U : (TopologicalSpace.Opens ↑Y)ᵒᵖ) :
+    globalSectionRestrict (1 : Γ(Y, ⊤)) U = 1 := by
+  unfold globalSectionRestrict; exact map_one _
+
+private lemma globalSectionRestrict_zero {Y : Scheme.{u}}
+    (U : (TopologicalSpace.Opens ↑Y)ᵒᵖ) :
+    globalSectionRestrict (0 : Γ(Y, ⊤)) U = 0 := by
+  unfold globalSectionRestrict; exact map_zero _
+
+private lemma globalSectionRestrict_mul {Y : Scheme.{u}} (r s : Γ(Y, ⊤))
+    (U : (TopologicalSpace.Opens ↑Y)ᵒᵖ) :
+    globalSectionRestrict (r * s) U = globalSectionRestrict r U * globalSectionRestrict s U := by
+  unfold globalSectionRestrict; exact map_mul _ _ _
+
+private lemma globalSectionRestrict_add {Y : Scheme.{u}} (r s : Γ(Y, ⊤))
+    (U : (TopologicalSpace.Opens ↑Y)ᵒᵖ) :
+    globalSectionRestrict (r + s) U = globalSectionRestrict r U + globalSectionRestrict s U := by
+  unfold globalSectionRestrict; exact map_add _ _ _
+
+/-- Restricting a *global* section commutes with any further structure-sheaf restriction
+map `R.map f`: both sides are `r` restricted to the smaller open (uniqueness of the
+`Opens` morphism into `⊤`). -/
+private lemma globalSectionRestrict_naturality {Y : Scheme.{u}} (r : Γ(Y, ⊤))
+    {U V : (TopologicalSpace.Opens ↑Y)ᵒᵖ} (f : U ⟶ V) :
+    (Y.ringCatSheaf.obj.map f) (globalSectionRestrict r U) = globalSectionRestrict r V := by
+  unfold globalSectionRestrict
+  rw [← CategoryTheory.comp_apply, ← Y.ringCatSheaf.obj.map_comp]; congr 1
+
+/-- `restrictScalars` along `g : A →+* B` carries a `B`-scaled morphism `g a • h` to the
+`A`-scaled restriction `a • restrictScalars h`. The semilinear-restriction compatibility
+underlying the naturality of `internalHom`'s scalar action. -/
+private lemma restrictScalars_map_smul {A B : Type u} [CommRing A] [CommRing B] (g : A →+* B)
+    {P Q : ModuleCat.{u} B} (a : A) (h : P ⟶ Q) :
+    (ModuleCat.restrictScalars g).map ((g a) • h) = a • (ModuleCat.restrictScalars g).map h := by
+  apply ModuleCat.hom_ext; apply LinearMap.ext; intro x
+  rw [ModuleCat.restrictScalars.map_apply]
+  change (g a • h) x = a • ((ModuleCat.restrictScalars g).map h) x
+  rw [ModuleCat.restrictScalars.map_apply, ModuleCat.restrictScalars.smul_def (M := Q)]; simp
+
+/-- The underlying presheaf-of-modules morphism of `r • φ`: scale each section component
+`φ.val.app U` by the restricted global section `r|_U`. Naturality is the
+semilinear-restriction compatibility (`restrictScalars_map_smul`) plus `φ`'s naturality. -/
+private noncomputable def internalHomSmulVal {Y : Scheme.{u}} {M N : Y.Modules}
+    (r : Γ(Y, ⊤)) (φ : M ⟶ N) : M.val ⟶ N.val :=
+  PresheafOfModules.Hom.mk
+    (fun U =>
+      letI : CommRing ↑(Y.ringCatSheaf.obj.obj U) := inferInstanceAs (CommRing Γ(Y, U.unop))
+      globalSectionRestrict r U • φ.val.app U) (by
+    intro U V f
+    letI cU : CommRing ↑(Y.ringCatSheaf.obj.obj U) := inferInstanceAs (CommRing Γ(Y, U.unop))
+    letI cV : CommRing ↑(Y.ringCatSheaf.obj.obj V) := inferInstanceAs (CommRing Γ(Y, V.unop))
+    change M.val.map f ≫ (ModuleCat.restrictScalars _).map (globalSectionRestrict r V • φ.val.app V)
+        = (globalSectionRestrict r U • φ.val.app U) ≫ N.val.map f
+    rw [← globalSectionRestrict_naturality r f,
+      restrictScalars_map_smul (RingCat.Hom.hom (Y.ringCatSheaf.obj.map f))
+        (globalSectionRestrict r U) (φ.val.app V),
+      Linear.comp_smul, φ.val.naturality f, Linear.smul_comp])
+
+/-- **Brick 1 foundation (Mathlib gap).** The module structure on hom-sets of sheaves of
+modules over a scheme `Y`, over the global sections `Γ(Y,⊤)` of the structure sheaf: a global
+function `r` acts on `φ : M ⟶ N` by scaling each section by `r|_U`. This is the per-section
+module structure that every section of the internal-hom sheaf `ℋom_{𝒪_X}(I,-)` carries
+(taking `Y := ↑U` for an open `U ⊆ X`), and is absent from Mathlib because the structure
+sheaf is valued in `RingCat`, hiding the commutativity needed for the `Linear` structure on
+`ModuleCat` hom-sets. See `def:internalHom`. -/
+noncomputable instance homModuleOverGlobalSections {Y : Scheme.{u}} {M N : Y.Modules} :
+    Module Γ(Y, ⊤) (M ⟶ N) where
+  smul r φ := ⟨internalHomSmulVal r φ⟩
+  one_smul φ := by
+    apply SheafOfModules.hom_ext; apply PresheafOfModules.hom_ext; intro X
+    letI : CommRing ↑(Y.ringCatSheaf.obj.obj X) := inferInstanceAs (CommRing Γ(Y, X.unop))
+    change globalSectionRestrict 1 X • φ.val.app X = φ.val.app X
+    rw [globalSectionRestrict_one, one_smul]
+  mul_smul r s φ := by
+    apply SheafOfModules.hom_ext; apply PresheafOfModules.hom_ext; intro X
+    letI : CommRing ↑(Y.ringCatSheaf.obj.obj X) := inferInstanceAs (CommRing Γ(Y, X.unop))
+    change globalSectionRestrict (r * s) X • φ.val.app X
+        = globalSectionRestrict r X • globalSectionRestrict s X • φ.val.app X
+    rw [globalSectionRestrict_mul, mul_smul]
+  smul_zero r := by
+    apply SheafOfModules.hom_ext; apply PresheafOfModules.hom_ext; intro X
+    letI : CommRing ↑(Y.ringCatSheaf.obj.obj X) := inferInstanceAs (CommRing Γ(Y, X.unop))
+    change globalSectionRestrict r X • (0 : M.val.obj X ⟶ N.val.obj X) = 0
+    exact smul_zero _
+  smul_add r φ ψ := by
+    apply SheafOfModules.hom_ext; apply PresheafOfModules.hom_ext; intro X
+    letI : CommRing ↑(Y.ringCatSheaf.obj.obj X) := inferInstanceAs (CommRing Γ(Y, X.unop))
+    change globalSectionRestrict r X • (φ.val.app X + ψ.val.app X)
+        = globalSectionRestrict r X • φ.val.app X + globalSectionRestrict r X • ψ.val.app X
+    rw [smul_add]
+  add_smul r s φ := by
+    apply SheafOfModules.hom_ext; apply PresheafOfModules.hom_ext; intro X
+    letI : CommRing ↑(Y.ringCatSheaf.obj.obj X) := inferInstanceAs (CommRing Γ(Y, X.unop))
+    change globalSectionRestrict (r + s) X • φ.val.app X
+        = globalSectionRestrict r X • φ.val.app X + globalSectionRestrict s X • φ.val.app X
+    rw [globalSectionRestrict_add, add_smul]
+  zero_smul φ := by
+    apply SheafOfModules.hom_ext; apply PresheafOfModules.hom_ext; intro X
+    letI : CommRing ↑(Y.ringCatSheaf.obj.obj X) := inferInstanceAs (CommRing Γ(Y, X.unop))
+    change globalSectionRestrict 0 X • φ.val.app X = 0
+    rw [globalSectionRestrict_zero, zero_smul]
+
+/-- **Brick 1 foundation (Mathlib gap).** The category of `𝒪_Y`-modules is `Γ(Y,⊤)`-linear:
+composition is bilinear over the global functions acting by `homModuleOverGlobalSections`.
+This is the structural form of the per-section module structure, packaging that internal-hom's
+scalar action is compatible with composition (needed for `internalHom`'s functoriality and the
+`𝒪_S`-linearity of `relExt`). Absent from Mathlib for the same `RingCat`-vs-`CommRing` reason.
+See `def:internalHom`. -/
+noncomputable instance linearOverGlobalSections {Y : Scheme.{u}} :
+    Linear Γ(Y, ⊤) Y.Modules where
+  smul_comp P Q R' r f g := by
+    apply SheafOfModules.hom_ext; apply PresheafOfModules.hom_ext; intro X
+    letI : CommRing ↑(Y.ringCatSheaf.obj.obj X) := inferInstanceAs (CommRing Γ(Y, X.unop))
+    change (globalSectionRestrict r X • f.val.app X) ≫ g.val.app X
+        = globalSectionRestrict r X • (f.val.app X ≫ g.val.app X)
+    rw [Linear.smul_comp]
+  comp_smul P Q R' f r g := by
+    apply SheafOfModules.hom_ext; apply PresheafOfModules.hom_ext; intro X
+    letI : CommRing ↑(Y.ringCatSheaf.obj.obj X) := inferInstanceAs (CommRing Γ(Y, X.unop))
+    change f.val.app X ≫ (globalSectionRestrict r X • g.val.app X)
+        = globalSectionRestrict r X • (f.val.app X ≫ g.val.app X)
+    rw [Linear.comp_smul]
 
 /-- Project-local (Mathlib gap): the relative local Ext sheaf
 `sExt^q_{X/S}(I,F)`, an `𝒪_S`-module (morally `R^q f_*` of the sheaf-Ext of `I`
@@ -440,7 +1221,7 @@ generated `A`-modules is half-exact. Realized directly: for every short exact
 sequence `S` of `A`-modules and every choice of additive structure on `T` (so that
 `T` preserves zero morphisms and `S.map T` is defined), the image short complex
 `S.map T` is exact at its middle object. -/
-def IsHalfExact {A : Type u} [CommRing A] (T : ModuleCat.{u} A ⥤ ModuleCat.{u} A) : Prop :=
+def IsHalfExact {A : Type u} [CommRing A] (T : ModuleCat.{u} A ⥤ ModuleCat.{u + 1} A) : Prop :=
   ∀ [T.Additive] (S : ShortComplex (ModuleCat.{u} A)), S.ShortExact → (S.map T).Exact
 
 /-- The standing hypotheses of Altman–Kleiman (1.1): `f` is finitely presented
@@ -491,7 +1272,7 @@ axiom External.descent_noetherian {X S : Scheme.{u}} (hS : IsAffine S)
 over a Noetherian local ring: if `T` is half-exact and `T(k) = 0` then
 `T(M) = 0` for every finitely generated module `M`. See `thm:ob_halfexact_free`. -/
 axiom External.halfexact_free (A : Type u) [CommRing A] [IsNoetherianRing A]
-    [IsLocalRing A] (T : ModuleCat.{u} A ⥤ ModuleCat.{u} A) [T.Additive]
+    [IsLocalRing A] (T : ModuleCat.{u} A ⥤ ModuleCat.{u + 1} A) [T.Additive]
     (hHE : IsHalfExact T)
     (hk : IsZero (T.obj (ModuleCat.of A (IsLocalRing.ResidueField A))))
     (M : ModuleCat.{u} A) :
@@ -586,19 +1367,502 @@ See `thm:pullback_preserves_fp`. -/
 axiom External.pullback_isLFP {X Y : Scheme.{u}} (p : X ⟶ Y) {M : Y.Modules}
     (h : IsLFP M) : IsLFP ((Scheme.Modules.pullback p).obj M)
 
+/-- **[standard / EGA]** Strong monoidality of the pullback (inverse-image) functor
+`f^* = Scheme.Modules.pullback f`: for `𝒪_S`-modules `A, B` there is a canonical
+isomorphism `f^*A ⊗_X f^*B ≅ f^*(A ⊗_S B)`. This is the general fact that the
+inverse-image functor is strong monoidal — `f^*` factors as
+`forget ∘ (presheaf base change) ∘ sheafify`, presheaf base change is monoidal
+pointwise (it is the pointwise extension of scalars along the ring map, which
+commutes with the tensor product), and module sheafification is monoidal
+(`External.sheafifyTensorComparison`). Mathlib v4.30.0 carries **no** monoidal
+structure on `Scheme.Modules.pullback` / `PresheafOfModules.pullback` (neither a
+`MonoidalFunctor` instance nor a comparison iso — verified absent via
+loogle/leansearch, iter-035), so the comparison is anchored here, exactly parallel
+to the sanctioned `External.sheafifyTensorComparison`.
+
+**Natural form (re-typed @036, net axiom count unchanged).** Stated as a
+**natural isomorphism of functors `S.Modules ⥤ X.Modules`**, natural in the second
+slot `B` with the first slot `A` a parameter:
+`(B ↦ f^*A ⊗_X f^*B) ≅ (B ↦ f^*(A ⊗_S B))`, i.e.
+`pullback f ⋙ tensorLeft (f^*A) ≅ tensorLeft A ⋙ pullback f`. The object-level
+comparison `f^*A ⊗_X f^*B ≅ f^*(A ⊗_S B)` is recovered as `(… A).app B`; the new
+content over the iter-035 object-level axiom is the second-slot naturality square,
+which is exactly what the (1.1.3) comparison-map `θ` needs to be natural in `N`
+(the first slot is always the *fixed* `H(I,F)` there). This **replaces** the
+object-level axiom — net axiom count unchanged. See `lem:pullbackTensorComparison`. -/
+axiom External.pullbackTensorComparison {X S : Scheme.{u}} (f : X ⟶ S) (A : S.Modules) :
+    Scheme.Modules.pullback f ⋙ tensorLeft ((Scheme.Modules.pullback f).obj A) ≅
+      tensorLeft A ⋙ Scheme.Modules.pullback f
+
+/-- **[standard: pullback of the structure sheaf]** Base-change unit `f^*𝒪_S ≅ 𝒪_X`.
+For a morphism of schemes `f : X ⟶ S`, the pullback of the structure sheaf `𝒪_S`
+(the tensor unit of `𝒪_S`-modules) is canonically isomorphic to the structure sheaf
+`𝒪_X` (the tensor unit of `𝒪_X`-modules): `f^*𝒪_S ≅ 𝒪_X`.
+
+Standard fact: `f^*` is a (strong) monoidal functor and so carries the tensor unit to
+the tensor unit. Mathlib v4.30.0 registers **no** monoidal structure on
+`Scheme.Modules.pullback`, so the unit isomorphism is recorded here as an external input,
+exactly parallel to the `f^*`-monoidality comparison `External.pullbackTensorComparison`.
+See `thm:ega_pullbackUnit`. -/
+axiom External.pullbackUnit {X S : Scheme.{u}} (f : X ⟶ S) :
+    (Scheme.Modules.pullback f).obj (SheafOfModules.unit S.ringCatSheaf)
+      ≅ SheafOfModules.unit X.ringCatSheaf
+
+/-- **[standard: `f^*` right-unitality coherence]** The right-unitality square of the
+(strong) monoidal functor `f^* = Scheme.Modules.pullback f` commutes. Writing
+`μ_{A,𝒪} : f^*A ⊗_X f^*𝒪_S → f^*(A ⊗_S 𝒪_S)` for the `f^*`-laxity comparison
+(`External.pullbackTensorComparison`), `ε : f^*𝒪_S ≅ 𝒪_X` for the unit comparison
+(`External.pullbackUnit`), and `ρ` for the right unitor (`tensorRightUnitor`), one has,
+in diagrammatic (left-to-right) order,
+`μ_{A,𝒪} ; f^*(ρ_A) = (id_{f^*A} ⊗ ε) ; ρ_{f^*A}`, i.e.
+`f^*A ⊗ f^*𝒪 --μ--> f^*(A⊗𝒪) --f^*ρ--> f^*A` equals
+`f^*A ⊗ f^*𝒪 --id⊗ε--> f^*A ⊗ 𝒪_X --ρ--> f^*A`.
+
+Standard: this is one of the two unit coherence axioms of a (strong/lax) monoidal
+functor. Mathlib v4.30.0 registers **no** monoidal structure on
+`Scheme.Modules.pullback`, so — exactly as for the laxity `μ`
+(`External.pullbackTensorComparison`) and the unit `ε` (`External.pullbackUnit`) — the
+coherence relating these two otherwise-independent comparison data is recorded as an
+external input, in-family with the existing `f^*`-monoidality anchors. It mentions
+neither `H` nor admissibility nor Eilenberg–Watts, so it is strictly weaker than
+`H_tensor`. See `thm:ega_pullback_rightUnitality`. -/
+axiom External.pullback_rightUnitality {X S : Scheme.{u}} (f : X ⟶ S) (A : S.Modules) :
+    ((External.pullbackTensorComparison f A).app (SheafOfModules.unit S.ringCatSheaf)).hom
+        ≫ (Scheme.Modules.pullback f).map (tensorRightUnitor A).hom
+      = (tensorLeft ((Scheme.Modules.pullback f).obj A)).map (External.pullbackUnit f).hom
+        ≫ (tensorRightUnitor ((Scheme.Modules.pullback f).obj A)).hom
+
+/-- **[EGA O_I, 4.4.3.1]** Adjunction isomorphism for `Hom` under base change,
+in the **degree-0 / module-level form actually consumed by (1.3)**.
+
+Altman–Kleiman state this (in the (1.7) proof) as the sheaf iso
+`Hom_X(I, (1×g)_* N) ≅ (1×g)_* Hom_{X_T}(I_T, N)` for a base change `g : T → S`.
+The only instance (1.3) consumes is the closed-fibre, *Hom-set* incarnation: for
+the fibre inclusion `j = f.fiberι s : X(s) ⟶ X` (a general scheme morphism `j`)
+and a quasi-coherent module `G` on the source, the natural bijection
+`Hom_X(I, j_* G) ≅ Hom_{X(s)}(j^* I, G)` — these are the vertical maps in AK's
+commutative diagram, with `j^* I = I(s)`.
+
+Unlike the other `External.*` anchors this is **not** an axiom: the fibre-product
+form is a genuine Mathlib gap, but the degree-0 Hom-set form it reduces to is
+*exactly* the hom-equivalence of Mathlib's pullback–pushforward adjunction
+`Scheme.Modules.pullbackPushforwardAdjunction j` (`pullback j ⊣ pushforward j`).
+So we realize it as a proved theorem rather than an assumed axiom. The `\lean`
+hint `thm:ega_adjunction` points here; review may mark it `\mathlibok`. -/
+noncomputable def External.adjunction {X Y : Scheme.{u}} (j : Y ⟶ X) (I : X.Modules)
+    (G : Y.Modules) :
+    (I ⟶ (Scheme.Modules.pushforward j).obj G) ≃ ((Scheme.Modules.pullback j).obj I ⟶ G) :=
+  ((Scheme.Modules.pullbackPushforwardAdjunction j).homEquiv I G).symm
+
 /-
 TODO (deferred external anchors — need infrastructure absent from Mathlib):
 
 * `External.basechange_q0`  (thm:ega_basechange_q0)  — the `q = 0` case of the
   `sExt`-limit isomorphism; requires projective limits of schemes/modules and
   the comparison map `lim Hom_{X_λ}(I_λ,F_λ) → Hom_X(I,F)`.
-* `External.adjunction`     (thm:ega_adjunction)     — the adjunction iso
-  `Hom_X(I,(1×g)_* N) ≅ (1×g)_* Hom_{X_T}(I_T,N)`; requires fibre products
-  `X_T = X ×_S T`, the projection `1×g`, and pushforward along it.
 * `External.nakayama_iso`   (thm:ob_nakayama_iso)    — the Nakayama-type iso
   `R(𝒪_s) ⊗ N ≅ R(N)`; phrasable in pure module theory but needs the explicit
   base-change comparison natural transformation to be stated faithfully.
 -/
+
+/-! ## Project-local Mathlib supplement — half-exactness of the Ext-tensor functor
+
+The homological core of (1.3): the functor `N ↦ Ext^q_X(I, F ⊗_S N)` is
+half-exact. The genuine homological content (Mathlib's covariant `Ext` long exact
+sequence) is built here; the one missing input is that, for `F` `S`-flat, the
+base-change tensor `F ⊗_S (-)` carries a short exact sequence of `𝒪_S`-modules to
+a short exact sequence of `𝒪_X`-modules (stalkwise flatness through sheafification,
+a from-scratch gap parallel to `tilde_exact` / the `j_!`-pullback). That input is
+isolated as the hypothesis `hSE` below — the conclusion of a future anchor
+`External.flat_tensor_exact f F hF sc hsc : (sc.map (tensorBaseChangeFunctor f F)).ShortExact`. -/
+
+/-- `tensorLeft F` preserves zero morphisms: the presheaf monoidal tensor is
+bilinear (`MonoidalPreadditive.tensor_zero`) and sheafification is additive.
+Project-local because `X.Modules` has no `MonoidalCategory` instance, so
+`tensorLeft` is hand-built and its additivity is not inferred. -/
+instance tensorLeft_preservesZeroMorphisms {X : Scheme.{u}} (F : X.Modules) :
+    (tensorLeft F).PreservesZeroMorphisms where
+  map_zero N N' := by
+    change (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map
+      (PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (𝟙 F.val) (0 : N ⟶ N').val) = 0
+    have hv : (SheafOfModules.Hom.val (0 : N ⟶ N')) = 0 := rfl
+    have ht : (PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (𝟙 F.val)
+        (0 : N.val ⟶ N'.val)) = 0 := by
+      ext1 Y
+      rw [PresheafOfModules.Monoidal.tensorHom_app]
+      exact CategoryTheory.MonoidalPreadditive.tensor_zero _
+    rw [hv, ht]
+    exact Functor.map_zero _ _ _
+
+/-- The base-change tensor functor `F ⊗_S (-) = pullback f ⋙ tensorLeft F`
+preserves zero morphisms (composite of two zero-preserving functors). Needed so
+that `ShortComplex.map (tensorBaseChangeFunctor f F)` is well-formed. -/
+instance tensorBaseChangeFunctor_preservesZeroMorphisms {X S : Scheme.{u}} (f : X ⟶ S)
+    (F : X.Modules) : (tensorBaseChangeFunctor f F).PreservesZeroMorphisms := by
+  unfold tensorBaseChangeFunctor
+  infer_instance
+
+/-- **[AK §1, (1.3) proof]** Half-exactness of `N ↦ Ext^q_X(I, F ⊗_S N)`, in the
+exactness-at-the-middle (membership) form matching Mathlib's covariant `Ext` long
+exact sequence `CategoryTheory.Abelian.Ext.covariant_sequence_exact₂`.
+
+Conditional form: the hypothesis `hSE` is that the base-changed sequence
+`sc.map (tensorBaseChangeFunctor f F)` is short exact — exactly what `F` being
+`S`-flat supplies (the to-be-anchored `External.flat_tensor_exact`). Given that,
+every degree-`q` Ext class on the middle term `Ext^q_X(I, F ⊗_S sc.X₂)` that maps
+to `0` under the third map lifts to the first term, i.e. the sequence
+`Ext^q_X(I, F⊗N') → Ext^q_X(I, F⊗N) → Ext^q_X(I, F⊗N'')` is exact at the middle.
+
+Project-local: assembles Mathlib's `Ext` LES against the hand-built base-change
+tensor `tensorBaseChangeFunctor`. See `lem:ext_tensor_halfexact`. -/
+theorem ext_tensor_halfexact {X S : Scheme.{u}} (f : X ⟶ S) (I F : X.Modules) (q : ℕ)
+    (sc : ShortComplex S.Modules)
+    (hSE : (sc.map (tensorBaseChangeFunctor f F)).ShortExact) :
+    letI : HasDerivedCategory X.Modules := HasDerivedCategory.standard X.Modules
+    haveI := CategoryTheory.hasExt_of_hasDerivedCategory X.Modules
+    ∀ (x₂ : CategoryTheory.Abelian.Ext I (tensorBC f F sc.X₂) q),
+      x₂.comp (CategoryTheory.Abelian.Ext.mk₀ (sc.map (tensorBaseChangeFunctor f F)).g)
+        (add_zero q) = 0 →
+      ∃ x₁ : CategoryTheory.Abelian.Ext I (tensorBC f F sc.X₁) q,
+        x₁.comp (CategoryTheory.Abelian.Ext.mk₀ (sc.map (tensorBaseChangeFunctor f F)).f)
+          (add_zero q) = x₂ := by
+  letI : HasDerivedCategory X.Modules := HasDerivedCategory.standard X.Modules
+  haveI := CategoryTheory.hasExt_of_hasDerivedCategory X.Modules
+  intro x₂ hx₂
+  exact CategoryTheory.Abelian.Ext.covariant_sequence_exact₂ I hSE x₂ hx₂
+
+/-- **[AK §1, (1.3) proof; standard flatness]** `F` `S`-flat ⟹ the base-change
+tensor `F ⊗_S (−) = tensorBaseChangeFunctor f F` carries a short exact sequence of
+`S.Modules` to a short exact sequence of `X.Modules`.
+
+`F` being `S`-flat means each stalk `F_x` is flat over `𝒪_{S,f(x)}`, so the
+module-level fact `Module.Flat.lTensor_shortComplex_exact` gives exactness
+stalkwise; reflecting that through the `IsLocalizedModule`/stalk layer and
+sheafification (the route of `tilde_exact`) is a genuine from-scratch
+stalkwise-flatness Mathlib gap, parallel to `External.flat_pullback_exact`. Anchored
+as the standard flatness input that discharges the hypothesis `hSE` of
+`ext_tensor_halfexact`, making the half-exactness of `N ↦ Ext^q_X(I, F ⊗_S N)`
+unconditional. See `thm:flat_tensor_exact`. -/
+axiom External.flat_tensor_exact {X S : Scheme.{u}} (f : X ⟶ S) (F : X.Modules)
+    (hF : IsSFlat f F) (sc : ShortComplex S.Modules) (hsc : sc.ShortExact) :
+    (sc.map (tensorBaseChangeFunctor f F)).ShortExact
+
+/-- **[standard / EGA; AK §1, (1.3) proof p. 56]** Flat restriction to the closed
+fibre preserves short exactness — the **correct** flatness mechanism for the (1.3)
+fibre diagram (replacing the iter-028 named gap `hpullflat`).
+
+Altman–Kleiman restrict the acyclic short exact sequence `0 → K → J → I → 0` to the
+closed fibre `X(s)`; *because the right-hand term `I = sc.X₃` is flat over the **base**
+`S`* (NOT over the fibre map `j`), base change along `S → k(s)`
+(equivalently `Tor₁^{𝒪_S}(I, k(s)) = 0`) keeps the restricted sequence
+`0 → j^*K → j^*J → j^*I → 0` short exact, where `j = f.fiberι s`. This is a *different,
+correct* anchor from `External.flat_pullback_exact` (whose flatness slot is on the
+pulled-back term): the @028 prover showed that deriving `IsSFlat (j ≫ f) (j^*I)` from
+`IsSFlat f I` is FALSE in general (a fibre preimmersion `j` is not flat), so this anchor
+states exactly the input AK use. Standard commutative algebra / EGA; absent from Mathlib
+at the sheaf level (parallel to `External.flat_pullback_exact`/`flat_tensor_exact`).
+AK quote: *"Since `I` is `S`-flat, the sequence remains exact when restricted to `X(s)`."*
+See `thm:ega_flat_fibre_restriction`. -/
+axiom External.flat_fibre_restriction_exact {X S : Scheme.{u}} (f : X ⟶ S) (s : S)
+    (sc : ShortComplex X.Modules) (hsc : sc.ShortExact) (hflat : IsSFlat f sc.X₃) :
+    (sc.map (Scheme.Modules.pullback (f.fiberι s))).ShortExact
+
+/-- **[standard / EGA; AK §1, (1.3) proof p. 56]** Fibre pushforward of a base-change is
+the residue tensor (brick 5, the fibre identification). For `A` Noetherian local with
+closed point `s` and residue field `k = k(s)`, `f : X ⟶ Spec A`, and `F : X.Modules`,
+the projection / base-change formula identifies
+`j_*j^*F ≅ F ⊗_S k(s)~ = (tensorBaseChangeFunctor f F).obj (k~)`, where
+`j = f.fiberι s` is the inclusion of the closed fibre. This turns the homological
+assembly `ext1_X_pushforward_fibre_vanishes` (`Ext¹_X(I, j_*j^*F) = 0`) into the residue
+value `T(k(s)) = 0` of the functor `T`. General EGA base change along the closed
+immersion of the closed fibre; NOT §1 content (AK use it implicitly: *"the latter Ext is
+just `T(k(s))`"*). Absent from Mathlib at this generality. See `thm:ega_fibre_tensor_residue`. -/
+axiom External.fibre_tensor_residue_iso {X : Scheme.{u}} (A : CommRingCat.{u})
+    [IsLocalRing ↑A] (f : X ⟶ Spec A) (F : X.Modules) :
+    (Scheme.Modules.pushforward (f.fiberι (IsLocalRing.closedPoint ↑A))).obj
+        ((Scheme.Modules.pullback (f.fiberι (IsLocalRing.closedPoint ↑A))).obj F)
+      ≅ (tensorBaseChangeFunctor f F).obj
+          (AlgebraicGeometry.tilde (ModuleCat.of ↑A (IsLocalRing.ResidueField ↑A)))
+
+/-- **[standard / EGA]** Quasicoherence of the fibre pushforward `j_*j^*F`. For a
+quasi-coherent `F` and the fibre inclusion `j = f.fiberι s` (a quasi-compact,
+quasi-separated morphism, being a base change of `Spec k(s) → S`), the pullback `j^*F`
+is quasi-coherent and its pushforward `j_*j^*F` along the qcqs `j` is again
+quasi-coherent. Mathlib v4.30.0 has no instance/lemma supplying
+`SheafOfModules.IsQuasicoherent` through `Scheme.Modules.pullback` / `pushforward`, so the
+standard preservation fact is anchored here; it discharges the `hWqc` named gap of the
+iter-028 `ext1_X_pushforward_fibre_vanishes`. See `thm:ega_fibre_pushforward_qcoh`. -/
+axiom External.fibre_pushforward_qcoh {X S : Scheme.{u}} (f : X ⟶ S) (s : S)
+    (F : X.Modules) (hF : F.IsQuasicoherent) :
+    ((Scheme.Modules.pushforward (f.fiberι s)).obj
+      ((Scheme.Modules.pullback (f.fiberι s)).obj F)).IsQuasicoherent
+
+/-- **[AK §1, (1.3) proof]** Unconditional half-exactness of `N ↦ Ext^q_X(I, F ⊗_S N)`
+for `F` `S`-flat. Discharges the hypothesis `hSE` of `ext_tensor_halfexact` with the
+flatness anchor `External.flat_tensor_exact f F hF sc hsc`: every degree-`q` Ext class
+on the middle term that maps to `0` under the third map lifts to the first term.
+
+Project-local helper specializing `ext_tensor_halfexact` to the genuine flatness
+input. See `lem:ext_tensor_halfexact` / `thm:flat_tensor_exact`. -/
+theorem ext_tensor_halfexact_of_flat {X S : Scheme.{u}} (f : X ⟶ S) (I F : X.Modules)
+    (hF : IsSFlat f F) (q : ℕ) (sc : ShortComplex S.Modules) (hsc : sc.ShortExact) :
+    letI : HasDerivedCategory X.Modules := HasDerivedCategory.standard X.Modules
+    haveI := CategoryTheory.hasExt_of_hasDerivedCategory X.Modules
+    ∀ (x₂ : CategoryTheory.Abelian.Ext I (tensorBC f F sc.X₂) q),
+      x₂.comp (CategoryTheory.Abelian.Ext.mk₀ (sc.map (tensorBaseChangeFunctor f F)).g)
+        (add_zero q) = 0 →
+      ∃ x₁ : CategoryTheory.Abelian.Ext I (tensorBC f F sc.X₁) q,
+        x₁.comp (CategoryTheory.Abelian.Ext.mk₀ (sc.map (tensorBaseChangeFunctor f F)).f)
+          (add_zero q) = x₂ :=
+  ext_tensor_halfexact f I F q sc (External.flat_tensor_exact f F hF sc hsc)
+
+/-! ## Project-local Mathlib supplement — additivity of `tensorLeft`
+
+Mathlib registers `PreservesZeroMorphisms` for `PresheafOfModules.sheafification`
+(used in `tensorLeft_preservesZeroMorphisms`) but no `Additive` instance. We supply
+it from the sheafification adjunction: sheafification is the left adjoint, its right
+adjoint `forget ⋙ restrictScalars` is additive, and a left adjoint of an additive
+functor is additive (`Adjunction.left_adjoint_additive`). This unblocks the
+additivity of the hand-built `tensorLeft F` (no `MonoidalCategory X.Modules`
+instance, so additivity is not inferred). -/
+
+/-- Project-local (Mathlib gap): the module-sheafification functor
+`PresheafOfModules.sheafification α` is **additive**. It is the left adjoint of
+`PresheafOfModules.sheafificationAdjunction α`, whose right adjoint
+`(SheafOfModules.forget R) ⋙ (PresheafOfModules.restrictScalars α)` is additive
+(`SheafOfModules.forget` and `PresheafOfModules.restrictScalars` are each additive,
+and additivity is closed under composition), so the left adjoint is additive by
+`CategoryTheory.Adjunction.left_adjoint_additive`. See `lem:sheafification_additive`. -/
+instance presheafOfModules_sheafification_additive
+    {C : Type*} [Category C] {J : GrothendieckTopology C}
+    {R₀ : Cᵒᵖ ⥤ RingCat} {R : Sheaf J RingCat} (α : R₀ ⟶ R.obj)
+    [Presheaf.IsLocallyInjective J α] [Presheaf.IsLocallySurjective J α]
+    [J.WEqualsLocallyBijective AddCommGrpCat] [HasWeakSheafify J AddCommGrpCat] :
+    (PresheafOfModules.sheafification α).Additive :=
+  (PresheafOfModules.sheafificationAdjunction α).left_adjoint_additive
+
+/-- Project-local (Mathlib gap): the hand-built endofunctor `tensorLeft F`
+(`N ↦ F ⊗_{𝒪_X} N`) is **additive**. On the presheaf level `𝟙_F ⊗ (-)` is additive
+because `ModuleCat` is monoidal-preadditive (`MonoidalPreadditive.tensor_add`
+pointwise), and sheafification is additive
+(`presheafOfModules_sheafification_additive`); the composite is additive.
+Project-local because `X.Modules` carries no `MonoidalCategory` instance, so
+`tensorLeft` is hand-built and its additivity is not inferred. See
+`lem:tensorLeft_additive`. -/
+instance tensorLeft_additive {X : Scheme.{u}} (F : X.Modules) :
+    (tensorLeft F).Additive where
+  map_add {N N' φ ψ} := by
+    change (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map
+        (PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (𝟙 F.val) (φ + ψ).val) = _
+    have hv : ((φ + ψ : N ⟶ N').val) = φ.val + ψ.val := rfl
+    have ht : (PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (𝟙 F.val)
+          (φ.val + ψ.val))
+        = PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (𝟙 F.val) φ.val
+          + PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (𝟙 F.val) ψ.val := by
+      ext1 Y
+      simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.add_app]
+      exact CategoryTheory.MonoidalPreadditive.tensor_add _ _ _
+    rw [hv, ht]
+    exact Functor.map_add _
+
+/-! ## Project-local Mathlib supplement — the functor `T` of (1.3)
+
+Altman–Kleiman (1.3) opens with the functor `T(M) = Ext¹_X(I, F ⊗_S M~)` from
+finitely generated `A`-modules to `A`-modules. We package it as a typed functor
+`functorT`. Because Mathlib has **no** `Functor.Linear A` route into
+`AddCommGrpCat` (that target is only `ℤ`-linear), the `A`-module structure on the
+Ext groups is supplied by a general *End-action lift* `liftAdditiveToModuleCat`:
+any additive `G : ModuleCat A ⥤ AddCommGrpCat` lifts to a functor
+`ModuleCat A ⥤ ModuleCat A` whose value on `M` has the same underlying group as
+`G.obj M` and `A`-action `a • x = (G.map (a • 𝟙 M)) x`. The ring hom
+`A →+* AddMonoid.End (G.obj M)`, `a ↦ G.map (a • 𝟙 M)`, is `endRingHom`
+(multiplicativity uses commutativity of `A`); `Module.compHom` then transports the
+canonical `AddMonoid.End`-action to an `A`-module structure (`moduleOfLift`).
+
+**Universe note (genuine obstruction, flagged for the later 1.3 bricks).** The
+covariant `Ext` of `Y.Modules` (`Y : Scheme.{u}`) lands in `AddCommGrpCat.{u+1}`
+(it is a hom in the standard derived category, whose universe is the *object*
+universe `u+1` of `Y.Modules`; cf. `extGroup`, which lands in `Ab.{u+1}` for the
+same reason). Consequently `functorT` is genuinely
+`ModuleCat.{u} ↑A ⥤ ModuleCat.{u+1} ↑A`, **not** an endofunctor of
+`ModuleCat.{u} ↑A`. Feeding it to `External.halfexact_free` (which is stated for an
+endofunctor `ModuleCat.{u} A ⥤ ModuleCat.{u} A`) therefore needs a universe
+reconciliation downstream — either re-typing `External.halfexact_free` /
+`IsHalfExact` to the `{u}/{u+1}` shape, or collapsing the Ext universe via a
+small-hom derived category. This is the precise next-brick gap. -/
+
+/-- `tensorBaseChangeFunctor f F` is additive: it is the composite of the additive
+`Scheme.Modules.pullback f` (a left adjoint) and the additive `tensorLeft F`
+(`tensorLeft_additive`). Project-local because `tensorBaseChangeFunctor` is a `def`,
+so the composite-additivity is not synthesized through it without unfolding. -/
+instance tensorBaseChangeFunctor_additive {X S : Scheme.{u}} (f : X ⟶ S)
+    (F : X.Modules) : (tensorBaseChangeFunctor f F).Additive := by
+  unfold tensorBaseChangeFunctor; infer_instance
+
+section FunctorT
+open CategoryTheory.Abelian
+
+universe w
+
+variable {A : Type u} [CommRing A]
+
+/-- **(`lem:additive_functor_module_lift`, ring-hom core)** For an additive functor
+`G : ModuleCat A ⥤ AddCommGrpCat` and an object `M`, the map `a ↦ G.map (a • 𝟙 M)`
+is a ring homomorphism `A →+* AddMonoid.End (G.obj M)`. Additivity/`one` come from
+`G.map_add` / `G.map_id`; multiplicativity uses `G.map_comp` together with the
+commutativity of `A` (`(a*b) • 𝟙 = (b • 𝟙) ≫ (a • 𝟙)`). Project-local: Mathlib has
+no "additive functor induces a ring hom on `End`" lemma. -/
+noncomputable def endRingHom (G : ModuleCat.{u} A ⥤ AddCommGrpCat.{w}) [G.Additive]
+    (M : ModuleCat.{u} A) : A →+* AddMonoid.End (G.obj M) where
+  toFun a := (G.map (a • 𝟙 M)).hom
+  map_one' := by rw [one_smul, G.map_id]; rfl
+  map_zero' := by rw [zero_smul, G.map_zero]; rfl
+  map_add' a b := by rw [add_smul, G.map_add]; rfl
+  map_mul' a b := by
+    have : (a * b) • 𝟙 M = (b • 𝟙 M) ≫ (a • 𝟙 M) := by
+      rw [Linear.smul_comp, Linear.comp_smul, Category.comp_id, smul_smul, mul_comm]
+    rw [this, G.map_comp]; rfl
+
+/-- **(`lem:additive_functor_module_lift`, module structure)** The `A`-module
+structure on `G.obj M` induced by `endRingHom` via `Module.compHom`: the canonical
+`AddMonoid.End (G.obj M)`-action precomposed with the ring hom `endRingHom G M`. -/
+noncomputable instance moduleOfLift (G : ModuleCat.{u} A ⥤ AddCommGrpCat.{w}) [G.Additive]
+    (M : ModuleCat.{u} A) : Module A (G.obj M) :=
+  Module.compHom (G.obj M) (endRingHom G M)
+
+/-- **(`lem:additive_functor_module_lift`)** The End-action lift of an additive
+functor `G : ModuleCat A ⥤ AddCommGrpCat` to a functor `ModuleCat A ⥤ ModuleCat A`.
+On objects it equips `G.obj M` with the `A`-module structure `moduleOfLift`; on a
+morphism `φ` it is `(G.map φ).hom`, which is `A`-linear by naturality of `G`
+against `a • 𝟙` (`(a • 𝟙_M) ≫ φ = a • φ = φ ≫ (a • 𝟙_N)`). The general
+project-bespoke category-theory infrastructure underlying `functorT`. -/
+noncomputable def liftAdditiveToModuleCat (G : ModuleCat.{u} A ⥤ AddCommGrpCat.{w})
+    [G.Additive] : ModuleCat.{u} A ⥤ ModuleCat.{w} A where
+  obj M := ModuleCat.of A (G.obj M)
+  map {M N} φ := ModuleCat.ofHom
+    { toFun := (G.map φ).hom
+      map_add' := map_add _
+      map_smul' := fun a x => by
+        change (G.map φ).hom ((G.map (a • 𝟙 M)).hom x)
+          = (G.map (a • 𝟙 N)).hom ((G.map φ).hom x)
+        rw [← AddMonoidHom.comp_apply, ← AddMonoidHom.comp_apply,
+            ← AddCommGrpCat.hom_comp, ← AddCommGrpCat.hom_comp,
+            ← G.map_comp, ← G.map_comp, Linear.smul_comp, Linear.comp_smul,
+            Category.id_comp, Category.comp_id] }
+  map_id M := by ext x; change (G.map (𝟙 M)).hom x = x; rw [G.map_id]; rfl
+  map_comp φ ψ := by
+    ext x
+    change (G.map (φ ≫ ψ)).hom x = (G.map ψ).hom ((G.map φ).hom x)
+    rw [G.map_comp]; rfl
+
+/-- **(`lem:functorT_additive`, lift half)** The End-action lift
+`liftAdditiveToModuleCat G` of an additive `G` is itself additive: its action on
+morphisms is `(G.map ·).hom`, which is additive because `G` is. -/
+instance liftAdditiveToModuleCat_additive (G : ModuleCat.{u} A ⥤ AddCommGrpCat.{w})
+    [G.Additive] : (liftAdditiveToModuleCat G).Additive where
+  map_add {M N φ ψ} := by
+    ext x
+    change (G.map (φ + ψ)).hom x = (G.map φ).hom x + (G.map ψ).hom x
+    rw [G.map_add]; rfl
+
+/-- **(`lem:functorT_obj_isZero_iff`, lift half)** `IsZero`-reflection through the
+End-action lift: `(liftAdditiveToModuleCat G).obj M` is a zero object of `ModuleCat A`
+iff `G.obj M` is a zero object of `AddCommGrpCat`. The lift only re-structures the
+underlying abelian group with an `A`-action, so both reduce to subsingleton of the
+*same* carrier `↑(G.obj M)` (`ModuleCat.isZero_of_iff_subsingleton` /
+`AddCommGrpCat.isZero_iff_subsingleton`). Project-local. -/
+lemma liftAdditiveToModuleCat_isZero_obj_iff (G : ModuleCat.{u} A ⥤ AddCommGrpCat.{w})
+    [G.Additive] (M : ModuleCat.{u} A) :
+    IsZero ((liftAdditiveToModuleCat G).obj M) ↔ IsZero (G.obj M) := by
+  have hobj : (liftAdditiveToModuleCat G).obj M = ModuleCat.of A (G.obj M) := rfl
+  rw [hobj, ModuleCat.isZero_of_iff_subsingleton, AddCommGrpCat.isZero_iff_subsingleton]
+
+end FunctorT
+
+/-- **(`lem:covariant_ext_functor`)** The covariant Ext functor
+`N ↦ Ext^q_Y(I, N)` packaged as `Y.Modules ⥤ AddCommGrpCat.{u+1}`, the missing
+functorial form of `extGroup` in its second variable. On a morphism `f : N ⟶ N'`
+it is `x ↦ x.comp (Ext.mk₀ f)`; functoriality is `Ext.comp_mk₀_id` (identity),
+`Ext.mk₀_comp_mk₀` + `Ext.comp_assoc` (composition), additivity in `x` is
+`Ext.add_comp`. Uses the same `HasDerivedCategory.standard` + `hasExt` setup as
+`extGroup` / `ext_tensor_halfexact`, so it lands one universe up. Project-local:
+Mathlib v4.30.0 packages no covariant Ext functor. -/
+noncomputable def covariantExtFunctor {Y : Scheme.{u}} (I : Y.Modules) (q : ℕ) :
+    Y.Modules ⥤ AddCommGrpCat.{u+1} :=
+  letI : HasDerivedCategory Y.Modules := HasDerivedCategory.standard Y.Modules
+  haveI := CategoryTheory.hasExt_of_hasDerivedCategory Y.Modules
+  { obj := fun N => AddCommGrpCat.of (CategoryTheory.Abelian.Ext I N q)
+    map := fun {N N'} f => AddCommGrpCat.ofHom
+      { toFun := fun x => x.comp (CategoryTheory.Abelian.Ext.mk₀ f) (add_zero q)
+        map_zero' := CategoryTheory.Abelian.Ext.zero_comp I q
+          (CategoryTheory.Abelian.Ext.mk₀ f) q (add_zero q)
+        map_add' := fun x y => CategoryTheory.Abelian.Ext.add_comp x y
+          (CategoryTheory.Abelian.Ext.mk₀ f) (add_zero q) }
+    map_id := fun N => by
+      ext x; exact congrArg CategoryTheory.Abelian.Ext.hom
+        (CategoryTheory.Abelian.Ext.comp_mk₀_id x)
+    map_comp := fun {N₁ N₂ N₃} f g => by
+      ext x; refine congrArg CategoryTheory.Abelian.Ext.hom ?_
+      change x.comp (CategoryTheory.Abelian.Ext.mk₀ (f ≫ g)) (add_zero q)
+        = (x.comp (CategoryTheory.Abelian.Ext.mk₀ f) (add_zero q)).comp
+            (CategoryTheory.Abelian.Ext.mk₀ g) (add_zero q)
+      rw [← CategoryTheory.Abelian.Ext.mk₀_comp_mk₀ f g]
+      exact (CategoryTheory.Abelian.Ext.comp_assoc x
+        (CategoryTheory.Abelian.Ext.mk₀ f) (CategoryTheory.Abelian.Ext.mk₀ g)
+        (add_zero q) (zero_add 0) (by omega)).symm }
+
+/-- **(`lem:covariant_ext_functor`, additive)** The covariant Ext functor is
+additive: `Ext.mk₀ (f + g) = Ext.mk₀ f + Ext.mk₀ g` (`Ext.mk₀_add`) and
+`Ext.comp_add`. -/
+instance covariantExtFunctor_additive {Y : Scheme.{u}} (I : Y.Modules) (q : ℕ) :
+    (covariantExtFunctor I q).Additive where
+  map_add {N N' f g} := by
+    letI : HasDerivedCategory Y.Modules := HasDerivedCategory.standard Y.Modules
+    haveI := CategoryTheory.hasExt_of_hasDerivedCategory Y.Modules
+    ext x
+    change x.comp (CategoryTheory.Abelian.Ext.mk₀ (f + g)) (add_zero q)
+      = x.comp (CategoryTheory.Abelian.Ext.mk₀ f) (add_zero q)
+        + x.comp (CategoryTheory.Abelian.Ext.mk₀ g) (add_zero q)
+    rw [CategoryTheory.Abelian.Ext.mk₀_add, CategoryTheory.Abelian.Ext.comp_add]
+
+/-- **(`def:functorT`)** The functor `T(M) = Ext¹_X(I, F ⊗_S M~)` of
+Altman–Kleiman (1.3), for `A` a commutative ring, `f : X ⟶ Spec A`, and
+`I F : X.Modules`. It is the End-action lift (`liftAdditiveToModuleCat`) of the
+additive composite `tilde.functor A ⋙ tensorBaseChangeFunctor f F ⋙
+covariantExtFunctor I 1` (`M ↦ I, F ⊗_S M~ ↦ Ext¹_X(I, F ⊗_S M~)`).
+
+See the universe note above: the covariant Ext lands in `AddCommGrpCat.{u+1}`, so
+`functorT` is `ModuleCat.{u} ↑A ⥤ ModuleCat.{u+1} ↑A`, not yet an endofunctor.
+Parametrized over the post-reduction data `(A, f, I, F)`; the reduction to this
+affine-Noetherian-local shape is a later 1.3 brick (anchored, not proved here). -/
+noncomputable def functorT {X : Scheme.{u}} (A : CommRingCat.{u}) (f : X ⟶ Spec A)
+    (I F : X.Modules) : ModuleCat.{u} ↑A ⥤ ModuleCat.{u+1} ↑A :=
+  liftAdditiveToModuleCat
+    (AlgebraicGeometry.tilde.functor A ⋙ tensorBaseChangeFunctor f F ⋙ covariantExtFunctor I 1)
+
+/-- **(`lem:functorT_additive`)** `functorT A f I F` is additive: it is the
+End-action lift (`liftAdditiveToModuleCat_additive`) of a composite of additive
+functors (`tilde.functor` is additive as a left adjoint;
+`tensorBaseChangeFunctor_additive`; `covariantExtFunctor_additive`). -/
+instance functorT_additive {X : Scheme.{u}} (A : CommRingCat.{u}) (f : X ⟶ Spec A)
+    (I F : X.Modules) : (functorT A f I F).Additive := by
+  unfold functorT; infer_instance
+
+/-- **(`lem:functorT_obj_isZero_iff`)** `IsZero`-reflection through `functorT`: the
+lifted `ModuleCat A` object `(functorT A f I F).obj M` is a zero object iff the
+underlying `Ext` group `extGroup 1 I (F ⊗_S M~)` is a zero object of `Ab`. `functorT` is
+the End-action lift (`liftAdditiveToModuleCat`) of the additive composite
+`tilde.functor A ⋙ tensorBaseChangeFunctor f F ⋙ covariantExtFunctor I 1`, whose value on
+`M` is — by `rfl` — exactly `extGroup 1 I ((tensorBaseChangeFunctor f F).obj (tilde M))`;
+the lift adds only an `A`-action, so `liftAdditiveToModuleCat_isZero_obj_iff` reflects
+`IsZero`. Project-local. -/
+lemma functorT_obj_isZero_iff {X : Scheme.{u}} (A : CommRingCat.{u}) (f : X ⟶ Spec A)
+    (I F : X.Modules) (M : ModuleCat.{u} ↑A) :
+    IsZero ((functorT A f I F).obj M) ↔
+      IsZero (extGroup 1 I ((tensorBaseChangeFunctor f F).obj (AlgebraicGeometry.tilde M))) := by
+  unfold functorT
+  rw [liftAdditiveToModuleCat_isZero_obj_iff]
+  exact Iff.rfl
 
 /-! ## Strand (a): the representing module `H(I,F)` and local freeness -/
 
@@ -625,21 +1889,801 @@ theorem H_represents (f : X ⟶ S) (I F : X.Modules) (ha : Admissible f I F) :
   haveI := External.H_existence f I F ha
   ⟨(homTensorFunctor f I F).coreprW⟩
 
+/-- **(1.1.3 STEP 2.5-b, object-level)** The functorial action of `H(-,F)` in its
+**first slot**: a morphism `φ : J ⟶ J'` of `𝒪_X`-modules induces a morphism
+`H(J,F) ⟶ H(J',F)` of the corepresenting `𝒪_S`-modules.
+
+Construction (corepresentability/coyoneda reflection): `φ` gives, by precomposition,
+a natural transformation `homTensorFunctor f J' F ⟶ homTensorFunctor f J F` of the
+corepresented functors (`coyoneda.map φ.op` whiskered into the base-change tensor).
+Conjugating by the two corepresentation isos `H_represents` turns it into a map
+`coyoneda(H J') ⟶ coyoneda(H J)`, which the full-faithfulness of `coyoneda`
+(`Coyoneda.coyoneda_full`/`_faithful`) reflects to a unique `H J ⟶ H J'` (the
+direction flips twice: contravariance of precomposition, then of `coyoneda` /
+`op`). This is the object-level substrate the `θ`-naturality of (1.1.3) needs;
+a *total* functor `X.Modules ⥤ S.Modules` cannot exist because `H f J F` is only
+defined where `Admissible f J F` holds (not for every object), so the functorial
+action is delivered per-morphism with its two admissibility witnesses threaded.
+Project-local. -/
+noncomputable def HMapFst (f : X ⟶ S) (F : X.Modules) {J J' : X.Modules}
+    (haJ : Admissible f J F) (haJ' : Admissible f J' F) (φ : J ⟶ J') :
+    H f J F haJ ⟶ H f J' F haJ' :=
+  (coyoneda.preimage
+    ((H_represents f J' F haJ').some.hom ≫
+      Functor.whiskerLeft (tensorBaseChangeFunctor f F) (coyoneda.map φ.op) ≫
+      (H_represents f J F haJ).some.inv)).unop
+
+/-- **(1.1.3 STEP 2.5-b, functoriality)** `HMapFst` carries an identity to an
+identity: `H(-,F)` preserves identities in its first slot. -/
+@[simp] lemma HMapFst_id (f : X ⟶ S) (F : X.Modules) {J : X.Modules}
+    (haJ : Admissible f J F) :
+    HMapFst f F haJ haJ (𝟙 J) = 𝟙 (H f J F haJ) := by
+  rw [HMapFst]
+  have hw : Functor.whiskerLeft (tensorBaseChangeFunctor f F)
+      (coyoneda.map (𝟙 J : J ⟶ J).op) = 𝟙 _ := by
+    rw [op_id, CategoryTheory.Functor.map_id, Functor.whiskerLeft_id']
+  rw [hw]
+  erw [Category.id_comp]
+  rw [Iso.hom_inv_id, Functor.preimage_id]
+  rfl
+
+/-- **(1.1.3 STEP 2.5-b, functoriality)** `HMapFst` carries a composite to a
+composite: `H(-,F)` preserves composition in its first slot. The two corepresentation
+isos at the middle object `J'` cancel; the precomposition natural transformations
+compose via `coyoneda`/`whiskerLeft` functoriality and `(φ ≫ ψ).op = ψ.op ≫ φ.op`. -/
+lemma HMapFst_comp (f : X ⟶ S) (F : X.Modules) {J J' J'' : X.Modules}
+    (haJ : Admissible f J F) (haJ' : Admissible f J' F) (haJ'' : Admissible f J'' F)
+    (φ : J ⟶ J') (ψ : J' ⟶ J'') :
+    HMapFst f F haJ haJ'' (φ ≫ ψ)
+      = HMapFst f F haJ haJ' φ ≫ HMapFst f F haJ' haJ'' ψ := by
+  rw [HMapFst, HMapFst, HMapFst, ← unop_comp]
+  congr 1
+  rw [← Functor.preimage_comp]
+  congr 1
+  rw [op_comp, CategoryTheory.Functor.map_comp, Functor.whiskerLeft_comp]
+  simp only [Category.assoc]
+  erw [Iso.inv_hom_id_assoc]
+  rfl
+
+/-- **(1.1.3 STEP 2.5-b)** `H(-,F)` as a covariant functor `X.Modules ⥤ S.Modules`
+in its first slot, assembled from the per-morphism action `HMapFst` and its
+functoriality (`HMapFst_id`, `HMapFst_comp`).
+
+**Carrier.** `H f J F` is defined only where `Admissible f J F` holds, so a *total*
+functor on `X.Modules` requires the admissibility witness for *every* object — the
+planner-sanctioned carrier `hAdm : ∀ J, Admissible f J F`. This hypothesis is rarely
+satisfiable in full (it forces every `𝒪_X`-module to be locally finitely presented),
+so downstream uses must either restrict to a subcategory of objects where
+admissibility holds or supply the comparison map per-object via `htensorComparison`;
+the functor is recorded here as the structural substrate the (1.1.3) `θ`-naturality
+is phrased against. See `def:HFunctorFst`. -/
+noncomputable def HFunctorFst (f : X ⟶ S) (F : X.Modules)
+    (hAdm : ∀ J : X.Modules, Admissible f J F) : X.Modules ⥤ S.Modules where
+  obj J := H f J F (hAdm J)
+  map {J J'} φ := HMapFst f F (hAdm J) (hAdm J') φ
+  map_id J := HMapFst_id f F (hAdm J)
+  map_comp {J J' J''} φ ψ := HMapFst_comp f F (hAdm J) (hAdm J') (hAdm J'') φ ψ
+
+/-- **(1.1.3 STEP 2.5-c)** The domain endofunctor of the (1.1.3) comparison:
+`N ↦ H(I ⊗_S N, F)`, realized as the composite
+`tensorBaseChangeFunctor f I ⋙ HFunctorFst f F` (`N ↦ I ⊗_S N = tensorBC f I N ↦
+H(tensorBC f I N, F)`). Carries the same `∀ J, Admissible` carrier as
+`HFunctorFst`. See `def:htensorDomainFunctor`. -/
+noncomputable def htensorDomainFunctor (f : X ⟶ S) (I F : X.Modules)
+    (hAdm : ∀ J : X.Modules, Admissible f J F) : S.Modules ⥤ S.Modules :=
+  tensorBaseChangeFunctor f I ⋙ HFunctorFst f F hAdm
+
+/-! ### (1.1.2 STEP D) first-factor naturality → tensor equivalence → twist iso
+
+The pieces that turn the per-variable naturality layer (STEPs A–C) into the
+categorical equivalence `- ⊗ L` for an invertible `L`, then into the `(1.1.2)` twist
+isomorphism of `homTensorFunctor`s, and finally close `H_tensor_invertible` by Yoneda. -/
+
+/-- Project-local: an isomorphism `e : L₁ ≅ L₂` of `𝒪_X`-modules induces a natural
+isomorphism of the right-tensor endofunctors `tensorRight L₁ ≅ tensorRight L₂`. The
+component at `A` is `(tensorLeft A).mapIso e : A ⊗ L₁ ≅ A ⊗ L₂`; naturality in `A` is the
+tensor interchange law. This is the "whisker an object iso into `tensorRight`" operation
+used to transport the invertibility iso `L ⊗ L' ≅ 𝒪_X` into the equivalence unit/counit. -/
+noncomputable def tensorRightMapIso {X : Scheme.{u}} {L₁ L₂ : X.Modules} (e : L₁ ≅ L₂) :
+    tensorRight L₁ ≅ tensorRight L₂ :=
+  NatIso.ofComponents (fun A => (tensorLeft A).mapIso e) (by
+    intro A A' φ
+    have key : PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) φ.val (𝟙 L₁.val)
+          ≫ PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (𝟙 A'.val) e.hom.val
+        = PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (𝟙 A.val) e.hom.val
+          ≫ PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) φ.val (𝟙 L₂.val) := by
+      ext1 Z
+      simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.comp_app,
+        PresheafOfModules.id_app]
+      exact (MonoidalCategory.whisker_exchange _ _).symm
+    simp only [tensorRight_map_eq, Functor.mapIso_hom, tensorLeft_map_eq]
+    exact ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+        (𝟙 X.ringCatSheaf.obj)).map_comp _ _).symm.trans
+      (((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+          (𝟙 X.ringCatSheaf.obj)).congr_map key).trans
+        ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+          (𝟙 X.ringCatSheaf.obj)).map_comp _ _)))
+
+/-- Project-local: the left unitor `𝒪_X ⊗ A ≅ A` packaged as a natural isomorphism of
+endofunctors `tensorLeft 𝒪_X ≅ 𝟭`. -/
+noncomputable def tensorLeftUnitorNatIso {X : Scheme.{u}} :
+    tensorLeft (SheafOfModules.unit X.ringCatSheaf) ≅ 𝟭 X.Modules :=
+  NatIso.ofComponents (fun A => tensorLeftUnitor A) (by
+    intro A A' φ
+    rw [tensorLeft_map_eq]
+    simp only [tensorLeftUnitor, Iso.trans_hom, Functor.mapIso_hom, Functor.id_map,
+      sheafifyValIso, asIso_hom]
+    have hlu : PresheafOfModules.Monoidal.tensorHom (R := X.presheaf)
+          (𝟙 (SheafOfModules.unit X.ringCatSheaf).val) φ.val
+          ≫ (presheafLeftUnitor (R := X.presheaf) A'.val).hom
+        = (presheafLeftUnitor (R := X.presheaf) A.val).hom ≫ φ.val :=
+      MonoidalCategory.leftUnitor_naturality
+        (C := PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) φ.val
+    have step : (PresheafOfModules.sheafification (R := X.ringCatSheaf)
+          (𝟙 X.ringCatSheaf.obj)).map (PresheafOfModules.Monoidal.tensorHom (R := X.presheaf)
+            (𝟙 (SheafOfModules.unit X.ringCatSheaf).val) φ.val)
+          ≫ (PresheafOfModules.sheafification (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).map (presheafLeftUnitor (R := X.presheaf) A'.val).hom
+        = (PresheafOfModules.sheafification (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).map (presheafLeftUnitor (R := X.presheaf) A.val).hom
+          ≫ (PresheafOfModules.sheafification (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).map φ.val :=
+      ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+          (𝟙 X.ringCatSheaf.obj)).map_comp _ _).symm.trans
+        (((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).congr_map hlu).trans
+          ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).map_comp _ _))
+    have cnat : (PresheafOfModules.sheafification (R := X.ringCatSheaf)
+          (𝟙 X.ringCatSheaf.obj)).map φ.val
+          ≫ (PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).counit.app A'
+        = (PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).counit.app A ≫ φ :=
+      (PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
+        (𝟙 X.ringCatSheaf.obj)).counit_naturality φ
+    exact (Category.assoc _ _ _).symm.trans
+      ((congrArg (· ≫ (PresheafOfModules.sheafificationAdjunction (R := X.ringCatSheaf)
+          (𝟙 X.ringCatSheaf.obj)).counit.app A') step).trans
+        ((Category.assoc _ _ _).trans
+          ((congrArg (((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+              (𝟙 X.ringCatSheaf.obj)).map (presheafLeftUnitor (R := X.presheaf) A.val).hom) ≫ ·)
+              cnat).trans
+            (Category.assoc _ _ _).symm))))
+
+/-- Project-local (`lem:tensorRightUnitor_natIso`): the right unitor `A ⊗ 𝒪_X ≅ A`
+packaged as a natural isomorphism of endofunctors `𝟭 ≅ tensorRight 𝒪_X`. Derived from the
+braiding natural iso `tensorBraidingNatIso 𝒪_X : tensorRight 𝒪_X ≅ tensorLeft 𝒪_X` and the
+left-unitor natural iso `tensorLeftUnitorNatIso`, both already natural. -/
+noncomputable def tensorRightUnitorNatIso {X : Scheme.{u}} :
+    𝟭 X.Modules ≅ tensorRight (SheafOfModules.unit X.ringCatSheaf) :=
+  (tensorBraidingNatIso (SheafOfModules.unit X.ringCatSheaf) ≪≫ tensorLeftUnitorNatIso).symm
+
+/-- Index functor `A ↦ (A.val ⊗ L.val, L'.val)`, the first-factor analogue of
+`assocIdxL` (here the *first* tensor slot `A` varies, inner factors `L, L'` fixed). -/
+private noncomputable def assocIdxL₁ {X : Scheme.{u}} (L L' : X.Modules) :
+    X.Modules ⥤ (PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat) ×
+      PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) where
+  obj A := (PresheafOfModules.Monoidal.tensorObj A.val L.val, L'.val)
+  map {A A'} φ := (PresheafOfModules.Monoidal.tensorHom φ.val (𝟙 L.val), 𝟙 L'.val)
+  map_id A := by
+    refine Prod.ext (presheaf_id_tensorHom_id A.val L.val) rfl
+  map_comp {A A' A''} φ ψ := by
+    refine Prod.ext ?_ (Category.id_comp _).symm
+    change PresheafOfModules.Monoidal.tensorHom (φ.val ≫ ψ.val) (𝟙 L.val)
+        = PresheafOfModules.Monoidal.tensorHom φ.val (𝟙 L.val)
+          ≫ PresheafOfModules.Monoidal.tensorHom ψ.val (𝟙 L.val)
+    ext1 Z
+    simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.comp_app,
+      PresheafOfModules.id_app]
+    exact MonoidalCategory.comp_tensor_id _ _
+
+/-- Index functor `A ↦ (A.val, L.val ⊗ L'.val)`, the right-form companion of
+`assocIdxL₁`. The fixed inner factor's identity is expressed as `𝟙_L ⊗ 𝟙_{L'}` (as in
+`assocIdxL₃`) so the associator-naturality leg matches definitionally. -/
+private noncomputable def assocIdxR₁ {X : Scheme.{u}} (L L' : X.Modules) :
+    X.Modules ⥤ (PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat) ×
+      PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat)) where
+  obj A := (A.val, PresheafOfModules.Monoidal.tensorObj L.val L'.val)
+  map {A A'} φ := (φ.val, PresheafOfModules.Monoidal.tensorHom (𝟙 L.val) (𝟙 L'.val))
+  map_id A := by
+    refine Prod.ext (SheafOfModules.id_val A) ?_
+    exact presheaf_id_tensorHom_id L.val L'.val
+  map_comp {A A' A''} φ ψ := by
+    refine Prod.ext (SheafOfModules.comp_val φ ψ) ?_
+    change PresheafOfModules.Monoidal.tensorHom (𝟙 L.val) (𝟙 L'.val)
+        = PresheafOfModules.Monoidal.tensorHom (𝟙 L.val) (𝟙 L'.val)
+          ≫ PresheafOfModules.Monoidal.tensorHom (𝟙 L.val) (𝟙 L'.val)
+    exact (Category.id_comp _).symm.trans
+      (congrArg (· ≫ PresheafOfModules.Monoidal.tensorHom (𝟙 L.val) (𝟙 L'.val))
+        (presheaf_id_tensorHom_id L.val L'.val).symm)
+
+/-- **(1.1.2 naturality, first factor)** Naturality of the unconditional associator
+`tensorAssoc · L L'` in its FIRST factor, packaged as a natural isomorphism of
+endofunctors `tensorRight (L ⊗ L') ≅ tensorRight L ⋙ tensorRight L'`
+(`A ↦ (A ⊗ (L ⊗ L') ≅ (A ⊗ L) ⊗ L')`). The first-factor mirror of
+`tensorAssocNatIso₂`/`tensorAssocNatIso₃`, built as the `.symm` of the three-`NatIso`
+composite `tensorRight L ⋙ tensorRight L' ≅ … ≅ tensorRight (L ⊗ L')` (comparison anchors
+whiskered by `assocIdxL₁`/`assocIdxR₁` + sheafified associator). The varying factor is now
+the first product slot; both comparison legs sheafify fixed inner factors, discharged by the
+sheafify-of-identity bridges. See `lem:tensorAssocNatIso1`. -/
+noncomputable def tensorAssocNatIso₁ {X : Scheme.{u}} (L L' : X.Modules) :
+    tensorRight (tensorMod L L') ≅ tensorRight L ⋙ tensorRight L' :=
+  ((NatIso.ofComponents
+    (fun A => (External.sheafifyTensorComparison (X := X)).app
+      (PresheafOfModules.Monoidal.tensorObj A.val L.val, L'.val)) (by
+      intro A A' φ
+      have h := (External.sheafifyTensorComparison (X := X)).hom.naturality
+        ((PresheafOfModules.Monoidal.tensorHom φ.val (𝟙 L.val), 𝟙 L'.val) :
+          (PresheafOfModules.Monoidal.tensorObj A.val L.val, L'.val) ⟶
+            (PresheafOfModules.Monoidal.tensorObj A'.val L.val, L'.val))
+      simp only [assocIdxL₁, sheafifyFst_map_eq, tensorRight_map_eq, tensorThenSheafify_map_eq,
+        Iso.app_hom, Functor.comp_map] at h ⊢
+      exact h) :
+    tensorRight L ⋙ tensorRight L' ≅ assocIdxL₁ L L' ⋙ tensorThenSheafify X) ≪≫
+  (NatIso.ofComponents
+    (fun A => (PresheafOfModules.sheafification (R := X.ringCatSheaf)
+      (𝟙 X.ringCatSheaf.obj)).mapIso
+        (MonoidalCategory.associator
+          (C := PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat))
+          A.val L.val L'.val)) (by
+      intro A A' φ
+      simp only [assocIdxL₁, assocIdxR₁, Functor.comp_map, tensorThenSheafify_map_eq,
+        Functor.mapIso_hom]
+      exact ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+          (𝟙 X.ringCatSheaf.obj)).map_comp _ _).symm.trans
+        (((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).congr_map
+          (MonoidalCategory.associator_naturality
+            (C := PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat))
+            φ.val (𝟙 L.val) (𝟙 L'.val))).trans
+        ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+            (𝟙 X.ringCatSheaf.obj)).map_comp _ _))) :
+    assocIdxL₁ L L' ⋙ tensorThenSheafify X ≅ assocIdxR₁ L L' ⋙ tensorThenSheafify X) ≪≫
+  (NatIso.ofComponents
+    (fun A => ((External.sheafifyTensorComparisonLeft (X := X)).app
+      (A.val, PresheafOfModules.Monoidal.tensorObj L.val L'.val)).symm) (by
+      intro A A' φ
+      have h := (External.sheafifyTensorComparisonLeft (X := X)).inv.naturality
+        ((φ.val, PresheafOfModules.Monoidal.tensorHom (𝟙 L.val) (𝟙 L'.val)) :
+          (A.val, PresheafOfModules.Monoidal.tensorObj L.val L'.val) ⟶
+            (A'.val, PresheafOfModules.Monoidal.tensorObj L.val L'.val))
+      simp only [assocIdxR₁, sheafifySnd_map_eq, tensorRight_map_eq, tensorThenSheafify_map_eq,
+        Iso.app_inv, Iso.symm_hom, Functor.comp_map] at h ⊢
+      convert h using 4
+      exact congrArg
+        (fun a => (PresheafOfModules.sheafification (R := X.ringCatSheaf)
+          (𝟙 X.ringCatSheaf.obj)).map
+            (PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) φ.val a))
+        (((congrArg (fun m => ((PresheafOfModules.sheafification (R := X.ringCatSheaf)
+          (𝟙 X.ringCatSheaf.obj)).map m).val) (presheaf_id_tensorHom_id L.val L'.val)).trans
+            (sheafify_map_id_val _)).symm)) :
+    assocIdxR₁ L L' ⋙ tensorThenSheafify X ≅ tensorRight (tensorMod L L'))).symm
+
+/-- **(1.1.2 STEP D)** (`lem:tensorRight_invertible_equiv`): if `L` is invertible, the
+endofunctor `tensorRight L` (`- ⊗ L`) is an equivalence of `𝒪_X`-modules, with quasi-inverse
+`tensorRight L'` for `L'` the chosen inverse (`L ⊗ L' ≅ 𝒪_X`). Unit and counit are NatIso
+composites of the right-unitor naturality `tensorRightUnitorNatIso`, the invertibility iso
+whiskered into `tensorRight` (`tensorRightMapIso`), and the first-factor associator naturality
+`tensorAssocNatIso₁` (counit via the braided companion `L' ⊗ L ≅ 𝒪_X`); being NatIsos they are
+automatically natural, so `Equivalence.mk` needs no triangle/coherence. -/
+noncomputable def tensorRightEquivOfInvertible {X : Scheme.{u}} {L : X.Modules}
+    (hL : IsInvertibleMod L) : X.Modules ≌ X.Modules :=
+  let L' := hL.choose
+  let e : tensorMod L L' ≅ SheafOfModules.unit X.ringCatSheaf := hL.choose_spec.some
+  let e' : tensorMod L' L ≅ SheafOfModules.unit X.ringCatSheaf := tensorBraiding L' L ≪≫ e
+  CategoryTheory.Equivalence.mk (tensorRight L) (tensorRight L')
+    (tensorRightUnitorNatIso ≪≫ tensorRightMapIso e.symm ≪≫ tensorAssocNatIso₁ L L')
+    ((tensorAssocNatIso₁ L' L).symm ≪≫ tensorRightMapIso e' ≪≫ tensorRightUnitorNatIso.symm)
+
+/-- **(1.1.2 STEP E)** (`lem:homTensorFunctor_twist_natIso`): for `L` invertible, the natural
+isomorphism of functors `S.Modules ⥤ Type u`
+`homTensorFunctor f (I ⊗ L) (F ⊗ L) ≅ homTensorFunctor f I F`.
+Built on the `𝒪_X`-side by rearranging the target via `tensorRearrangeNatIso F L`
+(`(F ⊗ L) ⊗ Y ≅ (F ⊗ Y) ⊗ L`) and reflecting through the tensor equivalence's
+full-faithfulness `coyonedaCompFF` (`Hom(I ⊗ L, - ⊗ L) ≅ Hom(I, -)`), then whiskered by the
+pullback `f^*`. -/
+noncomputable def homTensorFunctorTwistIso {X S : Scheme.{u}} (f : X ⟶ S) (I F L : X.Modules)
+    (hL : IsInvertibleMod L) :
+    homTensorFunctor f (tensorMod I L) (tensorMod F L) ≅ homTensorFunctor f I F :=
+  let hFF : (tensorRight L).FullyFaithful := (tensorRightEquivOfInvertible hL).fullyFaithfulFunctor
+  Functor.isoWhiskerLeft (Scheme.Modules.pullback f)
+    (Functor.isoWhiskerRight (tensorRearrangeNatIso F L).symm
+        (coyoneda.obj (op (tensorMod I L))) ≪≫
+      Functor.isoWhiskerLeft (tensorLeft F) (coyonedaCompFF hFF I))
+
 /-- **(1.1.2)** Invariance of `H` under twist by an invertible sheaf:
 `H(I ⊗ L, F ⊗ L) ≅ H(I, F)`. See `lem:H_tensor_invertible`. -/
 theorem H_tensor_invertible (f : X ⟶ S) (I F L : X.Modules)
     (hL : IsInvertibleMod L) (ha : Admissible f I F)
     (ha' : Admissible f (tensorMod I L) (tensorMod F L)) :
     Nonempty (H f (tensorMod I L) (tensorMod F L) ha' ≅ H f I F ha) :=
-  sorry
+  ⟨(coyoneda.preimageIso
+    ((H_represents f (tensorMod I L) (tensorMod F L) ha').some ≪≫
+      homTensorFunctorTwistIso f I F L hL ≪≫
+      (H_represents f I F ha).some.symm)).unop.symm⟩
+
+/-- **(1.1.3 STEP 2)** The canonical comparison map `θ` of (1.1.3), directed OUT of
+the corepresenting object `H(I ⊗_S N, F)`:
+`θ : H(I ⊗_S N, F) ⟶ H(I,F) ⊗_S N`. (The (1.1.3) isomorphism is `θ.symm` once `θ`
+is shown to be an iso by right-exactness/Eilenberg–Watts — the deep crux, handed off.)
+
+Construction (verbatim AK (1.1.3), p. 55): by corepresentability of
+`M ↦ Hom_X(I ⊗_S N, F ⊗_S M)` by `H(I ⊗_S N, F)`, a map
+`H(I ⊗_S N, F) ⟶ W` (here `W = H(I,F) ⊗_S N`) is the same as a universal element
+`e ∈ Hom_X(I ⊗_S N, F ⊗_S W)`. We build `e` from the universal element
+`h(I,F) : I ⟶ F ⊗_S H(I,F)` by tensoring on the right with `f^*N`, reassociating
+(`tensorAssoc`), and folding the two pullbacks back together via the
+f^*-monoidality anchor `External.pullbackTensorComparison`:
+`I ⊗_X f^*N → (F ⊗_X f^*H) ⊗_X f^*N ≅ F ⊗_X (f^*H ⊗_X f^*N) ≅ F ⊗_X f^*(H ⊗_S N) = F ⊗_S W`.
+See `def:htensorComparison`. -/
+noncomputable def htensorComparison (f : X ⟶ S) (I F : X.Modules) (N : S.Modules)
+    (ha : Admissible f I F) (ha' : Admissible f (tensorBC f I N) F) :
+    H f (tensorBC f I N) F ha' ⟶ tensorMod (H f I F ha) N :=
+  (H_represents f (tensorBC f I N) F ha').some.inv.app (tensorMod (H f I F ha) N)
+    ((tensorRight ((Scheme.Modules.pullback f).obj N)).map (h f I F ha) ≫
+      (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+        ((Scheme.Modules.pullback f).obj N)).hom ≫
+      (tensorLeft F).map ((External.pullbackTensorComparison f (H f I F ha)).app N).hom)
+
+/-- **(general category theory)** Compose three commuting squares in a row into a
+single equation between the two outer fourfold composites. Project-local plumbing
+for the `θ`-naturality of (1.1.3): there the three squares are `whisker_exchange`,
+the associator naturality, and the `f^*`-monoidality (`pullbackTensorComparison`)
+naturality. Chained in **term mode** (`congrArg`/`Category.assoc`): the morphisms
+carry non-syntactic sheafification instance paths, so `rw`/`reassoc`/`slice` matching
+fails (it works only up to reducible transparency, and `tensorBC`/`tensorMod` unfold
+only at default transparency); `congrArg` typechecks via full defeq and so threads
+the squares cleanly. -/
+private lemma compose_three_squares {Cat : Type*} [Category Cat] {o0 o1 o2 o3 o4 : Cat}
+    (A : o0 ⟶ o1) (B : o1 ⟶ o2) (C : o2 ⟶ o3) (D : o3 ⟶ o4)
+    {p1 p2 p3 : Cat} (L1 : o0 ⟶ p1) (M1 : p1 ⟶ o2)
+    (L2 : p1 ⟶ p2) (M2 : p2 ⟶ o3) (L3 : p2 ⟶ p3) (Q : p3 ⟶ o4)
+    (S1 : A ≫ B = L1 ≫ M1) (S2 : M1 ≫ C = L2 ≫ M2) (S3 : M2 ≫ D = L3 ≫ Q) :
+    A ≫ B ≫ C ≫ D = (L1 ≫ L2 ≫ L3) ≫ Q :=
+  (Category.assoc A B (C ≫ D)).symm.trans
+  ((congrArg (· ≫ (C ≫ D)) S1).trans
+  ((Category.assoc L1 M1 (C ≫ D)).trans
+  ((congrArg (L1 ≫ ·) (Category.assoc M1 C D).symm).trans
+  ((congrArg (fun t => L1 ≫ t ≫ D) S2).trans
+  ((congrArg (L1 ≫ ·) (Category.assoc L2 M2 D)).trans
+  ((congrArg (fun t => L1 ≫ L2 ≫ t) S3).trans
+  ((congrArg (L1 ≫ ·) (Category.assoc L2 L3 Q).symm).trans
+  (Category.assoc L1 (L2 ≫ L3) Q).symm)))))))
+
+/-- **(1.1.3 STEP 2.5-d)** Per-morphism naturality of the comparison map `θ`
+(`htensorComparison`) in the second variable `N`. For `ψ : N ⟶ N'` the square
+```
+HMapFst f F ha' ha'' ((tensorBaseChangeFunctor f I).map ψ) ≫ htensorComparison f I F N' ..
+  = htensorComparison f I F N .. ≫ (tensorLeft (H f I F ha)).map ψ
+```
+commutes. This is the genuinely reusable θ-naturality substrate (delivered
+per-morphism via the non-total `HMapFst`, because the total functorial carrier
+`∀ J, Admissible f J F` of `HFunctorFst`/`htensorDomainFunctor` is unsatisfiable
+— `Admissible ⊃ IsLFP` — and any `NatTrans` between those total functors is
+vacuous). Proof by corepresentation reflection: both sides are maps OUT of the
+corepresenting object `H(I⊗N,F)`, so via `H_represents` they reduce to an identity
+of universal elements (`star`) that chains (i) `whisker_exchange`, (ii) `tensorAssoc`
+naturality (`tensorAssocNatIso₃`), and (iii) the second-slot naturality of the
+`f^*`-monoidality anchor `External.pullbackTensorComparison`; `HMapFst`'s defining
+`coyoneda.preimage` is expanded via `Functor.map_preimage`. See
+`lem:htensorComparison_naturality`. -/
+theorem htensorComparison_naturality (f : X ⟶ S) (I F : X.Modules)
+    {N N' : S.Modules} (ψ : N ⟶ N') (ha : Admissible f I F)
+    (ha' : Admissible f (tensorBC f I N) F)
+    (ha'' : Admissible f (tensorBC f I N') F) :
+    HMapFst f F ha' ha'' ((tensorBaseChangeFunctor f I).map ψ) ≫ htensorComparison f I F N' ha ha''
+      = htensorComparison f I F N ha ha' ≫ (tensorLeft (H f I F ha)).map ψ := by
+  -- (★): naturality of the universal element `e` in `N`, after corepresentation reflection.
+  have star : (tensorBaseChangeFunctor f I).map ψ ≫
+        ((tensorRight ((Scheme.Modules.pullback f).obj N')).map (h f I F ha) ≫
+          (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+            ((Scheme.Modules.pullback f).obj N')).hom ≫
+          (tensorLeft F).map ((External.pullbackTensorComparison f (H f I F ha)).app N').hom)
+      = ((tensorRight ((Scheme.Modules.pullback f).obj N)).map (h f I F ha) ≫
+          (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+            ((Scheme.Modules.pullback f).obj N)).hom ≫
+          (tensorLeft F).map ((External.pullbackTensorComparison f (H f I F ha)).app N).hom)
+        ≫ (tensorBaseChangeFunctor f F).map ((tensorLeft (H f I F ha)).map ψ) := by
+    simp only [tensorBaseChangeFunctor, Functor.comp_map]
+    -- Square 1: whisker exchange of `h(I,F) ⊗ -` and `id_I ⊗ f^*ψ`.
+    have S1 : (tensorLeft I).map ((Scheme.Modules.pullback f).map ψ)
+          ≫ (tensorRight ((Scheme.Modules.pullback f).obj N')).map (h f I F ha)
+        = (tensorRight ((Scheme.Modules.pullback f).obj N)).map (h f I F ha)
+          ≫ (tensorLeft (tensorMod F ((Scheme.Modules.pullback f).obj (H f I F ha)))).map
+              ((Scheme.Modules.pullback f).map ψ) := by
+      have key : PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (𝟙 I.val)
+              ((Scheme.Modules.pullback f).map ψ).val
+            ≫ PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (h f I F ha).val
+              (𝟙 ((Scheme.Modules.pullback f).obj N').val)
+          = PresheafOfModules.Monoidal.tensorHom (R := X.presheaf) (h f I F ha).val
+              (𝟙 ((Scheme.Modules.pullback f).obj N).val)
+            ≫ PresheafOfModules.Monoidal.tensorHom (R := X.presheaf)
+              (𝟙 (tensorMod F ((Scheme.Modules.pullback f).obj (H f I F ha))).val)
+              ((Scheme.Modules.pullback f).map ψ).val := by
+        ext1 Z
+        simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.comp_app,
+          PresheafOfModules.id_app]
+        exact MonoidalCategory.whisker_exchange _ _
+      change (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map _
+          ≫ (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map _
+        = (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map _
+          ≫ (PresheafOfModules.sheafification (R := X.ringCatSheaf) (𝟙 X.ringCatSheaf.obj)).map _
+      rw [← Functor.map_comp, ← Functor.map_comp]
+      exact congrArg (PresheafOfModules.sheafification (R := X.ringCatSheaf)
+        (𝟙 X.ringCatSheaf.obj)).map key
+    -- Square 2: naturality of the associator in its third factor (`tensorAssocNatIso₃`).
+    have S2 : (tensorLeft (tensorMod F ((Scheme.Modules.pullback f).obj (H f I F ha)))).map
+            ((Scheme.Modules.pullback f).map ψ)
+          ≫ (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+              ((Scheme.Modules.pullback f).obj N')).hom
+        = (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+              ((Scheme.Modules.pullback f).obj N)).hom
+          ≫ (tensorLeft F).map ((tensorLeft ((Scheme.Modules.pullback f).obj (H f I F ha))).map
+              ((Scheme.Modules.pullback f).map ψ)) := by
+      have hnat := (tensorAssocNatIso₃ F
+        ((Scheme.Modules.pullback f).obj (H f I F ha))).inv.naturality
+          ((Scheme.Modules.pullback f).map ψ)
+      have hb : ∀ Y : X.Modules,
+          (tensorAssocNatIso₃ F ((Scheme.Modules.pullback f).obj (H f I F ha))).inv.app Y
+            = (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha)) Y).hom := fun _ => rfl
+      rw [hb, hb] at hnat
+      simp only [Functor.comp_map] at hnat
+      exact hnat
+    -- Square 3: second-slot naturality of the `f^*`-monoidality anchor.
+    have S3 : (tensorLeft F).map ((tensorLeft ((Scheme.Modules.pullback f).obj (H f I F ha))).map
+              ((Scheme.Modules.pullback f).map ψ))
+          ≫ (tensorLeft F).map ((External.pullbackTensorComparison f (H f I F ha)).app N').hom
+        = (tensorLeft F).map ((External.pullbackTensorComparison f (H f I F ha)).app N).hom
+          ≫ (tensorLeft F).map
+              ((Scheme.Modules.pullback f).map ((tensorLeft (H f I F ha)).map ψ)) := by
+      rw [← Functor.map_comp, ← Functor.map_comp]
+      congr 1
+      have hnat := (External.pullbackTensorComparison f (H f I F ha)).hom.naturality ψ
+      simp only [Functor.comp_map] at hnat
+      exact hnat
+    exact compose_three_squares _ _ _ _ _ _ _ _ _ _ S1 S2 S3
+  -- LHS reduction: `HMapFst(ψ) ≫ θ_{N'}` reflects to `θ`'s universal element precomposed by `f^*ψ`.
+  have step2 : HMapFst f F ha' ha'' ((tensorBaseChangeFunctor f I).map ψ)
+        ≫ htensorComparison f I F N' ha ha''
+      = (H_represents f (tensorBC f I N) F ha').some.inv.app (tensorMod (H f I F ha) N')
+          ((tensorBaseChangeFunctor f I).map ψ ≫
+            ((tensorRight ((Scheme.Modules.pullback f).obj N')).map (h f I F ha) ≫
+            (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+              ((Scheme.Modules.pullback f).obj N')).hom ≫
+            (tensorLeft F).map
+              ((External.pullbackTensorComparison f (H f I F ha)).app N').hom)) := by
+    have hT : coyoneda.map (HMapFst f F ha' ha'' ((tensorBaseChangeFunctor f I).map ψ)).op
+        = (H_represents f (tensorBC f I N') F ha'').some.hom
+          ≫ Functor.whiskerLeft (tensorBaseChangeFunctor f F)
+              (coyoneda.map ((tensorBaseChangeFunctor f I).map ψ).op)
+          ≫ (H_represents f (tensorBC f I N) F ha').some.inv := by
+      rw [HMapFst]; exact coyoneda.map_preimage _
+    have e1 : HMapFst f F ha' ha'' ((tensorBaseChangeFunctor f I).map ψ)
+          ≫ htensorComparison f I F N' ha ha''
+        = (coyoneda.map (HMapFst f F ha' ha'' ((tensorBaseChangeFunctor f I).map ψ)).op).app
+            (tensorMod (H f I F ha) N') (htensorComparison f I F N' ha ha'') := rfl
+    rw [e1, hT, htensorComparison]
+    simp only [NatTrans.comp_app, types_comp_apply, Functor.whiskerLeft_app,
+      Iso.inv_hom_id_app_apply]
+    rfl
+  -- RHS reduction: `θ_N ≫ (H(I,F) ⊗ ψ)` reflects via naturality of the `α.inv` of `H_represents`.
+  have step3 : htensorComparison f I F N ha ha' ≫ (tensorLeft (H f I F ha)).map ψ
+      = (H_represents f (tensorBC f I N) F ha').some.inv.app (tensorMod (H f I F ha) N')
+          (((tensorRight ((Scheme.Modules.pullback f).obj N)).map (h f I F ha) ≫
+            (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+              ((Scheme.Modules.pullback f).obj N)).hom ≫
+            (tensorLeft F).map ((External.pullbackTensorComparison f (H f I F ha)).app N).hom)
+          ≫ (tensorBaseChangeFunctor f F).map ((tensorLeft (H f I F ha)).map ψ)) := by
+    rw [htensorComparison]
+    exact (NatTrans.naturality_apply (H_represents f (tensorBC f I N) F ha').some.inv _ _).symm
+  exact step2.trans
+    ((congrArg (fun e => (H_represents f (tensorBC f I N) F ha').some.inv.app
+        (tensorMod (H f I F ha) N') e) star).trans step3.symm)
+
+/-- **[Eilenberg–Watts; Altman–Kleiman §1 (1.1.3), p. 55, "So we have…"]**
+Eilenberg–Watts propagation for the comparison map `θ` of `def:htensorComparison`.
+
+Both functors `N ↦ H(I ⊗_S N, F)` and `N ↦ H(I,F) ⊗_S N` of a quasi-coherent
+`𝒪_S`-module `N` are covariant, additive, right exact and sum-preserving, and `θ`
+(`htensorComparison`) is the canonical comparison transformation between them (natural by
+`htensorComparison_naturality`). If `θ_{𝒪_S}` (the comparison at the unit `N = 𝒪_S`) is an
+isomorphism, then `θ_N` is an isomorphism for every quasi-coherent `N`.
+
+This is the general Eilenberg–Watts principle: a natural transformation between two
+right-exact, direct-sum-preserving functors on quasi-coherent `𝒪_S`-modules that is an
+isomorphism on the unit `𝒪_S` is an isomorphism on every quasi-coherent object (locally
+choose a free presentation `𝒪_S^{(J)} → 𝒪_S^{(K)} → N → 0`; `θ` is iso on each free
+`𝒪_S^{(•)}` by sum-preservation, hence on the cokernel `N` by right exactness and the five
+lemma). Mathlib has neither Eilenberg–Watts nor the free-presentation machinery for
+`𝒪_S`-modules, and the source functor is not total (admissibility constrains the objects),
+so the principle is recorded here **conditional on `θ_{𝒪_S}` invertible** (`hunit`); the
+project supplies that hypothesis directly via `htensorComparison_unit_isIso`. This is
+strictly weaker than `H_tensor` (which is unconditional) — it is the general theorem
+Altman–Kleiman cite, not a restatement of it. See `thm:ew_htensorComparison`. -/
+axiom External.eilenbergWatts_htensorComparison {X S : Scheme.{u}} (f : X ⟶ S)
+    (I F : X.Modules) (ha : Admissible f I F)
+    (hau : Admissible f (tensorBC f I (SheafOfModules.unit S.ringCatSheaf)) F)
+    (hunit : IsIso (htensorComparison f I F (SheafOfModules.unit S.ringCatSheaf) ha hau))
+    {N : S.Modules} (hN : N.IsQuasicoherent)
+    (ha' : Admissible f (tensorBC f I N) F) :
+    IsIso (htensorComparison f I F N ha ha')
+
+/-- **(1.1.3 STEP 3 helper)** The base-change unit collapses `I ⊗_S 𝒪_S` to `I`:
+`tensorBC f I 𝒪_S ≅ I`. Built from `External.pullbackUnit` (`f^*𝒪_S ≅ 𝒪_X`) and the
+right unitor `tensorRightUnitor` (`I ⊗_X 𝒪_X ≅ I`). -/
+noncomputable def tensorUnitBC (f : X ⟶ S) (I : X.Modules) :
+    tensorBC f I (SheafOfModules.unit S.ringCatSheaf) ≅ I :=
+  (tensorLeft I).mapIso (External.pullbackUnit f) ≪≫ tensorRightUnitor I
+
+/-- **(1.1.3 STEP 3 helper)** Admissibility of `I ⊗_S 𝒪_S` follows from admissibility of
+`I`: the only nontrivial field, `IsLFP (I ⊗_S 𝒪_S)`, transports from `IsLFP I` along the
+unit iso `tensorUnitBC` (finite presentation is closed under isomorphism). -/
+lemma admissible_tensorUnit (f : X ⟶ S) (I F : X.Modules) (ha : Admissible f I F) :
+    Admissible f (tensorBC f I (SheafOfModules.unit S.ringCatSheaf)) F where
+  proper := ha.proper
+  finitePresentation := ha.finitePresentation
+  lfp_I := ObjectProperty.prop_of_iso (SheafOfModules.isFinitePresentation X.ringCatSheaf)
+            (tensorUnitBC f I).symm ha.lfp_I
+  lfp_F := ha.lfp_F
+  flat_F := ha.flat_F
+
+/-- **(1.1.3 STEP 3, the θ_𝒪 sanity check formalized)** The comparison map `θ` of
+`htensorComparison` is an isomorphism at the unit `N = 𝒪_S`. This is the load-bearing
+hypothesis discharging `External.eilenbergWatts_htensorComparison`: under the
+identifications `I ⊗_S 𝒪_S ≅ I` (`tensorUnitBC`) and `H(I,F) ⊗_S 𝒪_S ≅ H(I,F)`
+(`tensorRightUnitor`), the defining universal element of `θ_𝒪` reduces to `h(I,F)`, so
+`θ_𝒪` is the canonical iso `H(I ⊗_S 𝒪_S, F) ≅ H(I,F) ≅ H(I,F) ⊗_S 𝒪_S`.
+See `lem:htensorComparison_unit_isIso`. -/
+theorem htensorComparison_unit_isIso (f : X ⟶ S) (I F : X.Modules)
+    (ha : Admissible f I F)
+    (hau : Admissible f (tensorBC f I (SheafOfModules.unit S.ringCatSheaf)) F) :
+    IsIso (htensorComparison f I F (SheafOfModules.unit S.ringCatSheaf) ha hau) := by
+  haveI hcI := External.H_existence f I F ha
+  -- The corepresenting iso `α` for `I ⊗_S 𝒪` used in `htensorComparison`.
+  set 𝒪 := SheafOfModules.unit S.ringCatSheaf with h𝒪
+  set α := (H_represents f (tensorBC f I 𝒪) F hau).some with hα
+  -- The explicit comparison iso `Ψ : coyoneda(H(I,F) ⊗ 𝒪) ≅ homTensorFunctor(I ⊗ 𝒪)`,
+  -- assembled from the right unitor `i`, the genuine corepresentation `coreprW` of
+  -- `homTensorFunctor(I,F)`, and the unit collapse `u : I ⊗ 𝒪 ≅ I`.
+  set i := tensorRightUnitor (H f I F ha) with hi
+  set u := tensorUnitBC f I with hu
+  set Ψ : coyoneda.obj (op (tensorMod (H f I F ha) 𝒪)) ≅ homTensorFunctor f (tensorBC f I 𝒪) F :=
+    coyoneda.mapIso i.symm.op ≪≫ (homTensorFunctor f I F).coreprW ≪≫
+      Functor.isoWhiskerLeft (tensorBaseChangeFunctor f F) (coyoneda.mapIso u.op) with hΨ
+  -- Main identity: `coyoneda(θ_𝒪) ≫ α.hom = Ψ.hom`, proved by Yoneda (value at `𝟙`).
+  have hmain : coyoneda.map (htensorComparison f I F 𝒪 ha hau).op ≫ α.hom = Ψ.hom := by
+    have hθ : htensorComparison f I F 𝒪 ha hau
+        = α.inv.app (tensorMod (H f I F ha) 𝒪)
+            ((tensorRight ((Scheme.Modules.pullback f).obj 𝒪)).map (h f I F ha) ≫
+              (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+                ((Scheme.Modules.pullback f).obj 𝒪)).hom ≫
+              (tensorLeft F).map
+                ((External.pullbackTensorComparison f (H f I F ha)).app 𝒪).hom) := rfl
+    apply coyonedaEquiv.injective
+    rw [coyonedaEquiv_comp, coyonedaEquiv_coyoneda_map, hθ, Iso.inv_hom_id_app_apply, hΨ]
+    simp only [Iso.trans_hom, coyonedaEquiv_comp, NatTrans.comp_app, Functor.mapIso_hom,
+      Iso.symm_hom, Iso.op_hom, coyonedaEquiv_coyoneda_map, types_comp_apply,
+      Functor.isoWhiskerLeft_hom, Functor.whiskerLeft_app]
+    erw [Functor.coreprW_hom_app (homTensorFunctor f I F) (tensorMod (H f I F ha) 𝒪) i.inv]
+    -- Reduced (definitionally) to the unit-coherence equation `star_unit`:
+    --   the universal element `e_𝒪` equals `h(I,F)` transported along the unit collapse
+    --   `u : I ⊗ 𝒪 ≅ I` and the right unitor `i⁻¹ : H ≅ H ⊗ 𝒪`.
+    change (tensorRight ((Scheme.Modules.pullback f).obj 𝒪)).map (h f I F ha)
+          ≫ (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+              ((Scheme.Modules.pullback f).obj 𝒪)).hom
+          ≫ (tensorLeft F).map ((External.pullbackTensorComparison f (H f I F ha)).app 𝒪).hom
+        = u.hom ≫ h f I F ha ≫ (tensorBaseChangeFunctor f F).map i.inv
+    -- REDUCTION of `star_unit` toward the sanctioned `f^*` right-unitality anchor
+    -- `External.pullback_rightUnitality` (anchor (A), landed this iter). The full route
+    -- (each piece verified in isolation — see `task_results`):
+    --   (i)   ν-naturality of the right-unit collapse `ν_A = (A ◁ ε) ≫ ρ_A` at `h(I,F)`
+    --         (a `whisker_exchange` square `tensorRightMapIso (pullbackUnit f)` plus the
+    --         `tensorRightUnitorNatIso` naturality square, mirroring the `S1`/`S2` legs of
+    --         `htensorComparison_naturality`);
+    --   (ii)  associator naturality in the third slot at `ε` (via `tensorAssocNatIso₃`,
+    --         exactly the `S2` leg of `htensorComparison_naturality`);
+    --   (iii) the `f^*` anchor reformulated as `m = ν_{f^*H} ; f^*(i⁻¹)` (`hm'`, landed); and
+    --   (iv)  the INTERNAL right-unitor triangle of the hand-built `tensorMod`/`tensorAssoc`
+    --         monoidal structure — the one genuinely irreducible residual (see below).
+    -- Step (iii): reformulate the anchor to solve for the laxity `m = (μ.app 𝒪).hom`.
+    have hanch : ((External.pullbackTensorComparison f (H f I F ha)).app 𝒪).hom
+          ≫ (Scheme.Modules.pullback f).map i.hom
+        = (tensorLeft ((Scheme.Modules.pullback f).obj (H f I F ha))).map
+              (External.pullbackUnit f).hom
+          ≫ (tensorRightUnitor ((Scheme.Modules.pullback f).obj (H f I F ha))).hom :=
+      External.pullback_rightUnitality f (H f I F ha)
+    have hm' : ((External.pullbackTensorComparison f (H f I F ha)).app 𝒪).hom
+        = ((tensorLeft ((Scheme.Modules.pullback f).obj (H f I F ha))).map
+              (External.pullbackUnit f).hom
+            ≫ (tensorRightUnitor ((Scheme.Modules.pullback f).obj (H f I F ha))).hom)
+          ≫ (Scheme.Modules.pullback f).map i.inv :=
+      (Iso.eq_comp_inv ((Scheme.Modules.pullback f).mapIso i)).mpr hanch
+    -- Substitute the anchor (step iii): the laxity `m` becomes the `ν`-collapse of `f^*H`
+    -- followed by `f^*(i⁻¹)`, exposing the universal element as the `ν`-collapse whiskered by `F`.
+    rw [hm']
+    -- RESIDUAL. The goal now reads
+    --   `(tR f^*𝒪).map h ≫ assoc ≫ ((F ◁ ν_{f^*H}) ≫ (BC F).map i⁻¹) = u.hom ≫ h ≫ (BC F).map i⁻¹`,
+    -- where `ν_{f^*H} = ((f^*H ◁ ε) ≫ ρ_{f^*H})` (`ε = External.pullbackUnit f`). It closes by
+    -- (ii) associator naturality at `ε`, (iv) the INTERNAL right-unitor triangle (the new anchor
+    -- `External.tensorMod_rightUnitality`), and (i) ν-naturality of `(- ◁ ε) ≫ ρ` at `h`.
+    -- (ii) associator naturality in the third slot at `ε` (the `S2` leg, here with `ε` directly).
+    have hS2 : (tensorLeft (tensorMod F ((Scheme.Modules.pullback f).obj (H f I F ha)))).map
+            (External.pullbackUnit f).hom
+          ≫ (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+              (SheafOfModules.unit X.ringCatSheaf)).hom
+        = (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+              ((Scheme.Modules.pullback f).obj 𝒪)).hom
+          ≫ (tensorLeft F).map ((tensorLeft ((Scheme.Modules.pullback f).obj (H f I F ha))).map
+              (External.pullbackUnit f).hom) := by
+      have hnat := (tensorAssocNatIso₃ F
+        ((Scheme.Modules.pullback f).obj (H f I F ha))).inv.naturality (External.pullbackUnit f).hom
+      have hb : ∀ Y : X.Modules,
+          (tensorAssocNatIso₃ F ((Scheme.Modules.pullback f).obj (H f I F ha))).inv.app Y
+            = (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha)) Y).hom := fun _ => rfl
+      rw [hb, hb] at hnat
+      simp only [Functor.comp_map] at hnat
+      exact hnat
+    -- (iv) the INTERNAL right-unitor triangle, instantiated at `M := F, N := f^*H` (new anchor).
+    have htri : (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+              (SheafOfModules.unit X.ringCatSheaf)).hom
+            ≫ (tensorLeft F).map
+                (tensorRightUnitor ((Scheme.Modules.pullback f).obj (H f I F ha))).hom
+          = (tensorRightUnitor (tensorMod F ((Scheme.Modules.pullback f).obj (H f I F ha)))).hom :=
+      External.tensorMod_rightUnitality F ((Scheme.Modules.pullback f).obj (H f I F ha))
+    -- (P): combine `Functor.map_comp`, `hS2` and the triangle into the collapse of the inner
+    -- `ν_{f^*H}` whiskered by `F`: `α_{f^*𝒪} ; (F ◁ ν_{f^*H}) = ((F⊗f^*H) ◁ ε) ; ρ_{F⊗f^*H}`.
+    have hP : (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+              ((Scheme.Modules.pullback f).obj 𝒪)).hom
+            ≫ (tensorLeft F).map
+                ((tensorLeft ((Scheme.Modules.pullback f).obj (H f I F ha))).map
+                    (External.pullbackUnit f).hom
+                  ≫ (tensorRightUnitor ((Scheme.Modules.pullback f).obj (H f I F ha))).hom)
+          = (tensorLeft (tensorMod F ((Scheme.Modules.pullback f).obj (H f I F ha)))).map
+                (External.pullbackUnit f).hom
+            ≫ (tensorRightUnitor (tensorMod F ((Scheme.Modules.pullback f).obj (H f I F ha)))).hom :=
+      -- term-mode (`rw [Category.assoc]`/`simp` stall on the sheafification `≫`): split the
+      -- whiskered `ν_{f^*H}` via `map_comp`, reassociate, then apply `hS2` and the triangle.
+      (congrArg ((tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+            ((Scheme.Modules.pullback f).obj 𝒪)).hom ≫ ·)
+          ((tensorLeft F).map_comp
+            ((tensorLeft ((Scheme.Modules.pullback f).obj (H f I F ha))).map
+              (External.pullbackUnit f).hom)
+            (tensorRightUnitor ((Scheme.Modules.pullback f).obj (H f I F ha))).hom)).trans
+        (((Category.assoc _ _ _).symm).trans
+          ((congrArg (· ≫ (tensorLeft F).map
+                (tensorRightUnitor ((Scheme.Modules.pullback f).obj (H f I F ha))).hom)
+              hS2.symm).trans
+            ((Category.assoc _ _ _).trans
+              (congrArg ((tensorLeft (tensorMod F ((Scheme.Modules.pullback f).obj (H f I F ha)))).map
+                  (External.pullbackUnit f).hom ≫ ·) htri))))
+    -- ν-naturality legs, typed directly in `tensorMod F (f^*H)` form (the naturality squares
+    -- come out in the defeq `tensorBC f F (H ..)` form, reconciled by `exact` up to defeq).
+    have happ : ∀ A : X.Modules, (tensorRightMapIso (External.pullbackUnit f)).hom.app A
+        = (tensorLeft A).map (External.pullbackUnit f).hom := fun _ => rfl
+    have hrapp : ∀ A : X.Modules, (tensorRightUnitorNatIso (X := X)).inv.app A
+        = (tensorRightUnitor A).hom := fun _ => rfl
+    have hu_hom : u.hom = (tensorLeft I).map (External.pullbackUnit f).hom
+        ≫ (tensorRightUnitor I).hom := by rw [hu]; rfl
+    -- (i.a) whisker exchange of `h(I,F)` with `- ◁ ε`.
+    have hw : (tensorRight ((Scheme.Modules.pullback f).obj 𝒪)).map (h f I F ha)
+          ≫ (tensorLeft (tensorMod F ((Scheme.Modules.pullback f).obj (H f I F ha)))).map
+              (External.pullbackUnit f).hom
+        = (tensorLeft I).map (External.pullbackUnit f).hom
+          ≫ (tensorRight (SheafOfModules.unit X.ringCatSheaf)).map (h f I F ha) := by
+      have t := (tensorRightMapIso (External.pullbackUnit f)).hom.naturality (h f I F ha)
+      rw [happ, happ] at t
+      exact t
+    -- (i.b) right-unitor naturality at `h(I,F)`.
+    have hru : (tensorRight (SheafOfModules.unit X.ringCatSheaf)).map (h f I F ha)
+          ≫ (tensorRightUnitor (tensorMod F ((Scheme.Modules.pullback f).obj (H f I F ha)))).hom
+        = (tensorRightUnitor I).hom ≫ h f I F ha := by
+      have t := (tensorRightUnitorNatIso (X := X)).inv.naturality (h f I F ha)
+      rw [hrapp, hrapp] at t
+      simp only [Functor.id_map] at t
+      exact t
+    -- (i) ν-naturality collapse: `(tR f^*𝒪).map h ; ((F⊗f^*H) ◁ ε ; ρ_{F⊗f^*H}) = u.hom ; h`.
+    have hν : (tensorRight ((Scheme.Modules.pullback f).obj 𝒪)).map (h f I F ha)
+            ≫ ((tensorLeft (tensorMod F ((Scheme.Modules.pullback f).obj (H f I F ha)))).map
+                  (External.pullbackUnit f).hom
+              ≫ (tensorRightUnitor (tensorMod F ((Scheme.Modules.pullback f).obj (H f I F ha)))).hom)
+          = u.hom ≫ h f I F ha :=
+      -- term-mode reassociation chain: whisker exchange (`hw`), right-unitor naturality (`hru`),
+      -- and the collapse `(I ◁ ε) ; ρ_I = u.hom` (`hu_hom`).
+      ((Category.assoc _ _ _).symm).trans
+        ((congrArg (· ≫ (tensorRightUnitor
+              (tensorMod F ((Scheme.Modules.pullback f).obj (H f I F ha)))).hom) hw).trans
+          ((Category.assoc _ _ _).trans
+            ((congrArg ((tensorLeft I).map (External.pullbackUnit f).hom ≫ ·) hru).trans
+              (((Category.assoc _ _ _).symm).trans
+                (congrArg (· ≫ h f I F ha) hu_hom.symm)))))
+    -- (P) collapses the `α ; (F ◁ ν_{f^*H})` block; (hν) collapses the whole `ν`-naturality.
+    have hmaster : (tensorRight ((Scheme.Modules.pullback f).obj 𝒪)).map (h f I F ha)
+          ≫ (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+              ((Scheme.Modules.pullback f).obj 𝒪)).hom
+          ≫ (tensorLeft F).map
+              ((tensorLeft ((Scheme.Modules.pullback f).obj (H f I F ha))).map
+                  (External.pullbackUnit f).hom
+                ≫ (tensorRightUnitor ((Scheme.Modules.pullback f).obj (H f I F ha))).hom)
+        = u.hom ≫ h f I F ha :=
+      (congrArg ((tensorRight ((Scheme.Modules.pullback f).obj 𝒪)).map (h f I F ha) ≫ ·) hP).trans hν
+    -- Final assembly: split `F ◁ (ν_{f^*H} ; f^*i⁻¹)` and append the common `(BC F).map i.inv`
+    -- tail to `hmaster`. The `(BC F).map i.inv = (tensorLeft F).map (f^*i.inv)` boundary is rfl.
+    have hsplit : (tensorLeft F).map
+            (((tensorLeft ((Scheme.Modules.pullback f).obj (H f I F ha))).map
+                  (External.pullbackUnit f).hom
+                ≫ (tensorRightUnitor ((Scheme.Modules.pullback f).obj (H f I F ha))).hom)
+              ≫ (Scheme.Modules.pullback f).map i.inv)
+        = (tensorLeft F).map
+            ((tensorLeft ((Scheme.Modules.pullback f).obj (H f I F ha))).map
+                (External.pullbackUnit f).hom
+              ≫ (tensorRightUnitor ((Scheme.Modules.pullback f).obj (H f I F ha))).hom)
+          ≫ (tensorLeft F).map ((Scheme.Modules.pullback f).map i.inv) :=
+      (tensorLeft F).map_comp _ _
+    -- Final assembly in term mode: split off the common `f^*i⁻¹` tail (`hsplit`), reassociate it
+    -- out of the whiskered block, apply `hmaster`, and reassociate back to the goal RHS.
+    calc (tensorRight ((Scheme.Modules.pullback f).obj 𝒪)).map (h f I F ha)
+            ≫ (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+                ((Scheme.Modules.pullback f).obj 𝒪)).hom
+            ≫ (tensorLeft F).map
+                (((tensorLeft ((Scheme.Modules.pullback f).obj (H f I F ha))).map
+                      (External.pullbackUnit f).hom
+                    ≫ (tensorRightUnitor ((Scheme.Modules.pullback f).obj (H f I F ha))).hom)
+                  ≫ (Scheme.Modules.pullback f).map i.inv)
+        = (tensorRight ((Scheme.Modules.pullback f).obj 𝒪)).map (h f I F ha)
+            ≫ (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+                ((Scheme.Modules.pullback f).obj 𝒪)).hom
+            ≫ ((tensorLeft F).map
+                  ((tensorLeft ((Scheme.Modules.pullback f).obj (H f I F ha))).map
+                      (External.pullbackUnit f).hom
+                    ≫ (tensorRightUnitor ((Scheme.Modules.pullback f).obj (H f I F ha))).hom)
+                ≫ (tensorLeft F).map ((Scheme.Modules.pullback f).map i.inv)) :=
+          congrArg (fun y => (tensorRight ((Scheme.Modules.pullback f).obj 𝒪)).map (h f I F ha)
+              ≫ (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+                  ((Scheme.Modules.pullback f).obj 𝒪)).hom ≫ y) hsplit
+      _ = (tensorRight ((Scheme.Modules.pullback f).obj 𝒪)).map (h f I F ha)
+            ≫ ((tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+                  ((Scheme.Modules.pullback f).obj 𝒪)).hom
+                ≫ (tensorLeft F).map
+                    ((tensorLeft ((Scheme.Modules.pullback f).obj (H f I F ha))).map
+                        (External.pullbackUnit f).hom
+                      ≫ (tensorRightUnitor ((Scheme.Modules.pullback f).obj (H f I F ha))).hom))
+              ≫ (tensorLeft F).map ((Scheme.Modules.pullback f).map i.inv) :=
+          congrArg ((tensorRight ((Scheme.Modules.pullback f).obj 𝒪)).map (h f I F ha) ≫ ·)
+            (Category.assoc _ _ _).symm
+      _ = ((tensorRight ((Scheme.Modules.pullback f).obj 𝒪)).map (h f I F ha)
+            ≫ (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha))
+                ((Scheme.Modules.pullback f).obj 𝒪)).hom
+              ≫ (tensorLeft F).map
+                  ((tensorLeft ((Scheme.Modules.pullback f).obj (H f I F ha))).map
+                      (External.pullbackUnit f).hom
+                    ≫ (tensorRightUnitor ((Scheme.Modules.pullback f).obj (H f I F ha))).hom))
+            ≫ (tensorLeft F).map ((Scheme.Modules.pullback f).map i.inv) :=
+          (Category.assoc _ _ _).symm
+      _ = (u.hom ≫ h f I F ha) ≫ (tensorLeft F).map ((Scheme.Modules.pullback f).map i.inv) :=
+          congrArg (· ≫ (tensorLeft F).map ((Scheme.Modules.pullback f).map i.inv)) hmaster
+      _ = u.hom ≫ h f I F ha ≫ (tensorLeft F).map ((Scheme.Modules.pullback f).map i.inv) :=
+          Category.assoc _ _ _
+  -- Hence `coyoneda(θ_𝒪) = Ψ.hom ≫ α.inv` is iso, so `θ_𝒪` is iso.
+  have hfac : coyoneda.map (htensorComparison f I F 𝒪 ha hau).op = Ψ.hom ≫ α.inv := by
+    rw [← hmain, Category.assoc, Iso.hom_inv_id, Category.comp_id]
+  haveI : IsIso (coyoneda.map (htensorComparison f I F 𝒪 ha hau).op) := by
+    rw [hfac]; infer_instance
+  haveI : IsIso (htensorComparison f I F 𝒪 ha hau).op := Coyoneda.isIso _
+  exact (isIso_op_iff _).mp inferInstance
 
 /-- **(1.1.3)** Right exactness of `H` in the second-variable tensor:
 `H(I,F) ⊗ N ≅ H(I ⊗_S N, F)` for a quasi-coherent `𝒪_S`-module `N`.
 See `lem:H_tensor`. -/
 theorem H_tensor (f : X ⟶ S) (I F : X.Modules) (N : S.Modules)
-    (ha : Admissible f I F) (ha' : Admissible f (tensorBC f I N) F) :
-    Nonempty (tensorMod (H f I F ha) N ≅ H f (tensorBC f I N) F ha') :=
-  sorry
+    (ha : Admissible f I F) (ha' : Admissible f (tensorBC f I N) F)
+    (hN : N.IsQuasicoherent) :
+    Nonempty (tensorMod (H f I F ha) N ≅ H f (tensorBC f I N) F ha') := by
+  haveI hau := admissible_tensorUnit f I F ha
+  haveI : IsIso (htensorComparison f I F N ha ha') :=
+    External.eilenbergWatts_htensorComparison f I F ha hau
+      (htensorComparison_unit_isIso f I F ha hau) hN ha'
+  exact ⟨(asIso (htensorComparison f I F N ha ha')).symm⟩
 
 -- **(1.2)** `exists_acyclic_surjection` (`lem:acyclic_surjection`) is defined LATER
 -- in the file (after the `extensionByZero` (`j_!`) infrastructure block, which its
@@ -647,14 +2691,11 @@ theorem H_tensor (f : X ⟶ S) (I F : X.Modules) (N : S.Modules)
 -- first. See the `### Acyclic surjection (1.2) anchor-and-assemble` section at the end
 -- of the file. (The signature is unchanged from its blueprint statement.)
 
-/-- **(1.3)** Local freeness of `H(I,F)`: if `Ext^1_{X(s)}(I(s),F(s)) = 0` for
-some `s ∈ S`, then `H(I,F)` is locally free of finite rank on an open
-(retrocompact) neighbourhood of `s`. See `thm:H_locallyFree`. -/
-theorem H_locallyFree_of_ext_vanishing (f : X ⟶ S) (I F : X.Modules)
-    (ha : Admissible f I F) (s : S) (hs : FiberExtVanishes 1 f I F s) :
-    ∃ U : S.Opens, s ∈ U ∧ IsRetrocompact U ∧
-      IsLocallyFreeOfFiniteRankOn (H f I F ha) U :=
-  sorry
+-- **(1.3)** `H_locallyFree_of_ext_vanishing` (`thm:H_locallyFree`) is defined LATER
+-- in the file (after the brick-6 free-conclusion chain `homTensorFunctor_tilde_exact`
+-- and `H_free_of_functorT_zero`, which in turn consume the homological heart
+-- `functorT_eq_zero` defined near the end). Lean requires those in scope first. See
+-- the `### Brick 6 of (1.3): free conclusion + EGA reduction` section at the end.
 
 /-! ## Strand (b): relative local Ext, base-change map, exchange, finiteness -/
 
@@ -837,6 +2878,173 @@ theorem tilde_exact {R : CommRingCat.{u}} (S : ShortComplex (ModuleCat.{u} R))
     (hS : S.ShortExact) :
     (S.map (AlgebraicGeometry.tilde.functor R)).ShortExact :=
   hS.map_of_exact (AlgebraicGeometry.tilde.functor R)
+
+/-- **(`lem:functorT_halfexact`, brick (ii) of 1.3)** For `F` `S`-flat, the functor
+`T = functorT A f I F` (`M ↦ Ext¹_X(I, F ⊗_S M~)`) is half-exact: it sends every short
+exact sequence of `A`-modules to a short complex exact at its middle term.
+
+This is the load-bearing translation between the abstract `ShortComplex.Exact` of
+`S.map (functorT A f I F)` (taken in `ModuleCat.{u+1} ↑A`) and the membership form of
+middle-exactness of `Ext¹_X(I, F ⊗_S −)` supplied by `ext_tensor_halfexact_of_flat`.
+
+`ShortComplex.moduleCat_exact_iff` reduces exactness to: every `x₂` in the middle module
+killed by `(S.map functorT).g` lifts along `(S.map functorT).f`. Unfolding the End-action
+lift `liftAdditiveToModuleCat` and `covariantExtFunctor`, `(S.map functorT).g` is
+`x ↦ x.comp (Ext.mk₀ ((tensorBaseChangeFunctor f F).map ((tilde.functor A).map S.g)))`,
+which is *definitionally* the map in the membership statement of
+`ext_tensor_halfexact_of_flat f I F hF 1 (S.map (tilde.functor A)) (tilde_exact S hS)`
+(via `(sc.map T).g = T.map sc.g` with `sc = S.map (tilde.functor A)`). The two membership
+statements thus coincide and the lift is supplied directly. See `lem:functorT_halfexact`. -/
+theorem functorT_halfExact {X : Scheme.{u}} (A : CommRingCat.{u}) (f : X ⟶ Spec A)
+    (I F : X.Modules) (hF : IsSFlat f F) : IsHalfExact (functorT A f I F) := by
+  intro _ S hS
+  rw [CategoryTheory.ShortComplex.moduleCat_exact_iff]
+  intro x₂ hx₂
+  have hsc := tilde_exact S hS
+  exact ext_tensor_halfexact_of_flat f I F hF 1 _ hsc x₂ hx₂
+
+/-- **(brick (iv) core of 1.3)** Vanishing of `T = functorT A f I F` on *every*
+finitely generated module from vanishing on the residue field. Over a Noetherian local
+ring `A`, the half-exactness `functorT_halfExact` (brick (ii)) combines with the OB 2.1
+anchor `External.halfexact_free` to upgrade `T(k) = 0` to `T(M) = 0` for all `M`.
+
+This packages the homological heart of the (1.3) proof ("since `T` is half-exact and
+`T(k(s)) = 0`, `T(M) = 0` for every finitely generated `A`-module `M`"): it consumes the
+fibrewise hypothesis `hk` (to be discharged by brick (iii), `T(k(s)) = Ext¹_X(I, j_*F(s))
+= 0`, via `External.adjunction` + the 1.2 SES on the closed fibre) and produces the
+input to the free conclusion (the adjacent `Hom`-functor is exact, hence `H` is free).
+Axiom-clean modulo the existing anchors `External.flat_tensor_exact` (half-exactness)
+and `External.halfexact_free` (OB 2.1). See `lem:functorT_halfexact` / `thm:ob_halfexact_free`. -/
+theorem functorT_eq_zero_of_residue {X : Scheme.{u}} (A : CommRingCat.{u})
+    [IsNoetherianRing ↑A] [IsLocalRing ↑A] (f : X ⟶ Spec A) (I F : X.Modules)
+    (hF : IsSFlat f F)
+    (hk : IsZero ((functorT A f I F).obj
+      (ModuleCat.of ↑A (IsLocalRing.ResidueField ↑A))))
+    (M : ModuleCat.{u} ↑A) : IsZero ((functorT A f I F).obj M) :=
+  External.halfexact_free ↑A (functorT A f I F) (functorT_halfExact A f I F hF) hk M
+
+/-! ## Project-local Mathlib supplement — contravariant-Ext diagram chase (1.3 brick (iii) core)
+
+The homological heart of Altman–Kleiman's `T(k(s)) = Ext¹_X(I, j_*F(s)) = 0` argument
+((1.3) proof, p. 56). AK apply `Hom_X(-, j_*F(s))` to the acyclic short exact sequence
+`0 → K → J → I → 0` of `exists_acyclic_surjection` and chase the **contravariant** Ext long
+exact sequence: with `Ext¹(J, -) = 0` (the acyclic `J`) and `Hom(J,-) ↠ Hom(K,-)` (the
+adjunction ladder), `Ext¹(I, -) = 0` follows. This is a *degree-0* adjunction + a chase, NOT
+a degree-1 derived adjunction. The chase needs only Mathlib's contravariant Ext LES
+(`CategoryTheory.Abelian.Ext.contravariant_sequence_exact₃` and the consecutive-maps-compose-
+to-zero fact `ShortComplex.ShortExact.extClass_comp_assoc`), so the core is buildable
+axiom-clean. The scheme-side hypotheses (`hJ` from acyclicity, `hsurj` from the adjunction
+ladder, and the fibre identification `F ⊗_S k(s)~ ≅ j_*F(s)`) are discharged in later bricks. -/
+section AcyclicChase
+open CategoryTheory.Abelian
+
+/-- **(1.3 brick (iii) core, `lem:ext1_vanishing_of_acyclic_chase`)** The abstract
+contravariant-Ext diagram chase. For a short exact sequence `S = (0 → K → J → I → 0)` in any
+abelian category with `Ext` and any object `Y`: if `Ext¹(J, Y) = 0` and the precomposition
+map `Hom(J, Y) → Hom(K, Y)` (degree-0 `Ext`, precompose with `S.f`) is surjective, then
+`Ext¹(I, Y) = 0`. Project-local: this is the homological core of Altman–Kleiman's
+`T(k(s)) = 0` step (1.3), phrased generically so the scheme-side inputs can be supplied later.
+
+Proof (the faithful AK chase): given `x : Ext¹(I, Y)`, its image in `Ext¹(J, Y)` is `0` by
+`hJ`, so by exactness of the contravariant LES (`contravariant_sequence_exact₃`) it lifts to
+`w : Hom(K, Y)` with `extClass.comp w = x`; surjectivity writes `w = (mk₀ S.f).comp v`, and the
+two consecutive LES maps compose to zero (`extClass_comp_assoc`), so `x = 0`. -/
+theorem ext1_vanishing_of_acyclic_chase {C : Type*} [Category C] [Abelian C]
+    [HasExt C] (S : ShortComplex C) (hS : S.ShortExact) (Y : C)
+    (hJ : ∀ y : Ext S.X₂ Y 1, y = 0)
+    (hsurj : Function.Surjective
+      (fun v : Ext S.X₂ Y 0 => (Ext.mk₀ S.f).comp v (zero_add 0)))
+    (x : Ext S.X₃ Y 1) : x = 0 := by
+  have hgx : (Ext.mk₀ S.g).comp x (zero_add 1) = 0 := hJ _
+  obtain ⟨w, hw⟩ := Ext.contravariant_sequence_exact₃ hS Y x hgx (n₀ := 0) (by norm_num)
+  obtain ⟨v, hv⟩ := hsurj w
+  rw [← hw, ← hv]
+  exact hS.extClass_comp_assoc v
+
+/-- **(1.3 helper)** Bridge between the `IsZero` form of `extGroup` and the membership form
+`∀ y, y = 0`. An object of `Ab` is zero iff it is a subsingleton iff all its elements vanish;
+specialized to `extGroup q M N` so the project's `FiberExtVanishes` / acyclicity `IsZero`
+conditions translate to the membership hypotheses consumed by `ext1_vanishing_of_acyclic_chase`,
+and back. Project-local. -/
+lemma isZero_extGroup_iff {Y : Scheme.{u}} (q : ℕ) (M N : Y.Modules) :
+    IsZero (extGroup q M N) ↔ ∀ y : (extGroup q M N), y = 0 := by
+  rw [AddCommGrpCat.isZero_iff_subsingleton, subsingleton_iff_forall_eq 0]
+
+/-- **(1.3 brick (iii), scheme form)** The contravariant-Ext chase packaged in the project's
+`extGroup` `IsZero` notation, over `Y.Modules`. For a short exact sequence `S = (0 → K → J → I
+→ 0)` of `𝒪_Y`-modules and an `𝒪_Y`-module `W`: `Ext¹_Y(J, W) = 0` together with surjectivity
+of `Hom_Y(J, W) → Hom_Y(K, W)` gives `Ext¹_Y(I, W) = 0`. This is the form that discharges the
+homological half of `hk` (`T(k(s)) = Ext¹_X(I, j_*F(s)) = 0`) once the scheme-side SES,
+acyclicity (`exists_acyclic_surjection`), and adjunction-ladder surjectivity are supplied.
+Project-local; reduces to `ext1_vanishing_of_acyclic_chase` via `isZero_extGroup_iff`. -/
+theorem ext1_isZero_of_acyclic_chase {Y : Scheme.{u}} (S : ShortComplex Y.Modules)
+    (hS : S.ShortExact) (W : Y.Modules)
+    (hJ : IsZero (extGroup 1 S.X₂ W))
+    (hsurj :
+      letI : HasDerivedCategory Y.Modules := HasDerivedCategory.standard Y.Modules
+      haveI := CategoryTheory.hasExt_of_hasDerivedCategory Y.Modules
+      Function.Surjective
+        (fun v : Ext S.X₂ W 0 => (Ext.mk₀ S.f).comp v (zero_add 0))) :
+    IsZero (extGroup 1 S.X₃ W) := by
+  letI : HasDerivedCategory Y.Modules := HasDerivedCategory.standard Y.Modules
+  haveI := CategoryTheory.hasExt_of_hasDerivedCategory Y.Modules
+  rw [isZero_extGroup_iff] at hJ ⊢
+  exact fun x => ext1_vanishing_of_acyclic_chase S hS W hJ hsurj x
+
+/-- **(1.3 helper)** `IsZero (extGroup q · N)` transports across an isomorphism of the
+first ( contravariant) argument: an iso `e : M ≅ M'` carries `Ext^q(M, N) = 0` to
+`Ext^q(M', N) = 0`. Project-local; needed to strip the `pullback (𝟙 X)` wrapper off the
+acyclicity output of `exists_acyclic_surjection`. Proved by transporting elements through
+`Ext.mk₀ e.hom` / `Ext.mk₀ e.inv` (a two-sided inverse via `mk₀_comp_mk₀` + `inv_hom_id`). -/
+lemma isZero_extGroup_of_iso_left {Y : Scheme.{u}} (q : ℕ) {M M' : Y.Modules}
+    (e : M ≅ M') (N : Y.Modules) (h : IsZero (extGroup q M N)) :
+    IsZero (extGroup q M' N) := by
+  letI : HasDerivedCategory Y.Modules := HasDerivedCategory.standard Y.Modules
+  haveI := CategoryTheory.hasExt_of_hasDerivedCategory Y.Modules
+  rw [isZero_extGroup_iff] at h ⊢
+  intro y
+  have key : (Ext.mk₀ e.inv).comp ((Ext.mk₀ e.hom).comp y (zero_add q)) (zero_add q) = y := by
+    rw [← Ext.comp_assoc_of_second_deg_zero, Ext.mk₀_comp_mk₀, e.inv_hom_id, Ext.mk₀_id_comp]
+  rw [← key, h ((Ext.mk₀ e.hom).comp y (zero_add q))]
+  exact Ext.comp_zero _ _ _ _ _
+
+/-- **(1.3 helper, `lem:isZero_extGroup_of_iso_right`)** `IsZero (extGroup q M ·)`
+transports across an isomorphism of the second (covariant) argument: an iso `e : N ≅ N'`
+carries `Ext^q(M, N) = 0` to `Ext^q(M, N') = 0`. The second-argument mirror of
+`isZero_extGroup_of_iso_left`; needed to transport the homological vanishing
+`Ext¹_X(I, j_*j^*F) = 0` along the fibre identification `j_*j^*F ≅ F ⊗_S k(s)~`
+(`External.fibre_tensor_residue_iso`) into the residue value of `functorT`. Proved by
+transporting elements through postcomposition with `Ext.mk₀ e.inv` / `Ext.mk₀ e.hom`
+(a two-sided inverse via `mk₀_comp_mk₀` + `inv_hom_id`). Project-local. -/
+lemma isZero_extGroup_of_iso_right {Y : Scheme.{u}} (q : ℕ) (M : Y.Modules) {N N' : Y.Modules}
+    (e : N ≅ N') (h : IsZero (extGroup q M N)) :
+    IsZero (extGroup q M N') := by
+  letI : HasDerivedCategory Y.Modules := HasDerivedCategory.standard Y.Modules
+  haveI := CategoryTheory.hasExt_of_hasDerivedCategory Y.Modules
+  rw [isZero_extGroup_iff] at h ⊢
+  intro y
+  have key : (y.comp (Ext.mk₀ e.inv) (add_zero q)).comp (Ext.mk₀ e.hom) (add_zero q) = y := by
+    rw [Ext.comp_assoc_of_third_deg_zero, Ext.mk₀_comp_mk₀, e.inv_hom_id, Ext.comp_mk₀_id]
+  rw [← key, h (y.comp (Ext.mk₀ e.inv) (add_zero q))]
+  exact Ext.zero_comp _ _ _ _ _
+
+/-- **(1.3 brick (iii), discharges `hJ`)** The acyclic `J` produced by
+`exists_acyclic_surjection` satisfies `Ext¹_X(J, W) = 0` for every quasi-coherent `W`.
+Specialize the acyclicity hypothesis (vanishing of `Ext^q((g^* J), G)` for affine `g`, `q > 0`)
+to the identity `g = 𝟙 X` (which is affine), then strip the `pullback (𝟙 X)` wrapper via
+`Scheme.Modules.pullbackId` and `isZero_extGroup_of_iso_left`. This is precisely the `hJ`
+hypothesis of `ext1_isZero_of_acyclic_chase`, so the homological half of the (1.3)
+`T(k(s)) = Ext¹_X(I, j_*F(s)) = 0` step is now assembled up to the adjunction-ladder
+surjectivity (`hsurj`) and the fibre identification `F ⊗_S k(s)~ ≅ j_*F(s)`. Project-local. -/
+theorem acyclic_ext1_vanishes {X : Scheme.{u}} (J : X.Modules)
+    (hac : ∀ {Y : Scheme.{u}} (g : Y ⟶ X) [IsAffineHom g] (G : Y.Modules)
+        (_ : G.IsQuasicoherent) (q : ℕ) (_ : 0 < q),
+        IsZero (extGroup q ((Scheme.Modules.pullback g).obj J) G))
+    (W : X.Modules) (hW : W.IsQuasicoherent) : IsZero (extGroup 1 J W) :=
+  isZero_extGroup_of_iso_left 1 ((Scheme.Modules.pullbackId X).app J) W
+    (hac (𝟙 X) W hW 1 one_pos)
+
+end AcyclicChase
 
 end TildeExact
 
@@ -1287,5 +3495,399 @@ theorem exists_acyclic_surjection {X : Scheme.{u}} (I : X.Modules) :
   obtain ⟨ι, U, hU, π, hπ⟩ := External.exists_extensionByZero_surjection I
   exact ⟨_, π, hπ, fun {Y} g _ G hG q hq =>
     External.extensionByZero_coprod_acyclic ι U hU g G hG q hq⟩
+
+/-! ## Project-local Mathlib supplement — (1.3) brick (iii) surjectivity bricks
+
+The three buildable bricks that discharge `hsurj` of `ext1_isZero_of_acyclic_chase`
+and assemble `Ext¹_X(I, j_*j^*F) = 0` (= `T(k(s)) = 0` up to the fibre
+identification). See `lem:acyclic_ses`, `lem:fibre_hom_surjective`,
+`lem:adjunction_ladder_surjective`, `lem:ext1_X_pushforward_fibre_vanishes`. -/
+
+open CategoryTheory.Abelian
+
+/-- **(1.3 brick (iii), `lem:acyclic_ses`)** The short exact sequence
+`0 → K → J → I → 0` produced from `exists_acyclic_surjection I`: `J` is the acyclic
+cover, `π : J ⟶ I` the epimorphism, and `K = ker π`. Packaged as a `ShortComplex`
+with a `ShortExact` proof, `X₃` definitionally `I`, `X₂` definitionally `J`, and the
+acyclicity of `J` (= `X₂`) carried alongside for the homological `hJ` of the chase.
+Project-local. -/
+theorem acyclic_ses {X : Scheme.{u}} (I : X.Modules) :
+    ∃ (sc : ShortComplex X.Modules) (_ : sc.ShortExact) (_ : sc.X₃ = I),
+      ∀ {Y : Scheme.{u}} (g : Y ⟶ X) [IsAffineHom g] (G : Y.Modules)
+        (_ : G.IsQuasicoherent) (q : ℕ) (_ : 0 < q),
+        IsZero (extGroup q ((Scheme.Modules.pullback g).obj sc.X₂) G) := by
+  obtain ⟨J, π, hπ, hac⟩ := exists_acyclic_surjection I
+  haveI : Epi π := hπ
+  exact ⟨ShortComplex.mk (kernel.ι π) π (kernel.condition π),
+    ShortComplex.ShortExact.mk (ShortComplex.exact_kernel π), rfl,
+    fun {Y} g _ G hG q hq => hac g G hG q hq⟩
+
+/-- **(1.3 helper)** Bridge between the degree-0 `Ext` precomposition surjectivity
+(the form consumed by `ext1_isZero_of_acyclic_chase`/`contravariant_sequence_exact₁`)
+and the plain `Hom`-set precomposition surjectivity (the form produced by the
+adjunction ladder). The bijection `Ext.mk₀ : (J ⟶ N) ≃ Ext J N 0`
+(`Ext.mk₀_bijective`) conjugates the two precomposition maps via
+`Ext.mk₀_comp_mk₀`. Project-local. -/
+lemma ext0_precomp_surjective_iff {Y : Scheme.{u}} {K J N : Y.Modules} (φ : K ⟶ J) :
+    letI : HasDerivedCategory Y.Modules := HasDerivedCategory.standard Y.Modules
+    haveI := CategoryTheory.hasExt_of_hasDerivedCategory Y.Modules
+    (Function.Surjective (fun v : Ext J N 0 => (Ext.mk₀ φ).comp v (zero_add 0))
+      ↔ Function.Surjective (fun v : (J ⟶ N) => φ ≫ v)) := by
+  letI : HasDerivedCategory Y.Modules := HasDerivedCategory.standard Y.Modules
+  haveI := CategoryTheory.hasExt_of_hasDerivedCategory Y.Modules
+  constructor
+  · intro h w
+    obtain ⟨ve, hve⟩ := h (Ext.mk₀ w)
+    refine ⟨Ext.homEquiv₀ ve, ?_⟩
+    have hmk : Ext.mk₀ (φ ≫ Ext.homEquiv₀ ve) = Ext.mk₀ w := by
+      rw [← Ext.mk₀_comp_mk₀, Ext.mk₀_homEquiv₀_apply]; exact hve
+    exact (Ext.mk₀_bijective K N).1 hmk
+  · intro h w
+    obtain ⟨vh, hvh⟩ := h (Ext.homEquiv₀ w)
+    refine ⟨Ext.mk₀ vh, ?_⟩
+    simp only at hvh ⊢
+    rw [Ext.mk₀_comp_mk₀, hvh, Ext.mk₀_homEquiv₀_apply]
+
+/-- **(1.3 brick (iii), `lem:adjunction_ladder_surjective`)** Transport precomposition
+surjectivity through the pullback–pushforward adjunction `j^* ⊣ j_*`. For a morphism
+`j : Y ⟶ X`, an `𝒪_Y`-module `G`, and `φ : K ⟶ J` in `X.Modules`: if precomposition
+with `j^*φ` is surjective `Hom_Y(j^*J, G) → Hom_Y(j^*K, G)`, then precomposition with
+`φ` is surjective `Hom_X(J, j_*G) → Hom_X(K, j_*G)`. The square commutes by
+`Adjunction.homEquiv_naturality_left` of `Scheme.Modules.pullbackPushforwardAdjunction j`
+(of which `External.adjunction` is the `homEquiv.symm`); conjugating the bottom-row
+surjection by the two `homEquiv` bijections gives the top row. Project-local. -/
+theorem adjunction_ladder_surjective {X Y : Scheme.{u}} (j : Y ⟶ X)
+    {K J : X.Modules} (φ : K ⟶ J) (G : Y.Modules)
+    (hsurj : Function.Surjective
+      (fun u : (Scheme.Modules.pullback j).obj J ⟶ G =>
+        (Scheme.Modules.pullback j).map φ ≫ u)) :
+    Function.Surjective
+      (fun v : J ⟶ (Scheme.Modules.pushforward j).obj G => φ ≫ v) := by
+  intro w
+  let adj := Scheme.Modules.pullbackPushforwardAdjunction j
+  obtain ⟨u, hu⟩ := hsurj ((adj.homEquiv K G).symm w)
+  refine ⟨adj.homEquiv J G u, ?_⟩
+  have hnat := adj.homEquiv_naturality_left φ u
+  simp only at hu ⊢
+  rw [← hnat, hu, Equiv.apply_symm_apply]
+
+/-- **(1.3 brick (iii), `lem:fibre_hom_surjective`)** Surjectivity of the fibre-side
+transition map `Hom_{X(s)}(j^*J, j^*F) → Hom_{X(s)}(j^*K, j^*F)` (precomposition with
+`j^*(sc.f)`), for the fibre inclusion `j = f.fiberι s`. Given the pulled-back sequence
+`0 → j^*K → j^*J → j^*I → 0` short exact (`hSEpull` — produced from `External.flat_pullback_exact`
+using that `I = sc.X₃` is `S`-flat) and the fibre Ext-vanishing
+`Ext¹_{X(s)}(j^*I, j^*F) = 0` (`FiberExtVanishes 1 f sc.X₃ F s`), the connecting map out of
+`Ext⁰(j^*K, j^*F)` lands in the zero group `Ext¹(j^*I, j^*F)`, so by
+`Ext.contravariant_sequence_exact₁` every element of `Ext⁰(j^*K, j^*F)` is in the image of
+precomposition with `mk₀ (j^*sc.f)`; the `Ext⁰ ↔ Hom` bridge (`ext0_precomp_surjective_iff`)
+restates this as `Hom`-precomposition surjectivity. Project-local. -/
+theorem fibre_hom_surjective {X S : Scheme.{u}} (f : X ⟶ S) (s : S)
+    (sc : ShortComplex X.Modules) (F : X.Modules)
+    (hSEpull : (sc.map (Scheme.Modules.pullback (f.fiberι s))).ShortExact)
+    (hs : FiberExtVanishes 1 f sc.X₃ F s) :
+    Function.Surjective
+      (fun u : (Scheme.Modules.pullback (f.fiberι s)).obj sc.X₂ ⟶
+          (Scheme.Modules.pullback (f.fiberι s)).obj F =>
+        (Scheme.Modules.pullback (f.fiberι s)).map sc.f ≫ u) := by
+  letI : HasDerivedCategory (f.fiber s).Modules :=
+    HasDerivedCategory.standard (f.fiber s).Modules
+  haveI := CategoryTheory.hasExt_of_hasDerivedCategory (f.fiber s).Modules
+  refine (ext0_precomp_surjective_iff
+    ((Scheme.Modules.pullback (f.fiberι s)).map sc.f)).mp ?_
+  intro x₁
+  have hzero : hSEpull.extClass.comp x₁ (show (1:ℕ) + 0 = 1 by norm_num) = 0 :=
+    (isZero_extGroup_iff 1 _ _).mp hs _
+  obtain ⟨x₂, hx₂⟩ := Ext.contravariant_sequence_exact₁ hSEpull
+    ((Scheme.Modules.pullback (f.fiberι s)).obj F) x₁
+    (show (1:ℕ) + 0 = 1 by norm_num) hzero
+  exact ⟨x₂, hx₂⟩
+
+/-- **(1.3 brick (iii) assembly, `lem:ext1_X_pushforward_fibre_vanishes`)** The
+homological half of `T(k(s)) = 0`: `Ext¹_X(I, j_*j^*F) = 0` for the fibre inclusion
+`j = f.fiberι s`. Feeds the contravariant chase `ext1_isZero_of_acyclic_chase` with the
+acyclic SES `0 → K → J → I → 0` (`acyclic_ses`), whose `hJ` is discharged by
+`acyclic_ext1_vanishes` and whose `hsurj` is assembled from `fibre_hom_surjective`
+(fibre-side surjectivity), `adjunction_ladder_surjective` (transport through `j^* ⊣ j_*`),
+and the `Ext⁰ ↔ Hom` bridge `ext0_precomp_surjective_iff`.
+
+The single flatness hypothesis `hI : IsSFlat f I` (flatness of the **base term** `I`
+over `S`) is the genuine AK input; it is consumed by the iter-029 anchor
+`External.flat_fibre_restriction_exact` to keep the fibre-restricted sequence short exact
+("since `I` is `S`-flat, the sequence remains exact when restricted to `X(s)`"),
+**replacing** the iter-028 named gap `hpullflat` (the bridge `IsSFlat (j ≫ f) (j^*I)` was
+shown FALSE). The quasicoherence of `W = j_*j^*F` is supplied by
+`External.fibre_pushforward_qcoh` from `hFqc : F.IsQuasicoherent` (pullback then
+qcqs-pushforward of a quasi-coherent), replacing the iter-028 named gap `hWqc`.
+Project-local. -/
+theorem ext1_X_pushforward_fibre_vanishes {X S : Scheme.{u}} (f : X ⟶ S) (s : S)
+    (I F : X.Modules) (hI : IsSFlat f I) (hFqc : F.IsQuasicoherent)
+    (hs : FiberExtVanishes 1 f I F s) :
+    IsZero (extGroup 1 I ((Scheme.Modules.pushforward (f.fiberι s)).obj
+      ((Scheme.Modules.pullback (f.fiberι s)).obj F))) := by
+  obtain ⟨sc, hsc, hX3, hac⟩ := acyclic_ses I
+  set j := f.fiberι s with hj
+  set W := (Scheme.Modules.pushforward j).obj ((Scheme.Modules.pullback j).obj F) with hW
+  -- quasicoherence of `W = j_*j^*F` (qcqs-pushforward of a quasi-coherent pullback).
+  have hWqc : W.IsQuasicoherent := External.fibre_pushforward_qcoh f s F hFqc
+  -- the pulled-back SES `0 → j^*K → j^*J → j^*I → 0` stays short exact because `I` is
+  -- `S`-flat (the correct flatness mechanism: flatness of the base term `I = sc.X₃`).
+  have hSEpull : (sc.map (Scheme.Modules.pullback j)).ShortExact :=
+    External.flat_fibre_restriction_exact f s sc hsc (by rw [hX3]; exact hI)
+  -- `Ext¹_X(I, W) = 0` follows from the contravariant chase on `sc`.
+  rw [← hX3]
+  refine ext1_isZero_of_acyclic_chase sc hsc W ?_ ?_
+  · -- `hJ`: `Ext¹_X(J, W) = 0` since `J` is acyclic.
+    exact acyclic_ext1_vanishes sc.X₂ hac W hWqc
+  · -- `hsurj`: precomposition `Hom_X(J, W) → Hom_X(K, W)` is surjective.
+    refine (ext0_precomp_surjective_iff sc.f).mpr ?_
+    refine adjunction_ladder_surjective j sc.f ((Scheme.Modules.pullback j).obj F) ?_
+    exact fibre_hom_surjective f s sc F hSEpull (by rw [hX3]; exact hs)
+
+/-- **(`lem:functorT_residue_eq_zero`, the residue value `T(k(s)) = 0`)** For `A`
+Noetherian local with closed point `s` and residue field `k = k(s)`, `f : X ⟶ Spec A`,
+and `I, F : X.Modules` with `I` `S`-flat (`hI`), `F` quasi-coherent (`hFqc`), and the
+fibre `Ext`-vanishing `Ext¹_{X(s)}(I(s), F(s)) = 0` (`hs`), the value of `T = functorT A
+f I F` on the residue field is zero: `(functorT A f I F).obj k~ = 0`. This is exactly the
+`hk` hypothesis of `functorT_eq_zero_of_residue`; composing the two yields `T(M) = 0` for
+every finitely generated `A`-module `M` — the homological heart of (1.3) at `S = Spec A`.
+
+Route: `functorT_obj_isZero_iff` reduces the claim to `extGroup 1 I (F ⊗_S k~) = 0`; the
+fibre identification `External.fibre_tensor_residue_iso` (`j_*j^*F ≅ F ⊗_S k~`) transports
+it — via `isZero_extGroup_of_iso_right` in the second `Ext` argument — to
+`extGroup 1 I (j_*j^*F) = 0`, which is `ext1_X_pushforward_fibre_vanishes` (using `hI`,
+`hFqc`, `hs`). Project-local. -/
+lemma functorT_residue_eq_zero {X : Scheme.{u}} (A : CommRingCat.{u})
+    [IsNoetherianRing ↑A] [IsLocalRing ↑A] (f : X ⟶ Spec A) (I F : X.Modules)
+    (hI : IsSFlat f I) (hFqc : F.IsQuasicoherent)
+    (hs : FiberExtVanishes 1 f I F (IsLocalRing.closedPoint ↑A)) :
+    IsZero ((functorT A f I F).obj (ModuleCat.of ↑A (IsLocalRing.ResidueField ↑A))) := by
+  rw [functorT_obj_isZero_iff]
+  exact isZero_extGroup_of_iso_right 1 I (External.fibre_tensor_residue_iso A f F)
+    (ext1_X_pushforward_fibre_vanishes f (IsLocalRing.closedPoint ↑A) I F hI hFqc hs)
+
+/-- **(`lem:functorT_eq_zero`, the homological heart of (1.3) at `S = Spec A`)** For `A`
+Noetherian local with closed point `s`, `f : X ⟶ Spec A`, and `I, F : X.Modules` with `I`
+and `F` `S`-flat, `F` quasi-coherent, and the fibre `Ext`-vanishing
+`Ext¹_{X(s)}(I(s), F(s)) = 0`, the functor `T = functorT A f I F` vanishes on **every**
+finitely generated `A`-module `M`: `(functorT A f I F).obj M = 0`.
+
+This composes the residue value `functorT_residue_eq_zero` (`T(k(s)) = 0`, the `hk`
+input) with `functorT_eq_zero_of_residue` (half-exactness + OB 2.1 upgrade `T(k) = 0 ⟹
+T(M) = 0 ∀M`). It is the full homological conclusion of the (1.3) argument *after*
+reduction to the affine-Noetherian-local base — the input to the free conclusion (brick 6:
+`M ↦ Hom_X(I, F ⊗_S M~)` exact ⟹ `H` free at `s`). Project-local. -/
+lemma functorT_eq_zero {X : Scheme.{u}} (A : CommRingCat.{u})
+    [IsNoetherianRing ↑A] [IsLocalRing ↑A] (f : X ⟶ Spec A) (I F : X.Modules)
+    (hI : IsSFlat f I) (hF : IsSFlat f F) (hFqc : F.IsQuasicoherent)
+    (hs : FiberExtVanishes 1 f I F (IsLocalRing.closedPoint ↑A))
+    (M : ModuleCat.{u} ↑A) : IsZero ((functorT A f I F).obj M) :=
+  functorT_eq_zero_of_residue A f I F hF (functorT_residue_eq_zero A f I F hI hFqc hs) M
+
+/-! ### Brick 6 of (1.3): free conclusion + EGA reduction
+
+From the homological heart `T(M) = 0` (`functorT_eq_zero`) to local freeness of the
+representing module `H`. The free conclusion at `S = Spec A` (Noetherian local) is
+**built** below (`homTensorFunctor_tilde_exact` ⟹ `H_free_of_functorT_zero`, with the
+commutative-algebra endpoint `Module.free_of_flat_of_isLocalRing` supplied by Mathlib);
+the EGA reduction from a general base `S` to `Spec A` is **anchored** (it transports `H`
+along base change, requiring the base-change compatibility `H_tensor` which is paused).
+-/
+
+/-- **[EGA III₂, 7.7.6]** Local finite presentation (coherence) of the representing
+module `H(I,F)` over a Noetherian base. Used in the (1.3) free conclusion (affine
+bridge `H ≅ Γ(H)~`) and in the EGA `O_I 5.4.1` free-at-a-point criterion. Absent from
+Mathlib; small EGA anchor. See `thm:ega_H_isLFP`. -/
+axiom External.H_isLFP {X S : Scheme.{u}} (f : X ⟶ S) (I F : X.Modules)
+    (ha : Admissible f I F) : IsLFP (H f I F ha)
+
+/-- **[EGA O_I, 5.4.1, 2.4.1]** A locally finitely presented `𝒪_S`-module that is free
+at a point `s` (its pullback along some open neighbourhood `V ∋ s` is a free sheaf) is
+locally free of finite rank on an open, retrocompact neighbourhood of `s`. Standard EGA;
+no §1 content. See `thm:ega_lfp_free_at_point`. -/
+axiom External.lfp_free_at_point_locallyFree {S : Scheme.{u}} (M : S.Modules)
+    (hM : IsLFP M) (s : S)
+    (hfree : ∃ V : S.Opens, s ∈ V ∧ IsFreeMod ((Scheme.Modules.pullback V.ι).obj M)) :
+    ∃ U : S.Opens, s ∈ U ∧ IsRetrocompact U ∧ IsLocallyFreeOfFiniteRankOn M U
+
+/-- **[EGA IV₃, §8; AK §1 (1.3) p. 56]** The EGA reduction step of (1.3): the assertion
+is local on `S`, descent to a Noetherian base together with the base-change compatibility
+of `H` ((1.1)) reduces to `S = Spec A` with `A` Noetherian local and `s` the closed point.
+Given that the representing module is **free at the closed point** for every such reduced
+datum (the §1 output `H_free_of_functorT_zero`, supplied as the premise `hfree`), it
+produces the open, retrocompact neighbourhood on which `H(I,F)` is locally free of finite
+rank. Anchored: it transports `H` along base change, requiring the (paused) base-change
+compatibility of `H`. It carries NO §1 content. See `thm:ega_reduce_H_locallyFree`. -/
+axiom External.reduce_H_locallyFree_to_spec_local {X S : Scheme.{u}} (f : X ⟶ S)
+    (I F : X.Modules) (ha : Admissible f I F) (hI : IsSFlat f I) (s : S)
+    (hs : FiberExtVanishes 1 f I F s)
+    (hfree : ∀ {X' : Scheme.{u}} (A : CommRingCat.{u}) [IsNoetherianRing ↑A] [IsLocalRing ↑A]
+      (f' : X' ⟶ Spec A) (I' F' : X'.Modules) (ha' : Admissible f' I' F'),
+      IsSFlat f' I' →
+      FiberExtVanishes 1 f' I' F' (IsLocalRing.closedPoint ↑A) →
+      IsFreeMod (H f' I' F' ha')) :
+    ∃ U : S.Opens, s ∈ U ∧ IsRetrocompact U ∧
+      IsLocallyFreeOfFiniteRankOn (H f I F ha) U
+
+/-- **(`lem:homTensorFunctor_tilde_exact`)** From the homological heart `T = 0`
+(`functorT_eq_zero`): the functor `M ↦ Hom_X(I, F ⊗_S M~)` on f.g. `A`-modules is right
+exact. Concretely, for a short exact sequence `sc` of `A`-modules the map
+`(homTensorFunctor f I F).map (tilde sc.g) : Hom_X(I, F ⊗_S sc.X₂~) → Hom_X(I, F ⊗_S sc.X₃~)`
+(postcomposition with `F ⊗_S tilde(sc.g)`) is surjective.
+
+Route: `tilde_exact` + `External.flat_tensor_exact` (`F` `S`-flat) give a short exact
+sequence `0 → F⊗sc.X₁~ → F⊗sc.X₂~ → F⊗sc.X₃~ → 0` of `𝒪_X`-modules; the covariant `Ext`
+LES `Abelian.Ext.covariant_sequence_exact₃` lifts every degree-0 class on `F⊗sc.X₃~` whose
+image under the connecting map to `Ext¹_X(I, F⊗sc.X₁~)` vanishes — and that target is
+`(functorT A f I F).obj sc.X₁ = 0` by `functorT_eq_zero`, so every class lifts. The
+degree-0 Ext bijection `Ext.mk₀_bijective` + `Ext.mk₀_comp_mk₀` translate this into the
+Hom-set surjectivity. Project-local. -/
+theorem homTensorFunctor_tilde_exact {X : Scheme.{u}} (A : CommRingCat.{u})
+    [IsNoetherianRing ↑A] [IsLocalRing ↑A] (f : X ⟶ Spec A) (I F : X.Modules)
+    (hI : IsSFlat f I) (hF : IsSFlat f F) (hFqc : F.IsQuasicoherent)
+    (hs : FiberExtVanishes 1 f I F (IsLocalRing.closedPoint ↑A))
+    (sc : ShortComplex (ModuleCat.{u} ↑A)) (hsc : sc.ShortExact) :
+    Function.Surjective
+      ((homTensorFunctor f I F).map ((AlgebraicGeometry.tilde.functor A).map sc.g)) := by
+  letI : HasDerivedCategory X.Modules := HasDerivedCategory.standard X.Modules
+  haveI := CategoryTheory.hasExt_of_hasDerivedCategory X.Modules
+  haveI : (AlgebraicGeometry.tilde.functor A).PreservesZeroMorphisms := inferInstance
+  -- The base-changed short exact sequence of `𝒪_X`-modules.
+  have hSEtilde : (sc.map (AlgebraicGeometry.tilde.functor A)).ShortExact := tilde_exact sc hsc
+  set scT := (sc.map (AlgebraicGeometry.tilde.functor A)).map (tensorBaseChangeFunctor f F)
+    with hscT
+  have hSEX : scT.ShortExact :=
+    External.flat_tensor_exact f F hF (sc.map (AlgebraicGeometry.tilde.functor A)) hSEtilde
+  -- `Ext¹_X(I, scT.X₁) = 0` is the value of `T` on `sc.X₁`.
+  have hzero : Subsingleton (CategoryTheory.Abelian.Ext I scT.X₁ 1) := by
+    have h0 : IsZero (extGroup 1 I ((tensorBaseChangeFunctor f F).obj
+        (AlgebraicGeometry.tilde sc.X₁))) :=
+      (functorT_obj_isZero_iff A f I F sc.X₁).mp
+        (functorT_eq_zero A f I F hI hF hFqc hs sc.X₁)
+    rw [extGroup, AddCommGrpCat.isZero_iff_subsingleton] at h0
+    exact h0
+  -- Surjectivity via the covariant `Ext` long exact sequence in degree 0.
+  intro ψ
+  -- `ψ : I ⟶ scT.X₃`.
+  have hx₃ : (CategoryTheory.Abelian.Ext.mk₀ ψ).comp hSEX.extClass (zero_add 1) = 0 :=
+    hzero.elim _ _
+  obtain ⟨x₂, hx₂⟩ :=
+    CategoryTheory.Abelian.Ext.covariant_sequence_exact₃ I hSEX
+      (CategoryTheory.Abelian.Ext.mk₀ ψ) (zero_add 1) hx₃
+  obtain ⟨φ, hφ⟩ := (CategoryTheory.Abelian.Ext.mk₀_bijective I scT.X₂).surjective x₂
+  refine ⟨φ, ?_⟩
+  have key : CategoryTheory.Abelian.Ext.mk₀ (φ ≫ scT.g) = CategoryTheory.Abelian.Ext.mk₀ ψ := by
+    rw [← CategoryTheory.Abelian.Ext.mk₀_comp_mk₀, hφ]; exact hx₂
+  exact (CategoryTheory.Abelian.Ext.mk₀_bijective I scT.X₃).injective key
+
+/-- A natural isomorphism of `Type`-valued functors transports surjectivity of the action
+on a morphism: if `G.map φ` is surjective and `α : F ≅ G`, then `F.map φ` is surjective.
+Project-local helper isolating the `Type`-category bookkeeping for the (1.3) free
+conclusion transport (`coyoneda(H) ≅ homTensorFunctor`). -/
+private lemma surjective_of_natIso_map {C : Type u'} [CategoryTheory.Category.{v'} C]
+    {F G : CategoryTheory.Functor C (Type w)} (α : F ≅ G) {Y Z : C} (φ : Y ⟶ Z)
+    (h : Function.Surjective (G.map φ)) : Function.Surjective (F.map φ) := by
+  intro y
+  obtain ⟨x, hx⟩ := h (CategoryTheory.ConcreteCategory.hom (α.hom.app Z) y)
+  refine ⟨CategoryTheory.ConcreteCategory.hom (α.inv.app Y) x, ?_⟩
+  have h1 := CategoryTheory.NatTrans.naturality_apply α.inv φ x
+  rw [← h1, hx, ← CategoryTheory.ConcreteCategory.comp_apply, α.hom_inv_id_app,
+    CategoryTheory.ConcreteCategory.id_apply]
+
+/-- **(transport core of `thm:H_free_of_functorT_zero`)** Given the representing module
+`H(I,F) ≅ Ñ` over `Spec A`, the right-exactness of `M ↦ Hom_X(I, F ⊗_S M~)`
+(`homTensorFunctor_tilde_exact`) transports — through the representability iso
+`H_represents`, the iso `e : Ñ ≅ H`, and full faithfulness of `tilde` — to right
+exactness of `M ↦ Hom_A(N, M)`: for any short exact sequence `sc` of `A`-modules,
+postcomposition `(N ⟶ sc.X₂) → (N ⟶ sc.X₃)` with `sc.g` is surjective. Project-local. -/
+private theorem hom_postcomp_surjective_of_functorT_zero {X : Scheme.{u}} (A : CommRingCat.{u})
+    [IsNoetherianRing ↑A] [IsLocalRing ↑A] (f : X ⟶ Spec A) (I F : X.Modules)
+    (ha : Admissible f I F) (hI : IsSFlat f I) (hF : IsSFlat f F) (hFqc : F.IsQuasicoherent)
+    (hs : FiberExtVanishes 1 f I F (IsLocalRing.closedPoint ↑A))
+    (N : ModuleCat.{u} ↑A) (e : (AlgebraicGeometry.tilde.functor A).obj N ≅ H f I F ha)
+    (sc : ShortComplex (ModuleCat.{u} ↑A)) (hsc : sc.ShortExact) :
+    Function.Surjective (fun φ : N ⟶ sc.X₂ => φ ≫ sc.g) := by
+  obtain ⟨α⟩ := H_represents f I F ha
+  -- Step 2: transport STEP B through the representability iso `α`, whiskered by `tilde`.
+  have s2 : Function.Surjective
+      ((AlgebraicGeometry.tilde.functor A ⋙ coyoneda.obj (op (H f I F ha))).map sc.g) :=
+    surjective_of_natIso_map
+      (CategoryTheory.Functor.isoWhiskerLeft (AlgebraicGeometry.tilde.functor A) α)
+      sc.g (homTensorFunctor_tilde_exact A f I F hI hF hFqc hs sc hsc)
+  -- Step 3: transport through `e : Ñ ≅ H` (coyoneda is contravariant in the object).
+  have s3 : Function.Surjective
+      ((AlgebraicGeometry.tilde.functor A ⋙
+        coyoneda.obj (op ((AlgebraicGeometry.tilde.functor A).obj N))).map sc.g) :=
+    surjective_of_natIso_map (CategoryTheory.Functor.isoWhiskerLeft
+      (AlgebraicGeometry.tilde.functor A) (coyoneda.mapIso e.op).symm) sc.g s2
+  -- Step 4: descend through full faithfulness of `tilde`.
+  intro φ'
+  obtain ⟨ρ, hρ⟩ := s3 ((AlgebraicGeometry.tilde.functor A).map φ')
+  set FF := AlgebraicGeometry.tilde.fullyFaithfulFunctor (R := A) with hFF
+  refine ⟨FF.preimage ρ, ?_⟩
+  apply (AlgebraicGeometry.tilde.functor A).map_injective
+  rw [CategoryTheory.Functor.map_comp, FF.map_preimage]
+  exact hρ
+
+/-- **(`thm:H_free_of_functorT_zero`)** For `A` Noetherian local, `f : X ⟶ Spec A`
+admissible, `I` `S`-flat, and the fibre `Ext`-vanishing at the closed point, the
+representing module `H(I,F)` is a free `𝒪_{Spec A}`-module.
+
+Route: `homTensorFunctor_tilde_exact` (the homological heart `T = 0`) makes
+`M ↦ Hom_X(I, F ⊗_S M~)` right exact; `hom_postcomp_surjective_of_functorT_zero`
+transports this through representability and the affine bridge `H ≅ Ñ` to right
+exactness of `M ↦ Hom_A(N, M)`, i.e. a finite free cover `Aⁿ ↠ N` splits, so `N` is
+projective; `Module.Flat.of_projective` + `Module.free_of_flat_of_isLocalRing` make `N`
+free; tilde-ing a basis gives `H ≅ Ñ ≅` a free sheaf. Project-local. -/
+theorem H_free_of_functorT_zero {X : Scheme.{u}} (A : CommRingCat.{u})
+    [IsNoetherianRing ↑A] [IsLocalRing ↑A] (f : X ⟶ Spec A) (I F : X.Modules)
+    (ha : Admissible f I F) (hI : IsSFlat f I)
+    (hs : FiberExtVanishes 1 f I F (IsLocalRing.closedPoint ↑A)) :
+    IsFreeMod (H f I F ha) := by
+  have hF : IsSFlat f F := ha.flat_F
+  haveI hFfp : F.IsFinitePresentation := ha.lfp_F
+  have hFqc : F.IsQuasicoherent := inferInstance
+  haveI hHfp : (H f I F ha).IsFinitePresentation := External.H_isLFP f I F ha
+  obtain ⟨N, hNfp, ⟨eHN⟩⟩ := External.affine_fp_tilde (H f I F ha)
+  haveI : Module.FinitePresentation ↑A ↑N := hNfp
+  haveI : Module.Finite ↑A ↑N := inferInstance
+  -- `N` is projective: a finite free cover `Aⁿ ↠ N` splits by the transported right
+  -- exactness.
+  haveI hNproj : Module.Projective ↑A ↑N := by
+    obtain ⟨n, p, hp⟩ := Module.Finite.exists_fin' ↑A ↑N
+    set pm : ModuleCat.of ↑A (Fin n → ↑A) ⟶ N := ModuleCat.ofHom p with hpm
+    haveI : Epi pm := by
+      rw [ModuleCat.epi_iff_surjective]; simpa [hpm] using hp
+    have hSES : (ShortComplex.mk (CategoryTheory.Limits.kernel.ι pm) pm
+        (CategoryTheory.Limits.kernel.condition pm)).ShortExact :=
+      ShortComplex.ShortExact.mk (ShortComplex.exact_kernel pm)
+    obtain ⟨s, hsv⟩ := hom_postcomp_surjective_of_functorT_zero A f I F ha hI hF hFqc hs N eHN
+      (ShortComplex.mk (CategoryTheory.Limits.kernel.ι pm) pm
+        (CategoryTheory.Limits.kernel.condition pm)) hSES (𝟙 N)
+    refine (Module.Projective.iff_split_of_projective p hp).mpr ⟨s.hom, ?_⟩
+    have h := hsv
+    apply_fun ModuleCat.Hom.hom at h
+    simpa [ModuleCat.hom_comp, ModuleCat.hom_id, hpm, ModuleCat.hom_ofHom] using h
+  haveI : Module.Flat ↑A ↑N := Module.Flat.of_projective
+  haveI : Module.Free ↑A ↑N := Module.free_of_flat_of_isLocalRing
+  -- `N` free of finite rank ⟹ `Ñ` (hence `H`) is a free sheaf.
+  haveI : Finite (Module.Free.ChooseBasisIndex ↑A ↑N) := inferInstance
+  obtain ⟨Λ', ⟨gfree⟩⟩ := tilde_free (R := A) (Module.Free.ChooseBasisIndex ↑A ↑N)
+  refine ⟨Λ', ⟨eHN.symm ≪≫ (AlgebraicGeometry.tilde.functor A).mapIso
+    (LinearEquiv.toModuleIso (Module.Free.chooseBasis ↑A ↑N).repr) ≪≫ gfree⟩⟩
+
+/-- **(1.3)** Local freeness of `H(I,F)`: if `Ext^1_{X(s)}(I(s),F(s)) = 0` for some
+`s ∈ S` (with `I` `S`-flat, as `Admissible` carries only flatness of `F`), then `H(I,F)`
+is locally free of finite rank on an open, retrocompact neighbourhood of `s`.
+
+Assembly: the EGA reduction `External.reduce_H_locallyFree_to_spec_local` reduces to the
+Noetherian-local affine case, whose §1 output — freeness of `H` at the closed point — is
+the built `H_free_of_functorT_zero`. See `thm:H_locallyFree`. -/
+theorem H_locallyFree_of_ext_vanishing (f : X ⟶ S) (I F : X.Modules)
+    (ha : Admissible f I F) (hI : IsSFlat f I) (s : S) (hs : FiberExtVanishes 1 f I F s) :
+    ∃ U : S.Opens, s ∈ U ∧ IsRetrocompact U ∧
+      IsLocallyFreeOfFiniteRankOn (H f I F ha) U :=
+  External.reduce_H_locallyFree_to_spec_local f I F ha hI s hs
+    (by intro X' A inst1 inst2 f' I' F' ha' hI' hs'
+        exact @H_free_of_functorT_zero X' A inst1 inst2 f' I' F' ha' hI' hs')
 
 end MR0555258CompactifyingPicard

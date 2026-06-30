@@ -5,6 +5,17 @@ Authors: Christian Merten
 -/
 import Mathlib
 
+/- USER (2026-06-29): TWO standing directives for this file.
+   (A) FBC PIVOT — prove flat base change via the ČECH-TO-COHOMOLOGY SPECTRAL SEQUENCE, not the
+       walled mate-calculus naturality (`pullbackSpecTildeNatIso_comp` /
+       `pushforwardPullbackBaseChange_restrict_naturality`). Build the relative SS
+       `E₂^{p,q}=Ȟ^p(𝒰,R^q f_*F) ⟹ R^{p+q}f_*F` (Stacks 01EO/03OW, Cohomology 20.11.5) on Mathlib's
+       `Algebra.Homology.SpectralObject.*` / `SpectralSequence.Basic` / `TotalComplex` scaffold; use its
+       base-change functoriality to close `cech_flatBaseChange` (02KH), then Kleiman 4.8
+       (`Scheme.PicScheme.representable`). Full plan + anchors: `.archon/USER_HINTS.md` temporary hint.
+   (B) Mate-calc chain deleted iter-312 in favor of the SS route; remaining `sorry`s are the two
+       canonical-mate stubs (`affineBaseChange_pushforward_iso`, `flatBaseChange_pushforward_isIso`). -/
+
 /-!
 # Flat base change for the pushforward of a quasi-coherent sheaf (`i = 0`)
 
@@ -143,7 +154,7 @@ theorem Modules.isIso_of_isIso_app_of_isBasis {X : Scheme.{u}} {M N : X.Modules}
   · -- Surjectivity: a germ at `x` comes from a section over a basic open, where `α` is onto.
     intro t
     obtain ⟨U, hxU, hU, s, rfl⟩ :=
-      TopCat.Presheaf.germ_exist_of_isBasis hB N.presheaf x t
+      TopCat.Presheaf.exists_mem_germ_eq_of_isBasis hB N.presheaf x t
     haveI := happ U hU
     obtain ⟨s', hs'⟩ := (CategoryTheory.ConcreteCategory.bijective_of_isIso
       (((Scheme.Modules.toPresheaf X).map φ).app (Opposite.op U))).surjective s
@@ -295,8 +306,9 @@ noncomputable def gammaPushforwardIso {R R' : CommRingCat.{u}} (φ : R ⟶ R')
   have hcomp : pushTop.comp gsRhom = gsR'hom.comp φ.hom := by
     apply RingHom.ext
     intro x
-    simpa [hpush, hgsR, hgsR', RingHom.comp_apply] using
-      congr($(globalSectionsIso_hom_comp_specMap_appTop φ).hom x)
+    have h := congr($(globalSectionsIso_hom_comp_specMap_appTop φ).hom x)
+    simp only [hpush, hgsR, hgsR', RingHom.comp_apply] at h ⊢
+    exact h
   exact (ModuleCat.restrictScalarsComp'App gsRhom pushTop (pushTop.comp gsRhom) rfl SecN).symm ≪≫
     (ModuleCat.restrictScalarsCongr hcomp).app SecN ≪≫
     (ModuleCat.restrictScalarsComp'App φ.hom gsR'hom (gsR'hom.comp φ.hom) rfl SecN)
@@ -342,8 +354,9 @@ noncomputable def gammaPushforwardIsoAt {R R' : CommRingCat.{u}} (φ : R ⟶ R')
   have hcomp : pushTop.comp gsRhom = gsR'hom.comp φ.hom := by
     apply RingHom.ext
     intro x
-    simpa [hpush, hgsR, hgsR', RingHom.comp_apply] using
-      congr($(globalSectionsIso_hom_comp_specMap_appTop φ).hom x)
+    have h := congr($(globalSectionsIso_hom_comp_specMap_appTop φ).hom x)
+    simp only [hpush, hgsR, hgsR', RingHom.comp_apply] at h ⊢
+    exact h
   exact (ModuleCat.restrictScalarsComp'App gsRhom pushTop (pushTop.comp gsRhom) rfl SecN).symm ≪≫
     (ModuleCat.restrictScalarsCongr hcomp).app SecN ≪≫
     (ModuleCat.restrictScalarsComp'App φ.hom gsR'hom (gsR'hom.comp φ.hom) rfl SecN)
@@ -390,7 +403,8 @@ lemma fromTildeΓ_app_isIso_of_isLocalizedModule {R : CommRingCat.{u}} (N : (Spe
   have htri : L ∘ₗ j = ρ := by
     have := Scheme.Modules.toOpen_fromTildeΓ_app N (PrimeSpectrum.basicOpen a)
     apply_fun ModuleCat.Hom.hom at this
-    simpa [hL, hj, hρ, ModuleCat.hom_comp] using this
+    simp only [hL, hj, hρ, ModuleCat.hom_comp] at this ⊢
+    exact this
   -- `L` equals the canonical iso between the two localizations of `Γ(N, ⊤)`, hence bijective.
   set ej := IsLocalizedModule.iso (Submonoid.powers a) j with hej
   set eρ := IsLocalizedModule.iso (Submonoid.powers a) ρ with heρ
@@ -692,6 +706,108 @@ noncomputable def pullback_spec_tilde_iso {R R' : CommRingCat.{u}}
   let adjR := (ModuleCat.extendRestrictScalarsAdj φ.hom).comp (tilde.adjunction (R := R'))
   (((conjugateIsoEquiv adjL adjR).symm (gammaPushforwardNatIso φ)).symm).app M
 
+/-! ## Project-local Mathlib supplement — affine termwise base-change brick (IN PROGRESS)
+
+The concrete-tilde route to flat base change (Stacks 02KH) builds a *fresh* base-change
+isomorphism `e : g^* ∘ f_* ≅ f'_* ∘ (g')^*` by gluing affine-local isomorphisms, instead of
+proving the canonical adjoint mate `pushforwardBaseChangeMap` is an isomorphism (which walls on the
+mate ↔ `cancelBaseChange` coherence). The affine-local brick is the floor of that construction:
+over the fully affine pushout square
+```
+  Spec (A ⊗_R R') --Spec ρ--> Spec A
+  |Spec σ                      |Spec φ
+  v                            v
+  Spec R'      ----Spec ψ---->  Spec R
+```
+(`φ : R → A`, `ψ : R → R'`, `ρ = includeLeft`, `σ = includeRight` into `A ⊗_R R'`) it produces the
+termwise isomorphism `g^*(f_* M̃) ≅ f'_*((g')^* M̃)`, assembled from the two sorry-free tilde
+dictionaries `pushforward_spec_tilde_iso` / `pullback_spec_tilde_iso` and the pure
+commutative-algebra cancellation `Algebra.IsPushout.cancelBaseChange`, never forming the adjoint
+mate.
+
+STATUS (iter-305): the load-bearing module-level core — the `R'`-linear iso
+`(extendScalars ψ) ∘ (restrictScalars φ) ≅ (restrictScalars σ) ∘ (extendScalars ρ)` realising
+`R' ⊗_R M ≅ (A ⊗_R R') ⊗_A M` — was PROVEN to typecheck axiom-clean in the **CommRingCat framing**
+(ambient algebras supplied as `φ.hom.toAlgebra` / `ψ.hom.toAlgebra`), by `@`-threading the
+`RingHom.toAlgebra` instances through `Algebra.IsPushout.cancelBaseChange` (so its output is defeq to
+the `compHom`-based `ModuleCat.extendScalars`/`restrictScalars` objects) with `IsPushout` transported
+from `TensorProduct.isPushout'` via `Algebra.algebra_ext`. See `task_results` for the full working
+construction. It is NOT yet landed as a top-level declaration: stating the tensor `A ⊗_R R'` in the
+signature forces a Type-u framing whose *opaque* ambient `[Algebra R A]`/`[Algebra R R']` lets the
+GLOBAL `Algebra.TensorProduct.leftAlgebra`/`rightAlgebra` instances win over the `toAlgebra` `letI`s,
+breaking the `compHom`-defeq on the inner `Module A (A⊗_R R')` and outer `Module R' (·)`. The
+recommended fix (iter-306) is the abstract-`B` framing: take `ρ : A ⟶ B`, `σ : R' ⟶ B` and a
+`CategoryTheory.IsPushout φ ψ ρ σ` (or `IsPullback` of the Spec square) hypothesis, derive
+`Algebra.IsPushout` in the proof with all algebras `toAlgebra` (no global tensor instances to shadow),
+and assemble the 5-step chain. See blueprint `lem:affine_pushforward_pullback_baseChange`. -/
+
+/-- **Module-level base-change cancellation iso (abstract-`B` framing).** Given a pushout square of
+commutative rings
+```
+  R --φ--> A
+  |ψ       |ρ
+  v        v
+  R' --σ-> B
+```
+(so `B ≅ A ⊗_R R'`) and an `A`-module `M`, the `R'`-linear isomorphism
+`extendScalars_ψ (restrictScalars_φ M) ≅ restrictScalars_σ (extendScalars_ρ M)`, i.e.
+`R' ⊗_R M ≅ restrictScalars_σ (B ⊗_A M)`. It realises the inverse of Mathlib's
+`Algebra.IsPushout.cancelBaseChange` between the extension-of-scalars objects attached to the two
+legs of the square. The abstract `B` (rather than the concrete `A ⊗_R R'`) keeps all ambient
+algebra instances `toAlgebra`, so no global tensor-product instance shadows them and
+`cancelBaseChange`'s output module structures land defeq on the `compHom`-based
+`extendScalars`/`restrictScalars` objects. Project-local: the module core of the affine termwise
+base-change brick. See blueprint `lem:baseChangeCancelModuleIso`. -/
+noncomputable def baseChangeCancelModuleIso {R A R' B : CommRingCat.{u}}
+    (φ : R ⟶ A) (ψ : R ⟶ R') (ρ : A ⟶ B) (σ : R' ⟶ B)
+    (h : CategoryTheory.IsPushout φ ψ ρ σ) (M : ModuleCat.{u} A) :
+    (ModuleCat.extendScalars ψ.hom).obj ((ModuleCat.restrictScalars φ.hom).obj M) ≅
+      (ModuleCat.restrictScalars σ.hom).obj ((ModuleCat.extendScalars ρ.hom).obj M) := by
+  letI iRA : Algebra (R : Type u) (A : Type u) := φ.hom.toAlgebra
+  letI iRR' : Algebra (R : Type u) (R' : Type u) := ψ.hom.toAlgebra
+  letI iAB : Algebra (A : Type u) (B : Type u) := ρ.hom.toAlgebra
+  letI iR'B : Algebra (R' : Type u) (B : Type u) := σ.hom.toAlgebra
+  letI iRB : Algebra (R : Type u) (B : Type u) := (ρ.hom.comp φ.hom).toAlgebra
+  letI iMR : Module (R : Type u) M := ((ModuleCat.restrictScalars φ.hom).obj M).isModule
+  haveI tRAM : IsScalarTower (R : Type u) A M :=
+    ⟨fun r a m => by rw [Algebra.smul_def, mul_smul]; rfl⟩
+  haveI tRAB : @IsScalarTower (R : Type u) A B _ iAB.toSMul iRB.toSMul :=
+    @IsScalarTower.of_algebraMap_eq (R : Type u) A B _ _ _ iRA iAB iRB (fun _ => rfl)
+  haveI tRR'B : @IsScalarTower (R : Type u) R' B _ iR'B.toSMul iRB.toSMul :=
+    @IsScalarTower.of_algebraMap_eq (R : Type u) R' B _ _ _ iRR' iR'B iRB (fun r => by
+      change (ρ.hom.comp φ.hom) r = σ.hom (ψ.hom r)
+      have := congrArg (fun m => (CommRingCat.Hom.hom m) r) h.w
+      simpa using this)
+  haveI hpush : @Algebra.IsPushout (R : Type u) R' _ _ iRR' A B _ _ iRA iR'B iAB iRB tRAB tRR'B :=
+    (CommRingCat.isPushout_iff_isPushout).mp h.flip
+  exact LinearEquiv.toModuleIso
+    (@Algebra.IsPushout.cancelBaseChange (R : Type u) R' _ _ iRR' A B _ _ iRA iRB iAB iR'B
+      tRAB tRR'B hpush M _ iMR _ tRAM).symm
+
+/-- **Affine termwise base change (abstract-`B` framing).** For a pushout square of commutative
+rings `(φ : R ⟶ A, ψ : R ⟶ R', ρ : A ⟶ B, σ : R' ⟶ B)` — equivalently the cartesian square of
+affine schemes obtained by `Spec` — and an `A`-module `M`, the base-change comparison
+`g^*(f_* M̃) ≅ f'_*((g')^* M̃)` for `f = Spec φ`, `g = Spec ψ`, `f' = Spec σ`, `g' = Spec ρ`. It is
+assembled as a 5-step chain from the two affine tilde dictionaries
+(`pushforward_spec_tilde_iso` / `pullback_spec_tilde_iso`) and the module-level cancellation core
+`baseChangeCancelModuleIso`, and it **never** forms the adjoint mate
+`pushforwardBaseChangeMap`, so it sidesteps the unresolved mate ↔ `cancelBaseChange` coherence
+obligation of the canonical route. This is the affine-local brick (the floor) of the active
+concrete-tilde route to flat base change (Stacks 02KG/02KH). Project-local. See blueprint
+`lem:affine_pushforward_pullback_baseChange`. -/
+noncomputable def affinePushforwardPullbackBaseChange {R A R' B : CommRingCat.{u}}
+    (φ : R ⟶ A) (ψ : R ⟶ R') (ρ : A ⟶ B) (σ : R' ⟶ B)
+    (h : CategoryTheory.IsPushout φ ψ ρ σ) (M : ModuleCat.{u} A) :
+    (Scheme.Modules.pullback (Spec.map ψ)).obj
+        ((Scheme.Modules.pushforward (Spec.map φ)).obj (tilde M)) ≅
+      (Scheme.Modules.pushforward (Spec.map σ)).obj
+        ((Scheme.Modules.pullback (Spec.map ρ)).obj (tilde M)) :=
+  (Scheme.Modules.pullback (Spec.map ψ)).mapIso (pushforward_spec_tilde_iso φ M)
+    ≪≫ pullback_spec_tilde_iso ψ ((ModuleCat.restrictScalars φ.hom).obj M)
+    ≪≫ (tilde.functor R').mapIso (baseChangeCancelModuleIso φ ψ ρ σ h M)
+    ≪≫ (pushforward_spec_tilde_iso σ ((ModuleCat.extendScalars ρ.hom).obj M)).symm
+    ≪≫ (Scheme.Modules.pushforward (Spec.map σ)).mapIso (pullback_spec_tilde_iso ρ M).symm
+
 /-- **Affine base change.** If `f` is an affine morphism and the square is
 cartesian, then the base-change map for the pushforward is an isomorphism. In the
 affine-local picture this is the associativity isomorphism
@@ -770,5 +886,197 @@ theorem flatBaseChange_pushforward_isIso (h : IsPullback g' f' f g) [Flat g]
   -- affine-cover infrastructure for `SheafOfModules`; see
   -- `informal/affineBaseChange_pushforward_iso.md`.
   sorry
+
+/-! ## Project-local Mathlib supplement — cancellation/localization compatibility
+
+For a tower of commutative rings `R → S → S'` and a further homomorphism `R → A`, the
+cancellation isomorphism `Algebra.IsPushout.cancelBaseChange` for the `S'`-tower is the
+base change along `S → S'` of the cancellation isomorphism for the `S`-tower. This is the
+purely commutative-algebraic "cancellation move" of the affine-restriction naturality square
+(`pushforwardPullbackBaseChange_restrict_naturality`); see blueprint
+`lem:cancelBaseChange_localization_compat`. It carries no scheme scaffolding.
+-/
+
+section CancelBaseChangeCompat
+
+open TensorProduct
+
+attribute [local instance] Algebra.TensorProduct.rightAlgebra
+  Algebra.TensorProduct.right_isScalarTower TensorProduct.isPushout'
+
+/-- Value of `cancelBaseChange` on a simple tensor `(algebraMap S B s * algebraMap A B a) ⊗ₜ m`:
+the cancellation isomorphism sends it to `s ⊗ₜ (a • m)`. This is the simple-tensor formula
+behind `cancelBaseChange`, packaged so the two factors `S → B` and `A → B` are explicit. -/
+private lemma cancelBaseChange_algebraMap_mul_tmul
+    {R S A B : Type u} [CommRing R] [CommRing S] [CommRing A] [CommRing B]
+    [Algebra R S] [Algebra R A] [Algebra R B] [Algebra A B] [Algebra S B]
+    [IsScalarTower R A B] [IsScalarTower R S B] [Algebra.IsPushout R S A B]
+    {M : Type u} [AddCommGroup M] [Module R M] [Module A M] [IsScalarTower R A M]
+    (s : S) (a : A) (m : M) :
+    Algebra.IsPushout.cancelBaseChange R S A B M
+      ((algebraMap S B s * algebraMap A B a) ⊗ₜ[A] m) = s ⊗ₜ[R] (a • m) := by
+  have h1 : (algebraMap S B s * algebraMap A B a) ⊗ₜ[A] m
+      = algebraMap S B s ⊗ₜ[A] (a • m) := by
+    rw [mul_comm, ← Algebra.smul_def, TensorProduct.smul_tmul]
+  rw [h1]
+  have h2 : algebraMap S B s ⊗ₜ[A] (a • m) = s • ((1 : B) ⊗ₜ[A] (a • m)) := by
+    rw [TensorProduct.smul_tmul', Algebra.smul_def, mul_one]
+  rw [h2, LinearEquiv.map_smul, Algebra.IsPushout.cancelBaseChange_tmul,
+    TensorProduct.smul_tmul', smul_eq_mul, mul_one]
+
+/-- Value of `cancelBaseChange` on a simple tensor `(a ⊗ₜ s) ⊗ₜ m` of the concrete pushout
+`TensorProduct R A S`: the cancellation isomorphism sends it to `s ⊗ₜ (a • m)`. -/
+private lemma cancelBaseChange_tmul_tmul
+    {R S A : Type u} [CommRing R] [CommRing S] [CommRing A] [Algebra R S] [Algebra R A]
+    {M : Type u} [AddCommGroup M] [Module R M] [Module A M] [IsScalarTower R A M]
+    (a : A) (s : S) (m : M) :
+    Algebra.IsPushout.cancelBaseChange R S A (TensorProduct R A S) M ((a ⊗ₜ[R] s) ⊗ₜ[A] m)
+      = s ⊗ₜ[R] (a • m) := by
+  have hb : (a ⊗ₜ[R] s : TensorProduct R A S)
+      = algebraMap S (TensorProduct R A S) s * algebraMap A (TensorProduct R A S) a := by
+    rw [Algebra.TensorProduct.right_algebraMap_apply, Algebra.TensorProduct.algebraMap_apply,
+      Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one, Algebra.algebraMap_self_apply]
+  rw [hb, cancelBaseChange_algebraMap_mul_tmul]
+
+/-- **Compatibility of cancellation with localizing the outer base.** For a tower of commutative
+rings `R → S → S'` and a homomorphism `R → A`, with the pushouts realized as the concrete tensor
+products `A ⊗[R] S` and `A ⊗[R] S'`, the cancellation isomorphism
+`Algebra.IsPushout.cancelBaseChange` for the `S'`-tower is the base change along `S → S'` of the
+cancellation isomorphism for the `S`-tower. Concretely, the square with horizontal maps the two
+`cancelBaseChange`s and vertical maps the `S → S'` base-change maps on `(A ⊗[R] S) ⊗[A] M` and on
+`S ⊗[R] M` commutes. This is the purely commutative-algebraic "cancellation move" of the
+affine-restriction naturality square; see blueprint `lem:cancelBaseChange_localization_compat`. -/
+lemma cancelBaseChange_localization_compat
+    {R S S' A : Type u} [CommRing R] [CommRing S] [CommRing S'] [CommRing A]
+    [Algebra R S] [Algebra R S'] [Algebra S S'] [IsScalarTower R S S'] [Algebra R A]
+    {M : Type u} [AddCommGroup M] [Module R M] [Module A M] [IsScalarTower R A M]
+    (x : TensorProduct A (TensorProduct R A S) M) :
+    Algebra.IsPushout.cancelBaseChange R S' A (TensorProduct R A S') M
+        (LinearMap.rTensor M
+          (Algebra.TensorProduct.map (AlgHom.id A A) (IsScalarTower.toAlgHom R S S')).toLinearMap x)
+      = LinearMap.rTensor M
+          ((IsScalarTower.toAlgHom R S S').toLinearMap.restrictScalars R)
+          (Algebra.IsPushout.cancelBaseChange R S A (TensorProduct R A S) M x) := by
+  induction x using TensorProduct.induction_on with
+  | zero => simp
+  | add x y hx hy => simp only [map_add, hx, hy]
+  | tmul b m =>
+    induction b using TensorProduct.induction_on with
+    | zero => simp
+    | add b1 b2 hb1 hb2 => simp only [add_tmul, map_add, hb1, hb2]
+    | tmul a s =>
+      simp only [LinearMap.rTensor_tmul, AlgHom.toLinearMap_apply,
+        Algebra.TensorProduct.map_tmul, AlgHom.coe_id, id_eq,
+        IsScalarTower.coe_toAlgHom', LinearMap.coe_restrictScalars,
+        cancelBaseChange_tmul_tmul]
+
+/-- **Inverse form of `cancelBaseChange_localization_compat`.** The `cancelBaseChange⁻¹` of the
+`S'`-tower is the base change along `S → S'` of the `cancelBaseChange⁻¹` of the `S`-tower. This is
+the form directly consumed by the affine brick, which uses `cancelBaseChange.symm` (via
+`baseChangeCancelModuleIso`). Derived from `cancelBaseChange_localization_compat` by injectivity of
+the cancellation isomorphism. Project-local. -/
+lemma cancelBaseChange_localization_compat_symm
+    {R S S' A : Type u} [CommRing R] [CommRing S] [CommRing S'] [CommRing A]
+    [Algebra R S] [Algebra R S'] [Algebra S S'] [IsScalarTower R S S'] [Algebra R A]
+    {M : Type u} [AddCommGroup M] [Module R M] [Module A M] [IsScalarTower R A M]
+    (y : TensorProduct R S M) :
+    LinearMap.rTensor M
+        (Algebra.TensorProduct.map (AlgHom.id A A) (IsScalarTower.toAlgHom R S S')).toLinearMap
+        ((Algebra.IsPushout.cancelBaseChange R S A (TensorProduct R A S) M).symm y)
+      = (Algebra.IsPushout.cancelBaseChange R S' A (TensorProduct R A S') M).symm
+          (LinearMap.rTensor M
+            ((IsScalarTower.toAlgHom R S S').toLinearMap.restrictScalars R) y) := by
+  apply (Algebra.IsPushout.cancelBaseChange R S' A (TensorProduct R A S') M).injective
+  rw [cancelBaseChange_localization_compat, LinearEquiv.apply_symm_apply,
+    LinearEquiv.apply_symm_apply]
+
+end CancelBaseChangeCompat
+
+/-! ## Project-local Mathlib supplement — general-scheme gluing scaffolding
+
+The active concrete-tilde route to flat base change (Stacks 02KH) glues the affine-local
+isomorphisms `affinePushforwardPullbackBaseChange` over the affine basis of `S'`. The gluing
+(`pushforwardPullbackBaseChangeAbHom` → `…Hom` → `…NatIso`, blueprint §`sec:fbc_gluing`) is driven
+by `TopCat.Sheaf.restrictHomEquivHom`, whose hypothesis is the *affine-restriction naturality* of
+the brick: for an inclusion of affine opens `Spec R'' ⊆ Spec R'` of `S'` (over the same chosen
+affine `Spec R ⊆ S`), the bricks `e_{R'}` and `e_{R''}` are intertwined by the structure-sheaf
+restriction maps (blueprint `lem:pushforwardPullbackBaseChange_restrict_naturality`).
+
+`BaseChangeChartTower` is the algebraic datum of that inclusion: the chosen affine chart datum
+`(φ : R → A)` (the affine morphism `f` over `Spec R`, so `X_{Spec R} = Spec A`), the two base rings
+`R'`, `R''` with the tower map `j : R' → R''` (the restriction `Spec R'' ⊆ Spec R'`), and the two
+fully-affine pushout squares (= cartesian squares of affine schemes after `Spec`) realizing the
+two charts `B' = A ⊗_R R'`, `B'' = A ⊗_R R''`. The two bricks `brickR'`/`brickR''` are exactly the
+two `affinePushforwardPullbackBaseChange` isomorphisms the restriction square compares. -/
+
+/-- **Chart-tower datum for the affine-restriction naturality of the base-change brick.** An
+inclusion of affine opens `Spec R'' ⊆ Spec R'` of the base `S'`, both over the same chosen affine
+`Spec R ⊆ S` (so `R → R' → R''` is a tower with `j` the restriction), together with the affine
+chart datum `φ : R → A` (`X_{Spec R} = Spec A`) and the two fully-affine pushout squares realizing
+the charts `B' = A ⊗_R R'`, `B'' = A ⊗_R R''`. This is the indexing datum of the general-scheme
+gluing chain (blueprint §`sec:fbc_gluing`): the affine-restriction naturality lemma
+`lem:pushforwardPullbackBaseChange_restrict_naturality` is stated against exactly this data,
+comparing `brickR'` and `brickR''`. Project-local scaffolding. -/
+structure BaseChangeChartTower where
+  /-- The chosen affine `Spec R ⊆ S` over the `g`-image. -/
+  R : CommRingCat.{u}
+  /-- The affine chart `X_{Spec R} = Spec A` (`f` over `Spec R` is `Spec φ`). -/
+  A : CommRingCat.{u}
+  /-- The larger affine open `Spec R' ⊆ S'`. -/
+  R' : CommRingCat.{u}
+  /-- The smaller affine open `Spec R'' ⊆ Spec R'`. -/
+  R'' : CommRingCat.{u}
+  /-- The affine chart morphism `f|_{Spec R} = Spec φ`. -/
+  φ : R ⟶ A
+  /-- The base morphism `g|_{Spec R'} = Spec ψ`. -/
+  ψ : R ⟶ R'
+  /-- The restriction `Spec R'' ⊆ Spec R'`, i.e. the tower map `j : R' → R''`. -/
+  j : R' ⟶ R''
+  /-- The chart pushout `B' = A ⊗_R R'`. -/
+  B' : CommRingCat.{u}
+  /-- The chart pushout `B'' = A ⊗_R R''`. -/
+  B'' : CommRingCat.{u}
+  ρ' : A ⟶ B'
+  σ' : R' ⟶ B'
+  ρ'' : A ⟶ B''
+  σ'' : R'' ⟶ B''
+  /-- The `Spec R'`-chart square is a pushout (cartesian after `Spec`). -/
+  h' : CategoryTheory.IsPushout φ ψ ρ' σ'
+  /-- The `Spec R''`-chart square is a pushout (cartesian after `Spec`). -/
+  h'' : CategoryTheory.IsPushout φ (ψ ≫ j) ρ'' σ''
+
+namespace BaseChangeChartTower
+
+variable (T : BaseChangeChartTower.{u})
+
+/-- The canonical comparison `B' ⟶ B''` between the two chart pushouts, induced by the universal
+property of `B' = A ⊗_R R'` applied to the cocone `(ρ'', j ≫ σ'')`. It is the affine model of the
+restriction `X_{Spec R''} ⊆ X_{Spec R'}` on the total spaces. Project-local. -/
+noncomputable def connect : T.B' ⟶ T.B'' :=
+  T.h'.desc T.ρ'' (T.j ≫ T.σ'') (by rw [← Category.assoc]; exact T.h''.w)
+
+@[reassoc] lemma inl_connect : T.ρ' ≫ T.connect = T.ρ'' := T.h'.inl_desc _ _ _
+
+@[reassoc] lemma inr_connect : T.σ' ≫ T.connect = T.j ≫ T.σ'' := T.h'.inr_desc _ _ _
+
+/-- The affine base-change brick `e_{R'}` over `Spec R'` (an isomorphism of `Spec R'`-modules):
+`g^*(f_* M̃) ≅ f'_*((g')^* M̃)` in the fully-affine chart over `Spec R'`. Project-local. -/
+noncomputable def brickR' (M : ModuleCat.{u} T.A) :
+    (Scheme.Modules.pullback (Spec.map T.ψ)).obj
+        ((Scheme.Modules.pushforward (Spec.map T.φ)).obj (tilde M)) ≅
+      (Scheme.Modules.pushforward (Spec.map T.σ')).obj
+        ((Scheme.Modules.pullback (Spec.map T.ρ')).obj (tilde M)) :=
+  affinePushforwardPullbackBaseChange T.φ T.ψ T.ρ' T.σ' T.h' M
+
+/-- The affine base-change brick `e_{R''}` over `Spec R''` (an isomorphism of `Spec R''`-modules),
+for the composite base map `ψ ≫ j : R → R''`. Project-local. -/
+noncomputable def brickR'' (M : ModuleCat.{u} T.A) :
+    (Scheme.Modules.pullback (Spec.map (T.ψ ≫ T.j))).obj
+        ((Scheme.Modules.pushforward (Spec.map T.φ)).obj (tilde M)) ≅
+      (Scheme.Modules.pushforward (Spec.map T.σ'')).obj
+        ((Scheme.Modules.pullback (Spec.map T.ρ'')).obj (tilde M)) :=
+  affinePushforwardPullbackBaseChange T.φ (T.ψ ≫ T.j) T.ρ'' T.σ'' T.h'' M
+
+end BaseChangeChartTower
 
 end AlgebraicGeometry

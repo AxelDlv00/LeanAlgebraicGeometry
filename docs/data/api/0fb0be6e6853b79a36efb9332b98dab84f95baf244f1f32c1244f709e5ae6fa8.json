@@ -1,0 +1,93 @@
+[
+  {
+    "timestamp": "2026-06-25T14:42:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "internalHom (strand-(b) brick 1)"
+    },
+    "session": {
+      "id": "session_41",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "internalHom functor is a confirmed multi-iter from-scratch Mathlib-gap layer (sub-bricks 2-5 remain: semilinear restriction maps + PresheafOfModules assembly, sheaf condition, functoriality in M, Additive). Built its foundational atom this iter.",
+      "key_lemmas_used": [
+        "inferInstanceAs (CommRing Γ(Y,U.unop))",
+        "SheafOfModules.hom_ext",
+        "PresheafOfModules.hom_ext",
+        "ModuleCat.restrictScalars.map_apply",
+        "ModuleCat.restrictScalars.smul_def",
+        "Linear.comp_smul",
+        "Linear.smul_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Search Mathlib for an existing internal-hom / ihom / sheafHom / MonoidalClosed / Linear instance for PresheafOfModules / SheafOfModules",
+        "code_tried": "lean_loogle: PresheafOfModules.internalHom, SheafOfModules.internalHom, MonoidalClosed (PresheafOfModules _), PresheafOfModules.ihom; grep ihom|internalHom|MonoidalClosed|sheafHom|homObj over Mathlib/Algebra/Category/ModuleCat/{Presheaf,Sheaf}/ and AlgebraicGeometry/Modules/",
+        "line_number": "n/a (search)",
+        "lean_error": "No results found",
+        "result": "failed",
+        "insight": "Confirmed absent in Mathlib v4.30.0: no internal-hom, ihom, sheafHom, MonoidalClosed, or Linear instance for PresheafOfModules/SheafOfModules; no over-open restriction functor. internalHom must be built from scratch."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Build the per-section module structure Module Γ(Y,⊤) (M⟶N) — r acts by scaling each section φ.val.app U by r|_U; recover the per-open CommRing the RingCat-valued structure sheaf hides",
+        "code_tried": "letI : CommRing ↑(Y.ringCatSheaf.obj.obj U) := inferInstanceAs (CommRing Γ(Y, U.unop)); internalHomSmulVal r φ := PresheafOfModules.Hom.mk (fun U => globalSectionRestrict r U • φ.val.app U) (naturality...)",
+        "line_number": "1070-1128",
+        "lean_error": "(during dev) failed to synthesize CommRing ↑(Y.ringCatSheaf.obj.obj U) when type pinned; resolved via inferInstanceAs (CommRing Γ(Y,U.unop)) defeq",
+        "result": "success",
+        "insight": "RingCat-valued structure sheaf forgets commutativity; recover CommRing per open via inferInstanceAs (CommRing Γ(Y,U.unop)) (defeq to the carrier). Module axioms close by SheafOfModules.hom_ext -> PresheafOfModules.hom_ext -> section-level ModuleCat smul lemmas."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Naturality of the scalar action: semilinear-restriction compatibility restrictScalars_map_smul + globalSectionRestrict_naturality",
+        "code_tried": "rw [← globalSectionRestrict_naturality r f, restrictScalars_map_smul (RingCat.Hom.hom (Y.ringCatSheaf.obj.map f)) (globalSectionRestrict r U) (φ.val.app V), Linear.comp_smul, φ.val.naturality f, Linear.smul_comp]",
+        "line_number": "1081-1084",
+        "lean_error": "none (closed)",
+        "result": "success",
+        "insight": "globalSectionRestrict_naturality (global section restriction commutes with R.map f) proven by uniqueness of Opens morphism into ⊤ (rw [← comp_apply, ← map_comp]; congr 1). restrictScalars_map_smul proven pointwise via restrictScalars.map_apply + .smul_def."
+      },
+      {
+        "attempt": 4,
+        "strategy": "Package as Linear Γ(Y,⊤) Y.Modules (whole category linear over global functions)",
+        "code_tried": "instance linearOverGlobalSections : Linear Γ(Y,⊤) Y.Modules where smul_comp/comp_smul := by apply SheafOfModules.hom_ext; apply PresheafOfModules.hom_ext; intro X; change ...; rw [Linear.smul_comp/comp_smul]",
+        "line_number": "1136-1149",
+        "lean_error": "none (closed)",
+        "result": "success",
+        "insight": "Built on homModuleOverGlobalSections; both instances #print axioms = {propext, Classical.choice, Quot.sound} (axiom-clean). Whole-file lake build exit 0, still 1 sorry."
+      }
+    ],
+    "next_steps": "Continue brick 1 sub-brick (2): semilinear restriction maps (I|_U⟶M|_U)→(I|_V⟶M|_V) via Scheme.Modules.pullback (incl) + pullbackComp coherence on hom-objects, assembled into a PresheafOfModules X.ringCatSheaf reusing homModuleOverGlobalSections (instantiate at Y:=↑U). Then (3) sheaf condition, (4) functoriality in M, (5) Additive. ≥3-4 more iters. OR escalate §1-scope to user (TO_USER fork)."
+  },
+  {
+    "timestamp": "2026-06-25T14:42:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_finite_flat (1.10)"
+    },
+    "session": {
+      "id": "session_41",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "relExt / IsLFPAndFlatOn are still opaque (no API). Closing 1.10 requires the real internalHom + Rⁱf_* infrastructure (the strand-(b) build, brick 1 in progress). Anchoring would restate 1.10 (unsound).",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Untouched this iter (off-lane; blocked behind the strand-(b) infrastructure build)",
+        "code_tried": "n/a",
+        "line_number": "~2712",
+        "lean_error": "declaration uses sorry",
+        "result": "partial",
+        "insight": "Lone remaining Basic.lean sorry. Blocked behind internalHom -> relExt -> base-change 1.8 -> exchange 1.9 -> close 1.10 chain."
+      }
+    ],
+    "next_steps": "Blocked until strand-(b) bricks land. Do NOT re-assign directly; do NOT anchor (restates 1.10)."
+  }
+]

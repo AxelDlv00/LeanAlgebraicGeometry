@@ -1,0 +1,200 @@
+[
+  {
+    "timestamp": "2026-06-25T06:30:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "pushforwardSpecTildeNatIso"
+    },
+    "session": {
+      "id": "session_307",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Scheme.Modules.fromTildeΓNatTrans",
+        "isIso_fromTildeΓ_iff",
+        "pushforward_spec_tilde_iso",
+        "gammaPushforwardTildeNatIso",
+        "Functor.isoWhiskerLeft",
+        "Functor.isoWhiskerRight",
+        "NatIso.isIso_of_isIso_app"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "iter-306 compositional-whisker recipe (NOT ofComponents+rw): build natiso as (rightUnitor P).symm ≪≫ (asIso (whiskerLeft P fromTildeΓNatTrans)).symm ≪≫ (associator).symm ≪≫ isoWhiskerRight gammaPushforwardTildeNatIso (tilde.functor R); register fromTildeΓ IsIso via syntactically-matched haveI family discharged by isIso_fromTildeΓ_iff.mpr + essImage witness ⟨restrictScalars φ M, ⟨(pushforward_spec_tilde_iso φ M).symm⟩⟩",
+        "code_tried": "compositional ≪≫ chain + haveI hiso : ∀ M, IsIso ((Functor.whiskerLeft P Scheme.Modules.fromTildeΓNatTrans).app M)",
+        "line_number": "721",
+        "result": "success",
+        "insight": "Both predicted blockers defeated: whisker route avoids the rw-match wall; syntactically-identical local instance avoids the 20000-heartbeat synth timeout (search matches by rfl). Axiom-clean."
+      }
+    ],
+    "next_steps": "Optional: close pushforwardSpecTildeNatIso_app bridge (Iso.trans .app distribution; load-bearing component identity gammaPushforwardTildeNatIso_app already proved). Not on critical path."
+  },
+  {
+    "timestamp": "2026-06-25T06:30:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "gammaPushforwardIsoAt_naturality"
+    },
+    "session": {
+      "id": "session_307",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "gammaPushforwardIsoAt",
+        "Iso.trans_hom",
+        "Iso.symm_hom"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "open-naturality of the section comparison {e_U}_U (prose remark in lem:gammaPushforwardIsoAt made into a lemma; consumed by lem:pushforwardPullbackBaseChange_restrict_naturality). Generalize the inline hsq square (L624-638) to arbitrary U'⊆U, arbitrary N.",
+        "code_tried": "simp only [gammaPushforwardIsoAt, Iso.trans_hom, Iso.symm_hom]; ext x; rfl",
+        "line_number": "792",
+        "result": "success",
+        "insight": "Closes because every constituent of gammaPushforwardIsoAt is identity-on-carrier. This is the one self-contained tilde-dictionary brick of priority (b)'s gluing lemma."
+      }
+    ],
+    "next_steps": "Feeds pushforwardPullbackBaseChange_restrict_naturality (not yet built)."
+  },
+  {
+    "timestamp": "2026-06-25T06:30:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "pullbackSpecTildeNatIso / gammaPushforwardTildeNatIso (+ _app bridges)"
+    },
+    "session": {
+      "id": "session_307",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "conjugateIsoEquiv",
+        "tilde.adjunction",
+        "pullbackPushforwardAdjunction",
+        "extendRestrictScalarsAdj",
+        "gammaPushforwardNatIso",
+        "tilde.toTildeΓNatIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "pullbackSpecTildeNatIso: drop the .app M from the already-defined uniqueness-of-left-adjoints natiso ((conjugateIsoEquiv adjL adjR).symm (gammaPushforwardNatIso φ)).symm to expose tilde_R ⋙ (Spec φ)^* ≅ extendScalars φ ⋙ tilde_R'; bridge _app = rfl. gammaPushforwardTildeNatIso: assemble Γ-fragment natiso compositionally via isoWhiskerLeft/Right + associator + leftUnitor.",
+        "code_tried": "compositional ≪≫ chains; bridge lemmas via rfl",
+        "line_number": "704,752,764,773",
+        "result": "success",
+        "insight": "Pullback companion of (a); gluing's naturality-in-F consumes both pushforward+pullback natisos. All axiom-clean."
+      }
+    ],
+    "next_steps": "All three are new lean_aux nodes needing blueprint blocks (see recommendations)."
+  },
+  {
+    "timestamp": "2026-06-25T06:30:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "pushforwardPullbackBaseChange_restrict_naturality"
+    },
+    "session": {
+      "id": "session_307",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "Genuinely-new gluing lemma + 3 downstream nodes (…AbHom/…Hom/…NatIso) need general-scheme scaffolding (index S'.affineOpens with a chosen affine Spec R⊆S over each g-image; chart X_{Spec R}=Spec A from f-affineness) AND a cancellation-localization compat (cancelBaseChange commuting with localizing R'→R''). Multi-iteration build; not started end-to-end.",
+      "key_lemmas_used": [
+        "gammaPushforwardIsoAt_naturality (LANDED this iter)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Priority (b) — landed only its self-contained tilde-dictionary brick (gammaPushforwardIsoAt_naturality); did not assemble the full restrict-naturality lemma.",
+        "code_tried": "(scaffolding not started)",
+        "line_number": "n/a",
+        "result": "partial",
+        "insight": "Next single target = the cancellation-localization compatibility brick: pure commutative algebra (R→R'→R'', R→A; cancelBaseChange for R''-tower = localization of R'-tower under (R'⊗A)⊗M→(R''⊗A)⊗M; R'-side datum = tildeRestriction_isLocalizedModule). Build at ModuleCat level, independent of scheme scaffolding."
+      }
+    ],
+    "next_steps": "iter-308: (1) cancellation-localization ModuleCat brick; (2) general-scheme gluing scaffolding assembles restrict-naturality from (1)+gammaPushforwardIsoAt_naturality+pullback companion; (3) the 3 mechanical nodes via restrictHomEquivHom/homMk/isIso_iff_isIso_app_affineOpens+ofComponents."
+  },
+  {
+    "timestamp": "2026-06-25T06:30:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport.naturality (refine_1)"
+    },
+    "session": {
+      "id": "session_307",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "NOT a wall: residual is defeq-not-syntactic spelling plumbing (presheaf-vs-sheaf restrictScalars functor spellings + two 𝟙_ monoidal-unit instance elaborations) that defeats rw/simp/exact; needs convert/show bridges, compounded by rfl-bridge heartbeat cost. The iter-306 'architectural wall' (restrictScalarsLaxε missing) is FALSE — confirmed in code.",
+      "key_lemmas_used": [
+        "PresheafOfModules.restrictScalarsLaxε",
+        "dualUnitRingSwap_comp_dualUnitRingSwapInv",
+        "dualUnitRingSwapInv_comp_dualUnitRingSwap",
+        "Functor.map_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Consume restrictScalarsLaxε.naturality as leg-B (ε-square); paste with φ.naturality (leg-A). Establish hε := restrictScalarsLaxε(whiskerRight α (forget₂ CommRingCat RingCat)).naturality with α := {app := fun U ↦ (f.appIso U.unop).inv}.",
+        "code_tried": "have hε := (PresheafOfModules.restrictScalarsLaxε …).naturality …; rw [Functor.map_comp]",
+        "line_number": "564",
+        "result": "partial",
+        "insight": "hε TYPECHECKS at the refine_1 goal — the in-code refutation of the false wall. Goal advanced. Leg-B math verified step-by-step in lean_multi_attempt when stated in hε's own spelling."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Assemble leg-A∘leg-B by rewriting the hand-written Mid-equation with hε.",
+        "code_tried": "rw [hε] / rw [← hε] / conv_rhs => rw [hε] / simp only [hε] on hand-written Mid-equation; rw [Functor.map_inv] after rw [hswX, hswY]; reassoc_of% key",
+        "line_number": "564",
+        "result": "failed",
+        "insight": "All four hε-rewrites fail (pattern not found / 𝟙_ instance mismatch). Functor.map_inv does not fire on bundled (restrictScalars _).map (inv _). reassoc_of% produces non-matching left-assoc pattern. Must route through named swap lemmas + convert."
+      }
+    ],
+    "next_steps": "iter-308: keep hε; rw [← hMiddef] at hε to fold Mid; derive leg-B via (IsIso.eq_inv_comp _).mpr hε.symm (so 𝟙_/functor subterms come FROM hε, never hand-typed); convert against sheaf-spelling goal using 2 to discharge presheaf↔sheaf + 𝟙_ defeq leaves; prove leg-A separately as homLocalSection-style restrictScalars β reindex. DO NOT re-declare an architectural wall."
+  },
+  {
+    "timestamp": "2026-06-25T06:30:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "sheafificationCompPullback_comp"
+    },
+    "session": {
+      "id": "session_307",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "Residual = mateEquiv_vcomp cocycle interior (1 honest sorry, R0 already killed). ~60-100 LOC nested-homEquiv assembly with heavy namespace/defeq friction; pre-authorized iter-308 escalation.",
+      "key_lemmas_used": [
+        "homEquiv_conjugateEquiv_app' (new private, verbatim GlueDescent twin)",
+        "conjugateEquiv_whiskerLeft",
+        "Scheme.Modules.conjugateEquiv_pullbackComp_inv",
+        "Adjunction.comp_homEquiv"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "anti-circular R0-kill per analogies/d3-mate-306.md: mirror gr_pullbackObjUnitToUnit_comp one composite-adjunction level up. erw homEquiv_conjugateEquiv_app' to peel R0=(pullbackComp h f).inv keeping pullbackComp OPAQUE; rw conjugateEquiv_whiskerLeft + erw conjugateEquiv_pullbackComp_inv collapse conjugate to whiskerRight (pushforwardComp h f).hom R_X; simp only [Adjunction.comp_homEquiv] split adj₁.homEquiv into nested form. DELETE circular sheafificationCompPullback_comp_tail (~157 LOC).",
+        "code_tried": "erw [homEquiv_conjugateEquiv_app' adj₁ adj₂ (whiskerLeft a_X (pullbackComp h f).inv)]; rw [conjugateEquiv_whiskerLeft]; erw [Scheme.Modules.conjugateEquiv_pullbackComp_inv]; simp only [Adjunction.comp_homEquiv]",
+        "line_number": "2493",
+        "result": "partial",
+        "insight": "Structural progress verified axiom-clean. R0-kill at transposed/homEquiv level with pullbackComp opaque = exactly the recipe's pivot. Residual is now a clean cocycle with R0 removed, not the iter-305/306 contaminated forget-distributed goal. Circular _tail deleted."
+      }
+    ],
+    "next_steps": "iter-308 mateEquiv_vcomp escalation (STEP (b)): use `change` (NOT rw [Equiv.trans_apply] — coercion normal-form mismatch) to nest homEquivs; homEquiv_naturality_left to pull R1's (pullback h).map (sheafCompPb f).hom; recover sheafCompPb factors as B_f/B_h units via leftAdjointUniqUnitEta_app; kill presheaf δ_pre via Adjunction.conjugateEquiv_leftAdjointCompIso_inv (mirror CLOSED pullbackComp_δ); collapse against whiskerRight pushforwardComp.hom conjugate by (pushforwardComp h f).hom.naturality + comp_unit_app."
+  }
+]

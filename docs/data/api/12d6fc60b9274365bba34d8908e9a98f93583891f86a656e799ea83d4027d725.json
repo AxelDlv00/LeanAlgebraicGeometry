@@ -1,0 +1,60 @@
+{
+  "files": [
+    {
+      "path": "AlgebraicJacobian.lean",
+      "size": 527
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/LineBundlePullback.lean",
+      "size": 21876
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/RelPicFunctor.lean",
+      "size": 37673
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "size": 193575
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "size": 332059
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "size": 114984
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "size": 73612
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualUnitPullback.lean",
+      "size": 21863
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/SliceTransport.lean",
+      "size": 74575
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/PresheafInternalHom.lean",
+      "size": 59912
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/PullbackTensorMapIso.lean",
+      "size": 3092
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/StalkTensor.lean",
+      "size": 30594
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/TrivialisationRestrict.lean",
+      "size": 19479
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/TensorObjSubstrate/Vestigial.lean",
+      "size": 39943
+    }
+  ]
+}

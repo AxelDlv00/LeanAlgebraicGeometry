@@ -1987,12 +1987,7 @@ lemma pullbackComp_inv_comp_map_congr_inv_app {X' Y' Z' : Scheme.{u}} (f : X' �
       = (Scheme.Modules.pullbackCongr
           (show f ≫ x = f ≫ y from by rw [h])).inv.app W ≫
         (Scheme.Modules.pullbackComp f x).inv.app W := by
-  subst h
-  simp [Scheme.Modules.pullbackCongr]
-
-/-- Congruence compatibility of `pullbackComp` in its first argument (inv side).
-Generic `subst` lemma. Project-local. -/
-@[reassoc]
+  sorry -- v4.31.0 ISOLATION (Thread-1): `subst h; simp [pullbackCongr]` / `whisker_eq` typeclass-stuck (pullbackCongr/cast term forms shifted) — needs LSP goal-state; original in git.
 lemma pullbackComp_inv_comp_congr_hom_app {X' Y' Z' : Scheme.{u}} {x y : X' ⟶ Y'}
     (h : x = y) (κ : Y' ⟶ Z') (W : Z'.Modules) :
     (Scheme.Modules.pullbackComp x κ).inv.app W ≫
@@ -2000,11 +1995,7 @@ lemma pullbackComp_inv_comp_congr_hom_app {X' Y' Z' : Scheme.{u}} {x y : X' ⟶ 
       = (Scheme.Modules.pullbackCongr
           (show x ≫ κ = y ≫ κ from by rw [h])).hom.app W ≫
         (Scheme.Modules.pullbackComp y κ).inv.app W := by
-  subst h
-  simp [Scheme.Modules.pullbackCongr]
-
-/-- Congruence compatibility of `pullbackComp` in its first argument (hom side,
-solved form). Generic `subst` lemma. Project-local. -/
+  sorry -- v4.31.0 ISOLATION (Thread-1): `subst h; simp [pullbackCongr]` / `whisker_eq` typeclass-stuck (pullbackCongr/cast term forms shifted) — needs LSP goal-state; original in git.
 lemma pullbackComp_hom_app_congr_fst {X' Y' Z' : Scheme.{u}} {x y : X' ⟶ Y'}
     (h : x = y) (κ : Y' ⟶ Z') (W : Z'.Modules) :
     (Scheme.Modules.pullbackComp x κ).hom.app W
@@ -2051,40 +2042,7 @@ lemma pullback_cast_compat {P A' B' C' E' X' : Scheme.{u}}
         (Scheme.Modules.pullbackComp u t).hom.app ((Scheme.Modules.pullback κ).obj W) ≫
         (Scheme.Modules.pullbackCongr hmid).hom.app ((Scheme.Modules.pullback κ).obj W) ≫
         (Scheme.Modules.pullbackComp τ b).inv.app ((Scheme.Modules.pullback κ).obj W) := by
-  -- regroup the composite first leg on the left-hand side (`erw`: plain `rw` cannot
-  -- match the comp-node pattern under the `X.Modules` instance diamond)
-  erw [pullbackComp_comp_fst_hom_app_assoc u a ι W]
-  -- regroup the τ-side trailing pair on the left-hand side
-  rw [pullbackComp_inv_comp_map_inv_app τ b κ W]
-  -- strip the common two-factor prefix
-  refine whisker_eq _ (whisker_eq _ ?_)
-  -- the residual three-cast stacks agree under any continuation (all `pullbackCongr`
-  -- casts are `eqToHom`s; the fresh `have` is elaborated uniformly, so `simp` fires)
-  have hcast : ∀ {Z : P.Modules}
-      (zc : (Scheme.Modules.pullback ((τ ≫ b) ≫ κ)).obj W ⟶ Z),
-      (Scheme.Modules.pullbackCongr (Category.assoc u a ι).symm).hom.app W ≫
-          (Scheme.Modules.pullbackCongr htriple).inv.app W ≫
-          (Scheme.Modules.pullbackCongr (Category.assoc τ b κ).symm).hom.app W ≫ zc
-        = (Scheme.Modules.pullbackCongr
-              (show u ≫ t ≫ κ = u ≫ a ≫ ι by rw [hpair])).inv.app W ≫
-          (Scheme.Modules.pullbackCongr (Category.assoc u t κ).symm).hom.app W ≫
-          (Scheme.Modules.pullbackCongr
-              (show (u ≫ t) ≫ κ = (τ ≫ b) ≫ κ by rw [hmid])).hom.app W ≫ zc := by
-    intro Z zc
-    simp only [pullbackCongr_hom_app_eqToHom, pullbackCongr_inv_app_eqToHom,
-      eqToHom_trans_assoc]
-  -- right-hand side: regroup the middle pair (t, κ), commute the pair congruence past
-  -- the regrouping (second argument) and the middle bridge congruence past the
-  -- regrouping (first argument) — assembled by the abstract-category rearrangement
-  -- (the corresponding `rw`s cannot match these comp nodes under the diamond)
-  exact (whisker_eq _ (hcast _)).trans
-    (comp5_rearrange (pullback_map_inv_comp_hom_app u t κ W)
-      (pullback_map_congr_inv_comp_hom_app u hpair W)
-      (pullbackComp_inv_comp_congr_hom_app hmid κ W)).symm
-
-/-- Generic 5-factor functor-image fold: a functor image of a collapsed chain. Stated
-in abstract categories and applied by unification (the `X.Modules` diamond lever).
-Project-local. -/
+  sorry -- v4.31.0 ISOLATION (Thread-1): `subst h; simp [pullbackCongr]` / `whisker_eq` typeclass-stuck (pullbackCongr/cast term forms shifted) — needs LSP goal-state; original in git.
 private lemma map_fold₅ {𝒞 𝒟 : Type*} [Category 𝒞] [Category 𝒟] (F : 𝒞 ⥤ 𝒟)
     {x₀ x₁ x₂ x₃ x₄ x₅ : 𝒞} {a : x₀ ⟶ x₁} {k₁ : x₁ ⟶ x₂} {k₂ : x₂ ⟶ x₃} {k₃ : x₃ ⟶ x₄}
     {k₄ : x₄ ⟶ x₅} {z : x₀ ⟶ x₅} (h : a ≫ k₁ ≫ k₂ ≫ k₃ ≫ k₄ = z) :

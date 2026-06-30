@@ -1,0 +1,111 @@
+[
+  {
+    "timestamp": "2026-06-29T10:39:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransportInv (reverse naturality field)"
+    },
+    "session": {
+      "id": "session_317",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "restrictScalars_collapse_apply",
+        "ModuleCat.restrictScalars.map_apply",
+        "PresheafOfModules.naturality_apply",
+        "PresheafOfModules.map_comp_apply",
+        "PresheafOfModules.congr_map_apply",
+        "Subsingleton.elim",
+        "Scheme.Hom.appIso_inv_naturality_assoc",
+        "Functor.map_comp",
+        "CommRingCat.comp_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Clear double-restrictScalars collapse legs then peel ψ-reindex wrapper; order LHS-collapse before peel",
+        "code_tried": "erw [ModuleCat.restrictScalars.map_apply]; erw [restrictScalars_collapse_apply, restrictScalars_collapse_apply]",
+        "line_number": "584",
+        "lean_error": "587:9: typeclass instance problem is stuck — Ring ?m.666 (metavariable, collapse-clear before peel corrupts sibling coercion)",
+        "result": "failed",
+        "insight": "Order matters: collapse-clear corrupts the sibling .hom'.toAddHom coercion if done before peeling. Must clear-LHS → peel-RHS → clear-RHS."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Explicit ring args to restrictScalars_collapse_apply (appIso.hom, β.app, hβ)",
+        "code_tried": "erw [restrictScalars_collapse_apply ((appIso f _).hom.hom) (RingCat.Hom.hom (β.app _)) (hβ _) _, restrictScalars_collapse_apply ...]",
+        "line_number": "584",
+        "lean_error": "590:9: typeclass instance problem is stuck; later rewrite Did not find an occurrence of the pattern",
+        "result": "partial",
+        "insight": "Explicit ring args un-stick the metavariable but pattern order still wrong."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Clear-LHS → peel-RHS via restrictScalars.map_apply on pristine .hom' form → clear-RHS",
+        "code_tried": "erw [restrictScalars_collapse_apply (appIso Y1) ...]; erw [ModuleCat.restrictScalars.map_apply (appIso X1).hom]; erw [restrictScalars_collapse_apply (appIso X1) ...]",
+        "line_number": "584",
+        "lean_error": "none on collapse; goal exposed cross-fiber M.val.map mismatch",
+        "result": "partial",
+        "insight": "Correct collapse order reached. Residual: LHS inner M.val.map-leg vs RHS (restr·pushforward).map g'' leg — the genuine reverse-only difficulty."
+      },
+      {
+        "attempt": 4,
+        "strategy": "harg cross-fiber alignment: change restr/pushforward maps to M.val.map, combine via ← map_comp_apply, close with congr_map_apply (Subsingleton.elim) z",
+        "code_tried": "have harg : ... ; change ...; rw [← PresheafOfModules.map_comp_apply]; exact M.val.congr_map_apply (Subsingleton.elim _ _) z; then erw [harg, PresheafOfModules.naturality_apply ψ g'' ...]",
+        "line_number": "615-637",
+        "lean_error": "637:67: rewrite failed Did not find occurrence; then keyB rw mismatches",
+        "result": "partial",
+        "insight": "harg + naturality_apply ψ fires. Remaining = leg-B appIso-inv relabel chase (keyB)."
+      },
+      {
+        "attempt": 5,
+        "strategy": "keyB appIso-inv relabel: appIso_inv_naturality_assoc + assoc + ← map_comp ×2 + congr 2; added respectTransparency false to the def",
+        "code_tried": "rw [Scheme.Hom.appIso_inv_naturality_assoc f jp, Category.assoc, ← Functor.map_comp, ← Functor.map_comp]; congr 2; then ConcreteCategory.congr_hom keyB c expanded with CommRingCat.comp_apply; erw [hc, CommRingCat.comp_apply, CommRingCat.comp_apply]",
+        "line_number": "637-650",
+        "lean_error": "iterated 'No goals to be solved' / 'unsolved goals' until correct assoc+comp_apply count found",
+        "result": "success",
+        "insight": "congr 2 closes the parallel (Opens X)ᵒᵖ residual by defeq (no explicit Subsingleton.elim). respectTransparency false needed for keyB presheaf-functor transparency. Closed axiom-clean."
+      }
+    ],
+    "next_steps": "DualInverse.lean fully sorry-free. Nothing left in this file."
+  },
+  {
+    "timestamp": "2026-06-29T10:30:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "dual_restrict_iso (Step-4 isoMk naturality)"
+    },
+    "session": {
+      "id": "session_317",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "PresheafOfModules.isoMk",
+        "ModuleCat.hom_ext",
+        "LinearMap.ext",
+        "PresheafOfModules.hom_ext",
+        "ModuleCat.hom_comp",
+        "LinearMap.comp_apply",
+        "ModuleCat.restrictScalars.map_apply",
+        "PresheafOfModules.comp_app"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Assemble isoMk sectionwise from sliceDualTransport family; reduce naturality square to slice-object element equality",
+        "code_tried": "refine PresheafOfModules.isoMk (fun V => sliceDualTransport f M V) ?_; intro V W g; apply ModuleCat.hom_ext; refine LinearMap.ext fun φ => ?_; apply PresheafOfModules.hom_ext; intro W''; simp only [ModuleCat.hom_comp, LinearMap.comp_apply, ModuleCat.restrictScalars.map_apply, PresheafOfModules.comp_app]; rfl",
+        "line_number": "1269",
+        "lean_error": "none",
+        "result": "success",
+        "insight": "Both legs reduce to φ.app at the same slice object — transport .app formula, dual restrictionMap, pushforward-dual .map g reindexings are all defeq (pushforward₀/restrictionMap app are rfl; dualUnitRingSwap/β indices depend only on W''.left). Residual φ.app A = φ.app A' holds by rfl. Confirms planner's 'routine once sliceDualTransport body concrete' comment. Closed axiom-clean."
+      }
+    ],
+    "next_steps": "DualInverse.lean fully sorry-free; dual_restrict_iso and (transitively) dual_isLocallyTrivial inherit no residual."
+  }
+]

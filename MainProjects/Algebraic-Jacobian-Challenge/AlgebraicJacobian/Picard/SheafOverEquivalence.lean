@@ -182,10 +182,8 @@ noncomputable def overEquivalence :
   · ext W : 2
     simp only [Functor.whiskerRight_app, NatTrans.op_app, NatTrans.comp_app,
       Functor.whiskerLeft_app, Functor.op_obj, phiOver, psiOver]
-    rw [show (↑U : Scheme).ringCatSheaf.obj.map
-            ((TopologicalSpace.Opens.overEquivalence U).counit.app W.unop).op
-          = X.ringCatSheaf.obj.map (U.ι.opensFunctor.op.map
-            ((TopologicalSpace.Opens.overEquivalence U).counit.app W.unop).op) from rfl]
+    change X.ringCatSheaf.obj.map (U.ι.opensFunctor.op.map
+            ((TopologicalSpace.Opens.overEquivalence U).counit.app W.unop).op) = _
     change (forget₂ CommRingCat RingCat).map _
         = (forget₂ CommRingCat RingCat).map _ ≫ (forget₂ CommRingCat RingCat).map _
     rw [← (forget₂ CommRingCat RingCat).map_comp]
@@ -279,6 +277,7 @@ noncomputable def restrictOverIso (M : X.Modules) :
   simp [phiOver, psiRestrict, overForgetNatIso]
   erw [ConcreteCategory.id_apply, ← ConcreteCategory.comp_apply, ← Functor.map_comp]
   simp
+  erw [ConcreteCategory.id_apply]
 
 /- Planner strategy (step 6 from `analogies/overeq258.md`):
 

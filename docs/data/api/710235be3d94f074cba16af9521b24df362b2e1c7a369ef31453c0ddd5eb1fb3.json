@@ -1,0 +1,182 @@
+[
+  {
+    "timestamp": "2026-06-29T09:00:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pushforward_mu_appIso_collapse"
+    },
+    "session": {
+      "id": "session_93",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "pushforward_lax_mu_comparison",
+        "deltaConjOfMuComparison",
+        "restrictScalars_δ_app_tmul"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Verbatim re-port of the v4.30 117100c4 (L4077-4768) δ/η-collapse block into TensorObjSubstrate before `end LocTrivPullbackTensor`, plus the missing transitive dep restrictScalars_δ_app_tmul",
+        "code_tried": "block insert of 13 decls (720 lines) at end LocTrivPullbackTensor anchor",
+        "line_number": "4544",
+        "lean_error": "",
+        "result": "success",
+        "insight": "THE keystone EQUATION form now exists in v4.31 ROOT; unblocks K1 (pullbackTensorMap_isIso_of_isOpenImmersion) + B1 (tensorObj_restrict_iso_eq_pullbackTensorMap). Axiom-clean [propext, Classical.choice, Quot.sound]."
+      }
+    ],
+    "next_steps": "Next iter: TensorObjInverse K1 file-split + B1 fill consuming this equation."
+  },
+  {
+    "timestamp": "2026-06-29T09:00:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "deltaConjOfMuComparison"
+    },
+    "session": {
+      "id": "session_93",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "Adjunction.unit_leftAdjointUniq_hom_app",
+        "Adjunction.unit_app_tensor_comp_map_δ",
+        "MonoidalCategory.tensorHom_comp_tensorHom"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "v4.30 verbatim: rw [hLHS]; simp [Adjunction.unit_app_tensor_comp_map_δ_assoc]; conv_rhs => rw [← hnat, ...]",
+        "code_tried": "simp [Adjunction.unit_app_tensor_comp_map_δ_assoc]",
+        "line_number": "4521",
+        "lean_error": "rewrite failed: Did not find an occurrence of the pattern (the @[simp] mate reductions unit_leftAdjointUniq_hom_app/_assoc no longer fire under v4.31)",
+        "result": "failed",
+        "insight": "v4.31: simp only distributes G.map (Functor.map_comp) and reports the _δ_assoc arg unused; mate reductions stopped auto-firing."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Replace simp with explicit reassoc_of% rewrites on full goal",
+        "code_tried": "rw [Functor.map_comp, Functor.map_comp, reassoc_of% (Adjunction.unit_leftAdjointUniq_hom_app ...), reassoc_of% (adj₂.unit_app_tensor_comp_map_δ ...)]",
+        "line_number": "4523",
+        "lean_error": "rewrite failed: pattern adj₁.unit.app (A⊗B) ≫ G.map (...) ≫ ?h not found; full-goal motive spans LHS which carries μ (rightAdjointLaxMonoidal adj₁) not type-correct under instances transparency",
+        "result": "failed",
+        "insight": "Must confine rewrites to RHS via conv_rhs — the post-hLHS LHS mate is not type-correct under instances transparency, breaking any full-goal motive."
+      },
+      {
+        "attempt": 3,
+        "strategy": "conv_rhs with rw of the mate lemmas",
+        "code_tried": "conv_rhs => rw [Functor.map_comp, Functor.map_comp, reassoc_of% ...]",
+        "line_number": "4533",
+        "lean_error": "rewrite failed: unit source prints (𝟭 C).obj (A⊗B) vs lemma A⊗B (defeq not syntactic)",
+        "result": "failed",
+        "insight": "The mate reassoc_of% lemmas need erw (defeq object spelling), not rw."
+      },
+      {
+        "attempt": 4,
+        "strategy": "erw for mate lemmas + ← hnat in ONE erw call inside conv_rhs",
+        "code_tried": "conv_rhs => rw [Functor.map_comp, Functor.map_comp]; erw [reassoc_of% (Adjunction.unit_leftAdjointUniq_hom_app ...), reassoc_of% (adj₂.unit_app_tensor_comp_map_δ ...)]; erw [← hnat, ← Category.assoc, MonoidalCategory.tensorHom_comp_tensorHom]; exact congr_arg₂ (·≫·) (congr_arg₂ tensorHom (htri' A).symm (htri' B).symm) hμ",
+        "line_number": "4528",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Splitting ← hnat / ← Category.assoc / tensorHom_comp_tensorHom across separate conv tactics makes ← Category.assoc unfindable — must be ONE erw call. EXIT 0, axiom-clean."
+      }
+    ],
+    "next_steps": "Recorded as new v4.31 axis: simp [..._δ_assoc] mate reductions no longer fire; use conv_rhs + erw [reassoc_of% ...] as one call."
+  },
+  {
+    "timestamp": "2026-06-29T09:00:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "isIso_oplaxδ_of_conj"
+    },
+    "session": {
+      "id": "session_93",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "pushforward_mu_appIso_collapse"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Verbatim re-port from v4.30 117100c4",
+        "code_tried": "ported body unchanged",
+        "line_number": "4618",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Ported verbatim; axiom-clean. Consumes pushforward_mu_appIso_collapse."
+      }
+    ],
+    "next_steps": "Downstream consumer K1 fills next iter."
+  },
+  {
+    "timestamp": "2026-06-29T09:00:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pushforward_eta_appIso_collapse"
+    },
+    "session": {
+      "id": "session_93",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "restrictScalars_oplaxMonoidal_η_app_one",
+        "appIso_inv_naturality"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Verbatim re-port + axis-#1 α-naturality fix (6 sites)",
+        "code_tried": "naturality := fun _ _ i => f.appIso_inv_naturality i  (aligned to app column)",
+        "line_number": "4037",
+        "lean_error": "(pre-fix) could not synthesize default value for field 'naturality' of NatTrans using tactics (aesop failed); then unexpected token ':=' when over-indented",
+        "result": "success",
+        "insight": "α-naturality default no longer auto-discharges in v4.31; supply explicit field aligned to `app` column (deeper indent → parser reads it as continuation of app lambda)."
+      }
+    ],
+    "next_steps": "η-side complete."
+  },
+  {
+    "timestamp": "2026-06-29T09:00:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "exists_tensorObj_inverse"
+    },
+    "session": {
+      "id": "session_93",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Dead unconsumed private duplicate (L716 sorry); functional public twin in TensorObjInverse.lean:2366. Deletion candidate per objectives — NOT to be re-proved. Auditor confirms zero in-file call sites; file header L137 stale-lists it as public API.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Untouched per iter-093 objectives (explicitly out of scope)",
+        "code_tried": "(not attempted)",
+        "line_number": "716",
+        "lean_error": "declaration uses sorry",
+        "result": "partial",
+        "insight": "Cleanup deferred; needs refactor-lane deletion, not a prover."
+      }
+    ],
+    "next_steps": "Refactor lane: delete the dead private dup + fix stale L137 header listing."
+  }
+]

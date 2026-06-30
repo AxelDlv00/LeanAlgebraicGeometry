@@ -1,0 +1,123 @@
+[
+  {
+    "timestamp": "2026-06-25T11:37:53Z",
+    "status": "partial",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor"
+    },
+    "session": {
+      "id": "session_38",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "depends on htensorComparison_unit_isIso, whose residual coherence star_unit needs a 3rd sanctioned anchor External.pullback_rightUnitality; H_tensor BODY itself is sorry-free",
+      "key_lemmas_used": [
+        "External.eilenbergWatts_htensorComparison",
+        "htensorComparison_unit_isIso",
+        "admissible_tensorUnit",
+        "External.pullbackUnit",
+        "asIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Re-sign H_tensor with (hN : N.IsQuasicoherent) per disprove-pass; assemble body from the conditional EW anchor + the unit-iso helper",
+        "code_tried": "haveI hau := admissible_tensorUnit f I F ha; haveI : IsIso (htensorComparison f I F N ha ha') := External.eilenbergWatts_htensorComparison f I F ha hau (htensorComparison_unit_isIso f I F ha hau) hN ha'; exact ⟨(asIso (htensorComparison f I F N ha ha')).symm⟩",
+        "line_number": "2311",
+        "lean_error": "none (body compiles; only comments referenced H_tensor, re-sign safe)",
+        "result": "success",
+        "insight": "H_tensor direct sorry ELIMINATED; reduces fully to the single helper htensorComparison_unit_isIso (θ_𝒪 iso) + the conditional EW anchor"
+      }
+    ],
+    "next_steps": "Sanction External.pullback_rightUnitality, close star_unit (~40-60 LOC ν-naturality assembly) ⇒ htensorComparison_unit_isIso ⇒ H_tensor fully closed (modulo External.*)."
+  },
+  {
+    "timestamp": "2026-06-25T11:32:40Z",
+    "status": "partial",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "htensorComparison_unit_isIso"
+    },
+    "session": {
+      "id": "session_38",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "lone residual star_unit: a coherence equation between the two independent opaque anchors pullbackTensorComparison (f^*-laxity) and pullbackUnit (f^*-unit); provably unclosable from current axioms, IS f^* right-unitality",
+      "key_lemmas_used": [
+        "Coyoneda.isIso",
+        "isIso_op_iff",
+        "coyonedaEquiv.injective",
+        "coyonedaEquiv_comp",
+        "coyonedaEquiv_coyoneda_map",
+        "Functor.coreprW",
+        "Functor.coreprW_hom_app",
+        "Iso.inv_hom_id_app_apply",
+        "Functor.isoWhiskerLeft",
+        "External.H_existence",
+        "tensorUnitBC",
+        "tensorRightUnitor"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Reflect θ_𝒪 iso through coyoneda; build explicit comparison iso Ψ from the right unitor i, the genuine coreprW, and the unit collapse u; prove hmain : coyoneda(θ_𝒪.op) ≓ α.hom = Ψ.hom by coyonedaEquiv.injective (value at 𝟙)",
+        "code_tried": "set Ψ := coyoneda.mapIso i.symm.op ≒≓ (homTensorFunctor f I F).coreprW ≒≓ isoWhiskerLeft (tensorBaseChangeFunctor f F) (coyoneda.mapIso u.op)",
+        "line_number": "2257",
+        "lean_error": "Unknown identifier `isoWhiskerLeft` → fixed to Functor.isoWhiskerLeft",
+        "result": "partial",
+        "insight": "Must use the GENUINE coreprW (not (H_represents …).some = Classical.choice, not defeq); needed haveI hcI := External.H_existence so coreprx/coreprX defeq h/H"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Reduce hmain via coyonedaEquiv: LHS → e_𝒪, RHS → u.hom ≓ h ≓ (tensorBaseChangeFunctor f F).map i.inv",
+        "code_tried": "rw [coyonedaEquiv_comp, coyonedaEquiv_coyoneda_map, hθ, Iso.inv_hom_id_app_apply, hΨ]; simp only […, Functor.isoWhiskerLeft_hom, Functor.whiskerLeft_app]; rw [Functor.coreprW_hom_app (homTensorFunctor f I F) (tensorMod (H f I F ha) 𝒪) i.inv]",
+        "line_number": "2274",
+        "lean_error": "rewrite failed: did not find pattern (coreprW.hom.app …) i.inv → switched to erw",
+        "result": "partial",
+        "insight": "erw lands the coreprW_hom_app rewrite; goal then defeq-changes to the clean star_unit coherence"
+      },
+      {
+        "attempt": 3,
+        "strategy": "change to the clean h-bearing coherence goal star_unit, leave as the lone residual sorry (directive forbade a 3rd axiom)",
+        "code_tried": "change (tensorRight (f^*𝒪)).map (h f I F ha) ≓ (tensorAssoc F (f^*H) (f^*𝒪)).hom ≓ (tensorLeft F).map ((pullbackTensorComparison f H).app 𝒪).hom = u.hom ≓ h ≓ (tensorBaseChangeFunctor f F).map i.inv; sorry",
+        "line_number": "2278",
+        "lean_error": "none (compiles; sorry remains)",
+        "result": "partial",
+        "insight": "star_unit = f^* right-unitality coherence; needs External.pullback_rightUnitality. Provably NOT closable from the 2 independent opaque comparison anchors alone."
+      }
+    ],
+    "next_steps": "Author External.pullback_rightUnitality (h-free f^* right-unitality coherence); derive star_unit by (i) ν-naturality at h (whisker_exchange + tensorRightUnitorNatIso, mirror S1/S2 of htensorComparison_naturality) then (ii) associator triangle. ~40-60 LOC."
+  },
+  {
+    "timestamp": "2026-06-25T11:00:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_finite_flat"
+    },
+    "session": {
+      "id": "session_38",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "IsLFPAndFlatOn opaque (no constructor); needs absent internal-ℰxt + R^q f_* infrastructure (1.10 strand)",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "untouched — off-lane, infra-blocked",
+        "code_tried": "n/a",
+        "line_number": "2345",
+        "lean_error": "n/a",
+        "result": "partial",
+        "insight": "Do not re-assign: opaque IsLFPAndFlatOn cannot be realized until P1b infra lands."
+      }
+    ],
+    "next_steps": "Leave deferred until internal-ℰxt / R^q f_* infrastructure exists in Mathlib or is built behind j_!."
+  }
+]

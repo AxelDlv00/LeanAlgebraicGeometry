@@ -1156,7 +1156,7 @@ noncomputable def cechFreeEvalEngineIso (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
     rw [ComplexShape.down_Rel] at hij
     obtain rfl : i = j + 1 := hij.symm
     rw [Functor.mapHomologicalComplex_obj_d,
-      show (cechEngineComplex 𝒰 V).d (j + 1) j = cechEngineD 𝒰 V j from ChainComplex.of_d _ _ _ j]
+      show (cechEngineComplex 𝒰 V).d (j + 1) j = cechEngineD 𝒰 V j from ChainComplex.of_d _ _ j]
     exact cechFreeEvalEngine_comm 𝒰 V j)
 
 /-! ## Project-local Mathlib supplement — positive-degree acyclicity of the engine complex
@@ -1175,8 +1175,8 @@ lemma cechEngineComplex_exactAt (𝒰 : X.OpenCover) (V : TopologicalSpace.Opens
     (by simp)]
   apply ModuleCat.shortComplex_exact
   have hf : (cechEngineComplex 𝒰 V).d (n + 2) (n + 1) = cechEngineD 𝒰 V (n + 1) :=
-    ChainComplex.of_d _ _ _ (n + 1)
-  have hg : (cechEngineComplex 𝒰 V).d (n + 1) n = cechEngineD 𝒰 V n := ChainComplex.of_d _ _ _ n
+    ChainComplex.of_d _ _ (n + 1)
+  have hg : (cechEngineComplex 𝒰 V).d (n + 1) n = cechEngineD 𝒰 V n := ChainComplex.of_d _ _ n
   change Function.Exact ⇑(ConcreteCategory.hom ((cechEngineComplex 𝒰 V).d (n + 2) (n + 1)))
     ⇑(ConcreteCategory.hom ((cechEngineComplex 𝒰 V).d (n + 1) n))
   rw [hf, hg]
@@ -1220,7 +1220,7 @@ noncomputable def cechEngineComplexAug (𝒰 : X.OpenCover) (V : TopologicalSpac
     cechEngineComplex 𝒰 V ⟶ (ChainComplex.single₀ _).obj (coverSectionModule V) :=
   ((cechEngineComplex 𝒰 V).toSingle₀Equiv (coverSectionModule V)).symm
     ⟨cechEngineAug0 𝒰 V, by
-      rw [show (cechEngineComplex 𝒰 V).d 1 0 = cechEngineD 𝒰 V 0 from ChainComplex.of_d _ _ _ 0]
+      rw [show (cechEngineComplex 𝒰 V).d 1 0 = cechEngineD 𝒰 V 0 from ChainComplex.of_d (cechEngineX 𝒰 V) (cechEngineD 𝒰 V) 0]
       exact cechEngineD_comp_aug 𝒰 V⟩
 
 /-! ## Project-local Mathlib supplement — degree-`0` splitting and engine quasi-isomorphism -/
@@ -1292,7 +1292,7 @@ lemma cechEngineComplexAug_quasiIso (𝒰 : X.OpenCover) (V : TopologicalSpace.O
       cechEngineComplexAug_f_zero 𝒰 V
     have hSf : S.f = cechEngineD 𝒰 V 0 := by
       change (cechEngineComplex 𝒰 V).d 1 0 = cechEngineD 𝒰 V 0
-      exact ChainComplex.of_d (cechEngineX 𝒰 V) (cechEngineD 𝒰 V) (cechEngineD_comp 𝒰 V) 0
+      exact ChainComplex.of_d (cechEngineX 𝒰 V) (cechEngineD 𝒰 V) 0
     have hsplit := cechEngineAug0_split 𝒰 V i_fix
     refine ⟨⟨Limits.Sigma.ι
       (fun _ : Fin 1 → {i : 𝒰.I₀ // V ≤ coverOpen 𝒰 i} => coverSectionModule V)
@@ -2075,7 +2075,7 @@ noncomputable def cechFreeEvalEngineIsoFam
     rw [ComplexShape.down_Rel] at hij
     obtain rfl : i = j + 1 := hij.symm
     rw [Functor.mapHomologicalComplex_obj_d,
-      show (cechEngineComplexFam U V).d (j + 1) j = cechEngineDFam U V j from ChainComplex.of_d _ _ _ j]
+      show (cechEngineComplexFam U V).d (j + 1) j = cechEngineDFam U V j from ChainComplex.of_d _ _ j]
     exact cechFreeEvalEngine_commFam U V j)
 
 /-- **Positive-degree exactness of the engine complex.** When `I₁(V)` is nonempty (witnessed by
@@ -2088,8 +2088,8 @@ lemma cechEngineComplex_exactAtFam (V : TopologicalSpace.Opens ↥X)
     (by simp)]
   apply ModuleCat.shortComplex_exact
   have hf : (cechEngineComplexFam U V).d (n + 2) (n + 1) = cechEngineDFam U V (n + 1) :=
-    ChainComplex.of_d _ _ _ (n + 1)
-  have hg : (cechEngineComplexFam U V).d (n + 1) n = cechEngineDFam U V n := ChainComplex.of_d _ _ _ n
+    ChainComplex.of_d _ _ (n + 1)
+  have hg : (cechEngineComplexFam U V).d (n + 1) n = cechEngineDFam U V n := ChainComplex.of_d _ _ n
   change Function.Exact ⇑(ConcreteCategory.hom ((cechEngineComplexFam U V).d (n + 2) (n + 1)))
     ⇑(ConcreteCategory.hom ((cechEngineComplexFam U V).d (n + 1) n))
   rw [hf, hg]
@@ -2126,7 +2126,7 @@ noncomputable def cechEngineComplexAugFam (V : TopologicalSpace.Opens ↥X) :
     cechEngineComplexFam U V ⟶ (ChainComplex.single₀ _).obj (coverSectionModule V) :=
   ((cechEngineComplexFam U V).toSingle₀Equiv (coverSectionModule V)).symm
     ⟨cechEngineAug0Fam U V, by
-      rw [show (cechEngineComplexFam U V).d 1 0 = cechEngineDFam U V 0 from ChainComplex.of_d _ _ _ 0]
+      rw [show (cechEngineComplexFam U V).d 1 0 = cechEngineDFam U V 0 from ChainComplex.of_d (cechEngineXFam U V) (cechEngineDFam U V) 0]
       exact cechEngineD_comp_augFam U V⟩
 
 /-- **Degree-`0` contracting identity of the augmented engine complex.** Fixing
@@ -2196,7 +2196,7 @@ lemma cechEngineComplexAug_quasiIsoFam (V : TopologicalSpace.Opens ↥X)
       cechEngineComplexAug_f_zeroFam U V
     have hSf : S.f = cechEngineDFam U V 0 := by
       change (cechEngineComplexFam U V).d 1 0 = cechEngineDFam U V 0
-      exact ChainComplex.of_d (cechEngineXFam U V) (cechEngineDFam U V) (cechEngineD_compFam U V) 0
+      exact ChainComplex.of_d (cechEngineXFam U V) (cechEngineDFam U V) 0
     have hsplit := cechEngineAug0_splitFam U V i_fix
     refine ⟨⟨Limits.Sigma.ι
       (fun _ : Fin 1 → {i : ι // V ≤ U i} => coverSectionModule V)

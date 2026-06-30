@@ -34,7 +34,7 @@ lemma toModuleKPresheaf_isSheaf (C : Over (Spec (CommRingCat.of k))) :
       (toModuleKPresheaf C) := by
   rw [Presheaf.isSheaf_iff_isSheaf_forget _ _ (CategoryTheory.forget (ModuleCat.{u} k))]
   convert (Presheaf.isSheaf_iff_isSheaf_forget _ _
-      (CategoryTheory.forget CommRingCat.{u})).mp C.left.sheaf.property using 1
+      (CategoryTheory.forget CommRingCat.{u})).mp C.left.sheaf.property using 1 <;> rfl
 
 /-- Phase A step 5 main: the structure sheaf of a `Spec k`-scheme as a sheaf
 of `k`-modules. Bundles `toModuleKPresheaf` (helper 6) and

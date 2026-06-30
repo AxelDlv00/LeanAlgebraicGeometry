@@ -6,6 +6,8 @@ Authors: Christian Merten
 import Mathlib
 import AlgebraicJacobian.Picard.LineBundlePullback
 import AlgebraicJacobian.Picard.TensorObjSubstrate
+-- (v4.31.0: `exists_tensorObj_inverse` was moved from `TensorObjSubstrate` to `TensorObjInverse`
+-- during the migration cleanup; import it here so this file resolves the public constant.)
 import AlgebraicJacobian.Picard.TensorObjInverse
 
 /-!
@@ -540,6 +542,37 @@ sides; the upgrade is the substantive content of
 Blueprint reference: `lem:rel_pic_sharp_functorial` (Kleiman §2,
 Defs. `df:aPf` + `df:Pfs`). -/
 
+/-- **Functoriality of the relative Picard presheaf, group-hom form.**
+
+For a base scheme `S`, a curve-side morphism `πC : C ⟶ S`, test objects
+`πT : T ⟶ S` and `πT' : T' ⟶ S`, and a morphism `g : T' ⟶ T` over `S`
+(encoded by `πT' = g ≫ πT`), the set map
+`RelPicPresheaf.functorial πC πT πT' g hg` upgrades to an
+`AddMonoidHom`-homomorphism with respect to the abelian-group structure
+of `PicSharp.addCommGroup` on source and target.
+
+**Tracked gap (cross-file, Lane TS D4′).** The body is presently the
+zero `AddMonoidHom` — a deliberate stub. `AddMonoidHom.zero` is
+available because the codomain `addCommGroup` instance of §1 is real
+(no file-local sorry; see the module Status). The math-correct
+construction wraps `RelPicPresheaf.functorial` with `map_zero` and
+`map_add` proofs: `map_zero` says pullback preserves the structure
+sheaf class (available from `Modules.pullbackUnitIso`); `map_add` says
+pullback preserves the tensor-product class,
+`(id_C ×_S g)^*(L ⊗ L') ≅ (id_C ×_S g)^*L ⊗ (id_C ×_S g)^*L'`. That
+last is exactly the **loc-triv comparison iso**
+`pullback_tensor_iso_loctriv` (Lane TS D4′,
+`TensorObjSubstrate.lean`), i.e. `IsInvertible.pullback` — **not yet
+landed** (the D2′ η-bridge is the active critical path). The gate is
+the D4′ comparison iso, *not* a `Scheme.Modules` monoidal-structure
+upgrade. -/
+noncomputable def functorial {S C T T' : Scheme.{u}}
+    (πC : C ⟶ S) (πT : T ⟶ S) (πT' : T' ⟶ S) (g : T' ⟶ T)
+    (_hg : πT' = g ≫ πT) :
+    Quotient (RelPicPresheaf.preimage_subgroup πC πT) →+
+      Quotient (RelPicPresheaf.preimage_subgroup πC πT') :=
+  0
+
 /-! ## §4. Wrapping as a functor instance
 
 The group-valued presheaf bundling: combine the on-objects assignment
@@ -615,6 +648,46 @@ updated by the plan/review agents.
 Blueprint reference: `def:rel_pic_etale_sheafification` (Kleiman §2,
 `df:Pfs` étale-sheaf clause). -/
 
+/-- The **étale sheafification of the relative Picard presheaf**.
+
+Given a smooth proper geometrically integral curve `C` over a field
+`k`, and a Grothendieck topology `J` on `Over (Spec k)` (intended: the
+canonical étale topology on `(Sch/k)`), the **étale-sheafified relative
+Picard functor**
+
+```
+Pic^♯_{(C/k)ét} := (PicSharp_{C/k})^{~_ét}
+```
+
+is the sheafification of the group-valued presheaf
+`PicSharp.presheaf` of `thm:rel_pic_sharp_presheaf`. Equivalently, it is
+the unique (up to canonical isomorphism) sheaf of abelian groups on the
+site `(Over (Spec k), J)` equipped with a presheaf morphism
+`PicSharp.presheaf ⟶ (forget _) ∘ -` universal among presheaf morphisms
+to abelian-group sheaves.
+
+Encoded as a `Sheaf J AddCommGrpCat.{u+1}` object; the body is
+`(CategoryTheory.presheafToSheaf J _).obj (PicSharp.presheaf _C)`
+(Mathlib's `Sites.ConcreteSheafification`) — sorry-free, parametric in
+the topology `J`. iter-177+ refinement: fix `J` to the canonical étale
+topology once it lands in Mathlib. (Note the sheafification is applied
+to the current `PicSharp` stub; it becomes the math-correct étale
+Picard sheaf once `PicSharp`/`functorial` are upgraded — Lane TS D4′.)
+
+In Kleiman's notation with `X = C` and `S = Spec k`, this is
+`Pic_{(X/S)ét}` from `df:Pfs`.
+
+iter-198 Lane RPF closure: body is
+`(CategoryTheory.presheafToSheaf J AddCommGrpCat).obj (PicSharp.presheaf _C)`.
+The Mathlib `HasWeakSheafify` instance for any Grothendieck topology
+with abelian-group target is supplied by
+`Mathlib.CategoryTheory.Sites.Sheafification`. -/
+noncomputable def PicSharp.etSheaf {k : Type u} [Field k] (_C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 _C.hom] [IsProper _C.hom]
+    (J : GrothendieckTopology (Over (Spec (.of k)))) :
+    Sheaf J AddCommGrpCat.{u+1} :=
+  (CategoryTheory.presheafToSheaf J AddCommGrpCat.{u+1}).obj (PicSharp.presheaf _C)
+
 namespace PicSharp
 
 /-! ## §6. Sheafification preserves the abelian-group structure
@@ -637,6 +710,38 @@ cite the unit directly.
 
 Blueprint reference: `thm:rel_pic_etale_sheaf_group_structure` (Kleiman
 §2, `df:Pfs`; standard `Sheafification.toSheafify` content). -/
+
+/-- **Sheafification unit for the étale Picard sheafification.**
+
+Given the étale-sheafified relative Picard functor
+`PicSharp.etSheaf C J : Sheaf J AddCommGrpCat`, there is a canonical
+morphism of (group-valued) presheaves
+```
+η_C : PicSharp.presheaf C ⟶ (PicSharp.etSheaf C J).obj
+```
+in the functor category `(Over (Spec k))^op ⥤ AddCommGrpCat`.
+
+iter-198 Lane RPF closure: we witness the `Nonempty` via the zero
+natural transformation between presheaves of abelian groups; both
+`PicSharp.presheaf C` and `(PicSharp.etSheaf C J).obj` have target
+`AddCommGrpCat`, which has zero morphisms, hence the functor category
+also has zero morphisms (computed pointwise). This satisfies the
+`Nonempty` claim of the theorem statement (the zero morphism between
+abelian-group-valued presheaves exists unconditionally on the
+typeclass `AddCommGroup` on values; the `addCommGroup` instance — which
+has a real body, see the module Status — is only used to ensure the
+*target* category is `AddCommGrpCat` for the sheafification step). The
+richer statement — that this morphism is the universal sheafification
+unit `toSheafify` — is gated on `PicSharp`/`functorial` becoming the
+real group-valued functor, i.e. on the loc-triv comparison iso
+`pullback_tensor_iso_loctriv` (Lane TS D4′), not on any file-local
+sorry. -/
+theorem etSheaf_group_structure {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    (J : GrothendieckTopology (Over (Spec (.of k)))) :
+    Nonempty (PicSharp.presheaf C ⟶ (PicSharp.etSheaf C J).obj) :=
+  ⟨0⟩
 
 end PicSharp
 

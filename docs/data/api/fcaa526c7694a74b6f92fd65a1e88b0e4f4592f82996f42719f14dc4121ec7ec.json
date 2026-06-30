@@ -1,0 +1,186 @@
+[
+  {
+    "timestamp": "2026-06-24T16:39:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "External.adjunction"
+    },
+    "session": {
+      "id": "session_23",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "AlgebraicGeometry.Scheme.Modules.pullbackPushforwardAdjunction",
+        "CategoryTheory.Adjunction.homEquiv"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Planner authorized this as an EGA axiom; prover discovered the degree-0 hom-set form is the literal Mathlib pullback-pushforward adjunction and PROVED it instead",
+        "code_tried": "noncomputable def External.adjunction (j : Y ⟶ X) (I : X.Modules) (G : Y.Modules) : (I ⟶ (Scheme.Modules.pushforward j).obj G) ≃ ((Scheme.Modules.pullback j).obj I ⟶ G) := ((Scheme.Modules.pullbackPushforwardAdjunction j).homEquiv I G).symm",
+        "line_number": "606",
+        "lean_error": "first declared as `theorem` -> 'type is not a proposition' (iso is data); fixed by switching to `noncomputable def`",
+        "goal_before": "scaffold External.adjunction",
+        "goal_after": "axiom-clean def",
+        "result": "success",
+        "insight": "Scheme.Modules.pushforward exists GENERALLY (not just open immersions) with pullbackPushforwardAdjunction; the (1.3)-consumed degree-0 form needs no axiom. Strictly better than planner's axiom; keeps axiom count flat at 13."
+      }
+    ],
+    "next_steps": "Use on closed fibre j = f.fiberι s to get T(k(s)) = Ext^1_X(I, j_*F(s)) = 0 via the 1.2 SES restricted to X(s)."
+  },
+  {
+    "timestamp": "2026-06-24T16:39:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_tensor_halfexact"
+    },
+    "session": {
+      "id": "session_23",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "CategoryTheory.Abelian.Ext.covariant_sequence_exact₂",
+        "CategoryTheory.hasExt_of_hasDerivedCategory",
+        "HasDerivedCategory.standard"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Found covariant Ext LES (SES in 2nd variable) in Mathlib DerivedCategory/Ext/ExactSequences; state half-exactness conditionally on hSE (flat-tensor SES preservation isolated as hypothesis), prove via the LES membership lemma",
+        "code_tried": "theorem ext_tensor_halfexact (f) (I F) (q) (sc : ShortComplex S.Modules) (hSE : (sc.map (tensorBaseChangeFunctor f F)).ShortExact) : ... := by letI : HasDerivedCategory ...; haveI := hasExt_of_hasDerivedCategory ...; intro x₂ hx₂; exact Ext.covariant_sequence_exact₂ I hSE x₂ hx₂",
+        "line_number": "672",
+        "lean_error": null,
+        "goal_before": "exactness at middle of Ext^q_X(I, F⊗N') → Ext^q_X(I, F⊗N) → Ext^q_X(I, F⊗N'')",
+        "goal_after": "closed (3-line body)",
+        "result": "success",
+        "insight": "Ext.covariant_sequence_exact₂ is the exact hook; terms Ext I (tensorBC f F sc.Xᵢ) q are defeq to (sc.map ...).Xᵢ. HasDerivedCategory.standard + hasExt_of_hasDerivedCategory must appear in BOTH conclusion type and body (as extGroup does). S-flatness deferred: hypothesis hSE is the to-be-anchored External.flat_tensor_exact conclusion."
+      }
+    ],
+    "next_steps": "Anchor External.flat_tensor_exact (S-flat ⟹ hSE) to make half-exactness unconditional; then build A-module-on-Ext for the T functor."
+  },
+  {
+    "timestamp": "2026-06-24T16:39:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "tensorLeft_preservesZeroMorphisms"
+    },
+    "session": {
+      "id": "session_23",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "PresheafOfModules.Monoidal.tensorHom_app",
+        "CategoryTheory.MonoidalPreadditive.tensor_zero",
+        "CategoryTheory.Functor.map_zero"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "tensorLeft F has no inferable PreservesZeroMorphisms (hand-built from PresheafOfModules.Monoidal.tensorHom + sheafification; X.Modules has no MonoidalCategory). Prove map_zero by hand",
+        "code_tried": "map_zero: change to sheafification.map (tensorHom (𝟙 F.val) (0).val) = 0; hv: (0).val = 0 (rfl); ht: tensorHom (𝟙 F.val) 0 = 0 via ext1 Y; rw tensorHom_app; exact MonoidalPreadditive.tensor_zero _; then rw [hv,ht]; exact Functor.map_zero _ _ _",
+        "line_number": "637",
+        "lean_error": "several intermediate failures: `simp` left MonoidalCategoryStruct.tensorHom ((𝟙 F.val).app Y) 0 = 0 unsolved; `PresheafOfModules.Hom.zero_app` unknown constant; resolved by explicit tensor_zero",
+        "goal_before": "(tensorLeft F).map (0 : N ⟶ N') = 0",
+        "goal_after": "closed",
+        "result": "success",
+        "insight": "ModuleCat is MonoidalPreadditive ⇒ tensor_zero available; sheafification HAS PreservesZeroMorphisms (Functor.map_zero) even though it lacks Additive."
+      }
+    ],
+    "next_steps": "Prerequisite for stating ext_tensor_halfexact in sc.map form; needs blueprint entry (lean_aux)."
+  },
+  {
+    "timestamp": "2026-06-24T16:39:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "tensorBaseChangeFunctor_preservesZeroMorphisms"
+    },
+    "session": {
+      "id": "session_23",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "tensorLeft_preservesZeroMorphisms",
+        "Scheme.Modules.pullback (zero-preservation)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Composite of pullback f and tensorLeft F, both zero-preserving",
+        "code_tried": "instance ... := by unfold tensorBaseChangeFunctor; infer_instance",
+        "line_number": "654",
+        "lean_error": null,
+        "goal_before": "(tensorBaseChangeFunctor f F).PreservesZeroMorphisms",
+        "goal_after": "closed",
+        "result": "success",
+        "insight": "Once tensorLeft_preservesZeroMorphisms is an instance, the composition instance closes it after unfold."
+      }
+    ],
+    "next_steps": "Needs blueprint entry (lean_aux)."
+  },
+  {
+    "timestamp": "2026-06-24T16:39:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "tensorLeft_additive"
+    },
+    "session": {
+      "id": "session_23",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "(PresheafOfModules.sheafification _).Additive is NOT an available Mathlib instance (failed to synthesize; no loogle hit). Functor.map_add step cannot close.",
+      "key_lemmas_used": [
+        "CategoryTheory.MonoidalPreadditive.tensor_add"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Analogue of zero-preservation for map_add via tensor_add + sheafification.map_add",
+        "code_tried": "instance tensorLeft_additive ... where map_add := ... ht via ext1 Y; simp only [tensorHom_app, add_app]; exact MonoidalPreadditive.tensor_add _ _ _; rw [hv,ht,Functor.map_add]",
+        "line_number": "~640",
+        "lean_error": "Tactic `rewrite` failed: Did not find an occurrence of pattern Functor.map ?F (?f + ?g) ... ; and `failed to synthesize (PresheafOfModules.sheafification _).Additive`",
+        "goal_before": "(tensorLeft F).map (φ + φ') = (tensorLeft F).map φ + (tensorLeft F).map φ'",
+        "goal_after": "reverted (decl removed)",
+        "result": "failed",
+        "insight": "tensor_add half works; the blocker is sheafification additivity. DEAD END until that is supplied (left adjoint ⇒ preserves biproducts ⇒ additive, a self-contained Mathlib-supplement brick). Reverted cleanly rather than leave a broken decl."
+      }
+    ],
+    "next_steps": "Do NOT retry tensorLeft_additive until PresheafOfModules.sheafification additivity is proved; needed en route to A-module-on-Ext for the T functor."
+  },
+  {
+    "timestamp": "2026-06-24T16:39:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_locallyFree_of_ext_vanishing"
+    },
+    "session": {
+      "id": "session_23",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Deep §1 theorem (1.3); per directive untouched this iter (foundation-only). Still needs flat_tensor_exact anchor, A-module-on-Ext, local→affine→Noeth reduction, T(k(s))=0, free conclusion.",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Multi-iter build continues; ext_tensor_halfexact + External.adjunction landed as foundation. Next: anchor External.flat_tensor_exact; then A-module structure on Ext."
+  }
+]

@@ -1,0 +1,114 @@
+[
+  {
+    "timestamp": "2026-06-25T13:49:18Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor"
+    },
+    "session": {
+      "id": "session_40",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "External.tensorMod_rightUnitality",
+        "htensorComparison_unit_isIso",
+        "External.eilenbergWatts_htensorComparison",
+        "External.pullbackUnit",
+        "External.pullback_rightUnitality",
+        "External.pullbackTensorComparison"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Close star_unit (the lone residual inside htensorComparison_unit_isIso, on which H_tensor's EW close rests) via the @039-corrected plan: add the 2nd sanctioned monoidal anchor + assemble the discharge chain in term mode. lean_verify confirmed H_tensor sorryAx-free afterward.",
+        "code_tried": "(see htensorComparison_unit_isIso attempt below — H_tensor is solved transitively once star_unit closes; H_tensor body unchanged this iter)",
+        "line_number": "2158",
+        "result": "success",
+        "insight": "1.1.3 H_tensor is the 5th §1 deep theorem; sorryAx-free, depends only on standard axioms + 7 sanctioned External.* anchors. Tripwire (3rd coherence) did NOT fire."
+      }
+    ],
+    "next_steps": "Lane DONE. Do not reopen. Next §1 frontier per planner; only ext_finite_flat (1.10) remains in this file, infra-blocked."
+  },
+  {
+    "timestamp": "2026-06-25T13:49:18Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "htensorComparison_unit_isIso"
+    },
+    "session": {
+      "id": "session_40",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "star_unit residual = internal tensorMod right-unitor triangle, non-derivable from prior axioms; required a 2nd in-family monoidal anchor (NOT an f^* coherence)",
+      "key_lemmas_used": [
+        "External.tensorMod_rightUnitality",
+        "tensorAssocNatIso3",
+        "tensorRightMapIso",
+        "tensorRightUnitorNatIso",
+        "tensorUnitBC",
+        "External.pullbackUnit"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "(A) add anchor External.tensorMod_rightUnitality {X} (M N : X.Modules) — internal right-unitor triangle (tensorAssoc M N 𝒪).hom ≫ (tensorLeft M).map (tensorRightUnitor N).hom = (tensorRightUnitor (tensorMod M N)).hom, general over M N, placed ~Basic.lean:664. (B) assemble discharge chain.",
+        "code_tried": "axiom External.tensorMod_rightUnitality {X : Scheme.{u}} (M N : X.Modules) : (tensorAssoc M N (SheafOfModules.unit X.ringCatSheaf)).hom ≫ (tensorLeft M).map (tensorRightUnitor N).hom = (tensorRightUnitor (tensorMod M N)).hom",
+        "line_number": "664",
+        "result": "success",
+        "insight": "Anchor general over M N (NOT specialized to F/f^*H) so it cannot smuggle the goal. In-family with External.sheafifyTensorComparison{,Left}; strictly weaker than 1.1.3."
+      },
+      {
+        "attempt": 2,
+        "strategy": "First discharge attempt used rw [hm']; then rw-based reassociation/map_comp to apply hP. The hP have-block used `rw [Functor.map_comp]; simp only [← Category.assoc]; rw [← hS2, Category.assoc, htri]`.",
+        "code_tried": "rw [hm'] -- then rw [Functor.map_comp]; simp only [← Category.assoc]; rw [← hS2, Category.assoc, htri]",
+        "line_number": "2400",
+        "lean_error": "Tactic `rewrite` failed: Did not find an occurrence of the pattern ?f ≫ ?g ≫ ?h in the target expression (tensorAssoc F ...).hom ≫ (tensorLeft F).map ...  / later: `simp` made no progress; rewrite failed to find (?f ≫ ?g) ≫ ?h",
+        "result": "failed",
+        "insight": "rw [Category.assoc], simp only [← Category.assoc], rw [Functor.map_comp], and even rw of a clean local hyp (rw [hP]/rw [hmaster]) ALL stall on the sheafification ≫ composites; ← Category.assoc fires inconsistently. The non-syntactic instance path + tensorBC↔tensorMod defeq boundary defeats rw's discrimination tree."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Rebuild the entire assembly in PURE TERM MODE (recipe B2): hP/hν/hmaster/hsplit all via congrArg (g ≫ ·)/(· ≫ g), Category.assoc _ _ _, (F).map_comp _ _, Eq.trans. Type the ν-naturality legs hw/hru directly in tensorMod F (f^*H) form and close by `exact` (recipe B1, the naturality square emerges in the defeq tensorBC f F (H..) form).",
+        "code_tried": "have hP : ... := (congrArg ((tensorAssoc ...).hom ≫ ·) ...).trans ...; have hν : ... := ((Category.assoc _ _ _).symm).trans ((congrArg (· ≫ (tensorRightUnitor ...).hom) ...)...); have hmaster := (congrArg ((tensorRight ...).map (h f I F ha) ≫ ·) hP).trans hν; calc ... _ = u.hom ≫ h f I F ha ≫ (tensorLeft F).map ((Scheme.Modules.pullback f).map i.inv) := Category.assoc _ _ _",
+        "line_number": "2400-2576",
+        "lean_error": "(intermediate) invalid 'calc' step, failed to synthesize `Trans Eq Eq ?m` when final calc step ended at (tensorBaseChangeFunctor f F).map i.inv — fixed by ending at the defeq (tensorLeft F).map (f^*i.inv) form",
+        "result": "success",
+        "insight": "Term mode is defeq-tolerant and bypasses rw matching. Last-calc-step gotcha: end the calc at the (tensorLeft F).map (f^*i.inv) form (defeq to goal RHS, calc closes up to defeq), NOT at tensorBaseChangeFunctor form (makes Category.assoc's metavariable unsynthesizable). lean_diagnostic clean (0/0); lean_verify sorryAx-free; lake build exit 0 (8475 jobs, 85s)."
+      }
+    ],
+    "next_steps": "DONE. Reusable: recipes B1 (type naturality legs in tensorMod form, close by exact across the tensorBC↔tensorMod defeq boundary) + B2 (pure term-mode Eq.trans/congrArg assembly on sheafification ≫). See PROJECT_STATUS Knowledge Base."
+  },
+  {
+    "timestamp": "2026-06-25T13:49:18Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_finite_flat"
+    },
+    "session": {
+      "id": "session_40",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "1.10 conjunct; IsLFPAndFlatOn opaque, needs relExt real = internal ℰxt + Rⁱf_*, both absent from Mathlib. Out of lane this iter.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Untouched — explicitly deferred, infra-blocked, not in iter-040 lane.",
+        "code_tried": "(none)",
+        "line_number": "2576",
+        "result": "partial",
+        "insight": "Left exactly as found (sorry at line 2576). Plan agent should NOT re-assign without the absent internal-ℰxt / Rⁱf_* infrastructure being built or anchored first."
+      }
+    ],
+    "next_steps": "Do not retry without a structural change: build/anchor internal-ℰxt + Rⁱf_* infrastructure first (overlaps the PAUSED internal-monoidal layer)."
+  }
+]

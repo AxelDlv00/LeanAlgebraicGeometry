@@ -1538,10 +1538,12 @@ lemma sectionCech_isZero_homology_of_objD_exact {ι : Type u}
       ShortComplex.ab_exact_iff_function_exact]
   have hf : (sectionCechComplex U F).d q (q + 1)
       = AlternatingCofaceMapComplex.objD (sectionCechCosimplicial U F) q :=
-    CochainComplex.of_d _ _ (AlternatingCofaceMapComplex.d_squared _) q
+    CochainComplex.of_d (fun n => (sectionCechCosimplicial U F).obj (SimplexCategory.mk n))
+      (AlternatingCofaceMapComplex.objD (sectionCechCosimplicial U F)) q
   have hg : (sectionCechComplex U F).d (q + 1) (q + 2)
       = AlternatingCofaceMapComplex.objD (sectionCechCosimplicial U F) (q + 1) :=
-    CochainComplex.of_d _ _ (AlternatingCofaceMapComplex.d_squared _) (q + 1)
+    CochainComplex.of_d (fun n => (sectionCechCosimplicial U F).obj (SimplexCategory.mk n))
+      (AlternatingCofaceMapComplex.objD (sectionCechCosimplicial U F)) (q + 1)
   change Function.Exact
       (ConcreteCategory.hom ((sectionCechComplex U F).d q (q + 1)))
       (ConcreteCategory.hom ((sectionCechComplex U F).d (q + 1) (q + 2)))

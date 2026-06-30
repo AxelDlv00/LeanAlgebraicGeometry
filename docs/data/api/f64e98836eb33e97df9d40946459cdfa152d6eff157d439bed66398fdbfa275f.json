@@ -1,0 +1,122 @@
+[
+  {
+    "timestamp": "2026-06-25T05:14:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor_invertible"
+    },
+    "session": {
+      "id": "session_32",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Linchpin tensorAssocNatIso₂ (naturality of tensorAssoc) blocked: forming a CONCRETE-object e1 equation forces isDefEq to whnf nested sheafification.obj/tensorObj types → 200k-heartbeat timeout (4M still diverged). Re-type-anchors-to-NatIso (STEP A) + tensorRight (STEP B) + cheap-reduction substrate LANDED. STEPs C-F gated on tensorAssocNatIso₂.",
+      "key_lemmas_used": [
+        "External.sheafifyTensorComparison",
+        "External.sheafifyTensorComparisonLeft",
+        "PresheafOfModules.Monoidal.tensorHom",
+        "MonoidalCategory.id_tensorHom_id",
+        "MonoidalCategory.tensorHom_comp_tensorHom",
+        "SheafOfModules.comp_val",
+        "CategoryTheory.Functor.map_id",
+        "CategoryTheory.Functor.map_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "STEP A: re-type comparison anchors object-level Iso → NatIso of bifunctors; recover object iso as `.app`. Build named bifunctors sheafifyForget/moduleSheafification/tensorThenSheafify/sheafifyFst,SndTensorThenSheafify to phrase the natural form.",
+        "code_tried": "axiom External.sheafifyTensorComparison ... : sheafifyFstTensorThenSheafify X ≅ tensorThenSheafify X ; tensorAssoc uses .app (P,Q)",
+        "line_number": "453",
+        "lean_error": "(initial) failed to synthesize Presheaf.IsLocallyInjective (𝟙 X.ringCatSheaf.obj) on bare-functor form; Unknown identifier NatIso.app",
+        "result": "success",
+        "insight": "Bare PresheafOfModules.sheafification functor leaves IsLocallyInjective/Surjective as metavars; the applied .obj/.map form drives instance synthesis. NatIso.app does not exist — use `.app` on the NatTrans (`External.sheafifyTensorComparison.app`)."
+      },
+      {
+        "attempt": 2,
+        "strategy": "STEP B + substrate: build `tensorRight L` endofunctor (mirror of tensorLeft); re-build tensorThenSheafify and sheafifyFst/SndTensorThenSheafify as hand-built functors with explicit obj/map so .map reduces cheaply.",
+        "code_tried": "map_comp: refine Eq.trans ?_ (sheafification.map_comp _ _); congr 1; ext1 Y; simp [tensorHom_app, comp_app, prod_comp_fst, prod_comp_snd, Functor.map_comp, SheafOfModules.comp_val]; exact (tensorHom_comp_tensorHom ..).symm",
+        "line_number": "490-560",
+        "lean_error": "typeclass instance problem is stuck: MonoidalCategory ?m.218 (after Functor.map_comp fired the wrong instance); also 'Functor.map_id resolves to monad Functor'",
+        "result": "partial",
+        "insight": "Functor.map_comp/map_id will not fire on the product-projected `≫`; must use `erw [Functor.map_comp]` and fully-qualified `erw [CategoryTheory.Functor.map_id]`. Landed all hand-built functors axiom-clean."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Bridge primitives *_map_eq by rfl over a generic morphism f (not a pair).",
+        "code_tried": "private lemma sheafifyFst_map_eq (f : P ⟶ P') : (sheafifyFstTensorThenSheafify X).map f = ~(tensorHom (~f.1).val f.2) := rfl",
+        "line_number": "690",
+        "lean_error": "none (generic form); pair form (a,b) → (deterministic) timeout at isDefEq",
+        "result": "success",
+        "insight": "Generic-f form keeps both sides syntactically ~(…) so rfl is cheap; pair form (a,b) introduces (a,b).1 inside sheafification.map and isDefEq whnfs the plus-construction → timeout. Essential reusable trick."
+      },
+      {
+        "attempt": 4,
+        "strategy": "Linchpin: tensorAssocNatIso₂ := NatIso.ofComponents (fun Y => tensorAssoc F Y L) naturality; discharge via e1 equation (tensorRight L).map ((tensorLeft F).map φ) = (sheafifyFst..).map (tensorHom (𝟙 F.val) φ.val, 𝟙 L.val).",
+        "code_tried": "private lemma e1_test ... := rfl  [then by rw [tensorRight_map_eq, tensorLeft_map_eq]; conv_rhs => rw [sheafifyFst_map_eq]; dsimp only]  [then set_option maxHeartbeats 4000000 ... := rfl]",
+        "line_number": "~700",
+        "lean_error": "(deterministic) timeout at isDefEq, maximum number of heartbeats (200000) has been reached",
+        "result": "failed",
+        "insight": "Concrete-object e1 forces isDefEq between nested sheafification.obj/tensorObj TYPES (statement level, not proof) → kernel whnfs sheafification → timeout. 4M heartbeats still divergent. Removed scratch e1; left substrate. NEXT: route all rewriting through the generic *_map_eq lemmas, never forming a concrete object equation."
+      }
+    ],
+    "next_steps": "Prove tensorAssocNatIso₂ naturality by rewriting (tensorLeft F ⋙ tensorRight L).map φ to the anchor-bifunctor form via the GENERIC sheafifyFst_map_eq/tensorLeft_map_eq/tensorRight_map_eq as rw/simp (objects stay abstract); final goal = sheafification.map-of-equal-tensorHom congr. Then tensorAssocNatIso₃ (mirror) → tensorRearrangeNatIso → tensorRightEquivOfInvertible (Equivalence.mk, no triangle) → homTensorFunctorTwistIso → close via coyonedaCompFF + coyoneda faithfulness."
+  },
+  {
+    "timestamp": "2026-06-25T05:14:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor"
+    },
+    "session": {
+      "id": "session_32",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "1.1.3 (Eilenberg–Watts) — off this iter's lane; gated on the same monoidal-naturality layer (tensorAssoc naturality) being completed for 1.1.2. Untouched as instructed.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — off-lane (downstream of the 1.1.2 naturality layer).",
+        "code_tried": "n/a",
+        "line_number": "1262",
+        "lean_error": "",
+        "result": "partial",
+        "insight": "Will be un-gated once the bifunctor + NatIso assoc/braiding substrate built for 1.1.2 is complete."
+      }
+    ],
+    "next_steps": "Defer until 1.1.2 naturality layer lands; shares the tensorAssoc/tensorRearrange NatIso machinery."
+  },
+  {
+    "timestamp": "2026-06-25T05:14:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_finite_flat"
+    },
+    "session": {
+      "id": "session_32",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "1.10 — opaque IsLFPAndFlatOn / relExt absent (R^q f_* + internal ℰxt). Off-lane, untouched.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — off-lane.",
+        "code_tried": "n/a",
+        "line_number": "1297",
+        "lean_error": "",
+        "result": "partial",
+        "insight": "Requires absent relative-Ext infra; overlaps PAUSED monoidal strand."
+      }
+    ],
+    "next_steps": "Deferred; needs relExt infrastructure not yet realized."
+  }
+]

@@ -397,6 +397,10 @@ noncomputable def pushforwardNatTrans (α : F ⟶ G) :
     ext U x
     exact congr($(f.naturality (α.app U.unop).op) x).symm
 
+@[simp] lemma pushforwardNatTrans_app_app_apply (α : F ⟶ G) (M : PresheafOfModules.{u} R)
+    (U : Cᵒᵖ) (x) :
+    ((pushforwardNatTrans φ α).app M).app U x = M.map (α.app U.unop).op x := rfl
+
 end PushforwardNatTrans
 
 section PushforwardCongr
@@ -417,6 +421,14 @@ noncomputable def pushforwardCongr {φ ψ : S ⟶ F.op ⋙ R} (e : φ = ψ) :
       (fun U ↦ (ModuleCat.restrictScalarsCongr (R := S.obj U) (S := R.obj _)
         (f := (φ.app U).hom) (g := (ψ.app U).hom) (by subst e; rfl)).app _)
       (fun _ _ _ ↦ by subst e; rfl)) (fun _ ↦ by subst e; rfl)
+
+@[simp] lemma pushforwardCongr_hom_app_app {φ ψ : S ⟶ F.op ⋙ R} (e : φ = ψ)
+    (M : PresheafOfModules.{u} R) (U x) :
+    ((pushforwardCongr e).hom.app M).app U x = x := by subst e; rfl
+
+@[simp] lemma pushforwardCongr_inv_app_app {φ ψ : S ⟶ F.op ⋙ R} (e : φ = ψ)
+    (M : PresheafOfModules.{u} R) (U x) :
+    ((pushforwardCongr e).inv.app M).app U x = x := by subst e; rfl
 
 end PushforwardCongr
 
@@ -750,7 +762,7 @@ lemma restrictionMap_globalSMul {U V : C} (g : V ⟶ U)
         = ((Over.map g).obj Y.unop).hom := by simp
     have e2 : Over.Hom.left (Over.mkIdTerminal.from Y.unop) = Y.unop.hom := by simp
     rw [e1, e2]
-    simp [Over.map_obj_hom]
+    exact Over.map_obj_hom
   rw [hmor]
   erw [← CommRingCat.comp_apply, ← R.map_comp]
   rfl
@@ -965,7 +977,7 @@ would otherwise time out). Used to rewrite the `naturality_apply` of a dual sect
 shape `ev_M`'s naturality needs. -/
 private lemma restr_map_homMk
     (N : PresheafOfModules.{u} (R₀ ⋙ forget₂ CommRingCat RingCat)) {X Y : Dᵒᵖ} (f : X ⟶ Y) :
-    (restr X.unop N).map (Over.homMk f.unop : Over.mk f.unop ⟶ Over.mk (𝟙 X.unop)).op
+    (restr X.unop N).map (Over.homMk f.unop (Category.comp_id _) : Over.mk f.unop ⟶ Over.mk (𝟙 X.unop)).op
       = N.map f := rfl
 
 /-- **The evaluation morphism `ev_M : M ⊗_R M^∨ ⟶ R`** (blueprint `lem:internal_hom_eval`):
@@ -1007,7 +1019,7 @@ noncomputable def internalHomEval
     have key := PresheafOfModules.naturality_apply
       (φ : restr X.unop M ⟶ restr X.unop
         (𝟙_ (PresheafOfModules.{u} (R₀ ⋙ forget₂ CommRingCat RingCat))))
-      (Over.homMk f.unop : Over.mk f.unop ⟶ Over.mk (𝟙 X.unop)).op s
+      (Over.homMk f.unop (Category.comp_id _) : Over.mk f.unop ⟶ Over.mk (𝟙 X.unop)).op s
     -- Both further-restrictions `(restr X.unop _).map (Over.homMk f.unop).op` are definitionally
     -- the base maps `M.map f` / `(𝟙_).map f` (`restr_map_homMk`).
     rw [restr_map_homMk, restr_map_homMk] at key

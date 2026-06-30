@@ -1,0 +1,285 @@
+[
+  {
+    "timestamp": "2026-06-29T14:15:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "tensorObj_left_unitor_image_collapse"
+    },
+    "session": {
+      "id": "session_92",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "right_triangle_components",
+        "left_triangle_components",
+        "sheafifyTensorUnitIso_hom_eq'"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "axis-9: replace `simpa only [Iso.app_hom, asIso_hom] using (...).right_triangle_components (...)` (fails at reducible transparency on `(forget ⋙ restrictScalars 𝟙).obj (unit) ≡ 𝟙_` unit-object spelling) with `have h := ...; simp only [...] at h; exact h` (bare exact = default transparency)",
+        "code_tried": "rw [sheafifyUnitIso]; have h := (...sheafificationAdjunction (𝟙 Y.ringCatSheaf.val)).right_triangle_components (SheafOfModules.unit ...); simp only [Iso.app_hom, asIso_hom] at h; exact h",
+        "line_number": "1722",
+        "result": "success",
+        "insight": "iter-091 RED break (L1743) fixed — restores GREEN. axis-9 also bites `simpa ... using right_triangle_components`, not only the iter-090 toRingCatSheafHom case."
+      }
+    ],
+    "next_steps": "Done. Helper for Cone A λ-leg."
+  },
+  {
+    "timestamp": "2026-06-29T14:15:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "tensorObj_left_unitor_pullback_eq_sheafify"
+    },
+    "session": {
+      "id": "session_92",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "tensorObj_left_unitor_naturality",
+        "tensorObjIsoOfIso_eq_comp",
+        "tensorObj_left_unitor_image_collapse"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Cone A λ-leg: split tensor leg by functoriality (tensorObjIsoOfIso_eq_comp), slide pbv M leg past via tensorObj_left_unitor_naturality (hnat/hcomb), residual = tensorObj_left_unitor_image_collapse discharged by `exact congrArg (· ≫ pbv) (image_collapse ...)`",
+        "code_tried": "have h0 := congrArg (SheafOfModules.forget Y.ringCatSheaf).map (Iso ...); ... -- axis-9 congrArg term-mode fold",
+        "line_number": "1801",
+        "result": "success",
+        "insight": "ports v4.30 body + axis-9 on the congrArg fold; no dependency on sorried decls — genuinely closed (9→8)."
+      }
+    ],
+    "next_steps": "Done."
+  },
+  {
+    "timestamp": "2026-06-29T14:15:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackUnitIso_whisker_eq_sheafify_eta_whisker"
+    },
+    "session": {
+      "id": "session_92",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "pullbackUnitIso_eq_sheafify_eta",
+        "sheafifyTensorUnitIso_hom_natural",
+        "tensorObjIsoOfIso_hom",
+        "aesop_cat"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "η-whisker leg: bridge-1 substitution pullbackUnitIso = pbv⁻¹;a.map η;sheafifyUnitIso + whisker expansion; central-leg STU naturality at arg-1=η (RHS whisker collapses by map_id); left-factor device cancels flanking legs against W",
+        "code_tried": "((SheafOfModules.forget Y.ringCatSheaf).map (sheafifyUnitIso ...)) ...; aesop_cat for routine 𝟙≫f=f",
+        "line_number": "1881",
+        "result": "success",
+        "insight": "central leg = already-proven two-arg naturality, no new coherence core; closed (8→7)."
+      }
+    ],
+    "next_steps": "Done."
+  },
+  {
+    "timestamp": "2026-06-29T14:15:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "tensorObj_restrict_iso_eq_pullbackTensorMap"
+    },
+    "session": {
+      "id": "session_92",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "CROSS-FILE MIGRATION REGRESSION: the v4.30 proof (ROOT TensorObjSubstrate.lean:4678 `pushforward_mu_appIso_collapse`, the δ-conjugation EQUATION) cannot be ported — the v4.31-migrated working-tree ROOT was RESTRUCTURED and DROPPED `pushforward_mu_appIso_collapse` / `deltaConjOfMuComparison` / `isIso_oplaxδ_of_conj`, replacing them with `isIso_pullbackTensorMap_of_isIso_sheafifyDelta` (an IsIso WITNESS, not the EQUATION this keystone needs).",
+      "key_lemmas_used": [
+        "pushforward_mu_appIso_collapse (MISSING from working-tree ROOT)",
+        "sheafifyTensorUnitIso_hom_eq'",
+        "H1inv_app_eq_pullbackVal_restrict",
+        "map_tensorHom_comp3"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "port v4.30 δ-collapse skeleton: simp [tensorObj_restrict_iso]; Iso.ext; congr; rw [pushforward_mu_appIso_collapse f M.val N.val]; ...",
+        "code_tried": "rw [pushforward_mu_appIso_collapse f M.val N.val, Iso.app_inv]; erw [Iso.inv_hom_id_app_assoc]; ...",
+        "line_number": "837",
+        "lean_error": "unknown identifier `pushforward_mu_appIso_collapse` (dropped from working-tree ROOT)",
+        "result": "failed",
+        "insight": "REVERTED to sorry with full WALLED comment (L817-836) preserving the intended v4.30 skeleton. Needs ROOT-recovery: restore/re-export the δ-collapse EQUATION lemma in TensorObjSubstrate. SAME lemma K1 needs."
+      }
+    ],
+    "next_steps": "ROOT-recovery lane: re-port `pushforward_mu_appIso_collapse` (+ deltaConjOfMuComparison, isIso_oplaxδ_of_conj) from 117100c4:TensorObjSubstrate.lean:4678 into the v4.31 working-tree ROOT, THEN B1 + K1 port follows."
+  },
+  {
+    "timestamp": "2026-06-29T14:15:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackTensorMap_isIso_of_isOpenImmersion"
+    },
+    "session": {
+      "id": "session_92",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "K1: deferred per objectives (heavy 6.4M-HB S2 region, OOMs the 2GB host when filled in place — iter-091). NEW this iter: its v4.30 ROOT proof (117100c4:TensorObjSubstrate.lean:4790) ALSO depends on the dropped `pushforward_mu_appIso_collapse` — so even after a file-split, K1 cannot port until ROOT re-exposes the δ-collapse equation.",
+      "key_lemmas_used": [
+        "pushforward_mu_appIso_collapse (MISSING)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "NOT attempted in-place (objective: DO NOT TOUCH — OOM hazard); left as `:= sorry` with honest WIP-gap comment.",
+        "code_tried": "",
+        "line_number": "807",
+        "result": "partial",
+        "insight": "Deferred. Slated for structural file-split next iter, but file-split is gated on ROOT-recovery of `pushforward_mu_appIso_collapse`."
+      }
+    ],
+    "next_steps": "ROOT-recovery first (shared with B1), then file-split + port from 117100c4:TensorObjSubstrate.lean:4790."
+  },
+  {
+    "timestamp": "2026-06-29T14:15:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "tensorObj_restrict_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_92",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Light-sweep target #1 per objectives; not reached this session (effort spent on restore-green + the 2 Cone A legs + the B1 WALL diagnosis). Still `:= sorry`."
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not reached",
+        "code_tried": "",
+        "line_number": "982",
+        "result": "partial",
+        "insight": "Recoverable from 117100c4 by name + 9-axis; independent of the dropped ROOT lemma — good next-iter light target."
+      }
+    ],
+    "next_steps": "Port from 117100c4 by name (restriction-naturality compat, light); independent of ROOT-recovery."
+  },
+  {
+    "timestamp": "2026-06-29T14:15:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_assemble"
+    },
+    "session": {
+      "id": "session_92",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "GENUINE-OPEN dual-unit FLANK (deferred per objectives): rides the ∞-source presheaf-level pullback-unit comparison `p` (no informal proof yet). Honest BLOCKER comment L1479-1510."
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "DO NOT TOUCH (deferred flank)",
+        "code_tried": "",
+        "line_number": "1511",
+        "result": "partial",
+        "insight": "Off critical path; needs dag-walker/blueprint-writer on the ∞-source first."
+      }
+    ],
+    "next_steps": "Future dual-unit FLANK phase; blueprint the ∞-source before any prover."
+  },
+  {
+    "timestamp": "2026-06-29T14:15:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dualUnitIso_dualIsoOfIso"
+    },
+    "session": {
+      "id": "session_92",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "GENUINE-OPEN dual-unit FLANK (deferred per objectives)."
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "DO NOT TOUCH (deferred flank)",
+        "code_tried": "",
+        "line_number": "2315",
+        "result": "partial",
+        "insight": "Off critical path."
+      }
+    ],
+    "next_steps": "Future dual-unit FLANK phase."
+  },
+  {
+    "timestamp": "2026-06-29T14:15:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_92",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Telescope: rides the full square-set incl. B1 + the dual flank (all sorried). Honest TELESCOPE PLAN comment L2273-2297."
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not attempted (uses not green)",
+        "code_tried": "",
+        "line_number": "2298",
+        "result": "partial",
+        "insight": "Gated on B1 + flank; cannot close until upstream sorries clear."
+      }
+    ],
+    "next_steps": "After B1/flank close."
+  },
+  {
+    "timestamp": "2026-06-29T14:15:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "exists_tensorObj_inverse"
+    },
+    "session": {
+      "id": "session_92",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Terminal consumer; rides trivialisation_restrict_compat (sorried). The final theorem of the file."
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not attempted (uses not green)",
+        "code_tried": "",
+        "line_number": "2372",
+        "result": "partial",
+        "insight": "Last to close; gated on the whole telescope."
+      }
+    ],
+    "next_steps": "After telescope closes."
+  }
+]

@@ -44,6 +44,7 @@ import AlgebraicJacobian.AbelJacobi
 import AlgebraicJacobian.Picard.RelativeSpec
 import AlgebraicJacobian.Picard.LineBundlePullback
 import AlgebraicJacobian.Picard.TensorObjSubstrate
+import AlgebraicJacobian.Picard.TensorObjSubstrate.PullbackTensorComp
 import AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse
 import AlgebraicJacobian.Picard.RelPicFunctor
 import AlgebraicJacobian.Picard.FGAPicRepresentability

@@ -1,15 +1,2 @@
-- **Paused Route-C chapters** (OCofP/OcOfD/RRFormula/RationalCurveIso/WeilDivisor) carry ~78 literal `REF` citation placeholders left in prose; they don't block the build but need human citations whenever Route C is unpaused.
-- **11 `REF` placeholders in protected `Jacobian.tex`/`AbelJacobi.tex`** render as bare "Theorem~REF" (build still passes). They're your prose to fill; suggested `\cref` targets (all labels verified to exist) were listed in the iter-287 notes — confirm or correct.
-
-## Union merge of GR-quot_closure (2026-06-22)
-- Imported the subproject's full Grassmannian/Quot representability deliverable (5 new
-  sorry-free files + `Grassmannian.represents` + the section graded ring/module lane).
-  The configured `enrich` scope was a **no-op** (all 26 shared decls identical /
-  target-stronger / already-proved); you opted into **union** to capture the real
-  non-shared deliverable. Both sides' `QuotScheme.lean` work preserved (base-change lane
-  kept; descent machinery appended).
-- **Note on the subproject's `\leanok` marks:** several were LSP-earned, not kernel-earned
-  (e.g. `Grassmannian.representable` is marked proved in the source blueprint but is a
-  `sorry` stub in the source Lean — identical to this project's stub). The merge relies on
-  `lake build` (lake_mode=`build`) as the real kernel check; the χ-blocked QuotScheme
-  stubs (`hilbertPolynomial`, `QuotFunctor`, `Grassmannian.representable`) remain `sorry`.
+- **02KH base-change progressing on two fronts.** DUAL is DONE (iter-317, axiom-clean). FBC (`CechHigherDirectImageUnconditional.lean`) runs the **reduce-to-absolute / separated-case** plan (deliberate partial divergence from the literal Čech-SS directive; SS kept as general-case tool; the 02KH adjoint-mate route stays DELETED); residual = the two affine-reduction hearts + two naturalities, now carved into 6 prover-ready blocks (FBC prover resumes iter-322). D3′ (`PullbackTensorComp.lean`): the last substrate pole `pullbackTensorMap_restrict` has been the residual for 3 iters — Steps A–D and the verified slide motive `scPb_slide` landed, but applying any slide into the giant goal whnf-explodes; iter-322 = a continuation-lemma split (no relaxed transparency) + a mathlib-analogist consult on the per-leg mate-calculus core. Override the FBC plan via `USER_HINTS.md`; the loop keeps moving.
+- **11 `REF` placeholders in protected `Jacobian.tex`/`AbelJacobi.tex`** render as bare "Theorem~REF" (build passes) — your prose to fill; suggested `\cref` targets (labels verified) are in the iter-287 notes. A further **~78 `REF`** in the paused Route-C chapters need human citations only if Route C is unpaused (non-blocking).

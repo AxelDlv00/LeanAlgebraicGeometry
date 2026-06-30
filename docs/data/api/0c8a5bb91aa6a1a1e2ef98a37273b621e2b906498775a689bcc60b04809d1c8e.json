@@ -1,0 +1,104 @@
+[
+  {
+    "timestamp": "2026-06-25T18:41:49Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "pushforwardBetaUnitEpsAppOne + presheafDualUnitIso_pullback_natural (FLANK L1273)"
+    },
+    "session": {
+      "id": "session_87",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "INFRASTRUCTURE, not math. All 3 prover attempts got Exit 137 (OOM/idle-kill) on `lake build` of the target module; 0 edits made; no task_result written. Build of this cone is ~28min wall-clock (sync_leanok measured 1657s) vs the prover's 900s idle-watchdog; machine has only 2GB RAM and the file carries `set_option maxHeartbeats 12800000` + whnf-heavy elaboration. The prover never reached the goal state to attempt any math.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Read target file + deps (TensorObjSubstrate, DualInverse, SliceTransport), grep for ingredient lemmas, then `lake build ...PresheafDualPullback`",
+        "code_tried": "timeout 1200 lake build AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse.PresheafDualPullback",
+        "line_number": "1273",
+        "lean_error": "Exit code 137 (process SIGKILLed — OOM / 900s idle-watchdog on silent build)",
+        "result": "failed",
+        "insight": "Could not establish a build baseline; full cone build exceeds harness limits on a 2GB host."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Re-read file + deps, re-attempt the same full build",
+        "code_tried": "timeout 1200 lake build AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse.PresheafDualPullback",
+        "line_number": "1273",
+        "lean_error": "Exit code 137",
+        "result": "failed",
+        "insight": "Identical OOM/idle-kill; no progress."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Read file regions, ToolSearch LSP tools (lean_goal/diagnostics) to reach the FLANK goal, then fell back to full build again",
+        "code_tried": "timeout 1200 lake build AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse.PresheafDualPullback",
+        "line_number": "1273",
+        "lean_error": "Exit code 137; session ended on idle_timeout (900s)",
+        "result": "failed",
+        "insight": "Even the LSP path needs the heavy file elaborated; the prover never reached the sorry's goal state."
+      }
+    ],
+    "next_steps": "Make the file iterable BEFORE any further prover lane: (a) pre-warm dependency oleans so only the leaf elaborates; (b) raise the prover idle-timeout above the ~28min cone build OR give the host more RAM; (c) structurally, split the 12.8M-heartbeat section so the FLANK goal is reachable without re-elaborating the whole file. Do NOT pivot to mathlib-analogist (the plan's STUCK corrective) — the math was never attempted; the blocker is purely environmental."
+  },
+  {
+    "timestamp": "2026-06-25T18:41:49Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_assemble (L2', L1601)"
+    },
+    "session": {
+      "id": "session_87",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Downstream-gated on L1' (PresheafDualPullback FLANK); not assigned this iter by design.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not assigned this iter (gated on L1' landing).",
+        "code_tried": "n/a",
+        "line_number": "1601",
+        "lean_error": "",
+        "result": "partial",
+        "insight": "Genuinely gated; planner deferred to next iter."
+      }
+    ],
+    "next_steps": "Unblocks only after L1' FLANK closes."
+  },
+  {
+    "timestamp": "2026-06-25T18:41:49Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat (telescope, L2387)"
+    },
+    "session": {
+      "id": "session_87",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Downstream-gated on S4a (L2'+L1'); not assigned this iter.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not assigned this iter (terminal telescope, gated).",
+        "code_tried": "n/a",
+        "line_number": "2387",
+        "lean_error": "",
+        "result": "partial",
+        "insight": "Genuinely gated."
+      }
+    ],
+    "next_steps": "Final close after S4a lands."
+  }
+]

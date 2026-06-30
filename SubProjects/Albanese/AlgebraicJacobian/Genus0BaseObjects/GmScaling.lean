@@ -92,7 +92,6 @@ private lemma awayι_comp_PLB_hom (kbar : Type u) [Field kbar]
   change Proj.awayι _ _ _ _ ≫ Proj.toSpecZero _ ≫ Spec.map _ = _
   rw [← Category.assoc, Proj.awayι_toSpecZero, ← Spec.map_comp,
     ← CommRingCat.ofHom_comp]
-  rfl
 
 /-- **`ℙ¹` is reduced.** Closed axiom-clean iter-168 via `IsReduced.of_openCover` over
 `projectiveLineBarAffineCover`; each chart `Spec (HomogeneousLocalization.Away 𝒜 (X_i))`
@@ -797,7 +796,6 @@ private lemma gmScalingP1_chart_agreement_cross01
         gmScalingP1_chart kbar (0 : Fin 2) = s := by
     have hcalc := congrArg
       (· ≫ pullback.fst (ProjectiveLineBar kbar).hom (ProjectiveLineBar kbar).hom) hs
-    simp only at hcalc
     rw [Category.assoc, pullback.diagonal_fst, Category.comp_id] at hcalc
     rw [hcalc]; exact hs_fst.symm
   have h_snd_eq :
@@ -806,7 +804,6 @@ private lemma gmScalingP1_chart_agreement_cross01
         gmScalingP1_chart kbar (1 : Fin 2) = s := by
     have hcalc := congrArg
       (· ≫ pullback.snd (ProjectiveLineBar kbar).hom (ProjectiveLineBar kbar).hom) hs
-    simp only at hcalc
     rw [Category.assoc, pullback.diagonal_snd, Category.comp_id] at hcalc
     rw [hcalc]; exact hs_snd.symm
   rw [h_fst_eq, h_snd_eq]
@@ -1044,7 +1041,6 @@ instance gm_geomIrred (kbar : Type u) [Field kbar] [IsAlgClosed kbar] :
       Spec.map (CommRingCat.ofHom (algebraMap kbar (MvPolynomial Unit kbar))) := by
     show Spec.map (CommRingCat.ofHom (algebraMap kbar (GmRing kbar))) = _
     rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
-    congr 1
   rw [hcomp]
   -- Surjective: target Spec k̄ is subsingleton, source is nonempty.
   haveI hsurj : Surjective (Spec.map (CommRingCat.ofHom

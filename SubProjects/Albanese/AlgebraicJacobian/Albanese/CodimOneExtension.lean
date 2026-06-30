@@ -440,8 +440,9 @@ private noncomputable def
       (Algebra.FormallySmooth.iff_split_injection
         (R := R) (P := Sₘ) (A := IsLocalRing.ResidueField Sₘ) hSurj).mp ‹_›
     refine Function.LeftInverse.injective (g := l) (fun x => ?_)
-    have := LinearMap.congr_fun hl x
-    simpa using this
+    have h := LinearMap.congr_fun hl x
+    simp only [LinearMap.coe_comp, Function.comp_apply] at h
+    exact h
   -- Step 2: `Ω[κ⁄R] = 0` + exactness → surjection.
   have hExact :=
     KaehlerDifferential.exact_kerCotangentToTensor_mapBaseChange R Sₘ

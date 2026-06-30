@@ -1,0 +1,183 @@
+[
+  {
+    "timestamp": "2026-06-29T03:20:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "tensorObj_unit_iso"
+    },
+    "session": {
+      "id": "session_90",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "PresheafOfModules.monoidalCategoryStruct.leftUnitor",
+        "sheafificationAdjunction.counit"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "paste the in-comment recoverable term using `λ_ (𝟙_ …)` then mapIso ≪≫ counit.app",
+        "code_tried": "exact (sheafification …).mapIso (λ_ (𝟙_ (PresheafOfModules …))) ≪≫ (asIso …counit).app (unit X.ringCatSheaf)",
+        "line_number": "294",
+        "lean_error": "L296:8 Application type mismatch: `λ_ (𝟙_ …)` has type `𝟙_ ⊗ 𝟙_ ≅ 𝟙_` but mapIso expects `Monoidal.tensorObj unit.val unit.val ≅ ?` — second slot defeq `unit.val ≡ 𝟙_` rejected by stricter v4.31.0 defeq",
+        "result": "failed",
+        "insight": "v4.31 axis 7: λ_ puts 𝟙_ in BOTH tensor slots; second-slot defeq no longer holds"
+      },
+      {
+        "attempt": 2,
+        "strategy": "use leftUnitor of the literal unit.val, keeping the un-unitored slot literal",
+        "code_tried": "(monoidalCategoryStruct …).leftUnitor (SheafOfModules.unit X.ringCatSheaf).val",
+        "line_number": "294",
+        "result": "success",
+        "insight": "leftUnitor M.val keeps second slot literal .val, only first-slot unit.val≡𝟙_ defeq remains (holds); axiom-clean"
+      }
+    ],
+    "next_steps": "none — closed axiom-clean"
+  },
+  {
+    "timestamp": "2026-06-29T03:20:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "tensorObj_restrict_iso"
+    },
+    "session": {
+      "id": "session_90",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "OpenImmersion.appIso_inv_naturality"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "iter-089 pattern axis #1 verbatim for the α-naturality sorry",
+        "code_tried": "naturality := fun _ _ i => f.appIso_inv_naturality i",
+        "line_number": "504",
+        "result": "success",
+        "insight": "one-token fix; same spelling that works in DualInverse/PresheafDualPullback"
+      }
+    ],
+    "next_steps": "none — closed axiom-clean"
+  },
+  {
+    "timestamp": "2026-06-29T03:20:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "sheafificationCompPullback_comp"
+    },
+    "session": {
+      "id": "session_90",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Adjunction.leftAdjointCompNatTrans_assoc",
+        "conjugateEquiv_symm_id",
+        "NatTrans.congr_app"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "port parent-main `sheafificationCompPullback_comp_natTrans` body into the `key` NatTrans-level cocycle (three-instance mate-cocycle calculus)",
+        "code_tried": "ported ~175-LOC body of main L2486-2683 into key's `by` block",
+        "line_number": "2642",
+        "lean_error": "L2818 `dsimp` made no progress; then L2827/2829 `rw [← e2]`/`rw [e3]` Did not find pattern (𝟙 _ ≫ X023 vs bare X023)",
+        "result": "partial",
+        "insight": "v4.31 axis 8: `simp only [Category.id_comp]` misses 𝟙 at Functor.obj spelling"
+      },
+      {
+        "attempt": 2,
+        "strategy": "guard the no-op dsimp with `try`; clear identities with erw before the rw",
+        "code_tried": "try dsimp only [Functor.comp_obj] …; erw [Category.id_comp] at e2; erw [Category.id_comp] at e3; rw/erw [← e2, e3] at e1; exact (Iso.eq_inv_comp …).mpr e1",
+        "line_number": "2827",
+        "result": "success",
+        "insight": "diagnosed via trace_state in build (LSP dead/broken-pipe); erw [id_comp] FIRST then rw matches the now-bare composite"
+      }
+    ],
+    "next_steps": "none — closed axiom-clean"
+  },
+  {
+    "timestamp": "2026-06-29T03:20:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "pullbackTensorMap_restrict"
+    },
+    "session": {
+      "id": "session_90",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "pullbackValIso_comp_leg",
+        "cocycle_assemble",
+        "inv_telescope",
+        "comp_forget_cocycle"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "port the entire helper block (14 private helpers) + lemma body from parent-main (~1030 LOC, main L2954-3985); the post-split file had lost them",
+        "code_tried": "spliced helpers4.txt + lemma4.txt (D1′ interleaved-squares paste) into the file before the D3′ lemma",
+        "line_number": "2765",
+        "lean_error": "L3257/3279 (later L3263/3285) Type mismatch in pullbackValIso_comp_leg's hUZ1/hUZ2: unit.naturality term has `(pullback φf ⋙ pullback φh).obj` / `φf ≫ whiskerLeft φh` spelling vs goal's `toRingCatSheafHom (h≫f)` nested-pullback.obj spelling",
+        "result": "partial",
+        "insight": "only 2 v4.31 drift sites in the whole 1030-LOC port"
+      },
+      {
+        "attempt": 2,
+        "strategy": "add Functor.comp_obj to the simpa set",
+        "code_tried": "simpa only [Functor.id_map, Functor.comp_map, Functor.comp_obj, restrictScalarsId_map] using …",
+        "line_number": "3263",
+        "lean_error": "same Type mismatch — the gap is in the type annotation, not the simp-rewritable term; respectTransparency false knob also no help",
+        "result": "failed",
+        "insight": "v4.31 axis 9: `simpa … using` closes with reducible-transparency isDefEq"
+      },
+      {
+        "attempt": 3,
+        "strategy": "land naturality into a hypothesis, normalize, close by bare exact (default-transparency isDefEq)",
+        "code_tried": "have hnat := …unit.naturality …; simp only [Functor.id_map, Functor.comp_map, restrictScalarsId_map] at hnat; exact hnat",
+        "line_number": "3263",
+        "result": "success",
+        "insight": "bare `exact` uses default-transparency isDefEq which sees through both comp_obj and the toRingCatSheafHom def-rfl reconciliation; build EXIT 0, axiom-clean"
+      }
+    ],
+    "next_steps": "none — closed axiom-clean; ~14 ported helpers + public pullbackValIso_comp_leg need blueprint coverage"
+  },
+  {
+    "timestamp": "2026-06-29T03:20:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "exists_tensorObj_inverse"
+    },
+    "session": {
+      "id": "session_90",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "stale unconsumed private duplicate — deletion candidate, NOT graded as math gap per directive",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "INVESTIGATE per directive: grep consumed-vs-stale",
+        "code_tried": "grep -n exists_tensorObj_inverse across project",
+        "line_number": "738",
+        "result": "partial",
+        "insight": "private copy has ZERO in-file term consumers; public twin consumed by RelPicFunctor lives in TensorObjInverse.lean L1971 (itself still v4.31-sorry'd, downstream). Left sorry in place per directive; reported as deletion candidate."
+      }
+    ],
+    "next_steps": "planner routes a refactor to delete the private dead dup; the LIVE obligation is the public twin in TensorObjInverse.lean (downstream lane)"
+  }
+]

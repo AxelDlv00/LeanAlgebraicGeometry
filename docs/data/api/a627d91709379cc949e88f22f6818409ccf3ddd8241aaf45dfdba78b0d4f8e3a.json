@@ -1,0 +1,160 @@
+[
+  {
+    "timestamp": "2026-06-25T04:15:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "gammaPushforwardIso_comp"
+    },
+    "session": {
+      "id": "session_310",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "eqToHom_map",
+        "eqRec_heq",
+        "Scheme.Modules.pushforwardComp",
+        "ModuleCat.restrictScalarsComp",
+        "Spec.map_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "ext x; rfl on the move-2 Γ-root cocycle directly",
+        "code_tried": "ext x; rfl",
+        "line_number": "1198",
+        "lean_error": "Tactic `rfl` failed: (gammaPushforwardIso (φ ≫ j) N).hom x not defeq to RHS (Spec.map (φ≫j) vs Spec.map j ≫ Spec.map φ)",
+        "result": "failed",
+        "insight": "Spec.map_comp eqToHom over moduleSpecΓFunctor carriers is the root obstruction"
+      },
+      {
+        "attempt": 2,
+        "strategy": "fold pushforwardComp (=Iso.refl) into eqToHom; rw [hpc, Functor.map_comp, eqToHom_map]",
+        "code_tried": "have hpc : (pushforwardComp ...).inv.app N = eqToHom (by rw [Spec.map_comp]); rw [hpc, ← Functor.map_comp, eqToHom_trans, eqToHom_map]",
+        "line_number": "1198",
+        "lean_error": "rewrite failed: Spec.map (?f ≫ ?g) not found in target (already pushforward (Spec.map j ≫ Spec.map φ))",
+        "result": "failed",
+        "insight": "pushforwardComp is Iso.refl — the comp coherence is just a single eqToHom (Spec.map_comp), no separate term"
+      },
+      {
+        "attempt": 3,
+        "strategy": "general key-HEq lemma to expose (eqToHom h).hom x as transport h ▸ x, then eqRec_heq",
+        "code_tried": "have key : ∀ {A B : ModuleCat ↑R} (h : A = B) (y : A), (ModuleCat.Hom.hom (eqToHom h)) y = h ▸ y := by intro A B h y; subst h; rfl\nrw [eqToHom_map]; ext x; rw [ConcreteCategory.comp_apply ×3, key]; apply eq_of_heq; refine HEq.trans ?_ (eqRec_heq _ x).symm; rfl",
+        "line_number": "1198",
+        "lean_error": "deterministic timeout at whnf, 200000 heartbeats (residual rfl)",
+        "result": "partial",
+        "insight": "key+eqRec_heq reduce the goal to a genuine isDefEq rfl, but it whnf-times-out at default budget"
+      },
+      {
+        "attempt": 4,
+        "strategy": "add the two set_options above the doc-comment (parser rejects them between -/ and lemma)",
+        "code_tried": "set_option maxHeartbeats 1600000 in\nset_option backward.isDefEq.respectTransparency false in\n/-- doc -/ lemma gammaPushforwardIso_comp ...",
+        "line_number": "1195",
+        "lean_error": null,
+        "result": "success",
+        "insight": "respectTransparency false + 1.6M hb makes the residual rfl terminate; set_option must precede the doc-comment, not sit between -/ and lemma"
+      }
+    ],
+    "next_steps": "Feed gammaPushforwardNatIso_comp to conjugateEquiv_comp to build pullbackSpecTildeNatIso_comp; then assemble pushforwardPullbackBaseChange_restrict_naturality over BaseChangeChartTower."
+  },
+  {
+    "timestamp": "2026-06-25T04:15:30Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "gammaPushforwardNatIso_comp"
+    },
+    "session": {
+      "id": "session_310",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "gammaPushforwardIso_comp",
+        "Functor.isoWhiskerLeft",
+        "Functor.isoWhiskerRight",
+        "Functor.associator",
+        "ModuleCat.restrictScalarsComp",
+        "NatIso.ofComponents_hom_app",
+        "eqToHom_app"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "ext N; simpa using gammaPushforwardIso_comp φ j N",
+        "code_tried": "ext N; simpa using gammaPushforwardIso_comp φ j N",
+        "line_number": "1228",
+        "lean_error": "Type mismatch: gammaPushforwardIso_comp φ j N has type ... (app-reduction not aligned)",
+        "result": "failed",
+        "insight": "the bare ext+simpa does not align the whiskered-composite app form to the per-object cocycle"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Iso.ext; NatTrans.ext; funext N; simp only app-reduction set then exact the per-object cocycle",
+        "code_tried": "apply Iso.ext; apply NatTrans.ext; funext N; simp only [Iso.trans_hom, NatTrans.comp_app, Functor.isoWhiskerRight_hom, Functor.isoWhiskerLeft_hom, Functor.associator_hom_app, Functor.associator_inv_app, NatTrans.id_app, Category.id_comp, Category.comp_id, NatIso.ofComponents_hom_app, ...]; exact gammaPushforwardIso_comp φ j N",
+        "line_number": "1228",
+        "lean_error": null,
+        "result": "success",
+        "insight": "explicit app-reduction simp set collapses the whiskered-composite component to exactly the per-object cocycle; same two set_options needed"
+      }
+    ],
+    "next_steps": "This nat-iso form is directly consumable by conjugateEquiv_comp (Mates.lean) to transport the cocycle to pullbackSpecTildeNatIso/pushforwardSpecTildeNatIso dictionary level."
+  },
+  {
+    "timestamp": "2026-06-25T03:32:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "sheafificationCompPullback_comp"
+    },
+    "session": {
+      "id": "session_310",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "conjugate fusion of key (L2631) requires step-by-step mate-calculus bookkeeping of ~4 intermediate adjunctions + conjugateEquiv directions; LSP goal queries time out at 30s on this 3.2M-heartbeat file so it cannot be done blind via 7-min builds",
+      "key_lemmas_used": [
+        "NatTrans.congr_app",
+        "sheafificationCompPullback_eq_leftAdjointUniq",
+        "Presheaf.instIsLocallyInjectiveOfIsIsoFunctorOpposite",
+        "Presheaf.isLocallySurjective_of_iso",
+        "conjugateEquiv_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "apply the never-tried knob backward.isDefEq.respectTransparency false (the iter-310 shared key)",
+        "code_tried": "set_option backward.isDefEq.respectTransparency false in (above existing maxHeartbeats 3200000)",
+        "line_number": "2572",
+        "lean_error": null,
+        "result": "success",
+        "insight": "knob compiles; this is the iter-309 missing piece (D3' only ever had maxHeartbeats)"
+      },
+      {
+        "attempt": 2,
+        "strategy": "replace walled homEquiv telescope with NatTrans-level cocycle `key` + NatTrans.congr_app reduction (the exact iter-309 isDefEq wall)",
+        "code_tried": "have key : (sheafCompPb (h≫f)).hom = whiskerLeft a_X (pullbackComp h f).inv ≫ whiskerRight (sheafCompPb f).hom (pullback h) ≫ whiskerLeft PrPb_f (sheafCompPb h).hom ≫ whiskerRight (PresheafOfModules.pullbackComp ...).hom a_Z\nhave happ := NatTrans.congr_app key P; simpa only [NatTrans.comp_app, Functor.whiskerLeft_app, Functor.whiskerRight_app] using happ",
+        "line_number": "2572",
+        "lean_error": "failed to synthesize Presheaf.IsLocallyInjective/IsLocallySurjective (𝟙 (Sheaf.val Z.ringCatSheaf))",
+        "result": "partial",
+        "insight": "VALIDATES SHARED KEY: NatTrans.congr_app key P (the iter-309 3.2M-hb isDefEq detonation) now COMPILES with the knob. Both IsLocallyInjective AND IsLocallySurjective of 𝟙 must be supplied as haveI (bare whiskerRight forces synthesis the .map form did not)"
+      },
+      {
+        "attempt": 3,
+        "strategy": "supply the two instances + key step-1 leftAdjointUniq bridge",
+        "code_tried": "haveI : IsLocallyInjective ... := instIsLocallyInjectiveOfIsIsoFunctorOpposite _ _\nhaveI : IsLocallySurjective ... := isLocallySurjective_of_iso _ _\n... rw [sheafificationCompPullback_eq_leftAdjointUniq (h ≫ f)]; sorry",
+        "line_number": "2631",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "build GREEN; sorry repositioned from walled homEquiv residual to clean conjugate-fusion of key after leftAdjointUniq step-1"
+      }
+    ],
+    "next_steps": "Conjugate fusion of key (L2631): pass to inverses via (leftAdjointUniq A B).inv = (conjugateEquiv A B).symm (𝟙 R) rfl-bridge, apply injective conjugateEquiv, fuse 4 whiskered conjugates with conjugateEquiv_comp ×3 (free middle adjunctions carry intermediate-scheme sheafifications). REQUIRES working LSP goal-inspection (lighter key-only scratch module) — do NOT attempt blind on the full 3.2M-hb file."
+  }
+]

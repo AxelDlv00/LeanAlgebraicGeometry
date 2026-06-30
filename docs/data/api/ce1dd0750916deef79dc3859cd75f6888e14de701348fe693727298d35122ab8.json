@@ -1,0 +1,28 @@
+{
+  "stage": "prover",
+  "objectives": [
+    "**`MR0555258CompactifyingPicard/Basic.lean`** — **Brick 1 of strand-(b): build the internal hom"
+  ],
+  "checklist": [
+    {
+      "label": "init",
+      "done": true
+    },
+    {
+      "label": "dag (blueprint graph complete)",
+      "done": true
+    },
+    {
+      "label": "autoformalize (Basic.lean compiles green; sorry stubs; External.* axioms)",
+      "done": true
+    },
+    {
+      "label": "prover  ← §1 strand-(a) COMPLETE: 1.4 @017, 1.2 @022, 1.3 @030, 1.1.2 @034, **1.1.3 @040**.",
+      "done": false
+    },
+    {
+      "label": "polish",
+      "done": false
+    }
+  ]
+}

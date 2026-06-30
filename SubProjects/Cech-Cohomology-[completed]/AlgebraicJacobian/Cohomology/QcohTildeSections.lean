@@ -427,7 +427,7 @@ lemma tilde_section_isLocalizedModule (M : ModuleCat.{u} R) (f : R) :
     have htop : (tilde.toOpen M ⊤).hom (eTop.symm x) = x := by
       rw [← heq]; exact eTop.apply_symm_apply x
     conv_lhs => rw [← htop]
-    simpa using hk
+    exact hk
   rw [hmap]
   exact IsLocalizedModule.of_linearEquiv_right (Submonoid.powers f)
     (tilde.toOpen M (PrimeSpectrum.basicOpen f)).hom eTop.symm
@@ -904,7 +904,7 @@ lemma tile_scalar_compat (F : (Spec R).Modules) (g r : R)
   have hG := congrArg (fun m : CommRingCat.of (R : Type _) ⟶ _ => m.hom r)
     (tile_section_ring_identity (R := R) g)
   simp only [CommRingCat.comp_apply] at hG
-  convert hG using 2
+  exact hG
 
 /-- Section-restriction form of `Scheme.Hom.appIso_inv_naturality`, stated with explicit `homOfLE`
 restrictions and image opens so it rewrites cleanly: for an open immersion `f` and `U' ≤ U`, the
@@ -999,7 +999,7 @@ lemma tile_scalar_compat' (F : (Spec R).Modules) (g r : R)
   have hG := congrArg (fun m : CommRingCat.of (R : Type _) ⟶ _ => m.hom r)
     (tile_section_ring_identity' (R := R) g V)
   simp only [CommRingCat.comp_apply] at hG
-  convert hG using 2
+  exact hG
 
 /-- `IsScalarTower R S` on a bundled restriction-of-scalars module object, supplied as a `Prop` (a
 proof, hence no codegen, so it never hoists to a noncomputable auxiliary `def`).  Project-local: lets

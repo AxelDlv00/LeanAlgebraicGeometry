@@ -6,7 +6,10 @@
 % archon:covers AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean
 % archon:covers AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/SliceTransport.lean
 % archon:covers AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean
+% archon:covers AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualUnitPullback.lean
 % archon:covers AlgebraicJacobian/Picard/TensorObjSubstrate/PresheafInternalHom.lean
+% archon:covers AlgebraicJacobian/Picard/TensorObjSubstrate/PullbackTensorMapIso.lean
+% archon:covers AlgebraicJacobian/Picard/TensorObjSubstrate/TrivialisationRestrict.lean
 % archon:covers AlgebraicJacobian/Picard/TensorObjInverse.lean
 
 \section{Motivation: the abelian-group-valued relative Picard sheaf}
@@ -765,6 +768,7 @@ to the off-path route~(e).
 
 
 
+
 \leanok
   Pick a common affine open cover \(\{U_i\}\) of \(X\) on which both
   \(L|_{U_i}\) and \(L'|_{U_i}\) are free of rank one. On each \(U_i\)
@@ -1373,6 +1377,7 @@ block is retained for the historical record only and must \emph{not} be formaliz
 
 
 
+
 \leanok
 [Inverse of an invertible module]
   \label{lem:tensorobj_inverse_invertible}
@@ -1515,6 +1520,7 @@ block is retained for the historical record only and must \emph{not} be formaliz
 \end{proof}
 
 \begin{lemma}
+
 
 
 
@@ -2370,6 +2376,7 @@ modules is constructed.
 
 
 
+
 \leanok
   Restriction of scalars along a homomorphism of ring presheaves is lax monoidal --- the
   comparison sends \((a \otimes b)\) to itself under the identification of the
@@ -2579,6 +2586,7 @@ modules is constructed.
 \end{lemma}
 
 \begin{proof}
+
 
 
 
@@ -2990,6 +2998,7 @@ the presheaf-level pullback. Write
 
 
 
+
 \leanok
   The two composite adjunctions \(A\) and \(B\) share the same right adjoint:
   pushing forward along \(\varphi\) and then forgetting to presheaves of modules on \(X\) is, on
@@ -3083,6 +3092,7 @@ the presheaf-level pullback. Write
 \begin{lemma}
 
 
+
 \leanok
 [Sheafification kills the \(\mathtt{pullbackComp}\) hom--inv pair (D3$'$ residual brick)]
   \label{lem:sheafify_pullbackcomp_hom_inv_cancel}
@@ -3100,6 +3110,7 @@ the presheaf-level pullback. Write
   \]
 \end{lemma}
 \begin{proof}
+
 
 
 \leanok
@@ -3145,6 +3156,7 @@ the presheaf-level pullback. Write
 \end{proof}
 
 \begin{lemma}
+
 
 
 \leanok
@@ -3221,6 +3233,7 @@ the presheaf-level pullback. Write
 \end{proof}
 
 \begin{lemma}
+
 
 \leanok
 [Sq4a --- the \(\mathtt{sheafCompPb}^{-1}\) reassembly (inverse of Sq1)]
@@ -3753,6 +3766,7 @@ monoidal-mate obligation is discharged by the standard mate transport across \(H
 \begin{lemma}
 
 
+
 \leanok
 [K1 $\eta$-side collapse: $H_1$ respects the unit comparison]
   \label{lem:pushforward_eta_appiso_collapse}
@@ -3789,6 +3803,7 @@ monoidal-mate obligation is discharged by the standard mate transport across \(H
 \begin{lemma}
 
 
+
 \leanok
 [Presheaf-level value of the pushforward--pushforward adjunction unit]
   \label{lem:pushforwardpushforwardadj_unit_app_app_apply}
@@ -3805,6 +3820,7 @@ monoidal-mate obligation is discharged by the standard mate transport across \(H
 \end{lemma}
 \begin{proof}
 
+
 \leanok
   Definitional. The constituent isomorphisms \(\mathtt{pushforwardId}\) and
   \(\mathtt{pushforwardComp}\) are \(\mathtt{Iso.refl}\), so the unit composite collapses to the
@@ -3813,6 +3829,7 @@ monoidal-mate obligation is discharged by the standard mate transport across \(H
 \end{proof}
 
 \begin{lemma}
+
 
 \leanok
 [Presheaf-level value of the pushforward--pushforward adjunction counit]
@@ -3833,6 +3850,7 @@ monoidal-mate obligation is discharged by the standard mate transport across \(H
 \end{lemma}
 \begin{proof}
 
+
 \leanok
   Definitional, exactly as the unit dual. The constituent isomorphisms \(\mathtt{pushforwardId}\)
   and \(\mathtt{pushforwardComp}\) are \(\mathtt{Iso.refl}\), so the counit composite collapses to the
@@ -3841,6 +3859,7 @@ monoidal-mate obligation is discharged by the standard mate transport across \(H
 \end{proof}
 
 \begin{lemma}
+
 
 
 \leanok
@@ -3868,6 +3887,7 @@ monoidal-mate obligation is discharged by the standard mate transport across \(H
 \end{proof}
 
 \begin{lemma}
+
 
 
 \leanok
@@ -3934,6 +3954,7 @@ monoidal-mate obligation is discharged by the standard mate transport across \(H
 \begin{lemma}
 
 
+
 \leanok
 [Sectionwise value of the RHS composition tensorator on a pure tensor]
   \label{lem:pushforward_lax_mu_comparison_rhs_tmul}
@@ -3958,6 +3979,7 @@ monoidal-mate obligation is discharged by the standard mate transport across \(H
 \end{proof}
 
 \begin{lemma}
+
 
 
 \leanok
@@ -4010,6 +4032,7 @@ monoidal-mate obligation is discharged by the standard mate transport across \(H
 \begin{lemma}
 
 
+
 \leanok
 [K1 $\mu$/$\delta$-side collapse: $H_1$ respects the tensorator]
   \label{lem:pushforward_mu_appiso_collapse}
@@ -4049,6 +4072,7 @@ monoidal-mate obligation is discharged by the standard mate transport across \(H
 \end{proof}
 
 \begin{lemma}
+
 
 
 \leanok
@@ -4144,7 +4168,6 @@ monoidal-mate obligation is discharged by the standard mate transport across \(H
 \begin{lemma}
 
 
-\leanok
 [Pullback commutes with $\otimes$ on locally-trivial pairs (D4$'$)]
   \label{lem:pullback_tensor_iso_loctriv}
   \lean{AlgebraicGeometry.Scheme.Modules.pullbackTensorIsoOfLocallyTrivial}
@@ -4250,6 +4273,7 @@ monoidal-mate obligation is discharged by the standard mate transport across \(H
 \begin{lemma}
 
 
+
 \leanok
 [$\delta_{\mathrm{sheaf}}$ is an isomorphism on a structure-sheaf pair (D4$'$ base case)]
   \label{lem:pullback_tensor_map_isiso_base_unit}
@@ -4276,7 +4300,6 @@ monoidal-mate obligation is discharged by the standard mate transport across \(H
 \begin{lemma}
 
 
-\leanok
 [Per-chart isomorphism obligation for the D4$'$ chart-chase]
   \label{lem:chart_isiso}
   \lean{AlgebraicGeometry.Scheme.Modules.chart_isIso}
@@ -4290,7 +4313,6 @@ monoidal-mate obligation is discharged by the standard mate transport across \(H
 
 \begin{proof}
   \uses{lem:isiso_of_isiso_restrict, lem:pullback_tensor_map_basechange, lem:pullback_tensor_map_isiso_open_immersion, lem:pullback_tensor_map_isiso_base_unit}
-  \leanok
   The base-change coherence \cref{lem:pullback_tensor_map_basechange}, applied at the two
   factorisations \(f \circ j_i' = j_i \circ g_i\), presents
   \((j_i')^*\delta^{f}_{\mathrm{sheaf}}(M,N)\) as the comparison \(\delta^{g_i}\) flanked by
@@ -5930,7 +5952,8 @@ internal construction.
   the equation holds by \(\mathtt{rfl}\) once the down-set proofs are supplied.
 \end{proof}
 
-\begin{lemma}[Clean pointwise form of the forward-transport component]
+\begin{lemma}\leanok
+[Clean pointwise form of the forward-transport component]
   \label{lem:slice_dual_transport_app_apply}
   \lean{AlgebraicGeometry.Scheme.Modules.sliceDualTransport_app_apply}
   \uses{def:dual_unit_ring_swap, lem:slice_dual_transport}
@@ -5956,8 +5979,108 @@ internal construction.
 \end{lemma}
 \begin{proof}
   \uses{lem:slice_dual_transport}
+  \leanok
   Definitional: every leg reduction in the forward component formula is a \(\mathtt{rfl}\)-identity,
   so the equation holds by \(\mathtt{rfl}\) once the down-set proofs are supplied.
+\end{proof}
+
+\begin{lemma}\leanok
+[Action of the codomain unit ring-swap]
+  \label{lem:dual_unit_ring_swap_apply}
+  \lean{AlgebraicGeometry.Scheme.Modules.dualUnitRingSwap_apply}
+  \uses{def:dual_unit_ring_swap}
+  \textit{Source: internal categorical construction; no external reference.}
+  The underlying map of the codomain unit ring-swap \(\mathtt{dualUnitRingSwap}\,f\,W'\)
+  (\cref{def:dual_unit_ring_swap}) is the \(\mathrm{hom}\)-direction of the open-immersion structure-ring
+  isomorphism. For a section \(x \in X.\mathrm{presheaf}\bigl(f.\mathtt{opensFunctor}\,W'\bigr)\),
+  \[
+    (\mathtt{dualUnitRingSwap}\,f\,W').\mathrm{hom}\,(x)
+      \;=\; (f.\mathtt{appIso}\,W').\mathrm{hom}.\mathrm{hom}\,(x).
+  \]
+  This is the workhorse pointwise action exposing \(\mathtt{dualUnitRingSwap}\) as a plain
+  change-of-rings ring map; it is the rewrite that drives the forward-transport sectionwise reductions.
+\end{lemma}
+\begin{proof}
+  \uses{def:dual_unit_ring_swap}
+  \leanok
+  \(\mathtt{dualUnitRingSwap}\) is the categorical inverse of the unit \(\varepsilon\), and
+  \(\varepsilon(\mathtt{restrictScalars}\,(f.\mathtt{appIso}\,W')^{-1})\) acts on carriers as
+  \((f.\mathtt{appIso}\,W').\mathrm{inv}\). Applying injectivity of \((f.\mathtt{appIso}\,W').\mathrm{inv}\)
+  to the round-trip identity \(\mathtt{dualUnitRingSwap} \circ \mathtt{dualUnitRingSwapInv} = \mathbf 1\)
+  collapses the left-hand carrier action to \((f.\mathtt{appIso}\,W').\mathrm{hom}\), which is the claim.
+\end{proof}
+
+\begin{lemma}[Open-immersion structure-ring cocycle]
+  \label{lem:scheme_modules_comp_appiso}
+  \lean{AlgebraicGeometry.Scheme.Hom.comp_appIso}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For composable open immersions \(f : X \hookrightarrow Y\) and \(g : Y \hookrightarrow Z\) and an open
+  \(U \subseteq X\), the structure-ring isomorphism of the composite factors as the
+  \(\mathtt{eqToIso}\)-twisted product of the two factor isomorphisms,
+  \[
+    (f \mathbin{;} g).\mathtt{appIso}\,U
+      \;=\; Z.\mathrm{presheaf}.\mathrm{mapIso}\bigl(\mathtt{eqToIso}\,
+        (\mathtt{comp\_image}\,f\,g\,U)\bigr)^{\mathrm{op}}
+        \mathbin{;} g.\mathtt{appIso}\bigl(f.\mathtt{opensFunctor}\,U\bigr) \mathbin{;} f.\mathtt{appIso}\,U,
+  \]
+  the cocycle reconciling the composite direct image \((f\mathbin{;}g)\,''\,U\) with the iterated one
+  \(g\,''\,(f\,''\,U)\). This is the structure-ring half of the open-immersion pseudofunctor coherence.
+\end{lemma}
+
+\begin{lemma}\leanok
+[Sectionwise split of the composite slice dual transport via the \(\mathtt{appIso}\) cocycle]
+  \label{lem:slice_dual_transport_comp}
+  \lean{AlgebraicGeometry.Scheme.Modules.sliceDualTransport_comp}
+  \uses{lem:slice_dual_transport, lem:slice_dual_transport_app_apply, def:dual_unit_ring_swap, lem:dual_unit_ring_swap_apply, lem:scheme_modules_comp_appiso}
+  \textit{Source: internal categorical construction; dual of the proven tensor base-change \cref{lem:pullback_tensor_map_basechange} (statement anchor: internal-hom base-change, Stacks Modules ch.~17).}
+  Let \(f : Y \hookrightarrow X\) and \(h : Z \hookrightarrow Y\) be composable open immersions, so that
+  \(h \mathbin{;} f : Z \hookrightarrow X\), let \(M \in \Scheme.\mathtt{Modules}\,X\), and let
+  \(V \subseteq Z\) be open. This is the structure-ring half of the pseudofunctoriality (composition)
+  law for the forward slice dual transport (\cref{lem:slice_dual_transport}): evaluated sectionwise, the
+  composite unit ring-swap \(\mathtt{dualUnitRingSwap}\,(h\mathbin{;}f)\) splits into the two
+  single-immersion swaps of \(f\) and of \(h\). Concretely, on a slice object \(W\) of
+  \((\mathtt{Over}\,V)^{\mathrm{op}}\), writing \(W' = W.\mathrm{left}\), the value of
+  \(\mathtt{sliceDualTransport}\,(h\mathbin{;}f)\,M\,V\,\varphi\) at \(W\) and a section \(z\) is
+  \[
+    \bigl(\mathtt{sliceDualTransport}\,(h\mathbin{;}f)\,M\,V\,\varphi\bigr).\mathtt{app}\,W\,(z)
+      \;=\;
+    (\mathtt{dualUnitRingSwap}\,h\,W').\mathrm{hom}\Bigl(
+      (\mathtt{dualUnitRingSwap}\,f\,(h.\mathtt{opensFunctor}\,W')).\mathrm{hom}\bigl(
+        \rho\bigl(\varphi.\mathtt{app}(\mathtt{Over.mk}\,((h\mathbin{;}f).\mathtt{opensFunctor}\,W.\mathrm{hom}))\,(z)\bigr)\bigr)\Bigr),
+  \]
+  where \(\rho = X.\mathrm{presheaf}.\mathrm{map}\bigl(\mathtt{eqToHom}\,
+  (\mathtt{comp\_image}\,h\,f\,W')^{-1}\bigr)^{\mathrm{op}}\) is the reindex along the direct-image
+  composition equality \((h\mathbin{;}f).\mathtt{opensFunctor}\,W' =
+  f.\mathtt{opensFunctor}(h.\mathtt{opensFunctor}\,W')\) (an equality of \(\mathrm{Opens}\,X\),
+  \cref{lem:scheme_modules_comp_appiso}). In words: the reindexed component \(\varphi.\mathtt{app}\) at
+  the \((h\mathbin{;}f)\)-image of \(W\), retracted across \(\mathtt{comp\_image}\) and then conjugated
+  successively by the codomain unit ring-swaps of \(f\) and of \(h\). There is no separate
+  \(\mathtt{dualIsoOfIso}\) correction factor: the whole splitting is carried by the structure-ring
+  cocycle \(\mathtt{comp\_appIso}\) (\cref{lem:scheme_modules_comp_appiso}) reindexed by
+  \(\mathtt{comp\_image}\).
+\end{lemma}
+\begin{proof}
+  \uses{lem:slice_dual_transport_app_apply, lem:dual_unit_ring_swap_apply, lem:scheme_modules_comp_appiso}
+  \leanok
+  Evaluate both sides at \(W\) and the section \(z\). The forward apply lemma
+  \cref{lem:slice_dual_transport_app_apply} rewrites the left-hand component as a single
+  \(\mathtt{dualUnitRingSwap}\,(h\mathbin{;}f)\)-conjugated reindex of \(\varphi\), and its action
+  \cref{lem:dual_unit_ring_swap_apply} replaces that swap by the \(\mathrm{hom}\)-direction of the
+  composite structure-ring iso \((h\mathbin{;}f).\mathtt{appIso}\,W'\). The cocycle \(\mathtt{comp\_appIso}\)
+  (\cref{lem:scheme_modules_comp_appiso}) factors that composite iso as the \(\mathtt{eqToIso}\)-twisted
+  product
+  \((h\mathbin{;}f).\mathtt{appIso}\,W' = X.\mathrm{presheaf}.\mathrm{mapIso}(\mathtt{eqToIso}\,
+  \mathtt{comp\_image})^{\mathrm{op}} \mathbin{;} f.\mathtt{appIso}(h.\mathtt{opensFunctor}\,W')
+  \mathbin{;} h.\mathtt{appIso}\,W'\), and applying \cref{lem:dual_unit_ring_swap_apply} once more to each
+  of the \(f\)- and \(h\)-factors re-expresses the two right-hand swaps in \(\mathrm{hom}\) form. Expanding
+  the composite of homs --- the opposite-presheaf map \(\rho\) of the \(\mathtt{comp\_image}\) equality
+  followed by the two factor isos --- the two sides coincide on the nose. The identity is thus purely the
+  structure-ring cocycle reindexed by \(\mathtt{comp\_image}\); no adjunction unit/counit layer enters.
+
+  Working sectionwise in the slice category --- where \cref{lem:slice_dual_transport_app_apply} yields a
+  definitional identity at each component --- this composition law separates from the adjunction
+  unit/counit layers of \cref{lem:presheafdual_pullback_comparison_restrict}.
 \end{proof}
 
 \begin{lemma}
@@ -6334,6 +6457,7 @@ internal construction.
 
 
 
+
 \leanok
   Being an isomorphism for a morphism of sheaves of \(\mathcal{O}_X\)-modules can be
   checked on the underlying morphism of sheaves of abelian groups, and there it can be
@@ -6456,9 +6580,11 @@ internal construction.
 
 
 
-\leanok
+
 [The glued morphism restricts to its local datum]
   \label{lem:hom_of_local_compat_restrict}
+  % NOTE: iter-099 — the v4.31 recovery dropped this decl from DualInverse.lean; it is currently a
+  % private re-port in TensorObjInverse.lean. \lean{} name still resolves; pending upstream-restore decision.
   \lean{AlgebraicGeometry.Scheme.Modules.homOfLocalCompat_restrictFunctor_map}
   \uses{lem:sheafofmodules_hom_of_local_compat, lem:scheme_modules_top_section_to_hom_app}
   In the situation of \cref{lem:sheafofmodules_hom_of_local_compat} --- a cover \(\{U_i\}\)
@@ -6476,7 +6602,6 @@ internal construction.
 
 
 
-\leanok
   By construction, \(\mathtt{homOfLocalCompat}\) produces its global morphism by gluing
   the local sections of the hom-sheaf associated to each \(f_i\) along the cover; the sheaf
   gluing axiom states that the resulting global section restricts on \(U_i\) to the section
@@ -6613,6 +6738,7 @@ reindex coherence. The constituents are therefore landed in the dependency order
 \begin{definition}
 
 
+
 \leanok
 [Restriction-composite reindexing \(\varrho\)]
   \label{def:restrictcompreindex}
@@ -6635,6 +6761,7 @@ reindex coherence. The constituents are therefore landed in the dependency order
 \begin{definition}
 
 
+
 \leanok
 [Unit-restriction identification \(u_\iota\)]
   \label{def:unitrestrictiso}
@@ -6653,6 +6780,44 @@ reindex coherence. The constituents are therefore landed in the dependency order
 \end{definition}
 
 \begin{lemma}
+[Bridge B2, general literal composite: \(\mathtt{restrictFunctorIsoPullback}\) across a composite of immersions]
+  \label{lem:restrictfunctorisopullback_comp_general}
+  \lean{AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback_comp_general}
+  \uses{def:restrictfunctorisopullback, lem:scheme_modules_restrictfunctorcomp}
+  \textit{Source: internal categorical construction; no external reference.}
+  Let \(f : Z \hookrightarrow Y\) and \(g : Y \hookrightarrow X\) be composable open immersions
+  (\emph{general} --- not tied to the chart \(j\) nor to any equality of opens) and
+  \(A \in \Scheme.\mathtt{Modules}\,X\). The restriction-to-pullback comparison
+  \(\mathtt{restrictFunctorIsoPullback}\) (\cref{def:restrictfunctorisopullback}) is pseudonatural
+  across the \emph{literal} composite \(f \mathbin{;} g\): it carries the restriction-world
+  composition isomorphism \(\mathtt{restrictFunctorComp}\,f\,g\)
+  (\cref{lem:scheme_modules_restrictfunctorcomp}) onto the pullback-world composition isomorphism
+  \(\mathtt{pullbackComp}\,f\,g\). Concretely, the leading
+  \(\mathtt{restrictFunctorIsoPullback}\) factors of the two flanks intertwine
+  \(\mathtt{restrictFunctorComp}\,f\,g\) with \(\mathtt{pullbackComp}\,f\,g\), the head being the
+  \emph{bare} \(\mathtt{restrictFunctorComp}\,f\,g\) (not the chart reindexing
+  \(\mathtt{restrictCompReindex}\) of \cref{def:restrictcompreindex}), so that \emph{no}
+  \(\mathtt{pullbackCongr}\)/\(\mathtt{restrictFunctorCongr}\) congruence legs occur. The
+  \(\mathrm{hom}\)-component is recorded separately as
+  \(\mathtt{restrictFunctorIsoPullback\_comp\_general\_hom}\) --- the \(.\mathrm{hom}\) of this iso
+  identity.
+\end{lemma}
+\begin{proof}
+  \uses{def:restrictfunctorisopullback, lem:scheme_modules_restrictfunctorcomp}
+  This is the general pseudofunctoriality coherence of the comparison
+  \(\mathtt{restrictFunctorIsoPullback}\): both \(\mathtt{restrictFunctorComp}\,f\,g\) and
+  \(\mathtt{pullbackComp}\,f\,g\) are the canonical isomorphisms comparing the base change along a
+  composite with the composite of base changes, and \(\mathtt{restrictFunctorIsoPullback}\)
+  intertwines them by naturality of the comparison in each factor. Since \(f \mathbin{;} g\) is the
+  literal composite --- with no equality-of-opens substitution interposed --- there is no congruence
+  leg to thread, and the two composition isomorphisms correspond directly. This is the general
+  (chart-free) form of the reindex coherence; the chart variant
+  \cref{lem:restrictfunctorisopullback_comp_compat} is its specialisation along
+  \(j \mathbin{;} \iota_U = \iota_V\), where the additional congruence legs appear.
+\end{proof}
+
+\begin{lemma}
+
 
 
 \leanok
@@ -7000,10 +7165,40 @@ mates, recorded here as dependency anchors.
   \]
 \end{lemma}
 
-\begin{lemma}[Restrict-side conjugate of the restriction-composition isomorphism]
+\begin{lemma}[Hom-transpose of the left-adjoint uniqueness comparison is the second unit]
+  \label{lem:homequiv_leftadjointuniq_hom_app}
+  \lean{CategoryTheory.Adjunction.homEquiv_leftAdjointUniq_hom_app}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For adjunctions \(\mathrm{adj}_1 : F \dashv G\) and \(\mathrm{adj}_2 : F' \dashv G\) sharing the
+  right adjoint, applying \(\mathrm{adj}_1.\mathrm{homEquiv}\) to the component of the left-adjoint
+  uniqueness comparison \(\mathtt{leftAdjointUniq}\,\mathrm{adj}_1\,\mathrm{adj}_2\) at an object
+  \(x\) returns the unit of \(\mathrm{adj}_2\) at \(x\):
+  \[
+    \mathrm{adj}_1.\mathrm{homEquiv}\bigl(
+      (\mathtt{leftAdjointUniq}\,\mathrm{adj}_1\,\mathrm{adj}_2).\mathrm{hom}.\mathrm{app}\,x\bigr)
+      \;=\; \mathrm{adj}_2.\mathrm{unit}.\mathrm{app}\,x.
+  \]
+\end{lemma}
+
+\begin{lemma}[Counit triangle of the left-adjoint uniqueness comparison]
+  \label{lem:leftadjointuniq_hom_app_counit}
+  \lean{CategoryTheory.Adjunction.leftAdjointUniq_hom_app_counit}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For adjunctions \(\mathrm{adj}_1 : F \dashv G\) and \(\mathrm{adj}_2 : F' \dashv G\) sharing the
+  right adjoint, the left-adjoint uniqueness comparison satisfies the counit triangle
+  \[
+    (\mathtt{leftAdjointUniq}\,\mathrm{adj}_1\,\mathrm{adj}_2).\mathrm{hom}.\mathrm{app}\,(G.\mathrm{obj}\,x)
+      \mathbin{;} \mathrm{adj}_2.\mathrm{counit}.\mathrm{app}\,x
+      \;=\; \mathrm{adj}_1.\mathrm{counit}.\mathrm{app}\,x.
+  \]
+\end{lemma}
+
+\begin{lemma}\leanok
+[Restrict-side conjugate of the restriction-composition isomorphism]
   \label{lem:conjugate_equiv_restrictfunctorcomp_inv}
   \lean{AlgebraicGeometry.Scheme.Modules.conjugateEquiv_restrictFunctorComp_inv}
-  \leanok
   \uses{def:restrictcompreindex}
   Let \(f : X \hookrightarrow Y\) and \(g : Y \hookrightarrow Z\) be open immersions. Under the
   conjugation equivalence between the composite restriction adjunction
@@ -7026,7 +7221,6 @@ mates, recorded here as dependency anchors.
   \(\mathtt{H1inv\_app\_eq\_pullbackVal\_restrict}\) depend.
 \end{lemma}
 \begin{proof}
-  \leanok
   Both \(\mathtt{restrictFunctorComp}\) and \(\mathtt{pushforwardComp}\) are sectionwise
   \(\mathtt{eqToHom}\)/identity maps: on each open the restriction-composition hom is
   \(\mathtt{presheaf.map}\) of an equality-of-opens \(\mathtt{eqToHom}\), and the
@@ -7249,6 +7443,7 @@ recorded here as load-bearing nodes.
 
 \begin{lemma}
 
+
 \leanok
 [Bridge B1 crux, Part III: the sheaf pullback unit, forget-transported, factors through sheafification]
   \label{lem:sheaf_pullback_unit_forget_eq}
@@ -7338,6 +7533,7 @@ recorded here as load-bearing nodes.
 \begin{lemma}
 
 
+
 \leanok
 [Bridge B1: \(\mathtt{tensorObj\_restrict\_iso}\) is the conjugated base-change comparison]
   \label{lem:tensorobj_restrict_iso_eq_pullback_tensor_map}
@@ -7399,6 +7595,7 @@ recorded here as load-bearing nodes.
 \end{proof}
 
 \begin{lemma}
+
 
 
 \leanok
@@ -7536,6 +7733,7 @@ recorded here as load-bearing nodes.
 \end{lemma}
 \begin{proof}
   \uses{def:presheafdual_pullback_comparison, lem:internal_hom_eval, def:presheaf_dual}
+  \leanok
   Unfolding \(\theta_M\) through its construction (\cref{def:presheafdual_pullback_comparison}), the forward
   component at an open \(W \le V\) is the categorical image of the dual-section component of
   \(\varphi\) at the \(j\)-image of \(W\), i.e.\ the evaluation map of the internal hom of
@@ -7600,6 +7798,7 @@ recorded here as load-bearing nodes.
 \end{lemma}
 \begin{proof}
   \uses{def:presheaf_dual_precomp_hom, def:presheaf_dual}
+  \leanok
   Immediate from the definition of \(\mathtt{dualPrecompHom}\)
   (\cref{def:presheaf_dual_precomp_hom}): its sectionwise value at \(\varphi\) is
   \(\bigl(\mathtt{pushforward}_0(\mathtt{Over.forget}\,U)\bigr).\mathrm{map}\,(\mathtt{restrict}\,j)
@@ -7635,12 +7834,7 @@ recorded here as load-bearing nodes.
 \end{lemma}
 \begin{proof}
   \uses{lem:internal_hom_eval, lem:image_preimage_of_le}
-  % NOTE (iter-066 review): proof-block  removed (manual override of sync_leanok). L3a is
-  % transitively `sorry`: its Lean body delegates to the private helper
-  % `evalLin_restrict_commute_aux`, which is `:= sorry` (whnf-bomb on
-  % `naturality_apply (internalHomEval) (s ⊗ₜ φ)`; the non-bombing route needs the private
-  % `restr_map_homMk`/`hom_app_heq` re-exposed). `sorry_analyzer` sees no literal sorry in L3a's
-  % own body, so sync over-marked the proof. L3a is OFF the S3/S4a critical path — the crux bypasses it.
+  \leanok
   This is exactly the evaluate/restrict-commutation identity already established in the proof of
   \cref{lem:internal_hom_eval}: the restriction \(\varphi|_V\) of a functional inside the dual is its
   restriction to the open \(V\), restriction is functorial, and evaluating the restricted functional
@@ -7672,6 +7866,7 @@ recorded here as load-bearing nodes.
 \end{lemma}
 \begin{proof}
   \uses{def:presheafdual_pullback_comparison, lem:image_preimage_of_le}
+  \leanok
   The underlying presheaf-of-modules morphism \(\theta_M\)
   (\cref{def:presheafdual_pullback_comparison}) commutes with the immersion's restriction map by
   construction --- this is the built-in naturality of a morphism of presheaves of modules, read off
@@ -7705,6 +7900,7 @@ recorded here as load-bearing nodes.
 \end{lemma}
 \begin{proof}
   \uses{def:presheafdual_pullback_comparison, lem:presheafdual_pullback_restrict_natural_apply}
+  \leanok
   By element extensionality on dual sections. Testing the asserted equality of morphisms against an
   arbitrary dual section \(\varphi\) reduces the immersion-naturality square immediately to the
   \emph{built-in} naturality of the underlying presheaf-of-modules morphism \(\theta_M\)
@@ -7717,6 +7913,7 @@ recorded here as load-bearing nodes.
 \end{proof}
 
 \begin{lemma}
+
 
 \leanok
 [Bridge dual-B1: \(\mathtt{dual\_restrict\_iso}\) is the conjugated dual base-change comparison]
@@ -7753,10 +7950,16 @@ recorded here as load-bearing nodes.
 
 \begin{lemma}
 
+
 \leanok
 [Bridge dual-(b): composition law of \(\mathtt{sheafificationCompPullback}\) over an immersion factorisation]
   \label{lem:sheafificationcomppullback_restrict}
   \lean{AlgebraicGeometry.Scheme.Modules.sheafificationCompPullback_restrict}
+  % NOTE (iter-080 review, lvb major #1): CLOSED iter-080 by the one-liner
+  % `exact sheafificationCompPullback_comp j U.ι P` (Sq1 specialised). The realized proof's SOLE
+  % dependency is lem:sheafificationcomppullback_comp; the other three \uses
+  % (def:restrictcompreindex, lem:toringcatsheafhom_comp_hom_reconcile, lem:image_preimage_of_le)
+  % are over-credited (spurious DAG edges). blueprint-writer: trim \uses to the single real dep.
   \uses{lem:sheafificationcomppullback_comp, def:restrictcompreindex, lem:toringcatsheafhom_comp_hom_reconcile, lem:image_preimage_of_le}
   \textit{Source: internal categorical construction; no external reference.}
   Let \(j : V \hookrightarrow U\) be the chart morphism above, with \(j \mathbin{;} \iota_U = \iota_V\),
@@ -7824,6 +8027,7 @@ recorded here as load-bearing nodes.
 \end{definition}
 \begin{proof}
   \uses{def:presheafdual_pullback_comparison, def:restrictfunctorisopullback, lem:sheafification_comp_pullback_eq_leftadjointuniq}
+  \leanok
   Compose two canonical identifications. First, the adjunction-uniqueness isomorphism built inside
   \cref{def:presheafdual_pullback_comparison} re-presents the abstract presheaf pullback
   \(\mathtt{pullback}\,\varphi\) as the pushforward \(\mathtt{pushforward}\,\beta\) on objects, giving
@@ -7896,6 +8100,9 @@ recorded here as load-bearing nodes.
   other and is therefore mate to \(\mathbf{1}_G\).
 \end{lemma}
 \begin{proof}
+
+
+\leanok
   Unfold \(\mathtt{leftAdjointUniq}\) as the symmetrisation of the conjugate-iso bijection and apply the
   Mathlib computation \(\mathtt{conjugateIsoEquiv\_symm\_apply\_inv}\) followed by the
   \(\mathtt{Equiv.apply\_symm\_apply}\) round-trip, which collapses the mate to \(\mathbf{1}_G\).
@@ -7916,6 +8123,9 @@ recorded here as load-bearing nodes.
   \(\mathtt{conjugateEquiv\_leftAdjointCompIso\_inv}\) (which computes the conjugate of the \(\mathrm{inv}\)).
 \end{lemma}
 \begin{proof}
+
+
+\leanok
   By \(\mathtt{conjugateEquiv\_leftAdjointCompIso\_inv}\) the conjugate of the \(\mathrm{inv}\) is
   \(e.\mathrm{hom}\); rewriting \(e.\mathrm{hom}\) as that conjugate and using functoriality of the
   conjugation bijection under composition (\(\mathtt{conjugateEquiv\_comp}\)) together with
@@ -7923,6 +8133,29 @@ recorded here as load-bearing nodes.
   \(e.\mathrm{hom}\) is the identity. Cancelling the mono \(e.\mathrm{hom}\) identifies the conjugate
   with \(e.\mathrm{inv}\).
 \end{proof}
+
+\begin{lemma}[Explicit component of the \(\mathtt{leftAdjointCompIso}\) hom]
+  \label{lem:leftadjointcompiso_hom_app}
+  \lean{CategoryTheory.Adjunction.leftAdjointCompIso_hom_app}
+  \mathlibok
+  \textit{Provided by Mathlib (\texttt{Mathlib/CategoryTheory/Adjunction/CompositionIso.lean}).}
+  Given three adjunctions \(\mathrm{adj}_{01} : F_{01} \dashv G_{10}\),
+  \(\mathrm{adj}_{12} : F_{12} \dashv G_{21}\), \(\mathrm{adj}_{02} : F_{02} \dashv G_{20}\) and a
+  right-adjoint composition isomorphism \(e : G_{21} \circ G_{10} \cong G_{20}\), the hom of the
+  left-adjoint composition isomorphism is \emph{fully explicit} at each object \(X\):
+  \[
+    (\mathtt{leftAdjointCompIso}\,\mathrm{adj}_{01}\,\mathrm{adj}_{12}\,\mathrm{adj}_{02}\,e).\mathrm{hom}.\mathrm{app}\,X
+      \;=\; F_{12}.\mathrm{map}\bigl(F_{01}.\mathrm{map}\,(\mathrm{adj}_{02}.\mathrm{unit}.\mathrm{app}\,X)\bigr)
+        \;\mathbin{;}\; F_{12}.\mathrm{map}\bigl(F_{01}.\mathrm{map}\,(e.\mathrm{inv}.\mathrm{app}\,\cdot)\bigr)
+        \;\mathbin{;}\; F_{12}.\mathrm{map}\,(\mathrm{adj}_{01}.\mathrm{counit}.\mathrm{app}\,\cdot)
+        \;\mathbin{;}\; \mathrm{adj}_{12}.\mathrm{counit}.\mathrm{app}\,\cdot,
+  \]
+  i.e. the unit of \(\mathrm{adj}_{02}\) pushed through \(F_{01}\) and \(F_{12}\), the reconciling
+  \(e.\mathrm{inv}\), and the two counits of \(\mathrm{adj}_{01}\) and \(\mathrm{adj}_{12}\). When the
+  reconciling iso is the identity (\(e = \mathtt{Iso.refl}\)) the middle \(e.\mathrm{inv}\) factor drops.
+  This is the section-level component companion of the mate characterisation
+  \cref{lem:conjugate_equiv_leftadjointcompiso_hom}.
+\end{lemma}
 
 \begin{lemma}\leanok
 [Abstract \(H1\) cocycle: \(\mathtt{leftAdjointUniq}\) intertwines two \(\mathtt{leftAdjointCompIso}\)s]
@@ -7952,6 +8185,7 @@ recorded here as load-bearing nodes.
 \end{lemma}
 \begin{proof}
   \uses{lem:conjugate_equiv_leftadjointuniq_hom, lem:conjugate_equiv_leftadjointcompiso_hom}
+  \leanok
   Apply the conjugation bijection \(\mathtt{conjugateEquiv}\), which is injective, to both sides. On the
   left, functoriality under composition turns the mate of \(FC.\mathrm{hom} \mathbin{;} (H1_{02}).\mathrm{hom}\)
   into the mate of \(H1_{02}\) composed with the mate of \(FC.\mathrm{hom}\); by
@@ -8017,6 +8251,7 @@ recorded here as load-bearing nodes.
 \end{lemma}
 \begin{proof}
   \uses{def:presheafdual_pullback_comparison, lem:presheafofmodules_pullbackcomp, lem:scheme_modules_restrictfunctorcomp, lem:conjugate_equiv_pullbackcomp_inv, lem:adjunction_leftadjointuniq_trans, lem:conjugate_equiv_restrictfunctorcomp_inv, lem:leftadjointuniq_leftadjointcompiso_comm}
+  \leanok
   Each \(H1_g\) is a \(\mathtt{leftAdjointUniq}\) comparison of two left adjoints of the shared right
   adjoint \(\mathtt{pushforward}\). The composite-immersion comparison \(H1_{h \mathbin{;} f}\)
   decomposes by transitivity of \(\mathtt{leftAdjointUniq}\)
@@ -8037,11 +8272,49 @@ recorded here as load-bearing nodes.
   \(\mathtt{leftAdjointCompIso}\) is definitionally \(\mathtt{pullbackComp}\,\varphi_f\,\varphi_h\).
 \end{proof}
 
+\begin{lemma}\leanok
+[Generic \(H1\)-cancellation skeleton for the c.2 cocycle]
+  \label{lem:c2_assemble}
+  \lean{AlgebraicGeometry.Scheme.Modules.c2_assemble}
+  \uses{lem:presheafdual_h1_cocycle, lem:conjugate_equiv_leftadjointcompiso_hom, lem:leftadjointuniq_leftadjointcompiso_comm}
+  \textit{Source: internal categorical construction; no external reference.}
+  Work in an arbitrary category \(C\) with objects \(A_1, \dots, A_9\) and the morphisms appearing in
+  the c.2 reduction. Given the eight structural facts of that reduction --- the two iso cancellations
+  \(\mathtt{aHinv} \mathbin{;} \mathtt{aH} = \mathbf{1}\) (of \(H1_{h \mathbin{;} f}\)) and
+  \(\mathtt{fcinv} \mathbin{;} \mathtt{fc} = \mathbf{1}\) (of \(FC\)), the abstract \(H1\) cocycle
+  \(\mathtt{fc} \mathbin{;} \mathtt{aH} = \mathtt{phf} \mathbin{;} \mathtt{hh} \mathbin{;} \mathtt{pc}\)
+  (instantiating \cref{lem:presheafdual_h1_cocycle}), the \(\mathtt{pullbackComp}\) cancellation
+  \(\mathtt{pc} \mathbin{;} \mathtt{p0} = \mathbf{1}\), the single \(H1_h.\mathrm{hom}\) naturality
+  slide \(\mathtt{hh} \mathbin{;} \mathtt{Pfhif} = \mathtt{Pushhif} \mathbin{;} \mathtt{hhdmf}\), the
+  \(\mathtt{pushforward}\,\beta_h\)-functoriality fold
+  \(\mathtt{phf} \mathbin{;} \mathtt{Pushhif} = \mathtt{pushSDTf}\), the \(H1_h\) round-trip
+  \(\mathtt{hhdmf} \mathbin{;} \mathtt{Hhinv} = \mathbf{1}\), and the residual \((**)\)
+  \(\mathtt{fc} \mathbin{;} \mathtt{s} = \mathtt{pushSDTf} \mathbin{;} \mathtt{sDTh} \mathbin{;} \mathtt{p3}\)
+  --- the c.2 goal identity
+  \(\mathtt{aHinv} \mathbin{;} \mathtt{s}
+    = \mathtt{p0} \mathbin{;} \mathtt{Pfhif} \mathbin{;} (\mathtt{Hhinv} \mathbin{;} \mathtt{sDTh}) \mathbin{;} \mathtt{p3}\)
+  holds. This is the instance-agnostic engine that performs the entire \(H1\)-cancellation of
+  \cref{lem:presheafdual_pullback_comparison_restrict}; the consumer supplies its eight hypotheses at
+  the concrete pushforward/pullback morphisms (the cocycle hypothesis being
+  \cref{lem:presheafdual_h1_cocycle}, itself \cref{lem:leftadjointuniq_leftadjointcompiso_comm} at the
+  three pushforward adjunctions, reconciled by \cref{lem:conjugate_equiv_leftadjointcompiso_hom}).
+\end{lemma}
+\begin{proof}
+  \uses{lem:presheafdual_h1_cocycle, lem:conjugate_equiv_leftadjointcompiso_hom, lem:leftadjointuniq_leftadjointcompiso_comm}
+  \leanok
+  Pure associativity and identity rewriting. Pre-compose the cocycle goal with \(\mathtt{fc}\) and use
+  the cocycle hypothesis together with the residual \((**)\); the \(\mathtt{pullbackComp}\)
+  cancellation, the \(H1_h\) naturality slide, the \(H1_h\) round-trip and the functoriality fold then
+  collapse the middle in turn, yielding \(\mathtt{fc} \mathbin{;} (\text{RHS}) = \mathtt{fc} \mathbin{;} \mathtt{s}\).
+  Cancelling the iso \(\mathtt{fc}\) (via \(\mathtt{fcinv}\)) and then the iso \(\mathtt{aH}\) (via
+  \(\mathtt{aHinv}\)) gives the stated identity.
+\end{proof}
+
 \begin{lemma}[Bridge dual-(c): cocycle law of the presheaf dual base-change comparison \(\theta\) over \(\mathtt{pullbackComp}\)]
   \leanok
   \label{lem:presheafdual_pullback_comparison_restrict}
   \lean{AlgebraicGeometry.Scheme.Modules.presheafDualPullbackComparison_restrict}
-  \uses{def:presheafdual_pullback_comparison, lem:presheafdual_h1_cocycle, lem:slice_dual_transport_app_apply, def:pushforward_obj_val_restrict_iso, lem:presheafofmodules_pullbackcomp, lem:scheme_modules_restrictfunctorcomp, def:scheme_modules_dual_iso_of_iso, lem:presheafdual_pullback_restrict_natural, lem:image_preimage_of_le}
+  \uses{def:presheafdual_pullback_comparison, lem:presheafdual_h1_cocycle, lem:slice_dual_transport_app_apply, def:pushforward_obj_val_restrict_iso, lem:presheafofmodules_pullbackcomp, lem:scheme_modules_restrictfunctorcomp, def:scheme_modules_dual_iso_of_iso, lem:presheafdual_pullback_restrict_natural, lem:image_preimage_of_le, lem:leftadjointcompiso_hom_app, lem:slice_dual_transport_comp, lem:conjugate_equiv_leftadjointcompiso_hom, lem:c2_assemble, lem:pushforwardpushforwardadj_unit_app_app_apply, lem:pushforwardpushforwardadj_counit_app_app_apply}
   \textit{Source: internal categorical construction; no external reference.}
   Let \(j : V \hookrightarrow U\) be the chart morphism, \(j \mathbin{;} \iota_U = \iota_V\), and
   \(M \in \Scheme.\mathtt{Modules}\,X\). The presheaf dual base-change comparison \(\theta\)
@@ -8079,7 +8352,19 @@ recorded here as load-bearing nodes.
   \cref{lem:pullback_tensor_map_natural} inside \cref{lem:pullback_tensor_map_basechange}.
 \end{lemma}
 \begin{proof}
-  \uses{def:presheafdual_pullback_comparison, lem:presheafdual_h1_cocycle, lem:slice_dual_transport_app_apply, def:pushforward_obj_val_restrict_iso, lem:presheafofmodules_pullbackcomp, lem:scheme_modules_restrictfunctorcomp, def:scheme_modules_dual_iso_of_iso, lem:image_preimage_of_le, lem:presheafdual_pullback_restrict_natural}
+  \uses{def:presheafdual_pullback_comparison, lem:presheafdual_h1_cocycle, lem:slice_dual_transport_app_apply, def:pushforward_obj_val_restrict_iso, lem:presheafofmodules_pullbackcomp, lem:scheme_modules_restrictfunctorcomp, def:scheme_modules_dual_iso_of_iso, lem:image_preimage_of_le, lem:presheafdual_pullback_restrict_natural, lem:leftadjointcompiso_hom_app, lem:slice_dual_transport_comp, lem:conjugate_equiv_leftadjointcompiso_hom, lem:c2_assemble, lem:pushforwardpushforwardadj_unit_app_app_apply, lem:pushforwardpushforwardadj_counit_app_app_apply, lem:dual_unit_ring_swap_apply, lem:scheme_modules_comp_appiso}
+  \leanok
+  % NOTE (iter-079, review): lemma is now CLOSED in Lean (sorry-free, axiom-clean) but close-route prose
+  % below is STALE. It does NOT call `slice_dual_transport_comp` (bypassed) nor the FC-mate route.
+  % REALISED close: FC-opacity resolved via `leftAdjointCompIso_hom_app` + `pushforwardComp = Iso.refl`,
+  % then `ppadj_unit/counit_app_app_apply` + `dual_map_app_apply` collapse LHS to one `\phi.app(slice)`.
+  % TERMINAL keystone (iter-079): `Over (Opens X)` is a thin poset whose homs are proof-irrelevant, so
+  % `homOfLE \equiv eqToHom` DEFEQ; the residual is `\phi`'s `naturality_apply` along the canonical thin
+  % slice morphism `g`, packaged in the NEW private helper `hstar_naturality`, and `convert key using 2`
+  % closes by `rfl` (NO residual `Subsingleton` goals — the iter-078 `Subsingleton.elim` route was
+  % superseded). blueprint-writer next iter (lvb `presheafdualpullback-iter079`, 3 major): drop
+  % `slice_dual_transport_comp` + `conjugate_equiv_leftadjointcompiso_hom` `\uses` edges; add blocks for
+  % `dual_map_app_apply` and `hstar_naturality`; rewrite the close prose to the `convert`-defeq form.
   The cocycle \emph{factors cleanly}: every \(H1\) factor cancels against the abstract \(H1\) cocycle
   (a) (\cref{lem:presheafdual_h1_cocycle}) together with a single ordinary naturality square, leaving
   one isolated pushforward-flank identity that touches \(\mathtt{sliceDualTransport}\)'s internals.
@@ -8092,11 +8377,11 @@ recorded here as load-bearing nodes.
   \(\theta_g = (H1_g)^{-1} \mathbin{;} \mathtt{sDT}_g\). The reduction runs in six steps.
   \begin{enumerate}
     \item \textbf{Strip the leading inverse.} Left-multiply both sides by
-      \(H1_{\iota_V}.\mathrm{hom}\) (the iso identity \(\mathtt{Iso.inv\_comp\_eq}\)); the left side
+      \(H1_{\iota_V}.\mathrm{hom}\) (using the isomorphism inverse-composition identity); the left side
       becomes \(\mathtt{sDT}_{\iota_V}\) and the right side acquires the prefix
       \(H1_{\iota_V}.\mathrm{hom}\).
     \item \textbf{Expose the cocycle prefix.} Left-multiply by the \(\mathtt{pushforwardComp}\) counit
-      \(FC.\mathrm{hom}_{dM}\), legitimate because it is an epimorphism (\(\mathtt{cancel\_epi}\)); the
+      \(FC.\mathrm{hom}_{dM}\), legitimate because it is an isomorphism (hence an epimorphism); the
       left flank now reads \(FC.\mathrm{hom}_{dM} \mathbin{;} H1_{\iota_V}.\mathrm{hom}_{dM}\).
     \item \textbf{Substitute cocycle (a).} By the abstract \(H1\) cocycle
       \cref{lem:presheafdual_h1_cocycle} this prefix equals
@@ -8108,13 +8393,13 @@ recorded here as load-bearing nodes.
     \item \textbf{Cancel \(\mathtt{pullbackComp}\).} The trailing
       \(\mathtt{pullbackComp}.\mathrm{hom}_{dM}\) meets the leading
       \((\mathtt{pullbackComp}\,j\,\iota_U).\mathrm{inv}_{dM}\) of the right side and the two cancel
-      (\(\mathtt{Iso.hom\_inv\_id\_app}\)).
+      (as the hom-inv identity of an isomorphism).
     \item \textbf{Slide \(H1_j\) by one naturality.} The factor \(H1_j.\mathrm{hom}\) is moved past
       \((\mathtt{pullback}\,\varphi_j).\mathrm{map}\,(\theta_{\iota_U}.\mathrm{hom})\) by a \emph{single}
       ordinary naturality square of the natural transformation \(H1_j.\mathrm{hom}\) at
       \(\theta_{\iota_U}.\mathrm{hom}\) --- this is the only ``slide'', and it is plain
-      \(\mathtt{NatTrans.naturality}\), not a bespoke interleaved-merge step.
-    \item \textbf{Collapse the \(H1\) round-trips.} The two \(\mathtt{hom\_inv\_id}\)'s of
+      naturality of \(H1_j.\mathrm{hom}\) as a natural transformation, not a bespoke multi-step calculation.
+    \item \textbf{Collapse the \(H1\) round-trips.} The hom-inv identities of
       \(H1_{\iota_U}\) and \(H1_j\) annihilate the remaining \(H1\) factors, leaving the sole residual
       \begin{equation}
         FC.\mathrm{hom}_{dM} \mathbin{;} \mathtt{sDT}_{\iota_V}
@@ -8128,36 +8413,199 @@ recorded here as load-bearing nodes.
   The residual \((**)\) is the pushforward-flank pseudofunctoriality of
   \(\mathtt{sliceDualTransport}\) --- the only step that touches the transport's internals --- and it
   plays the dual role of \cref{lem:pullback_tensor_map_natural} inside the proven tensor analogue
-  \cref{lem:pullback_tensor_map_basechange}. It closes sectionwise: on each open \(W\) of \(V\) and
-  each dual section, the forward apply lemma \cref{lem:slice_dual_transport_app_apply} rewrites every
-  \(\mathtt{sDT}\) factor into its explicit \(\mathtt{dualUnitRingSwap}\)-conjugated reindex; the
-  composite immersion's direct image factors as
-  \(\iota_U.\mathtt{opensFunctor} \circ j.\mathtt{opensFunctor}\), and the down-set equality
-  \(\mathtt{image\_preimage\_of\_le}\) (\cref{lem:image_preimage_of_le}) pins the open along which both
-  sides are read. The module-argument naturality of \(\theta\)
+  \cref{lem:pullback_tensor_map_basechange}.
+
+  \textbf{The leading factor \(FC.\mathrm{hom}\) is explicit, not opaque.} Here
+  \(FC = \mathtt{leftAdjointCompIso}\) of the three pushforward adjunctions. It is \emph{correct} that
+  \(FC.\mathrm{hom}\) is \emph{not} definitionally equal to the concrete presheaf pushforward-composition
+  iso \(\mathtt{pushforwardComp}\): the domain
+  \((\mathtt{pushforward}\,\beta_j \circ \mathtt{pushforward}\,\beta_{\iota_U}).\mathrm{obj}\,dM\) and the
+  codomain \((\mathtt{pushforward}\,\beta_{\iota_V}).\mathrm{obj}\,dM\) are themselves not defeq, because
+  the \(\mathtt{opensFunctor}\) of a composite open immersion is not the composite of the
+  \(\mathtt{opensFunctor}\)s on the nose. This is \emph{not}, however, an obstruction: \(FC.\mathrm{hom}\)
+  is \emph{fully explicit} via the Mathlib component formula
+  \(\mathtt{leftAdjointCompIso\_hom\_app}\) (\cref{lem:leftadjointcompiso_hom_app}), which expands
+  \(FC.\mathrm{hom}.\mathrm{app}\,X\) as the unit of the composite adjunction pushed through the two left
+  adjoints, the reconciling \(e.\mathrm{inv}\), and the two counits. With
+  \(e = \mathtt{pushforwardComp} = \mathtt{Iso.refl}\) the middle \(e.\mathrm{inv}\) factor drops, leaving
+  an explicit unit/counit composite; the residual \((**)\) is reachable via this formula.
+
+  \textbf{The close route.} Expose \(FC.\mathrm{hom}\) through the component formula
+  \cref{lem:leftadjointcompiso_hom_app}. (The mate characterisation
+  \cref{lem:conjugate_equiv_leftadjointcompiso_hom} is an alternative reading --- it identifies the
+  conjugate \(\mathtt{conjugateEquiv}\,FC.\mathrm{hom} = e.\mathrm{inv} = \mathbf 1\), but delivers only
+  the mate, not the section-level component directly.) After
+  substituting the explicit unit/counit form of \(FC.\mathrm{hom}\) and cancelling all
+  \(\mathtt{appIso}\)/\(\mathtt{dualUnitRingSwap}\) change-of-rings layers --- the structure-ring layers
+  reconciling through the cocycle \(\mathtt{comp\_appIso}\) (\(\mathtt{Scheme.Hom.comp\_appIso}\),
+  \((h \mathbin{;} f).\mathtt{appIso}\,U = X.\mathrm{presheaf}.\mathrm{mapIso}(\mathtt{eqToHom})^{\mathrm{op}}
+  \mathbin{;} f.\mathtt{appIso}(h.\mathtt{opensFunctor}\,U) \mathbin{;} h.\mathtt{appIso}\,U\)) ---
+  the residual \((**)\) reduces to a single \emph{thin-poset / \(\mathtt{opensFunctor}\)-composition
+  coherence}. The leading \(FC.\mathrm{hom}\) is handled sectionwise via \cref{lem:leftadjointcompiso_hom_app}: it is the composite of the pushforward adjunction's
+  unit and two counits, and \emph{each} of these, evaluated at a section, is --- by the triangle-component
+  identities \cref{lem:pushforwardpushforwardadj_unit_app_app_apply} and
+  \cref{lem:pushforwardpushforwardadj_counit_app_app_apply} --- precisely a presheaf restriction map
+  \(X.\mathrm{presheaf}.\mathrm{map}(-)^{\mathrm{op}}\) of an \(\mathrm{Opens}\,X\) morphism. This form is
+  reached \emph{definitionally} (the units/counits are restriction maps on the nose); direct unfolding
+  of \(\mathtt{pushforwardPushforwardAdj}\) would reintroduce the
+  \(\mathtt{restrictScalars}\) carrier diamond. Folding the three restriction maps by functoriality
+  yields one \(X.\mathrm{presheaf}.\mathrm{map}(\text{composite})^{\mathrm{op}}\); the two resulting
+  slice objects share domain (\((j\mathbin{;}\iota_U).\mathtt{opensFunctor} =
+  \iota_U.\mathtt{opensFunctor}\circ j.\mathtt{opensFunctor}\), \(\mathtt{comp\_image}\)) and codomain,
+  hence are \(\mathtt{Subsingleton}\)-equal in the thin poset \(\mathrm{Opens}\,X\), and the residual
+  closes. The slice-side split \cref{lem:slice_dual_transport_comp} supplies the matching
+  \(\mathtt{sDT}_{j\mathbin{;}\iota_U}\) factorisation on that flank. \emph{The mate \(FC\) must remain
+  the \(\mathtt{leftAdjointCompIso}\)}: it cannot be replaced by the concrete
+  \(\mathtt{pushforwardComp}\,\beta_j\,\beta_{\iota_U}\) --- their codomain functors differ by the
+  \(\mathtt{comp\_appIso}\) reindex (so the two are not even type-compatible), and the swap would break
+  the proven cocycle~(a) \cref{lem:presheafdual_h1_cocycle}, which needs both flanks to be
+  \(\mathtt{leftAdjointCompIso}\) of the \emph{same} \(e\).
+  The sectionwise content, supplied by \cref{lem:slice_dual_transport_comp}, runs
+  through the forward apply lemma \cref{lem:slice_dual_transport_app_apply}: on each open \(W\) of \(V\)
+  and each dual section it rewrites the composite \(\mathtt{sDT}\) factor into its explicit
+  \(\mathtt{dualUnitRingSwap}\,(j\mathbin{;}\iota_U)\)-conjugated reindex; by the action
+  \cref{lem:dual_unit_ring_swap_apply} that swap is the \(\mathrm{hom}\)-direction of the composite
+  structure-ring iso, and the cocycle \(\mathtt{comp\_appIso}\) (\cref{lem:scheme_modules_comp_appiso})
+  splits it into the two single-immersion swaps of \(\iota_U\) and \(j\), reindexed by the direct-image
+  composition \((j\mathbin{;}\iota_U).\mathtt{opensFunctor} =
+  \iota_U.\mathtt{opensFunctor}\circ j.\mathtt{opensFunctor}\) (\(\mathtt{comp\_image}\)). The
+  module-argument naturality of \(\theta\)
   (\cref{lem:presheafdual_pullback_restrict_natural}) together with poset-thinness of
-  \(\mathrm{Opens}\) makes the assembly canonical, and the target-flank reindexing is realised by
-  \(\mathtt{dualIsoOfIso}\) (\cref{def:scheme_modules_dual_iso_of_iso}) of the forgetful image of
-  \(\varrho\) (\cref{lem:scheme_modules_restrictfunctorcomp}). The middle factor already sits at
+  \(\mathrm{Opens}\) --- the consumer reads everything over the single open \(j\mathbin{;}\iota_U=\iota_V\)
+  (\cref{lem:image_preimage_of_le}) --- makes the assembly canonical, and the target-flank reindexing is
+  realised by \(\mathtt{dualIsoOfIso}\) (\cref{def:scheme_modules_dual_iso_of_iso}) of the forgetful image
+  of \(\varrho\) (\cref{lem:scheme_modules_restrictfunctorcomp}). The middle factor already sits at
   \(M|_{\iota_U}\) because the object identification \(\mathtt{pushforwardObjValRestrictIso}\)
   (\cref{def:pushforward_obj_val_restrict_iso}, c.1) is \(\mathtt{Iso.refl}\): the underlying presheaf
   of \(M|_{\iota_U}\) is definitionally the pushforward object, so no intervening transport appears.
 
-  Across the definitional boundary between \(\mathtt{PresheafOfModules}\) and
-  \(\mathtt{SheafOfModules}\) (which is definitionally equal but not syntactically so), the
-  regroupings and cancellations above are carried out by generic single-category composition
-  identities (\(\mathtt{comp\_cancel\_mid}\), \(\mathtt{comp\_slide\_nested}\),
-  \(\mathtt{comp\_cancel\_three\_lr}\)).
+  The entire six-step \(H1\)-cancellation above is carried out by a single generic,
+  instance-agnostic skeleton lemma \(\mathtt{c2\_assemble}\) (\cref{lem:c2_assemble}), stated over an
+  arbitrary ambient category. It takes the structural facts of the reduction as hypotheses --- the two
+  iso cancellations of \(H1_{h \mathbin{;} f}\) and \(FC\) at \(dM\), the abstract \(H1\) cocycle~(a)
+  (\cref{lem:presheafdual_h1_cocycle}), the \(\mathtt{pullbackComp}\) cancellation, the single
+  \(H1_h.\mathrm{hom}\) naturality, the \(\mathtt{pushforward}\,\beta_h\)-functoriality fold, the
+  \(H1_h\) round-trip at \(d(M|_{\iota_U})\), and the residual \((**)\) --- and assembles the c.2
+  identity from them by associativity and identity rewriting alone. The abstract identity transfers
+  across the definitional boundary between \(\mathtt{PresheafOfModules}\) and
+  \(\mathtt{SheafOfModules}\) because the skeleton is stated for abstract morphisms in an arbitrary
+  category: instantiating at the concrete pullback/pushforward morphisms specialises the identity
+  directly to the c.2 goal, and the definitional equality between the two categories is absorbed into
+  the abstract hypothesis statements rather than appearing as an additional verification condition.
 \end{proof}
 
 \begin{lemma}
 
 
 \leanok
+[L1: folded composition cocycle for \(\mathtt{dual\_restrict\_iso}\) along a composite]
+  \label{lem:dual_restrict_iso_comp}
+  \lean{AlgebraicGeometry.Scheme.Modules.dual_restrict_iso_comp}
+  \uses{lem:dual_restrict_iso, lem:dual_restrict_iso_eq_comparison, lem:restrictfunctorisopullback_comp_compat, lem:sheafificationcomppullback_restrict, lem:presheafdual_pullback_comparison_restrict, lem:presheafdual_pullback_restrict_natural, def:pushforward_obj_val_restrict_iso, def:scheme_modules_dual_iso_of_iso, lem:scheme_modules_restrictfunctorcomp}
+  % NOTE (iter-083, lvb major): the REALIZED L1 proof cancels the leading RFIP via NEW general
+  % literal-composite B2 helpers `restrictFunctorIsoPullback_comp_general(_hom)` (head =
+  % `restrictFunctorComp f g`, NO `pullbackCongr`/`restrictFunctorCongr` congruence legs), NOT the
+  % chart variant `lem:restrictfunctorisopullback_comp_compat` cited in the `\uses`/prose above
+  % (head = `restrictCompReindex`, with congr legs). The two general helpers are now blueprinted at
+  % `lem:restrictfunctorisopullback_comp_general` (its `_hom` companion is the `.hom`-component
+  % noted there). UPDATE (iter-084): L1 is now CLOSED + axiom-clean (★pb-iso SCP-cocycle discharged via
+  % `.hom`-flatten + NEW generic helper `dual_scp_assemble`); this B2 coverage debt + the
+  % un-blueprinted `dual_scp_assemble` are the ONLY remaining L1 blueprint gaps.
+  \textit{Source: internal categorical construction; no external reference (dual mirror of the
+  tensor-flank composition law \cref{lem:tensorobj_restrict_iso_restrict_compat}).}
+  Let \(f : Z \hookrightarrow Y\) and \(g : Y \hookrightarrow X\) be composable open immersions
+  (\emph{general} --- not tied to the chart \(j\)) and \(M \in \Scheme.\mathtt{Modules}\,X\). Write
+  \(D(h) := \mathtt{dual\_restrict\_iso}\,h : (\mathtt{dual}\,A)|_h \cong \mathtt{dual}(A|_h)\)
+  (\cref{lem:dual_restrict_iso}). The dual-restriction comparison along the composite \(f \mathbin{;} g\)
+  factors --- \emph{entirely at the folded Scheme-\(\mathtt{dual}\) level}, so that every junction is a
+  Scheme-dual \(\leftrightarrow\) Scheme-dual identification and no \(\mathtt{sheafification}\)-colimit
+  seam appears in the statement --- as
+  \[
+    D(f \mathbin{;} g)
+      \;=\; \bigl(\mathtt{restrictFunctorComp}\,f\,g\bigr).\mathrm{app}\,(\mathtt{dual}\,M)
+        \;\mathbin{;}\; (\mathtt{restrict}\,f)\,D(g)
+        \;\mathbin{;}\; D(f)\,\bigl(M|_g\bigr)
+        \;\mathbin{;}\; \mathtt{dualIsoOfIso}\,\bigl((\mathtt{restrictFunctorComp}\,f\,g).\mathrm{app}\,M\bigr),
+  \]
+  where \(\mathtt{restrictFunctorComp}\,f\,g\) (\cref{lem:scheme_modules_restrictfunctorcomp}) is the
+  restriction-composition pseudofunctoriality iso \(A|_{f\mathbin{;}g} \cong (A|_g)|_f\) and
+  \(\mathtt{dualIsoOfIso}\) (\cref{def:scheme_modules_dual_iso_of_iso}) is its contravariant dual image.
+  Choosing the \(\mathtt{restrictFunctorComp}\)-induced head (rather than a \(\mathtt{pullbackComp}\)
+  one) keeps both flanks in the restriction world, hence syntactically folded.
+\end{lemma}
+\begin{proof}
+  \uses{lem:dual_restrict_iso, lem:dual_restrict_iso_eq_comparison, lem:restrictfunctorisopullback_comp_compat, lem:sheafificationcomppullback_restrict, lem:presheafdual_pullback_comparison_restrict, lem:presheafdual_pullback_restrict_natural, def:pushforward_obj_val_restrict_iso, def:scheme_modules_dual_iso_of_iso, lem:scheme_modules_restrictfunctorcomp}
+  This is the dual mirror of the tensor-flank composition law
+  (\cref{lem:tensorobj_restrict_iso_restrict_compat}), routed through Cone~B (internal-hom base-change);
+  no ``closed functor preserves duals'' principle applies, since pullback along an open immersion is
+  neither faithful nor an equivalence. The seam between the Scheme-\(\mathtt{dual}\) world and the
+  sheafified presheaf-dual world is crossed \emph{inside} this proof exactly as bridges (b), (c) and the
+  S2 route do --- never across the stated junction.
+
+  By the dual analogue of Bridge B1 (\cref{lem:dual_restrict_iso_eq_comparison}) each
+  \(D(\cdot)\) factors as \(\mathtt{restrictFunctorIsoPullback} \mathbin{;}
+  \mathtt{sheafificationCompPullback} \mathbin{;} \mathtt{sheafification}(\theta)\). Substituting this for
+  the three instances \(D(f\mathbin{;}g)\), \(D(g)\) and \(D(f)\), the leading
+  \(\mathtt{restrictFunctorIsoPullback}\) factors cancel against the
+  \(\mathtt{restrictFunctorComp}\)-reindex by Bridge B2 (\cref{lem:restrictfunctorisopullback_comp_compat}),
+  reducing the identity to its \(\mathtt{sheafificationCompPullback}\)- and \(\theta\)-legs. The
+  \(\mathtt{sheafificationCompPullback}\)-cocycle over the composite is closed by bridge~(b)
+  (\cref{lem:sheafificationcomppullback_restrict}); the \(\theta\)-cocycle by bridge~(c)
+  (\cref{lem:presheafdual_pullback_comparison_restrict}, itself through the immersion-naturality of
+  \(\theta\), \cref{lem:presheafdual_pullback_restrict_natural}). Bridge~(c) delivers its middle
+  \(\theta\)-factor at the pushforward object \((\mathtt{pushforward}\,\beta_g).\mathrm{obj}\,M_{\mathrm{val}}\);
+  the object-identification iso \(\mathtt{pushforwardObjValRestrictIso}\)
+  (\cref{def:pushforward_obj_val_restrict_iso}, bridge c.1), which is \(\mathtt{Iso.refl}\), converts that
+  factor to the \(D(f)\,(M|_g)\)-form appearing here, so the substitution is type-correct. The
+  contravariant reindexing on the dual flank is the dual image
+  \(\mathtt{dualIsoOfIso}\) (\cref{def:scheme_modules_dual_iso_of_iso}) of
+  \((\mathtt{restrictFunctorComp}\,f\,g).\mathrm{app}\,M\)
+  (\cref{lem:scheme_modules_restrictfunctorcomp}). Assembling the leg-for-leg identities yields the
+  displayed composite.
+\end{proof}
+
+\begin{lemma}
+
+
+\leanok
+[L2: folded \(\mathtt{restrictFunctorCongr}\) coherence for \(\mathtt{dual\_restrict\_iso}\)]
+  \label{lem:dual_restrict_iso_pullbackcongr}
+  \lean{AlgebraicGeometry.Scheme.Modules.dual_restrict_iso_pullbackCongr}
+  \uses{lem:dual_restrict_iso, def:scheme_modules_dual_iso_of_iso, lem:dualisoofiso_refl}
+  \textit{Source: internal categorical construction; no external reference.}
+  Let \(f, g : Y \hookrightarrow X\) be open immersions with \(f = g\) (witnessed by \(hf\)), and
+  \(M \in \Scheme.\mathtt{Modules}\,X\). The dual-restriction comparison is coherent with the
+  restriction congruence \(\mathtt{restrictFunctorCongr}\,hf : A|_f \cong A|_g\), at the folded
+  Scheme-\(\mathtt{dual}\) level (both junctions Scheme-dual \(\leftrightarrow\) Scheme-dual, seam-free):
+  \[
+    \bigl(\mathtt{restrictFunctorCongr}\,hf\bigr).\mathrm{app}\,(\mathtt{dual}\,M)
+        \;\mathbin{;}\; \mathtt{dual\_restrict\_iso}\,g\,M
+      \;=\; \mathtt{dual\_restrict\_iso}\,f\,M
+        \;\mathbin{;}\; \mathtt{dualIsoOfIso}\,\bigl((\mathtt{restrictFunctorCongr}\,hf).\mathrm{app}\,M\bigr)^{-1}.
+  \]
+  This is the dual mirror of \(\mathtt{pullbackTensorMap\_pullbackCongr}\), used to convert the
+  \(\iota_V\)-leg of S3 to the composite \(j \mathbin{;} \iota_U\). \emph{(This brick is already verified
+  in Lean: \(\mathtt{dual\_restrict\_iso\_pullbackCongr}\), private, axiom-clean.)}
+\end{lemma}
+\begin{proof}
+  \uses{lem:dual_restrict_iso, def:scheme_modules_dual_iso_of_iso, lem:dualisoofiso_refl}
+  Substitute \(g := f\) along \(hf\). Then the restriction congruence collapses,
+  \(\mathtt{restrictFunctorCongr}\,(\mathrm{rfl}) = \mathrm{Iso.refl}\) (section-level, since its hom is
+  \(\mathrm{rfl}\)-valued on each section), so the left factor on the source flank is the identity; and on
+  the dual flank \(\mathtt{dualIsoOfIso}\,(\mathrm{Iso.refl}) = \mathrm{Iso.refl}\)
+  (\cref{lem:dualisoofiso_refl}, \cref{def:scheme_modules_dual_iso_of_iso}). Both sides reduce to
+  \(\mathtt{dual\_restrict\_iso}\,f\,M\), and the equation holds.
+\end{proof}
+
+\begin{lemma}
+
+
+
+\leanok
 [S3: dual-restriction comparison commutes with further restriction (clean core)]
   \label{lem:dual_restrict_iso_restrict_compat}
   \lean{AlgebraicGeometry.Scheme.Modules.dual_restrict_iso_restrict_compat}
-  \uses{lem:dual_restrict_iso, lem:dual_restrict_iso_eq_comparison, lem:restrictfunctorisopullback_comp_compat, lem:sheafificationcomppullback_restrict, lem:presheafdual_pullback_comparison_restrict, lem:presheafdual_pullback_restrict_natural, def:pushforward_obj_val_restrict_iso, lem:dualisoofiso_trans, def:scheme_modules_dual_iso_of_iso, def:restrictcompreindex, lem:image_preimage_of_le}
+  \uses{lem:dual_restrict_iso, lem:dual_restrict_iso_comp, lem:dual_restrict_iso_pullbackcongr, lem:dualisoofiso_trans, def:scheme_modules_dual_iso_of_iso, def:restrictcompreindex, lem:image_preimage_of_le}
   Let \(M \in \Scheme.\mathtt{Modules}\,X\) and let \(j : V \hookrightarrow U\) be the chart
   morphism above. Write \(D(f) := \mathtt{dual\_restrict\_iso}\,f :
   (\mathtt{dual}\,M)|_f \cong \mathtt{dual}\bigl(M|_f\bigr)\) (\cref{lem:dual_restrict_iso}). The
@@ -8178,44 +8626,678 @@ recorded here as load-bearing nodes.
   telescope in the parent (\cref{lem:trivialisation_restrict_compat}).
 \end{lemma}
 \begin{proof}
-  \uses{lem:dual_restrict_iso, lem:dual_restrict_iso_eq_comparison, lem:restrictfunctorisopullback_comp_compat, lem:sheafificationcomppullback_restrict, lem:presheafdual_pullback_comparison_restrict, lem:presheafdual_pullback_restrict_natural, def:pushforward_obj_val_restrict_iso, lem:dualisoofiso_trans, def:scheme_modules_dual_iso_of_iso, def:restrictcompreindex, lem:image_preimage_of_le}
-  By dual-B1, B2, bridges (b) and (c), threading \(\varrho\). The proof is the dual-flank mirror of
-  S2, routed through Cone~B (internal-hom base-change), not through any sheaf-level monoidal structure;
-  no ``monoidal/closed functor preserves duals'' principle applies, since pullback along an open
-  immersion is neither faithful nor an equivalence.
-
-  By the dual analogue of Bridge B1 (\cref{lem:dual_restrict_iso_eq_comparison}) each
-  \(\mathtt{dual\_restrict\_iso}\) factors as
+  \uses{lem:dual_restrict_iso, lem:dual_restrict_iso_comp, lem:dual_restrict_iso_pullbackcongr, lem:dualisoofiso_trans, def:scheme_modules_dual_iso_of_iso, def:restrictcompreindex, lem:image_preimage_of_le}
+  % NOTE (iter-083 effort-break, condenses the iter-080/081/082 review NOTEs): S3 is now decomposed
+  % into the folded chain L1 (lem:dual_restrict_iso_comp) + L2 (lem:dual_restrict_iso_pullbackcongr);
+  % do NOT re-attempt a monolithic close. KEY DURABLE FACT (lake-verified iter-082): the pinned
+  % subst-style pullbackCongr coherence as a TYPED Scheme-`dualIsoOfIso' transport adjacent to an
+  % UNFOLDED `C_f' leg is PROVEN IMPOSSIBLE (12.8M HB + backward.isDefEq.respectTransparency=false BOTH
+  % fail): `C_f ;; dualIsoOfIso(...)' whnf-bombs into the sheafification colimit (infinite whnf) at
+  % STATEMENT elaboration. CONSEQUENCE: keep ALL pullbackCongr/restrictFunctorCongr/dualIsoOfIso/
+  % restrictCompReindex algebra at the FOLDED dual_restrict_iso level (Scheme-dual<->Scheme-dual,
+  % seam-free), and unfold a `dual_restrict_iso' leg to its `RFIP ;; SCP ;; sheafify(θ)' form ONLY
+  % inside a proof (that confinement is L1's job), never across a stated junction. L2 is already
+  % verified in Lean (`dual_restrict_iso_pullbackCongr', private, axiom-clean); the prior partial S3
+  % attempt collapsed RFIP_j.symm ;; RFIP_j via the generic helper `iso_symm_fold_cancel'.
+  The square is now a short assembly of the folded composition cocycle L1
+  (\cref{lem:dual_restrict_iso_comp}) and the folded congruence coherence L2
+  (\cref{lem:dual_restrict_iso_pullbackcongr}); the seam-crossing work (dual-B1, B2, bridges (b), (c),
+  c.1) has been moved into L1's proof, where the unfolding to
   \(\mathtt{restrictFunctorIsoPullback} \mathbin{;} \mathtt{sheafificationCompPullback}
-  \mathbin{;} \mathtt{sheafification}(\theta)\). Substituting this on the \(\iota_U\)-,
-  \(\iota_V\)- and \(j\)-instances and cancelling the leading \(\mathtt{restrictFunctorIsoPullback}\)
-  by Bridge B2 (\cref{lem:restrictfunctorisopullback_comp_compat}) reduces the square to its
-  \(\mathtt{sheafificationCompPullback}\)- and \(\theta\)-legs, closed respectively by bridge~(b)
-  (\cref{lem:sheafificationcomppullback_restrict}) and bridge~(c)
-  (\cref{lem:presheafdual_pullback_comparison_restrict}, itself through
-  \cref{lem:presheafdual_pullback_restrict_natural}), both conjugated by
-  \(\mathtt{pullbackComp}\,j\,\iota_U\). Bridge~(c) delivers its cocycle with the middle
-  \(\theta\)-factor at the pushforward object \((\mathtt{pushforward}\,\beta_{\iota_U}).\mathrm{obj}\,M_{\mathrm{val}}\);
-  the object-identification iso \(\mathtt{pushforwardObjValRestrictIso}\)
-  (\cref{def:pushforward_obj_val_restrict_iso}) converts that factor to the
-  \(\mathtt{dual\_restrict\_iso}\,j\,(M|_{\iota_U})\)-form appearing in this square, so the substitution
-  is type-correct. On the dual flank the contravariant reindexing
-  \(\mathtt{dualIsoOfIso}\,\varrho\) (\cref{def:scheme_modules_dual_iso_of_iso},
-  \cref{lem:dualisoofiso_trans}) replaces \(\varrho \otimes \varrho\), and
-  \(\varrho = \mathtt{restrictCompReindex}\,j\) (\cref{def:restrictcompreindex}) threads
-  \(j \mathbin{;} \iota_U = \iota_V\) (\cref{lem:image_preimage_of_le}). The trivialisation step's
-  \((\mathtt{dualIsoOfIso}\,e^M)^{-1}\) transport and the datum refinement are not part of this square;
-  they telescope in the parent (\cref{lem:trivialisation_restrict_compat}).
+  \mathbin{;} \mathtt{sheafification}(\theta)\) is confined. The proof is the dual-flank mirror of S2,
+  routed through Cone~B (internal-hom base-change), not through any sheaf-level monoidal structure.
+
+  Specialise L1 (\cref{lem:dual_restrict_iso_comp}) at \((f, g) = (j, \iota_U)\). The equality of opens
+  \(j \mathbin{;} \iota_U = \iota_V\) (\(hjι\), \cref{lem:image_preimage_of_le}) converts the
+  \(\iota_V\)-leg \(D(\iota_V)\) on the left of the target into the composite leg \(D(j\mathbin{;}\iota_U)\)
+  via L2 (\cref{lem:dual_restrict_iso_pullbackcongr}). Combining the \(\mathtt{restrictFunctorCongr}\,hjι\)
+  factor that L2 produces with the \(\mathtt{restrictFunctorComp}\,j\,\iota_U\) head of L1 reconstitutes
+  \(\varrho = \mathtt{restrictCompReindex}\,j\), which is by definition
+  \((\mathtt{restrictFunctorCongr}\,hjι)^{-1} \mathbin{;} \mathtt{restrictFunctorComp}\,j\,\iota_U\)
+  (\cref{def:restrictcompreindex}), giving the head \(\varrho_{\mathtt{dual}\,M}\). On the dual flank the
+  two contravariant \(\mathtt{dualIsoOfIso}\) transports fuse, by contravariant functoriality
+  (\cref{lem:dualisoofiso_trans}, \cref{def:scheme_modules_dual_iso_of_iso}), into the single factor
+  \(\mathtt{dualIsoOfIso}\,\varrho_M\). This gives the displayed square. The trivialisation
+  step's \((\mathtt{dualIsoOfIso}\,e^M)^{-1}\) transport and the datum refinement are not part of this
+  square; they telescope in the parent (\cref{lem:trivialisation_restrict_compat}).
+\end{proof}
+
+\begin{definition}
+[Oplax-monoidal unit map $\eta$ of the presheaf pullback --- conceptual anchor]
+  \label{def:presheaf_pullback_unit_eta}
+  \lean{CategoryTheory.Functor.OplaxMonoidal.η}
+  \mathlibok
+  \uses{lem:presheaf_pullback_oplaxmonoidal}
+  \textit{Provided by Mathlib.}
+  For any oplax monoidal functor \(F\), Mathlib supplies the \emph{unit comparator}
+  \(\eta_F : F(\mathbf 1) \to \mathbf 1\), the oplax counterpart of the unit map. Applied to the
+  oplax-monoidal presheaf pullback \(\mathtt{PresheafOfModules.pullback}\,\varphi\)
+  (\cref{lem:presheaf_pullback_oplaxmonoidal}) along the chart immersion
+  \(j : V \hookrightarrow U\), \(\varphi = j.\mathtt{toRingCatSheafHom}\), it furnishes the bare
+  oplax unit comparison
+  \[
+    \eta(\mathtt{pullback}\,\varphi) :
+      (\mathtt{pullback}\,\varphi).\mathrm{obj}\,\mathbf 1_U \longrightarrow \mathbf 1_V .
+  \]
+  This is the \emph{conceptual} pullback-flank unit map. Its invertibility is \emph{not} asserted
+  here. The actual pullback-side comparator \(p\) used in the dual base-change theory is built
+  instead as
+  the H1 transport of the pushforward comparator \(q\); see
+  \cref{def:presheaf_pullback_unit_iso}.
+\end{definition}
+
+\begin{definition}
+
+\leanok
+[Pullback-side unit comparator $p$ --- the H1 realization]
+  \label{def:presheaf_pullback_unit_iso}
+  \lean{AlgebraicGeometry.Scheme.Modules.presheafPullbackUnitIso}
+  \uses{def:presheaf_pushforward_unit_iso, lem:unit_leftadjointuniq_hom_app, lem:pushforwardpushforwardadj_unit_app_app_apply, lem:presheaf_pullback_oplaxmonoidal}
+  \textit{Source: internal categorical construction; no external reference.}
+  Let \(j : V \hookrightarrow U\) be the chart immersion, \(\varphi = j.\mathtt{toRingCatSheafHom}\)
+  the pullback ring map, and \(\beta\) the corresponding (sectionwise-bijective) pushforward ring
+  map. The pullback-side unit comparator used throughout the dual base-change theory is the
+  isomorphism
+  \[
+    p := \mathtt{presheafPullbackUnitIso}\,j :
+      (\mathtt{pullback}\,\varphi).\mathrm{obj}\,\mathbf 1_U \;\cong\; \mathbf 1_V ,
+  \]
+  realized \emph{not} as the bare oplax \(\eta\) (\cref{def:presheaf_pullback_unit_eta}) but through
+  the \emph{H1 reconciliation}. Both \(\mathtt{pullback}\,\varphi\) and the open-immersion
+  pushforward \(\mathtt{pushforward}\,\beta\) are left adjoints of the same right adjoint
+  \(\mathtt{pushforward}\,\varphi\); the left-adjoint-uniqueness isomorphism
+  \[
+    H_1 := \mathtt{leftAdjointUniq}\bigl(\mathtt{pushforwardPushforwardAdj},\,
+      \mathtt{pullbackPushforwardAdjunction}\,\varphi\bigr) :
+      \mathtt{pushforward}\,\beta \;\xrightarrow{\ \sim\ }\; \mathtt{pullback}\,\varphi
+  \]
+  identifies the two left adjoints (\cref{lem:unit_leftadjointuniq_hom_app},
+  \cref{lem:pushforwardpushforwardadj_unit_app_app_apply}). Evaluated at the structure-sheaf unit
+  \(\mathbf 1_U\), it carries the pullback flank to the pushforward flank, on which the pushforward
+  comparator \(q = \mathtt{presheafPushforwardUnitIso}\,j\) (\cref{def:presheaf_pushforward_unit_iso})
+  contracts to \(\mathbf 1_V\). Composing,
+  \[
+    p \;=\; (H_1.\mathrm{app}\,\mathbf 1_U)^{-1} \,\mathbin{;}\, q ,
+  \]
+  the H1-transport of \(q\). This is exactly the identification by which the two flank comparators
+  are matched at the structure-sheaf unit in the \(\theta\)-at-unit bridge
+  \cref{lem:presheafdualunitiso_pullback_natural}.
+\end{definition}
+
+\begin{definition}
+[Lax-monoidal unit map $\varepsilon$ of the presheaf pushforward --- conceptual anchor]
+  \label{def:presheaf_pushforward_unit_eps}
+  \lean{CategoryTheory.Functor.LaxMonoidal.ε}
+  \mathlibok
+  \uses{lem:presheaf_pushforward_laxmonoidal}
+  \textit{Provided by Mathlib.}
+  For any lax monoidal functor \(G\), Mathlib supplies the \emph{unit comparator}
+  \(\varepsilon_G : \mathbf 1 \to G(\mathbf 1)\). Applied to the lax-monoidal presheaf pushforward
+  \(\mathtt{PresheafOfModules.pushforward}\,\beta\) (\cref{lem:presheaf_pushforward_laxmonoidal}) along
+  the chart immersion, it gives the bare lax unit comparison
+  \[
+    \varepsilon(\mathtt{pushforward}\,\beta) :
+      \mathbf 1_V \longrightarrow (\mathtt{pushforward}\,\beta).\mathrm{obj}\,\mathbf 1_U ,
+  \]
+  the presheaf analogue of \(\mathtt{SheafOfModules.unitToPushforwardObjUnit}\). This is the
+  \emph{conceptual} pushforward-flank unit map; its invertibility is supplied not by the lax
+  structure but by the strong monoidality of \(\mathtt{pushforward}\,\beta\) for an open immersion
+  (\cref{lem:presheaf_pushforward_beta_monoidal}), and the resulting comparator \(q\) is recorded in
+  \cref{def:presheaf_pushforward_unit_iso}.
+\end{definition}
+
+\begin{lemma}
+
+\leanok
+[Strong monoidality of the open-immersion presheaf pushforward $\mathtt{pushforward}\,\beta$]
+  \label{lem:presheaf_pushforward_beta_monoidal}
+  \lean{AlgebraicGeometry.Scheme.Modules.presheafPushforwardBetaMonoidal}
+  \uses{lem:presheaf_pushforward_laxmonoidal, lem:restrictscalars_monoidal_of_bijective}
+  \textit{Source: internal categorical construction; no external reference.}
+  Let \(f : Y \to X\) be an open immersion and \(\beta = \mathtt{whiskerRight}\,\alpha\,
+  (\mathtt{forget}_2)\) the induced structure-ring comparison, where
+  \(\alpha.\mathrm{app}\,U = (f.\mathtt{appIso}\,U)^{-1}\). Since \(f\) is an open immersion each
+  \(\alpha.\mathrm{app}\,U\) is invertible, hence \(\beta\) is sectionwise bijective. Consequently the
+  presheaf pushforward factors as the strong-monoidal composite
+  \[
+    \mathtt{pushforward}\,\beta \;=\;
+      \mathtt{pushforward}_0^{\mathrm{Comm}} \,\circ\, \mathtt{restrictScalars}\,\beta ,
+  \]
+  in which the topological pushforward \(\mathtt{pushforward}_0^{\mathrm{Comm}}\) is strong monoidal
+  and \(\mathtt{restrictScalars}\,\beta\) is strong monoidal because \(\beta\) is sectionwise
+  bijective (\(\mathtt{restrictScalarsMonoidalOfBijective}\)). Hence \(\mathtt{pushforward}\,\beta\)
+  carries a \emph{strong}-monoidal structure, upgrading the ambient lax instance
+  (\cref{lem:presheaf_pushforward_laxmonoidal}); in particular its unit comparator
+  \(\varepsilon\) and tensorator \(\mu\) are isomorphisms.
+\end{lemma}
+
+\begin{definition}
+
+\leanok
+[Pushforward-side unit comparator $q$ --- the strong-monoidal $\varepsilon$ inverse]
+  \label{def:presheaf_pushforward_unit_iso}
+  \lean{AlgebraicGeometry.Scheme.Modules.presheafPushforwardUnitIso}
+  \uses{lem:presheaf_pushforward_beta_monoidal}
+  \textit{Source: internal categorical construction; no external reference.}
+  In the open-immersion setting above, the strong monoidality of \(\mathtt{pushforward}\,\beta\)
+  (\cref{lem:presheaf_pushforward_beta_monoidal}) makes the unit comparator an isomorphism
+  \(\varepsilon_{\mathrm{iso}}(\mathtt{pushforward}\,\beta) :
+    \mathbf 1_V \cong (\mathtt{pushforward}\,\beta).\mathrm{obj}\,\mathbf 1_U\). The pushforward-side
+  unit comparator is its inverse,
+  \[
+    q := \varepsilon_{\mathrm{iso}}(\mathtt{pushforward}\,\beta)^{-1} :
+      (\mathtt{pushforward}\,\beta).\mathrm{obj}\,\mathbf 1_U \;\cong\; \mathbf 1_V ,
+  \]
+  the strong-monoidal \(\varepsilon_{\mathrm{iso}}\) inverse (not the bare lax \(\varepsilon\) of
+  \cref{def:presheaf_pushforward_unit_eps}).
+\end{definition}
+
+\begin{lemma}
+
+\leanok
+[Carrier-value of the pushforward comparator: $q$ is the $f.\mathtt{appIso}$-conjugation on carriers]
+  \label{lem:pushforward_beta_unit_eps_app_one}
+  \lean{AlgebraicGeometry.Scheme.Modules.pushforwardBetaUnitEpsAppOne}
+  \uses{lem:presheaf_pushforward_beta_monoidal, def:presheaf_pushforward_unit_iso, lem:pushforward_mu_appiso_collapse, lem:restrictscalars_oplaxmonoidal_eta_app_one}
+  \textit{Source: internal categorical construction; no external reference.}
+  This is the unit-side analogue of the tensorator collapse
+  \cref{lem:pushforward_mu_appiso_collapse}. With \(f : Y \to X\) an open immersion,
+  \(\beta\) the (sectionwise-bijective) structure-ring comparison, and
+  \(q = \mathtt{presheafPushforwardUnitIso}\,f = \varepsilon_{\mathrm{iso}}(\mathtt{pushforward}\,
+  \beta)^{-1}\) (\cref{def:presheaf_pushforward_unit_iso}), the sectionwise carrier action of
+  \(q.\mathrm{hom} = \varepsilon_{\mathrm{iso}}(\mathtt{pushforward}\,\beta)^{-1}\) at an
+  \emph{arbitrary} carrier element \(y\) is, over a section \(V\),
+  \[
+    \bigl(q.\mathrm{hom}\bigr)_V (y)
+      \;=\; (f.\mathtt{appIso}\,V).\mathrm{hom}\,(y) ,
+  \]
+  the \(f.\mathtt{appIso}\)-conjugation of \(y\). The unit case \(y = 1\) is the motivating
+  instance; the general form is the one the L1\('\) consumer
+  \cref{lem:presheafdualunitiso_pullback_natural} requires (it instantiates at a non-unit
+  carrier).
+\end{lemma}
+\begin{proof}
+  \uses{lem:presheaf_pushforward_beta_monoidal, def:presheaf_pushforward_unit_iso, lem:pushforward_mu_appiso_collapse, lem:restrictscalars_oplaxmonoidal_eta_app_one}
+  \leanok
+  We compute the carrier action of \(q.\mathrm{hom} = \varepsilon_{\mathrm{iso}}(\mathtt{pushforward}\,
+  \beta)^{-1}\) at an arbitrary carrier element \(y\) by splitting the strong-monoidal structure of
+  \(\mathtt{pushforward}\,\beta\) along the factorization
+  \(\mathtt{pushforward}\,\beta = \mathtt{pushforward}_0^{\mathrm{Comm}} \,\circ\,
+  \mathtt{restrictScalars}\,\beta\) furnished by
+  \cref{lem:presheaf_pushforward_beta_monoidal}. The argument is cleanest run on the \emph{inverse}
+  \(q.\mathrm{inv} = \varepsilon(\mathtt{pushforward}\,\beta)\): under \(\mathtt{Functor.Monoidal.comp}\)
+  the lax unit comparator \(\varepsilon\) of the composite is the composite of the two factors'
+  \(\varepsilon\)'s, and the scalar-forgetting pushforward \(\mathtt{pushforward}_0^{\mathrm{Comm}}\)
+  has \(\varepsilon = \mathrm{id}\), so \(q.\mathrm{inv}\) reduces to the \(\varepsilon\)-value of
+  \(\mathtt{restrictScalars}\,\beta\). That value is the sectionwise structure-ring transport
+  \((f.\mathtt{appIso}\,V).\mathrm{inv}\), by the abstract \(\varepsilon\)-template
+  \cref{lem:restrictscalars_laxmonoidal_eps_app} (the strong-monoidal companion of the oplax
+  \(\eta\)-template \cref{lem:restrictscalars_oplaxmonoidal_eta_app_one}; \(\varepsilon = \eta^{-1}\)
+  since \(\beta\) is sectionwise bijective). Hence
+  \(\bigl(q.\mathrm{inv}\bigr)_V (w) = (f.\mathtt{appIso}\,V).\mathrm{inv}\,(w)\)
+  (\cref{lem:presheaf_pushforward_unit_iso_inv_app}). Now both \(\bigl(q.\mathrm{hom}\bigr)_V(y)\) and
+  \((f.\mathtt{appIso}\,V).\mathrm{hom}\,(y)\) are sent to \(y\) by the injective
+  \(\bigl(q.\mathrm{inv}\bigr)_V\) — the former by the round-trip \(q.\mathrm{hom}\,;q.\mathrm{inv} =
+  \mathrm{id}\), the latter by \(\mathtt{appIso}\)'s hom-inv identity — so they are equal:
+  \(\bigl(q.\mathrm{hom}\bigr)_V (y) = (f.\mathtt{appIso}\,V).\mathrm{hom}\,(y)\), the
+  \(f.\mathtt{appIso}\)-conjugation of \(y\). This isolates the same structure-ring transport that the
+  tensorator collapse \cref{lem:pushforward_mu_appiso_collapse} isolates on the \(\mu\)-side.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Abstract $\varepsilon$-value of $\mathtt{restrictScalars}$ on carriers]
+  \label{lem:restrictscalars_laxmonoidal_eps_app}
+  \lean{AlgebraicGeometry.Scheme.Modules.restrictScalars_laxMonoidal_ε_app}
+  \uses{lem:restrictscalars_oplaxmonoidal_eta_app_one}
+  \textit{Source: internal categorical construction; no external reference.}
+  For ring-presheaves \(R, S : \mathcal C^{\mathrm{op}} \to \mathtt{CommRingCat}\) and a natural
+  transformation \(\alpha : R \to S\), the lax unit comparator \(\varepsilon\) of
+  \(\mathtt{PresheafOfModules.restrictScalars}\,\alpha\) acts sectionwise on carriers by the ring map
+  \(\alpha\): over a section \(W\), \(\varepsilon.\mathrm{app}\,W\,(r) = (\alpha.\mathrm{app}\,W).\mathrm{hom}\,(r)\).
+  This is the abstract \(\{R,S : \mathcal C^{\mathrm{op}} \to \mathtt{CommRingCat}\}\) companion of the
+  unit-value template \cref{lem:restrictscalars_oplaxmonoidal_eta_app_one}; the abstract framing makes
+  the ambient \(\mathtt{CommRing}\) instance native (the concrete post-\(\mathtt{forget}_2\) Scheme
+  carrier exposes only \(\mathtt{Ring}\)).
+\end{lemma}
+\begin{proof}
+  \uses{lem:restrictscalars_oplaxmonoidal_eta_app_one}
+  \leanok
+  Unfold \(\mathtt{ModuleCat.restrictScalars}\)'s lax-monoidal \(\varepsilon\): it is, by construction,
+  the scalar-action map induced by \(\alpha.\mathrm{app}\,W\) on the unit module, i.e. multiplication by
+  \((\alpha.\mathrm{app}\,W).\mathrm{hom}\,(r)\). Reading off its value at a carrier element gives the
+  claim directly.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Carrier-value of the pushforward comparator inverse $q.\mathrm{inv} = \varepsilon$]
+  \label{lem:presheaf_pushforward_unit_iso_inv_app}
+  \lean{AlgebraicGeometry.Scheme.Modules.presheafPushforwardUnitIso_inv_app}
+  \uses{def:presheaf_pushforward_unit_iso, lem:presheaf_pushforward_beta_monoidal, lem:restrictscalars_laxmonoidal_eps_app}
+  \textit{Source: internal categorical construction; no external reference.}
+  In the open-immersion setting, with \(q = \mathtt{presheafPushforwardUnitIso}\,f\)
+  (\cref{def:presheaf_pushforward_unit_iso}), the inverse \(q.\mathrm{inv} =
+  \varepsilon(\mathtt{pushforward}\,\beta)\) acts sectionwise on carriers as the inverse structure-ring
+  transport: over a section \(V\),
+  \(\bigl(q.\mathrm{inv}\bigr)_V (w) = (f.\mathtt{appIso}\,V).\mathrm{inv}\,(w)\).
+  This is the \(\varepsilon\)-side companion of \cref{lem:pushforward_beta_unit_eps_app_one}; it is
+  consumed both inside that lemma and directly by the L1\('\) flank
+  \cref{lem:presheafdualunitiso_pullback_natural}.
+\end{lemma}
+\begin{proof}
+  \uses{lem:presheaf_pushforward_beta_monoidal, lem:restrictscalars_laxmonoidal_eps_app}
+  \leanok
+  Split \(\mathtt{pushforward}\,\beta = \mathtt{pushforward}_0^{\mathrm{Comm}} \circ
+  \mathtt{restrictScalars}\,\beta\) (\cref{lem:presheaf_pushforward_beta_monoidal}). Under
+  \(\mathtt{Functor.Monoidal.comp}\) the composite \(\varepsilon\) is the composite of the factors';
+  \(\mathtt{pushforward}_0^{\mathrm{Comm}}\) contributes \(\varepsilon = \mathrm{id}\), leaving the
+  \(\varepsilon\)-value of \(\mathtt{restrictScalars}\,\beta\), which by
+  \cref{lem:restrictscalars_laxmonoidal_eps_app} is \((\beta.\mathrm{app}\,V)\)-multiplication, i.e.
+  \((f.\mathtt{appIso}\,V).\mathrm{inv}\) on carriers. Hence
+  \(\bigl(q.\mathrm{inv}\bigr)_V (w) = (f.\mathtt{appIso}\,V).\mathrm{inv}\,(w)\).
 \end{proof}
 
 \begin{lemma}
 
 
 \leanok
+[S4a / L1$'$: $\theta$-at-unit bridge --- the presheaf dual base-change comparison at the structure sheaf is the dual-of-unit iso]
+  \label{lem:presheafdualunitiso_pullback_natural}
+  \lean{AlgebraicGeometry.Scheme.Modules.presheafDualUnitIso_pullback_natural}
+  \uses{def:presheafdual_pullback_comparison, lem:presheafdual_pullback_restrict_natural, lem:presheafdualunitiso_naturality, def:presheaf_dual_unit_iso, lem:internal_hom_eval, def:presheaf_pullback_unit_iso, def:presheaf_pushforward_unit_iso, lem:pushforward_beta_unit_eps_app_one, lem:presheaf_pushforward_unit_iso_inv_app, lem:slice_dual_transport_app_apply, lem:unit_leftadjointuniq_hom_app}
+  \textit{Source: internal categorical construction; no external reference.}
+  Let \(j : V \hookrightarrow U\) be the chart immersion with \(j \mathbin{;} \iota_U = \iota_V\),
+  \(\varphi = j.\mathtt{toRingCatSheafHom}\) the pullback ring map, and \(\beta\) the corresponding
+  pushforward ring map. Evaluate the presheaf dual base-change comparison
+  \(\theta_M = \mathtt{presheafDualPullbackComparison}\,j\,M\)
+  (\cref{def:presheafdual_pullback_comparison}) at the structure-sheaf unit
+  \(M = \mathbf 1_U = \mathtt{SheafOfModules.unit}\,U.\mathtt{ringCatSheaf}\). Because \(\theta\) lands
+  the dual on the pushforward flank, this gives
+  \[
+    \theta_{\mathbf 1} : \mathtt{pullback}_\varphi(\mathtt{dual}\,\mathbf 1_U)
+      \;\cong\; \mathtt{dual}\bigl((\mathtt{pushforward}_\beta)\,\mathbf 1_U\bigr).
+  \]
+  Two \emph{distinct} unit comparators enter, one per flank:
+  \begin{itemize}
+    \item the pullback-side comparator
+      \(p := \mathtt{presheafPullbackUnitIso}\,j : \mathtt{pullback}_\varphi\,\mathbf 1_U \cong \mathbf 1_V\)
+      (\cref{def:presheaf_pullback_unit_iso}), the H1-transport \((H_1.\mathrm{app}\,\mathbf 1_U)^{-1}
+      \mathbin{;} q\) of the pushforward comparator;
+    \item the pushforward-side comparator
+      \(q := \varepsilon_{\mathrm{iso}}(\mathtt{pushforward}\,\beta)^{-1} :
+        (\mathtt{pushforward}_\beta)\,\mathbf 1_U \cong \mathbf 1_V\)
+      (\cref{def:presheaf_pushforward_unit_iso}), the inverse of the strong-monoidal unit comparator
+      of the pushforward.
+  \end{itemize}
+  Modulo the eval-at-\(1\) dual-of-unit isomorphism \(\mathtt{presheafDualUnitIso}\)
+  (\cref{def:presheaf_dual_unit_iso}) on the \(U\)- and \(V\)-flanks, \(\theta_{\mathbf 1}\)
+  \emph{is} the dual-of-unit identification, with the two comparators on opposite flanks: \(q\) is
+  transported contravariantly through \(\mathtt{dualIsoOfIso}\) onto the pushforward codomain of
+  \(\theta_{\mathbf 1}\), while \(p\) closes the pullback domain on the right:
+  \[
+    \theta_{\mathbf 1}
+      \,\mathbin{;}\, \bigl(\mathtt{dualIsoOfIso}\,q\bigr)^{-1}
+      \,\mathbin{;}\, \mathtt{presheafDualUnitIso}_V
+    \;=\; \mathtt{pullback}_\varphi\bigl(\mathtt{presheafDualUnitIso}_U\bigr)
+      \,\mathbin{;}\, p,
+  \]
+  both sides being isomorphisms
+  \(\mathtt{pullback}_\varphi(\mathtt{dual}\,\mathbf 1_U) \cong \mathbf 1_V\). This is the
+  unit-specialisation of the immersion-naturality \cref{lem:presheafdual_pullback_restrict_natural}
+  and the immersion analogue of the unit-automorphism core
+  \cref{lem:presheafdualunitiso_naturality}.
+\end{lemma}
+\begin{proof}
+  \uses{def:presheafdual_pullback_comparison, lem:presheafdual_pullback_restrict_natural, lem:presheafdualunitiso_naturality, lem:internal_hom_eval, def:presheaf_dual_unit_iso, def:presheaf_pullback_unit_iso, def:presheaf_pushforward_unit_iso, lem:pushforward_beta_unit_eps_app_one, lem:slice_dual_transport_app_apply, lem:unit_leftadjointuniq_hom_app}
+  \leanok
+  By element extensionality on dual sections, exactly as in
+  \cref{lem:presheafdual_pullback_restrict_natural}, of which this is the unit specialisation. Both
+  \(\theta_{\mathbf 1}\) and \(\mathtt{presheafDualUnitIso}\) are morphisms of presheaves of modules:
+  \(\theta_{\mathbf 1}\) is the internal-hom base-change comparison
+  \(f^{*}\mathcal{H}om(\mathbf 1, \mathcal{O}) \to \mathcal{H}om(f^{*}\mathbf 1, f^{*}\mathcal{O})\)
+  (\cref{def:presheafdual_pullback_comparison}), and \(\mathtt{presheafDualUnitIso}\) is the
+  sectionwise evaluation-at-\(1\) of the internal hom of the unit into itself
+  (\cref{def:presheaf_dual_unit_iso}). Testing the displayed equality against an arbitrary dual
+  section reduces, as in \cref{lem:presheafdual_pullback_restrict_natural}, to the built-in
+  naturality of \(\theta\) (its \(\mathtt{.hom}\) naturality), now read through the eval-at-\(1\)
+  identification, where the internal-hom evaluation (\cref{lem:internal_hom_eval}) collapses both
+  composites to evaluation of the pulled-back section at the image of \(1\).
+
+  The two flanks carry the two \emph{different} comparators. On the pushforward codomain of
+  \(\theta_{\mathbf 1}\) the comparator \(q = \varepsilon_{\mathrm{iso}}(\mathtt{pushforward}\,
+  \beta)^{-1}\) (\cref{def:presheaf_pushforward_unit_iso}) is transported contravariantly by
+  \(\mathtt{dualIsoOfIso}\); on the pullback domain the comparator
+  \(p = \mathtt{presheafPullbackUnitIso}\,j\) (\cref{def:presheaf_pullback_unit_iso}) closes the
+  square. Because \(p\) is, by definition, the H1-transport \((H_1.\mathrm{app}\,\mathbf 1_U)^{-1}
+  \mathbin{;} q\), the two leading H1 factors --- the one hidden inside \(p\) and the one produced by
+  unfolding \(\theta_{\mathbf 1}\) at the dual unit --- are telescoped away by the naturality of the
+  natural isomorphism \(H_1 : \mathtt{pushforward}\,\beta \xrightarrow{\sim} \mathtt{pullback}\,
+  \varphi\) at the dual-unit contraction \(\mathtt{presheafDualUnitIso}_U\)
+  (\cref{lem:unit_leftadjointuniq_hom_app}). After this cancellation the entire claim reduces to a
+  single \emph{pushforward-flank} sectionwise identity ($\dagger$): writing \(\mathtt{sDT}\) for the
+  slice-dual transport \(\mathtt{sliceDualTransport}\,f\,\mathbf 1_U\),
+  \[
+    \mathtt{sDT}
+      \,\mathbin{;}\, \bigl(\mathtt{dualIsoOfIso}\,q\bigr)^{-1}
+      \,\mathbin{;}\, \mathtt{presheafDualUnitIso}_V
+    \;=\;
+    (\mathtt{pushforward}_\beta)\bigl(\mathtt{presheafDualUnitIso}_U\bigr)
+      \,\mathbin{;}\, q .
+  \]
+
+  This identity is proved sectionwise, as the immersion analogue of
+  \cref{lem:presheafdualunitiso_naturality}. Fix a section \(V\) and a dual section \(\varphi\).
+  \begin{itemize}
+    \item \emph{Left-hand side.} The verified forward transport formula
+      (\cref{lem:slice_dual_transport_app_apply}) evaluates \(\mathtt{sDT}\) at the terminal slice as
+      the reindexing across \(f.\mathtt{opensFunctor}\) conjugated by \(f.\mathtt{appIso}\) and the
+      dual-unit ring swap; precomposing by \(q\) and evaluating at \(1\) (the dual-unit iso
+      \(\mathtt{presheafDualUnitIso} = \mathtt{evalLin}\,(\cdot)\,1\),
+      \cref{def:presheaf_dual_unit_iso}) exposes \(\mathtt{evalLin}\,\mathbf 1_U\,(\mathrm{op}\,fV)\,
+      \varphi\,1\) conjugated by \(f.\mathtt{appIso}\) and the dual-unit ring swap.
+    \item \emph{Right-hand side.} The pushforward of the eval-at-\(1\) contraction
+      \((\mathtt{pushforward}_\beta)(\mathtt{presheafDualUnitIso}_U)\) followed by the unit comparator
+      \(q.\mathrm{hom}\) is reduced by the unit-value sub-lemma
+      \cref{lem:pushforward_beta_unit_eps_app_one}: the carrier action of \(q.\mathrm{hom}\) at \(1\)
+      is the \(f.\mathtt{appIso}\)-conjugation of \(1\), so the right side reduces to the same
+      \(f.\mathtt{appIso}\)-conjugated \(\mathtt{evalLin}\,\mathbf 1_U\,(\mathrm{op}\,fV)\,\varphi\,1\).
+  \end{itemize}
+  Both sides being the same eval-at-\(1\) value conjugated by \(f.\mathtt{appIso}\), equality is the
+  commutativity of \(\mathcal{O}_V\)-linear endomorphisms of the (commutative) structure ring --- the
+  same \(\mathtt{linearEndo\_apply\_comm}\)-style step that closes
+  \cref{lem:presheafdualunitiso_naturality}, now with \(p\) and \(q\) in place of the unit
+  automorphism. Hence both sides of ($\dagger$) agree sectionwise, and with the H1 telescope this gives the displayed
+  square.
+\end{proof}
+
+\begin{lemma}
+
+
+\leanok
+[S4a / L2$'$: unit assembly --- the dual-restriction comparison at the unit intertwines the dual-unit contractions]
+  \label{lem:dual_unit_iso_restrict_assemble}
+  \lean{AlgebraicGeometry.Scheme.Modules.dual_unit_iso_restrict_assemble}
+  \uses{lem:presheafdualunitiso_pullback_natural, lem:dual_restrict_iso, lem:dual_restrict_iso_eq_comparison, lem:sheafificationcomppullback_restrict, lem:dual_unit_iso, def:unitrestrictiso, def:scheme_modules_dual_iso_of_iso, lem:image_preimage_of_le, lem:forget_unit_restrict_eq_pushforward_unit, lem:pullback_unit_sheafify_reconcile}
+  \textit{Source: internal categorical construction; no external reference.}
+  With \(j : V \hookrightarrow U\) as above, write \(\mathbf 1_U, \mathbf 1_V\) for the structure
+  sheaves, \(u_j = \mathtt{unitRestrictIso}\,j\) (\cref{def:unitrestrictiso}) for the chart-scheme
+  unit identification \(\mathbf 1_U|_j \cong \mathbf 1_V\), and
+  \(\mathtt{dual\_unit\_iso}_U, \mathtt{dual\_unit\_iso}_V\) for the dual-unit contractions
+  (\cref{lem:dual_unit_iso}). The \emph{bare} dual-restriction comparison
+  \(\mathtt{dual\_restrict\_iso}\,j\,(\mathbf 1_U) : (\mathtt{dual}\,\mathbf 1_U)|_j \cong
+  \mathtt{dual}(\mathbf 1_U|_j)\) (\cref{lem:dual_restrict_iso}) intertwines the two contractions
+  with the unit-restriction identification:
+  \[
+    (\mathtt{restrict}\,j)\,\mathtt{dual\_unit\_iso}_U \,\mathbin{;}\, u_j
+      \;=\; \mathtt{dual\_restrict\_iso}\,j\,(\mathbf 1_U)
+        \,\mathbin{;}\, \bigl(\mathtt{dualIsoOfIso}\,u_j\bigr)^{-1}
+        \,\mathbin{;}\, \mathtt{dual\_unit\_iso}_V,
+  \]
+  both sides being isomorphisms \((\mathtt{dual}\,\mathbf 1_U)|_j \cong \mathbf 1_V\).
+\end{lemma}
+\begin{proof}
+  \uses{lem:presheafdualunitiso_pullback_natural, lem:dual_restrict_iso_eq_comparison, lem:sheafificationcomppullback_restrict, lem:dual_unit_iso, def:unitrestrictiso, def:scheme_modules_dual_iso_of_iso, lem:image_preimage_of_le, lem:forget_unit_restrict_eq_pushforward_unit, lem:pullback_unit_sheafify_reconcile}
+  Drop both sides to their underlying morphisms (\(\mathtt{Iso.ext}\)) and flatten every
+  \(\mathbin{;}\), \(\mathrm{mapIso}\) and inverse into a single right-associated composite. Expanding
+  the bare comparison \(\mathtt{dual\_restrict\_iso}\,j\,(\mathbf 1_U)\) by the dual-B1 factorisation
+  (\cref{lem:dual_restrict_iso_eq_comparison}) into the three-factor composite
+  \(\mathtt{restrictFunctorIsoPullback}\,j \mathbin{;} \mathtt{sheafificationCompPullback}\,\varphi
+  \mathbin{;} \mathtt{sheafification}(\theta_{\mathbf 1})\), and each contraction by its definition
+  \(\mathtt{dual\_unit\_iso} = \mathtt{sheafification}(\mathtt{presheafDualUnitIso}) \mathbin{;}
+  \mathtt{counit}\) (\cref{lem:dual_unit_iso}), turns the square into a purely syntactic identity of
+  two right-associated \(\mathbin{;}\)-chains.
+
+  This flattened identity is discharged by a verified \emph{category-algebra assembly}: an abstract
+  reassociation lemma over a bare category, proven by associativity bookkeeping alone, that crosses
+  the \(\mathtt{SheafOfModules}\,\mathbin{;}\) seam without any unfolding. The assembly splits the
+  left-hand unit-restriction map \(m\) as a prefix \(m_{\mathrm p}\) followed by a core
+  \(m_{\mathrm c}\) and consumes four hypotheses --- a split identity, a flank identity, an
+  scp-prefix identity, and a tail identity. The split, scp-prefix and tail data are folded
+  \(\mathbin{;}\)-bookkeeping (the \(\mathtt{restrictFunctorIsoPullback} \mathbin{;}
+  \mathtt{sheafificationCompPullback}\) prefix is matched, exactly as in S3, by the composition law of
+  bridge~(b), \cref{lem:sheafificationcomppullback_restrict}, threading the equality of opens
+  \(j \mathbin{;} \iota_U = \iota_V\), \cref{lem:image_preimage_of_le}; and the
+  sheafification-counit naturality moves the counits past the restriction while contravariant
+  functoriality of \(\mathtt{dualIsoOfIso}\), \cref{def:scheme_modules_dual_iso_of_iso}, collects the
+  dual transport into \((\mathtt{dualIsoOfIso}\,u_j)^{-1}\)). The whole \(\theta\)-at-unit
+  identification supplied by L1$'$ (\cref{lem:presheafdualunitiso_pullback_natural}) is consumed
+  inside this fold. The substantive content of the four hypotheses reduces to exactly two residual
+  reconciliations:
+
+  \begin{itemize}
+    \item the \emph{dual flank} (\cref{lem:forget_unit_restrict_eq_pushforward_unit}): the
+      forgotten sheaf-level unit-restriction comparator equals the presheaf pushforward-unit
+      comparator \(q\), which discharges the dual-flank leg of the assembly;
+    \item the \emph{pullback (unit-only) flank} (\cref{lem:pullback_unit_sheafify_reconcile}): the
+      sheaf pullback-unit comparator sheafifies the presheaf pullback-unit comparator \(p\), threaded
+      through \(\mathtt{sheafificationCompPullback}\) and the two sheafification counits. After
+      reduced-image/SCP-naturality and the common-prefix cancel, the residual is unit-only --- no
+      dual factor remains.
+  \end{itemize}
+
+  Modulo these two reconciliations the square is closed by the folded assembly; the keystone is
+  therefore sorry-free up to them. The genuine open work is precisely these two adjunction-coherence
+  reconciliations, both of which consume the already-proven left-adjoint-uniqueness and
+  hom-transpose infrastructure (\cref{lem:sheafification_comp_pullback_eq_leftadjointuniq},
+  \cref{lem:leftadjointuniq_app_unit_eta_general}, \cref{lem:comp_homequiv_factor_sheafify_pullback},
+  \cref{lem:unit_leftadjointuniq_hom_app}, \cref{lem:pushforward_beta_unit_eps_app_one}).
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[RES1 (dual-flank reconciliation): the forgotten sheaf unit-restriction iso equals the presheaf
+pushforward-unit comparator]
+  \label{lem:forget_unit_restrict_eq_pushforward_unit}
+  \lean{AlgebraicGeometry.Scheme.Modules.forgetUnitRestrict_eq_pushforwardUnit}
+  \uses{def:restrictfunctorisopullback, lem:pushforward_beta_unit_eps_app_one, lem:unit_leftadjointuniq_hom_app, lem:homequiv_leftadjointuniq_hom_app, lem:leftadjointuniq_hom_app_counit, lem:presheafdualunitiso_naturality, def:presheaf_pushforward_unit_iso, lem:pullbackObjUnitToUnit_comp}
+  \textit{Source: internal categorical construction; no external reference.}
+  Let \(f : Y \hookrightarrow X\) be an open immersion with pullback ring map
+  \(\varphi = f.\mathtt{toRingCatSheafHom}\) and pushforward ring map \(\beta\). Applying the
+  forgetful functor \(\mathtt{forget} : \Scheme.\mathtt{Modules}\,Y \to \mathtt{PresheafOfModules}\)
+  to the composite of the chart-scheme unit identification
+  \(\mathtt{restrictFunctorIsoPullback}\,f\) (\cref{def:restrictfunctorisopullback}) at the
+  structure-sheaf unit \(\mathbf 1_X\) with the sheaf pullback-unit iso \(\mathtt{pullbackUnitIso}\,f\)
+  yields, on the nose, the presheaf pushforward-unit comparator
+  \(q = \mathtt{presheafPushforwardUnitIso}\,f\) (\cref{def:presheaf_pushforward_unit_iso}, the inverse
+  strong-monoidal unit comparator \(\varepsilon(\mathtt{pushforward}\,\beta)^{-1}\)):
+  \[
+    \mathtt{forget}.\mathrm{mapIso}\bigl(
+      (\mathtt{restrictFunctorIsoPullback}\,f).\mathrm{app}\,(\mathbf 1_X)
+        \;\mathbin{;}\; \mathtt{pullbackUnitIso}\,f\bigr)
+      \;=\; \mathtt{presheafPushforwardUnitIso}\,f .
+  \]
+  This is the leg of the unit assembly (\cref{lem:dual_unit_iso_restrict_assemble}) that closes its
+  dual flank.
+\end{lemma}
+\begin{proof}
+  \uses{def:restrictfunctorisopullback, lem:pushforward_beta_unit_eps_app_one, lem:unit_leftadjointuniq_hom_app, lem:homequiv_leftadjointuniq_hom_app, lem:leftadjointuniq_hom_app_counit, lem:presheafdualunitiso_naturality, def:presheaf_pushforward_unit_iso, lem:pullbackObjUnitToUnit_comp}
+  Reduce to a sectionwise carrier identity at an open \(V\) and a carrier element \(y\) (drop both
+  isomorphisms to their homs, then test presheaf-of-modules morphisms section by section and the
+  resulting \(\mathcal{O}_V\)-linear maps element by element).
+
+  On the right, the carrier action of \(q.\mathrm{hom}\) at \(V\) is the structure-ring isomorphism
+  \((f.\mathtt{appIso}\,V).\mathrm{hom}\) by the proven linchpin
+  \cref{lem:pushforward_beta_unit_eps_app_one}.
+
+  On the left, the sectionwise carrier is the composite of the two sheaf-level unit comparators
+  \((\mathtt{restrictFunctorIsoPullback}\,f).\mathrm{app}\,\mathbf 1_X\) followed by
+  \(\mathtt{pullbackObjUnitToUnit}\,\varphi\). The first comparator is the left-adjoint-uniqueness
+  isomorphism \(\mathtt{leftAdjointUniq}(\mathtt{restrictAdjunction}\,f)\,
+  (\mathtt{pullbackPushforwardAdjunction}\,f)\) (\cref{def:restrictfunctorisopullback}); the second is
+  the adjunction transpose \((\mathtt{pullbackPushforwardAdjunction}\,f).\mathrm{homEquiv}^{-1}\) of
+  the canonical \(\mathtt{unitToPushforwardObjUnit}\) (\cref{lem:pullbackObjUnitToUnit_comp}).
+  Collapsing the composite
+  \[
+    (\mathtt{leftAdjointUniq}\,\mathrm{adj}_1\,\mathrm{adj}_2).\mathrm{hom}.\mathrm{app}\,x
+      \;\mathbin{;}\; \mathrm{adj}_2.\mathrm{homEquiv}^{-1}(g)
+      \;=\; \mathrm{adj}_1.\mathrm{homEquiv}^{-1}(g)
+  \]
+  by the uniqueness coherences \cref{lem:homequiv_leftadjointuniq_hom_app},
+  \cref{lem:leftadjointuniq_hom_app_counit} and the unit triangle
+  \cref{lem:unit_leftadjointuniq_hom_app} rewrites the left composite as the single
+  \(\mathtt{restrictAdjunction}\)-unit transpose at \(V\).
+  % NOTE (iter-101, RES1 CLOSED): the Lean proof collapses the displayed equation at the MORPHISM
+  % level FIRST (before sectioning) — the abstract left-adjoint `pullback` has no sectionwise value,
+  % so the prior section-first reduction was stuck. The displayed collapse identity above is realized
+  % by a new generic helper `leftAdjointUniq_hom_app_homEquiv_symm` (private,
+  % AlgebraicGeometry.Scheme.Modules), which currently has NO own \label/\lean block — planner: give
+  % it a Mathlib-adjacent block (uses Adjunction.homEquiv_counit / NatTrans.naturality /
+  % leftAdjointUniq_hom_app_counit) and reorder this proof prose to collapse-then-section. Its structure-sheaf carrier value at \(V\)
+  is again \((f.\mathtt{appIso}\,V).\mathrm{hom}\) --- the structure-sheaf specialisation, exactly
+  mirroring the eval-core template \cref{lem:presheafdualunitiso_naturality}. Both sides equal
+  \((f.\mathtt{appIso}\,V).\mathrm{hom}\), closing the identity.
+\end{proof}
+
+% ======================================================================================
+% RES2 fine break (iter-102): the RHS counit-slide of `lem:pullback_unit_sheafify_reconcile`
+% is split into L1 (the concrete `pullbackValIso` factorisation) and L2 (the comparator
+% reconciliation), after which the target collapses by pure `sheafificationCompPullback`
+% iso-cancellation.  Cut along the seams of the proven template
+% `lem:sheaf_pullback_unit_forget_eq`, specialised to the structure-sheaf unit.
+% ======================================================================================
+
+\begin{lemma}
+
+\leanok
+[RES2 L1: the unit pullback identification factors through \texttt{sheafificationCompPullback} and the
+$X$-sheafification counit]
+  \label{lem:pullback_val_iso_unit_factor}
+  \lean{AlgebraicGeometry.Scheme.Modules.pullbackValIso_unit_factor}
+  \uses{def:pullback_val_iso, lem:sheafification_comp_pullback_eq_leftadjointuniq}
+  \textit{Source: internal categorical construction; no external reference.}
+  Let \(f : Y \hookrightarrow X\) be an open immersion with pullback ring map
+  \(\varphi = f.\mathtt{toRingCatSheafHom}\), let \(M_0 = \mathtt{SheafOfModules.unit}\,\mathcal O_X\) be
+  the structure-sheaf unit over \(X\) with underlying presheaf
+  \(\mathbf 1^{\mathrm p}_X = M_0.\mathrm{val}\), and write
+  \(\mathtt{cuX} = (\mathtt{sheafificationAdjunction}\,\mathbf 1_X).\mathrm{counit}\) for the
+  $X$-sheafification counit. The per-object pullback identification
+  \(\mathtt{pullbackValIso}\,f\,M_0\) (\cref{def:pullback_val_iso}) factors, on the nose, as the
+  inverse \(\mathtt{sheafificationCompPullback}\,\varphi\) comparison at \(\mathbf 1^{\mathrm p}_X\)
+  followed by the sheaf pullback of \(\mathtt{cuX}\) at \(M_0\):
+  \[
+    (\mathtt{pullbackValIso}\,f\,M_0).\mathrm{hom}
+      = (\mathtt{sheafificationCompPullback}\,\varphi).\mathrm{inv}.\mathrm{app}\,\mathbf 1^{\mathrm p}_X
+        \;\mathbin{;}\; (\mathtt{pullback}\,f).\mathrm{map}\bigl(\mathtt{cuX}.\mathrm{app}\,M_0\bigr).
+  \]
+\end{lemma}
+\begin{proof}
+  \uses{def:pullback_val_iso}
+  Immediate from the definition
+  \(\mathtt{pullbackValIso}\,f\,M_0 =
+  ((\mathtt{sheafificationCompPullback}\,\varphi).\mathrm{app}\,\mathbf 1^{\mathrm p}_X)^{-1}
+  \mathbin{;} (\mathtt{pullback}\,f).\mathrm{mapIso}\,((\mathtt{asIso}\,\mathtt{cuX}).\mathrm{app}\,M_0)\)
+  (\cref{def:pullback_val_iso}): reading off the homs of the two composed isomorphisms gives the
+  displayed identity by reflexivity. This is the unit instance of the template factorisation
+  \(\mathtt{hpbv}\) of \cref{lem:sheaf_pullback_unit_forget_eq}.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[RES2 L2: the sheafified presheaf pullback-unit comparator reconciles with the sheaf pullback
+identification]
+  \label{lem:presheaf_pullback_unit_iso_sheafify_reconcile}
+  \lean{AlgebraicGeometry.Scheme.Modules.presheafPullbackUnitIso_sheafify_reconcile}
+  \uses{lem:sheaf_pullback_unit_forget_eq, def:presheaf_pullback_unit_iso, def:presheaf_pushforward_unit_iso, lem:pullback_unit_iso, def:pullback_val_iso, lem:sheafificationcomppullback_restrict, lem:leftadjointuniq_app_unit_eta_general, lem:unit_leftadjointuniq_hom_app}
+  \textit{Source: internal categorical construction; no external reference.}
+  With notation as above, let \(\mathtt{cuY} = (\mathtt{sheafificationAdjunction}\,\mathbf 1_Y).\mathrm{counit}\)
+  be the $Y$-sheafification counit, \(a_Y = \mathtt{sheafification}\,\mathbf 1_Y\), and
+  \(p = \mathtt{presheafPullbackUnitIso}\,f\) (\cref{def:presheaf_pullback_unit_iso}, the presheaf
+  pullback-unit comparator \(p = (H_1\,\mathbf 1^{\mathrm p}_X)^{-1} \mathbin{;} q\) with \(H_1\) the
+  \(\mathtt{leftAdjointUniq}\) factor and \(q = \mathtt{presheafPushforwardUnitIso}\,f\),
+  \cref{def:presheaf_pushforward_unit_iso}). Then sheafifying \(p\) and cancelling the
+  $Y$-sheafification counit reproduces the sheaf pullback identification followed by the sheaf
+  pullback-unit iso \(\mathtt{pullbackUnitIso}\,f\) (\cref{lem:pullback_unit_iso}):
+  \[
+    a_Y.\mathrm{map}\,(p.\mathrm{hom}) \;\mathbin{;}\; \mathtt{cuY}.\mathrm{app}\,\mathbf 1_Y
+      = (\mathtt{pullbackValIso}\,f\,M_0).\mathrm{hom}
+        \;\mathbin{;}\; (\mathtt{pullbackUnitIso}\,f).\mathrm{hom}.
+  \]
+  Both sides are sheaf morphisms
+  \(a_Y\bigl((\mathtt{pullback}\,\varphi').\mathrm{obj}\,\mathbf 1^{\mathrm p}_X\bigr) \to \mathcal O_Y\).
+\end{lemma}
+\begin{proof}
+  % NOTE: (iter-102) PROSE↔PROOF DIVERGENCE — statement unchanged, but the realized Lean proof does
+  % NOT follow this transpose/template-mirror route. The actual proof is a transpose-free
+  % (†)-factorisation: p.hom = η_Y ; forget(pullbackValIso f 𝟙_X ; pullbackUnitIso f), built from the
+  % already-proven `H1inv_app_eq_pullbackVal_restrict` + RES1 `forgetUnitRestrict_eq_pushforwardUnit`
+  % (the two restrictFunctorIsoPullback legs cancel), then the generic unit/counit collapse
+  % `adj_unit_counit_collapse` (homEquiv round-trip). The statement-block \uses below therefore
+  % over-/under-declares vs the realized dep set (`sheaf_pullback_unit_forget_eq`,
+  % `leftadjointuniq_app_unit_eta_general`, `unit_leftadjointuniq_hom_app` are NOT used; the genuine
+  % deps are H1inv_app_eq_pullbackVal_restrict + forget_unit_restrict_eq_pushforward_unit +
+  % adj_unit_counit_collapse). Planner: rewrite this proof prose + realign both \uses sets.
+  \uses{lem:sheaf_pullback_unit_forget_eq, def:presheaf_pullback_unit_iso, lem:sheafificationcomppullback_restrict, lem:leftadjointuniq_app_unit_eta_general, lem:unit_leftadjointuniq_hom_app}
+  This is the structure-sheaf-unit specialisation of the proven template
+  \cref{lem:sheaf_pullback_unit_forget_eq}, which already carries out the sheafification-intertwining
+  mate-calculus that identifies the opaque sheaf pullback unit with its presheaf transpose. Unfold
+  \(p = (H_1\,\mathbf 1^{\mathrm p}_X)^{-1} \mathbin{;} q\) (\cref{def:presheaf_pullback_unit_iso}). The
+  \(H_1\) factor is the presheaf-level \(\mathtt{leftAdjointUniq}\) comparison; transposing the
+  template's conclusion at \(M_0\) and threading the \(\mathtt{leftAdjointUniq}\) transport of the
+  composite unit (\cref{lem:leftadjointuniq_app_unit_eta_general}) and the unit triangle
+  \(\mathtt{unit\_leftAdjointUniq\_hom\_app}\) (\cref{lem:unit_leftadjointuniq_hom_app}) identifies the
+  sheafified \(H_1\)/\(q\) presheaf comparator, after the \(\mathtt{cuY}\) cancellation, with the sheaf
+  pullback identification \(\mathtt{pullbackValIso}\,f\,M_0\) followed by
+  \(\mathtt{pullbackUnitIso}\,f\). The reduced-image/restriction matching between the two
+  \(\mathtt{sheafificationCompPullback}\) presentations is supplied as in bridge~(b)
+  (\cref{lem:sheafificationcomppullback_restrict}).
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[$(*)$ / RES2 (pullback unit-only reconciliation): the sheaf pullback-unit comparator sheafifies
+the presheaf pullback-unit comparator]
+  \label{lem:pullback_unit_sheafify_reconcile}
+  \lean{AlgebraicGeometry.Scheme.Modules.pullbackUnit_sheafify_reconcile}
+  \uses{lem:sheafification_comp_pullback_eq_leftadjointuniq, def:presheaf_pullback_unit_iso, lem:pullback_unit_iso, lem:pullback_val_iso_unit_factor, lem:presheaf_pullback_unit_iso_sheafify_reconcile}
+  \textit{Source: internal categorical construction; no external reference.}
+  Let \(f : Y \hookrightarrow X\) be an open immersion. Pulling back the sheafification counit over
+  \(X\) at the structure-sheaf unit and then applying the sheaf pullback-unit iso
+  \(\mathtt{pullbackUnitIso}\,f\) equals: the \(\mathtt{sheafificationCompPullback}\) comparison at the
+  unit presheaf, then the sheafification of the presheaf pullback-unit comparator
+  \(p = \mathtt{presheafPullbackUnitIso}\,f\) (\cref{def:presheaf_pullback_unit_iso}), then the
+  sheafification counit over \(Y\) at the unit:
+  \[
+    (\mathtt{pullback}\,f).\mathrm{map}\bigl(\mathtt{sheafCounit}_X.\mathrm{app}\,\mathbf 1_X\bigr)
+      \;\mathbin{;}\; (\mathtt{pullbackUnitIso}\,f).\mathrm{hom}
+      \;=\; \mathtt{sheafificationCompPullback}\,\varphi.\mathrm{hom}.\mathrm{app}\,\mathbf 1_X^{\mathrm p}
+  \]
+  \[
+      \qquad\qquad
+        \;\mathbin{;}\; \mathtt{sheafification}.\mathrm{map}\bigl((\mathtt{presheafPullbackUnitIso}\,f).\mathrm{hom}\bigr)
+        \;\mathbin{;}\; \mathtt{sheafCounit}_Y.\mathrm{app}\,\mathbf 1_Y ,
+  \]
+  where \(\mathtt{sheafCounit}_\bullet\) is the counit of the sheafification adjunction over
+  \(\bullet\) and \(\mathbf 1_X^{\mathrm p}\) the underlying presheaf unit. This is the genuine
+  unit-side reconciliation of the dual-unit naturality square; no dual factor remains.
+\end{lemma}
+\begin{proof}
+  \uses{lem:sheafification_comp_pullback_eq_leftadjointuniq, def:presheaf_pullback_unit_iso, lem:pullback_unit_iso, lem:pullback_val_iso_unit_factor, lem:presheaf_pullback_unit_iso_sheafify_reconcile}
+  Rewrite the right-hand comparator leg
+  \(a_Y.\mathrm{map}(p.\mathrm{hom}) \mathbin{;} \mathtt{cuY}.\mathrm{app}\,\mathbf 1_Y\) by L2
+  (\cref{lem:presheaf_pullback_unit_iso_sheafify_reconcile}), then expand
+  \((\mathtt{pullbackValIso}\,f\,M_0).\mathrm{hom}\) by L1
+  (\cref{lem:pullback_val_iso_unit_factor}); the leading
+  \(\mathtt{sheafificationCompPullback}\,\varphi\) hom/inv legs cancel
+  (\(\mathtt{Iso.hom\_inv\_id\_app}\)), leaving the left-hand side
+  \((\mathtt{pullback}\,f).\mathrm{map}(\mathtt{cuX}.\mathrm{app}\,M_0) \mathbin{;}
+  (\mathtt{pullbackUnitIso}\,f).\mathrm{hom}\). All seam-crossing mate-calculus is confined to L2.
+\end{proof}
+
+\begin{lemma}
+
+
+
+\leanok
 [S4a: dual-unit contraction commutes with further restriction]
   \label{lem:dual_unit_iso_restrict_compat}
   \lean{AlgebraicGeometry.Scheme.Modules.dual_unit_iso_restrict_compat}
-  \uses{lem:dual_unit_iso, lem:dual_restrict_iso, lem:dual_restrict_iso_restrict_compat, lem:dual_restrict_iso_eq_comparison, lem:sheafificationcomppullback_restrict, lem:presheafdual_pullback_restrict_natural, lem:presheafdualunitiso_naturality, def:unitrestrictiso, def:scheme_modules_dual_iso_of_iso, lem:image_preimage_of_le}
+  \uses{lem:dual_unit_iso, lem:dual_restrict_iso, lem:dual_unit_iso_restrict_assemble, lem:presheafdualunitiso_pullback_natural, def:unitrestrictiso, def:scheme_modules_dual_iso_of_iso}
   With \(j : V \hookrightarrow U\) as above, the unit-duality contraction
   \(\mathtt{dual\_unit\_iso} : \mathcal{H}om(\mathcal{O}_U, \mathcal{O}_U) \cong \mathcal{O}_U\)
   (\cref{lem:dual_unit_iso}) commutes with further restriction along \(j\). Writing
@@ -8235,31 +9317,27 @@ recorded here as load-bearing nodes.
   of \(u_j\) on the dual flank.
 \end{lemma}
 \begin{proof}
-  \uses{lem:dual_unit_iso, lem:dual_restrict_iso_restrict_compat, lem:dual_restrict_iso_eq_comparison, lem:sheafificationcomppullback_restrict, lem:presheafdual_pullback_restrict_natural, lem:presheafdualunitiso_naturality, def:unitrestrictiso, def:restrictcompreindex, lem:image_preimage_of_le}
-  This is the restriction-naturality square of \cref{lem:dual_restrict_iso_restrict_compat}
-  specialised to the structure sheaf. The unit-duality contraction
-  \(\mathtt{dual\_unit\_iso} : \mathcal{H}om(\mathcal{O}, \mathcal{O}) \cong \mathcal{O}\) is the
-  unit-evaluation component of the internal-hom restriction comparison
-  \(\mathtt{dual\_restrict\_iso}\) (\cref{lem:dual_restrict_iso_restrict_compat}). Its
-  restriction-naturality square therefore decomposes into the bare
-  \(\mathtt{dual\_restrict\_iso}\) immersion-naturality
-  (\cref{lem:dual_restrict_iso_restrict_compat}) together with the chart-scheme unit
-  identification \(u_\iota = \mathtt{unitRestrictIso}\,j\) (\cref{def:unitrestrictiso}) that
-  evaluates the comparison at the structure sheaf. The immersion-naturality input is the
-  specialisation of \cref{lem:presheafdual_pullback_restrict_natural} to the unit, which is exactly
-  \cref{lem:presheafdualunitiso_naturality}, promoted from a unit automorphism to the
-  immersion \(j\). The \(\mathtt{sheafificationCompPullback}\) factor is matched, as in
-  \cref{lem:dual_restrict_iso_restrict_compat}, by the
-  composition law of bridge~(b) (\cref{lem:sheafificationcomppullback_restrict}), now applied at the
-  structure-sheaf presheaf; the \(\theta\)-component is identified by the dual-B1 factorisation
-  (\cref{lem:dual_restrict_iso_eq_comparison}) and evaluated at the unit via
-  \cref{lem:presheafdualunitiso_naturality}. Composing along the factorisation
-  \(j \mathbin{;} \iota_U = \iota_V\) and threading the reindexing
-  \(\varrho = \mathtt{restrictCompReindex}\,j\) (\cref{def:restrictcompreindex},
-  \cref{lem:image_preimage_of_le}) through the unit comparison gives the claim.
+  \uses{lem:dual_unit_iso_restrict_assemble, lem:presheafdualunitiso_pullback_natural, lem:dual_unit_iso, def:scheme_modules_dual_iso_of_iso, def:unitrestrictiso}
+  Pure folded iso-algebra from the unit assembly square L2$'$
+  (\cref{lem:dual_unit_iso_restrict_assemble}), which records
+  \[
+    (\mathtt{restrict}\,j)\,\mathtt{dual\_unit\_iso}_U \,\mathbin{;}\, u_j
+      = \mathtt{dual\_restrict\_iso}\,j\,(\mathbf 1_U)
+        \,\mathbin{;}\, \bigl(\mathtt{dualIsoOfIso}\,u_j\bigr)^{-1}
+        \,\mathbin{;}\, \mathtt{dual\_unit\_iso}_V .
+  \]
+  Solving this square for \(\mathtt{dual\_unit\_iso}_V\) --- cancelling the invertible factors
+  \((\mathtt{dualIsoOfIso}\,u_j)^{-1}\) and \(\mathtt{dual\_restrict\_iso}\,j\,(\mathbf 1_U)\) on the
+  right by the self-inverse cancellations of an isomorphism with its inverse ---
+  yields the conjugated four-leg identity verbatim, with
+  \((\mathtt{dual\_restrict\_iso}\,j\,(\mathbf 1_U))^{-1}\) the middle leg and
+  \(\mathtt{dualIsoOfIso}\,u_j\), \(u_j\) the two outer transports. The seam-crossing
+  \(\theta\)-at-unit identification is confined to L2$'$ (via L1$'$,
+  \cref{lem:presheafdualunitiso_pullback_natural}); no unfolding is needed here.
 \end{proof}
 
 \begin{lemma}
+
 
 \leanok
 [The unit contraction is the left unitor at the unit (Cone A coverage)]
@@ -8278,6 +9356,7 @@ recorded here as load-bearing nodes.
 \end{proof}
 
 \begin{lemma}
+
 
 \leanok
 [Naturality of the left unitor (Cone A coverage)]
@@ -8299,6 +9378,7 @@ recorded here as load-bearing nodes.
 \end{proof}
 
 \begin{lemma}
+
 
 \leanok
 [$\eta$ mate-identification: the unit iso is the sheafified presheaf unit comparison (Cone A)]
@@ -8330,6 +9410,7 @@ recorded here as load-bearing nodes.
 
 \begin{lemma}
 
+
 \leanok
 [$\delta$ mate-identification: the tensor comparison is the sheafified cotensorator (Cone A)]
   \label{lem:pullback_tensor_map_eq_sheafify_delta}
@@ -8359,6 +9440,7 @@ recorded here as load-bearing nodes.
 \end{proof}
 
 \begin{lemma}
+
 
 \leanok
 [Cone A sub-lemma 1: \texttt{pullbackValIso} naturality at the sheaf left unitor (RHS reconciliation)]
@@ -8460,6 +9542,11 @@ recorded here as load-bearing nodes.
 [STU-collapse: the sheaf left unitor at a pullback image object]
   \label{lem:tensorobj_left_unitor_image_collapse}
   \lean{AlgebraicGeometry.Scheme.Modules.tensorObj_left_unitor_image_collapse}
+  % NOTE (iter-092 review, lvb minor): the display below orients the tensor comparison as
+  % \((\mu_{\mathbf 1,\cdot}).\mathrm{hom}\) in the solved-for-unitor form, but solving the authoritative
+  % Lean statement \(\mu.\mathrm{hom};(\varepsilon\rhd);\mathrm{unitor}=a.\mathrm{map}\,\lambda\) for the
+  % unitor yields \(\mu.\mathbf{inv}\) in the middle factor, not \(\mu.\mathrm{hom}\). The Lean statement
+  % is correct and was formalized; only this paraphrase has the hom/inv slip. Cosmetic; non-blocking.
   \uses{lem:sheafify_tensor_unit_iso_hom_eq_prime, def:sheafify_tensor_unit_iso, lem:tensorobj_unit_iso}
   Let \(f : Y \to X\), write \(a = a_Y = \mathtt{PresheafOfModules.sheafification}\) for the
   sheafification reflector on \(Y\), \(\varepsilon = \mathtt{sheafifyUnitIso}\) for its unit comparison
@@ -8516,6 +9603,7 @@ recorded here as load-bearing nodes.
 
 \begin{lemma}
 
+
 \leanok
 [Cone A sub-lemma 2: the pullback-object left unitor is the sheafified presheaf unitor]
   \label{lem:tensorobj_left_unitor_pullback_eq_sheafify}
@@ -8570,6 +9658,7 @@ recorded here as load-bearing nodes.
 \end{proof}
 
 \begin{lemma}
+
 
 \leanok
 [Cone A sub-lemma 3: the whiskered unit comparison is the sheafified \(\eta\)-whisker]
@@ -8650,6 +9739,7 @@ recorded here as load-bearing nodes.
 
 \begin{lemma}
 
+
 \leanok
 [Sheaf-level left unitality of the pullback tensor comparison (Cone A core)]
   \label{lem:pullback_tensor_map_left_unitality}
@@ -8691,6 +9781,7 @@ recorded here as load-bearing nodes.
 
 \begin{lemma}
 
+
 \leanok
 [S4b inner seam: pullback-world left-unitor coherence at the chart unit (Cone A)]
   \label{lem:tensorobj_unit_iso_restrict_compat_inner}
@@ -8720,6 +9811,7 @@ recorded here as load-bearing nodes.
 \end{proof}
 
 \begin{lemma}
+
 
 
 \leanok
@@ -8791,6 +9883,7 @@ recorded here as load-bearing nodes.
 \begin{lemma}
 
 
+
 \leanok
 [S4c: global-unit comparison \(u_\iota\) commutes with further restriction]
   \label{lem:trivialisation_uiota_restrict_compat}
@@ -8827,6 +9920,161 @@ recorded here as load-bearing nodes.
 \end{proof}
 
 \begin{lemma}
+[Seam 1 keystone: the unit-of-\(\le\) restriction iso is the chart restriction of \(e^M\)]
+  \label{lem:restrict_iso_unit_of_le_eq_restrict}
+  \lean{AlgebraicGeometry.Scheme.Modules.restrictIsoUnitOfLE_eq_restrict}
+  \uses{def:restrictcompreindex, def:unitrestrictiso, lem:restrictfunctorisopullback_comp_general}
+  \textit{Source: internal categorical construction; no external reference.}
+  Let \(j : V \hookrightarrow U\) be the chart morphism (\(j \mathbin{;} \iota_U = \iota_V\)) and
+  \(e^M : M|_{\iota_U} \cong \mathcal{O}_U\) a trivialisation. Then the unit-of-\(\le\) restriction
+  isomorphism factors through the chart restriction of \(e^M\):
+  \[
+    \mathtt{restrictIsoUnitOfLE}\,h_{VU}\,e^M
+      \;=\; \mathtt{restrictCompReindex}\,j\,M
+        \mathbin{;} (\mathtt{restrictFunctor}\,j).\mathrm{mapIso}\,e^M
+        \mathbin{;} \mathtt{unitRestrictIso}\,j,
+  \]
+  where \(\mathtt{restrictCompReindex}\,j\,M\) is the restriction-composite reindexing \(\varrho_M\)
+  (\cref{def:restrictcompreindex}) and \(\mathtt{unitRestrictIso}\,j\) the unit-restriction
+  identification \(u_\iota(j)\) (\cref{def:unitrestrictiso}).
+\end{lemma}
+\begin{proof}
+  \uses{def:restrictcompreindex, def:unitrestrictiso, lem:restrictfunctorisopullback_comp_general}
+  Unfold \(\mathtt{restrictIsoUnitOfLE}\,h_{VU}\,e^M\) to its pullback-world chart-chase
+  \[
+    \mathtt{RFIP}(\iota_V)
+      \mathbin{;} \mathtt{pullbackCongr}(h_{j\iota})
+      \mathbin{;} (\mathtt{pullbackComp}\,j\,\iota_U)^{-1}
+      \mathbin{;} (\mathtt{pullback}\,j)\bigl(\mathtt{RFIP}(\iota_U)^{-1}\bigr)
+      \mathbin{;} (\mathtt{pullback}\,j)\,e^M
+      \mathbin{;} \mathtt{pullbackObjUnitToUnit}\,j,
+  \]
+  where \(\mathtt{RFIP} = \mathtt{restrictFunctorIsoPullback}\). On the right-hand side,
+  \(\mathtt{restrictCompReindex}\,j\) unfolds (\cref{def:restrictcompreindex}) as
+  \((\mathtt{restrictFunctorCongr}\,h_{j\iota})^{-1} \mathbin{;}
+  \mathtt{restrictFunctorComp}\,j\,\iota_U\), and \(\mathtt{unitRestrictIso}\,j\) unfolds
+  (\cref{def:unitrestrictiso}) as
+  \(\mathtt{RFIP}(j).\mathrm{app}\,\mathcal{O}_U \mathbin{;} \mathtt{pullbackUnitIso}\,j\). Pushing the
+  two restriction-world factors \(\mathtt{restrictFunctorComp}\) and \(\mathtt{restrictFunctorCongr}\)
+  into the pullback world by the general pseudonaturality bridge
+  (\cref{lem:restrictfunctorisopullback_comp_general}) turns the right-hand side into the same
+  pullback-world chart-chase as the left, the trailing \(\mathtt{pullbackObjUnitToUnit}\,j\) matching
+  \(\mathtt{pullbackUnitIso}\,j\) definitionally. The two presentations therefore agree.
+\end{proof}
+
+\begin{lemma}
+[Telescope seam 1: \(e^M\)-bifunctoriality split of the wrapped dual constituent]
+  \label{lem:trivialisation_restrict_em_split}
+  \lean{AlgebraicGeometry.Scheme.Modules.trivialisation_restrict_eM_split}
+  % NOTE (iter-103): Lean decl `trivialisation_restrict_eM_split` NOT yet created (dangling \lean{}
+  % target — block correctly unmarked).  The first bullet's identity
+  % `restrictIsoUnitOfLE hVU eM = (restrict j) eM` IS now realized by the NEW Lean helper
+  % `restrictIsoUnitOfLE_eq_restrict` (TensorObjInverse.lean, sorry'd, `apply Iso.ext`); per the
+  % lean-vs-blueprint checker iter-103 that helper should become a \uses-linked sub-lemma of this block.
+  % Planner: author a sub-block for it (+ its `restrictFunctorComp ↔ pullbackComp` chart-chase) here.
+  \uses{lem:tensorobjisoofiso_trans, lem:dualisoofiso_trans, lem:dual_restrict_iso_restrict_compat, lem:dual_unit_iso_restrict_compat, def:unitrestrictiso, def:restrictcompreindex, lem:restrict_iso_unit_of_le_eq_restrict}
+  With \(j : V \hookrightarrow U\) the chart morphism (\(j \mathbin{;} \iota_U = \iota_V\)) and
+  \(e^M : L|_{\iota_U} \cong \mathcal{O}_U\) a trivialisation, applying \(\mathtt{restrict}\,j\) to the
+  \(U\)-side constituent
+  \(\mathtt{tensorObjIsoOfIso}\,e^M\,\bigl(\mathtt{dual\_restrict\_iso}\,\iota_U \mathbin{;}
+  (\mathtt{dualIsoOfIso}\,e^M)^{-1} \mathbin{;} \mathtt{dual\_unit\_iso}\bigr)\) splits, by
+  bifunctoriality of the tensor iso-of-iso functor (\cref{lem:tensorobjisoofiso_trans}), into:
+  \begin{itemize}
+    \item the \(e^M\)-leg, whose \(V\)-refinement is the identification
+      \(\mathtt{restrictIsoUnitOfLE}\,h_{VU}\,e^M = (\mathtt{restrict}\,j)\,e^M\)
+      (\cref{def:unitrestrictiso}); and
+    \item the dual-chain leg, where contravariant functoriality of \(\mathtt{dualIsoOfIso}\)
+      (\cref{lem:dualisoofiso_trans}) transports \((\mathtt{dualIsoOfIso}\,e^M)^{-1}\) through
+      \(\mathtt{restrict}\,j\), leaving the bare dual-restriction comparison covered by S3
+      (\cref{lem:dual_restrict_iso_restrict_compat}) and S4a
+      (\cref{lem:dual_unit_iso_restrict_compat}).
+  \end{itemize}
+  Concretely, modulo the reindexing \(\varrho = \mathtt{restrictCompReindex}\,j\)
+  (\cref{def:restrictcompreindex}), the \(\mathtt{restrict}\,j\)-image of constituent (2) equals the
+  \(V\)-built \(\mathtt{tensorObjIsoOfIso}\,(\mathtt{restrictIsoUnitOfLE}\,h_{VU}\,e^M)\,(\cdots_V)\)
+  conjugated by \(\varrho\) on both flanks.
+\end{lemma}
+\begin{proof}
+  \uses{lem:tensorobjisoofiso_trans, lem:dualisoofiso_trans, lem:dual_restrict_iso_restrict_compat, lem:dual_unit_iso_restrict_compat, def:unitrestrictiso, lem:restrict_iso_unit_of_le_eq_restrict}
+  The functor \(\mathtt{tensorObjIsoOfIso}\) is bifunctorial in its two iso arguments
+  (\cref{lem:tensorobjisoofiso_trans}): \(\mathtt{restrict}\,j\) carries it to the
+  \(\mathtt{tensorObjIsoOfIso}\) of the \(\mathtt{restrict}\,j\)-images of the two arguments, conjugated
+  by \(\varrho\). The first argument \(e^M\) refines to \((\mathtt{restrict}\,j)\,e^M\), which is
+  \(\mathtt{restrictIsoUnitOfLE}\,h_{VU}\,e^M\) by the very definition of the latter
+  (\cref{def:unitrestrictiso}). For the second argument, the dual chain is carried leg by leg:
+  \(\mathtt{dual\_restrict\_iso}\) by S3 (\cref{lem:dual_restrict_iso_restrict_compat}), the
+  contravariant \((\mathtt{dualIsoOfIso}\,e^M)^{-1}\) by \(\mathtt{dualIsoOfIso}\)-functoriality
+  (\cref{lem:dualisoofiso_trans}) into \((\mathtt{dualIsoOfIso}\,((\mathtt{restrict}\,j)\,e^M))^{-1}\),
+  and \(\mathtt{dual\_unit\_iso}\) by S4a (\cref{lem:dual_unit_iso_restrict_compat}). Reassembling, the
+  \(\mathtt{restrict}\,j\)-image of constituent (2) is the \(V\)-built constituent conjugated by
+  \(\varrho\).
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Telescope seam 2: generic \(\varrho\)-cancellation assembly of the five squares]
+  \label{lem:trivialisation_telescope_assemble}
+  \lean{AlgebraicGeometry.Scheme.Modules.trivialisation_telescope_assemble}
+  \uses{lem:tensorobj_restrict_iso_restrict_compat, lem:dual_restrict_iso_restrict_compat, lem:dual_unit_iso_restrict_compat, lem:tensorobj_unit_iso_restrict_compat, lem:trivialisation_uiota_restrict_compat, def:restrictcompreindex}
+  \textit{Source: internal categorical construction; no external reference.}
+  Work in an arbitrary category \(C\). Given the five \(U\)-built constituents \(c^U_1, \dots, c^U_5\)
+  of the trivialisation chain and their \(V\)-built counterparts \(c^V_1, \dots, c^V_5\), the four
+  internal reindexings \(\varrho_1, \dots, \varrho_4\) (the
+  \(\mathtt{restrictCompReindex}\,j\)/\(\mathtt{unitRestrictIso}\) factors of
+  \cref{def:restrictcompreindex}), and the two outer reindexings \(\varrho_0, \varrho_5\), suppose each
+  constituent satisfies its restriction-naturality square
+  \[
+    (\mathtt{restrict}\,j)\,c^U_k \;=\; \varrho_{k-1}^{-1} \mathbin{;} c^V_k \mathbin{;} \varrho_k
+    \qquad (k = 1, \dots, 5),
+  \]
+  so that the target \(\varrho_k\) of square \(k\) is the source \(\varrho_k\) of square \(k+1\). Then,
+  composing the five squares in order, the internal reindexings \(\varrho_1, \dots, \varrho_4\) cancel
+  telescopically and
+  \[
+    (\mathtt{restrict}\,j)\bigl(c^U_1 \mathbin{;} \cdots \mathbin{;} c^U_5\bigr)
+      \;=\; \varrho_0^{-1} \mathbin{;} \bigl(c^V_1 \mathbin{;} \cdots \mathbin{;} c^V_5\bigr) \mathbin{;} \varrho_5,
+  \]
+  leaving only the two outer reindexings \(\varrho_0 = \mathtt{hobjU}\) and \(\varrho_5 = \mathtt{hobjV}\).
+\end{lemma}
+\begin{proof}
+  Pure \(\mathtt{Category.assoc}\) cocycle collapse, identical in form to the sibling assembles
+  \(\mathtt{dual\_scp\_assemble}\), \(\mathtt{unit\_assemble}\) and \(\mathtt{hcore\_assemble}\). As
+  \(\mathtt{restrict}\,j\) is a functor it carries the \(U\)-composite to the composite of the
+  \(\mathtt{restrict}\,j\)-images; substitute each square, and for every adjacent pair the factor
+  \(\varrho_k \mathbin{;} \varrho_k^{-1} = \mathbf{1}\) (\(k = 1, \dots, 4\)) cancels by the iso law.
+  What survives is \(\varrho_0^{-1}\) on the left and \(\varrho_5\) on the right --- the displayed
+  identity. No \(\mathtt{SheafOfModules} \mathbin{;}\) defeq seam is crossed: the statement lives over an
+  abstract \([\mathtt{Category}\ C]\) and is applied to the concrete chain by \(\mathtt{exact}\), never
+  \(\mathtt{rw}\)/\(\mathtt{ext}\) on a conjugate-headed goal.
+\end{proof}
+
+\begin{lemma}
+[Telescope seam 3: sectionwise evaluation of the two outer reindexings]
+  \label{lem:trivialisation_restrict_sectionwise}
+  \lean{AlgebraicGeometry.Scheme.Modules.trivialisation_restrict_sectionwise}
+  \uses{lem:image_preimage_of_le, lem:trivialisation_telescope_assemble}
+  Let \(\mathtt{hobjU} = \mathtt{image\_preimage\_of\_le}\,U\,h_{VU}\) and
+  \(\mathtt{hobjV} = \mathtt{image\_preimage\_of\_le}\,V\,\mathrm{le\_rfl}\) be the two direct-image
+  identities of \cref{lem:image_preimage_of_le}, with images \(\iota_U\,''^U(\iota_U^{-1}(V)) = V\) and
+  \(\iota_V\,''^V(\iota_V^{-1}(V)) = V\). Threading the corresponding \(\mathtt{eqToHom}\) transports
+  through the two flanks of the telescoped chain (\cref{lem:trivialisation_telescope_assemble}) and
+  evaluating \(\mathtt{.val.presheaf.map}\)/\(\mathtt{.val.app}\) sectionwise over the preimage open
+  \(\iota_U^{-1}(V)\) yields precisely the asserted equality of
+  \cref{lem:trivialisation_restrict_compat}.
+\end{lemma}
+\begin{proof}
+  \uses{lem:image_preimage_of_le, lem:trivialisation_telescope_assemble}
+  The telescoped identity (\cref{lem:trivialisation_telescope_assemble}) leaves only the outer
+  reindexings \(\varrho_0\) and \(\varrho_5\); these are the \(\mathtt{eqToHom}\) images of
+  \(\mathtt{hobjU}\) and \(\mathtt{hobjV}\) at the presheaf level. Pushing them onto the section
+  functors \(\mathtt{.val.presheaf.map}\) and evaluating the chain's underlying morphism with
+  \(\mathtt{.val.app}\) at the preimage open \(\iota_U^{-1}(V)\) discharges the bookkeeping and produces
+  the stated section equation.
+\end{proof}
+
+\begin{lemma}
+
 
 
 
@@ -8835,7 +10083,7 @@ recorded here as load-bearing nodes.
 [Trivialisation iso-chain compatible with further restriction (cocycle residual A, step 1)]
   \label{lem:trivialisation_restrict_compat}
   \lean{AlgebraicGeometry.Scheme.Modules.trivialisation_restrict_compat}
-  \uses{lem:tensorobj_restrict_iso_restrict_compat, lem:dual_restrict_iso_restrict_compat, lem:dual_unit_iso_restrict_compat, lem:tensorobj_unit_iso_restrict_compat, lem:trivialisation_uiota_restrict_compat, lem:restrictfunctorisopullback_comp_compat, def:restrictcompreindex, lem:image_preimage_of_le}
+  \uses{lem:tensorobj_restrict_iso_restrict_compat, lem:dual_restrict_iso_restrict_compat, lem:dual_unit_iso_restrict_compat, lem:tensorobj_unit_iso_restrict_compat, lem:trivialisation_uiota_restrict_compat, lem:restrictfunctorisopullback_comp_compat, def:restrictcompreindex, lem:image_preimage_of_le, lem:trivialisation_restrict_em_split, lem:trivialisation_telescope_assemble, lem:trivialisation_restrict_sectionwise}
   Let \(V \subseteq U\) be opens of \(X\) (an inclusion of trivialising opens, e.g.
   \(V \subseteq U_i \cap U_j\)). The trivialisation iso-chain that builds the local
   contraction --- the restriction-compatibility iso \cref{lem:tensorobj_restrict_iso}
@@ -8849,57 +10097,31 @@ recorded here as load-bearing nodes.
   \cref{lem:tensorobj_unit_self_duality_collapse} can act.
 \end{lemma}
 \begin{proof}
-  \uses{lem:tensorobj_restrict_iso_restrict_compat, lem:dual_restrict_iso_restrict_compat, lem:dual_unit_iso_restrict_compat, lem:tensorobj_unit_iso_restrict_compat, lem:trivialisation_uiota_restrict_compat, lem:restrictfunctorisopullback_comp_compat, lem:dualisoofiso_trans, lem:tensorobjisoofiso_trans, lem:image_preimage_of_le}
-
-  \emph{The reindexing obstacle.} The chain is assembled over \(U\) and read off over the sub-open
-  \(V\); the bookkeeping the one-line statement hides is that the preimage \(\iota_U^{-1}(V)\) (over
-  which the \(U\)-built chain evaluates after restriction along \(V \le U\)) and the preimage
-  \(\iota_V^{-1}(V)\) (over which the \(V\)-built chain lives) coincide as subsets only up to the
-  canonical equality-of-opens identification \(\varrho\) of the direct-image identity
-  \((\iota_U)_!\bigl(\iota_U^{-1}(V)\bigr) = V\) (\cref{lem:image_preimage_of_le}). In the chain
-  \(\varrho\) appears as a transport isomorphism on \emph{both} flanks of each constituent;
-  threading it through every square is the essential bookkeeping.
-
-  \emph{The five squares.} The trivialisation chain carrying \((L \otimes_X L^{-1})|_U\) to
-  \(\mathcal{O}_U\), composed with the global-unit comparison \(u_\iota(\iota_U)^{-1}\), is --- \emph{in
-  order} --- the composite of five constituents, each now carrying its own restriction-naturality
-  square: (1) \(\mathtt{tensorObj\_restrict\_iso}\,\iota_U\)
-  (\cref{lem:tensorobj_restrict_iso_restrict_compat}, S2); (2) the bare dual-restriction comparison
-  \(\mathtt{dual\_restrict\_iso}\,\iota_U\) (\cref{lem:dual_restrict_iso_restrict_compat}, S3, clean
-  core); (3) \(\mathtt{dual\_unit\_iso}\)
-  (\cref{lem:dual_unit_iso_restrict_compat}, S4a); (4) \(\mathtt{tensorObj\_unit\_iso}\)
-  (\cref{lem:tensorobj_unit_iso_restrict_compat}, S4b); (5) \(u_\iota(\iota_U)^{-1}\)
-  (\cref{lem:trivialisation_uiota_restrict_compat}, S4c). The \((\mathtt{dualIsoOfIso}\,e^M)^{-1}\)
-  transport that the full trivialisation step wraps around constituent (2) is \emph{not} carried by
-  S3 itself; it telescopes here. Constituent (2), with that transport, sits inside the bifunctor
-  \(\mathtt{tensorObjIsoOfIso}\,e^M\,(\cdots)\); bifunctoriality (\cref{lem:tensorobjisoofiso_trans})
-  splits it into the \(e^M\)-leg --- whose \(V\)-side refinement is the
-  \(\mathtt{restrictIsoUnitOfLE}\,h_{VU}\,e^M = (\mathtt{restrict}\,j)\,e^M\) identification --- and
-  the dual-chain leg, where contravariant functoriality of \(\mathtt{dualIsoOfIso}\)
-  (\cref{lem:dualisoofiso_trans}) transports \((\mathtt{dualIsoOfIso}\,e^M)^{-1}\) through
-  \(\mathtt{restrict}\,j\), leaving the bare dual-restriction naturality covered by S3 and S4a.
-
-  \emph{The telescope.} Each sub-lemma asserts that applying \(\mathtt{restrict}\,j\) (the chart
-  morphism \(j : V \hookrightarrow U\), \(j \mathbin{;} \iota_U = \iota_V\)) to the \(U\)-built
-  constituent equals the \(V\)-built one, with \(\varrho\) on both flanks. Composing the five
-  squares in order, the target \(\varrho\) of each is the source \(\varrho\) of the next, so the
-  internal reindexings cancel telescopically, leaving only the two outer reindexings
+  \uses{lem:trivialisation_restrict_em_split, lem:trivialisation_telescope_assemble, lem:trivialisation_restrict_sectionwise, lem:tensorobjisoofiso_trans, lem:dualisoofiso_trans}
+  The trivialisation chain carrying \((L \otimes_X L^{-1})|_U\) to \(\mathcal{O}_U\), then the global-unit
+  comparison \(u_\iota(\iota_U)^{-1}\), is --- in order --- the five constituents S2--S4c, each carrying
+  its own restriction-naturality square (\cref{lem:tensorobj_restrict_iso_restrict_compat},
+  \cref{lem:dual_restrict_iso_restrict_compat}, \cref{lem:dual_unit_iso_restrict_compat},
+  \cref{lem:tensorobj_unit_iso_restrict_compat}, \cref{lem:trivialisation_uiota_restrict_compat}). The
+  assembly is the three-seam chain of this section. Seam~1
+  (\cref{lem:trivialisation_restrict_em_split}) handles the \((\mathtt{dualIsoOfIso}\,e^M)^{-1}\)
+  transport the trivialisation step wraps around constituent~(2): bifunctoriality of
+  \(\mathtt{tensorObjIsoOfIso}\) splits it into the \(e^M\)-leg \((\mathtt{restrict}\,j)\,e^M\) and the
+  dual-chain leg covered by S3/S4a. Seam~2 (\cref{lem:trivialisation_telescope_assemble}) is the generic
+  abstract-\([\mathtt{Category}]\) cocycle collapse: composing the five squares, the internal \(\varrho\)
+  reindexings cancel telescopically, leaving only the outer
   \(\mathtt{hobjU} = \mathtt{image\_preimage\_of\_le}\,U\,h_{VU}\) and
-  \(\mathtt{hobjV} = \mathtt{image\_preimage\_of\_le}\,V\,\mathrm{le\_rfl}\) recorded in the
-  statement. Evaluated sectionwise over the preimage open,
-  this is the asserted equality.
-
-  \emph{Consequence.} Restricting the sectionwise overlap equation of two local contractions
-  \(f_i, f_j\) along \(V \hookrightarrow U_i\) and \(V \hookrightarrow U_j\) through this
-  compatibility lifts it from an equation of sections to an equation of \emph{restricted sheaf
-  morphisms} over \(V\). That is precisely the form on which the iso-level functoriality laws
-  --- bifunctoriality of the tensor iso-of-iso functor (\cref{lem:tensorobjisoofiso_trans}),
-  contravariant functoriality of the dual iso-of-iso functor (\cref{lem:dualisoofiso_trans}), and
-  the unit self-duality collapse \cref{lem:tensorobj_unit_self_duality_collapse} --- act to
-  discharge the cocycle equality.
+  \(\mathtt{hobjV} = \mathtt{image\_preimage\_of\_le}\,V\,\mathrm{le\_rfl}\). Seam~3
+  (\cref{lem:trivialisation_restrict_sectionwise}) threads those two outer \(\mathtt{eqToHom}\)s and
+  evaluates the chain sectionwise over the preimage open \(\iota_U^{-1}(V)\), which is the asserted
+  equality. Restricting the sectionwise overlap equation of two local contractions \(f_i, f_j\) through
+  this compatibility lifts it to an equation of restricted sheaf morphisms over \(V\), the form on which
+  the iso-level functoriality laws (\cref{lem:tensorobjisoofiso_trans}, \cref{lem:dualisoofiso_trans})
+  and \cref{lem:tensorobj_unit_self_duality_collapse} act.
 \end{proof}
 
 \begin{lemma}
+
 
 
 
@@ -8924,6 +10146,7 @@ recorded here as load-bearing nodes.
 \end{proof}
 
 \begin{lemma}
+
 
 
 
@@ -8954,9 +10177,11 @@ recorded here as load-bearing nodes.
 \begin{lemma}
 
 
-\leanok
+
 [Naturality of the presheaf dual-of-unit iso against a unit automorphism (B1 eval-core)]
   \label{lem:presheafdualunitiso_naturality}
+  % NOTE: iter-099 — the v4.31 recovery dropped this decl from DualInverse.lean; it is currently a
+  % private re-port in TensorObjInverse.lean. \lean{} name still resolves; pending upstream-restore decision.
   \lean{AlgebraicGeometry.Scheme.Modules.presheafDualUnitIso_naturality}
   \uses{def:presheaf_dual_unit_iso, def:dual_unit_iso_gen, lem:internal_hom_eval, lem:presheaf_dualisoofiso_trans}
   Let \(\hat s\) be a presheaf-level automorphism of the unit \(\mathbf 1\) (the underlying map of a
@@ -8970,7 +10195,6 @@ recorded here as load-bearing nodes.
 \end{lemma}
 \begin{proof}
   \uses{def:presheaf_dual_unit_iso, def:dual_unit_iso_gen, lem:internal_hom_eval, lem:presheaf_dualisoofiso_trans}
-  \leanok
   By construction (\cref{def:dual_unit_iso_gen}, \cref{def:presheaf_dual_unit_iso})
   \(\mathtt{presheafDualUnitIso}\) is the sectionwise evaluation-at-\(1\) map of the internal hom of
   the unit into itself. On sections, \(\mathtt{dualIsoOfIso}\,\hat s\) is precomposition by the
@@ -8983,6 +10207,7 @@ recorded here as load-bearing nodes.
 \end{proof}
 
 \begin{lemma}
+
 
 
 
@@ -9030,6 +10255,7 @@ recorded here as load-bearing nodes.
 \end{proof}
 
 \begin{lemma}
+
 
 
 
@@ -9429,6 +10655,7 @@ above are wired to depend on them. All but one are sorry-free; the single residu
 \begin{proof}
 
 
+
 \leanok
   Proved directly in Lean by \(\mathtt{inferInstance}\): the lone finality hypothesis is
   isolated at a clean site so the Mathlib \(\mathtt{OfFinal}\) instance synthesises
@@ -9553,6 +10780,7 @@ above are wired to depend on them. All but one are sorry-free; the single residu
 \begin{proof}
 
 
+
 \leanok
   Proved directly in Lean by \(\mathtt{rfl}\): the two sides hold up to definitional
   equality at default transparency.
@@ -9581,6 +10809,7 @@ above are wired to depend on them. All but one are sorry-free; the single residu
 \end{proof}
 
 \begin{lemma}
+
 
 
 \leanok
@@ -9627,6 +10856,7 @@ above are wired to depend on them. All but one are sorry-free; the single residu
 \begin{proof}
 
 
+
 \leanok
   Proved directly in Lean: the sheaf-level instance of \(\mathtt{unit\_conjugateEquiv}\)
   combined with \(\mathtt{conjugateEquiv\_pullbackComp\_inv}\) (the mate of
@@ -9658,8 +10888,7 @@ above are wired to depend on them. All but one are sorry-free; the single residu
   identity by \cref{lem:sheafificationcomppullback_comp_tail}.
 \end{proof}
 
-\begin{lemma}\leanok
-[Sq1 tail --- the R1/R5 unit collapse]
+\begin{lemma}[Sq1 tail --- the R1/R5 unit collapse]
   \label{lem:sheafificationcomppullback_comp_tail}
   \lean{AlgebraicGeometry.Scheme.Modules.sheafificationCompPullback_comp_tail}
   \uses{lem:sheafification_comp_pullback_eq_leftadjointuniq, lem:leftadjointuniq_app_unit_eta_general, lem:pullbackObjUnitToUnit_comp, lem:restrictscalarsid_map, lem:forget_map_pushforward_map}
@@ -9679,7 +10908,6 @@ above are wired to depend on them. All but one are sorry-free; the single residu
 \end{lemma}
 \begin{proof}
   \uses{lem:sheafification_comp_pullback_eq_leftadjointuniq, lem:leftadjointuniq_app_unit_eta_general, lem:pullbackObjUnitToUnit_comp, lem:restrictscalarsid_map, lem:forget_map_pushforward_map}
-  \leanok
   \textit{Source: internal categorical construction; no external reference.}
 
   This is the sheafification-laden analogue of the unit composition coherence
@@ -9762,6 +10990,7 @@ its \(\mathtt{\backslash uses}\) edges are read off its Lean body.
 \begin{proof}
 
 
+
 \leanok
   Proved directly in Lean by \(\mathtt{rfl}\): \(\mathtt{restrictScalars}\,(\mathbf{1})\) is
   definitionally the identity functor, stated as a propositional rewrite so the wrapper can
@@ -9798,6 +11027,7 @@ its \(\mathtt{\backslash uses}\) edges are read off its Lean body.
 \begin{proof}
 
 
+
 \leanok
   Proved directly in Lean: it is \(\mathtt{ModuleCat.restrictScalars\_}\mu\mathtt{\_tmul}\),
   the Mathlib pure-tensor formula for the change-of-rings tensorator, with the
@@ -9822,6 +11052,7 @@ its \(\mathtt{\backslash uses}\) edges are read off its Lean body.
 \end{proof}
 
 \begin{lemma}
+
 
 \leanok
 [Pure-tensor value of the presheaf \(\mathtt{restrictScalars}\) \emph{oplax} tensorator \(\delta\)]
@@ -9928,6 +11159,7 @@ its \(\mathtt{\backslash uses}\) edges are read off its Lean body.
   reconciliation of the Sq1 tail.
 \end{lemma}
 \begin{proof}
+
 
 
 \leanok

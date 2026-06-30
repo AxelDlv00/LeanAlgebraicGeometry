@@ -1,0 +1,139 @@
+[
+  {
+    "timestamp": "2026-06-25T07:46:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor_invertible"
+    },
+    "session": {
+      "id": "session_34",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "tensorRightMapIso",
+        "tensorLeftUnitorNatIso",
+        "tensorRightUnitorNatIso",
+        "tensorAssocNatIso₁",
+        "tensorRightEquivOfInvertible",
+        "homTensorFunctorTwistIso",
+        "coyoneda.preimageIso",
+        "H_represents",
+        "MonoidalCategory.whisker_exchange",
+        "MonoidalCategory.leftUnitor_naturality",
+        "MonoidalCategory.associator_naturality",
+        "sheafificationAdjunction.counit_naturality"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "tensorRightMapIso: e:L₁≅L₂ ↦ tensorRight L₁≅tensorRight L₂, component (tensorLeft A).mapIso e; naturality=tensor interchange. First tried rw/simp [MonoidalCategory.tensorHom_comp_tensorHom]",
+        "code_tried": "rw [MonoidalCategory.tensorHom_comp_tensorHom, MonoidalCategory.tensorHom_comp_tensorHom]; simp [Category.id_comp, Category.comp_id]",
+        "line_number": "1655",
+        "lean_error": "Tactic rewrite failed: Did not find an occurrence of pattern MonoidalCategoryStruct.tensorHom ?f₁ ?f₂ ≫ ... (PresheafOfModules.Monoidal.tensorHom is a standalone def, not MonoidalCategoryStruct.tensorHom)",
+        "result": "failed",
+        "insight": "tensorHom_comp_tensorHom does not fire on PresheafOfModules.Monoidal.tensorHom goals"
+      },
+      {
+        "attempt": 2,
+        "strategy": "tensorRightMapIso interchange via whisker_exchange after ext1 Z",
+        "code_tried": "ext1 Z; simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.comp_app, PresheafOfModules.id_app]; exact (MonoidalCategory.whisker_exchange _ _).symm",
+        "line_number": "1655",
+        "lean_error": null,
+        "result": "success",
+        "insight": "the tensorHom-vs-whiskerLeft defeq is absorbed by exact (MonoidalCategory.whisker_exchange _ _).symm; then sheafify both legs via map_comp.symm.trans(congr_map key)(map_comp)"
+      },
+      {
+        "attempt": 3,
+        "strategy": "tensorLeftUnitorNatIso: tensorLeft 𝒪_X≅𝟭, component tensorLeftUnitor A; naturality=presheaf leftUnitor_naturality + sheafification counit naturality. Hit synth failure on bare PresheafOfModules",
+        "code_tried": "MonoidalCategory.leftUnitor_naturality φ.val ... with C inferred",
+        "line_number": "1690",
+        "lean_error": "failed to synthesize MonoidalCategoryStruct (PresheafOfModules X.ringCatSheaf.obj)",
+        "result": "failed",
+        "insight": "must pin C := PresheafOfModules (X.presheaf ⋙ forget₂ CommRingCat RingCat) and use presheafLeftUnitor; X.ringCatSheaf.obj form fails MonoidalCategoryStruct synth"
+      },
+      {
+        "attempt": 4,
+        "strategy": "tensorLeftUnitorNatIso reassociation of the sheafification naturality square",
+        "code_tried": "rw [reassoc_of% step, cnat]; / rw [Category.assoc]; / simp only [← Category.assoc]; rw [step]; / slice_lhs",
+        "line_number": "1690",
+        "lean_error": "Tactic rewrite failed: Did not find an occurrence of pattern ?f ≫ ?g ≫ ?h / simp made no progress — the ≫ carries a non-syntactic CategoryStruct/instance path",
+        "result": "failed",
+        "insight": "KEY DEAD END: rw/simp/reassoc_of%/slice_lhs ALL silently fail to match ≫ on sheafification goals (non-syntactic instance path). Must close reassociation by pure term-mode Eq.trans chain"
+      },
+      {
+        "attempt": 5,
+        "strategy": "tensorLeftUnitorNatIso reassociation via term-mode Eq.trans chain",
+        "code_tried": "(Category.assoc _ _ _).symm.trans ((congrArg (· ≫ counit.app A') step).trans ((Category.assoc _ _ _).trans ((congrArg (... ≫ ·) cnat).trans (Category.assoc _ _ _).symm)))",
+        "line_number": "1690",
+        "lean_error": null,
+        "result": "success",
+        "insight": "term elaboration tolerates the defeq path; this is the linchpin trick for the whole unitor layer"
+      },
+      {
+        "attempt": 6,
+        "strategy": "tensorAssocNatIso₁ (first-factor mirror of ₂/₃): assocIdxR₁ second slot 𝟙(tensorObj L L')",
+        "code_tried": "rw [← presheaf_id_tensorHom_id L.val L'.val]",
+        "line_number": "1700",
+        "lean_error": "Tactic rewrite failed: Did not find an occurrence of pattern 𝟙 (PresheafOfModules.Monoidal.tensorObj L.val L'.val) (implicit-R spelling mismatch X.presheaf vs X.ringCatSheaf.obj)",
+        "result": "failed",
+        "insight": "express fixed-factor identity as tensorHom (𝟙 L)(𝟙 L') (assocIdxL₃ convention) so associator_naturality φ (𝟙 L)(𝟙 L') matches definitionally, avoiding the id-bridge"
+      },
+      {
+        "attempt": 7,
+        "strategy": "tensorAssocNatIso₁ with assocIdxR₁ second slot = tensorHom(𝟙 L)(𝟙 L'); 3-NatIso decomposition first-factor mirror",
+        "code_tried": "map_comp.symm.trans ((congr_map (MonoidalCategory.associator_naturality φ.val ...)).trans map_comp); leg3 via convert h using 4 + congrArg",
+        "line_number": "1771",
+        "lean_error": null,
+        "result": "success",
+        "insight": "first-factor mirror follows mechanically once fixed factor is tensorHom of identities"
+      },
+      {
+        "attempt": 8,
+        "strategy": "tensorRightEquivOfInvertible + homTensorFunctorTwistIso + close H_tensor_invertible via Yoneda",
+        "code_tried": "Equivalence.mk (tensorRight L)(tensorRight L') (unit/counit from NatIsos, no triangle); homTensorFunctorTwistIso via isoWhiskerRight (tensorRearrangeNatIso F L).symm + coyonedaCompFF hFF; ⟨(coyoneda.preimageIso (r₁ ≪≫ homTensorFunctorTwistIso ... ≪≫ r₂.symm)).unop.symm⟩",
+        "line_number": "1878",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Equivalence.mk needs no triangle/coherence; coyoneda Full+Faithful resolve automatically; functor-comp associativity defeq ⇒ no explicit Functor.associator"
+      }
+    ],
+    "next_steps": "1.1.2 lane COMPLETE. Next: 1.1.3 H_tensor (Eilenberg–Watts, L1893) reuses this naturality layer; or 1.10 ext_finite_flat (L1928)."
+  },
+  {
+    "timestamp": "2026-06-25T07:46:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor"
+    },
+    "session": {
+      "id": "session_34",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "off-lane this iter (1.1.3 Eilenberg–Watts); untouched as instructed. Now un-gated by the completed 1.1.2 naturality layer."
+    },
+    "attempts": [],
+    "next_steps": "Candidate next target; reuses tensorRight/tensorAssoc/rearrange NatIso layer built across iters 031–034."
+  },
+  {
+    "timestamp": "2026-06-25T07:46:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_finite_flat"
+    },
+    "session": {
+      "id": "session_34",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "1.10 relExt — infra-blocked (R^q f_* + internal ℰxt absent); untouched as instructed."
+    },
+    "attempts": [],
+    "next_steps": "Remains infra-blocked; do not dispatch without the internal-ℰxt strand."
+  }
+]

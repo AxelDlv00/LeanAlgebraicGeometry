@@ -1,0 +1,73 @@
+[
+  {
+    "timestamp": "2026-06-29T11:50:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "tensorObj_restrict_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_96",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "tensorObj_restrict_iso_eq_pullbackTensorMap",
+        "restrictFunctorIsoPullback_comp_compat",
+        "pullbackTensorMap_pullbackCongr_assoc",
+        "pullbackTensorMap_restrict_cancel_assoc",
+        "pullbackTensorMap_natural",
+        "tensorObj_functoriality_comp3",
+        "restrictFunctorIsoPullback_comp_compat_leg"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Verbatim v4.30 body port (recipe predicted 0-1 fixes)",
+        "code_tried": "simp only [tensorObj_restrict_iso_eq_pullbackTensorMap]; rw [restrictFunctorIsoPullback_comp_compat ...]; ...; rw [pullbackTensorMap_pullbackCongr_assoc, pullbackTensorMap_restrict_cancel_assoc, Functor.map_comp]; simp only [Category.assoc]; congr 1; ...",
+        "line_number": "994",
+        "lean_error": "Tactic `rewrite` failed: Did not find an occurrence of the pattern (pullbackComp j U.ι).hom.app ... ≫ pullbackTensorMap (j ≫ U.ι) M N ≫ ?h — domain spelled (pullback U.ι ⋙ pullback j).obj (M⊗N) vs cancel lemma RHS nested (pullback j).obj ((pullback U.ι).obj (M⊗N))",
+        "goal_before": "",
+        "goal_after": "",
+        "result": "partial",
+        "insight": "v4.31 instances-transparency: ⋙-obj spelling vs nested-obj spelling defeq-not-syntactic; rw motive ill-typed"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Cross the ⋙-vs-nested seam by unification instead of rw motive",
+        "code_tried": "refine Eq.trans (pullbackTensorMap_restrict_cancel_assoc j U.ι M N _) ?_; rw [Functor.map_comp]; simp only [Category.assoc]",
+        "line_number": "1008",
+        "lean_error": "`simp` made no progress (Category.assoc left LHS head left-bracketed; congr 1 then matched big-left-group vs single map → spurious HEq)",
+        "goal_before": "",
+        "goal_after": "",
+        "result": "partial",
+        "insight": "refine Eq.trans crosses the seam, but the @[reassoc] cancel lemma left LHS left-bracketed; need explicit rw [Category.assoc] before congr 1"
+      },
+      {
+        "attempt": 3,
+        "strategy": "Explicit rw [Category.assoc] to expose shared leading map; then tensorObjIsoOfIso_hom",
+        "code_tried": "rw [Category.assoc]; simp only [Category.assoc]; congr 1; simp only [tensorObjIsoOfIso_hom]",
+        "line_number": "1017",
+        "lean_error": "`simp` made no progress — (pullbackComp j U.ι).app carries COMPOSED ⋙-obj spelling vs pullbackTensorMap j NESTED",
+        "goal_before": "",
+        "goal_after": "",
+        "result": "partial",
+        "insight": "third site of same axis; tensorObjIsoOfIso_hom won't fire on composed-obj spelling"
+      },
+      {
+        "attempt": 4,
+        "strategy": "Normalize composed→nested via Functor.comp_obj before tensorObjIsoOfIso_hom; finish with naturality + functoriality legs",
+        "code_tried": "simp only [Functor.comp_obj, tensorObjIsoOfIso_hom]; rw [reassoc_of% (pullbackTensorMap_natural j ...)]; congr 1; refine Eq.trans (tensorObj_functoriality_comp3 ...) ?_; refine Eq.trans ?_ (tensorObj_functoriality_comp3 ...).symm; rw [restrictFunctorIsoPullback_comp_compat_leg j hjι M, ... N]",
+        "line_number": "1054",
+        "lean_error": null,
+        "goal_before": "",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "EXIT 0, axiom-clean [propext, Classical.choice, Quot.sound]. Functor.comp_obj normalization clears the seam; the trailing 'rfl' from a draft was removed (No goals)."
+      }
+    ],
+    "next_steps": "Dual-unit FLANK next: its ∞-source lem:pushforward_beta_unit_eps_app_one needs an informal proof (dag-walker/blueprint) BEFORE a prover. Do NOT send a prover at the FLANK first."
+  }
+]

@@ -1,0 +1,234 @@
+[
+  {
+    "timestamp": "2026-06-29T21:30:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "coverInterOpen_baseChange_eq"
+    },
+    "session": {
+      "id": "session_322",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "coverOpen_baseChange_eq",
+        "coe_iInf_of_finite",
+        "IsOpenImmersion.image_preimage_eq_preimage_image_of_isPullback",
+        "Scheme.isPullback_of_openCover",
+        "IsPullback.of_iso",
+        "Set.preimage_iInter"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "per-member range identity + preimage commutes with finite intersection; reconstruct openCoverOfLeft pullback square, transport onto g' via IsPullback.of_iso, apply open-immersion base-change range identity",
+        "code_tried": "Opens.ext + map_coe + Set.preimage_iInter + per-member coverOpen_baseChange_eq",
+        "line_number": "440",
+        "lean_error": "instance-synth hazard: IsOpenImmersion of pushforwardIso member fails synth with IsPullback in context",
+        "result": "success",
+        "insight": "fixed synth by @-application giving both instances explicitly; [Finite κ] GENUINELY required (Opens.comap is FrameHom, preserves only finite meets)"
+      }
+    ],
+    "next_steps": "consumer twisted_cech_nerve_per_sigma must add [Finite κ] when wired"
+  },
+  {
+    "timestamp": "2026-06-29T21:30:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "restrictedCartesianAffinePushout"
+    },
+    "session": {
+      "id": "session_322",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "STATEMENT MISMATCH: Lean proves weaker scheme-level IsPullback, blueprint asserts affine ring IsPushout with corner A_σ⊗_R R'",
+      "key_lemmas_used": [
+        "IsPullback.of_hasPullback",
+        "IsPullback.flip"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "close scheme-level restricted cartesian square instead of ring-tensor IsPushout",
+        "code_tried": "(IsPullback.of_hasPullback g' (ι V)).flip",
+        "line_number": "523",
+        "lean_error": "none (sorry-free, but tautological / weaker than blueprint)",
+        "result": "partial",
+        "insight": "prover chose true sorry-free geometric statement over fabricating richer typed sorry; ring-pushout = this square + commRingCat_isPushout_iff_mathlib + affineness; decl NOT protected, planner should re-sign to ring form"
+      }
+    ],
+    "next_steps": "planner re-signs to ring-pushout form if pushPullObj_coverInter_baseChange needs explicit tensor maps; lvb-fbc322 must-fix"
+  },
+  {
+    "timestamp": "2026-06-29T21:30:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "openImmersion_beckChevalley"
+    },
+    "session": {
+      "id": "session_322",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "open-immersion Beck-Chevalley sheaf iso = genuine remaining content of this leaf",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "create typed scaffold with confident type (pullback g').obj(pushPullObj F (Over.mk p)) ≅ pushPullObj ((pullback g').obj F)(Over.mk p') over cartesian IsPullback gV p' p g' with [IsOpenImmersion p]",
+        "code_tried": "sorry with docstring sketch (p'^* g'^* ≅ gV^* p^* + open-immersion adjunction iso, vanishing off preimage)",
+        "line_number": "705",
+        "lean_error": "none (typed scaffold)",
+        "result": "partial",
+        "insight": "exact shape twisted_cech_nerve_per_sigma consumes; dag pin now resolves; genuine open content (NEW sorry)"
+      }
+    ],
+    "next_steps": "prove the open-immersion BC sheaf iso; then wire twisted_cech_nerve_per_sigma"
+  },
+  {
+    "timestamp": "2026-06-29T21:30:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "pushPullObj_coverInter_baseChange"
+    },
+    "session": {
+      "id": "session_322",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "abstract->tilde identification of both comparison sides (altitude-2)",
+      "key_lemmas_used": [
+        "restrictedCartesianAffinePushout",
+        "pushPullObj_pushforward_iso_tilde",
+        "cech_degree_affine_baseChange"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "comment-only update: now references CLOSED restrictedCartesianAffinePushout + altitude-2 bridge",
+        "code_tried": "exact sorry (body unchanged)",
+        "line_number": "523",
+        "lean_error": "none (still sorry)",
+        "result": "partial",
+        "insight": "residual = abstract->tilde identification, not the geometric square (now closed)"
+      }
+    ],
+    "next_steps": "identify both comparison sides with tilde via altitude-2 bridge"
+  },
+  {
+    "timestamp": "2026-06-29T21:30:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "twisted_cech_nerve_per_sigma"
+    },
+    "session": {
+      "id": "session_322",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "delegates to openImmersion_beckChevalley leaf; signature missing [Finite κ] (auditor MAJOR)",
+      "key_lemmas_used": [
+        "restrictedCartesianAffinePushout",
+        "openImmersion_beckChevalley",
+        "coverInterOpen_baseChange_eq",
+        "IsOpenImmersion.isoOfRangeEq"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "comment-only: documented precise 3-step closing chain",
+        "code_tried": "sorry (body unchanged)",
+        "line_number": "745",
+        "lean_error": "none (still sorry)",
+        "result": "partial",
+        "insight": "cannot fully close while openImmersion_beckChevalley is a leaf; wiring build-blind would not reduce net sorries; documented proof needs [Finite κ] added to signature {κ : Type}(σ : κ → 𝒰.I₀)"
+      }
+    ],
+    "next_steps": "add [Finite κ] to signature; close openImmersion_beckChevalley first; then assemble in scratch-loop"
+  },
+  {
+    "timestamp": "2026-06-29T21:30:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/PullbackTensorComp.lean",
+      "theorem": "cmp_leg"
+    },
+    "session": {
+      "id": "session_322",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "core coherence C = leftAdjointUniq composite-adjunction-unit mate calculus; plain sheafification unit η must align with adjB's Adjunction.comp unit",
+      "key_lemmas_used": [
+        "pullbackValIso_comp",
+        "Adjunction.unit.naturality_assoc",
+        "cancel_mono",
+        "Iso.hom_inv_id_app",
+        "Functor.map_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "homEquiv-transpose (analogist recipe): congrArg homEquiv (pullbackValIso_comp ...) then homEquiv_naturality_left/_right + homEquiv_unit",
+        "code_tried": "congrArg ((sheafificationAdjunction (𝟙 _)).homEquiv _ _) (pullbackValIso_comp h f M); rw [homEquiv_naturality_right]; rw/erw [homEquiv_naturality_left]",
+        "line_number": "752",
+        "lean_error": "homEquiv_naturality_left whnf-detonates under erw (200k-hb timeout), does not match under rw; after naturality_right the Sheaf.val deprecated coercion makes goal ill-typed at instances transparency, breaks every subsequent kabstract",
+        "result": "failed",
+        "insight": "generic homEquiv lemmas unusable here; iter-322 '≤40 LOC homEquiv shortcut' partially optimistic — transposes easy direction but can't reach Fp_h.map(cmp_f) form; Sheaf.val coercion poison blocks rewriting"
+      },
+      {
+        "attempt": 2,
+        "strategy": "roadmap-form statement + hand reduction to named core coherence C",
+        "code_tried": "state cmp_leg in roadmap form (forget + plain unit); cancel_mono (forget pbc.inv); collapse forget pbc.hom≫inv→𝟙; rewrite through pullbackValIso_comp; erw Category.comp_id; Functor.map_comp×2; unit.naturality_assoc; Functor.id_map; Iso.hom_inv_id_app",
+        "line_number": "752",
+        "lean_error": "none (22-line prefix verified, file compiles end-to-end)",
+        "result": "partial",
+        "insight": "statement TYPECHECKS; 22-line prefix VERIFIED reducing cmp_leg to single residual core C; core C needs Adjunction.comp_unit_app expansion + unit_leftAdjointUniq_hom_app/leftAdjointUniq_hom_app_counit but units do not align syntactically (simp only makes NO progress); needs interactive LSP (times out on this file)"
+      }
+    ],
+    "next_steps": "escalate core C: Adjunction.comp-unit + leftAdjointUniq mate calculus (~100 LOC, LSP-needing, fully isolated as cmp_leg residual)"
+  },
+  {
+    "timestamp": "2026-06-29T21:30:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/PullbackTensorComp.lean",
+      "theorem": "pullbackTensorMap_restrict"
+    },
+    "session": {
+      "id": "session_322",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "gated on cmp_leg core C + slide wiring; kabstract on post-Step-D goal under required respectTransparency false detonates on Scheme.Modules.pullback ≟ SheafOfModules.pullback / Sheaf.val coercion whnf wall",
+      "key_lemmas_used": [
+        "scPb_slide",
+        "cmp_leg"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not advanced this iter (gated on cmp_leg)",
+        "code_tried": "sorry (unchanged)",
+        "line_number": "1060",
+        "lean_error": "none (still sorry)",
+        "result": "partial",
+        "insight": "continuation-lemma assembly (steps 1-6) cannot wire until cmp_leg fully closed; same whnf/coercion wall as PROGRESS.md"
+      }
+    ],
+    "next_steps": "close cmp_leg core C first; then wire continuation lemma with default transparency + (C:=…) re-pin"
+  }
+]

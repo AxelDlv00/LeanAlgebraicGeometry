@@ -1,0 +1,24 @@
+{
+  "stage": "prover",
+  "objectives": [
+    "**`AlgebraicJacobian/Picard/TensorObjInverse.lean`** — close the LAST keystone sorry (c)"
+  ],
+  "checklist": [
+    {
+      "label": "init",
+      "done": true
+    },
+    {
+      "label": "autoformalize",
+      "done": true
+    },
+    {
+      "label": "prover",
+      "done": false
+    },
+    {
+      "label": "polish",
+      "done": false
+    }
+  ]
+}

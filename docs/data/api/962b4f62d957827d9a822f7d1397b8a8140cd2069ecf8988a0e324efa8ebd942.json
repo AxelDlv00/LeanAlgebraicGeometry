@@ -1,0 +1,95 @@
+[
+  {
+    "timestamp": "2026-06-25T02:30:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "BaseChangeChartTower (+ connect/inl_connect/inr_connect/brickR'/brickR'')"
+    },
+    "session": {
+      "id": "session_309",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "affinePushforwardPullbackBaseChange",
+        "CategoryTheory.IsPushout.desc",
+        "IsPushout.inl_desc",
+        "IsPushout.inr_desc"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Define BaseChangeChartTower structure as the algebraic datum of affine-open inclusion Spec R'' ⊆ Spec R' over fixed Spec R ⊆ S: carriers R A R' R'', chart φ, base ψ, tower j, charts B' B'' with two IsPushout witnesses h'/h''",
+        "code_tried": "structure BaseChangeChartTower with fields one-per-line; connect := h'.desc ρ'' (j ≫ σ'') (cocone by rw [← Category.assoc]; exact h''.w); inl_connect := h'.inl_desc; inr_connect := h'.inr_desc; brickR'/brickR'' := affinePushforwardPullbackBaseChange instantiated (brickR'' uses composite base ψ ≫ j)",
+        "line_number": "1100-1177",
+        "result": "success",
+        "insight": "Fields MUST be one-per-line — grouped binder `R A R' R'' : CommRingCat.{u}` makes dependent field `φ : R ⟶ A` fail typeclass resolution (Quiver ?m stuck). All 6 axiom-clean {propext, Classical.choice, Quot.sound}."
+      }
+    ],
+    "next_steps": "Assemble pushforwardPullbackBaseChange_restrict_naturality over BaseChangeChartTower once move (2) (pullbackSpecTildeNatIso ring-map cocycle) lands; restate the blueprint lemma against the structure; add 6 blueprint blocks."
+  },
+  {
+    "timestamp": "2026-06-25T02:30:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "pushforwardPullbackBaseChange_restrict_naturality"
+    },
+    "session": {
+      "id": "session_309",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "move (2): scheme-level mate-coherence cocycle of pullbackSpecTildeNatIso under ring-map composition φ ≫ j — same conjugate-calculus mate coherence as D3′ sheafificationCompPullback_comp (in-flight, also walled this iter)",
+      "key_lemmas_used": [
+        "gammaPushforwardIsoAt_naturality (move 1, READY)",
+        "cancelBaseChange_localization_compat_symm (move 3, READY)",
+        "ModuleCat.extendScalarsComp",
+        "Scheme.Modules.pullbackComp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Deliberately NOT added — would require a sorry (forbidden by invariant). Square pastes from 3 component squares: move(1)=gammaPushforwardIsoAt_naturality (rfl, READY), move(3)=cancelBaseChange_localization_compat_symm (READY), move(2)=pullbackSpecTildeNatIso cocycle (hard residual).",
+        "result": "partial",
+        "insight": "move (2) is statable today (ModuleCat.extendScalarsComp + Scheme.Modules.pullbackComp both confirmed in Mathlib); obstruction is proof-effort/sequencing not a missing ingredient. pullbackSpecTildeNatIso built by uniqueness-of-left-adjoints (conjugateIsoEquiv), so no rfl section lemma exists — must port D3′ conjugate-calculus recast after D3′ lands."
+      }
+    ],
+    "next_steps": "iter-310: port D3′ conjugate-calculus recast to a pullbackSpecTildeNatIso_comp cocycle lemma AFTER TOS D3′ lands; do NOT form the adjoint mate pushforwardBaseChangeMap (walled ~30it)."
+  },
+  {
+    "timestamp": "2026-06-25T02:30:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "sheafificationCompPullback_comp"
+    },
+    "session": {
+      "id": "session_309",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "step-1 NatTrans reduction of the conjugate recast walls: NatTrans.congr_app monolithic isDefEq times out (3.2M heartbeats) on Scheme.Modules.pullback ≟ SheafOfModules.pullback (toRingCatSheafHom ·) defeq THROUGH the sheafification-laden whisker junctions — fires BEFORE any conjugateEquiv_comp fusion",
+      "key_lemmas_used": [
+        "NatTrans.congr_app",
+        "Presheaf.instIsLocallyInjectiveOfIsIsoFunctorOpposite",
+        "conjugateIsoEquiv"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Conjugate-calculus RECAST per analogies/d3-mate-recast-309.md: reduce .app P goal to NatTrans identity via refine NatTrans.congr_app (?_ : <thatEq>) P, pass to inverses, fuse with conjugateEquiv_comp (free middle adjunction sheafAdj_Y absorbed)",
+        "code_tried": "haveI three instances incl. Presheaf.IsLocallyInjective (𝟙 ·.ringCatSheaf.obj) := Presheaf.instIsLocallyInjectiveOfIsIsoFunctorOpposite _ _; refine CategoryTheory.NatTrans.congr_app (?_ : <NatTransEq>) P",
+        "line_number": "2607 (attempt) / 2722 (sorry)",
+        "lean_error": "isDefEq timeout 3.2M heartbeats at the refine; secondary instance-synthesis error at trailing a_Z whisker (moot)",
+        "result": "failed",
+        "insight": "Sub-finding UNBLOCKED: sheafification functors a_X/a_Y/a_Z re-type standalone once IsLocallyInjective(𝟙) supplied via instIsLocallyInjectiveOfIsIsoFunctorOpposite (iso ⇒ loc. inj., proof-irrel ⇒ defeq). But congr_app offers no place to guide the Scheme.Modules.pullback defeq. File RESTORED to green (recast left it RED); only inline comment added."
+      }
+    ],
+    "next_steps": "Do NOT redo monolithic NatTrans.congr_app. Two untried routes: (1) pre-normalise every Scheme.Modules.pullback/pullbackComp to SheafOfModules.pullback (toRingCatSheafHom ·) native form so junctions typecheck cheap, THEN congr_app; (2) mateEquiv_vcomp/TwoSquare (same defeq risk). Consider mathlib-analogist on pullback-spelling normalisation before next prover."
+  }
+]

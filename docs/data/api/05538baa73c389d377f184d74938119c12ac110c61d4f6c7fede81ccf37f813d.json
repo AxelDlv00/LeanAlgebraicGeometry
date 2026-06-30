@@ -1,0 +1,251 @@
+[
+  {
+    "timestamp": "2026-06-24T21:03:51Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "AlgebraicGeometry.baseChangeCancelModuleIso"
+    },
+    "session": {
+      "id": "session_306",
+      "model": "prover"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Algebra.IsPushout.cancelBaseChange",
+        "CommRingCat.isPushout_iff_isPushout",
+        "CategoryTheory.IsPushout.flip",
+        "IsScalarTower.of_algebraMap_eq",
+        "RingHom.toAlgebra",
+        "LinearEquiv.toModuleIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "abstract-B framing per iter-305 recipe: letI all 5 algebra instances as hom.toAlgebra so cancelBaseChange output is defeq on compHom-based extend/restrict; bridge abstract-B to Algebra.IsPushout via CommRingCat.isPushout_iff_isPushout |>.mp h.flip",
+        "code_tried": "noncomputable def baseChangeCancelModuleIso {R A R' B : CommRingCat.{u}} (φ ψ ρ σ) (h : CategoryTheory.IsPushout φ ψ ρ σ) (M : ModuleCat A) := LinearEquiv.toModuleIso (Algebra.IsPushout.cancelBaseChange … hpush M …).symm",
+        "line_number": "747",
+        "result": "success",
+        "insight": "iter-305 prediction held exactly: keyT becomes rfl with no global tensor instances to shadow. The one new ingredient — the categorical-pushout→Algebra.IsPushout bridge CommRingCat.isPushout_iff_isPushout — was found and works."
+      }
+    ],
+    "next_steps": "DONE, axiom-clean. Consumed by affinePushforwardPullbackBaseChange."
+  },
+  {
+    "timestamp": "2026-06-24T21:03:51Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "AlgebraicGeometry.affinePushforwardPullbackBaseChange"
+    },
+    "session": {
+      "id": "session_306",
+      "model": "prover"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "pushforward_spec_tilde_iso",
+        "pullback_spec_tilde_iso",
+        "baseChangeCancelModuleIso",
+        "tilde.functor.mapIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "5-step ≪≫ tilde chain from the iter-305 recipe, verbatim; hypothesis is CategoryTheory.IsPushout φ ψ ρ σ matching the IsPullback-of-Specs square the Cech consumers carry",
+        "code_tried": "(pullback (Spec ψ)).mapIso (pushforward_spec_tilde_iso φ M) ≪≫ pullback_spec_tilde_iso ψ (restrictScalars φ M) ≪≫ (tilde.functor R').mapIso (baseChangeCancelModuleIso φ ψ ρ σ h M) ≪≫ (pushforward_spec_tilde_iso σ (extendScalars ρ M)).symm ≪≫ (pushforward (Spec σ)).mapIso (pullback_spec_tilde_iso ρ M).symm",
+        "line_number": "784",
+        "result": "success",
+        "insight": "Type-checks on first attempt (all 5 constituents already axiom-clean in the file). The brick floor (objective bars a+b) landed axiom-clean, never forming the adjoint mate."
+      }
+    ],
+    "next_steps": "DONE, axiom-clean. The (c) push (general-scheme gluing chain, sec:fbc_gluing) NOT started — needs affine-cover scaffolding."
+  },
+  {
+    "timestamp": "2026-06-24T21:03:51Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "pushforwardSpecTildeNatIso (M-naturality of the tilde-pushforward dictionary; NOT landed)"
+    },
+    "session": {
+      "id": "session_306",
+      "model": "prover"
+    },
+    "findings": {
+      "blocker": "Two orthogonal tactic walls: (1) rw/slice cannot match defeq-but-not-syntactic morphism objects on the NatIso.ofComponents-generated goal; (2) typeclass heartbeat timeout (20000) re-synthesizing IsIso fromTildeΓ per-object. Removed cleanly, no sorry left.",
+      "key_lemmas_used": [
+        "NatIso.ofComponents",
+        "gammaPushforwardNatIso",
+        "fromTildeΓNatTrans",
+        "isIso_fromTildeΓ_iff",
+        "isoWhiskerLeft/isoWhiskerRight"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "ofComponents with pushforward_spec_tilde_iso per-M; discharge naturality square via reassoc_of% h1 where h1 = gammaPushforwardNatIso.hom.naturality",
+        "code_tried": "NatIso.ofComponents (fun M => pushforward_spec_tilde_iso φ M) (by intro M N f; have h1 := (gammaPushforwardNatIso φ).hom.naturality (tilde.map f); rw [reassoc_of% h1, ← Functor.map_comp, ← Functor.map_comp]; congr 2; …)",
+        "line_number": "~852",
+        "lean_error": "Tactic `rewrite` failed: Did not find an occurrence of the pattern (?f ≫ ?g) ≫ ?h ... / Did not find an occurrence of the pattern moduleSpecΓFunctor.map (...) ≫ (gammaPushforwardIso φ (tilde N)).hom ≫ ?h",
+        "result": "failed",
+        "insight": "BLOCKER 1 confirmed: the morphism objects (huge restrictScalars…Γ… exprs) are defeq but not syntactic, so rw/slice/Category.assoc cannot locate the subterm even though h1's LHS is literally the first two factors. Same class as the keyT Type-u wall, at the morphism level."
+      },
+      {
+        "attempt": 2,
+        "strategy": "register per-object IsIso (pushforward (Spec φ)).obj (tilde M)).fromTildeΓ via essImage witness, then feed to whisker-IsIso synthesis",
+        "code_tried": "haveI iPM : IsIso ((Scheme.Modules.pushforward (Spec.map φ)).obj (tilde M)).fromTildeΓ := isIso_fromTildeΓ_iff.mpr ⟨(ModuleCat.restrictScalars φ.hom).obj M, ⟨(pushforward_spec_tilde_iso φ M).symm⟩⟩",
+        "line_number": "~885",
+        "lean_error": "Unknown identifier `isIso_fromTildeΓ_pushforward` (does not exist in pinned toolchain); (deterministic) timeout at typeclass (20000 heartbeats) on NatIso.isIso_of_isIso_app whisker",
+        "result": "failed",
+        "insight": "BLOCKER 2: isIso_fromTildeΓ_pushforward post-dates the pin (use essImage witness instead); the per-object IsIso re-synthesis is too expensive without a registered instance. Also `isoWhiskerLeft`/`isoWhiskerRight` were renamed to the `Functor.`-method form in this Mathlib (Unknown identifier on the bare names)."
+      }
+    ],
+    "next_steps": "iter-307: build the NatIso PURELY COMPOSITIONALLY (Functor.isoWhiskerLeft/isoWhiskerRight + associators + leftUnitor) so no naturality square is ever stated → sidesteps BLOCKER 1; register the fromTildeΓ IsIso as a named hyp fed via lambda → sidesteps BLOCKER 2. Do NOT retry ofComponents+reassoc_of%."
+  },
+  {
+    "timestamp": "2026-06-24T21:03:51Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport (left_inv, refine_5)"
+    },
+    "session": {
+      "id": "session_306",
+      "model": "prover"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "PresheafOfModules.hom_ext",
+        "dualUnitRingSwap_comp_dualUnitRingSwapInv",
+        "Iso.inv_hom_id"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "hom_ext structural reduction: apply PresheafOfModules.hom_ext; intro W'' to drop the round-trip to a per-component equality, bypassing the ε-naturality of the naturality fields (proof-irrelevant under hom_ext)",
+        "code_tried": "intro φ; apply PresheafOfModules.hom_ext; intro W''  -- reduces to (sliceDualTransportInv (toFun φ)).app W'' = φ.app W''",
+        "line_number": "627",
+        "result": "partial",
+        "insight": "Real verified structural advance: the round-trips do NOT depend on the missing ε-NatTrans; residual is a 4-leg per-component telescope discharged by named ε-cancellation lemmas + eqToHom/restrictScalarsId'App collapse. bare sorry → executing skeleton."
+      }
+    ],
+    "next_steps": "iter-307: prove the per-component telescope (existing ε-cancellation lemmas suffice; no new infra)."
+  },
+  {
+    "timestamp": "2026-06-24T21:03:51Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport (right_inv, refine_6)"
+    },
+    "session": {
+      "id": "session_306",
+      "model": "prover"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "PresheafOfModules.hom_ext",
+        "dualUnitRingSwapInv_comp_dualUnitRingSwap",
+        "Iso.hom_inv_id"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "mirror of left_inv: apply PresheafOfModules.hom_ext; intro W → per-component goal (toFun (invFun ψ)).app W = ψ.app W",
+        "code_tried": "intro ψ; apply PresheafOfModules.hom_ext; intro W",
+        "line_number": "629",
+        "result": "partial",
+        "insight": "Same bypass of the ε-NatTrans wall via hom_ext; mirror telescope. bare sorry → executing skeleton."
+      }
+    ],
+    "next_steps": "iter-307: prove the mirror per-component telescope."
+  },
+  {
+    "timestamp": "2026-06-24T21:03:51Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport (naturality, refine_1)"
+    },
+    "session": {
+      "id": "session_306",
+      "model": "prover"
+    },
+    "findings": {
+      "blocker": "Prover claimed ingredient (b) ε-naturality needs PresheafOfModules.restrictScalarsLaxε which 'does NOT exist in the codebase'. REVIEW-FALSIFIED: restrictScalarsLaxε EXISTS (PresheafInternalHom.lean:290, axiom-clean, proved naturality field) and is DIRECTLY IMPORTED by DualInverse.lean (line 7). The 'architectural wall' is a false premise.",
+      "key_lemmas_used": [
+        "φ.naturality",
+        "PresheafOfModules.restrictScalarsLaxε (available, not absent)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "binder peel only: intro X1 Y1 f1; sorry — decompose residual into (a) φ.naturality reindex + (b) ε-naturality of restrictScalars",
+        "code_tried": "intro X1 Y1 f1; sorry",
+        "line_number": "533",
+        "result": "partial",
+        "insight": "Binder peel is fine, but the prover's stated blocker (b) is FALSE: it ran lean_local_search restrictScalarsLax → empty and concluded the NatTrans is absent, but the decl exists at PresheafInternalHom.lean:290 and is imported (line 7). The lean-vs-blueprint-checker confirmed its naturality field IS exactly the across-two-ring-maps square the comment claims is missing."
+      }
+    ],
+    "next_steps": "iter-307: USE PresheafOfModules.restrictScalarsLaxε directly (it exists, imported); do NOT treat as a wall. Correct the misleading L525-532 comment + the new (wrong) project memory note."
+  },
+  {
+    "timestamp": "2026-06-24T21:03:51Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransportInv (naturality, L388)"
+    },
+    "session": {
+      "id": "session_306",
+      "model": "prover"
+    },
+    "findings": {
+      "blocker": "Prover deferred on the same (false) restrictScalarsLaxε-absent wall; sorry unchanged. The infra exists and is imported (see refine_1 above)."
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "no code change — deferred per (false) architectural-wall claim",
+        "code_tried": "(unchanged sorry)",
+        "line_number": "388",
+        "result": "failed",
+        "insight": "Same false premise as refine_1. The app component is fully closed (iter-303); naturality needs the ε-naturality + eqToHom/restrictScalars*App slide — the ε-NatTrans being available."
+      }
+    ],
+    "next_steps": "iter-307: attempt with restrictScalarsLaxε in hand."
+  },
+  {
+    "timestamp": "2026-06-24T21:03:51Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "dual_restrict_iso (isoMk naturality, L760)"
+    },
+    "session": {
+      "id": "session_306",
+      "model": "prover"
+    },
+    "findings": {
+      "blocker": "Same (false) restrictScalarsLaxε-absent wall; sorry unchanged (already binder-peeled at intro V W g)."
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "no code change — deferred per (false) architectural-wall claim",
+        "code_tried": "(unchanged sorry, binder-peeled)",
+        "line_number": "760",
+        "result": "failed",
+        "insight": "Reduces to the same ε-naturality content as refine_1; the ε-NatTrans is available."
+      }
+    ],
+    "next_steps": "iter-307: attempt with restrictScalarsLaxε in hand."
+  }
+]

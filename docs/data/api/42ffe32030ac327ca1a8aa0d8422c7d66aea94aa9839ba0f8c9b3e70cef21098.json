@@ -1,0 +1,150 @@
+[
+  {
+    "timestamp": "2026-06-24T21:05:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_locallyFree_of_ext_vanishing"
+    },
+    "session": {
+      "id": "session_30",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "External.reduce_H_locallyFree_to_spec_local",
+        "H_free_of_functorT_zero",
+        "homTensorFunctor_tilde_exact",
+        "functorT_eq_zero",
+        "Abelian.Ext.covariant_sequence_exact₃",
+        "Abelian.Ext.mk₀_bijective",
+        "Module.free_of_flat_of_isLocalRing",
+        "Module.Flat.of_projective",
+        "Module.Projective.iff_split_of_projective",
+        "External.H_isLFP",
+        "External.affine_fp_tilde"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "STEP A: re-sign with (hI : IsSFlat f I) (faithfulness — Admissible carries only flat_F) and relocate theorem to EOF (consumes functorT_eq_zero defined near end); leave forward-ref comment at old line-1071 slot",
+        "code_tried": "theorem H_locallyFree_of_ext_vanishing (f : X ⟶ S) (I F : X.Modules) (ha : Admissible f I F) (hI : IsSFlat f I) (s : S) (hs : FiberExtVanishes 1 f I F s) : ...",
+        "line_number": "1071→EOF",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Lean requires functorT machinery in scope first; relocation + pointer comment mirrors the 1.4 / 1.2 'defined LATER' precedent"
+      },
+      {
+        "attempt": 2,
+        "strategy": "STEP B: homTensorFunctor_tilde_exact phrased as Function.Surjective ((homTensorFunctor f I F).map ((tilde.functor A).map sc.g)); functorT_eq_zero ⟹ Subsingleton (Ext I scT.X₁ 1) ⟹ covariant_sequence_exact₃ lifts every degree-0 class",
+        "code_tried": "obtain ⟨x₂, hx₂⟩ := Abelian.Ext.covariant_sequence_exact₃ I hSEX (Ext.mk₀ ψ) (zero_add 1) hx₃",
+        "line_number": "~2118",
+        "lean_error": "failed to synthesize (tilde.functor A).PreservesZeroMorphisms",
+        "result": "partial",
+        "insight": "elaboration-order: needs explicit `haveI : (tilde.functor A).PreservesZeroMorphisms := inferInstance` BEFORE `set scT`; Functor.Additive.preservesZeroMorphisms does NOT exist"
+      },
+      {
+        "attempt": 3,
+        "strategy": "fix degree bookkeeping: replace `(by omega)` with `zero_add 1`; close mk₀ injection via mk₀_comp_mk₀ + hx₂ (drop the `(by omega)` that left unsolved goals)",
+        "code_tried": "rw [← Ext.mk₀_comp_mk₀, hφ]; exact hx₂; exact (Ext.mk₀_bijective I scT.X₃).injective key",
+        "line_number": "~2118",
+        "lean_error": "unsolved goals (from earlier `by omega` / hx₂ in rw position)",
+        "result": "success",
+        "insight": "mk₀_bijective gives Hom-set surjectivity from Ext⁰-surjectivity"
+      },
+      {
+        "attempt": 4,
+        "strategy": "surjective_of_natIso_map: nat-iso α:F≅G (Type-valued) transports Surjective (G.map φ) → Surjective (F.map φ); iterate over naturality API",
+        "code_tried": "have h1 := congrFun (α.inv.naturality φ) x  →  CategoryTheory.NatTrans.naturality_apply α.inv φ x",
+        "line_number": "~2098",
+        "lean_error": "Application type mismatch on congrFun (α.inv.naturality φ); then `rewrite types_comp` pattern-not-found; then FunctorToTypes.naturality deprecated",
+        "result": "success",
+        "insight": "use NatTrans.naturality_apply + ConcreteCategory.comp_apply/id_apply + Iso.hom_inv_id_app; ConcreteCategory.hom wrapping for Type category"
+      },
+      {
+        "attempt": 5,
+        "strategy": "hom_postcomp_surjective_of_functorT_zero (transport core): whisker H_represents iso by tilde, then coyoneda.mapIso e.op.symm, descend through tilde.fullyFaithfulFunctor",
+        "code_tried": "surjective_of_natIso_map (CategoryTheory.Functor.isoWhiskerLeft (tilde.functor A) α) sc.g ...; FF.preimage ρ; FF.map_preimage",
+        "line_number": "~2138",
+        "lean_error": "Unknown identifier CategoryTheory.isoWhiskerLeft (→ Functor.isoWhiskerLeft); Unknown identifier CategoryTheory.coyoneda_obj_map (removed simp lemma)",
+        "result": "success",
+        "insight": "isoWhiskerLeft is in CategoryTheory.Functor namespace; the coyoneda_obj_map simp step was unnecessary — drop it"
+      },
+      {
+        "attempt": 6,
+        "strategy": "STEP C: H_free_of_functorT_zero — free cover Aⁿ↠N (Module.Finite.exists_fin'), kernel SES, transport core splits it, projective → flat → free over local ring",
+        "code_tried": "haveI hFfp : F.IsFinitePresentation := ha.lfp_F; Module.Projective.iff_split_of_projective; Module.Flat.of_projective; Module.free_of_flat_of_isLocalRing",
+        "line_number": "~2208",
+        "lean_error": "Type mismatch ha.lfp_F : IsLFP F vs SheafOfModules.IsFinitePresentation ?m (fixed by dot notation F.IsFinitePresentation)",
+        "result": "success",
+        "insight": "projective-from-split-Hom step the plan flagged as possibly-absent IS Module.Projective.iff_split_of_projective, present in Mathlib"
+      },
+      {
+        "attempt": 7,
+        "strategy": "STEP E: assemble via External.reduce_H_locallyFree_to_spec_local with the ∀-quantified free-conclusion premise discharged by @H_free_of_functorT_zero",
+        "code_tried": "External.reduce_H_locallyFree_to_spec_local f I F ha hI s hs (by intro X' A inst1 inst2 f' I' F' ha' hI' hs'; exact @H_free_of_functorT_zero X' A inst1 inst2 f' I' F' ha' hI' hs')",
+        "line_number": "EOF",
+        "lean_error": "Application type mismatch (plain fun-lambda misaligned implicit X'/instance binders)",
+        "result": "success",
+        "insight": "explicit `intro` of all binders + `@`-application aligns the implicit X'/instances; sorry closed 4→3"
+      }
+    ],
+    "next_steps": "1.3 DONE. Remaining 3 sorries are off-lane: H_tensor_invertible (1.1.2 PAUSED monoidal), H_tensor (1.1.3 PAUSED), ext_finite_flat (1.10 IsLFPAndFlatOn opaque). Planner: blueprint the 2 unmatched private helpers; reconcile 3 blueprint signature/phrasing deltas; prune the unused External.lfp_free_at_point_locallyFree anchor."
+  },
+  {
+    "timestamp": "2026-06-24T21:05:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor_invertible"
+    },
+    "session": {
+      "id": "session_30",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "1.1.2 — depends on the PAUSED monoidal structure on X.Modules (associator gap; MonoidalClosed(PresheafOfModules)/stalks absent)",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Do NOT re-assign — blocked on the PAUSED monoidal lane. Needs MonoidalCategory X.Modules or stalk-level tensor, both absent from Mathlib v4.30.0."
+  },
+  {
+    "timestamp": "2026-06-24T21:05:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor"
+    },
+    "session": {
+      "id": "session_30",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "1.1.3 — same PAUSED monoidal dependency as H_tensor_invertible",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Do NOT re-assign — blocked on the PAUSED monoidal lane."
+  },
+  {
+    "timestamp": "2026-06-24T21:05:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_finite_flat"
+    },
+    "session": {
+      "id": "session_30",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "1.10 — IsLFPAndFlatOn is an opaque stub; needs R^q f_* + internal ℰxt (internal-ℰxt overlaps the PAUSED monoidal lane)",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Do NOT re-assign until IsLFPAndFlatOn is realized (relExt/R^q f_* infra absent). Per ARCHON_MEMORY: opaque stub ⇒ UNPROVABLE; realize def first."
+  }
+]

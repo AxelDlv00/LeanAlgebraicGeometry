@@ -57,6 +57,7 @@ private lemma pushPull_leg_coherence {A C' : Scheme.{u}} (q : A ⟶ X)
 /-! ### Restrict-world unit calculus for the per-leg face (Steps 0–3′ of
 `lem:pushPull_interLegHom_sections`) -/
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 set_option synthInstance.maxHeartbeats 400000 in
 /-- Step 0: the pullback-pushforward adjunction unit, post-composed with the pushforward of
@@ -101,6 +102,7 @@ lemma unit_pushforward_rFIP_inv {W₁ W₂ : Scheme.{u}} (j : W₁ ⟶ W₂) [Is
         (congrArg (fun w => (Scheme.Modules.restrictAdjunction j).unit.app N ≫ w) h2).trans
           (Category.comp_id _)
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 set_option synthInstance.maxHeartbeats 400000 in
 /-- Step 1 (K5): the iterated restriction-adjunction units compose, through the
@@ -127,6 +129,7 @@ lemma restrict_unit_comp {A C' : Scheme.{u}} (q : A ⟶ X) [IsOpenImmersion q]
       (Subsingleton.elim _ _)
   exact key
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 set_option synthInstance.maxHeartbeats 400000 in
 /-- The β-chain collapse in the middle scheme: the pullback-pushforward unit followed by the

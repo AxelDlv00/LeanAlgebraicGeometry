@@ -1,3 +1,0 @@
-{
-  "content": "# Notices\n\n- The 9 `External.*` declarations in `Basic.lean` are **intentional EGA/OB/Stacks\n  boundary axioms** (the honest analogue of the paper citing EGA); §1 is proved\n  relative to them. iter-016 added two authorized anchors used to assemble 1.4:\n  `External.tilde_isFP` (Stacks 01PC forward) and `External.flat_pullback_exact`\n  (flat pullback preserves SES), and re-signed `External.descent_noetherian` to the\n  data-descent form. Recommend listing all 9 in `archon-protected.yaml` (YAML is\n  user-only) to silence the blueprint-doctor re-flag. Not a bug."
-}

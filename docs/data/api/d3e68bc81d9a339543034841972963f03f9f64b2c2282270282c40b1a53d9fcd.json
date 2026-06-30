@@ -1,0 +1,78 @@
+[
+  {
+    "timestamp": "2026-06-25T13:00:02Z",
+    "status": "partial",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "htensorComparison_unit_isIso (star_unit residual)"
+    },
+    "session": {
+      "id": "session_39",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "After landing+USING the sanctioned anchor External.pullback_rightUnitality (hanch/hm'/rw[hm']), the star_unit residual bottoms out at a GENUINELY NEW obstacle: the INTERNAL tensorMod/tensorAssoc right-unitor triangle `(tensorAssoc F (f^*H) 𝒪_X).hom ≫ (tensorLeft F).map (tensorRightUnitor (f^*H)).hom = (tensorRightUnitor (tensorMod F (f^*H))).hom`. Empirically NOT derivable: unfolding leaves LHS carrying opaque External.sheafifyTensorComparison{,Left} (inside tensorAssoc) vs RHS comparison-free (presheaf unitors+sheafification counit); coherence/monoidal_coherence/aesop all stall on the comparison-vs-no-comparison mismatch. Needs a SECOND new sanctioned anchor (X.Modules-internal monoidal coherence). The @038 plan assumed ONE anchor would suffice — that assumption was WRONG.",
+      "key_lemmas_used": [
+        "External.pullback_rightUnitality",
+        "Iso.eq_comp_inv",
+        "External.pullbackTensorComparison",
+        "External.pullbackUnit"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Land sanctioned anchor External.pullback_rightUnitality (f^* right-unitality coherence)",
+        "code_tried": "axiom External.pullback_rightUnitality {X S : Scheme.{u}} (f : X ⟶ S) (A : S.Modules) : ((External.pullbackTensorComparison f A).app (SheafOfModules.unit S.ringCatSheaf)).hom ≫ (Scheme.Modules.pullback f).map (tensorRightUnitor A).hom = (tensorLeft ((Scheme.Modules.pullback f).obj A)).map (External.pullbackUnit f).hom ≫ (tensorRightUnitor ((Scheme.Modules.pullback f).obj A)).hom",
+        "line_number": "1241",
+        "result": "success",
+        "insight": "Landed clean, lean_verify sorryAx-free, axioms in-family (pullbackTensorComparison+pullbackUnit only). Anchor count 25→26."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Test internal right-unitor triangle as a standalone lemma to see if derivable",
+        "code_tried": "lemma tmp_tensorRightUnitor_triangle (F P : X.Modules) : (tensorAssoc F P 𝒪).hom ≫ (tensorLeft F).map (tensorRightUnitor P).hom = (tensorRightUnitor (tensorMod F P)).hom := by simp [tensorAssoc, tensorRightUnitor, tensorLeftUnitor, tensorBraiding]",
+        "line_number": "1893",
+        "lean_error": "simp leaves goal: LHS = External.sheafifyTensorComparison.hom.app (tensorObj F.val P.val, ...) ... (carries opaque comparison); RHS comparison-free. Not closed.",
+        "result": "failed",
+        "insight": "PROVED the internal triangle is NOT derivable from current axioms — it mixes opaque External.sheafifyTensorComparison{,Left} (LHS) against comparison-free unitors (RHS). Removed the temp lemma."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Build hm' (solve laxity m for the ν-collapse) from the anchor via Iso.eq_comp_inv, then rw[hm'] to substitute into the universal element",
+        "code_tried": "have hanch := External.pullback_rightUnitality f (H f I F ha); have hm' : ... := (Iso.eq_comp_inv ((Scheme.Modules.pullback f).mapIso i)).mpr hanch; rw [hm']",
+        "line_number": "2335",
+        "result": "partial",
+        "insight": "hanch + hm' + rw[hm'] all COMPILE and substitute m = ((pullbackTensorComparison f H).app 𝒪).hom by the ν-collapse of f^*H ≫ f^*(i⁻¹). The anchor is genuinely USED; residual sorry now sits AFTER anchor application."
+      },
+      {
+        "attempt": 4,
+        "strategy": "rw-plumbing assembly of the ν-naturality + associator + triangle chain (hw, hru, hS2 legs each verified in isolation)",
+        "code_tried": "rw [← Category.assoc, hw, Category.assoc, hru, ← Category.assoc] (and conv_lhs/simp-only variants)",
+        "line_number": "2351",
+        "lean_error": "Tactic `rewrite` failed: Did not find an occurrence of the pattern (repeated, multiple lines)",
+        "result": "failed",
+        "insight": "rw-glue dies on the tensorBC↔tensorMod F(f^*·) defeq-not-syntactic boundary (the project's known 'rw-on-sheafification is dead' phenomenon). Individual legs hw/hru/hS2/hm' compile; only the gluing fails. Recipe recorded: canonicalize on tensorBC f F (H f I F ha) OR full term-mode Eq.trans chain. But even with clean glue the chain bottoms out at the internal triangle which needs the second anchor."
+      }
+    ],
+    "next_steps": "Planner: sanction a SECOND new anchor External.tensorMod_rightUnitality (internal sheafified-tensor right-unitality triangle, in-family with sheafifyTensorComparison, strictly weaker than H_tensor) + author its blueprint block; THEN dispatch the close using the term-mode recipe (canonicalize on tensorBC or Eq.trans). Do NOT re-dispatch with only rw-plumbing and no second anchor."
+  },
+  {
+    "timestamp": "2026-06-25T13:00:02Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_finite_flat"
+    },
+    "session": {
+      "id": "session_39",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Off-lane (1.10), infra-blocked: relExt/IsLFPAndFlatOn need R^q f_* + internal ℰxt, absent from Mathlib. Untouched this iter per plan.",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Do NOT assign until internal-ℰxt / Rⁱf_* infrastructure exists (currently absent)."
+  }
+]

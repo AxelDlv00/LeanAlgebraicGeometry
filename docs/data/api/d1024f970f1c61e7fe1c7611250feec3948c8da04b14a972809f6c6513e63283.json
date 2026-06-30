@@ -1,0 +1,149 @@
+[
+  {
+    "timestamp": "2026-06-24T17:11:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "mapAlternatingCofaceMapComplexIso"
+    },
+    "session": {
+      "id": "session_304",
+      "model": "opus/sonnet"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Functor.map_sum",
+        "Functor.map_zsmul",
+        "HomologicalComplex.Hom.isoOfComponents",
+        "CochainComplex.of_d"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "additive functor commutes with alternatingCofaceMapComplex; isoOfComponents (fun _ => Iso.refl _); differential square via objD distribution",
+        "code_tried": "HomologicalComplex.Hom.isoOfComponents (fun _ => Iso.refl _); rw [alternatingCofaceMapComplex_d]; exact map_alternatingCofaceMapComplex_objD ...; erw [Category.id_comp, Category.comp_id]",
+        "line_number": "191",
+        "lean_error": "early: `rw [Category.id_comp]` / `Functor.map_sum` fail to match because `.X i` is defeq-not-syntactic to `Y.obj ⟨i⟩`",
+        "result": "success",
+        "insight": "state objD distribution as standalone clean-typed lemma; close square with `exact` (up-to-defeq) not `rw`; clear identities with `erw [Category.id_comp, Category.comp_id]` — plain simp/rw will NOT close them"
+      }
+    ],
+    "next_steps": "axiom-clean; blueprint node lem:pullback_commutes_alternatingCofaceMapComplex now has \\lean{} (review added)"
+  },
+  {
+    "timestamp": "2026-06-24T17:11:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "cechComplex_baseChange_iso_of_cosimplicialIso"
+    },
+    "session": {
+      "id": "session_304",
+      "model": "opus/sonnet"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "pullback_cechComplex_alternatingIso",
+        "Functor.mapIso",
+        "alternatingCofaceMapComplex"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "factoring lemma: reduce whole leaf-2 iso to a single cosimplicial Beck-Chevalley iso e; uses CechComplex = relativeCechComplexOfNerve defeq so all matches are rfl",
+        "code_tried": "pullback_cechComplex_alternatingIso ≪≫ Functor.mapIso (alternatingCofaceMapComplex S'.Modules) e",
+        "line_number": "248",
+        "result": "success",
+        "insight": "the four-piece cosimplicial strategy the chapter pre-described; endpoints align by defeq (CechComplex defeq relativeCechComplexOfNerve)"
+      }
+    ],
+    "next_steps": "honest reduction; residual e is the genuine frontier"
+  },
+  {
+    "timestamp": "2026-06-24T17:11:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "cech_flatBaseChange"
+    },
+    "session": {
+      "id": "session_304",
+      "model": "opus/sonnet"
+    },
+    "findings": {
+      "blocker": "transitively depends on cechComplex_baseChange_iso's residual sorry e",
+      "key_lemmas_used": [
+        "pullback_mapHC_homologyIso",
+        "HomologicalComplex.homologyMapIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "compose flat-exactness homology commutation with homologyMapIso of the base-change iso; cechHigherDirectImage = (CechComplex).homology i defeq aligns endpoints",
+        "code_tried": "⟨(pullback_mapHC_homologyIso ...).symm ≪≫ HomologicalComplex.homologyMapIso (cechComplex_baseChange_iso f g f' g' h 𝒰 F) i⟩",
+        "line_number": "322",
+        "result": "partial",
+        "insight": "own body now sorry-free; whole theorem still gated on the single iso sorry; auditor: hF (IsQuasicoherent) declared but never threaded to cechComplex_baseChange_iso"
+      }
+    ],
+    "next_steps": "blocked until residual e lands in FlatBaseChange.lean"
+  },
+  {
+    "timestamp": "2026-06-24T17:11:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "cechComplex_baseChange_iso"
+    },
+    "session": {
+      "id": "session_304",
+      "model": "opus/sonnet"
+    },
+    "findings": {
+      "blocker": "residual sorry e = Beck-Chevalley natural iso g^* f_* ≅ f'_* g'^* whiskered through nerve = the still-open affineBaseChange_pushforward_iso / flatBaseChange_pushforward_isIso in FlatBaseChange.lean (affine-reduction-on-S wall, NEEDS_MATHLIB_GAP_FILL); ALSO signature lacks [Flat g] so the sorry is currently unfillable as-typed (auditor major)",
+      "key_lemmas_used": [
+        "cechComplex_baseChange_iso_of_cosimplicialIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "reduce to of_cosimplicialIso ... sorry so residual sorry has exactly the type of the cosimplicial iso e",
+        "code_tried": "cechComplex_baseChange_iso_of_cosimplicialIso f g f' g' h 𝒰 F sorry",
+        "line_number": "283",
+        "result": "partial",
+        "insight": "sorry genuinely narrowed from whole-complex hole to a single cosimplicial natural iso; but def has no [Flat g] hyp → permanently unfillable until re-signed"
+      }
+    ],
+    "next_steps": "PLANNER: add [Flat g] to cechComplex_baseChange_iso signature (not protected); build e in FlatBaseChange.lean lane"
+  },
+  {
+    "timestamp": "2026-06-24T17:11:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "pullback_preservesFiniteLimits"
+    },
+    "session": {
+      "id": "session_304",
+      "model": "opus/sonnet"
+    },
+    "findings": {
+      "blocker": "iter-244 abstract-left-adjoint wall — no stalk functor for (pre)sheaves of modules; stalkwise route DEAD; multi-hundred-LOC, no shortcut"
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "untouched per PROGRESS.md DO-NOT-TOUCH directive (leaf-1 deep lane)",
+        "code_tried": "n/a — not attempted",
+        "line_number": "131",
+        "result": "failed",
+        "insight": "deferred deep lane; not a tactic gap"
+      }
+    ],
+    "next_steps": "do NOT re-assign without a structural plan; deep lane"
+  }
+]

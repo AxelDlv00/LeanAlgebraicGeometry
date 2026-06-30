@@ -1,0 +1,36 @@
+{
+  "files": [
+    {
+      "path": "AlgebraicJacobian.lean",
+      "size": 332
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/GlueDescent.lean",
+      "size": 209311
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/GradedHilbertSerre.lean",
+      "size": 68627
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/GrassmannianCells.lean",
+      "size": 123558
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/GrassmannianQuot.lean",
+      "size": 348112
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/QuotScheme.lean",
+      "size": 166727
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/RelativeSpec.lean",
+      "size": 38249
+    },
+    {
+      "path": "AlgebraicJacobian/Picard/SectionGradedRing.lean",
+      "size": 272063
+    }
+  ]
+}

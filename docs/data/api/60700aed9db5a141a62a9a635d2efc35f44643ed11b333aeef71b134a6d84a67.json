@@ -1,0 +1,214 @@
+[
+  {
+    "timestamp": "2026-06-29T02:06:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "dual_restrict_iso (isoMk naturality)"
+    },
+    "session": {
+      "id": "session_89",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "subsingleton",
+        "PresheafOfModules.isoMk"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Port the v4.30 `main` original close: the isoMk naturality square is a thin-poset Opens Y coherence whose connecting hom-space is a subsingleton",
+        "code_tried": "refine PresheafOfModules.isoMk (fun V => sliceDualTransport f M V) ?_ ; intro V W g ; subsingleton",
+        "line_number": "~937",
+        "lean_error": null,
+        "result": "success",
+        "insight": "v4.31.0 regressed `by sorry`; one-token fix `sorry`->`subsingleton` (connecting Opens Y hom-space is genuinely thin)."
+      }
+    ],
+    "next_steps": "none — closed"
+  },
+  {
+    "timestamp": "2026-06-29T02:06:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport (naturality)"
+    },
+    "session": {
+      "id": "session_89",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "sliceDualTransport_naturality_apply",
+        "ModuleCat.hom_ext",
+        "LinearMap.ext"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Replace the hand-rolled restrictScalarsLaxε-pasting with a pointwise glue into the extracted standalone square; required RELOCATING `sliceDualTransport_naturality_apply` (+deps `appIso_hom_naturality_apply`, `dualUnitRingSwap_apply`) to BEFORE `sliceDualTransport` (forward-ref ordering bug = original cause of the sorry)",
+        "code_tried": "intro X1 Y1 f1 ; apply ModuleCat.hom_ext ; refine LinearMap.ext fun z => ?_ ; exact sliceDualTransport_naturality_apply f M V φ f1 z",
+        "line_number": "~625",
+        "lean_error": null,
+        "result": "success",
+        "insight": "The original sorry was a forward-reference ordering bug, not a math gap; relocating the helper above the def resolves it."
+      }
+    ],
+    "next_steps": "none — closed"
+  },
+  {
+    "timestamp": "2026-06-29T02:06:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransportInv (naturality)"
+    },
+    "session": {
+      "id": "session_89",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "sliceDualTransportInv_naturality_apply",
+        "ModuleCat.hom_ext",
+        "LinearMap.ext"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Port SliceTransport orphan-file close; supply four down-set facts inline; required porting helper `sliceDualTransportInv_naturality_apply` (new in this file)",
+        "code_tried": "intro X1 Y1 f1 ; apply ModuleCat.hom_ext ; refine LinearMap.ext fun z => ?_ ; exact sliceDualTransportInv_naturality_apply f M V β hβ ψ f1 z (le_trans ...)",
+        "line_number": "~449",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Recovery source for slice machinery is the orphan sibling DualInverse/SliceTransport.lean, NOT main (main predates the slice rework)."
+      }
+    ],
+    "next_steps": "none — closed"
+  },
+  {
+    "timestamp": "2026-06-29T02:06:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport (left_inv)"
+    },
+    "session": {
+      "id": "session_89",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "sliceDualTransportInv_app_apply",
+        "dualUnitRingSwapHom_apply",
+        "unitRelabelSwap_apply",
+        "dualUnitRingSwap_apply",
+        "Iso.hom_inv_id_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Glue into sliceDualTransportInv_app_apply, collapse three structure-ring legs via the _apply lemmas + phi-naturality across the down-set relabel + X.presheaf round-trip identity",
+        "code_tried": "apply ModuleCat.hom_ext ; refine LinearMap.ext fun z => ?_ ; have hPV ... ; have he ... ; (collapse via _apply lemmas)",
+        "line_number": "~765",
+        "lean_error": "v4.31.0 type mismatch at L409/L431: `(restrictScalars g).obj (𝟙_ _)` not defeq to Γ(Y,_) under stricter defeq",
+        "result": "success",
+        "insight": "Fix = prepend `set_option backward.isDefEq.respectTransparency false in` to dualUnitRingSwapHom_apply / unitRelabelSwap_apply (same knob dualUnitRingSwap_apply already carried)."
+      }
+    ],
+    "next_steps": "none — closed"
+  },
+  {
+    "timestamp": "2026-06-29T02:06:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport (right_inv)"
+    },
+    "session": {
+      "id": "session_89",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "sliceDualTransportInv_app_apply",
+        "appIso_inv_naturality",
+        "Iso.inv_hom_id"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Mirror of left_inv: re-derive hβc inline (`simp only [...] at h ⊢; exact h`, NOT `simpa ... using h` which leaves a forget₂-map mismatch), glue sliceDualTransportInv_app_apply, collapse 3 legs into one Y.presheaf relabel + ψ-naturality + Y.presheaf round-trip",
+        "code_tried": "apply ModuleCat.hom_ext ; refine LinearMap.ext fun z => ?_ ; have hβc : ∀ P, (β.app (op P)).hom.comp ... ; (collapse)",
+        "line_number": "~806",
+        "lean_error": "forget₂-map mismatch when using `simpa ... using h`",
+        "result": "success",
+        "insight": "`simp only [...] at h ⊢; exact h` is robust where `simpa ... using h` leaves a residual forget₂ map under v4.31.0."
+      }
+    ],
+    "next_steps": "none — closed"
+  },
+  {
+    "timestamp": "2026-06-29T02:06:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "homLocalSection (naturality)"
+    },
+    "session": {
+      "id": "session_89",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "reassoc_of%",
+        "Subsingleton.elim",
+        "Category.assoc",
+        "eqToHom"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Port the main chart-chase; align hsubM/hsubN/hML/hNR to the new `(Over.forget U).op.map φ` spelling; opener `rw [← Category.assoc, hML]`",
+        "code_tried": "rw [← Category.assoc, hML] ; erw [Category.assoc, reassoc_of% hm, hNR] ; simp only [Category.assoc] ; rfl",
+        "line_number": "~1085",
+        "lean_error": "rewrite failed: Did not find an occurrence of the pattern (Over.forget op-map + eqToHom-proof drift)",
+        "result": "failed",
+        "insight": "v4.31.0 presents the slice-restriction morphism as `(Over.forget U).op.map φ` and the eqToHom proofs drift (proof-irrelevant but not syntactic) — `rw` cannot match."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Use erw + reassoc_of% to reach the same left-nested form up to defeq",
+        "code_tried": "erw [reassoc_of% hML, reassoc_of% hm, hNR] ; simp only [Category.assoc] ; rfl",
+        "line_number": "~1085",
+        "lean_error": "still rewrite-pattern-not-found on the chained erw",
+        "result": "failed",
+        "insight": "Chaining all three reassoc_of% in one erw over-reaches; needs stepwise."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Stepwise erw with intervening simp only [Category.assoc]; final opener erw [reassoc_of% hML] then keep the original v4.30 tail erw [Category.assoc, reassoc_of% hm, hNR]; simp; rfl",
+        "code_tried": "erw [reassoc_of% hML] ; erw [Category.assoc, reassoc_of% hm, hNR] ; simp only [Category.assoc] ; rfl",
+        "line_number": "~1085",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Opener `rw [← Category.assoc, hML]` -> `erw [reassoc_of% hML]` reaches the same `(a≫b)≫rest` form up to defeq; original tail then closes. This also auto-cleaned `homOfLocalCompat` (transitive sorry via simp-unfold)."
+      }
+    ],
+    "next_steps": "none — closed"
+  }
+]

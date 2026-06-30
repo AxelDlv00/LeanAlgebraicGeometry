@@ -1,0 +1,159 @@
+[
+  {
+    "timestamp": "2026-06-25T02:16:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "sheafificationCompPullback_restrict"
+    },
+    "session": {
+      "id": "session_80",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "sheafificationCompPullback_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Sq1 specialised at h:=j, f:=U.ι — the in-file 'private blocker' docstring/comments were stale (Sq1 PUBLIC since iter-069)",
+        "code_tried": "exact sheafificationCompPullback_comp j U.ι P",
+        "line_number": "1116",
+        "lean_error": null,
+        "goal_before": "((SCP (toRingCatSheafHom (j ≫ U.ι))).app P).hom = pullbackComp.inv.app … ≫ … (3-factor composite)",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "Goal RHS is Sq1's RHS verbatim (cosmetic (↑·).ringCatSheaf.obj vs .val, defeq, absorbed by exact). Verified via lean_multi_attempt (goals:[], no diagnostics) then lake build EXIT 0. Stale BLOCKER docstring+comments deleted."
+      }
+    ],
+    "next_steps": "Done. Bridge (b) is now a public-proven dependency for S3/S4a."
+  },
+  {
+    "timestamp": "2026-06-25T02:16:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_restrict_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_80",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "case e_β residual assembly crosses the restrictFunctor-j SOURCE-category instance diamond; rw/simp/erw of category lemmas across the SheafOfModules ≫ seam all fail/misfire/whnf-bomb. Needs FULL TERM-MODE assembly + 3 NEW dual-coherence helpers that do not yet exist.",
+      "key_lemmas_used": [
+        "dual_restrict_iso_eq_comparison",
+        "restrictFunctorIsoPullback_comp_compat"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "open the square: promote each dual_restrict_iso via dual-B1, expand leading RFIP by B2, reassoc + cancel ρ prefix",
+        "code_tried": "rw [dual_restrict_iso_eq_comparison V.ι M, dual_restrict_iso_eq_comparison U.ι M, dual_restrict_iso_eq_comparison j (M.restrict U.ι), restrictFunctorIsoPullback_comp_compat j hjι M.dual]; simp only [Iso.trans_assoc]; congr 1",
+        "line_number": "1140-1145",
+        "lean_error": null,
+        "goal_before": "dual_restrict_iso V.ι M = ρ ≪≫ (restrict j)(dual_restrict_iso U.ι M) ≪≫ dual_restrict_iso j (M|U) ≪≫ dualIsoOfIso ρ",
+        "goal_after": "case e_β residual (LHS/RHS leg relation, in-code comment block)",
+        "result": "partial",
+        "insight": "Discharges dual-B1 + B2 + ρ-cancellation, reaching the genuine residual — same opening as S2."
+      },
+      {
+        "attempt": 2,
+        "strategy": "distribute the RHS (restrictFunctor j).mapIso over the trans via mapIso_trans",
+        "code_tried": "simp only [Functor.mapIso_trans, Iso.trans_assoc]; congr 1   /  rw [Functor.mapIso_trans, Functor.mapIso_trans]",
+        "line_number": "1145 residual",
+        "lean_error": "did not find pattern (the ≪≫/≫ instance is defeq-but-not-syntactic to the one the lemma expects)",
+        "goal_after": null,
+        "result": "failed",
+        "insight": "Source-category instance diamond: structural rw/simp of category lemmas head-key-miss across the seam."
+      },
+      {
+        "attempt": 3,
+        "strategy": "force the map_comp distribution with erw / via Iso.ext + sectionwise",
+        "code_tried": "apply Iso.ext; simp only [Iso.trans_hom, Functor.mapIso_hom, Iso.app_hom]; erw [Functor.map_comp, Functor.map_comp]; rw [Category.assoc]",
+        "line_number": "1145 residual",
+        "lean_error": "erw fires on WRONG occurrence — unfolds restrictFunctorIsoPullback's internal leftUnitor ≫ mateEquiv mate composite (catastrophic term blow-up)",
+        "goal_after": null,
+        "result": "failed",
+        "insight": "erw [Functor.map_comp] mis-targets the mate-calculus internals; dead end."
+      },
+      {
+        "attempt": 4,
+        "strategy": "elaborate the fold as a `show … from Functor.mapIso_trans` term then rw",
+        "code_tried": "rw [show (restrictFunctor j).mapIso (… ≪≫ … ≪≫ …) = … from Functor.mapIso_trans _ _ _]",
+        "line_number": "1145 residual",
+        "lean_error": "term elaborates (defeq match) but the subsequent rw whnf-bombs (deterministic timeout at 200000 heartbeats)",
+        "goal_after": null,
+        "result": "failed",
+        "insight": "Confirms S3 must be a FULL TERM-MODE assembly (c2_assemble idiom: generic single-[Category C] lemma by exact/refine), NEVER rw/erw/simp of a category lemma across the seam, + 3 missing dual-coherence helpers (presheafDualPullbackComparison_pullbackCongr, sheafificationCompPullback_restrict_cancel, per-leg dual coherence)."
+      }
+    ],
+    "next_steps": "Build the 3 dual-coherence helpers first (dual analogues of S2's L947/L972/L990 bricks), then assemble S3 in term mode with maxHeartbeats bumped, mirroring S2 (L1028). Do NOT re-assign a flat prove round."
+  },
+  {
+    "timestamp": "2026-06-25T02:16:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_80",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "rides on S3-style SCP composition seam + θ-unit identification; partial proof in place (unfold + dual_restrict_iso_eq_comparison). Auditor: bridge (b) now proven ⇒ NOT strictly gated on S3 closing; may be partly pursuable in parallel.",
+      "key_lemmas_used": [
+        "dual_unit_iso",
+        "dual_restrict_iso_eq_comparison",
+        "presheafDualUnitIso_naturality"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "unfold dual_unit_iso + promote dual_restrict_iso j (unit U) to its comparison decomposition",
+        "code_tried": "simp only [dual_unit_iso, dual_restrict_iso_eq_comparison]",
+        "line_number": "1209",
+        "lean_error": null,
+        "goal_before": "dual_unit_iso (Y:=V) = dualIsoOfIso (unitRestrictIso j) ≪≫ … ≪≫ (restrict j)(dual_unit_iso (Y:=U)) ≪≫ unitRestrictIso j",
+        "goal_after": "residual: sheafify(presheafDualUnitIso_V) ≪≫ counit_V = … (documented in-code L1210-1220)",
+        "result": "partial",
+        "insight": "Exposes the SCP seam + θ-unit identification residual; not attempted further this iter (prover prioritized S3 diagnosis)."
+      }
+    ],
+    "next_steps": "Needs (i) the same SCP composition seam as S3's bridge (b) and (ii) θ-unit identification: presheafDualPullbackComparison j (unit U) at the structure sheaf coincides (mod unitRestrictIso j) with presheafDualUnitIso_naturality promoted to j. Can be tried before S3 fully lands."
+  },
+  {
+    "timestamp": "2026-06-25T02:16:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_80",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "telescope wiring the 5 squares; S2/S4b/S4c done, needs S3 + S4a. Untouched this iter.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not attempted — strict downstream consumer of S3/S4a",
+        "code_tried": null,
+        "line_number": "1989",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "Gated on S3/S4a; correctly deferred."
+      }
+    ],
+    "next_steps": "Assemble after S3 and S4a close; wires the 5 trivialisation squares."
+  }
+]

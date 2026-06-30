@@ -427,7 +427,7 @@ noncomputable def descHom (s : Limits.Cofork (aL S M N) (aR S M N)) :
       simp only [AddMonoidHom.coe_mk, ZeroHom.coe_mk]
       have key :=
         congrArg (fun φ => (ConcreteCategory.hom φ) (m ⊗ₜ[ℤ] (a ⊗ₜ[ℤ] n))) s.condition
-      simpa using key)
+      exact key)
 
 @[simp] lemma descHom_tmul (s : Limits.Cofork (aL S M N) (aR S M N)) (m : M) (n : N) :
     descHom S M N s (m ⊗ₜ[S] n) = (ConcreteCategory.hom s.π) (m ⊗ₜ[ℤ] n) := rfl
@@ -618,8 +618,9 @@ noncomputable def relTensorActL (P Q : X.PresheafOfModules) :
     dsimp only [relTensorTriplePresheaf, relTensorDomainPresheaf]
     ext z
     have hz := LinearMap.congr_fun key z
-    simpa only [AddCommGrpCat.hom_comp, AddCommGrpCat.hom_ofHom, AddMonoidHom.comp_apply,
-      LinearMap.toAddMonoidHom_coe, LinearMap.comp_apply] using hz
+    simp only [AddCommGrpCat.hom_comp, AddCommGrpCat.hom_ofHom, AddMonoidHom.comp_apply,
+      LinearMap.toAddMonoidHom_coe, LinearMap.comp_apply] at hz
+    exact hz
 
 /-- The **right-action** natural transformation of the coequalizer rows
 (`def:relTensorActR`): `relTensorTriplePresheaf P Q ⟶ relTensorDomainPresheaf P Q`, whose
@@ -657,8 +658,9 @@ noncomputable def relTensorActR (P Q : X.PresheafOfModules) :
     dsimp only [relTensorTriplePresheaf, relTensorDomainPresheaf]
     ext z
     have hz := LinearMap.congr_fun key z
-    simpa only [AddCommGrpCat.hom_comp, AddCommGrpCat.hom_ofHom, AddMonoidHom.comp_apply,
-      LinearMap.toAddMonoidHom_coe, LinearMap.comp_apply] using hz
+    simp only [AddCommGrpCat.hom_comp, AddCommGrpCat.hom_ofHom, AddMonoidHom.comp_apply,
+      LinearMap.toAddMonoidHom_coe, LinearMap.comp_apply] at hz
+    exact hz
 
 /-- The **projection** natural transformation (`relTensorProj`):
 `relTensorDomainPresheaf P Q ⟶ (toPresheaf).obj (P ⊗_p Q)`, whose component at `U` is the
@@ -699,8 +701,9 @@ noncomputable def relTensorProj (P Q : X.PresheafOfModules) :
     apply AddCommGrpCat.hom_ext
     ext z
     have hz := LinearMap.congr_fun key z
-    simpa only [AddCommGrpCat.hom_comp, AddCommGrpCat.hom_ofHom, AddMonoidHom.comp_apply,
-      LinearMap.toAddMonoidHom_coe, LinearMap.comp_apply, AddMonoidHom.coe_toIntLinearMap] using hz
+    simp only [AddCommGrpCat.hom_comp, AddCommGrpCat.hom_ofHom, AddMonoidHom.comp_apply,
+      LinearMap.toAddMonoidHom_coe, LinearMap.comp_apply, AddMonoidHom.coe_toIntLinearMap] at hz
+    exact hz
 
 /-- The cofork condition for the presheaf-level relative-tensor coequalizer: the left- and
 right-action rows compose equally with the projection, `a_L ≫ π = a_R ≫ π`, as natural
@@ -1632,7 +1635,7 @@ lemma tensorObjRightUnitor_eq (G : X.Modules) :
       (localizationUnitIso X) ((toPresheafOfModules X).obj G)
   dsimp only [tensorObjRightUnitor, tensorObjIso, Iso.trans_hom, Functor.mapIso_hom,
     MonoidalCategory.tensorIso_hom, Iso.symm_hom]
-  rw [MonoidalCategory.tensorHom_def, ← hnat, hru]
+  rw [← hnat, hru]
   simp only [Category.assoc]
   rfl
 
@@ -1656,7 +1659,7 @@ private lemma tensorObjUnitIso_eq (G : X.Modules) :
       (localizationUnitIso X) ((toPresheafOfModules X).obj G)
   dsimp only [tensorObjUnitIso, tensorObjIso, Iso.trans_hom, Functor.mapIso_hom,
     MonoidalCategory.tensorIso_hom, Iso.symm_hom]
-  rw [MonoidalCategory.tensorHom_def', ← hnat, hlu]
+  rw [← hnat, hlu]
   simp only [Category.assoc]
   rfl
 
@@ -2484,6 +2487,7 @@ private lemma tensorObjAssoc_associator_counit_coherence
 -- a large concrete monoidal coherence; its (terminating, head-aligned) `isDefEq` recurses deeper than
 -- the default `maxRecDepth = 512`.  Raised to 4000 (a stack-depth bound, NOT the forbidden heartbeat
 -- bump — the elaboration is fast once the depth suffices; `lean_multi_attempt` closes it instantly).
+set_option backward.isDefEq.respectTransparency false in
 set_option maxRecDepth 4000 in
 /-- **Sheaf-level factorization of the associator** (the `X.Modules`-internal core of
 `lem:tensorObjAssoc_eta_factor`).  As morphisms of *sheaves* of modules, the sheafified
@@ -3823,7 +3827,8 @@ lemma tensorPowAdd_comm (L : X.Modules) [IsInvertible L] (m m' : ℕ) :
       _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ ?hsymm ?hk
     · -- `hsymm`: opposite self-braidings cancel (symmetry `β_{L^m,L} ≫ β_{L,L^m} = 𝟙`).
       have h := congrArg Iso.hom (tensorBraiding_symm (L.tensorPow m) L)
-      simpa only [Iso.trans_hom, Iso.refl_hom] using h
+      simp only [Iso.trans_hom, Iso.refl_hom] at h
+      exact h
     · -- `hk`: reindex reconciliation of the trailing tensor-power bridge family.
       have gen : ∀ {n1 n2 : ℕ} (hn : n1 = n2),
           eqToHom (congrArg (L.tensorPow) hn.symm) ▷ L ≫ ((L.tensorPow n1).tensorObjIso L).hom

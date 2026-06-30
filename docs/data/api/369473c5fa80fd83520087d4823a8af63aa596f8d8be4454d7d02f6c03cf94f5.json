@@ -1,0 +1,117 @@
+[
+  {
+    "timestamp": "2026-06-25T08:18:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "External.pullbackTensorComparison"
+    },
+    "session": {
+      "id": "session_35",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "External.sheafifyTensorComparison"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "STEP 1: sanctioned general-fact anchor — f^* strong monoidal: f^*A ⊗ f^*B ≅ f^*(A ⊗_S B). Object-level axiom parallel to External.sheafifyTensorComparison; Mathlib has no monoidal struct on Scheme.Modules.pullback (loogle-confirmed @035).",
+        "code_tried": "axiom External.pullbackTensorComparison {X S : Scheme.{u}} (f : X ⟶ S) (A B : S.Modules) : tensorMod ((Scheme.Modules.pullback f).obj A) ((Scheme.Modules.pullback f).obj B) ≅ (Scheme.Modules.pullback f).obj (tensorMod A B)",
+        "line_number": "1215",
+        "result": "success",
+        "insight": "Sanctioned anchor; lean_verify confirms sorryAx-free. Axiom count 22→23. Re-typed to NatIso of bifunctors LATER when θ-naturality needs it."
+      }
+    ],
+    "next_steps": "Promote to NatIso of bifunctors (the @031→@032 pattern) before STEP 3 EW comparison."
+  },
+  {
+    "timestamp": "2026-06-25T08:13:20Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "htensorComparison"
+    },
+    "session": {
+      "id": "session_35",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "H_represents",
+        "tensorRight",
+        "tensorAssoc",
+        "External.pullbackTensorComparison",
+        "h"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "STEP 2: build canonical comparison map θ : H(I⊗_S N,F) ⟶ H(I,F)⊗N directed OUT of corepresenting object via corepr-inverse (H_represents .some.inv) applied to universal element e built from h(I,F) ⊗ id_{f^*N}, tensorAssoc, and External.pullbackTensorComparison.",
+        "code_tried": "noncomputable def htensorComparison ... := (H_represents f (tensorBC f I N) F ha').some.inv.app (tensorMod (H f I F ha) N) ((tensorRight ((Scheme.Modules.pullback f).obj N)).map (h f I F ha) ≫ (tensorAssoc F ((Scheme.Modules.pullback f).obj (H f I F ha)) ((Scheme.Modules.pullback f).obj N)).hom ≫ (tensorLeft F).map (External.pullbackTensorComparison f (H f I F ha) N).hom)",
+        "line_number": "1920",
+        "result": "success",
+        "insight": "Type-checked first try — defeqs tensorBC f I N = tensorMod I (f^*N) (domain) and tensorBC f F W = tensorMod F (f^*(H⊗N)) (codomain) resolve without `show`. Axiom-clean."
+      }
+    ],
+    "next_steps": "θ iso (STEP 3) via right-exact/⊕ Eilenberg–Watts — needs 2nd anchor, planner-gated."
+  },
+  {
+    "timestamp": "2026-06-25T08:16:02Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor"
+    },
+    "session": {
+      "id": "session_35",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "POLICY GATE (not math wall): STEP 3 iso = htensorComparison.symm once θ shown iso. Needs SECOND general anchor (Eilenberg–Watts: two right-exact ⊕-preserving additive functors agreeing on 𝒪_S are nat-iso) OR affine reduction + Watts on Mod-A. PROGRESS.md forbids adding 2nd anchor this iter without planner direction. Adjacent sub-steps (θ_{𝒪}=id, θ-naturality) also need absent f^*𝒪≅𝒪 / bifunctor re-typing.",
+      "key_lemmas_used": [
+        "htensorComparison"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Left as sorry — STEP 3 deliberately not attempted per soundness gate (committed deliverable was STEP 1+2 substrate). θ_{𝒪}=id sanity check PASSED on paper (h(I,F)⊗id reduces via unitors to h(I,F)).",
+        "code_tried": "sorry",
+        "line_number": "1935",
+        "result": "partial",
+        "insight": "Iso step is the deep crux; both routes (EW categorical fact; f^*𝒪≅𝒪) require absent Mathlib facts. Correctly not anchored unsanctioned."
+      }
+    ],
+    "next_steps": "Planner: (STEP 2.5) re-type External.pullbackTensorComparison → NatIso of bifunctors + θ → NatTrans of N↦H(I⊗N,F), N↦H(I,F)⊗N; then (STEP 3) decide EW anchor form (a) general categorical input vs (b) affine+Watts."
+  },
+  {
+    "timestamp": "2026-06-25T08:16:02Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_finite_flat"
+    },
+    "session": {
+      "id": "session_35",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Off-lane, untouched as instructed. 1.10 infra-blocked (IsLFPAndFlatOn opaque; needs R^q f_* + internal ℰxt, absent — internal-ℰxt strand PAUSED)."
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — off active lane.",
+        "code_tried": "sorry",
+        "line_number": "1961",
+        "result": "partial",
+        "insight": "Deferred; infra-blocked."
+      }
+    ],
+    "next_steps": "Deferred until internal-ℰxt infra strand resumes."
+  }
+]

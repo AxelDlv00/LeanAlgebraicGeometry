@@ -1,0 +1,253 @@
+[
+  {
+    "timestamp": "2026-06-24T18:54:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext1_vanishing_of_acyclic_chase"
+    },
+    "session": {
+      "id": "session_27",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "CategoryTheory.Abelian.Ext.contravariant_sequence_exact₃",
+        "CategoryTheory.ShortComplex.ShortExact.extClass_comp_assoc"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Probe contravariant Ext LES API: contravariant_sequence_exact₃, Ext.precomp, ShortExact.extClass, extClass_comp",
+        "code_tried": "#check @Ext.contravariant_sequence_exact₃ ; #check @ShortComplex.ShortExact.extClass ; #check @ShortComplex.ShortExact.extClass_comp",
+        "line_number": "~1247",
+        "lean_error": "none (info probes; some succeed:false on partial #check syntax)",
+        "result": "partial",
+        "insight": "contravariant_sequence_exact₃ hS Y x _ (n₀:=0) lifts x:Ext I Y 1 to w:Ext K Y 0 with extClass.comp w = x; the dedicated extClass_comp_assoc closes the consecutive-LES-maps-compose-to-zero step"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Faithful AK (1.3) contravariant chase: x→0 in Ext¹(J,Y) by hJ; lift via _exact₃; rewrite w=mk₀(S.f).comp v by hsurj; extClass_comp_assoc gives x=0",
+        "code_tried": "intro x; have := hJ ((Ext.mk₀ S.g).comp x ...); obtain ⟨w,hw⟩ := Ext.contravariant_sequence_exact₃ hS Y x _ (by norm_num); ... hS.extClass_comp_assoc v",
+        "line_number": "~1247",
+        "lean_error": "none — clean",
+        "result": "success",
+        "insight": "extClass_comp_assoc matches the x=0 goal VERBATIM — NO manual comp_assoc / degree regrouping needed; axiom-clean {propext,Classical.choice,Quot.sound}"
+      }
+    ],
+    "next_steps": "Pinned target DONE. Feeds brick (iii) hk discharge; remaining gaps = hsurj (adjunction naturality), fibre id F⊗k(s)~≅j_*F(s), S=Spec A reduction — all flagged absent infra."
+  },
+  {
+    "timestamp": "2026-06-24T18:54:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "isZero_extGroup_iff"
+    },
+    "session": {
+      "id": "session_27",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "AddCommGrpCat.isZero_iff_subsingleton",
+        "subsingleton_iff_forall_eq"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Bridge IsZero(extGroup q M N) ↔ ∀y,y=0 via AddCommGrpCat zero characterization",
+        "code_tried": "rw [AddCommGrpCat.isZero_iff] ...",
+        "line_number": "~1272",
+        "lean_error": "Unknown constant `AddCommGrpCat.isZero_iff`",
+        "result": "failed",
+        "insight": "the constant is named isZero_iff_subsingleton, not isZero_iff"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Use AddCommGrpCat.isZero_iff_subsingleton + subsingleton_iff_forall_eq 0",
+        "code_tried": "rw [AddCommGrpCat.isZero_iff_subsingleton, subsingleton_iff_forall_eq (0 : _)]",
+        "line_number": "~1272",
+        "lean_error": "none — clean",
+        "result": "success",
+        "insight": "one-line rw; reusable for every extGroup/FiberExtVanishes IsZero condition"
+      }
+    ],
+    "next_steps": "Reusable helper; no further work."
+  },
+  {
+    "timestamp": "2026-06-24T18:54:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext1_isZero_of_acyclic_chase"
+    },
+    "session": {
+      "id": "session_27",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "ext1_vanishing_of_acyclic_chase",
+        "isZero_extGroup_iff",
+        "HasDerivedCategory.standard",
+        "hasExt_of_hasDerivedCategory"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Scheme-extGroup form over Y.Modules: rw isZero_extGroup_iff on hJ+goal, apply generic chase; supply standard HasExt instances",
+        "code_tried": "letI : HasDerivedCategory Y.Modules := .standard _; haveI := hasExt_of_hasDerivedCategory _; rw [isZero_extGroup_iff] at hJ ⊢; exact fun x => ext1_vanishing_of_acyclic_chase S hS W hJ hsurj x",
+        "line_number": "~1285",
+        "lean_error": "Type mismatch hasExt_of_hasDerivedCategory Y.Modules : HasExt.{u+1,u,u+1} but expected HasExt.{u_1,u,u+1}",
+        "result": "partial",
+        "insight": "clean local instance route fails on universe-metavar (first universe left as metavar); the letI-in-hypothesis form (hsurj's type carries the letI/haveI prefix) is the working compromise — extGroup carrier becomes defeq Abelian.Ext _ _ 1"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Thread HasDerivedCategory.standard/hasExt instances via letI/haveI inside hsurj hypothesis type + body",
+        "code_tried": "(hsurj : letI := ...; haveI := ...; Function.Surjective ...) ... rw [isZero_extGroup_iff] at hJ ⊢; exact fun x => ext1_vanishing_of_acyclic_chase S hS W hJ hsurj x",
+        "line_number": "~1285",
+        "lean_error": "none — clean",
+        "result": "success",
+        "insight": "axiom-clean; HasDerivedCategory.standard is a def not instance so must be letI-supplied at elaboration"
+      }
+    ],
+    "next_steps": "Scheme-form chase assembled. Consumer hsurj source = still-absent adjunction ladder."
+  },
+  {
+    "timestamp": "2026-06-24T18:54:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "isZero_extGroup_of_iso_left"
+    },
+    "session": {
+      "id": "session_27",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "Ext.comp_assoc_of_second_deg_zero",
+        "Ext.mk₀_comp_mk₀",
+        "Ext.mk₀_id_comp",
+        "Ext.comp_zero"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Transport IsZero(extGroup q M N)→extGroup q M' N across e:M≅M' by element pushforward (mk₀ e.inv).comp((mk₀ e.hom).comp y)",
+        "code_tried": "... simp [...] ; (mk₀ e.inv).comp ((mk₀ e.hom).comp y)",
+        "line_number": "~1300",
+        "lean_error": "Type mismatch: y has type ↑(extGroup q M' N) but expected Abelian.Ext M ?m.75 q ; `simp` made no progress",
+        "result": "failed",
+        "insight": "needs explicit comp_assoc_of_second_deg_zero regrouping + mk₀_comp_mk₀ collapse, not simp"
+      },
+      {
+        "attempt": 2,
+        "strategy": "(mk₀ e.inv).comp((mk₀ e.hom).comp y) = y via comp_assoc_of_second_deg_zero + mk₀_comp_mk₀ + e.inv_hom_id + mk₀_id_comp; inner term =0 by hyp, finish Ext.comp_zero",
+        "code_tried": "rw [← comp_assoc_of_second_deg_zero, mk₀_comp_mk₀, e.inv_hom_id, mk₀_id_comp]; ... Ext.comp_zero",
+        "line_number": "~1300",
+        "lean_error": "none — clean",
+        "result": "success",
+        "insight": "axiom-clean; strips the pullback(𝟙 X) wrapper off acyclicity output"
+      }
+    ],
+    "next_steps": "Reusable first-arg iso-invariance helper."
+  },
+  {
+    "timestamp": "2026-06-24T18:54:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "acyclic_ext1_vanishes"
+    },
+    "session": {
+      "id": "session_27",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "exists_acyclic_surjection",
+        "Scheme.Modules.pullbackId",
+        "isZero_extGroup_of_iso_left",
+        "IsAffineHom"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Specialize exists_acyclic_surjection acyclicity to g=𝟙 X (IsAffineHom by inferInstance), strip pullback(𝟙 X) via pullbackId.app + isZero_extGroup_of_iso_left",
+        "code_tried": "have := (exists_acyclic_surjection ...).2 (𝟙 X) (G:=W) ...; exact isZero_extGroup_of_iso_left ((Scheme.Modules.pullbackId X).app J) this",
+        "line_number": "~1310",
+        "lean_error": "none — clean",
+        "result": "success",
+        "insight": "axiom-clean; yields Ext¹_X(J,W)=0 for quasi-coherent W = the hJ input of ext1_isZero_of_acyclic_chase, reusing existing acyclicity"
+      }
+    ],
+    "next_steps": "hJ-discharge brick DONE. Remaining hk gaps = hsurj adjunction-ladder, fibre id, Spec A reduction."
+  },
+  {
+    "timestamp": "2026-06-24T18:54:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_locallyFree_of_ext_vanishing"
+    },
+    "session": {
+      "id": "session_27",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Untouched (no-touch directive). Final 1.3 assembly needs: hsurj adjunction-ladder surjectivity (External.adjunction NATURALITY upgrade), fibre identification F⊗_S k(s)~≅j_*F(s) (EGA base-change anchor candidate), the SES 0→K→J→I'→0, S=Spec A Noeth-local reduction, and free conclusion via H_represents",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Plan agent: do NOT re-dispatch as a proof lane. Supply (a) External.adjunction naturality upgrade, (b) anchor fibre id F⊗k(s)~≅j_*F(s), (c) Spec A reduction anchor. brick(iii) core (ext1_isZero_of_acyclic_chase) + hJ (acyclic_ext1_vanishes) are now in place; the gap is the hsurj/fibre/reduction infra, all flagged-absent."
+  },
+  {
+    "timestamp": "2026-06-24T18:54:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor_invertible"
+    },
+    "session": {
+      "id": "session_27",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Untouched. PAUSED monoidal strand — needs MonoidalCategory(X.Modules)/tensorAssoc, blocked on absent sheafify-tensor comparison (stalks/MonoidalClosed)",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Do NOT re-assign; gated on PAUSED monoidal infra."
+  },
+  {
+    "timestamp": "2026-06-24T18:54:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_finite_flat"
+    },
+    "session": {
+      "id": "session_27",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Untouched. 2nd conjunct IsLFPAndFlatOn gated on relExt = R^q f_*(ℰxt) — both internal ℰxt sheaf and R^q f_* absent from Mathlib",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Do NOT re-assign; anchor relExt semantics as single External.* or multi-iter build of internal ℰxt + right-derived pushforward."
+  }
+]

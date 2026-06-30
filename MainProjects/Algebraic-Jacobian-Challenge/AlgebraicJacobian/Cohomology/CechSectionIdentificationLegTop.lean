@@ -25,6 +25,8 @@ namespace AlgebraicGeometry
 open Scheme.Modules
 
 variable {X : Scheme.{u}}
+-- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 set_option synthInstance.maxHeartbeats 400000 in
 /-- Step 2 (K4): the `pullbackComp` comparison, conjugated to restrict-world through
@@ -132,6 +134,8 @@ lemma pullbackComp_rFIP_compat {A C' : Scheme.{u}} (q : A ⟶ X) [IsOpenImmersio
     exact restrict_unit_comp q c F
   exact hA.trans hB.symm
 
+-- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 set_option synthInstance.maxHeartbeats 400000 in
 /-- Step 3: the push–pull map of a slice-level open inclusion, conjugated to restrict-world,
@@ -253,6 +257,8 @@ private lemma thin_resid5 (P : (TopologicalSpace.Opens ↥X)ᵒᵖ ⥤ Ab.{u})
     ← Functor.map_comp, ← op_comp, ← op_comp, ← op_comp]
   exact congrArg (fun t : E ⟶ A => P.map t.op) (Subsingleton.elim _ _)
 
+-- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 set_option synthInstance.maxHeartbeats 400000 in
 /-- Coordinate unfolding of the per-leg section identification: `pushPull_leg_sections`
@@ -277,6 +283,8 @@ private lemma pls_eq (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules)
 -- intersections at the section level (irreducibility doesn't help — the kernel ignores it;
 -- abstracting the opens to variables makes it cheap but re-grinds on specialization). A genuine
 -- speedup needs redesigning the section-identification away from module-level adjunction units.
+-- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 4000000 in
 set_option synthInstance.maxHeartbeats 400000 in
 /-- Decomposition of `pushPull_interLegHom_sections` (kernel-budget split): the
@@ -400,6 +408,8 @@ private lemma pushPull_interLegHom_resid (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
    `pushPull_interLegHom_sections` or `coreIso_comm_leg` — both are consumed downstream (CSI/Aux). -/
 -- KERNEL-BUDGET: same intrinsic cost as `pushPull_interLegHom_resid` — the kernel symbolically
 -- expands `coverInterOpen` over the variable-length face while checking this concrete statement.
+-- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 4000000 in
 set_option synthInstance.maxHeartbeats 400000 in
 /-- **Per-leg restriction naturality** (the sheaf-theoretic seam): the evaluated push–pull
@@ -455,6 +465,8 @@ private lemma map_op_eqToHom_swap (P : (TopologicalSpace.Opens ↥X)ᵒᵖ ⥤ A
   rw [eqToHom_refl, eqToHom_refl, Category.comp_id, Category.id_comp]
   exact congrArg (fun u => P.map u) (congrArg Quiver.Hom.op (Subsingleton.elim f g))
 
+-- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 /-- **Per-leg naturality of the core comparison coface** (`lem:coreIso_comm_leg`).
 For a fixed coface index `k` and multi-index `σ'`, the `σ'`-coordinate (the projection

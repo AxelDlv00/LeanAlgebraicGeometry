@@ -1,0 +1,81 @@
+[
+  {
+    "timestamp": "2026-06-25T05:09:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_restrict_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_81",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "case e_β residual reduced past ALL restrictFunctor j source-category instance diamonds to a clean diamond-free pullback-world cocycle (★pb-iso); residual is now pure bridge-assembly, not a seam/diamond wall",
+      "key_lemmas_used": [
+        "dual_restrict_iso_eq_comparison",
+        "restrictFunctorIsoPullback_comp_compat",
+        "mapIso_naturality_assoc",
+        "iso_cancel_left",
+        "Functor.mapIso_trans"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "iter-080-pinned recipe: generic s3_assemble applied by refine, distributing (restrictFunctor j).map of a ≪≫-composite",
+        "code_tried": "refine s3_assemble (...); set_option maxHeartbeats 6400000",
+        "line_number": "1185",
+        "lean_error": "(deterministic) timeout at whnf, maximum number of heartbeats (6400000) reached — Functor.map of a metavariable composite forces whnf across the source-category instance diamond",
+        "result": "failed",
+        "insight": "the iter-080 term-mode recipe is DEAD; Functor.map_comp distribution of a composite cannot cross the diamond at any finite HB"
+      },
+      {
+        "attempt": 2,
+        "strategy": "atomic-iso naturality: keep dual_restrict_iso folded (atomic), move restrictFunctorIsoPullback j to front by iso-level naturality on ATOMIC isos; never Functor.map_comp/mapIso_trans of a ≪≫-composite",
+        "code_tried": "rw [dual_restrict_iso_eq_comparison V.ι M, restrictFunctorIsoPullback_comp_compat j hjι M.dual]; simp only [Iso.trans_assoc]; congr 1; rw [mapIso_naturality_assoc (restrictFunctorIsoPullback j) ((restrictFunctorIsoPullback U.ι).app M.dual)]; have hR := ...; rw [← Iso.trans_assoc ..., hR]; congr 1; have hsplit := Functor.mapIso_trans (pullback j) _ _; rw [hsplit]; refine iso_cancel_left _ _ _ _ ?_; rw [dual_restrict_iso_eq_comparison j (M.restrict U.ι)]; sorry",
+        "line_number": "1166-1255",
+        "lean_error": "none (compiles, green-mod-sorry; reduced to ★pb-iso residual)",
+        "result": "partial",
+        "insight": "atomic-iso naturality clears every diamond crossing the term-mode route could not; the c.1 defeq seam needs generic single-[Category C] lemmas (iso_cancel_left) applied by refine, not keyed rw"
+      }
+    ],
+    "next_steps": "SOLO prove S3: discharge ★pb-iso (pure pullback-world dual cocycle) via PROVEN bridges (b) sheafificationCompPullback_restrict + (c) presheafDualPullbackComparison_restrict + c.1 pushforwardObjValRestrictIso=Iso.refl + a subst-style pullbackCongr coherence (dual of pullbackTensorMap_pullbackCongr); collapse leading RFIP_j.symm≪≫RFIP_j via iso_symm_trans_cancel applied by exact/refine"
+  },
+  {
+    "timestamp": "2026-06-25T05:09:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_81",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "untouched this iter — S3 consumed the full session",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "S4a is NOT strictly gated on S3 closing (shared seam bridge (b) proven); rides on (b) + θ-unit identification (presheafDualUnitIso_naturality promoted to j); partly parallel-able with S3"
+  },
+  {
+    "timestamp": "2026-06-25T05:09:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_81",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "untouched — telescope wires the 5 squares; gated on S3+S4a",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "wire the telescope once S3 + S4a land (S2/S4b/S4c done); telescope close ⇒ whole seed cone sorry-free"
+  }
+]

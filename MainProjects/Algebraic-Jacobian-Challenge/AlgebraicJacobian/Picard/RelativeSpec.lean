@@ -281,7 +281,8 @@ theorem UniversalProperty {X : Scheme.{u}} (𝒜 : X.QcohAlgebra) :
   change IsAffineOpen (d.toBase ⁻¹ᵁ U)
   have key : d.toBase ⁻¹ᵁ U = (d.cover.f i).opensRange := by
     have h := d.toBase_preimage_eq_opensRange_ι i
-    simpa [Scheme.Opens.opensRange_ι] using h
+    simp only [Scheme.Opens.opensRange_ι] at h
+    exact h
   rw [key]
   have : IsAffine (d.cover.X i) := by
     change IsAffine (Scheme.Spec.obj _)
@@ -493,7 +494,6 @@ noncomputable def pullback_cocone {X T : Scheme.{u}} (g : T ⟶ X)
         simp only [AffineZariskiSite.relativeGluingData, Functor.comp_obj,
           Functor.comp_map, Functor.rightOp_map, Functor.const_obj_obj,
           Functor.const_obj_map]
-        rw [Category.comp_id]
         exact (V.2.preimage q).map_fromSpec (U.2.preimage q) _ } }
 
 /-- **The descent composed with `q` equals `d.toBase`** (iter-183 Lane D

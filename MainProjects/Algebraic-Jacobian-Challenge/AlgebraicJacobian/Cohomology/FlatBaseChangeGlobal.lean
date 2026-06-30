@@ -202,22 +202,26 @@ noncomputable def gammaTopEquivEqLocus {X : Scheme.{u}} (M : X.Modules) {ι : Ty
         U ⊤ (fun _ => homOfLE le_top) hU.ge _ _ ?_
       intro i
       have hi := congrFun h i
-      simpa only [toCoverEqLocus, LinearMap.codRestrict_apply, toCover, LinearMap.pi_apply,
-        gammaResA_apply] using hi,
+      simp only [toCoverEqLocus, LinearMap.codRestrict_apply, toCover, LinearMap.pi_apply,
+        gammaResA_apply] at hi ⊢
+      exact hi,
      by
       rintro ⟨sf, hsf⟩
       have hcompat : TopCat.Presheaf.IsCompatible M.presheaf U sf := by
         intro i j
         have h := congrFun hsf (i, j)
-        simpa only [leftRes, rightRes, LinearMap.pi_apply, LinearMap.comp_apply,
-          LinearMap.proj_apply, gammaResA_apply] using h
+        simp only [leftRes, rightRes, LinearMap.pi_apply, LinearMap.comp_apply,
+          LinearMap.proj_apply, gammaResA_apply] at h ⊢
+        exact h
       obtain ⟨s, hs, -⟩ := TopCat.Sheaf.existsUnique_gluing'
         (⟨M.presheaf, M.isSheaf⟩ : TopCat.Sheaf Ab X) U ⊤ (fun _ => homOfLE le_top) hU.ge sf hcompat
       refine ⟨s, ?_⟩
       apply Subtype.ext
       funext i
-      simpa only [toCoverEqLocus, LinearMap.codRestrict_apply, toCover, LinearMap.pi_apply,
-        gammaResA_apply] using hs i⟩
+      have h := hs i
+      simp only [toCoverEqLocus, LinearMap.codRestrict_apply, toCover, LinearMap.pi_apply,
+        gammaResA_apply] at h ⊢
+      exact h⟩
 
 /-- **Flat base change commutes with the `H⁰` equalizer.** For `M : X.Modules`, a cover `U`
 of `X` (`⨆ i, U i = ⊤`), and a flat `A`-algebra `B` (`A = Γ(X, ⊤)`), base changing the global

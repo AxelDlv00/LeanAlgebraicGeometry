@@ -1,0 +1,355 @@
+[
+  {
+    "timestamp": "2026-06-24T20:11:32Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "functorT_residue_eq_zero"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "functorT_obj_isZero_iff",
+        "isZero_extGroup_of_iso_right",
+        "External.fibre_tensor_residue_iso",
+        "ext1_X_pushforward_fibre_vanishes"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "rw [functorT_obj_isZero_iff] then transport homological vanishing along fibre-id iso (2nd Ext arg)",
+        "code_tried": "rw [functorT_obj_isZero_iff]; exact isZero_extGroup_of_iso_right 1 I (External.fibre_tensor_residue_iso A f F) (ext1_X_pushforward_fibre_vanishes f (IsLocalRing.closedPoint ↑A) I F hI hFqc hs)",
+        "line_number": "2032",
+        "lean_error": "",
+        "result": "success",
+        "insight": "T(k(s))=0 = the hk hypothesis of functorT_eq_zero_of_residue; closed point elaborates as scheme point since ↑(Spec A) is defeq PrimeSpectrum ↑A"
+      }
+    ],
+    "next_steps": "Feeds functorT_eq_zero; both consumed by brick-6 free conclusion (next iter)."
+  },
+  {
+    "timestamp": "2026-06-24T20:11:32Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "functorT_eq_zero"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "functorT_eq_zero_of_residue",
+        "functorT_residue_eq_zero"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "compose residue-vanishing with the @026 OB-2.1 brick to get T(M)=0 for all M at S=Spec A",
+        "code_tried": "functorT_eq_zero_of_residue A f I F hF (functorT_residue_eq_zero …) M",
+        "line_number": "2058",
+        "lean_error": "",
+        "result": "success",
+        "insight": "BONUS adjacent step beyond pinned target: completes the full homological heart of (1.3) at S=Spec A (T(M)=0 ∀ f.g. M)."
+      }
+    ],
+    "next_steps": "Consumed by brick-6 free conclusion via H_represents exactness (next iter)."
+  },
+  {
+    "timestamp": "2026-06-24T20:11:32Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "functorT_obj_isZero_iff"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "liftAdditiveToModuleCat_isZero_obj_iff"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "unfold functorT + rw lift IsZero-reflection",
+        "code_tried": "unfold functorT; rw [liftAdditiveToModuleCat_isZero_obj_iff]",
+        "line_number": "1005",
+        "lean_error": "unsolved goals: IsZero ((tilde.functor A ⋙ tensorBaseChangeFunctor f F ⋙ covariantExtFunctor I 1).obj M) ↔ IsZero (extGroup 1 I ((tensorBaseChange…",
+        "goal_after": "the composite .obj M ↔ extGroup form",
+        "result": "partial",
+        "insight": "lift reflection leaves a defeq goal between the composite and the extGroup form"
+      },
+      {
+        "attempt": 2,
+        "strategy": "close residual defeq goal",
+        "code_tried": "unfold functorT; rw [liftAdditiveToModuleCat_isZero_obj_iff]; exact Iff.rfl",
+        "line_number": "1005",
+        "lean_error": "",
+        "result": "success",
+        "insight": "covariantExtFunctor I 1 .obj N = extGroup 1 I N and (tilde.functor A).obj M = tilde M both by rfl; same HasDerivedCategory.standard instances"
+      }
+    ],
+    "next_steps": "Coverage debt: needs blueprint entry lem:functorT_obj_isZero_iff (already pre-authored + matched per prover)."
+  },
+  {
+    "timestamp": "2026-06-24T20:11:32Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "liftAdditiveToModuleCat_isZero_obj_iff"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "ModuleCat.isZero_of_iff_subsingleton",
+        "AddCommGrpCat.isZero_iff_subsingleton"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "both sides reduce to Subsingleton ↑(G.obj M)",
+        "code_tried": "(liftAdditiveToModuleCat G).obj M = ModuleCat.of A (G.obj M) by rfl; then ModuleCat.isZero_of_iff_subsingleton + AddCommGrpCat.isZero_iff_subsingleton",
+        "line_number": "923",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Mathlib name found via loogle: ModuleCat.isZero_of_iff_subsingleton (initial searches for ModuleCat.isZero failed)"
+      }
+    ],
+    "next_steps": "Coverage debt — UNMATCHED lean_aux, needs blueprint sub-lemma of lem:functorT_obj_isZero_iff."
+  },
+  {
+    "timestamp": "2026-06-24T20:11:32Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "isZero_extGroup_of_iso_right"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Ext.comp_assoc_of_third_deg_zero",
+        "Ext.mk₀_comp_mk₀",
+        "Ext.comp_mk₀_id",
+        "Ext.zero_comp",
+        "isZero_extGroup_iff"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "second-arg mirror of isZero_extGroup_of_iso_left; transport y via postcomposition with mk₀ e.inv/e.hom",
+        "code_tried": "key : (y.comp (mk₀ e.inv)).comp (mk₀ e.hom) = y by Ext.comp_assoc_of_third_deg_zero, Ext.mk₀_comp_mk₀, e.inv_hom_id, Ext.comp_mk₀_id; then h (y.comp (mk₀ e.inv)) = 0 + Ext.zero_comp",
+        "line_number": "1397",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Covariant (2nd) arg uses POSTcomposition + comp_assoc_of_third_deg_zero (vs left version's precomposition + second_deg_zero)"
+      }
+    ],
+    "next_steps": "Coverage debt — UNMATCHED lean_aux, needs blueprint mirror of lem:isZero_extGroup_of_iso_left."
+  },
+  {
+    "timestamp": "2026-06-24T20:11:32Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext1_X_pushforward_fibre_vanishes"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "External.flat_fibre_restriction_exact",
+        "External.fibre_pushforward_qcoh"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "re-sign: drop @028 false named gaps hpullflat/hWqc, replace with (hI : IsSFlat f I) (hFqc : F.IsQuasicoherent)",
+        "code_tried": "hWqc := External.fibre_pushforward_qcoh f s F hFqc; hSEpull := External.flat_fibre_restriction_exact f s sc hsc (by rw [hX3]; exact hI)",
+        "line_number": "1898",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Faithful fix to @028's FALSE bridge IsSFlat (j≫f) (j^*I): base-term flatness hI drives the fibre SES via the new anchor; unprotected, no external callers, safe to re-sign"
+      }
+    ],
+    "next_steps": "Consumed by functorT_residue_eq_zero."
+  },
+  {
+    "timestamp": "2026-06-24T20:11:32Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "External.flat_fibre_restriction_exact"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "author EGA/standard anchor: I=sc.X₃ flat over base keeps fibre-restricted SES exact (j=f.fiberι s)",
+        "code_tried": "axiom External.flat_fibre_restriction_exact …",
+        "line_number": "720",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Sanctioned anchor replacing @028 false hpullflat; parallel to existing External.flat_pullback_exact; AK p.56 verbatim"
+      }
+    ],
+    "next_steps": "Blueprint thm:ega_flat_fibre_restriction pre-authored + matched."
+  },
+  {
+    "timestamp": "2026-06-24T20:11:32Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "External.fibre_tensor_residue_iso"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "author brick-5 fibre-id anchor j_*j^*F ≅ (tensorBaseChangeFunctor f F).obj k~ at closed point of Noeth-local A",
+        "code_tried": "axiom External.fibre_tensor_residue_iso …; stated at IsLocalRing.closedPoint ↑A; k~ = tilde (ModuleCat.of ↑A (IsLocalRing.ResidueField ↑A))",
+        "line_number": "734",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Verified ↑(Spec A) defeq PrimeSpectrum ↑A so closedPoint elaborates as a scheme point (probe via scratch example + exact?)"
+      }
+    ],
+    "next_steps": "Blueprint thm:ega_fibre_tensor_residue pre-authored + matched."
+  },
+  {
+    "timestamp": "2026-06-24T20:11:32Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "External.fibre_pushforward_qcoh"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "sanctioned 3rd anchor for hWqc: j_*j^*F qcoh from F qcoh (Mathlib lacks qcoh-preservation through Scheme.Modules.pullback/pushforward)",
+        "code_tried": "axiom External.fibre_pushforward_qcoh f s F (hF : F.IsQuasicoherent) : … ; verified absent via lean_local_search IsQuasicoherent",
+        "line_number": "749",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Plan preferred transporting qcoh along fibre_tensor_residue_iso, but that local iso fails at GENERAL S; honest small anchor instead (j qcqs ⟹ pushforward of qcoh pullback qcoh)"
+      }
+    ],
+    "next_steps": "Coverage debt: needs blueprint thm:ega_fibre_pushforward_qcoh (NOT yet authored)."
+  },
+  {
+    "timestamp": "2026-06-24T20:11:32Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_locallyFree_of_ext_vanishing"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "brick 6: EGA reduction general-S → Spec A Noeth-local (anchor) + free conclusion via H_represents exactness; PROGRESS explicitly instructed NOT to attempt this iter. Also needs (hI : IsSFlat f I) added to its signature (faithfulness)."
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "untouched per PROGRESS hand-off",
+        "code_tried": "",
+        "line_number": "1075",
+        "result": "partial",
+        "insight": "Homological heart (functorT_eq_zero) now fully in place at Spec A; remaining is the reduction + free conclusion only."
+      }
+    ],
+    "next_steps": "Planner authors EGA reduction anchor + wires free conclusion; closes line-1075 sorry."
+  },
+  {
+    "timestamp": "2026-06-24T20:11:32Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor_invertible"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "PAUSED monoidal lane (associator/MonoidalClosed gap); untouched."
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "untouched",
+        "code_tried": "",
+        "line_number": "1052",
+        "result": "partial",
+        "insight": "Off the active 1.3 lane."
+      }
+    ],
+    "next_steps": "Deferred."
+  },
+  {
+    "timestamp": "2026-06-24T20:11:32Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_finite_flat"
+    },
+    "session": {
+      "id": "session_29",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "relExt/R^q f_* + internal ℰxt absent; untouched."
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "untouched",
+        "code_tried": "",
+        "line_number": "1098",
+        "result": "partial",
+        "insight": "Off the active 1.3 lane."
+      }
+    ],
+    "next_steps": "Deferred."
+  }
+]

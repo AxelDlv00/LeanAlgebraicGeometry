@@ -1,0 +1,222 @@
+[
+  {
+    "timestamp": "2026-06-29T23:33:51Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackUnit_sheafify_reconcile"
+    },
+    "session": {
+      "id": "session_102",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "pullbackValIso_unit_factor",
+        "presheafPullbackUnitIso_sheafify_reconcile",
+        "adj_unit_counit_collapse",
+        "Iso.hom_inv_id_app_assoc"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "rewrite RHS comparator leg via L2 then expand pullbackValIso via L1, cancel sheafificationCompPullback hom/inv",
+        "code_tried": "rw [presheafPullbackUnitIso_sheafify_reconcile f, pullbackValIso_unit_factor f, ← Category.assoc, ← Category.assoc, Iso.hom_inv_id_app, Category.id_comp]",
+        "line_number": "1749",
+        "lean_error": "rewrite failed: Did not find an occurrence of the pattern (keyed rw of L2 misses the composite across the SheafOfModules seam)",
+        "result": "failed",
+        "insight": "keyed rw of a category lemma misses the ≫ composite across the SheafOfModules defeq seam"
+      },
+      {
+        "attempt": 2,
+        "strategy": "term-mode congrArg to rewrite L2 across the seam, then expand L1 and cancel via Iso.hom_inv_id_app_assoc",
+        "code_tried": "refine Eq.trans ?_ (congrArg ((SheafOfModules.sheafificationCompPullback f.toRingCatSheafHom).hom.app (SheafOfModules.unit X.ringCatSheaf).val ≫ ·) (presheafPullbackUnitIso_sheafify_reconcile f)).symm\n  rw [pullbackValIso_unit_factor f, Category.assoc, Iso.hom_inv_id_app_assoc]",
+        "line_number": "1749",
+        "lean_error": "(none after wrapping decl in set_option backward.isDefEq.respectTransparency false)",
+        "result": "success",
+        "insight": "term-mode congrArg crosses the seam where keyed rw fails; respectTransparency false needed for the comparator-unfold goal"
+      }
+    ],
+    "next_steps": "Keystone (a) now sorry-free; only (c) trivialisation_restrict_compat remains, gated/unblocked."
+  },
+  {
+    "timestamp": "2026-06-29T23:33:51Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "presheafPullbackUnitIso_sheafify_reconcile"
+    },
+    "session": {
+      "id": "session_102",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "H1inv_app_eq_pullbackVal_restrict",
+        "forgetUnitRestrict_eq_pushforwardUnit",
+        "adj_unit_counit_collapse",
+        "Iso.app_inv",
+        "Functor.map_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "transpose-free (†)-factorisation: p.hom = η_Y ; forget(pullbackValIso ; pullbackUnitIso) via H1inv reconciliation + RES1 leg cancellation, then generic unit/counit collapse",
+        "code_tried": "simp only [presheafPullbackUnitIso, Iso.trans_hom, Iso.symm_hom, Iso.app_inv]; erw [H1inv_app_eq_pullbackVal_restrict f (SheafOfModules.unit X.ringCatSheaf)]; have hqid : ... = forget (pullbackUnitIso f).hom := ...; rw [hp, ...]",
+        "line_number": "1700",
+        "lean_error": "ill-typed under instances transparency after presheafPullbackUnitIso unfold",
+        "result": "partial",
+        "insight": "wrap decl in set_option backward.isDefEq.respectTransparency false; (H1.app 𝟙).inv ≠ H1.inv.app 𝟙 for keyed rw → convert with Iso.app_inv; avoid ← Functor.map_comp (triggers instances type error), split RHS by FORWARD Functor.map_comp"
+      },
+      {
+        "attempt": 2,
+        "strategy": "apply generic collapse adj_unit_counit_collapse to finish SY.map(η_Y ; forget g) ; cuY = g",
+        "code_tried": "exact adj_unit_counit_collapse ...",
+        "line_number": "1700",
+        "lean_error": "(none)",
+        "result": "success",
+        "insight": "transpose-free route closes L2 fully; no need for the no-grind clean-sorry fallback"
+      }
+    ],
+    "next_steps": "Done; consumed by pullbackUnit_sheafify_reconcile."
+  },
+  {
+    "timestamp": "2026-06-29T23:33:51Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackValIso_unit_factor"
+    },
+    "session": {
+      "id": "session_102",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "pullbackValIso",
+        "Iso.trans_hom",
+        "Iso.symm_hom",
+        "Functor.mapIso_hom"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "mirror template hpbv (L647-653): unfold pullbackValIso, write RHS with (asIso counit).hom.app to match syntactically, close by rfl",
+        "code_tried": "rw [pullbackValIso, Iso.trans_hom, Iso.symm_hom, Functor.mapIso_hom]; rfl",
+        "line_number": "1665",
+        "lean_error": "(none)",
+        "result": "success",
+        "insight": "RHS spelling (asIso ...counit).hom.app M₀ matches target LHS on the nose"
+      }
+    ],
+    "next_steps": "Done; consumed by L2 and target."
+  },
+  {
+    "timestamp": "2026-06-29T23:33:51Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "adj_unit_counit_collapse"
+    },
+    "session": {
+      "id": "session_102",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "Adjunction.homEquiv_unit",
+        "Adjunction.homEquiv_counit",
+        "Equiv.symm_apply_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "rw with adj.counit.naturality + left_triangle_components",
+        "code_tried": "rw [Functor.map_comp, Category.assoc, ← Functor.comp_map, adj.counit.naturality g, ← Category.assoc, adj.left_triangle_components, Category.id_comp]",
+        "line_number": "1664",
+        "lean_error": "rewrite failed (instances transparency); Functor.map (Functor.map ...) pattern / (L⋙R).obj P vs R.obj(L.obj P) mismatch",
+        "result": "failed",
+        "insight": "the L⋙R middle-object mismatch defeats keyed rw of naturality"
+      },
+      {
+        "attempt": 2,
+        "strategy": "homEquiv round-trip with explicit-arg spelling to dodge middle-object mismatch",
+        "code_tried": "rw [show adj.unit.app P ≫ R.map g = adj.homEquiv P B g from (adj.homEquiv_unit P B g).symm]\n  exact (adj.homEquiv_counit P B (adj.homEquiv P B g)).symm.trans (Equiv.symm_apply_apply (adj.homEquiv P B) g)",
+        "line_number": "1664",
+        "lean_error": "(none)",
+        "result": "success",
+        "insight": "Adjunction.homEquiv_unit/homEquiv_counit take X Y f EXPLICITLY in this Mathlib; term-mode exact is defeq-friendly"
+      }
+    ],
+    "next_steps": "NEEDS blueprint block (new generic helper, no \\label)."
+  },
+  {
+    "timestamp": "2026-06-29T23:33:51Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_assemble"
+    },
+    "session": {
+      "id": "session_102",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "pullbackUnit_sheafify_reconcile",
+        "forgetUnitRestrict_eq_pushforwardUnit",
+        "unit_assemble",
+        "hcore_assemble"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "keystone body assembled iter-100, RES1 closed iter-101; this iter closing RES2 makes the body sorry-free transitively",
+        "code_tried": "(no direct edit; closed by RES2 chain landing)",
+        "line_number": "1786",
+        "lean_error": "(none)",
+        "result": "success",
+        "insight": "axiom-clean [propext, Classical.choice, Quot.sound]; keystone (a) fully closed"
+      }
+    ],
+    "next_steps": "Unblocks (c) trivialisation_restrict_compat."
+  },
+  {
+    "timestamp": "2026-06-29T23:33:51Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_102",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": "5-square telescope (S2/S3/S4a/S4b/S4c + ρ/uι reindex); each square needs naturality in the immersion j, not just restrictFunctorComp. Out of scope this iter; planner-scheduled next.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not attempted (gated, out of scope)",
+        "code_tried": "(left as typed sorry L2660 with in-code telescope plan)",
+        "line_number": "2660",
+        "lean_error": "(declaration uses sorry)",
+        "result": "partial",
+        "insight": "now unblocked in principle (a/S4a landed); was sorry in v4.30 too — not a regression"
+      }
+    ],
+    "next_steps": "Planner: dispatch dedicated directive; large 5-square assembly, separate from unit-reconciliation infra."
+  }
+]

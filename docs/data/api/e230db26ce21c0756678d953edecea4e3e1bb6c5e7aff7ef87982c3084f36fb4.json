@@ -1,0 +1,30 @@
+{
+  "files": [
+    {
+      "file": "AlgebraicJacobian/Picard/GlueDescent.lean",
+      "count": 3,
+      "lines": [
+        1990,
+        1998,
+        2045
+      ],
+      "occurrences": [
+        {
+          "line": 1990,
+          "column": 3
+        },
+        {
+          "line": 1998,
+          "column": 3
+        },
+        {
+          "line": 2045,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "total": 3,
+  "partial": false,
+  "warnings": []
+}

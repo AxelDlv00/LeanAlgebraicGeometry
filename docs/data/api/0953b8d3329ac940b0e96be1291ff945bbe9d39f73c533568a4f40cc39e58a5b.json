@@ -1,0 +1,108 @@
+[
+  {
+    "timestamp": "2026-06-24T16:01:20Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "exists_acyclic_surjection"
+    },
+    "session": {
+      "id": "session_22",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "External.exists_extensionByZero_surjection",
+        "External.extensionByZero_coprod_acyclic",
+        "extensionByZeroCoprod"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "anchor-and-assemble (planner pivot): add 2 External.* anchor axioms verbatim-sourced to AK §1 (1.2), assemble lemma in ~3 lines via a shared private abbrev extensionByZeroCoprod so witness J and acyclicity goal unify by defeq",
+        "code_tried": "obtain ⟨ι, U, hU, π, hπ⟩ := External.exists_extensionByZero_surjection I; exact ⟨_, π, hπ, fun {Y} g _ G hG q hq => External.extensionByZero_coprod_acyclic ι U hU g G hG q hq⟩",
+        "line_number": "1282",
+        "lean_error": null,
+        "goal_before": "∃ (J : X.Modules) (π : J ⟶ I), Epi π ∧ ∀ {Y} (g : Y ⟶ X) [IsAffineHom g] (G : Y.Modules) (_ : G.IsQuasicoherent) (q : ℕ) (_ : 0 < q), IsZero (extGroup q ((Scheme.Modules.pullback g).obj J) G)",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "Shared private abbrev extensionByZeroCoprod (∐_i (j_{U_i})_!(𝒪_{U_i})) used up front (the plan's '∐ shape fights elaboration' fallback) guaranteed the defeq match between J (inferred from π's type) and the second anchor's IsZero conclusion; elaborated on first build. #print axioms = {propext, Classical.choice, Quot.sound, External.exists_extensionByZero_surjection, External.extensionByZero_coprod_acyclic} — no sorryAx."
+      }
+    ],
+    "next_steps": "Pivot to 1.3 H_locallyFree_of_ext_vanishing — now CONSUMES the closed 1.2 (lem:acyclic_surjection); still gated on functor T + External.adjunction (unscaffolded) + half-exactness. Blueprint extensionByZeroCoprod (unmatched=1)."
+  },
+  {
+    "timestamp": "2026-06-24T16:01:20Z",
+    "status": "not_started",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor_invertible"
+    },
+    "session": {
+      "id": "session_22",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "PAUSED monoidal (MonoidalClosed / stalks absent); directive forbade touching the other 4 sorried theorems",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Remains PAUSED — monoidal associator needs MonoidalClosed(PresheafOfModules)/stalks, both absent."
+  },
+  {
+    "timestamp": "2026-06-24T16:01:20Z",
+    "status": "not_started",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor"
+    },
+    "session": {
+      "id": "session_22",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "right-exactness of H — absent infra; out of scope this iter",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Deferred — depends on absent half-exact / monoidal infra."
+  },
+  {
+    "timestamp": "2026-06-24T16:01:20Z",
+    "status": "not_started",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_locallyFree_of_ext_vanishing"
+    },
+    "session": {
+      "id": "session_22",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "needs functor T + External.adjunction (unscaffolded) + half-exact; out of scope this iter",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Newly-unblocked dependency: consumes the now-closed 1.2 (lem:acyclic_surjection). Still needs T + adjunction scaffolding. Highest-value next prove target on the 1.3 path."
+  },
+  {
+    "timestamp": "2026-06-24T16:01:20Z",
+    "status": "not_started",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_finite_flat"
+    },
+    "session": {
+      "id": "session_22",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "2nd conjunct IsLFPAndFlatOn opaque; needs relExt realized + internal ℰxt + R^q f_* (all absent)",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Deferred — relExt strand (internal ℰxt + R^q f_*), multi-iter absent-Mathlib build or anchor."
+  }
+]

@@ -1,0 +1,143 @@
+[
+  {
+    "timestamp": "2026-06-29T12:21:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "pullback_isQuasicoherent"
+    },
+    "session": {
+      "id": "session_318",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "isQuasicoherent_pullback_opens"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "planner hint = thin via Presentation.map; rejected after discovering Presentation.map transports only a GLOBAL presentation while IsQuasicoherent is LOCAL",
+        "code_tried": "(searched SheafOfModules.Presentation / Presentation.map)",
+        "line_number": "365",
+        "result": "partial",
+        "insight": "Presentation.map route is unsound for this goal"
+      },
+      {
+        "attempt": 2,
+        "strategy": "thin re-export of the sorry-free open-immersion lemma in CechTermAcyclic",
+        "code_tried": "theorem pullback_isQuasicoherent (V : X.Opens) (F : X.Modules) (hF : F.IsQuasicoherent) : ((Scheme.Modules.pullback V.ι).obj F).IsQuasicoherent := isQuasicoherent_pullback_opens V F hF",
+        "line_number": "365",
+        "result": "success",
+        "insight": "open-immersion case (V.ι) is all the fibre-power projections need; axiom-clean"
+      }
+    ],
+    "next_steps": "leaf-wiring iter-319 uses this for the degreewise pushPullObj presentation"
+  },
+  {
+    "timestamp": "2026-06-29T12:21:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "pullbackRestrict_iso_tilde"
+    },
+    "session": {
+      "id": "session_318",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "pullback_isQuasicoherent",
+        "pushforward_iso_preserves_qcoh",
+        "qcoh_iso_tilde_sections",
+        "isIso_fromTildeΓ_of_quasicoherent"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "altitude-1: push (V.ι)^*F forward along whole-scheme iso isoSpec.hom to land on literal Spec Γ(X,V) (so tilde type-checks), establish QC via instance, apply qcoh_iso_tilde_sections",
+        "code_tried": "haveI : (...pushforward isoSpec.hom).obj ((pullback V.ι).obj F)).IsQuasicoherent := pushforward_iso_preserves_qcoh hV.isoSpec _ (pullback_isQuasicoherent V F hF); qcoh_iso_tilde_sections _",
+        "line_number": "377",
+        "result": "success",
+        "insight": "isIso_fromTildeΓ_of_quasicoherent fires as instance; qcoh_iso_tilde_sections_qcoh (planner memory name) does NOT exist — use qcoh_iso_tilde_sections"
+      }
+    ],
+    "next_steps": "consumed by altitude 2 and the X-level leaf"
+  },
+  {
+    "timestamp": "2026-06-29T12:21:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "pushPullObj_pushforward_iso_tilde"
+    },
+    "session": {
+      "id": "session_318",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "pushforwardComp",
+        "pushforwardCongr",
+        "Spec.map_preimage",
+        "IsAffineOpen.isoSpec_inv_ι",
+        "pullbackRestrict_iso_tilde"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "altitude-2: 4-step iso composite over affine base S=Spec R; collapse f_*∘(V.ι)_* via pushforwardComp, rewrite V.ι≫f=isoSpec.hom≫Spec.map φ via pushforwardCongr, split off (Spec.map φ)_*, push altitude-1 through",
+        "code_tried": "have heq : V.ι ≫ f = hV.isoSpec.hom ≫ Spec.map (Spec.preimage (hV.fromSpec ≫ f)) := by rw [Spec.map_preimage, ← IsAffineOpen.isoSpec_inv_ι hV, Iso.hom_inv_id_assoc]",
+        "line_number": "408",
+        "result": "failed",
+        "insight": "missing Category.assoc — rw [Spec.map_preimage, ← isoSpec_inv_ι, Iso.hom_inv_id_assoc] did not close"
+      },
+      {
+        "attempt": 2,
+        "strategy": "same with Category.assoc inserted before Iso.hom_inv_id_assoc",
+        "code_tried": "rw [Spec.map_preimage, ← IsAffineOpen.isoSpec_inv_ι hV, Category.assoc, Iso.hom_inv_id_assoc]",
+        "line_number": "409",
+        "result": "success",
+        "insight": "heq closes; RHS = exactly the brick input (pushforward (Spec.map φ)).obj (tilde N); axiom-clean"
+      }
+    ],
+    "next_steps": "S-level leaf cech_pushforward_baseChange_natIso uses this degreewise then cech_degree_affine_baseChange"
+  },
+  {
+    "timestamp": "2026-06-29T12:21:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "cech_pushforward_baseChange_natIso"
+    },
+    "session": {
+      "id": "session_318",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "leaf-wiring deferred to iter-319 by directive (NOT touched this iter)"
+    },
+    "attempts": [],
+    "next_steps": "iter-319: extend sig [IsSeparated f][IsAffine S][IsAffine S']+affine cover, present pushPullObj F Yₙ affinely via pushPullObj_pushforward_iso_tilde (altitude 2), then cech_degree_affine_baseChange degreewise"
+  },
+  {
+    "timestamp": "2026-06-29T12:21:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "twisted_cech_nerve_iso"
+    },
+    "session": {
+      "id": "session_318",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "leaf-wiring deferred to iter-319 by directive (NOT touched this iter)"
+    },
+    "attempts": [],
+    "next_steps": "iter-319: X-level square, consumes altitude 1 + brick at the X-level square"
+  }
+]

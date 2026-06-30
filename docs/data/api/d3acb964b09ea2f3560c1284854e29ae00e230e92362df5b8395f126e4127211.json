@@ -1,0 +1,112 @@
+[
+  {
+    "timestamp": "2026-06-25T13:35:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_restrict_iso_comp"
+    },
+    "session": {
+      "id": "session_84",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "dual_scp_assemble",
+        "sheafificationCompPullback_comp",
+        "presheafDualPullbackComparison_restrict",
+        "pushforwardObjValRestrictIso",
+        "Iso.ext",
+        "Functor.map_comp",
+        "Iso.hom_inv_id_app"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "rw bridge-(b) iso-form hb across the SheafOfModules seam",
+        "code_tried": "have hb : (sheafificationCompPullback (f≫g)).app M.val.dual = ...; rw [hb]; simp only [Iso.trans_assoc]",
+        "line_number": "1384",
+        "lean_error": "rw did not find pattern (defeq-not-syntactic across SheafOfModules ≫ seam)",
+        "result": "failed",
+        "insight": "rw of a category/iso lemma misses across the ≫ seam"
+      },
+      {
+        "attempt": 2,
+        "strategy": "erw the bridge-(b) iso then iso-level reassoc",
+        "code_tried": "erw [hb]; simp only [Iso.trans_assoc]",
+        "line_number": "1384",
+        "lean_error": "erw fires but leaves an iso-bracket simp[Iso.trans_assoc] cannot reassociate (no (a≪≫b)≪≫c redex)",
+        "result": "failed",
+        "insight": "post-erw term resists iso-level reassoc; staying iso-level is dead"
+      },
+      {
+        "attempt": 3,
+        "strategy": "drop to .hom level via Iso.ext, syntactic flatten, discharge by generic abstract assembly lemma",
+        "code_tried": "apply Iso.ext; simp only [Iso.trans_hom, Functor.mapIso_hom, Functor.map_comp, Iso.symm_hom, Iso.app_hom]; exact dual_scp_assemble ha2 haZc hcancel1 hcancelrd hnat",
+        "line_number": "1326-1489",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Iso.ext→syntactic .hom flatten (Category.assoc fires, θ_g safe)→pure-abstract single-[Category C] dual_scp_assemble by exact (no whnf bomb). 5 haves: ha2=bridge(b) cocycle, haZc=outer sheafify distribute via ←Functor.map_comp ×3, hcancel1=Iso.hom_inv_id_app pullbackComp pair, hcancelrd=term-mode congrArg mid-pair under sheafify, hnat=sheafificationCompPullback.hom.naturality θ_g.hom .symm"
+      }
+    ],
+    "next_steps": "S3 dual_restrict_iso_restrict_compat now fully sorry-free + axiom-clean. Sorry 3→2."
+  },
+  {
+    "timestamp": "2026-06-25T13:35:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_84",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "needs a NEW θ-at-unit bridge: identify presheafDualPullbackComparison j (unit U) with presheafDualUnitIso modulo unitRestrictIso j; ~100+ LOC construction, unit-side analogue of the Cone-B θ machinery. dual_scp_assemble does NOT transfer (no SCP-composition structure; shape is presheafDualUnitIso ≪≫ counit).",
+      "key_lemmas_used": [
+        "presheafDualUnitIso_naturality"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "expose residual then attempt reuse of L1/SCP device",
+        "code_tried": "simp only [dual_unit_iso, dual_restrict_iso_eq_comparison] (already in file); inspect residual goal",
+        "line_number": "1567",
+        "lean_error": "no closing tactic; residual is the θ-at-unit identification, a separate construction",
+        "result": "partial",
+        "insight": "S4a is a separable obstacle, NOT a reuse of L1; precise blocker named"
+      }
+    ],
+    "next_steps": "Build presheafDualPullbackComparison_unit (θ-unit identification) relating presheafDualPullbackComparison j (unit U) to presheafDualUnitIso via pullback/pushforward of monoidal unit + dual-unit eval-at-1, promoting presheafDualUnitIso_naturality (DualInverse.lean:317) to immersion j; thread through the exposed S4a residual as S3 threads bridges (b)/(c)."
+  },
+  {
+    "timestamp": "2026-06-25T13:35:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_84",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "gated on all five squares (S2 done, S3 done iter-084, S4a OPEN, S4b done, S4c) plus a chart-chase telescoping assembly. Cannot proceed until S4a closes.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not attempted (strictly downstream of S4a)",
+        "code_tried": "",
+        "line_number": "2335",
+        "result": "partial",
+        "insight": "documentation in-file L2294-2334 current; gated on S4a"
+      }
+    ],
+    "next_steps": "After S4a closes: wire the five squares + chart-chase telescope assembly."
+  }
+]

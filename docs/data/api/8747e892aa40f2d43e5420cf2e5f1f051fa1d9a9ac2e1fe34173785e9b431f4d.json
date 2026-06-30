@@ -1,0 +1,102 @@
+[
+  {
+    "timestamp": "2026-06-29T18:24:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_assemble"
+    },
+    "session": {
+      "id": "session_100",
+      "model": "fine-grained"
+    },
+    "findings": {
+      "blocker": "RES1+RES2 both need leftAdjointUniq/homEquiv transpose-carrier coherence infra (FLANK-scale)",
+      "key_lemmas_used": [
+        "unit_assemble",
+        "hcore_assemble",
+        "restrictFunctorIsoPullback.hom.naturality",
+        "sheafificationCompPullback.hom.naturality",
+        "presheafDualUnitIso_pullback_natural",
+        "Functor.map_comp",
+        "pushforwardBetaUnitEpsAppOne"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "extract goal via trace_state+lake env lean (LSP dead/broken pipe), then build a verified abstract-[Category C] assembly to discharge the right-associated ≫-bookkeeping off-seam",
+        "code_tried": "private lemma unit_assemble / hcore_assemble {C}[Category C] ...; refine unit_assemble ... ?hnat ?hcore",
+        "line_number": "1529/1542/1646",
+        "lean_error": "none — compiles",
+        "result": "success",
+        "insight": "generic single-[Category C] lemma applied by defeq-refine/exact crosses the SheafOfModules ≫ seam with no whnf bomb"
+      },
+      {
+        "attempt": 2,
+        "strategy": "feed hL1'h (presheaf L1' naturality) under SY.map via rw",
+        "code_tried": "rw [forgetUnitRestrict_eq_pushforwardUnit f, ← Functor.map_comp, ← Functor.map_comp, hL1'h, Functor.map_comp]",
+        "line_number": "1685",
+        "lean_error": "rewrite failed: Did not find an occurrence of the pattern (presheafDualPullbackComparison f (unit)).hom ≫ ...",
+        "result": "failed",
+        "insight": "rw [hL1'h] under SY.map chokes on v4.31 Sheaf.val instances-transparency seam"
+      },
+      {
+        "attempt": 3,
+        "strategy": "apply hL1'h in TERM mode via congrArg SY.map, then unfold map of composite",
+        "code_tried": "exact (congrArg (fun m => (PresheafOfModules.sheafification (R := Y.ringCatSheaf) (𝟙 Y.ringCatSheaf.val)).map m) hL1'h).trans (Functor.map_comp _ _ _)",
+        "line_number": "1685",
+        "lean_error": "none — closes hflank",
+        "result": "success",
+        "insight": "term-mode congrArg + Functor.map_comp is the fix for the under-SY.map rewrite seam"
+      },
+      {
+        "attempt": 4,
+        "strategy": "close RES1 forgetUnitRestrict_eq_pushforwardUnit sectionwise: Iso.ext→hom_ext→ModuleCat.hom_ext→LinearMap.ext, RHS via pushforwardBetaUnitEpsAppOne",
+        "code_tried": "refine Eq.trans ?_ (pushforwardBetaUnitEpsAppOne f V y).symm; simp only [...pullbackObjUnitToUnitIso_hom]",
+        "line_number": "1566",
+        "lean_error": "reduced to carrier identity ((RFIP.app 𝟙_X).hom.val.app V ≫ (pullbackObjUnitToUnit φ).val.app V) y = (f.appIso V).hom y — sorry remains",
+        "result": "partial",
+        "insight": "RFIP = restrictAdjunction.leftAdjointUniq pullbackPushforwardAdjunction; pullbackObjUnitToUnit = homEquiv.symm transpose — needs Adjunction.homEquiv_leftAdjointUniq_hom_app / unit_leftAdjointUniq_hom_app"
+      },
+      {
+        "attempt": 5,
+        "strategy": "close RES2/(*) pullbackUnit_sheafify_reconcile by unfolding comparators",
+        "code_tried": "simp only [pullbackUnitIso, pullbackObjUnitToUnitIso_hom, presheafPullbackUnitIso]",
+        "line_number": "1607",
+        "lean_error": "exposes leftAdjointUniq (H1) factor — sorry remains",
+        "result": "partial",
+        "insight": "after RFIP-naturality cancels lead + SCP-naturality slides dual-unit to front + common (pullback f)(SX.map pdX) prefix cancels, RES2 becomes UNIT-ONLY (no dual factor) — same transpose-coherence infra as RES1"
+      }
+    ],
+    "next_steps": "effort-breaker / infrastructure lane on leftAdjointUniq unit-transpose carrier value (the H1 pullback↔pushforward identification at 𝟙_X); both RES1 and RES2 then close. Do NOT re-dispatch a plain prover at the keystone — the residual is FLANK-scale infra, not a fill."
+  },
+  {
+    "timestamp": "2026-06-29T18:24:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_100",
+      "model": "fine-grained"
+    },
+    "findings": {
+      "blocker": "structurally gated on (a) dual_unit_iso_restrict_assemble fully closing (S4a telescope)",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not attempted — gated on (a)",
+        "code_tried": "",
+        "line_number": "2451",
+        "lean_error": "",
+        "result": "partial",
+        "insight": "(c) was sorry in v4.30 too; not a regression; off the keystone path"
+      }
+    ],
+    "next_steps": "Do NOT dispatch before (a)/S4a lands."
+  }
+]

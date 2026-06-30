@@ -296,8 +296,9 @@ theorem affine_surj_of_vanishing {R : CommRingCat.{u}}
     have hz : fι ≫ gπ = 0 := by
       rw [hfι, hgπ, ← Functor.map_comp, ← Functor.map_comp, S.zero,
         Functor.map_zero, Functor.map_zero]
-    have := congrArg (fun (ψ : FX.presheaf ⟶ HX.presheaf) => ConcreteCategory.hom (ψ.app V) x) hz
-    simpa using this
+    have h := congrArg (fun (ψ : FX.presheaf ⟶ HX.presheaf) => ConcreteCategory.hom (ψ.app V) x) hz
+    simp at h ⊢
+    exact h
   have hmono : ∀ (V : (TopologicalSpace.Opens ↥(Spec R))ᵒᵖ),
       Function.Injective (ConcreteCategory.hom (fι.app V)) := by
     intro V
@@ -680,8 +681,9 @@ theorem affine_surj_of_vanishing_affine {R : CommRingCat.{u}}
     have hz : fι ≫ gπ = 0 := by
       rw [hfι, hgπ, ← Functor.map_comp, ← Functor.map_comp, S.zero,
         Functor.map_zero, Functor.map_zero]
-    have := congrArg (fun (ψ : FX.presheaf ⟶ HX.presheaf) => ConcreteCategory.hom (ψ.app V) x) hz
-    simpa using this
+    have h := congrArg (fun (ψ : FX.presheaf ⟶ HX.presheaf) => ConcreteCategory.hom (ψ.app V) x) hz
+    simp at h ⊢
+    exact h
   have hmono : ∀ (V : (TopologicalSpace.Opens ↥(Spec R))ᵒᵖ),
       Function.Injective (ConcreteCategory.hom (fι.app V)) := by
     intro V

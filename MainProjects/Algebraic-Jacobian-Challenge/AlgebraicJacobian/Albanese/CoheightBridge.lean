@@ -168,8 +168,7 @@ theorem ringKrullDim_stalk_eq_coheight
         = (Order.height (α := PrimeSpectrum Γ(X, U)) p : WithBot ℕ∞) := by
     rw [IsLocalization.AtPrime.ringKrullDim_eq_height
           (R := Γ(X, U)) p.asIdeal (X.presheaf.stalk z),
-        Ideal.height_eq_primeHeight]
-    rfl
+        PrimeSpectrum.height_eq_orderHeight p]
   -- Step 5: relate height(p) to coheight(z) via Decls 1 + 2 and the
   -- homeomorphism `Spec Γ(X,U) ≃ U.toScheme` from `hU.isoSpec`.
   -- (5a) Decl 1: coheight z in X = coheight ⟨z, hzU⟩ in U.1 subspace.

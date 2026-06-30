@@ -190,7 +190,7 @@ noncomputable def stalkMapₗ {M N : ModuleCat R} (f : M ⟶ N) (x : PrimeSpectr
   map_add' a b := map_add _ a b
   map_smul' r ζ := by
     dsimp only [RingHom.id_apply]
-    obtain ⟨U, hxU, s, rfl⟩ := TopCat.Presheaf.germ_exist (AlgebraicGeometry.tilde M).presheaf x ζ
+    obtain ⟨U, hxU, s, rfl⟩ := TopCat.Presheaf.exists_germ_eq (AlgebraicGeometry.tilde M).presheaf ζ
     rw [← tilde_germ_algebraMap_smul U x hxU r s]
     erw [TopCat.Presheaf.stalkFunctor_map_germ_apply U x hxU
         ((Scheme.Modules.toPresheaf (Spec (.of R))).map (AlgebraicGeometry.tilde.map f)),

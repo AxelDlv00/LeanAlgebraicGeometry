@@ -1,0 +1,196 @@
+[
+  {
+    "timestamp": "2026-06-24T19:33:28Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "acyclic_ses"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "exists_acyclic_surjection",
+        "ShortComplex.ShortExact.mk",
+        "ShortComplex.exact_kernel",
+        "kernel.condition"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Build SES 0→K→J→I→0 from exists_acyclic_surjection; package as ShortComplex with X₃ defeq I, X₂ defeq J, carrying J-acyclicity",
+        "code_tried": "obtain ⟨J, π, hπ, hac⟩ := exists_acyclic_surjection I; haveI : Epi π := hπ; exact ⟨ShortComplex.mk (kernel.ι π) π (kernel.condition π), ShortComplex.ShortExact.mk (ShortComplex.exact_kernel π), rfl, fun {Y} g _ G hG q hq => hac g G hG q hq⟩",
+        "line_number": "1793",
+        "result": "success",
+        "insight": "Same SES-from-epi pattern as 1.4 proof (L1500); acyclicity transfers to sc.X₂ by rfl"
+      }
+    ],
+    "next_steps": "Feeds ext1_X_pushforward_fibre_vanishes assembly"
+  },
+  {
+    "timestamp": "2026-06-24T19:33:28Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext0_precomp_surjective_iff"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Ext.mk₀_bijective",
+        "Ext.mk₀_comp_mk₀",
+        "Ext.homEquiv₀",
+        "Ext.mk₀_homEquiv₀_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Bridge degree-0 Ext precomp surjectivity ↔ Hom precomp surjectivity via mk₀ bijection conjugation",
+        "code_tried": "refine ⟨Ext.mk₀ vh, ?_⟩; rw [Ext.mk₀_comp_mk₀, hvh, Ext.mk₀_homEquiv₀_apply]",
+        "line_number": "1810",
+        "lean_error": "Tactic `rewrite` failed: Did not find an occurrence of the pattern (Ext.mk₀ ?f).comp (Ext.mk₀ ?g) ⋯ in (fun v ↦ (Ext.mk₀ φ).comp v ⋯) (Ext.mk₀ vh) = w",
+        "result": "failed",
+        "insight": "The fun-application was not beta-reduced; pattern hidden behind the lambda"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Beta-reduce with simp only before the rewrite",
+        "code_tried": "simp only at hvh ⊢; rw [Ext.mk₀_comp_mk₀, hvh, Ext.mk₀_homEquiv₀_apply]",
+        "line_number": "1827",
+        "result": "success",
+        "insight": "simp only (no lemmas) beta-reduces the lambda application so mk₀_comp_mk₀ matches. NEW helper, was unmatched (needs blueprint)"
+      }
+    ],
+    "next_steps": "Blueprint entry lem:ext0_precomp_surjective_iff (planner)"
+  },
+  {
+    "timestamp": "2026-06-24T19:33:28Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "adjunction_ladder_surjective"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Scheme.Modules.pullbackPushforwardAdjunction",
+        "Adjunction.homEquiv_naturality_left",
+        "Equiv.apply_symm_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Transport precomp surjectivity through j^*⊣j_* adjunction; pull w with homEquiv.symm, lift fibre-side, push back, commute square via homEquiv_naturality_left",
+        "code_tried": "let adj := Scheme.Modules.pullbackPushforwardAdjunction j; obtain ⟨u, hu⟩ := hsurj ((adj.homEquiv K G).symm w); refine ⟨adj.homEquiv J G u, ?_⟩; have hnat := adj.homEquiv_naturality_left φ u; simp only at hu ⊢; rw [← hnat, hu, Equiv.apply_symm_apply]",
+        "line_number": "1838",
+        "result": "success",
+        "insight": "Naturality is FREE (External.adjunction IS this adjunction's homEquiv.symm) — confirms planner's 'naturality is free' over @027's 'upgrade to nat-iso' worry"
+      }
+    ],
+    "next_steps": "Feeds ext1_X_pushforward_fibre_vanishes assembly"
+  },
+  {
+    "timestamp": "2026-06-24T19:33:28Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "fibre_hom_surjective"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Ext.contravariant_sequence_exact₁",
+        "isZero_extGroup_iff",
+        "ShortComplex.ShortExact.extClass",
+        "ext0_precomp_surjective_iff",
+        "FiberExtVanishes"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Connecting map Ext⁰(j^*K,j^*F)→Ext¹(j^*I,j^*F) lands in zero group (FiberExtVanishes); contravariant_sequence_exact₁ gives Ext⁰-precomp surjectivity; bridge to Hom. Take pulled-back SES short-exactness hSEpull as EXPLICIT hypothesis (keeps lemma axiom-clean, isolates flatness to assembly)",
+        "code_tried": "refine (ext0_precomp_surjective_iff _).mp ?_; intro x₁; have hzero : hSEpull.extClass.comp x₁ (show (1:ℕ)+0=1 by norm_num) = 0 := (isZero_extGroup_iff 1 _ _).mp hs _; obtain ⟨x₂, hx₂⟩ := Ext.contravariant_sequence_exact₁ hSEpull _ x₁ (show (1:ℕ)+0=1 by norm_num) hzero; exact ⟨x₂, hx₂⟩",
+        "line_number": "1863",
+        "result": "success",
+        "insight": "FiberExtVanishes stated on sc.X₃ (not free I) for definitional lineup with pulled SES's X₃"
+      }
+    ],
+    "next_steps": "Feeds ext1_X_pushforward_fibre_vanishes assembly"
+  },
+  {
+    "timestamp": "2026-06-24T19:33:28Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext1_X_pushforward_fibre_vanishes"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "acyclic_ses",
+        "External.flat_pullback_exact",
+        "ext1_isZero_of_acyclic_chase",
+        "acyclic_ext1_vanishes",
+        "ext0_precomp_surjective_iff",
+        "adjunction_ladder_surjective",
+        "fibre_hom_surjective"
+      ],
+      "blocker": "Two genuine external inputs (hpullflat = S-flatness of j^*I; hWqc = quasicoherence of j_*j^*F) taken as EXPLICIT hypotheses, not derived"
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Assemble Ext¹_X(I,j_*j^*F)=0: acyclic_ses → flat_pullback_exact for pulled SES short-exactness (threading flatness of original I's pullback via mapIso eqToIso) → ext1_isZero_of_acyclic_chase with hJ=acyclic_ext1_vanishes, hsurj from the three surjectivity bricks",
+        "code_tried": "obtain ⟨sc, hsc, hX3, hac⟩ := acyclic_ses I; ... have hSEpull := External.flat_pullback_exact (j ≫ f) j sc hsc ((pullback j).obj I) hpullflat e; rw [← hX3]; refine ext1_isZero_of_acyclic_chase sc hsc W ?_ ?_; · exact acyclic_ext1_vanishes sc.X₂ hac W hWqc; · refine (ext0_precomp_surjective_iff sc.f).mpr ?_; refine adjunction_ladder_surjective j sc.f _ ?_; exact fibre_hom_surjective f s sc F hSEpull (by rw [hX3]; exact hs)",
+        "line_number": "1898",
+        "result": "success",
+        "insight": "Plan wanted (hI:IsSFlat f I) deriving hpullflat — but that bridge is FALSE (see findings). #print axioms = only pre-existing External anchors, NO new axiom"
+      }
+    ],
+    "next_steps": "Anchor hpullflat (S-flatness of j^*I via Tor-vanishing along S→k(s)) + hWqc; then brick 5 (fibre id j_*j^*F≅F⊗_S k(s)~) + brick 6 (reduction+free) close H_locallyFree"
+  },
+  {
+    "timestamp": "2026-06-24T19:33:28Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_locallyFree_of_ext_vanishing"
+    },
+    "session": {
+      "id": "session_28",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Final 1.3 assembly. Needs: brick 5 (fibre identification j_*j^*F ≅ F⊗_S k(s)~, new EGA base-change anchor) + brick 6 (local-on-S reduction to Spec A + H_represents ⟹ free). Signature still missing (hI : IsSFlat f I) faithfulness fix.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — correctly deferred per plan; depends on bricks 5/6 (new anchors, planner authors next iter)",
+        "code_tried": "(no edit; line 993 sorry untouched)",
+        "result": "partial",
+        "insight": "ext1_X_pushforward_fibre_vanishes (this iter) supplies the homological half of T(k(s))=0"
+      }
+    ],
+    "next_steps": "Planner: anchor brick 5 fibre id + author brick 6 reduction/free; add (hI:IsSFlat f I) to signature"
+  }
+]

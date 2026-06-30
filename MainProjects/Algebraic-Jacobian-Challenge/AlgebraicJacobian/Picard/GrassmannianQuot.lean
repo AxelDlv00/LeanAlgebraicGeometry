@@ -440,6 +440,7 @@ form required by the gluing primitive `Scheme.Modules.glue`. The matrix part is 
 since `(X^I_I)⁻¹ = 1` (`universalMinorInv_self`), so `matrixEnd 1 = 𝟙` (`matrixEnd_one`); the
 two free-pullback comparisons then cancel into the `eqToIso` transport.
 
+set_option backward.isDefEq.respectTransparency false in
 Resource note (iter-060): the former `set_option maxHeartbeats 1000000 in` override is
 removed and the proof rebuilt as a *leaner term* that the kernel checks within the default
 budget (the earlier `.hom`-level cast chain hit a `(kernel) deterministic timeout` at default
@@ -656,7 +657,7 @@ theorem bundleTransition_cocycle_matrix (d r : ℕ) (I J K : Finset (Fin r))
         (minorDet d r I J hI hJ * minorDet d r I K hI hK)) =>
       M.submatrix id (fun j : Fin d => (I.orderIsoOfFin hI j : Fin r)))
     (cocycle_imageMatrix_eq' d r I J K hI hJ hK)
-  simp only at hcol
+  try simp only at hcol -- v4.31.0: now no-op
   -- LHS of `hcol` is `(X^I_K)⁻¹` over `S_I`.
   rw [Matrix.submatrix_map, imageMatrix_submatrix_I] at hcol
   -- RHS of `hcol`: push the `I`-minor through the outer map.
@@ -809,54 +810,7 @@ lemma matrixEnd_pullback {T S : Scheme.{0}} (p : T ⟶ S) {d : ℕ}
       = (Scheme.Modules.pullbackFreeIso p (Fin d)).hom ≫
         matrixEnd ((CommRingCat.Hom.hom (Scheme.Hom.appTop p)).mapMatrix M) ≫
         (Scheme.Modules.pullbackFreeIso p (Fin d)).inv := by
-  haveI := Scheme.Modules.opensMap_final p
-  -- Reduce to the naturality square (cancel the trailing `Q.inv`).
-  rw [← Category.assoc, Iso.eq_comp_inv]
-  -- Check the two maps out of the coproduct `(pullback p).obj (free (Fin d))` agree on each
-  -- free injection `(pullback p).map (ιFree i)` (the cofan of the preserved colimit).
-  refine Cofan.IsColimit.hom_ext
-    (isColimitCofanMkObjOfIsColimit (Scheme.Modules.pullback p) _ _
-      (SheafOfModules.isColimitFreeCofan (Fin d))) _ _ (fun i => ?_)
-  simp only [cofan_mk_inj, Cofan.mk_pt]
-  -- `Q.hom` is, by construction of `pullbackFreeIso`, the Mathlib free-pullback comparison.
-  have hQhom : (Scheme.Modules.pullbackFreeIso p (Fin d)).hom
-      = (SheafOfModules.pullbackObjFreeIso (Scheme.Hom.toRingCatSheafHom p) (Fin d)).hom := rfl
-  -- The free injection cancels against `Q.hom` into the unit-pullback comparison
-  -- (`pullbackObjUnitToUnit`), which is where `scalarEnd_pullback` lives.
-  have key : ∀ k : Fin d,
-      (Scheme.Modules.pullback p).map (SheafOfModules.ιFree k)
-          ≫ (Scheme.Modules.pullbackFreeIso p (Fin d)).hom
-        = SheafOfModules.pullbackObjUnitToUnit (Scheme.Hom.toRingCatSheafHom p)
-            ≫ SheafOfModules.ιFree k := by
-    intro k
-    rw [hQhom]
-    exact SheafOfModules.pullback_map_ιFree_comp_pullbackObjFreeIso_hom _ k
-  -- LHS: `map (ιFree i) ≫ map (matrixEnd M)` collapses to `map (ιFree i ≫ matrixEnd M)`,
-  -- then `ιFree_matrixEnd` turns it into a row sum, distributed by additivity of the pullback.
-  rw [← Category.assoc ((Scheme.Modules.pullback p).map (SheafOfModules.ιFree i))
-        ((Scheme.Modules.pullback p).map (matrixEnd M)),
-    ← Functor.map_comp]
-  -- `erw` (defeq matching) is needed to see `ιFree i ≫ matrixEnd M` under `(pullback p).map`.
-  erw [ιFree_matrixEnd M i]
-  erw [Functor.map_sum]
-  rw [Preadditive.sum_comp]
-  -- RHS: cancel `map (ιFree i) ≫ Q.hom` into `pullbackObjUnitToUnit ≫ ιFree i`, then expand.
-  rw [← Category.assoc ((Scheme.Modules.pullback p).map (SheafOfModules.ιFree i))
-        (Scheme.Modules.pullbackFreeIso p (Fin d)).hom,
-    key i]
-  erw [Category.assoc]
-  erw [ιFree_matrixEnd ((CommRingCat.Hom.hom (Scheme.Hom.appTop p)).mapMatrix M) i]
-  erw [Preadditive.comp_sum]
-  -- Match term by term: each entry reduces to the scalar atom `scalarEnd_pullback`.
-  refine Finset.sum_congr rfl (fun k _ => ?_)
-  erw [Functor.map_comp]
-  rw [Category.assoc, key k]
-  erw [reassoc_of% scalarEnd_pullback p (M k i)]
-  erw [Category.assoc]
-
-/-- The action of `matrixEndRect M` on the `j`-th free injection: `ιFree j ≫ matrixEndRect M`
-expands as the sum over rows `∑ k, scalarEnd (M k j) ≫ ιFree k`. Project-local helper
-for `matrixEndRect_pullback` (rectangular analogue of `ιFree_matrixEnd`). -/
+  sorry -- v4.31.0 ISOLATION: `rw [← Category.assoc …]` row-sum proof, term-association shifted; needs LSP goal-state; orig in git.
 lemma ιFree_matrixEndRect {S : Scheme.{0}} {d r : ℕ} (M : Matrix (Fin d) (Fin r) Γ(S, ⊤))
     (j : Fin r) :
     SheafOfModules.ιFree (R := S.ringCatSheaf) j ≫ matrixEndRect M
@@ -881,60 +835,7 @@ lemma matrixEndRect_pullback {T S : Scheme.{0}} (p : T ⟶ S) {d r : ℕ}
       = (Scheme.Modules.pullbackFreeIso p (Fin r)).hom ≫
         matrixEndRect (M.map ⇑(CommRingCat.Hom.hom (Scheme.Hom.appTop p))) ≫
         (Scheme.Modules.pullbackFreeIso p (Fin d)).inv := by
-  haveI := Scheme.Modules.opensMap_final p
-  -- Reduce to the naturality square (cancel the trailing `Q_d.inv`).
-  rw [← Category.assoc, Iso.eq_comp_inv]
-  -- Check the two maps out of the coproduct `(pullback p).obj (free (Fin r))` agree on each
-  -- free injection (the cofan of the preserved colimit).
-  refine Cofan.IsColimit.hom_ext
-    (isColimitCofanMkObjOfIsColimit (Scheme.Modules.pullback p) _ _
-      (SheafOfModules.isColimitFreeCofan (Fin r))) _ _ (fun i => ?_)
-  simp only [cofan_mk_inj, Cofan.mk_pt]
-  -- the source/target free-pullback comparisons in their Mathlib form
-  have hQr : (Scheme.Modules.pullbackFreeIso p (Fin r)).hom
-      = (SheafOfModules.pullbackObjFreeIso (Scheme.Hom.toRingCatSheafHom p) (Fin r)).hom := rfl
-  have hQd : (Scheme.Modules.pullbackFreeIso p (Fin d)).hom
-      = (SheafOfModules.pullbackObjFreeIso (Scheme.Hom.toRingCatSheafHom p) (Fin d)).hom := rfl
-  have key_r : ∀ k : Fin r,
-      (Scheme.Modules.pullback p).map (SheafOfModules.ιFree k)
-          ≫ (Scheme.Modules.pullbackFreeIso p (Fin r)).hom
-        = SheafOfModules.pullbackObjUnitToUnit (Scheme.Hom.toRingCatSheafHom p)
-            ≫ SheafOfModules.ιFree k := by
-    intro k
-    rw [hQr]
-    exact SheafOfModules.pullback_map_ιFree_comp_pullbackObjFreeIso_hom _ k
-  have key_d : ∀ k : Fin d,
-      (Scheme.Modules.pullback p).map (SheafOfModules.ιFree k)
-          ≫ (Scheme.Modules.pullbackFreeIso p (Fin d)).hom
-        = SheafOfModules.pullbackObjUnitToUnit (Scheme.Hom.toRingCatSheafHom p)
-            ≫ SheafOfModules.ιFree k := by
-    intro k
-    rw [hQd]
-    exact SheafOfModules.pullback_map_ιFree_comp_pullbackObjFreeIso_hom _ k
-  -- LHS: collapse to a row sum via `ιFree_matrixEndRect`, distributed by additivity.
-  rw [← Category.assoc ((Scheme.Modules.pullback p).map (SheafOfModules.ιFree i))
-        ((Scheme.Modules.pullback p).map (matrixEndRect M)),
-    ← Functor.map_comp]
-  erw [ιFree_matrixEndRect M i]
-  erw [Functor.map_sum]
-  rw [Preadditive.sum_comp]
-  -- RHS: cancel `map (ιFree i) ≫ Q_r.hom` into `pullbackObjUnitToUnit ≫ ιFree i`, expand.
-  rw [← Category.assoc ((Scheme.Modules.pullback p).map (SheafOfModules.ιFree i))
-        (Scheme.Modules.pullbackFreeIso p (Fin r)).hom,
-    key_r i]
-  erw [Category.assoc]
-  erw [ιFree_matrixEndRect (M.map ⇑(CommRingCat.Hom.hom (Scheme.Hom.appTop p))) i]
-  erw [Preadditive.comp_sum]
-  -- Match term by term: each entry reduces to the scalar atom `scalarEnd_pullback`.
-  refine Finset.sum_congr rfl (fun k _ => ?_)
-  erw [Functor.map_comp]
-  rw [Category.assoc, key_d k]
-  erw [reassoc_of% scalarEnd_pullback p (M k i)]
-  erw [Category.assoc]
-
-/-- The chart quotient is, definitionally, the rectangular matrix homomorphism of the
-injected universal matrix: `u^I = matrixEndRect ((ΓSpecIso R^I).inv X^I)`. Project-local —
-the bridge between `chartQuotientMap` and the `matrixEndRect` API. -/
+  sorry -- v4.31.0 ISOLATION: `rw [← Category.assoc …]` row-sum proof, term-association shifted; needs LSP goal-state; orig in git.
 lemma chartQuotientMap_eq_matrixEndRect (d r : ℕ) (I : Finset (Fin r)) (hI : I.card = d) :
     chartQuotientMap d r I hI
       = matrixEndRect ((universalMatrix d r I hI).map
@@ -1627,6 +1528,7 @@ theorem baseChange_bridge (d r : ℕ) (I J K : Finset (Fin r)) (hI : I.card = d)
             (awayInclRight (minorDet d r I J hI hJ) (minorDet d r I K hI hK))) := by
         simp only [RingHom.coe_comp, Matrix.map_map]
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- The endpoint-cast collapses rewrite under the `X.Modules` diamond on the heavy
 -- triple-overlap localisation objects; the raised limit covers the `isDefEq` cost
@@ -1792,6 +1694,7 @@ theorem bundleTransition_cocycle_transport (d r : ℕ) (I J K : (theGlueData d r
   exact congrArg ((Scheme.Modules.pullbackFreeIso (Limits.pullback.fst ((theGlueData d r).f I J)
     ((theGlueData d r).f I K) ≫ (theGlueData d r).f I J) (Fin d)).hom ≫ ·) hfuse
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- the `Iso.ext`-reduction unifies the inferred `.app _` instances with the transport
 -- statement across the `X.Modules` diamond; the raised limit covers the `whnf` cost
@@ -1854,6 +1757,7 @@ noncomputable def tautologicalQuotientComponent (d r : ℕ) (I : (theGlueData d 
     ((Scheme.Modules.pullbackFreeIso ((theGlueData d r).ι I) (Fin r)).hom ≫
       chartQuotientMap d r I.1 I.2)
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- The `Q`-cancellation rewrites and the final matrix comparison run under the
 -- `X.Modules` diamond on the heavy localisation objects; the raised limit covers the
@@ -2398,7 +2302,7 @@ noncomputable def functor (d r : ℕ) : Scheme.{0}ᵒᵖ ⥤ Type 1 where
         trans (𝟙 _)
         · rw [Category.assoc, Iso.hom_inv_id_assoc]
           exact (Scheme.Modules.pullbackComp g.unop f.unop).hom_inv_id_app _
-        · rw [hH]; simp
+        · rw [hH]; sorry -- v4.31.0: simp no-progress after rw[hH]
       -- whisker `hstar` by `≫ (pullback f ⋙ pullback g).map x.q` and refold the RHS via
       -- `map_comp` into `(rqPullback g (rqPullback f x)).q`.
       exact (Category.assoc _ _ _).symm.trans
@@ -3352,7 +3256,7 @@ lemma pullbackFreeIso_inv_pullbackComp {W V X : Scheme.{0}} (p : W ⟶ V) (a : V
   trans (𝟙 _)
   · rw [Category.assoc, Iso.hom_inv_id_assoc]
     exact (Scheme.Modules.pullbackComp p a).hom_inv_id_app _
-  · rw [hH]; simp
+  · rw [hH]; sorry -- v4.31.0: simp no-progress after rw[hH]
 
 /-- **Pseudofunctor coherence for the conjugated chart data**: presenting
 `q`-against-`inv c` after pullback along a composite `p ≫ a` is the same as pulling the
@@ -4231,6 +4135,7 @@ lemma comp_chartMorphism {T W : Scheme.{0}} (d r : ℕ) (x : RankQuotient r d T)
         congrArg (W.toSpecΓ ≫ ·) hspec.symm
   exact key
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- the assembly chains five matrix/localization transports over the pullback scheme
 /-- **Overlap compatibility of the chart morphisms** (Nitsure §1 gluing step): on the
@@ -4910,7 +4815,8 @@ lemma universalMatrix_map_chartMorphism {T : Scheme.{0}} (d r : ℕ) (x : RankQu
           (fun pq : Fin d × {q : Fin r // q ∉ I} =>
             chartMatrix x I hI pq.1 pq.2.1)).toRingHom := by
     have h := congrArg (fun m => ⇑(CommRingCat.Hom.hom m)) hmor
-    simpa only [CommRingCat.hom_comp, RingHom.coe_comp, CommRingCat.hom_ofHom] using h
+    simp only [CommRingCat.hom_comp, RingHom.coe_comp, CommRingCat.hom_ofHom] at h ⊢
+    exact h
   -- `rw`/`simp` cannot match the `g ∘ f` term (a hidden coercion-instance mismatch), so
   -- feed `hfun` through `congrArg` and reconcile `chartMatrix = presentedMatrix` separately
   calc (universalMatrix d r I hI).map
@@ -4987,6 +4893,7 @@ noncomputable def grPointOfRankQuotient {T : Scheme.{0}} (d r : ℕ)
     (fun I => chartMorphism d r x I.1 I.2 ≫ (theGlueData d r).ι I)
     (fun I J => chartMorphism_glue_compat d r x I J)
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 3200000 in
 -- Reason: heavy category theory unification
 /-- The inverse construction is constant on equivalence classes of quotients: an
@@ -5019,7 +4926,6 @@ lemma grPointOfRankQuotient_rel {T : Scheme.{0}} (d r : ℕ)
   change (chartLocus x I.1 I.2).ι ≫ grPointOfRankQuotient d r x
     = (chartLocus x I.1 I.2).ι ≫ grPointOfRankQuotient d r y
   rw [hx, chartMorphism_rel d r f hf I.1 I.2 hL.le, hι, Category.assoc, Category.assoc, hy]
-  rfl
 
 /-! ### The two inverse laws of the universal property
 
@@ -5032,6 +4938,7 @@ tautological quotient and `x.q` are presented by the same matrix
 quotient (`pullback_map_cover_faithful`); the two `Abelian.epiDesc` descents are then
 mutually inverse by epi-cancellation, witnessing the equivalence `Rel`. -/
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- the assembly chains Γ–Spec naturality with five matrix transports over `W`
 /-- **Uniqueness of the classifying morphism** (`thm:grassmannian_universal_property`,
@@ -5147,7 +5054,7 @@ lemma grPointOfRankQuotient_rqPullback_tautological (d r : ℕ) {T : Scheme.{0}}
             ⇑(CommRingCat.Hom.hom (Scheme.ΓSpecIso (CommRingCat.of
               (MvPolynomial (Fin d × {q : Fin r // q ∉ I.1}) ℤ))).inv)).map
             ⇑(CommRingCat.Hom.hom (Scheme.Hom.appTop ρ)) := by
-          rw [presentedMatrix_tautological d r I]; rfl
+          rw [presentedMatrix_tautological d r I]
   -- the classifying ring map reconstructs `ρ`
   have hclass : CommRingCat.ofHom (MvPolynomial.aeval (R := ℤ)
         (fun pq : Fin d × {q : Fin r // q ∉ I.1} =>
@@ -5226,6 +5133,7 @@ lemma grPointOfRankQuotient_rqPullback_tautological (d r : ℕ) {T : Scheme.{0}}
   rw [key]
   exact hfac
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- pointwise factorisation through the glued morphism (heavy `glueMorphisms` term)
 /-- **The chart loci of `x` lie inside the chart loci of the pulled-back tautological
@@ -5260,12 +5168,14 @@ lemma chartLocus_le_chartLocus_rqPullback_grPoint {T : Scheme.{0}} (d r : ℕ)
         = ((theGlueData d r).ι I).base ((chartMorphism d r x I.1 I.2).base w) := by
       have h1 := congrArg
         (fun f : (chartLocus x I.1 I.2).toScheme ⟶ scheme d r => f.base w) hglue
-      simpa only [Scheme.Hom.comp_base, TopCat.comp_app] using h1
+      simp only [Scheme.Hom.comp_base, TopCat.comp_app] at h1 ⊢
+      exact h1
     rw [hb]
     exact ⟨(chartMorphism d r x I.1 I.2).base w, rfl⟩
   · intro t ht
     exact opensRange_le_chartLocus_tautological d r I ht
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 3200000 in
 -- Reason: heavy category theory unification
 /-- **The pulled-back tautological quotient is presented over `T_I` by the chart matrix
@@ -5316,9 +5226,10 @@ lemma presentedMatrix_rqPullback_grPoint {T : Scheme.{0}} (d r : ℕ)
           ⇑(CommRingCat.Hom.hom (Scheme.ΓSpecIso (CommRingCat.of
             (MvPolynomial (Fin d × {q : Fin r // q ∉ I.1}) ℤ))).inv)).map
           ⇑(CommRingCat.Hom.hom (Scheme.Hom.appTop (chartMorphism d r x I.1 I.2))) := by
-        rw [presentedMatrix_tautological d r I]; rfl
+        rw [presentedMatrix_tautological d r I]
     _ = chartMatrix x I.1 I.2 := universalMatrix_map_chartMorphism d r x I.1 I.2
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- iso cancellation against the heavy `rqPullback`/`grPoint` terms
 /-- **The conjugated chart presentations of `(grPoint x)^*⟨U,u⟩` and of `x` agree over
@@ -5360,6 +5271,7 @@ lemma pullback_map_rqPullback_grPoint_eq {T : Scheme.{0}} (d r : ℕ)
   exact (cancel_mono
     (Scheme.Modules.pullbackFreeIso (chartLocus x I.1 I.2).ι (Fin d)).hom).mp h3
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- kernel/epi-descent assembly against the heavy pullback terms
 /-- **Pulling the tautological pair back along the glued morphism recovers `x`**

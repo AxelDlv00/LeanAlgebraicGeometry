@@ -14,124 +14,97 @@ prover
 
 **Zero inline `sorry` in the dependency cone of the three seed declarations + kernel-only
 axioms**, for the **Line-Bundle Comparison Iso** subproject (A.1.c.sub). Seeds:
-`lem:pullback_tensor_iso_loctriv` (seed-1, D4′ — DELIVERED iter-042),
-`lem:dual_isLocallyTrivial` (seed-2, DUAL — DELIVERED),
-`thm:rel_pic_addcommgroup_via_tensorobj` (seed-3, consumer; gated on terminal).
+`lem:pullback_tensor_iso_loctriv` (seed-1, D4′), `lem:dual_isLocallyTrivial` (seed-2, DUAL),
+`thm:rel_pic_addcommgroup_via_tensorobj` (seed-3, consumer).
 
-## Build state (iter-073 plan turn)
+## State (iter-103 turn-in)
 
-- **iter-072 was a COMPLETE NO-OP** (`logs/iter-072/meta.json`: `planValidate = failed_all_noop`,
-  `objectivesDispatched: 0`). The sole objective (`SliceTransport.lean`) was DROPPED because the file
-  is sorry-free and its header said "**ADD** the forward apply lemma" — `ADD` is NOT a recognized
-  validator scaffold keyword (`scaffold|skeleton|stub out|declarations for|does not exist`). No prover
-  ran, no Lean changed, no review happened. Forward `sliceDualTransport_app_apply` STILL does not
-  exist (only the inverse at SliceTransport.lean:563, `:= rfl`).
-- **Main tree `lake build` GREEN-mod-sorry** (iter-071 prover verified `…PresheafDualPullback` EXIT 0,
-  8324 jobs; no Lean touched since — build still green). Terminal `TensorObjInverse.lean`
-  carries 4 `sorry`: S3, S4a, bridge-(b) `sheafificationCompPullback_restrict`, telescope. Sibling
-  `PresheafDualPullback.lean` carries 3 `sorry`: c.2 `presheafDualPullbackComparison_restrict` (L764)
-  + 2 OFF-path abandoned (L377, L434; deferred). Upstream `SliceTransport.lean` is **sorry-free**.
-- **iter-071 BREAKTHROUGH (supersedes the iter-070 framing): c.2 FACTORS CLEANLY.** The iter-071 prover
-  DISPROVED the 4-iter-old "interleaved two-immersion merge that does NOT factor" picture. c.2 reduces by
-  pure category/naturality algebra to a SINGLE isolated residual identity (∗∗) via ONE ordinary
-  `NatTrans` naturality of `H1_h.hom` at `θ_f.hom`: left-mult by `H1_{h≫f}.hom` + the `pushforwardComp`
-  counit `FC.hom`, substitute cocycle (a) `presheafDualH1Cocycle` (CLOSED), cancel `pbComp`, slide
-  `H1_h.hom`, collapse two `hom_inv_id`s. **(∗∗)** `FC.hom.app dM ; sDT_{h≫f} = pushβ_h.map(sDT_f) ;
-  sDT_h(M|f) ; dualIsoOfIso(rfc).hom` is the SOLE genuine residual — the pushforward-flank
-  `sliceDualTransport` pseudofunctoriality. Verified in code: the 3 `let`-transparent adjunctions + `have
-  hcoc := presheafDualH1Cocycle …` instantiate cleanly (build EXIT 0).
-- **TWO named blockers to close c.2 (both off the iter-071 tactic-depth):** (1) the abstract H1-cancel
-  tail whnf-BOMBS across the `≫` seam under `rw`/`erw`/`cancel_epi`/`set`/`show` (lake-confirmed) — cure =
-  local copies of the generic single-`[Category C]` bricks `comp_cancel_mid`/`comp_slide_nested`/
-  `comp_cancel_three_lr` applied by `exact`/`refine` (they exist `private` at TensorObjSubstrate.lean:2981+);
-  (2) (∗∗) needs a **FORWARD** `sliceDualTransport_app_apply` lemma in `SliceTransport.lean` — only the
-  INVERSE `sliceDualTransportInv_app_apply` (`:= rfl`, L563) exists. The forward apply is in a DIFFERENT
-  (upstream, sorry-free) file → this iter's lane.
-- **Cone A DONE iter-065; Cone B crux DONE iter-066; c.1 + (a) DONE.** Root + `DualInverse/*` GREEN.
+**v4.31.0 recovery COMPLETE (089→096); dual-unit FLANK closed step-by-step (098→102):** LEAF (098),
+(b)/(d) (099), keystone (a) ASSEMBLED (100), RES1 (101), **RES2 + keystone (a) `dual_unit_iso_restrict_assemble`
+CLOSED iter-102** (sorry-free, axiom-clean `[propext, Classical.choice, Quot.sound]`). `lake build
+…TensorObjInverse` EXIT 0 (8567 jobs).
 
-## iter-073 — RE-DISPATCH iter-072's never-run work (scaffold-keyword fix)
+**Live open sorries = 1 (keystone path), + 1 dead dup:**
+- **(c) `trivialisation_restrict_compat` (private, `TensorObjInverse.lean` L2660; effort 4097)** — the LAST
+  keystone obligation, UNBLOCKED by (a) (S4a now supplied). It is the telescope ASSEMBLY of the **5 already-proven
+  square-lemmas** S2 `tensorObj_restrict_iso_restrict_compat` / S3 `dual_restrict_iso_restrict_compat` /
+  S4a `dual_unit_iso_restrict_compat` / S4b `tensorObj_unit_iso_restrict_compat` / S4c
+  `trivialisation_uIota_restrict_compat` (all sorry-free above it). **iter-103 effort-broke the ASSEMBLY**
+  (not the squares) into a 3-link chain (effort 4097→2018); blueprint-reviewer `iter103` GATE CLEARED,
+  progress-critic `iter103` CONVERGING.
+- **Dead private `exists_tensorObj_inverse` dup (`TensorObjSubstrate.lean` L738)** — unconsumed deletion
+  candidate (public twin lives in TensorObjInverse, body sorry-free). Harmless; cleanup phase.
 
-iter-072's plan was correct and progress-critic-endorsed, but plan-validate dropped its sole objective
-as a no-op: SliceTransport.lean is sorry-free and the header said "ADD …", which is NOT a recognized
-scaffold keyword. So the forward apply lemma was never built. iter-073 re-dispatches the SAME objective
-with a recognized keyword on the filename line ("Scaffold-and-prove … (does not exist yet)"). This is
-NOT a 6th grind — it is iter-072's intended (and never-executed) de-risk probe, run correctly.
+## Decision (iter-103) — effort-break (c) ASSEMBLY, then guarded `prove` the 3-seam chain (fast path)
 
-- **Blueprint state (carried, unchanged — no chapter edited since iter-072 since no prover ran):**
-  `Picard_TensorObjSubstrate.tex` HARD GATE CLEARED iter-072 (complete:true / correct:true / 0 must-fix);
-  block `lem:slice_dual_transport_app_apply` (L5933) is a faithful forward mirror of the proven inverse;
-  c.2 proof already rewritten to the clean factorisation; deleted-block left 0 dangling refs.
-- **Subagent skips (all three mandatory, rationale in iter/iter-073/plan.md):** blueprint-reviewer
-  (gate cleared, no chapter touched since); progress-critic (iter-072 ran no prover phase — no new
-  trajectory data; iter-072 critic already endorsed this exact pivot); strategy-critic (STRATEGY.md
-  SHA-unchanged; single forced route, no fork to challenge).
-
-## Decision (iter-073) — SOLO `mathlib-build` lane on `SliceTransport.lean`, scaffold-keyword header
-
-- **Chosen:** one prover, **`mathlib-build`** mode, on `SliceTransport.lean`; objective header carries a
-  recognized scaffold keyword so plan-validate does not drop it (the iter-072 trap fix). `mathlib-build`
-  = build+prove the lemma fully, no sorry in output — correct for a NEW single atomic lemma (not `prove`:
-  no stub; not `fine-grained`: one atom).
-- **Why SOLO, not the 2-file co-dispatch the critic floated (MILD_UNDER_DISPATCH):** the forward lemma
-  is the explicit DE-RISK PROBE. If it does NOT land as clean `:= rfl` (the trip-wire case), a
-  co-dispatched PresheafDualPullback c.2 lane burns its whole budget grinding the whnf-seam against a
-  missing lemma — the 6th grind the trip-wire forbids. Confirm the probe green THIS iter, co-dispatch
-  the c.2 close NEXT iter with full confidence. Also: `SliceTransport → DualInverse → PresheafDualPullback`
-  is one import chain; parallel co-dispatch risks the ARCHON_MEMORY iter-029 build race. Bounded 1-iter
-  latency ≪ wasted-lane + race risk.
-- **High confidence it lands:** forward def `sliceDualTransport` (L635) has `toFun := fun φ => { app :=
-  fun W => … }` (L722-724), so `.app W` reduces definitionally exactly as the proven inverse `_app_apply`
-  (L563-577, `:= rfl`) does.
+iter-102 review flagged (c) as a monolith (effort 4097) needing blueprint-level atomization BEFORE a prover.
+Corrective taken THIS iter (the proven iter-102 template — effort-break → fast-path review → guarded prove):
+- **effort-breaker `c-telescope`** split the telescope ASSEMBLY (leaving the 5 proven squares intact) into:
+  **Seam1** `trivialisation_restrict_eM_split` (the `eM` bifunctoriality split; heaviest, ≈1215),
+  **Seam2** `trivialisation_telescope_assemble` (a GENERIC abstract-`{C}[Category C]` ρ-cocycle collapse,
+  sibling of the proven `c2_assemble`/`dual_scp_assemble`/`unit_assemble`; ≈861 — confines ALL `SheafOfModules ≫`
+  seam-crossing, applied by `exact`), **Seam3** `trivialisation_restrict_sectionwise` (outer-reindex sectionwise
+  eval; ≈584). Target rewritten to invoke Seam1→Seam2→Seam3.
+- **HARD GATE: blueprint-reviewer `iter103` = GATE CLEARED (fast path)** — consolidated chapter
+  `Picard_TensorObjSubstrate.tex` complete+correct for all 4 blocks (target + 3 seams), 0 must-fix, the 3-link
+  chain genuinely proves the target (no gap relabelled away), `leandag unknown_uses = []`, doctor clean.
+- **progress-critic `iter103` = CONVERGING, dispatch=OK** (0 churn; net sorry trend 3→2→1, each iter closed a
+  named piece; first attempt on a freshly-decomposed gate-cleared target is structurally distinct from a re-grind).
 
 ## Current Objectives
 
-1. **`AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/SliceTransport.lean`** — scaffold the forward apply declaration (it does not exist yet) and prove it; SOLO `mathlib-build` lane.
-   This is a sorry-free file; the objective ADDS one NEW declaration `sliceDualTransport_app_apply` and
-   proves it fully (no sorry in output). Blueprint: `chapters/Picard_TensorObjSubstrate.tex` (consolidated;
-   `% archon:covers` this file; HARD GATE CLEARED iter-072, block `lem:slice_dual_transport_app_apply`).
-   - **Add and prove `sliceDualTransport_app_apply`** — the FORWARD mirror of the existing proven inverse
-     `sliceDualTransportInv_app_apply` (L563–585, body `:= rfl`). State it as the `app`-component of the
-     forward `sliceDualTransport f M V` (def at L635) evaluated at a dual section `φ`, equal to its
-     explicit forward-transport formula (the `dualUnitRingSwapHom`/`unitRelabelSwap` reindex conjugated by
-     `appIso`), with the leg reductions definitional. **Read the inverse apply lemma L563–585 and the
-     forward def L635 first** and mirror the shape — it is expected to close by `rfl` once the down-set
-     proofs are supplied (the inverse does). The blueprint block `lem:slice_dual_transport_app_apply`
-     (Picard_TensorObjSubstrate.tex:5933) gives the statement and `\uses`.
-   - **TRIP-WIRE:** if the forward apply lemma does NOT close as a clean `rfl`/short mirror — if it needs
-     real new machinery or whnf-bombs — STOP and report the exact residual goal. Do NOT improvise
-     un-anchored content; do NOT grind. (Per progress-critic: a hard outcome here is the escalation
-     signal, not a cue to keep grinding.)
-   - **AUTHORITATIVE = `lake build AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse.SliceTransport`
-     EXIT 0, NOT LSP** (ARCHON_MEMORY stale-green hazard). The file is currently sorry-free — keep it that
-     way (mathlib-build = no sorry in output; either the lemma is fully proved or it is absent + reported).
-   - **Reference-driven:** internal categorical construction (Stacks Modules ch.17 tag 01CR internal-hom
-     base-change is the statement anchor); the proof is the forward dual of the proven `:= rfl` inverse
-     apply lemma in the same file. No external proof content to improvise.
-   [prover-mode: mathlib-build]
+1. **`AlgebraicJacobian/Picard/TensorObjInverse.lean`** — close the LAST keystone sorry (c)
+   `trivialisation_restrict_compat` (L2660) by proving the iter-103 3-seam decomposition. Blueprint:
+   `chapters/Picard_TensorObjSubstrate.tex` (`% archon:covers` this file; HARD GATE CLEARED iter-103;
+   `lem:trivialisation_restrict_compat` + the 3 new seam blocks). Create the 3 private sub-lemmas BEFORE
+   `trivialisation_restrict_compat` (L2591); namespace `AlgebraicGeometry.Scheme.Modules`.
 
-## Deferred this iter (NOT prover objectives)
+   - **Seam1 `trivialisation_restrict_eM_split`** (`lem:trivialisation_restrict_em_split`). Applying
+     `restrict j` to the U-side `tensorObjIsoOfIso eM (dual_restrict_iso U.ι L ≪≫ (dualIsoOfIso eM).symm ≪≫
+     dual_unit_iso)` splits via `tensorObjIsoOfIso_trans` into the `eM`-leg — whose V-refinement IS
+     `restrictIsoUnitOfLE hVU eM = (restrict j) eM` — and the dual-chain leg, where `dualIsoOfIso_trans`
+     (contravariant) carries `(dualIsoOfIso eM).symm` through `restrict j`, leaving the bare dual-restriction
+     covered by S3 + S4a. HEAVIEST seam; if it resists, it is the re-break candidate (split the
+     `restrictIsoUnitOfLE = restrict j eM` identification from the 3-leg dual-chain carry).
+   - **Seam2 `trivialisation_telescope_assemble`** (`lem:trivialisation_telescope_assemble`) — GENERIC, keep it
+     instance-agnostic `{C} [Category C]` (mirror `c2_assemble`). Given the five square equations
+     `(restrict j)(c^U_k) = ρ_{k-1}.inv ≫ c^V_k ≫ ρ_k` composed in order, the adjacent
+     ρ (`restrictCompReindex j hjι` / `unitRestrictIso j`) factors cancel telescopically, leaving the outer
+     hobjU/hobjV. Pure `Category.assoc` cocycle collapse; **apply it to the concrete chain by `exact`/`refine`,
+     NEVER `rw`/`ext`** — this is what confines the seam-crossing.
+   - **Seam3 `trivialisation_restrict_sectionwise`** (`lem:trivialisation_restrict_sectionwise`) — thread the
+     two outer `eqToHom`s `image_preimage_of_le U hVU` / `image_preimage_of_le V le_rfl` and evaluate
+     `.val.presheaf.map`/`.val.app` over the preimage open `U.ι ⁻¹ᵁ V`, yielding the asserted section equality.
+   - **Target `trivialisation_restrict_compat`** — REWRITE the body to invoke Seam1 → Seam2 → Seam3
+     (the chart `j := Scheme.Hom.resLE (𝟙 X) U V hVU'`, `hjι : j ≫ U.ι = V.ι`, `IsOpenImmersion j` are already
+     set up in the existing body L2619–2628; keep them).
+   - **NO-GRIND GUARD (must obey):** Seam2 + Seam3 + the target rewrite should close. For Seam1, if it resists
+     after a focused effort, leave it as a **single clean `sorry`** and report whether the `eM`-leg
+     identification or the dual-chain carry failed — do NOT grind the monolith or reintroduce a whole-(c) sorry.
+     A clean Seam1 sorry + Seam2/Seam3/target closed is acceptable progress (Seam1 is the pre-mapped re-break
+     target for next iter).
+   - **Seam discipline ([[seam-split-fold-idiom]]):** across `SheafOfModules ≫`, syntactic `rw`/`simp`/`erw`
+     of a category lemma chokes → term-mode `exact`/`refine` of a generic single-`[Category C]` lemma (defeq
+     matches). Under `sheafification.map`/`forget`, `congrArg`/`Functor.map_comp` term-mode, NOT keyed `rw`.
+     Trust `lake build …TensorObjInverse` EXIT 0 only (LSP dead). DEAD probes for this telescope:
+     `restrictFunctorComp.hom.naturality φ` (morphism-level, iter-040); subst/rcases on `hVU`;
+     `simp[restrictIsoUnitOfLE]`; `congr 1`/`Iso.eq_inv_comp`/`Hom.ext`.
 
-- **PresheafDualPullback.lean c.2 brick-tail close** — NEXT iter, once `sliceDualTransport_app_apply`
-  lands green this iter. Plan: add LOCAL copies of the generic `[Category C]` bricks `comp_cancel_mid`/
-  `comp_slide_nested`/`comp_cancel_three_lr` (`private` at TensorObjSubstrate.lean:2981+; copy ~6 lines
-  each), run the verified iter-071 6-step reduction via `exact`/`refine` of those bricks (NEVER
-  `rw`/`erw`/`cancel_epi`/`set`/`show` across the seam), and close the sole residual (∗∗) via the now-
-  available forward apply lemma (eval-extensionality route, dual of the inverse). **iter-071-review
-  TRIP-WIRE carries forward:** if the brick-`exact` tail ALSO whnf-bombs, escalate (raise maxHeartbeats /
-  restructure) — do not grind further. Fold the iter-070 auditor hygiene fixes (L274 stale comment, L670
-  `respectTransparency` comment, L671 `maxHeartbeats` style comment, L669 stale `DRAFT` label) into that lane.
-- **TensorObjInverse.lean bridge-(b) `sheafificationCompPullback_restrict` (one-liner, Sq1 public) +
-  S3/S4a assembly + telescope** — once c.2 lands. S3 assembles from dual-B1 + B2 + bridge-(b)
-  + c.1 + c.2; S4a rides on S3 + bridge-(b) + `presheafDualUnitIso_naturality`; telescope wires all 5
-  squares. Deferred this iter to avoid the build race with the `PresheafDualPullback` c.2 lane
-  (TensorObjInverse imports it). Also clean the now-STALE in-code comments in `TensorObjInverse.lean`
-  claiming Sq1 is still `private` (reviewer-flagged) when that lane runs.
-- **2 off-path sorries in `PresheafDualPullback.lean`** (L377 L1 / L434 L3a) — cross-file-blocked,
-  UPSTREAM; defer to post-terminal cleanup (likely DELETE — checker-confirmed no other `.lean`
-  references them).
-- **Consumer seed-3 `PicSharp.addCommGroup_via_tensorObj` (`RelPicFunctor.lean`)** — gated on terminal.
-- **Blueprint hygiene (review-phase):** 3 isolated `\mathlibok` localization anchors (reviewer-flagged,
-  wire via `\uses` or fold) + the 3 exposition sub-lemmas showing as false leandag frontier nodes.
-- **Coverage / file-split debt:** ~118 isolated `lean_aux` nodes; `TensorObjSubstrate.lean` (>3600 LOC)
-  split — scheduled cleanup phase after the terminal lands (STRATEGY phase owns it).
-- **Extraction note:** module names / paths / labels unchanged from the parent for clean merge-back.
+   [prover-mode: prove]
+
+## NEXT iter (committed)
+- **If (c) closes (⇒ keystone path sorry-free):** dispatch the **public terminal `exists_tensorObj_inverse`
+  body** (`TensorObjInverse.lean`) — its A-bridge (SheafOfModules morphism descent / gluing local trivialising
+  isos) + B-connector `isIso_of_isIso_restrict` rides (c). Then **consumer seed-3
+  `PicSharp.addCommGroup_via_tensorObj` (`RelPicFunctor.lean`)** scaffolds + fills.
+- **If Seam1 returns a clean sorry (per no-grind guard):** Seam2/Seam3/target closed = acceptable progress, NOT
+  a churn PARTIAL. Re-dispatch effort-breaker on Seam1 FINE (split the `restrictIsoUnitOfLE = restrict j eM`
+  identification from the dual-chain carry), then fine-grained prover. Do NOT re-prove Seam1 whole.
+- **If no Seam2/Seam3/target progress / a monolithic (c) sorry reappears:** decomposition didn't take →
+  mathlib-analogist (cross-domain) on the `tensorObjIsoOfIso`/`dualIsoOfIso` bifunctoriality-at-SheafOfModules
+  shape, or re-break sentence-by-sentence.
+- **Coverage + cleanup phase** (post-keystone): blueprint entries for `adj_unit_counit_collapse` (iter-102) +
+  the 3 iter-103 seam lemmas (once Lean-scaffolded, sync will match `\lean{}`); delete the dead private
+  `exists_tensorObj_inverse` dup (`TensorObjSubstrate.lean` L738); prune dead IsIso-witness scaffolding; clear
+  remaining `lean_aux` coverage debt; split `TensorObjSubstrate.lean` (>3600 LOC).
+- **Extraction note:** decl names / namespaces / labels unchanged for clean merge-back.

@@ -1,0 +1,204 @@
+[
+  {
+    "timestamp": "2026-06-24T16:59:49Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "External.flat_tensor_exact"
+    },
+    "session": {
+      "id": "session_24",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "External.flat_pullback_exact (model)",
+        "Module.Flat.lTensor_shortComplex_exact (informal justification)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "S1: anchor flat_tensor_exact (F S-flat ⟹ base-change tensor preserves SES) next to flat_pullback_exact to discharge hSE of ext_tensor_halfexact",
+        "code_tried": "axiom External.flat_tensor_exact ... (sc.map (tensorBaseChangeFunctor f F)).ShortExact",
+        "line_number": "~672 (initially placed early near flat_pullback_exact)",
+        "lean_error": "failed to synthesize instance (tensorBaseChangeFunctor f F).PreservesZeroMorphisms",
+        "result": "failed",
+        "insight": "PreservesZeroMorphisms instance for tensorBaseChangeFunctor lives in the half-exactness block (tensorBaseChangeFunctor_preservesZeroMorphisms); placing axiom earlier breaks instance synth for sc.map (...)"
+      },
+      {
+        "attempt": 2,
+        "strategy": "relocate axiom AFTER ext_tensor_halfexact block (after the PreservesZeroMorphisms instance)",
+        "code_tried": "axiom External.flat_tensor_exact moved to ~672 after covariant_sequence_exact₂ block",
+        "line_number": "~672",
+        "lean_error": null,
+        "result": "success",
+        "insight": "axiom-clean; #print axioms = {propext, Classical.choice, Quot.sound, External.flat_tensor_exact}. Authorized anchor (parallel to flat_pullback_exact). NOT a §1-theorem restatement (standard stalkwise flatness)."
+      }
+    ],
+    "next_steps": "Feeds ext_tensor_halfexact_of_flat (unconditional half-exactness). Buildable/upstreamable from Module.Flat.lTensor_shortComplex_exact + stalk/IsLocalizedModule layer."
+  },
+  {
+    "timestamp": "2026-06-24T16:59:54Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_tensor_halfexact_of_flat"
+    },
+    "session": {
+      "id": "session_24",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "ext_tensor_halfexact (@023 conditional)",
+        "External.flat_tensor_exact",
+        "Abelian.Ext.covariant_sequence_exact₂"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "S1 corollary: feed External.flat_tensor_exact f F hF sc hsc as the hSE argument to @023 conditional ext_tensor_halfexact; same letI HasDerivedCategory.standard / haveI hasExt wrapper, IsSFlat hF replacing hSE",
+        "code_tried": "theorem ext_tensor_halfexact_of_flat ... := ... ext_tensor_halfexact ... (External.flat_tensor_exact f F hF sc hsc)",
+        "line_number": "~688",
+        "lean_error": null,
+        "result": "success",
+        "insight": "unconditional half-exactness; axiom-clean modulo the authorized anchor. @023 conditional decl kept intact."
+      }
+    ],
+    "next_steps": "Feeds T half-exact (brick 3) after the S=Spec A reduction. UNMATCHED lean_aux — needs blueprint block lem:ext_tensor_halfexact_of_flat (planner)."
+  },
+  {
+    "timestamp": "2026-06-24T16:58:36Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "presheafOfModules_sheafification_additive"
+    },
+    "session": {
+      "id": "session_24",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "Adjunction.left_adjoint_additive",
+        "PresheafOfModules.sheafificationAdjunction",
+        "PresheafOfModules.instAdditiveRestrictScalars",
+        "SheafOfModules.forget additive"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "S2(a): sheafification = LEFT adjoint of sheafificationAdjunction α; right adjoint (forget ⋙ restrictScalars α) is Additive (auto-inferred); apply left_adjoint_additive",
+        "code_tried": "instance ... := (PresheafOfModules.sheafificationAdjunction α).left_adjoint_additive",
+        "line_number": "~736",
+        "lean_error": null,
+        "result": "success",
+        "insight": "ONE-line. Stated GENERALLY (same {C J R₀ R}(α)[IsLocallyInjective][IsLocallySurjective][WEqualsLocallyBijective][HasWeakSheafify] setup as sheafification_map_isIso_of_locallyBijective) so it is auto-found for (𝟙 X.ringCatSheaf.obj). Closes the @023-named sole gap. Axiom-clean."
+      }
+    ],
+    "next_steps": "Prereq for tensorLeft_additive (landed same iter)."
+  },
+  {
+    "timestamp": "2026-06-24T16:58:36Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "tensorLeft_additive"
+    },
+    "session": {
+      "id": "session_24",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "presheafOfModules_sheafification_additive",
+        "MonoidalPreadditive.tensor_add",
+        "PresheafOfModules.Monoidal.tensorHom_app",
+        "PresheafOfModules.add_app",
+        "Functor.map_add"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "S2(b): Functor.Additive via map_add; change to sheafification-of-tensorHom form; ht via explicit rw chain on tensorHom_app/add_app",
+        "code_tried": "ext1 Y; rw [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.add_app, tensorHom_app, tensorHom_app, add_app]; exact MonoidalPreadditive.tensor_add _ _ _ ... exact Functor.map_add _ _ _",
+        "line_number": "~756",
+        "lean_error": "rewrite failed: pattern (Monoidal.tensorHom ?f ?g).app ?X not found in MonoidalCategoryStruct.tensorHom ((𝟙 F.val).app Y) (φ.val.app Y + ψ.val.app Y)",
+        "result": "failed",
+        "insight": "literal rw chain mismatches occurrence-order on RHS (a+b).app Y; tensorHom already unfolded to MonoidalCategoryStruct.tensorHom"
+      },
+      {
+        "attempt": 2,
+        "strategy": "replace rw chain with simp only; fix Functor.map_add arity",
+        "code_tried": "ext1 Y; simp only [PresheafOfModules.Monoidal.tensorHom_app, PresheafOfModules.add_app]; exact MonoidalPreadditive.tensor_add _ _ _; ... rw [hv, ht]; exact Functor.map_add _",
+        "line_number": "~756",
+        "lean_error": null,
+        "result": "success",
+        "insight": "simp only handles occurrence-order where rw fails. Functor.map_add takes the functor as its only explicit arg (Functor.map_add _, NOT _ _ _). Axiom-clean. Closes the @023 blocked gap unconditionally."
+      }
+    ],
+    "next_steps": "Unblocks A-module-on-Ext / functor T (brick 2): tensorBaseChangeFunctor now Additive."
+  },
+  {
+    "timestamp": "2026-06-24T17:00:36Z",
+    "status": "not_started",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_locallyFree_of_ext_vanishing"
+    },
+    "session": {
+      "id": "session_24",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Per directive — deep §1 sorry untouched this foundation iter. Next brick (A-module-on-Ext functor T) assessed and deferred: needs (a) S=Spec A Noeth-local reduction anchor [absent] and (b) A-linear assembly tilde ⋙ tensorBaseChange ⋙ extFunctor; Abelian.Ext.instModule requires X.Modules to be Linear A, which it is NOT (A-action comes from M's functoriality, not from X.Modules).",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Bricks 1-5 decomposed in task_result: (1) reduction anchor S→Spec A Noeth-local; (2) functor T:ModuleCat A⥤ModuleCat A via A-linear tilde + tensorBaseChange (now Additive) + extFunctor 1; (3) T half-exact via ext_tensor_halfexact_of_flat (THIS ITER); (4) T(k(s))=0 via External.adjunction + 1.2-SES on fibre; (5) free conclusion via External.halfexact_free."
+  },
+  {
+    "timestamp": "2026-06-24T17:00:36Z",
+    "status": "not_started",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor_invertible"
+    },
+    "session": {
+      "id": "session_24",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "PAUSED monoidal (associator needs MonoidalClosed(PresheafOfModules)/stalks, absent). Untouched per directive.",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Deferred (monoidal PAUSED)."
+  },
+  {
+    "timestamp": "2026-06-24T17:00:36Z",
+    "status": "not_started",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_finite_flat"
+    },
+    "session": {
+      "id": "session_24",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Needs relExt / R^q f_* + internal ℰxt (absent; internal-ℰxt overlaps PAUSED monoidal). Untouched per directive.",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Deferred (needs proper-pushforward infrastructure)."
+  }
+]

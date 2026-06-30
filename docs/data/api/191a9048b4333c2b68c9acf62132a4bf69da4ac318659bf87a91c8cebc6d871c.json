@@ -1,0 +1,214 @@
+[
+  {
+    "timestamp": "2026-06-25T12:15:54Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_restrict_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_83",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "dual_restrict_iso_pullbackCongr",
+        "dual_restrict_iso_comp",
+        "dualIsoOfIso_trans",
+        "restrictCompReindex"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Folded L1+L2 assembly (the iter-083 effort-break target): solve L2 for D(V.ι), rw L1 cocycle at (j,U.ι), unfold restrictCompReindex, fuse the two dualIsoOfIso by dualIsoOfIso_trans, close by simp[Iso.trans_assoc];rfl",
+        "code_tried": "have hL2 := dual_restrict_iso_pullbackCongr (f:=j≫U.ι)(g:=V.ι) hjι M; have hVeq := ... ; rw [hVeq, dual_restrict_iso_comp j U.ι M]; unfold restrictCompReindex; rw [dualIsoOfIso_trans]; simp only [Iso.trans_assoc]; rfl",
+        "line_number": "1396",
+        "lean_error": null,
+        "goal_before": "dual_restrict_iso V.ι M ≪≫ ... = restrictCompReindex j hjι (dual M) ≪≫ ... ≪≫ dualIsoOfIso (restrictCompReindex j hjι M)",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "(α.symm).app X is DEFEQ to (α.app X).symm (Iso.app has hom := α.hom.app X), so head/tail differ only by this defeq; rfl closes after Iso.trans_assoc aligns bracketing. No Iso.symm_app lemma needed (does not exist). Diamond cleared: seam crossed ONLY inside L1."
+      }
+    ],
+    "next_steps": "Sorry-free in own body; rides L1 dual_restrict_iso_comp's residual sorry. Consumed by trivialisation_restrict_compat (telescope)."
+  },
+  {
+    "timestamp": "2026-06-25T12:15:54Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "restrictFunctorIsoPullback_comp_general_hom"
+    },
+    "session": {
+      "id": "session_83",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "conjugateEquiv_restrictFunctorIsoPullback_hom",
+        "conjugateEquiv_comp",
+        "conjugateEquiv_restrictFunctorComp_inv",
+        "conjugateEquiv_pullbackComp_hom"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "General literal-composite f≫g B2 at .app/NatTrans level (no restrictFunctorCongr/pullbackCongr congruence legs, unlike chart _comp_compat). conjugateEquiv injectivity onto pushforward (f≫g); distribute 4-leg product via three ←conjugateEquiv_comp; telescope c2↦pushforwardComp.hom, c5↦pushforwardComp.inv, c3/c4↦𝟙; congr_app+whisker-app simp",
+        "code_tried": "apply conjugateEquiv (...) |>.injective; rw [←conjugateEquiv_comp ×3, conjugateEquiv_restrictFunctorComp_inv, conjugateEquiv_pullbackComp_hom, ...]; congr_app ... A; simpa",
+        "line_number": "1230",
+        "lean_error": null,
+        "goal_before": "RFIP(f≫g).hom.app A = product of 4 conjugated legs",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "NO conjugateEquiv_reindexCongr needed (congruence legs absent in the literal-composite version). Axiom-clean, sorry-free, live-used at L1287."
+      }
+    ],
+    "next_steps": "Consumed by restrictFunctorIsoPullback_comp_general (L1266)."
+  },
+  {
+    "timestamp": "2026-06-25T12:15:54Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "restrictFunctorIsoPullback_comp_general"
+    },
+    "session": {
+      "id": "session_83",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "homEquiv_leftAdjointUniq_hom_app",
+        "unit_leftAdjointUniq_hom_app",
+        "restrictFunctorIsoPullback_comp_general_hom"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Iso-level general RFIP composition law; Adjunction.homEquiv.injective + leftAdjointUniq identification, residual .hom-naturality = _general_hom; same skeleton as chart iso version",
+        "code_tried": "apply Adjunction.homEquiv ... |>.injective; rw [homEquiv_leftAdjointUniq_hom_app, unit_leftAdjointUniq_hom_app, restrictFunctorIsoPullback_comp_general_hom f g A, Functor.map_comp ×3]; rfl",
+        "line_number": "1266",
+        "lean_error": null,
+        "goal_before": "RFIP(f≫g) iso = composite of general legs",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "Axiom-clean, sorry-free, live-used at L1314 inside dual_restrict_iso_comp."
+      }
+    ],
+    "next_steps": "Consumed by L1 dual_restrict_iso_comp."
+  },
+  {
+    "timestamp": "2026-06-25T12:15:54Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_restrict_iso_comp"
+    },
+    "session": {
+      "id": "session_83",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "STEP-B ★pb-iso SCP-cocycle residual: distribute outer sheafification.mapIso over bridge-(c) composite, cancel sheafify θ_f / dualIsoOfIso tails, discharge pure SCP-cocycle by bridge (b) sheafificationCompPullback_comp f g at .hom level (Iso.ext)",
+      "key_lemmas_used": [
+        "dual_restrict_iso_eq_comparison",
+        "restrictFunctorIsoPullback_comp_general",
+        "mapIso_naturality_assoc",
+        "iso_cancel_left",
+        "iso_symm_fold_cancel",
+        "presheafDualPullbackComparison_restrict"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "NEW L1 folded composition cocycle for literal f≫g. Unfold D via dual-B1, expand leading RFIP via general B2, congr-cancel restrictFunctorComp head, mapIso_naturality_assoc/hR/hsplit/iso_cancel_left/iso_symm_fold_cancel reduce to clean ★pb-iso residual",
+        "code_tried": "rw [dual_restrict_iso_eq_comparison, restrictFunctorIsoPullback_comp_general]; simp only [Iso.trans_assoc]; congr 1; congr 1; have hR ...; erw [...]; refine iso_cancel_left ...; rw [iso_symm_fold_cancel]",
+        "line_number": "1302",
+        "lean_error": null,
+        "goal_before": "dual_restrict_iso (f≫g) M = (restrictFunctorComp f g).app dM ≪≫ ...",
+        "goal_after": "★pb-iso: (pullbackComp f g).app dM ≪≫ SCP_{f≫g}(dM.val) ≪≫ sheafify θ_{f≫g} = (pullback f).mapIso(SCP_g ≪≫ sheafify θ_g) ≪≫ (SCP_f ≪≫ sheafify θ_f) ≪≫ dualIsoOfIso(rfc.app M)",
+        "result": "partial",
+        "insight": "rw of mapIso_naturality/Iso.trans_assoc across Functor.comp_obj object-index defeq → 'did not find pattern'; erw fires cleanly. The ★pb-iso residual CANNOT be extracted to a standalone lemma (its STATEMENT re-triggers the iter-082 infinite-whnf junction, whnf timeout 200k HB); typable ONLY inline where rw-produced goal has unified indices."
+      },
+      {
+        "attempt": 2,
+        "strategy": "STEP A: apply bridge (c) presheafDualPullbackComparison_restrict to expand θ_{f≫g}",
+        "code_tried": "rw [presheafDualPullbackComparison_restrict f g M]",
+        "line_number": "1384",
+        "lean_error": null,
+        "goal_before": "★pb-iso residual",
+        "goal_after": "θ_{f≫g} expanded into Ppc.symm ≪≫ pullback(θ_g) ≪≫ θ_f(M|g) ≪≫ Pdual(forget.mapIso rfc) composite",
+        "result": "partial",
+        "insight": "STEP A fires. STEP B (sole open sorry, L1384) = distribute sheafification.mapIso over the composite (PRECISE term-mode Functor.mapIso_trans, NOT erw — erw over-reaches into θ_g internals exposing sliceDualTransport), cancel sheafify θ_f/dualIsoOfIso tails, discharge pure SCP-cocycle by bridge (b). Dual mirror of proven tensor pullbackTensorMap_restrict SCP step."
+      }
+    ],
+    "next_steps": "Close STEP B from clean EXIT-0 checkpoint: precise term-mode Functor.mapIso_trans distribution; the last sheafified factor sheafify(PresheafOfModules.dualIsoOfIso(forget.mapIso rfc)) is DEFEQ to Scheme dualIsoOfIso(rfc.app M); discharge SCP-cocycle by sheafificationCompPullback_comp f g (.hom-level, Iso.ext)."
+  },
+  {
+    "timestamp": "2026-06-25T12:15:54Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_83",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "S4a unit-iso restriction compatibility; NOT this iter (planned after S3/L1)",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted this iter (out of effort-break scope); pre-sorry body only unfolds defs",
+        "code_tried": "simp only [dual_unit_iso, dual_restrict_iso_eq_comparison]; sorry",
+        "line_number": "1440",
+        "lean_error": null,
+        "goal_before": null,
+        "goal_after": null,
+        "result": "partial",
+        "insight": "Residual = SCP composition seam + unit identification of θ; downstream of S3/L1 (reuses L1 at structure sheaf + presheafDualUnitIso_naturality promoted from unit automorphism to j)."
+      }
+    ],
+    "next_steps": "After L1 closes, attempt S4a reusing L1 + presheafDualUnitIso_naturality."
+  },
+  {
+    "timestamp": "2026-06-25T12:15:54Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_83",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Telescope wiring the 5 squares (S2/S3/S4a/S4b/S4c); rides S3/S4a; NOT this iter",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted this iter; substantial pre-sorry setup (j:=resLE, hjι, IsOpenImmersion j, hobjU/hobjV) present",
+        "code_tried": "set j := Scheme.Hom.resLE (𝟙 X) U V hVU'; ...; sorry",
+        "line_number": "2161",
+        "lean_error": null,
+        "goal_before": null,
+        "goal_after": null,
+        "result": "partial",
+        "insight": "Residual = 5-constituent restriction-naturality telescope (S2+S3+S4a+S4b+S4c). S3 now closed; consumes dual_restrict_iso_restrict_compat."
+      }
+    ],
+    "next_steps": "Final terminal close after S3 (done) + L1 + S4a land."
+  }
+]

@@ -412,6 +412,7 @@ private lemma coversTop_preimage_of_iso {X Y : Scheme.{u}} (φ : X ≅ Y) {I : T
   exact hxZ
 
 set_option synthInstance.maxHeartbeats 1000000 in
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
 -- The heartbeat bumps are required: `SheafOfModules.IsQuasicoherent.of_coversTop` triggers
 -- synthesis of the doubly-sliced opens `HasSheafify`/`WEqualsLocallyBijective` instances
@@ -490,6 +491,7 @@ instance sliceStructureSheafHom_pre_isRightAdjoint :
   Functor.isRightAdjoint_of_leftAdjointObjIsDefined_eq_top
     (PresheafOfModules.pullbackObjIsDefined_eq_top.{u} (sliceStructureSheafHom φ Ui).hom)
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 4000000 in
 set_option synthInstance.maxHeartbeats 2000000 in
 -- The heartbeat bumps are required: the derivation triggers synthesis of the sliced-site
@@ -630,9 +632,7 @@ lemma pushforwardSliceAdjunctionH1 :
         (X.sheaf.obj.map (Over.Hom.left ((sliceOversEquiv φ Ui).unitInv.app (unop U))).op) := by
     rw [← (forget₂ CommRingCat RingCat).map_comp]
     exact congrArg _ key
-  rw [← RingCat.hom_comp]
-  erw [key2]
-  rfl
+  exact DFunLike.congr_fun (congrArg RingCat.Hom.hom key2.symm) x
 
 /-- **Unit compatibility square `H₂`** for the slice adjunction (blueprint
 `lem:pushforward_slice_adjunction_h2`).  Identical in shape to `H₁`: the unit triangle reduces to a
@@ -666,9 +666,7 @@ lemma pushforwardSliceAdjunctionH2 :
       = 𝟙 _ := by
     rw [← CategoryTheory.Functor.map_comp, ← CategoryTheory.Functor.map_comp, key]
     exact (forget₂ CommRingCat RingCat).map_id _
-  rw [← RingCat.hom_comp, ← RingCat.hom_comp]
-  erw [key2]
-  rfl
+  exact DFunLike.congr_fun (congrArg RingCat.Hom.hom key2) x
 
 /-- **The two-pushforward slice adjunction** (blueprint `lem:pushforward_slice_two_adjunction`):
 `pushforward φ'' ⊣ pushforward ψ_r`, assembled by feeding `pushforwardPushforwardAdj` the slice
@@ -702,6 +700,7 @@ noncomputable def pushforwardSlicePullbackIso (H : X.Modules) :
     (SheafOfModules.pullbackPushforwardAdjunction.{u} (sliceStructureSheafHom φ Ui))
     (pushforwardSliceTwoAdjunction φ Ui)).app (H.over Ui) ≪≫ Iso.refl _
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 4000000 in
 set_option synthInstance.maxHeartbeats 2000000 in
 -- Heartbeat bumps: the per-slice presentation transport triggers synthesis of the sliced/doubly
@@ -728,7 +727,7 @@ lemma pushforward_iso_preserves_qcoh {X Y : Scheme.{u}} (φ : X ≅ Y) (H : X.Mo
   -- transport the local presentation of `H.over Uᵢ` across the colimit-preserving pullback...
   have P1 : ((SheafOfModules.pullback.{u} (sliceStructureSheafHom φ (qcd.X i))).obj
       (H.over (qcd.X i))).Presentation :=
-    (qcd.presentation i).map (SheafOfModules.pullback.{u} (sliceStructureSheafHom φ (qcd.X i))) η
+    SheafOfModules.Presentation.map.{u} (qcd.presentation i) (SheafOfModules.pullback.{u} (sliceStructureSheafHom φ (qcd.X i))) η.symm
   -- ...then across the comparison iso to a presentation of `(Φ H).over Vᵢ`, whence quasi-coherence.
   exact (P1.ofIsIso (pushforwardSlicePullbackIso φ (qcd.X i) H).hom).isQuasicoherent
 

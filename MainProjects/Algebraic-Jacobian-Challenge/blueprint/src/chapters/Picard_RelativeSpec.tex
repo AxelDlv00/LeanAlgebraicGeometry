@@ -180,8 +180,7 @@ glue compatibly because \(\mathcal{A}\) is quasi-coherent (the transition isomor
   \(\mathcal{A}\); this is the projection underlying \cref{thm:relative_spec_exists}.
 \end{proof}
 
-\begin{theorem}\leanok
-[Universal property of the relative spectrum]
+\begin{theorem}[Universal property of the relative spectrum]
   \label{thm:relative_spec_univ}
   \lean{AlgebraicGeometry.Scheme.RelativeSpec.UniversalProperty}
   % NOTE iter-283: removed the spurious `thm:relative_spec_base_change` from this
@@ -252,7 +251,6 @@ glue compatibly because \(\mathcal{A}\) is quasi-coherent (the transition isomor
 % project notation.
 \begin{proof}
   
-  \leanok
   % NOTE (iter-179 review): supersedes the iter-176 placeholder-discharge note.
   % The iter-179 Block A refactor replaces the iter-176 placeholder bodies with
   % the Mathlib values ``(AffineZariskiSite.relativeGluingData _).glued`` /
@@ -282,8 +280,7 @@ glue compatibly because \(\mathcal{A}\) is quasi-coherent (the transition isomor
 \section{Affine base}
 \label{sec:relspec_affine}
 
-\begin{theorem}\leanok
-[Relative spectrum over an affine base]
+\begin{theorem}[Relative spectrum over an affine base]
   \label{thm:relative_spec_affine_base}
   \lean{AlgebraicGeometry.Scheme.RelativeSpec.affine_base_iff}
   \uses{def:qc_sheaf_of_algebras}
@@ -335,7 +332,6 @@ glue compatibly because \(\mathcal{A}\) is quasi-coherent (the transition isomor
 % \((f_{univ}, \varphi_{univ})\) represents \(F\) in this case."
 \begin{proof}
   
-  \leanok
   % NOTE (iter-179 review): supersedes the iter-176 placeholder-discharge note.
   % The iter-176 ``change IsAffine (Spec R); inferInstance`` form is now stale
   % — iter-179 Lane B closes via ``UniversalProperty 𝒜`` + ``isAffine_of_isAffineHom``
@@ -367,8 +363,7 @@ glue compatibly because \(\mathcal{A}\) is quasi-coherent (the transition isomor
 \section{Base change}
 \label{sec:relspec_basechange}
 
-\begin{theorem}\leanok
-[Base change of the relative spectrum]
+\begin{theorem}[Base change of the relative spectrum]
   \label{thm:relative_spec_base_change}
   \lean{AlgebraicGeometry.Scheme.RelativeSpec.base_change}
   \uses{thm:relative_spec_univ, lem:relspec_pullback_iso,
@@ -416,7 +411,6 @@ glue compatibly because \(\mathcal{A}\) is quasi-coherent (the transition isomor
 % Hence the lemma."
 \begin{proof}
   
-  \leanok
   % NOTE (iter-185 review, supersedes iter-179): the iter-185 Lane D HARD-BAR
   % closed BOTH iter-179 Mathlib-gap sorries kernel-clean:
   % (i) ``Scheme.QcohAlgebra.pullback_coequifibered`` (the ``coequifibered``
@@ -497,7 +491,6 @@ base-change isomorphism (\cref{thm:relative_spec_base_change}). Throughout,
 
 \begin{definition}
 
-\leanok
 [Base change of a quasi-coherent algebra]
   \label{def:relspec_qcoh_pullback}
   \lean{AlgebraicGeometry.Scheme.QcohAlgebra.pullback}
@@ -522,7 +515,6 @@ base-change isomorphism (\cref{thm:relative_spec_base_change}). Throughout,
 
 \begin{proof}
 
-\leanok
   Proved directly in Lean.
 \end{proof}
 
@@ -617,7 +609,6 @@ base-change isomorphism (\cref{thm:relative_spec_base_change}). Throughout,
 
 \begin{lemma}
 
-\leanok
 [Existence of the base-change isomorphism]
   \label{lem:relspec_pullback_iso}
   \lean{AlgebraicGeometry.Scheme.RelativeSpec.pullback_iso}
@@ -630,7 +621,6 @@ base-change isomorphism (\cref{thm:relative_spec_base_change}). Throughout,
 
 \begin{proof}
 
-\leanok
   Witnessed by the explicit construction
   \cref{def:relspec_pullback_iso_construction}. Proved directly in Lean.
 \end{proof}
@@ -638,8 +628,7 @@ base-change isomorphism (\cref{thm:relative_spec_base_change}). Throughout,
 \section{Functoriality}
 \label{sec:relspec_functoriality}
 
-\begin{theorem}\leanok
-[Relative spectrum as a functor]
+\begin{theorem}[Relative spectrum as a functor]
   \label{thm:relative_spec_functorial}
   \lean{AlgebraicGeometry.Scheme.RelativeSpec.functor}
   \uses{thm:relative_spec_univ, thm:relative_spec_affine_base}
@@ -699,7 +688,6 @@ base-change isomorphism (\cref{thm:relative_spec_base_change}). Throughout,
 
 \begin{proof}
   
-  \leanok
   Functoriality follows directly from \cref{thm:relative_spec_univ}: for
   \(\psi : \mathcal{A} \to \mathcal{B}\), the pair
   \((\pi_\mathcal{B} : \underline{\Spec}_X(\mathcal{B}) \to X, \;

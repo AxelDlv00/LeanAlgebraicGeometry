@@ -1,0 +1,129 @@
+[
+  {
+    "timestamp": "2026-06-24T18:12:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "IsHalfExact (retype) + External.halfexact_free (retype)"
+    },
+    "session": {
+      "id": "session_26",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "universe reconciliation: retype T arg from ModuleCat.{u}⥤ModuleCat.{u} to ModuleCat.{u}⥤ModuleCat.{u+1}",
+        "code_tried": "def IsHalfExact ... (T : ModuleCat.{u} A ⥤ ModuleCat.{u + 1} A) ; axiom External.halfexact_free ... (T : ModuleCat.{u} A ⥤ ModuleCat.{u + 1} A)",
+        "line_number": "443,494",
+        "lean_error": "first attempt used '{u+1}' (no spaces) -> warning 'missing space in the source'; fixed to '{u + 1}'",
+        "result": "success",
+        "insight": "IsHalfExact body unchanged; S.map T now lands in ShortComplex (ModuleCat.{u+1} A) (abelian, .Exact fine). Both unprotected (confirmed not in archon-protected.yaml); no consumers broke. Axiom count flat 14->14 (retype, not new)."
+      }
+    ],
+    "next_steps": "Brick (ii)/(iv) now consume the {u}->{u+1} typed halfexact_free."
+  },
+  {
+    "timestamp": "2026-06-24T18:08:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "functorT_halfExact"
+    },
+    "session": {
+      "id": "session_26",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "ShortComplex.moduleCat_exact_iff",
+        "ext_tensor_halfexact_of_flat",
+        "tilde_exact",
+        "functorT_additive"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "unfold IsHalfExact -> membership form via moduleCat_exact_iff, supply lift via ext_tensor_halfexact_of_flat with explicit sc=S.map tilde.functor",
+        "code_tried": "intro _ S hS; rw [ShortComplex.moduleCat_exact_iff]; intro x₂ hx₂; exact ext_tensor_halfexact_of_flat f I F hF 1 (S.map (AlgebraicGeometry.tilde.functor A)) (tilde_exact S hS) x₂ hx₂",
+        "line_number": "1197",
+        "lean_error": "failed to synthesize instance (tilde.functor A).PreservesZeroMorphisms (triggered by writing the sc arg explicitly)",
+        "result": "failed",
+        "insight": "Writing sc=(S.map tilde.functor A) explicitly forces a spurious PreservesZeroMorphisms synth; it resolves fine INSIDE tilde_exact."
+      },
+      {
+        "attempt": 2,
+        "strategy": "bind hsc := tilde_exact S hS first, pass sc slot as _",
+        "code_tried": "intro _ S hS; rw [ShortComplex.moduleCat_exact_iff]; intro x₂ hx₂; have hsc := tilde_exact S hS; exact ext_tensor_halfexact_of_flat f I F hF 1 _ hsc x₂ hx₂",
+        "line_number": "1197",
+        "lean_error": "",
+        "result": "success",
+        "insight": "@025-predicted defeq friction resolved automatically: (S.map functorT).g is defeq to x.comp (Ext.mk₀ (sc.map tensorBaseChangeFunctor).g) with sc=S.map tilde.functor. No change/simp needed. Also: must be placed AFTER TildeExact section (depends on tilde_exact)."
+      }
+    ],
+    "next_steps": "Feeds functorT_eq_zero_of_residue and the free conclusion."
+  },
+  {
+    "timestamp": "2026-06-24T18:10:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "functorT_eq_zero_of_residue"
+    },
+    "session": {
+      "id": "session_26",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "External.halfexact_free",
+        "functorT_halfExact",
+        "functorT_additive"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "one-step corollary: feed functorT_halfExact + hk to OB 2.1 anchor External.halfexact_free",
+        "code_tried": "External.halfexact_free ↑A (functorT A f I F) (functorT_halfExact A f I F hF) hk M",
+        "line_number": "1217",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Needs [IsNoetherianRing ↑A] [IsLocalRing ↑A] instance args + global functorT_additive. The Step-A retype is what made functorT ({u}->{u+1}) feedable to halfexact_free. Packages 'T half-exact + T(k)=0 => T≡0'. Axiom-clean modulo External.flat_tensor_exact + External.halfexact_free."
+      }
+    ],
+    "next_steps": "hk (=T(k(s))=0, brick iii) still undischarged: needs degree-1 Ext adjunction / fibre pushforward, absent from Mathlib."
+  },
+  {
+    "timestamp": "2026-06-24T18:10:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_locallyFree_of_ext_vanishing (brick iii + i + free conclusion)"
+    },
+    "session": {
+      "id": "session_26",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "brick (iii) T(k(s))=0 needs degree-1 Ext adjunction Ext¹_X(I,j_*N)≅Ext¹_{X(s)}(j^*I,N) (External.adjunction is only degree-0/hom-set; derived-functor adjunction absent from Mathlib, noted @020/@023). brick (i) needs local-on-S freeness glueing (absent). free conclusion needs Hom->Hom->Hom->Ext¹ degree-0/1 boundary LES (ext_tensor_halfexact gives only middle Ext^q exactness).",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "not attempted (would require sorry; absent infrastructure, not a proof-search difficulty)",
+        "code_tried": "",
+        "line_number": "1011",
+        "lean_error": "",
+        "result": "failed",
+        "insight": "Genuine multi-iter Mathlib-infra gaps already diagnosed @019/@020/@023. Informal agent not called (cannot conjure missing API)."
+      }
+    ],
+    "next_steps": "Anchor T(k(s))=0 directly as External.* from 1.2 SES on closed fibre + FiberExtVanishes, OR build fibre-pushforward + degree-1 Ext adjunction."
+  }
+]

@@ -217,6 +217,7 @@ theorem standard_cover_cofinal {R : CommRingCat.{u}} (f : R) {α : Type u}
 
 /-! ## Project-local Mathlib supplement — section surjectivity for the affine cover system -/
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 /-- **Section surjectivity for the affine cover system** (Stacks 02KG, `surj_of_vanishing` field;
 Stacks `lemma-ses-cech-h1`). Let `S : 0 → S₁ → S₂ → S₃ → 0` be a short exact sequence of
@@ -296,8 +297,9 @@ theorem affine_surj_of_vanishing {R : CommRingCat.{u}}
     have hz : fι ≫ gπ = 0 := by
       rw [hfι, hgπ, ← Functor.map_comp, ← Functor.map_comp, S.zero,
         Functor.map_zero, Functor.map_zero]
-    have := congrArg (fun (ψ : FX.presheaf ⟶ HX.presheaf) => ConcreteCategory.hom (ψ.app V) x) hz
-    simpa using this
+    have h := congrArg (fun (ψ : FX.presheaf ⟶ HX.presheaf) => ConcreteCategory.hom (ψ.app V) x) hz
+    simp at h ⊢
+    exact h
   have hmono : ∀ (V : (TopologicalSpace.Opens ↥(Spec R))ᵒᵖ),
       Function.Injective (ConcreteCategory.hom (fι.app V)) := by
     intro V
@@ -345,7 +347,6 @@ theorem affine_surj_of_vanishing {R : CommRingCat.{u}}
       congr 1
     simp only [← ConcreteCategory.comp_apply]
     rw [← hmaps]
-    exact (ConcreteCategory.comp_apply _ _ t).symm
   -- apply the Čech surjectivity criterion
   obtain ⟨glob, hglob⟩ := ses_cech_h1 U FX GX HX fι gπ S.X₂.isSheaf S.X₃.isSheaf
     hπι hmono hker s hH1 sLoc hlift
@@ -360,6 +361,7 @@ theorem affine_surj_of_vanishing {R : CommRingCat.{u}}
 
 /-! ## Project-local Mathlib supplement — the affine cover system (Stacks 02KG) -/
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
 /-- **The affine cover system** (Stacks 02KG, `def:affine_cover_system`). For `X = Spec R`, the
 basis `B` is the distinguished opens `D f` (`f : R`) and the admissible coverings `Cov` are the
@@ -599,6 +601,7 @@ theorem standard_cover_cofinal_affine {R : CommRingCat.{u}} (V : (Spec R).Opens)
   · intro i
     exact le_trans (e.symm i).1.2 inf_le_right
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- The `ses_cech_h1` assembly over a general affine open is heartbeat-heavy (large product
 -- presheaf-section equalities); the bound matches `affine_surj_of_vanishing`.
@@ -680,8 +683,9 @@ theorem affine_surj_of_vanishing_affine {R : CommRingCat.{u}}
     have hz : fι ≫ gπ = 0 := by
       rw [hfι, hgπ, ← Functor.map_comp, ← Functor.map_comp, S.zero,
         Functor.map_zero, Functor.map_zero]
-    have := congrArg (fun (ψ : FX.presheaf ⟶ HX.presheaf) => ConcreteCategory.hom (ψ.app V) x) hz
-    simpa using this
+    have h := congrArg (fun (ψ : FX.presheaf ⟶ HX.presheaf) => ConcreteCategory.hom (ψ.app V) x) hz
+    simp at h ⊢
+    exact h
   have hmono : ∀ (V : (TopologicalSpace.Opens ↥(Spec R))ᵒᵖ),
       Function.Injective (ConcreteCategory.hom (fι.app V)) := by
     intro V
@@ -725,7 +729,6 @@ theorem affine_surj_of_vanishing_affine {R : CommRingCat.{u}}
       congr 1
     simp only [← ConcreteCategory.comp_apply]
     rw [← hmaps]
-    exact (ConcreteCategory.comp_apply _ _ t).symm
   -- apply the Čech surjectivity criterion
   obtain ⟨glob, hglob⟩ := ses_cech_h1 U FX GX HX fι gπ S.X₂.isSheaf S.X₃.isSheaf
     hπι hmono hker s hH1 sLoc hlift
@@ -740,6 +743,7 @@ theorem affine_surj_of_vanishing_affine {R : CommRingCat.{u}}
 
 /-! ## Project-local Mathlib supplement — the enlarged affine cover system -/
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
 -- The structure literal forces three nontrivial field elaborations (`faces_mem`,
 -- `surj_of_vanishing`, `injective_acyclic`), each unfolding large presheaf data.

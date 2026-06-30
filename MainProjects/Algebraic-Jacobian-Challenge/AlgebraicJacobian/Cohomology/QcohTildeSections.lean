@@ -427,7 +427,7 @@ lemma tilde_section_isLocalizedModule (M : ModuleCat.{u} R) (f : R) :
     have htop : (tilde.toOpen M ⊤).hom (eTop.symm x) = x := by
       rw [← heq]; exact eTop.apply_symm_apply x
     conv_lhs => rw [← htop]
-    simpa using hk
+    exact hk
   rw [hmap]
   exact IsLocalizedModule.of_linearEquiv_right (Submonoid.powers f)
     (tilde.toOpen M (PrimeSpectrum.basicOpen f)).hom eTop.symm
@@ -879,6 +879,7 @@ theorem tile_section_ring_identity (g : R) :
 
 -- The `convert … using 2` defeq check on the tile section carriers (global-ring `modulesSpecToSheaf`
 -- functor) is heartbeat-heavy; the default limit is insufficient.
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1000000 in
 /-- **Sub-lemma B scalar compatibility (Stacks 01I8).**  For a quasi-coherent `F` on `Spec R` and
 `g r : R`, the native `R`-action of `r` on a section of `F` over the tile image open `D(g)`
@@ -904,7 +905,7 @@ lemma tile_scalar_compat (F : (Spec R).Modules) (g r : R)
   have hG := congrArg (fun m : CommRingCat.of (R : Type _) ⟶ _ => m.hom r)
     (tile_section_ring_identity (R := R) g)
   simp only [CommRingCat.comp_apply] at hG
-  convert hG using 2
+  exact hG
 
 /-- Section-restriction form of `Scheme.Hom.appIso_inv_naturality`, stated with explicit `homOfLE`
 restrictions and image opens so it rewrites cleanly: for an open immersion `f` and `U' ≤ U`, the
@@ -975,6 +976,7 @@ theorem tile_section_ring_identity' (g : R) (V : (Spec (.of (Localization.Away g
 
 -- The `convert … using 2` defeq check on the tile section carriers (global-ring `modulesSpecToSheaf`
 -- functor) is heartbeat-heavy; the default limit is insufficient.
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1000000 in
 /-- **General-open form of `tile_scalar_compat` (Stacks 01I8).**  For a quasi-coherent `F` on `Spec R`,
 `g r : R`, and an arbitrary open `V ⊆ Spec R_g`, the native `R`-action of `r` on a section of `F` over
@@ -999,7 +1001,7 @@ lemma tile_scalar_compat' (F : (Spec R).Modules) (g r : R)
   have hG := congrArg (fun m : CommRingCat.of (R : Type _) ⟶ _ => m.hom r)
     (tile_section_ring_identity' (R := R) g V)
   simp only [CommRingCat.comp_apply] at hG
-  convert hG using 2
+  exact hG
 
 /-- `IsScalarTower R S` on a bundled restriction-of-scalars module object, supplied as a `Prop` (a
 proof, hence no codegen, so it never hoists to a noncomputable auxiliary `def`).  Project-local: lets
@@ -1014,6 +1016,7 @@ instance isScalarTower_restrictScalars_obj {R S : Type u} [CommRing R] [CommRing
 
 -- The `toFun := id` carrier identity unifies the tile section against `F.val.obj (op (ι ''ᵁ V))`
 -- through the `modulesSpecToSheaf` ∘ restrict tower; this `isDefEq` is heartbeat-heavy.
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1000000 in
 /-- The reconciliation `R`-linear equivalence underlying the tile section comparison: on the common
 underlying carrier `F.val.obj (op (ι ''ᵁ V))` (the tile section over `V` IS `F`'s section over the
@@ -1050,6 +1053,7 @@ noncomputable def tileReconcileEquiv (F : (Spec R).Modules) (g : R)
 
 -- The `rfl` checks the tile restriction against `F`'s restriction over the iterated image opens
 -- through the `modulesSpecToSheaf` ∘ restrict tower; this `isDefEq` is heartbeat-heavy.
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1000000 in
 /-- The tile restriction map IS `F`'s restriction over the iterated image opens (the restriction
 `rfl` underlying the smul bridges, read at the level of the section-restriction morphism).
@@ -1065,6 +1069,7 @@ private lemma tile_restrict_map_apply (F : (Spec R).Modules) (g : R)
 
 -- The base-ring descent + transport unify tile sections against `F.val` sections through the
 -- `modulesSpecToSheaf` ∘ restrict tower (descent carriers, reconcile equivs); these are heartbeat-heavy.
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1000000 in
 /-- **Per-tile section localisation at `f` (Stacks 01HV(4)/01I8, the last keystone leaf).**  Let
 `F` be an `𝒪_{Spec R}`-module, `f g : R`, and suppose `D(g) ⊆ U` with `F.over U` globally presented.
@@ -1341,6 +1346,7 @@ private lemma overlap_section_localization (F : (Spec R).Modules) (U : (Spec R).
   rw [← keyB]
   exact h4
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1000000 in
 -- The `change`-based defeq reduction of the `LinearMap.pi` cover-section maps and the per-tile
 -- `IsLocalizedModule.pi` synthesis over `ULift (Fin n)` are heartbeat-heavy.

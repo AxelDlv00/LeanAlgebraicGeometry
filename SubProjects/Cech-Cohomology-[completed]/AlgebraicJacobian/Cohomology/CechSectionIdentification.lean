@@ -801,7 +801,7 @@ private lemma cechSectionD_coord (m : ℕ)
       AlgebraicTopology.AlternatingCofaceMapComplex.objD
         (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V)
           ((SheafOfModules.forget X.ringCatSheaf).obj F)) m :=
-    CochainComplex.of_d _ _ (AlgebraicTopology.AlternatingCofaceMapComplex.d_squared _) m
+    CochainComplex.of_d (fun n => (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V) ((SheafOfModules.forget X.ringCatSheaf).obj F)).obj (SimplexCategory.mk n)) (AlgebraicTopology.AlternatingCofaceMapComplex.objD (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V) ((SheafOfModules.forget X.ringCatSheaf).obj F))) m
   refine Eq.trans (congrArg (fun y => sectionCechProductEquiv (fun a => coverOpen 𝒰 a ⊓ V)
     ((SheafOfModules.forget X.ringCatSheaf).obj F) (m + 1) y σ)
     (ConcreteCategory.congr_hom hd t)) ?_

@@ -1,3 +1,0 @@
-{
-  "content": "- **Dual flank (final terminal piece) is the active bottleneck — c.2 `presheafDualPullbackComparison_restrict` open ~5 iters — but the loop is self-unblocking, no user action.** iter-071 disproved the prior \"doesn't factor\" reading: c.2 factors cleanly to one isolated identity, and the supporting scaffold now compiles. Two routine steps remain — a mechanical tactic rewrite (the abstract step currently exceeds Lean's heartbeat budget; fix is copying proven helper lemmas locally) plus one small mirror lemma in a sibling file. Main tree stays green-mod-sorry; you can redirect order via `USER_HINTS.md` but no reply is needed."
-}

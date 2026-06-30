@@ -1,0 +1,101 @@
+[
+  {
+    "timestamp": "2026-06-24T23:01:01Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "presheafDualPullbackComparison_restrict (case hstar, L1062)"
+    },
+    "session": {
+      "id": "session_78",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Residual changed kind: FC-opacity (4-iter blocker iters 074-078) RESOLVED. After full sectionwise FC reduction (now compiling), the sole sorry sits on a thin-poset Subsingleton + restrictFunctorComp_hom_app_app + naturality_apply coherence at the phi.app level. Global sorry flat 5->5 (this file 1->1).",
+      "key_lemmas_used": [
+        "Adjunction.leftAdjointCompIso_hom_app",
+        "PresheafOfModules.pushforwardComp (=Iso.refl)",
+        "ppadj_unit_app_app_apply (new, rfl)",
+        "ppadj_counit_app_app_apply (new, rfl)",
+        "dual_map_app_apply (new, rfl)",
+        "pushforward_map_app_apply",
+        "pushforward_obj_map_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Expand FC.hom.app dM sectionwise via Adjunction.leftAdjointCompIso_hom_app, drop middle e.inv (pushforwardComp=Iso.refl)",
+        "code_tried": "simp only [FC]; rw [Adjunction.leftAdjointCompIso_hom_app]; simp only [PresheafOfModules.pushforwardComp, Iso.refl_inv, NatTrans.id_app]",
+        "line_number": "~963",
+        "result": "success",
+        "insight": "leftAdjointCompIso_hom_app gives FC.hom.app X as explicit 4-term unit/counit composite; middle term drops at e=Iso.refl. FC-opacity resolved (the iter-075 finding, now executed)."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Distribute .app V over the composite, peel pushforward.map wrappers",
+        "code_tried": "simp only [PresheafOfModules.comp_app, ModuleCat.hom_comp, LinearMap.comp_apply]; erw [pushforward_map_app_apply ...]",
+        "line_number": "~990",
+        "result": "partial",
+        "insight": "rw fails (ConcreteCategory.hom vs ModuleCat.Hom.hom coercion-form mismatch); bare erw bombs whnf. Fix = explicit anchoring args to erw (pushforward_map_app_apply with all named args)."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Reduce the 3 pushforwardPushforwardAdj unit/counit factors via locally re-stated rfl value lemmas",
+        "code_tried": "erw [ppadj_counit_app_app_apply (adj := f.isOpenEmbedding.isOpenMap.adjunction) (phi := betaf) (psi := ...) (N := ...) (U := ...), ppadj_counit_app_app_apply (adj := h...), ppadj_unit_app_app_apply (adj := (h-comp-f)...)]",
+        "line_number": "~1000",
+        "result": "partial",
+        "insight": "Root-file pushforwardPushforwardAdj_unit/counit_app_app_apply are private; re-stated locally as ppadj_unit/counit_app_app_apply (both := rfl, compile). Counit-at-pushforward-object reductions are carrier-diamond-heavy; needs maxHeartbeats 3.2M->12.8M (finite, documented)."
+      },
+      {
+        "attempt": 4,
+        "strategy": "Peel pushforward-object restrictions via pushforward_obj_map_apply (Mathlib rfl)",
+        "code_tried": "erw [pushforward_obj_map_apply (phi := whiskerRight alpha_hf (forget2 ...)) (M := M.val.dual) (f := ...)]",
+        "line_number": "~1020",
+        "result": "success",
+        "insight": "pushforward_obj_map_apply (Mathlib, rfl) reduces N.map -> M.val.dual.map (T3 needs two, T4 one)."
+      },
+      {
+        "attempt": 5,
+        "strategy": "Collapse the three dual-restriction maps to a single phi.app evaluation via new rfl brick dual_map_app_apply",
+        "code_tried": "erw [PresheafOfModules.dual_map_app_apply, PresheafOfModules.dual_map_app_apply, PresheafOfModules.dual_map_app_apply]; sorry",
+        "line_number": "1062",
+        "result": "partial",
+        "insight": "dual_map_app_apply (new, rfl): ((dual M).map g phi).app W0 = phi.app ((Over.map g.unop).op.obj W0), via ofPresheaf_map -> internalHomPresheaf.map = restrictionMap = (pushforward0 (Over.map g.unop)).map. Both sides now phi.app(slice)(z-variant). Residual = Subsingleton.elim of LHS slice (triple Over.map reindex) vs RHS slice (slice2), equal domain by comp_image; eqToIso vs restrictFunctorComp reindex reconcile via naturality_apply."
+      }
+    ],
+    "next_steps": "Mechanical close, exact dual template TensorObjSubstrate.lean:4955-4967: rw [restrictFunctorComp_hom_app_app]; erw [<- M.presheaf.map_comp]; congr 1; exact Subsingleton.elim _ _. Then phi-naturality_apply reconciles ground reindexes. Heavy elaboration (12.8M HB); 2-3 trace-guided builds. If this well-templated route does NOT close next iter, escalate (STUCK)."
+  },
+  {
+    "timestamp": "2026-06-24T23:01:01Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "ppadj_unit_app_app_apply / ppadj_counit_app_app_apply / dual_map_app_apply (new helpers)"
+    },
+    "session": {
+      "id": "session_78",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "",
+      "key_lemmas_used": [
+        "pushforwardPushforwardAdj",
+        "ofPresheaf_map",
+        "internalHomPresheaf/restrictionMap",
+        "pushforward0 map"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Local rfl re-statements of the root private value lemmas + sectionwise dual restriction value",
+        "code_tried": "lemma ppadj_unit_app_app_apply ... := rfl; lemma ppadj_counit_app_app_apply ... := rfl; lemma dual_map_app_apply ... := rfl",
+        "line_number": "237/250/267",
+        "result": "success",
+        "insight": "All three := rfl, compile axiom-clean. Re-state root-file privates locally (cross-import visibility) + new sectionwise dual-restriction value lemma. auditor-confirmed genuine (not vacuous). Coverage debt: no blueprint blocks."
+      }
+    ],
+    "next_steps": "blueprint-writer: add \\lean+\\uses blocks for all three (PresheafOfModules namespace). dual_map_app_apply is load-bearing in case hstar."
+  }
+]

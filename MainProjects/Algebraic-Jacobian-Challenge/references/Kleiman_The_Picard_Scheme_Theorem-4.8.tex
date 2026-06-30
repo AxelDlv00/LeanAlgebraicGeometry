@@ -1,0 +1,106 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{mathrsfs}
+
+% Custom operators and macros
+\newcommand{\Pic}{\mathbf{Pic}}
+\newcommand{\pPic}{\operatorname{Pic}}
+\newcommand{\Hilb}{\mathbf{Hilb}}
+\newcommand{\Div}{\operatorname{Div}}
+\newcommand{\LinSys}{\operatorname{LinSys}}
+\newcommand{\et}{\text{ét}}
+\newcommand{\bEGA}{\textbf{EGA }}
+
+\newtheorem{theorem}{THEOREM}[section]
+
+\begin{document}
+
+\begin{theorem}[Main]
+Assume $f : X \to S$ is projective Zariski locally over $S$, and is flat with integral geometric fibers.
+\begin{enumerate}
+    \item Then $\Pic_{X/S}$ exists, is separated and locally of finite type over $S$, and represents $\pPic_{(X/S)(\et)}$.
+    \item If also $S$ is Noetherian and $X/S$ is projective, then $\Pic_{X/S}$ is a disjoint union of open subschemes, each an increasing union of open quasi-projective $S$-schemes.
+\end{enumerate}
+\end{theorem}
+
+\noindent\textbf{PROOF.} By [\textbf{EGA G} (0, 4.5.5), p. 106], it is a local matter on $S$ to represent a Zariski sheaf on the category of $S$-schemes. Moreover, it is also a local matter on $S$ to prove that an $S$-scheme is separated and locally of finite type. Hence, in order to prove (1), we may assume $S$ is Noetherian and $X/S$ is projective.
+
+Plainly an $S$-scheme is separated if it is a disjoint union of separated open subschemes, or if it is an increasing union of separated open subschemes. Hence (1) follows from (2).
+
+To prove (2), owing to Yoneda's lemma, we may view the category of schemes as a full subcategory of the category of functors by identifying a scheme $T$ with its functor of points. Denote this functor too by $T$ in order to lighten the notation. And say that the functor is a scheme, as well as that it is representable. Also, set
+\[
+P := \pPic_{(X/S)(\et)}.
+\]
+Note $P(T) = \operatorname{Hom}(T, P)$.
+
+Given a polynomial $\phi \in \mathbb{Q}[n]$, let $P^{\phi} \subset P$ be the \'{e}tale subsheaf associated to the presheaf whose $T$-points are represented by the invertible sheaves $\mathcal{L}$ on $X_T$ such that we have
+\begin{equation}\label{4.8.1}
+\chi(X_t, \mathcal{L}_t^{-1}(n)) = \phi(n) \text{ for all } t \in T.
+\end{equation}
+Notice that this presheaf is well defined, because \eqref{4.8.1} remains valid after any base change $p: T' \to T$; indeed, for any $t' \in T'$, for any $i$, and for any $n$, we have
+\[
+\mathrm{H}^i(X_{t'}, \mathcal{L}_{t'}^{-1}(n)) = \mathrm{H}^i(X_{p(t')}, \mathcal{L}_{p(t')}^{-1}(n)) \otimes_{k_t} k_{t'}
+\]
+because cohomology commutes with flat base change by [\textbf{Ha83}, Prp. III, 9.3, p. 255]. Hence $P^{\phi} $ is well defined too.
+
+Fix a map $T \to P$, and represent it by means of an \'{e}tale covering $p : T' \to T$ and an invertible sheaf $\mathcal{L}'$ on $X_{T'}$. Consider the subset $T^{\prime\phi} \subset T'$ defined as follows:
+\[
+T^{\prime\phi} := \{ t' \in T' \mid \chi(X_{t'}, \mathcal{L}_{t'}^{\prime-1}(n)) = \phi(n) \}.
+\]
+Then $T^{\prime\phi}$ is open by [\textbf{EGA III}$_2$, 7.9.11].
+
+Set $T^{\phi} := p(T^{\prime\phi})$. Then $T^{\phi} \subset T$ is open as $T^{\prime\phi} \subset T'$ is open and $p$ is \'{e}tale. Moreover, $T^{\prime\phi} = p^{-1}(T^{\phi})$. Indeed, let $t' \in p^{-1}(T^{\phi})$. Say $p(t') = p(t'_1)$ where $t'_1 \in T^{\prime\phi}$. Now, there is an \'{e}tale covering $T'' \to T' \times_T T'$ such that the two pullbacks of $\mathcal{L}'$ to $X_{T''}$ are isomorphic. Let $t'' \in T''$ have image $t' \in T'$ under the first map $T'' \to T'$ and have the image $t'_1 \in T'$ under the second map. Then
+\[
+\chi(X_{t'}, \mathcal{L}_{t'}^{\prime-1}(n)) = \chi(X_{t''}, \mathcal{L}_{t''}^{\prime\prime-1}(n)) = \chi(X_{t'_1}, \mathcal{L}_{t'_1}^{\prime-1}(n)) = \phi(n).
+\]
+Hence $t' \in T^{\prime\phi}$. Thus $T^{\prime\phi} \supset p^{-1}(T^{\phi})$. Therefore, $T^{\prime\phi} = p^{-1}(T^{\phi})$.
+
+Furthermore, $T^{\phi}$ is (represents) the fiber product of functors $P^{\phi} \times_P T$. Indeed, to see they have the same $R$-points, let $r : R \to T$ be a map; form $R' := R \times_T T'$ and $r' : R' \to T'$. Suppose $r$ factors through $T^{\phi}$. Then $r'$ factors through $T^{\prime\phi}$. So $R' \to T' \to P$ factors through $P^{\phi}$ essentially by definition. Now, $R' \to R$ is an \'{e}tale covering. Hence $R \to T \to P$ factors through $P^{\phi}$ since $P^{\phi}$ is an \'{e}tale sheaf.
+
+Conversely, suppose $R \to T \to P$ factors through $P^{\phi}$. Then $R \to P$ is defined by means of an \'{e}tale covering $R'' \to R$ and an invertible sheaf $\mathcal{L}''$ on $X_{R''}$ such that $\chi(X_u, \mathcal{L}_u^{\prime\prime-1}(n)) = \phi(n)$ for all $u \in R''$. Since both $\mathcal{L}''$ and $\mathcal{L}'$ define $R \to P$, there is an \'{e}tale covering $R''' \to R'' \times_R R'$ such that the pullbacks of $\mathcal{L}''$ and $\mathcal{L}'$ to $X_{R'''}$ are isomorphic. Hence the image of $r' : R' \to T'$ lies in $T^{\prime\phi}$. But the latter is open. Hence $r'$ factors through it. Therefore, $r : R \to T$ factors through $T^{\phi}$. Thus $T^{\phi}$ and $P^{\phi} \times_P T$ have the same $R$-points.
+
+Let $\phi$ vary. Plainly the $T^{\prime\phi}$ are disjoint and cover $T'$. So the $T^{\phi}$ are disjoint and cover $T$. Hence, by a general result [\textbf{EGA G} (0, 4.5.4), p. 103], if the $P^{\phi}$ are (representable by) schemes, then $P$ is their disjoint union. Thus it remains to represent each $P^{\phi}$ by an increasing union of open quasi-projective $S$-schemes.
+
+Fix $\phi$. Given $m \in \mathbb{Z}$, let $P^{\phi}_m \subset P^{\phi}$ be the \'{e}tale subsheaf associated to the presheaf whose $T$-points are represented by the $\mathcal{L}$ on $X_T$ such that, in addition to \eqref{4.8.1}, we have
+\begin{equation}\label{4.8.2}
+\mathrm{R}^i f_{T*} \mathcal{L}(n) = 0 \text{ for all } i \ge 1 \text{ and } n \ge m.
+\end{equation}
+Notice that this presheaf is well defined, because \eqref{4.8.2} remains valid after any base change $p: T' \to T$, as is shown next.
+
+First, let's see that \eqref{4.8.2} is equivalent to the following condition:
+\begin{equation}\label{4.8.3}
+\mathrm{H}^i(X_t, \mathcal{L}_t(n)) = 0 \text{ for all } i \ge 1\text{, all } n \ge m\text{, and all } t \in T.
+\end{equation}
+Indeed, \eqref{4.8.3} implies \eqref{4.8.2}; in fact, for any given $i, t$ and $n$, if $\mathrm{H}^i(X_t, \mathcal{L}_t(n)) = 0$, then $\mathrm{R}^i f_{T*} (\mathcal{L}(n) \otimes_{\mathcal{O}_T} \mathcal{N})_t = 0$ for all quasi-coherent $\mathcal{N}$ on $T$ by [\textbf{EGA III}$_2$, 7.5.3] or [\textbf{OB72}, Cor. 2.1 p. 68].
+
+Conversely, assume \eqref{4.8.2}. Fix $t$ and $n$. Let's proceed by descending induction on $i$ to prove $\mathrm{H}^i(X_t, \mathcal{L}_t(n))$ vanishes. It vanishes for $i \gg 1$ by Serre's Theorem [\textbf{EGA III}$_1$, 2.2.2]. Suppose it vanishes for some $i \ge 2$. Then $\mathrm{R}^i f_{T*} (\mathcal{L}(n) \otimes_{\mathcal{O}_T} f_T^* \mathcal{N})_t$ vanishes for all quasi-coherent $\mathcal{N}$ on $T$, as just noted. So $\mathrm{R}^{i-1} f_{T*} (\mathcal{L}(n) \otimes_{\mathcal{O}_T} f_T^* \mathcal{N})_t$ is right exact in $\mathcal{N}$ owing to the long exact sequence of higher direct images. Therefore, by general principles, there is a natural isomorphism of functors
+\[
+\mathrm{R}^{i-1} f_{T*} (\mathcal{L}(n)) \otimes_{\mathcal{O}_T} \mathcal{N}_t \xrightarrow{\sim} \mathrm{R}^{i-1} f_{T*} (\mathcal{L}(n) \otimes_{\mathcal{O}_T} f_T^* \mathcal{N})_t.
+\]
+Since \eqref{4.8.2} holds, both source and target vanish. Taking $\mathcal{N} := k_t$ yields the vanishing of $\mathrm{H}^{i-1}(X_t, \mathcal{L}_t(n))$. Thus \eqref{4.8.2} implies \eqref{4.8.3}.
+
+Finally, for any $t' \in T'$, any $i$, and any $n$, we have
+\[
+\mathrm{H}^i(X_{t'}, \mathcal{L}_{t'}(n)) = \mathrm{H}^i(X_{p(t')}, \mathcal{L}_{p(t')}(n)) \otimes_{k_t} k_{t'}
+\]
+because cohomology commutes with flat base change. So \eqref{4.8.3} remains valid after the base change $p : T' \to T$; whence, \eqref{4.8.2} does too. Thus the presheaf is well defined, and so $P^{\phi}_m$ is too.
+
+Arguing much as we did for $P^{\phi} \times_P T$, we find, given a map $T \to P^{\phi}$, that, as $m$ varies, the products $P^{\phi}_m \times_{P^{\phi}} T$ form a nested sequence of open subschemes of $T$, whose union is $T$. In the argument, the key change is in proving openness. In place of [\textbf{EGA III}$_2$, 7.9.11], we use the following part of Serre's Theorem [\textbf{EGA III}$_1$, 2.2.2]: given a coherent sheaf $\mathcal{F}$ on a projective scheme over a Noetherian ring $A$, there are only finitely many $i \ge 1$ and $n \ge m$ such that $\mathrm{H}^i(\mathcal{F}(n))$ is nonzero, and all these nonzero $A$-modules are finitely generated. Hence, if there is a prime $\mathfrak{p}$ of $A$ such that $\mathrm{H}^i(\mathcal{F}(n))_{\mathfrak{p}} = 0$ for all $i \ge 1$ and $n \ge m$, then there is an $a \notin \mathfrak{p}$ such that $\mathrm{H}^i(\mathcal{F}(n))_a = 0$ for all $i \ge 1$ and $n \ge m$.
+
+Therefore, again by [\textbf{EGA G} (0, 4.5.4), p. 103], it suffices to represent each $P^{\phi}_m$ by a quasi-projective $S$-scheme.
+
+Fix $\phi$ and $m$. Set $\phi_0(n) := \phi(m+n)$. Then there is an isomorphism of functors $P^{\phi}_m \xrightarrow{\sim} P^{\phi_0}_0$, which is defined as follows. First, define an endomorphism $\varepsilon$ of $\Pic_{X/S}$ by sending an invertible sheaf $\mathcal{L}$ on an $X_T$ to $\mathcal{L}(m)$. Plainly $\varepsilon$ is an automorphism. So $\varepsilon$ induces an automorphism $\varepsilon^+$ of the associated sheaf $P$. Plainly $\varepsilon^+$ carries $P^{\phi}_m$ onto $P^{\phi_0}_0$. Thus it suffices to represent $P^{\phi_0}_0$ by a quasi-projective $S$-scheme.
+
+The function $s \mapsto \chi(X_s, \mathcal{O}_{X_s}(n))$ is locally constant on $S$ by [\textbf{EGA III}$_2$, 7.9.11]. Hence we may assume it is constant by replacing $S$ by an open and closed subset. Set $\psi(n) := \chi(X_s, \mathcal{O}_{X_s}(n))$.
+
+Consider the Abel map $\mathrm{A}_{X/S} : \Div_{X/S} \to P$. Note that $\Div_{X/S}$ is a scheme, in fact, an open subscheme of the Hilbert scheme $\Hilb_{X/S}$, by Theorem \textbf{3.7}. Form the product $P^{\phi_0}_0 \times_P \Div_{X/S}$. It is a scheme $Z$, in fact, an open subscheme of $\Div_{X/S}$, by what was proved above. Set $\theta(n) := \psi(n) - \phi_0(n)$. Plainly $Z$ lies in $\Hilb_{X/S}^{\theta}(n)$, which is projective over $S$. Hence $Z$ is quasi-projective.
+
+Let's now prove the projection $\alpha : Z \to P^{\phi_0}_0$ is a surjection of \'{e}tale sheaves. In other words, given a $T$ and a $\lambda \in P^{\phi_0}_0(T)$, we have to find an \'{e}tale covering $T_1 \to T$ and a $\lambda_1 \in Z(T_1)$ such that $\alpha(\lambda_1) \in P^{\phi_0}_0(T_1)$ is equal to the image of $\lambda$.
+
+Represent $\lambda$ by means of an \'{e}tale covering $p : T' \to T$ and an invertible sheaf $\mathcal{L}'$ on $X_{T'}$. Virtually by definition, the product $T' \times_{P^{\phi_0}_0} Z$ is equal to $\LinSys_{\mathcal{L}'/X_{T'}/T'}$. So, by Theorem \textbf{3.13}, this product is equal to $\mathbf{P}(\mathcal{Q})$ where $\mathcal{Q}$ is the $\mathcal{O}_{T'}$-module associated to $\mathcal{L}'$ as in Subsection \textbf{3.10}. Now, $m=0$, so $\mathrm{H}^1(X_t, \mathcal{L}_t) = 0$ for all $t \in T'$ owing to \eqref{4.8.3}. Since (v) implies (i) in Subsection \textbf{3.10} therefore $\mathcal{Q}$ is locally free.
+
+Hence $\mathbf{P}(\mathcal{Q})$ is smooth over $T'$. So there exist an \'{e}tale covering $T_1 \to T'$ and a $T'$-map $T_1 \to \mathbf{P}(\mathcal{Q})$ by [\textbf{EGA IV}$_4$, 17.16.3 (ii)]. Then the composition $T_1 \to \mathbf{P}(\mathcal{Q}) \to Z \to P^{\phi_0}_0$ is equal to the composition $T_1 \to T' \to T \to P^{\phi_0}_0$. In other words, the map $T_1 \to Z$ is a $\lambda_1 \in Z(T_1)$ such that $\alpha(\lambda_1) \in P^{\phi_0}_0(T_1)$ is equal to the image of $\lambda$. Since the composition $T_1 \to T' \to T$ is an \'{e}tale covering, $\alpha$ is thus a surjection of \'{e}tale sheaves.
+
+Plainly, the map $\alpha : Z \to P^{\phi_0}_0$ is defined by the invertible sheaf associated to the universal relative effective divisor on $X_Z/Z$. So taking $T := Z$ and $T' := T$ above, we conclude that the product $Z \times_{P^{\phi_0}_0} Z$ is a scheme and that the first projection is smooth and projective. Therefore, the theorem now results from the following general lemma. \hfill $\square$
+
+\end{document}

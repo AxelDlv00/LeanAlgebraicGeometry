@@ -1,0 +1,169 @@
+[
+  {
+    "timestamp": "2026-06-29T05:32:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/PullbackTensorComp.lean",
+      "theorem": "sheafificationCompPullback_comp"
+    },
+    "session": {
+      "id": "session_314",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Adjunction.conjugateEquiv_leftAdjointCompIso_inv",
+        "CategoryTheory.conjugateEquiv_comm",
+        "PresheafOfModules.pullbackComp",
+        "Functor.whiskerRight_id'",
+        "Functor.whiskerLeft_id'"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Close the lone strict-pushforwardComp-cocycle `key` residual (iter-313 5-iter D3' wall). pullbackComp = leftAdjointCompIso prF prH prf (pushforwardComp) by rfl; conjugateEquiv_leftAdjointCompIso_inv gives the .inv conjugate = (pushforwardComp).hom = 𝟙 (Iso.refl); conjugateEquiv_comm flips to the .hom conjugate; rw collapses left whisker; right whisker is whiskerRight (Scheme.Modules.pushforwardComp).hom = 𝟙 (rfl), closed by whiskerRight_id'.",
+        "code_tried": "have h1 : conjugateEquiv (prF.comp prH) prf (pullbackComp φ'_f φ'_h).inv = 𝟙 _ := by rw [show pullbackComp = leftAdjointCompIso prF prH prf (pushforwardComp) from rfl, conjugateEquiv_leftAdjointCompIso_inv]; rfl; have hconj := conjugateEquiv_comm ...; rw [hconj, show (pushforwardComp h f).hom = 𝟙 _ from rfl]; simp only [Functor.whiskerLeft_id', Category.id_comp]; exact Functor.whiskerRight_id' _",
+        "line_number": "586",
+        "result": "success",
+        "insight": "Both Scheme.Modules.pushforwardComp AND PresheafOfModules.pushforwardComp are literally Iso.refl, so each whisker factor collapses to 𝟙 independently — the iter-313-predicted forget_map_pushforward_map cross-side bridge is NOT needed. The Mathlib-absent _hom conjugate is supplied via conjugateEquiv_comm (.inv form). rw [Functor.whiskerLeft_id] unprimed FAILS (stated with NatTrans.id not 𝟙); use the primed forms. lean_verify: {propext, Classical.choice, Quot.sound} — axiom-clean."
+      }
+    ],
+    "next_steps": "Sq1 foundation now sorry-free. Next: pullbackTensorMap_restrict needs Sq4 (pullbackValIso composition coherence, Mathlib-absent ~40-120 LOC) + interleaved 4-square merge."
+  },
+  {
+    "timestamp": "2026-06-29T05:32:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/PullbackTensorComp.lean",
+      "theorem": "pullbackTensorMap_restrict"
+    },
+    "session": {
+      "id": "session_314",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Needs new Mathlib-absent Sq4 (pullbackValIso composition coherence) + interleaved 4-square merge; deliberately deferred iters 256-261. Race-safety: DualInverse imports this file, must stay green.",
+      "key_lemmas_used": [
+        "sheafificationCompPullback_comp (Sq1, now available)",
+        "pullbackComp_δ (Sq2b)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Scoped only (live goal inspected, available squares identified). Not attempted to close.",
+        "code_tried": "simp only [pullbackTensorMap, tensorObjIsoOfIso]; rw [map_comp×3]; simp only [assoc]; sorry (paste-ready opening retained)",
+        "line_number": "743",
+        "result": "partial",
+        "insight": "Sq1 (this iter) + Sq2b available; Sq4 = pullbackValIso composition coherence is the blocker, lives in lower TensorObjSubstrate.lean (read-only oleans). Would be a new private helper here."
+      }
+    ],
+    "next_steps": "Build Sq4 as new private helper citing TOS oleans, then interleaved merge mirroring D1' pullbackTensorMap_natural."
+  },
+  {
+    "timestamp": "2026-06-29T05:32:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport.naturality (forward, refine_1)"
+    },
+    "session": {
+      "id": "session_314",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "REGRESSION: the iter-314 'element-level close' does NOT compile. The new helper appIso_hom_naturality (L309-316) fails its rw (instances-transparency corruption); appIso_hom_naturality_apply inherits a silent sorry; the forward naturality element paste blows the heartbeat budget (whnf timeouts at L618/L778 even at 800K limit). File left BROKEN (6 errors).",
+      "key_lemmas_used": [
+        "PresheafOfModules.naturality_apply",
+        "appIso_hom_naturality_apply (sorry-backed)",
+        "ModuleCat.restrictScalars.map_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Add new .hom-direction appIso naturality helper (mirror of Mathlib appIso_inv_naturality), then close forward naturality element-wise.",
+        "code_tried": "lemma appIso_hom_naturality ... := by have h := appIso_inv_naturality f i; rw [← cancel_mono (appIso f V).inv]; simp only [Category.assoc, Iso.hom_inv_id, Category.comp_id]; rw [h, ← Category.assoc, Iso.hom_inv_id, Category.id_comp]",
+        "line_number": "316",
+        "lean_error": "Tactic `rewrite` failed: Did not find an occurrence of the pattern Y.presheaf.map i ≫ (appIso f V).inv ... The target expression is not type-correct under the `instances` transparency level (X.presheaf.obj application type mismatch).",
+        "result": "failed",
+        "insight": "Same instances-transparency-corruption wall documented in KB (change-through-corruption). The cancel_mono/simp prefix corrupts the goal so the final rw [h] can't match. Helper does NOT prove. LSP showed 'clean: true' at an intermediate point (events 18/42/46) — stale/incremental; a real build fails."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Forward naturality element close using appIso_hom_naturality_apply + PresheafOfModules.naturality_apply at the f.opensFunctor-reindexed slice morphism g.",
+        "code_tried": "erw [Scheme.Modules.εInv_apply ×2]; rw [ofBijective_appIso_inv_symm ×2]; erw [ModuleCat.restrictScalars.map_apply]; have hnat := PresheafOfModules.naturality_apply φ g z; erw [hnat]; ...; exact appIso_hom_naturality_apply f ...",
+        "line_number": "778",
+        "lean_error": "(deterministic) timeout at `whnf`, maximum number of heartbeats (800000) has been reached",
+        "result": "failed",
+        "insight": "Even the 800K-bumped block times out. The element paste is too heavy for a clean build; relies on the broken helper above."
+      }
+    ],
+    "next_steps": "REVERT DualInverse.lean to the iter-313 green baseline (.archon/logs/iter-314/snapshots/.../baseline.lean) OR isolate: prove appIso_hom_naturality with the change-through-corruption recipe (erw/change at default transparency, not rw-after-simp) and split the heavy element pastes into pre-stated lemmas to dodge the heartbeat cliff. Do NOT re-run the same in-file blind element close."
+  },
+  {
+    "timestamp": "2026-06-29T05:32:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransportInv.naturality (reverse, refine_2)"
+    },
+    "session": {
+      "id": "session_314",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "whnf heartbeat timeouts (L499 return-type 200K, L584 erw-chain 200K). sorry at L587 unreachable behind the timeouts.",
+      "key_lemmas_used": [
+        "Scheme.Modules.εInv_apply",
+        "ModuleCat.restrictScalarsId'App",
+        "ModuleCat.restrictScalarsComp'App"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Reduce the reverse-component telescope: ModuleCat.hom_ext + LinearMap.ext, simp the restrictScalars Id'/Comp' app, then erw [εInv_apply ×4].",
+        "code_tried": "intro X_1 Y_1 f_1; apply ModuleCat.hom_ext; refine LinearMap.ext fun z => ?_; simp only [..., restrictScalarsId'App, restrictScalarsComp'App, LinearEquiv.toModuleIso_inv/hom]; erw [εInv_apply ×4]; all_goals try ...; sorry",
+        "line_number": "584",
+        "lean_error": "(deterministic) timeout at `whnf`, maximum number of heartbeats (200000) has been reached",
+        "result": "failed",
+        "insight": "The εInv ×4 erw-chain over the restrictScalarsId'/Comp' telescope exceeds the default heartbeat budget; sliceDualTransportInv's signature itself (L499) now also times out — the added cost cascaded."
+      }
+    ],
+    "next_steps": "Deferred behind the forward-naturality revert. The reverse telescope needs the same change-through-corruption discipline + pre-stated heavy steps, not an inline εInv ×4 chain."
+  },
+  {
+    "timestamp": "2026-06-29T05:32:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "dual_restrict_iso (homOfLocalCompat isoMk naturality)"
+    },
+    "session": {
+      "id": "session_314",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Cascade 'Unknown identifier sliceDualTransport' at L1149 — sliceDualTransport never elaborates because its naturality fields (above) error out. Gated on the forward/reverse naturality closes.",
+      "key_lemmas_used": [
+        "Scheme.Modules.restrictScalars_collapse_apply",
+        "dualUnitRingSwapHom",
+        "unitRelabelSwap"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Set up element reduction (the goal had sorry.hom — gated on sliceDualTransport being sorry-free).",
+        "code_tried": "intro X_1 Y_1 f_1; apply ModuleCat.hom_ext; refine LinearMap.ext fun z => ?_; simp only [ModuleCat.hom_comp, LinearMap.comp_apply, ModuleCat.restrictScalars.map_apply, restrictScalars_collapse_apply, dualUnitRingSwapHom, unitRelabelSwap]; sorry",
+        "line_number": "1151",
+        "lean_error": "Unknown identifier `sliceDualTransport` (cascade — the decl failed upstream)",
+        "result": "failed",
+        "insight": "Cannot be cleanly proven until sliceDualTransport is sorry-free (its .hom is sorry); prover correctly identified this as gated."
+      }
+    ],
+    "next_steps": "Gated. Will resolve once the forward+reverse naturality fields are honestly closed (after the revert)."
+  }
+]

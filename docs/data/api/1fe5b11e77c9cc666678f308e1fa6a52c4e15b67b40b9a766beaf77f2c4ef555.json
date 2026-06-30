@@ -1,0 +1,105 @@
+[
+  {
+    "timestamp": "2026-06-25T00:53:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "presheafDualPullbackComparison_restrict (case hstar / c.2 residual ★)"
+    },
+    "session": {
+      "id": "session_79",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "none — CLOSED",
+      "key_lemmas_used": [
+        "PresheafOfModules.naturality_apply",
+        "AlgebraicGeometry.Scheme.restrictFunctorComp_hom_app_app",
+        "Scheme.Hom.comp_image",
+        "Over.homMk",
+        "homOfLE",
+        "Subsingleton.elim",
+        "hstar_naturality (new)"
+      ],
+      "keystone": "Over (Opens X) is a thin poset whose homs are proof-irrelevant Props => homOfLE ≡ eqToHom DEFEQ => convert key using 2 closes by rfl with NO residual Subsingleton goals"
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "erw the geometry-level restrictFunctorComp_hom_app_app on the RHS reindex to fold it to M.val.map(eqToHom)",
+        "code_tried": "erw [restrictFunctorComp_hom_app_app] (also fully-qualified AlgebraicGeometry.Scheme. form)",
+        "line_number": "1062-1063",
+        "lean_error": "Unknown constant (qualified form); then `rewrite failed: Did not find an occurrence of the pattern` — lemma is at the forget₂ Hom.app level, goal RHS is at ModuleCat .val.app, wrappers (pushforward₀.map.app + forget.mapIso) block matching",
+        "result": "failed",
+        "insight": "restrictFunctorComp_hom_app_app cannot rewrite the goal's RHS directly — wrong abstraction level + wrapper mismatch"
+      },
+      {
+        "attempt": 2,
+        "strategy": "simp-normalise the slice with Over/pushforward₀/forget unfolds before the erw",
+        "code_tried": "simp only [Functor.mapIso_hom, PresheafOfModules.pushforward₀, SheafOfModules.forget]; erw [restrictFunctorComp_hom_app_app]",
+        "line_number": "1063",
+        "lean_error": "rewrite still did not find the pattern; trace_state showed RHS_z as φ.app(triple-Over.map slice) with restrictScalars semilinear map",
+        "result": "failed",
+        "insight": "after simp the LHS is φ.app(sliceL) and RHS is φ.app(sliceR) — the goal is φ's naturality square, not a reindex rewrite"
+      },
+      {
+        "attempt": 3,
+        "strategy": "rw a `show ... = M.val.map (eqToHom).op` rfl bridge for the RHS reindex",
+        "code_tried": "rw [show (((restrictFunctorComp h f).app M).hom.val.app ...) = (M.val.map (eqToHom (by simp)).op) from rfl]",
+        "line_number": "1063-1064",
+        "lean_error": "Application type mismatch / Type mismatch / `simp` made no progress — the map is semilinear (restrictScalars carrier diamond), domain/codomain are restrictFunctor-objects not bare M.val.obj, so no clean M.val.map rfl form",
+        "result": "failed",
+        "insight": "the reindex is genuinely a semilinear restrictFunctor map; cannot be coerced to a plain M.val.map by rfl"
+      },
+      {
+        "attempt": 4,
+        "strategy": "introduce helper hstar_naturality with g BUILT INSIDE from hle, close consumer by convert ... using 2/3",
+        "code_tried": "convert hstar_naturality M φ ?hle ?z using 2 (then using 3); hstar_naturality took hle : (unop B).left ≤ (unop A).left and built g internally",
+        "line_number": "1062, 745",
+        "lean_error": "EXIT 0 but convert left object goals convert_1/convert_2 (the slices A,B unsolved) instead of unifying — A-coupling (A occurs in both internally-built g and φ.app A) defeats convert",
+        "result": "partial",
+        "insight": "coupling A into g blocks convert from unifying the slices; g must be DECOUPLED as an explicit argument so A,B are concrete before convert"
+      },
+      {
+        "attempt": 5,
+        "strategy": "DECOUPLE g: hstar_naturality takes explicit (g : A ⟶ B); body = (naturality_apply φ g z).symm; consumer supplies concrete transcribed g and slices are inferred",
+        "code_tried": "have hle := le_of_eq (Scheme.Hom.comp_image h f (unop W).left).symm; have key := hstar_naturality M φ (Over.homMk (homOfLE hle) (Subsingleton.elim _ _) : ...).op z; convert key using 2",
+        "line_number": "1086-1100, 745",
+        "lean_error": "none — EXIT 0, Build completed successfully (8324 jobs), no error, no 'declaration uses sorry'",
+        "result": "success",
+        "insight": "thin-poset proof-irrelevance: homOfLE ≡ eqToHom definitionally in Over (Opens X), so the goal's X.presheaf.map(eqToIso) / restrictFunctorComp reindexes are DEFEQ to (restr base ·).map g; convert key using 2 discharges all map-mismatches by rfl"
+      }
+    ],
+    "next_steps": "Route c.2 CLOSED. Next: TensorObjInverse.lean {1128,1186,1222,1990} (S3/S4a/(b)/telescope) now unblocked vs the green sibling — co-dispatch next iter. Blueprint-writer: reconcile lem:presheafdual_pullback_comparison_restrict close-route prose + add hstar_naturality / dual_map_app_apply blocks (lvb 3 major, blueprint-side)."
+  },
+  {
+    "timestamp": "2026-06-25T00:23:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "hstar_naturality (new private helper)"
+    },
+    "session": {
+      "id": "session_79",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "none",
+      "key_lemmas_used": [
+        "PresheafOfModules.naturality_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "package φ's naturality_apply at an explicit slice morphism g : A ⟶ B, A B implicit, g decoupled",
+        "code_tried": "private lemma hstar_naturality ... (g : A ⟶ B) (z) : ... := (PresheafOfModules.naturality_apply φ g z).symm",
+        "line_number": "745",
+        "lean_error": "transient: unexpected token 'open' (open...in placement) — fixed by moving the open..in onto its own line before the docstring/lemma",
+        "result": "success",
+        "insight": "atomic naturality brick; decoupled g is what lets the consumer's convert unify slices. lean-auditor iter079: clean, not over-specialized, g genuinely explicit"
+      }
+    ],
+    "next_steps": "Needs blueprint entry (lvb major 3): add \\label+\\lean+\\uses block feeding lem:presheafdual_pullback_comparison_restrict."
+  }
+]

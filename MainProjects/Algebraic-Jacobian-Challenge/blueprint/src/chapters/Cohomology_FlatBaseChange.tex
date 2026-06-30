@@ -3,6 +3,11 @@
 % SOURCE: [Stacks Project], Cohomology of Schemes, Section "Cohomology and
 % base change, I", and Tag 02KH (read from references/stacks-coherent.tex and
 % references/stacks-coherent.md).
+% NOTE: the adjoint-mate / conjugate-calculus cocycle development (the
+% gammaPushforward*NatIso_comp, pullbackSpecTildeNatIso(_comp), and
+% pushforwardSpecTildeNatIso nat-iso packaging) was removed; flat base change now
+% routes through the Cech spectral-sequence / reduce-to-absolute approach (see
+% Cohomology_CechHigherDirectImage.tex, lem:cech_flat_base_change).
 
 \section{Setup and motivation}
 
@@ -29,6 +34,62 @@ by the cartesian square obtained from the fibre product
 Here \(f' : X' \to S'\) is the base change of \(f\), and \(g' : X' \to X\) is the
 first projection. We write \(\mathcal{F}' = (g')^*\mathcal{F}\) for the pullback
 of \(\mathcal{F}\) to \(X'\).
+
+\section{Two routes to base change, and which one is active}
+\label{sec:fbc_route_decision}
+
+There are two distinct ways to express ``the pushforward commutes with flat base
+change'' at the level of \(\mathcal{O}_{S'}\)-modules. This chapter records both, but
+commits to one as the load-bearing construction.
+
+\emph{The canonical-mate route (Stacks-faithful, currently deprioritized).} One fixes
+the canonical base-change morphism
+\(\beta : g^*(f_*\mathcal{F}) \to f'_*((g')^*\mathcal{F})\) of
+Definition~\ref{def:pushforward_base_change_map} --- the adjoint mate of the
+\(((g')^*,(g')_*)\)-unit --- and proves \(\mathrm{IsIso}\,\beta\) directly,
+affine-locally. This is the route the Stacks Project takes, and it remains the
+mathematically canonical formulation. Its closure requires two obligations absent from
+Mathlib: the affine-open reduction
+Lemma~\ref{lem:base_change_map_affine_local} (compatibility of the mate with
+restriction to affine opens of \(S'\)) and the coherence identification
+Lemma~\ref{lem:pushforward_base_change_mate_cancelBaseChange} (the abstract mate,
+transported through the four affine dictionaries, equals the concrete cancellation
+isomorphism \(\operatorname{cancelBaseChange}\)). The second is a \(2\)-categorical
+mate-unwinding that has no known direct proof. We therefore record both nodes as the
+canonical route and \textbf{deprioritize} it; we do \emph{not} delete them,
+as they document the Stacks-faithful statement and remain available should a Mathlib
+bridge identifying the mate with \(\operatorname{cancelBaseChange}\) appear.
+
+\emph{The concrete-tilde construction (active, consumed downstream).} Rather than prove
+that the \emph{canonical} map is an isomorphism, one \emph{constructs a fresh} natural
+isomorphism
+\[
+  e : g^* \circ f_* \;\cong\; f'_* \circ (g')^*
+\]
+directly, by gluing the affine-local isomorphisms of
+Lemma~\ref{lem:affine_pushforward_pullback_baseChange} (each assembled from the two
+tilde dictionaries and Mathlib's \(\operatorname{cancelBaseChange}\)) along the affine
+basis of \(S'\). This construction \textbf{never forms the adjoint mate}, so it
+entirely sidesteps the unresolved coherence obligation
+Lemma~\ref{lem:pushforward_base_change_mate_cancelBaseChange}: the only remaining
+content is the naturality of the cancellation chain across affine restrictions of
+\(S'\) (Lemma~\ref{lem:pushforwardPullbackBaseChange_restrict_naturality}), a concrete
+localization-and-tensor compatibility rather than a mate identification.
+
+\emph{Why the active route suffices.} Everything downstream of this chapter --- the
+{\v C}ech tensorial base-change isomorphism (the cosimplicial residual \(e\) of the
+{\v C}ech chapter) and, through it, the Kleiman-style representability inputs ---
+consumes \emph{only} a base-change isomorphism (a \(\mathrm{Nonempty}\) / \(\cong\)
+datum) that commutes with the restriction maps, \emph{not} the assertion that the
+canonical map \(\beta\) is that isomorphism. The fresh \(e\) supplies exactly such an
+isomorphism, and by construction it commutes with restriction (it is glued from
+restriction-compatible affine pieces). The canonical map
+\(\operatorname{pushforwardBaseChangeMap}\) is not a protected declaration, so
+re-plumbing the downstream consumers to receive \(e\) is permitted. Consequently the
+key constituent of this chapter is
+Lemma~\ref{lem:affine_pushforward_pullback_baseChange} and the gluing chain
+(\S\ref{sec:fbc_gluing}) built on it; the canonical-mate nodes are retained for
+faithfulness but are off the critical path.
 
 \section{The canonical base-change map}
 
@@ -843,6 +904,576 @@ infrastructure and carries no external citation.
   sections of \(\widetilde M\) over \(D(a)\).)
 \end{proof}
 
+\subsection{The concrete-tilde affine base-change brick (active route)}
+\label{subsec:fbc_concrete_brick}
+
+The key affine input for this construction is the following isomorphism. It
+is assembled entirely from the two tilde dictionaries
+(Lemmas~\ref{lem:pushforward_spec_tilde_iso} and~\ref{lem:pullback_spec_tilde_iso}) and
+Mathlib's cancellation isomorphism, and --- crucially --- it never forms the adjoint
+mate of Definition~\ref{def:pushforward_base_change_map}, so it does not re-incur the
+mate\(\,\leftrightarrow\,\operatorname{cancelBaseChange}\) obligation
+(Lemma~\ref{lem:pushforward_base_change_mate_cancelBaseChange}) of the deprioritized
+canonical route.
+
+\begin{lemma}[Cancellation isomorphism for iterated base change]
+  \label{lem:cancelBaseChange_mathlib}
+  \lean{Algebra.IsPushout.cancelBaseChange}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Let \(R \to R'\) and \(R \to A\) be commutative-ring homomorphisms and \(M\) an
+  \(A\)-module. There is a canonical isomorphism of \(R'\)-modules
+  \[
+    \operatorname{cancelBaseChange} :
+    (R' \otimes_R A) \otimes_A M \;\xrightarrow{\ \sim\ }\; R' \otimes_R M,
+    \qquad (r' \otimes a) \otimes m \;\mapsto\; r' \otimes (a \cdot m),
+  \]
+  with no flatness hypothesis whatsoever.
+\end{lemma}
+
+\begin{lemma}\leanok
+[Module-level base-change cancellation iso]
+  \label{lem:baseChangeCancelModuleIso}
+  \lean{AlgebraicGeometry.baseChangeCancelModuleIso}
+  \uses{lem:cancelBaseChange_mathlib}
+  % NOTE (iter-306, review): landed axiom-clean. The load-bearing categorical-pushout ->
+  % `Algebra.IsPushout` bridge is `CommRingCat.isPushout_iff_isPushout` (|>.mp h.flip), which the
+  % proof prose below names only verbally; record it explicitly when next editing.
+  Let \(\varphi : R \to A\), \(\psi : R \to R'\), \(\rho : A \to B\),
+  \(\sigma : R' \to B\) be commutative-ring homomorphisms forming a pushout square in
+  \(\mathrm{CommRing}\) (so that \(B\) is, up to canonical isomorphism, the tensor
+  product \(A \otimes_R R'\)), and let \(M\) be an \(A\)-module. Then there is a
+  canonical isomorphism of \(R'\)-modules
+  \[
+    \operatorname{extendScalars}_\psi\bigl(\operatorname{restr}_\varphi M\bigr)
+    \;\cong\;
+    \operatorname{restr}_\sigma\bigl(\operatorname{extendScalars}_\rho M\bigr),
+  \]
+  i.e.\ \(R' \otimes_R M \cong \operatorname{restr}_\sigma\bigl(B \otimes_A M\bigr)\),
+  realising the inverse \(\operatorname{cancelBaseChange}^{-1}\) of
+  Lemma~\ref{lem:cancelBaseChange_mathlib} as a map between the extension-of-scalars
+  objects attached to the two legs of the square.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:cancelBaseChange_mathlib}
+  \leanok
+  The pushout hypothesis exhibits \((R, R', A, B)\) as a commutative-algebra pushout.
+  For such a square the cancellation isomorphism Lemma~\ref{lem:cancelBaseChange_mathlib} is
+  exactly the \(R'\)-linear isomorphism \(B \otimes_A M \cong R' \otimes_R M\); its
+  inverse, read through the definitional identifications
+  \(R' \otimes_R M = \operatorname{extendScalars}_\psi(\operatorname{restr}_\varphi M)\)
+  and \(B \otimes_A M = \operatorname{extendScalars}_\rho M\), is the displayed map. It
+  is an isomorphism with no flatness hypothesis.
+\end{proof}
+
+\begin{lemma}\leanok
+[Affine termwise base change, abstract-\(B\) framing]
+  \label{lem:affine_pushforward_pullback_baseChange}
+  \lean{AlgebraicGeometry.affinePushforwardPullbackBaseChange}
+  \uses{lem:pushforward_spec_tilde_iso, lem:pullback_spec_tilde_iso,
+        lem:cancelBaseChange_mathlib, lem:baseChangeCancelModuleIso}
+  % SOURCE: [Stacks Project], Cohomology of Schemes, Tag 02KG
+  % (\texttt{lemma-affine-base-change}) (read from references/stacks-coherent.tex,
+  % L906--918).
+  % SOURCE QUOTE: "Let $f : X \to S$ be a morphism of schemes.
+  % Let $\mathcal{F}$ be a quasi-coherent $\mathcal{O}_X$-module.
+  % Assume $f$ is affine.
+  % In this case $f_*\mathcal{F} \cong Rf_*\mathcal{F}$ is
+  % a quasi-coherent sheaf, and for every base change diagram
+  % (\ref{equation-base-change-diagram})
+  % we have
+  % $$
+  % g^*f_*\mathcal{F} = f'_*(g')^*\mathcal{F}.
+  % $$"
+  \textit{Source: Stacks Project, Cohomology of Schemes, Tag 02KG
+  (\texttt{lemma-affine-base-change}).}
+  Let \(\varphi : R \to A\), \(\psi : R \to R'\), \(\rho : A \to B\),
+  \(\sigma : R' \to B\) be commutative-ring homomorphisms forming a pushout square in
+  \(\mathrm{CommRing}\),
+  \[
+    \begin{array}{ccc}
+      R & \xrightarrow{\;\varphi\;} & A \\[2pt]
+      {\scriptstyle \psi}\big\downarrow & & \big\downarrow{\scriptstyle \rho} \\[2pt]
+      R' & \xrightarrow{\;\sigma\;} & B
+    \end{array}
+  \]
+  equivalently --- applying \(\operatorname{Spec}\), which carries a pushout of rings to
+  a cartesian (pullback) square of affine schemes --- the cartesian square
+  \[
+    \begin{array}{ccc}
+      \operatorname{Spec} B & \xrightarrow{\;\operatorname{Spec}\rho\;}
+        & \operatorname{Spec} A \\[2pt]
+      {\scriptstyle \operatorname{Spec}\sigma}\big\downarrow & &
+        \big\downarrow{\scriptstyle \operatorname{Spec}\varphi} \\[2pt]
+      \operatorname{Spec} R' & \xrightarrow{\;\operatorname{Spec}\psi\;}
+        & \operatorname{Spec} R .
+    \end{array}
+  \]
+  Write \(S = \operatorname{Spec} R\), \(S' = \operatorname{Spec} R'\),
+  \(X = \operatorname{Spec} A\), \(X' = \operatorname{Spec} B\), with
+  \(f = \operatorname{Spec}\varphi\), \(g = \operatorname{Spec}\psi\),
+  \(f' = \operatorname{Spec}\sigma\), \(g' = \operatorname{Spec}\rho\); let \(M\) be an
+  \(A\)-module and \(\mathcal{F} = \widetilde{M}\). Then there is an isomorphism of
+  \(\operatorname{Spec}(R')\)-modules
+  \[
+    g^*\bigl(f_*\widetilde{M}\bigr)
+    \;\cong\;
+    f'_*\bigl((g')^*\widetilde{M}\bigr),
+  \]
+  natural in the module \(M\), built directly from the tilde primitives and the
+  cancellation isomorphism, and \emph{never} identified with the canonical
+  adjoint-mate base-change map.
+
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:pushforward_spec_tilde_iso, lem:pullback_spec_tilde_iso,
+        lem:cancelBaseChange_mathlib, lem:baseChangeCancelModuleIso}
+        \leanok
+  The two sides are transported to modules through the affine dictionaries and then
+  compared by the cancellation isomorphism, in three composable moves; each move is an
+  isomorphism, so the composite is.
+
+  \emph{(1) The source \(g^*(f_*\widetilde{M})\).} The pushforward dictionary
+  Lemma~\ref{lem:pushforward_spec_tilde_iso} identifies \(f_*\widetilde{M}\) over
+  \(\operatorname{Spec}(R)\) with \(\widetilde{\operatorname{restr}_\varphi M}\). The
+  pullback dictionary Lemma~\ref{lem:pullback_spec_tilde_iso} then identifies its
+  pullback \(g^*\bigl(\widetilde{\operatorname{restr}_\varphi M}\bigr)\) with
+  \(\widetilde{\bigl(R' \otimes_R M\bigr)}\), the tilde of the \(R'\)-module
+  \(\operatorname{extendScalars}_\psi(\operatorname{restr}_\varphi M) = R' \otimes_R M\).
+
+  \emph{(2) The target \(f'_*((g')^*\widetilde{M})\).} The pullback dictionary
+  Lemma~\ref{lem:pullback_spec_tilde_iso} (applied to \(g' = \operatorname{Spec}\rho\))
+  identifies \((g')^*\widetilde{M}\) with
+  \(\widetilde{\bigl(\operatorname{extendScalars}_\rho M\bigr)}
+  = \widetilde{\bigl(B \otimes_A M\bigr)}\). The pushforward dictionary
+  Lemma~\ref{lem:pushforward_spec_tilde_iso} (applied to
+  \(f' = \operatorname{Spec}\sigma\)) identifies the pushforward of this tilde with
+  \(\widetilde{\bigl(\operatorname{restr}_\sigma(B \otimes_A M)\bigr)}\), the tilde of
+  \(B \otimes_A M\) read as an \(R'\)-module by restriction of scalars along \(\sigma\).
+
+  \emph{(3) Cancellation.} The module-level core
+  Lemma~\ref{lem:baseChangeCancelModuleIso} supplies the \(R'\)-linear isomorphism
+  \(\operatorname{extendScalars}_\psi(\operatorname{restr}_\varphi M) \cong
+  \operatorname{restr}_\sigma(\operatorname{extendScalars}_\rho M)\), i.e.\
+  \(R' \otimes_R M \cong \operatorname{restr}_\sigma(B \otimes_A M)\); it is the
+  realization of \(\operatorname{cancelBaseChange}^{-1}\)
+  (Lemma~\ref{lem:cancelBaseChange_mathlib}) for the square. Applying
+  \(\widetilde{(-)}\) and composing the inverse of (1), this iso, and (2) yields the
+  asserted isomorphism \(g^*(f_*\widetilde{M}) \cong f'_*((g')^*\widetilde{M})\).
+
+  \medskip
+  \emph{Realization as a chain of isomorphisms.} The three moves are assembled as a
+  five-step chain of isomorphisms of \(\operatorname{Spec}(R')\)-modules
+  \[
+    g^*\bigl(f_*\widetilde{M}\bigr)
+    \;\xrightarrow{\;\sim\;}\; \widetilde{\bigl(R' \otimes_R M\bigr)}
+    \;\xrightarrow{\;\widetilde{(\cdot)}\,\mathrm{of\ core}\;}\;
+    \widetilde{\bigl(\operatorname{restr}_\sigma(B \otimes_A M)\bigr)}
+    \;\xrightarrow{\;\sim\;} f'_*\bigl((g')^*\widetilde{M}\bigr),
+  \]
+  in which the first arrow is move (1) (the pushforward dictionary
+  Lemma~\ref{lem:pushforward_spec_tilde_iso} followed by the pullback dictionary
+  Lemma~\ref{lem:pullback_spec_tilde_iso}), the middle arrow is \(\widetilde{(-)}\)
+  applied to the module-level core Lemma~\ref{lem:baseChangeCancelModuleIso}, and the
+  last arrow is the inverse of move (2) (the pullback then pushforward dictionaries for
+  \(g'\) and \(f'\)). The only step carrying mathematical content beyond the tilde
+  dictionaries is the middle one: keeping \(B\) abstract ensures the cancellation
+  Lemma~\ref{lem:baseChangeCancelModuleIso} applies from the pushout hypothesis
+  directly, with no adjoint mate formed.
+
+  Naturality in \(M\) is the naturality of each constituent: the two tilde dictionaries
+  are natural in the module argument, and \(\operatorname{cancelBaseChange}\) (hence the
+  module core Lemma~\ref{lem:baseChangeCancelModuleIso}) is natural in \(M\) by Mathlib.
+  No adjoint mate is formed at any point, so the
+  mate\(\,\leftrightarrow\,\operatorname{cancelBaseChange}\) coherence obligation of the
+  canonical route never arises.
+\end{proof}
+
+\section{Gluing the affine base-change isomorphisms to a global natural iso}
+\label{sec:fbc_gluing}
+
+The affine brick Lemma~\ref{lem:affine_pushforward_pullback_baseChange} produces, over
+each affine open \(\operatorname{Spec}(R') \subseteq S'\) (with a chosen affine
+\(\operatorname{Spec}(R) \subseteq S\) over its \(g\)-image), an isomorphism
+\(e_{R'}\). We glue these into the global natural isomorphism
+\(e : g^* \circ f_* \cong f'_* \circ (g')^*\) of the active route. The construction
+mirrors the worked sheaf-of-modules descent already carried out in the project's
+line-bundle dual, and proceeds in four steps: an affine-restriction naturality lemma
+(the one genuinely new statement), a gluing to a sheaf of abelian groups, the
+re-imposition of \(\mathcal{O}_{S'}\)-linearity, and the upgrade to an isomorphism
+packaged in \(\mathcal{F}\). It rests on the following Mathlib anchors.
+
+\begin{lemma}[Morphism into a sheaf from its restriction to a basis]
+  \label{lem:restrictHomEquivHom_mathlib}
+  \lean{TopCat.Sheaf.restrictHomEquivHom}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Let \(F\) be a presheaf and \(F'\) a sheaf (valued in a category) on a space \(X\),
+  and let \(\{B_i\}_{i}\) be opens whose range is a basis of the topology of \(X\).
+  Then restriction along the basis is a bijection
+  \[
+    \bigl(B^{\mathrm{op}*}F \longrightarrow B^{\mathrm{op}*}F'\bigr)
+    \;\simeq\;
+    \bigl(F \longrightarrow F'\bigr),
+  \]
+  so a morphism into the sheaf \(F'\) is determined by, and constructible from, a
+  compatible family of restrictions to the basis opens (with
+  \(\operatorname{extend\_hom\_app}\) recovering the component at each \(B_i\)).
+\end{lemma}
+
+\begin{lemma}[Re-imposing module linearity on a sheaf morphism]
+  \label{lem:presheafOfModules_homMk_mathlib}
+  \lean{PresheafOfModules.homMk}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  A morphism \(\varphi\) of the underlying abelian-group presheaves of two presheaves
+  of \(R\)-modules \(M_1, M_2\), satisfying the sectionwise linearity equation
+  \(\varphi(r \cdot m) = r \cdot \varphi(m)\) for all opens, all scalars
+  \(r \in R(U)\) and all sections \(m\), assembles into a morphism
+  \(M_1 \to M_2\) of presheaves of \(R\)-modules.
+\end{lemma}
+
+\begin{lemma}[Packaging components into a natural isomorphism]
+  \label{lem:natIso_ofComponents_mathlib}
+  \lean{CategoryTheory.NatIso.ofComponents}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  A family of isomorphisms \(\{\eta_X : G_1(X) \cong G_2(X)\}_X\), natural in \(X\),
+  assembles into a natural isomorphism \(G_1 \cong G_2\) of functors.
+\end{lemma}
+
+% NOTE (iter-308, lvb fbc308): the FORMALIZED lemma is STRICTLY STRONGER than this statement —
+% it holds for an ARBITRARY algebra map S→S' ([Algebra S S'] [IsScalarTower R S S']) with NO
+% IsLocalizedModule hypothesis; proof is a TensorProduct.induction_on closing on the simple-tensor
+% formula (cancelBaseChange_tmul_tmul), never touching localization. Planner/writer: DROP
+% `lem:tildeRestriction_isLocalizedModule` from BOTH the statement and proof \uses (keep
+% `lem:cancelBaseChange_mathlib`); the localization datum is needed only at the consumption site
+% `lem:pushforwardPullbackBaseChange_restrict_naturality`. The proof sketch below (universal-property-
+% of-localized-modules route) is STALE — rewrite for the general tmul-induction route.
+\begin{lemma}\leanok
+[Compatibility of cancellation with localizing the outer base]
+  \label{lem:cancelBaseChange_localization_compat}
+  \lean{AlgebraicGeometry.cancelBaseChange_localization_compat}
+  \uses{lem:cancelBaseChange_mathlib}
+  \textit{Source: bespoke project infrastructure; no external citation.}
+  Let \(R \to S \to S'\) be a tower of commutative-ring homomorphisms (\(S \to S'\)
+  \emph{arbitrary} --- no localization hypothesis), let \(R \to A\) be a further homomorphism, and
+  let \(M\) be an \(A\)-module. Realizing the pushouts as the concrete tensor products
+  \(A \otimes_R S\) and \(A \otimes_R S'\) (\(A\) the first factor), the cancellation
+  isomorphisms \(\operatorname{cancelBaseChange}\) (Lemma~\ref{lem:cancelBaseChange_mathlib}) for the
+  \(S\)-tower and the \(S'\)-tower are intertwined by the outer base-change \(S \to S'\): the square
+  \[
+    \begin{array}{ccc}
+      (A \otimes_R S) \otimes_A M & \xrightarrow{\;\operatorname{cancelBaseChange}_S\;} & S \otimes_R M\\
+      \big\downarrow{\scriptstyle\,\mathrm{rTensor}\,(\mathrm{id}_A \otimes (S\to S'))} & & \big\downarrow{\scriptstyle\,\mathrm{rTensor}\,(S \to S')}\\
+      (A \otimes_R S') \otimes_A M & \xrightarrow{\;\operatorname{cancelBaseChange}_{S'}\;} & S' \otimes_R M
+    \end{array}
+  \]
+  commutes. Equivalently \(\operatorname{cancelBaseChange}\) commutes with changing the outer base
+  \(S \to S'\). This is pure \(\operatorname{ModuleCat}\)-level commutative algebra, carrying no
+  scheme scaffolding; the localization instance \(S' = S[1/b]\) (with the standard
+  \(\mathtt{Algebra}\)/\(\mathtt{IsScalarTower}\) data) is the case consumed by the
+  affine-restriction naturality square
+  (Lemma~\ref{lem:pushforwardPullbackBaseChange_restrict_naturality}).
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:cancelBaseChange_mathlib}
+  \leanok
+  Both \(\operatorname{cancelBaseChange}\) maps are given on simple tensors by the shared formula
+  \((a \otimes s) \otimes m \mapsto s \otimes (a \cdot m)\) (Lemma~\ref{lem:cancelBaseChange_mathlib}).
+  The square is checked pointwise by a double \(\mathtt{TensorProduct.induction\_on}\) (outer over
+  \((A \otimes_R S) \otimes_A M\), inner over \(A \otimes_R S\)); the \(\mathtt{tmul}\) leaf
+  reduces, on both routes around the square, to
+  \((\operatorname{algebraMap}\,S\,S')(s) \otimes (a \cdot m)\) by the simple-tensor formula together
+  with \(\mathrm{rTensor}\) functoriality and the \(A\)-algebra map \(\mathrm{id}_A \otimes (S\to S')\).
+  No \(\mathtt{IsLocalizedModule}\) datum or universal property of localized modules is required: the
+  identity holds for the \emph{arbitrary} ring map \(S \to S'\). (This is \emph{stronger} than the
+  localization-only framing originally planned, and removes
+  \(\mathtt{tildeRestriction\_isLocalizedModule}\) from this lemma's cone.)
+\end{proof}
+
+\begin{lemma}\leanok
+[Cancellation--base-change compatibility, inverse form]
+  \label{lem:cancelBaseChange_localization_compat_symm}
+  \lean{AlgebraicGeometry.cancelBaseChange_localization_compat_symm}
+  \uses{lem:cancelBaseChange_localization_compat}
+  \textit{Source: bespoke project infrastructure; no external citation.}
+  In the setting of Lemma~\ref{lem:cancelBaseChange_localization_compat}, the inverse square
+  commutes as well:
+  \(\mathrm{rTensor}\,(S \to S') \circ \operatorname{cancelBaseChange}_S^{-1}
+   = \operatorname{cancelBaseChange}_{S'}^{-1} \circ \mathrm{rTensor}\,(\mathrm{id}_A \otimes (S \to S'))\).
+  This is the form consumed by the affine brick, since
+  \(\mathtt{baseChangeCancelModuleIso} = \operatorname{cancelBaseChange}^{-1}\).
+\end{lemma}
+\begin{proof}
+  \uses{lem:cancelBaseChange_localization_compat}
+  \leanok
+  Apply \(\operatorname{cancelBaseChange}_{S'}\) (an isomorphism, hence injective) to both sides and
+  rewrite by Lemma~\ref{lem:cancelBaseChange_localization_compat} and
+  \(\mathtt{LinearEquiv.apply\_symm\_apply}\) (twice); both sides become equal.
+\end{proof}
+
+\subsection{The chart-tower indexing datum (scaffolding)}
+
+The affine-restriction naturality lemma compares the two affine bricks attached to an
+inclusion \(\operatorname{Spec}(R'') \subseteq \operatorname{Spec}(R')\) of affine opens
+over a common chart \(\operatorname{Spec}(R) \subseteq S\). We package the algebraic datum
+of such an inclusion --- four rings \(R, A, R', R''\), the chart map \(\varphi : R \to A\),
+the base map \(\psi : R \to R'\), the tower map \(j : R' \to R''\), and the two affine
+pushout squares realizing the charts \(B' = A \otimes_R R'\), \(B'' = A \otimes_R R''\) ---
+as a single structure, so the naturality statement is phrased against it.
+
+\begin{definition}\leanok
+[Base-change chart tower]
+  \label{def:baseChangeChartTower}
+  \lean{AlgebraicGeometry.BaseChangeChartTower}
+  \uses{lem:affine_pushforward_pullback_baseChange}
+  \textit{Source: bespoke project infrastructure; no external citation.}
+  A \emph{base-change chart tower} is the datum of commutative rings \(R, A, R', R''\),
+  ring maps \(\varphi : R \to A\), \(\psi : R \to R'\), \(j : R' \to R''\), chart rings
+  \(B', B''\) with their pushout legs \(\rho', \sigma', \rho'', \sigma''\), and two
+  cocartesian-square witnesses \(h' : \mathrm{IsPushout}\,\varphi\,\psi\,\rho'\,\sigma'\)
+  and \(h'' : \mathrm{IsPushout}\,\varphi\,(\psi \circ j)\,\rho''\,\sigma''\). It indexes
+  the affine bricks of Lemma~\ref{lem:affine_pushforward_pullback_baseChange} over the
+  inclusion \(\operatorname{Spec}(R'') \subseteq \operatorname{Spec}(R')\).
+\end{definition}
+
+\begin{definition}\leanok
+[Chart comparison of a tower]
+  \label{def:baseChangeChartTower_connect}
+  \lean{AlgebraicGeometry.BaseChangeChartTower.connect}
+  \uses{def:baseChangeChartTower}
+  \textit{Source: bespoke project infrastructure; no external citation.}
+  The canonical ring map \(B' \to B''\) obtained from the universal property of the
+  pushout \(B'\) applied to the cocone \((\rho'', j \circ \sigma'')\); it is the affine
+  model of the inclusion \(X_{\operatorname{Spec}(R'')} \subseteq X_{\operatorname{Spec}(R')}\).
+\end{definition}
+
+\begin{lemma}\leanok
+[Leg compatibilities of the chart comparison]
+  \label{lem:baseChangeChartTower_inl_connect}
+  \lean{AlgebraicGeometry.BaseChangeChartTower.inl_connect}
+  \uses{def:baseChangeChartTower_connect}
+  \textit{Source: bespoke project infrastructure; no external citation.}
+  The chart comparison satisfies \(\rho' \circ \mathrm{connect} = \rho''\) (and, by
+  Lemma~\ref{lem:baseChangeChartTower_inr_connect}, \(\sigma' \circ \mathrm{connect}
+  = j \circ \sigma''\)); both are immediate from the pushout universal property
+  (\(\mathrm{inl\_desc}\), \(\mathrm{inr\_desc}\)).
+\end{lemma}
+
+\begin{lemma}\leanok
+[Second leg compatibility of the chart comparison]
+  \label{lem:baseChangeChartTower_inr_connect}
+  \lean{AlgebraicGeometry.BaseChangeChartTower.inr_connect}
+  \uses{def:baseChangeChartTower_connect}
+  \textit{Source: bespoke project infrastructure; no external citation.}
+  \(\sigma' \circ \mathrm{connect} = j \circ \sigma''\), from the pushout
+  universal property.
+\end{lemma}
+
+\begin{definition}\leanok
+[The two bricks of a tower]
+  \label{def:baseChangeChartTower_bricks}
+  \lean{AlgebraicGeometry.BaseChangeChartTower.brickR'}
+  \uses{def:baseChangeChartTower, lem:affine_pushforward_pullback_baseChange}
+  \textit{Source: bespoke project infrastructure; no external citation.}
+  The brick \(e_{R'}\) is \(\mathrm{affinePushforwardPullbackBaseChange}\) over
+  \(\operatorname{Spec}(R')\) (base map \(\psi\)); the companion brick \(e_{R''}\)
+  (\(\mathrm{brickR''}\)) is the same over \(\operatorname{Spec}(R'')\) with the
+  \emph{composite} base map \(\psi \circ j\). These are exactly the two isomorphisms the
+  restriction-naturality square of
+  Lemma~\ref{lem:pushforwardPullbackBaseChange_restrict_naturality} compares.
+\end{definition}
+
+\begin{definition}\leanok
+[The second brick of a tower]
+  \label{def:baseChangeChartTower_brickRpp}
+  \lean{AlgebraicGeometry.BaseChangeChartTower.brickR''}
+  \uses{def:baseChangeChartTower, lem:affine_pushforward_pullback_baseChange}
+  \textit{Source: bespoke project infrastructure; no external citation.}
+  The brick \(e_{R''} = \mathrm{affinePushforwardPullbackBaseChange}\) over
+  \(\operatorname{Spec}(R'')\) with composite base map \(\psi \circ j\); paired with
+  \(\mathrm{brickR'}\) (Definition~\ref{def:baseChangeChartTower_bricks}) in the
+  restriction-naturality square.
+\end{definition}
+
+\begin{lemma}[Affine-restriction naturality of the cancellation chain]
+  \label{lem:pushforwardPullbackBaseChange_restrict_naturality}
+  \lean{AlgebraicGeometry.pushforwardPullbackBaseChange_restrict_naturality}
+  \uses{lem:affine_pushforward_pullback_baseChange,
+        lem:tildeRestriction_isLocalizedModule, lem:cancelBaseChange_mathlib,
+        lem:cancelBaseChange_localization_compat, lem:cancelBaseChange_localization_compat_symm,
+        def:baseChangeChartTower, def:baseChangeChartTower_bricks}
+  Let \(\operatorname{Spec}(R'') \subseteq \operatorname{Spec}(R')\) be an inclusion of
+  affine opens of the base \(S'\) (with the same chosen affine
+  \(\operatorname{Spec}(R) \subseteq S\) over the \(g\)-image, so that
+  \(R \to R' \to R''\) is a tower). Then the affine base-change isomorphisms
+  \(e_{R'}\) and \(e_{R''}\) of
+  Lemma~\ref{lem:affine_pushforward_pullback_baseChange} are intertwined by the
+  structure-sheaf restriction maps: the square with horizontal maps \(e_{R'}, e_{R''}\)
+  and vertical maps the restrictions
+  \(\operatorname{Spec}(R') \to \operatorname{Spec}(R'')\) on
+  \(g^*(f_*\widetilde{M})\) and on \(f'_*((g')^*\widetilde{M})\) commutes. Equivalently,
+  the family \(\{e_{R'}\}\) is a morphism of the restricted presheaves over the affine
+  basis. This is the one genuinely new lemma of the active route: a concrete
+  localization compatibility, replacing the intractable mate coherence.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:affine_pushforward_pullback_baseChange,
+        lem:tildeRestriction_isLocalizedModule, lem:cancelBaseChange_mathlib,
+        lem:cancelBaseChange_localization_compat}
+  Each \(e_{R'}\) is the three-move composite of
+  Lemma~\ref{lem:affine_pushforward_pullback_baseChange}: two tilde-dictionary
+  isomorphisms and \(\widetilde{\operatorname{cancelBaseChange}}\). The restriction
+  square factors as the paste of one component square per move, and each commutes for a
+  concrete reason. The crucial structural point is that the two bricks live over
+  \emph{different base maps}: \(e_{R'}\) is assembled from the dictionaries for the base map
+  \(\psi : R \to R'\), whereas \(e_{R''}\) is assembled from the dictionaries for the
+  \emph{composite} base map \(\psi \circ j\), with \(j : R' \to R''\) the chart inclusion.
+  The vertical restriction maps realize the passage \(\psi \rightsquigarrow \psi\circ j\), so
+  the relevant commutation is governed not by fixed-base open-naturality but by the
+  \emph{base-map composition cocycle} of the dictionaries.
+  \begin{itemize}
+    \item \emph{Tilde-dictionary moves.} Restricting from \(\operatorname{Spec}(R')\)
+      to \(\operatorname{Spec}(R'')\) replaces each dictionary factor for the base map
+      \(\psi\) by the corresponding factor for the composite \(\psi\circ j\). That these
+      transitions commute with the dictionary isomorphisms is exactly the base-map
+      composition cocycle of the affine dictionaries, instantiated at the tower
+      \(R \xrightarrow{\psi} R' \xrightarrow{j} R''\): on the pushforward/\(\Gamma\) side the
+      global-sections comparison of Lemma~\ref{lem:gammaPushforwardIso} factors through the
+      comparisons for \(\psi\) and \(j\) separately (the source pushforward cocycle absorbed into
+      \(\operatorname{Spec}\)-functoriality and the target restriction-of-scalars cocycle folded
+      in), and on the pullback side the corresponding factorization of the pullback dictionary of
+      Lemma~\ref{lem:pullback_spec_tilde_iso}. (The fixed-base open-naturality of the section
+      comparison, recorded in the proof of Lemma~\ref{lem:gammaPushforwardIsoAt}, supplies the
+      compatibility of each individual brick with the structure-sheaf restriction maps internal
+      to a single base; it is the base-map composition cocycle that reconciles the \emph{two
+      distinct base maps} \(\psi\) and \(\psi\circ j\) the square actually compares.)
+    \item \emph{Cancellation move.} Localizing the base \(R'\) to \(R''\) carries
+      \((R'\otimes_R A)\otimes_A M\) to \((R''\otimes_R A)\otimes_A M = R'' \otimes_{R'}
+      \bigl((R'\otimes_R A)\otimes_A M\bigr)\) and \(R'\otimes_R M\) to
+      \(R''\otimes_R M = R'' \otimes_{R'} (R'\otimes_R M)\); under these identifications
+      \(\operatorname{cancelBaseChange}\) for the tower over \(R''\) is the localization
+      of \(\operatorname{cancelBaseChange}\) for the tower over \(R'\). This is exactly the
+      cancellation-localization compatibility
+      Lemma~\ref{lem:cancelBaseChange_localization_compat} (whose \(R'\)-side localization
+      datum is Lemma~\ref{lem:tildeRestriction_isLocalizedModule}).
+  \end{itemize}
+  Pasting the three component squares yields the restriction square. As the inclusion
+  was an arbitrary basic affine inclusion, the family \(\{e_{R'}\}\) is restriction-
+  compatible on the affine basis.
+\end{proof}
+
+\begin{lemma}[Gluing to a global sheaf-of-abelian-groups morphism]
+  \label{lem:pushforwardPullbackBaseChange_abHom}
+  \lean{AlgebraicGeometry.pushforwardPullbackBaseChangeAbHom}
+  \uses{lem:pushforwardPullbackBaseChange_restrict_naturality,
+        lem:restrictHomEquivHom_mathlib, lem:affine_pushforward_pullback_baseChange}
+  There is a morphism of sheaves of abelian groups
+  \[
+    \underline{e} :
+    \operatorname{toSheaf}\bigl(g^*(f_*\mathcal{F})\bigr)
+    \longrightarrow
+    \operatorname{toSheaf}\bigl(f'_*((g')^*\mathcal{F})\bigr)
+  \]
+  on \(S'\) whose restriction to each affine open
+  \(\operatorname{Spec}(R') \subseteq S'\) of the basis is the underlying
+  abelian-group morphism of the affine isomorphism \(e_{R'}\).
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:pushforwardPullbackBaseChange_restrict_naturality,
+        lem:restrictHomEquivHom_mathlib, lem:affine_pushforward_pullback_baseChange}
+  The affine opens of \(S'\) form a basis of its topology
+  (\(X.\operatorname{isBasis\_affineOpens}\)). Forgetting the module structure of both
+  \(g^*(f_*\mathcal{F})\) and \(f'_*((g')^*\mathcal{F})\) through
+  \(\operatorname{SheafOfModules.toSheaf}\) gives a presheaf source and a \emph{sheaf}
+  target of abelian groups. By the restriction naturality
+  Lemma~\ref{lem:pushforwardPullbackBaseChange_restrict_naturality}, the affine-local
+  components \(\{e_{R'}\}\) (Lemma~\ref{lem:affine_pushforward_pullback_baseChange})
+  assemble into a morphism of the basis-restricted presheaves
+  \(B^{\mathrm{op}*}F \to B^{\mathrm{op}*}F'\). Mathlib's
+  Lemma~\ref{lem:restrictHomEquivHom_mathlib} (basis form) promotes this basis-local
+  family to a global morphism of sheaves of abelian groups \(\underline{e}\), with the
+  component at each basis open \(\operatorname{Spec}(R')\) recovered as the
+  abelian-group morphism of \(e_{R'}\); the corresponding extension property
+  \(\operatorname{hom\_ext}\) makes \(\underline{e}\) the unique such global morphism.
+\end{proof}
+
+\begin{lemma}[Re-imposing \(\mathcal{O}_{S'}\)-linearity]
+  \label{lem:pushforwardPullbackBaseChange_linHom}
+  \lean{AlgebraicGeometry.pushforwardPullbackBaseChangeHom}
+  \uses{lem:pushforwardPullbackBaseChange_abHom,
+        lem:presheafOfModules_homMk_mathlib,
+        lem:affine_pushforward_pullback_baseChange}
+  The abelian-group sheaf morphism \(\underline{e}\) of
+  Lemma~\ref{lem:pushforwardPullbackBaseChange_abHom} underlies a morphism of
+  \(\mathcal{O}_{S'}\)-modules
+  \[
+    e^{\mathrm{lin}} :
+    g^*(f_*\mathcal{F}) \longrightarrow f'_*((g')^*\mathcal{F}).
+  \]
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:pushforwardPullbackBaseChange_abHom,
+        lem:presheafOfModules_homMk_mathlib,
+        lem:affine_pushforward_pullback_baseChange}
+  The linearity equation \(\underline{e}(r \cdot m) = r \cdot \underline{e}(m)\) is a
+  sectionwise identity. It holds on each affine open
+  \(\operatorname{Spec}(R') \subseteq S'\) of the basis, because there \(\underline{e}\)
+  agrees with the underlying map of \(e_{R'}\), which is
+  \(\mathcal{O}_{S'}(\operatorname{Spec}(R'))\)-linear by construction
+  (Lemma~\ref{lem:affine_pushforward_pullback_baseChange}). Since the affine opens form
+  a basis and both sides of the equation are sections of a sheaf, the identity that
+  holds on the basis holds on every open by separatedness. Mathlib's
+  Lemma~\ref{lem:presheafOfModules_homMk_mathlib} packages the abelian-group morphism
+  \(\underline{e}\) together with this sectionwise linearity witness into the morphism
+  \(e^{\mathrm{lin}}\) of \(\mathcal{O}_{S'}\)-modules.
+\end{proof}
+
+\begin{lemma}[The global base-change natural isomorphism \(e\)]
+  \label{lem:pushforwardPullbackBaseChange_natIso}
+  \lean{AlgebraicGeometry.pushforwardPullbackBaseChangeNatIso}
+  \uses{lem:pushforwardPullbackBaseChange_linHom,
+        lem:modules_isIso_iff_affineOpens,
+        lem:affine_pushforward_pullback_baseChange,
+        lem:natIso_ofComponents_mathlib}
+  The morphism \(e^{\mathrm{lin}}\) of
+  Lemma~\ref{lem:pushforwardPullbackBaseChange_linHom} is an isomorphism, and the
+  family over quasi-coherent \(\mathcal{F}\) assembles into a natural isomorphism of
+  functors
+  \[
+    e : g^* \circ f_* \;\cong\; f'_* \circ (g')^* .
+  \]
+  This \(e\) is the active-route deliverable consumed downstream (it commutes with the
+  restriction maps by construction); it is built without ever forming the canonical
+  adjoint mate.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:pushforwardPullbackBaseChange_linHom,
+        lem:modules_isIso_iff_affineOpens,
+        lem:affine_pushforward_pullback_baseChange,
+        lem:natIso_ofComponents_mathlib}
+  By the affine-open locality criterion
+  Lemma~\ref{lem:modules_isIso_iff_affineOpens}, \(e^{\mathrm{lin}}\) is an isomorphism
+  if and only if it restricts to an isomorphism on the sections over every affine open
+  of \(S'\). On each such affine open \(\operatorname{Spec}(R')\) it agrees with
+  \(e_{R'}\), which is an isomorphism by
+  Lemma~\ref{lem:affine_pushforward_pullback_baseChange}; hence \(e^{\mathrm{lin}}\) is
+  an isomorphism. Naturality in \(\mathcal{F}\) is checked affine-locally: the brick
+  Lemma~\ref{lem:affine_pushforward_pullback_baseChange} is natural in the module
+  \(M\), so the components are natural in \(\mathcal{F}\), and this naturality propagates
+  through the gluing (the global morphism is the unique extension of natural affine
+  data). Finally Mathlib's Lemma~\ref{lem:natIso_ofComponents_mathlib} packages the
+  per-\(\mathcal{F}\) isomorphisms into the natural isomorphism \(e\).
+\end{proof}
+
 \subsection{The affine base-change lemma and its remaining obligations}
 
 The affine base-change lemma below reduces, via the locality criterion
@@ -882,25 +1513,38 @@ abstract adjoint mate with the concrete cancellation isomorphism.
   reduces to the affine--affine case \(S = \operatorname{Spec}(R)\),
   \(S' = \operatorname{Spec}(R')\), \(X = \operatorname{Spec}(A)\),
   \(\mathcal{F} = \widetilde{M}\) for an \(A\)-module \(M\).
+
+  \textbf{Route note (deprioritized).} This obligation belongs to the canonical-mate
+  route (\S\ref{sec:fbc_route_decision}): it is the affine reduction \emph{of the
+  canonical map} \(\operatorname{pushforwardBaseChangeMap}\). It is \emph{not} on the
+  main critical path. The concrete-tilde construction handles the analogous
+  affine-restriction compatibility concretely, without the mate, in
+  Lemma~\ref{lem:pushforwardPullbackBaseChange_restrict_naturality}; the gluing chain
+  there delivers the downstream isomorphism \(e\) without this lemma.
 \end{lemma}
 
 \begin{proof}
-  \uses{def:pushforward_base_change_map, lem:modules_isIso_iff_affineOpens}
-  Being an isomorphism of \(\mathcal{O}_{S'}\)-modules is, by
-  Lemma~\ref{lem:modules_isIso_iff_affineOpens}, a property that may be checked on
-  sections over the affine opens of \(S'\). Restricting the cartesian square along
-  an affine open \(U \subseteq S'\) produces a cartesian square over
-  \(U\) whose total space is the corresponding open of \(X'\); since affineness of
-  \(f\) is preserved by base change, the restricted morphism is again affine and
-  \(\mathcal{F}\) is again a tilde-module over the affine chart of \(X\) lying over
-  \(U\) (this is where quasi-coherence of \(\mathcal{F}\) is used). The
-  base-change map is the adjoint mate of the unit of the
-  \(((g')^*, (g')_*)\)-adjunction, and one must verify that forming this mate
-  commutes with the restriction; granting that compatibility, the general statement
-  reduces to the affine--affine case. The required compatibility of the abstract
-  adjoint mate with open restriction is not packaged in the pinned Mathlib, and is
-  itself a base-change-of-the-base-change-map naturality statement; it is recorded
-  here as a named obligation.
+  \uses{def:pushforward_base_change_map, lem:modules_isIso_iff_affineOpens,
+        lem:pushforwardPullbackBaseChange_restrict_naturality}
+  This proof concerns the canonical map and is not on the main critical path;
+  it is recorded for the Stacks-faithful route only. By
+  Lemma~\ref{lem:modules_isIso_iff_affineOpens}, being an isomorphism of
+  \(\mathcal{O}_{S'}\)-modules may be checked on sections over the affine opens of
+  \(S'\). Restricting the cartesian square along an affine open \(U \subseteq S'\)
+  produces a cartesian square over \(U\) whose total space is the corresponding open of
+  \(X'\); since affineness of \(f\) is preserved by base change, the restricted morphism
+  is again affine and \(\mathcal{F}\) is again a tilde-module over the affine chart of
+  \(X\) lying over \(U\) (this is where quasi-coherence of \(\mathcal{F}\) is used). The
+  one step with no counterpart in Mathlib is the compatibility of the
+  \emph{adjoint mate} \(\operatorname{pushforwardBaseChangeMap}\) with this restriction
+  --- a base-change-of-the-base-change-map naturality statement for the abstract mate.
+  It is precisely this mate-with-restriction compatibility that walls the canonical
+  route, and it is exactly what the active route \emph{avoids}: the concrete
+  affine-restriction square
+  Lemma~\ref{lem:pushforwardPullbackBaseChange_restrict_naturality} carries the same
+  geometric content for the fresh isomorphism \(e_{R'}\) without ever forming the mate.
+  We therefore leave this canonical-route reduction as a deprioritized named obligation
+  and route the downstream consumers through \(e\) instead.
 \end{proof}
 
 \begin{lemma}
@@ -946,6 +1590,15 @@ abstract adjoint mate with the concrete cancellation isomorphism.
   (Mathlib's \texttt{TensorProduct.AlgebraTensorModule.cancelBaseChange}). Since
   \(\operatorname{cancelBaseChange}\) is an isomorphism with no flatness hypothesis,
   this identification closes the affine case.
+
+  \textbf{Route note (deprioritized).} This is the mate\(\,\leftrightarrow\,
+  \operatorname{cancelBaseChange}\) coherence of the canonical-mate route
+  (\S\ref{sec:fbc_route_decision}). The active concrete-tilde construction reaches the
+  same algebraic comparison \emph{directly} in
+  Lemma~\ref{lem:affine_pushforward_pullback_baseChange} --- it composes the two tilde
+  dictionaries with \(\widetilde{\operatorname{cancelBaseChange}}\) without ever forming
+  the abstract mate --- so this node is not on the main critical path and is retained
+  only to document the Stacks-faithful formulation.
 \end{lemma}
 
 \begin{proof}
@@ -965,7 +1618,7 @@ abstract adjoint mate with the concrete cancellation isomorphism.
   \(((g')^*, (g')_*)\)-unit through these four dictionary isos and shows that the
   resulting \(R'\)-linear map is exactly \(\operatorname{cancelBaseChange}\),
   \((r' \otimes a) \otimes m \mapsto r' \otimes (a \cdot m)\). This mate-versus-
-  concrete-map identification has no ready counterpart in the pinned Mathlib; it is
+  concrete-map identification has no ready counterpart in Mathlib; it is
   the precise content that a later Mathlib bridge identifying the
   pushforward base-change map with the tilde of \(\operatorname{cancelBaseChange}\)
   would supply. Granting it, the affine case closes because
@@ -1028,23 +1681,20 @@ abstract adjoint mate with the concrete cancellation isomorphism.
 % (R' \otimes_R A) \otimes_A M = R' \otimes_R M
 % $$
 % as $R'$-modules."
-% NOTE (updated iter-242): Lean proof is a documented sorry. The locality
-% reduction (lem:modules_isIso_iff_affineOpens) lands, and BOTH affine
-% dictionaries are now proved and axiom-clean: lem:pushforward_spec_tilde_iso
-% (iter-241) and its pullback companion lem:pullback_spec_tilde_iso (iter-242).
-% Those are no longer the blockers. TWO Mathlib-absent obligations remain, neither
-% with a quick sub-step:
+% NOTE: Lean proof is a documented sorry. The locality reduction
+% (lem:modules_isIso_iff_affineOpens) lands, and both affine dictionaries
+% (lem:pushforward_spec_tilde_iso and lem:pullback_spec_tilde_iso) are proved
+% and axiom-clean. Two Mathlib-absent obligations remain:
 %   (1) AFFINE REDUCTION. S, S', X, X' are arbitrary (only f affine, F quasi-
 %       coherent); reducing to S=Spec R, S'=Spec R', X=Spec A, F=M~ needs the
 %       naturality / base-change compatibility of pushforwardBaseChangeMap under
-%       restriction to affine opens of S', which is itself not packaged in Mathlib.
-%   (2) ADJOINT-MATE <-> cancelBaseChange. Even once affine, the abstract adjoint-
-%       mate pushforwardBaseChangeMap transported through the four dictionary isos
-%       must be shown equal to tilde(TensorProduct.AlgebraTensorModule.cancelBaseChange)
-%       -- a coherence computation unwinding the mate of the ((g')^*,(g')_*)-unit.
-% cancelBaseChange itself is present in Mathlib with no flatness; the gap is the
-% mate identification, not the closing algebra. See
-% informal/affineBaseChange_pushforward_iso.md and the in-file sorry comment.
+%       restriction to affine opens of S', which is not packaged in Mathlib.
+%   (2) ADJOINT-MATE <-> cancelBaseChange. The abstract adjoint-mate
+%       pushforwardBaseChangeMap transported through the four dictionary isos must
+%       be shown equal to tilde(cancelBaseChange) -- a coherence computation
+%       unwinding the mate of the ((g')^*,(g')_*)-unit.
+% cancelBaseChange is present in Mathlib with no flatness; the gap is the
+% mate identification. See informal/affineBaseChange_pushforward_iso.md.
 \begin{proof}
   \uses{def:pushforward_base_change_map, lem:modules_isIso_iff_affineOpens, lem:pushforward_spec_tilde_iso, lem:pullback_spec_tilde_iso, lem:base_change_map_affine_local, lem:pushforward_base_change_mate_cancelBaseChange}
   \emph{First reduction (locality).} By
@@ -1266,10 +1916,11 @@ abstract adjoint mate with the concrete cancellation isomorphism.
 % affine lemma above, which in turn reduces to lem:pushforward_spec_tilde_iso (the
 % affine-pushforward-of-tilde brick) plus the tilde full-faithfulness reframe. On
 % top of that it needs Čech-cohomology / affine-cover infrastructure for
-% SheafOfModules, which Mathlib does not provide. This remains a multi-lane engine
-% build, not a single-iter target. See informal/affineBaseChange_pushforward_iso.md.
+% SheafOfModules, which Mathlib does not provide.
+% See informal/affineBaseChange_pushforward_iso.md.
 \begin{proof}
-  \uses{def:pushforward_base_change_map, lem:affine_base_change_pushforward}
+  \uses{def:pushforward_base_change_map, lem:affine_base_change_pushforward,
+        lem:pushforwardPullbackBaseChange_natIso}
   \emph{Reduction to the affine target.} The statement is local on \(S'\), so we
   may assume \(S\) and \(S'\) are affine, say \(S = \operatorname{Spec}(A)\) and
   \(S' = \operatorname{Spec}(B)\) with \(A \to B\) flat. Because \(f\) is
@@ -1310,33 +1961,37 @@ abstract adjoint mate with the concrete cancellation isomorphism.
   \(H^0(X, \mathcal{F}) \otimes_A B \cong H^0(X_B, \mathcal{F}_B)\).
 
   \medskip
-  \emph{The quasi-separated case.} In general \(X\) need only be quasi-separated.
-  Choose a finite affine open cover \(\mathcal{U} : X = U_1 \cup \dots \cup U_t\).
-  Now the intersections \(U_{i_0 \dots i_p}\) are quasi-compact and separated
-  rather than affine, but they fall under the separated case already treated, so
-  flat base change holds for each of them. One then compares the two
-  {\v C}ech-to-cohomology spectral sequences with \(E_2\)-pages
-  \(\check{H}^p(\mathcal{U}, \underline{H}^q(\mathcal{F}))\) and
+  \emph{The quasi-separated case (\(i = 0\), via Mayer--Vietoris).} In general \(X\)
+  need only be quasi-separated. Choose a finite affine open cover
+  \(\mathcal{U} : X = U_1 \cup \dots \cup U_t\); now the intersections
+  \(U_{i_0 \dots i_p}\) are quasi-compact and separated rather than affine, but they
+  fall under the separated case already treated, so flat base change for \(H^0\) holds
+  for each of them. \emph{For the \(i = 0\) statement at hand no spectral sequence is
+  needed}: argue by Mayer--Vietoris induction on the number \(t\) of cover members. For
+  \(t = 1\) the scheme is affine and the claim is the affine brick. For the inductive
+  step write \(X = (U_1 \cup \dots \cup U_{t-1}) \cup U_t\); the two pieces and their
+  intersection are each separated (or have fewer members), so \(H^0\)-flat-base-change
+  holds for them by the inductive hypothesis and the separated case. The Mayer--Vietoris
+  sequence in degrees \(0\) and \(1\) for \(\mathcal{F}\) base-changes, term by term, to
+  that for \(\mathcal{F}_B\) tensored with \(B\) (using the affine case
+  Lemma~\ref{lem:affine_base_change_pushforward} on the affine pieces and the global
+  isomorphism \(e\) of Lemma~\ref{lem:pushforwardPullbackBaseChange_natIso} on the
+  separated pieces); since \(A \to B\) is flat, \(- \otimes_A B\) is exact and preserves
+  this Mayer--Vietoris sequence. The five-lemma at the \(H^0\) spot then gives
+  \(H^0(X, \mathcal{F}) \otimes_A B \cong H^0(X_B, \mathcal{F}_B)\), as required.
+
+  \medskip
+  (\emph{For general \(i\)} --- outside the \(i = 0\) scope of this chapter --- one
+  instead compares the two {\v C}ech-to-cohomology spectral sequences with
+  \(E_2\)-pages \(\check{H}^p(\mathcal{U}, \underline{H}^q(\mathcal{F}))\) and
   \(\check{H}^p(\mathcal{U}_B, \underline{H}^q(\mathcal{F}_B))\), converging to
-  \(H^{p+q}(X, \mathcal{F})\) and \(H^{p+q}(X_B, \mathcal{F}_B)\) respectively.
-  The separated case provides the term-by-term identification
-  \(\check{H}^p(\mathcal{U}_B, \underline{H}^q(\mathcal{F}_B)) =
-  \check{H}^p(\mathcal{U}, \underline{H}^q(\mathcal{F})) \otimes_A B\) on the
-  \(E_2\)-pages, and flatness of \(A \to B\) propagates this isomorphism through
-  the spectral sequences to the abutment. In particular, in degree \(0\) one
-  obtains \(H^0(X, \mathcal{F}) \otimes_A B \cong H^0(X_B, \mathcal{F}_B)\), as
-  required. (For the \(i = 0\) statement at hand, one may avoid the spectral
-  sequence entirely and argue by Mayer--Vietoris induction on the number \(t\) of
-  cover members, reducing each step to the separated case.)
+  \(H^{p+q}(X, \mathcal{F})\) and \(H^{p+q}(X_B, \mathcal{F}_B)\); the separated case
+  identifies the \(E_2\)-pages after \(\otimes_A B\) and flatness propagates the
+  isomorphism to the abutment. This spectral-sequence comparison is not used for the
+  \(i = 0\) result.)
 \end{proof}
 
-%% ===========================================================================
-%% UNION MERGE (2026-06-22): two Mathlib-backed stub nodes ported from the
-%% GR-quot_closure subproject's Cohomology_FlatBaseChange.tex. They are
-%% \uses-referenced by the imported GlueDescent / GrassmannianQuot development
-%% (def:gr_modules_glueHom, lem:gr_tautologicalQuotientComponent_transpose).
-%% ===========================================================================
-\section{Mathlib stubs imported for the Grassmannian/Quot descent (union merge)}
+\section{Mathlib stubs imported for the Grassmannian/Quot descent}
 \label{sec:fbc_gr_union_stubs}
 
 \begin{lemma}[The pullback--pushforward conjugate sends the pullback coherence to the pushforward coherence]

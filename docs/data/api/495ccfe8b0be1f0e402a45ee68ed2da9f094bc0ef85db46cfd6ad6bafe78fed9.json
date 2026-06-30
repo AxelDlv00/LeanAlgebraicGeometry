@@ -1,0 +1,46 @@
+{
+  "files": [
+    {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "count": 1,
+      "lines": [
+        2456
+      ],
+      "occurrences": [
+        {
+          "line": 2456,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/TrivialisationRestrict.lean",
+      "count": 1,
+      "lines": [
+        269
+      ],
+      "occurrences": [
+        {
+          "line": 269,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "count": 1,
+      "lines": [
+        738
+      ],
+      "occurrences": [
+        {
+          "line": 738,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "total": 3,
+  "partial": false,
+  "warnings": []
+}

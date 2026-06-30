@@ -1,0 +1,184 @@
+[
+  {
+    "timestamp": "2026-06-29T17:30:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/PullbackTensorComp.lean",
+      "theorem": "pullbackTensorMap_restrict"
+    },
+    "session": {
+      "id": "session_320",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "sheafificationCompPullback naturality slide whnf-explodes (6.4M heartbeats/~9min) under the respectTransparency-false option that Step A's Sq1 rewrite forces on the whole lemma; rewrite motive over the giant goal is the cost, the hnatδ equation itself typechecks cheaply. S3 step blocked by sheafifyTensorUnitIso_hom_eq' being private to TensorObjSubstrate.lean.",
+      "key_lemmas_used": [
+        "sheafificationCompPullback_comp",
+        "pullbackComp_δ",
+        "Functor.OplaxMonoidal.comp_δ",
+        "Iso.hom_inv_id_app",
+        "Functor.map_comp_assoc"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Develop 4-square assembly paste in Scratch_PTC.lean (import prebuilt TOS olean, ~26s/iter), then transplant",
+        "code_tried": "Step A: rw [sheafificationCompPullback_comp h f (Monoidal.tensorObj M.val N.val)]; simp only [Category.assoc]; refine congr_arg₂ (·≫·) rfl ?_ ×2 (peel R0 and (pullback h).map L1f). Step B: erw [pullbackComp_δ φ'_f φ'_h M.val N.val]. Step C: rw [Functor.map_comp ×2]; rw [← Functor.map_comp_assoc]; erw [Iso.hom_inv_id_app, CategoryTheory.Functor.map_id, Category.id_comp]. Step D: rw [Functor.OplaxMonoidal.comp_δ, Functor.map_comp].",
+        "line_number": "774-927",
+        "lean_error": "none for Steps A-D (full green build, lean_exit 0)",
+        "goal_before": "L1=(scPb_{h≫f}).hom over Monoidal.tensorObj M.val N.val",
+        "goal_after": "explicit residual identity: LHS scPb_h.app(...).hom ≫ a_Z.map(Fp_h.map δ_f) ≫ ... ≫ S3_{hf} ≫ L4_{hf} = RHS (pullback h).map(a_Y.map δ_f) ≫ ... ≫ S4comp",
+        "result": "partial",
+        "insight": "Steps A-D land in ~26s; whole lemma needs respectTransparency false (Scheme.Modules.pullback ≟ SheafOfModules.pullback defeq) and maxHeartbeats 3200000."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Slide scPb_h past (pullback h).map(a_Y.map δ_f) via naturality (3 variants)",
+        "code_tried": "(a) erw naturality_assoc; (b) have hnatδ := ((sheafificationCompPullback φ_h).hom.naturality (δ ...)).symm then rw [hnatδ]; (c) slice_lhs 1 2 => rw [hnatδ]",
+        "line_number": "884-927",
+        "lean_error": "deterministic timeout at 6.4M heartbeats (~9min wall) — kabstract does defeq under relaxed transparency over the enormous tail",
+        "result": "failed",
+        "insight": "hnatδ have typechecks cheaply; only its whole-goal rewrite MOTIVE explodes. Fix: standalone small-motive slide lemma + calc/Eq.trans avoiding abstraction of the giant tail."
+      }
+    ],
+    "next_steps": "Effort-break the assembly into per-slide steps with small rewrite motives (NOT raw re-paste). Un-private sheafifyTensorUnitIso_hom_eq' in TensorObjSubstrate.lean (one-line visibility change) to make S3 a clean rw instead of change-through-defeq. Fix the 2 stale comments (auditor)."
+  },
+  {
+    "timestamp": "2026-06-29T17:30:01Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "coverInterOpen_isAffine"
+    },
+    "session": {
+      "id": "session_320",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "IsAffineOpen.iInf",
+        "isAffineOpen_opensRange",
+        "IsSeparated.comp_iff",
+        "terminal.comp_from",
+        "IsSeparated.isClosedImmersion_diagonal",
+        "IsAffine ⇒ Scheme.IsSeparated"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "New sorry-free theorem: finite nonempty Čech intersection opens of separated f (S affine, affine cover) are affine",
+        "code_tried": "haveI : IsSeparated (terminal.from X) := by rw [terminal.comp_from]; exact IsSeparated.comp_iff.mpr ‹IsSeparated f›; haveI : IsClosedImmersion (pullback.diagonal (terminal.from X)) := IsSeparated.isClosedImmersion_diagonal; exact IsAffineOpen.iInf (fun k => isAffineOpen_opensRange (𝒰.f (σ k)))",
+        "line_number": "431-442",
+        "lean_error": "none (green, axiom-clean)",
+        "result": "success",
+        "insight": "separated ⇒ affine-diagonal ⇒ IsAffineHom ⇒ IsAffineOpen.iInf. This is the geometric ingredient pushPullObj_coverInter_baseChange consumes. Auditor confirmed not laundered."
+      }
+    ],
+    "next_steps": "Needs blueprint entry (label lem:cech_interopen_isaffine). Uses iInf NOT biInf — correct the blueprint hint lem:isAffineOpen_biInf_mathlib mismatch flagged by lvb."
+  },
+  {
+    "timestamp": "2026-06-29T17:30:02Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "twisted_cech_nerve_iso"
+    },
+    "session": {
+      "id": "session_320",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "X-level per-σ open-immersion Beck–Chevalley + cover-base-change identity coverInterOpen 𝒰' σ = (g')⁻¹(coverInterOpen 𝒰 σ); no quick Mathlib lemma, multi-hundred-LOC geometric heart",
+      "key_lemmas_used": [
+        "pushPull_sigma_iso",
+        "Limits.Pi.mapIso",
+        "PreservesProduct.iso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "STEP 1: extend signature with base-changed-cover binders [Finite ((openCoverOfLeft 𝒰 f g).pushforwardIso h.isoPullback.symm.hom).I₀] + [∀ i, IsAffine (... .X i)], propagate up the cosimplicialIso/baseChange_iso/cech_flatBaseChange chain",
+        "code_tried": "added explicit instance binders (TC won't unfold pushforwardIso/Cover.copy/openCoverOfLeft to reduce 𝒰'.I₀ ≡ 𝒰.I₀)",
+        "line_number": "608-613",
+        "lean_error": "none (green)",
+        "result": "success",
+        "insight": "binders must be in scope by name; twisted_cech_nerve_iso carries no [IsAffine S/S'] to derive pullback-affineness."
+      },
+      {
+        "attempt": 2,
+        "strategy": "STEP 2a: replace monolithic exact sorry in app with full RHS reassembly via product decomposition",
+        "code_tried": "Pi.mapIso (fun σ => twisted_cech_nerve_per_sigma …) ≪≫ (pushPull_sigma_iso 𝒰' (g'^*F) n.len).symm",
+        "line_number": "576",
+        "lean_error": "none (typechecks; Fin(n+1)→𝒰.I₀ vs →𝒰'.I₀ index defeq composes through ≪≫)",
+        "result": "partial",
+        "insight": "app skeleton now a genuine reassembly; residual content isolated into NEW named leaf twisted_cech_nerve_per_sigma (typed sorry, L584)."
+      }
+    ],
+    "next_steps": "Close twisted_cech_nerve_per_sigma (per-σ X-level Beck–Chevalley); then the twisted naturality (L652, gated on the leaf). Needs blueprint entry lem:twisted_cech_nerve_per_sigma."
+  },
+  {
+    "timestamp": "2026-06-29T17:30:03Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "pushPullObj_coverInter_baseChange"
+    },
+    "session": {
+      "id": "session_320",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "affine-reduction heart: present f/g/g'/f' over V as Spec.maps, route LHS f_*(p_*p^*F) through pushPullObj_pushforward_iso_tilde, extract affine pushout square via CommRingCat.isPushout_iff_isPushout from the restricted cartesian square over V, discharge to cech_degree_affine_baseChange. Multi-hundred-LOC, not blind-closeable.",
+      "key_lemmas_used": [
+        "coverInterOpen_isAffine",
+        "S.isoSpec",
+        "pushPullObj_pushforward_iso_tilde",
+        "CommRingCat.isPushout_iff_isPushout"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Add hF/[Finite κ][Nonempty κ], thread hF down the 02KH chain, establish hV affineness in body",
+        "code_tried": "added (hF : F.IsQuasicoherent) [Finite κ][Nonempty κ]; threaded hF through cech_pushforward_baseChange_natIso → cechComplex_baseChange_cosimplicialIso → cechComplex_baseChange_iso → cech_flatBaseChange; have hV : IsAffineOpen (coverInterOpen 𝒰 σ) := coverInterOpen_isAffine …; sorry",
+        "line_number": "465-486",
+        "lean_error": "none (green); residual sorry at L486",
+        "result": "partial",
+        "insight": "hF threading is REQUIRED architecture (altitude-2 bridge pushPullObj_pushforward_iso_tilde needs F quasi-coherent, not threaded before). hV side-condition closed via the new coverInterOpen_isAffine. Auditor: no sorry trivially dischargeable by hF addition."
+      }
+    ],
+    "next_steps": "Effort-break per the planner reversal signal — affine-reduction heart is the substantive residual (pushout-square extraction). Needs blueprint node lem:pushpullobj_coverinter_basechange (writer added it iter-320)."
+  },
+  {
+    "timestamp": "2026-06-29T17:30:04Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "pullback_preservesFiniteLimits"
+    },
+    "session": {
+      "id": "session_320",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "leaf-1 wall: PresheafOfModules.pullback left-exact-under-flat = abstract left-adjoint wall; no stalk functor for (pre)sheaves of modules ⇒ stalkwise route DEAD (per ARCHON_MEMORY). Untouched/deferred this iter.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted (deferred per directive)",
+        "code_tried": "n/a",
+        "line_number": "159",
+        "lean_error": "n/a",
+        "result": "partial",
+        "insight": "Known wall; separate lane from the 02KH base-change leaves worked this iter."
+      }
+    ],
+    "next_steps": "Do NOT re-assign on the stalkwise route. Separate dedicated lane."
+  }
+]

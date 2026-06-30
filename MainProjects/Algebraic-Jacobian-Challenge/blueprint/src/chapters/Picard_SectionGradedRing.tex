@@ -841,7 +841,6 @@ F \otimes_{\mathcal{O}_X} G\) for the bridge \(\mathrm{tensorObjIso}\)
 \end{lemma}
 
 \begin{proof}
-  \leanok
   \(\rho\) exhibits exactly the descended presheaf right unitor and counit that
   define \(\mathrm{tensorObjRightUnitor}_G\), after the bridge
   \(\Phi_{G,\mathbf{1}}\) is moved across by naturality of \(\rho\). Cancelling the
@@ -871,7 +870,6 @@ F \otimes_{\mathcal{O}_X} G\) for the bridge \(\mathrm{tensorObjIso}\)
 \end{lemma}
 
 \begin{proof}
-  \leanok
   transported across by naturality of \(\lambda\) and cancelled on the unit
   factor.
 \end{proof}
@@ -900,7 +898,6 @@ F \otimes_{\mathcal{O}_X} G\) for the bridge \(\mathrm{tensorObjIso}\)
 \end{lemma}
 
 \begin{proof}
-  \leanok
   rewrites \(\Phi_{G,F} \circ \beta_{F,G} \circ \Phi_{F,G}^{-1}\) as the descended
   presheaf braiding, which is \(\mathrm{tensorBraiding}_{F,G}\) by definition
   (\cref{def:tensorBraiding}). The two bridges sit on opposite ends and are
@@ -928,7 +925,6 @@ F \otimes_{\mathcal{O}_X} G\) for the bridge \(\mathrm{tensorObjIso}\)
 \end{lemma}
 
 \begin{proof}
-  \leanok
   \(\Phi_{F,H} \circ (F \lhd e) \circ \Phi_{F,G}^{-1}\) into the descended
   whiskering, which is \(\mathrm{tensorObjWhiskerLeftIso}\,F\,e\).
 \end{proof}
@@ -954,7 +950,6 @@ F \otimes_{\mathcal{O}_X} G\) for the bridge \(\mathrm{tensorObjIso}\)
 \end{lemma}
 
 \begin{proof}
-  \leanok
   whiskering \(\mathrm{tensorObjWhiskerRightIso}\,e\,F\).
 \end{proof}
 
@@ -1552,7 +1547,6 @@ the inherited symmetric monoidal structure on \(X.\Modules\).
     lem:tensorObjWhiskerRightIso_eq, lem:tensorPowAdd_zero_right,
     lem:tensorPowAdd_zero_left, lem:tensorPowAdd_succ_left_braided,
     lem:tensorBraiding_hexagon_forward, cor:sheafModule_braided_symmetric}
-    \leanok
   Induction mirroring the recursion of \(\mu\) (now on the second index), so the
   statement relates two distinct inductions. The base cases \(m = 0\) and
   \(m' = 0\) are the unit constraints: the right unit
@@ -1624,7 +1618,6 @@ the inherited symmetric monoidal structure on \(X.\Modules\).
 \end{lemma}
 
 \begin{proof}
-  \leanok
   \uses{lem:sheafTensorPow_add, cor:sheafTensorObjAssoc,
     def:sheafModule_monoidalStructure, lem:tensorObjWhiskerRightIso_eq,
     lem:tensorObjWhiskerLeftIso_eq, lem:tensorPowAdd_zero_right}
@@ -2133,7 +2126,6 @@ the presheaf monoidal product (\cref{lem:presheafModule_monoidal_mathlib}).
 % SOURCE QUOTE PROOF: project-bespoke (no external source; bookkeeping of the
 % inherited monoidal-localization structure of \cref{lem:monoidalLocalization_mathlib}).
 \begin{proof}
-  \leanok
   associator \(\alpha\) of \(X.\Modules\) flanked by the four tensor-agreement
   bridges \(\Phi = \mathrm{tensorObjIso}\) (\cref{def:tensorObjIso}) whiskered on the
   outer and inner factors,

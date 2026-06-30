@@ -1,0 +1,88 @@
+[
+  {
+    "timestamp": "2026-06-24T18:53:10Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "presheafDualPullbackComparison_restrict"
+    },
+    "session": {
+      "id": "session_75",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "case hstar residual: thin-poset / opensFunctor-composition coherence; needs a def-level sectionwise sliceDualTransport pseudofunctoriality brick (sliceDualTransport_comp) in SliceTransport.lean. FC-opacity (iters 067-074 core blocker) is now RESOLVED.",
+      "key_lemmas_used": [
+        "Adjunction.leftAdjointCompIso_hom_app",
+        "sliceDualTransport_app_apply",
+        "dualUnitRingSwap_apply",
+        "PresheafOfModules.pushforward_map_app_apply",
+        "Scheme.Hom.comp_appIso",
+        "restrictFunctorComp_hom_app_app",
+        "c2_assemble",
+        "PresheafOfModules.naturality_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Probe goal after hom_ext/intro V then sorry (trace_state)",
+        "code_tried": "apply PresheafOfModules.hom_ext; intro V; trace_state; sorry",
+        "line_number": "855",
+        "result": "partial",
+        "insight": "Established the per-open goal shape for the FC-app cancellation."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Try to show FC.hom.app M.val.dual = 𝟙 directly via leftAdjointCompIso_hom_app",
+        "code_tried": "have hFC : FC.hom.app M.val.dual = 𝟙 _ := by rw [Adjunction.leftAdjointCompIso_hom_app]; apply PresheafOfModules.hom_ext; intro U; ...",
+        "line_number": "855",
+        "result": "failed",
+        "insight": "FC.hom.app dM is NOT 𝟙: domain (pushforward βf ⋙ pushforward βh).obj dM and codomain (pushforward βhf).obj dM are NOT defeq (opensFunctor of a composite ≠ composite of opensFunctors). So no identity collapse; must use the explicit unit/counit form instead."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Unfold FC via simp [FC, leftAdjointCompIso_hom_app, pushforwardComp, Iso.refl_inv, ...]",
+        "code_tried": "simp only [FC, Adjunction.leftAdjointCompIso_hom_app, PresheafOfModules.pushforwardComp, Iso.refl_inv, ...]",
+        "line_number": "855",
+        "result": "partial",
+        "insight": "leftAdjointCompIso_hom_app IS the right simp lemma — gives FC.hom.app X = explicit composite of the three pushforwardPushforwardAdj units/counits (e=pushforwardComp=Iso.refl drops the middle term). FC opacity resolved."
+      },
+      {
+        "attempt": 4,
+        "strategy": "Full sectionwise descent + forward-apply chase (the committed reduction)",
+        "code_tried": "apply PresheafOfModules.hom_ext; intro V; apply ModuleCat.hom_ext; apply LinearMap.ext; intro φ; apply PresheafOfModules.hom_ext; intro W; apply ModuleCat.hom_ext; apply LinearMap.ext; intro z; simp only [comp_app, isoMk_hom_app, ModuleCat.hom_comp, LinearMap.comp_apply]; erw [sliceDualTransport_app_apply (h≫f) M V _ W z]; rw [dualUnitRingSwap_apply]; erw [pushforward_map_app_apply βh iMf.hom V φ]; simp [iMf, isoMk_hom_app]; rw [Scheme.Hom.comp_appIso h f (unop W).left]; simp [Iso.trans_hom]; erw [sliceDualTransport_app_apply h ...]; rw [dualUnitRingSwap_apply]; erw [sliceDualTransport_app_apply f M ...]; rw [dualUnitRingSwap_apply]; refine congrArg (h.appIso _).hom.hom ?_; refine congrArg (f.appIso _).hom.hom ?_",
+        "line_number": "855-918",
+        "result": "partial",
+        "insight": "~30 lines of working tactics (lake EXIT 0, LSP goals_before at L920 = exact crisp residual). Cancels all appIso/dualUnitRingSwap layers via the comp_appIso cocycle. Reduces (★) to a single thin-poset coherence: X.presheaf.map(eqToHom).op (((FC.hom.app dM).app V φ).app (op slice_{h≫f}) z) = φ.app (op slice_{f,h}) (rfc-reindexed z)."
+      },
+      {
+        "attempt": 5,
+        "strategy": "In-file unfold of the three pushforward-adjunction unit/counit projections",
+        "code_tried": "simp only [FC, leftAdjointCompIso_hom_app, pushforwardPushforwardAdj, pushforwardNatTrans, pushforwardCongr, pushforwardId, pushforward_map_app_apply]",
+        "line_number": "918",
+        "result": "failed",
+        "insight": "Does NOT unfold hadjhf.unit / hadjf.counit / hadjh.counit — pushforwardPushforwardAdj's manual `where unit/counit` fields are not simp-reducible; forcing them hits the restrictScalars carrier diamond (ARCHON_MEMORY: full simp/letI re-ADD the diamond — dead). Empirically confirms case-(i) classification: clean close is a def-level SliceTransport.lean brick, NOT an in-file grind."
+      }
+    ],
+    "next_steps": "Build sliceDualTransport_comp (sectionwise sliceDualTransport pseudofunctoriality / composition law) in SliceTransport.lean SOLO next iter, proved from comp_appIso + opensFunctor-composition + Subsingleton next to the slice machinery (iter-073 pattern); then case hstar closes by `exact`. Blueprint chapter c.2 close-route prose must be updated (still describes FC-opacity as unresolved + mate route)."
+  },
+  {
+    "timestamp": "2026-06-24T18:53:10Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "S3/S4a/bridge-(b)/telescope (lines 1128,1186,1222,1990)"
+    },
+    "session": {
+      "id": "session_75",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Downstream of the c.2 close; not dispatched this iter (SOLO lane on PresheafDualPullback to avoid the one-import-chain build race). Will follow next iter once the dual flank is green.",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Co-dispatch after c.2 lands green; carried from iter-074."
+  }
+]

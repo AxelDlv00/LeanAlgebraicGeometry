@@ -285,7 +285,7 @@ cover of `p⁻¹(Spec A)`. The witness `V` is the common basic open
 `D(f_1 f_2 ⋯ f_r) ⊆ Spec A` clearing the finitely many
 generic-flatness elements `f_i ∈ A` produced on each patch. -/
 theorem genericFlatness {S X : Scheme.{u}} [IsIntegral S] [IsLocallyNoetherian S]
-    (p : X ⟶ S) [LocallyOfFiniteType p] (F : X.Modules) :
+    (p : X ⟶ S) [LocallyOfFiniteType p] (F : X.Modules) [F.IsFinitePresentation] :
     ∃ (V : S.Opens), (V : Set S).Nonempty ∧
       ∀ {U : S.Opens} (_ : IsAffineOpen U) (_ : U ≤ V) {W : X.Opens}
         (_ : IsAffineOpen W) (e : W ≤ p ⁻¹ᵁ U),
@@ -329,7 +329,7 @@ defined by the matrix-entry ideal of the first map represents the
 locus of locally-free-of-rank-`e`; gluing over a cover and intersecting
 with `V ∖ ⋃_{e' > e} V_{e'}` produces the locally-closed `S_e`. -/
 lemma flatLocusStratification {S : Scheme.{u}} [IsLocallyNoetherian S]
-    (F : S.Modules) :
+    (F : S.Modules) [F.IsFinitePresentation] :
     ∃ (S_ : ℕ → Scheme.{u}) (ι : ∀ e, S_ e ⟶ S),
       (∀ e, IsImmersion (ι e)) ∧
       (∀ e e', e ≠ e' → Disjoint (Set.range (ι e).base) (Set.range (ι e').base)) ∧
@@ -357,7 +357,7 @@ merely that strata exist); the polynomial-indexed refinement of the
 main theorem (`flatteningStratification`) requires further assembly
 (`flatLocusAssembly`). -/
 lemma flatLocusReduction {S X : Scheme.{u}} [IsLocallyNoetherian S]
-    (π : X ⟶ S) [IsProper π] (F : X.Modules) :
+    (π : X ⟶ S) [IsProper π] (F : X.Modules) [F.IsFinitePresentation] :
     ∃ (I : Type u) (_ : Finite I) (V_ : I → Scheme.{u}) (ι : ∀ i, V_ i ⟶ S),
       (∀ i, IsImmersion (ι i)) ∧
       (∀ i j, i ≠ j → Disjoint (Set.range (ι i).base) (Set.range (ι j).base)) ∧
@@ -387,7 +387,7 @@ The Hilbert polynomial itself is encoded abstractly as a function
 substantive refinement to `numericalPolynomial` of degree `≤ n` is
 iter-177+ work. -/
 lemma flatLocusAssembly {S X : Scheme.{u}} [IsLocallyNoetherian S]
-    (π : X ⟶ S) [IsProper π] (F : X.Modules) :
+    (π : X ⟶ S) [IsProper π] (F : X.Modules) [F.IsFinitePresentation] :
     ∃ (I : Type u) (_ : Finite I) (S_ : I → Scheme.{u}) (ι : ∀ f, S_ f ⟶ S)
       (P : I → ℕ → ℤ),
       (∀ f, IsImmersion (ι f)) ∧
@@ -435,7 +435,7 @@ base-change `R^r π_* 𝓕(m) = 0` for `m ≫ 0`, cohomology-and-base-change
 Stacks tag 02KH for the `H^0` form) are itemised in the blueprint
 chapter §`Mathlib status`. -/
 theorem flatteningStratification {S X : Scheme.{u}} [IsLocallyNoetherian S]
-    (π : X ⟶ S) [IsProper π] (F : X.Modules) :
+    (π : X ⟶ S) [IsProper π] (F : X.Modules) [F.IsFinitePresentation] :
     ∃ (I : Type u) (_ : Finite I) (S_ : I → Scheme.{u}) (ι : ∀ f, S_ f ⟶ S),
       (∀ f, IsImmersion (ι f)) ∧
       (∀ s : S, ∃ f, s ∈ Set.range (ι f).base) ∧
@@ -477,7 +477,7 @@ contravariant functor `T ↦ {φ : T ⟶ S | 𝓕|_{X_T} is T-flat}` is
 available. -/
 theorem flatteningStratification_universal {S X : Scheme.{u}}
     [IsLocallyNoetherian S] (π : X ⟶ S) [IsProper π] (F : X.Modules)
-    (I : Type u) [Finite I] (S_ : I → Scheme.{u}) (ι : ∀ f, S_ f ⟶ S)
+    [F.IsFinitePresentation] (I : Type u) [Finite I] (S_ : I → Scheme.{u}) (ι : ∀ f, S_ f ⟶ S)
     [∀ f, IsImmersion (ι f)] :
     ∀ {T : Scheme.{u}} (φ : T ⟶ S),
       Scheme.CoherentSheafFlat (pullback.snd π φ)
@@ -518,7 +518,7 @@ theorem flatteningStratification.ofCurve {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     (T : Over (Spec (.of k))) [IsLocallyNoetherian T.left]
-    (F : (Limits.pullback C.hom T.hom).Modules) :
+    (F : (Limits.pullback C.hom T.hom).Modules) [F.IsFinitePresentation] :
     ∃ (I : Type u) (_ : Finite I) (T_ : I → Scheme.{u}) (ι : ∀ f, T_ f ⟶ T.left),
       (∀ f, IsImmersion (ι f)) ∧
       (∀ t : T.left, ∃ f, t ∈ Set.range (ι f).base) ∧

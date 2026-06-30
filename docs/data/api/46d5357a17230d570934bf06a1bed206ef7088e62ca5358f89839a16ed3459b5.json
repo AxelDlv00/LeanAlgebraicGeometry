@@ -1,0 +1,61 @@
+[
+  {
+    "timestamp": "2026-06-24T16:10:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/SliceTransport.lean",
+      "theorem": "sliceDualTransport_app_apply"
+    },
+    "session": {
+      "id": "session_73",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "",
+      "key_lemmas_used": [
+        "sliceDualTransport",
+        "dualUnitRingSwap",
+        "sliceDualTransportInv_app_apply (mirror)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "naive bare rfl with β written inline as Functor.whiskerRight {app:=...} (forget₂ ...) in the φ binder type (with `: Type u` carrier ascription)",
+        "code_tried": "(φ : (((PresheafOfModules.pushforward (Functor.whiskerRight ({ app := fun U => (f.appIso U.unop).inv } : ...) (forget₂ CommRingCat RingCat))).obj (PresheafOfModules.dual M.val)).obj V : Type u)) ... := rfl",
+        "line_number": "1034",
+        "lean_error": "isDefEq whnf-bomb (statement elaboration / RHS type-check); concrete β forces zeta-expansion of whiskerRight through the LinearEquiv.toModuleIso iso carrier reduction",
+        "result": "failed",
+        "insight": "the bomb is in STATEMENT elaboration not the proof; concrete β is super-linear"
+      },
+      {
+        "attempt": 2,
+        "strategy": "raise maxHeartbeats (set_option maxHeartbeats N in) over the inlined-β statement",
+        "code_tried": "set_option maxHeartbeats 4000000 in / 10000000 in ... := rfl",
+        "line_number": "1034",
+        "lean_error": "still whnf-bomb; confirmed bombing at 200000, 4000000, AND 10000000 heartbeats",
+        "result": "failed",
+        "insight": "super-linear — no finite N closes it while β is inlined; raising HB does not help"
+      },
+      {
+        "attempt": 3,
+        "strategy": "tactic unfold + simp lemmas to expose toFun app component then rfl",
+        "code_tried": "unfold sliceDualTransport; simp only [LinearEquiv.toModuleIso_hom, ModuleCat.hom_ofHom, LinearEquiv.coe_coe, LinearEquiv.coe_mk, AddHom.coe_mk]; rfl",
+        "line_number": "1037",
+        "lean_error": "did not resolve cleanly (LSP goal-check timed out at 30s)",
+        "result": "failed",
+        "insight": "fighting the same carrier reduction from the tactic side does not avoid the bomb"
+      },
+      {
+        "attempt": 4,
+        "strategy": "fold β as a `letI` chain (α then β) in the φ binder type — the EXACT spelling the def and the downstream consumer use — keeping β opaque during whnf; then bare rfl at default heartbeats",
+        "code_tried": "(φ : letI α : Y.presheaf ⟶ f.opensFunctor.op ⋙ X.presheaf := { app := fun U => (f.appIso U.unop).inv }\n letI β : Y.ringCatSheaf.obj ⟶ f.opensFunctor.op ⋙ X.ringCatSheaf.obj := Functor.whiskerRight α (forget₂ CommRingCat RingCat)\n (((PresheafOfModules.pushforward β).obj (PresheafOfModules.dual (R₀ := X.presheaf) M.val)).obj V)) ... := rfl",
+        "line_number": "1034",
+        "lean_error": "",
+        "result": "success",
+        "insight": "folded letI β stays opaque through the iso/pushforward-dual carrier reduction → rfl is cheap at DEFAULT heartbeats (no set_option). Mirrors why the inverse lemma — which takes β as an explicit variable — is cheap. All three letI/body must be column-aligned or parse fails; no `: Type u` ascription (use ModuleCat CoeSort)."
+      }
+    ],
+    "next_steps": "Consumer presheafDual_pullback_comparison_eval_apply (PresheafDualPullback.lean:377) can now `rw [sliceDualTransport_app_apply f M V φ W z]; dualUnitRingSwap_apply`; its φ already uses the folded-letI β spelling so the rw matches without re-triggering the bomb. Then the c.2 brick-tail close (L764)."
+  }
+]

@@ -1,0 +1,130 @@
+[
+  {
+    "timestamp": "2026-06-29T09:07:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "tensorObj_restrict_iso_eq_pullbackTensorMap"
+    },
+    "session": {
+      "id": "session_94",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "pushforward_mu_appIso_collapse",
+        "pullbackTensorMap_isIso_of_isOpenImmersion",
+        "Iso.inv_hom_id_app_assoc",
+        "Functor.map_comp",
+        "sheafifyTensorUnitIso_hom_eq'",
+        "H1inv_app_eq_pullbackVal_restrict",
+        "map_tensorHom_comp3"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Port the verbatim v4.30 proof body (117100c4 TensorObjInverse L843-893) now that the keystone equation pushforward_mu_appIso_collapse was re-ported into the ROOT iter-093; replace the WALLED comment + bare sorry.",
+        "code_tried": "haveI : IsIso (pullbackTensorMap f M N) := pullbackTensorMap_isIso_of_isOpenImmersion f M N; simp only [tensorObj_restrict_iso]; apply Iso.ext; simp only [Iso.trans_hom, Category.assoc]; congr 1; simp only [Functor.mapIso_hom, Iso.trans_hom, Iso.symm_hom, asIso_hom, Functor.Monoidal.μIso_inv, tensorObjIsoOfIso, MonoidalCategory.tensorIso_hom]; rw [pushforward_mu_appIso_collapse f M.val N.val, Iso.app_inv]; erw [Iso.inv_hom_id_app_assoc]; erw [Functor.map_comp]; simp only [pullbackTensorMap, Category.assoc]; congr 1; congr 1; rw [sheafifyTensorUnitIso_hom_eq']; erw [H1inv_app_eq_pullbackVal_restrict f M, H1inv_app_eq_pullbackVal_restrict f N]; exact map_tensorHom_comp3 (C := _root_.PresheafOfModules (Y.presheaf ⋙ forget₂ CommRingCat RingCat)) _ _ _ _ _ _ _",
+        "line_number": "809",
+        "lean_error": null,
+        "goal_before": "tensorObj_restrict_iso f M N = (restrictFunctorIsoPullback f).app (tensorObj M N) ⪪≡ asIso (pullbackTensorMap f M N) ⪪≡ tensorObjIsoOfIso ((restrictFunctorIsoPullback f).app M).symm ((restrictFunctorIsoPullback f).app N).symm",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "The verbatim v4.30 body compiled with ZERO v4.31 fixes once pushforward_mu_appIso_collapse was in scope. The erw spots and the map_tensorHom_comp3 tail fired as-is; the 9-axis reminders (α-naturality, simpa-transparency) did not apply. B1's own body is sorry-free; it transitively rides K1's sorryAx via the haveI IsIso witness."
+      }
+    ],
+    "next_steps": "B1 done. Open the K1+S2 file-split lane (both 6.4M-HB, OOM in place → leaf module). Fix the 2 stale B1 docstrings (L784-786, L800-803) on the same K1 iter. Dual-unit FLANK still gated on the ∞-source lem:pushforward_beta_unit_eps_app_one informal proof."
+  },
+  {
+    "timestamp": "2026-06-29T09:07:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackTensorMap_isIso_of_isOpenImmersion"
+    },
+    "session": {
+      "id": "session_94",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "6.4M-HB OOM-band: elaborating the filled K1 proof in place exceeds the 2 GB host RAM (Exit 137, demonstrated iter-091). Needs a structural file-split into a leaf module before fill. Deferred this iter per objectives.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted (explicitly DO-NOT-TOUCH this iter per objectives).",
+        "code_tried": null,
+        "line_number": "806",
+        "lean_error": null,
+        "goal_before": null,
+        "goal_after": null,
+        "result": "partial",
+        "insight": "K1's IsIso witness is consumed by B1's haveI, so B1's transitive sorryAx is K1's. The keystone isIso_oplaxd_of_conj (re-ported iter-093) is now available to supply K1's proof; only the OOM-in-place build hazard remains → file-split."
+      }
+    ],
+    "next_steps": "Refactor lane: split K1 (and S2, which consumes B1) into their own leaf module so the 6.4M-HB proof elaborates in isolation, then fill from the v4.30 ROOT recipe (117100c4 TensorObjSubstrate L4790) using isIso_oplaxd_of_conj."
+  },
+  {
+    "timestamp": "2026-06-29T09:07:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "tensorObj_restrict_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_94",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "6.4M-HB OOM-band AND consumes B1; OOMs in place. Grouped with K1 in the file-split lane. Deferred this iter per objectives.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted (explicitly deferred per objectives).",
+        "code_tried": null,
+        "line_number": "988",
+        "lean_error": null,
+        "goal_before": null,
+        "goal_after": null,
+        "result": "partial",
+        "insight": "S2 substitutes Bridge B1 in its proof, so now that B1 is closed S2's blueprint route is unblocked mathematically; only the OOM-in-place hazard remains."
+      }
+    ],
+    "next_steps": "File-split lane with K1; fill using the now-closed B1."
+  },
+  {
+    "timestamp": "2026-06-29T09:07:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_assemble"
+    },
+    "session": {
+      "id": "session_94",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Dual-unit FLANK; gated on the ∞-source lem:pushforward_beta_unit_eps_app_one which has no informal proof yet. Needs dag-walker/blueprint-writer before any prover.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted (deferred per objectives).",
+        "code_tried": null,
+        "line_number": "1481",
+        "lean_error": null,
+        "goal_before": null,
+        "goal_after": null,
+        "result": "partial",
+        "insight": "Off critical path; the ∞-source informal proof must be written first."
+      }
+    ],
+    "next_steps": "dag-walker/blueprint-writer on lem:pushforward_beta_unit_eps_app_one before any prover targets this FLANK."
+  }
+]

@@ -18,6 +18,7 @@
 % archon:covers AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean
 % archon:covers AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean
 % archon:covers AlgebraicJacobian/Cohomology/CechTermAcyclic.lean
+% archon:covers AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean
 % SOURCE: [Stacks Project], Cohomology of Schemes, \S{\v C}ech cohomology of
 % quasi-coherent sheaves and \S Quasi-coherence of higher direct images
 % (Lemmas \texttt{lemma-cech-cohomology-quasi-coherent-trivial},
@@ -349,7 +350,6 @@ bricks, and the functor laws assembling them are the lone coherence statement.
 
 \begin{proof}
 
-\leanok
   A direct calculation with comparison isomorphisms, with no sectionwise content.
   Rewrite the head \(p_*(\eta)\) followed by the pushforward comparison as the
   conjugate-mate of the inverse pullback comparison; the identity leg then collapses
@@ -414,7 +414,6 @@ bricks, and the functor laws assembling them are the lone coherence statement.
 
 \begin{proof}
 
-\leanok
   A direct mate-calculus computation: unfold both sides using the definition of
   the adjunction unit for the composite and the pseudofunctor structure maps, then
   verify the equality by the mate identity for the pushforward/pullback comparison.
@@ -449,7 +448,6 @@ bricks, and the functor laws assembling them are the lone coherence statement.
 
 \begin{proof}
 
-\leanok
   Substitute the over-triangle equality \(\bar g \circ p_1 = p_2\) to replace
   transport coercions by identities, then verify the cancellation by direct
   calculation with the pushforward comparison.
@@ -3296,6 +3294,7 @@ of this instantiation.
 
 \begin{lemma}
 
+
 \leanok
 [Distinguished opens are closed under finite intersection]
   \label{lem:affine_faces_mem}
@@ -3328,6 +3327,7 @@ of this instantiation.
 \end{proof}
 
 \begin{lemma}
+
 
 \leanok
 [Standard covers are cofinal among open covers of a distinguished open]
@@ -3403,6 +3403,7 @@ of this instantiation.
 \end{proof}
 
 \begin{lemma}
+
 
 \leanok
 [Section surjectivity for the affine cover system]
@@ -3625,6 +3626,7 @@ of this instantiation.
 
 \begin{lemma}
 
+
 \leanok
 [Standard-cover opens are the distinguished opens \(D(s_i)\)]
   \label{lem:cover_datum_bridge}
@@ -3657,6 +3659,7 @@ of this instantiation.
 \end{proof}
 
 \begin{lemma}
+
 
 \leanok
 [Injective acyclicity for the affine cover system]
@@ -3702,6 +3705,7 @@ of this instantiation.
 \end{proof}
 
 \begin{definition}
+
 
 \leanok
 [The affine cover system]
@@ -4734,10 +4738,10 @@ that build the keystone; the keystone and the assembly carry out the route.
 \end{proof}
 
 \begin{lemma}
-% NOTE (review iter-080): \leanok REMOVED from statement+proof. This block is UNFORMALIZED
+% NOTE (review iter-080):  REMOVED from statement+proof. This block is UNFORMALIZED
 % (no \lean{}, per the iter-044 NOTE below): only the V=⊤ scalar core tile_scalar_compat is in
 % Lean, not the full natural R_g-linear iso over all V asserted here. The marker was a stale manual
-% \leanok invisible to sync_leanok (sync keys off \lean{}); no node \uses this leaf (impact=0).
+%  invisible to sync_leanok (sync keys off \lean{}); no node \uses this leaf (impact=0).
 [Natural section comparison between the tile and the ambient sheaf]
   \label{lem:tile_section_comparison}
   % NOTE (review iter-044): the residual structure-sheaf ring identity that this proof reduces to
@@ -5230,7 +5234,11 @@ that build the keystone; the keystone and the assembly carry out the route.
     AlgebraicGeometry.isIso_fromTildeΓ_app_basicOpen}
   \uses{lem:qcoh_section_isLocalizedModule, lem:fromTildeGamma_mathlib,
     lem:isIso_fromTildeGamma_iff_mathlib, lem:forget_reflectsIso_mathlib,
+    lem:isIso_fromTildeGamma_iff_isLocalizing_mathlib,
     lem:isLocalizedModule_linearEquiv_mathlib}
+  % NOTE: With the v4.31.0 Mathlib criterion lem:isIso_fromTildeGamma_iff_isLocalizing_mathlib
+  % the unconditional instance is the one-line composite of that iff with the keystone
+  % lem:qcoh_section_isLocalizedModule; the basis-checking proof below remains valid.
   % SOURCE: [Stacks Project], Schemes, Tag 01I8, Lemma \texttt{lemma-quasi-coherent-affine}
   % (statement and final step of proof) (read from references/stacks-schemes.tex,
   % L1278--1284, L1380--1386).
@@ -6164,6 +6172,7 @@ keystone above. All are anchored to the Stacks Project section ``Quasi-coherent 
   \]
 \end{lemma}
 \begin{proof}
+
 
 \leanok
   Pull the equality \(D(f) = \bigsqcup_i D(g_i)\) back along the canonical open immersion
@@ -7219,6 +7228,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
   \uses{lem:sheafify_kills_locally_zero}
+  \leanok
   This is the ``locally zero'' packaging of
   Lemma~\ref{lem:sheafify_kills_locally_zero}. Let \(Z\) be the constant presheaf with
   value the zero group; its sheafification is the zero sheaf. The zero map \(0 : Q \to Z\)
@@ -7318,6 +7328,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
     lem:cohomology_sheaf_is_sheafify_homology, lem:sheafify_kills_locally_zero,
     lem:isZero_of_faithful_preservesZeroMorphisms,
     lem:isZero_presheafToSheaf_of_locally_isZero, lem:cechSection_isZero_homology}
+    \leanok
   \textit{Source: Stacks Project, Cohomology of Schemes,
   \texttt{lemma-cech-cohomology-quasi-coherent-trivial} (proof).}
   We prove exactness of the augmented {\v C}ech complex of
@@ -7486,6 +7497,8 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
   \(p\) the homology object \(H^p(D^\bullet)\) is a zero object.
 \end{lemma}
 \begin{proof}
+
+\leanok
   The map induced on homology is a homotopy invariant: homotopic chain maps induce equal
   maps on each homology object. Applying this to the homotopy \(\mathrm{id}_{D^\bullet}
   \simeq 0\), the map induced by \(\mathrm{id}_{D^\bullet}\) on \(H^p(D^\bullet)\) equals the
@@ -7512,6 +7525,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
   \uses{lem:isZero_homology_of_homotopy_id_zero}
+  \leanok
   By Lemma~\ref{lem:isZero_homology_of_homotopy_id_zero} the null-homotopy \(\mathrm{id}_{D'^\bullet}
   \simeq 0\) forces \(H^p(D'^\bullet)\) to be a zero object in every degree. Homology is a functor,
   so the isomorphism \(D^\bullet \cong D'^\bullet\) induces an isomorphism \(H^p(D^\bullet) \cong
@@ -7550,7 +7564,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
   \uses{def:cover_cech_nerve}
-  \leanok
   Pure unfolding of the definitions. By Definition~\ref{def:cover_cech_nerve},
   \(\operatorname{coverCechNerveOver}\mathcal{U}\) is the lift into \(\operatorname{Over} X\) of
   \(\operatorname{coverCechNerve}\mathcal{U} = (\operatorname{coverArrow}\mathcal{U}).
@@ -7615,7 +7628,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
   \uses{lem:widePullback_overX_eq_prod}
-  \leanok
   By Lemma~\ref{lem:widePullback_overX_eq_prod} the \(1\)-fold fibre power is the \(1\)-fold product
   in \(\operatorname{Over} S\), which is the object itself: \((\coprod_i X_i)^{\times_S 1} \cong
   \coprod_i X_i\). On the right, the evaluation-at-\(0\) bijection \(\mathrm{Fin}(1) \to \iota\)
@@ -7719,7 +7731,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
   \uses{lem:overProd_coproduct_distrib}
-  \leanok
   Braid the slice binary product, \(A \times (\coprod_i Y_i) \cong (\coprod_i Y_i) \times A\), apply
   the left-handed distributivity (Lemma~\ref{lem:overProd_coproduct_distrib}) to get
   \(\coprod_i (Y_i \times A)\), and braid each summand back to \(A \times Y_i\). All three steps are
@@ -7763,7 +7774,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
   \uses{lem:sigmaSigmaIso_mathlib}
-  \leanok
   The first isomorphism is \(\operatorname{sigmaSigmaIso}\) of
   Lemma~\ref{lem:sigmaSigmaIso_mathlib}, collapsing the doubly-indexed coproduct
   \(\coprod_i \coprod_\tau\) into a coproduct over pairs \((i,\tau)\). The
@@ -8029,7 +8039,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
   \uses{lem:forget_reflectsIso_mathlib}
-  \leanok
   The forgetful functor from sheaves of \(\mathcal{O}_X\)-modules to the underlying (pre)sheaf of
   abelian groups is fully faithful, hence reflects isomorphisms
   (Lemma~\ref{lem:forget_reflectsIso_mathlib}); the inclusion of sheaves of abelian groups into
@@ -8183,7 +8192,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \begin{proof}
   \uses{def:push_pull_map, lem:restrictFunctorIsoPullback_mathlib,
     lem:unit_leftAdjointUniq_mathlib, lem:pushPullCoprodLegIso}
-    \leanok
   The two legs are symmetric; treat \(\operatorname{inl}\). Unfold the push--pull map on the
   left-hand side to its raw five-step form (Definition~\ref{def:push_pull_map}):
   \(\operatorname{pushPullMap}\mathcal{F}\,\overline{\operatorname{inl}}\) is \(q_*\) applied to the
@@ -8224,7 +8232,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
   \uses{lem:restrictFunctorIsoPullback_mathlib}
-  \leanok
   Push forward along \(q_*\) the inner isomorphism chaining the identification of restriction with
   open-immersion pullback (Lemma~\ref{lem:restrictFunctorIsoPullback_mathlib}), the
   pullback-composition comparison for \(c \circ q\), and the over-triangle reindexing \(c \circ q = p_C\);
@@ -8248,7 +8255,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
 
-\leanok
   The forward map is \(\operatorname{Sigma.desc}\) of the cocone sending the \(\operatorname{none}\)
   component to the left binary inclusion and each \(\operatorname{some} a\) component to the composite
   of the \(a\)-th inclusion into \(\coprod_{a} Z(\operatorname{some} a)\) with the right binary
@@ -8273,7 +8279,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
   \uses{def:push_pull_map}
-  \leanok
   The push--pull object is a contravariant functor of its slice argument through the push--pull map
   (Definition~\ref{def:push_pull_map}). Take the forward map to be
   \(\operatorname{pushPullMap}\mathcal{F}\,e.\mathrm{inv}\) and the backward map
@@ -8299,7 +8304,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
   \uses{lem:sigmaOptionIso}
-  \leanok
   Build the slice isomorphism as \(\operatorname{Over.isoMk}\) of the underlying-scheme isomorphism
   \(\operatorname{sigmaOptionIso}(o \mapsto (\mathrm{legs}\,o).\mathrm{left})\)
   (Lemma~\ref{lem:sigmaOptionIso}), together with the verification that its forward map commutes with
@@ -8321,7 +8325,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
 
-\leanok
   The same construction as Lemma~\ref{lem:sigmaOptionIso} with all arrows reversed: the forward map is
   \(\operatorname{prod.lift}\) of the projection onto \(W(\operatorname{none})\) and the
   \(\operatorname{Pi.lift}\) of the \(\operatorname{some}\) projections; the inverse is
@@ -8429,7 +8432,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
   \uses{def:coprodOverIncl, def:coprodToProdMap, lem:pushPullObjCongr}
-  \leanok
   The induction hypothesis supplies that
   \(\operatorname{coprodToProdMap}\mathcal{F}\,(\mathrm{legs} \circ e)\) is an isomorphism; it suffices
   to exhibit \(\operatorname{coprodToProdMap}\mathcal{F}\,\mathrm{legs}\) as the conjugate of that map by
@@ -8609,7 +8611,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \begin{proof}
   \uses{lem:pushforward_obj_obj_mathlib, lem:restrictFunctorIsoPullback_mathlib,
     lem:restrict_obj_mathlib}
-    \leanok
   This follows from three standard identifications. First, the leg is
   \((j_\sigma)_*\,(j_\sigma)^*\mathcal{F}\); pushforward sections are computed by preimage,
   \(\Gamma\bigl(V, (j_\sigma)_* N\bigr) = \Gamma\bigl(j_\sigma^{-1}(V), N\bigr)\)
@@ -8645,7 +8646,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \begin{proof}
   \uses{lem:pushPull_sigma_iso, lem:pushPull_leg_sections,
     lem:evaluation_preserves_products_mathlib}
-    \leanok
   Combine the product decomposition of the backbone push--pull object
   (Lemma~\ref{lem:pushPull_sigma_iso}), \(\operatorname{pushPullObj}\mathcal{F}\,Y_p \cong
   \prod_\sigma \operatorname{pushPullObj}\mathcal{F}\,(\operatorname{Over.mk} j_\sigma)\),
@@ -8679,7 +8679,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
   \uses{lem:map_augment_cond}
-  \leanok
   The two augmented complexes have, by construction, the same underlying graded object:
   in degree \(0\) both read \(\Phi Y\), and in degree \(n+1\) both read \(\Phi C^n\). Define
   the isomorphism by taking every degreewise component to be the identity \(\mathrm{id}\).
@@ -8704,7 +8703,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
 
-\leanok
   The lowest differential of \(\Phi C^\bullet\) is, by definitional reshaping, \(\Phi(d^0)\)
   applied to the original lowest differential of \(C^\bullet\). Hence
   \(\Phi(f) \cdot \Phi(d^0) = \Phi(f \cdot d^0) = \Phi(0) = 0\) by functoriality of \(\Phi\)
@@ -8730,7 +8728,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
 
-\leanok
   Define the isomorphism degreewise: take the degree-\(0\) component to be \(e_Y\) and the
   degree-\(n+1\) component to be \(\varphi_n\), the \(n\)-th component of \(\varphi\). The
   degree-\(0\) differential square is exactly the supplied compatibility square
@@ -8757,7 +8754,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
 
-\leanok
   By definition \(\operatorname{coverInterOpen}\mathcal{U}\,\sigma = \bigcap_k
   \operatorname{coverOpen}\mathcal{U}\,(\sigma k)\), the \((p+1)\)-fold meet of the
   cover-member opens. The index type \(\mathrm{Fin}(p+1)\) is nonempty, and in the frame of
@@ -8792,7 +8788,6 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
   \uses{lem:pushPull_eval_prod_iso, lem:coverInterOpen_inf_distrib}
-  \leanok
   Lemma~\ref{lem:pushPull_eval_prod_iso} supplies the evaluated push--pull product iso
   \(\Gamma(V, \operatorname{pushPullObj}\mathcal{F}\,Y_p) \cong \prod_\sigma
   \Gamma(\operatorname{coverInterOpen}\mathcal{U}\,\sigma \cap V, \mathcal{F})\). Post-compose
@@ -9080,6 +9075,8 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{proof}
 
 \begin{lemma}
+
+\leanok
 [Per-coface square of the core comparison]
   \label{lem:coreIso_comm_coface}
   \lean{AlgebraicGeometry.coreIso_comm_coface}
@@ -9097,6 +9094,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
   \uses{lem:coreIso_comm_leg, lem:section_cech_product_equiv, lem:section_cech_objd_apply}
+  \leanok
   Both sides are maps into the degree-\((p+1)\) term, which is the product over multi-indices
   \(\sigma' : \mathrm{Fin}(p+2) \to I\); by the product equivalence
   \(\operatorname{sectionCechProductEquiv}\) (Lemma~\ref{lem:section_cech_product_equiv}) it
@@ -9157,6 +9155,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
   \uses{lem:coreIso_comm_sum, lem:coreIso_obj_iso}
+  \leanok
   The intertwining square for each \(p\) is exactly the alternating-sum assembly of
   Lemma~\ref{lem:coreIso_comm_sum}: both {\v C}ech differentials are the alternating coface sums
   \(\sum_k (-1)^k \delta_k\), and that lemma matches them by summing the per-coface squares of
@@ -9176,6 +9175,8 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{proof}
 
 \begin{definition}
+
+\leanok
 [Canonical augmentation of the section {\v C}ech complex over \(V\)]
   \label{def:sectionCechAugV}
   \lean{AlgebraicGeometry.sectionCechAugV}
@@ -9200,6 +9201,8 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{definition}
 
 \begin{lemma}
+
+\leanok
 [The canonical section augmentation kills the first differential]
   \label{lem:sectionCechAugV_comp_d}
   \lean{AlgebraicGeometry.sectionCechAugV_comp_d}
@@ -9214,6 +9217,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{lemma}
 \begin{proof}
   \uses{def:sectionCechAugV, lem:cech_augmentation_comp_d, lem:coreIso_comm}
+  \leanok
   Conjugating \(\varepsilon_{\mathrm{can}} \cdot d^0\) by the degree-\(0\) and degree-\(1\) object
   isomorphisms turns it, via the differential-match squares of Lemma~\ref{lem:coreIso_comm}, into
   the evaluation at \(V\) of the backbone augmentation composite
@@ -9492,6 +9496,8 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \end{proof}
 
 \begin{lemma}
+
+\leanok
 [Local vanishing of the evaluated augmented {\v C}ech homology]
   \label{lem:cechSection_isZero_homology}
   \lean{AlgebraicGeometry.cechSection_isZero_homology}
@@ -9507,6 +9513,7 @@ unitors of the push--pull adjunction --- and is independent of the exactness (ac
 \begin{proof}
   \uses{lem:cechSection_complex_iso, lem:cechSection_contractible,
     lem:isZero_homology_of_homotopy_id_zero}
+    \leanok
   By Lemma~\ref{lem:cechSection_complex_iso} the evaluated complex \(D^\bullet\) is
   isomorphic to the augmented concrete section {\v C}ech complex \(D'^\bullet_{\mathrm{aug}}\).
   The hypothesis \(V \le \operatorname{coverOpen}\mathcal{U}\,i\) places \(V\) inside one cover
@@ -10314,6 +10321,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 
 \begin{lemma}
 
+
 \leanok
 [Distinguished opens of \(\operatorname{Spec} R\) are affine]
   \label{lem:isAffineOpen_specBasicOpen}
@@ -10327,6 +10335,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 \end{lemma}
 \begin{proof}
 
+
 \leanok
   The canonical open immersion \(D(r) \cong \operatorname{Spec} R[1/r] \hookrightarrow \operatorname{Spec}
   R\) (the basic-open / away-localisation isomorphism \(\operatorname{basicOpenIsoSpecAway}\)) is an
@@ -10335,6 +10344,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 \end{proof}
 
 \begin{lemma}
+
 
 \leanok
 [Standard covers are cofinal among open covers of a general affine open]
@@ -10392,6 +10402,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 
 \begin{lemma}
 
+
 \leanok
 [Section surjectivity for the enlarged affine cover system]
   \label{lem:affine_surj_of_vanishing_affine}
@@ -10422,6 +10433,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 \end{proof}
 
 \begin{definition}
+
 
 \leanok
 [The enlarged affine cover system]
@@ -10622,6 +10634,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 
 \begin{lemma}
 
+
 \leanok
 [General-affine-open quasi-coherent {\v C}ech vanishing from the tilde seed]
   \label{lem:affine_cech_vanishing_general_of_tildeVanishing}
@@ -10648,6 +10661,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 \end{proof}
 
 \begin{lemma}
+
 
 \leanok
 [General-affine Serre vanishing from the enlarged {\v C}ech seed]
@@ -10676,6 +10690,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 
 \begin{lemma}
 
+
 \leanok
 [General-affine Serre vanishing from the tilde leaf]
   \label{lem:affine_serre_vanishing_general_of_tildeVanishing}
@@ -10702,6 +10717,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 \end{proof}
 
 \begin{lemma}
+
 
 \leanok
 [Serre vanishing for a general affine open (Need~\#2)]
@@ -11892,6 +11908,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 
 \begin{proof}
   \uses{lem:cech_augmented_resolution, lem:cech_term_pushforward_acyclic, lem:acyclic_resolution_computes_derived, def:cech_complex, def:higher_direct_image}
+  \leanok
   Apply the abstract Lemma~\ref{lem:acyclic_resolution_computes_derived} with the
   right-derivable additive functor \(G = f_*\)
   (the pushforward \(\operatorname{QCoh}(X) \to \operatorname{QCoh}(S)\)), the object
@@ -11932,6 +11949,8 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 \end{proof}
 
 \begin{lemma}
+
+\leanok
 [A finite product of right-\(f_*\)-acyclic objects is right-\(f_*\)-acyclic]
   \label{lem:rightAcyclic_finite_prod}
   \lean{AlgebraicGeometry.rightAcyclic_finite_prod}
@@ -11945,6 +11964,8 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   \(k \geq 1\).
 \end{lemma}
 \begin{proof}
+
+\leanok
   A finite product in an abelian category is a finite biproduct, and an additive
   right-derived functor preserves finite biproducts; hence for every \(k\) there is
   an isomorphism
@@ -11999,6 +12020,8 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 \end{proof}
 
 \begin{lemma}
+
+\leanok
 [From augmented exactness to the acyclic-resolution input data]
   \label{lem:cechAugmented_to_acyclicResolutionInput}
   \lean{AlgebraicGeometry.cechAugmented_to_acyclicResolutionInput}
@@ -12021,6 +12044,7 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 \end{lemma}
 \begin{proof}
   \uses{lem:cech_augmented_resolution, def:cech_complex_on_X, def:cech_augmented_complex}
+  \leanok
   The augmented complex is the complex obtained by prepending \(\mathcal{F}\) to
   \(\mathcal{C}^\bullet\) along the augmentation \(\varepsilon\): its degree-\(0\) term
   is \(\mathcal{F}\) and its degree-\((p+1)\) term is \(\mathcal{C}^p\). This
@@ -12090,13 +12114,295 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   pushforward \(R^0 f_*\mathcal{F} = f_*\mathcal{F}\).
 \end{definition}
 
+\section{The relative {\v C}ech-to-derived-pushforward spectral sequence}
+\label{sec:cech_to_derived_pushforward_ss}
+
+This section assembles the relative {\v C}ech-to-derived-pushforward spectral
+sequence
+\[
+  E_2^{p,q} = \check{H}^p\bigl(\mathfrak{U}, R^q f_* \mathcal{F}\bigr)
+  \;\Longrightarrow\;
+  R^{p+q} f_* \mathcal{F},
+\]
+functorial in \(\mathcal{F}\), for a separated quasi-compact morphism
+\(f : X \to S\) and a finite affine open cover \(\mathfrak{U}\) of \(X\). It is the
+relative (over the base \(S\)) version of the absolute {\v C}ech-to-cohomology
+spectral sequence; the absolute statement is cited verbatim in
+\cref{lem:cech_to_derived_pushforward_ss}, the relativization replacing the global
+sections functor by \(f_*\) and absolute cohomology \(H^q\) by the derived
+pushforward \(R^q f_*\).
+
+Mathlib supplies only the \emph{abstract} spectral-sequence scaffold (the
+total-complex and spectral-object API recorded as Mathlib anchors below); it does
+\emph{not} contain the Grothendieck spectral sequence as a black box. The
+construction is therefore decomposed into the bicomplex of a {\v C}ech complex of an
+injective resolution, its total complex, the two filtrations whose associated graded
+pages give respectively \(R^n f_*\mathcal{F}\) and
+\(\check{H}^p(\mathfrak{U}, R^q f_*\mathcal{F})\), and the final assembly through the
+Mathlib bridge.
+
+\subsection{Mathlib anchors for the abstract spectral-sequence scaffold}
+
+\begin{lemma}[Total complex of a bicomplex]
+  \label{lem:total_complex_mathlib}
+  \lean{HomologicalComplex₂.total, HomologicalComplex₂.total.mapIso}
+  \mathlibok
+  \textit{Provided by Mathlib (\texttt{Mathlib.Algebra.Homology.TotalComplex}).}
+  For a double complex \(K\) in a preadditive category with the requisite coproducts,
+  Mathlib forms the associated total complex \(\operatorname{Tot}(K)\) and, for an
+  isomorphism \(e : K \cong L\) of double complexes, a functorial isomorphism
+  \(\operatorname{Tot}(K) \cong \operatorname{Tot}(L)\) of the totals. This is the
+  total-complex half of the abstract scaffold on which the spectral object below is
+  built.
+\end{lemma}
+
+\begin{lemma}[Spectral sequence of a spectral object]
+  \label{lem:spectralObject_spectralSequence_mathlib}
+  \lean{CategoryTheory.Abelian.SpectralObject,
+        CategoryTheory.Abelian.SpectralObject.spectralSequence,
+        CategoryTheory.CohomologicalSpectralSequenceNat}
+  \mathlibok
+  \textit{Provided by Mathlib (\texttt{Mathlib.Algebra.Homology.SpectralObject.*},
+  \texttt{Mathlib.Algebra.Homology.SpectralSequence.Basic}).}
+  A \emph{spectral object} in an abelian category \(C\) (Mathlib's
+  \(\operatorname{SpectralObject}\)) packages the filtration data of a filtered
+  cochain complex; from one, together with a page datum, Mathlib produces a genuine
+  spectral sequence via \(\operatorname{SpectralObject.spectralSequence}\), and in the
+  cohomological-quadrant indexing it is a
+  \(\operatorname{CohomologicalSpectralSequenceNat}\). Applied to the two filtrations
+  of a total complex this is exactly the abstract machine that turns a filtered total
+  complex into a convergent first-quadrant spectral sequence; the project supplies the
+  filtered total complex (\cref{def:cech_resolution_total_complex}) and the page
+  identifications (\cref{lem:total_complex_first_filtration_degenerates},
+  \cref{lem:total_complex_second_filtration_E2}).
+\end{lemma}
+
+\subsection{The bicomplex and its total complex}
+
+\begin{definition}[{\v C}ech bicomplex of an injective resolution]
+  \label{def:cech_resolution_bicomplex}
+  \uses{def:relative_cech_complex_of_nerve, def:cech_free_presheaf_complex,
+        lem:enoughInjectives_of_hasInjectiveResolutions}
+  % SOURCE: [Stacks Project], Cohomology, Tag 03OW
+  % (\texttt{lemma-cech-spectral-sequence}, Grothendieck-SS proof)
+  % (read from references/stacks-cohomology.tex, L1553--1570).
+  % SOURCE QUOTE: "This is a Grothendieck spectral sequence
+  % (see
+  % Derived Categories, Lemma \ref{derived-lemma-grothendieck-spectral-sequence})
+  % for the functors
+  % $$
+  % i :  \textit{Mod}(\mathcal{O}_X) \to \textit{PMod}(\mathcal{O}_X)
+  % \quad\text{and}\quad
+  % \check{H}^0(\mathcal{U}, - ) : \textit{PMod}(\mathcal{O}_X)
+  % \to \text{Mod}_{\mathcal{O}_X(U)}.
+  % $$"
+  \textit{Source: Stacks Project, Cohomology, Tag 03OW
+  (\texttt{lemma-cech-spectral-sequence}); the bicomplex is the explicit model of the
+  Grothendieck spectral sequence used in its proof.}
+  Choose an injective resolution \(\mathcal{F} \to \mathcal{I}^\bullet\) in the
+  category of \(\mathcal{O}_X\)-modules (it exists by
+  \cref{lem:enoughInjectives_of_hasInjectiveResolutions}). Applying the relative
+  {\v C}ech-complex construction \cref{def:relative_cech_complex_of_nerve} of the cover
+  \(\mathfrak{U}\) to each \(\mathcal{I}^q\) yields a double complex
+  \[
+    C^{p,q} \;=\; \check{\mathcal{C}}^p\bigl(\mathfrak{U}, \mathcal{I}^q\bigr)
+    \in \operatorname{QCoh}(S),
+  \]
+  with horizontal differential the {\v C}ech (alternating-coface) differential and
+  vertical differential induced by \(\mathcal{I}^\bullet\). Each row \(C^{\bullet,q}\)
+  is the relative {\v C}ech complex of \(\mathcal{I}^q\); each column \(C^{p,\bullet}\)
+  is \(f_*\) of the push--pull nerve term at level \(p\) applied to the resolution
+  \(\mathcal{I}^\bullet\).
+\end{definition}
+
+\begin{definition}[Total complex of the {\v C}ech bicomplex]
+  \label{def:cech_resolution_total_complex}
+  \uses{def:cech_resolution_bicomplex, lem:total_complex_mathlib}
+  The total complex \(\operatorname{Tot}^\bullet(C^{\bullet,\bullet})\) of the
+  bicomplex \cref{def:cech_resolution_bicomplex}, formed via Mathlib's
+  \(\texttt{HomologicalComplex}_2.\texttt{total}\)
+  (\cref{lem:total_complex_mathlib}). Carrying both the row filtration (by the
+  {\v C}ech degree \(p\)) and the column filtration (by the resolution degree \(q\)),
+  it is the single filtered complex whose two filtrations produce the two pages of the
+  spectral sequence.
+\end{definition}
+
+\subsection{The two filtrations}
+
+\begin{lemma}[First filtration: degeneration onto \(R^n f_*\mathcal{F}\)]
+  \label{lem:total_complex_first_filtration_degenerates}
+  \uses{def:cech_resolution_total_complex, def:cech_higher_direct_image,
+        lem:cech_term_pushforward_acyclic, lem:map_hc_homology_iso}
+  % SOURCE: [Stacks Project], Cohomology, Tag 01EO / 03OW
+  % (\texttt{lemma-cech-spectral-sequence-application}, degeneration)
+  % (read from references/stacks-cohomology.tex, L1584--1589).
+  % SOURCE QUOTE: "We will use the spectral sequence of
+  % Lemma \ref{lemma-cech-spectral-sequence}.
+  % The assumptions mean that $E_2^{p, q} = 0$ for all $(p, q)$ with
+  % $q \not = 0$. Hence the spectral sequence degenerates at $E_2$
+  % and the result follows."
+  \textit{Source: Stacks Project, Cohomology,
+  \texttt{lemma-cech-spectral-sequence-application} (the degeneration corollary).}
+  The filtration of \(\operatorname{Tot}^\bullet(C^{\bullet,\bullet})\) by the
+  resolution degree \(q\) has associated spectral object whose first page is computed
+  by the columns. Because each {\v C}ech term is a finite product of pushforwards of
+  injectives along affine intersections, it is \(f_*\)-acyclic
+  (\cref{lem:cech_term_pushforward_acyclic}); hence taking column cohomology in the
+  \(q\)-direction is concentrated in the resolution direction and recovers
+  \(\mathcal{I}^\bullet\) up to homotopy, so the total complex computes the derived
+  pushforward: \(H^n\bigl(\operatorname{Tot}^\bullet\bigr) \cong R^n f_*\mathcal{F}\)
+  with \(R^n f_*\mathcal{F}\) as in \cref{def:cech_higher_direct_image}. The
+  exact-functor/homology interchange \cref{lem:map_hc_homology_iso} supplies the
+  termwise identifications.
+\end{lemma}
+
+\begin{lemma}[Second filtration: \(E_2 = \check{H}^p(\mathfrak{U}, R^q f_*\mathcal{F})\)]
+  \label{lem:total_complex_second_filtration_E2}
+  \uses{def:cech_resolution_total_complex, lem:injective_cech_acyclic,
+        lem:cech_complex_hom_identification, lem:mod_pmod_adjunction,
+        def:cech_higher_direct_image}
+  % SOURCE: [Stacks Project], Cohomology, Tag 03AZ
+  % (\texttt{lemma-cech-cohomology-derived-presheaves}, $\check H^p = R^p \check H^0$)
+  % (read from references/stacks-cohomology.tex, L1287--1299).
+  % SOURCE QUOTE: "The {\v C}ech cohomology functors $\check{H}^p(\mathcal{U}, -)$
+  % are canonically isomorphic as a $\delta$-functor to
+  % the right derived functors of the functor
+  % $$
+  % \check{H}^0(\mathcal{U}, -) :
+  % \textit{PMod}(\mathcal{O}_X)
+  % \longrightarrow
+  % \text{Mod}_{\mathcal{O}_X(U)}.
+  % $$"
+  \textit{Source: Stacks Project, Cohomology,
+  \texttt{lemma-cech-cohomology-derived-presheaves} and
+  \texttt{lemma-injective-trivial-cech}.}
+  The filtration of \(\operatorname{Tot}^\bullet(C^{\bullet,\bullet})\) by the
+  {\v C}ech degree \(p\) has \(E_2\) page
+  \[
+    E_2^{p,q} \;=\; \check{H}^p\bigl(\mathfrak{U}, R^q f_*\mathcal{F}\bigr).
+  \]
+  Taking row cohomology first computes, in each column \(q\), the {\v C}ech cohomology
+  of the resolution sheaf \(\mathcal{I}^q\); since injectives are {\v C}ech-acyclic
+  (\cref{lem:injective_cech_acyclic}, the Grothendieck-SS hypothesis), the
+  presheaf-level {\v C}ech functor \(\check{H}^0(\mathfrak{U}, -)\) is computed by the
+  {\v C}ech complex \cref{lem:cech_complex_hom_identification}, and its right derived
+  functors are the {\v C}ech cohomology functors
+  \(\check{H}^p(\mathfrak{U}, -) = R^p\check{H}^0(\mathfrak{U}, -)\) on presheaves
+  (using the exact inclusion \(i\) of \cref{lem:mod_pmod_adjunction}). Applying this
+  with the column cohomology \(R^q f_*\mathcal{F}\)
+  (\cref{def:cech_higher_direct_image}) in the coefficient slot identifies the second
+  page with \(\check{H}^p(\mathfrak{U}, R^q f_*\mathcal{F})\).
+\end{lemma}
+
+\subsection{Assembly of the spectral sequence}
+
+\begin{lemma}[Relative {\v C}ech-to-derived-pushforward spectral sequence]
+  \label{lem:cech_to_derived_pushforward_ss}
+  \uses{lem:total_complex_first_filtration_degenerates,
+        lem:total_complex_second_filtration_E2,
+        lem:spectralObject_spectralSequence_mathlib,
+        def:cech_higher_direct_image}
+  % SOURCE: [Stacks Project], Cohomology, Tag 03OW
+  % (\texttt{lemma-cech-spectral-sequence}, ``{\v C}ech-to-cohomology spectral sequence'')
+  % (read from references/stacks-cohomology.tex, L1540--1551).
+  % SOURCE QUOTE: "Let $X$ be a ringed space.
+  % Let $\mathcal{U} : U = \bigcup_{i \in I} U_i$ be an open covering.
+  % For any sheaf of $\mathcal{O}_X$-modules $\mathcal{F}$ there
+  % is a spectral sequence $(E_r, d_r)_{r \geq 0}$ with
+  % $$
+  % E_2^{p, q} = \check{H}^p(\mathcal{U}, \underline{H}^q(\mathcal{F}))
+  % $$
+  % converging to $H^{p + q}(U, \mathcal{F})$.
+  % This spectral sequence is functorial in $\mathcal{F}$."
+  \textit{Source: Stacks Project, Cohomology, Tag 03OW
+  (\texttt{lemma-cech-spectral-sequence}, ``{\v C}ech-to-cohomology spectral
+  sequence''); stated here in its relative form over the base \(S\).}
+  Let \(f : X \to S\) be separated and quasi-compact, \(\mathcal{F}\) a quasi-coherent
+  \(\mathcal{O}_X\)-module, and \(\mathfrak{U}\) a finite affine open cover of \(X\).
+  There is a first-quadrant cohomological spectral sequence, functorial in
+  \(\mathcal{F}\),
+  \[
+    E_2^{p,q} = \check{H}^p\bigl(\mathfrak{U}, R^q f_*\mathcal{F}\bigr)
+    \;\Longrightarrow\; R^{p+q} f_*\mathcal{F},
+  \]
+  with \(R^\bullet f_*\) the unconditional {\v C}ech higher direct images of
+  \cref{def:cech_higher_direct_image}.
+\end{lemma}
+
+% SOURCE QUOTE PROOF: "This is a Grothendieck spectral sequence
+% (see
+% Derived Categories, Lemma \ref{derived-lemma-grothendieck-spectral-sequence})
+% for the functors
+% $$
+% i :  \textit{Mod}(\mathcal{O}_X) \to \textit{PMod}(\mathcal{O}_X)
+% \quad\text{and}\quad
+% \check{H}^0(\mathcal{U}, - ) : \textit{PMod}(\mathcal{O}_X)
+% \to \text{Mod}_{\mathcal{O}_X(U)}.
+% $$
+% Namely, we have $\check{H}^0(\mathcal{U}, i(\mathcal{F})) = \mathcal{F}(U)$
+% by Lemma \ref{lemma-cech-h0}. We have that $i(\mathcal{I})$ is
+% {\v C}ech acyclic by Lemma \ref{lemma-injective-trivial-cech}. And we
+% have that $\check{H}^p(\mathcal{U}, -) = R^p\check{H}^0(\mathcal{U}, -)$
+% as functors on $\textit{PMod}(\mathcal{O}_X)$
+% by Lemma \ref{lemma-cech-cohomology-derived-presheaves}.
+% Putting everything together gives the lemma."
+% (read from references/stacks-cohomology.tex, L1553--1570.)
+\begin{proof}
+  \uses{def:cech_resolution_total_complex,
+        lem:total_complex_first_filtration_degenerates,
+        lem:total_complex_second_filtration_E2,
+        lem:spectralObject_spectralSequence_mathlib}
+  Form the {\v C}ech bicomplex \(C^{\bullet,\bullet}\) of an injective resolution
+  \(\mathcal{F} \to \mathcal{I}^\bullet\) (\cref{def:cech_resolution_bicomplex}) and its
+  total complex \(\operatorname{Tot}^\bullet\) (\cref{def:cech_resolution_total_complex}).
+  Feeding the two filtrations of \(\operatorname{Tot}^\bullet\) into Mathlib's
+  spectral-object machine (\cref{lem:spectralObject_spectralSequence_mathlib}) yields
+  two spectral sequences with the same abutment
+  \(H^{p+q}(\operatorname{Tot}^\bullet)\). The column (resolution-degree) filtration
+  degenerates at its second page onto \(R^n f_*\mathcal{F}\)
+  (\cref{lem:total_complex_first_filtration_degenerates}), identifying the abutment with
+  \(R^{p+q} f_*\mathcal{F}\). The row ({\v C}ech-degree) filtration has second page
+  \(\check{H}^p(\mathfrak{U}, R^q f_*\mathcal{F})\)
+  (\cref{lem:total_complex_second_filtration_E2}). The resulting spectral sequence is
+  the asserted one; functoriality in \(\mathcal{F}\) is inherited from functoriality of
+  the injective resolution, the {\v C}ech complex, and the total-complex/spectral-object
+  constructions. This is the relative incarnation of the Grothendieck spectral sequence
+  for the composite \(\check{H}^0(\mathfrak{U}, -) \circ i\) recorded in the source.
+\end{proof}
+
 \section{Flat base change for the {\v C}ech higher direct images}
 
 \begin{lemma}
+
+\leanok
 [Flat base change of $R^i f_*$ via {\v C}ech]
   \label{lem:cech_flat_base_change}
   \lean{AlgebraicGeometry.cech_flatBaseChange}
   \uses{def:cech_higher_direct_image, lem:cech_computes_cohomology}
+  % SOURCE: [Stacks Project], Cohomology of Schemes, Tag 02KH
+  % (\texttt{lemma-flat-base-change-cohomology}, ``Flat base change'')
+  % (read from references/stacks-coherent.tex, L947--969).
+  % SOURCE QUOTE: "Consider a cartesian diagram of schemes
+  % $$
+  % \xymatrix{
+  % X' \ar[d]_{f'} \ar[r]_{g'} & X \ar[d]^f \\
+  % S' \ar[r]^g & S
+  % }
+  % $$
+  % Let $\mathcal{F}$ be a quasi-coherent $\mathcal{O}_X$-module
+  % with pullback $\mathcal{F}' = (g')^*\mathcal{F}$.
+  % Assume that $g$ is flat and that $f$ is quasi-compact and quasi-separated.
+  % For any $i \geq 0$
+  % \begin{enumerate}
+  % \item the base change map of
+  % Cohomology, Lemma \ref{cohomology-lemma-base-change-map-flat-case}
+  % is an isomorphism
+  % $$
+  % g^*R^if_*\mathcal{F} \longrightarrow R^if'_*\mathcal{F}',
+  % $$
+  % \item if $S = \Spec(A)$ and $S' = \Spec(B)$, then
+  % $H^i(X, \mathcal{F}) \otimes_A B = H^i(X', \mathcal{F}')$.
+  % \end{enumerate}"
   \textit{Source: Stacks Project, Cohomology of Schemes, Tag 02KH
   (\texttt{lemma-flat-base-change-cohomology}, ``Flat base change'').}
   Consider the cartesian square
@@ -12109,7 +12415,11 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   \]
   with \(f : X \to S\) separated and quasi-compact, \(\mathcal{F}\) a
   quasi-coherent \(\mathcal{O}_X\)-module, and
-  \(\mathcal{F}' = (g')^*\mathcal{F}\). Assume \(g\) is flat. Then for every
+  \(\mathcal{F}' = (g')^*\mathcal{F}\). Assume \(g\) is flat. Fix a finite affine
+  open cover \(\mathfrak{U}\) of \(X\); the cover \(\mathfrak{U}'\) of \(X'\) is
+  required to be the \emph{base change of \(\mathfrak{U}\) along \(g'\)} (the cover
+  by the preimages \((g')^{-1}(U_i)\)) — the isomorphism is constructed only for
+  this matched pair, not for an unrelated cover \(\mathfrak{U}'\). Then for every
   \(i \geq 0\) the canonical base-change map between the unconditional {\v C}ech
   higher direct images of Definition~\ref{def:cech_higher_direct_image} is an
   isomorphism
@@ -12124,10 +12434,14 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
 \end{lemma}
 
 \begin{proof}
-  \uses{lem:pullback_mapHC_homologyIso, def:cech_complex_base_change_iso}
-  This is the \emph{separated} case of Stacks Tag 02KH; following the source, it needs
-  \emph{no} spectral sequence (the {\v C}ech-to-cohomology spectral sequence enters
-  only in the separated~\(\to\) general quasi-separated promotion). Write
+  \uses{lem:pullback_mapHC_homologyIso, def:cech_complex_base_change_iso,
+        lem:cech_to_derived_pushforward_ss}
+  This is the \emph{separated} case of Stacks Tag 02KH. For a separated quasi-compact
+  \(f\) the relative {\v C}ech complex already computes \(R^\bullet f_*\) on the nose,
+  so the separated case needs \emph{no} spectral sequence; the
+  {\v C}ech-to-derived-pushforward spectral sequence
+  (\cref{lem:cech_to_derived_pushforward_ss}) enters only in the
+  separated~\(\to\) general quasi-separated promotion (see the remark below). Write
   \(\check{\mathcal{C}}^\bullet = \check{\mathcal{C}}^\bullet(\mathfrak{U},\mathcal{F})\)
   for the relative {\v C}ech complex in \(\operatorname{QCoh}(S)\), so that
   \(R^i f_*\mathcal{F} = H^i(\check{\mathcal{C}}^\bullet)\) by
@@ -12150,12 +12464,30 @@ localisation \(R_f\) of the distinguished case by the coordinate ring \(\Gamma(V
   of~(2) into the homology isomorphism. Composing the two gives the claim.
 \end{proof}
 
+\begin{remark}[Lift to the general quasi-separated case]
+  \label{rem:cech_flat_base_change_general}
+  \uses{lem:cech_to_derived_pushforward_ss, lem:cech_flat_base_change,
+        def:cech_complex_base_change_iso}
+  The separated case above suffices for the curve/Jacobian application, where the
+  structure morphisms in play are separated. The general (quasi-compact,
+  quasi-separated) case of Stacks Tag 02KH is obtained from the separated case by base
+  change functoriality of the spectral sequence
+  \cref{lem:cech_to_derived_pushforward_ss}: the flat morphism \(g\) induces, by
+  \(g^*\)-exactness, a comparison of the entire \(E_2\) page
+  \(g^*\check{H}^p(\mathfrak{U}, R^q f_*\mathcal{F}) \to
+  \check{H}^p(\mathfrak{U}', R^q f'_*\mathcal{F}')\), whose termwise input is the affine
+  base change of \cref{def:cech_complex_base_change_iso}; an isomorphism on \(E_2\)
+  yields an isomorphism on the abutment \(R^{p+q} f_*\), promoting the separated
+  conclusion to the general one. This downstream lift is recorded as a remark only; it
+  is not needed for the present development.
+\end{remark}
+
 \section{Homology-side machinery for {\v C}ech flat base change}
 
 The {\v C}ech flat-base-change lemma factors through two ingredients: exactness of the
 flat pullback \(g^*\) (so it commutes with cohomology) and the tensorial base change of
 the {\v C}ech complex itself. We record both here. The homology-side pieces are
-sorry-free; the genuine open content is isolated in the two clearly-flagged gaps below.
+already proved; the genuine open content is isolated in the two clearly-flagged gaps below.
 
 \begin{lemma}
 \leanok
@@ -12296,18 +12628,6 @@ it does not yield to a stalkwise argument.
   Let \(\varphi_{\mathrm{hom}}\) be the ring-sheaf hom underlying a flat morphism
   \(g\). Then \(\texttt{PresheafOfModules.pullback}\,\varphi_{\mathrm{hom}}\) preserves
   finite limits.
-
-  \emph{This is the irreducible open frontier of \cref{sec:pullback_pfl_decomposition}.}
-  Mathlib defines the presheaf pullback purely as the left adjoint of the pushforward,
-  \(\texttt{PresheafOfModules.pullback} =
-  (\texttt{PresheafOfModules.pushforward}\,\varphi_{\mathrm{hom}})^{\mathrm{L}}\), with
-  \emph{no} pointwise, sectionwise, or stalkwise description, and there is no stalk
-  functor for (pre)sheaves of modules in Mathlib. The naive stalkwise route — ``the
-  stalk of the pullback is the flat extension of scalars of the stalk, hence
-  left-exact pointwise'' — therefore has nothing to run against: there is no stalk
-  functor to take. The only viable route is to build a concrete model of the adjoint
-  and transport left-exactness through it, which is the sub-decomposition above; it is
-  a multi-hundred-line development, not a one-iteration target.
 \end{lemma}
 
 \begin{proof}
@@ -12324,9 +12644,13 @@ it does not yield to a stalkwise argument.
 \end{proof}
 
 \begin{lemma}
+
+\leanok
 [Flat pullback is left-exact \textnormal{(OPEN)}]
   \label{lem:pullback_preserves_finite_limits}
   \lean{AlgebraicGeometry.pullback_preservesFiniteLimits}
+  \uses{lem:sheafOfModules_pullbackIso, lem:forget_sheafOfModules_pfl_mathlib,
+        lem:sheafification_pfl_mathlib, lem:presheaf_pullback_pfl_flat}
   If \(g\) is flat then \(g^*\) preserves finite limits. The flatness-dependent
   content reduces, via the factorisation of
   Lemma~\ref{lem:sheafOfModules_pullbackIso}, to the single middle factor
@@ -12347,9 +12671,6 @@ it does not yield to a stalkwise argument.
   site). The middle factor preserves finite limits because \(g\) is flat
   (Lemma~\ref{lem:presheaf_pullback_pfl_flat}). A composite of
   finite-limit-preserving functors preserves finite limits, so \(g^*\) does.
-  \emph{The single irreducible step is the middle factor,
-  Lemma~\ref{lem:presheaf_pullback_pfl_flat}: the genuine multi-hundred-line frontier;
-  every other ingredient is supplied by Mathlib on the scheme site.}
 \end{proof}
 
 \begin{lemma}
@@ -12374,21 +12695,1043 @@ it does not yield to a stalkwise argument.
   Lemma~\ref{lem:map_hc_homology_iso} to \(g^*\).
 \end{lemma}
 
+\subsection{The {\v C}ech base-change isomorphism via a cosimplicial natural iso}
+\label{sec:cech_base_change_construction}
+
+The relative {\v C}ech complex is \emph{not} a literal product of affine
+pushforwards but an abstract cosimplicial whiskering: by
+Definition~\ref{def:relative_cech_complex_of_nerve},
+\(\check{\mathcal{C}}^\bullet(\mathfrak{U}, \mathcal{F}) =
+\operatorname{alternatingCofaceMapComplex}\bigl((\operatorname{pushforward} f) \circ
+\operatorname{CechNerve}(\mathfrak{U}, \mathcal{F})\bigr)\), whose degree-\(p\) term is
+\((\operatorname{pushforward} f)\) of a push--pull nerve object and whose differentials
+are \((\operatorname{pushforward} f)\) of cosimplicial coface maps. The base-change iso
+must therefore be built at the cosimplicial altitude, by transporting natural isos
+through the functor \(\operatorname{alternatingCofaceMapComplex}\) — \emph{not} by a
+hand-assembled \(\operatorname{isoOfComponents}\) with explicit per-degree {\v C}ech
+differential squares. The construction has four pieces, recorded next.
+
+\begin{lemma}\leanok
+[Additive functors commute with the alternating-coface differential]
+  \label{lem:map_alternatingCofaceMapComplex_objD}
+  \lean{AlgebraicGeometry.map_alternatingCofaceMapComplex_objD}
+  For an additive functor \(F\) between preadditive categories, \(F\) applied to the
+  degree-\(p\) alternating-coface differential \(\operatorname{objD}\) of a cosimplicial
+  object \(C\) agrees with the alternating-coface differential of \(F \circ C\): the
+  differential is an alternating sum of coface maps, and \(F\) preserves finite sums and
+  carries each coface map to the corresponding coface map of \(F \circ C\), so the two
+  differentials coincide termwise.
+\end{lemma}
+
+\begin{lemma}\leanok
+[Flat pullback commutes with the alternating-coface complex]
+  \label{lem:pullback_commutes_alternatingCofaceMapComplex}
+  \lean{AlgebraicGeometry.mapAlternatingCofaceMapComplexIso}
+  % NOTE: AlgebraicGeometry.mapAlternatingCofaceMapComplexIso is currently DUPLICATED in
+  % two Lean files (CechHigherDirectImageUnconditional.lean and CechToHigherDirectImage.lean);
+  % this node pins the CechHigherDirectImageUnconditional copy. The duplicate needs a
+  % Lean-side de-dup refactor (planner-scheduled).
+  \uses{def:relative_cech_complex_of_nerve, lem:map_alternatingCofaceMapComplex_objD}
+  For an additive functor \(F\) between preadditive categories, \(F\) applied
+  degreewise commutes with the alternating-coface-map cochain complex functor: there is
+  a natural isomorphism
+  \(F\bigl(\operatorname{alternatingCofaceMapComplex}(C)\bigr) \cong
+  \operatorname{alternatingCofaceMapComplex}(F \circ C)\), natural in the cosimplicial
+  object \(C\). In particular this holds for \(F = g^*\), which is additive.
+  \emph{Proof sketch.} The degree-\(p\) terms agree on the nose (\(F\) applied to the
+  degree-\(p\) term of \(C\)); the differential is an alternating sum of coface maps,
+  and since \(F\) is additive it commutes with finite sums and with each coface map, so
+  the term-wise identifications assemble into a chain isomorphism. \emph{(Mathlib-absent;
+  a moderate \(\operatorname{NatTrans}\)-level build.)}
+\end{lemma}
+
+% The affine termwise base-change brick lives in the Flat Base Change chapter as
+% \cref{lem:affine_pushforward_pullback_baseChange}; the {\v C}ech construction below
+% consumes it by cross-reference.
+
+\begin{lemma}
+
+\leanok
+[Degreewise affine reduction of the {\v C}ech base change]
+  \label{lem:cech_degree_affine_baseChange}
+  \lean{AlgebraicGeometry.cech_degree_affine_baseChange}
+  \uses{lem:affine_pushforward_pullback_baseChange, lem:pushforward_spec_tilde_iso,
+        lem:pullback_spec_tilde_iso, lem:cancelBaseChange_mathlib,
+        def:cech_nerve_cosimplicial}
+  Fix a cosimplicial degree \(p\). The \((p+1)\)-fold fibre power
+  \(U_{i_0\dots i_p} = U_{i_0} \times_X \dots \times_X U_{i_p}\) appearing in the
+  {\v C}ech nerve is, on the standard affine model of the cover, \(\operatorname{Spec}\)
+  of the finite affine intersection \(A_{i_0} \otimes_R \dots \otimes_R A_{i_p}\) of the
+  coordinate rings of the members \(U_{i_j} = \operatorname{Spec} A_{i_j}\). On that
+  affine model the X-level cartesian square defining the base change along \(g'\)
+  restricts to the affine pushout (tensor) square of rings, so the degreewise
+  Beck--Chevalley comparison
+  \(g'^*(p_* p^* F) \cong p'_* p'^*(g'^* F)\) over \(U_{i_0\dots i_p}\) IS the affine
+  termwise base change \(\operatorname{affinePushforwardPullbackBaseChange}\)
+  (\cref{lem:affine_pushforward_pullback_baseChange}). These affine identifications are
+  natural with respect to the index-omission maps that generate the cosimplicial
+  structure of the nerve.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:affine_pushforward_pullback_baseChange, lem:pushforward_spec_tilde_iso,
+        lem:pullback_spec_tilde_iso, lem:cancelBaseChange_mathlib,
+        def:cech_nerve_cosimplicial}
+  \emph{Spec-reduction.} On the standard affine model the members of the cover are
+  \(U_{i_j} = \operatorname{Spec} A_{i_j}\) over the affine base \(\operatorname{Spec} R\),
+  and the intersection \(U_{i_0\dots i_p}\) --- a fibre power over \(X\) --- is, by the
+  affine description of fibre products, \(\operatorname{Spec}\) of the iterated tensor
+  product \(A_{i_0} \otimes_R \dots \otimes_R A_{i_p}\). The base change \(g'\) is
+  induced by a ring map \(R \to R'\); pulling back along \(g'\) replaces this affine
+  intersection by \(\operatorname{Spec}\) of \((A_{i_0} \otimes_R \dots \otimes_R A_{i_p})
+  \otimes_R R'\). Thus the X-level cartesian square restricts, over each intersection, to
+  the affine pushout square of rings, and the degreewise base-change isomorphism is by
+  construction \(\operatorname{affinePushforwardPullbackBaseChange}\)
+  (\cref{lem:affine_pushforward_pullback_baseChange}); the latter is assembled from the
+  tilde dictionaries \cref{lem:pushforward_spec_tilde_iso}, \cref{lem:pullback_spec_tilde_iso}
+  and the cancellation \(\operatorname{cancelBaseChange}\)
+  (\cref{lem:cancelBaseChange_mathlib}), \emph{not} from the canonical adjoint mate.
+
+  \emph{Index-omission naturality.} Each coface map of the {\v C}ech nerve
+  (\cref{def:cech_nerve_cosimplicial}) omits one index \(i_j\), realised on rings as the
+  inclusion \(A_{i_0} \otimes_R \dots \widehat{A_{i_j}} \dots \otimes_R A_{i_p} \to
+  A_{i_0} \otimes_R \dots \otimes_R A_{i_p}\) (insertion of the missing tensor factor);
+  codegeneracies repeat an index dually. The affine base-change isomorphism
+  \(\operatorname{affinePushforwardPullbackBaseChange}\) is natural in the ring under
+  consideration, so the degreewise comparisons commute with these omission/insertion
+  maps and assemble into a morphism of cosimplicial objects. This is exactly the
+  per-degree data that both \cref{lem:cech_pushforward_baseChange_natIso} and the
+  twisted-nerve identification consume.
+\end{proof}
+
+\subsection{The abstract-to-affine bridge for the base-change leaves}
+\label{sec:pushpull_tilde_bridge}
+
+The brick \cref{lem:cech_degree_affine_baseChange} speaks the affine
+\(\widetilde{(-)}\)-model over \(\operatorname{Spec}\): it compares
+\(g^*\bigl((\operatorname{Spec}\varphi)_*\widetilde{N}\bigr)\) with
+\((\operatorname{Spec}\varphi')_*\bigl(g'^*\widetilde{N}\bigr)\) for an explicit module
+\(N\). The two leaves below, however, present each degree as the \emph{abstract}
+push--pull sheaf \(\operatorname{pushPullObj} \mathcal{F}\, Y_n = (p_n)_*\,p_n^*\mathcal{F}\)
+(\cref{def:push_pull_obj}) over a fibre power \(Y_n\), with no \(\widetilde{(-)}\) in
+sight. The present subsection supplies the missing identification, at the two well-typed
+altitudes at which it can be stated, and it is what lets each leaf hand its degreewise
+square to the affine brick. The bridge rests on four already-available ingredients,
+recorded first: the affine structure theorem in counit form, preservation of
+quasi-coherence by pullback and by affine pushforward, and the affineness of fibre powers
+of an affine open-immersion cover of a separated scheme.
+
+\begin{lemma}[The counit-iso criterion in localizing form]
+  \label{lem:isIso_fromTildeGamma_iff_isLocalizing_mathlib}
+  \lean{AlgebraicGeometry.isIso_fromTildeΓ_iff_isLocalizing}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For an \(\mathcal{O}_{\operatorname{Spec} R}\)-module \(\mathcal{F}\), the tilde--\(\Gamma\)
+  counit (the canonical map \(\widetilde{\Gamma(\mathcal{F})} \to \mathcal{F}\)) is an
+  isomorphism if and only if \(\mathcal{F}\) is \emph{localizing}: for every \(f \in R\)
+  the section-restriction map
+  \(\Gamma(\operatorname{Spec} R, \mathcal{F}) \to \Gamma(D(f), \mathcal{F})\) exhibits its
+  target as the localization of the global sections at the powers of \(f\). Combined with
+  the keystone \cref{lem:qcoh_section_isLocalizedModule}, this yields the unconditional
+  01I8 instance \cref{lem:qcoh_isIso_fromTildeGamma} directly.
+\end{lemma}
+
+\begin{lemma}[Affine pushforward preserves the localizing property]
+  \label{lem:isLocalizing_pushforward_mathlib}
+  \lean{AlgebraicGeometry.isLocalizing_pushforward_of_isLocalizing}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Let \(\varphi : R \to A\) be a ring homomorphism and let \(\mathcal{G}\) be a localizing
+  (equivalently, \(\widetilde{(-)}\)-essential-image) \(\mathcal{O}_{\operatorname{Spec} A}\)-module.
+  Then the pushforward \((\operatorname{Spec}\varphi)_*\mathcal{G}\) along the affine
+  morphism \(\operatorname{Spec}\varphi : \operatorname{Spec} A \to \operatorname{Spec} R\)
+  is again localizing; equivalently its tilde--\(\Gamma\) counit is an isomorphism, so
+  \((\operatorname{Spec}\varphi)_*\widetilde{N} \cong \widetilde{N|_R}\) with \(N|_R\) the
+  restriction of scalars of \(N\) along \(\varphi\).
+\end{lemma}
+
+\begin{lemma}[Finite intersections of affine opens of a separated scheme are affine]
+  \label{lem:isAffineOpen_biInf_mathlib}
+  \lean{AlgebraicGeometry.IsAffineOpen.biInf}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Let \(X\) be a scheme whose diagonal is affine --- in particular any \emph{separated}
+  scheme. Then any finite
+  intersection \(U_{i_0} \cap \dots \cap U_{i_p}\) of affine open subschemes of \(X\) is
+  again an affine open. Consequently, for an affine open-immersion cover
+  \(\mathfrak{U} = \{U_i = \operatorname{Spec} A_i\}\) of a separated scheme, every
+  \((p+1)\)-fold fibre power \(Y_n = U_{i_0} \times_X \dots \times_X U_{i_p} =
+  U_{i_0} \cap \dots \cap U_{i_p}\) of the {\v C}ech nerve is affine,
+  \(Y_n = \operatorname{Spec} A_n\).
+\end{lemma}
+
+\begin{lemma}
+
+\leanok
+[{\v C}ech intersection opens are affine, separated case]
+  \label{lem:cech_interopen_isaffine}
+  \lean{AlgebraicGeometry.coverInterOpen_isAffine}
+  \uses{lem:isAffineOpen_biInf_mathlib}
+  Let \(f : X \to S\) be a \emph{separated} morphism with affine base
+  \(S = \operatorname{Spec} R\), and let \(\mathfrak{U} = \{U_i = \operatorname{Spec} A_i\}\)
+  be an affine open-immersion cover of \(X\). Then for every \emph{finite, nonempty} index
+  family \(\sigma : \kappa \to I\) the {\v C}ech intersection open
+  \(\operatorname{coverInterOpen}\mathfrak{U}\,\sigma = \bigcap_k (U_{\sigma(k)})\) --- the
+  meet of the ranges of the cover members indexed by \(\sigma\) --- is an affine open
+  subscheme of \(X\).
+\end{lemma}
+\begin{proof}
+  \uses{lem:isAffineOpen_biInf_mathlib}
+  Since \(S = \operatorname{Spec} R\) is affine it is a separated scheme, so its structure
+  morphism to the terminal scheme is separated. The structure morphism of \(X\) factors as
+  \(f\) followed by that of \(S\); a composite of separated morphisms is separated, so the
+  structure morphism of \(X\) is separated, i.e.\ \(X\) is a separated scheme. Separatedness
+  says the diagonal \(\Delta_X : X \to X \times X\) is a closed immersion, in particular an
+  affine morphism, so \(X\) has affine diagonal. Consequently any finite \emph{nonempty}
+  intersection of affine opens of \(X\) is again affine --- this is the indexed-meet form of
+  \cref{lem:isAffineOpen_biInf_mathlib}, where each successive meet is an affine open because
+  it is cut out by the affine diagonal. Applying it to the nonempty finite family
+  \(\{U_{\sigma(k)}\}_k\) shows \(\operatorname{coverInterOpen}\mathfrak{U}\,\sigma\) is
+  affine. (Nonemptiness of \(\kappa\) is load-bearing: an empty meet would be all of \(X\),
+  which need not be affine.)
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Restriction of a quasi-coherent module to an open is quasi-coherent]
+  \label{lem:isQuasicoherent_pullback_opens}
+  \lean{AlgebraicGeometry.isQuasicoherent_pullback_opens}
+  Let \(\iota_V : V \hookrightarrow X\) be the open immersion of an open subscheme \(V\) of a
+  scheme \(X\), and let \(\mathcal{F}\) be a quasi-coherent \(\mathcal{O}_X\)-module. Then the
+  pullback \(\iota_V^*\mathcal{F}\) is quasi-coherent on \(V\).
+\end{lemma}
+\begin{proof}
+
+\leanok
+  Quasi-coherence is a local property: a module is quasi-coherent once it is so on the members
+  of an open cover. The preimages \(\iota_V^{-1}(W_i)\) of a quasi-coherence cover \(\{W_i\}\)
+  of \(X\) cover \(V\), and on each the restriction of \(\mathcal{F}\) carries the transported
+  presentation; descending along this cover shows \(\iota_V^*\mathcal{F}\) is quasi-coherent.
+\end{proof}
+
+\begin{lemma}\leanok
+[Pullback preserves quasi-coherence (open-immersion case)]
+  \label{lem:pullback_preserves_quasicoherent}
+  \lean{AlgebraicGeometry.pullback_isQuasicoherent}
+  \uses{lem:isQuasicoherent_pullback_opens}
+  % SOURCE: [Stacks Project], Modules on Sites, Tag 01BG
+  % (\texttt{lemma-pullback-quasi-coherent}) (read from references/stacks-modules.tex,
+  % L1086--1090).
+  % SOURCE QUOTE: "Let $f : (X, \mathcal{O}_X) \to (Y, \mathcal{O}_Y)$ be a morphism of
+  % ringed spaces. The pullback $f^*\mathcal{G}$ of a quasi-coherent $\mathcal{O}_Y$-module
+  % is quasi-coherent."
+  \textit{Source: Stacks Project, Modules on Sites, Tag 01BG, \texttt{lemma-pullback-quasi-coherent}.}
+  Let \(\iota_V : V \hookrightarrow X\) be the open immersion of an open subscheme \(V\) of \(X\),
+  and let \(\mathcal{F}\) be a quasi-coherent \(\mathcal{O}_X\)-module. Then the restriction
+  pullback \(\iota_V^*\mathcal{F}\) is a quasi-coherent \(\mathcal{O}_V\)-module. In particular,
+  each fibre power \(Y_n = U_{i_0} \cap \dots \cap U_{i_p}\) of the {\v C}ech nerve embeds in
+  \(X\) by an open immersion \(p_n : Y_n \hookrightarrow X\), so \(p_n^*\mathcal{F}\) is
+  quasi-coherent on \(Y_n\).
+\end{lemma}
+\begin{proof}
+  \uses{lem:isQuasicoherent_pullback_opens}
+  This is the open-immersion instance of \cref{lem:isQuasicoherent_pullback_opens}: the
+  preimages of a quasi-coherence cover of \(X\) cover \(V\), and quasi-coherence descends
+  along that cover. The {\v C}ech case follows since each fibre-power inclusion
+  \(p_n : Y_n \hookrightarrow X\) is an open immersion.
+\end{proof}
+
+\begin{lemma}
+[Abstract push--pull is the affine tilde-model on a fibre power]
+  \label{lem:pushPullObj_iso_tilde}
+  \lean{AlgebraicGeometry.pullbackRestrict_iso_tilde,
+        AlgebraicGeometry.pushPullObj_pushforward_iso_tilde}
+  \uses{def:push_pull_obj, lem:qcoh_iso_tilde_sections, lem:qcoh_isIso_fromTildeGamma,
+        lem:pullback_preserves_quasicoherent, lem:pushforward_iso_preserves_qcoh,
+        lem:isLocalizing_pushforward_mathlib,
+        lem:isAffineOpen_biInf_mathlib, lem:scheme_pushforwardComp_mathlib,
+        lem:isoSpec_scheme_mathlib}
+  % SOURCE: [Stacks Project], Schemes, Tag 01I8, Lemma \texttt{lemma-quasi-coherent-affine}
+  % (read from references/stacks-schemes.tex, L1278--1285).
+  % SOURCE QUOTE: "Let $(X, \mathcal{O}_X) = (\Spec(R), \mathcal{O}_{\Spec(R)})$
+  % be an affine scheme. Let $\mathcal{F}$ be a
+  % quasi-coherent $\mathcal{O}_X$-module. Then
+  % $\mathcal{F}$ is isomorphic to the sheaf associated to
+  % the $R$-module $\Gamma(X, \mathcal{F})$."
+  \textit{Source: Stacks Project, Schemes, Tag 01I8, \texttt{lemma-quasi-coherent-affine}.}
+  Let \(f : X \to S\) be separated with affine base \(S = \operatorname{Spec} R\), let
+  \(\mathfrak{U} = \{U_i = \operatorname{Spec} A_i\}\) be an affine open-immersion cover of
+  \(X\), and fix a cosimplicial degree, writing \(Y_n\) for the corresponding fibre power
+  with projection \(p_n : Y_n \to X\). By \cref{lem:isAffineOpen_biInf_mathlib} the
+  separatedness makes \(Y_n = \operatorname{Spec} A_n\) affine. There are two well-typed
+  identifications of the abstract push--pull data with the affine \(\widetilde{(-)}\)-model.
+
+  \emph{Altitude 1 (restriction level).} Since the formation of \(\widetilde{(-)}\) requires a
+  genuine \(\operatorname{Spec}\), and the open subscheme \(Y_n\) is not literally the spectrum
+  of a ring, we transport along the whole-scheme affine identification
+  \(\sigma_n : Y_n \xrightarrow{\ \sim\ } \operatorname{Spec}\Gamma(X, Y_n)\). Pushing the
+  restriction \(p_n^*\mathcal{F}\) forward along \(\sigma_n\) onto the genuine affine
+  \(\operatorname{Spec}\Gamma(X, Y_n)\), and setting
+  \(N_n := \Gamma\bigl(\operatorname{Spec}\Gamma(X, Y_n),\ (\sigma_n)_*\,p_n^*\mathcal{F}\bigr)\),
+  \[
+    (\sigma_n)_*\,p_n^*\mathcal{F} \;\cong\; \widetilde{N_n}
+    \qquad\text{(over } \operatorname{Spec}\Gamma(X, Y_n)\text{).}
+  \]
+
+  \emph{Altitude 2 (assembled pushed-forward level).} Over the affine base \(S\), with
+  \(\varphi_n : R \to A_n\) the ring map presenting the composite \(f \circ p_n\) as
+  \(\operatorname{Spec}\varphi_n\),
+  \[
+    (\operatorname{pushforward} f).\!\operatorname{obj}\bigl(\operatorname{pushPullObj}
+      \mathcal{F}\, Y_n\bigr)
+    \;\cong\;
+    (\operatorname{pushforward}(\operatorname{Spec}\varphi_n)).\!\operatorname{obj}\bigl(
+      \widetilde{N_n}\bigr).
+  \]
+  The left-hand side is exactly the term \(f_*\bigl((p_n)_* p_n^*\mathcal{F}\bigr)\) whose
+  pullback along \(g\) appears in the degree-\(n\) Beck--Chevalley square; the right-hand
+  side is the affine pushforward of a \(\widetilde{(-)}\)-module, the form to which
+  \cref{lem:affine_pushforward_pullback_baseChange} applies.
+\end{lemma}
+\begin{proof}
+  \uses{def:push_pull_obj, lem:qcoh_iso_tilde_sections, lem:qcoh_isIso_fromTildeGamma,
+        lem:pullback_preserves_quasicoherent, lem:pushforward_iso_preserves_qcoh,
+        lem:isLocalizing_pushforward_mathlib,
+        lem:isAffineOpen_biInf_mathlib, lem:scheme_pushforwardComp_mathlib,
+        lem:isoSpec_scheme_mathlib}
+  \emph{Altitude 1.} The restriction \(p_n^*\mathcal{F}\) is quasi-coherent on \(Y_n\)
+  (\cref{lem:pullback_preserves_quasicoherent}). Pushing it forward along the whole-scheme
+  iso \(\sigma_n : Y_n \cong \operatorname{Spec}\Gamma(X, Y_n)\) (\cref{lem:isoSpec_scheme_mathlib})
+  lands it on a genuine affine scheme, where \(\widetilde{(-)}\) is defined, and pushforward
+  along an isomorphism preserves quasi-coherence (\cref{lem:pushforward_iso_preserves_qcoh}).
+  The affine structure theorem 01I8 then applies to the quasi-coherent
+  \((\sigma_n)_*\,p_n^*\mathcal{F}\): the tilde--\(\Gamma\) counit is an isomorphism
+  (\cref{lem:qcoh_isIso_fromTildeGamma}), so
+  \((\sigma_n)_*\,p_n^*\mathcal{F} \cong \widetilde{N_n}\) with
+  \(N_n = \Gamma\bigl(\operatorname{Spec}\Gamma(X, Y_n),\ (\sigma_n)_*\,p_n^*\mathcal{F}\bigr)\)
+  by \cref{lem:qcoh_iso_tilde_sections}.
+
+  \emph{Altitude 2.} Collapse \(f_* \circ (p_n)_* \cong (f \circ p_n)_*\) by
+  \cref{lem:scheme_pushforwardComp_mathlib}; thus
+  \((\operatorname{pushforward} f).\operatorname{obj}(\operatorname{pushPullObj}\mathcal{F}\,
+  Y_n) = (f \circ p_n)_*\,p_n^*\mathcal{F}\). As \(Y_n\) is affine, the composite
+  \(f \circ p_n : Y_n \to S\) of schemes with affine source and target is presented as
+  \(\operatorname{Spec}\varphi_n\) for \(\varphi_n = \Gamma(f \circ p_n) : R \to A_n\),
+  using the whole-scheme identification \(Y_n \cong \operatorname{Spec}\Gamma(Y_n)\)
+  (\cref{lem:isoSpec_scheme_mathlib}). Applying the
+  pushforward of this presented morphism to the altitude-1 iso gives
+  \((f \circ p_n)_*\,p_n^*\mathcal{F} \cong (\operatorname{Spec}\varphi_n)_*\widetilde{N_n}\),
+  which is the asserted altitude-2 form; that the affine pushforward of a
+  \(\widetilde{(-)}\)-module is again of \(\widetilde{(-)}\)-form
+  is \cref{lem:isLocalizing_pushforward_mathlib}.
+\end{proof}
+
+\begin{lemma}[Affine commutative squares are pushouts of rings]
+  \label{lem:commRingCat_isPushout_iff_mathlib}
+  \lean{CommRingCat.isPushout_iff_isPushout}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  A commutative square of commutative rings \(R \to A\), \(R \to R'\), \(A \to T\),
+  \(R' \to T\) is a pushout (cocartesian) square in the category of commutative rings if and
+  only if it is an algebra pushout in the sense of \(\operatorname{Algebra.IsPushout}\) ---
+  equivalently, the corner ring is the tensor product \(T = A \otimes_R R'\) of the two legs
+  over the base \(R\). Applying \(\operatorname{Spec}\) carries such a cocartesian ring square
+  to a cartesian square of affine schemes, and conversely.
+\end{lemma}
+
+\begin{lemma}
+
+\leanok
+[Restriction of the cartesian base-change square over an intersection open is cartesian]
+  \label{lem:restricted_cartesian_affine_pushout}
+  \lean{AlgebraicGeometry.restrictedCartesianAffinePushout}
+  Let \(g' : X' \to X\) be an arbitrary morphism of schemes and let
+  \(V = \operatorname{coverInterOpen}\mathfrak{U}\,\sigma = \bigcap_k U_{\sigma(k)}\) be a
+  {\v C}ech intersection open of an affine open-immersion cover \(\mathfrak{U}\) of \(X\),
+  with open immersion \(j_\sigma : V \hookrightarrow X\). Form the fibre product
+  \(X' \times_X V\) and the cartesian square
+  \[
+    \begin{array}{ccc}
+      X' \times_X V & \longrightarrow & V\\
+      \big\downarrow & & \big\downarrow{\scriptstyle j_\sigma}\\
+      X' & \xrightarrow{\ g'\ } & X
+    \end{array}
+  \]
+  in which the top map is the projection \(\operatorname{pullback.snd}\,g'\,j_\sigma\), the
+  left map is \(\operatorname{pullback.fst}\,g'\,j_\sigma\), the right map is the open
+  immersion \(j_\sigma\), and the bottom map is \(g'\). This square is cartesian: it is a
+  pullback square of schemes.
+\end{lemma}
+\begin{proof}
+  The fibre product \(X' \times_X V\) exists and its defining projections fit, by
+  construction, into a cartesian square. Reading off that pullback square with the projections
+  in the stated positions gives exactly the asserted cartesian square; no further hypotheses
+  are required.
+\end{proof}
+
+\begin{lemma}
+[LHS abstract \(\to\) tilde for a single intersection open]
+  \label{lem:coverinter_lhs_iso_tilde}
+  \lean{AlgebraicGeometry.pushPullObj_coverInter_pushforward_iso_tilde}
+  \uses{lem:pushPullObj_iso_tilde, lem:cech_interopen_isaffine, def:push_pull_obj}
+  Let \(f : X \to S\) be \emph{separated} with affine base \(S = \operatorname{Spec} R\), fix an
+  affine open-immersion cover \(\mathfrak{U} = \{U_i = \operatorname{Spec} A_i\}\) of \(X\) and a
+  \emph{finite, nonempty} multi-index \(\sigma : \kappa \to I\), with intersection open
+  \(V = \operatorname{coverInterOpen}\mathfrak{U}\,\sigma = \bigcap_k U_{\sigma(k)}\) and open
+  immersion \(j_\sigma : V \hookrightarrow X\). By \cref{lem:cech_interopen_isaffine} the open
+  \(V = \operatorname{Spec} A_\sigma\) is affine; write \(\varphi : R \to A_\sigma\) for the ring
+  map presenting the composite \(f \circ j_\sigma : V \to S\) as \(\operatorname{Spec}\varphi\),
+  and \(N = \Gamma\bigl(V, (j_\sigma)^*\mathcal{F}\bigr)\) for the \(A_\sigma\)-module of sections
+  of the (quasi-coherent) restriction. Then there is an isomorphism of
+  \(\mathcal{O}_S\)-modules
+  \[
+    f_*\bigl(\operatorname{pushPullObj}\mathcal{F}\,(\operatorname{Over.mk} j_\sigma)\bigr)
+      \;=\; f_*\bigl((j_\sigma)_* (j_\sigma)^*\mathcal{F}\bigr)
+      \;\cong\; (\operatorname{Spec}\varphi)_*\,\widetilde{N}.
+  \]
+\end{lemma}
+\begin{proof}
+  \uses{lem:pushPullObj_iso_tilde, lem:cech_interopen_isaffine, def:push_pull_obj}
+  The intersection open \(V\) is affine, \(V = \operatorname{Spec} A_\sigma\), by
+  \cref{lem:cech_interopen_isaffine} (the separated-diagonal instance). The single open
+  immersion \(j_\sigma : V \hookrightarrow X\) is the projection of the one-fold fibre power of
+  the cover indexed by \(\sigma\), so \(\operatorname{Over.mk} j_\sigma\) is the degenerate fibre
+  power \(Y\) to which \cref{lem:pushPullObj_iso_tilde} applies. Reading that bridge at
+  \emph{altitude 2} over the affine base \(S\) collapses
+  \(f_* \circ (j_\sigma)_* \cong (f \circ j_\sigma)_*\) and presents the composite as
+  \(\operatorname{Spec}\varphi\) with \(\varphi = \Gamma(f \circ j_\sigma) : R \to A_\sigma\),
+  yielding exactly
+  \(f_*\bigl((j_\sigma)_*(j_\sigma)^*\mathcal{F}\bigr) \cong
+  (\operatorname{Spec}\varphi)_*\widetilde{N}\) with
+  \(N = \Gamma(V, (j_\sigma)^*\mathcal{F})\).
+\end{proof}
+
+\begin{lemma}
+[The base-changed sections are the tensor base change of \(N\)]
+  \label{lem:coverinter_baseChanged_module_iso_tensor}
+  \lean{AlgebraicGeometry.coverInter_baseChanged_sections_iso_tensor}
+  \uses{lem:pullback_spec_tilde_iso, lem:openimm_beckchevalley,
+        lem:restricted_cartesian_affine_pushout, lem:cech_interopen_isaffine,
+        def:push_pull_obj}
+  In the cartesian base-change setting of \cref{lem:pushpullobj_coverinter_basechange}, let
+  \(V = \operatorname{Spec} A_\sigma\) be the (affine, \cref{lem:cech_interopen_isaffine})
+  intersection open with \(j_\sigma : V \hookrightarrow X\) and
+  \(N = \Gamma(V, (j_\sigma)^*\mathcal{F})\). Let \(j'_\sigma : V' \hookrightarrow X'\) be the
+  pullback of \(j_\sigma\) along \(g'\) --- an open immersion onto the preimage
+  \((g')^{-1}(V)\) --- with \(g'_V : V' \to V\) the top map of the restricted cartesian square
+  of \cref{lem:restricted_cartesian_affine_pushout}, so that
+  \(V' = X' \times_X V = \operatorname{Spec}(A_\sigma \otimes_R R')\). Set
+  \(N' = \Gamma\bigl(V', (j'_\sigma)^*\bigl((g')^*\mathcal{F}\bigr)\bigr)\). Then there is an
+  isomorphism of \((A_\sigma \otimes_R R')\)-modules
+  \[
+    N' \;\cong\; N \otimes_R R'
+      \;=\; N \otimes_{A_\sigma} (A_\sigma \otimes_R R'),
+  \]
+  natural in \(\mathcal{F}\).
+\end{lemma}
+\begin{proof}
+  \uses{lem:pullback_spec_tilde_iso, lem:openimm_beckchevalley,
+        lem:restricted_cartesian_affine_pushout, lem:cech_interopen_isaffine,
+        def:push_pull_obj}
+  The restricted square \(V' \to V\), \(V' \to X'\), \(g' : X' \to X\), \(j_\sigma\) is cartesian
+  by \cref{lem:restricted_cartesian_affine_pushout}, and supplies the canonical pullback
+  identification \((j'_\sigma)^*\bigl((g')^*\mathcal{F}\bigr) \cong
+  (g'_V)^*\bigl((j_\sigma)^*\mathcal{F}\bigr)\) (the same comparison of the cartesian square used
+  in \cref{lem:openimm_beckchevalley}). Over the affine \(V = \operatorname{Spec} A_\sigma\) the
+  restriction \((j_\sigma)^*\mathcal{F}\) is quasi-coherent, \(\cong \widetilde{N}\). The top map
+  \(g'_V : V' \to V\) is the base change of \(g : S' \to S\) over the affine \(V\), hence the
+  affine morphism \(\operatorname{Spec}\rho\) for the corner ring map
+  \(\rho : A_\sigma \to A_\sigma \otimes_R R'\); pulling \(\widetilde{N}\) back along it is, by
+  the pullback tilde dictionary \cref{lem:pullback_spec_tilde_iso},
+  \((g'_V)^*\widetilde{N} \cong \widetilde{N \otimes_{A_\sigma}(A_\sigma \otimes_R R')}
+  = \widetilde{N \otimes_R R'}\). Taking global sections over
+  \(V' = \operatorname{Spec}(A_\sigma \otimes_R R')\) gives
+  \(N' \cong N \otimes_{A_\sigma}(A_\sigma \otimes_R R') = N \otimes_R R'\), naturally in
+  \(\mathcal{F}\).
+\end{proof}
+
+\begin{lemma}
+[RHS abstract \(\to\) tilde for a single intersection open (base-changed side)]
+  \label{lem:coverinter_rhs_iso_tilde}
+  \lean{AlgebraicGeometry.pushPullObj_coverInter_baseChanged_pushforward_iso_tilde}
+  \uses{lem:twisted_cech_nerve_per_sigma, lem:pushPullObj_iso_tilde,
+        lem:restricted_cartesian_affine_pushout, lem:cech_interopen_isaffine,
+        lem:coverinter_baseChanged_module_iso_tensor, def:push_pull_obj}
+  In the cartesian base-change setting of \cref{lem:pushpullobj_coverinter_basechange}, with
+  \(V = \operatorname{Spec} A_\sigma\), \(N = \Gamma(V, (j_\sigma)^*\mathcal{F})\),
+  \(j'_\sigma : V' \hookrightarrow X'\) the pullback of \(j_\sigma\) along \(g'\), and
+  \(V' = X' \times_X V = \operatorname{Spec}(A_\sigma \otimes_R R')\). Write
+  \(\psi : R' \to A_\sigma \otimes_R R'\) for the ring map presenting the composite
+  \(f' \circ j'_\sigma : V' \to S'\) as \(\operatorname{Spec}\psi\). Then there is an isomorphism
+  of \(\mathcal{O}_{S'}\)-modules
+  \[
+    f'_*\Bigl((g')^*\bigl(\operatorname{pushPullObj}\mathcal{F}\,
+      (\operatorname{Over.mk} j_\sigma)\bigr)\Bigr)
+      \;\cong\; (\operatorname{Spec}\psi)_*\,\widetilde{N \otimes_R R'}.
+  \]
+\end{lemma}
+\begin{proof}
+  \uses{lem:twisted_cech_nerve_per_sigma, lem:pushPullObj_iso_tilde,
+        lem:restricted_cartesian_affine_pushout, lem:cech_interopen_isaffine,
+        lem:coverinter_baseChanged_module_iso_tensor, def:push_pull_obj}
+  First reorganise the pulled-back data by the per-intersection-open \(X\)-level
+  Beck--Chevalley isomorphism \cref{lem:twisted_cech_nerve_per_sigma}: since \(j_\sigma\) is an
+  open immersion whose pullback along \(g'\) is the open immersion
+  \(j'_\sigma : V' \hookrightarrow X'\) onto the preimage \((g')^{-1}(V)\),
+  \[
+    (g')^*\bigl(\operatorname{pushPullObj}\mathcal{F}\,(\operatorname{Over.mk} j_\sigma)\bigr)
+      = (g')^*\bigl((j_\sigma)_*(j_\sigma)^*\mathcal{F}\bigr)
+      \;\cong\; (j'_\sigma)_*(j'_\sigma)^*\bigl((g')^*\mathcal{F}\bigr)
+      = \operatorname{pushPullObj}\bigl((g')^*\mathcal{F}\bigr)\,(\operatorname{Over.mk}
+        j'_\sigma).
+  \]
+  Pushing forward along \(f'\) reduces the left side of the claim to
+  \(f'_*\bigl(\operatorname{pushPullObj}((g')^*\mathcal{F})\,(\operatorname{Over.mk}
+  j'_\sigma)\bigr)\). The base-changed open \(V' = X' \times_X V\) is affine,
+  \(V' = \operatorname{Spec}(A_\sigma \otimes_R R')\): it is the restricted cartesian square of
+  \cref{lem:restricted_cartesian_affine_pushout} over the affine
+  \(V = \operatorname{Spec} A_\sigma\) (\cref{lem:cech_interopen_isaffine}) and the affine
+  \(S' = \operatorname{Spec} R'\). Hence \(\{V'\}\) is a single-open affine open-immersion datum
+  for the separated \(f' : X' \to S'\) over the affine base \(S'\), and
+  \cref{lem:pushPullObj_iso_tilde} at \emph{altitude 2} applies, giving
+  \[
+    f'_*\bigl(\operatorname{pushPullObj}((g')^*\mathcal{F})\,(\operatorname{Over.mk}
+      j'_\sigma)\bigr)
+      \;\cong\; (\operatorname{Spec}\psi)_*\,\widetilde{N'},
+    \qquad N' = \Gamma\bigl(V', (j'_\sigma)^*((g')^*\mathcal{F})\bigr),
+  \]
+  with \(\psi = \Gamma(f' \circ j'_\sigma) : R' \to A_\sigma \otimes_R R'\). Finally
+  \cref{lem:coverinter_baseChanged_module_iso_tensor} identifies the corner module
+  \(N' \cong N \otimes_R R'\), turning the right-hand side into
+  \((\operatorname{Spec}\psi)_*\widetilde{N \otimes_R R'}\).
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Per-intersection-open base change of the push--pull object]
+  \label{lem:pushpullobj_coverinter_basechange}
+  \lean{AlgebraicGeometry.pushPullObj_coverInter_baseChange}
+  \uses{lem:coverinter_lhs_iso_tilde, lem:coverinter_rhs_iso_tilde,
+        lem:cech_degree_affine_baseChange,
+        lem:affine_pushforward_pullback_baseChange, lem:isAffineOpen_biInf_mathlib,
+        lem:cech_interopen_isaffine, def:push_pull_obj}
+  Let \(f : X \to S\) be \emph{separated} with affine base \(S = \operatorname{Spec} R\), let
+  \(g : S' \to S\) be a base-change morphism with \(S' = \operatorname{Spec} R'\) affine, and
+  let
+  \[
+    \begin{array}{ccc}
+      X' & \xrightarrow{\ g'\ } & X\\
+      {\scriptstyle f'}\big\downarrow & & \big\downarrow{\scriptstyle f}\\
+      S' & \xrightarrow{\ g\ } & S
+    \end{array}
+  \]
+  be the associated cartesian square. Fix an affine open-immersion cover
+  \(\mathfrak{U} = \{U_i = \operatorname{Spec} A_i\}\) of \(X\) and a multi-index
+  \(\sigma : \kappa \to I\), with intersection open
+  \(V = \operatorname{coverInterOpen}\mathfrak{U}\,\sigma = \bigcap_k U_{\sigma(k)}\) and open
+  immersion \(j_\sigma : V \hookrightarrow X\). Then there is an isomorphism of
+  \(\mathcal{O}_{S'}\)-modules
+  \[
+    g^*\Bigl(f_*\bigl((j_\sigma)_* (j_\sigma)^*\mathcal{F}\bigr)\Bigr)
+      \;\cong\;
+    f'_*\Bigl((g')^*\bigl((j_\sigma)_* (j_\sigma)^*\mathcal{F}\bigr)\Bigr),
+  \]
+  i.e.\ \(g^*\bigl(f_*(\operatorname{pushPullObj}\mathcal{F}\,(\operatorname{Over.mk}
+  j_\sigma))\bigr) \cong f'_*\bigl((g')^*(\operatorname{pushPullObj}\mathcal{F}\,
+  (\operatorname{Over.mk} j_\sigma))\bigr)\). This is the per-intersection-open instance of the
+  Beck--Chevalley comparison; it is the genuine open content that survives the
+  coproduct/product decomposition of the degreewise {\v C}ech nerve.
+\end{lemma}
+\begin{proof}
+  \uses{lem:coverinter_lhs_iso_tilde, lem:coverinter_rhs_iso_tilde,
+        lem:cech_degree_affine_baseChange, lem:affine_pushforward_pullback_baseChange,
+        lem:isAffineOpen_biInf_mathlib, lem:cech_interopen_isaffine,
+        lem:restricted_cartesian_affine_pushout, lem:commRingCat_isPushout_iff_mathlib}
+  The two sides of the comparison are routed independently to the common affine
+  \((\operatorname{Spec}\cdot)_*\widetilde{(-)}\) form, where the affine termwise base change
+  closes the gap between them.
+  \begin{enumerate}
+    \item \emph{\(V\) is affine.} The intersection open
+      \(V = \bigcap_k U_{\sigma(k)}\) is a finite nonempty intersection of affine opens of the
+      separated scheme \(X\), hence affine by \cref{lem:cech_interopen_isaffine} (the
+      separated-diagonal instance of \cref{lem:isAffineOpen_biInf_mathlib}),
+      \(V = \operatorname{Spec} A_\sigma\); write \(\varphi : R \to A_\sigma\) for the ring map
+      presenting \(f \circ j_\sigma\) as \(\operatorname{Spec}\varphi\) and
+      \(N = \Gamma(V, (j_\sigma)^*\mathcal{F})\).
+    \item \emph{LHS \(\to\) tilde.} By \cref{lem:coverinter_lhs_iso_tilde} the left abstract
+      term is the affine pushforward of \(\widetilde{N}\) over \(S\),
+      \[
+        f_*\bigl(\operatorname{pushPullObj}\mathcal{F}\,(\operatorname{Over.mk} j_\sigma)\bigr)
+          \;\cong\; (\operatorname{Spec}\varphi)_*\,\widetilde{N},
+      \]
+      so applying \(g^*\) gives
+      \(g^*\bigl(f_*(\operatorname{pushPullObj}\mathcal{F}\,(\operatorname{Over.mk}
+      j_\sigma))\bigr) \cong g^*\bigl((\operatorname{Spec}\varphi)_*\widetilde{N}\bigr)\).
+    \item \emph{RHS \(\to\) tilde.} By \cref{lem:coverinter_rhs_iso_tilde} the right abstract
+      term is likewise the affine pushforward of the base-changed module
+      \(N \otimes_R R'\) over \(S'\),
+      \[
+        f'_*\Bigl((g')^*\bigl(\operatorname{pushPullObj}\mathcal{F}\,
+          (\operatorname{Over.mk} j_\sigma)\bigr)\Bigr)
+          \;\cong\; (\operatorname{Spec}\psi)_*\,\widetilde{N \otimes_R R'},
+      \]
+      where \(\psi : R' \to A_\sigma \otimes_R R'\) presents
+      \(f' \circ j'_\sigma\). Both comparison sides are now in
+      \((\operatorname{Spec}\cdot)_*\widetilde{(-)}\) form.
+    \item \emph{The affine pushout square closes the gap.} Restrict the cartesian base-change
+      square over \(j_\sigma : V \hookrightarrow X\). By
+      \cref{lem:restricted_cartesian_affine_pushout} the resulting square
+      \(X' \times_X V \to V\), \(X' \times_X V \to X'\), \(g'\), \(j_\sigma\) is cartesian, and
+      with \(V = \operatorname{Spec} A_\sigma\) (step~1), \(S = \operatorname{Spec} R\),
+      \(S' = \operatorname{Spec} R'\) affine it is a cartesian square of affine schemes,
+      \(\operatorname{Spec}(A_\sigma \otimes_R R') \to \operatorname{Spec} A_\sigma\),
+      \(\operatorname{Spec}(A_\sigma \otimes_R R') \to \operatorname{Spec} R'\). Applying global
+      sections, the affine-pullback \(\leftrightarrow\) ring-pushout equivalence
+      \cref{lem:commRingCat_isPushout_iff_mathlib} converts it into the cocartesian square of
+      commutative rings
+      \[
+        \begin{array}{ccc}
+          R & \xrightarrow{\ \varphi\ } & A_\sigma\\
+          \big\downarrow & & \big\downarrow\\
+          R' & \xrightarrow{\ \psi\ } & A_\sigma \otimes_R R'
+        \end{array}
+      \]
+      with corner \(A_\sigma \otimes_R R'\). For this pushout square the affine termwise base
+      change \cref{lem:cech_degree_affine_baseChange}, the per-open instance of
+      \cref{lem:affine_pushforward_pullback_baseChange}, supplies
+      \[
+        g^*\bigl((\operatorname{Spec}\varphi)_*\widetilde{N}\bigr)
+          \;\cong\; (\operatorname{Spec}\psi)_*\,\widetilde{N \otimes_R R'}.
+      \]
+      Composing step~2 (and \(g^*\)), this affine isomorphism, and the inverse of step~3 yields
+      the asserted comparison
+      \(g^*\bigl(f_*(\operatorname{pushPullObj}\mathcal{F}\,(\operatorname{Over.mk}
+      j_\sigma))\bigr) \cong f'_*\bigl((g')^*(\operatorname{pushPullObj}\mathcal{F}\,
+      (\operatorname{Over.mk} j_\sigma))\bigr)\).
+  \end{enumerate}
+\end{proof}
+
+\begin{lemma}\leanok
+[Beck--Chevalley natural iso through the {\v C}ech nerve]
+  \label{lem:cech_pushforward_baseChange_natIso}
+  \lean{AlgebraicGeometry.cech_pushforward_baseChange_natIso}
+  \uses{lem:affine_pushforward_pullback_baseChange, lem:pushPullObj_iso_tilde,
+        def:cech_nerve_cosimplicial, def:push_pull_functor}
+  Let \(f : X \to S\) be \emph{separated} with affine base \(S = \operatorname{Spec} R\),
+  fix an affine open-immersion cover \(\mathfrak{U} = \{U_i = \operatorname{Spec} A_i\}\) of
+  \(X\) (so that, by \cref{lem:isAffineOpen_biInf_mathlib}, every fibre power \(Y_n\) of the
+  {\v C}ech nerve is affine). Whiskered through the {\v C}ech nerve, there is a natural
+  isomorphism of cosimplicial \(\mathcal{O}_{S'}\)-modules
+  \[
+    g^* \circ (\operatorname{pushforward} f) \;\cong\;
+      (\operatorname{pushforward} f') \circ (g')^*,
+  \]
+  the Beck--Chevalley comparison for the cartesian square, valid at every cosimplicial
+  degree.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:cech_degree_affine_baseChange, lem:affine_pushforward_pullback_baseChange,
+        lem:pushPullObj_iso_tilde, lem:isAffineOpen_biInf_mathlib,
+        lem:pushforward_spec_tilde_iso,
+        lem:pullback_spec_tilde_iso, lem:cancelBaseChange_mathlib,
+        lem:pushPull_sigma_iso, lem:pushpullobj_coverinter_basechange,
+        def:cech_nerve_cosimplicial, def:push_pull_functor}
+  The natural isomorphism is built degreewise. Fix a cosimplicial degree \(n\) and work over
+  the affine base \(S = \operatorname{Spec} R\). The degree-\(n\) comparison is between
+  \(g^*\bigl(f_*(\operatorname{pushPullObj}\mathcal{F}\, Y_n)\bigr)\) and
+  \(f'_*\bigl((g')^*(\operatorname{pushPullObj}\mathcal{F}\, Y_n)\bigr)\), where \(Y_n\) is the
+  degree-\(n\) fibre power of the {\v C}ech nerve.
+  \begin{enumerate}
+    \item \emph{Product decomposition.} The degree-\(n\) fibre power is the coproduct
+      \(Y_n = \coprod_\sigma U_\sigma\) over index tuples \(\sigma : \mathrm{Fin}(n+1) \to I\)
+      of the intersection opens \(U_\sigma = \operatorname{coverInterOpen}\mathfrak{U}\,\sigma\),
+      so by \cref{lem:pushPull_sigma_iso} (which requires the cover to be finite) the
+      push--pull object decomposes as the finite product \(\operatorname{pushPullObj}\mathcal{F}\,
+      Y_n \cong \prod_\sigma \operatorname{pushPullObj}\mathcal{F}\,(\operatorname{Over.mk}
+      j_\sigma)\). Both \(\operatorname{pushforward} f\) and \(g^*\) (and likewise \(f'_*\),
+      \((g')^*\)) preserve this finite product, so the degree-\(n\) comparison reduces termwise
+      to the per-\(\sigma\) single-open base change.
+    \item \emph{The per-\(\sigma\) factor.} Each summand is exactly the per-intersection-open
+      base-change isomorphism \(g^*\bigl(f_*((j_\sigma)_*(j_\sigma)^*\mathcal{F})\bigr) \cong
+      f'_*\bigl((g')^*((j_\sigma)_*(j_\sigma)^*\mathcal{F})\bigr)\) of
+      \cref{lem:pushpullobj_coverinter_basechange}. There the intersection open
+      \(U_\sigma = U_{i_0} \cap \dots \cap U_{i_p}\) is affine by separatedness
+      (\cref{lem:isAffineOpen_biInf_mathlib}); the abstract pushed-forward term is identified
+      with the affine \(\widetilde{(-)}\)-form \((\operatorname{Spec}\varphi)_*\widetilde{N}\)
+      over \(S\) by \cref{lem:pushPullObj_iso_tilde} (\emph{altitude 2}); and on that affine
+      model the comparison IS the affine termwise base change
+      \cref{lem:affine_pushforward_pullback_baseChange} (via
+      \cref{lem:cech_degree_affine_baseChange}), assembled from the concrete tilde
+      dictionaries \cref{lem:pushforward_spec_tilde_iso} and
+      \cref{lem:pullback_spec_tilde_iso} with the commutative-algebra cancellation
+      \(\operatorname{cancelBaseChange}\) (\cref{lem:cancelBaseChange_mathlib}) --- not the
+      canonical adjoint mate.
+    \item \emph{Naturality.} The naturality condition is the index-omission
+      restriction: each coface map is a restriction along an inclusion of finite affine
+      intersections, and the termwise isomorphisms are natural in the intersection;
+      naturality in the base-change morphism \(g\) is inherited termwise from the affine
+      base change.
+  \end{enumerate}
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[The base-changed cover intersection is the preimage of the intersection]
+  \label{lem:coverinteropen_basechange_eq}
+  \lean{AlgebraicGeometry.coverInterOpen_baseChange_eq}
+  \uses{def:cover_cech_nerve}
+  Let \(g' : X' \to X\) be the pullback of a base change \(g : S' \to S\) along a separated
+  \(f : X \to S\), and let \(\mathfrak{U}'\) be the base change along \(g'\) of the affine
+  open-immersion cover \(\mathfrak{U}\) of \(X\). Then for every finite index family
+  \(\sigma\) the {\v C}ech intersection open of the base-changed cover is the preimage of the
+  intersection open of the original cover:
+  \[
+    \operatorname{coverInterOpen}\mathfrak{U}'\,\sigma
+      \;=\; (g')^{-1}\bigl(\operatorname{coverInterOpen}\mathfrak{U}\,\sigma\bigr).
+  \]
+\end{lemma}
+\begin{proof}
+  \uses{def:cover_cech_nerve}
+  The base-changed cover member \(\mathfrak{U}'.X\,i\) is by definition the pullback
+  \((g')^{-1}(U_i)\), so its range in \(X'\) is the preimage of the range of \(U_i\). Taking
+  preimages of opens commutes with finite meets (the inverse-image map on the frame of opens
+  preserves intersections), whence
+  \(\operatorname{coverInterOpen}\mathfrak{U}'\,\sigma = \bigcap_k (g')^{-1}(U_{\sigma(k)})
+  = (g')^{-1}\bigl(\bigcap_k U_{\sigma(k)}\bigr)
+  = (g')^{-1}\bigl(\operatorname{coverInterOpen}\mathfrak{U}\,\sigma\bigr)\).
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Open-immersion Beck--Chevalley over a restricted cartesian square]
+  \label{lem:openimm_beckchevalley}
+  \lean{AlgebraicGeometry.openImmersion_beckChevalley}
+  \uses{def:push_pull_obj}
+  Let
+  \[
+    \begin{array}{ccc}
+      V' & \xrightarrow{\ g'_V\ } & V\\
+      {\scriptstyle p'}\big\downarrow & & \big\downarrow{\scriptstyle p}\\
+      X' & \xrightarrow{\ g'\ } & X
+    \end{array}
+  \]
+  be the cartesian square obtained by restricting \(g' : X' \to X\) over an \emph{open
+  immersion} \(p : V \hookrightarrow X\), so that \(p' : V' \hookrightarrow X'\) is again an
+  open immersion (the pullback of \(p\) along \(g'\), with image the preimage
+  \((g')^{-1}(V)\)). Then for any \(\mathcal{O}_X\)-module \(\mathcal{F}\) there is a
+  Beck--Chevalley isomorphism
+  \[
+    (g')^*\bigl(p_*\,p^*\mathcal{F}\bigr)
+      \;\cong\;
+    p'_*\,p'^*\bigl((g')^*\mathcal{F}\bigr),
+  \]
+  i.e.\ \((g')^*(\operatorname{pushPullObj}\mathcal{F}\,(\operatorname{Over.mk} p)) \cong
+  \operatorname{pushPullObj}((g')^*\mathcal{F})\,(\operatorname{Over.mk} p')\). No affineness
+  of the base is required: this is the open-immersion (in particular flat) case of
+  Beck--Chevalley.
+\end{lemma}
+\begin{proof}
+  \uses{def:push_pull_obj}
+  For an open immersion \(p\) the pushforward \(p_*\) is extension-by-restriction along the
+  open \(V\), and the square is cartesian with \(p'\) the open immersion onto the preimage
+  \((g')^{-1}(V)\). The base-change (Beck--Chevalley) natural transformation
+  \((g')^* p_* \to p'_* (g'_V)^*\) attached to the cartesian square is an isomorphism for an
+  open immersion \(p\): on the open \(V'\) both sides restrict \((g')^*\mathcal{F}\), and away
+  from \(V'\) both vanish, so the comparison is an isomorphism stalkwise. Composing with the
+  canonical identification \(p'^*(g')^* \cong (g'_V)^* p^*\) of the cartesian square yields the
+  asserted isomorphism between the two push--pull objects.
+\end{proof}
+
+\begin{lemma}
+
+\leanok
+[Per-intersection-open X-level Beck--Chevalley for the twisted nerve]
+  \label{lem:twisted_cech_nerve_per_sigma}
+  \lean{AlgebraicGeometry.twisted_cech_nerve_per_sigma}
+  \uses{lem:coverinteropen_basechange_eq, lem:openimm_beckchevalley, lem:pushPullObj_iso_tilde}
+  In the setting of \cref{lem:twisted_cech_nerve_iso}, fix an index family \(\sigma\) with
+  intersection open \(U_\sigma = \operatorname{coverInterOpen}\mathfrak{U}\,\sigma\),
+  \(j_\sigma : U_\sigma \hookrightarrow X\), and write \(U'_\sigma\),
+  \(j'_\sigma : U'_\sigma \hookrightarrow X'\) for the corresponding data of the base-changed
+  cover \(\mathfrak{U}'\). Then there is the per-intersection-open \(X\)-level Beck--Chevalley
+  isomorphism
+  \[
+    (g')^*\bigl((j_\sigma)_* (j_\sigma)^*\mathcal{F}\bigr)
+      \;\cong\;
+    (j'_\sigma)_* (j'_\sigma)^*\bigl((g')^*\mathcal{F}\bigr),
+  \]
+  over the base-changed intersection open \(U'_\sigma\); this is the single-open factor of the
+  twisted-nerve identification. The index family \(\sigma\) is required to be \emph{finite}, so
+  that \cref{lem:coverinteropen_basechange_eq} applies to identify
+  \((g')^{-1}(U_\sigma)\) with \(\operatorname{coverInterOpen}\mathfrak{U}'\,\sigma\) (the
+  preimage commutes with the cover intersection only for finite index families); in the
+  {\v C}ech application \(\sigma\) ranges over the finite index sets of the nerve.
+\end{lemma}
+\begin{proof}
+  \uses{lem:coverinteropen_basechange_eq, lem:openimm_beckchevalley, lem:pushPullObj_iso_tilde}
+  The restriction \(j_\sigma : U_\sigma \hookrightarrow X\) is an open immersion, and its
+  pullback along \(g'\) is the open immersion \(j'_\sigma : U'_\sigma \hookrightarrow X'\) onto
+  the preimage \((g')^{-1}(U_\sigma)\), which by \cref{lem:coverinteropen_basechange_eq} is
+  exactly the base-changed intersection open
+  \(U'_\sigma = \operatorname{coverInterOpen}\mathfrak{U}'\,\sigma\). Restricting the cartesian
+  square \(g' : X' \to X\) over \(j_\sigma\) is therefore the restricted cartesian square of
+  \cref{lem:openimm_beckchevalley}, whose open-immersion Beck--Chevalley isomorphism is the
+  asserted comparison. When the affine \(\widetilde{(-)}\)-model is needed downstream, both
+  sides are identified with their affine forms by \cref{lem:pushPullObj_iso_tilde} at
+  altitude~1.
+\end{proof}
+
+\begin{lemma}\leanok
+[The base-changed nerve is the nerve of the base-changed data]
+  \label{lem:twisted_cech_nerve_iso}
+  \lean{AlgebraicGeometry.twisted_cech_nerve_iso}
+  \uses{def:cech_nerve, def:cover_cech_nerve, lem:pushPullObj_iso_tilde}
+  Let \(f : X \to S\) be \emph{separated} and fix an affine open-immersion cover
+  \(\mathfrak{U} = \{U_i = \operatorname{Spec} A_i\}\) of \(X\) (so every fibre power is
+  affine, \cref{lem:isAffineOpen_biInf_mathlib}). Applying \((g')^*\) to the {\v C}ech
+  nerve of \((\mathfrak{U}, \mathcal{F})\) yields the {\v C}ech nerve of the base-changed
+  data \((\mathfrak{U}', (g')^*\mathcal{F})\), where \(\mathfrak{U}'\) is the base change of
+  \(\mathfrak{U}\) along \(g'\): a natural isomorphism
+  \((g')^* \circ \operatorname{CechNerve}(\mathfrak{U}, -) \cong
+  \operatorname{CechNerve}(\mathfrak{U}', (g')^*(-))\).
+\end{lemma}
+
+\begin{proof}
+  \uses{def:cech_nerve, def:cover_cech_nerve, lem:cech_degree_affine_baseChange,
+        lem:affine_pushforward_pullback_baseChange, lem:pushPullObj_iso_tilde,
+        lem:isAffineOpen_biInf_mathlib, lem:pushforward_spec_tilde_iso,
+        lem:pullback_spec_tilde_iso, lem:cancelBaseChange_mathlib,
+        lem:pushPull_sigma_iso, lem:pushpullobj_coverinter_basechange,
+        lem:twisted_cech_nerve_per_sigma, lem:cech_interopen_isaffine,
+        lem:coverinteropen_basechange_eq}
+  \emph{Geometric backbone (first half).} The cover {\v C}ech nerve
+  \(\operatorname{coverCechNerve}\) of \(\mathfrak{U}\) base-changes to that of
+  \(\mathfrak{U}'\): the fibre powers \(U_{i_0} \times_X \dots \times_X U_{i_p}\) of the
+  cover commute with the base change \(g'\) (pullback preserves fibre products), so the
+  preimages \((g')^{-1}(U_{i_0\dots i_p})\) are exactly the corresponding intersections
+  \(U'_{i_0\dots i_p}\) of \(\mathfrak{U}'\). This identifies the underlying diagrams of
+  open subschemes. It does \emph{not} by itself produce the nerve isomorphism: the
+  {\v C}ech nerve is valued not in open subschemes but in the push--pull functor
+  \(p_* p^*\) (for \(p\) the projection of the relevant fibre power), so the comparison
+  carries genuine sheaf-theoretic content beyond the identification of supports.
+
+  \emph{Genuine content (second half, Beck--Chevalley).} The degree-\(n\) component
+  is the \(X\)-level square along \(g'\): the asserted identification is the sheaf-level
+  Beck--Chevalley isomorphism \((g')^*(\operatorname{pushPullObj}\mathcal{F}\, Y_n) \cong
+  \operatorname{pushPullObj}((g')^*\mathcal{F})\, Y'_n\) (that is, \(g'^*(p_* p^* F) \cong
+  p'_* p'^*(g'^* F)\)), where \(Y_n\), \(Y'_n\) are the degree-\(n\) fibre powers of the
+  cover {\v C}ech nerves of \(\mathfrak{U}\) and \(\mathfrak{U}'\).
+  \begin{enumerate}
+    \item \emph{Product decomposition (LHS).} The degree-\(n\) fibre power is the coproduct
+      \(Y_n = \coprod_\sigma U_\sigma\) over index tuples \(\sigma : \mathrm{Fin}(n+1) \to I\),
+      so by \cref{lem:pushPull_sigma_iso} (which requires the cover to be finite) the push--pull
+      object decomposes as the finite product \(\operatorname{pushPullObj}\mathcal{F}\, Y_n \cong
+      \prod_\sigma \operatorname{pushPullObj}\mathcal{F}\,(\operatorname{Over.mk} j_\sigma)\),
+      and \((g')^*\) preserves this finite product. The left-hand side thus reduces to
+      \(\prod_\sigma (g')^*\bigl((j_\sigma)_*(j_\sigma)^*\mathcal{F}\bigr)\).
+    \item \emph{Per-\(\sigma\) component.} Each factor is the per-intersection-open \(X\)-level
+      Beck--Chevalley iso \((g')^*\bigl((j_\sigma)_*(j_\sigma)^*\mathcal{F}\bigr) \cong
+      (j'_\sigma)_*(j'_\sigma)^*\bigl((g')^*\mathcal{F}\bigr)\) of
+      \cref{lem:twisted_cech_nerve_per_sigma} (the \(X\)-level analogue of
+      \cref{lem:pushpullobj_coverinter_basechange} for the restricted cartesian square over
+      \(U_\sigma\)). Here each intersection \(U_\sigma = U_{i_0} \cap \dots \cap U_{i_p}\) is
+      affine by separatedness (\cref{lem:cech_interopen_isaffine}); the abstract data is
+      identified with the affine \(\widetilde{(-)}\)-form by \cref{lem:pushPullObj_iso_tilde}
+      at \emph{altitude 1} (the restriction level \(p_n^*\mathcal{F} \cong \widetilde{N_n}\)
+      over the affine \(Y_n\)), pushed forward along \(g'\); and on that model the comparison
+      IS the affine termwise base change \cref{lem:affine_pushforward_pullback_baseChange}
+      (via \cref{lem:cech_degree_affine_baseChange}), assembled from the concrete tilde
+      dictionaries \cref{lem:pushforward_spec_tilde_iso} and
+      \cref{lem:pullback_spec_tilde_iso} with the commutative-algebra cancellation
+      \(\operatorname{cancelBaseChange}\) (\cref{lem:cancelBaseChange_mathlib}), \emph{not}
+      the canonical adjoint mate.
+    \item \emph{RHS reassembly (the residual cover-base-change obligation).} To recognise the
+      product \(\prod_\sigma (j'_\sigma)_*(j'_\sigma)^*((g')^*\mathcal{F})\) as the push--pull
+      object \(\operatorname{pushPullObj}((g')^*\mathcal{F})\, Y'_n\) of the base-changed cover
+      one applies \cref{lem:pushPull_sigma_iso} \emph{in reverse} to \(\mathfrak{U}'\). This
+      requires the base-changed cover \(\mathfrak{U}'\) to be finite with affine members,
+      together with the cover-base-change identification
+      \(\operatorname{coverInterOpen}\mathfrak{U}'\,\sigma = (g')^{-1}
+      (\operatorname{coverInterOpen}\mathfrak{U}\,\sigma)\) of
+      \cref{lem:coverinteropen_basechange_eq} (the preimages of the intersections
+      of \(\mathfrak{U}\) are the intersections of \(\mathfrak{U}'\)). This geometric matching
+      of the base-changed cover with the preimage cover is the Beck--Chevalley content of the
+      argument.
+    \item \emph{Naturality.} The naturality condition is verified by the index-omission
+      restriction: each coface and codegeneracy is induced by an index omission, hence by
+      an inclusion of finite affine intersections, and the termwise comparisons are natural
+      in those inclusions.
+  \end{enumerate}
+\end{proof}
+
+\begin{definition}\leanok
+[Degreewise pullback of the {\v C}ech complex as an alternating-coface complex]
+  \label{def:pullback_cechComplex_alternatingIso}
+  \lean{AlgebraicGeometry.pullback_cechComplex_alternatingIso}
+  \uses{lem:pullback_commutes_alternatingCofaceMapComplex,
+        def:relative_cech_complex_of_nerve}
+  Specialising \cref{lem:pullback_commutes_alternatingCofaceMapComplex} to \(F = g^*\)
+  and to the push--pull nerve underlying \(\check{\mathcal{C}}^\bullet(\mathfrak{U},
+  \mathcal{F})\): applying \(g^*\) degreewise to the relative {\v C}ech complex is the
+  alternating-coface complex of \(g^* \circ (\operatorname{pushforward} f) \circ
+  \operatorname{CechNerve}(\mathfrak{U}, \mathcal{F})\). This is step~(1) of the
+  base-change construction below.
+\end{definition}
+
+\begin{definition}\leanok
+[Reduction of the {\v C}ech base change to a cosimplicial iso]
+  \label{def:cech_complex_base_change_iso_of_cosimplicialIso}
+  \lean{AlgebraicGeometry.cechComplex_baseChange_iso_of_cosimplicialIso}
+  \uses{def:pullback_cechComplex_alternatingIso,
+        lem:pullback_commutes_alternatingCofaceMapComplex,
+        lem:cech_pushforward_baseChange_natIso, lem:twisted_cech_nerve_iso,
+        def:cech_complex_base_change_cosimplicialIso}
+  Given a cosimplicial natural isomorphism
+  \[
+    e : g^* \circ (\operatorname{pushforward} f) \circ
+        \operatorname{CechNerve}(\mathfrak{U}, \mathcal{F})
+      \;\cong\;
+      (\operatorname{pushforward} f') \circ
+        \operatorname{CechNerve}(\mathfrak{U}', (g')^*\mathcal{F}),
+  \]
+  the {\v C}ech base-change complex isomorphism follows mechanically: it is the composite
+  \[
+    \operatorname{pullback\_cechComplex\_alternatingIso}
+    \;\circ\;
+    \operatorname{alternatingCofaceMapComplex}.\!\operatorname{mapIso}(e),
+  \]
+  i.e.\ the degreewise pullback identification
+  (\cref{def:pullback_cechComplex_alternatingIso}, step~(1)) followed by
+  \(\operatorname{Functor.mapIso}\) of \(e\) through the alternating-coface complex
+  functor. No per-degree {\v C}ech differential square is checked by hand:
+  functoriality of \(\operatorname{alternatingCofaceMapComplex}\) supplies the
+  differential compatibility automatically.
+
+  The hypothesis \(e\) is precisely the residual obligation. It is constructed in
+  \cref{def:cech_complex_base_change_cosimplicialIso} as the whiskered composite of the
+  Beck--Chevalley natural iso \cref{lem:cech_pushforward_baseChange_natIso} with the
+  twisted-nerve identification \cref{lem:twisted_cech_nerve_iso}, both pushed through the
+  {\v C}ech nerve. Supplying \(e\) is the sole remaining open obligation (Stacks Tag 02KG);
+  \cref{def:cech_complex_base_change_iso} below obtains the complex
+  iso by feeding \(e\) into the present reduction.
+\end{definition}
+
 \begin{definition}
+
+\leanok
+[The {\v C}ech base-change cosimplicial isomorphism \(e\)]
+  \label{def:cech_complex_base_change_cosimplicialIso}
+  \lean{AlgebraicGeometry.cechComplex_baseChange_cosimplicialIso}
+  \uses{lem:cech_pushforward_baseChange_natIso, lem:twisted_cech_nerve_iso}
+  The cosimplicial natural isomorphism \(e\) required by
+  \cref{def:cech_complex_base_change_iso_of_cosimplicialIso} is assembled from the two
+  base-change leaves. It is the composite
+  \[
+    e \;=\;
+      \bigl(\cref{lem:cech_pushforward_baseChange_natIso}\bigr)
+      \mathbin{;}
+      (\operatorname{pushforward} f')\!.\operatorname{mapIso}
+        \bigl(\cref{lem:twisted_cech_nerve_iso}\bigr),
+  \]
+  i.e.\ first the Beck--Chevalley natural iso
+  \(g^* \circ (\operatorname{pushforward} f) \cong (\operatorname{pushforward} f')
+  \circ (g')^*\) whiskered through the {\v C}ech nerve, followed by the image under the
+  functor \(\operatorname{pushforward} f'\) (via \(\operatorname{Functor.mapIso}\)) of the
+  twisted-nerve identification
+  \((g')^* \circ \operatorname{CechNerve}(\mathfrak{U}, -) \cong
+  \operatorname{CechNerve}(\mathfrak{U}', (g')^*(-))\). Both factors are isomorphisms of
+  cosimplicial objects, so \(e\) is one as well; it is precisely the hypothesis consumed
+  by \cref{def:cech_complex_base_change_iso_of_cosimplicialIso}.
+\end{definition}
+
+\begin{definition}
+
+\leanok
 [Tensorial base change of the {\v C}ech complex \textnormal{(Stacks 02KG, OPEN)}]
   \label{def:cech_complex_base_change_iso}
   \lean{AlgebraicGeometry.cechComplex_baseChange_iso}
-  \uses{def:cech_complex}
+  \uses{def:cech_complex, def:relative_cech_complex_of_nerve,
+        def:cech_nerve_cosimplicial}
+  % SOURCE: [Stacks Project], Cohomology of Schemes, Tag 02KG
+  % (\texttt{lemma-affine-base-change}) (read from references/stacks-coherent.tex, L906--918);
+  % and Tag 02KH (\texttt{lemma-flat-base-change-cohomology}) (L1020--1027).
+  % SOURCE QUOTE: "We have the following relation between the {\v C}ech complexes
+  % $$
+  % \check{\mathcal{C}}^\bullet(\mathcal{U}_B, \mathcal{F}_B) =
+  % \check{\mathcal{C}}^\bullet(\mathcal{U}, \mathcal{F}) \otimes_A B
+  % $$
+  % as follows from
+  % Lemma \ref{lemma-affine-base-change}."
+  % (read from references/stacks-coherent.tex, L1020--1026.)
   \textit{Source: Stacks Project, Cohomology of Schemes, Tag 02KG
-  (\texttt{lemma-cech-complex-base-change}).}
+  (\texttt{lemma-affine-base-change}); the {\v C}ech-complex relation in the proof of
+  Tag 02KH (\texttt{lemma-flat-base-change-cohomology}).}
   Applying \(g^*\) degreewise to the relative {\v C}ech complex
-  \(\check{\mathcal{C}}^\bullet(\mathfrak{U}, \mathcal{F})\) yields the relative
-  {\v C}ech complex \(\check{\mathcal{C}}^\bullet(\mathfrak{U}', (g')^*\mathcal{F})\) of
-  the base-changed data, with \(\mathfrak{U}'\) the base change of \(\mathfrak{U}\)
-  along \(g'\). \emph{This is the load-bearing open content.} Termwise it is the affine
-  \(i = 0\) base change over each finite affine intersection
-  (\texttt{affineBaseChange\_pushforward\_iso}, itself still carrying a \texttt{sorry}
-  in \texttt{Cohomology/FlatBaseChange.lean}: the affine reduction and the adjoint-mate
-  \(\leftrightarrow\) \texttt{cancelBaseChange} identification are both Mathlib-absent),
-  made compatible with the alternating {\v C}ech differentials.
+  \(\check{\mathcal{C}}^\bullet(\mathfrak{U}, \mathcal{F})\) yields a {\v C}ech complex
+  naturally isomorphic to the relative {\v C}ech complex
+  \(\check{\mathcal{C}}^\bullet(\mathfrak{U}', (g')^*\mathcal{F})\) of the base-changed
+  data, with \(\mathfrak{U}'\) the base change of \(\mathfrak{U}\) along \(g'\). Only the
+  \emph{existence} of such a natural isomorphism is asserted --- the downstream
+  assembly Lemma~\ref{lem:cech_flat_base_change} concludes \(\mathrm{Nonempty}\) of an
+  isomorphism --- so no identification with any canonical base-change map is required.
 \end{definition}
+
+% SOURCE QUOTE PROOF: "We have the following relation between the {\v C}ech complexes
+% $$
+% \check{\mathcal{C}}^\bullet(\mathcal{U}_B, \mathcal{F}_B) =
+% \check{\mathcal{C}}^\bullet(\mathcal{U}, \mathcal{F}) \otimes_A B
+% $$
+% as follows from
+% Lemma \ref{lemma-affine-base-change}.
+% Since $A \to B$ is flat, the same thing remains true on taking cohomology."
+% (read from references/stacks-coherent.tex, L1020--1027.)
+\begin{proof}
+  \uses{def:cech_complex_base_change_iso_of_cosimplicialIso,
+        def:cech_complex_base_change_cosimplicialIso,
+        lem:pullback_commutes_alternatingCofaceMapComplex,
+        lem:cech_pushforward_baseChange_natIso, lem:twisted_cech_nerve_iso,
+        lem:cech_degree_affine_baseChange,
+        lem:affine_pushforward_pullback_baseChange, lem:pushforward_spec_tilde_iso,
+        lem:pullback_spec_tilde_iso, lem:cancelBaseChange_mathlib}
+  The construction factors through
+  \cref{def:cech_complex_base_change_iso_of_cosimplicialIso}: it suffices to supply the
+  cosimplicial iso \(e\) and feed it into that reduction. We bypass the canonical
+  base-change map entirely. The sole genuine input is the \emph{affine termwise} base
+  change \cref{lem:affine_pushforward_pullback_baseChange}, which is assembled from the
+  sorry-free concrete tilde dictionaries \cref{lem:pushforward_spec_tilde_iso} and
+  \cref{lem:pullback_spec_tilde_iso} together with the commutative-algebra cancellation
+  \(\operatorname{cancelBaseChange}\) (\cref{lem:cancelBaseChange_mathlib}) --- not the
+  canonical adjoint mate \(\operatorname{pushforwardBaseChangeMap}\). Unwinding the
+  reduction, the construction is the composite,
+  pushed through the functor \(\operatorname{alternatingCofaceMapComplex}\):
+  \begin{enumerate}
+    \item By Lemma~\ref{lem:pullback_commutes_alternatingCofaceMapComplex}, applying
+      \(g^*\) degreewise commutes with \(\operatorname{alternatingCofaceMapComplex}\),
+      so \(g^*\) of the {\v C}ech complex is the alternating-coface complex of
+      \(g^* \circ (\operatorname{pushforward} f) \circ
+      \operatorname{CechNerve}(\mathfrak{U}, \mathcal{F})\).
+    \item The Beck--Chevalley natural iso
+      (Lemma~\ref{lem:cech_pushforward_baseChange_natIso}) rewrites the cosimplicial
+      object as \((\operatorname{pushforward} f') \circ (g')^* \circ
+      \operatorname{CechNerve}(\mathfrak{U}, \mathcal{F})\); since this is a natural iso
+      of cosimplicial objects, feeding it through the \emph{functor}
+      \(\operatorname{alternatingCofaceMapComplex}\) via \(\operatorname{Functor.mapIso}\)
+      makes compatibility with the {\v C}ech differentials automatic --- no per-degree
+      naturality square need be checked by hand.
+    \item Lemma~\ref{lem:twisted_cech_nerve_iso} identifies the \((g')^*\)-twisted nerve
+      with \(\operatorname{CechNerve}(\mathfrak{U}', (g')^*\mathcal{F})\), so the
+      alternating-coface complex of the rewritten object is exactly
+      \(\check{\mathcal{C}}^\bullet(\mathfrak{U}', (g')^*\mathcal{F})\).
+  \end{enumerate}
+  Composing (1)--(3) yields the required isomorphism of complexes; the homology
+  isomorphism that Lemma~\ref{lem:cech_flat_base_change} consumes is then
+  \(\operatorname{homologyMapIso}\) of this complex iso, exactly as in that lemma's
+  assembly. Following Stacks Tag 02KH, since \(g\) is flat the relation persists on
+  taking cohomology; flatness is \emph{not} needed for the present complex iso, the
+  affine base change being flatness-free.
+\end{proof}

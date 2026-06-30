@@ -630,9 +630,7 @@ lemma pushforwardSliceAdjunctionH1 :
         (X.sheaf.obj.map (Over.Hom.left ((sliceOversEquiv φ Ui).unitInv.app (unop U))).op) := by
     rw [← (forget₂ CommRingCat RingCat).map_comp]
     exact congrArg _ key
-  rw [← RingCat.hom_comp]
-  erw [key2]
-  rfl
+  exact DFunLike.congr_fun (congrArg RingCat.Hom.hom key2.symm) x
 
 /-- **Unit compatibility square `H₂`** for the slice adjunction (blueprint
 `lem:pushforward_slice_adjunction_h2`).  Identical in shape to `H₁`: the unit triangle reduces to a
@@ -666,9 +664,7 @@ lemma pushforwardSliceAdjunctionH2 :
       = 𝟙 _ := by
     rw [← CategoryTheory.Functor.map_comp, ← CategoryTheory.Functor.map_comp, key]
     exact (forget₂ CommRingCat RingCat).map_id _
-  rw [← RingCat.hom_comp, ← RingCat.hom_comp]
-  erw [key2]
-  rfl
+  exact DFunLike.congr_fun (congrArg RingCat.Hom.hom key2) x
 
 /-- **The two-pushforward slice adjunction** (blueprint `lem:pushforward_slice_two_adjunction`):
 `pushforward φ'' ⊣ pushforward ψ_r`, assembled by feeding `pushforwardPushforwardAdj` the slice
@@ -728,7 +724,7 @@ lemma pushforward_iso_preserves_qcoh {X Y : Scheme.{u}} (φ : X ≅ Y) (H : X.Mo
   -- transport the local presentation of `H.over Uᵢ` across the colimit-preserving pullback...
   have P1 : ((SheafOfModules.pullback.{u} (sliceStructureSheafHom φ (qcd.X i))).obj
       (H.over (qcd.X i))).Presentation :=
-    (qcd.presentation i).map (SheafOfModules.pullback.{u} (sliceStructureSheafHom φ (qcd.X i))) η
+    SheafOfModules.Presentation.map.{u} (qcd.presentation i) (SheafOfModules.pullback.{u} (sliceStructureSheafHom φ (qcd.X i))) η.symm
   -- ...then across the comparison iso to a presentation of `(Φ H).over Vᵢ`, whence quasi-coherence.
   exact (P1.ofIsIso (pushforwardSlicePullbackIso φ (qcd.X i) H).hom).isQuasicoherent
 

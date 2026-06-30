@@ -1,0 +1,95 @@
+[
+  {
+    "timestamp": "2026-06-29T02:40:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport.right_inv"
+    },
+    "session": {
+      "id": "session_312",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "ModuleCat `.hom'` field-projection + `AddEquiv.refl.toLinearEquiv` collapse-leg scaffolding resists simp/rw on the lone φ/ψ-naturality residual (documented coercion wall, analogies/dualcoerce309.md); needs a change/conv to expose M₁.map g before PresheafOfModules.naturality_apply can fire.",
+      "key_lemmas_used": [
+        "appIso_relabel_cancel_apply",
+        "Scheme.Modules.εInv_apply",
+        "Scheme.Hom.appIso_inv_naturality",
+        "Iso.inv_hom_id",
+        "Function.preimage_image_eq"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Build the 3-way `appIso_relabel_cancel` morphism lemma ((appIso W').hom ∘ X.presheaf.map(opensFunctor.op.map i) ∘ (appIso P).inv = Y.presheaf.map i) via appIso_inv_naturality + inv_hom_id, packaged as a Category morphism identity then congr_hom'd",
+        "code_tried": "have key : (appIso f P).inv ≫ X.presheaf.map ((opensFunctor f).op.map i) ≫ (appIso f W').hom = Y.presheaf.map i := by rw [← Category.assoc, ← hnat]; erw [Category.assoc, Iso.inv_hom_id, Category.comp_id]",
+        "line_number": "254",
+        "lean_error": "Category.assoc rw chokes on TopCat.Sheaf/Functor coercion; needed `erw` for the assoc/inv_hom_id step",
+        "result": "success",
+        "insight": "the morphism-level cocycle closes by reassoc+inv_hom_id but plain `rw` fails on the coercion gremlin — `erw` bridges it"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Build `appIso_relabel_cancel_apply` (3-way in the goal's `RingEquiv.ofBijective ·.symm` spelling) and fire it on the telescope via erw; discharge hPW:P=W' by f.preimage_image_eq+Over.mk_left",
+        "code_tried": "erw [appIso_relabel_cancel_apply f hPW]  -- after  have hPW : f ⁻¹ᵁ (Over.mk ...).left = (unop W).left := by simp only [Over.mk_left]; exact f.preimage_image_eq _",
+        "line_number": "890",
+        "lean_error": "`rw [appIso_relabel_cancel_apply ...]` no-progress (coercion); `erw` succeeds and the entire 3-`inv ε` telescope vanishes",
+        "result": "partial",
+        "insight": "the full inv-ε telescope collapses to Y.presheaf.map(eqToHom)(ψ.app A (collapse (M.val.map z))) = ψ.app W z — the pure φ/ψ-naturality reindex"
+      },
+      {
+        "attempt": 3,
+        "strategy": "Discharge the φ.naturality residual with simp only over restrictScalars/ModuleCat coercion + LinearEquiv.apply_symm_apply to cancel the collapse legs",
+        "code_tried": "simp only [ModuleCat.restrictScalars.map_apply, ModuleCat.hom_comp, LinearMap.comp_apply, ModuleCat.hom_ofHom, ModuleCat.ofHom_hom, LinearEquiv.coe_coe, LinearEquiv.apply_symm_apply]",
+        "line_number": "895",
+        "lean_error": "all simp args report 'unused' — no syntactic match through the `.hom'` field projection",
+        "result": "failed",
+        "insight": "the residual is NOT mathematical; the ModuleCat `.hom'`/AddEquiv.refl scaffolding blocks the rewrite. Needs change/conv to expose M₁.map g for PresheafOfModules.naturality_apply"
+      }
+    ],
+    "next_steps": "Apply PresheafOfModules.naturality_apply ψ g z after a change/conv punches through `.hom'`; supply the two thin-poset facts (a) M₁.map g z = collapse(M.val.map(eqToHom) z), (b) Y.presheaf.map(eqToHom) ∘ M₂.map g = id. Do NOT add more cancel helpers — the telescope is fully reduced; the residual is the coercion-wall punch-through."
+  },
+  {
+    "timestamp": "2026-06-29T02:40:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport.left_inv"
+    },
+    "session": {
+      "id": "session_312",
+      "model": "claude-opus"
+    },
+    "findings": {
+      "blocker": "Same shared φ/ψ-naturality crux + ModuleCat `.hom'` coercion wall as right_inv.",
+      "key_lemmas_used": [
+        "Scheme.Modules.εInv_apply",
+        "appIso_swap_cancel",
+        "ConcreteCategory.bijective_of_isIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Restore the v4.31.0-migration-broken bare sorry: re-apply the εInv reduction (simp only [...] then erw [εInv_apply ×3]) mirroring right_inv",
+        "code_tried": "simp only [ModuleCat.hom_comp, LinearMap.comp_apply, dualUnitRingSwap, ...]; erw [εInv_apply, εInv_apply, εInv_apply]; all_goals try exact ConcreteCategory.bijective_of_isIso _",
+        "line_number": "830",
+        "lean_error": "none (compiles)",
+        "result": "partial",
+        "insight": "left_inv had regressed to a near-bare sorry under migration; the εInv reduction is recoverable"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Here the two appIso swaps ε_hom⁻¹ ∘ ε_inv⁻¹ are ADJACENT, so close them with the existing 2-way appIso_swap_cancel (fired via erw to bridge the Over.mk_left defeq on P)",
+        "code_tried": "erw [appIso_swap_cancel f (f ⁻¹ᵁ (unop W'').left)]; all_goals try exact ConcreteCategory.bijective_of_isIso _",
+        "line_number": "861",
+        "lean_error": "plain `rw`/`simp [Over.mk_left]` fail ('no progress'); `erw` bridges the Over.mk_left defeq",
+        "result": "partial",
+        "insight": "left_inv's swaps are adjacent (unlike right_inv's non-adjacent ones) ⇒ reuses the 2-way helper; reaches the IDENTICAL φ.naturality residual as right_inv"
+      }
+    ],
+    "next_steps": "Same as right_inv — both round-trips are now symmetric and one PresheafOfModules.naturality_apply away from closing. Solve the coercion punch-through once, apply to both."
+  }
+]

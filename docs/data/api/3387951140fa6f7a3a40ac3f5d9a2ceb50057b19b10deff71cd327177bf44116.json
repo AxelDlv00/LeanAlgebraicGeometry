@@ -1,0 +1,112 @@
+[
+  {
+    "timestamp": "2026-06-29T07:08:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "cechComplex_baseChange_iso"
+    },
+    "session": {
+      "id": "session_315",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "two named leaves remain (cech_pushforward_baseChange_natIso L303, twisted_cech_nerve_iso L346) — both X/S-level Beck–Chevalley, degreewise affine reduction",
+      "key_lemmas_used": [
+        "affinePushforwardPullbackBaseChange",
+        "NatIso.ofComponents",
+        "CosimplicialObject.whiskering",
+        "Functor.mapIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Decompose the monolithic L312 sorry per blueprint §12732–12845: introduce e = cech_pushforward_baseChange_natIso ≪≫ (whiskering X' S' (pushforward f')).mapIso twisted_cech_nerve_iso, package as cechComplex_baseChange_cosimplicialIso",
+        "code_tried": "e := cech_pushforward_baseChange_natIso ≪≫ ((whiskering X' S' (pushforward f')).mapIso twisted_cech_nerve_iso); cechComplex_baseChange_iso_of_cosimplicialIso e",
+        "line_number": "303-361",
+        "lean_error": "none — lake env lean exit 0; only sorry warnings at L141 (leaf-1), L324, L361",
+        "result": "success",
+        "insight": "≪≫/mapIso composition typechecks because the natIso codomain is stated as (whiskering X' S' (pushforward f')).obj ((whiskering X X' (pullback g')).obj (drop (CechNerve 𝒰 F))). Monolithic L312 sorry GONE; cechComplex_baseChange_iso + cech_flatBaseChange now sorry-free modulo the two leaves."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Scaffold the two new leaves degreewise with NatIso.ofComponents (fun _ => sorry) (fun _ => sorry)",
+        "code_tried": "NatIso.ofComponents (fun _ => sorry) (fun _ => sorry)",
+        "line_number": "324,361",
+        "lean_error": "none (honest skeleton sorries)",
+        "result": "partial",
+        "insight": "Per-degree app/naturality obligations exposed and typechecked. FINDING: twisted_cech_nerve_iso is NOT mechanical — the nerve is push–pull-functor-valued so the degreewise obligation is g'^*(p_* p^* F) ≅ p'_* p'^*(g'^*F), an X-level Beck–Chevalley iso, same difficulty class as the main leaf. Confirmed by lvb ptc315."
+      }
+    ],
+    "next_steps": "Assign BOTH leaves together with the affine-Spec-reduction prep (express each fibre power as Spec of finite affine intersections so affinePushforwardPullbackBaseChange applies degreewise). Do NOT form the pushforwardBaseChangeMap mate. Add \\lean{} pin for cechComplex_baseChange_cosimplicialIso and rescope lem:twisted_cech_nerve_iso \\uses (affine brick, not fibre-product formalities)."
+  },
+  {
+    "timestamp": "2026-06-29T07:08:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport.naturality (forward)"
+    },
+    "session": {
+      "id": "session_315",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "BUILD BREAK: L728 `exact sliceDualTransport_toFun_naturality f M V β φ f1` references a lemma never defined (prover cut off before writing it). File RED — unknown identifier. Prover status=error, no task_result written. Repeats the iter-314 DUAL regression.",
+      "key_lemmas_used": [
+        "appIso_hom_naturality",
+        "appIso_hom_naturality_apply",
+        "Scheme.Hom.appIso_inv_naturality"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Build the .hom-direction mirror of appIso_inv_naturality, derive by cancelling the inverse iso",
+        "code_tried": "lemma appIso_hom_naturality ... := by have h := appIso_inv_naturality f i; rw [← cancel_mono (appIso f V).inv]; simp only [Category.assoc, Iso.hom_inv_id, Category.comp_id]; rw [h, ← Category.assoc, Iso.hom_inv_id, Category.id_comp]",
+        "line_number": "554",
+        "lean_error": "rewrite failed: Did not find pattern Y.presheaf.map i ≫ (appIso f V).inv (instances-transparency corruption)",
+        "result": "failed",
+        "insight": "The documented .hom-direction instances-transparency wall: rw-after-cancel_mono/simp corrupts the goal."
+      },
+      {
+        "attempt": 2,
+        "strategy": "calc-chain insert hom∘inv = 𝟙 then rewrite h; then switched to Iso.comp_inv_eq",
+        "code_tried": "rw [Iso.comp_inv_eq, Category.assoc] at h; rw [h, ← Category.assoc, Iso.hom_inv_id, Category.id_comp]",
+        "line_number": "554",
+        "lean_error": "unsolved goals / rewrite pattern (?f ≫ ?g) ≫ ?h not found",
+        "result": "failed",
+        "insight": "Associativity reshape under corruption still mis-fires."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Prepend `set_option backward.isDefEq.respectTransparency false in` to the lemma (the SHARED KEY knob)",
+        "code_tried": "set_option backward.isDefEq.respectTransparency false in\\nlemma appIso_hom_naturality ... := by ... rw [Iso.comp_inv_eq, Category.assoc] at h; rw [h, ← Category.assoc, Iso.hom_inv_id, Category.id_comp]",
+        "line_number": "548",
+        "lean_error": "none — diagnostics clean",
+        "result": "success",
+        "insight": "respectTransparency false dissolves the .hom-direction corruption (same knob as the pullback-cocycle wall). appIso_hom_naturality + appIso_hom_naturality_apply (L548–575) COMPILE and are reusable, salvageable next iter."
+      },
+      {
+        "attempt": 4,
+        "strategy": "Close the sliceDualTransport.naturality field inline: φ.naturality (leg-A) ∘ appIso_hom_naturality_apply (leg-B)",
+        "code_tried": "· intro X1 Y1 f1; apply ModuleCat.hom_ext; refine ...",
+        "line_number": "723",
+        "lean_error": "(deterministic) timeout at whnf, 800000 heartbeats — the iter-314 heartbeat cliff",
+        "result": "failed",
+        "insight": "Inlining the close into the heartbeat-heavy sliceDualTransport blows its 800000 budget (exactly the iter-314 regression)."
+      },
+      {
+        "attempt": 5,
+        "strategy": "Extract the close to a standalone lemma sliceDualTransport_toFun_naturality with its own budget, apply it in the field",
+        "code_tried": "· intro X1 Y1 f1; exact sliceDualTransport_toFun_naturality f M V β φ f1",
+        "line_number": "728",
+        "lean_error": "unknown identifier (lemma NEVER DEFINED — prover cut off / status error before writing the lemma body)",
+        "result": "failed",
+        "insight": "Correct STRATEGY (pre-state, the planner-prescribed corrective) but INCOMPLETE COMMIT: the application call was written, the lemma definition was not. File left RED."
+      }
+    ],
+    "next_steps": "REVERT the L723–728 field to an honest `sorry` first (DualInverse is imported downstream; red corrupts sync_leanok and the chain). KEEP the compiling appIso_hom_naturality(_apply) L548–575 — they are the real reusable gain. Then write sliceDualTransport_toFun_naturality as a genuine standalone lemma (own maxHeartbeats budget) BEFORE wiring it in; only then apply. Do NOT re-inline. Remove the doc-laundering comment at L723."
+  }
+]

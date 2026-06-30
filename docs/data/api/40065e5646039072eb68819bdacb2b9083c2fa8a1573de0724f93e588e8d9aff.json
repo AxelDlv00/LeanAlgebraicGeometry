@@ -1,0 +1,98 @@
+[
+  {
+    "timestamp": "2026-06-25T09:14:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor"
+    },
+    "session": {
+      "id": "session_36",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "STEP 2.5-d htensorComparisonNatTrans (θ-naturality square) is the deep crux; deferred without sorry. STEP 3 (θ iso / Eilenberg-Watts) remains policy-gated.",
+      "key_lemmas_used": [
+        "H_represents",
+        "Coyoneda.coyoneda_full",
+        "Coyoneda.coyoneda_faithful",
+        "Functor.preimage_comp",
+        "Functor.whiskerLeft_comp",
+        "Iso.inv_hom_id_assoc",
+        "External.pullbackTensorComparison"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "STEP 2.5-a: re-type External.pullbackTensorComparison object-level -> single-variable NatIso of functors S.Modules ⥤ X.Modules, natural in 2nd slot (pullback f ⋙ tensorLeft (f^*A) ≅ tensorLeft A ⋙ pullback f). Net axiom count unchanged. Updated htensorComparison to (..).app N.",
+        "code_tried": "(tensorLeft F).map ((External.pullbackTensorComparison f (H f I F ha)).app N).hom",
+        "line_number": "1223",
+        "result": "success",
+        "insight": "Single-slot suffices: htensorComparison only ever uses first slot fixed at H(I,F); θ-naturality varies only N (2nd slot). Avoids ~100-line product-category bifunctor build."
+      },
+      {
+        "attempt": 2,
+        "strategy": "STEP 2.5-b: build HMapFst (φ:J⟶J' ⟹ H(J,F)⟶H(J',F)) via precomposition NatTrans whiskerLeft (tensorBaseChangeFunctor f F)(coyoneda.map φ.op), conjugate by H_represents corepr isos, reflect through coyoneda.preimage + .unop.",
+        "code_tried": "Functor.whiskerLeft (tensorBaseChangeFunctor f F) (coyoneda.map φ.op) ≫ (H_represents f J F haJ).some.inv",
+        "line_number": "1700",
+        "lean_error": "name clash: bare whiskerLeft not found",
+        "result": "success",
+        "insight": "Current name is Functor.whiskerLeft (not bare whiskerLeft). Direction flips twice (op + preimage) ⇒ covariant H J ⟶ H J'."
+      },
+      {
+        "attempt": 3,
+        "strategy": "HMapFst_id: cancel iso after whiskerLeft of identity.",
+        "code_tried": "rw [hw, Category.id_comp, Iso.hom_inv_id, Functor.preimage_id]; rfl  -- then -> rw [hw]; erw [Category.id_comp]; rw [Iso.hom_inv_id, Functor.preimage_id]; rfl",
+        "line_number": "1710",
+        "lean_error": "rw [Category.id_comp] fails to match `... ≫ 𝟙 ≫ ...` (homTensorFunctor vs its ⋙-unfolding not syntactic)",
+        "result": "success",
+        "insight": "GOTCHA: homTensorFunctor f J F vs ⋙-unfolding blocks SYNTACTIC rw/simp on id-composition; must use erw (up-to-defeq) for id-cancellation steps."
+      },
+      {
+        "attempt": 4,
+        "strategy": "HMapFst_comp: distribute composite through preimage, op, map, whiskerLeft, cancel middle iso.",
+        "code_tried": "rw [HMapFst, HMapFst, HMapFst, ← unop_comp]; congr 1; rw [← Functor.preimage_comp]; congr 1; rw [op_comp, Functor.map_comp, Functor.whiskerLeft_comp]; simp only [Category.assoc]; erw [Iso.inv_hom_id_assoc]; rfl",
+        "line_number": "1726",
+        "result": "success",
+        "insight": "Middle iso cancels via erw [Iso.inv_hom_id_assoc]; remainder is definitional associativity closed by rfl."
+      },
+      {
+        "attempt": 5,
+        "strategy": "STEP 2.5-c: HFunctorFst (total functor X.Modules ⥤ S.Modules, carrier ∀J Admissible) + htensorDomainFunctor = tensorBaseChangeFunctor f I ⋙ HFunctorFst f F.",
+        "code_tried": "HFunctorFst f F hAdm := { obj J := H f J F (hAdm J), map := HMapFst .., map_id := HMapFst_id, map_comp := HMapFst_comp }",
+        "line_number": "1752",
+        "result": "partial",
+        "insight": "STRUCTURAL CAVEAT: total functor requires ∀J Admissible f J F, forcing every 𝒪_X-module LFP — NOT satisfiable in general, downstream-vacuous. The reusable substrate is per-morphism HMapFst{,_id,_comp} (no totality hyp)."
+      },
+      {
+        "attempt": 6,
+        "strategy": "STEP 2.5-d: htensorComparisonNatTrans (θ as NatTrans, naturality proved).",
+        "code_tried": "unfold; aesop_cat; simp [htensorComparison, HMapFst, ...]",
+        "line_number": "2010",
+        "lean_error": "all tactics leave the full naturality square open (expected — deep θ-naturality content)",
+        "result": "failed",
+        "insight": "DEFERRED, NOT added (no sorry). Precise goal + corepresentation-reflection decomposition handed off: apply H_represents.some.hom.app to reduce to identity of universal elements, using (i) corepr iso naturality, (ii) tensorAssoc naturality, (iii) 2nd-slot naturality of re-typed pullbackTensorComparison, expand HMapFst via Functor.map_preimage. ~60-120 lines element-chasing. Do NOT expect simp/aesop."
+      }
+    ],
+    "next_steps": "Phrase θ-naturality per-morphism via HMapFst (no totality hyp) NOT the total endofunctor. Build htensorComparisonNatTrans via corepresentation reflection skeleton (handed off). Then STEP 3 (EW route a) decision."
+  },
+  {
+    "timestamp": "2026-06-25T09:14:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_finite_flat"
+    },
+    "session": {
+      "id": "session_36",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "1.10 infra-blocked: absent internal-ℰxt / R^q f_* in Mathlib; off-lane, untouched this iter.",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Defer until internal-ℰxt strand is opened; not assignable now."
+  }
+]

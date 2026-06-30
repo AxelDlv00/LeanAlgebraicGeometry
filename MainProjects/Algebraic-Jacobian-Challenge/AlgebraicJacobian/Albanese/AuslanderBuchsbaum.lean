@@ -485,7 +485,7 @@ theorem depth_eq_smallest_ext_index
             (ModuleCat.of R (IsLocalRing.ResidueField R)) hS _e hSf_kill rfl
         have hx₃_zero : x₃ = 0 := hMxM_vanish j hj _
         rw [hx₃_zero] at hx₃
-        simpa using hx₃.symm
+        rw [← hx₃]; simp; rfl
     · -- (⇐) Backward direction: `(∀ i ≤ n, Ext^i(κ, M) = 0) → (n+1 : ℕ∞) ≤ depth M`.
       intro hext
       -- Step 1: From Ext^0(κ, M) = 0, extract `Subsingleton (κ →ₗ[R] M)`.
@@ -545,7 +545,7 @@ theorem depth_eq_smallest_ext_index
         -- `x₂ : Ext κ M j = 0` by `hext` at `j`.
         have hx₂_zero : x₂ = 0 := hext j (by omega) _
         rw [hx₂_zero] at hx₂
-        simpa using hx₂.symm
+        rw [← hx₂]; simp; rfl
       -- Step B: apply `ih (M := MxM)` at index `n`.
       have hdepth_MxM : (n : ℕ∞) ≤ depth (IsLocalRing.maximalIdeal R) MxM :=
         (ih (M := MxM)).mpr hMxM_vanish
@@ -1092,7 +1092,7 @@ lemma depth_quotSMulTop_succ_eq_depth_of_isSMulRegular
           CategoryTheory.Abelian.Ext.covariant_sequence_exact₁ κ hS e (hSf_kill e) rfl
         have hx₃_zero : x₃ = 0 := hMxM_vanish j hj _
         rw [hx₃_zero] at hx₃
-        simpa using hx₃.symm
+        rw [← hx₃]; simp; rfl
   · -- (≤): depth M ≤ depth(M/xM) + 1.
     rw [← ENat.forall_natCast_le_iff_le]
     intro a ha
@@ -1119,7 +1119,7 @@ lemma depth_quotSMulTop_succ_eq_depth_of_isSMulRegular
           CategoryTheory.Abelian.Ext.covariant_sequence_exact₃ κ hS e rfl he_extClass
         have hx₂_zero : x₂ = 0 := hM_vanish j (by omega) _
         rw [hx₂_zero] at hx₂
-        simpa using hx₂.symm
+        rw [← hx₂]; simp; rfl
       gcongr
 
 /-! ### Helper iter-198 Lane AB (axiom-clean): regular-element existence from positive depth.
@@ -2868,9 +2868,9 @@ private lemma notMem_minimalPrimes_of_regularLocal_succ
         · exact IsLocalRing.le_maximalIdeal hi_prime.ne_top
         · exact habs
       have h_min : 𝔪 ∈ minimalPrimes R := hi_eq ▸ hi
-      have h_ph_zero : 𝔪.primeHeight = 0 := Ideal.primeHeight_eq_zero_iff.mpr h_min
-      have h_ph_dim : 𝔪.primeHeight = ringKrullDim R :=
-        IsLocalRing.maximalIdeal_primeHeight_eq_ringKrullDim
+      have h_ph_zero : 𝔪.height = 0 := Ideal.height_eq_zero_iff.mpr h_min
+      have h_ph_dim : 𝔪.height = ringKrullDim R :=
+        IsLocalRing.maximalIdeal_height_eq_ringKrullDim
       have h_dim_zero : (ringKrullDim R : WithBot ℕ∞) = 0 :=
         h_ph_dim ▸ (h_ph_zero ▸ rfl)
       have h_dim_eq : (𝔪.spanFinrank : WithBot ℕ∞) = ringKrullDim R := by

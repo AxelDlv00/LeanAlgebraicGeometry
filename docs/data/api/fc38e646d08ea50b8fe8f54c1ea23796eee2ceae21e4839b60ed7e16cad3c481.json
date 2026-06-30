@@ -1,0 +1,81 @@
+[
+  {
+    "timestamp": "2026-06-24T20:10:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/SliceTransport.lean",
+      "theorem": "sliceDualTransport_comp"
+    },
+    "session": {
+      "id": "session_77",
+      "model": "prover"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "sliceDualTransport_app_apply",
+        "dualUnitRingSwap_apply",
+        "Scheme.Hom.comp_appIso",
+        "Scheme.Hom.comp_image"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "scratch probe: opensFunctor of composite defeq to composite of opensFunctors?",
+        "code_tried": "example : (Hom.opensFunctor (h ≫ f)).obj W' = (Hom.opensFunctor f).obj ((Hom.opensFunctor h).obj W') := by rfl",
+        "line_number": "1056",
+        "lean_error": "Tactic `rfl` failed: (h ≫ f) ''ᵁ W' not defeq f ''ᵁ h ''ᵁ W' (comp_image is propositional)",
+        "result": "failed",
+        "insight": "iso-level FC-free composition law is TYPE-INCORRECT: domains only propositionally equal. Forces the sectionwise spelling."
+      },
+      {
+        "attempt": 2,
+        "strategy": "sectionwise split via app_apply + comp_appIso cocycle",
+        "code_tried": "rw [sliceDualTransport_app_apply (h ≫ f) M V φ W z, dualUnitRingSwap_apply, Scheme.Hom.comp_appIso h f (unop W).left, dualUnitRingSwap_apply, dualUnitRingSwap_apply]; simp only [Iso.trans_hom, CommRingCat.hom_comp, RingHom.comp_apply, Functor.mapIso_hom, Iso.op_hom, eqToIso.hom, eqToHom_op]",
+        "line_number": "1086",
+        "lean_error": "first: application type mismatch on eqToHom direction; then: NatTrans naturality default-value synth failure",
+        "result": "partial",
+        "insight": "eqToHom carrier needs (comp_image …).symm; φ binder α needs EXPLICIT naturality := (h≫f).appIso_inv_naturality (aesop fails for composite)."
+      },
+      {
+        "attempt": 3,
+        "strategy": "fix eqToHom .symm + explicit naturality field",
+        "code_tried": "X.presheaf.map (eqToHom (Scheme.Hom.comp_image h f (unop W).left).symm).op ; naturality := fun _ _ i => (h ≫ f).appIso_inv_naturality i",
+        "line_number": "1084",
+        "lean_error": "none — clean diagnostics, lake build EXIT 0 (8322 jobs), lean_verify axioms {propext, Classical.choice, Quot.sound}",
+        "result": "success",
+        "insight": "Brick lands axiom-clean. iter-073 pattern (app_apply + comp_appIso) generalizes to composites."
+      }
+    ],
+    "next_steps": "Brick is axiom-clean BUT does NOT close the consumer case hstar (see PresheafDualPullback milestone). Blueprint statement (lem:slice_dual_transport_comp) is iso-level, mismatches the sectionwise Lean — blueprint-writer must correct."
+  },
+  {
+    "timestamp": "2026-06-24T20:10:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "presheafDualPullbackComparison_restrict (case hstar, L920)"
+    },
+    "session": {
+      "id": "session_77",
+      "model": "prover"
+    },
+    "findings": {
+      "blocker": "case hstar RE-DIAGNOSED: residual is the sectionwise action of FC = leftAdjointCompIso (pushforward-comparison), NOT a sliceDualTransport fact. The brick built this iter (sliceDualTransport_comp) peels slice layers but the FC-reindex of φ remains. Next sub-identity: reconcile abstract leftAdjointCompIso with concrete PresheafOfModules.pushforwardComp.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "pull exact consumer goal at L884/L920 via LSP, characterize residual after both sides reduce via slice app_apply",
+        "code_tried": "lean_goal @ PresheafDualPullback.lean:884 (after dualUnitRingSwap legs cancel)",
+        "line_number": "920",
+        "lean_error": "LSP timeouts (30s) twice then succeeded; residual = X.presheaf.map(eqToHom).op ((FC.hom.app dM).app V φ).app(...) = φ.app(...)(pushforward₀-reindex via restrictFunctorComp)",
+        "result": "partial",
+        "insight": "Every sliceDualTransport layer is already peeled. The brick is NOT the closer — the residual is pushforward-comparison content (FC), confirmed by lean-auditor independently."
+      }
+    ],
+    "next_steps": "Do NOT build another slice brick. Next sub-identity: (FC.hom.app dM).app V φ = concrete reindex of φ via PresheafOfModules.pushforwardComp β_h β_f. RECOMMEND mathlib-analogist (api-alignment / design-shape) on leftAdjointCompIso vs PresheafOfModules.pushforwardComp BEFORE building the next brick — 4th iter on this single sorry with a shifting blocker name."
+  }
+]

@@ -49,6 +49,7 @@ noncomputable def sectionCechAugV (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X
       PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).map (cechAugmentation 𝒰 F)) ≫
     (coreIso_objIso 𝒰 F 0 V).hom
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- raised: the reverse `← Functor.map_comp` folds over the 5-fold composite `GV ∘ Ψ` are
 -- whnf-intensive on the heavily-whiskered section/pushforward types.
@@ -454,6 +455,7 @@ private lemma cechAugmentation_pushPullMap (𝒰 : X.OpenCover) (F : X.Modules)
   rw [cechNervePointIso_inv_eq_unit, pushPullMap_eq_raw]
   exact rawPushPullMap_unit _ _ _ _ F
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 /-- The pullback–pushforward unit reads through the per-leg section identification as the
 plain `F`-restriction `Γ(V, F) → Γ(U_σ ∩ V, F)`. -/
@@ -558,7 +560,9 @@ private lemma unit_pushPull_leg_sections (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
 
 end AugSeam
 
-set_option maxHeartbeats 1600000 in
+set_option backward.isDefEq.respectTransparency false in
+-- TODO(v4.31.0): kernel deterministic-timeout on this term at 1.6M; raised to unlimited to keep the proof (slow kernel-check, ~one-time then cached)
+set_option maxHeartbeats 0 in
 set_option synthInstance.maxHeartbeats 1000000 in
 -- raised: instance synthesis (`HasLimit`/`PreservesLimitsOfShape` over the heavy
 -- push–pull product types) exceeds the default budget on this file.
@@ -801,7 +805,7 @@ private lemma cechSectionD_coord (m : ℕ)
       AlgebraicTopology.AlternatingCofaceMapComplex.objD
         (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V)
           ((SheafOfModules.forget X.ringCatSheaf).obj F)) m :=
-    CochainComplex.of_d _ _ (AlgebraicTopology.AlternatingCofaceMapComplex.d_squared _) m
+    CochainComplex.of_d (fun n => (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V) ((SheafOfModules.forget X.ringCatSheaf).obj F)).obj (SimplexCategory.mk n)) (AlgebraicTopology.AlternatingCofaceMapComplex.objD (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V) ((SheafOfModules.forget X.ringCatSheaf).obj F))) m
   refine Eq.trans (congrArg (fun y => sectionCechProductEquiv (fun a => coverOpen 𝒰 a ⊓ V)
     ((SheafOfModules.forget X.ringCatSheaf).obj F) (m + 1) y σ)
     (ConcreteCategory.congr_hom hd t)) ?_
@@ -844,6 +848,7 @@ private lemma cechSection_comm_zero :
     (op_id (X := V))).trans
     (((SheafOfModules.forget X.ringCatSheaf).obj F).presheaf.map_id (Opposite.op V))
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 /-- **(In)** The positive-degree contracting identities, from the dependent engine
 (`CombinatorialCech.depHomotopy_spec`). -/
@@ -923,6 +928,7 @@ private lemma cechSection_comm_succ (n : ℕ) :
     ((SheafOfModules.forget X.ringCatSheaf).obj F) (n + 1) y σ)
     (ConcreteCategory.id_apply t).symm
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 set_option maxRecDepth 4000 in
 /-- **(I1)** The augmentation-node contracting identity:
@@ -1105,6 +1111,7 @@ the `Dependent` engine — NOT a math dependency. Invoke no affine vanishing.
 
 Difficulty: MEDIUM (combinatorial assembly; the Dependent engine does the heavy lifting). -/
 set_option maxRecDepth 8000 in
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 noncomputable def cechSection_contractible (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
     (F : X.Modules) (V : TopologicalSpace.Opens X)

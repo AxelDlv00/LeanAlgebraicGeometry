@@ -311,7 +311,7 @@ noncomputable def presentationModulesRestrictBasicOpen
       (Scheme.Modules.restrictFunctor.{u} (basicOpenIsoSpecAway g).inv) := inferInstance
   exact @SheafOfModules.Presentation.map _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ P4
     (Scheme.Modules.restrictFunctor.{u} (basicOpenIsoSpecAway g).inv) hpc
-    (restrictBasicOpenUnitIso g)
+    (restrictBasicOpenUnitIso g).symm
 
 end RestrictOverBridge
 

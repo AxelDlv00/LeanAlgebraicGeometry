@@ -28,6 +28,14 @@ open AlgebraicGeometry CategoryTheory
 
 namespace AlgebraicGeometry.Grassmannian
 
+/-- [v4.31.0] Resolve the `CommRing` instance diamond for tensor products of `ℤ`-MvPolynomial
+rings: there are two `Algebra ℤ (MvPolynomial _ ℤ)` paths (`algebraInt` vs `MvPolynomial.algebra`)
+which block `inferInstance`; the explicit `Algebra.TensorProduct.instCommRing` picks one. -/
+noncomputable local instance mvPolyTensorCommRing {σ τ : Type*} :
+    CommRing (TensorProduct ℤ (MvPolynomial σ ℤ) (MvPolynomial τ ℤ)) :=
+  Algebra.TensorProduct.instCommRing
+
+
 /- Blueprint: def:gr_affine_chart (chapters/Picard_GrassmannianCells.tex) -/
 
 /- Planner note:
@@ -1308,8 +1316,9 @@ theorem pullbackιIso_inv_fst (d r : ℕ) (i j : (theGlueData d r).J) :
       (Limits.cospan ((theGlueData d r).ι i)
         ((theGlueData d r).ι j))).conePointUniqueUpToIso_inv_comp
     ((theGlueData d r).vPullbackConeIsLimit i j) Limits.WalkingCospan.left
-  simpa [pullbackιIso, Limits.pullback.fst, Limits.PullbackCone.mk,
-    Grassmannian.theGlueData] using this
+  simp only [pullbackιIso, Limits.pullback.fst, Limits.PullbackCone.mk,
+    Grassmannian.theGlueData] at this ⊢
+  exact this
 
 /-- Second leg of the source iso `pullbackιIso`: `e₂⁻¹ ≫ pr₂ = chartTransition I J ≫ chartIncl J I`
 (the `V (i,j) ⟶ U j` leg of the glue-data pullback cone, which is `t ≫ f`). Project-local. -/
@@ -1321,8 +1330,9 @@ theorem pullbackιIso_inv_snd (d r : ℕ) (i j : (theGlueData d r).J) :
       (Limits.cospan ((theGlueData d r).ι i)
         ((theGlueData d r).ι j))).conePointUniqueUpToIso_inv_comp
     ((theGlueData d r).vPullbackConeIsLimit i j) Limits.WalkingCospan.right
-  simpa [pullbackιIso, Limits.pullback.snd, Limits.PullbackCone.mk,
-    Grassmannian.theGlueData] using this
+  simp only [pullbackιIso, Limits.pullback.snd, Limits.PullbackCone.mk,
+    Grassmannian.theGlueData] at this ⊢
+  exact this
 
 /-- The overlap-to-chart composite `t_{I,J} ≫ ι_{J,I}` is the comorphism of the pre-localisation
 transition hom `θ̃_{I,J}` (`Spec.map`): `chartTransition I J ≫ chartIncl J I = Spec.map θ̃_{I,J}`.
@@ -1347,6 +1357,8 @@ theorem chartTransition_comp_chartIncl (d r : ℕ) (I J : Finset (Fin r)) (hI : 
 set_option maxHeartbeats 3200000 in
 -- The patch computation traverses the `pullbackDiagonalMapIdIso` / `pullbackSpecIso` instance
 -- diamonds over the heavy `MvPolynomial` localisation objects (defeq-expensive `erw`s); raised limit.
+-- (v4.31.0: stricter `instances`-transparency defeq broke the `cancel_right e₁.hom`
+-- rewrite below; the knob restores the b80f227 unification behavior.)
 set_option backward.isDefEq.respectTransparency false in
 open TensorProduct CategoryTheory.Limits in
 /-- The structure morphism `Gr(d,r) → Spec ℤ` is **separated** (`lem:gr_separated`, morphism form).

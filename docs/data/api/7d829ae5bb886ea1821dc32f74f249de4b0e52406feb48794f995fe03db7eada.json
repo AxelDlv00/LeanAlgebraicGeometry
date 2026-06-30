@@ -1,0 +1,148 @@
+[
+  {
+    "timestamp": "2026-06-25T09:00:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport.left_inv"
+    },
+    "session": {
+      "id": "session_311",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "Scheme.Modules.εInv_apply",
+        "appIso_swap_cancel",
+        "presheafMap_ofBijective_symm",
+        "PresheafOfModules.naturality_apply",
+        "ModuleCat.restrictScalarsId'App_inv_apply",
+        "Subsingleton.elim"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "fire 3 nested inv-ε via εInv_apply, discharge bijectivity side-goals first so metavars resolve",
+        "code_tried": "erw [Scheme.Modules.εInv_apply, εInv_apply, εInv_apply]; all_goals try exact ConcreteCategory.bijective_of_isIso _",
+        "line_number": "726",
+        "lean_error": "rw [RingEquiv.symm_apply_eq] fails: Mul-instance synthesis on 𝟙_/restr-spelled unit carrier; metavars block motive before discharge",
+        "result": "partial",
+        "insight": "discharge ?hg bijectivity FIRST (all_goals try ...) so main term is concrete; do ring-equiv algebra in plain-carrier helper lemmas fired by erw, never rw"
+      },
+      {
+        "attempt": 2,
+        "strategy": "cancel adjacent appIso hom/inv pair then relabel the εrel via new helpers",
+        "code_tried": "simp only [Over.mk_left]; erw [appIso_swap_cancel f (f ⁻¹ᵁ (unop W'').left) (bij) (bij)]; erw [presheafMap_ofBijective_symm]",
+        "line_number": "752",
+        "lean_error": "bare `erw [appIso_swap_cancel]` times out at whnf (800k hb) — must invoke focused with explicit f, P, both bijectivity proofs",
+        "result": "partial",
+        "insight": "focused erw avoids full-term whnf; presheafMap_ofBijective_symm turns εrel⁻¹ into reverse relabel X.presheaf.map (eqToHom e.symm)"
+      },
+      {
+        "attempt": 3,
+        "strategy": "reduce to φ.naturality across thin-poset slice morphism, collapse relabel composite by proof-irrelevance",
+        "code_tried": "convert (PresheafOfModules.naturality_apply φ g y₀).symm using 2; rw [restr.map g = M.val.map ((Over.forget _).map (Over.homMk ...)).op]; erw [← PresheafOfModules.map_comp_apply, Subsingleton.elim ...]; exact (ModuleCat.restrictScalarsId'App_inv_apply _ _ _ z).symm",
+        "line_number": "726-790",
+        "lean_error": null,
+        "result": "success",
+        "insight": "convert using 2 is exact depth (3/4 overshoots); restr = pushforward₀(Over.forget U) so restr.map g = M.val.map(...).op by rfl; relabel composite = 𝟙 by Subsingleton.elim on thin poset"
+      }
+    ],
+    "next_steps": "left_inv CLOSED axiom-clean (per prover; build-green). right_inv (L843) is the structural mirror — same opener, reduced; apply same φ.naturality close."
+  },
+  {
+    "timestamp": "2026-06-25T09:00:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport.right_inv"
+    },
+    "session": {
+      "id": "session_311",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "post-εInv element residual: ε_inv⁻¹(εrel⁻¹(ε_hom⁻¹(ψ-reindex(collapse(M.val.map(eqToHom) z))))) = ψ.app W z; needs the appIso swaps relabelled (εrel between the two swaps) — a 3-way appIso_relabel_cancel not yet built",
+      "key_lemmas_used": [
+        "Scheme.Modules.εInv_apply",
+        "ConcreteCategory.bijective_of_isIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "mirror left_inv opener: collapse 3 inv-ε to RingEquiv.ofBijective.symm",
+        "code_tried": "erw [Scheme.Modules.εInv_apply, εInv_apply, εInv_apply]; all_goals try exact ConcreteCategory.bijective_of_isIso _",
+        "line_number": "823-843",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "opener works identically; residual is documented (outer→inner inv-ε chain). Differs from left_inv: the two appIso swaps are NOT directly adjacent (ε_inv = (appIso fW').inv, separated by εrel), so appIso_swap_cancel does not directly fire — needs a 3-way appIso_relabel_cancel"
+      }
+    ],
+    "next_steps": "build a 3-way appIso_relabel_cancel that absorbs εrel between the two appIso swaps; then close as left_inv."
+  },
+  {
+    "timestamp": "2026-06-25T09:00:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "pullbackSpecTildeNatIso_comp"
+    },
+    "session": {
+      "id": "session_311",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "after rw [pullbackSpecTildeNatIso, gammaPushforwardNatIso_comp]; congr 1; rw [Equiv.symm_apply_eq] the residual is a conjugateIsoEquiv image equation (pushforward-side cocycle = conjugate-transported pullback-side cocycle) — the banked conjugateEquiv_comp / conjugateIsoEquiv fusion step, left as bare sorry",
+      "key_lemmas_used": [
+        "pullbackSpecTildeNatIso",
+        "gammaPushforwardNatIso_comp",
+        "Equiv.symm_apply_eq",
+        "Scheme.Modules.pullbackComp",
+        "ModuleCat.extendScalarsComp",
+        "Spec.map_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "unfold both nat-isos via the def + the landed Γ-side cocycle, then peel the conjugateIsoEquiv",
+        "code_tried": "rw [pullbackSpecTildeNatIso, gammaPushforwardNatIso_comp]; congr 1; rw [Equiv.symm_apply_eq]",
+        "line_number": "1280-1283",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "the Γ-side cocycle gammaPushforwardNatIso_comp transports in cleanly; congr 1 + Equiv.symm_apply_eq strip the outer .symm leaving the conjugateIsoEquiv naturality equation between the two assembled cocycles — exactly the 'one conjugateEquiv_comp step' iter-310 predicted"
+      },
+      {
+        "attempt": 2,
+        "strategy": "supplement lemma: rewrite the eqToIso Spec.map_comp carrier into pullbackComp form (the move-2 source cocycle)",
+        "code_tried": "eqToIso (show pullback (Spec.map (φ ≫ j)) = pullback (Spec.map j ≫ Spec.map φ) by rw [Spec.map_comp]) ≪≫ (pullbackComp (Spec.map j) (Spec.map φ)).symm",
+        "line_number": "1266-1271",
+        "lean_error": null,
+        "result": "success",
+        "insight": "under set_option backward.isDefEq.respectTransparency false + maxHeartbeats 3200000 the eqToIso≪≫pullbackComp.symm spelling of the source cocycle type-checks (opaque Lan left-adjoint); statement compiles green"
+      }
+    ],
+    "next_steps": "close the conjugateIsoEquiv fusion residual (L1283) via conjugateIsoEquiv functoriality / conjugateEquiv_comp; SAME residual-shape as the D3′ TOS:2631 key — consider the shared scratch-module fix. Add a local comment naming the residual goal (lean-auditor must-fix)."
+  },
+  {
+    "timestamp": "2026-06-25T09:00:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "pushforwardPullbackBaseChange_restrict_naturality"
+    },
+    "session": {
+      "id": "session_311",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "depends on pullbackSpecTildeNatIso_comp (still sorry) + BaseChangeChartTower assembly; not reached this lane (build timeout consumed the budget)",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "blocked on pullbackSpecTildeNatIso_comp close; then assemble over BaseChangeChartTower."
+  }
+]

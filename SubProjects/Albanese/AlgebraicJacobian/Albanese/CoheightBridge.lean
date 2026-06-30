@@ -168,8 +168,7 @@ theorem ringKrullDim_stalk_eq_coheight
         = (Order.height (α := PrimeSpectrum Γ(X, U)) p : WithBot ℕ∞) := by
     rw [IsLocalization.AtPrime.ringKrullDim_eq_height
           (R := Γ(X, U)) p.asIdeal (X.presheaf.stalk z),
-        Ideal.height_eq_primeHeight]
-    rfl
+        PrimeSpectrum.height_eq_orderHeight p]
   -- Step 5: relate height(p) to coheight(z) via Decls 1 + 2 and the
   -- homeomorphism `Spec Γ(X,U) ≃ U.toScheme` from `hU.isoSpec`.
   -- (5a) Decl 1: coheight z in X = coheight ⟨z, hzU⟩ in U.1 subspace.
@@ -221,6 +220,16 @@ end AlgebraicGeometry
 namespace AlgebraicGeometry
 
 namespace Scheme
+
+/-- **Codim-1 wrapper: coheight = 1 ⟹ stalk Krull dim ≤ 1.** Consumer-facing
+specialisation of `ringKrullDim_stalk_eq_coheight` for the codim-`1` case used
+in `Albanese/CodimOneExtension.lean` and `RiemannRoch/WeilDivisor.lean`. -/
+lemma ringKrullDimLE_of_coheight_eq_one
+    (X : Scheme.{u}) (z : X) (hz : Order.coheight z = 1) :
+    Ring.KrullDimLE 1 (X.presheaf.stalk z) := by
+  rw [Ring.krullDimLE_iff, ringKrullDim_stalk_eq_coheight, hz]
+  -- Goal: ((1 : ℕ∞) : WithBot ℕ∞) ≤ ((1 : ℕ) : WithBot ℕ∞)
+  norm_cast
 
 end Scheme
 

@@ -1,0 +1,88 @@
+[
+  {
+    "timestamp": "2026-06-29T18:30:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/PullbackTensorComp.lean",
+      "theorem": "pullbackTensorMap_restrict"
+    },
+    "session": {
+      "id": "session_321",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Applying the first slide rewrite (scPb_slide) INTO the giant post-Step-D goal whnf-explodes under the lemma-wide `backward.isDefEq.respectTransparency false` (required by Step A's Sq1 rewrite); kabstract does relaxed-transparency defeq over `Scheme.Modules.pullback ≟ SheafOfModules.pullback φ_h` (iter-320 wall, re-confirmed).",
+      "key_lemmas_used": [
+        "scPb_slide",
+        "sheafificationCompPullback_comp",
+        "sheafifyTensorUnitIso_hom_eq'",
+        "tensorHom_comp_tensorHom"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Capture EXACT post-Step-D goal via trace_state + lake env lean (build-blind, LSP times out).",
+        "code_tried": "trace_state at residual; transcribed 4-vs-8 factor identity into proof body comment",
+        "line_number": "987",
+        "result": "partial",
+        "insight": "Previously-vague 'slide + S3/S4 region' is now a fully explicit factor identity; basis for the 7-step roadmap."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Extract the slide as a small standalone naturality lemma to use as the rewrite motive.",
+        "code_tried": "private lemma scPb_slide ... := ((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom h)).hom.naturality g).symm",
+        "line_number": "762",
+        "result": "success",
+        "insight": "scPb_slide compiles axiom-clean (plain NatTrans.naturality; no pullback-defeq detonation). Verified standalone vs prebuilt TOS olean."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Wire Slide-1 (rw/erw/slice of scPb_slide / reassoc_of%) into the giant post-Step-D goal.",
+        "code_tried": "rw [scPb_slide h δ_f] / erw [reassoc_of% scPb_slide ...] into residual goal",
+        "line_number": "987",
+        "result": "failed",
+        "insight": "kabstract whnf-explodes (Scheme.Modules.pullback ≟ SheafOfModules.pullback φ_h defeq) under the lemma-wide respectTransparency false. Cheap lemma, expensive application. Did NOT gamble the 9-min build on the known-exploding rewrite."
+      },
+      {
+        "attempt": 4,
+        "strategy": "Split steps (1)-(7) into a continuation lemma WITHOUT relaxed transparency (mirror of D1' pullbackTensorMap_natural erw paste, which does not explode at default transparency).",
+        "code_tried": "scratch continuation lemma stub for the 7-step slide assembly",
+        "line_number": "987",
+        "result": "partial",
+        "insight": "Blocked only by transcription: trace_state pretty-printer DROPS each ⊗ₘ's `(C := PresheafOfModules (W.presheaf ⋙ forget₂ CommRingCat RingCat))` carrier pin, so verbatim copy elaborates on the wrong `Sheaf.val W.ringCatSheaf` carrier and picks a failing MonoidalCategory/OplaxMonoidal path. Continuation lemma must re-pin (C := …) on every ⊗ₘ."
+      }
+    ],
+    "next_steps": "iter-322: build the continuation lemma `pullbackTensorMap_restrict_cont h f M N` with `(C := …)` re-pinned on every ⊗ₘ and WITHOUT respectTransparency false; develop the 7-step slide proof in the fast scratch loop; close residual with `exact …_cont`. The genuine math core is `cmp_leg` (per-leg, ~100 LOC mate calculus = presheaf transpose of sheafificationCompPullback_comp) — dispatch mathlib-analogist on it. Do NOT re-dispatch a raw paste round."
+  },
+  {
+    "timestamp": "2026-06-29T18:30:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/PullbackTensorComp.lean",
+      "theorem": "scPb_slide"
+    },
+    "session": {
+      "id": "session_321",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "NatTrans.naturality",
+        "SheafOfModules.sheafificationCompPullback"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "State the naturality square of sheafificationCompPullback as a standalone slide lemma; prove via the NatIso's NatTrans naturality, flipped.",
+        "code_tried": "((SheafOfModules.sheafificationCompPullback (Hom.toRingCatSheafHom h)).hom.naturality g).symm",
+        "line_number": "762",
+        "result": "success",
+        "insight": "Axiom-clean, compiles; auditor-confirmed correct + correctly typed. This is the 'small rewrite motive' the planner asked for. New unmatched lean_aux (needs a blueprint block or private-mechanical tag)."
+      }
+    ],
+    "next_steps": "Planner: add a thin blueprint block for scPb_slide or mark it a private mechanical slide that may stay unmatched."
+  }
+]

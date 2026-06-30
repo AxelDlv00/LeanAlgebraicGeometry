@@ -1,0 +1,136 @@
+[
+  {
+    "timestamp": "2026-06-25T14:45:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_compat"
+    },
+    "session": {
+      "id": "session_85",
+      "model": "opus"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "dual_unit_iso_restrict_assemble",
+        "Iso.symm_self_id_assoc",
+        "Iso.self_symm_id_assoc"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Open S4a by unfolding dual_unit_iso + dual_restrict_iso_eq_comparison (the prior body)",
+        "code_tried": "simp only [dual_unit_iso, dual_restrict_iso_eq_comparison]",
+        "line_number": "1607",
+        "lean_error": "none (compiles) but DEAD ROUTE: unfolds prematurely, destroying the folded structure L2' matches against",
+        "result": "failed",
+        "insight": "Premature unfold destroys the folded matching surface; must stay folded and rw by L2'."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Folded telescope: rewrite the trailing (restrict j) dual_unit_iso_U leg by the new general L2' assembly lemma, then cancel the two exposed inverse pairs",
+        "code_tried": "rw [dual_unit_iso_restrict_assemble j, Iso.symm_self_id_assoc, Iso.self_symm_id_assoc]",
+        "line_number": "1619",
+        "lean_error": "none",
+        "goal_before": "dual_unit_iso (V) = dualIsoOfIso(unitRestrictIso j) ≪≫ (dual_restrict_iso j 𝒪_U).symm ≪≫ (restrictFunctor j).mapIso dual_unit_iso_U ≪≫ unitRestrictIso j",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "S4a body sorry-free. Two inverse pairs D.symm≪≫D and dualIsoOfIso(u)≪≫(dualIsoOfIso u).symm telescope; LSP lean_multi_attempt confirmed both _assoc cancellers exist + fire."
+      }
+    ],
+    "next_steps": "S4a body closed but rides the sorry'd L2' dual_unit_iso_restrict_assemble. Do NOT re-open S4a body."
+  },
+  {
+    "timestamp": "2026-06-25T14:45:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_assemble"
+    },
+    "session": {
+      "id": "session_85",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "L2' .hom residual is the dual-unit naturality square along f; closing it needs L1' presheafDualUnitIso_pullback_natural, which cannot be stated — it pairs θ_𝟙 against a presheaf-level pullback-unit comparison p that does not exist in codebase/Mathlib",
+      "key_lemmas_used": [
+        "Iso.ext",
+        "Iso.trans_hom",
+        "Functor.mapIso_hom",
+        "Iso.symm_hom",
+        "Iso.app_hom",
+        "dual_unit_iso",
+        "unitRestrictIso",
+        "dual_restrict_iso_eq_comparison"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "STEP-B idiom (as in dual_restrict_iso_comp/S3): drop to .hom level and flatten every ≪≫/mapIso/symm into one right-associated ≫-chain via syntactic simp only + 3 definitional unfolds",
+        "code_tried": "apply Iso.ext; simp only [Iso.trans_hom, Functor.mapIso_hom, Iso.symm_hom, Iso.app_hom, dual_unit_iso, unitRestrictIso, dual_restrict_iso_eq_comparison]; sorry",
+        "line_number": "1565",
+        "lean_error": "none (flatten succeeds); sorry remains at L1601",
+        "goal_after": "LHS RF.map (SX.map pdX.hom ≫ cuX.app 𝒪_X) ≫ RFIP.app 𝒪_X ≫ pbU.hom = RHS (RFIP.app (dual 𝒪_X) ≫ SCP.app 𝒪_X.val.dual ≫ SY.map θ.hom) ≫ (dualIsoOfIso u).inv ≫ SY.map pdY.hom ≫ cuY.app 𝒪_Y",
+        "result": "partial",
+        "insight": "Flatten to exact .hom-level dual-unit naturality square verified via LSP lean_goal. Residual decomposes into (b) bridge-(b) SCP + (ct) counit naturality + (du) dualIsoOfIso def-unfold + (★) L1' presheaf core."
+      },
+      {
+        "attempt": 2,
+        "strategy": "State + prove L1' presheafDualUnitIso_pullback_natural as the (★) core",
+        "code_tried": "(not authored — L1' could not be stated cleanly)",
+        "line_number": "n/a",
+        "lean_error": "blocked: references presheaf-level pullback-unit comparison p : (PresheafOfModules.pullback φR).obj 𝟙_X ≅ 𝟙_Y that does NOT exist (lean_local_search + lean_loogle confirm only sheaf-level pullbackUnitIso/pullbackObjUnitToUnit); also θ's pushforward-side codomain needs an H1 unit reconciliation",
+        "result": "failed",
+        "insight": "L1' needs a missing infrastructure construction first (presheafPullbackUnitIso + pushforward-flank). This is the iter-085 trip-wire's anticipated fine-re-break case."
+      }
+    ],
+    "next_steps": "Construction lane: build presheafPullbackUnitIso (mirror pullbackObjUnitToUnitIso ~50-100 LOC) + the pushforward-flank unit comparison; then state+prove L1' via funext/element-ext → naturality_apply + evalLin 1; then finish L2' via STEP-B have-list + generic dual_scp_assemble-style exact. blueprint-writer MUST expand the under-specified L1' block first (HARD GATE)."
+  },
+  {
+    "timestamp": "2026-06-25T14:45:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "presheafDualUnitIso_pullback_natural"
+    },
+    "session": {
+      "id": "session_85",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Cannot be STATED: pairs θ_𝟙 against presheaf-level pullback-unit comparison p : (PresheafOfModules.pullback φR).obj 𝟙_X ≅ 𝟙_Y which does not exist in codebase or Mathlib; plus θ's pushforward codomain needs an H1 unit reconciliation (pushforward β).obj 𝟙_X ≅ 𝟙_Y",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Search for an existing presheaf-level pullback-unit comparison to pair θ against",
+        "code_tried": "lean_local_search 'PresheafOfModules pullback unit monoidal'; lean_loogle 'PresheafOfModules.pullback, _root_.MonoidalCategory.tensorUnit'; grep mathlib PullbackFree.lean",
+        "line_number": "n/a",
+        "lean_error": "No results — only sheaf-level pullbackObjUnitToUnit(Iso) exists (.lake/.../ModuleCat/Sheaf/PullbackFree.lean); no presheaf analogue",
+        "result": "failed",
+        "insight": "Need to CONSTRUCT presheafPullbackUnitIso first. Stating L1' at the Scheme-dualIsoOfIso level is DEAD (whnf-bomb, durable negative)."
+      }
+    ],
+    "next_steps": "Do NOT re-dispatch a prover at L1' as-is. Required: (1) construct presheafPullbackUnitIso; (2) construct pushforward-flank unit iso; (3) blueprint-writer expand the under-specified L1' block; then (4) state+prove L1'."
+  },
+  {
+    "timestamp": "2026-06-25T14:45:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_85",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Telescope gated on the whole S4a chain (L2' + L1') completing; correctly untouched per iter-085 instructions"
+    },
+    "attempts": [],
+    "next_steps": "Wire the 5 squares once S4a chain (L2'/L1') lands. sorry at L2387."
+  }
+]

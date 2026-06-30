@@ -1,0 +1,144 @@
+[
+  {
+    "timestamp": "2026-06-29T16:39:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dualUnitIso_dualIsoOfIso"
+    },
+    "session": {
+      "id": "session_99",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "presheafDualUnitIso_naturality",
+        "linearEndo_apply_comm",
+        "dualIsoOfIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Port green v4.30 body verbatim (B1: pure iso-algebra from single naturality square N)",
+        "code_tried": "dual_unit_iso.symm ≪≫ dualIsoOfIso s ≪≫ dual_unit_iso = s := by ... (N) via presheaf eval-core naturality + counit",
+        "line_number": "2383",
+        "lean_error": "Unknown identifier `presheafDualUnitIso_naturality` (decl dropped from DualInverse by v4.31 recovery)",
+        "result": "partial",
+        "insight": "v4.31 recovery silently DROPPED presheafDualUnitIso_naturality + linearEndo_apply_comm from DualInverse.lean; only comment refs survive"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Re-port the 2 dropped helpers (+private linearEndo_apply_comm) as private decls in TensorObjInverse, then re-run the v4.30 body",
+        "code_tried": "private lemma linearEndo_apply_comm ...; private lemma presheafDualUnitIso_naturality ...; then verbatim B1 body",
+        "line_number": "2383",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Closed axiom-clean [propext, Classical.choice, Quot.sound], no sorryAx (verified via temp #print axioms)"
+      }
+    ],
+    "next_steps": "Decide upstream restore of dropped helpers vs keep local private copies."
+  },
+  {
+    "timestamp": "2026-06-29T16:39:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "exists_tensorObj_inverse"
+    },
+    "session": {
+      "id": "session_99",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "homOfLocalCompat_restrictFunctor_map",
+        "dual_isLocallyTrivial",
+        "eqToHom_comp_iff"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Port green v4.30 body verbatim (3-step glue: Linv:=dual L, dual_isLocallyTrivial, choose trivialising opens)",
+        "code_tried": "refine ⟨dual L, dual_isLocallyTrivial hL, ?_⟩; choose U hxU _hUaff hLt using hL; ...homOfLocalCompat_restrictFunctor_map",
+        "line_number": "2438",
+        "lean_error": "Unknown identifier `homOfLocalCompat_restrictFunctor_map`; then in `key` sub-proof: rw [eqToHom_comp_iff] failed (target not type-correct under instances transparency); Over.mk_left no longer fires",
+        "result": "partial",
+        "insight": "Same dropped-helper blocker; plus v4.31 drift in key sub-proof: (Over.forget).op ⋙ M.val.presheaf ↔ restrict defeq + Sheaf.val↔ObjectProperty.obj deprecation poisons syntactic rw"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Re-port homOfLocalCompat_restrictFunctor_map private; build hnat with UNREDUCED .left spelling; apply eqToHom_comp_iff in TERM mode",
+        "code_tried": "have hnat := (...toPresheaf...map (f i).val).naturality (eqToHom hh); exact (eqToHom_comp_iff _ _ _).mpr hnat.symm",
+        "line_number": "2438",
+        "lean_error": null,
+        "result": "success",
+        "insight": "TERM-mode `(eqToHom_comp_iff _ _ _).mpr` is defeq-tolerant where syntactic `rw [eqToHom_comp_iff]` chokes; body sorry-free (rides open trivialisation_restrict_compat transitively). Developed in scratch importing only DualInverse (LSP dead on monster file)"
+      }
+    ],
+    "next_steps": "Closes fully once trivialisation_restrict_compat (c) lands."
+  },
+  {
+    "timestamp": "2026-06-29T16:39:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_assemble"
+    },
+    "session": {
+      "id": "session_99",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Two sheaf↔presheaf comparator reconciliations RES1 (dual flank) / RES2 (pullback flank) — the genuine churning core; every syntactic rw/erw of a category lemma chokes on v4.31 instances-transparency defeq",
+      "key_lemmas_used": [
+        "presheafDualUnitIso_pullback_natural",
+        "dualIsoOfIso",
+        "Functor.map_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Wire L1′ (now sorry-free leaf) into the body: add leaf import, bring θ-at-unit bridge to hom level, sheafify",
+        "code_tried": "have hL1'h := congrArg Iso.hom (presheafDualUnitIso_pullback_natural f); simp [...]; have hSY := congrArg (SY.map) hL1'h; simp only [dualIsoOfIso, Functor.mapIso_inv]; rw [← Functor.map_comp, ...]",
+        "line_number": "1538",
+        "lean_error": "rw [← Functor.map_comp] Did not find an occurrence (sheaf↔presheaf comparator legs not yet reconciled)",
+        "result": "partial",
+        "insight": "L1′ wiring works (genuine ingredients elaborate); residual is RES1/RES2 — real sub-lemmas about how sheaf comparators (restrictFunctorIsoPullback, pullbackUnitIso, dualIsoOfIso) sheafify presheaf comparators p/q. iter-085 BLOCKER comment (p does NOT exist) corrected as OBSOLETE"
+      }
+    ],
+    "next_steps": "Close via STEP-B generic-assemble: build RES1/RES2 + counit-naturality as term-mode `have`s, discharge ≫-bookkeeping by `exact` on a generic single-[Category] assemble lemma (NO syntactic rw). Consider effort-breaker to split RES1/RES2 into named sub-lemmas."
+  },
+  {
+    "timestamp": "2026-06-29T16:39:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_99",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Gated on (a)/S4a (dual_unit_iso_restrict_compat = L2′ rides dual_unit_iso_restrict_assemble, still sorry); was sorry in v4.30 117100c4 too — not a regression. 5-square immersion-naturality telescope S2/S3/S4a/S4b/S4c + ϱ/u_ι reindex",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — gated on (a)",
+        "code_tried": "(none; left as documented sorry scaffold)",
+        "line_number": "2327",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "Each telescope square is a genuine immersion-naturality residual, not free from restrictFunctorComp.hom.naturality"
+      }
+    ],
+    "next_steps": "Do NOT dispatch until (a) dual_unit_iso_restrict_assemble / S4a lands."
+  }
+]

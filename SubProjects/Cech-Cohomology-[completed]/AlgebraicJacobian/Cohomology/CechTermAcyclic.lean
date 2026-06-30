@@ -520,7 +520,7 @@ noncomputable def presentationRestrictOfOver
     (M.restrict W.ι).Presentation :=
   letI P2 : (M.over W).Presentation := presentationOverOpens W M U P hWU
   letI P3 : ((modulesOverOpensEquivalence W).inverse.obj (M.over W)).Presentation :=
-    P2.map (modulesOverOpensEquivalence W).inverse (overOpensInverseUnitIso W)
+    P2.map (modulesOverOpensEquivalence W).inverse (overOpensInverseUnitIso W).symm
   SheafOfModules.Presentation.ofIsIso.{u, u, u} (overOpensIsoRestrict W M).hom P3
 
 end RestrictOverBridge
@@ -582,7 +582,7 @@ noncomputable def presentationRestrictSliceOfOver (V : X.Opens) (F : X.Modules)
       (Scheme.Modules.restrictFunctor.{u} φ.hom) := inferInstance
   letI P4 : ((Scheme.Modules.restrictFunctor.{u} φ.hom).obj (F.restrict Wx.ι)).Presentation :=
     @SheafOfModules.Presentation.map _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ P3
-      (Scheme.Modules.restrictFunctor.{u} φ.hom) hpc (restrictIsoUnitIso φ.hom)
+      (Scheme.Modules.restrictFunctor.{u} φ.hom) hpc (restrictIsoUnitIso φ.hom).symm
   -- Identify with the iterated restriction `(F.restrict V.ι).restrict Wv.ι`.
   letI e45 : (Scheme.Modules.restrictFunctor.{u} φ.hom).obj (F.restrict Wx.ι) ≅
       (F.restrict V.ι).restrict Wv.ι :=
@@ -600,7 +600,7 @@ noncomputable def presentationRestrictSliceOfOver (V : X.Opens) (F : X.Modules)
       SheafOfModules.unit (V.toScheme.ringCatSheaf.over Wv) :=
     overOpensFunctorUnitIso (X := V.toScheme) Wv
   letI P7 : (eV.functor.obj (eV.inverse.obj ((F.restrict V.ι).over Wv))).Presentation :=
-    P6.map eV.functor ηV
+    P6.map eV.functor ηV.symm
   exact SheafOfModules.Presentation.ofIsIso.{u, u, u}
     (eV.counitIso.app ((F.restrict V.ι).over Wv)).hom P7
 

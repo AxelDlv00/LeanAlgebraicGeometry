@@ -1,0 +1,169 @@
+[
+  {
+    "timestamp": "2026-06-25T10:30:53Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "htensorComparison_naturality"
+    },
+    "session": {
+      "id": "session_37",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "H_represents",
+        "HMapFst",
+        "htensorComparison",
+        "tensorAssocNatIso₃",
+        "External.pullbackTensorComparison",
+        "MonoidalCategory.whisker_exchange",
+        "tensorHom_comp_tensorHom",
+        "coyoneda.map_preimage",
+        "NatTrans.naturality_apply",
+        "compose_three_squares"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "interchange via tensorHom_comp_tensorHom directly",
+        "code_tried": "tensorHom_comp_tensorHom (wrong arg order)",
+        "lean_error": "Application type mismatch: g₁ has type b ⟶ b' but expected a ⟶ a'",
+        "result": "failed",
+        "insight": "arg order must be f₁ g₁ f₂ g₂"
+      },
+      {
+        "attempt": 2,
+        "strategy": "reference External.pullbackTensorComparison unqualified",
+        "code_tried": "External.pullbackTensorComparison f H",
+        "lean_error": "Unknown identifier `External.pullbackTensorComparison`",
+        "result": "failed",
+        "insight": "namespace scoping; full-qualify after grep namespace/open"
+      },
+      {
+        "attempt": 3,
+        "strategy": "rw the interchange lemma into the composite",
+        "code_tried": "rw [tensorHom_comp_tensorHom]",
+        "lean_error": "rewrite failed: pattern (?f₁ ⊗ₘ ?f₂) ≫ (?g₁ ⊗ₘ ?g₂) not found in PresheafOfModules.Monoidal.tensorHom (𝟙 I.val) …",
+        "result": "failed",
+        "insight": "non-syntactic sheafification/tensorBC instance path; rw matches only to reducible transparency"
+      },
+      {
+        "attempt": 4,
+        "strategy": "simp the presheaf tensorHom comp",
+        "code_tried": "simp [comp_app, tensorHom_app]",
+        "lean_error": "simp made no progress (repeated)",
+        "result": "failed",
+        "insight": "fires only with explicit (R := X.presheaf)"
+      },
+      {
+        "attempt": 5,
+        "strategy": "assemble via calc chain",
+        "code_tried": "calc … = … := …",
+        "lean_error": "invalid 'calc' step, failed to synthesize Trans Eq Eq (≥4×)",
+        "result": "failed",
+        "insight": "calc unusable on these defeq junctions; abandon for term mode"
+      },
+      {
+        "attempt": 6,
+        "strategy": "extract generic 3-square composer; rw associativity inside it",
+        "code_tried": "rw [(?f ≫ ?g) ≫ ?h] on L1 ≫ L2 ≫ M2 ≫ D",
+        "lean_error": "rewrite failed: pattern not found",
+        "result": "failed",
+        "insight": "even plain assoc rw fails; compose_three_squares must be pure term-mode congrArg + Category.assoc"
+      },
+      {
+        "attempt": 7,
+        "strategy": "associator naturality wrong direction",
+        "code_tried": "Eq.symm hnat / hn with tensorAssoc.hom",
+        "lean_error": "Type mismatch: (tensorAssoc F L A).hom ≫ … = … vs expected",
+        "result": "failed",
+        "insight": "use (tensorAssocNatIso₃ F L).inv.naturality + rfl bridge inv.app Y = (tensorAssoc F L Y).hom"
+      },
+      {
+        "attempt": 8,
+        "strategy": "naturality_apply via FunctorToTypes",
+        "code_tried": "FunctorToTypes.naturality / ConcreteCategory route",
+        "lean_error": "deprecation + failed to synthesize ConcreteCategory (Type u) / typeclass stuck",
+        "result": "failed",
+        "insight": "use NatTrans.naturality_apply instead"
+      },
+      {
+        "attempt": 9,
+        "strategy": "final term-mode assembly: corepr reflection step2/step3 + star via compose_three_squares",
+        "code_tried": "step2.trans ((congrArg (α.inv.app W') star).trans step3.symm); star = compose_three_squares _ … S1 S2 S3 with S1=whisker_exchange, S2=assoc naturality, S3=pullbackTensorComparison 2nd-slot naturality",
+        "lean_error": "",
+        "line_number": "2063",
+        "result": "success",
+        "insight": "term-mode congrArg typechecks via full defeq; whisker_exchange closes ModuleCat ⊗ₘ+id via exact"
+      }
+    ],
+    "next_steps": "STEP 3: θ iso ⇒ H_tensor via .symm; consumes htensorComparison_naturality across free presentation 𝒪^J→𝒪^K→N. Requires the 2 planner-sanctioned anchors (per-presentation/LFP-scoped Eilenberg–Watts + External.pullbackUnit f^*𝒪≅𝒪)."
+  },
+  {
+    "timestamp": "2026-06-25T10:30:53Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "compose_three_squares"
+    },
+    "session": {
+      "id": "session_37",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "congrArg",
+        "Category.assoc"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "generic plumbing: chain 3 commuting squares into one fourfold-composite equation, term mode",
+        "code_tried": "private lemma compose_three_squares … := term-mode congrArg + Category.assoc",
+        "line_number": "2030",
+        "result": "success",
+        "insight": "rw/reassoc_of%/slice/set all fail on these composites; term-mode congrArg is the working route. Axiom-free."
+      }
+    ],
+    "next_steps": "Needs blueprint stub lem:compose_three_squares (unmatched lean_aux). Reusable for any chained-square term-mode assembly on non-syntactic composites."
+  },
+  {
+    "timestamp": "2026-06-25T10:30:53Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor"
+    },
+    "session": {
+      "id": "session_37",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "STEP 3 (θ iso) policy-gated: needs 2nd anchor (per-presentation/LFP-scoped Eilenberg–Watts) + External.pullbackUnit f^*𝒪≅𝒪, sanctioned for NEXT iter only. Not touched per PROGRESS objective.",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Next iter: add the 2 sanctioned anchors, build θ iso on the free presentation using htensorComparison_naturality, then H_tensor := (θ iso).symm-derived right-exactness."
+  },
+  {
+    "timestamp": "2026-06-25T10:30:53Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_finite_flat"
+    },
+    "session": {
+      "id": "session_37",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "off-lane, infra-blocked: IsLFPAndFlatOn opaque; needs relExt real (internal ℰxt + R^q f_*, both absent in Mathlib).",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Do NOT re-assign until internal-ℰxt / R^q f_* infra exists; out of reach this strand."
+  }
+]

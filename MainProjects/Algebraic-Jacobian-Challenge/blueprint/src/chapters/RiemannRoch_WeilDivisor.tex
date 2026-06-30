@@ -252,6 +252,8 @@ the appropriate stronger hypothesis at the use site.
   degree lemmas may consume it as a typeclass hypothesis.
 \end{definition}
 \begin{definition}
+
+\leanok
 [DVR stalk from regularity in codimension one]
   \label{def:isRegularInCodimOne_dvrStalk}
   \lean{AlgebraicGeometry.Scheme.IsRegularInCodimensionOne.instIsDiscreteValuationRingStalk}
@@ -270,6 +272,8 @@ the appropriate stronger hypothesis at the use site.
   \ref{def:isRegularInCodimensionOne}).
 \end{proof}
 \begin{definition}
+
+\leanok
 [Krull dimension \(\leq 1\) of a prime-divisor stalk]
   \label{def:isRegularInCodimOne_krullDimStalk}
   \lean{AlgebraicGeometry.Scheme.IsRegularInCodimensionOne.instKrullDimLEStalk}
@@ -307,6 +311,8 @@ and the open-immersion descent of the \(\texttt{IsRegularInCodimensionOne}\)
 class.
 
 \begin{lemma}
+
+\leanok
 [Extensionality for prime divisors]
   \label{lem:primeDivisor_ext}
   \lean{AlgebraicGeometry.Scheme.PrimeDivisor.ext}
@@ -377,6 +383,8 @@ class.
   field via subtype eta + structure eta.
 \end{lemma}
 \begin{lemma}
+
+\leanok
 [Point field of a restricted prime divisor]
   \label{lem:primeDivisor_restrictToOpen_point}
   \lean{AlgebraicGeometry.Scheme.PrimeDivisor.restrictToOpen_point}
@@ -392,6 +400,8 @@ class.
   Proved directly in Lean (the equality is definitional).
 \end{proof}
 \begin{lemma}
+
+\leanok
 [Point field of a pushed prime divisor]
   \label{lem:primeDivisor_ofOpen_point}
   \lean{AlgebraicGeometry.Scheme.PrimeDivisor.ofOpen_point}
@@ -473,6 +483,8 @@ project-local because Mathlib (as of \texttt{b80f227}) ships no naturality
 lemma for this family.
 
 \begin{lemma}
+
+\leanok
 [Order length is invariant under a ring isomorphism]
   \label{lem:ord_ringEquiv}
   \lean{Ring.ord_ringEquiv}
@@ -489,6 +501,8 @@ lemma for this family.
   module length is preserved by surjective semilinear maps.
 \end{proof}
 \begin{lemma}
+
+\leanok
 [Non-zero divisors are preserved by a ring isomorphism]
   \label{lem:nonZeroDivisors_ringEquiv}
   \lean{Ring.nonZeroDivisors_ringEquiv}
@@ -503,6 +517,8 @@ lemma for this family.
   together with injectivity of \(e\).
 \end{proof}
 \begin{lemma}
+
+\leanok
 [The order monoid-with-zero hom is invariant under a ring isomorphism]
   \label{lem:ordMonoidWithZeroHom_ringEquiv}
   \lean{Ring.ordMonoidWithZeroHom_ringEquiv}
@@ -519,6 +535,8 @@ lemma for this family.
   Proved directly in Lean.
 \end{proof}
 \begin{lemma}
+
+\leanok
 [The fraction-field order-of-vanishing is invariant under a ring isomorphism]
   \label{lem:ordFrac_ringEquiv}
   \lean{Ring.ordFrac_ringEquiv}
@@ -678,6 +696,8 @@ Archon-original; landed axiom-clean iter-202) are pinned below.
 \end{proof}
 
 \begin{lemma}
+
+\leanok
 [Parameterised \(\texttt{ordFrac}\) naturality across the open-immersion stalk iso]
   \label{lem:ordFrac_stalkIso_naturality}
   \lean{AlgebraicGeometry.Scheme.PrimeDivisor.ordFrac_stalkIso_naturality}
@@ -1134,6 +1154,8 @@ following identities feed the principal-divisor homomorphism
   corresponding identities for finite sums of integers.
 \end{proof}
 \begin{lemma}
+
+\leanok
 [Degree homomorphism agrees with the degree map]
   \label{lem:degree_hom_apply}
   \lean{AlgebraicGeometry.Scheme.WeilDivisor.degree_hom_apply}
@@ -1148,6 +1170,8 @@ following identities feed the principal-divisor homomorphism
   Proved directly in Lean (from \(\texttt{Finsupp.liftAddHom\_apply}\)).
 \end{proof}
 \begin{lemma}
+
+\leanok
 [Degree of the zero divisor]
   \label{lem:degree_zero}
   \lean{AlgebraicGeometry.Scheme.WeilDivisor.degree_zero}
@@ -1159,6 +1183,8 @@ following identities feed the principal-divisor homomorphism
   so sends \(0\) to \(0\); use \ref{lem:degree_hom_apply}).
 \end{proof}
 \begin{lemma}
+
+\leanok
 [Degree is additive]
   \label{lem:degree_add}
   \lean{AlgebraicGeometry.Scheme.WeilDivisor.degree_add}
@@ -1171,6 +1197,8 @@ following identities feed the principal-divisor homomorphism
   \ref{lem:degree_hom_apply}).
 \end{proof}
 \begin{lemma}
+
+\leanok
 [Degree of a negation]
   \label{lem:degree_neg}
   \lean{AlgebraicGeometry.Scheme.WeilDivisor.degree_neg}
@@ -1182,6 +1210,8 @@ following identities feed the principal-divisor homomorphism
   \ref{lem:degree_hom_apply}).
 \end{proof}
 \begin{lemma}
+
+\leanok
 [Degree is subtractive]
   \label{lem:degree_sub}
   \lean{AlgebraicGeometry.Scheme.WeilDivisor.degree_sub}
@@ -1194,6 +1224,8 @@ following identities feed the principal-divisor homomorphism
   \ref{lem:degree_hom_apply}).
 \end{proof}
 \begin{lemma}
+
+\leanok
 [Degree of a one-point divisor]
   \label{lem:degree_single}
   \lean{AlgebraicGeometry.Scheme.WeilDivisor.degree_single}
@@ -1310,6 +1342,8 @@ following identities feed the principal-divisor homomorphism
   sum over closed points.
 \end{definition}
 \begin{lemma}
+
+\leanok
 [Coefficient of a principal divisor is the order]
   \label{lem:principal_apply}
   \lean{AlgebraicGeometry.Scheme.WeilDivisor.principal_apply}
@@ -1324,6 +1358,8 @@ following identities feed the principal-divisor homomorphism
   Proved directly in Lean (from \(\texttt{Finsupp.ofSupportFinite\_coe}\)).
 \end{proof}
 \begin{lemma}
+
+\leanok
 [Principal divisor of the constant function one]
   \label{lem:principal_one}
   \lean{AlgebraicGeometry.Scheme.WeilDivisor.principal_one}
@@ -1472,6 +1508,8 @@ following identities feed the principal-divisor homomorphism
   divisor is \(D\), in the case \(D = \mathrm{div}(f)\).
 \end{definition}
 \begin{lemma}
+
+\leanok
 [Positive part of the zero divisor]
   \label{lem:positivePart_zero}
   \lean{AlgebraicGeometry.Scheme.WeilDivisor.positivePart_zero}
@@ -1482,6 +1520,8 @@ following identities feed the principal-divisor homomorphism
   Proved directly in Lean (from \(\texttt{Finsupp.mapRange\_zero}\)).
 \end{proof}
 \begin{lemma}
+
+\leanok
 [Positive part of a one-point divisor]
   \label{lem:positivePart_single}
   \lean{AlgebraicGeometry.Scheme.WeilDivisor.positivePart_single}
@@ -1495,6 +1535,8 @@ following identities feed the principal-divisor homomorphism
   \(\max(0, 0) = 0\) the zero-preservation witness).
 \end{proof}
 \begin{lemma}
+
+\leanok
 [Degree of the positive part as a sum of capped coefficients]
   \label{lem:degree_positivePart_eq_sum_max}
   \lean{AlgebraicGeometry.Scheme.WeilDivisor.degree_positivePart_eq_sum_max}
@@ -1525,6 +1567,8 @@ following identities feed the principal-divisor homomorphism
   by a pointwise case-split on the sign of \(D_a\)).
 \end{proof}
 \begin{lemma}
+
+\leanok
 [A single simple zero forces positive-part degree at least one]
   \label{lem:one_le_degree_positivePart_principal_of_order_one}
   \lean{AlgebraicGeometry.Scheme.WeilDivisor.one_le_degree_positivePart_principal_of_order_one}

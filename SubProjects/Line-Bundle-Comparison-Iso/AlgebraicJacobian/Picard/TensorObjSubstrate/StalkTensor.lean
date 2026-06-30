@@ -192,9 +192,9 @@ noncomputable def stalkTensorLinearMap :
   map_add' a b := map_add _ a b
   map_smul' r ξ := by
     dsimp only [RingHom.id_apply]
-    obtain ⟨U, hxU, r₀, rfl⟩ := TopCat.Presheaf.germ_exist R x r
+    obtain ⟨U, hxU, r₀, rfl⟩ := TopCat.Presheaf.exists_germ_eq R r
     obtain ⟨V, hxV, z, rfl⟩ :=
-      TopCat.Presheaf.germ_exist (Monoidal.tensorObj A B).presheaf x ξ
+      TopCat.Presheaf.exists_germ_eq (Monoidal.tensorObj A B).presheaf ξ
     set W : Opens X := U ⊓ V with hW
     have hxW : x ∈ W := ⟨hxU, hxV⟩
     set iWU : W ⟶ U := homOfLE inf_le_left
@@ -317,13 +317,13 @@ private noncomputable def revOuterLeg (U : Opens X) (hxU : x ∈ U) :
   map_add' a a' := by
     apply AddMonoidHom.ext
     intro ξ
-    obtain ⟨V, hxV, b, rfl⟩ := TopCat.Presheaf.germ_exist B.presheaf x ξ
+    obtain ⟨V, hxV, b, rfl⟩ := TopCat.Presheaf.exists_germ_eq B.presheaf ξ
     simp only [AddMonoidHom.add_apply, revInner_germ]
     erw [_root_.map_add, TensorProduct.add_tmul, _root_.map_add]
   map_zero' := by
     apply AddMonoidHom.ext
     intro ξ
-    obtain ⟨V, hxV, b, rfl⟩ := TopCat.Presheaf.germ_exist B.presheaf x ξ
+    obtain ⟨V, hxV, b, rfl⟩ := TopCat.Presheaf.exists_germ_eq B.presheaf ξ
     simp only [AddMonoidHom.zero_apply, revInner_germ]
     erw [_root_.map_zero, TensorProduct.zero_tmul, _root_.map_zero]
 
@@ -351,7 +351,7 @@ private noncomputable def revBihom :
         erw [CategoryTheory.ConcreteCategory.id_apply]
         apply AddMonoidHom.ext
         intro ξ
-        obtain ⟨V, hxV, b, rfl⟩ := TopCat.Presheaf.germ_exist B.presheaf x ξ
+        obtain ⟨V, hxV, b, rfl⟩ := TopCat.Presheaf.exists_germ_eq B.presheaf ξ
         erw [revOuterLeg_apply, revOuterLeg_apply, revInner_germ, revInner_germ]
         have hVle : (unop W').1 ≤ (unop W).1 := leOfHom ((OpenNhds.inclusion x).map f.unop)
         have j : (unop W').1 ⊓ V ⟶ (unop W).1 ⊓ V := homOfLE (inf_le_inf_right V hVle)
@@ -429,9 +429,9 @@ private lemma revBihom_balanced (r : ↑(R.stalk x))
     (n : ↑(TopCat.Presheaf.stalk B.presheaf x)) :
     ((ConcreteCategory.hom (revBihom A B x)) (r • m)) n
       = ((ConcreteCategory.hom (revBihom A B x)) m) (r • n) := by
-  obtain ⟨T, hxT, r₀, rfl⟩ := TopCat.Presheaf.germ_exist R x r
-  obtain ⟨U, hxU, a, rfl⟩ := TopCat.Presheaf.germ_exist A.presheaf x m
-  obtain ⟨V, hxV, b, rfl⟩ := TopCat.Presheaf.germ_exist B.presheaf x n
+  obtain ⟨T, hxT, r₀, rfl⟩ := TopCat.Presheaf.exists_germ_eq R r
+  obtain ⟨U, hxU, a, rfl⟩ := TopCat.Presheaf.exists_germ_eq A.presheaf m
+  obtain ⟨V, hxV, b, rfl⟩ := TopCat.Presheaf.exists_germ_eq B.presheaf n
   set W : Opens X := T ⊓ U ⊓ V with hWdef
   have hxW : x ∈ W := ⟨⟨hxT, hxU⟩, hxV⟩
   rw [← TopCat.Presheaf.germ_res_apply R
@@ -512,7 +512,7 @@ noncomputable def stalkTensorIso :
   left_inv := by
     intro s
     obtain ⟨U, hxU, w, rfl⟩ :=
-      TopCat.Presheaf.germ_exist (Monoidal.tensorObj A B).presheaf x s
+      TopCat.Presheaf.exists_germ_eq (Monoidal.tensorObj A B).presheaf s
     induction w using TensorProduct.induction_on with
     | zero =>
         erw [map_zero, map_zero, map_zero]
@@ -527,8 +527,8 @@ noncomputable def stalkTensorIso :
     | zero =>
         simp only [map_zero]
     | tmul ξ η =>
-        obtain ⟨U, hxU, a, rfl⟩ := TopCat.Presheaf.germ_exist A.presheaf x ξ
-        obtain ⟨V, hxV, b, rfl⟩ := TopCat.Presheaf.germ_exist B.presheaf x η
+        obtain ⟨U, hxU, a, rfl⟩ := TopCat.Presheaf.exists_germ_eq A.presheaf ξ
+        obtain ⟨V, hxV, b, rfl⟩ := TopCat.Presheaf.exists_germ_eq B.presheaf η
         rw [stalkTensorRev_germ_tmul]
         erw [stalkTensorLinearMap_germ_tmul,
             TopCat.Presheaf.germ_res_apply A.presheaf

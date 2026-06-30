@@ -1,0 +1,155 @@
+[
+  {
+    "timestamp": "2026-06-29T06:00:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "tensorObj_left_unitor_image_collapse"
+    },
+    "session": {
+      "id": "session_91",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "v4.31 type-mismatch at L1743 in the freshly-ported body: `simpa only [Iso.app_hom, asIso_hom] using (...).right_triangle_components (SheafOfModules.unit Y.ringCatSheaf)` drifts under reducible-transparency. Prover identified it ('one v4.31 simpa issue at 1743') but the session was killed before fixing it — file left RED.",
+      "key_lemmas_used": [
+        "sheafificationAdjunction.right_triangle_components",
+        "sheafifyUnitIso",
+        "MonoidalCategory.leftUnitor_naturality"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Port the v4.30 `image_collapse` body (54 lines) from parent 117100c4 into the frozen L1703 signature, replacing the TODO(v4.31.0) sorry.",
+        "code_tried": "rw [sheafifyUnitIso]; simpa only [Iso.app_hom, asIso_hom] using (sheafificationAdjunction ...).right_triangle_components (SheafOfModules.unit Y.ringCatSheaf)",
+        "line_number": "1743",
+        "lean_error": "Type mismatch: After simplification, term ... (then Exit 137 OOM on rebuild)",
+        "result": "failed",
+        "insight": "Axis-9 (`simpa` reducible-transparency) bites `right_triangle_components` too; needs `have h := ...; simp only [...] at h; exact h`. Build also OOMs (137) re-elaborating the surrounding heavy region."
+      }
+    ],
+    "next_steps": "Apply axis-9 fix at L1743 (replace simpa with have/simp-at/exact), then rebuild to confirm green."
+  },
+  {
+    "timestamp": "2026-06-29T06:00:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "conjugateEquiv_restrictFunctorComp_inv"
+    },
+    "session": {
+      "id": "session_91",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "None for this decl itself — auditor confirms the ported body is GENUINE (real mate-calculus, legitimate v4.31 `Subsingleton.elim` thin-poset pattern). But unverified: the FILE does not compile, so EXIT-0 confirmation is absent.",
+      "key_lemmas_used": [
+        "Adjunction.conjugateEquiv_leftAdjointCompIso_inv",
+        "Adjunction.leftAdjointCompIso",
+        "restrictFunctorComp_hom_app_app",
+        "Subsingleton.elim"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Port public lemma + helper `restrictFunctor_map_app' (:= rfl)` from the v4.30 root tail (dropped in file-split). Reduce conjugate to `leftAdjointCompIso.inv` then sectionwise `ext M U : 3` + erw chain, closing leftover thin-poset legs by `Subsingleton.elim`.",
+        "code_tried": "rw [show (restrictFunctorComp f g).hom = (Adjunction.leftAdjointCompIso ...).inv from ?_]; exact Adjunction.conjugateEquiv_leftAdjointCompIso_inv _ _ _ _; · ext M U : 3; ... all_goals first | rfl | (congr 1; exact Subsingleton.elim _ _)",
+        "line_number": "315",
+        "lean_error": "(none for this decl; file blocked downstream by L1743)",
+        "result": "partial",
+        "insight": "Real recovery. restrictFunctor_map_app' is a clean `:= rfl` private helper. Both have NO blueprint entry beyond lem L7077 (conjugate has one; the rfl helper does not)."
+      }
+    ],
+    "next_steps": "Confirm green once L1743 fixed; add blueprint coverage for restrictFunctor_map_app'."
+  },
+  {
+    "timestamp": "2026-06-29T06:00:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "tensorObj_unit_iso + tensorObj_restrict_iso (light cluster)"
+    },
+    "session": {
+      "id": "session_91",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "File RED — reductions unverified by a green build.",
+      "key_lemmas_used": [
+        "tensorHom_inv_comp_leftUnitor",
+        "appIso_inv_naturality",
+        "PresheafOfModules.sheafification"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Sweep the light-region v4.31 sorries (L174/274/292/... per objectives) using the 9-axis pattern: α-naturality via appIso_inv_naturality, leftUnitor-over-λ_ for unit slot, sheafify-push the presheaf coherence.",
+        "code_tried": "apply Iso.ext; have hpre : tensorHom (forget.map t.hom) (forget.map s.hom) ≫ (λ_ 𝟙_).hom = (λ_ 𝟙_).hom := by apply tensorHom_inv_comp_leftUnitor; ...; exact congrArg (· ≫ _) hmap",
+        "line_number": "173-335",
+        "lean_error": "(closed in working tree; net sorry 19→9, but file does not compile due to L1743)",
+        "result": "partial",
+        "insight": "10 sorry sites eliminated in the working tree across the light clusters; auditor flags `tensorObj_unit_iso_restrict_compat(_inner)` as transitively hollow (ride on remaining sorry stubs)."
+      }
+    ],
+    "next_steps": "Reach green build to validate the 10 reductions; then attack heavy/K1."
+  },
+  {
+    "timestamp": "2026-06-29T06:00:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackTensorMap_isIso_of_isOpenImmersion"
+    },
+    "session": {
+      "id": "session_91",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "K1 stub (L807, `:= sorry`) NOT closed — sits in the S2 heavy region (@805) whose fills OOM (Exit 137). Session ran out of wall-clock (~96 min) / was killed before porting the v4.30 root L4770 body.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "(planned per objectives) port the root TensorObjSubstrate L4770 proof (hδ via isIso_oplaxδ_of_conj ← pushforward_mu_appIso_collapse) into the frozen L806 signature.",
+        "code_tried": "(not reached — session terminated)",
+        "line_number": "807",
+        "lean_error": "Exit 137 (OOM) on builds of the heavy region; session killed",
+        "result": "failed",
+        "insight": "Heavy 6.4M-HB regions (S2@805, S3-core) are the real wall on this file; filling one OOMs the 2 GB host."
+      }
+    ],
+    "next_steps": "Effort-break / leaf-split the heavy regions before any further fill; do NOT re-grind in-place (OOM)."
+  },
+  {
+    "timestamp": "2026-06-29T06:00:00Z",
+    "status": "not_started",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "dual_unit_iso_restrict_assemble + dualUnitIso_dualIsoOfIso"
+    },
+    "session": {
+      "id": "session_91",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "Genuine-open dual-unit FLANK — correctly left untouched per objectives (rides the deprioritized PresheafDualUnitPullback ∞-source).",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Intentionally NOT attempted (deferred FLANK).",
+        "code_tried": "(none)",
+        "line_number": "1446/2185",
+        "lean_error": "",
+        "result": "partial",
+        "insight": "Their sorry + docs preserved; correct restraint."
+      }
+    ],
+    "next_steps": "Dual-unit FLANK phase: dag-walk/blueprint-write the ∞-source `lem:pushforward_beta_unit_eps_app_one` to finite effort first."
+  }
+]

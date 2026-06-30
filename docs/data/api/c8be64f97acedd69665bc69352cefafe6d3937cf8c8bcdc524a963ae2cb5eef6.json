@@ -1,0 +1,174 @@
+[
+  {
+    "timestamp": "2026-06-29T08:36:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "cech_degree_affine_baseChange"
+    },
+    "session": {
+      "id": "session_316",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "affinePushforwardPullbackBaseChange"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "shared degreewise brick delegating to the sorry-free affine termwise base change",
+        "code_tried": "noncomputable def cech_degree_affine_baseChange ... := affinePushforwardPullbackBaseChange ...",
+        "line_number": "352",
+        "result": "success",
+        "insight": "Brick is sorry-free + axiom-clean ({propext,Classical.choice,Quot.sound}); pure alias to affinePushforwardPullbackBaseChange."
+      }
+    ],
+    "next_steps": "Brick is the right degreewise tool but cannot be wired into the two leaves (abstract pushPullObj vs Spec-model tilde) — see the two leaf milestones."
+  },
+  {
+    "timestamp": "2026-06-29T08:36:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "cech_pushforward_baseChange_natIso"
+    },
+    "session": {
+      "id": "session_316",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "leaf app n obligation is the ABSTRACT pushPullObj F Yₙ (p_* p^* F over the fibre power), NOT tilde M over Spec; the brick only speaks the affine Spec-model. Missing pushPullObj ≅ tilde identification (needs affineness/separatedness absent from leaf signature + Mathlib).",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "import FlatBaseChange; document the precise degree-n residual; attempt to wire brick into NatIso.ofComponents app",
+        "code_tried": "NatIso.ofComponents (fun _ => sorry) (fun _ => sorry)",
+        "line_number": "377",
+        "result": "partial",
+        "insight": "Could not connect: `app n` is `(pullback g).obj ((pushforward f).obj (pushPullObj F Yₙ)) ≅ (pushforward f').obj ((pullback g').obj (pushPullObj F Yₙ))` — abstract, no Spec model in scope."
+      }
+    ],
+    "next_steps": "blueprint-writer adds lem:pushPullObj_iso_tilde Spec-model bridge; effort-breaker may be needed; then prover wires brick AFTER the identification."
+  },
+  {
+    "timestamp": "2026-06-29T08:36:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "twisted_cech_nerve_iso"
+    },
+    "session": {
+      "id": "session_316",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "X-level Beck–Chevalley leaf: app n obligation `(pullback g').obj Mₙ ≅ pushPullObj ((pullback g').obj F) Y'ₙ` i.e. g'^*(p_* p^* F) ≅ p'_* p'^*(g'^* F); same abstract→affine bridge wall as the S-level leaf.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "document precise X-level Beck–Chevalley residual; NatIso.ofComponents skeleton",
+        "code_tried": "NatIso.ofComponents (fun _ => sorry) (fun _ => sorry)",
+        "line_number": "423",
+        "result": "partial",
+        "insight": "Same pushPullObj-vs-tilde wall as cech_pushforward_baseChange_natIso; both leaves need the Spec-model bridge first."
+      }
+    ],
+    "next_steps": "Same as the S-level leaf: needs pushPullObj_iso_tilde bridge before brick fires."
+  },
+  {
+    "timestamp": "2026-06-29T08:36:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport_toFun_naturality"
+    },
+    "session": {
+      "id": "session_316",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "PresheafOfModules.naturality_apply",
+        "appIso_hom_naturality_apply",
+        "Scheme.Modules.εInv_apply",
+        "ofBijective_appIso_inv_symm"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "write standalone lemma with own heartbeat budget, confirm green in isolation, then wire into forward field",
+        "code_tried": "apply ModuleCat.hom_ext; refine LinearMap.ext fun z => ?_; ... simp only [...]; erw [εInv_apply ×2]; ... erw [ofBijective_appIso_inv_symm ×2]; have hnat := PresheafOfModules.naturality_apply φ g z; erw [restrictScalars.map_apply]; erw [hnat]; erw [restrictScalars.map_apply]; exact appIso_hom_naturality_apply f i _",
+        "line_number": "628",
+        "result": "success",
+        "insight": "leg-A (φ.naturality_apply) ∘ leg-B (appIso_hom_naturality_apply). axiom-clean. Wired via `exact sliceDualTransport_toFun_naturality f M V φ f1`. The iter-315 standalone-first discipline applied correctly — no regression."
+      }
+    ],
+    "next_steps": "Forward naturality CLOSED. Apply the mirror recipe to the reverse leaves."
+  },
+  {
+    "timestamp": "2026-06-29T08:36:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransportInv (naturality field)"
+    },
+    "session": {
+      "id": "session_316",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "reverse residual (right_inv-mirror): parallel thin-poset M.val.map legs only Subsingleton.elim-equal (no pushforward to absorb the collapse) — needs explicit alignment before ψ.naturality fires.",
+      "key_lemmas_used": [
+        "Scheme.Modules.εInv_apply",
+        "presheafMap_ofBijective_symm",
+        "ofBijective_appIso_hom_symm",
+        "restrictScalars_collapse_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "mirror the forward recipe for the reverse inv-ε direction",
+        "code_tried": "intro X1 Y1 f1; apply ModuleCat.hom_ext; refine LinearMap.ext fun z => ?_; simp only [...dualUnitRingSwapHom, unitRelabelSwap...]; erw [εInv_apply ×4]; all_goals try exact bijective_of_isIso _; erw [presheafMap_ofBijective_symm, ofBijective_appIso_hom_symm ×2]",
+        "line_number": "584",
+        "result": "partial",
+        "insight": "Reduced to clean carrier-level reverse-telescope residual; reverse `inv ε` turns appIso.hom-swap into appIso.inv, εrel into X.presheaf.map (eqToHom he). Still 1 sorry (L584)."
+      }
+    ],
+    "next_steps": "Close the right_inv-mirror residual: align the parallel thin-poset legs (Subsingleton.elim) then ψ.naturality."
+  },
+  {
+    "timestamp": "2026-06-29T08:36:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "dual_restrict_iso"
+    },
+    "session": {
+      "id": "session_316",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Step-4 isoMk naturality square (V W g) — same ε-paste obligation; gated on sliceDualTransportInv.naturality. (Stale comment L1205-1208 still names the now-closed sliceDualTransport.hom as the blocker.)",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "untouched this iter (downstream of sliceDualTransportInv)",
+        "code_tried": "sorry",
+        "line_number": "1210",
+        "result": "failed",
+        "insight": "Blocked behind sliceDualTransportInv.naturality; not directly attempted."
+      }
+    ],
+    "next_steps": "Close after sliceDualTransportInv.naturality lands; update the stale L1205-1208 comment."
+  }
+]

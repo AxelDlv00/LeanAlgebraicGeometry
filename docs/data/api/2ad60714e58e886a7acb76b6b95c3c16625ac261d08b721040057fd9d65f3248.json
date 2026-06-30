@@ -1,0 +1,49 @@
+[
+  {
+    "timestamp": "2026-06-29T10:08:18Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/PullbackTensorMapIso.lean",
+      "theorem": "pullbackTensorMap_isIso_of_isOpenImmersion"
+    },
+    "session": {
+      "id": "session_95",
+      "model": "opus-4.8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "isIso_pullbackTensorMap_of_isIso_sheafifyDelta",
+        "isIso_oplaxδ_of_conj",
+        "pushforward_mu_appIso_collapse",
+        "PresheafOfModules.restrictScalarsMonoidalOfBijective",
+        "f.appIso_inv_naturality"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Replace `:= sorry` with verbatim v4.30 body (117100c4 TensorObjSubstrate.lean:4790) in the new monster-free leaf",
+        "code_tried": "apply isIso_pullbackTensorMap_of_isIso_sheafifyDelta; letI φ' ...; haveI hδ : IsIso (δ (pullback φ') M.val N.val) := by ... exact isIso_oplaxδ_of_conj (hadj'.leftAdjointUniq ...) M.val N.val (pushforward_mu_appIso_collapse f M.val N.val); exact Functor.map_isIso _ _",
+        "line_number": "25",
+        "lean_error": "could not synthesize default value for field 'naturality' of 'CategoryTheory.NatTrans' (on `let α := { app := fun U => (f.appIso U.unop).inv }`)",
+        "goal_before": "IsIso (pullbackTensorMap f M N)",
+        "goal_after": "IsIso (pullbackTensorMap f M N)",
+        "result": "partial",
+        "insight": "v4.31 no longer auto-discharges the NatTrans naturality autoparam via aesop — the single predicted axis-#1 fix"
+      },
+      {
+        "attempt": 2,
+        "strategy": "Supply naturality field explicitly via f.appIso_inv_naturality, column-aligned to the app field",
+        "code_tried": "let α : Y.presheaf ⟶ f.opensFunctor.op ⋙ X.presheaf := { app := fun U => (f.appIso U.unop).inv\\n        naturality := fun _ _ i => f.appIso_inv_naturality i }",
+        "line_number": "33",
+        "lean_error": null,
+        "goal_before": "IsIso (pullbackTensorMap f M N)",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "Only fix needed; rest of v4.30 body compiled verbatim. lake build EXIT 0 (8563 jobs), ~13s elaboration, axiom-clean (no sorry warning attributable to this file). Leaf-split worked: monster-free, OOM-isolated."
+      }
+    ],
+    "next_steps": "K1 closed. Next iter (096): fill S2 tensorObj_restrict_iso_restrict_compat in-place in TensorObjInverse.lean (HARD watch, no further deferral) — 6.4M-HB, revert-on-OOM; fallback de-privatize S2 deps. Then dual-unit FLANK (∞-source lem:pushforward_beta_unit_eps_app_one needs informal proof first) + terminal + consumer."
+  }
+]

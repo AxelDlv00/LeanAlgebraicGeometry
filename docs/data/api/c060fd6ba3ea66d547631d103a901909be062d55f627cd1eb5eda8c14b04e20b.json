@@ -1,0 +1,231 @@
+[
+  {
+    "timestamp": "2026-06-29T14:21:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "cech_pushforward_baseChange_natIso"
+    },
+    "session": {
+      "id": "session_319",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "naturality sorry + per-σ helper body open; app layer fully built",
+      "key_lemmas_used": [
+        "pushPull_sigma_iso",
+        "Limits.PreservesProduct.iso",
+        "Limits.Pi.mapIso",
+        "pushPullObj_coverInter_baseChange"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "signature-extend leaf with [Finite 𝒰.I₀][IsSeparated f][IsAffine S][IsAffine S'][∀ i, IsAffine (𝒰.X i)] and propagate up the chain",
+        "code_tried": "added instance binders to cech_pushforward_baseChange_natIso, twisted_cech_nerve_iso, cechComplex_baseChange_cosimplicialIso, cechComplex_baseChange_iso, cech_flatBaseChange",
+        "line_number": "476",
+        "lean_error": "none — clean diagnostics",
+        "result": "success",
+        "insight": "no external .lean consumes these as terms; propagation fully contained, file stays green"
+      },
+      {
+        "attempt": 2,
+        "strategy": "build degree-n app via coproduct/product decomposition",
+        "code_tried": "(pullback g).mapIso ((pushforward f).mapIso (pushPull_sigma_iso ..)) ≪≫ (pullback g).mapIso (PreservesProduct.iso (pushforward f) _) ≪≫ PreservesProduct.iso (pullback g) _ ≪≫ Limits.Pi.mapIso (fun σ => pushPullObj_coverInter_baseChange ..) ≪≫ (PreservesProduct.iso (pushforward f') _).symm ≪≫ (pushforward f').mapIso (PreservesProduct.iso (pullback g') _).symm ≪≫ (pushforward f').mapIso ((pullback g').mapIso (pushPull_sigma_iso ..).symm)",
+        "line_number": "476",
+        "lean_error": "none — app field compiles",
+        "result": "partial",
+        "insight": "Yₙ = ∐_σ U_σ (coverInterOpen); pushPull_sigma_iso decomposes pushPullObj F Yₙ ≅ ∏_σ pushPullObj F (Over.mk j_σ); both pushforward and pullback preserve the finite product, reducing app to a per-σ single-open base change"
+      }
+    ],
+    "next_steps": "Prove pushPullObj_coverInter_baseChange body (per-σ affine reduction via iter-318 bridge + cech_degree_affine_baseChange); then the naturality sorry (index-omission compatibility of the product chain)."
+  },
+  {
+    "timestamp": "2026-06-29T14:21:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "twisted_cech_nerve_iso"
+    },
+    "session": {
+      "id": "session_319",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "RHS cover-base-change blocked: missing [Finite 𝒰'.I₀]/[∀ i, IsAffine (𝒰'.X i)] on base-changed cover (verified instance synthesis fails)",
+      "key_lemmas_used": [
+        "pushPull_sigma_iso",
+        "Limits.PreservesProduct.iso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "build LHS product layer of app n: (pullback g').obj (pushPullObj F Yₙ) ≅ pushPullObj (g'^* F) Y'ₙ",
+        "code_tried": "(pullback g').mapIso (pushPull_sigma_iso 𝒰 F n.len) ≪≫ PreservesProduct.iso (pullback g') _ ≪≫ ?_",
+        "line_number": "576",
+        "lean_error": "none for LHS layer; ?_ residual = ∏_σ (pullback g').obj (pushPullObj F (Over.mk j_σ)) ≅ pushPullObj (g'^* F) Y'ₙ",
+        "result": "partial",
+        "insight": "matching RHS needs (pushPull_sigma_iso 𝒰' (g'^* F) n.len).symm for base-changed cover 𝒰', requiring [Finite 𝒰'.I₀] and [∀ i, IsAffine (𝒰'.X i)] — NOT in the X-level leaf signature; per-σ content is the open-immersion Beck–Chevalley g'^*(p_*p^*F) ≅ p'_* p'^*(g'^*F)"
+      }
+    ],
+    "next_steps": "Add the X-level cover-base-change identification (coverInterOpen 𝒰' σ = g'⁻¹(U_σ)) OR add affineness on the base-changed cover; then naturality."
+  },
+  {
+    "timestamp": "2026-06-29T14:21:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/CechHigherDirectImageUnconditional.lean",
+      "theorem": "pushPullObj_coverInter_baseChange"
+    },
+    "session": {
+      "id": "session_319",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "body = the genuine multi-hundred-LOC affine-reduction heart (per-σ single-open S-level base change via affine pushout square)",
+      "key_lemmas_used": [
+        "pushPullObj_pushforward_iso_tilde",
+        "cech_degree_affine_baseChange",
+        "affinePushforwardPullbackBaseChange"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "extract the per-σ residual as a named top-level helper",
+        "code_tried": "noncomputable def pushPullObj_coverInter_baseChange ... := sorry",
+        "line_number": "438",
+        "lean_error": "declaration uses sorry (intended)",
+        "result": "partial",
+        "insight": "crisp per-σ statement: g^*(f_*(p_*p^*F)) ≅ f'_*(g'^*(p_*p^*F)) at pushPullObj F (Over.mk (coverInterOpen 𝒰 σ).ι); dischargeable via iter-318 bridge altitude-2 (needs S = Spec R via S.isoSpec) + sorry-free affine brick"
+      }
+    ],
+    "next_steps": "Prove via S.isoSpec → cech_degree_affine_baseChange for the restricted affine pushout square. NEW decl — needs a blueprint entry (unmatched in DAG)."
+  },
+  {
+    "timestamp": "2026-06-29T14:21:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/PullbackTensorComp.lean",
+      "theorem": "pullbackValIso_eq_sheafCompPb"
+    },
+    "session": {
+      "id": "session_319",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "definitional unfold",
+        "code_tried": "rfl (it IS, definitionally, sheafCompPb.symm.app(M.val) ≪≫ (pullback f).mapIso ε^X_M)",
+        "line_number": "632",
+        "lean_error": "none",
+        "result": "success",
+        "insight": "axiom-clean; the body of def pullbackValIso is exactly this composite"
+      }
+    ],
+    "next_steps": "Done."
+  },
+  {
+    "timestamp": "2026-06-29T14:21:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/PullbackTensorComp.lean",
+      "theorem": "sheafCompPb_counit_comp_coherence"
+    },
+    "session": {
+      "id": "session_319",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "sheafificationCompPullback_comp",
+        "pullbackComp naturality",
+        "Iso.hom_inv_id"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "3-move proof: counit half (slide ε across pullbackComp.inv by naturality) + sheafified-presheaf half (consume Sq1 via Iso.inv_comp_eq + explicit Tiso palindrome) + fold map_comp",
+        "code_tried": "have hnat := (pullbackComp h f).inv.naturality εhom; ...; have hB : e1.inv ≫ pbComp.inv.app(..) = Tiso.inv := by rw [Iso.inv_comp_eq, hSq1, hThom, Category.assoc, Iso.hom_inv_id, Category.comp_id]; rfl; rw [hB, hTiso]; simp",
+        "line_number": "653",
+        "lean_error": "intermediate: 'rw failed: not type-correct under instances transparency' (site defeq); fixed via set_option backward.isDefEq.respectTransparency false",
+        "result": "success",
+        "insight": "a_Z.map (𝟙 _) MUST never form — detonates Scheme/Sheaf-site defeq; the explicit Tiso reformulation makes cancellation Iso.hom_inv_id (plain 𝟙, never F.map 𝟙). NatIso.app does not exist — build Iso.mk by hand. PresheafOfModules.pullbackComp composite ring map is INFERRED (do not spell explicitly)"
+      }
+    ],
+    "next_steps": "Done — the substantive Sq4 engine."
+  },
+  {
+    "timestamp": "2026-06-29T14:21:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/PullbackTensorComp.lean",
+      "theorem": "pullbackValIso_comp"
+    },
+    "session": {
+      "id": "session_319",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "pullbackValIso_eq_sheafCompPb",
+        "sheafCompPb_counit_comp_coherence"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "3-step corollary: rewrite both pullbackValIso instances to sheafCompPb/counit form, apply the coherence engine, refold",
+        "code_tried": "rw [pullbackValIso_eq_sheafCompPb (h≫f) M]; simp only [Iso.trans_hom, Iso.symm_hom, Functor.mapIso_hom]; rw [sheafCompPb_counit_comp_coherence h f M, pullbackValIso_eq_sheafCompPb f M]; simp only [...]",
+        "line_number": "732",
+        "lean_error": "site-defeq motive detonation on rw; fixed via set_option backward.isDefEq.respectTransparency false",
+        "result": "success",
+        "insight": "axiom-clean; derived a fully-explicit Ψ (a_Z.map(Ppb pullbackComp.inv) ≫ sheafCompPb h.inv ≫ (pullback h).map ...) — directly consumable by the L879 paste, unlike the abstract blueprint Ψ"
+      }
+    ],
+    "next_steps": "Done — the Sq4 ingredient consumed by pullbackTensorMap_restrict."
+  },
+  {
+    "timestamp": "2026-06-29T14:21:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/PullbackTensorComp.lean",
+      "theorem": "pullbackTensorMap_restrict"
+    },
+    "session": {
+      "id": "session_319",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "interleaved 4-square assembly — squares cannot be rewritten in isolation while staying green; needs per-step goal tracking but LSP times out + 9-min builds make blind iteration intractable",
+      "key_lemmas_used": [
+        "sheafificationCompPullback_comp",
+        "pullbackComp_δ",
+        "pullbackValIso_comp",
+        "sheafifyTensorUnitIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "obtain the exact unfolded 4-vs-13 factor goal, then attempt square-by-square rewrite",
+        "code_tried": "simp only [pullbackTensorMap, tensorObjIsoOfIso]; rw [Functor.map_comp ×3]; simp only [Category.assoc] -- exposes L1≫L2≫L3≫L4 = R0 ≫ (Rf1..4) ≫ (Rh1..4) ≫ S4comp",
+        "line_number": "879",
+        "lean_error": "no single square rewritable in isolation: Rh1 acts on ((pullback f)M).val ⊗ ((pullback f)N).val NOT on Ppb φ'_f (M.val⊗N.val); L4's pullbackValIso(h≫f).hom only adjacent to S4comp AFTER full assembly",
+        "result": "partial",
+        "insight": "all 4 square coherences now in-file (Sq1 iter-314, Sq2b pullbackComp_δ, Sq4 pullbackValIso_comp this iter, Sq3 sheafifyTensorUnitIso to wire); remaining = the interleaved mate-calculus paste (~100-300 LOC) sliding factors by δ_natural/NatTrans.naturality/tensorHom_comp_tensorHom"
+      }
+    ],
+    "next_steps": "Develop the paste in the fast scratch loop (import the prebuilt TOS olean, ~15-35s elaboration; reproduce restrict with the 4 square lemmas as sorry-haves). Do NOT iterate blind on the real file."
+  }
+]

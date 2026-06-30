@@ -1,0 +1,166 @@
+[
+  {
+    "timestamp": "2026-06-24T17:43:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "liftAdditiveToModuleCat"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Module.compHom",
+        "AddMonoid.End",
+        "Linear.smul_comp",
+        "Linear.comp_smul",
+        "Functor.map_add",
+        "Functor.map_comp",
+        "Functor.map_id",
+        "AddCommGrpCat.hom_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "End-action lift: ring hom endRingHom a ↦ (G.map (a•𝟙 M)).hom : A →+* AddMonoid.End (G.obj M); Module via Module.compHom; functor obj M := ModuleCat.of A (G.obj M), map φ := ofHom {(G.map φ).hom with map_smul'}",
+        "code_tried": "noncomputable def liftAdditiveToModuleCat (G : ModuleCat.{u} A ⥤ AddCommGrpCat.{w}) [G.Additive] : ModuleCat.{u} A ⥤ ModuleCat.{w} A",
+        "line_number": "843",
+        "lean_error": "(intermediate) map_smul' naturality: motive is not type correct on rw of ModuleCat.ofHom; resolved via change + ← G.map_comp + Linear.smul_comp/comp_smul + id_comp/comp_id",
+        "result": "success",
+        "insight": "Mathlib has NO Functor.Linear A route (AddCommGrpCat only ℤ-linear) and NO Functor.mapEnd ring-hom-on-End lemma; hand-build from map_add/map_comp/map_id. Lift faithfully carries target universe w ⟹ ModuleCat.{u}→{w}."
+      }
+    ],
+    "next_steps": "Reusable general lift; consumed by functorT with w = u+1."
+  },
+  {
+    "timestamp": "2026-06-24T17:43:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "covariantExtFunctor"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Abelian.Ext.comp",
+        "Ext.mk₀",
+        "Ext.add_comp",
+        "Ext.zero_comp",
+        "Ext.comp_mk₀_id",
+        "Ext.mk₀_comp_mk₀",
+        "Ext.comp_assoc",
+        "HasDerivedCategory.standard",
+        "hasExt_of_hasDerivedCategory"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "covariant Ext^q_Y(I,-) as functor Y.Modules ⥤ AddCommGrpCat.{u+1}: obj N := AddCommGrpCat.of (Ext I N q); map f := ofHom (x ↦ x.comp (Ext.mk₀ f) (add_zero q))",
+        "code_tried": "noncomputable def covariantExtFunctor {Y : Scheme.{u}} (I : Y.Modules) (q : ℕ) : Y.Modules ⥤ AddCommGrpCat.{u+1}",
+        "line_number": "882",
+        "lean_error": "map_id: rw [Ext.comp_mk₀_id] failed 'Did not find occurrence' — ext x recurses into Ext.hom injection; map_comp: type mismatch Ext.comp_assoc add_zero vs 0+0; resolved via congrArg Ext.hom with explicit closed proof term (not refine ?_)",
+        "result": "success",
+        "insight": "ext x behaves differently per field: map_id/map_comp get Ext.hom-wrapped goal (use congrArg Ext.hom + explicit term, else HasDerivedCategory args stick), map_add does NOT (use change to plain Ext.comp form)."
+      }
+    ],
+    "next_steps": "Functorial form of extGroup's 2nd variable; lands in u+1 (the universe obstruction source)."
+  },
+  {
+    "timestamp": "2026-06-24T17:43:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "functorT"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "liftAdditiveToModuleCat",
+        "AlgebraicGeometry.tilde.functor",
+        "tensorBaseChangeFunctor",
+        "covariantExtFunctor"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "functorT A f I F := liftAdditiveToModuleCat (tilde.functor A ⋙ tensorBaseChangeFunctor f F ⋙ covariantExtFunctor I 1); additivity by unfold + infer_instance",
+        "code_tried": "noncomputable def functorT {X : Scheme.{u}} (A : CommRingCat.{u}) (f : X ⟶ Spec A) (I F : X.Modules) : ModuleCat.{u} ↑A ⥤ ModuleCat.{u+1} ↑A",
+        "line_number": "930",
+        "lean_error": "none (compiled axiom-clean); Spec (CommRingCat.of ↑A) (tilde target) vs Spec A (tensorBaseChangeFunctor source) match is DEFEQ — composes with no coercion",
+        "result": "success",
+        "insight": "GENUINE FINDING: functorT : ModuleCat.{u}→ModuleCat.{u+1}, NOT an endofunctor. Ext of Y.Modules (Category.{u,u+1}) lands in AddCommGrpCat.{u+1} via HasDerivedCategory.standard — same u+1 as extGroup. Parametrized in post-reduction shape (A, f:X⟶Spec A, I, F); reduction NOT proved (later anchored brick)."
+      }
+    ],
+    "next_steps": "Bricks (ii) T half-exact and (iv) free-conclusion BLOCKED: IsHalfExact/External.halfexact_free demand a ModuleCat.{u} endofunctor — universe reconciliation needed (re-type IsHalfExact, or collapse Ext universe)."
+  },
+  {
+    "timestamp": "2026-06-24T17:43:00Z",
+    "status": "solved",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "functorT_additive"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "liftAdditiveToModuleCat_additive",
+        "tensorBaseChangeFunctor_additive",
+        "covariantExtFunctor_additive",
+        "tilde additive (left adjoint)"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "instance functorT_additive via unfold functorT; infer_instance — composite + lift additivity instances fire",
+        "code_tried": "instance functorT_additive {X : Scheme.{u}} (A : CommRingCat.{u}) (f : X ⟶ Spec A) (I F : X.Modules) : (functorT A f I F).Additive",
+        "line_number": "939",
+        "lean_error": "none",
+        "result": "success",
+        "insight": "Step 3 complete. Required new instance tensorBaseChangeFunctor_additive (pullback-additive + tensorLeft_additive) + liftAdditiveToModuleCat_additive + covariantExtFunctor_additive."
+      }
+    ],
+    "next_steps": "Functor T fully built (Steps 1–3 of brief). Hand off to bricks (i)/(ii)/(iii)/(iv)."
+  },
+  {
+    "timestamp": "2026-06-24T17:43:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_locallyFree_of_ext_vanishing"
+    },
+    "session": {
+      "id": "session_25",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Universe obstruction: functorT is ModuleCat.{u}→ModuleCat.{u+1}, but IsHalfExact and External.halfexact_free require a ModuleCat.{u} endofunctor. Also still needs the S=Spec A reduction anchor (brick i) and T(k(s))=0 (brick iii). NOT touched per no-touch directive (the 4 deep §1 sorries).",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "untouched this iter (infra-only brief); foundation for T now built",
+        "code_tried": "n/a — sorry preserved",
+        "line_number": "1011",
+        "result": "partial",
+        "insight": "Consumes functorT (built this iter) but cannot proceed past brick (i)/(ii) without universe reconciliation + reduction anchor."
+      }
+    ],
+    "next_steps": "Planner decision: re-type IsHalfExact (lives in-file, not protected) to the {u}/{u+1} shape and re-sign External.halfexact_free's T arg; supply brick (i) reduction anchor (model External.descent_noetherian); then brick (ii) half-exactness pull-through + brick (iii) T(k(s))=0 via External.adjunction + 1.2 SES on fibre."
+  }
+]

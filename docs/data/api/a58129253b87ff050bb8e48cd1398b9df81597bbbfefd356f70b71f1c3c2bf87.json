@@ -1,0 +1,119 @@
+[
+  {
+    "timestamp": "2026-06-24T19:05:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "affinePushforwardPullbackBaseChange"
+    },
+    "session": {
+      "id": "session_305",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Type-u instance shadowing: global Algebra.TensorProduct.leftAlgebra/rightAlgebra on B=TensorProduct R A R' shadow the letI toAlgebra instances, so keyT (restrictScalars σ ∘ extendScalars ρ).obj M = of R' (A⊗_R B' tensor M) FAILS rfl when the brick is forced into a top-level Type-u signature. Core compiles in CommRingCat framing.",
+      "key_lemmas_used": [
+        "Algebra.IsPushout.cancelBaseChange",
+        "TensorProduct.isPushout'",
+        "Algebra.algebra_ext",
+        "IsScalarTower.of_algebraMap_eq",
+        "Algebra.TensorProduct.includeLeftRingHom_comp_algebraMap"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Identify the affine brick's module-level core as a single Mathlib cancellation iso",
+        "code_tried": "lean_leansearch 'base change of base change (A⊗_R B)⊗_A M ≅ B⊗_R M' → Algebra.IsPushout.cancelBaseChange R S A B M : B⊗[A]M ≃ₗ[S] S⊗[R]M; IsPushout from TensorProduct.isPushout'",
+        "line_number": "~76",
+        "lean_error": "(search) resolved",
+        "result": "success",
+        "insight": "Entire brick content = one Mathlib lemma; S:=R', B:=A⊗_R R', pushout via TensorProduct.isPushout'."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Build midIso via LinearEquiv.toModuleIso of cancelBaseChange.symm, letI-supplied toAlgebra instances",
+        "code_tried": "letI iAB : Algebra A B' := ρ.hom.toAlgebra; ... LinearEquiv.toModuleIso (Algebra.IsPushout.cancelBaseChange ...).symm",
+        "line_number": "~79",
+        "lean_error": "failed to synthesize Algebra ↑R' (TensorProduct ↑R ↑A ↑R'); leftAlgebra/leftHasSMul shadow letI",
+        "result": "failed",
+        "insight": "letI cannot override global tensor-algebra instances; @-explicit instance threading required."
+      },
+      {
+        "attempt": 3,
+        "strategy": "@-explicit instance threading of all Algebra/IsScalarTower/IsPushout args through cancelBaseChange",
+        "code_tried": "@Algebra.IsPushout.cancelBaseChange (R:Type u) R' _ _ iRR' A B' _ _ iRA iRB iAB iR'B tRAB tRR'B hpush M _ iMR _ tRAM; hpush via convert TensorProduct.isPushout' using 2 <;> (apply Algebra.algebra_ext; intro a; rfl)",
+        "line_number": "~72",
+        "lean_error": "(none — compiles green in CommRingCat framing via lean_run_code)",
+        "result": "partial",
+        "insight": "midIso typechecks axiom-clean with ascribed `let midIso : extend∘restrict ≅ restrict∘extend` when ambient algebras are toAlgebra (CommRingCat framing). keyS is rfl; discovery: f.toAlgebra.toModule defeq Module.compHom/restrictScalars f."
+      },
+      {
+        "attempt": 4,
+        "strategy": "Package as top-level def in Type-u framing (B'=TensorProduct R A R' in signature)",
+        "code_tried": "def affinePushforwardPullbackBaseChange ... return type forces extend/restrict objects in Type-u; keyT : (restrictScalars σ).obj((extendScalars ρ).obj M) = of R' (A⊗B' M)",
+        "line_number": "signature",
+        "lean_error": "keyT FAILS rfl: inner Module A (A⊗_R R') resolves to global leftAlgebra (not letI iAB), not defeq to compHom(includeLeftRingHom) that extendScalars carries",
+        "result": "failed",
+        "insight": "Only the Type-u SIGNATURE re-introduces shadowing; recommended fix = abstract-B framing (no global tensor instances) deriving Algebra.IsPushout from the pullback square."
+      }
+    ],
+    "next_steps": "iter-306: restate brick with abstract {B : CommRingCat} (ρ:A⟶B)(σ:R'⟶B) + Algebra.IsPushout/IsPullback hypothesis; reuse WORKING CODE verbatim (keyT becomes rfl); derive Algebra.IsPushout from IsPullback(Spec.map ...) via Spec-pullback↔ring-pushout API. Then add baseChangeCancelModuleIso + affinePushforwardPullbackBaseChange blueprint nodes."
+  },
+  {
+    "timestamp": "2026-06-24T19:05:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "affineBaseChange_pushforward_iso"
+    },
+    "session": {
+      "id": "session_305",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Deprioritized this iter per objective (canonical adjoint-mate IsIso route, walled ~30 iters in FBC-B on the mate↔cancelBaseChange coherence). Untouched; sorry remains at L785.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — deprioritized per iter-305 objective (route pivot to fresh-e gluing bypass)",
+        "code_tried": "n/a",
+        "line_number": "785",
+        "lean_error": "n/a",
+        "result": "partial",
+        "insight": "Auditor flag: the NEW fresh-e brick bypasses obligation (2) only if downstream consumes e directly; this existing sorry is stated via the canonical mate and still owes obligation (2) if retained. Planner must decide: re-plumb consumers to e (and re-sign/retire this sorry) vs keep the canonical statement."
+      }
+    ],
+    "next_steps": "Planner decision: either retire/re-sign this canonical-mate theorem in favor of consumers using the fresh `e`, or leave it as the literal-Stacks statement (still walled). Do NOT dispatch a prover to close it via mate coherence without a structural change."
+  },
+  {
+    "timestamp": "2026-06-24T19:05:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "flatBaseChange_pushforward_isIso"
+    },
+    "session": {
+      "id": "session_305",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Deprioritized this iter per objective; depends on affineBaseChange_pushforward_iso (term-by-term + flatness). Untouched; sorry at L807.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Not attempted — deprioritized per iter-305 objective",
+        "code_tried": "n/a",
+        "line_number": "807",
+        "lean_error": "n/a",
+        "result": "partial",
+        "insight": "Downstream of the affine canonical-mate route; same planner decision applies."
+      }
+    ],
+    "next_steps": "Gated on the affineBaseChange_pushforward_iso planner decision above."
+  }
+]

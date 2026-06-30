@@ -1,0 +1,282 @@
+[
+  {
+    "timestamp": "2026-06-25T00:20:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "cancelBaseChange_localization_compat"
+    },
+    "session": {
+      "id": "session_308",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Algebra.IsPushout.cancelBaseChange_tmul",
+        "TensorProduct.induction_on",
+        "LinearMap.rTensor_tmul",
+        "Algebra.TensorProduct.map_tmul",
+        "IsScalarTower.coe_toAlgHom'",
+        "TensorProduct.isPushout'"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "PRIORITY (a) iteration bar: prove the cancellation-compat square. Realized the two pushouts as concrete tensor products B=TensorProduct R A S / R A S' (A as LEFT factor so Algebra.TensorProduct.map id (toAlgHom) is a →ₐ[A] hom, keeping rTensor M A-linear). Activated scoped right-factor instances via `attribute [local instance] Algebra.TensorProduct.rightAlgebra ... TensorProduct.isPushout'` inside a section.",
+        "code_tried": "lemma cancelBaseChange_localization_compat ... := by double TensorProduct.induction_on; leaf: simp only [LinearMap.rTensor_tmul, AlgHom.toLinearMap_apply, Algebra.TensorProduct.map_tmul, AlgHom.coe_id, id_eq, IsScalarTower.coe_toAlgHom', LinearMap.coe_restrictScalars, cancelBaseChange_tmul_tmul]",
+        "line_number": "1044",
+        "result": "success",
+        "insight": "Square commutes for an ARBITRARY ring map S→S' with NO IsLocalizedModule hypothesis — strictly stronger than blueprint. Helper crux cancelBaseChange_algebraMap_mul_tmul needs `LinearEquiv.map_smul` EXPLICITLY (bare map_smul resolves to a PresheafOfModules overload in `import Mathlib` files)."
+      }
+    ],
+    "next_steps": "Consumed by the gluing chain `pushforwardPullbackBaseChange_restrict_naturality` move (3). Lift through tilde.functor with S→S' := basic-open localization R'→R'[1/b]."
+  },
+  {
+    "timestamp": "2026-06-25T00:20:01Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "cancelBaseChange_localization_compat_symm"
+    },
+    "session": {
+      "id": "session_308",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "cancelBaseChange_localization_compat",
+        "LinearEquiv.apply_symm_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "The cbc⁻¹ form (the orientation the affine brick consumes via baseChangeCancelModuleIso = cancelBaseChange.symm). Derive from the forward lemma by injectivity.",
+        "code_tried": "apply cbc_S'.injective; rw [cancelBaseChange_localization_compat, LinearEquiv.apply_symm_apply, LinearEquiv.apply_symm_apply]",
+        "line_number": "1073",
+        "result": "success",
+        "insight": "Axiom-clean. Consumer-facing orientation. No blueprint block yet (Lean→blueprint debt)."
+      }
+    ],
+    "next_steps": "Add a one-line corollary blueprint block \\uses{lem:cancelBaseChange_localization_compat}."
+  },
+  {
+    "timestamp": "2026-06-25T00:20:02Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "cancelBaseChange_tmul_tmul"
+    },
+    "session": {
+      "id": "session_308",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Algebra.IsPushout.cancelBaseChange_tmul",
+        "TensorProduct.smul_tmul",
+        "Algebra.TensorProduct.*"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "private helper: specialize cancelBaseChange on a simple tensor for B = TensorProduct R A S.",
+        "code_tried": "cancelBaseChange ((a ⊗ₜ s) ⊗ₜ m) = s ⊗ₜ (a • m)",
+        "line_number": "1024",
+        "result": "success",
+        "insight": "Simple-tensor formula; the leaf both induction branches reduce to."
+      }
+    ],
+    "next_steps": "none (proof-internal)."
+  },
+  {
+    "timestamp": "2026-06-25T00:20:03Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "cancelBaseChange_algebraMap_mul_tmul"
+    },
+    "session": {
+      "id": "session_308",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "mul_comm",
+        "Algebra.smul_def",
+        "TensorProduct.smul_tmul'",
+        "LinearEquiv.map_smul",
+        "Algebra.IsPushout.cancelBaseChange_tmul"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "private helper crux: value of cancelBaseChange on (algebraMap S B s * algebraMap A B a) ⊗ₜ m for arbitrary pushout B.",
+        "code_tried": "cancelBaseChange((algMap_S s * algMap_A a)⊗ₜm) = s ⊗ₜ (a•m); via mul_comm/Algebra.smul_def/TensorProduct.smul_tmul(') to pull A across ⊗_A and S out via LinearEquiv.map_smul",
+        "line_number": "1005",
+        "result": "success",
+        "insight": "PITFALL: bare `map_smul` resolves to the wrong (PresheafOfModules) overload in `import Mathlib` files — MUST write `LinearEquiv.map_smul`."
+      }
+    ],
+    "next_steps": "none (proof-internal)."
+  },
+  {
+    "timestamp": "2026-06-25T00:20:04Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "Scheme.Modules.εInv_apply"
+    },
+    "session": {
+      "id": "session_308",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "IsIso.hom_inv_id",
+        "CategoryTheory.ConcreteCategory.comp_apply",
+        "ModuleCat.restrictScalars_η",
+        "RingEquiv.ofBijective",
+        "restrictScalars_isIso_ε_of_bijective"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "New reusable helper: element action of `inv ε` for restrictScalars along a bijective ring hom. Round-trip ε ≫ inv ε = 𝟙 applied at r = symm s, then restrictScalars_η (ε's underlying = g) + apply_symm_apply.",
+        "code_tried": "(ConcreteCategory.hom (inv (ε (restrictScalars g)))) s = (RingEquiv.ofBijective g hg).symm s",
+        "line_number": "192",
+        "result": "success",
+        "insight": "Axiom-clean (lean_multi_attempt goals: []). The shared linchpin for every ε-swap cancellation in the lane — round-trips AND the 3 naturality sorries. No blueprint block yet (Lean→blueprint debt)."
+      }
+    ],
+    "next_steps": "Thread through left_inv/right_inv residuals + L587/L880 naturality ε-squares iter-309."
+  },
+  {
+    "timestamp": "2026-06-25T00:20:05Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport.left_inv"
+    },
+    "session": {
+      "id": "session_308",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "ModuleCat.Hom.hom vs ConcreteCategory.hom coercion bridge; unit-carrier ring-map direction matching; LSP died mid-session (concurrent D3' broke TensorObjSubstrate:2663).",
+      "key_lemmas_used": [
+        "sliceDualTransportInv",
+        "ModuleCat.hom_ext",
+        "LinearMap.ext",
+        "εInv_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "First-ever attempt (iters 306-307 deferred on 'budget'). Reduce the round-trip from bare sorry to the concrete per-component element residual.",
+        "code_tried": "dsimp only [sliceDualTransportInv]; apply ModuleCat.hom_ext; refine LinearMap.ext fun z => ?_; simp only [ModuleCat.hom_comp, LinearMap.comp_apply, dualUnitRingSwap, dualUnitRingSwapHom, unitRelabelSwap, ModuleCat.restrictScalarsId'App, ModuleCat.restrictScalarsComp'App, LinearEquiv.toModuleIso_inv, LinearEquiv.toModuleIso_hom]",
+        "line_number": "726",
+        "result": "partial",
+        "lean_error": "no error — reduced to element residual εrel⁻¹(φ.app A (M.val.map (eqToHom he) z)) = φ.app W'' z; the two inner ε-swaps cancel via εInv_apply + Iso.hom_inv_id of appIso; residual is φ.naturality across slice A⟶W''",
+        "insight": "collapse legs (restrictScalarsId'App/Comp'App) reduce to AddEquiv.refl = identity on underlying type. Worked-out close documented for iter-309; one-shot finish blocked by coercion bridge (rw/simp [restrictScalars_η] 'made no progress'; need erw/change/ModuleCat.hom_ext before εInv_apply fires)."
+      }
+    ],
+    "next_steps": "iter-309: solve coercion bridge with erw/change, then φ.naturality. right_inv is the exact mirror."
+  },
+  {
+    "timestamp": "2026-06-25T00:20:06Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport.right_inv"
+    },
+    "session": {
+      "id": "session_308",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "same coercion bridge as left_inv; LSP died mid-session.",
+      "key_lemmas_used": [
+        "sliceDualTransportInv",
+        "ModuleCat.hom_ext",
+        "εInv_apply",
+        "dualUnitRingSwapInv_comp_dualUnitRingSwap"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Exact mirror of left_inv (swap pair the other way; ψ.naturality).",
+        "code_tried": "mirror block of left_inv reduction (dsimp/hom_ext/LinearMap.ext/simp)",
+        "line_number": "749",
+        "result": "partial",
+        "insight": "Reduced to mirror element residual; same friction (coercion bridge) blocks one-shot close."
+      }
+    ],
+    "next_steps": "iter-309: mirror the left_inv close once the coercion bridge is solved."
+  },
+  {
+    "timestamp": "2026-06-25T00:20:07Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate.lean",
+      "theorem": "sheafificationCompPullback_comp"
+    },
+    "session": {
+      "id": "session_308",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "mateEquiv_vcomp cocycle interior: h-comparison sheafCompPb h must collapse against the intermediate-scheme sheafification sheafAdj_Y, which is NOT free in the transposed chain (divergence from gr_pullbackObjUnitToUnit_comp) and must be slid in from the f-collapse B_f.unit by mate naturality.",
+      "key_lemmas_used": [
+        "Adjunction.homEquiv_naturality_left",
+        "homEquiv_conjugateEquiv_app'",
+        "leftAdjointUniqUnitEta_app"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "STEP(b) cocycle interior per analogies/d3-mate-306.md: reshape transposed RHS to nested applied form, peel R1 by homEquiv_naturality_left.",
+        "code_tried": "set_option maxHeartbeats 3200000 in; change ((A.trans B).trans C) arg → nested sheafAdj_X.homEquiv P _ (ShPb_f.homEquiv _ _ (ShPb_h.homEquiv _ _ (_ ≫ _ ≫ _))); have hnatL : ... := Adjunction.homEquiv_naturality_left _ _ _; erw [hnatL]",
+        "line_number": "2683",
+        "result": "partial",
+        "lean_error": "none for the landed step (build GREEN, EXIT=0); the residual mateEquiv_vcomp cocycle remains as the lone sorry",
+        "insight": "KEY TECHNIQUE: bare `erw [Adjunction.homEquiv_naturality_left]` whnf-times-out at 3.2M hb (forced to verify Scheme.Modules.pullback h ≟ SheafOfModules.pullback via blind kabstract). Fix: explicit `have hnatL` spelled with Scheme.Modules.pullback h → defeq becomes type-directed (cheap); erw [hnatL] bridges lighter index spellings. DEAD: rw/simp [Equiv.trans_apply] (use change to nested form); bare erw homEquiv_naturality_right (over-unfolds via homEquiv_unit)."
+      }
+    ],
+    "next_steps": "iter-309: f-collapse (homEquiv_naturality_right + leftAdjointUniqUnitEta_app) + h-slide (mate naturality from B_f.unit) + δ-kill (conjugateEquiv_leftAdjointCompIso_inv). Recommended escalation: mateEquiv_vcomp/TwoSquare recast (lower fragility) + mathlib-analogist on mates across a sheafification boundary. CAVEAT: 3.2M heartbeat budget nearly exhausted by the verified prefix — closing likely needs another bump."
+  },
+  {
+    "timestamp": "2026-06-25T00:20:08Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Cohomology/FlatBaseChange.lean",
+      "theorem": "pushforwardPullbackBaseChange_restrict_naturality"
+    },
+    "session": {
+      "id": "session_308",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "PRIORITY (b): scheme/sheaf-of-modules-level statement needs general-scheme scaffolding (affineOpens indexing, chart datum Spec R⊆S / X_Spec R = Spec A, restriction maps on g^*(f_* M̃) as presheaves). The lone hard residual is move (2): ring-map naturality of pullbackSpecTildeNatIso via the conjugateIsoEquiv mate.",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Deliberately NOT attempted to completion — a partial would land a non-axiom-clean shell, forbidden by the invariant. Prover landed the pure-algebra cancellation floor (a) instead and handed off a precise 3-square decomposition.",
+        "code_tried": "(none — decomposition handoff only)",
+        "line_number": "n/a",
+        "result": "partial",
+        "insight": "Three component squares: (1) pushforward-dictionary move = gammaPushforwardIsoAt_naturality (LANDED iter-307); (2) pullback-dictionary move = ring-map naturality of pullbackSpecTildeNatIso (conjugateIsoEquiv mate, the HARD residual — NO drop-in section lemma since pullback_spec_tilde_iso is built by uniqueness-of-left-adjoints); (3) cancellation move = cancelBaseChange_localization_compat_symm (THIS iter)."
+      }
+    ],
+    "next_steps": "iter-309: build the minimal general-scheme chart-datum stub, prove moves (1)+(3) compat (both ready), isolate move (2) as the lone obligation. Do NOT form the adjoint mate pushforwardBaseChangeMap (walled)."
+  }
+]

@@ -1,0 +1,127 @@
+[
+  {
+    "timestamp": "2026-06-29T21:11:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "forgetUnitRestrict_eq_pushforwardUnit"
+    },
+    "session": {
+      "id": "session_101",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "leftAdjointUniq_hom_app_homEquiv_symm",
+        "Adjunction.homEquiv_counit",
+        "Adjunction.leftAdjointUniq_hom_app_counit",
+        "pushforwardBetaUnitEpsAppOne",
+        "PresheafOfModules.pushforward_map_app_apply",
+        "SheafOfModules.unitToPushforwardObjUnit_val_app_apply",
+        "SheafOfModules.pushforwardPushforwardAdj_counit_app_val_app",
+        "Scheme.Hom.appIso_hom",
+        "Subsingleton.elim"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "section-first reduction then rw the leftAdjointUniq counit-triangle coherence",
+        "code_tried": "rw [Adjunction.homEquiv_counit, ..., Adjunction.leftAdjointUniq_hom_app_counit]",
+        "line_number": "1571",
+        "lean_error": "rewrite failed: pattern (leftAdjointUniq ?adj1 ?adj2).hom.app (Functor.obj ?m ?x) ≫ (counit ?adj2).app ?x not found; target not type-correct under instances transparency",
+        "result": "failed",
+        "insight": "the leftAdjointUniq_hom_app_counit rw chokes on instances-transparency seam; abstract left-adjoint pullback has no sectionwise value — must collapse at morphism level."
+      },
+      {
+        "attempt": 2,
+        "strategy": "close the generic slide with term-mode congrArg to dodge transparency mismatch",
+        "code_tried": "exact congrArg (F.map g ∘ ·) (Adjunction.leftAdjointUniq_hom_app_counit adj1 adj2 e)",
+        "line_number": "1571",
+        "lean_error": null,
+        "result": "success",
+        "insight": "new generic helper leftAdjointUniq_hom_app_homEquiv_symm proves (leftAdjointUniq adj1 adj2).hom.app x ≫ (adj2.homEquiv x e).symm g = (adj1.homEquiv x e).symm g via term-mode last step."
+      },
+      {
+        "attempt": 3,
+        "strategy": "split forget over composite with keyed rw [map_comp]",
+        "code_tried": "rw [(SheafOfModules.forget Y.ringCatSheaf).map_comp]",
+        "line_number": "1620",
+        "lean_error": "rewrite failed: pattern (forget Y.ringCatSheaf).map (?f ≫ ?g) not found (SheafOfModules ≫ seam blocks motive)",
+        "result": "failed",
+        "insight": "keyed rw [map_comp] fails on the SheafOfModules ≫ seam; use term-mode Eq.trans ((forget _).map_comp _ _) ?_."
+      },
+      {
+        "attempt": 4,
+        "strategy": "sectionwise legs: reindex unit comparator + counit + appIso, finish by Subsingleton.elim on Opens restriction maps",
+        "code_tried": "erw [PresheafOfModules.pushforward_map_app_apply, SheafOfModules.unitToPushforwardObjUnit_val_app_apply]; erw [SheafOfModules.pushforwardPushforwardAdj_counit_app_val_app]; rw [Scheme.Hom.appIso_hom]; have hops : ... = eqToHom (...).symm := Subsingleton.elim _ _; rw [hops, CommRingCat.comp_apply]; rfl",
+        "line_number": "1640-1654",
+        "lean_error": null,
+        "result": "success",
+        "insight": "two restriction maps V→f⁻¹ᵁ(f''ᵁV) agree by Subsingleton.elim (Opens poset homs proof-irrelevant); RHS pre-reduced to (f.appIso V).hom by linchpin pushforwardBetaUnitEpsAppOne. EXIT 0, sorry-free, axiom-clean."
+      }
+    ],
+    "next_steps": "RES1 closed; keystone (a) dual_unit_iso_restrict_assemble now closed modulo RES2 only."
+  },
+  {
+    "timestamp": "2026-06-29T21:04:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "pullbackUnit_sheafify_reconcile"
+    },
+    "session": {
+      "id": "session_101",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "RHS sheafification counit-slide mate-calculus (RES2 residual): after homEquiv transpose + LHS reduction to cuX.app 𝟙_X ≫ unitToPushforwardObjUnit φ, the RHS = homEquiv (sheafCompPullback.hom.app 𝟙_X.val ≫ sheafification.map p.hom ≫ cuY.app 𝟙_Y) must be collapsed via hEta + the two sheafification-counit triangles + unit_leftAdjointUniq_hom_app — same shape as the proven sheafPullbackUnit_forget_eq residual hA2, ~80-150 LOC mate proof.",
+      "key_lemmas_used": [
+        "sheafificationCompPullback_eq_leftAdjointUniq",
+        "leftAdjointUniqUnitEta_app",
+        "Adjunction.homEquiv_naturality_left",
+        "SheafOfModules.pullbackPushforwardAdjunction_homEquiv_pullbackObjUnitToUnit"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "transpose under sheaf pullbackPushforwardAdjunction homEquiv (injective), reduce LHS",
+        "code_tried": "apply (Scheme.Modules.pullbackPushforwardAdjunction f).homEquiv _ _ |>.injective; rw [Adjunction.homEquiv_naturality_left]; simp only [Functor.id_obj]; rw [SheafOfModules.pullbackPushforwardAdjunction_homEquiv_pullbackObjUnitToUnit]",
+        "line_number": "1693",
+        "lean_error": "rewrite failed: pattern (pullbackPushforwardAdjunction ?φ).homEquiv (unit) (unit) (pullbackObjUnitToUnit ?φ) not found",
+        "result": "failed",
+        "insight": "keyed rw (and show...from) fails on the Scheme.Modules vs SheafOfModules.…(toRingCatSheafHom) adjunction spelling instance-transparency seam even though printed terms identical."
+      },
+      {
+        "attempt": 2,
+        "strategy": "same but erw for the spelling seam",
+        "code_tried": "erw [SheafOfModules.pullbackPushforwardAdjunction_homEquiv_pullbackObjUnitToUnit]",
+        "line_number": "1694",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "erw crosses the seam; LHS now fully reduced to clean composite cuX.app 𝟙_X ≫ unitToPushforwardObjUnit φ. RHS residual is the genuine mate-calculus core; left as documented sorry at L1705. EXIT 0."
+      }
+    ],
+    "next_steps": "ESCALATE: effort-breaker / mathlib-analogist on the sheafification counit-slide; reuse the proven sheafPullbackUnit_forget_eq hA2 template (L459+) specialised to 𝟙_X. Do NOT re-grind a direct prove pass without the escalation."
+  },
+  {
+    "timestamp": "2026-06-29T21:09:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_101",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Gated on keystone (a)/S4a (5-constituent restriction-naturality telescope). Not assigned this iter; untouched (sorry at L2595). Was sorry in v4.30 too — not a regression.",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Do NOT assign until (a) closes (i.e. until RES2 lands). Then telescope assembly via S2-S4c square lemmas (all in place)."
+  }
+]

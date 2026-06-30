@@ -1,0 +1,180 @@
+[
+  {
+    "timestamp": "2026-06-25T16:30:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "presheafDualUnitIso_pullback_natural"
+    },
+    "session": {
+      "id": "session_86",
+      "model": "prover"
+    },
+    "findings": {
+      "blocker": "FLANK: sectionwise ε/η value of the composite pushforward β = pushforward₀OfCommRingCat ⋙ restrictScalars β is carrier-diamond-heavy; one sorry at L1273",
+      "key_lemmas_used": [
+        "presheafPushforwardBetaMonoidal",
+        "presheafPushforwardUnitIso",
+        "presheafPullbackUnitIso",
+        "H1.hom.naturality",
+        "Iso.inv_comp_eq",
+        "Iso.hom_inv_id_assoc",
+        "sliceDualTransport_app_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Build pullback-unit comparator p as η(pullback φR) directly",
+        "code_tried": "have p := Functor.OplaxMonoidal.η (PresheafOfModules.pullback φR); have hp : IsIso (η …) := by infer_instance",
+        "line_number": "scratch ~1119",
+        "lean_error": "typeclass instance problem is stuck (PresheafOfModules.pullback φR).OplaxMonoidal — metavariable args; then IsIso (η (pullback φR)) not synthesizable (= unproven D2' η-bridge)",
+        "result": "failed",
+        "insight": "IsIso (η (pullback φR)) is the project's long-standing η-bridge; no Mathlib inferInstance. Sidestepped via H1 reconciliation."
+      },
+      {
+        "attempt": 2,
+        "strategy": "Build q = ε(pushforward β)⁻¹ via asIso of the lax ε",
+        "code_tried": "exact (asIso (Functor.LaxMonoidal.ε (PresheafOfModules.pushforward β))).symm",
+        "line_number": "~1167",
+        "lean_error": "failed to synthesize IsIso (Functor.LaxMonoidal.ε (pushforward β)) — ambient ε uses global lax instance, distinct from the letI .Monoidal's ε (two-LaxMonoidal diamond)",
+        "result": "failed",
+        "insight": "Must use Functor.Monoidal.εIso built from the .Monoidal instance directly, not asIso of the global lax ε."
+      },
+      {
+        "attempt": 3,
+        "strategy": "Prove strong monoidality of pushforward β to get εIso",
+        "code_tried": "have hβbij : ∀ U, Function.Bijective ((whiskerRight α (forget₂)).app U).hom := by intro U; haveI : IsIso (α.app U) := inferInstanceAs (IsIso (f.appIso U.unop).inv); … exact Functor.map_isIso (forget₂ …) (α.app U) … ; letI mβ := restrictScalarsMonoidalOfBijective _ hβbij",
+        "line_number": "1121",
+        "lean_error": "(resolved) initial IsIso ((forget₂).map (α.app U)) not found until haveI IsIso (α.app U) supplied",
+        "result": "success",
+        "insight": "presheafPushforwardBetaMonoidal: β sectionwise iso ⇒ pushforward β strong via Functor.Monoidal.comp of Mathlib-strong pushforward₀OfCommRingCat + restrictScalarsMonoidalOfBijective. @[implicit_reducible] so it serves as letI instance. Axiom-clean."
+      },
+      {
+        "attempt": 4,
+        "strategy": "Realize p via H1 reconciliation",
+        "code_tried": "let hadj := pushforwardPushforwardAdj …; let H1 := hadj.leftAdjointUniq (pullbackPushforwardAdjunction φR); exact (H1.app 𝟙_X).symm ≪≫ presheafPushforwardUnitIso f",
+        "line_number": "1177",
+        "lean_error": "none",
+        "result": "success",
+        "insight": "presheafPullbackUnitIso (p) = (H1.app 𝟙_X).symm ≪≫ q; axiom-clean. IS the unit comparator up to the H1 identification."
+      },
+      {
+        "attempt": 5,
+        "strategy": "State + prove L1′ via H1 telescope, reduce to FLANK",
+        "code_tried": "apply Iso.ext; simp only [Iso.trans_hom, presheafDualPullbackComparison, presheafPullbackUnitIso, Iso.symm_hom, Functor.mapIso_hom]; change …; have hnat := H1.hom.naturality (presheafDualUnitIso).hom; rw [Category.assoc, Iso.inv_comp_eq, ← Category.assoc …, ← hnat, Category.assoc, Iso.hom_inv_id_assoc]; exact FLANK",
+        "line_number": "1208-1273",
+        "lean_error": "none (statement whnf-safe; H1-telescope closes to FLANK)",
+        "result": "partial",
+        "insight": "Keep hadj/H1 as letI (NOT have) so the simp-unfolded explicit H1 is defeq to the local H1 and `change` folds it back. The presheaf-level statement does NOT whnf-bomb (contra the Scheme-dualIsoOfIso negative). FLANK is the sole residual."
+      },
+      {
+        "attempt": 6,
+        "strategy": "Open FLANK sectionwise",
+        "code_tried": "apply PresheafOfModules.hom_ext; intro V; apply ModuleCat.hom_ext; apply LinearMap.ext; intro φ; simp only [comp_app, ModuleCat.hom_comp, LinearMap.comp_apply, isoMk_hom_app]; erw [sliceDualTransport_app_apply f 𝟙_X V φ]; sorry",
+        "line_number": "1273",
+        "lean_error": "none (opening reduction verified; sorry remains)",
+        "result": "partial",
+        "insight": "Residual after the verified erw: reduce RHS (pushforward β).map pdX.hom .app V and q.hom = εIso.inv sectionwise to the same f.appIso-conjugated evalLin 𝟙_X (op fV) φ 1; blocked on the carrier-diamond-heavy sectionwise ε/η value of the composite pushforward β. Bounded next-pass sub-lemma (template analogies/eta-plumbing.md §1)."
+      }
+    ],
+    "next_steps": "Blueprint-writer expands def:presheaf_pullback_unit_eta/_eps + adds the 3 comparator blocks + previews the ε/η FLANK obligation (HARD GATE). Then effort-break/prover builds a sectionwise ε/η value lemma for pushforward β, close FLANK by linearEndo_apply_comm idiom (presheafDualUnitIso_naturality DualInverse:317). Run progress-critic K≥5 first."
+  },
+  {
+    "timestamp": "2026-06-25T16:30:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "presheafPushforwardBetaMonoidal"
+    },
+    "session": {
+      "id": "session_86",
+      "model": "prover"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "restrictScalarsMonoidalOfBijective",
+        "Functor.Monoidal.comp",
+        "ConcreteCategory.bijective_of_isIso",
+        "Functor.map_isIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Strong monoidality of open-immersion presheaf pushforward",
+        "code_tried": "β sectionwise bijective (α.app U = (f.appIso U.unop).inv) ⇒ pushforward β = pushforward₀OfCommRingCat ⋙ restrictScalars β strong via Functor.Monoidal.comp",
+        "line_number": "1121",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Sorry-free, axiom-clean. @[implicit_reducible] to serve as letI. Mirrors LAX presheafPushforwardLaxMonoidal but at .Monoidal level."
+      }
+    ],
+    "next_steps": "Used by presheafPushforwardUnitIso (q). Needs a blueprint block (unmatched)."
+  },
+  {
+    "timestamp": "2026-06-25T16:30:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "presheafPushforwardUnitIso"
+    },
+    "session": {
+      "id": "session_86",
+      "model": "prover"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "Functor.Monoidal.εIso",
+        "presheafPushforwardBetaMonoidal"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "q = ε(pushforward β)⁻¹ via strong εIso",
+        "code_tried": "exact (Functor.Monoidal.εIso (PresheafOfModules.pushforward β)).symm",
+        "line_number": "1153",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Axiom-clean. Realizes def:presheaf_pushforward_unit_eps but via strong εIso not lax ε."
+      }
+    ],
+    "next_steps": "Used by p (presheafPullbackUnitIso) and L1′. Needs blueprint block."
+  },
+  {
+    "timestamp": "2026-06-25T16:30:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "presheafPullbackUnitIso"
+    },
+    "session": {
+      "id": "session_86",
+      "model": "prover"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "pushforwardPushforwardAdj",
+        "Adjunction.leftAdjointUniq",
+        "pullbackPushforwardAdjunction",
+        "presheafPushforwardUnitIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "p via H1 reconciliation (sidestep the unproven η-bridge)",
+        "code_tried": "(H1.app 𝟙_X).symm ≪≫ presheafPushforwardUnitIso f, H1 = hadj.leftAdjointUniq (pullbackPushforwardAdjunction φR)",
+        "line_number": "1177",
+        "lean_error": null,
+        "result": "success",
+        "insight": "Axiom-clean. NOT literal η(pullback φR) (= unproven D2' η-bridge); equals it only via the H1 identification."
+      }
+    ],
+    "next_steps": "Used by L1′. Needs blueprint block; def:presheaf_pullback_unit_eta % NOTE added recording the H1 realization."
+  }
+]

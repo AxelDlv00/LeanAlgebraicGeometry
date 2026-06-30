@@ -1046,6 +1046,48 @@ lemma sliceDualTransport_app_apply {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmer
       = (dualUnitRingSwap f (unop W).left).hom
           ((φ.app (op (Over.mk ((Hom.opensFunctor f).map (unop W).hom)))).hom z) := rfl
 
+/-! ## Project-local Mathlib supplement — slice dual transport pseudofunctoriality
+
+`sliceDualTransport_comp` is the sectionwise pseudofunctoriality (composition law) of the forward
+slice dual transport along a composite of two open immersions `h ≫ f`.  It is the cross-file brick
+that discharges the SOLE residual `case hstar` of `presheafDualPullbackComparison_restrict`
+(`PresheafDualPullback.lean`).  Working sectionwise via `sliceDualTransport_app_apply`, the structure
+ring iso of the composite immersion splits — by the `appIso` cocycle `Scheme.Hom.comp_appIso` and the
+direct-image composition `Scheme.Hom.comp_image` — into the two single-immersion legs `f.appIso`,
+`h.appIso`, bypassing the adjunction unit/counit layers entirely. -/
+
+open PresheafOfModules InternalHom Opposite in
+set_option maxHeartbeats 1600000 in
+/-- **Sectionwise split of the composite slice dual transport via the `appIso` cocycle.**
+The `app` component of `sliceDualTransport (h ≫ f) M V` evaluated at `φ`, `W`, `z` factors the
+composite structure-ring swap `dualUnitRingSwap (h ≫ f)` into the two single-immersion swaps
+`dualUnitRingSwap f (h ''ᵁ W')` and `dualUnitRingSwap h W'` (`W' = W.left`), reindexed by the
+direct-image composition `Scheme.Hom.comp_image`.  This is the structure-ring half of the
+pseudofunctoriality law; project-local because it factors the open-immersion `comp_appIso` cocycle
+through the slice-transport `app_apply` form. -/
+lemma sliceDualTransport_comp {X Y Z : Scheme.{u}} (f : Y ⟶ X) (h : Z ⟶ Y)
+    [IsOpenImmersion f] [IsOpenImmersion h]
+    (M : X.Modules) (V : (TopologicalSpace.Opens ↥Z)ᵒᵖ)
+    (φ : letI α : Z.presheaf ⟶ (Hom.opensFunctor (h ≫ f)).op ⋙ X.presheaf :=
+           { app := fun U => ((h ≫ f).appIso U.unop).inv
+             naturality := fun _ _ i => (h ≫ f).appIso_inv_naturality i }
+         letI β : Z.ringCatSheaf.obj ⟶ (Hom.opensFunctor (h ≫ f)).op ⋙ X.ringCatSheaf.obj :=
+           Functor.whiskerRight α (forget₂ CommRingCat RingCat)
+         (((PresheafOfModules.pushforward β).obj
+            (PresheafOfModules.dual (R₀ := X.presheaf) M.val)).obj V))
+    (W : (Over (unop V))ᵒᵖ)
+    (z : (M.val.obj (op ((Hom.opensFunctor (h ≫ f)).obj (unop W).left)) : Type u)) :
+    (ModuleCat.Hom.hom
+        (((ModuleCat.Hom.hom (sliceDualTransport (h ≫ f) M V).hom) φ).app W)) z
+      = (dualUnitRingSwap h (unop W).left).hom
+          ((dualUnitRingSwap f ((Hom.opensFunctor h).obj (unop W).left)).hom
+            ((X.presheaf.map (eqToHom (Scheme.Hom.comp_image h f (unop W).left).symm).op).hom
+              ((φ.app (op (Over.mk ((Hom.opensFunctor (h ≫ f)).map (unop W).hom)))).hom z))) := by
+  rw [sliceDualTransport_app_apply (h ≫ f) M V φ W z, dualUnitRingSwap_apply,
+    Scheme.Hom.comp_appIso h f (unop W).left, dualUnitRingSwap_apply, dualUnitRingSwap_apply]
+  simp only [Iso.trans_hom, CommRingCat.hom_comp, RingHom.comp_apply, Functor.mapIso_hom,
+    Iso.op_hom, eqToIso.hom, eqToHom_op]
+
 end Modules
 
 end Scheme

@@ -359,8 +359,7 @@ instance HModule'_shortComplex_f_mono
     (S : J.MayerVietorisSquare) :
     Mono (HModule'_shortComplex k S).f := by
   have : Mono ((HModule'_shortComplex k S).f ≫ biprod.snd) := by
-    dsimp
-    simp only [biprod.lift_snd]
+    simp only [HModule'_shortComplex_f, biprod.lift_snd]
     infer_instance
   exact mono_of_mono _ biprod.snd
 
@@ -582,7 +581,7 @@ noncomputable def HModule'_sequenceIso
     (Iso.refl _)
     (by ext; apply HModule'_biprodAddEquiv_symm_biprodIsoProd_hom_toBiprod_apply)
     (by ext; symm; apply HModule'_mk₀_f_comp_biprodAddEquiv_symm_biprodIsoProd_hom)
-    (by dsimp; rw [Category.comp_id, Category.id_comp]; rfl)
+    (by simp [ComposableArrows.Precomp.map]; rfl)
     (by ext; apply HModule'_biprodAddEquiv_symm_biprodIsoProd_hom_toBiprod_apply)
     (by ext; symm; apply HModule'_mk₀_f_comp_biprodAddEquiv_symm_biprodIsoProd_hom)
 

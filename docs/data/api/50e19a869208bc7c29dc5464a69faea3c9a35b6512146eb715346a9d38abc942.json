@@ -1,0 +1,96 @@
+[
+  {
+    "timestamp": "2026-06-30T00:48:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_telescope_assemble"
+    },
+    "session": {
+      "id": "session_103",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Category.assoc",
+        "Iso.inv_hom_id_assoc"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "generic [Category C] 5-square telescope; conjugation direction rho.inv >> cV >> rho.hom",
+        "code_tried": "dU_k = rho_{k-1}.inv >> cV_k >> rho_k.hom",
+        "line_number": "2631",
+        "lean_error": "Type mismatch: rho0.inv >> ?m >> rho1.hom has type P0 -> P1 but expected O0 -> O1",
+        "result": "failed",
+        "insight": "conjugation direction wrong; dU_k : O_{k-1} -> O_k so must be rho_{k-1}.hom >> cV_k >> rho_k.inv"
+      },
+      {
+        "attempt": 2,
+        "strategy": "corrected conjugation direction, subst + simp cocycle collapse",
+        "code_tried": "subst h1 h2 h3 h4 h5; simp only [Category.assoc, Iso.inv_hom_id_assoc]",
+        "line_number": "2631",
+        "result": "success",
+        "insight": "adjacent rho_k.inv >> rho_k.hom cancellations fire as Iso.inv_hom_id_assoc; verified standalone (pure Mathlib cat theory) then in-file lake build EXIT 0 8567 jobs"
+      }
+    ],
+    "next_steps": "Apply by exact/refine to the concrete SheafOfModules chain inside the (c) target once Seam1+Seam3 land."
+  },
+  {
+    "timestamp": "2026-06-30T00:48:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "restrictIsoUnitOfLE_eq_restrict"
+    },
+    "session": {
+      "id": "session_103",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "restrictFunctorComp <-> pullbackComp reconciliation through pullbackCongr/restrictFunctorCongr shim; needs build-driven trace_state stepping, LSP dead",
+      "key_lemmas_used": [
+        "Iso.ext"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "NEW Seam-1 keystone: restrictIsoUnitOfLE = restrictCompReindex >> (restrictFunctor j).mapIso e >> unitRestrictIso j; reduce via Iso.ext to .hom chart-chase",
+        "code_tried": "apply Iso.ext; sorry",
+        "line_number": "2613",
+        "result": "partial",
+        "insight": "statement type-verifies (build EXIT 0); LHS unfolds to pullback-world chain RFIP(V.i) >> pullbackCongr >> (pullbackComp).inv >> ...; RHS to restrict-world chain via restrictFunctorComp; bridge restrictFunctorIsoPullback_comp_general available but threading needs ~20 blind trace_state builds (LSP dead -> Broken pipe)"
+      }
+    ],
+    "next_steps": "Re-break FINE along the restrictFunctorComp<->pullbackComp shim, or restore LSP; then prove the .hom chart-chase."
+  },
+  {
+    "timestamp": "2026-06-30T00:48:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjInverse.lean",
+      "theorem": "trivialisation_restrict_compat"
+    },
+    "session": {
+      "id": "session_103",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "section descent (Seam3) + Seam1 reindexings cannot be developed blind (LSP dead); first real step is section-level .val.app descent over U.i preimage with eqToHom from image_preimage_of_le",
+      "key_lemmas_used": []
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "target assembly of S2/S3/S4a/S4b/S4c via the 3-seam decomposition",
+        "code_tried": "(body unchanged; sorry retained)",
+        "line_number": "2723",
+        "result": "partial",
+        "insight": "needs Seam1 (restrictIsoUnitOfLE_eq_restrict, not yet proven) + Seam2 (now available) + Seam3 (section descent, not created); section descent is conceptually hardest, not blind-doable"
+      }
+    ],
+    "next_steps": "Create Seam3 trivialisation_restrict_sectionwise + close Seam1 keystone first; do NOT re-prove monolith. Restore LSP or re-break further."
+  }
+]

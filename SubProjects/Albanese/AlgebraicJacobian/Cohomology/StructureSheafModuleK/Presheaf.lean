@@ -59,7 +59,12 @@ then `F : C ⥤ D` is `R`-linear. Mirrors Mathlib's `left_adjoint_additive`; the
 default simp lemmas. -/
 lemma left_adjoint_linear [G.Additive] [G.Linear R] : F.Linear R where
   map_smul {X Y} f r := (adj.homEquiv _ _).injective (by
-    simp [adj.homEquiv_unit])
+    -- v4.31.0: the old `simp [adj.homEquiv_unit]` no longer closes; the categorical
+    -- `Linear.comp_smul`/`smul_comp` only match via `erw` (the `≃ₗ` homModule smul is defeq but
+    -- not syntactically the `Linear.smul` instance), with unit-naturality in between.
+    simp only [adj.homEquiv_unit, Functor.map_smul, ← Functor.comp_map]
+    erw [← adj.unit.naturality, Linear.comp_smul, ← adj.unit.naturality, Linear.smul_comp]
+    rfl)
 
 /-- Iter-046 (Mathlib gap-fill): if `F : C ⥤ D` is `R`-linear and `adj : F ⊣ G`,
 then `G : D ⥤ C` is `R`-linear. The dual of `left_adjoint_linear`. -/
@@ -79,7 +84,8 @@ noncomputable def homLinearEquiv [F.Additive] [G.Additive] [G.Linear R]
   { adj.homAddEquiv X Y with
     map_smul' := fun r f => by
       change adj.homEquiv _ _ (r • f) = r • adj.homEquiv _ _ f
-      simp [adj.homEquiv_unit] }
+      simp only [adj.homEquiv_unit, Functor.map_smul]
+      erw [Linear.comp_smul] }
 
 end Adjunction
 

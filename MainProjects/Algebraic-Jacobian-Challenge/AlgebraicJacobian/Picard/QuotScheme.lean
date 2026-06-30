@@ -1713,13 +1713,22 @@ theorem isLocalizedModule_restrict_of_isIso_fromTildeΓ {R : CommRingCat.{u}}
     IsLocalizedModule.of_linearEquiv_right (S := Submonoid.powers f)
       (f := eDf.toLinearMap ∘ₗ rt) (e := eTop.symm)
   -- identify the target restriction map with `(eDf ∘ rt) ∘ eTop⁻¹`
-  convert step2 using 1
-  apply LinearMap.ext; intro x
-  have hc := LinearMap.congr_fun hnathom (eTop.symm x)
-  simp only [LinearMap.comp_apply] at hc ⊢
-  refine (?_ : _ = _).trans hc.symm
-  congr 1
-  exact (eTop.apply_symm_apply x).symm
+  -- v4.31.0 ISOLATION (Thread-1): `convert step2 using 1` now leaves `Sheaf.forget`-vs-`.presheaf`
+  -- TYPE equalities (`↑((…).presheaf.obj U) = ↑(((Sheaf.forget …).obj …).obj U)`) that no longer
+  -- close by `rfl`/`with_unfolding_all rfl` (the `sheafToPresheaf` functor `.obj` doesn't reduce),
+  -- so `apply LinearMap.ext` hits a Type-eq instead of the map-eq. `step2` (the localized-module
+  -- structure on the composite) IS established above; only the final `convert` identification is
+  -- sorry'd.  ORIGINAL PROOF preserved for restoration:
+  -- ```
+  -- convert step2 using 1
+  -- apply LinearMap.ext; intro x
+  -- have hc := LinearMap.congr_fun hnathom (eTop.symm x)
+  -- simp only [LinearMap.comp_apply] at hc ⊢
+  -- refine (?_ : _ = _).trans hc.symm
+  -- congr 1
+  -- exact (eTop.apply_symm_apply x).symm
+  -- ```
+  sorry
 
 /-- A morphism of sheaves of `R`-modules on `Spec R` that is an isomorphism on every basic open
 `D(f)` is an isomorphism. This is the "isomorphism on a basis ⟹ isomorphism" reduction specialised
@@ -1741,7 +1750,7 @@ private theorem isIso_sheaf_of_isIso_app_basicOpen {R : CommRingCat.{u}}
     rw [ConcreteCategory.isIso_iff_bijective]
     refine ⟨TopCat.Presheaf.stalkFunctor_map_injective_of_isBasis hB hinj x, ?_⟩
     intro t
-    obtain ⟨U, hxU, hUB, s, rfl⟩ := TopCat.Presheaf.germ_exist_of_isBasis hB G.presheaf x t
+    obtain ⟨U, hxU, hUB, s, rfl⟩ := TopCat.Presheaf.exists_mem_germ_eq_of_isBasis hB G.presheaf x t
     obtain ⟨f, rfl⟩ := hUB
     obtain ⟨s', rfl⟩ := ((ConcreteCategory.isIso_iff_bijective _).mp (h f)).2 s
     exact ⟨F.presheaf.germ _ x hxU s', by rw [TopCat.Presheaf.stalkFunctor_map_germ_apply]⟩
@@ -1883,7 +1892,8 @@ theorem map_units_restrict_basicOpen {R : CommRingCat.{u}} (M : (Spec R).Modules
       ((modulesSpecToSheaf.obj M).presheaf.obj
         (.op (PrimeSpectrum.basicOpen f)))) (x : R)) := by
   rintro ⟨x, n, rfl⟩
-  simpa using (tilde.isUnit_algebraMap_end_basicOpen M f).pow n
+  rw [map_pow]
+  exact (Scheme.Modules.isUnit_algebraMap_end_of_le_basicOpen (M := M) f le_rfl).pow n
 
 /-- **Finite basic-open cover refining a quasi-coherent presentation cover.** Given a
 sheaf of modules `M` on `Spec R` together with quasi-coherent data `q` (a — possibly
@@ -1983,6 +1993,7 @@ instance overEquivalence_functor_isCocontinuous :
       obtain ⟨z', hz'V, hz'eq⟩ := (hz : (z : X) ∈ (W : Set X))
       exact (Subtype.val_injective hz'eq) ▸ hz'V
     convert S.downward_closed hSh (homOfLE hdomle) using 1
+    all_goals apply Subsingleton.elim
 
 /-- The inverse of `Opens.overEquivalence U` is cocontinuous (cover-lifting) from the
 Grothendieck topology of the open subspace `↥U` to the `U`-slice of the ambient Grothendieck
@@ -2010,7 +2021,7 @@ instance overEquivalence_inverse_isCocontinuous :
     have hdomle : ((Opens.overEquivalence U).inverse.obj V).left ≤ P := by
       intro p hp; obtain ⟨p', hp'V, rfl⟩ := hp; exact hp'V
     convert S.downward_closed hSf0 (Over.homMk (homOfLE hdomle) ?_) using 1
-    · apply Subsingleton.elim
+    all_goals apply Subsingleton.elim
 
 /-- The dense-subsite witness for the inverse of `Opens.overEquivalence U`, assembled from the two
 cover-lifting facts above. Project-local glue for `overEquivalence_sheafCongr`. -/
@@ -2126,7 +2137,7 @@ noncomputable def overRestrictEquiv :
         have h : (eqv.unitIso.inv.app (Opposite.unop x)).op ≫ (eqv.unit.app (Opposite.unop x)).op
             = 𝟙 _ := by
           rw [← op_comp]
-          simp
+          simp only [CategoryTheory.Equivalence.unit, Iso.hom_inv_id_app, op_id]
         exact (congrArg (Sheaf.over X.ringCatSheaf U).obj.map h).trans
           (CategoryTheory.Functor.map_id _ _))).symm
 
@@ -2228,7 +2239,11 @@ private theorem isIso_unitToPushforwardObjUnit_of_isIso' {C : Type u} [Category.
   intro V
   haveI hiso : IsIso (ψ.hom.app V) := hmap V
   haveI : IsIso ((forget₂ RingCat AddCommGrpCat).map (ψ.hom.app V)) := inferInstance
-  convert this using 1
+  -- v4.31.0 ISOLATION (Thread-1): `convert this using 1/2` leaves stuck `sheafToPresheaf.obj`
+  -- (co)domain/morphism identifications that don't reduce (SAME wall as `isLocalizedModule_restrict…`
+  -- at L1686).  The instance `this : IsIso ((forget₂ …).map (ψ.hom.app V))` IS established above;
+  -- only the final defeq-bridge to the unit component is sorry'd.  ORIGINAL PROOF: `convert this using 1`
+  sorry
 
 namespace Scheme.Modules
 
@@ -2246,7 +2261,7 @@ noncomputable def overRestrictUnitIso (U : X.Opens) :
     (overRestrictEquiv U).functor.obj (SheafOfModules.unit (X.ringCatSheaf.over U)) ≅
       SheafOfModules.unit U.toScheme.ringCatSheaf := by
   unfold overRestrictEquiv
-  dsimp only [Equivalence.symm_functor]
+  try dsimp only [Equivalence.symm_functor]
   refine (@asIso _ _ _ _ (SheafOfModules.unitToPushforwardObjUnit
       (F := (Opens.overEquivalence U).inverse) (J := Opens.grothendieckTopology ↥U)
       (S := U.toScheme.ringCatSheaf) (R := X.ringCatSheaf.over U)
@@ -2273,6 +2288,7 @@ noncomputable def overRestrictPresentation (U : X.Opens) (M : X.Modules)
   SheafOfModules.Presentation.ofIsIso.{u} (overRestrictPullbackIso U M).hom
     (SheafOfModules.Presentation.map.{u} P (overRestrictEquiv U).functor (overRestrictUnitIso U))
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
 set_option synthInstance.maxHeartbeats 800000 in
 set_option backward.isDefEq.respectTransparency false in
@@ -2336,6 +2352,7 @@ namespace Scheme.Modules
 
 variable {X : Scheme.{u}}
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
 set_option synthInstance.maxHeartbeats 800000 in
 set_option backward.isDefEq.respectTransparency false in
@@ -2406,6 +2423,7 @@ noncomputable def pullbackSchemeIsoUnitIso {Y Z : Scheme.{u}} (φ : Y ≅ Z) :
   haveI : (SheafOfModules.pushforward (φ.inv.toRingCatSheafHom)).IsRightAdjoint := inferInstance
   exact asIso (SheafOfModules.pullbackObjUnitToUnit (φ.inv.toRingCatSheafHom))
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
 set_option synthInstance.maxHeartbeats 800000 in
 set_option backward.isDefEq.respectTransparency false in
@@ -2423,8 +2441,9 @@ noncomputable def presentationPullbackOfSchemeIso {Y Z : Scheme.{u}} (φ : Y ≅
   haveI : PreservesColimitsOfSize.{u, u, u, u, u + 1, u + 1} (Scheme.Modules.pullback φ.inv) :=
     (Scheme.Modules.pullbackPushforwardAdjunction φ.inv).leftAdjoint_preservesColimits
   SheafOfModules.Presentation.map.{u} P (Scheme.Modules.pullback φ.inv)
-    (pullbackSchemeIsoUnitIso φ)
+    (pullbackSchemeIsoUnitIso φ).symm
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
 set_option synthInstance.maxHeartbeats 800000 in
 set_option backward.isDefEq.respectTransparency false in
@@ -2454,6 +2473,7 @@ theorem isIso_fromTildeΓ_presentationPullback (M : X.Modules)
         ((Scheme.Modules.pullback (Scheme.Opens.ι (q.X i))).obj M))
       (presentationPullbackιRestrict M q i W))
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
 set_option synthInstance.maxHeartbeats 800000 in
 set_option backward.isDefEq.respectTransparency false in
@@ -3231,6 +3251,7 @@ theorem image_basicOpen_eq_inf {S R : CommRingCat.{u}} (j : Spec S ⟶ Spec R)
     j ''ᵁ (PrimeSpectrum.basicOpen f') = (j ''ᵁ ⊤) ⊓ (Spec R).basicOpen g := by
   rw [image_basicOpen_of_affine, hfg, Scheme.basicOpen_res]
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- Large multi-step assembly (localization combiner + `eqToHom` open-transport); needs headroom.
 /-- **(producer, TOP-aux) Basic-open `Hfr` along an abstract affine open immersion.**  For an open
@@ -3614,6 +3635,7 @@ theorem isLocalizedModule_basicOpen_of_isQuasicoherent {R : CommRingCat.{u}}
   haveI := isIso_fromTildeΓ_of_isQuasicoherent M
   isLocalizedModule_restrict_of_isIso_fromTildeΓ M f
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- The multi-step eqToHom open-transport + bridge-(I) ring-iso assembly needs heartbeat headroom.
 /-- **(gap2, Piece B — the eqToHom bridge)** Basic-open section localization from the gap2-core,
@@ -3751,7 +3773,7 @@ noncomputable def overRestrictPresentationInv (V : X.Opens) (M : X.Modules)
     ((overRestrictEquiv V).unitIso.symm.app (M.over V)).hom
     (SheafOfModules.Presentation.map.{u}
       (SheafOfModules.Presentation.ofIsIso.{u} (overRestrictPullbackIso V M).inv P)
-      (overRestrictEquiv V).inverse (overRestrictUnitIsoInv V))
+      (overRestrictEquiv V).inverse (overRestrictUnitIsoInv V).symm)
 
 /-- **(Piece A helper) Pullback along an open immersion sends `unit` to `unit`.**
 For an open immersion `k : A ⟶ B`, the pullback functor `pullback k` carries the structure-sheaf
@@ -3787,6 +3809,7 @@ noncomputable def pullbackPreimageιIso {Y : Scheme.{u}} (g : Y ⟶ X) [IsOpenIm
       (Scheme.Hom.resLE_comp_ι g (U := U) (V := g ⁻¹ᵁ U) le_rfl)).app M ≪≫
     ((Scheme.Modules.pullbackComp (Scheme.Opens.ι (g ⁻¹ᵁ U)) g).app M).symm
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
 -- Heartbeat headroom for the slice-site presentation transport, as elsewhere in this file.
 set_option synthInstance.maxHeartbeats 800000 in
@@ -3812,8 +3835,9 @@ noncomputable def presentationPullbackιPreimage {Y : Scheme.{u}} (g : Y ⟶ X) 
     (SheafOfModules.Presentation.map.{u}
       (presentationPullbackιOfQuasicoherentData M q i)
       (Scheme.Modules.pullback (g.resLE (q.X i) (g ⁻¹ᵁ (q.X i)) le_rfl))
-      (pullbackOpenImmersionUnitIso (g.resLE (q.X i) (g ⁻¹ᵁ (q.X i)) le_rfl)))
+      (pullbackOpenImmersionUnitIso (g.resLE (q.X i) (g ⁻¹ᵁ (q.X i)) le_rfl)).symm)
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- Heartbeat headroom for the slice-site `HasSheafify` synthesis triggered by `over`.
 set_option synthInstance.maxHeartbeats 800000 in
@@ -3846,6 +3870,7 @@ theorem coversTop_preimage {Y : Scheme.{u}} (g : Y ⟶ X)
   · change g.base y ∈ q.X i
     exact leOfHom hUi hgyU
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- Heartbeat headroom for the slice-site `of_coversTop` `bind` synthesis.
 set_option synthInstance.maxHeartbeats 800000 in

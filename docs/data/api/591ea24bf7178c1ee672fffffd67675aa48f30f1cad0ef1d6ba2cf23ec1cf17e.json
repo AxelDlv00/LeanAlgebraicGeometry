@@ -1,0 +1,80 @@
+[
+  {
+    "timestamp": "2026-06-29T13:55:03Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualUnitPullback.lean",
+      "theorem": "presheafDualUnitIso_pullback_natural"
+    },
+    "session": {
+      "id": "session_98",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "",
+      "key_lemmas_used": [
+        "sliceDualTransport_app_apply",
+        "dualUnitRingSwap_apply",
+        "pushforwardBetaUnitEpsAppOne",
+        "presheafPushforwardUnitIso_inv_app",
+        "PresheafOfModules.pushforward_map_app_apply",
+        "leftAdjointUniq H1 naturality",
+        "PresheafOfModules.hom_ext"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "STEP 0 recover 6 v4.31 NatTrans naturality-autoparam sites (L34/40/65/73/98/134) with `naturality := fun _ _ i => f.appIso_inv_naturality i`",
+        "code_tried": "naturality := fun _ _ i => f.appIso_inv_naturality i",
+        "line_number": "34-134",
+        "lean_error": "v4.31 autoparam no longer auto-discharges NatTrans.naturality",
+        "result": "success",
+        "insight": "documented axis-#1; uniform fix across all 6 sites"
+      },
+      {
+        "attempt": 2,
+        "strategy": "STEP 2 FLANK: sectionwise hom_ext/ModuleCat.hom_ext/LinearMap.ext; erw sliceDualTransport_app_apply; both sides factor through same outer (f.appIso V).hom; LHS via dualUnitRingSwap_apply, RHS via pushforwardBetaUnitEpsAppOne; congr 1 strips common map; PUSH=1 reduction",
+        "code_tried": "apply PresheafOfModules.hom_ext; intro V; apply ModuleCat.hom_ext; apply LinearMap.ext; intro phi; simp only[...]; erw[sliceDualTransport_app_apply]; rw[dualUnitRingSwap_apply]; erw[pushforwardBetaUnitEpsAppOne ...]; congr 1; erw[pushforward_map_app_apply]; erw[presheafPushforwardUnitIso_inv_app]; erw[map_one]; rfl",
+        "line_number": "254-293",
+        "lean_error": "",
+        "result": "success",
+        "insight": "PUSH and dual-unit-iso eval both reduce to (phi.app termSlice).hom 1; flank collapses once both comparators recognised as the same (f.appIso V).hom; H1-telescope via H1.hom.naturality closes the iso-level goal"
+      }
+    ],
+    "next_steps": "Leaf frozen-green; co-dispatch downstream TensorObjInverse cone (dual_unit_iso_restrict_assemble L1583, dualUnitIso_dualIsoOfIso L2387, trivialisation_restrict_compat L2370, terminal exists_tensorObj_inverse L2444) which rides L1'."
+  },
+  {
+    "timestamp": "2026-06-29T13:55:03Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualUnitPullback.lean",
+      "theorem": "pushforwardBetaUnitEpsAppOne"
+    },
+    "session": {
+      "id": "session_98",
+      "model": "opus"
+    },
+    "findings": {
+      "blocker": "",
+      "key_lemmas_used": [
+        "presheafPushforwardUnitIso_inv_app",
+        "Function.LeftInverse.injective",
+        "Iso.hom_inv_id",
+        "ConcreteCategory.congr_hom"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "AUTHOR linchpin as GENERAL carrier value (q.hom.app V).hom y = (f.appIso V).hom.hom y for arbitrary y (blueprint's 'at 1' is y=1 special case). Prove by injectivity of q.inv.app V (=eps); both sides sent to y by q.inv via round-trip q.hom>>q.inv=1 and presheafPushforwardUnitIso_inv_app",
+        "code_tried": "have hinj : Function.Injective ((presheafPushforwardUnitIso f).inv.app V).hom := Function.LeftInverse.injective ...; apply hinj; rw[hεval ...]; rw[<-comp_app, hom_inv_id]; rw[appIso.hom_inv_id]; rfl",
+        "line_number": "145-182",
+        "lean_error": "",
+        "result": "success",
+        "insight": "general-y form is no harder and is what the FLANK consumer requires (instantiated at non-1 carrier). Needed helper restrictScalars_laxMonoidal_ε_app (abstract {R S:CommRingCat}) because restrictScalars_η can't synth CommRing in concrete Scheme spelling; comp_ε fires only on left-associated `show` of the composite functor; Functor.map_id (CategoryTheory, NOT monad)"
+      }
+    ],
+    "next_steps": "Generalise blueprint statement lem:pushforward_beta_unit_eps_app_one to arbitrary y."
+  }
+]

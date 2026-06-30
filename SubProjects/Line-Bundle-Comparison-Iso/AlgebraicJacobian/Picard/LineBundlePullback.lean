@@ -20,11 +20,14 @@ Pic^♯_{C/S}(T) := Pic(C ×_S T) / π_T^* Pic(T)
 
 as a functor on `(Sch/S)^op`.
 
-## Status
+## Status (iter-174 Lane E file-skeleton)
 
-The five pinned declarations carry their substantive type signatures (matching the
-blueprint `\lean{...}` pins in `chapters/Picard_LineBundlePullback.tex`); the
-pullback chase is complete.
+This file is the **iter-174 Lane E** file-skeleton: each of the five pinned
+declarations carries the *intended* substantive type signature (matching the
+blueprint `\lean{...}` pin in `chapters/Picard_LineBundlePullback.tex`) with a
+`sorry` body. The bodies are iter-175+ work after the sibling chapters
+`Picard_RelativeSpec.lean` (A.1.a) settles its `QcohAlgebra` body, and after
+`Picard_RelPicFunctor.lean` (A.1.c) lands the étale-sheafification overlay.
 
 The 5 pinned declarations are:
 
@@ -148,7 +151,8 @@ and observes that `f^*` commutes with restriction along open immersions (the
 involves the natural-isomorphism `restrictFunctorIsoPullback` plus the
 preservation of `SheafOfModules.unit` under pullback (Mathlib
 `Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree`'s
-`unitToPushforwardObjUnit`). The chart-chase is complete. -/
+`unitToPushforwardObjUnit`). Iter-187 wraps this chase as a named typed sorry
+(helper-budget = 1); iter-188+ instantiates the chart-chase. -/
 lemma IsLocallyTrivial.pullback {X Y : Scheme.{u}} (f : Y ⟶ X) {M : X.Modules}
     (hM : IsLocallyTrivial M) :
     IsLocallyTrivial ((Scheme.Modules.pullback f).obj M) := by
@@ -237,6 +241,61 @@ of `Scheme.Modules.pullback` (Mathlib `Modules.pullbackComp`).
 
 Blueprint reference: `lem:pullback_compose` (Kleiman §2; Stacks tag 01HG). -/
 
+/-- **Composition of line-bundle pullbacks** along the projection. For a base
+scheme `S`, a curve-side morphism `πC : C ⟶ S`, test objects `T, T'` over `S`
+via `πT : T ⟶ S` and `πT' : T' ⟶ S`, and a morphism `g : T' ⟶ T` over `S`
+(encoded by the hypothesis `πT' = g ≫ πT`), set
+`g_C := id_C ×_S g : C ×_S T' ⟶ C ×_S T`
+(the base-change morphism, given by `pullback.map`). On the underlying
+`Scheme.Modules.pullback` functors the two routes through the canonical
+naturality square give canonically isomorphic objects:
+```
+            Scheme.Modules.pullback (pullback.snd πC πT)
+  T.Modules  ─────────────────────────────────────────────►  (C ×_S T).Modules
+       │                                                              │
+       │ Scheme.Modules.pullback g            Scheme.Modules.pullback g_C
+       ▼                                                              ▼
+ T'.Modules  ─────────────────────────────────────────────►  (C ×_S T').Modules
+            Scheme.Modules.pullback (pullback.snd πC πT')
+```
+i.e. for any `N : T.Modules`,
+```
+(Modules.pullback g_C).obj ((Modules.pullback (pullback.snd πC πT)).obj N)
+  ≅
+(Modules.pullback (pullback.snd πC πT')).obj ((Modules.pullback g).obj N).
+```
+
+This natural isomorphism is the substantive content of the
+"line-bundle pullback functor is well-behaved under composition" fact
+(Stacks tag 01HG). At the level of the `OnProduct` carrier (which is a typed
+`sorry` in iter-174; see §1) it descends to equality of isomorphism classes
+`[g_C^* π_T^* N] = [π_{T'}^* g^* N] ∈ OnProduct πC πT'`.
+
+iter-186: closed via the chain
+1. `Scheme.Modules.pullbackComp g_C (pullback.snd πC πT)` (functor iso applied at `N`)
+2. `Scheme.Modules.pullbackCongr` for the equation `g_C ≫ snd πC πT = snd πC πT' ≫ g`
+   (`pullback.lift_snd` on the `pullback.map` lift).
+3. `(Scheme.Modules.pullbackComp (pullback.snd πC πT') g).symm` (applied at `N`). -/
+theorem pullback_pullback_eq {S C T T' : Scheme.{u}}
+    (πC : C ⟶ S) (πT : T ⟶ S) (πT' : T' ⟶ S) (g : T' ⟶ T)
+    (hg : πT' = g ≫ πT) (N : T.Modules) :
+    Nonempty
+      ((Scheme.Modules.pullback
+            (Limits.pullback.map πC πT' πC πT (𝟙 C) g (𝟙 S)
+              (by rw [Category.comp_id, Category.id_comp]) (by rw [Category.comp_id, hg]))).obj
+          ((Scheme.Modules.pullback (Limits.pullback.snd πC πT)).obj N) ≅
+        (Scheme.Modules.pullback (Limits.pullback.snd πC πT')).obj
+          ((Scheme.Modules.pullback g).obj N)) := by
+  set g_C : Limits.pullback πC πT' ⟶ Limits.pullback πC πT :=
+    Limits.pullback.map πC πT' πC πT (𝟙 C) g (𝟙 S)
+      (by rw [Category.comp_id, Category.id_comp]) (by rw [Category.comp_id, hg])
+  have key : g_C ≫ Limits.pullback.snd πC πT = Limits.pullback.snd πC πT' ≫ g :=
+    Limits.pullback.lift_snd _ _ _
+  refine ⟨?_⟩
+  refine (Scheme.Modules.pullbackComp g_C (Limits.pullback.snd πC πT)).app N ≪≫ ?_
+  refine (Scheme.Modules.pullbackCongr key).app N ≪≫ ?_
+  exact ((Scheme.Modules.pullbackComp (Limits.pullback.snd πC πT') g).app N).symm
+
 end LineBundle
 
 namespace RelPicPresheaf
@@ -317,6 +376,39 @@ full `Functor` packaging (with the identity / composition laws supplied as
 
 Blueprint reference: `thm:pullback_natural` (Kleiman §2, "absolute Picard
 functor" + Def. `df:Pfs`; Stacks tag 01HG). -/
+
+/-- **The relative Picard presheaf is functorial in the test scheme.**
+
+Object-level functorial action: for any morphism `g : T' ⟶ T` over `S`, there
+is a canonical map
+```
+g^♯ : Pic^♯_{C/S}(T) ⟶ Pic^♯_{C/S}(T')
+```
+of quotient sets, factoring `g_C^*` through `preimage_subgroup πC πT` and
+`preimage_subgroup πC πT'`. On representatives, `g^♯ [L] = [g_C^* L]` where
+`g_C := id_C ×_S g`. The factorisation through the quotient is well-defined
+because `g_C^*` sends `π_T^* Pic(T) ⊆ Pic(C ×_S T)` into
+`π_{T'}^* Pic(T') ⊆ Pic(C ×_S T')` (this is the commutative-square content of
+`pullback_pullback_eq`).
+
+iter-186: with the iso-class setoid `preimage_subgroup`, `Quotient.lift`
+on `L ↦ ⟦(Scheme.Modules.pullback g_C).obj L⟧` is well-defined because
+functors preserve isomorphisms. The identity / composition laws giving the
+full `Functor (Sch/S)^op ⥤ Set` packaging follow from `pullbackId` /
+`pullbackComp` and are iter-187+ work (they currently aren't needed by any
+downstream consumer). -/
+noncomputable def functorial {S C T T' : Scheme.{u}}
+    (πC : C ⟶ S) (πT : T ⟶ S) (πT' : T' ⟶ S) (g : T' ⟶ T) (hg : πT' = g ≫ πT) :
+    Quotient (preimage_subgroup πC πT) → Quotient (preimage_subgroup πC πT') :=
+  let g_C : Limits.pullback πC πT' ⟶ Limits.pullback πC πT :=
+    Limits.pullback.map πC πT' πC πT (𝟙 C) g (𝟙 S)
+      (by rw [Category.comp_id, Category.id_comp]) (by rw [Category.comp_id, hg])
+  Quotient.lift
+    (fun L : LineBundle.OnProduct πC πT =>
+      Quotient.mk (preimage_subgroup πC πT')
+        (⟨(Scheme.Modules.pullback g_C).obj L.carrier,
+          L.isLocallyTrivial.pullback g_C⟩ : LineBundle.OnProduct πC πT'))
+    (fun _ _ ⟨e⟩ => Quotient.sound ⟨(Scheme.Modules.pullback g_C).mapIso e⟩)
 
 end RelPicPresheaf
 

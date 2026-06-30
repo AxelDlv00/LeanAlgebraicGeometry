@@ -13,13 +13,14 @@ This file holds the **dual-inverse chain** that feeds `exists_tensorObj_inverse`
 `TensorObjSubstrate.lean`:
 
 1. `dual_restrict_iso` — restriction along an open immersion commutes with the sheaf-level
-   dual (blueprint `lem:dual_restrict_iso`; the C-bridge).  **PARTIAL** (held iter-258): Steps 1–3
-   (`restrictFunctorIsoPullback`/`sheafificationCompPullback`/strip) + H1
-   (`pushforwardPushforwardAdj`∘`leftAdjointUniq`) are in place; one `sorry` remains at the
-   identified Step-4 presheaf residual
-   `(pushforward β).obj (dual M.val) ≅ dual ((pushforward β).obj M.val)`,
-   assembled sectionwise from `sliceDualTransport` (see piece 1b below) plus a thin-poset
-   naturality square.
+   dual (blueprint `lem:dual_restrict_iso`; the C-bridge).  **CLOSED** (iter-317, axiom-clean):
+   Steps 1–3 (`restrictFunctorIsoPullback`/`sheafificationCompPullback`/strip) + H1
+   (`pushforwardPushforwardAdj`∘`leftAdjointUniq`) + the Step-4 presheaf residual
+   `(pushforward β).obj (dual M.val) ≅ dual ((pushforward β).obj M.val)`
+   are all in place.  Step-4 is assembled sectionwise from `sliceDualTransport` (see piece 1b
+   below) via `isoMk`; its `Opens Y` V-naturality square closes by `rfl` after splitting the
+   composites (the transport `.app`/`restrictionMap`/pushforward-`dual.map` reindexings are all
+   defeq, so both legs land on `φ.app` at the same slice object).
 
    1b. `sliceDualTransport` — the per-`V` `𝒪_Y(V)`-linear iso of the Step-4 residual.  **PARTIAL**
    (iter-262): the obligation is a `𝒪_Y(V)`-linear equivalence between the two morphism (`Hom`)
@@ -36,13 +37,21 @@ This file holds the **dual-inverse chain** that feeds `exists_tensorObj_inverse`
    `codomainMap` hole is filled by defeq.  `map_add'` is CLOSED (iter-263) and `map_smul'` is CLOSED
    (iter-264, axiom-clean: β-naturality ring identity `s = (β.app W').hom c` via
    `Scheme.Hom.appIso_inv_naturality` + `𝒪_Y(W')`-linearity of `dualUnitRingSwap.hom` via `map_smul`).
-   REMAINING (typed sorries, 4 of the `≃ₗ`-packaging fields): `naturality`, the reverse `invFun`, and
-   its `left_inv`/`right_inv` round-trips.
+   `invFun` is CLOSED (iter-265/271, extracted as `sliceDualTransportInv`), and `left_inv`/`right_inv`
+   are CLOSED (iter-313, axiom-clean).  The forward `naturality` field is CLOSED (iter-316,
+   axiom-clean) via the extracted standalone lemma `sliceDualTransport_toFun_naturality` (own
+   heartbeat budget; leg-A `ψ`/`φ`-`naturality_apply` ∘ leg-B `appIso_hom_naturality_apply`, the
+   verified `.hom'`-wall `erw` recipe).  The reverse `sliceDualTransportInv.naturality` is CLOSED
+   (iter-317, axiom-clean): the reverse ε-telescope reduces (collapse-clears + `εInv` + `appIso`-swap
+   reductions) to a 3-identity residual — the cross-fiber `M.val.map` alignment `harg`
+   (parallel thin-poset paths via `congr_map_apply`+`Subsingleton.elim`), `PresheafOfModules.naturality_apply ψ`,
+   and the leg-B `appIso_inv_naturality` relabel chase `keyB`.  **All `sliceDualTransport`/`Inv` fields and
+   `dual_restrict_iso` are now sorry-free.**
 2. `dual_isLocallyTrivial` — the dual of a locally-trivial module is locally trivial
-   (blueprint `lem:dual_isLocallyTrivial`).  **TRANSITIVELY PARTIAL** (depends on
-   `dual_restrict_iso` Step-4 `isoMk` naturality sorry at ~L546): the three-step chart-chase
-   `dual_restrict_iso ≪≫ (dualIsoOfIso eL).symm ≪≫ dual_unit_iso` is assembled and compiles, but it
-   inherits the `dual_restrict_iso` residual axiomatically.  The third leg `dual_unit_iso`
+   (blueprint `lem:dual_isLocallyTrivial`).  **CLOSED** (iter-317; `dual_restrict_iso` is now
+   sorry-free): the three-step chart-chase
+   `dual_restrict_iso ≪≫ (dualIsoOfIso eL).symm ≪≫ dual_unit_iso` is assembled and compiles, no
+   longer inheriting any residual.  The third leg `dual_unit_iso`
    and its presheaf core `presheafDualUnitIso` (= the §0 `dualUnitIsoGen`, the eval-at-`1`
    `dual 𝟙_ ≅ 𝟙_`) are built axiom-clean.
 3. `homOfLocalCompat` — a compatible family of local `𝒪_X`-module morphisms over an open
@@ -140,11 +149,11 @@ noncomputable def dualUnitIsoGen :
       have key := PresheafOfModules.naturality_apply
         (φ : restr X.unop (𝟙_ (_root_.PresheafOfModules.{u} (R₀ ⋙ forget₂ CommRingCat RingCat))) ⟶
           restr X.unop (𝟙_ (_root_.PresheafOfModules.{u} (R₀ ⋙ forget₂ CommRingCat RingCat))))
-        (Over.homMk f.unop : Over.mk f.unop ⟶ Over.mk (𝟙 X.unop)).op
+        (Over.homMk f.unop (Category.comp_id _) : Over.mk f.unop ⟶ Over.mk (𝟙 X.unop)).op
         (1 : ((R₀ ⋙ forget₂ CommRingCat RingCat).obj X : Type u))
       have hrm : (restr X.unop
             (𝟙_ (_root_.PresheafOfModules.{u} (R₀ ⋙ forget₂ CommRingCat RingCat)))).map
-          (Over.homMk f.unop : Over.mk f.unop ⟶ Over.mk (𝟙 X.unop)).op
+          (Over.homMk f.unop (Category.comp_id _) : Over.mk f.unop ⟶ Over.mk (𝟙 X.unop)).op
           = (𝟙_ (_root_.PresheafOfModules.{u} (R₀ ⋙ forget₂ CommRingCat RingCat))).map f := rfl
       rw [hrm] at key
       erw [PresheafOfModules.unit_map_one] at key
@@ -182,6 +191,162 @@ lemma isIso_ε_restrictScalars_appIso {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenIm
       (ModuleCat.restrictScalars (Scheme.Hom.appIso f W').inv.hom)) :=
   restrictScalars_isIso_ε_of_bijective (Scheme.Hom.appIso f W').inv.hom
     (CategoryTheory.ConcreteCategory.bijective_of_isIso (Scheme.Hom.appIso f W').inv)
+
+/-- **Element action of `inv ε` for a `restrictScalars` along a bijective ring hom.**  The
+lax-monoidal unit `ε (restrictScalars g)` has underlying map `g` (`ModuleCat.restrictScalars_η`);
+since `g` is bijective `ε` is invertible (`restrictScalars_isIso_ε_of_bijective`) and the underlying
+map of `inv ε` is `g⁻¹` (`(RingEquiv.ofBijective g hg).symm`).  This is the reusable element-level
+ingredient that powers the ε-swap cancellations in the `sliceDualTransport` round-trips and
+naturality (`dualUnitRingSwap`/`dualUnitRingSwapHom`/`unitRelabelSwap` are all `inv ε`s). -/
+lemma εInv_apply {R S : Type u} [CommRing R] [CommRing S] (g : R →+* S)
+    (hg : Function.Bijective g) (s : S) :
+    haveI := restrictScalars_isIso_ε_of_bijective g hg
+    (CategoryTheory.ConcreteCategory.hom
+        (CategoryTheory.inv (Functor.LaxMonoidal.ε (ModuleCat.restrictScalars g)))) s
+      = (RingEquiv.ofBijective g hg).symm s := by
+  haveI := restrictScalars_isIso_ε_of_bijective g hg
+  have key : (CategoryTheory.ConcreteCategory.hom
+        (CategoryTheory.inv (Functor.LaxMonoidal.ε (ModuleCat.restrictScalars g))))
+        ((CategoryTheory.ConcreteCategory.hom (Functor.LaxMonoidal.ε (ModuleCat.restrictScalars g)))
+          ((RingEquiv.ofBijective g hg).symm s)) = (RingEquiv.ofBijective g hg).symm s := by
+    rw [← CategoryTheory.ConcreteCategory.comp_apply, IsIso.hom_inv_id]; rfl
+  rw [ModuleCat.restrictScalars_η] at key
+  rw [show g ((RingEquiv.ofBijective g hg).symm s) = s from
+    (RingEquiv.ofBijective g hg).apply_symm_apply s] at key
+  exact key
+
+open Opposite in
+/-- **Two ε-swap cancellation on the unit carrier.**  The reverse transport `sliceDualTransportInv`
+applies `inv ε (.hom-direction)` after the forward transport's `inv ε (.inv-direction)`; on the
+shared section ring `𝒪_X(f''ᵁP)` the two `inv ε` (= `(RingEquiv.ofBijective (appIso).hom).symm` and
+`(RingEquiv.ofBijective (appIso).inv).symm`) cancel, because `(appIso f P).hom` and `(appIso f P).inv`
+are mutually-inverse ring maps (`Iso.hom_inv_id`).  Stated at the plain `↑(X.presheaf.obj _)` carrier
+(not the `restr`/`𝟙_` spelling) so the `RingEquiv`/`Mul` instance synthesis is native; the caller
+bridges the unit-object spelling with `erw`. -/
+lemma appIso_swap_cancel {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
+    (P : TopologicalSpace.Opens ↥Y)
+    (hh : Function.Bijective (CommRingCat.Hom.hom (Scheme.Hom.appIso f P).hom))
+    (hi : Function.Bijective (CommRingCat.Hom.hom (Scheme.Hom.appIso f P).inv))
+    (u : ↑(X.presheaf.obj (Opposite.op ((Scheme.Hom.opensFunctor f).obj P)))) :
+    (RingEquiv.ofBijective (CommRingCat.Hom.hom (Scheme.Hom.appIso f P).hom) hh).symm
+        ((RingEquiv.ofBijective (CommRingCat.Hom.hom (Scheme.Hom.appIso f P).inv) hi).symm u) = u := by
+  have h1 : (RingEquiv.ofBijective (CommRingCat.Hom.hom (Scheme.Hom.appIso f P).inv) hi).symm u
+      = (RingEquiv.ofBijective (CommRingCat.Hom.hom (Scheme.Hom.appIso f P).hom) hh) u := by
+    rw [RingEquiv.symm_apply_eq, RingEquiv.ofBijective_apply, RingEquiv.ofBijective_apply]
+    have hki := congrArg CommRingCat.Hom.hom (Scheme.Hom.appIso f P).hom_inv_id
+    simp only [CommRingCat.hom_comp, CommRingCat.hom_id] at hki
+    exact (RingHom.congr_fun hki u).symm
+  rw [h1, RingEquiv.symm_apply_apply]
+
+open Opposite in
+/-- **`inv ε`-relabel as the reverse section restriction map.**  For an `eqToHom`-induced section
+relabel `X.presheaf.map (eqToHom e)` (`e : a = b` of section opens), the inverse `RingEquiv`
+(produced by `εInv_apply` at the unit-relabel swap `unitRelabelSwap`) is just the reverse relabel
+`X.presheaf.map (eqToHom e.symm)`.  Lets the `unitRelabelSwap` `inv ε` in the `sliceDualTransport`
+round-trips collapse to a plain presheaf restriction, exposing `φ.naturality`. -/
+lemma presheafMap_ofBijective_symm {X : Scheme.{u}}
+    {a b : (TopologicalSpace.Opens ↥X)ᵒᵖ} (e : a = b)
+    (hb : Function.Bijective (CommRingCat.Hom.hom (X.presheaf.map (eqToHom e))))
+    (s : ↑(X.presheaf.obj b)) :
+    (RingEquiv.ofBijective (CommRingCat.Hom.hom (X.presheaf.map (eqToHom e))) hb).symm s
+      = (CommRingCat.Hom.hom (X.presheaf.map (eqToHom e.symm))) s := by
+  rw [RingEquiv.symm_apply_eq, RingEquiv.ofBijective_apply, ← CommRingCat.comp_apply,
+    ← Functor.map_comp, eqToHom_trans, eqToHom_refl, X.presheaf.map_id, ConcreteCategory.id_apply]
+
+open Opposite in
+/-- **Three-way `appIso` relabel cancellation (the `right_inv` analogue of `appIso_swap_cancel`).**
+In `right_inv` the `εrel` section-relabel sits BETWEEN the two `appIso` swaps (unlike `left_inv`,
+where they are adjacent and cancel via `appIso_swap_cancel`).  The composite
+`(appIso W').hom ∘ (X-side relabel `X.presheaf.map (opensFunctor.op.map i)`) ∘ (appIso P).inv`
+collapses to the Y-side section relabel `Y.presheaf.map i`, via the naturality of `appIso.inv`
+against restriction (`Scheme.Hom.appIso_inv_naturality`) followed by `Iso.inv_hom_id` of `appIso`. -/
+lemma appIso_relabel_cancel {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
+    {P W' : TopologicalSpace.Opens ↥Y} (i : (Opposite.op P : (TopologicalSpace.Opens ↥Y)ᵒᵖ) ⟶ op W')
+    (u : ↑(Y.presheaf.obj (op P))) :
+    (CommRingCat.Hom.hom (Scheme.Hom.appIso f W').hom)
+        ((CommRingCat.Hom.hom (X.presheaf.map ((Hom.opensFunctor f).op.map i)))
+          ((CommRingCat.Hom.hom (Scheme.Hom.appIso f P).inv) u))
+      = (CommRingCat.Hom.hom (Y.presheaf.map i)) u := by
+  -- Naturality of `appIso.inv` against the relabel `i`, packaged as a morphism identity.
+  have hnat := Scheme.Hom.appIso_inv_naturality f i
+  have key : (Scheme.Hom.appIso f P).inv ≫ X.presheaf.map ((Hom.opensFunctor f).op.map i) ≫
+        (Scheme.Hom.appIso f W').hom = Y.presheaf.map i := by
+    rw [← Category.assoc, ← hnat]
+    erw [Category.assoc, Iso.inv_hom_id, Category.comp_id]
+  have hu := ConcreteCategory.congr_hom key u
+  erw [CommRingCat.comp_apply, CommRingCat.comp_apply] at hu
+  exact hu
+
+open Opposite in
+/-- **`(ofBijective (appIso W').inv).symm = (appIso W').hom` at the element level.**  The inverse of
+the `RingEquiv` built from `(appIso W').inv` is the underlying map of `(appIso W').hom`, by
+`hom_inv_id` of `appIso`.  A spelling-bridge for the `right_inv`/`left_inv` round-trips. -/
+lemma ofBijective_appIso_inv_symm {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
+    (W' : TopologicalSpace.Opens ↥Y)
+    (hi : Function.Bijective (CommRingCat.Hom.hom (Scheme.Hom.appIso f W').inv))
+    (x : ↑(X.presheaf.obj (op ((Hom.opensFunctor f).obj W')))) :
+    (RingEquiv.ofBijective (CommRingCat.Hom.hom (Scheme.Hom.appIso f W').inv) hi).symm x
+      = (CommRingCat.Hom.hom (Scheme.Hom.appIso f W').hom) x := by
+  rw [RingEquiv.symm_apply_eq, RingEquiv.ofBijective_apply]
+  have h := congrArg CommRingCat.Hom.hom (Scheme.Hom.appIso f W').hom_inv_id
+  simp only [CommRingCat.hom_comp, CommRingCat.hom_id] at h
+  exact (RingHom.congr_fun h x).symm
+
+open Opposite in
+/-- **`(ofBijective (appIso P).hom).symm = (appIso P).inv` at the element level.**  Mirror of
+`ofBijective_appIso_inv_symm` for the `.hom`-direction swap, by `inv_hom_id` of `appIso`. -/
+lemma ofBijective_appIso_hom_symm {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
+    (P : TopologicalSpace.Opens ↥Y)
+    (hh : Function.Bijective (CommRingCat.Hom.hom (Scheme.Hom.appIso f P).hom))
+    (x : ↑(Y.presheaf.obj (op P))) :
+    (RingEquiv.ofBijective (CommRingCat.Hom.hom (Scheme.Hom.appIso f P).hom) hh).symm x
+      = (CommRingCat.Hom.hom (Scheme.Hom.appIso f P).inv) x := by
+  rw [RingEquiv.symm_apply_eq, RingEquiv.ofBijective_apply]
+  have h := congrArg CommRingCat.Hom.hom (Scheme.Hom.appIso f P).inv_hom_id
+  simp only [CommRingCat.hom_comp, CommRingCat.hom_id] at h
+  exact (RingHom.congr_fun h x).symm
+
+open Opposite in
+/-- **Three-way relabel cancellation, in the `RingEquiv.ofBijective ·.symm` spelling of the goal.**
+Exactly the telescope appearing in the `right_inv` round-trip after `erw [εInv_apply ×3]`:
+`(ofBij (appIso W').inv).symm ∘ (ofBij (X-relabel)).symm ∘ (ofBij (appIso P).hom).symm` applied to a
+section `u : 𝒪_Y(P)` collapses to the `Y`-side section relabel `Y.presheaf.map (eqToHom (op hPW))`
+(`hPW : P = W'`).  Proved by `subst hPW`, after which both relabels are identities and the two
+`appIso` swaps cancel via `inv_hom_id`. -/
+lemma appIso_relabel_cancel_apply {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
+    {P W' : TopologicalSpace.Opens ↥Y} (hPW : P = W')
+    (eX : (op ((Hom.opensFunctor f).obj W') : (TopologicalSpace.Opens ↥X)ᵒᵖ)
+      = op ((Hom.opensFunctor f).obj P))
+    (hi : Function.Bijective (CommRingCat.Hom.hom (Scheme.Hom.appIso f W').inv))
+    (hr : Function.Bijective (CommRingCat.Hom.hom (X.presheaf.map (eqToHom eX))))
+    (hh : Function.Bijective (CommRingCat.Hom.hom (Scheme.Hom.appIso f P).hom))
+    (u : ↑(Y.presheaf.obj (op P))) :
+    (RingEquiv.ofBijective (CommRingCat.Hom.hom (Scheme.Hom.appIso f W').inv) hi).symm
+        ((RingEquiv.ofBijective (CommRingCat.Hom.hom (X.presheaf.map (eqToHom eX))) hr).symm
+          ((RingEquiv.ofBijective (CommRingCat.Hom.hom (Scheme.Hom.appIso f P).hom) hh).symm u))
+      = (CommRingCat.Hom.hom (Y.presheaf.map (eqToHom (congrArg op hPW)))) u := by
+  subst hPW
+  rw [ofBijective_appIso_hom_symm, presheafMap_ofBijective_symm, ofBijective_appIso_inv_symm]
+  -- both `eX`-relabels are now identities (`eqToHom` between equal opens)
+  rw [eqToHom_refl, X.presheaf.map_id, eqToHom_refl, Y.presheaf.map_id]
+  simp only [CommRingCat.id_apply]
+  -- residual: `(appIso P).hom ((appIso P).inv u) = u`
+  have h := congrArg CommRingCat.Hom.hom (Scheme.Hom.appIso f P).inv_hom_id
+  simp only [CommRingCat.hom_comp, CommRingCat.hom_id] at h
+  exact RingHom.congr_fun h u
+
+/-- **The double-`restrictScalars` collapse legs act as the identity on elements.**  Both
+`ModuleCat.restrictScalarsId'App` and `ModuleCat.restrictScalarsComp'App` are `AddEquiv.refl` on the
+underlying carrier, so the `sliceDualTransportInv` `?collapse` morphism
+`(restrictScalarsId'App (g∘f) ⋯ M).inv ≫ (restrictScalarsComp'App f g (g∘f) rfl M).hom` is the
+identity at the element level (`rfl`).  Used to clear the collapse legs in `sliceDualTransport.left_inv`
+(where, unlike `right_inv`, the absence of a pushforward means `PresheafOfModules.naturality_apply`
+cannot absorb them by defeq).  Proof-irrelevance makes the concrete `Id'App` hypothesis match. -/
+lemma restrictScalars_collapse_apply {R₁ R₂ : Type u} [Ring R₁] [Ring R₂]
+    (f : R₁ →+* R₂) (g : R₂ →+* R₁) (hgf : g.comp f = RingHom.id R₁)
+    (M : ModuleCat.{u} R₁) (x : ↑M) :
+    (((ModuleCat.restrictScalarsId'App (g.comp f) hgf M).inv ≫
+        (ModuleCat.restrictScalarsComp'App f g (g.comp f) rfl M).hom)).hom' x = x := rfl
 
 open Opposite in
 /-- **Leg-B: the codomain unit ring-iso swap** `restrictScalars (f.appIso W').inv (𝟙_X(fW')) ⟶
@@ -280,6 +445,10 @@ noncomputable def unitRelabelSwap {X : Scheme.{u}}
   CategoryTheory.inv (Functor.LaxMonoidal.ε
     (ModuleCat.restrictScalars (X.presheaf.map (eqToHom e)).hom))
 
+set_option maxHeartbeats 800000 in
+-- The reverse `app` 4-leg telescope (eqToHom/collapse/core/unitRelabelSwap) and its naturality
+-- ε-paste overrun the default 200000-heartbeat budget during `whnf` on `restrictScalars`.
+set_option backward.isDefEq.respectTransparency false in
 open PresheafOfModules InternalHom Opposite in
 /-- **Reverse slice transport (the `invFun` of `sliceDualTransport`), extracted top-level.**
 
@@ -385,8 +554,196 @@ noncomputable def sliceDualTransportInv {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpen
     -- the `ψ`-reindex `core`, and the two ε-swaps) must be slid through the restriction `.map` — an
     -- `erw`-level paste mirroring `homLocalSection.naturality`, NOT yet assembled.  Parallels the
     -- still-open forward `sliceDualTransport.naturality`.
-    exact sorry
+    intro X1 Y1 f1
+    apply ModuleCat.hom_ext
+    refine LinearMap.ext fun z => ?_
+    -- Strip the categorical scaffolding (keep the `restrictScalarsId'App`/`Comp'App` collapse legs
+    -- as named isos for `restrictScalars_collapse_apply`), then collapse the `inv ε`s on both sides.
+    simp only [ModuleCat.hom_comp, LinearMap.comp_apply, dualUnitRingSwapHom, unitRelabelSwap]
+    erw [Scheme.Modules.εInv_apply, Scheme.Modules.εInv_apply, Scheme.Modules.εInv_apply,
+      Scheme.Modules.εInv_apply]
+    all_goals try exact CategoryTheory.ConcreteCategory.bijective_of_isIso _
+    -- The two outer `inv ε` per side are now `ofBijective …·.symm`: turn the `appIso.hom`-swap into
+    -- `appIso.inv` and the `εrel` into the reverse presheaf relabel `X.presheaf.map (eqToHom he)`.
+    erw [presheafMap_ofBijective_symm, ofBijective_appIso_hom_symm,
+      presheafMap_ofBijective_symm, ofBijective_appIso_hom_symm]
+    -- Peel the LHS `ψ`-reindex wrapper (`restrictScalars` is identity on the carrier) to `ψ.app A_Y1`.
+    erw [ModuleCat.restrictScalars.map_apply]
+    -- **REDUCED to the cross-fiber `ψ`-naturality residual (the genuine reverse-only difficulty).**
+    -- Both sides are now `X.presheaf.map (eqToHom he) ∘ (appIso (f⁻¹W')).inv ∘ ψ.app A_W' ∘ collapse ∘
+    -- M.val.map (eqToHom he)`, with `A_W' = op (Over.mk (homOfLE hPV))`, `collapse` the (carrier-identity)
+    -- `restrictScalarsId'App.inv ≫ restrictScalarsComp'App.hom`, and the LHS additionally pre-composed by
+    -- the slice restriction `(restr fV M.val).map f1`.  **CLOSE:** build the slice morphism
+    -- `g'' : A_X1 ⟶ A_Y1` over `Over (unop V)` (from `f⁻¹(unop Y1).left ≤ f⁻¹(unop X1).left`, the preimage
+    -- monotonicity of `hle`), then `hnatψ := PresheafOfModules.naturality_apply ψ g'' z` (`z`'s carrier
+    -- `M.val(op (unop X1).left) ≡ M₁.obj A_X1` by `he_X`, exactly as in the CLOSED forward).
+    -- UNLIKE the forward, `M₁.map g'' z` is only `Subsingleton.elim`-equal (NOT defeq) to the LHS inner
+    -- `collapse (M.val.map (eqToHom he_Y) ((restr fV M.val).map f1 z))`: the two `M.val.map` legs are
+    -- PARALLEL thin-poset `Opens X` morphisms differing by the cross-fiber `eqToHom` relabel.  So `erw
+    -- [hnatψ]` needs a preceding `Subsingleton.elim`/`eqToHom`-functoriality alignment of those `M.val.map`
+    -- legs (the move `homLocalSection.naturality` uses); then the residual is the SAME leg-B
+    -- `Scheme.Hom.appIso_inv_naturality` + `X.presheaf.map (eqToHom) ∘ (restr fV 𝟙_X).map f1` relabel
+    -- cancel as the forward's `appIso_hom_naturality_apply` close.  All infrastructure present; this
+    -- thin-poset `M.val.map` alignment is the lone remaining fine-grained step.
+    -- Clear the LHS collapse, peel the RHS `ψ`-reindex `restrictScalars` wrapper on the pristine
+    -- `.hom'` form, then clear the (now-exposed) RHS collapse.
+    erw [restrictScalars_collapse_apply ((Scheme.Hom.appIso f (f ⁻¹ᵁ (unop Y1).left)).hom.hom)
+        (RingCat.Hom.hom (β.app (op (f ⁻¹ᵁ (unop Y1).left)))) (hβ (f ⁻¹ᵁ (unop Y1).left)) _]
+    erw [ModuleCat.restrictScalars.map_apply
+        (CommRingCat.Hom.hom (Scheme.Hom.appIso f (f ⁻¹ᵁ (unop X1).left)).hom)]
+    erw [restrictScalars_collapse_apply ((Scheme.Hom.appIso f (f ⁻¹ᵁ (unop X1).left)).hom.hom)
+        (RingCat.Hom.hom (β.app (op (f ⁻¹ᵁ (unop X1).left)))) (hβ (f ⁻¹ᵁ (unop X1).left)) _]
+    -- Down-set data + the cross-fiber slice morphism `g''` for `ψ`-naturality.
+    have he_X : f ''ᵁ (f ⁻¹ᵁ (unop X1).left) = (unop X1).left := by
+      rw [Scheme.Hom.image_preimage_eq_opensRange_inf]
+      exact inf_eq_right.mpr ((unop X1).hom.le.trans (f.image_le_opensRange (unop V)))
+    have he_Y : f ''ᵁ (f ⁻¹ᵁ (unop Y1).left) = (unop Y1).left := by
+      rw [Scheme.Hom.image_preimage_eq_opensRange_inf]
+      exact inf_eq_right.mpr ((unop Y1).hom.le.trans (f.image_le_opensRange (unop V)))
+    have hle : (unop Y1).left ≤ (unop X1).left := (f1.unop).left.le
+    have hPV_X : f ⁻¹ᵁ (unop X1).left ≤ unop V :=
+      le_trans ((TopologicalSpace.Opens.map f.base).monotone (unop X1).hom.le)
+        (le_of_eq (f.preimage_image_eq (unop V)))
+    have hPV_Y : f ⁻¹ᵁ (unop Y1).left ≤ unop V :=
+      le_trans ((TopologicalSpace.Opens.map f.base).monotone (unop Y1).hom.le)
+        (le_of_eq (f.preimage_image_eq (unop V)))
+    have hpre : f ⁻¹ᵁ (unop Y1).left ≤ f ⁻¹ᵁ (unop X1).left :=
+      (TopologicalSpace.Opens.map f.base).monotone hle
+    let g'' : (op (Over.mk (homOfLE hPV_X)) : (Over (unop V))ᵒᵖ) ⟶ op (Over.mk (homOfLE hPV_Y)) :=
+      (Over.homMk (homOfLE hpre) (by subsingleton)).op
+    -- **Alignment (the reverse-only difficulty):** the LHS inner `M.val.map`-leg equals the
+    -- `ψ`-domain restriction `M₁.map g''` of the RHS inner leg, because both are `M.val.map` of
+    -- parallel thin-poset `Opens X` morphisms (`Subsingleton.elim`); the `restr`/`pushforward`
+    -- restriction maps are `M.val.map` of opensFunctor-reindexed morphisms by `rfl`.
+    have harg : (M.val.map (eqToHom (congrArg op he_Y.symm))).hom'
+            ((ModuleCat.Hom.hom ((restr (f ''ᵁ (unop V)) M.val).map f1)) z)
+          = (restr (unop V) ((PresheafOfModules.pushforward β).obj M.val)).map g''
+              ((M.val.map (eqToHom (congrArg op he_X.symm))).hom' z) := by
+      change (M.val.map (eqToHom (congrArg op he_Y.symm))).hom'
+            ((M.val.map ((Over.forget (f ''ᵁ (unop V))).op.map f1)).hom' z)
+          = (M.val.map (((Hom.opensFunctor f).map ((Over.forget (unop V)).op.map g'').unop).op)).hom'
+              ((M.val.map (eqToHom (congrArg op he_X.symm))).hom' z)
+      erw [← PresheafOfModules.map_comp_apply, ← PresheafOfModules.map_comp_apply]
+      exact M.val.congr_map_apply (Subsingleton.elim _ _) z
+    erw [harg, PresheafOfModules.naturality_apply ψ g''
+        ((M.val.map (eqToHom (congrArg op he_X.symm))).hom' z)]
+    -- **leg-B (the appIso-inv relabel chase).**  The two unit restriction maps `(restr · 𝟙_).map`
+    -- are section relabels (`Y.presheaf.map jp`, `X.presheaf.map ipX` by `rfl`); the residual ring
+    -- identity is `appIso_inv_naturality` + an `eqToHom`/`Subsingleton.elim` thin-poset relabel.
+    let jp : (op (f ⁻¹ᵁ (unop X1).left) : (TopologicalSpace.Opens ↥Y)ᵒᵖ) ⟶ op (f ⁻¹ᵁ (unop Y1).left) :=
+      (Over.forget (unop V)).op.map g''
+    let ipX : (op (unop X1).left : (TopologicalSpace.Opens ↥X)ᵒᵖ) ⟶ op (unop Y1).left :=
+      (Over.forget (f ''ᵁ (unop V))).op.map f1
+    have keyB : Y.presheaf.map jp ≫ (Scheme.Hom.appIso f (f ⁻¹ᵁ (unop Y1).left)).inv ≫
+          X.presheaf.map (eqToHom (congrArg op he_Y))
+        = (Scheme.Hom.appIso f (f ⁻¹ᵁ (unop X1).left)).inv ≫
+          X.presheaf.map (eqToHom (congrArg op he_X)) ≫ X.presheaf.map ipX := by
+      rw [Scheme.Hom.appIso_inv_naturality_assoc f jp, Category.assoc, ← Functor.map_comp,
+        ← Functor.map_comp]
+      congr 2
+    have hc := ConcreteCategory.congr_hom keyB
+        ((ConcreteCategory.hom (ψ.app (op (Over.mk (homOfLE hPV_X)))))
+          ((M.val.map (eqToHom (congrArg op he_X.symm))).hom' z))
+    erw [CommRingCat.comp_apply, CommRingCat.comp_apply, CommRingCat.comp_apply,
+      CommRingCat.comp_apply] at hc
+    erw [hc, CommRingCat.comp_apply, CommRingCat.comp_apply]
 
+set_option backward.isDefEq.respectTransparency false in
+open Opposite in
+/-- **Naturality of the `.hom` direction of the structure ring iso `appIso` against restriction.**
+The `.hom` analogue of `Scheme.Hom.appIso_inv_naturality`: `appIso.hom` commutes with the section
+restriction maps along `f.opensFunctor`.  Derived from `appIso_inv_naturality` by cancelling the
+inverse iso. -/
+lemma appIso_hom_naturality {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
+    {U V : TopologicalSpace.Opens ↥Y} (i : (op U : (TopologicalSpace.Opens ↥Y)ᵒᵖ) ⟶ op V) :
+    X.presheaf.map ((Hom.opensFunctor f).op.map i) ≫ (Scheme.Hom.appIso f V).hom
+      = (Scheme.Hom.appIso f U).hom ≫ Y.presheaf.map i := by
+  have h := Scheme.Hom.appIso_inv_naturality f i
+  rw [Iso.comp_inv_eq, Category.assoc] at h
+  rw [h, ← Category.assoc, Iso.hom_inv_id, Category.id_comp]
+
+open Opposite in
+/-- **Element-level form of `appIso_hom_naturality`.**  Powers leg-B of the forward
+`sliceDualTransport` naturality square (the `dualUnitRingSwap` underlying map IS `(appIso _).hom`
+after the `εInv_apply`/`ofBijective_appIso_inv_symm` reduction). -/
+lemma appIso_hom_naturality_apply {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
+    {U V : TopologicalSpace.Opens ↥Y} (i : (op U : (TopologicalSpace.Opens ↥Y)ᵒᵖ) ⟶ op V)
+    (w : ↑(X.presheaf.obj (op ((Hom.opensFunctor f).obj U)))) :
+    (CommRingCat.Hom.hom (Scheme.Hom.appIso f V).hom)
+        ((CommRingCat.Hom.hom (X.presheaf.map ((Hom.opensFunctor f).op.map i))) w)
+      = (CommRingCat.Hom.hom (Y.presheaf.map i))
+          ((CommRingCat.Hom.hom (Scheme.Hom.appIso f U).hom) w) := by
+  have h := ConcreteCategory.congr_hom (appIso_hom_naturality f i) w
+  erw [CommRingCat.comp_apply, CommRingCat.comp_apply] at h
+  exact h
+
+set_option maxHeartbeats 400000 in
+-- The element-level ε-paste chase (`εInv_apply`/`naturality_apply`/`appIso_hom_naturality_apply`
+-- through heavy `restrictScalars`/internal-hom `whnf`) overruns the default 200000-heartbeat budget.
+set_option backward.isDefEq.respectTransparency false in
+open PresheafOfModules InternalHom Opposite in
+/-- **Standalone forward-slice naturality square (leg-A ∘ leg-B ε-paste), extracted for its own
+heartbeat budget.**  The thin-poset naturality field of the forward `sliceDualTransport.toFun`
+section: for `f1 : X1 ⟶ Y1` in `(Over (unop V))ᵒᵖ`, the family
+`app W := (restrictScalars (β W'.left)).map (φ.app A_W) ≫ dualUnitRingSwap f W'.left`
+commutes with restriction.  Two genuine ingredients pasted: (A) `φ.naturality` reindexes the
+`φ.app` legs across `opensFunctor.map f1`; (B) `appIso_hom_naturality_apply` slides the
+`dualUnitRingSwap` codomain swaps (whose underlying map is `(appIso _).hom`) through the
+restriction maps.  Extracted top-level (own budget) per the iter-316 standalone-first discipline. -/
+lemma sliceDualTransport_toFun_naturality {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
+    (M : X.Modules) (V : (TopologicalSpace.Opens ↥Y)ᵒᵖ) :
+    letI α : Y.presheaf ⟶ (Hom.opensFunctor f).op ⋙ X.presheaf :=
+      { app := fun U ↦ (Hom.appIso f (Opposite.unop U)).inv,
+        naturality := fun _ _ g => Scheme.Hom.appIso_inv_naturality f g }
+    letI β : Y.ringCatSheaf.obj ⟶ (Hom.opensFunctor f).op ⋙ X.ringCatSheaf.obj :=
+      Functor.whiskerRight α (forget₂ CommRingCat RingCat)
+    ∀ (φ : (((PresheafOfModules.pushforward β).obj M.val.dual).obj V : Type u))
+      {X1 Y1 : (Over (Opposite.unop V))ᵒᵖ} (f1 : X1 ⟶ Y1),
+    (restr (Opposite.unop V) ((PresheafOfModules.pushforward β).obj M.val)).map f1 ≫
+        (ModuleCat.restrictScalars
+            (RingCat.Hom.hom
+              ((((Over.forget (Opposite.unop V)).op ⋙
+                    (sheafToPresheaf (Opens.grothendieckTopology ↥Y) CommRingCat).obj Y.sheaf) ⋙
+                    forget₂ CommRingCat RingCat).map f1))).map
+          ((ModuleCat.restrictScalars (RingCat.Hom.hom (β.app (op (Opposite.unop Y1).left)))).map
+              (φ.app (op (Over.mk ((Hom.opensFunctor f).map (Opposite.unop Y1).hom)))) ≫
+            dualUnitRingSwap f (Opposite.unop Y1).left) =
+      ((ModuleCat.restrictScalars (RingCat.Hom.hom (β.app (op (Opposite.unop X1).left)))).map
+            (φ.app (op (Over.mk ((Hom.opensFunctor f).map (Opposite.unop X1).hom)))) ≫
+          dualUnitRingSwap f (Opposite.unop X1).left) ≫
+        (restr (Opposite.unop V)
+              (𝟙_ (_root_.PresheafOfModules
+                ((sheafToPresheaf (Opens.grothendieckTopology ↥Y) CommRingCat).obj Y.sheaf ⋙
+                  forget₂ CommRingCat RingCat)))).map f1 := by
+  intro φ X1 Y1 f1
+  apply ModuleCat.hom_ext
+  refine LinearMap.ext fun z => ?_
+  -- Down-set: `f1.unop : Y1 ⟶ X1` in `Over (unop V)`, so `(unop Y1).left ≤ (unop X1).left`.
+  have hle : (Opposite.unop Y1).left ≤ (Opposite.unop X1).left := (f1.unop).left.le
+  -- The X-side slice morphism `g : A_X1 ⟶ A_Y1` over `Over fV` and the Y-side restriction index `i`.
+  let i : (op (Opposite.unop X1).left : (TopologicalSpace.Opens ↥Y)ᵒᵖ) ⟶ op (Opposite.unop Y1).left :=
+    (homOfLE hle).op
+  let g : (op (Over.mk ((Hom.opensFunctor f).map (Opposite.unop X1).hom)) :
+        (Over (f ''ᵁ (Opposite.unop V)))ᵒᵖ) ⟶
+      op (Over.mk ((Hom.opensFunctor f).map (Opposite.unop Y1).hom)) :=
+    (Over.homMk ((Hom.opensFunctor f).map (homOfLE hle)) (by subsingleton)).op
+  simp only [ModuleCat.hom_comp, LinearMap.comp_apply, ModuleCat.restrictScalars.map_apply,
+    dualUnitRingSwap]
+  erw [Scheme.Modules.εInv_apply, Scheme.Modules.εInv_apply]
+  all_goals try exact CategoryTheory.ConcreteCategory.bijective_of_isIso _
+  erw [ofBijective_appIso_inv_symm, ofBijective_appIso_inv_symm]
+  have hnat := PresheafOfModules.naturality_apply φ g z
+  erw [ModuleCat.restrictScalars.map_apply]
+  erw [hnat]
+  erw [ModuleCat.restrictScalars.map_apply]
+  -- leg-B: slide `dualUnitRingSwap`/`appIso.hom` through the unit-section restriction maps,
+  -- the `.hom`-direction structure-ring-iso naturality `appIso_hom_naturality_apply f i w`.
+  exact appIso_hom_naturality_apply f i _
+
+set_option maxHeartbeats 800000 in
+-- The `refine LinearEquiv.toModuleIso` carrier + the iter-307 `restrictScalarsLaxε.naturality`
+-- (`hε`) term in the `naturality` field involve heavy `whnf` on `restrictScalars`/internal-hom
+-- terms; the default 200000 heartbeats is insufficient for this single declaration.
 open PresheafOfModules InternalHom Opposite in
 /-- **Leg (A)∘(B): the sectionwise slice transport of the dual along an open immersion.**
 
@@ -407,7 +764,8 @@ iso `f.appIso`; naturality on the thin poset `Opens Y` is `Subsingleton.elim`. -
 noncomputable def sliceDualTransport {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImmersion f]
     (M : X.Modules) (V : (TopologicalSpace.Opens ↥Y)ᵒᵖ) :
     letI α : Y.presheaf ⟶ (Hom.opensFunctor f).op ⋙ X.presheaf :=
-      { app := fun U => (f.appIso U.unop).inv }
+      { app := fun U => (f.appIso U.unop).inv,
+        naturality := fun _ _ g => Scheme.Hom.appIso_inv_naturality f g }
     letI β : Y.ringCatSheaf.obj ⟶ (Hom.opensFunctor f).op ⋙ X.ringCatSheaf.obj :=
       Functor.whiskerRight α (forget₂ CommRingCat RingCat)
     (((PresheafOfModules.pushforward β).obj (PresheafOfModules.dual M.val)).obj V) ≅
@@ -481,7 +839,7 @@ noncomputable def sliceDualTransport {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImm
   -- `restr`-section defeq bridge), the toFun naturality (thin-poset `Subsingleton.elim`), invFun
   -- (mirror with `(f.appIso W').inv`), and the four `≃ₗ` proof fields.
   set β : Y.ringCatSheaf.obj ⟶ (Hom.opensFunctor f).op ⋙ X.ringCatSheaf.obj :=
-    Functor.whiskerRight ({ app := fun U ↦ (Hom.appIso f (Opposite.unop U)).inv } :
+    Functor.whiskerRight ({ app := fun U ↦ (Hom.appIso f (Opposite.unop U)).inv, naturality := fun _ _ g => Scheme.Hom.appIso_inv_naturality f g } :
       Y.presheaf ⟶ (Hom.opensFunctor f).op ⋙ X.presheaf) (forget₂ CommRingCat RingCat) with hβ
   letI lhsMod : Module (Y.ringCatSheaf.obj.obj V : Type u)
       (((PresheafOfModules.pushforward β).obj (PresheafOfModules.dual M.val)).obj V : Type u) :=
@@ -516,13 +874,22 @@ noncomputable def sliceDualTransport {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImm
   -- The remaining six fields are the (instance-delicate) `≃ₗ`-packaging; goal order (verified by
   -- `lean_goal`): naturality, map_add', map_smul', invFun, left_inv, right_inv.
   --
-  -- (1) naturality of the leg-A∘leg-B family in `W`: the thin-poset `Subsingleton.elim` square over
-  --     `(Over (unop V))ᵒᵖ`.  After `apply PresheafOfModules.hom_ext`, the connecting `restr`-map
-  --     edges agree by `Subsingleton.elim` on the base hom-sets, but the `restrictScalars`-functor
-  --     `.map` of the reindexed `φ.app` must be commuted through `dualUnitRingSwap` — needs the
-  --     ε-naturality of `restrictScalars` along the structure ring iso (an `erw`-level paste, NOT
-  --     yet built).
-  · sorry
+  -- (1) naturality of the leg-A∘leg-B family in `W`.  The square over `(Over (unop V))ᵒᵖ` pastes
+  --     TWO genuine ingredients (the thin-poset `Subsingleton.elim` settles only the base maps):
+  --       (a) leg-A: `φ.naturality` across `(opensFunctor.map f1)` reindexes the `φ.app` legs;
+  --       (b) leg-B: the ε-naturality of `restrictScalars` commutes the `dualUnitRingSwap`
+  --           codomain swaps through the restriction maps.
+  --     CORRECTION (iter-307; the iter-306 "architectural wall" was FALSE): ingredient (b) IS the
+  --     natural transformation `PresheafOfModules.restrictScalarsLaxε` — it EXISTS axiom-clean at
+  --     `PresheafInternalHom.lean:290`, is imported here (line 7), and its `NatTrans.naturality`
+  --     field is EXACTLY this ε-square.  Instantiated below at `α := whiskerRight {appIso.inv} ·`
+  --     it typechecks and applies at this very goal (`dualUnitRingSwap = inv` of its component, the
+  --     simp lemma `dualUnitRingSwap_comp_dualUnitRingSwapInv`).  No new monoidal infra is needed.
+  --     The whole square is the pasting `key` (leg-A) ∘ `key2` (leg-B, from `hε`); see below.
+  · intro X1 Y1 f1
+    -- The leg-A∘leg-B ε-paste, discharged by the standalone `sliceDualTransport_toFun_naturality`
+    -- (own heartbeat budget; `set`-β is defeq to the lemma's `letI`-β whiskerRight literal).
+    exact sliceDualTransport_toFun_naturality f M V φ f1
   -- (2) map_add': `toFun (x+y) = toFun x + toFun y`.  CLOSED (iter-263) with the verified
   --     `analogies/ma-ihom263.md` recipe: the `internalHomObjModule`-add IS the ambient
   --     `PresheafOfModules.Hom` Preadditive add (single shared add), so the `change`-reshape +
@@ -620,13 +987,160 @@ noncomputable def sliceDualTransport {X Y : Scheme.{u}} (f : Y ⟶ X) [IsOpenImm
     intro P
     rw [hβ]
     have h := congrArg CommRingCat.Hom.hom (Scheme.Hom.appIso f P).hom_inv_id
-    simpa only [Functor.whiskerRight_app, CommRingCat.forgetToRingCat_map_hom,
-      CommRingCat.hom_comp, CommRingCat.hom_id] using h
+    simp only [Functor.whiskerRight_app, CommRingCat.forgetToRingCat_map_hom,
+      CommRingCat.hom_comp, CommRingCat.hom_id] at h ⊢
+    exact h
   -- (5) left_inv: `invFun (toFun φ) = φ`, collapses via `Iso.inv_hom_id` of `f.appIso`
-  --     (`dualUnitRingSwap`/`ε` round-trip) + the down-set bijection.  Blocked on (4).
-  · sorry
-  -- (6) right_inv: `toFun (invFun ψ) = ψ`, the `Iso.hom_inv_id` mirror of (5).  Blocked on (4).
-  · sorry
+  --     (`dualUnitRingSwap`/`ε` round-trip) + the down-set bijection.
+  --     STRUCTURAL REDUCTION (iter-306): `PresheafOfModules.hom_ext` drops the round-trip to a
+  --     PER-COMPONENT equality at each `W'' : (Over fV)ᵒᵖ`, which sidesteps the ε-naturality wall
+  --     blocking refine_1 (the `naturality` fields are proof-irrelevant under `hom_ext`).  The
+  --     residual `(sliceDualTransportInv (toFun φ)).app W'' = φ.app W''` is the 4-leg telescope:
+  --     `M.val.map (eqToHom he) ≫ restrictScalars(ρ).map (collapse ≫ core) ≫ unitRelabelSwap`,
+  --     where `core` contains `(toFun φ).app = restrictScalars(β).map (φ.app …) ≫ dualUnitRingSwap`.
+  --     It closes by the named ε cancellations `dualUnitRingSwap_comp_dualUnitRingSwapInv` /
+  --     `Iso.inv_hom_id` of `f.appIso` against `dualUnitRingSwapHom`, plus `eqToHom`/`restrictScalarsId'App`
+  --     collapse of the cross-fiber down-set relabel.  Per-component residual isolated below.
+  · intro φ
+    apply PresheafOfModules.hom_ext
+    intro W''
+    -- **left_inv — reduced to the concrete per-component element residual (iter-308).**
+    -- `dsimp` unfolds the reverse component to the explicit 4-leg telescope, with
+    -- `ψ = toFun φ` already substituted; `hom_ext`+`LinearMap.ext` drop to elements and the
+    -- `simp only` strips the categorical scaffolding: the `collapse` legs (`restrictScalarsId'App`
+    -- / `restrictScalarsComp'App`) become `AddEquiv.refl` (identity on the underlying type).
+    -- WORKED-OUT CLOSE (the remaining `sorry`):  at the element level the LHS is
+    --   `εrel⁻¹ ( ε_hom⁻¹ ( ε_inv⁻¹ ( φ.app A ( M.val.map (eqToHom he) z ) ) ) )`
+    -- where `A = op (Over.mk (opensFunctor.map (homOfLE hPV)))`, `ε_inv = ε(restrictScalars
+    -- (appIso P).inv)`, `ε_hom = ε(restrictScalars (appIso P).hom)`, `εrel = ε(restrictScalars
+    -- (X.presheaf.map (eqToHom he)))`, `P = f⁻¹ᵁ W''.left`.  The two inner swaps cancel:
+    -- `ε_inv⁻¹`/`ε_hom⁻¹` have underlying maps `(appIso P).inv⁻¹ = (appIso P).hom` and
+    -- `(appIso P).hom⁻¹ = (appIso P).inv` (`ModuleCat.restrictScalars_η` for the underlying
+    -- of `ε`, `Iso.hom_inv_id`/`inv_hom_id` of `appIso` for the composite), so
+    -- `ε_hom⁻¹ (ε_inv⁻¹ x) = x`.  This leaves `εrel⁻¹ ( φ.app A ( M.val.map (eqToHom he) z ) )
+    -- = φ.app W'' z`, which is `φ.naturality` across the slice morphism `A ⟶ W''` (the
+    -- `homLocalSection`-style reindex used in the CLOSED `app` field), with the `eqToHom`/`εrel`
+    -- relabel absorbed by the down-set identity `he : f''ᵁ(f⁻¹ᵁ W''.left) = W''.left`.
+    -- The friction blocking the one-shot close is the `inv ε` element-action lemma + the
+    -- precise `appIso` ring-map direction at the unit-object carriers (see task_result).
+    dsimp only [sliceDualTransportInv]
+    apply ModuleCat.hom_ext
+    refine LinearMap.ext fun z => ?_
+    -- Mirror of `right_inv` (iter-312): strip the categorical scaffolding, then collapse the three
+    -- `inv ε` to `RingEquiv.ofBijective …·.symm` via `εInv_apply`.  Keep `restrictScalarsId'App`/
+    -- `restrictScalarsComp'App` UN-unfolded (out of the simp set) so the double-`restrictScalars`
+    -- collapse legs stay as named isos, killable below in element form.
+    simp only [ModuleCat.hom_comp, LinearMap.comp_apply, dualUnitRingSwap, dualUnitRingSwapHom,
+      unitRelabelSwap]
+    erw [Scheme.Modules.εInv_apply, Scheme.Modules.εInv_apply, Scheme.Modules.εInv_apply]
+    all_goals try exact CategoryTheory.ConcreteCategory.bijective_of_isIso _
+    -- **INNER TWO SWAPS CANCEL (iter-312).**  Unlike `right_inv`, here the two `appIso` swaps
+    -- `ε_hom⁻¹ ∘ ε_inv⁻¹` are ADJACENT, so they cancel via the existing 2-way `appIso_swap_cancel`
+    -- (`(appIso P).hom⁻¹ ((appIso P).inv⁻¹ u) = u`).  `Over.mk_left` first unifies the two `P` args.
+    erw [appIso_swap_cancel f (f ⁻¹ᵁ (unop W'').left)]
+    -- **RESIDUAL = `εrel⁻¹ (φ.app A (collapse (M.val.map (eqToHom) z))) = φ.app W'' z`**, the SAME
+    -- `φ.naturality` crux as `right_inv`.  `presheafMap_ofBijective_symm` turns `εrel⁻¹` into the
+    -- reverse relabel `X.presheaf.map (eqToHom)`; `restrictScalars.map_apply` peels the `β`-reindex
+    -- wrapper on `φ.app A`.  CLOSED (iter-313): unlike `right_inv` (where the pushforward in `M₁` lets
+    -- `naturality_apply` absorb the `restrictScalars` collapse legs by defeq), here `M₁ = restr M.val`
+    -- has no pushforward, so the collapse is genuinely extra.  A `change` (defeq, robust against the
+    -- `instances`-transparency goal corruption from `dsimp [sliceDualTransportInv]`) clears the
+    -- defeq-identity collapse (`restrictScalars_collapse_apply`, by `rfl`) AND reshapes the source
+    -- relabel `M.val.map (eqToHom)` into `(restr fV M.val).map g` for the thin-poset slice morphism
+    -- `g : W'' ⟶ A`; then `naturality_apply` fires and the codomain relabel cancels by `eqToHom_trans`.
+    erw [presheafMap_ofBijective_symm, ModuleCat.restrictScalars.map_apply]
+    -- Reconstruct the down-set facts (mirror of `sliceDualTransportInv`): `he` is the preimage
+    -- round-trip `f''ᵁ(f⁻¹ᵁ W'') = W''` (since `W'' ≤ fV ⊆ range f`), `g` the slice morphism it induces.
+    have hWfV : (unop W'').left ≤ f ''ᵁ (unop V) := (unop W'').hom.le
+    have hPV : f ⁻¹ᵁ (unop W'').left ≤ unop V :=
+      le_trans ((TopologicalSpace.Opens.map f.base).monotone hWfV)
+        (le_of_eq (f.preimage_image_eq (unop V)))
+    have he : f ''ᵁ f ⁻¹ᵁ (unop W'').left = (unop W'').left := by
+      rw [Scheme.Hom.image_preimage_eq_opensRange_inf]
+      exact inf_eq_right.mpr (hWfV.trans (f.image_le_opensRange (unop V)))
+    let g : W'' ⟶ op (Over.mk ((Hom.opensFunctor f).map (Over.mk (homOfLE hPV)).hom)) :=
+      (Over.homMk (homOfLE (le_of_eq he)) (by subsingleton)).op
+    change (CommRingCat.Hom.hom (X.presheaf.map (eqToHom _)))
+        ((ConcreteCategory.hom
+            (φ.app (op (Over.mk ((Hom.opensFunctor f).map (Over.mk (homOfLE hPV)).hom)))))
+          ((ModuleCat.Hom.hom ((restr (unop ((Hom.opensFunctor f).op.obj V)) M.val).map g)) z)) =
+        (ModuleCat.Hom.hom (φ.app W'')) z
+    erw [PresheafOfModules.naturality_apply]
+    erw [← CommRingCat.comp_apply, ← Functor.map_comp, eqToHom_trans, eqToHom_refl, X.presheaf.map_id]
+    · rfl
+    · exact congrArg op he.symm
+  -- (6) right_inv: `toFun (invFun ψ) = ψ`, the `Iso.hom_inv_id` mirror of (5).  Same structural
+  --     reduction: `hom_ext` drops it to a per-component equality at each `W : (Over V)ᵒᵖ`,
+  --     `(toFun (invFun ψ)).app W = ψ.app W`, the mirror telescope closing by the reverse ε
+  --     cancellation `dualUnitRingSwapInv_comp_dualUnitRingSwap` + `Iso.hom_inv_id` of `f.appIso`.
+  · intro ψ
+    apply PresheafOfModules.hom_ext
+    intro W
+    -- **right_inv — reduced to the concrete per-component element residual (iter-308).**
+    -- Mirror of `left_inv`: the forward component `(toFun (invFun ψ)).app W` is
+    -- `restrictScalars(β.app W').map ((invFun ψ).app A) ≫ dualUnitRingSwap f W'`, with
+    -- `(invFun ψ) = sliceDualTransportInv … ψ` the 4-leg telescope.  `dsimp` unfolds it,
+    -- `hom_ext`+`LinearMap.ext` drop to elements, the `simp only` strips the categorical
+    -- scaffolding (collapse legs → `AddEquiv.refl`).  CLOSE (the remaining `sorry`): the same
+    -- two-swap cancellation as `left_inv` but the OTHER way (`dualUnitRingSwapInv_comp_
+    -- dualUnitRingSwap` + `Iso.hom_inv_id` of `appIso`), leaving the `ψ.naturality` reindex back
+    -- across the down-set identity.  Same `inv ε` element-action friction (see task_result).
+    dsimp only [sliceDualTransportInv]
+    apply ModuleCat.hom_ext
+    refine LinearMap.ext fun z => ?_
+    simp only [ModuleCat.hom_comp, LinearMap.comp_apply, dualUnitRingSwap, dualUnitRingSwapHom,
+      unitRelabelSwap, ModuleCat.restrictScalarsId'App, ModuleCat.restrictScalarsComp'App,
+      LinearEquiv.toModuleIso_inv, LinearEquiv.toModuleIso_hom]
+    erw [Scheme.Modules.εInv_apply, Scheme.Modules.εInv_apply, Scheme.Modules.εInv_apply]
+    all_goals try exact CategoryTheory.ConcreteCategory.bijective_of_isIso _
+    -- REDUCED (mirror of `left_inv`, iter-311): the three `inv ε` are now
+    -- `(RingEquiv.ofBijective …).symm`.  Residual (outer→inner):
+    --   `ε_inv⁻¹ ( εrel⁻¹ ( ε_hom⁻¹ ( ψ-reindex (collapse (M.val.map (eqToHom) z)) ) ) ) = ψ.app W z`
+    -- with `ε_inv = (appIso f W').inv`, `ε_hom = (appIso f P).hom` (`P = f⁻¹ᵁ(f''ᵁW') = W'`),
+    -- `εrel = X.presheaf.map (eqToHom)` the section relabel `f''ᵁP ↔ f''ᵁW'`.
+    -- UNLIKE `left_inv` (where the two `appIso` swaps were ADJACENT and cancelled via
+    -- `appIso_swap_cancel`), here `εrel` sits BETWEEN `ε_inv⁻¹` and `ε_hom⁻¹`, so the cancellation
+    -- is not the 2-way `appIso_swap_cancel`: after `presheafMap_ofBijective_symm` turns `εrel⁻¹`
+    -- into `X.presheaf.map (eqToHom e.symm)`, the residual is
+    --   `(appIso W').hom ( X.presheaf.map (eqToHom e.symm) ( (appIso P).inv u ) ) = u`,
+    -- which is the `appIso`-naturality square across the relabel (`Scheme.Hom.appIso_inv_naturality`)
+    -- composed with `Iso.hom_inv_id` of `appIso`, i.e. a NEW 3-way helper
+    -- `appIso_relabel_cancel` is needed (vs `left_inv`'s 2-way), then the same `ψ.naturality`
+    -- close as `left_inv` (`PresheafOfModules.naturality_apply` + `map_comp_apply` + the
+    -- thin-poset `Subsingleton.elim`).  The 2 reusable helpers (`appIso_swap_cancel`,
+    -- `presheafMap_ofBijective_symm`) and the full `left_inv` close are the template.
+    have hPW : f ⁻¹ᵁ (Over.mk ((Hom.opensFunctor f).map (unop W).hom)).left = (unop W).left := by
+      simp only [Over.mk_left]; exact f.preimage_image_eq _
+    -- **TELESCOPE COLLAPSED (iter-312).**  The three `inv ε` (= `ofBijective …·.symm`) cancel via
+    -- the new 3-way helper `appIso_relabel_cancel_apply` (`(appIso W').hom ∘ X-relabel ∘ (appIso P).inv
+    -- = Y.presheaf.map (eqToHom)` by `appIso_inv_naturality` + `inv_hom_id`, in the goal's
+    -- `ofBijective·.symm` spelling, `subst`-proved).  `hPW : P = W'` is `f.preimage_image_eq`.
+    erw [appIso_relabel_cancel_apply f hPW]
+    -- **RESIDUAL = pure `ψ.naturality` across the `P = W'` slice morphism** (the SAME residual that
+    -- closes `left_inv`).  Goal (collapse legs `R.symm ≫ R` are identities, `restrictScalars.map`
+    -- keeps the underlying map):
+    --   `Y.presheaf.map (eqToHom) ((ψ.app A).hom (M.val.map (eqToHom) z)) = (ψ.app W).hom z`
+    -- with `A = op (Over.mk (homOfLE : P ≤ unop V))`, `P = f⁻¹ᵁ(f''ᵁW') = W'`.  Picking the thin-poset
+    -- slice morphism `g : W ⟶ A` (from `P = W'`), `PresheafOfModules.naturality_apply ψ g z` gives
+    -- `(ψ.app A) ((restr (pushforward β M.val)).map g z) = (restr 𝟙_Y).map g ((ψ.app W) z)`; the two
+    -- remaining facts are (a) `(restr (pushforward β M.val)).map g z = collapse (M.val.map (eqToHom) z)`
+    -- and (b) `Y.presheaf.map (eqToHom) ∘ (restr 𝟙_Y).map g = id` (the codomain relabel cancels),
+    -- both `Subsingleton.elim`/`eqToHom`-collapse on the thin poset.
+    -- **CLOSED (iter-313, `analogies/dualcoerce313.md`).**  The `.hom'`/`AddEquiv.refl.toLinearEquiv`
+    -- scaffolding is punched through by `erw` against the `ConcreteCategory.hom`-form lemmas
+    -- `ModuleCat.restrictScalars.map_apply` (peels the `restrictScalars`-reindex wrapper on `ψ.app A`)
+    -- and `PresheafOfModules.naturality_apply` (fires up to defeq, absorbing the collapse-legs into
+    -- `M₁.map g` and emitting the slice morphism `?g : W ⟶ A` as a goal).  `?g` is supplied CHEAPLY
+    -- as the thin-poset `Over.homMk … |>.op` (mirror of the L143 template), and the residual unit
+    -- cancellation closes by defeq.
+    erw [ModuleCat.restrictScalars.map_apply, PresheafOfModules.naturality_apply]
+    case g => exact (Over.homMk (homOfLE (le_of_eq hPW)) (by subsingleton)).op
+    -- Residual unit cancellation `Y.presheaf.map (eqToHom) ∘ (restr V 𝟙_Y).map g = id`: the two
+    -- relabels compose to `eqToHom rfl = 𝟙` (`eqToHom_trans`), the side equality of opens objects
+    -- being `congrArg op hPW.symm` (the down-set round-trip `P = W'`).
+    erw [← CommRingCat.comp_apply, ← Functor.map_comp, eqToHom_trans, eqToHom_refl, Y.presheaf.map_id]
+    · rfl
+    · exact congrArg op hPW.symm
 
 /-- **Restriction along an open immersion commutes with the sheaf-level dual (C-bridge).**
 
@@ -741,7 +1255,8 @@ noncomputable def dual_restrict_iso {X Y : Scheme.{u}} (f : Y ⟶ X)
   -- H1: replace `pullback φ` with `pushforward β` (β the open-immersion structure ring iso).
   let φR := (Scheme.Hom.toRingCatSheafHom f).hom
   let α : Y.presheaf ⟶ f.opensFunctor.op ⋙ X.presheaf :=
-    { app := fun U => (f.appIso U.unop).inv }
+    { app := fun U => (f.appIso U.unop).inv,
+      naturality := fun _ _ g => Scheme.Hom.appIso_inv_naturality f g }
   let β : Y.ringCatSheaf.obj ⟶ f.opensFunctor.op ⋙ X.ringCatSheaf.obj :=
     Functor.whiskerRight α (forget₂ CommRingCat RingCat)
   have hadj : PresheafOfModules.pushforward β ⊣ PresheafOfModules.pushforward φR :=
@@ -751,13 +1266,18 @@ noncomputable def dual_restrict_iso {X Y : Scheme.{u}} (f : Y ⟶ X)
   let H1 := hadj.leftAdjointUniq (PresheafOfModules.pullbackPushforwardAdjunction φR)
   refine (H1.app (PresheafOfModules.dual (R₀ := X.presheaf) M.val)).symm ≪≫ ?_
   -- Residual: `(pushforward β).obj (dual M.val) ≅ dual ((pushforward β).obj M.val)`.
-  -- Assemble sectionwise from `sliceDualTransport`.  The `isoMk` naturality square is the
-  -- thin-poset `Opens Y` coherence of the `sliceDualTransport` family; it becomes routine once
-  -- `sliceDualTransport`'s body is concrete (its `.hom` is currently a `sorry`, so the square
-  -- cannot be discharged yet — it is left as the assembly residual, per the planner bar).
+  -- Assemble sectionwise from `sliceDualTransport` (now sorry-free: `.hom`/`naturality`/`invFun` and
+  -- both round-trips are CLOSED).  The `isoMk` naturality square is the thin-poset `Opens Y`
+  -- coherence of the `sliceDualTransport` family — the V-naturality of the leg-A∘leg-B transport.
   refine PresheafOfModules.isoMk (fun V => sliceDualTransport f M V) ?_
   intro V W g
-  sorry
+  apply ModuleCat.hom_ext
+  refine LinearMap.ext fun φ => ?_
+  apply PresheafOfModules.hom_ext
+  intro W''
+  simp only [ModuleCat.hom_comp, LinearMap.comp_apply, ModuleCat.restrictScalars.map_apply,
+    PresheafOfModules.comp_app]
+  rfl
 
 /-! ## §B. Local triviality of the dual -/
 
@@ -789,9 +1309,9 @@ Blueprint `lem:dual_isLocallyTrivial` (~L5472).  If `L : X.Modules` satisfies
 
 /- Planner strategy:
    Blueprint label: lem:dual_isLocallyTrivial (~L5472).
-   Uses (dual_restrict_iso is PARTIAL — Step-4 `isoMk` naturality sorry at ~L546; all other deps CLOSED):
+   Uses (all deps CLOSED; dual_restrict_iso is now sorry-free, iter-317):
      lem:internal_hom_isSheaf  → `Scheme.Modules.dual` (TensorObjSubstrate.lean ~L207)
-     lem:dual_restrict_iso     → `dual_restrict_iso` (this file, §A above — PARTIAL, Step-4 sorry)
+     lem:dual_restrict_iso     → `dual_restrict_iso` (this file, §A above — CLOSED iter-317)
      def:scheme_modules_dual_iso_of_iso → `Scheme.Modules.dualIsoOfIso`
                                           (TensorObjSubstrate.lean ~L218)
      lem:restrictscalars_ringiso_dualequiv → `restrictScalarsRingIsoDualEquiv`
@@ -902,9 +1422,12 @@ noncomputable def homLocalSection {X : Scheme.{u}} {M N : X.Modules} {ι : Type*
       rw [(N.val.presheaf.map_comp _ _).symm, hsubN]
       exact N.val.presheaf.map_comp _ _
     dsimp only [Functor.comp_map, Functor.op_map, Functor.op_obj, Functor.comp_obj]
-    rw [← Category.assoc, hML]
-    erw [Category.assoc, reassoc_of% hm, hNR]
-    simp only [Category.assoc]
+    -- v4.31.0 RESTORE (iter-313): the original `rw [← Category.assoc, hML]` failed because the goal's
+    -- `(Over.forget (U i)).op.map φ` spelling is only DEFEQ to `hML`'s `((Over.forget (U i)).map φ.unop).op`
+    -- (the `dsimp [Functor.op_map]` above no longer normalizes it).  `erw` bridges that defeq, so the
+    -- whole `hML → hm → hNR` paste goes through as a single `erw`-chain; the residual is a defeq
+    -- `Functor.op_map` spelling of the last `N`-leg, closed by `rfl`.
+    erw [← Category.assoc, hML, Category.assoc, reassoc_of% hm, hNR, Category.assoc]
     rfl
 
 open Opposite TopologicalSpace in

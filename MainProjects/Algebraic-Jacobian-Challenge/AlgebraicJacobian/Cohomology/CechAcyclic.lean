@@ -1145,6 +1145,7 @@ lemma dDiff_exact [Finite ι] (hs : Ideal.span (Set.range s) = ⊤) (m : ℕ) :
     map_dDiff_eq_locDiff s M (spanIdx s ρ) (m + 2)]
   exact locDiff_exact s M (spanIdx s ρ) m
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- raised: the change-of-ring ladder repeatedly synthesises `AddMonoidHomClass` over the
 -- `dCoeff`-abbreviated `LocalizedModule` carriers, which is instance-search heavy.
@@ -1267,6 +1268,7 @@ lemma dDiff_exact_of_localizationAway [Finite ι] (f : R)
   exact Function.Exact.of_ladder_addEquiv_of_exact (E m) (E (m + 1)) (E (m + 2))
     (sq m) (sq (m + 1)) Hf
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- raised: like `dDiff_exact_of_localizationAway`, the change-of-ring ladder repeatedly synthesises
 -- `AddMonoidHomClass`/base-change instances over the `dCoeff`-abbreviated `LocalizedModule` carriers.
@@ -1538,10 +1540,12 @@ lemma sectionCech_isZero_homology_of_objD_exact {ι : Type u}
       ShortComplex.ab_exact_iff_function_exact]
   have hf : (sectionCechComplex U F).d q (q + 1)
       = AlternatingCofaceMapComplex.objD (sectionCechCosimplicial U F) q :=
-    CochainComplex.of_d _ _ (AlternatingCofaceMapComplex.d_squared _) q
+    CochainComplex.of_d (fun n => (sectionCechCosimplicial U F).obj (SimplexCategory.mk n))
+      (AlternatingCofaceMapComplex.objD (sectionCechCosimplicial U F)) q
   have hg : (sectionCechComplex U F).d (q + 1) (q + 2)
       = AlternatingCofaceMapComplex.objD (sectionCechCosimplicial U F) (q + 1) :=
-    CochainComplex.of_d _ _ (AlternatingCofaceMapComplex.d_squared _) (q + 1)
+    CochainComplex.of_d (fun n => (sectionCechCosimplicial U F).obj (SimplexCategory.mk n))
+      (AlternatingCofaceMapComplex.objD (sectionCechCosimplicial U F)) (q + 1)
   change Function.Exact
       (ConcreteCategory.hom ((sectionCechComplex U F).d q (q + 1)))
       (ConcreteCategory.hom ((sectionCechComplex U F).d (q + 1) (q + 2)))
@@ -1751,6 +1755,7 @@ private lemma restr_bridge (V W : (Spec R).Opens) (g : V ⟶ W)
     ConcreteCategory.hom ((tP M).presheaf.map g.op) x
       = (((modulesSpecToSheaf.obj (tilde M)).presheaf.map g.op).hom) x := rfl
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1000000 in
 -- raised: feeds `phiL_naturality` through the same defeq-heavy section types via `restr_bridge`.
 /-- **Additive per-coface naturality** (accessor-1, the form the coface match consumes).

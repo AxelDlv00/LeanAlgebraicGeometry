@@ -1,0 +1,100 @@
+[
+  {
+    "timestamp": "2026-06-24T21:36:41Z",
+    "status": "partial",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor_invertible"
+    },
+    "session": {
+      "id": "session_31",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "STEP 4 needs a NATURAL iso of homTensorFunctor's; the STEP-1 anchors are object-level `axiom` Iso's with zero naturality content, and X.Modules carries no MonoidalCategory instance, so neither naturality squares nor Mathlib invertible-object machinery (tensorRightHomEquiv, needs MonoidalCategory) apply. The monoidal-naturality LAYER must be built first (bifunctor + NatIso monoidal isos + invertible-object equivalence).",
+      "key_lemmas_used": [
+        "External.sheafifyTensorComparison",
+        "External.sheafifyTensorComparisonLeft",
+        "MonoidalCategory.associator",
+        "sheafification.mapIso",
+        "tensorBraiding",
+        "tensorLeft.mapIso"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "STEP 1 — anchor the unconditional sheafification-tensor comparison `~((~P)⊗Q) ≅ ~(P⊗Q)` (right) and `~(P⊗(~Q)) ≅ ~(P⊗Q)` (left), exact type shape of the conditional `sheafifyTensorComparison{,Left}OfLocallyBijective` minus the (false-in-general) local-bijectivity hyps.",
+        "code_tried": "axiom External.sheafifyTensorComparison {X} ... ; axiom External.sheafifyTensorComparisonLeft {X} ...",
+        "line_number": "369,379",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Module-sheafification is monoidal = the one genuine Mathlib gap; NOT a §1 restatement. 2 sanctioned anchors, axiom-clean."
+      },
+      {
+        "attempt": 2,
+        "strategy": "STEP 2 — build the FIRST unconditional associator `(A⊗B)⊗C ≅ A⊗(B⊗C)` for tensorMod, verbatim the `tensorAssocOfLocallyBijective` chain with the two ends supplied by STEP-1 anchors and the middle by `sheafification.mapIso (associator)`.",
+        "code_tried": "noncomputable def tensorAssoc (A B C) := (STEP1 anchor) ≪≫ sheafification.mapIso (MonoidalCategory.associator ..) ≪≫ (STEP1 anchor).symm",
+        "line_number": "394",
+        "lean_error": "",
+        "result": "success",
+        "insight": "Types matched on the nose (defeq through tensorMod unfold); axiom-clean modulo STEP-1 anchors via lean_verify."
+      },
+      {
+        "attempt": 3,
+        "strategy": "STEP 3 — build rearrangement `(F⊗Y)⊗L ≅ (F⊗L)⊗Y` via assoc + braiding + assoc.symm.",
+        "code_tried": "noncomputable def tensorRearrange := tensorAssoc F Y L ≪≫ (tensorLeft F).mapIso (tensorBraiding Y L) ≪≫ (tensorAssoc F L Y).symm",
+        "line_number": "411",
+        "lean_error": "",
+        "result": "success",
+        "insight": "At Y=f^*M this is the `(F⊗_S M)⊗L ≅ (F⊗L)⊗_S M` rearrangement the (1.1.2) twist needs."
+      },
+      {
+        "attempt": 4,
+        "strategy": "STEP 4 — assemble nat-iso `homTensorFunctor f (I⊗L)(F⊗L) ≅ homTensorFunctor f I F` from (a) tensorRearrange natural in M + (b) `−⊗L` Hom-bijection from IsInvertibleMod L.",
+        "code_tried": "(not added) GG≅HH via natural tensorRearrange + tensorLeft L fully faithful",
+        "line_number": "1117",
+        "lean_error": "no naturality lemmas available on object-level axiom Iso's; leansearch: every invertible-object hit requires MonoidalCategory C",
+        "result": "failed",
+        "insight": "BLOCKER: both (a) and (b) need naturality; anchors are bare Iso's, X.Modules not MonoidalCategory. Sorry retained (correct stop)."
+      }
+    ],
+    "next_steps": "Re-scope next objective to a PREREQUISITE LAYER: (1) re-state STEP-1 anchor as a NatIso (bifunctor level); (2) package tensorMod as bifunctor X.Modules × X.Modules ⥤ X.Modules and rebuild assoc/braiding/unitors as NatIso's; (3) build `tensorLeftEquivOfInvertible (hL) : X.Modules ≌ X.Modules`, extract homEquiv; (4) STEP 4 assemble GG≅HH, whisker by pullback f; (5) STEP 5 coyoneda fully faithful + H_represents ⟹ close. This layer un-gates BOTH 1.1.2 and 1.1.3."
+  },
+  {
+    "timestamp": "2026-06-24T21:36:41Z",
+    "status": "not_started",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor"
+    },
+    "session": {
+      "id": "session_31",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "1.1.3 Eilenberg-Watts / monoidal strand; gated on the same absent monoidal-naturality layer as 1.1.2. Untouched as instructed.",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Un-gated once the tensorMod bifunctor + natural monoidal isos layer (see 1.1.2 next_steps) lands; tensorAssoc/tensorRearrange from this iter are forward-feeding ingredients."
+  },
+  {
+    "timestamp": "2026-06-24T21:36:41Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_finite_flat"
+    },
+    "session": {
+      "id": "session_31",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "1.10 — opaque `IsLFPAndFlatOn`/relExt; needs R^q f_* + internal ℰxt (absent Mathlib). Off-lane, untouched.",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Do NOT re-assign without first realizing relExt/IsLFPAndFlatOn (R^q f_* + internal ℰxt) — see ARCHON_MEMORY."
+  }
+]

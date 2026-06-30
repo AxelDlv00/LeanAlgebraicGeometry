@@ -32,7 +32,7 @@ For more details, run `archon dashboard <project-name>` for any project in the s
 | `MR0555258-compactifying-picard` | Compactifying the Picard scheme | Formalization of the paper | 🔄 In progress (5) ✨ |
 | 35 related-paper projects | Formalization of related algebraic-geometry papers | A few consume the AG base (secant/perverse/Mordell–Lang); most are self-contained | 📝 Blueprint only (0 Lean) |
 
-> Note: The related papers do not directly contribute to the Jacobian challenge, they are not advanced yet, I included them here because they might indirectly contribute. However, contributors or readers should focus their attention on the AJC and its related subprojects. 
+> Note: The related papers do not directly contribute to the Jacobian challenge, they are not advanced yet, I included them here because they might indirectly contribute. However, contributors or readers should focus their attention on the AJC and its related subprojects. The full related-paper catalogue and formalization-readiness ordering now live in their own [Related-Papers roadmap](SubProjects/RelatedPapersFormalisation/roadmap.md). ✨
 
 ## Methodology
 

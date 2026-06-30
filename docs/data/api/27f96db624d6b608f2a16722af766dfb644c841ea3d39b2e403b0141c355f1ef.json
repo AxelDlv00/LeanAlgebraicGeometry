@@ -1,0 +1,202 @@
+[
+  {
+    "timestamp": "2026-06-29T04:42:06Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport.right_inv"
+    },
+    "session": {
+      "id": "session_313",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "ModuleCat.restrictScalars.map_apply",
+        "PresheafOfModules.naturality_apply",
+        "CommRingCat.comp_apply",
+        "Functor.map_comp",
+        "eqToHom_trans"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "VERIFIED analogies/dualcoerce313.md recipe: erw the .hom' coercion wall, then supply slice morphism g via Over.homMk|>.op, then discharge unit-cancellation residual",
+        "code_tried": "erw [ModuleCat.restrictScalars.map_apply, PresheafOfModules.naturality_apply]; case g => exact (Over.homMk (homOfLE (le_of_eq hPW)) (by subsingleton)).op; erw [← CommRingCat.comp_apply, ← Functor.map_comp, eqToHom_trans, eqToHom_refl, Y.presheaf.map_id]",
+        "line_number": "920",
+        "result": "success",
+        "insight": "the pushforward in M₁ = restr (pushforward β M.val) lets naturality_apply absorb the restrictScalars collapse legs by defeq. Recipe under-specified: a unit-cancellation residual (Y.presheaf.map eqToHom ∘ (restr V 𝟙).map g = id) remained after the erw and needed an explicit close (the recipe's 'one-shot' claim was a misleading-empty lean_multi_attempt trap)."
+      }
+    ],
+    "next_steps": "Technique reused for left_inv; remaining 3 ε-pasting sorries are a separate sub-build."
+  },
+  {
+    "timestamp": "2026-06-29T04:42:06Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "sliceDualTransport.left_inv"
+    },
+    "session": {
+      "id": "session_313",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "presheafMap_ofBijective_symm",
+        "ModuleCat.restrictScalars.map_apply",
+        "restrictScalars_collapse_apply",
+        "PresheafOfModules.naturality_apply"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "recipe left_inv path: clear ofHom refl.symm ≫ ofHom refl collapse legs then erw naturality_apply",
+        "code_tried": "(clear collapse legs) ; erw [naturality_apply]",
+        "line_number": "860",
+        "lean_error": "goal type-incorrect under `instances` transparency (artifact of dsimp only [sliceDualTransportInv] unfolding ringCatSheaf); rw/simp/conv-rw all fail to match collapse legs in every spelling; .hom' head blocks ConcreteCategory/ModuleCat.Hom.hom-form lemmas",
+        "result": "failed",
+        "insight": "the instances-transparency corruption defeats subterm matching for rw/simp/conv"
+      },
+      {
+        "attempt": 2,
+        "strategy": "defeq `change` through the corruption: use default-transparency defeq (change / erw) which sees through the instances-transparency corruption that blocks rw/simp",
+        "code_tried": "erw [presheafMap_ofBijective_symm, ModuleCat.restrictScalars.map_apply]; (reconstruct hWfV/hPV/he + slice morphism g); change ... (simultaneously clears restrictScalars_collapse_apply by rfl AND reshapes M.val.map eqToHom into (restr fV M.val).map g); erw [PresheafOfModules.naturality_apply]; (unit cancellation, congrArg op he.symm)",
+        "line_number": "860",
+        "result": "success",
+        "insight": "Governing lesson (extends dualcoerce313): when the goal is instances-transparency-corrupted do NOT fight subterm matching with rw/simp/conv — use a single `change` (defeq) to simultaneously normalise the collapse legs AND pre-shape the argument into the lemma's expected form, then erw. Here M₁ = restr M.val has NO pushforward to absorb the collapse (unlike right_inv) so the reshape is mandatory."
+      }
+    ],
+    "next_steps": "same change-through-corruption + slice-g technique is the likely lever for L544 reverse-naturality (element-level mirror)."
+  },
+  {
+    "timestamp": "2026-06-29T04:42:06Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "homLocalSection.naturality"
+    },
+    "session": {
+      "id": "session_313",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Category.assoc",
+        "reassoc_of%"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "v4.31.0 INTERIM restore: original rw [← Category.assoc, hML] failed because goal spells (Over.forget _).op.map φ while hML built with ((Over.forget _).map φ.unop).op — only DEFEQ post-v4.31.0",
+        "code_tried": "erw [← Category.assoc, hML, Category.assoc, reassoc_of% hm, hNR, Category.assoc]; rfl",
+        "line_number": "1253",
+        "result": "success",
+        "insight": "run the whole hML→hm→hNR paste as one erw-chain; erw bridges the defeq that dsimp [Functor.op_map] no longer normalises. This restore makes homOfLocalCompat axiom-clean again ⇒ L52/L1421 'CLOSED axiom-clean' docstrings TRUE again (resolves the iter-312 stale-comment must-fix)."
+      }
+    ],
+    "next_steps": "none — on-touch debt cleared."
+  },
+  {
+    "timestamp": "2026-06-29T04:42:06Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse.lean",
+      "theorem": "alpha_naturality_placeholders_x4"
+    },
+    "session": {
+      "id": "session_313",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "key_lemmas_used": [
+        "Scheme.Hom.appIso_inv_naturality"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "4× { app := (appIso _).inv, naturality := by sorry } placeholders (letI α, set β, refine_1 let α, dual_restrict_iso let α)",
+        "code_tried": "naturality := by exact Scheme.Hom.appIso_inv_naturality ...",
+        "line_number": "557/631/682/1035",
+        "result": "success",
+        "insight": "all four α-naturality placeholders close uniformly by Scheme.Hom.appIso_inv_naturality."
+      }
+    ],
+    "next_steps": "none."
+  },
+  {
+    "timestamp": "2026-06-29T04:42:06Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/PullbackTensorComp.lean",
+      "theorem": "sheafificationCompPullback_comp"
+    },
+    "session": {
+      "id": "session_313",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "Adjunction.conjugateEquiv_leftAdjointCompIso_hom is Mathlib-absent (only _inv exists); the presheaf inner pullbackComp conjugate must be inverted first, then the two pushforwardComps (on opposite whisker sides ◁R_Z vs R_X▷) bridged through forget_map_pushforward_map before the strictness rfl fires",
+      "key_lemmas_used": [
+        "conjugateEquiv_comp",
+        "conjugateEquiv_whiskerLeft",
+        "conjugateEquiv_whiskerRight",
+        "conjugateEquiv_pullbackComp_inv",
+        "Adjunction.ext",
+        "Equiv.apply_symm_apply",
+        "leftAdjointUniq",
+        "sheafificationCompPullback_eq_leftAdjointUniq"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "Full conjugate-fusion recast per analogies/d3-mate-recast-309.md steps 1–5 on the LSP-now-queryable split-out file: leftAdjointUniq→conjugateEquiv.symm 𝟙 bridge (rfl), Equiv.symm_apply_eq, telescope conjugateEquiv via conjugateEquiv_comp ×3, collapse single-leg conjugates by whisker lemmas + pullbackComp_inv",
+        "code_tried": "rw [sheafificationCompPullback_eq_leftAdjointUniq ...]; (bridge rfl) ; Equiv.symm_apply_eq; symm; rw [← conjugateEquiv_comp ...] ×3 (explicit left-assoc middles M₀/M₁/M₂); have eassoc0/1/2 : ... := by apply Adjunction.ext <;> intros <;> rfl; have hF2/hF3 (Equiv.apply_symm_apply + whisker-identity); rw [hF2, hF3, Category.comp_id, Category.comp_id]; (F1/F4 erw whisker-collapse)",
+        "line_number": "502",
+        "result": "partial",
+        "insight": "Three reusable unblocks: (a) (leftAdjointUniq A B).hom = (conjugateEquiv B A).symm 𝟙 is rfl; (b) Adjunction.comp associativity is `apply Adjunction.ext <;> intros <;> rfl`-provable (NOT bare rfl) — this is the key unblock swinging whiskerLeft factors into adj.comp shape; (c) erw (not rw) bridges the iter-309 Scheme.Modules.pullback (top site) vs SheafOfModules.pullback (Grothendieck site) defeq for the whisker lemmas. The 5-iter-stuck opaque leftAdjointUniq cocycle is now reduced to ONE named residual at L586."
+      },
+      {
+        "attempt": 2,
+        "strategy": "close the L586 pushforwardComp-cocycle residual directly",
+        "code_tried": "rfl / simp / aesop_cat / NatTrans.ext+ext1+rfl",
+        "line_number": "586",
+        "lean_error": "none close — the two pushforwardComps live on opposite whisker sides (◁ R_Z vs R_X ▷) and are not yet on a common side",
+        "result": "failed",
+        "insight": "residual is genuinely the pushforwardComp cocycle R_Z ◁ (presheaf pullbackComp conjugate) ≫ (Scheme pushforwardComp h f).hom ▷ R_X = 𝟙; needs the presheaf↔sheaf identification through forget/restrict whiskers (forget_map_pushforward_map) to bring both pushforwardComps onto a common side, then componentwise rfl. ~30–60 LOC of mate bookkeeping remaining."
+      }
+    ],
+    "next_steps": "Finish from the named L586 residual: invert the presheaf pullbackComp conjugate via conjugateEquiv_comp/conjugateEquiv_id (Adjunction.conjugateEquiv_leftAdjointCompIso_hom is absent), then bridge both pushforwardComps onto a common whisker side via forget_map_pushforward_map, then strictness rfl. If it stalls again, dispatch effort-breaker on lem:sheafificationcomppullback_comp."
+  },
+  {
+    "timestamp": "2026-06-29T04:42:06Z",
+    "status": "blocked",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/PullbackTensorComp.lean",
+      "theorem": "pullbackTensorMap_restrict"
+    },
+    "session": {
+      "id": "session_313",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "gated on sheafificationCompPullback_comp (Sq1=key) being sorry-free; 4-square interleaved paste (Sq1=key, Sq2b=pullbackComp_δ done, Sq3, Sq4) not attempted"
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "untouched stretch goal — gated on key",
+        "code_tried": "(not attempted)",
+        "line_number": "709",
+        "result": "partial",
+        "insight": "roadmap (4-square interleaved paste) is in file comments; cannot start until key closes."
+      }
+    ],
+    "next_steps": "Resume once key (L586) closes; build Sq3/Sq4 then run interleaved merge."
+  }
+]

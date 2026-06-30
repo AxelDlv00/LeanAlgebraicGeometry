@@ -28,6 +28,8 @@ open Scheme.Modules
 
 variable {X : Scheme.{u}}
 
+-- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 6400000 in
 /-- **Per-coface square of the core comparison** (`lem:coreIso_comm_coface`): for each
 degree `p` and coface index `k`, the object isos intertwine the individual cofaces.
@@ -63,6 +65,8 @@ lemma coreIso_comm_coface (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules
     (((sectionCechProductEquiv_apply (fun a => coverOpen 𝒰 a ⊓ V)
       ((SheafOfModules.forget X.ringCatSheaf).obj F) (p + 1) _ σ').trans hR).symm)
 
+-- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 6400000 in
 /-- **Alternating-sum assembly of the core comparison square** (`lem:coreIso_comm_sum`):
 the full alternating-coface differentials are intertwined by the object isos.  Proved
@@ -200,6 +204,8 @@ lemma coreIso_comm_sum (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules)
     (σ' ∘ (SimplexCategory.δ i).toOrderHom)]
   exact hleg
 
+-- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 /-- **The core comparison intertwines the Čech differentials** (`lem:coreIso_comm`).  Under the
 degreewise object isos `coreIso_objIso`, the alternating-coface differential of the evaluated
@@ -223,11 +229,11 @@ lemma coreIso_comm (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules)
       AlgebraicTopology.AlternatingCofaceMapComplex.objD
         (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V)
           ((SheafOfModules.forget X.ringCatSheaf).obj F)) i :=
-    CochainComplex.of_d _ _ (AlgebraicTopology.AlternatingCofaceMapComplex.d_squared _) i
+    CochainComplex.of_d (fun n => (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V) ((SheafOfModules.forget X.ringCatSheaf).obj F)).obj (SimplexCategory.mk n)) (AlgebraicTopology.AlternatingCofaceMapComplex.objD (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V) ((SheafOfModules.forget X.ringCatSheaf).obj F))) i
   have hX : (cechComplexOnX 𝒰 F).d i (i + 1) =
       AlgebraicTopology.AlternatingCofaceMapComplex.objD
         (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)) i :=
-    CochainComplex.of_d _ _ (AlgebraicTopology.AlternatingCofaceMapComplex.d_squared _) i
+    CochainComplex.of_d (fun n => (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).obj (SimplexCategory.mk n)) (AlgebraicTopology.AlternatingCofaceMapComplex.objD (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F))) i
   rw [hsec, hX]
   exact coreIso_comm_sum 𝒰 F V i
 

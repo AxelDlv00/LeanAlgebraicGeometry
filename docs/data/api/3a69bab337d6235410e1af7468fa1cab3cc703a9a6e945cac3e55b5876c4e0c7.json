@@ -1,0 +1,101 @@
+[
+  {
+    "timestamp": "2026-06-25T06:46:00Z",
+    "status": "partial",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor_invertible"
+    },
+    "session": {
+      "id": "session_33",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "STEP D tensorRightEquivOfInvertible needs FIRST-factor (A-slot) naturality of right unitor + associator; this iter built only middle/last-factor naturality. H_tensor_invertible stays sorry until STEPs D-F land.",
+      "key_lemmas_used": [
+        "External.sheafifyTensorComparison",
+        "External.sheafifyTensorComparisonLeft",
+        "MonoidalCategory.associator_naturality",
+        "CategoryTheory.Functor.isoWhiskerRight",
+        "NatIso.ofComponents"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "STEP C-i: tensorAssocNatIso₂ (middle-factor) via single NatIso.ofComponents + hand reassociation (the @032 route, retried)",
+        "code_tried": "NatIso.ofComponents (fun Y => tensorAssoc F Y L) (by intro Y Y' φ; dsimp only [...]; have sq1/sq2/sq3 := comparison.naturality ...; simp only [sheafifyFst_map_eq, ...] at sq1 sq3 ⊢; rw [Category.assoc, reassoc_of% sq1, reassoc_of% sq2, sq3])",
+        "line_number": "722",
+        "lean_error": "(deterministic) timeout at `whnf`, maximum number of heartbeats (200000) reached; later: rewrite failed 'Did not find an occurrence of the pattern (?f ≫ ?g) ≫ ?h' / 'simp made no progress'",
+        "goal_before": "(tensorLeft F ⋙ tensorRight L).map φ ≫ (tensorAssoc F Y' L).hom = (tensorAssoc F Y L).hom ≫ (tensorRight L ⋙ tensorLeft F).map φ",
+        "result": "failed",
+        "insight": "The @032 blocker recurs: any reassociation across the comparison `.app` boundary (rw [Category.assoc]/reassoc_of%) won't match because tensorThenSheafify.obj won't unfold under rw transparency. Single-ofComponents-with-reassociation is a dead end."
+      },
+      {
+        "attempt": 2,
+        "strategy": "STEP C-i fix: decompose tensorAssocNatIso₂ into THREE composed NatIsos (leg1 ≪≫ leg2 ≪≫ leg3), one per tensorAssoc leg, via hand-built index functors assocIdxL/assocIdxR; each leg naturality = single anchor naturality square with morphism explicit, objects abstract",
+        "code_tried": "(NatIso.ofComponents (fun Y => comparison.app (tensorObj F.val Y.val, L.val)) (by intro Y Y' φ; have h := comparison.hom.naturality ((tensorHom (𝟙 F.val) φ.val, 𝟙 L.val) : ...); simp only [assocIdxL, sheafifyFst_map_eq, tensorLeft_map_eq, tensorThenSheafify_map_eq, Iso.app_hom, Functor.comp_map] at h ⊢; exact h)) ≪≫ ... middle (associator) leg via (sheaf.map_comp _ _).symm.trans ((sheaf.congr_map (associator_naturality ...)).trans (sheaf.map_comp _ _)) ≪≫ ...",
+        "line_number": "745",
+        "lean_error": "intermediate: Application type mismatch on 𝟙 L.val (product-hom metavars unresolved) → fixed by ascribing source/target product type + (X := X); MonoidalCategoryStruct synthesis failure → fixed by (C := PresheafOfModules ...) on associator; rw [← Functor.map_comp] failed → replaced by term-level map_comp/congr_map Eq-chain",
+        "goal_after": "no goals",
+        "result": "success",
+        "insight": "CRACKED the @032 linchpin. The 3-NatIso decomposition does object identifications via ≪≫ at full elaborator transparency, so no cross-leg reassociation (the divergent step) is ever needed. Leg naturality via anchor.hom.naturality with morphism EXPLICIT + objects abstract + generic *_map_eq normalization."
+      },
+      {
+        "attempt": 3,
+        "strategy": "STEP C-ii: tensorAssocNatIso₃ (last-factor) as .symm of mirror 3-NatIso via assocIdxL₃/assocIdxR₃; leg1 is sheafify-of-(F⊗L)-identity",
+        "code_tried": "convert h using 4; exact congrArg (fun a => sheaf.map (tensorHom a φ.val)) (((congrArg (fun m => (sheaf.map m).val) (presheaf_id_tensorHom_id F.val L.val)).trans (sheafify_map_id_val _)).symm)",
+        "line_number": "887",
+        "lean_error": "Type mismatch on h (𝟙 vs sheaf.map(tensorHom 𝟙 𝟙)); rw [presheaf_id_tensorHom_id] 'pattern not found' (defeq-not-syntactic base mismatch); ext1 Z residual 𝟙⊗𝟙 = (𝟙⊗𝟙)≫(𝟙⊗𝟙)",
+        "result": "success",
+        "insight": "Needed new helpers presheaf_id_tensorHom_id (𝟙_M ⊗ 𝟙_N = 𝟙) + sheafify_map_id_val (~(𝟙 P)).val = 𝟙. The sheafify-of-identity leg closes via `convert h using 4` then a congrArg Eq-chain. presheaf helper must be typed over X.presheaf base (defeq X.ringCatSheaf.obj not syntactic)."
+      },
+      {
+        "attempt": 4,
+        "strategy": "STEP C-iii: tensorRearrangeNatIso := tensorAssocNatIso₂ ≪≫ isoWhiskerRight (tensorBraidingNatIso L) (tensorLeft F) ≪≫ tensorAssocNatIso₃",
+        "code_tried": "tensorAssocNatIso₂ F L ≪≫ Functor.isoWhiskerRight (tensorBraidingNatIso L) (tensorLeft F) ≪≫ tensorAssocNatIso₃ F L",
+        "line_number": "957",
+        "lean_error": "Unknown identifier `isoWhiskerRight` → name is CategoryTheory.Functor.isoWhiskerRight",
+        "result": "success",
+        "insight": "STEP C-iii (the algebraic core of the 1.1.2 twist) complete; all three NatIsos axiom-clean. Whiskering iso name is Functor.isoWhiskerRight (NOT bare isoWhiskerRight)."
+      }
+    ],
+    "next_steps": "STEP D tensorRightEquivOfInvertible: build (1) tensorRightUnitorNatIso (𝟭 ≅ tensorRight 𝒪, A ↦ A⊗𝒪) and (2) tensorAssocNatIso₁ (A⊗(L⊗L') ≅ (A⊗L)⊗L', FIRST-factor mirror) via same 3-NatIso+convert technique with index functors assocIdxL₁/assocIdxR₁; then unit/counit via NatIso composition + hL.symm whiskering, Equivalence.mk (no triangle); homEquiv → natural Hom-bijection; STEP E homTensorFunctorTwistIso; STEP F close via coyonedaCompFF + coyoneda faithfulness + H_represents."
+  },
+  {
+    "timestamp": "2026-06-25T06:46:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "H_tensor"
+    },
+    "session": {
+      "id": "session_33",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "1.1.3 Eilenberg–Watts; off this iter's lane. Un-gated by 1.1.2's NatIso layer but not yet attempted.",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Defer until 1.1.2 closes; reuse the NatIso layer."
+  },
+  {
+    "timestamp": "2026-06-25T06:46:00Z",
+    "status": "blocked",
+    "target": {
+      "file": "MR0555258CompactifyingPicard/Basic.lean",
+      "theorem": "ext_finite_flat"
+    },
+    "session": {
+      "id": "session_33",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "1.10 relExt + R^q f_* + internal ℰxt absent from Mathlib; opaque IsLFPAndFlatOn. Off-lane.",
+      "key_lemmas_used": []
+    },
+    "attempts": [],
+    "next_steps": "Do NOT re-assign; needs absent derived-functor/internal-Ext infrastructure."
+  }
+]

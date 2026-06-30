@@ -494,8 +494,9 @@ private noncomputable def
       (Algebra.FormallySmooth.iff_split_injection
         (R := R) (P := Sₘ) (A := IsLocalRing.ResidueField Sₘ) hSurj).mp ‹_›
     refine Function.LeftInverse.injective (g := l) (fun x => ?_)
-    have := LinearMap.congr_fun hl x
-    simpa using this
+    have h := LinearMap.congr_fun hl x
+    simp at h ⊢
+    exact h
   -- Step 2: `Ω[κ⁄R] = 0` + exactness → surjection.
   have hExact :=
     KaehlerDifferential.exact_kerCotangentToTensor_mapBaseChange R Sₘ
@@ -1090,6 +1091,7 @@ private theorem isRegular_cons_of_quotient_ring
   apply RingTheory.Sequence.IsRegular.cons' h1
   exact ((quotSMulTop_quotientRing_linearEquiv r).symm.isRegular_congr _).mp h2
 
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
 -- The cotangent-map kernel computation + the hand-rolled `linearIndependent_iff`
 -- argument are heartbeat-heavy; the default budget is insufficient.

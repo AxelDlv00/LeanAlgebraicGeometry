@@ -223,11 +223,11 @@ lemma coreIso_comm (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (F : X.Modules)
       AlgebraicTopology.AlternatingCofaceMapComplex.objD
         (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V)
           ((SheafOfModules.forget X.ringCatSheaf).obj F)) i :=
-    CochainComplex.of_d _ _ (AlgebraicTopology.AlternatingCofaceMapComplex.d_squared _) i
+    CochainComplex.of_d (fun n => (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V) ((SheafOfModules.forget X.ringCatSheaf).obj F)).obj (SimplexCategory.mk n)) (AlgebraicTopology.AlternatingCofaceMapComplex.objD (sectionCechCosimplicial (fun a => coverOpen 𝒰 a ⊓ V) ((SheafOfModules.forget X.ringCatSheaf).obj F))) i
   have hX : (cechComplexOnX 𝒰 F).d i (i + 1) =
       AlgebraicTopology.AlternatingCofaceMapComplex.objD
         (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)) i :=
-    CochainComplex.of_d _ _ (AlgebraicTopology.AlternatingCofaceMapComplex.d_squared _) i
+    CochainComplex.of_d (fun n => (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F)).obj (SimplexCategory.mk n)) (AlgebraicTopology.AlternatingCofaceMapComplex.objD (CosimplicialObject.Augmented.drop.obj (CechNerve 𝒰 F))) i
   rw [hsec, hX]
   exact coreIso_comm_sum 𝒰 F V i
 

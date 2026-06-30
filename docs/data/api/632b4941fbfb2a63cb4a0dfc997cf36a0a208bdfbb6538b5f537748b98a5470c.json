@@ -1,0 +1,108 @@
+{
+  "files": [
+    {
+      "path": "AlgebraicJacobian.lean",
+      "size": 1388
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/AbsoluteCohomology.lean",
+      "size": 9775
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/AcyclicResolution.lean",
+      "size": 52231
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean",
+      "size": 55823
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechAcyclic.lean",
+      "size": 123102
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechAugmentedResolution.lean",
+      "size": 15457
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechBridge.lean",
+      "size": 65265
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean",
+      "size": 52776
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechSectionIdentification.lean",
+      "size": 69572
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean",
+      "size": 89480
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean",
+      "size": 42966
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegAux.lean",
+      "size": 14426
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegMid1.lean",
+      "size": 16766
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegMid2.lean",
+      "size": 12079
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechSectionIdentificationLegTop.lean",
+      "size": 33760
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechTermAcyclic.lean",
+      "size": 42071
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechToCohomology.lean",
+      "size": 26930
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean",
+      "size": 14559
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/FreePresheafComplex.lean",
+      "size": 142812
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/HigherDirectImage.lean",
+      "size": 1753
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/HigherDirectImagePresheaf.lean",
+      "size": 8530
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean",
+      "size": 63063
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/PresheafCech.lean",
+      "size": 20572
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean",
+      "size": 18588
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/QcohTildeSections.lean",
+      "size": 96884
+    },
+    {
+      "path": "AlgebraicJacobian/Cohomology/TildeExactness.lean",
+      "size": 14682
+    }
+  ]
+}

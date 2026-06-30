@@ -176,6 +176,7 @@ section AffineHomAcyclic
 variable {U Z : Scheme.{u}}
 
 set_option synthInstance.maxHeartbeats 1000000 in
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 4000000 in
 /-- **Higher direct images along an affine morphism from an affine scheme vanish**
 (Stacks `lemma-relative-affine-vanishing`, project-local generalization of
@@ -520,7 +521,7 @@ noncomputable def presentationRestrictOfOver
     (M.restrict W.ι).Presentation :=
   letI P2 : (M.over W).Presentation := presentationOverOpens W M U P hWU
   letI P3 : ((modulesOverOpensEquivalence W).inverse.obj (M.over W)).Presentation :=
-    P2.map (modulesOverOpensEquivalence W).inverse (overOpensInverseUnitIso W)
+    P2.map (modulesOverOpensEquivalence W).inverse (overOpensInverseUnitIso W).symm
   SheafOfModules.Presentation.ofIsIso.{u, u, u} (overOpensIsoRestrict W M).hom P3
 
 end RestrictOverBridge
@@ -552,6 +553,7 @@ noncomputable def restrictIsoUnitIso {T T' : Scheme.{u}} (φ : T ⟶ T') [IsIso 
 
 set_option backward.isDefEq.respectTransparency false in
 set_option synthInstance.maxHeartbeats 1000000 in
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
 /-- **The per-slice presentation of the restriction to an open subscheme**: a presentation of
 `F.over A` induces a presentation of the slice `(F.restrict V.ι).over (V.ι ⁻¹ᵁ A)`.
@@ -582,7 +584,7 @@ noncomputable def presentationRestrictSliceOfOver (V : X.Opens) (F : X.Modules)
       (Scheme.Modules.restrictFunctor.{u} φ.hom) := inferInstance
   letI P4 : ((Scheme.Modules.restrictFunctor.{u} φ.hom).obj (F.restrict Wx.ι)).Presentation :=
     @SheafOfModules.Presentation.map _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ P3
-      (Scheme.Modules.restrictFunctor.{u} φ.hom) hpc (restrictIsoUnitIso φ.hom)
+      (Scheme.Modules.restrictFunctor.{u} φ.hom) hpc (restrictIsoUnitIso φ.hom).symm
   -- Identify with the iterated restriction `(F.restrict V.ι).restrict Wv.ι`.
   letI e45 : (Scheme.Modules.restrictFunctor.{u} φ.hom).obj (F.restrict Wx.ι) ≅
       (F.restrict V.ι).restrict Wv.ι :=
@@ -600,7 +602,7 @@ noncomputable def presentationRestrictSliceOfOver (V : X.Opens) (F : X.Modules)
       SheafOfModules.unit (V.toScheme.ringCatSheaf.over Wv) :=
     overOpensFunctorUnitIso (X := V.toScheme) Wv
   letI P7 : (eV.functor.obj (eV.inverse.obj ((F.restrict V.ι).over Wv))).Presentation :=
-    P6.map eV.functor ηV
+    P6.map eV.functor ηV.symm
   exact SheafOfModules.Presentation.ofIsIso.{u, u, u}
     (eV.counitIso.app ((F.restrict V.ι).over Wv)).hom P7
 
@@ -610,6 +612,7 @@ noncomputable def presentationRestrictSliceOfOver (V : X.Opens) (F : X.Modules)
 -- opens `HasSheafify`/`WEqualsLocallyBijective` instances, whose default-heartbeat search
 -- times out (same pattern as `pushforward_iso_qcoh_of_slice_qcoh`).
 set_option synthInstance.maxHeartbeats 1000000 in
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 2000000 in
 /-- **Restriction of a quasi-coherent module to an open subscheme is quasi-coherent**
 (Stacks 01XZ-adjacent; project-local Mathlib supplement — Mathlib's `IsQuasicoherent` has no

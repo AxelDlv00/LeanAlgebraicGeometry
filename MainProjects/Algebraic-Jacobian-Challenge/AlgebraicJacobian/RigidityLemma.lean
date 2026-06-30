@@ -378,9 +378,13 @@ theorem rigidity_eqAt_closedPoint_of_proper_into_affine
     rw [← Category.assoc, hIIover, Category.assoc]
   -- Translate to the `q`-form of the goal.
   have hxqf : q ≫ f.left = xq.left ≫ (sec ≫ f).left := by
-    simpa only [Over.comp_left, hqhatL] using congrArg Over.Hom.left hqf
+    have h := congrArg Over.Hom.left hqf
+    simp only [Over.comp_left, hqhatL] at h
+    exact h
   have hx₀f : q ≫ retract.left ≫ f.left = x₀.left ≫ (sec ≫ f).left := by
-    simpa only [Over.comp_left, hqhatL] using congrArg Over.Hom.left hqrf
+    have h := congrArg Over.Hom.left hqrf
+    simp only [Over.comp_left, hqhatL] at h
+    exact h
   -- The two `k̄`-points have the same image under `sec ≫ f` (corestricted via `key`).
   have hbridge : xq.left ≫ (sec ≫ f).left = x₀.left ≫ (sec ≫ f).left := by
     rw [← hgfac, ← Category.assoc, ← Category.assoc]
@@ -566,14 +570,15 @@ theorem rigidity_eqOn_dense_open
       IsPullback.of_right houter hsp2 (IsPullback.of_hasPullback X.hom Y.hom)
     -- Range of `s` = fibre of `p₂` over `range y₀.left`, via the coarse pullback-carrier lemma.
     have hrange : Set.range s.base = p₂.base ⁻¹' Set.range y₀.left.base := by
-      simpa [Set.image_univ, Set.preimage_univ] using
-        AlgebraicGeometry.Scheme.image_preimage_eq_of_isPullback hL.flip Set.univ
+      have h := AlgebraicGeometry.Scheme.image_preimage_eq_of_isPullback hL.flip Set.univ
+      simp only [Set.image_univ, Set.preimage_univ] at h
+      exact h
     rw [Over.snd_left, ← hp₂def, hrange]
     exact Set.preimage_mono (Set.singleton_subset_iff.mpr ⟨ptk, rfl⟩)
   -- `y₀ ∉ G`: any point over `y₀` is `s x`, and `_hf` collapses `f (s x) = z₀ ∈ U₀`.
   have hy₀ : y₀pt ∉ Gset := by
     rintro ⟨q, hq, hsndq⟩
-    obtain ⟨x, rfl⟩ := hfib (by simpa using hsndq)
+    obtain ⟨x, rfl⟩ := hfib hsndq
     apply hq
     have hcomp : s ≫ f.left = (toUnit X ≫ z₀).left := by
       rw [← Over.comp_left]; exact congrArg Over.Hom.left _hf
@@ -693,8 +698,9 @@ theorem rigidity_core
   haveI : IrreducibleSpace (X ⊗ Y).left :=
     GeometricallyIrreducible.irreducibleSpace_of_subsingleton (X ⊗ Y).hom
   -- A non-empty open of an irreducible space is dense, so its inclusion is dominant.
-  haveI : IsDominant (U.ι : (U : (X ⊗ Y).left.Opens).toScheme ⟶ (X ⊗ Y).left) :=
-    Scheme.PartialMap.Opens.isDominant_ι (IsOpen.dense U.isOpen hU)
+  haveI : IsDominant (U.ι : (U : (X ⊗ Y).left.Opens).toScheme ⟶ (X ⊗ Y).left) := by
+    rw [isDominant_iff, DenseRange, Scheme.Opens.range_ι]
+    exact IsOpen.dense U.isOpen hU
   -- Provide separatedness of `Z.left` over `Spec k̄` in the `OverClass.fromOver` form.
   haveI : IsSeparated (Z.left ↘ Spec (CommRingCat.of kbar)) := ‹IsSeparated Z.hom›
   -- Promote the underlying-scheme equality to an `Over (Spec k̄)` equality.

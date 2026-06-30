@@ -284,8 +284,8 @@ noncomputable def stalkLinearMap
   map_add' a b := map_add _ a b
   map_smul' r s := by
     dsimp only [RingHom.id_apply]
-    obtain ⟨U, hxU, r₀, rfl⟩ := TopCat.Presheaf.germ_exist R x r
-    obtain ⟨V, hxV, s₀, rfl⟩ := TopCat.Presheaf.germ_exist M.presheaf x s
+    obtain ⟨U, hxU, r₀, rfl⟩ := TopCat.Presheaf.exists_germ_eq R r
+    obtain ⟨V, hxV, s₀, rfl⟩ := TopCat.Presheaf.exists_germ_eq M.presheaf s
     set W : Opens X := U ⊓ V with hW
     have hxW : x ∈ W := ⟨hxU, hxV⟩
     set iWU : W ⟶ U := homOfLE inf_le_left
@@ -411,8 +411,8 @@ theorem injective_stalk_of_isLocallyInjective
     (z : Z) :
     Function.Injective ⇑(ConcreteCategory.hom ((stalkFunctor A z).map T)) := by
   intro sₓ tₓ hxeq
-  obtain ⟨U, hzU, s, rfl⟩ := F.germ_exist z sₓ
-  obtain ⟨V, hzV, t, rfl⟩ := F.germ_exist z tₓ
+  obtain ⟨U, hzU, s, rfl⟩ := F.exists_germ_eq sₓ
+  obtain ⟨V, hzV, t, rfl⟩ := F.exists_germ_eq tₓ
   rw [stalkFunctor_map_germ_apply, stalkFunctor_map_germ_apply] at hxeq
   obtain ⟨W, hzW, iU, iV, heqG⟩ := G.germ_eq z hzU hzV
     ((ConcreteCategory.hom (T.app (op U))) s) ((ConcreteCategory.hom (T.app (op V))) t) hxeq
@@ -499,7 +499,7 @@ lemma isLocallyInjective_whiskerLeft_of_W
       eN (ConcreteCategory.hom φ w) = E (eM w) := by
     intro w
     obtain ⟨W, hzW, p, rfl⟩ :=
-      TopCat.Presheaf.germ_exist (Monoidal.tensorObj F M).presheaf z w
+      TopCat.Presheaf.exists_germ_eq (Monoidal.tensorObj F M).presheaf w
     -- The germ map, `φ`, `eN`, `eM`, `E` are all additive; the `+`/`0` instances on the
     -- defeq carriers `(toPresheaf _).obj (F ⊗ M)` vs `(Monoidal.tensorObj F M).presheaf` differ
     -- syntactically, so we distribute `map_add`/`map_zero` via `have`-terms (defeq-coerced).

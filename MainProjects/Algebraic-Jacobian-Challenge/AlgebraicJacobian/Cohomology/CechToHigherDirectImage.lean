@@ -64,15 +64,17 @@ noncomputable def mapAlternatingCofaceMapComplexIso
         (((CosimplicialObject.whiskering C D).obj G).obj Y) :=
   HomologicalComplex.Hom.isoOfComponents (fun _ => Iso.refl _) (by
     rintro i j (rfl : i + 1 = j)
-    simp only [Iso.refl_hom, Category.id_comp, Category.comp_id,
-      Functor.mapHomologicalComplex_obj_d, AlgebraicTopology.alternatingCofaceMapComplex_obj]
-    dsimp only [AlgebraicTopology.AlternatingCofaceMapComplex.obj]
-    rw [CochainComplex.of_d, CochainComplex.of_d]
-    simp only [AlgebraicTopology.AlternatingCofaceMapComplex.objD, Functor.map_sum,
-      Functor.map_zsmul]
-    -- After simp, both sides equal ∑ k, (-1)^k • G.map (Y.δ k); close by rfl after
-    -- unfolding whiskering and additivity.
-    simp [Functor.map_sum, Functor.map_zsmul, CosimplicialObject.whiskering]; rfl)
+    -- (v4.31.0: `dsimp only [AlternatingCofaceMapComplex.obj]` no longer reduces the functor-
+    -- wrapped `.obj`, so the old `dsimp; rw [of_d]` broke. Unfold the functor + def + `of_d`
+    -- via `simp only`, clear the (defeq-wrapped) identity components with `erw`, then both sides
+    -- are the alternating sum `∑ (-1)^k • G.map (Y.δ k)` definitionally — `(whisker G Y).δ` is
+    -- `rfl`-equal to `G.map (Y.δ)` — so `rfl` closes it.)
+    simp only [Iso.refl_hom, Functor.mapHomologicalComplex_obj_d,
+      AlgebraicTopology.alternatingCofaceMapComplex,
+      AlgebraicTopology.AlternatingCofaceMapComplex.obj, CochainComplex.of_d,
+      AlgebraicTopology.AlternatingCofaceMapComplex.objD, Functor.map_sum, Functor.map_zsmul]
+    erw [Category.id_comp, Category.comp_id]
+    rfl)
 
 /-- **The `f_*`-image of the un-augmented Čech complex on `X` is isomorphic to the relative Čech
 complex** (blueprint `lem:pushforward_mapHC_cechComplexOnX`). -/
@@ -105,6 +107,7 @@ degree 0 is the augmentation `ε : F → C⁰`.
 
 Both outputs are assembled into a `PProd` (anonymous constructor `⟨e, hexact⟩`; `PProd` rather
 than `Prod` because the second component is a `Prop` while the first is an `Iso` in `Type`). -/
+set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 4000000 in
 /-- **From augmented exactness to the P4 input data**
 (blueprint `lem:cechAugmented_to_acyclicResolutionInput`).

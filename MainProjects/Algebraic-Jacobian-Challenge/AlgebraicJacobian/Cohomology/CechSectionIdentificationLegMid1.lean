@@ -42,7 +42,12 @@ private noncomputable def coverReindexHom (𝒰 : X.OpenCover) [Finite 𝒰.I₀
       refine Eq.trans (Limits.Sigma.ι_comp_map'_assoc _ _ _ _) ?_
       exact Eq.trans (Category.id_comp _) (Limits.Sigma.ι_desc _ _))
 
-set_option maxHeartbeats 3200000 in
+-- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
+-- TODO(v4.31.0): the v4.31.0 *kernel* (stricter than b80f227) deterministic-times-out
+-- typechecking this term at 3.2M; `respectTransparency` only speeds elaboration, not the
+-- kernel, so maxHeartbeats is raised to 0 (unlimited) to keep the proof. ~70 min to compile.
+set_option backward.isDefEq.respectTransparency false in
+set_option maxHeartbeats 0 in
 set_option synthInstance.maxHeartbeats 400000 in
 /-- **Backbone inclusion/projection characterization** (the Stub-1 unwinding): the
 `τ`-summand inclusion of the backbone followed by the `l`-th wide-pullback projection is
@@ -212,7 +217,11 @@ private lemma piMapIso_hom_π {β : Type u} {f g : β → Ab.{u}}
 
 -- The unfolding of `coreIso_objIso`/`pushPull_eval_prod_iso` is `whnf`-heavy on the
 -- bundled section types.
-set_option maxHeartbeats 1600000 in
+-- (heavy lemma: high heartbeat budget; respectTransparency knob restores v4.31.0 speed)
+-- TODO(v4.31.0): kernel deterministic-timeout risk at 1.6M (same as backboneIncl_proj
+-- above); maxHeartbeats raised to 0 (unlimited) to keep the proof under the stricter kernel.
+set_option backward.isDefEq.respectTransparency false in
+set_option maxHeartbeats 0 in
 /-- **Coordinate formula for the degreewise object iso** (`coreIso_objIso`): its
 `τ`-projection is the evaluated push–pull map of the backbone inclusion `backboneIncl`,
 followed by the per-leg section identification `pushPull_leg_sections` and the open-meet

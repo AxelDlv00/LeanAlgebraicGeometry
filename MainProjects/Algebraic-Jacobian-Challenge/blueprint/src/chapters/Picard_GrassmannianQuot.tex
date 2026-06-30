@@ -470,7 +470,6 @@ is reconstituted entry-by-entry over a finite biproduct.
 
 \begin{proof}
   \uses{def:gr_scalarEnd}
-  \leanok
   Multiplication by \(1\) is the identity on every section, so under the
   identification \(\End(\mathbf{1}) \cong \Gamma(X, \mathbf{1})\) the section \(1\)
   corresponds to \(\mathrm{id}_{\mathbf{1}}\).
@@ -488,7 +487,6 @@ is reconstituted entry-by-entry over a finite biproduct.
 
 \begin{proof}
   \uses{def:gr_scalarEnd}
-  \leanok
   Multiplication by \(0\) sends every section to \(0\), so the corresponding
   endomorphism of the unit module is the zero map.
 \end{proof}
@@ -504,7 +502,6 @@ is reconstituted entry-by-entry over a finite biproduct.
 \end{lemma}
 \begin{proof}
   \uses{def:gr_scalarEnd}
-  \leanok
   Under the identification \(\End(\mathbf{1}) \cong \Gamma(X, \mathbf{1})\) the
   scalar endomorphisms act as multiplication by \(a\) and by \(b\); their composite
   is multiplication by \(a\,b\), because the section ring is commutative and
@@ -521,7 +518,6 @@ is reconstituted entry-by-entry over a finite biproduct.
 \end{lemma}
 \begin{proof}
   \uses{def:gr_scalarEnd}
-  \leanok
   Multiplication by \(a + b\) equals multiplication by \(a\) plus multiplication by
   \(b\) on every section, since the restriction maps of \(\mathcal{O}_X\) are additive;
   under \(\End(\mathbf{1}) \cong \Gamma(X, \mathbf{1})\) this is the stated additivity.
@@ -570,7 +566,6 @@ the algebraic heart of the bundle cocycle.
 \end{lemma}
 \begin{proof}
   \uses{def:gr_matrixEnd, lem:gr_scalarEnd_comp, lem:gr_scalarEnd_add}
-  \leanok
   The composition of two biproduct-assembled morphisms is again biproduct-assembled,
   with \((i,q)\)-component the sum over the middle index \(p\) of the composites of
   components, \(\sum_p \mathrm{component}_{i,p} \circ \mathrm{component}_{p,q}\) (the
@@ -596,7 +591,6 @@ the algebraic heart of the bundle cocycle.
 \end{lemma}
 \begin{proof}
   \uses{def:gr_matrixEnd, lem:gr_scalarEnd_one, lem:gr_scalarEnd_zero}
-  \leanok
   The diagonal components are \(\mathrm{scalarEnd}(1) = \mathrm{id}\)
   (\cref{lem:gr_scalarEnd_one}) and the off-diagonal components are
   \(\mathrm{scalarEnd}(0) = 0\) (\cref{lem:gr_scalarEnd_zero}); the morphism with this
@@ -628,7 +622,6 @@ the algebraic heart of the bundle cocycle.
 \end{lemma}
 \begin{proof}
   \uses{def:gr_matrixToFreeIso, def:gr_matrixEnd}
-  \leanok
   Immediate from the definition \cref{def:gr_matrixToFreeIso}, whose forward field is
   literally \(\mathrm{matrixEnd}(M)\).
 \end{proof}
@@ -654,7 +647,6 @@ the algebraic heart of the bundle cocycle.
 \end{lemma}
 \begin{proof}
   \uses{def:gr_matrixToFreeIso, lem:gr_matrixToFreeIso_hom, lem:gr_matrixEnd_comp}
-  \leanok
   By \cref{lem:gr_matrixToFreeIso_hom} the two forward maps are
   \(\mathrm{matrixEnd}(A)\) and \(\mathrm{matrixEnd}(B)\); their composite is
   \(\mathrm{matrixEnd}(A)\circ\mathrm{matrixEnd}(B) = \mathrm{matrixEnd}(B\cdot A)\) by
@@ -723,7 +715,6 @@ the algebraic heart of the bundle cocycle.
 
 \begin{proof}
   \uses{def:gr_chart_quotient}
-  \leanok
   We exhibit a section, so that \(u^I\) is a \emph{split} epimorphism and hence an
   epimorphism. Let \(\iota_I : \{1,\dots,d\} \hookrightarrow \{1,\dots,r\}\) be the
   inclusion of the \(I\)-indexed coordinates, \(k \mapsto \iota_I(k)\), the
@@ -814,7 +805,6 @@ universal quotient requires beyond the gluing primitive itself.
 \begin{proof}
   \uses{def:gr_bundleTransition, lem:gr_universalMatrix_submatrix_self,
     lem:gr_universalMinorInv_identities, lem:gr_scalarEnd_one, lem:gr_scalarEnd_zero}
-    \leanok
   The \(I\)-th minor of the universal matrix is the identity block, \(X^I_I = 1_{d\times d}\)
   (\cref{lem:gr_universalMatrix_submatrix_self}), so its Cramer inverse is again the
   identity, \((X^I_I)^{-1} = 1_{d\times d}\) (\cref{lem:gr_universalMinorInv_identities}).
@@ -845,7 +835,6 @@ universal quotient requires beyond the gluing primitive itself.
   \uses{def:gr_universalMinorInv, lem:gr_cocycle_imageMatrix_eq,
     lem:gr_universalMinorInv_identities, lem:gr_mul_submatrix_col,
     lem:gr_inv_mul_inv_mul_cancel, lem:gr_cocycle}
-    \leanok
   Write all matrices over the common triple-overlap ring. The image matrix of the
   transition \(\theta_{I,J}\) is \(X^J = (X^I_J)^{-1} X^I\), and its \(K\)-minor is
   computed by restricting to the \(K\)-indexed columns; since taking a column
@@ -891,7 +880,6 @@ universal quotient requires beyond the gluing primitive itself.
 \end{lemma}
 \begin{proof}
   \uses{def:gr_scalarEnd, lem:gr_pullbackFreeIso}
-  \leanok
   The scalar endomorphism \(\mathrm{scalarEnd}(a)\) (\cref{def:gr_scalarEnd}) is multiplication
   by the global section \(a\) on the unit module \(\mathbf 1 = \mathcal{O}_S\). Pulling back
   along \(p\) sends multiplication by \(a\) to multiplication by its image, and the comorphism
@@ -926,7 +914,6 @@ universal quotient requires beyond the gluing primitive itself.
 \begin{proof}
   \uses{def:gr_matrixEnd, lem:gr_scalarEnd_pullback, lem:gr_pullbackFreeIso,
     def:modules_pullbackComp}
-    \leanok
   By \cref{def:gr_matrixEnd}, \(\mathrm{matrixEnd}(M)\) is the biproduct-assembled endomorphism
   of \(\mathcal{O}_S^{\,d} = \bigoplus_{k} \mathbf 1\) whose \((k,\ell)\)-component is
   \(\mathrm{scalarEnd}(M_{k,\ell})\). The pullback functor \(p^{*}\) is a left adjoint, hence
@@ -961,7 +948,6 @@ universal quotient requires beyond the gluing primitive itself.
 \end{lemma}
 \begin{proof}
 
-\leanok
   This is the naturality of the counit isomorphism \(\Gamma \circ \Spec \cong \mathrm{id}\) of
   the global-sections / spectrum adjunction: for any ring homomorphism \(\varphi\) the comorphism
   of \(\Spec\varphi\) on global sections is, after transport through the natural counit
@@ -992,7 +978,6 @@ universal quotient requires beyond the gluing primitive itself.
 \begin{proof}
   \uses{lem:gr_awayPullbackIso_inv_fst, def:gr_away_incl_left,
     lem:gr_baseChange_bridge_gammaSpec}
-    \leanok
   By \cref{lem:gr_awayPullbackIso_inv_fst} the first pullback projection, precomposed with the
   away-pullback identification \cref{def:gr_away_pullback_iso}, equals
   \(\Spec(\mathrm{awayInclLeft}(P^I_J, P^I_K))\). The source and overlap charts are affine, so by
@@ -1024,7 +1009,6 @@ universal quotient requires beyond the gluing primitive itself.
 \begin{proof}
   \uses{lem:gr_awayPullbackIso_inv_snd, def:gr_away_incl_right,
     lem:gr_baseChange_bridge_gammaSpec}
-    \leanok
   Identical to \cref{lem:gr_baseChange_bridge_left} with the second leg in place of the first:
   by \cref{lem:gr_awayPullbackIso_inv_snd} the second pullback projection, precomposed with the
   away-pullback identification \cref{def:gr_away_pullback_iso}, equals
@@ -1056,7 +1040,6 @@ universal quotient requires beyond the gluing primitive itself.
 \begin{proof}
   \uses{def:gr_chart_transition', def:gr_cocycle_theta_ij, def:gr_away_mul_comm_equiv,
     lem:gr_baseChange_bridge_gammaSpec}
-    \leanok
   By \cref{def:gr_chart_transition'} the triple transition \(t'_{IJK}\) is the composite of the
   source away-pullback identification, \(\Spec\Theta_{IJ}\) (\cref{def:gr_cocycle_theta_ij}), the
   \(\Spec\) of the order-swap isomorphism (\cref{def:gr_away_mul_comm_equiv}), and the inverse
@@ -1095,7 +1078,6 @@ universal quotient requires beyond the gluing primitive itself.
 \begin{proof}
   \uses{lem:gr_baseChange_bridge_left, lem:gr_baseChange_bridge_right,
     lem:gr_baseChange_bridge_transition}
-    \leanok
   The three identifications are exactly the three projection bridges. The first projection is
   handled by \cref{lem:gr_baseChange_bridge_left}, identifying its global-sections base-change
   map with \(\mathrm{awayInclLeft}\); the second projection by
@@ -1136,7 +1118,6 @@ universal quotient requires beyond the gluing primitive itself.
     lem:gr_matrixEnd_pullback, lem:gr_baseChange_bridge,
     lem:modules_pullback_basechange_transport, lem:gr_glueData_bridges,
     def:modules_pullbackComp, lem:gr_pullbackFreeIso}
-    \leanok
   This is pure assembly of the two infrastructure pieces over the endpoint bridges. Each
   bundle transition is, by \cref{def:gr_bundleTransition}, \(\mathrm{matrixToFreeIso}\) of a
   localised Cramer inverse conjugated by the free-pullback comparisons
@@ -1174,7 +1155,6 @@ universal quotient requires beyond the gluing primitive itself.
 \begin{proof}
   \uses{lem:gr_bundleCocycle_matrix, lem:gr_matrixToFreeIso_mul,
     lem:gr_bundleCocycle_transport}
-    \leanok
   The statement decomposes into three independent steps. First, the matrix-algebra core
   \cref{lem:gr_bundleCocycle_matrix} establishes the Cramer-inverse cocycle
   \((X^J_K)^{-1}(X^I_J)^{-1} = (X^I_K)^{-1}\) over the triple overlap. Second, the linkage
@@ -1306,7 +1286,6 @@ project-bespoke infrastructure.
 \begin{proof}
   \uses{def:gr_matrixEndRect, lem:gr_scalarEnd_pullback, lem:gr_pullbackFreeIso,
     def:modules_pullbackComp, lem:gr_matrixEnd_pullback}
-    \leanok
   Identical to the square case \cref{lem:gr_matrixEnd_pullback}, with the source and target
   biproducts now indexed by \(\{1,\dots,r\}\) and \(\{1,\dots,d\}\) respectively. The
   pullback functor \(p^{*}\), a left adjoint, is additive and biproduct-preserving; through
@@ -1347,7 +1326,6 @@ project-bespoke infrastructure.
 \begin{proof}
   \uses{def:gr_matrixEndRect, def:gr_matrixEnd, lem:gr_scalarEnd_comp, lem:gr_scalarEnd_add,
     lem:gr_matrixEnd_comp}
-    \leanok
   The same biproduct-extensionality computation as \cref{lem:gr_matrixEnd_comp}, the only
   change being that the leftmost (input) biproduct is indexed by \(\{1,\dots,r\}\) rather
   than \(\{1,\dots,d\}\). The composite of two biproduct-assembled morphisms is again
@@ -1392,7 +1370,6 @@ project-bespoke infrastructure.
 \begin{proof}
   \uses{lem:gr_homEquiv_conjugateEquiv_app, lem:conjugateEquiv_pullbackComp_inv_mathlib,
     lem:gr_pullbackFreeIso, def:modules_pullbackComp}
-    \leanok
   The components are produced by applying the adjunction hom-equivalence to the chart
   quotients; the descent condition of \cref{def:gr_modules_glueHom} is stated on those
   transposes. Transposing back across the adjunction is the naturality of the conjugate
@@ -1428,7 +1405,6 @@ project-bespoke infrastructure.
     lem:gr_matrixEndRect_comp, def:gr_bundleTransition,
     lem:gr_universalMatrix_map_transitionPreMap, lem:gr_imageMatrix_map_eq,
     lem:gr_baseChange_bridge_left}
-    \leanok
   By \cref{lem:gr_tautologicalQuotientComponent_transpose} it suffices to prove the
   pullback-level identity \(g_{I,J} \circ f_{IJ}^{*} u^I = (t_{IJ}\circ f_{JI})^{*} u^J\) on
   \(U^I_J\). Both sides are morphisms of trivial bundles \(\mathcal{O}_{U^I_J}^{\,r} \to
@@ -1653,7 +1629,6 @@ glued classifying morphism itself (\cref{def:grPointOfRankQuotient}).
 \end{lemma}
 \begin{proof}
   \uses{lem:gr_chartQuotientMap_epi, def:tautological_quotient, lem:gr_modules_glue_unique}
-  \leanok
   Being an epimorphism of sheaves of modules is local on the base: a morphism is epi
   precisely when its restriction to every member of an open cover is epi, since the
   cokernel is computed chartwise and a sheaf vanishing on a cover vanishes
@@ -1691,7 +1666,6 @@ glued classifying morphism itself (\cref{def:grPointOfRankQuotient}).
 \end{lemma}
 \begin{proof}
   \uses{def:isoLocus}
-  \leanok
   Being an isomorphism of module sheaves is stalk-local. Each point of the iso-locus has an
   open neighbourhood on which \(\varphi\) pulls back to an isomorphism, and restriction along
   an open immersion preserves stalks; hence the stalk of the underlying abelian-sheaf morphism
@@ -1726,7 +1700,6 @@ glued classifying morphism itself (\cref{def:grPointOfRankQuotient}).
 \end{lemma}
 \begin{proof}
   \uses{def:chartLocus}
-  \leanok
   Fix \(t \in T\). By local freeness of \(\mathcal{F}\), choose an affine open \(W \ni t\) on
   which \(\mathcal{F}|_W \cong \mathcal{O}_W^{\,d}\); the chart composite then becomes a
   \(d\times r\) matrix of sections of \(\mathcal{O}_W\). Epimorphy of \(q\) makes this matrix
@@ -1778,7 +1751,6 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
 \end{lemma}
 \begin{proof}
 
-\leanok
   The functor \(p^{*}\) carries the isomorphism \(a^{*}c\) to an isomorphism; transporting
   along the composition comparison identifies \(p^{*}(a^{*}c)\) with \((p\circ a)^{*}c\),
   which is therefore an isomorphism.
@@ -1796,7 +1768,6 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
 \end{lemma}
 \begin{proof}
   \uses{def:gr_presentedMatrix, def:gr_matrixEndRect}
-  \leanok
   Both sides are compared through their rectangular-endomorphism realisations
   (\cref{def:gr_matrixEndRect}), which are injective on matrices. The realisation of the left
   side is the conjugated pullback along \(p\circ a\); folding in the composition comparison
@@ -1816,7 +1787,6 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
 \end{lemma}
 \begin{proof}
   \uses{def:gr_presentedMatrix}
-  \leanok
   Substituting \(j' = j\), the two presented matrices coincide by definition.
 \end{proof}
 
@@ -1831,7 +1801,6 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
 \end{lemma}
 \begin{proof}
   \uses{def:gr_presentedMatrix, def:chartLocus}
-  \leanok
   Immediate from the definitions: the chart matrix is, entrywise, the presented matrix along
   the inclusion of the chart locus.
 \end{proof}
@@ -1846,7 +1815,6 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
 \end{lemma}
 \begin{proof}
   \uses{def:gr_presentedMatrix, def:gr_matrixEndRect}
-  \leanok
   Through the rectangular-endomorphism realisation, the \(I\)-minor presents the inverted
   chart composite against itself, i.e. \((j^{*}c_I)^{-1}\circ (j^{*}c_I) = \mathrm{id}\);
   matching realisations and using injectivity of the realisation gives the identity matrix.
@@ -1863,7 +1831,6 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
 \end{lemma}
 \begin{proof}
   \uses{def:gr_presentedMatrix, lem:gr_presentedMatrix_submatrix_self}
-  \leanok
   On the free entries \(x^I_{p,q}\) (columns outside \(I\)) the substitution returns the
   matching entry of \(M^I\) by \(\mathrm{aeval}(x^I_{p,q}) = M^I_{p,q}\). On the \(I\)-columns
   both \(X^I_I\) and \(M^I_I\) are the identity (\cref{lem:gr_presentedMatrix_submatrix_self}),
@@ -1882,7 +1849,6 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
 \end{lemma}
 \begin{proof}
 
-\leanok
   Expand the image matrix as the product of the nonsingular inverse of the \(J\)-minor with
   \(X^I\). A ring map commutes with matrix multiplication and, since the minor determinant is
   a unit, with the nonsingular inverse. Rewriting both factors along \(\mathrm{incl}\) and
@@ -1902,7 +1868,6 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
 \end{lemma}
 \begin{proof}
   \uses{lem:gr_presentedMatrix_comp, lem:gr_chartMatrix_eq_presentedMatrix}
-  \leanok
   By naturality of \(\Gamma\)--\(\Spec\), \(p\circ\varphi_I\) is classified by the \(p\)-image
   of the ring map classifying \(\varphi_I\), i.e. by \(\mathrm{aeval}(p^{\sharp}M^I)\). By
   \cref{lem:gr_chartMatrix_eq_presentedMatrix} and \cref{lem:gr_presentedMatrix_comp} one has
@@ -1922,7 +1887,6 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
 \end{lemma}
 \begin{proof}
 
-\leanok
   Factor the \(J\)-classifier through the localization away from \(P^I_J\): the transition map
   \(\tilde\theta_{I,J}\) composed with the chart inclusion is the chart-transition immersion,
   so the glue condition \(\theta_{I,J}\circ\iota_{JI} = \iota_{IJ}\) of the glue data
@@ -1947,7 +1911,6 @@ image-matrix transport (\cref{lem:gr_imageMatrix_map_ringHom}), chart-morphism n
   \uses{def:gr_presentedMatrix, lem:gr_presentedMatrix_submatrix_self,
     lem:gr_universalMatrix_map_presentedMatrix, lem:gr_imageMatrix_map_ringHom,
     lem:gr_chart_point_eq, lem:gr_isIso_pullback_map_comp}
-    \leanok
   On \(P\) both chart composites \(c_I, c_J\) pull back to isomorphisms
   (\cref{lem:gr_isIso_pullback_map_comp}), so the pulled-back quotient is presented by both
   matrices \(M^I_P\) and \(M^J_P\). The \(J\)-minor of \(M^I_P\) is invertible -- it presents
@@ -2006,7 +1969,6 @@ representability theorem.
 \end{lemma}
 \begin{proof}
   \uses{def:gr_presentedMatrix, def:gr_rankQuotient, def:gr_matrixEndRect}
-  \leanok
   Compare the two matrices through their rectangular-endomorphism realisations
   (\cref{def:gr_matrixEndRect}), which are injective. By definition of the pullback action
   (\cref{def:gr_rankQuotient}), \(\psi^{*}y\) re-presents the source through the free-pullback
@@ -2047,7 +2009,6 @@ representability theorem.
   \uses{def:grPointOfRankQuotient, lem:gr_presentedMatrix_rqPullback,
     lem:gr_presentedMatrix_comp, lem:gr_presentedMatrix_congr, lem:gr_comp_chartMorphism,
     lem:isIso_pullback_isoLocus_map}
-    \leanok
   The preimages \(\{\psi^{-1}(\iota_I(U^I))\}\) of the chart-immersion ranges cover \(T\), so
   it suffices to check the equality after restriction to each member \(W = \psi^{-1}
   (\iota_I(U^I))\). On \(W\) the composite \(\iota_W\circ\psi\) factors through the chart
@@ -2097,7 +2058,6 @@ representability theorem.
 \begin{proof}
   \uses{def:grPointOfRankQuotient, lem:gr_grPointOfRankQuotient_rqPullback_tautological,
     lem:tautologicalQuotient_epi}
-    \leanok
   The forward map sends \(\psi\) to the pullback \(\psi^{*}\langle\mathcal{U},u\rangle\) of the
   tautological pair; naturality in \(T\) is the pseudofunctoriality of the pullback action
   (\cref{def:grassmannian_functor}) evaluated at the tautological point. The inverse is the

@@ -1308,8 +1308,9 @@ theorem pullbackιIso_inv_fst (d r : ℕ) (i j : (theGlueData d r).J) :
       (Limits.cospan ((theGlueData d r).ι i)
         ((theGlueData d r).ι j))).conePointUniqueUpToIso_inv_comp
     ((theGlueData d r).vPullbackConeIsLimit i j) Limits.WalkingCospan.left
-  simpa [pullbackιIso, Limits.pullback.fst, Limits.PullbackCone.mk,
-    Grassmannian.theGlueData] using this
+  simp only [pullbackιIso, Limits.pullback.fst, Limits.PullbackCone.mk,
+    Grassmannian.theGlueData] at this ⊢
+  exact this
 
 /-- Second leg of the source iso `pullbackιIso`: `e₂⁻¹ ≫ pr₂ = chartTransition I J ≫ chartIncl J I`
 (the `V (i,j) ⟶ U j` leg of the glue-data pullback cone, which is `t ≫ f`). Project-local. -/
@@ -1321,8 +1322,9 @@ theorem pullbackιIso_inv_snd (d r : ℕ) (i j : (theGlueData d r).J) :
       (Limits.cospan ((theGlueData d r).ι i)
         ((theGlueData d r).ι j))).conePointUniqueUpToIso_inv_comp
     ((theGlueData d r).vPullbackConeIsLimit i j) Limits.WalkingCospan.right
-  simpa [pullbackιIso, Limits.pullback.snd, Limits.PullbackCone.mk,
-    Grassmannian.theGlueData] using this
+  simp only [pullbackιIso, Limits.pullback.snd, Limits.PullbackCone.mk,
+    Grassmannian.theGlueData] at this ⊢
+  exact this
 
 /-- The overlap-to-chart composite `t_{I,J} ≫ ι_{J,I}` is the comorphism of the pre-localisation
 transition hom `θ̃_{I,J}` (`Spec.map`): `chartTransition I J ≫ chartIncl J I = Spec.map θ̃_{I,J}`.

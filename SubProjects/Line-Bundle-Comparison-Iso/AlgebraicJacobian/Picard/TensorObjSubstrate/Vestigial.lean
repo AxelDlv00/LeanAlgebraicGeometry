@@ -12,8 +12,8 @@ import AlgebraicJacobian.Picard.TensorObjSubstrate.StalkTensor
 This file quarantines three sections of the substrate build that are NOT on the
 primary `exists_tensorObj_inverse` closure path but may serve future prover work:
 
-- `FlatWhisker` / `WhiskerOfW` (route-(e) flatness-free whiskering; axiom-clean,
-  including `isLocallyInjective_whiskerLeft_of_W`)
+- `FlatWhisker` / `WhiskerOfW` (route-(e) flatness-free whiskering; one open sorry
+  `isLocallyInjective_whiskerLeft_of_W`)
 - `StalkLinearMap` (route-(e) d.1 ingredient; axiom-clean)
 - `OverSliceSheafEquiv` (the shared root for both ⊗-inverse bridges; axiom-clean)
 
@@ -64,6 +64,15 @@ lemma toPresheaf_whiskerLeft_app_tmul
   erw [toPresheaf_map_app_apply]
   exact ModuleCat.MonoidalCategory.whiskerLeft_apply _ _ a b
 
+/-- The underlying additive map of `(F ◁ g).app X` is `LinearMap.lTensor`. -/
+lemma toPresheaf_whiskerLeft_app_apply
+    (F : PresheafOfModules.{u} (R ⋙ forget₂ _ _))
+    {M N : PresheafOfModules.{u} (R ⋙ forget₂ _ _)} (g : M ⟶ N) (X : Cᵒᵖ)
+    (z : (F ⊗ M).obj X) :
+    (((toPresheaf _).map (F ◁ g)).app X).hom z
+      = LinearMap.lTensor (R := (R.obj X : CommRingCat)) (F.obj X) (g.app X).hom z := by
+  erw [toPresheaf_map_app_apply, PresheafOfModules.whiskerLeft_app]
+
 /-- **Local surjectivity is preserved by left-whiskering.** Right-exactness of
 `⊗`: no flatness needed. Blueprint `lem:flat_whisker_localizer`, surjectivity
 half. -/
@@ -93,6 +102,123 @@ lemma isLocallySurjective_whiskerLeft
       obtain ⟨⟨ds, hds⟩, ⟨dt, hdt⟩⟩ := hi
       refine ⟨ds + dt, ?_⟩
       rw [map_add, hds, hdt]; exact (map_add _ s t).symm
+
+/-- **Local injectivity is preserved by flat left-whiskering.** This is where
+sectionwise flatness of `F` enters: via `Module.Flat.lTensor_exact` on the
+kernel exact sequence `ker(gₓ) ↪ M(X) →gₓ N(X)`, an element of `ker(F ◁ g)` is
+a sum of simple tensors with kernel entries, each of which restricts to `0` on a
+covering sieve (local injectivity of `g`). Blueprint `lem:flat_whisker_localizer`,
+injectivity half. -/
+lemma isLocallyInjective_whiskerLeft_of_flat
+    (F : PresheafOfModules.{u} (R ⋙ forget₂ _ _))
+    [∀ X, Module.Flat (R.obj X) (F.obj X)]
+    {M N : PresheafOfModules.{u} (R ⋙ forget₂ _ _)} (g : M ⟶ N)
+    (hg : IsLocallyInjective J g) :
+    IsLocallyInjective J (F ◁ g) := by
+  constructor
+  intro X ξ η h
+  -- View the sectionwise map of `g` as `R.obj X`-linear (the ring is commutative).
+  let gl : ((M.obj X : ModuleCat _) : Type _) →ₗ[(R.obj X : CommRingCat)]
+      ((N.obj X : ModuleCat _) : Type _) := (g.app X).hom
+  -- `h` says `F ◁ g` agrees on `ξ, η`, i.e. `lTensor` kills `ξ - η`.
+  have hδ : LinearMap.lTensor (R := (R.obj X : CommRingCat)) (F.obj X) gl (ξ - η) = 0 := by
+    have heq : LinearMap.lTensor (R := (R.obj X : CommRingCat)) (F.obj X) gl ξ
+        = LinearMap.lTensor (R := (R.obj X : CommRingCat)) (F.obj X) gl η := by
+      rw [← toPresheaf_whiskerLeft_app_apply, ← toPresheaf_whiskerLeft_app_apply]; exact h
+    exact (map_sub (LinearMap.lTensor (R := (R.obj X : CommRingCat)) (F.obj X) gl) ξ η).trans
+      (sub_eq_zero.mpr heq)
+  -- Flatness: `ker(F ⊗ gl) = range(F ⊗ ker.subtype)`, so `ξ - η` is a sum of simple
+  -- tensors with kernel entries.
+  have hex : Function.Exact
+      (LinearMap.lTensor (R := (R.obj X : CommRingCat)) (F.obj X) (LinearMap.ker gl).subtype)
+      (LinearMap.lTensor (R := (R.obj X : CommRingCat)) (F.obj X) gl) :=
+    Module.Flat.lTensor_exact (F.obj X) (LinearMap.exact_subtype_ker_map gl)
+  obtain ⟨ζ, hζ⟩ := (hex (ξ - η)).mp hδ
+  -- Each simple tensor `a ⊗ k` with `gl k = 0` restricts to `0` on a covering sieve
+  -- (local injectivity of `g`); induct on the witness `ζ`.
+  have key : ∀ ζ : TensorProduct (R.obj X) (F.obj X) (LinearMap.ker gl),
+      Presheaf.equalizerSieve (F := (toPresheaf _).obj (F ⊗ M)) (X := X)
+        (LinearMap.lTensor (R := (R.obj X : CommRingCat)) (F.obj X)
+          (LinearMap.ker gl).subtype ζ) 0 ∈ J X.unop := by
+    intro ζ
+    induction ζ using TensorProduct.induction_on with
+    | zero =>
+        rw [map_zero]
+        exact J.superset_covering (Presheaf.equalizerSieve_self_eq_top _).ge (J.top_mem _)
+    | tmul a kk =>
+        rw [LinearMap.lTensor_tmul]
+        have hk : ((toPresheaf _).map g).app X kk.1
+            = ((toPresheaf _).map g).app X (0 : ((toPresheaf _).obj M).obj X) := by
+          rw [map_zero]
+          erw [toPresheaf_map_app_apply]
+          exact kk.2
+        refine J.superset_covering ?_ (hg.equalizerSieve_mem kk.1 0 hk)
+        intro V f hf
+        rw [Presheaf.equalizerSieve_apply] at hf ⊢
+        rw [map_zero] at hf ⊢
+        erw [presheaf_map_apply_coe, PresheafOfModules.Monoidal.tensorObj_map_tmul]
+        erw [presheaf_map_apply_coe] at hf
+        rw [Submodule.subtype_apply, hf]
+        erw [TensorProduct.tmul_zero]; rfl
+    | add ζ₁ ζ₂ h₁ h₂ =>
+        rw [map_add]
+        refine J.superset_covering ?_ (J.intersection_covering h₁ h₂)
+        intro V f hf
+        obtain ⟨hf1, hf2⟩ := hf
+        rw [Presheaf.equalizerSieve_apply] at hf1 hf2 ⊢
+        rw [map_zero] at hf1 hf2 ⊢
+        exact (map_add _ _ _).trans (by rw [hf1, hf2, add_zero])
+  -- Transport `equalizerSieve (ξ - η) 0 ∈ J` to `equalizerSieve ξ η ∈ J`.
+  have hmain : Presheaf.equalizerSieve (F := (toPresheaf _).obj (F ⊗ M)) (X := X)
+      (ξ - η) 0 ∈ J X.unop := hζ ▸ key ζ
+  refine J.superset_covering ?_ hmain
+  intro V f hf
+  rw [Presheaf.equalizerSieve_apply] at hf ⊢
+  rw [map_zero, map_sub, sub_eq_zero] at hf
+  exact hf
+
+/-- **Flat left-whiskering preserves the sheafification localizer.**
+(Blueprint `lem:flat_whisker_localizer`.) For a sectionwise-flat presheaf of
+modules `F` and a morphism `g` lying in the sheafification localizer `J.W` (the
+class of morphisms inverted by sheafification, equivalently the locally bijective
+ones via `WEqualsLocallyBijective`), the left-whiskered morphism `F ◁ g` again
+lies in `J.W`. The two halves are `isLocallyInjective_whiskerLeft_of_flat` (where
+flatness enters) and `isLocallySurjective_whiskerLeft` (pure right-exactness).
+This is the single non-formal ingredient of the `⊗`-invertibility associator
+`tensorObj_assoc_iso`; the route uses no `MonoidalClosed` structure. -/
+lemma W_whiskerLeft_of_flat [J.WEqualsLocallyBijective Ab.{u}]
+    (F : PresheafOfModules.{u} (R ⋙ forget₂ _ _))
+    [∀ X, Module.Flat (R.obj X) (F.obj X)]
+    {M N : PresheafOfModules.{u} (R ⋙ forget₂ _ _)} (g : M ⟶ N)
+    (hg : J.W ((toPresheaf _).map g)) :
+    J.W ((toPresheaf _).map (F ◁ g)) := by
+  rw [GrothendieckTopology.W_iff_isLocallyBijective] at hg ⊢
+  exact ⟨isLocallyInjective_whiskerLeft_of_flat F g hg.1,
+    isLocallySurjective_whiskerLeft F g hg.2⟩
+
+/-- **Flat right-whiskering preserves the sheafification localizer.** The
+braiding-conjugate of `W_whiskerLeft_of_flat`: for a sectionwise-flat presheaf of
+modules `F` and a morphism `g` in the sheafification localizer `J.W`, the
+right-whiskered morphism `g ▷ F` again lies in `J.W`. Obtained from the
+left-whiskered statement by conjugating with the (iso) braiding of the symmetric
+presheaf-of-modules monoidal structure, using that `J.W` respects isomorphisms. -/
+lemma W_whiskerRight_of_flat [J.WEqualsLocallyBijective Ab.{u}]
+    (F : PresheafOfModules.{u} (R ⋙ forget₂ _ _))
+    [∀ X, Module.Flat (R.obj X) (F.obj X)]
+    {M N : PresheafOfModules.{u} (R ⋙ forget₂ _ _)} (g : M ⟶ N)
+    (hg : J.W ((toPresheaf _).map g)) :
+    J.W ((toPresheaf _).map (g ▷ F)) := by
+  have hwl := W_whiskerLeft_of_flat F g hg
+  -- `g ▷ F = (β_ M F).hom ≫ (F ◁ g) ≫ (β_ N F).inv` by braiding naturality.
+  have hconj : g ▷ F
+      = (BraidedCategory.braiding M F).hom ≫ (F ◁ g) ≫ (BraidedCategory.braiding N F).inv := by
+    rw [← Category.assoc, ← BraidedCategory.braiding_naturality_left g F, Category.assoc,
+      Iso.hom_inv_id, Category.comp_id]
+  rw [hconj, Functor.map_comp, Functor.map_comp]
+  -- `J.W` respects isos on both sides (it is the sheafification localizer).
+  rw [(J.W).cancel_left_of_respectsIso, (J.W).cancel_right_of_respectsIso]
+  exact hwl
+
 
 /-- **The sheafification-localization bridge.** A morphism `f` of presheaves of
 modules whose underlying additive-presheaf map lies in the sheafification localizer
@@ -158,8 +284,8 @@ noncomputable def stalkLinearMap
   map_add' a b := map_add _ a b
   map_smul' r s := by
     dsimp only [RingHom.id_apply]
-    obtain ⟨U, hxU, r₀, rfl⟩ := TopCat.Presheaf.germ_exist R x r
-    obtain ⟨V, hxV, s₀, rfl⟩ := TopCat.Presheaf.germ_exist M.presheaf x s
+    obtain ⟨U, hxU, r₀, rfl⟩ := TopCat.Presheaf.exists_germ_eq R r
+    obtain ⟨V, hxV, s₀, rfl⟩ := TopCat.Presheaf.exists_germ_eq M.presheaf s
     set W : Opens X := U ⊓ V with hW
     have hxW : x ∈ W := ⟨hxU, hxV⟩
     set iWU : W ⟶ U := homOfLE inf_le_left
@@ -285,8 +411,8 @@ theorem injective_stalk_of_isLocallyInjective
     (z : Z) :
     Function.Injective ⇑(ConcreteCategory.hom ((stalkFunctor A z).map T)) := by
   intro sₓ tₓ hxeq
-  obtain ⟨U, hzU, s, rfl⟩ := F.germ_exist z sₓ
-  obtain ⟨V, hzV, t, rfl⟩ := F.germ_exist z tₓ
+  obtain ⟨U, hzU, s, rfl⟩ := F.exists_germ_eq sₓ
+  obtain ⟨V, hzV, t, rfl⟩ := F.exists_germ_eq tₓ
   rw [stalkFunctor_map_germ_apply, stalkFunctor_map_germ_apply] at hxeq
   obtain ⟨W, hzW, iU, iV, heqG⟩ := G.germ_eq z hzU hzV
     ((ConcreteCategory.hom (T.app (op U))) s) ((ConcreteCategory.hom (T.app (op V))) t) hxeq
@@ -373,7 +499,7 @@ lemma isLocallyInjective_whiskerLeft_of_W
       eN (ConcreteCategory.hom φ w) = E (eM w) := by
     intro w
     obtain ⟨W, hzW, p, rfl⟩ :=
-      TopCat.Presheaf.germ_exist (Monoidal.tensorObj F M).presheaf z w
+      TopCat.Presheaf.exists_germ_eq (Monoidal.tensorObj F M).presheaf w
     -- The germ map, `φ`, `eN`, `eM`, `E` are all additive; the `+`/`0` instances on the
     -- defeq carriers `(toPresheaf _).obj (F ⊗ M)` vs `(Monoidal.tensorObj F M).presheaf` differ
     -- syntactically, so we distribute `map_add`/`map_zero` via `have`-terms (defeq-coerced).
@@ -525,6 +651,73 @@ universe v w
 -- are `CategoryTheory` names with no scheme shadow and stay unqualified.
 
 variable {X : Type u} [TopologicalSpace X] (U : TopologicalSpace.Opens X)
+
+/-- Pointwise cover-correspondence underlying `overEquivInverseIsDenseSubsite`: a
+sieve `S` on `W : Opens ↥U` is a covering sieve in the subspace topology iff its
+pushforward along the open-embedding image functor `↥U ↪ X` is a covering sieve in
+`X`. Both sides are the pointwise neighbourhood-cover condition of
+`Opens.grothendieckTopology`, matched across the injection `Subtype.val`. -/
+private lemma overEquiv_image_cover_iff (W : TopologicalSpace.Opens ↥U) (S : Sieve W) :
+    (S.functorPushforward ((TopologicalSpace.Opens.overEquivalence U).inverse ⋙ Over.forget U))
+        ∈ (Opens.grothendieckTopology X)
+          (((TopologicalSpace.Opens.overEquivalence U).inverse ⋙ Over.forget U).obj W)
+      ↔ S ∈ (Opens.grothendieckTopology ↥U) W := by
+  constructor
+  · intro h y hy
+    have hx : (y : X) ∈
+        (((TopologicalSpace.Opens.overEquivalence U).inverse ⋙ Over.forget U).obj W) :=
+      ⟨y, hy, rfl⟩
+    obtain ⟨V, f, hf, hxV⟩ := h y hx
+    obtain ⟨W', a, b, hSa, _⟩ := hf
+    refine ⟨W', a, hSa, ?_⟩
+    have hyim : (y : X) ∈
+        ((TopologicalSpace.Opens.overEquivalence U).inverse ⋙ Over.forget U).obj W' := b.le hxV
+    obtain ⟨z, hz, hzeq⟩ := hyim
+    rw [← (Subtype.ext hzeq : z = y)]; exact hz
+  · intro h x hx
+    obtain ⟨y, hy, rfl⟩ := hx
+    obtain ⟨W', a, hSa, hyW'⟩ := h y hy
+    refine ⟨((TopologicalSpace.Opens.overEquivalence U).inverse ⋙ Over.forget U).obj W',
+      ((TopologicalSpace.Opens.overEquivalence U).inverse ⋙ Over.forget U).map a, ?_,
+      ⟨y, hyW', rfl⟩⟩
+    exact ⟨W', a, 𝟙 _, hSa, by simp⟩
+
+/-- The inverse of `overEquivalence U` exhibits `(Opens ↥U, subspace topology)` as a
+dense subsite of `(Over U, slice topology)`. This is the dense-subsite datum
+`Equivalence.sheafCongr` consumes; the only non-formal field is the pointwise
+cover-correspondence `overEquiv_image_cover_iff`. -/
+instance overEquivInverseIsDenseSubsite :
+    (TopologicalSpace.Opens.overEquivalence U).inverse.IsDenseSubsite
+      (Opens.grothendieckTopology ↥U)
+      ((Opens.grothendieckTopology X).over U) where
+  functorPushforward_mem_iff {W S} := by
+    rw [GrothendieckTopology.mem_over_iff]
+    rw [show Sieve.overEquiv ((TopologicalSpace.Opens.overEquivalence U).inverse.obj W)
+          (S.functorPushforward (TopologicalSpace.Opens.overEquivalence U).inverse)
+        = S.functorPushforward
+            ((TopologicalSpace.Opens.overEquivalence U).inverse ⋙ Over.forget U) by
+      rw [Sieve.functorPushforward_comp]; rfl]
+    exact overEquiv_image_cover_iff U W S
+
+/-- **The open-immersion↔slice sheaf-site equivalence.** For a topological space
+`X`, an open `U : Opens X`, and any value category `A`, the slice sheaf category
+over `U` is equivalent to the sheaf category on the open subspace `↥U`:
+
+  `Sheaf ((Opens.grothendieckTopology X).over U) A ≌ Sheaf (Opens.grothendieckTopology ↥U) A`.
+
+This completes the documented Mathlib `## TODO` at `Topology/Sheaves/Over.lean` and
+is the SHARED root both ⊗-inverse bridges (`homOfLocalCompat`, `dual_isLocallyTrivial`)
+reduce to. Built by transporting `TopologicalSpace.Opens.overEquivalence U` across
+`CategoryTheory.Equivalence.sheafCongr`, using the project-local dense-subsite
+instance `overEquivInverseIsDenseSubsite`.
+
+Per blueprint `lem:open_immersion_slice_sheaf_equiv`. -/
+noncomputable def overSliceSheafEquiv (A : Type w) [Category.{v} A] :
+    Sheaf ((Opens.grothendieckTopology X).over U) A ≌
+      Sheaf (Opens.grothendieckTopology ↥U) A :=
+  (TopologicalSpace.Opens.overEquivalence U).sheafCongr
+    ((Opens.grothendieckTopology X).over U)
+    (Opens.grothendieckTopology ↥U) A
 
 end OverSliceSheafEquiv
 

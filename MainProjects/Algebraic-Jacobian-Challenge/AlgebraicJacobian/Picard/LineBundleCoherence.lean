@@ -240,6 +240,7 @@ instance (M : X.Modules) (U : X.Opens)
 
 /-! ## §3. Finite presentation of a locally trivial line bundle -/
 
+set_option synthInstance.maxHeartbeats 400000 in -- v4.31.0: `sheafToPresheaf.IsRightAdjoint` synth is slow
 /-- **Locally trivial `⟹` finitely presented** (Stacks 0B8M / Lemma 17.25.4).
 A locally trivial module on a scheme is finitely presented: assemble a
 `QuasicoherentData` from the trivialising affine cover

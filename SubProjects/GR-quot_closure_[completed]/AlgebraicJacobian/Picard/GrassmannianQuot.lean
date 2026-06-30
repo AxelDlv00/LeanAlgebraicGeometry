@@ -656,7 +656,6 @@ theorem bundleTransition_cocycle_matrix (d r : ℕ) (I J K : Finset (Fin r))
         (minorDet d r I J hI hJ * minorDet d r I K hI hK)) =>
       M.submatrix id (fun j : Fin d => (I.orderIsoOfFin hI j : Fin r)))
     (cocycle_imageMatrix_eq' d r I J K hI hJ hK)
-  simp only at hcol
   -- LHS of `hcol` is `(X^I_K)⁻¹` over `S_I`.
   rw [Matrix.submatrix_map, imageMatrix_submatrix_I] at hcol
   -- RHS of `hcol`: push the `I`-minor through the outer map.
@@ -833,9 +832,7 @@ lemma matrixEnd_pullback {T S : Scheme.{0}} (p : T ⟶ S) {d : ℕ}
     exact SheafOfModules.pullback_map_ιFree_comp_pullbackObjFreeIso_hom _ k
   -- LHS: `map (ιFree i) ≫ map (matrixEnd M)` collapses to `map (ιFree i ≫ matrixEnd M)`,
   -- then `ιFree_matrixEnd` turns it into a row sum, distributed by additivity of the pullback.
-  rw [← Category.assoc ((Scheme.Modules.pullback p).map (SheafOfModules.ιFree i))
-        ((Scheme.Modules.pullback p).map (matrixEnd M)),
-    ← Functor.map_comp]
+  rw [← Functor.map_comp_assoc]
   -- `erw` (defeq matching) is needed to see `ιFree i ≫ matrixEnd M` under `(pullback p).map`.
   erw [ιFree_matrixEnd M i]
   erw [Functor.map_sum]
@@ -912,9 +909,7 @@ lemma matrixEndRect_pullback {T S : Scheme.{0}} (p : T ⟶ S) {d r : ℕ}
     rw [hQd]
     exact SheafOfModules.pullback_map_ιFree_comp_pullbackObjFreeIso_hom _ k
   -- LHS: collapse to a row sum via `ιFree_matrixEndRect`, distributed by additivity.
-  rw [← Category.assoc ((Scheme.Modules.pullback p).map (SheafOfModules.ιFree i))
-        ((Scheme.Modules.pullback p).map (matrixEndRect M)),
-    ← Functor.map_comp]
+  rw [← Functor.map_comp_assoc]
   erw [ιFree_matrixEndRect M i]
   erw [Functor.map_sum]
   rw [Preadditive.sum_comp]
@@ -4910,7 +4905,8 @@ lemma universalMatrix_map_chartMorphism {T : Scheme.{0}} (d r : ℕ) (x : RankQu
           (fun pq : Fin d × {q : Fin r // q ∉ I} =>
             chartMatrix x I hI pq.1 pq.2.1)).toRingHom := by
     have h := congrArg (fun m => ⇑(CommRingCat.Hom.hom m)) hmor
-    simpa only [CommRingCat.hom_comp, RingHom.coe_comp, CommRingCat.hom_ofHom] using h
+    simp only [CommRingCat.hom_comp, RingHom.coe_comp, CommRingCat.hom_ofHom] at h
+    exact h
   -- `rw`/`simp` cannot match the `g ∘ f` term (a hidden coercion-instance mismatch), so
   -- feed `hfun` through `congrArg` and reconcile `chartMatrix = presentedMatrix` separately
   calc (universalMatrix d r I hI).map
@@ -5260,7 +5256,8 @@ lemma chartLocus_le_chartLocus_rqPullback_grPoint {T : Scheme.{0}} (d r : ℕ)
         = ((theGlueData d r).ι I).base ((chartMorphism d r x I.1 I.2).base w) := by
       have h1 := congrArg
         (fun f : (chartLocus x I.1 I.2).toScheme ⟶ scheme d r => f.base w) hglue
-      simpa only [Scheme.Hom.comp_base, TopCat.comp_app] using h1
+      simp only [Scheme.Hom.comp_base, TopCat.comp_app] at h1
+      exact h1
     rw [hb]
     exact ⟨(chartMorphism d r x I.1 I.2).base w, rfl⟩
   · intro t ht

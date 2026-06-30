@@ -1,0 +1,135 @@
+[
+  {
+    "timestamp": "2026-06-24T16:52:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "presheafDual_pullback_comparison_eval_apply"
+    },
+    "session": {
+      "id": "session_74",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "sliceDualTransport_app_apply",
+        "dualUnitRingSwap_apply",
+        "PresheafOfModules.evalLin"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "rw forward-apply at terminal slice",
+        "code_tried": "rw [sliceDualTransport_app_apply f M V φ (op (Over.mk (𝟙 V.unop))) s, dualUnitRingSwap_apply]",
+        "line_number": "377",
+        "lean_error": "rw misses (evalLin exposes section app via ConcreteCategory.hom; lemma keyed on ModuleCat.Hom.hom — defeq not syntactic)",
+        "result": "failed",
+        "insight": "rw needs syntactic head match; the two spellings are only defeq"
+      },
+      {
+        "attempt": 2,
+        "strategy": "unfold + erw to bridge the defeq",
+        "code_tried": "unfold PresheafOfModules.evalLin; erw [sliceDualTransport_app_apply f M V φ (op (Over.mk (𝟙 V.unop))) s, dualUnitRingSwap_apply]; rfl",
+        "line_number": "377",
+        "lean_error": null,
+        "result": "success",
+        "insight": "erw absorbs the ConcreteCategory.hom vs ModuleCat.Hom.hom defeq; at terminal slice W=op(Over.mk 𝟙) swap leg rewrites to (appIso f V.unop).hom.hom; final rfl discharges f.opensFunctor.map(𝟙) vs 𝟙 defeq. Consumes the iter-073 forward brick."
+      }
+    ],
+    "next_steps": "Closed. Off critical path."
+  },
+  {
+    "timestamp": "2026-06-24T16:52:00Z",
+    "status": "solved",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "evalLin_restrict_commute_aux"
+    },
+    "session": {
+      "id": "session_74",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": null,
+      "key_lemmas_used": [
+        "PresheafOfModules.naturality_apply",
+        "PresheafOfModules.internalHomEval"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "multi-step have + erw (prior-pass route)",
+        "code_tried": "have key := PresheafOfModules.naturality_apply (internalHomEval N) j.op (s ⊗ₜ φ); erw [tensorObj_map_tmul, internalHomEvalApp_tmul, internalHomEvalApp_tmul] at key; exact key.symm",
+        "line_number": "434",
+        "lean_error": "whnf-bomb at erw (TensorProduct.lift monoidal machinery) even at maxHeartbeats 1.6M",
+        "result": "failed",
+        "insight": "the erw rewrite (not the object) is what bombs"
+      },
+      {
+        "attempt": 2,
+        "strategy": "one-shot term-mode exact",
+        "code_tried": "(PresheafOfModules.naturality_apply (PresheafOfModules.internalHomEval N) j.op (s ⊗ₜ[(R₀.obj (op U) : Type u)] φ)).symm",
+        "line_number": "434",
+        "lean_error": null,
+        "result": "success",
+        "insight": "exact unifies goal with the naturality square up to defeq (internalHomEvalApp_tmul/tensorObj_map_tmul reductions hold definitionally) — sidesteps the erw whnf-bomb entirely. The feared private restr_map_homMk/hom_app_heq re-exposure was NOT needed."
+      }
+    ],
+    "next_steps": "Closed. Unblocks blueprint L3a \\leanok (stale NOTE removed this review)."
+  },
+  {
+    "timestamp": "2026-06-24T16:52:00Z",
+    "status": "partial",
+    "target": {
+      "file": "AlgebraicJacobian/Picard/TensorObjSubstrate/DualInverse/PresheafDualPullback.lean",
+      "theorem": "presheafDualPullbackComparison_restrict"
+    },
+    "session": {
+      "id": "session_74",
+      "model": "claude-opus-4-8"
+    },
+    "findings": {
+      "blocker": "(★) hstar: pushforward-flank sliceDualTransport pseudofunctoriality FC.hom.app dM ≫ sDT_{h≫f} = (pushforward βh).map(sDT_f) ≫ sDT_h(M|f) ≫ dualIsoOfIso(rfc).hom; blocked on FC=leftAdjointCompIso opacity (NOT defeq to concrete pushforwardComp)",
+      "key_lemmas_used": [
+        "c2_assemble (NEW generic [Category C] skeleton)",
+        "presheafDualH1Cocycle",
+        "Iso.inv_hom_id_app",
+        "H1h.hom.naturality",
+        "Functor.map_comp"
+      ]
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "strategy": "realise iter-071 clean factorisation via generic single-[Category C] skeleton refine-applied with 11 structural facts",
+        "code_tried": "refine c2_assemble (aHinv:=…) (fc:=FC.hom.app M.val.dual) (hcoc:=NatTrans.congr_app hcoc M.val.dual) (hnat:=(H1h.hom.naturality gf).symm) (hfold:=?hfold) (hstar:=?hstar) …",
+        "line_number": "794",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "CRITICAL: refine crosses the PresheafOfModules-over-Z defeq-but-not-syntactic ≫ seam by metavariable-assignment unification with NO whnf bomb (lake EXIT 0). This is the exact device the iter-071 trip-wire feared would bomb — it did NOT. Whole H1-cancellation now COMPILING CODE; hfold discharged inline."
+      },
+      {
+        "attempt": 2,
+        "strategy": "collapse FC.hom to concrete pushforwardComp by rfl (for hstar)",
+        "code_tried": "rw [show FC.hom = (PresheafOfModules.pushforwardComp …).hom from rfl]",
+        "line_number": "855",
+        "lean_error": "type mismatch on ring-map whiskering + whnf bomb at 3.2M HB",
+        "result": "failed",
+        "insight": "leftAdjointCompIso (built from units/counits) is NOT defeq to concrete pushforwardComp even though pushforwardComp = Iso.refl (mathlib Pushforward.lean:135). FC.hom does not collapse by rfl."
+      },
+      {
+        "attempt": 3,
+        "strategy": "sectionwise ext on hstar",
+        "code_tried": "apply PresheafOfModules.hom_ext; intro V; sorry",
+        "line_number": "855",
+        "lean_error": null,
+        "result": "partial",
+        "insight": "hom_ext SUCCEEDS (advances to sectionwise goal at V), but FC.hom.app M.val.dual stays OPAQUE sectionwise (unfolding leftAdjointCompIso unit/counit whnf-bombs). Naive ext+forward-apply blocked on FC. Left as documented scaffold."
+      }
+    ],
+    "next_steps": "Close (★) hstar: characterise FC.hom via §0 mate calculus (conjugateEquiv_leftAdjointCompIso_hom: FC.hom is mate of 𝟙, e=pushforwardComp=Iso.refl), OR prove dual-flank sliceDualTransport pseudofunctoriality directly with FC folded into one sectionwise appIso-cocycle (dual of tensor comp_slide_three/map_comp_slide; likely 1-2 FORWARD sectionwise bricks in SliceTransport.lean — CROSS-FILE)."
+  }
+]

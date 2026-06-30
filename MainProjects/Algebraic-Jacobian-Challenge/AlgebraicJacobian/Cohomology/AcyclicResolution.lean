@@ -324,8 +324,8 @@ noncomputable def twistedBiprod : CochainComplex 𝒜 ℕ :=
 lemma twistedBiprod_X (n : ℕ) : (twistedBiprod τ hτ).X n = (K.X n ⊞ L.X n) := rfl
 
 @[simp]
-lemma twistedBiprod_d (n : ℕ) : (twistedBiprod τ hτ).d n (n + 1) = twistedBiprodD τ n :=
-  CochainComplex.of_d _ _ _ _
+lemma twistedBiprod_d (n : ℕ) : (twistedBiprod τ hτ).d n (n + 1) = twistedBiprodD τ n := by
+  simp [twistedBiprod, CochainComplex.of_d]
 
 /-- The coprojection `K ⟶ twistedBiprod τ hτ`, degreewise `biprod.inl`. -/
 noncomputable def twistedBiprodInl : K ⟶ twistedBiprod τ hτ where
@@ -359,7 +359,11 @@ noncomputable def twistedBiprodSplitting (n : ℕ) :
       (HomologicalComplex.eval 𝒜 (ComplexShape.up ℕ) n)).Splitting where
   r := biprod.fst
   s := biprod.inr
-  id := by simpa using biprod.total
+  -- v4.31.0: `ShortComplex.Splitting` gained `f_r`/`s_g` fields whose default `cat_disch` doesn't
+  -- reduce the `eval`-mapped biprod; the biprod identities close them by defeq.
+  f_r := biprod.inl_fst
+  s_g := biprod.inr_snd
+  id := biprod.total
 
 end TwistedBiprod
 
@@ -616,11 +620,14 @@ lemma quasiIso_horseshoeι : QuasiIso (horseshoeι hses I_A I_C) := by
         rcases i with _ | m
         · rfl
         · exact absurd rfl (hi m)
-      simpa only [horseshoeφ_τ₂, horseshoeι_f_zero] using mono_horseshoeβ hses I_A I_C)
+      have h := mono_horseshoeβ hses I_A I_C
+      simp only [horseshoeφ_τ₂, horseshoeι_f_zero] at h ⊢
+      exact h)
     (hbEpi := by
       intro i hi
       exact absurd rfl (hi (i + 1)))
-  simpa only [horseshoeφ_τ₂] using key
+  simp only [horseshoeφ_τ₂] at key ⊢
+  exact key
 
 /-- **The middle complex resolves `B`** (blueprint `lem:horseshoe_resolvesMiddle`). The horseshoe
 middle complex `I_B = twistedBiprod I_A I_C`, with augmentation `β`, is an injective resolution of
@@ -852,7 +859,8 @@ noncomputable def Functor.cohomologyAppliedResolutionIso (G : 𝒜 ⥤ ℬ) [G.A
     cokernel.mapIso _ (G.map (K.toCycles m (m + 1))) (Iso.refl _)
       (G.gCosyzygyIsoCocycles K (m + 1)).symm (by
         simp only [Iso.symm_hom, Iso.refl_hom, Iso.comp_inv_eq]
-        simp [G.gCosyzygyIsoCocycles_toCycles K m])
+        simp [G.gCosyzygyIsoCocycles_toCycles K m]
+        exact (Category.id_comp _).symm)
   Limits.IsColimit.coconePointUniqueUpToIso
       (((G.mapHomologicalComplex (ComplexShape.up ℕ)).obj K).homologyIsCokernel m (m + 1) (by simp))
       (cokernelIsCokernel _) ≪≫ iso2

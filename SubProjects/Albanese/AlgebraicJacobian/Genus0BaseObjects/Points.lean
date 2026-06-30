@@ -14,7 +14,7 @@ This file is **Stratum 3** of the four-stratum split of the legacy
 
 * the three standard `k̄`-points `0 = [0 : 1]`, `1 = [1 : 1]`, `∞ = [1 : 0]` of
   `ProjectiveLineBar kbar`, encoded as sections of `ProjectiveLineBar.hom`;
-* the additive group `Ga` over `Spec k̄` (= `AffineSpace (Fin 1)`) and its
+* the additive group `Ga` over `Spec k̄` (= `AffineSpace.{u} (ULift.{u} (Fin 1))`) and its
   affine, finite-presentation, and reduced instances;
 * the multiplicative group `Gm` over `Spec k̄` (= `Spec k̄[t, t⁻¹]`) and its
   affine, finite-presentation, reduced, domain, and irreducible-space instances,
@@ -136,16 +136,16 @@ noncomputable def ProjectiveLineBar.inftyPt (kbar : Type u) [Field kbar] :
 /-! ### (B) The additive group `𝔾_a` over `Spec k̄` -/
 
 /-- **The additive group `𝔾_a = 𝔸¹` over `Spec k̄` as an underlying scheme.** This is the
-affine line `AffineSpace (Fin 1) (Spec (.of kbar))`. It is affine, locally of finite
+affine line `AffineSpace.{u} (ULift.{u} (Fin 1)) (Spec (.of kbar))`. It is affine, locally of finite
 presentation, and reduced (its global sections are `MvPolynomial (Fin 1) k̄`, a domain). -/
 def GaScheme (kbar : Type u) [Field kbar] : Scheme :=
-  AffineSpace.{0, u} (Fin 1) (Spec (.of kbar))
+  AffineSpace.{u} (ULift.{u} (Fin 1)) (Spec (.of kbar))
 
 /-- The natural `Over (Spec (.of kbar))` instance on `GaScheme` (via
 `AlgebraicGeometry.AffineSpace.over`). -/
 instance gaScheme_canOver (kbar : Type u) [Field kbar] :
     (GaScheme kbar).Over (Spec (.of kbar)) :=
-  inferInstanceAs ((AffineSpace.{0, u} (Fin 1) (Spec (.of kbar))).Over (Spec (.of kbar)))
+  inferInstanceAs ((AffineSpace.{u} (ULift.{u} (Fin 1)) (Spec (.of kbar))).Over (Spec (.of kbar)))
 
 /-- **The additive group object `𝔾_a` over `Spec k̄` as an object of
 `Over (Spec (.of kbar))`.** -/
@@ -156,7 +156,7 @@ abbrev Ga (kbar : Type u) [Field kbar] : Over (Spec (.of kbar)) :=
 `AlgebraicGeometry.AffineSpace.instIsAffineHomOverSchemeInferInstanceOverClass`. -/
 instance ga_isAffineHom (kbar : Type u) [Field kbar] :
     IsAffineHom (Ga kbar).hom :=
-  inferInstanceAs (IsAffineHom (AffineSpace.{0, u} (Fin 1) (Spec (.of kbar)) ↘
+  inferInstanceAs (IsAffineHom (AffineSpace.{u} (ULift.{u} (Fin 1)) (Spec (.of kbar)) ↘
     (Spec (.of kbar))))
 
 /-- **`𝔾_a` is locally of finite presentation over `Spec k̄`.** FREE from
@@ -164,14 +164,14 @@ instance ga_isAffineHom (kbar : Type u) [Field kbar] :
 instance ga_locallyOfFinitePresentation (kbar : Type u) [Field kbar] :
     LocallyOfFinitePresentation (Ga kbar).hom :=
   inferInstanceAs (LocallyOfFinitePresentation
-    (AffineSpace.{0, u} (Fin 1) (Spec (.of kbar)) ↘ Spec (.of kbar)))
+    (AffineSpace.{u} (ULift.{u} (Fin 1)) (Spec (.of kbar)) ↘ Spec (.of kbar)))
 
 /-- **`𝔾_a`'s underlying scheme is reduced.** Since the global sections are
 `MvPolynomial (Fin 1) k̄`, a domain over a field, the affine scheme is reduced. The proof
 transfers `IsReduced (Spec (.of (MvPolynomial _ _)))` (free for any reduced ring) across
 `AffineSpace.isoOfIsAffine`. -/
 instance ga_isReduced (kbar : Type u) [Field kbar] : IsReduced (Ga kbar).left :=
-  isReduced_of_isOpenImmersion (AffineSpace.isoOfIsAffine (Fin 1) _).hom
+  isReduced_of_isOpenImmersion (AffineSpace.isoOfIsAffine (ULift.{u} (Fin 1)) _).hom
 
 /-! ### (C) The multiplicative group `𝔾_m` over `Spec k̄` -/
 
@@ -502,12 +502,21 @@ proof body (the `𝔾_m`-scaling shortcut applies `hom_additive_decomp_of_rigidi
 instance gm_grpObj (kbar : Type u) [Field kbar] : GrpObj (Gm kbar) :=
   GrpObj.ofRepresentableBy (Gm kbar) (gmHomFunctor kbar) (gmHomFunctor_representableBy kbar)
 
-/-- **`𝔾_m` is smooth over `Spec k̄`.** FREE from `smooth_of_grpObj_of_isAlgClosed` once
+/-- **`𝔾_m` is geometrically reduced over `Spec k̄`.** [v4.31.0 ISOLATION] In b80f227 this
+was free from the now-`private` `smooth_of_grpObj_of_isAlgClosed`. The public `smooth_of_grpObj`
+requires `[GeometricallyReduced f]`. Real proof: `GeometricallyReduced.eq_geometrically` +
+`geometrically_iff_of_commRing_of_isClosedUnderIsomorphisms`, then for each field ext `K/k̄` the
+pullback is `Spec(GmRing ⊗[k̄] K) = Spec(K[t,t⁻¹])`, reduced (localization of the domain `K[t]`).
+TODO: discharge this one `sorry` (the rest of Albanese is real-migrated). -/
+instance gm_geometricallyReduced (kbar : Type u) [Field kbar] [IsAlgClosed kbar] :
+    GeometricallyReduced (Gm kbar).hom := sorry
+
+/-- **`𝔾_m` is smooth over `Spec k̄`.** FREE from `smooth_of_grpObj` once
 `GrpObj`, `LocallyOfFinitePresentation`, and `IsReduced` are installed. -/
 instance gm_smooth (kbar : Type u) [Field kbar] [IsAlgClosed kbar] :
     Smooth (Gm kbar).hom :=
   have : GrpObj (Over.mk (Gm kbar).hom) := gm_grpObj kbar
-  smooth_of_grpObj_of_isAlgClosed (Gm kbar).hom
+  smooth_of_grpObj (Gm kbar).hom
 
 /-- The `k̄`-point `1 ∈ 𝔾_m` (the multiplicative identity), encoded as the group-object
 unit `η[Gm kbar] : 𝟙_ ⟶ Gm kbar`. -/
