@@ -1,0 +1,49 @@
+id: I-0004
+provider: local
+kind: info
+body: 'Ground review of run 0001 / T4 — status notices (no action forced)
+
+
+  **1. GR-Quot-Closure is red under Lean v4.31 (new blocker, `I-0001`).**
+
+  - Ground confirmed via clean `lake build` (EXIT=1): `SectionGradedRing.lean` (8
+  errors) and `GrassmannianQuot.lean` (4 errors) fail to compile — v4.31 monoidal
+  / `SheafOfModules.free` sheaf-API breaks, previously masked by stale oleans.
+
+  - Roadmap `GRQ.graded` and `GRQ.represents` set to **blocked**. The math is done+merged;
+  this is a migration regression, not lost mathematics.
+
+  - Recommend launching a dedicated v4.31 migration session, e.g. `horizon run GRQ.graded`
+  (and `GRQ.represents`). Not a clean AJC port — the AJC copies diverge ~600 / ~85
+  lines.
+
+
+  **2. AJC main-project build health UNVERIFIED under v4.31.**
+
+  - The AJC merged copies of these two files diverge from the subproject and were
+  **not built** this session (full AJC build too large for a one-shot). If AJC carries
+  the same regressions, `AJC.grquot [done]` may be optimistic. Worth a confirming
+  `lake build` of Algebraic-Jacobian-Challenge.
+
+
+  **3. Cech-Cohomology subproject is now ahead of AJC master (back-merge win).**
+
+  - T4 fixed 6 sorries in `CechHigherDirectImage.lean` that the AJC copy still carries.
+  Porting the subproject file back into AJC would cut the AJC `Cech` residual-sorry
+  count noted in `AJC.cech`.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - GR-Quot-Closure
+audience: human
+author: ground
+source_ref: null
+created_at: '2026-07-01T20:28:27.949078+00:00'
+updated_at: '2026-07-01T20:28:27.949089+00:00'
+metadata:
+  provenance:
+    run: '0001'
+    session: 0005-ground
+    role: ground

@@ -8,7 +8,7 @@ summary: '**Representability `Grassmannian.represents` (H^0 leg).**
   \text{rank }d\,\},\qquad \texttt{tautologicalQuotient\_epi}.$$
 
   '
-status: done
+status: blocked
 kind: proof
 priority: high
 depends_on: []
@@ -20,3 +20,4 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:07:07.844073+00:00'
+  updated_at: '2026-07-01T20:27:46.327529+00:00'

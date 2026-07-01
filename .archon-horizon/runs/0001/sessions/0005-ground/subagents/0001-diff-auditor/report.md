@@ -1,0 +1,26 @@
+Both work trees are clean (match their commits, no drift). The `respectTransparency false` options match exactly between the ported subproject file and AJC (6 each). 
+
+The audit is complete. All checks pass. No inbox findings needed — the work is sound.
+
+## Verdict: CLEAN — no findings
+
+I audited the round-0001 T4 diffs in both projects against their baselines (`e15ec4e` / `be59147`). The Horizon agent's report is accurate and the work is sound. No inbox issue filed.
+
+### What I verified
+
+**Ported files (Cech-Cohomology) — faithful:**
+- `SubProjects/Cech-Cohomology/AlgebraicJacobian/Cohomology/PresheafCech.lean` is **byte-identical** to `MainProjects/Algebraic-Jacobian-Challenge/AlgebraicJacobian/Cohomology/PresheafCech.lean`.
+- `SubProjects/Cech-Cohomology/AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean` is **byte-identical** to the AJC copy.
+- Both AJC copies are themselves sorry-free, so the ported subproject files are sorry-free too. No divergence, no hidden sorry, no weakened statement. (The PresheafCech VCS diff shows a real proof for `map_id` — `ext1` + `Subsingleton.elim` + `erw [Functor.map_id, comp_id]` — not a hack.)
+
+**Proof fixes — real, no hacks:**
+- `CechHigherDirectImage.lean`: 6 sorries replaced with genuine proofs (`hnat`/`reassoc_of%`/`simp`, `eqToHom_app` rw-chains, `simp <;> rfl`, the pentagon `h1`/`h2` cancellation, etc.). The single remaining sorry is exactly the sanctioned one at **line 540** (`rawPushPullMap_comp` transport-plumbing gap).
+- `GlueDescent.lean`: 2 sorries fixed with real proofs (`subst h; simp [pullbackCongr]; exact comp_id`). One sanctioned sorry remains at **line 2049** (`pullback_cast_compat`).
+- No `admit`, no `native_decide`, no `axiom` declarations anywhere in the touched files.
+
+**Sorry inventory matches the sanction exactly:** only `CechHigherDirectImage.lean:540` and `GlueDescent.lean:2049` remain. Nothing else.
+
+**No stray artifacts:** both out-of-tree work trees are clean against their HEAD commits (no untracked scratch, no uncommitted drift). The added `set_option backward.isDefEq.respectTransparency false in` lines are a legitimate Lean transparency option (needed for post-v4.31.0 defeq/rw matching), not a soundness bypass; the count matches the AJC copies (6/6) for the ported file.
+
+### One noteworthy observation (positive, not a problem)
+The subproject `CechHigherDirectImage.lean` is now **ahead of the AJC master**: AJC still carries 7 sorries in that file (lines 222, 229, 305, 328, 448, 456, 548), while the subproject has fixed 6 of them and retains only the one hard transport gap that AJC also leaves (AJC:548 ≙ subproject:540). The report's claim that the final sorry is "also unfixed in AJC copy" checks out. This is a candidate to feed those 6 fixes back upstream into AJC, but that is out of scope for this audit and not a defect.
