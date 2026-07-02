@@ -1,0 +1,8 @@
+# archon-protected.yaml
+# Declarations whose signatures must not be modified by any agent.
+# The mathematician owns these; agents are read-only on them.
+# (Pruned from MainProjects/Algebraic-Jacobian-Challenge/archon-protected.yaml
+# to the files present in this extraction subproject.)
+
+AlgebraicJacobian/Genus.lean:
+  - AlgebraicGeometry.genus

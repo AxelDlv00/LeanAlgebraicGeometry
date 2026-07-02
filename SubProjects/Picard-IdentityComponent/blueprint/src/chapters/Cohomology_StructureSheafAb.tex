@@ -1,0 +1,81 @@
+\chapter{Structure sheaf as a sheaf of abelian groups, sheafification and Ext}
+\label{chap:Cohomology_StructureSheafAb}
+
+This chapter executes Phase~A steps~2--4 on the topology of opens of an arbitrary topological space, using the sheaf-compose instance of \cref{chap:Cohomology_SheafCompose} as input. It supplies three pieces of infrastructure that sit immediately upstream of the genus definition (\cref{def:genus}):
+
+\begin{enumerate}
+  \item Sheafification for abelian-group-valued sheaves on opens (Phase~A step~2).
+  \item \(\Ext\) on the same sheaf category (Phase~A step~3).
+  \item Promotion of the structure sheaf \(\mathcal O_C\) from commutative-ring-valued to abelian-group-valued, packaging the data on which sheaf cohomology can be evaluated (Phase~A step~4 first half).
+\end{enumerate}
+
+No new mathematical content is introduced here, only the typeclass plumbing and one definition. After this chapter lands, the only remaining steps in Phase~A are equipping \(H^1(C, \mathcal O_C)\) with a \(k\)-vector-space structure and proving Serre finiteness; both are deferred to subsequent iterations.
+
+The chapter introduces no protected declarations: every definition and instance here is auxiliary, supporting the eventual construction of \(H^1(C, \mathcal O_C)\).
+
+\section{Sheafification of abelian-group-valued sheaves on opens}
+
+\begin{theorem}\leanok
+[Sheafification on the topology of opens, abelian-group valued]
+  \label{thm:HasSheafify_Opens_AddCommGrp}
+  \lean{AlgebraicGeometry.Cohomology.instHasSheafify_Opens_AddCommGrp}
+  Let \(X\) be a topological space. Then the Grothendieck topology of opens of \(X\) admits sheafification for sheaves valued in the category of abelian groups.
+\end{theorem}
+
+\begin{proof}
+
+
+\leanok
+  Mathlib's general sheafification API constructs sheafification whenever weak sheafification holds and the resulting sheafification preserves finite limits. For the topology of opens of \(X\) and the category of abelian groups, both prerequisites are already available in Mathlib (concrete-category sheafification on a small site, plus exactness of abelian-group-valued sheafification). The instance is therefore inferable; the formal task is to establish the universe pinning needed to make instance synthesis succeed.
+\end{proof}
+
+\section{\(\Ext\) for sheaves on opens}
+
+\begin{theorem}\leanok
+[\(\Ext\) on the topology of opens, abelian-group valued]
+  \label{thm:HasExt_Sheaf_Opens_AddCommGrp}
+  \lean{AlgebraicGeometry.Cohomology.instHasExt_Sheaf_Opens_AddCommGrp}
+  \uses{thm:HasSheafify_Opens_AddCommGrp}
+
+  Let \(X\) be a topological space. Then the category of sheaves of abelian groups on the topology of opens of \(X\) admits \(\Ext\) groups.
+\end{theorem}
+
+\begin{proof}
+
+
+\leanok
+  The category of abelian groups is abelian. The sheaf category inherits an abelian structure from an abelian value category once sheafification is available (\cref{thm:HasSheafify_Opens_AddCommGrp}). Mathlib's standard construction produces \(\Ext\) from any abelian category.
+\end{proof}
+
+\section{Structure sheaf as a sheaf of abelian groups}
+
+\begin{definition}\leanok
+[Structure sheaf as a sheaf of abelian groups]
+  \label{def:Scheme_toAbSheaf}
+  \lean{AlgebraicGeometry.Scheme.toAbSheaf}
+  \uses{thm:HasSheafCompose_forget, thm:HasSheafify_Opens_AddCommGrp,
+        thm:HasExt_Sheaf_Opens_AddCommGrp}
+
+  Let \(C\) be a scheme. The structure sheaf of \(C\), viewed as a sheaf of abelian groups on the topology of opens of the underlying topological space of \(C\), is obtained by post-composing the commutative-ring-valued structure sheaf with the forgetful composite \(\mathrm{CommRing} \to \mathrm{Ring} \to \mathrm{Ab}\) of \cref{chap:Cohomology_SheafCompose}.
+\end{definition}
+
+The construction uses the sheaf-compose functoriality, which requires the sheaf-compose instance from \cref{chap:Cohomology_SheafCompose}. Functoriality in \(C\) is delegated to a future iteration once it is needed for naturality of the cohomology long exact sequence.
+
+\section{Use in the project}
+
+The chain \(\text{sheaf-compose} \to \text{sheafification} \to \Ext \to \text{toAbSheaf}\) unblocks the abelian-group-level definition of \(H^n(C, \mathcal O_C)\):
+\[
+  H^n(C, \mathcal O_C) \;:=\; \text{toAbSheaf}(C).H\,n,
+\]
+where \(H\) is the abstract sheaf-cohomology functor. The result is automatically an abelian group. Only two steps remain inside Phase~A:
+
+\begin{itemize}
+  \item Equip \(H^1(C, \mathcal O_C)\) with the \(k\)-module structure inherited from the \(k\)-algebra structure on \(\Gamma(C, \mathcal O_C)\) (Phase~A step~5).
+  \item Establish finite rank via Serre's theorem on coherent cohomology of proper \(k\)-schemes (Phase~A step~6).
+\end{itemize}
+
+Both are deferred to iterations beyond this chapter.
+
+\begin{remark}[Lean implementation]
+  The sheafification and \(\Ext\) instances are inferable from Mathlib's small-site and concrete-category APIs. The structure-sheaf promotion uses Mathlib's sheaf-compose machinery together with the forget-composite instance of \cref{chap:Cohomology_SheafCompose}. The only work is universe annotation: the morphism universe of the sheaf category lives one level above the object universe, and the instances must be pinned accordingly.
+\end{remark}
