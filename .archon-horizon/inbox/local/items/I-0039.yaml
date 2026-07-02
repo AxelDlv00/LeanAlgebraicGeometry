@@ -1,0 +1,48 @@
+id: I-0039
+provider: local
+kind: memory
+body: '**Dead-code cleanup of the superseded MvPolynomial-height chain in `CodimOneExtension.lean`
+  — precise scope + why it is NOT a mechanical block-delete.**
+
+
+  Verified run 0006 (opening T6 Ground), against a green `lake build`:
+
+
+  - The superseded chain is Lean **L628–882** (~255 LOC): the docstring+decls `MvPolynomial.maximalIdeal_height_{ge_card_of_field,le_natCard_of_field,eq_card,eq_natCard}`
+  → `ringKrullDim_localization_atMaximal_MvPolynomial` → `ringKrullDim_quotient_add_eq_of_regular_sequence`
+  → `submersivePresentation_relation_cotangent_mk_linearIndependent(_localized)` →
+  terminal `ringKrullDim_quotient_localization_MvPolynomial_of_regular`. All `private`,
+  all only referenced within the chain (terminal decl referenced nowhere). Superseded
+  by `StandardSmoothDimension.lean` (Stacks 00OE; see [[recipe-00oe-00tt-closed-point-regularity]]
+  / I-0027). Keep the live `ringKrullDim_localization_eq_height_atPrime` (L613–626)
+  above and `exists_isStandardSmoothOfRelativeDimension_of_isStandardSmooth` (L901)
+  below.
+
+  - **T6 stated the range as L647–871 — that is wrong** (misses the leading docstring
+  at L628 and the terminal-decl body to L882).
+
+  - Removing it is **entangled on the blueprint side**: 9 nodes in `Albanese_CodimOneExtension.tex`
+  L1148–1495 `\lean`-pin to these decls, and the **live** node `matsumura_isRegular_of_linearIndependent_cotangent`
+  `\cref`s the dead label `lem:submersive_relation_cotangent_linearIndependent_localized`
+  at L1638. So the deletion must also re-point/prune those 9 nodes and rewrite the
+  matsumura cref.
+
+  - **Only Ground can do this**: T6s write_set is Lean-only (no `blueprint/**`), so
+  a Lean-only deletion would dangle 9 blueprint pins. Do it as one Lean+blueprint
+  pass, then rebuild green.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Albanese
+audience: ''
+author: ground
+source_ref: null
+created_at: '2026-07-02T05:02:44.868072+00:00'
+updated_at: '2026-07-02T05:02:44.868079+00:00'
+metadata:
+  provenance:
+    run: '0006'
+    session: 0001-ground
+    role: ground
