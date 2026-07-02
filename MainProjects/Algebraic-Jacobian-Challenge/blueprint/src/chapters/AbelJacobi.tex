@@ -1,0 +1,72 @@
+\chapter{The Abel--Jacobi map}
+\label{chap:AbelJacobi}
+Let \(C\) be a smooth proper curve over \(k\) as in Chapter~\ref{chap:Genus}, and let \(\Jac(C)\) be its Jacobian (Definition~\ref{def:Jacobian}). The constructions of this chapter consume only the Albanese universal property of \(\Jac(C)\), as packaged by Definition~\ref{def:IsAlbanese} and provided uniformly in the marked point by Theorem~\ref{thm:nonempty_jacobianWitness}. The Lean formalisation closes every block in this chapter by a single projection from the Albanese structure \(\mathrm{IsAlbanese}\,C\,P\,\Jac(C)\); the corresponding classical line-bundle / Pic-scheme description is recorded as a remark for each block.
+\section{Definition}
+\begin{definition}\leanok
+[Abel--Jacobi map]
+  \label{def:ofCurve}
+  \uses{def:Jacobian, def:IsAlbanese, def:IsAlbanese_ofCurve, thm:nonempty_jacobianWitness}
+  
+  \lean{AlgebraicGeometry.Jacobian.ofCurve}
+  Let \(P \colon \Spec k \to C\) be a \(k\)-rational point of \(C\), equivalently a morphism \(P \colon \mathbf 1 \to C\) in the category of \(k\)-schemes over \(\Spec k\). By Theorem~\ref{thm:nonempty_jacobianWitness} the Jacobian \(\Jac(C)\) of Definition~\ref{def:Jacobian} carries, for each such marked point \(P\), an Albanese structure \(\mathrm{IsAlbanese}\,C\,P\,\Jac(C)\) in the sense of Definition~\ref{def:IsAlbanese}. The \emph{Abel--Jacobi map at \(P\)} is the universal pointed morphism \(\iota_P\) supplied by that Albanese structure:
+  \[
+    \alpha_P \;:=\; \iota_P \;\colon\; C \;\longrightarrow\; \Jac(C).
+  \]
+  Equivalently, \(\alpha_P\) is the projection of the universal-pointed-morphism field of the Albanese predicate \(\mathrm{IsAlbanese}\,C\,P\,\Jac(C)\), evaluated at the marked point \(P\).
+\end{definition}
+\begin{remark}
+[Classical description (Pic-scheme route)]
+  \label{rem:ofCurve_classical}
+  Classically (cf.\ Hartshorne~III.4 and FGA Explained, Chapter~9), the Abel--Jacobi map at \(P\) admits the line-bundle description
+  \[
+    \alpha_P \colon C \;\longrightarrow\; \Pic^0_{C/k},\qquad Q \;\longmapsto\; [\mathcal O_C(Q - P)].
+  \]
+  Functorially, it is the morphism in the category of \(k\)-schemes induced by the line bundle \(\mathcal O_{C \times C}(\Delta - p_1^* P)\) on \(C \times C\) via the universal property of \(\Pic^0_{C/k}\) as the moduli space of degree-\(0\) line bundles on \(C\). The Lean formalisation does not follow this route: the Pic-scheme representability machinery (Route~A of the proof of Theorem~\ref{thm:nonempty_jacobianWitness}, in particular sub-step~A.2) is not currently available in Mathlib. See Layer~I of Chapter~\ref{chap:Jacobian} for the formalisation route actually taken.
+\end{remark}
+\section{Pointed property}
+\begin{lemma}\leanok
+[\(\alpha_P\) sends \(P\) to \(0\)]
+  \uses{def:ofCurve, lem:IsAlbanese_comp_ofCurve, thm:nonempty_jacobianWitness}
+  \label{lem:comp_ofCurve}
+  
+  \lean{AlgebraicGeometry.Jacobian.comp_ofCurve}
+  \(P \;\circ\; \alpha_P \;=\; \eta[\Jac(C)]\), where \(\eta[\Jac(C)]\) is the identity element of the group scheme \(\Jac(C)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The Lean closure is the field projection from the Albanese structure \(\mathrm{IsAlbanese}\,C\,P\,\Jac(C)\) supplied by Theorem~\ref{thm:nonempty_jacobianWitness}. By Definition~\ref{def:IsAlbanese}, this predicate carries among its data the assertion \(P \circ \iota_P = \eta_{\Jac(C)}\) that the universal pointed morphism sends the marked point to the identity of the target group scheme. Since \(\alpha_P := \iota_P\) by Definition~\ref{def:ofCurve}, the claim is precisely the pointed-property field of that Albanese structure.
+\end{proof}
+\begin{remark}
+[Classical description]
+  \label{rem:comp_ofCurve_classical}
+  Under the classical Pic-scheme description of Remark~\ref{rem:ofCurve_classical}, the same equality reads at the level of \(k\)-points as
+  \[
+    \alpha_P(P) \;=\; [\mathcal O_C(P - P)] \;=\; [\mathcal O_C] \;=\; 0 \in \Pic^0_{C/k}(k),
+  \]
+  and globally as the statement that restricting the universal line bundle \(\mathcal O_{C \times C}(\Delta - p_1^* P)\) along the section \((P, \mathrm{id}) \colon C \to C \times C\) gives the trivial line bundle on \(C\), hence the zero point of \(\Pic^0_{C/k}\). This classical content is not used in the Lean formalisation.
+\end{remark}
+\section{Universal (Albanese) property}
+\begin{theorem}\leanok
+  \uses{def:ofCurve, def:IsAlbanese, def:Jacobian, lem:IsAlbanese_exists_unique_ofCurve_comp, thm:nonempty_jacobianWitness}
+[Albanese property of the Jacobian]
+  \label{thm:exists_unique_ofCurve_comp}
+  
+  \lean{AlgebraicGeometry.Jacobian.exists_unique_ofCurve_comp}
+  Let \(A\) be an abelian variety over \(k\) --- i.e.\ a smooth proper geometrically irreducible group scheme over \(k\). For every pointed morphism \(f \colon C \to A\) with \(f \circ P = \eta[A]\), there exists a unique group-scheme morphism \(g \colon \Jac(C) \to A\) such that \(f = \alpha_P \circ g\).
+  \[
+  \begin{array}{ccc}
+    C & \stackrel{f}{\longrightarrow} & A \\
+    {\scriptstyle\alpha_P} \downarrow & \nearrow {\scriptstyle\exists ! g} & \\
+    \Jac(C) & &
+  \end{array}
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The argument has two stages: the Lean closure (a direct projection from an Albanese witness) and the classical description (a Pic-scheme / rigidity argument that the Lean side does not replay).
+  \emph{Lean closure.} By Theorem~\ref{thm:nonempty_jacobianWitness}, the Jacobian \(\Jac(C)\) is, uniformly in the marked point \(P\), the underlying scheme of an Albanese witness for the pointed curve \((C, P)\): it carries an Albanese structure \(\mathrm{IsAlbanese}\,C\,P\,\Jac(C)\) in the sense of Definition~\ref{def:IsAlbanese}, whose universal pointed morphism is the Abel--Jacobi map \(\alpha_P\) of Definition~\ref{def:ofCurve} (with \(\alpha_P \circ P = \eta_{\Jac(C)}\) being Lemma~\ref{lem:comp_ofCurve}). The universal-property data carried by this Albanese structure is, by Definition~\ref{def:IsAlbanese}, exactly the existence-and-uniqueness assertion of the theorem: for every \(f \colon C \to A\) with \(f \circ P = \eta_A\), there is a unique \(g \colon \Jac(C) \to A\) with \(f = \alpha_P \circ g\). The Lean side closes the goal by projecting this universal-property field of the Albanese witness \(\mathrm{IsAlbanese}\,C\,P\,\Jac(C)\), applied to the data \((f, hf)\).
+  \emph{Classical description.} The classical proof of the same statement constructs the Jacobian uniformly as the Picard identity component \(\Pic^0_{C/k}\): the existence and uniqueness of the factorisation come from the Pic-scheme representability theorem together with the universal property of \(\Pic^0_{C/k}\) (see Theorem~\ref{thm:nonempty_jacobianWitness}, Route~A, for the line-bundle / universal-property route via \(\Pic^0_{C/k}\); Route~B is the symmetric-power / Stein-factorisation route documented as a historical alternative not pursued). The genus-\(0\) case is not special: when \(g(C) = 0\) one has \(H^1(C, \mathcal O_C) = 0\), so \(\Pic^0_{C/k} = \Spec k\) automatically and the universal property degenerates to the (then trivial) statement that every pointed morphism \(C \to A\) into an abelian variety is constant, an instance of the general rigidity-lemma corollaries of \cref{chap:AbelianVarietyRigidity}. The protected signature of \cref{thm:nonempty_jacobianWitness} does \emph{not} assume \(C(k) \neq \emptyset\); when \(C(k) = \emptyset\) the universal quantifier over marked points ranges over the empty type and the \(\mathtt{isAlbaneseFor}\) field is vacuously true. None of this classical content is replayed in the Lean formalisation: it is bundled into the deferred existence hypothesis \cref{thm:nonempty_jacobianWitness}, whose proof is the project's single explicit foundational gap.
+\end{proof}
+\section{Implementation route via the Albanese framework}
+The three results above are formalised through the Albanese framework of Chapter~\ref{chap:Jacobian}. In the absence of Mathlib's Pic-scheme machinery, the Jacobian is defined (Layer~I) as the underlying scheme of an Albanese witness uniform in the marked point (Theorem~\ref{thm:nonempty_jacobianWitness}); the universal-property data \((\iota_P,\, \text{factorisation})\) is then carried by the Albanese predicate (Definition~\ref{def:IsAlbanese}) and projects directly into the three results of this chapter (Layer~II): the Abel--Jacobi map \(\alpha_P := \iota_P\) of Definition~\ref{def:ofCurve}, its pointed property of Lemma~\ref{lem:comp_ofCurve}, and the universal factorisation of Theorem~\ref{thm:exists_unique_ofCurve_comp}. Existence of a uniform-over-\(P\) Albanese object is the single remaining mathematical hypothesis, pending the formalisation of Pic-scheme representability (Route~A), which constructs the Jacobian uniformly as \(\Pic^0_{C/k}\) for every genus (the genus-\(0\) case degenerating to \(\Spec k\) automatically).
+The classical proof via line bundles --- using the universal property of \(\Pic^0_{C/k}\) and dual abelian varieties, with the genus-\(0\) case degenerating automatically to \(\Pic^0_{C/k} = \Spec k\) --- gives the same conclusions but requires more Mathlib infrastructure than is presently available, as catalogued in the proof of Theorem~\ref{thm:nonempty_jacobianWitness} and the milestone roadmap of \texttt{STRATEGY.md}. The Albanese-framework route used here is mathematically equivalent and bundles all of the missing infrastructure into that single deferred existence hypothesis.

@@ -1,0 +1,22 @@
+# archon-protected.yaml
+# Declarations whose signatures must not be modified by any agent.
+# The mathematician owns these; agents are read-only on them.
+#
+# This is the Line-Bundle-Comparison-Iso subproject, extracted from the
+# Algebraic-Jacobian-Challenge. Its deliverables are the three seed nodes of
+# the carved cone (blueprint labels), which form the comparison-isomorphism
+# substrate for the relative Picard group:
+#
+#   - lem:pullback_tensor_iso_loctriv
+#       AlgebraicGeometry.Scheme.Modules.pullbackTensorIsoOfLocallyTrivial
+#       (D3' route; blueprint roadmap node — not yet realized in Lean)
+#   - lem:dual_isLocallyTrivial
+#       AlgebraicGeometry.Scheme.Modules.dual_isLocallyTrivial
+#       (DUAL route; exists in TensorObjSubstrate/DualInverse.lean)
+#   - thm:rel_pic_addcommgroup_via_tensorobj
+#       AlgebraicGeometry.Scheme.PicSharp.addCommGroup_via_tensorObj
+#       (consumer; blueprint roadmap node — not yet realized in Lean)
+#
+# The seeds are targets to be built, not fixed mathematician-owned signatures,
+# so no file:declaration entries are protected here. Add entries below if the
+# mathematician pins a signature.

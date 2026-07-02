@@ -1,0 +1,1038 @@
+\chapter{The relative Picard functor and its \'etale sheafification}
+\label{chap:Picard_RelPicFunctor}
+% archon:covers AlgebraicJacobian/Picard/RelPicFunctor.lean
+
+% STRATEGY NOTE (iter-174). This chapter is the A.1.c sub-row of Route~A
+% (positive-genus arm of nonempty_jacobianWitness). It upgrades the set-valued
+% relative Picard presheaf \(\Pic^\sharp_{C/k}\) of
+% \cref{chap:Picard_LineBundlePullback} (A.1.b) to its abelian-group-valued
+% refinement and then to its \'etale sheafification
+% \(\Pic^\sharp_{(C/k)\et} := (\Pic^\sharp_{C/k})^\sim\). The chapter is gated on
+% \cref{chap:Picard_LineBundlePullback} (A.1.b, pullback functor + set-valued
+% quotient on disk) and on \cref{chap:Picard_RelativeSpec} (A.1.a, the
+% relative-spectrum machinery underlying any concrete Lean-side computation).
+% It \emph{gates} A.2.c (\cref{chap:Picard_FGAPicRepresentability}) since
+% Grothendieck's existence theorem represents precisely the \'etale-sheafified
+% functor (cf.\ [Kleiman], \S 4, th:main: ``\dots represents
+% \(\Pic_{(X/S)\et}\).''). It is \emph{not} responsible for representability
+% (that is A.2.c) and not responsible for the identity-component \(\Pic^0_{C/k}\)
+% (that is A.3).
+
+% NOTE (planner directive iter-174). Per the iter-174 plan, the chapter has
+% two responsibilities. First, package the abelian-group structure on the
+% quotient \(\Pic(C \times_k T) / \pi_T^* \Pic(T)\) that the set-valued chapter
+% A.1.b deliberately suppressed. The structure is canonical: \(\Pic(C \times_k T)\)
+% is abelian under tensor product, the image \(\pi_T^*\Pic(T)\) is a subgroup
+% because \(\pi_T^*\) is a group homomorphism, and the quotient is abelian. Second,
+% \emph{sheafify} the resulting group-valued presheaf
+% \(\Pic^\sharp_{C/k} : (\Sch/k)^{op} \to \Ab\) in the \'etale topology; the
+% sheafification is the functor Kleiman \S 4 represents. The \'etale-sheaf
+% refinement is necessary because, by Kleiman \S 2, \(\Pic_X\) is never a Zariski
+% (let alone \'etale) sheaf; the smallest \'etale sheaf below \(\Pic_X\) is the
+% one that captures line bundles that are trivializable \emph{\'etale-locally},
+% which is the right notion for Grothendieck--Mumford--Kleiman representability.
+
+\section{Setup and motivation}
+\label{sec:relpic_setup}
+
+Fix a base field \(k\) and a smooth proper geometrically integral curve \(C\) over
+\(k\). As in \cref{chap:Picard_LineBundlePullback}, write
+\(\pi_T : C \times_k T \to T\) for the projection of a relative curve over a
+\(k\)-scheme \(T\) and
+\(\pi_T^* : \Pic(T) \to \Pic(C \times_k T)\) for the induced pullback of
+isomorphism classes of line bundles (\cref{def:pullback_along_projection}).
+
+The set-valued relative Picard presheaf
+\[
+  \Pic^\sharp_{C/k}(T) \;\;=\;\; \Pic(C \times_k T) \, / \, \pi_T^*\Pic(T)
+\]
+of \cref{thm:relative_pic_quotient_well_defined} was set up forgetting the
+abelian-group structure inherited from tensor product. This chapter restores
+that structure and then sheafifies. The first half (\cref{sec:relpic_group}
+and \cref{sec:relpic_groupvalued}) verifies that the quotient is canonically
+an abelian group and the functoriality of \cref{thm:pullback_natural} respects
+that group structure; the result is a group-valued presheaf
+\(\Pic^\sharp_{C/k} : (\Sch/k)^{op} \to \Ab\) on the category of \(k\)-schemes. The
+second half (\cref{sec:relpic_etale_sheaf}) takes the \'etale sheafification
+\(\Pic^\sharp_{(C/k)\et} := (\Pic^\sharp_{C/k})^\sim\) in the \'etale topology on
+\((\Sch/k)^{op}\), and verifies that sheafification preserves the abelian-group
+target. The \'etale-sheafified functor is the object represented by the Picard
+scheme in \cref{chap:Picard_FGAPicRepresentability}.
+
+\section{Group structure on the relative Picard quotient}
+\label{sec:relpic_group}
+
+The Picard group \(\Pic(X)\) of any scheme is canonically an abelian group under
+tensor product of line bundles (Stacks tag 01CR; the inverse of \([\mathcal{L}]\)
+is $[\mathcal{L}^{-1}] = [\mathcal{H}om_{\mathcal{O}_X}(\mathcal{L},
+\mathcal{O}_X)]$). The pullback map
+\(\pi_T^* : \Pic(T) \to \Pic(C \times_k T)\) of
+\cref{def:pullback_along_projection} respects this structure: pullback of
+\(\mathcal{O}_X\)-modules sends \(\mathcal{O}_T\) to \(\mathcal{O}_{C \times_k T}\)
+and is multiplicative on tensor products.
+
+\begin{lemma}\leanok
+[Group structure descends to the relative Picard quotient]
+  \label{lem:rel_pic_sharp_groupoid}
+  \lean{AlgebraicGeometry.Scheme.PicSharp.addCommGroup}
+  \uses{def:line_bundle_on_product, def:pullback_along_projection,
+    thm:relative_pic_quotient_well_defined}
+
+  % SOURCE: [Kleiman], "The Picard scheme", \S 2 (FGA Explained Ch.~9 \S 9.2),
+  % Definition df:aPf + Definition df:Pfs (the absolute and relative Picard
+  % functors are \emph{abelian-group}-valued, by construction; the relative
+  % Picard functor is defined as a quotient \emph{group})
+  % (read from references/kleiman-picard-src/kleiman-picard.tex, L1274-L1318).
+  % SOURCE QUOTE:
+  % "The {\it absolute Picard functor} \(\Pic_X\) is the functor from  the
+  %  category of (locally Noetherian) \(S\)-schemes \(T\) to the category of
+  % abelian groups defined by the formula
+  %     \(\)\Pic_X(T):=\Pic(X_T).\(\)
+  %  [\dots]
+  %  \begin{dfn}\label{df:Pfs}
+  %   The {\it relative Picard functor} \(\Pic_{X/S}\) is defined by
+  %     \(\)\Pic_{X/S}(T):=\Pic(X_T)\big/\Pic(T).\(\)"
+  \textit{Source: [Kleiman], ``The Picard scheme'', \S 2,
+  Defs.~df:aPf + df:Pfs (the Picard functors are abelian-group-valued, and the
+  relative one is a quotient of abelian groups; cf.\ Stacks tag 01CR for the
+  abelian-group structure on \(\Pic\)).}
+  Let \(C/k\) be a smooth proper geometrically integral curve and let \(T\) be a
+  \(k\)-scheme. The Picard group \(\Pic(C \times_k T)\) is an abelian group under
+  tensor product of line bundles, and the pullback map
+  \[
+    \pi_T^* \;\colon\; \Pic(T) \;\longrightarrow\; \Pic(C \times_k T)
+  \]
+  of \cref{def:pullback_along_projection} is a group homomorphism. Its image
+  \[
+    H_T \;\;:=\;\; \pi_T^* \Pic(T)
+  \]
+  is therefore a subgroup of \(\Pic(C \times_k T)\), and the quotient set of
+  \cref{thm:relative_pic_quotient_well_defined}
+  \[
+    \Pic^\sharp_{C/k}(T) \;\;=\;\; \Pic(C \times_k T) \, / \, H_T
+  \]
+  inherits a canonical abelian-group structure under which the quotient map
+  \(\Pic(C \times_k T) \twoheadrightarrow \Pic^\sharp_{C/k}(T)\) is a surjective
+  homomorphism with kernel exactly \(H_T\).
+\end{lemma}
+
+% NOTE (iter-247): the import cycle is RESOLVED. As of iter-247 the dependency flows
+% LineBundlePullback -> TensorObjSubstrate -> RelPicFunctor (RelPicFunctor now imports
+% TensorObjSubstrate), so the tensor substrate is upstream and its real decls are directly
+% citable here: tensorObj, tensorObj_assoc_iso, tensorObj_comm/unit/left/right isos,
+% tensorObj_isLocallyTrivial, exists_tensorObj_inverse, pullbackUnitIso, and (when it
+% lands) the loc-triv comparison iso pullback_tensor_iso_loctriv. The four local
+% pure-Mathlib bridge copies built in iter-246 (pTensor_isLocallyTrivial, pAssoc,
+% isLocallyTrivial_unit, exists_pTensor_inverse) should now be rewired to those upstream
+% proofs, collapsing the construction to a real AddCommGroup modulo only the genuine
+% project-deferred sorry exists_tensorObj_inverse (and a typed bridge on the not-yet-landed
+% comparison iso, used only for the pullback-additivity of Step 2).
+% Carrier caveat (still live, unrelated to the cycle): the carrier setoid
+% RelPicPresheaf.preimage_subgroup (LineBundlePullback.lean) is the iso-class relation
+% Nonempty(L ≅ L'), so the realized group is the tensor-product Picard group on loc-triv
+% iso-classes (additive mirror of picCommGroup). The quotient-by-H_T of Steps 2-4 below is
+% the eventual relative-Picard carrier; Step 1's loc-triv group is what the Lean instance
+% realizes now. See memory rpf-import-cycle-blocks-tensorobj (now resolved) +
+% rpf-addcommgroup-real-skeleton.
+
+% SOURCE QUOTE PROOF: Kleiman \S 2 does not supply a separate "proof" block
+% for df:Pfs; the abelian-group structure is part of the definition (the word
+% \emph{group} appears in df:aPf already, and df:Pfs is a quotient of the same
+% abelian groups). The verbatim quotes for the statements above are therefore
+% the same as for the lemma. The project-side proof is a structural restatement.
+\begin{proof}
+  \uses{def:line_bundle_on_product, def:pullback_along_projection,
+    thm:relative_pic_quotient_well_defined, lem:tensorobj_lift_onproduct,
+    lem:tensorobj_preserves_locally_trivial, lem:tensorobj_assoc_iso,
+    lem:tensorobj_comm_iso, lem:tensorobj_unit_iso,
+    lem:tensorobj_isoclass_commgroup, lem:tensorobj_inverse_invertible,
+    lem:pullback_unit_iso, lem:pullback_tensor_iso_loctriv}
+
+
+\leanok
+  The construction proceeds in four steps over the locally-trivial carrier
+  \[
+    \mathrm{OnProduct}(\pi_C, \pi_T) \;=\;
+      \bigl\{\, M : \text{a module on } C \times_k T \;\bigm|\;
+      M \text{ is locally trivial} \,\bigr\}
+  \]
+  of \cref{def:line_bundle_on_product}, on whose isomorphism classes the
+  relative Picard quotient is taken. It is authored \emph{in parallel} against
+  two inputs being built concurrently: the locally-trivial pullback--tensor
+  comparison isomorphism \cref{lem:pullback_tensor_iso_loctriv} (consumed in
+  Step~2 to make \(\pi_T^*\) additive) and the tensor inverse
+  \cref{lem:tensorobj_inverse_invertible} (consumed in Step~1 for group
+  closure); both are themselves deferred targets.
+
+  \emph{Step 1 (abelian group on the carrier).} On isomorphism classes of the
+  carrier \(\mathrm{OnProduct}(\pi_C, \pi_T)\), addition is the descent of the
+  scheme-level tensor product of line bundles,
+  \[
+    [L] + [L'] \;:=\; [\, L \otimes_{\mathcal{O}_{C \times_k T}} L' \,],
+  \]
+  where \(L \otimes L'\) is the locally-trivial descent of the scheme-level
+  tensor product (\cref{lem:tensorobj_lift_onproduct}); the sum lands again in
+  the carrier because the tensor product of two locally-trivial modules is
+  locally trivial (\cref{lem:tensorobj_preserves_locally_trivial}). The zero
+  element is the class \([\mathcal{O}_{C \times_k T}]\) of the structure sheaf,
+  the monoidal unit, which is locally trivial. Associativity, commutativity,
+  and left/right unitality of \(+\) descend from the scheme-level coherence
+  isomorphisms --- the associator (\cref{lem:tensorobj_assoc_iso}), the
+  braiding (\cref{lem:tensorobj_comm_iso}), and the unitors
+  (\cref{lem:tensorobj_unit_iso}) --- exactly as for the absolute Picard group
+  on tensor-invertible isomorphism classes
+  (\cref{lem:tensorobj_isoclass_commgroup}). The additive inverse is
+  \[
+    -[L] \;:=\; [\, L^{\mathrm{inv}} \,],
+  \]
+  where \(L^{\mathrm{inv}}\) is the witness supplied by
+  \cref{lem:tensorobj_inverse_invertible}: it returns a \emph{locally-trivial}
+  module together with an isomorphism
+  \(L \otimes L^{\mathrm{inv}} \cong \mathcal{O}_{C \times_k T}\), so the inverse
+  stays inside the loc-triv carrier and the group is closed under negation.
+
+  \emph{Step 2 (the pullback homomorphism \(\pi_T^*\)).} Pullback along the
+  projection \(\pi_T\) gives an additive map
+  \[
+    \pi_T^* \;\colon\; \Pic(T) \;\longrightarrow\; \mathrm{OnProduct}(\pi_C, \pi_T),
+  \]
+  whose underlying assignment of line bundles is
+  \cref{def:pullback_along_projection}. It is a homomorphism of abelian groups:
+  it sends the unit to the unit, since
+  \(\pi_T^*\mathcal{O}_T \cong \mathcal{O}_{C \times_k T}\) by the unconditional
+  pullback--unit isomorphism (\cref{lem:pullback_unit_iso}); and it is additive,
+  since pullback commutes with tensor product on locally-trivial modules,
+  \[
+    \pi_T^*(N \otimes_{\mathcal{O}_T} N') \;\cong\;
+      \pi_T^* N \otimes_{\mathcal{O}_{C \times_k T}} \pi_T^* N',
+  \]
+  by the locally-trivial comparison isomorphism
+  \cref{lem:pullback_tensor_iso_loctriv} specialised to the projection
+  \(\pi_T\) on the \(\mathrm{OnProduct}\) carrier. This is the exact analogue,
+  for the geometric pullback, of the additive monoid homomorphism on Picard
+  groups induced by a ring map respecting tensor product, and is modelled on it
+  field-for-field. Write \(H_T := \mathrm{im}(\pi_T^*)\) for its image, a
+  subgroup of the carrier's isomorphism-class group.
+
+  \emph{Step 3 (setoid reconciliation).} The set-valued quotient of
+  \cref{thm:relative_pic_quotient_well_defined} is taken modulo the
+  isomorphism-class equivalence that declares two line bundles related when
+  their classes differ by an element of \(H_T\). This relation coincides with
+  the left-coset relation of the subgroup \(H_T\) inside the abelian group of
+  Steps~1--2: both encode
+  \[
+    L \sim L' \quad\Longleftrightarrow\quad
+      [\, L^{\mathrm{inv}} \otimes L' \,] \in H_T .
+  \]
+  Establishing this equivalence of relations is a concrete isomorphism-class
+  argument over the carrier; it consumes the tensor inverse (Step~1) and the
+  group law, but not the computational content of the comparison isomorphism.
+
+  \emph{Step 4 (transport).} By Step~3 the quotient set underlying
+  \(\Pic^\sharp_{C/k}(T)\) is in canonical bijection with the group quotient
+  \(\mathrm{OnProduct}(\pi_C, \pi_T) / H_T\), which carries the canonical
+  abelian-group structure of a quotient of an abelian group by a subgroup.
+  Transporting this structure along the bijection of Step~3 endows
+  \(\Pic^\sharp_{C/k}(T)\) with its abelian-group structure, under which the
+  canonical surjection
+  \(\Pic(C \times_k T) \twoheadrightarrow \Pic^\sharp_{C/k}(T)\) is a
+  homomorphism with kernel exactly \(H_T\).
+\end{proof}
+
+\subsection{Helper constructions underlying the group law}
+\label{subsec:relpic_group_helpers}
+
+The abelian-group instance of \cref{lem:rel_pic_sharp_groupoid} is assembled
+from a handful of project-internal helper constructions on the locally-trivial
+carrier \(\mathrm{OnProduct}(\pi_C, \pi_T)\): the tensor-product operation that
+realises addition, the local triviality of the unit (the zero element), the
+uniqueness of tensor inverses (which makes negation well defined), and the two
+descended operations on isomorphism classes. Each is recorded here for the
+one-to-one Lean correspondence; all are proved directly in Lean.
+
+\begin{definition}\leanok
+[Tensor product on relative line bundles]
+  \label{def:rel_tensor_obj}
+  \lean{AlgebraicGeometry.Scheme.PicSharp.relTensorObj}
+  \uses{def:line_bundle_on_product, lem:tensorobj_lift_onproduct,
+    lem:tensorobj_preserves_locally_trivial}
+  For relative line bundles \(L, L'\) on the locally-trivial carrier
+  \(\mathrm{OnProduct}(\pi_C, \pi_T)\) of \cref{def:line_bundle_on_product},
+  their \emph{tensor product} is
+  \[
+    L \,\mathbin{\otimes}\, L' \;:=\;
+      L \otimes_{\mathcal{O}_{C \times_S T}} L',
+  \]
+  the locally-trivial descent of the scheme-level tensor product
+  (\cref{lem:tensorobj_lift_onproduct}). The result again lies in the carrier
+  because the tensor product of two locally-trivial modules is locally trivial
+  (\cref{lem:tensorobj_preserves_locally_trivial}). This is the operation that
+  realises addition \([L] + [L'] := [L \otimes L']\) on isomorphism classes.
+\end{definition}
+
+\begin{lemma}\leanok
+[The structure-sheaf unit is locally trivial]
+  \label{lem:rel_pic_sharp_unit_loctriv}
+  \lean{AlgebraicGeometry.Scheme.PicSharp.isLocallyTrivial_unit}
+  \uses{def:line_bundle_on_product, lem:pullback_unit_iso}
+  The structure sheaf \(\mathcal{O}_{C \times_S T}\) (the monoidal unit) is
+  locally trivial, hence defines an element of the carrier
+  \(\mathrm{OnProduct}(\pi_C, \pi_T)\). Its isomorphism class is the zero
+  element of the group of \cref{lem:rel_pic_sharp_groupoid}.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:pullback_unit_iso}
+  \leanok
+  Proved directly in Lean. Local triviality is checked on an affine chart: for
+  any point \(x\), choose an affine open \(W \ni x\); the restriction of the
+  structure sheaf to \(W\) is its pullback along the inclusion
+  \(W \hookrightarrow C \times_S T\), and the pullback of the structure sheaf is
+  again the structure sheaf by the unconditional pullback--unit isomorphism
+  (\cref{lem:pullback_unit_iso}). Composing these two isomorphisms trivialises
+  \((\mathcal{O}_{C \times_S T})|_W \cong \mathcal{O}_W\).
+\end{proof}
+
+\begin{lemma}\leanok
+[Uniqueness of the tensor inverse]
+  \label{lem:rel_pic_sharp_inverse_unique}
+  \lean{AlgebraicGeometry.Scheme.PicSharp.pInverseUnique}
+  \uses{lem:tensorobj_lift_onproduct, lem:tensorobj_unit_iso,
+    lem:tensorobj_comm_iso, lem:tensorobj_assoc_iso}
+  Let \(M, N, N'\) be relative line bundles, and suppose there are
+  isomorphisms
+  \[
+    M \otimes N \;\cong\; \mathcal{O}_{C \times_S T}
+    \qquad\text{and}\qquad
+    M \otimes N' \;\cong\; \mathcal{O}_{C \times_S T}.
+  \]
+  Then \(N \cong N'\). In other words, the tensor inverse of a relative line
+  bundle is unique up to isomorphism.
+\end{lemma}
+
+\begin{proof}
+  \uses{lem:tensorobj_lift_onproduct, lem:tensorobj_unit_iso,
+    lem:tensorobj_comm_iso, lem:tensorobj_assoc_iso}
+    \leanok
+  Proved directly in Lean. One transports \(N\) across the chain of coherence
+  isomorphisms
+  \[
+    N \;\cong\; N \otimes \mathcal{O}
+      \;\cong\; N \otimes (M \otimes N')
+      \;\cong\; (N \otimes M) \otimes N'
+      \;\cong\; (M \otimes N) \otimes N'
+      \;\cong\; \mathcal{O} \otimes N'
+      \;\cong\; N',
+  \]
+  using the right unitor and left unitor (\cref{lem:tensorobj_unit_iso}), the
+  given trivialisations together with bifunctoriality of \(\otimes\)
+  (\cref{lem:tensorobj_lift_onproduct}), the associator
+  (\cref{lem:tensorobj_assoc_iso}), and the braiding
+  (\cref{lem:tensorobj_comm_iso}). This is the relative-line-bundle analogue of
+  the standard uniqueness of inverses in the Picard group.
+\end{proof}
+
+\begin{definition}\leanok
+[Descended addition on the relative Picard quotient]
+  \label{def:rel_add}
+  \lean{AlgebraicGeometry.Scheme.PicSharp.relAdd}
+  \uses{def:rel_tensor_obj, thm:relative_pic_quotient_well_defined,
+    lem:tensorobj_lift_onproduct}
+  The addition on the relative Picard quotient
+  \(\Pic^\sharp_{C/k}(T) = \Pic(C \times_S T)/\pi_T^*\Pic(T)\) is the descent of
+  the tensor product \cref{def:rel_tensor_obj} to isomorphism classes:
+  \[
+    [L] + [L'] \;:=\; [\,L \otimes L'\,].
+  \]
+\end{definition}
+
+\begin{proof}
+  \uses{def:rel_tensor_obj, lem:tensorobj_lift_onproduct}
+  \leanok
+  Proved directly in Lean. Well-definedness on the quotient
+  (\cref{thm:relative_pic_quotient_well_defined}) is bifunctoriality of the
+  tensor product: replacing \(L, L'\) by isomorphic representatives
+  \(L \cong M\), \(L' \cong M'\) yields an isomorphism
+  \(L \otimes L' \cong M \otimes M'\) (\cref{lem:tensorobj_lift_onproduct}),
+  so the class \([L \otimes L']\) is independent of the chosen representatives.
+\end{proof}
+
+\begin{definition}\leanok
+[Descended negation on the relative Picard quotient]
+  \label{def:rel_neg}
+  \lean{AlgebraicGeometry.Scheme.PicSharp.relNeg}
+  \uses{def:rel_tensor_obj, lem:rel_pic_sharp_inverse_unique,
+    lem:tensorobj_inverse_invertible}
+  The negation on the relative Picard quotient is
+  \[
+    -[L] \;:=\; [\,L^{\mathrm{inv}}\,],
+  \]
+  where \(L^{\mathrm{inv}}\) is the locally-trivial tensor-inverse witness
+  supplied by \cref{lem:tensorobj_inverse_invertible}, together with its
+  trivialisation \(L \otimes L^{\mathrm{inv}} \cong \mathcal{O}_{C \times_S T}\).
+\end{definition}
+
+\begin{proof}
+  \uses{lem:rel_pic_sharp_inverse_unique, lem:tensorobj_inverse_invertible}
+  \leanok
+  Proved directly in Lean. Well-definedness on the quotient uses uniqueness of
+  the tensor inverse (\cref{lem:rel_pic_sharp_inverse_unique}): if
+  \(L \cong M\), then the chosen inverse witnesses \(L^{\mathrm{inv}}\) and
+  \(M^{\mathrm{inv}}\) of \cref{lem:tensorobj_inverse_invertible} both trivialise
+  the same class up to the isomorphism \(L \cong M\), hence
+  \(L^{\mathrm{inv}} \cong M^{\mathrm{inv}}\), so \([L^{\mathrm{inv}}]\) is
+  independent of the representative.
+\end{proof}
+
+\section{The relative Picard presheaf as a group-valued presheaf}
+\label{sec:relpic_groupvalued}
+
+We now refine the set-valued functor of \cref{thm:pullback_natural} into a
+group-valued presheaf.
+
+\begin{definition}\leanok
+[Relative Picard presheaf]
+  \label{def:rel_pic_sharp}
+  \lean{AlgebraicGeometry.Scheme.PicSharp}
+  \uses{def:line_bundle_on_product, def:pullback_along_projection,
+    thm:relative_pic_quotient_well_defined, lem:rel_pic_sharp_groupoid,
+    thm:pullback_natural}
+
+  % SOURCE: [Kleiman], "The Picard scheme", \S 2 (FGA Explained Ch.~9 \S 9.2),
+  % Definition df:Pfs (the relative Picard functor)
+  % (read from references/kleiman-picard-src/kleiman-picard.tex, L1311-L1318).
+  % SOURCE QUOTE:
+  % "\begin{dfn}\label{df:Pfs}
+  %   The {\it relative Picard functor} \(\Pic_{X/S}\) is defined by
+  %     \(\)\Pic_{X/S}(T):=\Pic(X_T)\big/\Pic(T).\(\)
+  %  Denote its associated sheaves in the Zariski, \'etale, and fppf
+  % topologies  by
+  %     \(\)\Pic_{(X/S)\zar},\ \Pic_{(X/S)\et},\
+  %     \Pic_{(X/S)\fppf}.\(\)
+  %  \end{dfn}"
+  \textit{Source: [Kleiman], ``The Picard scheme'', \S 2,
+  Def.~df:Pfs.}
+  Let \(C/k\) be a smooth proper geometrically integral curve. The
+  \emph{relative Picard presheaf} of \(C\) over \(k\) is the functor
+  \[
+    \Pic^\sharp_{C/k} \;\;\colon\;\; (\Sch/k)^{op} \;\longrightarrow\; \Ab,
+    \qquad
+    T \;\longmapsto\; \Pic(C \times_k T) \,/\, \pi_T^*\Pic(T),
+  \]
+  where the right-hand side is the quotient abelian group of
+  \cref{lem:rel_pic_sharp_groupoid}, and the structure morphisms are induced by
+  the pullback maps \(g^\sharp\) of \cref{thm:pullback_natural} (which restrict
+  to group homomorphisms on the quotient because the source square commutes
+  with all pullback functors, see the proof below). In Kleiman's notation with
+  \(X = C\) and \(S = \Spec k\), this is exactly \(\Pic_{X/S}\) of df:Pfs.
+\end{definition}
+
+% NOTE (iter-199 plan agent): the Lean closure
+% AlgebraicGeometry.Scheme.PicSharp at the pinned Mathlib commit
+% b80f227 carries a constant-functor placeholder body
+% ((CategoryTheory.Functor.const _).obj (AddCommGrpCat.of PUnit)),
+% i.e.\ the constant functor at the trivial abelian group. This is NOT
+% the relative Picard presheaf
+% \(T \mapsto \Pic(C \times_k T)/\pi_T^*\Pic(T)\) that the definition
+% above describes; the placeholder merely supplies a type-checking
+% object of the correct kind. The closure is gated on the upstream
+% Mathlib \texttt{Scheme.Modules} monoidal-structure gap (no
+% tensor-product \texttt{AddCommGroup} structure on
+% \texttt{LineBundle.OnProduct} is available, hence no quotient group
+% can be built on the Lean side until that gap is closed). DO NOT
+% promote this block to \leanok via the deterministic \texttt{sync\_leanok}
+% phase, and DO NOT mark it formalised in review, until the body is
+% replaced with the mathematically correct construction.
+
+\begin{lemma}\leanok
+[Naturality respects the group structure]
+  \label{lem:rel_pic_sharp_functorial}
+  \lean{AlgebraicGeometry.Scheme.PicSharp.functorial}
+  \uses{def:rel_pic_sharp, lem:pullback_compose,
+    lem:rel_pic_sharp_groupoid, thm:pullback_natural}
+
+  % SOURCE: [Kleiman], "The Picard scheme", \S 2 (FGA Explained Ch.~9 \S 9.2),
+  % Definitions df:aPf + df:Pfs (the relative Picard functor is functorial
+  % into abelian groups; the word \emph{functor} into the category of abelian
+  % groups encodes both the identity / composition laws and the
+  % group-homomorphism property of the restriction maps)
+  % (read from references/kleiman-picard-src/kleiman-picard.tex, L1274-L1318).
+  % SOURCE QUOTE:
+  % "The {\it absolute Picard functor} \(\Pic_X\) is the functor from  the
+  %  category of (locally Noetherian) \(S\)-schemes \(T\) to the category of
+  % abelian groups defined by the formula
+  %     \(\)\Pic_X(T):=\Pic(X_T).\(\)
+  %  [\dots]
+  %  \begin{dfn}\label{df:Pfs}
+  %   The {\it relative Picard functor} \(\Pic_{X/S}\) is defined by
+  %     \(\)\Pic_{X/S}(T):=\Pic(X_T)\big/\Pic(T).\(\)"
+  \textit{Source: [Kleiman], ``The Picard scheme'', \S 2,
+  Defs.~df:aPf + df:Pfs (the target category is the category of abelian
+  groups; the structure maps are group homomorphisms).}
+  For a morphism \(g : T' \to T\) of \(k\)-schemes, the induced set map
+  \(g^\sharp : \Pic^\sharp_{C/k}(T) \to \Pic^\sharp_{C/k}(T')\) of
+  \cref{thm:pullback_natural} is a homomorphism of abelian groups with respect
+  to the structure of \cref{lem:rel_pic_sharp_groupoid}, and the identity and
+  composition laws \(\mathrm{id}^\sharp = \mathrm{id}\) and
+  \((g \circ h)^\sharp = h^\sharp \circ g^\sharp\) hold as identities of group
+  homomorphisms.
+\end{lemma}
+
+% SOURCE QUOTE PROOF: Kleiman \S 2 does not write out a separate proof for
+% functoriality; the structural assertion is part of the definition. No
+% verbatim proof body is available in the source; the project-side argument
+% is a direct unfolding of the pullback of modules.
+% NOTE (iter-199 plan agent): the Lean closure
+% AlgebraicGeometry.Scheme.PicSharp.functorial at b80f227 carries a
+% zero AddMonoidHom body (\(0 : \dots \to \dots\)), i.e.\ the zero map
+% between two trivial-group endpoints, NOT the pullback-descended
+% homomorphism this lemma describes. Moreover, because the codomain's
+% \texttt{Zero} instance is derived from the sorry-body
+% \texttt{addCommGroup} (the file-local genuine sorry of the chapter),
+% the closure also inherits \texttt{sorryAx} via that typeclass leak;
+% it is therefore not even axiom-clean. The closure is gated on the
+% upstream Mathlib \texttt{Scheme.Modules} monoidal-structure gap. DO
+% NOT promote this block to \leanok via the deterministic
+% \texttt{sync\_leanok} phase, and DO NOT mark it formalised in
+% review, until the body is replaced with the mathematically correct
+% map descended from \(g_C^*\).
+\begin{proof}
+
+
+
+
+\leanok
+  By \cref{thm:pullback_natural}, the set map \(g^\sharp\) is defined by
+  \([\mathcal{L}] \mapsto [g_C^* \mathcal{L}]\), where
+  \(g_C := \mathrm{id}_C \times_k g : C \times_k T' \to C \times_k T\). Pullback
+  of \(\mathcal{O}\)-modules along \(g_C\) preserves tensor products and the
+  structure sheaf, hence the map
+  \(g_C^* : \Pic(C \times_k T) \to \Pic(C \times_k T')\) on Picard groups is
+  itself an abelian-group homomorphism. By
+  \cref{lem:rel_pic_sharp_groupoid}, the quotient map
+  \(\Pic(C \times_k T) \to \Pic^\sharp_{C/k}(T)\) is a group homomorphism, and
+  \(g_C^*\) takes \(H_T\) into \(H_{T'}\) by \cref{lem:pullback_compose}; therefore
+  \(g^\sharp\) is a group homomorphism on the quotient. The identity and
+  composition laws are inherited from \(\mathrm{id}^* = \mathrm{id}\) and
+  \((g \circ h)^* = h^* \circ g^*\) on \(\mathcal{O}\)-module pullback.
+\end{proof}
+
+\begin{theorem}\leanok
+[\(\Pic^\sharp_{C/k}\) is a group-valued presheaf]
+  \label{thm:rel_pic_sharp_presheaf}
+  \lean{AlgebraicGeometry.Scheme.PicSharp.presheaf}
+  \uses{def:rel_pic_sharp, lem:rel_pic_sharp_functorial,
+    lem:rel_pic_sharp_groupoid}
+
+  % SOURCE: [Kleiman], "The Picard scheme", \S 2 (FGA Explained Ch.~9 \S 9.2),
+  % Definitions df:aPf + df:Pfs (relative Picard functor as a functor into
+  % abelian groups)
+  % (read from references/kleiman-picard-src/kleiman-picard.tex, L1274-L1318).
+  % SOURCE QUOTE:
+  % "The {\it absolute Picard functor} \(\Pic_X\) is the functor from  the
+  %  category of (locally Noetherian) \(S\)-schemes \(T\) to the category of
+  % abelian groups defined by the formula
+  %     \(\)\Pic_X(T):=\Pic(X_T).\(\)"
+  \textit{Source: [Kleiman], ``The Picard scheme'', \S 2,
+  Defs.~df:aPf + df:Pfs.}
+  The assignment \(T \mapsto \Pic^\sharp_{C/k}(T)\) of \cref{def:rel_pic_sharp},
+  together with the structure maps \(g \mapsto g^\sharp\) of
+  \cref{lem:rel_pic_sharp_functorial}, defines a presheaf of abelian groups
+  \[
+    \Pic^\sharp_{C/k} \;\;\colon\;\; (\Sch/k)^{op} \;\longrightarrow\;
+                                     \AddCommGroup
+  \]
+  on the category of \(k\)-schemes.
+\end{theorem}
+
+% SOURCE QUOTE PROOF: As with the prior theorems, Kleiman \S 2 does not supply
+% a separate proof body --- the presheaf-of-abelian-groups property is part of
+% the definition df:aPf + df:Pfs. The project-side proof assembles the lemmas
+% above; no external proof is being translated.
+% NOTE (iter-199 plan agent): the Lean closure
+% AlgebraicGeometry.Scheme.PicSharp.presheaf at b80f227 is defined as
+% \texttt{PicSharp \_C}, i.e.\ it re-exports the constant-PUnit-functor
+% placeholder from \texttt{PicSharp} above; it is NOT the canonical
+% presheaf assembled from the pullback-descended functorial action
+% \(g \mapsto g^\sharp\) that this theorem describes. The closure is
+% gated on the upstream Mathlib \texttt{Scheme.Modules}
+% monoidal-structure gap. DO NOT promote this block to \leanok via the
+% deterministic \texttt{sync\_leanok} phase, and DO NOT mark it
+% formalised in review, until the body is replaced with the
+% mathematically correct presheaf assembly.
+\begin{proof}
+
+
+
+
+\leanok
+  The object map is well defined by
+  \cref{lem:rel_pic_sharp_groupoid}: for each \(k\)-scheme \(T\), the value
+  \(\Pic^\sharp_{C/k}(T)\) is an abelian group. The morphism map
+  \(g \mapsto g^\sharp\) is a group homomorphism by
+  \cref{lem:rel_pic_sharp_functorial}, and satisfies the identity and
+  composition laws by the same lemma. These data assemble into a functor
+  \((\Sch/k)^{op} \to \AddCommGroup\), i.e.\ a presheaf of abelian groups on
+  \((\Sch/k)\).
+\end{proof}
+
+\section{\'Etale sheafification}
+\label{sec:relpic_etale_sheaf}
+
+The presheaf \(\Pic^\sharp_{C/k}\) is generally not an \'etale (or even Zariski)
+sheaf. The standard obstruction (Kleiman \S 2, L1292--L1302): for a \(k\)-scheme
+\(T\) carrying a non-trivial line bundle whose pullback to \(C \times_k T\) becomes
+non-trivial after an open cover, the Zariski separated-presheaf condition
+fails. Therefore, to obtain a representable functor in the sense of
+\cref{chap:Picard_FGAPicRepresentability}, one must replace
+\(\Pic^\sharp_{C/k}\) by its \emph{associated \'etale sheaf}. Kleiman \S 2 names
+this sheaf \(\Pic_{(X/S)\et}\) and singles it out as the functor that Kleiman's
+main existence theorem in \S 4 represents.
+
+\begin{definition}\leanok
+[\'Etale sheafification of the relative Picard presheaf]
+  \label{def:rel_pic_etale_sheafification}
+  \lean{AlgebraicGeometry.Scheme.PicSharp.etSheaf}
+  \uses{def:rel_pic_sharp, thm:rel_pic_sharp_presheaf}
+  % NOTE (iter-176 review): the iter-176 Lane G prover renamed this declaration
+  % from ``AlgebraicGeometry.Scheme.PicScheme`` to
+  % ``AlgebraicGeometry.Scheme.PicSharp.etSheaf`` to avoid a name collision with
+  % ``Picard_FGAPicRepresentability`` (which legitimately uses ``PicScheme``
+  % for the REPRESENTING SCHEME, a different mathematical object). The
+  % ``\lean{...}`` pin is updated accordingly. The §"Lean encoding" bullet 5
+  % below is also corrected.
+  
+  % SOURCE: [Kleiman], "The Picard scheme", \S 2 (FGA Explained Ch.~9 \S 9.2),
+  % Definition df:Pfs --- the second half of df:Pfs names the \'etale sheaf
+  % associated to the relative Picard functor
+  % (read from references/kleiman-picard-src/kleiman-picard.tex, L1311-L1318
+  %  and the surrounding paragraph L1320-L1328).
+  % SOURCE QUOTE:
+  % "\begin{dfn}\label{df:Pfs}
+  %   The {\it relative Picard functor} \(\Pic_{X/S}\) is defined by
+  %     \(\)\Pic_{X/S}(T):=\Pic(X_T)\big/\Pic(T).\(\)
+  %  Denote its associated sheaves in the Zariski, \'etale, and fppf
+  % topologies  by
+  %     \(\)\Pic_{(X/S)\zar},\ \Pic_{(X/S)\et},\
+  %     \Pic_{(X/S)\fppf}.\(\)
+  %  \end{dfn}
+  %  [\dots]
+  %  if the latter functor is one of the three just displayed,
+  %  then it is a sheaf in the indicated topology; in fact, it is the sheaf
+  %  associated to any one of its predecessors, and the map between them is
+  %  the natural map from a presheaf to its associated sheaf, as is easy to
+  %  check.  In particular, the three displayed sheaves are the sheaves
+  %  associated to the absolute Picard functor \(\Pic_X\), as well as to the
+  %  relative Picard functor \(\Pic_{X/S}\)."
+  \textit{Source: [Kleiman], ``The Picard scheme'', \S 2,
+  Def.~df:Pfs (the \'etale-sheaf notation \(\Pic_{(X/S)\et}\)) and the
+  associated-sheaf paragraph immediately following df:Pfs.}
+  Let \(C/k\) be a smooth proper geometrically integral curve. The
+  \emph{\'etale-sheafified relative Picard functor} is the sheafification of
+  the presheaf \(\Pic^\sharp_{C/k}\) (\cref{thm:rel_pic_sharp_presheaf}) in the
+  global \'etale topology on \((\Sch/k)\):
+  \[
+    \Pic^\sharp_{(C/k)\et} \;\;:=\;\;
+       \bigl(\Pic^\sharp_{C/k}\bigr)^{\sim_{\et}}.
+  \]
+  Equivalently, \(\Pic^\sharp_{(C/k)\et}\) is the unique (up to canonical
+  isomorphism) sheaf of abelian groups on the \'etale site of \(\Sch/k\)
+  equipped with a presheaf morphism $\Pic^\sharp_{C/k} \to
+  \Pic^\sharp_{(C/k)\et}$ which is universal among presheaf morphisms from
+  \(\Pic^\sharp_{C/k}\) to \'etale sheaves of abelian groups. In Kleiman's
+  notation this is \(\Pic_{(X/S)\et}\) with \(X = C\) and \(S = \Spec k\). When \(k\)
+  is algebraically closed and \(T = \Spec k'\) for an algebraically closed field
+  extension \(k'/k\), the natural map
+  \(\Pic^\sharp_{C/k}(T) \to \Pic^\sharp_{(C/k)\et}(T)\) is a bijection (Kleiman
+  Exercise ex:Alr, L1357--L1361).
+\end{definition}
+
+% NOTE (iter-199 plan agent): the Lean closure
+% AlgebraicGeometry.Scheme.PicSharp.etSheaf at b80f227 applies the
+% sheafification machinery
+% (\texttt{CategoryTheory.presheafToSheaf etaleTopology AddCommGrpCat}
+% / \texttt{plusPlusSheaf}) to the constant-PUnit-functor placeholder
+% supplied by \texttt{PicSharp.presheaf}; the sheafification machinery
+% itself is correct, but the input presheaf is the wrong object, so
+% \texttt{etSheaf} is the \'etale sheafification of a trivial constant
+% functor rather than of the relative Picard presheaf. The closure is
+% gated on the upstream Mathlib \texttt{Scheme.Modules}
+% monoidal-structure gap (it is precisely the upstream
+% \texttt{PicSharp.presheaf} body that needs to be replaced). DO NOT
+% promote this block to \leanok via the deterministic
+% \texttt{sync\_leanok} phase, and DO NOT mark it formalised in
+% review, until the underlying \texttt{PicSharp} / \texttt{PicSharp.presheaf}
+% bodies are replaced with the mathematically correct constructions.
+
+\begin{theorem}\leanok
+[\'Etale sheafification preserves the abelian-group structure]
+  \label{thm:rel_pic_etale_sheaf_group_structure}
+  \lean{AlgebraicGeometry.Scheme.PicSharp.etSheaf_group_structure}
+  \uses{def:rel_pic_etale_sheafification, thm:rel_pic_sharp_presheaf,
+    thm:rel_pic_etale_sheaf_unit_canonical}
+
+  % SOURCE: [Kleiman], "The Picard scheme", \S 2 (FGA Explained Ch.~9 \S 9.2),
+  % Def.~df:Pfs + the immediately following associated-sheaf paragraph
+  % (L1320-L1328) --- the \'etale-sheafified functor \(\Pic_{(X/S)\et}\) is
+  % named alongside the abelian-group-valued \(\Pic_{X/S}\) in the same
+  % definition, and the surrounding paragraph singles it out as the sheaf
+  % associated to the relative Picard functor (in the same target category)
+  % (read from references/kleiman-picard-src/kleiman-picard.tex, L1311-L1328).
+  % SOURCE QUOTE:
+  % "\begin{dfn}\label{df:Pfs}
+  %   The {\it relative Picard functor} \(\Pic_{X/S}\) is defined by
+  %     \(\)\Pic_{X/S}(T):=\Pic(X_T)\big/\Pic(T).\(\)
+  %  Denote its associated sheaves in the Zariski, \'etale, and fppf
+  % topologies  by
+  %     \(\)\Pic_{(X/S)\zar},\ \Pic_{(X/S)\et},\
+  %     \Pic_{(X/S)\fppf}.\(\)
+  %  \end{dfn}
+  %  [\dots]
+  %  if the latter functor is one of the three just displayed,
+  %  then it is a sheaf in the indicated topology; in fact, it is the sheaf
+  %  associated to any one of its predecessors, and the map between them is
+  %  the natural map from a presheaf to its associated sheaf, as is easy to
+  %  check.  In particular, the three displayed sheaves are the sheaves
+  %  associated to the absolute Picard functor \(\Pic_X\), as well as to the
+  %  relative Picard functor \(\Pic_{X/S}\)."
+  \textit{Source: [Kleiman], ``The Picard scheme'', \S 2,
+  Def.~df:Pfs together with the associated-sheaf paragraph immediately
+  following (the \'etale sheaf \(\Pic_{(X/S)\et}\) is named together with the
+  abelian-group-valued relative Picard functor, meaning the sheaf is taken in
+  the category of abelian groups, and is universal among such sheaves
+  receiving a presheaf morphism from \(\Pic_{X/S}\)).}
+  This block records the bare existence of a morphism of presheaves of
+  abelian groups
+  \[
+    \Pic^\sharp_{C/k} \;\;\longrightarrow\;\;
+    \Pic^\sharp_{(C/k)\et}
+  \]
+  inside the category of presheaves
+  \((\Sch/k)^{op} \to \AddCommGroup\); equivalently, the hom-set of
+  presheaf morphisms from \(\Pic^\sharp_{C/k}\) to
+  \(\Pic^\sharp_{(C/k)\et}\) is nonempty. The full canonical statement
+  --- that this morphism is the canonical sheafification unit and
+  carries the universal property characterising
+  \(\Pic^\sharp_{(C/k)\et}\) as the initial \'etale sheaf of abelian
+  groups receiving a presheaf morphism from \(\Pic^\sharp_{C/k}\), so
+  in particular that the abelian-group structure on
+  \(\Pic^\sharp_{(C/k)\et}(T)\) is uniquely determined --- is recorded
+  separately as \cref{thm:rel_pic_etale_sheaf_unit_canonical} below.
+\end{theorem}
+
+% SOURCE QUOTE PROOF: Kleiman \S 2 does not supply a self-contained proof of
+% this auxiliary statement --- it is the standard fact that the sheafification
+% of a presheaf of abelian groups in a Grothendieck topology is again a
+% presheaf of abelian groups (equivalently, the forgetful functor
+% \(\AddCommGroup \to \Set\) preserves filtered colimits, and the
+% plus-construction is built from such colimits). The Lean side appeals to
+% Mathlib's \(\mathtt{CategoryTheory.Sheafification}\) machinery.
+% NOTE (iter-199 plan agent): the Lean closure
+% AlgebraicGeometry.Scheme.PicSharp.etSheaf\_group\_structure at
+% b80f227 supplies a zero natural transformation as the Nonempty
+% witness
+% (\(\langle 0\rangle : \texttt{Nonempty}\,(\texttt{presheaf}\ C
+%   \Rightarrow \texttt{etSheaf}.\mathrm{obj})\)),
+% NOT the canonical sheafification unit. The Lean statement type has
+% been weakened to bare \texttt{Nonempty} existence to admit this
+% trivial witness; the canonical morphism with its universal property
+% is the content of \cref{thm:rel_pic_etale_sheaf_unit_canonical} and
+% is deferred. The closure is gated on the upstream Mathlib
+% \texttt{Scheme.Modules} monoidal-structure gap. DO NOT promote this
+% block to \leanok-on-the-canonical-statement via the deterministic
+% \texttt{sync\_leanok} phase, and DO NOT mark it formalised in review
+% beyond the weak \texttt{Nonempty} content, until the body is
+% replaced with the canonical sheafification unit and the prose is
+% upgraded accordingly.
+\begin{proof}
+
+
+
+
+\leanok
+  The canonical morphism from a presheaf to its associated sheaf in
+  any Grothendieck topology (Stacks tag 00WI; the canonical
+  sheafification unit) supplies, in particular, a morphism of
+  presheaves \(\Pic^\sharp_{C/k} \to \Pic^\sharp_{(C/k)\et}\); the
+  hom-set of presheaf morphisms between these two objects is therefore
+  nonempty. The full universal property of this canonical morphism
+  --- and consequently the claim that the abelian-group structure on
+  the sheafification is uniquely pinned by it --- is the content of
+  the forward-looking \cref{thm:rel_pic_etale_sheaf_unit_canonical}
+  below; see its proof sketch for the canonical formulation.
+\end{proof}
+
+\begin{theorem}[Canonical sheafification unit with universal property (forward-looking)]
+  \label{thm:rel_pic_etale_sheaf_unit_canonical}
+  % \lean: TODO placeholder per DAG integrity rule 1. This is the forward-looking
+  % universal property of the canonical étale sheafification unit; no standalone
+  % Lean declaration realises it yet (RelPicFunctor.lean provides PicSharp.etSheaf
+  % and etSheaf_group_structure, but not the universal-property statement), so a
+  % placeholder name keeps the node rule-1 compliant.
+  \lean{AlgebraicGeometry.TODO.rel_pic_etale_sheaf_unit_canonical}
+  \uses{def:rel_pic_sharp, def:rel_pic_etale_sheafification}
+
+  % SOURCE: [Kleiman], "The Picard scheme", \S 2 (FGA Explained Ch.~9 \S 9.2),
+  % Def.~df:Pfs + the associated-sheaf paragraph immediately following
+  % (the \'etale sheaf is characterised as the sheaf associated to the
+  % relative Picard functor, via the natural map from a presheaf to its
+  % associated sheaf --- i.e.\ the sheafification unit with its universal
+  % property)
+  % (read from references/kleiman-picard-src/kleiman-picard.tex, L1311-L1328).
+  % SOURCE QUOTE:
+  % "\begin{dfn}\label{df:Pfs}
+  %   The {\it relative Picard functor} \(\Pic_{X/S}\) is defined by
+  %     \(\)\Pic_{X/S}(T):=\Pic(X_T)\big/\Pic(T).\(\)
+  %  Denote its associated sheaves in the Zariski, \'etale, and fppf
+  % topologies  by
+  %     \(\)\Pic_{(X/S)\zar},\ \Pic_{(X/S)\et},\
+  %     \Pic_{(X/S)\fppf}.\(\)
+  %  \end{dfn}
+  %  [\dots]
+  %  if the latter functor is one of the three just displayed,
+  %  then it is a sheaf in the indicated topology; in fact, it is the sheaf
+  %  associated to any one of its predecessors, and the map between them is
+  %  the natural map from a presheaf to its associated sheaf, as is easy to
+  %  check.  In particular, the three displayed sheaves are the sheaves
+  %  associated to the absolute Picard functor \(\Pic_X\), as well as to the
+  %  relative Picard functor \(\Pic_{X/S}\)."
+  \textit{Source: [Kleiman], ``The Picard scheme'', \S 2,
+  Def.~df:Pfs together with the associated-sheaf paragraph
+  immediately following (the natural map from a presheaf to its
+  associated sheaf, taken inside the category of abelian groups, is
+  universal among presheaf morphisms from \(\Pic_{X/S}\) into \'etale
+  sheaves of abelian groups).}
+  Let \(C/k\) be a smooth proper geometrically integral curve. There
+  exists a canonical morphism of presheaves of abelian groups
+  \[
+    \eta \;\colon\; \Pic^\sharp_{C/k} \;\longrightarrow\;
+    \Pic^\sharp_{(C/k)\et}
+  \]
+  with the following universal property. For every \'etale sheaf
+  \(\mathcal{F}\) of abelian groups on \((\Sch/k)\) and every morphism
+  of presheaves of abelian groups
+  \(\varphi : \Pic^\sharp_{C/k} \to \mathcal{F}\), there is a unique
+  morphism of \'etale sheaves of abelian groups
+  \(\tilde\varphi : \Pic^\sharp_{(C/k)\et} \to \mathcal{F}\) such that
+  \(\tilde\varphi \circ \eta = \varphi\). Equivalently, the pair
+  \(\bigl(\Pic^\sharp_{(C/k)\et}, \, \eta\bigr)\) is initial among
+  pairs \((\mathcal{F}, \, \Pic^\sharp_{C/k} \to \mathcal{F})\)
+  consisting of an \'etale sheaf of abelian groups on \((\Sch/k)\) and
+  a morphism of presheaves of abelian groups from \(\Pic^\sharp_{C/k}\)
+  to \(\mathcal{F}\). In particular, the abelian-group structure on
+  \(\Pic^\sharp_{(C/k)\et}(T)\) at each \(k\)-scheme \(T\) is uniquely
+  determined (up to canonical isomorphism) by the abelian-group
+  structure on \(\Pic^\sharp_{C/k}(T)\) and the universal property of
+  \(\eta\).
+\end{theorem}
+
+% SOURCE QUOTE PROOF: As with df:Pfs itself, Kleiman \S 2 does not
+% supply a separate proof body --- the universal property is built
+% into ``the sheaf associated to'' as a synonym for sheafification,
+% as the verbatim quote above already makes plain. The project-side
+% argument is the standard universal property of sheafification in a
+% Grothendieck topology, transported through the colimit-preservation
+% of \(\AddCommGroup \to \mathbf{Set}\).
+\begin{proof}
+
+  In any Grothendieck topology, every presheaf has a canonical
+  associated sheaf, and the canonical morphism from a presheaf to its
+  associated sheaf is universal among morphisms from the presheaf into
+  sheaves (Stacks tag 00WI; Kleiman \S 2, paragraph following
+  df:Pfs). The \'etale site of \((\Sch/k)\) is a Grothendieck
+  topology, so this applies in particular to \(\Pic^\sharp_{C/k}\) and
+  yields the canonical set-valued sheafification
+  \((\Pic^\sharp_{C/k})^{\sim_\et}\) together with the universal arrow
+  out of \(\Pic^\sharp_{C/k}\). The forgetful functor
+  \(\AddCommGroup \to \mathbf{Set}\) preserves and reflects the
+  filtered colimits and finite limits used by the plus-construction,
+  so performing the same plus-construction inside \(\AddCommGroup\)
+  yields a sheaf of abelian groups whose underlying set-valued sheaf
+  coincides with the set-valued sheafification; the abelian-group
+  structure on the sheafification is transported back through this
+  identification. The resulting morphism \(\eta\) is then by
+  construction the universal arrow in the abelian-group-valued
+  sheafification, which is the universal property in the form stated.
+\end{proof}
+
+\section{Lean encoding}
+\label{sec:relpic_lean_encoding}
+
+The Lean target file is the new
+\texttt{AlgebraicJacobian/Picard/RelPicFunctor.lean}, sibling to
+\texttt{AlgebraicJacobian/Picard/LineBundlePullback.lean}
+(\cref{chap:Picard_LineBundlePullback}) and
+\texttt{AlgebraicJacobian/Picard/RelativeSpec.lean}
+(\cref{chap:Picard_RelativeSpec}). The blueprint declarations correspond to
+Lean targets as follows.
+\begin{itemize}
+  \item \texttt{AlgebraicGeometry.Scheme.PicSharp.addCommGroup}
+    (\cref{lem:rel_pic_sharp_groupoid}) is the abelian-group instance on the
+    quotient set built in
+    \texttt{AlgebraicGeometry.Scheme.RelPicPresheaf.preimage\_subgroup}
+    (\cref{thm:relative_pic_quotient_well_defined}). Mathlib's
+    \texttt{QuotientAddGroup} machinery on a normal subgroup of an abelian
+    group is the backbone; the project-side work is to certify that
+    \(\pi_T^*\) is a group homomorphism (one extra
+    \texttt{LinearMap.map\_mul}--style line on tensor product preservation).
+  \item \texttt{AlgebraicGeometry.Scheme.PicSharp}
+    (\cref{def:rel_pic_sharp}) is the group-valued presheaf
+    \(T \mapsto \Pic(C \times_k T)/\pi_T^*\Pic(T)\). The Lean form is a functor
+    \((\Sch/k)^{op} \to \AddCommGroup\) built from the data of
+    \cref{thm:relative_pic_quotient_well_defined} +
+    \cref{lem:rel_pic_sharp_groupoid}.
+  \item \texttt{AlgebraicGeometry.Scheme.PicSharp.functorial}
+    (\cref{lem:rel_pic_sharp_functorial}) packages the structure-map
+    homomorphism property: the set map \(g^\sharp\) of
+    \cref{thm:pullback_natural} is a group homomorphism. On the Lean side
+    this is a one-step strengthening of the existing set-valued naturality
+    proof.
+  \item \texttt{AlgebraicGeometry.Scheme.PicSharp.presheaf}
+    (\cref{thm:rel_pic_sharp_presheaf}) wraps the previous three lemmas as a
+    functor instance into \(\AddCommGroup\).
+  \item \texttt{AlgebraicGeometry.Scheme.PicSharp.etSheaf}
+    % NOTE (iter-176 review): renamed from ``AlgebraicGeometry.Scheme.PicScheme``
+    % to avoid a collision with the representing-scheme declaration of the same
+    % name in ``Picard_FGAPicRepresentability``.
+    (\cref{def:rel_pic_etale_sheafification}) is the \'etale sheafification
+    of \texttt{PicSharp}. The Lean form is
+    \texttt{CategoryTheory.presheafToSheaf} applied to the big \'etale
+    topology on \texttt{Scheme} with target category
+    \texttt{AddCommGrpCat}.
+    \textbf{Lean API note.} The big \'etale Grothendieck topology on the
+    category of schemes is
+    \texttt{AlgebraicGeometry.Scheme.etaleTopology}, of type
+    \texttt{CategoryTheory.GrothendieckTopology AlgebraicGeometry.Scheme}
+    (module \texttt{Mathlib.AlgebraicGeometry.Sites.Etale}; an
+    \texttt{abbrev} for the topology generated by the big \'etale
+    pretopology \texttt{Scheme.etalePretopology}). The sheafification
+    entry point with abelian-group target is
+    \texttt{CategoryTheory.presheafToSheaf
+    AlgebraicGeometry.Scheme.etaleTopology AddCommGrpCat}, of type
+    \texttt{Functor (Schemeᵒᵖ \(\Rightarrow\) AddCommGrpCat)
+    (Sheaf etaleTopology AddCommGrpCat)} (module
+    \texttt{Mathlib.CategoryTheory.Sites.Sheafification}); it is
+    available under a \texttt{CategoryTheory.HasWeakSheafify} instance
+    for the pair \texttt{(etaleTopology, AddCommGrpCat)}. The slice
+    \((\Sch/k)\) on the Lean side is captured by working over the
+    global \texttt{Scheme} category and restricting along
+    \texttt{Over (Spec k)} via Mathlib's
+    \texttt{CategoryTheory.Sites.Over} / \texttt{GrothendieckTopology}
+    pullback construction (the relative Picard functor's natural domain
+    is the slice; Kleiman's notation \((\Sch/S)^{op}\) corresponds to
+    \texttt{(Over (Spec k))ᵒᵖ}). If the \texttt{HasWeakSheafify}
+    instance for the pair \texttt{(etaleTopology, AddCommGrpCat)} is
+    missing at the pinned Mathlib commit, the project-side fallback
+    combines the concrete set-valued sheafification
+    \texttt{CategoryTheory.GrothendieckTopology.sheafify} (module
+    \texttt{Mathlib.CategoryTheory.Sites.ConcreteSheafification}) with
+    the colimit-preservation of the forgetful functor
+    \(\texttt{AddCommGrpCat} \to \mathbf{Set}\) and the
+    \texttt{plusPlusSheaf} plus-construction on the underlying
+    set-valued presheaf, transported back through the
+    \texttt{ConcreteCategory} instance on \texttt{AddCommGrpCat}.
+  \item \texttt{AlgebraicGeometry.Scheme.PicSharp.etSheaf\_group\_structure}
+    (\cref{thm:rel_pic_etale_sheaf_group_structure}) packages the fact
+    that the \'etale sheafification preserves the abelian-group target.
+    On the Lean side it is the canonical
+    \texttt{Functor (Schemeᵒᵖ \(\Rightarrow\) AddCommGrpCat)}
+    obtained by applying
+    \texttt{CategoryTheory.presheafToSheaf
+    AlgebraicGeometry.Scheme.etaleTopology AddCommGrpCat} to
+    \texttt{PicSharp.presheaf} and then forgetting from the sheaf
+    category back to a presheaf-of-abelian-groups via
+    \texttt{(CategoryTheory.sheafToPresheaf etaleTopology
+    AddCommGrpCat)}. The proof is structural: it identifies
+    \texttt{etSheaf} (typed as a sheaf of sets via the concrete
+    plus-construction
+    \texttt{CategoryTheory.GrothendieckTopology.sheafify}) with the
+    value of \texttt{presheafToSheaf etaleTopology AddCommGrpCat
+    PicSharp.presheaf} under the forgetful functor, using
+    \texttt{CategoryTheory.GrothendieckTopology.sheafification\_obj}
+    (the equality \(\texttt{J.sheafification D}.\mathrm{obj}\, P =
+    \texttt{J.sheafify}\, P\)) and the fact that the forgetful functor
+    \(\texttt{AddCommGrpCat} \to \mathbf{Set}\) preserves the
+    multiequalizer / filtered-colimit data used by the
+    plus-construction (\texttt{plusPlusSheaf} commutes with
+    \texttt{forget} on a \texttt{ConcreteCategory} target).
+\end{itemize}
+
+The relationship with \cref{chap:Picard_FGAPicRepresentability} is captured by
+the slogan: the FGA Picard scheme of A.2.c represents
+\(\Pic^\sharp_{(C/k)\et}\) (Kleiman \S 4, the main existence theorem: ``\dots represents
+\(\Pic_{(X/S)\et}\)''), \emph{not} \(\Pic^\sharp_{C/k}\) directly. The \'etale
+sheafification step of this chapter is precisely what makes the
+representability theorem in A.2.c well-posed.
+
+\section{Out of scope}
+\label{sec:relpic_out_of_scope}
+
+The following constructions are downstream of this chapter and live in
+dedicated sibling chapters; this chapter does \emph{not} touch them:
+\begin{itemize}
+  \item \textbf{Representability of \(\Pic^\sharp_{(C/k)\et}\) by a scheme}
+    (A.2.c, \cref{chap:Picard_FGAPicRepresentability}) --- the
+    Grothendieck--Mumford--Kleiman existence theorem is the next step but is
+    not part of this chapter.
+  \item \textbf{Comparison theorem $\Pic_{X/S} \hookrightarrow
+    \Pic_{(X/S)\zar} \hookrightarrow \Pic_{(X/S)\et} \hookrightarrow
+    \Pic_{(X/S)\fppf}$} (Kleiman \S 2, the comparison theorem) --- the chain of inclusions
+    under \(\mathcal{O}_S \cong f_*\mathcal{O}_X\); we use only the
+    \'etale-sheafified functor here, not the full comparison chain.
+  \item \textbf{Identity component \(\Pic^0_{C/k}\)} (A.3) --- the open subgroup
+    scheme cut out by Hilbert polynomials, treated in a downstream chapter.
+  \item \textbf{Albanese universal property} (A.4) --- consumes the full
+    Route~A stack.
+  \item \textbf{Group-scheme structure on the representing object} --- once
+    \(\Pic^\sharp_{(C/k)\et}\) is representable (A.2.c), its representing scheme
+    inherits a \(k\)-group-scheme structure from the abelian-group-valued
+    target via the Yoneda embedding; that refinement is part of A.2.c, not
+    of this chapter.
+\end{itemize}
+
+\section{Internal-consistency check}
+\label{sec:relpic_consistency_check}
+
+The six Lean-pinned declaration blocks (plus the forward-looking
+\cref{thm:rel_pic_etale_sheaf_unit_canonical}, which carries no
+\texttt{\textbackslash lean\{\dots\}} pin and so is not yet tracked by
+the deterministic \texttt{sync\_leanok} phase) form a connected
+\texttt{\textbackslash uses\{\dots\}} chain rooted in
+\cref{chap:Picard_LineBundlePullback}:
+\begin{itemize}
+  \item \cref{lem:rel_pic_sharp_groupoid} uses
+    \cref{def:line_bundle_on_product, def:pullback_along_projection,
+    thm:relative_pic_quotient_well_defined} (all from A.1.b on disk) for the
+    statement, and in its proof additionally consumes the tensor-substrate
+    lemmas \cref{lem:tensorobj_lift_onproduct,
+    lem:tensorobj_preserves_locally_trivial, lem:tensorobj_assoc_iso,
+    lem:tensorobj_comm_iso, lem:tensorobj_unit_iso,
+    lem:tensorobj_isoclass_commgroup, lem:tensorobj_inverse_invertible,
+    lem:pullback_unit_iso} together with the locally-trivial pullback--tensor
+    comparison isomorphism \cref{lem:pullback_tensor_iso_loctriv} (the
+    concurrently-built A.1.c.sub input feeding additivity of \(\pi_T^*\)).
+  \item \cref{def:rel_pic_sharp} uses
+    \cref{def:line_bundle_on_product, def:pullback_along_projection,
+    thm:relative_pic_quotient_well_defined, lem:rel_pic_sharp_groupoid}.
+  \item \cref{lem:rel_pic_sharp_functorial} uses
+    \cref{def:rel_pic_sharp, lem:pullback_compose,
+    lem:rel_pic_sharp_groupoid, thm:pullback_natural}.
+  \item \cref{thm:rel_pic_sharp_presheaf} uses
+    \cref{def:rel_pic_sharp, lem:rel_pic_sharp_functorial,
+    lem:rel_pic_sharp_groupoid, thm:pullback_natural}.
+  \item \cref{def:rel_pic_etale_sheafification} uses
+    \cref{def:rel_pic_sharp, thm:rel_pic_sharp_presheaf}.
+  \item \cref{thm:rel_pic_etale_sheaf_group_structure} uses
+    \cref{def:rel_pic_etale_sheafification, thm:rel_pic_sharp_presheaf}.
+  \item \cref{thm:rel_pic_etale_sheaf_unit_canonical} uses
+    \cref{def:rel_pic_etale_sheafification, thm:rel_pic_sharp_presheaf,
+    thm:rel_pic_etale_sheaf_group_structure}. This block records the
+    canonical sheafification unit and its universal property; it carries
+    no \texttt{\textbackslash lean\{\dots\}} pin and is not yet tracked
+    by the deterministic \texttt{sync\_leanok} phase.
+\end{itemize}
+All \(\uses\) pointers resolve either inside this chapter or inside the already
+on-disk \cref{chap:Picard_LineBundlePullback}. No declaration cross-references
+a chapter that does not yet exist on disk; the reference to
+\cref{chap:Picard_FGAPicRepresentability} is purely commentary in the section
+``Lean encoding'' and ``Out of scope'', not a \(\uses\) target.

@@ -1,0 +1,10 @@
+import AlgebraicJacobian.Picard.LineBundlePullback
+import AlgebraicJacobian.Picard.TensorObjSubstrate
+import AlgebraicJacobian.Picard.TensorObjSubstrate.PresheafInternalHom
+import AlgebraicJacobian.Picard.TensorObjSubstrate.StalkTensor
+import AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse
+import AlgebraicJacobian.Picard.TensorObjSubstrate.PullbackTensorMapIso
+import AlgebraicJacobian.Picard.TensorObjSubstrate.PullbackTensorIso
+import AlgebraicJacobian.Picard.TensorObjInverse
+import AlgebraicJacobian.Picard.TensorObjSubstrate.Vestigial
+import AlgebraicJacobian.Picard.RelPicFunctor

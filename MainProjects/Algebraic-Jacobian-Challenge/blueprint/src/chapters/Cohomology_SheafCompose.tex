@@ -1,0 +1,40 @@
+\chapter{Sheaf condition along the structure-sheaf forget composite}
+\label{chap:Cohomology_SheafCompose}
+
+This chapter records the first step of Phase~A: equipping the abstract sheaf-cohomology pipeline with the link it needs to compute \(H^1(C, \mathcal O_C)\) as an abelian group. It is the smallest unblocking unit of progress toward the genus of a smooth proper curve (\cref{def:genus}).
+
+The chapter introduces no protected declarations: every definition and lemma here is auxiliary, supporting the construction of \(H^1(C, \mathcal O_C)\) in subsequent Phase~A iterations.
+
+\section{Statement}
+
+The structure sheaf \(\mathcal O_C\) of a scheme is delivered as a sheaf of commutative rings. To plug it into the cohomology API, which is formulated for sheaves of abelian groups, one must first transport the sheaf condition along the forgetful composite \(\mathrm{CommRing} \to \mathrm{Ring} \to \mathrm{Ab}\). The following theorem packages exactly this transport.
+
+\begin{theorem}\leanok
+[Sheaf condition transports along the structure-sheaf forget composite]
+  \label{thm:HasSheafCompose_forget}
+  \lean{AlgebraicGeometry.Cohomology.instHasSheafCompose_forget_CommRing_AddCommGrp}
+  Let \(X\) be a topological space. Then the Grothendieck topology of opens of \(X\) transports sheaves along the forgetful composite from commutative rings to abelian groups.
+\end{theorem}
+
+\begin{proof}
+
+
+\leanok
+  Both forgetful functors in the composite \(\mathrm{CommRing} \to \mathrm{Ring} \to \mathrm{Ab}\) create (in particular preserve) all small limits. The sheaf condition for the topology of opens is expressed as preservation of certain multiequalizer limits. Composing two limit-preserving functors gives a limit-preserving functor, so post-composition with the forget composite preserves the sheaf condition.
+\end{proof}
+
+\section{Use in the project}
+
+\Cref{thm:HasSheafCompose_forget} is the gateway to:
+\begin{itemize}
+  \item constructing \(\mathcal O_C\) as a sheaf of abelian groups on \(C\);
+  \item plugging that sheaf into the abstract cohomology functor once sheafification and \(\Ext\) are available (Phase~A steps 2--3);
+  \item endowing the resulting \(H^1\) with a \(k\)-vector-space structure via the \(k\)-algebra structure on \(\Gamma(C, \mathcal O_C)\) (Phase~A step~4);
+  \item finite-dimensionality via Serre's theorem on coherent cohomology of proper \(k\)-schemes (Phase~A step~5).
+\end{itemize}
+
+The chain is: sheaf-compose transport (this chapter) \(\to\) sheafification \(\to\) \(\Ext\) \(\to\) \(k\)-module structure on \(H^1\) \(\to\) Serre finiteness \(\to\) genus.
+
+\begin{remark}[Lean implementation]
+  In Lean the forget composite is written as the concatenation of the two structure-forgetful functors \(\mathrm{CommRingCat} \to \mathrm{RingCat} \to \mathrm{AddCommGrpCat}\). The proof appeals to the general fact that a functor preserving limits of a given size preserves the sheaf condition when post-composed with a presheaf. The instance body is a 5-line composition of Mathlib's limit-preservation lemmas.
+\end{remark}

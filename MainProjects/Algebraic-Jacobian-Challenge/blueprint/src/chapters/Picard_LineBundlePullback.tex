@@ -1,0 +1,627 @@
+\chapter{Line-bundle pullback on a relative curve}
+\label{chap:Picard_LineBundlePullback}
+% archon:covers AlgebraicJacobian/Picard/LineBundlePullback.lean
+
+% STRATEGY NOTE (iter-173). This chapter is the A.1.b sub-row of Route~A
+% (positive-genus arm of nonempty_jacobianWitness). It packages the line-bundle
+% pullback functor \(\pi_T^* : \Pic(T) \to \Pic(C \times_k T)\) along the
+% projection \(\pi_T : C \times_k T \to T\) of a relative curve, and the
+% set-valued relative Picard presheaf
+% \(\Pic^\sharp_{C/k}(T) := \Pic(C \times_k T) / \pi_T^*\Pic(T)\)
+% as a functor on \((\Sch/k)^{op}\). This chapter is gated on
+% \cref{chap:Picard_RelativeSpec} (iter-172) for the relative-spectrum machinery
+% that any concrete Lean-side affine-cover argument will need, and it itself
+% gates A.1.c (\'etale sheafification / \(\Pic^\sharp_{C/k}\) as a sheaf), A.2.*
+% (Quot / Hilbert representability), A.3 (identity component), and A.4
+% (universal property = Albanese / Jacobian).
+
+% NOTE (planner directive iter-173). Per the iter-173 blueprint-review
+% recommendation (see .archon/task_results/blueprint-reviewer-route173.md,
+% sub-phase choice), this chapter defines \(\Pic^\sharp_{C/k}\) as a
+% \emph{set-valued} presheaf on \((\Sch/k)^{op}\). The abelian-group refinement
+% (and the \'etale-sheafification step) belong to the follow-up chapter
+% Picard_RelPicFunctor.tex (A.1.c). The set-valued formulation lets us discharge
+% well-definedness of the quotient and functoriality of \(g^*\) as soon as a
+% line-bundle pullback functor and its composition identity are in hand, with
+% no reliance on Mathlib's \texttt{AddCommGrp} \'etale-sheafification API which
+% does not yet exist.
+
+\section{Setup and motivation}
+\label{sec:lbp_setup}
+
+Throughout this chapter, fix a base field \(k\) and a smooth proper geometrically
+integral curve \(C\) over \(k\) (the curve carrying the Jacobian; the chapter's
+constructions are functorial in \(C\) and do not formally use these hypotheses
+until they meet the representability theorems in the downstream A.1.c / A.2.*
+chapters). A test object is a \(k\)-scheme \(T\); the relative curve over \(T\) is
+\(C \times_k T \xrightarrow{\pi_T} T\), with \(\pi_C : C \times_k T \to C\) the
+companion projection. Both \(\pi_T\) and \(\pi_C\) are flat (because base change of
+flat morphisms is flat and \(C/k\) is flat since \(k\) is a field).
+
+The relative Picard presheaf compares two natural line-bundle groups on the
+product: the Picard group \(\Pic(C \times_k T)\) of the total space, and the
+Picard group \(\Pic(T)\) of the base. The pullback functor \(\pi_T^*\) sends a line
+bundle on \(T\) to its base-change line bundle on \(C \times_k T\); the
+\emph{relative Picard presheaf}
+\[
+  \Pic^\sharp_{C/k}(T) \;\;:=\;\; \Pic(C \times_k T)\, / \, \pi_T^*\Pic(T)
+\]
+is the quotient set (and, with extra structure, the quotient abelian group). It
+is the universal Set-valued functor on \((\Sch/k)^{op}\) that ``forgets line
+bundles pulled back from the base'', and is the starting point of the
+representability theorems of Grothendieck, Mumford, and Kleiman (see
+\cref{chap:Jacobian} for the wider Route~A picture).
+
+\section{Line bundles on a relative curve}
+\label{sec:lbp_line_bundle}
+
+\begin{definition}\leanok
+[Line bundle on a product]
+  \label{def:line_bundle_on_product}
+  \lean{AlgebraicGeometry.Scheme.LineBundle.OnProduct}
+  % SOURCE: [Kleiman], "The Picard scheme", §2 (FGA Explained Ch.9 §9.2),
+  % Definition df:aPf (absolute Picard functor)
+  % (read from references/kleiman-picard-src/kleiman-picard.tex, L1274-L1279).
+  % SOURCE QUOTE:
+  % "The {\it absolute Picard functor} \(\Pic_X\) is the functor from  the
+  %  category of (locally Noetherian) \(S\)-schemes \(T\) to the category of
+  % abelian groups defined by the formula
+  %     \(\)\Pic_X(T):=\Pic(X_T).\(\)"
+  \textit{Source: [Kleiman], ``The Picard scheme'', §2,
+  Def.~``absolute Picard functor''
+  (cf.\ Stacks tag 01HK, Hartshorne II~§6).}
+  Let \(k\) be a base field, \(C\) a \(k\)-scheme (in our application, a smooth proper
+  geometrically integral curve), and \(T\) a \(k\)-scheme. A
+  \emph{line bundle on the relative curve \(C \times_k T\)} is an invertible
+  \(\mathcal{O}_{C \times_k T}\)-module, that is, an
+  \(\mathcal{O}_{C \times_k T}\)-module \(\mathcal{L}\) such that there exists an
+  open cover \(\{U_i\}\) of \(C \times_k T\) on which each restriction
+  \(\mathcal{L}|_{U_i}\) is free of rank one. Two line bundles are isomorphic if
+  they are isomorphic as \(\mathcal{O}_{C \times_k T}\)-modules. The set of
+  isomorphism classes forms an abelian group under tensor product (the
+  \emph{Picard group}), denoted
+  \(\Pic(C \times_k T)\). In Kleiman's notation with \(X = C\) and \(S = \Spec k\),
+  this is exactly the value
+  \(\Pic_C(T) = \Pic(C \times_k T)\) of the absolute Picard functor.
+\end{definition}
+
+% NOTE: iter-174 Lane E (file-skeleton) encodes the carrier `OnProduct πC πT`
+% as `Type (u+1) := sorry` (a TYPE-level scaffold sorry), mirroring the
+% iter-173 precedent for `Scheme.QcohAlgebra`. Mathlib commit `b80f227`
+% ships no `IsInvertible` predicate on `Scheme.Modules`; the closest is
+% `Module.Invertible` (rings-only, in `Mathlib.RingTheory.PicardGroup`).
+% iter-175+ refines the Lean body to a `structure` pairing a
+% `(pullback πC πT).Modules` carrier with an invertibility witness (either
+% Mathlib upstream of an `IsInvertible`-on-sheaf-of-modules predicate, or
+% a project-side cover-by-affine-opens reduction to `Module.Invertible R`
+% over each chart).
+%
+% NOTE (iter-186 review): The iter-186 Lane A.1.b prover landed the carrier as
+% `@[reducible] noncomputable def OnProduct := (Limits.pullback πC πT).Modules`
+% --- a direct alias of Mathlib's `Scheme.Modules` carrier, dropping the
+% invertibility wrapper as a deliberate carrier-level simplification (Mathlib
+% b80f227 still ships no `IsInvertible`-on-`Scheme.Modules` predicate). The
+% 5 declarations in this file are now axiom-clean (kernel-only: propext,
+% Classical.choice, Quot.sound) as direct Mathlib applications, but the
+% semantic refinement to the full Pic claim (with `IsInvertible` witness AND
+% quotient by `pi_T^* Pic(T)` subgroup) is iter-187+ follow-up work:
+% project-side `LineBundle.IsInvertible : (pullback πC πT).Modules → Prop`
+% via local trivialisation on an affine open cover, OR an upstream Mathlib PR
+% for `Scheme.Modules.IsInvertible`.
+%
+% NOTE (iter-187 review): The iter-187 follow-up lane LANDED the
+% project-side trivialisation predicate as
+% `Scheme.LineBundle.IsLocallyTrivial : ∀ x : X, ∃ U : X.Opens,
+%     x ∈ U ∧ IsAffineOpen U ∧ Nonempty (M.restrict U.ι ≅ SheafOfModules.unit _)`
+% (the affine-cover trivialisation path, NOT the planner's earlier
+% `IsInvertible` naming — the rename is semantic-equivalent: Mathlib
+% b80f227 still ships no `Scheme.Modules.IsInvertible` predicate per
+% iter-187 lean_local_search). `OnProduct` is now the subtype
+% `{ M : (Limits.pullback πC πT).Modules // IsLocallyTrivial M }` with
+% `.carrier` / `.isLocallyTrivial` projection helpers. The Stacks 01HH
+% preservation lemma `IsLocallyTrivial.pullback` lands with 1 narrow
+% named typed sorry on the chart-iso composition
+% (`restrictFunctorIsoPullback` + `pullbackComp` + `pullbackObjUnitToUnit`)
+% — iter-188+ closure ~30-50 LOC.
+
+\section{Project-side IsLocallyTrivial substrate}
+\label{sec:lbp_isLocallyTrivial_substrate}
+
+Mathlib at the pinned commit \texttt{b80f227} ships no
+\texttt{Scheme.Modules.IsInvertible} predicate (iter-187 \texttt{lean\_local\_search}
+verdict: empty). The project introduces a stand-in predicate
+\texttt{Scheme.LineBundle.IsLocallyTrivial} encoding rank-one local
+trivialisation on an affine cover. The subtype
+\texttt{\{ M : (Limits.pullback πC πT).Modules // IsLocallyTrivial M \}}
+gives the carrier of \cref{def:line_bundle_on_product}.
+
+\begin{definition}
+
+\leanok
+[Local triviality of a \(\mathcal{O}_X\)-module]
+  \label{def:IsLocallyTrivial}
+  \lean{AlgebraicGeometry.Scheme.LineBundle.IsLocallyTrivial}
+  \textit{Source: Stacks~\href{https://stacks.math.columbia.edu/tag/01HH}{01HH}
+  (locally trivial $\mathcal{O}_X$-modules), specialised to rank one.}
+  An \(\mathcal{O}_X\)-module \(\mathcal{M}\) on a scheme \(X\) is
+  \emph{locally trivial of rank one} if for every point \(x \in X\) there
+  exists an affine open \(U \ni x\) and an iso
+  \(\mathcal{M}|_U \cong \mathcal{O}_U\) (the structure sheaf restricted to
+  \(U\) viewed as the unit object of \(X.\mathrm{Modules}\)). Formally:
+  \[
+    \forall\, x : X, \exists\, U : X.\mathrm{Opens},
+      x \in U \,\wedge\, \mathtt{IsAffineOpen}\, U \,\wedge\,
+      \mathtt{Nonempty}\, (\mathcal{M}.\mathrm{restrict}\, U.\iota \cong
+        \mathtt{SheafOfModules.unit}\, \_).
+  \]
+\end{definition}
+
+\begin{lemma}
+
+\leanok
+[Pullback preserves local triviality (Stacks 01HH)]
+  \label{lem:IsLocallyTrivial_pullback}
+  \lean{AlgebraicGeometry.Scheme.LineBundle.IsLocallyTrivial.pullback}
+  \uses{def:IsLocallyTrivial}
+  \textit{Source: Stacks~\href{https://stacks.math.columbia.edu/tag/01HH}{01HH}
+  (pullback of a locally trivial module is locally trivial).}
+  Let \(f : Y \to X\) be a morphism of schemes and let
+  \(\mathcal{M} : X.\mathrm{Modules}\) be locally trivial of rank one
+  (\cref{def:IsLocallyTrivial}). Then \(f^*\mathcal{M}\) is locally
+  trivial of rank one.
+\end{lemma}
+\begin{proof}
+  \uses{def:IsLocallyTrivial}
+  \leanok
+  Given \(y : Y\), let \(x = f(y) \in X\). By the local triviality of
+  \(\mathcal{M}\) at \(x\), there is an affine open \(U \ni x\) and an
+  iso \(\mathcal{M}|_U \cong \mathcal{O}_U\). The preimage \(f^{-1}U\)
+  is an open neighbourhood of \(y\), and any sufficiently small affine
+  open \(V \subseteq f^{-1}U\) containing \(y\) (exists by
+  \texttt{exists\_isAffineOpen\_mem\_and\_subset}) gives the chart. The
+  required iso
+  \((f^*\mathcal{M})|_V \cong \mathcal{O}_V\) follows from the chain:
+  \texttt{restrictFunctorIsoPullback} (identifying \(\mathrm{restrict}\, V.\iota\)
+  with \(\mathrm{pullback}\, V.\iota\)), \texttt{pullbackComp} (composing
+  pullback functors along \(V.\iota \circ f = (g : V \to U) \circ U.\iota\)),
+  and \texttt{pullbackObjUnitToUnit} (pullback of unit is unit; uses
+  \(\mathtt{F.Final}\) instance for the underlying continuous functor of an
+  open immersion).
+
+  % NOTE (iter-188 plan-phase): Body lands with 1 narrow named typed sorry
+  % on the residual chart-iso construction; the affine-chart existence step
+  % is closed axiom-clean. Closure target iter-188 prover, ~30-50 LOC.
+\end{proof}
+
+\begin{definition}
+
+\leanok
+[Underlying sheaf of a line bundle on the product]
+  \label{def:OnProduct_carrier}
+  \lean{AlgebraicGeometry.Scheme.LineBundle.OnProduct.carrier}
+  \uses{def:line_bundle_on_product, def:IsLocallyTrivial}
+  The \emph{underlying sheaf of modules} of a line bundle
+  \(\mathcal{L} \in \mathrm{OnProduct}\,\pi_C\,\pi_T\)
+  (\cref{def:line_bundle_on_product}) is its first component, the
+  \(\mathcal{O}_{C \times_k T}\)-module \(\mathcal{L}.\mathrm{carrier}\) obtained
+  by forgetting the local-triviality witness. Since
+  \(\mathrm{OnProduct}\,\pi_C\,\pi_T\) is the subtype
+  \(\{\,\mathcal{M} : (C \times_k T).\mathrm{Modules} \mid
+  \mathtt{IsLocallyTrivial}\,\mathcal{M}\,\}\) of
+  \cref{def:line_bundle_on_product}, the carrier is the underlying
+  \((C \times_k T).\mathrm{Modules}\) value, recovering the all-modules
+  carrier of \cref{def:line_bundle_on_product} by projecting away the second
+  (invertibility) component.
+\end{definition}
+
+\begin{lemma}
+
+\leanok
+[A line bundle on the product is locally trivial]
+  \label{lem:OnProduct_isLocallyTrivial}
+  \lean{AlgebraicGeometry.Scheme.LineBundle.OnProduct.isLocallyTrivial}
+  \uses{def:line_bundle_on_product, def:OnProduct_carrier, def:IsLocallyTrivial}
+  For any line bundle \(\mathcal{L} \in \mathrm{OnProduct}\,\pi_C\,\pi_T\)
+  (\cref{def:line_bundle_on_product}), the underlying sheaf of modules
+  \(\mathcal{L}.\mathrm{carrier}\) (\cref{def:OnProduct_carrier}) is locally
+  trivial of rank one in the sense of \cref{def:IsLocallyTrivial}. This is the
+  second component of the subtype, the invertibility witness packaged with the
+  carrier.
+\end{lemma}
+\begin{proof}
+  \uses{def:IsLocallyTrivial}
+  \leanok
+  Proved directly in Lean: the local-triviality witness is the defining second
+  component of the subtype \(\mathrm{OnProduct}\,\pi_C\,\pi_T\).
+\end{proof}
+
+\section{The pullback functor along the projection}
+\label{sec:lbp_pullback_projection}
+
+If \(f : Y \to Z\) is a morphism of schemes and \(\mathcal{M}\) is an invertible
+\(\mathcal{O}_Z\)-module, the pullback \(f^*\mathcal{M}\) is an invertible
+\(\mathcal{O}_Y\)-module (the pullback of an open cover trivialising \(\mathcal{M}\)
+trivialises \(f^*\mathcal{M}\), and the pullback of a free module of rank one is
+free of rank one). This is a standard preservation fact (Stacks tag 01HH); we
+specialise it to the projection \(\pi_T : C \times_k T \to T\) and the
+\(\mathcal{O}_T\)-Picard group.
+
+\begin{definition}\leanok
+[Pullback along the projection]
+  \label{def:pullback_along_projection}
+  \lean{AlgebraicGeometry.Scheme.LineBundle.pullbackAlongProjection}
+  
+  % SOURCE: [Kleiman], "The Picard scheme", §2 (FGA Explained Ch.9 §9.2),
+  % Definition df:aPf (functoriality of the absolute Picard functor)
+  % (read from references/kleiman-picard-src/kleiman-picard.tex, L1274-L1290).
+  % SOURCE QUOTE:
+  % "The {\it absolute Picard functor} \(\Pic_X\) is the functor from  the
+  %  category of (locally Noetherian) \(S\)-schemes \(T\) to the category of
+  % abelian groups defined by the formula
+  %     \(\)\Pic_X(T):=\Pic(X_T).\(\)
+  %  [\dots]
+  %  The absolute Picard functor  is a ``prepared presheaf'' in this
+  % sense: given any family of  \(S\)-schemes \(T_i\), we have
+  %     \(\)\Pic_X\bigl(\textstyle\coprod T_i\bigr)=\prod\Pic_X(T_i).\(\)"
+  \textit{Source: [Kleiman], ``The Picard scheme'', §2,
+  Def.~``absolute Picard functor'' and the ``prepared presheaf'' paragraph
+  (cf.\ Stacks tag 01HH).}
+  Let \(C/k\) and \(T/k\) be as in
+  \cref{def:line_bundle_on_product}, and let \(\pi_T : C \times_k T \to T\)
+  denote the canonical projection. The \emph{pullback along \(\pi_T\)} is the
+  group homomorphism (in fact, the set map; the additive structure is not used
+  in this chapter)
+  \[
+    \pi_T^* \;\colon\; \Pic(T) \;\longrightarrow\; \Pic(C \times_k T),
+    \qquad [\mathcal{N}] \;\longmapsto\; [\pi_T^* \mathcal{N}],
+  \]
+  sending an isomorphism class of an invertible \(\mathcal{O}_T\)-module
+  \(\mathcal{N}\) to the isomorphism class of \(\pi_T^*\mathcal{N}\), an invertible
+  \(\mathcal{O}_{C \times_k T}\)-module (Stacks tag 01HH). This assignment is well
+  defined because pullback of \(\mathcal{O}\)-modules respects isomorphism, and is
+  multiplicative on tensor products. It defines the functor
+  \(\pi^* \mathrm{Pic} \subseteq \Pic_C\) that we quotient by in the definition of
+  the relative Picard presheaf.
+\end{definition}
+
+% NOTE (iter-186 review): The iter-186 Lane A.1.b prover landed the body as
+% the direct application `(Scheme.Modules.pullback (Limits.pullback.snd πC πT)).obj N`,
+% axiom-clean modulo the carrier-level simplification on `OnProduct`. The
+% invertibility-preservation step (Stacks 01HH: pullback of invertible is
+% invertible) is deferred to iter-187+ once `OnProduct` carries an
+% invertibility witness.
+
+\section{Composition of pullbacks}
+\label{sec:lbp_compose}
+
+\begin{lemma}\leanok
+[Composition of line-bundle pullbacks]
+  \label{lem:pullback_compose}
+  \lean{AlgebraicGeometry.Scheme.LineBundle.pullback_pullback_eq}
+  \uses{def:line_bundle_on_product, def:pullback_along_projection}
+
+  % SOURCE: [Kleiman], "The Picard scheme", §2 (FGA Explained Ch.9 §9.2),
+  % Definition df:aPf (the absolute Picard functor as a functor; functoriality
+  % includes composition)
+  % (read from references/kleiman-picard-src/kleiman-picard.tex, L1274-L1279).
+  % SOURCE QUOTE:
+  % "The {\it absolute Picard functor} \(\Pic_X\) is the functor from  the
+  %  category of (locally Noetherian) \(S\)-schemes \(T\) to the category of
+  % abelian groups defined by the formula
+  %     \(\)\Pic_X(T):=\Pic(X_T).\(\)"
+  \textit{Source: [Kleiman], ``The Picard scheme'', §2,
+  Def.~``absolute Picard functor'' --- the word \emph{functor} encodes both the
+  identity and composition laws (cf.\ Stacks tag 01HG: pullback of an invertible
+  module is invertible and compatible with composition).}
+  Let \(C/k\) be as in \cref{def:line_bundle_on_product}, and let
+  \(g : T' \to T\) be a morphism of \(k\)-schemes. Write
+  \(\pi_T : C \times_k T \to T\) and \(\pi_{T'} : C \times_k T' \to T'\) for the
+  canonical projections, and write
+  \(g_C := \mathrm{id}_C \times_k g : C \times_k T' \to C \times_k T\) for the
+  base change of \(g\) along \(C/k\). Then on line bundles we have the equality of
+  pullback maps
+  \[
+    g^* \circ \pi_T^* \;\;=\;\; \pi_{T'}^* \circ g^*
+    \quad\colon\quad \Pic(T) \;\longrightarrow\; \Pic(C \times_k T'),
+  \]
+  and, equivalently, the canonical natural isomorphism of pullback functors
+  \[
+    g_C^* \circ \pi_T^* \;\;\cong\;\; \pi_{T'}^* \circ g^*
+  \]
+  realises both sides as the pullback along the composite morphism
+  \(\pi_T \circ g_C = g \circ \pi_{T'} : C \times_k T' \to T\).
+\end{lemma}
+
+% SOURCE QUOTE PROOF: not applicable --- the statement is one application of
+% the functoriality of pullback (Kleiman § 2's "absolute Picard functor is a
+% functor" + Stacks 01HG); no separate proof body is offered in the cited
+% source, only the structural assertion. The Lean side is therefore a direct
+% appeal to Mathlib's pullback-of-modules transitivity.
+\begin{proof}
+  
+  
+\leanok
+  The square
+  \[
+    \begin{array}{ccc}
+      C \times_k T' & \xrightarrow{g_C} & C \times_k T \\
+      \;\downarrow\,\pi_{T'} & & \;\downarrow\,\pi_T \\
+      T' & \xrightarrow{g} & T
+    \end{array}
+  \]
+  is a pullback square (by definition of the fibre product). Equality of the
+  composites \(\pi_T \circ g_C = g \circ \pi_{T'}\) holds on the nose. Pullback of
+  \(\mathcal{O}\)-modules is functorial, so for any \(\mathcal{N} \in \Pic(T)\)
+  there is a canonical isomorphism
+  \(g_C^*\pi_T^*\mathcal{N} \cong \pi_{T'}^* g^* \mathcal{N}\)
+  obtained as the composite of pullback-along-composition isomorphisms
+  \((\pi_T \circ g_C)^*\mathcal{N} \cong (g \circ \pi_{T'})^*\mathcal{N}\)
+  (Mathlib \texttt{Module.pullback\_comp} on the underlying \(\mathcal{O}\)-module
+  category, or Stacks tag 01HG for the category-theoretic statement). Passing
+  to isomorphism classes turns this canonical isomorphism into the equality of
+  set-valued maps stated above.
+\end{proof}
+
+\section{The relative Picard presheaf (set-valued)}
+\label{sec:lbp_relpic_quotient}
+
+We now package the pullback functor into the relative Picard presheaf. As
+explained in the planner note at the top of the chapter, we work with the
+Set-valued version; the group refinement is deferred to A.1.c.
+
+\begin{theorem}\leanok
+[The relative Picard quotient is well defined]
+  \label{thm:relative_pic_quotient_well_defined}
+  \lean{AlgebraicGeometry.Scheme.RelPicPresheaf.preimage_subgroup}
+  
+  % SOURCE: [Kleiman], "The Picard scheme", §2 (FGA Explained Ch.9 §9.2),
+  % Definition df:Pfs (relative Picard functor)
+  % (read from references/kleiman-picard-src/kleiman-picard.tex, L1311-L1318).
+  % SOURCE QUOTE:
+  % "\begin{dfn}\label{df:Pfs}
+  %   The {\it relative Picard functor} \(\Pic_{X/S}\) is defined by
+  %     \(\)\Pic_{X/S}(T):=\Pic(X_T)\big/\Pic(T).\(\)
+  %  Denote its associated sheaves in the Zariski, \'etale, and fppf
+  % topologies  by
+  %     \(\)\Pic_{(X/S)\zar},\ \Pic_{(X/S)\et},\
+  %     \Pic_{(X/S)\fppf}.\(\)
+  %  \end{dfn}"
+  \textit{Source: [Kleiman], ``The Picard scheme'', §2,
+  Def.~``relative Picard functor'' df:Pfs.}
+  Let \(C/k\) be as in \cref{def:line_bundle_on_product} and let \(T\) be a
+  \(k\)-scheme. The subset
+  \[
+    H_T \;\;:=\;\; \pi_T^* \Pic(T) \;\;\subseteq\;\; \Pic(C \times_k T)
+  \]
+  is the image of the pullback map \(\pi_T^*\)
+  (\cref{def:pullback_along_projection}); in particular it contains the trivial
+  class and is closed under the multiplication of \(\Pic(C \times_k T)\) (so it is
+  a subgroup). Define
+  \[
+    \Pic^\sharp_{C/k}(T) \;\;:=\;\; \Pic(C \times_k T) \, / \, H_T,
+  \]
+  the quotient set whose elements are equivalence classes \([\mathcal{L}]\) of
+  line bundles \(\mathcal{L} \in \Pic(C \times_k T)\) under the relation
+  \(\mathcal{L} \sim \mathcal{L}'\) iff
+  \(\mathcal{L} \otimes \mathcal{L}'^{-1} \in H_T\).
+  Then \(T \mapsto \Pic^\sharp_{C/k}(T)\) is a well-defined assignment from
+  \(k\)-schemes to sets, and the natural map
+  \(\Pic(C \times_k T) \to \Pic^\sharp_{C/k}(T)\) is a surjection of sets.
+\end{theorem}
+
+% NOTE (iter-186 review): The iter-186 Lane A.1.b prover landed the body as a
+% `Setoid` on `OnProduct = (pullback πC πT).Modules` whose relation is
+% `r L L' := Nonempty (L ≅ L')` (iso-class equivalence; axiom-clean). This
+% identifies isomorphic modules (giving the underlying set of `Pic(C ×_S T)`
+% once invertibility is imposed in iter-187+) but does NOT yet quotient by
+% the pullback subgroup `pi_T^* Pic(T)`. The full quotient requires (a) a
+% tensor-product structure on `Scheme.Modules` (Mathlib ships
+% `PresheafOfModules.Monoidal.tensorObj` but no monoidal structure on
+% `Scheme.Modules` directly at b80f227), and (b) an inverse for invertible
+% sheaves (depends on the iter-187+ `IsInvertible` predicate). Iter-187+
+% refinement: `r L L' := exists N : T.Modules, Nonempty (L tensor L'inv iso
+% pullbackAlongProjection πC πT N)` once both are available.
+
+% SOURCE QUOTE PROOF: Kleiman §2 does not supply a separate "proof" block for
+% df:Pfs --- the definition's well-definedness is a direct group-theoretic
+% observation. The verbatim statement above is the full source content. The
+% project-side proof is therefore a structural restatement in Lean syntax,
+% not a translation of an external argument.
+\begin{proof}
+  
+  
+\leanok
+  The subset \(H_T = \pi_T^*\Pic(T)\) is a subgroup of \(\Pic(C \times_k T)\)
+  because the pullback map \(\pi_T^*\) is a homomorphism of abelian groups (its
+  multiplicativity on tensor products is part of
+  \cref{def:pullback_along_projection}). Therefore the quotient
+  \(\Pic(C \times_k T) / H_T\) is a well-defined quotient set (equivalently, a
+  quotient abelian group; we forget the group structure to obtain the
+  Set-valued version per the planner directive). The surjection
+  \(\Pic(C \times_k T) \to \Pic^\sharp_{C/k}(T)\) is the canonical quotient map
+  to equivalence classes; surjectivity is by construction.
+\end{proof}
+
+\section{Naturality in the test scheme}
+\label{sec:lbp_pullback_natural}
+
+\begin{theorem}\leanok
+[Pullback descends through the quotient]
+  \label{thm:pullback_natural}
+  \lean{AlgebraicGeometry.Scheme.RelPicPresheaf.functorial}
+  \uses{def:line_bundle_on_product, def:pullback_along_projection,
+    lem:pullback_compose, thm:relative_pic_quotient_well_defined}
+
+  % SOURCE: [Kleiman], "The Picard scheme", §2 (FGA Explained Ch.9 §9.2),
+  % Definitions df:aPf + df:Pfs (the relative Picard functor is a functor)
+  % (read from references/kleiman-picard-src/kleiman-picard.tex, L1274-L1318).
+  % SOURCE QUOTE:
+  % "The {\it absolute Picard functor} \(\Pic_X\) is the functor from  the
+  %  category of (locally Noetherian) \(S\)-schemes \(T\) to the category of
+  % abelian groups defined by the formula
+  %     \(\)\Pic_X(T):=\Pic(X_T).\(\)
+  %  [\dots]
+  %  \begin{dfn}\label{df:Pfs}
+  %   The {\it relative Picard functor} \(\Pic_{X/S}\) is defined by
+  %     \(\)\Pic_{X/S}(T):=\Pic(X_T)\big/\Pic(T).\(\)"
+  \textit{Source: [Kleiman], ``The Picard scheme'', §2,
+  Defs.~df:aPf + df:Pfs (the word \emph{functor} encodes naturality in \(T\);
+  cf.\ Stacks tag 01HG).}
+  Let \(C/k\) be as in \cref{def:line_bundle_on_product}, and let
+  \(g : T' \to T\) be a morphism of \(k\)-schemes. The pullback maps
+  \(g_C^* : \Pic(C \times_k T) \to \Pic(C \times_k T')\) and
+  \(g^* : \Pic(T) \to \Pic(T')\) make the diagram
+  \[
+    \begin{array}{ccc}
+      \Pic(T) & \xrightarrow{\;\;\pi_T^*\;\;} & \Pic(C \times_k T) \\
+      \;\downarrow\,g^* & & \;\downarrow\,g_C^* \\
+      \Pic(T') & \xrightarrow{\;\;\pi_{T'}^*\;\;} & \Pic(C \times_k T')
+    \end{array}
+  \]
+  commute (\cref{lem:pullback_compose}). Therefore \(g_C^*\) sends
+  \(H_T = \pi_T^*\Pic(T)\) into \(H_{T'} = \pi_{T'}^*\Pic(T')\) and hence induces a
+  unique set map
+  \[
+    g^\sharp \;\;\colon\;\; \Pic^\sharp_{C/k}(T) \;\longrightarrow\;
+                              \Pic^\sharp_{C/k}(T'),
+    \qquad [\mathcal{L}] \;\longmapsto\; [g_C^* \mathcal{L}],
+  \]
+  through the quotients of
+  \cref{thm:relative_pic_quotient_well_defined}. The assignment
+  \(g \mapsto g^\sharp\) satisfies \(\mathrm{id}_T^\sharp = \mathrm{id}\) and
+  \((g \circ h)^\sharp = g^\sharp \circ h^\sharp\) for any composable
+  \(h : T'' \to T'\) and \(g : T' \to T\); thus
+  \(T \mapsto \Pic^\sharp_{C/k}(T)\) extends to a functor
+  \(\Pic^\sharp_{C/k} : (\Sch/k)^{op} \to \mathrm{Set}\).
+\end{theorem}
+
+% SOURCE QUOTE PROOF: As with df:Pfs, Kleiman §2 does not supply a separate
+% proof body for the functoriality assertion --- it is part of the definition
+% (the word "functor" carries the identity and composition laws). The verbatim
+% quote is therefore the same as the statement.
+\begin{proof}
+  
+  
+\leanok
+  Commutativity of the displayed square is the special case
+  \(g_C^* \circ \pi_T^* = \pi_{T'}^* \circ g^*\) of
+  \cref{lem:pullback_compose}. Therefore \(g_C^*\) maps the image
+  \(H_T = \pi_T^*\Pic(T)\) into the image
+  \(H_{T'} = \pi_{T'}^*\Pic(T')\): an element
+  \(\pi_T^*\mathcal{N} \in H_T\) with \(\mathcal{N} \in \Pic(T)\) has
+  \(g_C^*\pi_T^*\mathcal{N} = \pi_{T'}^*g^*\mathcal{N} \in H_{T'}\). Hence
+  \(g_C^*\) induces a unique map of quotient sets
+  \(g^\sharp : \Pic(C \times_k T)/H_T \to \Pic(C \times_k T')/H_{T'}\) by the
+  universal property of the quotient set
+  (\cref{thm:relative_pic_quotient_well_defined}). The identity law
+  \(\mathrm{id}^\sharp = \mathrm{id}\) is immediate from
+  \(\mathrm{id}^* = \mathrm{id}\) for pullback of \(\mathcal{O}\)-modules. The
+  composition law \((g \circ h)^\sharp = g^\sharp \circ h^\sharp\) follows from
+  the corresponding statement for \(\mathcal{O}\)-module pullback
+  \((g \circ h)^* = h^* \circ g^*\) (passing through the quotient is functorial).
+  Hence \(\Pic^\sharp_{C/k} : (\Sch/k)^{op} \to \mathrm{Set}\) is a presheaf.
+\end{proof}
+
+\section{Lean encoding}
+\label{sec:lbp_lean_encoding}
+
+The Lean target file is the new
+\texttt{AlgebraicJacobian/Picard/LineBundlePullback.lean}, sibling to
+\texttt{AlgebraicJacobian/Picard/RelativeSpec.lean}
+(\cref{chap:Picard_RelativeSpec}). The blueprint declarations correspond to
+Lean targets as follows.
+
+\begin{itemize}
+  \item \texttt{AlgebraicGeometry.Scheme.LineBundle.OnProduct}
+    (\cref{def:line_bundle_on_product}) is a re-export / type alias for the
+    Mathlib invertible-module predicate on \(C \times_k T\). Mathlib provides
+    \texttt{Mathlib.AlgebraicGeometry.Modules.Invertible} (or the equivalent
+    bundle-of-rank-one packaging in \texttt{Mathlib.AlgebraicGeometry.LineBundle});
+    the project-side declaration simply specialises the Mathlib predicate to
+    the product scheme.
+  \item \texttt{AlgebraicGeometry.Scheme.LineBundle.pullbackAlongProjection}
+    (\cref{def:pullback_along_projection}) is the pullback map on Picard
+    groups induced by \(\pi_T : C \times_k T \to T\). The Mathlib backbone is
+    the pullback of \(\mathcal{O}\)-modules
+    (\texttt{Mathlib.AlgebraicGeometry.Pullback}); the project-side
+    declaration restricts that pullback to invertible modules and proves
+    invertibility is preserved (Stacks tag 01HH; one open-cover unfolding).
+  \item \texttt{AlgebraicGeometry.Scheme.LineBundle.pullback\_pullback\_eq}
+    (\cref{lem:pullback_compose}) is the equality of pullback maps on
+    isomorphism classes; the Lean form is the propositional equality of two
+    \texttt{LinearMap}s (or \texttt{Quotient.mk}s) deduced from Mathlib's
+    pullback-of-modules transitivity.
+  \item \texttt{AlgebraicGeometry.Scheme.RelPicPresheaf.preimage\_subgroup}
+    (\cref{thm:relative_pic_quotient_well_defined}) is the
+    structural existence of the quotient set
+    \(\Pic(C \times_k T)/H_T\). Mathlib's quotient-set machinery
+    (\texttt{Quotient}, \texttt{QuotientGroup}) suffices; the project-side
+    declaration only packages the universal property in the form
+    \texttt{CategoryTheory.Functor.RepresentableBy} expects.
+  \item \texttt{AlgebraicGeometry.Scheme.RelPicPresheaf.functorial}
+    (\cref{thm:pullback_natural}) is the functor instance
+    \(\Pic^\sharp_{C/k} : (\Sch/k)^{op} \to \mathrm{Set}\). The naturality square
+    of \cref{lem:pullback_compose} is the data; the identity and composition
+    laws are the lemmas \texttt{id\_eq} and \texttt{comp\_eq} of the
+    quotient-induced map.
+\end{itemize}
+
+No new core axiom is required. The chapter is a definitional / structural
+construction on top of the existing Mathlib invertible-module + pullback
+infrastructure, plus the project's relative-spectrum chapter
+(\cref{chap:Picard_RelativeSpec}) for any concrete Lean unfolding that the
+prover wishes to perform on an affine open of \(C \times_k T\).
+
+\section{Out of scope}
+\label{sec:lbp_out_of_scope}
+
+This chapter packages \emph{only} the line-bundle pullback functor on a
+relative curve and the well-definedness + functoriality of the set-valued
+quotient \(\Pic^\sharp_{C/k}\). The following downstream constructions live in
+separate sibling chapters and are explicitly out of scope here:
+\begin{itemize}
+  \item \textbf{Group structure on \(\Pic^\sharp_{C/k}\)} (A.1.c) --- the
+    quotient is here treated as set-valued; the abelian-group enhancement
+    (and the \'etale-sheafification step that turns the presheaf into a
+    representable functor) belongs to the planned chapter
+    \texttt{Picard\_RelPicFunctor.tex}.
+  \item \textbf{Comparison theorem $\Pic_{X/S} \hookrightarrow \Pic_{(X/S)\zar}
+    \hookrightarrow \Pic_{(X/S)\et} \hookrightarrow \Pic_{(X/S)\fppf}$}
+    (Kleiman §2 Thm~\texttt{th:cmp}) --- out of scope here (\'etale-sheaf
+    refinement; A.1.c).
+  \item \textbf{Representability of \(\Pic_{C/k}\) as a scheme} --- A.1.c +
+    A.2.* (Hilbert / Quot schemes); requires the flattening-stratification
+    chapter \texttt{Picard\_FGA\_FlatteningStratification.tex} (planned, not
+    yet on disk; do not forward-reference).
+  \item \textbf{Identity component \(\Pic^0_{C/k}\) and abelian-variety
+    structure} --- A.3 (out of scope; depends on \'etale-sheaf and Hilbert
+    machinery).
+  \item \textbf{Albanese universal property / Jacobian morphism} --- A.4 (out
+    of scope; consumes the entire Route~A stack).
+\end{itemize}
+
+\section{Internal-consistency check}
+\label{sec:lbp_consistency_check}
+
+The five declaration blocks form a connected \(\uses\) chain rooted in
+\cref{chap:Picard_RelativeSpec}:
+\begin{itemize}
+  \item \cref{def:line_bundle_on_product} is a root (no internal \(\uses\));
+    its math content uses Mathlib's invertible-module predicate (not chapter
+    dependency).
+  \item \cref{def:pullback_along_projection} uses
+    \cref{def:line_bundle_on_product}.
+  \item \cref{lem:pullback_compose} uses
+    \cref{def:pullback_along_projection}.
+  \item \cref{thm:relative_pic_quotient_well_defined} uses
+    \cref{def:line_bundle_on_product, def:pullback_along_projection}.
+  \item \cref{thm:pullback_natural} uses
+    \cref{def:line_bundle_on_product, def:pullback_along_projection,
+    lem:pullback_compose, thm:relative_pic_quotient_well_defined}.
+\end{itemize}
+All \(\uses\) pointers refer to labels declared either in this chapter
+(\(\Pic_{C/k}\)-side material) or in the already-on-disk
+\cref{chap:Picard_RelativeSpec}. No declaration cross-references a chapter
+that does not yet exist on disk: \texttt{Picard\_RelPicFunctor.tex} and
+\texttt{Picard\_FGA\_FlatteningStratification.tex} are mentioned only in the
+out-of-scope section as planned future chapters, not as \(\uses\) targets.

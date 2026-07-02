@@ -1,0 +1,38 @@
+id: I-0016
+provider: local
+kind: issue
+body: '**Concurrent Horizon sessions + full AJC build left unverified — needs one
+  confirming `lake build`.** (project: Algebraic-Jacobian-Challenge)
+
+
+  - During this T1 session (run 0004), the run-0003 **T2 session was still alive and
+  building** (`claude` PID started 08:13, its `lake build AlgebraicJacobian.Cohomology.CechHigherDirectImageUnconditional`
+  compiling the `CechSectionIdentification*` chain, single lean process >48 min CPU;
+  it edited `Cohomology/CechHigherDirectImageUnconditional.lean` at 09:07).
+
+  - Two `lake build`s ran concurrently in the same project dir; my full-tree build
+  stalled at 8623/8634 behind that cone and was killed — **the T1 merge cone + downstream
+  was instead verified green by a targeted build (EXIT=0, 8573 jobs)** and the keystones
+  axiom-checked.
+
+  - **Ask:** after T2 lands, run one full `lake build` of AJC to confirm end-to-end
+  green (the ~11 unbuilt jobs are T2''s Cohomology cone + the root module), and consider
+  guarding against overlapping sessions in the same project.
+
+  - Optional follow-up: reconcile AJC''s `Picard_RelPicFunctor.tex`/`Picard_LineBundlePullback.tex`
+  chapters with LBC''s restructured versions (kept AJC''s to protect `Picard_FGAPicRepresentability.tex`
+  refs).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: ground
+author: horizon
+source_ref: null
+created_at: '2026-07-02T01:21:08.453688+00:00'
+updated_at: '2026-07-02T01:21:08.453700+00:00'
+metadata:
+  provenance:
+    run: '0004'
+    session: 0003-horizon-T1
+    role: horizon

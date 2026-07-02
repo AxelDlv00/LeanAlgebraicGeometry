@@ -1,0 +1,775 @@
+\chapter{The rigidity lemma and its Milne \S I.1--I.3 corollaries}
+\label{chap:AbelianVarietyRigidity}
+\label{chap:avr_for_rr}
+% archon:covers AlgebraicJacobian/RigidityLemma.lean
+% Local macro: diagrammatic (Lean `≫`) composition. Defined locally because this
+% chapter is the writer's only editable file; flagged in the writer report for promotion
+% to macros/common.tex if desired. \providecommand is a no-op if it is later added globally.
+\providecommand{\fatsemi}{\mathbin{\,;\,}}
+% STRATEGY NOTE. This chapter is the dedicated home of the GENERAL Mumford/Milne \S I.1--I.3
+% rigidity-lemma infrastructure. It is 1:1 with the upstream Lean file
+% AlgebraicJacobian/AbelianVarietyRigidity.lean (the RigidityLemma.lean material), which imports
+% AlgebraicJacobian.Genus and is imported by AlgebraicJacobian.Jacobian. The material is consumed
+% by the positive-genus Albanese universal property of Pic^0_{C/k}: the rigidity lemma and its
+% corollaries (a pointed regular map of abelian varieties is a homomorphism; additivity over a
+% product) are exactly the inputs the Albanese factorisation needs.
+This chapter develops the general \emph{Rigidity Lemma} of Mumford and its Milne \S I.1--I.3
+corollaries. These are the elementary, cohomology-free building blocks of abelian-variety
+theory: the lemma collapses a morphism out of a product when one fibre is constant, and from it
+follow the basic structural facts that a pointed regular map of abelian varieties is a group
+homomorphism and that \(\mathrm{Hom}(-, A)\) is additive over a product. This infrastructure is
+consumed by the positive-genus Albanese universal property of \(\Pic^0_{C/k}\): the uniqueness
+and homomorphism content of the Albanese factorisation rest on exactly these rigidity
+corollaries. (When \(\genus C = 0\) the Jacobian \(\Pic^0_{C/k}\) is automatically \(\Spec k\),
+since \(H^1(C, \mathcal O_C) = 0\), so the genus-\(0\) case is the degenerate instance of the
+same universal property and needs no separate treatment.)
+\medskip
+The \emph{Rigidity Lemma} (\cref{thm:rigidity_lemma}, Mumford, Form~I; equivalently Milne's
+Rigidity Theorem~1.1) is an elementary properness/closed-map argument --- it uses neither the
+theorem of the cube nor any cohomology, is the entry point for formalisation, and is now proven
+axiom-clean. From the Rigidity Lemma, Milne's \S I.1--I.3 derive the structural corollaries
+\emph{without} the theorem of the cube. The decisive input is that a complete first factor makes
+the second projection \(p_2 \colon X \times Y \to Y\) a closed map; combined with the universal
+property of the product this forces a morphism whose restriction to one fibre is constant to
+factor through that projection.
+The chapter then records the two corollaries used by the Albanese construction. Additivity of
+\(\mathrm{Hom}(-, A)\) over a product (\cref{lem:hom_additivity_over_product}, Milne
+Corollary~1.5) --- whose Lean signature requires only the \emph{first} factor complete --- is
+obtained directly from the lemma applied to the defect map \((x, y) \mapsto f(x, y) - f(x, y_0)
+- f(x_0, y) + f(x_0, y_0)\), which is constant on each axis. From it follows Milne
+Corollary~1.2, that a pointed regular map of abelian varieties is a homomorphism
+(\cref{lem:av_regular_map_is_hom}); this is the corollary the positive-genus Albanese
+universal property consumes. The theorem of the cube (Milne \S I.5) is \emph{not} used anywhere
+on this path (see \cref{rmk:cube_not_needed}); the chain invokes neither Serre duality nor the
+FGA \(\Pic\) representability engine. Milne's Theorem~3.2 (rational-map extension,
+\cref{thm:rational_map_to_av_extends}) is a Route-A-only item (the Albanese universal property),
+recorded here for completeness (\cref{rmk:thm32_codim1_mathlib_gap}).
+\medskip
+Throughout, \(\bar k\) is an algebraically closed field of arbitrary characteristic. An
+\emph{abelian variety} over \(\bar k\) is a complete (proper) irreducible group variety; in the
+project's Lean encoding \(A\) is an object of \(\mathrm{Over}\,(\Spec \bar k)\) carrying
+\(\mathtt{GrpObj}\), \(\mathtt{IsProper}\), \(\mathtt{Smooth}\), and \(\mathtt{GeometricallyIrreducible}\).
+\section{The Rigidity Lemma}
+\begin{lemma}
+\leanok
+[Rigidity Lemma (Mumford, Form I)]
+  \label{thm:rigidity_lemma}
+  \uses{lem:rigidity_eqOn_dense_open, lem:rigidity_core, lem:rigidity_snd_lift}
+  
+  \lean{AlgebraicGeometry.rigidity_lemma}
+  % SOURCE: [Mumford, Abelian Varieties], Rigidity Lemma (Form I.), Ch.~II \S4, book p.~43 (read from references/mumford-abelian-varieties.pdf, PDF page 54)
+  % SOURCE QUOTE: "RIGIDITY LEMMA. (Form I.) Let \(X\) be a complete variety, \(Y\) and \(Z\)
+  % any varieties, and \(f \colon X \times Y \to Z\) a morphism such that for some
+  % \(y_0 \in Y\), \(f(X \times \{y_0\})\) is a single point \(z_0\) of \(Z\). Then there is a
+  % morphism \(g \colon Y \to Z\) such that if \(p_2 \colon X \times Y \to Y\) is the
+  % projection, \(f = g \circ p_2\)."
+  \textit{Source: Mumford, Abelian Varieties, Ch.~II \S4, Rigidity Lemma (Form~I), p.~43.}
+  Let \(X\) be a complete variety, and let \(Y\), \(Z\) be any varieties over \(\bar k\). Let
+  \(f \colon X \times Y \to Z\) be a morphism such that for some \(y_0 \in Y\) the image
+  \(f(X \times \{y_0\})\) is a single point \(z_0 \in Z\). Then there is a morphism
+  \(g \colon Y \to Z\) with \(f = g \circ p_2\), where \(p_2 \colon X \times Y \to Y\) is the
+  projection; that is, \(f\) depends only on the \(Y\)-coordinate, and \(g(y) = f(x_0, y)\) for any
+  fixed \(x_0 \in X\).
+\end{lemma}
+% SOURCE QUOTE PROOF: "PROOF. Choose any point \(x_0 \in X\), and define \(g \colon Y \to Z\) by
+% \(g(y) = f(x_0, y)\). Since \(X \times Y\) is a variety, to show that \(f = g \circ p_2\), it is
+% sufficient to show that these morphisms coincide on some open subset of \(X \times Y\). Let
+% \(U\) be an affine open neighbourhood of \(z_0\) in \(Z\), \(F = Z - U\), and \(G = p_2(f^{-1}(F))\);
+% then \(G\) is closed in \(Y\) since \(X\) is complete and hence \(p_2\) is a closed map. Further
+% \(y_0 \notin G\) since \(f(X \times \{y_0\}) = \{z_0\}\). Therefore \(Y - G = V\) is a non-empty
+% open subset of \(Y\). For each \(y \in V\), the complete variety \(X \times \{y\}\) gets mapped by
+% \(f\) into the affine variety \(U\), and hence to a single point of \(U\). But this means that for
+% any \(x \in X\), \(y \in V\), \(f(x, y) = f(x_0, y) = g \circ p_2(x, y)\), and this proves our
+% assertion."
+\begin{proof}
+\leanok
+% NOTE (iter-159 review): the iter-157 unsoundness REMAINS REPAIRED. The collapse hypothesis
+% (_hf : f(X x {y0}) = {z0}) is threaded through all three helpers (rigidity_lemma ->
+% rigidity_core -> rigidity_eqOn_dense_open) and GENUINELY CONSUMED in the body of
+% rigidity_eqOn_dense_open (proves y0 \notin G, the load-bearing non-emptiness of V := Y - G).
+% The counterexample f = fst is excluded (under f = fst, _hf forces X to collapse to a point).
+% rigidity_eqOn_dense_open is sorry-free in its OWN body (hfib, the pullback-fibre fact over the
+% k-bar-point y0, is closed). rigidity_snd_lift and snd_left_isClosedMap are axiom-clean (no sorryAx).
+% NOTE (iter-160): the \uses edges run FORWARD along the true Lean dependency order
+% (rigidity_lemma -> rigidity_eqOn_dense_open -> rigidity_eqOn_saturated_open_to_affine), so the
+% not-proven status of the residual sorry propagates up and de-launders BOTH thm:rigidity_lemma and
+% lem:rigidity_eqOn_dense_open. No backward edge from the leaf lemmas back up the chain.
+% NOTE (iter-161): bridge 2 (rigidity_eqOn_saturated_open_to_affine) was DECOMPOSED into two named
+% top-level sub-lemmas along the route-B (cohomology-free) split:
+%   - Step 2, morphism_eq_of_eqAt_closedPoints: "two morphisms agreeing at every closed point of a
+%     reduced Jacobson source into a separated target are equal" -- PROVEN axiom-clean (the
+%     dense-closed-points coproduct probe + ext_of_isDominant; the connective Mathlib lacks).
+%   - Step 1, rigidity_eqAt_closedPoint_of_proper_into_affine: Mumford's per-closed-slice constancy
+%     -- the genuinely-deep residual, still `sorry`. THIS is now the chain's lone deep residual
+%     (bridge 2's body is real assembly: Step 2 proven, the JacobsonSpace U instance now derivable).
+% SIGNATURE CHANGE (iter-161, plan-authorized): Step 2's globalisation needs the closed points of
+% the saturated open U to be DENSE, i.e. U Jacobson, which over Spec k-bar follows from (X tensor Y)
+% being LOCALLY OF FINITE TYPE. So [LocallyOfFiniteType (X tensor Y).hom] is now carried on FIVE
+% chain lemmas (rigidity_lemma, rigidity_core, rigidity_eqOn_dense_open,
+% rigidity_eqOn_saturated_open_to_affine, rigidity_eqAt_closedPoint_of_proper_into_affine), in
+% addition to [IsAlgClosed kbar]. Free downstream: curves and abelian varieties are of finite type
+% over k-bar. The earlier "[IsAlgClosed] is the only added instance" claim is hereby retired.
+  Fix any point \(x_0 \in X\) and define \(g \colon Y \to Z\) by \(g(y) = f(x_0, y)\) (the
+  composite of \(y \mapsto (x_0, y)\) with \(f\)). Since \(X \times Y\) is a variety (in
+  particular reduced and irreducible, so separated and with no embedded structure), to prove
+  the equality of morphisms \(f = g \circ p_2\) it suffices to prove they agree on a non-empty
+  open subset of \(X \times Y\).
+  Let \(U\) be an affine open neighbourhood of \(z_0\) in \(Z\), put \(F = Z - U\) (a closed set),
+  and set \(G = p_2(f^{-1}(F))\). Because \(X\) is complete, the projection
+  \(p_2 \colon X \times Y \to Y\) is a \emph{closed} map (this is the defining property of
+  completeness/properness); hence \(G\), the image of the closed set \(f^{-1}(F)\), is closed in
+  \(Y\). The hypothesis \(f(X \times \{y_0\}) = \{z_0\} \subseteq U\) gives
+  \(f^{-1}(F) \cap (X \times \{y_0\}) = \varnothing\), so \(y_0 \notin G\). Therefore
+  \(V := Y - G\) is a non-empty open subset of \(Y\).
+  For each \(y \in V\) we have \(X \times \{y\} \cap f^{-1}(F) = \varnothing\), i.e.
+  \(f(X \times \{y\}) \subseteq U\). Thus the complete (proper) variety \(X \times \{y\}\) is
+  mapped by \(f\) into the \emph{affine} variety \(U\). A proper connected variety mapping to an
+  affine variety has image a single point (a global regular function on a complete connected
+  variety is constant). Hence \(f(X \times \{y\})\) is one point, necessarily
+  \(f(x_0, y) = g(y)\). So for all \(x \in X\) and \(y \in V\),
+  \[ f(x, y) = f(x_0, y) = g(y) = (g \circ p_2)(x, y). \]
+  The two morphisms \(f\) and \(g \circ p_2\) thus agree on the non-empty open
+  \(X \times V\), which is dense in the irreducible \(X \times Y\); as \(Z\) is separated they
+  agree everywhere. \qedhere
+\end{proof}
+\begin{remark}
+  \label{rmk:rigidity_lemma_cube_free}
+  The proof of \cref{thm:rigidity_lemma} uses \emph{only} (i) that completeness of \(X\) makes
+  \(p_2\) a closed map, and (ii) that a proper connected variety has no nonconstant map to an
+  affine variety. It uses neither the theorem of the cube nor any cohomology, and is valid in
+  arbitrary characteristic. This is the designated formalisation entry point: it is the
+  lowest-prerequisite link of the chain. (Mumford gives this as the geometric heart of the
+  ``second proof'' of commutativity of an abelian variety; Milne packages the same statement
+  as the Rigidity Theorem~1.1, requiring \(V\) complete and \(V \times W\) geometrically
+  irreducible.)
+\end{remark}
+\begin{remark}
+  \label{rmk:rigidity_lemma_decomposition}
+  The Lean formalisation of \cref{thm:rigidity_lemma} splits into three helper steps, mirroring
+  the proof above: \texttt{rigidity\_snd\_lift} (the cartesian-monoidal algebra identifying the
+  collapsed map \((x, y) \mapsto (x_0, y)\) followed by \(f\) with \(g \circ p_2\));
+  \texttt{rigidity\_core} (the scheme-level gluing: two maps out of the geometrically irreducible
+  reduced \(X \times Y\) into the separated \(Z\) that agree on a non-empty open subset agree
+  everywhere, by separatedness); and \texttt{rigidity\_eqOn\_dense\_open}
+  (\cref{lem:rigidity_eqOn_dense_open}, the genuine geometry: the construction of the non-empty
+  open \(X \times V\) and the slice-constancy of \(f\) on it). The collapse hypothesis
+  \(f(X \times \{y_0\}) = \{z_0\}\) must be threaded through \emph{all three} helpers, since it is
+  what makes \(V\) non-empty; a decomposition that drops it from the lower helpers is unsound
+  (see \cref{lem:rigidity_eqOn_dense_open}).
+  \emph{Status (iter-161).} Bridge~1 (the closed-map step) is \textbf{built} as the axiom-clean
+  helper \texttt{snd\_left\_isClosedMap}. The fibre-over-\(y_0\) fact is \textbf{closed} (via the
+  coarse \texttt{PullbackCarrier} layer), so \texttt{rigidity\_eqOn\_dense\_open} is
+  \texttt{sorry}-free in its own body. Bridge~2 (slice-constancy on the saturated open \(U\),
+  \cref{lem:rigidity_eqOn_saturated_open_to_affine}) has now been \textbf{decomposed} along its
+  cohomology-free route-(c) split into two named sub-lemmas: the globalisation
+  \cref{lem:morphism_eq_of_eqAt_closedPoints} (Step~2, ``agree at every closed point of a reduced
+  Jacobson source \(\Rightarrow\) equal'') is \textbf{proven axiom-clean}, and the per-closed-slice
+  constancy \cref{lem:rigidity_eqAt_closedPoint_of_proper_into_affine} (Step~1, Mumford's slice
+  argument) is the chain's \emph{single genuinely-deep residual} \texttt{sorry}. The body of
+  \cref{lem:rigidity_eqOn_saturated_open_to_affine} is therefore real assembly (Step~2 over Step~1).
+  % NOTE: (iter-162 review) STALE as of iter-162 — Step~1 is now PROVEN and the WHOLE
+  % Rigidity-Lemma chain (thm:rigidity_lemma … lem:rigidity_eqAt_closedPoint_of_proper_into_affine,
+  % via the new helper lem:isIntegral_of_retract_of_integral) is sorry-free + axiom-clean
+  % ({propext, Classical.choice, Quot.sound}, re-verified). The "single genuinely-deep residual
+  % sorry" wording here and in the proof blocks of lem:rigidity_eqOn_dense_open / …saturated… /
+  % …eqAt_closedPoint… should be refreshed by the plan/blueprint-writer to "chain closed iter-162".
+  This route requires the base field to be algebraically closed \emph{and} the source to be of finite
+  type: Step~2 needs the closed points of \(U\) to be dense (the Jacobson-space property), which over
+  the algebraically closed \(\bar k\) holds because \(X \times Y\) is locally of finite type.
+  Accordingly the formalization carries \textbf{both} \([\mathtt{IsAlgClosed}\ \bar k]\) and
+  \([\mathtt{LocallyOfFiniteType}\ (X \otimes Y).\mathrm{hom}]\) across the chain lemmas
+  (\texttt{rigidity\_lemma}, \texttt{rigidity\_core}, \texttt{rigidity\_eqOn\_dense\_open},
+  \texttt{rigidity\_eqOn\_saturated\_open\_to\_affine},
+  \texttt{rigidity\_eqAt\_closedPoint\_of\_proper\_into\_affine}); the earlier claim that
+  \([\mathtt{IsAlgClosed}\ \bar k]\) is the \emph{only} added instance is retired. Both cost nothing
+  downstream: curves and abelian varieties are of finite type over the algebraically closed \(\bar k\),
+  and the consumers already assume it. The relative Stein-factorisation / proper-pushforward
+  \(f_*\mathcal O = \mathcal O\) framing is a genuine Mathlib cohomology gap and is \emph{deliberately
+  avoided}.
+\end{remark}
+\begin{lemma}\leanok
+[Cartesian-monoidal collapse identity]
+  \label{lem:rigidity_snd_lift}
+  \lean{AlgebraicGeometry.rigidity_snd_lift}
+  Let \(X\), \(Y\) be objects over \(\bar k\) and fix a \(\bar k\)-point \(x_0\) of \(X\).
+  Post-composing the second projection \(p_2 \colon X \times Y \to Y\) with the slice section
+  \(y \mapsto (x_0, y)\) equals the ``collapse the \(X\)-coordinate onto \(x_0\)'' endomorphism
+  \((x, y) \mapsto (x_0, y)\) of \(X \times Y\). This is pure cartesian-monoidal algebra (no
+  geometry): the product universal property distributes \(p_2\), the \(Y\)-component simplifies by
+  the identity law, and the \(X\)-component collapses by uniqueness of maps to the terminal object.
+\end{lemma}
+\begin{lemma}\leanok
+[Bridge~1: completeness makes the projection a closed map]
+  \label{lem:snd_left_isClosedMap}
+  \lean{AlgebraicGeometry.snd_left_isClosedMap}
+  Let \(X\) be complete (proper) over \(\bar k\) and \(Y\) any object over \(\bar k\). Then the
+  underlying topological map of the second projection \(p_2 \colon X \times Y \to Y\) is a
+  \emph{closed} map. This is Mumford's ``completeness of \(X\) makes \(p_2\) a closed map'': the
+  projection is the base change of \(X \to \Spec \bar k\) along \(Y \to \Spec \bar k\), properness
+  of \(X\) gives universal closedness, and universal closedness is stable under base change, so the
+  base-changed projection is universally closed and hence a closed map. Characteristic-free; no
+  theorem of the cube, no cohomology.
+\end{lemma}
+\begin{lemma}\leanok
+[Scheme-level gluing core of the Rigidity Lemma]
+  \label{lem:rigidity_core}
+  \lean{AlgebraicGeometry.rigidity_core}
+  \uses{lem:rigidity_eqOn_dense_open}
+  Let \(\bar k\) be algebraically closed, \(X\) proper, \(X \times Y\) geometrically irreducible,
+  reduced and locally of finite type over \(\bar k\), and \(Z\) separated. Let
+  \(f \colon X \times Y \to Z\) collapse the slice \(X \times \{y_0\}\) to a single point \(z_0\).
+  Then \(f\) equals its composite with the collapse endomorphism \((x, y) \mapsto (x_0, y)\), i.e.\
+  \(f = \mathtt{retract} \fatsemi f\). The proof takes the non-empty open \(U\) on which \(f\) and
+  \(\mathtt{retract} \fatsemi f\) agree (\cref{lem:rigidity_eqOn_dense_open}); since \(X \times Y\)
+  is geometrically irreducible over the one-point base \(\Spec \bar k\), it is irreducible, so the
+  non-empty open \(U\) is dense and its inclusion is dominant; the dominant-source/separated-target
+  rigidity handle then promotes agreement on \(U\) to equality of the two morphisms everywhere.
+\end{lemma}
+\begin{lemma}
+\leanok
+[Dense-open agreement: the geometric heart of the Rigidity Lemma]
+  \label{lem:rigidity_eqOn_dense_open}
+  \lean{AlgebraicGeometry.rigidity_eqOn_dense_open}
+  \uses{lem:rigidity_eqOn_saturated_open_to_affine, lem:snd_left_isClosedMap}
+  % SOURCE: [Mumford, Abelian Varieties], Rigidity Lemma (Form I.), Ch.~II \S4, book p.~43 (read from references/mumford-abelian-varieties.pdf, PDF page 54)
+  % SOURCE QUOTE: "RIGIDITY LEMMA. (Form I.) Let \(X\) be a complete variety, \(Y\) and \(Z\)
+  % any varieties, and \(f \colon X \times Y \to Z\) a morphism such that for some
+  % \(y_0 \in Y\), \(f(X \times \{y_0\})\) is a single point \(z_0\) of \(Z\). Then there is a
+  % morphism \(g \colon Y \to Z\) such that if \(p_2 \colon X \times Y \to Y\) is the
+  % projection, \(f = g \circ p_2\)."
+  \textit{Source: Mumford, Abelian Varieties, Ch.~II \S4, Rigidity Lemma (Form~I), p.~43 (the
+  dense-open construction is the body of that proof).}
+  Let \(X\) be a complete variety and \(Y\), \(Z\) any varieties over \(\bar k\). Let
+  \(f \colon X \times Y \to Z\) be a morphism, fix a point \(x_0 \in X\), and suppose given
+  \(y_0 \in Y\), \(z_0 \in Z\) with the \emph{collapse hypothesis}
+  \[ f(X \times \{y_0\}) = \{z_0\} \qquad
+     \text{(in Lean: } \mathtt{lift}\,(\mathbf 1_X)\,(\mathtt{toUnit}\,X \fatsemi y_0) \fatsemi f
+     = \mathtt{toUnit}\,X \fatsemi z_0\text{).} \]
+  Then there is a non-empty open subset \(U \subseteq X \times Y\) on which \(f\) agrees, as a
+  scheme morphism, with the collapsed map \(\mathtt{retract} \fatsemi f\), where
+  \(\mathtt{retract} := \mathtt{lift}\,(\mathtt{toUnit}\,(X \times Y) \fatsemi x_0)\,
+  (p_2 \colon X \times Y \to Y)\) is the ``\((x, y) \mapsto (x_0, y)\)'' endomorphism. Concretely
+  \(U = X \times V\) with \(V := Y - G\), \(G = p_2(f^{-1}(Z - U_0))\) for an affine open
+  neighbourhood \(U_0\) of \(z_0\), and on \(U\) one has \(f(x, y) = f(x_0, y)\).
+  \medskip
+  \noindent\textbf{The collapse hypothesis is load-bearing.} The non-emptiness of \(V\) is exactly
+  the assertion \(y_0 \notin G\), and this holds \emph{because} \(f(X \times \{y_0\}) = \{z_0\}
+  \subseteq U_0\) keeps the slice over \(y_0\) inside the affine \(U_0\), away from \(F = Z - U_0\). A
+  version of this lemma \emph{without} the collapse hypothesis is false: for \(X = Y = Z\) and
+  \(f = p_1\) the first projection, \(f\) and \(\mathtt{retract} \fatsemi f \colon (x, y) \mapsto x_0\)
+  agree on no non-empty open (the agreement locus is contained in \(\{x = x_0\}\), which has empty
+  interior in the irreducible \(X \times Y\)). Therefore the formal target \emph{must} carry the
+  collapse hypothesis as an explicit antecedent; dropping it (as an earlier decomposition
+  silently did) makes the deferred goal unsatisfiable.
+  \medskip
+  \noindent\textbf{Formalization note: algebraically closed base, and locally-of-finite-type
+  source.} The prose already takes \(\bar k\) algebraically closed, but the formal statement must
+  \emph{encode} two properties. First, the cohomology-free proof of the slice-constancy bridge
+  (below) needs each per-closed-point residue field \(\kappa(y)\) to be \(\bar k\) itself, so that a
+  proper integral slice has global sections \(\Gamma = \bar k\) and maps to a single \(\bar k\)-point of
+  the affine \(U_0\); this requires \([\mathtt{IsAlgClosed}\ \bar k]\). Second, the globalisation of the
+  per-slice agreement (Step~2 of the bridge, \cref{lem:morphism_eq_of_eqAt_closedPoints}) needs the
+  closed points of the saturated open \(U\) to be \emph{dense} --- i.e.\ \(U\) to be a Jacobson space.
+  Over the algebraically closed \(\bar k\) this holds precisely because \(X \times Y\) is \emph{locally of
+  finite type} over \(\bar k\) (\texttt{LocallyOfFiniteType.jacobsonSpace} transports the Jacobson
+  property of \(\Spec \bar k\), and \texttt{closure\_closedPoints} then gives density); this requires
+  \([\mathtt{LocallyOfFiniteType}\ (X \otimes Y).\mathrm{hom}]\). Accordingly the formalization carries
+  \emph{both} \([\mathtt{IsAlgClosed}\ \bar k]\) and
+  \([\mathtt{LocallyOfFiniteType}\ (X \otimes Y).\mathrm{hom}]\) on this lemma (in addition to
+  \([\mathtt{Field}\ \bar k]\)), and propagates the same two instances to \cref{thm:rigidity_lemma},
+  its core helper \texttt{rigidity\_core}, and the bridge sub-lemmas
+  \cref{lem:rigidity_eqOn_saturated_open_to_affine} and
+  \cref{lem:rigidity_eqAt_closedPoint_of_proper_into_affine}. Both cost nothing downstream: the
+  abelian-variety consumers of the rigidity corollaries work over an algebraically closed field
+  and \emph{already} assume \([\mathtt{IsAlgClosed}\ \bar k]\) --- the base-field variable is
+  literally named \(\mathtt{kbar}\) --- and curves and abelian varieties are of finite type over
+  \(\bar k\), so the locally-of-finite-type instance is automatic there.
+\end{lemma}
+% SOURCE QUOTE PROOF: "PROOF. Choose any point \(x_0 \in X\), and define \(g \colon Y \to Z\) by
+% \(g(y) = f(x_0, y)\). Since \(X \times Y\) is a variety, to show that \(f = g \circ p_2\), it is
+% sufficient to show that these morphisms coincide on some open subset of \(X \times Y\). Let
+% \(U\) be an affine open neighbourhood of \(z_0\) in \(Z\), \(F = Z - U\), and \(G = p_2(f^{-1}(F))\);
+% then \(G\) is closed in \(Y\) since \(X\) is complete and hence \(p_2\) is a closed map. Further
+% \(y_0 \notin G\) since \(f(X \times \{y_0\}) = \{z_0\}\). Therefore \(Y - G = V\) is a non-empty
+% open subset of \(Y\). For each \(y \in V\), the complete variety \(X \times \{y\}\) gets mapped by
+% \(f\) into the affine variety \(U\), and hence to a single point of \(U\). But this means that for
+% any \(x \in X\), \(y \in V\), \(f(x, y) = f(x_0, y) = g \circ p_2(x, y)\), and this proves our
+% assertion."
+\begin{proof}
+  \leanok
+  Let \(U_0\) be an affine open neighbourhood of \(z_0\) in \(Z\), put \(F = Z - U_0\), and set
+  \(G = p_2(f^{-1}(F))\). Because \(X\) is complete, the projection \(p_2 \colon X \times Y \to Y\) is a
+  \emph{closed} map, so \(G\) (the image of the closed set \(f^{-1}(F)\)) is closed in \(Y\). The
+  collapse hypothesis \(f(X \times \{y_0\}) = \{z_0\} \subseteq U_0\) gives
+  \(f^{-1}(F) \cap (X \times \{y_0\}) = \varnothing\), hence \(y_0 \notin G\); this is the only place
+  the collapse hypothesis is used, and it is essential, for \(V := Y - G\) is non-empty precisely
+  because \(y_0 \in V\). For each \(y \in V\) the proper variety \(X \times \{y\}\) is mapped by \(f\)
+  into the affine \(U_0\), hence to a single point, necessarily \(f(x_0, y)\). So for all \(x \in X\),
+  \(y \in V\), we have \(f(x, y) = f(x_0, y) = (\mathtt{retract} \fatsemi f)(x, y)\), i.e.\ \(f\) and
+  \(\mathtt{retract} \fatsemi f\) agree on the non-empty open \(U := X \times V\). (In the Lean
+  encoding the two slice-constancy bridges are the closed-map step from properness and the
+  ``proper-into-affine has single-point image'' step; see the docstring of
+  \texttt{rigidity\_core}.)
+  \medskip
+  \noindent\textbf{Formalization notes (the concrete char-free Mathlib route).} The textbook
+  proof above is realised in Lean by three pieces. They cite Mathlib lemma names as the chosen
+  route; none uses cohomology, and the relative Stein-factorisation framing is deliberately
+  \emph{avoided} (see below).
+  \emph{Bridge~1 (the closed-map step) --- BUILT.} ``\(X\) complete \(\Rightarrow p_2\) closed'' is
+  the axiom-clean helper \texttt{snd\_left\_isClosedMap} (iter-158). It is obtained from
+  \texttt{IsProper.toUniversallyClosed} on \(X\), base-changed across the canonical pullback square
+  to make \(p_2\) universally closed, using that the monoidal projection \emph{is} the chosen
+  pullback projection: \texttt{Over.snd\_left} rewrites \((\mathtt{snd}\,X\,Y).\mathtt{left}\) to
+  \(\mathtt{Limits.pullback.snd}\ X.\mathtt{hom}\ Y.\mathtt{hom}\) exactly. This step is already
+  proven.
+  \emph{The fibre fact (non-emptiness of \(V\)) --- RESOLVED route, char-free.} That the slice
+  \(X \times \{y_0\}\) over the \(\bar k\)-rational point \(y_0\) is exactly the image of the slice
+  section \(s \colon X \to X \times Y\) is formalised \emph{without} the residue-field /
+  \texttt{Triplet} / tensor-product machinery (that fine \texttt{carrierEquiv} layer is the wrong
+  granularity and is to be avoided). One pastes the identity square for the section against the
+  canonical pullback square (\texttt{IsPullback.of\_right},
+  \texttt{IsPullback.of\_horiz\_isIso}; the section identities \(s \fatsemi p_1 = \mathbf 1\) and
+  \(s \fatsemi p_2 = X.\mathtt{hom} \fatsemi y_0\) come from \texttt{lift\_fst}/\texttt{lift\_snd}
+  with \texttt{Over.w} on the unit) and reads off the fibre with the \emph{coarse} topological
+  layer of \texttt{PullbackCarrier}, namely
+  \texttt{AlgebraicGeometry.Scheme.Pullback.image\_preimage\_eq\_of\_isPullback}. This needs no
+  \([\mathtt{IsAlgClosed}]\).
+  \emph{Bridge~2 (slice-constancy / the agreement equation) --- RESOLVED route, cohomology-FREE.}
+  ``Proper connected slice into affine \(\Rightarrow\) single point, glued to a morphism equality on
+  \(U\)'' is realised by a \textbf{global-sections + per-closed-point} route, \emph{not} by any
+  relative Stein-factorisation or proper-pushforward \(f_*\mathcal O = \mathcal O\) statement: the
+  latter is a genuine Mathlib gap (no Stein factorisation, no \(H^0\) base change), and route~(c)
+  exists precisely to avoid coherent cohomology, so it must \emph{not} be attempted. The concrete
+  stack is: for each closed point \(y \in V\) one has \(\kappa(y) = \bar k\) (alg-closed, finite type);
+  the slice \(X_y\) is proper integral, so its global sections form a field
+  (\texttt{isField\_of\_universallyClosed}) module-finite over \(\bar k\)
+  (\texttt{finite\_appTop\_of\_universallyClosed}), and algebraic closedness kills the finite
+  extension to give \(\Gamma(X_y) = \bar k\). A morphism into the affine \(U_0\) is pinned by its ring
+  map on global sections (\texttt{ext\_of\_isAffine}), so \(f\) and
+  \(\mathtt{retract} \fatsemi f\) agree on each closed slice. Closed points are dense in the
+  locally-of-finite-type \(U\) (\texttt{closure\_closedPoints} / the Jacobson-space property of
+  locally-of-finite-type \(\bar k\)-schemes; in the formalization this density is supplied by the new
+  hypothesis \([\mathtt{LocallyOfFiniteType}\ (X \otimes Y).\mathrm{hom}]\)), so the per-slice
+  agreement globalises to all of \(U\) via the reduced-source / separated-target rigidity
+  \texttt{ext\_of\_isDominant\_of\_isSeparated'} (the same handle \texttt{rigidity\_core} already
+  uses). The packaged ``morphisms agreeing on a dense set of closed points are equal''
+  hom-extensionality --- the one connective Mathlib does not supply directly (it gives only the
+  single-dominant-morphism \texttt{ext\_of\_isDominant}) --- has now been built as the axiom-clean
+  \cref{lem:morphism_eq_of_eqAt_closedPoints} (Step~2): it assembles the closed points into one
+  dominant coproduct probe and applies \texttt{ext\_of\_isDominant}. The whole argument is extracted
+  into the dedicated obligation \cref{lem:rigidity_eqOn_saturated_open_to_affine} below, whose body
+  wires that proven Step~2 over the per-slice Step~1
+  (\cref{lem:rigidity_eqAt_closedPoint_of_proper_into_affine}); Step~1 (Mumford's per-closed-slice
+  constancy) is now the chain's \emph{single} genuinely-deep residual \texttt{sorry}.
+\end{proof}
+\begin{lemma}
+\leanok
+[Bridge~2: slice-constancy on a saturated open mapping into an affine]
+  \label{lem:rigidity_eqOn_saturated_open_to_affine}
+
+  \lean{AlgebraicGeometry.rigidity_eqOn_saturated_open_to_affine}
+  \uses{lem:rigidity_eqAt_closedPoint_of_proper_into_affine, lem:morphism_eq_of_eqAt_closedPoints}
+  % NOTE (iter-161): the iter-160 SIGNATURE GAP is RESOLVED. The Lean proof wires Step 2
+  % (morphism_eq_of_eqAt_closedPoints, PROVEN axiom-clean) over Step 1
+  % (rigidity_eqAt_closedPoint_of_proper_into_affine, the residual sorry). Step 2 needs the closed
+  % points of U to be DENSE, i.e. U Jacobson; over k̄ this follows from (X⊗Y) being locally of finite
+  % type, so [LocallyOfFiniteType (X⊗Y).hom] is now a stated hypothesis of this lemma (and across the
+  % chain). With it, the `JacobsonSpace U` instance is a routine discharge (LocallyOfFiniteType.
+  % jacobsonSpace + JacobsonSpace.of_isOpenEmbedding), no longer an as-typed gap. The only `sorry`
+  % reachable from this lemma is now Step 1 (Mumford's per-closed-slice constancy). The hypothesis
+  % set is recorded in the statement and proof prose below (both [IsAlgClosed k̄] AND
+  % [LocallyOfFiniteType (X⊗Y).hom]); the earlier "[IsAlgClosed] is the only added instance" claim
+  % is retired.
+  % SOURCE: [Mumford, Abelian Varieties], Rigidity Lemma (Form I.), Ch.~II \S4, book p.~43 (read from references/mumford-abelian-varieties.pdf, PDF page 54)
+  % SOURCE QUOTE PROOF: "For each \(y \in V\), the complete variety \(X \times \{y\}\) gets mapped by
+  % \(f\) into the affine variety \(U\), and hence to a single point of \(U\). But this means that for
+  % any \(x \in X\), \(y \in V\), \(f(x, y) = f(x_0, y) = g \circ p_2(x, y)\), and this proves our
+  % assertion." [Mumford, Ch.~II \S4, Rigidity Lemma, p.~43.]
+  \textit{Source: Mumford, Abelian Varieties, Ch.~II \S4, Rigidity Lemma (Form~I), p.~43 (the
+  ``for each \(y \in V\), the complete slice maps into the affine, hence to a single point'' step).}
+  Let \(\bar k\) be algebraically closed and let \(X\), \(Y\), \(Z\) be objects of
+  \(\mathrm{Over}\,(\Spec \bar k)\) with \(X\) proper, \(X \times Y\) geometrically irreducible, reduced,
+  and \emph{locally of finite type} over \(\bar k\) (the formalization carries
+  \([\mathtt{LocallyOfFiniteType}\ (X \otimes Y).\mathrm{hom}]\), which makes the saturated open \(U\)
+  below a Jacobson space, so its closed points are dense --- the hypothesis Step~2 of the proof
+  consumes), and \(Z\) separated. Let \(f \colon X \times Y \to Z\) be a morphism, fix a \(\bar k\)-point
+  \(x_0 \colon \mathbf 1 \to X\), and write \(\mathtt{retract} := \mathtt{lift}\,
+  (\mathtt{toUnit}\,(X \times Y) \fatsemi x_0)\,(p_2)\) for the ``\((x, y) \mapsto (x_0, y)\)''
+  endomorphism. Suppose:
+  \begin{itemize}
+    \item \(U \subseteq X \times Y\) is a \(p_2\)-\emph{saturated} open, i.e.\ \(U = p_2^{-1}(V_{\mathrm{set}})\)
+      for a set \(V_{\mathrm{set}} \subseteq Y\) (so \(U\) contains the whole fibre \(X_y\) over each of
+      its points);
+    \item \(U_0 \subseteq Z\) is an \emph{affine} open;
+    \item \(f(U) \subseteq U_0\), i.e.\ \(f\) maps \(U\) into the affine \(U_0\).
+  \end{itemize}
+  Then \(f\) and \(\mathtt{retract} \fatsemi f\) agree on \(U\) as scheme morphisms:
+  \(U.\iota \fatsemi f = U.\iota \fatsemi (\mathtt{retract} \fatsemi f)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  This is the formalization realization of Mumford's step ``for each \(y \in V\), the complete
+  variety \(X \times \{y\}\) gets mapped by \(f\) into the affine variety \(U\), and hence to a single
+  point of \(U\)''. We realise it by a \textbf{global-sections + per-closed-point} route that is
+  \emph{cohomology-free}; in particular the relative Stein-factorisation / proper-pushforward
+  \(f_*\mathcal O = \mathcal O\) framing is a confirmed Mathlib gap (no Stein factorisation, no
+  \(H^0\) base change) and is \emph{deliberately avoided}. The argument splits into two named
+  sub-lemmas, one residual and one proven.
+  \medskip
+  \noindent\textbf{Step 1 (per-closed-slice constancy) --- \cref{lem:rigidity_eqAt_closedPoint_of_proper_into_affine}, the residual.}
+  Fix a closed point \(x\) of \(U\), lying over a closed point \(y = p_2(x) \in V_{\mathrm{set}}\).
+  Since \(\bar k\) is algebraically closed and \(Y\) is of finite type over \(\bar k\), the residue field
+  is \(\kappa(y) = \bar k\). Because \(U = p_2^{-1}(V_{\mathrm{set}})\) is saturated, \(U\) contains the
+  \emph{entire} fibre \(X_y \cong X\) over \(y\); hence \(f\) maps the proper integral slice \(X_y\) into the
+  affine \(U_0\). By \(\mathtt{isField\_of\_universallyClosed}\) the global sections \(\Gamma(X_y)\) form a
+  field, module-finite over \(\bar k\) by \(\mathtt{finite\_appTop\_of\_universallyClosed}\), and
+  algebraic closedness collapses the finite extension to give \(\Gamma(X_y) = \bar k\). A morphism into
+  the affine \(U_0\) is pinned by its ring map on global sections (\(\mathtt{ext\_of\_isAffine}\)), so the
+  restriction of \(f\) to \(X_y\) factors through a single \(\bar k\)-point of \(U_0\) --- necessarily the
+  point \(f(x_0, y) = (\mathtt{retract} \fatsemi f)(x)\). Thus \(f\) and \(\mathtt{retract} \fatsemi f\)
+  agree (after the residue-field probe) at every closed point of \(U\). This per-slice statement is the
+  chain's single genuinely-deep residual \texttt{sorry}.
+  \medskip
+  \noindent\textbf{Step 2 (globalisation over dense closed points) --- \cref{lem:morphism_eq_of_eqAt_closedPoints}, proven.}
+  The closed points are dense in the locally-of-finite-type \(\bar k\)-scheme \(U\)
+  (\(\mathtt{closure\_closedPoints}\) / the Jacobson-space property, supplied here by the new hypothesis
+  \([\mathtt{LocallyOfFiniteType}\ (X \otimes Y).\mathrm{hom}]\)). To turn ``\(f\) and
+  \(\mathtt{retract} \fatsemi f\) agree at each closed point'' into a single morphism equality on \(U\),
+  the proven globalisation \cref{lem:morphism_eq_of_eqAt_closedPoints} assembles the closed points
+  into one dominant probe --- the coproduct
+  \(\coprod_{x \in \mathrm{closedPoints}\,U} \Spec \kappa(x) \to U\), whose range is dense --- and feeds
+  it to the reduced-source / separated-target rigidity handle \(\mathtt{ext\_of\_isDominant}\) (the same
+  family \(\mathtt{rigidity\_core}\) uses). This yields the morphism equality
+  \(U.\iota \fatsemi f = U.\iota \fatsemi (\mathtt{retract} \fatsemi f)\) on all of \(U\). The
+  ``agrees on a dense set of closed points \(\Rightarrow\) hom-equality'' connective is the one piece
+  Mathlib does not package directly (it supplies only the single-dominant-morphism
+  \(\mathtt{ext\_of\_isDominant}\)); that bespoke build is now done in
+  \cref{lem:morphism_eq_of_eqAt_closedPoints}, and it is \emph{not} cohomology. \qedhere
+\end{proof}
+\begin{lemma}\leanok
+[Step~2: morphisms agreeing at every closed point of a Jacobson source are equal]
+  \label{lem:morphism_eq_of_eqAt_closedPoints}
+  
+  \lean{AlgebraicGeometry.morphism_eq_of_eqAt_closedPoints}
+  % Project-bespoke assembly: NO external source. Mathlib supplies only the single-dominant-morphism
+  % ext_of_isDominant; the "dense closed points => hom-extensionality" connective is built here.
+  Let \(W\), \(Z\) be schemes with \(W\) \emph{reduced}, \(W\) a \emph{Jacobson space}, and \(Z\)
+  \emph{separated}. Let \(g_1, g_2 \colon W \to Z\) be morphisms. If, for every \emph{closed} point
+  \(x \in W\), the two morphisms agree after restriction along the residue-field point
+  \(\Spec \kappa(x) \to W\) (in Lean, \(W.\mathtt{fromSpecResidueField}\,x \fatsemi g_1 =
+  W.\mathtt{fromSpecResidueField}\,x \fatsemi g_2\)), then \(g_1 = g_2\).
+\end{lemma}
+\begin{proof}
+\leanok
+  This is the ``dense closed points \(\Rightarrow\) hom-extensionality'' connective that Mathlib does
+  not package directly: it supplies only the single-dominant-morphism extensionality
+  \(\mathtt{ext\_of\_isDominant}\) (a dominant morphism into a separated target is an epimorphism for
+  the purpose of right-cancellation). We assemble the per-closed-point hypotheses into one such
+  dominant probe.
+  Form the coproduct \(P := \coprod_{x \in \mathrm{closedPoints}\,W} \Spec \kappa(x)\) and the morphism
+  \(\mathrm{probe} \colon P \to W\) defined by \(\mathtt{Sigma.desc}\) of the residue-field points
+  \(W.\mathtt{fromSpecResidueField}\,x\). Its topological range contains every closed point of \(W\):
+  the inclusion \(\iota_x \colon \Spec \kappa(x) \to P\) composes with \(\mathrm{probe}\) to
+  \(W.\mathtt{fromSpecResidueField}\,x\) (the defining property of \(\mathtt{Sigma.desc}\)), and the
+  range of \(W.\mathtt{fromSpecResidueField}\,x\) is the singleton \(\{x\}\)
+  (\(\mathtt{Scheme.range\_fromSpecResidueField}\)). Because \(W\) is a Jacobson space, the closed points
+  are dense (\(\mathtt{closure\_closedPoints}\), i.e.\ \(\overline{\mathrm{closedPoints}\,W} = W\)), so
+  the range of \(\mathrm{probe}\) is dense and \(\mathrm{probe}\) is \emph{dominant}.
+  Componentwise, \(g_1\) and \(g_2\) agree after \(\mathrm{probe}\): precomposing with each coproduct
+  inclusion \(\iota_x\) reduces (by \(\mathtt{Sigma.\iota\_desc}\)) to
+  \(W.\mathtt{fromSpecResidueField}\,x \fatsemi g_1 = W.\mathtt{fromSpecResidueField}\,x \fatsemi g_2\),
+  which is the hypothesis at the closed point \(x\). By the universal property of the coproduct
+  (\(\mathtt{Sigma.hom\_ext}\)) this gives \(\mathrm{probe} \fatsemi g_1 = \mathrm{probe} \fatsemi g_2\).
+  Since \(\mathrm{probe}\) is dominant and \(Z\) is separated, \(\mathtt{ext\_of\_isDominant}\) cancels it
+  on the left to yield \(g_1 = g_2\).
+\end{proof}
+\begin{lemma}
+\leanok
+[Global-sections constancy: two \(\bar k\)-points of a proper integral source into an affine agree]
+  \label{lem:eq_comp_of_isAffine_of_properIntegral}
+  \lean{AlgebraicGeometry.eq_comp_of_isAffine_of_properIntegral}
+  % Project-bespoke assembly of Mathlib lemmas: NO external source. Realises, cohomology-free, the
+  % classical "a global regular function on a proper integral variety over an algebraically closed
+  % field is constant" --- precisely the affine-image step of Mumford's Rigidity Lemma proof quoted
+  % above (the "complete slice into an affine maps to a single point" sentence, Ch.~II \S4, p.~43).
+  Let \(\bar k\) be algebraically closed and let \(W\) be an integral scheme equipped with a structure
+  morphism \(w \colon W \to \Spec \bar k\) that is universally closed (proper) and locally of finite
+  type. Let \(g \colon W \to V\) be a morphism into an \emph{affine} scheme \(V\). Then any two
+  \(\bar k\)-points of \(W\) --- i.e.\ any two sections \(a, b \colon \Spec \bar k \to W\) of \(w\) (so
+  \(a \fatsemi w = \mathbf 1\) and \(b \fatsemi w = \mathbf 1\)) --- satisfy \(a \fatsemi g = b \fatsemi g\).
+  \medskip
+  \noindent\textbf{Every hypothesis is load-bearing} (confirmed by the iter-161 audit).
+  \([\mathtt{IsAlgClosed}\ \bar k]\) collapses the finite extension \(\Gamma(W)/\bar k\); integrality of
+  \(W\) makes \(\Gamma(W)\) a domain (without it a two-point disjoint union is a counterexample);
+  \(\mathtt{UniversallyClosed}\) is what upgrades \(\Gamma(W)\) to a \emph{field} (without it
+  \(\mathbb A^1\), with \(\Gamma = \bar k[t]\) and two distinct \(\bar k\)-points, is a counterexample);
+  \(\mathtt{LocallyOfFiniteType}\) gives finiteness of \(\Gamma(W)\) over \(\bar k\); and
+  \([\mathtt{IsAffine}\ V]\) is what lets \(\mathtt{ext\_of\_isAffine}\) pin the morphism by its ring map
+  on global sections.
+\end{lemma}
+\begin{proof}
+\leanok
+  Because \(W\) is integral and \(w\) is universally closed, the global sections
+  \(\Gamma(W, \mathcal O_W)\) form a field (\(\mathtt{isField\_of\_universallyClosed}\)), and the structure
+  ring map \(w^\sharp \colon \bar k \to \Gamma(W)\) (the map \(\mathtt{wk.appTop}\) after the canonical
+  identification \(\Gamma(\Spec \bar k) \cong \bar k\)) is integral / module-finite
+  (\(\mathtt{finite\_appTop\_of\_universallyClosed}\)). Since \(\bar k\) is algebraically closed and
+  \(\Gamma(W)\) is a domain finite over it, that map is bijective
+  (\(\mathtt{IsAlgClosed.ringHom\_bijective\_of\_isIntegral}\)); thus \(\Gamma(W) = \bar k\) and
+  \(w^\sharp\) is an isomorphism on global sections --- in particular an epimorphism. Both sections
+  \(a\), \(b\) left-invert \(w^\sharp\) on global sections (they are sections of \(w\)), so they induce the
+  \emph{same} ring map \(a^\sharp = b^\sharp\) on \(\Gamma(W)\) (cancel the epimorphism \(w^\sharp\)). A
+  morphism into the \emph{affine} \(V\) is pinned by its global-sections ring map
+  (\(\mathtt{ext\_of\_isAffine}\)), whence \(a \fatsemi g = b \fatsemi g\). This realises, without
+  cohomology, the classical ``proper connected variety into an affine is a single point'' step
+  quoted from Mumford above.
+\end{proof}
+\begin{lemma}
+\leanok
+[Integrality descends to a retract of an integral scheme]
+  \label{lem:isIntegral_of_retract_of_integral}
+  \lean{AlgebraicGeometry.isIntegral_of_retract}
+  % NOTE: (iter-162 review) project-bespoke (elementary topology + algebra); NO external source.
+  % LANDED axiom-clean as `AlgebraicGeometry.isIntegral_of_retract`, stated generically for any
+  % retract `r : S ⟶ T`, `pr : T ⟶ S` with `r ≫ pr = 𝟙 S` of an integral `T` (more general than
+  % the `X`/`X×Y`/`p_1` instance below). PROOF DIVERGENCE (cosmetic, sound either way): the Lean
+  % proves reducedness PER-STALK (each `S.stalk x` embeds via `pr.stalkMap` into the reduced
+  % `T.stalk`, then `isReduced_of_isReduced_stalk`), not via the global-sections split-injection
+  % the prose below describes. Plan/blueprint-writer may align the prose to the stalk route.
+  Let \(X \times Y\) be an integral scheme (here it is geometrically irreducible and reduced over
+  \(\bar k\)). Suppose \(X\) is a \emph{retract} of \(X \times Y\): there is a section
+  \(s \colon X \to X \times Y\) of the first projection \(p_1\), i.e.\ \(s \fatsemi p_1 = \mathbf 1_X\).
+  Then \(X\) is integral.
+\end{lemma}
+\begin{proof}
+\leanok
+  Integrality is reducedness together with irreducibility, and the retract supplies each.
+  \emph{Reduced.} The section identity \(s \fatsemi p_1 = \mathbf 1_X\) makes the pullback on global
+  sections \(p_1^\sharp \colon \mathcal O_X(X) \to \mathcal O_{X \times Y}(X \times Y)\) split
+  injective (it is left-inverted by \(s^\sharp\)). A split-injective ring map into the reduced ring
+  \(\mathcal O_{X \times Y}(X \times Y)\) embeds \(\mathcal O_X(X)\) into a reduced ring, so it too is
+  reduced (\(\mathtt{isReduced\_of\_injective}\) on the split injection); hence \(X\) is reduced.
+  \emph{Irreducible.} The first projection \(p_1 \colon X \times Y \to X\) is surjective because it
+  admits the section \(s\) (every point of \(X\) is \(p_1(s(\cdot))\)). The continuous image of an
+  irreducible space under a surjection is irreducible; as \(X \times Y\) is irreducible and \(p_1\) is a
+  continuous surjection onto \(X\), the space of \(X\) is irreducible.
+  Reduced and irreducible together give that \(X\) is integral. This is elementary --- no cohomology,
+  no external citation --- and feeds the Step-1 geometric assembly below, where the proper slice
+  \(X_y \cong X\) must be presented as proper \emph{integral}.
+\end{proof}
+\begin{lemma}\leanok
+[Step~1: per-closed-slice constancy of a proper slice into an affine]
+  \label{lem:rigidity_eqAt_closedPoint_of_proper_into_affine}
+
+  \lean{AlgebraicGeometry.rigidity_eqAt_closedPoint_of_proper_into_affine}
+  \uses{lem:eq_comp_of_isAffine_of_properIntegral, lem:isIntegral_of_retract_of_integral}
+  % SOURCE: [Mumford, Abelian Varieties], Rigidity Lemma (Form I.), Ch.~II \S4, book p.~43 (read from references/mumford-abelian-varieties.pdf, PDF page 54)
+  % SOURCE QUOTE PROOF: "For each \(y \in V\), the complete variety \(X \times \{y\}\) gets mapped by
+  % \(f\) into the affine variety \(U\), and hence to a single point of \(U\). But this means that for
+  % any \(x \in X\), \(y \in V\), \(f(x, y) = f(x_0, y) = g \circ p_2(x, y)\), and this proves our
+  % assertion." [Mumford, Ch.~II \S4, Rigidity Lemma, p.~43.]
+  \textit{Source: Mumford, Abelian Varieties, Ch.~II \S4, Rigidity Lemma (Form~I), p.~43 (the
+  ``for each \(y \in V\), the complete slice maps into the affine, hence to a single point'' step).}
+  With the data of \cref{lem:rigidity_eqOn_saturated_open_to_affine} --- \(\bar k\) algebraically
+  closed, \(X\) proper over \(\bar k\), \(X \times Y\) geometrically irreducible, reduced, and locally of
+  finite type, \(Z\) separated, a \(\bar k\)-point \(x_0 \colon \mathbf 1 \to X\), a morphism
+  \(f \colon X \times Y \to Z\), a \(p_2\)-saturated open \(U = p_2^{-1}(V_{\mathrm{set}})\) mapping into an
+  affine open \(U_0 \subseteq Z\) --- fix a \emph{closed} point \(x\) of \(U\). Then \(f\) and the collapsed
+  map \(\mathtt{retract} \fatsemi f\) (with \(\mathtt{retract} := \mathtt{lift}\,
+  (\mathtt{toUnit}\,(X \times Y) \fatsemi x_0)\,(p_2)\), i.e.\ \((x, y) \mapsto (x_0, y)\)) agree at \(x\)
+  after the residue-field probe \(\Spec \kappa(x) \to U\):
+  \[ U.\mathtt{fromSpecResidueField}\,x \fatsemi (U.\iota \fatsemi f)
+     = U.\mathtt{fromSpecResidueField}\,x \fatsemi (U.\iota \fatsemi (\mathtt{retract} \fatsemi f)). \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  This is Mumford's per-slice step, realised \emph{cohomology-free} (route~B): the relative Stein /
+  proper-pushforward \(f_*\mathcal O = \mathcal O\) framing is a confirmed Mathlib gap and is
+  deliberately avoided. The closed point \(x\) of \(U\) lies over a closed point
+  \(y = p_2(x) \in V_{\mathrm{set}}\); since \(\bar k\) is algebraically closed and \(Y\) is of finite type
+  over \(\bar k\), the residue field is \(\kappa(y) = \bar k\). Saturation \(U = p_2^{-1}(V_{\mathrm{set}})\)
+  puts the \emph{entire} proper integral fibre \(X_y \cong X\) over \(y\) inside \(U\), so \(f\) maps \(X_y\)
+  into the affine \(U_0\). Because \(X_y\) is proper integral over \(\bar k\), its global sections form a
+  field (\(\mathtt{isField\_of\_universallyClosed}\)), module-finite over \(\bar k\)
+  (\(\mathtt{finite\_appTop\_of\_universallyClosed}\)); algebraic closedness collapses the finite
+  extension, giving \(\Gamma(X_y, \mathcal O) = \bar k\).
+  % NOTE (iter-162): the iter-161 documentary gap is RESOLVED --- this algebraic core ("two k-bar
+  % points of a proper integral l.f.t. k-bar-scheme into an affine agree") now has its own node
+  % lem:eq_comp_of_isAffine_of_properIntegral (above), and this proof's  edge points at it.
+  A morphism into the affine \(U_0\) is pinned by
+  its ring map on global sections (\(\mathtt{ext\_of\_isAffine}\)), so \(f|_{X_y}\) factors through a
+  single \(\bar k\)-point of \(U_0\). That point is \(f(x_0, y)\), since the \(\bar k\)-point \((x_0, y)\) lies
+  on \(X_y\); and \(f(x_0, y) = (\mathtt{retract} \fatsemi f)(x)\) by the definition of \(\mathtt{retract}\).
+  Evaluating at the residue-field probe of the closed point \(x\) gives the asserted equality. This
+  per-slice statement is the chain's single genuinely-deep residual \texttt{sorry}; its globalisation
+  over the dense closed points is \cref{lem:morphism_eq_of_eqAt_closedPoints}.
+\end{proof}
+\section{The Milne \S I.1--I.3 corollaries: additivity, homomorphisms, extension}
+This section assembles, from the proven Rigidity Lemma, the structural corollaries used by the
+Albanese construction. The load-bearing ingredient is the additive decomposition over a product
+(\cref{lem:hom_additivity_over_product}, Milne Corollary~1.5): a morphism \(h \colon V \times W
+\to A\) with \(h(v_0, w_0) = 0\) decomposes uniquely as \(h = f \fatsemi p + g \fatsemi q\). From
+it follows that a pointed regular map of abelian varieties is a homomorphism
+(\cref{lem:av_regular_map_is_hom}, Milne Corollary~1.2) --- the corollary the positive-genus
+Albanese universal property consumes. None of this uses the theorem of the cube. For Route~A,
+Milne's Theorem~3.2 (rational-map extension, \cref{thm:rational_map_to_av_extends}) is retained
+in this chapter as the remaining Albanese input.
+\begin{remark}
+  \label{rmk:cube_not_needed}
+  \textbf{The theorem of the cube is not needed for these corollaries.} The Milne \S I.1--I.3
+  corollaries used here --- additivity over a product (Corollary~1.5,
+  \cref{lem:hom_additivity_over_product}) and ``a pointed regular map of abelian varieties is a
+  homomorphism'' (Corollary~1.2, \cref{lem:av_regular_map_is_hom}) --- follow directly from the
+  Rigidity Theorem~1.1 (our \cref{thm:rigidity_lemma}), with no appeal to the theorem of the
+  cube. The theorem of the cube (Milne \S I.5) enters Milne's theory only later, for
+  projectivity, the seesaw/square principle, dual abelian varieties, polarizations, and the
+  Poincar\'e sheaf. For Route~A: the Albanese universal property that the positive-genus arm
+  needs (Milne Proposition~6.1/6.4, \S III.6) is \emph{also} cube-free, resting on Theorem~3.2
+  (\cref{thm:rational_map_to_av_extends}) together with Corollaries~1.2 and~1.5 --- which is
+  precisely why Theorem~3.2 and Corollary~1.2 are retained in this chapter as Route-A inputs.
+\end{remark}
+\begin{lemma}
+\leanok
+[Additive decomposition over a product (Milne Corollary 1.5)]
+  \label{lem:hom_additivity_over_product}
+  
+  \uses{thm:rigidity_lemma}
+  \lean{AlgebraicGeometry.hom_additive_decomp_of_rigidity}
+  % NOTE: (iter-163 review) The Lean signature carries three product-level instance
+  % hypotheses on V⊗W not spelled out in the prose: [GeometricallyIrreducible (V⊗W).hom],
+  % [LocallyOfFiniteType (V⊗W).hom], [IsReduced (V⊗W).left] — i.e. "V×W is a variety".
+  % These are mathematically free for genuine complete varieties V, W, but Mathlib does not
+  % auto-derive the product instances from the factors, so they are carried explicitly to keep
+  % the lemma axiom-clean. Also: the Lean states the EXISTENCE half only (canonical
+  % axis-restriction witnesses inlined; uniqueness not formalized) and requires only V (not W)
+  % complete — strictly more general than the prose. (lean-vs-blueprint-checker avr-iter163.)
+  % NOTE: (iter-164 review) iter-164 hygiene dropped the A-side instances [Smooth A.hom] and
+  % [GeometricallyIrreducible A.hom] from the Lean signature; the abelian-variety target now
+  % requires only [GrpObj A] [IsProper A.hom]. The Lean signature is therefore STRICTLY MORE
+  % GENERAL than the prose ("Let A be an abelian variety"): every situation the prose covers is
+  % covered, and additionally any proper group object suffices. Axiom-clean preserved.
+  % (lean-vs-blueprint-checker avr-iter164.)
+  % SOURCE: [Milne, Abelian Varieties], Corollary 1.5, \S I.1, doc p.~9 (read from references/abelian-varieties.pdf, PDF page 15)
+  % SOURCE QUOTE: "COROLLARY 1.5. Let V and W be complete varieties over k with k-rational
+  % points v0 and w0, and let p and q be the projection maps V×W→V and V×W→W. Let A be an
+  % abelian variety. Then a morphism h:V×W→A such that h(v0,w0)=0 can be written uniquely as
+  % h = f∘p + g∘q with f:V→A and g:W→A morphisms such that f(v0)=0 and g(w0)=0."
+  \textit{Source: Milne, Abelian Varieties, Corollary~1.5.}
+  Let \(V\), \(W\) be complete varieties over \(\bar k\) with \(\bar k\)-points \(v_0 \in V\),
+  \(w_0 \in W\), and let \(p \colon V \times W \to V\), \(q \colon V \times W \to W\) be the
+  projections. Let \(A\) be an abelian variety over \(\bar k\). Then a morphism
+  \(h \colon V \times W \to A\) with \(h(v_0, w_0) = 0\) can be written uniquely as
+  \(h = f \circ p + g \circ q\), with morphisms \(f \colon V \to A\), \(g \colon W \to A\) satisfying
+  \(f(v_0) = 0\) and \(g(w_0) = 0\).
+  \emph{Lean encoding.} In the project \(A\) is a group object \texttt{[GrpObj A]} (not assumed
+  commutative). The ``\(+\)'' here is the binary operation that \texttt{GrpObj} induces on each
+  hom-set \(\mathrm{Hom}(X, A)\): for \(u, v \colon X \to A\), \(u + v\) is the composite
+  \(X \xrightarrow{\langle u, v\rangle} A \times A \xrightarrow{\;\mathrm{mul}\;} A\) (and
+  \(f \circ p + g \circ q\) is built this way from the projections). The decomposition is therefore
+  read \emph{multiplicatively} as \(h = (f \circ p) \cdot (g \circ q)\) in the group
+  \(\mathrm{Hom}(V \times W, A)\), and does \emph{not} require \(A\) commutative; commutativity of
+  abelian varieties (Milne Cor 1.4, a separate consequence of \cref{lem:av_regular_map_is_hom})
+  is needed only to rewrite the product symmetrically/additively, not for the statement or its
+  proof. The prover should infer the hom-set group operation from the \texttt{GrpObj} instance,
+  not from a \texttt{CommGrpObj} instance.
+\end{lemma}
+% SOURCE QUOTE PROOF: "PROOF. Set f=h|V×{w0}, g=h|{v0}×W, and identify V×{w0} and {v0}×W with
+% V and W. On points, f(v) = h(v,w0) and g(w) = h(v0,w), and so φ =df h − (f∘p + g∘q) is the
+% map that sends (v,w) ↦ h(v,w) − h(v,w0) − h(v0,w). Thus φ(V×{w0}) = 0 = φ({v0}×W) and so the
+% theorem shows that φ = 0." [Milne, Cor 1.5, \S I.1, doc p.~9--10.]
+\begin{proof}
+  \leanok
+  \textit{Source: Milne, Abelian Varieties, Corollary~1.5.}
+  Define \(f := h|_{V \times \{w_0\}}\) and \(g := h|_{\{v_0\} \times W}\), identifying
+  \(V \times \{w_0\} \cong V\) and \(\{v_0\} \times W \cong W\); on points \(f(v) = h(v, w_0)\) and
+  \(g(w) = h(v_0, w)\). Form the difference
+  \[ \varphi := h - (f \circ p + g \circ q) \colon V \times W \to A, \qquad
+     \varphi(v, w) = h(v, w) - h(v, w_0) - h(v_0, w) \]
+  (the subtraction is in the group \(A\), i.e.\ \(\varphi\) is the composite of
+  \((h, -(f \circ p + g \circ q))\) with the group law of \(A\)). Then \(\varphi\) vanishes on both
+  axes: \(\varphi(V \times \{w_0\}) = 0 = \varphi(\{v_0\} \times W)\) (direct computation, using
+  \(h(v_0, w_0) = 0\)). In particular \(\varphi\) collapses the complete axis \(V \times \{w_0\}\) to
+  the single point \(0 \in A\), so by the Rigidity Lemma (\cref{thm:rigidity_lemma}, with \(V\)
+  complete and \(V \times W\) geometrically irreducible) \(\varphi\) factors through the projection
+  \(q\); but it also vanishes on \(\{v_0\} \times W\), which is a section of \(q\), so the factoring
+  morphism is identically \(0\), i.e.\ \(\varphi \equiv 0\). Hence \(h = f \circ p + g \circ q\).
+  Uniqueness: restricting any such decomposition to the axes recovers \(f\) and \(g\) as the
+  axis-restrictions of \(h\).
+\end{proof}
+\begin{lemma}
+\leanok
+[A pointed regular map of abelian varieties is a homomorphism (Milne Corollary 1.2)]
+  \label{lem:av_regular_map_is_hom}
+
+  \uses{lem:hom_additivity_over_product}
+  \lean{AlgebraicGeometry.av_regularMap_isHom_of_zero}
+  % NOTE: (iter-163 review) The Lean formalizes the POINTED direction
+  % (η[A] ≫ α = η[B] ⟹ IsMonHom α), not the full "composite of a homomorphism with a
+  % translation" form — which is what the genus-0 consumer needs. The conclusion IsMonHom α
+  % (one_hom + mul_hom) is a faithful, slightly stronger rendering of "α is a homomorphism".
+  % As with lem:hom_additivity_over_product, the signature carries the product-level instances
+  % [GeometricallyIrreducible (A⊗A).hom], [LocallyOfFiniteType (A⊗A).hom], [IsReduced (A⊗A).left]
+  % ("A×A is a variety"), free for a genuine abelian variety A but carried explicitly because
+  % Mathlib lacks the product-instance inference. (lean-vs-blueprint-checker avr-iter163.)
+  % NOTE: (iter-164 review) iter-164 hygiene dropped the B-side instances [Smooth B.hom] and
+  % [GeometricallyIrreducible B.hom] from the Lean signature; the target B now requires only
+  % [GrpObj B] [IsProper B.hom]. (The source-side A retains the full abelian-variety instance
+  % set.) The Lean signature is strictly more general on B than the prose ("α : A → B of
+  % abelian varieties") demands. The lean-auditor flagged the symmetric A-side
+  % [Smooth A.hom]/[GeometricallyIrreducible A.hom] as ALSO unused — kept this iter as a
+  % minimal-change follow-up. (lean-vs-blueprint-checker avr-iter164.)
+  % SOURCE: [Milne, Abelian Varieties], Corollary 1.2, \S I.1, doc p.~9 (read from references/abelian-varieties.pdf, PDF page 15)
+  % SOURCE QUOTE: "COROLLARY 1.2. Every regular map α:A→B of abelian varieties is the composite
+  % of a homomorphism with a translation."
+  \textit{Source: Milne, Abelian Varieties, Corollary~1.2.}
+  Every regular map \(\alpha \colon A \to B\) of abelian varieties over \(\bar k\) is the composite
+  of a homomorphism with a translation; equivalently, if \(\alpha(0_A) = 0_B\) then \(\alpha\) is a
+  homomorphism, i.e.\ \(\alpha(a + a') = \alpha(a) + \alpha(a')\) for all \(a, a' \in A\).
+\end{lemma}
+% SOURCE QUOTE PROOF: "PROOF. The regular map α will send the k-rational point 0 of A to a
+% k-rational point b of B. After composing α with translation by −b, we may assume that
+% α(0)=0. Consider the map φ:A×A→B, φ(a,a′)=α(a+a′) − α(a) − α(a′). By this we mean that φ is
+% the difference of the two regular maps A×A →(m)→ A →(α)→ B and A×A →(α×α)→ B×B →(m)→ B, which
+% is a regular map. Then φ(A×0)=0=φ(0×A) and so φ=0. This means that α is a homomorphism."
+% [Milne, Cor 1.2, \S I.1, doc p.~9.]
+\begin{proof}
+  \leanok
+  \textit{Source: Milne, Abelian Varieties, Corollary~1.2.}
+  The image \(\alpha(0_A)\) is a \(\bar k\)-point \(b\) of \(B\); composing \(\alpha\) with translation by
+  \(-b\) we may assume \(\alpha(0_A) = 0_B\), and it suffices to show such an \(\alpha\) is a
+  homomorphism. Form
+  \[ \varphi \colon A \times A \to B, \qquad \varphi(a, a') = \alpha(a + a') - \alpha(a) - \alpha(a'), \]
+  the difference of the two regular maps \(A \times A \xrightarrow{m} A \xrightarrow{\alpha} B\)
+  and \(A \times A \xrightarrow{\alpha \times \alpha} B \times B \xrightarrow{m} B\). Then
+  \(\varphi(0_A, 0_A) = 0\) and \(\varphi\) vanishes on both axes,
+  \(\varphi(A \times 0) = 0 = \varphi(0 \times A)\) (since \(\alpha(0) = 0\)). By the additive
+  decomposition \cref{lem:hom_additivity_over_product} (with \(V = W = A\)), the axis-restrictions
+  of \(\varphi\) being \(0\) force \(\varphi \equiv 0\); equivalently, \(\varphi\) collapses the complete
+  axis \(A \times 0\) and vanishes on \(0 \times A\), so Rigidity gives \(\varphi = 0\). Hence
+  \(\alpha(a + a') = \alpha(a) + \alpha(a')\), i.e.\ \(\alpha\) is a homomorphism.
+\end{proof}
+\begin{remark}
+  \label{rmk:thm32_codim1_mathlib_gap}
+  \textbf{Formalisation risk: the pure-codimension-\(1\) step (Lemma 3.3) has no Mathlib
+  Weil-divisor support.} Theorem~3.1's everywhere-extension-outside-codimension-\(2\) is within
+  reach of Mathlib's valuative criterion of properness
+  (\texttt{ValuativeCriterion}/\texttt{IsProper.of\_valuativeCriterion}), applied at the
+  discrete valuation ring \(\mathcal O_{V, Z}\) of each codimension-\(1\) point \(Z\). But Lemma~3.3,
+  which rules out codimension-\(1\) indeterminacy for maps into a group variety, is proved in
+  Milne via Weil-divisor theory (\(\mathrm{div}(f)_0 - \mathrm{div}(f)_1\), prime divisors,
+  tangent cones) for which Mathlib currently has \emph{no} usable API at this generality. This
+  is the route's riskiest sub-build. An open question for the prover: whether a \emph{pointwise}
+  valuative extension --- showing, at each codimension-\(1\) point \(Z\) separately, that the
+  morphism \(\Spec k(V) \to A\) extends over \(\Spec \mathcal O_{V, Z}\) using only that \(A\) is
+  proper and a group (so the difference-map argument can be run \emph{locally} at \(Z\) without
+  globally building \(\mathrm{div}(f)\)) --- side-steps building divisor theory entirely.
+  \textbf{This surface extension is confined to Route~A.} It is needed only for the
+  positive-genus Albanese universal property (Milne \S III.6), where the additive-defect map of a
+  morphism out of a higher-dimensional variety must be extended over a complete surface.
+  The additive decomposition \cref{lem:hom_additivity_over_product} and the rigidity corollaries
+  established above do \emph{not} depend on it. Consequently
+  \cref{thm:rational_map_to_av_extends} (Theorem~3.2), the codim-\(1\) indeterminacy sub-build
+  (Lemma~3.3), and the Weil-divisor gap discussed above are all confined to \textbf{Route~A};
+  they are retained in this chapter solely as Route-A inputs and may be deferred until Route~A
+  consumes them.
+\end{remark}
