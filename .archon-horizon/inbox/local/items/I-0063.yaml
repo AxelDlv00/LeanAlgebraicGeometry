@@ -1,0 +1,54 @@
+id: I-0063
+provider: local
+kind: info
+body: '**AJC working tree is shared by ≥3 concurrent runs; no full green build was
+  confirmed this session.**
+
+
+  At reconcile time the AJC project dir had live builds from OTHER runs racing in
+  it (olean-corruption risk, per the standing warning):
+
+
+  - Run 0007 session `0007-horizon-T8`: a full `lake build` (~40+ min in).
+
+  - A T2 build of `CechSectionIdentificationLegMid1` (the ~70-min leg).
+
+
+  The uncommitted working tree therefore mixes several runs work, not just T5 s:
+
+
+  - **T5 (this reconcile):** `RelPicFunctor.lean` + `Picard_RelPicFunctor.tex` — reviewed,
+  sound, axiom-clean per the session report.
+
+  - **Not T5 (in-flight, untouched by me):** `SectionGradedRing.lean` (+717, written
+  ~2 min before my session — active T8 edit), `GrassmannianQuot.lean`, `QuotScheme.lean`,
+  `GlueDescent.lean`, `Cech*.lean`, and untracked `Cohomology/AffinePushPullEssImage.lean`
+  (a real T2 FBC deliverable, never checkpointed).
+
+
+  **Consequence:** I did NOT run a confirming `lake build` (would race the live builds
+  and risk corrupting shared oleans). The RelPicFunctor advance is verified only by
+  diff review + the session s own axiom check, not by an independent kernel build.
+  `SectionGradedRing` (the I-0001 v4.31 errors) is mid-repair by T8 and its state
+  is unknown.
+
+
+  This escalates the standing `I-0016` concurrency concern. Suggest serializing AJC-mutating
+  runs, or letting the T8/T2 builds finish and running one clean full `lake build`
+  before the next integration commit.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: human
+author: ground
+source_ref: null
+created_at: '2026-07-02T08:29:41.384570+00:00'
+updated_at: '2026-07-02T08:29:41.384579+00:00'
+metadata:
+  provenance:
+    run: '0005'
+    session: 0017-ground
+    role: ground

@@ -858,29 +858,11 @@ declarations of this subsection equip the honest \(H_T\)-coset carrier of
 math-correct relative Picard presheaf of Kleiman df:Pfs together with the
 natural quotient comparison from the absolute functor.
 
-\begin{lemma}\leanok
-[Group structure on the \(H_T\)-quotient]
-  \label{lem:relpic_group_via_tensorobj}
-  \lean{AlgebraicGeometry.Scheme.PicSharp.addCommGroup_via_tensorObj}
-  \uses{lem:relpic_setoid, lem:relpic_add_welldef, lem:relpic_rel_neg,
-    lem:relpic_rel_of_iso, lem:rel_pic_sharp_unit_loctriv}
-  \textit{Source: [Kleiman], ``The Picard scheme'', \S 2, Def.~df:Pfs.}
-  The quotient \(\Pic(C \times_k T)/H_T\) of \cref{lem:relpic_setoid} carries
-  a canonical abelian-group structure: addition descends the tensor product
-  (\cref{lem:relpic_add_welldef}), the zero is the class of
-  \(\mathcal O_{C \times_k T}\), and negation descends the chosen tensor
-  inverse (\cref{lem:relpic_rel_neg}).
-\end{lemma}
-
-\begin{proof}\leanok
-  \uses{lem:relpic_add_welldef, lem:relpic_rel_neg, lem:relpic_rel_of_iso}
-  The operations are well defined by \cref{lem:relpic_add_welldef} and
-  \cref{lem:relpic_rel_neg}. Every abelian-group axiom holds on
-  representatives up to isomorphism of the underlying bundles (associator,
-  unitors, braiding, and the chosen-inverse cancellation), and the
-  \(H_T\)-relation is coarser than isomorphism by \cref{lem:relpic_rel_of_iso},
-  so the axioms descend to the quotient.
-\end{proof}
+The abelian-group structure on the \(H_T\)-quotient
+\(\Pic(C \times_k T)/H_T\) is the theorem
+\cref{thm:rel_pic_addcommgroup_via_tensorobj} (addition descends the tensor
+product, zero is the class of \(\mathcal O_{C \times_k T}\)); the declarations
+below equip it with pullback functoriality.
 
 \begin{lemma}\leanok
 [Pullback descends to the \(H_T\)-quotient]
@@ -911,14 +893,14 @@ natural quotient comparison from the absolute functor.
 [Relative functorial action, group-hom form]
   \label{lem:relpic_functorial_relative}
   \lean{AlgebraicGeometry.Scheme.PicSharp.relFunctorial}
-  \uses{lem:relpic_group_via_tensorobj, lem:relpic_pullback_welldef,
+  \uses{thm:rel_pic_addcommgroup_via_tensorobj, lem:relpic_pullback_welldef,
     lem:pullback_unit_iso, lem:pullback_tensor_iso_loctriv}
   \textit{Source: [Kleiman], ``The Picard scheme'', \S 2,
   Defs.~df:aPf + df:Pfs.}
   For a morphism \(g : T' \to T\) of \(k\)-schemes, the assignment
   \([L] \mapsto [g_C^* L]\) is a well-defined homomorphism of abelian groups
   \(\Pic(C \times_k T)/H_T \to \Pic(C \times_k T')/H_{T'}\) with respect to
-  the structure of \cref{lem:relpic_group_via_tensorobj}, and satisfies the
+  the structure of \cref{thm:rel_pic_addcommgroup_via_tensorobj}, and satisfies the
   identity and composition laws.
 \end{lemma}
 
@@ -942,7 +924,7 @@ natural quotient comparison from the absolute functor.
 [Relative Picard presheaf on the \(H_T\)-quotient]
   \label{def:rel_pic_sharp_relative}
   \lean{AlgebraicGeometry.Scheme.PicSharp.relPresheaf}
-  \uses{lem:relpic_setoid, lem:relpic_group_via_tensorobj,
+  \uses{lem:relpic_setoid, thm:rel_pic_addcommgroup_via_tensorobj,
     lem:relpic_functorial_relative}
   \textit{Source: [Kleiman], ``The Picard scheme'', \S 2, Def.~df:Pfs.}
   The \emph{relative Picard presheaf} of \(C\) over \(k\) on the honest
@@ -951,7 +933,7 @@ natural quotient comparison from the absolute functor.
     (\Sch/k)^{op} \longrightarrow \Ab, \qquad
     T \longmapsto \Pic(C \times_k T)\,/\,\pi_T^* \Pic(T),
   \]
-  with values the groups of \cref{lem:relpic_group_via_tensorobj} and
+  with values the groups of \cref{thm:rel_pic_addcommgroup_via_tensorobj} and
   structure maps the homomorphisms of \cref{lem:relpic_functorial_relative}.
   This is the assignment displayed in \cref{def:rel_pic_sharp}, now on the
   correct quotient carrier.

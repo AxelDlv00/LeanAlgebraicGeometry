@@ -1,0 +1,11 @@
+## Checklist
+
+- [x] Started Horizon task T5.
+- [ ] Write-domain violation for task T5: SubProjects/GR-Quot-Closure/AlgebraicJacobian/Picard/SectionGradedRing.lean.
+- [x] Report saved: .archon-horizon/runs/0005/sessions/0015-horizon-T5/report.md.
+- [x] Finished Horizon task T5 with status: done.
+- [x] Integrated horizon session 0015-horizon-T5: 3d10e4a; projects Algebraic-Jacobian-Challenge; 50 files: .archon-horizon/blueprints/Albanese.json, .archon-horizon/blueprints/Algebraic-Jacobian-Challenge.json, .archon-horizon/blueprints/GR-Quot-Closure.json, .archon-horizon/events.jsonl, .archon-horizon/inbox/local/comments/I-0006/C-0004.md, .archon-horizon/inbox/local/history/I-0006.jsonl, .archon-horizon/inbox/local/history/I-0060.jsonl, .archon-horizon/inbox/local/history/I-0061.jsonl, +42 more.
+
+## Issues
+
+- Write-domain violation for task T5: SubProjects/GR-Quot-Closure/AlgebraicJacobian/Picard/SectionGradedRing.lean.

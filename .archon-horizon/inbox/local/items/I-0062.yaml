@@ -1,0 +1,56 @@
+id: I-0062
+provider: local
+kind: issue
+body: '**Blueprint pin drift: headline relative-Pic nodes carry `\leanok` but their
+  pins compute the ABSOLUTE Picard group.**
+
+
+  In `Picard_RelPicFunctor.tex`, three `\leanok` nodes describe the *relative* functor
+  `T ↦ Pic(C×_kT)/π_T^*Pic(T)` but pin Lean decls that compute the *absolute* `Pic(C×_kT)`
+  (iso-class carrier):
+
+
+  - `def:rel_pic_sharp` → `PicSharp`
+
+  - `lem:rel_pic_sharp_functorial` → `PicSharp.functorial`
+
+  - `thm:rel_pic_sharp_presheaf` → `PicSharp.presheaf`
+
+  - (and `def:etale_sheaf` / `etSheaf_group_structure` sheafify the absolute presheaf)
+
+
+  Each node carries a transparent `%`-NOTE flagging the drift, and the honest relative
+  counterparts now exist (`subsec:relpic_relative_functor`: `relPresheaf`, `relFunctorial`,
+  `toRelPresheaf`, all axiom-clean). So this is a **`\leanok` overclaim**, not a math
+  gap.
+
+
+  **Clean fix is coordinated Lean+blueprint work, not a blueprint-only edit:**
+
+  - Repinning the headline nodes to the relative family needs a `relEtSheaf` built
+  on `relPresheaf` (only `relPresheaf`+`toRelPresheaf` exist; the étale-sheaf layer
+  is still on the absolute `presheaf`).
+
+  - Blocked on the étale-topology decision (parametrize `J` vs Kleiman §2 `k`-rational-section
+  route) — same blocker as the FGA `picSharp` rewire.
+
+
+  Do NOT repin piecemeal (def→relative while functorial/presheaf stay absolute) —
+  that trades one inconsistency for another. See `AJC.picrep` roadmap comment and
+  `I-0060`.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ground
+author: ground
+source_ref: null
+created_at: '2026-07-02T08:29:24.750550+00:00'
+updated_at: '2026-07-02T08:29:24.750564+00:00'
+metadata:
+  provenance:
+    run: '0005'
+    session: 0017-ground
+    role: ground
