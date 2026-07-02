@@ -1713,22 +1713,14 @@ theorem isLocalizedModule_restrict_of_isIso_fromTildeΓ {R : CommRingCat.{u}}
     IsLocalizedModule.of_linearEquiv_right (S := Submonoid.powers f)
       (f := eDf.toLinearMap ∘ₗ rt) (e := eTop.symm)
   -- identify the target restriction map with `(eDf ∘ rt) ∘ eTop⁻¹`
-  -- v4.31.0 ISOLATION (Thread-1): `convert step2 using 1` now leaves `Sheaf.forget`-vs-`.presheaf`
-  -- TYPE equalities (`↑((…).presheaf.obj U) = ↑(((Sheaf.forget …).obj …).obj U)`) that no longer
-  -- close by `rfl`/`with_unfolding_all rfl` (the `sheafToPresheaf` functor `.obj` doesn't reduce),
-  -- so `apply LinearMap.ext` hits a Type-eq instead of the map-eq. `step2` (the localized-module
-  -- structure on the composite) IS established above; only the final `convert` identification is
-  -- sorry'd.  ORIGINAL PROOF preserved for restoration:
-  -- ```
-  -- convert step2 using 1
-  -- apply LinearMap.ext; intro x
-  -- have hc := LinearMap.congr_fun hnathom (eTop.symm x)
-  -- simp only [LinearMap.comp_apply] at hc ⊢
-  -- refine (?_ : _ = _).trans hc.symm
-  -- congr 1
-  -- exact (eTop.apply_symm_apply x).symm
-  -- ```
-  sorry
+  convert step2 using 1 <;> try rfl
+  refine heq_of_eq ?_
+  apply LinearMap.ext; intro x
+  have hc := LinearMap.congr_fun hnathom (eTop.symm x)
+  simp only [LinearMap.comp_apply] at hc ⊢
+  refine (?_ : _ = _).trans hc.symm
+  congr 1
+  exact (eTop.apply_symm_apply x).symm
 
 /-- A morphism of sheaves of `R`-modules on `Spec R` that is an isomorphism on every basic open
 `D(f)` is an isomorphism. This is the "isomorphism on a basis ⟹ isomorphism" reduction specialised
@@ -2239,11 +2231,7 @@ private theorem isIso_unitToPushforwardObjUnit_of_isIso' {C : Type u} [Category.
   intro V
   haveI hiso : IsIso (ψ.hom.app V) := hmap V
   haveI : IsIso ((forget₂ RingCat AddCommGrpCat).map (ψ.hom.app V)) := inferInstance
-  -- v4.31.0 ISOLATION (Thread-1): `convert this using 1/2` leaves stuck `sheafToPresheaf.obj`
-  -- (co)domain/morphism identifications that don't reduce (SAME wall as `isLocalizedModule_restrict…`
-  -- at L1686).  The instance `this : IsIso ((forget₂ …).map (ψ.hom.app V))` IS established above;
-  -- only the final defeq-bridge to the unit component is sorry'd.  ORIGINAL PROOF: `convert this using 1`
-  sorry
+  exact this
 
 namespace Scheme.Modules
 

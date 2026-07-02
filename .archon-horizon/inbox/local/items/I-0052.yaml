@@ -1,0 +1,56 @@
+id: I-0052
+provider: local
+kind: memory
+body: '**IdentityComponent `isSubgroupHomomorphism` + `baseChangeIso` CLOSED, axiom-clean
+  (run 0005 session 0011, T5).** File sorries 8 → 6; all 6 remaining are blocked (QC∧GeomIrred
+  conjunct needs EGA IV₂ 4.6.1-type input; 5 Pic⁰ decls FGA-tainted). Recipes:
+
+
+  - **Subgroup object via Yoneda**: `GrpObj.ofRepresentableBy` + a `Subgroup (T ⟶
+  G)` presheaf (`{f | Set.range ⇑f.left ⊆ carrier}`) beats hand-rolling MonObj/GrpObj
+  diagram axioms. Closure under mul: factor `f*g = lift f'' g'' ≫ ((ι⊗ₘι) ≫ μ)` via
+  `lift_map`, bound range by core lemma `range ((ι⊗ₘι)≫μ).left ⊆ carrier` (connected
+  product through e). `Hom.group` is a **scoped instance**: `open scoped MonObj`.
+
+  - **`G⁰ ×ₖ G⁰` connected**: Mathlib `[GeometricallyConnected g] [UniversallyOpen
+  g] [ConnectedSpace X] : ConnectedSpace (pullback f g)` + `(R ⊗ S).left = pullback
+  R.hom S.hom` (rfl). UniversallyOpen-to-Spec-field needs `haveI : Subsingleton ↥(Spec
+  (.of k)) := inferInstanceAs (Subsingleton (PrimeSpectrum k))` (sometimes ALSO at
+  the defeq-disguised type `↥(𝟙_ (Over (Spec (.of k)))).left`).
+
+  - **grpObjMkPullbackSnd unit compat** (`fst(e_{G_K}) = e_G`): `Over.grpObjMkPullbackSnd_one
+  : one = ε ≫ (Over.pullback g).map one` IS rw-able against a `letI`-bound instance
+  (must be `letI`, not `haveI` — GrpObj is data). But **morphism-level rw/assoc in
+  the resulting goal FAILS**: `(Over.pullback φ).obj X` vs `pullback X.hom φ` index
+  mismatch is opaque at instances transparency and `respectTransparency false` does
+  NOT rescue rw or post-rw rfl. Working pattern: **point level** — calc chain of `rfl`
+  steps redistributing `⇑(_ ≫ _).base` applications, `congrArg` for every rewrite
+  (incl. `Subsingleton.elim`), `rw` only inside standalone well-typed subterms (e.g.
+  `pullback.lift_fst` on an explicitly spelled lift, with the lift''s w-proof given
+  concretely — proof irrelevance makes the rfl steps match).
+
+  - **Post-rw auto-rfl failures** on ⇑-coercion goals (identical-looking sides left
+  unsolved): replace `by rw [h]` with term-mode `congrArg (fun m => …) h`.
+
+  - **baseChangeIso iso assembly**: `IsOpenImmersion.isoOfRangeEq (carrier G_K).ι
+  (pullback.snd ι fst) ≪≫ pullbackRightPullbackFstIso G.hom φ ι`; carrier identification
+  `fst⁻¹(carrier G) = carrier G_K` by clopen (⊇) + preconnected-range (⊆) around `IsOpenImmersion.range_pullbackSnd`.
+
+  - `SubProjects/Picard-IdentityComponent` mirror now FURTHER behind AJC (needs re-sync
+  or retirement).'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-02T07:27:58.244987+00:00'
+updated_at: '2026-07-02T07:27:58.244995+00:00'
+metadata:
+  provenance:
+    run: '0005'
+    session: 0011-horizon-T5
+    role: horizon

@@ -22,16 +22,19 @@ substrate for a `k`-group scheme locally of finite type and specialises it to
    of `C` when `C/k` is a smooth proper geometrically integral curve of
    positive genus).
 
-## Status (iter-185 NEW file-skeleton)
+## Status (run 0005, session 0011)
 
-This file is the **iter-185 IdentityComponent** file-skeleton (NEW lane,
-blueprint-reviewer HARD GATE cleared for the iter-184 plan-phase chapter
-`Picard_IdentityComponent.tex`). Each of the five blueprint-pinned
-declarations carries the *intended* substantive type signature (matching the
-`\lean{...}` pin in `Picard_IdentityComponent.tex`) with a `sorry` body. The
-bodies are iter-186+ work; iter-185's mandate is the mechanical scaffold only.
+The §1 group-scheme substrate is now fully proved: `IdentityComponent`,
+`isOpenSubgroupScheme`, `isSubgroupHomomorphism` (Yoneda subgroup-presheaf
+route) and `baseChangeIso` are sorry-free. Remaining sorries (6):
+`isFiniteTypeGeometricallyIrreducible`'s quasi-compactness/geometric-
+irreducibility conjunct (needs EGA IV₂ 4.6.1-type reduced-fiber-product
+input, not in Mathlib), and the five Pic⁰-specific declarations of §2–§4,
+which inherit the typed-sorry FGA representability foundation
+(`Picard/FGAPicRepresentability.lean`) and cannot be axiom-clean before
+`AJC.picrep` lands.
 
-The 5 pinned declarations are:
+The 5 blueprint-pinned declarations are:
 
 1. `AlgebraicGeometry.GroupScheme.IdentityComponent` (def, ~5 LOC) — the
    **identity component** `G^0` of a `k`-group scheme `G` locally of finite
@@ -496,6 +499,235 @@ private theorem identityComponent_geometricallyConnected
     (IdentityComponent G).hom (identityComponentSection G)
     (identityComponentSection_isSection G)
 
+/-! ### Session 0011 (run 0005, T5): the inherited group structure on `G⁰`
+
+Kleiman §5 Lem.~`lem:agps`~(3)(b): the clopen identity component `G⁰` of a
+`k`-group scheme `G` locally of finite type inherits the group structure of
+`G`. Strategy (Yoneda): the subfunctor of `Hom(-, G)` of morphisms whose
+set-theoretic image lands in the identity-component carrier is a presheaf of
+*subgroups* — closure under `mul`/`inv` is Kleiman's connectedness argument
+(`G⁰ ×ₖ G⁰` is connected, via `identityComponent_geometricallyConnected` +
+Mathlib's connected-pullback instance, so its image under the group law is a
+connected subset through `e`, hence contained in the connected component).
+This subfunctor is represented by `IdentityComponent G` (factorisation
+through the open immersion `G⁰ ↪ G` via `IsOpenImmersion.lift`), so
+`GrpObj.ofRepresentableBy` equips `IdentityComponent G` with the
+group-object structure. -/
+
+open MonoidalCategory CartesianMonoidalCategory
+open scoped MonObj
+
+section SubgroupStructure
+
+variable {k : Type u} [Field k] (G : Over (Spec (.of k)))
+  [GrpObj G] [LocallyOfFiniteType G.hom]
+
+/-- The inclusion `G⁰ ⟶ G` as an over-category morphism (the same underlying
+open immersion `(identityComponentCarrier G).ι` as in
+`IdentityComponent.isOpenSubgroupScheme`). -/
+private noncomputable def identityComponentInclusion : IdentityComponent G ⟶ G :=
+  Over.homMk (identityComponentCarrier G).ι rfl
+
+/-- Composition with a fixed morphism only shrinks the set-theoretic image. -/
+private lemma range_comp_left_subset {A B C' : Over (Spec (.of k))} (a : A ⟶ B) (b : B ⟶ C') :
+    Set.range ⇑(a ≫ b).left ⊆ Set.range ⇑b.left := by
+  rintro _ ⟨t, rfl⟩
+  exact ⟨a.left.base t, by simp⟩
+
+/-- The image of the unit section lands in the identity-component carrier. -/
+private lemma range_one_left_subset :
+    Set.range ⇑(MonObj.one (X := G)).left ⊆ (identityComponentCarrier G : Set G.left) := by
+  have h := identityComponentSection_range_subset G
+  rwa [Scheme.Opens.range_ι] at h
+
+/-- The image of the inclusion is contained in the identity-component carrier. -/
+private lemma range_inclusion_left_subset :
+    Set.range ⇑(identityComponentInclusion G).left ⊆
+      (identityComponentCarrier G : Set G.left) := by
+  show Set.range ⇑(identityComponentCarrier G).ι ⊆ (identityComponentCarrier G : Set G.left)
+  exact (Scheme.Opens.range_ι _).le
+
+/-- Range hypothesis for the `IsOpenImmersion.lift` factorisation below. -/
+private lemma identityComponentFactor_range {T : Over (Spec (.of k))} (f : T ⟶ G)
+    (hf : Set.range ⇑f.left ⊆ (identityComponentCarrier G : Set G.left)) :
+    Set.range ⇑f.left ⊆ Set.range ⇑(identityComponentCarrier G).ι := by
+  rw [Scheme.Opens.range_ι]; exact hf
+
+/-- A morphism `T ⟶ G` whose set-theoretic image lands in the
+identity-component carrier factors through the open immersion `G⁰ ↪ G`. -/
+private noncomputable def identityComponentFactor {T : Over (Spec (.of k))} (f : T ⟶ G)
+    (hf : Set.range ⇑f.left ⊆ (identityComponentCarrier G : Set G.left)) :
+    T ⟶ IdentityComponent G :=
+  Over.homMk
+    (@IsOpenImmersion.lift (identityComponentCarrier G).toScheme T.left G.left
+      (identityComponentCarrier G).ι f.left inferInstance
+      (identityComponentFactor_range G f hf))
+    (by
+      change _ ≫ (identityComponentCarrier G).ι ≫ G.hom = T.hom
+      rw [← Category.assoc, IsOpenImmersion.lift_fac (identityComponentCarrier G).ι f.left
+        (identityComponentFactor_range G f hf)]
+      exact Over.w f)
+
+private lemma identityComponentFactor_comp {T : Over (Spec (.of k))} (f : T ⟶ G)
+    (hf : Set.range ⇑f.left ⊆ (identityComponentCarrier G : Set G.left)) :
+    identityComponentFactor G f hf ≫ identityComponentInclusion G = f := by
+  apply Over.OverMorphism.ext
+  exact IsOpenImmersion.lift_fac (identityComponentCarrier G).ι f.left
+    (identityComponentFactor_range G f hf)
+
+/-- The unit of `G`, viewed as a morphism into the identity component. -/
+private noncomputable def identityComponentOne :
+    𝟙_ (Over (Spec (.of k))) ⟶ IdentityComponent G :=
+  Over.homMk (identityComponentSection G) (identityComponentSection_isSection G)
+
+private lemma identityComponentOne_comp :
+    identityComponentOne G ≫ identityComponentInclusion G = MonObj.one (X := G) := by
+  apply Over.OverMorphism.ext
+  exact IsOpenImmersion.lift_fac (identityComponentCarrier G).ι
+    (MonObj.one (X := G)).left (identityComponentSection_range_subset G)
+
+omit [LocallyOfFiniteType G.hom] in
+/-- `1 · 1 = 1` in diagrammatic form for the unit object. -/
+private lemma lift_one_one_mul :
+    lift (MonObj.one (X := G)) (MonObj.one (X := G)) ≫ MonObj.mul (X := G) =
+      MonObj.one (X := G) := by
+  have h1 : (1 : 𝟙_ (Over (Spec (.of k))) ⟶ G) = MonObj.one (X := G) := by
+    rw [Hom.one_def, toUnit_unique (toUnit _) (𝟙 _), Category.id_comp]
+  simpa [Hom.mul_def, h1] using mul_one (1 : 𝟙_ (Over (Spec (.of k))) ⟶ G)
+
+omit [LocallyOfFiniteType G.hom] in
+/-- The unit is fixed by inversion: `e⁻¹ = e` in diagrammatic form. -/
+private lemma one_comp_inv :
+    MonObj.one (X := G) ≫ GrpObj.inv (X := G) = MonObj.one (X := G) := by
+  have h1 : (1 : 𝟙_ (Over (Spec (.of k))) ⟶ G) = MonObj.one (X := G) := by
+    rw [Hom.one_def, toUnit_unique (toUnit _) (𝟙 _), Category.id_comp]
+  simpa [Hom.inv_def, h1] using (inv_one : (1 : 𝟙_ (Over (Spec (.of k))) ⟶ G)⁻¹ = 1)
+
+/-- `G⁰ ×ₖ G⁰` is connected (EGA IV₂ 4.5.8, via geometric connectedness of
+`G⁰` and universal openness of morphisms to the spectrum of a field). -/
+private lemma identityComponent_tensor_connectedSpace :
+    ConnectedSpace (IdentityComponent G ⊗ IdentityComponent G).left := by
+  letI := identityComponent_geometricallyConnected G
+  haveI : IsIntegral (Spec (CommRingCat.of k)) := inferInstance
+  haveI : Subsingleton ↥(Spec (CommRingCat.of k)) :=
+    inferInstanceAs (Subsingleton (PrimeSpectrum k))
+  haveI : UniversallyOpen (IdentityComponent G).hom := inferInstance
+  exact inferInstanceAs
+    (ConnectedSpace ↥(pullback (IdentityComponent G).hom (IdentityComponent G).hom))
+
+/-- **Core closure lemma (mul)**: the image of `G⁰ ×ₖ G⁰` under the group law
+of `G` is contained in the identity-component carrier (a connected set
+through the identity point is contained in its connected component). -/
+private lemma range_tensor_mul_subset :
+    Set.range ⇑(((identityComponentInclusion G ⊗ₘ identityComponentInclusion G) ≫
+        MonObj.mul (X := G)).left) ⊆ (identityComponentCarrier G : Set G.left) := by
+  haveI := identityComponent_tensor_connectedSpace G
+  have hmor : lift (identityComponentOne G) (identityComponentOne G) ≫
+      ((identityComponentInclusion G ⊗ₘ identityComponentInclusion G) ≫
+        MonObj.mul (X := G)) = MonObj.one (X := G) := by
+    rw [← Category.assoc, lift_map, identityComponentOne_comp, lift_one_one_mul]
+  have hmem : identitySectionPoint G ∈ Set.range ⇑(((identityComponentInclusion G ⊗ₘ
+      identityComponentInclusion G) ≫ MonObj.mul (X := G)).left) := by
+    have h0 : identitySectionPoint G ∈ Set.range ⇑(MonObj.one (X := G)).left :=
+      ⟨(default : ↥(Spec (CommRingCat.of k))), rfl⟩
+    rw [← hmor] at h0
+    exact range_comp_left_subset _ _ h0
+  have hsub := (isPreconnected_range (Scheme.Hom.continuous _)).subset_connectedComponent hmem
+  simpa [identityComponentCarrier] using hsub
+
+/-- **Core closure lemma (inv)**: the image of `G⁰` under the inversion of `G`
+is contained in the identity-component carrier. -/
+private lemma range_inclusion_inv_subset :
+    Set.range ⇑((identityComponentInclusion G ≫ GrpObj.inv (X := G)).left) ⊆
+      (identityComponentCarrier G : Set G.left) := by
+  have hmor : identityComponentOne G ≫
+      identityComponentInclusion G ≫ GrpObj.inv (X := G) = MonObj.one (X := G) := by
+    rw [← Category.assoc, identityComponentOne_comp, one_comp_inv]
+  have hmem : identitySectionPoint G ∈
+      Set.range ⇑((identityComponentInclusion G ≫ GrpObj.inv (X := G)).left) := by
+    have h0 : identitySectionPoint G ∈ Set.range ⇑(MonObj.one (X := G)).left :=
+      ⟨(default : ↥(Spec (CommRingCat.of k))), rfl⟩
+    rw [← hmor] at h0
+    exact range_comp_left_subset _ _ h0
+  have hsub := (isPreconnected_range (Scheme.Hom.continuous _)).subset_connectedComponent hmem
+  simpa [identityComponentCarrier] using hsub
+
+/-- The subgroup of `Hom(T, G)` of morphisms landing in the identity-component
+carrier (Kleiman §5 Lem.~`lem:agps`~(3)(b), Yoneda form). -/
+private noncomputable def identityComponentSubgroup (T : Over (Spec (.of k))) :
+    Subgroup (T ⟶ G) where
+  carrier := {f | Set.range ⇑f.left ⊆ (identityComponentCarrier G : Set G.left)}
+  one_mem' := by
+    show Set.range ⇑(1 : T ⟶ G).left ⊆ _
+    rw [(Hom.one_def : (1 : T ⟶ G) = _)]
+    exact (range_comp_left_subset _ _).trans (range_one_left_subset G)
+  mul_mem' := by
+    intro f g hf hg
+    show Set.range ⇑(f * g).left ⊆ _
+    have hfac : f * g =
+        lift (identityComponentFactor G f hf) (identityComponentFactor G g hg) ≫
+          ((identityComponentInclusion G ⊗ₘ identityComponentInclusion G) ≫
+            MonObj.mul (X := G)) := by
+      conv_rhs => rw [← Category.assoc, lift_map,
+        identityComponentFactor_comp G f hf, identityComponentFactor_comp G g hg]
+      exact Hom.mul_def f g
+    rw [hfac]
+    exact (range_comp_left_subset _ _).trans (range_tensor_mul_subset G)
+  inv_mem' := by
+    intro f hf
+    show Set.range ⇑f⁻¹.left ⊆ _
+    have hfac : f⁻¹ = identityComponentFactor G f hf ≫
+        (identityComponentInclusion G ≫ GrpObj.inv (X := G)) := by
+      conv_rhs => rw [← Category.assoc, identityComponentFactor_comp G f hf]
+      exact Hom.inv_def f
+    rw [hfac]
+    exact (range_comp_left_subset _ _).trans (range_inclusion_inv_subset G)
+
+/-- The presheaf of groups `T ↦ {f : T ⟶ G | im f ⊆ G⁰}`. -/
+private noncomputable def identityComponentSubgroupFunctor :
+    (Over (Spec (.of k)))ᵒᵖ ⥤ GrpCat.{u} where
+  obj T := GrpCat.of (identityComponentSubgroup G T.unop)
+  map {T T'} φ := GrpCat.ofHom
+    { toFun := fun f => ⟨φ.unop ≫ f.1, (range_comp_left_subset _ _).trans f.2⟩
+      map_one' := Subtype.ext (by
+        show φ.unop ≫ (1 : T.unop ⟶ G) = (1 : T'.unop ⟶ G)
+        simp only [Hom.one_def]
+        rw [← Category.assoc, comp_toUnit])
+      map_mul' := fun f g => Subtype.ext (by
+        show φ.unop ≫ (f.1 * g.1) = (φ.unop ≫ f.1) * (φ.unop ≫ g.1)
+        simp only [Hom.mul_def]
+        rw [← Category.assoc, comp_lift]) }
+  map_id T := by
+    ext f
+    exact Category.id_comp _
+  map_comp {T T' T''} φ ψ := by
+    ext f
+    exact Category.assoc _ _ _
+
+/-- The natural bijection `(T ⟶ G⁰) ≃ {f : T ⟶ G | im f ⊆ G⁰}`. -/
+private noncomputable def identityComponentHomEquiv (T : Over (Spec (.of k))) :
+    (T ⟶ IdentityComponent G) ≃ ↥(identityComponentSubgroup G T) where
+  toFun u := ⟨u ≫ identityComponentInclusion G,
+    (range_comp_left_subset _ _).trans (range_inclusion_left_subset G)⟩
+  invFun f := identityComponentFactor G f.1 f.2
+  left_inv u := by
+    apply Over.OverMorphism.ext
+    exact (IsOpenImmersion.lift_uniq (identityComponentCarrier G).ι
+      (u ≫ identityComponentInclusion G).left _ u.left rfl).symm
+  right_inv f := Subtype.ext (identityComponentFactor_comp G f.1 f.2)
+
+/-- `IdentityComponent G` represents the subgroup presheaf. -/
+private noncomputable def identityComponentRepresentableBy :
+    (identityComponentSubgroupFunctor G ⋙ forget GrpCat).RepresentableBy
+      (IdentityComponent G) where
+  homEquiv {T} := identityComponentHomEquiv G T
+  homEquiv_comp {T T'} f g := by
+    apply Subtype.ext
+    show (f ≫ g) ≫ identityComponentInclusion G = f ≫ (g ≫ identityComponentInclusion G)
+    exact Category.assoc _ _ _
+
+end SubgroupStructure
+
 /-- **The identity component inclusion is a group-scheme homomorphism.**
 
 Kleiman §5 Lem.~`lem:agps`~(3) conclusion (b): the clopen subscheme `G^0`
@@ -508,14 +740,20 @@ Kleiman's argument (the product `G^0 ×_k G^0` is connected by
 EGA IV₂ 4.5.8; the group-multiplication map sends this connected subset
 containing the identity into the connected component `G^0`).
 
-The full statement (existence of `GrpObj (IdentityComponent G)` *together*
-with the homomorphism-compatibility of the inclusion in the relevant
-`Hom`-form) lives in iter-193+. -/
+CLOSED (run 0005, session 0011): via `GrpObj.ofRepresentableBy` applied to
+the subgroup presheaf `identityComponentSubgroupFunctor` — the group
+structure on `Hom(T, G⁰)` is the subgroup of `Hom(T, G)` of morphisms
+landing in the carrier, with closure under `mul`/`inv` provided by the
+connectedness core lemmas `range_tensor_mul_subset` /
+`range_inclusion_inv_subset` above. The induced group law on `G⁰` is by
+construction compatible with the inclusion (the Yoneda equivalence is
+`u ↦ u ≫ identityComponentInclusion G`). -/
 theorem IdentityComponent.isSubgroupHomomorphism {k : Type u} [Field k]
     (G : Over (Spec (.of k)))
     [GrpObj G] [LocallyOfFiniteType G.hom] :
     Nonempty (GrpObj (IdentityComponent G)) :=
-  sorry
+  ⟨GrpObj.ofRepresentableBy (IdentityComponent G) (identityComponentSubgroupFunctor G)
+    (identityComponentRepresentableBy G)⟩
 
 /-- **The identity component is of finite type and geometrically irreducible.**
 
@@ -557,6 +795,7 @@ theorem IdentityComponent.isFiniteTypeGeometricallyIrreducible
     -- + EGA IV₂ 4.5.8 / 4.6.1 / EGA I 6.1.10 (not yet in Mathlib).
     sorry
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Formation of the identity component commutes with base change.**
 
 Kleiman §5 Lem.~`lem:agps`~(3) conclusion (d): for any field extension
@@ -571,19 +810,25 @@ on the base change `G ×_{Spec k} Spec K` (with appropriate
 locally-of-finite-type instance), and an isomorphism on underlying schemes
 identifying the two iterated constructions.
 
-iter-192 partial closure (Lane A.3.i, axiom-clean modulo the iso slot):
-the `_grpInst` slot closes via `CategoryTheory.Over.grpObjMkPullbackSnd`
-(per `analogies/lane-a3i-isconnected-prod.md` second analogue — the
-category-theoretic base-change of `GrpObj` directly fitting the
-`Over.mk (pullback.snd ...)` shape of `G_K`); the `_locFTInst` slot
-closes via Mathlib's stability of `LocallyOfFiniteType` under base
-change (`inferInstance` fires on the pullback). The remaining iso slot
-`(IdentityComponent G_K).left ≅ pullback (IdentityComponent G).hom φ`
-is the substantive content of Stacks 04KS / EGA IV₂ 4.5.16: identifying
-the iterated identity-component construction with the base change of
-the identity component, which requires the
-`geometricallyConnected_of_connected_of_section` helper above plus
-descent of clopen partitions along base change (not yet in Mathlib). -/
+CLOSED (run 0005, session 0011): the `_grpInst` slot via
+`CategoryTheory.Over.grpObjMkPullbackSnd`, the `_locFTInst` slot via
+Mathlib's base-change stability of `LocallyOfFiniteType`, and the iso slot
+(Stacks 04KS / EGA IV₂ 4.5.16) by the carrier identification
+`fst⁻¹(G⁰-carrier) = (G_K)⁰-carrier` inside `|G ×ₖ Spec K|`:
+
+- `⊆` (connectedness): `fst⁻¹(carrier)` is the image of the open immersion
+  `pullback ι fst`, whose source is connected because
+  `pullback (IdentityComponent G).hom φ` is connected — Mathlib's
+  connected-pullback instance fed by
+  `identityComponent_geometricallyConnected` and universal openness of
+  morphisms to the spectrum of a field — and it contains the identity
+  point of `G_K` (which lies over `e` by the base-change compatibility of
+  the unit of `grpObjMkPullbackSnd`);
+- `⊇` (clopen): `fst⁻¹(carrier)` is clopen and contains the identity point
+  of `G_K`, hence contains its connected component.
+
+The isomorphism is `IsOpenImmersion.isoOfRangeEq` composed with the
+pasting isomorphism `pullbackRightPullbackFstIso`. -/
 theorem IdentityComponent.baseChangeIso {k : Type u} [Field k]
     (G : Over (Spec (.of k))) [GrpObj G] [LocallyOfFiniteType G.hom]
     (K : Type u) [Field K] [Algebra k K] :
@@ -600,34 +845,118 @@ theorem IdentityComponent.baseChangeIso {k : Type u} [Field k]
   -- `CategoryTheory.Over.grpObjMkPullbackSnd`. The instance bridge
   -- `[GrpObj G] ⟹ [GrpObj (Over.mk G.hom)]` is by defeq (`G = Over.mk G.hom`
   -- when `G` is an over-category object whose right component is the unique
-  -- inhabitant of `Discrete PUnit`).
-  haveI hG : GrpObj (Over.mk G.hom) := ‹GrpObj G›
-  haveI hGK_grp : GrpObj G_K := CategoryTheory.Over.grpObjMkPullbackSnd
+  -- inhabitant of `Discrete PUnit`). `letI` (not `haveI`) so the group
+  -- structure stays definitionally transparent for the carrier computation.
+  letI hG : GrpObj (Over.mk G.hom) := ‹GrpObj G›
+  letI hGK_grp : GrpObj G_K := CategoryTheory.Over.grpObjMkPullbackSnd
   -- `LocallyOfFiniteType G_K.hom`: `G_K.hom = pullback.snd G.hom φ` is the
   -- base change of `G.hom` along `φ`; `LocallyOfFiniteType` is stable
   -- under base change (Mathlib instance).
   haveI hGK_lft : LocallyOfFiniteType G_K.hom :=
     (inferInstance : LocallyOfFiniteType (CategoryTheory.Limits.pullback.snd G.hom φ))
-  -- The iso slot: substrate is now in place (iter-193 push-beyond):
-  -- `identityComponent_geometricallyConnected` provides
-  -- `GeometricallyConnected (IdentityComponent G).hom`, which combined with
-  -- Mathlib's `[GeometricallyConnected f] [UniversallyOpen f]
-  -- [ConnectedSpace Y] ⟹ ConnectedSpace (pullback f g)` instance gives
-  -- `ConnectedSpace (pullback (IdentityComponent G).hom φ)` (the connected-
-  -- pullback substrate). The iso construction proceeds by:
-  -- 1. Build an open immersion `e : pullback (IdentityComponent G).hom φ ⟶
-  --    G_K.left` via `pullback.map _ _ _ _ (identityComponentCarrier G).ι
-  --    (𝟙 _) (𝟙 _) ...`, open-immersion status from
-  --    `Scheme.pullback_map_isOpenImmersion` (i₁ = ι OI; i₂ = 𝟙 OI;
-  --    i₃ = 𝟙 mono).
-  -- 2. Show `Set.range e.base = identityComponentCarrier G_K (as Set)`
-  --    via clopen-+-connected → connected-component bidirectional argument.
-  -- 3. Apply `IsOpenImmersion.isoOfRangeEq` to get the iso between
-  --    `pullback (IdentityComponent G).hom φ` and
-  --    `(identityComponentCarrier G_K).toScheme = (IdentityComponent G_K).left`.
-  -- Substantive content of step 2 (`~80-100 LOC`) deferred to iter-194+.
   refine ⟨⟨hGK_grp, hGK_lft, ?_⟩⟩
-  sorry
+  -- §1: connectivity substrate.
+  letI := identityComponent_geometricallyConnected G
+  haveI : IsIntegral (Spec (CommRingCat.of k)) := inferInstance
+  haveI : Subsingleton ↥(Spec (CommRingCat.of k)) :=
+    inferInstanceAs (Subsingleton (PrimeSpectrum k))
+  haveI : Subsingleton ↥(𝟙_ (Over (Spec (CommRingCat.of k)))).left :=
+    inferInstanceAs (Subsingleton (PrimeSpectrum k))
+  haveI : UniversallyOpen (IdentityComponent G).hom := inferInstance
+  haveI : ConnectedSpace ↥(Spec (CommRingCat.of K)) := connectedSpace_spec_of_isDomain K
+  haveI hP : ConnectedSpace ↥(pullback (IdentityComponent G).hom φ) := inferInstance
+  haveI hP' : ConnectedSpace ↥(pullback ((identityComponentCarrier G).ι ≫ G.hom) φ) := hP
+  haveI hQ : ConnectedSpace
+      ↥(pullback (identityComponentCarrier G).ι (pullback.fst G.hom φ)) :=
+    ((pullbackRightPullbackFstIso G.hom φ
+      (identityComponentCarrier G).ι).hom.homeomorph.connectedSpace_iff).mpr hP'
+  -- §2: the identity point of `G_K` lies over the identity point of `G`
+  -- (base-change compatibility of the unit of `grpObjMkPullbackSnd`).
+  have hεfst : (Functor.LaxMonoidal.ε (Over.pullback φ)).left ≫
+      pullback.fst (𝟙_ (Over (Spec (CommRingCat.of k)))).hom φ = φ := by
+    have hcond : pullback.fst (𝟙_ (Over (Spec (CommRingCat.of k)))).hom φ =
+        pullback.snd (𝟙_ (Over (Spec (CommRingCat.of k)))).hom φ ≫ φ := by
+      simpa using pullback.condition
+        (f := (𝟙_ (Over (Spec (CommRingCat.of k)))).hom) (g := φ)
+    rw [hcond, CategoryTheory.Over.ε_pullback_left, ← Category.assoc]
+    erw [IsIso.inv_hom_id]
+    rw [Category.id_comp]
+  have hfst : ⇑(pullback.fst G.hom φ) (identitySectionPoint G_K) =
+      identitySectionPoint G := by
+    have h1 := congrArg
+      (fun m : 𝟙_ (Over (Spec (CommRingCat.of K))) ⟶ G_K =>
+        ⇑m.left.base (default : ↥(Spec (CommRingCat.of K))))
+      (CategoryTheory.Over.grpObjMkPullbackSnd_one (f := G.hom) (g := φ))
+    calc ⇑(pullback.fst G.hom φ) (identitySectionPoint G_K)
+        = ⇑(pullback.fst G.hom φ)
+            (⇑(MonObj.one (X := G_K)).left.base
+              (default : ↥(Spec (CommRingCat.of K)))) := rfl
+      _ = ⇑(pullback.fst G.hom φ)
+            (⇑(Functor.LaxMonoidal.ε (Over.pullback φ) ≫
+              (Over.pullback φ).map (MonObj.one (X := Over.mk G.hom))).left.base
+              (default : ↥(Spec (CommRingCat.of K)))) :=
+          congrArg (⇑(pullback.fst G.hom φ)) h1
+      _ = ⇑(pullback.lift
+            (pullback.fst (𝟙_ (Over (Spec (CommRingCat.of k)))).hom φ ≫
+              (MonObj.one (X := Over.mk G.hom)).left)
+            (pullback.snd (𝟙_ (Over (Spec (CommRingCat.of k)))).hom φ)
+            (by rw [Category.assoc, Over.w (MonObj.one (X := Over.mk G.hom))]
+                exact pullback.condition) ≫
+            pullback.fst (Over.mk G.hom).hom φ).base
+            (⇑(Functor.LaxMonoidal.ε (Over.pullback φ)).left.base
+              (default : ↥(Spec (CommRingCat.of K)))) := rfl
+      _ = ⇑(pullback.fst (𝟙_ (Over (Spec (CommRingCat.of k)))).hom φ ≫
+            (MonObj.one (X := Over.mk G.hom)).left).base
+            (⇑(Functor.LaxMonoidal.ε (Over.pullback φ)).left.base
+              (default : ↥(Spec (CommRingCat.of K)))) := by
+          rw [pullback.lift_fst]
+      _ = ⇑(MonObj.one (X := Over.mk G.hom)).left.base
+            (⇑((Functor.LaxMonoidal.ε (Over.pullback φ)).left ≫
+              pullback.fst (𝟙_ (Over (Spec (CommRingCat.of k)))).hom φ).base
+              (default : ↥(Spec (CommRingCat.of K)))) := rfl
+      _ = ⇑(MonObj.one (X := Over.mk G.hom)).left.base
+            (⇑φ.base (default : ↥(Spec (CommRingCat.of K)))) :=
+          congrArg
+            (fun m : (𝟙_ (Over (Spec (CommRingCat.of K)))).left ⟶
+                Spec (CommRingCat.of k) =>
+              ⇑(MonObj.one (X := Over.mk G.hom)).left.base
+                (⇑m.base (default : ↥(Spec (CommRingCat.of K))))) hεfst
+      _ = ⇑(MonObj.one (X := Over.mk G.hom)).left.base
+            (default : ↥(Spec (CommRingCat.of k))) :=
+          congrArg (⇑(MonObj.one (X := Over.mk G.hom)).left.base)
+            (Subsingleton.elim _ _)
+      _ = identitySectionPoint G := rfl
+  -- §3: the two carriers coincide as subsets of `|G_K|`.
+  have hclopenG : IsClopen (identityComponentCarrier G : Set G.left) := by
+    show IsClopen (connectedComponent (identitySectionPoint G))
+    exact ⟨isClosed_connectedComponent, isOpen_connectedComponent⟩
+  have hrange : Set.range
+        ⇑(pullback.snd (identityComponentCarrier G).ι (pullback.fst G.hom φ)) =
+      ⇑(pullback.fst G.hom φ) ⁻¹' (identityComponentCarrier G : Set G.left) := by
+    rw [IsOpenImmersion.range_pullbackSnd]
+    simp
+  have hset : ⇑(pullback.fst G.hom φ) ⁻¹' (identityComponentCarrier G : Set G.left) =
+      (identityComponentCarrier G_K : Set G_K.left) := by
+    apply Set.Subset.antisymm
+    · -- preimage ⊆ carrier: the preimage is a connected set through `e_{G_K}`.
+      have hmem : identitySectionPoint G_K ∈
+          ⇑(pullback.fst G.hom φ) ⁻¹' (identityComponentCarrier G : Set G.left) :=
+        Set.mem_preimage.mpr (by rw [hfst]; exact mem_connectedComponent)
+      rw [← hrange] at hmem ⊢
+      exact (isPreconnected_range
+        (Scheme.Hom.continuous _)).subset_connectedComponent hmem
+    · -- carrier ⊆ preimage: the preimage is clopen and contains `e_{G_K}`.
+      show connectedComponent (identitySectionPoint G_K) ⊆ _
+      refine IsClopen.connectedComponent_subset
+        (hclopenG.preimage (Scheme.Hom.continuous _)) ?_
+      exact Set.mem_preimage.mpr (by rw [hfst]; exact mem_connectedComponent)
+  -- §4: assemble the isomorphism.
+  have hrangeEq : Set.range ⇑(identityComponentCarrier G_K).ι =
+      Set.range ⇑(pullback.snd (identityComponentCarrier G).ι (pullback.fst G.hom φ)) := by
+    rw [Scheme.Opens.range_ι, hrange, hset]
+  exact IsOpenImmersion.isoOfRangeEq (identityComponentCarrier G_K).ι
+      (pullback.snd (identityComponentCarrier G).ι (pullback.fst G.hom φ)) hrangeEq ≪≫
+    pullbackRightPullbackFstIso G.hom φ (identityComponentCarrier G).ι
 
 end GroupScheme
 

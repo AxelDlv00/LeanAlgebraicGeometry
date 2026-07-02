@@ -180,6 +180,7 @@ and `pushPullFunctor` is assembled from them immediately after. -/
 
 /-! ### Functor laws of the push–pull functor `G` -/
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Identity law of the push–pull functor `G`. -/
 lemma pushPullMap_id (F : X.Modules) (Y : Over X) :
     pushPullMap F (𝟙 Y) = 𝟙 (pushPullObj F Y) := by
@@ -209,24 +210,18 @@ lemma pushPullMap_id (F : X.Modules) (Y : Over X) :
         ((Scheme.Modules.pullback (𝟙 Y.left)).obj ((Scheme.Modules.pullback Y.hom).obj F)) ≫
       (Scheme.Modules.pullbackId Y.left).hom.app ((Scheme.Modules.pullback Y.hom).obj F) =
       𝟙 ((Scheme.Modules.pullback Y.hom).obj F) := by
-    -- v4.31.0 ISOLATION (Thread-1): `exact Iso.inv_hom_id_app _ _` typeclass-stuck (category metavar);
-    -- the `erw [← hnat, ← reassoc_of% star]` no longer leaves the clean `inv.app ≫ hom.app` form.
-    -- Needs goal-state-driven repair (LSP dead here). ORIGINAL PROOF preserved:
-    -- ```
-    -- have hnat := (Scheme.Modules.pushforwardId Y.left).hom.naturality
-    --   ((Scheme.Modules.pullbackId Y.left).hom.app ((Scheme.Modules.pullback Y.hom).obj F))
-    -- simp only [Functor.id_map] at hnat
-    -- erw [← hnat, ← reassoc_of% star]
-    -- exact Iso.inv_hom_id_app _ _
-    -- ```
-    sorry
+    have hnat := (Scheme.Modules.pushforwardId Y.left).hom.naturality
+      ((Scheme.Modules.pullbackId Y.left).hom.app ((Scheme.Modules.pullback Y.hom).obj F))
+    simp only [Functor.id_map] at hnat
+    erw [← hnat, ← reassoc_of% star]
+    simp
   -- the pullback comparison + the over-triangle transport collapse via right-unitality
   have hib_inner : (Scheme.Modules.pullbackComp (𝟙 Y.left) Y.hom).hom.app F ≫
       eqToHom (congrArg (fun q => (Scheme.Modules.pullback q).obj F) (Category.id_comp Y.hom)) =
       (Scheme.Modules.pullbackId Y.left).hom.app ((Scheme.Modules.pullback Y.hom).obj F) := by
-    -- v4.31.0 ISOLATION (Thread-1): rw-chain leaves unsolved goals (eqToHom/assoc reassociation
-    -- shifted). Needs goal-state. ORIGINAL: `rw [eqToHom_app] at hru2; rw [← hru2, ← Category.assoc, Iso.hom_inv_id_app]; simp`
-    sorry
+    rw [eqToHom_app] at hru2
+    rw [← hru2, ← Category.assoc, Iso.hom_inv_id_app]
+    erw [Category.id_comp, Category.comp_id]
   have hib : (Scheme.Modules.pushforward Y.hom).map
         ((Scheme.Modules.pullbackComp (𝟙 Y.left) Y.hom).hom.app F) ≫
       eqToHom (congrArg (fun q => (Scheme.Modules.pushforward Y.hom).obj
@@ -301,8 +296,7 @@ lemma pushPull_transport_cancel {Y₁ Y₂ : Scheme.{u}}
       eqToHom (congrArg (fun q => (Scheme.Modules.pushforward q).obj
         ((Scheme.Modules.pullback q).obj F)) h) := by
   subst h
-  -- v4.31.0 ISOLATION (Thread-1): `simp` leaves an eqToHom residual post-`subst`. ORIGINAL: `subst h; simp`
-  sorry
+  simp <;> rfl
 
 /-- **Composite-unit decomposition for the push–pull head.** The adjunction unit
 `η^{f≫p}` for a composite morphism, expressed through the iterated units `η^p`,
@@ -322,10 +316,8 @@ lemma pushPull_unit_comp {A B Z : Scheme.{u}} (f : A ⟶ B) (p : B ⟶ Z)
         (Scheme.Modules.pushforward (f ≫ p)).map
           ((Scheme.Modules.pullbackComp f p).hom.app N) := by
   have m := pushPull_unit_mate f p N
-  -- v4.31.0 ISOLATION (Thread-1): `← Functor.map_comp` finds no adjacent `F.map _ ≫ F.map _` in the
-  -- target (term association shifted). Needs goal-state. ORIGINAL:
-  -- `erw [reassoc_of% m, ← Functor.map_comp, Iso.inv_hom_id_app, CategoryTheory.Functor.map_id, Category.comp_id]`
-  sorry
+  erw [reassoc_of% m, Category.assoc, ← Functor.map_comp, Iso.inv_hom_id_app,
+    CategoryTheory.Functor.map_id, Category.comp_id]
 
 /-- The pushforward pseudofunctor is *strict* on sheaves of modules: the
 `pushforwardComp` comparison `2`-cell is the identity on the nose. Holds by `rfl`
@@ -358,7 +350,6 @@ noncomputable def rawPushPullMap {Z₁ Z₂ : Scheme.{u}} (a : Z₂ ⟶ Z₁)
     eqToHom (congrArg (fun q => (Scheme.Modules.pushforward p₂).obj
       ((Scheme.Modules.pullback q).obj F)) w)
 
-set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1000000 in
 /-- `pushPullMap` is the `Over X`-instance of `rawPushPullMap`. Holds by `rfl`. -/
 lemma pushPullMap_eq_raw (F : X.Modules) {Y₁ Y₂ : Over X} (g : Y₂ ⟶ Y₁) :
@@ -386,7 +377,6 @@ lemma rawPushPullMap_self {Z₁ Z₂ : Scheme.{u}} (a : Z₂ ⟶ Z₁) (p₁ : Z
     Category.comp_id, Functor.map_comp]
   rfl
 
-set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 4000000 in
 /-- Clean form of `rawPushPullMap` for a general over-triangle `w : a ≫ p₁ = p₂`:
 the transport-free head `(pushforward p₁).map (η^a ≫ a_*(pullbackComp a p₁).hom)`
@@ -406,6 +396,7 @@ lemma rawPushPullMap_self_gen {Z₁ Z₂ : Scheme.{u}} (a : Z₂ ⟶ Z₁) (p₁
   rw [rawPushPullMap_self]
   exact (Category.comp_id _).symm
 
+set_option backward.isDefEq.respectTransparency false in
 /-- The pure pullback **pentagon** at `F`, in transport-light form: the content of
 `pushPullMap_comp` once the units and pushforwards are peeled. It is exactly
 `Scheme.Modules.pseudofunctor_associativity (f := b) (g := a) (h := p₁)` evaluated at
@@ -436,27 +427,24 @@ lemma pushPull_pentagon {Z₁ Z₂ Z₃ : Scheme.{u}} (a : Z₂ ⟶ Z₁) (b : Z
         (Scheme.Modules.pullbackComp (b ≫ a) p₁).hom.app F =
       (Scheme.Modules.pullbackComp b a).hom.app ((Scheme.Modules.pullback p₁).obj F) ≫
         (Scheme.Modules.pullbackComp (b ≫ a) p₁).hom.app F := by
-    -- v4.31.0 ISOLATION (Thread-1): `rw [reassoc_of% h2, reassoc_of% h1]` finds neither hom≫inv
-    -- adjacency in the target (term association shifted). Needs goal-state. ORIGINAL:
-    -- ```
-    -- have h1 : (pullbackComp b (a ≫ p₁)).hom.app F ≫ (pullbackComp b (a ≫ p₁)).inv.app F = 𝟙 _ := Iso.hom_inv_id_app _ _
-    -- have h2 : (pullback b).map ((pullbackComp a p₁).hom.app F) ≫ (pullback b).map ((pullbackComp a p₁).inv.app F) = 𝟙 _ :=
-    --   ((pullback b).map_comp _ _).symm.trans ((congrArg (pullback b).map (Iso.hom_inv_id_app _ _)).trans ((pullback b).map_id _))
-    -- simp only [Functor.comp_obj] at h1 h2 ⊢
-    -- rw [reassoc_of% h2, reassoc_of% h1]
-    -- ```
-    sorry
+    have h1 : (Scheme.Modules.pullbackComp b (a ≫ p₁)).hom.app F ≫
+        (Scheme.Modules.pullbackComp b (a ≫ p₁)).inv.app F = 𝟙 _ := Iso.hom_inv_id_app _ _
+    have h2 : (Scheme.Modules.pullback b).map ((Scheme.Modules.pullbackComp a p₁).hom.app F) ≫
+        (Scheme.Modules.pullback b).map ((Scheme.Modules.pullbackComp a p₁).inv.app F) = 𝟙 _ :=
+      ((Scheme.Modules.pullback b).map_comp _ _).symm.trans
+        ((congrArg (Scheme.Modules.pullback b).map (Iso.hom_inv_id_app _ _)).trans
+          ((Scheme.Modules.pullback b).map_id _))
+    rw [reassoc_of% h1, reassoc_of% h2]
   have hcd := cancel.symm.trans (congrArg (fun t => (Scheme.Modules.pullback b).map
     ((Scheme.Modules.pullbackComp a p₁).hom.app F) ≫
       (Scheme.Modules.pullbackComp b (a ≫ p₁)).hom.app F ≫ t) HF)
   rw [← Category.assoc ((Scheme.Modules.pullbackComp b a).hom.app
         ((Scheme.Modules.pullback p₁).obj F))
       ((Scheme.Modules.pullbackComp (b ≫ a) p₁).hom.app F), hcd]
-  -- v4.31.0 ISOLATION (Thread-1): `simp [eqToHom_trans]` no longer closes the post-rw eqToHom goal.
-  sorry
+  simp [eqToHom_trans]
 
-set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
+set_option backward.isDefEq.respectTransparency false in
 /-- Composition law for `rawPushPullMap` with the two over-triangles as free
 hypotheses (kernel-cheap). -/
 lemma rawPushPullMap_comp {Z₁ Z₂ Z₃ : Scheme.{u}} (a : Z₂ ⟶ Z₁) (b : Z₃ ⟶ Z₂)
@@ -542,10 +530,20 @@ lemma rawPushPullMap_comp {Z₁ Z₂ Z₃ : Scheme.{u}} (a : Z₂ ⟶ Z₁) (b :
             ((Scheme.Modules.pullback (a ≫ p₁)).obj F) ≫
           (Scheme.Modules.pushforward b).map ((Scheme.Modules.pullbackComp b (a ≫ p₁)).hom.app F)))
         from rfl]
-  -- v4.31.0 ISOLATION (Thread-1): `convert … using 2` leaves an unsolved `case e'_1.e'_2` residual
-  -- (the pushforward-functor congr depth shifted). `INNER` IS established. ORIGINAL:
-  -- `convert congrArg (Scheme.Modules.pushforward p₁).map INNER using 2`
-  sorry
+  -- Final assembly is now pure term-mode transport (no `rw`, so no motive issues).
+  -- LHS = `(pf p₁).map A ≫ E` with `A` the `(b ≫ a)`-head and `E` the outer over-triangle.
+  -- `he` rewrites `E = (pf p₁).map eqInner`; fold via `← map_comp`; reassociate the head so
+  -- `A ≫ eqInner` matches `INNER`'s LHS; apply `INNER`; then split the RHS by `map_comp`.
+  exact
+    (congrArg (fun t => (Scheme.Modules.pushforward p₁).map
+        ((Scheme.Modules.pullbackPushforwardAdjunction (b ≫ a)).unit.app
+            ((Scheme.Modules.pullback p₁).obj F) ≫
+          (Scheme.Modules.pushforward (b ≫ a)).map
+            ((Scheme.Modules.pullbackComp (b ≫ a) p₁).hom.app F)) ≫ t) he).trans
+      (((Functor.map_comp _ _ _).symm.trans
+          (congrArg (Scheme.Modules.pushforward p₁).map
+            ((Category.assoc _ _ _).trans INNER))).trans
+        (Functor.map_comp _ _ _))
 
 /-- **Push–pull functor `G` — composition law** (contravariant functoriality).
 For composable morphisms `g : Y₂ ⟶ Y₁`, `h : Y₃ ⟶ Y₂` of `X`-schemes,
