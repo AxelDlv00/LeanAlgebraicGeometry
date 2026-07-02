@@ -1,0 +1,13 @@
+## Checklist
+
+- [x] Started Horizon task T1.
+- [ ] Write-domain violation for task T1: archon-horizon/blueprints/Albanese.json, SubProjects/Albanese/AlgebraicJacobian/Albanese/CodimOneExtension.lean, SubProjects/Cech-Cohomology/AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean, SubProjects/GR-Quot-Closure/AlgebraicJacobian/Picard/SectionGradedRing.lean, SubProjects/GR-Quot-Closure/build.log, SubProjects/GR-Quot-Closure/build_errors.log, SubProjects/Albanese/AlgebraicJacobian/Albanese/StandardSmoothDimension.lean.
+- [x] Committed Algebraic-Jacobian-Challenge changes: 668380e (4 files: AlgebraicJacobian.lean, AlgebraicJacobian/Picard/TangentSpaceSchemePoints.lean, blueprint/src/chapters/Picard_Pic0AbelianVariety.tex, blueprint/src/chapters/Picard_RelPicFunctor.tex).
+- [x] No project changes to commit for Line-Bundle-Comparison-Iso.
+- [x] Report saved: .archon-horizon/runs/0004/sessions/0011-horizon-T1/report.md.
+- [x] Finished Horizon task T1 with status: done.
+- [x] Integrated horizon session 0011-horizon-T1: df84386; project commits Algebraic-Jacobian-Challenge 668380e; 43 files: .archon-horizon/blueprints/Albanese.json, .archon-horizon/blueprints/Algebraic-Jacobian-Challenge.json, .archon-horizon/blueprints/Cech-Cohomology.json, .archon-horizon/blueprints/GR-Quot-Closure.json, .archon-horizon/blueprints/Line-Bundle-Comparison-Iso.json, .archon-horizon/blueprints/MR0555258-Compactifying-Picard.json, .archon-horizon/events.jsonl, .archon-horizon/inbox/local/comments/I-0016/C-0003.md, +35 more.
+
+## Issues
+
+- Write-domain violation for task T1: archon-horizon/blueprints/Albanese.json, SubProjects/Albanese/AlgebraicJacobian/Albanese/CodimOneExtension.lean, SubProjects/Cech-Cohomology/AlgebraicJacobian/Cohomology/CechToHigherDirectImage.lean, SubProjects/GR-Quot-Closure/AlgebraicJacobian/Picard/SectionGradedRing.lean, SubProjects/GR-Quot-Closure/build.log, SubProjects/GR-Quot-Closure/build_errors.log, SubProjects/Albanese/AlgebraicJacobian/Albanese/StandardSmoothDimension.lean.
