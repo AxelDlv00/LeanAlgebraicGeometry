@@ -96,7 +96,7 @@ private lemma trdeg_add_one_le_trdeg_polynomial
   haveI : FaithfulSMul A (Polynomial A) :=
     (faithfulSMul_iff_algebraMap_injective A (Polynomial A)).mpr
       Polynomial.C_injective
-  have h := Algebra.trdeg_add_le (R := k) (S := A) (A := Polynomial A)
+  have h := trdeg_add_le (R := k) (S := A) (A := Polynomial A)
   rwa [Polynomial.trdeg_of_isDomain] at h
 
 /-- If a prime `Q ⊆ A[X]` contracts to `⊥` in `A`, the residue algebra
@@ -105,7 +105,7 @@ private lemma trdeg_le_trdeg_polynomial_quotient
     (A : Type v) [CommRing A] [Algebra k A]
     (Q : Ideal (Polynomial A)) (hQA : Q.comap (algebraMap A (Polynomial A)) = ⊥) :
     Algebra.trdeg k A ≤ Algebra.trdeg k (Polynomial A ⧸ Q) := by
-  refine Algebra.trdeg_le_of_injective
+  refine trdeg_le_of_injective
     ((Ideal.Quotient.mkₐ k Q).comp (IsScalarTower.toAlgHom k A (Polynomial A))) ?_
   rw [injective_iff_map_eq_zero]
   intro a ha
@@ -120,7 +120,7 @@ suffices downstream). -/
 private lemma trdeg_le_trdeg_quotient_bot
     (B : Type v) [CommRing B] [Algebra k B] :
     Algebra.trdeg k B ≤ Algebra.trdeg k (B ⧸ (⊥ : Ideal B)) := by
-  refine Algebra.trdeg_le_of_injective (Ideal.Quotient.mkₐ k ⊥) ?_
+  refine trdeg_le_of_injective (Ideal.Quotient.mkₐ k ⊥) ?_
   rw [injective_iff_map_eq_zero]
   intro b hb
   rw [Ideal.Quotient.mkₐ_eq_mk, Ideal.Quotient.eq_zero_iff_mem] at hb
@@ -131,7 +131,31 @@ inequality suffices downstream). -/
 private lemma trdeg_le_of_algEquiv
     {B C : Type v} [CommRing B] [CommRing C] [Algebra k B] [Algebra k C]
     (g : B ≃ₐ[k] C) : Algebra.trdeg k B ≤ Algebra.trdeg k C :=
-  Algebra.trdeg_le_of_injective g.toAlgHom g.injective
+  trdeg_le_of_injective g.toAlgHom g.injective
+
+/-- The quotient by the (membership-described) preimage of an ideal embeds into
+the quotient by the ideal, so transcendence degrees compare. Stated with an
+explicit membership equivalence to avoid comparing coercion paths. -/
+private lemma trdeg_quotient_le_of_forall_mem_iff
+    {B C : Type v} [CommRing B] [CommRing C] [Algebra k B] [Algebra k C]
+    (g : B →ₐ[k] C) (P : Ideal C) (P₀ : Ideal B)
+    (hmem : ∀ a : B, a ∈ P₀ ↔ g a ∈ P) :
+    Algebra.trdeg k (B ⧸ P₀) ≤ Algebra.trdeg k (C ⧸ P) := by
+  set φ : B →ₐ[k] C ⧸ P := (Ideal.Quotient.mkₐ k P).comp g with hφdef
+  have hφmem : ∀ a : B, φ a = 0 ↔ a ∈ P₀ := by
+    intro a
+    rw [hφdef]
+    simp only [AlgHom.coe_comp, Function.comp_apply, Ideal.Quotient.mkₐ_eq_mk,
+      Ideal.Quotient.eq_zero_iff_mem]
+    exact (hmem a).symm
+  refine trdeg_le_of_injective (Ideal.Quotient.liftₐ P₀ φ
+    (fun a ha => (hφmem a).mpr ha)) ?_
+  rw [injective_iff_map_eq_zero]
+  intro x hx
+  obtain ⟨b, rfl⟩ := Ideal.Quotient.mk_surjective x
+  rw [Ideal.Quotient.liftₐ_apply, Ideal.Quotient.lift_mk] at hx
+  rw [Ideal.Quotient.eq_zero_iff_mem]
+  exact (hφmem b).mp hx
 
 end TrdegHelpers
 
@@ -177,28 +201,28 @@ private theorem Polynomial.step_height_trdeg_of_isPrime
   -- The fiber ring identification `A[X] ≃+* R[X] ⧸ pR[X]`.
   have hCeq : p.map (Polynomial.C (R := R)) = pX := by
     rw [hpXdef, Polynomial.algebraMap_eq]
-  have e2 : Polynomial A ≃+* (Polynomial R ⧸ pX) :=
+  set e2 : Polynomial A ≃+* (Polynomial R ⧸ pX) :=
     p.polynomialQuotientEquivQuotientPolynomial.trans (Ideal.quotEquivOfEq hCeq)
+    with he2def
   have hcomm : ∀ r : R, e2 (Polynomial.C (Ideal.Quotient.mk p r)) =
       Ideal.Quotient.mk pX (Polynomial.C r) := by
     intro r
-    have hs : p.polynomialQuotientEquivQuotientPolynomial.symm
-        (Ideal.Quotient.mk _ (Polynomial.C r)) =
-        Polynomial.C (Ideal.Quotient.mk p r) := by
-      rw [Ideal.polynomialQuotientEquivQuotientPolynomial_symm_mk, Polynomial.map_C]
+    have hs := Ideal.polynomialQuotientEquivQuotientPolynomial_symm_mk p (Polynomial.C r)
+    rw [Polynomial.map_C] at hs
     have hfwd : p.polynomialQuotientEquivQuotientPolynomial
         (Polynomial.C (Ideal.Quotient.mk p r)) =
         Ideal.Quotient.mk _ (Polynomial.C r) := by
       rw [← hs, RingEquiv.apply_symm_apply]
-    show (Ideal.quotEquivOfEq hCeq) (p.polynomialQuotientEquivQuotientPolynomial
-        (Polynomial.C (Ideal.Quotient.mk p r))) = _
-    rw [hfwd, Ideal.quotEquivOfEq_mk]
+    rw [he2def, RingEquiv.coe_trans, Function.comp_apply, hfwd, Ideal.quotEquivOfEq_mk]
   -- The fiber prime `Q ⊆ A[X]` and its basic properties.
   set Q : Ideal (Polynomial A) := Pbar.comap e2 with hQdef
   haveI hQPrime : Q.IsPrime := Ideal.comap_isPrime _ Pbar
   have hQheight : Q.height = Pbar.height := RingEquiv.height_comap e2 Pbar
   have hQmap : Pbar = Q.map (e2 : Polynomial A →+* (Polynomial R ⧸ pX)) := by
-    rw [hQdef, Ideal.map_comap_of_surjective _ e2.surjective]
+    have hcoe : Q = Pbar.comap (e2 : Polynomial A →+* (Polynomial R ⧸ pX)) :=
+      Ideal.ext fun x => Iff.rfl
+    rw [hcoe, Ideal.map_comap_of_surjective
+      (e2 : Polynomial A →+* (Polynomial R ⧸ pX)) e2.surjective]
   -- Membership translation between `Q` and `P`.
   have hmem : ∀ r : R, Polynomial.C (Ideal.Quotient.mk p r) ∈ Q ↔ Polynomial.C r ∈ P := by
     intro r
@@ -209,34 +233,48 @@ private theorem Polynomial.step_height_trdeg_of_isPrime
     obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective a
     rw [Ideal.mem_comap, Polynomial.algebraMap_eq, Submodule.mem_bot, hmem r,
       Ideal.Quotient.eq_zero_iff_mem]
-    show Polynomial.C r ∈ P ↔ r ∈ p
+    change Polynomial.C r ∈ P ↔ r ∈ p
     rw [hpdef, Ideal.mem_comap, Polynomial.algebraMap_eq]
   -- The `k`-algebra upgrade of `e2`.
-  have e2alg : Polynomial A ≃ₐ[k] (Polynomial R ⧸ pX) := by
-    refine AlgEquiv.ofRingEquiv (f := e2) ?_
+  have he2c : ∀ c : k, e2 (algebraMap k (Polynomial A) c) =
+      algebraMap k (Polynomial R ⧸ pX) c := by
     intro c
     rw [IsScalarTower.algebraMap_apply k A (Polynomial A), Polynomial.algebraMap_eq,
       IsScalarTower.algebraMap_apply k R A, Ideal.Quotient.algebraMap_eq, hcomm,
       IsScalarTower.algebraMap_apply k (Polynomial R) (Polynomial R ⧸ pX),
       Ideal.Quotient.algebraMap_eq, IsScalarTower.algebraMap_apply k R (Polynomial R),
       Polynomial.algebraMap_eq]
+  set e2alg : Polynomial A ≃ₐ[k] (Polynomial R ⧸ pX) := AlgEquiv.ofRingEquiv he2c
+    with he2algdef
   -- The `k`-algebra identification of the residue algebras.
-  have hQmapAlg : Pbar = Q.map (e2alg : Polynomial A →+* (Polynomial R ⧸ pX)) := hQmap
+  have hQmapAlg : Pbar = Q.map (e2alg : Polynomial A →+* (Polynomial R ⧸ pX)) := by
+    rw [hQmap]
+    congr 1
   have gQuot : (Polynomial A ⧸ Q) ≃ₐ[k] (Polynomial R ⧸ P) := by
     refine (Ideal.quotientEquivAlg Q Pbar e2alg hQmapAlg).trans ?_
-    refine (Ideal.quotientEquivAlgOfEq k ?_).trans (DoubleQuot.quotQuotEquivQuotOfLEₐ k hker_le)
-    show Pbar = P.map (Ideal.Quotient.mkₐ k pX)
-    rw [hPbardef]
-    rfl
+    refine AlgEquiv.ofRingEquiv (f := DoubleQuot.quotQuotEquivQuotOfLE hker_le) ?_
+    intro c
+    have hL : algebraMap k ((Polynomial R ⧸ pX) ⧸ Pbar) c =
+        Ideal.Quotient.mk Pbar (Ideal.Quotient.mk pX (algebraMap k (Polynomial R) c)) := by
+      rw [IsScalarTower.algebraMap_apply k (Polynomial R ⧸ pX)
+          ((Polynomial R ⧸ pX) ⧸ Pbar),
+        Ideal.Quotient.algebraMap_eq,
+        IsScalarTower.algebraMap_apply k (Polynomial R) (Polynomial R ⧸ pX),
+        Ideal.Quotient.algebraMap_eq]
+    have hR : algebraMap k (Polynomial R ⧸ P) c =
+        Ideal.Quotient.mk P (algebraMap k (Polynomial R) c) := by
+      rw [IsScalarTower.algebraMap_apply k (Polynomial R) (Polynomial R ⧸ P),
+        Ideal.Quotient.algebraMap_eq]
+    rw [hL, hR]
+    exact DoubleQuot.quotQuotEquivQuotOfLE_quotQuotMk (algebraMap k (Polynomial R) c) hker_le
   -- Case split on the fiber prime.
   by_cases hQ : Q = ⊥
   · -- Fiber prime trivial: heights agree, transcendence degree gains one.
     right
     have hPbarBot : Pbar = ⊥ := by rw [hQmap, hQ, Ideal.map_bot]
-    haveI : Nontrivial (Polynomial R ⧸ pX) := by
-      refine Ideal.Quotient.nontrivial ?_
-      intro htop
-      exact hP.ne_top (top_le_iff.mp (htop ▸ hker_le))
+    haveI : Nontrivial (Polynomial R ⧸ pX) :=
+      Ideal.Quotient.nontrivial_iff.mpr
+        (fun htop => hP.ne_top (top_le_iff.mp (htop ▸ hker_le)))
     constructor
     · rw [h00, hPbarBot, Ideal.height_bot, add_zero]
     · calc Algebra.trdeg k A + 1
@@ -247,13 +285,14 @@ private theorem Polynomial.step_height_trdeg_of_isPrime
   · -- Fiber prime nontrivial: the height jumps by at least one.
     left
     have h1Q : 1 ≤ Q.height := by
-      haveI : (⊥ : Ideal (Polynomial A)).IsPrime := Ideal.bot_prime
+      haveI : (⊥ : Ideal (Polynomial A)).IsPrime := Ideal.isPrime_bot
       have hlt : (⊥ : Ideal (Polynomial A)) < Q := bot_lt_iff_ne_bot.mpr hQ
       have h := Ideal.height_add_one_le_of_lt_of_isPrime hlt
       rwa [Ideal.height_bot, zero_add] at h
     constructor
     · rw [h00]
-      exact add_le_add_left (hQheight ▸ h1Q) _
+      gcongr
+      exact le_trans h1Q (le_of_eq hQheight)
     · calc Algebra.trdeg k A
           ≤ Algebra.trdeg k (Polynomial A ⧸ Q) :=
             trdeg_le_trdeg_polynomial_quotient A Q hQA
@@ -280,18 +319,16 @@ theorem MvPolynomial.exists_le_trdeg_and_natCard_le_height_add
       (Nat.card ι : ℕ∞) ≤ P.height + d := by
   induction ι using Finite.induction_empty_option with
   | of_equiv e IH =>
-    rename_i α β _
     haveI := hP
-    set ψ : MvPolynomial α k ≃ₐ[k] MvPolynomial β k := MvPolynomial.renameEquiv k e
-      with hψdef
-    set P₀ : Ideal (MvPolynomial α k) :=
-      P.comap (ψ : MvPolynomial α k →+* MvPolynomial β k) with hP₀def
+    set ψ := MvPolynomial.renameEquiv k e with hψdef
+    set P₀ := P.comap ψ.toRingEquiv with hP₀def
     haveI hP₀p : P₀.IsPrime := Ideal.comap_isPrime _ P
     obtain ⟨d, hd, hht⟩ := IH P₀ hP₀p
-    have hmap : P = P₀.map (ψ : MvPolynomial α k →+* MvPolynomial β k) := by
-      rw [hP₀def, Ideal.map_comap_of_surjective _ ψ.surjective]
     refine ⟨d, ?_, ?_⟩
-    · exact le_trans hd (trdeg_le_of_algEquiv (Ideal.quotientEquivAlg P₀ P ψ hmap))
+    · refine le_trans hd (trdeg_quotient_le_of_forall_mem_iff ψ.toAlgHom P P₀ ?_)
+      intro a
+      rw [hP₀def, Ideal.mem_comap]
+      exact Iff.rfl
     · have hh : P₀.height = P.height := by
         rw [hP₀def]
         exact RingEquiv.height_comap ψ.toRingEquiv P
@@ -304,42 +341,45 @@ theorem MvPolynomial.exists_le_trdeg_and_natCard_le_height_add
     haveI := hP
     set ψ : MvPolynomial (Option α) k ≃ₐ[k] Polynomial (MvPolynomial α k) :=
       MvPolynomial.optionEquivLeft k α with hψdef
-    set P' : Ideal (Polynomial (MvPolynomial α k)) :=
-      P.map (ψ : MvPolynomial (Option α) k →+* Polynomial (MvPolynomial α k)) with hP'def
-    haveI hP'p : P'.IsPrime := by
-      rw [hP'def]
-      exact Ideal.map_isPrime_of_equiv ψ.toRingEquiv
+    set P' : Ideal (Polynomial (MvPolynomial α k)) := P.comap ψ.symm.toRingEquiv
+      with hP'def
+    haveI hP'p : P'.IsPrime := Ideal.comap_isPrime _ P
     have hPheight : P'.height = P.height := by
       rw [hP'def]
-      exact RingEquiv.height_map ψ.toRingEquiv P
-    have gP : (MvPolynomial (Option α) k ⧸ P) ≃ₐ[k] (Polynomial (MvPolynomial α k) ⧸ P') :=
-      Ideal.quotientEquivAlg P P' ψ hP'def
+      exact RingEquiv.height_comap ψ.symm.toRingEquiv P
+    have htr : Algebra.trdeg k (Polynomial (MvPolynomial α k) ⧸ P') ≤
+        Algebra.trdeg k (MvPolynomial (Option α) k ⧸ P) := by
+      refine trdeg_quotient_le_of_forall_mem_iff ψ.symm.toAlgHom P P' ?_
+      intro a
+      rw [hP'def, Ideal.mem_comap]
+      exact Iff.rfl
     set p : Ideal (MvPolynomial α k) :=
       P'.comap (algebraMap (MvPolynomial α k) (Polynomial (MvPolynomial α k))) with hpdef
     haveI hpp : p.IsPrime := Ideal.comap_isPrime _ P'
     obtain ⟨d, hd, hht⟩ := IH p hpp
     have hstep := Polynomial.step_height_trdeg_of_isPrime (k := k) P' hP'p
     have hcard : (Nat.card (Option α) : ℕ∞) = (Nat.card α : ℕ∞) + 1 := by
-      rw [Nat.card_option]
+      rw [Finite.card_option]
       push_cast
       rfl
     rcases hstep with ⟨hh, ht⟩ | ⟨hh, ht⟩
     · -- Height jumped: keep the same witness `d`.
       refine ⟨d, ?_, ?_⟩
-      · exact le_trans (le_trans hd ht) (trdeg_le_of_algEquiv gP.symm)
+      · exact le_trans (le_trans hd ht) htr
       · rw [hcard]
-        calc (Nat.card α : ℕ∞) + 1 ≤ (p.height + d) + 1 := add_le_add_right hht 1
+        calc (Nat.card α : ℕ∞) + 1 ≤ (p.height + d) + 1 := by gcongr
           _ = (p.height + 1) + d := by
               rw [add_assoc, add_comm (d : ℕ∞) 1, ← add_assoc]
-          _ ≤ P'.height + d := add_le_add_right hh d
+          _ ≤ P'.height + d := by gcongr
           _ = P.height + d := by rw [hPheight]
     · -- Transcendence degree jumped: use `d + 1`.
       refine ⟨d + 1, ?_, ?_⟩
       · push_cast
-        exact le_trans (add_le_add_right hd 1) (le_trans ht (trdeg_le_of_algEquiv gP.symm))
+        refine le_trans ?_ (le_trans ht htr)
+        gcongr
       · rw [hcard]
         push_cast
-        calc (Nat.card α : ℕ∞) + 1 ≤ (p.height + d) + 1 := add_le_add_right hht 1
+        calc (Nat.card α : ℕ∞) + 1 ≤ (p.height + d) + 1 := by gcongr
           _ = p.height + ((d : ℕ∞) + 1) := by rw [add_assoc]
           _ = P.height + ((d : ℕ∞) + 1) := by rw [← hPheight, hh]
 
@@ -382,12 +422,13 @@ theorem Algebra.IsStandardSmoothOfRelativeDimension.exists_le_trdeg_and_natCast_
       intro x hx
       obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective x
       rw [Ideal.Quotient.liftₐ_apply, Ideal.Quotient.lift_mk] at hx
-      rw [Ideal.Quotient.eq_zero_iff_mem]
-      have : algebraMap P.Ring S r ∈ q := by
-        simpa only [hφdef, AlgHom.coe_comp, Function.comp_apply, Ideal.Quotient.mkₐ_eq_mk,
-          IsScalarTower.coe_toAlgHom', Ideal.Quotient.eq_zero_iff_mem] using hx
-      exact this
-    exact le_trans hd (Algebra.trdeg_le_of_injective _ hφqinj)
+      have h2 : φ r = 0 := hx
+      rw [hφdef] at h2
+      simp only [AlgHom.coe_comp, Function.comp_apply, Ideal.Quotient.mkₐ_eq_mk,
+        IsScalarTower.coe_toAlgHom', Ideal.Quotient.eq_zero_iff_mem] at h2
+      rw [Ideal.Quotient.eq_zero_iff_mem, hMdef]
+      exact Ideal.mem_comap.mpr h2
+    exact le_trans hd (trdeg_le_of_injective _ hφqinj)
   · -- Height bookkeeping (mirror of the closed-point proof).
     have hker_le : RingHom.ker (algebraMap P.Ring S) ≤ M := fun x hx => by
       rw [hMdef, Ideal.mem_comap, RingHom.mem_ker.mp hx]
@@ -420,13 +461,12 @@ theorem Algebra.IsStandardSmoothOfRelativeDimension.exists_le_trdeg_and_natCast_
     have h1 : (Nat.card ι : ℕ∞) ≤ (q.height + d) + Nat.card σ := by
       calc (Nat.card ι : ℕ∞) ≤ M.height + d := hA
         _ ≤ ((M.map (Ideal.Quotient.mk (RingHom.ker (algebraMap P.Ring S)))).height
-            + (RingHom.ker (algebraMap P.Ring S)).spanFinrank) + d :=
-            add_le_add_right hbound d
+            + (RingHom.ker (algebraMap P.Ring S)).spanFinrank) + d := by gcongr
         _ ≤ (q.height + Nat.card σ) + d := by
             rw [hqheight]
             have hfr' : ((RingHom.ker (algebraMap P.Ring S)).spanFinrank : ℕ∞)
                 ≤ (Nat.card σ : ℕ∞) := by exact_mod_cast hfr
-            exact add_le_add_right (add_le_add le_rfl hfr') d
+            gcongr
         _ = (q.height + d) + Nat.card σ := by
             rw [add_assoc, add_comm (Nat.card σ : ℕ∞) (d : ℕ∞), ← add_assoc]
     rw [← hcards] at h1
@@ -439,19 +479,18 @@ section LemmaC
 
 /-! ### Lemma C: Kähler rank equals transcendence degree over a perfect field -/
 
-open KaehlerDifferential
+open KaehlerDifferential Cardinal Module
 
 /-- Ω-rank is invariant under `k`-algebra isomorphisms: transport along the
 formally étale algebra structure induced by the isomorphism, then apply the
 étale base-change identification of Kähler differentials. -/
 private lemma rank_kaehlerDifferential_eq_of_algEquiv
-    {k : Type u} [CommRing k] {B C : Type u} [CommRing B] [CommRing C]
+    {k : Type u} [CommRing k] {B C : Type u} [Field B] [Field C]
     [Algebra k B] [Algebra k C] (e : B ≃ₐ[k] C) :
     Module.rank B (Ω[B⁄k]) = Module.rank C (Ω[C⁄k]) := by
   letI : Algebra B C := e.toAlgHom.toRingHom.toAlgebra
-  haveI : IsScalarTower k B C := IsScalarTower.of_algebraMap_eq fun x => by
-    show algebraMap k C x = e (algebraMap k B x)
-    rw [AlgEquiv.commutes]
+  haveI : IsScalarTower k B C := IsScalarTower.of_algebraMap_eq fun x =>
+    (e.commutes x).symm
   haveI : Algebra.FormallyEtale B C := by
     have e' : B ≃ₐ[B] C := AlgEquiv.ofBijective (Algebra.ofId B C) e.bijective
     exact Algebra.FormallyEtale.of_equiv e'
@@ -492,14 +531,16 @@ theorem Algebra.rank_kaehlerDifferential_eq_trdeg
     haveI : IsLocalizedModule (nonZeroDivisors (MvPolynomial {x // x ∈ s} k))
         (map k k (MvPolynomial {x // x ∈ s} k)
           (FractionRing (MvPolynomial {x // x ∈ s} k))) :=
-      isLocalizedModule_map k _ _ _
+      isLocalizedModule_map k (MvPolynomial {x // x ∈ s} k)
+        (FractionRing (MvPolynomial {x // x ∈ s} k))
+        (nonZeroDivisors (MvPolynomial {x // x ∈ s} k))
     have b : Basis {x // x ∈ s} (FractionRing (MvPolynomial {x // x ∈ s} k))
         (Ω[FractionRing (MvPolynomial {x // x ∈ s} k)⁄k]) :=
-      Basis.ofIsLocalizedModule (FractionRing (MvPolynomial {x // x ∈ s} k))
+      (mvPolynomialBasis k {x // x ∈ s}).ofIsLocalizedModule
+        (FractionRing (MvPolynomial {x // x ∈ s} k))
         (nonZeroDivisors (MvPolynomial {x // x ∈ s} k))
         (map k k (MvPolynomial {x // x ∈ s} k)
           (FractionRing (MvPolynomial {x // x ∈ s} k)))
-        (mvPolynomialBasis k {x // x ∈ s})
     exact (b.mk_eq_rank'').symm
   -- Step 4: `#s = trdeg k K` since `s` is a transcendence basis.
   have h4 : (#{x // x ∈ s} : Cardinal) = Algebra.trdeg k K := hs.cardinalMk_eq_trdeg
@@ -527,7 +568,7 @@ surjectivity of `mapBaseChange`, and the middle term has dimension `n`;
 rank–nullity gives the identity. This generalises the iter-199 closed-point
 computation (which additionally assumed `Subsingleton Ω[κ⁄R]`). -/
 theorem finrank_cotangentSpace_add_finrank_kaehler_residueField
-    {R Sₘ : Type u} [CommRing R] [CommRing Sₘ] [IsLocalRing Sₘ] [Nontrivial Sₘ]
+    {R Sₘ : Type u} [CommRing R] [CommRing Sₘ] [IsLocalRing Sₘ]
     [Algebra R Sₘ] [Algebra.FormallySmooth R Sₘ]
     [Algebra.FormallySmooth R (ResidueField Sₘ)]
     [Module.Free Sₘ (Ω[Sₘ⁄R])]
@@ -554,12 +595,13 @@ theorem finrank_cotangentSpace_add_finrank_kaehler_residueField
           (R := R) (P := Sₘ) (A := ResidueField Sₘ) hSurj).mp ‹_›
       refine Function.LeftInverse.injective (g := l) fun x => ?_
       have h := LinearMap.congr_fun hl x
-      simpa using h
+      simp only [LinearMap.coe_comp, Function.comp_apply] at h
+      exact h
     · intro x
       have h := KaehlerDifferential.exact_kerCotangentToTensor_mapBaseChange R Sₘ
         (ResidueField Sₘ) hSurj x
       rw [LinearMap.mem_ker]
-      exact h.symm
+      exact h
   -- Step 2: promote to κ-linear and identify `CotangentSpace` with the kernel.
   set f' : CotangentSpace Sₘ →ₗ[ResidueField Sₘ]
       TensorProduct Sₘ (ResidueField Sₘ) (Ω[Sₘ⁄R]) :=
@@ -567,7 +609,8 @@ theorem finrank_cotangentSpace_add_finrank_kaehler_residueField
   have hf'app : ∀ x, f' x = f x := fun x => rfl
   have hf'inj : Function.Injective f' := fun a b hab => hfinj (by
     rw [← hf'app, ← hf'app]; exact hab)
-  have hrangeEq : LinearMap.range f' = LinearMap.ker (mapBaseChange R Sₘ (ResidueField Sₘ)) := by
+  have hrangeEq : LinearMap.range f'
+      = LinearMap.ker (mapBaseChange R Sₘ (ResidueField Sₘ)) := by
     ext x
     rw [LinearMap.mem_range, hfrange x]
     constructor
@@ -578,7 +621,7 @@ theorem finrank_cotangentSpace_add_finrank_kaehler_residueField
   -- Step 3: finite-dimensionality of the middle term, of dimension `n`.
   haveI : Module.Finite Sₘ (Ω[Sₘ⁄R]) := by
     rw [← Module.rank_lt_aleph0_iff, hrank]
-    exact Cardinal.nat_lt_aleph0 n
+    exact Cardinal.natCast_lt_aleph0
   have hmid : Module.finrank (ResidueField Sₘ)
       (TensorProduct Sₘ (ResidueField Sₘ) (Ω[Sₘ⁄R])) = n := by
     rw [Module.finrank_baseChange]
@@ -636,7 +679,8 @@ theorem isRegularLocalRing_of_isLocalization_atPrime_of_isStandardSmooth_of_perf
   haveI : IsLocalizedModule q.primeCompl (KaehlerDifferential.map k k S Sq) :=
     KaehlerDifferential.isLocalizedModule_map k S Sq q.primeCompl
   haveI : Module.Free Sq (Ω[Sq⁄k]) :=
-    Module.free_of_isLocalizedModule (S := q.primeCompl) (KaehlerDifferential.map k k S Sq)
+    Module.free_of_isLocalizedModule (R := S) (Rₛ := Sq) (S := q.primeCompl)
+      (M := Ω[S⁄k]) (Mₛ := Ω[Sq⁄k]) (KaehlerDifferential.map k k S Sq)
   have hrank : Module.rank Sq (Ω[Sq⁄k]) = n := by
     have h := Module.lift_rank_of_isLocalizedModule_of_free Sq q.primeCompl
       (KaehlerDifferential.map k k S Sq)
@@ -646,15 +690,16 @@ theorem isRegularLocalRing_of_isLocalization_atPrime_of_isStandardSmooth_of_perf
   -- Formal smoothness of `Sq` and of its residue field over `k`.
   haveI : Algebra.FormallySmooth S Sq := Algebra.FormallySmooth.of_isLocalization q.primeCompl
   haveI : Algebra.FormallySmooth k Sq := Algebra.FormallySmooth.comp k S Sq
-  haveI : Algebra.EssFiniteType k S := Algebra.EssFiniteType.of_finiteType
-  haveI : Algebra.EssFiniteType S Sq := Algebra.EssFiniteType.of_isLocalization q.primeCompl
+  haveI : Algebra.EssFiniteType k S := Algebra.EssFiniteType.of_finiteType k S
+  haveI : Algebra.EssFiniteType S Sq := Algebra.EssFiniteType.of_isLocalization Sq q.primeCompl
   haveI : Algebra.EssFiniteType k Sq := Algebra.EssFiniteType.comp k S Sq
   have hResSurj : Function.Surjective (algebraMap Sq (ResidueField Sq)) := by
     rw [IsLocalRing.ResidueField.algebraMap_eq]
     exact IsLocalRing.residue_surjective
   haveI : Algebra.FiniteType Sq (ResidueField Sq) :=
     Algebra.FiniteType.of_surjective (Algebra.ofId Sq (ResidueField Sq)) hResSurj
-  haveI : Algebra.EssFiniteType Sq (ResidueField Sq) := Algebra.EssFiniteType.of_finiteType
+  haveI : Algebra.EssFiniteType Sq (ResidueField Sq) :=
+    Algebra.EssFiniteType.of_finiteType Sq (ResidueField Sq)
   haveI : Algebra.EssFiniteType k (ResidueField Sq) :=
     Algebra.EssFiniteType.comp k Sq (ResidueField Sq)
   -- (the `Algebra.FormallySmooth.of_perfectField` low-priority instance)
@@ -684,7 +729,7 @@ theorem isRegularLocalRing_of_isLocalization_atPrime_of_isStandardSmooth_of_perf
       rw [Ideal.Quotient.liftₐ_apply, Ideal.Quotient.lift_mk] at hx
       rw [Ideal.Quotient.eq_zero_iff_mem]
       exact (hφmem r).mp hx
-    exact Algebra.trdeg_le_of_injective _ hinj
+    exact trdeg_le_of_injective _ hinj
   -- Lemma C at the residue field.
   have hC : Module.rank (ResidueField Sq) (Ω[ResidueField Sq⁄k]) =
       Algebra.trdeg k (ResidueField Sq) :=
@@ -692,14 +737,15 @@ theorem isRegularLocalRing_of_isLocalization_atPrime_of_isStandardSmooth_of_perf
   -- Ω[κ⁄k] is finite-dimensional (surjective image of the f.d. middle term).
   haveI : Module.Finite Sq (Ω[Sq⁄k]) := by
     rw [← Module.rank_lt_aleph0_iff, hrank]
-    exact Cardinal.nat_lt_aleph0 n
+    exact Cardinal.natCast_lt_aleph0
   haveI : Module.Finite (ResidueField Sq) (Ω[ResidueField Sq⁄k]) :=
     Module.Finite.of_surjective (mapBaseChange k Sq (ResidueField Sq))
       (KaehlerDifferential.mapBaseChange_surjective k Sq (ResidueField Sq) hResSurj)
   -- `d ≤ dim_κ Ω[κ⁄k]`.
   have hdfin : (d : ℕ∞) ≤
       (Module.finrank (ResidueField Sq) (Ω[ResidueField Sq⁄k]) : ℕ∞) := by
-    have hcard : (d : Cardinal) ≤ Module.rank (ResidueField Sq) (Ω[ResidueField Sq⁄k]) := by
+    have hcard : (d : Cardinal) ≤
+        Module.rank (ResidueField Sq) (Ω[ResidueField Sq⁄k]) := by
       rw [hC]
       exact le_trans hd hmono
     rw [← Module.finrank_eq_rank] at hcard
@@ -708,14 +754,15 @@ theorem isRegularLocalRing_of_isLocalization_atPrime_of_isStandardSmooth_of_perf
   apply IsRegularLocalRing.of_finrank_cotangentSpace_le_ringKrullDim
   rw [IsLocalization.AtPrime.ringKrullDim_eq_height q Sq]
   have hfinal : (Module.finrank (ResidueField Sq) (CotangentSpace Sq) : ℕ∞) ≤ q.height := by
-    refine (ENat.add_le_add_iff_right (c := (Module.finrank (ResidueField Sq)
-      (Ω[ResidueField Sq⁄k]) : ℕ∞)) (by simp)).mp ?_
+    refine (ENat.add_le_add_iff_right
+      (k := (Module.finrank (ResidueField Sq) (Ω[ResidueField Sq⁄k]) : ℕ∞))
+      (by simp)).mp ?_
     calc (Module.finrank (ResidueField Sq) (CotangentSpace Sq) : ℕ∞)
         + (Module.finrank (ResidueField Sq) (Ω[ResidueField Sq⁄k]) : ℕ∞)
         = (n : ℕ∞) := by exact_mod_cast hD
       _ ≤ q.height + d := hB
-      _ ≤ q.height + (Module.finrank (ResidueField Sq) (Ω[ResidueField Sq⁄k]) : ℕ∞) :=
-          add_le_add_left hdfin _
+      _ ≤ q.height + (Module.finrank (ResidueField Sq) (Ω[ResidueField Sq⁄k]) : ℕ∞) := by
+          gcongr
   exact_mod_cast hfinal
 
 end Main

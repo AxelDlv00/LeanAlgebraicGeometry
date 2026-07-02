@@ -8,6 +8,7 @@ import AlgebraicJacobian.RiemannRoch.WeilDivisor
 import AlgebraicJacobian.Albanese.CoheightBridge
 import AlgebraicJacobian.Albanese.AuslanderBuchsbaum
 import AlgebraicJacobian.Albanese.StandardSmoothDimension
+import AlgebraicJacobian.Albanese.SmoothPrimeRegularity
 
 /-!
 # Codimension-1 indeterminacy extension (A.4.a)
@@ -38,16 +39,19 @@ These outputs feed Milne Theorem 3.2 in the sibling
 `cor:regular_cohen_macaulay` from `Albanese/AuslanderBuchsbaum.lean` (A.4.b)
 at Step 2 of `extend_of_codimOneFree_of_smooth`.
 
-## Status (iter-177 Lane 6 file-skeleton)
+## Status (run-0006 T6)
 
-Each of the six blueprint-pinned declarations carries the *intended*
-substantive type signature (matching the `\lean{...}` pin in
-`blueprint/src/chapters/Albanese_CodimOneExtension.tex`) with a `sorry` body.
-Bodies are iter-178+ work, gated on the local-cohomology / depth-≥2
-extension lemma (Step 2 of `thm:codim_one_extension`) being supplied either
-from `Albanese/AuslanderBuchsbaum.lean` (the `cor:regular_cohen_macaulay`
-input) or from a Mathlib upstream once the local-cohomology vanishing
-`H¹_{x}(V, 𝒪_X) = 0` at a depth-≥2 point lands.
+Of the blueprint-pinned declarations below, the definitional layer (1, 2, 6)
+and the DVR chain (3, via the now sorry-free
+`isRegularLocalRing_stalk_of_smooth` — Stacks 00TT at every point, proved
+Serre-free in `Albanese/SmoothPrimeRegularity.lean`) are complete and
+axiom-clean. The remaining `sorry`s are:
+`indeterminacy_codimGe2_of_smooth_of_complete` (the unbundled codim-≥2 half
+of Milne 3.1, gated on rational-map valuative-criterion plumbing),
+`extend_of_codimOneFree_of_smooth` (4; additionally needs the Step-2
+depth-≥2 / local-cohomology extension, Stacks 0AVF), and
+`indeterminacy_pure_codim_one_into_grpScheme` (5; needs the function-field
+pullback machinery).
 
 The 6 pinned declarations are:
 
@@ -193,11 +197,13 @@ The Mathlib gap "smooth over `\bar k` ⟹ stalk is a regular local ring"
   regular local ring (`IsRegularLocalRing.of_regularSequence`; Stacks
   `00OE`/Matsumura 19.2; Mathlib gap as of `b80f227`).
 
-Stages 1-2 are landed axiom-clean as named helpers below. Stages 3-4
-remain a single scoped `sorry` inside the main theorem
-`isRegularLocalRing_stalk_of_smooth` until either the cotangent /
-sheaf-of-relative-differentials route (Mathlib upstream) lands or the
-project-side `02JK`/`00OE` chain is built (iter-192+). -/
+Stages 1-2 are landed axiom-clean as named helpers below. Stages 3-4 were
+historically a single scoped `sorry` inside the main theorem
+`isRegularLocalRing_stalk_of_smooth`; that theorem is now **fully proved**
+(no `sorry`) via the Serre-free arbitrary-prime route of
+`Albanese/SmoothPrimeRegularity.lean` (conormal identity + Kähler-trdeg
+identification + polynomial-ring trdeg–height inequality), which needs
+neither Stacks `00OF` nor the `02JK`/`00OE` regular-sequence chain. -/
 
 /-- **Stage 1 (Stacks 00TT, smooth ⟹ flat at stalk).** For a smooth
 morphism `X.hom : X.left ⟶ Spec (.of k̄)` with `k̄` algebraically closed,
@@ -726,12 +732,13 @@ This *closes sub-gap (ii.B) at closed points*: the proof combines
 * the generic glue `IsRegularLocalRing.of_finrank_cotangentSpace_le_ringKrullDim`
   (a Noetherian local ring with `dim_κ m/m² ≤ ringKrullDim` is regular).
 
-The consumer `isRegularLocalRing_stalk_of_smooth` still carries its `sorry`
-because its statement quantifies over *all* points `z`: at a non-closed point
-the residue field is a transcendental extension of `k̄` and the bijectivity
-hypothesis fails; localising this closed-point witness to a general point is
-Stacks `00OF` (localisations of regular local rings are regular), the one
-remaining genuine Mathlib gap of the pipeline. Axiom-clean. -/
+The consumer `isRegularLocalRing_stalk_of_smooth` quantifies over *all*
+points `z`; the non-closed points (where the residue field is a
+transcendental extension of `k̄` and the bijectivity hypothesis fails) are
+now handled by the Serre-free arbitrary-prime theorem of
+`Albanese/SmoothPrimeRegularity.lean`, so the whole pipeline is `sorry`-free
+without Stacks `00OF`. This closed-point form is retained as the input to
+Step B.e (`isReduced_of_isStandardSmooth_of_isAlgClosed`). Axiom-clean. -/
 theorem isRegularLocalRing_localization_of_isStandardSmooth_of_bijective_residue
     {k : Type u} [Field k]
     {S : Type u} [CommRing S] [Nontrivial S] [Algebra k S]
@@ -1151,100 +1158,29 @@ private theorem matsumura_isRegular_of_linearIndependent_cotangent
 
 /-- **Stacks `00TT`, Jacobian-criterion direction (regularity conclusion).**
 For a smooth integral variety `X` over an algebraically closed field `k̄`, the
-stalk of `X` at every point is a regular local ring.
+stalk of `X` at **every** point (closed or not) is a regular local ring.
 
-This is the scheme-level packaging of Stacks tag `00TT` (Lemma 10.140.3
-"Smooth algebras over fields"): given an affine chart `Spec A ⊆ X`, the
-\(\bar k\)-algebra `A` is smooth at every prime `𝔮`, and the localisation
-`A_𝔮 = X.presheaf.stalk z` (for `z ∈ X` lying over `𝔮`) is regular by the
-"in this case the local ring `A_𝔮` is regular" clause of the cited lemma.
+Proof: Stage 2 (`exists_isStandardSmooth_at_of_smooth`) produces an affine
+chart `V ∋ z` whose section ring `Γ(X, V)` is standard-smooth over
+`Γ(Spec k̄, U) ≃ k̄` (base identification `gammaSpecField_ringEquiv`,
+transported by `RingHom.isStandardSmooth_respectsIso`); the stalk is the
+localisation of `Γ(X, V)` at the prime of `z` (`IsAffineOpen.isLocalization_stalk`),
+and the Serre-free Stacks-00TT theorem at arbitrary primes
+`isRegularLocalRing_of_isLocalization_atPrime_of_isStandardSmooth_of_perfectField`
+(`Albanese/SmoothPrimeRegularity.lean`; conormal identity + Kähler-trdeg
+identification + the polynomial-ring trdeg–height inequality) applies since
+`k̄` is perfect.
 
-**Mathlib status at commit `b80f227` (iter-193 Lane M↓ Stage 5a/5b expansion).**
-The 6-stage proof chain is now scaffolded as follows.
-
-* Stage 1 (`stalkMap_flat_of_smooth`): smooth ⟹ flat at every stalk.
-  Axiom-clean (iter-191).
-* Stage 2 (`exists_isStandardSmooth_at_of_smooth`): smooth ⟹ standard
-  smooth ring-hom presentation locally. Axiom-clean (iter-191).
-* Stage 3 (`exists_algebra_isStandardSmooth_section_stalk_isLocalization_of_smooth`):
-  scheme-to-algebra bridge: composes Stage 2 with the
-  `RingHom.IsStandardSmooth.toAlgebra` bridge and the affine-open stalk
-  localisation, producing an algebra-side `Algebra.IsStandardSmooth Γ(Spec, U)
-  Γ(X.left, V)` + `IsLocalization.AtPrime` on the stalk. Axiom-clean
-  (iter-192).
-* Stage 4 (`module_free_kaehlerDifferential_of_isStandardSmooth`):
-  standard-smooth algebra ⟹ Kähler differentials `Ω[Γ(X.left, V)⁄Γ(Spec, U)]`
-  are `Module.Free` over the section algebra. Axiom-clean (iter-192).
-* Stage 5a (`module_free_kaehlerDifferential_localization`): localisation
-  transports Kähler-differentials freeness. Axiom-clean (iter-193). The
-  Stage 5 chain in the body now contracts to a one-liner application of
-  this helper. Was previously inline; extraction makes the proof body read
-  as a clean sequence of named substrate lemmas.
-* Stage 5b (`rank_kaehlerDifferential_localization_eq_relativeDimension`):
-  the `Sₘ`-rank of `Ω[Sₘ⁄R]` equals the relative dimension `n` of the
-  standard-smooth algebra `R → S`. Axiom-clean (iter-193). Composes
-  `Algebra.IsStandardSmoothOfRelativeDimension.rank_kaehlerDifferential`
-  (Mathlib re-export) with `Module.lift_rank_of_isLocalizedModule_of_free`.
-  This supplies the *specific rank* that downstream Stage 6 needs as the
-  dimension witness for the regularity conclusion.
-* **Stage 6 sub-gap (i) RESOLVED**
-  (`exists_isStandardSmoothOfRelativeDimension_of_isStandardSmooth`): the
-  relative-dimension `n` is now extractable axiom-clean directly from
-  the `IsStandardSmooth` instance via the underlying submersive
-  presentation. Iter-194 had flagged this as a sub-gap requiring further
-  Mathlib work, but in fact it is a 4-line unpacking of `IsStandardSmooth.out`
-  + `SubmersivePresentation.isStandardSmoothOfRelativeDimension`. Iter-198.
-* **Stage 6.B RHS substrate**
-  (`finrank_residueField_tensor_kaehlerDifferential_of_free_rank_eq` and
-  `…of_isStandardSmoothOfRelativeDimension`): the residue-field base-change
-  `κ(mₘ) ⊗_{Sₘ} Ω[Sₘ⁄R]` has `finrank κ(mₘ) = n` axiom-clean. This is the
-  RHS of the Stacks-02JK cotangent iso (sub-lemma 6.B); combined with the
-  iso it gives `finrank κ (CotangentSpace Sₘ) = n` (the cotangent input of
-  the regularity criterion). Iter-198.
-* **Stage 6 sub-gap (ii.A) RESOLVED (iter-199)**
-  (`cotangent_iso_residue_tensor_kaehler_of_formallySmooth_residue`,
-  `cotangent_iso_maximalIdeal_residue_tensor_kaehler_of_formallySmooth_residue`,
-  `finrank_cotangentSpace_of_formallySmooth_residue`,
-  `finrank_cotangentSpace_of_bijective_algebraMap_residue`): the
-  Stacks-02JK closed-point cotangent ↔ Kähler iso is now axiom-clean as
-  an `Sₘ`-linear (and via `extendScalarsOfSurjective` also
-  `κ`-linear) equivalence
-  `(maximalIdeal Sₘ).Cotangent ≃ κ ⊗_{Sₘ} Ω[Sₘ⁄R]`,
-  under the three-typeclass closed-point pattern
-  `[FormallySmooth R Sₘ] [FormallySmooth R κ] [Subsingleton (Ω[κ⁄R])]`,
-  or equivalently the single-hypothesis bundled form
-  `Bijective (algebraMap R κ)`. The proof uses the iter-199 analogist
-  recipe: retraction → injection via
-  `Algebra.FormallySmooth.iff_split_injection` + surjection via
-  `KaehlerDifferential.exact_kerCotangentToTensor_mapBaseChange` and
-  `Subsingleton Ω[κ⁄R]`. Composed with the iter-198 6.B-RHS substrate
-  it gives `finrank κ (CotangentSpace Sₘ) = n` axiom-clean — the
-  cotangent input of the regularity criterion. Iter-199.
-* **Stage 6 sub-gap (ii.B) DISCHARGED (this iter)** — Smooth-algebra
-  Krull-dimension formula (Stacks 00OE), closed-point form: the new module
-  `Albanese/StandardSmoothDimension.lean` proves
-  `MvPolynomial.height_eq_natCard_of_isMaximal` (maximal ideals of finite
-  polynomial rings over a field have full height) and the lower bound
-  `Algebra.IsStandardSmoothOfRelativeDimension.le_ringKrullDim_of_isLocalization_atPrime`
-  (`n ≤ ringKrullDim Sₘ` at any maximal `m`) via Krull's height theorem —
-  no transcendence-degree theory needed. Combined with (ii.A) in
-  `isRegularLocalRing_localization_of_isStandardSmooth_of_bijective_residue`
-  (§3.B Step B.d) and its unconditional k̄-form
-  `isRegularLocalRing_localizationAtPrime_of_isStandardSmooth_of_isAlgClosed`
-  (B.d′), the **closed-point case of Stacks 00TT is now proved axiom-clean**:
-  the local ring of a standard-smooth `k̄`-algebra at every *maximal* ideal
-  is regular.
-* Stage 6 residual gap (the reason this helper still carries a `sorry`):
-  the statement quantifies over ALL points `z`, and at a **non-closed** `z`
-  the prime `primeIdealOf z` is not maximal: the residue field is a
-  transcendental extension of `k̄` (so (ii.A)'s bijectivity hypothesis
-  genuinely fails — indeed `finrank κ (CotangentSpace Sₘ) = ht z ≠ n` there),
-  and the closed-point witness must instead be **localised**: Stacks `00OF`
-  (localisations of regular local rings are regular, via Serre's homological
-  characterisation) is the one remaining genuine Mathlib gap. Every
-  downstream consumer (`smooth_codim_one_maximalIdeal_isPrincipal_and_ne_bot`,
-  `localRing_dvr_of_codim_one`) inherits the closure automatically once
-  00OF lands.
+**History.** This statement was the Stage-6 keystone gap of the codim-1
+extension pipeline: the closed-point case was closed in `StandardSmoothDimension.lean`
+(iter-199/ii.B) via `isRegularLocalRing_localizationAtPrime_of_isStandardSmooth_of_isAlgClosed`
+(§3.B above), while the non-closed-point case was long believed to require
+Stacks `00OF` (localisation of regular local rings, Serre's homological
+characterisation — still absent from Mathlib v4.31). The
+`SmoothPrimeRegularity.lean` route avoids `00OF` entirely; the previous
+6-stage in-body scaffolding (flat stalks, Kähler freeness/rank at the stalk,
+cotangent computation at rational points) survives as §3.A/§3.B helpers used
+by the closed-point corollaries and `isReduced_of_smooth_of_isAlgClosed`.
 
 Blueprint reference: `\cref{lem:smooth_to_regular_local_ring}` in
 `blueprint/src/chapters/Albanese_CodimOneExtension.tex` (also Stacks
@@ -1257,110 +1193,35 @@ private theorem isRegularLocalRing_stalk_of_smooth
     [IsIntegral X.left] [IsReduced X.left]
     (z : X.left) :
     IsRegularLocalRing (X.left.presheaf.stalk z) := by
-  -- Stage 1 (axiom-clean): smooth ⟹ flat at the stalk z.
-  have _hflat : ((X.hom.stalkMap z).hom).Flat :=
-    stalkMap_flat_of_smooth X z
-  -- Stage 3 (axiom-clean): smooth ⟹ algebra-side standard-smooth presentation
-  -- on an affine neighbourhood V ∋ z, with the stalk identified as the
-  -- localisation of `Γ(X.left, V)` at the prime ideal of `z`. This composes
-  -- Stage 1 + Stage 2 + the `RingHom.IsStandardSmooth.toAlgebra` bridge + the
-  -- affine-open `IsLocalization.AtPrime` stalk witness.
-  obtain ⟨U, hU, V, hV, hzV, e, alg, hSSalg, hLoc⟩ :=
-    exists_algebra_isStandardSmooth_section_stalk_isLocalization_of_smooth X z
-  -- Activate the algebra structure (= `(X.hom.appLE U V e).hom.toAlgebra`)
-  -- and the stalk-section algebra structure so downstream typeclass search
-  -- sees both bridges.
-  letI : Algebra Γ(Spec (.of kbar), U) Γ(X.left, V) := alg
-  haveI hSS : Algebra.IsStandardSmooth Γ(Spec (.of kbar), U) Γ(X.left, V) := hSSalg
+  -- Stage 2 chart: a standard-smooth section ring on an affine chart `V ∋ z`.
+  obtain ⟨U, hU, V, hV, hzV, e, hSS⟩ := exists_isStandardSmooth_at_of_smooth X z
+  -- Base identification `Γ(Spec k̄, U) ≃+* k̄` (U is nonempty: it contains the
+  -- image of z).
+  let ε : kbar ≃+* Γ(Spec (.of kbar), U) :=
+    (gammaSpecField_ringEquiv kbar U ⟨⟨_, e hzV⟩⟩).symm
+  have hSS' : ((X.hom.appLE U V e).hom.comp ε.toRingHom).IsStandardSmooth :=
+    RingHom.isStandardSmooth_respectsIso.2 _ ε hSS
+  letI : Algebra kbar Γ(X.left, V) :=
+    ((X.hom.appLE U V e).hom.comp ε.toRingHom).toAlgebra
+  haveI : Algebra.IsStandardSmooth kbar Γ(X.left, V) := hSS'.toAlgebra
+  -- The stalk as the localisation of the chart ring at the prime of `z`.
   letI : Algebra Γ(X.left, V) (X.left.presheaf.stalk z) :=
     TopCat.Presheaf.algebra_section_stalk X.left.presheaf ⟨z, hzV⟩
-  haveI hLoc' : IsLocalization.AtPrime
-      (X.left.presheaf.stalk z) (hV.primeIdealOf ⟨z, hzV⟩).asIdeal := hLoc
-  -- Stage 4 (axiom-clean, named helper): the Kähler-differentials module
-  -- `Ω[Γ(X.left, V)⁄Γ(Spec _, U)]` is a free `Γ(X.left, V)`-module.
-  haveI _hFree : Module.Free Γ(X.left, V) (Ω[Γ(X.left, V)⁄Γ(Spec (.of kbar), U)]) :=
-    module_free_kaehlerDifferential_of_isStandardSmooth
-  -- Stage 5a (axiom-clean, iter-193 named helper):
-  -- `module_free_kaehlerDifferential_localization` transports the freeness of
-  -- `Ω[Γ(X.left, V)⁄Γ(Spec, U)]` along the localisation `Γ(X.left, V) → stalk z`
-  -- to obtain `Module.Free (stalk z) Ω[stalk z⁄Γ(Spec, U)]`.
-  letI : Algebra Γ(Spec (.of kbar), U) (X.left.presheaf.stalk z) :=
+  haveI hLoc : IsLocalization.AtPrime (X.left.presheaf.stalk z)
+      (hV.primeIdealOf ⟨z, hzV⟩).asIdeal :=
+    isLocalization_atPrime_stalk_of_affineOpen hV z hzV
+  letI : Algebra kbar (X.left.presheaf.stalk z) :=
     ((algebraMap Γ(X.left, V) (X.left.presheaf.stalk z)).comp
-      (algebraMap Γ(Spec (.of kbar), U) Γ(X.left, V))).toAlgebra
-  haveI : IsScalarTower Γ(Spec (.of kbar), U) Γ(X.left, V)
-      (X.left.presheaf.stalk z) := by
-    apply IsScalarTower.of_algebraMap_eq
-    intro _; rfl
-  haveI _hFreeStalk : Module.Free (X.left.presheaf.stalk z)
-      (Ω[(X.left.presheaf.stalk z)⁄Γ(Spec (.of kbar), U)]) :=
-    module_free_kaehlerDifferential_localization
-      (hV.primeIdealOf ⟨z, hzV⟩).asIdeal.primeCompl (X.left.presheaf.stalk z)
-  -- Stage 6 sub-gap (i) RESOLVED (iter-198): extract a specific relative
-  -- dimension `n` from the `IsStandardSmooth` instance on Γ(X.left, V) via
-  -- `exists_isStandardSmoothOfRelativeDimension_of_isStandardSmooth`. The
-  -- underlying submersive presentation supplies a concrete `P.dimension`.
-  obtain ⟨n, hRelDim⟩ :=
-    exists_isStandardSmoothOfRelativeDimension_of_isStandardSmooth
-      (R := Γ(Spec (.of kbar), U)) (S := Γ(X.left, V))
-  -- With sub-gap (i) discharged, instantiate Stage 5b at the stalk to obtain
-  -- the *specific* `Module.rank` of the stalk-side Kähler differentials.
-  -- Nontriviality: the stalk at any point of a scheme is a local ring (hence
-  -- nontrivial); `Γ(X.left, V)` is nontrivial because `z ∈ V` makes `V`
-  -- nonempty (Mathlib `Scheme.component_nontrivial`).
-  haveI : Nontrivial (X.left.presheaf.stalk z) := by infer_instance
-  haveI hNeV : Nonempty V := ⟨⟨z, hzV⟩⟩
+      (algebraMap kbar Γ(X.left, V))).toAlgebra
+  haveI : IsScalarTower kbar Γ(X.left, V) (X.left.presheaf.stalk z) :=
+    IsScalarTower.of_algebraMap_eq fun _ => rfl
+  haveI : Nonempty V := ⟨⟨z, hzV⟩⟩
   haveI : Nontrivial Γ(X.left, V) :=
     AlgebraicGeometry.Scheme.component_nontrivial X.left V
-  have hRank :
-      Module.rank (X.left.presheaf.stalk z)
-        (Ω[(X.left.presheaf.stalk z)⁄Γ(Spec (.of kbar), U)]) = n :=
-    rank_kaehlerDifferential_localization_eq_relativeDimension n
-      (hV.primeIdealOf ⟨z, hzV⟩).asIdeal.primeCompl
-      (X.left.presheaf.stalk z)
-  -- Now apply the Stage 6.B substrate: the residue-field base-change of the
-  -- stalk-side Kähler module has `finrank n`. This is the RHS of the
-  -- Stacks-02JK conormal iso `κ ⊗_Sₘ Ω ≃ mₘ/mₘ²`; once the bridge lands the
-  -- LHS picks up the same `finrank n` automatically.
-  have _hFinrankResidueTensor :
-      Module.finrank (IsLocalRing.ResidueField (X.left.presheaf.stalk z))
-        (TensorProduct (X.left.presheaf.stalk z)
-          (IsLocalRing.ResidueField (X.left.presheaf.stalk z))
-          (Ω[(X.left.presheaf.stalk z)⁄Γ(Spec (.of kbar), U)])) = n :=
-    finrank_residueField_tensor_kaehlerDifferential_of_free_rank_eq n hRank
-  -- **Residual Stage 6 gap (this-iter surface).** Sub-gaps (i), (ii.A) AND
-  -- (ii.B) are now all DISCHARGED axiom-clean
-  -- (`exists_isStandardSmoothOfRelativeDimension_of_isStandardSmooth`,
-  -- `finrank_cotangentSpace_of_bijective_algebraMap_residue`, and the new
-  -- `Albanese/StandardSmoothDimension.lean` +
-  -- `isRegularLocalRing_localization_of_isStandardSmooth_of_bijective_residue`
-  -- / `isRegularLocalRing_localizationAtPrime_of_isStandardSmooth_of_isAlgClosed`
-  -- in §3.B, which together prove the **closed-point case** of this helper:
-  -- the local ring of a standard-smooth k̄-algebra at every MAXIMAL ideal is
-  -- regular).
-  --
-  -- What remains for THIS statement (arbitrary `z`) is the **non-closed
-  -- point** case. There `(hV.primeIdealOf ⟨z, hzV⟩).asIdeal` is a non-maximal
-  -- prime: the residue field κ(z) has positive transcendence degree over k̄,
-  -- so (ii.A)'s bijectivity hypothesis genuinely fails (correctly so:
-  -- `finrank κ (CotangentSpace Sₘ) = ht z ≠ n` there — the conormal sequence
-  -- acquires the `Ω[κ(z)⁄k̄]` quotient). The classical route localises the
-  -- closed-point regularity witness:
-  --
-  -- **Stacks 00OF — localisations of regular local rings are regular** (via
-  -- Serre's homological characterisation `regular ⟺ finite global
-  -- dimension`, Stacks 00O7/00OE-part-2). Neither direction of Serre's
-  -- characterisation exists in Mathlib at v4.31 (`IsRegularLocalRing` has
-  -- only the `RegularLocalRing/Defs.lean` spanFinrank definition layer), so
-  -- this is the one remaining genuine Mathlib gap of the pipeline.
-  --
-  -- **Closure pattern (post-00OF).** Pick a closed specialisation `x` of `z`
-  -- in `V` (exists: `V` affine ⟹ quasi-compact sober); then
-  -- `stalk z ≅ (stalk x)_{q}` for the prime `q` of `z`, `stalk x` is regular
-  -- by the §3.B closed-point theorem (transported along
-  -- `IsLocalization.algEquiv` + `IsRegularLocalRing.of_ringEquiv`), and 00OF
-  -- localises. The Stage 1-5a-5b-6.B-(ii.A)-(ii.B) chain above already
-  -- supplies every other ingredient.
-  sorry
+  -- Conclude by the Serre-free Stacks-00TT theorem at arbitrary primes.
+  exact isRegularLocalRing_of_isLocalization_atPrime_of_isStandardSmooth_of_perfectField
+    (k := kbar) (hV.primeIdealOf ⟨z, hzV⟩).asIdeal
+    (hV.primeIdealOf ⟨z, hzV⟩).isPrime (X.left.presheaf.stalk z)
 
 /-- **Helper for `localRing_dvr_of_codim_one`.** On a smooth integral variety
 over an algebraically closed field, the stalk at a codimension-`1` point has a
@@ -1375,12 +1236,10 @@ smooth ⟹ regular (Stacks 00TT) and codim-1 ⟹ Krull-dim-1 — into an inline
 `hreg_dim` conjunction whose first conjunct was a bare `sorry`. The Krull-dim
 half has been closed axiom-clean since iter-184 via
 `Scheme.ringKrullDim_stalk_eq_coheight` (the iter-183 `CoheightBridge.lean`
-bridge); the iter-187 refactor isolates the remaining Stacks-00TT gap as the
-named helper `isRegularLocalRing_stalk_of_smooth` above. This helper is now
-*axiom-clean modulo the named Stacks-00TT gap*: its body discharges every
-conclusion from explicit Mathlib lemmas and the named regularity helper.
-Once `isRegularLocalRing_stalk_of_smooth` closes upstream the whole chain
-becomes axiom-clean automatically. -/
+bridge); the iter-187 refactor isolated the then-open Stacks-00TT gap as the
+named helper `isRegularLocalRing_stalk_of_smooth` above, which is now fully
+proved (via `Albanese/SmoothPrimeRegularity.lean`). The whole chain is
+therefore **axiom-clean** — no residual gap. -/
 private theorem smooth_codim_one_maximalIdeal_isPrincipal_and_ne_bot
     {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
     (X : Over (Spec (.of kbar)))
@@ -1396,10 +1255,8 @@ private theorem smooth_codim_one_maximalIdeal_isPrincipal_and_ne_bot
   -- `IsNoetherianRing` (Mathlib instance).
   haveI : IsLocallyNoetherian X.left :=
     LocallyOfFiniteType.isLocallyNoetherian X.hom
-  -- Regularity half: extracted to the named helper above
-  -- (`isRegularLocalRing_stalk_of_smooth`), which captures the Stacks-00TT
-  -- Jacobian-criterion gap as a narrow named typed sorry. No further
-  -- inline `sorry` is required at this step.
+  -- Regularity half: the named helper above (`isRegularLocalRing_stalk_of_smooth`,
+  -- Stacks 00TT at every point — sorry-free via SmoothPrimeRegularity.lean).
   have hreg : IsRegularLocalRing (X.left.presheaf.stalk z) :=
     isRegularLocalRing_stalk_of_smooth X z
   -- Krull-dim half: closes via the iter-183 axiom-clean CoheightBridge
@@ -1490,6 +1347,43 @@ already codim-1-indeterminacy-free (by hypothesis), then `Dom(f) = X` and
 `f` extends to a unique regular morphism `X ⟶ Y`.
 
 Blueprint pin: `thm:codim_one_extension` (Milne §I.3 Theorem 3.1 p. 16). -/
+
+/-- **Milne Theorem 3.1, codim-≥2 conclusion (unbundled).** For a rational map
+`f : X ⇢ Y` from a nonsingular variety to a complete variety over `k̄`, every
+point of the indeterminacy locus has coheight (codimension) at least `2`.
+
+This is the *Step 1* half of `extend_of_codimOneFree_of_smooth` below,
+exposed as a standalone lemma because
+`av_codimOneFree_of_indeterminacy` in `Thm32RationalMapExtension.lean`
+needs exactly this conclusion (its branch 2 combines it with Milne
+Lemma 3.3's pure-codim-1 disjunct to force the locus empty).
+
+**Status: named `sorry` (project gap, run-0006 T6 split).** The substantive
+content is the valuative criterion of properness applied at a codim-1 generic
+point: if `z ∈ Z(f)` had `coheight z = 1`, the stalk `O_{X,z}` would be a DVR
+(`localRing_dvr_of_codim_one` — now sorry-free via
+`SmoothPrimeRegularity.lean`), whose fraction field is the function field
+`K(X)` carrying `f`'s generic point of `Y`; the valuative criterion
+(`IsProper` on `Y.hom`) lifts the generic point along `Spec K(X) → Spec O_{X,z}`
+to a point of `Y(O_{X,z})`, i.e. a representative of `f` defined at `z` —
+contradicting `z ∈ Z(f)`. The missing bridge is the
+`Scheme.RationalMap`-to-function-field/valuative-criterion plumbing (the same
+machinery gap tracked for `indeterminacy_pure_codim_one_into_grpScheme`
+substep 3 below); points of coheight `0` (the generic point) are always in
+`f.domain` since the domain is dense open. -/
+theorem indeterminacy_codimGe2_of_smooth_of_complete
+    {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
+    {X : Over (Spec (.of kbar))}
+    [Smooth X.hom] [GeometricallyIrreducible X.hom]
+    [IsSeparated X.hom] [LocallyOfFiniteType X.hom]
+    [IsIntegral X.left] [IsReduced X.left]
+    {Y : Over (Spec (.of kbar))}
+    [IsProper Y.hom] [GeometricallyIrreducible Y.hom]
+    [IsSeparated Y.hom] [LocallyOfFiniteType Y.hom]
+    [IsIntegral Y.left] [IsReduced Y.left]
+    (f : X.left.RationalMap Y.left) :
+    ∀ z ∈ indeterminacyLocus f, 2 ≤ Order.coheight z := by
+  sorry
 
 /-- **Milne Theorem 3.1 (specialised) — codim-1-indeterminacy-free + smooth
 source + complete target ⇒ extension.**

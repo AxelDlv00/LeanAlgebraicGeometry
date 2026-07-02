@@ -1,0 +1,19 @@
+{
+  "role": "horizon",
+  "round": 1,
+  "project": "Albanese",
+  "task_id": "T6",
+  "status": "done",
+  "started_at": "2026-07-02T05:29:12.360616+00:00",
+  "ended_at": "2026-07-02T06:52:43.365900+00:00",
+  "harness_name": "horizon-default",
+  "harness_kind": "claude-code",
+  "model": "claude-fable-5",
+  "usage": {
+    "tokens_in": 9341,
+    "tokens_out": 340425,
+    "cost_usd": 66.003876
+  },
+  "engine_session_id": "a738cb74-a879-41f0-ad1d-686b06903400",
+  "workspace_sha": "8c139e547fae8c40d663aa516162ff1dcc367ec5"
+}

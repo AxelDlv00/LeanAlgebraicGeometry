@@ -234,15 +234,13 @@ Combining (1) ∨ (2): pure codim 1 contradicts codim `≥ 2`, so the
 indeterminacy locus is empty; trivially every point — and in particular
 every codim-1 point — lies in `f.domain`, so `CodimOneFree f`.
 
-**Status of the substantive content.** The codim-≥2 conclusion of
-Milne 3.1 is not currently exposed by the project as a standalone lemma;
-it is encapsulated inside `extend_of_codimOneFree_of_smooth`'s body (which
-is itself `sorry` in `Albanese/CodimOneExtension.lean`). Once the project
-exposes a lemma `indeterminacy_codimGe2_of_smooth_of_complete` separating
-out the codim-≥2 conclusion, this helper closes via the two-line
-combination above. Until then it is left as a named `sorry` whose
-docstring exhaustively records the combination strategy, replacing the
-iter-179 conjunction-level `sorry` with a more targeted one.
+**Status (run-0006 T6).** The codim-≥2 conclusion of Milne 3.1 is now
+exposed as the standalone lemma
+`indeterminacy_codimGe2_of_smooth_of_complete` in
+`Albanese/CodimOneExtension.lean` (itself a named `sorry`, gated on the
+rational-map valuative-criterion machinery), and this helper's body is
+`sorry`-free: branch 2 derives the contradiction `2 ≤ coheight x = 1`
+directly from that lemma.
 
 This is the iter-180 Lane G refactor's split: the `CodimOneFree f`
 conjunct is split off into a self-contained named lemma with the
@@ -279,25 +277,17 @@ private theorem av_codimOneFree_of_indeterminacy
     have hxZ : x ∈ indeterminacyLocus f := hnotin
     rw [hempty] at hxZ
     exact hxZ.elim
-  · -- **Branch 2 (PROJECT GAP).** The disjunct gives, for any `x ∈ Z(f)`,
-    -- a codim-1 generic point `z` with `x ∈ closure {z}`. To prove
-    -- `x ∈ f.domain` for our codim-1 `x`, contrapositive: assume
-    -- `x ∈ Z(f)`. The disjunct produces a `z` with `coheight z = 1` and
-    -- `x ∈ closure {z}` — but for a codim-1 `x`, sobriety of the scheme
-    -- forces `z = x` (chains of length 1 starting at `z` and ending at a
-    -- specialisation `x` of equal coheight collapse in a sober T₀ space),
-    -- so `x = z` is a codim-1 point of `Z(f)`. The contradiction needs
-    -- the **codim-≥2 conclusion of Milne 3.1** (project-side
-    -- `extend_of_codimOneFree_of_smooth`'s unbundled half), which is
-    -- currently encapsulated inside that theorem's `sorry`'d body in
-    -- `Albanese/CodimOneExtension.lean` rather than exposed as a separate
-    -- lemma. Once a lemma
-    -- `indeterminacy_codimGe2_of_smooth_of_complete : ∀ z ∈ indeterminacyLocus f, coheight z ≥ 2`
-    -- lands in `CodimOneExtension.lean`, branch 2 closes via:
-    --   `by_contra hnotin; obtain ⟨z, hz1, hxz⟩ := hpure x hnotin;`
-    --   `obtain rfl := sober_eq_of_specializes_of_coheight_eq hxz hx hz1;`
-    --   `exact absurd hx (lt_irrefl 1 ∘ ... ∘ codimGe2 hnotin)`.
-    sorry
+  · -- **Branch 2 (CLOSED, run-0006 T6).** The codim-≥2 conclusion of
+    -- Milne 3.1 (`indeterminacy_codimGe2_of_smooth_of_complete`, the
+    -- unbundled Step-1 half of `extend_of_codimOneFree_of_smooth`, now
+    -- exposed as a standalone lemma in `Albanese/CodimOneExtension.lean`)
+    -- contradicts `coheight x = 1` for a codim-1 point of the indeterminacy
+    -- locus, so `x ∈ f.domain`. (The pure-codim-1 disjunct of Milne 3.3 is
+    -- not needed once the codim-≥2 conclusion is available.)
+    by_contra hnotin
+    have h2 := indeterminacy_codimGe2_of_smooth_of_complete f x hnotin
+    rw [hx] at h2
+    norm_num at h2
 
 /-- **Iter-182 documentation helper: branch-1 of `av_codimOneFree_of_indeterminacy`.**
 The empty-indeterminacy branch of Milne Lemma 3.3 closes `CodimOneFree`
@@ -367,9 +357,9 @@ Milne's two-line argument:
    `av_isIntegral_and_codimOneFree`, which combines
    `indeterminacy_pure_codim_one_into_grpScheme` (Milne Lemma 3.3 — pure
    codim 1 or empty indeterminacy for grpScheme targets) with the codim-≥2
-   half of Milne 3.1. Both pieces are documented in that helper's
-   docstring; the helper carries the single `sorry` that captures the
-   remaining math content the project spec does not yet expose.
+   half of Milne 3.1 (`indeterminacy_codimGe2_of_smooth_of_complete`,
+   the named-`sorry` lemma in `Albanese/CodimOneExtension.lean` that now
+   carries the remaining math content).
 
 3. Materialize the remaining variety-package instances on `A.left`:
    `IsSeparated A.hom` from `IsProper A.hom` (Mathlib instance),

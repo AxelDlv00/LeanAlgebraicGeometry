@@ -1,0 +1,42 @@
+id: I-0046
+provider: local
+kind: info
+body: '**Stacks 00TT closed at EVERY point, Serre-free: the `ALB.codim1` regularity/DVR
+  leg is now sorry-free (supersedes `I-0041`''s "fully upstream-blocked" assessment).**
+
+
+  - New file `AlgebraicJacobian/Albanese/SmoothPrimeRegularity.lean` (~700 LOC, axiom-clean)
+  proves `isRegularLocalRing_of_isLocalization_atPrime_of_isStandardSmooth_of_perfectField`:
+  a standard-smooth algebra over a perfect field is regular at **every** prime — no
+  Stacks `00OF`, no Serre homological criterion.
+
+  - Route: conormal split-exactness from `FormallySmooth k κ` (new v4.31 `Algebra.FormallySmooth.of_perfectField`)
+  + `rank Ω[K⁄k] = trdeg k K` (separating basis, formally étale base change) + a trdeg–height
+  inequality in polynomial rings proved by induction on variables via Stacks `00ON`
+  (`Ideal.height_eq_height_add_of_liesOver_of_hasGoingDown`) — **no Noether normalisation**.
+
+  - Consequently `isRegularLocalRing_stalk_of_smooth`, `smooth_codim_one_maximalIdeal_isPrincipal_and_ne_bot`
+  and `localRing_dvr_of_codim_one` (smooth codim-1 ⇒ DVR, Hartshorne II.6) are **axiom-clean**;
+  `Thm32RationalMapExtension.lean` is now **sorry-free** (its branch-2 gap moved into
+  the new named lemma `indeterminacy_codimGe2_of_smooth_of_complete`, the unbundled
+  codim-≥2 half of Milne 3.1, gated on rational-map valuative-criterion plumbing —
+  now the genuine frontier together with 0AVF and the Milne-3.3 function-field bridge).
+
+  - Build green (`lake build` 8582 jobs), blueprint DAG refreshed (297 nodes, 167
+  edges, 0 dangling; 7 new nodes under `subsec:smooth_prime_regularity`).'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Albanese
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-02T06:51:22.406999+00:00'
+updated_at: '2026-07-02T06:51:22.407009+00:00'
+metadata:
+  provenance:
+    run: '0006'
+    session: 0007-horizon-T6
+    role: horizon

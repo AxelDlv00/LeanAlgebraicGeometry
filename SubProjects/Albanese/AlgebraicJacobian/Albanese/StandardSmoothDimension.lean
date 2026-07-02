@@ -43,9 +43,9 @@ The consumer (`isRegularLocalRing_stalk_of_smooth` Stage 6 in
 `CodimOneExtension.lean`) combines the last two lemmas with the iter-199
 sub-gap (ii.A) helper `finrank_cotangentSpace_of_bijective_algebraMap_residue`
 (`finrank κ(m) (m/m²) = n` at a `k`-rational closed point) to conclude
-regularity of the stalk at closed points. The remaining gap for *non-closed*
-points is Stacks `00OF` (localisations of regular local rings are regular),
-tracked in `CodimOneExtension.lean`.
+regularity of the stalk at closed points. The *non-closed* points — long
+tracked as a Stacks `00OF` gap — are now handled Serre-free by the
+arbitrary-prime theorem of `Albanese/SmoothPrimeRegularity.lean`.
 
 Blueprint chapter: `blueprint/src/chapters/Albanese_CodimOneExtension.tex`
 (nodes `lem:mvPolynomial_height_eq_natCard_of_isMaximal`,
