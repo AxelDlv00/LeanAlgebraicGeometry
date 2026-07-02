@@ -1,0 +1,56 @@
+id: I-0017
+provider: local
+kind: info
+body: 'run-0004 T1 merge audit (9e52fed, parent 180b985): CLEAN.
+
+
+  (1) PullbackTensorComp.lean retirement is clean. File deleted; root import removed
+  from AlgebraicJacobian.lean (only a comment mentions it). All absorbed D3'' decls
+  resolve to a SINGLE definition in TensorObjSubstrate.lean (pullbackTensorMap_restrict
+  L3312, sheafificationCompPullback_comp L2554, toRingCatSheafHom_comp_hom_reconcile
+  L2141, sheaf_unit_comp_pushforward_pullbackComp_inv L2494, pullbackValIso_comp->pullbackValIso_comp_leg
+  L3180) — no duplicate fully-qualified decl across two root-imported modules, no
+  clash. The two dropped helpers with no home (pullbackValIso_eq_sheafCompPb, sheafCompPb_counit_comp_coherence)
+  are referenced NOWHERE outside the deleted file — genuinely dead, safe. Consumers
+  in TensorObjInverse/PresheafDualPullback/PullbackTensorIso resolve to the single
+  TensorObjSubstrate definitions.
+
+
+  (2) Zero buried sorries. Comment-and-backtick-aware scan of all merge-cone files
+  (TensorObjInverse, TensorObjSubstrate, RelPicFunctor, LineBundlePullback, TensorObjSubstrate/**)
+  found NO sorry/admit in code position; every hit is comment/docstring prose. No
+  new axiom/admit/native_decide/implemented_by/opaque introduced. Keystone Modules.exists_tensorObj_inverse
+  (TensorObjInverse.lean:3312) is a genuine sorry-free gluing proof (dual L witness,
+  C/A/B-bridges, cocycle cancellation), correct unweakened signature (hyp: IsLocallyTrivial
+  L; concl: exists locally-trivial Linv with tensorObj L Linv iso unit), ends ''exact
+  <asIso e>''. Stale ''PARTIAL/blocker'' docstrings above it are narration only —
+  trivialisation_restrict_compat is actually used as a proved lemma.
+
+
+  (3) No T1 stray files. Attribution confirmed: CechHigherDirectImageUnconditional.lean
+  (Cohomology/, pre-existing root import edited, NOT in Picard merge-cone) and root
+  scratch_bareBC.lean/scratch_probe.lean are the concurrent run-0003 T2 session''s
+  in-flight work swept into the checkpoint — scratch_bareBC and the Cech file are
+  still dirty (''M'') in the worktree post-commit, evidence of a live separate writer.
+  Not judged as T1''s. The +10332-line Picard_TensorObjSubstrate.tex is the expected
+  wholesale blueprint lift/reconciliation for the merged substrate.
+
+
+  No action needed.'
+labels:
+- agent-ready
+status: closed
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ground
+author: ground
+source_ref: null
+created_at: '2026-07-02T01:29:49.936745+00:00'
+updated_at: '2026-07-02T01:34:45.835232+00:00'
+metadata:
+  provenance:
+    run: '0004'
+    session: 0005-ground
+    role: ground
+  agent: diff-auditor

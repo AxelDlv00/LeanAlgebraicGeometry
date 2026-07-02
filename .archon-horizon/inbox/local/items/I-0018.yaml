@@ -1,0 +1,83 @@
+id: I-0018
+provider: local
+kind: issue
+body: 'Blueprint review of T1 merge (commit 9e52fed) chapter Picard_TensorObjSubstrate.tex
+  vs merged Lean. NOTE: actual blueprint path is MainProjects/Algebraic-Jacobian-Challenge/blueprint/src/chapters/Picard_TensorObjSubstrate.tex
+  (the .archon-horizon/blueprints/... path in the directive does not exist).
+
+
+  VERDICT on the core honesty concern: CLEAN. Every \lean{} pin in the keystone cone
+  resolves to an existing, sorry-free declaration; found NO \leanok resting on genuinely-missing
+  Lean. All grep "sorry" hits in the cone files are in comments/docstrings (0 real
+  sorry). Keystones verified:
+
+  - exists_tensorObj_inverse -> TensorObjInverse.lean:3312, sorry-free, signature
+  matches blueprint (dual as witness; L tensor Linv iso unit). \leanok honest.
+
+  - PicSharp.addCommGroup_via_tensorObj -> RelPicFunctor.lean:689, full sorry-free
+  AddCommGroup instance on Quotient(relPicSetoid), matches blueprint statement. \leanok
+  honest.
+
+
+  REAL DISCREPANCY (stale/self-contradictory blueprint NOTEs, not proof gaps): several
+  % NOTE comments falsely claim their \lean{} target is missing while the decl EXISTS
+  and is sorry-free, and four of them assert "block correctly unmarked" though the
+  block carries \leanok:
+
+  1. thm:rel_pic_addcommgroup_via_tensorobj (tex ~L4656): NOTE L4657 says pin "absent
+  from Lean source as of iter-271 (verified by grep)" -- FALSE, instance exists at
+  RelPicFunctor.lean:689.
+
+  2. lem:trivialisation_em_split_bifunctor (tex L4280 area, ~L10280): NOTE L10281
+  "not yet created (dangling -- block correctly unmarked)" -- FALSE; decl = private
+  lemma trivialisation_restrict_eM_split_bifunctor TensorObjInverse.lean:2569 (sorry-free);
+  block IS \leanok (stmt L10277 + proof L10302).
+
+  3. lem:trivialisation_em_leg (~L10316): NOTE L10317 same false claim; decl private
+  @ TensorObjInverse:2597; block \leanok.
+
+  4. lem:trivialisation_dual_chain_leg (~L10347): NOTE L10348 same; decl private trivialisation_restrict_dual_leg
+  @ TensorObjInverse:2622; block \leanok (L10341).
+
+  5. lem:trivialisation_restrict_em_split (~L10424): NOTE L10425 same; decl private
+  @ TensorObjInverse:2727 (sorry-free).
+
+  Recommend deleting/refreshing these five NOTEs; the \leanok marks themselves are
+  correct. Note leandag cache (.archon-horizon/blueprints/Algebraic-Jacobian-Challenge.json)
+  resolves all five pins (private lemmas match by base name), has_sorry=False -- so
+  private-ness is not a tooling problem.
+
+
+  MINOR (honestly understated, no action needed): lem:hom_of_local_compat_restrict
+  (tex L6663) and lem:presheafdualunitiso_naturality (tex L10653) are NOT \leanok-marked,
+  but their Lean re-ports (homOfLocalCompat_restrictFunctor_map @ TensorObjInverse:3136;
+  presheafDualUnitIso_naturality @ 3107) exist and are sorry-free (cache proved=False,
+  has_sorry=False). Their NOTEs accurately flag "private re-port; name resolves."
+  Could be upgraded to \leanok.
+
+
+  DAG: leandag reports 0 dangling; exists_tensorObj_inverse and addCommGroup cones
+  are acyclic and resolve. No cycle found.
+
+
+  Also stale (informational, matches directive warning): module docstrings still narrate
+  old PARTIAL/Step-4-sorry state (e.g. DualInverse.lean ~L546, TensorObjInverse.lean
+  ~L3300 docstring of exists_tensorObj_inverse calling trivialisation_restrict_compat
+  "the remaining blocker"); code is complete.'
+labels:
+- agent-ready
+status: closed
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ground
+author: ground
+source_ref: null
+created_at: '2026-07-02T01:32:10.117269+00:00'
+updated_at: '2026-07-02T01:34:47.770747+00:00'
+metadata:
+  provenance:
+    run: '0004'
+    session: 0005-ground
+    role: ground
+  agent: blueprint-reviewer
