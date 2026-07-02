@@ -1,0 +1,44 @@
+id: I-0042
+provider: local
+kind: memory
+body: '**Stacks 04KV/037Q descent CLOSED** — `geometricallyConnected_of_connected_of_section`
+  is axiom-clean (T5, run 0005 session 0007).
+
+
+  - New module `AlgebraicJacobian/Picard/GeometricallyConnectedSection.lean` (~330
+  LOC, Mathlib-only imports, sorry-free, axioms = propext/choice/Quot.sound): Stacks
+  05P3 (`A ⊗[k] B` domain over alg-closed `k`, via Nullstellensatz-evaluation + Jacobson-radical
+  coordinate argument + f.g.-subalgebra exhaustion), then geometry: fibers of `X_L
+  → X` are `Spec(K ⊗ L)`; alg-closed base via Mathlib''s `GeometricallyConnected.connectedSpace`;
+  algebraic-closure step via open+closed(integral)+singleton-fiber clopen argument;
+  assembly `k ⊆ k̄ ↪ L̄ ⊇ L`.
+
+  - Key Mathlib enablers already present in v4.31: `UniversallyOpen` instance for
+  morphisms to Spec-of-field (Stacks 0383), `IsIntegralHom → UniversallyClosed`, the
+  `geometrically` framework, `Scheme.Hom.fiber` API, `descResidueField_stalkClosedPointTo_fromSpecResidueField`
+  for the section retraction.
+
+  - `identityComponent_geometricallyConnected` is now axiom-clean automatically. IdentityComponent
+  sorries: 9 → 8.
+
+  - **Unblocked next**: `baseChangeIso` iso slot (clopen-image identification, ~80-100
+  LOC per in-file plan) and `isSubgroupHomomorphism` (`G⁰ ×ₖ G⁰` connected now derivable
+  via the Mathlib pullback instance). Remaining Pic⁰-specific sorries still FGA-blocked.
+
+  - **Stale mirror**: `SubProjects/Picard-IdentityComponent` is now BEHIND AJC (was
+  byte-identical); re-sync needs `IdentityComponent.lean` + the new `GeometricallyConnectedSection.lean`
+  + blueprint chapter.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-02T05:54:49.418103+00:00'
+updated_at: '2026-07-02T05:54:49.418114+00:00'
+metadata:
+  provenance:
+    run: '0005'
+    session: 0007-horizon-T5
+    role: horizon

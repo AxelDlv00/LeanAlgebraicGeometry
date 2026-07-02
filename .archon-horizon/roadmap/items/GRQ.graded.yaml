@@ -8,7 +8,7 @@ summary: '**Section graded ring (SNAP, sorry-free).** The graded ring/module lan
   $$\sum_{n}\dim_{k}M_{n}\,t^{n}\in\mathbb{Z}(t)\ \text{(rational)}.$$
 
   '
-status: blocked
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -20,4 +20,4 @@ scope:
 metadata:
   author: human
   created_at: '2026-07-01T10:07:06.613323+00:00'
-  updated_at: '2026-07-01T20:28:01.878954+00:00'
+  updated_at: '2026-07-02T05:36:30.949321+00:00'

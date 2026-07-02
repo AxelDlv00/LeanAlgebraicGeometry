@@ -63,6 +63,7 @@ import AlgebraicJacobian.Picard.TensorObjSubstrate.PullbackTensorIso
 import AlgebraicJacobian.Picard.TensorObjSubstrate.TrivialisationRestrict
 import AlgebraicJacobian.Picard.TensorObjInverse
 import AlgebraicJacobian.Picard.RelPicFunctor
+import AlgebraicJacobian.Picard.GeometricallyConnectedSection
 import AlgebraicJacobian.Picard.FGAPicRepresentability
 import AlgebraicJacobian.Picard.IdentityComponent
 import AlgebraicJacobian.Picard.TangentSpaceDualNumbers

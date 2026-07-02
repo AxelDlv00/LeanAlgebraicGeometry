@@ -5,6 +5,7 @@ Authors: Christian Merten
 -/
 import Mathlib
 import AlgebraicJacobian.Picard.FGAPicRepresentability
+import AlgebraicJacobian.Picard.GeometricallyConnectedSection
 import AlgebraicJacobian.Genus
 
 /-!
@@ -326,13 +327,14 @@ Stacks Tag 04KU / EGA IV₂ 4.5.14 (a connected `k`-scheme with a
 This iter (Lane A.3.i): we add the AXIOM-CLEAN
 `identityComponentCarrier_connectedSpace` helper below (the carrier is
 connected by construction). The full Stacks 04KU bridge
-"`ConnectedSpace X` + section ⟹ `GeometricallyConnected f`" requires
-the Mathlib substrate "`X` connected with `k` algebraically closed in
-`Γ(X, 𝒪_X)` ⟹ `X` geometrically connected over `k`" (Stacks 037Q +
-04KU), not yet available in Mathlib at SHA b80f227 — pending that
-Mathlib lemma, the geometric-connectedness step lives as a residual
-sorry inside the downstream theorems
-(`isSubgroupHomomorphism`, `baseChangeIso`, `isFiniteTypeGeometricallyIrreducible`).
+"`ConnectedSpace X` + section ⟹ `GeometricallyConnected f`" is now
+PROVED project-side (run 0005 session 0007, T5) in the sibling module
+`Picard/GeometricallyConnectedSection.lean` and consumed by
+`geometricallyConnected_of_connected_of_section` below, so the
+geometric-connectedness substrate is axiom-clean. The remaining sorries
+in `isSubgroupHomomorphism`, `baseChangeIso`,
+`isFiniteTypeGeometricallyIrreducible` are the group-structure /
+clopen-image-identification arguments built on top of it.
 
 Below: `baseChangeIso` partially closes via
 `CategoryTheory.Over.grpObjMkPullbackSnd` (iter-192 axiom-clean closure
@@ -379,7 +381,7 @@ private instance identityComponent_connectedSpace
   change ConnectedSpace ((identityComponentCarrier G : G.left.Opens) : Type _)
   infer_instance
 
-/-- **Stacks 04KU / EGA IV₂ 4.5.14**: a connected `k`-scheme with a `k`-rational
+/-- **Stacks 04KV / EGA IV₂ 4.5.14**: a connected `k`-scheme with a `k`-rational
 section is geometrically connected.
 
 Given a morphism `f : X ⟶ Spec k` from a `ConnectedSpace`-typed scheme `X`
@@ -387,96 +389,18 @@ admitting a section `s : Spec k ⟶ X` (i.e. `s ≫ f = 𝟙`), the morphism `f`
 geometrically connected: for any field extension `K/k`, the pullback
 `X ×_{Spec k} Spec K` is connected.
 
-iter-193 Lane A.3.i, planner-set authorisation per `PROGRESS.md`: ships as a
-typed `sorry` to enable downstream consumers (sanctioned temporary sorry-count
-increase). The full body is Stacks 04KV: a hypothetical clopen partition
-`X_K = U ⊔ V` would, via the base-changed section `s_K = s ≫ (pullback π s)⁻¹`
-say `K`-rational point landing in exactly one of `U, V`; the image of the
-chosen piece under the projection `X_K → X` would then be a clopen subset
-of `X` whose disjointness from the image of the other piece contradicts
-`ConnectedSpace X`. Mathlib at SHA b80f227 lacks the descent-of-clopen-
-partitions-along-fpqc-base-change substrate (Stacks 02LB), preventing an
-axiom-clean closure this iter.
-
-Alternative proof via Stacks 037Q (also project-side, also not yet built):
-a `k`-scheme `X` is geometrically connected iff `X` is connected AND the
-algebraic closure of `k` in `Γ(X, 𝒪_X)` equals `k`. With the section `s`,
-the pullback `s^* : Γ(X, 𝒪_X) → k` is a `k`-algebra retraction; any subfield
-`F ⊆ Γ(X, 𝒪_X)` containing `k` maps injectively into `k` (as `F` is a field),
-forcing `F = k`. Combined with `ConnectedSpace X`, gives the conclusion.
-
-Downstream consumers:
-- iso slot of `IdentityComponent.baseChangeIso` (the `(G^0)_K ≅ (G_K)^0`
-  identification);
-- chain into `[GeometricallyConnected f] [UniversallyOpen f]
-  [ConnectedSpace Y] ⟹ ConnectedSpace (pullback f g)` to derive
-  `ConnectedSpace (G^0 ×_k G^0)` for `isSubgroupHomomorphism`. -/
+CLOSED (run 0005 session 0007, T5): the full Stacks 04KV/037Q descent substrate
+now lives in the sibling module `Picard/GeometricallyConnectedSection.lean`
+(tensor products of field extensions over an algebraically closed field are
+domains + the open/closed/singleton-fiber clopen descent argument), and this
+helper is a direct application. Axiom-clean. -/
 private theorem geometricallyConnected_of_connected_of_section
     {k : Type u} [Field k] {X : Scheme.{u}}
     (f : X ⟶ Spec (.of k))
-    (s : Spec (.of k) ⟶ X) (_hsf : s ≫ f = 𝟙 _)
+    (s : Spec (.of k) ⟶ X) (hsf : s ≫ f = 𝟙 _)
     [ConnectedSpace X] :
-    GeometricallyConnected f := by
-  -- iter-194 push-beyond restructure: expose the structural reduction via
-  -- `geometrically_iff_of_commRing_of_isClosedUnderIsomorphisms`. The
-  -- residual sorry now lives at the precise Stacks 037Q gap point.
-  refine ⟨?_⟩
-  rw [geometrically_iff_of_commRing_of_isClosedUnderIsomorphisms]
-  intro K _ _
-  -- Goal: `ConnectedSpace ↥(pullback f (Spec.map (ofHom (algebraMap k K))))`.
-  --
-  -- Stacks 037Q gap (precise INCOMPLETE surface, iter-194 prover lane):
-  -- The Stacks-037Q route requires two missing Mathlib pieces at SHA b80f227:
-  --
-  -- (1) **Stacks 04KV reduction**: For `f : X → Spec k`, `GeometricallyConnected f`
-  --     iff for every finite separable extension `k'/k`, the base change
-  --     `X ×_k Spec k'` is connected. This is the descent of geometric
-  --     connectedness from arbitrary extensions to finite separable ones; it
-  --     uses Galois-fixed-point arguments on `Spec(k' ⊗_k K)` for `K`
-  --     algebraically closed. Not in Mathlib.
-  --
-  -- (2) **Field-tensor-product criterion**: For `K = Γ(X, O_X)` with `k`
-  --     algebraically closed in `K`, the tensor product `K ⊗_k k'` is a
-  --     field for every finite separable extension `k'/k`. Not in Mathlib
-  --     (the converse `Algebra.TensorProduct.isField_of_isAlgebraic` exists
-  --     but expects `IsDomain` on the tensor product; the "alg-closed-in"
-  --     hypothesis is not what `Algebra.IsAlgebraic` packages).
-  --
-  -- The section `s` supplies the algebraic-closure hypothesis of (2): the
-  -- `k`-algebra retraction `s.app top : Γ(X, O_X) → k` of `f.app top`
-  -- forces any intermediate subfield `F` of `Γ(X, O_X)` containing `k` to
-  -- satisfy `F = k` (a `k`-algebra retraction of a field map is necessarily
-  -- an isomorphism). With (2) in hand, `Spec(Γ(X, O_X) ⊗_k k')` is connected
-  -- (Spec of a field is connected), then (1) chains this to the conclusion.
-  --
-  -- Alternative attack: descent of clopen partitions along faithfully flat
-  -- (Spec K → Spec k) base change. Mathlib has
-  -- `AlgebraicGeometry.Flat.isQuotientMap_of_surjective` for the
-  -- faithfully-flat-quasi-compact-surjective case; the fibre-connectedness
-  -- needed for the quotient-map argument to bootstrap is the same gap.
-  --
-  -- iter-200 mathlib-analogist sweep target: surface (1) + (2) on the
-  -- "substrate unowned" tier; the project-side closure becomes mechanical
-  -- once either is in Mathlib.
-  --
-  -- iter-194 structural advance (axiom-clean intermediate): build the
-  -- base-changed section `sK` explicitly so the next prover starts from
-  -- "ConnectedSpace + Nonempty witness" instead of bare connectedness.
-  -- This is what the `_hsf` hypothesis encodes structurally — the
-  -- `s ≫ f = 𝟙` triangle base-changes to a section of `pullback.snd`,
-  -- giving a `K`-rational point of the base change.
-  let g : Spec (CommRingCat.of K) ⟶ Spec (CommRingCat.of k) :=
-    Spec.map (CommRingCat.ofHom (algebraMap k K))
-  let _sK : Spec (CommRingCat.of K) ⟶ Limits.pullback f g :=
-    Limits.pullback.lift (g ≫ s) (𝟙 _)
-      (by rw [Category.assoc, _hsf, Category.comp_id, Category.id_comp])
-  -- `_sK` is a section of `pullback.snd : pullback f g → Spec K` (by
-  -- `pullback.lift_snd`); pushing `default` through gives nonemptiness:
-  haveI : Nonempty ↑↑(Limits.pullback f g).toPresheafedSpace :=
-    ⟨_sK.base default⟩
-  -- Residual gap: connectedness of `pullback f g` given nonemptiness +
-  -- `ConnectedSpace X`. Stacks 037Q / 04KV; cf. structural notes above.
-  sorry
+    GeometricallyConnected f :=
+  geometricallyConnected_of_connectedSpace_of_section f s hsf
 
 /-- The range-containment hypothesis for `IsOpenImmersion.lift` used to build
 the section `identityComponentSection G` below: the image of the identity
@@ -537,8 +461,8 @@ private lemma identityComponentSection_isSection
   -- `MonObj.one.left ≫ G.hom = (𝟙_).hom = 𝟙 (Spec k)` (defeq).
   exact (MonObj.one (X := G)).w
 
-/-- Lemma (iter-193 Lane A.3.i, propagates through the sorry-bodied
-`geometricallyConnected_of_connected_of_section` helper): the structural
+/-- Lemma (iter-193 Lane A.3.i; AXIOM-CLEAN since run 0005 session 0007
+closed `geometricallyConnected_of_connected_of_section`): the structural
 morphism `(IdentityComponent G).hom` is **geometrically connected**.
 
 **iter-194 demotion (per lean-auditor iter-193 must-fix): no longer a
@@ -554,11 +478,10 @@ Derived from:
 - `identityComponentSection_isSection`: existence of a section
   `Spec k ⟶ (IdentityComponent G).left` (axiom-clean iter-193).
 - `geometricallyConnected_of_connected_of_section`: Stacks 04KU helper
-  (sorry-bodied iter-193, planner-sanctioned).
+  (axiom-clean since run 0005 session 0007 via
+  `Picard/GeometricallyConnectedSection.lean`).
 
-Once `geometricallyConnected_of_connected_of_section` lands axiom-clean
-(via the Stacks 037Q substrate or descent-of-clopen-partitions substrate),
-this lemma becomes axiom-clean automatically. Downstream consumers can
+Downstream consumers can
 chain `letI := identityComponent_geometricallyConnected G` with
 `UniversallyOpen` of `Spec k → Spec k` (which holds via
 `[IsIntegral Y] [Subsingleton Y] ⟹ UniversallyOpen f`) to derive
