@@ -1,0 +1,105 @@
+id: T8
+project: Algebraic-Jacobian-Challenge
+objective: 'Close the mechanical **v4.31.0 migration-interim** `sorry`s in the AJC
+  in-tree tree by cross-referencing how the sibling SUBPROJECTS already repaired the
+  same declarations. These are NOT math gaps: they are `eqToHom`/`reassoc`/`simp`/typeclass
+  breakages from the mathlib v4.31.0 bump, each tagged `v4.31.0 ISOLATION`/`INTERIM`
+  with the pre-bump ORIGINAL proof documented inline.
+
+
+  READ SCOPE = ALL PROJECTS. You may read freely from every project in the workspace
+  (Cech-Cohomology, GR-Quot-Closure, Albanese, Line-Bundle-Comparison-Iso, MR0555258)
+  to find the already-working proof of the same/analogous declaration and port it.
+  Also consult the inbox memory recipes: [[cech-gr-hard-sorrys-solved]] (rawPushPullMap_comp
+  term-mode, pullback_cast_compat), the v4.31 migration fix patterns, and [[gr-sectiongradedring-monoidal-broken]].
+
+
+  WRITE SCOPE = ONLY the 5 listed AJC files. Within them, fix ONLY the `v4.31.0 ISOLATION/INTERIM`-tagged
+  sorries:
+
+  - Cohomology/CechHigherDirectImage.lean — all 7 (port from the T4-fixed Cech-Cohomology
+  copy).
+
+  - Picard/SectionGradedRing.lean — all 8. WARNING: the GR-Quot-Closure copy is itself
+  NOT yet fixed (its ~8 hard TopCat.Sheaf semireducibility errors are the sole GR
+  blocker per memory), so a straight port may not exist — this file may not converge;
+  time-box it and report the root cause rather than forcing it.
+
+  - Picard/GlueDescent.lean — all 3 (port from GR-Quot-Closure).
+
+  - Picard/GrassmannianQuot.lean — ONLY the 2 v4.31-tagged sorries; LEAVE the other
+  structural sorries untouched.
+
+  - Picard/QuotScheme.lean — ONLY the 2 v4.31-tagged sorries; LEAVE the ~12 structural
+  χ-blocked stubs (hilbertPolynomial/QuotFunctor/Grassmannian.representable/Quot endgame)
+  untouched.
+
+
+  HARD CONSTRAINTS:
+
+  - FREEZE ALL SIGNATURES. Repair proof BODIES only. CechHigherDirectImage.lean is
+  imported by T2s live file (Cohomology/CechHigherDirectImageUnconditional.lean) and
+  7 other modules — changing any declaration statement would break T2 and the FBC
+  run.
+
+  - DO NOT edit Cohomology/FlatBaseChange* or Cohomology/CechHigherDirectImageUnconditional.lean
+  — those are T2s (FBC) exclusive write-scope. Coordinate by leaving them alone.
+
+  - BUILD CONTENTION: these files live in AJCs .lake, shared with the live FBC run
+  (T2). Prefer to run this AFTER T2 lands, or expect slow/contended builds under machine
+  load.
+
+
+  DONE WHEN: the targeted v4.31 sorries are closed, `lake build` of the affected modules
+  is green with no new axioms (`#print axioms` clean bar pre-existing typed-sorry
+  carriers), signatures unchanged, and structural sorries left intact. Update roadmap
+  v4.31 debt note.'
+title: Finish the v4.31.0 migration debt in AJC by porting subproject fixes
+explanation: ''
+projects:
+- Algebraic-Jacobian-Challenge
+- Line-Bundle-Comparison-Iso
+- Albanese
+- Cech-Cohomology
+- GR-Quot-Closure
+- MR0555258-Compactifying-Picard
+priority: normal
+status: queued
+write_set:
+  files:
+  - AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean
+  - AlgebraicJacobian/Picard/SectionGradedRing.lean
+  - AlgebraicJacobian/Picard/GlueDescent.lean
+  - AlgebraicJacobian/Picard/GrassmannianQuot.lean
+  - AlgebraicJacobian/Picard/QuotScheme.lean
+  projects:
+  - Algebraic-Jacobian-Challenge
+  - Line-Bundle-Comparison-Iso
+  - Albanese
+  - Cech-Cohomology
+  - GR-Quot-Closure
+  - MR0555258-Compactifying-Picard
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+  - Line-Bundle-Comparison-Iso
+  - Albanese
+  - Cech-Cohomology
+  - GR-Quot-Closure
+  - MR0555258-Compactifying-Picard
+  files:
+  - AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean
+  - AlgebraicJacobian/Picard/SectionGradedRing.lean
+  - AlgebraicJacobian/Picard/GlueDescent.lean
+  - AlgebraicJacobian/Picard/GrassmannianQuot.lean
+  - AlgebraicJacobian/Picard/QuotScheme.lean
+roadmap_refs: []
+inbox_refs: []
+artifact_refs: []
+created_at: '2026-07-02T06:08:13.047732+00:00'
+updated_at: '2026-07-02T06:08:13.047745+00:00'
+metadata:
+  author: ground
