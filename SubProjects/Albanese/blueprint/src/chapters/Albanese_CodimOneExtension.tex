@@ -1390,6 +1390,119 @@ variety, the indeterminacy locus is either empty or of \emph{pure} codimension \
 Combined with \cref{thm:indeterminacy_codimGe2}'s ``codimension \(\geq 2\)'' conclusion,
 this forces the locus to be empty, and \cref{thm:codim_one_extension} then extends.
 
+\subsection{Pole-divisor purity}
+\label{subsec:pole_divisor_purity}
+
+The divisor-theoretic engine of Milne's proof (his appeal to the ``good theory of
+divisors'' on the nonsingular variety \(X \times X\)) is the purity of the polar locus
+of a rational function: on a nonsingular variety, a function with a pole at a point
+already has a pole along a prime divisor through that point. We isolate this as a
+free-standing lemma. The classical route derives it from normality of regular local
+rings (Auslander--Buchsbaum, or Serre's criterion); the proof below instead uses an
+elementary length-two regular-sequence computation, which suffices because every local
+ring in sight is regular.
+
+\begin{lemma}[Pole-divisor purity on a scheme with regular local rings]
+  \label{lem:pole_divisor_purity}
+  \lean{AlgebraicGeometry.Scheme.exists_specializes_coheight_eq_one_of_notMem_stalk_range,
+        exists_height_one_prime_colon_le,
+        Ideal.height_le_one_of_colon_span_singleton,
+        IsRegularLocalRing.exists_swap_pair_of_two_le_ringKrullDim,
+        mem_span_singleton_of_swap_pair}
+  \leanok
+  % SOURCE: [Milne, Abelian Varieties], proof of Lemma~3.3, \S I.3, p.~17 (the
+  % characterisation of the local ring by pole divisors and the purity of
+  % div(f)_infty); classically Hartshorne, Algebraic Geometry, II.6.3A / Matsumura,
+  % Commutative Ring Theory, Thm.~11.5 (associated primes of principal ideals in a
+  % normal domain have height one).
+  \textit{Source: Milne, \emph{Abelian Varieties}, proof of Lemma~3.3, \S I.3, p.~17;
+  cf.\ Matsumura, \emph{Commutative Ring Theory}, Theorem~11.5.}
+  Let \(X\) be an integral, locally Noetherian scheme all of whose local rings
+  \(\mathcal O_{X, x}\) are regular (for instance, a nonsingular variety over a field),
+  and let \(K(X)\) denote its function field. Let \(P \in X\) be a point and
+  \(h \in K(X)\) an element that is \emph{not} regular at \(P\), i.e.\
+  \(h \notin \mathcal O_{X, P} \subseteq K(X)\). Then there is a point \(z \in X\) of
+  codimension \(1\) (\(\operatorname{coheight} z = 1\)) with
+  \[
+    z \rightsquigarrow P
+    \qquad\text{(i.e.\ } P \in \overline{\{z\}}\text{)}
+    \qquad\text{and}\qquad
+    h \notin \mathcal O_{X, z}.
+  \]
+  In other words, the polar locus
+  \(\{\, x \in X \mid h \notin \mathcal O_{X, x} \,\}\) is of pure codimension \(1\)
+  through every one of its points: each of its points specialises from a
+  codimension-\(1\) point of the locus.
+\end{lemma}
+
+\begin{proof}
+  \leanok
+  \uses{lem:isDomain_of_regularLocal,
+        lem:regularLocal_quotient_isRegularLocal_of_notMemSq,
+        lem:exists_notMemSq_of_spanFinrank_pos,
+        thm:ringKrullDim_stalk_eq_coheight}
+  Choose an affine open \(U \ni P\) and set \(R := \mathcal O_X(U)\), a Noetherian
+  integral domain with fraction field \(K(X)\). Points \(z \in U\) correspond to primes
+  \(\mathfrak q \subseteq R\) with \(\mathcal O_{X, z} = R_{\mathfrak q}\), the
+  codimension of \(z\) in \(X\) equals \(\operatorname{ht} \mathfrak q\), and
+  specialisation corresponds to inclusion of primes. Let \(\mathfrak p\) be the prime
+  of \(P\).
+
+  Write \(h = a/b\) with \(a, b \in R\), \(b \neq 0\), and form the denominator ideal
+  \(J := \bigl((b) : a\bigr) = \{\, r \in R \mid r a \in (b) \,\}\). For any prime
+  \(\mathfrak q\) one has \(h \in R_{\mathfrak q}\) iff \(s a \in (b)\) for some
+  \(s \notin \mathfrak q\), i.e.\ iff \(J \not\subseteq \mathfrak q\). In particular
+  \(J \subseteq \mathfrak p\), and it suffices to produce a prime
+  \(\mathfrak q \subseteq \mathfrak p\) of height \(1\) with \(J \subseteq \mathfrak q\).
+
+  Pass to the Noetherian local domain \(A := R_{\mathfrak p}\); primes of \(A\)
+  correspond to primes of \(R\) contained in \(\mathfrak p\), preserving heights, and
+  every localization of \(A\) at a prime is a localization of \(R\), hence regular.
+  Since \(J \subseteq \mathfrak p\), the class \(\bar a\) of \(a\) in \(A/(b)\) is
+  nonzero, so (Noetherianness) among the annihilator ideals of elements of \(A/(b)\)
+  containing \(\operatorname{Ann}(\bar a) \supseteq J A\) there is a maximal one, and it
+  is an associated prime: \(Q = \bigl((b) : x\bigr)\) for some \(x \in A\) with
+  \(x \notin (b)\), with \(Q\) prime and \(J A \subseteq Q\).
+
+  \emph{Claim: \(\operatorname{ht} Q = 1\).} First, \(b \in Q\) and \(b \neq 0\), so
+  \(Q \neq (0)\) and \(\operatorname{ht} Q \geq 1\). Suppose
+  \(\operatorname{ht} Q \geq 2\) and localize at \(Q\): the ring \(A_Q\) is regular
+  local of dimension \(\geq 2\), and its maximal ideal is
+  \(\mathfrak m = \bigl((b) : x\bigr) A_Q\) (the colon persists: it contains \(Q A_Q\)
+  by construction and is proper because \(x \notin (b) A_Q\)). Choose
+  \(u \in \mathfrak m \setminus \mathfrak m^2\) (possible since
+  \(\mathfrak m \neq \mathfrak m^2\) by Nakayama,
+  \cref{lem:exists_notMemSq_of_spanFinrank_pos}); then \(A_Q / (u)\) is again regular
+  local, of dimension one less
+  (\cref{lem:regularLocal_quotient_isRegularLocal_of_notMemSq}), hence of positive
+  dimension, and is a domain (\cref{lem:isDomain_of_regularLocal}). Pick
+  \(v \in \mathfrak m\) with \(v \notin (u)\) (possible since
+  \(\dim A_Q/(u) \geq 1\) forces its maximal ideal to be nonzero); then
+  \(v\) is a nonzerodivisor modulo \((u)\).
+
+  Now the elementary \emph{swap computation}: from \(\mathfrak m \cdot x \subseteq (b)\)
+  write \(u x = b s\) and \(v x = b t\). Then
+  \[
+    b \,(u t - v s) \;=\; u\,(b t) - v\,(b s) \;=\; u\,(v x) - v\,(u x) \;=\; 0,
+  \]
+  so \(u t = v s\) (as \(A_Q\) is a domain and \(b \neq 0\)). Thus \(v s \in (u)\), and
+  since \(v\) is regular modulo \((u)\), \(s = u s'\) for some \(s'\); cancelling
+  \(u \neq 0\) in \(u x = b u s'\) gives \(x = b s' \in (b)\) --- contradicting
+  \(x \notin (b)\). Hence \(\operatorname{ht} Q \leq 1\), proving the claim. (This
+  computation is the elementary substitute for ``associated primes of a principal ideal
+  in a normal domain have height one''; no normality theory for regular local rings is
+  invoked.)
+
+  Finally pull back: \(\mathfrak q := Q \cap R \subseteq \mathfrak p\) is a prime of
+  \(R\) of height \(1\) (heights of primes below \(\mathfrak p\) are unchanged by the
+  localization) with \(J \subseteq \mathfrak q\). The corresponding point \(z \in U\)
+  satisfies \(z \rightsquigarrow P\), has \(h \notin \mathcal O_{X, z} = R_{\mathfrak q}\)
+  (as \(J \subseteq \mathfrak q\)), and has codimension
+  \(\operatorname{coheight} z = \dim \mathcal O_{X, z} = \operatorname{ht} \mathfrak q
+  = 1\) by the coheight--Krull-dimension bridge
+  (\cref{thm:ringKrullDim_stalk_eq_coheight}).
+\end{proof}
+
 \begin{lemma}
 
 
@@ -1454,7 +1567,7 @@ this forces the locus to be empty, and \cref{thm:codim_one_extension} then exten
 % it with a subset of \(V\), it is a subset of \(V\) of codimension one passing through
 % \(x\) on which \(\varphi\) is not defined."
 \begin{proof}
-  
+  \uses{lem:pole_divisor_purity}
   Following Milne's proof of Lemma~3.3. The argument has four sub-steps. Throughout we
   fix a representative \((U, \varphi_U)\) of \(f\).
 
@@ -1524,7 +1637,11 @@ this forces the locus to be empty, and \cref{thm:codim_one_extension} then exten
   Suppose \(f \in K(X \times X)^\ast\) is not in \(\mathcal O_{X \times X, (x, x)}\);
   equivalently, \((x, x) \in \mathrm{supp}(\mathrm{div}(f)_\infty)\). The pole divisor
   \(\mathrm{div}(f)_\infty\) is a finite sum of prime divisors of \(X \times X\) (i.e.\ a
-  closed subset of pure codimension \(1\) in \(X \times X\)). Its intersection with the
+  closed subset of pure codimension \(1\) in \(X \times X\)); the purity through every
+  point of the polar locus --- every point of \(X \times X\) where \(f\) fails to be
+  regular specialises from a codimension-\(1\) pole point --- is exactly
+  \cref{lem:pole_divisor_purity}, applicable because all local rings of the
+  nonsingular variety \(X \times X\) are regular. Its intersection with the
   diagonal \(\Delta_X \subseteq X \times X\) is a closed subset of pure codimension \(1\)
   in \(\Delta_X\) (this is Milne's reference to AG~9.2, the standard fact that a prime
   divisor of \(X \times X\) either contains \(\Delta_X\) or meets it in pure codimension

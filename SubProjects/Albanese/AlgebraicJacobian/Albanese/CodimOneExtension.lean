@@ -9,6 +9,7 @@ import AlgebraicJacobian.Albanese.CoheightBridge
 import AlgebraicJacobian.Albanese.AuslanderBuchsbaum
 import AlgebraicJacobian.Albanese.StandardSmoothDimension
 import AlgebraicJacobian.Albanese.SmoothPrimeRegularity
+import AlgebraicJacobian.Albanese.PolePurity
 
 /-!
 # Codimension-1 indeterminacy extension (A.4.a)
@@ -1697,15 +1698,26 @@ theorem indeterminacy_pure_codim_one_into_grpScheme
   --   `div(g)_∞` of any non-zero rational function `g ∈ Φ^*(𝒪_{G,e})` is
   --   pure codim-1; its intersection with the diagonal is pure codim-1 in
   --   the diagonal (Hartshorne AG 9.2, Krull's principal-ideal theorem).
-  --   This is the substantive Mathlib gap: Mathlib's
-  --   `RamificationTheory.PrincipalIdeal` provides Krull's HPP for ideals
-  --   but the scheme-level codim-1 intersection-with-diagonal lemma is
-  --   not packaged.
+  --   **Substep 4a (pole-divisor purity) is PROVED (run-0006 T6, session
+  --   0019)**: `Albanese/PolePurity.lean` provides
+  --   `Scheme.exists_specializes_coheight_eq_one_of_notMem_stalk_range` —
+  --   on a locally Noetherian integral scheme with regular stalks (e.g.
+  --   `X × X` smooth over `k̄`, via `isRegularLocalRing_stalk_of_smooth`
+  --   applied to the product), an `h ∈ K(X×X)` not regular at a point `Q₀`
+  --   fails to be regular at some coheight-1 generization `z ⤳ Q₀`. The
+  --   proof is Serre-free/UFD-free (elementary swap-pair argument replaces
+  --   normality; blueprint node `lem:pole_divisor_purity`, axiom-clean).
+  --   **Substep 4b (diagonal intersection)** remains: transport the
+  --   coheight-1 pole point of `X × X` through `Δ` to a coheight-1 point
+  --   of `X` inside `Z(f)` (Krull height bound for the diagonal, a local
+  --   complete intersection of codim `dim X` since `X` is smooth).
   --
   -- Iter-200+ tracked: gated on (a) the function-field-pullback bridge for
-  -- `Scheme.RationalMap` (also blocks `thm:weil_divisor_obstruction`),
-  -- (b) the codim-1 pole-divisor / diagonal intersection lemma (Hartshorne
-  -- AG 9.2 scheme-level form).
+  -- `Scheme.RationalMap` (Substeps 1–3: difference map, slice argument,
+  -- `Φ^*` of `𝒪_{G,e}`; also blocks `thm:weil_divisor_obstruction`),
+  -- (b) Substep 4b, the codim-1 diagonal-intersection bound (Hartshorne
+  -- AG 9.2 scheme-level form). Substep 4a is closed by
+  -- `Albanese/PolePurity.lean` (imported above).
   sorry
 
 /-! ## §6. Definedness at a prime-divisor generic point
