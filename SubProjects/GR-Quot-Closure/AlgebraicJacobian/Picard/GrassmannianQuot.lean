@@ -795,6 +795,7 @@ lemma ιFree_matrixEnd {S : Scheme.{0}} {d : ℕ} (M : Matrix (Fin d) (Fin d) Γ
     ← Category.assoc, Sigma.ι_desc, biproduct.ι_matrix_assoc, biproduct.lift_desc]
   rfl
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **(a) Matrix endomorphism naturality under pullback** (`lem:gr_matrixEnd_pullback`).
 For `p : T ⟶ S` and `M : Matrix (Fin d) (Fin d) Γ(S,⊤)`, the pullback of the matrix
 endomorphism `matrixEnd M` is, after the free-pullback comparison `Q = pullbackFreeIso p (Fin d)`,
@@ -864,6 +865,7 @@ lemma ιFree_matrixEndRect {S : Scheme.{0}} {d r : ℕ} (M : Matrix (Fin d) (Fin
     ← Category.assoc, Sigma.ι_desc, biproduct.ι_matrix_assoc, biproduct.lift_desc]
   rfl
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Rectangular matrix homomorphism naturality under pullback**
 (`lem:gr_matrixEndRect_pullback`). For `p : T ⟶ S` and a `d × r` matrix `M` of global
 sections, the pullback of `matrixEndRect M` is, after the free-pullback comparisons
@@ -2326,6 +2328,7 @@ end AlgebraicGeometry.Grassmannian
 
 namespace AlgebraicGeometry.Grassmannian
 
+set_option backward.isDefEq.respectTransparency false in
 /-- The **Grassmannian functor** `Grass(r,d)` (`def:grassmannian_functor`): the
 contravariant functor from schemes to sets sending `T` to the set of equivalence classes
 of rank-`d` locally free quotients `q : O_T^r ↠ F`, acting on morphisms by pullback.
@@ -2393,7 +2396,7 @@ noncomputable def functor (d r : ℕ) : Scheme.{0}ᵒᵖ ⥤ Type 1 where
         trans (𝟙 _)
         · rw [Category.assoc, Iso.hom_inv_id_assoc]
           exact (Scheme.Modules.pullbackComp g.unop f.unop).hom_inv_id_app _
-        · rw [hH]; simp
+        · rw [hH]; simp <;> rfl
       -- whisker `hstar` by `≫ (pullback f ⋙ pullback g).map x.q` and refold the RHS via
       -- `map_comp` into `(rqPullback g (rqPullback f x)).q`.
       exact (Category.assoc _ _ _).symm.trans
@@ -3330,6 +3333,7 @@ lemma conjPullback_congr {Wx X : Scheme.{0}} {j j' : Wx ⟶ X} (hjj : j = j') {r
         (Scheme.Modules.pullbackFreeIso j' (Fin d)).hom := by
   subst hjj; rfl
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Inverse-side composite free coherence: `Q_{p≫a}⁻¹ ≫ (pullbackComp p a).inv.app (free)
 = Q_p⁻¹ ≫ p^*(Q_a⁻¹)`. The inverse form of `pullbackFreeIso_comp` (the `hstar` of the
 functor `map_comp` proof, extracted generically). Project-local. -/
@@ -3347,7 +3351,7 @@ lemma pullbackFreeIso_inv_pullbackComp {W V X : Scheme.{0}} (p : W ⟶ V) (a : V
   trans (𝟙 _)
   · rw [Category.assoc, Iso.hom_inv_id_assoc]
     exact (Scheme.Modules.pullbackComp p a).hom_inv_id_app _
-  · rw [hH]; simp
+  · rw [hH]; simp <;> rfl
 
 /-- **Pseudofunctor coherence for the conjugated chart data**: presenting
 `q`-against-`inv c` after pullback along a composite `p ≫ a` is the same as pulling the

@@ -1610,6 +1610,7 @@ hand-built `tensorObjUnitIso`/`tensorObjRightUnitor`/`tensorBraiding` with the c
 `λ_`/`ρ_`/`β_` transported along the bridge `tensorObjIso`, so the coherence laws of `tensorPowAdd`
 and the section multiplication can be read off the canonical (Mac Lane / hexagon) coherence. -/
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Bridge: the hand-built right unitor is the canonical `ρ_` transported along `tensorObjIso`. -/
 lemma tensorObjRightUnitor_eq (G : X.Modules) :
     tensorObjRightUnitor G = (tensorObjIso G (unitModule X)).symm ≪≫ ρ_ G := by
@@ -1639,6 +1640,7 @@ lemma tensorObjRightUnitor_eq (G : X.Modules) :
   simp only [Category.assoc]
   rfl
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Bridge: the hand-built left unitor is the canonical `λ_` transported along `tensorObjIso`. -/
 private lemma tensorObjUnitIso_eq (G : X.Modules) :
     tensorObjUnitIso G = (tensorObjIso (unitModule X) G).symm ≪≫ λ_ G := by
@@ -1663,6 +1665,7 @@ private lemma tensorObjUnitIso_eq (G : X.Modules) :
   simp only [Category.assoc]
   rfl
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Bridge: the hand-built braiding is the canonical `β_` transported along `tensorObjIso`. -/
 private lemma tensorBraiding_eq (F G : X.Modules) :
     tensorBraiding F G = (tensorObjIso F G).symm ≪≫ β_ F G ≪≫ tensorObjIso G F := by
@@ -1843,6 +1846,7 @@ private noncomputable def tensorObjWhiskerLeftIso (F : X.Modules) {G G' : X.Modu
     (MonoidalCategory.whiskerLeftIso (C := MonoidalPresheaf X)
       ((toPresheafOfModules X).obj F) ((toPresheafOfModules X).mapIso e))
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Bridge: the hand-built left-whiskering `tensorObjWhiskerLeftIso F e` is the canonical left
 whiskering `F ◁ e` transported along the bridge `tensorObjIso`.  Mirror of `tensorBraiding_eq`,
 using `μ`-naturality in the right variable (`Localization.Monoidal.μ_natural_right`). -/
@@ -1894,6 +1898,7 @@ private lemma tensorObjWhiskerLeftIso_eq (F : X.Modules) {G G' : X.Modules} (e :
   erw [Iso.inv_hom_id, Category.comp_id]
   rfl
 
+set_option backward.isDefEq.respectTransparency false in
 /-- Bridge: the hand-built right-whiskering `tensorObjWhiskerRightIso e G` is the canonical right
 whiskering `e ▷ G` transported along the bridge `tensorObjIso`.  Mirror of `tensorBraiding_eq`,
 using `μ`-naturality in the left variable (`Localization.Monoidal.μ_natural_left`). -/
@@ -2489,6 +2494,7 @@ private lemma tensorObjAssoc_associator_counit_coherence
 -- bump — the elaboration is fast once the depth suffices; `lean_multi_attempt` closes it instantly).
 set_option backward.isDefEq.respectTransparency false in
 set_option maxRecDepth 4000 in
+set_option backward.isDefEq.respectTransparency false in
 /-- **Sheaf-level factorization of the associator** (the `X.Modules`-internal core of
 `lem:tensorObjAssoc_eta_factor`).  As morphisms of *sheaves* of modules, the sheafified
 right-whiskered unit composed with `tensorObjAssoc` equals the sheafified presheaf associator
@@ -3034,6 +3040,7 @@ private lemma tensorPowAdd_assoc_succ_core
 -- `LocalizedMonoidal` rfl-diamond; pinning `M` makes it short-circuit, but it still recurses past the
 -- default `maxRecDepth = 512` (a stack-depth bound, NOT the forbidden heartbeat bump).
 set_option maxRecDepth 4000 in
+set_option backward.isDefEq.respectTransparency false in
 /-- **Associativity constraint for the tensor-power comparison** (`lem:tensorPowAdd_assoc`): the
 two bracketings of `L^⊗m ⊗ L^⊗m' ⊗ L^⊗m''` into `L^⊗(m+m'+m'')` agree:
 `(μ_{m,m'} ▷ L^m'') ≫ μ_{m+m',m''}` (reindexed by `(m+m')+m'' = m+(m'+m'')`) equals
@@ -3765,6 +3772,7 @@ private lemma tensorPowAdd_comm_succ_core
     MonoidalCategory.whiskerLeft_id, Category.id_comp]
   rw [hk]
 
+set_option backward.isDefEq.respectTransparency false in
 /-- **Commutativity constraint of the tensor-power comparison** (`lem:tensorPowAdd_comm`): for an
 invertible `L`, the comparison family is symmetric, `μ_{m,m'} = β_{L^m,L^m'} ≫ μ_{m',m}` after
 the reindexing `m' + m = m + m'`.  The invertibility hypothesis is essential — for a general
