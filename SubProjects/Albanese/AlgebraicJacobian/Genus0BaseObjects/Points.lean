@@ -502,14 +502,56 @@ proof body (the `𝔾_m`-scaling shortcut applies `hom_additive_decomp_of_rigidi
 instance gm_grpObj (kbar : Type u) [Field kbar] : GrpObj (Gm kbar) :=
   GrpObj.ofRepresentableBy (Gm kbar) (gmHomFunctor kbar) (gmHomFunctor_representableBy kbar)
 
-/-- **`𝔾_m` is geometrically reduced over `Spec k̄`.** [v4.31.0 ISOLATION] In b80f227 this
-was free from the now-`private` `smooth_of_grpObj_of_isAlgClosed`. The public `smooth_of_grpObj`
-requires `[GeometricallyReduced f]`. Real proof: `GeometricallyReduced.eq_geometrically` +
-`geometrically_iff_of_commRing_of_isClosedUnderIsomorphisms`, then for each field ext `K/k̄` the
-pullback is `Spec(GmRing ⊗[k̄] K) = Spec(K[t,t⁻¹])`, reduced (localization of the domain `K[t]`).
-TODO: discharge this one `sorry` (the rest of Albanese is real-migrated). -/
+open scoped TensorProduct in
+/-- **Ring-level input for `gm_geometricallyReduced`:** for every field extension `K/k̄` the
+base change `k̄[t,t⁻¹] ⊗[k̄] K` is reduced. Route: `GmRing ⊗[k̄] K` is (via
+`Algebra.TensorProduct.cancelBaseChange` + `comm`) the localization of
+`P ⊗[k̄] K ≅ MvPolynomial Unit K` — a domain, hence reduced — at the image of the powers of
+`t` (`IsLocalization.tensor`), and localization preserves reducedness
+(`isReduced_localizationPreserves`). -/
+private lemma gmRing_tensor_isReduced (kbar : Type u) [Field kbar] (K : Type u) [Field K]
+    [Algebra kbar K] : _root_.IsReduced (GmRing kbar ⊗[kbar] K) := by
+  -- `P ⊗[k̄] K ≅ MvPolynomial Unit K` is a domain, hence reduced.
+  have hPK : _root_.IsReduced (MvPolynomial Unit kbar ⊗[kbar] K) := by
+    have e : (MvPolynomial Unit kbar ⊗[kbar] K) ≃+* MvPolynomial Unit K :=
+      (Algebra.TensorProduct.comm kbar (MvPolynomial Unit kbar) K).toRingEquiv.trans
+        (MvPolynomial.algebraTensorAlgEquiv kbar K).toRingEquiv
+    exact isReduced_of_injective e.toRingHom e.injective
+  -- Its localization at (the image of) the powers of `t` is reduced.
+  have hLoc : _root_.IsReduced
+      ((MvPolynomial Unit kbar ⊗[kbar] K) ⊗[MvPolynomial Unit kbar] GmRing kbar) := by
+    exact isReduced_localizationPreserves
+      (Algebra.algebraMapSubmonoid (MvPolynomial Unit kbar ⊗[kbar] K)
+        (Submonoid.powers (MvPolynomial.X () : MvPolynomial Unit kbar)))
+      ((MvPolynomial Unit kbar ⊗[kbar] K) ⊗[MvPolynomial Unit kbar] GmRing kbar) hPK
+  -- Transfer along `GmRing ⊗[k̄] K ≅ GmRing ⊗[P] (P ⊗[k̄] K) ≅ (P ⊗[k̄] K) ⊗[P] GmRing`.
+  have e2 : (GmRing kbar ⊗[kbar] K) ≃+*
+      ((MvPolynomial Unit kbar ⊗[kbar] K) ⊗[MvPolynomial Unit kbar] GmRing kbar) :=
+    ((Algebra.TensorProduct.cancelBaseChange kbar (MvPolynomial Unit kbar)
+        (MvPolynomial Unit kbar) (GmRing kbar) K).symm.trans
+      (Algebra.TensorProduct.comm (MvPolynomial Unit kbar) (GmRing kbar)
+        (MvPolynomial Unit kbar ⊗[kbar] K))).toRingEquiv
+  exact isReduced_of_injective e2 e2.injective
+
+open scoped TensorProduct in
+set_option backward.isDefEq.respectTransparency false in
+/-- **`𝔾_m` is geometrically reduced over `Spec k̄`.** For each field extension `K/k̄` the
+pullback is `Spec(GmRing ⊗[k̄] K) = Spec(K[t,t⁻¹])` (via `pullbackSpecIso`), reduced by
+`gmRing_tensor_isReduced` (localization of the domain `K[t]`). -/
 instance gm_geometricallyReduced (kbar : Type u) [Field kbar] [IsAlgClosed kbar] :
-    GeometricallyReduced (Gm kbar).hom := sorry
+    GeometricallyReduced (Gm kbar).hom := by
+  rw [geometricallyReduced_iff]
+  intro K _ y Z fst snd h
+  obtain ⟨φ, rfl⟩ := Spec.map_surjective y
+  algebraize [φ.hom]
+  have h' : IsPullback fst snd
+      (Spec.map (CommRingCat.ofHom (algebraMap kbar (GmRing kbar))))
+      (Spec.map (CommRingCat.ofHom (algebraMap kbar K))) := h
+  haveI : IsReduced (Spec (CommRingCat.of (GmRing kbar ⊗[kbar] K))) := by
+    rw [affine_isReduced_iff]
+    exact gmRing_tensor_isReduced kbar K
+  exact isReduced_of_isOpenImmersion
+    (h'.isoPullback ≪≫ pullbackSpecIso kbar (GmRing kbar) K).hom
 
 /-- **`𝔾_m` is smooth over `Spec k̄`.** FREE from `smooth_of_grpObj` once
 `GrpObj`, `LocallyOfFinitePresentation`, and `IsReduced` are installed. -/

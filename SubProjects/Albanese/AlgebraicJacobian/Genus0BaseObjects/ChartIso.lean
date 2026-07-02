@@ -458,6 +458,222 @@ instance projectiveLineBar_smoothOfRelDim (kbar : Type u) [Field kbar] :
   apply IsZariskiLocalAtSource.of_openCover (projectiveLineBarAffineCover kbar).openCover
   exact projectiveLineBar_smooth_chart_aux kbar
 
+/-! ### `GeometricallyIrreducible` instance via the 2-chart cover
+
+The real proof of the former BareScheme scaffold `projectiveLineBar_geomIrred`
+(relocated here — iter-201 — because it needs the chart-ring iso
+`homogeneousLocalizationAwayIso`): for any field extension `K/k̄`, the base change
+`ℙ¹_K` is covered by the two pulled-back chart opens `p ⁻¹ᵁ D₊(X i)`, each irreducible
+(`≅ 𝔸¹_K = Spec (K[u])`), and the two chart opens intersect (both contain any preimage
+of the generic point `⟨⊥⟩ ∈ ℙ¹_{k̄}` under the surjective projection `p : ℙ¹_K → ℙ¹_{k̄}`);
+a space covered by two intersecting irreducible opens is irreducible. -/
+
+/-- **Topological input**: a space covered by two irreducible opens with nonempty
+intersection is irreducible. -/
+private lemma irreducibleSpace_of_two_irreducible_opens {α : Type*} [TopologicalSpace α]
+    {U V : Set α} (_hUo : IsOpen U) (hVo : IsOpen V)
+    (hU : IsIrreducible U) (hV : IsIrreducible V)
+    (hUV : (U ∩ V).Nonempty) (hcov : ∀ x : α, x ∈ U ∨ x ∈ V) :
+    IrreducibleSpace α := by
+  obtain ⟨w, hwU, hwV⟩ := hUV
+  refine { toNonempty := ⟨w⟩, isPreirreducible_univ := ?_ }
+  intro u v hu hv hune hvne
+  obtain ⟨a, -, hau⟩ := hune
+  obtain ⟨b, -, hbv⟩ := hvne
+  rw [Set.univ_inter]
+  -- Any nonempty open meeting `U` also meets `V` (through `U`'s irreducibility and
+  -- the common point `w`); hence both `u` and `v` meet `V`, and `V`'s irreducibility
+  -- closes the goal.
+  have key : ∀ {u' : Set α}, IsOpen u' → ∀ {c : α}, c ∈ u' → c ∈ U →
+      (U ∩ (u' ∩ V)).Nonempty := fun {u'} hu' {c} hcu' hcU =>
+    hU.2 u' V hu' hVo ⟨c, hcU, hcu'⟩ ⟨w, hwU, hwV⟩
+  have hu_meets_V : (V ∩ u).Nonempty := by
+    rcases hcov a with haU | haV
+    · obtain ⟨c, -, hcu, hcV⟩ := key hu hau haU
+      exact ⟨c, hcV, hcu⟩
+    · exact ⟨a, haV, hau⟩
+  have hv_meets_V : (V ∩ v).Nonempty := by
+    rcases hcov b with hbU | hbV
+    · obtain ⟨c, -, hcv, hcV⟩ := key hv hbv hbU
+      exact ⟨c, hcV, hcv⟩
+    · exact ⟨b, hbV, hbv⟩
+  obtain ⟨c, -, hcu, hcv⟩ := hV.2 u v hu hv hu_meets_V hv_meets_V
+  exact ⟨c, hcu, hcv⟩
+
+/-- **Ring-level input**: the chart ring `Away 𝒜 (X i) ≅ k̄[u]` stays a domain after base
+change to any field extension `K/k̄` (via `k̄[u] ⊗[k̄] K ≅ K[u]`). -/
+private lemma chartAway_tensor_isDomain (kbar : Type u) [Field kbar] (i : Fin 2)
+    (K : Type u) [Field K] [Algebra kbar K] :
+    IsDomain (TensorProduct kbar
+      (HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+        (MvPolynomial.X i : MvPolynomial (Fin 2) kbar)) K) := by
+  -- `k̄[u] ⊗[k̄] K ≅ K[u]` is a domain.
+  haveI hMv : IsDomain (TensorProduct kbar (MvPolynomial Unit kbar) K) := by
+    haveI : IsDomain (MvPolynomial Unit K) := inferInstance
+    have e2 : TensorProduct kbar (MvPolynomial Unit kbar) K ≃+*
+        TensorProduct kbar K (MvPolynomial Unit kbar) :=
+      (Algebra.TensorProduct.comm kbar (MvPolynomial Unit kbar) K).toRingEquiv
+    have e1 : TensorProduct kbar K (MvPolynomial Unit kbar) ≃+* MvPolynomial Unit K :=
+      (MvPolynomial.algebraTensorAlgEquiv kbar K).toRingEquiv
+    exact Function.Injective.isDomain (e1.toRingHom.comp e2.toRingHom)
+      (e1.injective.comp e2.injective)
+  -- Transport along `congr` of the chart-ring iso (upgraded to a `kbar`-algEquiv).
+  let eUnit : HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+      (MvPolynomial.X i : MvPolynomial (Fin 2) kbar) ≃ₐ[kbar] MvPolynomial Unit kbar :=
+    AlgEquiv.ofRingEquiv (f := homogeneousLocalizationAwayIso kbar i) <| fun r =>
+      RingHom.congr_fun (homogeneousLocalizationAwayIso_algebraMap kbar i) r
+  have e : TensorProduct kbar
+      (HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+        (MvPolynomial.X i : MvPolynomial (Fin 2) kbar)) K ≃+*
+      TensorProduct kbar (MvPolynomial Unit kbar) K :=
+    (Algebra.TensorProduct.congr eUnit AlgEquiv.refl).toRingEquiv
+  exact Function.Injective.isDomain e.toRingHom e.injective
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **Per-chart geometric irreducibility**: the chart structure morphism
+`Spec (Away 𝒜 (X i)) ⟶ Spec k̄` is geometrically irreducible. Mirrors
+`projectiveLineBar_smooth_chart_X`'s Step-1 rewrite to a single
+`Spec.map (algebraMap k̄ (Away 𝒜 (X i)))`, then computes the pullback along any
+`Spec K ⟶ Spec k̄` as `Spec (Away 𝒜 (X i) ⊗[k̄] K)` via `pullbackSpecIso` — irreducible
+since the tensor is a domain (`chartAway_tensor_isDomain`). -/
+private lemma chartAway_geomIrred (kbar : Type u) [Field kbar] (i : Fin 2) :
+    GeometricallyIrreducible (Proj.awayι (projectiveLineBarGrading kbar)
+        (MvPolynomial.X i : MvPolynomial (Fin 2) kbar)
+        (MvPolynomial.isHomogeneous_X kbar i) Nat.one_pos ≫
+      (ProjectiveLineBar kbar).hom) := by
+  -- Step 1: rewrite the composition as `Spec.map (algebraMap k̄ (Away 𝒜 (X i)))`.
+  rw [show ((ProjectiveLineBar kbar).hom : ProjectiveLineBarScheme kbar ⟶ _)
+      = Proj.toSpecZero (projectiveLineBarGrading kbar) ≫
+        Spec.map (CommRingCat.ofHom
+          (algebraMap kbar ((projectiveLineBarGrading kbar) 0))) from rfl]
+  rw [Proj.awayι_toSpecZero_assoc, ← Spec.map_comp]
+  change GeometricallyIrreducible (Spec.map (CommRingCat.ofHom
+    (algebraMap kbar (HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+      (MvPolynomial.X i : MvPolynomial (Fin 2) kbar)))))
+  -- Step 2: direct geometric computation (as in `affineLine_geomIrred`).
+  refine ⟨?_⟩
+  rw [geometrically_iff_of_commRing_of_isClosedUnderIsomorphisms]
+  intro K _ _
+  haveI := chartAway_tensor_isDomain kbar i K
+  haveI hirr : IrreducibleSpace (Spec (CommRingCat.of (TensorProduct kbar
+      (HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+        (MvPolynomial.X i : MvPolynomial (Fin 2) kbar)) K))) := by
+    change IrreducibleSpace (PrimeSpectrum (TensorProduct kbar
+      (HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+        (MvPolynomial.X i : MvPolynomial (Fin 2) kbar)) K))
+    infer_instance
+  exact (pullbackSpecIso kbar _ K).symm.hom.homeomorph.irreducibleSpace_iff.mp hirr
+
+/-- **The generic point of `ℙ¹_{k̄}`**: the zero homogeneous prime of the polynomial ring
+(a domain), which does not contain the irrelevant ideal (`X 0 ≠ 0`). Typed as a point of
+the scheme `ProjectiveLineBarScheme` (defeq to `ProjectiveSpectrum`). -/
+private noncomputable def projectiveLineBarGenericPt (kbar : Type u) [Field kbar] :
+    ↥(ProjectiveLineBarScheme kbar) :=
+  show ProjectiveSpectrum (projectiveLineBarGrading kbar) from
+    ⟨⊥, Ideal.isPrime_bot, fun hle => by
+      have h0 := hle (HomogeneousIdeal.mem_irrelevant_of_mem _ Nat.zero_lt_one
+        (MvPolynomial.isHomogeneous_X kbar 0))
+      rw [← HomogeneousIdeal.mem_iff, HomogeneousIdeal.toIdeal_bot, Ideal.mem_bot] at h0
+      exact MvPolynomial.X_ne_zero (R := kbar) _ h0⟩
+
+set_option backward.isDefEq.respectTransparency false in
+/-- The generic point lies in each chart open `D₊(X i)` (`X i ∉ ⊥`). -/
+private lemma projectiveLineBar_genericPt_mem_basicOpen (kbar : Type u) [Field kbar]
+    (f : MvPolynomial (Fin 2) kbar) (hf : f ≠ 0) :
+    projectiveLineBarGenericPt kbar ∈
+      Proj.basicOpen (projectiveLineBarGrading kbar) f := by
+  rw [Proj.mem_basicOpen]
+  intro hmem
+  rw [show (projectiveLineBarGenericPt kbar).asHomogeneousIdeal =
+      (⊥ : HomogeneousIdeal (projectiveLineBarGrading kbar)) from rfl,
+    ← HomogeneousIdeal.mem_iff, HomogeneousIdeal.toIdeal_bot, Ideal.mem_bot] at hmem
+  exact hf hmem
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **`ℙ¹_{k̄}` is geometrically irreducible over `Spec k̄`.** Formerly a BareScheme
+scaffold sorry; relocated here (iter-201) with the real proof via the 2-chart cover:
+the base change `ℙ¹_K` is covered by the two pulled-back chart opens, each irreducible
+(`≅ Spec (K[u])` by `chartAway_geomIrred`), and both contain any preimage of the generic
+point of `ℙ¹_{k̄}` under the (surjective, by base change) projection. -/
+instance projectiveLineBar_geomIrred (kbar : Type u) [Field kbar] :
+    GeometricallyIrreducible (ProjectiveLineBar kbar).hom := by
+  rw [geometricallyIrreducible_iff]
+  intro K _ y Z fst snd h
+  suffices hmain : IrreducibleSpace ↥(pullback (ProjectiveLineBar kbar).hom y) by
+    exact h.isoPullback.hom.homeomorph.irreducibleSpace_iff.mpr hmain
+  -- Notation: `p` is the base-change projection `ℙ¹_K ⟶ ℙ¹_{k̄}`; `c i` the chart
+  -- open immersion `Spec (Away 𝒜 (X i)) ⟶ ℙ¹_{k̄}`; `V i` the pulled-back chart opens.
+  let p : pullback (ProjectiveLineBar kbar).hom y ⟶ ProjectiveLineBarScheme kbar :=
+    pullback.fst (ProjectiveLineBar kbar).hom y
+  let c := fun i : Fin 2 => Proj.awayι (projectiveLineBarGrading kbar)
+    (MvPolynomial.X i : MvPolynomial (Fin 2) kbar)
+    (MvPolynomial.isHomogeneous_X kbar i) Nat.one_pos
+  let V : Fin 2 → Set ↥(pullback (ProjectiveLineBar kbar).hom y) :=
+    fun i => (p ⁻¹ᵁ Proj.basicOpen (projectiveLineBarGrading kbar)
+      (MvPolynomial.X i : MvPolynomial (Fin 2) kbar) : TopologicalSpace.Opens _)
+  -- Each pulled-back chart open is irreducible.
+  have hVirr : ∀ i : Fin 2, IsIrreducible (V i) := by
+    intro i
+    haveI hWi : IrreducibleSpace ↥(pullback p (c i)) := by
+      haveI := chartAway_geomIrred kbar i
+      have hpb : IrreducibleSpace ↥(pullback ((c i) ≫ (ProjectiveLineBar kbar).hom) y) :=
+        pullback_of_geometrically GeometricallyIrreducible.geometrically_irreducibleSpace K y
+      exact ((pullbackSymmetry p (c i)) ≪≫
+        pullbackRightPullbackFstIso (ProjectiveLineBar kbar).hom y
+          (c i)).hom.homeomorph.irreducibleSpace_iff.mpr hpb
+    have hr := IsOpenImmersion.range_pullbackFst (f := c i) (g := p)
+    rw [Proj.opensRange_awayι] at hr
+    change IsIrreducible ((p ⁻¹ᵁ Proj.basicOpen (projectiveLineBarGrading kbar)
+      (MvPolynomial.X i : MvPolynomial (Fin 2) kbar) :
+        TopologicalSpace.Opens ↥(pullback (ProjectiveLineBar kbar).hom y)) :
+        Set ↥(pullback (ProjectiveLineBar kbar).hom y))
+    rw [← hr, ← Set.image_univ]
+    exact (IrreducibleSpace.isIrreducible_univ _).image _
+      (pullback.fst p (c i)).continuous.continuousOn
+  -- The two pulled-back chart opens cover.
+  have htop : (⨆ i, Proj.basicOpen (projectiveLineBarGrading kbar)
+      ((![MvPolynomial.X 0, MvPolynomial.X 1] : Fin 2 → MvPolynomial (Fin 2) kbar) i)) = ⊤ :=
+    Proj.iSup_basicOpen_eq_top (projectiveLineBarGrading kbar)
+      ![MvPolynomial.X 0, MvPolynomial.X 1] (projectiveLineBarAffineCover_span kbar)
+  have hcov : ∀ z' : ↥(pullback (ProjectiveLineBar kbar).hom y),
+      z' ∈ V 0 ∨ z' ∈ V 1 := by
+    intro z'
+    have hmem : p.base z' ∈ (⊤ : TopologicalSpace.Opens ↥(ProjectiveLineBarScheme kbar)) :=
+      trivial
+    rw [← htop] at hmem
+    obtain ⟨i, hi⟩ := TopologicalSpace.Opens.mem_iSup.mp hmem
+    fin_cases i
+    · refine Or.inl ?_
+      change p.base z' ∈ Proj.basicOpen (projectiveLineBarGrading kbar)
+        (MvPolynomial.X 0 : MvPolynomial (Fin 2) kbar)
+      simpa using hi
+    · refine Or.inr ?_
+      change p.base z' ∈ Proj.basicOpen (projectiveLineBarGrading kbar)
+        (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar)
+      simpa using hi
+  -- They intersect: `p` is surjective (base change of the surjective `y`), and any
+  -- preimage of the generic point lies in both chart opens.
+  haveI hy_surj : Surjective y := by
+    constructor
+    intro q
+    obtain ⟨x⟩ : Nonempty ↥(Spec (CommRingCat.of K)) := inferInstance
+    exact ⟨x, Subsingleton.elim _ _⟩
+  haveI hp_surj : Surjective p := MorphismProperty.pullback_fst _ _ hy_surj
+  obtain ⟨z0, hz0⟩ := p.surjective (projectiveLineBarGenericPt kbar)
+  have hz0i : ∀ i : Fin 2, z0 ∈ V i := by
+    intro i
+    change p.base z0 ∈ Proj.basicOpen (projectiveLineBarGrading kbar)
+      (MvPolynomial.X i : MvPolynomial (Fin 2) kbar)
+    rw [hz0]
+    exact projectiveLineBar_genericPt_mem_basicOpen kbar _ (MvPolynomial.X_ne_zero i)
+  exact irreducibleSpace_of_two_irreducible_opens
+    (p ⁻¹ᵁ Proj.basicOpen (projectiveLineBarGrading kbar)
+      (MvPolynomial.X 0 : MvPolynomial (Fin 2) kbar)).isOpen
+    (p ⁻¹ᵁ Proj.basicOpen (projectiveLineBarGrading kbar)
+      (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar)).isOpen
+    (hVirr 0) (hVirr 1) ⟨z0, hz0i 0, hz0i 1⟩ hcov
+
+
 end AlgebraicGeometry
 
 end

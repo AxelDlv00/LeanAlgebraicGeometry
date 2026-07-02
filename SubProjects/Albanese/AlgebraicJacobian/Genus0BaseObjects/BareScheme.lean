@@ -210,14 +210,11 @@ instance mvPolynomialFin_isStandardSmoothOfRelativeDimension
   (mvPolySubmersivePresentation R (Fin n)).isStandardSmoothOfRelativeDimension <| by
     simp [Algebra.Presentation.dimension]
 
-/-! ### `GeometricallyIrreducible` instance -/
+/-! ### `GeometricallyIrreducible` instance
 
-/-- **`ℙ¹_{k̄}` is geometrically irreducible over `Spec k̄`.** Project-side scaffold sorry
-(Mathlib does not ship `GeometricallyIrreducible` for `Proj` of a polynomial ring;
-plan-marked acceptable for iter-165). -/
-instance projectiveLineBar_geomIrred (kbar : Type u) [Field kbar] :
-    GeometricallyIrreducible (ProjectiveLineBar kbar).hom :=
-  sorry
+NOTE iter-201: the former scaffold-sorry instance `projectiveLineBar_geomIrred` is now
+PROVED and relocated to `AlgebraicJacobian/Genus0BaseObjects/ChartIso.lean` (it needs the
+chart-ring iso `homogeneousLocalizationAwayIso`, which lives in the later stratum). -/
 
 /-! ### The 2-chart affine cover of `ℙ¹_{k̄}` -/
 
@@ -243,14 +240,58 @@ lemma projectiveLineBarAffineCover_hm :
     ∀ i, 0 < (![1, 1] : Fin 2 → ℕ) i :=
   fun i => by fin_cases i <;> exact Nat.one_pos
 
+/-- **The irrelevant ideal is contained in the span of `{X 0, X 1}`** (the `hf` input of
+`projectiveLineBarAffineCover`, hoisted to a named lemma — iter-201 — so that consumers
+such as `Proj.iSup_basicOpen_eq_top` can reuse it): any irrelevant element is a sum of
+monomials whose multi-index `d ≠ 0`, hence `d j > 0` for some `j ∈ Fin 2`, hence
+`monomial d r ∈ Ideal.span {X 0, X 1}` via `MvPolynomial.X_dvd_monomial`. -/
+lemma projectiveLineBarAffineCover_span (kbar : Type u) [Field kbar] :
+    (HomogeneousIdeal.irrelevant (projectiveLineBarGrading kbar)).toIdeal ≤
+      Ideal.span (Set.range ![(MvPolynomial.X 0 : MvPolynomial (Fin 2) kbar),
+        MvPolynomial.X 1]) := by
+  classical
+  intro p hp
+  rw [HomogeneousIdeal.mem_iff, HomogeneousIdeal.mem_irrelevant_iff,
+    GradedRing.proj_apply] at hp
+  have hp' : MvPolynomial.homogeneousComponent 0 p = 0 := by
+    have := hp
+    rw [show DirectSum.decompose (projectiveLineBarGrading kbar) p 0
+        = ⟨MvPolynomial.homogeneousComponent 0 p,
+            MvPolynomial.homogeneousComponent_mem 0 p⟩ from Subtype.ext
+      (MvPolynomial.decomposition.decompose'_apply p 0)] at this
+    exact this
+  have h0 : MvPolynomial.coeff 0 p = 0 := by
+    rw [MvPolynomial.homogeneousComponent_zero] at hp'
+    exact MvPolynomial.C_injective _ _ (hp'.trans MvPolynomial.C_0.symm)
+  rw [MvPolynomial.as_sum p]
+  refine Ideal.sum_mem _ fun d hd ↦ ?_
+  have hcoeff : MvPolynomial.coeff d p ≠ 0 := MvPolynomial.mem_support_iff.mp hd
+  have hd_ne : d ≠ 0 := fun heq => hcoeff (heq ▸ h0)
+  have hd_nonzero : d 0 ≠ 0 ∨ d 1 ≠ 0 := by
+    by_contra h
+    push Not at h
+    apply hd_ne
+    ext k
+    fin_cases k
+    · simpa using h.1
+    · simpa using h.2
+  rcases hd_nonzero with h0' | h1'
+  · obtain ⟨q, hq⟩ : (MvPolynomial.X 0 : MvPolynomial (Fin 2) kbar) ∣
+        MvPolynomial.monomial d (MvPolynomial.coeff d p) :=
+      MvPolynomial.X_dvd_monomial.mpr (Or.inr h0')
+    rw [hq, mul_comm]
+    exact Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨0, rfl⟩)
+  · obtain ⟨q, hq⟩ : (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar) ∣
+        MvPolynomial.monomial d (MvPolynomial.coeff d p) :=
+      MvPolynomial.X_dvd_monomial.mpr (Or.inr h1')
+    rw [hq, mul_comm]
+    exact Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨1, rfl⟩)
+
+
 /-- **The 2-chart affine open cover of `ProjectiveLineBarScheme`** by `D₊(X 0)` and
 `D₊(X 1)`. Specialises `Proj.affineOpenCoverOfIrrelevantLESpan` to the family
-`![X 0, X 1] : Fin 2 → MvPolynomial (Fin 2) k̄` with `m := ![1, 1]`.
-
-The non-trivial bit is `hf`: the irrelevant ideal `(X 0, X 1)` is contained in
-`Ideal.span {X 0, X 1}` — proved by writing any irrelevant element as a sum of monomials
-whose multi-index `d ≠ 0`, hence `d j > 0` for some `j ∈ Fin 2`, hence
-`monomial d r ∈ Ideal.span {X 0, X 1}` via `MvPolynomial.X_dvd_monomial`. -/
+`![X 0, X 1] : Fin 2 → MvPolynomial (Fin 2) k̄` with `m := ![1, 1]`; the span input is
+the named lemma `projectiveLineBarAffineCover_span`. -/
 noncomputable def projectiveLineBarAffineCover (kbar : Type u) [Field kbar] :
     (ProjectiveLineBarScheme kbar).AffineOpenCover :=
   Proj.affineOpenCoverOfIrrelevantLESpan (projectiveLineBarGrading kbar)
@@ -258,44 +299,7 @@ noncomputable def projectiveLineBarAffineCover (kbar : Type u) [Field kbar] :
     (![MvPolynomial.X 0, MvPolynomial.X 1])
     (projectiveLineBarAffineCover_fDeg kbar)
     projectiveLineBarAffineCover_hm
-    (by
-      classical
-      intro p hp
-      rw [HomogeneousIdeal.mem_iff, HomogeneousIdeal.mem_irrelevant_iff,
-        GradedRing.proj_apply] at hp
-      have hp' : MvPolynomial.homogeneousComponent 0 p = 0 := by
-        have := hp
-        rw [show DirectSum.decompose (projectiveLineBarGrading kbar) p 0
-            = ⟨MvPolynomial.homogeneousComponent 0 p,
-                MvPolynomial.homogeneousComponent_mem 0 p⟩ from Subtype.ext
-          (MvPolynomial.decomposition.decompose'_apply p 0)] at this
-        exact this
-      have h0 : MvPolynomial.coeff 0 p = 0 := by
-        rw [MvPolynomial.homogeneousComponent_zero] at hp'
-        exact MvPolynomial.C_injective _ _ (hp'.trans MvPolynomial.C_0.symm)
-      rw [MvPolynomial.as_sum p]
-      refine Ideal.sum_mem _ fun d hd ↦ ?_
-      have hcoeff : MvPolynomial.coeff d p ≠ 0 := MvPolynomial.mem_support_iff.mp hd
-      have hd_ne : d ≠ 0 := fun heq => hcoeff (heq ▸ h0)
-      have hd_nonzero : d 0 ≠ 0 ∨ d 1 ≠ 0 := by
-        by_contra h
-        push Not at h
-        apply hd_ne
-        ext k
-        fin_cases k
-        · simpa using h.1
-        · simpa using h.2
-      rcases hd_nonzero with h0' | h1'
-      · obtain ⟨q, hq⟩ : (MvPolynomial.X 0 : MvPolynomial (Fin 2) kbar) ∣
-            MvPolynomial.monomial d (MvPolynomial.coeff d p) :=
-          MvPolynomial.X_dvd_monomial.mpr (Or.inr h0')
-        rw [hq, mul_comm]
-        exact Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨0, rfl⟩)
-      · obtain ⟨q, hq⟩ : (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar) ∣
-            MvPolynomial.monomial d (MvPolynomial.coeff d p) :=
-          MvPolynomial.X_dvd_monomial.mpr (Or.inr h1')
-        rw [hq, mul_comm]
-        exact Ideal.mul_mem_left _ _ (Ideal.subset_span ⟨1, rfl⟩))
+    (projectiveLineBarAffineCover_span kbar)
 
 -- NOTE iter-197: relocated to AlgebraicJacobian/Genus0BaseObjects/ChartIso.lean per BareScheme smoothness-relocation refactor.
 
