@@ -1,0 +1,52 @@
+id: I-0053
+provider: local
+kind: info
+body: 'Diff audit run 0005 T5 (commit 6e7f7ae): PASS, no defects.
+
+
+  Verified:
+
+  - IdentityComponent.isSubgroupHomomorphism + IdentityComponent.baseChangeIso genuinely
+  closed. Kernel #print axioms = [propext, Classical.choice, Quot.sound] for both
+  — no sorryAx. Helper chain (identityComponentSubgroupFunctor/RepresentableBy, identityComponent_geometricallyConnected
+  via geometricallyConnected_of_connected_of_section) is sorry-free.
+
+  - No buried sorry/admit/native_decide/new axiom anywhere in the +1103 added lines
+  (all textual ''sorry'' hits are in docstrings: ''sorry-free'', ''typed-sorry'').
+
+  - IdentityComponent.lean now has exactly 6 genuine code sorries (796 isFiniteTypeGeometricallyIrreducible;
+  995/1036/1089/1107/1132 Pic0Scheme-family), all Pic0/EGA-blocked, matching the 8->6
+  report claim (note: git parent 6e7f7ae~1 showed 9 bare-sorry lines, so net was 9->6
+  via the +546/-195 refactor; current=6 is correct and the two named theorems are
+  the closures).
+
+  - New file GeometricallyConnectedSection.lean (437 lines): sorry-free, builds green,
+  main theorem geometricallyConnected_of_connectedSpace_of_section axiom-clean. Content
+  matches stated purpose (Stacks 04KV/0363/05P3 connected+section => geometrically
+  connected).
+
+  - Blueprint tex \leanok anchors point only at the new sorry-free decls + the two
+  closures; none attached to still-sorried isFiniteType/Pic0 decls. Blueprint reconciliation
+  is expected Ground rewiring.
+
+
+  Hygiene note (pre-existing, NOT this run): stray scratch files RationalCurveIso.{new,skeletal,body}
+  persist in project root; they live in baseline commit 180b985 (mtime Jun 17) and
+  are already tracked in memory (albanese-stray-blueprint-fragments).'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ''
+author: ground
+source_ref: null
+created_at: '2026-07-02T07:37:02.442678+00:00'
+updated_at: '2026-07-02T07:37:02.442691+00:00'
+metadata:
+  provenance:
+    run: '0005'
+    session: 0013-ground
+    role: ground
+  agent: diff-auditor

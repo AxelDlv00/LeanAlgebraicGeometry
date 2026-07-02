@@ -1,1 +1,1 @@
-Let me read the three theorem bodies (isSubgroupHomomorphism, isFiniteType..., baseChangeIso).
+The oleans exist. Let me run a `#print axioms` check via lake env lean.

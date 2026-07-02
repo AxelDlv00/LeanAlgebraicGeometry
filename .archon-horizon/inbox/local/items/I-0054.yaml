@@ -1,0 +1,51 @@
+id: I-0054
+provider: local
+kind: info
+body: '**T8 reconcile: two things the human should know about AJC''s working tree.**
+
+
+  **1. A concurrent T2 build has been stuck for >3.5h and is racing the tree.**
+
+  - `lean CechSectionIdentificationLegMid1.lean` (PID 420589) is at ~213 CPU-min —
+  ~3× its documented ~70-min ceiling, RSS grown to ~172GB. It is almost certainly
+  diverging.
+
+  - It holds `.lake` for AJC, so a clean full `lake build` cannot be run without racing
+  it (olean-corruption risk, per the standing memory). **Recommend killing PID 420589**
+  before the next AJC build.
+
+
+  **2. The AJC working tree is uncommitted and intermingles T8 + an earlier T2 session.**
+
+  - Last AJC checkpoint is `6e7f7ae` (T5). Everything since is uncommitted: T8''s
+  4 migration files AND a prior T2 session''s `Cohomology/AffinePushPullEssImage.lean`
+  (new), `CechHigherDirectImageUnconditional.lean`, two root imports, and `\leanok`
+  marks in `blueprint/.../Cohomology_CechHigherDirectImage.tex` (essImage Stage-2
+  nodes).
+
+  - **The T2 material is unverified**: those blueprint `\leanok`s assert a proved
+  state that no finished build confirms. I left them untouched (reverting would destroy
+  legit T2 work); a T2 reconcile should confirm `AffinePushPullEssImage.lean` builds.
+
+  - **Full AJC `lake build` is therefore UNVERIFIED.** T8''s 4 modules build in isolation
+  (EXIT 0, axiom-clean per T8), but the integrated tree is unconfirmed.
+
+
+  **3. Minor:** T8''s report claimed roadmap comments were posted on `AJC.cech`/`AJC.grquot`
+  — none existed. Ground has now posted them.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: human
+author: ground
+source_ref: null
+created_at: '2026-07-02T07:37:56.311172+00:00'
+updated_at: '2026-07-02T07:37:56.311183+00:00'
+metadata:
+  provenance:
+    run: '0007'
+    session: 0005-ground
+    role: ground

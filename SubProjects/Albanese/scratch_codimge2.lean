@@ -27,8 +27,7 @@ private lemma fromFunctionField_factor
   rw [← Category.assoc]
   congr 1
   rw [← cancel_mono g.domain.ι, Category.assoc, Opens.fromSpecStalkOfMem_ι,
-    Category.assoc, Opens.fromSpecStalkOfMem_ι,
-    SpecMap_stalkSpecializes_fromSpecStalk]
+    Opens.fromSpecStalkOfMem_ι, SpecMap_stalkSpecializes_fromSpecStalk]
 
 /-- Bridge: the `algebraMap` of `stalkFunctionFieldAlgebra` is the
 stalk-specialization map. -/
@@ -56,7 +55,7 @@ theorem indeterminacy_codimGe2_of_smooth_of_complete'
   by_contra hlt
   have hle : Order.coheight z ≤ 1 := by
     have h2 : Order.coheight z < 2 := not_le.mp hlt
-    rwa [show (2 : ℕ∞) = 1 + 1 from rfl, ENat.lt_add_one_iff one_ne_top] at h2
+    rwa [ENat.lt_two_iff] at h2
   -- The generic point of X.
   have hspec : genericPoint X.left ⤳ z :=
     (genericPoint_spec X.left).specializes trivial
@@ -66,7 +65,7 @@ theorem indeterminacy_codimGe2_of_smooth_of_complete'
     obtain ⟨g0, rfl⟩ := f.exists_rep
     have h1' : (g0.compHom Y.hom).toRationalMap
         = X.hom.toPartialMap.toRationalMap := by
-      rw [← RationalMap.compHom_toRationalMap]; exact hf
+      rw [RationalMap.compHom_toRationalMap]; exact hf
     have h2 := congrArg RationalMap.fromFunctionField h1'
     rw [RationalMap.fromFunctionField_toRationalMap,
       RationalMap.fromFunctionField_toRationalMap] at h2
@@ -76,12 +75,12 @@ theorem indeterminacy_codimGe2_of_smooth_of_complete'
     rw [Order.lt_one_iff] at h0
     have hmax : IsMax z := Order.coheight_eq_zero.mp h0
     have hzeq : z = genericPoint X.left :=
-      (show z ⤳ genericPoint X.left from hmax hspec).antisymm hspec
+      ((show z ⤳ genericPoint X.left from hmax hspec).antisymm hspec).eq
     obtain ⟨w, hw⟩ := f.dense_domain.nonempty
     exact hzdom (hzeq ▸ (genericPoint_specializes w).mem_open f.domain.2 hw)
   · -- coheight 1: valuative criterion at the DVR stalk.
     haveI hDVR : IsDiscreteValuationRing (X.left.presheaf.stalk z) :=
-      Scheme.localRing_dvr_of_codim_one z h1.symm
+      Scheme.localRing_dvr_of_codim_one z h1
     haveI : ValuationRing (X.left.presheaf.stalk z) := inferInstance
     -- The valuative criterion for the proper structure morphism of Y.
     have hVC : ValuativeCriterion Y.hom := by
@@ -93,16 +92,23 @@ theorem indeterminacy_codimGe2_of_smooth_of_complete'
         (Spec.map (CommRingCat.ofHom
           (algebraMap (X.left.presheaf.stalk z) X.left.functionField)))
         Y.hom (X.left.fromSpecStalk z ≫ X.hom) := ⟨by
-      rw [hff, ← Category.assoc, ofHom_algebraMap_stalk_functionField,
-        SpecMap_stalkSpecializes_fromSpecStalk hspec]⟩
-    let S : ValuativeCommSq Y.hom :=
+      rw [hff, ← Category.assoc]
+      congr 1
+      exact (SpecMap_stalkSpecializes_fromSpecStalk hspec).symm⟩
+    haveI : IsDomain (X.left.presheaf.stalk z) := inferInstance
+    obtain ⟨hlift⟩ := hVC
       { R := X.left.presheaf.stalk z
         K := X.left.functionField
         i₁ := f.fromFunctionField
         i₂ := X.left.fromSpecStalk z ≫ X.hom
         commSq := hcommSq }
-    obtain ⟨hlift⟩ := hVC S
-    obtain ⟨L, hfacl, hfacr⟩ := hlift.default
+    obtain ⟨L₀, hfacl₀, hfacr₀⟩ := hlift.default
+    -- Retype the lift through the (definitional) `CommRingCat.of ↥R = R` and
+    -- `algebraMap = stalkSpecializes` identifications.
+    let L : Spec (X.left.presheaf.stalk z) ⟶ Y.left := L₀
+    have hfacl : Spec.map (X.left.presheaf.stalkSpecializes hspec) ≫ L
+        = f.fromFunctionField := hfacl₀
+    have hfacr : L ≫ Y.hom = X.left.fromSpecStalk z ≫ X.hom := hfacr₀
     -- Spread the lift out to a partial map defined at z.
     let g : X.left.PartialMap Y.left :=
       PartialMap.ofFromSpecStalk (x := z) X.hom Y.hom L hfacr
@@ -113,8 +119,7 @@ theorem indeterminacy_codimGe2_of_smooth_of_complete'
     have hgen : g.toRationalMap = f := by
       refine RationalMap.eq_of_fromFunctionField_eq _ _ ?_
       rw [RationalMap.fromFunctionField_toRationalMap,
-        fromFunctionField_factor g hzg, hgL,
-        ← ofHom_algebraMap_stalk_functionField]
+        fromFunctionField_factor g hzg, hgL]
       exact hfacl
     exact hzdom (RationalMap.mem_domain.mpr ⟨g, hzg, hgen⟩)
 
