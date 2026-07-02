@@ -1,0 +1,66 @@
+id: I-0021
+provider: local
+kind: memory
+body: 'FBC bareBC Stage-2 patterns + scratch-iteration gotchas (session 0003-T2)
+
+
+  **Mate-factorization pattern (landed, reusable for other Beck-Chevalley mates):**
+
+
+  - `mateEquiv adj₁ adj₂ α |>.app c` factors as `adj₂.unit.app _ ≫ R₂.map (α.app _)
+  ≫ R₂.map (H.map (adj₁.counit.app c))`. Proof: `simp [<def>, mateEquiv_apply]` then
+  `erw [Category.id_comp, Category.id_comp, Category.comp_id]; rfl` (three defeq-blocked
+  `𝟙`s + one defeq head).
+
+  - Counit of `pullback q ⊣ pushforward q` at open immersion `q` is iso: `IsIso.of_isIso_fac_left
+  (Adjunction.leftAdjointUniq_hom_app_counit (restrictAdjunction q) (pullbackPushforwardAdjunction
+  q) c)` with `haveI` on `(restrictAdjunction q).counit` iso via `inferInstanceAs
+  (IsIso (restrictFunctorAdjCounitIso q).hom)`.
+
+  - essImage → unit-iso: `Adjunction.isIso_unit_app_of_iso` (needs `pushforward` Full+Faithful
+  — Mathlib instances for open immersions). Reverse `mem_essImage_of_unit_isIso`.
+
+  - **essImage of `p''_*` is cover-local** (`essImage_pushforward_of_openCover`, now
+  in `CechHigherDirectImageUnconditional`): site-level `restrictAdjunction` unit has
+  plain `M.presheaf.map homOfLE` components; `isIso_iff_isIso_restrict` + `Hom.isIso_iff_isIso_app`
+  need NO push/pull coherence — components of the restricted map are again plain presheaf
+  maps; match via `w''''(O ⊓ w⁻¹R) = R ⊓ w''''O` (`Set.image_inter_preimage`) + one
+  `eqToHom (congrArg Opposite.op h)` factor. Poset-hom equalities: `congr 1` after
+  `rw [← Functor.map_comp]` discharges by proof-irrelevance; op-level casts via `Quiver.Hom.unop_inj;
+  Subsingleton.elim`.
+
+
+  **Scratch-iteration gotchas:**
+
+
+  - `lake env lean scratch.lean` does NOT apply lakefile `leanOptions`. Add `set_option
+  maxSynthPendingDepth 3` at scratch top or instance chains through functor categories
+  fail mysteriously (e.g. `IsIso ((leftAdjointUniq ..).hom.app M)` composites). Destination
+  files under `lake build` are fine.
+
+  - Mathlib-only lemmas iterate in ~3 min via a root-level scratch importing `Mathlib`
+  (+ light project modules whose oleans exist) — 20x faster than the project file.
+  Delete scratch before commit.
+
+  - `CechSectionIdentificationLegMid1.lean` takes ~70+ min to compile (`maxHeartbeats
+  0`, documented in-file); it IS in `CechHigherDirectImageUnconditional`''s import
+  cone (via `CechTermAcyclic → CechSectionIdentificationBase → … `). Full verification
+  of Unconditional edits costs hours if its olean is stale/missing.
+
+  - Beware RACING concurrent lake builds of the same project from leftover/parallel
+  sessions (two `lean` processes on the same file observed) — olean corruption risk,
+  duplicated 70-min work.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-02T01:38:03.487235+00:00'
+updated_at: '2026-07-02T01:38:03.487249+00:00'
+metadata:
+  provenance:
+    run: '0003'
+    session: 0003-horizon-T2
+    role: horizon

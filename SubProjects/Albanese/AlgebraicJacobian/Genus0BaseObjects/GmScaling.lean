@@ -901,6 +901,155 @@ noncomputable def gmScalingP1 (kbar : Type u) [Field kbar] [IsAlgClosed kbar] :
       (gmScalingP1_chart_agreement kbar))
     (gmScalingP1_over_coherence kbar)
 
+/-! #### Chart-1 helpers for `gmScalingP1_collapse_at_zero` (iter-202)
+
+The collapse proof factors `zeroPt` through chart 1 of the cover (via
+`ProjectiveLineBar.zeroPt_left_factor`), realizes the induced section
+`s : 𝔾ₘ.left ⟶ (cover).X 1` as `Spec.map` of a tensor-collapse ring map transported
+across `(gmScalingP1_cover_X_iso kbar 1).inv`, and closes with the ring identity
+`φ(u)·λ = 0 = φ(u)` — where `φ(u) = 0` comes from `zeroPt_left_preimage_X0` (the point
+`[0:1]` misses `D₊(X 0)`), with NO unfolding of the `Proj.fromOfGlobalSections` ring data.
+The two projection lemmas below compute the chart-factor and `𝔾ₘ`-factor projections of
+the cover-X iso inverse; the ring lemma computes the chart-1 ring map composed with the
+tensor collapse. -/
+
+set_option backward.isDefEq.respectTransparency false in
+/-- Projection of `(gmScalingP1_cover_X_iso kbar 1).inv` onto the chart factor
+`Spec (Away 𝒜 (X 1))`: it is `Spec.map` of the left tensor inclusion. -/
+@[reassoc]
+private lemma gmScalingP1_cover_X_iso_inv_snd (kbar : Type u) [Field kbar] :
+    (gmScalingP1_cover_X_iso kbar 1).inv ≫
+        pullback.snd (pullback.fst (ProjectiveLineBar kbar).hom (Gm kbar).hom)
+          ((projectiveLineBarAffineCover kbar).openCover.f (1 : Fin 2)) =
+      Spec.map (CommRingCat.ofHom Algebra.TensorProduct.includeLeftRingHom) := by
+  unfold gmScalingP1_cover_X_iso
+  simp only [Iso.trans_inv, Category.assoc, pullbackSymmetry_inv_comp_snd,
+    pullbackRightPullbackFstIso_inv_fst, pullback.congrHom_inv]
+  -- Re-align the residual projection's type arguments from the cover-`f` form to the
+  -- `awayι ≫ PLB.hom` form used by the `congrHom`-induced `pullback.map` (defeq).
+  change (pullbackSpecIso kbar _ (GmRing kbar)).inv ≫
+      pullback.map _ _ _ _ _ _ _ _ _ ≫
+      pullback.fst (Proj.awayι (projectiveLineBarGrading kbar)
+          ((![MvPolynomial.X 0, MvPolynomial.X 1] : Fin 2 → MvPolynomial (Fin 2) kbar) 1)
+          (projectiveLineBarAffineCover_fDeg kbar 1)
+          (projectiveLineBarAffineCover_hm 1) ≫ (ProjectiveLineBar kbar).hom)
+        (Gm kbar).hom = _
+  simp only [pullback_map_fst_proj, Category.comp_id, pullbackSpecIso_inv_fst]
+
+set_option backward.isDefEq.respectTransparency false in
+/-- Projection of `(gmScalingP1_cover_X_iso kbar 1).inv` onto the `𝔾ₘ` factor: it is
+`Spec.map` of the right tensor inclusion. -/
+private lemma gmScalingP1_cover_X_iso_inv_fst_snd (kbar : Type u) [Field kbar] :
+    (gmScalingP1_cover_X_iso kbar 1).inv ≫
+        pullback.fst (pullback.fst (ProjectiveLineBar kbar).hom (Gm kbar).hom)
+          ((projectiveLineBarAffineCover kbar).openCover.f (1 : Fin 2)) ≫
+        pullback.snd (ProjectiveLineBar kbar).hom (Gm kbar).hom =
+      Spec.map (CommRingCat.ofHom
+        (RingHomClass.toRingHom (Algebra.TensorProduct.includeRight
+          (R := kbar)
+          (A := HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+            (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar))
+          (B := GmRing kbar)))) := by
+  unfold gmScalingP1_cover_X_iso
+  simp only [Iso.trans_inv, Category.assoc, pullbackSymmetry_inv_comp_fst_assoc,
+    pullbackRightPullbackFstIso_inv_snd_snd, pullback.congrHom_inv]
+  -- Re-align the residual projection's type arguments (defeq), as in the previous lemma.
+  change (pullbackSpecIso kbar _ (GmRing kbar)).inv ≫
+      pullback.map _ _ _ _ _ _ _ _ _ ≫
+      pullback.snd (Proj.awayι (projectiveLineBarGrading kbar)
+          ((![MvPolynomial.X 0, MvPolynomial.X 1] : Fin 2 → MvPolynomial (Fin 2) kbar) 1)
+          (projectiveLineBarAffineCover_fDeg kbar 1)
+          (projectiveLineBarAffineCover_hm 1) ≫ (ProjectiveLineBar kbar).hom)
+        (Gm kbar).hom = _
+  simp only [pullback_map_snd_proj]
+  -- `snd ≫ 𝟙` where the `𝟙` lives at `(Gm kbar).left`, defeq but not syntactically the
+  -- codomain of `snd` — `erw` matches through the transparency wall.
+  erw [Category.comp_id]
+  exact pullbackSpecIso_inv_snd _ _ _
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **Chart-1 ring collapse**: composing the chart-1 ring map of `σ_×` (which sends the
+affine coordinate `u ↦ u ⊗ λ`) with the tensor collapse `a ⊗ b ↦ φ(a)·b` for an
+evaluation `φA` killing `u` recovers plain evaluation — the `λ`-dependence dies because
+`φA(u)·λ = 0·λ = 0 = φA(u)`. -/
+private lemma gmScalingP1_chart1_ring_collapse (kbar : Type u) [Field kbar]
+    (φA : HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+        (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar) →ₐ[kbar] kbar)
+    (hφ_u : φA (HomogeneousLocalization.Away.isLocalizationElem
+        (MvPolynomial.isHomogeneous_X kbar 1) (MvPolynomial.isHomogeneous_X kbar 0)) = 0) :
+    (Algebra.TensorProduct.productMap ((Algebra.ofId kbar (GmRing kbar)).comp φA)
+        (AlgHom.id kbar (GmRing kbar))).toRingHom.comp
+      ((MvPolynomial.eval₂Hom
+          (algebraMap kbar (TensorProduct kbar
+            (HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+              ((![MvPolynomial.X 0, MvPolynomial.X 1] :
+                Fin 2 → MvPolynomial (Fin 2) kbar) 1))
+            (GmRing kbar)))
+          (fun _ : Unit =>
+            (HomogeneousLocalization.Away.isLocalizationElem
+                (projectiveLineBarAffineCover_fDeg kbar 1)
+                (projectiveLineBarAffineCover_fDeg kbar (otherFin 1))) ⊗ₜ[kbar]
+              (algebraMap (MvPolynomial Unit kbar) (GmRing kbar)
+                (MvPolynomial.X ())))).comp
+        (homogeneousLocalizationAwayIso kbar 1).toRingHom) =
+    (algebraMap kbar (GmRing kbar)).comp φA.toRingHom := by
+  -- The inverse of the chart-ring iso sends `C c` to the structure map and `X ()` to the
+  -- chart coordinate `u`.
+  have hsymmC : ∀ c : kbar,
+      (homogeneousLocalizationAwayIso kbar 1).symm (MvPolynomial.C c) =
+        algebraMap kbar (HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+          (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar)) c := fun c => by
+    change mvPolyToHomogeneousLocalizationAway kbar 1 (MvPolynomial.C c) = _
+    simp only [mvPolyToHomogeneousLocalizationAway, MvPolynomial.eval₂Hom_C]
+    rfl
+  have hsymmX : (homogeneousLocalizationAwayIso kbar 1).symm (MvPolynomial.X ()) =
+      HomogeneousLocalization.Away.isLocalizationElem
+        (MvPolynomial.isHomogeneous_X kbar 1) (MvPolynomial.isHomogeneous_X kbar 0) := by
+    change mvPolyToHomogeneousLocalizationAway kbar 1 (MvPolynomial.X ()) = _
+    simp only [mvPolyToHomogeneousLocalizationAway, MvPolynomial.eval₂Hom_X']
+    rfl
+  -- Split off the chart-ring iso and compare on `MvPolynomial Unit kbar`.
+  have hmain : (Algebra.TensorProduct.productMap
+        ((Algebra.ofId kbar (GmRing kbar)).comp φA)
+        (AlgHom.id kbar (GmRing kbar))).toRingHom.comp
+      (MvPolynomial.eval₂Hom
+        (algebraMap kbar (TensorProduct kbar
+          (HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+            ((![MvPolynomial.X 0, MvPolynomial.X 1] :
+              Fin 2 → MvPolynomial (Fin 2) kbar) 1))
+          (GmRing kbar)))
+        (fun _ : Unit =>
+          (HomogeneousLocalization.Away.isLocalizationElem
+              (projectiveLineBarAffineCover_fDeg kbar 1)
+              (projectiveLineBarAffineCover_fDeg kbar (otherFin 1))) ⊗ₜ[kbar]
+            (algebraMap (MvPolynomial Unit kbar) (GmRing kbar)
+              (MvPolynomial.X ())))) =
+      ((algebraMap kbar (GmRing kbar)).comp φA.toRingHom).comp
+        (homogeneousLocalizationAwayIso kbar 1).symm.toRingHom := by
+    apply MvPolynomial.ringHom_ext
+    · intro c
+      simp only [RingHom.coe_comp, Function.comp_apply, MvPolynomial.eval₂Hom_C,
+        RingEquiv.toRingHom_eq_coe, AlgHom.toRingHom_eq_coe,
+        RingHom.coe_coe]
+      rw [hsymmC c, AlgHom.commutes]
+      simp [AlgHom.commutes]
+    · intro i
+      simp only [RingHom.coe_comp, Function.comp_apply, MvPolynomial.eval₂Hom_X',
+        RingEquiv.toRingHom_eq_coe, AlgHom.toRingHom_eq_coe,
+        RingHom.coe_coe]
+      rw [hsymmX, hφ_u]
+      have helem : (HomogeneousLocalization.Away.isLocalizationElem
+          (projectiveLineBarAffineCover_fDeg kbar 1)
+          (projectiveLineBarAffineCover_fDeg kbar (otherFin 1))) =
+          HomogeneousLocalization.Away.isLocalizationElem
+            (MvPolynomial.isHomogeneous_X kbar 1)
+            (MvPolynomial.isHomogeneous_X kbar 0) := rfl
+      rw [Algebra.TensorProduct.productMap_apply_tmul, helem]
+      simp [hφ_u]
+  rw [← RingHom.comp_assoc, hmain, RingHom.comp_assoc,
+    RingEquiv.symm_toRingHom_comp_toRingHom, RingHom.comp_id]
+
+set_option backward.isDefEq.respectTransparency false in
 /-- **The load-bearing fixed-point property of `σ_×`:** at the scaling fixed point
 `0 ∈ ℙ¹`, the morphism `σ_×(0, ·) : 𝔾_m → ℙ¹` is the constant morphism at `0`. That is,
 the composite `(0 ≫ toUnit) × 𝟙 : 𝔾_m ⟶ ℙ¹ ⊗ 𝔾_m ⟶ ℙ¹` equals `toUnit ≫ 0`.
@@ -909,36 +1058,177 @@ This is precisely the `W`-axis-collapse hypothesis `_hf` that
 `hom_additive_decomp_of_rigidity` (Cor 1.5) consumes when applied with `V = ℙ¹` proper,
 `W = 𝔾_m`, base points `0 ∈ ℙ¹`, `1 ∈ 𝔾_m`.
 
-**Status (iter-180):** axiom-laundering retired by deleting the temp axiom.
-The substantive proof (Step 3 (3) of `analogies/gmscaling-cover-bridge.md`)
-remains a single direct sorry: it requires unfolding `gmScalingP1` to its
-`glueMorphisms` form, applying `Scheme.Cover.hom_ext` to reduce to a per-chart
-identity, then computing the chart-1 ring map's action on `zeroPt`'s global
-section. The chart-1 ring map is concrete (`gmScalingP1_chart1_ringMap`,
-axiom-clean), but the bridge from `gmScalingP1`'s glued form to the chart-1
-ring-map computation propagates a `pullback.lift _ _ _ ≫ glueMorphisms.f i`
-chase against the `pointOfVec` factorization of `zeroPt`. -/
+**Status (iter-202): closed sorry-free.** Proof route: `zeroPt` factors through the
+chart-1 open immersion as `Spec.map φ ≫ awayι (X 1)` (`zeroPt_left_factor` +
+`Spec.map_surjective`); the evaluation `φ` kills the affine coordinate `u = X 0/X 1`
+because `[0:1]` misses `D₊(X 0)` (`zeroPt_left_preimage_X0` — NO unfolding of the
+`fromOfGlobalSections` ring data needed); the lifted pair equals the chart-1 section
+`Spec.map (φ ⊗ id) ≫ (cover-X iso).inv ≫ (cover).f 1` (projection lemmas above);
+`Cover.ι_glueMorphisms` then reduces the goal to the ring identity
+`gmScalingP1_chart1_ring_collapse`: `φ(u)·λ = 0 = φ(u)`. -/
 lemma gmScalingP1_collapse_at_zero (kbar : Type u) [Field kbar] [IsAlgClosed kbar] :
     lift (toUnit (Gm kbar) ≫ ProjectiveLineBar.zeroPt kbar) (𝟙 (Gm kbar)) ≫
         gmScalingP1 kbar =
       toUnit (Gm kbar) ≫ ProjectiveLineBar.zeroPt kbar := by
-  -- iter-185 Lane B (stretch): structural setup via `Over.OverMorphism.ext` lifts the
-  -- equation to its `.left` form on `Scheme`. The next planned step is
-  -- `Cover.hom_ext` on `gmScalingP1_cover` to reduce to a per-chart identity, then
-  -- compute the chart-1 ring map's action on `zeroPt`'s factor through `Spec.map
-  -- (eval-at-zero)`. Helper budget = 0 for iter-185 means the section-construction
-  -- recipe (`pullback.lift (toUnit ≫ r_1) (𝟙 Gm.left) ...` from
-  -- `analogies/intersection-ring-cross01.md` Decision 4) cannot be packaged into a
-  -- private lemma; iter-186+ pickup either inlines that recipe here (~30-50 LOC)
-  -- or packages it as a named helper.
+  -- (0) Chart-1 factorization of `zeroPt` through `D₊(X 1)`, in `Spec.map` form.
+  obtain ⟨r, hr⟩ := ProjectiveLineBar.zeroPt_left_factor kbar
+  obtain ⟨φ, rfl⟩ := Spec.map_surjective r
+  -- (1) `φ` is `kbar`-algebra compatible: post-composing with the structure map is `𝟙`.
+  have hπ : Spec.map φ ≫ Spec.map (CommRingCat.ofHom (algebraMap kbar
+      (HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+        (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar)))) =
+      𝟙 (Spec (CommRingCat.of kbar)) := by
+    rw [← awayι_comp_PLB_hom kbar Nat.one_pos
+      (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar)
+      (MvPolynomial.isHomogeneous_X kbar 1), ← Category.assoc, ← hr]
+    exact Over.w (ProjectiveLineBar.zeroPt kbar)
+  have hφ_alg : φ.hom.comp (algebraMap kbar
+      (HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+        (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar))) = RingHom.id kbar := by
+    have h2 : Spec.map (CommRingCat.ofHom (algebraMap kbar
+        (HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+          (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar))) ≫ φ) =
+        Spec.map (𝟙 (CommRingCat.of kbar)) := by
+      rw [Spec.map_comp, Spec.map_id]; exact hπ
+    have h3 := congrArg CommRingCat.Hom.hom (Spec.map_injective h2)
+    simpa using h3
+  have hφ_c : ∀ c : kbar, φ.hom (algebraMap kbar
+      (HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+        (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar)) c) = c := fun c =>
+    RingHom.congr_fun hφ_alg c
+  -- (2) `φ` kills the chart-1 affine coordinate `u = X 0 / X 1` (the collapse input).
+  have hφ_u : φ.hom (HomogeneousLocalization.Away.isLocalizationElem
+      (MvPolynomial.isHomogeneous_X kbar 1) (MvPolynomial.isHomogeneous_X kbar 0)) = 0 := by
+    have hpre := ProjectiveLineBar.zeroPt_left_preimage_X0 kbar
+    rw [hr, Scheme.Hom.comp_preimage,
+      Proj.awayι_preimage_basicOpen (𝒜 := projectiveLineBarGrading kbar)
+        (MvPolynomial.isHomogeneous_X kbar 1) Nat.one_pos
+        (MvPolynomial.isHomogeneous_X kbar 0) Nat.one_pos] at hpre
+    have hb : PrimeSpectrum.basicOpen (φ.hom
+        (HomogeneousLocalization.Away.isLocalizationElem
+          (MvPolynomial.isHomogeneous_X kbar 1)
+          (MvPolynomial.isHomogeneous_X kbar 0))) = ⊥ := hpre
+    exact ((PrimeSpectrum.basicOpen_eq_bot_iff _).mp hb).eq_zero
+  -- (3) `φ` as a `kbar`-algebra hom.
+  let φA : HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+      (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar) →ₐ[kbar] kbar :=
+    AlgHom.mk' φ.hom (fun c x => by
+      rw [Algebra.smul_def, map_mul, hφ_c c, smul_eq_mul])
+  -- Shared bridging facts.
+  have htu : (toUnit (Gm kbar)).left =
+      Spec.map (CommRingCat.ofHom (algebraMap kbar (GmRing kbar))) := rfl
+  have h𝒰1 : (projectiveLineBarAffineCover kbar).openCover.f (1 : Fin 2) =
+      Proj.awayι (projectiveLineBarGrading kbar)
+        (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar)
+        (MvPolynomial.isHomogeneous_X kbar 1) Nat.one_pos := rfl
+  -- The two tensor-collapse identities of `χ := φ ⊗ id`.
+  have hχl : (Algebra.TensorProduct.productMap
+      ((Algebra.ofId kbar (GmRing kbar)).comp φA)
+      (AlgHom.id kbar (GmRing kbar))).toRingHom.comp
+        Algebra.TensorProduct.includeLeftRingHom =
+      (algebraMap kbar (GmRing kbar)).comp φ.hom := by
+    refine RingHom.ext fun a => ?_
+    exact AlgHom.congr_fun
+      (Algebra.TensorProduct.productMap_left
+        ((Algebra.ofId kbar (GmRing kbar)).comp φA) (AlgHom.id kbar (GmRing kbar))) a
+  have hχr : (Algebra.TensorProduct.productMap
+      ((Algebra.ofId kbar (GmRing kbar)).comp φA)
+      (AlgHom.id kbar (GmRing kbar))).toRingHom.comp
+        (RingHomClass.toRingHom (Algebra.TensorProduct.includeRight
+          (R := kbar)
+          (A := HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+            (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar))
+          (B := GmRing kbar))) =
+      RingHom.id (GmRing kbar) := by
+    refine RingHom.ext fun b => ?_
+    exact AlgHom.congr_fun
+      (Algebra.TensorProduct.productMap_right
+        ((Algebra.ofId kbar (GmRing kbar)).comp φA) (AlgHom.id kbar (GmRing kbar))) b
+  -- (4) The lifted pair `(0 ≫ toUnit) × 𝟙` IS the chart-1 section, as morphisms into
+  -- `(ℙ¹ ⊗ 𝔾ₘ).left` (quantified over the `pullback.lift` compatibility witness so the
+  -- rewrite below matches the goal's own witness).
+  have hL : ∀ w : ((toUnit (Gm kbar)).left ≫ (ProjectiveLineBar.zeroPt kbar).left) ≫
+        (ProjectiveLineBar kbar).hom = 𝟙 ((Gm kbar).left) ≫ (Gm kbar).hom,
+      pullback.lift ((toUnit (Gm kbar)).left ≫ (ProjectiveLineBar.zeroPt kbar).left)
+          (𝟙 ((Gm kbar).left)) w =
+        (Spec.map (CommRingCat.ofHom (Algebra.TensorProduct.productMap
+            ((Algebra.ofId kbar (GmRing kbar)).comp φA)
+            (AlgHom.id kbar (GmRing kbar))).toRingHom) ≫
+          (gmScalingP1_cover_X_iso kbar 1).inv) ≫ (gmScalingP1_cover kbar).f (1 : Fin 2) := by
+    intro w
+    apply pullback.hom_ext
+    · -- `ℙ¹`-leg.
+      rw [pullback.lift_fst]
+      change (toUnit (Gm kbar)).left ≫ (ProjectiveLineBar.zeroPt kbar).left =
+        ((Spec.map (CommRingCat.ofHom (Algebra.TensorProduct.productMap
+            ((Algebra.ofId kbar (GmRing kbar)).comp φA)
+            (AlgHom.id kbar (GmRing kbar))).toRingHom) ≫
+          (gmScalingP1_cover_X_iso kbar 1).inv) ≫
+          pullback.fst (pullback.fst (ProjectiveLineBar kbar).hom (Gm kbar).hom)
+            ((projectiveLineBarAffineCover kbar).openCover.f (1 : Fin 2))) ≫
+          pullback.fst (ProjectiveLineBar kbar).hom (Gm kbar).hom
+      rw [htu, hr, Category.assoc, Category.assoc, pullback.condition,
+        gmScalingP1_cover_X_iso_inv_snd_assoc kbar, h𝒰1,
+        ← Category.assoc, ← Spec.map_comp,
+        ← Category.assoc, ← Spec.map_comp, ← CommRingCat.ofHom_comp, hχl]
+      rfl
+    · -- `𝔾ₘ`-leg.
+      rw [pullback.lift_snd]
+      change 𝟙 ((Gm kbar).left) =
+        ((Spec.map (CommRingCat.ofHom (Algebra.TensorProduct.productMap
+            ((Algebra.ofId kbar (GmRing kbar)).comp φA)
+            (AlgHom.id kbar (GmRing kbar))).toRingHom) ≫
+          (gmScalingP1_cover_X_iso kbar 1).inv) ≫
+          pullback.fst (pullback.fst (ProjectiveLineBar kbar).hom (Gm kbar).hom)
+            ((projectiveLineBarAffineCover kbar).openCover.f (1 : Fin 2))) ≫
+          pullback.snd (ProjectiveLineBar kbar).hom (Gm kbar).hom
+      rw [Category.assoc, Category.assoc, gmScalingP1_cover_X_iso_inv_fst_snd kbar,
+        ← Spec.map_comp, ← CommRingCat.ofHom_comp, hχr]
+      rw [show CommRingCat.ofHom (RingHom.id (GmRing kbar)) =
+        𝟙 (CommRingCat.of (GmRing kbar)) from rfl, Spec.map_id]
+      rfl
+  -- (5) Reduce along the glued morphism and close with the ring collapse.
+  have hchart : gmScalingP1_chart kbar 1 =
+      (gmScalingP1_cover_X_iso kbar 1).hom ≫
+        Spec.map (CommRingCat.ofHom
+          ((MvPolynomial.eval₂Hom
+              (algebraMap kbar (TensorProduct kbar
+                (HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+                  ((![MvPolynomial.X 0, MvPolynomial.X 1] :
+                    Fin 2 → MvPolynomial (Fin 2) kbar) 1))
+                (GmRing kbar)))
+              (fun _ : Unit =>
+                (HomogeneousLocalization.Away.isLocalizationElem
+                    (projectiveLineBarAffineCover_fDeg kbar 1)
+                    (projectiveLineBarAffineCover_fDeg kbar (otherFin 1))) ⊗ₜ[kbar]
+                  (algebraMap (MvPolynomial Unit kbar) (GmRing kbar)
+                    (MvPolynomial.X ())))).comp
+            (homogeneousLocalizationAwayIso kbar 1).toRingHom)) ≫
+        Proj.awayι (projectiveLineBarGrading kbar)
+          (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar)
+          (MvPolynomial.isHomogeneous_X kbar 1) Nat.one_pos := rfl
   apply Over.OverMorphism.ext
-  simp only [Over.comp_left, Over.lift_left]
-  -- Goal: `pullback.lift ((toUnit Gm).left ≫ zeroPt.left) ((𝟙 Gm).left) _ ≫
-  --        gmScalingP1.left = (toUnit Gm).left ≫ zeroPt.left`.
-  -- Chart-1 of `gmScalingP1_cover` is the relevant one because `zeroPt = [0:1]` lies
-  -- in `D₊(X 1)`. Both sides equal the chart-1 map composed with a section
-  -- `s : Gm.left ⟶ (cover).X 1` built from `Spec.map (eval-at-0)` and `𝟙 Gm.left`.
-  sorry
+  simp only [Over.comp_left, Over.lift_left, Over.id_left]
+  rw [hL _]
+  change ((Spec.map (CommRingCat.ofHom (Algebra.TensorProduct.productMap
+      ((Algebra.ofId kbar (GmRing kbar)).comp φA)
+      (AlgHom.id kbar (GmRing kbar))).toRingHom) ≫
+    (gmScalingP1_cover_X_iso kbar 1).inv) ≫ (gmScalingP1_cover kbar).f (1 : Fin 2)) ≫
+      (gmScalingP1_cover kbar).glueMorphisms (gmScalingP1_chart kbar)
+        (gmScalingP1_chart_agreement kbar) =
+    (toUnit (Gm kbar)).left ≫ (ProjectiveLineBar.zeroPt kbar).left
+  rw [Category.assoc, Scheme.Cover.ι_glueMorphisms, hchart]
+  trans Spec.map (φ ≫ CommRingCat.ofHom (algebraMap kbar (GmRing kbar))) ≫
+    Proj.awayι (projectiveLineBarGrading kbar)
+      (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar)
+      (MvPolynomial.isHomogeneous_X kbar 1) Nat.one_pos
+  · -- collapse `iso.inv ≫ iso.hom` and apply the ring identity.
+    rw [Category.assoc, Iso.inv_hom_id_assoc, ← Category.assoc, ← Spec.map_comp,
+      ← CommRingCat.ofHom_comp, gmScalingP1_chart1_ring_collapse kbar φA hφ_u]
+    rfl
+  · -- unfold the factorization of `zeroPt` on the right.
+    rw [Spec.map_comp, htu, hr]
+    simp only [Category.assoc]
 
 /-! ### (E) Product-stability instances on `ℙ¹ ⊗ 𝔾_m`
 

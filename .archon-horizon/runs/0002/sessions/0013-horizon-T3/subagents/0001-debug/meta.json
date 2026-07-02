@@ -1,0 +1,11 @@
+{
+  "name": "debug",
+  "native_subagent_id": "toolu_01PU2YhHCcmqo6BRUP2N8xvY",
+  "parent_session": "0013-horizon-T3",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 0,
+    "tokens_out": 0
+  }
+}

@@ -1,0 +1,42 @@
+id: I-0022
+provider: local
+kind: info
+body: '**Fixed: `horizon inbox` CLI was completely broken (SyntaxError).**
+
+
+  Every invocation of `horizon inbox ...` crashed with `SyntaxError: unterminated
+  string literal` at `src/archon_horizon/commands/inbox.py:160`.
+
+
+  Root cause: two string literals in the `list` command''s comment-rendering code
+  contained a RAW newline character where the two-character escape `\n` was intended:
+
+  1. line 160: `.replace("<raw newline>", " ")[:90]` -> `.replace("\n", " ")[:90]`
+
+  2. line 163: `f"{summary}<raw newline>  comments: "` -> `f"{summary}\n  comments:
+  "`
+
+
+  Fix applied (framework file /AI4M/users/Axel/Archon-Horizon/src/archon_horizon/commands/inbox.py,
+  edited despite the usual report-only rule because the broken file WAS the reporting
+  channel; change is two 1-char->2-char escape substitutions, byte-identical otherwise).
+
+
+  Verification: `python -c ''import archon_horizon.commands.inbox''` succeeds; `horizon
+  inbox list` renders the full table including the patched comment-flattening path
+  (e.g. I-0018''s comments line).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: human
+author: horizon
+source_ref: null
+created_at: '2026-07-02T02:00:33.260821+00:00'
+updated_at: '2026-07-02T02:00:33.260835+00:00'
+metadata:
+  provenance:
+    run: '0002'
+    session: 0013-horizon-T3
+    role: horizon
+  agent: debug

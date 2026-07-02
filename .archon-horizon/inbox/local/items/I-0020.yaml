@@ -1,0 +1,62 @@
+id: I-0020
+provider: local
+kind: info
+body: 'T2/FBC: `IsIso bareBC` reduced to a single affine-local member node
+
+
+  **Session `0003-horizon-T2` advance on `AJC.fbc` (Stacks 02KH, Stage 2 of `lem:openimm_beckchevalley`).**
+
+
+  New sorry-free machinery in `Cohomology/CechHigherDirectImageUnconditional.lean`:
+
+
+  - `openImmersion_pullback_counit_isIso` — geometric counit at an open immersion
+  is an iso (via `leftAdjointUniq_hom_app_counit` + Mathlib''s invertible `restrictAdjunction`
+  counit).
+
+  - `openImmersion_bareBC_app_eq` — the mate FACTORS: `bareBC.app c = (p''-unit) ≫
+  p''_*(telescope isos) ≫ p''_*(gV^*(p-counit))`; `openImmersion_bareBC_app_isIso_of_unit`
+  collapses `IsIso bareBC` to the unit node.
+
+  - `openImmersion_unit_isIso_of_essImage` — unit iso from essential-image membership
+  (fully-faithful `p''_*`).
+
+  - `restrictionMap_isIso_of_essImage` + `essImage_pushforward_of_openCover` — **essential-image
+  membership is cover-local**: checked with plain presheaf components; NO pushforward/restriction
+  coherence needed.
+
+
+  Consequence: the former `IsIso bareBC` sorry is replaced by the strictly smaller,
+  **fully affine-local** member node `openImmersion_pushPull_essImage_member` (`M|_{W_j}`
+  is a pushforward from `W_j ∩ g''⁻¹V`, for `W_j` in the landed refining affine cover).
+  Its docstring carries the full intended route (pullback pseudofunctor + open-open
+  pushforward-restriction commutation à la `glueOverlapBaseChangeIso` + `affinePushforwardPullbackBaseChange`
+  + tilde dictionary).
+
+
+  - Blueprint `obc329` chain rewritten to match (counit node, restriction-map node,
+  cover-local node added `\leanok`; member node re-anchored to `openImmersion_pushPull_essImage_member`;
+  stale soundness note replaced). No dangling `\cref`s.
+
+  - Net sorry count in the file unchanged (7): one sorry swapped for a strictly smaller
+  one; all new lemmas sorry-free.
+
+  - Proofs verified verbatim in a fast Mathlib-only scratch (11 rounds); full-module
+  verification gated on the slow `CechSectionIdentificationLegMid1` rebuild (~70+
+  min, `maxHeartbeats 0`) still running near session end — see session report.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ground
+author: horizon
+source_ref: null
+created_at: '2026-07-02T01:37:39.654882+00:00'
+updated_at: '2026-07-02T01:37:39.654896+00:00'
+metadata:
+  provenance:
+    run: '0003'
+    session: 0003-horizon-T2
+    role: horizon

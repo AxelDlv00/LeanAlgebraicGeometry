@@ -133,6 +133,68 @@ noncomputable def ProjectiveLineBar.inftyPt (kbar : Type u) [Field kbar] :
     𝟙_ (Over (Spec (.of kbar))) ⟶ ProjectiveLineBar kbar :=
   ProjectiveLineBar.pointOfVec kbar (fun i => if i = 0 then 1 else 0) 0 (by simp)
 
+set_option backward.isDefEq.respectTransparency false in
+/-- **`zeroPt` misses the chart-0 locus:** the preimage of `D₊(X 0)` under `zeroPt.left` is
+empty (`[0 : 1]` has vanishing `X 0`-coordinate). Consumed by
+`gmScalingP1_collapse_at_zero` (GmScaling), which derives from this that the chart-1
+evaluation of `zeroPt` kills the affine coordinate `u = X 0 / X 1`. -/
+lemma ProjectiveLineBar.zeroPt_left_preimage_X0 (kbar : Type u) [Field kbar] :
+    (ProjectiveLineBar.zeroPt kbar).left ⁻¹ᵁ
+      (Proj.basicOpen (projectiveLineBarGrading kbar)
+        (MvPolynomial.X 0 : MvPolynomial (Fin 2) kbar)) = ⊥ := by
+  change Proj.fromOfGlobalSections (projectiveLineBarGrading kbar)
+      (ProjectiveLineBar.evalIntoGlobal kbar (fun i => if i = 0 then 0 else 1))
+      (ProjectiveLineBar.irrelevant_map_eq_top kbar _ 1 (by simp)) ⁻¹ᵁ _ = ⊥
+  rw [Proj.fromOfGlobalSections_preimage_basicOpen _ _ _ Nat.one_pos
+    (MvPolynomial.isHomogeneous_X kbar 0)]
+  have h0 : (ProjectiveLineBar.evalIntoGlobal kbar (fun i => if i = 0 then 0 else 1))
+      (MvPolynomial.X 0) = 0 := by
+    simp [ProjectiveLineBar.evalIntoGlobal]
+  rw [h0, Scheme.basicOpen_zero]
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **`zeroPt` factors through the chart-1 open immersion** `Spec (Away 𝒜 (X 1)) ⟶ ℙ¹`:
+the point `[0 : 1]` lies in `D₊(X 1)`. The factor is produced abstractly via
+`IsOpenImmersion.lift`; its ring-level behaviour is pinned downstream (GmScaling) from
+`zeroPt_left_preimage_X0`. -/
+lemma ProjectiveLineBar.zeroPt_left_factor (kbar : Type u) [Field kbar] :
+    ∃ r : Spec (CommRingCat.of kbar) ⟶
+        Spec (CommRingCat.of (HomogeneousLocalization.Away (projectiveLineBarGrading kbar)
+          (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar))),
+      (ProjectiveLineBar.zeroPt kbar).left =
+        r ≫ Proj.awayι (projectiveLineBarGrading kbar) (MvPolynomial.X 1)
+          (MvPolynomial.isHomogeneous_X kbar 1) Nat.one_pos := by
+  have hpre : (ProjectiveLineBar.zeroPt kbar).left ⁻¹ᵁ
+      (Proj.basicOpen (projectiveLineBarGrading kbar)
+        (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar)) = ⊤ := by
+    change Proj.fromOfGlobalSections (projectiveLineBarGrading kbar)
+        (ProjectiveLineBar.evalIntoGlobal kbar (fun i => if i = 0 then 0 else 1))
+        (ProjectiveLineBar.irrelevant_map_eq_top kbar _ 1 (by simp)) ⁻¹ᵁ _ = ⊤
+    rw [Proj.fromOfGlobalSections_preimage_basicOpen _ _ _ Nat.one_pos
+      (MvPolynomial.isHomogeneous_X kbar 1)]
+    have h1 : (ProjectiveLineBar.evalIntoGlobal kbar (fun i => if i = 0 then 0 else 1))
+        (MvPolynomial.X 1) = 1 := by
+      simp [ProjectiveLineBar.evalIntoGlobal]
+    rw [h1]
+    exact Scheme.basicOpen_of_isUnit _ isUnit_one
+  have hsub : Set.range (ProjectiveLineBar.zeroPt kbar).left.base ⊆
+      Set.range (Proj.awayι (projectiveLineBarGrading kbar) (MvPolynomial.X 1)
+        (MvPolynomial.isHomogeneous_X kbar 1) Nat.one_pos).base := by
+    rintro _ ⟨y, rfl⟩
+    have hy : (ProjectiveLineBar.zeroPt kbar).left.base y ∈
+        Proj.basicOpen (projectiveLineBarGrading kbar)
+          (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar) := by
+      have hy' : y ∈ (ProjectiveLineBar.zeroPt kbar).left ⁻¹ᵁ
+          (Proj.basicOpen (projectiveLineBarGrading kbar)
+            (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar)) := by
+        rw [hpre]; trivial
+      exact hy'
+    rw [← Proj.opensRange_awayι (projectiveLineBarGrading kbar)
+      (MvPolynomial.X 1 : MvPolynomial (Fin 2) kbar)
+      (MvPolynomial.isHomogeneous_X kbar 1) Nat.one_pos] at hy
+    exact hy
+  exact ⟨IsOpenImmersion.lift _ _ hsub, (IsOpenImmersion.lift_fac _ _ hsub).symm⟩
+
 /-! ### (B) The additive group `𝔾_a` over `Spec k̄` -/
 
 /-- **The additive group `𝔾_a = 𝔸¹` over `Spec k̄` as an underlying scheme.** This is the
