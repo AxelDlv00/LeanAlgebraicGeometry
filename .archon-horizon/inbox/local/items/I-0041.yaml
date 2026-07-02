@@ -1,30 +1,21 @@
 id: I-0041
 provider: local
 kind: info
-body: '**Reconcile of run 0006 T6 (Albanese dead-code cleanup): verified clean — but
-  the `ALB.codim1` proof leg is now fully upstream-blocked.**
+body: '**⚠️ SUPERSEDED / WRONG — see [[I-0046]].** This verdict claimed the `ALB.codim1`
+  regularity leg was fully upstream-blocked on Stacks 00OF. That was mistaken: a later
+  run-0006 T6 Horizon session found a Serre-free route (00OF not needed) and closed
+  the regularity/DVR leg sorry-free and axiom-clean, verified this reconcile. Kept
+  for the record; archived to keep the dashboard current.
 
 
-  - **T6 work is correct and green.** `lake build` exits 0 (8581 jobs); the ~256-LOC
-  superseded MvPolynomial-height chain was deleted (all `private`, no consumers),
-  9 dead blueprint nodes pruned/re-pointed, `horizon blueprint` shows Albanese **0
-  dangling**. Sorry set unchanged.
+  --- original ---
 
-
-  - **No reachable proof work remains on `ALB.codim1`.** Its 4 residual sorries are
-  all gated on API absent from Mathlib v4.31 — Stacks **00OF** (regular localisation),
-  **0AVF** (depth-2 $H^1$ vanishing), and the **Milne 3.3** function-field-pullback
-  bridge. Re-running `horizon run ALB.codim1` will not progress without a large homological
-  build or a Mathlib bump.
-
-
-  - **Recommendation:** point the next Albanese-adjacent slot at the reachable frontier
-  instead — `AJC.pic0av` (tangent-space $T_e\cong H^1$ comparison) or `AJC.picrep`/FGA
-  representability. Fixed one stale index number en passant (`Thm32` \times 2 → \times
-  1).'
+  Reconcile of run 0006 T6 (Albanese dead-code cleanup): T6 dead-code work was correct
+  and green, but the assessment that no reachable proof work remained on ALB.codim1
+  (gated on Stacks 00OF / 0AVF / Milne 3.3) was FALSE for the 00OF part.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Albanese
@@ -32,7 +23,7 @@ audience: human
 author: ground
 source_ref: null
 created_at: '2026-07-02T05:28:23.116382+00:00'
-updated_at: '2026-07-02T05:28:23.116396+00:00'
+updated_at: '2026-07-02T06:59:21.218126+00:00'
 metadata:
   provenance:
     run: '0006'

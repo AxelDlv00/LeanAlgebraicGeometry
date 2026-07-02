@@ -1,0 +1,59 @@
+id: I-0048
+provider: local
+kind: info
+body: '[diff-audit T6] Albanese run-0006 clean: 00TT closed Serre-free, signatures
+  intact, no buried cheats
+
+
+  Audited uncommitted run-0006 T6 working-tree diff in SubProjects/Albanese (vs HEAD
+  via .archon-horizon/vcs/Albanese.git). Verdict: CLEAN.
+
+
+  STRAY FILES: none from this run. Diff is exactly 7 modified + 1 new (SmoothPrimeRegularity.lean,
+  768 LOC). Pre-existing top-level items (RationalCurveIso.body/.new/.skeletal, informal/,
+  analogies/, TO_USER.md) are tracked from prior commits, untouched by T6 - not strays.
+
+
+  CHEATS: none beyond the 3 sanctioned named gaps in CodimOneExtension.lean. All 3
+  are genuine named-lemma gaps (full statement present, only proof body = sorry):
+  indeterminacy_codimGe2_of_smooth_of_complete (sorry @1386), extend_of_codimOneFree_of_smooth
+  (@1454), indeterminacy_pure_codim_one_into_grpScheme (@1529). No admit/native_decide/new
+  axiom/@[implemented_by]/unsafe anywhere; SmoothPrimeRegularity.lean fully sorry-free.
+  The two ''closed'' theorems are defined BEFORE the sorries (isRegularLocalRing_stalk_of_smooth
+  @1188, localRing_dvr_of_codim_one @1309) and route through SmoothPrimeRegularity''s
+  substantive Kaehler/conormal + trdeg-height proof (isRegularLocalRing_of_isLocalization_atPrime_of_isStandardSmooth_of_perfectField
+  @662) - they neither can nor do depend on the sorries.
+
+
+  -648-LINE REWRITE SOUND: signatures of every retained/exported decl byte-identical
+  old vs HEAD (CodimOneFree, indeterminacyLocus, localRing_dvr_of_codim_one, extend_of_codimOneFree_of_smooth,
+  indeterminacy_pure_codim_one_into_grpScheme, isRegularLocalRing_stalk_of_smooth).
+  No hypotheses dropped, no conclusion weakened, nothing vacuous. Deleted content
+  is the abandoned Serre/closed-point scaffolding (MvPolynomial-height, regular-sequence
+  Krull-dim, submersivePresentation cotangent-independence lemmas) superseded by the
+  arbitrary-prime route. All deleted decls have ZERO remaining consumers inside SubProjects/Albanese;
+  only lingering references are in the out-of-scope MainProjects mirror (separate
+  project, not T6 write-set). blueprint lean_decls (-9) and the .tex rewrite track
+  the deleted decls - expected Ground reconciliation.
+
+
+  DEAD CODE CONFIRMED: stalkMap_flat_of_smooth (private @216) and exists_algebra_isStandardSmooth_section_stalk_isLocalization_of_smooth
+  (private @262) have no Lean consumers anywhere (comment mentions only). Both private
+  = no external surface; harmless leftover, optional cleanup.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Albanese
+audience: ''
+author: ground
+source_ref: null
+created_at: '2026-07-02T07:00:38.749028+00:00'
+updated_at: '2026-07-02T07:00:38.749035+00:00'
+metadata:
+  provenance:
+    run: '0006'
+    session: 0009-ground
+    role: ground
+  agent: diff-auditor

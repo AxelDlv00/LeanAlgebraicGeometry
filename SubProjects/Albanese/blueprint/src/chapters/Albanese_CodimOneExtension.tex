@@ -127,8 +127,7 @@ working with the project's \(\mathrm{Scheme.WeilDivisor}\) API.
   \texttt{Scheme.RationalMap.domain}, which is already exposed by Mathlib). The
   closedness of \(Z(f)\) is a separate \texttt{IsClosed} witness, packaged either as a
   field of \texttt{indeterminacyLocus} or as a standalone lemma
-  \texttt{Scheme.RationalMap.isClosed\_indeterminacyLocus}, whichever is cleaner with
-  Mathlib's existing API at commit \texttt{b80f227}.
+  \texttt{Scheme.RationalMap.isClosed\_indeterminacyLocus}.
 \end{definition}
 
 
@@ -189,30 +188,22 @@ direction of Stacks tag \texttt{00TT}; we package it as a separate sub-lemma so 
 \cref{lem:smooth_codim_one_dvr} below reads cleanly as ``regular local of dimension
 \(1\) is a DVR'', with the regularity prerequisite supplied by the sub-lemma.
 
-\subsection{Stages 5a/5b: K\"ahler-differentials localisation substrate (iter-193)}
+\subsection{K\"ahler-differentials localisation substrate}
 \label{subsec:kaehler_localisation_substrate}
 
 The Jacobian-criterion direction of Stacks tag \texttt{00TT}
-(\cref{lem:smooth_to_regular_local_ring} below) factors on the Lean side
-through a six-stage chain. Stages~1--2 (smooth \(\Rightarrow\) flat at a
-stalk; smooth \(\Rightarrow\) admits a standard-smooth presentation
-locally) are axiom-clean since iter-191; Stages~3--4 (the
-scheme-to-algebra bridge for standard-smooth presentations; freeness of
-\(\Omega_{S/R}\) for a standard-smooth algebra \(R \to S\)) are
-axiom-clean since iter-192. The remaining Stages~5--6 reduce the
-Stacks~00TT conclusion to a freeness plus rank computation on K\"ahler
-differentials, transported through localisation at the prime defining
-the stalk. Iter-193 packaged Stages~5a (transport of freeness) and 5b
-(matching rank under localisation) as the two standalone helpers below;
-Stage~6 (the remaining Stacks~00OE smooth-algebra dimension formula
-plus Stacks~02JK cotangent--K\"ahler-over-a-field bridge) is the open
-Mathlib gap, decomposed iter-198 into the three named sub-lemmas
-\cref{lem:smooth_algebra_krull_dim_formula} (6.A),
-\cref{lem:cotangent_kahler_over_field} (6.B), and
-\cref{lem:stage6_regular_stalk_assembly} (6.C) in
-\cref{subsec:stage6_subgap_decomposition} immediately following.
+(\cref{lem:smooth_to_regular_local_ring} below) is assembled from several
+substrate results: smoothness gives flatness at a stalk and, locally, a
+standard-smooth presentation; the scheme-to-algebra bridge and the freeness of
+\(\Omega_{S/R}\) for a standard-smooth algebra \(R \to S\) then reduce the
+regularity claim to a freeness-plus-rank computation on K\"ahler differentials,
+transported through localisation at the prime defining the stalk. The two
+localisation helpers below --- transport of freeness, and matching of rank under
+localisation --- supply this reduction. The Krull-dimension and cotangent inputs
+are collected in \cref{subsec:stage6_subgap_decomposition}, and the regularity
+conclusion at an arbitrary prime is \cref{thm:standard_smooth_regular_at_prime}.
 
-Stages~1--4 of the chain are recorded below as named substrate lemmas, feeding
+The substrate lemmas are recorded below, feeding
 \cref{lem:smooth_to_regular_local_ring}.
 
 \begin{lemma}\leanok
@@ -344,36 +335,25 @@ Stages~1--4 of the chain are recorded below as named substrate lemmas, feeding
   \(\mathrm{rank}_{S_M}(\Omega_{S_M / R}) = n\) as required.
 \end{proof}
 
-\subsection{Stage 6 sub-decomposition: 00OE + 02JK chain (iter-198)}
+\subsection{Stage 6 sub-decomposition: 00OE + 02JK chain}
 \label{subsec:stage6_subgap_decomposition}
 
-Stage 6 is the residual gap inside
-\cref{lem:smooth_to_regular_local_ring}'s six-stage chain: given Stages
-1--5b (a standard-smooth presentation of an affine chart
-\(R \to S\) at a point \(z\), with \(\Omega_{S/R}\) free of rank \(n\)
-and \(\Omega_{S_\mathfrak q / R}\) free of rank \(n\) on the stalk
-\(S_\mathfrak q = \mathcal O_{X, z}\)), one must conclude that
-\(S_\mathfrak q\) is a regular local ring. The Stacks proof of tag
-\texttt{00TT} ultimately reduces to two ingredients which Mathlib does
-not yet ship at commit \texttt{b80f227}: (6.A) the smooth-algebra
-Krull-dimension formula (Stacks tag \texttt{00OE}, in the algebra
-chapter as Lemma~\texttt{lemma-dimension-at-a-point-finite-type-field}),
-and (6.B) the cotangent / K\"ahler-differential bridge over a field
-base (Stacks tag \texttt{02JK}, in the algebra chapter as
-Lemma~\texttt{lemma-differential-seq} plus the separable-residue-field
-refinement of Lemma~\texttt{lemma-separable-smooth}). The two
-ingredients combine (6.C) into the regularity conclusion via
+Given a standard-smooth presentation of an affine chart \(R \to S\) at a
+point \(z\), with \(\Omega_{S/R}\) free of rank \(n\) and
+\(\Omega_{S_\mathfrak q / R}\) free of rank \(n\) on the stalk
+\(S_\mathfrak q = \mathcal O_{X, z}\), one concludes that \(S_\mathfrak q\)
+is a regular local ring from two ingredients: (6.A) the smooth-algebra
+Krull-dimension formula (Stacks tag \texttt{00OE}), and (6.B) the cotangent /
+K\"ahler-differential bridge over a field base (Stacks tag \texttt{02JK}). The
+two ingredients combine (6.C) into the regularity conclusion via
 \(\dim S_\mathfrak q = \mathrm{rank}_{S_\mathfrak q}\Omega_{S_\mathfrak
 q / R} = \dim_{\kappa(\mathfrak q)} \mathfrak m / \mathfrak m^2\),
-which is the cotangent-space characterisation of regularity that
-Mathlib's \texttt{IsRegularLocalRing.iff\_finrank\_cotangentSpace}
-already exposes. The next three lemmas package the three sub-gaps as
-named iter-199+ prover targets.
+the cotangent-space characterisation of regularity. The next three lemmas
+record these three ingredients.
 
 \begin{lemma}
   [Stage 6.A --- Smooth-algebra Krull-dimension formula (Stacks 00OE)]
   \label{lem:smooth_algebra_krull_dim_formula}
-  \lean{Algebra.IsStandardSmoothOfRelativeDimension.ringKrullDim_localization_eq_relativeDimension}
   \uses{lem:rank_kaehler_localization_eq_relative_dim,
         lem:mvPolynomial_height_eq_natCard_of_isMaximal,
         lem:standard_smooth_le_height_of_isMaximal,
@@ -404,10 +384,10 @@ named iter-199+ prover targets.
   \(\mathrm{trdeg}_k\,\kappa(\mathfrak q) = 0\) and
   \(\dim S_{\mathfrak q} = \dim_x(\mathrm{Spec}\,S)\).
 
-  \paragraph{Geometric application.} Applied to the iter-193 Stage~3
+  \paragraph{Geometric application.} Applied to the standard-smooth
   setup --- \(k = \bar k\), \(S = \Gamma(X.\mathrm{left}, V)\) a
-  standard-smooth \(\bar k\)-algebra of relative dimension \(n\) (Stage
-  3), and \(\mathfrak q\) the prime defining the point \(z \in V\) --- the
+  standard-smooth \(\bar k\)-algebra of relative dimension \(n\),
+  and \(\mathfrak q\) the prime defining the point \(z \in V\) --- the
   formula yields \(\dim(\mathcal O_{X, z}) = \dim S_{\mathfrak q} = n -
   \mathrm{trdeg}_{\bar k}\,\kappa(z)\). For \(z\) a closed point this is
   simply \(n\); for the generic point of a codim-\(1\) subvariety
@@ -479,12 +459,6 @@ named iter-199+ prover targets.
   [Stage 6.B --- Cotangent \(\leftrightarrow\) K\"ahler over a field (Stacks 02JK)]
   \label{lem:cotangent_kahler_over_field}
   \lean{AlgebraicGeometry.Scheme.cotangent_iso_residue_tensor_kaehler_of_formallySmooth_residue}
-  % \lean{...} updated iter-199 review: iter-199 prover landed the
-  % closed-point iso as a project-local axiom-clean helper (private
-  % theorem in AlgebraicGeometry.Scheme namespace). Companion siblings:
-  %   cotangent_iso_maximalIdeal_residue_tensor_kaehler_of_formallySmooth_residue
-  %   finrank_cotangentSpace_of_formallySmooth_residue
-  %   finrank_cotangentSpace_of_bijective_algebraMap_residue (closed-point bundled)
   \uses{lem:smooth_algebra_krull_dim_formula}
   % SOURCE: [Stacks Project], lemma-differential-seq (canonically
   % known as the right-exact conormal portion of tag 02JK; the
@@ -614,21 +588,6 @@ the cotangent-space finrank consumed by the regularity criterion.
 \begin{lemma}
   [Stage 6.C --- Assembly: smooth standard-smooth stalk is regular local]
   \label{lem:stage6_regular_stalk_assembly}
-  \lean{AlgebraicGeometry.TODO.stage6_regular_stalk_assembly}
-  % NOTE (iter-270 dag-walker): \lean{...} pinned to the TODO placeholder
-  % decl name. This 6.C assembly has NO separately-pinnable Lean
-  % declaration: its content is the in-body closure pattern of
-  % \texttt{isRegularLocalRing\_stalk\_of\_smooth} (pinned by
-  % \cref{lem:smooth_to_regular_local_ring}), so it cannot re-pin that same
-  % decl. The TODO pin gives leandag a resolvable \lean{...} target so the
-  % node carries a name; it is NOT a claim that a kernel-clean decl exists.
-  % NOTE (iter-199): the Lean target for this 6.C assembly is the body
-  % of \texttt{AlgebraicGeometry.Scheme.isRegularLocalRing\_stalk\_of\_smooth}
-  % itself (see \cref{lem:smooth_to_regular_local_ring}); the iter-198
-  % blueprint named a planned \texttt{...\_aux} extraction that has not
-  % been created in the Lean file. Treat the lemma below as the in-body
-  % closure pattern that the existing helper consumes once Stages 6.A and
-  % 6.B land, rather than as a separately-pinned Lean declaration.
   \uses{lem:rank_kaehler_localization_eq_relative_dim,
         lem:smooth_algebra_krull_dim_formula,
         lem:cotangent_kahler_over_field}
@@ -683,116 +642,6 @@ the cotangent-space finrank consumed by the regularity criterion.
   \end{enumerate}
 \end{proof}
 
-\paragraph{Mathlib API state (commit \texttt{b80f227}).} The following
-pieces are needed to formalise Stages 6.A--6.C; status as audited iter-198.
-
-\begin{itemize}
-  \item \texttt{Algebra.IsStandardSmoothOfRelativeDimension} --- EXISTS
-    in Mathlib (\texttt{Mathlib/RingTheory/Smooth/StandardSmooth.lean});
-    relative-dimension witness already consumed by Stage 5b
-    (\cref{lem:rank_kaehler_localization_eq_relative_dim}).
-  \item \texttt{Algebra.FormallySmooth} / \texttt{Algebra.Smooth} ---
-    EXISTS (\texttt{Mathlib/RingTheory/Smooth/Basic.lean}); used in
-    Stages 1--2 to deduce standard-smooth presentations.
-  \item \texttt{ringKrullDim} / \texttt{Ring.KrullDim} --- EXISTS
-    (\texttt{Mathlib/RingTheory/KrullDimension/Basic.lean}); supplies
-    the Krull-dimension side. The link
-    \texttt{ringKrullDim S\_q = m.height} is supplied by
-    \texttt{IsLocalization.AtPrime.ringKrullDim\_eq\_height}
-    (\texttt{Mathlib/RingTheory/Ideal/Height.lean}). EXISTS.
-  \item \texttt{Algebra.IsStandardSmoothOfRelativeDimension.\linebreak ringKrullDim\_localization\_eq\_relativeDimension}
-    (the project's name for Stage 6.A, Stacks 00OE) --- MISSING in
-    Mathlib at \texttt{b80f227} as a packaged form. The closed-point
-    case is proved axiom-clean in
-    \texttt{StandardSmoothDimension.lean} via the Krull-height-theorem
-    route (see \ref{subsec:stage6_iib_substrate_iter200}); the
-    general-point form of 00OE remains open, gated on Stacks
-    \texttt{00OF} below.
-  \item \texttt{KaehlerDifferential.exact\_mapBaseChange} (the
-    conormal-sequence right-exactness, \(=\) Stacks
-    \texttt{lemma-differential-seq}) --- EXISTS in Mathlib at
-    \texttt{Mathlib/RingTheory/Kaehler/CotangentComplex.lean} (some
-    naming variant of \texttt{conormal\_seq\_exact} /
-    \texttt{KaehlerDifferential.map\_surjective}). Verify the exact name
-    at \texttt{b80f227} before pinning.
-  \item \texttt{KaehlerDifferential.cotangent\_iso\_residue\_tensor\_kaehler}
-    (the project's name for Stage 6.B, Stacks 02JK at a separable
-    residue point) --- MISSING in Mathlib at \texttt{b80f227} in this
-    packaged form; pieces are present (conormal sequence + \(\Omega_{\kappa
-    / k} = 0\) for \(\kappa = k\) algebraically closed), but the
-    \texttt{IsLocalRing.CotangentSpace} \(\leftrightarrow\)
-    \texttt{KaehlerDifferential} bridge is not assembled. NEEDS-BRIDGE;
-    project build of \(\sim\)100--200~LOC.
-  \item \texttt{IsRegularLocalRing.iff\_finrank\_cotangentSpace} ---
-    EXISTS (\texttt{Mathlib/RingTheory/RegularLocal/Basic.lean}); this
-    is the cotangent-space characterisation of regularity that
-    Stage 6.C feeds into. Consumes \texttt{Module.finrank} of
-    \texttt{IsLocalRing.CotangentSpace} \(=\) \(\dim_\kappa \mathfrak m
-    / \mathfrak m^2\).
-  \item \texttt{Algebra.IsSmooth.krullDim\_stalk} or any direct
-    smooth-algebra \(\Rightarrow\) regular-stalk shortcut --- MISSING
-    at \texttt{b80f227}. The standard scheme-level packaging of Stacks
-    00TT is not in Mathlib; the iter-191--193 staged decomposition is
-    the project-side substitute.
-  \item \texttt{IsRegularLocalRing.localization\_isRegularLocalRing}
-    (preservation of regularity under localisation at a prime;
-    Stacks \texttt{tag 00OF}) --- \textbf{MISSING at \texttt{b80f227}}
-    (corrected iter-202: iter-201 Lane COE prover scout confirmed via
-    \texttt{grep} of \texttt{Mathlib/RingTheory/RegularLocalRing/}
-    that only \texttt{Defs.lean} is present). The
-    closed-point-to-arbitrary-point alternative route through this
-    lemma is therefore also gated. The closed-point route does not
-    need this lemma (see
-    \cref{subsec:stage6_iib_substrate_iter200}).
-\end{itemize}
-
-\paragraph{Cascade to consumers.} Closure of Stage 6 (i.e.\ landing
-\cref{lem:stage6_regular_stalk_assembly} axiom-clean) collapses the
-following residual sorries in
-\texttt{AlgebraicJacobian/Albanese/CodimOneExtension.lean}:
-\begin{itemize}
-  \item \texttt{isRegularLocalRing\_stalk\_of\_smooth} (L434--L526) ---
-    its final \texttt{sorry} on L526 is filled by chaining the Stage 5a/5b
-    helpers with the new Stage 6.A/6.B/6.C bridges, exactly as the
-    proof of \cref{lem:stage6_regular_stalk_assembly} sketches. Closure
-    is automatic once the three sub-lemmas land axiom-clean.
-  \item \texttt{smooth\_codim\_one\_maximalIdeal\_isPrincipal\_and\_ne\_bot}
-    (L547--L599) --- already axiom-clean modulo the named Stacks-00TT
-    gap; the regularity half is delegated to
-    \texttt{isRegularLocalRing\_stalk\_of\_smooth}, so closure
-    propagates upward without further work.
-  \item \texttt{localRing\_dvr\_of\_codim\_one} (L615--L644) ---
-    likewise upgrades from gated to axiom-clean automatically: it
-    consumes \texttt{smooth\_codim\_one\_maximalIdeal\_isPrincipal\_and\_ne\_bot}
-    and then closes via \texttt{IsDiscreteValuationRing.TFAE}.
-  \item \texttt{extend\_of\_codimOneFree\_of\_smooth} (the body
-    around L703--L723) --- Step~1 of
-    \cref{thm:codim_one_extension}'s proof consumes
-    \texttt{localRing\_dvr\_of\_codim\_one} via the valuative
-    criterion at codim-\(1\) points, so Stage 6 closure unblocks
-    Step~1 entirely. Step~2 (the depth-\(\geq 2\) local-cohomology
-    vanishing, Stacks tag \texttt{0AVF}) remains an independent
-    Mathlib gap and is \emph{not} unblocked by Stage 6.
-  \item \texttt{indeterminacy\_pure\_codim\_one\_into\_grpScheme}
-    (L752--L798, the Lean body of
-    \cref{lem:milne_codim1_indeterminacy}) --- not directly gated on
-    Stage 6 (its substantive Mathlib gap is the codim-\(1\)
-    pole-divisor / diagonal intersection lemma, Sub-step~4 of
-    Milne's proof). Stage 6 closure does \emph{not} unblock this
-    lemma; it is recorded here only for completeness of the
-    chapter's dependency picture.
-\end{itemize}
-
-The two remaining post-Stage-6 gaps in the chapter are therefore:
-(a) the Step~2 depth-\(\geq 2\) local-cohomology vanishing
-(Stacks~\texttt{0AVF}) consumed only by
-\cref{thm:codim_one_extension}, and (b) the
-function-field-pullback machinery for \texttt{Scheme.RationalMap}
-consumed by \texttt{thm:weil_divisor_obstruction} and Sub-step~3 of
-\cref{lem:milne_codim1_indeterminacy}. Neither overlaps with the
-Stage 6 work, so the three sub-lemmas above are a self-contained
-mathlib-analogist target.
-
 \subsection{Stacks 00OE closed-point substrate (superseded decomposition)}
 \label{subsec:stage6_iib_substrate_iter200}
 
@@ -800,10 +649,9 @@ An earlier decomposition of Stage 6.A
 (\cref{lem:smooth_algebra_krull_dim_formula}, Stacks 00OE) reduced the
 localised Krull-dimension formula at a closed point to a
 Jacobian-regular-sequence witness for the relations of a submersive
-presentation (Stacks 00SW / 00OW together with Matsumura Thm.~14.2). The
-in-file substrate chain implementing that reduction has been removed as
-dead code: the closed-point case is now proved unconditionally by the
-Krull-height-theorem route of \texttt{StandardSmoothDimension.lean} ---
+presentation (Stacks 00SW / 00OW together with Matsumura Thm.~14.2). That
+reduction is not needed: the closed-point case is proved unconditionally by the
+Krull-height-theorem route ---
 full height of maximal ideals of polynomial rings
 (\cref{lem:mvPolynomial_height_eq_natCard_of_isMaximal}), the height
 lower bound at maximal ideals of standard-smooth algebras
@@ -814,9 +662,11 @@ cotangent upper bound
 (\cref{lem:regular_of_finrank_cotangent_le_dim}) --- which needs no
 regular-sequence witness. The Matsumura regular-sequence lemma itself
 survives as \cref{lem:matsumura_isRegular_of_linearIndependent_cotangent}.
-The general (non-closed) point case of Stacks 00OE remains open, gated on
-the localisation-of-regular-local-rings lemma (Stacks \texttt{00OF}),
-absent from Mathlib.
+The general (non-closed) point case does not require the
+localisation theorem for regular local rings (Stacks \texttt{00OF}) at all:
+regularity at an arbitrary prime is obtained directly, Serre-free, by the
+trdeg--height route of \cref{subsec:smooth_prime_regularity}
+(\cref{thm:standard_smooth_regular_at_prime}).
 
 \subsection{Substrate lemmas for Stacks 00OE and the scheme bridges}
 \label{subsec:codim1_substrate_lemmas}
@@ -1414,8 +1264,7 @@ sequence at an arbitrary prime.
 \end{lemma}
 
 \begin{proof}
-  Proved directly in Lean (modulo the named Stacks 00TT regularity gap of
-  \cref{lem:smooth_to_regular_local_ring}): smoothness gives a regular local stalk via
+  Smoothness gives a regular local stalk via
   \cref{lem:smooth_to_regular_local_ring}; the coheight bridge
   \cref{thm:ringKrullDim_stalk_eq_coheight} gives Krull dimension \(1\); the
   cotangent-space characterisation of regularity then forces
@@ -1457,24 +1306,9 @@ sequence at an arbitrary prime.
 
 \begin{proof}
 
-  % NOTE (iter-185 writer): the `` marker on this proof block reflects
-  % the Krull-dim half (Tier-1 axiom-clean closure achieved iter-184 via
-  % `Scheme.ringKrullDim_stalk_eq_coheight` from the iter-183
-  % `Albanese/CoheightBridge.lean`, see
-  % `\cref{chap:Albanese_CoheightBridge}`). The `IsRegularLocalRing` half is
-  % tracked separately as the Stacks 00TT gap and is now packaged in
-  % `\cref{lem:smooth_to_regular_local_ring}` above; that block carries no
-  % `` because the Mathlib hooks (i)--(iv) in its proof sketch are not
-  % all axiom-clean at commit `b80f227`. The composition (00TT regularity +
-  % iter-183 Krull-dim bridge) inside the private Lean helper
-  % `smooth_codim_one_maximalIdeal_isPrincipal_and_ne_bot`
-  % (`AlgebraicJacobian/Albanese/CodimOneExtension.lean:223`) keeps a single
-  % typed `sorry` on the regularity half pending an iter-185+ prover round.
   By \cref{lem:smooth_to_regular_local_ring} (Stacks tag \texttt{00TT}, the
-  Jacobian-criterion direction), the stalk \(\mathcal O_{X, x}\) is regular for
-  every point \(x \in X\) --- in particular at every closed point (the case
-  Hartshorne~I.5.1 states classically). Localising a regular local ring at a
-  prime ideal yields a regular local ring; in particular, for \(\eta \in X\) with
+  Jacobian-criterion direction), the stalk \(\mathcal O_{X, x}\) is regular at
+  every point \(x \in X\); in particular, for \(\eta \in X\) with
   \(\mathrm{codim}_X \overline{\{\eta\}} = 1\), the local ring
   \(\mathcal O_{X, \eta}\) is regular of Krull dimension \(1\). A regular local ring of Krull dimension \(1\) is exactly a
   discrete valuation ring (Atiyah--Macdonald, Proposition 9.2; or Stacks tag
@@ -1489,8 +1323,7 @@ sequence at an arbitrary prime.
   \texttt{[Smooth\,(\dots)\,X.hom]\ [IsIntegral X.left]} and the hypothesis
   \texttt{Order.coheight\ \(\eta\) = 1}. The fraction-field identification with
   \texttt{X.functionField} is a downstream named instance
-  \texttt{Scheme.fractionRing\_localRing\_eq\_functionField} (or whatever Mathlib name
-  the prover chooses at commit \texttt{b80f227}). The regular-local-ring-of-dimension-1
+  \texttt{Scheme.fractionRing\_localRing\_eq\_functionField}. The regular-local-ring-of-dimension-1
   \(\Leftrightarrow\) DVR equivalence is shipped in Mathlib as
   \texttt{IsRegularLocalRing.isDiscreteValuationRing\_of\_dim\_one} (or analogous);
   the prover re-exports it rather than re-proving.
@@ -1854,25 +1687,19 @@ the extension fails at a prime divisor \(W\) if and only if some affine coordina
 \begin{remark}
   \label{rmk:mem_domain_partial_map_reshuffle_scope}
   \textbf{Relationship to \texttt{thm:weil_divisor_obstruction}.}
-  \texttt{lem:mem_domain_partial_map_reshuffle} is the iter-179 Lane~D honest
-  fallback for the substantive Hartshorne-II.6 ``regular = no pole''
-  reformulation that \texttt{thm:weil_divisor_obstruction} states in its full
-  \(\ord_W \geq 0\) form. The reshuffle captures only the
-  definitional half of the equivalence (existence of a partial-map
-  representative through a prime-divisor generic point); upgrading it to the
-  substantive \(\ord_W \geq 0\) form requires the
-  \texttt{Scheme.RationalMap}-to-function-field pullback machinery, which is
-  not shipped by Mathlib at commit \texttt{b80f227}. See the iter-179
-  \texttt{\% NOTE} block on \texttt{thm:weil_divisor_obstruction} for the
-  history.
+  \texttt{lem:mem_domain_partial_map_reshuffle} records the definitional half of
+  the Hartshorne-II.6 ``regular = no pole'' reformulation that
+  \texttt{thm:weil_divisor_obstruction} states in its full \(\ord_W \geq 0\)
+  form: it provides a partial-map representative through a prime-divisor generic
+  point. The full \(\ord_W \geq 0\) form additionally requires the pullback of a
+  rational map to the function field, which is the content of
+  \texttt{thm:weil_divisor_obstruction}.
 \end{remark}
 
 \section{Lean encoding}
 \label{sec:codim1_lean_encoding}
 
-The Lean target file is the new
-\texttt{AlgebraicJacobian/Albanese/CodimOneExtension.lean}. The declarations to
-introduce, in order:
+The chapter's declarations correspond, in order, to the following Lean targets:
 
 \begin{enumerate}
   \item \texttt{AlgebraicGeometry.Scheme.RationalMap.indeterminacyLocus} ---
@@ -1903,81 +1730,15 @@ introduce, in order:
     variety \(X\), a group scheme \(G\) over \(\bar k\) that is a variety (smooth, finite
     type, separated), and \(f \colon X \dashrightarrow G\) rational, conclude that
     \(Z(f)\) is either empty or of pure codimension \(1\) in \(X\).
-  \item % NOTE (iter-184 review): the declaration name `extend\_iff\_order\_nonneg`
-        % was RETIRED in iter-179 (renamed to
-        % `mem\_domain\_iff\_exists\_partialMap\_through\_point`; per the
-        % iter-179 review of auditor 178B). The new declaration is at
-        % AlgebraicJacobian/Albanese/CodimOneExtension.lean:492.
-        % NOTE (iter-185 writer): the lightweight blueprint home for the
-        % reshuffle now exists at \texttt{lem:mem_domain_partial_map_reshuffle};
-        % the substantive Hartshorne-II.6 `ord_W \geq 0` form remains at
-        % \texttt{thm:weil_divisor_obstruction} (unpinned until the
-        % `Scheme.RationalMap` -> function-field pullback machinery lands).
-    \texttt{AlgebraicGeometry.Scheme.RationalMap.mem\_domain\_iff\_exists\_partialMap\_through\_point}
-    --- the iter-179 definitional reshuffle pinned at
+  \item \texttt{AlgebraicGeometry.Scheme.RationalMap.mem\_domain\_iff\_exists\_partialMap\_through\_point}
+    --- the definitional reshuffle pinned at
     \texttt{lem:mem_domain_partial_map_reshuffle}. The substantive
     Hartshorne-II.6 ``regular = no pole'' Weil-divisor reformulation lives
-    at \texttt{thm:weil_divisor_obstruction} (unpinned at the chapter level;
-    the iter-179 detach \texttt{\% NOTE} on that theorem block explains the
-    reshuffle). Re-uses
+    at \texttt{thm:weil_divisor_obstruction}. Re-uses
     \texttt{AlgebraicGeometry.Scheme.RationalMap.order} from
     \cref{chap:RiemannRoch_WeilDivisor} (the order map at a prime divisor).
 \end{enumerate}
 
-\paragraph{Mathlib readiness audit.} At commit \texttt{b80f227} the prover should
-verify:
-\begin{itemize}
-  \item \texttt{Scheme.RationalMap.domain} is shipped at
-    \texttt{Mathlib.AlgebraicGeometry.Birational.RationalMap}; its complement
-    \texttt{indeterminacyLocus} is a one-line definition.
-  \item The valuative criterion of properness in Mathlib form is
-    \texttt{AlgebraicGeometry.IsProper.valuative\_criterion} (or analogous); the
-    prover invokes this in Step~1 of \cref{thm:codim_one_extension}'s proof.
-  \item % NOTE (iter-184 review): the previous claim that Mathlib's
-        % \texttt{AlgebraicGeometry.Smooth} ``bundles the regular-local-rings
-        % hypothesis'' was FALSE at b80f227 — empirically verified by
-        % lean-vs-blueprint-checker iter184-codimone. The implication
-        % \texttt{Smooth X.hom + [IsAlgClosed kbar] $\Rightarrow$ IsRegularLocalRing
-        % (X.left.presheaf.stalk z)} is a Mathlib GAP (Stacks tag 00TT, the
-        % Jacobian-criterion direction), not a bundled instance. The
-        % \texttt{Krull-dim} half of \texttt{lem:smooth\_codim\_one\_dvr} now
-        % closes axiom-clean via \texttt{Scheme.ringKrullDim\_stalk\_eq\_coheight}
-        % (iter-183 \texttt{Albanese/CoheightBridge.lean}) + \texttt{exact\_mod\_cast};
-        % the \texttt{IsRegularLocalRing} half remains as a typed sorry pending
-        % Stacks 00TT formalisation (iter-185+ blueprint-expansion required).
-        % Once \texttt{IsRegularLocalRing} is in scope, the closure
-        % ``regular local + Krull dim 1 = DVR'' goes via
-        % \texttt{IsDiscreteValuationRing.TFAE.out 0 4} (the iter-178
-        % closure pattern).
-        The DVR-at-codim-1 lemma reduces to ``regular local of dim 1 = DVR''
-    (\texttt{IsDiscreteValuationRing.TFAE.out 0 4}; the iter-178 closure pattern).
-    The bridge \texttt{Smooth X.hom + [IsAlgClosed kbar] $\Rightarrow$
-    IsRegularLocalRing (stalk z)} is the Stacks 00TT gap — see the iter-184 note above.
-  \item Mathlib's product-of-smooth-is-smooth instance,
-    \texttt{AlgebraicGeometry.Smooth.comp\_pullback} / equivalent, is needed in
-    \cref{lem:milne_codim1_indeterminacy}'s Sub-step~4 to apply the Weil-divisor
-    machinery to \(X \times X\).
-  \item The local-cohomology vanishing in Step~2 of
-    \cref{thm:codim_one_extension}'s proof
-    (\(H^0_{\{x\}}(V, \mathcal O_X) = H^1_{\{x\}}(V, \mathcal O_X) = 0\) at a
-    depth-\(\geq 2\) point) is a substantial Mathlib gap as of \texttt{b80f227}; the
-    prover's options are (i) prove the depth-\(\geq 2\) extension property as a local
-    lemma using the \texttt{Module.depth} / Auslander--Buchsbaum machinery of
-    \cref{chap:Albanese_AuslanderBuchsbaum}, or (ii) reformulate
-    \cref{thm:codim_one_extension} in the weaker ``surface'' form
-    (where \(X\) has \(\dim 2\), so codim-\(\geq 2\) means closed points only and the
-    extension is the classical Hartshorne~III.7.1 ``smooth-surface point removal''
-    argument). For the consumer \cref{chap:Albanese_Thm32RationalMapExtension} only
-    the surface case is needed in practice (the symmetric product \(C^{(g)}\) is
-    smooth, and the Abel--Jacobi map's intermediate-step indeterminacy lives on a
-    smooth surface inside \(C^{(g)} \times C^{(g)}\)).
-\end{itemize}
-
-No new core axiom is required. The proof of \cref{lem:milne_codim1_indeterminacy} is
-purely Weil-divisor manipulation on a smooth variety and is the cleanest part of
-the chapter; the substance of the Lean engineering is in
-\cref{thm:codim_one_extension}'s proof, both halves of which rest on Mathlib API
-gaps the prover must either fill in or work around.
 
 \section{Out of scope}
 \label{sec:codim1_out_of_scope}

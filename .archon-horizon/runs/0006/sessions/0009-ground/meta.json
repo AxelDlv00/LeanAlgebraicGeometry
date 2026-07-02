@@ -1,0 +1,15 @@
+{
+  "role": "ground",
+  "round": 2,
+  "status": "ok",
+  "engine_session_id": "9085a3d7-dfae-49aa-a1ad-c1f0a3ef5ff8",
+  "harness_name": "ground-default",
+  "harness_kind": "claude-code",
+  "model": "claude-opus-4-8",
+  "usage": {
+    "tokens_in": 12119,
+    "tokens_out": 44425,
+    "cost_usd": 11.285503000000002
+  },
+  "workspace_sha": "08fe0b24df9d008bda88d53eef983e14ba3f62c2"
+}

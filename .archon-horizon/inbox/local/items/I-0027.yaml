@@ -18,27 +18,28 @@ body: 'Recipe: Stacks 00OE/00TT closed-point regularity for standard-smooth alge
 
   - Lower bound `n ≤ ht m` in standard-smooth `S`: pull `m` back along `P.algebraMap_surjective`
   of the submersive presentation; `Ideal.height_le_height_add_spanFinrank_of_le` (Krull
-  height thm, relative form) + `spanFinrank(ker) ≤ #σ` via `P.span_range_relation_eq_ker`
-  (note `P.ker` unfolds to `RingHom.ker (algebraMap P.Ring S)` by rfl-level abbrevs);
+  height thm, relative form) + `spanFinrank(ker) ≤ #σ` via `P.span_range_relation_eq_ker`;
   quotient side identified with `m` via `RingHom.quotientKerEquivOfSurjective_apply_mk`
   + `Ideal.map_comap_of_surjective`; cancel in ℕ∞ with `ENat.add_le_add_iff_right`.
 
-  - Upper bound is free: `IsRegularLocalRing.of_spanFinrank_maximalIdeal_le` + `IsLocalRing.spanFinrank_maximalIdeal_eq_finrank_cotangentSpace`
-  — a Noetherian local ring with `finrank Cotangent ≤ ringKrullDim` is regular.
+  - Upper bound is free: `IsRegularLocalRing.of_spanFinrank_maximalIdeal_le` + `IsLocalRing.spanFinrank_maximalIdeal_eq_finrank_cotangentSpace`.
 
   - k̄-rationality of maximal ideals: `finite_of_finite_type_of_isJacobsonRing` (Zariski)
   + `IsAlgClosed.algebraMap_bijective_of_isIntegral` + `Ideal.bijective_algebraMap_quotient_residueField`.
   **Trap:** install `letI := Ideal.Quotient.field m` BEFORE any other `haveI` on `S
   ⧸ m` (FiniteType, Module.Finite) — installing it after poisons `Algebra k (S ⧸ m)`
-  synthesis inside later applications (semiring-key mismatch; `respectTransparency
-  false` does NOT fix it; Field-first ordering does — same idiom as Mathlib''s `finite_of_algHom_finiteType_of_isJacobsonRing`).
+  synthesis (semiring-key mismatch; `respectTransparency false` does NOT fix it; Field-first
+  ordering does).
 
 
-  **Remaining genuine gap for all-points `isRegularLocalRing_stalk_of_smooth`: Stacks
-  00OF** (localisation of regular local is regular) — needs Serre''s finite-global-dimension
-  characterisation, absent from Mathlib v4.31 (`IsRegularLocalRing` has only `RegularLocalRing/Defs.lean`).
-  At non-closed points (ii.A) correctly fails (`finrank Cotangent = ht z ≠ n`). Do
-  not attempt 00OF as a side quest — it is a large homological build.'
+  **SUPERSEDED for the all-points case (run 0006 T6): Stacks 00OF is NO LONGER needed.**
+  The old claim here — "remaining genuine gap for all-points `isRegularLocalRing_stalk_of_smooth`
+  is Stacks 00OF, do not attempt" — is now false. See [[I-0047]]: `Albanese/SmoothPrimeRegularity.lean`
+  proves regularity at EVERY prime of a standard-smooth algebra over a perfect field,
+  Serre-free (trdeg–height induction via Stacks 00ON + conormal split-exactness from
+  `FormallySmooth.of_perfectField`), so `isRegularLocalRing_stalk_of_smooth` / `localRing_dvr_of_codim_one`
+  are now axiom-clean. This closed-point recipe is retained only for its k̄-rationality
+  trap and the maximal-ideal API details.'
 labels:
 - agent-ready
 status: open
@@ -47,7 +48,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-02T03:00:21.313046+00:00'
-updated_at: '2026-07-02T03:00:21.313056+00:00'
+updated_at: '2026-07-02T06:58:50.801402+00:00'
 metadata:
   provenance:
     run: '0002'

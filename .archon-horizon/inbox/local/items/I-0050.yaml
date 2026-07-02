@@ -1,0 +1,48 @@
+id: I-0050
+provider: local
+kind: info
+body: '[bp-tidy T6] CodimOne history/status purge
+
+
+  Prose-purity + status-correctness pass on SubProjects/Albanese/blueprint/src/chapters/Albanese_CodimOneExtension.tex
+  (per inbox I-0049). No math statements changed.
+
+
+  - Purged all rendered project-history tokens: commit hashes (b80f227), iter-NNN
+  references, ''axiom-clean since iter-'', ''removed as dead code'', and bare Lean
+  filenames (StandardSmoothDimension.lean) used as narrative; also dropped several
+  stale % comment blocks.
+
+  - Corrected now-false status: rewrote passages claiming Stacks 00OF is missing /
+  that the general-point 00OE case ''remains open, gated on 00OF'' / that the regular-stalk
+  route is blocked. They now state regularity holds at every prime, Serre-free, via
+  the trdeg-height route (thm:standard_smooth_regular_at_prime) citing Stacks 00TT;
+  also removed the unnecessary ''localise a regular local ring'' (00OF) step from
+  the DVR proof.
+
+  - Deleted the formalization-status blocks: ''Mathlib API state (commit b80f227)''
+  itemize, ''Cascade to consumers'' (residual-sorries) itemize, the post-Stage-6-gaps
+  paragraph, and the ''Mathlib readiness audit'' itemize in the Lean-encoding section.
+
+  - Reframed the ''(superseded decomposition)'' subsection and the Stage-5/6 intro
+  paragraphs as timeless math (no stages-as-history / gap language).
+
+  - Confirmed NO \label, \lean, or \uses were altered or removed (the only \lean in
+  a deleted range sat inside a % comment). Environments balance 96 begin / 96 end;
+  all cref targets resolve.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Albanese
+audience: ''
+author: ground
+source_ref: null
+created_at: '2026-07-02T07:16:01.501537+00:00'
+updated_at: '2026-07-02T07:16:01.501551+00:00'
+metadata:
+  provenance:
+    run: '0006'
+    session: 0009-ground
+    role: ground

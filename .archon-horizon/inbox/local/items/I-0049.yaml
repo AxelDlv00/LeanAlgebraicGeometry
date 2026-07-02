@@ -1,0 +1,64 @@
+id: I-0049
+provider: local
+kind: issue
+body: '[bp-review T6] Blueprint changes for SmoothPrimeRegularity + indeterminacy_codimGe2
+  are mathematically sound; two minor findings to tidy.
+
+
+  CORE VERDICT: PASS. The 7 new nodes in subsec:smooth_prime_regularity all have correct
+  1-to-1 Lean pins (Polynomial.step_height_trdeg_of_isPrime, MvPolynomial.exists_le_trdeg_and_natCard_le_height_add,
+  Algebra.IsStandardSmoothOfRelativeDimension.exists_le_trdeg_and_natCast_le_height_add,
+  Algebra.rank_kaehlerDifferential_eq_trdeg, finrank_cotangentSpace_add_finrank_kaehler_residueField,
+  isRegularLocalRing_of_isLocalization_atPrime_of_isStandardSmooth_of_perfectField).
+  SmoothPrimeRegularity.lean and StandardSmoothDimension.lean are both sorry-free
+  and compiled (oleans present); signatures match the LaTeX (hypotheses, trdeg/height
+  directions, conormal identity, perfect-field/EssFiniteType assumptions all correct).
+  All \uses targets on changed nodes resolve; no dangling refs to the ~9 removed MvPolynomial/submersive
+  substrate labels. The rewritten smooth_to_regular_local_ring proof is now pure and
+  routes correctly through thm:standard_smooth_regular_at_prime.
+
+
+  LEANOK HONESTY: correct. thm:indeterminacy_codimGe2 pins indeterminacy_codimGe2_of_smooth_of_complete
+  (CodimOneExtension.lean:1374, body = sorry); node marks \leanok on the STATEMENT
+  line only, proof block has NO \leanok. Same for thm:codim_one_extension (Lean sorry,
+  not \leanok). Honest per statement-level convention.
+
+
+  FINDING 1 (math-purity, minor): The rewritten narrative subsections in Albanese_CodimOneExtension.tex
+  (subsec:codim1_substrate_lemmas and the ''superseded decomposition'' paragraph)
+  still leak implementation/project history in ADDED lines: commit hash ''b80f227'',
+  ''proved axiom-clean'', ''removed as dead code'', Lean filename ''StandardSmoothDimension.lean''.
+  The run greatly reduced this (-894 lines) but did not fully purge it. Non-node prose;
+  pre-existing pattern.
+
+
+  FINDING 2 (dead placeholder pins, minor): Now off the critical path (dropped from
+  smooth_to_regular_local_ring \uses), the two nodes lem:stage6_regular_stalk_assembly
+  and lem:smooth_algebra_krull_dim_formula have \lean{} pins (AlgebraicGeometry.TODO.stage6_regular_stalk_assembly
+  and Algebra.IsStandardSmoothOfRelativeDimension.ringKrullDim_localization_eq_relativeDimension)
+  that do NOT resolve to any Lean declaration (absent from source at HEAD and now;
+  only listed in blueprint/lean_decls). They do not create dangling DAG edges and
+  are correctly NOT \leanok, but they break 1-to-1 correspondence (pin -> nonexistent
+  decl) and are superseded by the arbitrary-prime route. Candidates for removal.
+
+
+  NOTE (not a finding): thm:standard_smooth_regular_at_prime LaTeX says ''standard-smooth
+  of relative dimension n'' while the Lean uses [Algebra.IsStandardSmooth k S] with
+  n derived internally; conclusion unaffected, acceptable.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Albanese
+audience: ground
+author: ground
+source_ref: null
+created_at: '2026-07-02T07:02:16.528742+00:00'
+updated_at: '2026-07-02T07:02:16.528753+00:00'
+metadata:
+  provenance:
+    run: '0006'
+    session: 0009-ground
+    role: ground
+  agent: blueprint-reviewer
