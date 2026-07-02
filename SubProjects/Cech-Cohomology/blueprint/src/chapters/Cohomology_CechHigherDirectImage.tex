@@ -313,7 +313,8 @@ bricks, and the functor laws assembling them are the lone coherence statement.
   the pushforward along \(p\) of the pullback \(p^*\mathcal{F}\).
 \end{definition}
 
-\begin{definition}[Push--pull comparison map]
+\begin{definition}\leanok
+[Push--pull comparison map]
   \label{def:push_pull_map}
   \lean{AlgebraicGeometry.pushPullMap, AlgebraicGeometry.rawPushPullMap, AlgebraicGeometry.pushPullMap_eq_raw, AlgebraicGeometry.rawPushPullMap_self, AlgebraicGeometry.rawPushPullMap_self_gen, AlgebraicGeometry.pushforwardComp_hom_app_id, AlgebraicGeometry.pushPull_unit_comp}
   \uses{def:push_pull_obj}
@@ -362,6 +363,8 @@ bricks, and the functor laws assembling them are the lone coherence statement.
 \end{proof}
 
 \begin{lemma}
+
+\leanok
 [Push--pull functor — composition law]
   \label{lem:push_pull_comp}
   \lean{AlgebraicGeometry.pushPullMap_comp, AlgebraicGeometry.rawPushPullMap_comp, AlgebraicGeometry.pushPull_pentagon}
@@ -379,6 +382,8 @@ bricks, and the functor laws assembling them are the lone coherence statement.
 \end{lemma}
 
 \begin{proof}
+
+\leanok
   \uses{lem:push_pull_unit_mate, lem:push_pull_transport_cancel}
   The composition identity \(G(g \circ h) = G(h) \circ G(g)\) follows from three
   coherence facts. First, the composite adjunction unit \(\eta^{g \circ h}\) decomposes into

@@ -1543,7 +1543,7 @@ instance W_isMonoidal : (sheafificationW X).IsMonoidal where
   whiskerLeft Z {Y₁ Y₂} g hg :=
     ((sheafificationW X).arrow_mk_iso_iff
       (Arrow.isoMk (β_ Z Y₁) (β_ Z Y₂)
-        (by simp [BraidedCategory.braiding_naturality_right]))).2
+        (by exact (BraidedCategory.braiding_naturality_right Z g).symm))).2
       (ztensor_whisker_localIso g hg Z)
 
 /-- The preferred unit isomorphism feeding the monoidal-localization transport: the underlying
