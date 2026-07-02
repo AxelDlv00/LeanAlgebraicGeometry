@@ -1,0 +1,22 @@
+## Summary
+
+- **Milne 3.3 Substep 4a — pole-divisor purity — is proved, axiom-clean**, in new `AlgebraicJacobian/Albanese/PolePurity.lean` (617 LOC): on a locally Noetherian integral scheme with regular stalks, an $h \in K(X)$ not regular at $P$ has a pole at a coheight-1 generization $z \rightsquigarrow P$ — exactly the "pole divisors are pure codim 1" input to `indeterminacy_pure_codim_one_into_grpScheme`, in the pinned disjunct shape.
+- **Novel route**: Mathlib v4.31 lacks regular⟹UFD (Auslander–Buchsbaum), Serre normality, and Krull-domain theory, so the classical normality proof was unavailable. Replaced by an elementary **swap-pair computation** ($b(ut-vs)=0$) killing associated primes $((b):x)$ of height ≥ 2, powered by the project's own 00NP assets (`isDomain_of_regularLocal`, `regularLocal_quotient_isRegularLocal_of_notMemSq` — both confirmed axiom-clean).
+- Task targets 1 (dead-code chain) and 3 (Thm32 branch) were already done by session 0015; live state reduced T6 to Milne 3.3, matching Ground's `ALB.codim1` recommendation.
+
+## Progress
+
+- All 5 new decls kernel-checked: axioms = `propext, Classical.choice, Quot.sound` only; full `lake build` green (8583 jobs), zero new warnings.
+- Wired into the cone: imported by `CodimOneExtension.lean`; the 3.3 plan comment now records 4a closed, 4b + substeps 1–3 remaining.
+- Blueprint: new node `lem:pole_divisor_purity` (complete math proof, `\leanok` statement+proof, 5 `\lean` pins, Milne/Matsumura sources), `\uses`-wired into `lem:milne_codim1_indeterminacy`'s proof; `blueprint/lean_decls` updated (+5).
+- Ledger commit `b75986bf31` (4 files); progress comment on `I-0066`; recipe memory `I-0068` (includes the generic-point-of-fiber slicing trick that resolves the non-closed-point worry in Substep 2, and Lean gotchas: instance-binder `∀ (q) [q.IsPrime]`, `smul_eq_mul` via explicit `rw`, beta-unreduced `mk'_surjective`).
+
+## Issues
+
+- None open from this session: build green, no stray files (scratch was in `/tmp`), no new sorries. `CodimOneExtension.lean` still has exactly its 1 pre-existing sorry (Milne 3.3 itself).
+- Blueprint LaTeX not compiled locally (no leanblueprint run here); env balance and label existence checked manually.
+
+## Next
+
+- **Roadmap `ALB.codim1` stays active**: Milne 3.3 now needs (a) substeps 1–3 — difference map $\Phi(x,y)=f(x)f(y)^{-1}$ via `GrpObj`, the slice argument, and the $\Phi^*\mathcal O_{G,e}$ function-field pullback bridge (the large build, also blocking `thm:weil_divisor_obstruction`); (b) substep 4b — the diagonal-intersection Krull bound (Mathlib's `ringKrullDim_le_ringKrullDim_add_card` is the tool; diagonal ideal $n$-generation from smoothness still to build).
+- Suggested next session: build substep 4b as a standalone lemma (self-contained commutative algebra + conormal), then start the difference-map substrate.

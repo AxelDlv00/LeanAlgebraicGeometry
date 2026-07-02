@@ -1,0 +1,70 @@
+id: I-0068
+provider: local
+kind: memory
+body: 'Recipe: pole-divisor purity WITHOUT normality/UFD of regular local rings (Albanese
+  `PolePurity.lean`, axiom-clean) — reuse for any "unmixedness of principal ideals"
+  need.
+
+
+  Mathlib v4.31 has NO regular⟹UFD (Auslander–Buchsbaum), NO Serre normality criterion,
+  NO Krull-domain $R=\bigcap_{\mathrm{ht}=1}R_\mathfrak p$; `RingTheory/RegularLocalRing/`
+  is only `Defs.lean`. Do not build those. The elementary substitute chain:
+
+
+  - **Swap lemma** (`mem_span_singleton_of_swap_pair`): domain, $u\ne 0$, $v$ regular
+  mod $(u)$, $ux, vx \in (b)$ ⟹ $x \in (b)$ via $b(ut-vs)=0$. Replaces the determinant
+  trick / integral-closedness entirely.
+
+  - **Regular pair in regular local of dim ≥ 2** (`IsRegularLocalRing.exists_swap_pair_of_two_le_ringKrullDim`):
+  $u \in \mathfrak m\setminus\mathfrak m^2$ + project lemmas `RingTheory.CohenMacaulay.regularLocal_quotient_isRegularLocal_of_notMemSq`
+  and `isDomain_of_regularLocal` (00NP, AuslanderBuchsbaum.lean — CONFIRMED axiom-clean);
+  pick $v$ lifting a nonzero element of the quotient''s maximal ideal.
+
+  - **Ass-prime height bound** (`Ideal.height_le_one_of_colon_span_singleton`): prime
+  $Q=((b):y)$ with $A_Q$ regular ⟹ $\mathrm{ht}\,Q\le 1$; the colon persists to $\mathfrak
+  m_{A_Q}$ (map ≤ colon via `Localization.AtPrime.map_eq_maximalIdeal`, colon proper
+  ⟹ ≤ maximalIdeal).
+
+  - **Main thm over $R_\mathfrak p$** so the associated prime lands below $\mathfrak
+  p$ (`exists_le_isAssociatedPrime_of_isNoetherianRing` + `isAssociatedPrime_iff`);
+  transfer with the golden Mathlib trio: `IsLocalization.height_under` (heights under
+  comap of localization), `IsLocalization.localizationLocalizationAtPrimeIsoLocalization`
+  (double localization ≃ₐ), `IsRegularLocalRing.of_ringEquiv`.
+
+  - **Scheme wrapper traps**: state membership as `algebraMap (X.presheaf.stalk z)
+  X.functionField).range` (instances `stalkFunctionFieldAlgebra`, `functionField_isScalarTower`,
+  `functionField_isFractionRing_of_isAffineOpen` are all ready-made for integral X);
+  point-from-prime via `hU.fromSpec` + `hU.isLocalization_stalk''` (takes the PrimeSpectrum
+  point directly — no primeIdealOf round-trip); `Order.coheight z = 1` via CoheightBridge
+  `ringKrullDim_stalk_eq_coheight` + `IsLocalization.AtPrime.ringKrullDim_eq_height`.
+  Hypotheses of form `∀ q, IsRegularLocalRing (Localization.AtPrime q)` MUST use instance
+  binder `∀ (q : Ideal R) [q.IsPrime], …` (plain `→` fails elaboration). `Submodule.mem_colon_singleton`
+  gives `r • y ∈ …` — always explicit `rw [smul_eq_mul]`, never `simpa [smul_eq_mul]
+  using` (fails). `IsLocalization.mk''_surjective` returns a beta-unreduced match
+  — fix with `replace hcs : IsLocalization.mk'' … = g := hcs`. Quotient-module annihilator
+  bridge: `Algebra.smul_def` + `Ideal.Quotient.algebraMap_eq` (NOT `map_smul`/`Submodule.Quotient.mk_smul`).
+
+
+  Remaining Milne 3.3 gaps after this: substeps 1–3 (difference rational map + slicing
+  + $\Phi^*\mathcal O_{G,e}$; needs function-field pullback for `Scheme.RationalMap`)
+  and 4b (diagonal codim bound: `ringKrullDim_le_ringKrullDim_add_card` in Mathlib
+  `KrullDimension/Regular.lean` is the Krull tool; diagonal ideal $n$-generation from
+  smoothness still to build). For non-closed diagonal points, the slicing in substep
+  2 works at the GENERIC point of the fiber $\mathrm{pr}_1^{-1}(x) = \operatorname{Spec}\kappa(x)\times_{\bar
+  k}X$ (irreducible by geometric irreducibility; its generic point maps to $\eta_X
+  \in \mathrm{Dom}(f)$ under $\mathrm{pr}_2$) — this resolves the "Milne argues with
+  closed points" worry.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-02T09:48:53.979024+00:00'
+updated_at: '2026-07-02T09:48:53.979034+00:00'
+metadata:
+  provenance:
+    run: '0006'
+    session: 0019-horizon-T6
+    role: horizon
