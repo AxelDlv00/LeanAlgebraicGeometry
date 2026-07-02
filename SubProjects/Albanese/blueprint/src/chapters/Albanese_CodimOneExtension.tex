@@ -375,11 +375,11 @@ named iter-199+ prover targets.
   \label{lem:smooth_algebra_krull_dim_formula}
   \lean{Algebra.IsStandardSmoothOfRelativeDimension.ringKrullDim_localization_eq_relativeDimension}
   \uses{lem:rank_kaehler_localization_eq_relative_dim,
-        lem:ringKrullDim_localization_atMaximal_mvPolynomial,
-        lem:ringKrullDim_quotient_localization_mvPolynomial_regular,
+        lem:mvPolynomial_height_eq_natCard_of_isMaximal,
+        lem:standard_smooth_le_height_of_isMaximal,
+        lem:standard_smooth_le_ringKrullDim_localization,
         lem:matsumura_isRegular_of_linearIndependent_cotangent,
-        lem:exists_submersivePresentation_of_standardSmoothReldim,
-        lem:submersive_relation_cotangent_linearIndependent_localized}
+        lem:exists_submersivePresentation_of_standardSmoothReldim}
   % SOURCE: [Stacks Project], lemma-dimension-at-a-point-finite-type-field
   % (canonically known as tag 00OE; tag-to-label cross-check not in the
   % local `tags/tags` file, see iter-198 writer report note) (read from
@@ -436,11 +436,11 @@ named iter-199+ prover targets.
 % The lemma follows."
 \begin{proof}
   \uses{lem:rank_kaehler_localization_eq_relative_dim,
-        lem:ringKrullDim_localization_atMaximal_mvPolynomial,
-        lem:ringKrullDim_quotient_localization_mvPolynomial_regular,
+        lem:mvPolynomial_height_eq_natCard_of_isMaximal,
+        lem:standard_smooth_le_height_of_isMaximal,
+        lem:standard_smooth_le_ringKrullDim_localization,
         lem:matsumura_isRegular_of_linearIndependent_cotangent,
-        lem:exists_submersivePresentation_of_standardSmoothReldim,
-        lem:submersive_relation_cotangent_linearIndependent_localized}
+        lem:exists_submersivePresentation_of_standardSmoothReldim}
   This is exactly Stacks tag~\texttt{00OE}
   (\texttt{lemma-dimension-at-a-point-finite-type-field}); the proof is a
   citation of the dimension theory of finitely generated algebras over a
@@ -702,19 +702,12 @@ pieces are needed to formalise Stages 6.A--6.C; status as audited iter-198.
     (\texttt{Mathlib/RingTheory/Ideal/Height.lean}). EXISTS.
   \item \texttt{Algebra.IsStandardSmoothOfRelativeDimension.\linebreak ringKrullDim\_localization\_eq\_relativeDimension}
     (the project's name for Stage 6.A, Stacks 00OE) --- MISSING in
-    Mathlib at \texttt{b80f227} as a packaged form. Iter-200 closed the
-    polynomial-ring side axiom-clean via 7 \texttt{private} substrate
-    declarations in \texttt{CodimOneExtension.lean} L688--L800 (see
-    \ref{subsec:stage6_iib_substrate_iter200}): the height-of-maximal-ideal
-    formula \texttt{MvPolynomial.maximalIdeal\_height\_eq\_card / \_eq\_natCard}
-    on \texttt{MvPolynomial} \(k\) is in hand by induction on \texttt{Fin n}
-    via \texttt{Polynomial.height\_eq\_height\_add\_one}; the capstone
-    \texttt{ringKrullDim\_localization\_atMaximal\_MvPolynomial} composes
-    Steps 1+2 into a single consumer call. Residual at iter-201 is
-    Step 3: a Jacobian-criterion regular-sequence witness for the
-    relations of the smooth-algebra presentation (Stacks 00SW / 00OW,
-    \(\sim 30-60\) LOC project-side; recipe in
-    \ref{subsec:stage6_iib_substrate_iter200} below).
+    Mathlib at \texttt{b80f227} as a packaged form. The closed-point
+    case is proved axiom-clean in
+    \texttt{StandardSmoothDimension.lean} via the Krull-height-theorem
+    route (see \ref{subsec:stage6_iib_substrate_iter200}); the
+    general-point form of 00OE remains open, gated on Stacks
+    \texttt{00OF} below.
   \item \texttt{KaehlerDifferential.exact\_mapBaseChange} (the
     conormal-sequence right-exactness, \(=\) Stacks
     \texttt{lemma-differential-seq}) --- EXISTS in Mathlib at
@@ -748,7 +741,7 @@ pieces are needed to formalise Stages 6.A--6.C; status as audited iter-198.
     \texttt{grep} of \texttt{Mathlib/RingTheory/RegularLocalRing/}
     that only \texttt{Defs.lean} is present). The
     closed-point-to-arbitrary-point alternative route through this
-    lemma is therefore also gated. The main Step A1 route does not
+    lemma is therefore also gated. The closed-point route does not
     need this lemma (see
     \cref{subsec:stage6_iib_substrate_iter200}).
 \end{itemize}
@@ -800,341 +793,39 @@ consumed by \texttt{thm:weil_divisor_obstruction} and Sub-step~3 of
 Stage 6 work, so the three sub-lemmas above are a self-contained
 mathlib-analogist target.
 
-\subsection{Stage 6.A iter-200 substrate: Stacks 00OE 3-step decomposition}
+\subsection{Stacks 00OE closed-point substrate (superseded decomposition)}
 \label{subsec:stage6_iib_substrate_iter200}
-\textit{Source: \texttt{coe-stacks00oe} mathlib-analogist
-cross-domain-inspiration recipe (iter-200, persistent
-\texttt{analogies/coe-stacks00oe.md}); 7 axiom-clean
-\texttt{private} substrate theorems landed in
-\texttt{CodimOneExtension.lean} L688--L800 under
-\texttt{namespace AlgebraicGeometry.Scheme}.}
 
-The iter-200 Lane COE prover phase decomposed Stage 6.A
-(\ref{lem:smooth_algebra_krull_dim_formula}, Stacks 00OE) into a
-3-step Mathlib-chain. Steps 1 and 2 landed axiom-clean as
-project-local \texttt{private} theorems; Step 3 landed in an
-additive parameterised form awaiting the Jacobian-regular-sequence
-witness for the relations of the smooth-algebra presentation.
+An earlier decomposition of Stage 6.A
+(\cref{lem:smooth_algebra_krull_dim_formula}, Stacks 00OE) reduced the
+localised Krull-dimension formula at a closed point to a
+Jacobian-regular-sequence witness for the relations of a submersive
+presentation (Stacks 00SW / 00OW together with Matsumura Thm.~14.2). The
+in-file substrate chain implementing that reduction has been removed as
+dead code: the closed-point case is now proved unconditionally by the
+Krull-height-theorem route of \texttt{StandardSmoothDimension.lean} ---
+full height of maximal ideals of polynomial rings
+(\cref{lem:mvPolynomial_height_eq_natCard_of_isMaximal}), the height
+lower bound at maximal ideals of standard-smooth algebras
+(\cref{lem:standard_smooth_le_height_of_isMaximal}), the localised
+dimension lower bound
+(\cref{lem:standard_smooth_le_ringKrullDim_localization}), and the
+cotangent upper bound
+(\cref{lem:regular_of_finrank_cotangent_le_dim}) --- which needs no
+regular-sequence witness. The Matsumura regular-sequence lemma itself
+survives as \cref{lem:matsumura_isRegular_of_linearIndependent_cotangent}.
+The general (non-closed) point case of Stacks 00OE remains open, gated on
+the localisation-of-regular-local-rings lemma (Stacks \texttt{00OF}),
+absent from Mathlib.
 
-\paragraph{Step 1 --- Krull-dim \(\Rightarrow\) height (trivial,
-\(\sim 1\) line).} Re-export of Mathlib's
-\(\texttt{IsLocalization.AtPrime.ringKrullDim\_eq\_height}\) under
-the project-local name
-\(\texttt{ringKrullDim\_localization\_eq\_height\_atPrime}\); reduces
-the localised Krull-dim goal to a height-of-maximal-ideal goal.
-
-\paragraph{Step 2 --- Polynomial-ring maximal-ideal height
-(\(\sim 60\) LOC).} For \(\texttt{MvPolynomial}\,(\texttt{Fin}\,n)\,k\)
-with \(k\) a field, every maximal ideal has height \emph{exactly}
-\(n\). Lower bound:
-\(\texttt{MvPolynomial.maximalIdeal\_height\_ge\_card\_of\_field}\),
-induction on \texttt{Fin n} via \(\texttt{MvPolynomial.finSuccEquiv}\)
-+ Mathlib's \(\texttt{Polynomial.height\_eq\_height\_add\_one}\) plus
-the Jacobson contraction
-\(\texttt{Polynomial.isMaximal\_comap\_C\_of\_isJacobsonRing}\). Upper
-bound:
-\(\texttt{MvPolynomial.maximalIdeal\_height\_le\_natCard\_of\_field}\)
-via \(\texttt{Ideal.height\_le\_ringKrullDim\_of\_ne\_top}\) +
-\(\texttt{MvPolynomial.ringKrullDim\_of\_isNoetherianRing}\) +
-\(\texttt{ringKrullDim\_eq\_zero\_of\_field}\). Combined: the
-\texttt{Fin n}-form
-\(\texttt{MvPolynomial.maximalIdeal\_height\_eq\_card}\) and the
-general \texttt{[Finite ι]}-form
-\(\texttt{MvPolynomial.maximalIdeal\_height\_eq\_natCard}\) via
-\(\texttt{MvPolynomial.renameEquiv}\) +
-\(\texttt{RingEquiv.height\_map}\). Capstone packaging the
-Steps 1+2 composition for any localisation at a maximal ideal:
-\(\texttt{ringKrullDim\_localization\_atMaximal\_MvPolynomial}\).
-
-\paragraph{Step 3 --- Drop by regular-sequence length (additive form
-in hand, witness pending).} Step 3 generally:
-\(\texttt{ringKrullDim}\,(R'_{m'} / (f_j)_{j \in \sigma}) +
- |\sigma| = \texttt{ringKrullDim}\,R'_{m'}\). The additive form is
-landed as
-\(\texttt{ringKrullDim\_quotient\_add\_eq\_of\_regular\_sequence}\)
-via Mathlib's
-\(\texttt{ringKrullDim\_add\_length\_eq\_ringKrullDim\_of\_isRegular}\),
-parameterised over a hypothesis
-\(\texttt{RingTheory.Sequence.IsRegular}\,R'_{m'}\,\texttt{rs}\)
-that is the iter-201+ residual substrate obligation. Note:
-\(\texttt{WithBot}\,\mathbb N_\infty\) carries no \texttt{HSub}
-instance, so the additive form is the natural API; a subtraction
-form is not available.
-
-\paragraph{Iter-201+ Jacobian-regular-sequence witness recipe.} The
-residual substrate of Stage 6.A is the Jacobian-criterion
-regular-sequence witness for the relations of an
-\(\texttt{Algebra.SubmersivePresentation}\).
-
-\textbf{API choice} (per iter-201 \texttt{progress-critic route201}
-flag): the project-local target predicate is Mathlib's
-\(\texttt{RingTheory.Sequence.IsRegular}\), \emph{not}
-\(\texttt{IsWeaklyRegular}\). Reason: the iter-200 substrate
-\(\texttt{ringKrullDim\_quotient\_add\_eq\_of\_regular\_sequence}\)
-(\texttt{CodimOneExtension.lean} L807) consumes the strong predicate
-\(\texttt{IsRegular}\) (via Mathlib's
-\(\texttt{ringKrullDim\_add\_length\_eq\_ringKrullDim\_of\_isRegular}\));
-the localised stalk \(R'_{m'}\) is local, so by Mathlib's
-\(\texttt{IsLocalRing.isRegular\_iff\_isWeaklyRegular\_of\_subset\_maximalIdeal}\)
-the two predicates are equivalent under the standing hypothesis that
-the relations lie in the maximal ideal --- which holds because
-the Jacobian-criterion conclusion is precisely that the relations
-generate (a subset of) the maximal ideal at the closed point. The
-recipe builds \(\texttt{IsWeaklyRegular}\) first (it is the
-naturally-arising predicate from the Koszul-complex argument) and
-then promotes to \(\texttt{IsRegular}\) via the bridge lemma; the
-final consumer call uses the \(\texttt{IsRegular}\) form.
-
-The recipe (per the iter-200 prover handoff + the
-\texttt{coe-stacks00oe} analogist + iter-201 \texttt{coe-stacks00sw}
-analogist):
-(i) extract the explicit
-\(\texttt{Algebra.SubmersivePresentation}\,\bar k\,
- \Gamma(X.\texttt{left}, V)\) from
-\(\texttt{Algebra.IsStandardSmoothOfRelativeDimension}\) (Stage 6 sub-gap
-(i) substrate iter-198); (ii) cite Stacks 00SW / 00OW + Matsumura
-Thm 14.2: the relations \((f_j)_{j \in \sigma}\) of a submersive
-presentation form a Koszul-regular sequence at the closed point
-because the Jacobian matrix is invertible modulo the maximal ideal
-\(\Leftrightarrow\) the images of \(f_j\) in \(\mathfrak m_A /
-\mathfrak m_A^2\) are \(\kappa\)-linearly independent
-\(\Rightarrow\) (Matsumura 14.2 / Stacks 00NQ on a regular local
-ring) the \(f_j\) form a regular sequence in \(A\); (iii) bundle
-as a 3-step chain:
-\begin{itemize}
-  \item \textbf{A1 — Matsumura helper} (revised cost
-    \(\sim 80\)--\(150\) LOC \emph{including cross-file imports}; the
-    earlier \(\sim 30\)--\(50\) LOC estimate did not account for
-    project-local Stacks 00NQ + RLR-preservation supply): on a regular
-    local Noetherian ring \((A, \mathfrak m)\) of Krull dim \(n\), a
-    sequence \(f_1, \dots, f_c \in \mathfrak m\) whose images in
-    \(\mathfrak m / \mathfrak m^2\) are \(\kappa\)-linearly
-    independent forms an \(\texttt{IsRegular}\) sequence in \(A\).
-    Proof: induction on \(c\), dim-drops-by-one via Mathlib's
-    \(\texttt{ringKrullDim\_quotient\_span\_singleton\_succ\_eq\_ringKrullDim}\)
-    (in \texttt{Mathlib/RingTheory/KrullDimension/Regular.lean}),
-    \(\texttt{IsSMulRegular}\) on the non-zero-divisor \(f_1\) via
-    \(\texttt{IsRegularLocalRing} \Rightarrow \texttt{IsDomain}\) +
-    \(f_1 \neq 0\) (since \(f_1 \notin \mathfrak m^2\)), then
-    \(\texttt{isRegular\_cons\_iff}\) to descend.
-
-    \textbf{Mathlib API state (iter-201 prover scout + iter-201
-    \texttt{lean-auditor iter201} cross-file finding).} Two of the
-    ingredients are \emph{absent} from Mathlib at \texttt{b80f227} but
-    \emph{present project-locally} as private witnesses in
-    \texttt{AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean}, all
-    axiom-clean:
-    \begin{itemize}
-      \item \(\texttt{IsRegularLocalRing} \Rightarrow \texttt{IsDomain}\)
-        (Stacks 00NQ) --- Mathlib has only the PID-converse instance
-        \([\texttt{IsLocalRing R}]\,[\texttt{IsDomain R}]\,
-         [\texttt{IsPrincipalIdealRing R}]\,
-         \to \texttt{IsRegularLocalRing R}\). The forward direction is
-        supplied project-side by
-        \(\texttt{RingTheory.CohenMacaulay.isDomain\_of\_regularLocal}\)
-        (\texttt{AuslanderBuchsbaum.lean} L2657, public as of
-        iter-202; strong induction on
-        \(\texttt{spanFinrank}\,\mathfrak m\) closed iter-186 modulo
-        \(\texttt{notMem\_minimalPrimes\_of\_regularLocal\_succ}\),
-        latter closed iter-201). The iter-202 Lane AB dispatch
-        landed the \texttt{private}\(\to\)public promotion, so the
-        name is reachable cross-file.
-      \item \(A / (f_1) \to \texttt{IsRegularLocalRing}\)
-        preservation under quotient by an element not in
-        \(\mathfrak m^2\) --- absent in Mathlib (only the dim-drop
-        \(\texttt{ringKrullDim\_quotient\_span\_singleton\_succ\_eq\_ringKrullDim}\)
-        is present, no RLR-preservation companion). Supplied
-        project-side by
-        \(\texttt{RingTheory.CohenMacaulay.regularLocal\_quotient\_isRegularLocal\_of\_notMemSq}\)
-        (\texttt{AuslanderBuchsbaum.lean} L2293, public as of
-        iter-202). Same iter-202 Lane AB promotion path, landed.
-    \end{itemize}
-    Both project-local witnesses are now public and reachable
-    cross-file (the iter-202 Lane AB dispatch removed
-    \texttt{private}), so Step A1 closes in the projected
-    \(\sim 30\)--\(50\) LOC via the recipe above; the cross-file
-    blocker that fenced iter-202 is discharged.
-    \textbf{Iter-203 Lane COE Step A1 prover recipe (full
-    specification per iter-202 \texttt{progress-critic route202}
-    must-fix).} For the iter-203 prover dispatch (iter-202 Lane AB
-    landed the two promotions), the recipe is:
-
-    \emph{Imports} (top of
-    \texttt{AlgebraicJacobian/Albanese/CodimOneExtension.lean}, in
-    addition to existing): \texttt{import
-    AlgebraicJacobian.Albanese.AuslanderBuchsbaum} (already present).
-    After the iter-202 Lane AB private removals, the qualified names
-    \(\texttt{RingTheory.CohenMacaulay.isDomain\_of\_regularLocal}\) and
-    \(\texttt{RingTheory.CohenMacaulay.regularLocal\_quotient\_isRegularLocal\_of\_notMemSq}\)
-    become reachable cross-file with no new import line.
-
-    \emph{Target declaration} (new \texttt{private theorem}, insert
-    between iter-201 \texttt{ringKrullDim\_quotient\_localization\_MvPolynomial\_of\_regular}
-    L924 and iter-198 \texttt{exists\_isStandardSmoothOfRelativeDimension\_of\_isStandardSmooth}
-    L834+):
-    \begin{verbatim}
-    -- LANDED iter-203 (axiom-clean). The dimension is read off the
-    -- cotangent-independence internally, so the explicit
-    -- `(hn : ringKrullDim A = n)` parameter of the original recipe was
-    -- dropped in the landed declaration:
-    private theorem matsumura_isRegular_of_linearIndependent_cotangent
-        {A : Type u} [CommRing A] [IsLocalRing A] [IsNoetherianRing A]
-        [IsRegularLocalRing A]
-        (n : ℕ) (rs : Fin n → A)
-        (hrs_mem : ∀ i, rs i ∈ IsLocalRing.maximalIdeal A)
-        (h_lin : LinearIndependent (IsLocalRing.ResidueField A)
-                   (fun i => (IsLocalRing.maximalIdeal A).toCotangent
-                               ⟨rs i, hrs_mem i⟩)) :
-        RingTheory.Sequence.IsRegular A (List.ofFn rs) := …
-    \end{verbatim}
-
-    \emph{Proof structure} (~30--50 LOC, induction on \texttt{Fin n}
-    via \texttt{Fin.induction} or \texttt{Nat} on \texttt{n}, with
-    \(A\) generalized):
-    \begin{enumerate}
-      \item \textbf{Base case} \(n = 0\): \texttt{List.ofFn} on an
-        empty \texttt{Fin 0} is \texttt{[]}, and the empty list is
-        \texttt{IsRegular} trivially via \texttt{RingTheory.Sequence.isRegular\_nil}.
-      \item \textbf{Inductive step} \(n = k+1\): unpack
-        \(\texttt{rs}\,0\) (the head) and the tail via
-        \texttt{Fin.tail}/\texttt{Fin.cases}. Apply
-        \(\texttt{RingTheory.Sequence.isRegular\_cons\_iff}\)
-        (\texttt{Mathlib/RingTheory/Regular/RegularSequence.lean:246}):
-        the cons is \texttt{IsRegular} iff (a) \texttt{IsSMulRegular
-        A (rs 0)} and (b) \texttt{IsRegular} on the tail descended
-        to \(A / (rs\,0)\) on the appropriate image module.
-      \item \textbf{Discharge (a)} \texttt{IsSMulRegular A (rs 0)}:
-        in an \texttt{IsDomain}, \texttt{IsSMulRegular} on a non-zero
-        element is automatic via \texttt{IsSMulRegular.of\_ne\_zero}
-        (or its analogous Mathlib lemma — verify the name).
-        Domain witness: invoke
-        \(\texttt{RingTheory.CohenMacaulay.isDomain\_of\_regularLocal A}\)
-        (newly-public iter-202 cross-file import). Non-zero: from
-        \(\texttt{rs}\,0 \notin \mathfrak m^2\) (consequence of
-        \texttt{h\_lin} on the cotangent class), \(\texttt{rs}\,0
-        \neq 0\) (the zero element lies in every power of
-        \(\mathfrak m\)).
-      \item \textbf{Apply the RLR-preservation helper} (newly-public
-        iter-202): \(\texttt{RingTheory.CohenMacaulay.regularLocal\_quotient\_isRegularLocal\_of\_notMemSq A hdim (rs 0) hxMem hxNotSq}\)
-        returns a \texttt{Nontrivial} witness, \texttt{IsLocalRing}
-        witness, \texttt{IsRegularLocalRing} witness, and
-        \texttt{spanFinrank = k} for \(A / (rs\,0)\). Promote these
-        to typeclass instances via \texttt{haveI}.
-      \item \textbf{Dimension descent}: by Mathlib's
-        \texttt{ringKrullDim\_quotient\_span\_singleton\_succ\_eq\_ringKrullDim}
-        (\texttt{Mathlib/RingTheory/KrullDimension/Regular.lean}),
-        \(\texttt{ringKrullDim}\,(A / (rs\,0)) + 1 = \texttt{ringKrullDim}\,A = n + 1\),
-        so \(\texttt{ringKrullDim}\,(A / (rs\,0)) = k\).
-        (Equivalently from the helper's \texttt{spanFinrank = k} +
-        Mathlib's RLR Krull-dim formula.)
-      \item \textbf{Apply IH on the quotient}: at the smaller
-        \(n = k\), \texttt{IsRegular} on the tail image module in
-        \(A / (rs\,0)\).
-      \item \textbf{Close}: combine (3) + (6) into the goal via
-        \texttt{isRegular\_cons\_iff.mpr}.
-    \end{enumerate}
-
-    \emph{Linear-independence transfer}: the \texttt{h\_lin}
-    hypothesis on \texttt{rs} in the IH for \(n = k\) needs to be
-    derived from the same \texttt{h\_lin} on \(A\) via the image of
-    cotangent classes through the quotient algebra map; this is a
-    straightforward \(\texttt{LinearIndependent.image}\) /
-    \(\texttt{LinearIndependent.map}\) application using the
-    helper's \texttt{spanFinrank} witness.
-
-    \emph{Target sorry-line for closure}: this declaration is a NEW
-    \texttt{private theorem}; its proof body has no sorry-line
-    target. The iter-203 A3 consumer (existing
-    \texttt{private theorem Algebra.SubmersivePresentation.relations\_isRegular\_in\_localization}
-    if landed, OR composed inline in the L1061 closure of
-    \texttt{isRegularLocalRing\_stalk\_of\_smooth}) invokes A1 with
-    the lin-indep premise from A2 to produce the
-    \texttt{RingTheory.Sequence.IsRegular} witness consumed by
-    \texttt{ringKrullDim\_quotient\_localization\_MvPolynomial\_of\_regular}
-    (iter-201 L924).
-
-    \emph{Verification}: after landing, run \texttt{lean\_verify} on
-    \texttt{matsumura\_isRegular\_of\_linearIndependent\_cotangent}
-    and confirm \texttt{\#print axioms} returns the kernel triple
-    \(\{\texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}\}\).
-  \item \textbf{A2 — Cotangent-localisation transport}
-    (sub-pieces partially landed iter-201; residual
-    \(\sim 50\)--\(100\) LOC): transport
-    \(\texttt{Algebra.SubmersivePresentation.basisCotangent}\)'s
-    linear-independence statement from \(I/I^2\) over \(S\) to
-    \(\mathfrak m_A / \mathfrak m_A^2\) over \(\kappa(\mathfrak m_A)\)
-    on the localisation \(A = P.\texttt{Ring}_{m'}\). Uses
-    \(\texttt{LinearIndependent.of\_isLocalizedModule\_of\_isRegular}\)
-    (in \texttt{Mathlib/RingTheory/Localization/Module.lean}) +
-    the conormal-localisation iso
-    \((I/I^2) \otimes_S S_{\mathfrak m} \simeq
-     (I \cdot A) / (I \cdot A)^2\).
-
-    \textbf{Iter-201 landed substrate.} Two A2 sub-pieces are
-    axiom-clean private theorems in
-    \texttt{CodimOneExtension.lean}:
-    \begin{itemize}
-      \item \(\texttt{submersivePresentation\_relation\_cotangent\_mk\_linearIndependent}\)
-        (L854): forward-ergonomic re-package of
-        \(\texttt{Basis.linearIndependent}\) +
-        \(\texttt{basisCotangent\_apply}\), expressing lin-indep
-        directly in the \(\texttt{Cotangent.mk}\)-of-relation form.
-      \item \(\texttt{submersivePresentation\_relation\_cotangent\_mk\_linearIndependent\_localized}\)
-        (L889): transport through the canonical localisation map
-        \(\texttt{LocalizedModule.mkLinearMap}\) at any prime
-        \(p\) of \(S\), via
-        \(\texttt{LinearIndependent.of\_isLocalizedModule}\).
-    \end{itemize}
-    \textbf{Iter-202+ A2 residual.} The conormal-localisation iso
-    for \(\texttt{IsLocalization.AtPrime}\) (Stacks 02JK at a
-    non-Away prime; the Mathlib infrastructure
-    \(\texttt{Algebra.Generators.cotangentCompLocalizationAwayEquiv}\)
-    generalises only to the Away case) is the remaining substantive
-    gap on the A2 side. Estimated \(\sim 50\)--\(100\) LOC.
-  \item \textbf{A3 — Assembly} (\(\sim 10\)--\(15\) LOC): invoke
-    A1 with the lin-indep premise from A2, then close via
-    \(\texttt{IsWeaklyRegular.isRegular\_of\_isLocalizedModule\_of\_mem}\)
-    (in \texttt{Mathlib/RingTheory/Regular/Flat.lean:65--73} ---
-    DIRECT INVOCATION). Final declaration:
-    \(\texttt{Algebra.SubmersivePresentation.relations\_isRegular\_in\_localization}\).
-
-    \textbf{Iter-201 landed substrate.}
-    \(\texttt{ringKrullDim\_quotient\_localization\_MvPolynomial\_of\_regular}\)
-    (\texttt{CodimOneExtension.lean} L924) is the
-    \texttt{IsRegular}-conditional Steps 1+2+3 composite for the
-    polynomial-ring setting: given an \(\texttt{IsRegular}\,A\,rs\)
-    witness (the iter-202+ A1/A2/A3 endpoint), this lemma reduces
-    the Stage 6.A conclusion to a one-line invocation.
-\end{itemize}
-consuming Mathlib's existing
-\(\texttt{Algebra.SubmersivePresentation.jacobian\_isUnit}\) +
-\(\texttt{Algebra.SubmersivePresentation.basisCotangent}\) +
-\(\texttt{Algebra.SubmersivePresentation.cotangentEquiv}\) +
-\(\texttt{IsWeaklyRegular.isRegular\_of\_isLocalizedModule\_of\_mem}\) +
-\(\texttt{LinearIndependent.of\_isLocalizedModule\_of\_isRegular}\) +
-\(\texttt{IsLocalRing.isRegular\_iff\_isWeaklyRegular\_of\_subset\_maximalIdeal}\);
-(iv) plug into \texttt{ringKrullDim\_quotient\_add\_eq\_of\_regular\_sequence}
-+ \texttt{ringKrullDim\_localization\_atMaximal\_MvPolynomial} for
-\(\texttt{ringKrullDim}\,S_{m} = n\) (with the standard-smooth
-presentation's \texttt{relativeDimension} witness as \(n\)). Estimated
-project-side cost: \(\sim 30-60\) LOC for (ii)+(iii); the full L1061
-inline closure additionally requires scheme-to-algebra bridging
-(extracting the presentation from
-\(\Gamma(X.\texttt{left}, V)\) over \(\Gamma(\Spec, U) = \bar k\),
-identifying the maximal ideal of \(\Gamma(X.\texttt{left}, V)\)
-corresponding to \(z\)) which adds another \(\sim 30-50\) LOC. The
-substrate landing trigger Lane T32 re-engagement (per
-\texttt{PROGRESS.md} Lane T32 binding trigger).
-
-\subsection{Substrate lemmas for Stages 00OE / 00SW and the scheme bridges}
+\subsection{Substrate lemmas for Stacks 00OE and the scheme bridges}
 \label{subsec:codim1_substrate_lemmas}
 
 The narrative above is realised on the Lean side by the named substrate lemmas
 collected here. They feed the Stacks-00OE Krull-dimension formula
-\cref{lem:smooth_algebra_krull_dim_formula} and the regular-stalk assembly,
-either directly or through the Jacobian regular-sequence witness.
+\cref{lem:smooth_algebra_krull_dim_formula} and the regular-stalk assembly.
 
-\paragraph{Stacks 00OE Krull-dimension chain.}
+\paragraph{Stacks 00OE localisation/height bridge.}
 
 \begin{lemma}\leanok
 [00OE Step 1 --- localised Krull dimension equals height]
@@ -1147,125 +838,18 @@ either directly or through the Jacobian regular-sequence witness.
 
 \begin{proof}
   Proved directly in Lean: re-export of Mathlib's
-  \texttt{IsLocalization.AtPrime.ringKrullDim\_eq\_height}. A sub-step of
-  \cref{lem:ringKrullDim_localization_atMaximal_mvPolynomial}.
+  \texttt{IsLocalization.AtPrime.ringKrullDim\_eq\_height}. Consumed by the
+  closed-point dimension bound
+  \cref{lem:standard_smooth_le_ringKrullDim_localization}.
 \end{proof}
 
-\begin{lemma}\leanok
-[00OE Step 2 (lower bound) --- height $\ge n$ in $k[\mathrm{Fin}\,n]$]
-  \label{lem:mvPolynomial_maximalIdeal_height_ge_card}
-  \lean{AlgebraicGeometry.Scheme.MvPolynomial.maximalIdeal_height_ge_card_of_field}
-  For a field \(k\), every maximal ideal of the polynomial ring
-  \(\mathrm{MvPolynomial}\,(\mathrm{Fin}\,n)\,k\) has height at least \(n\).
-\end{lemma}
+\paragraph{Closed-point form of the 00OE formula (Krull height theorem route).}
 
-\begin{proof}
-  Proved directly in Lean: induction on \(n\), transporting the ideal along the
-  one-variable-splitting isomorphism and using that adjoining a polynomial variable
-  raises height by one, together with the Jacobson contraction of the maximal ideal.
-  A sub-step of \cref{lem:mvPolynomial_maximalIdeal_height_eq_card}.
-\end{proof}
-
-\begin{lemma}[00OE Step 2 (upper bound) --- height $\le \#\iota$ in $k[\iota]$]
-  \label{lem:mvPolynomial_maximalIdeal_height_le_natCard}
-  \lean{AlgebraicGeometry.Scheme.MvPolynomial.maximalIdeal_height_le_natCard_of_field}
-  For a field \(k\) and a finite index set \(\iota\), every proper ideal of
-  \(\mathrm{MvPolynomial}\,\iota\,k\) has height at most \(\#\iota\).
-\end{lemma}
-
-\begin{proof}
-  Proved directly in Lean: height is bounded by the Krull dimension, which for the
-  Noetherian polynomial ring over a field equals \(\#\iota\). A sub-step of
-  \cref{lem:mvPolynomial_maximalIdeal_height_eq_card}.
-\end{proof}
-
-\begin{lemma}\leanok
-[00OE Step 2 ($\mathrm{Fin}\,n$ form) --- maximal-ideal height equals $n$]
-  \label{lem:mvPolynomial_maximalIdeal_height_eq_card}
-  \lean{AlgebraicGeometry.Scheme.MvPolynomial.maximalIdeal_height_eq_card}
-  \uses{lem:mvPolynomial_maximalIdeal_height_ge_card, lem:mvPolynomial_maximalIdeal_height_le_natCard}
-  For a field \(k\), every maximal ideal of
-  \(\mathrm{MvPolynomial}\,(\mathrm{Fin}\,n)\,k\) has height exactly \(n\).
-\end{lemma}
-
-\begin{proof}
-  Proved directly in Lean: combine the lower bound
-  \cref{lem:mvPolynomial_maximalIdeal_height_ge_card} and the upper bound
-  \cref{lem:mvPolynomial_maximalIdeal_height_le_natCard} by antisymmetry.
-\end{proof}
-
-\begin{lemma}[00OE Step 2 (general finite form) --- maximal-ideal height equals $\#\iota$]
-  \label{lem:mvPolynomial_maximalIdeal_height_eq_natCard}
-  \lean{AlgebraicGeometry.Scheme.MvPolynomial.maximalIdeal_height_eq_natCard}
-  \uses{lem:mvPolynomial_maximalIdeal_height_eq_card}
-  For a field \(k\) and a finite index set \(\iota\), every maximal ideal of
-  \(\mathrm{MvPolynomial}\,\iota\,k\) has height exactly \(\#\iota\).
-\end{lemma}
-
-\begin{proof}
-  Proved directly in Lean: transport
-  \cref{lem:mvPolynomial_maximalIdeal_height_eq_card} along the renaming isomorphism
-  induced by a bijection \(\iota \simeq \mathrm{Fin}\,(\#\iota)\). A sub-step of
-  \cref{lem:ringKrullDim_localization_atMaximal_mvPolynomial}.
-\end{proof}
-
-\begin{lemma}[00OE Steps 1+2 capstone --- localised polynomial-ring Krull dimension]
-  \label{lem:ringKrullDim_localization_atMaximal_mvPolynomial}
-  \lean{AlgebraicGeometry.Scheme.ringKrullDim_localization_atMaximal_MvPolynomial}
-  \uses{lem:ringKrullDim_localization_eq_height_atPrime, lem:mvPolynomial_maximalIdeal_height_eq_natCard}
-  For a field \(k\), a finite index set \(\iota\), and any localisation \(A\) of
-  \(\mathrm{MvPolynomial}\,\iota\,k\) at a maximal ideal \(\mathfrak m\), the Krull
-  dimension of \(A\) equals \(\#\iota\).
-\end{lemma}
-
-\begin{proof}
-  Proved directly in Lean: compose
-  \cref{lem:ringKrullDim_localization_eq_height_atPrime} (Krull dimension equals
-  height) with \cref{lem:mvPolynomial_maximalIdeal_height_eq_natCard} (height equals
-  \(\#\iota\)).
-\end{proof}
-
-\begin{lemma}\leanok
-[00OE Step 3 (additive form) --- dimension drop by a regular sequence]
-  \label{lem:ringKrullDim_quotient_add_eq_regular_sequence}
-  \lean{AlgebraicGeometry.Scheme.ringKrullDim_quotient_add_eq_of_regular_sequence}
-  Let \(R'\) be a Noetherian local ring with \(\mathrm{ringKrullDim}\,R' = a\) and let
-  \(rs\) be a regular sequence in \(R'\) of length \(b\). Then
-  \(\mathrm{ringKrullDim}\,(R'/(rs)) + b = a\). The additive form is used because the
-  value semiring \(\mathrm{WithBot}\,\mathbb N_\infty\) carries no subtraction.
-\end{lemma}
-
-\begin{proof}
-  Proved directly in Lean: re-export of Mathlib's
-  \texttt{ringKrullDim\_add\_length\_eq\_ringKrullDim\_of\_isRegular} with the
-  dimension and length values made explicit. A sub-step of
-  \cref{lem:ringKrullDim_quotient_localization_mvPolynomial_regular}.
-\end{proof}
-
-\begin{lemma}[00OE Steps 1+2+3 composite --- localised polynomial-quotient dimension]
-  \label{lem:ringKrullDim_quotient_localization_mvPolynomial_regular}
-  \lean{AlgebraicGeometry.Scheme.ringKrullDim_quotient_localization_MvPolynomial_of_regular}
-  \uses{lem:ringKrullDim_localization_atMaximal_mvPolynomial, lem:ringKrullDim_quotient_add_eq_regular_sequence}
-  Let \(A\) be a Noetherian localisation of \(\mathrm{MvPolynomial}\,\iota\,k\) at a
-  maximal ideal, and let \(rs\) be a regular sequence in \(A\) of length \(b\). Then
-  \(\mathrm{ringKrullDim}\,(A/(rs)) + b = \#\iota\).
-\end{lemma}
-
-\begin{proof}
-  Proved directly in Lean: compose the capstone
-  \cref{lem:ringKrullDim_localization_atMaximal_mvPolynomial} with the
-  regular-sequence dimension drop
-  \cref{lem:ringKrullDim_quotient_add_eq_regular_sequence}.
-\end{proof}
-
-\paragraph{Closed-point completion of the 00OE chain (Krull height theorem route).}
-
-The lemmas above reduce the localised Krull-dimension formula at a maximal
-ideal to a regular-sequence witness for the relations of the presentation. The
-following route closes the closed-point case unconditionally, replacing that
-witness by Krull's height theorem: the dimension \emph{lower} bound comes from
-the full height of the pulled-back maximal ideal in the polynomial ring, and
-the \emph{upper} bound is automatic from the cotangent space. Combined with the
+The following route proves the localised Krull-dimension formula at a maximal
+ideal unconditionally: the dimension \emph{lower} bound comes from the full
+height of the pulled-back maximal ideal in the polynomial ring via Krull's
+height theorem, and the \emph{upper} bound is automatic from the cotangent
+space. Combined with the
 cotangent computation \cref{lem:finrank_cotangentSpace_of_bijective_residue},
 this proves regularity of a standard-smooth algebra at every closed point.
 
@@ -1460,40 +1044,6 @@ this proves regularity of a standard-smooth algebra at every closed point.
   a reduced ring is reduced.
 \end{proof}
 
-\paragraph{Stacks 00SW submersive-presentation cotangent independence.}
-
-\begin{lemma}\leanok
-[00SW --- relations are cotangent-independent]
-  \label{lem:submersive_relation_cotangent_linearIndependent}
-  \lean{AlgebraicGeometry.Scheme.submersivePresentation_relation_cotangent_mk_linearIndependent}
-  For a submersive presentation \(P\) of an \(R\)-algebra \(S\), the family of
-  cotangent classes of the relations \(i \mapsto [\,P.\mathrm{relation}\,i\,]\) in the
-  cotangent module of \(P\) is \(S\)-linearly independent.
-\end{lemma}
-
-\begin{proof}
-  Proved directly in Lean: re-packaging of the linear independence of the cotangent
-  basis of \(P\). A sub-step of
-  \cref{lem:submersive_relation_cotangent_linearIndependent_localized}.
-\end{proof}
-
-\begin{lemma}\leanok
-[00SW --- cotangent independence transported to a localisation]
-  \label{lem:submersive_relation_cotangent_linearIndependent_localized}
-  \lean{AlgebraicGeometry.Scheme.submersivePresentation_relation_cotangent_mk_linearIndependent_localized}
-  \uses{lem:submersive_relation_cotangent_linearIndependent}
-  With \(P\) a submersive presentation of \(S\) and \(p\) a prime ideal of \(S\), the
-  image of the cotangent classes of the relations under the canonical localisation map
-  of the cotangent module at \(p\) is \(\mathrm{Localization.AtPrime}\,p\)-linearly
-  independent.
-\end{lemma}
-
-\begin{proof}
-  Proved directly in Lean: transport
-  \cref{lem:submersive_relation_cotangent_linearIndependent} through the localisation
-  map, using that linear independence is preserved by a localised-module map.
-\end{proof}
-
 \paragraph{Relative dimension and scheme-to-algebra bridges.}
 
 \begin{lemma}\leanok
@@ -1633,9 +1183,7 @@ this proves regularity of a standard-smooth algebra at every closed point.
   (a regular local ring is a domain), the cotangent independence descends to the
   quotient \(A/(f_1)\) by \cref{lem:matsumura_descent_cotangent}, and the
   ring-quotient cons rule \cref{lem:isRegular_cons_of_quotient_ring} reassembles the
-  regular sequence. In the standard-smooth application the linear-independence input is
-  supplied by the relations of a submersive presentation via
-  \cref{lem:submersive_relation_cotangent_linearIndependent_localized}.
+  regular sequence.
 \end{proof}
 
 \begin{lemma}
