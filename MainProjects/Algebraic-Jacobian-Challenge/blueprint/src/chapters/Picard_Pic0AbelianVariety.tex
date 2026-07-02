@@ -480,6 +480,175 @@ thread between \cref{cor:tangent_spec_dual_number_at} and
   the rationality hypothesis.
 \end{proof}
 
+\begin{lemma}[A section retracts the structure homomorphism]\leanok
+  \label{lem:tangent_section_retraction}
+  \lean{AlgebraicGeometry.stalkStructureHom_comp_stalkClosedPointTo}
+  \uses{def:tangent_stalk_structure_hom}
+  Let \(k\) be a field, \(f : X \to \operatorname{Spec} k\) a morphism
+  of schemes, and \(e : \operatorname{Spec} k \to X\) a section of
+  \(f\) (that is, \(f \circ e = \operatorname{id}\)). Write
+  \(x = e(*)\) for the image of the unique point of
+  \(\operatorname{Spec} k\), \(\sigma_x : k \to \mathcal O_{X,x}\) for
+  the structure homomorphism
+  (\cref{def:tangent_stalk_structure_hom}), and
+  \(\varphi_e : \mathcal O_{X,x} \to k\) for the local homomorphism
+  induced by \(e\) on stalks. Then
+  \(\varphi_e \circ \sigma_x = \operatorname{id}_k\).
+\end{lemma}
+
+\begin{proof}\leanok
+  \uses{lem:tangent_over_triangle_iff}
+  Apply \cref{lem:tangent_over_triangle_iff} with \(S = k\),
+  \(g = e\) and \(\psi = \operatorname{id}_k\): the over-triangle
+  \(f \circ e = \operatorname{id} =
+  \operatorname{Spec}(\operatorname{id}_k)\) holds by hypothesis, and
+  it is equivalent to \(\varphi_e \circ \sigma_x =
+  \operatorname{id}_k\).
+\end{proof}
+
+\begin{lemma}[The image of a section is a rational point]\leanok
+  \label{lem:tangent_section_rational}
+  \lean{AlgebraicGeometry.bijective_algebraMap_residueField_of_section}
+  \uses{def:tangent_stalk_algebra}
+  Let \(k\) be a field, \(X\) a scheme over \(\operatorname{Spec} k\),
+  \(e : \operatorname{Spec} k \to X\) a section of the structure
+  morphism, and \(x = e(*)\). Then \(x\) is a \(k\)-rational point:
+  the structure map \(k \to \kappa(x)\) to the residue field is
+  bijective.
+\end{lemma}
+
+\begin{proof}\leanok
+  \uses{lem:tangent_section_retraction}
+  Injectivity is automatic: a ring homomorphism out of a field into a
+  nonzero ring is injective. For surjectivity, the retraction
+  \(\varphi_e : \mathcal O_{X,x} \to k\) of
+  \cref{lem:tangent_section_retraction} is a local homomorphism into
+  a field, so it kills the maximal ideal \(\mathfrak m_x\) and
+  descends to a field homomorphism
+  \(\bar\varphi : \kappa(x) \to k\) with
+  \(\bar\varphi \circ \iota = \operatorname{id}_k\), where
+  \(\iota : k \to \kappa(x)\) is the structure map. Given
+  \(a \in \kappa(x)\), the element
+  \(a - \iota(\bar\varphi(a))\) lies in the kernel of
+  \(\bar\varphi\); but \(\bar\varphi\) is a homomorphism of fields,
+  hence injective, so \(a = \iota(\bar\varphi(a))\). Thus \(\iota\)
+  is surjective.
+\end{proof}
+
+\begin{corollary}[Tangent space at the image of a section]\leanok
+  \label{cor:tangent_section_cotangent_dual}
+  \lean{AlgebraicGeometry.overDualNumberSectionEquivCotangentSpaceDual}
+  \uses{lem:tangent_section_rational}
+  Let \(k\) be a field, \(X\) a scheme over \(\operatorname{Spec} k\),
+  \(e : \operatorname{Spec} k \to X\) a section of the structure
+  morphism, and \(x = e(*)\). Then the dual-number points of \(X\) at
+  \(x\) over \(\operatorname{Spec} k\) form the \(\kappa(x)\)-linear
+  dual of the cotangent space:
+  \[
+    \{\, g : \operatorname{Spec} k_\varepsilon \to X
+        \text{ over } \operatorname{Spec} k
+        \mid g(\mathfrak m) = x \,\}
+    \;\cong\;
+    \operatorname{Hom}_{\kappa(x)}\!\bigl(\mathfrak m_x/\mathfrak m_x^2,\,
+      \kappa(x)\bigr).
+  \]
+\end{corollary}
+
+\begin{proof}\leanok
+  \uses{thm:tangent_over_dual_number_cotangent_dual}
+  By \cref{lem:tangent_section_rational} the point \(x\) is
+  \(k\)-rational, so
+  \cref{thm:tangent_over_dual_number_cotangent_dual} applies.
+\end{proof}
+
+\begin{definition}[Identity section of a group scheme]\leanok
+  \label{def:tangent_identity_section}
+  \lean{AlgebraicGeometry.GroupScheme.identitySection}
+  Let \(k\) be a field and \(G\) a monoid (in particular, group)
+  scheme over \(k\): a scheme over \(\operatorname{Spec} k\) equipped
+  with a monoid-object structure in the category of schemes over
+  \(\operatorname{Spec} k\). The \emph{identity section}
+  \(e : \operatorname{Spec} k \to G\) is the underlying scheme
+  morphism of the unit \(\eta : \mathbf 1 \to G\), where the monoidal
+  unit \(\mathbf 1\) is \(\operatorname{Spec} k\) with structure
+  morphism the identity.
+\end{definition}
+
+\begin{lemma}[The identity section is a section]\leanok
+  \label{lem:tangent_identity_section_comp}
+  \lean{AlgebraicGeometry.GroupScheme.identitySection_comp}
+  \uses{def:tangent_identity_section}
+  In the situation of \cref{def:tangent_identity_section}, the
+  identity section satisfies
+  \(f \circ e = \operatorname{id}_{\operatorname{Spec} k}\), where
+  \(f : G \to \operatorname{Spec} k\) is the structure morphism.
+\end{lemma}
+
+\begin{proof}\leanok
+  The unit \(\eta\) is a morphism of schemes over
+  \(\operatorname{Spec} k\) out of the monoidal unit
+  \((\operatorname{Spec} k, \operatorname{id})\); its compatibility
+  triangle over \(\operatorname{Spec} k\) is precisely the equation
+  \(f \circ e = \operatorname{id}\).
+\end{proof}
+
+\begin{theorem}[Tangent space of a group scheme at the identity]\leanok
+  \label{thm:tangent_identity_cotangent_dual}
+  \lean{AlgebraicGeometry.GroupScheme.identityDualNumberEquivCotangentSpaceDual}
+  \uses{def:tangent_identity_section}
+  Let \(k\) be a field and \(G\) a monoid (in particular, group)
+  scheme over \(k\), with identity section
+  \(e : \operatorname{Spec} k \to G\)
+  (\cref{def:tangent_identity_section}) and \(x = e(*)\). Then the
+  dual-number points of \(G\) at \(x\) over \(\operatorname{Spec} k\)
+  — the Zariski tangent space of \(G\) at the identity in its
+  functor-of-points form — form the \(\kappa(x)\)-linear dual of the
+  cotangent space \(\mathfrak m_x/\mathfrak m_x^2\).
+\end{theorem}
+
+\begin{proof}\leanok
+  \uses{cor:tangent_section_cotangent_dual,
+        lem:tangent_identity_section_comp}
+  By \cref{lem:tangent_identity_section_comp} the identity section is
+  a section of the structure morphism, so
+  \cref{cor:tangent_section_cotangent_dual} applies at \(x = e(*)\).
+\end{proof}
+
+\begin{theorem}[Dual-number points of \(\Pic^0_{C/k}\) at the identity]\leanok
+  \label{thm:pic0_tangent_cotangent_dual}
+  \lean{AlgebraicGeometry.Scheme.Pic0.tangentSpaceCotangentDual}
+  \uses{def:pic_zero_subscheme,
+        thm:identity_component_open_subgroup}
+  Let \(C/k\) be a smooth proper geometrically integral curve over a
+  field \(k\), and suppose \(\Pic^0_{C/k}\)
+  (\cref{def:pic_zero_subscheme}) carries its \(k\)-group-scheme
+  structure (\cref{thm:identity_component_open_subgroup}). Then there
+  is an identity section \(e : \operatorname{Spec} k \to
+  \Pic^0_{C/k}\) of the structure morphism such that the dual-number
+  points of \(\Pic^0_{C/k}\) at \(e(*)\) over \(\operatorname{Spec} k\)
+  form the \(\kappa(e(*))\)-linear dual of the cotangent space:
+  \[
+    \tu T_0 \Pic^0_{C/k}
+    \;=\;
+    \{\, g : \operatorname{Spec} k_\varepsilon \to \Pic^0_{C/k}
+        \text{ over } \operatorname{Spec} k
+        \mid g(\mathfrak m) = e(*) \,\}
+    \;\cong\;
+    \operatorname{Hom}_{\kappa(e(*))}\!\bigl(
+      \mathfrak m_{e(*)}/\mathfrak m_{e(*)}^2,\, \kappa(e(*))\bigr).
+  \]
+  This is the geometric half of \cref{thm:pic0_tangent_space_iso};
+  what remains is the identification of the right-hand side with
+  \(H^1(C, \mathcal O_C)\).
+\end{theorem}
+
+\begin{proof}\leanok
+  \uses{thm:tangent_identity_cotangent_dual}
+  The group-scheme structure provides the identity section, and
+  \cref{thm:tangent_identity_cotangent_dual} applied to
+  \(G = \Pic^0_{C/k}\) gives the identification.
+\end{proof}
+
 
 \begin{theorem}\leanok
 [Tangent space at the identity: \(\tu T_0 \Pic^0_{C/k} \cong H^1(C, \mathcal{O}_C)\)]
@@ -539,7 +708,8 @@ thread between \cref{cor:tangent_spec_dual_number_at} and
         thm:identity_component_open_subgroup,
         lem:tangent_derivation_cotangent_dual,
         cor:tangent_dual_number_cotangent_dual,
-        cor:tangent_spec_dual_number_at}
+        cor:tangent_spec_dual_number_at,
+        thm:pic0_tangent_cotangent_dual}
   We follow Kleiman~\S 5 Thm.~5.11. By
   \cref{thm:fga_pic_representability}, the Picard scheme
   \(\Pic_{C/k}\) exists and represents the étale-sheafified relative
@@ -572,6 +742,11 @@ thread between \cref{cor:tangent_spec_dual_number_at} and
     \tu T_0 \Pic_{C/k}
     \;=\; \ker\bigl(\Pic_{C/k}(k_\varepsilon) \to \Pic_{C/k}(k)\bigr).
   \]
+  The identification of \(\tu T_0 \Pic^0_{C/k}\) — the dual-number
+  points over the identity section — with the
+  \(\kappa(0)\)-linear dual of the cotangent space
+  \(\mathfrak m_0/\mathfrak m_0^2\) is
+  \cref{thm:pic0_tangent_cotangent_dual}.
 
   \emph{Computing the kernel via the truncated exponential sequence.}
   Set \(C_\varepsilon := C \otimes_k k_\varepsilon\). On the étale

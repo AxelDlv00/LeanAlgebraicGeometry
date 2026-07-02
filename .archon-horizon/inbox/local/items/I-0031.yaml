@@ -1,0 +1,50 @@
+id: I-0031
+provider: local
+kind: info
+body: "T3 session 0021: `Thm32` smooth⇒reduced sorry CLOSED — Albanese ledger 16 →\
+  \ 15, `av_isIntegral_of_smooth_geomIrred` now axiom-clean.\n\n**Key claim:** the\
+  \ \"Mathlib gap\" `isReduced_of_smooth_over_field` (`Thm32RationalMapExtension.lean`)\
+  \ was closable in-project: the missing Stacks `00NP` (regular local ⇒ domain) already\
+  \ exists sorry-free as `RingTheory.CohenMacaulay.isDomain_of_regularLocal` in `AuslanderBuchsbaum.lean`\
+  \ (ALB.ab), and v4.31 Mathlib ships `isReduced_ofLocalizationMaximal` + `isReduced_of_isReduced_stalk`.\n\
+  \nWhat landed (full `lake build` GREEN, 8581 jobs; all new decls `#print axioms`\
+  \ = `propext, Classical.choice, Quot.sound`):\n\n- `CodimOneExtension.lean` §3.B,\
+  \ two new public theorems (~90 LOC incl. docs):\n  - **Step B.e** `isReduced_of_isStandardSmooth_of_isAlgClosed`\
+  \ — standard-smooth `k̄`-algebras are reduced (maximal-localisation regular by B.d′\
+  \ ⇒ domain by 00NP ⇒ reduced; glue via `isReduced_ofLocalizationMaximal`).\n  -\
+  \ **Step B.f** `isReduced_of_smooth_of_isAlgClosed` — a scheme smooth over `Spec\
+  \ k̄` is reduced (stalk-local; chart via Stage-2 `exists_isStandardSmooth_at_of_smooth`,\
+  \ base transport `gammaSpecField_ringEquiv` + `RingHom.isStandardSmooth_respectsIso`,\
+  \ localisation via `isReduced_localizationPreserves`). Unlike the 00OF-blocked regularity\
+  \ keystone, reducedness only needs maximal-ideal localisations of the chart ring,\
+  \ so it closes at EVERY point.\n- `Thm32RationalMapExtension.lean`: `isReduced_of_smooth_over_field`\
+  \ sorry replaced by a call to B.f; hypothesis strengthened `[Field k̄]` → `[Field\
+  \ k̄] [IsAlgClosed k̄]` (sole consumer `av_isIntegral_of_smooth_geomIrred` already\
+  \ assumes it). That helper is now **fully proven** — Thm32 is down to 1 sorry (`av_codimOneFree_of_indeterminacy`\
+  \ branch 2, waiting on the Milne-3.1 codim-≥2 conclusion).\n- Blueprint: new nodes\
+  \ `lem:standard_smooth_reduced_algclosed`, `lem:smooth_scheme_reduced_algclosed`\
+  \ in `Albanese_CodimOneExtension.tex`; `lem:isReduced_of_smooth_over_field` statement\
+  \ corrected to the alg-closed hypothesis + real `\\uses` proof. `horizon blueprint`\
+  \ refreshed: Albanese 293 nodes / 169 edges / 0 dangling.\n\nRemaining 15 sorried\
+  \ decls are the known blocked set: `AlbaneseUP` ×7 (A.3), `CodimOneExtension` ×3\
+  \ (00OF + Milne 3.1/3.3), `Thm32` ×1 (Milne 3.1 unbundling), `FGAPic` ×2 (AJC.picrep),\
+  \ `GmScaling` ×1 (hCP_check), `WeilDivisor` ×1 (upstream).\n\nNote: the recommended-focus\
+  \ hint `I-0026` (AJC.pic0av tangent leaf) targets `MainProjects/Algebraic-Jacobian-Challenge`\
+  \ — outside this session's Albanese write scope, so not attempted; route it to an\
+  \ AJC-scoped session."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Albanese
+audience: ground
+author: horizon
+source_ref: null
+created_at: '2026-07-02T03:37:14.925995+00:00'
+updated_at: '2026-07-02T03:37:14.926007+00:00'
+metadata:
+  provenance:
+    run: '0002'
+    session: 0021-horizon-T3
+    role: horizon

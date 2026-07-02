@@ -882,8 +882,8 @@
       "tex_file": "chapters/Albanese_CodimOneExtension.tex",
       "lean_file": "AlgebraicJacobian/Albanese/CodimOneExtension.lean",
       "dep_count": 0,
-      "rdep_count": 1,
-      "descendant_count": 8,
+      "rdep_count": 2,
+      "descendant_count": 13,
       "proof_size_tex": 154,
       "effort_local": 0,
       "proof_size_tex_total": 154,
@@ -1570,12 +1570,72 @@
       "tex_file": "chapters/Albanese_CodimOneExtension.tex",
       "lean_file": "AlgebraicJacobian/Albanese/CodimOneExtension.lean",
       "dep_count": 0,
-      "rdep_count": 1,
-      "descendant_count": 7,
+      "rdep_count": 2,
+      "descendant_count": 13,
       "proof_size_tex": 505,
       "effort_local": 0,
       "proof_size_tex_total": 505,
       "proof_size_lean_total": 1194,
+      "effort_total": 0
+    },
+    {
+      "id": "lem:standard_smooth_reduced_algclosed",
+      "type": "lemma",
+      "title": "",
+      "chapter": "Codimension-1 indeterminacy extension (A.4.a)",
+      "statement": "ok\n[Step B.e --- standard-smooth algebras over an algebraically closed field are reduced]\n  \n  \n  \n  Let \\(\\bar k\\) be an algebraically closed field and \\(S\\) a standard-smooth\n  \\(\\bar k\\)-algebra. Then \\(S\\) is reduced.",
+      "uses": [
+        "lem:standard_smooth_regular_at_closed_point_algclosed",
+        "lem:isDomain_of_regularLocal"
+      ],
+      "sources": [],
+      "lean_name": "AlgebraicGeometry.Scheme.isReduced_of_isStandardSmooth_of_isAlgClosed",
+      "proved": true,
+      "mathlib_ok": false,
+      "proof_tex": "\n  If \\(S\\) is the zero ring the claim is vacuous, so assume \\(S \\neq 0\\).\n  Reducedness is detected at localisations at maximal ideals: if \\(x \\in S\\) is\n  nilpotent and nonzero, its annihilator is a proper ideal, hence contained in\n  some maximal ideal \\(\\mathfrak m\\); the image of \\(x\\) in \\(S_{\\mathfrak m}\\)\n  is then nilpotent and nonzero, so \\(S_{\\mathfrak m}\\) is not reduced. It\n  therefore suffices to show every \\(S_{\\mathfrak m}\\) is reduced. By\n  \\cref{lem:standard_smooth_regular_at_closed_point_algclosed} the local ring\n  \\(S_{\\mathfrak m}\\) is regular, by \\cref{lem:isDomain_of_regularLocal} it is\n  an integral domain, and integral domains are reduced.\n",
+      "lean_source": "theorem isReduced_of_isStandardSmooth_of_isAlgClosed\n    (k : Type u) [Field k] [IsAlgClosed k]\n    (S : Type u) [CommRing S] [Algebra k S]\n    [Algebra.IsStandardSmooth k S] :\n    _root_.IsReduced S := by\n  cases subsingleton_or_nontrivial S with\n  | inl _ => exact \u27e8fun x _ => Subsingleton.elim x 0\u27e9\n  | inr _ =>\n    refine isReduced_ofLocalizationMaximal S (fun m hm => ?_)\n    haveI := hm.isPrime\n    haveI : IsRegularLocalRing (Localization.AtPrime m) :=\n      isRegularLocalRing_localizationAtPrime_of_isStandardSmooth_of_isAlgClosed\n        (k := k) m hm\n    haveI : IsDomain (Localization.AtPrime m) :=\n      RingTheory.CohenMacaulay.isDomain_of_regularLocal _\n    infer_instance",
+      "proof_size_lean": 687,
+      "has_sorry": false,
+      "tex_file": "chapters/Albanese_CodimOneExtension.tex",
+      "lean_file": "AlgebraicJacobian/Albanese/CodimOneExtension.lean",
+      "dep_count": 2,
+      "rdep_count": 1,
+      "descendant_count": 8,
+      "proof_size_tex": 668,
+      "effort_local": 0,
+      "proof_size_tex_total": 1534,
+      "proof_size_lean_total": 26911,
+      "effort_total": 0
+    },
+    {
+      "id": "lem:smooth_scheme_reduced_algclosed",
+      "type": "lemma",
+      "title": "",
+      "chapter": "Codimension-1 indeterminacy extension (A.4.a)",
+      "statement": "ok\n[Step B.f --- a scheme smooth over an algebraically closed field is reduced]\n  \n  \n  \n  Let \\(\\bar k\\) be an algebraically closed field and let \\(X\\) be a scheme with\n  a smooth morphism \\(X \\to \\Spec(\\bar k)\\). Then \\(X\\) is reduced.",
+      "uses": [
+        "lem:exists_standardSmooth_at_of_smooth",
+        "lem:gammaSpecField_ringEquiv",
+        "lem:isLocalization_atPrime_stalk_of_affineOpen",
+        "lem:standard_smooth_reduced_algclosed"
+      ],
+      "sources": [],
+      "lean_name": "AlgebraicGeometry.Scheme.isReduced_of_smooth_of_isAlgClosed",
+      "proved": true,
+      "mathlib_ok": false,
+      "proof_tex": "\n  A scheme is reduced if and only if all of its stalks are reduced, so fix\n  \\(z \\in X\\). By \\cref{lem:exists_standardSmooth_at_of_smooth} there are affine\n  opens \\(U \\subseteq \\Spec(\\bar k)\\) and \\(V \\ni z\\) with \\(V\\) mapping into\n  \\(U\\) such that \\(\\Gamma(\\Spec \\bar k, U) \\to \\Gamma(X, V)\\) is standard\n  smooth. Since \\(U\\) contains the image of \\(z\\) it is nonempty, so\n  \\cref{lem:gammaSpecField_ringEquiv} identifies\n  \\(\\Gamma(\\Spec \\bar k, U) \\simeq \\bar k\\); transporting the presentation along\n  this isomorphism makes \\(\\Gamma(X, V)\\) a standard-smooth\n  \\(\\bar k\\)-algebra, which is reduced by\n  \\cref{lem:standard_smooth_reduced_algclosed}. The stalk\n  \\(\\mathcal O_{X,z}\\) is a localisation of \\(\\Gamma(X, V)\\) by\n  \\cref{lem:isLocalization_atPrime_stalk_of_affineOpen}, and a localisation of\n  a reduced ring is reduced.\n",
+      "lean_source": "theorem isReduced_of_smooth_of_isAlgClosed\n    {kbar : Type u} [Field kbar] [IsAlgClosed kbar]\n    (X : Over (Spec (.of kbar)))\n    [Smooth X.hom] :\n    IsReduced X.left := by\n  haveI hstalk : \u2200 z : X.left.toPresheafedSpace,\n      _root_.IsReduced (X.left.presheaf.stalk z) := by\n    intro z\n\n    obtain \u27e8U, hU, V, hV, hzV, e, hSS\u27e9 := exists_isStandardSmooth_at_of_smooth X z\n\n    let \u03b5 : kbar \u2243+* \u0393(Spec (.of kbar), U) :=\n      (gammaSpecField_ringEquiv kbar U \u27e8\u27e8_, e hzV\u27e9\u27e9).symm\n\n    have hSS' : ((X.hom.appLE U V e).hom.comp \u03b5.toRingHom).IsStandardSmooth :=\n      RingHom.isStandardSmooth_respectsIso.2 _ \u03b5 hSS\n    letI : Algebra kbar \u0393(X.left, V) :=\n      ((X.hom.appLE U V e).hom.comp \u03b5.toRingHom).toAlgebra\n    haveI : Algebra.IsStandardSmooth kbar \u0393(X.left, V) := hSS'.toAlgebra\n\n    haveI hSred : _root_.IsReduced \u0393(X.left, V) :=\n      isReduced_of_isStandardSmooth_of_isAlgClosed kbar \u0393(X.left, V)\n\n    letI : Algebra \u0393(X.left, V) (X.left.presheaf.stalk z) :=\n      TopCat.Presheaf.algebra_section_stalk X.left.presheaf \u27e8z, hzV\u27e9\n    haveI : IsLocalization.AtPrime (X.left.presheaf.stalk z)\n        (hV.primeIdealOf \u27e8z, hzV\u27e9).asIdeal := hV.isLocalization_stalk \u27e8z, hzV\u27e9\n    exact isReduced_localizationPreserves\n      (hV.primeIdealOf \u27e8z, hzV\u27e9).asIdeal.primeCompl (X.left.presheaf.stalk z) hSred\n  exact isReduced_of_isReduced_stalk X.left",
+      "proof_size_lean": 1347,
+      "has_sorry": false,
+      "tex_file": "chapters/Albanese_CodimOneExtension.tex",
+      "lean_file": "AlgebraicJacobian/Albanese/CodimOneExtension.lean",
+      "dep_count": 4,
+      "rdep_count": 1,
+      "descendant_count": 7,
+      "proof_size_tex": 837,
+      "effort_local": 0,
+      "proof_size_tex_total": 2934,
+      "proof_size_lean_total": 29560,
       "effort_total": 0
     },
     {
@@ -1704,8 +1764,8 @@
       "tex_file": "chapters/Albanese_CodimOneExtension.tex",
       "lean_file": "AlgebraicJacobian/Albanese/CodimOneExtension.lean",
       "dep_count": 0,
-      "rdep_count": 1,
-      "descendant_count": 8,
+      "rdep_count": 2,
+      "descendant_count": 13,
       "proof_size_tex": 82,
       "effort_local": 0,
       "proof_size_tex_total": 82,
@@ -1731,7 +1791,7 @@
       "lean_file": "AlgebraicJacobian/Albanese/CodimOneExtension.lean",
       "dep_count": 0,
       "rdep_count": 1,
-      "descendant_count": 8,
+      "descendant_count": 13,
       "proof_size_tex": 104,
       "effort_local": 0,
       "proof_size_tex_total": 104,
@@ -1758,8 +1818,8 @@
       "tex_file": "chapters/Albanese_CodimOneExtension.tex",
       "lean_file": "AlgebraicJacobian/Albanese/CodimOneExtension.lean",
       "dep_count": 1,
-      "rdep_count": 1,
-      "descendant_count": 7,
+      "rdep_count": 2,
+      "descendant_count": 12,
       "proof_size_tex": 223,
       "effort_local": 0,
       "proof_size_tex_total": 327,
@@ -2211,7 +2271,7 @@
       "lean_file": "AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean",
       "dep_count": 0,
       "rdep_count": 1,
-      "descendant_count": 13,
+      "descendant_count": 19,
       "proof_size_tex": 123,
       "effort_local": 0,
       "proof_size_tex_total": 123,
@@ -2239,7 +2299,7 @@
       "lean_file": "AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean",
       "dep_count": 1,
       "rdep_count": 2,
-      "descendant_count": 12,
+      "descendant_count": 18,
       "proof_size_tex": 34,
       "effort_local": 0,
       "proof_size_tex_total": 157,
@@ -2265,7 +2325,7 @@
       "lean_file": "AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean",
       "dep_count": 0,
       "rdep_count": 2,
-      "descendant_count": 10,
+      "descendant_count": 16,
       "proof_size_tex": 34,
       "effort_local": 0,
       "proof_size_tex_total": 34,
@@ -2291,7 +2351,7 @@
       "lean_file": "AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean",
       "dep_count": 0,
       "rdep_count": 1,
-      "descendant_count": 10,
+      "descendant_count": 16,
       "proof_size_tex": 34,
       "effort_local": 0,
       "proof_size_tex_total": 34,
@@ -2319,7 +2379,7 @@
       "lean_file": "AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean",
       "dep_count": 1,
       "rdep_count": 2,
-      "descendant_count": 11,
+      "descendant_count": 17,
       "proof_size_tex": 34,
       "effort_local": 0,
       "proof_size_tex_total": 191,
@@ -2345,7 +2405,7 @@
       "lean_file": "AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean",
       "dep_count": 0,
       "rdep_count": 1,
-      "descendant_count": 11,
+      "descendant_count": 17,
       "proof_size_tex": 34,
       "effort_local": 0,
       "proof_size_tex_total": 34,
@@ -2374,7 +2434,7 @@
       "lean_file": "AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean",
       "dep_count": 2,
       "rdep_count": 1,
-      "descendant_count": 10,
+      "descendant_count": 16,
       "proof_size_tex": 34,
       "effort_local": 0,
       "proof_size_tex_total": 259,
@@ -2404,8 +2464,8 @@
       "tex_file": "chapters/Albanese_AuslanderBuchsbaum.tex",
       "lean_file": "AlgebraicJacobian/Albanese/AuslanderBuchsbaum.lean",
       "dep_count": 4,
-      "rdep_count": 1,
-      "descendant_count": 9,
+      "rdep_count": 2,
+      "descendant_count": 15,
       "proof_size_tex": 34,
       "effort_local": 0,
       "proof_size_tex_total": 361,
@@ -2613,33 +2673,35 @@
       "effort_local": 0,
       "proof_size_tex_total": null,
       "proof_size_lean_total": null,
-      "effort_total": 16837
+      "effort_total": 16813
     },
     {
       "id": "lem:isReduced_of_smooth_over_field",
       "type": "lemma",
       "title": "",
       "chapter": "Milne Theorem 3.2: Rational maps into abelian varieties",
-      "statement": "ok\n[A scheme smooth over a field is reduced]\n  \n  \n  For an object \\(A\\) over \\(\\Spec \\bar k\\) whose structure morphism\n  \\(A.\\mathrm{hom}\\) is smooth, the underlying scheme \\(A.\\mathrm{left}\\) is\n  reduced.\n  \\begin{proof}\n    Proved directly in Lean.\n  \\end{proof}",
-      "uses": [],
+      "statement": "ok\n[A scheme smooth over an algebraically closed field is reduced]\n  \n  \n  For an algebraically closed field \\(\\bar k\\) and an object \\(A\\) over\n  \\(\\Spec \\bar k\\) whose structure morphism \\(A.\\mathrm{hom}\\) is smooth, the\n  underlying scheme \\(A.\\mathrm{left}\\) is reduced.\n  \\begin{proof}\n    \n    Immediate from \\cref{lem:smooth_scheme_reduced_algclosed}.\n  \\end{proof}",
+      "uses": [
+        "lem:smooth_scheme_reduced_algclosed"
+      ],
       "sources": [],
       "lean_name": "AlgebraicGeometry.Scheme.RationalMap.isReduced_of_smooth_over_field",
       "proved": true,
       "mathlib_ok": false,
-      "proof_tex": "\n    Proved directly in Lean.\n  ",
-      "lean_source": "private theorem isReduced_of_smooth_over_field\n    {kbar : Type u} [Field kbar]\n    (A : Over (Spec (.of kbar)))\n    [Smooth A.hom] :\n    IsReduced A.left := sorry",
-      "proof_size_lean": null,
-      "has_sorry": true,
+      "proof_tex": "\n    \\uses{lem:smooth_scheme_reduced_algclosed}\n    Immediate from \\cref{lem:smooth_scheme_reduced_algclosed}.\n  ",
+      "lean_source": "private theorem isReduced_of_smooth_over_field\n    {kbar : Type u} [Field kbar] [IsAlgClosed kbar]\n    (A : Over (Spec (.of kbar)))\n    [Smooth A.hom] :\n    IsReduced A.left :=\n  isReduced_of_smooth_of_isAlgClosed A",
+      "proof_size_lean": 215,
+      "has_sorry": false,
       "tex_file": "chapters/Albanese_Thm32RationalMapExtension.tex",
       "lean_file": "AlgebraicJacobian/Albanese/Thm32RationalMapExtension.lean",
-      "dep_count": 0,
+      "dep_count": 1,
       "rdep_count": 1,
       "descendant_count": 6,
-      "proof_size_tex": 24,
-      "effort_local": 24,
-      "proof_size_tex_total": 24,
-      "proof_size_lean_total": null,
-      "effort_total": 24
+      "proof_size_tex": 105,
+      "effort_local": 0,
+      "proof_size_tex_total": 3039,
+      "proof_size_lean_total": 29775,
+      "effort_total": 0
     },
     {
       "id": "lem:av_isIntegral_of_smooth_geomIrred",
@@ -2665,9 +2727,9 @@
       "descendant_count": 5,
       "proof_size_tex": 24,
       "effort_local": 0,
-      "proof_size_tex_total": 48,
-      "proof_size_lean_total": null,
-      "effort_total": 24
+      "proof_size_tex_total": 3063,
+      "proof_size_lean_total": 30391,
+      "effort_total": 0
     },
     {
       "id": "lem:codimOneFree_of_indeterminacyLocus_eq_empty",
@@ -2723,7 +2785,7 @@
       "effort_local": 24,
       "proof_size_tex_total": null,
       "proof_size_lean_total": null,
-      "effort_total": 7170
+      "effort_total": 7146
     },
     {
       "id": "lem:av_isIntegral_and_codimOneFree",
@@ -2752,7 +2814,7 @@
       "effort_local": 0,
       "proof_size_tex_total": null,
       "proof_size_lean_total": null,
-      "effort_total": 7170
+      "effort_total": 7146
     },
     {
       "id": "thm:albanese_universal_property",
@@ -2778,7 +2840,7 @@
       "effort_local": 0,
       "proof_size_tex_total": null,
       "proof_size_lean_total": null,
-      "effort_total": 25770
+      "effort_total": 25746
     },
     {
       "id": "def:pic0_bundle",
@@ -3121,7 +3183,7 @@
       "effort_local": 859,
       "proof_size_tex_total": null,
       "proof_size_lean_total": null,
-      "effort_total": 25746
+      "effort_total": 25722
     },
     {
       "id": "lem:albanese_eq_iff_symmetricPower_eq",
@@ -8046,6 +8108,30 @@
       "target": "lem:ringKrullDim_quotient_localization_mvPolynomial_regular"
     },
     {
+      "source": "lem:standard_smooth_regular_at_closed_point_algclosed",
+      "target": "lem:standard_smooth_reduced_algclosed"
+    },
+    {
+      "source": "lem:isDomain_of_regularLocal",
+      "target": "lem:standard_smooth_reduced_algclosed"
+    },
+    {
+      "source": "lem:exists_standardSmooth_at_of_smooth",
+      "target": "lem:smooth_scheme_reduced_algclosed"
+    },
+    {
+      "source": "lem:gammaSpecField_ringEquiv",
+      "target": "lem:smooth_scheme_reduced_algclosed"
+    },
+    {
+      "source": "lem:isLocalization_atPrime_stalk_of_affineOpen",
+      "target": "lem:smooth_scheme_reduced_algclosed"
+    },
+    {
+      "source": "lem:standard_smooth_reduced_algclosed",
+      "target": "lem:smooth_scheme_reduced_algclosed"
+    },
+    {
       "source": "lem:submersive_relation_cotangent_linearIndependent",
       "target": "lem:submersive_relation_cotangent_linearIndependent_localized"
     },
@@ -8256,6 +8342,10 @@
     {
       "source": "lem:av_isIntegral_and_codimOneFree",
       "target": "thm:rational_map_to_av_extends"
+    },
+    {
+      "source": "lem:smooth_scheme_reduced_algclosed",
+      "target": "lem:isReduced_of_smooth_over_field"
     },
     {
       "source": "lem:isReduced_of_smooth_over_field",

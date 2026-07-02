@@ -6,6 +6,7 @@ Authors: Christian Merten
 import Mathlib
 import AlgebraicJacobian.Picard.IdentityComponent
 import AlgebraicJacobian.Picard.TangentSpaceDualNumbers
+import AlgebraicJacobian.Picard.TangentSpaceIdentitySection
 import AlgebraicJacobian.Genus
 
 /-!
@@ -119,6 +120,44 @@ about `Pic0Scheme C` (tangent space at the identity, smoothness, properness,
 geometric irreducibility, abelian-variety assembly). -/
 
 namespace Pic0
+
+/-- **Dual-number points of `Pic⁰_{C/k}` at the identity are the cotangent
+dual** (Kleiman §5 Thm.~`thm:tgtsp`, LHS). Given the `k`-group-scheme
+structure on `Pic0Scheme C` (supplied by
+`GroupScheme.IdentityComponent.isSubgroupHomomorphism` once `Pic0Scheme`
+unwinds to `IdentityComponent (PicScheme C)`), the identity section
+`e : Spec k ⟶ Pic⁰_{C/k}` hits a `k`-rational point, and the over-`Spec k`
+dual-number points of `Pic⁰_{C/k}` at `e` — the Zariski tangent space
+`T₀ Pic⁰_{C/k}` in its functor-of-points form — form the `κ(e)`-linear dual
+of the cotangent space `m_e/m_e²`.
+
+This is the geometric half of `tangentSpaceIso`; composing with the
+`H¹(C, 𝒪_C)`-identification of `Dual (m_e/m_e²)` (gated on the `AJC.picrep`
+representability cone) closes `thm:pic0_tangent_space_iso`. -/
+theorem tangentSpaceCotangentDual {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom]
+    (hgrp : Nonempty (GrpObj (Pic0Scheme C))) :
+    Nonempty (Σ' (e : Spec (.of k) ⟶ (Pic0Scheme C).left),
+      (e ≫ (Pic0Scheme C).hom = 𝟙 (Spec (.of k))) ×'
+      ({g : Spec (CommRingCat.of (DualNumber k)) ⟶ (Pic0Scheme C).left //
+          g ≫ (Pic0Scheme C).hom
+              = Spec.map (CommRingCat.ofHom (algebraMap k (DualNumber k)))
+            ∧ g.base (IsLocalRing.closedPoint (DualNumber k)) = e.base default} ≃
+        Module.Dual
+          (IsLocalRing.ResidueField ((Pic0Scheme C).left.presheaf.stalk (e.base default)))
+          (IsLocalRing.CotangentSpace
+            ((Pic0Scheme C).left.presheaf.stalk (e.base default))))) := by
+  obtain ⟨i⟩ := hgrp
+  letI := i
+  haveI : Subsingleton ↥(Spec (CommRingCat.of k)) :=
+    inferInstanceAs (Subsingleton (PrimeSpectrum k))
+  exact ⟨GroupScheme.identitySection (Pic0Scheme C),
+    GroupScheme.identitySection_comp (Pic0Scheme C),
+    overDualNumberSectionEquivCotangentSpaceDual (Pic0Scheme C)
+      (GroupScheme.identitySection_comp (Pic0Scheme C))
+      (congrArg _ (Subsingleton.elim _ _))⟩
 
 /-- **Tangent space at the identity: `T₀ Pic⁰_{C/k} ≅ H¹(C, 𝒪_C)`.**
 

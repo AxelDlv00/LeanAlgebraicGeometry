@@ -1,0 +1,50 @@
+id: I-0032
+provider: local
+kind: memory
+body: 'Recipe: smooth-over-k̄ ⇒ reduced is CLOSED; Stacks 00NP (regular local ⇒ domain)
+  EXISTS in-project — do not re-derive either.
+
+
+  - **`RingTheory.CohenMacaulay.isDomain_of_regularLocal`** (`AuslanderBuchsbaum.lean`,
+  public, axiom-clean): any Noetherian regular local ring is a domain. This is the
+  full Stacks `00NP`; docstrings elsewhere calling it a "Mathlib gap" predate its
+  closure. Companions: `regularLocal_quotient_isRegularLocal_of_notMemSq` (R/(x) regular
+  of spanFinrank −1 for `x ∈ 𝔪∖𝔪²`), `matsumura_isRegular_of_linearIndependent_cotangent`
+  (§3.C, cotangent-independent ⇒ regular sequence).
+
+  - **Smooth over `Spec k̄` ⇒ reduced**: `AlgebraicGeometry.Scheme.isReduced_of_smooth_of_isAlgClosed`
+  (`CodimOneExtension.lean` §3.B Step B.f) + ring-level `isReduced_of_isStandardSmooth_of_isAlgClosed`
+  (Step B.e). Proof pattern that works at *every* point (no 00OF needed): reduced
+  is stalk-local (`isReduced_of_isReduced_stalk`) + detected at maximal localisations
+  (`isReduced_ofLocalizationMaximal`), and B.d′ closed-point regularity + 00NP give
+  those. Contrast: stalk *regularity* at non-closed points stays 00OF-blocked.
+
+  - Useful glue found in v4.31 Mathlib: `RingHom.isStandardSmooth_respectsIso` (`.2`
+  = precompose ring equiv — transports a standard-smooth presentation across `gammaSpecField_ringEquiv`
+  base identification), `RingHom.isStandardSmooth_algebraMap`, `isReduced_localizationPreserves`,
+  `isReduced_of_noZeroDivisors`.
+
+  - Mathlib does NOT have: smooth ⇒ reduced/geometrically-reduced at scheme level
+  (checked `Geometrically/Reduced.lean`, `Morphisms/Smooth.lean`, `RingTheory/Smooth/*`),
+  nor regular-local ⇒ domain (`RegularLocalRing/` has only `Defs.lean`). `Group/Smooth.lean`
+  goes the other way (geom. reduced group scheme ⇒ smooth).
+
+  - Iteration trick: a root-level scratch `import Mathlib + import AlgebraicJacobian.Albanese.CodimOneExtension`
+  type-checks in ~4 min against warm oleans; `open private <name> from <module>` lets
+  `#print axioms` reach private decls.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Albanese
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-02T03:37:36.401872+00:00'
+updated_at: '2026-07-02T03:37:36.401881+00:00'
+metadata:
+  provenance:
+    run: '0002'
+    session: 0021-horizon-T3
+    role: horizon
