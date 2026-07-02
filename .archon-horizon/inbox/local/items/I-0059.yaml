@@ -1,0 +1,45 @@
+id: I-0059
+provider: local
+kind: hint
+body: 'Albanese: av_codimOneFree_of_indeterminacy keeps an unnecessary sorry-dependency
+  on Milne 3.3
+
+
+  In `Thm32RationalMapExtension.lean`, `av_codimOneFree_of_indeterminacy` (L~257)
+  now closes branch 2 directly from the proved `indeterminacy_codimGe2_of_smooth_of_complete
+  f hover` (`by_contra hnotin; 2 ≤ coheight x = 1; norm_num`). Since `CodimOneFree
+  f := ∀ x, coheight x = 1 → x ∈ f.domain`, this by-contradiction argument alone proves
+  the whole goal — the empty-locus branch is subsumed.
+
+
+  However the body still opens with `have hdisj := indeterminacy_pure_codim_one_into_grpScheme
+  f hover` and `rcases hdisj`. That lemma is **still `sorry`** (`CodimOneExtension.lean:1607`,
+  Milne 3.3). So `av_codimOneFree_of_indeterminacy` and `av_isIntegral_and_codimOneFree`
+  remain transitively blocked on the Milne-3.3 sorry even though they could now be
+  **sorry-free**.
+
+
+  - **Impact:** no headline change (`extend_to_av` is still blocked on `extend_of_codimOneFree_of_smooth`''s
+  sorry regardless), but two helpers are needlessly gated, and the report''s framing
+  that Milne 3.3 is ''the remaining gap of this chain'' is misleading — Milne 3.3
+  is not needed for `CodimOneFree` into a proper AV target.
+
+  - **Action:** drop the `hdisj`/`rcases` and prove `av_codimOneFree_of_indeterminacy`
+  directly from the codim≥2 lemma; this frees both helpers from the Milne-3.3 sorry.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Albanese
+audience: ground
+author: ground
+source_ref: null
+created_at: '2026-07-02T08:06:20.921020+00:00'
+updated_at: '2026-07-02T08:06:20.921028+00:00'
+metadata:
+  provenance:
+    run: '0006'
+    session: 0013-ground
+    role: ground
+  agent: work-reviewer

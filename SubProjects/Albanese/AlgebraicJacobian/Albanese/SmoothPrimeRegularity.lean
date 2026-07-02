@@ -174,7 +174,7 @@ transcendental element (`trdeg + 1`). Stacks `00ON` supplies
 `ht P = ht p + ht P̄` for the fiber prime `P̄` of `R[X]/pR[X] ≅ (R⧸p)[X]`;
 the two cases are `P̄ ≠ ⊥` (then `ht P̄ ≥ 1`) and `P̄ = ⊥` (then
 `R[X]⧸P ≅ (R⧸p)[X]`). -/
-private theorem Polynomial.step_height_trdeg_of_isPrime
+theorem Polynomial.step_height_trdeg_of_isPrime
     (P : Ideal (Polynomial R)) (hP : P.IsPrime) :
     ((P.comap (algebraMap R (Polynomial R))).height + 1 ≤ P.height ∧
       Algebra.trdeg k (R ⧸ P.comap (algebraMap R (Polynomial R))) ≤
