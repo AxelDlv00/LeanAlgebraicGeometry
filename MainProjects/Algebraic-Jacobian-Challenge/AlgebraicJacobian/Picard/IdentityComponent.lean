@@ -282,11 +282,9 @@ with the over-category compatibility holding by definition of
 `(identityComponentCarrier G).ι`, an open immersion by the global
 `Scheme.Opens.instIsOpenImmersionι` instance. For the closed-immersion
 half we apply `IsClosedImmersion.of_isPreimmersion` to the open immersion
-and reduce to `IsClosed (↑(identityComponentCarrier G) : Set _)`. The
-remaining inline `sorry` is the substantive content: the carrier of
-`identityComponentCarrier G` is closed, by "closure of a connected subspace
-is connected" applied to the connected component through the image of the
-identity section. -/
+and reduce to `IsClosed (↑(identityComponentCarrier G) : Set _)`, which holds
+because the carrier is a connected component and connected components are
+closed. This theorem is now axiom-clean. -/
 theorem IdentityComponent.isOpenSubgroupScheme {k : Type u} [Field k]
     (G : Over (Spec (.of k)))
     [GrpObj G] [LocallyOfFiniteType G.hom] :
@@ -334,15 +332,15 @@ connected by construction). The full Stacks 04KU bridge
 PROVED project-side (run 0005 session 0007, T5) in the sibling module
 `Picard/GeometricallyConnectedSection.lean` and consumed by
 `geometricallyConnected_of_connected_of_section` below, so the
-geometric-connectedness substrate is axiom-clean. The remaining sorries
-in `isSubgroupHomomorphism`, `baseChangeIso`,
-`isFiniteTypeGeometricallyIrreducible` are the group-structure /
-clopen-image-identification arguments built on top of it.
+geometric-connectedness substrate is axiom-clean. Built on top of it,
+`isSubgroupHomomorphism` (group-structure inheritance) and `baseChangeIso`
+(clopen-image identification) are now both axiom-clean; the only remaining
+sorry is the `GeometricallyIrreducible` conjunct of
+`isFiniteTypeGeometricallyIrreducible` (EGA IV₂ 4.6.1-type input).
 
-Below: `baseChangeIso` partially closes via
-`CategoryTheory.Over.grpObjMkPullbackSnd` (iter-192 axiom-clean closure
-of 2 of the 3 conjuncts; the third conjunct, the iso of identity-component
-constructions, remains sorry pending the Stacks 04KU substrate). -/
+Below: `baseChangeIso` closes via
+`CategoryTheory.Over.grpObjMkPullbackSnd` together with the carrier
+identification `fst⁻¹(G⁰) = (G_K)⁰` (clopen ⊇, preconnected-range ⊆). -/
 
 /-- Helper (iter-192 Lane A.3.i, axiom-clean): the **identity component
 carrier** has connected underlying topological space.

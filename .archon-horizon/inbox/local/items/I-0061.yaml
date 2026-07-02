@@ -1,0 +1,51 @@
+id: I-0061
+provider: local
+kind: memory
+body: '**tangentSpaceIso (A.3.iii) is NOT directly provable — critical path runs through
+  the relative Pic functor, and a naive FGA rewire is a FALSE-axiom trap.**
+
+
+  - `Pic0.tangentSpaceIso` (`Pic0AbelianVariety.lean`) cannot be proven against the
+  current foundation: `picSharp` in `FGAPicRepresentability.lean` is `Classical.choice`
+  of a `⟨sorry⟩` `Nonempty` — a fully opaque functor. No H¹ comparison can attach
+  to it. Do not re-probe the sorry directly.
+
+  - **Critical path** (in order): (1) ~~real relative Pic presheaf~~ DONE session
+  0015 (`PicSharp.relPresheaf` in `RelPicFunctor.lean`, `H_T`-coset carrier, axiom-clean);
+  (2) étale sheafification target — Mathlib v4.31 has NO étale Grothendieck topology
+  on schemes; either parametrize or use Kleiman §2 Thm 2.5: for C/k with a **k-rational
+  section**, `Pic^♯(T) → Pic^♯_ét(T)` is already bijective, so representability can
+  be stated against `relPresheaf` directly under a section hypothesis; (3) rewire
+  FGA `picSharp` := (sheafified) relative functor — universe bump `Type u → Type (u+1)`
+  in `HasPicSharp`/`HasPicScheme` is viable (`Functor.RepresentableBy` is universe-polymorphic;
+  `Equiv` is cross-universe); (4) `Pic(C_ε) ≅ H¹(C_ε, O^×)` cocycle classification
+  + truncated exponential split sequence `0 → O_C → O^×_{C_ε} → O^×_C → 1` for the
+  kernel = `H¹(C,O_C)` computation (Kleiman Thm 5.11) — none of this exists yet, largest
+  remaining block.
+
+  - **TRAP**: wiring `picSharp := PicSharp.presheaf` (the absolute functor, iso-class
+  carrier) would make `PicSharpRepresentable`''s sorry a mathematically FALSE statement
+  (absolute `Pic(C×T)` is not representable — it differs from `Hom(T, Pic)` by `Pic(T)`).
+  Any rewire must use the relative (and in general sheafified) functor.
+
+  - Proof-pattern notes: the `Quotient.lift`/`Quotient.sound` + iso-chain style (pullbackCongr/pullbackId/pullbackComp
+  `.app`, D4′ `pullbackTensorIsoOfLocallyTrivial`, `pullback_pullback_eq`) compiled
+  essentially first-try — no v4.31 transparency walls in this corner. `pullback.lift_fst/snd`
+  are NOT simp (only `@[reassoc]`); pass them + their `_assoc` forms to `simp` explicitly
+  after `pullback.hom_ext`.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-02T08:17:53.754280+00:00'
+updated_at: '2026-07-02T08:17:53.754292+00:00'
+metadata:
+  provenance:
+    run: '0005'
+    session: 0015-horizon-T5
+    role: horizon

@@ -1700,8 +1700,8 @@
       "proved": true,
       "mathlib_ok": false,
       "proof_tex": "\n  \\leanok\n  The extension \\(R \\to R[X]\\) is free, hence flat, hence satisfies going-down,\n  so the dimension formula (Stacks 00ON) gives\n  \\(\\operatorname{ht} P = \\operatorname{ht} p + \\operatorname{ht} \\bar P\\) for\n  the image \\(\\bar P\\) of \\(P\\) in \\(R[X]/pR[X] \\cong (R/p)[X]\\). Write\n  \\(A = R/p\\) (a domain) and \\(Q \\subseteq A[X]\\) for the prime corresponding\n  to \\(\\bar P\\); then \\(Q \\cap A = 0\\) and \\(A[X]/Q \\cong R[X]/P\\) as\n  \\(k\\)-algebras. If \\(Q = 0\\), the heights agree and\n  \\(R[X]/P \\cong A[X]\\); superadditivity of transcendence degree in the tower\n  \\(k \\to A \\to A[X]\\) together with \\(\\operatorname{trdeg}_A A[X] = 1\\) gives\n  \\(\\operatorname{trdeg}_k A[X] \\ge \\operatorname{trdeg}_k A + 1\\). If\n  \\(Q \\neq 0\\), then \\(0 \\subsetneq Q\\) is a chain of primes in the domain\n  \\(A[X]\\), so \\(\\operatorname{ht} \\bar P = \\operatorname{ht} Q \\ge 1\\), while\n  \\(A\\) still embeds into \\(A[X]/Q\\) because \\(Q \\cap A = 0\\), whence\n  \\(\\operatorname{trdeg}_k A \\le \\operatorname{trdeg}_k (A[X]/Q)\\).\n",
-      "lean_source": "private theorem Polynomial.step_height_trdeg_of_isPrime\n    (P : Ideal (Polynomial R)) (hP : P.IsPrime) :\n    ((P.comap (algebraMap R (Polynomial R))).height + 1 \u2264 P.height \u2227\n      Algebra.trdeg k (R \u29f8 P.comap (algebraMap R (Polynomial R))) \u2264\n        Algebra.trdeg k (Polynomial R \u29f8 P)) \u2228\n    (P.height = (P.comap (algebraMap R (Polynomial R))).height \u2227\n      Algebra.trdeg k (R \u29f8 P.comap (algebraMap R (Polynomial R))) + 1 \u2264\n        Algebra.trdeg k (Polynomial R \u29f8 P)) := by\n  haveI := hP\n  set p : Ideal R := P.comap (algebraMap R (Polynomial R)) with hpdef\n  haveI hp : p.IsPrime := Ideal.comap_isPrime _ P\n  haveI : P.LiesOver p := \u27e8rfl\u27e9\n\n  haveI : Module.Flat R (Polynomial R) := Module.Flat.of_free\n  have h00 := Ideal.height_eq_height_add_of_liesOver_of_hasGoingDown p P\n\n  set pX : Ideal (Polynomial R) := p.map (algebraMap R (Polynomial R)) with hpXdef\n  have hker_le : pX \u2264 P := Ideal.map_le_iff_le_comap.mpr le_rfl\n  set Pbar : Ideal (Polynomial R \u29f8 pX) := P.map (Ideal.Quotient.mk pX) with hPbardef\n  haveI hPbarPrime : Pbar.IsPrime :=\n    Ideal.map_isPrime_of_surjective Ideal.Quotient.mk_surjective\n      (by rwa [Ideal.mk_ker])\n  set A := R \u29f8 p with hAdef\n  haveI : IsDomain A := Ideal.Quotient.isDomain p\n\n  have hCeq : p.map (Polynomial.C (R := R)) = pX := by\n    rw [hpXdef, Polynomial.algebraMap_eq]\n  set e2 : Polynomial A \u2243+* (Polynomial R \u29f8 pX) :=\n    p.polynomialQuotientEquivQuotientPolynomial.trans (Ideal.quotEquivOfEq hCeq)\n    with he2def\n  have hcomm : \u2200 r : R, e2 (Polynomial.C (Ideal.Quotient.mk p r)) =\n      Ideal.Quotient.mk pX (Polynomial.C r) := by\n    intro r\n    have hs := Ideal.polynomialQuotientEquivQuotientPolynomial_symm_mk p (Polynomial.C r)\n    rw [Polynomial.map_C] at hs\n    have hfwd : p.polynomialQuotientEquivQuotientPolynomial\n        (Polynomial.C (Ideal.Quotient.mk p r)) =\n        Ideal.Quotient.mk _ (Polynomial.C r) := by\n      rw [\u2190 hs, RingEquiv.apply_symm_apply]\n    rw [he2def, RingEquiv.coe_trans, Function.comp_apply, hfwd, Ideal.quotEquivOfEq_mk]\n\n  set Q : Ideal (Polynomial A) := Pbar.comap e2 with hQdef\n  haveI hQPrime : Q.IsPrime := Ideal.comap_isPrime _ Pbar\n  have hQheight : Q.height = Pbar.height := RingEquiv.height_comap e2 Pbar\n  have hQmap : Pbar = Q.map (e2 : Polynomial A \u2192+* (Polynomial R \u29f8 pX)) := by\n    have hcoe : Q = Pbar.comap (e2 : Polynomial A \u2192+* (Polynomial R \u29f8 pX)) :=\n      Ideal.ext fun x => Iff.rfl\n    rw [hcoe, Ideal.map_comap_of_surjective\n      (e2 : Polynomial A \u2192+* (Polynomial R \u29f8 pX)) e2.surjective]\n\n  have hmem : \u2200 r : R, Polynomial.C (Ideal.Quotient.mk p r) \u2208 Q \u2194 Polynomial.C r \u2208 P := by\n    intro r\n    rw [hQdef, Ideal.mem_comap, hcomm, hPbardef, Ideal.mem_quotient_iff_mem hker_le]\n\n  have hQA : Q.comap (algebraMap A (Polynomial A)) = \u22a5 := by\n    ext a\n    obtain \u27e8r, rfl\u27e9 := Ideal.Quotient.mk_surjective a\n    rw [Ideal.mem_comap, Polynomial.algebraMap_eq, Submodule.mem_bot, hmem r,\n      Ideal.Quotient.eq_zero_iff_mem]\n    change Polynomial.C r \u2208 P \u2194 r \u2208 p\n    rw [hpdef, Ideal.mem_comap, Polynomial.algebraMap_eq]\n\n  have he2c : \u2200 c : k, e2 (algebraMap k (Polynomial A) c) =\n      algebraMap k (Polynomial R \u29f8 pX) c := by\n    intro c\n    rw [IsScalarTower.algebraMap_apply k A (Polynomial A), Polynomial.algebraMap_eq,\n      IsScalarTower.algebraMap_apply k R A, Ideal.Quotient.algebraMap_eq, hcomm,\n      IsScalarTower.algebraMap_apply k (Polynomial R) (Polynomial R \u29f8 pX),\n      Ideal.Quotient.algebraMap_eq, IsScalarTower.algebraMap_apply k R (Polynomial R),\n      Polynomial.algebraMap_eq]\n  set e2alg : Polynomial A \u2243\u2090[k] (Polynomial R \u29f8 pX) := AlgEquiv.ofRingEquiv he2c\n    with he2algdef\n\n  have hQmapAlg : Pbar = Q.map (e2alg : Polynomial A \u2192+* (Polynomial R \u29f8 pX)) := by\n    rw [hQmap]\n    congr 1\n  have gQuot : (Polynomial A \u29f8 Q) \u2243\u2090[k] (Polynomial R \u29f8 P) := by\n    refine (Ideal.quotientEquivAlg Q Pbar e2alg hQmapAlg).trans ?_\n    refine AlgEquiv.ofRingEquiv (f := DoubleQuot.quotQuotEquivQuotOfLE hker_le) ?_\n    intro c\n    have hL : algebraMap k ((Polynomial R \u29f8 pX) \u29f8 Pbar) c =\n        Ideal.Quotient.mk Pbar (Ideal.Quotient.mk pX (algebraMap k (Polynomial R) c)) := by\n      rw [IsScalarTower.algebraMap_apply k (Polynomial R \u29f8 pX)\n          ((Polynomial R \u29f8 pX) \u29f8 Pbar),\n        Ideal.Quotient.algebraMap_eq,\n        IsScalarTower.algebraMap_apply k (Polynomial R) (Polynomial R \u29f8 pX),\n        Ideal.Quotient.algebraMap_eq]\n    have hR : algebraMap k (Polynomial R \u29f8 P) c =\n        Ideal.Quotient.mk P (algebraMap k (Polynomial R) c) := by\n      rw [IsScalarTower.algebraMap_apply k (Polynomial R) (Polynomial R \u29f8 P),\n        Ideal.Quotient.algebraMap_eq]\n    rw [hL, hR]\n    exact DoubleQuot.quotQuotEquivQuotOfLE_quotQuotMk (algebraMap k (Polynomial R) c) hker_le\n\n  by_cases hQ : Q = \u22a5\n  \u00b7 \n    right\n    have hPbarBot : Pbar = \u22a5 := by rw [hQmap, hQ, Ideal.map_bot]\n    haveI : Nontrivial (Polynomial R \u29f8 pX) :=\n      Ideal.Quotient.nontrivial_iff.mpr\n        (fun htop => hP.ne_top (top_le_iff.mp (htop \u25b8 hker_le)))\n    constructor\n    \u00b7 rw [h00, hPbarBot, Ideal.height_bot, add_zero]\n    \u00b7 calc Algebra.trdeg k A + 1\n          \u2264 Algebra.trdeg k (Polynomial A) := trdeg_add_one_le_trdeg_polynomial A\n        _ \u2264 Algebra.trdeg k (Polynomial A \u29f8 Q) := by\n            rw [hQ]; exact trdeg_le_trdeg_quotient_bot _\n        _ \u2264 Algebra.trdeg k (Polynomial R \u29f8 P) := trdeg_le_of_algEquiv gQuot\n  \u00b7 \n    left\n    have h1Q : 1 \u2264 Q.height := by\n      haveI : (\u22a5 : Ideal (Polynomial A)).IsPrime := Ideal.isPrime_bot\n      have hlt : (\u22a5 : Ideal (Polynomial A)) < Q := bot_lt_iff_ne_bot.mpr hQ\n      have h := Ideal.height_add_one_le_of_lt_of_isPrime hlt\n      rwa [Ideal.height_bot, zero_add] at h\n    constructor\n    \u00b7 rw [h00]\n      gcongr\n      exact le_trans h1Q (le_of_eq hQheight)\n    \u00b7 calc Algebra.trdeg k A\n          \u2264 Algebra.trdeg k (Polynomial A \u29f8 Q) :=\n            trdeg_le_trdeg_polynomial_quotient A Q hQA\n        _ \u2264 Algebra.trdeg k (Polynomial R \u29f8 P) := trdeg_le_of_algEquiv gQuot",
-      "proof_size_lean": 5922,
+      "lean_source": "theorem Polynomial.step_height_trdeg_of_isPrime\n    (P : Ideal (Polynomial R)) (hP : P.IsPrime) :\n    ((P.comap (algebraMap R (Polynomial R))).height + 1 \u2264 P.height \u2227\n      Algebra.trdeg k (R \u29f8 P.comap (algebraMap R (Polynomial R))) \u2264\n        Algebra.trdeg k (Polynomial R \u29f8 P)) \u2228\n    (P.height = (P.comap (algebraMap R (Polynomial R))).height \u2227\n      Algebra.trdeg k (R \u29f8 P.comap (algebraMap R (Polynomial R))) + 1 \u2264\n        Algebra.trdeg k (Polynomial R \u29f8 P)) := by\n  haveI := hP\n  set p : Ideal R := P.comap (algebraMap R (Polynomial R)) with hpdef\n  haveI hp : p.IsPrime := Ideal.comap_isPrime _ P\n  haveI : P.LiesOver p := \u27e8rfl\u27e9\n\n  haveI : Module.Flat R (Polynomial R) := Module.Flat.of_free\n  have h00 := Ideal.height_eq_height_add_of_liesOver_of_hasGoingDown p P\n\n  set pX : Ideal (Polynomial R) := p.map (algebraMap R (Polynomial R)) with hpXdef\n  have hker_le : pX \u2264 P := Ideal.map_le_iff_le_comap.mpr le_rfl\n  set Pbar : Ideal (Polynomial R \u29f8 pX) := P.map (Ideal.Quotient.mk pX) with hPbardef\n  haveI hPbarPrime : Pbar.IsPrime :=\n    Ideal.map_isPrime_of_surjective Ideal.Quotient.mk_surjective\n      (by rwa [Ideal.mk_ker])\n  set A := R \u29f8 p with hAdef\n  haveI : IsDomain A := Ideal.Quotient.isDomain p\n\n  have hCeq : p.map (Polynomial.C (R := R)) = pX := by\n    rw [hpXdef, Polynomial.algebraMap_eq]\n  set e2 : Polynomial A \u2243+* (Polynomial R \u29f8 pX) :=\n    p.polynomialQuotientEquivQuotientPolynomial.trans (Ideal.quotEquivOfEq hCeq)\n    with he2def\n  have hcomm : \u2200 r : R, e2 (Polynomial.C (Ideal.Quotient.mk p r)) =\n      Ideal.Quotient.mk pX (Polynomial.C r) := by\n    intro r\n    have hs := Ideal.polynomialQuotientEquivQuotientPolynomial_symm_mk p (Polynomial.C r)\n    rw [Polynomial.map_C] at hs\n    have hfwd : p.polynomialQuotientEquivQuotientPolynomial\n        (Polynomial.C (Ideal.Quotient.mk p r)) =\n        Ideal.Quotient.mk _ (Polynomial.C r) := by\n      rw [\u2190 hs, RingEquiv.apply_symm_apply]\n    rw [he2def, RingEquiv.coe_trans, Function.comp_apply, hfwd, Ideal.quotEquivOfEq_mk]\n\n  set Q : Ideal (Polynomial A) := Pbar.comap e2 with hQdef\n  haveI hQPrime : Q.IsPrime := Ideal.comap_isPrime _ Pbar\n  have hQheight : Q.height = Pbar.height := RingEquiv.height_comap e2 Pbar\n  have hQmap : Pbar = Q.map (e2 : Polynomial A \u2192+* (Polynomial R \u29f8 pX)) := by\n    have hcoe : Q = Pbar.comap (e2 : Polynomial A \u2192+* (Polynomial R \u29f8 pX)) :=\n      Ideal.ext fun x => Iff.rfl\n    rw [hcoe, Ideal.map_comap_of_surjective\n      (e2 : Polynomial A \u2192+* (Polynomial R \u29f8 pX)) e2.surjective]\n\n  have hmem : \u2200 r : R, Polynomial.C (Ideal.Quotient.mk p r) \u2208 Q \u2194 Polynomial.C r \u2208 P := by\n    intro r\n    rw [hQdef, Ideal.mem_comap, hcomm, hPbardef, Ideal.mem_quotient_iff_mem hker_le]\n\n  have hQA : Q.comap (algebraMap A (Polynomial A)) = \u22a5 := by\n    ext a\n    obtain \u27e8r, rfl\u27e9 := Ideal.Quotient.mk_surjective a\n    rw [Ideal.mem_comap, Polynomial.algebraMap_eq, Submodule.mem_bot, hmem r,\n      Ideal.Quotient.eq_zero_iff_mem]\n    change Polynomial.C r \u2208 P \u2194 r \u2208 p\n    rw [hpdef, Ideal.mem_comap, Polynomial.algebraMap_eq]\n\n  have he2c : \u2200 c : k, e2 (algebraMap k (Polynomial A) c) =\n      algebraMap k (Polynomial R \u29f8 pX) c := by\n    intro c\n    rw [IsScalarTower.algebraMap_apply k A (Polynomial A), Polynomial.algebraMap_eq,\n      IsScalarTower.algebraMap_apply k R A, Ideal.Quotient.algebraMap_eq, hcomm,\n      IsScalarTower.algebraMap_apply k (Polynomial R) (Polynomial R \u29f8 pX),\n      Ideal.Quotient.algebraMap_eq, IsScalarTower.algebraMap_apply k R (Polynomial R),\n      Polynomial.algebraMap_eq]\n  set e2alg : Polynomial A \u2243\u2090[k] (Polynomial R \u29f8 pX) := AlgEquiv.ofRingEquiv he2c\n    with he2algdef\n\n  have hQmapAlg : Pbar = Q.map (e2alg : Polynomial A \u2192+* (Polynomial R \u29f8 pX)) := by\n    rw [hQmap]\n    congr 1\n  have gQuot : (Polynomial A \u29f8 Q) \u2243\u2090[k] (Polynomial R \u29f8 P) := by\n    refine (Ideal.quotientEquivAlg Q Pbar e2alg hQmapAlg).trans ?_\n    refine AlgEquiv.ofRingEquiv (f := DoubleQuot.quotQuotEquivQuotOfLE hker_le) ?_\n    intro c\n    have hL : algebraMap k ((Polynomial R \u29f8 pX) \u29f8 Pbar) c =\n        Ideal.Quotient.mk Pbar (Ideal.Quotient.mk pX (algebraMap k (Polynomial R) c)) := by\n      rw [IsScalarTower.algebraMap_apply k (Polynomial R \u29f8 pX)\n          ((Polynomial R \u29f8 pX) \u29f8 Pbar),\n        Ideal.Quotient.algebraMap_eq,\n        IsScalarTower.algebraMap_apply k (Polynomial R) (Polynomial R \u29f8 pX),\n        Ideal.Quotient.algebraMap_eq]\n    have hR : algebraMap k (Polynomial R \u29f8 P) c =\n        Ideal.Quotient.mk P (algebraMap k (Polynomial R) c) := by\n      rw [IsScalarTower.algebraMap_apply k (Polynomial R) (Polynomial R \u29f8 P),\n        Ideal.Quotient.algebraMap_eq]\n    rw [hL, hR]\n    exact DoubleQuot.quotQuotEquivQuotOfLE_quotQuotMk (algebraMap k (Polynomial R) c) hker_le\n\n  by_cases hQ : Q = \u22a5\n  \u00b7 \n    right\n    have hPbarBot : Pbar = \u22a5 := by rw [hQmap, hQ, Ideal.map_bot]\n    haveI : Nontrivial (Polynomial R \u29f8 pX) :=\n      Ideal.Quotient.nontrivial_iff.mpr\n        (fun htop => hP.ne_top (top_le_iff.mp (htop \u25b8 hker_le)))\n    constructor\n    \u00b7 rw [h00, hPbarBot, Ideal.height_bot, add_zero]\n    \u00b7 calc Algebra.trdeg k A + 1\n          \u2264 Algebra.trdeg k (Polynomial A) := trdeg_add_one_le_trdeg_polynomial A\n        _ \u2264 Algebra.trdeg k (Polynomial A \u29f8 Q) := by\n            rw [hQ]; exact trdeg_le_trdeg_quotient_bot _\n        _ \u2264 Algebra.trdeg k (Polynomial R \u29f8 P) := trdeg_le_of_algEquiv gQuot\n  \u00b7 \n    left\n    have h1Q : 1 \u2264 Q.height := by\n      haveI : (\u22a5 : Ideal (Polynomial A)).IsPrime := Ideal.isPrime_bot\n      have hlt : (\u22a5 : Ideal (Polynomial A)) < Q := bot_lt_iff_ne_bot.mpr hQ\n      have h := Ideal.height_add_one_le_of_lt_of_isPrime hlt\n      rwa [Ideal.height_bot, zero_add] at h\n    constructor\n    \u00b7 rw [h00]\n      gcongr\n      exact le_trans h1Q (le_of_eq hQheight)\n    \u00b7 calc Algebra.trdeg k A\n          \u2264 Algebra.trdeg k (Polynomial A \u29f8 Q) :=\n            trdeg_le_trdeg_polynomial_quotient A Q hQA\n        _ \u2264 Algebra.trdeg k (Polynomial R \u29f8 P) := trdeg_le_of_algEquiv gQuot",
+      "proof_size_lean": 5914,
       "has_sorry": false,
       "tex_file": "chapters/Albanese_CodimOneExtension.tex",
       "lean_file": "AlgebraicJacobian/Albanese/SmoothPrimeRegularity.lean",
@@ -1711,7 +1711,7 @@
       "proof_size_tex": 1007,
       "effort_local": 0,
       "proof_size_tex_total": 1007,
-      "proof_size_lean_total": 5922,
+      "proof_size_lean_total": 5914,
       "effort_total": 0
     },
     {
@@ -1739,7 +1739,7 @@
       "proof_size_tex": 683,
       "effort_local": 0,
       "proof_size_tex_total": 1690,
-      "proof_size_lean_total": 8776,
+      "proof_size_lean_total": 8768,
       "effort_total": 0
     },
     {
@@ -1767,7 +1767,7 @@
       "proof_size_tex": 646,
       "effort_local": 0,
       "proof_size_tex_total": 2336,
-      "proof_size_lean_total": 12747,
+      "proof_size_lean_total": 12739,
       "effort_total": 0
     },
     {
@@ -1853,7 +1853,7 @@
       "proof_size_tex": 1297,
       "effort_local": 0,
       "proof_size_tex_total": 6625,
-      "proof_size_lean_total": 26039,
+      "proof_size_lean_total": 26031,
       "effort_total": 0
     },
     {
@@ -1884,7 +1884,7 @@
       "proof_size_tex": 601,
       "effort_local": 0,
       "proof_size_tex_total": 7789,
-      "proof_size_lean_total": 29082,
+      "proof_size_lean_total": 29074,
       "effort_total": 0
     },
     {
@@ -1913,7 +1913,7 @@
       "proof_size_tex": 450,
       "effort_local": 0,
       "proof_size_tex_total": 14740,
-      "proof_size_lean_total": 35488,
+      "proof_size_lean_total": 35480,
       "effort_total": 0
     },
     {
@@ -1943,7 +1943,7 @@
       "proof_size_tex": 1491,
       "effort_local": 0,
       "proof_size_tex_total": 16231,
-      "proof_size_lean_total": 36293,
+      "proof_size_lean_total": 36285,
       "effort_total": 0
     },
     {
@@ -1972,7 +1972,7 @@
       "proof_size_tex": 976,
       "effort_local": 0,
       "proof_size_tex_total": null,
-      "proof_size_lean_total": 40399,
+      "proof_size_lean_total": 40391,
       "effort_total": 0
     },
     {

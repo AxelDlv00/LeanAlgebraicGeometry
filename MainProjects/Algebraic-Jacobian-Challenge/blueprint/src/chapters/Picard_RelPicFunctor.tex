@@ -697,22 +697,27 @@ group-valued presheaf.
   \(X = C\) and \(S = \Spec k\), this is exactly \(\Pic_{X/S}\) of df:Pfs.
 \end{definition}
 
-% NOTE (iter-199 plan agent): the Lean closure
-% AlgebraicGeometry.Scheme.PicSharp at the pinned Mathlib commit
-% b80f227 carries a constant-functor placeholder body
-% ((CategoryTheory.Functor.const _).obj (AddCommGrpCat.of PUnit)),
-% i.e.\ the constant functor at the trivial abelian group. This is NOT
-% the relative Picard presheaf
-% \(T \mapsto \Pic(C \times_k T)/\pi_T^*\Pic(T)\) that the definition
-% above describes; the placeholder merely supplies a type-checking
-% object of the correct kind. The closure is gated on the upstream
-% Mathlib \texttt{Scheme.Modules} monoidal-structure gap (no
-% tensor-product \texttt{AddCommGroup} structure on
-% \texttt{LineBundle.OnProduct} is available, hence no quotient group
-% can be built on the Lean side until that gap is closed). DO NOT
-% promote this block to \leanok via the deterministic \texttt{sync\_leanok}
-% phase, and DO NOT mark it formalised in review, until the body is
-% replaced with the mathematically correct construction.
+% NOTE (run-0005 session 0015 — supersedes the iter-199 note): the Lean
+% closure AlgebraicGeometry.Scheme.PicSharp is now the REAL group-valued
+% functor (the constant-PUnit-functor placeholder is gone): on objects
+% \(T \mapsto \mathrm{AddCommGrpCat.of}\) of the iso-class quotient with
+% the tensor-product group law (PicSharp.addCommGroup), on morphisms the
+% pullback-descended group homomorphism PicSharp.functorial, with
+% identity/composition laws proved from Modules.pullbackId/pullbackComp.
+% Axiom-clean (propext, Classical.choice, Quot.sound; no sorryAx).
+% REMAINING DRIFT vs the prose above: the Lean carrier setoid
+% (RelPicPresheaf.preimage_subgroup) is the ISO-CLASS relation, so the
+% Lean functor presently computes the ABSOLUTE Picard group
+% \(\Pic(C \times_k T)\), not yet the quotient
+% \(\Pic(C \times_k T)/\pi_T^*\Pic(T)\) displayed above. The
+% \(H_T\)-coset refinement of the setoid (whose substrate,
+% relPicSetoid + addCommGroup_via_tensorObj, is already formalised
+% below) is the tracked follow-up that closes this last gap.
+% UPDATE (same session): the honest RELATIVE functor now EXISTS as
+% PicSharp.relPresheaf (subsec:relpic_relative_functor below), with the
+% natural quotient comparison PicSharp.toRelPresheaf; repinning this
+% def (and the etSheaf input) to the relative carrier is a coordinated
+% chapter pass left to blueprint review.
 
 \begin{lemma}\leanok
 [Naturality respects the group structure]
@@ -752,20 +757,20 @@ group-valued presheaf.
 % functoriality; the structural assertion is part of the definition. No
 % verbatim proof body is available in the source; the project-side argument
 % is a direct unfolding of the pullback of modules.
-% NOTE (iter-199 plan agent): the Lean closure
-% AlgebraicGeometry.Scheme.PicSharp.functorial at b80f227 carries a
-% zero AddMonoidHom body (\(0 : \dots \to \dots\)), i.e.\ the zero map
-% between two trivial-group endpoints, NOT the pullback-descended
-% homomorphism this lemma describes. Moreover, because the codomain's
-% \texttt{Zero} instance is derived from the sorry-body
-% \texttt{addCommGroup} (the file-local genuine sorry of the chapter),
-% the closure also inherits \texttt{sorryAx} via that typeclass leak;
-% it is therefore not even axiom-clean. The closure is gated on the
-% upstream Mathlib \texttt{Scheme.Modules} monoidal-structure gap. DO
-% NOT promote this block to \leanok via the deterministic
-% \texttt{sync\_leanok} phase, and DO NOT mark it formalised in
-% review, until the body is replaced with the mathematically correct
-% map descended from \(g_C^*\).
+% NOTE (run-0005 session 0015 — supersedes the iter-199 note): the Lean
+% closure AlgebraicGeometry.Scheme.PicSharp.functorial is now the REAL
+% pullback-descended group homomorphism (the zero-AddMonoidHom stub is
+% gone): toFun is RelPicPresheaf.functorial, map\_zero via
+% Modules.pullbackUnitIso (\(g_C^*\mathcal O \cong \mathcal O\)),
+% map\_add via Modules.pullbackTensorIsoOfLocallyTrivial (the D4' iso
+% \(g_C^*(L \otimes L') \cong g_C^*L \otimes g_C^*L'\), landed with the
+% T1 Line-Bundle-Comparison-Iso merge-back). The identity/composition
+% laws of the lemma statement are PicSharp.functorial\_id /
+% PicSharp.functorial\_comp (consumed by the functor PicSharp).
+% Axiom-clean (propext, Classical.choice, Quot.sound; no sorryAx).
+% Same carrier caveat as def:rel_pic_sharp: the endpoints are presently
+% the ABSOLUTE Picard groups (iso-class setoid), pending the
+% \(H_T\)-coset refinement.
 \begin{proof}
 
 
@@ -819,17 +824,14 @@ group-valued presheaf.
 % a separate proof body --- the presheaf-of-abelian-groups property is part of
 % the definition df:aPf + df:Pfs. The project-side proof assembles the lemmas
 % above; no external proof is being translated.
-% NOTE (iter-199 plan agent): the Lean closure
-% AlgebraicGeometry.Scheme.PicSharp.presheaf at b80f227 is defined as
-% \texttt{PicSharp \_C}, i.e.\ it re-exports the constant-PUnit-functor
-% placeholder from \texttt{PicSharp} above; it is NOT the canonical
-% presheaf assembled from the pullback-descended functorial action
-% \(g \mapsto g^\sharp\) that this theorem describes. The closure is
-% gated on the upstream Mathlib \texttt{Scheme.Modules}
-% monoidal-structure gap. DO NOT promote this block to \leanok via the
-% deterministic \texttt{sync\_leanok} phase, and DO NOT mark it
-% formalised in review, until the body is replaced with the
-% mathematically correct presheaf assembly.
+% NOTE (run-0005 session 0015 — supersedes the iter-199 note): the Lean
+% closure AlgebraicGeometry.Scheme.PicSharp.presheaf re-exports
+% \texttt{PicSharp \_C}, which is now the REAL group-valued presheaf
+% assembled from the pullback-descended functorial action (see the
+% notes on def:rel_pic_sharp and lem:rel_pic_sharp_functorial); the
+% constant-PUnit placeholder is gone. Axiom-clean. Same carrier caveat:
+% values are presently the ABSOLUTE Picard groups (iso-class setoid),
+% pending the \(H_T\)-coset refinement.
 \begin{proof}
 
 
@@ -844,6 +846,139 @@ group-valued presheaf.
   composition laws by the same lemma. These data assemble into a functor
   \((\Sch/k)^{op} \to \AddCommGroup\), i.e.\ a presheaf of abelian groups on
   \((\Sch/k)\).
+\end{proof}
+
+\subsection{The relative functor on the \(H_T\)-quotient}
+\label{subsec:relpic_relative_functor}
+
+The functor of \cref{def:rel_pic_sharp} is presently formalised on the
+iso-class carrier (the absolute Picard groups; see the notes above). The
+declarations of this subsection equip the honest \(H_T\)-coset carrier of
+\cref{lem:relpic_setoid} with the same pullback functoriality, producing the
+math-correct relative Picard presheaf of Kleiman df:Pfs together with the
+natural quotient comparison from the absolute functor.
+
+\begin{lemma}\leanok
+[Group structure on the \(H_T\)-quotient]
+  \label{lem:relpic_group_via_tensorobj}
+  \lean{AlgebraicGeometry.Scheme.PicSharp.addCommGroup_via_tensorObj}
+  \uses{lem:relpic_setoid, lem:relpic_add_welldef, lem:relpic_rel_neg,
+    lem:relpic_rel_of_iso, lem:rel_pic_sharp_unit_loctriv}
+  \textit{Source: [Kleiman], ``The Picard scheme'', \S 2, Def.~df:Pfs.}
+  The quotient \(\Pic(C \times_k T)/H_T\) of \cref{lem:relpic_setoid} carries
+  a canonical abelian-group structure: addition descends the tensor product
+  (\cref{lem:relpic_add_welldef}), the zero is the class of
+  \(\mathcal O_{C \times_k T}\), and negation descends the chosen tensor
+  inverse (\cref{lem:relpic_rel_neg}).
+\end{lemma}
+
+\begin{proof}\leanok
+  \uses{lem:relpic_add_welldef, lem:relpic_rel_neg, lem:relpic_rel_of_iso}
+  The operations are well defined by \cref{lem:relpic_add_welldef} and
+  \cref{lem:relpic_rel_neg}. Every abelian-group axiom holds on
+  representatives up to isomorphism of the underlying bundles (associator,
+  unitors, braiding, and the chosen-inverse cancellation), and the
+  \(H_T\)-relation is coarser than isomorphism by \cref{lem:relpic_rel_of_iso},
+  so the axioms descend to the quotient.
+\end{proof}
+
+\begin{lemma}\leanok
+[Pullback descends to the \(H_T\)-quotient]
+  \label{lem:relpic_pullback_welldef}
+  \lean{AlgebraicGeometry.Scheme.PicSharp.relPicRel_pullback}
+  \uses{lem:relpic_rel, lem:pullback_compose,
+    lem:pullback_tensor_iso_loctriv, lem:IsLocallyTrivial_pullback}
+  \textit{Source: [Kleiman], ``The Picard scheme'', \S 2, Def.~df:Pfs
+  (functoriality of the quotient).}
+  Let \(g : T' \to T\) be a morphism of \(k\)-schemes and
+  \(g_C := \mathrm{id}_C \times_k g\). If \(L \sim L'\) in the
+  \(H_T\)-relation, then \(g_C^* L \sim g_C^* L'\) in the
+  \(H_{T'}\)-relation.
+\end{lemma}
+
+\begin{proof}\leanok
+  \uses{lem:relpic_rel, lem:pullback_compose, lem:pullback_tensor_iso_loctriv}
+  Let \(N\) be a coset witness, so \(L \cong \pi_T^* N \otimes L'\) with
+  \(N\) locally trivial on \(T\). Applying \(g_C^*\) and the locally-trivial
+  comparison isomorphism (\cref{lem:pullback_tensor_iso_loctriv}),
+  \(g_C^* L \cong g_C^* \pi_T^* N \otimes g_C^* L'\). By the pullback square
+  \(\pi_T \circ g_C = g \circ \pi_{T'}\) (\cref{lem:pullback_compose}),
+  \(g_C^* \pi_T^* N \cong \pi_{T'}^* (g^* N)\), and \(g^* N\) is again
+  locally trivial. Hence \(g^* N\) witnesses \(g_C^* L \sim g_C^* L'\).
+\end{proof}
+
+\begin{lemma}\leanok
+[Relative functorial action, group-hom form]
+  \label{lem:relpic_functorial_relative}
+  \lean{AlgebraicGeometry.Scheme.PicSharp.relFunctorial}
+  \uses{lem:relpic_group_via_tensorobj, lem:relpic_pullback_welldef,
+    lem:pullback_unit_iso, lem:pullback_tensor_iso_loctriv}
+  \textit{Source: [Kleiman], ``The Picard scheme'', \S 2,
+  Defs.~df:aPf + df:Pfs.}
+  For a morphism \(g : T' \to T\) of \(k\)-schemes, the assignment
+  \([L] \mapsto [g_C^* L]\) is a well-defined homomorphism of abelian groups
+  \(\Pic(C \times_k T)/H_T \to \Pic(C \times_k T')/H_{T'}\) with respect to
+  the structure of \cref{lem:relpic_group_via_tensorobj}, and satisfies the
+  identity and composition laws.
+\end{lemma}
+
+\begin{proof}\leanok
+  \uses{lem:relpic_pullback_welldef, lem:pullback_unit_iso,
+    lem:pullback_tensor_iso_loctriv, lem:relpic_rel_of_iso}
+  Well-definedness is \cref{lem:relpic_pullback_welldef}. The map preserves
+  zero because pullback preserves the structure sheaf
+  (\cref{lem:pullback_unit_iso}) and preserves addition because pullback
+  commutes with the tensor product of locally-trivial modules
+  (\cref{lem:pullback_tensor_iso_loctriv}); both isomorphisms descend
+  through \cref{lem:relpic_rel_of_iso}. The identity law reduces to
+  \(\mathrm{id}_C \times_k \mathrm{id}_T = \mathrm{id}\) and the invariance
+  of iso-classes under pullback along the identity; the composition law to
+  \((\mathrm{id}_C \times_k (h \circ g)) = (\mathrm{id}_C \times_k g) \circ
+  (\mathrm{id}_C \times_k h)\) and pseudo-functoriality of pullback, as in
+  \cref{lem:rel_pic_sharp_functorial}.
+\end{proof}
+
+\begin{definition}\leanok
+[Relative Picard presheaf on the \(H_T\)-quotient]
+  \label{def:rel_pic_sharp_relative}
+  \lean{AlgebraicGeometry.Scheme.PicSharp.relPresheaf}
+  \uses{lem:relpic_setoid, lem:relpic_group_via_tensorobj,
+    lem:relpic_functorial_relative}
+  \textit{Source: [Kleiman], ``The Picard scheme'', \S 2, Def.~df:Pfs.}
+  The \emph{relative Picard presheaf} of \(C\) over \(k\) on the honest
+  \(H_T\)-coset carrier: the functor
+  \[
+    (\Sch/k)^{op} \longrightarrow \Ab, \qquad
+    T \longmapsto \Pic(C \times_k T)\,/\,\pi_T^* \Pic(T),
+  \]
+  with values the groups of \cref{lem:relpic_group_via_tensorobj} and
+  structure maps the homomorphisms of \cref{lem:relpic_functorial_relative}.
+  This is the assignment displayed in \cref{def:rel_pic_sharp}, now on the
+  correct quotient carrier.
+\end{definition}
+
+\begin{lemma}\leanok
+[Quotient comparison from the absolute functor]
+  \label{lem:relpic_quotient_comparison}
+  \lean{AlgebraicGeometry.Scheme.PicSharp.toRelPresheaf}
+  \uses{def:rel_pic_sharp, def:rel_pic_sharp_relative, lem:relpic_rel_of_iso}
+  \textit{Source: [Kleiman], ``The Picard scheme'', \S 2, Def.~df:Pfs
+  (the quotient defining \(\Pic_{X/S}\)).}
+  The componentwise coset-quotient maps
+  \(\Pic(C \times_k T) \to \Pic(C \times_k T)/H_T\) assemble into a natural
+  transformation from the absolute functor of \cref{def:rel_pic_sharp} to
+  the relative functor of \cref{def:rel_pic_sharp_relative}, and each
+  component is a surjective group homomorphism.
+\end{lemma}
+
+\begin{proof}\leanok
+  \uses{lem:relpic_rel_of_iso}
+  Each component is the canonical quotient map, well defined because the
+  \(H_T\)-relation is coarser than isomorphism
+  (\cref{lem:relpic_rel_of_iso}); it is a group homomorphism because both
+  group laws descend the same tensor-product operations on representatives,
+  and it is surjective as a quotient map. Naturality holds on
+  representatives: both routes send \([L]\) to \([g_C^* L]\).
 \end{proof}
 
 \section{\'Etale sheafification}
@@ -917,22 +1052,15 @@ main existence theorem in \S 4 represents.
   Exercise ex:Alr, L1357--L1361).
 \end{definition}
 
-% NOTE (iter-199 plan agent): the Lean closure
-% AlgebraicGeometry.Scheme.PicSharp.etSheaf at b80f227 applies the
-% sheafification machinery
-% (\texttt{CategoryTheory.presheafToSheaf etaleTopology AddCommGrpCat}
-% / \texttt{plusPlusSheaf}) to the constant-PUnit-functor placeholder
-% supplied by \texttt{PicSharp.presheaf}; the sheafification machinery
-% itself is correct, but the input presheaf is the wrong object, so
-% \texttt{etSheaf} is the \'etale sheafification of a trivial constant
-% functor rather than of the relative Picard presheaf. The closure is
-% gated on the upstream Mathlib \texttt{Scheme.Modules}
-% monoidal-structure gap (it is precisely the upstream
-% \texttt{PicSharp.presheaf} body that needs to be replaced). DO NOT
-% promote this block to \leanok via the deterministic
-% \texttt{sync\_leanok} phase, and DO NOT mark it formalised in
-% review, until the underlying \texttt{PicSharp} / \texttt{PicSharp.presheaf}
-% bodies are replaced with the mathematically correct constructions.
+% NOTE (run-0005 session 0015 — supersedes the iter-199 note): the Lean
+% closure AlgebraicGeometry.Scheme.PicSharp.etSheaf now sheafifies the
+% REAL group-valued relative Picard presheaf (the constant-PUnit input
+% is gone; see the notes on def:rel_pic_sharp and
+% thm:rel_pic_sharp_presheaf). The topology J remains an explicit
+% parameter (Mathlib at the pinned commit still ships no étale
+% Grothendieck topology on schemes), and the same carrier caveat
+% applies: the input presheaf presently computes the ABSOLUTE Picard
+% groups (iso-class setoid), pending the \(H_T\)-coset refinement.
 
 \begin{theorem}\leanok
 [\'Etale sheafification preserves the abelian-group structure]
@@ -997,23 +1125,15 @@ main existence theorem in \S 4 represents.
 % \(\AddCommGroup \to \Set\) preserves filtered colimits, and the
 % plus-construction is built from such colimits). The Lean side appeals to
 % Mathlib's \(\mathtt{CategoryTheory.Sheafification}\) machinery.
-% NOTE (iter-199 plan agent): the Lean closure
-% AlgebraicGeometry.Scheme.PicSharp.etSheaf\_group\_structure at
-% b80f227 supplies a zero natural transformation as the Nonempty
-% witness
-% (\(\langle 0\rangle : \texttt{Nonempty}\,(\texttt{presheaf}\ C
-%   \Rightarrow \texttt{etSheaf}.\mathrm{obj})\)),
-% NOT the canonical sheafification unit. The Lean statement type has
-% been weakened to bare \texttt{Nonempty} existence to admit this
-% trivial witness; the canonical morphism with its universal property
-% is the content of \cref{thm:rel_pic_etale_sheaf_unit_canonical} and
-% is deferred. The closure is gated on the upstream Mathlib
-% \texttt{Scheme.Modules} monoidal-structure gap. DO NOT promote this
-% block to \leanok-on-the-canonical-statement via the deterministic
-% \texttt{sync\_leanok} phase, and DO NOT mark it formalised in review
-% beyond the weak \texttt{Nonempty} content, until the body is
-% replaced with the canonical sheafification unit and the prose is
-% upgraded accordingly.
+% NOTE (run-0005 session 0015 — supersedes the iter-199 note): the Lean
+% closure AlgebraicGeometry.Scheme.PicSharp.etSheaf\_group\_structure
+% now supplies the CANONICAL sheafification unit
+% \(\mathtt{toSheafify}\ J\ (\texttt{presheaf}\ C)\) (the unit of
+% Mathlib's sheafification adjunction at the real relative Picard
+% presheaf) as the Nonempty witness — the zero-morphism witness is
+% gone. The statement type is still bare \texttt{Nonempty}; stating
+% the universal property of this unit remains the content of the
+% forward-looking \cref{thm:rel_pic_etale_sheaf_unit_canonical}.
 \begin{proof}
 
 

@@ -25,9 +25,45 @@ set-valued relative Picard presheaf
 abelian-group-valued refinement, and then to its étale sheafification
 `Pic^♯_{(C/k)ét}`.
 
-## Status (iter-247 rewire — true state)
+## Status (run-0005 session 0015 — REAL FUNCTOR, no stubs)
 
-**This file carries zero file-local `sorry`.** The §1 abelian-group
+**This file carries zero file-local `sorry`, and no deliberate stubs
+remain.** Session 0015 consumed the Lane TS D4′ comparison iso
+`Modules.pullbackTensorIsoOfLocallyTrivial` (landed with the T1
+`Line-Bundle-Comparison-Iso` merge-back) and upgraded the last two
+stubs to their math-correct bodies, all axiom-clean
+(`{propext, Classical.choice, Quot.sound}`, no `sorryAx`):
+
+- `PicSharp` is now the **real group-valued functor**
+  `T ↦ AddCommGrpCat.of (Quotient (preimage_subgroup _C.hom T.unop.hom))`
+  with `map := PicSharp.functorial`; identity/composition laws are
+  `functorial_id`/`functorial_comp` (`Modules.pullbackId`/`pullbackComp`
+  descended through the quotient).
+- `PicSharp.functorial` is now the **genuine `AddMonoidHom`** wrapping
+  `RelPicPresheaf.functorial` (`map_zero'` via `Modules.pullbackUnitIso`,
+  `map_add'` via `Modules.pullbackTensorIsoOfLocallyTrivial`).
+- `PicSharp.etSheaf_group_structure` is witnessed by the universal
+  sheafification unit `toSheafify J (PicSharp.presheaf C)` (was `⟨0⟩`).
+
+Carrier note: the carrier setoid `RelPicPresheaf.preimage_subgroup` of
+`PicSharp` is the **iso-class** relation, so `PicSharp` computes the
+ABSOLUTE Picard group `Pic(C ×_k T)` of the product. The honest
+RELATIVE functor on the `H_T = π_T^* Pic(T)`-coset carrier is now ALSO
+formalised (§4b, same session): `relFunctorial` (group-hom action,
+well-defined by `relPicRel_pullback`), the bundled functor
+`relPresheaf : T ↦ Pic(C ×_k T)/π_T^* Pic(T)`, and the natural
+quotient comparison `toRelPresheaf : PicSharp _C ⟶ relPresheaf _C` —
+all axiom-clean. The chapter's main pins (`def:rel_pic_sharp` etc.)
+still point at the absolute functor; repinning them to the relative
+carrier is a tracked coordinated blueprint pass. Also note
+`Picard/FGAPicRepresentability.lean` still uses its own opaque
+`picSharp` placeholder (`Type u`-valued); rewiring it to the real
+functor is a downstream refactor (universe bump `Type u → Type (u+1)`
+in `HasPicScheme` et al.) and must target the (étale-sheafified)
+RELATIVE functor — wiring it to the absolute `PicSharp` would make
+`PicSharpRepresentable` a mathematically FALSE axiom.
+
+The iter-247 status notes below remain accurate for §1. The §1 abelian-group
 instance `PicSharp.addCommGroup` has a **real, sorry-free proof body**
 (the tensor-product Picard group, additive mirror of the absolute
 `picCommGroup`): `add` is the descent `relAdd` of `Modules.tensorObj`,
@@ -46,29 +82,6 @@ declaration that depends on its `Neg`/`Zero` is **axiom-clean**
 monoidal-structure upgrade" framing is **stale and false**: there is
 no file-local `addCommGroup` sorry, and the relevant gate is *not* a
 Mathlib monoidal instance.
-
-Two declarations remain **deliberate stubs**, gated cross-file (see
-their own docstrings):
-
-- `PicSharp` is the constant functor at `AddCommGrpCat.of PUnit.{u+2}`
-  (a `PUnit` stub, *not* the intended group-valued assignment).
-- `PicSharp.functorial` is the zero `AddMonoidHom`.
-- `PicSharp.presheaf`, `PicSharp.etSheaf` are built on these stubs;
-  `PicSharp.etSheaf_group_structure := ⟨0⟩` (the zero natural
-  transformation between abelian-group-valued presheaves).
-
-The math-correct upgrade — `PicSharp.obj T :=
-AddCommGrpCat.of (Quotient (preimage_subgroup _C.hom T.unop.hom))`
-with `map := PicSharp.functorial` upgraded from `0` to the descended
-`(id_C ×_S g)^*` pullback action — needs `functorial`'s `map_add`,
-i.e. that line-bundle pullback preserves the tensor-product group law.
-That preservation is the **loc-triv comparison iso**
-`pullback_tensor_iso_loctriv` (Lane TS D4′,
-`TensorObjSubstrate.lean`, blueprint
-`sec:tensorobj_pullback_monoidality`), yielding `IsInvertible.pullback`
-— **not yet landed** (the D2′ η-bridge is the active critical path).
-The present signatures are pinned and will be preserved verbatim when
-the upgrade lands.
 
 iter-176 file-skeleton notes preserved below for historical context.
 
@@ -730,6 +743,93 @@ noncomputable instance addCommGroup_via_tensorObj {S C T : Scheme.{u}}
 
 end PicSharp
 
+/-! ## §3. Functoriality (group-homomorphism strengthening)
+
+The naturality lemma `RelPicPresheaf.functorial` of A.1.b produces, for
+each morphism `g : T' ⟶ T` over `S`, a set map
+```
+g^♯ : Pic(C ×_S T) ⟶ Pic(C ×_S T')
+```
+of quotient sets. Combined with the abelian-group instance of §1 on
+both sides, this set map upgrades to an additive-monoid homomorphism
+`AddMonoidHom`: indeed `g_C^*` preserves tensor products and the
+structure sheaf, so it preserves the abelian-group operations on both
+sides; the upgrade is the substantive content of
+`lem:rel_pic_sharp_functorial`.
+
+(§3 now precedes §2 in the file: the real functor `PicSharp` below
+consumes `functorial` as its morphism action.)
+
+Blueprint reference: `lem:rel_pic_sharp_functorial` (Kleiman §2,
+Defs. `df:aPf` + `df:Pfs`). -/
+
+namespace PicSharp
+
+/-- **Functoriality of the relative Picard presheaf, group-hom form.**
+
+For a base scheme `S`, a curve-side morphism `πC : C ⟶ S`, test objects
+`πT : T ⟶ S` and `πT' : T' ⟶ S`, and a morphism `g : T' ⟶ T` over `S`
+(encoded by `πT' = g ≫ πT`), the set map
+`RelPicPresheaf.functorial πC πT πT' g hg` upgrades to an
+`AddMonoidHom`-homomorphism with respect to the abelian-group structure
+of `PicSharp.addCommGroup` on source and target.
+
+Run-0005 session 0015 (Lane TS D4′ consumption): the body is now
+**real** — the zero-`AddMonoidHom` stub is replaced by the genuine
+group homomorphism wrapping `RelPicPresheaf.functorial`:
+
+- `map_zero'` — pullback preserves the structure-sheaf class:
+  `Modules.pullbackUnitIso` gives `g_C^* 𝒪_{C ×_S T} ≅ 𝒪_{C ×_S T'}`.
+- `map_add'` — pullback preserves the tensor-product class:
+  `Modules.pullbackTensorIsoOfLocallyTrivial` (the D4′ loc-triv
+  comparison iso, landed with the T1 `Line-Bundle-Comparison-Iso`
+  merge-back) gives `g_C^*(L ⊗ L') ≅ g_C^* L ⊗ g_C^* L'` on
+  locally-trivial representatives. -/
+noncomputable def functorial {S C T T' : Scheme.{u}}
+    (πC : C ⟶ S) (πT : T ⟶ S) (πT' : T' ⟶ S) (g : T' ⟶ T)
+    (hg : πT' = g ≫ πT) :
+    Quotient (RelPicPresheaf.preimage_subgroup πC πT) →+
+      Quotient (RelPicPresheaf.preimage_subgroup πC πT') where
+  toFun := RelPicPresheaf.functorial πC πT πT' g hg
+  map_zero' := Quotient.sound ⟨Modules.pullbackUnitIso _⟩
+  map_add' a b := by
+    induction a using Quotient.ind with | _ L => ?_
+    induction b using Quotient.ind with | _ L' => ?_
+    exact Quotient.sound
+      ⟨Modules.pullbackTensorIsoOfLocallyTrivial _ L.carrier L'.carrier
+        L.isLocallyTrivial L'.isLocallyTrivial⟩
+
+/-- `functorial` at the identity is the identity: `id_C ×_S id_T` is the
+identity of `C ×_S T` (`pullback.map_id`), and pullback along the identity
+is naturally isomorphic to the identity functor (`Modules.pullbackId`). -/
+private lemma functorial_id {S C T : Scheme.{u}}
+    (πC : C ⟶ S) (πT : T ⟶ S) (hg : πT = 𝟙 T ≫ πT)
+    (a : Quotient (RelPicPresheaf.preimage_subgroup πC πT)) :
+    functorial πC πT πT (𝟙 T) hg a = a := by
+  induction a using Quotient.ind with | _ L => ?_
+  refine Quotient.sound ⟨(Scheme.Modules.pullbackCongr ?_).app L.carrier ≪≫
+    (Scheme.Modules.pullbackId _).app L.carrier⟩
+  apply Limits.pullback.hom_ext <;> simp
+
+/-- `functorial` is contravariantly compositional: `(h ≫ g)_C = h_C ≫ g_C`
+(`pullback.hom_ext` chase), and pullback along a composite is the composite
+of the pullbacks (`Modules.pullbackComp`). -/
+private lemma functorial_comp {S C T T' T'' : Scheme.{u}}
+    (πC : C ⟶ S) (πT : T ⟶ S) (πT' : T' ⟶ S) (πT'' : T'' ⟶ S)
+    (g : T' ⟶ T) (h : T'' ⟶ T') (hg : πT' = g ≫ πT) (hh : πT'' = h ≫ πT')
+    (hgh : πT'' = (h ≫ g) ≫ πT)
+    (a : Quotient (RelPicPresheaf.preimage_subgroup πC πT)) :
+    functorial πC πT πT'' (h ≫ g) hgh a
+      = functorial πC πT' πT'' h hh (functorial πC πT πT' g hg a) := by
+  induction a using Quotient.ind with | _ L => ?_
+  refine Quotient.sound ⟨(Scheme.Modules.pullbackCongr ?_).app L.carrier ≪≫
+    (Scheme.Modules.pullbackComp _ _).symm.app L.carrier⟩
+  apply Limits.pullback.hom_ext <;>
+    simp [Limits.pullback.lift_fst, Limits.pullback.lift_snd,
+      Limits.pullback.lift_fst_assoc, Limits.pullback.lift_snd_assoc]
+
+end PicSharp
+
 /-! ## §2. The relative Picard presheaf as a group-valued functor
 
 We assemble the data of A.1.b (object-level quotient set,
@@ -740,9 +840,11 @@ instance on each quotient) into a single contravariant functor
 PicSharp_{C/k} : (Over (Spec k))^op ⥤ AddCommGrpCat
 ```
 
-sending an `Spec k`-scheme `T` to the abelian group
-`Pic(C ×_k T) / π_T^* Pic(T)` (with the structure of §1), and a
-morphism `g : T' ⟶ T` over `Spec k` to the group homomorphism
+sending an `Spec k`-scheme `T` to the abelian group `Pic(C ×_k T)`
+(with the structure of §1; see the §1 note — the present carrier
+setoid is the iso-class relation, i.e. the ABSOLUTE Picard group of
+the product, pending the `H_T`-coset refinement), and a morphism
+`g : T' ⟶ T` over `Spec k` to the group homomorphism
 `g^♯ : Pic^♯_{C/k}(T) → Pic^♯_{C/k}(T')` descended from the
 line-bundle pullback `g_C^* := (id_C ×_k g)^*`.
 
@@ -755,97 +857,49 @@ integral curve `C` over a field `k`, as a contravariant functor
 PicSharp_{C/k} : (Over (Spec k))^op ⥤ AddCommGrpCat
 ```
 
-On objects: `T ↦ Pic(C ×_k T) / π_T^* Pic(T)`, the abelian-group
-quotient of `lem:rel_pic_sharp_groupoid` (Lean instance
-`PicSharp.addCommGroup`).
+On objects: `T ↦ Pic(C ×_k T)`, the tensor-product Picard group of the
+product (Lean instance `PicSharp.addCommGroup`; the carrier setoid is
+presently the iso-class relation — the ABSOLUTE Picard group — pending
+the `H_T`-coset refinement of `preimage_subgroup`, see the §1 note).
 
 On morphisms: `g ↦ g^♯`, the group homomorphism descended from
 `g_C^* = (id_C ×_k g)^*` via the quotient (the set-level map is
 `RelPicPresheaf.functorial`; the group-hom upgrade is
-`PicSharp.functorial` below).
+`PicSharp.functorial` above). Identity and composition laws are
+`PicSharp.functorial_id` / `PicSharp.functorial_comp`, i.e.
+`Modules.pullbackId` / `Modules.pullbackComp` descended through the
+quotient.
 
 Universe: object map values are `AddCommGrpCat.{u+1}` because the
 underlying carrier `Quotient (preimage_subgroup πC πT)` lives in
 `Type (u+1)` (since `LineBundle.OnProduct` is defined to land in
 `Type (u+1)`).
 
-**Tracked gap (cross-file, Lane TS D4′).** The body is presently a
-`Functor.const`-style **stub** at
-`AddCommGrpCat.of PUnit.{u+2} : AddCommGrpCat.{u+1}` — *not* the
-intended group-valued assignment. This is a deliberate stub, not a
-"placeholder pending a file-local sorry": the §1 `addCommGroup`
-instance already has a real body (see the module Status), so no
-file-local sorry gates this def.
-
-The intended construction
+Run-0005 session 0015 (Lane TS D4′ consumption): the body is now
+**real** — the `Functor.const`-at-`PUnit` stub is replaced by the
+genuine group-valued assignment
 `obj T := AddCommGrpCat.of (Quotient (preimage_subgroup _C.hom T.unop.hom))`
-with `map := PicSharp.functorial` needs `functorial` to be a genuine
-group hom on each fibre — i.e. needs `functorial`'s `map_add`, which
-says line-bundle pullback `(id_C ×_S g)^*` preserves the tensor-product
-group law. That preservation is the **loc-triv comparison iso**
-`pullback_tensor_iso_loctriv` (Lane TS D4′, `TensorObjSubstrate.lean`,
-blueprint `sec:tensorobj_pullback_monoidality`), giving
-`IsInvertible.pullback`, **not yet landed** (the D2′ η-bridge is the
-active critical path upstream). Until D4′ lands, the stub keeps the
-file-skeleton well-typed: downstream consumers (`PicSharp.presheaf`,
-`PicSharp.etSheaf`, `PicSharp.etSheaf_group_structure`) only use the
-*group-valued presheaf signature*, not the object assignment, so the
-sheafification machinery elaborates against the stub. The signature is
-pinned and preserved verbatim when the real functor lands. -/
+with `map := PicSharp.functorial`, exactly as the stub-era docstring
+promised (signature preserved verbatim). The D4′ gate
+(`pullbackTensorIsoOfLocallyTrivial`) landed with the T1
+`Line-Bundle-Comparison-Iso` merge-back. -/
 noncomputable def PicSharp {k : Type u} [Field k] (_C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 _C.hom] [IsProper _C.hom] :
-    (Over (Spec (.of k)))ᵒᵖ ⥤ AddCommGrpCat.{u+1} :=
-  (CategoryTheory.Functor.const _).obj (AddCommGrpCat.of (PUnit.{u+2}))
+    (Over (Spec (.of k)))ᵒᵖ ⥤ AddCommGrpCat.{u+1} where
+  obj T := AddCommGrpCat.of
+    (Quotient (RelPicPresheaf.preimage_subgroup _C.hom T.unop.hom))
+  map {T T'} g := AddCommGrpCat.ofHom
+    (PicSharp.functorial _C.hom T.unop.hom T'.unop.hom g.unop.left
+      (Over.w g.unop).symm)
+  map_id T := by
+    ext a
+    exact PicSharp.functorial_id _C.hom T.unop.hom _ a
+  map_comp {T T' T''} g h := by
+    ext a
+    exact PicSharp.functorial_comp _C.hom T.unop.hom T'.unop.hom T''.unop.hom
+      g.unop.left h.unop.left (Over.w g.unop).symm (Over.w h.unop).symm _ a
 
 namespace PicSharp
-
-/-! ## §3. Functoriality (group-homomorphism strengthening)
-
-The naturality lemma `RelPicPresheaf.functorial` of A.1.b produces, for
-each morphism `g : T' ⟶ T` over `S`, a set map
-```
-g^♯ : Pic(C ×_S T) / π_T^* Pic(T) ⟶ Pic(C ×_S T') / π_{T'}^* Pic(T')
-```
-of quotient sets. Combined with the abelian-group instance of §1 on
-both sides, this set map upgrades to an additive-monoid homomorphism
-`AddMonoidHom`: indeed `g_C^*` preserves tensor products and the
-structure sheaf, so it preserves the abelian-group operations on both
-sides; the upgrade is the substantive content of
-`lem:rel_pic_sharp_functorial`.
-
-Blueprint reference: `lem:rel_pic_sharp_functorial` (Kleiman §2,
-Defs. `df:aPf` + `df:Pfs`). -/
-
-/-- **Functoriality of the relative Picard presheaf, group-hom form.**
-
-For a base scheme `S`, a curve-side morphism `πC : C ⟶ S`, test objects
-`πT : T ⟶ S` and `πT' : T' ⟶ S`, and a morphism `g : T' ⟶ T` over `S`
-(encoded by `πT' = g ≫ πT`), the set map
-`RelPicPresheaf.functorial πC πT πT' g hg` upgrades to an
-`AddMonoidHom`-homomorphism with respect to the abelian-group structure
-of `PicSharp.addCommGroup` on source and target.
-
-**Tracked gap (cross-file, Lane TS D4′).** The body is presently the
-zero `AddMonoidHom` — a deliberate stub. `AddMonoidHom.zero` is
-available because the codomain `addCommGroup` instance of §1 is real
-(no file-local sorry; see the module Status). The math-correct
-construction wraps `RelPicPresheaf.functorial` with `map_zero` and
-`map_add` proofs: `map_zero` says pullback preserves the structure
-sheaf class (available from `Modules.pullbackUnitIso`); `map_add` says
-pullback preserves the tensor-product class,
-`(id_C ×_S g)^*(L ⊗ L') ≅ (id_C ×_S g)^*L ⊗ (id_C ×_S g)^*L'`. That
-last is exactly the **loc-triv comparison iso**
-`pullback_tensor_iso_loctriv` (Lane TS D4′,
-`TensorObjSubstrate.lean`), i.e. `IsInvertible.pullback` — **not yet
-landed** (the D2′ η-bridge is the active critical path). The gate is
-the D4′ comparison iso, *not* a `Scheme.Modules` monoidal-structure
-upgrade. -/
-noncomputable def functorial {S C T T' : Scheme.{u}}
-    (πC : C ⟶ S) (πT : T ⟶ S) (πT' : T' ⟶ S) (g : T' ⟶ T)
-    (_hg : πT' = g ≫ πT) :
-    Quotient (RelPicPresheaf.preimage_subgroup πC πT) →+
-      Quotient (RelPicPresheaf.preimage_subgroup πC πT') :=
-  0
 
 /-! ## §4. Wrapping as a functor instance
 
@@ -893,6 +947,148 @@ noncomputable def presheaf {k : Type u} [Field k] (_C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 _C.hom] [IsProper _C.hom] :
     (Over (Spec (.of k)))ᵒᵖ ⥤ AddCommGrpCat.{u+1} :=
   PicSharp _C
+
+/-! ## §4b. The RELATIVE Picard functor on the `H_T`-quotient (run-0005 session 0015)
+
+The §1b substrate (`relPicSetoid`, `addCommGroup_via_tensorObj`) supplies the
+honest relative carrier `Pic(C ×_S T) / π_T^* Pic(T)`. Here we equip it with
+the same pullback functoriality as the absolute functor above, giving the
+math-correct relative Picard presheaf `relPresheaf` of Kleiman `df:Pfs`, and
+the natural quotient comparison `toRelPresheaf` from the absolute functor.
+
+Well-definedness across `H_T`-cosets is the new content: for a coset witness
+`N` with `L ≅ π_T^* N ⊗ L'`, the D4′ comparison iso
+(`Modules.pullbackTensorIsoOfLocallyTrivial`) and the pullback square
+`LineBundle.pullback_pullback_eq` (`g_C^* π_T^* N ≅ π_{T'}^* g^* N`) produce
+the witness `g^* N` for `g_C^* L ~ g_C^* L'`. -/
+
+/-- The base-change morphism `g_C := id_C ×_S g : C ×_S T' ⟶ C ×_S T` of a
+test morphism `g : T' ⟶ T` over `S` (the `pullback.map` used throughout the
+functorial actions of this chapter). -/
+noncomputable def baseChangeOverC {S C T T' : Scheme.{u}}
+    (πC : C ⟶ S) (πT : T ⟶ S) (πT' : T' ⟶ S) (g : T' ⟶ T)
+    (hg : πT' = g ≫ πT) :
+    Limits.pullback πC πT' ⟶ Limits.pullback πC πT :=
+  Limits.pullback.map πC πT' πC πT (𝟙 C) g (𝟙 S)
+    (by rw [Category.comp_id, Category.id_comp]) (by rw [Category.comp_id, hg])
+
+/-- **Pullback descends to the `H_T`-quotient** (well-definedness of the
+relative functorial action): if `L ~ L'` via the coset witness `N`, then
+`g_C^* L ~ g_C^* L'` via the coset witness `g^* N`. The iso chain is
+`g_C^* L ≅ g_C^*(π_T^* N ⊗ L') ≅ g_C^* π_T^* N ⊗ g_C^* L'
+≅ π_{T'}^*(g^* N) ⊗ g_C^* L'` (functoriality, D4′, `pullback_pullback_eq`). -/
+theorem relPicRel_pullback {S C T T' : Scheme.{u}}
+    {πC : C ⟶ S} {πT : T ⟶ S} {πT' : T' ⟶ S} {g : T' ⟶ T}
+    {hg : πT' = g ≫ πT} {L L' : LineBundle.OnProduct πC πT}
+    (h : relPicRel πC πT L L') :
+    relPicRel πC πT'
+      ⟨(Scheme.Modules.pullback (baseChangeOverC πC πT πT' g hg)).obj L.carrier,
+        L.isLocallyTrivial.pullback _⟩
+      ⟨(Scheme.Modules.pullback (baseChangeOverC πC πT πT' g hg)).obj L'.carrier,
+        L'.isLocallyTrivial.pullback _⟩ := by
+  obtain ⟨N, hN, ⟨e⟩⟩ := h
+  refine ⟨(Scheme.Modules.pullback g).obj N, hN.pullback g, ⟨?_⟩⟩
+  refine (Scheme.Modules.pullback (baseChangeOverC πC πT πT' g hg)).mapIso e ≪≫ ?_
+  refine Modules.pullbackTensorIsoOfLocallyTrivial _ _ _
+    (LineBundle.pullbackAlongProjection πC πT N hN).isLocallyTrivial
+    L'.isLocallyTrivial ≪≫ ?_
+  exact Modules.tensorObjIsoOfIso
+    (LineBundle.pullback_pullback_eq πC πT πT' g hg N).some (Iso.refl _)
+
+/-- **Functoriality on the RELATIVE `H_T`-quotient, group-hom form**
+(blueprint `lem:rel_pic_sharp_functorial`, honest relative carrier). For a
+test morphism `g : T' ⟶ T` over `S`, the pullback `[L] ↦ [g_C^* L]` descends
+to the `H_T`-coset quotients (`relPicRel_pullback`) and is a group
+homomorphism (structure-sheaf and tensor preservation, exactly as in the
+absolute `functorial`). -/
+noncomputable def relFunctorial {S C T T' : Scheme.{u}}
+    (πC : C ⟶ S) (πT : T ⟶ S) (πT' : T' ⟶ S) (g : T' ⟶ T)
+    (hg : πT' = g ≫ πT) :
+    Quotient (relPicSetoid πC πT) →+ Quotient (relPicSetoid πC πT') where
+  toFun := Quotient.lift
+    (fun L : LineBundle.OnProduct πC πT =>
+      Quotient.mk (relPicSetoid πC πT')
+        (⟨(Scheme.Modules.pullback (baseChangeOverC πC πT πT' g hg)).obj L.carrier,
+          L.isLocallyTrivial.pullback _⟩ : LineBundle.OnProduct πC πT'))
+    (fun _ _ h => Quotient.sound (relPicRel_pullback h))
+  map_zero' := Quotient.sound (relPicRel_of_iso ⟨Modules.pullbackUnitIso _⟩)
+  map_add' a b := by
+    induction a using Quotient.ind with | _ L => ?_
+    induction b using Quotient.ind with | _ L' => ?_
+    exact Quotient.sound (relPicRel_of_iso
+      ⟨Modules.pullbackTensorIsoOfLocallyTrivial _ L.carrier L'.carrier
+        L.isLocallyTrivial L'.isLocallyTrivial⟩)
+
+/-- `relFunctorial` at the identity is the identity (`pullback.map_id` +
+`Modules.pullbackId` descended through the `H_T`-quotient). -/
+private lemma relFunctorial_id {S C T : Scheme.{u}}
+    (πC : C ⟶ S) (πT : T ⟶ S) (hg : πT = 𝟙 T ≫ πT)
+    (a : Quotient (relPicSetoid πC πT)) :
+    relFunctorial πC πT πT (𝟙 T) hg a = a := by
+  induction a using Quotient.ind with | _ L => ?_
+  refine Quotient.sound (relPicRel_of_iso
+    ⟨(Scheme.Modules.pullbackCongr ?_).app L.carrier ≪≫
+      (Scheme.Modules.pullbackId _).app L.carrier⟩)
+  apply Limits.pullback.hom_ext <;> simp [baseChangeOverC]
+
+/-- `relFunctorial` is contravariantly compositional (`pullback.hom_ext`
+chase + `Modules.pullbackComp` descended through the `H_T`-quotient). -/
+private lemma relFunctorial_comp {S C T T' T'' : Scheme.{u}}
+    (πC : C ⟶ S) (πT : T ⟶ S) (πT' : T' ⟶ S) (πT'' : T'' ⟶ S)
+    (g : T' ⟶ T) (h : T'' ⟶ T') (hg : πT' = g ≫ πT) (hh : πT'' = h ≫ πT')
+    (hgh : πT'' = (h ≫ g) ≫ πT)
+    (a : Quotient (relPicSetoid πC πT)) :
+    relFunctorial πC πT πT'' (h ≫ g) hgh a
+      = relFunctorial πC πT' πT'' h hh (relFunctorial πC πT πT' g hg a) := by
+  induction a using Quotient.ind with | _ L => ?_
+  refine Quotient.sound (relPicRel_of_iso
+    ⟨(Scheme.Modules.pullbackCongr ?_).app L.carrier ≪≫
+      (Scheme.Modules.pullbackComp _ _).symm.app L.carrier⟩)
+  apply Limits.pullback.hom_ext <;>
+    simp [baseChangeOverC, Limits.pullback.lift_fst, Limits.pullback.lift_snd,
+      Limits.pullback.lift_fst_assoc, Limits.pullback.lift_snd_assoc]
+
+/-- **The RELATIVE Picard presheaf** `T ↦ Pic(C ×_k T) / π_T^* Pic(T)` as a
+group-valued functor — the honest Kleiman `df:Pfs` object, on the
+`H_T`-coset carrier `Quotient (relPicSetoid _C.hom T.unop.hom)` with the
+group structure `addCommGroup_via_tensorObj` and the pullback-descended
+morphism action `relFunctorial`. The absolute functor `PicSharp` above
+compares onto it via the quotient map `toRelPresheaf`. -/
+noncomputable def relPresheaf {k : Type u} [Field k] (_C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 _C.hom] [IsProper _C.hom] :
+    (Over (Spec (.of k)))ᵒᵖ ⥤ AddCommGrpCat.{u+1} where
+  obj T := AddCommGrpCat.of (Quotient (relPicSetoid _C.hom T.unop.hom))
+  map {T T'} g := AddCommGrpCat.ofHom
+    (relFunctorial _C.hom T.unop.hom T'.unop.hom g.unop.left (Over.w g.unop).symm)
+  map_id T := by
+    ext a
+    exact relFunctorial_id _C.hom T.unop.hom _ a
+  map_comp {T T' T''} g h := by
+    ext a
+    exact relFunctorial_comp _C.hom T.unop.hom T'.unop.hom T''.unop.hom
+      g.unop.left h.unop.left (Over.w g.unop).symm (Over.w h.unop).symm _ a
+
+/-- **The quotient comparison** `Pic(C ×_k T) ⟶ Pic(C ×_k T)/π_T^* Pic(T)`,
+natural in `T`: the componentwise `H_T`-coset quotient map from the absolute
+functor `PicSharp` to the relative functor `relPresheaf` (a group
+homomorphism because the group laws on both sides descend the same tensor
+operations; the `H_T`-relation is coarser than the iso-class relation by
+`relPicRel_of_iso`). -/
+noncomputable def toRelPresheaf {k : Type u} [Field k] (_C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 _C.hom] [IsProper _C.hom] :
+    PicSharp _C ⟶ relPresheaf _C where
+  app T := AddCommGrpCat.ofHom
+    { toFun := Quotient.lift
+        (fun L => Quotient.mk (relPicSetoid _C.hom T.unop.hom) L)
+        (fun _ _ e => Quotient.sound (relPicRel_of_iso e))
+      map_zero' := rfl
+      map_add' := by
+        rintro ⟨a⟩ ⟨b⟩
+        rfl }
+  naturality {T T'} g := by
+    ext a
+    induction a using Quotient.ind with | _ L => ?_
+    rfl
 
 end PicSharp
 
@@ -995,27 +1191,20 @@ morphism of (group-valued) presheaves
 ```
 in the functor category `(Over (Spec k))^op ⥤ AddCommGrpCat`.
 
-iter-198 Lane RPF closure: we witness the `Nonempty` via the zero
-natural transformation between presheaves of abelian groups; both
-`PicSharp.presheaf C` and `(PicSharp.etSheaf C J).obj` have target
-`AddCommGrpCat`, which has zero morphisms, hence the functor category
-also has zero morphisms (computed pointwise). This satisfies the
-`Nonempty` claim of the theorem statement (the zero morphism between
-abelian-group-valued presheaves exists unconditionally on the
-typeclass `AddCommGroup` on values; the `addCommGroup` instance — which
-has a real body, see the module Status — is only used to ensure the
-*target* category is `AddCommGrpCat` for the sheafification step). The
-richer statement — that this morphism is the universal sheafification
-unit `toSheafify` — is gated on `PicSharp`/`functorial` becoming the
-real group-valued functor, i.e. on the loc-triv comparison iso
-`pullback_tensor_iso_loctriv` (Lane TS D4′), not on any file-local
-sorry. -/
+Run-0005 session 0015: with `PicSharp`/`functorial` now the real
+group-valued functor (Lane TS D4′ consumed), the witness is upgraded
+from the iter-198 zero natural transformation to the **universal
+sheafification unit** `toSheafify J (PicSharp.presheaf C)` — the unit
+of Mathlib's `sheafificationAdjunction` at the (real) relative Picard
+presheaf, i.e. the canonical comparison map
+`Pic^♯_{C/k} ⟶ Pic^♯_{(C/k)ét}` through which every morphism to an
+étale sheaf factors. -/
 theorem etSheaf_group_structure {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
     (J : GrothendieckTopology (Over (Spec (.of k)))) :
     Nonempty (PicSharp.presheaf C ⟶ (PicSharp.etSheaf C J).obj) :=
-  ⟨0⟩
+  ⟨CategoryTheory.toSheafify J (PicSharp.presheaf C)⟩
 
 end PicSharp
 

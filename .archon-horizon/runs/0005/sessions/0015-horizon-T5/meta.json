@@ -1,0 +1,19 @@
+{
+  "role": "horizon",
+  "round": 3,
+  "project": "Algebraic-Jacobian-Challenge",
+  "task_id": "T5",
+  "status": "done",
+  "started_at": "2026-07-02T07:47:31.853946+00:00",
+  "ended_at": "2026-07-02T08:19:35.842504+00:00",
+  "harness_name": "horizon-default",
+  "harness_kind": "claude-code",
+  "model": "claude-fable-5",
+  "usage": {
+    "tokens_in": 8615,
+    "tokens_out": 108488,
+    "cost_usd": 27.023225
+  },
+  "engine_session_id": "8dd654b1-5d62-4073-b85a-bd118abd4f13",
+  "workspace_sha": "f58a2f97526cf868cf45fe3df7311c08c3e5645d"
+}
