@@ -1952,6 +1952,7 @@ lemma pullback_map_inv_comp_hom_app {X' Y' Z' T' : Scheme.{u}} (f : X' ⟶ Y')
 composite second leg followed by the pulled-back inner ungrouping equals the
 associativity cast, the ungrouping at the composite first leg, and the outer
 ungrouping. Project-local. -/
+@[reassoc]
 lemma pullbackComp_inv_comp_map_inv_app {X' Y' Z' T' : Scheme.{u}} (f : X' ⟶ Y')
     (g : Y' ⟶ Z') (h : Z' ⟶ T') (M : T'.Modules) :
     (Scheme.Modules.pullbackComp f (g ≫ h)).inv.app M ≫
@@ -1990,6 +1991,7 @@ lemma pullbackComp_inv_comp_map_congr_inv_app {X' Y' Z' : Scheme.{u}} (f : X' �
   subst h
   simp [Scheme.Modules.pullbackCongr]
   exact Category.comp_id _
+@[reassoc]
 lemma pullbackComp_inv_comp_congr_hom_app {X' Y' Z' : Scheme.{u}} {x y : X' ⟶ Y'}
     (h : x = y) (κ : Y' ⟶ Z') (W : Z'.Modules) :
     (Scheme.Modules.pullbackComp x κ).inv.app W ≫
@@ -2023,6 +2025,11 @@ private lemma comp5_rearrange {𝒞 : Type*} [Category 𝒞]
     d₃ ≫ d₄ ≫ d₅ ≫ d₆ ≫ d₇ = A ≫ cD ≫ cC ≫ cE ≫ f ≫ d₇ := by
   rw [reassoc_of% h45, reassoc_of% h6, ← Category.assoc d₃ B, h3, Category.assoc]
 
+-- `backward.isDefEq.respectTransparency false`: the `pullbackComp` solved-forms unfold to the
+-- `⋙`-composite object form (`pullback ι ⋙ pullback a`), which is only defeq (not syntactic) to
+-- `(pullback a).obj ((pullback ι).obj W)`; without this the v4.31 `instances`-transparency wall
+-- reports the target "not type-correct" and blocks the congruence-slide `rw`s.
+set_option backward.isDefEq.respectTransparency false in
 /-- **Cast compatibility of the triple-overlap and pair-overlap regroupings** (the
 coherence core of the conjugated cocycle): given a pair square `t ≫ κ = a ≫ ι`, a
 middle bridge `u ≫ t = τ ≫ b` and the induced triple square
@@ -2046,7 +2053,21 @@ lemma pullback_cast_compat {P A' B' C' E' X' : Scheme.{u}}
         (Scheme.Modules.pullbackComp u t).hom.app ((Scheme.Modules.pullback κ).obj W) ≫
         (Scheme.Modules.pullbackCongr hmid).hom.app ((Scheme.Modules.pullback κ).obj W) ≫
         (Scheme.Modules.pullbackComp τ b).inv.app ((Scheme.Modules.pullback κ).obj W) := by
-  sorry -- v4.31.0 ISOLATION (Thread-1): `subst h; simp [pullbackCongr]` / `whisker_eq` typeclass-stuck (pullbackCongr/cast term forms shifted) — needs LSP goal-state; original in git.
+  -- Both routes reduce, via the associativity solved-forms, to `(common) ≫ eqToHom ≫ pair`.
+  -- Phase 1 (keep the `pullbackCongr` casts as casts, use the `_assoc` reassociated forms so
+  -- they fire mid-chain, `simp` re-flattens associativity between them): expand the `(u≫a)^*ι`-
+  -- hom (fst solved form); fold `(pb u)`-map∘hom (R4≫R5) into `u^*(t≫κ)`; slide the `hpair`
+  -- congruence through it to turn `u^*(t≫κ)` into `u^*(a≫ι)`; slide the `hmid` congruence
+  -- through `(u≫t)^*κ`-inv into `(τ≫b)^*κ`-inv; expand the trailing `τ^*(b≫κ)`-inv (L3≫L4) into
+  -- the matching `(τ≫b)^*κ`-inv ∘ `τ^*b`-inv pair.
+  simp only [pullbackComp_comp_fst_hom_app, pullback_map_inv_comp_hom_app_assoc,
+    pullback_map_congr_inv_comp_hom_app_assoc, pullbackComp_inv_comp_congr_hom_app_assoc,
+    pullbackComp_inv_comp_map_inv_app_assoc, pullbackComp_inv_comp_map_inv_app, Category.assoc]
+  -- Phase 2: the remaining chains of `pullbackCongr` casts are `eqToHom`s between the same
+  -- endpoints, so they collapse (via the `_assoc` fold, since they sit mid-chain) by `eqToHom`
+  -- uniqueness.
+  simp only [pullbackCongr_hom_app_eqToHom, pullbackCongr_inv_app_eqToHom, eqToHom_trans,
+    eqToHom_trans_assoc, eqToHom_refl, Category.assoc, Category.comp_id, Category.id_comp]
 private lemma map_fold₅ {𝒞 𝒟 : Type*} [Category 𝒞] [Category 𝒟] (F : 𝒞 ⥤ 𝒟)
     {x₀ x₁ x₂ x₃ x₄ x₅ : 𝒞} {a : x₀ ⟶ x₁} {k₁ : x₁ ⟶ x₂} {k₂ : x₂ ⟶ x₃} {k₃ : x₃ ⟶ x₄}
     {k₄ : x₄ ⟶ x₅} {z : x₀ ⟶ x₅} (h : a ≫ k₁ ≫ k₂ ≫ k₃ ≫ k₄ = z) :

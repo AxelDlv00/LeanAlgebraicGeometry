@@ -530,14 +530,20 @@ lemma rawPushPullMap_comp {Z₁ Z₂ Z₃ : Scheme.{u}} (a : Z₂ ⟶ Z₁) (b :
             ((Scheme.Modules.pullback (a ≫ p₁)).obj F) ≫
           (Scheme.Modules.pushforward b).map ((Scheme.Modules.pullbackComp b (a ≫ p₁)).hom.app F)))
         from rfl]
-  -- v4.31.0 INTERIM (also unfixed in AJC copy): the final assembly needs
-  -- `congrArg (pushforward p₁).map INNER` transported across the over-triangle `eqToHom`
-  -- (`he`). Every reassociation route — `convert … using 2`, `rw [he, ← Functor.map_comp]`,
-  -- `simp only [he, ← Functor.map_comp]`, `rw [← Category.assoc] at INNER` — fails: the
-  -- `eqToHom (congrArg _ (Category.assoc b a p₁))` makes the rewrite motive not type-correct,
-  -- or `convert` leaves defeq instance/obj + HEq map-comp residuals. `INNER`/`he` (the whole
-  -- math content) ARE established; this is a pure transport-plumbing gap. TODO: `conv`/`Eq.mpr`.
-  skip
+  -- Final assembly is now pure term-mode transport (no `rw`, so no motive issues).
+  -- LHS = `(pf p₁).map A ≫ E` with `A` the `(b ≫ a)`-head and `E` the outer over-triangle.
+  -- `he` rewrites `E = (pf p₁).map eqInner`; fold via `← map_comp`; reassociate the head so
+  -- `A ≫ eqInner` matches `INNER`'s LHS; apply `INNER`; then split the RHS by `map_comp`.
+  exact
+    (congrArg (fun t => (Scheme.Modules.pushforward p₁).map
+        ((Scheme.Modules.pullbackPushforwardAdjunction (b ≫ a)).unit.app
+            ((Scheme.Modules.pullback p₁).obj F) ≫
+          (Scheme.Modules.pushforward (b ≫ a)).map
+            ((Scheme.Modules.pullbackComp (b ≫ a) p₁).hom.app F)) ≫ t) he).trans
+      (((Functor.map_comp _ _ _).symm.trans
+          (congrArg (Scheme.Modules.pushforward p₁).map
+            ((Category.assoc _ _ _).trans INNER))).trans
+        (Functor.map_comp _ _ _))
 
 /-- **Push–pull functor `G` — composition law** (contravariant functoriality).
 For composable morphisms `g : Y₂ ⟶ Y₁`, `h : Y₃ ⟶ Y₂` of `X`-schemes,
