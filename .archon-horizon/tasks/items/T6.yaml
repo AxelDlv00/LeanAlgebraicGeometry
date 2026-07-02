@@ -32,7 +32,7 @@ explanation: ''
 projects:
 - Albanese
 priority: normal
-status: queued
+status: running
 write_set:
   files:
   - AlgebraicJacobian/Albanese/CodimOneExtension.lean
@@ -54,6 +54,6 @@ roadmap_refs: []
 inbox_refs: []
 artifact_refs: []
 created_at: '2026-07-02T04:28:53.595808+00:00'
-updated_at: '2026-07-02T04:28:53.595817+00:00'
+updated_at: '2026-07-02T05:04:02.422795+00:00'
 metadata:
   author: ground

@@ -1,0 +1,37 @@
+id: PIC.idcomp
+title: Identity-component group-scheme substrate (A.3 leg)
+projects:
+- Picard-IdentityComponent
+summary: '**Identity-component group-scheme substrate (A.3 leg).** Extraction subproject
+  carrying the `GroupScheme.IdentityComponent`-based construction of $\mathrm{Pic}^{0}_{C/k}$
+  and its abelian-variety structure:
+
+  $$e\in\mathrm{Pic}^{0}_{C/k}=\big(\underline{\mathrm{Pic}}_{C/k}\big)^{\!\circ},\qquad
+  \dim_k\mathrm{Pic}^{0}_{C/k}=g .$$
+
+  Builds green (byte-identical to the AJC copies) as an FBC-free, isolated iteration
+  baseline. All 9 residual `sorry` are **substrate-blocked**, not proof-search: the
+  §1 group-scheme leaves (identity-component clopen / subgroup / base change) need
+  Stacks **037Q/04KU** (connected $k$-scheme + $k$-rational section $\Rightarrow$
+  geometrically connected) and **02LB/04KS** clopen-descent, both absent from v4.31
+  Mathlib; the $\mathrm{Pic}^{0}$-specific leaves (`Pic0Scheme`, `degree`, `isAbelianVariety`,
+  `finrank_eq_genus`) inherit the FGA sorry-taint (`AJC.picrep`) and the tangent-space
+  comparison (`AJC.pic0av`).
+
+  '
+status: blocked
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Picard-IdentityComponent
+metadata:
+  author: ground
+  created_at: '2026-07-02T05:04:18.847730+00:00'
+  provenance:
+    run: '0005'
+    session: 0005-ground
+    role: ground
