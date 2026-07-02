@@ -1,0 +1,64 @@
+id: I-0064
+provider: local
+kind: info
+body: 'T6 session 0015: false Milne-3.1 "extension" statement removed; Thm 3.2 chain
+  refactored, now gated ONLY on Milne 3.3. Albanese green.
+
+
+  **Soundness finding.** `extend_of_codimOneFree_of_smooth` (`CodimOneExtension.lean`,
+  sorry) claimed: a codim-1-indeterminacy-free rational map from a nonsingular variety
+  to a **complete** variety extends to a regular morphism. This is **false**: the
+  projection $\mathbb P^2 \dashrightarrow \mathbb P^1$, $[x{:}y{:}z]\mapsto[x{:}y]$,
+  has indeterminacy exactly one codim-2 point (so is CodimOneFree) but admits no regular
+  extension — any extension $g$ would force $\mathrm{Dom}(f)=\mathbb P^2$ via `PartialMap.le_domain_toRationalMap`.
+  The `sorry` was unclosable; Milne 3.1 asserts only codim-≥2 indeterminacy, and the
+  everywhere-extension needs the *group-variety* input (Lemma 3.3) to first empty
+  the locus.
+
+
+  **Refactor (all built + axiom-checked, `lake build` green, checkdecls unchanged):**
+
+
+  - NEW proved `existsUnique_hom_of_indeterminacyLocus_eq_empty`: $Z(f)=\emptyset$
+  ⇒ unique regular representative (any reduced source / separated target; via Mathlib''s
+  maximal representative `RationalMap.toPartialMap`), + helper `hom_ext_of_toRationalMap_eq`
+  (morphisms with equal rational class are equal) and simp lemma `toPartialMap_domain`.
+  All axiom-clean.
+
+  - NEW proved `codimOneFree_of_smooth_of_complete` (Milne 3.1''s CodimOneFree phrasing,
+  no 3.3 dependency) — also closes hint `I-0059`.
+
+  - Milne 3.3 statement **strengthened**: the codim-1 witness must lie in $Z(f)$ (old
+  form was nearly vacuous and could not force emptiness). Still the chapter''s single
+  `sorry`.
+
+  - `Thm32RationalMapExtension.lean`: three `CodimOneFree` helpers replaced by `av_indeterminacyLocus_eq_empty`
+  (3.3 + codim-≥2 ⇒ $Z(f)=\emptyset$); `extend_to_av` = emptiness + extension theorem,
+  sorry-free body, `sorryAx` only via 3.3.
+
+  - Blueprint: `thm:codim_one_extension` restated + repinned (now fully `\leanok`),
+  new `cor:codim_one_free`, `rmk:codim1_no_extension_from_codim1free` (the counterexample),
+  Thm32 chapter nodes/`\uses` rewired, stale 0AVF/Auslander–Buchsbaum "Step 2" prose
+  removed (AB is no longer consumed by this chain at all); `lean_decls` updated. `horizon
+  blueprint` refreshed: 299 nodes, 289 proved, 0 dangling.
+
+
+  **Ledger:** `CodimOneExtension.lean` sorries 2 → 1 (only Milne 3.3, `indeterminacy_pure_codim_one_into_grpScheme`).
+  The 0AVF / Stacks depth-≥2 gap is **gone from the roadmap** for ALB.codim1 — it
+  was only ever needed for the false statement.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Albanese
+audience: ''
+author: horizon
+source_ref: null
+created_at: '2026-07-02T08:41:37.099990+00:00'
+updated_at: '2026-07-02T08:41:37.100001+00:00'
+metadata:
+  provenance:
+    run: '0006'
+    session: 0015-horizon-T6
+    role: horizon

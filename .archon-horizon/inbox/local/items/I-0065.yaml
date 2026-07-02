@@ -1,0 +1,52 @@
+id: I-0065
+provider: local
+kind: memory
+body: 'Milne 3.1/3.2 extension chain: "CodimOneFree ⇒ extension to a complete target"
+  is FALSE — never re-add it; the honest chain and the reusable Mathlib extension
+  recipe.
+
+
+  - **Do not reintroduce** an `extend_of_codimOneFree_of_smooth`-style statement (codim-1-free
+  rational map to a complete variety extends): counterexample $\mathbb P^2 \dashrightarrow
+  \mathbb P^1$ away from a point (indeterminacy = one codim-2 point, no regular extension;
+  blow-up needed). Removed in run-0006 session 0015 after its `sorry` sat unclosable
+  for ~25 iterations. A Weil-style codim-≥2 extension is true only for **group-variety**
+  targets, and Milne''s route never needs it.
+
+  - **Honest chain** (all in `Albanese/CodimOneExtension.lean` + `Thm32RationalMapExtension.lean`):
+  Milne 3.1 = `indeterminacy_codimGe2_of_smooth_of_complete` (proved, valuative);
+  Milne 3.3 (`indeterminacy_pure_codim_one_into_grpScheme`, the only remaining sorry)
+  must assert the codim-1 witness lies **in $Z(f)$** (without that conjunct the disjunct
+  is nearly vacuous and cannot force emptiness); 3.3 + 3.1 ⇒ $Z(f)=\emptyset$ (`av_indeterminacyLocus_eq_empty`);
+  then extension. **Stacks 0AVF / Auslander–Buchsbaum depth-≥2 is NOT needed anywhere
+  in this chain** (supersedes older notes listing 0AVF as a Milne-3.1 blocker).
+
+  - **Recipe: extension from empty indeterminacy** (`existsUnique_hom_of_indeterminacyLocus_eq_empty`,
+  reduced X / separated Y): witness `X.topIso.inv ≫ X.homOfLE hdom.ge ≫ f.toPartialMap.hom`
+  where `hdom : f.toPartialMap.domain = ⊤` (`toPartialMap.domain = f.domain` is `rfl`);
+  rational-class equality via `PartialMap.toRationalMap_eq_iff.mpr ⟨⊤, …⟩` + `simp
+  only [PartialMap.restrict_hom, Scheme.Hom.toPartialMap, Scheme.topIso_hom, Scheme.ι_toIso_inv_assoc,
+  Scheme.homOfLE_homOfLE_assoc]`; uniqueness via `hom_ext_of_toRationalMap_eq` (=
+  `PartialMap.toRationalMap_eq_iff.mp` + `Opens.isDominant_ι` + `ext_of_isDominant`,
+  positional arg — the parser rejects `(ι := …)` named form here). Both lemmas need
+  `set_option backward.isDefEq.respectTransparency false` BEFORE the docstring (`(restrict
+  …).domain` / `Hom.toPartialMap` defeq walls).
+
+  - **Standing lesson**: before attacking a long-lived typed `sorry`, sanity-check
+  the statement for truth (hunt small counterexamples); a false pinned statement silently
+  blocks a whole cone and can smuggle wrong `\uses` (here it dragged a phantom `cor:regular_cohen_macaulay`/0AVF
+  dependency into the blueprint for ~30 iterations).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-02T08:42:01.665283+00:00'
+updated_at: '2026-07-02T08:42:01.665297+00:00'
+metadata:
+  provenance:
+    run: '0006'
+    session: 0015-horizon-T6
+    role: horizon
