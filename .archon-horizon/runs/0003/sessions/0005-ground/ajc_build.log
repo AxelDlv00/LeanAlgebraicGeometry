@@ -1,0 +1,1067 @@
+⚠ [8557/8583] Replayed AlgebraicJacobian.Cohomology.QcohRestrictBasicOpen
+warning: AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean:31:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean:47:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean:196:82: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean:214:85: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean:206:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean:233:43: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean:240:44: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean:241:31: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean:231:33: This simp argument is unused:
+  Functor.comp_obj
+
+Hint: Omit it from the simp argument list.
+  simp only [overBasicOpenRingHom, overBasicOpenRingInvHom, NatTrans.comp_app,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲Functor.whiskerRight_app, NatTrans.op_app, Functor.whiskerLeft_app, F̵u̵n̵c̵t̵o̵r̵.̵c̵o̵m̵p̵_̵o̵b̵j̵,̵ ̵Functor.op_obj]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean:231:51: This simp argument is unused:
+  Functor.op_obj
+
+Hint: Omit it from the simp argument list.
+  simp only [overBasicOpenRingHom, overBasicOpenRingInvHom, NatTrans.comp_app,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲Functor.whiskerRight_app, NatTrans.op_app, Functor.whiskerLeft_app, F̵u̵n̵c̵t̵o̵r̵.̵c̵o̵m̵p̵_̵o̵b̵j̵,̵ ̵F̵u̵n̵c̵t̵o̵r̵.̵o̵p̵_̵o̵b̵j̵]̵F̲u̲n̲c̲t̲o̲r̲.̲c̲o̲m̲p̲_̲o̲b̲j̲]̲
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean:237:33: This simp argument is unused:
+  Functor.comp_obj
+
+Hint: Omit it from the simp argument list.
+  simp only [overBasicOpenRingHom, overBasicOpenRingInvHom, NatTrans.comp_app,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲Functor.whiskerRight_app, NatTrans.op_app, Functor.whiskerLeft_app, F̵u̵n̵c̵t̵o̵r̵.̵c̵o̵m̵p̵_̵o̵b̵j̵,̵ ̵Functor.op_obj,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲NatTrans.id_app, overForgetInvIso, Iso.refl_inv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean:237:51: This simp argument is unused:
+  Functor.op_obj
+
+Hint: Omit it from the simp argument list.
+  simp only [overBasicOpenRingHom, overBasicOpenRingInvHom, NatTrans.comp_app,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲Functor.whiskerRight_app, NatTrans.op_app, Functor.whiskerLeft_app, Functor.comp_obj,
+  ̲  ̲ ̲ ̲ ̲ ̲ ̲ ̲F̵u̵n̵c̵t̵o̵r̵.̵o̵p̵_̵o̵b̵j̵,̵ ̵NatTrans.id_app, overForgetInvIso, Iso.refl_inv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean:216:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean:221:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean:230:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean:236:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean:279:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohRestrictBasicOpen.lean:292:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 400000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+⚠ [8558/8583] Replayed AlgebraicJacobian.Cohomology.QcohTildeSections
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:709:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:714:100: This line exceeds the 100 character limit, please shorten it!
+You can use "string gaps" to format long strings: within a string quotation, using a '\' at the end of a line allows you to continue the string on the following line, removing all intervening whitespace.
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:733:36: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:742:57: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:759:57: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:814:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:858:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:859:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:880:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:883:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:931:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:934:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:970:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:977:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:980:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:981:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:982:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:986:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:1007:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:1009:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:1020:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:1057:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:1071:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:1073:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:1081:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:1100:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:1132:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:1146:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:1469:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/QcohTildeSections.lean:1470:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+⚠ [8561/8583] Replayed AlgebraicJacobian.Cohomology.AcyclicResolution
+warning: AlgebraicJacobian/Cohomology/AcyclicResolution.lean:394:0: automatically included section variable(s) unused in theorem `CategoryTheory.InjectiveResolution.f_comp_horseshoeβ₁`:
+  [HasInjectiveResolutions 𝒜]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [HasInjectiveResolutions 𝒜] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Cohomology/AcyclicResolution.lean:493:0: automatically included section variable(s) unused in theorem `CategoryTheory.InjectiveResolution.ιC0_comp_d`:
+  [HasInjectiveResolutions 𝒜]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [HasInjectiveResolutions 𝒜] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Cohomology/AcyclicResolution.lean:504:0: automatically included section variable(s) unused in theorem `CategoryTheory.InjectiveResolution.horseshoeβ_fst`:
+  [HasInjectiveResolutions 𝒜]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [HasInjectiveResolutions 𝒜] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Cohomology/AcyclicResolution.lean:508:0: automatically included section variable(s) unused in theorem `CategoryTheory.InjectiveResolution.horseshoeβ_snd`:
+  [HasInjectiveResolutions 𝒜]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [HasInjectiveResolutions 𝒜] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Cohomology/AcyclicResolution.lean:529:8: automatically included section variable(s) unused in theorem `_private.AlgebraicJacobian.Cohomology.AcyclicResolution.0.CategoryTheory.InjectiveResolution.single₀_hom_ext`:
+  [HasInjectiveResolutions 𝒜]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [HasInjectiveResolutions 𝒜] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Cohomology/AcyclicResolution.lean:541:6: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/AcyclicResolution.lean:552:0: automatically included section variable(s) unused in theorem `CategoryTheory.InjectiveResolution.mono_horseshoeβ`:
+  [HasInjectiveResolutions 𝒜]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [HasInjectiveResolutions 𝒜] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Cohomology/AcyclicResolution.lean:862:8: `simp [G.gCosyzygyIsoCocycles_toCycles K m]` is a flexible tactic modifying `⊢`. Try `simp?` and use the suggested `simp only [...]`. Alternatively, use `suffices` to explicitly state the simplified form.
+
+Note: This linter can be disabled with `set_option linter.flexible false`
+info: AlgebraicJacobian/Cohomology/AcyclicResolution.lean:862:8: Try this:
+  [apply] simp only [Category.assoc]
+info: AlgebraicJacobian/Cohomology/AcyclicResolution.lean:863:8: `exact (Category.id_comp _).symm` uses `⊢`!
+⚠ [8563/8583] Replayed AlgebraicJacobian.Cohomology.FlatBaseChange
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:302:66: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:302:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:342:79: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:345:36: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:349:66: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:380:34: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:394:53: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:396:39: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:445:90: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:496:42: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:523:56: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:526:51: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:534:49: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:583:49: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:588:60: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:590:42: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:591:59: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:594:42: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:595:71: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:597:70: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:616:79: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:626:74: `CategoryTheory.Sheaf.val` has been deprecated: Use ObjectProperty.obj
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:594:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:732:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:733:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:737:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:741:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:825:8: declaration uses `sorry`
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:857:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:858:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:860:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:875:8: declaration uses `sorry`
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:13:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:15:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FlatBaseChange.lean:17:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+⚠ [8564/8583] Replayed AlgebraicJacobian.Cohomology.CechHigherDirectImage
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:184:6: declaration uses `sorry`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:212:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:228:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:291:6: declaration uses `sorry`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:304:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:313:6: declaration uses `sorry`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:327:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:362:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:390:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 4000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:414:6: declaration uses `sorry`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:425:45: This simp argument is unused:
+  Functor.comp_obj
+
+Hint: Omit it from the simp argument list.
+  simp only [NatTrans.comp_app, Functor.whiskerRight_app, Functor.whiskerLeft_app,
+      Functor.associator_hom_app, eqToHom_app, F̵u̵n̵c̵t̵o̵r̵.̵c̵o̵m̵p̵_̵o̵b̵j̵,̵
+  ̵ ̵ ̵ ̵ ̵Category.id_comp] at HF
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:426:4: This simp argument is unused:
+  Category.id_comp
+
+Hint: Omit it from the simp argument list.
+  simp only [NatTrans.comp_app, Functor.whiskerRight_app, Functor.whiskerLeft_app,
+      Functor.associator_hom_app, eqToHom_app, Functor.comp_obj,̵
+  ̵ ̵ ̵ ̵ ̵C̵a̵t̵e̵g̵o̵r̵y̵.̵i̵d̵_̵c̵o̵m̵p̵] at HF
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:428:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:442:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:443:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:444:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:462:6: declaration uses `sorry`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:459:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:481:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:738:31: This simp argument is unused:
+  Functor.id_map
+
+Hint: Omit it from the simp argument list.
+  simp only [Functor.id_obj, F̵u̵n̵c̵t̵o̵r̵.̵i̵d̵_̵m̵a̵p̵,̵ ̵Functor.const_obj_map] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AlgebraicJacobian/Cohomology/CechHigherDirectImage.lean:741:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+⚠ [8565/8583] Replayed AlgebraicJacobian.Cohomology.PresheafCech
+warning: AlgebraicJacobian/Cohomology/PresheafCech.lean:322:75: This simp argument is unused:
+  OrderHom.comp_coe
+
+Hint: Omit it from the simp argument list.
+  simp only [Pi.lift_π, Category.assoc, SimplexCategory.comp_toOrderHom,̵ ̵O̵r̵d̵e̵r̵H̵o̵m̵.̵c̵o̵m̵p̵_̵c̵o̵e̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [8567/8583] Replayed AlgebraicJacobian.Cohomology.CechAcyclic
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:9:0: The module doc-string for a file should be the first command after the imports.
+Please, add a module doc-string before `universe u`.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+info: AlgebraicJacobian/Cohomology/CechAcyclic.lean:10:0: linter.style.header:1600:16: error: expected token
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:10:0: The module doc-string for a file should be the first command after the imports.
+Please, add a module doc-string before `open CategoryTheory Limits`.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:10:0: The module doc-string for a file should be the first command after the imports.
+Please, add a module doc-string before `namespace AlgebraicGeometry`.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:10:0: The module doc-string for a file should be the first command after the imports.
+Please, add a module doc-string before `open Scheme.Modules`.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:10:0: The module doc-string for a file should be the first command after the imports.
+Please, add a module doc-string before `/-!## Project-local Mathlib supplement — `CombinatorialCech`
+
+The constant-coefficient combinatorial core of standard-cover Čech acyclicity
+(planner step **L3**, `analogies/p3-localisation.md`).  After localising the
+extended Čech complex at a spanning element `s_r` (planner step L2, via
+`exact_of_isLocalized_span`), the fixed index `r` becomes globally available, and
+the alternating Čech coboundary admits the explicit contracting homotopy
+`h(t)_{i₀…i_p} = t_{r i₀…i_p}` of Stacks
+`lemma-cech-cohomology-quasi-coherent-trivial`.
+
+This section formalises that homotopy and its consequences for the **constant
+coefficient** complex `Cᵖ = (Fin (p+1) → ι) → M` with alternating coface
+differential — abstracted away from the localisation/geometry so the purely
+combinatorial cancellation (`combHomotopy`) and the simplicial identity
+(`combDifferential_comp`, `d² = 0`) are isolated and reusable.  The remaining
+work to close `CechAcyclic.affine` is the **L1** categorical bridge identifying
+the abstract `CechComplex` terms with the away-localisation modules `M_{s_σ}` and
+its differential with this `combDifferential` (after localising at `s_r`); these
+lemmas are then fed to `exact_of_isLocalized_span` node by node.
+
+These declarations are `private`: they exist only to close `CechAcyclic.affine`
+in this file.  The intended blueprint home is the `\lean{...}` bundle of
+`lem:cech_acyclic_affine`. -/
+`.
+
+Note: This linter can be disabled with `set_option linter.style.header false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:641:6: 'change
+  AwayComparison.Inverts (s r * sprod s (Fin.cons r σ))
+    (LocalizedModule (Submonoid.powers (s r * sprod s σ)) M)' tactic does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:862:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:867:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:878:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:1279:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:1282:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:1283:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:1284:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:1285:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:1311:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:1392:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:2000:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:2004:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:2006:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:2009:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:2010:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:2011:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:2012:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:2034:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:2043:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:2045:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:2046:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:2062:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:2064:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:2065:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:2071:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechAcyclic.lean:2086:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+⚠ [8568/8583] Replayed AlgebraicJacobian.Cohomology.FreePresheafComplex
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:623:3: `Finsupp.LinearEquiv.finsuppUnique` has been deprecated: Use `Finsupp.uniqueLinearEquiv` instead
+
+Note: The updated constant has a different type:
+  (R : Type u_1) →
+    {α : Type u_3} →
+      (M : Type u_4) →
+        [inst : AddCommMonoid M] →
+          [inst_1 : Semiring R] → [inst_2 : Module R M] → [Subsingleton α] → α → (α →₀ M) ≃ₗ[R] M
+instead of
+  (R : Type u_1) →
+    (M : Type u_4) →
+      [inst : AddCommMonoid M] →
+        [inst_1 : Semiring R] → [inst_2 : Module R M] → (α : Type u_5) → [Unique α] → (α →₀ M) ≃ₗ[R] M
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.finsuppUnique` to `Finsupp.uniqueLinearEquiv x`).
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:988:12: `Finsupp.LinearEquiv.finsuppUnique` has been deprecated: Use `Finsupp.uniqueLinearEquiv` instead
+
+Note: The updated constant has a different type:
+  (R : Type u_1) →
+    {α : Type u_3} →
+      (M : Type u_4) →
+        [inst : AddCommMonoid M] →
+          [inst_1 : Semiring R] → [inst_2 : Module R M] → [Subsingleton α] → α → (α →₀ M) ≃ₗ[R] M
+instead of
+  (R : Type u_1) →
+    (M : Type u_4) →
+      [inst : AddCommMonoid M] →
+        [inst_1 : Semiring R] → [inst_2 : Module R M] → (α : Type u_5) → [Unique α] → (α →₀ M) ≃ₗ[R] M
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.finsuppUnique` to `Finsupp.uniqueLinearEquiv x`).
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:989:8: `Finsupp.LinearEquiv.finsuppUnique_apply` has been deprecated: Use `Finsupp.uniqueLinearEquiv_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ (R : Type u_1) {α : Type u_3} (M : Type u_4) [inst : AddCommMonoid M] [inst_1 : Semiring R] [inst_2 : Module R M]
+    [inst_3 : Subsingleton α] (a : α) (a_1 : α →₀ M), (Finsupp.uniqueLinearEquiv R M a) a_1 = a_1 a
+instead of
+  ∀ {R : Type u_1} {M : Type u_4} [inst : AddCommMonoid M] [inst_1 : Semiring R] [inst_2 : Module R M] (α : Type u_5)
+    [inst_3 : Unique α] (f : α →₀ M), (Finsupp.LinearEquiv.finsuppUnique R M α) f = f default
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.finsuppUnique_apply` to `Finsupp.uniqueLinearEquiv_apply x`).
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:1223:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:1508:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:1592:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:1788:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:1866:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:1921:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:2032:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:2064:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:2078:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:2123:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:2129:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:2133:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:2169:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:2226:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:2258:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:2259:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean:2302:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+⚠ [8569/8583] Replayed AlgebraicJacobian.Cohomology.CechBridge
+warning: AlgebraicJacobian/Cohomology/CechBridge.lean:210:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/CechBridge.lean:212:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/CechBridge.lean:307:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechBridge.lean:310:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechBridge.lean:468:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechBridge.lean:471:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechBridge.lean:638:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/CechBridge.lean:716:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechBridge.lean:822:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/CechBridge.lean:1028:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechBridge.lean:1031:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+⚠ [8571/8583] Replayed AlgebraicJacobian.Cohomology.CechToCohomology
+warning: AlgebraicJacobian/Cohomology/CechToCohomology.lean:79:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechToCohomology.lean:57:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/CechToCohomology.lean:70:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/CechToCohomology.lean:135:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/CechToCohomology.lean:180:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+⚠ [8572/8583] Replayed AlgebraicJacobian.Cohomology.CechSectionIdentificationBase
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:67:2: `CategoryTheory.Limits.mkFanLimit` has been deprecated: Use `CategoryTheory.Limits.Fan.IsLimit.mk` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.mkFanLimit` to `Fan.IsLimit.mk x`).
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:110:9: `CategoryTheory.Limits.mkCofanColimit` has been deprecated: Use `CategoryTheory.Limits.Cofan.IsColimit.mk` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.mkCofanColimit` to `Cofan.IsColimit.mk x`).
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:118:35: This simp argument is unused:
+  Cofan.mk_ι_app
+
+Hint: Omit it from the simp argument list.
+  simp only [overSigmaDescCofan, C̵o̵f̵a̵n̵.̵m̵k̵_̵ι̵_̵a̵p̵p̵,̵ ̵Over.homMk_left]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:118:51: This simp argument is unused:
+  Over.homMk_left
+
+Hint: Omit it from the simp argument list.
+  simp only [overSigmaDescCofan, Cofan.mk_ι_app,̵ ̵O̵v̵e̵r̵.̵h̵o̵m̵M̵k̵_̵l̵e̵f̵t̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:146:54: `CategoryTheory.Limits.mkFanLimit` has been deprecated: Use `CategoryTheory.Limits.Fan.IsLimit.mk` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.mkFanLimit` to `Fan.IsLimit.mk x`).
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:207:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:208:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:211:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:232:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:255:2: `simp` is a flexible tactic modifying `⊢`. Try `simp?` and use the suggested `simp only [...]`. Alternatively, use `suffices` to explicitly state the simplified form.
+
+Note: This linter can be disabled with `set_option linter.flexible false`
+info: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:255:2: Try this:
+  [apply] simp only [Iso.trans_inv, pullback.congrHom_inv, Category.assoc, pullbackLeftPullbackSndIso_inv_fst]
+info: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:257:2: `rw [pullback.lift_fst]` uses `⊢`!
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:242:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:248:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:250:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:277:2: `simp` is a flexible tactic modifying `⊢`. Try `simp?` and use the suggested `simp only [...]`. Alternatively, use `suffices` to explicitly state the simplified form.
+
+Note: This linter can be disabled with `set_option linter.flexible false`
+info: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:277:2: Try this:
+  [apply] simp only [Iso.trans_inv, pullback.congrHom_inv, Category.assoc, pullbackLeftPullbackSndIso_inv_snd_snd_assoc]
+info: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:279:2: `rw [pullback.lift_snd_assoc]` uses `⊢`!
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:263:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:269:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:271:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:284:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:294:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:305:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:313:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:314:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:376:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:512:9: `CategoryTheory.Limits.mkCofanColimit` has been deprecated: Use `CategoryTheory.Limits.Cofan.IsColimit.mk` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.mkCofanColimit` to `Cofan.IsColimit.mk x`).
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:520:36: This simp argument is unused:
+  Cofan.mk_ι_app
+
+Hint: Omit it from the simp argument list.
+  simp only [coverArrowOverCofan, C̵o̵f̵a̵n̵.̵m̵k̵_̵ι̵_̵a̵p̵p̵,̵ ̵Over.homMk_left]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:520:52: This simp argument is unused:
+  Over.homMk_left
+
+Hint: Omit it from the simp argument list.
+  simp only [coverArrowOverCofan, Cofan.mk_ι_app,̵ ̵O̵v̵e̵r̵.̵h̵o̵m̵M̵k̵_̵l̵e̵f̵t̵]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:605:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:665:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:757:6: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:763:6: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:787:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:810:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:861:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:864:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:886:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:944:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:951:6: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:1033:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:1066:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:1077:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:1124:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:1152:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:1209:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:1218:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:1246:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:1260:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 800000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationBase.lean:1416:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+⚠ [8573/8583] Replayed AlgebraicJacobian.Cohomology.AffineSerreVanishing
+warning: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:221:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:301:4: `simp at h ⊢` is a flexible tactic modifying `h`. Try `simp?` and use the suggested `simp only [...]`. Alternatively, use `suffices` to explicitly state the simplified form.
+
+Note: This linter can be disabled with `set_option linter.flexible false`
+info: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:301:4: Try this:
+  [apply] simp only [PresheafOfModules.toPresheaf_obj_coe] at h ⊢
+info: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:302:4: `exact h` uses `h`!
+warning: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:301:4: `simp at h ⊢` is a flexible tactic modifying `⊢`. Try `simp?` and use the suggested `simp only [...]`. Alternatively, use `suffices` to explicitly state the simplified form.
+
+Note: This linter can be disabled with `set_option linter.flexible false`
+info: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:301:4: Try this:
+  [apply] simp only [PresheafOfModules.toPresheaf_obj_coe] at h ⊢
+info: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:302:4: `exact h` uses `⊢`!
+warning: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:226:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:338:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:356:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:365:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 2000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:371:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:372:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:374:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:465:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:466:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:687:4: `simp at h ⊢` is a flexible tactic modifying `⊢`. Try `simp?` and use the suggested `simp only [...]`. Alternatively, use `suffices` to explicitly state the simplified form.
+
+Note: This linter can be disabled with `set_option linter.flexible false`
+info: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:687:4: Try this:
+  [apply] simp only [PresheafOfModules.toPresheaf_obj_coe] at h ⊢
+info: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:688:4: `exact h` uses `⊢`!
+warning: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:687:4: `simp at h ⊢` is a flexible tactic modifying `h`. Try `simp?` and use the suggested `simp only [...]`. Alternatively, use `suffices` to explicitly state the simplified form.
+
+Note: This linter can be disabled with `set_option linter.flexible false`
+info: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:687:4: Try this:
+  [apply] simp only [PresheafOfModules.toPresheaf_obj_coe] at h ⊢
+info: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:688:4: `exact h` uses `h`!
+warning: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:720:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/AffineSerreVanishing.lean:738:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+⚠ [8574/8583] Replayed AlgebraicJacobian.Cohomology.OpenImmersionPushforward
+warning: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:256:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:258:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:353:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:386:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:414:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option synthInstance.maxHeartbeats 1000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:495:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 4000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:618:2: `simp [Scheme.Hom.toRingCatSheafHom]
+  -- The two structure-sheaf comparisons `φ.inv.c` and `φ.hom.c` compose to the restriction of
+  -- `𝒪_X` along the open identity `φ.hom⁻¹ᵁ φ.inv⁻¹ᵁ W = W` (`comp_app` + `congr_app φ.hom_inv_id`).` is a flexible tactic modifying `⊢`. Try `simp?` and use the suggested `simp only [...]`. Alternatively, use `suffices` to explicitly state the simplified form.
+
+Note: This linter can be disabled with `set_option linter.flexible false`
+info: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:618:2: Try this:
+  [apply] simp only [Equivalence.toAdjunction_counit, Equivalence.symm_counit, Functor.whiskerRight_app,
+    NatTrans.op_app, Functor.id_obj, Functor.sheafPushforwardContinuous_obj_obj_map, Over.forget_obj, Over.forget_map,
+    ObjectProperty.ι_obj, Iso.symm_inv, NatTrans.comp_app, Functor.sheafPushforwardContinuous_map_hom_app,
+    Functor.whiskerLeft_app]
+info: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:635:2: `exact DFunLike.congr_fun (congrArg RingCat.Hom.hom key2.symm) x` uses `⊢`!
+warning: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:620:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:624:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:648:2: `simp [Scheme.Hom.toRingCatSheafHom]` is a flexible tactic modifying `⊢`. Try `simp?` and use the suggested `simp only [...]`. Alternatively, use `suffices` to explicitly state the simplified form.
+
+Note: This linter can be disabled with `set_option linter.flexible false`
+info: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:648:2: Try this:
+  [apply] simp only [Iso.symm_inv, ObjectProperty.ι_obj, Equivalence.toAdjunction_unit, Equivalence.symm_unit,
+    NatTrans.comp_app, Functor.sheafPushforwardContinuous_map_hom_app, Over.forget_obj, Functor.whiskerLeft_app,
+    Functor.whiskerRight_app, NatTrans.op_app, Functor.id_obj, Functor.sheafPushforwardContinuous_obj_obj_map,
+    Over.forget_map, RingCat.hom_comp, RingHom.coe_comp, Function.comp_apply, NatTrans.id_app]
+info: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:669:2: `exact DFunLike.congr_fun (congrArg RingCat.Hom.hom key2) x` uses `⊢`!
+warning: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:690:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:704:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 4000000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:722:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:730:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:851:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/OpenImmersionPushforward.lean:852:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+⚠ [8575/8583] Replayed AlgebraicJacobian.Cohomology.CechSectionIdentificationLeg
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean:112:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean:141:4: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean:206:4: This simp argument is unused:
+  Limits.Sigma.ι_comp_map'_assoc
+
+Hint: Omit it from the simp argument list.
+  simp only [coproduct_fibrePower_reindex, Iso.trans_inv, Sigma.whiskerEquiv, L̵i̵m̵i̵t̵s̵.̵S̵i̵g̵m̵a̵.̵ι̵_̵c̵o̵m̵p̵_̵m̵a̵p̵'̵_̵a̵s̵s̵o̵c̵,̵ ̵Iso.refl_hom,
+  ̲  ̲ ̲ ̲Category.comp_id, Category.assoc, sigmaSigmaIso_inv, Equiv.symm_trans_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean:206:68: This simp argument is unused:
+  Category.assoc
+
+Hint: Omit it from the simp argument list.
+  simp only [coproduct_fibrePower_reindex, Iso.trans_inv, Sigma.whiskerEquiv,
+      Limits.Sigma.ι_comp_map'_assoc, Iso.refl_hom, Category.comp_id, C̵a̵t̵e̵g̵o̵r̵y̵.̵a̵ss̵o̵c̵,̵
+  ̵ ̵ ̵ ̵ ̵s̵igmaSigmaIso_inv,
+  ̲  ̲ ̲ ̲Equiv.symm_trans_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean:249:8: automatically included section variable(s) unused in theorem `_private.AlgebraicJacobian.Cohomology.CechSectionIdentificationLeg.0.AlgebraicGeometry.overSigmaHomEq`:
+  [HasPullbacks C]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [HasPullbacks C] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean:259:2: The `show` tactic should only be used to indicate intermediate goal states for readability.
+However, this tactic invocation changed the goal. Please use `change` instead for these purposes.
+
+Note: This linter can be disabled with `set_option linter.style.show false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean:311:52: This simp argument is unused:
+  pullback.lift_snd_assoc
+
+Hint: Omit it from the simp argument list.
+  simp only [Category.assoc, pullback.lift_snd, p̵u̵l̵l̵b̵a̵c̵k̵.̵l̵i̵f̵t̵_̵s̵n̵d̵_̵a̵s̵s̵o̵c̵,̵
+  ̵ ̵ ̵ ̵ ̵ ̵ ̵ ̵ ̵Category.comp_id]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean:400:8: automatically included section variable(s) unused in theorem `_private.AlgebraicJacobian.Cohomology.CechSectionIdentificationLeg.0.AlgebraicGeometry.ι_overSigmaDescIso_hom`:
+  [HasPullbacks C]
+  [FinitaryPreExtensive C]
+  [HasFiniteWidePullbacks C]
+  [HasFiniteProducts (Over S)]
+  [HasFiniteCoproducts (Over S)]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [HasPullbacks
+  C] [FinitaryPreExtensive
+  C] [HasFiniteWidePullbacks C] [HasFiniteProducts (Over S)] [HasFiniteCoproducts (Over S)] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean:407:8: automatically included section variable(s) unused in theorem `_private.AlgebraicJacobian.Cohomology.CechSectionIdentificationLeg.0.AlgebraicGeometry.wpEqProd_inv_overWPproj`:
+  [HasPullbacks C]
+  [FinitaryPreExtensive C]
+  [HasFiniteCoproducts (Over S)]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [HasPullbacks C] [FinitaryPreExtensive C] [HasFiniteCoproducts (Over S)] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean:413:8: automatically included section variable(s) unused in theorem `_private.AlgebraicJacobian.Cohomology.CechSectionIdentificationLeg.0.AlgebraicGeometry.wpEqProd_hom_π`:
+  [HasPullbacks C]
+  [FinitaryPreExtensive C]
+  [HasFiniteCoproducts (Over S)]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [HasPullbacks C] [FinitaryPreExtensive C] [HasFiniteCoproducts (Over S)] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean:481:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean:493:100: This line exceeds the 100 character limit, please shorten it!
+
+Note: This linter can be disabled with `set_option linter.style.longLine false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean:639:15: Variable name `σ` is not explicitly referenced.
+
+The binding can be removed (if unused) or named `_` (if used implicitly).
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: AlgebraicJacobian/Cohomology/CechSectionIdentificationLeg.lean:627:0: Please, add a comment explaining the need for modifying the maxHeartbeat limit, as in
+set_option maxHeartbeats 1600000 in
+-- reason for change
+...
+
+Note: This linter can be disabled with `set_option linter.style.maxHeartbeats false`

@@ -1,0 +1,11 @@
+{
+  "name": "blueprint-reviewer",
+  "native_subagent_id": "toolu_01YNhRPMNxko1UVFE5yLXgp8",
+  "parent_session": "0005-ground",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 0,
+    "tokens_out": 0
+  }
+}

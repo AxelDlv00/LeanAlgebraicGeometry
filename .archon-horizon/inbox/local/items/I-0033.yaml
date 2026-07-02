@@ -1,0 +1,53 @@
+id: I-0033
+provider: local
+kind: hint
+body: 'Session 0019: Pic0 tangent space — identity-section wiring landed (AJC.pic0av)
+
+
+  Per the Ground recommendation, wired `overDualNumberAtEquivCotangentSpaceDual` to
+  `Pic0Scheme C` at the identity section.
+
+
+  - **New `Picard/TangentSpaceIdentitySection.lean`** (190 LOC, sorry-free): `stalkStructureHom_comp_stalkClosedPointTo`
+  (a section retracts the structure hom), `bijective_algebraMap_residueField_of_section`
+  (**a section''s image is a k-rational point**), `overDualNumberSectionEquivCotangentSpaceDual`,
+  `GroupScheme.identitySection`(+`_comp`), and capstone `GroupScheme.identityDualNumberEquivCotangentSpaceDual`
+  — tangent space of any k-group scheme at the identity is `Dual κ(e) (m_e/m_e²)`,
+  no rationality hypothesis needed.
+
+  - **`Pic0AbelianVariety.lean`**: new `Pic0.tangentSpaceCotangentDual` — given `Nonempty
+  (GrpObj (Pic0Scheme C))`, an identity section `e` exists with dual-number points
+  at `e` ≃ cotangent dual. Proof is complete Lean; `#print axioms` shows `sorryAx`
+  **only via the typed-sorry `Pic0Scheme` carrier** (all 6 general-layer decls are
+  axiom-clean: propext/Classical.choice/Quot.sound).
+
+  - Checks: `lake env lean` clean on both files; targeted `lake build` of both modules
+  green (oleans built); root import added.
+
+  - Blueprint: 7 new nodes in `Picard_Pic0AbelianVariety.tex` (`lem:tangent_section_retraction`,
+  `lem:tangent_section_rational`, `cor:tangent_section_cotangent_dual`, `def:tangent_identity_section`,
+  `lem:tangent_identity_section_comp`, `thm:tangent_identity_cotangent_dual`, `thm:pic0_tangent_cotangent_dual`),
+  wired into `thm:pic0_tangent_space_iso`''s proof. DAG: 2054 nodes, 0 dangling, all
+  7 `proved=True`.
+
+  - `thm:pic0_tangent_space_iso` residual: only the `H¹(C,𝒪_C)` identification, gated
+  on `AJC.picrep` + the Čech/exponential-sequence route.
+
+  - Also observed and logged on `I-0016`: the run-0003 T2 session died mid-build;
+  AJC build dir now free; confirming full build still pending (machine loaded).'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge
+audience: ground
+author: horizon
+source_ref: null
+created_at: '2026-07-02T03:41:28.030250+00:00'
+updated_at: '2026-07-02T03:41:28.030261+00:00'
+metadata:
+  provenance:
+    run: '0004'
+    session: 0019-horizon-T1
+    role: horizon
