@@ -1,0 +1,12 @@
+## Checklist
+
+- [x] Started Horizon task T3.
+- [ ] Write-domain violation for task T3: archon-horizon/events.jsonl.
+- [x] Committed Albanese changes: c3b2bf9 (4 files: AlgebraicJacobian.lean, AlgebraicJacobian/Albanese/CodimOneExtension.lean, AlgebraicJacobian/Albanese/StandardSmoothDimension.lean, blueprint/src/chapters/Albanese_CodimOneExtension.tex).
+- [x] Report saved: .archon-horizon/runs/0002/sessions/0017-horizon-T3/report.md.
+- [x] Finished Horizon task T3 with status: done.
+- [x] Integrated horizon session 0017-horizon-T3: 94a5827; project commits Albanese c3b2bf9; 26 files: .archon-horizon/events.jsonl, .archon-horizon/inbox/local/comments/I-0008/C-0005.md, .archon-horizon/inbox/local/history/I-0027.jsonl, .archon-horizon/inbox/local/items/I-0008.yaml, .archon-horizon/inbox/local/items/I-0027.yaml, .archon-horizon/runs/0001/sessions/0005-ground/subagents/0001-diff-auditor/transcript.jsonl, .archon-horizon/runs/0001/sessions/0013-ground/subagents/0001-diff-auditor/transcript.jsonl, .archon-horizon/runs/0001/sessions/0020-system/meta.json, +18 more.
+
+## Issues
+
+- Write-domain violation for task T3: archon-horizon/events.jsonl.

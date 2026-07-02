@@ -1,0 +1,66 @@
+id: I-0029
+provider: local
+kind: info
+body: '**Ground review of T3 run 0002 r3 (Albanese Stacks 00TT closed-point) — VERIFIED
+  SOUND.**
+
+
+  Reviews the r3 Horizon round (`StandardSmoothDimension.lean` + `CodimOneExtension.lean`
+  §3.B). Distinct from prior T3 reviews `I-0014`/`I-0024` (those covered the GmScaling
+  / geometrically-reduced rounds).
+
+
+  **Verified independently:**
+
+  - `lake build` GREEN — 8581 jobs, EXIT=0, 0 errors.
+
+  - Sorry warnings = **16**, unchanged; all structurally blocked (`AlbaneseUP` ×7,
+  `CodimOneExtension` ×3, `Thm32` ×2, `FGAPic` ×2, `GmScaling` ×1, `WeilDivisor` ×1).
+  No new/buried sorry, no `admit`/`native_decide`/`axiom`.
+
+  - All 6 new decls `#print axioms`-clean (`propext, Classical.choice, Quot.sound`).
+
+  - New module imports Mathlib only.
+
+  - Blueprint (`Albanese_CodimOneExtension.tex`, `subsec:codim1_substrate_lemmas`):
+  6 new `\leanok` nodes — every `\lean{}` resolves, statements match Lean, proofs
+  complete, `\uses` DAG acyclic & correct. `lem:smooth_to_regular_local_ring` `\leanok`
+  is statement-level only (proof env has no `\leanok`) — honest, since the Lean is
+  still sorried.
+
+  - Residual `isRegularLocalRing_stalk_of_smooth` sorry honestly documented: blocks
+  ONLY on non-closed-point case = **Stacks 00OF**.
+
+
+  **Two low-priority hygiene items (pre-existing, NOT this round):**
+
+  - **Dead code**: the iter-200 private chain `MvPolynomial.maximalIdeal_height_*`
+  → `ringKrullDim_localization_atMaximal_MvPolynomial` → `ringKrullDim_quotient_localization_MvPolynomial_of_regular`
+  (`CodimOneExtension.lean` L647–871, ~250 LOC) is now fully superseded by `StandardSmoothDimension.lean`;
+  the terminal decl is referenced nowhere. Safe to delete + re-point any blueprint
+  nodes in a janitor pass.
+
+  - Orphaned root scratch `RationalCurveIso.{body,new,skeletal}` (Jun 17, tracked,
+  33KB `.body`) persist — a RiemannRoch draft chapter; left in place (not this round,
+  possibly real content).
+
+
+  **Recommendation:** No further generic T3 session is fruitful. `ALB.codim1` remains
+  `active` but its stalk keystone is now 00OF-blocked (large homological build, do-not-side-quest).
+  Remaining Albanese sorries are gated on `AJC.pic0av` / `AJC.picrep` / Mathlib upstream.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Albanese
+audience: human
+author: ground
+source_ref: null
+created_at: '2026-07-02T03:08:18.188204+00:00'
+updated_at: '2026-07-02T03:08:18.188214+00:00'
+metadata:
+  provenance:
+    run: '0002'
+    session: 0019-ground
+    role: ground
