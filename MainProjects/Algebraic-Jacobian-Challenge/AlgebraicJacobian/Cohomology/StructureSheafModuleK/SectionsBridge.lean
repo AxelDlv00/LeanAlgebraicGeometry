@@ -346,7 +346,16 @@ consumes (via the naturality companions below): it converts the H⁰ entries of
 `HModule'_sequence` at `(n₀, n₁) = (0, 1)` into the concrete section modules
 appearing in `AffineCoverMVSquare.sectionDiff`/`H1Cok`
 (`RiemannRoch/Adelic/Cokernel.lean`).  Being `Module.finrank`-compatible
-(a genuine `≃ₗ[k]`), it also transports `Module.Finite` statements. -/
+(a genuine `≃ₗ[k]`), it also transports `Module.Finite` statements.
+
+**Statement audit (genus-lane wave 1', 2026-07-09): TRUE at stated
+generality.**  Arbitrary site `(C, J)` at `Category.{u, v}`, arbitrary sheaf
+of `k`-modules `F`, arbitrary `U : C`; no curve/scheme hypotheses.  The
+sheaf-ness of `F` is exactly what the sheafification-adjunction hop uses; the
+other two hops are unconditional.  The `[HasExt]` binder resolves at
+`HasExt.{u}` through the `Type u` ascription of the `HModule'` abbrev
+(supplied by `IsGrothendieckAbelian.hasExt` on the scheme site), matching
+`Carriers.lean`; the whole chain lives at `Type u` with no `ULift`. -/
 noncomputable def HModule'_zero_sectionsLinearEquiv
     (F : Sheaf J (ModuleCat.{u} k)) (U : C) :
     HModule' k F 0 U ≃ₗ[k] F.obj.obj (Opposite.op U) :=
@@ -418,7 +427,16 @@ For `C := Opens X` and `g := homOfLE h`, the right-hand side is definitionally
 identifies the degree-0 MV corner maps with `sectionDiff`'s constituents.
 
 Blueprint: the diagram `H⁰(U, F) → H⁰(V, F)` versus restriction
-`Γ(U, F) → Γ(V, F)` commutes. -/
+`Γ(U, F) → Γ(V, F)` commutes.
+
+**Statement audit: consumable shape CONFIRMED against the MV degree-0
+corners.**  `HModule'_toBiprod`/`HModule'_fromBiprod`
+(`MayerVietorisCore.lean`) are `biprod.lift`/`biprod.desc` of literally
+`(HModule'_cohomologyPresheaf k F n).map S.f₂₄.op` (resp. `f₃₄`, `f₁₂`,
+`−f₁₃`), and their elementwise formulas `HModule'_toBiprod_apply` /
+`HModule'_fromBiprod_biprodIsoProd_inv_apply` expose exactly
+`(….map g.op) x` terms — the LHS here.  The RHS is `sectionRestrict F h`
+definitionally when `C := Opens X`, `g := homOfLE h`. -/
 lemma HModule'_zero_sectionsLinearEquiv_naturality_map
     (F : Sheaf J (ModuleCat.{u} k)) {U V : C} (g : V ⟶ U) (x : HModule' k F 0 U) :
     HModule'_zero_sectionsLinearEquiv k F V
@@ -459,7 +477,16 @@ actual section-level maps `Γ(U, I) → Γ(U, Q)`.
 Proof: chain the degree-zero `Ext` compatibility (`linearEquiv₀_comp_mk₀`),
 the right-naturality of the sheafification adjunction
 (`homEquiv_naturality_right`), and the `M`-naturality of the free-Yoneda
-sections equivalence. -/
+sections equivalence.
+
+**Statement audit: consumable shape CONFIRMED against the second-variable
+`Ext` LES.**  Mathlib's element-level forms
+`Abelian.Ext.covariant_sequence_exact₁/₂/₃`
+(`Mathlib/Algebra/Homology/DerivedCategory/Ext/ExactSequences.lean`) are
+phrased with literally `x.comp (mk₀ S.f) (add_zero n)` — the LHS here at
+`n = 0` — so this lemma converts the H⁰ rungs of the dimension-shift LES
+(e.g. `Hom(P_U, I) → Hom(P_U, Q)` for `0 → F → I → Q → 0`) into the honest
+section maps `Γ(U, I) → Γ(U, Q)` with no reshaping. -/
 lemma HModule'_zero_sectionsLinearEquiv_naturality_hom
     {F G : Sheaf J (ModuleCat.{u} k)} (φ : F ⟶ G) (U : C) (x : HModule' k F 0 U) :
     HModule'_zero_sectionsLinearEquiv k G U (x.comp (Abelian.Ext.mk₀ φ) (add_zero 0)) =
