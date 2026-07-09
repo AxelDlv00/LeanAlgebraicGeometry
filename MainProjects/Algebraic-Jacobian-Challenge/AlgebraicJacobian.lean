@@ -4,6 +4,8 @@ import AlgebraicJacobian.Cohomology.RegroupHelper
 import AlgebraicJacobian.Cohomology.SheafCompose
 import AlgebraicJacobian.Cohomology.StructureSheafAb
 import AlgebraicJacobian.Cohomology.StructureSheafModuleK
+import AlgebraicJacobian.Cohomology.StructureSheafModuleK.SectionsBridge
+import AlgebraicJacobian.Cohomology.StructureSheafModuleK.AffineDegreeOneVanishing
 import AlgebraicJacobian.Cohomology.MayerVietorisCore
 import AlgebraicJacobian.Cohomology.MayerVietorisCover
 -- Čech-cohomology development merged from the Cech-Cohomology subproject
@@ -50,6 +52,10 @@ import AlgebraicJacobian.AbelJacobi
 import AlgebraicJacobian.Picard.RelativeSpec
 import AlgebraicJacobian.Picard.SectionRingUniversal
 import AlgebraicJacobian.Picard.StructureSheafPushforward
+import AlgebraicJacobian.Picard.RigidPushforward
+import AlgebraicJacobian.Picard.SemicontinuityH0
+import AlgebraicJacobian.Picard.DivDegree
+import AlgebraicJacobian.Picard.FiniteGaloisQuotient
 import AlgebraicJacobian.Picard.LineBundlePullback
 import AlgebraicJacobian.Picard.TensorObjSubstrate
 import AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse
@@ -136,6 +142,7 @@ import AlgebraicJacobian.RiemannRoch.Adelic.CechComparisonGate
 import AlgebraicJacobian.RiemannRoch.Adelic.CechAcyclicInstance
 import AlgebraicJacobian.Picard.InvertibleSectionLocalization
 import AlgebraicJacobian.Picard.GaloisDescent.SemilinearModules
+import AlgebraicJacobian.Picard.GaloisDescent.SemilinearAlgebras
 import AlgebraicJacobian.Albanese.AlbaneseUP
 import AlgebraicJacobian.Albanese.AuslanderBuchsbaum
 import AlgebraicJacobian.Albanese.CodimOneExtension
