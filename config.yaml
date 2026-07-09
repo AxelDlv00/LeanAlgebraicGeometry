@@ -52,7 +52,8 @@ harnesses:
     kind: "claude-code"
     model: claude-fable-5
     options:
-      effort: high
+      effort: ultracode
+      backend: interactive   # launch this role as an interactive TTY (single-role runs)
 
 github:
   enabled: true
