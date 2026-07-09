@@ -51,6 +51,7 @@ this brick is field-agnostic and reused for `Sym^d`/Albanese).
 universe u v
 
 open scoped TensorProduct
+open Module
 
 namespace AlgebraicJacobian.GaloisDescent
 
@@ -64,6 +65,117 @@ is compatible with the `L`-scalar action twisted by `σ`, i.e.
 class IsSemilinear : Prop where
   /-- The semilinearity relation `σ • (a • v) = σ a • (σ • v)`. -/
   smul_smul' (σ : L ≃ₐ[K] L) (a : L) (v : V) : σ • (a • v) = σ a • σ • v
+
+/-! ## The Galois matrix
+
+Dedekind's independence of characters, transported through evaluation at a
+`K`-basis `b` of `L`, says the "rows" of the Galois matrix `(σ (b i))_{σ, i}` are
+`L`-linearly independent in `ι → L`; since their number equals `dim_L (ι → L)`
+they span.  From this we deduce the annihilation criterion
+`galoisMatrix_eq_zero_of`, which powers both directions of Speiser descent. -/
+
+section GaloisCore
+
+variable {K L : Type u} [Field K] [Field L] [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
+variable {ι : Type*}
+
+/-- Evaluation of a `K`-linear endomorphism of `L` at a basis, as an `L`-linear map
+`(L →ₗ[K] L) →ₗ[L] (ι → L)`, `f ↦ (i ↦ f (b i))`. -/
+noncomputable def evalAtBasis (b : Basis ι K L) : (L →ₗ[K] L) →ₗ[L] (ι → L) where
+  toFun f i := f (b i)
+  map_add' f g := by ext i; simp
+  map_smul' c f := by ext i; simp
+
+omit [FiniteDimensional K L] [IsGalois K L] in
+@[simp] lemma evalAtBasis_apply (b : Basis ι K L) (f : L →ₗ[K] L) (i : ι) :
+    evalAtBasis b f i = f (b i) := rfl
+
+omit [FiniteDimensional K L] [IsGalois K L] in
+lemma evalAtBasis_ker (b : Basis ι K L) : LinearMap.ker (evalAtBasis b) = ⊥ := by
+  rw [LinearMap.ker_eq_bot']
+  intro f hf
+  refine b.ext fun i => ?_
+  have h0 : evalAtBasis b f i = 0 := by rw [hf]; rfl
+  simpa using h0
+
+omit [FiniteDimensional K L] [IsGalois K L] in
+/-- **Dedekind independence, matrix form.** The rows `σ ↦ (i ↦ σ (b i))` of the
+Galois matrix are `L`-linearly independent in `ι → L`. -/
+theorem galoisRow_linearIndependent (b : Basis ι K L) :
+    LinearIndependent L (fun σ : L ≃ₐ[K] L => (fun i => σ (b i) : ι → L)) := by
+  have hAlg : LinearIndependent L (fun f : L →ₐ[K] L => f.toLinearMap) :=
+    linearIndependent_algHom_toLinearMap K L L
+  have hEquiv : LinearIndependent L
+      (fun σ : L ≃ₐ[K] L => ((σ : L →ₐ[K] L)).toLinearMap) :=
+    hAlg.comp (fun σ : L ≃ₐ[K] L => (σ : L →ₐ[K] L)) AlgEquiv.coe_algHom_injective
+  have hmap := hEquiv.map' (evalAtBasis b) (evalAtBasis_ker b)
+  have hfun : (fun σ : L ≃ₐ[K] L => (fun i => σ (b i) : ι → L))
+      = (evalAtBasis b) ∘ (fun σ : L ≃ₐ[K] L => ((σ : L →ₐ[K] L)).toLinearMap) := by
+    funext σ i; simp
+  rw [hfun]; exact hmap
+
+/-- The rows of the Galois matrix span `ι → L` over `L`. -/
+theorem galoisRow_span [Finite ι] (b : Basis ι K L) :
+    Submodule.span L (Set.range (fun σ : L ≃ₐ[K] L => (fun i => σ (b i) : ι → L))) = ⊤ := by
+  haveI := Fintype.ofFinite ι
+  haveI : Nonempty ι := b.index_nonempty
+  refine (galoisRow_linearIndependent b).span_eq_top_of_card_eq_finrank ?_
+  have h1 : Fintype.card (L ≃ₐ[K] L) = Fintype.card ι := by
+    rw [← Nat.card_eq_fintype_card, IsGalois.card_aut_eq_finrank K L, finrank_eq_card_basis b]
+  rw [Module.finrank_fintype_fun_eq_card, h1]
+
+/-- **The Galois-matrix annihilation criterion.** For any `L`-module `W` and
+vectors `t : ι → W`: if `∑_i σ (b i) • t i = 0` for every `σ ∈ Gal(L/K)`, then all
+`t i = 0`.  With `W = V` this gives injectivity of the descent map; with `W = L`
+it gives independence of the Galois-matrix columns (hence surjectivity). -/
+theorem galoisMatrix_eq_zero_of [Fintype ι]
+    {W : Type*} [AddCommGroup W] [Module L W]
+    (b : Basis ι K L) (t : ι → W)
+    (h : ∀ σ : L ≃ₐ[K] L, ∑ i, σ (b i) • t i = 0) (j : ι) : t j = 0 := by
+  classical
+  have hmem : (Pi.single j (1 : L) : ι → L) ∈ Submodule.span L
+      (Set.range (fun σ : L ≃ₐ[K] L => (fun i => σ (b i) : ι → L))) := by
+    rw [galoisRow_span]; trivial
+  rw [Submodule.mem_span_range_iff_exists_fun] at hmem
+  obtain ⟨c, hc⟩ := hmem
+  have hcoord : ∀ i, (Pi.single j (1 : L) : ι → L) i = ∑ σ : L ≃ₐ[K] L, c σ * σ (b i) := by
+    intro i
+    have := congrFun hc i
+    simpa [Finset.sum_apply, Pi.smul_apply, smul_eq_mul] using this.symm
+  calc t j = ∑ i, (Pi.single j (1 : L) : ι → L) i • t i := by
+            simp [Pi.single_apply, Finset.sum_ite_eq']
+    _ = ∑ i, (∑ σ : L ≃ₐ[K] L, c σ * σ (b i)) • t i := by
+            refine Finset.sum_congr rfl fun i _ => ?_; rw [hcoord i]
+    _ = ∑ σ : L ≃ₐ[K] L, c σ • ∑ i, σ (b i) • t i := by
+            simp_rw [Finset.sum_smul, mul_smul]
+            rw [Finset.sum_comm]
+            simp_rw [← Finset.smul_sum]
+    _ = 0 := by simp [h]
+
+/-- The columns of the Galois matrix span `(L ≃ₐ[K] L) → L` over `L`.  Deduced from
+column independence (`galoisMatrix_eq_zero_of` with `W = L`) and the cardinality
+count.  Powers surjectivity of the descent map. -/
+theorem galoisCol_span [Finite ι] (b : Basis ι K L) :
+    Submodule.span L
+      (Set.range (fun i : ι => (fun σ => σ (b i) : (L ≃ₐ[K] L) → L))) = ⊤ := by
+  classical
+  haveI := Fintype.ofFinite ι
+  haveI : Nonempty ι := b.index_nonempty
+  have hindep : LinearIndependent L
+      (fun i : ι => (fun σ => σ (b i) : (L ≃ₐ[K] L) → L)) := by
+    rw [Fintype.linearIndependent_iff]
+    intro g hg
+    refine galoisMatrix_eq_zero_of b g fun σ => ?_
+    have h2 := congrFun hg σ
+    simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at h2
+    simpa [smul_eq_mul, mul_comm] using h2
+  refine hindep.span_eq_top_of_card_eq_finrank ?_
+  have h1 : Fintype.card ι = Fintype.card (L ≃ₐ[K] L) := by
+    rw [← Nat.card_eq_fintype_card (α := L ≃ₐ[K] L), IsGalois.card_aut_eq_finrank K L,
+      finrank_eq_card_basis b]
+  rw [Module.finrank_fintype_fun_eq_card, h1]
+
+end GaloisCore
 
 namespace SemilinearAction
 
