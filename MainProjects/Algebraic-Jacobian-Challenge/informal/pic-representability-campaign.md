@@ -272,3 +272,49 @@ So P1's "prove the `ExistsNonconstantMapToP1` instance" and "`P1HasLaurentChartD
 **C3 — B0 partially landed this session.** The H⁰-*finiteness* half was already present (`instIsHModuleHomFinite_toModuleKSheaf`, `Carriers.lean:498`, iter-046: `Module.Finite k Γ(C,𝒪)` for proper integral C). This session added `Picard/SectionRingUniversal.lean` (axiom-clean, kernel-green): `isField_globalSections` (`Γ(C,𝒪)` is a field), `finiteDimensional_globalSections` (finite field extension of k), and `globalSectionsAlgEquivBase : Γ(C,𝒪) ≃ₐ[k] k` **modulo the honest gate `HasTrivialConstants C`** (= `k → Γ(C,𝒪)` surjective = field-of-constants-is-k). The one remaining input to discharge `HasTrivialConstants` unconditionally is **degree-0 H⁰ flat base change** `Γ(C_{k̄},𝒪) ≅ k̄ ⊗_k Γ(C,𝒪)` (Mathlib v4.31 has no scheme-level H⁰ base change; leansearch confirms). NB: degree-0 flat base change is a *much* smaller brick than the general `Rⁱf_*` FBC engine and is reused across B2/B3/B4/B5/D2' — worth building as standalone infra (candidate wave-1 item, feeds C3's gate discharge).
 
 **C4 — Wave-1 re-scoping recommendation.** Given C1–C3, the effective independent wave-1 poles are: **(i)** `IsAffineHModuleVanishing` (affine Serre vanishing, XL — new top item); **(ii)** B3 rigid pushforward (XL); **(iii)** G2 Galois quotient engine (XL); **(iv)** degree-0 H⁰ flat base change (L, feeds B0/B2/B4/B5); **(v)** D1' Div degree slices (M, in-tree); **(vi)** B0 gate discharge (S, once (iv) lands). P1 and the HasExt gates are struck from wave 1 (done).
+
+---
+
+## Part IV — WAVE LANDINGS (run-0020 session 0006, T15, 2026-07-09)
+
+**G2(b) Speiser semilinear descent — LANDED (algebraic heart complete, axiom-clean).**
+New file `Picard/GaloisDescent/SemilinearModules.lean` (~390 LOC, kernel-green, full
+project build 8690 jobs exit 0; headline decls `descentMap_bijective`,
+`finrank_invariants` verified `[propext, Classical.choice, Quot.sound]`, no `sorryAx`).
+
+Content: for a **finite Galois** extension `L/K` (`[FiniteDimensional K L] [IsGalois K L]`)
+and **any** `L`-module `V` (`[Module K V] [Module L V] [IsScalarTower K L V]`) carrying a
+**semilinear** `Gal(L/K)`-action (`IsSemilinear K L V`: `σ • (a•v) = σa • σ•v`):
+
+- `SemilinearAction.invariants K L V : Submodule K V` — the `K`-form `V^G`;
+- `SemilinearAction.descentEquiv : L ⊗[K] V^G ≃ₗ[L] V` — **Speiser's theorem**, the descent
+  isomorphism `a ⊗ w ↦ a•w`;
+- `SemilinearAction.finrank_invariants : finrank K V^G = finrank L V`.
+
+NB **no finiteness on `V` is assumed** — this is the full module-form descent (not just the
+finite-dimensional vector-space case), i.e. exactly the reusable brick G3 consumes (`G2(b)`
+"module form over a general base"; also serves `Sym^d`/Albanese).
+
+Proof architecture (pure field theory, mathlib-only — no AG machinery, no cohomology):
+- **Dedekind independence** (`linearIndependent_algHom_toLinearMap`) transported through
+  evaluation at a `K`-basis `b` of `L` gives the "Galois matrix" rows
+  `σ ↦ (i ↦ σ(b i))` `L`-independent, hence (card `= [L:K] = |Gal|`) spanning
+  (`galoisRow_span`); the annihilation criterion `galoisMatrix_eq_zero_of`
+  (`∀σ ∑ σ(b i)•t i = 0 ⟹ t = 0`, for coefficients in **any** `L`-module) and column
+  spanning `galoisCol_span` follow.
+- **Surjectivity**: `avg a v = ∑_σ σa•(σ•v) ∈ V^G`; `v` is an `L`-combination of the
+  `avg (b i) v` via `galoisCol_span` (`span_invariants_eq_top`).
+- **Injectivity**: `tensorFromPi` decomposes `L ⊗[K] V^G` via the `L`-basis `b`; the composite
+  `t ↦ ∑ b i • (t i:V)` is injective by `galoisMatrix_eq_zero_of` (using invariance of the
+  `t i`), and `tensorFromPi` is surjective.
+
+**Remaining for full G2** (this session closed only the algebraic heart `G2(b)`; `G2(a)`/`G2(c)`
+scheme-side are untouched): (a) orbit-in-affine hypothesis + gluing `Spec(A^Γ)` via
+`Scheme.GlueData` (`galoisDescendScheme`); (c) the `Hom_k(T,X) ≅ Hom_{k'}(T_{k'},X')^Γ`
+scheme-point statement. These consume the landed `descentEquiv` (Speiser) as the key module
+input, exactly as the plan's `G2`→`G3` edge intends.
+
+**No blueprint node yet** (campaign blueprint scaffolding for cluster `G` does not exist);
+`descentEquiv`/`finrank_invariants` are genuinely new project mathematics available for a node
+once the `sec:galois_descent` scaffolding is written. Nothing depends on the file in Lean yet
+(no invisible-dependency risk).
