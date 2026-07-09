@@ -369,3 +369,51 @@ tensor's non-canonical `Algebra` instances are supplied via `letI`-in-return-typ
 from the `appTop`/`appLE` section maps); consumers `B2`/`B4`/`B5`/`D2'` that need degree-0
 section base change over the constant curve can call it directly. Nothing consumes B0 in Lean
 yet (B1 rigidification unwritten), so no invisible-dependency risk.
+
+---
+
+## Part VI — WAVE LANDINGS (run-0020 session 0014, T15, 2026-07-09)
+
+**B1 sheaf-level H⁰ base change brick + `lm:aut` — LANDED (unconditional for ALL `T`, axiom-clean).**
+New file `Picard/StructureSheafPushforward.lean` (~370 LOC), imported into the aggregator
+(`AlgebraicJacobian.lean:51`); full `lake build AlgebraicJacobian` green (8691 jobs, exit 0); all
+headline decls verified `[propext, Classical.choice, Quot.sound]` (no `sorryAx`). This is the
+highest-fan-out B1 sub-brick a 4-agent feasibility recon (this session) selected: the
+**degree-0 cohomology-and-base-change** statement generalising B0 from affine `T` to arbitrary `T`.
+
+Content (`namespace AlgebraicGeometry.Scheme`, `{k}[Field k]`; `π := pullback.snd C.hom πT`):
+- **P1 (affine base):** `bijective_snd_appTop_baseChange C A` and its generalisation to ANY affine
+  base scheme + ANY structure map `bijective_snd_appTop_of_isAffine C (h : W ⟶ Spec k)`
+  (`[IsAffine W]`) — `Γ(W,𝒪) → Γ(C ×_k W, 𝒪)` bijective. Proof: B0's `globalSectionsBaseChangeAlgEquiv`
+  gives `Γ(W)⊗_{Γ(Spec k)}Γ(C) ≅ Γ(C×W)`; `Γ(C,𝒪)=k` (`globalSectionsAlgEquivBase`,
+  `bijective_hom_appTop`) collapses the right factor so `includeLeft = algebraMap` is bijective; its
+  `commutes'` identifies `π.appTop`. Any affine `W` via `W.isoSpec` + `Spec.map_preimage`.
+- **P2 (arbitrary base — THE brick, UNCONDITIONAL):** `isIso_snd_appTop C πT :
+  IsIso ((pullback.snd C.hom πT).appTop)` for ANY `T : Scheme.{u}`. Route: `isIso_snd_app_of_isAffineOpen`
+  (per affine open `V`, `IsIso (π.app V)` — P1 at base `V.toScheme`/struct map `V.ι ≫ πT`, transported
+  via `pullbackLeftPullbackSndIso` (pasting) + `pullbackRestrictIsoRestrict` + `morphismRestrict_appTop`
+  + `isIso_comp_right_iff` + `Scheme.Opens.ι_image_top`), then STALK ASSEMBLY: package `π.c` as a
+  `TopCat.Sheaf CommRingCat` hom `𝒪_T ⟶ π_*𝒪_{C×T}`, apply per-affine-open iso over
+  `T.isBasis_affineOpens`, `stalkFunctor_map_injective_of_isBasis` + germ-lift ⟹ all stalk maps
+  bijective ⟹ `app_isIso_of_stalkFunctor_map_iso α ⊤` (⊤-component defeq `π.appTop`). Mirrors
+  `QuotScheme.isIso_sheaf_of_isIso_app_basicOpen` but on the affine-opens basis. Gate
+  `HasStructureSheafPushforwardIso` retained as a lightweight interface, discharged unconditionally
+  by `instHasStructureSheafPushforwardIso`.
+- **P3 (`lm:aut`, Kleiman §2):** `retraction_appTop_of_section` (a section `σ` of `π` retracts
+  `π.appTop`) + `eq_one_of_section_of_restrict_eq_one(_of_gate)`: a global function on `C×T` rigidified
+  to `1` along `σ` is `1`. Unconditional for arbitrary `T`. This is the automorphism-rigidity heart
+  of B1: a line-bundle automorphism restricting to `id` along the `x₀`-section is `id`.
+
+**Consumers now unblocked:** B1's remaining `RigidifiedPic`/lm:fff/lm:idn/full `IsZariskiSheafOver`
+(the sheaf brick + lm:aut are the load-bearing inputs), and B3/B6/J1/G3 whenever they need degree-0
+section base change (they mostly work over AFFINE noetherian bases, which the P1 form already covered;
+the arbitrary-`T` P2 form is what the Zariski sheaf axiom itself needs). Recipe notes: the affine-base
+P1 trick — *any* `S`-alg iso `S⊗_R M ≃ₐ[S] S` forces `algebraMap S (S⊗M) = ε.symm` bijective, built
+from `Γ(C)≅k` via `Algebra.TensorProduct.congr` + `rid`; `set π := …` breaks `rw` under the dependent
+`pullback.snd π V.ι` type (close the pasting square with the `_hom_snd` simp instead); `op` not in
+scope, use `Opposite.op`. `CompactSpace`/`QuasiSeparatedSpace C.left` are NOT auto — derive from
+proper via `QuasiCompact.compactSpace_of_compactSpace` / `quasiSeparatedSpace_of_quasiSeparated`.
+
+**No blueprint node yet** (would dangle — no downstream `\uses` consumer node until B1's Zariski-sheaf
+or RigidifiedPic node exists; same reasoning as B0). `instHasPicScheme` remains a single `⟨sorry⟩`
+(`FGAPicRepresentability.lean:317`) — this is one milestone of the ~30; not closed.
