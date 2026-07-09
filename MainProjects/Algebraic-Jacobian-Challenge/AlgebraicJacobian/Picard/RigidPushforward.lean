@@ -7,6 +7,7 @@ import Mathlib
 import AlgebraicJacobian.Picard.HilbertPolynomial
 import AlgebraicJacobian.Picard.LineBundlePullback
 import AlgebraicJacobian.Picard.FlatteningStratification
+import AlgebraicJacobian.Picard.GlueDescent
 import AlgebraicJacobian.Cohomology.MayerVietorisCover
 import AlgebraicJacobian.Cohomology.FlatBaseChange
 import AlgebraicJacobian.RiemannRoch.Adelic.FinitenessP1
@@ -400,6 +401,84 @@ theorem pushforward_baseChange_of_h1_vanishing [HasRigidPushforward C]
   HasRigidPushforward.baseChange A L hL h1 A' φ
 
 end Extraction
+
+/-! ## §4. The rank-one corollary (B3, step 2) -/
+
+section RankOneCorollary
+
+/-- **Rank-one local freeness gives local triviality** (scaffold brick for the
+B3 rank-one corollary): if every point of `X` has an open neighbourhood on
+which `M` pulls back to the free module of rank one, then `M` is an
+invertible sheaf in the project sense (`LineBundle.IsLocallyTrivial`:
+trivializations on an *affine* cover).  Proof: shrink each neighbourhood to
+an affine one (`exists_isAffineOpen_mem_and_subset`), restrict the
+trivialization along the inclusion (pullback pseudofunctor coherences +
+`pullbackFreeIso`), and identify the rank-one free module with the unit
+(`coproductUniqueIso`, as in `LineBundle.freeUnitIso`). -/
+theorem LineBundle.isLocallyTrivial_of_pointwise_free_one {X : Scheme.{u}} (M : X.Modules)
+    (h : ∀ x : X, ∃ U : X.Opens, x ∈ U ∧
+      Nonempty ((Scheme.Modules.pullback U.ι).obj M ≅
+        _root_.SheafOfModules.free (R := U.toScheme.ringCatSheaf) (ULift.{u} (Fin 1)))) :
+    LineBundle.IsLocallyTrivial M := by
+  intro x
+  obtain ⟨U, hxU, ⟨e⟩⟩ := h x
+  obtain ⟨W, hW_aff, hxW, hWU⟩ := exists_isAffineOpen_mem_and_subset hxU
+  have hle : W ≤ U := hWU
+  refine ⟨W, hxW, hW_aff, ⟨?_⟩⟩
+  have e₁ : M.restrict W.ι ≅ (Scheme.Modules.pullback W.ι).obj M :=
+    (Scheme.Modules.restrictFunctorIsoPullback W.ι).app M
+  have e₂ : (Scheme.Modules.pullback W.ι).obj M ≅
+      (Scheme.Modules.pullback (X.homOfLE hle ≫ U.ι)).obj M :=
+    ((Scheme.Modules.pullbackCongr (X.homOfLE_ι hle)).symm).app M
+  have e₃ : (Scheme.Modules.pullback (X.homOfLE hle ≫ U.ι)).obj M ≅
+      (Scheme.Modules.pullback (X.homOfLE hle)).obj
+        ((Scheme.Modules.pullback U.ι).obj M) :=
+    ((Scheme.Modules.pullbackComp (X.homOfLE hle) U.ι).app M).symm
+  have e₄ : (Scheme.Modules.pullback (X.homOfLE hle)).obj
+        ((Scheme.Modules.pullback U.ι).obj M) ≅
+      (Scheme.Modules.pullback (X.homOfLE hle)).obj
+        (_root_.SheafOfModules.free (R := U.toScheme.ringCatSheaf) (ULift.{u} (Fin 1))) :=
+    (Scheme.Modules.pullback (X.homOfLE hle)).mapIso e
+  have e₅ : (Scheme.Modules.pullback (X.homOfLE hle)).obj
+        (_root_.SheafOfModules.free (R := U.toScheme.ringCatSheaf) (ULift.{u} (Fin 1))) ≅
+      _root_.SheafOfModules.free (R := W.toScheme.ringCatSheaf) (ULift.{u} (Fin 1)) :=
+    Scheme.Modules.pullbackFreeIso (X.homOfLE hle) (ULift.{u} (Fin 1))
+  have e₆ : _root_.SheafOfModules.free (R := W.toScheme.ringCatSheaf) (ULift.{u} (Fin 1)) ≅
+      _root_.SheafOfModules.unit W.toScheme.ringCatSheaf :=
+    Limits.coproductUniqueIso (fun (_ : ULift.{u} (Fin 1)) ↦
+      _root_.SheafOfModules.unit W.toScheme.ringCatSheaf)
+  exact e₁ ≪≫ e₂ ≪≫ e₃ ≪≫ e₄ ≪≫ e₅ ≪≫ e₆
+
+variable (C : Over (Spec (CommRingCat.of k)))
+variable (A : Type u) [CommRing A] [Algebra k A] [Algebra.FiniteType k A]
+
+/-- **B3, step 2: the rank-one corollary** (campaign milestone B3(i),
+corollary; Kleiman §5): if moreover `h⁰(C_t, L_t) = 1` at every scheme point
+`t : Spec A` (so `χ ≡ 1` given `h¹ ≡ 0`), the pushforward `q_* L` is an
+invertible sheaf on `Spec A`.  Proved from the gate via
+`LineBundle.isLocallyTrivial_of_pointwise_free_one`.
+
+**J2-interface TODO** (deliberately not pinned here — see the module
+docstring): the continuation `counit section fibrewise nonzero ⟹ regular on
+the integral fibres ⟹ canonical DivFamily` belongs to milestone J2, where
+the target `DivFamily` shape is fixed. -/
+theorem pushforward_isLocallyTrivial_of_h1_vanishing [HasRigidPushforward C]
+    (L : (Limits.pullback C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules)
+    (hL : LineBundle.IsLocallyTrivial L)
+    (h1 : ∀ t : Spec (CommRingCat.of A),
+      (pullback.snd C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))).FiberH1Vanishing L t)
+    (h0 : ∀ t : Spec (CommRingCat.of A),
+      (pullback.snd C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberH0 L t = 1) :
+    LineBundle.IsLocallyTrivial
+      ((Scheme.Modules.pushforward
+        (pullback.snd C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A))))).obj L) := by
+  apply LineBundle.isLocallyTrivial_of_pointwise_free_one
+  intro t
+  obtain ⟨U, htU, ⟨e⟩⟩ := pushforward_locallyFree_of_h1_vanishing C A L hL h1 t
+  rw [h0 t] at e
+  exact ⟨U, htU, ⟨e⟩⟩
+
+end RankOneCorollary
 
 end Scheme
 
