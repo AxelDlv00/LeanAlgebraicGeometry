@@ -417,3 +417,59 @@ proper via `QuasiCompact.compactSpace_of_compactSpace` / `quasiSeparatedSpace_of
 **No blueprint node yet** (would dangle — no downstream `\uses` consumer node until B1's Zariski-sheaf
 or RigidifiedPic node exists; same reasoning as B0). `instHasPicScheme` remains a single `⟨sorry⟩`
 (`FGAPicRepresentability.lean:317`) — this is one milestone of the ~30; not closed.
+
+---
+
+## Part VII — WAVE LANDINGS (run-0020 session 0018, T15, 2026-07-09)
+
+**B1 `lm:fff` (rigidified representative exists) — LANDED (axiom-clean); `lm:aut` faithfulness half landed; surjectivity blocked.**
+
+New file `Picard/RigidifiedPic.lean` (~150 LOC, imported into the aggregator; all headline decls
+verified `[propext, Classical.choice, Quot.sound]`, no `sorryAx`). This is the natural consumer of
+the s0014 B1 brick (`StructureSheafPushforward` sheaf-level H⁰ base change + ring-level `lm:aut`),
+selected by a 4-agent substrate-mapping recon this session:
+
+- `sectionPullbackProjIso σ hσ N : σ^*(π_T^* N) ≅ N` — the section base-change iso for a section
+  `σ` of the projection `π_T = pullback.snd πC πT` (the `pullbackComp ≪≫ pullbackCongr hσ ≪≫ pullbackId`
+  chain, mirroring `LineBundle.pullback_pullback_eq`). General `{S C T}`, no curve hypotheses.
+- `Rigidification σ L` — structure carrying a trivialisation `σ^* L ≅ 𝒪_T`.
+- **`exists_rigidification_relPicRel σ hσ L`** (Kleiman `lm:fff`): every `L : OnProduct πC πT` is
+  `H_T`-equivalent (`PicSharp.relPicRel`) to the rigidified twist `L' = L ⊗ π_T^*((σ^*L)⁻¹)`. The
+  canonical rigidification of `L'` is `pullbackTensorIsoOfLocallyTrivial ≪≫ tensorObjIsoOfIso (refl) (sectionPullbackProjIso) ≪≫ eN`
+  where `eN` is the tensor-inverse iso from `Modules.exists_tensorObj_inverse`; the `H_T`-witness is
+  `tensorObj_braiding` with `N := (σ^*L)⁻¹`. Fully general (no `[HasRationalPoint]`/curve hypotheses;
+  works for any section of the projection).
+- `rationalPointSection πT x₀ hx₀ = pullback.lift (πT ≫ x₀) (𝟙 T) _` + `rationalPointSection_comp_snd`
+  (`= pullback.lift_snd`): the projection-section from a rational point `x₀` of `C`, matching the
+  hypothesis shape of the `StructureSheafPushforward` `lm:aut` lemmas. Parametrised by explicit
+  `x₀` (NOT `[HasRationalPoint]`) to keep the file upstream of / independent from
+  `FGAPicRepresentability` (and its `instHasPicScheme` sorry).
+
+**`lm:aut` faithfulness half** — new file `Picard/ScalarEndFaithful.lean` (imports `GrassmannianQuot`
+for its `scalarEnd`; axiom-clean):
+- `scalarEnd_injective : Function.Injective (scalarEnd (X := X))` — scalar endos of `𝒪_X` are
+  faithful; recovered by evaluating at the unit section `1` over `⊤` (via `scalarEnd_val_app_one`
+  + `Subsingleton.elim ((homOfLE le_top).op) (𝟙 (op ⊤))` + `Functor.map_id` + `ConcreteCategory.id_apply`).
+- `scalarEnd_eq_one_iff : scalarEnd a = 𝟙 ↔ a = 1` — the identity-rigidity criterion.
+
+**REMAINING for geometric `lm:aut`** (next session, precise route):
+1. **Surjectivity `scalarEnd_self : scalarEnd (χ.val.app (op ⊤) 1) = χ`** (every endo of `𝒪_X` is
+   scalar) — reduces to `unitHomEquiv.injective` + `unitHomEquiv_scalarEnd` + `sections_ext` +
+   `SheafOfModules.unitHomEquiv_apply_coe` + `PresheafOfModules.naturality_apply` +
+   `PresheafOfModules.unit_map_one`. BLOCKED on the `(SheafOfModules.unit R).val` vs
+   `PresheafOfModules.unit R.obj` coercion wall: `rw`/`simp` cannot fire `unit_map_one` under the
+   `ConcreteCategory.hom` wrapper of `χ.val.app`, and the `.val`-rewrite motive is not type-correct
+   (dependent). Way through: a `SheafOfModules`-level `unit_map_one` restatement, or a `conv`/`@[congr]`
+   route. The naturality identity itself (`naturality_apply`) elaborates fine; only the `map 1 = 1`
+   collapse stalls.
+2. **End(L) ≅ End(unit) bridge**: conjugate `φ : L ≅ L` through `Modules.exists_tensorObj_inverse`
+   (`e : L ⊗ L⁻¹ ≅ 𝒪`) to `χ := e.inv ≫ (φ ⊗ 𝟙) ≫ e.hom : End(𝒪_{C×T})`; injective (⊗L⁻¹ faithful).
+3. **Pullback-of-scalarEnd compatibility** (hardest, ~50–100 LOC): `σ^*(scalarEnd u) ≅ scalarEnd(σ.appTop u)`
+   under `pullbackUnitIso`, so the rigidified condition `σ^*φ = id` gives `σ.appTop u = 1`, then the
+   ring-level `lm:aut` (`eq_one_of_section_of_restrict_eq_one_of_gate`, unconditional for arbitrary T
+   under `[IsProper][GeometricallyIntegral]`) gives `u = 1`, and (1)+(2) give `φ = id`.
+
+**No blueprint node yet** for `lm:fff`/`sectionPullbackProjIso`/`scalarEnd`-faithfulness (would dangle —
+same B0/B1 reasoning; author under a `sec:rigidification` node when the Zariski-sheaf consumer
+(`IsZariskiSheafOver (picSharp C)`) lands, which is the natural downstream `\uses`). `instHasPicScheme`
+still `⟨sorry⟩` — one milestone of the ~30.

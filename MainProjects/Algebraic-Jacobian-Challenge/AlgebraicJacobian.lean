@@ -94,6 +94,7 @@ import AlgebraicJacobian.Picard.SectionGradedRing
 import AlgebraicJacobian.Picard.GrassmannianCells
 import AlgebraicJacobian.Picard.GlueDescent
 import AlgebraicJacobian.Picard.GrassmannianQuot
+import AlgebraicJacobian.Picard.ScalarEndFaithful
 import AlgebraicJacobian.Picard.QuotFunctorDef
 -- T14 ampleness / projective-morphism / Serre-finiteness foundation:
 -- relative projective space, Serre twist O(m), projective-with-L predicate.
