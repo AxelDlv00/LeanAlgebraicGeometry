@@ -140,4 +140,19 @@ noncomputable def globalSectionsAlgEquivBase (C : Over (Spec (CommRingCat.of k))
     HasTrivialConstants.surjective_constMap
   exact (AlgEquiv.ofBijective (Algebra.ofId k Γ(C.left, ⊤)) ⟨hinj, hsurj⟩).symm
 
+/-- **The field-of-constants gate is unconditional over an algebraically closed
+base.**  A finite field extension of an algebraically closed field is trivial, so
+`Γ(C, 𝒪_C) = k` needs no extra hypothesis when `k = k̄`
+(`IsAlgClosed.algebraMap_bijective_of_isIntegral`).  This discharges
+`HasTrivialConstants` in the geometric case `C_{k̄}` that the Milne route reduces
+to (campaign `J`-cluster works over separably/algebraically closed `k'`). -/
+instance instHasTrivialConstants_of_isAlgClosed (C : Over (Spec (CommRingCat.of k)))
+    [IsProper C.hom] [GeometricallyIntegral C.hom] [IsAlgClosed k] :
+    HasTrivialConstants C := by
+  letI : Field Γ(C.left, ⊤) := (isField_globalSections C).toField
+  haveI : Module.Finite k Γ(C.left, ⊤) := finiteDimensional_globalSections C
+  haveI : Algebra.IsIntegral k Γ(C.left, ⊤) := Algebra.IsIntegral.of_finite k _
+  exact ⟨(IsAlgClosed.algebraMap_bijective_of_isIntegral (k := k)
+    (K := Γ(C.left, ⊤))).2⟩
+
 end AlgebraicGeometry.Scheme
