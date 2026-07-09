@@ -47,6 +47,7 @@ import AlgebraicJacobian.RigidityLemma
 import AlgebraicJacobian.Jacobian
 import AlgebraicJacobian.AbelJacobi
 import AlgebraicJacobian.Picard.RelativeSpec
+import AlgebraicJacobian.Picard.SectionRingUniversal
 import AlgebraicJacobian.Picard.LineBundlePullback
 import AlgebraicJacobian.Picard.TensorObjSubstrate
 import AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse

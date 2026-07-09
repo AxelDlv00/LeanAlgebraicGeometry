@@ -253,3 +253,22 @@ Accept: one audit note per item with verdict + file:line evidence; hygiene commi
 13. **Kernel-build every inherited "sorry-free" closure** before relying on it (adelic lane, DivFunctorDef, GrassmannianRepresentability) — check PIPESTATUS.
 14. **P2**: Λ-stability of `C_κ` + `AffineCoverMVSquare` base-change as named instances.
 15. **B6**: geometric integrality load-bearing in "deg 0 + section ⟹ trivial"; pin (c) at the represents-the-subfunctor level.
+
+---
+
+## Part III — RECON CORRECTION (run-0020 session 0002, T15, 2026-07-09; supersedes stale Part-I/II recon where noted)
+
+Baseline kernel build green (`lake build AlgebraicJacobian` = 8617 jobs, exit 0). Corrections to the wave plan after auditing the actual tree state — several Part-I/II claims were stale at authoring time:
+
+**C1 — P1 is essentially DONE, not a wave-1 task.** The map-to-ℙ¹ gate chain is already sorry-free and *unconditional* under the ambient AJC hypotheses `[SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]`:
+- `existsNonconstantMapToProjInt_of_ajc` (`NonconstantToP1.lean:1067`, sorry-free) ⟹ `ExistsNonconstantMapToProjInt C`;
+- `existsNonconstantMapToP1_of_existsNonconstantMapToProjInt` (`NonconstantToP1.lean:136`) ⟹ `ExistsNonconstantMapToP1 C`;
+- `hasFiniteMapToP1_of_existsNonconstantMapToP1` (`FiniteMapToP1.lean:452`) ⟹ `HasFiniteMapToP1 C`;
+- `instP1HasLaurentChartData` (`P1ChartData.lean:1179`, *unconditional* for every field) discharges gate 2.
+So P1's "prove the `ExistsNonconstantMapToP1` instance" and "`P1HasLaurentChartData`" line items are already closed. **The `HasExt.{u}`/`HasExt.{u+1}` gates are also non-issues**: `hasExt_moduleKSheaf`/`hasExt_succ_moduleKSheaf` (`CechComparisonGate.lean`) prove them by `inferInstance` (Grothendieck-abelian + enough injectives on the `ModuleCat k`-sheaf site).
+
+**C2 — The TRUE root bottleneck of Cluster P is `IsAffineHModuleVanishing` (affine Serre vanishing), NOT P1.** The genus/cohomology keystone `module_finite_hModule_one_unconditional` (`CechAcyclicInstance.lean:172`) still requires the gate `∀ S, HasCechToHModuleIso (toModuleKSheaf C) S.coverFamily`, whose only residual is `IsAffineHModuleVanishing k C (toModuleKSheaf C)` (`StructureSheafModuleK/Carriers.lean:222`): for every affine open `U` and `i>0`, `Subsingleton (HModule' k F i U)`. Its own docstring flags it a **Mathlib-gap, multi-iteration project-local build** (no scheme-level Serre vanishing on affines for the `ModuleCat k` flavour). Since P2/P3 need `h¹(C_κ,M)` *finite/computable*, this gate gates the whole P-cluster. **Re-sequencing: elevate affine Serre vanishing (`IsAffineHModuleVanishing`) to a wave-1 XL pole alongside B3 and G2.** It is arguably the single highest-leverage remaining root — it also unblocks the T16 north-star `finrank_eq_genus`/`tangentSpaceIso`.
+
+**C3 — B0 partially landed this session.** The H⁰-*finiteness* half was already present (`instIsHModuleHomFinite_toModuleKSheaf`, `Carriers.lean:498`, iter-046: `Module.Finite k Γ(C,𝒪)` for proper integral C). This session added `Picard/SectionRingUniversal.lean` (axiom-clean, kernel-green): `isField_globalSections` (`Γ(C,𝒪)` is a field), `finiteDimensional_globalSections` (finite field extension of k), and `globalSectionsAlgEquivBase : Γ(C,𝒪) ≃ₐ[k] k` **modulo the honest gate `HasTrivialConstants C`** (= `k → Γ(C,𝒪)` surjective = field-of-constants-is-k). The one remaining input to discharge `HasTrivialConstants` unconditionally is **degree-0 H⁰ flat base change** `Γ(C_{k̄},𝒪) ≅ k̄ ⊗_k Γ(C,𝒪)` (Mathlib v4.31 has no scheme-level H⁰ base change; leansearch confirms). NB: degree-0 flat base change is a *much* smaller brick than the general `Rⁱf_*` FBC engine and is reused across B2/B3/B4/B5/D2' — worth building as standalone infra (candidate wave-1 item, feeds C3's gate discharge).
+
+**C4 — Wave-1 re-scoping recommendation.** Given C1–C3, the effective independent wave-1 poles are: **(i)** `IsAffineHModuleVanishing` (affine Serre vanishing, XL — new top item); **(ii)** B3 rigid pushforward (XL); **(iii)** G2 Galois quotient engine (XL); **(iv)** degree-0 H⁰ flat base change (L, feeds B0/B2/B4/B5); **(v)** D1' Div degree slices (M, in-tree); **(vi)** B0 gate discharge (S, once (iv) lands). P1 and the HasExt gates are struck from wave 1 (done).
