@@ -360,9 +360,12 @@ downstream `↥Γ(·,⊤)` forms; `f ⁻¹ᵁ ⊤ = ⊤` and `appTop = app ⊤` 
 preimage-transport bookkeeping. `set_option backward.isDefEq.respectTransparency false` scoped
 per declaration.
 
-**Not extracted (follow-up):** the H⁰ base-change `≃ₐ` is built inline inside
-`surjective_constMap_of_isAlgClosed_baseChange`; a standalone reusable
-`globalSectionsBaseChangeAlgEquiv (X qcqs / k) (A : k-algebra)` would package it for direct
-consumption (the tensor's non-canonical `Algebra` instances make the signature slightly fussy —
-use `letI`-in-return-type). Nothing consumes B0 in Lean yet (B1 rigidification unwritten), so no
-invisible-dependency risk.
+**Reusable brick extracted (item iv delivered):** `globalSectionsBaseChangeAlgEquiv`
+(`SectionRingUniversal.lean`, axiom-clean `[propext, Classical.choice, Quot.sound]`) is the
+standalone H⁰ flat base-change iso for the structure sheaf — for a **qcqs** `k`-scheme `X`
+(`[CompactSpace X] [QuasiSeparatedSpace X]`) and **any** `k`-algebra `A`, a
+`Γ(Spec A,𝒪)`-algebra iso `Γ(Spec A,𝒪) ⊗_{Γ(Spec k,𝒪)} Γ(X,𝒪) ≅ Γ(X ×_k Spec A, 𝒪)`. The
+tensor's non-canonical `Algebra` instances are supplied via `letI`-in-return-type (they come
+from the `appTop`/`appLE` section maps); consumers `B2`/`B4`/`B5`/`D2'` that need degree-0
+section base change over the constant curve can call it directly. Nothing consumes B0 in Lean
+yet (B1 rigidification unwritten), so no invisible-dependency risk.

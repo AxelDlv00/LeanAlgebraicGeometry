@@ -180,6 +180,54 @@ This is the campaign `B0`/wave-1 degree-zero H⁰ flat base-change brick (reused
 
 open TensorProduct Limits in
 set_option backward.isDefEq.respectTransparency false in
+/-- **H⁰ flat base change over a field base (structure sheaf).**  For a qcqs `k`-scheme `X`
+(e.g. proper) and **any** `k`-algebra `A`, the canonical base-change map is a
+`Γ(Spec A, 𝒪)`-algebra isomorphism
+`Γ(Spec A, 𝒪) ⊗_{Γ(Spec k,𝒪)} Γ(X, 𝒪) ≅ Γ(X ×_k Spec A, 𝒪)`.
+
+Over the field base `Spec k` the base-change morphism `Spec A → Spec k` is automatically flat
+(`Spec k` is subsingleton integral), so Mathlib's qcqs `pushoutSection` engine
+(`isIso_pushoutSection_of_isQuasiSeparated_of_flat_right`) applies; the `≃ₐ` is assembled from
+`CommRingCat.isPushout_tensorProduct` exactly as `Mathlib/AlgebraicGeometry/Normalization.lean`.
+The three source-ring `Algebra` instances (non-canonical — they come from the `appTop`/`appLE`
+section maps) are supplied via `letI` in the return type.  Campaign `B0`/wave-1 item (iv). -/
+noncomputable def globalSectionsBaseChangeAlgEquiv
+    {X : Scheme.{u}} (iX : X ⟶ Spec (CommRingCat.of k))
+    [CompactSpace X] [QuasiSeparatedSpace X]
+    (A : Type u) [CommRing A] [Algebra k A] :
+    letI : Algebra ↥Γ(Spec (CommRingCat.of k), ⊤) ↥Γ(Spec (CommRingCat.of A), ⊤) :=
+      ((Spec.map (CommRingCat.ofHom (algebraMap k A))).appLE ⊤ ⊤ le_top).hom.toAlgebra
+    letI : Algebra ↥Γ(Spec (CommRingCat.of k), ⊤) ↥Γ(X, ⊤) := (iX.appTop).hom.toAlgebra
+    letI : Algebra ↥Γ(Spec (CommRingCat.of A), ⊤)
+        ↥Γ(pullback iX (Spec.map (CommRingCat.ofHom (algebraMap k A))), ⊤) :=
+      ((pullback.snd iX (Spec.map (CommRingCat.ofHom (algebraMap k A)))).appTop).hom.toAlgebra
+    ↥Γ(Spec (CommRingCat.of A), ⊤) ⊗[↥Γ(Spec (CommRingCat.of k), ⊤)] ↥Γ(X, ⊤)
+      ≃ₐ[↥Γ(Spec (CommRingCat.of A), ⊤)]
+      ↥Γ(pullback iX (Spec.map (CommRingCat.ofHom (algebraMap k A))), ⊤) := by
+  let g : Spec (CommRingCat.of A) ⟶ Spec (CommRingCat.of k) :=
+    Spec.map (CommRingCat.ofHom (algebraMap k A))
+  have hU : IsAffineOpen (⊤ : (Spec (CommRingCat.of k)).Opens) := isAffineOpen_top _
+  have hV : IsAffineOpen (⊤ : (Spec (CommRingCat.of A)).Opens) := isAffineOpen_top _
+  have hthis := isIso_pushoutSection_of_isQuasiSeparated_of_flat_right
+    (.of_hasPullback iX g) (le_top) (le_refl _) (UY := pullback.snd iX g ⁻¹ᵁ ⊤)
+    (by simp) hU hV (iX.isCompact_preimage hU.isCompact)
+    (iX.isQuasiSeparated_preimage hU.isQuasiSeparated)
+  algebraize [(iX.appTop).hom, (g.appLE ⊤ ⊤ le_top).hom,
+    ((pullback.snd iX g).appTop).hom]
+  let e₀ := (CommRingCat.isPushout_tensorProduct
+      (↥Γ(Spec (CommRingCat.of k), ⊤)) (↥Γ(Spec (CommRingCat.of A), ⊤))
+      (↥Γ(X, ⊤))).flip.isoPushout ≪≫
+    (pushout.congrHom iX.app_eq_appLE rfl ≪≫ @asIso _ _ _ _ _ hthis :)
+  exact
+    { toRingEquiv := e₀.commRingCatIsoToRingEquiv
+      commutes' := fun r => by
+        change (CommRingCat.ofHom Algebra.TensorProduct.includeLeftRingHom ≫ e₀.hom) r =
+          ((pullback.snd iX g).app ⊤) r
+        congr 2
+        simp [e₀, pushout.inr_desc_assoc, Scheme.Hom.app_eq_appLE] }
+
+open TensorProduct Limits in
+set_option backward.isDefEq.respectTransparency false in
 /-- **Surjectivity of the field-of-constants map via base change to an algebraically closed
 extension.**  For a proper geometrically integral curve `C/k` and any algebraically closed
 field extension `K/k`, the structure map `k → Γ(C, 𝒪_C)` is surjective.  Proof: H⁰ flat base
