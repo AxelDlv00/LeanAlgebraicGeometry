@@ -8,16 +8,11 @@ import AlgebraicJacobian.RiemannRoch.Adelic.FinitenessP1
 /-!
 # The `ℙ¹` chart-ring computation: discharging `P1HasLaurentChartData` (node `N11b`)
 
-**STATUS: WORK-IN-PROGRESS — NOT YET REGISTERED in `AlgebraicJacobian.lean`.**
-This module is not imported by the library root, so the default `lake build` target
-does not compile it; it therefore cannot break the fleet baseline.  Declarations here
-are checked with the lean-LSP loop (`lean_diagnostic_messages` + `lean_verify`, clean
-axioms `[propext, Classical.choice, Quot.sound]`); a final faithful
-`lake build AlgebraicJacobian.RiemannRoch.Adelic.P1ChartData` was not run to completion
-because the build host was catastrophically oversubscribed during authoring
-(load average > 200 on 16 cores, cross-tenant workloads).
+**STATUS: COMPLETE — registered in `AlgebraicJacobian.lean`.**  The gate instance
+`instP1HasLaurentChartData` is proved with clean axioms
+`[propext, Classical.choice, Quot.sound]`.
 
-This file is intended to compute the standard-chart Laurent data of the concrete
+This file computes the standard-chart Laurent data of the concrete
 projective line `ℙ¹ = ℙ(ULift (Fin 2); Spec k)` (the `Proj`-pullback model of
 `Picard/ProjectiveSpace.lean`), the datum consumed by the adelic keystone
 `Adelic.LaurentChartData.module_finite_H1Cok` (`FinitenessP1.lean`), and thereby to
@@ -51,10 +46,11 @@ an ascribed `X`-index* — otherwise `RingHom.comp` defers the index and unifies
 basic-open predicates through the concrete `ℙ¹` pullback into `MvPolynomial`, which is
 astronomically slow.
 
-**Not yet landed (see the route map below):** the symmetric `y`-chart span
-`Γ(V₁) = k[y]` (mirror of step 2 for `D₊(X₁)`, needs the `⟨1⟩`-analogue of
-`span_p1CoordAway_pow_top`), the overlap identities `V₀ ⊓ V₁ = D(x) = D(y)` and `x·y = 1`
-(step 3), and the final `LaurentChartData`/`P1HasLaurentChartData` assembly (step 4).
+**Landed (route steps 3–4):** the symmetric `y`-chart span `Γ(V₁) = k[y]`, the overlap
+identities `V₀ ⊓ V₁ = D(x) = D(y)` and `x·y = 1` (through the *hoisted* overlap
+polynomial `p1XY = X₀X₁` — one shared elaborated copy, see its docstring for the
+`binop%`/`OfNat`-instance elaboration trap), and the final
+`p1LaurentChartData`/`instP1HasLaurentChartData` assembly.
 
 ## The reduction (route map for a future wave)
 
@@ -991,18 +987,39 @@ private lemma p1Chart_inf_eq_basicOpen_coordSection (k : Type u) [Field k]
       proj_basicOpen_awayToSection_coord i j, Scheme.Hom.preimage_inf]
   rfl
 
-/-- The image of the coordinate `Xⱼ/Xᵢ` under the away-restriction `Away 𝒜 Xᵢ → Away 𝒜 (X₀X₁)`
-computed on the standard chart pair: `awayMap` of the two coordinate fractions multiply to `1`
-in `Away 𝒜 (X₀X₁)` (both are `X₀X₁`-fractions and mutually inverse, `awayFraction_mul_inv`). -/
-private lemma awayMap_coord_mul_eq_one :
+/-- **The hoisted overlap polynomial `X₀ · X₁`** — a *single* elaborated copy of the
+product, shared by every `D₊(X₀X₁)`/`Away 𝒜 (X₀X₁)` occurrence in the overlap
+computation below.  **Elaboration note (fleet recipe):** a bare `X ⟨0⟩ * X ⟨1⟩` is
+elaborated by `binop%` with the leaf indices under pending metavariables, so distinct
+occurrences can pick *different* `OfNat (Fin 2)`-instance terms; any cross-occurrence
+`isDefEq` then descends through `Submonoid.powers`/`MvPolynomial` and is astronomically
+slow.  Referencing this one def makes all occurrences syntactically identical. -/
+noncomputable def p1XY : MvPolynomial (ULift.{u} (Fin 2)) (ULift.{u} ℤ) :=
+  X (⟨0⟩ : ULift.{u} (Fin 2)) * X (⟨1⟩ : ULift.{u} (Fin 2))
+
+/-- `X₀ · X₁ = X₁ · X₀`, with the hoisted copy `p1XY` on the left — the `hx`-input of
+the `awayMap : Away 𝒜 X₁ → Away 𝒜 (X₀X₁)` transporting the `y`-coordinate. -/
+private lemma p1XY_eq_comm :
+    p1XY = X (⟨1⟩ : ULift.{u} (Fin 2)) * X (⟨0⟩ : ULift.{u} (Fin 2)) :=
+  mul_comm (X (⟨0⟩ : ULift.{u} (Fin 2))) (X (⟨1⟩ : ULift.{u} (Fin 2)))
+
+/-- The away-ring unit relation with a clean generalized binder `x` for the overlap
+localiser (the two `awayMap`s land in `Away 𝒜 x` for *any* `x` presenting `X₀X₁`):
+`awayMap` of the two coordinate fractions multiply to `1` in `Away 𝒜 x` (both are
+`x`-fractions and mutually inverse).  `subst` recovers the concrete-product proof. -/
+private lemma awayMap_coord_mul_eq_one_aux
+    {x : MvPolynomial (ULift.{u} (Fin 2)) (ULift.{u} ℤ)}
+    (hx₁ : x = X (⟨0⟩ : ULift.{u} (Fin 2)) * X (⟨1⟩ : ULift.{u} (Fin 2)))
+    (hx₂ : x = X (⟨1⟩ : ULift.{u} (Fin 2)) * X (⟨0⟩ : ULift.{u} (Fin 2))) :
     HomogeneousLocalization.awayMap (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
         (ProjTwist.X_mem_deg_one (ULift.{u} (Fin 2)) ⟨1⟩)
-        (rfl : (X ⟨0⟩ * X ⟨1⟩ : MvPolynomial (ULift.{u} (Fin 2)) (ULift.{u} ℤ)) = X ⟨0⟩ * X ⟨1⟩)
+        hx₁
         (p1CoordAway (ULift.{u} (Fin 2)) ⟨0⟩ ⟨1⟩)
       * HomogeneousLocalization.awayMap (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
           (ProjTwist.X_mem_deg_one (ULift.{u} (Fin 2)) ⟨0⟩)
-          (mul_comm (X (⟨0⟩ : ULift.{u} (Fin 2))) (X ⟨1⟩))
+          hx₂
           (p1CoordAway (ULift.{u} (Fin 2)) ⟨1⟩ ⟨0⟩) = 1 := by
+  subst hx₁
   apply HomogeneousLocalization.val_injective
   simp only [p1CoordAway, HomogeneousLocalization.awayMap_mk, HomogeneousLocalization.val_mul,
     HomogeneousLocalization.val_one, HomogeneousLocalization.Away.val_mk, Localization.mk_mul]
@@ -1011,192 +1028,158 @@ private lemma awayMap_coord_mul_eq_one :
   simp only [OneMemClass.coe_one, one_mul, mul_one, MulMemClass.coe_mul]
   ring
 
+/-- The image of the coordinate `Xⱼ/Xᵢ` under the away-restriction `Away 𝒜 Xᵢ → Away 𝒜 (X₀X₁)`
+computed on the standard chart pair: `awayMap` of the two coordinate fractions multiply to `1`
+in `Away 𝒜 (X₀X₁)` (both are `X₀X₁`-fractions and mutually inverse), stated through the
+hoisted product `p1XY`. -/
+private lemma awayMap_coord_mul_eq_one :
+    HomogeneousLocalization.awayMap (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
+        (ProjTwist.X_mem_deg_one (ULift.{u} (Fin 2)) ⟨1⟩)
+        (rfl : p1XY = X (⟨0⟩ : ULift.{u} (Fin 2)) * X (⟨1⟩ : ULift.{u} (Fin 2)))
+        (p1CoordAway (ULift.{u} (Fin 2)) ⟨0⟩ ⟨1⟩)
+      * HomogeneousLocalization.awayMap (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
+          (ProjTwist.X_mem_deg_one (ULift.{u} (Fin 2)) ⟨0⟩)
+          p1XY_eq_comm
+          (p1CoordAway (ULift.{u} (Fin 2)) ⟨1⟩ ⟨0⟩) = 1 :=
+  awayMap_coord_mul_eq_one_aux rfl p1XY_eq_comm
+
 /-- The overlap of the two `ℙ¹` charts is the `toProjInt`-preimage of the degree-`2`
 basic open `D₊(X₀ · X₁)` (the two charts pull back `D₊(X₀)`, `D₊(X₁)`, and
-`D₊(X₀) ⊓ D₊(X₁) = D₊(X₀X₁)` by `Proj.basicOpen_mul`). -/
+`D₊(X₀) ⊓ D₊(X₁) = D₊(X₀X₁)` by `Proj.basicOpen_mul`), stated through the hoisted
+product `p1XY`. -/
 private lemma p1Chart_inf_eq_preimage_mul (k : Type u) [Field k] :
     p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩
       = ProjectiveSpace.toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k)) ⁻¹ᵁ
-          Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
-            (X ⟨0⟩ * X ⟨1⟩) := by
-  rw [Proj.basicOpen_mul]
+          Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ)) p1XY := by
+  rw [show p1XY = X (⟨0⟩ : ULift.{u} (Fin 2)) * X (⟨1⟩ : ULift.{u} (Fin 2)) from rfl,
+    Proj.basicOpen_mul]
   rfl
 
-set_option maxHeartbeats 400000 in
-private lemma probeInf (k : Type u) [Field k] :
-    ((ProjectiveSpace.toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k))).app
-        (Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ)) (X ⟨0⟩)
-          ⊓ Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ)) (X ⟨1⟩)))
-      = ((ProjectiveSpace.toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k))).app
-        (Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ)) (X ⟨0⟩)
-          ⊓ Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ)) (X ⟨1⟩))) := rfl
+/-- **Overlap restriction of `x`.**  The restriction of the chart coordinate `x = p1XSection`
+to `V₀ ⊓ V₁` is the `toProjInt`-pullback (via `appLE` over `D₊(X₀X₁)`, with the hoisted
+product `p1XY` as the localiser) of the away section `X₁/X₀` transported into
+`Away 𝒜 (X₀X₁)` by `awayMap`.  Morphism-level factorisation of
+`awayToSection X₀ ≫ appLE D₊(X₀)` through `awayMap` and `D₊(X₀X₁)`. -/
+private lemma res_p1XSection (k : Type u) [Field k] :
+    ((ℙ(ULift.{u} (Fin 2); Spec (CommRingCat.of k))).presheaf.map
+        (homOfLE (inf_le_left : p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩ ≤ p1Chart k ⟨0⟩)).op).hom
+      (p1XSection k)
+      = ((ProjectiveSpace.toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k))).appLE
+          (Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ)) p1XY)
+          (p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩)
+          (p1Chart_inf_eq_preimage_mul k).le).hom
+        ((Proj.awayToSection (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
+            p1XY).hom
+          (awayMap (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
+            (ProjTwist.X_mem_deg_one (ULift.{u} (Fin 2)) ⟨1⟩)
+            (rfl : p1XY = X (⟨0⟩ : ULift.{u} (Fin 2)) * X (⟨1⟩ : ULift.{u} (Fin 2)))
+            (p1CoordAway (ULift.{u} (Fin 2)) ⟨0⟩ ⟨1⟩))) := by
+  have Mx :
+      (Proj.awayToSection (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
+          (X (⟨0⟩ : ULift.{u} (Fin 2))))
+        ≫ (ProjectiveSpace.toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k))).appLE
+            (Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
+              (X (⟨0⟩ : ULift.{u} (Fin 2))))
+            (p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩)
+            (inf_le_left : p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩ ≤ p1Chart k ⟨0⟩)
+      = CommRingCat.ofHom (awayMap (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
+            (ProjTwist.X_mem_deg_one (ULift.{u} (Fin 2)) ⟨1⟩)
+            (rfl : p1XY = X (⟨0⟩ : ULift.{u} (Fin 2)) * X (⟨1⟩ : ULift.{u} (Fin 2))))
+          ≫ (Proj.awayToSection (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ)) p1XY)
+          ≫ (ProjectiveSpace.toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k))).appLE
+              (Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ)) p1XY)
+              (p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩)
+              (p1Chart_inf_eq_preimage_mul k).le := by
+    rw [Proj.awayMap_awayToSection_assoc, Scheme.Hom.map_appLE]
+  exact congrArg (fun φ => φ.hom (p1CoordAway (ULift.{u} (Fin 2)) ⟨0⟩ ⟨1⟩)) Mx
 
--- EXPERIMENT START
--- Probe A: the hoisted LE proof with ascribed type
-set_option maxHeartbeats 400000 in
-private def p1OverlapLE_test (k : Type u) [Field k] :
-    p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩
-      ≤ ProjectiveSpace.toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k)) ⁻¹ᵁ
-          Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
-            (X ⟨0⟩ * X ⟨1⟩) :=
-  (p1Chart_inf_eq_preimage_mul k).le
+/-- **Overlap restriction of `y`** (mirror of `res_p1XSection`).  The restriction of
+`y = p1YSection` to `V₀ ⊓ V₁` is the `appLE`-pullback of `X₀/X₁` transported into
+`Away 𝒜 (X₀X₁)` by `awayMap` (using `p1XY_eq_comm` so the away localiser is the common
+hoisted `p1XY`). -/
+private lemma res_p1YSection (k : Type u) [Field k] :
+    ((ℙ(ULift.{u} (Fin 2); Spec (CommRingCat.of k))).presheaf.map
+        (homOfLE (inf_le_right : p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩ ≤ p1Chart k ⟨1⟩)).op).hom
+      (p1YSection k)
+      = ((ProjectiveSpace.toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k))).appLE
+          (Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ)) p1XY)
+          (p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩)
+          (p1Chart_inf_eq_preimage_mul k).le).hom
+        ((Proj.awayToSection (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
+            p1XY).hom
+          (awayMap (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
+            (ProjTwist.X_mem_deg_one (ULift.{u} (Fin 2)) ⟨0⟩)
+            p1XY_eq_comm
+            (p1CoordAway (ULift.{u} (Fin 2)) ⟨1⟩ ⟨0⟩))) := by
+  have My :
+      (Proj.awayToSection (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
+          (X (⟨1⟩ : ULift.{u} (Fin 2))))
+        ≫ (ProjectiveSpace.toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k))).appLE
+            (Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
+              (X (⟨1⟩ : ULift.{u} (Fin 2))))
+            (p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩)
+            (inf_le_right : p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩ ≤ p1Chart k ⟨1⟩)
+      = CommRingCat.ofHom (awayMap (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
+            (ProjTwist.X_mem_deg_one (ULift.{u} (Fin 2)) ⟨0⟩)
+            p1XY_eq_comm)
+          ≫ (Proj.awayToSection (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ)) p1XY)
+          ≫ (ProjectiveSpace.toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k))).appLE
+              (Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ)) p1XY)
+              (p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩)
+              (p1Chart_inf_eq_preimage_mul k).le := by
+    rw [Proj.awayMap_awayToSection_assoc, Scheme.Hom.map_appLE]
+  exact congrArg (fun φ => φ.hom (p1CoordAway (ULift.{u} (Fin 2)) ⟨1⟩ ⟨0⟩)) My
 
--- Probe E: pp.all the awayMap element (its type carries the `x` copy from the rfl ascription)
-set_option maxHeartbeats 400000 in
-set_option pp.all true in
-#check fun (k : Type u) [Field k] =>
-  (awayMap (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
-    (ProjTwist.X_mem_deg_one (ULift.{u} (Fin 2)) ⟨1⟩)
-    (rfl : (X ⟨0⟩ * X ⟨1⟩ : MvPolynomial (ULift.{u} (Fin 2)) (ULift.{u} ℤ)) = X ⟨0⟩ * X ⟨1⟩)
-    (p1CoordAway (ULift.{u} (Fin 2)) ⟨0⟩ ⟨1⟩))
+/-- **The unit relation `res x · res y = 1` on the overlap (route step 3).**  Both
+restrictions factor, by `res_p1XSection`/`res_p1YSection`, through the common overlap
+ring map `toProjInt.appLE D₊(X₀X₁)`, whence the product is the pullback of
+`awayToSection (awayMap(X₁/X₀) · awayMap(X₀/X₁))`; the away-ring identity
+`awayMap_coord_mul_eq_one` collapses the argument to `1`. -/
+private lemma p1_res_x_mul_res_y (k : Type u) [Field k] :
+    ((ℙ(ULift.{u} (Fin 2); Spec (CommRingCat.of k))).presheaf.map
+        (homOfLE (inf_le_left : p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩ ≤ p1Chart k ⟨0⟩)).op).hom
+      (p1XSection k)
+      * ((ℙ(ULift.{u} (Fin 2); Spec (CommRingCat.of k))).presheaf.map
+          (homOfLE (inf_le_right : p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩ ≤ p1Chart k ⟨1⟩)).op).hom
+        (p1YSection k)
+      = 1 := by
+  rw [res_p1XSection k, res_p1YSection k, ← map_mul, ← map_mul,
+    awayMap_coord_mul_eq_one, map_one, map_one]
 
--- Probe F: pp.all the awayToSection source (fresh copy of `X ⟨0⟩ * X ⟨1⟩`)
-set_option maxHeartbeats 400000 in
-set_option pp.all true in
-#check (Proj.awayToSection (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
-    ((X ⟨0⟩ : MvPolynomial (ULift.{u} (Fin 2)) (ULift.{u} ℤ)) * X ⟨1⟩))
--- EXPERIMENT END
+/-- **The `ℙ¹` Laurent chart datum (route step 4, assembly).**  On the standard 2-chart
+geometry `p1CoverSquare` of `ℙ¹ = ℙ(ULift (Fin 2); Spec k)` (charts `V₀ = p1Chart ⟨0⟩`,
+`V₁ = p1Chart ⟨1⟩`, coordinates `x = p1XSection`, `y = p1YSection`), the chart-ring
+computation assembles into the `Adelic.LaurentChartData` consumed by the keystone:
+the overlap is the basic open of either coordinate (`p1Chart_inf_eq_basicOpen_coordSection`),
+the coordinates are mutually inverse (`p1_res_x_mul_res_y`), and each chart ring is the
+`k`-span of the powers of its coordinate (`span_pow_p1XSection_scaffold`,
+`span_pow_p1YSection_scaffold`). -/
+noncomputable def p1LaurentChartData (k : Type u) [Field k] :
+    LaurentChartData
+      (Over.mk (ℙ(ULift.{u} (Fin 2); Spec (CommRingCat.of k)) ↘ Spec (CommRingCat.of k))) where
+  V₀ := p1Chart k ⟨0⟩
+  V₁ := p1Chart k ⟨1⟩
+  isAffineOpen_V₀ := isAffineOpen_p1Chart k ⟨0⟩
+  isAffineOpen_V₁ := isAffineOpen_p1Chart k ⟨1⟩
+  cover := p1Chart_sup_eq_top k
+  x := p1XSection k
+  y := p1YSection k
+  inf_eq_basicOpen_x := p1Chart_inf_eq_basicOpen_coordSection k ⟨0⟩ ⟨1⟩
+  inf_eq_basicOpen_y := by
+    rw [inf_comm]
+    exact p1Chart_inf_eq_basicOpen_coordSection k ⟨1⟩ ⟨0⟩
+  res_x_mul_res_y := p1_res_x_mul_res_y k
+  span_pow_x := span_pow_p1XSection_scaffold k
+  span_pow_y := span_pow_p1YSection_scaffold k
 
---set_option maxHeartbeats 3200000 in
----- `maxHeartbeats`: the `appLE` factorisation crosses the concrete `ℙ¹`/`Proj` pullback
----- diamond.  The identity is proved at the *morphism* level (`Proj.awayMap_awayToSection_assoc`
----- restricts the away section to `D₊(X₀X₁)`; `Scheme.Hom.map_appLE` re-expands the overlap
----- restriction through `D₊(X₀X₁)`), with the `X`-index ascribed on the `awayToSection`/`appLE`
----- so the elaborator does not defer the `D₊`-predicate through the pullback (fleet recipe).
---set_option backward.isDefEq.respectTransparency false in
---/-- **Overlap restriction of `x`.**  The restriction of the chart coordinate `x = p1XSection`
---to `V₀ ⊓ V₁` is the `toProjInt`-pullback (via `appLE` over `D₊(X₀X₁)`) of the away section
---`X₁/X₀` transported into `Away 𝒜 (X₀X₁)` by `awayMap`.  Morphism-level factorisation of
---`awayToSection X₀ ≫ appLE D₊(X₀)` through `awayMap` and `D₊(X₀X₁)`. -/
---private lemma res_p1XSection (k : Type u) [Field k] :
---    ((ℙ(ULift.{u} (Fin 2); Spec (CommRingCat.of k))).presheaf.map
---        (homOfLE (inf_le_left : p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩ ≤ p1Chart k ⟨0⟩)).op).hom
---      (p1XSection k)
---      = ((ProjectiveSpace.toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k))).appLE
---          (Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
---            (X ⟨0⟩ * X ⟨1⟩))
---          (p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩)
---          (p1Chart_inf_eq_preimage_mul k).le).hom
---        ((Proj.awayToSection (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
---            (X ⟨0⟩ * X ⟨1⟩)).hom
---          (awayMap (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
---            (ProjTwist.X_mem_deg_one (ULift.{u} (Fin 2)) ⟨1⟩)
---            (rfl : (X ⟨0⟩ * X ⟨1⟩ : MvPolynomial (ULift.{u} (Fin 2)) (ULift.{u} ℤ)) = X ⟨0⟩ * X ⟨1⟩)
---            (p1CoordAway (ULift.{u} (Fin 2)) ⟨0⟩ ⟨1⟩))) := by
---  have Mx :
---      (Proj.awayToSection (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
---          (X (⟨0⟩ : ULift.{u} (Fin 2))))
---        ≫ (ProjectiveSpace.toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k))).appLE
---            (Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
---              (X (⟨0⟩ : ULift.{u} (Fin 2))))
---            (p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩)
---            (inf_le_left : p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩ ≤ p1Chart k ⟨0⟩)
---      = CommRingCat.ofHom (awayMap (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
---            (ProjTwist.X_mem_deg_one (ULift.{u} (Fin 2)) ⟨1⟩)
---            (rfl : (X ⟨0⟩ * X ⟨1⟩ : MvPolynomial (ULift.{u} (Fin 2)) (ULift.{u} ℤ)) = X ⟨0⟩ * X ⟨1⟩))
---          ≫ (Proj.awayToSection (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
---              (X ⟨0⟩ * X ⟨1⟩))
---          ≫ (ProjectiveSpace.toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k))).appLE
---              (Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
---                (X ⟨0⟩ * X ⟨1⟩))
---              (p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩)
---              (p1Chart_inf_eq_preimage_mul k).le := by
---    rw [Proj.awayMap_awayToSection_assoc, Scheme.Hom.map_appLE]
---  exact congrArg (fun φ => φ.hom (p1CoordAway (ULift.{u} (Fin 2)) ⟨0⟩ ⟨1⟩)) Mx
---
---set_option maxHeartbeats 3200000 in
----- `maxHeartbeats`: mirror of `res_p1XSection` (`X₀ ↔ X₁`), factoring the `V₁`-restriction of
----- `y = p1YSection` through `D₊(X₀X₁)` (`hx = mul_comm`, so the localiser stays `X₀X₁`).
---set_option backward.isDefEq.respectTransparency false in
---/-- **Overlap restriction of `y`** (mirror of `res_p1XSection`).  The restriction of
---`y = p1YSection` to `V₀ ⊓ V₁` is the `appLE`-pullback of `X₀/X₁` transported into
---`Away 𝒜 (X₀X₁)` by `awayMap` (using `mul_comm` so the away localiser is the common `X₀X₁`). -/
---private lemma res_p1YSection (k : Type u) [Field k] :
---    ((ℙ(ULift.{u} (Fin 2); Spec (CommRingCat.of k))).presheaf.map
---        (homOfLE (inf_le_right : p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩ ≤ p1Chart k ⟨1⟩)).op).hom
---      (p1YSection k)
---      = ((ProjectiveSpace.toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k))).appLE
---          (Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
---            (X ⟨0⟩ * X ⟨1⟩))
---          (p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩)
---          (p1Chart_inf_eq_preimage_mul k).le).hom
---        ((Proj.awayToSection (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
---            (X ⟨0⟩ * X ⟨1⟩)).hom
---          (awayMap (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
---            (ProjTwist.X_mem_deg_one (ULift.{u} (Fin 2)) ⟨0⟩)
---            (mul_comm (X (⟨0⟩ : ULift.{u} (Fin 2))) (X ⟨1⟩))
---            (p1CoordAway (ULift.{u} (Fin 2)) ⟨1⟩ ⟨0⟩))) := by
---  have My :
---      (Proj.awayToSection (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
---          (X (⟨1⟩ : ULift.{u} (Fin 2))))
---        ≫ (ProjectiveSpace.toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k))).appLE
---            (Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
---              (X (⟨1⟩ : ULift.{u} (Fin 2))))
---            (p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩)
---            (inf_le_right : p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩ ≤ p1Chart k ⟨1⟩)
---      = CommRingCat.ofHom (awayMap (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
---            (ProjTwist.X_mem_deg_one (ULift.{u} (Fin 2)) ⟨0⟩)
---            (mul_comm (X (⟨0⟩ : ULift.{u} (Fin 2))) (X ⟨1⟩)))
---          ≫ (Proj.awayToSection (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
---              (X ⟨0⟩ * X ⟨1⟩))
---          ≫ (ProjectiveSpace.toProjInt (ULift.{u} (Fin 2)) (Spec (CommRingCat.of k))).appLE
---              (Proj.basicOpen (homogeneousSubmodule (ULift.{u} (Fin 2)) (ULift.{u} ℤ))
---                (X ⟨0⟩ * X ⟨1⟩))
---              (p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩)
---              (p1Chart_inf_eq_preimage_mul k).le := by
---    rw [Proj.awayMap_awayToSection_assoc, Scheme.Hom.map_appLE]
---  exact congrArg (fun φ => φ.hom (p1CoordAway (ULift.{u} (Fin 2)) ⟨1⟩ ⟨0⟩)) My
---
---/-- **The unit relation `res x · res y = 1` on the overlap (route step 3).**  Both
---restrictions factor, by `res_p1XSection`/`res_p1YSection`, through the common overlap
---ring map `toProjInt.appLE D₊(X₀X₁)`, whence the product is the pullback of
---`awayToSection (awayMap(X₁/X₀) · awayMap(X₀/X₁))`; the away-ring identity
---`awayMap_coord_mul_eq_one` collapses the argument to `1`. -/
---private lemma p1_res_x_mul_res_y (k : Type u) [Field k] :
---    ((ℙ(ULift.{u} (Fin 2); Spec (CommRingCat.of k))).presheaf.map
---        (homOfLE (inf_le_left : p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩ ≤ p1Chart k ⟨0⟩)).op).hom
---      (p1XSection k)
---      * ((ℙ(ULift.{u} (Fin 2); Spec (CommRingCat.of k))).presheaf.map
---          (homOfLE (inf_le_right : p1Chart k ⟨0⟩ ⊓ p1Chart k ⟨1⟩ ≤ p1Chart k ⟨1⟩)).op).hom
---        (p1YSection k)
---      = 1 := by
---  rw [res_p1XSection k, res_p1YSection k, ← map_mul, ← map_mul,
---    awayMap_coord_mul_eq_one, map_one, map_one]
---
---/-- **The `ℙ¹` Laurent chart datum (route step 4, assembly).**  On the standard 2-chart
---geometry `p1CoverSquare` of `ℙ¹ = ℙ(ULift (Fin 2); Spec k)` (charts `V₀ = p1Chart ⟨0⟩`,
---`V₁ = p1Chart ⟨1⟩`, coordinates `x = p1XSection`, `y = p1YSection`), the chart-ring
---computation assembles into the `Adelic.LaurentChartData` consumed by the keystone:
---the overlap is the basic open of either coordinate (`p1Chart_inf_eq_basicOpen_coordSection`),
---the coordinates are mutually inverse (`p1_res_x_mul_res_y`), and each chart ring is the
---`k`-span of the powers of its coordinate (`span_pow_p1XSection_scaffold`,
---`span_pow_p1YSection_scaffold`). -/
---noncomputable def p1LaurentChartData (k : Type u) [Field k] :
---    LaurentChartData
---      (Over.mk (ℙ(ULift.{u} (Fin 2); Spec (CommRingCat.of k)) ↘ Spec (CommRingCat.of k))) where
---  V₀ := p1Chart k ⟨0⟩
---  V₁ := p1Chart k ⟨1⟩
---  isAffineOpen_V₀ := isAffineOpen_p1Chart k ⟨0⟩
---  isAffineOpen_V₁ := isAffineOpen_p1Chart k ⟨1⟩
---  cover := p1Chart_sup_eq_top k
---  x := p1XSection k
---  y := p1YSection k
---  inf_eq_basicOpen_x := p1Chart_inf_eq_basicOpen_coordSection k ⟨0⟩ ⟨1⟩
---  inf_eq_basicOpen_y := by
---    rw [inf_comm]
---    exact p1Chart_inf_eq_basicOpen_coordSection k ⟨1⟩ ⟨0⟩
---  res_x_mul_res_y := p1_res_x_mul_res_y k
---  span_pow_x := span_pow_p1XSection_scaffold k
---  span_pow_y := span_pow_p1YSection_scaffold k
---
---/-- **Gate #1 of the genus theorem discharged.**  The concrete projective line
---`ℙ(ULift (Fin 2); Spec k)` carries Laurent chart data (`p1LaurentChartData`), so the
---`Adelic.P1HasLaurentChartData` gate holds for every field `k` — the char-free Route B
---of the module header, closing node `N11b`. -/
---noncomputable instance instP1HasLaurentChartData (k : Type u) [Field k] :
---    P1HasLaurentChartData k :=
---  ⟨⟨p1LaurentChartData k⟩⟩
---
+/-- **Gate #1 of the genus theorem discharged.**  The concrete projective line
+`ℙ(ULift (Fin 2); Spec k)` carries Laurent chart data (`p1LaurentChartData`), so the
+`Adelic.P1HasLaurentChartData` gate holds for every field `k` — the char-free Route B
+of the module header, closing node `N11b`. -/
+noncomputable instance instP1HasLaurentChartData (k : Type u) [Field k] :
+    P1HasLaurentChartData k :=
+  ⟨⟨p1LaurentChartData k⟩⟩
+
 end Overlap
 
 end AlgebraicGeometry.Adelic
