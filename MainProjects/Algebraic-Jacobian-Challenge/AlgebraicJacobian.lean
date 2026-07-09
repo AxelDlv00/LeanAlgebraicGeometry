@@ -131,6 +131,7 @@ import AlgebraicJacobian.RiemannRoch.Adelic.GenusFiniteness
 import AlgebraicJacobian.RiemannRoch.Adelic.CechComparisonGate
 import AlgebraicJacobian.RiemannRoch.Adelic.CechAcyclicInstance
 import AlgebraicJacobian.Picard.InvertibleSectionLocalization
+import AlgebraicJacobian.Picard.GaloisDescent.SemilinearModules
 import AlgebraicJacobian.Albanese.AlbaneseUP
 import AlgebraicJacobian.Albanese.AuslanderBuchsbaum
 import AlgebraicJacobian.Albanese.CodimOneExtension
