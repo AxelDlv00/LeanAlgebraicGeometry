@@ -219,6 +219,27 @@ lemma AffineCoverMVSquare.moduleSectionDiff_comp_moduleSectionRes
     moduleSectionDiff_apply, moduleSectionRes, AddMonoidHom.prod_apply]
   rw [h₁, h₂, sub_self]
 
+/-- **The preimage of a 2-affine cover square under an affine morphism**: for
+`f : X ⟶ Y` affine and a bundled 2-affine cover of `Y`, the preimages of the
+two charts form a 2-affine cover of `X` (affine morphisms pull affine opens
+back to affine opens, `IsAffineOpen.preimage`; preimages preserve `⊓`, `⊔`,
+`⊤` definitionally).  Generalizes `Adelic.LaurentChartData.pullbackSquare`
+(which is the special case of a finite morphism) to arbitrary affine
+morphisms — in particular to the affine projection `ℙ¹_A ⟶ ℙ¹_k`, giving
+the standard 2-chart cover of `ℙ¹_A` (`Adelic.p1BaseChangeCoverSquare`). -/
+noncomputable def AffineCoverMVSquare.preimage {Y : Scheme.{u}}
+    (V : Y.AffineCoverMVSquare) (f : X ⟶ Y) [IsAffineHom f] :
+    X.AffineCoverMVSquare where
+  U₁ := f ⁻¹ᵁ V.U₁
+  U₂ := f ⁻¹ᵁ V.U₂
+  isAffineOpen_U₁ := V.isAffineOpen_U₁.preimage f
+  isAffineOpen_U₂ := V.isAffineOpen_U₂.preimage f
+  isAffineOpen_inf := V.isAffineOpen_inf.preimage f
+  cover := by
+    change f ⁻¹ᵁ (V.U₁ ⊔ V.U₂) = ⊤
+    rw [V.cover]
+    rfl
+
 /-! ## §2. Fibrewise `h⁰` and `h¹`-vanishing for a family -/
 
 /-- The **fibrewise `h⁰`** of a sheaf of modules `L` on the total space of a
@@ -481,5 +502,237 @@ theorem pushforward_isLocallyTrivial_of_h1_vanishing [HasRigidPushforward C]
 end RankOneCorollary
 
 end Scheme
+
+/-! ## §5. The ℙ¹ reduction skeleton (Mumford AV II §5 route)
+
+The B3 discharge route: push `L` forward along the finite map
+`π_A : C_A ⟶ ℙ¹_A` (base change of the gate `HasFiniteMapToP1`'s finite
+`C ⟶ ℙ¹`, which is exportable via choice — `finiteMapToP1` below — since
+`IsFinite` is `Prop`-valued), then run the two-term finite free replacement
+on the explicit 2-chart Čech complex of `ℙ¹_A`
+(`p1BaseChangeCoverSquare` + `AffineCoverMVSquare.moduleSectionRes`/
+`moduleSectionDiff`).  This section builds the *proved* part of that route:
+
+* the base-changed finite map and its finiteness
+  (`isFinite_finiteMapToP1BaseChange`, by base-change stability of
+  `IsFinite` along the cartesian square `C_A = C ×_{ℙ¹} ℙ¹_A`);
+* the pushforward factorization `q_* ≅ p_* ∘ (π_A)_*`
+  (`pushforwardFactorThroughP1Iso`, pseudofunctoriality);
+* the standard 2-chart affine cover of `ℙ¹_A`;
+* the **reduction theorem** `rigidPushforwardLocallyFree_of_p1`:
+  B3-local-freeness for `C_A` follows from the ℙ¹ engine
+  (`P1RigidPushforwardStatement`) plus a named finite-pushforward transfer
+  package (coherence, base-flatness, and fibrewise `h⁰`/`h¹` transfer along
+  the affine map `π_A` — the honest dévissage lemmas of the B3 discharge,
+  Stacks 01XZ/02KE-grade, taken as hypotheses here and proved in the B3
+  session). -/
+
+namespace Adelic
+
+open Scheme
+
+variable {k : Type u} [Field k]
+
+/-- The projective line `ℙ¹_k` as an object of `Over (Spec k)` — the target
+of the finite-map gate `HasFiniteMapToP1`. -/
+noncomputable abbrev p1Over (k : Type u) [Field k] : Over (Spec (CommRingCat.of k)) :=
+  Over.mk (ℙ(ULift.{u} (Fin 2); Spec (CommRingCat.of k)) ↘ Spec (CommRingCat.of k))
+
+/-- **Choice extraction of the finite map to `ℙ¹`** from the gate
+`HasFiniteMapToP1` (audit note: the gate stores a `Prop`-valued existential,
+so the morphism itself is exportable only via `Classical.choice`; all
+downstream uses are propositional, so this is harmless).  Everything the
+reduction needs about it is `isFinite_finiteMapToP1_left`. -/
+noncomputable def finiteMapToP1 (C : Over (Spec (CommRingCat.of k))) [HasFiniteMapToP1 C] :
+    C ⟶ p1Over k :=
+  (HasFiniteMapToP1.nonempty_finite_map (C := C)).choose
+
+instance isFinite_finiteMapToP1_left (C : Over (Spec (CommRingCat.of k)))
+    [HasFiniteMapToP1 C] : IsFinite (finiteMapToP1 C).left :=
+  (HasFiniteMapToP1.nonempty_finite_map (C := C)).choose_spec
+
+variable (A : Type u) [CommRing A] [Algebra k A]
+
+/-- The chart projection `ℙ¹_A ⟶ ℙ¹_k` is affine: it is the base change of
+the affine morphism `Spec A ⟶ Spec k`. -/
+instance isAffineHom_p1BaseChange_fst :
+    IsAffineHom (pullback.fst (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))) :=
+  MorphismProperty.pullback_fst (P := @IsAffineHom) (p1Over k).hom
+    (Spec.map (CommRingCat.ofHom (algebraMap k A)))
+    (inferInstance : IsAffineHom (Spec.map (CommRingCat.ofHom (algebraMap k A))))
+
+/-- **The standard 2-chart affine cover of `ℙ¹_A`**: the preimage of the
+standard cover `p1CoverSquare` of `ℙ¹_k` under the (affine, being a base
+change of the affine `Spec A ⟶ Spec k`) projection `ℙ¹_A ⟶ ℙ¹_k`.  The
+two-term complex `moduleSectionRes`/`moduleSectionDiff` on this cover is
+the explicit 2-chart Čech complex of `ℙ¹_A` that the Mumford AV II §5
+finite free replacement consumes. -/
+noncomputable def p1BaseChangeCoverSquare :
+    (Limits.pullback (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).AffineCoverMVSquare :=
+  @Scheme.AffineCoverMVSquare.preimage _ _ (p1CoverSquare k)
+    (pullback.fst (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A))))
+    (isAffineHom_p1BaseChange_fst A)
+
+variable (C : Over (Spec (CommRingCat.of k)))
+
+/-- **The base-changed finite map `π_A : C_A ⟶ ℙ¹_A`**: the functorial map
+between the pullbacks along `Spec A ⟶ Spec k` induced by the finite
+`π : C ⟶ ℙ¹` of the gate. -/
+noncomputable def finiteMapToP1BaseChange [HasFiniteMapToP1 C] :
+    Limits.pullback C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A))) ⟶
+      Limits.pullback (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A))) :=
+  pullback.map C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))
+    (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))
+    (finiteMapToP1 C).left (𝟙 _) (𝟙 _)
+    (by rw [Category.comp_id]; exact (Over.w (finiteMapToP1 C)).symm)
+    (by simp)
+
+/-- `π_A` is a map of families over `Spec A`: it commutes with the two
+projections (the triangle `q = π_A ≫ p`). -/
+@[reassoc (attr := simp)]
+lemma finiteMapToP1BaseChange_snd [HasFiniteMapToP1 C] :
+    finiteMapToP1BaseChange A C ≫
+        pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A))) =
+      pullback.snd C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A))) :=
+  (pullback.lift_snd _ _ _).trans (Category.comp_id _)
+
+/-- `π_A` covers `π` over the chart projections. -/
+@[reassoc (attr := simp)]
+lemma finiteMapToP1BaseChange_fst [HasFiniteMapToP1 C] :
+    finiteMapToP1BaseChange A C ≫
+        pullback.fst (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A))) =
+      pullback.fst C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A))) ≫
+        (finiteMapToP1 C).left :=
+  pullback.lift_fst _ _ _
+
+/-- **The square `C_A → C, π_A ↓ π.left, ℙ¹_A → ℙ¹` is cartesian**:
+`C_A = C ×_{ℙ¹} ℙ¹_A` (pasting of pullbacks over the common base
+`Spec k`).  This exhibits `π_A` as the base change of the finite `π.left`
+along `ℙ¹_A ⟶ ℙ¹`, whence its finiteness. -/
+lemma isPullback_finiteMapToP1BaseChange [HasFiniteMapToP1 C] :
+    IsPullback (pullback.fst C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A))))
+      (finiteMapToP1BaseChange A C)
+      (finiteMapToP1 C).left
+      (pullback.fst (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) := by
+  have hs : IsPullback
+      (pullback.fst C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A))))
+      (finiteMapToP1BaseChange A C ≫
+        pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A))))
+      ((finiteMapToP1 C).left ≫ (p1Over k).hom)
+      (Spec.map (CommRingCat.ofHom (algebraMap k A))) := by
+    rw [finiteMapToP1BaseChange_snd, Over.w (finiteMapToP1 C)]
+    exact IsPullback.of_hasPullback C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))
+  exact IsPullback.of_bot hs (finiteMapToP1BaseChange_fst A C).symm
+    (IsPullback.of_hasPullback (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A))))
+
+/-- **`π_A` is finite** — `IsFinite` is stable under base change, and
+`isPullback_finiteMapToP1BaseChange` exhibits `π_A` as a base change of the
+finite `π.left`. -/
+instance isFinite_finiteMapToP1BaseChange [HasFiniteMapToP1 C] :
+    IsFinite (finiteMapToP1BaseChange A C) :=
+  MorphismProperty.IsStableUnderBaseChange.of_isPullback (P := @IsFinite)
+    (isPullback_finiteMapToP1BaseChange A C) inferInstance
+
+/-- **The pushforward factorization `q_* L ≅ p_* ((π_A)_* L)`** along the
+triangle `q = π_A ≫ p` (pseudofunctoriality of the module pushforward).
+This is the formal half of the B3 reduction: local freeness of `q_* L` is
+local freeness of `p_* M` for `M := (π_A)_* L` on `ℙ¹_A`. -/
+noncomputable def pushforwardFactorThroughP1Iso [HasFiniteMapToP1 C]
+    (L : (Limits.pullback C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules) :
+    (Scheme.Modules.pushforward
+        (pullback.snd C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A))))).obj L ≅
+      (Scheme.Modules.pushforward
+        (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A))))).obj
+        ((Scheme.Modules.pushforward (finiteMapToP1BaseChange A C)).obj L) :=
+  (Scheme.Modules.pushforwardCongr (finiteMapToP1BaseChange_snd A C).symm).app L ≪≫
+    ((Scheme.Modules.pushforwardComp (finiteMapToP1BaseChange A C)
+      (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A))))).app L).symm
+
+/-- **The ℙ¹ engine (statement pin)**: the Mumford AV II §5 conclusion for
+the projective line — for every finitely presented `M` on `ℙ¹_A`, flat over
+the base, with fibrewise `h¹ = 0` at all scheme points, the pushforward
+`p_* M` is locally free of pointwise rank `h⁰(ℙ¹_t, M_t)`.  This is the
+`ℙ¹` instance of B3's local-freeness half, at the generality (coherent flat
+`M`, not just line bundles) the finite-pushforward reduction requires.
+Honestly TRUE for noetherian `A` (the two-term finite free replacement on
+the 2-chart Čech complex `p1BaseChangeCoverSquare`); consumed as an explicit
+hypothesis by `rigidPushforwardLocallyFree_of_p1` and discharged in the B3
+session. -/
+def P1RigidPushforwardStatement (k : Type u) [Field k]
+    (A : Type u) [CommRing A] [Algebra k A] : Prop :=
+  ∀ M : (Limits.pullback (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules,
+    M.IsFinitePresentation →
+    CoherentSheafFlat
+      (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M →
+    (∀ t : Spec (CommRingCat.of A),
+      (pullback.snd (p1Over k).hom
+        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).FiberH1Vanishing M t) →
+    ∀ t : Spec (CommRingCat.of A),
+      ∃ U : (Spec (CommRingCat.of A)).Opens, t ∈ U ∧
+        Nonempty ((Scheme.Modules.pullback U.ι).obj
+            ((Scheme.Modules.pushforward (pullback.snd (p1Over k).hom
+              (Spec.map (CommRingCat.ofHom (algebraMap k A))))).obj M) ≅
+          _root_.SheafOfModules.free (R := U.toScheme.ringCatSheaf)
+            (ULift.{u} (Fin ((pullback.snd (p1Over k).hom
+              (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberH0 M t))))
+
+/-- **THE B3 REDUCTION** (campaign W1-B acceptance item): *B3 local freeness
+for `C_A` follows from the ℙ¹ engine plus the finite-pushforward transfer
+package along `π_A : C_A ⟶ ℙ¹_A`.*  Sorry-free; the four named hypotheses
+are the honest dévissage lemmas of the B3 discharge session:
+
+* `hfp` — the finite pushforward of an invertible module is finitely
+  presented (finite morphisms are affine with module-finite section rings;
+  Stacks 01XZ, 087T-grade);
+* `hflat` — the finite pushforward stays flat over the base (affine
+  pushforward does not change the underlying sections over affine bases);
+* `hH1` — fibrewise Čech `h¹`-transfer: `H¹(ℙ¹_t, (π_A)_* L |_t) ≅
+  H¹(C_t, L_t)` (exactness of affine pushforward + cohomology-and-base-change
+  in the affine direction, Stacks 02KE/02KG-grade);
+* `hH0` — the same transfer in degree 0 (`h⁰` match).
+
+No finiteness on `A` is needed for this glue: the finiteness enters only
+when discharging `hP1` (Mumford's argument needs `A` noetherian). -/
+theorem rigidPushforwardLocallyFree_of_p1 [HasFiniteMapToP1 C]
+    (hP1 : P1RigidPushforwardStatement k A)
+    (hfp : ∀ L : (Limits.pullback C.hom
+        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules,
+      LineBundle.IsLocallyTrivial L →
+      ((Scheme.Modules.pushforward (finiteMapToP1BaseChange A C)).obj L).IsFinitePresentation)
+    (hflat : ∀ L : (Limits.pullback C.hom
+        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules,
+      LineBundle.IsLocallyTrivial L →
+      CoherentSheafFlat
+        (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A))))
+        ((Scheme.Modules.pushforward (finiteMapToP1BaseChange A C)).obj L))
+    (hH1 : ∀ (L : (Limits.pullback C.hom
+        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules)
+      (t : Spec (CommRingCat.of A)), LineBundle.IsLocallyTrivial L →
+      (pullback.snd C.hom
+        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).FiberH1Vanishing L t →
+      (pullback.snd (p1Over k).hom
+        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).FiberH1Vanishing
+        ((Scheme.Modules.pushforward (finiteMapToP1BaseChange A C)).obj L) t)
+    (hH0 : ∀ (L : (Limits.pullback C.hom
+        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules)
+      (t : Spec (CommRingCat.of A)), LineBundle.IsLocallyTrivial L →
+      (pullback.snd (p1Over k).hom
+        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberH0
+        ((Scheme.Modules.pushforward (finiteMapToP1BaseChange A C)).obj L) t =
+      (pullback.snd C.hom
+        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberH0 L t) :
+    Scheme.RigidPushforwardLocallyFree C A := by
+  intro L hL h1 t
+  obtain ⟨U, htU, ⟨e⟩⟩ := hP1
+    ((Scheme.Modules.pushforward (finiteMapToP1BaseChange A C)).obj L)
+    (hfp L hL) (hflat L hL) (fun s => hH1 L s hL (h1 s)) t
+  refine ⟨U, htU, ⟨?_⟩⟩
+  rw [hH0 L t hL] at e
+  exact (Scheme.Modules.pullback U.ι).mapIso (pushforwardFactorThroughP1Iso A C L) ≪≫ e
+
+end Adelic
 
 end AlgebraicGeometry
