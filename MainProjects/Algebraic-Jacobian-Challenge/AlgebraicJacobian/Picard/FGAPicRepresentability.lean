@@ -181,7 +181,15 @@ Run 0010: with the real functor `Scheme.DivFunctor` available
 (`Picard/DivFunctorDef.lean`), the instance `instHasDivFunctor` below is
 PROVED (witness: `divFunctor C = DivFunctor C.hom`), so this class carries no
 sorry any more; it survives only as the blueprint-pinned existence carrier
-(`def:has_div_functor`). -/
+(`def:has_div_functor`).
+
+**VACUITY WARNING (campaign hygiene, 2026-07-09).** The field
+`has_div_functor : Nonempty ((Over (Spec (.of k)))ᵒᵖ ⥤ Type (u+1))` does not
+mention `C` at all: ANY functor (e.g. a constant functor) witnesses it, so
+the class is vacuously true and carries zero mathematical content. It must
+never be cited as evidence that the honest relative-divisor functor exists —
+use `Scheme.DivFunctor C.hom` (`Picard/DivFunctorDef.lean`) directly, as
+`divFunctor` below does. Kept solely for the blueprint pin. -/
 class HasDivFunctor {k : Type u} [Field k] (C : Over (Spec (.of k))) : Prop where
   has_div_functor : Nonempty ((Over (Spec (.of k)))ᵒᵖ ⥤ Type (u+1))
 
@@ -537,7 +545,18 @@ There is deliberately NO global instance (run-0008: the former global
 `⟨sorry⟩` instance was a false statement — see the section header). The
 class is supplied at the use site, where the Kleiman `lm:qt` hypotheses —
 including the quasi-projectivity of the representing scheme, which the
-`smoothProperQuotient` statement below cannot yet express — actually hold. -/
+`smoothProperQuotient` statement below cannot yet express — actually hold.
+
+**PERMANENTLY OFF-PATH (pic-representability campaign, 2026-07-09).** The
+committed route to `instHasPicScheme` (D3 Milne–Kollár: section trick on the
+Div substrate + finite Galois quotient via the orbit-in-affine engine +
+coproduct assembly; see `informal/pic-representability-campaign.md`) never
+supplies an instance of this class and never invokes `smoothProperQuotient`:
+the only quotient taken is the finite Galois quotient (`G2`), whose
+orbit-in-affine hypothesis sidesteps the Hironaka-type counterexample noted
+in the section header. This class stays instance-free forever; it is kept
+(not deleted) only as the blueprint-pinned record of the Altman–Kleiman
+`lm:qt` interface. Do not build new consumers against it. -/
 class HasSmoothProperQuotient {k : Type u} [Field k]
     {Z P : (Over (Spec (.of k)))ᵒᵖ ⥤ Type (u+1)}
     (_α : Z ⟶ P) : Prop where

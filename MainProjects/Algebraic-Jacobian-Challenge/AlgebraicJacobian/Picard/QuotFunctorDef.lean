@@ -453,7 +453,8 @@ formulas — `Modules.pullback_app_isoTensor` (QuotScheme.lean) supplies the
 pullback side, and a `Γ(affine, tensorObj)` section formula for
 quasi-coherent factors is the missing brick — globalized by
 `isIso_of_isIso_restrict` through the restriction coherence
-`pullbackTensorMap_restrict` (itself a tracked `sorry` of the substrate);
+`pullbackTensorMap_restrict` (PROVED sorry-free in `TensorObjSubstrate.lean`
+— the D3′ composition coherence, closed via the mate calculus);
 (ii) the concrete inverse-image model (`extendScalars ⋙ pullback₀` left Kan
 extension) route of `sec:tensorobj_pullback_monoidality` (multi-hundred-LOC);
 (iii) stalk machinery for `SheafOfModules` (Mathlib-absent; the presheaf-level

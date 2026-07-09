@@ -73,15 +73,16 @@ Faithfulness notes (Kleiman §3):
 The pullback action reuses the `QuotFamily` base-change lemmas for the shared
 fields (finite presentation: `Modules.pullback_isFinitePresentation`, proved;
 flatness: `CoherentSheafFlat.of_isPullback`, proved; proper support:
-`Modules.HasProperSupport.of_isPullback`, pinned leaf) and needs exactly ONE
-new fact for the divisor condition, recorded as the named typed-`sorry` leaf
+`Modules.HasProperSupport.of_isPullback`, proved sorry-free in
+`Picard/QuotSupportBaseChange.lean`) and needs exactly ONE new fact for the
+divisor condition, PROVED in this file as the theorem
 `Scheme.Modules.pullback_kernel_isLocallyTrivial` (blueprint
 `lem:relative_divisor_base_change`): the kernel of the pulled-back quotient
 is the pullback of the kernel — because `0 → I → O → O_D → 0` stays exact
 after base change, `Tor_1` against the `T`-flat `O_D` vanishing (Kleiman §3,
 functoriality note after `df:div`: "Since `D` is `T`-flat, `p_{X_T}^* I`
 equals the ideal of `D_{T'}`") — and pullback preserves invertibility
-(`IsLocallyTrivial.pullback`, Stacks 01HH).  The leaf carries a
+(`IsLocallyTrivial.pullback`, Stacks 01HH).  The theorem carries a
 quasi-coherence hypothesis on the source of the quotient (removable once
 extension-closure of quasi-coherence, Stacks 01LA, is available; see the
 declaration docstring), discharged here by `pullback_isQuasicoherent_hom` +

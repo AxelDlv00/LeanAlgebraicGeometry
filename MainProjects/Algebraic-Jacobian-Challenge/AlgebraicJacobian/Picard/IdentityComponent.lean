@@ -259,7 +259,10 @@ component of `|G|` through the image of the identity section. The
 structure morphism is the inherited `(identityComponentCarrier G).ι ≫ G.hom`.
 The substantive content (the actual carrier `Set`, plus its openness from
 EGA I 6.1.9: locally Noetherian spaces have open connected components)
-lives in the typed-sorry body of `identityComponentCarrier`. -/
+lives in the PROVED body of `identityComponentCarrier` above —
+`connectedComponent (identitySectionPoint G)`, open by
+`isOpen_connectedComponent` under the
+`identityComponent_locallyConnectedSpace` instance. -/
 noncomputable def IdentityComponent {k : Type u} [Field k]
     (G : Over (Spec (.of k)))
     [GrpObj G] [LocallyOfFiniteType G.hom] :

@@ -227,9 +227,11 @@ content (Stacks tag 02KH / 02KE / 00H8) lives entirely in the helper;
 it reduces affine-locally to: for a flat ring map `A → B` and an
 `A`-algebra `R`, the canonical map `B ⊗_A H^i(X, F) → H^i(X_B, F_B)`
 is an iso for any quasi-coherent `F` (the `i = 0` form is what we use).
-The helper remains a typed `sorry` pending the affine-local reduction
-+ algebraic flat base change; this is iter-178+ body work after
-quasi-compact open-cover Mayer-Vietoris infrastructure is in scope. -/
+The helper `canonicalBaseChangeMap_isIso` is PROVED (T13, 2026-07-07):
+the affine-local reduction runs through the sorry-free Tilde-route
+section formula (Stacks 01HQ, `pullback_app_isoTensor`) and the
+quasi-compact open-cover Mayer–Vietoris induction engine, so the whole
+02KE/02KH `i = 0` chain in this file is sorry-free. -/
 
 /-- The canonical base-change natural transformation `g* (f_* -) ⟶ f'_* ((g')* -)`
 associated to a cartesian square
@@ -280,27 +282,25 @@ private lemma pushforward_pullback_section_eq_pullback_section
     Γ((Scheme.Modules.pushforward f').obj ((Scheme.Modules.pullback g').obj F), U) =
       Γ((Scheme.Modules.pullback g').obj F, f' ⁻¹ᵁ U) := rfl
 
-/-! ### Project-side typed-sorry: affine-open section formula for `Scheme.Modules.pullback`
+/-! ### Affine-open section formula for `Scheme.Modules.pullback` (CLOSED — sorry-free)
 
-The load-bearing Mathlib gap for `_of_isAffineBase` is the affine-open
+The load-bearing Mathlib gap for `_of_isAffineBase` was the affine-open
 section formula identifying
 
   `Γ((pullback g).obj N, U)  ≃  Γ(Y, U) ⊗_{Γ(X, V)} Γ(N, V)`
 
 for any compatible affine pair `(V ⊆ X, U ⊆ Y)` of a morphism `g : Y ⟶ X`
-of schemes and a sheaf of `O_X`-modules `N`. The pullback functor
-`Scheme.Modules.pullback g` is built as `SheafOfModules.pullback` via the
-partial-adjoint machinery and has NO closed-form `pullback_obj_obj` simp
-lemma (cf. `analogies/quotscheme-pullback-affine-section.md` table for the
-mathlib survey). We introduce the typed-sorry def below as the
-project-side `BUILD_PROJECT_HELPER` declaration the analogy file recommends;
-the body (~120–200 LOC) is iter-184+ work via the `Tilde` route on Spec
-+ promotion to a general affine open in `Y`.
-
-iter-183 Lane F PIVOT (helper budget #1): the def adds a single named
-project-side sorry (Tier-3, direct sorry on a substantive type) that
-captures the algebraic content the consumer
-`_of_isAffineBase` is waiting on. -/
+of schemes and a quasi-coherent sheaf of `O_X`-modules `N`. The pullback
+functor `Scheme.Modules.pullback g` is built as `SheafOfModules.pullback`
+via the partial-adjoint machinery and has NO closed-form `pullback_obj_obj`
+simp lemma (cf. `analogies/quotscheme-pullback-affine-section.md` table for
+the mathlib survey). Formerly this section pinned the formula as the
+project's Lane-F typed-sorry helper; it is now PROVED (Stacks 01HQ, run
+0010): the substantive claim is discharged by
+`pullback_app_isoTensor_isBaseChange` via the `Tilde` route on Spec
+(`pullback_tildeIso` + `pullback_app_isoTensor_baseMap_sectionLinearEquiv`)
+promoted to a general affine open in `Y`, and the whole helper chain below
+is sorry-free. -/
 
 /-- **Project-side base linear map for `pullback_app_isoTensor`** (iter-185
 Lane F substantive step).
