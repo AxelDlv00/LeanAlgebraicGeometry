@@ -175,6 +175,36 @@ theorem galoisCol_span [Finite ι] (b : Basis ι K L) :
       finrank_eq_card_basis b]
   rw [Module.finrank_fintype_fun_eq_card, h1]
 
+/-- From an `L`-basis `b` of `L` and a `K`-module `W`: the `K`-linear map
+`(ι → W) → L ⊗[K] W`, `t ↦ ∑ i, b i ⊗ₜ t i`.  It is surjective, exhibiting
+`L ⊗[K] W` as spanned by the tensors `b i ⊗ₜ w`. -/
+noncomputable def tensorFromPi [Fintype ι] {W : Type*} [AddCommGroup W] [Module K W]
+    (b : Basis ι K L) : (ι → W) →ₗ[K] L ⊗[K] W :=
+  ∑ i, (TensorProduct.mk K L W (b i)).comp (LinearMap.proj i)
+
+omit [FiniteDimensional K L] [IsGalois K L] in
+lemma tensorFromPi_apply [Fintype ι] {W : Type*} [AddCommGroup W] [Module K W]
+    (b : Basis ι K L) (t : ι → W) :
+    tensorFromPi b t = ∑ i, b i ⊗ₜ[K] t i := by
+  simp [tensorFromPi, LinearMap.sum_apply]
+
+omit [FiniteDimensional K L] [IsGalois K L] in
+lemma tensorFromPi_surjective [Fintype ι] {W : Type*} [AddCommGroup W] [Module K W]
+    (b : Basis ι K L) : Function.Surjective (tensorFromPi (W := W) b) := by
+  intro x
+  induction x using TensorProduct.induction_on with
+  | zero => exact ⟨0, by simp [tensorFromPi_apply]⟩
+  | tmul a w =>
+      refine ⟨fun i => b.repr a i • w, ?_⟩
+      rw [tensorFromPi_apply]
+      conv_rhs => rw [← Basis.sum_repr b a]
+      rw [TensorProduct.sum_tmul]
+      exact Finset.sum_congr rfl fun i _ => (TensorProduct.smul_tmul _ _ _).symm
+  | add x y hx hy =>
+      obtain ⟨tx, rfl⟩ := hx
+      obtain ⟨ty, rfl⟩ := hy
+      exact ⟨tx + ty, by rw [map_add]⟩
+
 end GaloisCore
 
 namespace SemilinearAction
@@ -279,6 +309,62 @@ theorem descentMap_surjective [IsSemilinear K L V] :
   refine Submodule.span_le.mpr ?_
   intro x hx
   exact ⟨1 ⊗ₜ[K] (⟨x, hx⟩ : invariants K L V), by simp⟩
+
+/-- **Injectivity of the descent map** `L ⊗[K] V^G → V`.  Writing an element via the
+basis `b` of `L` as `∑ i, b i ⊗ t i` (`tensorFromPi_surjective`), the image
+`∑ i, b i • t i = 0` and the invariance of the `t i` feed the Galois-matrix
+annihilation criterion `galoisMatrix_eq_zero_of`, forcing every `t i = 0`. -/
+theorem descentMap_injective [IsSemilinear K L V] :
+    Function.Injective (descentMap K L V) := by
+  classical
+  set b := finBasis K L with hb
+  -- The composite `t ↦ descentMap (∑ i, b i ⊗ t i) = ∑ i, b i • t i` is injective.
+  have hcompose : ∀ t : Fin (finrank K L) → invariants K L V,
+      descentMap K L V (tensorFromPi b t) = ∑ i, b i • ((t i : V)) := by
+    intro t
+    rw [tensorFromPi_apply, map_sum]
+    exact Finset.sum_congr rfl fun i _ => descentMap_tmul K L V (b i) (t i)
+  have hcomp_inj : Function.Injective
+      (fun t : Fin (finrank K L) → invariants K L V => descentMap K L V (tensorFromPi b t)) := by
+    intro t s hts
+    replace hts : ∑ i, b i • ((t i : V)) = ∑ i, b i • ((s i : V)) := by
+      rw [← hcompose, ← hcompose]; exact hts
+    funext j
+    have hu : ∀ σ : L ≃ₐ[K] L, ∑ i, σ (b i) • ((t i : V) - (s i : V)) = 0 := by
+      intro σ
+      have hdiff : ∑ i, b i • ((t i : V) - (s i : V)) = 0 := by
+        simp_rw [smul_sub, Finset.sum_sub_distrib, hts, sub_self]
+      have key : σ • (∑ i, b i • ((t i : V) - (s i : V)))
+          = ∑ i, σ (b i) • ((t i : V) - (s i : V)) := by
+        rw [Finset.smul_sum]
+        refine Finset.sum_congr rfl fun i _ => ?_
+        rw [smul_smul_apply]
+        congr 1
+        rw [smul_sub, (t i).property σ, (s i).property σ]
+      rw [← key, hdiff, smul_zero]
+    have hzero := galoisMatrix_eq_zero_of b (fun i => (t i : V) - (s i : V)) hu j
+    exact Subtype.ext (sub_eq_zero.mp hzero)
+  intro x y hxy
+  obtain ⟨t, rfl⟩ := tensorFromPi_surjective b x
+  obtain ⟨s, rfl⟩ := tensorFromPi_surjective b y
+  exact congrArg (tensorFromPi b) (hcomp_inj hxy)
+
+/-- **Speiser's theorem, bijectivity.** The descent map `L ⊗[K] V^G → V` is
+bijective. -/
+theorem descentMap_bijective [IsSemilinear K L V] :
+    Function.Bijective (descentMap K L V) :=
+  ⟨descentMap_injective K L V, descentMap_surjective K L V⟩
+
+/-- **Speiser's theorem.** For a finite Galois extension `L/K` and an `L`-vector
+space `V` with a semilinear `Gal(L/K)`-action, the descent map is an `L`-linear
+isomorphism `L ⊗[K] V^G ≃ₗ[L] V`.  Thus `V^G` is a `K`-form of `V`. -/
+noncomputable def descentEquiv [IsSemilinear K L V] :
+    L ⊗[K] (invariants K L V) ≃ₗ[L] V :=
+  LinearEquiv.ofBijective (descentMap K L V) (descentMap_bijective K L V)
+
+@[simp] lemma descentEquiv_tmul [IsSemilinear K L V] (a : L) (w : invariants K L V) :
+    descentEquiv K L V (a ⊗ₜ[K] w) = a • (w : V) :=
+  descentMap_tmul K L V a w
 
 end SemilinearAction
 
