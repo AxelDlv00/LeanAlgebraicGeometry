@@ -25,18 +25,24 @@ the ring of global sections `Γ(C, 𝒪_C)` is:
 The sharp statement that this finite field extension is **trivial** — i.e.
 `Γ(C, 𝒪_C) = k` — is the content Kleiman/Milne use to build canonical divisors and
 rigidified representatives (campaign `B1`, `B3`-corollary, `B6`, `J1`, `G3`).  Over
-`k` it is equivalent to `k` being the *field of constants* of `C`; the one honest
-remaining input is the degree-zero flat base change
-`Γ(C_{k̄}, 𝒪) ≅ k̄ ⊗_k Γ(C, 𝒪)` (which Mathlib v4.31 does not yet provide at the
-scheme level).  We isolate that input in the `Prop`-class `HasTrivialConstants`
-and prove the `k`-algebra isomorphism `Γ(C, 𝒪_C) ≃ₐ[k] k` from it
-(`globalSectionsAlgEquivBase`).  No global instance is supplied — the class is an
-honest use-site gate, mirroring `IsConstantField` / `HasDedekindChart`.
+`k` it is equivalent to `k` being the *field of constants* of `C`.  We isolate the
+content in the `Prop`-class `HasTrivialConstants` and prove the `k`-algebra
+isomorphism `Γ(C, 𝒪_C) ≃ₐ[k] k` from it (`globalSectionsAlgEquivBase`).
+
+**`HasTrivialConstants` is now UNCONDITIONAL** (`instHasTrivialConstants`, this file):
+the honest input — degree-zero H⁰ flat base change `Γ(C_{k̄}, 𝒪) ≅ k̄ ⊗_k Γ(C, 𝒪)` —
+is already provided by Mathlib v4.31 as the qcqs `pushoutSection` engine
+(`isIso_pushoutSection_of_isQuasiSeparated_of_flat_right`, `Morphisms/Flat.lean`).
+Over the field base the base-change morphism `Spec k̄ → Spec k` is automatically flat
+and `C` is qcqs (proper), so base change to the algebraically closed `k̄` (where
+`Γ(C_{k̄}, 𝒪) = k̄`, `instHasTrivialConstants_of_isAlgClosed`) plus a `finrank` count
+forces `Γ(C, 𝒪_C) = k`.  Consequently `globalSectionsAlgEquivBase` is now
+**unconditional** (the `[HasTrivialConstants C]` binder auto-synthesises from
+`[IsProper C.hom] [GeometricallyIntegral C.hom]`).
 
 Campaign reference: milestone `B0` of `informal/pic-representability-campaign.md`
-(Kleiman §2 uses `Γ(C, 𝒪) = k` implicitly throughout the rigidification of
-`Pic^♯`).  No blueprint node is claimed yet — the sharp `Γ(C, 𝒪) = k` statement
-is still gated (`HasTrivialConstants`), so `\leanok` would be premature.
+(Part V wave landing; Kleiman §2 uses `Γ(C, 𝒪) = k` implicitly throughout the
+rigidification of `Pic^♯`).
 -/
 
 universe u
@@ -113,16 +119,16 @@ theorem finiteDimensional_globalSections (C : Over (Spec (CommRingCat.of k)))
 
 /-! ## `Γ(C, 𝒪_C) = k` under the field-of-constants gate -/
 
-/-- **Field-of-constants gate** (`B0` residual).  The structure map `k → Γ(C, 𝒪_C)`
+/-- **Field-of-constants gate** (`B0`).  The structure map `k → Γ(C, 𝒪_C)`
 is surjective — equivalently, `k` is the field of constants of `C`.  Together with
 `isField_globalSections` this is `Γ(C, 𝒪_C) = k`.
 
-There is no global instance: the honest remaining input is degree-zero flat base
-change `Γ(C_{k̄}, 𝒪) ≅ k̄ ⊗_k Γ(C, 𝒪)` (with `C_{k̄}` integral by geometric
-integrality forcing the finite extension `Γ(C, 𝒪)/k` to be both separable — from
-geometric reducedness — and to remain a domain after `⊗ k̄` — from geometric
-irreducibility — hence trivial).  Mathlib v4.31 supplies no scheme-level `H⁰` base
-change, so we gate on the conclusion, as with `IsConstantField`. -/
+The global instance `instHasTrivialConstants` (below) discharges this
+**unconditionally** for proper geometrically integral `C/k`, via H⁰ flat base change
+to `k̄`.  The class is kept as the reusable interface (mirroring `IsConstantField`),
+and for the geometric semantics: `C_{k̄}` integral (geometric integrality) forces the
+finite extension `Γ(C, 𝒪)/k` to be both separable — from geometric reducedness — and
+to remain a domain after `⊗ k̄` — from geometric irreducibility — hence trivial. -/
 class HasTrivialConstants (C : Over (Spec (CommRingCat.of k))) : Prop where
   surjective_constMap : Function.Surjective (constMap C).hom
 
@@ -154,5 +160,113 @@ instance instHasTrivialConstants_of_isAlgClosed (C : Over (Spec (CommRingCat.of 
   haveI : Algebra.IsIntegral k Γ(C.left, ⊤) := Algebra.IsIntegral.of_finite k _
   exact ⟨(IsAlgClosed.algebraMap_bijective_of_isIntegral (k := k)
     (K := Γ(C.left, ⊤))).2⟩
+
+/-! ## `Γ(C, 𝒪_C) = k` unconditionally, via H⁰ flat base change
+
+The field-of-constants gate `HasTrivialConstants` is discharged **unconditionally** for a
+proper geometrically integral curve `C/k` by base change to an algebraically closed
+extension `K/k` (e.g. `K = k̄`) together with Mathlib's qcqs `H⁰` flat base-change engine
+`isIso_pushoutSection_of_isQuasiSeparated_of_flat_right` (`Morphisms/Flat.lean`):
+
+* the base-change morphism `Spec K → Spec k` is automatically flat (the base `Spec k` is a
+  subsingleton integral scheme), and `C` is qcqs (proper), so the canonical map
+  `Γ(Spec K, 𝒪) ⊗_{Γ(Spec k,𝒪)} Γ(C, 𝒪) → Γ(C_K, 𝒪)` is an isomorphism;
+* over the algebraically closed `K`, `Γ(C_K, 𝒪) = K` (the already-available
+  `instHasTrivialConstants_of_isAlgClosed`), so a `finrank` count over `Γ(Spec K, 𝒪)`
+  forces `Γ(Spec k, 𝒪) → Γ(C, 𝒪)` to be an isomorphism, i.e. `Γ(C, 𝒪) = k`.
+
+This is the campaign `B0`/wave-1 degree-zero H⁰ flat base-change brick (reused across `B2`,
+`B3`, `B4`, `B5`, `D2'`); see `informal/pic-representability-campaign.md` Part III `C3`. -/
+
+open TensorProduct Limits in
+set_option backward.isDefEq.respectTransparency false in
+/-- **Surjectivity of the field-of-constants map via base change to an algebraically closed
+extension.**  For a proper geometrically integral curve `C/k` and any algebraically closed
+field extension `K/k`, the structure map `k → Γ(C, 𝒪_C)` is surjective.  Proof: H⁰ flat base
+change gives `Γ(Spec K, 𝒪) ⊗_{Γ(Spec k,𝒪)} Γ(C, 𝒪) ≅ Γ(C_K, 𝒪)`, and `Γ(C_K, 𝒪) = K` over
+the algebraically closed `K` forces the `Γ(Spec k,𝒪)`-dimension of `Γ(C, 𝒪)` to be `1`. -/
+theorem surjective_constMap_of_isAlgClosed_baseChange
+    (C : Over (Spec (CommRingCat.of k)))
+    [IsProper C.hom] [GeometricallyIntegral C.hom]
+    (K : Type u) [Field K] [Algebra k K] [IsAlgClosed K] :
+    Function.Surjective (constMap C).hom := by
+  classical
+  let g : Spec (CommRingCat.of K) ⟶ Spec (CommRingCat.of k) :=
+    Spec.map (CommRingCat.ofHom (algebraMap k K))
+  haveI hpq : IsProper (pullback.snd C.hom g) := inferInstance
+  haveI hgiq : GeometricallyIntegral (pullback.snd C.hom g) := inferInstance
+  haveI : IsProper (Over.mk (pullback.snd C.hom g)).hom := hpq
+  haveI : GeometricallyIntegral (Over.mk (pullback.snd C.hom g)).hom := hgiq
+  have hVU : (⊤ : (Spec (CommRingCat.of K)).Opens) ≤ g ⁻¹ᵁ ⊤ := le_top
+  have hU : IsAffineOpen (⊤ : (Spec (CommRingCat.of k)).Opens) := isAffineOpen_top _
+  have hV : IsAffineOpen (⊤ : (Spec (CommRingCat.of K)).Opens) := isAffineOpen_top _
+  have hthis := isIso_pushoutSection_of_isQuasiSeparated_of_flat_right
+    (.of_hasPullback C.hom g) hVU (le_refl _) (UY := pullback.snd C.hom g ⁻¹ᵁ ⊤)
+    (by simp) hU hV (C.hom.isCompact_preimage hU.isCompact)
+    (C.hom.isQuasiSeparated_preimage hU.isQuasiSeparated)
+  algebraize [(C.hom.appTop).hom, (g.appLE ⊤ ⊤ hVU).hom,
+    ((pullback.snd C.hom g).appTop).hom]
+  let e₀ := (CommRingCat.isPushout_tensorProduct
+      (↥Γ(Spec (CommRingCat.of k), ⊤)) (↥Γ(Spec (CommRingCat.of K), ⊤))
+      (↥Γ(C.left, ⊤))).flip.isoPushout ≪≫
+    (pushout.congrHom C.hom.app_eq_appLE rfl ≪≫ @asIso _ _ _ _ _ hthis :)
+  let e : Γ(Spec (CommRingCat.of K), ⊤) ⊗[Γ(Spec (CommRingCat.of k), ⊤)] Γ(C.left, ⊤)
+      ≃ₐ[Γ(Spec (CommRingCat.of K), ⊤)] Γ(pullback C.hom g, ⊤) :=
+    { toRingEquiv := e₀.commRingCatIsoToRingEquiv
+      commutes' := fun r => by
+        change (CommRingCat.ofHom Algebra.TensorProduct.includeLeftRingHom ≫ e₀.hom) r =
+          ((pullback.snd C.hom g).app ⊤) r
+        congr 2
+        simp [e₀, pushout.inr_desc_assoc, Scheme.Hom.app_eq_appLE] }
+  -- The section rings of the affine bases `Spec k`, `Spec K` are fields.
+  letI : Field ↥Γ(Spec (CommRingCat.of k), ⊤) :=
+    (MulEquiv.isField (Field.toIsField k)
+      (Scheme.ΓSpecIso (CommRingCat.of k)).commRingCatIsoToRingEquiv.toMulEquiv).toField
+  letI : Field ↥Γ(Spec (CommRingCat.of K), ⊤) :=
+    (MulEquiv.isField (Field.toIsField K)
+      (Scheme.ΓSpecIso (CommRingCat.of K)).commRingCatIsoToRingEquiv.toMulEquiv).toField
+  -- `Γ(C_K, 𝒪)` is a field and `Γ(Spec K,𝒪) → Γ(C_K,𝒪)` is bijective (`K` alg. closed).
+  haveI : Nontrivial Γ(pullback C.hom g, ⊤) :=
+    (isField_globalSections (k := K) (Over.mk (pullback.snd C.hom g))).nontrivial
+  have hsurjK : Function.Surjective ⇑((pullback.snd C.hom g).appTop).hom := by
+    have hh := (instHasTrivialConstants_of_isAlgClosed (k := K)
+      (Over.mk (pullback.snd C.hom g))).surjective_constMap
+    rw [show constMap (Over.mk (pullback.snd C.hom g))
+        = (Scheme.ΓSpecIso (CommRingCat.of K)).inv ≫ (pullback.snd C.hom g).appTop from rfl,
+      CommRingCat.hom_comp, RingHom.coe_comp] at hh
+    exact hh.of_comp
+  have hM1 : Module.finrank ↥Γ(Spec (CommRingCat.of K), ⊤) ↥Γ(pullback C.hom g, ⊤) = 1 := by
+    rw [Algebra.finrank_eq_one_iff_bijective_algebraMap]
+    exact ⟨(algebraMap ↥Γ(Spec (CommRingCat.of K), ⊤)
+      ↥Γ(pullback C.hom g, ⊤)).injective, hsurjK⟩
+  -- Transport the finrank through base change and the iso `e`.
+  have hbc : Module.finrank ↥Γ(Spec (CommRingCat.of K), ⊤)
+      (↥Γ(Spec (CommRingCat.of K), ⊤) ⊗[↥Γ(Spec (CommRingCat.of k), ⊤)] ↥Γ(C.left, ⊤))
+      = Module.finrank ↥Γ(Spec (CommRingCat.of k), ⊤) ↥Γ(C.left, ⊤) :=
+    Module.finrank_baseChange
+  have he : Module.finrank ↥Γ(Spec (CommRingCat.of K), ⊤)
+      (↥Γ(Spec (CommRingCat.of K), ⊤) ⊗[↥Γ(Spec (CommRingCat.of k), ⊤)] ↥Γ(C.left, ⊤))
+      = Module.finrank ↥Γ(Spec (CommRingCat.of K), ⊤) ↥Γ(pullback C.hom g, ⊤) :=
+    e.toLinearEquiv.finrank_eq
+  have hL1 : Module.finrank ↥Γ(Spec (CommRingCat.of k), ⊤) ↥Γ(C.left, ⊤) = 1 := by
+    rw [← hbc, he, hM1]
+  rw [Algebra.finrank_eq_one_iff_bijective_algebraMap] at hL1
+  -- Conclude: `constMap C = ΓSpecIso.inv ≫ C.hom.appTop` is surjective.
+  have hbij : Function.Bijective ⇑(C.hom.appTop).hom := hL1
+  change Function.Surjective
+    ⇑((Scheme.ΓSpecIso (CommRingCat.of k)).inv ≫ C.hom.appTop).hom
+  rw [CommRingCat.hom_comp, RingHom.coe_comp]
+  exact hbij.surjective.comp
+    (ConcreteCategory.bijective_of_isIso (Scheme.ΓSpecIso (CommRingCat.of k)).inv).surjective
+
+/-- **`Γ(C, 𝒪_C) = k` unconditionally** — the field-of-constants gate `HasTrivialConstants`
+is discharged for every proper geometrically integral curve `C/k`, with no
+algebraic-closedness or rational-point hypothesis, via H⁰ flat base change to `k̄`
+(`surjective_constMap_of_isAlgClosed_baseChange` with `K = AlgebraicClosure k`).  This closes
+the campaign `B0` residual, making `globalSectionsAlgEquivBase : Γ(C, 𝒪_C) ≃ₐ[k] k`
+unconditional. -/
+instance instHasTrivialConstants (C : Over (Spec (CommRingCat.of k)))
+    [IsProper C.hom] [GeometricallyIntegral C.hom] : HasTrivialConstants C :=
+  ⟨surjective_constMap_of_isAlgClosed_baseChange C (AlgebraicClosure k)⟩
 
 end AlgebraicGeometry.Scheme

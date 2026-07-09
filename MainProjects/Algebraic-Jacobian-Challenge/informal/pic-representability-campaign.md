@@ -318,3 +318,51 @@ input, exactly as the plan's `G2`→`G3` edge intends.
 `descentEquiv`/`finrank_invariants` are genuinely new project mathematics available for a node
 once the `sec:galois_descent` scaffolding is written. Nothing depends on the file in Lean yet
 (no invisible-dependency risk).
+
+---
+
+## Part V — WAVE LANDINGS (run-0020 session 0010, T15, 2026-07-09)
+
+**B0 field-of-constants residual — CLOSED (`HasTrivialConstants` now unconditional, axiom-clean).**
+`Picard/SectionRingUniversal.lean` (leaf file, nothing imports it yet — isolated change,
+kernel-green `lake build` 8558 jobs exit 0). New decls verified `[propext, Classical.choice,
+Quot.sound]` (no `sorryAx`):
+
+- `surjective_constMap_of_isAlgClosed_baseChange` — for a proper geometrically integral `C/k`
+  and **any** algebraically closed field extension `K/k`, `k → Γ(C, 𝒪_C)` is surjective;
+- `instHasTrivialConstants` — the **unconditional** global instance `HasTrivialConstants C`
+  from `[IsProper C.hom] [GeometricallyIntegral C.hom]` alone (via `K := AlgebraicClosure k`).
+
+This discharges the C3 residual: `globalSectionsAlgEquivBase : Γ(C, 𝒪_C) ≃ₐ[k] k` is now
+**unconditional** (the `[HasTrivialConstants C]` binder auto-synthesises), the exact
+field-of-constants input `B1`/`B3`-corollary/`B6`/`J1`/`G3` consume.
+
+**Route (the standard proof, no new mathlib gap needed).** The degree-0 H⁰ flat base change
+`Γ(Spec K, 𝒪) ⊗_{Γ(Spec k,𝒪)} Γ(C, 𝒪) ≅ Γ(C_K, 𝒪)` is **already in Mathlib v4.31** —
+`AlgebraicGeometry.isIso_pushoutSection_of_isQuasiSeparated_of_flat_right`
+(`Mathlib/AlgebraicGeometry/Morphisms/Flat.lean`), the qcqs `pushoutSection` engine. Over the
+field base `Spec k` the base-change morphism `Spec K → Spec k` is **automatically flat** (the
+`[Subsingleton Y] [IsIntegral Y] ⟹ Flat` instance, `Flat.lean:110`), and `C` is qcqs
+(proper). The `≃ₐ` is assembled exactly as `Mathlib/AlgebraicGeometry/Normalization.lean:631`
+(`isPushout_tensorProduct`.flip.isoPushout ≪≫ `pushout.congrHom` ≪≫ `asIso`). A `finrank`
+count over `Γ(Spec K,𝒪)` (`Module.finrank_baseChange` + `Algebra.finrank_eq_one_iff_bijective_algebraMap`),
+using the already-landed `instHasTrivialConstants_of_isAlgClosed` on `C_K` for `finrank = 1`,
+forces `dim_{Γ(Spec k,𝒪)} Γ(C,𝒪) = 1`. **Correction to C3:** no scheme-level H⁰ base-change
+brick had to be built from scratch — Mathlib's `pushoutSection` already provides it. The
+whole argument stays in the `Γ(Spec ·, 𝒪)`-ring world via the project's `MulEquiv.isField`
+Field-transport idiom (no `k`-vs-`Γ(Spec k)` scalar transport).
+
+**Recipe notes (v4.31, for reuse):** the `Normalization.lean` `e`-template needs the
+`isPushout_tensorProduct` ring args passed **explicitly** (`..`-inference fails to invert
+`ofHom (algebraMap ?) = f.appTop`); `algebraize` via `.appTop` (not `.app ⊤`) so the induced
+`Algebra` carriers read `Γ(X,⊤)` (declared type) rather than `Γ(X, f⁻¹ᵁ⊤)`, matching
+downstream `↥Γ(·,⊤)` forms; `f ⁻¹ᵁ ⊤ = ⊤` and `appTop = app ⊤` are `rfl`, removing all
+preimage-transport bookkeeping. `set_option backward.isDefEq.respectTransparency false` scoped
+per declaration.
+
+**Not extracted (follow-up):** the H⁰ base-change `≃ₐ` is built inline inside
+`surjective_constMap_of_isAlgClosed_baseChange`; a standalone reusable
+`globalSectionsBaseChangeAlgEquiv (X qcqs / k) (A : k-algebra)` would package it for direct
+consumption (the tensor's non-canonical `Algebra` instances make the signature slightly fussy —
+use `letI`-in-return-type). Nothing consumes B0 in Lean yet (B1 rigidification unwritten), so no
+invisible-dependency risk.
