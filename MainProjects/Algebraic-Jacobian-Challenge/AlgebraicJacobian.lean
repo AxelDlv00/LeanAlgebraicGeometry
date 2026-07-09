@@ -13,6 +13,7 @@ import AlgebraicJacobian.Cohomology.HigherDirectImage
 import AlgebraicJacobian.Cohomology.HigherDirectImagePresheaf
 import AlgebraicJacobian.Cohomology.CechHigherDirectImage
 import AlgebraicJacobian.Cohomology.CechAcyclic
+import AlgebraicJacobian.Cohomology.CechCoboundarySplitting
 import AlgebraicJacobian.Cohomology.AcyclicResolution
 import AlgebraicJacobian.Cohomology.PresheafCech
 import AlgebraicJacobian.Cohomology.FreePresheafComplex
