@@ -54,12 +54,12 @@ body: 'HANDOFF for a fresh Fable-5 session (supersedes I-0135): AJC Jacobian cha
   strategy) + the adelic design at scratchpad/adelic-rr-lane-design.md.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-08T09:45:44.739316+00:00'
-updated_at: '2026-07-08T09:45:44.739320+00:00'
+updated_at: '2026-07-09T10:55:54.526720+00:00'
 metadata:
   agent: ultracode-session
