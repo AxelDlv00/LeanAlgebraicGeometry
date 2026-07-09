@@ -235,6 +235,51 @@ noncomputable def descentMap [IsSemilinear K L V] :
     descentMap K L V (a ⊗ₜ[K] w) = a • (w : V) := by
   simp [descentMap, LinearMap.toSpanSingleton_apply, LinearMap.smul_apply]
 
+/-! ## Speiser's theorem: the descent map is an isomorphism -/
+
+variable [FiniteDimensional K L] [IsGalois K L]
+
+/-- **Surjectivity direction.** The invariants `V^G` span `V` over `L`.  For each
+`v` and each basis vector `b i`, the averaged element `avg (b i) v` is invariant,
+and `v` is recovered as an `L`-combination of these because the columns of the
+Galois matrix span (`galoisCol_span`). -/
+theorem span_invariants_eq_top [IsSemilinear K L V] :
+    Submodule.span L ((invariants K L V : Set V)) = ⊤ := by
+  classical
+  rw [Submodule.eq_top_iff']
+  intro v
+  set b := finBasis K L with hb
+  set Ψ : ((L ≃ₐ[K] L) → L) →ₗ[L] V :=
+    Fintype.linearCombination L (fun σ => σ • v) with hΨ
+  have hv : Ψ (Pi.single (1 : L ≃ₐ[K] L) (1 : L)) = v := by
+    simp [hΨ, Fintype.linearCombination_apply_single, one_smul]
+  have hcol : (Pi.single (1 : L ≃ₐ[K] L) (1 : L)) ∈ Submodule.span L
+      (Set.range (fun i => (fun σ => σ (b i) : (L ≃ₐ[K] L) → L))) := by
+    rw [galoisCol_span b]; trivial
+  obtain ⟨e, he⟩ := (Submodule.mem_span_range_iff_exists_fun L).mp hcol
+  have hΨcol : ∀ i, Ψ (fun σ => σ (b i)) = avg K L (b i) v := fun i => by
+    rw [hΨ, Fintype.linearCombination_apply]; rfl
+  have hveq : ∑ i, e i • avg K L (b i) v = v := by
+    calc ∑ i, e i • avg K L (b i) v
+        = ∑ i, e i • Ψ (fun σ => σ (b i)) := by
+            refine Finset.sum_congr rfl fun i _ => ?_; rw [hΨcol i]
+      _ = Ψ (∑ i, e i • fun σ => σ (b i)) := by rw [map_sum]; simp_rw [map_smul]
+      _ = Ψ (Pi.single 1 1) := by rw [he]
+      _ = v := hv
+  rw [← hveq]
+  exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _
+    (Submodule.subset_span (avg_mem_invariants (b i) v))
+
+/-- **Surjectivity of the descent map** `L ⊗[K] V^G → V`. -/
+theorem descentMap_surjective [IsSemilinear K L V] :
+    Function.Surjective (descentMap K L V) := by
+  rw [← LinearMap.range_eq_top]
+  refine top_le_iff.mp ?_
+  rw [← span_invariants_eq_top K L V]
+  refine Submodule.span_le.mpr ?_
+  intro x hx
+  exact ⟨1 ⊗ₜ[K] (⟨x, hx⟩ : invariants K L V), by simp⟩
+
 end SemilinearAction
 
 end AlgebraicJacobian.GaloisDescent
