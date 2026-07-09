@@ -2,3 +2,5 @@
 {"at": "2026-07-09T06:51:12.185847+00:00", "actor": "ground", "field": "edited", "from": "", "to": "", "note": "fields updated"}
 {"at": "2026-07-09T06:51:38.873581+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-07-09T07:20:43.803609+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-07-09T07:25:23.601528+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-07-09T08:12:32.409026+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
