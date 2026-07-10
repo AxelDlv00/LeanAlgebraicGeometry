@@ -10,6 +10,7 @@ import AlgebraicJacobian.Picard.ChartSectionsFinite
 import AlgebraicJacobian.Picard.GenericFlatnessGeometric
 import AlgebraicJacobian.Picard.InvertibleGrBridge
 import AlgebraicJacobian.Picard.PullbackFinitePresentation
+import AlgebraicJacobian.Cohomology.StructureSheafModuleK.QuasicoherentDegreeOneVanishing
 
 /-!
 # B3 transfer package — discharging the named hypotheses of the ℙ¹ reduction
@@ -60,9 +61,17 @@ transfer hypotheses:
   `fiberPushforwardCompatIso : (p.fiberι t)^* ((π_A)_* L) ≅ (π_t)_* (L_t)`,
   the verbatim `hH0` discharge
   (`pushforward_finiteMapToP1BaseChange_fiberH0`), and the `hH1` transfer
-  reduced to its single remaining obligation — Čech cover-independence of
-  `Ȟ¹`-vanishing on the fibre curve (the recorded P2-interface TODO;
-  `fiberH1Vanishing_pushforward_finiteMapToP1BaseChange_of_coverIndependence`).
+  reduced to Čech cover-independence of `Ȟ¹`-vanishing on the fibre curve
+  (`fiberH1Vanishing_pushforward_finiteMapToP1BaseChange_of_coverIndependence`).
+
+* **`hH1` (wave 5)** — the cover-independence obligation `hindep` is
+  discharged by the QC-vanishing keystone
+  (`Cohomology/StructureSheafModuleK/QuasicoherentDegreeOneVanishing.lean`:
+  degree-1 affine vanishing for quasi-coherent modules + the Mayer–Vietoris
+  `(0,1)`-slice on every 2-affine cover), giving the verbatim pinned `hH1`
+  (`pushforward_finiteMapToP1BaseChange_fiberH1`).  The transfer package is
+  **complete**: B3 local freeness for `C_A` now follows from the ℙ¹ engine
+  alone (`rigidPushforwardLocallyFree_of_p1Engine`).
 
 No pinned statement is touched: this file only *produces* the named
 hypotheses consumed by `rigidPushforwardLocallyFree_of_p1`.
@@ -1336,26 +1345,54 @@ theorem fiberH1Vanishing_pushforward_finiteMapToP1BaseChange_of_coverIndependenc
   fiberH1Vanishing_pushforward_finiteMapToP1BaseChange_of_preimage_cover A C L hL t
     (p1BaseChangeFiberCoverSquare A t) (hindep hvan)
 
-/-- **Consumption probe (wave-4)**: with `hfp`, `hflat` (wave 3) and `hH0`
-(this wave) discharged, the B3 reduction `rigidPushforwardLocallyFree_of_p1`
-consumes them verbatim.  The remaining hypotheses are the ℙ¹ engine `hP1` and
-the pinned `hH1`, whose sole outstanding content is the Čech cover-independence
-`hindep` of `fiberH1Vanishing_pushforward_finiteMapToP1BaseChange_of_coverIndependence`. -/
-example [HasFiniteMapToP1 C] [Algebra.FiniteType k A]
-    (hP1 : P1RigidPushforwardStatement k A)
-    (hH1 : ∀ (L : (Limits.pullback C.hom
-        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules)
-      (t : Spec (CommRingCat.of A)), LineBundle.IsLocallyTrivial L →
-      (pullback.snd C.hom
-        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).FiberH1Vanishing L t →
-      (pullback.snd (p1Over k).hom
-        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).FiberH1Vanishing
-        ((Scheme.Modules.pushforward (finiteMapToP1BaseChange A C)).obj L) t) :
+/-- **`hH1` for the B3 reduction, VERBATIM against the pinned shape**
+(`rigidPushforwardLocallyFree_of_p1`, `RigidPushforward.lean`): fibrewise
+Čech `h¹`-vanishing of the invertible `L` on the fibre curve `C_t` transfers
+to the finite pushforward `(π_A)_* L` on the fibre `ℙ¹_t`, at every scheme
+point `t`.
+
+The `hindep` obligation of
+`fiberH1Vanishing_pushforward_finiteMapToP1BaseChange_of_coverIndependence`
+is discharged by the wave-5 QC-vanishing keystone: the fibre restriction
+`L_t` is quasi-coherent (`Scheme.Hom.fiberModule_isQuasicoherent`), so
+`Ȟ¹`-vanishing on *some* 2-affine cover of `C_t` (the ∃-form `hvan`) forces
+the surjectivity witness on the specific `π_t`-preimage cover
+(`Scheme.Hom.FiberH1Vanishing.surjective_moduleSectionDiff`, Leray both ways
+through the cover-free `H¹(C_t, L_t)` over `κ(t)`;
+`Cohomology/StructureSheafModuleK/QuasicoherentDegreeOneVanishing.lean`).
+This closes the P2-interface TODO recorded in `RigidPushforward.lean`. -/
+theorem pushforward_finiteMapToP1BaseChange_fiberH1 [HasFiniteMapToP1 C]
+    (L : (Limits.pullback C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules)
+    (t : Spec (CommRingCat.of A)) (hL : LineBundle.IsLocallyTrivial L)
+    (hvan : (pullback.snd C.hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).FiberH1Vanishing L t) :
+    (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).FiberH1Vanishing
+      ((Scheme.Modules.pushforward (finiteMapToP1BaseChange A C)).obj L) t := by
+  haveI := hL.isFinitePresentation
+  haveI : ((pullback.snd C.hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberModule t L).IsQuasicoherent :=
+    Scheme.Hom.fiberModule_isQuasicoherent _ t L
+  exact fiberH1Vanishing_pushforward_finiteMapToP1BaseChange_of_coverIndependence
+    A C L hL t
+    (fun hv => hv.surjective_moduleSectionDiff
+      ((p1BaseChangeFiberCoverSquare A t).preimage (finiteMapToP1FiberMap A C t)))
+    hvan
+
+/-- **THE B3 TRANSFER PACKAGE IS COMPLETE** (wave-5): with `hfp`/`hflat`
+(wave 3), `hH0` (wave 4) and `hH1` (this wave, above) all discharged, B3
+local freeness for the constant curve `C_A` follows from the ℙ¹ engine alone:
+for every finitely generated `k`-algebra `A`, `P1RigidPushforwardStatement`
+implies `RigidPushforwardLocallyFree C A`.  (The `HasRigidPushforward` gate
+is *not* instantiated here: its `baseChange` field is still open; this is the
+locally-free half only.) -/
+theorem rigidPushforwardLocallyFree_of_p1Engine [HasFiniteMapToP1 C]
+    [Algebra.FiniteType k A] (hP1 : P1RigidPushforwardStatement k A) :
     Scheme.RigidPushforwardLocallyFree C A :=
   rigidPushforwardLocallyFree_of_p1 A C hP1
     (fun L hL => pushforward_finiteMapToP1BaseChange_isFinitePresentation A C L hL)
     (fun L hL => pushforward_finiteMapToP1BaseChange_coherentSheafFlat A C L hL)
-    hH1
+    (fun L t hL hvan => pushforward_finiteMapToP1BaseChange_fiberH1 A C L t hL hvan)
     (fun L t hL => pushforward_finiteMapToP1BaseChange_fiberH0 A C L t hL)
 
 end Adelic
