@@ -10,6 +10,9 @@ import AlgebraicJacobian.AbelianVariety.RigidityCorollaries
 import AlgebraicJacobian.Cohomology.ModuleKSheaf
 import AlgebraicJacobian.Cohomology.AffineCech
 import AlgebraicJacobian.Cohomology.AffineVanishing
+import AlgebraicJacobian.Cohomology.OverOpen
+import AlgebraicJacobian.Cohomology.MayerVietoris
+import AlgebraicJacobian.Cohomology.TwoCover
 import AlgebraicJacobian.Challenge
 
 /-!
