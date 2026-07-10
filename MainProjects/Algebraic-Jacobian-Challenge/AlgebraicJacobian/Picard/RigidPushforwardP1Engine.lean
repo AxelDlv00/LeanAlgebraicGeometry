@@ -157,6 +157,27 @@ lemma Hom.baseSections_res_smul (p : X ⟶ S) (M : X.Modules) {W W' : X.Opens}
   simp only [CommRingCat.hom_comp, RingHom.comp_apply] at h1
   exact h1
 
+/-- **The bundled `Γ(S, ⊤)`-linear section restriction** of a module on the
+total space of the family `p : X ⟶ S`, for the `baseSectionsModule`
+structures.  (`restrictₗ` of `Picard/QuotScheme.lean` is the sibling over
+the section ring of the source open; this one is linear over the base.) -/
+noncomputable def Hom.baseSectionsRes (p : X ⟶ S) (M : X.Modules) {W W' : X.Opens}
+    (h : W' ≤ W) :
+    letI := p.baseSectionsModule M W
+    letI := p.baseSectionsModule M W'
+    Γ(M, W) →ₗ[Γ(S, ⊤)] Γ(M, W') :=
+  letI := p.baseSectionsModule M W
+  letI := p.baseSectionsModule M W'
+  { toFun := fun m => M.presheaf.map (homOfLE h).op m
+    map_add' := map_add _
+    map_smul' := fun r m => p.baseSections_res_smul M h r m }
+
+/-- The underlying function of `baseSectionsRes` is the presheaf restriction. -/
+lemma Hom.baseSectionsRes_apply (p : X ⟶ S) (M : X.Modules) {W W' : X.Opens}
+    (h : W' ≤ W) (m : Γ(M, W)) :
+    p.baseSectionsRes M h m = M.presheaf.map (homOfLE h).op m :=
+  rfl
+
 /-- **The `Γ(S, ⊤)`-linear difference-of-restrictions map** of a 2-affine
 cover, for a module `M` on the total space of the family `p : X ⟶ S`: the
 linear upgrade of `AffineCoverMVSquare.moduleSectionDiff` for the
@@ -351,5 +372,269 @@ noncomputable def AffineCoverMVSquare.globalSectionsEquivKerModuleSectionDiffBas
         exact Prod.ext (hs ⟨true⟩) (hs ⟨false⟩))
 
 end Scheme
+
+namespace Adelic
+
+/-! ## §3a. The abstract two-lattice core, module coefficients
+
+The Weil/Stichtenoth two-lattice engine of
+`RiemannRoch/Adelic/FinitenessP1.lean` (`module_finite_quotient_of_laurent_pair`)
+generalized from a commutative `k`-algebra to a **module** `M` over a
+commutative ring `C` containing the Laurent pair `t * u = 1`, with lattices
+that are submodules over an auxiliary base ring `A` acting compatibly
+(`SMulCommClass A C M`) — the shape induced on the overlap section module
+`Γ(M, U₁ ⊓ U₂)` by the pulled-back ℙ¹ coordinates.  No noetherian or
+finiteness hypothesis on `A` enters. -/
+
+section SmulTwoLattice
+
+variable {A : Type*} [CommRing A] {C : Type*} [CommRing C]
+variable {M : Type*} [AddCommGroup M] [Module A M] [Module C M] [SMulCommClass A C M]
+
+/-- Scalar multiplication by `c : C` as an `A`-linear endomorphism (the
+compatibility `SMulCommClass A C M` is exactly its `A`-linearity). -/
+def smulALinear (A : Type*) [CommRing A] {C : Type*} [CommRing C]
+    {M : Type*} [AddCommGroup M] [Module A M] [Module C M] [SMulCommClass A C M]
+    (c : C) : M →ₗ[A] M where
+  toFun := fun m => c • m
+  map_add' := smul_add c
+  map_smul' := fun a m => (smul_comm a c m).symm
+
+@[simp] lemma smulALinear_apply (c : C) (m : M) : smulALinear A c m = c • m := rfl
+
+omit [SMulCommClass A C M] in
+/-- Iterated stability, module coefficients: an `A`-submodule stable under
+scalar multiplication by `t : C` is stable under every power `t ^ n`.
+(`Adelic.pow_mul_mem`, module dialect.) -/
+lemma pow_smul_mem {N : Submodule A M} {t : C} (h : ∀ a ∈ N, t • a ∈ N)
+    (n : ℕ) {a : M} (ha : a ∈ N) : t ^ n • a ∈ N := by
+  induction n with
+  | zero => simpa using ha
+  | succ n ih =>
+    have hrw : t ^ (n + 1) • a = t • (t ^ n • a) := by
+      rw [smul_smul, pow_succ, mul_comm]
+    rw [hrw]
+    exact h _ ih
+
+/-- **Ladder-spanning producer, module coefficients**
+(`Adelic.span_ladder_of_pow_mul_mem_span`, module dialect): if `t * u = 1`
+in `C` and every `m ∈ M` satisfies `t ^ n • m ∈ span_A {t^j • a : a ∈ s}`
+for some `n`, then the full two-sided ladder spans `M` over `A`. -/
+theorem span_smul_ladder_of_pow_smul_mem_span {t u : C} (htu : t * u = 1) (s : Set M)
+    (H : ∀ m : M, ∃ n : ℕ,
+      t ^ n • m ∈ Submodule.span A (⋃ j : ℕ, (fun z => t ^ j • z) '' s)) :
+    ⊤ ≤ Submodule.span A
+      ((⋃ j : ℕ, (fun z => t ^ j • z) '' s) ∪ (⋃ j : ℕ, (fun z => u ^ j • z) '' s)) := by
+  have hpow : ∀ n : ℕ, u ^ n * t ^ n = 1 := fun n => by
+    rw [← mul_pow, mul_comm u t, htu, one_pow]
+  intro m _
+  obtain ⟨n, hn⟩ := H m
+  have hm : m = u ^ n • (t ^ n • m) := by
+    rw [smul_smul, hpow, one_smul]
+  have hmem : u ^ n • (t ^ n • m) ∈ Submodule.map (smulALinear A (u ^ n))
+      (Submodule.span A (⋃ j : ℕ, (fun z => t ^ j • z) '' s)) :=
+    Submodule.mem_map_of_mem hn
+  rw [Submodule.map_span, ← hm] at hmem
+  refine Submodule.span_le.mpr ?_ hmem
+  rintro _ ⟨z, hz, rfl⟩
+  simp only [Set.mem_iUnion, Set.mem_image] at hz
+  obtain ⟨j, a, ha, rfl⟩ := hz
+  simp only [smulALinear_apply]
+  rcases le_or_gt n j with hnj | hjn
+  · -- `u^n • (t^j • a) = t^(j-n) • a`
+    have key : u ^ n • (t ^ j • a) = t ^ (j - n) • a := by
+      have hj : t ^ j = t ^ n * t ^ (j - n) := by
+        rw [← pow_add]
+        congr 1
+        omega
+      rw [smul_smul, hj, ← mul_assoc, hpow, one_mul]
+    rw [key]
+    exact Submodule.subset_span (Or.inl (Set.mem_iUnion.mpr
+      ⟨j - n, Set.mem_image_of_mem _ ha⟩))
+  · -- `u^n • (t^j • a) = u^(n-j) • a`
+    have key : u ^ n • (t ^ j • a) = u ^ (n - j) • a := by
+      have hn' : u ^ n = u ^ (n - j) * u ^ j := by
+        rw [← pow_add]
+        congr 1
+        omega
+      rw [smul_smul, hn', mul_assoc, hpow, mul_one]
+    rw [key]
+    exact Submodule.subset_span (Or.inr (Set.mem_iUnion.mpr
+      ⟨n - j, Set.mem_image_of_mem _ ha⟩))
+
+omit [SMulCommClass A C M] in
+/-- **The abstract two-lattice core, module coefficients**
+(`Adelic.module_finite_quotient_of_laurent_pair`, module dialect — the
+algebraic heart of the A-coefficient `H¹`-finiteness of ℙ¹_A).  For a
+Laurent pair `t * u = 1` in `C` acting on the `A`-module `M`, a `t`-stable
+lattice `N₀` and a `u`-stable lattice `N₁`, a finite `s ⊆ N₀` whose
+two-sided ladder spans `M` over `A`, and the extension property (`u`-powers
+of `s` land in `N₁`), the cokernel `M ⧸ (N₀ ⊔ N₁)` is a finite `A`-module.
+(As in the field-coefficient original, the Laurent relation `t * u = 1`
+enters only through the spanning hypothesis `hspan`, produced by
+`span_smul_ladder_of_pow_smul_mem_span`.) -/
+theorem module_finite_quotient_of_smul_laurent_pair {t u : C}
+    {N₀ N₁ : Submodule A M}
+    (h₀ : ∀ a ∈ N₀, t • a ∈ N₀) (h₁ : ∀ a ∈ N₁, u • a ∈ N₁)
+    {s : Set M} (hs : s.Finite) (hsN₀ : s ⊆ N₀)
+    (hspan : ⊤ ≤ Submodule.span A
+      ((⋃ j : ℕ, (fun z => t ^ j • z) '' s) ∪ (⋃ j : ℕ, (fun z => u ^ j • z) '' s)))
+    (hext : ∀ a ∈ s, ∃ n : ℕ, u ^ n • a ∈ N₁) :
+    Module.Finite A (M ⧸ (N₀ ⊔ N₁)) := by
+  classical
+  -- a uniform extension bound over the finite set `s`
+  set B : M → ℕ := fun a => if h : a ∈ s then (hext a h).choose else 0 with hB
+  set N : ℕ := hs.toFinset.sup B with hNdef
+  have hBmem : ∀ a ∈ s, u ^ B a • a ∈ N₁ := by
+    intro a ha
+    simp only [hB, dif_pos ha]
+    exact (hext a ha).choose_spec
+  have hN₁ : ∀ a ∈ s, ∀ n : ℕ, B a ≤ n → u ^ n • a ∈ N₁ := by
+    intro a ha n hn
+    have hrw : u ^ n • a = u ^ (n - B a) • (u ^ B a • a) := by
+      rw [smul_smul, ← pow_add]
+      congr 2
+      omega
+    rw [hrw]
+    exact pow_smul_mem h₁ _ (hBmem a ha)
+  -- the finite middle band
+  set T : Set M := ⋃ j ∈ Finset.range N, (fun z => u ^ j • z) '' s with hT
+  have hTfin : T.Finite :=
+    Set.Finite.biUnion (Finset.range N).finite_toSet fun j _ => hs.image _
+  -- the middle band together with the two lattices spans everything
+  have hkey : N₀ ⊔ N₁ ⊔ Submodule.span A T = ⊤ := by
+    refine le_antisymm le_top (hspan.trans (Submodule.span_le.mpr ?_))
+    rintro z (hz | hz) <;> simp only [Set.mem_iUnion, Set.mem_image] at hz
+    · obtain ⟨j, a, ha, rfl⟩ := hz
+      exact Submodule.mem_sup_left (Submodule.mem_sup_left (pow_smul_mem h₀ j (hsN₀ ha)))
+    · obtain ⟨j, a, ha, rfl⟩ := hz
+      rcases lt_or_ge j N with hj | hj
+      · refine Submodule.mem_sup_right (Submodule.subset_span ?_)
+        simp only [hT, Set.mem_iUnion, Set.mem_image]
+        exact ⟨j, Finset.mem_range.mpr hj, a, ha, rfl⟩
+      · refine Submodule.mem_sup_left (Submodule.mem_sup_right ?_)
+        exact hN₁ a ha j (le_trans (Finset.le_sup (hs.mem_toFinset.mpr ha)) hj)
+  -- pass to the quotient: the image of the middle band spans it
+  have himg : Submodule.span A (⇑(N₀ ⊔ N₁).mkQ '' T) = ⊤ := by
+    rw [Submodule.span_image]
+    have h1 : Submodule.map (N₀ ⊔ N₁).mkQ (N₀ ⊔ N₁) = ⊥ := by
+      rw [eq_bot_iff]
+      rintro x ⟨y, hy, rfl⟩
+      simpa [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero] using hy
+    have h2 := congrArg (Submodule.map (N₀ ⊔ N₁).mkQ) hkey
+    rw [Submodule.map_sup, h1, bot_sup_eq, Submodule.map_top, Submodule.range_mkQ] at h2
+    exact h2
+  have hfg : (⊤ : Submodule A (M ⧸ (N₀ ⊔ N₁))).FG :=
+    ⟨(hTfin.image _).toFinset, by rw [Set.Finite.coe_toFinset]; exact himg⟩
+  exact ⟨hfg⟩
+
+end SmulTwoLattice
+
+/-! ## §3b. The chart-ladder producer, module coefficients -/
+
+section ChartSpan
+
+variable {A C : Type*} [CommRing A] [CommRing C] [Algebra A C]
+variable {MM : Type*} [AddCommGroup MM] [Module C MM] [Module A MM] [IsScalarTower A C MM]
+
+/-- The `A`-span of a `⋃ₙ (xⁿ • ·)`-ladder is stable under scalars from the
+`A`-span of the powers of `x` — the multiplicative step of the chart-ladder
+producer, module coefficients. -/
+lemma smul_mem_span_smul_ladder (x : C) {r : C}
+    (hr : r ∈ Submodule.span A (Set.range fun n : ℕ => x ^ n))
+    {G : Set MM} {m : MM}
+    (hm : m ∈ Submodule.span A (⋃ n : ℕ, (fun z => x ^ n • z) '' G)) :
+    r • m ∈ Submodule.span A (⋃ n : ℕ, (fun z => x ^ n • z) '' G) := by
+  induction hr using Submodule.span_induction with
+  | mem w hw =>
+    obtain ⟨a, rfl⟩ := hw
+    induction hm using Submodule.span_induction with
+    | mem z hz =>
+      simp only [Set.mem_iUnion, Set.mem_image] at hz
+      obtain ⟨b, g, hg, rfl⟩ := hz
+      rw [smul_smul, ← pow_add]
+      exact Submodule.subset_span (Set.mem_iUnion.mpr ⟨a + b, ⟨g, hg, rfl⟩⟩)
+    | zero => rw [smul_zero]; exact zero_mem _
+    | add y z _ _ ihy ihz => rw [smul_add]; exact add_mem ihy ihz
+    | smul a₀ y _ ihy =>
+      rw [smul_comm]
+      exact Submodule.smul_mem _ _ ihy
+  | zero => rw [zero_smul]; exact zero_mem _
+  | add r₁ r₂ _ _ ih₁ ih₂ => rw [add_smul]; exact add_mem ih₁ ih₂
+  | smul a₀ r₁ _ ih₁ =>
+    rw [smul_assoc]
+    exact Submodule.smul_mem _ _ ih₁
+
+/-- **Chart-ladder producer, module coefficients**
+(`Adelic.exists_finset_forall_mem_span_pow_mul`, module dialect): if the
+chart ring `C` is spanned over `A` by the powers of `x` and the section
+module `MM` is module-finite over `C`, then `MM` is spanned over `A` by the
+ladder `{xⁿ • g}` over a finite set of generators `g ∈ G`. -/
+theorem exists_finset_forall_mem_span_pow_smul (x : C)
+    (hx : ⊤ ≤ Submodule.span A (Set.range fun n : ℕ => x ^ n))
+    [hfin : Module.Finite C MM] :
+    ∃ G : Finset MM, ∀ m : MM,
+      m ∈ Submodule.span A (⋃ n : ℕ, (fun z => x ^ n • z) '' (G : Set MM)) := by
+  obtain ⟨G, hG⟩ := Module.finite_def.mp hfin
+  refine ⟨G, fun m => ?_⟩
+  have hm : m ∈ Submodule.span C (G : Set MM) := by rw [hG]; trivial
+  induction hm using Submodule.span_induction with
+  | mem z hz =>
+    refine Submodule.subset_span (Set.mem_iUnion.mpr ⟨0, ⟨z, hz, ?_⟩⟩)
+    rw [pow_zero]
+    exact one_smul C z
+  | zero => exact zero_mem _
+  | add y z _ _ ihy ihz => exact add_mem ihy ihz
+  | smul r z _ ihz => exact smul_mem_span_smul_ladder x (hx trivial) ihz
+
+end ChartSpan
+
+end Adelic
+
+/-! ## §3c. The module-section extension lemma over an affine chart -/
+
+namespace Scheme.Modules
+
+/-- **The module-section extension lemma** (`Adelic.exists_pow_mul_eq_res`,
+`X.Modules` dialect; Stacks 01PC-grade).  Let `U` be an affine open of `X`,
+`f ∈ Γ(X, U)`, `W = D(f)` (recorded as an arbitrary open equal to the basic
+open, so callers need not transport), and `M` quasi-coherent.  Then every
+section `m ∈ Γ(M, W)` becomes, after scalar multiplication by a power of
+`f|_W`, the restriction of a section over the chart: sections of the
+localized module extend after multiplying by a power of `f`.  From the qcqs
+section-localization engine `isLocalizedModule_basicOpen_of_isCompact`
+(`Picard/QuotScheme.lean`) at the (compact, quasi-separated) affine `U`. -/
+theorem exists_pow_smul_eq_res {X : Scheme.{u}} (M : X.Modules) [M.IsQuasicoherent]
+    {U W : X.Opens} (hU : IsAffineOpen U) (f : Γ(X, U)) (hW : W = X.basicOpen f)
+    (hWU : W ≤ U) (m : Γ(M, W)) :
+    ∃ (n : ℕ) (a : Γ(M, U)),
+      (X.presheaf.map (homOfLE hWU).op).hom f ^ n • m
+        = M.presheaf.map (homOfLE hWU).op a := by
+  subst hW
+  letI : Module Γ(X, U) Γ(M, X.basicOpen f) :=
+    Module.compHom _ (algebraMap Γ(X, U) Γ(X, X.basicOpen f))
+  letI : IsScalarTower Γ(X, U) Γ(X, X.basicOpen f) Γ(M, X.basicOpen f) :=
+    IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
+  haveI := isLocalizedModule_basicOpen_of_isCompact M hU.isCompact
+    hU.isQuasiSeparated f
+  obtain ⟨⟨a, s⟩, hsurj⟩ := IsLocalizedModule.surj (Submonoid.powers f)
+    (restrictBasicOpenₗ M f) m
+  obtain ⟨n, hn⟩ := s.2
+  refine ⟨n, a, ?_⟩
+  -- `s • m = res a`, `s = f ^ n`, and the `Γ(X, U)`-action is through the
+  -- restriction ring map, so `s • m = (f|_W)^n • m`.
+  have hn' : (f ^ n : Γ(X, U)) = (s : Γ(X, U)) := hn
+  have h1 : ((f ^ n : Γ(X, U)) • m : Γ(M, X.basicOpen f))
+      = restrictBasicOpenₗ M f a := by
+    rw [hn']
+    exact hsurj
+  have h2 : ((f ^ n : Γ(X, U)) • m : Γ(M, X.basicOpen f))
+      = (X.presheaf.map (homOfLE hWU).op).hom f ^ n • m := by
+    rw [← map_pow]
+    rfl
+  rw [← h2, h1]
+  rfl
+
+end Scheme.Modules
 
 end AlgebraicGeometry
