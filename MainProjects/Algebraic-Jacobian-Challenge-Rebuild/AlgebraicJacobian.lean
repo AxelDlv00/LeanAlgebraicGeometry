@@ -4,6 +4,10 @@ import AlgebraicJacobian.Curve.Basic
 import AlgebraicJacobian.Curve.Sections
 import AlgebraicJacobian.Curve.P1
 import AlgebraicJacobian.Curve.P1Charts
+import AlgebraicJacobian.Curve.DedekindSections
+import AlgebraicJacobian.Curve.StalksDVR
+import AlgebraicJacobian.Curve.P1Points
+import AlgebraicJacobian.Curve.RationalToP1
 import AlgebraicJacobian.Curve.MapToP1
 import AlgebraicJacobian.AbelianVariety.Rigidity
 import AlgebraicJacobian.AbelianVariety.RigidityCorollaries

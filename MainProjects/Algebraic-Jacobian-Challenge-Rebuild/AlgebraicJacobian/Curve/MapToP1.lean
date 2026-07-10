@@ -1,8 +1,12 @@
 /-
 Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
+Authors: The AlgebraicJacobian Contributors
 -/
+import AlgebraicJacobian.Curve.Basic
+import AlgebraicJacobian.Curve.GeometricallyReduced
 import AlgebraicJacobian.Curve.P1Charts
+import AlgebraicJacobian.Curve.RationalToP1
 
 /-!
 # A finite morphism from the curve to the projective line
@@ -24,8 +28,9 @@ existence and the basic consequences of a **finite** `k`-morphism `π : C ⟶ �
   (`isAffineOpen_preimage_chartOpen`, `preimage_chartOpen_sup`), and the section ring of each
   preimage is module-finite over the section ring of the chart (`finite_app_chartOpen`).
 * `AlgebraicGeometry.exists_isFinite_toP1` — the **existence** of a finite `π : C ⟶ ℙ¹` over
-  `k`. This is the one remaining `sorry` of this file; see its docstring for the intended
-  proof route.
+  `k`, by spreading out a transcendental rational function
+  (`AlgebraicJacobian.Curve.RationalToP1`) and applying the reduction above; see its
+  docstring for the proof route.
 -/
 
 set_option autoImplicit false
@@ -78,22 +83,25 @@ geometrically irreducible curve `C/k` there is a finite `k`-morphism `π : C ⟶
 
 This is the keystone the two-lattice finiteness argument for `H¹(C, 𝒪_C)` consumes.
 
-Intended proof route (see `informal/route-decision.md`, Wave 1 item 4):
-1. produce a rational function on `C` transcendental over `k` (an affine chart of the
-   relative-dimension-1 smooth curve has a section ring of Krull dimension 1, which cannot be
-   algebraic over `k`); this consumes `GeometricallyReduced C.hom`/integrality of `C`, which
-   another Wave-1 lane derives from smoothness;
-2. extend the rational function to a morphism `π : C ⟶ ℙ¹` over `k` using that the local
-   rings of `C` at codimension-one points are valuation rings (DVRs): at each point either
-   `f` or `1/f` is regular, giving maps to the two charts of `P1 k` which glue;
-3. `π` is nonconstant, hence (fibers are proper closed subschemes of the curve not equal to
-   it) has finite fibers, hence is locally quasi-finite;
-4. conclude with `exists_isFinite_toP1_of_locallyQuasiFinite` (Zariski's main theorem).
-
-Only steps 1–3 remain. -/
+Proof route (see `informal/route-decision.md`, Wave 1 item 4):
+1. `C` is integral (smooth ⟹ geometrically reduced, `AlgebraicJacobian.Curve.
+   GeometricallyReduced`, plus geometric irreducibility, `AlgebraicJacobian.Curve.Basic`),
+   and the function field of `C` contains an element transcendental over `k`: the étale
+   coordinate of a standard smooth chart of relative dimension `1`
+   (`SmoothOfRelativeDimension.exists_transcendental_functionField`, via the structure
+   theorem for standard smooth algebras of Stacks 00T7);
+2. the transcendental function spreads out to a morphism `π : C ⟶ ℙ¹` over `k`: the stalks
+   of `C` are valuation rings (localizations of the Dedekind chart rings,
+   `AlgebraicJacobian.Curve.DedekindSections` and `Curve.StalksDVR`), so at each point
+   either `f` or `1/f` is a regular germ; the two chart morphisms agree generically by the
+   gluing identity `P1.fromSpecChart_units`, so the associated rational map `C ⤏ ℙ¹` is
+   defined everywhere (`AlgebraicJacobian.Curve.RationalToP1`);
+3. `π` maps the generic point to the generic point (transcendence again), hence has finite
+   fibers on the height-one Noetherian space `C`, hence is locally quasi-finite;
+4. conclude with `exists_isFinite_toP1_of_locallyQuasiFinite` (Zariski's main theorem). -/
 theorem exists_isFinite_toP1 :
-    ∃ π : C.left ⟶ P1 k, IsFinite π ∧ π ≫ P1.structureMap k = C.hom := by
-  sorry
+    ∃ π : C.left ⟶ P1 k, IsFinite π ∧ π ≫ P1.structureMap k = C.hom :=
+  exists_isFinite_toP1_of_locallyQuasiFinite (exists_locallyQuasiFinite_toP1 C.hom)
 
 /-! ### Preimage bookkeeping for a finite morphism to the projective line
 
