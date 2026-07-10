@@ -65,7 +65,7 @@ This file instantiates the **abstract two-term finite replacement** of
   the ℙ¹_A Čech complex.
 
 * **§5 — the endgame skeleton** (work item 3, as far as it goes).
-  `p1CechComplex_h0_baseChange_of_surjective_fibres` applies the
+  `p1Cech_h0_baseChange_of_fibrewise_h1_vanishing` applies the
   `TwoTermFiniteFree` endgame to the base-linear Čech complex: fibrewise
   `H¹`-vanishing at all maximal ideals + `H⁰` finite generation give `d`
   surjective, `H⁰ = ker d` finite projective (= locally free), and `H⁰`
@@ -984,6 +984,296 @@ theorem span_pow_section_of_isPullback {XA Xk T S : Scheme.{u}}
   | add a b _ _ ha hb => exact Submodule.add_mem _ ha hb
   | neg a _ ha => exact Submodule.neg_mem _ ha
   | mul a b _ _ ha hb => exact mul_mem_span_range_pow _ ha hb
+
+/-! ## §4b. The ℙ¹_A relative Laurent chart datum -/
+
+section P1BaseChange
+
+open Scheme
+
+variable {k : Type u} [Field k]
+variable (A : Type u) [CommRing A] [Algebra k A]
+
+/-- **The `Γ(Spec A, ⊤)`-span of the base-changed `x`-chart of `ℙ¹_A`**: the
+powers of the pulled-back coordinate `pr₁^♯ x` span
+`Γ(ℙ¹_A, pr₁ ⁻¹ᵁ V₀) = A[x]` over the base — `span_pow_section_of_isPullback`
+on the defining pullback square of `ℙ¹_A`, fed with the `ℙ¹_k` chart span
+`Γ(V₀) = k[x]` (`p1LaurentChartData`, bridged from `k` to `Γ(Spec k, ⊤)`). -/
+theorem span_pow_p1BaseChangeX :
+    letI := (((pullback.snd (p1Over k).hom
+        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).appLE
+        ⊤ (pullback.fst (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A))) ⁻¹ᵁ
+          (p1LaurentChartData k).V₀)
+        le_top).hom).toAlgebra
+    ⊤ ≤ Submodule.span Γ(Spec (CommRingCat.of A), ⊤)
+      (Set.range fun n : ℕ =>
+        ((pullback.fst (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).app
+            (p1LaurentChartData k).V₀).hom (p1LaurentChartData k).x ^ n) :=
+  span_pow_section_of_isPullback
+    (IsPullback.of_hasPullback (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A))))
+    (isAffineOpen_top _) (isAffineOpen_top _)
+    (p1LaurentChartData k).isAffineOpen_V₀ (p1LaurentChartData k).x
+    (span_section_base_of_span_k _ (p1LaurentChartData k).span_pow_x)
+
+/-- The `y`-chart mirror of `span_pow_p1BaseChangeX`. -/
+theorem span_pow_p1BaseChangeY :
+    letI := (((pullback.snd (p1Over k).hom
+        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).appLE
+        ⊤ (pullback.fst (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A))) ⁻¹ᵁ
+          (p1LaurentChartData k).V₁)
+        le_top).hom).toAlgebra
+    ⊤ ≤ Submodule.span Γ(Spec (CommRingCat.of A), ⊤)
+      (Set.range fun n : ℕ =>
+        ((pullback.fst (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).app
+            (p1LaurentChartData k).V₁).hom (p1LaurentChartData k).y ^ n) :=
+  span_pow_section_of_isPullback
+    (IsPullback.of_hasPullback (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A))))
+    (isAffineOpen_top _) (isAffineOpen_top _)
+    (p1LaurentChartData k).isAffineOpen_V₁ (p1LaurentChartData k).y
+    (span_section_base_of_span_k _ (p1LaurentChartData k).span_pow_y)
+
+set_option maxHeartbeats 800000 in
+-- `maxHeartbeats`: the field checks cross the `p1BaseChangeCoverSquare` /
+-- `preimage` / `p1LaurentChartData` presentation diamonds (fleet recipe).
+/-- **The relative Laurent chart datum of `ℙ¹_A` over `Spec A`** (work item
+2, geometric substrate): the standard 2-chart cover `p1BaseChangeCoverSquare`
+of `ℙ¹_A` — the *same* cover square consumed by the pinned ℙ¹ engine
+statement — carries relative Laurent chart data over `Spec A`: coordinates
+are the `pr₁`-pullbacks of the `ℙ¹_k` Laurent coordinates
+(`p1LaurentChartData`), overlap/basic-open identities and the unit relation
+pull back along `pr₁`, and the chart-ring spans transfer by the ring-pushout
+description of the base-changed charts (`span_pow_p1BaseChangeX/Y`). -/
+noncomputable def p1BaseChangeRelLaurentChartData :
+    RelLaurentChartData
+      (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) where
+  V := p1BaseChangeCoverSquare A
+  x := ((pullback.fst (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).app
+        (p1LaurentChartData k).V₀).hom (p1LaurentChartData k).x
+  y := ((pullback.fst (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).app
+        (p1LaurentChartData k).V₁).hom (p1LaurentChartData k).y
+  inf_eq_basicOpen_x := by
+    have h1 : (p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂
+        = pullback.fst (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A))) ⁻¹ᵁ
+            ((p1LaurentChartData k).V₀ ⊓ (p1LaurentChartData k).V₁) := rfl
+    rw [h1, (p1LaurentChartData k).inf_eq_basicOpen_x, Scheme.preimage_basicOpen]
+    rfl
+  inf_eq_basicOpen_y := by
+    have h1 : (p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂
+        = pullback.fst (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A))) ⁻¹ᵁ
+            ((p1LaurentChartData k).V₀ ⊓ (p1LaurentChartData k).V₁) := rfl
+    rw [h1, (p1LaurentChartData k).inf_eq_basicOpen_y, Scheme.preimage_basicOpen]
+    rfl
+  res_x_mul_res_y := by
+    -- naturality: the restricted pullbacks are the overlap pullbacks
+    have hnat₀ : ((Limits.pullback (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).presheaf.map
+          (homOfLE (inf_le_left : (p1BaseChangeCoverSquare A).U₁ ⊓
+            (p1BaseChangeCoverSquare A).U₂ ≤ (p1BaseChangeCoverSquare A).U₁)).op).hom
+          (((pullback.fst (p1Over k).hom
+            (Spec.map (CommRingCat.ofHom (algebraMap k A)))).app
+              (p1LaurentChartData k).V₀).hom (p1LaurentChartData k).x)
+        = ((pullback.fst (p1Over k).hom
+            (Spec.map (CommRingCat.ofHom (algebraMap k A)))).app
+              ((p1LaurentChartData k).V₀ ⊓ (p1LaurentChartData k).V₁)).hom
+            (((p1Over k).left.presheaf.map
+              (homOfLE (inf_le_left : (p1LaurentChartData k).V₀ ⊓
+                (p1LaurentChartData k).V₁ ≤ (p1LaurentChartData k).V₀)).op).hom
+              (p1LaurentChartData k).x) := by
+      have h := congrArg (fun g : Γ((p1Over k).left, (p1LaurentChartData k).V₀) ⟶
+          Γ(Limits.pullback (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A))),
+            (p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂) =>
+          g.hom (p1LaurentChartData k).x)
+        ((pullback.fst (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).naturality
+          (homOfLE (inf_le_left : (p1LaurentChartData k).V₀ ⊓
+            (p1LaurentChartData k).V₁ ≤ (p1LaurentChartData k).V₀)).op)
+      exact h.symm
+    have hnat₁ : ((Limits.pullback (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).presheaf.map
+          (homOfLE (inf_le_right : (p1BaseChangeCoverSquare A).U₁ ⊓
+            (p1BaseChangeCoverSquare A).U₂ ≤ (p1BaseChangeCoverSquare A).U₂)).op).hom
+          (((pullback.fst (p1Over k).hom
+            (Spec.map (CommRingCat.ofHom (algebraMap k A)))).app
+              (p1LaurentChartData k).V₁).hom (p1LaurentChartData k).y)
+        = ((pullback.fst (p1Over k).hom
+            (Spec.map (CommRingCat.ofHom (algebraMap k A)))).app
+              ((p1LaurentChartData k).V₀ ⊓ (p1LaurentChartData k).V₁)).hom
+            (((p1Over k).left.presheaf.map
+              (homOfLE (inf_le_right : (p1LaurentChartData k).V₀ ⊓
+                (p1LaurentChartData k).V₁ ≤ (p1LaurentChartData k).V₁)).op).hom
+              (p1LaurentChartData k).y) := by
+      have h := congrArg (fun g : Γ((p1Over k).left, (p1LaurentChartData k).V₁) ⟶
+          Γ(Limits.pullback (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A))),
+            (p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂) =>
+          g.hom (p1LaurentChartData k).y)
+        ((pullback.fst (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).naturality
+          (homOfLE (inf_le_right : (p1LaurentChartData k).V₀ ⊓
+            (p1LaurentChartData k).V₁ ≤ (p1LaurentChartData k).V₁)).op)
+      exact h.symm
+    rw [hnat₀, hnat₁]
+    exact ((map_mul _ _ _).symm.trans
+      (congrArg _ (p1LaurentChartData k).res_x_mul_res_y)).trans (map_one _)
+  span_pow_x := span_pow_p1BaseChangeX A
+  span_pow_y := span_pow_p1BaseChangeY A
+
+/-- **`H¹`-finiteness of the ℙ¹_A Čech complex** (work item 2, `H¹` half,
+concrete form): for a finitely presented module `M` on `ℙ¹_A`, the cokernel
+of the base-linear Čech difference map of the standard 2-chart cover
+`p1BaseChangeCoverSquare` is a finite `Γ(Spec A, ⊤)`-module — the
+`Module.Finite A (M1 ⧸ range d)` input of the two-term finite replacement
+`exists_twoTermFiniteReplacement`.  No finiteness of `A` is needed. -/
+theorem module_finite_h1_p1BaseChange
+    (M : (Limits.pullback (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules)
+    [M.IsFinitePresentation] :
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        (p1BaseChangeCoverSquare A).U₁
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        (p1BaseChangeCoverSquare A).U₂
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        ((p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂)
+    Module.Finite Γ(Spec (CommRingCat.of A), ⊤)
+      (Γ(M, (p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂) ⧸
+        LinearMap.range ((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+          (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M)) :=
+  (p1BaseChangeRelLaurentChartData A).module_finite_h1 M
+    (Scheme.Modules.module_finite_sections_of_isFinitePresentation M
+      ⟨(p1BaseChangeCoverSquare A).U₁, (p1BaseChangeCoverSquare A).isAffineOpen_U₁⟩)
+
+end P1BaseChange
+
+/-! ## §5. The endgame skeleton: the two-term finite replacement on the
+ℙ¹_A Čech complex
+
+The abstract `TwoTermFiniteFree` machinery applied to the base-linear Čech
+complex `d = moduleSectionDiffBase` of `p1BaseChangeCoverSquare`.  All the
+module-theoretic hypotheses of the Mumford brick are now discharged for
+finitely presented, base-flat `M`:
+
+* flatness of `M⁰ = Γ(M, U₁) × Γ(M, U₂)` and `M¹ = Γ(M, U₁ ⊓ U₂)` — from
+  the pinned `CoherentSheafFlat` hypothesis
+  (`flat_baseSections_of_coherentSheafFlat` + `TwoTerm.flat_prod`);
+* finite generation of `H¹ = coker d` — the A-coefficient Laurent ladder
+  (`module_finite_h1_p1BaseChange`);
+* noetherianity of the base ring `Γ(Spec A, ⊤) ≅ A` — Hilbert basis.
+
+**Audited remaining leaf (see the module docstring)**: finite generation of
+`H⁰ = ker d (= Γ(ℙ¹_A, M))` is Serre-finiteness-grade and is consumed as
+the named hypothesis `hH0`; the geometric bridges (fibrewise
+`FiberH1Vanishing` at scheme points ⟹ surjectivity of `d ⊗ κ(𝔪)` at maximal
+ideals, and `ker d` finite projective ⟹ `p_* M` locally free of rank
+`fiberH0`, shaped as `P1RigidPushforwardStatement`) are the remaining B3
+sessions' work. -/
+
+section Endgame
+
+variable {k : Type u} [Field k]
+variable (A : Type u) [CommRing A] [Algebra k A]
+
+set_option maxHeartbeats 800000 in
+-- Heartbeat headroom for the instance-heavy `letI` environment (fleet recipe).
+/-- **The B3 ℙ¹-endgame on the Čech complex** (work item 3, algebraic half):
+for a finitely presented `M` on `ℙ¹_A` (`A` a finitely generated
+`k`-algebra), flat over the base in the pinned `CoherentSheafFlat` sense,
+with `H⁰ = ker d` finitely generated (`hH0`, the audited Serre-finiteness
+leaf) and `H¹` vanishing on every closed fibre (`hfib`), the Čech difference
+map `d` is surjective, `H⁰ = ker d ≅ Γ(ℙ¹_A, M)` is a **finite projective**
+(= locally free) `Γ(Spec A, ⊤)`-module, and the formation of `H⁰` commutes
+with **arbitrary** base change `Γ(Spec A, ⊤) → B`.
+
+This is `TwoTerm.h0_baseChange_of_fibrewise_h1_vanishing` (Mumford AV II §5
+/ Nitsure §5) instantiated on the base-linear Čech complex; combined with
+the kernel identification `globalSectionsEquivKerModuleSectionDiffBase` it
+computes the pushforward sections `Γ(Spec A, p_* M) = Γ(ℙ¹_A, M) ≅ ker d`. -/
+theorem p1Cech_h0_baseChange_of_fibrewise_h1_vanishing
+    [Algebra.FiniteType k A]
+    (M : (Limits.pullback (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules)
+    [M.IsFinitePresentation]
+    (hflat : Scheme.CoherentSheafFlat
+      (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M) :
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        (p1BaseChangeCoverSquare A).U₁
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        (p1BaseChangeCoverSquare A).U₂
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        ((p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂)
+    ∀ _hH0 : (LinearMap.ker ((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+        (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M)).FG,
+    ∀ _hfib : (∀ (m : Ideal Γ(Spec (CommRingCat.of A), ⊤)), m.IsMaximal →
+      Function.Surjective
+        (((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+          (pullback.snd (p1Over k).hom
+            (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M).baseChange
+          (Γ(Spec (CommRingCat.of A), ⊤) ⧸ m))),
+    Function.Surjective ⇑((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+        (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M) ∧
+      Module.Finite Γ(Spec (CommRingCat.of A), ⊤)
+        (LinearMap.ker ((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+          (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M)) ∧
+      Module.Projective Γ(Spec (CommRingCat.of A), ⊤)
+        (LinearMap.ker ((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+          (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M)) ∧
+      ∀ (B : Type u) [CommRing B] [Algebra Γ(Spec (CommRingCat.of A), ⊤) B],
+        Function.Bijective (AlgebraicJacobian.TwoTerm.kerBaseChange
+          ((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+            (pullback.snd (p1Over k).hom
+              (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M) B) := by
+  letI := (pullback.snd (p1Over k).hom
+    (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+      (p1BaseChangeCoverSquare A).U₁
+  letI := (pullback.snd (p1Over k).hom
+    (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+      (p1BaseChangeCoverSquare A).U₂
+  letI := (pullback.snd (p1Over k).hom
+    (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+      ((p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂)
+  intro hH0 hfib
+  -- noetherianity of the base ring `Γ(Spec A, ⊤) ≅ A` (Hilbert basis)
+  haveI : IsNoetherianRing A := Algebra.FiniteType.isNoetherianRing k A
+  haveI : IsNoetherianRing Γ(Spec (CommRingCat.of A), ⊤) :=
+    isNoetherianRing_of_ringEquiv A
+      (Scheme.ΓSpecIso (CommRingCat.of A)).commRingCatIsoToRingEquiv.symm
+  -- flatness of the two Čech terms, from the pinned `CoherentSheafFlat`
+  haveI hflat₁ : Module.Flat Γ(Spec (CommRingCat.of A), ⊤)
+      Γ(M, (p1BaseChangeCoverSquare A).U₁) :=
+    Scheme.flat_baseSections_of_coherentSheafFlat _ M hflat
+      (p1BaseChangeCoverSquare A).isAffineOpen_U₁
+  haveI hflat₂ : Module.Flat Γ(Spec (CommRingCat.of A), ⊤)
+      Γ(M, (p1BaseChangeCoverSquare A).U₂) :=
+    Scheme.flat_baseSections_of_coherentSheafFlat _ M hflat
+      (p1BaseChangeCoverSquare A).isAffineOpen_U₂
+  haveI hflat₀ : Module.Flat Γ(Spec (CommRingCat.of A), ⊤)
+      (Γ(M, (p1BaseChangeCoverSquare A).U₁) × Γ(M, (p1BaseChangeCoverSquare A).U₂)) :=
+    AlgebraicJacobian.TwoTerm.flat_prod
+  haveI hflatΓ : Module.Flat Γ(Spec (CommRingCat.of A), ⊤)
+      Γ(M, (p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂) :=
+    Scheme.flat_baseSections_of_coherentSheafFlat _ M hflat
+      (p1BaseChangeCoverSquare A).isAffineOpen_inf
+  -- `H¹` finite generation: the A-coefficient Laurent ladder
+  haveI hH1 : Module.Finite Γ(Spec (CommRingCat.of A), ⊤)
+      (Γ(M, (p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂) ⧸
+        LinearMap.range ((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+          (pullback.snd (p1Over k).hom
+            (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M)) :=
+    module_finite_h1_p1BaseChange A M
+  -- the Mumford endgame brick
+  exact AlgebraicJacobian.TwoTerm.h0_baseChange_of_fibrewise_h1_vanishing hH0 hfib
+
+end Endgame
 
 end Adelic
 
