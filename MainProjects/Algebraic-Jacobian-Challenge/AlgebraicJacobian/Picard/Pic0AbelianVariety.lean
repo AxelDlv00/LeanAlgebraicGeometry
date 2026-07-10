@@ -273,6 +273,30 @@ theorem pointedDualNumberPoints_equiv_cotangentSpaceDual {k : Type u} [Field k]
   exact ⟨overDualNumberSectionEquivCotangentSpaceDual (Pic0Scheme C)
     (identitySection_isSection C) (congrArg _ (Subsingleton.elim _ _))⟩
 
+/-- **Axiom-clean.** The tangent space of `Pic⁰_{C/k}` at the identity is the
+tangent space of `Pic_{C/k}` there (leg-(1) connector of the Kleiman §5
+Thm.~5.11 dimension identity): along the clopen inclusion
+`ι : Pic⁰_{C/k} ↪ Pic_{C/k}` (an open immersion by the sibling's
+`IdentityComponent.isOpenSubgroupScheme`), composition identifies the pointed
+dual-number points at the identity section with those of the ambient Picard
+scheme at its image — `Spec k[ε]` is a one-point scheme, so dual-number
+points landing in the open subscheme lift uniquely
+(`pointedDualNumberPointsEquivOfOpenImmersion`,
+`Picard/Pic0TangentSpace.lean`). This lets the representability leg compute
+`T_e Pic⁰` on `Pic_{C/k}` itself, where `picSharp`-representability applies. -/
+theorem pointedDualNumberPoints_equiv_picScheme {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C] :
+    Nonempty (Σ' (ι : Pic0Scheme C ⟶ PicScheme C),
+      pointedDualNumberPoints (Pic0Scheme C) (identitySection C) ≃
+        pointedDualNumberPoints (PicScheme C) (identitySection C ≫ ι.left)) := by
+  obtain ⟨f, hopen, -⟩ :=
+    GroupScheme.IdentityComponent.isOpenSubgroupScheme (PicScheme C)
+  haveI := hopen
+  exact ⟨⟨f, pointedDualNumberPointsEquivOfOpenImmersion f (identitySection C)⟩⟩
+
 /-- **Sorry-free source (carries the FGA existential's `sorryAx`).** The Picard
 scheme `Pic_{C/k}` is separated over `k`. Kleiman delivers this as part of the
 §4 representability package ("Then `Pic_{X/k}` is separated, ..."); its home is
