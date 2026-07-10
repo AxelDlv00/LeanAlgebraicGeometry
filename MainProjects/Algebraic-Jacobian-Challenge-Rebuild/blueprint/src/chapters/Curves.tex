@@ -1,0 +1,1053 @@
+\chapter{Curves over a field}
+\label{chap:Curves}
+
+Throughout this chapter \(k\) is a field. As in Chapter~\ref{chap:Challenge}, a \emph{smooth
+curve} over \(k\) is a \(k\)-scheme which is smooth of relative dimension one, proper, and
+geometrically irreducible over \(k\). This chapter provides the geometric substrate for the
+genus: smooth schemes over a field are reduced, so a smooth curve is geometrically integral;
+a proper geometrically integral scheme over a field has no global functions besides the
+constants; the projective line carries two affine charts with polynomial section rings and
+Laurent-polynomial overlap; and, by Zariski's main theorem, producing a finite morphism
+\(C \to \PP^1\) reduces to producing a locally quasi-finite one.
+
+\section{Smooth algebras over a domain are reduced}
+
+\begin{lemma}[Unramified flat algebras over a domain are reduced]
+  \label{lem:unramified_flat_reduced}
+  \lean{Algebra.FormallyUnramified.isReduced_of_isDomain}
+  \leanok
+  Let \(B\) be an integral domain and let \(S\) be a commutative \(B\)-algebra which is
+  formally unramified, essentially of finite type, and flat over \(B\). Then \(S\) is reduced.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Let \(K = \Frac B\) be the fraction field. The \(K\)-algebra \(K \otimes_B S\) is again
+  formally unramified and essentially of finite type, both properties being stable under base
+  change, and a formally unramified, essentially of finite type algebra over a field is
+  reduced. It therefore suffices to embed \(S\) into \(K \otimes_B S\). The canonical map
+  \(s \mapsto 1 \otimes s\) is, up to the isomorphism \(S \cong B \otimes_B S\), obtained from
+  the injection \(B \hookrightarrow K\) by tensoring with \(S\); since \(S\) is flat over
+  \(B\), it is injective. A subring of a reduced ring is reduced.
+\end{proof}
+
+\begin{lemma}[\'Etale algebras over a domain are reduced]
+  \label{lem:etale_reduced_domain}
+  \lean{Algebra.Etale.isReduced_of_isDomain}
+  \leanok
+  An \'etale algebra over an integral domain is reduced.
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:unramified_flat_reduced}
+  An \'etale algebra is formally unramified and of finite presentation, in particular
+  essentially of finite type, and it is flat. Apply \ref{lem:unramified_flat_reduced}.
+\end{proof}
+
+\begin{lemma}[Standard smooth homomorphisms out of a domain]
+  \label{lem:standard_smooth_reduced_ringhom}
+  \lean{RingHom.IsStandardSmooth.isReduced_of_isDomain}
+  \leanok
+  Let \(B\) be an integral domain and let \(B \to S\) be a standard smooth ring homomorphism,
+  that is, one admitting a presentation \(S = B[x_1,\dots,x_n]/(f_1,\dots,f_c)\) in which the
+  Jacobian matrix \((\partial f_u/\partial x_v)_{u,v \le c}\) has invertible determinant in
+  \(S\). Then \(S\) is reduced.
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:etale_reduced_domain}
+  By the structure theorem for standard smooth algebras, \(S\) is \'etale over a polynomial
+  ring over the base: there are \(m\) and a factorization
+  \(B \to B[x_1,\dots,x_m] \to S\) with the second map \'etale. A polynomial ring over an
+  integral domain is an integral domain, so \ref{lem:etale_reduced_domain} applies.
+\end{proof}
+
+\begin{lemma}[Standard smooth algebras over a domain]
+  \label{lem:standard_smooth_reduced}
+  \lean{Algebra.IsStandardSmooth.isReduced_of_isDomain}
+  \leanok
+  A standard smooth algebra over an integral domain is reduced.
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:standard_smooth_reduced_ringhom}
+  The structure homomorphism is a standard smooth ring homomorphism out of a domain; apply
+  \ref{lem:standard_smooth_reduced_ringhom}.
+\end{proof}
+
+\begin{theorem}[Smooth schemes over a field are reduced]
+  \label{thm:smooth_reduced_field}
+  \lean{AlgebraicGeometry.Smooth.isReduced_of_field}
+  \leanok
+  Let \(K\) be a field and let \(X\) be a scheme which is smooth over \(\Spec K\). Then \(X\)
+  is reduced.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:standard_smooth_reduced_ringhom}
+  A smooth morphism is, locally on the source and the target, standard smooth: every point
+  \(x \in X\) has an affine open neighbourhood \(V\), mapping into an affine open \(U\) of the
+  base, such that the induced ring homomorphism \(\Gamma(U) \to \Gamma(V)\) is standard
+  smooth. Since \(\Spec K\) has a single point and \(U\) is a nonempty open subset containing
+  the image of \(x\), we have \(U = \Spec K\), and \(\Gamma(U) \cong K\) is a field, in
+  particular a domain. By \ref{lem:standard_smooth_reduced_ringhom} the ring \(\Gamma(V)\) is
+  reduced, hence the affine scheme \(V\) is reduced. The opens \(V\) cover \(X\), and a scheme
+  covered by reduced open subschemes is reduced.
+\end{proof}
+
+\begin{theorem}[Smooth morphisms are geometrically reduced]
+  \label{thm:smooth_geometrically_reduced}
+  \lean{AlgebraicGeometry.Smooth.geometricallyReduced}
+  \leanok
+  A smooth morphism of schemes \(f : X \to Y\) is geometrically reduced: for every field \(K\)
+  and every morphism \(\Spec K \to Y\), the base change \(X \times_Y \Spec K\) is a reduced
+  scheme.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:smooth_reduced_field}
+  Smoothness is stable under base change, so the projection
+  \(X \times_Y \Spec K \to \Spec K\) is smooth; apply \ref{thm:smooth_reduced_field}.
+\end{proof}
+
+\begin{lemma}[Smooth of relative dimension one implies smooth]
+  \label{lem:smooth_of_relDim_one}
+  \lean{AlgebraicGeometry.Smooth.of_smoothOfRelativeDimension_one}
+  \leanok
+  A morphism of schemes which is smooth of relative dimension one is smooth.
+\end{lemma}
+\begin{proof}
+  \leanok
+  A morphism smooth of some relative dimension is smooth.
+\end{proof}
+
+\begin{lemma}[Smooth of a relative dimension implies geometrically reduced]
+  \label{lem:relDim_geometrically_reduced}
+  \lean{AlgebraicGeometry.SmoothOfRelativeDimension.geometricallyReduced}
+  \leanok
+  For every \(n\), a morphism of schemes which is smooth of relative dimension \(n\) is
+  geometrically reduced.
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{thm:smooth_geometrically_reduced}
+  Such a morphism is smooth; apply \ref{thm:smooth_geometrically_reduced}.
+\end{proof}
+
+\begin{theorem}[Smooth and geometrically irreducible implies geometrically integral]
+  \label{thm:smooth_geometrically_integral}
+  \lean{AlgebraicGeometry.Smooth.geometricallyIntegral}
+  \leanok
+  A smooth, geometrically irreducible morphism of schemes is geometrically integral: every
+  base change to the spectrum of a field is an integral scheme.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:smooth_geometrically_reduced}
+  Every base change to the spectrum of a field is reduced
+  (\ref{thm:smooth_geometrically_reduced}) and irreducible (geometric irreducibility), and a
+  reduced scheme with irreducible --- in particular nonempty --- underlying space is integral.
+\end{proof}
+
+\begin{theorem}[Relative-dimension form]
+  \label{thm:relDim_geometrically_integral}
+  \lean{AlgebraicGeometry.SmoothOfRelativeDimension.geometricallyIntegral}
+  \leanok
+  For every \(n\), a geometrically irreducible morphism of schemes which is smooth of relative
+  dimension \(n\) is geometrically integral.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:smooth_geometrically_integral}
+  Such a morphism is smooth; apply \ref{thm:smooth_geometrically_integral}.
+\end{proof}
+
+\section{Schemes over a field: the topological substrate}
+
+In this section \(X\) is a scheme over \(k\), that is, a scheme equipped with a structure
+morphism \(X \to \Spec k\).
+
+\begin{lemma}[Irreducibility]
+  \label{lem:irreducible_of_geomirred}
+  \lean{AlgebraicGeometry.irreducibleSpace_left_of_geometricallyIrreducible}
+  \leanok
+  If \(X\) is geometrically irreducible over \(k\), then the underlying topological space of
+  \(X\) is irreducible; in particular \(X\) is nonempty.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Geometric irreducibility applied to the trivial extension \(k \to k\) says that
+  \(X \times_{\Spec k} \Spec k \cong X\) is irreducible.
+\end{proof}
+
+\begin{lemma}[Quasi-compactness]
+  \label{lem:curve_compact}
+  \lean{AlgebraicGeometry.compactSpace_left_of_quasiCompact}
+  \leanok
+  If \(X\) is quasi-compact over \(\Spec k\) (for instance proper), then the underlying
+  topological space of \(X\) is quasi-compact.
+\end{lemma}
+\begin{proof}
+  \leanok
+  \(\Spec k\) is a one-point space, hence quasi-compact, and \(X\) is the preimage of it
+  under a quasi-compact morphism.
+\end{proof}
+
+\begin{lemma}[Quasi-separatedness]
+  \label{lem:curve_quasiseparated}
+  \lean{AlgebraicGeometry.quasiSeparatedSpace_left_of_quasiSeparated}
+  \leanok
+  If \(X\) is quasi-separated over \(\Spec k\) (for instance proper), then the underlying
+  topological space of \(X\) is quasi-separated: the intersection of any two quasi-compact
+  opens is quasi-compact.
+\end{lemma}
+\begin{proof}
+  \leanok
+  \(\Spec k\) is affine, hence a quasi-separated scheme, and a scheme quasi-separated over a
+  quasi-separated scheme is quasi-separated.
+\end{proof}
+
+\begin{proposition}[Integrality]
+  \label{prop:curve_integral}
+  \lean{AlgebraicGeometry.isIntegral_left_of_geometricallyReduced}
+  \leanok
+  If \(X\) is geometrically reduced and geometrically irreducible over \(k\), then \(X\) is an
+  integral scheme.
+\end{proposition}
+\begin{proof}
+  \leanok
+  \uses{lem:irreducible_of_geomirred}
+  Applying geometric reducedness to the trivial extension \(k \to k\) shows that \(X\) is
+  reduced, and \(X\) is irreducible by \ref{lem:irreducible_of_geomirred}. A reduced scheme
+  with irreducible underlying space is integral.
+\end{proof}
+
+\section{Global sections of a proper geometrically integral scheme}
+
+\begin{lemma}[Pushout of a field extension along itself]
+  \label{lem:pushout_field_epi}
+  \lean{CommRingCat.epi_of_isPushout_of_isField}
+  \leanok
+  Let \(\varphi : A \to B\) and \(\psi : A \to C\) be homomorphisms of commutative rings with
+  \(B\) nontrivial, and let \(D\), with coprojections \(\iota_B : B \to D\) and
+  \(\iota_C : C \to D\), be a pushout of \((\varphi, \psi)\) (for instance
+  \(D = B \otimes_A C\)). Assume that \(D\) is a field and that there is a ring isomorphism
+  \(e : C \cong B\) with \(e \circ \psi = \varphi\). Then \(\varphi\) is an epimorphism in the
+  category of commutative rings.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Let \(\mu : D \to B\) be the homomorphism with \(\mu \circ \iota_B = \id_B\) and
+  \(\mu \circ \iota_C = e\), given by the universal property of the pushout (the two maps
+  agree on \(A\) because \(e \circ \psi = \varphi\)). Since \(D\) is a field and \(B\) is
+  nontrivial, \(\mu\) is injective; it is surjective because \(\mu \circ \iota_B = \id_B\).
+  Hence \(\mu\) is an isomorphism, and from
+  \(\mu \circ \iota_B = \id_B = \mu \circ (\iota_C \circ e^{-1})\) we conclude
+  \(\iota_B = \iota_C \circ e^{-1}\).
+
+  Now let \(u, v : B \to W\) satisfy \(u \circ \varphi = v \circ \varphi\). Then
+  \(u \circ \varphi = (v \circ e) \circ \psi\), so there is
+  \(w : D \to W\) with \(w \circ \iota_B = u\) and \(w \circ \iota_C = v \circ e\). Therefore
+  \[
+    u = w \circ \iota_B = w \circ \iota_C \circ e^{-1} = v \circ e \circ e^{-1} = v,
+  \]
+  which proves that \(\varphi\) is an epimorphism.
+\end{proof}
+
+\begin{lemma}[Global sections form a field]
+  \label{lem:sections_field}
+  \lean{AlgebraicGeometry.isField_of_universallyClosed_of_isField}
+  \leanok
+  Let \(R\) be a commutative ring which is a field, let \(X\) be an integral scheme, and let
+  \(f : X \to \Spec R\) be universally closed. Then \(\Gamma(X, \struct X)\) is a field.
+\end{lemma}
+\begin{proof}
+  \leanok
+  \(\Gamma(X, \struct X)\) is an integral domain because \(X\) is integral. Since \(f\) is
+  universally closed, the induced ring homomorphism
+  \(R \cong \Gamma(\Spec R, \struct{\Spec R}) \to \Gamma(X, \struct X)\) is an integral
+  extension. A domain which is integral over a field is a field.
+\end{proof}
+
+\begin{theorem}[Constant functions on a proper geometrically integral scheme]
+  \label{thm:sections_k}
+  \lean{AlgebraicGeometry.bijective_appTop_of_isProper_of_geometricallyIntegral}
+  \leanok
+  Let \(K\) be a field and let \(X\) be a scheme, proper and geometrically integral over
+  \(K\). Then the ring homomorphism
+  \(\Gamma(\Spec K, \struct{\Spec K}) \to \Gamma(X, \struct X)\) induced by the structure
+  morphism is bijective; identifying \(\Gamma(\Spec K, \struct{\Spec K}) = K\), this says
+  \(\Gamma(X, \struct X) = K\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:pushout_field_epi, lem:sections_field, lem:curve_compact, lem:curve_quasiseparated}
+  Write \(A = \Gamma(X, \struct X)\) and let \(\varphi : K \to A\) be the map in question.
+  Applying geometric integrality to the trivial extension \(K \to K\) shows that \(X\) is
+  integral; in particular \(X\) is nonempty and \(A\) is a nontrivial domain, so \(\varphi\),
+  a ring homomorphism out of a field into a nontrivial ring, is injective. By
+  \ref{lem:sections_field} (properness includes universal closedness), \(A\) is a field, and
+  since \(f\) is proper, \(A\) is moreover a finite \(K\)-module. As a finite ring
+  homomorphism is surjective as soon as it is an epimorphism of commutative rings, it remains
+  to prove that \(\varphi\) is an epimorphism.
+
+  Let \(q : \Spec A \to \Spec K\) be the morphism induced by \(\varphi\) and form the base
+  change \(Y = X \times_{\Spec K} \Spec A\). Since \(A\) is a field, geometric integrality of
+  \(f\) makes \(Y\) integral, and the projection \(Y \to \Spec A\) is universally closed as a
+  base change of \(f\); hence \(D := \Gamma(Y, \struct Y)\) is a field by
+  \ref{lem:sections_field}. On the other hand, \(X\) is quasi-compact and quasi-separated as
+  a topological space (\ref{lem:curve_compact}, \ref{lem:curve_quasiseparated}), and \(q\) is
+  flat because every vector space over \(K\) is flat; flat base change for global sections
+  therefore exhibits the square of section rings
+  \[
+    \begin{array}{ccc}
+      K & \longrightarrow & A \\
+      \downarrow & & \downarrow \\
+      A & \longrightarrow & D
+    \end{array}
+  \]
+  (left column \(\varphi\), top row \(\varphi\) transported through the canonical isomorphism
+  \(\Gamma(\Spec A, \struct{\Spec A}) \cong A\)) as a pushout square of commutative rings,
+  \(D \cong A \otimes_K A\). Its pushout \(D\) is a field and its two legs are isomorphic
+  copies of \(\varphi\), so \(\varphi\) is an epimorphism by \ref{lem:pushout_field_epi}.
+\end{proof}
+
+\begin{corollary}[Isomorphism form]
+  \label{cor:sections_iso}
+  \lean{AlgebraicGeometry.isIso_appTop_of_isProper_of_geometricallyIntegral}
+  \leanok
+  In the situation of \ref{thm:sections_k}, the induced map
+  \(\Gamma(\Spec K, \struct{\Spec K}) \to \Gamma(X, \struct X)\) is an isomorphism of rings.
+\end{corollary}
+\begin{proof}
+  \leanok
+  \uses{thm:sections_k}
+  A bijective ring homomorphism is an isomorphism.
+\end{proof}
+
+\begin{corollary}[Global sections of the curve]
+  \label{cor:curve_sections}
+  \lean{AlgebraicGeometry.isIso_hom_appTop_of_geometricallyReduced}
+  \leanok
+  Let \(C\) be a scheme over \(k\) which is proper, geometrically irreducible and
+  geometrically reduced over \(k\). Then the structure morphism induces an isomorphism
+  \(\Gamma(\Spec k, \struct{\Spec k}) \cong \Gamma(C, \struct C)\); that is,
+  \(\Gamma(C, \struct C) = k\).
+\end{corollary}
+\begin{proof}
+  \leanok
+  \uses{cor:sections_iso}
+  Every base change of \(C\) to the spectrum of a field is reduced and irreducible, hence
+  integral; so \(C\) is geometrically integral over \(k\) and \ref{cor:sections_iso} applies.
+\end{proof}
+
+\begin{remark}[The smooth curve]
+  \label{rem:curve_bundle}
+  \uses{lem:smooth_of_relDim_one, lem:relDim_geometrically_reduced,
+    thm:relDim_geometrically_integral, lem:irreducible_of_geomirred, lem:curve_compact,
+    lem:curve_quasiseparated, prop:curve_integral, cor:curve_sections}
+  \leanok
+  Let \(C\) be a smooth curve over \(k\), i.e.\ proper, smooth of relative dimension one and
+  geometrically irreducible over \(k\), as in Chapter~\ref{chap:Challenge}. Combining the
+  above: \(C\) is smooth over \(k\) (\ref{lem:smooth_of_relDim_one}), geometrically reduced
+  (\ref{lem:relDim_geometrically_reduced}) and geometrically integral
+  (\ref{thm:relDim_geometrically_integral}); its underlying space is irreducible
+  (\ref{lem:irreducible_of_geomirred}), quasi-compact (\ref{lem:curve_compact}) and
+  quasi-separated (\ref{lem:curve_quasiseparated}); \(C\) is an integral scheme
+  (\ref{prop:curve_integral}); and \(\Gamma(C, \struct C) = k\) (\ref{cor:curve_sections}).
+\end{remark}
+
+\section{The projective line and its charts}
+
+Let \(A = k[X_0, X_1]\) be the polynomial ring in two variables, graded by total degree. For a
+homogeneous element \(f \in A\) we write \(A_{(f)}\) for the degree-zero part of the
+localization \(A_f\); its elements are fractions \(a/f^n\) with \(a\) homogeneous of degree
+\(n \deg f\).
+
+\begin{definition}[The projective line]
+  \label{def:P1}
+  \lean{AlgebraicGeometry.P1}
+  \leanok
+  The projective line over \(k\) is \(\PP^1 = \Proj A\), the Proj of the graded ring
+  \(A = k[X_0, X_1]\).
+\end{definition}
+
+\begin{definition}[Degree zero]
+  \label{def:P1_gradeZero}
+  \lean{AlgebraicGeometry.P1.gradeZeroAlgEquiv}
+  \leanok
+  The inclusion of constants \(k \to A_0\) into the degree-zero part of \(A\) is an
+  isomorphism of \(k\)-algebras.
+\end{definition}
+\begin{proof}
+  \leanok
+  It is injective because a nonzero constant polynomial is nonzero, and surjective because a
+  polynomial which is homogeneous of degree zero is constant.
+\end{proof}
+
+\begin{definition}[Structure morphism]
+  \label{def:P1_structureMap}
+  \lean{AlgebraicGeometry.P1.structureMap}
+  \uses{def:P1, def:P1_gradeZero}
+  \leanok
+  The structure morphism \(\PP^1 \to \Spec k\) is the canonical morphism
+  \(\Proj A \to \Spec A_0\) followed by the isomorphism \(\Spec A_0 \cong \Spec k\) induced by
+  \ref{def:P1_gradeZero}.
+\end{definition}
+
+\begin{theorem}[Properness of the projective line]
+  \label{thm:P1_proper}
+  \lean{AlgebraicGeometry.P1.isProper_structureMap}
+  \uses{def:P1_structureMap}
+  \leanok
+  \(\PP^1\) is proper over \(k\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{def:P1_gradeZero}
+  \(A\) is a finitely generated algebra over its degree-zero part \(A_0 = k\) (generated by
+  \(X_0\) and \(X_1\)), and the Proj of a graded ring which is finitely generated over its
+  degree-zero part is proper over the spectrum of the degree-zero part. Composing with the
+  isomorphism \(\Spec A_0 \cong \Spec k\) preserves properness.
+\end{proof}
+
+\begin{definition}[The projective line as a scheme over \(k\)]
+  \label{def:P1_asOver}
+  \lean{AlgebraicGeometry.P1.asOver}
+  \uses{def:P1_structureMap}
+  \leanok
+  \(\PP^1\), regarded as a scheme over \(k\) via the structure morphism of
+  \ref{def:P1_structureMap}.
+\end{definition}
+
+\begin{definition}[The standard charts]
+  \label{def:P1_chartOpen}
+  \lean{AlgebraicGeometry.P1.chartOpen}
+  \uses{def:P1}
+  \leanok
+  For \(i \in \{0,1\}\), the chart \(U_i = D_+(X_i) \subseteq \PP^1\) is the basic open locus
+  where the homogeneous coordinate \(X_i\) does not vanish.
+\end{definition}
+
+\begin{lemma}[The charts are affine]
+  \label{lem:P1_chartOpen_affine}
+  \lean{AlgebraicGeometry.P1.isAffineOpen_chartOpen}
+  \uses{def:P1_chartOpen}
+  \leanok
+  Each chart \(U_i\) is an affine open of \(\PP^1\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \(X_i\) is homogeneous of degree \(1 > 0\), and the basic open of \(\Proj\) at a homogeneous
+  element of positive degree is affine.
+\end{proof}
+
+\begin{lemma}[The charts cover]
+  \label{lem:P1_chartOpen_sup}
+  \lean{AlgebraicGeometry.P1.chartOpen_sup}
+  \uses{def:P1_chartOpen}
+  \leanok
+  \(U_0 \cup U_1 = \PP^1\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  A point of \(\Proj A\) is a homogeneous prime ideal \(\mathfrak p\) of \(A\) not containing
+  the irrelevant ideal \(A_+\). Every monomial of positive degree is divisible by \(X_0\) or
+  by \(X_1\), so if both \(X_0 \in \mathfrak p\) and \(X_1 \in \mathfrak p\) then
+  \(A_+ \subseteq \mathfrak p\), a contradiction. Hence every point avoids some \(X_i\), i.e.\
+  lies in \(U_0 \cup U_1\).
+\end{proof}
+
+\begin{lemma}[The chart overlap]
+  \label{lem:P1_chartOpen_inf}
+  \lean{AlgebraicGeometry.P1.chartOpen_inf}
+  \uses{def:P1_chartOpen}
+  \leanok
+  \(U_0 \cap U_1 = D_+(X_0 X_1)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  A homogeneous prime avoids the product \(X_0 X_1\) if and only if it avoids both factors.
+\end{proof}
+
+\begin{definition}[Affine models of the charts]
+  \label{def:P1_chartIota}
+  \lean{AlgebraicGeometry.P1.chartι}
+  \uses{def:P1, def:P1_chartOpen}
+  \leanok
+  For \(i \in \{0,1\}\), the canonical morphism \(\Spec A_{(X_i)} \to \PP^1\) associated with
+  the basic open at the degree-one element \(X_i\); it is an open immersion.
+\end{definition}
+
+\begin{lemma}[Image of the affine model]
+  \label{lem:P1_chartIota_range}
+  \lean{AlgebraicGeometry.P1.opensRange_chartι}
+  \uses{def:P1_chartIota, def:P1_chartOpen}
+  \leanok
+  The image of \(\Spec A_{(X_i)} \to \PP^1\) is the chart \(U_i\); thus
+  \(U_i \cong \Spec A_{(X_i)}\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  This is the standard description of the basic opens of \(\Proj\): the homogeneous primes
+  avoiding \(X_i\) correspond to the primes of the degree-zero localization \(A_{(X_i)}\).
+\end{proof}
+
+\begin{lemma}[The affine models lie over \(k\)]
+  \label{lem:P1_chartIota_structureMap}
+  \lean{AlgebraicGeometry.P1.chartι_structureMap}
+  \uses{def:P1_chartIota, def:P1_structureMap}
+  \leanok
+  The composite \(\Spec A_{(X_i)} \to \PP^1 \to \Spec k\) is the morphism induced by the
+  \(k\)-algebra structure of \(A_{(X_i)}\); that is, the affine models are morphisms of
+  schemes over \(k\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{def:P1_gradeZero}
+  The canonical morphism \(\Proj A \to \Spec A_0\), restricted to the affine chart, is induced
+  by the ring homomorphism \(A_0 \to A_{(X_i)}\); composing with the isomorphism
+  \(k \cong A_0\) of \ref{def:P1_gradeZero} gives the claim.
+\end{proof}
+
+\begin{definition}[Chart coordinates]
+  \label{def:P1_chartCoord}
+  \lean{AlgebraicGeometry.P1.chartCoord}
+  \uses{def:P1}
+  \leanok
+  For \(i, j \in \{0,1\}\), the chart coordinate is the degree-zero fraction
+  \(t_{ij} = X_j / X_i \in A_{(X_i)}\).
+\end{definition}
+
+\begin{definition}[Dehomogenization]
+  \label{def:P1_dehomogenize}
+  \lean{AlgebraicGeometry.P1.dehomogenize}
+  \leanok
+  For \(i \in \{0,1\}\), the dehomogenization at \(X_i\) is the \(k\)-algebra homomorphism
+  \(\delta_i : k[X_0, X_1] \to k[t]\) with \(\delta_i(X_i) = 1\) and \(\delta_i(X_j) = t\) for
+  \(j \neq i\).
+\end{definition}
+
+\begin{definition}[From polynomials to the chart ring]
+  \label{def:P1_polyToAway}
+  \lean{AlgebraicGeometry.P1.polyToAway}
+  \uses{def:P1_chartCoord}
+  \leanok
+  For \(i, j \in \{0,1\}\), the \(k\)-algebra homomorphism \(k[t] \to A_{(X_i)}\) given by
+  evaluation at the chart coordinate, \(t \mapsto t_{ij}\).
+\end{definition}
+
+\begin{definition}[From the chart ring to polynomials]
+  \label{def:P1_awayToPoly}
+  \lean{AlgebraicGeometry.P1.awayToPoly}
+  \uses{def:P1_dehomogenize}
+  \leanok
+  For \(i \in \{0,1\}\), the \(k\)-algebra homomorphism \(A_{(X_i)} \to k[t]\) sending a
+  degree-zero fraction \(a / X_i^n\) (with \(a\) homogeneous of degree \(n\)) to
+  \(\delta_i(a)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  Well-definedness: \(\delta_i(X_i) = 1\) is a unit of \(k[t]\), so \(\delta_i\) extends to
+  the localization \(A_{X_i} \to k[t]\) by the universal property of localization; on the
+  degree-zero subring its value on \(a / X_i^n\) is
+  \(\delta_i(a)\,\delta_i(X_i)^{-n} = \delta_i(a)\).
+\end{proof}
+
+\begin{lemma}[One composite is the identity]
+  \label{lem:P1_awayToPoly_polyToAway}
+  \lean{AlgebraicGeometry.P1.awayToPoly_comp_polyToAway}
+  \uses{def:P1_polyToAway, def:P1_awayToPoly}
+  \leanok
+  For \(i \neq j\), the composite \(k[t] \to A_{(X_i)} \to k[t]\) of
+  \ref{def:P1_polyToAway} followed by \ref{def:P1_awayToPoly} is the identity.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Both sides are \(k\)-algebra homomorphisms on \(k[t]\), so it suffices to check the
+  generator: \(t \mapsto t_{ij} = X_j / X_i \mapsto \delta_i(X_j) = t\).
+\end{proof}
+
+\begin{lemma}[Monomial fractions are powers of the coordinate]
+  \label{lem:P1_away_monomial}
+  \lean{AlgebraicGeometry.P1.away_mk_prod_eq}
+  \uses{def:P1_chartCoord}
+  \leanok
+  Let \(i \neq j\) and let \(e_0, e_1 \ge 0\) with \(e_0 + e_1 = a\). Then in \(A_{(X_i)}\)
+  \[
+    \frac{X_0^{e_0} X_1^{e_1}}{X_i^{a}} \;=\; t_{ij}^{\,e_j}.
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  Since \(X_0^{e_0} X_1^{e_1} = X_i^{e_i} X_j^{e_j}\) and \(a = e_i + e_j\), the left-hand
+  side is \(X_i^{e_i} X_j^{e_j} / X_i^{e_i + e_j} = X_j^{e_j} / X_i^{e_j}\), which is
+  \(t_{ij}^{\,e_j}\).
+\end{proof}
+
+\begin{lemma}[Surjectivity onto the chart ring]
+  \label{lem:P1_polyToAway_surjective}
+  \lean{AlgebraicGeometry.P1.polyToAway_surjective}
+  \uses{def:P1_polyToAway}
+  \leanok
+  For \(i \neq j\), the homomorphism \(k[t] \to A_{(X_i)}\) of \ref{def:P1_polyToAway} is
+  surjective.
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:P1_away_monomial, def:P1_gradeZero}
+  Since \(A\) is generated over \(A_0\) by the degree-one elements \(X_0, X_1\), the
+  degree-zero localization \(A_{(X_i)}\) is spanned, as a module over \(A_0 = k\)
+  (\ref{def:P1_gradeZero}), by the fractions \(m / X_i^a\) where \(m\) ranges over the
+  monomials \(X_0^{e_0} X_1^{e_1}\) of degree \(a\). By \ref{lem:P1_away_monomial} each such
+  fraction equals \(t_{ij}^{\,e_j}\), which is the image of \(t^{e_j}\). The image of a ring
+  homomorphism is closed under addition and under multiplication by scalars from \(k\), so it
+  is all of \(A_{(X_i)}\).
+\end{proof}
+
+\begin{lemma}[The other composite is the identity]
+  \label{lem:P1_polyToAway_awayToPoly}
+  \lean{AlgebraicGeometry.P1.polyToAway_comp_awayToPoly}
+  \uses{def:P1_polyToAway, def:P1_awayToPoly}
+  \leanok
+  For \(i \neq j\), the composite \(A_{(X_i)} \to k[t] \to A_{(X_i)}\) of
+  \ref{def:P1_awayToPoly} followed by \ref{def:P1_polyToAway} is the identity.
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:P1_polyToAway_surjective, lem:P1_awayToPoly_polyToAway}
+  By \ref{lem:P1_polyToAway_surjective} every element of \(A_{(X_i)}\) is of the form
+  \(p(t_{ij})\) with \(p \in k[t]\), and on such elements the claim follows from
+  \ref{lem:P1_awayToPoly_polyToAway}.
+\end{proof}
+
+\begin{definition}[The chart identification]
+  \label{def:P1_awayAlgEquiv}
+  \lean{AlgebraicGeometry.P1.awayAlgEquiv}
+  \uses{def:P1_polyToAway, def:P1_awayToPoly}
+  \leanok
+  For \(i \neq j\), the isomorphism of \(k\)-algebras
+  \(\alpha_i : A_{(X_i)} \cong k[t]\) given by the mutually inverse homomorphisms of
+  \ref{def:P1_awayToPoly} and \ref{def:P1_polyToAway}; the chart coordinate \(t_{ij}\)
+  corresponds to \(t\).
+\end{definition}
+\begin{proof}
+  \leanok
+  \uses{lem:P1_awayToPoly_polyToAway, lem:P1_polyToAway_awayToPoly}
+  The two composites are the identity by \ref{lem:P1_awayToPoly_polyToAway} and
+  \ref{lem:P1_polyToAway_awayToPoly}.
+\end{proof}
+
+\section{The chart overlap and Laurent polynomials}
+
+Write \(k[T, T^{-1}]\) for the ring of Laurent polynomials over \(k\).
+
+\begin{lemma}[Laurent span]
+  \label{lem:laurent_span}
+  \lean{LaurentPolynomial.exists_toLaurent_add_aeval}
+  \leanok
+  Every Laurent polynomial \(f \in R[T, T^{-1}]\) over a commutative (semi)ring \(R\) can be
+  written as \(f = p(T) + q(T^{-1})\) with \(p, q \in R[t]\) ordinary polynomials.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Split \(f\) into its monomials and collect those with nonnegative exponent into \(p\) and
+  those with negative exponent into \(q\).
+\end{proof}
+
+\begin{definition}[Restriction from the left chart]
+  \label{def:P1_awayToOverlapLeft}
+  \lean{AlgebraicGeometry.P1.awayToOverlapLeft}
+  \uses{def:P1}
+  \leanok
+  The canonical ring homomorphism \(\lambda : A_{(X_0)} \to A_{(X_0 X_1)}\), sending
+  \(a / X_0^{\,n}\) to \(a X_1^{\,n} / (X_0 X_1)^{n}\).
+\end{definition}
+
+\begin{definition}[Restriction from the right chart]
+  \label{def:P1_awayToOverlapRight}
+  \lean{AlgebraicGeometry.P1.awayToOverlapRight}
+  \uses{def:P1}
+  \leanok
+  The canonical ring homomorphism \(\rho : A_{(X_1)} \to A_{(X_0 X_1)}\), sending
+  \(a / X_1^{\,n}\) to \(a X_0^{\,n} / (X_0 X_1)^{n}\).
+\end{definition}
+
+\begin{lemma}[The two coordinates are mutually inverse on the overlap]
+  \label{lem:P1_coord_mul}
+  \lean{AlgebraicGeometry.P1.awayToOverlap_mul_eq_one}
+  \uses{def:P1_awayToOverlapLeft, def:P1_awayToOverlapRight, def:P1_chartCoord}
+  \leanok
+  In \(A_{(X_0 X_1)}\) one has \(\lambda(t_{01}) \cdot \rho(t_{10}) = 1\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Computing with the formulas of \ref{def:P1_awayToOverlapLeft} and
+  \ref{def:P1_awayToOverlapRight}:
+  \(\lambda(t_{01}) = X_1^2 / (X_0 X_1)\) and \(\rho(t_{10}) = X_0^2 / (X_0 X_1)\), so
+  \[
+    \lambda(t_{01}) \cdot \rho(t_{10})
+      = \frac{X_0^2 X_1^2}{(X_0 X_1)^2} = 1 .
+  \]
+\end{proof}
+
+\begin{lemma}[The overlap ring is a localization of the chart ring]
+  \label{lem:P1_overlap_isLocalization}
+  \lean{AlgebraicGeometry.P1.instAwayAwayNatMvPolynomialFinOfNatSubmoduleHomogeneousSubmoduleXChartCoordHMul}
+  \uses{def:P1_awayToOverlapLeft, def:P1_chartCoord}
+  \leanok
+  The homomorphism \(\lambda\) of \ref{def:P1_awayToOverlapLeft} identifies
+  \(A_{(X_0 X_1)}\) with the localization of \(A_{(X_0)}\) at the powers of the chart
+  coordinate \(t_{01}\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  This is a general property of degree-zero localizations: for homogeneous elements \(f, g\)
+  of degree one, \(A_{(fg)}\) is the localization of \(A_{(f)}\) away from the degree-zero
+  fraction \(g/f\). Here \(f = X_0\), \(g = X_1\) and \(g/f = t_{01}\).
+\end{proof}
+
+\begin{definition}[The overlap identification]
+  \label{def:P1_overlapAlgEquiv}
+  \lean{AlgebraicGeometry.P1.overlapAlgEquiv}
+  \uses{def:P1}
+  \leanok
+  The isomorphism of \(k\)-algebras \(\theta : A_{(X_0 X_1)} \cong k[T, T^{-1}]\), with
+  \(T\) the image of the coordinate \(t_{01}\).
+\end{definition}
+\begin{proof}
+  \leanok
+  \uses{lem:P1_overlap_isLocalization, def:P1_awayAlgEquiv}
+  By \ref{lem:P1_overlap_isLocalization}, \(A_{(X_0X_1)}\) is the localization of
+  \(A_{(X_0)}\) at the powers of \(t_{01}\). The isomorphism
+  \(\alpha_0 : A_{(X_0)} \cong k[t]\) of \ref{def:P1_awayAlgEquiv} carries \(t_{01}\) to
+  \(t\), hence induces an isomorphism of the two localizations
+  \(A_{(X_0X_1)} \cong k[t]_{t} = k[T, T^{-1}]\) (localizations at corresponding
+  multiplicative sets are canonically isomorphic). The map is \(k\)-linear because
+  \(\alpha_0\) is.
+\end{proof}
+
+\begin{lemma}[Left restriction is \(t \mapsto T\)]
+  \label{lem:P1_overlap_res_left}
+  \lean{AlgebraicGeometry.P1.overlapAlgEquiv_awayToOverlapLeft}
+  \uses{def:P1_overlapAlgEquiv, def:P1_awayAlgEquiv, def:P1_awayToOverlapLeft}
+  \leanok
+  For every \(z \in A_{(X_0)}\) one has \(\theta(\lambda(z)) = p(T)\), where
+  \(p = \alpha_0(z) \in k[t]\). In other words, under the identifications
+  \(\alpha_0\) and \(\theta\), the restriction \(\lambda\) is the canonical inclusion
+  \(k[t] \to k[T, T^{-1}]\), \(t \mapsto T\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:P1_overlap_isLocalization}
+  By construction (\ref{def:P1_overlapAlgEquiv}), \(\theta\) is the comparison of
+  localizations induced by \(\alpha_0\); under such a comparison the localization map
+  \(\lambda\) of \ref{lem:P1_overlap_isLocalization} corresponds to the localization map
+  \(k[t] \to k[T, T^{-1}]\).
+\end{proof}
+
+\begin{lemma}[Right restriction is \(t \mapsto T^{-1}\)]
+  \label{lem:P1_overlap_res_right}
+  \lean{AlgebraicGeometry.P1.overlapAlgEquiv_awayToOverlapRight}
+  \uses{def:P1_overlapAlgEquiv, def:P1_awayAlgEquiv, def:P1_awayToOverlapRight}
+  \leanok
+  For every \(z \in A_{(X_1)}\) one has \(\theta(\rho(z)) = q(T^{-1})\), where
+  \(q = \alpha_1(z) \in k[t]\). In other words, under the identifications \(\alpha_1\) and
+  \(\theta\), the restriction \(\rho\) is the homomorphism \(k[t] \to k[T, T^{-1}]\),
+  \(t \mapsto T^{-1}\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:P1_coord_mul, lem:P1_overlap_res_left, lem:P1_polyToAway_surjective}
+  By \ref{lem:P1_overlap_res_left} the image of \(\lambda(t_{01})\) under \(\theta\) is
+  \(T\), and by \ref{lem:P1_coord_mul} \(\lambda(t_{01})\,\rho(t_{10}) = 1\); applying
+  \(\theta\) gives \(\theta(\rho(t_{10})) = T^{-1}\). By
+  \ref{lem:P1_polyToAway_surjective} (for the indices \((1,0)\)) every \(z \in A_{(X_1)}\)
+  is a polynomial in \(t_{10}\) with coefficients in \(k\); both sides of the claim are
+  \(k\)-algebra homomorphisms in \(z\), and they agree on \(t_{10}\).
+\end{proof}
+
+\begin{lemma}[Laurent span on the overlap ring]
+  \label{lem:P1_overlap_span}
+  \lean{AlgebraicGeometry.P1.exists_awayToOverlap_add}
+  \uses{def:P1_awayToOverlapLeft, def:P1_awayToOverlapRight}
+  \leanok
+  Every \(w \in A_{(X_0 X_1)}\) can be written as \(w = \lambda(z_0) + \rho(z_1)\) with
+  \(z_0 \in A_{(X_0)}\) and \(z_1 \in A_{(X_1)}\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:laurent_span, def:P1_overlapAlgEquiv, lem:P1_overlap_res_left,
+    lem:P1_overlap_res_right, def:P1_awayAlgEquiv}
+  Write \(\theta(w) = p(T) + q(T^{-1})\) by \ref{lem:laurent_span} and set
+  \(z_0 = \alpha_0^{-1}(p)\), \(z_1 = \alpha_1^{-1}(q)\). By
+  \ref{lem:P1_overlap_res_left} and \ref{lem:P1_overlap_res_right},
+  \(\theta(\lambda(z_0) + \rho(z_1)) = p(T) + q(T^{-1}) = \theta(w)\), and \(\theta\) is
+  injective.
+\end{proof}
+
+\section{Section rings and the Laurent chart pair}
+
+\begin{lemma}[The overlap is affine]
+  \label{lem:P1_overlap_affine}
+  \lean{AlgebraicGeometry.P1.isAffineOpen_overlap}
+  \uses{lem:P1_chartOpen_inf}
+  \leanok
+  The chart overlap \(U_0 \cap U_1 = D_+(X_0 X_1)\) is an affine open of \(\PP^1\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \(X_0 X_1\) is homogeneous of degree \(2 > 0\), and the basic open of \(\Proj\) at a
+  homogeneous element of positive degree is affine.
+\end{proof}
+
+\begin{definition}[Sections on the left chart]
+  \label{def:P1_chartSectionsEquiv0}
+  \lean{AlgebraicGeometry.P1.chartSectionsEquiv₀}
+  \uses{def:P1_chartOpen, def:P1_chartIota, def:P1_awayAlgEquiv}
+  \leanok
+  The ring isomorphism \(\gamma_0 : \Gamma(\PP^1, U_0) \cong k[t]\): the canonical
+  identification \(\Gamma(\PP^1, D_+(X_0)) \cong A_{(X_0)}\) (sections of \(\Proj\) over a
+  basic open; equivalently, \(U_0 = \Spec A_{(X_0)}\) via \ref{def:P1_chartIota}) followed by
+  \(\alpha_0\) of \ref{def:P1_awayAlgEquiv}.
+\end{definition}
+
+\begin{definition}[Sections on the right chart]
+  \label{def:P1_chartSectionsEquiv1}
+  \lean{AlgebraicGeometry.P1.chartSectionsEquiv₁}
+  \uses{def:P1_chartOpen, def:P1_chartIota, def:P1_awayAlgEquiv}
+  \leanok
+  The ring isomorphism \(\gamma_1 : \Gamma(\PP^1, U_1) \cong k[t]\), defined as in
+  \ref{def:P1_chartSectionsEquiv0} with the identification
+  \(\Gamma(\PP^1, D_+(X_1)) \cong A_{(X_1)}\) followed by \(\alpha_1\).
+\end{definition}
+
+\begin{definition}[Sections on the overlap]
+  \label{def:P1_overlapSectionsEquiv}
+  \lean{AlgebraicGeometry.P1.overlapSectionsEquiv}
+  \uses{lem:P1_chartOpen_inf, def:P1_overlapAlgEquiv}
+  \leanok
+  The ring isomorphism \(\gamma_{01} : \Gamma(\PP^1, U_0 \cap U_1) \cong k[T, T^{-1}]\): the
+  canonical identification \(\Gamma(\PP^1, D_+(X_0X_1)) \cong A_{(X_0X_1)}\) followed by
+  \(\theta\) of \ref{def:P1_overlapAlgEquiv}.
+\end{definition}
+
+\begin{lemma}[Restriction of sections from the left chart]
+  \label{lem:P1_res_left}
+  \lean{AlgebraicGeometry.P1.overlapSectionsEquiv_res_left}
+  \uses{def:P1_chartSectionsEquiv0, def:P1_overlapSectionsEquiv}
+  \leanok
+  For every section \(a \in \Gamma(\PP^1, U_0)\),
+  \[
+    \gamma_{01}\bigl(a|_{U_0 \cap U_1}\bigr) = p(T), \qquad p = \gamma_0(a);
+  \]
+  under the identifications, restriction from the left chart to the overlap is
+  \(t \mapsto T\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:P1_overlap_res_left}
+  The identifications \(\Gamma(\PP^1, D_+(f)) \cong A_{(f)}\) are natural with respect to
+  inclusions of basic opens: restriction of sections from \(D_+(X_0)\) to \(D_+(X_0X_1)\)
+  corresponds to the ring homomorphism \(\lambda\). Conclude by
+  \ref{lem:P1_overlap_res_left}.
+\end{proof}
+
+\begin{lemma}[Restriction of sections from the right chart]
+  \label{lem:P1_res_right}
+  \lean{AlgebraicGeometry.P1.overlapSectionsEquiv_res_right}
+  \uses{def:P1_chartSectionsEquiv1, def:P1_overlapSectionsEquiv}
+  \leanok
+  For every section \(b \in \Gamma(\PP^1, U_1)\),
+  \[
+    \gamma_{01}\bigl(b|_{U_0 \cap U_1}\bigr) = q(T^{-1}), \qquad q = \gamma_1(b);
+  \]
+  under the identifications, restriction from the right chart to the overlap is
+  \(t \mapsto T^{-1}\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:P1_overlap_res_right}
+  As in \ref{lem:P1_res_left}, restriction of sections corresponds to \(\rho\); conclude by
+  \ref{lem:P1_overlap_res_right}.
+\end{proof}
+
+\begin{definition}[Laurent chart pair]
+  \label{def:LaurentChartPair}
+  \lean{AlgebraicGeometry.LaurentChartPair}
+  \uses{def:P1}
+  \leanok
+  A \emph{Laurent chart pair} on \(\PP^1\) consists of open subsets
+  \(V_0, V_1, V_{01} \subseteq \PP^1\) with \(V_{01} \subseteq V_0\),
+  \(V_{01} \subseteq V_1\) and \(V_0 \cap V_1 = V_{01}\), all three affine, covering the
+  projective line (\(V_0 \cup V_1 = \PP^1\)), together with ring isomorphisms
+  \[
+    \Gamma_0 : \Gamma(\PP^1, V_0) \cong k[t], \quad
+    \Gamma_1 : \Gamma(\PP^1, V_1) \cong k[t], \quad
+    \Gamma_{01} : \Gamma(\PP^1, V_{01}) \cong k[T, T^{-1}],
+  \]
+  such that, under these identifications, restriction \(V_{01} \subseteq V_0\) is
+  \(t \mapsto T\) and restriction \(V_{01} \subseteq V_1\) is \(t \mapsto T^{-1}\).
+\end{definition}
+
+\begin{theorem}[Laurent span for a chart pair]
+  \label{thm:laurentChartPair_span}
+  \lean{AlgebraicGeometry.LaurentChartPair.exists_res_add_res}
+  \uses{def:LaurentChartPair}
+  \leanok
+  Let \((V_0, V_1, V_{01}, \Gamma_0, \Gamma_1, \Gamma_{01})\) be a Laurent chart pair on
+  \(\PP^1\). Every section \(z \in \Gamma(\PP^1, V_{01})\) is the sum of a restriction from
+  \(V_0\) and a restriction from \(V_1\): there are \(a \in \Gamma(\PP^1, V_0)\) and
+  \(b \in \Gamma(\PP^1, V_1)\) with \(z = a|_{V_{01}} + b|_{V_{01}}\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:laurent_span}
+  Write \(\Gamma_{01}(z) = p(T) + q(T^{-1})\) by \ref{lem:laurent_span} and set
+  \(a = \Gamma_0^{-1}(p)\), \(b = \Gamma_1^{-1}(q)\). By the two restriction conditions,
+  \(\Gamma_{01}(a|_{V_{01}} + b|_{V_{01}}) = p(T) + q(T^{-1}) = \Gamma_{01}(z)\), and
+  \(\Gamma_{01}\) is injective.
+\end{proof}
+
+\begin{definition}[The canonical Laurent chart pair]
+  \label{def:P1_laurentChartPair}
+  \lean{AlgebraicGeometry.P1.laurentChartPair}
+  \uses{def:LaurentChartPair, def:P1_chartOpen, def:P1_chartSectionsEquiv0,
+    def:P1_chartSectionsEquiv1, def:P1_overlapSectionsEquiv}
+  \leanok
+  The Laurent chart pair on \(\PP^1\) given by the standard charts: \(V_0 = U_0\),
+  \(V_1 = U_1\), \(V_{01} = D_+(X_0X_1)\), with the identifications \(\gamma_0, \gamma_1,
+  \gamma_{01}\) of \ref{def:P1_chartSectionsEquiv0}--\ref{def:P1_overlapSectionsEquiv}.
+\end{definition}
+\begin{proof}
+  \leanok
+  \uses{lem:P1_chartOpen_affine, lem:P1_chartOpen_sup, lem:P1_chartOpen_inf,
+    lem:P1_overlap_affine, lem:P1_res_left, lem:P1_res_right}
+  The overlap conditions and affineness are \ref{lem:P1_chartOpen_inf},
+  \ref{lem:P1_chartOpen_affine} and \ref{lem:P1_overlap_affine}; the covering condition is
+  \ref{lem:P1_chartOpen_sup}; the two restriction conditions are \ref{lem:P1_res_left} and
+  \ref{lem:P1_res_right}.
+\end{proof}
+
+\section{A finite morphism to the projective line}
+
+\begin{theorem}[Zariski's main theorem, cancellation form]
+  \label{thm:zmt_cancellation}
+  \lean{AlgebraicGeometry.IsFinite.of_locallyQuasiFinite_of_comp}
+  \leanok
+  Let \(\pi : X \to Y\) and \(g : Y \to S\) be morphisms of schemes with \(\pi\) locally
+  quasi-finite, \(g\) separated and \(g \circ \pi\) proper. Then \(\pi\) is finite.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By the cancellation property of proper morphisms (using that \(g\) is separated), \(\pi\)
+  is proper. A proper, locally quasi-finite morphism is finite (Zariski's main theorem).
+\end{proof}
+
+\begin{lemma}[Locally quasi-finite maps to the projective line are finite]
+  \label{lem:finite_toP1_of_lqf}
+  \lean{AlgebraicGeometry.isFinite_toP1_of_locallyQuasiFinite}
+  \uses{def:P1_structureMap}
+  \leanok
+  Let \(X\) be a scheme, proper over \(k\), and let \(\pi : X \to \PP^1\) be a locally
+  quasi-finite morphism over \(k\) (i.e.\ its composite with the structure morphism of
+  \(\PP^1\) is the structure morphism of \(X\)). Then \(\pi\) is finite.
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{thm:zmt_cancellation, thm:P1_proper}
+  The structure morphism of \(\PP^1\) is proper (\ref{thm:P1_proper}), in particular
+  separated, and the composite of \(\pi\) with it is the structure morphism of \(X\), which
+  is proper. Apply \ref{thm:zmt_cancellation}.
+\end{proof}
+
+\begin{lemma}[Reduction to local quasi-finiteness]
+  \label{lem:exists_finite_of_lqf}
+  \lean{AlgebraicGeometry.exists_isFinite_toP1_of_locallyQuasiFinite}
+  \uses{def:P1_structureMap}
+  \leanok
+  Let \(C\) be a scheme, proper over \(k\). If there exists a locally quasi-finite morphism
+  \(C \to \PP^1\) over \(k\), then there exists a finite morphism \(C \to \PP^1\) over \(k\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:finite_toP1_of_lqf}
+  Immediate from \ref{lem:finite_toP1_of_lqf}: the given locally quasi-finite morphism is
+  itself finite.
+\end{proof}
+
+\begin{theorem}[Existence of a finite morphism to the projective line]
+  \label{thm:exists_finite_toP1}
+  \lean{AlgebraicGeometry.exists_isFinite_toP1}
+  \uses{def:P1, def:P1_structureMap}
+  \leanok
+  Let \(C\) be a smooth curve over \(k\) (proper, smooth of relative dimension one,
+  geometrically irreducible). Then there exists a finite morphism \(\pi : C \to \PP^1\) over
+  \(k\).
+\end{theorem}
+
+By \ref{lem:exists_finite_of_lqf}, it suffices to produce a locally quasi-finite morphism
+\(C \to \PP^1\) over \(k\); such a morphism arises from a rational function on \(C\)
+transcendental over \(k\), extended to all of \(C\) using that the local rings of \(C\) at
+closed points are discrete valuation rings.
+
+\begin{lemma}[Preimages of the charts are affine]
+  \label{lem:preimage_chart_affine}
+  \lean{AlgebraicGeometry.isAffineOpen_preimage_chartOpen}
+  \uses{def:P1_chartOpen}
+  \leanok
+  Let \(\pi : Y \to \PP^1\) be an affine morphism (for instance a finite one). Then
+  \(\pi^{-1}(U_i)\) is an affine open of \(Y\) for \(i \in \{0,1\}\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:P1_chartOpen_affine}
+  The charts are affine (\ref{lem:P1_chartOpen_affine}), and the preimage of an affine open
+  under an affine morphism is affine.
+\end{proof}
+
+\begin{lemma}[Preimages of the charts cover]
+  \label{lem:preimage_chart_sup}
+  \lean{AlgebraicGeometry.preimage_chartOpen_sup}
+  \uses{def:P1_chartOpen}
+  \leanok
+  For any morphism \(\pi : Y \to \PP^1\), the preimages of the two standard charts cover
+  \(Y\): \(\pi^{-1}(U_0) \cup \pi^{-1}(U_1) = Y\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:P1_chartOpen_sup}
+  Preimages of a cover form a cover (\ref{lem:P1_chartOpen_sup}).
+\end{proof}
+
+\begin{lemma}[Module-finiteness over the charts]
+  \label{lem:finite_app_chart}
+  \lean{AlgebraicGeometry.finite_app_chartOpen}
+  \uses{def:P1_chartOpen}
+  \leanok
+  Let \(\pi : Y \to \PP^1\) be a finite morphism. For \(i \in \{0,1\}\), the induced ring
+  homomorphism \(\Gamma(\PP^1, U_i) \to \Gamma(Y, \pi^{-1}(U_i))\) is module-finite. (By
+  \ref{def:P1_chartSectionsEquiv0}--\ref{def:P1_chartSectionsEquiv1}, the source is the
+  polynomial ring \(k[t]\).)
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:P1_chartOpen_affine}
+  A finite morphism induces module-finite maps on sections over affine opens; the charts are
+  affine by \ref{lem:P1_chartOpen_affine}.
+\end{proof}
+
+\begin{lemma}[Module-finiteness over the overlap]
+  \label{lem:finite_app_overlap}
+  \lean{AlgebraicGeometry.finite_app_overlap}
+  \uses{lem:P1_chartOpen_inf}
+  \leanok
+  Let \(\pi : Y \to \PP^1\) be a finite morphism. The induced ring homomorphism
+  \(\Gamma(\PP^1, U_0 \cap U_1) \to \Gamma(Y, \pi^{-1}(U_0 \cap U_1))\) is module-finite.
+  (By \ref{def:P1_overlapSectionsEquiv}, the source is the Laurent polynomial ring
+  \(k[T,T^{-1}]\).)
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:P1_overlap_affine}
+  As in \ref{lem:finite_app_chart}, with the overlap affine by \ref{lem:P1_overlap_affine}.
+\end{proof}

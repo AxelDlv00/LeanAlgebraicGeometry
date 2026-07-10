@@ -1,0 +1,416 @@
+\chapter{Cohomology of sheaves of modules}
+\label{chap:Cohomology}
+
+Fix a commutative ring \(R\); for the genus of a curve, \(R\) will be the base field \(k\).
+This chapter defines the cohomology of sheaves of \(R\)-modules on a small site as
+\(\Ext\)-groups from the constant sheaf, identifies degree-zero cohomology with global
+sections, and proves the vanishing of degree-one cohomology of the structure sheaf on an
+affine scheme --- the input for the finiteness of \(H^1(C, \struct C)\) and hence for the
+genus of Definition~\ref{def:genus}.
+
+\section{Cohomology on a site}
+
+Let \((\mathcal C, J)\) be a small site: a small category \(\mathcal C\) with a Grothendieck
+topology \(J\). The category of sheaves of \(R\)-modules on \((\mathcal C, J)\) is a
+Grothendieck abelian category; in particular it has enough injectives, and all
+\(\Ext\)-groups exist and carry \(R\)-module structures.
+
+\begin{definition}[The constant sheaf]
+  \label{def:constModuleSheaf}
+  \lean{CategoryTheory.Sheaf.constModuleSheaf}
+  \leanok
+  The constant sheaf \(R_J\) of \(R\)-modules on \((\mathcal C, J)\) with value \(R\): the
+  sheafification of the constant presheaf with value \(R\).
+\end{definition}
+
+\begin{definition}[Sheaf cohomology]
+  \label{def:HModule}
+  \lean{CategoryTheory.Sheaf.HModule}
+  \uses{def:constModuleSheaf}
+  \leanok
+  For a sheaf \(F\) of \(R\)-modules on \((\mathcal C, J)\) and \(n \ge 0\), the degree-\(n\)
+  cohomology of \(F\) is the \(R\)-module
+  \[
+    H^n(F) \;=\; \Ext^n\bigl(R_J,\, F\bigr),
+  \]
+  the \(\Ext\)-group computed in the category of sheaves of \(R\)-modules.
+\end{definition}
+
+\begin{definition}[Functoriality]
+  \label{def:HModule_map}
+  \lean{CategoryTheory.Sheaf.HModule.map}
+  \uses{def:HModule}
+  \leanok
+  A morphism of sheaves \(f : F \to G\) induces an \(R\)-linear map
+  \(H^n(F) \to H^n(G)\) for every \(n\), by covariant functoriality of \(\Ext\) in the second
+  argument. The identity induces the identity, and a composite induces the composite.
+\end{definition}
+\begin{proof}
+  \leanok
+  Functoriality of \(\Ext^n(R_J, -)\); the \(R\)-linearity comes from the \(R\)-linear
+  structure of the sheaf category.
+\end{proof}
+
+\begin{lemma}[No higher cohomology on injectives]
+  \label{lem:HModule_injective_vanishing}
+  \lean{CategoryTheory.Sheaf.HModule.instSubsingletonHAddNatOfNat}
+  \uses{def:HModule}
+  \leanok
+  If \(F\) is an injective object of the category of sheaves of \(R\)-modules, then
+  \(H^{n+1}(F) = 0\) for every \(n \ge 0\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Positive-degree \(\Ext\)-groups into an injective object vanish.
+\end{proof}
+
+\begin{definition}[The adjunction, linearly]
+  \label{def:constAdjHomEquiv}
+  \lean{CategoryTheory.Sheaf.constantSheafAdjHomLinearEquiv}
+  \leanok
+  Assume the category \(\mathcal C\) has a terminal object \(\top\). For every \(R\)-module
+  \(M\) and every sheaf \(F\) of \(R\)-modules there is an \(R\)-linear equivalence
+  \[
+    \Hom\bigl(\underline{M},\, F\bigr) \;\cong\; \Hom_R\bigl(M,\, F(\top)\bigr),
+  \]
+  where \(\underline{M}\) denotes the constant sheaf with value \(M\); it is the hom-bijection
+  of the adjunction between the constant-sheaf functor and evaluation at \(\top\).
+\end{definition}
+\begin{proof}
+  \leanok
+  The constant-sheaf functor is left adjoint to evaluation at the terminal object. The
+  bijection sends \(\varphi\) to the composite of the unit \(M \to \underline{M}(\top)\) with
+  \(\varphi_\top\); both this assignment and its inverse are additive and commute with the
+  \(R\)-action.
+\end{proof}
+
+\begin{definition}[Morphisms out of the constant sheaf are sections]
+  \label{def:constHomEquiv}
+  \lean{CategoryTheory.Sheaf.constModuleSheafHomEquiv}
+  \uses{def:constModuleSheaf, def:constAdjHomEquiv}
+  \leanok
+  The \(R\)-linear equivalence
+  \(\Hom(R_J, F) \cong F(\top)\): specialize \ref{def:constAdjHomEquiv} to \(M = R\) and
+  compose with the canonical evaluation \(\Hom_R(R, N) \cong N\), \(u \mapsto u(1)\).
+\end{definition}
+
+\begin{lemma}[Naturality]
+  \label{lem:constHomEquiv_naturality}
+  \lean{CategoryTheory.Sheaf.constModuleSheafHomEquiv_naturality}
+  \uses{def:constHomEquiv}
+  \leanok
+  The equivalence of \ref{def:constHomEquiv} is natural in the sheaf: for
+  \(\varphi : R_J \to F\) and \(f : F \to G\), the section corresponding to
+  \(f \circ \varphi\) is \(f_\top\) applied to the section corresponding to \(\varphi\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Naturality of the adjunction hom-bijection in the second variable, and naturality of the
+  evaluation \(\Hom_R(R, N) \cong N\).
+\end{proof}
+
+\begin{definition}[Degree-zero cohomology is global sections]
+  \label{def:HModule_linearEquiv0}
+  \lean{CategoryTheory.Sheaf.HModule.linearEquiv₀}
+  \uses{def:HModule, def:constHomEquiv}
+  \leanok
+  The \(R\)-linear equivalence \(H^0(F) \cong F(\top)\): the canonical identification
+  \(\Ext^0(R_J, F) \cong \Hom(R_J, F)\) followed by \ref{def:constHomEquiv}.
+\end{definition}
+
+\begin{lemma}[Naturality in degree zero]
+  \label{lem:HModule_linearEquiv0_naturality}
+  \lean{CategoryTheory.Sheaf.HModule.linearEquiv₀_naturality}
+  \uses{def:HModule_linearEquiv0, def:HModule_map}
+  \leanok
+  The equivalence \(H^0(F) \cong F(\top)\) of \ref{def:HModule_linearEquiv0} is natural: for
+  \(f : F \to G\), applying \(f_\top\) to the section corresponding to \(x \in H^0(F)\)
+  yields the section corresponding to the image of \(x\) under \(H^0(f)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:constHomEquiv_naturality}
+  The identification \(\Ext^0 \cong \Hom\) turns composition with the degree-zero class of
+  \(f\) into postcomposition with \(f\); conclude by \ref{lem:constHomEquiv_naturality}.
+\end{proof}
+
+\section{The structure sheaf as a sheaf of modules}
+
+Let \(k\) be a commutative ring and let \(X\) be a scheme over \(\Spec k\). The relevant site
+is the \emph{small Zariski site} of \(X\): the partially ordered set of open subsets of
+\(X\), with coverings the open coverings. The whole space is a terminal object of this site.
+
+\begin{definition}[The algebra map on sections]
+  \label{def:overAlgebraMap}
+  \lean{AlgebraicGeometry.Scheme.overAlgebraMap}
+  \leanok
+  For every open \(U \subseteq X\), the canonical ring homomorphism \(k \to \Gamma(X, U)\):
+  the map induced on global sections by the structure morphism, followed by restriction to
+  \(U\). It commutes with the restriction maps of the structure sheaf; in particular each
+  \(\Gamma(X, U)\) is a \(k\)-algebra --- hence a \(k\)-module --- and all restriction maps
+  are \(k\)-linear.
+\end{definition}
+\begin{proof}
+  \leanok
+  Restriction maps are ring homomorphisms and commute with restriction from the global
+  sections; the maps from \(k\) are fixed composites of such maps, so they commute with
+  further restriction.
+\end{proof}
+
+\begin{definition}[The structure sheaf as a sheaf of \(k\)-modules]
+  \label{def:moduleKSheaf}
+  \lean{AlgebraicGeometry.Scheme.moduleKSheaf}
+  \uses{def:overAlgebraMap}
+  \leanok
+  The structure sheaf of \(X\), viewed as a sheaf \(\struct{X/k}\) of \(k\)-modules on the
+  small Zariski site of \(X\): its sections over an open \(U\) are \(\Gamma(X, U)\) with the
+  \(k\)-module structure of \ref{def:overAlgebraMap}, and its restriction maps are those of
+  the structure sheaf.
+\end{definition}
+\begin{proof}
+  \leanok
+  The restriction maps are \(k\)-linear by \ref{def:overAlgebraMap}, so this is a presheaf of
+  \(k\)-modules. Its underlying presheaf of sets is that of the structure sheaf, which
+  satisfies the sheaf condition; since limits of \(k\)-modules are computed on underlying
+  sets, the presheaf of \(k\)-modules is a sheaf.
+\end{proof}
+
+\begin{definition}[Degree-zero cohomology of the structure sheaf]
+  \label{def:moduleKSheafHZero}
+  \lean{AlgebraicGeometry.Scheme.moduleKSheafHZero}
+  \uses{def:moduleKSheaf, def:HModule_linearEquiv0}
+  \leanok
+  The \(k\)-linear equivalence \(H^0\bigl(X, \struct{X/k}\bigr) \cong \Gamma(X, \struct X)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  The open \(X\) is a terminal object of the small Zariski site; apply
+  \ref{def:HModule_linearEquiv0}.
+\end{proof}
+
+\section{\v{C}ech cobounding on affine schemes}
+
+For a scheme \(X\), a global section \(g \in \Gamma(X, \struct X)\) and an open
+\(U \subseteq X\), we write \(D(g)\) for the basic open locus where \(g\) is invertible, and
+\(g|_V\), \(s|_V\) for restrictions of sections.
+
+\begin{lemma}[Denominator clearing on an affine open]
+  \label{lem:denominator_clearing}
+  \lean{AlgebraicGeometry.IsAffineOpen.exists_res_eq_pow_mul}
+  \leanok
+  Let \(X\) be a scheme, \(U \subseteq X\) an affine open and \(g\) a global section of the
+  structure sheaf. For every \(c \in \Gamma(X, U \cap D(g))\) there exist \(N \ge 0\) and
+  \(e \in \Gamma(X, U)\) such that
+  \[
+    e|_{U \cap D(g)} \;=\; \bigl(g|_{U \cap D(g)}\bigr)^{N} \cdot c .
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  \(U \cap D(g)\) is the basic open of the affine \(U\) defined by \(g|_U\), and restriction
+  identifies the sections over the basic open of an affine open with the localization:
+  \(\Gamma(X, U \cap D(g)) = \Gamma(X, U)\bigl[1/(g|_U)\bigr]\) (quasi-coherence of the
+  structure sheaf). Writing \(c\) as a fraction \(e / (g|_U)^N\) and clearing the denominator
+  gives the claim.
+\end{proof}
+
+\begin{lemma}[Annihilation on an affine open]
+  \label{lem:section_annihilation}
+  \lean{AlgebraicGeometry.IsAffineOpen.exists_pow_mul_eq_zero_of_res_eq_zero}
+  \leanok
+  Let \(X\) be a scheme, \(U \subseteq X\) an affine open and \(g\) a global section of the
+  structure sheaf. If \(t \in \Gamma(X, U)\) restricts to zero on \(U \cap D(g)\), then
+  \((g|_U)^{M} \cdot t = 0\) in \(\Gamma(X, U)\) for some \(M \ge 0\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  As in \ref{lem:denominator_clearing}, \(\Gamma(X, U \cap D(g))\) is the localization of
+  \(\Gamma(X, U)\) at the powers of \(g|_U\), and the kernel of the localization map consists
+  of the elements annihilated by a power of \(g|_U\).
+\end{proof}
+
+\begin{theorem}[Degree-one \v{C}ech cobounding on an affine scheme]
+  \label{thm:cech_cobounding}
+  \lean{AlgebraicGeometry.Scheme.exists_cech_cobounding}
+  \leanok
+  Let \(X\) be an affine scheme and let \(f_1, \dots, f_n\) be global sections of the
+  structure sheaf with \(D(f_1) \cup \dots \cup D(f_n) = X\). Let
+  \(a_{ij} \in \Gamma\bigl(X, D(f_i) \cap D(f_j)\bigr)\) be a \v{C}ech \(1\)-cocycle: for all
+  \(i, j, l\),
+  \[
+    a_{il} \;=\; a_{ij} + a_{jl}
+    \qquad \text{on } D(f_i) \cap D(f_j) \cap D(f_l).
+  \]
+  Then there are sections \(b_i \in \Gamma\bigl(X, D(f_i)\bigr)\) with
+  \[
+    a_{ij} \;=\; b_i - b_j \qquad \text{on } D(f_i) \cap D(f_j)
+  \]
+  for all \(i, j\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:denominator_clearing, lem:section_annihilation}
+  All restriction maps are suppressed from the notation. Note that each \(D(f_i)\) and each
+  pairwise intersection \(D(f_i) \cap D(f_j) = D(f_i f_j)\) is an affine open of \(X\).
+
+  \emph{Step 1: clear denominators with a uniform exponent.} For each pair \((i,j)\) apply
+  \ref{lem:denominator_clearing} with \(U = D(f_i)\) and \(g = f_j\): there are
+  \(N_{ij} \ge 0\) and \(e^0_{ij} \in \Gamma(X, D(f_i))\) with
+  \(e^0_{ij} = f_j^{N_{ij}} a_{ij}\) on \(D(f_i) \cap D(f_j)\). Let \(N\) be the maximum of
+  the \(N_{ij}\) and set \(e_{ij} = f_j^{\,N - N_{ij}}\, e^0_{ij}\), so that
+  \(e_{ij} = f_j^{\,N} a_{ij}\) on \(D(f_i) \cap D(f_j)\).
+
+  \emph{Step 2: kill the defects.} For \(i, j, l\) define, on \(D(f_i) \cap D(f_j)\),
+  \[
+    t_{ijl} \;=\; e_{il} - e_{jl} - f_l^{\,N} a_{ij}.
+  \]
+  On the triple intersection \(D(f_i) \cap D(f_j) \cap D(f_l)\) we have
+  \(e_{il} = f_l^N a_{il}\) and \(e_{jl} = f_l^N a_{jl}\), so the cocycle identity gives
+  \(t_{ijl} = f_l^N (a_{il} - a_{jl} - a_{ij}) = 0\) there. Since
+  \(D(f_i) \cap D(f_j)\) is affine and the triple intersection is its basic open defined by
+  \(f_l\), \ref{lem:section_annihilation} yields \(M_{ijl} \ge 0\) with
+  \(f_l^{\,M_{ijl}}\, t_{ijl} = 0\) on \(D(f_i) \cap D(f_j)\). Let \(M\) be the maximum of
+  the \(M_{ijl}\); then \(f_l^{\,M} t_{ijl} = 0\) for all \(i,j,l\).
+
+  \emph{Step 3: partition of unity.} Since the \(D(f_i)\) cover the affine scheme \(X\), the
+  \(f_i\) generate the unit ideal of \(\Gamma(X, \struct X)\); hence so do the powers
+  \(f_i^{\,N+M}\), and we may write \(1 = \sum_l h_l\, f_l^{\,N+M}\) with
+  \(h_l \in \Gamma(X, \struct X)\).
+
+  \emph{Step 4: assemble the cobounding.} Set
+  \(b_i = \sum_l h_l\, f_l^{\,M}\, e_{il} \in \Gamma\bigl(X, D(f_i)\bigr)\). On
+  \(D(f_i) \cap D(f_j)\),
+  \[
+    b_i - b_j
+      = \sum_l h_l f_l^{\,M} \bigl(e_{il} - e_{jl}\bigr)
+      = \sum_l h_l f_l^{\,M} \bigl(f_l^{\,N} a_{ij} + t_{ijl}\bigr)
+      = \Bigl(\sum_l h_l f_l^{\,N+M}\Bigr) a_{ij}
+      = a_{ij},
+  \]
+  using \(f_l^{\,M} t_{ijl} = 0\) in the third equality.
+\end{proof}
+
+\section{Vanishing of degree-one cohomology on affine schemes}
+
+\begin{lemma}[A vanishing criterion for \(\Ext^1\)]
+  \label{lem:ext_one_vanishing_criterion}
+  \lean{CategoryTheory.Abelian.Ext.subsingleton_one_of_injective_of_surjective}
+  \leanok
+  Let \(\mathcal A\) be an abelian category (with \(\Ext\)-groups), let
+  \(\iota : A \to I\) be a monomorphism with \(I\) injective, and let \(L\) be an object. If
+  every morphism \(L \to \coker \iota\) lifts along the projection
+  \(\pi : I \to \coker \iota\), then \(\Ext^1(L, A) = 0\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Consider the short exact sequence \(0 \to A \to I \to \coker \iota \to 0\) and the induced
+  long exact sequence
+  \[
+    \Hom(L, I) \xrightarrow{\;\pi_*\;} \Hom(L, \coker \iota)
+      \xrightarrow{\;\delta\;} \Ext^1(L, A) \longrightarrow \Ext^1(L, I).
+  \]
+  Let \(z \in \Ext^1(L, A)\). Its image in \(\Ext^1(L, I)\) vanishes because \(I\) is
+  injective, so by exactness \(z = \delta(x)\) for some \(x : L \to \coker \iota\). By
+  hypothesis \(x = \pi \circ \psi\) for some \(\psi : L \to I\), and
+  \(\delta \circ \pi_* = 0\) (composite of consecutive maps of the long exact sequence);
+  hence \(z = \delta(\pi_*(\psi)) = 0\).
+\end{proof}
+
+\begin{lemma}[Sections are left exact]
+  \label{lem:sections_left_exact}
+  \lean{CategoryTheory.Sheaf.exists_app_eq_of_cokernelπ_app_eq_zero}
+  \leanok
+  Let \(\iota : F \to G\) be a monomorphism of sheaves of \(R\)-modules on a site and let
+  \(U\) be an object of the site. If \(c \in G(U)\) maps to zero in \((\coker \iota)(U)\),
+  then \(c = \iota_U(a)\) for a (unique) \(a \in F(U)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  In an abelian category, a monomorphism is a kernel of its cokernel. Evaluation of sheaves
+  at \(U\) preserves limits: it is the composite of the inclusion of sheaves into presheaves
+  (a right adjoint, sheafification being left adjoint to it) with evaluation of presheaves at
+  \(U\) (limits of presheaves are computed objectwise). Hence
+  \(F(U) \to G(U)\) is a kernel of \(G(U) \to (\coker \iota)(U)\), which is the claim.
+\end{proof}
+
+\begin{lemma}[Monomorphisms are injective on sections]
+  \label{lem:app_injective_of_mono}
+  \lean{CategoryTheory.Sheaf.app_injective_of_mono}
+  \leanok
+  A monomorphism of sheaves of \(R\)-modules on a site is injective on sections over every
+  object of the site.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Evaluation of sheaves at an object preserves limits (as in
+  \ref{lem:sections_left_exact}), hence preserves monomorphisms, and a monomorphism of
+  \(R\)-modules is an injective map.
+\end{proof}
+
+\begin{theorem}[Global sections surjectivity on an affine scheme]
+  \label{thm:cokernel_sections_surjective}
+  \lean{AlgebraicGeometry.Scheme.cokernel_app_top_surjective}
+  \uses{def:moduleKSheaf}
+  \leanok
+  Let \(k\) be a commutative ring, \(X\) an affine scheme over \(\Spec k\), \(G\) a sheaf of
+  \(k\)-modules on the small Zariski site of \(X\), and
+  \(\iota : \struct{X/k} \to G\) a monomorphism. Then every global section of
+  \(\coker \iota\) lifts to a global section of \(G\): the map
+  \(G(X) \to (\coker \iota)(X)\) is surjective.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:sections_left_exact, lem:app_injective_of_mono, thm:cech_cobounding}
+  Let \(q \in (\coker \iota)(X)\) and write \(\pi : G \to \coker \iota\) for the projection.
+
+  (a) \(\pi\) is an epimorphism of sheaves, hence locally surjective on sections: every point
+  has an open neighbourhood on which the restriction of \(q\) lifts to \(G\). Shrinking, and
+  since the basic opens form a basis of the affine scheme \(X\), every point lies in some
+  basic open \(D(g)\) carrying a lift of \(q|_{D(g)}\).
+
+  (b) \(X\) is quasi-compact, so there are finitely many global sections
+  \(f_1, \dots, f_n\) with \(D(f_1) \cup \dots \cup D(f_n) = X\) and lifts
+  \(s_i \in G(D(f_i))\) with \(\pi(s_i) = q|_{D(f_i)}\).
+
+  (c) On \(D(f_i) \cap D(f_j)\) the difference \(s_i - s_j\) is killed by \(\pi\), so by
+  \ref{lem:sections_left_exact} there is a unique
+  \(a_{ij} \in \Gamma\bigl(X, D(f_i) \cap D(f_j)\bigr)\) with
+  \(\iota(a_{ij}) = s_i - s_j\).
+
+  (d) The \(a_{ij}\) form a \v{C}ech \(1\)-cocycle: on triple intersections,
+  \(\iota(a_{il}) = s_i - s_l = (s_i - s_j) + (s_j - s_l) = \iota(a_{ij} + a_{jl})\), and
+  \(\iota\) is injective on sections (\ref{lem:app_injective_of_mono}).
+
+  (e) By \ref{thm:cech_cobounding} there are \(b_i \in \Gamma\bigl(X, D(f_i)\bigr)\) with
+  \(a_{ij} = b_i - b_j\) on overlaps. The corrected lifts \(s_i - \iota(b_i)\) then agree on
+  all overlaps, so by the sheaf condition they glue to a global section \(s \in G(X)\).
+
+  (f) Finally \(\pi(s) = q\): on each \(D(f_i)\) we have
+  \(\pi(s) = \pi(s_i) - \pi(\iota(b_i)) = q|_{D(f_i)}\) since \(\pi \circ \iota = 0\), and
+  sections of the sheaf \(\coker \iota\) that agree on a cover agree.
+\end{proof}
+
+\begin{theorem}[Vanishing of \(H^1\) on affine schemes]
+  \label{thm:affine_vanishing}
+  \lean{AlgebraicGeometry.Scheme.subsingleton_moduleKSheaf_hModule_one}
+  \uses{def:HModule, def:moduleKSheaf}
+  \leanok
+  Let \(k\) be a commutative ring and \(X\) an affine scheme over \(\Spec k\). Then
+  \[
+    H^1\bigl(X, \struct{X/k}\bigr) \;=\; 0 .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:ext_one_vanishing_criterion, thm:cokernel_sections_surjective,
+    def:constHomEquiv, lem:constHomEquiv_naturality}
+  The category of sheaves of \(k\)-modules on the small Zariski site of \(X\) is Grothendieck
+  abelian, hence has enough injectives: choose a monomorphism
+  \(\iota : \struct{X/k} \to G\) with \(G\) injective. By
+  \ref{lem:ext_one_vanishing_criterion} (with \(L = k_J\) the constant sheaf), it suffices to
+  lift every morphism \(k_J \to \coker \iota\) along \(G \to \coker \iota\). By
+  \ref{def:constHomEquiv} and its naturality \ref{lem:constHomEquiv_naturality}, morphisms
+  out of \(k_J\) are global sections, compatibly with postcomposition; so the required
+  lifting is exactly the surjectivity of \(G(X) \to (\coker \iota)(X)\), which is
+  \ref{thm:cokernel_sections_surjective}.
+\end{proof}
