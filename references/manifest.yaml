@@ -265,7 +265,17 @@ references:
       localized-Cech-complex homotopy-contraction argument given there. Cite
       plainly as \source{stacks-project} (bare slug, matching the existing
       Algebraic-Jacobian-Challenge project's usage) since these are read
-      directly from the .tex, not transcribed pages.
+      directly from the .tex, not transcribed pages. ALSO (2026-07-11, same
+      project, Curves.tex): read stacks-algebra.tex "lemma-standard-smooth"
+      (tag 00T7) with its full proof -- for a standard smooth presentation
+      S = R[x_1..x_n]/(f_1..f_c), R -> S is smooth and Omega_{S/R} is free on
+      dx_{c+1},...,dx_n. Cited on the \mathlibok node for mathlib's
+      Algebra.IsStandardSmoothOfRelativeDimension.exists_etale_mvPolynomial
+      (etale factorization through the polynomial ring on the last n-c
+      coordinates): 00T7 is the statement the factorization is read off from
+      (freeness of Omega on the trailing coordinates makes S unramified, hence
+      etale, over that subring), and is the tag both mathlib and the project's
+      Lean docstrings name for it.
     topics: [schemes, coherent-sheaves, cohomology, constructions, divisors, fields, modules, sheaves, sites, varieties]
     notes: "The two stale citations references/stacks-0BUG.md and references/hartshorne-ag.md are blueprint typos with no source file; see Cohomology_MayerVietoris.tex and Genus.tex."
 

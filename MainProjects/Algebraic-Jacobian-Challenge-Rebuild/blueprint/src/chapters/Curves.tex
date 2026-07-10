@@ -7,8 +7,11 @@ geometrically irreducible over \(k\). This chapter provides the geometric substr
 genus: smooth schemes over a field are reduced, so a smooth curve is geometrically integral;
 a proper geometrically integral scheme over a field has no global functions besides the
 constants; the projective line carries two affine charts with polynomial section rings and
-Laurent-polynomial overlap; and, by Zariski's main theorem, producing a finite morphism
-\(C \to \PP^1\) reduces to producing a locally quasi-finite one.
+Laurent-polynomial overlap; the section rings of the standard smooth charts of a curve are
+Dedekind domains, so the local rings of the curve are valuation rings and its
+specialization order has height one; a rational function transcendental over \(k\) therefore
+spreads out to a locally quasi-finite morphism \(C \to \PP^1\); and Zariski's main theorem
+upgrades it to a finite one.
 
 \section{Smooth algebras over a domain are reduced}
 
@@ -928,6 +931,875 @@ Write \(k[T, T^{-1}]\) for the ring of Laurent polynomials over \(k\).
   \ref{lem:P1_res_right}.
 \end{proof}
 
+\section{Unramified finite-type algebras over Dedekind domains}
+
+The results of this section are pure commutative algebra, stated in full generality. The
+first theorem strengthens the classical statement that a domain which is unramified and
+\emph{module-finite} over a Dedekind domain is Dedekind: module-finiteness is relaxed to
+finite type. The point of the generalization is where incomparability of primes comes from
+--- for module-finite algebras it follows from integrality (lying over/incomparability),
+while here it follows from quasi-finiteness, which every unramified algebra essentially of
+finite type enjoys.
+
+\begin{theorem}[Unramified finite-type domains over a Dedekind domain, DVR form]
+  \label{thm:unramified_finiteType_dedekind_dvr}
+  \lean{IsDedekindDomainDvr.of_formallyUnramified_of_finiteType}
+  \leanok
+  Let \(A\) be a Dedekind domain and \(B\) an integral domain which is an \(A\)-algebra of
+  finite type and formally unramified over \(A\). Then \(B\) is Noetherian, and the
+  localization of \(B\) at every nonzero prime ideal is a discrete valuation ring.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \(B\) is Noetherian as a finite-type algebra over the Noetherian ring \(A\) (Hilbert basis
+  theorem). Let \(\mathfrak q\) be a nonzero prime of \(B\) and set
+  \(\mathfrak p = \mathfrak q \cap A\). The localization \(B_{\mathfrak q}\) is a Noetherian
+  local domain and not a field (its maximal ideal is nonzero because \(\mathfrak q\) is), so
+  it suffices to show that its maximal ideal \(\mathfrak q B_{\mathfrak q}\) is principal.
+
+  \emph{Step 1: \(\mathfrak p \neq 0\).} An algebra which is formally unramified and of
+  finite type is quasi-finite, and over a quasi-finite algebra two comparable primes of
+  \(B\) lying over the same prime of \(A\) coincide. If \(\mathfrak p\) were zero, the
+  comparable primes \(0 \subseteq \mathfrak q\) of \(B\) would both contract to \(0\) in
+  \(A\), forcing \(\mathfrak q = 0\), a contradiction. Since \(A\) is Dedekind, the nonzero
+  prime \(\mathfrak p\) is maximal, and \(A_{\mathfrak p}\) is a discrete valuation ring; in
+  particular \(\mathfrak p A_{\mathfrak p}\) is principal.
+
+  \emph{Step 2: \(\mathfrak q\) is minimal over \(\mathfrak p B\).} The fiber ring
+  \(B/\mathfrak p B\) is an algebra over the residue field \(A/\mathfrak p\) which is again
+  formally unramified (base change); every module over a field is free, and an unramified
+  algebra which is free as a module is module-finite. Hence \(B/\mathfrak p B\) is a finite
+  module over the field \(A/\mathfrak p\), in particular an Artinian ring, so all of its
+  primes are minimal; applying this to the image of \(\mathfrak q\) shows that
+  \(\mathfrak q\) is a minimal prime over \(\mathfrak p B\).
+
+  \emph{Step 3: \(\mathfrak q B_{\mathfrak q} = \mathfrak p B_{\mathfrak q}\).} Since
+  \(\mathfrak p\) is maximal and \(B\) is unramified over \(A\), the extension
+  \(\mathfrak p B\) is a radical ideal of \(B\) (the fiber ring \(B/\mathfrak p B\) is
+  reduced, being unramified and essentially of finite type over a field). Localization
+  commutes with radicals, so \(\mathfrak p B_{\mathfrak q}\) is a radical ideal of
+  \(B_{\mathfrak q}\); and because \(\mathfrak q\) is minimal over \(\mathfrak p B\)
+  (Step~2), the radical of \(\mathfrak p B_{\mathfrak q}\) is exactly the maximal ideal
+  \(\mathfrak q B_{\mathfrak q}\). A radical ideal equals its own radical, so
+  \(\mathfrak p B_{\mathfrak q} = \mathfrak q B_{\mathfrak q}\).
+
+  \emph{Step 4: conclusion.} By Step~3 and Step~1, the maximal ideal
+  \(\mathfrak q B_{\mathfrak q}\) is the extension of the principal ideal
+  \(\mathfrak p A_{\mathfrak p} \subseteq A_{\mathfrak p}\) along
+  \(A_{\mathfrak p} \to B_{\mathfrak q}\), hence principal. A Noetherian local domain which
+  is not a field and whose maximal ideal is principal is a discrete valuation ring.
+\end{proof}
+
+\begin{corollary}[Unramified finite-type domains over a Dedekind domain]
+  \label{cor:unramified_finiteType_dedekind}
+  \lean{IsDedekindDomain.of_formallyUnramified_of_finiteType}
+  \uses{thm:unramified_finiteType_dedekind_dvr}
+  \leanok
+  Let \(A\) be a Dedekind domain and \(B\) an integral domain which is an \(A\)-algebra of
+  finite type and formally unramified over \(A\). Then \(B\) is a Dedekind domain.
+\end{corollary}
+\begin{proof}
+  \leanok
+  A Noetherian domain whose localizations at all nonzero primes are discrete valuation
+  rings is a Dedekind domain; apply \ref{thm:unramified_finiteType_dedekind_dvr}.
+\end{proof}
+
+\begin{lemma}[The polynomial ring in one variable is a principal ideal ring]
+  \label{lem:mvpoly_fin_one_pid}
+  \lean{MvPolynomial.isPrincipalIdealRing_fin_one}
+  \leanok
+  Let \(k\) be a field. The polynomial ring over \(k\) on a one-element set of variables is
+  a principal ideal ring.
+\end{lemma}
+\begin{proof}
+  \leanok
+  It is isomorphic as a ring to the ordinary one-variable polynomial ring \(k[t]\), which
+  is a principal ideal domain (Euclidean division), and being a principal ideal ring
+  transports along a surjective ring homomorphism.
+\end{proof}
+
+\begin{lemma}[The polynomial ring in one variable is Dedekind]
+  \label{lem:mvpoly_fin_one_dedekind}
+  \lean{MvPolynomial.isDedekindDomain_fin_one}
+  \uses{lem:mvpoly_fin_one_pid}
+  \leanok
+  Let \(k\) be a field. The polynomial ring over \(k\) on a one-element set of variables is
+  a Dedekind domain.
+\end{lemma}
+\begin{proof}
+  \leanok
+  A principal ideal domain is a Dedekind domain.
+\end{proof}
+
+\begin{theorem}[Structure theorem for standard smooth algebras]
+  \label{thm:standard_smooth_etale_structure}
+  \lean{Algebra.IsStandardSmoothOfRelativeDimension.exists_etale_mvPolynomial}
+  \mathlibok
+  \source{stacks-project}
+  \textit{Provided by Mathlib.}
+  Let \(R\) be a commutative ring and \(S\) an \(R\)-algebra which is standard smooth of
+  relative dimension \(n\): it admits a presentation
+  \(S = R[x_1,\dots,x_m]/(f_1,\dots,f_c)\) with \(m - c = n\) in which the Jacobian matrix
+  \((\partial f_u/\partial x_v)_{u,v \le c}\) has invertible determinant in \(S\). Then the
+  structure map factors as
+  \[
+    R \longrightarrow R[y_1, \dots, y_n] \longrightarrow S
+  \]
+  with the second homomorphism \'etale. (For such a presentation the module of K\"ahler
+  differentials \(\Omega_{S/R}\) is free on the images of
+  \(dx_{c+1}, \dots, dx_m\); consequently \(S\) is unramified, hence \'etale, over the
+  polynomial subring on those last \(n\) coordinates.)
+\end{theorem}
+
+\begin{theorem}[Standard smooth domains of relative dimension one are Dedekind]
+  \label{thm:standard_smooth_dim_one_dedekind}
+  \lean{Algebra.IsStandardSmoothOfRelativeDimension.isDedekindDomain}
+  \uses{cor:unramified_finiteType_dedekind, lem:mvpoly_fin_one_dedekind,
+    thm:standard_smooth_etale_structure}
+  \leanok
+  Let \(k\) be a field and \(B\) an integral domain which is a standard smooth
+  \(k\)-algebra of relative dimension \(1\). Then \(B\) is a Dedekind domain.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By the structure theorem \ref{thm:standard_smooth_etale_structure}, \(B\) is \'etale over
+  a polynomial ring over \(k\) in one variable, which is a Dedekind domain
+  (\ref{lem:mvpoly_fin_one_dedekind}). An \'etale algebra is formally unramified and of
+  finite type, so \ref{cor:unramified_finiteType_dedekind} applies.
+\end{proof}
+
+\begin{theorem}[Standard smooth algebras of relative dimension one contain a transcendental]
+  \label{thm:standard_smooth_transcendental}
+  \lean{Algebra.IsStandardSmoothOfRelativeDimension.exists_transcendental}
+  \uses{thm:standard_smooth_etale_structure}
+  \leanok
+  Let \(k\) be a field and \(B\) a nontrivial standard smooth \(k\)-algebra of relative
+  dimension \(1\). Then \(B\) contains an element transcendental over \(k\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  By the structure theorem \ref{thm:standard_smooth_etale_structure}, there is an \'etale
+  homomorphism \(g : k[y] \to B\) from a one-variable polynomial ring; we claim that the
+  \'etale coordinate \(t = g(y)\) is transcendental over \(k\). Note that no dimension
+  theory enters: the argument is pure torsion-freeness.
+
+  First, \(g\) is injective. An \'etale algebra is flat, and a flat module over a domain is
+  torsion-free; so \(B\) is a torsion-free \(k[y]\)-module. If \(g(P) = g(Q)\) for
+  \(P \neq Q\), then the nonzero element \(P - Q\) of the domain \(k[y]\) would satisfy
+  \((P - Q) \cdot 1_B = g(P - Q) = 0\) with \(1_B \neq 0\) (\(B\) is nontrivial),
+  contradicting torsion-freeness.
+
+  Now suppose \(P(t) = 0\) for some nonzero \(P \in k[T]\). Evaluating \(P\) at \(t = g(y)\)
+  is the image under \(g\) of the evaluation of \(P\) at \(y\), so \(g(P(y)) = 0\); by
+  injectivity \(P(y) = 0\) in \(k[y]\), contradicting the transcendence of the variable
+  \(y\) over \(k\). Hence \(t\) is transcendental over \(k\).
+\end{proof}
+
+\section{Stalks, specializations and finiteness on curve-like schemes}
+
+A scheme covered by affine opens whose section rings are Dedekind domains behaves like a
+smooth curve: its stalks are valuation rings, and its specialization order has height one.
+This section proves the pointwise statements from the single hypothesis ``the point lies in
+an affine open with Dedekind section ring'', derives the finiteness of proper closed
+subsets, and discharges the hypotheses for a scheme smooth of relative dimension one over a
+field.
+
+\begin{theorem}[Stalks over Dedekind section rings are valuation rings]
+  \label{thm:affine_dedekind_stalk_valuation}
+  \lean{AlgebraicGeometry.IsAffineOpen.valuationRing_stalk}
+  \leanok
+  Let \(X\) be an integral scheme, \(V \subseteq X\) an affine open whose ring of sections
+  \(\Gamma(X, V)\) is a Dedekind domain, and \(x \in V\). Then the stalk
+  \(\struct{X,x}\) is a valuation ring.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The stalk at \(x\) is the localization of \(\Gamma(X, V)\) at the prime ideal
+  \(\mathfrak q\) corresponding to \(x\) under \(V \cong \Spec \Gamma(X, V)\). If
+  \(\mathfrak q = 0\), its complement is the set of nonzero elements of the domain
+  \(\Gamma(X, V)\), so the stalk is the fraction field --- a field, and every field is a
+  valuation ring. If \(\mathfrak q \neq 0\), the localization of a Dedekind domain at a
+  nonzero prime is a discrete valuation ring, and every discrete valuation ring is a
+  valuation ring.
+\end{proof}
+
+\begin{theorem}[Height-one specialization over Dedekind section rings]
+  \label{thm:affine_dedekind_specializes}
+  \lean{AlgebraicGeometry.IsAffineOpen.specializes_eq_genericPoint_or_eq}
+  \leanok
+  Let \(X\) be a scheme whose underlying space is irreducible, \(V \subseteq X\) an affine
+  open with \(\Gamma(X, V)\) a Dedekind domain, and \(x \in V\). Then every generalization
+  of \(x\) is the generic point of \(X\) or \(x\) itself.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Let \(y\) be a generalization of \(x\). Open sets are stable under generalization, so
+  \(y \in V\). Under the open immersion \(\Spec \Gamma(X, V) \cong V \subseteq X\) the
+  points \(x, y\) correspond to primes \(\mathfrak q_x, \mathfrak q_y\) of
+  \(\Gamma(X, V)\) with \(\mathfrak q_y \subseteq \mathfrak q_x\) (specialization order of
+  the spectrum). If \(\mathfrak q_y = 0\), then \(y\) is the image of the generic point of
+  \(\Spec \Gamma(X, V)\), and the generic point of a nonempty open subscheme of an
+  irreducible scheme is the generic point of the whole scheme. If \(\mathfrak q_y \neq 0\),
+  then \(\mathfrak q_y\) is maximal (nonzero primes of a Dedekind domain are maximal), so
+  \(\mathfrak q_y = \mathfrak q_x\) and \(y = x\).
+\end{proof}
+
+\begin{lemma}[Non-generic points are closed]
+  \label{lem:height_one_closed_points}
+  \lean{AlgebraicGeometry.Scheme.isClosed_singleton_of_forall_specializes}
+  \leanok
+  Let \(X\) be a scheme whose underlying space is irreducible and whose specialization
+  order has height one: every generalization of any point is the generic point or the
+  point itself. Then every point other than the generic point is closed.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Let \(x \neq \xi\) (\(\xi\) the generic point) and let \(y\) be a point of the closure of
+  \(\{x\}\), i.e.\ \(x\) is a generalization of \(y\). By hypothesis \(x = \xi\) or
+  \(x = y\); the first is excluded, so \(y = x\). Hence the closure of \(\{x\}\) is
+  \(\{x\}\).
+\end{proof}
+
+\begin{theorem}[Finiteness of proper closed subsets]
+  \label{thm:height_one_finite_closed}
+  \lean{AlgebraicGeometry.Scheme.finite_of_isClosed_of_notMem_genericPoint}
+  \uses{lem:height_one_closed_points}
+  \leanok
+  Let \(X\) be a scheme whose underlying space is irreducible and Noetherian and whose
+  specialization order has height one. Then every closed subset \(Z \subseteq X\) not
+  containing the generic point is finite.
+\end{theorem}
+\begin{proof}
+  \leanok
+  A closed subset of a Noetherian space is a finite union of irreducible closed subsets.
+  Schemes are sober, so each irreducible closed subset \(T\) in such a decomposition of
+  \(Z\) is the closure of a unique point \(z \in T \subseteq Z\). Since the generic point
+  does not lie in \(Z\), \(z\) is not the generic point, so \(\{z\}\) is closed by
+  \ref{lem:height_one_closed_points} and \(T = \overline{\{z\}} = \{z\}\). Hence \(Z\) is a
+  finite union of singletons.
+\end{proof}
+
+\begin{theorem}[Dedekind charts on a curve]
+  \label{thm:relDim1_dedekind_charts}
+  \lean{AlgebraicGeometry.SmoothOfRelativeDimension.exists_isDedekindDomain_section}
+  \uses{thm:standard_smooth_dim_one_dedekind}
+  \leanok
+  Let \(k\) be a field and \(X\) an integral scheme, smooth of relative dimension one over
+  \(\Spec k\). Then every point of \(X\) lies in an affine open \(V\) whose ring of
+  sections \(\Gamma(X, V)\) is a Dedekind domain.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By definition of smoothness of relative dimension one, a point \(x\) has an affine open
+  neighbourhood \(V\), mapping into an affine open \(U\) of \(\Spec k\), such that
+  \(\Gamma(U) \to \Gamma(X, V)\) is standard smooth of relative dimension \(1\). The base
+  \(\Spec k\) has a single point, and \(U\) is nonempty (it receives the image of \(x\)),
+  so \(U = \Spec k\) and \(\Gamma(U) \cong k\). The ring \(\Gamma(X, V)\) is an integral
+  domain, since \(V\) is a nonempty open of the integral scheme \(X\). Apply
+  \ref{thm:standard_smooth_dim_one_dedekind}.
+\end{proof}
+
+\begin{theorem}[The stalks of a curve are valuation rings]
+  \label{thm:relDim1_stalks_valuation}
+  \lean{AlgebraicGeometry.SmoothOfRelativeDimension.valuationRing_stalk}
+  \uses{thm:relDim1_dedekind_charts, thm:affine_dedekind_stalk_valuation}
+  \leanok
+  Let \(k\) be a field and \(X\) an integral scheme, smooth of relative dimension one over
+  \(\Spec k\). Then every stalk of the structure sheaf of \(X\) is a valuation ring.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Combine \ref{thm:relDim1_dedekind_charts} with
+  \ref{thm:affine_dedekind_stalk_valuation}.
+\end{proof}
+
+\begin{theorem}[Height-one specialization on a curve]
+  \label{thm:relDim1_specializes}
+  \lean{AlgebraicGeometry.SmoothOfRelativeDimension.specializes_eq_genericPoint_or_eq}
+  \uses{thm:relDim1_dedekind_charts, thm:affine_dedekind_specializes}
+  \leanok
+  Let \(k\) be a field and \(X\) an integral scheme, smooth of relative dimension one over
+  \(\Spec k\). Then every generalization of a point of \(X\) is the generic point or the
+  point itself.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Combine \ref{thm:relDim1_dedekind_charts} with \ref{thm:affine_dedekind_specializes};
+  the underlying space of an integral scheme is irreducible.
+\end{proof}
+
+\begin{theorem}[Existence of a transcendental rational function]
+  \label{thm:relDim1_transcendental}
+  \lean{AlgebraicGeometry.SmoothOfRelativeDimension.exists_transcendental_functionField}
+  \uses{thm:standard_smooth_transcendental}
+  \leanok
+  Let \(k\) be a field and \(X\) an integral scheme, smooth of relative dimension one over
+  \(\Spec k\). Regard the function field \(K(X)\) --- the stalk of the structure sheaf at
+  the generic point --- as a ring under \(k\) via the structure morphism (global sections
+  followed by the germ at the generic point). Then \(K(X)\) contains an element \(f_0\)
+  transcendental over \(k\): no nonzero polynomial with coefficients in \(k\) vanishes at
+  \(f_0\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Apply the definition of smoothness of relative dimension one at the generic point
+  \(\xi\): there is an affine open \(V \ni \xi\) such that \(k \to \Gamma(X, V)\) is
+  standard smooth of relative dimension \(1\) (the base affine open is all of \(\Spec k\),
+  as in the proof of \ref{thm:relDim1_dedekind_charts}). The ring \(\Gamma(X, V)\) is
+  nontrivial (\(V\) is nonempty), so by \ref{thm:standard_smooth_transcendental} it
+  contains an element \(t\) transcendental over \(k\); let \(f_0\) be the germ of \(t\) at
+  \(\xi\).
+
+  On an integral scheme, the germ map \(\Gamma(X, V) \to K(X)\) at the generic point is
+  injective. Let \(P \in k[T]\) be nonzero. Evaluating \(P\) at \(f_0\) through the
+  structure map \(k \to K(X)\) is the germ of the evaluation of \(P\) at \(t\) through
+  \(k \to \Gamma(X, V)\) (the structure map factors through \(\Gamma(X, V)\), and germs
+  commute with polynomial evaluation). The latter is nonzero by transcendence of \(t\)
+  (with coefficients moved into \(\Gamma(X, V)\) along the injective map \(k \to
+  \Gamma(X, V)\)), so by injectivity of the germ map \(P(f_0) \neq 0\).
+\end{proof}
+
+\section{The topology of the projective line and morphisms into it}
+
+Two groups of results about \(\PP^1\) feed the construction of the finite morphism from
+the curve: the topology of \(\PP^1\) (irreducibility, height-one specialization, closed
+points, separatedness), and the construction of morphisms \(\Spec A \to \PP^1\) from a
+single element of a ring \(A\) under \(k\), with the gluing identity
+\([1 : u] = [u^{-1} : 1]\) for units.
+
+\begin{lemma}[The chart models are domains]
+  \label{lem:P1_away_domains}
+  \lean{AlgebraicGeometry.P1.instIsDomainAwayNatMvPolynomialFinOfNatSubmoduleHomogeneousSubmoduleX,
+    AlgebraicGeometry.P1.instIsDomainAwayNatMvPolynomialFinOfNatSubmoduleHomogeneousSubmoduleX_1,
+    AlgebraicGeometry.P1.instNontrivialAwayNatMvPolynomialFinOfNatSubmoduleHomogeneousSubmoduleHMulX}
+  \uses{def:P1_awayAlgEquiv, def:P1_overlapAlgEquiv}
+  \leanok
+  The chart rings \(A_{(X_0)}\) and \(A_{(X_1)}\) are integral domains, and the overlap
+  ring \(A_{(X_0X_1)}\) is nontrivial.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Transport along the isomorphisms \(\alpha_i : A_{(X_i)} \cong k[t]\) of
+  \ref{def:P1_awayAlgEquiv} and \(\theta : A_{(X_0X_1)} \cong k[T,T^{-1}]\) of
+  \ref{def:P1_overlapAlgEquiv}: polynomial rings over a field are domains, and the Laurent
+  polynomial ring is nontrivial.
+\end{proof}
+
+\begin{lemma}[The chart section rings are principal ideal rings]
+  \label{lem:P1_chartSections_pid}
+  \lean{AlgebraicGeometry.P1.isPrincipalIdealRing_chartSections}
+  \uses{def:P1_chartSectionsEquiv0, def:P1_chartSectionsEquiv1}
+  \leanok
+  For \(i \in \{0,1\}\), the ring \(\Gamma(\PP^1, U_i)\) is a principal ideal ring.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Being a principal ideal ring transports along the surjective homomorphism
+  \(\gamma_i^{-1} : k[t] \to \Gamma(\PP^1, U_i)\)
+  (\ref{def:P1_chartSectionsEquiv0}--\ref{def:P1_chartSectionsEquiv1}), and \(k[t]\) is a
+  principal ideal domain.
+\end{proof}
+
+\begin{lemma}[The chart section rings are domains]
+  \label{lem:P1_chartSections_domain}
+  \lean{AlgebraicGeometry.P1.isDomain_chartSections}
+  \uses{def:P1_chartSectionsEquiv0, def:P1_chartSectionsEquiv1}
+  \leanok
+  For \(i \in \{0,1\}\), the ring \(\Gamma(\PP^1, U_i)\) is an integral domain.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Transport along \(\gamma_i : \Gamma(\PP^1, U_i) \cong k[t]\).
+\end{proof}
+
+\begin{theorem}[The chart section rings are Dedekind]
+  \label{thm:P1_chartSections_dedekind}
+  \lean{AlgebraicGeometry.P1.isDedekindDomain_chartSections}
+  \uses{lem:P1_chartSections_pid, lem:P1_chartSections_domain}
+  \leanok
+  For \(i \in \{0,1\}\), the ring \(\Gamma(\PP^1, U_i)\) is a Dedekind domain.
+\end{theorem}
+\begin{proof}
+  \leanok
+  A principal ideal domain is a Dedekind domain; combine
+  \ref{lem:P1_chartSections_pid} and \ref{lem:P1_chartSections_domain}.
+\end{proof}
+
+\begin{lemma}[Every nonempty open meets the left chart]
+  \label{lem:P1_dense_chart}
+  \lean{AlgebraicGeometry.P1.exists_mem_chartOpen_zero_of_isOpen}
+  \uses{lem:P1_chartOpen_sup, lem:P1_chartIota_range, lem:P1_away_domains}
+  \leanok
+  Every nonempty open subset \(W \subseteq \PP^1\) contains a point of the chart \(U_0\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Let \(w \in W\). The charts cover (\ref{lem:P1_chartOpen_sup}), so \(w \in U_0\) or
+  \(w \in U_1\); in the first case we are done. In the second, work in the affine model
+  \(U_1 \cong \Spec A_{(X_1)}\) (\ref{lem:P1_chartIota_range}), an irreducible space since
+  \(A_{(X_1)}\) is a domain (\ref{lem:P1_away_domains}). The preimage of \(W\) there is a
+  nonempty open (it contains the preimage of \(w\)). The preimage of \(U_0\) there is open
+  and nonempty: the overlap \(D_+(X_0X_1)\) is contained in both charts and is nonempty,
+  because its coordinate ring \(A_{(X_0X_1)}\) is nontrivial (\ref{lem:P1_away_domains}).
+  Two nonempty opens of an irreducible space intersect; the image in \(\PP^1\) of a common
+  point lies in \(W \cap U_0\).
+\end{proof}
+
+\begin{theorem}[Irreducibility of the projective line]
+  \label{thm:P1_irreducible}
+  \lean{AlgebraicGeometry.P1.instIrreducibleSpaceCarrierCarrierCommRingCat}
+  \uses{lem:P1_dense_chart, lem:P1_chartIota_range, lem:P1_away_domains}
+  \leanok
+  The underlying topological space of \(\PP^1\) is irreducible (in particular nonempty).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \(\PP^1\) is nonempty: the chart \(U_0 \cong \Spec A_{(X_0)}\) is the spectrum of a
+  nontrivial ring. Let \(u, v\) be nonempty opens of \(\PP^1\). By
+  \ref{lem:P1_dense_chart} both meet \(U_0\), so their preimages in the affine model
+  \(\Spec A_{(X_0)}\) (\ref{lem:P1_chartIota_range}) are nonempty opens; the spectrum of
+  the domain \(A_{(X_0)}\) (\ref{lem:P1_away_domains}) is irreducible, so the preimages
+  intersect, and the image of a common point lies in \(u \cap v\).
+\end{proof}
+
+\begin{lemma}[The generic point through the chart]
+  \label{lem:P1_generic_point_chart}
+  \lean{AlgebraicGeometry.P1.chartι_base_genericPoint}
+  \uses{def:P1_chartIota, thm:P1_irreducible}
+  \leanok
+  The affine model \(\Spec A_{(X_0)} \to \PP^1\) sends the generic point of
+  \(\Spec A_{(X_0)}\) to the generic point of \(\PP^1\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  An open immersion with nonempty source into an irreducible space has dense image, and
+  the image of the generic point of the source is a generic point of the image, hence of
+  the closure of the image, which is the whole space.
+\end{proof}
+
+\begin{lemma}[A second point of the projective line]
+  \label{lem:P1_exists_ne_generic}
+  \lean{AlgebraicGeometry.P1.exists_ne_genericPoint}
+  \uses{def:P1_awayAlgEquiv, lem:P1_generic_point_chart}
+  \leanok
+  \(\PP^1\) has a point distinct from its generic point.
+\end{lemma}
+\begin{proof}
+  \leanok
+  \(A_{(X_0)} \cong k[t]\) (\ref{def:P1_awayAlgEquiv}) is not a field, so it has a nonzero
+  prime ideal \(\mathfrak p\). The corresponding point of the chart differs from the
+  generic point: the generic point corresponds to the zero ideal
+  (\ref{lem:P1_generic_point_chart}), and the chart immersion is injective.
+\end{proof}
+
+\begin{theorem}[Height-one specialization on the projective line]
+  \label{thm:P1_specializes}
+  \lean{AlgebraicGeometry.P1.specializes_eq_genericPoint_or_eq}
+  \uses{lem:P1_chartOpen_sup, lem:P1_chartOpen_affine, thm:P1_chartSections_dedekind,
+    thm:affine_dedekind_specializes}
+  \leanok
+  Every generalization of a point of \(\PP^1\) is the generic point or the point itself.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Every point lies in one of the two charts (\ref{lem:P1_chartOpen_sup}), which are affine
+  (\ref{lem:P1_chartOpen_affine}) with Dedekind section rings
+  (\ref{thm:P1_chartSections_dedekind}); apply \ref{thm:affine_dedekind_specializes}.
+\end{proof}
+
+\begin{lemma}[Non-generic points of the projective line are closed]
+  \label{lem:P1_closed_points}
+  \lean{AlgebraicGeometry.P1.isClosed_singleton_of_ne_genericPoint}
+  \uses{lem:height_one_closed_points, thm:P1_specializes}
+  \leanok
+  Every point of \(\PP^1\) other than the generic point is closed.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Immediate from \ref{lem:height_one_closed_points} and \ref{thm:P1_specializes}.
+\end{proof}
+
+\begin{theorem}[Separatedness of the projective line]
+  \label{thm:P1_separated}
+  \lean{AlgebraicGeometry.P1.instIsSeparated}
+  \uses{thm:P1_proper}
+  \leanok
+  \(\PP^1\) is a separated scheme.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The structure morphism \(\PP^1 \to \Spec k\) is proper (\ref{thm:P1_proper}), hence
+  separated, and \(\Spec k\), being affine, is a separated scheme; a scheme separated over
+  a separated scheme is separated.
+\end{proof}
+
+\begin{definition}[Evaluation of the chart ring]
+  \label{def:P1_chartEval}
+  \lean{AlgebraicGeometry.P1.chartEval}
+  \uses{def:P1_awayToPoly}
+  \leanok
+  Let \(A\) be a commutative ring under \(k\), i.e.\ equipped with a ring homomorphism
+  \(\sigma : k \to A\), let \(i \in \{0,1\}\) and \(a \in A\). The evaluation of the chart
+  ring at \(a\) is the ring homomorphism
+  \[
+    A_{(X_i)} \longrightarrow A, \qquad
+    z \longmapsto \bigl(\text{the polynomial } \alpha_i(z) \in k[t]\bigr)
+      \text{ evaluated at } t = a \text{ with coefficients mapped by } \sigma
+  \]
+  (composite of \ref{def:P1_awayToPoly} with polynomial evaluation). It sends the chart
+  coordinate \(t_{ij}\) (\(j \neq i\)) to \(a\) and a constant \(c \in k\) to \(\sigma(c)\).
+\end{definition}
+
+\begin{definition}[Morphisms to the projective line through a chart]
+  \label{def:P1_fromSpecChart}
+  \lean{AlgebraicGeometry.P1.fromSpecChart}
+  \uses{def:P1_chartEval, def:P1_chartIota}
+  \leanok
+  With \(\sigma : k \to A\), \(i \in \{0,1\}\) and \(a \in A\) as in
+  \ref{def:P1_chartEval}: the morphism \(\Spec A \to \PP^1\) obtained by applying
+  \(\Spec\) to the evaluation \(A_{(X_i)} \to A\) at \(a\) and composing with the affine
+  model \(\Spec A_{(X_i)} \to \PP^1\) of \ref{def:P1_chartIota}. For \(i = 0\) this is the
+  ``point'' \([1 : a]\); for \(i = 1\) it is \([a : 1]\).
+\end{definition}
+
+\begin{lemma}[The chart morphisms lie over the base]
+  \label{lem:P1_fromSpecChart_over}
+  \lean{AlgebraicGeometry.P1.fromSpecChart_structureMap}
+  \uses{def:P1_fromSpecChart, def:P1_structureMap, lem:P1_chartIota_structureMap}
+  \leanok
+  The composite of the morphism of \ref{def:P1_fromSpecChart} with the structure morphism
+  \(\PP^1 \to \Spec k\) is \(\Spec \sigma : \Spec A \to \Spec k\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{def:P1_chartEval}
+  The affine model lies over \(k\) (\ref{lem:P1_chartIota_structureMap}), and the
+  evaluation homomorphism of \ref{def:P1_chartEval} restricts to \(\sigma\) on the constants
+  \(k \to A_{(X_i)}\); apply \(\Spec\) to this equality of ring homomorphisms.
+\end{proof}
+
+\begin{lemma}[Naturality of the chart morphisms]
+  \label{lem:P1_fromSpecChart_natural}
+  \lean{AlgebraicGeometry.P1.SpecMap_fromSpecChart}
+  \uses{def:P1_fromSpecChart}
+  \leanok
+  Let \(g : A \to A'\) be a homomorphism of rings under \(k\) (so \(A'\) is under \(k\)
+  via \(g \circ \sigma\)), \(i \in \{0,1\}\) and \(a \in A\). Then the composite
+  \(\Spec A' \xrightarrow{\Spec g} \Spec A \to \PP^1\) of \ref{def:P1_fromSpecChart} at
+  \(a\) is the morphism of \ref{def:P1_fromSpecChart} at \(g(a) \in A'\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Polynomial evaluation commutes with \(g\): evaluating at \(a\) and applying \(g\) is
+  evaluating at \(g(a)\) with coefficients mapped by \(g \circ \sigma\). Apply \(\Spec\).
+\end{proof}
+
+\begin{lemma}[The chart restrictions factor the overlap model]
+  \label{lem:P1_SpecMap_overlap_chartIota}
+  \lean{AlgebraicGeometry.P1.SpecMap_awayToOverlapLeft_chartι,
+    AlgebraicGeometry.P1.SpecMap_awayToOverlapRight_chartι}
+  \uses{def:P1_awayToOverlapLeft, def:P1_awayToOverlapRight, def:P1_chartIota}
+  \leanok
+  Applying \(\Spec\) to the restriction homomorphism \(\lambda : A_{(X_0)} \to
+  A_{(X_0X_1)}\) (resp.\ \(\rho : A_{(X_1)} \to A_{(X_0X_1)}\)) of
+  \ref{def:P1_awayToOverlapLeft} (resp.\ \ref{def:P1_awayToOverlapRight}) and composing
+  with the affine model of the chart \(U_0\) (resp.\ \(U_1\)) yields the affine model
+  \(\Spec A_{(X_0X_1)} \to \PP^1\) of the overlap \(D_+(X_0X_1)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  This is the compatibility of the basic-open affine models of \(\Proj\) with inclusions
+  of basic opens: the inclusion \(D_+(fg) \subseteq D_+(f)\) of basic opens corresponds,
+  on affine models, to \(\Spec\) of the canonical map \(A_{(f)} \to A_{(fg)}\).
+\end{proof}
+
+\begin{theorem}[The gluing identity]
+  \label{thm:P1_gluing_identity}
+  \lean{AlgebraicGeometry.P1.fromSpecChart_units}
+  \uses{def:P1_fromSpecChart, lem:P1_SpecMap_overlap_chartIota,
+    lem:P1_overlap_isLocalization, lem:P1_coord_mul, lem:P1_polyToAway_surjective}
+  \leanok
+  Let \(\sigma : k \to A\) and let \(u \in A\) be a unit. Then the morphism
+  \([1 : u] : \Spec A \to \PP^1\) through the chart \(U_0\) equals the morphism
+  \([u^{-1} : 1]\) through the chart \(U_1\) (both as in \ref{def:P1_fromSpecChart}).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{def:P1_chartEval}
+  Both morphisms factor through the chart overlap, where they are induced by one and the
+  same ring homomorphism.
+
+  The evaluation \(e_0 : A_{(X_0)} \to A\) at \(u\) (\ref{def:P1_chartEval}) sends the
+  coordinate \(t_{01}\) to the unit \(u\). Since \(A_{(X_0X_1)}\) is the localization of
+  \(A_{(X_0)}\) at the powers of \(t_{01}\) (\ref{lem:P1_overlap_isLocalization}), the
+  universal property of localization extends \(e_0\) to a ring homomorphism
+  \(\psi : A_{(X_0X_1)} \to A\) with \(\psi \circ \lambda = e_0\).
+
+  From \(\lambda(t_{01}) \cdot \rho(t_{10}) = 1\) in \(A_{(X_0X_1)}\)
+  (\ref{lem:P1_coord_mul}) we get \(u \cdot \psi(\rho(t_{10})) = 1\), i.e.\
+  \(\psi(\rho(t_{10})) = u^{-1}\). Moreover \(\psi \circ \rho\) agrees with the structure
+  map on constants: the two restrictions \(\lambda\) and \(\rho\) restrict to the same map
+  on the constants \(k \to A_{(X_0X_1)}\), and \(\psi \circ \lambda = e_0\) restricts to
+  \(\sigma : k \to A\) on constants. Since \(A_{(X_1)}\) is generated as a \(k\)-algebra by
+  \(t_{10}\) (\ref{lem:P1_polyToAway_surjective}), it follows that \(\psi \circ \rho\) is
+  exactly the evaluation \(e_1 : A_{(X_1)} \to A\) at \(u^{-1}\).
+
+  Now apply \(\Spec\) and compose with the chart models. Writing \(\iota_0, \iota_1,
+  \iota_{01}\) for the affine models of \(U_0\), \(U_1\) and \(D_+(X_0X_1)\), the
+  factorization \(e_0 = \psi \circ \lambda\) and \ref{lem:P1_SpecMap_overlap_chartIota}
+  give
+  \[
+    [1 : u]
+      = \iota_0 \circ \Spec e_0
+      = \iota_0 \circ \Spec \lambda \circ \Spec \psi
+      = \iota_{01} \circ \Spec \psi ,
+  \]
+  and the same computation for \(e_1 = \psi \circ \rho\) gives
+  \([u^{-1} : 1] = \iota_1 \circ \Spec e_1 = \iota_{01} \circ \Spec \psi\). The two
+  morphisms coincide.
+\end{proof}
+
+\begin{theorem}[Transcendental points land on the generic point]
+  \label{thm:P1_fromSpecChart_generic}
+  \lean{AlgebraicGeometry.P1.fromSpecChart_base_genericPoint}
+  \uses{def:P1_fromSpecChart, lem:P1_polyToAway_surjective, lem:P1_generic_point_chart}
+  \leanok
+  Let \(A\) be an integral domain under \(\sigma : k \to A\) and let \(a \in A\) be
+  transcendental in the sense that no nonzero polynomial over \(k\), evaluated at \(a\)
+  with coefficients mapped by \(\sigma\), vanishes. Then the morphism
+  \([1 : a] : \Spec A \to \PP^1\) of \ref{def:P1_fromSpecChart} sends the generic point of
+  \(\Spec A\) to the generic point of \(\PP^1\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{def:P1_chartEval}
+  The evaluation \(A_{(X_0)} \to A\) at \(a\) is injective: every \(z \in A_{(X_0)}\) is a
+  polynomial in the coordinate \(t_{01}\) with coefficients in \(k\)
+  (\ref{lem:P1_polyToAway_surjective}), its image is that polynomial evaluated at \(a\),
+  and by hypothesis this vanishes only for the zero polynomial. The spectrum of an
+  injective homomorphism between domains sends the zero ideal to the zero ideal, i.e.\ the
+  generic point of \(\Spec A\) to the generic point of \(\Spec A_{(X_0)}\); conclude by
+  \ref{lem:P1_generic_point_chart}.
+\end{proof}
+
+\section{Spreading out a rational function to the projective line}
+
+On an integral scheme \(X\), proper and smooth of relative dimension one over \(k\), a
+rational function \(f_0 \in K(X)\) transcendental over \(k\) spreads out to a
+\(k\)-morphism \(\pi : X \to \PP^1\) with finite fibers. This section provides the
+stalk-level bricks and the spreading-out argument. Classically, the corresponding morphism
+is produced from the inclusion of function fields \(k(f_0) \subseteq K(X)\) together with
+the finiteness of \(K(X)\) over \(k(f_0)\); the route taken here never uses that
+finiteness --- quasi-finiteness of \(\pi\) is obtained purely topologically from the
+height-one specialization order of both spaces.
+
+\begin{lemma}[Stalk morphisms are compatible with specialization]
+  \label{lem:fromSpecStalkOfMem_stalkSpecializes}
+  \lean{AlgebraicGeometry.Scheme.Opens.fromSpecStalkOfMem_stalkSpecializes}
+  \leanok
+  Let \(X\) be a scheme, \(U \subseteq X\) open, \(x \in U\), and let \(y\) be a
+  generalization of \(x\) (so \(y \in U\) as well). Write
+  \(\struct{X,x} \to \struct{X,y}\) for the canonical map of stalks (restriction of
+  germs). Then the composite
+  \[
+    \Spec \struct{X,y} \longrightarrow \Spec \struct{X,x} \longrightarrow U
+  \]
+  of the induced morphism of spectra with the canonical morphism
+  \(\Spec \struct{X,x} \to U\) is the canonical morphism \(\Spec \struct{X,y} \to U\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The stalk of \(X\) at a point of \(U\) is canonically the stalk of the open subscheme
+  \(U\) at that point, compatibly with the canonical maps of stalks along
+  specializations (naturality of germs along the open immersion \(U \to X\)); and on
+  \(X\) itself the analogous triangle of canonical morphisms
+  \(\Spec \struct{X,y} \to \Spec \struct{X,x} \to X\) commutes, both composites being the
+  morphism determined by the local ring \(\struct{X,y}\) and its ideal-theoretic image.
+  Transport this triangle through the open immersion.
+\end{proof}
+
+\begin{definition}[Partial and rational maps]
+  \label{def:rational_map_machinery}
+  \lean{AlgebraicGeometry.Scheme.RationalMap.ofFunctionField,
+    AlgebraicGeometry.Scheme.RationalMap.toPartialMap,
+    AlgebraicGeometry.Scheme.PartialMap.ofFromSpecStalk,
+    AlgebraicGeometry.Scheme.RationalMap.mem_domain,
+    AlgebraicGeometry.Scheme.RationalMap.eq_of_fromFunctionField_eq}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Let \(X, Y\) be schemes over a base \(S\). A \emph{partial map} \(X \dashrightarrow Y\)
+  is a morphism to \(Y\) from a dense open subscheme of \(X\) (its \emph{domain}); a
+  \emph{rational map} is an equivalence class of partial maps, two being equivalent when
+  they agree on a common dense open. For \(X\) irreducible with generic point \(\xi\) and
+  function field \(K(X) = \struct{X,\xi}\), a partial map \(g\) restricts to a morphism
+  \(\Spec K(X) \to Y\) (its \emph{function-field morphism}), which determines the rational
+  map. For \(X\) integral and \(Y\) locally of finite type over \(S\):
+  \begin{enumerate}
+    \item every \(S\)-morphism \(\Spec K(X) \to Y\) arises as the function-field morphism
+      of a unique rational \(S\)-map \(X \dashrightarrow Y\) (spreading out);
+    \item if moreover an \(S\)-morphism \(\Spec \struct{X,x} \to Y\) restricting to the
+      given one on \(\Spec K(X)\) exists at a point \(x\), then \(x\) lies in the domain
+      of definition of that rational map (the union of the domains of its
+      representatives);
+    \item if \(Y\) is separated, a rational map has a largest representative, defined on
+      its whole domain of definition.
+  \end{enumerate}
+\end{definition}
+
+\begin{lemma}[Restriction of a partial map to the function field]
+  \label{lem:partialMap_fromFunctionField_eq}
+  \lean{AlgebraicGeometry.Scheme.PartialMap.fromFunctionField_eq}
+  \uses{def:rational_map_machinery, lem:fromSpecStalkOfMem_stalkSpecializes}
+  \leanok
+  Let \(X\) be a scheme with irreducible underlying space, \(g : X \dashrightarrow Y\) a
+  partial map and \(x\) a point of its domain. Then the function-field morphism of \(g\)
+  is the composite
+  \[
+    \Spec K(X) \longrightarrow \Spec \struct{X,x}
+      \longrightarrow Y,
+  \]
+  where the first arrow is induced by the canonical map
+  \(\struct{X,x} \to K(X) = \struct{X,\xi}\) and the second is the restriction of \(g\) to
+  \(\Spec \struct{X,x}\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The function-field morphism is by definition the restriction of \(g\) to
+  \(\Spec\) of the stalk at the generic point, which is a generalization of \(x\); apply
+  \ref{lem:fromSpecStalkOfMem_stalkSpecializes} inside the domain of \(g\).
+\end{proof}
+
+\begin{definition}[The structure map of a stalk]
+  \label{def:structureStalk}
+  \lean{AlgebraicGeometry.Scheme.Hom.structureStalk}
+  \leanok
+  Let \(f : X \to \Spec k\) be a scheme over \(k\) and \(x \in X\). The structure map of
+  the stalk at \(x\) is the composite ring homomorphism
+  \(k \to \Gamma(X, X) \to \struct{X,x}\) of the map induced by \(f\) on global sections
+  with the germ at \(x\); it makes every stalk of \(X\) a ring under \(k\).
+\end{definition}
+
+\begin{lemma}[Coherence of the structure maps of stalks]
+  \label{lem:structureStalk_coherence}
+  \lean{AlgebraicGeometry.Scheme.Hom.Spec_map_structureStalk,
+    AlgebraicGeometry.Scheme.Hom.structureStalk_stalkSpecializes}
+  \uses{def:structureStalk}
+  \leanok
+  Let \(f : X \to \Spec k\) and \(x \in X\).
+  \begin{enumerate}
+    \item Applying \(\Spec\) to the structure map of \ref{def:structureStalk} yields the
+      composite \(\Spec \struct{X,x} \to X \xrightarrow{f} \Spec k\) of the canonical
+      morphism with \(f\).
+    \item For a generalization \(y\) of \(x\), composing the structure map at \(x\) with
+      the canonical map \(\struct{X,x} \to \struct{X,y}\) yields the structure map at
+      \(y\).
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  \leanok
+  (1) is the compatibility of the canonical morphism \(\Spec \struct{X,x} \to X\) with
+  global sections: its composite with \(f\) corresponds, under the anti-equivalence of
+  affine schemes and rings, to the composite \(k \to \Gamma(X, X) \to \struct{X,x}\).
+  (2) is the compatibility of germs with the canonical maps of stalks: the germ at \(x\)
+  followed by restriction of germs to \(y\) is the germ at \(y\).
+\end{proof}
+
+\begin{theorem}[A smooth projective curve maps locally quasi-finitely to the line]
+  \label{thm:exists_lqf_toP1}
+  \lean{AlgebraicGeometry.exists_locallyQuasiFinite_toP1}
+  \uses{def:P1_structureMap}
+  \leanok
+  Let \(X\) be an integral scheme, proper and smooth of relative dimension one over the
+  field \(k\). Then there is a morphism \(\pi : X \to \PP^1\) over \(k\) which is locally
+  quasi-finite.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:relDim1_transcendental, thm:relDim1_stalks_valuation, thm:relDim1_specializes,
+    def:structureStalk, lem:structureStalk_coherence, def:P1_fromSpecChart,
+    lem:P1_fromSpecChart_over, lem:P1_fromSpecChart_natural, thm:P1_gluing_identity,
+    thm:P1_fromSpecChart_generic, def:rational_map_machinery,
+    lem:partialMap_fromFunctionField_eq, lem:height_one_closed_points,
+    thm:height_one_finite_closed, lem:P1_exists_ne_generic, lem:P1_closed_points,
+    thm:P1_separated, thm:P1_proper}
+  Write \(\xi\) for the generic point of \(X\) and \(K(X) = \struct{X,\xi}\) for the
+  function field, a field under \(k\) via the structure map of \ref{def:structureStalk}.
+
+  (a) \emph{The generic morphism.} By \ref{thm:relDim1_transcendental} choose
+  \(f_0 \in K(X)\) transcendental over \(k\); in particular \(f_0 \neq 0\) (the polynomial
+  \(T\) does not vanish at \(f_0\)). Let
+  \(\varphi_K = [1 : f_0] : \Spec K(X) \to \PP^1\) be the chart-\(0\) morphism of
+  \ref{def:P1_fromSpecChart}. It lies over \(k\), compatibly with the canonical morphism
+  \(\Spec K(X) \to X\), by \ref{lem:P1_fromSpecChart_over} and
+  \ref{lem:structureStalk_coherence}(1).
+
+  (b) \emph{Local regularity.} Let \(x \in X\). The stalk \(\struct{X,x}\) is a valuation
+  ring (\ref{thm:relDim1_stalks_valuation}) with fraction field \(K(X)\), so \(f_0\) or
+  \(f_0^{-1}\) lies in \(\struct{X,x}\). In the first case, with \(f_0 = a\) in
+  \(\struct{X,x}\), set \(\varphi_x = [1 : a] : \Spec \struct{X,x} \to \PP^1\) through
+  chart \(0\); in the second, with \(f_0^{-1} = b\), set \(\varphi_x = [b : 1]\) through
+  chart \(1\). In both cases \(\varphi_x\) lies over \(k\)
+  (\ref{lem:P1_fromSpecChart_over}, \ref{lem:structureStalk_coherence}(1)), and its
+  restriction along \(\Spec K(X) \to \Spec \struct{X,x}\) is \(\varphi_K\): in the first
+  case by naturality (\ref{lem:P1_fromSpecChart_natural}) together with
+  \ref{lem:structureStalk_coherence}(2), since \(a \mapsto f_0\) under
+  \(\struct{X,x} \to K(X)\); in the second case, naturality gives the chart-\(1\)
+  morphism \([f_0^{-1} : 1]\) on \(\Spec K(X)\), which equals \([1 : f_0]\) by the gluing
+  identity \ref{thm:P1_gluing_identity} applied to the unit \(f_0\) of the field
+  \(K(X)\).
+
+  (c) \emph{Spreading out.} The projective line is locally of finite type and separated
+  over \(k\) (\ref{thm:P1_proper}). By \ref{def:rational_map_machinery}(1), \(\varphi_K\)
+  is the function-field morphism of a rational \(k\)-map
+  \(F : X \dashrightarrow \PP^1\). Every point \(x\) lies in the domain of definition of
+  \(F\): the morphism \(\varphi_x\) of (b) spreads out to a partial map defined at \(x\)
+  (\ref{def:rational_map_machinery}(2)) whose function-field morphism is the restriction
+  of \(\varphi_x\) to \(\Spec K(X)\) (\ref{lem:partialMap_fromFunctionField_eq}), i.e.\
+  \(\varphi_K\) --- so this partial map represents \(F\). Since \(X\) is reduced and
+  \(\PP^1\) separated (\ref{thm:P1_separated}), \(F\) has a largest representative
+  (\ref{def:rational_map_machinery}(3)), defined on the whole of \(X\): an honest
+  morphism \(\pi : X \to \PP^1\) whose restriction to \(\Spec K(X)\) is \(\varphi_K\).
+
+  (d) \emph{\(\pi\) lies over \(k\).} The canonical morphism \(\Spec K(X) \to X\) hits the
+  generic point, hence is dominant, and \(\PP^1\) is separated; two morphisms out of the
+  reduced scheme \(X\) to a separated scheme agreeing after composition with a dominant
+  morphism agree. Both \(\pi\) followed by the structure morphism of \(\PP^1\) and the
+  structure morphism \(f\) of \(X\) restrict on \(\Spec K(X)\) to the structure morphism
+  of \(\Spec K(X)\) (step (a)), so they agree.
+
+  (e) \emph{\(\pi\) is proper and locally of finite type.} By (d), \(\pi\) followed by the
+  separated structure morphism of \(\PP^1\) is the proper, locally of finite type
+  morphism \(f\); properness and local finite-typeness descend along such factorizations
+  (cancellation).
+
+  (f) \emph{\(\pi\) maps \(\xi\) to the generic point of \(\PP^1\).} The point
+  \(\pi(\xi)\) is the image of the unique point of \(\Spec K(X)\) under \(\varphi_K\),
+  and \(\varphi_K = [1 : f_0]\) sends it to the generic point of \(\PP^1\) by
+  \ref{thm:P1_fromSpecChart_generic} (the hypothesis is the transcendence of \(f_0\), and
+  the unique point of \(\Spec K(X)\) is its generic point).
+
+  (g) \emph{All fibers of \(\pi\) are finite.} The underlying space of \(X\) is Noetherian:
+  \(X\) is locally of finite type over a field, hence locally Noetherian, and
+  quasi-compact (proper). Its specialization order has height one
+  (\ref{thm:relDim1_specializes}).
+
+  \emph{The fiber of the generic point of \(\PP^1\) is contained in \(\{\xi\}\):} suppose
+  \(x \neq \xi\) with \(\pi(x)\) generic. Then \(\{x\}\) is closed
+  (\ref{lem:height_one_closed_points}), and \(\pi\), being proper, is a closed map, so
+  \(\{\pi(x)\}\) is closed in \(\PP^1\). But the closure of the generic point is all of
+  \(\PP^1\), which has a second point (\ref{lem:P1_exists_ne_generic}) --- a
+  contradiction.
+
+  \emph{Any other fiber is finite:} for \(y\) a non-generic point of \(\PP^1\), the
+  singleton \(\{y\}\) is closed (\ref{lem:P1_closed_points}), so the fiber
+  \(\pi^{-1}(y)\) is closed in \(X\), and it avoids \(\xi\) because
+  \(\pi(\xi)\) is the generic point of \(\PP^1\) (step (f)), which differs from \(y\).
+  By \ref{thm:height_one_finite_closed} the fiber is finite.
+
+  (h) A morphism which is locally of finite type and has finite fibers is locally
+  quasi-finite; by (e) and (g), \(\pi\) is locally quasi-finite.
+\end{proof}
+
 \section{A finite morphism to the projective line}
 
 \begin{theorem}[Zariski's main theorem, cancellation form]
@@ -984,11 +1856,16 @@ Write \(k[T, T^{-1}]\) for the ring of Laurent polynomials over \(k\).
   geometrically irreducible). Then there exists a finite morphism \(\pi : C \to \PP^1\) over
   \(k\).
 \end{theorem}
-
-By \ref{lem:exists_finite_of_lqf}, it suffices to produce a locally quasi-finite morphism
-\(C \to \PP^1\) over \(k\); such a morphism arises from a rational function on \(C\)
-transcendental over \(k\), extended to all of \(C\) using that the local rings of \(C\) at
-closed points are discrete valuation rings.
+\begin{proof}
+  \leanok
+  \uses{lem:relDim_geometrically_reduced, prop:curve_integral, thm:exists_lqf_toP1,
+    lem:exists_finite_of_lqf}
+  \(C\) is geometrically reduced over \(k\) (\ref{lem:relDim_geometrically_reduced}), and
+  being also geometrically irreducible, it is an integral scheme
+  (\ref{prop:curve_integral}). By \ref{thm:exists_lqf_toP1} there is a locally quasi-finite
+  morphism \(C \to \PP^1\) over \(k\), and by \ref{lem:exists_finite_of_lqf} it may be
+  taken finite.
+\end{proof}
 
 \begin{lemma}[Preimages of the charts are affine]
   \label{lem:preimage_chart_affine}
