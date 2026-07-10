@@ -392,3 +392,220 @@ noncomputable def AffineCoverMVSquare.globalSectionsEquivH0ₗ
         refine ⟨s, ?_⟩
         apply Subtype.ext
         exact Prod.ext (hs ⟨true⟩) (hs ⟨false⟩))
+
+end Gluing
+
+/-! ## §4. The `𝒪_C` base case: `h⁰ = 1`, `h¹ = g`, `χ = 1 − g`
+
+The structure sheaf in the `X.Modules` dialect is the unit module
+`SheafOfModules.unit C.left.ringCatSheaf` (the `Picard/SectionGradedRing.lean`
+abbreviation `unitModule`, spelled out here to keep the import cone lean).
+Its sections are — *definitionally* — the scheme sections `Γ(C.left, U)`, and
+the `BaseSections` scalar path (`Module.compHom` along `kToSection`) is
+definitionally the `toModuleKSheaf` scalar path, so the two Čech dialects are
+compared by identity-function linear equivalences.  Chaining through the
+gate-free derived comparison `hModuleOneEquivH1Cok_curve`
+(`RiemannRoch/Adelic/GenusUnconditional.lean`) identifies `H1Cokₗ(S, 𝒪)` with
+the genus carrier `H¹(C, 𝒪_C)` for EVERY field `k` and EVERY cover `S`. -/
+
+section UnitBaseCase
+
+variable {k : Type u} [Field k]
+variable (C : Over (Spec (CommRingCat.of k)))
+
+/-- **Dialect bridge on sections of `𝒪`**: the sections of the unit module
+(`X.Modules` dialect) over an open `U` are `k`-linearly the sections of the
+structure sheaf of `k`-modules `toModuleKSheaf C` — by the *identity*
+function.  Both `k`-scalar paths are restriction of scalars along the same
+structure ring map `kToSection C (op U)`, acting by ring multiplication. -/
+noncomputable def unitBaseSectionsEquiv (U : C.left.Opens) :
+    BaseSections C (SheafOfModules.unit C.left.ringCatSheaf) U ≃ₗ[k]
+      (toModuleKSheaf C).obj.obj (Opposite.op U) where
+  toFun x := x
+  invFun x := x
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+/-- The `X.Modules`-dialect difference map of `𝒪` intertwines, under the
+identity bridges, with the sheaf-of-`k`-modules-dialect difference map
+(`AffineCoverMVSquare.sectionDiff`, `RiemannRoch/Adelic/Cokernel.lean`):
+both are `(a, b) ↦ a|₁₂ − b|₁₂` through the same restriction functions. -/
+lemma unitBaseSectionsEquiv_sectionDiff (S : C.left.AffineCoverMVSquare)
+    (p : BaseSections C (SheafOfModules.unit C.left.ringCatSheaf) S.U₁ ×
+      BaseSections C (SheafOfModules.unit C.left.ringCatSheaf) S.U₂) :
+    unitBaseSectionsEquiv C (S.U₁ ⊓ S.U₂)
+        (S.sectionDiffₗ C (SheafOfModules.unit C.left.ringCatSheaf) p) =
+      S.sectionDiff (toModuleKSheaf C)
+        (unitBaseSectionsEquiv C S.U₁ p.1, unitBaseSectionsEquiv C S.U₂ p.2) :=
+  rfl
+
+/-- **The two Čech `Ȟ¹` dialects agree on `𝒪`**: the `X.Modules`-dialect
+cokernel `H1Cokₗ(S, 𝒪)` of this file is `k`-linearly the sheaf-of-`k`-modules
+cokernel `H1Cok(S, toModuleKSheaf C)` of the adelic lane, by descending the
+identity bridge to the quotients (the two difference maps have identified
+ranges, `unitBaseSectionsEquiv_sectionDiff`). -/
+noncomputable def AffineCoverMVSquare.unitH1CokₗEquiv (S : C.left.AffineCoverMVSquare) :
+    S.H1Cokₗ C (SheafOfModules.unit C.left.ringCatSheaf) ≃ₗ[k]
+      S.H1Cok (toModuleKSheaf C) :=
+  Submodule.Quotient.equiv _ _ (unitBaseSectionsEquiv C (S.U₁ ⊓ S.U₂)) (by
+    ext y
+    simp only [Submodule.mem_map, LinearMap.mem_range]
+    constructor
+    · rintro ⟨x, ⟨p, rfl⟩, rfl⟩
+      exact ⟨(unitBaseSectionsEquiv C S.U₁ p.1, unitBaseSectionsEquiv C S.U₂ p.2),
+        (unitBaseSectionsEquiv_sectionDiff C S p).symm⟩
+    · rintro ⟨q, rfl⟩
+      refine ⟨S.sectionDiffₗ C (SheafOfModules.unit C.left.ringCatSheaf)
+        ((unitBaseSectionsEquiv C S.U₁).symm q.1,
+          (unitBaseSectionsEquiv C S.U₂).symm q.2), ⟨_, rfl⟩, ?_⟩
+      refine (unitBaseSectionsEquiv_sectionDiff C S _).trans ?_
+      simp)
+
+/-- **The genus carrier is the `X.Modules`-dialect Čech `Ȟ¹` of `𝒪`, gate-free,
+on every cover and over every field** (imperfect included): chain the derived
+comparison `hModuleOneEquivH1Cok_curve` (gate-free N5+N6,
+`RiemannRoch/Adelic/GenusUnconditional.lean`) with the dialect bridge
+`unitH1CokₗEquiv`.  This is the `h¹`-side cover-independence for `𝒪`: both
+sides of any two covers compute the same `H¹(C, 𝒪_C)`. -/
+noncomputable def AffineCoverMVSquare.hModuleOneEquivH1Cokₗ_unit
+    (S : C.left.AffineCoverMVSquare) :
+    HModule k (toModuleKSheaf C) 1 ≃ₗ[k]
+      S.H1Cokₗ C (SheafOfModules.unit C.left.ringCatSheaf) :=
+  S.hModuleOneEquivH1Cok_curve.trans (S.unitH1CokₗEquiv C).symm
+
+/-- **`h¹(𝒪_C) = genus C`** — on every 2-affine cover, over every field, for
+every AJC curve (the geometric-irreducibility instance of `genus` synthesises
+from `GeometricallyIntegral`). -/
+theorem AffineCoverMVSquare.h1_unit_eq_genus [SmoothOfRelativeDimension 1 C.hom]
+    [IsProper C.hom] [GeometricallyIntegral C.hom] (S : C.left.AffineCoverMVSquare) :
+    S.h1 C (SheafOfModules.unit C.left.ringCatSheaf) = genus C :=
+  (LinearEquiv.finrank_eq (S.hModuleOneEquivH1Cokₗ_unit C)).symm
+
+/-- The structure ring map at the top open is the global-sections structure map
+`constMap` of `Picard/SectionRingUniversal.lean`: the restriction along
+`⊤ ≤ ⊤` is the identity (`map_id`, applied pointwise — `kToSection (op ⊤)` is
+definitionally `constMap` followed by the restriction along `𝟙 (op ⊤)`). -/
+lemma kToSection_top_apply (c : k) :
+    (toModuleKSheaf.kToSection C (Opposite.op (⊤ : C.left.Opens))).hom c =
+      (constMap C).hom c :=
+  congrArg (fun g => CommRingCat.Hom.hom g ((constMap C).hom c))
+    (C.left.presheaf.map_id (Opposite.op (⊤ : C.left.Opens)))
+
+/-- **`Γ(C, 𝒪_C) = k` in `BaseSections` form**: the unconditional
+field-of-constants theorem `globalSectionsAlgEquivBase`
+(`Picard/SectionRingUniversal.lean`, `HasTrivialConstants` discharged
+unconditionally via H⁰ flat base change) as a `k`-linear equivalence
+`BaseSections C 𝒪 ⊤ ≃ₗ[k] k` — the `BaseSections` scalar path at `⊤` is the
+`constMap` scalar path (`kToSection_top_apply`). -/
+noncomputable def unitTopSectionsEquivBase [IsProper C.hom] [GeometricallyIntegral C.hom] :
+    BaseSections C (SheafOfModules.unit C.left.ringCatSheaf) (⊤ : C.left.Opens) ≃ₗ[k] k where
+  toFun x := globalSectionsAlgEquivBase C (x : Γ(C.left, ⊤))
+  invFun c := ((globalSectionsAlgEquivBase C).symm c : Γ(C.left, ⊤))
+  map_add' x y := map_add (globalSectionsAlgEquivBase C) x y
+  map_smul' c x := by
+    have hb : baseRingMap C (⊤ : C.left.Opens) c = (constMap C).hom c :=
+      kToSection_top_apply C c
+    change globalSectionsAlgEquivBase C
+        (baseRingMap C (⊤ : C.left.Opens) c • BaseSections.val x) =
+      c • globalSectionsAlgEquivBase C (BaseSections.val x)
+    rw [hb]
+    exact (globalSectionsAlgEquivBase C).toLinearEquiv.map_smul c (BaseSections.val x)
+  left_inv x := (globalSectionsAlgEquivBase C).symm_apply_apply x
+  right_inv c := (globalSectionsAlgEquivBase C).apply_symm_apply c
+
+/-- **`h⁰(𝒪_C) = 1`** — on every 2-affine cover, over every field: the kernel
+of the difference map is the global sections (`globalSectionsEquivH0ₗ`), which
+are exactly the constants `k` (`unitTopSectionsEquivBase`). -/
+theorem AffineCoverMVSquare.h0_unit_eq_one [IsProper C.hom] [GeometricallyIntegral C.hom]
+    (S : C.left.AffineCoverMVSquare) :
+    S.h0 C (SheafOfModules.unit C.left.ringCatSheaf) = 1 := by
+  have e : S.H0ₗ C (SheafOfModules.unit C.left.ringCatSheaf) ≃ₗ[k] k :=
+    (S.globalSectionsEquivH0ₗ C
+      (SheafOfModules.unit C.left.ringCatSheaf)).symm.trans (unitTopSectionsEquivBase C)
+  change Module.finrank k (S.H0ₗ C (SheafOfModules.unit C.left.ringCatSheaf)) = 1
+  rw [e.finrank_eq, Module.finrank_self]
+
+/-- **`χ(𝒪_C) = 1 − g` — the first honest entry of the P3 `χ`-ledger.**  On
+every 2-affine cover of every AJC curve over every field. -/
+theorem AffineCoverMVSquare.chi_unit_eq_one_sub_genus [SmoothOfRelativeDimension 1 C.hom]
+    [IsProper C.hom] [GeometricallyIntegral C.hom] (S : C.left.AffineCoverMVSquare) :
+    S.chi C (SheafOfModules.unit C.left.ringCatSheaf) = 1 - (genus C : ℤ) := by
+  rw [AffineCoverMVSquare.chi_def, S.h0_unit_eq_one C, S.h1_unit_eq_genus C, Nat.cast_one]
+
+/-- `H⁰ₗ(S, 𝒪)` is a finite-dimensional `k`-space (it is `k` itself). -/
+instance module_finite_H0ₗ_unit [IsProper C.hom] [GeometricallyIntegral C.hom]
+    (S : C.left.AffineCoverMVSquare) :
+    Module.Finite k (S.H0ₗ C (SheafOfModules.unit C.left.ringCatSheaf)) :=
+  Module.Finite.equiv ((S.globalSectionsEquivH0ₗ C
+    (SheafOfModules.unit C.left.ringCatSheaf)).symm.trans (unitTopSectionsEquivBase C)).symm
+
+/-- `Ȟ¹ₗ(S, 𝒪)` is a finite-dimensional `k`-space: it is the genus carrier
+`H¹(C, 𝒪_C)` (`hModuleOneEquivH1Cokₗ_unit`), finite by the unconditional genus
+finiteness `instModuleFiniteHModuleOne`
+(`RiemannRoch/Adelic/GenusUnconditional.lean`). -/
+instance module_finite_H1Cokₗ_unit [SmoothOfRelativeDimension 1 C.hom]
+    [IsProper C.hom] [GeometricallyIntegral C.hom] (S : C.left.AffineCoverMVSquare) :
+    Module.Finite k (S.H1Cokₗ C (SheafOfModules.unit C.left.ringCatSheaf)) :=
+  Module.Finite.equiv (S.hModuleOneEquivH1Cokₗ_unit C)
+
+end UnitBaseCase
+
+/-! ## §5. Base-change finiteness transport for `𝒪` (Λ-package consumers)
+
+The wave-3 named instances (`RiemannRoch/CurveBaseChange.lean`) make
+`C_κ := baseChangeField C κ` an AJC curve over any field extension `κ/k`, so
+every §4 statement applies to `C_κ` *verbatim at base field `κ`* — no
+perfectness, separability or algebraic-closedness on `κ/k`.  The named forms
+below are keyed on the `baseChangeField` spelling and the base-changed cover
+`S.baseChangeField κ`; the general §4 statements already cover every other
+cover of `C_κ`. -/
+
+section BaseChangeUnit
+
+variable {k : Type u} [Field k] (C : Over (Spec (CommRingCat.of k)))
+variable (κ : Type u) [Field κ] [Algebra k κ]
+
+/-- `h⁰(𝒪_{C_κ}) = 1` on the base-changed cover: the base-changed curve has
+field of constants `κ` (Λ-package instances + unconditional
+`HasTrivialConstants`). -/
+theorem AffineCoverMVSquare.h0_unit_baseChangeField_eq_one
+    [IsProper C.hom] [GeometricallyIntegral C.hom] (S : C.left.AffineCoverMVSquare) :
+    (S.baseChangeField κ).h0 (Scheme.baseChangeField C κ)
+      (SheafOfModules.unit (Scheme.baseChangeField C κ).left.ringCatSheaf) = 1 :=
+  (S.baseChangeField κ).h0_unit_eq_one (Scheme.baseChangeField C κ)
+
+/-- `h¹(𝒪_{C_κ}) = genus C_κ` on the base-changed cover — the base-changed
+genus, at base field `κ` (the comparison with `genus C` is the P2/P3
+flat-base-change item, NOT claimed here). -/
+theorem AffineCoverMVSquare.h1_unit_baseChangeField_eq_genus
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]
+    (S : C.left.AffineCoverMVSquare) :
+    (S.baseChangeField κ).h1 (Scheme.baseChangeField C κ)
+      (SheafOfModules.unit (Scheme.baseChangeField C κ).left.ringCatSheaf) =
+      genus (Scheme.baseChangeField C κ) :=
+  (S.baseChangeField κ).h1_unit_eq_genus (Scheme.baseChangeField C κ)
+
+/-- `H⁰ₗ` of `𝒪` on the base-changed curve is a finite-dimensional `κ`-space. -/
+instance module_finite_H0ₗ_unit_baseChangeField
+    [IsProper C.hom] [GeometricallyIntegral C.hom] (S : C.left.AffineCoverMVSquare) :
+    Module.Finite κ ((S.baseChangeField κ).H0ₗ (Scheme.baseChangeField C κ)
+      (SheafOfModules.unit (Scheme.baseChangeField C κ).left.ringCatSheaf)) :=
+  module_finite_H0ₗ_unit (Scheme.baseChangeField C κ) (S.baseChangeField κ)
+
+/-- `Ȟ¹ₗ` of `𝒪` on the base-changed curve is a finite-dimensional `κ`-space:
+the Λ-package instances make `C_κ` an AJC curve over `κ`, so the unconditional
+genus finiteness applies verbatim at base field `κ`. -/
+instance module_finite_H1Cokₗ_unit_baseChangeField
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIntegral C.hom]
+    (S : C.left.AffineCoverMVSquare) :
+    Module.Finite κ ((S.baseChangeField κ).H1Cokₗ (Scheme.baseChangeField C κ)
+      (SheafOfModules.unit (Scheme.baseChangeField C κ).left.ringCatSheaf)) :=
+  module_finite_H1Cokₗ_unit (Scheme.baseChangeField C κ) (S.baseChangeField κ)
+
+end BaseChangeUnit
+
+end Scheme
+
+end AlgebraicGeometry
