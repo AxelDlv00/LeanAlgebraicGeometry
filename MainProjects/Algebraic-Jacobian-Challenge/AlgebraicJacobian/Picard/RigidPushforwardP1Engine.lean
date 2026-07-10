@@ -637,4 +637,198 @@ theorem exists_pow_smul_eq_res {X : Scheme.{u}} (M : X.Modules) [M.IsQuasicohere
 
 end Scheme.Modules
 
+/-! ## §3d. Relative Laurent chart data and the `H¹`-finiteness keystone -/
+
+namespace Scheme
+
+/-- **Relative Laurent chart data for a family `p : X ⟶ S`** — the
+base-linear dialect of `Adelic.LaurentChartData`: a 2-affine cover of the
+total space with mutually inverse coordinates on the overlap, each chart
+*ring* being spanned over the base ring `Γ(S, ⊤)` (acting through
+`p.appLE`) by the powers of its coordinate.  For `X = ℙ¹_A ⟶ S = Spec A`
+this is the standard two-chart structure with `Γ(U₁) = A[x]`,
+`Γ(U₂) = A[y]`, `Γ(U₁ ⊓ U₂) = A[x, x⁻¹]`. -/
+structure RelLaurentChartData {X S : Scheme.{u}} (p : X ⟶ S) : Type u where
+  /-- The underlying 2-affine cover square. -/
+  V : X.AffineCoverMVSquare
+  /-- The coordinate on the first chart. -/
+  x : Γ(X, V.U₁)
+  /-- The coordinate on the second chart. -/
+  y : Γ(X, V.U₂)
+  /-- The overlap is the basic open of `x`. -/
+  inf_eq_basicOpen_x : V.U₁ ⊓ V.U₂ = X.basicOpen x
+  /-- The overlap is the basic open of `y`. -/
+  inf_eq_basicOpen_y : V.U₁ ⊓ V.U₂ = X.basicOpen y
+  /-- The coordinates are mutually inverse on the overlap: `x · y = 1`. -/
+  res_x_mul_res_y :
+    (X.presheaf.map (homOfLE (inf_le_left : V.U₁ ⊓ V.U₂ ≤ V.U₁)).op).hom x
+      * (X.presheaf.map (homOfLE (inf_le_right : V.U₁ ⊓ V.U₂ ≤ V.U₂)).op).hom y = 1
+  /-- The first chart ring is spanned over the base by the powers of `x`
+  (`Γ(U₁) = Γ(S, ⊤)[x]` as a module). -/
+  span_pow_x :
+    letI := ((p.appLE ⊤ V.U₁ (le_top : V.U₁ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+    ⊤ ≤ Submodule.span Γ(S, ⊤) (Set.range fun n : ℕ => x ^ n)
+  /-- The second chart ring is spanned over the base by the powers of `y`
+  (`Γ(U₂) = Γ(S, ⊤)[y]` as a module). -/
+  span_pow_y :
+    letI := ((p.appLE ⊤ V.U₂ (le_top : V.U₂ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+    ⊤ ≤ Submodule.span Γ(S, ⊤) (Set.range fun n : ℕ => y ^ n)
+
+set_option maxHeartbeats 800000 in
+-- `maxHeartbeats`: the proof repeatedly crosses the `Γ`-carrier and
+-- `Module.compHom` identifications, as in the field-coefficient original
+-- (`LaurentChartData.module_finite_H1Cok`, fleet elaboration recipe).
+/-- **The `H¹`-finiteness keystone, A-coefficients (work item 2, `H¹`
+half).**  For a family `p : X ⟶ S` with relative Laurent chart data `D` and
+a quasi-coherent module `M` on `X` whose chart section modules are finite
+over the chart rings (true for any finitely presented `M`,
+`module_finite_sections_of_isFinitePresentation`), the concrete Čech `Ȟ¹`
+of the cover — the cokernel of the base-linear difference map — is a
+**finite `Γ(S, ⊤)`-module**.
+
+This is the Weil/Stichtenoth two-lattice argument of
+`Adelic.LaurentChartData.module_finite_H1Cok` with the base field replaced
+by the base ring: `Γ(M, U₁)` is spanned over `Γ(S, ⊤)` by the ladder
+`{xⁿ • gᵢ}` (chart-ladder producer over `Γ(U₁) = Γ(S,⊤)[x]`), the overlap
+module is its localization at `x` (extension lemma), positive rungs come
+from `Γ(M, U₁)`, sufficiently negative rungs from `Γ(M, U₂)`, and the
+finite middle band spans the cokernel.  No noetherian hypothesis on the
+base enters. -/
+theorem RelLaurentChartData.module_finite_h1 {X S : Scheme.{u}} {p : X ⟶ S}
+    (D : RelLaurentChartData p) (M : X.Modules) [M.IsQuasicoherent]
+    (hfin₁ : Module.Finite Γ(X, D.V.U₁) Γ(M, D.V.U₁)) :
+    letI := p.baseSectionsModule M D.V.U₁
+    letI := p.baseSectionsModule M D.V.U₂
+    letI := p.baseSectionsModule M (D.V.U₁ ⊓ D.V.U₂)
+    Module.Finite Γ(S, ⊤)
+      (Γ(M, D.V.U₁ ⊓ D.V.U₂) ⧸ LinearMap.range (D.V.moduleSectionDiffBase p M)) := by
+  classical
+  letI := p.baseSectionsModule M D.V.U₁
+  letI := p.baseSectionsModule M D.V.U₂
+  letI := p.baseSectionsModule M (D.V.U₁ ⊓ D.V.U₂)
+  -- ### The compatible base action on the overlap module
+  haveI hscc : SMulCommClass Γ(S, ⊤) Γ(X, D.V.U₁ ⊓ D.V.U₂) Γ(M, D.V.U₁ ⊓ D.V.U₂) := by
+    constructor
+    intro r c m
+    change (p.appLE ⊤ (D.V.U₁ ⊓ D.V.U₂) le_top).hom r • (c • m)
+      = c • ((p.appLE ⊤ (D.V.U₁ ⊓ D.V.U₂) le_top).hom r • m)
+    rw [smul_smul, smul_smul, mul_comm]
+  -- ### Notation: the linear restrictions and the overlap Laurent pair
+  set σ₀ := p.baseSectionsRes M (inf_le_left : D.V.U₁ ⊓ D.V.U₂ ≤ D.V.U₁) with hσ₀
+  set σ₁ := p.baseSectionsRes M (inf_le_right : D.V.U₁ ⊓ D.V.U₂ ≤ D.V.U₂) with hσ₁
+  set t := (X.presheaf.map
+    (homOfLE (inf_le_left : D.V.U₁ ⊓ D.V.U₂ ≤ D.V.U₁)).op).hom D.x with ht
+  set u := (X.presheaf.map
+    (homOfLE (inf_le_right : D.V.U₁ ⊓ D.V.U₂ ≤ D.V.U₂)).op).hom D.y with hu
+  have htu : t * u = 1 := D.res_x_mul_res_y
+  -- ### Restrictions intertwine the coordinate actions with the Laurent pair
+  have hres₀ : ∀ (j : ℕ) (b : Γ(M, D.V.U₁)), σ₀ (D.x ^ j • b) = t ^ j • σ₀ b := by
+    intro j b
+    rw [hσ₀, p.baseSectionsRes_apply, p.baseSectionsRes_apply,
+      Scheme.Modules.map_smul, map_pow, ht]
+  have hres₁ : ∀ (j : ℕ) (b : Γ(M, D.V.U₂)), σ₁ (D.y ^ j • b) = u ^ j • σ₁ b := by
+    intro j b
+    rw [hσ₁, p.baseSectionsRes_apply, p.baseSectionsRes_apply,
+      Scheme.Modules.map_smul, map_pow, hu]
+  -- ### The two lattices and their stability
+  have h₀ : ∀ a ∈ LinearMap.range σ₀, t • a ∈ LinearMap.range σ₀ := by
+    rintro _ ⟨b, rfl⟩
+    refine ⟨D.x • b, ?_⟩
+    have := hres₀ 1 b
+    rw [pow_one, pow_one] at this
+    exact this
+  have h₁ : ∀ a ∈ LinearMap.range σ₁, u • a ∈ LinearMap.range σ₁ := by
+    rintro _ ⟨b, rfl⟩
+    refine ⟨D.y • b, ?_⟩
+    have := hres₁ 1 b
+    rw [pow_one, pow_one] at this
+    exact this
+  -- ### Chart-0 generators (ladder producer over `Γ(U₁) = Γ(S,⊤)[x]`)
+  letI : Algebra Γ(S, ⊤) Γ(X, D.V.U₁) :=
+    ((p.appLE ⊤ D.V.U₁ (le_top : D.V.U₁ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+  haveI : IsScalarTower Γ(S, ⊤) Γ(X, D.V.U₁) Γ(M, D.V.U₁) :=
+    IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
+  haveI := hfin₁
+  obtain ⟨G, hG⟩ := Adelic.exists_finset_forall_mem_span_pow_smul
+    (A := Γ(S, ⊤)) (MM := Γ(M, D.V.U₁)) D.x D.span_pow_x
+  -- ### The extension lemmas at the two charts
+  have hext₀ : ∀ m : Γ(M, D.V.U₁ ⊓ D.V.U₂),
+      ∃ (n : ℕ) (a : Γ(M, D.V.U₁)), t ^ n • m = σ₀ a := by
+    intro m
+    obtain ⟨n, a, ha⟩ := Scheme.Modules.exists_pow_smul_eq_res M
+      D.V.isAffineOpen_U₁ D.x D.inf_eq_basicOpen_x inf_le_left m
+    exact ⟨n, a, by rw [ht, hσ₀]; exact ha⟩
+  have hext₁ : ∀ m : Γ(M, D.V.U₁ ⊓ D.V.U₂),
+      ∃ (n : ℕ) (b : Γ(M, D.V.U₂)), u ^ n • m = σ₁ b := by
+    intro m
+    obtain ⟨n, b, hb⟩ := Scheme.Modules.exists_pow_smul_eq_res M
+      D.V.isAffineOpen_U₂ D.y D.inf_eq_basicOpen_y inf_le_right m
+    exact ⟨n, b, by rw [hu, hσ₁]; exact hb⟩
+  -- ### The ladder over the images of the generators spans the overlap module
+  have Hpow : ∀ m : Γ(M, D.V.U₁ ⊓ D.V.U₂), ∃ n : ℕ,
+      t ^ n • m ∈ Submodule.span Γ(S, ⊤)
+        (⋃ j : ℕ, (fun z => t ^ j • z) '' (⇑σ₀ '' (G : Set Γ(M, D.V.U₁)))) := by
+    intro m
+    obtain ⟨n, a, ha⟩ := hext₀ m
+    refine ⟨n, ?_⟩
+    rw [ha]
+    have h1 : σ₀ a ∈ Submodule.map σ₀ (Submodule.span Γ(S, ⊤)
+        (⋃ j : ℕ, (fun z => D.x ^ j • z) '' (G : Set Γ(M, D.V.U₁)))) :=
+      Submodule.mem_map_of_mem (hG a)
+    rw [Submodule.map_span] at h1
+    refine Submodule.span_le.mpr ?_ h1
+    rintro _ ⟨z, hz, rfl⟩
+    simp only [Set.mem_iUnion, Set.mem_image] at hz
+    obtain ⟨j, g, hg, rfl⟩ := hz
+    refine Submodule.subset_span (Set.mem_iUnion.mpr ⟨j, ⟨σ₀ g, ⟨g, hg, rfl⟩, ?_⟩⟩)
+    exact (hres₀ j g).symm
+  have hspan : ⊤ ≤ Submodule.span Γ(S, ⊤)
+      ((⋃ j : ℕ, (fun z => t ^ j • z) '' (⇑σ₀ '' (G : Set Γ(M, D.V.U₁))))
+        ∪ (⋃ j : ℕ, (fun z => u ^ j • z) '' (⇑σ₀ '' (G : Set Γ(M, D.V.U₁))))) :=
+    Adelic.span_smul_ladder_of_pow_smul_mem_span htu _ Hpow
+  -- ### The remaining hypotheses of the two-lattice core
+  have hsfin : (⇑σ₀ '' (G : Set Γ(M, D.V.U₁))).Finite := G.finite_toSet.image _
+  have hsN₀ : ⇑σ₀ '' (G : Set Γ(M, D.V.U₁)) ⊆ (LinearMap.range σ₀ : Set _) := by
+    rintro _ ⟨g, _, rfl⟩
+    exact ⟨g, rfl⟩
+  have hext : ∀ a ∈ ⇑σ₀ '' (G : Set Γ(M, D.V.U₁)),
+      ∃ n : ℕ, u ^ n • a ∈ LinearMap.range σ₁ := by
+    intro a _
+    obtain ⟨n, b, hb⟩ := hext₁ a
+    exact ⟨n, b, hb.symm⟩
+  -- ### The two-lattice core
+  have hcore : Module.Finite Γ(S, ⊤)
+      (Γ(M, D.V.U₁ ⊓ D.V.U₂) ⧸ (LinearMap.range σ₀ ⊔ LinearMap.range σ₁)) :=
+    Adelic.module_finite_quotient_of_smul_laurent_pair h₀ h₁ hsfin hsN₀ hspan hext
+  -- ### The Čech difference range is the sum of the two lattices
+  have hrange : LinearMap.range σ₀ ⊔ LinearMap.range σ₁
+      = LinearMap.range (D.V.moduleSectionDiffBase p M) := by
+    apply le_antisymm
+    · refine sup_le ?_ ?_
+      · have hcomp₀ : σ₀ = (D.V.moduleSectionDiffBase p M).comp
+            (LinearMap.inl Γ(S, ⊤) Γ(M, D.V.U₁) Γ(M, D.V.U₂)) := by
+          ext a
+          have : D.V.moduleSectionDiffBase p M (a, 0)
+              = σ₀ a - σ₁ 0 := rfl
+          rw [LinearMap.comp_apply, LinearMap.inl_apply, this, map_zero, sub_zero]
+        rw [hcomp₀]
+        exact LinearMap.range_comp_le_range _ _
+      · have hcomp₁ : -σ₁ = (D.V.moduleSectionDiffBase p M).comp
+            (LinearMap.inr Γ(S, ⊤) Γ(M, D.V.U₁) Γ(M, D.V.U₂)) := by
+          ext b
+          have : D.V.moduleSectionDiffBase p M (0, b)
+              = σ₀ 0 - σ₁ b := rfl
+          rw [LinearMap.neg_apply, LinearMap.comp_apply, LinearMap.inr_apply, this,
+            map_zero, zero_sub]
+        rw [← LinearMap.range_neg σ₁, hcomp₁]
+        exact LinearMap.range_comp_le_range _ _
+    · rintro _ ⟨⟨a, b⟩, rfl⟩
+      have : D.V.moduleSectionDiffBase p M (a, b) = σ₀ a - σ₁ b := rfl
+      rw [this]
+      exact sub_mem (Submodule.mem_sup_left ⟨a, rfl⟩) (Submodule.mem_sup_right ⟨b, rfl⟩)
+  rw [hrange] at hcore
+  exact hcore
+
+end Scheme
+
 end AlgebraicGeometry
