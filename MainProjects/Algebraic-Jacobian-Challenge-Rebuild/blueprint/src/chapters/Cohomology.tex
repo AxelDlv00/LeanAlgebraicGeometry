@@ -3,10 +3,14 @@
 
 Fix a commutative ring \(R\); for the genus of a curve, \(R\) will be the base field \(k\).
 This chapter defines the cohomology of sheaves of \(R\)-modules on a small site as
-\(\Ext\)-groups from the constant sheaf, identifies degree-zero cohomology with global
-sections, and proves the vanishing of degree-one cohomology of the structure sheaf on an
-affine scheme --- the input for the finiteness of \(H^1(C, \struct C)\) and hence for the
-genus of Definition~\ref{def:genus}.
+\(\Ext\)-groups from the constant sheaf, and more generally the cohomology of an object of
+the site as \(\Ext\)-groups from a free sheaf of \(R\)-modules; it identifies degree-zero
+cohomology with (global) sections and proves the vanishing of degree-one cohomology of the
+structure sheaf on an affine open of a scheme. It then develops the Mayer--Vietoris
+\((0,1)\)-slice for a sheaf of \(R\)-modules on a site and specializes it to a scheme
+covered by two affine opens, producing an explicit description of \(H^1(X,\struct{X/k})\)
+as the cokernel of a map of section modules --- the computational input for the finiteness
+of \(H^1(C, \struct C)\) and hence for the genus of Definition~\ref{def:genus}.
 
 \section{Cohomology on a site}
 
@@ -134,6 +138,161 @@ Grothendieck abelian category; in particular it has enough injectives, and all
   \(f\) into postcomposition with \(f\); conclude by \ref{lem:constHomEquiv_naturality}.
 \end{proof}
 
+\section{Cohomology of an object of the site}
+
+For an object \(U\) of \(\mathcal C\), this section defines the cohomology of \(U\) with
+coefficients in a sheaf \(F\) of \(R\)-modules as \(\Ext\)-groups from a \emph{free} sheaf
+of \(R\)-modules on \(U\), generalizing the previous section (where the implicit object was
+the terminal object \(\top\)). This is the coefficient system needed to run the
+Mayer--Vietoris sequence of Section~\ref{sec:mv-in-text} \(R\)-linearly, and it recovers the
+cohomology of the site when \(U\) is terminal (Definition~\ref{def:HModule_linearEquivHModule'}
+below).
+
+\begin{definition}[The free sheaf of \(R\)-modules on an object of the site]
+  \label{def:freeModuleSheaf}
+  \lean{CategoryTheory.Sheaf.freeModuleSheaf}
+  \leanok
+  For an object \(U\) of \(\mathcal C\), the free sheaf of \(R\)-modules on \(U\), written
+  \(R[U]\): the sheafification of the presheaf \(V \mapsto\) the free \(R\)-module on the
+  set \(\Hom(V, U)\), with restriction maps induced by precomposition.
+\end{definition}
+
+\begin{definition}[Functoriality in the object of the site]
+  \label{def:freeModuleSheafMap}
+  \lean{CategoryTheory.Sheaf.freeModuleSheafMap}
+  \uses{def:freeModuleSheaf}
+  \leanok
+  A morphism \(i : U \to V\) of \(\mathcal C\) induces a morphism of sheaves of
+  \(R\)-modules \(R[i] : R[U] \to R[V]\): apply the free-\(R\)-module-on-a-set functor and
+  sheafification to the induced map of representable presheaves
+  \(\Hom(-,U) \to \Hom(-,V)\), \(g \mapsto i \circ g\).
+\end{definition}
+
+\begin{definition}[Free sheaves of modules represent sections]
+  \label{def:freeModuleSheafHomEquiv}
+  \lean{CategoryTheory.Sheaf.freeModuleSheafHomEquiv}
+  \uses{def:freeModuleSheaf}
+  \leanok
+  For every object \(U\) of \(\mathcal C\) and every sheaf \(F\) of \(R\)-modules, an
+  \(R\)-linear equivalence
+  \[
+    \Hom\bigl(R[U],\, F\bigr) \;\cong\; F(U).
+  \]
+\end{definition}
+\begin{proof}
+  \leanok
+  Write \(y_U = \Hom(-,U)\) for the presheaf represented by \(U\), so that \(R[U]\) is the
+  sheafification of the presheaf of \(R\)-modules obtained by applying the free-\(R\)-module
+  functor to \(y_U\) objectwise. Compose three natural bijections:
+  \begin{itemize}
+    \item sheafification is left adjoint to the inclusion of sheaves into presheaves, giving
+      \(\Hom(R[U],F) \cong \Hom_{\mathrm{PSh}}(y_U \otimes R,\, F)\), naturally in \(F\);
+    \item on each object \(V\), the free-\(R\)-module functor is left adjoint to the
+      forgetful functor from \(R\)-modules to sets, giving
+      \(\Hom_{\mathrm{PSh}}(y_U \otimes R,\, F) \cong \Hom_{\mathrm{PSh}(\mathrm{Set})}(y_U,\, F)\)
+      (\(F\) viewed as a presheaf of sets), naturally in \(F\);
+    \item the Yoneda lemma identifies \(\Hom_{\mathrm{PSh}(\mathrm{Set})}(y_U, F) \cong F(U)\).
+  \end{itemize}
+  Each bijection is additive and \(R\)-linear in \(F\) (the first two are hom-sets of
+  \(R\)-linear/additive adjunctions; the last carries the \(R\)-module structure of \(F(U)\)
+  tautologically, evaluating a natural transformation at the identity of \(U\)), so the
+  composite is an \(R\)-linear equivalence.
+\end{proof}
+
+\begin{lemma}[Naturality of the section equivalence]
+  \label{lem:freeModuleSheafHomEquiv_naturality}
+  \lean{CategoryTheory.Sheaf.freeModuleSheafHomEquiv_comp,
+    CategoryTheory.Sheaf.freeModuleSheafHomEquiv_map}
+  \uses{def:freeModuleSheafHomEquiv, def:freeModuleSheafMap}
+  \leanok
+  The equivalence of \ref{def:freeModuleSheafHomEquiv} is natural in both variables:
+  \begin{enumerate}
+    \item for \(\varphi : R[U] \to F\) and \(f : F \to G\), the section of \(G(U)\)
+      corresponding to \(f \circ \varphi\) is \(f_U\) applied to the section of \(F(U)\)
+      corresponding to \(\varphi\);
+    \item for \(i : U \to V\) and \(\varphi : R[V] \to F\), the section of \(F(U)\)
+      corresponding to the composite \(R[U] \xrightarrow{R[i]} R[V] \xrightarrow{\varphi} F\)
+      is the restriction along \(i\) of the section of \(F(V)\) corresponding to \(\varphi\).
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  \leanok
+  Both are naturality of the composite of adjunction bijections used in
+  \ref{def:freeModuleSheafHomEquiv}: (1) is naturality of each of the three bijections in
+  the target sheaf \(F\); (2) is naturality of the Yoneda bijection
+  \(\Hom_{\mathrm{PSh}(\mathrm{Set})}(y_U,-) \cong \mathrm{ev}_U\) in \(U\) (precomposition
+  with \(y_i : y_U \to y_V\) corresponds to restriction along \(i\)), transported through the
+  other two (fixed) bijections.
+\end{proof}
+
+\begin{definition}[Cohomology of an object of the site]
+  \label{def:HModule'}
+  \lean{CategoryTheory.Sheaf.HModule'}
+  \uses{def:freeModuleSheaf}
+  \leanok
+  For an object \(U\) of \(\mathcal C\), a sheaf \(F\) of \(R\)-modules and \(n \ge 0\), the
+  degree-\(n\) cohomology of \(U\) with coefficients in \(F\) is the \(R\)-module
+  \[
+    H'^n(U, F) \;=\; \Ext^n\bigl(R[U],\, F\bigr).
+  \]
+\end{definition}
+
+\begin{definition}[Degree zero is sections]
+  \label{def:HModule'_linearEquiv0}
+  \lean{CategoryTheory.Sheaf.HModule'.linearEquiv₀}
+  \uses{def:HModule', def:freeModuleSheafHomEquiv}
+  \leanok
+  The \(R\)-linear equivalence \(H'^0(U, F) \cong F(U)\): the canonical identification
+  \(\Ext^0(R[U], F) \cong \Hom(R[U], F)\) followed by \ref{def:freeModuleSheafHomEquiv}.
+\end{definition}
+
+\begin{definition}[Restriction]
+  \label{def:HModule'_res}
+  \lean{CategoryTheory.Sheaf.HModule'.res}
+  \uses{def:HModule', def:freeModuleSheafMap}
+  \leanok
+  For \(i : U \to V\) in \(\mathcal C\), restriction along \(i\) is the \(R\)-linear map
+  \(H'^n(V, F) \to H'^n(U, F)\), \(x \mapsto x \circ R[i]\): precomposition with
+  \(R[i] : R[U] \to R[V]\) (contravariant functoriality of \(\Ext^n(-, F)\)).
+\end{definition}
+
+\begin{definition}[The free sheaf on a terminal object is the constant sheaf]
+  \label{def:freeModuleSheafIsoConstModuleSheaf}
+  \lean{CategoryTheory.Sheaf.freeModuleSheafIsoConstModuleSheaf}
+  \uses{def:freeModuleSheaf, def:constModuleSheaf, def:freeModuleSheafHomEquiv,
+    def:constHomEquiv}
+  \leanok
+  If \(T\) is a terminal object of \(\mathcal C\), a canonical isomorphism of sheaves of
+  \(R\)-modules \(R[T] \cong R_J\).
+\end{definition}
+\begin{proof}
+  \leanok
+  Both sides corepresent the same functor: \(\Hom(R[T], -) \cong \mathrm{ev}_T\) by
+  \ref{def:freeModuleSheafHomEquiv}, and \(\Hom(R_J, -) \cong \mathrm{ev}_T\) by
+  \ref{def:constHomEquiv} (valid since \(T\) is terminal), both naturally in the sheaf
+  argument. Two objects corepresenting the same functor via natural equivalences are
+  canonically isomorphic: the isomorphism corresponds, under each equivalence, to the section
+  of the other object at \(T\) that corresponds to its own identity morphism, and the two
+  composites are the identity by naturality applied to the identity morphism of each side.
+\end{proof}
+
+\begin{definition}[Cohomology of the site is cohomology of a terminal object]
+  \label{def:HModule_linearEquivHModule'}
+  \lean{CategoryTheory.Sheaf.HModule.linearEquivHModule'}
+  \uses{def:HModule, def:HModule', def:freeModuleSheafIsoConstModuleSheaf}
+  \leanok
+  For \(T\) terminal in \(\mathcal C\) and every \(n\), an \(R\)-linear equivalence
+  \(H^n(F) \cong H'^n(T, F)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  Apply the (contravariant, \(R\)-linear) functoriality of \(\Ext^n(-, F)\) to the
+  isomorphism \(R[T] \cong R_J\) of \ref{def:freeModuleSheafIsoConstModuleSheaf}: an
+  isomorphism of the first \(\Ext\)-argument induces, by composition (Yoneda product) with
+  its degree-zero class, a natural \(R\)-linear isomorphism on \(\Ext\)-groups in every
+  degree, with inverse given by composition with the inverse isomorphism.
+\end{proof}
+
 \section{The structure sheaf as a sheaf of modules}
 
 Let \(k\) be a commutative ring and let \(X\) be a scheme over \(\Spec k\). The relevant site
@@ -188,21 +347,22 @@ is the \emph{small Zariski site} of \(X\): the partially ordered set of open sub
   \ref{def:HModule_linearEquiv0}.
 \end{proof}
 
-\section{\v{C}ech cobounding on affine schemes}
+\section{\v{C}ech cobounding on affine opens}
 
-For a scheme \(X\), a global section \(g \in \Gamma(X, \struct X)\) and an open
-\(U \subseteq X\), we write \(D(g)\) for the basic open locus where \(g\) is invertible, and
-\(g|_V\), \(s|_V\) for restrictions of sections.
+For a scheme \(X\), a section \(g\) of the structure sheaf on an open \(V \subseteq X\) and
+an open \(U \subseteq V\), we write \(D(g)\) for the basic open locus of \(V\) where \(g\) is
+invertible, and \(g|_U\), \(s|_U\) for restrictions of sections.
 
 \begin{lemma}[Denominator clearing on an affine open]
   \label{lem:denominator_clearing}
   \lean{AlgebraicGeometry.IsAffineOpen.exists_res_eq_pow_mul}
   \leanok
-  Let \(X\) be a scheme, \(U \subseteq X\) an affine open and \(g\) a global section of the
-  structure sheaf. For every \(c \in \Gamma(X, U \cap D(g))\) there exist \(N \ge 0\) and
-  \(e \in \Gamma(X, U)\) such that
+  Let \(X\) be a scheme, \(U \subseteq X\) an affine open, \(V \subseteq X\) an open with
+  \(U \subseteq V\), and \(g \in \Gamma(X, V)\) a section of the structure sheaf on \(V\) (so
+  that \(D(g) \subseteq V\) is its basic open). For every \(c \in \Gamma(X, U \cap D(g))\)
+  there exist \(N \ge 0\) and \(e \in \Gamma(X, U)\) such that
   \[
-    e|_{U \cap D(g)} \;=\; \bigl(g|_{U \cap D(g)}\bigr)^{N} \cdot c .
+    e|_{U \cap D(g)} \;=\; \bigl(g|_{U}\bigr)|_{U \cap D(g)}^{N} \cdot c .
   \]
 \end{lemma}
 \begin{proof}
@@ -218,9 +378,10 @@ For a scheme \(X\), a global section \(g \in \Gamma(X, \struct X)\) and an open
   \label{lem:section_annihilation}
   \lean{AlgebraicGeometry.IsAffineOpen.exists_pow_mul_eq_zero_of_res_eq_zero}
   \leanok
-  Let \(X\) be a scheme, \(U \subseteq X\) an affine open and \(g\) a global section of the
-  structure sheaf. If \(t \in \Gamma(X, U)\) restricts to zero on \(U \cap D(g)\), then
-  \((g|_U)^{M} \cdot t = 0\) in \(\Gamma(X, U)\) for some \(M \ge 0\).
+  Let \(X\) be a scheme, \(U \subseteq X\) an affine open, \(V \subseteq X\) an open with
+  \(U \subseteq V\), and \(g \in \Gamma(X, V)\) a section of the structure sheaf on \(V\) (so
+  that \(D(g) \subseteq V\) is its basic open). If \(t \in \Gamma(X, U)\) restricts to zero
+  on \(U \cap D(g)\), then \((g|_U)^{M} \cdot t = 0\) in \(\Gamma(X, U)\) for some \(M \ge 0\).
 \end{lemma}
 \begin{proof}
   \leanok
@@ -229,12 +390,13 @@ For a scheme \(X\), a global section \(g \in \Gamma(X, \struct X)\) and an open
   of the elements annihilated by a power of \(g|_U\).
 \end{proof}
 
-\begin{theorem}[Degree-one \v{C}ech cobounding on an affine scheme]
-  \label{thm:cech_cobounding}
-  \lean{AlgebraicGeometry.Scheme.exists_cech_cobounding}
+\begin{theorem}[Degree-one \v{C}ech cobounding on an affine open]
+  \label{thm:affine_open_cech_cobounding}
+  \lean{AlgebraicGeometry.IsAffineOpen.exists_cech_cobounding}
   \leanok
-  Let \(X\) be an affine scheme and let \(f_1, \dots, f_n\) be global sections of the
-  structure sheaf with \(D(f_1) \cup \dots \cup D(f_n) = X\). Let
+  \source{stacks-project}
+  Let \(X\) be a scheme and \(U\) an affine open of \(X\). Let \(f_1, \dots, f_n \in
+  \Gamma(X, U)\) with \(D(f_1) \cup \dots \cup D(f_n) = U\). Let
   \(a_{ij} \in \Gamma\bigl(X, D(f_i) \cap D(f_j)\bigr)\) be a \v{C}ech \(1\)-cocycle: for all
   \(i, j, l\),
   \[
@@ -251,11 +413,12 @@ For a scheme \(X\), a global section \(g \in \Gamma(X, \struct X)\) and an open
   \leanok
   \uses{lem:denominator_clearing, lem:section_annihilation}
   All restriction maps are suppressed from the notation. Note that each \(D(f_i)\) and each
-  pairwise intersection \(D(f_i) \cap D(f_j) = D(f_i f_j)\) is an affine open of \(X\).
+  pairwise intersection \(D(f_i) \cap D(f_j) = D(f_i f_j)\) is an affine open of \(U\), hence
+  of \(X\).
 
   \emph{Step 1: clear denominators with a uniform exponent.} For each pair \((i,j)\) apply
-  \ref{lem:denominator_clearing} with \(U = D(f_i)\) and \(g = f_j\): there are
-  \(N_{ij} \ge 0\) and \(e^0_{ij} \in \Gamma(X, D(f_i))\) with
+  \ref{lem:denominator_clearing} with affine open \(D(f_i)\), ambient open \(V = U\) and
+  \(g = f_j\): there are \(N_{ij} \ge 0\) and \(e^0_{ij} \in \Gamma(X, D(f_i))\) with
   \(e^0_{ij} = f_j^{N_{ij}} a_{ij}\) on \(D(f_i) \cap D(f_j)\). Let \(N\) be the maximum of
   the \(N_{ij}\) and set \(e_{ij} = f_j^{\,N - N_{ij}}\, e^0_{ij}\), so that
   \(e_{ij} = f_j^{\,N} a_{ij}\) on \(D(f_i) \cap D(f_j)\).
@@ -267,15 +430,16 @@ For a scheme \(X\), a global section \(g \in \Gamma(X, \struct X)\) and an open
   On the triple intersection \(D(f_i) \cap D(f_j) \cap D(f_l)\) we have
   \(e_{il} = f_l^N a_{il}\) and \(e_{jl} = f_l^N a_{jl}\), so the cocycle identity gives
   \(t_{ijl} = f_l^N (a_{il} - a_{jl} - a_{ij}) = 0\) there. Since
-  \(D(f_i) \cap D(f_j)\) is affine and the triple intersection is its basic open defined by
-  \(f_l\), \ref{lem:section_annihilation} yields \(M_{ijl} \ge 0\) with
+  \(D(f_i) \cap D(f_j)\) is an affine open (of \(U\), hence of \(X\)) and the triple
+  intersection is its basic open defined by \(f_l\), \ref{lem:section_annihilation} (with
+  ambient open \(V = U\)) yields \(M_{ijl} \ge 0\) with
   \(f_l^{\,M_{ijl}}\, t_{ijl} = 0\) on \(D(f_i) \cap D(f_j)\). Let \(M\) be the maximum of
   the \(M_{ijl}\); then \(f_l^{\,M} t_{ijl} = 0\) for all \(i,j,l\).
 
-  \emph{Step 3: partition of unity.} Since the \(D(f_i)\) cover the affine scheme \(X\), the
-  \(f_i\) generate the unit ideal of \(\Gamma(X, \struct X)\); hence so do the powers
+  \emph{Step 3: partition of unity.} Since the \(D(f_i)\) cover the affine open \(U\), the
+  \(f_i\) generate the unit ideal of \(\Gamma(X, U)\); hence so do the powers
   \(f_i^{\,N+M}\), and we may write \(1 = \sum_l h_l\, f_l^{\,N+M}\) with
-  \(h_l \in \Gamma(X, \struct X)\).
+  \(h_l \in \Gamma(X, U)\).
 
   \emph{Step 4: assemble the cobounding.} Set
   \(b_i = \sum_l h_l\, f_l^{\,M}\, e_{il} \in \Gamma\bigl(X, D(f_i)\bigr)\). On
@@ -290,7 +454,25 @@ For a scheme \(X\), a global section \(g \in \Gamma(X, \struct X)\) and an open
   using \(f_l^{\,M} t_{ijl} = 0\) in the third equality.
 \end{proof}
 
-\section{Vanishing of degree-one cohomology on affine schemes}
+\begin{theorem}[Degree-one \v{C}ech cobounding on an affine scheme]
+  \label{thm:cech_cobounding}
+  \lean{AlgebraicGeometry.Scheme.exists_cech_cobounding}
+  \uses{thm:affine_open_cech_cobounding}
+  \leanok
+  Let \(X\) be an affine scheme and let \(f_1, \dots, f_n\) be global sections of the
+  structure sheaf with \(D(f_1) \cup \dots \cup D(f_n) = X\). Let
+  \(a_{ij} \in \Gamma\bigl(X, D(f_i) \cap D(f_j)\bigr)\) be a \v{C}ech \(1\)-cocycle as in
+  \ref{thm:affine_open_cech_cobounding}. Then there are sections
+  \(b_i \in \Gamma\bigl(X, D(f_i)\bigr)\) with \(a_{ij} = b_i - b_j\) on
+  \(D(f_i) \cap D(f_j)\) for all \(i, j\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The special case \(U = X\) of \ref{thm:affine_open_cech_cobounding}: an affine scheme is
+  an affine open of itself.
+\end{proof}
+
+\section{Vanishing of degree-one cohomology on affine opens}
 
 \begin{lemma}[A vanishing criterion for \(\Ext^1\)]
   \label{lem:ext_one_vanishing_criterion}
@@ -347,29 +529,30 @@ For a scheme \(X\), a global section \(g \in \Gamma(X, \struct X)\) and an open
   \(R\)-modules is an injective map.
 \end{proof}
 
-\begin{theorem}[Global sections surjectivity on an affine scheme]
-  \label{thm:cokernel_sections_surjective}
-  \lean{AlgebraicGeometry.Scheme.cokernel_app_top_surjective}
+\begin{theorem}[Sections surjectivity on an affine open]
+  \label{thm:cokernel_app_surjective_affine_open}
+  \lean{AlgebraicGeometry.IsAffineOpen.cokernel_app_surjective}
   \uses{def:moduleKSheaf}
   \leanok
-  Let \(k\) be a commutative ring, \(X\) an affine scheme over \(\Spec k\), \(G\) a sheaf of
-  \(k\)-modules on the small Zariski site of \(X\), and
-  \(\iota : \struct{X/k} \to G\) a monomorphism. Then every global section of
-  \(\coker \iota\) lifts to a global section of \(G\): the map
-  \(G(X) \to (\coker \iota)(X)\) is surjective.
+  Let \(k\) be a commutative ring, \(X\) a scheme over \(\Spec k\), \(U\) an affine open of
+  \(X\), \(G\) a sheaf of \(k\)-modules on the small Zariski site of \(X\), and
+  \(\iota : \struct{X/k} \to G\) a monomorphism. Then every section of
+  \(\coker \iota\) over \(U\) lifts to a section of \(G\) over \(U\): the map
+  \(G(U) \to (\coker \iota)(U)\) is surjective.
 \end{theorem}
 \begin{proof}
   \leanok
-  \uses{lem:sections_left_exact, lem:app_injective_of_mono, thm:cech_cobounding}
-  Let \(q \in (\coker \iota)(X)\) and write \(\pi : G \to \coker \iota\) for the projection.
+  \uses{lem:sections_left_exact, lem:app_injective_of_mono, thm:affine_open_cech_cobounding}
+  Let \(q \in (\coker \iota)(U)\) and write \(\pi : G \to \coker \iota\) for the projection.
 
   (a) \(\pi\) is an epimorphism of sheaves, hence locally surjective on sections: every point
-  has an open neighbourhood on which the restriction of \(q\) lifts to \(G\). Shrinking, and
-  since the basic opens form a basis of the affine scheme \(X\), every point lies in some
-  basic open \(D(g)\) carrying a lift of \(q|_{D(g)}\).
+  of \(U\) has an open neighbourhood on which the restriction of \(q\) lifts to \(G\).
+  Shrinking, and since the basic opens of \(U\) form a basis of \(U\) (as \(U\) is affine),
+  every point of \(U\) lies in some basic open \(D(g) \subseteq U\) carrying a lift of
+  \(q|_{D(g)}\).
 
-  (b) \(X\) is quasi-compact, so there are finitely many global sections
-  \(f_1, \dots, f_n\) with \(D(f_1) \cup \dots \cup D(f_n) = X\) and lifts
+  (b) \(U\) is quasi-compact (it is affine), so there are finitely many sections
+  \(f_1, \dots, f_n \in \Gamma(X, U)\) with \(D(f_1) \cup \dots \cup D(f_n) = U\) and lifts
   \(s_i \in G(D(f_i))\) with \(\pi(s_i) = q|_{D(f_i)}\).
 
   (c) On \(D(f_i) \cap D(f_j)\) the difference \(s_i - s_j\) is killed by \(\pi\), so by
@@ -381,13 +564,41 @@ For a scheme \(X\), a global section \(g \in \Gamma(X, \struct X)\) and an open
   \(\iota(a_{il}) = s_i - s_l = (s_i - s_j) + (s_j - s_l) = \iota(a_{ij} + a_{jl})\), and
   \(\iota\) is injective on sections (\ref{lem:app_injective_of_mono}).
 
-  (e) By \ref{thm:cech_cobounding} there are \(b_i \in \Gamma\bigl(X, D(f_i)\bigr)\) with
-  \(a_{ij} = b_i - b_j\) on overlaps. The corrected lifts \(s_i - \iota(b_i)\) then agree on
-  all overlaps, so by the sheaf condition they glue to a global section \(s \in G(X)\).
+  (e) By \ref{thm:affine_open_cech_cobounding} (applied to the affine open \(U\)) there are
+  \(b_i \in \Gamma\bigl(X, D(f_i)\bigr)\) with \(a_{ij} = b_i - b_j\) on overlaps. The
+  corrected lifts \(s_i - \iota(b_i)\) then agree on all overlaps, so by the sheaf condition
+  they glue to a section \(s \in G(U)\).
 
   (f) Finally \(\pi(s) = q\): on each \(D(f_i)\) we have
   \(\pi(s) = \pi(s_i) - \pi(\iota(b_i)) = q|_{D(f_i)}\) since \(\pi \circ \iota = 0\), and
-  sections of the sheaf \(\coker \iota\) that agree on a cover agree.
+  sections of the sheaf \(\coker \iota\) that agree on a cover of \(U\) agree on \(U\).
+\end{proof}
+
+\begin{theorem}[Vanishing of \(H^1{}'\) on affine opens]
+  \label{thm:affine_open_h1_vanishing}
+  \lean{AlgebraicGeometry.IsAffineOpen.subsingleton_moduleKSheaf_hModule'_one}
+  \uses{def:HModule', def:moduleKSheaf, thm:cokernel_app_surjective_affine_open}
+  \leanok
+  \source{stacks-project}
+  Let \(k\) be a commutative ring, \(X\) a scheme over \(\Spec k\) and \(U\) an affine open
+  of \(X\). Then
+  \[
+    H'^1\bigl(U, \struct{X/k}\bigr) \;=\; 0 .
+  \]
+  No hypothesis on \(X\) beyond the affineness of \(U\) is needed.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:ext_one_vanishing_criterion, def:freeModuleSheafHomEquiv}
+  The category of sheaves of \(k\)-modules on the small Zariski site of \(X\) is Grothendieck
+  abelian, hence has enough injectives: choose a monomorphism
+  \(\iota : \struct{X/k} \to G\) with \(G\) injective. By
+  \ref{lem:ext_one_vanishing_criterion} (with \(L = k[U]\) the free sheaf of \(k\)-modules on
+  \(U\)), it suffices to lift every morphism \(k[U] \to \coker \iota\) along
+  \(G \to \coker \iota\). By \ref{def:freeModuleSheafHomEquiv}, morphisms out of \(k[U]\) are,
+  compatibly with postcomposition, sections over \(U\); so the required lifting is exactly
+  the surjectivity of \(G(U) \to (\coker \iota)(U)\), which is
+  \ref{thm:cokernel_app_surjective_affine_open}.
 \end{proof}
 
 \begin{theorem}[Vanishing of \(H^1\) on affine schemes]
@@ -395,6 +606,7 @@ For a scheme \(X\), a global section \(g \in \Gamma(X, \struct X)\) and an open
   \lean{AlgebraicGeometry.Scheme.subsingleton_moduleKSheaf_hModule_one}
   \uses{def:HModule, def:moduleKSheaf}
   \leanok
+  \source{stacks-project}
   Let \(k\) be a commutative ring and \(X\) an affine scheme over \(\Spec k\). Then
   \[
     H^1\bigl(X, \struct{X/k}\bigr) \;=\; 0 .
@@ -402,7 +614,7 @@ For a scheme \(X\), a global section \(g \in \Gamma(X, \struct X)\) and an open
 \end{theorem}
 \begin{proof}
   \leanok
-  \uses{lem:ext_one_vanishing_criterion, thm:cokernel_sections_surjective,
+  \uses{lem:ext_one_vanishing_criterion, thm:cokernel_app_surjective_affine_open,
     def:constHomEquiv, lem:constHomEquiv_naturality}
   The category of sheaves of \(k\)-modules on the small Zariski site of \(X\) is Grothendieck
   abelian, hence has enough injectives: choose a monomorphism
@@ -411,6 +623,534 @@ For a scheme \(X\), a global section \(g \in \Gamma(X, \struct X)\) and an open
   lift every morphism \(k_J \to \coker \iota\) along \(G \to \coker \iota\). By
   \ref{def:constHomEquiv} and its naturality \ref{lem:constHomEquiv_naturality}, morphisms
   out of \(k_J\) are global sections, compatibly with postcomposition; so the required
-  lifting is exactly the surjectivity of \(G(X) \to (\coker \iota)(X)\), which is
-  \ref{thm:cokernel_sections_surjective}.
+  lifting is exactly the surjectivity of \(G(X) \to (\coker \iota)(X)\), i.e.\ of
+  \(G(\top) \to (\coker \iota)(\top)\), which is
+  \ref{thm:cokernel_app_surjective_affine_open} applied to the affine open \(U = \top\)
+  (an affine scheme is an affine open of itself).
+\end{proof}
+
+\section{The Mayer--Vietoris \((0,1)\)-slice}
+\label{sec:mv-in-text}
+
+For a Mayer--Vietoris square \(S\) (typically: opens \(X_1 = U \cap V\), \(X_2 = U\),
+\(X_3 = V\), \(X_4 = U \cup V\) of a topological space) and a sheaf of \(R\)-modules \(F\) on
+the site, this section produces the exactness of
+\[
+  0 \to F(X_4) \to F(X_2) \times F(X_3) \to F(X_1)
+    \xrightarrow{\;\delta\;} H'^1(X_4, F) \to H'^1(X_2, F) \times H'^1(X_3, F)
+\]
+and derives the two-cover cokernel computation: if \(H'^1(X_2, F)\) and \(H'^1(X_3, F)\)
+vanish, then \(F(X_1)/\mathrm{range}(\text{difference of restrictions}) \cong H'^1(X_4, F)\),
+the quotient map being the connecting homomorphism \(\delta\).
+
+\begin{definition}[Mayer--Vietoris square]
+  \label{def:MayerVietorisSquare}
+  \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Let \((\mathcal C, J)\) be a small site. A Mayer--Vietoris square consists of four objects
+  \(X_1, X_2, X_3, X_4\) of \(\mathcal C\) and morphisms \(f_{12} : X_1 \to X_2\),
+  \(f_{13} : X_1 \to X_3\), \(f_{24} : X_2 \to X_4\), \(f_{34} : X_3 \to X_4\) such that the
+  two composites \(X_1 \to X_2 \to X_4\) and \(X_1 \to X_3 \to X_4\) agree, \(f_{13}\) is a
+  monomorphism, and, after applying the representable-presheaf-then-sheafification functor
+  \(\mathcal C \to \mathrm{Sh}(\mathcal C, J; \mathrm{Set})\), the resulting square of
+  sheaves of sets is a pushout square: the image of \(X_4\) is the pushout, over the image of
+  \(X_1\), of the images of \(X_2\) and \(X_3\). The prototypical example is
+  \(X_1 = U \cap V\), \(X_2 = U\), \(X_3 = V\), \(X_4 = U \cup V\) for two opens \(U, V\) of a
+  topological space, with the evident inclusions.
+\end{definition}
+
+\begin{definition}[The sheaf condition of a Mayer--Vietoris square]
+  \label{def:mv_sheaf_condition}
+  \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.SheafCondition,
+    CategoryTheory.GrothendieckTopology.MayerVietorisSquare.sheafCondition_of_sheaf}
+  \uses{def:MayerVietorisSquare}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Let \(S = (X_1,X_2,X_3,X_4,f_{12},f_{13},f_{24},f_{34})\) be a Mayer--Vietoris square on
+  \((\mathcal C, J)\) and let \(P\) be a presheaf on \(\mathcal C\). Say \(P\) satisfies the
+  sheaf condition for \(S\) when the square \(P(X_4) \to P(X_2) \to P(X_1)\),
+  \(P(X_4) \to P(X_3) \to P(X_1)\) (restriction along \(f_{24}, f_{12}\) and along
+  \(f_{34}, f_{13}\)) is a pullback square: equivalently, restriction identifies \(P(X_4)\)
+  with the pairs \((u,v) \in P(X_2) \times P(X_3)\) of equal restriction to \(X_1\). Every
+  sheaf satisfies the sheaf condition for every Mayer--Vietoris square of its site.
+\end{definition}
+
+\begin{definition}[The Mayer--Vietoris short complex of free sheaves]
+  \label{def:moduleShortComplex}
+  \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.moduleShortComplex}
+  \uses{def:MayerVietorisSquare, def:freeModuleSheaf, def:freeModuleSheafMap}
+  \leanok
+  For a Mayer--Vietoris square \(S\) on \((\mathcal C, J)\), the complex of sheaves of
+  \(R\)-modules
+  \[
+    R[X_1] \xrightarrow{\ (R[f_{12}],\, -R[f_{13}])\ } R[X_2] \oplus R[X_3]
+      \xrightarrow{\ R[f_{24}] + R[f_{34}]\ } R[X_4],
+  \]
+  whose composite is zero by the commutativity of \(S\)'s square.
+\end{definition}
+
+\begin{theorem}[The Mayer--Vietoris short complex is short exact]
+  \label{thm:moduleShortComplex_shortExact}
+  \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.moduleShortComplex_shortExact}
+  \uses{def:moduleShortComplex}
+  \leanok
+  For every Mayer--Vietoris square \(S\), the complex of \ref{def:moduleShortComplex} is a
+  short exact sequence of sheaves of \(R\)-modules:
+  \[
+    0 \to R[X_1] \to R[X_2] \oplus R[X_3] \to R[X_4] \to 0 .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  \emph{The square of free sheaves is a pushout.} The free-\(R\)-module-sheaf functor
+  \(U \mapsto R[U]\) (\ref{def:freeModuleSheafMap} on morphisms) is a left adjoint of the
+  forgetful functor to sheaves of sets (it factors the free-\(R\)-module-on-a-set functor,
+  itself a left adjoint, through sheafification, also a left adjoint). Left adjoints
+  preserve colimits, in particular pushout squares; applying this functor to the defining
+  pushout square of \(S\) (Definition~\ref{def:MayerVietorisSquare}: the square of
+  sheafified representables at \(X_1,X_2,X_3,X_4\)) shows that the square
+  \(R[X_1] \to R[X_2]\), \(R[X_1] \to R[X_3]\), \(R[X_2] \to R[X_4]\),
+  \(R[X_3] \to R[X_4]\) is again a pushout, now in the category of sheaves of
+  \(R\)-modules.
+
+  \emph{Pushout along a mono is short exact.} In an additive category with biproducts, a
+  commuting square with legs \(p : A \to B\), \(q : A \to C\), \(r : B \to D\),
+  \(s : C \to D\) is a pushout square exactly when \(D\), together with the map
+  \((r,s) : B \oplus C \to D\), is a cokernel of the difference map
+  \((p,-q) : A \to B \oplus C\). Applied to the pushout square above, this shows that
+  \(R[X_4]\), with the sum map, is a cokernel of the difference map
+  \(R[X_1] \to R[X_2] \oplus R[X_3]\); that is, the complex of \ref{def:moduleShortComplex}
+  is exact at \(R[X_2] \oplus R[X_3]\) and at \(R[X_4]\), with the map to \(R[X_4]\) an
+  epimorphism.
+
+  \emph{The difference map is a monomorphism.} By definition of a Mayer--Vietoris square,
+  \(f_{13} : X_1 \to X_3\) is a monomorphism of \(\mathcal C\); postcomposition with a
+  monomorphism is injective on morphism sets, so the representable-presheaf map it induces
+  is a monomorphism of presheaves of sets, and both the free-\(R\)-module functor (on a set,
+  mapping along an injection of index sets is injective on finitely supported functions) and
+  sheafification preserve monomorphisms. Hence \(R[f_{13}] : R[X_1] \to R[X_3]\) is a
+  monomorphism of sheaves of \(R\)-modules, and so is its negative. The second component of
+  the difference map \((R[f_{12}], -R[f_{13}]) : R[X_1] \to R[X_2] \oplus R[X_3]\) (its
+  composite with the projection to \(R[X_3]\)) is exactly \(-R[f_{13}]\); since a composite
+  \(g \circ h\) being a monomorphism forces \(h\) to be a monomorphism, the difference map
+  itself is a monomorphism.
+
+  Together, the three paragraphs give short exactness.
+\end{proof}
+
+\begin{definition}[The restriction-difference map]
+  \label{def:moduleDiff}
+  \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.moduleDiff}
+  \uses{def:MayerVietorisSquare}
+  \leanok
+  For a Mayer--Vietoris square \(S\) and a sheaf \(F\) of \(R\)-modules, the \(R\)-linear map
+  \[
+    F(X_2) \times F(X_3) \longrightarrow F(X_1), \qquad
+    (s_2, s_3) \longmapsto s_2|_{X_1} - s_3|_{X_1},
+  \]
+  restricting along \(f_{12}\) and \(f_{13}\) respectively and taking the difference.
+\end{definition}
+
+\begin{lemma}[Degree-zero exactness]
+  \label{lem:mv_exact_degree0}
+  \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.sections_ext,
+    CategoryTheory.GrothendieckTopology.MayerVietorisSquare.exists_glue_of_moduleDiff_eq_zero}
+  \uses{def:moduleDiff, def:mv_sheaf_condition}
+  \leanok
+  For a Mayer--Vietoris square \(S\) and a sheaf \(F\) of \(R\)-modules, the sequence
+  \[
+    0 \to F(X_4) \xrightarrow{\ (\mathrm{res},\,\mathrm{res})\ } F(X_2) \times F(X_3)
+      \xrightarrow{\ \mathrm{moduleDiff}\ } F(X_1)
+  \]
+  is exact: the pair of restrictions to \(X_2, X_3\) is injective, and its image is exactly
+  the kernel of \ref{def:moduleDiff}.
+\end{lemma}
+\begin{proof}
+  \leanok
+  This is the sheaf condition of \(S\) for (the sheaf of sets underlying) \(F\)
+  (Definition~\ref{def:mv_sheaf_condition}): the map \(F(X_4) \to F(X_2) \times F(X_3)\) has
+  image exactly the pairs with equal restriction to \(X_1\) (i.e.\
+  \(\ker(\mathrm{moduleDiff})\)), and two elements of \(F(X_4)\) with the same pair of
+  restrictions are equal.
+\end{proof}
+
+\begin{lemma}[Contravariant long exact sequence of \(\Ext\)]
+  \label{lem:ext_contravariant_les}
+  \lean{CategoryTheory.Abelian.Ext.contravariant_sequence_exact₁,
+    CategoryTheory.Abelian.Ext.contravariant_sequence_exact₃,
+    CategoryTheory.ShortComplex.ShortExact.extClass,
+    CategoryTheory.Abelian.Ext.biprodAddEquiv}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Let \(0 \to A \xrightarrow{f} B \xrightarrow{g} C \to 0\) be a short exact sequence in an
+  abelian category with \(\Ext\)-groups and let \(Y\) be any object. There is a canonical
+  extension class \(\delta \in \Ext^1(C, A)\) (built from the connecting homomorphism of the
+  sequence), and for every \(n \ge 0\) the sequence of abelian groups
+  \[
+    \Ext^n(C,Y) \xrightarrow{g^*} \Ext^n(B,Y) \xrightarrow{f^*} \Ext^n(A,Y)
+      \xrightarrow{\ \delta \cdot (-)\ } \Ext^{n+1}(C,Y) \xrightarrow{g^*} \Ext^{n+1}(B,Y)
+      \xrightarrow{f^*} \Ext^{n+1}(A,Y)
+  \]
+  is exact at each of the four inner terms, where \(f^*, g^*\) are precomposition
+  (contravariant functoriality of \(\Ext(-,Y)\)) and \(\delta \cdot (-)\) is composition
+  (Yoneda product) with \(\delta\). (Convention: \(\Ext^0 = \Hom\).) If \(B = X_2 \oplus X_3\)
+  is a direct sum, \(\Ext^n(B,Y) \cong \Ext^n(X_2,Y) \times \Ext^n(X_3,Y)\) naturally,
+  compatibly with \(f^*, g^*\).
+\end{lemma}
+
+\begin{definition}[The connecting map]
+  \label{def:moduleDelta}
+  \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.moduleDelta}
+  \uses{def:HModule'_linearEquiv0, thm:moduleShortComplex_shortExact,
+    lem:ext_contravariant_les}
+  \leanok
+  For a Mayer--Vietoris square \(S\) and a sheaf \(F\) of \(R\)-modules, the connecting map
+  \(F(X_1) \to H'^1(X_4, F)\): the identification
+  \(F(X_1) \cong H'^0(X_1,F) = \Ext^0(R[X_1], F)\) of \ref{def:HModule'_linearEquiv0},
+  followed by the map \(\delta \cdot (-) : \Ext^0(R[X_1],F) \to \Ext^1(R[X_4],F) = H'^1(X_4,F)\)
+  of \ref{lem:ext_contravariant_les} for the short exact sequence of
+  \ref{thm:moduleShortComplex_shortExact} (\(A = R[X_1]\), \(B = R[X_2] \oplus R[X_3]\),
+  \(C = R[X_4]\)).
+\end{definition}
+
+\begin{lemma}[Exactness at \(F(X_1)\)]
+  \label{lem:mv_exact_at_X1}
+  \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.moduleDelta_moduleDiff,
+    CategoryTheory.GrothendieckTopology.MayerVietorisSquare.exists_of_moduleDelta_eq_zero}
+  \uses{def:moduleDelta, def:moduleDiff}
+  \leanok
+  For a Mayer--Vietoris square \(S\) and a sheaf \(F\) of \(R\)-modules,
+  \(\ker(\mathrm{moduleDelta}) = \mathrm{range}(\mathrm{moduleDiff})\) as submodules of
+  \(F(X_1)\): the connecting class of a difference of restrictions vanishes, and conversely
+  every section of \(F(X_1)\) with vanishing connecting class is such a difference.
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:ext_contravariant_les, thm:moduleShortComplex_shortExact,
+    lem:freeModuleSheafHomEquiv_naturality}
+  This is exactness of the sequence of \ref{lem:ext_contravariant_les} (for \(n=0\), the
+  short exact sequence of \ref{thm:moduleShortComplex_shortExact}, \(Y=F\)) at the term
+  \(\Ext^0(A,F) = F(X_1)\), transported along the identifications
+  \(\Ext^0(B,F) \cong F(X_2) \times F(X_3)\) (\ref{lem:ext_contravariant_les}, direct sum) and
+  \(\Ext^0(A,F) \cong F(X_1)\) (\ref{def:HModule'_linearEquiv0}): under these identifications
+  \(f^* : \Ext^0(B,F) \to \Ext^0(A,F)\) becomes \(\mathrm{moduleDiff}\) and
+  \(\delta \cdot (-) : \Ext^0(A,F) \to \Ext^1(C,F)\) becomes \(\mathrm{moduleDelta}\), by
+  naturality of the section equivalence in the site variable
+  (\ref{lem:freeModuleSheafHomEquiv_naturality}), which identifies precomposition at the
+  level of morphisms out of a free sheaf with restriction at the level of sections.
+\end{proof}
+
+\begin{lemma}[Exactness at \(H'^1(X_4,F)\)]
+  \label{lem:mv_exact_at_H1X4}
+  \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.res_moduleDelta₂,
+    CategoryTheory.GrothendieckTopology.MayerVietorisSquare.res_moduleDelta₃,
+    CategoryTheory.GrothendieckTopology.MayerVietorisSquare.exists_moduleDelta_eq}
+  \uses{def:moduleDelta, def:HModule'_res}
+  \leanok
+  For a Mayer--Vietoris square \(S\) and a sheaf \(F\) of \(R\)-modules,
+  \(\ker(\mathrm{res}_{f_{24}}) \cap \ker(\mathrm{res}_{f_{34}}) = \mathrm{range}(\mathrm{moduleDelta})\)
+  as submodules of \(H'^1(X_4,F)\), where
+  \(\mathrm{res}_{f_{24}}, \mathrm{res}_{f_{34}} : H'^1(X_4,F) \to H'^1(X_2,F), H'^1(X_3,F)\)
+  are the restrictions of \ref{def:HModule'_res}: the connecting class of any section of
+  \(F(X_1)\) restricts to zero on both \(X_2\) and \(X_3\), and conversely every class
+  restricting to zero on both is a connecting class.
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:ext_contravariant_les, thm:moduleShortComplex_shortExact}
+  As in \ref{lem:mv_exact_at_X1}, this is exactness of the sequence of
+  \ref{lem:ext_contravariant_les} (for \(n=0\), i.e.\ at the term \(\Ext^1(C,F)\) between
+  \(\delta \cdot (-)\) and \(g^*\)) transported along the same identifications, together
+  with the splitting \(\Ext^1(B,F) \cong H'^1(X_2,F) \times H'^1(X_3,F)\) under which
+  \(g^*\) becomes the pair \((\mathrm{res}_{f_{24}}, \mathrm{res}_{f_{34}})\).
+\end{proof}
+
+\begin{theorem}[Surjectivity of the connecting map]
+  \label{thm:moduleDelta_surjective}
+  \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.moduleDelta_surjective}
+  \uses{lem:mv_exact_at_H1X4}
+  \leanok
+  If \(H'^1(X_2,F)\) and \(H'^1(X_3,F)\) are both zero, then
+  \(\mathrm{moduleDelta} : F(X_1) \to H'^1(X_4,F)\) is surjective.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Immediate from \ref{lem:mv_exact_at_H1X4}:
+  \(\ker(\mathrm{res}_{f_{24}}) \cap \ker(\mathrm{res}_{f_{34}}) = H'^1(X_4,F)\) once both
+  targets vanish, so \(\mathrm{range}(\mathrm{moduleDelta}) = H'^1(X_4,F)\).
+\end{proof}
+
+\begin{definition}[The connecting map on the cokernel]
+  \label{def:moduleDeltaQuotient}
+  \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.moduleDeltaQuotient}
+  \uses{def:moduleDelta, lem:mv_exact_at_X1}
+  \leanok
+  Since \(\mathrm{range}(\mathrm{moduleDiff}) \subseteq \ker(\mathrm{moduleDelta})\)
+  (\ref{lem:mv_exact_at_X1}), \(\mathrm{moduleDelta}\) descends to an \(R\)-linear map
+  \[
+    F(X_1)/\mathrm{range}(\mathrm{moduleDiff}) \longrightarrow H'^1(X_4,F).
+  \]
+\end{definition}
+
+\begin{theorem}[The Mayer--Vietoris two-cover cokernel computation]
+  \label{thm:h1LinearEquiv}
+  \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.h1LinearEquiv}
+  \uses{def:moduleDeltaQuotient, lem:mv_exact_at_X1, thm:moduleDelta_surjective}
+  \leanok
+  \source{stacks-project}
+  If \(H'^1(X_2,F)\) and \(H'^1(X_3,F)\) are both zero, the map of
+  \ref{def:moduleDeltaQuotient} is an \(R\)-linear isomorphism
+  \[
+    F(X_1)/\mathrm{range}(\mathrm{moduleDiff}) \;\cong\; H'^1(X_4,F).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Injectivity: if the class of \(s \in F(X_1)\) maps to \(0\), then
+  \(\mathrm{moduleDelta}(s) = 0\), so by \ref{lem:mv_exact_at_X1}
+  \(s \in \mathrm{range}(\mathrm{moduleDiff})\), i.e.\ the class of \(s\) is already \(0\).
+  Surjectivity is \ref{thm:moduleDelta_surjective}.
+\end{proof}
+
+\begin{lemma}[Compatibility with the connecting map]
+  \label{lem:h1LinearEquiv_mk}
+  \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.h1LinearEquiv_mk}
+  \uses{thm:h1LinearEquiv}
+  \leanok
+  Under the isomorphism of \ref{thm:h1LinearEquiv}, the class of \(s \in F(X_1)\)
+  corresponds to \(\mathrm{moduleDelta}(s)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Immediate from the construction of \ref{def:moduleDeltaQuotient} and
+  \ref{thm:h1LinearEquiv}.
+\end{proof}
+
+\section{The two-affine-cover cokernel bridge}
+
+For a scheme \(X\) over \(\Spec k\) covered by two affine opens \(U_0 \cup U_1 = X\), this
+section computes the degree-one cohomology of the structure sheaf as
+\[
+  H^1\bigl(X, \struct{X/k}\bigr) \;\cong\;
+    \Gamma(X, U_0 \cap U_1) \big/
+      \mathrm{range}\bigl((s_0,s_1) \mapsto s_0|_{U_0 \cap U_1} - s_1|_{U_0 \cap U_1}\bigr),
+\]
+the computational access point for the genus of a curve. No hypothesis on the intersection
+\(U_0 \cap U_1\) is needed: the derived Mayer--Vietoris sequence of Section~\ref{sec:mv-in-text}
+is exact regardless, and affineness of the two pieces alone kills their degree-one
+cohomology (\ref{thm:affine_open_h1_vanishing}) --- the classical affine-intersection
+hypothesis is needed only for the \v{C}ech-complex identification of \(H^1\), which this
+route bypasses.
+
+\begin{definition}[Mayer--Vietoris square of two opens]
+  \label{def:opens_mayerVietorisSquare'}
+  \lean{Opens.mayerVietorisSquare'}
+  \uses{def:MayerVietorisSquare}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For a topological space \(T\) and opens \(X_1,X_2,X_3,X_4 \subseteq T\) with
+  \(X_1 = X_2 \cap X_3\) and \(X_4 = X_2 \cup X_3\), the square \((X_1,X_2,X_3,X_4)\) with the
+  inclusion morphisms is a Mayer--Vietoris square (Definition~\ref{def:MayerVietorisSquare})
+  on the small Zariski site of \(T\).
+\end{definition}
+
+\begin{definition}[The two-cover square]
+  \label{def:twoCoverSquare}
+  \lean{AlgebraicGeometry.Scheme.twoCoverSquare}
+  \uses{def:opens_mayerVietorisSquare'}
+  \leanok
+  For a scheme \(X\) and opens \(U_0, U_1 \subseteq X\) with \(U_0 \cup U_1 = X\), the
+  Mayer--Vietoris square \((U_0 \cap U_1,\, U_0,\, U_1,\, X)\) on the small Zariski site of
+  \(X\) (Definition~\ref{def:opens_mayerVietorisSquare'}, specialized to \(X_4 = X\)), with
+  the inclusion morphisms.
+\end{definition}
+
+\begin{theorem}[The two-cover \(H^1\) computation, general coefficients]
+  \label{thm:twoCoverH1LinearEquiv}
+  \lean{AlgebraicGeometry.Scheme.twoCoverH1LinearEquiv}
+  \uses{def:twoCoverSquare, def:HModule_linearEquivHModule', thm:h1LinearEquiv}
+  \leanok
+  \source{stacks-project}
+  Let \(k\) be a commutative ring, \(X\) a scheme over \(\Spec k\), \(U_0, U_1 \subseteq X\)
+  opens with \(U_0 \cup U_1 = X\), and \(F\) a sheaf of \(k\)-modules on the small Zariski
+  site of \(X\) with \(H'^1(U_0,F) = H'^1(U_1,F) = 0\). Then
+  \[
+    H^1(X,F) \;\cong\;
+      F(U_0 \cap U_1) \big/ \mathrm{range}\bigl((s_0,s_1) \mapsto
+        s_0|_{U_0 \cap U_1} - s_1|_{U_0 \cap U_1}\bigr) .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Compose the isomorphism \(H^1(X,F) \cong H'^1(X,F)\) of
+  \ref{def:HModule_linearEquivHModule'} (\(X\) is a terminal object of its own small Zariski
+  site) with the inverse of the isomorphism of \ref{thm:h1LinearEquiv} for the two-cover
+  square of \ref{def:twoCoverSquare}, whose \(\mathrm{moduleDiff}\) is exactly the displayed
+  restriction-difference map.
+\end{proof}
+
+\begin{definition}[The two-cover restriction-difference map]
+  \label{def:TwoCover_diff}
+  \lean{AlgebraicGeometry.TwoCover.diff}
+  \uses{def:moduleKSheaf}
+  \leanok
+  Let \(k\) be a commutative ring, \(X\) a scheme over \(\Spec k\), and \(U_0, U_1 \subseteq X\)
+  opens. The \(k\)-linear map
+  \[
+    \Gamma(X,U_0) \times \Gamma(X,U_1) \longrightarrow \Gamma(X, U_0 \cap U_1), \qquad
+    (s_0,s_1) \longmapsto s_0|_{U_0 \cap U_1} - s_1|_{U_0 \cap U_1} .
+  \]
+  When \(U_0 \cup U_1 = X\), this is the map \ref{def:moduleDiff} of the two-cover square
+  (Definition~\ref{def:twoCoverSquare}) for the structure sheaf \(\struct{X/k}\).
+\end{definition}
+
+\begin{definition}[The two-cover cokernel carrier]
+  \label{def:TwoCover_H1Cok}
+  \lean{AlgebraicGeometry.TwoCover.H1Cok}
+  \uses{def:TwoCover_diff}
+  \leanok
+  The \(k\)-module \(\Gamma(X, U_0 \cap U_1)/\mathrm{range}(\mathrm{diff})\), the cokernel of
+  the map of \ref{def:TwoCover_diff}.
+\end{definition}
+
+\begin{lemma}[Sections extending to one piece vanish in the cokernel]
+  \label{lem:TwoCover_h1Cok_mk_res}
+  \lean{AlgebraicGeometry.TwoCover.h1Cok_mk_resHom_left,
+    AlgebraicGeometry.TwoCover.h1Cok_mk_resHom_right}
+  \uses{def:TwoCover_H1Cok}
+  \leanok
+  For \(t \in \Gamma(X,U_0)\), the class of \(t|_{U_0 \cap U_1}\) in
+  \ref{def:TwoCover_H1Cok} is zero; symmetrically, for \(t \in \Gamma(X,U_1)\) the class of
+  \(t|_{U_0 \cap U_1}\) is zero.
+\end{lemma}
+\begin{proof}
+  \leanok
+  The first is the class of \(\mathrm{diff}(t,0)\), the second of \(\mathrm{diff}(0,-t)\)
+  (Definition~\ref{def:TwoCover_diff}), both in the range of \(\mathrm{diff}\).
+\end{proof}
+
+\begin{definition}[The two-cover connecting map]
+  \label{def:TwoCover_delta}
+  \lean{AlgebraicGeometry.TwoCover.delta}
+  \uses{def:twoCoverSquare, def:HModule_linearEquivHModule', def:moduleDelta}
+  \leanok
+  Assume \(U_0 \cup U_1 = X\). The \(k\)-linear map
+  \(\Gamma(X, U_0 \cap U_1) \to H^1(X, \struct{X/k})\): the connecting map
+  \ref{def:moduleDelta} of the two-cover square (Definition~\ref{def:twoCoverSquare}) for
+  \(F = \struct{X/k}\), followed by the inverse of the isomorphism
+  \(H^1(X,\struct{X/k}) \cong H'^1(X,\struct{X/k})\) of
+  \ref{def:HModule_linearEquivHModule'}.
+\end{definition}
+
+\begin{lemma}[The connecting class of a difference vanishes]
+  \label{lem:TwoCover_delta_diff}
+  \lean{AlgebraicGeometry.TwoCover.delta_diff}
+  \uses{def:TwoCover_delta, def:TwoCover_diff, lem:mv_exact_at_X1}
+  \leanok
+  For \(t \in \Gamma(X,U_0) \times \Gamma(X,U_1)\), \(\mathrm{delta}(\mathrm{diff}(t)) = 0\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \(\mathrm{diff}(t)\) equals the two-cover square's \(\mathrm{moduleDiff}(t)\)
+  (Definition~\ref{def:TwoCover_diff}), whose connecting class vanishes by
+  \ref{lem:mv_exact_at_X1}; transport along the (linear, hence class-zero-preserving)
+  isomorphism of \ref{def:HModule_linearEquivHModule'} used in the definition of
+  \(\mathrm{delta}\).
+\end{proof}
+
+\begin{lemma}[The connecting class of an extending section vanishes]
+  \label{lem:TwoCover_delta_resHom}
+  \lean{AlgebraicGeometry.TwoCover.delta_resHom_left,
+    AlgebraicGeometry.TwoCover.delta_resHom_right}
+  \uses{lem:TwoCover_delta_diff}
+  \leanok
+  For \(t \in \Gamma(X,U_0)\), \(\mathrm{delta}(t|_{U_0 \cap U_1}) = 0\); symmetrically, for
+  \(t \in \Gamma(X,U_1)\), \(\mathrm{delta}(t|_{U_0 \cap U_1}) = 0\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \(t|_{U_0 \cap U_1} = \mathrm{diff}(t,0)\), resp.\ \(-\mathrm{diff}(0,t)\)
+  (Definition~\ref{def:TwoCover_diff}), so this is \ref{lem:TwoCover_delta_diff} (using
+  \(\mathrm{delta}\)'s linearity in the second case).
+\end{proof}
+
+\begin{theorem}[Surjectivity of the two-cover connecting map]
+  \label{thm:TwoCover_delta_surjective}
+  \lean{AlgebraicGeometry.TwoCover.delta_surjective}
+  \uses{def:TwoCover_delta, thm:affine_open_h1_vanishing, thm:moduleDelta_surjective}
+  \leanok
+  If \(U_0\) and \(U_1\) are affine opens of \(X\) (still with \(U_0 \cup U_1 = X\)), then
+  \(\mathrm{delta} : \Gamma(X, U_0 \cap U_1) \to H^1(X,\struct{X/k})\) is surjective.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By \ref{thm:affine_open_h1_vanishing}, \(H'^1(U_0,\struct{X/k}) = H'^1(U_1,\struct{X/k}) = 0\);
+  by \ref{thm:moduleDelta_surjective} applied to the two-cover square, its connecting map
+  \(\mathrm{moduleDelta}\) is surjective onto \(H'^1(X,\struct{X/k})\), and transporting
+  along the isomorphism of \ref{def:HModule_linearEquivHModule'} used to define
+  \(\mathrm{delta}\) preserves surjectivity.
+\end{proof}
+
+\begin{theorem}[The two-affine-cover \(H^1\) cokernel bridge]
+  \label{thm:TwoCover_h1CokEquiv}
+  \lean{AlgebraicGeometry.TwoCover.h1CokEquiv}
+  \uses{thm:affine_open_h1_vanishing, thm:h1LinearEquiv, def:HModule_linearEquivHModule',
+    def:TwoCover_H1Cok}
+  \leanok
+  \source{stacks-project}
+  Let \(k\) be a commutative ring, \(X\) a scheme over \(\Spec k\), and \(U_0, U_1\) affine
+  opens of \(X\) with \(U_0 \cup U_1 = X\). There is a \(k\)-linear isomorphism
+  \[
+    H^1\bigl(X, \struct{X/k}\bigr) \;\cong\; \Gamma(X, U_0 \cap U_1)\big/\mathrm{range}(\mathrm{diff}),
+  \]
+  where \(\mathrm{diff}(s_0,s_1) = s_0|_{U_0 \cap U_1} - s_1|_{U_0 \cap U_1}\)
+  (\ref{def:TwoCover_diff}). No hypothesis on \(U_0 \cap U_1\) (affineness, separatedness, or
+  even quasi-compactness) is needed: the derived Mayer--Vietoris sequence of
+  \ref{thm:moduleShortComplex_shortExact} is exact regardless, and affineness of \(U_0, U_1\)
+  alone kills their degree-one cohomology (\ref{thm:affine_open_h1_vanishing}); the classical
+  hypothesis on the intersection is needed only for the \v{C}ech-complex identification of
+  \(H^1\), which this route bypasses.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By \ref{thm:affine_open_h1_vanishing}, \(H'^1(U_0,\struct{X/k}) = H'^1(U_1,\struct{X/k}) = 0\).
+  Apply \ref{thm:h1LinearEquiv} to the two-cover square of \ref{def:twoCoverSquare} with
+  \(F = \struct{X/k}\), giving
+  \(\Gamma(X, U_0 \cap U_1)/\mathrm{range}(\mathrm{diff}) \cong H'^1(X,\struct{X/k})\), and
+  compose with the inverse of the isomorphism
+  \(H^1(X,\struct{X/k}) \cong H'^1(X,\struct{X/k})\) of
+  \ref{def:HModule_linearEquivHModule'}.
+\end{proof}
+
+\begin{lemma}[Compatibility with the connecting map]
+  \label{lem:TwoCover_h1CokEquiv_delta}
+  \lean{AlgebraicGeometry.TwoCover.h1CokEquiv_delta}
+  \uses{thm:TwoCover_h1CokEquiv, def:TwoCover_delta, lem:h1LinearEquiv_mk}
+  \leanok
+  Under the isomorphism of \ref{thm:TwoCover_h1CokEquiv}, the class
+  \(\mathrm{delta}(s)\) (Definition~\ref{def:TwoCover_delta}) corresponds, for every
+  \(s \in \Gamma(X, U_0 \cap U_1)\), to the class of \(s\) in
+  \(\Gamma(X,U_0 \cap U_1)/\mathrm{range}(\mathrm{diff})\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Unwind the definitions of \ref{thm:TwoCover_h1CokEquiv} and \ref{def:TwoCover_delta} (both
+  built from the same two ingredients, \ref{thm:h1LinearEquiv} and
+  \ref{def:HModule_linearEquivHModule'}) and apply the compatibility \ref{lem:h1LinearEquiv_mk}
+  of the Mayer--Vietoris cokernel isomorphism with its connecting map.
+\end{proof}
+
+\begin{lemma}[Compatibility with the connecting map, inverse form]
+  \label{lem:TwoCover_h1CokEquiv_symm_mk}
+  \lean{AlgebraicGeometry.TwoCover.h1CokEquiv_symm_mk}
+  \uses{lem:TwoCover_h1CokEquiv_delta}
+  \leanok
+  The inverse of the isomorphism of \ref{thm:TwoCover_h1CokEquiv} sends the class of
+  \(s \in \Gamma(X, U_0 \cap U_1)\) to \(\mathrm{delta}(s)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Apply the isomorphism of \ref{thm:TwoCover_h1CokEquiv} to both sides of
+  \ref{lem:TwoCover_h1CokEquiv_delta} and use injectivity.
 \end{proof}

@@ -240,7 +240,32 @@ references:
       - { path: stacks-sites.tex, format: tex }
       - { path: stacks-varieties.tex, format: tex }
       - { path: stacks-tags.txt, format: txt }
-    read: "Each stacks-<topic>.tex has a sibling stacks-<topic>.md summary. Cite by Stacks tag; stacks-tags.txt maps tags. Blueprints reference e.g. 02KH (flat base change), 02KG, 01XJ, 01CV, 01I8."
+    read: >-
+      Each stacks-<topic>.tex has a sibling stacks-<topic>.md summary. Cite by
+      Stacks tag; stacks-tags.txt maps tags. Blueprints reference e.g. 02KH
+      (flat base change), 02KG, 01XJ, 01CV, 01I8. ADDITIONALLY (2026-07-11,
+      Algebraic-Jacobian-Challenge-Rebuild Cohomology.tex, checked for the
+      two-cover cokernel computation and the affine-vanishing/Cech-cobounding
+      keystones): read stacks-cohomology.tex lemma "lemma-mayer-vietoris"
+      (tag 01EB, Section "Mayer-Vietoris", the classical topological
+      Mayer-Vietoris long exact sequence for X = U union V) -- an honest
+      STATEMENT match (not proof match) for
+      GrothendieckTopology.MayerVietorisSquare.h1LinearEquiv /
+      Scheme.twoCoverH1LinearEquiv / TwoCover.h1CokEquiv: our proof is the
+      derived-functor (Ext-based, free-sheaf pushout) route, NOT a transcription
+      of the injective-resolution argument given there. Also read
+      stacks-coherent.tex "lemma-quasi-coherent-affine-cohomology-zero" (Serre
+      vanishing on affine schemes) and "lemma-cech-cohomology-quasi-coherent-trivial"
+      (its p>0 Cech-vanishing input, section-cech-quasi-coherent) -- again
+      honest STATEMENT ancestors (same theorems) for
+      IsAffineOpen.subsingleton_moduleKSheaf_hModule'_one /
+      Scheme.subsingleton_moduleKSheaf_hModule_one and
+      IsAffineOpen.exists_cech_cobounding, whose actual proofs are the
+      elementary partition-of-unity/denominator-clearing argument, NOT the
+      localized-Cech-complex homotopy-contraction argument given there. Cite
+      plainly as \source{stacks-project} (bare slug, matching the existing
+      Algebraic-Jacobian-Challenge project's usage) since these are read
+      directly from the .tex, not transcribed pages.
     topics: [schemes, coherent-sheaves, cohomology, constructions, divisors, fields, modules, sheaves, sites, varieties]
     notes: "The two stale citations references/stacks-0BUG.md and references/hartshorne-ag.md are blueprint typos with no source file; see Cohomology_MayerVietoris.tex and Genus.tex."
 
