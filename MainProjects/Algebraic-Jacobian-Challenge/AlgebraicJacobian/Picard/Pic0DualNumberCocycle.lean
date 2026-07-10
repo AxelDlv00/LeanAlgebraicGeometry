@@ -795,6 +795,25 @@ theorem mem_cechCoboundaryAdd {ρ₁ : A₁ →+* B} {ρ₂ : A₂ →+* B} {b :
     exact AddSubgroup.mem_sup.mpr
       ⟨_, AddMonoidHom.mem_range.mpr ⟨a₁, rfl⟩, _, AddMonoidHom.mem_range.mpr ⟨a₂, rfl⟩, rfl⟩
 
+/-- Differences of chart sections are additive Čech coboundaries — the
+subtraction form of membership, matching the difference-of-restrictions map
+`AffineCoverMVSquare.sectionDiff` of the geometric consumer. Clean-binder
+helper: state and use this on abstract rings, then transport the result along
+the (defeq) carrier identifications of the sheaf dialect. -/
+theorem sub_mem_cechCoboundaryAdd (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B)
+    (a₁ : A₁) (a₂ : A₂) :
+    ρ₁ a₁ - ρ₂ a₂ ∈ cechCoboundaryAdd ρ₁ ρ₂ :=
+  mem_cechCoboundaryAdd.mpr ⟨a₁, -a₂, by rw [map_neg, ← sub_eq_add_neg]⟩
+
+/-- Additive Čech coboundaries are differences of chart sections — the
+subtraction form of the membership characterisation (converse of
+`sub_mem_cechCoboundaryAdd`). -/
+theorem exists_sub_of_mem_cechCoboundaryAdd {ρ₁ : A₁ →+* B} {ρ₂ : A₂ →+* B}
+    {b : B} (h : b ∈ cechCoboundaryAdd ρ₁ ρ₂) :
+    ∃ (a₁ : A₁) (a₂ : A₂), ρ₁ a₁ - ρ₂ a₂ = b := by
+  obtain ⟨a₁, a₂, ha⟩ := mem_cechCoboundaryAdd.mp h
+  exact ⟨a₁, -a₂, by rw [map_neg, sub_neg_eq_add, ha]⟩
+
 /-- **The truncated exponential detects the additive coboundaries** (the
 well-definedness/injectivity heart of the Kleiman §5 Thm 5.11 cocycle leg):
 the unit `1 + b ε` on the dual-number overlap ring is a coboundary of the

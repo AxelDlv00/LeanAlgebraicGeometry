@@ -138,6 +138,91 @@ namespace AlgebraicGeometry
 
 namespace Scheme
 
+/-! ## §0b. The Čech side of the cocycle leg: `Ȟ¹` as the unit-cocycle kernel
+
+Wave-5 W12-cocycle connector: for a 2-affine cover `S` of the curve, the
+concrete Čech cokernel `S.H1Cok (toModuleKSheaf C) = Γ(U₁ ⊓ U₂) ⧸ range
+(sectionDiff)` — which is `H¹(C, 𝒪_C)` by the gate-free comparison
+`hModuleOneEquivH1Cok_curve` — is identified additively with the kernel of
+the two-chart dual-number Čech-units reduction of
+`Picard/Pic0DualNumberCocycle.lean` §6, via the truncated exponential. This
+is the ENTIRE Čech side of the Kleiman §5 Thm 5.11 cocycle leg; the open
+geometric distance to `finrank_cotangentSpaceDual_eq_finrank_h1Cok` below is
+the identification of the units-cocycle Picard kernel with the honest
+relative-Pic kernel (chart triviality on the nilpotent thickening) plus the
+`κ(e) ≃+* k` linearity bookkeeping. -/
+
+/-- The restriction homomorphism `Γ(U₁, 𝒪_C) →+* Γ(U₁ ⊓ U₂, 𝒪_C)` of a
+2-affine cover — the first chart map of the two-chart Čech datum. -/
+noncomputable abbrev AffineCoverMVSquare.resLeft {k : Type u} [Field k]
+    {C : Over (Spec (CommRingCat.of k))} (S : C.left.AffineCoverMVSquare) :
+    ↥(C.left.presheaf.obj (Opposite.op S.U₁)) →+*
+      ↥(C.left.presheaf.obj (Opposite.op (S.U₁ ⊓ S.U₂))) :=
+  (C.left.presheaf.map (homOfLE (inf_le_left : S.U₁ ⊓ S.U₂ ≤ S.U₁)).op).hom
+
+/-- The restriction homomorphism `Γ(U₂, 𝒪_C) →+* Γ(U₁ ⊓ U₂, 𝒪_C)` of a
+2-affine cover — the second chart map of the two-chart Čech datum. -/
+noncomputable abbrev AffineCoverMVSquare.resRight {k : Type u} [Field k]
+    {C : Over (Spec (CommRingCat.of k))} (S : C.left.AffineCoverMVSquare) :
+    ↥(C.left.presheaf.obj (Opposite.op S.U₂)) →+*
+      ↥(C.left.presheaf.obj (Opposite.op (S.U₁ ⊓ S.U₂))) :=
+  (C.left.presheaf.map (homOfLE (inf_le_right : S.U₁ ⊓ S.U₂ ≤ S.U₂)).op).hom
+
+/-- **The coboundary submodule of a 2-affine cover is the additive Čech
+coboundary subgroup**: the range of the difference-of-restrictions map
+`sectionDiff` (whose quotient is `H1Cok`) coincides, as an additive
+subgroup of the overlap ring, with `ρ₁(Γ(U₁)) + ρ₂(Γ(U₂))` — the
+`DualNumber.cechCoboundaryAdd` of the restriction datum. A difference
+`ρ₁ a - ρ₂ b` and a sum `ρ₁ a + ρ₂ b` span the same subgroup (the clean-binder
+helpers `sub_mem_cechCoboundaryAdd` / `exists_sub_of_mem_cechCoboundaryAdd`
+of `Picard/Pic0DualNumberCocycle.lean` cross the `Scheme.Opens` presentation
+diamond by pure defeq `exact`s). -/
+theorem AffineCoverMVSquare.range_sectionDiff_toAddSubgroup {k : Type u} [Field k]
+    {C : Over (Spec (CommRingCat.of k))} (S : C.left.AffineCoverMVSquare) :
+    (LinearMap.range (S.sectionDiff (Scheme.toModuleKSheaf C))).toAddSubgroup
+      = DualNumber.cechCoboundaryAdd S.resLeft S.resRight := by
+  refine AddSubgroup.ext fun s => Iff.intro (fun hs => ?_) (fun hs => ?_)
+  · obtain ⟨⟨a, b⟩, hp⟩ :=
+      LinearMap.mem_range.mp ((Submodule.mem_toAddSubgroup _).mp hs)
+    have hp' : S.resLeft a - S.resRight b = s := hp
+    exact hp' ▸ DualNumber.sub_mem_cechCoboundaryAdd S.resLeft S.resRight a b
+  · have hs' : (s : ↥(C.left.presheaf.obj (Opposite.op (S.U₁ ⊓ S.U₂)))) ∈
+        DualNumber.cechCoboundaryAdd S.resLeft S.resRight := hs
+    obtain ⟨a₁, a₂, ha⟩ := DualNumber.exists_sub_of_mem_cechCoboundaryAdd
+      (B := ↥(C.left.presheaf.obj (Opposite.op (S.U₁ ⊓ S.U₂)))) hs'
+    exact (Submodule.mem_toAddSubgroup _).mpr
+      (LinearMap.mem_range.mpr ⟨(a₁, a₂), ha⟩)
+
+/-- The concrete Čech cokernel of a 2-affine cover, as the additive
+coboundary quotient of the overlap ring: `S.H1Cok (toModuleKSheaf C) ≃+
+Γ(U₁ ⊓ U₂) ⧸ (ρ₁(Γ(U₁)) + ρ₂(Γ(U₂)))`. The underlying quotients are the
+same (`range_sectionDiff_toAddSubgroup`; a `Submodule` quotient is
+definitionally the quotient by its `toAddSubgroup`). -/
+noncomputable def AffineCoverMVSquare.h1CokAddEquivCechQuotient {k : Type u} [Field k]
+    {C : Over (Spec (CommRingCat.of k))} (S : C.left.AffineCoverMVSquare) :
+    S.H1Cok (Scheme.toModuleKSheaf C) ≃+
+      (↥(C.left.presheaf.obj (Opposite.op (S.U₁ ⊓ S.U₂))) ⧸
+        DualNumber.cechCoboundaryAdd S.resLeft S.resRight) :=
+  (AddEquiv.refl _ :
+      S.H1Cok (Scheme.toModuleKSheaf C) ≃+
+        (↥(C.left.presheaf.obj (Opposite.op (S.U₁ ⊓ S.U₂))) ⧸
+          (LinearMap.range (S.sectionDiff (Scheme.toModuleKSheaf C))).toAddSubgroup)).trans
+    (QuotientAddGroup.quotientAddEquivOfEq S.range_sectionDiff_toAddSubgroup)
+
+/-- **The Čech side of the Kleiman §5 Thm 5.11 cocycle leg, assembled**:
+for any 2-affine cover `S` of the curve, the concrete Čech cokernel
+`Ȟ¹(S, 𝒪_C)` — i.e. `H¹(C, 𝒪_C)`, by `hModuleOneEquivH1Cok_curve` — is
+additively the kernel of the dual-number Čech-units reduction
+`Ȟ¹ˣ(Γ(U₁ ⊓ U₂)[ε]) →* Ȟ¹ˣ(Γ(U₁ ⊓ U₂))` (the two-chart cocycle model of
+`ker(Pic(C ×_k Spec k[ε]) → Pic(C))`), via the truncated exponential
+`b ↦ [1 + b ε]` (`DualNumber.truncExpCechKernelAddEquiv`). -/
+noncomputable def AffineCoverMVSquare.h1CokAddEquivTruncExpCechKernel {k : Type u}
+    [Field k] {C : Over (Spec (CommRingCat.of k))} (S : C.left.AffineCoverMVSquare) :
+    S.H1Cok (Scheme.toModuleKSheaf C) ≃+
+      Additive (DualNumber.cechUnitsReduction S.resLeft S.resRight).ker :=
+  (S.h1CokAddEquivCechQuotient).trans
+    (DualNumber.truncExpCechKernelAddEquiv S.resLeft S.resRight)
+
 /-! ## §1. The `Pic0` namespace
 
 The blueprint chapter pins five Lean declarations under the
