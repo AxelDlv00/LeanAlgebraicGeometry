@@ -54,6 +54,7 @@ import AlgebraicJacobian.Picard.SectionRingUniversal
 import AlgebraicJacobian.Picard.StructureSheafPushforward
 import AlgebraicJacobian.Picard.RigidPushforward
 import AlgebraicJacobian.Picard.RigidPushforwardTransfer
+import AlgebraicJacobian.Picard.RigidPushforwardP1Engine
 import AlgebraicJacobian.Picard.TwoTermFiniteFree
 import AlgebraicJacobian.Picard.SemicontinuityH0
 import AlgebraicJacobian.Picard.DivDegree
@@ -148,6 +149,7 @@ import AlgebraicJacobian.RiemannRoch.Adelic.CechAcyclicInstance
 import AlgebraicJacobian.RiemannRoch.Adelic.GateInstances
 import AlgebraicJacobian.RiemannRoch.Adelic.GenusUnconditional
 import AlgebraicJacobian.RiemannRoch.CurveBaseChange
+import AlgebraicJacobian.RiemannRoch.CohomologyKit
 import AlgebraicJacobian.Picard.InvertibleSectionLocalization
 import AlgebraicJacobian.Picard.GaloisDescent.SemilinearModules
 import AlgebraicJacobian.Picard.GaloisDescent.SemilinearAlgebras
