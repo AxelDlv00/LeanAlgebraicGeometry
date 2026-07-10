@@ -1,0 +1,220 @@
+\chapter{Lattice finiteness over the Laurent ring}
+\label{chap:Algebra}
+
+This chapter isolates a general finiteness lemma about pairs of lattices in a module over
+the ring of Laurent polynomials. Write \(k[T, T^{-1}]\) for the ring of Laurent polynomials
+over a commutative ring \(k\) (Chapter~\ref{chap:Curves}): the free \(k\)-module on the
+monomials \(T^n\), \(n \in \Z\), with multiplication \(T^m \cdot T^n = T^{m+n}\), so that
+\(T^0 = 1\) and \(T^{-1}\) is a two-sided inverse of \(T\). For a subset \(s\) of a
+\(k[T,T^{-1}]\)-module \(N\), write \(\langle s \rangle_{k[T,T^{-1}]}\) for the
+\(k[T,T^{-1}]\)-submodule it generates. Call a \(k\)-module \emph{finite} if it is finitely
+generated over \(k\), and for \(k\)-submodules \(Q_0, Q_1\) of a \(k\)-module, write
+\(Q_0 + Q_1\) for the smallest \(k\)-submodule containing both.
+
+The result abstracts the classical computation, for the projective line covered by its two
+standard affine charts, of the cohomology of a coherent sheaf as the cokernel of the
+difference-of-restrictions map out of the two chart section rings into the ring of sections
+on the overlap: two \(k\)-submodules \(Q_0, Q_1\) of a \(k[T,T^{-1}]\)-module \(N\), one
+stable under multiplication by \(T\) and containing enough of \(N\), the other stable under
+multiplication by \(T^{-1}\) and eventually absorbing every element of \(N\), leave a quotient
+\(N / (Q_0 + Q_1)\) that is a finite \(k\)-module — because only a finite window of monomials
+can fail to be absorbed by one lattice or the other.
+
+\section{Stability under powers of the generator}
+
+Throughout this section \(N\) is an abelian group carrying both a \(k\)-module structure and a
+\(k[T,T^{-1}]\)-module structure (the two need not be related).
+
+\begin{lemma}[Stability under nonnegative powers of \(T\)]
+  \label{lem:T_pow_stable}
+  \lean{LaurentPolynomial.T_natCast_smul_mem}
+  \leanok
+  Let \(Q \subseteq N\) be a \(k\)-submodule such that \(T \cdot x \in Q\) for every
+  \(x \in Q\). Then for every \(x \in Q\) and every integer \(m \ge 0\), \(T^m \cdot x \in Q\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Induction on \(m\). For \(m = 0\), \(T^0 \cdot x = x \in Q\). For the step, suppose
+  \(T^m \cdot x \in Q\); then
+  \[
+    T^{m+1} \cdot x = T \cdot (T^m \cdot x) \in Q
+  \]
+  by the hypothesis on \(Q\) applied to the element \(T^m \cdot x \in Q\).
+\end{proof}
+
+\begin{lemma}[Stability under nonnegative powers of \(T^{-1}\)]
+  \label{lem:T_inv_pow_stable}
+  \lean{LaurentPolynomial.T_neg_natCast_smul_mem}
+  \leanok
+  Let \(Q \subseteq N\) be a \(k\)-submodule such that \(T^{-1} \cdot x \in Q\) for every
+  \(x \in Q\). Then for every \(x \in Q\) and every integer \(m \ge 0\),
+  \(T^{-m} \cdot x \in Q\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Induction on \(m\), exactly as in the proof of Lemma~\ref{lem:T_pow_stable}, with \(T^{-1}\)
+  in place of \(T\): for \(m = 0\), \(T^0 \cdot x = x \in Q\); for the step, if
+  \(T^{-m} \cdot x \in Q\) then
+  \[
+    T^{-(m+1)} \cdot x = T^{-1} \cdot (T^{-m} \cdot x) \in Q
+  \]
+  by the hypothesis on \(Q\).
+\end{proof}
+
+\section{The two-lattice lemma}
+
+\begin{theorem}[Two-lattice finiteness, spanning-set form]
+  \label{thm:two_lattice_span}
+  \lean{LaurentPolynomial.moduleFinite_quotient_sup_of_span_eq_top}
+  \leanok
+  \source{hartshorne-algebraic-geometry:page-0242, hartshorne-algebraic-geometry:page-0243}
+  Let \(k\) be a commutative ring and \(N\) a module over \(k[T,T^{-1}]\) whose
+  \(k\)-module structure is the restriction of scalars of the \(k[T,T^{-1}]\)-action along the
+  canonical ring map \(k \to k[T,T^{-1}]\). Let \(Q_0, Q_1 \subseteq N\) be \(k\)-submodules
+  and \(s \subset N\) a finite subset such that:
+  \begin{enumerate}
+    \item \(s \subseteq Q_0\);
+    \item \(s\) spans \(N\) over \(k[T,T^{-1}]\): \(\langle s \rangle_{k[T,T^{-1}]} = N\);
+    \item \(Q_0\) is stable under multiplication by \(T\): \(T \cdot x \in Q_0\) for all
+      \(x \in Q_0\);
+    \item \(Q_1\) is stable under multiplication by \(T^{-1}\): \(T^{-1} \cdot x \in Q_1\) for
+      all \(x \in Q_1\);
+    \item every \(n \in N\) is eventually absorbed by \(Q_1\): there is an integer \(m \ge 0\)
+      with \(T^{-m} \cdot n \in Q_1\).
+  \end{enumerate}
+  Then \(N / (Q_0 + Q_1)\) is a finite \(k\)-module: it is spanned by the classes of the
+  monomials \(T^j \cdot x\), for \(x \in s\) and \(-M < j < 0\), where \(M\) is any uniform
+  bound with \(T^{-M} \cdot x \in Q_1\) for every \(x \in s\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:T_pow_stable, lem:T_inv_pow_stable}
+  Since \(s\) is finite, hypothesis (5) applied to each \(x \in s\) gives an integer
+  \(m_x \ge 0\) with \(T^{-m_x} \cdot x \in Q_1\); let \(M = \max_{x \in s} m_x\) (or \(M = 0\)
+  if \(s\) is empty). For each \(x \in s\), since \(M - m_x \ge 0\) and \(Q_1\) is stable
+  under \(T^{-1}\), Lemma~\ref{lem:T_inv_pow_stable} gives
+  \[
+    T^{-M} \cdot x = T^{-(M - m_x)} \cdot \bigl(T^{-m_x} \cdot x\bigr) \in Q_1 ,
+  \]
+  so \(M\) is a uniform bound for all of \(s\).
+
+  Let \(F = \{\, T^j \cdot x : x \in s,\ -M < j < 0 \,\}\), a finite subset of \(N\) (finite
+  since \(s\) is finite and \(j\) ranges over the \(M - 1\) integers strictly between \(-M\)
+  and \(0\)).
+
+  \emph{Claim.} For every \(x \in s\) and every \(j \in \Z\),
+  \(T^j \cdot x \in Q_0 + Q_1 + \langle F \rangle_k\), where \(\langle F \rangle_k\) is the
+  \(k\)-submodule generated by \(F\).
+
+  Indeed, if \(j \ge 0\), then since \(x \in s \subseteq Q_0\) and \(Q_0\) is stable under
+  \(T\), Lemma~\ref{lem:T_pow_stable} gives \(T^j \cdot x \in Q_0\). If \(j \le -M\), write
+  \(j = -d - M\) with \(d = -j - M \ge 0\); then
+  \[
+    T^j \cdot x = T^{-d} \cdot \bigl(T^{-M} \cdot x\bigr) ,
+  \]
+  and since \(T^{-M} \cdot x \in Q_1\) and \(Q_1\) is stable under \(T^{-1}\),
+  Lemma~\ref{lem:T_inv_pow_stable} gives \(T^j \cdot x \in Q_1\). Finally, if \(-M < j < 0\),
+  then \(T^j \cdot x \in F \subseteq \langle F \rangle_k\) by definition of \(F\). This proves
+  the claim.
+
+  Every element \(f \in k[T,T^{-1}]\) is, by definition of the Laurent polynomial ring, a
+  \(k\)-linear combination of finitely many monomials \(T^j\), \(j \in \Z\). Since
+  \(Q_0 + Q_1 + \langle F \rangle_k\) is a \(k\)-submodule of \(N\), the claim and this
+  decomposition of \(f\) give, for every \(x \in s\),
+  \[
+    f \cdot x \in Q_0 + Q_1 + \langle F \rangle_k .
+  \]
+  Now let \(n \in N\) be arbitrary. By hypothesis (2), \(n\) is a (finite) \(k[T,T^{-1}]\)-
+  linear combination \(n = \sum_{x \in s} f_x \cdot x\) of elements of \(s\); each summand lies
+  in \(Q_0 + Q_1 + \langle F \rangle_k\) by the previous paragraph, and this submodule is
+  closed under addition, so \(n \in Q_0 + Q_1 + \langle F \rangle_k\). Hence
+  \[
+    Q_0 + Q_1 + \langle F \rangle_k = N .
+  \]
+  Consequently the composite \(\langle F \rangle_k \hookrightarrow N \twoheadrightarrow
+  N/(Q_0+Q_1)\) is surjective, so the (finite) image of \(F\) in \(N/(Q_0+Q_1)\) spans it as a
+  \(k\)-module. Thus \(N/(Q_0+Q_1)\) is a finite \(k\)-module.
+\end{proof}
+
+\section{Localization forms}
+
+The spanning-set form of Theorem~\ref{thm:two_lattice_span} is inconvenient when only a
+localization-type hypothesis on \(Q_0\) is available, symmetric to hypothesis (5) on \(Q_1\):
+every element of \(N\) is eventually absorbed by \(Q_0\) after multiplying by a sufficiently
+large power of \(T\). The next two results derive the finiteness conclusion from this
+symmetric pair of hypotheses, at the cost of assuming \(N\) itself is a finite
+\(k[T,T^{-1}]\)-module; this is exactly the shape of hypothesis produced by localizing a
+finite module away from an element.
+
+\begin{corollary}[Two-lattice finiteness, localization form]
+  \label{cor:two_lattice_loc}
+  \lean{LaurentPolynomial.moduleFinite_quotient_sup_of_exists_smul_mem}
+  \leanok
+  Let \(k\) be a commutative ring and \(N\) a finite module over \(k[T,T^{-1}]\) whose
+  \(k\)-module structure is the restriction of scalars of the \(k[T,T^{-1}]\)-action along the
+  canonical ring map \(k \to k[T,T^{-1}]\). Let \(Q_0, Q_1 \subseteq N\) be \(k\)-submodules
+  such that:
+  \begin{enumerate}
+    \item \(Q_0\) is stable under multiplication by \(T\);
+    \item \(Q_1\) is stable under multiplication by \(T^{-1}\);
+    \item every \(n \in N\) is eventually absorbed by \(Q_0\): there is an integer \(m \ge 0\)
+      with \(T^m \cdot n \in Q_0\);
+    \item every \(n \in N\) is eventually absorbed by \(Q_1\): there is an integer \(m \ge 0\)
+      with \(T^{-m} \cdot n \in Q_1\).
+  \end{enumerate}
+  Then \(N / (Q_0 + Q_1)\) is a finite \(k\)-module.
+\end{corollary}
+\begin{proof}
+  \leanok
+  \uses{thm:two_lattice_span}
+  Since \(N\) is a finite \(k[T,T^{-1}]\)-module, choose a finite subset \(t \subset N\) with
+  \(\langle t \rangle_{k[T,T^{-1}]} = N\). By hypothesis (3), for each \(y \in t\) choose an
+  integer \(\mu(y) \ge 0\) with \(T^{\mu(y)} \cdot y \in Q_0\), and set
+  \[
+    s = \{\, T^{\mu(y)} \cdot y : y \in t \,\} \subseteq Q_0 ,
+  \]
+  a finite subset of \(N\).
+
+  The set \(s\) again spans \(N\) over \(k[T,T^{-1}]\): each element of \(s\) is a
+  \(k[T,T^{-1}]\)-multiple of an element of \(t\), so
+  \(\langle s \rangle_{k[T,T^{-1}]} \subseteq \langle t \rangle_{k[T,T^{-1}]} = N\); and since
+  \(T\) is invertible in \(k[T,T^{-1}]\) with inverse \(T^{-1}\), every \(y \in t\) is
+  recovered from \(s\) by
+  \[
+    y = T^{-\mu(y)} \cdot \bigl(T^{\mu(y)} \cdot y\bigr) ,
+  \]
+  a \(k[T,T^{-1}]\)-multiple of the element \(T^{\mu(y)} \cdot y \in s\); so
+  \(t \subseteq \langle s \rangle_{k[T,T^{-1}]}\), giving
+  \(\langle s \rangle_{k[T,T^{-1}]} \supseteq \langle t \rangle_{k[T,T^{-1}]} = N\) as well.
+  Hence \(\langle s \rangle_{k[T,T^{-1}]} = N\).
+
+  Now \(s \subseteq Q_0\), \(s\) spans \(N\) over \(k[T,T^{-1}]\), \(Q_0\) is \(T\)-stable,
+  \(Q_1\) is \(T^{-1}\)-stable, and hypothesis (4) is exactly hypothesis (5) of
+  Theorem~\ref{thm:two_lattice_span}. Applying that theorem to \(s\), \(Q_0\), \(Q_1\) gives
+  that \(N/(Q_0+Q_1)\) is a finite \(k\)-module.
+\end{proof}
+
+\begin{corollary}[Two-lattice finiteness, localization form via powers of the generator]
+  \label{cor:two_lattice_loc_pow}
+  \lean{LaurentPolynomial.moduleFinite_quotient_sup_of_exists_pow_smul_mem}
+  \leanok
+  Let \(k\), \(N\), \(Q_0\), \(Q_1\) be as in Corollary~\ref{cor:two_lattice_loc}, satisfying
+  hypotheses (1) and (2) there, and suppose in place of (3) and (4) that:
+  \begin{enumerate}
+    \item[(3a)] every \(n \in N\) satisfies: there is an integer \(m \ge 0\) with
+      \(T^m \cdot n \in Q_0\), where \(T^m\) denotes the ordinary \(m\)-th power of the ring
+      element \(T \in k[T,T^{-1}]\);
+    \item[(4a)] every \(n \in N\) satisfies: there is an integer \(m \ge 0\) with
+      \(T^{-m} \cdot n \in Q_1\), where \(T^{-m}\) denotes the ordinary \(m\)-th power of
+      \(T^{-1} \in k[T,T^{-1}]\).
+  \end{enumerate}
+  Then \(N / (Q_0 + Q_1)\) is a finite \(k\)-module.
+\end{corollary}
+\begin{proof}
+  \leanok
+  \uses{cor:two_lattice_loc}
+  For every integer \(m \ge 0\), the \(m\)-th power of the ring element \(T\) is the monomial
+  \(T^m\), and the \(m\)-th power of \(T^{-1}\) is the monomial \(T^{-m}\); so hypotheses
+  (3a) and (4a) here coincide, element for element, with hypotheses (3) and (4) of
+  Corollary~\ref{cor:two_lattice_loc}. The conclusion is immediate from that corollary.
+\end{proof}

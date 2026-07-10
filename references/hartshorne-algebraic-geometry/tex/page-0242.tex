@@ -1,0 +1,51 @@
+% source: Robin Hartshorne, "Algebraic Geometry", GTM 52 (1977)
+% pdf_page: 0242
+% doc_page: 225 (Chapter III, Section 5, "The Cohomology of Projective Space")
+% retrieved: 2026-07-11
+% transcribed_by: claude-sonnet-5 (vision, rendered at 200dpi via PyMuPDF)
+
+\DeclareMathOperator{\Proj}{Proj}
+
+\section*{5 The Cohomology of Projective Space}
+
+In this section we make explicit calculations of the cohomology of the
+sheaves $\mathcal{O}(n)$ on a projective space, by using \v{C}ech cohomology
+for a suitable open affine covering. These explicit calculations form the
+basis for various general results about cohomology of coherent sheaves on
+projective varieties.
+
+Let $A$ be a noetherian ring, let $S = A[x_0, \ldots, x_r]$, and let
+$X = \Proj S$ be the projective space $\mathbf{P}^r_A$ over $A$. Let
+$\mathcal{O}_X(1)$ be the twisting sheaf of Serre (II, \S 5). For any sheaf
+of $\mathcal{O}_X$-modules $\mathcal{F}$, we denote by $\Gamma_*(\mathcal{F})$
+the graded $S$-module $\bigoplus_{n \in \mathbf{Z}} \Gamma(X, \mathcal{F}(n))$
+(see II, \S 5).
+
+\begin{theorem}[5.1]
+Let $A$ be a noetherian ring, and let $X = \mathbf{P}^r_A$, with $r \ge 1$.
+Then:
+\begin{enumerate}
+\item[(a)] the natural map $S \to \Gamma_*(\mathcal{O}_X) =
+  \bigoplus_{n \in \mathbf{Z}} H^0(X, \mathcal{O}_X(n))$ is an isomorphism of
+  graded $S$-modules;
+\item[(b)] $H^i(X, \mathcal{O}_X(n)) = 0$ for $0 < i < r$ and all
+  $n \in \mathbf{Z}$;
+\item[(c)] $H^r(X, \mathcal{O}_X(-r-1)) \cong A$;
+\item[(d)] the natural map
+  \[
+    H^0(X, \mathcal{O}_X(n)) \times H^r(X, \mathcal{O}_X(-n-r-1)) \to
+    H^r(X, \mathcal{O}_X(-r-1)) \cong A
+  \]
+  is a perfect pairing of finitely generated free $A$-modules, for each
+  $n \in \mathbf{Z}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Let $\mathcal{F}$ be the quasi-coherent sheaf
+$\bigoplus_{n \in \mathbf{Z}} \mathcal{O}_X(n)$. Since cohomology commutes
+with arbitrary direct sums on a noetherian topological space (2.9.1), the
+cohomology of $\mathcal{F}$ will be the direct sum of the cohomology of the
+sheaves $\mathcal{O}(n)$. So we will compute the cohomology of $\mathcal{F}$,
+and keep track
+% [continued on next page]
