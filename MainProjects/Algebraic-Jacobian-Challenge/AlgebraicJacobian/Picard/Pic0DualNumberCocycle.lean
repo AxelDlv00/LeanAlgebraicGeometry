@@ -50,6 +50,13 @@ the file name.
   fiber description of `T_e X` for represented functors.
 - `AlgebraicGeometry.pointedDualNumberPointsEquivAddKernel` — the kernel
   description for representably group-valued functors.
+- `DualNumber.scaleRingHom`, `AlgebraicGeometry.overDualNumberScale` — the
+  Mumford `ε ↦ aε` scaling of `k[ε]` resp. of the dual-number object of
+  `Over (Spec k)`, with its retract-pair compatibilities.
+- `AlgebraicGeometry.relPicKernelSMul` — the induced multiplicative-monoid
+  action of `k` on the dual-number kernel of a group-valued functor (the
+  scalar multiplication of the Kleiman/Mumford `k`-module structure on
+  `T_e`; distributivity in the scalar is deferred to the cocycle leg).
 
 ## References
 

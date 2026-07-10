@@ -42,15 +42,20 @@ closed in run 0009 — `IdentityComponent.lean`, Kleiman §5 Lem.~`lem:agps`(3))
 the `isAbelianVariety` assembly, and the moved
 `Pic0Scheme.isAbelianVariety` (blueprint pin `thm:pic_zero_is_abelian_variety`).
 
-Remaining `sorry` bodies: `tangentSpaceIso` — REDUCED (run 0015, W12-tangent)
-via `nonempty_cotangentSpaceAddEquiv_of_finrank_eq`
-(`Picard/Pic0TangentSpace.lean`) to the single Kleiman §5 Thm 5.11 dimension
-identity `dim_{κ(e)} m_e/m_e² = dim_k H¹(C, 𝒪_C)` at the identity section;
-the remaining content is the `Pic(C ×_k Spec k[ε])`-kernel description of the
-dual-number points (representability leg, `PicScheme.representable`) and the
-truncated-exponential Čech-cocycle computation (algebra-level splitting in
-sibling `Picard/DualNumberUnits.lean`, Čech carrier bridge
-`AffineCoverMVSquare.hModuleOneEquivH1Cok_curve`) — and `smooth`, `proper`.
+Remaining `sorry` bodies: `finrank_cotangentSpace_eq_finrank_hModuleOne` —
+the Kleiman §5 Thm 5.11 dimension identity
+`dim_{κ(e)} m_e/m_e² = dim_k H¹(C, 𝒪_C)` at the identity section, the single
+named sub-lemma `tangentSpaceIso` now consumes (run 0015 W12-tangent reduced
+the pinned statement to it via `nonempty_cotangentSpaceAddEquiv_of_finrank_eq`
+of `Picard/Pic0TangentSpace.lean`; wave-4 W12-finrank closed the
+**representability leg** — `pointedDualNumberPoints_equiv_relPicKernel`,
+`cotangentSpaceDual_equiv_relPicKernel` below, set-level both directions —
+and landed the Mumford `ε ↦ aε` scaling substrate in
+`Picard/Pic0DualNumberCocycle.lean`); the remaining content is the
+truncated-exponential Čech-cocycle computation of the kernel (algebra-level
+splitting in sibling `Picard/DualNumberUnits.lean`, Čech carrier bridge
+`AffineCoverMVSquare.hModuleOneEquivH1Cok_curve`) together with its
+`k`-(semi)linearity bookkeeping — and `smooth`, `proper`.
 
 The 5 blueprint-pinned declarations are:
 
