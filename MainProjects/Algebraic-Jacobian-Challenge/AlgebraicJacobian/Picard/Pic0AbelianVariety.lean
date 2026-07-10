@@ -42,19 +42,25 @@ closed in run 0009 — `IdentityComponent.lean`, Kleiman §5 Lem.~`lem:agps`(3))
 the `isAbelianVariety` assembly, and the moved
 `Pic0Scheme.isAbelianVariety` (blueprint pin `thm:pic_zero_is_abelian_variety`).
 
-Remaining `sorry` bodies: `finrank_cotangentSpace_eq_finrank_hModuleOne` —
-the Kleiman §5 Thm 5.11 dimension identity
-`dim_{κ(e)} m_e/m_e² = dim_k H¹(C, 𝒪_C)` at the identity section, the single
-named sub-lemma `tangentSpaceIso` now consumes (run 0015 W12-tangent reduced
-the pinned statement to it via `nonempty_cotangentSpaceAddEquiv_of_finrank_eq`
-of `Picard/Pic0TangentSpace.lean`; wave-4 W12-finrank closed the
-**representability leg** — `pointedDualNumberPoints_equiv_relPicKernel`,
-`cotangentSpaceDual_equiv_relPicKernel` below, set-level both directions —
-and landed the Mumford `ε ↦ aε` scaling substrate in
-`Picard/Pic0DualNumberCocycle.lean`); the remaining content is the
-truncated-exponential Čech-cocycle computation of the kernel (algebra-level
-splitting in sibling `Picard/DualNumberUnits.lean`, Čech carrier bridge
-`AffineCoverMVSquare.hModuleOneEquivH1Cok_curve`) together with its
+Remaining `sorry` bodies: `finrank_cotangentSpaceDual_eq_finrank_h1Cok` —
+the wave-5 W12-cocycle reduced core of the Kleiman §5 Thm 5.11 dimension
+identity: `dim_{κ(e)} Dual(m_e/m_e²) = dim_k Ȟ¹(S, 𝒪_C)` against the concrete
+two-chart Čech cokernel of any 2-affine cover `S`. The formerly-sorried
+dimension identity `finrank_cotangentSpace_eq_finrank_hModuleOne` (which
+`tangentSpaceIso` consumes, via the run-0015
+`nonempty_cotangentSpaceAddEquiv_of_finrank_eq` reduction of
+`Picard/Pic0TangentSpace.lean`) is now PROVED from the reduced core by
+`Subspace.dual_finrank_eq` + the genus lane's cover
+(`Adelic.exists_affineCoverMVSquare_module_finite_H1Cok`) + the gate-free
+comparison `AffineCoverMVSquare.hModuleOneEquivH1Cok_curve`. Wave-4
+W12-finrank closed the **representability leg**
+(`pointedDualNumberPoints_equiv_relPicKernel`,
+`cotangentSpaceDual_equiv_relPicKernel` below, set-level both directions) and
+landed the Mumford `ε ↦ aε` scaling substrate; wave-5 landed the **two-chart
+Čech unit-cocycle engine** (`DualNumber.truncExpCechKernelAddEquiv`,
+`Picard/Pic0DualNumberCocycle.lean` §6 — the algebra layer of the cocycle
+leg, with Mumford-scaling equivariance). The remaining content of the core is
+the geometric chart-triviality/section-identification substrate plus the
 `k`-(semi)linearity bookkeeping — and `smooth`, `proper`.
 
 The 5 blueprint-pinned declarations are:
@@ -500,11 +506,23 @@ theorem tangentSpaceCotangentDual {k : Type u} [Field k]
       (GroupScheme.identitySection_comp (Pic0Scheme C))
       (congrArg _ (Subsingleton.elim _ _))⟩
 
-/-- **The Kleiman §5 Thm 5.11 dimension identity**
-`dim_{κ(e)} m_e/m_e² = dim_k H¹(C, 𝒪_C)` at the identity section of
-`Pic⁰_{C/k}` — the single remaining `sorry` of the tangent-space keystone
-`tangentSpaceIso` (wave-4 W12-finrank reduction; the former in-line sorry of
-`tangentSpaceIso`, now the smallest named sub-lemma).
+/-- **The reduced Kleiman §5 Thm 5.11 core** (wave-5 W12-cocycle shrink; the
+single remaining `sorry` of the tangent-space keystone `tangentSpaceIso`):
+the `κ(e)`-dimension of the **dual** of the cotangent space `m_e/m_e²` at the
+identity of `Pic⁰_{C/k}` — i.e. of the Zariski tangent space `T₀ Pic⁰_{C/k}`
+in its linear-dual form, the side the Stacks 0B28 dictionary lands on —
+equals the `k`-dimension of the concrete two-chart Čech cokernel
+`Ȟ¹ = Γ(U₁ ⊓ U₂, 𝒪_C) ⧸ range(sectionDiff)` of **any** 2-affine cover `S`
+of the curve `C`.
+
+The statement is TRUE at this generality: the LHS is `dim T₀ Pic⁰ = g(C)`
+(Kleiman §5 Thm 5.11) and the RHS is `dim_k Ȟ¹(S, 𝒪_C) = dim_k H¹(C, 𝒪_C)
+= g(C)` for *every* 2-affine cover (`AffineCoverMVSquare.hModuleOneEquivH1Cok_curve`,
+`RiemannRoch/Adelic/GenusUnconditional.lean`); no choice of cover is
+privileged. The pinned dimension identity
+`finrank_cotangentSpace_eq_finrank_hModuleOne` below is PROVED from this
+statement (dual dimension + the gate-free `H¹ ≃ Ȟ¹` comparison), so this is
+now the smallest named open statement of the W12 lane.
 
 STATE OF THE REDUCTION (what is PROVED around this sorry):
 
@@ -518,6 +536,13 @@ STATE OF THE REDUCTION (what is PROVED around this sorry):
   `relPicKernelSMul`, `Picard/Pic0DualNumberCocycle.lean`);
 * the truncated-exponential unit splitting `(R[ε])ˣ ≃* Rˣ × (R, +)` with its
   naturality (`Picard/DualNumberUnits.lean`);
+* the **two-chart Čech unit-cocycle engine** (wave 5,
+  `Picard/Pic0DualNumberCocycle.lean` §6): for the section rings of any
+  2-affine cover, `Γ(U₁ ⊓ U₂) ⧸ (Γ(U₁) + Γ(U₂)) ≃+ ker(Ȟ¹ˣ(B[ε]) → Ȟ¹ˣ(B))`
+  via the truncated exponential (`DualNumber.truncExpCechKernelAddEquiv`),
+  with the Mumford `ε ↦ tε` scaling acting as `b ↦ t·b`
+  (`DualNumber.unitsScale_mk_truncExpUnit`) — the whole algebra layer of
+  the cocycle leg;
 * the Čech target `H¹(C, 𝒪_C) ≃ₗ[k] H1Cok` on any 2-affine cover
   (`AffineCoverMVSquare.hModuleOneEquivH1Cok_curve`,
   `RiemannRoch/Adelic/GenusUnconditional.lean`) and finite-dimensionality of
@@ -526,22 +551,60 @@ STATE OF THE REDUCTION (what is PROVED around this sorry):
 
 REMAINING MATHEMATICAL CONTENT (Kleiman §5, proof of Thm 5.11):
 
-1. **Cocycle leg**: an invertible sheaf on `C ×_k Spec k[ε]`, restricted
-   trivial along `ε ↦ 0`, is trivial on the two charts of a 2-affine cover
-   (nilpotent thickening does not change the underlying space) and its
-   transition unit lies in `(Γ(U₁ ⊓ U₂, 𝒪_C)[ε])ˣ` with constant term the
-   transition of the reduction; the truncated exponential then identifies
-   `ker(Pic(C_ε) → Pic(C))` with `Γ(U₁ ⊓ U₂, 𝒪_C)/(coboundaries) = H1Cok`,
-   additively and `k`-equivariantly for the `ε ↦ aε` action.
+1. **Geometric cocycle substrate**: an invertible sheaf on
+   `C ×_k Spec k[ε]`, restricted trivial along `ε ↦ 0`, is trivial on the
+   two base-changed charts of the 2-affine cover `S` (nilpotent thickening
+   does not change the underlying space; units of the chart rings lift along
+   the square-zero extension), and the chart sections identify as
+   `Γ(V × Spec k[ε], 𝒪) ≅ Γ(V, 𝒪)[ε]` for affine `V`; the class of a kernel
+   element is then its transition unit in `(Γ(U₁ ⊓ U₂, 𝒪_C)[ε])ˣ` up to the
+   thickened coboundaries, which the (landed) unit-cocycle engine converts
+   to `H1Cok`, additively and `k`-equivariantly for the `ε ↦ aε` action.
 2. **Linearity bookkeeping**: the composite of
    `cotangentSpaceDual_equiv_relPicKernel` with the leg-1 identification is
    `k`-semilinear along `κ(e) ≃+* k`
    (`residueFieldIso_of_section_over_field`), where the kernel carries the
-   Mumford structure; equal `finrank` then follows from
-   `finrank κ(e) Dual(V) = finrank κ(e) V` (`Subspace.dual_finrank_eq`) and
-   `LinearEquiv.finrank_eq`-style transport.
+   Mumford structure (`relPicKernelSMul`); a dimension count then gives this
+   statement, transporting bases along `κ(e) ≃+* k` as in
+   `Module.nonempty_addEquiv_of_finrank_eq_of_ringEquiv`.
 
 Neither step weakens the pinned `tangentSpaceIso`; both are multi-session. -/
+theorem finrank_cotangentSpaceDual_eq_finrank_h1Cok {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C]
+    (S : C.left.AffineCoverMVSquare) :
+    Module.finrank
+        (IsLocalRing.ResidueField
+          ((Pic0Scheme C).left.presheaf.stalk ((identitySection C).base default)))
+        (Module.Dual
+          (IsLocalRing.ResidueField
+            ((Pic0Scheme C).left.presheaf.stalk ((identitySection C).base default)))
+          (IsLocalRing.CotangentSpace
+            ((Pic0Scheme C).left.presheaf.stalk ((identitySection C).base default))))
+      = Module.finrank k (S.H1Cok (Scheme.toModuleKSheaf C)) := by
+  sorry
+
+/-- **The Kleiman §5 Thm 5.11 dimension identity**
+`dim_{κ(e)} m_e/m_e² = dim_k H¹(C, 𝒪_C)` at the identity section of
+`Pic⁰_{C/k}` — the named sub-lemma the tangent-space keystone
+`tangentSpaceIso` consumes (wave-4 W12-finrank reduction).
+
+PROVED (wave-5 W12-cocycle) from the reduced core
+`finrank_cotangentSpaceDual_eq_finrank_h1Cok` above by discharging the two
+outer legs of the dimension chain:
+
+* `dim_{κ(e)} m_e/m_e² = dim_{κ(e)} Dual(m_e/m_e²)` — reflexivity of finite-
+  dimensional duality (`Subspace.dual_finrank_eq`; finite-dimensionality from
+  `finiteDimensional_cotangentSpace_of_locallyOfFiniteType` via
+  `Pic0.locallyOfFiniteType`);
+* `dim_k Ȟ¹(S, 𝒪_C) = dim_k H¹(C, 𝒪_C)` — the gate-free Mayer–Vietoris
+  comparison `AffineCoverMVSquare.hModuleOneEquivH1Cok_curve`
+  (`RiemannRoch/Adelic/GenusUnconditional.lean`), at the 2-affine cover
+  supplied by the genus lane's
+  `Adelic.exists_affineCoverMVSquare_module_finite_H1Cok` (pullback of the
+  standard ℙ¹ charts along a finite map, `RiemannRoch/Adelic/FinitenessP1.lean`). -/
 theorem finrank_cotangentSpace_eq_finrank_hModuleOne {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -553,7 +616,29 @@ theorem finrank_cotangentSpace_eq_finrank_hModuleOne {k : Type u} [Field k]
         (IsLocalRing.CotangentSpace
           ((Pic0Scheme C).left.presheaf.stalk ((identitySection C).base default)))
       = Module.finrank k (Scheme.HModule k (Scheme.toModuleKSheaf C) 1) := by
-  sorry
+  haveI : LocallyOfFiniteType (Pic0Scheme C).hom := locallyOfFiniteType C
+  haveI := finiteDimensional_cotangentSpace_of_locallyOfFiniteType (Pic0Scheme C)
+    ((identitySection C).base default)
+  obtain ⟨S, -⟩ := Adelic.exists_affineCoverMVSquare_module_finite_H1Cok C
+  calc
+    Module.finrank
+        (IsLocalRing.ResidueField
+          ((Pic0Scheme C).left.presheaf.stalk ((identitySection C).base default)))
+        (IsLocalRing.CotangentSpace
+          ((Pic0Scheme C).left.presheaf.stalk ((identitySection C).base default)))
+      = Module.finrank
+          (IsLocalRing.ResidueField
+            ((Pic0Scheme C).left.presheaf.stalk ((identitySection C).base default)))
+          (Module.Dual
+            (IsLocalRing.ResidueField
+              ((Pic0Scheme C).left.presheaf.stalk ((identitySection C).base default)))
+            (IsLocalRing.CotangentSpace
+              ((Pic0Scheme C).left.presheaf.stalk ((identitySection C).base default)))) :=
+        Subspace.dual_finrank_eq.symm
+    _ = Module.finrank k (S.H1Cok (Scheme.toModuleKSheaf C)) :=
+        finrank_cotangentSpaceDual_eq_finrank_h1Cok C S
+    _ = Module.finrank k (Scheme.HModule k (Scheme.toModuleKSheaf C) 1) :=
+        (LinearEquiv.finrank_eq (S.hModuleOneEquivH1Cok_curve)).symm
 
 /-- **Tangent space at the identity: `T₀ Pic⁰_{C/k} ≅ H¹(C, 𝒪_C)`.**
 

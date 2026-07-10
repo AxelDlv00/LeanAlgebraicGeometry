@@ -57,6 +57,20 @@ the file name.
   action of `k` on the dual-number kernel of a group-valued functor (the
   scalar multiplication of the Kleiman/Mumford `k`-module structure on
   `T_e`; distributivity in the scalar is deferred to the cocycle leg).
+- §6 (wave-5 W12-cocycle): the **two-chart Čech unit-cocycle engine**, the
+  pure-algebra heart of the Kleiman §5 Thm 5.11 cocycle leg.
+  `DualNumber.cechCoboundaryUnits ρ₁ ρ₂` is the coboundary subgroup
+  `im(ρ₁ˣ) · im(ρ₂ˣ) ≤ Bˣ` of a two-chart datum `ρᵢ : Aᵢ →+* B` (think
+  `Aᵢ = Γ(Uᵢ, 𝒪)`, `B = Γ(U₁ ⊓ U₂, 𝒪)`), so `Bˣ ⧸ cechCoboundaryUnits` is
+  the two-cover Čech `Ȟ¹` of units — the two-chart Picard group.
+  `DualNumber.cechUnitsReduction` is its reduction mod `ε`, and
+  `DualNumber.truncExpCechKernelAddEquiv` computes its kernel by the
+  truncated exponential:
+  `B ⧸ (ρ₁(A₁) + ρ₂(A₂)) ≃+ ker(Ȟ¹ˣ(B[ε]) → Ȟ¹ˣ(B))` — the algebra layer of
+  `ker(Pic(C_ε) → Pic(C)) ≅ H¹(C, 𝒪_C)`, with target quotient matching the
+  `AffineCoverMVSquare.H1Cok` carrier. Mumford-scaling equivariance is
+  `DualNumber.unitsScale_mk_truncExpUnit` +
+  `DualNumber.cechCoboundaryUnits_le_comap_unitsScale`.
 
 ## References
 
@@ -609,3 +623,402 @@ lemma relPicKernelSMul_zero
   rw [overDualNumberScale_zero, h, x.2, map_zero]
 
 end AlgebraicGeometry
+
+/-! ## §6. The two-chart Čech unit-cocycle engine (Kleiman §5 Thm 5.11, algebra layer)
+
+The pure-algebra heart of the cocycle leg. A *two-chart datum* is a pair of
+ring homomorphisms `ρ₁ : A₁ →+* B`, `ρ₂ : A₂ →+* B` — think `Aᵢ = Γ(Uᵢ, 𝒪_C)`
+the section rings of a 2-affine cover and `B = Γ(U₁ ⊓ U₂, 𝒪_C)` the overlap
+ring, with `ρᵢ` the restrictions. The two-cover Čech `Ȟ¹` of *units* is the
+quotient `Bˣ ⧸ (im ρ₁ˣ · im ρ₂ˣ)` of transition units by coboundaries — the
+Picard group of the cover in Čech form. Applying the same construction to the
+dual-number thickening (`Aᵢ[ε] →+* B[ε]` via `DualNumber.mapRingHom`) and
+reducing mod `ε` (`unitsFst`, which maps coboundaries to coboundaries) gives
+the restriction map `Ȟ¹ˣ(B[ε]) →* Ȟ¹ˣ(B)` of `Pic(C_ε) → Pic(C)`.
+
+The engine computes the **kernel** of that reduction: the truncated
+exponential `b ↦ [1 + b ε]` induces an additive equivalence
+
+```
+B ⧸ (ρ₁(A₁) + ρ₂(A₂))  ≃+  ker(Ȟ¹ˣ(B[ε]) → Ȟ¹ˣ(B))
+```
+
+(`truncExpCechKernelAddEquiv`), whose source is exactly the two-chart Čech
+cokernel shape of `AffineCoverMVSquare.H1Cok` (`Γ(U₁ ⊓ U₂) ⧸ range
+sectionDiff`) — i.e. `H¹(C, 𝒪_C)` on a curve. Equivariance for the Mumford
+`ε ↦ tε` scaling (`scaleRingHom`) is provided pointwise:
+`unitsScale_mk_truncExpUnit` shows the scaling acts on truncated-exponential
+classes as `b ↦ t·b`, matching the `k`-scalar action on `H1Cok`.
+
+Everything here is elementary commutative algebra: no schemes, no sheaves.
+The remaining geometric distance to `Pic0.finrank_cotangentSpaceDual_eq_finrank_h1Cok`
+(`Picard/Pic0AbelianVariety.lean`) is the chart-triviality/section-identification
+substrate (`Γ(V × Spec k[ε], 𝒪) ≅ Γ(V, 𝒪)[ε]` for affine `V`, and triviality on
+charts of invertible sheaves on the thickening restricting trivially mod `ε`),
+which identifies the relative-Pic kernel with the kernel computed here. -/
+
+namespace DualNumber
+
+open TrivSqZeroExt
+
+section UnitHelpers
+
+variable {R : Type w} [CommRing R]
+
+/-- `mapRingHom` intertwines the constant inclusions: `mapRingHom ρ (inl a) =
+inl (ρ a)`. -/
+theorem mapRingHom_inl {A : Type u} {B : Type v} [CommRing A] [CommRing B]
+    (ρ : A →+* B) (a : A) :
+    mapRingHom ρ (inl a : A[ε]) = (inl (ρ a) : B[ε]) :=
+  TrivSqZeroExt.ext (by simp) (by simp)
+
+/-- `mapRingHom` intertwines the unit-level constant inclusions `unitsInl`. -/
+theorem unitsMap_mapRingHom_unitsInl {A : Type u} {B : Type v} [CommRing A] [CommRing B]
+    (ρ : A →+* B) (v : Aˣ) :
+    Units.map (mapRingHom ρ).toMonoidHom (unitsInl v)
+      = unitsInl (Units.map ρ.toMonoidHom v) :=
+  Units.ext (by simpa using mapRingHom_inl ρ (v : A))
+
+/-- Reduction mod `ε` on units retracts the constant inclusion:
+`unitsFst (unitsInl a) = a`. -/
+@[simp]
+theorem unitsFst_unitsInl (a : Rˣ) : unitsFst (unitsInl a) = a :=
+  Units.ext (by simp)
+
+/-- Truncated-exponential units reduce to `1` mod `ε`. -/
+@[simp]
+theorem unitsFst_truncExpUnit (b : R) : unitsFst (truncExpUnit b) = 1 :=
+  Units.ext (by simp)
+
+/-- The truncated exponential at `0` is the unit `1`. -/
+@[simp]
+theorem truncExpUnit_zero : truncExpUnit (0 : R) = 1 :=
+  Units.ext (by simp)
+
+/-- **The unit decomposition of the dual numbers, equational form**: every
+unit of `R[ε]` is the constant inclusion of its reduction times a truncated
+exponential — `u = inl(u₀) · (1 + c ε)` with `u₀ = unitsFst u` and
+`c = fst(u⁻¹) · snd(u)`. Pointwise restatement of `unitsEquivProd.left_inv`. -/
+theorem unitsInl_unitsFst_mul_truncExpUnit (u : (R[ε])ˣ) :
+    unitsInl (unitsFst u)
+        * truncExpUnit (((u⁻¹ : (R[ε])ˣ) : R[ε]).fst * ((u : (R[ε])ˣ) : R[ε]).snd)
+      = u := by
+  have h := unitsEquivProd.symm_apply_apply u
+  rw [unitsEquivProd_symm_apply] at h
+  exact h
+
+/-- The truncated exponential is injective in the equational (unit) form. -/
+theorem truncExpUnit_injective : Function.Injective (truncExpUnit (R := R)) := by
+  intro b c h
+  have := congrArg (fun u : (R[ε])ˣ => ((u : (R[ε])ˣ) : R[ε]).snd) h
+  simpa using this
+
+/-- The Mumford `ε ↦ aε` scaling acts on truncated-exponential units by
+scaling the infinitesimal: `(1 + b ε) ↦ (1 + (a b) ε)`. -/
+theorem unitsScale_truncExpUnit (a b : R) :
+    Units.map (scaleRingHom a).toMonoidHom (truncExpUnit b) = truncExpUnit (a * b) :=
+  Units.ext (TrivSqZeroExt.ext (by simp) (by simp))
+
+/-- The Mumford scaling is compatible with the functorial map of dual-number
+rings: `mapRingHom ρ ∘ scaleRingHom s = scaleRingHom (ρ s) ∘ mapRingHom ρ`. -/
+theorem mapRingHom_comp_scaleRingHom {A : Type u} {B : Type v} [CommRing A] [CommRing B]
+    (ρ : A →+* B) (s : A) :
+    (mapRingHom ρ).comp (scaleRingHom s) = (scaleRingHom (ρ s)).comp (mapRingHom ρ) :=
+  RingHom.ext fun x => TrivSqZeroExt.ext (by simp) (by simp)
+
+end UnitHelpers
+
+section CechEngine
+
+variable {A₁ : Type u} {A₂ : Type v} {B : Type w}
+variable [CommRing A₁] [CommRing A₂] [CommRing B]
+
+/-- **The Čech coboundary subgroup of a two-chart datum**: for restriction
+homomorphisms `ρ₁ : A₁ →+* B`, `ρ₂ : A₂ →+* B` onto the overlap ring `B`, the
+subgroup `im(ρ₁ˣ) · im(ρ₂ˣ) ≤ Bˣ` of transition units that are coboundaries
+of the 2-cover. The quotient `Bˣ ⧸ cechCoboundaryUnits ρ₁ ρ₂` is the
+two-cover Čech `Ȟ¹` of units — the Čech-cocycle Picard group of the cover. -/
+def cechCoboundaryUnits (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B) : Subgroup Bˣ :=
+  (Units.map ρ₁.toMonoidHom).range ⊔ (Units.map ρ₂.toMonoidHom).range
+
+/-- Membership in the Čech coboundary subgroup: `u` is a coboundary iff
+`u = ρ₁ˣ(v₁) · ρ₂ˣ(v₂)` for chart units `vᵢ ∈ Aᵢˣ` (the sign convention with
+a product rather than a quotient is immaterial: the ranges are subgroups). -/
+theorem mem_cechCoboundaryUnits {ρ₁ : A₁ →+* B} {ρ₂ : A₂ →+* B} {u : Bˣ} :
+    u ∈ cechCoboundaryUnits ρ₁ ρ₂
+      ↔ ∃ (v₁ : A₁ˣ) (v₂ : A₂ˣ),
+          Units.map ρ₁.toMonoidHom v₁ * Units.map ρ₂.toMonoidHom v₂ = u := by
+  constructor
+  · intro h
+    obtain ⟨y, hy, z, hz, rfl⟩ := Subgroup.mem_sup.mp h
+    obtain ⟨v₁, rfl⟩ := MonoidHom.mem_range.mp hy
+    obtain ⟨v₂, rfl⟩ := MonoidHom.mem_range.mp hz
+    exact ⟨v₁, v₂, rfl⟩
+  · rintro ⟨v₁, v₂, rfl⟩
+    exact Subgroup.mem_sup.mpr
+      ⟨_, MonoidHom.mem_range.mpr ⟨v₁, rfl⟩, _, MonoidHom.mem_range.mpr ⟨v₂, rfl⟩, rfl⟩
+
+/-- Chart units from the first chart are coboundaries. -/
+theorem unitsMap_mem_cechCoboundaryUnits_left (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B)
+    (v : A₁ˣ) : Units.map ρ₁.toMonoidHom v ∈ cechCoboundaryUnits ρ₁ ρ₂ :=
+  mem_cechCoboundaryUnits.mpr ⟨v, 1, by simp⟩
+
+/-- Chart units from the second chart are coboundaries. -/
+theorem unitsMap_mem_cechCoboundaryUnits_right (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B)
+    (v : A₂ˣ) : Units.map ρ₂.toMonoidHom v ∈ cechCoboundaryUnits ρ₁ ρ₂ :=
+  mem_cechCoboundaryUnits.mpr ⟨1, v, by simp⟩
+
+/-- **The additive Čech coboundary subgroup of a two-chart datum**:
+`ρ₁(A₁) + ρ₂(A₂) ≤ B` as an additive subgroup. The quotient
+`B ⧸ cechCoboundaryAdd ρ₁ ρ₂` is the two-cover Čech cokernel — for the
+section rings of a 2-affine cover, exactly the carrier shape of
+`AffineCoverMVSquare.H1Cok` (`Γ(U₁ ⊓ U₂) ⧸ range sectionDiff`; a difference
+`ρ₁ a₁ - ρ₂ a₂` and a sum `ρ₁ a₁ + ρ₂ a₂` span the same subgroup). -/
+def cechCoboundaryAdd (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B) : AddSubgroup B :=
+  ρ₁.toAddMonoidHom.range ⊔ ρ₂.toAddMonoidHom.range
+
+/-- Membership in the additive Čech coboundary subgroup. -/
+theorem mem_cechCoboundaryAdd {ρ₁ : A₁ →+* B} {ρ₂ : A₂ →+* B} {b : B} :
+    b ∈ cechCoboundaryAdd ρ₁ ρ₂ ↔ ∃ (a₁ : A₁) (a₂ : A₂), ρ₁ a₁ + ρ₂ a₂ = b := by
+  constructor
+  · intro h
+    obtain ⟨y, hy, z, hz, rfl⟩ := AddSubgroup.mem_sup.mp h
+    obtain ⟨a₁, rfl⟩ := AddMonoidHom.mem_range.mp hy
+    obtain ⟨a₂, rfl⟩ := AddMonoidHom.mem_range.mp hz
+    exact ⟨a₁, a₂, rfl⟩
+  · rintro ⟨a₁, a₂, rfl⟩
+    exact AddSubgroup.mem_sup.mpr
+      ⟨_, AddMonoidHom.mem_range.mpr ⟨a₁, rfl⟩, _, AddMonoidHom.mem_range.mpr ⟨a₂, rfl⟩, rfl⟩
+
+/-- **The truncated exponential detects the additive coboundaries** (the
+well-definedness/injectivity heart of the Kleiman §5 Thm 5.11 cocycle leg):
+the unit `1 + b ε` on the dual-number overlap ring is a coboundary of the
+thickened cover iff `b` is an additive coboundary `ρ₁(a₁) + ρ₂(a₂)`.
+
+Forward direction: decompose the two chart units `wᵢ ∈ (Aᵢ[ε])ˣ` as
+`inl(wᵢ₀)·(1 + cᵢ ε)` (`unitsInl_unitsFst_mul_truncExpUnit`); reducing the
+coboundary relation mod `ε` forces the constant parts to cancel, leaving
+`1 + b ε = 1 + (ρ₁ c₁ + ρ₂ c₂) ε`. -/
+theorem truncExpUnit_mem_cechCoboundaryUnits_iff
+    (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B) (b : B) :
+    truncExpUnit b ∈ cechCoboundaryUnits (mapRingHom ρ₁) (mapRingHom ρ₂)
+      ↔ b ∈ cechCoboundaryAdd ρ₁ ρ₂ := by
+  constructor
+  · intro h
+    obtain ⟨w₁, w₂, hw⟩ := mem_cechCoboundaryUnits.mp h
+    rw [← unitsInl_unitsFst_mul_truncExpUnit w₁,
+      ← unitsInl_unitsFst_mul_truncExpUnit w₂, map_mul, map_mul,
+      unitsMap_mapRingHom_unitsInl, unitsMap_mapRingHom_unitsInl,
+      map_mapRingHom_truncExpUnit, map_mapRingHom_truncExpUnit,
+      mul_mul_mul_comm, ← map_mul, ← truncExpUnit_add] at hw
+    -- reduce mod `ε`: the constant part of the coboundary is trivial
+    have hfst := congrArg unitsFst hw
+    rw [map_mul, unitsFst_unitsInl, unitsFst_truncExpUnit, mul_one,
+      unitsFst_truncExpUnit] at hfst
+    rw [hfst, map_one, one_mul] at hw
+    exact mem_cechCoboundaryAdd.mpr ⟨_, _, truncExpUnit_injective hw⟩
+  · intro h
+    obtain ⟨a₁, a₂, rfl⟩ := mem_cechCoboundaryAdd.mp h
+    refine mem_cechCoboundaryUnits.mpr ⟨truncExpUnit a₁, truncExpUnit a₂, ?_⟩
+    rw [map_mapRingHom_truncExpUnit, map_mapRingHom_truncExpUnit, ← truncExpUnit_add]
+
+/-- Reduction mod `ε` on units carries thickened coboundaries to
+coboundaries (`unitsFst` naturality), so it descends to the Čech `Ȟ¹`
+quotients. -/
+theorem cechCoboundaryUnits_le_comap_unitsFst (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B) :
+    cechCoboundaryUnits (mapRingHom ρ₁) (mapRingHom ρ₂) ≤
+      (cechCoboundaryUnits ρ₁ ρ₂).comap (unitsFst (R := B)) := by
+  intro u hu
+  obtain ⟨w₁, w₂, rfl⟩ := mem_cechCoboundaryUnits.mp hu
+  refine Subgroup.mem_comap.mpr (mem_cechCoboundaryUnits.mpr
+    ⟨unitsFst w₁, unitsFst w₂, ?_⟩)
+  rw [map_mul, unitsFst_map_mapRingHom, unitsFst_map_mapRingHom]
+
+/-- **The reduction map of two-chart Čech `Ȟ¹`-of-units groups**
+`Ȟ¹ˣ(B[ε]) →* Ȟ¹ˣ(B)` induced by reduction mod `ε` — the Čech-cocycle
+incarnation of the restriction `Pic(C ×_k Spec k[ε]) → Pic(C)` along
+`ε ↦ 0`. Its kernel is computed by `truncExpCechKernelAddEquiv` below. -/
+noncomputable def cechUnitsReduction (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B) :
+    ((B[ε])ˣ ⧸ cechCoboundaryUnits (mapRingHom ρ₁) (mapRingHom ρ₂)) →*
+      Bˣ ⧸ cechCoboundaryUnits ρ₁ ρ₂ :=
+  QuotientGroup.map _ _ (unitsFst (R := B))
+    (cechCoboundaryUnits_le_comap_unitsFst ρ₁ ρ₂)
+
+/-- Truncated-exponential classes lie in the kernel of the Čech reduction
+map: `1 + b ε` reduces to `1` mod `ε`. -/
+theorem cechUnitsReduction_mk_truncExpUnit (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B)
+    (b : B) :
+    cechUnitsReduction ρ₁ ρ₂ (QuotientGroup.mk (truncExpUnit b)) = 1 := by
+  rw [cechUnitsReduction, QuotientGroup.map_mk, unitsFst_truncExpUnit,
+    QuotientGroup.mk_one]
+
+/-- Vanishing of a truncated-exponential class in the thickened Čech `Ȟ¹`:
+`[1 + b ε] = 1` iff `b` is an additive coboundary. -/
+theorem mk_truncExpUnit_eq_one_iff (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B) (b : B) :
+    (QuotientGroup.mk (truncExpUnit b) :
+        (B[ε])ˣ ⧸ cechCoboundaryUnits (mapRingHom ρ₁) (mapRingHom ρ₂)) = 1
+      ↔ b ∈ cechCoboundaryAdd ρ₁ ρ₂ := by
+  rw [QuotientGroup.eq_one_iff]
+  exact truncExpUnit_mem_cechCoboundaryUnits_iff ρ₁ ρ₂ b
+
+/-- **Every kernel class of the Čech reduction is a truncated exponential**
+(the surjectivity heart of the Kleiman §5 Thm 5.11 cocycle leg): a class of
+`Ȟ¹ˣ(B[ε])` restricting trivially mod `ε` is represented by `1 + b ε` for
+some `b : B`. Proof: normalise a representative `u` by the (lifted) chart
+units trivialising its reduction; the corrected unit has trivial constant
+part, hence lies in the range of the truncated exponential
+(`truncExp_range_eq_ker_unitsFst`). -/
+theorem exists_mk_truncExpUnit_of_cechUnitsReduction_eq_one
+    (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B)
+    (x : (B[ε])ˣ ⧸ cechCoboundaryUnits (mapRingHom ρ₁) (mapRingHom ρ₂))
+    (hx : cechUnitsReduction ρ₁ ρ₂ x = 1) :
+    ∃ b : B, (QuotientGroup.mk (truncExpUnit b) :
+      (B[ε])ˣ ⧸ cechCoboundaryUnits (mapRingHom ρ₁) (mapRingHom ρ₂)) = x := by
+  revert hx
+  induction x using QuotientGroup.induction_on with
+  | H u =>
+    intro hu
+    rw [cechUnitsReduction, QuotientGroup.map_mk, QuotientGroup.eq_one_iff] at hu
+    obtain ⟨v₁, v₂, hv⟩ := mem_cechCoboundaryUnits.mp hu
+    -- the chart-unit correction of `u`
+    have hker : unitsFst
+        ((Units.map (mapRingHom ρ₁).toMonoidHom (unitsInl v₁))⁻¹ * u *
+          (Units.map (mapRingHom ρ₂).toMonoidHom (unitsInl v₂))⁻¹) = 1 := by
+      rw [map_mul, map_mul, map_inv, map_inv, unitsMap_mapRingHom_unitsInl,
+        unitsMap_mapRingHom_unitsInl, unitsFst_unitsInl, unitsFst_unitsInl, ← hv]
+      group
+    have hmem : (Units.map (mapRingHom ρ₁).toMonoidHom (unitsInl v₁))⁻¹ * u *
+        (Units.map (mapRingHom ρ₂).toMonoidHom (unitsInl v₂))⁻¹
+          ∈ (truncExp (R := B)).range := by
+      rw [truncExp_range_eq_ker_unitsFst]
+      exact MonoidHom.mem_ker.mpr hker
+    obtain ⟨m, hm⟩ := MonoidHom.mem_range.mp hmem
+    refine ⟨m.toAdd, ?_⟩
+    rw [← truncExp_apply, hm, QuotientGroup.mk_mul, QuotientGroup.mk_mul,
+      QuotientGroup.mk_inv, QuotientGroup.mk_inv,
+      (QuotientGroup.eq_one_iff _).mpr
+        (unitsMap_mem_cechCoboundaryUnits_left (mapRingHom ρ₁) (mapRingHom ρ₂)
+          (unitsInl v₁)),
+      (QuotientGroup.eq_one_iff _).mpr
+        (unitsMap_mem_cechCoboundaryUnits_right (mapRingHom ρ₁) (mapRingHom ρ₂)
+          (unitsInl v₂))]
+    simp
+
+/-- The truncated exponential as a monoid homomorphism into the kernel of
+the Čech reduction map (multiplicative source `Multiplicative B`). -/
+noncomputable def truncExpCechKernelMonoidHom (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B) :
+    Multiplicative B →* (cechUnitsReduction ρ₁ ρ₂).ker where
+  toFun b :=
+    ⟨QuotientGroup.mk (truncExpUnit b.toAdd),
+      MonoidHom.mem_ker.mpr (cechUnitsReduction_mk_truncExpUnit ρ₁ ρ₂ b.toAdd)⟩
+  map_one' := Subtype.ext <| by
+    change (QuotientGroup.mk (truncExpUnit ((1 : Multiplicative B).toAdd)) : _) = 1
+    rw [toAdd_one, truncExpUnit_zero, QuotientGroup.mk_one]
+  map_mul' b c := Subtype.ext <| by
+    change (QuotientGroup.mk (truncExpUnit ((b * c).toAdd)) : _) = _
+    rw [toAdd_mul, truncExpUnit_add, QuotientGroup.mk_mul]
+    rfl
+
+/-- **The truncated-exponential kernel computation** (Kleiman §5 Thm 5.11,
+cocycle leg, algebra layer): for a two-chart datum `ρ₁ : A₁ →+* B`,
+`ρ₂ : A₂ →+* B`, the truncated exponential `b ↦ [1 + b ε]` induces an
+additive equivalence
+
+```
+B ⧸ (ρ₁(A₁) + ρ₂(A₂))  ≃+  ker( Ȟ¹ˣ(B[ε]) →* Ȟ¹ˣ(B) )
+```
+
+from the two-cover Čech cokernel (the `AffineCoverMVSquare.H1Cok` carrier
+shape — `H¹(C, 𝒪_C)` for the section rings of a 2-affine cover of a curve)
+onto the kernel of the dual-number Čech-units reduction (the two-chart
+`ker(Pic(C_ε) → Pic(C))`). Well-definedness and injectivity are
+`mk_truncExpUnit_eq_one_iff`; surjectivity is
+`exists_mk_truncExpUnit_of_cechUnitsReduction_eq_one`; additivity is the
+truncated-exponential functional equation `truncExpUnit_add`. -/
+noncomputable def truncExpCechKernelAddEquiv (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B) :
+    B ⧸ cechCoboundaryAdd ρ₁ ρ₂ ≃+
+      Additive (cechUnitsReduction ρ₁ ρ₂).ker := by
+  refine AddEquiv.ofBijective
+    (QuotientAddGroup.lift (cechCoboundaryAdd ρ₁ ρ₂)
+      (MonoidHom.toAdditiveRight (truncExpCechKernelMonoidHom ρ₁ ρ₂)) ?_) ⟨?_, ?_⟩
+  · intro b hb
+    apply Additive.toMul.injective
+    apply Subtype.ext
+    change (QuotientGroup.mk (truncExpUnit b) : _) = 1
+    exact (mk_truncExpUnit_eq_one_iff ρ₁ ρ₂ b).mpr hb
+  · rw [injective_iff_map_eq_zero]
+    intro x
+    induction x using QuotientAddGroup.induction_on with
+    | H b =>
+      intro hbx
+      have hb : (QuotientGroup.mk (truncExpUnit b) :
+          (B[ε])ˣ ⧸ cechCoboundaryUnits (mapRingHom ρ₁) (mapRingHom ρ₂)) = 1 :=
+        congrArg (fun y => (Additive.toMul y : (cechUnitsReduction ρ₁ ρ₂).ker).1) hbx
+      rw [QuotientAddGroup.eq_zero_iff]
+      exact (mk_truncExpUnit_eq_one_iff ρ₁ ρ₂ b).mp hb
+  · intro y
+    obtain ⟨b, hb⟩ := exists_mk_truncExpUnit_of_cechUnitsReduction_eq_one ρ₁ ρ₂
+      (Additive.toMul y : (cechUnitsReduction ρ₁ ρ₂).ker).1
+      (Additive.toMul y : (cechUnitsReduction ρ₁ ρ₂).ker).2
+    exact ⟨QuotientAddGroup.mk b,
+      Additive.toMul.injective (Subtype.ext hb)⟩
+
+/-- Elementwise formula for the truncated-exponential kernel equivalence on
+residue classes: `[b] ↦ [1 + b ε]`. Definitional. -/
+theorem truncExpCechKernelAddEquiv_apply_mk (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B)
+    (b : B) :
+    ((Additive.toMul (truncExpCechKernelAddEquiv ρ₁ ρ₂ (QuotientAddGroup.mk b)) :
+        (cechUnitsReduction ρ₁ ρ₂).ker) : _)
+      = (QuotientGroup.mk (truncExpUnit b) :
+          (B[ε])ˣ ⧸ cechCoboundaryUnits (mapRingHom ρ₁) (mapRingHom ρ₂)) :=
+  rfl
+
+/-! ### Mumford-scaling equivariance of the engine
+
+The `ε ↦ tε` scaling of the overlap ring `B[ε]` (`scaleRingHom t`) preserves
+the thickened coboundaries whenever the scalar is compatible with the charts
+(`ρ₁ s₁ = t = ρ₂ s₂` — for a `k`-algebra datum, `sᵢ` and `t` are the images
+of a common `a ∈ k`), hence descends to `Ȟ¹ˣ(B[ε])`, and it acts on
+truncated-exponential classes exactly by `b ↦ t·b` — matching the `k`-scalar
+action on the Čech cokernel side of `truncExpCechKernelAddEquiv`. -/
+
+/-- The `ε ↦ tε` scaling preserves the thickened Čech coboundaries when the
+scalar `t` is compatible with the charts (`ρ₁ s₁ = t = ρ₂ s₂`). -/
+theorem cechCoboundaryUnits_le_comap_unitsScale (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B)
+    {s₁ : A₁} {s₂ : A₂} {t : B} (h₁ : ρ₁ s₁ = t) (h₂ : ρ₂ s₂ = t) :
+    cechCoboundaryUnits (mapRingHom ρ₁) (mapRingHom ρ₂) ≤
+      (cechCoboundaryUnits (mapRingHom ρ₁) (mapRingHom ρ₂)).comap
+        (Units.map (scaleRingHom t).toMonoidHom) := by
+  intro u hu
+  obtain ⟨w₁, w₂, rfl⟩ := mem_cechCoboundaryUnits.mp hu
+  refine Subgroup.mem_comap.mpr (mem_cechCoboundaryUnits.mpr
+    ⟨Units.map (scaleRingHom s₁).toMonoidHom w₁,
+     Units.map (scaleRingHom s₂).toMonoidHom w₂, ?_⟩)
+  rw [map_mul]
+  congr 1
+  · apply Units.ext
+    simp only [Units.coe_map]
+    exact (RingHom.congr_fun (mapRingHom_comp_scaleRingHom ρ₁ s₁) (w₁ : A₁[ε])).trans
+      (by rw [h₁]; rfl)
+  · apply Units.ext
+    simp only [Units.coe_map]
+    exact (RingHom.congr_fun (mapRingHom_comp_scaleRingHom ρ₂ s₂) (w₂ : A₂[ε])).trans
+      (by rw [h₂]; rfl)
+
+/-- **Equivariance of the truncated-exponential classes under the Mumford
+scaling**: the `ε ↦ tε` scaling of `Ȟ¹ˣ(B[ε])` carries `[1 + b ε]` to
+`[1 + (t·b) ε]` — through `truncExpCechKernelAddEquiv`, the scaling acts on
+the Čech cokernel `B ⧸ (ρ₁(A₁) + ρ₂(A₂))` as multiplication by `t`, i.e. as
+the `k`-scalar action for a `k`-algebra two-chart datum. -/
+theorem unitsScale_mk_truncExpUnit (ρ₁ : A₁ →+* B) (ρ₂ : A₂ →+* B)
+    {s₁ : A₁} {s₂ : A₂} {t : B} (h₁ : ρ₁ s₁ = t) (h₂ : ρ₂ s₂ = t) (b : B) :
+    QuotientGroup.map _ _ (Units.map (scaleRingHom t).toMonoidHom)
+        (cechCoboundaryUnits_le_comap_unitsScale ρ₁ ρ₂ h₁ h₂)
+        (QuotientGroup.mk (truncExpUnit b))
+      = (QuotientGroup.mk (truncExpUnit (t * b)) :
+          (B[ε])ˣ ⧸ cechCoboundaryUnits (mapRingHom ρ₁) (mapRingHom ρ₂)) := by
+  rw [QuotientGroup.map_mk, unitsScale_truncExpUnit]
+
+end CechEngine
+
+end DualNumber
