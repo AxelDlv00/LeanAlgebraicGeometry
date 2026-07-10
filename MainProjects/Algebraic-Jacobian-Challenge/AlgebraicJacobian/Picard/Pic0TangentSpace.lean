@@ -111,4 +111,74 @@ theorem nonempty_cotangentSpaceAddEquiv_of_finrank_eq
   exact Module.nonempty_addEquiv_of_finrank_eq_of_ringEquiv
     (residueFieldEquivOfBijective hres).symm h
 
+/-! ## Pointed dual-number points along an open immersion
+
+The leg-(1) connector for the Kleiman §5 Thm.~5.11 dimension identity: the
+Zariski tangent space of `Pic⁰_{C/k}` at the identity is the tangent space of
+`Pic_{C/k}` there, because `Spec k[ε]` is a one-point scheme, so a pointed
+dual-number point of the ambient scheme at a point of an open subscheme
+factors (uniquely) through the open immersion. Stated for an arbitrary
+morphism of `Over (Spec k)`-schemes whose underlying morphism is an open
+immersion. -/
+
+/-- The spectrum of the dual numbers over a field is a one-point space: every
+prime of `k[ε]` is the maximal ideal, since every nonunit `x` has vanishing
+constant component, hence `x² = 0` lies in every prime. -/
+instance DualNumber.instSubsingletonPrimeSpectrum :
+    Subsingleton (PrimeSpectrum (DualNumber k)) := by
+  constructor
+  have key : ∀ p : PrimeSpectrum (DualNumber k),
+      p.asIdeal = maximalIdeal (DualNumber k) := by
+    intro p
+    refine le_antisymm (le_maximalIdeal p.isPrime.ne_top) fun x hx => ?_
+    have hfst : TrivSqZeroExt.fst x = 0 := by
+      by_contra h0
+      exact hx (TrivSqZeroExt.isUnit_iff_isUnit_fst.mpr (isUnit_iff_ne_zero.mpr h0))
+    have hsq : x * x = 0 := by
+      have hxr : x = TrivSqZeroExt.inr (TrivSqZeroExt.snd x) := by
+        conv_lhs => rw [← TrivSqZeroExt.inl_fst_add_inr_snd_eq x]
+        rw [hfst, TrivSqZeroExt.inl_zero, zero_add]
+      rw [hxr, TrivSqZeroExt.inr_mul_inr]
+    exact p.isPrime.mem_of_pow_mem 2 (by rw [pow_two, hsq]; exact p.asIdeal.zero_mem)
+  intro p q
+  exact PrimeSpectrum.ext ((key p).trans (key q).symm)
+
+/-- **Pointed dual-number points transport along open immersions** (leg-(1)
+connector of Kleiman §5 Thm.~5.11 for `Pic⁰_{C/k} ↪ Pic_{C/k}`). For a
+morphism `f : X ⟶ Y` of schemes over `Spec k` whose underlying scheme
+morphism is an open immersion, and a `k`-point `e` of `X`, composition with
+`f` identifies the pointed dual-number points of `X` at `e(*)` with those of
+`Y` at `f(e(*))`: since `Spec k[ε]` is a one-point scheme, any dual-number
+point of `Y` landing at `f(e(*))` has range inside the open image of `f`,
+hence lifts uniquely (`IsOpenImmersion.lift`). -/
+noncomputable def pointedDualNumberPointsEquivOfOpenImmersion
+    {X Y : Over (Spec (CommRingCat.of k))} (f : X ⟶ Y) [IsOpenImmersion f.left]
+    (e : Spec (CommRingCat.of k) ⟶ X.left) :
+    {g : Spec (CommRingCat.of (DualNumber k)) ⟶ X.left //
+        g ≫ X.hom = Spec.map (CommRingCat.ofHom (algebraMap k (DualNumber k)))
+          ∧ g.base (closedPoint (DualNumber k)) = e.base default}
+      ≃ {g : Spec (CommRingCat.of (DualNumber k)) ⟶ Y.left //
+        g ≫ Y.hom = Spec.map (CommRingCat.ofHom (algebraMap k (DualNumber k)))
+          ∧ g.base (closedPoint (DualNumber k)) = (e ≫ f.left).base default} where
+  toFun g :=
+    ⟨g.1 ≫ f.left,
+      by rw [Category.assoc, Over.w f]; exact g.2.1,
+      by rw [Scheme.Hom.comp_apply, g.2.2, Scheme.Hom.comp_apply]⟩
+  invFun h :=
+    have hrange : Set.range h.1.base ⊆ Set.range f.left.base := by
+      rintro - ⟨t, rfl⟩
+      refine ⟨e.base default, ?_⟩
+      have ht : t = closedPoint (DualNumber k) :=
+        Subsingleton.elim (α := PrimeSpectrum (DualNumber k)) t _
+      rw [ht, h.2.2, Scheme.Hom.comp_apply]
+    ⟨IsOpenImmersion.lift f.left h.1 hrange,
+      by rw [← Over.w f, ← Category.assoc, IsOpenImmersion.lift_fac]; exact h.2.1,
+      by
+        apply (Scheme.Hom.isOpenEmbedding f.left).injective
+        rw [← Scheme.Hom.comp_apply, IsOpenImmersion.lift_fac, h.2.2,
+          Scheme.Hom.comp_apply]⟩
+  left_inv g :=
+    Subtype.ext (by rw [← cancel_mono f.left]; exact IsOpenImmersion.lift_fac _ _ _)
+  right_inv h := Subtype.ext (IsOpenImmersion.lift_fac _ _ _)
+
 end AlgebraicGeometry
