@@ -60,6 +60,7 @@ import AlgebraicJacobian.Picard.DivDegree
 import AlgebraicJacobian.Picard.FinitePresentationFunctor
 import AlgebraicJacobian.Picard.FiniteGaloisQuotient
 import AlgebraicJacobian.Picard.FiniteGaloisQuotientAffine
+import AlgebraicJacobian.Picard.StableAffineCover
 import AlgebraicJacobian.Picard.LineBundlePullback
 import AlgebraicJacobian.Picard.TensorObjSubstrate
 import AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse
