@@ -529,4 +529,146 @@ theorem pushforward_finiteMapToP1BaseChange_coherentSheafFlat
 
 end Adelic
 
+/-! ## §5. Substrate for `hH1`/`hH0` — the fibre square of the finite map
+and the definitional Čech bridges
+
+Item (c) of the transfer package identifies `(π_A)_* L` restricted to the
+fibre `ℙ¹_t` with `(π_t)_* (L_t)` and transports the Čech difference map
+across it.  This section lands the geometric substrate: the induced finite
+map `π_t : C_t ⟶ ℙ¹_t` between the scheme-theoretic fibres, its cartesian
+square over `π_A`, and the two *definitional* Čech bridges — the difference
+map of a 2-affine cover for an (affine) pushforward literally *is* the
+difference map of the preimage cover, and surjectivity of the difference
+map transports across isomorphisms of module sheaves.  What remains for
+`hH1`/`hH0` (next session) is the affine-morphism base-change isomorphism
+`(p.fiberι t)^* (π_A)_* L ≅ (π_t)_* (q.fiberι t)^* L` (Stacks 02KG for the
+affine `π_A`; `κ(t)` is *not* flat over `A`, so this is the
+glued form of `affinePushforwardPullbackBaseChange`), plus — for `hH1` —
+the Čech-to-Čech cover-independence of `Ȟ¹`-vanishing on the fibre curve,
+which is the recorded P2-interface TODO of `RigidPushforward.lean`. -/
+
+namespace Scheme
+
+/-- **The Čech difference map of an affine pushforward is the difference map
+of the preimage cover** — definitionally: sections, intersections of
+preimages, and restriction maps of `f_* M` over a 2-affine cover `V` all
+agree with those of `M` over `V.preimage f`. -/
+lemma AffineCoverMVSquare.moduleSectionDiff_pushforward {X Y : Scheme.{u}}
+    (f : X ⟶ Y) [IsAffineHom f] (V : Y.AffineCoverMVSquare) (M : X.Modules) :
+    V.moduleSectionDiff ((Scheme.Modules.pushforward f).obj M) =
+      (V.preimage f).moduleSectionDiff M :=
+  rfl
+
+/-- **Naturality of the Čech difference map** in the module: a morphism of
+module sheaves intertwines the difference maps of a 2-affine cover. -/
+lemma AffineCoverMVSquare.moduleSectionDiff_naturality {X : Scheme.{u}}
+    (V : X.AffineCoverMVSquare) {G G' : X.Modules} (φ : G ⟶ G')
+    (a : Γ(G, V.U₁)) (b : Γ(G, V.U₂)) :
+    V.moduleSectionDiff G' (φ.app V.U₁ a, φ.app V.U₂ b) =
+      φ.app (V.U₁ ⊓ V.U₂) (V.moduleSectionDiff G (a, b)) := by
+  have h₁ := congrArg (fun (ψ : Γ(G, V.U₁) ⟶ Γ(G', V.U₁ ⊓ V.U₂)) => ψ.hom a)
+    (φ.mapPresheaf.naturality (homOfLE (inf_le_left : V.U₁ ⊓ V.U₂ ≤ V.U₁)).op)
+  have h₂ := congrArg (fun (ψ : Γ(G, V.U₂) ⟶ Γ(G', V.U₁ ⊓ V.U₂)) => ψ.hom b)
+    (φ.mapPresheaf.naturality (homOfLE (inf_le_right : V.U₁ ⊓ V.U₂ ≤ V.U₂)).op)
+  simp only [AddCommGrpCat.hom_comp, AddMonoidHom.comp_apply] at h₁ h₂
+  simp only [moduleSectionDiff_apply, map_sub]
+  exact congrArg₂ Sub.sub h₁.symm h₂.symm
+
+/-- **Surjectivity of the Čech difference map transports across an
+isomorphism of module sheaves.** -/
+lemma AffineCoverMVSquare.surjective_moduleSectionDiff_of_iso {X : Scheme.{u}}
+    (V : X.AffineCoverMVSquare) {G G' : X.Modules} (e : G ≅ G')
+    (h : Function.Surjective ⇑(V.moduleSectionDiff G)) :
+    Function.Surjective ⇑(V.moduleSectionDiff G') := by
+  intro c
+  obtain ⟨⟨a, b⟩, hab⟩ := h (e.inv.app (V.U₁ ⊓ V.U₂) c)
+  refine ⟨(e.hom.app V.U₁ a, e.hom.app V.U₂ b), ?_⟩
+  rw [V.moduleSectionDiff_naturality e.hom a b, hab]
+  change ((e.inv ≫ e.hom).app (V.U₁ ⊓ V.U₂)).hom c = c
+  rw [e.inv_hom_id]
+  rfl
+
+end Scheme
+
+namespace Adelic
+
+open Scheme
+
+variable {k : Type u} [Field k]
+variable (A : Type u) [CommRing A] [Algebra k A]
+variable (C : Over (Spec (CommRingCat.of k)))
+
+/-- **The induced map on scheme-theoretic fibres of the finite
+`π_A : C_A ⟶ ℙ¹_A`**: for `t : Spec A`, the map `π_t : C_t ⟶ ℙ¹_t` from the
+fibre of `q = pullback.snd : C_A ⟶ Spec A` to the fibre of
+`p = pullback.snd : ℙ¹_A ⟶ Spec A`, induced by functoriality of the fibre
+square (`q = π_A ≫ p`, `finiteMapToP1BaseChange_snd`). -/
+noncomputable def finiteMapToP1FiberMap [HasFiniteMapToP1 C]
+    (t : Spec (CommRingCat.of A)) :
+    (pullback.snd C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiber t ⟶
+      (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiber t :=
+  pullback.map _ _ _ _ (finiteMapToP1BaseChange A C) (𝟙 _) (𝟙 _)
+    (by rw [Category.comp_id]; exact (finiteMapToP1BaseChange_snd A C).symm)
+    (by simp)
+
+/-- `π_t` lies over `π_A`: the fibre square of `π_t` against the fibre
+embeddings commutes. -/
+@[reassoc (attr := simp)]
+lemma finiteMapToP1FiberMap_fiberι [HasFiniteMapToP1 C]
+    (t : Spec (CommRingCat.of A)) :
+    finiteMapToP1FiberMap A C t ≫
+        (pullback.snd (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberι t =
+      (pullback.snd C.hom
+        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberι t ≫
+        finiteMapToP1BaseChange A C :=
+  pullback.lift_fst _ _ _
+
+/-- `π_t` is a map of `κ(t)`-schemes: it commutes with the structural maps
+to `Spec κ(t)`. -/
+@[reassoc (attr := simp)]
+lemma finiteMapToP1FiberMap_toSpecResidueField [HasFiniteMapToP1 C]
+    (t : Spec (CommRingCat.of A)) :
+    finiteMapToP1FiberMap A C t ≫
+        (pullback.snd (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberToSpecResidueField t =
+      (pullback.snd C.hom
+        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberToSpecResidueField t :=
+  (pullback.lift_snd _ _ _).trans (Category.comp_id _)
+
+/-- **The fibre square of the finite map is cartesian**: `C_t = C_A ×_{ℙ¹_A} ℙ¹_t`
+(pasting of the two fibre squares over `Spec κ(t) ⟶ Spec A`).  This exhibits
+`π_t` as the base change of the finite `π_A` along `ℙ¹_t ⟶ ℙ¹_A`. -/
+lemma isPullback_finiteMapToP1FiberMap [HasFiniteMapToP1 C]
+    (t : Spec (CommRingCat.of A)) :
+    IsPullback
+      ((pullback.snd C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberι t)
+      (finiteMapToP1FiberMap A C t)
+      (finiteMapToP1BaseChange A C)
+      ((pullback.snd (p1Over k).hom
+        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberι t) := by
+  have hs : IsPullback
+      ((pullback.snd C.hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberι t)
+      (finiteMapToP1FiberMap A C t ≫
+        (pullback.snd (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).fiberToSpecResidueField t)
+      (finiteMapToP1BaseChange A C ≫
+        pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A))))
+      ((Spec (CommRingCat.of A)).fromSpecResidueField t) := by
+    rw [finiteMapToP1FiberMap_toSpecResidueField, finiteMapToP1BaseChange_snd]
+    exact IsPullback.of_hasPullback _ _
+  exact IsPullback.of_bot hs (finiteMapToP1FiberMap_fiberι A C t).symm
+    (IsPullback.of_hasPullback _ _)
+
+/-- **`π_t` is finite** — base change of the finite `π_A` along the fibre
+embedding `ℙ¹_t ⟶ ℙ¹_A` (`isPullback_finiteMapToP1FiberMap`). -/
+instance isFinite_finiteMapToP1FiberMap [HasFiniteMapToP1 C]
+    (t : Spec (CommRingCat.of A)) :
+    IsFinite (finiteMapToP1FiberMap A C t) :=
+  MorphismProperty.IsStableUnderBaseChange.of_isPullback (P := @IsFinite)
+    (isPullback_finiteMapToP1FiberMap A C t)
+    (isFinite_finiteMapToP1BaseChange A C)
+
+end Adelic
+
 end AlgebraicGeometry
