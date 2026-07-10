@@ -93,6 +93,10 @@ base-change iso and `T`-points.
   over a stable open is `Γ`-invariant (the section-level face of the
   `StableAffineCover` norm trick; feeds the invariant-basic-open covering of
   layer 2).
+* `SemilinearGalAction.actApp_map` — the restriction map between stable opens is
+  `Γ`-equivariant; `isStableOpen_basicOpen`(`_prod_actApp`) — the basic open of an
+  invariant section (in particular of any norm) over a stable open is stable: the
+  invariant-basic-open covering machine of layer 2.
 * `SemilinearGalAction.restrict ρ hU : SemilinearGalAction K L U.toScheme (U.ι ≫ f)`
   — the scheme-level restriction of the action to a stable open.
 * `SemilinearGalAction.actRes_isoSpec_hom` / `actRes_isoSpec_hom_toSpecAut` —
@@ -200,6 +204,52 @@ lemma smul_norm_of_finite [FiniteDimensional K L] (s : Γ(X, U)) (τ : L ≃ₐ[
     map_prod (MulSemiringAction.toRingHom (L ≃ₐ[K] L) Γ(X, U) τ) _ _
   rw [h, Finset.prod_congr rfl fun γ _ => (mul_smul τ γ s).symm]
   exact Fintype.prod_equiv (Equiv.mulLeft τ) _ _ fun γ => rfl
+
+/-- Naturality of the section transport in the stable open: transporting then
+restricting between two stable opens is restricting then transporting.  (In
+particular the restriction map between stable opens is `Γ`-equivariant for the
+section actions, hence maps invariants to invariants — the map that glue layer 2
+localizes.) -/
+lemma actApp_map {V : X.Opens} (hV : ρ.IsStableOpen V) (hVU : V ≤ U)
+    (γ : L ≃ₐ[K] L) :
+    ρ.actApp hU γ ≫ X.presheaf.map (homOfLE hVU).op
+      = X.presheaf.map (homOfLE hVU).op ≫ ρ.actApp hV γ := by
+  rw [actApp, actApp, Scheme.Hom.appLE_map, Scheme.Hom.map_appLE]
+
+/-- **The basic open of an invariant section over a stable open is stable.**  The
+invariance hypothesis is pinned inverse-free through the transport `actApp` (for the
+section action it reads `γ • N = N` for all `γ`).  Together with
+`smul_norm_of_finite`/`isStableOpen_basicOpen_prod_actApp` this is the
+invariant-basic-open covering machine of glue layer 2. -/
+lemma isStableOpen_basicOpen {N : Γ(X, U)}
+    (hN : ∀ γ : L ≃ₐ[K] L, ρ.actApp hU γ N = N) :
+    ρ.IsStableOpen (X.basicOpen N) := by
+  intro γ
+  have h1 : ρ.actApp hU γ N
+      = X.presheaf.map (homOfLE (hU γ).ge).op ((ρ.act γ).hom.app U N) := rfl
+  have hle : X.basicOpen ((ρ.act γ).hom.app U N) ≤ U :=
+    (X.basicOpen_le _).trans_eq (hU γ)
+  calc (ρ.act γ).hom ⁻¹ᵁ X.basicOpen N
+      = X.basicOpen ((ρ.act γ).hom.app U N) := Scheme.preimage_basicOpen _ _
+    _ = U ⊓ X.basicOpen ((ρ.act γ).hom.app U N) := (inf_eq_right.mpr hle).symm
+    _ = X.basicOpen (ρ.actApp hU γ N) := by rw [h1, Scheme.basicOpen_res]
+    _ = X.basicOpen N := by rw [hN γ]
+
+/-- The basic open of the **norm** `∏_γ (act γ)^♯ s` of *any* section over a stable
+open is stable — the section-level norm trick, transport form. -/
+lemma isStableOpen_basicOpen_prod_actApp [FiniteDimensional K L] (s : Γ(X, U)) :
+    ρ.IsStableOpen (X.basicOpen (∏ γ : L ≃ₐ[K] L, ρ.actApp hU γ s)) := by
+  refine ρ.isStableOpen_basicOpen hU fun τ => ?_
+  have h : ρ.actApp hU τ (∏ γ : L ≃ₐ[K] L, ρ.actApp hU γ s)
+      = ∏ γ : L ≃ₐ[K] L, ρ.actApp hU τ (ρ.actApp hU γ s) :=
+    map_prod (ρ.actApp hU τ).hom _ _
+  have h2 : ∀ γ : L ≃ₐ[K] L,
+      ρ.actApp hU τ (ρ.actApp hU γ s) = ρ.actApp hU (γ * τ) s := by
+    intro γ
+    rw [actApp_mul]
+    rfl
+  rw [h, Finset.prod_congr rfl fun γ _ => h2 γ]
+  exact Fintype.prod_equiv (Equiv.mulRight τ) _ _ fun γ => rfl
 
 end ActApp
 
