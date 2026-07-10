@@ -760,3 +760,251 @@ theorem fg_ker_cechDiff_of_laurent {A C₀ C₁ C₀₁ M₀ M₁ V : Type*} [Co
 end TwoChart
 
 end AlgebraicJacobian
+
+namespace AlgebraicGeometry
+
+/-! ## §4. Localization facts on affine charts (ring and module dialects)
+
+The extension/torsion hypotheses of the abstract theorem, discharged from
+mathlib's `IsAffineOpen.isLocalization_basicOpen` (ring side) and the qcqs
+section-localization engine `isLocalizedModule_basicOpen_of_isCompact`
+(module side, `Picard/QuotScheme.lean`), both in the caller-friendly
+`W = X.basicOpen f` transport shape of `exists_pow_smul_eq_res`. -/
+
+/-- **Ring-section extension over a basic open of an affine chart**: a section
+of `𝒪_X` on `W = D(f) ⊆ U` extends to `U` after multiplication by a power of
+`f|_W`.  (`IsLocalization.surj` for `hU.isLocalization_of_eq_basicOpen`.) -/
+theorem exists_pow_mul_res_eq_res {X : Scheme.{u}} {U W : X.Opens} (hU : IsAffineOpen U)
+    (f : Γ(X, U)) (hW : W = X.basicOpen f) (hWU : W ≤ U) (c : Γ(X, W)) :
+    ∃ (n : ℕ) (q : Γ(X, U)),
+      (X.presheaf.map (homOfLE hWU).op).hom f ^ n * c
+        = (X.presheaf.map (homOfLE hWU).op).hom q := by
+  letI : Algebra Γ(X, U) Γ(X, W) := ((X.presheaf.map (homOfLE hWU).op).hom).toAlgebra
+  haveI : IsLocalization.Away f Γ(X, W) :=
+    hU.isLocalization_of_eq_basicOpen f (homOfLE hWU) hW
+  obtain ⟨⟨q, s⟩, hqs⟩ := IsLocalization.surj (M := Submonoid.powers f) (S := Γ(X, W)) c
+  obtain ⟨n, hn⟩ := s.2
+  have hn' : (f ^ n : Γ(X, U)) = (s : Γ(X, U)) := hn
+  refine ⟨n, q, ?_⟩
+  have halg : ∀ z : Γ(X, U),
+      algebraMap Γ(X, U) Γ(X, W) z = (X.presheaf.map (homOfLE hWU).op).hom z :=
+    fun _ => rfl
+  rw [← halg, ← halg, ← map_pow, hn', mul_comm]
+  exact hqs
+
+/-- **Ring-section torsion over a basic open of an affine chart**: a section of
+`𝒪_X` on `U` restricting to `0` on `W = D(f)` is killed by a power of `f`.
+(`IsLocalization.map_eq_zero_iff`.) -/
+theorem exists_pow_mul_eq_zero_of_res_eq_zero {X : Scheme.{u}} {U W : X.Opens}
+    (hU : IsAffineOpen U) (f : Γ(X, U)) (hW : W = X.basicOpen f) (hWU : W ≤ U)
+    (c : Γ(X, U)) (hc : (X.presheaf.map (homOfLE hWU).op).hom c = 0) :
+    ∃ n : ℕ, f ^ n * c = 0 := by
+  letI : Algebra Γ(X, U) Γ(X, W) := ((X.presheaf.map (homOfLE hWU).op).hom).toAlgebra
+  haveI : IsLocalization.Away f Γ(X, W) :=
+    hU.isLocalization_of_eq_basicOpen f (homOfLE hWU) hW
+  have hc' : algebraMap Γ(X, U) Γ(X, W) c = 0 := hc
+  obtain ⟨⟨s, hsmem⟩, hs⟩ :=
+    (IsLocalization.map_eq_zero_iff (Submonoid.powers f) Γ(X, W) c).mp hc'
+  obtain ⟨n, rfl⟩ := hsmem
+  exact ⟨n, hs⟩
+
+/-- **Module-section torsion over a basic open of an affine chart**
+(vanishing sibling of `Scheme.Modules.exists_pow_smul_eq_res`): a section of a
+quasi-coherent `M` on the affine `U` restricting to `0` on `W = D(f)` is
+killed by a power of `f`.  From the qcqs section-localization engine
+(`IsLocalizedModule.exists_of_eq`). -/
+theorem Scheme.Modules.exists_pow_smul_eq_zero_of_res {X : Scheme.{u}} (M : X.Modules)
+    [M.IsQuasicoherent] {U W : X.Opens} (hU : IsAffineOpen U) (f : Γ(X, U))
+    (hW : W = X.basicOpen f) (hWU : W ≤ U) (m : Γ(M, U))
+    (hm : M.presheaf.map (homOfLE hWU).op m = 0) :
+    ∃ n : ℕ, f ^ n • m = 0 := by
+  subst hW
+  letI : Module Γ(X, U) Γ(M, X.basicOpen f) :=
+    Module.compHom _ (algebraMap Γ(X, U) Γ(X, X.basicOpen f))
+  letI : IsScalarTower Γ(X, U) Γ(X, X.basicOpen f) Γ(M, X.basicOpen f) :=
+    IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
+  haveI := isLocalizedModule_basicOpen_of_isCompact M hU.isCompact
+    hU.isQuasiSeparated f
+  have hm' : Scheme.Modules.restrictBasicOpenₗ M f m
+      = Scheme.Modules.restrictBasicOpenₗ M f 0 := by
+    rw [map_zero]
+    exact hm
+  obtain ⟨s, hs⟩ := IsLocalizedModule.exists_of_eq (S := Submonoid.powers f)
+    (f := Scheme.Modules.restrictBasicOpenₗ M f) hm'
+  obtain ⟨n, hn⟩ := s.2
+  have hn' : (f ^ n : Γ(X, U)) = (s : Γ(X, U)) := hn
+  refine ⟨n, ?_⟩
+  have h1 : (s : Γ(X, U)) • m = 0 := by
+    rw [smul_zero] at hs
+    exact hs
+  rw [hn']
+  exact h1
+
+namespace Scheme
+
+/-! ## §5. The base-linear structure-sheaf Čech difference (the `hS0` anchor) -/
+
+variable {X S : Scheme.{u}}
+
+/-- **The base-linear ring-section restriction as an algebra hom** over
+`Γ(S, ⊤)` for the `appLE`-`toAlgebra` structures (the ring-side sibling of
+`Hom.baseSectionsRes`; the algebra-hom property is `appLE_map` naturality).
+This is the `ρ` of the abstract two-chart datum. -/
+noncomputable def Hom.baseRingSectionsResAlgHom (p : X ⟶ S) {W W' : X.Opens} (h : W' ≤ W) :
+    letI := ((p.appLE ⊤ W (le_top : W ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+    letI := ((p.appLE ⊤ W' (le_top : W' ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+    Γ(X, W) →ₐ[Γ(S, ⊤)] Γ(X, W') :=
+  letI := ((p.appLE ⊤ W (le_top : W ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+  letI := ((p.appLE ⊤ W' (le_top : W' ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+  { toRingHom := (X.presheaf.map (homOfLE h).op).hom
+    commutes' := fun r => by
+      have h1 := congrArg (fun φ : Γ(S, ⊤) ⟶ Γ(X, W') => φ.hom r)
+        (p.appLE_map (le_top : W ≤ p ⁻¹ᵁ ⊤) (homOfLE h).op)
+      simp only [CommRingCat.hom_comp, RingHom.comp_apply] at h1
+      exact h1 }
+
+/-- The underlying function of `baseRingSectionsResAlgHom` is the presheaf
+restriction. -/
+lemma Hom.baseRingSectionsResAlgHom_apply (p : X ⟶ S) {W W' : X.Opens} (h : W' ≤ W)
+    (c : Γ(X, W)) :
+    p.baseRingSectionsResAlgHom h c = (X.presheaf.map (homOfLE h).op).hom c :=
+  rfl
+
+/-- **The base-linear structure-sheaf Čech difference of a 2-affine cover**:
+`(c₀, c₁) ↦ c₀|_{U₁⊓U₂} − c₁|_{U₁⊓U₂}`, `Γ(S, ⊤)`-linearly for the
+`appLE`-`toAlgebra` structures.  Its kernel is the concrete Čech
+`H⁰(X, 𝒪_X)` as a `Γ(S, ⊤)`-module; finite generation of this kernel is the
+**single `M`-independent anchor** (`hS0`) of the B3-H0 leaf — for
+`X = ℙ¹_A ⟶ S = Spec A` it says `Γ(ℙ¹_A, 𝒪)` is a finite `A`-module (true:
+`Γ(ℙ¹_A, 𝒪) ≅ A`, Stacks 01XZ-adjacent; the remaining sub-leaf). -/
+noncomputable def AffineCoverMVSquare.ringSectionDiffBase (V : X.AffineCoverMVSquare)
+    (p : X ⟶ S) :
+    letI := ((p.appLE ⊤ V.U₁ (le_top : V.U₁ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+    letI := ((p.appLE ⊤ V.U₂ (le_top : V.U₂ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+    letI := ((p.appLE ⊤ (V.U₁ ⊓ V.U₂) (le_top : V.U₁ ⊓ V.U₂ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+    (Γ(X, V.U₁) × Γ(X, V.U₂)) →ₗ[Γ(S, ⊤)] Γ(X, V.U₁ ⊓ V.U₂) :=
+  letI := ((p.appLE ⊤ V.U₁ (le_top : V.U₁ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+  letI := ((p.appLE ⊤ V.U₂ (le_top : V.U₂ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+  letI := ((p.appLE ⊤ (V.U₁ ⊓ V.U₂) (le_top : V.U₁ ⊓ V.U₂ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+  AlgebraicJacobian.TwoChart.cechDiff
+    (p.baseRingSectionsResAlgHom (inf_le_left : V.U₁ ⊓ V.U₂ ≤ V.U₁)).toLinearMap
+    (p.baseRingSectionsResAlgHom (inf_le_right : V.U₁ ⊓ V.U₂ ≤ V.U₂)).toLinearMap
+
+/-! ## §6. THE LEAF: `H⁰`-finiteness over a relative Laurent chart datum -/
+
+set_option maxHeartbeats 1600000 in
+-- Heartbeat headroom: the proof repeatedly crosses the `Γ`-carrier and
+-- `Module.compHom`/`toAlgebra` identifications (fleet elaboration recipe, as
+-- in `RelLaurentChartData.module_finite_h1`).
+/-- **`H⁰`-finiteness for a family with relative Laurent chart data**
+(the B3-H0 leaf, general form).  For `p : X ⟶ S` with relative Laurent chart
+data `D`, a quasi-coherent `M` with chart-finite section modules, a
+noetherian base ring, and the single `M`-independent anchor `hS0`
+(structure-sheaf Čech `H⁰` finite over the base), the Čech kernel
+`H⁰ = ker (moduleSectionDiffBase) = Γ(X, M)` is a finitely generated
+`Γ(S, ⊤)`-submodule.  This is the abstract Serre dévissage
+`TwoChart.fg_ker_cechDiff_of_laurent` instantiated on the wave-4 substrate:
+extension = `exists_pow_smul_eq_res` / `IsLocalization.surj`, torsion =
+`exists_pow_smul_eq_zero_of_res` / `map_eq_zero_iff`, spans = `D.span_pow_x/y`. -/
+theorem RelLaurentChartData.fg_ker_moduleSectionDiffBase {X S : Scheme.{u}} {p : X ⟶ S}
+    (D : RelLaurentChartData p) (M : X.Modules) [M.IsQuasicoherent]
+    (hnoeth : IsNoetherianRing Γ(S, ⊤))
+    (hfin₁ : Module.Finite Γ(X, D.V.U₁) Γ(M, D.V.U₁))
+    (hfin₂ : Module.Finite Γ(X, D.V.U₂) Γ(M, D.V.U₂))
+    (hS0 :
+      letI := ((p.appLE ⊤ D.V.U₁ (le_top : D.V.U₁ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+      letI := ((p.appLE ⊤ D.V.U₂ (le_top : D.V.U₂ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+      letI := ((p.appLE ⊤ (D.V.U₁ ⊓ D.V.U₂)
+        (le_top : D.V.U₁ ⊓ D.V.U₂ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+      (LinearMap.ker (D.V.ringSectionDiffBase p)).FG) :
+    letI := p.baseSectionsModule M D.V.U₁
+    letI := p.baseSectionsModule M D.V.U₂
+    letI := p.baseSectionsModule M (D.V.U₁ ⊓ D.V.U₂)
+    (LinearMap.ker (D.V.moduleSectionDiffBase p M)).FG := by
+  letI := p.baseSectionsModule M D.V.U₁
+  letI := p.baseSectionsModule M D.V.U₂
+  letI := p.baseSectionsModule M (D.V.U₁ ⊓ D.V.U₂)
+  letI iA₁ : Algebra Γ(S, ⊤) Γ(X, D.V.U₁) :=
+    ((p.appLE ⊤ D.V.U₁ (le_top : D.V.U₁ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+  letI iA₂ : Algebra Γ(S, ⊤) Γ(X, D.V.U₂) :=
+    ((p.appLE ⊤ D.V.U₂ (le_top : D.V.U₂ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+  letI iA₁₂ : Algebra Γ(S, ⊤) Γ(X, D.V.U₁ ⊓ D.V.U₂) :=
+    ((p.appLE ⊤ (D.V.U₁ ⊓ D.V.U₂) (le_top : D.V.U₁ ⊓ D.V.U₂ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+  haveI hT₁ : IsScalarTower Γ(S, ⊤) Γ(X, D.V.U₁) Γ(M, D.V.U₁) :=
+    IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
+  haveI hT₂ : IsScalarTower Γ(S, ⊤) Γ(X, D.V.U₂) Γ(M, D.V.U₂) :=
+    IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
+  haveI hT₁₂ : IsScalarTower Γ(S, ⊤) Γ(X, D.V.U₁ ⊓ D.V.U₂) Γ(M, D.V.U₁ ⊓ D.V.U₂) :=
+    IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
+  haveI := hfin₁
+  haveI := hfin₂
+  haveI := hnoeth
+  set ρ₀ := p.baseRingSectionsResAlgHom (inf_le_left : D.V.U₁ ⊓ D.V.U₂ ≤ D.V.U₁) with hρ₀
+  set ρ₁ := p.baseRingSectionsResAlgHom (inf_le_right : D.V.U₁ ⊓ D.V.U₂ ≤ D.V.U₂) with hρ₁
+  set σ₀ := p.baseSectionsRes M (inf_le_left : D.V.U₁ ⊓ D.V.U₂ ≤ D.V.U₁) with hσ₀def
+  set σ₁ := p.baseSectionsRes M (inf_le_right : D.V.U₁ ⊓ D.V.U₂ ≤ D.V.U₂) with hσ₁def
+  -- the coordinates are mutually inverse on the overlap
+  have htu : ρ₀ D.x * ρ₁ D.y = 1 := D.res_x_mul_res_y
+  -- semilinearity of the section restrictions
+  have hσ₀sl : ∀ (c : Γ(X, D.V.U₁)) (m : Γ(M, D.V.U₁)), σ₀ (c • m) = ρ₀ c • σ₀ m := by
+    intro c m
+    rw [hσ₀def, p.baseSectionsRes_apply, p.baseSectionsRes_apply, Scheme.Modules.map_smul]
+    rfl
+  have hσ₁sl : ∀ (c : Γ(X, D.V.U₂)) (m : Γ(M, D.V.U₂)), σ₁ (c • m) = ρ₁ c • σ₁ m := by
+    intro c m
+    rw [hσ₁def, p.baseSectionsRes_apply, p.baseSectionsRes_apply, Scheme.Modules.map_smul]
+    rfl
+  -- module extension (localization surjectivity on sections)
+  have hext₀ : ∀ v : Γ(M, D.V.U₁ ⊓ D.V.U₂),
+      ∃ (n : ℕ) (m : Γ(M, D.V.U₁)), ρ₀ D.x ^ n • v = σ₀ m := by
+    intro v
+    obtain ⟨n, m, hm⟩ := Scheme.Modules.exists_pow_smul_eq_res M
+      D.V.isAffineOpen_U₁ D.x D.inf_eq_basicOpen_x inf_le_left v
+    exact ⟨n, m, hm⟩
+  have hext₁ : ∀ v : Γ(M, D.V.U₁ ⊓ D.V.U₂),
+      ∃ (n : ℕ) (m : Γ(M, D.V.U₂)), ρ₁ D.y ^ n • v = σ₁ m := by
+    intro v
+    obtain ⟨n, m, hm⟩ := Scheme.Modules.exists_pow_smul_eq_res M
+      D.V.isAffineOpen_U₂ D.y D.inf_eq_basicOpen_y inf_le_right v
+    exact ⟨n, m, hm⟩
+  -- module torsion (localization kernels on sections)
+  have htor₀ : ∀ m : Γ(M, D.V.U₁), σ₀ m = 0 → ∃ n : ℕ, D.x ^ n • m = 0 := fun m hm =>
+    Scheme.Modules.exists_pow_smul_eq_zero_of_res M
+      D.V.isAffineOpen_U₁ D.x D.inf_eq_basicOpen_x inf_le_left m hm
+  have htor₁ : ∀ m : Γ(M, D.V.U₂), σ₁ m = 0 → ∃ n : ℕ, D.y ^ n • m = 0 := fun m hm =>
+    Scheme.Modules.exists_pow_smul_eq_zero_of_res M
+      D.V.isAffineOpen_U₂ D.y D.inf_eq_basicOpen_y inf_le_right m hm
+  -- ring extension and torsion
+  have hRext₀ : ∀ c : Γ(X, D.V.U₁ ⊓ D.V.U₂),
+      ∃ (n : ℕ) (q : Γ(X, D.V.U₁)), ρ₀ D.x ^ n * c = ρ₀ q := by
+    intro c
+    obtain ⟨n, q, hq⟩ := exists_pow_mul_res_eq_res
+      D.V.isAffineOpen_U₁ D.x D.inf_eq_basicOpen_x inf_le_left c
+    exact ⟨n, q, hq⟩
+  have hRext₁ : ∀ c : Γ(X, D.V.U₁ ⊓ D.V.U₂),
+      ∃ (n : ℕ) (q : Γ(X, D.V.U₂)), ρ₁ D.y ^ n * c = ρ₁ q := by
+    intro c
+    obtain ⟨n, q, hq⟩ := exists_pow_mul_res_eq_res
+      D.V.isAffineOpen_U₂ D.y D.inf_eq_basicOpen_y inf_le_right c
+    exact ⟨n, q, hq⟩
+  have hRtor₀ : ∀ c : Γ(X, D.V.U₁), ρ₀ c = 0 → ∃ n : ℕ, D.x ^ n * c = 0 := fun c hc =>
+    exists_pow_mul_eq_zero_of_res_eq_zero
+      D.V.isAffineOpen_U₁ D.x D.inf_eq_basicOpen_x inf_le_left c hc
+  -- the abstract dévissage
+  have key := AlgebraicJacobian.TwoChart.fg_ker_cechDiff_of_laurent
+    (A := Γ(S, ⊤)) ρ₀ ρ₁ D.x D.y htu D.span_pow_x σ₀ σ₁ hσ₀sl hσ₁sl
+    hext₀ hext₁ htor₀ htor₁ hRext₀ hRext₁ hRtor₀ hS0
+  -- the two kernels agree
+  have hkereq : LinearMap.ker (D.V.moduleSectionDiffBase p M)
+      = LinearMap.ker (AlgebraicJacobian.TwoChart.cechDiff σ₀ σ₁) := by
+    refine Submodule.ext fun q => ?_
+    rw [LinearMap.mem_ker, LinearMap.mem_ker]
+    have happ : D.V.moduleSectionDiffBase p M q
+        = AlgebraicJacobian.TwoChart.cechDiff σ₀ σ₁ q := rfl
+    rw [happ]
+  rw [hkereq]
+  exact key
+
+end Scheme
+
+end AlgebraicGeometry
