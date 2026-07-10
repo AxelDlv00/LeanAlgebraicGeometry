@@ -17,6 +17,8 @@ import AlgebraicJacobian.Cohomology.AffineVanishing
 import AlgebraicJacobian.Cohomology.OverOpen
 import AlgebraicJacobian.Cohomology.MayerVietoris
 import AlgebraicJacobian.Cohomology.TwoCover
+import AlgebraicJacobian.Cohomology.FinitenessP1
+import AlgebraicJacobian.Cohomology.Finiteness
 import AlgebraicJacobian.Challenge
 
 /-!

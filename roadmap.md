@@ -19,6 +19,7 @@ closed — the AJC in-tree copies (T8, commit `eed5383`), the `GR-Quot-Closure` 
 
 | Project | Stage | Open `sorry` |
 | --- | --- | --- |
+| Algebraic-Jacobian-Challenge-Rebuild | prover ✨ | 13 — all of them the protected `Challenge.lean` targets; **zero infrastructure sorries**. Wave 1 complete 2026-07-11 (see the rebuild section below) |
 | Algebraic-Jacobian-Challenge | prover | 25 ✨ *(2026-07-07 fleet session: 30→25 — closed `isFiniteTypeGeometricallyIrreducible`, Stacks 02KE, `Pic0.bundle`, `rationalMap_order_finite_support` (after an honest `[IsNoetherian]` re-pin), `pullback_kernel_isLocallyTrivial`; I-0118 QuotScheme restated faithfully; NEW adelic Riemann–Roch lane (`RiemannRoch/Adelic/*`) with the H¹-finiteness keystone `LaurentChartData.module_finite_H1Cok` proved — see the `RiemannRoch_Adelic` blueprint chapter and inbox I-0134)* |
 | Cech-Cohomology | ✅ complete · merged → AJC | 0 — standalone green, v4.31-clean ✨ |
 | Line-Bundle-Comparison-Iso | prover | 3 ✨ |
@@ -49,6 +50,32 @@ ordering now live in the dedicated **[Related-Papers roadmap](SubProjects/Relate
 so this scope roadmap stays focused on the Jacobian-challenge critical path.
 
 ---
+
+## Algebraic-Jacobian-Challenge-Rebuild  *(from-scratch rebuild — prover stage, 13 open `sorry` = exactly the protected `Challenge.lean` targets)* ✨
+
+**Goal:** the EXTENDED challenge (core eight + `Jacobian.functor` + field base change with
+cocycle coherence), rebuilt clean/general/mathlib-idiomatic per the `rebuild` task charter.
+Route fixed in `informal/route-decision.md`: `J := Pic⁰` via the étale-sheafified Picard
+functor (curve-specialized Kleiman, no Quot schemes), Albanese via Milne III.6.1,
+`genus := dim_k H¹(C,𝒪_C)`.
+
+- [x] **Wave 1 — curve substrate + genus lane, COMPLETE** ✨ *(2026-07-11)* — smooth ⇒
+  geometrically reduced/integral; `Γ(C,𝒪_C) ≅ k`; ℙ¹ + Laurent charts; **finite `π : C → ℙ¹`**
+  (`exists_isFinite_toP1`, via a new unramified-over-Dedekind brick, RationalMap spreading-out,
+  topological quasi-finiteness + ZMT); `ModuleCat k` sheaf cohomology with affine `H¹'` vanishing;
+  Mayer–Vietoris (0,1)-slice + two-cover `H1Cok` bridge (no affine-intersection hypothesis!);
+  two-lattice ladder ⇒ **`Module.Finite k H¹(C,𝒪_C)`** — `genus` defined AND correct, axiom-clean.
+- [x] **Wave 2 item 6 — rigidity** ✨ — Mumford Form-I rigidity + Milne I 1.2 (pointed morphism
+  of group schemes is a homomorphism), hypotheses weaker than Milne's.
+- [~] **Wave 2 item 7 — χ-ledger / RR-lite** (next; twisted two-cover carrier landed as input)
+- [~] **Wave 3 — Picard functor** (design spec in progress: cocycle `Ȟ¹(𝒪ˣ)` carrier,
+  H_T-coset relative functor, pinned `RepresentableBy` datum; capability survey + old-draft
+  post-mortem lessons committed in `informal/`)
+- [ ] **Waves 4–7** — representability [RG], Pic⁰ abelian-variety package [RG], Albanese [RG],
+  functorial layer (cheap by design given the pin)
+
+Blueprint: Challenge/BaseChange/Curves/Algebra/Cohomology/AbelianVariety chapters all synced
+1-to-1 with the Lean, `\leanok` only after kernel checks, `\source{}` read-before-cite.
 
 ## Algebraic-Jacobian-Challenge  *(core engine — prover stage, 25 open `sorry` as of 2026-07-07)* ✨
 
