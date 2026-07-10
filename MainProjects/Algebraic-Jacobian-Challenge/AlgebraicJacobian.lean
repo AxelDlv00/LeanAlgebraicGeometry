@@ -53,10 +53,13 @@ import AlgebraicJacobian.Picard.RelativeSpec
 import AlgebraicJacobian.Picard.SectionRingUniversal
 import AlgebraicJacobian.Picard.StructureSheafPushforward
 import AlgebraicJacobian.Picard.RigidPushforward
+import AlgebraicJacobian.Picard.RigidPushforwardTransfer
+import AlgebraicJacobian.Picard.TwoTermFiniteFree
 import AlgebraicJacobian.Picard.SemicontinuityH0
 import AlgebraicJacobian.Picard.DivDegree
 import AlgebraicJacobian.Picard.FinitePresentationFunctor
 import AlgebraicJacobian.Picard.FiniteGaloisQuotient
+import AlgebraicJacobian.Picard.FiniteGaloisQuotientAffine
 import AlgebraicJacobian.Picard.LineBundlePullback
 import AlgebraicJacobian.Picard.TensorObjSubstrate
 import AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse
@@ -143,6 +146,7 @@ import AlgebraicJacobian.RiemannRoch.Adelic.CechComparisonGate
 import AlgebraicJacobian.RiemannRoch.Adelic.CechAcyclicInstance
 import AlgebraicJacobian.RiemannRoch.Adelic.GateInstances
 import AlgebraicJacobian.RiemannRoch.Adelic.GenusUnconditional
+import AlgebraicJacobian.RiemannRoch.CurveBaseChange
 import AlgebraicJacobian.Picard.InvertibleSectionLocalization
 import AlgebraicJacobian.Picard.GaloisDescent.SemilinearModules
 import AlgebraicJacobian.Picard.GaloisDescent.SemilinearAlgebras
