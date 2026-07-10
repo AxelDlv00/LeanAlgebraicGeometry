@@ -8,6 +8,7 @@ import AlgebraicJacobian.Picard.IdentityComponent
 import AlgebraicJacobian.Picard.TangentSpaceDualNumbers
 import AlgebraicJacobian.Picard.TangentSpaceIdentitySection
 import AlgebraicJacobian.Picard.Pic0TangentSpace
+import AlgebraicJacobian.Picard.Pic0DualNumberCocycle
 import AlgebraicJacobian.RiemannRoch.Adelic.GenusUnconditional
 import AlgebraicJacobian.Genus
 
@@ -297,6 +298,78 @@ theorem pointedDualNumberPoints_equiv_picScheme {k : Type u} [Field k]
   haveI := hopen
   exact ⟨⟨f, pointedDualNumberPointsEquivOfOpenImmersion f (identitySection C)⟩⟩
 
+/-- **Axiom-clean (through the `HasPicScheme` gate).** The Kleiman §5
+Thm.~5.11 **representability leg, applied**: the pointed dual-number points
+of `Pic⁰_{C/k}` at the identity section — the Zariski tangent space
+`T₀ Pic⁰_{C/k}` in functor-of-points form — biject with the **kernel** of the
+restriction homomorphism
+
+```
+Pic^♯_{C/k}(Spec k[ε]) →+ Pic^♯_{C/k}(Spec k)
+```
+
+of the relative Picard presheaf along the `ε ↦ 0` point. Composite of
+
+1. the open-immersion transport `T₀ Pic⁰ ≃ T₀ Pic` along the clopen inclusion
+   `Pic⁰_{C/k} ↪ Pic_{C/k}` (`pointedDualNumberPointsEquivOfOpenImmersion`,
+   `Picard/Pic0TangentSpace.lean`), and
+2. the represented-functor kernel description
+   (`pointedDualNumberPointsEquivAddKernel`,
+   `Picard/Pic0DualNumberCocycle.lean`) at the FGA representability witness
+   `PicScheme.representable C : picSharp C ≅ (T ⟶ Pic_{C/k})` — note
+   `picSharp C` is *by definition* the set-valued shadow of the group-valued
+   `PicSharp.relPresheaf C`, so the kernel of the group-valued restriction is
+   meaningful.
+
+⚠ This is a bijection of **sets** — it does not by itself transport `finrank`
+(a bare `Equiv` does not determine dimension over an infinite field). The
+`k`-linearity bookkeeping (Mumford's `a · [L_ε] := (ε ↦ aε)^* [L_ε]` module
+structure, `overDualNumberScale` of `Picard/Pic0DualNumberCocycle.lean`)
+remains with `finrank_cotangentSpace_eq_finrank_hModuleOne` below. -/
+theorem pointedDualNumberPoints_equiv_relPicKernel {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C] :
+    Nonempty (pointedDualNumberPoints (Pic0Scheme C) (identitySection C) ≃
+      {a : (PicSharp.relPresheaf C).obj (Opposite.op (overDualNumber k)) //
+        ((PicSharp.relPresheaf C).map (overDualNumberZero k).op).hom a = 0}) := by
+  obtain ⟨f, hopen, -⟩ :=
+    GroupScheme.IdentityComponent.isOpenSubgroupScheme (PicScheme C)
+  haveI := hopen
+  have he' : (identitySection C ≫ f.left) ≫ (PicScheme C).hom
+      = 𝟙 (Spec (.of k)) :=
+    (Category.assoc _ _ _).trans
+      ((congrArg (fun t => identitySection C ≫ t) (Over.w f)).trans
+        (identitySection_isSection C))
+  exact ⟨(pointedDualNumberPointsEquivOfOpenImmersion f (identitySection C)).trans
+    (pointedDualNumberPointsEquivAddKernel (PicScheme C)
+      (PicSharp.relPresheaf C) (PicScheme.representable C) he')⟩
+
+/-- **Axiom-clean (through the `HasPicScheme` gate).** The two proved halves
+of Kleiman §5 Thm.~5.11 composed: the `κ(e)`-linear dual of the cotangent
+space `m_e/m_e²` at the identity of `Pic⁰_{C/k}` bijects with the kernel of
+`Pic^♯_{C/k}(Spec k[ε]) →+ Pic^♯_{C/k}(Spec k)` — the Stacks 0B28 dictionary
+(`pointedDualNumberPoints_equiv_cotangentSpaceDual`) chained through the
+tangent space with the representability leg
+(`pointedDualNumberPoints_equiv_relPicKernel`). Same linearity caveat as the
+latter: this is a bijection of sets. -/
+theorem cotangentSpaceDual_equiv_relPicKernel {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C] :
+    Nonempty (Module.Dual
+        (IsLocalRing.ResidueField
+          ((Pic0Scheme C).left.presheaf.stalk ((identitySection C).base default)))
+        (IsLocalRing.CotangentSpace
+          ((Pic0Scheme C).left.presheaf.stalk ((identitySection C).base default)))
+      ≃ {a : (PicSharp.relPresheaf C).obj (Opposite.op (overDualNumber k)) //
+          ((PicSharp.relPresheaf C).map (overDualNumberZero k).op).hom a = 0}) := by
+  obtain ⟨φ⟩ := pointedDualNumberPoints_equiv_cotangentSpaceDual C
+  obtain ⟨ψ⟩ := pointedDualNumberPoints_equiv_relPicKernel C
+  exact ⟨φ.symm.trans ψ⟩
+
 /-- **Sorry-free source (carries the FGA existential's `sorryAx`).** The Picard
 scheme `Pic_{C/k}` is separated over `k`. Kleiman delivers this as part of the
 §4 representability package ("Then `Pic_{X/k}` is separated, ..."); its home is
@@ -422,6 +495,61 @@ theorem tangentSpaceCotangentDual {k : Type u} [Field k]
       (GroupScheme.identitySection_comp (Pic0Scheme C))
       (congrArg _ (Subsingleton.elim _ _))⟩
 
+/-- **The Kleiman §5 Thm 5.11 dimension identity**
+`dim_{κ(e)} m_e/m_e² = dim_k H¹(C, 𝒪_C)` at the identity section of
+`Pic⁰_{C/k}` — the single remaining `sorry` of the tangent-space keystone
+`tangentSpaceIso` (wave-4 W12-finrank reduction; the former in-line sorry of
+`tangentSpaceIso`, now the smallest named sub-lemma).
+
+STATE OF THE REDUCTION (what is PROVED around this sorry):
+
+* set-level, both directions:
+  `Dual_{κ(e)}(m_e/m_e²) ≃ T₀ Pic⁰ ≃ T₀ Pic ≃
+     ker(Pic^♯(Spec k[ε]) →+ Pic^♯(Spec k))`
+  — `cotangentSpaceDual_equiv_relPicKernel` above (Stacks 0B28 dictionary +
+  open-immersion transport + FGA representability leg);
+* the Mumford `ε ↦ aε` scaling substrate on that kernel, with its
+  multiplicative-monoid action laws (`overDualNumberScale`,
+  `relPicKernelSMul`, `Picard/Pic0DualNumberCocycle.lean`);
+* the truncated-exponential unit splitting `(R[ε])ˣ ≃* Rˣ × (R, +)` with its
+  naturality (`Picard/DualNumberUnits.lean`);
+* the Čech target `H¹(C, 𝒪_C) ≃ₗ[k] H1Cok` on any 2-affine cover
+  (`AffineCoverMVSquare.hModuleOneEquivH1Cok_curve`,
+  `RiemannRoch/Adelic/GenusUnconditional.lean`) and finite-dimensionality of
+  both sides (`finiteDimensional_cotangentSpace_of_locallyOfFiniteType`,
+  `instModuleFiniteHModuleOne`).
+
+REMAINING MATHEMATICAL CONTENT (Kleiman §5, proof of Thm 5.11):
+
+1. **Cocycle leg**: an invertible sheaf on `C ×_k Spec k[ε]`, restricted
+   trivial along `ε ↦ 0`, is trivial on the two charts of a 2-affine cover
+   (nilpotent thickening does not change the underlying space) and its
+   transition unit lies in `(Γ(U₁ ⊓ U₂, 𝒪_C)[ε])ˣ` with constant term the
+   transition of the reduction; the truncated exponential then identifies
+   `ker(Pic(C_ε) → Pic(C))` with `Γ(U₁ ⊓ U₂, 𝒪_C)/(coboundaries) = H1Cok`,
+   additively and `k`-equivariantly for the `ε ↦ aε` action.
+2. **Linearity bookkeeping**: the composite of
+   `cotangentSpaceDual_equiv_relPicKernel` with the leg-1 identification is
+   `k`-semilinear along `κ(e) ≃+* k`
+   (`residueFieldIso_of_section_over_field`), where the kernel carries the
+   Mumford structure; equal `finrank` then follows from
+   `finrank κ(e) Dual(V) = finrank κ(e) V` (`Subspace.dual_finrank_eq`) and
+   `LinearEquiv.finrank_eq`-style transport.
+
+Neither step weakens the pinned `tangentSpaceIso`; both are multi-session. -/
+theorem finrank_cotangentSpace_eq_finrank_hModuleOne {k : Type u} [Field k]
+    (C : Over (Spec (.of k)))
+    [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
+    [GeometricallyIntegral C.hom] [HasPicScheme C]
+    [PicScheme.PicSchemeLocallyOfFiniteType C] :
+    Module.finrank
+        (IsLocalRing.ResidueField
+          ((Pic0Scheme C).left.presheaf.stalk ((identitySection C).base default)))
+        (IsLocalRing.CotangentSpace
+          ((Pic0Scheme C).left.presheaf.stalk ((identitySection C).base default)))
+      = Module.finrank k (Scheme.HModule k (Scheme.toModuleKSheaf C) 1) := by
+  sorry
+
 /-- **Tangent space at the identity: `T₀ Pic⁰_{C/k} ≅ H¹(C, 𝒪_C)`.**
 
 The Kleiman §5 Thm.~`thm:tgtsp` tangent-space isomorphism. For a smooth
@@ -476,8 +604,8 @@ theorem tangentSpaceIso {k : Type u} [Field k]
       (Scheme.HModule k (Scheme.toModuleKSheaf C) 1) ?_).map
     fun φ => ⟨identitySection C, φ⟩
   -- Kleiman §5 Thm 5.11 dimension identity `dim_{κ(e)} m_e/m_e² = dim_k H¹(C, 𝒪_C)`:
-  -- representability + truncated-exponential Čech-cocycle legs, see docstring.
-  exact sorry
+  -- the named sub-lemma above (its docstring records the reduction state).
+  exact finrank_cotangentSpace_eq_finrank_hModuleOne C
 
 /-- **Smoothness of `Pic⁰_{C/k}`.**
 
