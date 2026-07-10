@@ -163,3 +163,172 @@ lemma toModuleKSheafOfModules_obj_map_apply {C : Over (Spec (CommRingCat.of k))}
   rfl
 
 end AlgebraicGeometry.Scheme
+
+/-! ## The quasi-coherent Čech section-identification kit
+
+The module analogue of the structure-sheaf kit of
+`CechCoboundarySplitting.lean` (`IsAffineOpen.dCoeffSectionsLinearEquiv` and
+its `dCoface` compatibility): over an affine open `U`, the abstract localised
+Čech coefficient `SectionCechModule.dCoeff g Γ(M, U) σ = Γ(M, U)_{g_σ}` of a
+**quasi-coherent** `M : X.Modules` is `Γ(X, U)`-linearly the honest section
+module `Γ(M, D(g_σ))`, with the Čech coface identified with the presheaf
+restriction of `M`.  The quasi-coherence input is the gap2 keystone
+`Scheme.Modules.isLocalizedModule_basicOpen` (Stacks 01HV(4)/01I8,
+`Picard/QuotScheme.lean`).
+
+The `Γ(X, U)`-module structure on `Γ(M, D(f))` is `Module.compHom` along the
+canonical algebra map `Γ(X, U) → Γ(X, D(f))` (the presheaf restriction),
+carried as a `letI` in each statement — the caller-supplied-instance
+discipline of `restrictBasicOpenₗ`. -/
+
+namespace AlgebraicGeometry
+
+open AlgebraicGeometry.Scheme
+
+variable {X : Scheme.{u}} {U : X.Opens}
+
+/-- Double restriction of sections of a sheaf of modules collapses to the
+single restriction (the `M.presheaf` analogue of
+`map_homOfLE_map_homOfLE_apply`). -/
+lemma Scheme.Modules.map_homOfLE_map_homOfLE_apply (M : X.Modules)
+    {V W Z : X.Opens} (hVW : V ≤ W) (hWZ : W ≤ Z) (z : Γ(M, Z)) :
+    M.presheaf.map (homOfLE hVW).op (M.presheaf.map (homOfLE hWZ).op z)
+      = M.presheaf.map (homOfLE (hVW.trans hWZ)).op z := by
+  rw [← CategoryTheory.comp_apply, ← M.presheaf.map_comp, ← op_comp, homOfLE_comp]
+
+/-- The presheaf restriction of `M` between nested basic-open section modules,
+as a `Γ(X, U)`-linear map for the `compHom` module structures.  The module
+analogue of `Scheme.basicOpenResAlgHom`. -/
+noncomputable def Scheme.Modules.basicOpenResₗ (M : X.Modules) {f₁ f₂ : Γ(X, U)}
+    (h : X.basicOpen f₂ ≤ X.basicOpen f₁) :
+    letI : Module Γ(X, U) Γ(M, X.basicOpen f₁) :=
+      Module.compHom _ (algebraMap Γ(X, U) Γ(X, X.basicOpen f₁))
+    letI : Module Γ(X, U) Γ(M, X.basicOpen f₂) :=
+      Module.compHom _ (algebraMap Γ(X, U) Γ(X, X.basicOpen f₂))
+    Γ(M, X.basicOpen f₁) →ₗ[Γ(X, U)] Γ(M, X.basicOpen f₂) :=
+  letI : Module Γ(X, U) Γ(M, X.basicOpen f₁) :=
+    Module.compHom _ (algebraMap Γ(X, U) Γ(X, X.basicOpen f₁))
+  letI : Module Γ(X, U) Γ(M, X.basicOpen f₂) :=
+    Module.compHom _ (algebraMap Γ(X, U) Γ(X, X.basicOpen f₂))
+  { toFun := fun z => M.presheaf.map (homOfLE h).op z
+    map_add' := fun z₁ z₂ => map_add _ z₁ z₂
+    map_smul' := fun r z => by
+      show M.presheaf.map (homOfLE h).op
+            ((algebraMap Γ(X, U) Γ(X, X.basicOpen f₁) r) • z)
+        = (algebraMap Γ(X, U) Γ(X, X.basicOpen f₂) r) •
+            M.presheaf.map (homOfLE h).op z
+      rw [Scheme.Modules.map_smul M (homOfLE h)
+        (algebraMap Γ(X, U) Γ(X, X.basicOpen f₁) r) z]
+      congr 1
+      rw [Scheme.algebraMap_section_basicOpen, Scheme.algebraMap_section_basicOpen,
+        ← CommRingCat.comp_apply, ← X.presheaf.map_comp, ← op_comp, homOfLE_comp] }
+
+@[simp] lemma Scheme.Modules.basicOpenResₗ_apply (M : X.Modules) {f₁ f₂ : Γ(X, U)}
+    (h : X.basicOpen f₂ ≤ X.basicOpen f₁) (z : Γ(M, X.basicOpen f₁)) :
+    Scheme.Modules.basicOpenResₗ M h z = M.presheaf.map (homOfLE h).op z :=
+  rfl
+
+/-- **Čech coefficients of a quasi-coherent module are section modules**: over
+an affine open `U`, the abstract Čech coefficient
+`SectionCechModule.dCoeff g Γ(M, U) σ = Γ(M, U)_{g_σ}` of a quasi-coherent
+`M : X.Modules` is `Γ(X, U)`-linearly the honest section module
+`Γ(M, D(g_σ))`.  Sends `x/1` to the restriction of `x`
+(`dCoeffModuleSectionsLinearEquiv_mk_one`) and intertwines the Čech coface
+with the presheaf restriction of `M`
+(`dCoeffModuleSectionsLinearEquiv_dCoface`).  This is the quasi-coherence
+brick of the degree-one vanishing: the module analogue of
+`IsAffineOpen.dCoeffSectionsLinearEquiv`, powered by the gap2 keystone
+`Scheme.Modules.isLocalizedModule_basicOpen`. -/
+noncomputable def IsAffineOpen.dCoeffModuleSectionsLinearEquiv (hU : IsAffineOpen U)
+    (M : X.Modules) [M.IsQuasicoherent] {ι : Type*} (g : ι → Γ(X, U))
+    {m : ℕ} (σ : Fin m → ι) :
+    letI : Module Γ(X, U) Γ(M, X.basicOpen (CechLocalized.sprod g σ)) :=
+      Module.compHom _ (algebraMap Γ(X, U) Γ(X, X.basicOpen (CechLocalized.sprod g σ)))
+    SectionCechModule.dCoeff g (Γ(M, U) : Type u) σ
+      ≃ₗ[Γ(X, U)] Γ(M, X.basicOpen (CechLocalized.sprod g σ)) :=
+  letI : Module Γ(X, U) Γ(M, X.basicOpen (CechLocalized.sprod g σ)) :=
+    Module.compHom _ (algebraMap Γ(X, U) Γ(X, X.basicOpen (CechLocalized.sprod g σ)))
+  letI : IsScalarTower Γ(X, U) Γ(X, X.basicOpen (CechLocalized.sprod g σ))
+      Γ(M, X.basicOpen (CechLocalized.sprod g σ)) :=
+    IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
+  haveI := Scheme.Modules.isLocalizedModule_basicOpen M hU (CechLocalized.sprod g σ)
+  IsLocalizedModule.iso (Submonoid.powers (CechLocalized.sprod g σ))
+    (Scheme.Modules.restrictBasicOpenₗ M (CechLocalized.sprod g σ))
+
+/-- The quasi-coherent section identification sends the localisation structure
+map `x ↦ x/1` to the presheaf restriction `Γ(M, U) → Γ(M, D(g_σ))`. -/
+@[simp] lemma IsAffineOpen.dCoeffModuleSectionsLinearEquiv_mk_one (hU : IsAffineOpen U)
+    (M : X.Modules) [M.IsQuasicoherent] {ι : Type*} (g : ι → Γ(X, U))
+    {m : ℕ} (σ : Fin m → ι) (x : Γ(M, U)) :
+    hU.dCoeffModuleSectionsLinearEquiv M g σ (LocalizedModule.mk x 1)
+      = M.presheaf.map
+          (homOfLE (X.basicOpen_le (CechLocalized.sprod g σ))).op x := by
+  letI : Module Γ(X, U) Γ(M, X.basicOpen (CechLocalized.sprod g σ)) :=
+    Module.compHom _ (algebraMap Γ(X, U) Γ(X, X.basicOpen (CechLocalized.sprod g σ)))
+  letI : IsScalarTower Γ(X, U) Γ(X, X.basicOpen (CechLocalized.sprod g σ))
+      Γ(M, X.basicOpen (CechLocalized.sprod g σ)) :=
+    IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
+  haveI := Scheme.Modules.isLocalizedModule_basicOpen M hU (CechLocalized.sprod g σ)
+  exact IsLocalizedModule.iso_mk_one _ _ x
+
+/-- **Coface = restriction, quasi-coherent form**: under the section
+identification `dCoeffModuleSectionsLinearEquiv`, the Čech coface
+`dCoface : Γ(M, U)_{g_{σ∘dⱼ}} → Γ(M, U)_{g_σ}` is the presheaf restriction
+`Γ(M, D(g_{σ∘dⱼ})) → Γ(M, D(g_σ))` of `M` along `D(g_σ) ⊆ D(g_{σ∘dⱼ})`. -/
+lemma IsAffineOpen.dCoeffModuleSectionsLinearEquiv_dCoface (hU : IsAffineOpen U)
+    (M : X.Modules) [M.IsQuasicoherent] {ι : Type*} (g : ι → Γ(X, U))
+    {m : ℕ} (σ : Fin (m + 1) → ι) (j : Fin (m + 1))
+    (x : SectionCechModule.dCoeff g (Γ(M, U) : Type u) (σ ∘ j.succAbove)) :
+    hU.dCoeffModuleSectionsLinearEquiv M g σ
+        (SectionCechModule.dCoface g (Γ(M, U) : Type u) m σ j x)
+      = M.presheaf.map (homOfLE (Scheme.basicOpen_le_basicOpen_of_dvd
+            (CechLocalized.sprod_succAbove_dvd g σ j))).op
+          (hU.dCoeffModuleSectionsLinearEquiv M g (σ ∘ j.succAbove) x) := by
+  letI : Module Γ(X, U) Γ(M, X.basicOpen (CechLocalized.sprod g σ)) :=
+    Module.compHom _ (algebraMap Γ(X, U) Γ(X, X.basicOpen (CechLocalized.sprod g σ)))
+  letI : Module Γ(X, U) Γ(M, X.basicOpen (CechLocalized.sprod g (σ ∘ j.succAbove))) :=
+    Module.compHom _
+      (algebraMap Γ(X, U) Γ(X, X.basicOpen (CechLocalized.sprod g (σ ∘ j.succAbove))))
+  letI : IsScalarTower Γ(X, U) Γ(X, X.basicOpen (CechLocalized.sprod g σ))
+      Γ(M, X.basicOpen (CechLocalized.sprod g σ)) :=
+    IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
+  letI : IsScalarTower Γ(X, U) Γ(X, X.basicOpen (CechLocalized.sprod g (σ ∘ j.succAbove)))
+      Γ(M, X.basicOpen (CechLocalized.sprod g (σ ∘ j.succAbove))) :=
+    IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
+  haveI instσ := Scheme.Modules.isLocalizedModule_basicOpen M hU (CechLocalized.sprod g σ)
+  haveI instτ := Scheme.Modules.isLocalizedModule_basicOpen M hU
+    (CechLocalized.sprod g (σ ∘ j.succAbove))
+  have hdvd := CechLocalized.sprod_succAbove_dvd g σ j
+  have key : (hU.dCoeffModuleSectionsLinearEquiv M g σ).toLinearMap
+        ∘ₗ SectionCechModule.dCoface g (Γ(M, U) : Type u) m σ j
+      = (Scheme.Modules.basicOpenResₗ M (Scheme.basicOpen_le_basicOpen_of_dvd hdvd))
+        ∘ₗ (hU.dCoeffModuleSectionsLinearEquiv M g (σ ∘ j.succAbove)).toLinearMap := by
+    apply IsLocalizedModule.ext
+      (Submonoid.powers (CechLocalized.sprod g (σ ∘ j.succAbove)))
+      (LocalizedModule.mkLinearMap _ _)
+      ((AwayComparison.Inverts.of_dvd hdvd
+        (Scheme.Modules.restrictBasicOpenₗ M (CechLocalized.sprod g σ))).isUnit_powers)
+    ext y
+    simp only [LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply]
+    rw [show (LocalizedModule.mkLinearMap
+          (Submonoid.powers (CechLocalized.sprod g (σ ∘ j.succAbove)))
+          (Γ(M, U) : Type u)) y
+        = LocalizedModule.mk y 1 from rfl]
+    rw [show SectionCechModule.dCoface g (Γ(M, U) : Type u) m σ j (LocalizedModule.mk y 1)
+        = LocalizedModule.mk y 1 from
+      AwayComparison.comparison_apply
+        (LocalizedModule.mkLinearMap
+          (Submonoid.powers (CechLocalized.sprod g (σ ∘ j.succAbove))) (Γ(M, U) : Type u))
+        (LocalizedModule.mkLinearMap
+          (Submonoid.powers (CechLocalized.sprod g σ)) (Γ(M, U) : Type u))
+        (AwayComparison.Inverts.of_dvd (CechLocalized.sprod_succAbove_dvd g σ j)
+          (LocalizedModule.mkLinearMap
+            (Submonoid.powers (CechLocalized.sprod g σ)) (Γ(M, U) : Type u)))
+        y]
+    rw [hU.dCoeffModuleSectionsLinearEquiv_mk_one M g σ y,
+      hU.dCoeffModuleSectionsLinearEquiv_mk_one M g (σ ∘ j.succAbove) y,
+      Scheme.Modules.basicOpenResₗ_apply]
+    exact (Scheme.Modules.map_homOfLE_map_homOfLE_apply M _ _ y).symm
+  exact DFunLike.congr_fun key x
+
+end AlgebraicGeometry
