@@ -55,6 +55,7 @@ import AlgebraicJacobian.Picard.StructureSheafPushforward
 import AlgebraicJacobian.Picard.RigidPushforward
 import AlgebraicJacobian.Picard.SemicontinuityH0
 import AlgebraicJacobian.Picard.DivDegree
+import AlgebraicJacobian.Picard.FinitePresentationFunctor
 import AlgebraicJacobian.Picard.FiniteGaloisQuotient
 import AlgebraicJacobian.Picard.LineBundlePullback
 import AlgebraicJacobian.Picard.TensorObjSubstrate
@@ -140,6 +141,8 @@ import AlgebraicJacobian.RiemannRoch.Adelic.NonconstantToP1
 import AlgebraicJacobian.RiemannRoch.Adelic.GenusFiniteness
 import AlgebraicJacobian.RiemannRoch.Adelic.CechComparisonGate
 import AlgebraicJacobian.RiemannRoch.Adelic.CechAcyclicInstance
+import AlgebraicJacobian.RiemannRoch.Adelic.GateInstances
+import AlgebraicJacobian.RiemannRoch.Adelic.GenusUnconditional
 import AlgebraicJacobian.Picard.InvertibleSectionLocalization
 import AlgebraicJacobian.Picard.GaloisDescent.SemilinearModules
 import AlgebraicJacobian.Picard.GaloisDescent.SemilinearAlgebras
