@@ -730,4 +730,115 @@ theorem subsingleton_hModule'_one_of_isAffineOpen_of_isQuasicoherent
   exact subsingleton_hModule'_one_of_surjective_app k hS U
     (IsAffineOpen.surjective_app_of_shortExact_toModuleKSheafOfModules k hS hU)
 
+/-! ## Čech cover-independence of `Ȟ¹`-vanishing for quasi-coherent modules
+
+The every-cover comparison: with the degree-1 affine vanishing available on
+the two pieces of **every** 2-affine cover `S`, the Mayer–Vietoris
+`(0, 1)`-slice (`hModuleOneEquivH1CokOfSubsingleton`,
+`GenusUnconditional.lean`) identifies each concrete Čech cokernel `S.H1Cok`
+with the cover-free `HModule k _ 1`.  Composing two such identifications:
+surjectivity of the difference-of-restrictions map on *some* cover forces it
+on *every* cover. -/
+
+/-- The Čech difference map of a 2-affine cover for the sheaf of `k`-modules
+underlying `M` is the `X.Modules`-dialect difference map
+(`AffineCoverMVSquare.moduleSectionDiff`, `Picard/RigidPushforward.lean`) on
+elements.  Definitional. -/
+lemma AffineCoverMVSquare.sectionDiff_toModuleKSheafOfModules_apply
+    {C : Over (Spec (CommRingCat.of k))} (M : C.left.Modules)
+    (S : C.left.AffineCoverMVSquare)
+    (p : (toModuleKSheafOfModules C M).obj.obj (Opposite.op S.U₁)
+      × (toModuleKSheafOfModules C M).obj.obj (Opposite.op S.U₂)) :
+    S.sectionDiff (toModuleKSheafOfModules C M) p = S.moduleSectionDiff M p :=
+  rfl
+
+/-- Vanishing of the concrete Čech `Ȟ¹` of a sheaf of `k`-modules is
+surjectivity of the difference-of-restrictions map (the
+`Sheaf (ModuleCat k)`-dialect of
+`AffineCoverMVSquare.subsingleton_moduleH1Cok_iff`). -/
+lemma AffineCoverMVSquare.subsingleton_h1Cok_iff {X : Scheme.{u}}
+    (S : X.AffineCoverMVSquare)
+    (F : Sheaf (Opens.grothendieckTopology X.toTopCat) (ModuleCat.{u} k)) :
+    Subsingleton (S.H1Cok F) ↔ Function.Surjective ⇑(S.sectionDiff F) := by
+  rw [show Function.Surjective ⇑(S.sectionDiff F)
+      ↔ LinearMap.range (S.sectionDiff F) = ⊤ from LinearMap.range_eq_top.symm]
+  exact Submodule.Quotient.subsingleton_iff
+
+/-- **Čech cover-independence of `Ȟ¹`-vanishing for quasi-coherent modules**
+(the P2-interface obligation of the B3 lane, discharged): for a
+quasi-coherent `M` on a `Spec k`-scheme, if the difference-of-restrictions
+map of **some** 2-affine cover `V` is surjective, then it is surjective for
+**every** 2-affine cover `W`.
+
+Route (Leray for 2-covers with `H¹`-acyclic pieces, both ways): the degree-1
+affine vanishing `subsingleton_hModule'_one_of_isAffineOpen_of_isQuasicoherent`
+holds on the two pieces of *both* covers, so the Mayer–Vietoris `(0,1)`-slice
+identifies both concrete Čech cokernels with the cover-free
+`HModule k (toModuleKSheafOfModules C M) 1`:
+`Ȟ¹(V) = 0 ⟺ H¹ = 0 ⟺ Ȟ¹(W) = 0`. -/
+theorem AffineCoverMVSquare.surjective_moduleSectionDiff_of_surjective
+    {C : Over (Spec (CommRingCat.of k))} (M : C.left.Modules) [M.IsQuasicoherent]
+    {V : C.left.AffineCoverMVSquare}
+    (h : Function.Surjective ⇑(V.moduleSectionDiff M))
+    (W : C.left.AffineCoverMVSquare) :
+    Function.Surjective ⇑(W.moduleSectionDiff M) := by
+  set F := toModuleKSheafOfModules C M with hF
+  -- the two Mayer–Vietoris identifications with the cover-free `H¹`
+  have eV := V.hModuleOneEquivH1CokOfSubsingleton F
+    (subsingleton_hModule'_one_of_isAffineOpen_of_isQuasicoherent k M V.isAffineOpen_U₁)
+    (subsingleton_hModule'_one_of_isAffineOpen_of_isQuasicoherent k M V.isAffineOpen_U₂)
+  have eW := W.hModuleOneEquivH1CokOfSubsingleton F
+    (subsingleton_hModule'_one_of_isAffineOpen_of_isQuasicoherent k M W.isAffineOpen_U₁)
+    (subsingleton_hModule'_one_of_isAffineOpen_of_isQuasicoherent k M W.isAffineOpen_U₂)
+  -- surjectivity on `V` kills `Ȟ¹(V)`, hence `H¹`, hence `Ȟ¹(W)`
+  have hV : Function.Surjective ⇑(V.sectionDiff F) := by
+    intro c
+    obtain ⟨p, hp⟩ := h c
+    exact ⟨p, (V.sectionDiff_toModuleKSheafOfModules_apply M p).trans hp⟩
+  haveI h1 : Subsingleton (V.H1Cok F) := (V.subsingleton_h1Cok_iff F).mpr hV
+  haveI h2 : Subsingleton (HModule k F 1) := eV.toEquiv.subsingleton
+  haveI h3 : Subsingleton (W.H1Cok F) := eW.symm.toEquiv.subsingleton
+  have hW : Function.Surjective ⇑(W.sectionDiff F) := (W.subsingleton_h1Cok_iff F).mp h3
+  intro c
+  obtain ⟨p, hp⟩ := hW c
+  exact ⟨p, (W.sectionDiff_toModuleKSheafOfModules_apply M p).symm.trans hp⟩
+
+end AlgebraicGeometry.Scheme
+
+/-! ## The fibre-curve wrapper: `FiberH1Vanishing` gives every-cover surjectivity
+
+The consumer-facing form for the B3 `hH1` transfer: the ∃-form fibrewise
+`h¹`-vanishing of the pinned B3 statements (`Scheme.Hom.FiberH1Vanishing`,
+surjectivity on *some* 2-affine cover of the scheme-theoretic fibre) yields
+the surjectivity witness on **any** prescribed 2-affine cover of the fibre —
+the fibre `X_t` is a scheme over the residue field `κ(t)`, and the restricted
+module `L_t` is quasi-coherent (pullback of quasi-coherent along the fibre
+embedding, `pullback_isQuasicoherent_hom`). -/
+
+namespace AlgebraicGeometry.Scheme
+
+/-- The fibre restriction of a quasi-coherent module is quasi-coherent
+(pullback along the fibre embedding; Stacks 01BG). -/
+theorem Hom.fiberModule_isQuasicoherent {X S : Scheme.{u}} (q : X ⟶ S) (t : S)
+    (L : X.Modules) [L.IsQuasicoherent] :
+    (q.fiberModule t L).IsQuasicoherent :=
+  pullback_isQuasicoherent_hom (q.fiberι t) L inferInstance
+
+/-- **`FiberH1Vanishing` is cover-independent** (the `hindep` discharge shape):
+for a quasi-coherent fibre restriction `L_t`, the ∃-form fibrewise
+`h¹`-vanishing at `t` (surjective Čech difference map on *some* 2-affine cover
+of the fibre `X_t`) yields the surjectivity witness on **every** 2-affine
+cover `W` of `X_t`.  The fibre is a scheme over the residue field `κ(t)` via
+`q.fiberToSpecResidueField t`, and quasi-coherent cover-independence
+(`AffineCoverMVSquare.surjective_moduleSectionDiff_of_surjective`) applies
+over that field. -/
+theorem Hom.FiberH1Vanishing.surjective_moduleSectionDiff {X S : Scheme.{u}}
+    {q : X ⟶ S} {L : X.Modules} {t : S}
+    [(q.fiberModule t L).IsQuasicoherent]
+    (h : q.FiberH1Vanishing L t) (W : (q.fiber t).AffineCoverMVSquare) :
+    Function.Surjective ⇑(W.moduleSectionDiff (q.fiberModule t L)) := by
+  obtain ⟨V, hV⟩ := h
+  exact @AffineCoverMVSquare.surjective_moduleSectionDiff_of_surjective _ _
+    (Over.mk (q.fiberToSpecResidueField t)) (q.fiberModule t L) ‹_› V hV W
+
 end AlgebraicGeometry.Scheme
