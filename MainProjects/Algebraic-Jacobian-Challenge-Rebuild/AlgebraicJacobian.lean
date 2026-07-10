@@ -5,6 +5,8 @@ import AlgebraicJacobian.Curve.Sections
 import AlgebraicJacobian.Curve.P1
 import AlgebraicJacobian.Curve.P1Charts
 import AlgebraicJacobian.Curve.MapToP1
+import AlgebraicJacobian.AbelianVariety.Rigidity
+import AlgebraicJacobian.AbelianVariety.RigidityCorollaries
 import AlgebraicJacobian.Cohomology.ModuleKSheaf
 import AlgebraicJacobian.Cohomology.AffineCech
 import AlgebraicJacobian.Cohomology.AffineVanishing
