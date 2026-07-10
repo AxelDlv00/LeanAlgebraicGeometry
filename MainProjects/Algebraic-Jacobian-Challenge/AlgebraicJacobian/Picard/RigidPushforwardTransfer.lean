@@ -671,4 +671,453 @@ instance isFinite_finiteMapToP1FiberMap [HasFiniteMapToP1 C]
 
 end Adelic
 
+/-! ## §6. Stacks 02KG for an affine morphism — the base-change comparison is an
+isomorphism
+
+The fibre-compatibility isomorphism of transfer item (c) is the statement that
+the canonical base-change comparison `pushforwardBaseChangeMap`
+(`Cohomology/FlatBaseChange.lean`) of the cartesian square
+
+```
+  X' --g'--> X
+  |f'        |f            (f affine, F quasi-coherent on X)
+  v          v
+  Y' --g---> Y
+```
+
+is an isomorphism `g^*(f_* F) ≅ f'_*((g')^* F)` — with **no flatness** on `g`
+(for the fibre embedding `g = p.fiberι t`, `κ(t)` is not flat over `A`).  This
+section proves it in full generality (Stacks 02KG, `i = 0`, affine case):
+
+* `pushforwardBaseChangeMap_app_baseMap` — the **mate–unit formula**: on the
+  canonical `baseMap` sections (the images of `Γ(F, f⁻¹V)` under the
+  `pullback ⊣ pushforward` unit), the abstract adjoint mate acts as the
+  `g'`-side `baseMap`.  Pure adjunction bookkeeping (triangle identity + unit
+  naturality); this sidesteps the recorded mate ↔ `cancelBaseChange` coherence
+  wall because the mate is only ever evaluated on unit images.
+* `algebra_isPushout_appLE_of_isPullback` — the **section-ring pushout**: for a
+  cartesian square and compatible affine opens, the `appLE` square of section
+  rings is a pushout (`Γ(X', f'⁻¹O) = Γ(X, f⁻¹V) ⊗_{Γ(Y, V)} Γ(Y', O)`).
+  Assembled from Mathlib's `Scheme.Hom.isPullback_resLE` (the restricted square
+  of affine opens is cartesian) and `isPushout_appTop_of_isPullback`.
+* `isIso_pushforwardBaseChangeMap_of_isAffineHom` — the headline: the mate is
+  an isomorphism.  Checked on the basis of affine opens lying inside a chart
+  `g ⁻¹ᵁ V` (`Modules.isIso_of_isIso_app_of_isBasis`), where both sides are
+  identified with the two scalar-extension tensor products by the Lane-F
+  section formula (`pullback_app_isoTensor_baseMap_sectionLinearEquiv`) and the
+  bridge between them is `SectionBaseChange.bijective_addHom_of_isPushout`
+  (associativity of scalar extension along the section-ring pushout — the
+  arbitrary-pushout brick, no flatness). -/
+
+namespace Scheme.Modules
+
+variable {X : Scheme.{u}}
+
+/-- Composition collapse for section restrictions of a sheaf of modules along
+arbitrary (`Subsingleton`) opens homs.  Public re-derivation of the transport
+brick used throughout the QuotScheme lane (`modules_res_res_hom` there is
+`private`). -/
+lemma sections_map_map (N : X.Modules) {W₁ W₂ W₃ : X.Opens}
+    (i₁ : W₁ ⟶ W₂) (i₂ : W₂ ⟶ W₃) (i₃ : W₁ ⟶ W₃) (ξ : Γ(N, W₃)) :
+    (N.presheaf.map i₁.op).hom ((N.presheaf.map i₂.op).hom ξ) =
+      (N.presheaf.map i₃.op).hom ξ := by
+  rw [← AddCommGrpCat.comp_apply, ← Functor.map_comp, ← op_comp]
+  exact (congrArg (fun (i : W₁ ⟶ W₃) =>
+    (AddCommGrpCat.Hom.hom (N.presheaf.map i.op)) ξ) (Subsingleton.elim _ _)).symm
+
+end Scheme.Modules
+
+section MateFormula
+
+variable {Y Y' X X' : Scheme.{u}}
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **`baseMap` naturality in the sheaf argument** (public re-derivation of the
+QuotScheme-private `pullback_app_isoTensor_baseMap_naturality`): the canonical
+base map intertwines `(pullback g).map h` with `h.app V`, via naturality of the
+`pullback ⊣ pushforward` adjunction unit. -/
+lemma pullback_map_app_isoTensor_baseMap
+    (g : Y' ⟶ Y) {N N' : Y.Modules}
+    (h : N ⟶ N') {O : Y'.Opens} {V : Y.Opens} (e : O ≤ g ⁻¹ᵁ V) (x : Γ(N, V)) :
+    (Scheme.Modules.Hom.app ((Scheme.Modules.pullback g).map h) O).hom
+        (pullback_app_isoTensor_baseMap g N e x) =
+      pullback_app_isoTensor_baseMap g N' e ((Scheme.Modules.Hom.app h V).hom x) := by
+  have hb := congrArg
+    (fun (k : N ⟶ (Scheme.Modules.pushforward g).obj
+        ((Scheme.Modules.pullback g).obj N')) =>
+      (Scheme.Modules.Hom.app k V).hom x)
+    ((Scheme.Modules.pullbackPushforwardAdjunction g).unit.naturality h)
+  have ha := congrArg
+    (fun (k : Γ((Scheme.Modules.pullback g).obj N, g ⁻¹ᵁ V) ⟶
+        Γ((Scheme.Modules.pullback g).obj N', O)) =>
+      (AddCommGrpCat.Hom.hom k)
+        (((Scheme.Modules.pullbackPushforwardAdjunction g).unit.app N).app V x))
+    ((Scheme.Modules.Hom.mapPresheaf ((Scheme.Modules.pullback g).map h)).naturality
+      (homOfLE e).op)
+  exact ha.trans (congrArg
+    (fun w => ((((Scheme.Modules.pullback g).obj N').presheaf.map (homOfLE e).op).hom) w)
+    hb.symm)
+
+set_option backward.isDefEq.respectTransparency false in
+/-- **The counit collapses the `baseMap` of a pushforward to a plain
+restriction** (triangle-identity brick for the mate–unit formula): for a module
+`K` on `Y'` and `y ∈ Γ((pushforward g).obj K, V) = Γ(K, g⁻¹V)`, applying the
+`pullback ⊣ pushforward` counit to the canonical base-map section of `y`
+returns the restriction of `y` to `O ⊆ g⁻¹V`. -/
+lemma counit_app_isoTensor_baseMap_pushforward
+    (g : Y' ⟶ Y) (K : Y'.Modules) {O : Y'.Opens} {V : Y.Opens} (e : O ≤ g ⁻¹ᵁ V)
+    (y : Γ((Scheme.Modules.pushforward g).obj K, V)) :
+    (Scheme.Modules.Hom.app
+        ((Scheme.Modules.pullbackPushforwardAdjunction g).counit.app K) O).hom
+      (pullback_app_isoTensor_baseMap g ((Scheme.Modules.pushforward g).obj K) e y) =
+    (K.presheaf.map (homOfLE (show O ≤ g ⁻¹ᵁ V from e)).op).hom y := by
+  -- (a) naturality of the counit component against the restriction `O ≤ g⁻¹V`:
+  have ha := congrArg
+    (fun (k : Γ((Scheme.Modules.pullback g).obj
+          ((Scheme.Modules.pushforward g).obj K), g ⁻¹ᵁ V) ⟶ Γ(K, O)) =>
+      (AddCommGrpCat.Hom.hom k)
+        (((Scheme.Modules.pullbackPushforwardAdjunction g).unit.app
+          ((Scheme.Modules.pushforward g).obj K)).app V y))
+    ((Scheme.Modules.Hom.mapPresheaf
+      ((Scheme.Modules.pullbackPushforwardAdjunction g).counit.app K)).naturality
+      (homOfLE e).op)
+  -- (b) the right triangle identity at `V`-sections: unit then (pushforward of
+  -- the) counit is the identity; the pushforward's `app` at `V` is
+  -- definitionally the counit's `app` at `g⁻¹V`.
+  have hb := congrArg
+    (fun (k : (Scheme.Modules.pushforward g).obj K ⟶
+        (Scheme.Modules.pushforward g).obj K) => (Scheme.Modules.Hom.app k V).hom y)
+    ((Scheme.Modules.pullbackPushforwardAdjunction g).right_triangle_components K)
+  exact ha.trans (congrArg
+    (fun w => ((K.presheaf.map (homOfLE e).op).hom) w) hb)
+
+set_option backward.isDefEq.respectTransparency false in
+set_option maxHeartbeats 1600000 in
+-- Heartbeat headroom for the adjunction-unit/counit transport chains, as
+-- elsewhere in the QuotScheme baseMap substrate.
+/-- **The mate–unit formula** (the pointwise Beck–Chevalley identity powering
+the 02KG isomorphism): on the canonical base-map section of
+`x ∈ Γ(f_* F, V) = Γ(F, f⁻¹V)`, the abstract base-change mate
+`g^*(f_* F) ⟶ f'_*((g')^* F)` acts as the `g'`-side canonical base map.
+
+This characterizes the mate on a generating family (over `Γ(Y', O)`) of the
+sections of `g^*(f_* F)` over any affine `O ≤ g⁻¹V`, which is all the
+isomorphism proof consumes — the recorded mate ↔ `cancelBaseChange` coherence
+wall is never touched. -/
+lemma pushforwardBaseChangeMap_app_baseMap
+    (f : X ⟶ Y) (g : Y' ⟶ Y) (f' : X' ⟶ Y') (g' : X' ⟶ X)
+    (comm : g' ≫ f = f' ≫ g) (F : X.Modules)
+    {V : Y.Opens} {O : Y'.Opens} (e : O ≤ g ⁻¹ᵁ V)
+    (e' : f' ⁻¹ᵁ O ≤ g' ⁻¹ᵁ (f ⁻¹ᵁ V))
+    (x : Γ((Scheme.Modules.pushforward f).obj F, V)) :
+    (Scheme.Modules.Hom.app (pushforwardBaseChangeMap f g f' g' comm F) O).hom
+        (pullback_app_isoTensor_baseMap g ((Scheme.Modules.pushforward f).obj F) e x) =
+      pullback_app_isoTensor_baseMap g' F e' x := by
+  -- the mate is `(pullback g).map χ ≫ counit` where `χ` is the adjoint
+  have hmate : pushforwardBaseChangeMap f g f' g' comm F =
+      (Scheme.Modules.pullback g).map
+          ((Scheme.Modules.pushforward f).map
+              ((Scheme.Modules.pullbackPushforwardAdjunction g').unit.app F) ≫
+            (Scheme.Modules.pushforwardComp g' f).hom.app _ ≫
+            (Scheme.Modules.pushforwardCongr comm).hom.app _ ≫
+            (Scheme.Modules.pushforwardComp f' g).inv.app _) ≫
+        (Scheme.Modules.pullbackPushforwardAdjunction g).counit.app
+          ((Scheme.Modules.pushforward f').obj ((Scheme.Modules.pullback g').obj F)) := by
+    rw [pushforwardBaseChangeMap, Adjunction.homEquiv_counit]
+  rw [hmate]
+  -- apply the two-step composite elementwise
+  rw [Scheme.Modules.Hom.comp_app]
+  simp only [AddCommGrpCat.hom_comp, AddMonoidHom.comp_apply]
+  rw [pullback_map_app_isoTensor_baseMap g _ e x]
+  refine (counit_app_isoTensor_baseMap_pushforward g
+    ((Scheme.Modules.pushforward f').obj ((Scheme.Modules.pullback g').obj F)) e _).trans ?_
+  -- it remains to compute `restr_e (χ.app V x)` as the `g'`-side base map:
+  -- `χ.app V` is the `g'`-unit at `f⁻¹V` followed by an (`eqToHom`) restriction
+  -- (the `pushforwardComp` legs are identities on sections), and the two
+  -- restrictions collapse to the single restriction `f'⁻¹O ≤ g'⁻¹(f⁻¹V)`.
+  have hχapp : (Scheme.Modules.Hom.app
+        ((Scheme.Modules.pushforward f).map
+            ((Scheme.Modules.pullbackPushforwardAdjunction g').unit.app F) ≫
+          (Scheme.Modules.pushforwardComp g' f).hom.app _ ≫
+          (Scheme.Modules.pushforwardCongr comm).hom.app _ ≫
+          (Scheme.Modules.pushforwardComp f' g).inv.app _) V).hom x =
+      (((Scheme.Modules.pullback g').obj F).presheaf.map
+          (eqToHom (show ((f' ≫ g) ⁻¹ᵁ V : X'.Opens) = (g' ≫ f) ⁻¹ᵁ V from
+            comm ▸ rfl)).op).hom
+        ((((Scheme.Modules.pullbackPushforwardAdjunction g').unit.app F).app
+          (f ⁻¹ᵁ V)).hom x) := by
+    rfl
+  refine Eq.trans (congrArg (fun w =>
+    ((((Scheme.Modules.pullback g').obj F).presheaf.map
+      ((Opens.map f'.base).map (homOfLE e)).op).hom) w) hχapp) ?_
+  exact Scheme.Modules.sections_map_map ((Scheme.Modules.pullback g').obj F)
+    _ _ (homOfLE e') _
+
+end MateFormula
+
+section SectionRingPushout
+
+variable {Y Y' X X' : Scheme.{u}}
+
+/-- **The section-ring square of a cartesian square, on compatible affine opens,
+is a pushout** (`Γ(X', f'⁻¹O) = Γ(X, f⁻¹V) ⊗_{Γ(Y, V)} Γ(Y', O)`, categorical
+form).  Restrict the cartesian square to the four opens
+(`Scheme.Hom.isPullback_resLE`), observe that the restricted square is a
+pullback of *affine* schemes, apply Mathlib's
+`isPushout_appTop_of_isPullback`, and transport the resulting pushout of
+`appTop`s along the four `topIso`s to the `appLE` maps of the original square
+(`Scheme.Hom.resLE_app_top`). -/
+theorem isPushout_appLE_of_isPullback
+    {f : X ⟶ Y} {g : Y' ⟶ Y} {f' : X' ⟶ Y'} {g' : X' ⟶ X}
+    (h : IsPullback g' f' f g)
+    {V : Y.Opens} {O : Y'.Opens} (e : O ≤ g ⁻¹ᵁ V)
+    (e' : f' ⁻¹ᵁ O ≤ g' ⁻¹ᵁ (f ⁻¹ᵁ V))
+    (hV : IsAffineOpen V) (hO : IsAffineOpen O)
+    (hfV : IsAffineOpen (f ⁻¹ᵁ V)) (hf'O : IsAffineOpen (f' ⁻¹ᵁ O)) :
+    CategoryTheory.IsPushout (f.appLE V (f ⁻¹ᵁ V) le_rfl) (g.appLE V O e)
+      (g'.appLE (f ⁻¹ᵁ V) (f' ⁻¹ᵁ O) e') (f'.appLE O (f' ⁻¹ᵁ O) le_rfl) := by
+  -- the restricted square of the four opens is cartesian
+  have hUY : (f' ⁻¹ᵁ O : X'.Opens) = g' ⁻¹ᵁ (f ⁻¹ᵁ V) ⊓ f' ⁻¹ᵁ O :=
+    (inf_eq_right.mpr e').symm
+  have hpb := Scheme.Hom.isPullback_resLE h (US := V) (UT := O) (UX := f ⁻¹ᵁ V)
+    e le_rfl hUY
+  -- the four corners are affine schemes
+  haveI : IsAffine V.toScheme := hV
+  haveI : IsAffine O.toScheme := hO
+  haveI : IsAffine (f ⁻¹ᵁ V).toScheme := hfV
+  haveI : IsAffine (f' ⁻¹ᵁ O).toScheme := hf'O
+  -- pushout of the `appTop`s of the restricted square
+  have hpush := isPushout_appTop_of_isPullback hpb
+  -- transport along the `topIso`s to the `appLE` square
+  have key : ∀ {A B : Scheme.{u}} (φ : A ⟶ B) (U : B.Opens) (W : A.Opens)
+      (ew : W ≤ φ ⁻¹ᵁ U),
+      (φ.resLE U W ew).appTop ≫ W.topIso.hom = U.topIso.hom ≫ φ.appLE U W ew := by
+    intro A B φ U W ew
+    rw [show (φ.resLE U W ew).appTop = (φ.resLE U W ew).app ⊤ from rfl,
+      Scheme.Hom.resLE_app_top]
+    simp only [Category.assoc, Iso.inv_hom_id, Category.comp_id]
+  exact hpush.of_iso (Scheme.Opens.topIso V) (Scheme.Opens.topIso (f ⁻¹ᵁ V))
+    (Scheme.Opens.topIso O) (Scheme.Opens.topIso (f' ⁻¹ᵁ O))
+    (key f V (f ⁻¹ᵁ V) le_rfl) (key g V O e)
+    (key g' (f ⁻¹ᵁ V) (f' ⁻¹ᵁ O) (hUY.le.trans inf_le_left))
+    (key f' O (f' ⁻¹ᵁ O) le_rfl)
+
+end SectionRingPushout
+
+section AffineBaseChangeIso
+
+variable {Y Y' X X' : Scheme.{u}}
+
+set_option backward.isDefEq.respectTransparency false in
+set_option maxHeartbeats 3200000 in
+-- Heartbeat headroom for the section-formula transports and the tensor-bridge
+-- instance searches, as elsewhere in the Lane-F section-formula layer.
+set_option synthInstance.maxHeartbeats 800000 in
+/-- **Stacks 02KG (`i = 0`, affine case), affine-chart form**: for a cartesian
+square with `f` (hence `f'`) affine, a quasi-coherent `F` on `X`, and affine
+opens `V ⊆ Y`, `O ⊆ Y'` with `O ≤ g⁻¹V`, the canonical base-change comparison
+`g^*(f_* F) ⟶ f'_*((g')^* F)` is an isomorphism on sections over `O`.  **No
+flatness of `g` is required.**  Both sides are identified with the two scalar
+extensions of `Γ(F, f⁻¹V)` by the affine section formula
+(`pullback_app_isoTensor_baseMap_sectionLinearEquiv`), the identifications are
+intertwined by the mate–unit formula on the `Γ(Y', O)`-generators, and the
+resulting bridge `Γ(Y', O) ⊗_{Γ(Y, V)} M ⟶ Γ(X', f'⁻¹O) ⊗_{Γ(X, f⁻¹V)} M` is
+bijective by associativity of scalar extension along the section-ring pushout
+(`SectionBaseChange.bijective_addHom_of_isPushout` +
+`isPushout_appLE_of_isPullback`). -/
+theorem isIso_pushforwardBaseChangeMap_app_of_isPullback
+    {f : X ⟶ Y} {g : Y' ⟶ Y} {f' : X' ⟶ Y'} {g' : X' ⟶ X}
+    (h : IsPullback g' f' f g) [IsAffineHom f] [IsAffineHom f']
+    (F : X.Modules) [F.IsQuasicoherent]
+    {V : Y.Opens} {O : Y'.Opens} (e : O ≤ g ⁻¹ᵁ V)
+    (hV : IsAffineOpen V) (hO : IsAffineOpen O) :
+    IsIso (Scheme.Modules.Hom.app (pushforwardBaseChangeMap f g f' g' h.w F) O) := by
+  -- opens bookkeeping
+  have e' : f' ⁻¹ᵁ O ≤ g' ⁻¹ᵁ (f ⁻¹ᵁ V) := by
+    rw [← Scheme.Hom.comp_preimage, h.w, Scheme.Hom.comp_preimage]
+    exact f'.preimage_mono e
+  have hfV : IsAffineOpen (f ⁻¹ᵁ V) := hV.preimage f
+  have hf'O : IsAffineOpen (f' ⁻¹ᵁ O) := hO.preimage f'
+  haveI : ((Scheme.Modules.pushforward f).obj F).IsQuasicoherent :=
+    Scheme.Modules.pushforward_isQuasicoherent f F
+  -- the algebra dictionary of the section-ring square
+  letI aAB : Algebra Γ(Y, V) Γ(Y', O) := (g.appLE V O e).hom.toAlgebra
+  letI aAC : Algebra Γ(Y, V) Γ(X, f ⁻¹ᵁ V) :=
+    (f.appLE V (f ⁻¹ᵁ V) le_rfl).hom.toAlgebra
+  letI aCD : Algebra Γ(X, f ⁻¹ᵁ V) Γ(X', f' ⁻¹ᵁ O) :=
+    (g'.appLE (f ⁻¹ᵁ V) (f' ⁻¹ᵁ O) e').hom.toAlgebra
+  letI aBD : Algebra Γ(Y', O) Γ(X', f' ⁻¹ᵁ O) :=
+    (f'.appLE O (f' ⁻¹ᵁ O) le_rfl).hom.toAlgebra
+  letI aAD : Algebra Γ(Y, V) Γ(X', f' ⁻¹ᵁ O) :=
+    ((f.appLE V (f ⁻¹ᵁ V) le_rfl) ≫
+      (g'.appLE (f ⁻¹ᵁ V) (f' ⁻¹ᵁ O) e')).hom.toAlgebra
+  have hsq : (f.appLE V (f ⁻¹ᵁ V) le_rfl) ≫ (g'.appLE (f ⁻¹ᵁ V) (f' ⁻¹ᵁ O) e') =
+      (g.appLE V O e) ≫ (f'.appLE O (f' ⁻¹ᵁ O) le_rfl) :=
+    (isPushout_appLE_of_isPullback h e e' hV hO hfV hf'O).w
+  haveI tACD : IsScalarTower Γ(Y, V) Γ(X, f ⁻¹ᵁ V) Γ(X', f' ⁻¹ᵁ O) :=
+    IsScalarTower.of_algebraMap_eq (fun _ => rfl)
+  haveI tABD : IsScalarTower Γ(Y, V) Γ(Y', O) Γ(X', f' ⁻¹ᵁ O) :=
+    IsScalarTower.of_algebraMap_eq (fun r => by
+      have h0 := congrArg (fun (φ : Γ(Y, V) ⟶ Γ(X', f' ⁻¹ᵁ O)) => φ.hom r) hsq
+      simp only [CommRingCat.hom_comp, RingHom.comp_apply] at h0
+      exact h0)
+  haveI pushAlg : Algebra.IsPushout Γ(Y, V) Γ(X, f ⁻¹ᵁ V) Γ(Y', O) Γ(X', f' ⁻¹ᵁ O) :=
+    (CommRingCat.isPushout_iff_isPushout).mp
+      (isPushout_appLE_of_isPullback h e e' hV hO hfV hf'O)
+  -- the `appLE V (f⁻¹V) le_rfl` restriction acts on sections as `app V` does
+  have happ : ∀ (r : Γ(Y, V)),
+      (f.appLE V (f ⁻¹ᵁ V) le_rfl).hom r = (f.app V).hom r := by
+    intro r
+    rw [← Scheme.Hom.app_eq_appLE]
+  have happ' : ∀ (r : Γ(Y', O)),
+      (f'.appLE O (f' ⁻¹ᵁ O) le_rfl).hom r = (f'.app O).hom r := by
+    intro r
+    rw [← Scheme.Hom.app_eq_appLE]
+  -- the module tower on the common section module `M = Γ(F, f⁻¹V) = Γ(f_* F, V)`;
+  -- the `Γ(Y, V)`-structure is `compHom` along `f.app V`, which is
+  -- *definitionally* the sheaf structure of the pushforward over `V`
+  letI mAM : Module Γ(Y, V) Γ(F, f ⁻¹ᵁ V) :=
+    Module.compHom _ (f.app V).hom
+  haveI tACM : IsScalarTower Γ(Y, V) Γ(X, f ⁻¹ᵁ V) Γ(F, f ⁻¹ᵁ V) :=
+    IsScalarTower.of_algebraMap_smul (fun r m => by
+      change (f.appLE V (f ⁻¹ᵁ V) le_rfl).hom r • m = (f.app V).hom r • m
+      rw [happ r])
+  -- the two affine section formulas
+  obtain ⟨⟨eL, heL⟩⟩ := pullback_app_isoTensor_baseMap_sectionLinearEquiv g
+    ((Scheme.Modules.pushforward f).obj F) hO hV e
+  obtain ⟨⟨eR, heR⟩⟩ := pullback_app_isoTensor_baseMap_sectionLinearEquiv g' F hf'O hfV e'
+  -- the scalar-extension bridge
+  let s : TensorProduct Γ(Y, V) Γ(Y', O) Γ(F, f ⁻¹ᵁ V) →+
+      TensorProduct Γ(X, f ⁻¹ᵁ V) Γ(X', f' ⁻¹ᵁ O) Γ(F, f ⁻¹ᵁ V) :=
+    TensorProduct.liftAddHom
+      (AddMonoidHom.mk' (fun b => AddMonoidHom.mk'
+        (fun m => algebraMap Γ(Y', O) Γ(X', f' ⁻¹ᵁ O) b ⊗ₜ[Γ(X, f ⁻¹ᵁ V)] m)
+        (fun m₁ m₂ => TensorProduct.tmul_add _ m₁ m₂))
+        (fun b₁ b₂ => by
+          ext m
+          simp [TensorProduct.add_tmul]))
+      (fun r b m => by
+        change algebraMap Γ(Y', O) Γ(X', f' ⁻¹ᵁ O) (r • b) ⊗ₜ[Γ(X, f ⁻¹ᵁ V)] m =
+          algebraMap Γ(Y', O) Γ(X', f' ⁻¹ᵁ O) b ⊗ₜ[Γ(X, f ⁻¹ᵁ V)] (r • m)
+        rw [Algebra.smul_def, map_mul,
+          ← IsScalarTower.algebraMap_apply Γ(Y, V) Γ(Y', O) Γ(X', f' ⁻¹ᵁ O),
+          IsScalarTower.algebraMap_apply Γ(Y, V) Γ(X, f ⁻¹ᵁ V) Γ(X', f' ⁻¹ᵁ O),
+          ← Algebra.smul_def, TensorProduct.smul_tmul]
+        congr 1
+        change (f.appLE V (f ⁻¹ᵁ V) le_rfl).hom r • m = (f.app V).hom r • m
+        rw [happ r])
+  have hs : ∀ (b : Γ(Y', O)) (m : Γ(F, f ⁻¹ᵁ V)),
+      s (b ⊗ₜ[Γ(Y, V)] m) = algebraMap Γ(Y', O) Γ(X', f' ⁻¹ᵁ O) b ⊗ₜ[Γ(X, f ⁻¹ᵁ V)] m :=
+    fun b m => TensorProduct.liftAddHom_tmul _ _ b m
+  have hs_bij : Function.Bijective s :=
+    SectionBaseChange.bijective_addHom_of_isPushout s hs
+  -- the mate agrees with `eR ∘ s ∘ eL⁻¹`: check on the `Γ(Y', O)`-generators
+  have hcomm : ∀ w : TensorProduct Γ(Y, V) Γ(Y', O) Γ(F, f ⁻¹ᵁ V),
+      (Scheme.Modules.Hom.app (pushforwardBaseChangeMap f g f' g' h.w F) O).hom
+        (eL w) = eR (s w) := by
+    intro w
+    induction w using TensorProduct.induction_on with
+    | zero => simp only [map_zero]
+    | add w₁ w₂ h₁ h₂ => simp only [map_add, h₁, h₂]
+    | tmul b m =>
+      -- normalize the right-hand side to `algebraMap b • baseMap_{g'} m`
+      rw [hs b m]
+      have hsm : (algebraMap Γ(Y', O) Γ(X', f' ⁻¹ᵁ O) b ⊗ₜ[Γ(X, f ⁻¹ᵁ V)] m :
+          TensorProduct Γ(X, f ⁻¹ᵁ V) Γ(X', f' ⁻¹ᵁ O) Γ(F, f ⁻¹ᵁ V)) =
+          algebraMap Γ(Y', O) Γ(X', f' ⁻¹ᵁ O) b •
+            ((1 : Γ(X', f' ⁻¹ᵁ O)) ⊗ₜ[Γ(X, f ⁻¹ᵁ V)] m) := by
+        rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
+      rw [hsm, map_smul, heR]
+      -- normalize the left-hand side to `b • mate (baseMap_g m)`
+      have hb : (b ⊗ₜ[Γ(Y, V)] m :
+          TensorProduct Γ(Y, V) Γ(Y', O) Γ(F, f ⁻¹ᵁ V)) =
+          b • ((1 : Γ(Y', O)) ⊗ₜ[Γ(Y, V)] m) := by
+        rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
+      rw [hb, map_smul, heL]
+      -- LHS: the module-sheaf-hom app is `Γ(Y', O)`-linear
+      have hlin : (Scheme.Modules.Hom.app (pushforwardBaseChangeMap f g f' g' h.w F) O).hom
+          (b • pullback_app_isoTensor_baseMap g
+            ((Scheme.Modules.pushforward f).obj F) e m) =
+          b • (Scheme.Modules.Hom.app (pushforwardBaseChangeMap f g f' g' h.w F) O).hom
+            (pullback_app_isoTensor_baseMap g
+              ((Scheme.Modules.pushforward f).obj F) e m) :=
+        Scheme.Modules.Hom.app_smul _ b _
+      rw [hlin, pushforwardBaseChangeMap_app_baseMap f g f' g' h.w F e e' m]
+      -- match the two scalar actions across the definitional identification
+      -- `Γ(f'_*(g'^* F), O) = Γ((g')^* F, f'⁻¹O)`
+      change b • (show Γ((Scheme.Modules.pushforward f').obj
+            ((Scheme.Modules.pullback g').obj F), O) from
+          pullback_app_isoTensor_baseMap g' F e' m) =
+        (f'.appLE O (f' ⁻¹ᵁ O) le_rfl).hom b • pullback_app_isoTensor_baseMap g' F e' m
+      rw [happ' b]
+      rfl
+  -- conclude: the app is a composition of bijections
+  rw [ConcreteCategory.isIso_iff_bijective]
+  have hfun : ⇑(ConcreteCategory.hom
+      (Scheme.Modules.Hom.app (pushforwardBaseChangeMap f g f' g' h.w F) O)) =
+      ⇑eR ∘ ⇑s ∘ ⇑eL.symm := by
+    funext z
+    obtain ⟨w, rfl⟩ := eL.surjective z
+    have hz : eL.symm (eL w) = w := eL.symm_apply_apply w
+    simp only [Function.comp_apply, hz]
+    exact hcomm w
+  rw [hfun]
+  exact (EquivLike.bijective eR).comp (hs_bij.comp (EquivLike.bijective eL.symm))
+
+set_option maxHeartbeats 1600000 in
+-- Heartbeat headroom for the basis-locality reduction over the affine-pairs
+-- index type, as elsewhere in the B3 lane.
+set_option synthInstance.maxHeartbeats 400000 in
+/-- **Stacks 02KG (`i = 0`), affine morphisms, arbitrary base change**: for a
+cartesian square of schemes
+
+```
+  X' --g'--> X
+  |f'        |f
+  v          v
+  Y' --g---> Y
+```
+
+with `f` and `f'` affine and `F` quasi-coherent on `X`, the canonical
+base-change comparison `g^*(f_* F) ⟶ f'_*((g')^* F)` is an isomorphism — with
+**no flatness hypothesis on `g`**.  Checked on the basis of affine opens of
+`Y'` contained in the `g`-preimage of an affine open of `Y`
+(`Modules.isIso_of_isIso_app_of_isBasis` +
+`isIso_pushforwardBaseChangeMap_app_of_isPullback`). -/
+theorem isIso_pushforwardBaseChangeMap_of_isPullback
+    {f : X ⟶ Y} {g : Y' ⟶ Y} {f' : X' ⟶ Y'} {g' : X' ⟶ X}
+    (h : IsPullback g' f' f g) [IsAffineHom f] [IsAffineHom f']
+    (F : X.Modules) [F.IsQuasicoherent] :
+    IsIso (pushforwardBaseChangeMap f g f' g' h.w F) := by
+  refine Modules.isIso_of_isIso_app_of_isBasis
+    (ι := {p : Y'.Opens × Y.Opens //
+      IsAffineOpen p.1 ∧ IsAffineOpen p.2 ∧ p.1 ≤ g ⁻¹ᵁ p.2})
+    (B := fun p => p.1.1) ?_ _ ?_
+  · rw [TopologicalSpace.Opens.isBasis_iff_nbhd]
+    intro W y hy
+    obtain ⟨V, hVaff, hgyV, -⟩ := TopologicalSpace.Opens.isBasis_iff_nbhd.mp
+      (Scheme.isBasis_affineOpens Y)
+      (show g.base y ∈ (⊤ : Y.Opens) from trivial)
+    have hyWV : y ∈ W ⊓ g ⁻¹ᵁ V := ⟨hy, hgyV⟩
+    obtain ⟨O, hOaff, hyO, hOsub⟩ := TopologicalSpace.Opens.isBasis_iff_nbhd.mp
+      (Scheme.isBasis_affineOpens Y') hyWV
+    exact ⟨O, ⟨⟨(O, V), hOaff, hVaff, hOsub.trans inf_le_right⟩, rfl⟩, hyO,
+      hOsub.trans inf_le_left⟩
+  · intro p
+    exact isIso_pushforwardBaseChangeMap_app_of_isPullback h F p.2.2.2 p.2.2.1 p.2.1
+
+/-- **The 02KG base-change isomorphism** for an affine morphism, bundled form:
+`g^*(f_* F) ≅ f'_*((g')^* F)` for a cartesian square with `f`, `f'` affine and
+`F` quasi-coherent — no flatness on `g`. -/
+noncomputable def pushforwardPullbackBaseChangeIso
+    {f : X ⟶ Y} {g : Y' ⟶ Y} {f' : X' ⟶ Y'} {g' : X' ⟶ X}
+    (h : IsPullback g' f' f g) [IsAffineHom f] [IsAffineHom f']
+    (F : X.Modules) [F.IsQuasicoherent] :
+    (Scheme.Modules.pullback g).obj ((Scheme.Modules.pushforward f).obj F) ≅
+      (Scheme.Modules.pushforward f').obj ((Scheme.Modules.pullback g').obj F) :=
+  haveI := isIso_pushforwardBaseChangeMap_of_isPullback h F
+  asIso (pushforwardBaseChangeMap f g f' g' h.w F)
+
+end AffineBaseChangeIso
+
 end AlgebraicGeometry
