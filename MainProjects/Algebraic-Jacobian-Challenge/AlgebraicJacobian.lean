@@ -6,6 +6,7 @@ import AlgebraicJacobian.Cohomology.StructureSheafAb
 import AlgebraicJacobian.Cohomology.StructureSheafModuleK
 import AlgebraicJacobian.Cohomology.StructureSheafModuleK.SectionsBridge
 import AlgebraicJacobian.Cohomology.StructureSheafModuleK.AffineDegreeOneVanishing
+import AlgebraicJacobian.Cohomology.StructureSheafModuleK.QuasicoherentDegreeOneVanishing
 import AlgebraicJacobian.Cohomology.MayerVietorisCore
 import AlgebraicJacobian.Cohomology.MayerVietorisCover
 -- Čech-cohomology development merged from the Cech-Cohomology subproject
@@ -55,6 +56,7 @@ import AlgebraicJacobian.Picard.StructureSheafPushforward
 import AlgebraicJacobian.Picard.RigidPushforward
 import AlgebraicJacobian.Picard.RigidPushforwardTransfer
 import AlgebraicJacobian.Picard.RigidPushforwardP1Engine
+import AlgebraicJacobian.Picard.P1SectionsFinite
 import AlgebraicJacobian.Picard.TwoTermFiniteFree
 import AlgebraicJacobian.Picard.SemicontinuityH0
 import AlgebraicJacobian.Picard.DivDegree
@@ -62,6 +64,7 @@ import AlgebraicJacobian.Picard.FinitePresentationFunctor
 import AlgebraicJacobian.Picard.FiniteGaloisQuotient
 import AlgebraicJacobian.Picard.FiniteGaloisQuotientAffine
 import AlgebraicJacobian.Picard.StableAffineCover
+import AlgebraicJacobian.Picard.GaloisQuotientGlue
 import AlgebraicJacobian.Picard.LineBundlePullback
 import AlgebraicJacobian.Picard.TensorObjSubstrate
 import AlgebraicJacobian.Picard.TensorObjSubstrate.DualInverse
