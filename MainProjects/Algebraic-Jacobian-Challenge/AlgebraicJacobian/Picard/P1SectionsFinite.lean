@@ -1007,4 +1007,140 @@ theorem RelLaurentChartData.fg_ker_moduleSectionDiffBase {X S : Scheme.{u}} {p :
 
 end Scheme
 
+namespace Adelic
+
+open Scheme
+
+/-! ## §7. The ℙ¹_A leaf, verbatim in the engine's `hH0` shape, and the composite -/
+
+variable {k : Type u} [Field k]
+variable (A : Type u) [CommRing A] [Algebra k A]
+
+set_option maxHeartbeats 800000 in
+-- Heartbeat headroom for the instance-heavy `letI` environment (fleet recipe,
+-- as in the wave-4 endgame skeleton).
+/-- **THE B3-H0 LEAF for `ℙ¹_A`** — the engine's named hypothesis `hH0`
+(`p1Cech_h0_baseChange_of_fibrewise_h1_vanishing`, verbatim shape), produced
+from the single `M`-independent anchor `hS0`: finite generation of the
+structure-sheaf Čech kernel of the standard 2-chart cover — i.e.
+`Γ(ℙ¹_A, 𝒪)` is a finite `A`-module.  Everything `M`-dependent
+(Serre-finiteness-grade in the classical references) is discharged
+unconditionally by the dévissage; the audit's "not derivable from the
+Laurent ladder" leaf is thereby reduced from coherent-sheaf cohomology to a
+single structure-sheaf fact. -/
+theorem p1Cech_h0_fg_of_structure_h0_fg [Algebra.FiniteType k A]
+    (M : (Limits.pullback (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules)
+    [M.IsFinitePresentation]
+    (hS0 :
+      letI := (((pullback.snd (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).appLE
+          ⊤ (p1BaseChangeCoverSquare A).U₁ le_top).hom).toAlgebra
+      letI := (((pullback.snd (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).appLE
+          ⊤ (p1BaseChangeCoverSquare A).U₂ le_top).hom).toAlgebra
+      letI := (((pullback.snd (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).appLE
+          ⊤ ((p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂)
+          le_top).hom).toAlgebra
+      (LinearMap.ker ((p1BaseChangeCoverSquare A).ringSectionDiffBase
+        (pullback.snd (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))))).FG) :
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        (p1BaseChangeCoverSquare A).U₁
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        (p1BaseChangeCoverSquare A).U₂
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        ((p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂)
+    (LinearMap.ker ((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+      (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M)).FG := by
+  haveI : IsNoetherianRing A := Algebra.FiniteType.isNoetherianRing k A
+  have hnoeth : IsNoetherianRing Γ(Spec (CommRingCat.of A), ⊤) :=
+    isNoetherianRing_of_ringEquiv A
+      (Scheme.ΓSpecIso (CommRingCat.of A)).commRingCatIsoToRingEquiv.symm
+  exact (p1BaseChangeRelLaurentChartData A).fg_ker_moduleSectionDiffBase M hnoeth
+    (Scheme.Modules.module_finite_sections_of_isFinitePresentation M
+      ⟨(p1BaseChangeCoverSquare A).U₁, (p1BaseChangeCoverSquare A).isAffineOpen_U₁⟩)
+    (Scheme.Modules.module_finite_sections_of_isFinitePresentation M
+      ⟨(p1BaseChangeCoverSquare A).U₂, (p1BaseChangeCoverSquare A).isAffineOpen_U₂⟩)
+    hS0
+
+
+set_option maxHeartbeats 800000 in
+-- Heartbeat headroom for the instance-heavy `letI` environment (fleet recipe,
+-- as in the wave-4 endgame skeleton).
+/-- **THE COMPOSITE (engine + leaf): the B3 ℙ¹-endgame with the audited
+`hH0` leaf discharged.**  The full wave-4 engine conclusion
+(`p1Cech_h0_baseChange_of_fibrewise_h1_vanishing`: `d` surjective, `H⁰ = ker d`
+finite projective, formation of `H⁰` commutes with arbitrary base change) with
+the Serre-finiteness-grade hypothesis `hH0` **replaced** by the single
+`M`-independent anchor `hS0` (structure-sheaf Čech `H⁰` finite — the remaining
+sub-leaf, `Γ(ℙ¹_A, 𝒪) ≅ A`). -/
+theorem p1Cech_h0_baseChange_of_fibrewise_h1_vanishing_of_structure_h0_fg
+    [Algebra.FiniteType k A]
+    (M : (Limits.pullback (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules)
+    [M.IsFinitePresentation]
+    (hflat : Scheme.CoherentSheafFlat
+      (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M)
+    (hS0 :
+      letI := (((pullback.snd (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).appLE
+          ⊤ (p1BaseChangeCoverSquare A).U₁ le_top).hom).toAlgebra
+      letI := (((pullback.snd (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).appLE
+          ⊤ (p1BaseChangeCoverSquare A).U₂ le_top).hom).toAlgebra
+      letI := (((pullback.snd (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))).appLE
+          ⊤ ((p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂)
+          le_top).hom).toAlgebra
+      (LinearMap.ker ((p1BaseChangeCoverSquare A).ringSectionDiffBase
+        (pullback.snd (p1Over k).hom
+          (Spec.map (CommRingCat.ofHom (algebraMap k A)))))).FG) :
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        (p1BaseChangeCoverSquare A).U₁
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        (p1BaseChangeCoverSquare A).U₂
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        ((p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂)
+    ∀ _hfib : (∀ (m : Ideal Γ(Spec (CommRingCat.of A), ⊤)), m.IsMaximal →
+      Function.Surjective
+        (((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+          (pullback.snd (p1Over k).hom
+            (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M).baseChange
+          (Γ(Spec (CommRingCat.of A), ⊤) ⧸ m))),
+    Function.Surjective ⇑((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+        (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M) ∧
+      Module.Finite Γ(Spec (CommRingCat.of A), ⊤)
+        (LinearMap.ker ((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+          (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M)) ∧
+      Module.Projective Γ(Spec (CommRingCat.of A), ⊤)
+        (LinearMap.ker ((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+          (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M)) ∧
+      ∀ (B : Type u) [CommRing B] [Algebra Γ(Spec (CommRingCat.of A), ⊤) B],
+        Function.Bijective (AlgebraicJacobian.TwoTerm.kerBaseChange
+          ((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+            (pullback.snd (p1Over k).hom
+              (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M) B) := by
+  letI := (pullback.snd (p1Over k).hom
+    (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+      (p1BaseChangeCoverSquare A).U₁
+  letI := (pullback.snd (p1Over k).hom
+    (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+      (p1BaseChangeCoverSquare A).U₂
+  letI := (pullback.snd (p1Over k).hom
+    (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+      ((p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂)
+  intro hfib
+  exact p1Cech_h0_baseChange_of_fibrewise_h1_vanishing A M hflat
+    (p1Cech_h0_fg_of_structure_h0_fg A M hS0) hfib
+
+end Adelic
+
 end AlgebraicGeometry
