@@ -64,8 +64,11 @@ base ring, for a finitely presented module `M` on `ℙ¹_A` (`A` noetherian).
      localization kernel `ker ρ₀`.  So the **only** geometric input beyond
      the wave-4 substrate is `hS0`: finite generation of the Čech `H⁰` of
      the *structure sheaf* — `Γ(ℙ¹_A, 𝒪) ≅ A`, an `M`-independent,
-     Serre-free statement (recorded here as the single remaining sub-leaf;
-     see `p1_structure_h0_fg_statement` below).
+     Serre-free statement (further reduced below, by the sheaf gluing axiom
+     and `Hom.module_finite_top_of_bijective_appTop`, to bijectivity of the
+     comparison map `Γ(Spec A, 𝒪) → Γ(ℙ¹_A, 𝒪)` — the `B1` conclusion shape
+     of `Picard/StructureSheafPushforward.lean`, pending only
+     `GeometricallyIntegral (p1Over k).hom`; the single remaining sub-leaf).
   4. **The snake.**  `0 → im(H⁰E) → H⁰M → H¹K` at the level of concrete
      kernels/cokernels of linear maps (`Submodule.fg_of_fg_map_of_fg_inf_ker`
      + `Submodule.ker_liftQ`), over the noetherian base.
@@ -86,6 +89,11 @@ base ring, for a finitely presented module `M` on `ℙ¹_A` (`A` noetherian).
 * `Adelic.p1Cech_h0_baseChange_of_fibrewise_h1_vanishing_of_structure_h0_fg`
   — the composite: the full wave-4 engine conclusion with `hH0` *replaced*
   by `hS0`.
+* `Scheme.AffineCoverMVSquare.fg_ker_ringSectionDiffBase_of_module_finite_top`
+  + `Scheme.Hom.module_finite_top_of_bijective_appTop` +
+  `Adelic.p1Cech_h0_fg_of_bijective_appTop` — the anchor `hS0` reduced (by
+  sheaf gluing, no injectivity or noetherianity) to bijectivity of
+  `Γ(Spec A, 𝒪) → Γ(ℙ¹_A, 𝒪)`, i.e. to the `B1` comparison-map brick.
 -/
 
 set_option autoImplicit false
