@@ -461,6 +461,24 @@ theorem h0_baseChange_of_fibrewise_h1_vanishing [IsNoetherianRing A]
   exact ⟨hd, Module.Finite.iff_fg.mpr hH0, projective_ker_of_surjective hd hH0,
     fun B _ _ => bijective_kerBaseChange_of_surjective hd B⟩
 
+/-- Surjectivity of a linear map descends along the self base change
+`A ⊗[A] -` (conjugation by `TensorProduct.lid`). -/
+theorem surjective_of_baseChange_self {A : Type u} [CommRing A] {M N : Type u}
+    [AddCommGroup M] [Module A M] [AddCommGroup N] [Module A N]
+    {f : M →ₗ[A] N} (hf : Function.Surjective (f.baseChange A)) :
+    Function.Surjective f := by
+  have hnat : ∀ w : A ⊗[A] M,
+      f (TensorProduct.lid A M w) = TensorProduct.lid A N (f.baseChange A w) := by
+    intro w
+    induction w using TensorProduct.induction_on with
+    | zero => simp
+    | tmul a x => simp
+    | add u v hu hv => simp [map_add, hu, hv]
+  intro y
+  obtain ⟨u, hu⟩ := hf ((TensorProduct.lid A N).symm y)
+  refine ⟨TensorProduct.lid A M u, ?_⟩
+  rw [hnat, hu, LinearEquiv.apply_symm_apply]
+
 end KerBaseChange
 
 end TwoTerm
@@ -714,6 +732,22 @@ theorem exists_twoTermFiniteReplacement [IsNoetherianRing A]
       refine ⟨-(LinearMap.fst A M0 (Fin n → A)).baseChange B u, ?_⟩
       rw [map_neg, map_neg, ← hu, hgBC]
       abel
+
+/-- **The split-off corollary on a replacement** (the B5 gate input): if
+`H¹ = coker d` vanishes, i.e. `d` is surjective, then the differential `k`
+of any finite replacement is surjective onto the finite free `K¹ = A^n` —
+hence split by projectivity of `A^n`, so `K⁰ ≅ ker k ⊕ A^n` with `ker k`
+finite projective realizing `H⁰`.  Proved by descending the `H¹` comparison
+at `B = A` along `TensorProduct.lid`. -/
+theorem TwoTermFiniteReplacement.k_surjective_of_surjective
+    {d : M0 →ₗ[A] M1} (R : TwoTermFiniteReplacement d)
+    (hd : Function.Surjective d) : Function.Surjective R.k := by
+  apply surjective_of_baseChange_self
+  rw [← range_eq_top, ← Submodule.Quotient.subsingleton_iff]
+  haveI h1 : Subsingleton ((A ⊗[A] M1) ⧸ range (d.baseChange A)) := by
+    rw [Submodule.Quotient.subsingleton_iff, range_eq_top]
+    exact LinearMap.baseChange_surjective A hd
+  exact ⟨fun a b => (R.h1_bijective A).injective (Subsingleton.elim _ _)⟩
 
 end Replacement
 
