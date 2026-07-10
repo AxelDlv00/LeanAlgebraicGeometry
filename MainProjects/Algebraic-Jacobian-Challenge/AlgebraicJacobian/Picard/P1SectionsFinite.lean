@@ -890,6 +890,114 @@ noncomputable def AffineCoverMVSquare.ringSectionDiffBase (V : X.AffineCoverMVSq
     (p.baseRingSectionsResAlgHom (inf_le_left : V.U₁ ⊓ V.U₂ ≤ V.U₁)).toLinearMap
     (p.baseRingSectionsResAlgHom (inf_le_right : V.U₁ ⊓ V.U₂ ≤ V.U₂)).toLinearMap
 
+set_option maxHeartbeats 400000 in
+-- Heartbeat headroom for the sheaf-condition gluing across the
+-- `Scheme.Opens`/`Opens X.toTopCat` presentation diamond (fleet recipe, as in
+-- `globalSectionsEquivKerModuleSectionDiffBase`).
+/-- **The `hS0` anchor reduces to global sections.**  If `Γ(X, ⊤)` is a
+finite `Γ(S, ⊤)`-module (for the `appLE`-`toAlgebra` structure — i.e. the
+pushforward `p_* 𝒪_X` has base-finite global sections), then the
+structure-sheaf Čech kernel of any 2-affine cover square is finitely
+generated: by the sheaf gluing axiom the kernel is the *image* of the
+pair-of-restrictions map from `Γ(X, ⊤)`, and images of finite modules are
+finite.  (No separatedness, injectivity, or noetherianity enters.)  For
+`X = ℙ¹_A` this reduces the B3-H0 sub-leaf to the single classical fact
+`Γ(ℙ¹_A, 𝒪) ≅ A`. -/
+theorem AffineCoverMVSquare.fg_ker_ringSectionDiffBase_of_module_finite_top
+    (V : X.AffineCoverMVSquare) (p : X ⟶ S)
+    (hfin :
+      letI := ((p.appLE ⊤ (⊤ : X.Opens) (le_top : (⊤ : X.Opens) ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+      Module.Finite Γ(S, ⊤) Γ(X, ⊤)) :
+    letI := ((p.appLE ⊤ V.U₁ (le_top : V.U₁ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+    letI := ((p.appLE ⊤ V.U₂ (le_top : V.U₂ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+    letI := ((p.appLE ⊤ (V.U₁ ⊓ V.U₂) (le_top : V.U₁ ⊓ V.U₂ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+    (LinearMap.ker (V.ringSectionDiffBase p)).FG := by
+  letI := ((p.appLE ⊤ (⊤ : X.Opens) (le_top : (⊤ : X.Opens) ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+  letI := ((p.appLE ⊤ V.U₁ (le_top : V.U₁ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+  letI := ((p.appLE ⊤ V.U₂ (le_top : V.U₂ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+  letI := ((p.appLE ⊤ (V.U₁ ⊓ V.U₂) (le_top : V.U₁ ⊓ V.U₂ ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+  haveI := hfin
+  classical
+  -- the pair-of-restrictions map from the global sections
+  set π : Γ(X, (⊤ : X.Opens)) →ₗ[Γ(S, ⊤)] Γ(X, V.U₁) × Γ(X, V.U₂) :=
+    LinearMap.prod
+      (p.baseRingSectionsResAlgHom (le_top : V.U₁ ≤ ⊤)).toLinearMap
+      (p.baseRingSectionsResAlgHom (le_top : V.U₂ ≤ ⊤)).toLinearMap with hπ
+  -- restriction composites collapse (functoriality + proof irrelevance)
+  have hres : ∀ {W : X.Opens} (hIW : V.U₁ ⊓ V.U₂ ≤ W) (hW : W ≤ ⊤)
+      (s : Γ(X, (⊤ : X.Opens))),
+      (X.presheaf.map (homOfLE hIW).op).hom ((X.presheaf.map (homOfLE hW).op).hom s)
+        = (X.presheaf.map (homOfLE (le_top : V.U₁ ⊓ V.U₂ ≤ ⊤)).op).hom s := by
+    intro W hIW hW s
+    have hcomp := X.presheaf.map_comp (homOfLE hW).op (homOfLE hIW).op
+    exact (congrArg (fun f => (CategoryTheory.ConcreteCategory.hom f) s) hcomp).symm.trans rfl
+  have hker : LinearMap.ker (V.ringSectionDiffBase p) = LinearMap.range π := by
+    refine le_antisymm ?_ ?_
+    · -- gluing: every Čech-kernel element comes from a global section
+      rintro ⟨c₀, c₁⟩ hc
+      rw [LinearMap.mem_ker] at hc
+      have hagree : (X.presheaf.map
+            (homOfLE (inf_le_left : V.U₁ ⊓ V.U₂ ≤ V.U₁)).op).hom c₀ =
+          (X.presheaf.map
+            (homOfLE (inf_le_right : V.U₁ ⊓ V.U₂ ≤ V.U₂)).op).hom c₁ := by
+        have h : (X.presheaf.map
+              (homOfLE (inf_le_left : V.U₁ ⊓ V.U₂ ≤ V.U₁)).op).hom c₀ -
+            (X.presheaf.map
+              (homOfLE (inf_le_right : V.U₁ ⊓ V.U₂ ≤ V.U₂)).op).hom c₁ = 0 := hc
+        exact sub_eq_zero.mp h
+      set sf : ∀ i : ULift.{u} Bool, Γ(X, V.pairFamily i) :=
+        fun i => match i with
+          | ⟨true⟩ => c₀
+          | ⟨false⟩ => c₁ with hsf
+      have hcompat : TopCat.Presheaf.IsCompatible X.presheaf V.pairFamily sf := by
+        intro i j
+        have key : ∀ {U W W' : X.Opens} (hUV : W' ≤ U ⊓ W)
+            (a : Γ(X, U)) (b : Γ(X, W)),
+            (X.presheaf.map (homOfLE (inf_le_left : U ⊓ W ≤ U)).op).hom a =
+              (X.presheaf.map (homOfLE (inf_le_right : U ⊓ W ≤ W)).op).hom b →
+            (X.presheaf.map (homOfLE (hUV.trans inf_le_left)).op).hom a =
+              (X.presheaf.map (homOfLE (hUV.trans inf_le_right)).op).hom b := by
+          intro U W W' hUV a b hab
+          have ha : (X.presheaf.map (homOfLE (hUV.trans inf_le_left)).op).hom a =
+              (X.presheaf.map (homOfLE hUV).op).hom
+                ((X.presheaf.map (homOfLE (inf_le_left : U ⊓ W ≤ U)).op).hom a) := by
+            have := X.presheaf.map_comp
+              (homOfLE (inf_le_left : U ⊓ W ≤ U)).op (homOfLE hUV).op
+            exact (congrArg (fun f => (CategoryTheory.ConcreteCategory.hom f) a) this).trans rfl
+          have hb : (X.presheaf.map (homOfLE (hUV.trans inf_le_right)).op).hom b =
+              (X.presheaf.map (homOfLE hUV).op).hom
+                ((X.presheaf.map (homOfLE (inf_le_right : U ⊓ W ≤ W)).op).hom b) := by
+            have := X.presheaf.map_comp
+              (homOfLE (inf_le_right : U ⊓ W ≤ W)).op (homOfLE hUV).op
+            exact (congrArg (fun f => (CategoryTheory.ConcreteCategory.hom f) b) this).trans rfl
+          rw [ha, hb, hab]
+        obtain ⟨bi⟩ := i
+        obtain ⟨bj⟩ := j
+        cases bi <;> cases bj
+        · exact congrArg
+            (fun g => (CategoryTheory.ConcreteCategory.hom (X.presheaf.map (Quiver.Hom.op g))) c₁)
+            (Subsingleton.elim _ _)
+        · exact (key (le_inf inf_le_right inf_le_left) c₀ c₁ hagree).symm
+        · exact key le_rfl c₀ c₁ hagree
+        · exact congrArg
+            (fun g => (CategoryTheory.ConcreteCategory.hom (X.presheaf.map (Quiver.Hom.op g))) c₀)
+            (Subsingleton.elim _ _)
+      obtain ⟨s, hs, -⟩ := TopCat.Sheaf.existsUnique_gluing'
+        X.sheaf V.pairFamily ⊤ (fun _ => homOfLE le_top) V.le_iSup_pairFamily sf hcompat
+      exact ⟨s, Prod.ext (hs ⟨true⟩) (hs ⟨false⟩)⟩
+    · -- the complex property: restrictions of a global section agree
+      rintro _ ⟨s, rfl⟩
+      rw [LinearMap.mem_ker]
+      have h : (X.presheaf.map (homOfLE (inf_le_left : V.U₁ ⊓ V.U₂ ≤ V.U₁)).op).hom
+            ((X.presheaf.map (homOfLE (le_top : V.U₁ ≤ ⊤)).op).hom s) -
+          (X.presheaf.map (homOfLE (inf_le_right : V.U₁ ⊓ V.U₂ ≤ V.U₂)).op).hom
+            ((X.presheaf.map (homOfLE (le_top : V.U₂ ≤ ⊤)).op).hom s) = 0 := by
+        rw [hres inf_le_left (le_top : V.U₁ ≤ ⊤) s,
+          hres inf_le_right (le_top : V.U₂ ≤ ⊤) s, sub_self]
+      exact h
+  rw [hker, ← Submodule.map_top]
+  exact (Module.finite_def.mp hfin).map π
+
 /-! ## §6. THE LEAF: `H⁰`-finiteness over a relative Laurent chart datum -/
 
 set_option maxHeartbeats 1600000 in
@@ -1004,6 +1112,34 @@ theorem RelLaurentChartData.fg_ker_moduleSectionDiffBase {X S : Scheme.{u}} {p :
     rw [happ]
   rw [hkereq]
   exact key
+
+/-- **Base-finiteness of global sections from the comparison map**: if the
+structure-sheaf comparison `Γ(S, ⊤) → Γ(X, ⊤)` (`p.appTop`) is bijective —
+the conclusion shape of the `B1` brick `isIso_snd_appTop`
+(`Picard/StructureSheafPushforward.lean`) — then `Γ(X, ⊤)` is a finite
+`Γ(S, ⊤)`-module for the `appLE`-`toAlgebra` structure (it is generated by
+`1`). -/
+theorem Hom.module_finite_top_of_bijective_appTop {X S : Scheme.{u}} (p : X ⟶ S)
+    (hbij : Function.Bijective (p.appTop).hom) :
+    letI := ((p.appLE ⊤ (⊤ : X.Opens) (le_top : (⊤ : X.Opens) ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+    Module.Finite Γ(S, ⊤) Γ(X, ⊤) := by
+  letI := ((p.appLE ⊤ (⊤ : X.Opens) (le_top : (⊤ : X.Opens) ≤ p ⁻¹ᵁ ⊤)).hom).toAlgebra
+  have heq : p ⁻¹ᵁ (⊤ : S.Opens) = ⊤ := p.preimage_top
+  have hiso : IsIso (X.presheaf.map
+      (homOfLE (le_top : (⊤ : X.Opens) ≤ p ⁻¹ᵁ ⊤)).op) := by
+    haveI : IsIso (homOfLE (le_top : (⊤ : X.Opens) ≤ p ⁻¹ᵁ ⊤)) :=
+      ⟨⟨homOfLE heq.le, Subsingleton.elim _ _, Subsingleton.elim _ _⟩⟩
+    infer_instance
+  have hres : Function.Bijective ((X.presheaf.map
+      (homOfLE (le_top : (⊤ : X.Opens) ≤ p ⁻¹ᵁ ⊤)).op).hom) :=
+    CategoryTheory.ConcreteCategory.bijective_of_isIso _
+  have hsurj : Function.Surjective (algebraMap Γ(S, ⊤) Γ(X, ⊤)) := by
+    have hcomp : ⇑(algebraMap Γ(S, ⊤) Γ(X, ⊤)) =
+        ⇑((X.presheaf.map (homOfLE (le_top : (⊤ : X.Opens) ≤ p ⁻¹ᵁ ⊤)).op).hom) ∘
+          ⇑((p.appTop).hom) := rfl
+    rw [hcomp]
+    exact hres.surjective.comp hbij.surjective
+  exact Module.Finite.of_surjective (Algebra.linearMap Γ(S, ⊤) Γ(X, ⊤)) hsurj
 
 end Scheme
 
@@ -1140,6 +1276,40 @@ theorem p1Cech_h0_baseChange_of_fibrewise_h1_vanishing_of_structure_h0_fg
   intro hfib
   exact p1Cech_h0_baseChange_of_fibrewise_h1_vanishing A M hflat
     (p1Cech_h0_fg_of_structure_h0_fg A M hS0) hfib
+
+set_option maxHeartbeats 800000 in
+-- Heartbeat headroom for the instance-heavy `letI` environment (fleet recipe).
+/-- **The B3-H0 leaf from the structure-sheaf comparison map**: the engine's
+`hH0`, given only that `Γ(Spec A, 𝒪) → Γ(ℙ¹_A, 𝒪)` is bijective — the exact
+conclusion shape of the `B1` brick `bijective_snd_appTop_baseChange`
+(`Picard/StructureSheafPushforward.lean`), which discharges it as soon as
+`GeometricallyIntegral (p1Over k).hom` is provided (`IsProper` is already an
+instance via `ProjectiveSpace.isProper_over`).  Chain:
+comparison bijective ⟹ `Γ(ℙ¹_A, ⊤)` base-finite ⟹ (sheaf gluing) `hS0` ⟹
+(Serre dévissage) `hH0`. -/
+theorem p1Cech_h0_fg_of_bijective_appTop [Algebra.FiniteType k A]
+    (M : (Limits.pullback (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).Modules)
+    [M.IsFinitePresentation]
+    (hbij : Function.Bijective (((pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).appTop).hom)) :
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        (p1BaseChangeCoverSquare A).U₁
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        (p1BaseChangeCoverSquare A).U₂
+    letI := (pullback.snd (p1Over k).hom
+      (Spec.map (CommRingCat.ofHom (algebraMap k A)))).baseSectionsModule M
+        ((p1BaseChangeCoverSquare A).U₁ ⊓ (p1BaseChangeCoverSquare A).U₂)
+    (LinearMap.ker ((p1BaseChangeCoverSquare A).moduleSectionDiffBase
+      (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A)))) M)).FG :=
+  p1Cech_h0_fg_of_structure_h0_fg A M
+    ((p1BaseChangeCoverSquare A).fg_ker_ringSectionDiffBase_of_module_finite_top
+      (pullback.snd (p1Over k).hom (Spec.map (CommRingCat.ofHom (algebraMap k A))))
+      ((pullback.snd (p1Over k).hom
+        (Spec.map (CommRingCat.ofHom (algebraMap k A)))).module_finite_top_of_bijective_appTop
+        hbij))
 
 end Adelic
 
