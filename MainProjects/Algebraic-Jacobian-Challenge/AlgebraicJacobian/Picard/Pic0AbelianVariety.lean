@@ -7,6 +7,8 @@ import Mathlib
 import AlgebraicJacobian.Picard.IdentityComponent
 import AlgebraicJacobian.Picard.TangentSpaceDualNumbers
 import AlgebraicJacobian.Picard.TangentSpaceIdentitySection
+import AlgebraicJacobian.Picard.Pic0TangentSpace
+import AlgebraicJacobian.RiemannRoch.Adelic.GenusUnconditional
 import AlgebraicJacobian.Genus
 
 /-!
@@ -28,20 +30,26 @@ the origin (hence everywhere by translation), properness inherited from the
 projectivity of `Pic⁰_{C/k}` for `C/k` geometrically normal, and the assembly
 into an abelian variety in the sense of Milne §I.1.
 
-## Status (run 0008, T5 session)
+## Status (run 0015, T16 W12-tangent session; previously run 0008 T5)
 
 Proved sorry-free in this file: `grpObj` (the `GrpObj (Pic0Scheme C)`
 structure, via `IdentityComponent.isSubgroupHomomorphism` +
 `PicScheme.groupSchemeStructure`), `tangentSpaceCotangentDual`,
 `geometricallyIrreducible` (specialisation of the sibling's
-`isFiniteTypeGeometricallyIrreducible`, whose QC∧GeomIrred conjunct is the
-remaining upstream sorry), the `isAbelianVariety` assembly, and the moved
+`isFiniteTypeGeometricallyIrreducible`, whose QC∧GeomIrred conjuncts were
+closed in run 0009 — `IdentityComponent.lean`, Kleiman §5 Lem.~`lem:agps`(3)),
+the `isAbelianVariety` assembly, and the moved
 `Pic0Scheme.isAbelianVariety` (blueprint pin `thm:pic_zero_is_abelian_variety`).
 
-Remaining `sorry` bodies: `tangentSpaceIso` (Kleiman §5 Thm 5.11 — needs the
-`Pic(C_ε) ≅ H¹(C_ε, O^×)` cocycle classification and the truncated-exponential
-kernel computation; the algebra-level splitting is in sibling
-`Picard/DualNumberUnits.lean`), `smooth`, `proper`.
+Remaining `sorry` bodies: `tangentSpaceIso` — REDUCED (run 0015, W12-tangent)
+via `nonempty_cotangentSpaceAddEquiv_of_finrank_eq`
+(`Picard/Pic0TangentSpace.lean`) to the single Kleiman §5 Thm 5.11 dimension
+identity `dim_{κ(e)} m_e/m_e² = dim_k H¹(C, 𝒪_C)` at the identity section;
+the remaining content is the `Pic(C ×_k Spec k[ε])`-kernel description of the
+dual-number points (representability leg, `PicScheme.representable`) and the
+truncated-exponential Čech-cocycle computation (algebra-level splitting in
+sibling `Picard/DualNumberUnits.lean`, Čech carrier bridge
+`AffineCoverMVSquare.hModuleOneEquivH1Cok_curve`) — and `smooth`, `proper`.
 
 The 5 blueprint-pinned declarations are:
 
@@ -314,13 +322,12 @@ theorem locallyOfFiniteType {k : Type u} [Field k]
   (GroupScheme.IdentityComponent.isFiniteTypeGeometricallyIrreducible
     (PicScheme C)).1
 
-/-- **Closed at this file's level (residual content in the sibling's typed
-sorry).** `Pic⁰_{C/k}` is quasi-compact over `k`: the second conjunct of the
-sibling's `IdentityComponent.isFiniteTypeGeometricallyIrreducible` (Kleiman §5
-Lem.~`lem:agps`~(3): `α(U × U) = G⁰` is the image of the affine, hence
-quasi-compact, `U × U`). Not needed for the `proper` assembly (Mathlib's
-`IsProper` derives quasi-compactness from universal closedness) but recorded
-for the blueprint's finite-type chain. -/
+/-- **Closed.** `Pic⁰_{C/k}` is quasi-compact over `k`: the second conjunct of
+the sibling's `IdentityComponent.isFiniteTypeGeometricallyIrreducible` (Kleiman
+§5 Lem.~`lem:agps`~(3): `α(U × U) = G⁰` is the image of the affine, hence
+quasi-compact, `U × U`), fully proved since run 0009. Not needed for the
+`proper` assembly (Mathlib's `IsProper` derives quasi-compactness from
+universal closedness) but recorded for the blueprint's finite-type chain. -/
 theorem quasiCompact {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -410,7 +417,27 @@ between the cotangent space and the project's `H¹(C, 𝒪_C)` module
 A k-LinearEquiv refinement (iter-194+) replaces the `AddEquiv` once the
 `k`-module structure on the cotangent space is consistently threaded through
 downstream consumers; the underlying additive group structure is enough for
-the dimension corollary `dim_k T₀ Pic⁰ = dim_k H¹ = g(C)`. -/
+the dimension corollary `dim_k T₀ Pic⁰ = dim_k H¹ = g(C)`.
+
+REDUCED (run 0015, W12-tangent): via the proved reduction
+`nonempty_cotangentSpaceAddEquiv_of_finrank_eq`
+(`Picard/Pic0TangentSpace.lean`, dimension-count transport of bases along
+`κ(e) ≃+* k`; inputs: `Pic0.locallyOfFiniteType`, `identitySection_isSection`,
+and the genus-lane finiteness `instModuleFiniteHModuleOne` of
+`RiemannRoch/Adelic/GenusUnconditional.lean`), the remaining `sorry` is
+exactly the Kleiman §5 Thm 5.11 **dimension identity**
+`dim_{κ(e)} m_e/m_e² = dim_k H¹(C, 𝒪_C)` at the identity section. Its
+intended proof: (1) `dim_{κ(e)} m_e/m_e² = dim_{κ(e)} Dual(m_e/m_e²)` and the
+dual is the pointed dual-number points (`tangentSpaceCotangentDual`,
+`pointedDualNumberPoints_equiv_cotangentSpaceDual`); (2) representability
+identifies those points `κ(e)`-linearly with
+`ker(Pic(C ×_k Spec k[ε]) / π^* → Pic(C))`; (3) the truncated-exponential
+splitting (`Picard/DualNumberUnits.lean`) computes that kernel on a 2-affine
+cover as the Čech carrier `AffineCoverMVSquare.H1Cok`, which is `H¹(C, 𝒪_C)`
+by `AffineCoverMVSquare.hModuleOneEquivH1Cok_curve`
+(`RiemannRoch/Adelic/GenusUnconditional.lean`). Steps (2)-(3) must be carried
+out with enough (semi)linearity to preserve dimension — a bare `Equiv` does
+not determine `finrank`. -/
 theorem tangentSpaceIso {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
@@ -418,8 +445,15 @@ theorem tangentSpaceIso {k : Type u} [Field k]
     [PicScheme.PicSchemeLocallyOfFiniteType C] :
     Nonempty (Σ' (e : Spec (.of k) ⟶ (Pic0Scheme C).left),
       IsLocalRing.CotangentSpace ((Pic0Scheme C).left.presheaf.stalk (e.base default))
-        ≃+ Scheme.HModule k (Scheme.toModuleKSheaf C) 1) :=
-  sorry
+        ≃+ Scheme.HModule k (Scheme.toModuleKSheaf C) 1) := by
+  haveI : LocallyOfFiniteType (Pic0Scheme C).hom := locallyOfFiniteType C
+  refine (nonempty_cotangentSpaceAddEquiv_of_finrank_eq (Pic0Scheme C)
+      (identitySection_isSection C)
+      (Scheme.HModule k (Scheme.toModuleKSheaf C) 1) ?_).map
+    fun φ => ⟨identitySection C, φ⟩
+  -- Kleiman §5 Thm 5.11 dimension identity `dim_{κ(e)} m_e/m_e² = dim_k H¹(C, 𝒪_C)`:
+  -- representability + truncated-exponential Čech-cocycle legs, see docstring.
+  exact sorry
 
 /-- **Smoothness of `Pic⁰_{C/k}`.**
 
@@ -475,10 +509,10 @@ specialisation of the abstract identity-component substrate
 The proof: apply `GroupScheme.IdentityComponent.isFiniteTypeGeometricallyIrreducible`
 to `G = PicScheme C` (locally of finite type by the
 `PicSchemeLocallyOfFiniteType` carrier); `IdentityComponent (PicScheme C)`
-is `Pic0Scheme C` definitionally. The specialisation is complete here; the
-remaining mathematical obligation (Kleiman's translate-cover argument, EGA
-IV₂ 4.5.8/4.6.1) lives in the sibling's
-`isFiniteTypeGeometricallyIrreducible` sorry. -/
+is `Pic0Scheme C` definitionally. The specialisation is complete here, and
+the mathematical content (Kleiman's translate-cover argument, EGA IV₂
+4.5.8/4.6.1) was closed in the sibling's
+`isFiniteTypeGeometricallyIrreducible` in run 0009. -/
 theorem geometricallyIrreducible {k : Type u} [Field k]
     (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom]
