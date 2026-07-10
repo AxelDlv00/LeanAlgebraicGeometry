@@ -1,0 +1,62 @@
+% source: David Mumford, "Abelian Varieties", TIFR Studies in Mathematics 5, Oxford UP, 1970
+% pdf_page: 0055
+% doc_page: 44 (Chapter II, Section 4, corollaries of the rigidity lemma; Appendix to Section 4)
+% retrieved: 2026-07-11
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi via PyMuPDF; scanned book, no text layer)
+
+\DeclareMathOperator{\Hom}{Hom}
+
+% [running head: ABELIAN VARIETIES, page 44]
+
+Note that in the proof of the above corollary, despite the additive notation
+used, no use of the commutativity of $X$ was made. Thus, we may use it to
+give a second proof of the commutativity of $X$.
+
+\paragraph{Corollary 2.}
+\textit{$X$ is a commutative group.}
+
+In fact, the morphism of $X$ into itself mapping each element onto its
+inverse is a homomorphism by Corollary 1. Hence, for $x, y \in X$,
+$(xy)^{-1} = x^{-1} y^{-1} = y^{-1} x^{-1}$, and $X$ is commutative.
+
+\paragraph{Corollary 3.}
+\textit{Let $X$ be an abelian variety (with base point $0$). Then on the
+category of complete varieties with base point, the functor
+$S \longmapsto \Hom(S, X)$ (where $\Hom$ denotes morphisms preserving base
+point) is linear; that is, for $S$, $T$ in this category, the natural map}
+\[
+  \Hom(S, X) \times \Hom(T, X) \longrightarrow \Hom(S \times T, X)
+\]
+\textit{given by $(f, g) \longmapsto h$, $h(s,t) = f(s) + g(t)$ is a
+bijection.}
+
+\paragraph{Proof.}
+That this map is injective follows by fixing $s$ and $t$ in turn to be the
+base points $s_0$ and $t_0$ of $S$ and $T$, respectively, in the equation
+$h(s, t) = f(s) + g(t)$. Next, take any $h \in \Hom(S \times T, X)$, and put
+$f(s) = h(s, t_0)$, $g(t) = h(s_0, t)$,
+$k(s, t) = h(s, t) - f(s) - g(t)$. Then
+$k(S \times \{t_0\}) = k(\{s_0\} \times T) = 0$, and it follows from the
+rigidity lemma that $k \equiv 0$.
+
+\section*{Appendix to \S 4}
+
+We want to prove the following result.
+
+\paragraph{Theorem.}
+\textit{Let $X$ be a complete variety, $e \in X$ a point, and}
+\[
+  m : X \times X \longrightarrow X
+\]
+\textit{a morphism such that $m(x, e) = m(e, x) = x$ for all $x \in X$. Then
+$X$ is an abelian variety with group law $m$ and identity $e$.}
+
+\paragraph{Proof.}
+We shall denote $m(x, y)$ simply by $xy$. Introduce the morphism
+\[
+  \psi : X \times X \longrightarrow X \times X
+\]
+\[
+  \psi : (x, y) = (xy, y).
+\]
+% [proof continues on the next page]

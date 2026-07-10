@@ -1,0 +1,79 @@
+% source: J. S. Milne, "Abelian Varieties" (course notes), v2.00, 2008, www.jmilne.org
+% pdf_page: 0014
+% doc_page: 8 (Chapter I, Section 1, "Definitions; Basic Properties" — Rigidity)
+% retrieved: 2026-07-11
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi via PyMuPDF)
+
+% [running head: CHAPTER I. ABELIAN VARIETIES: GEOMETRY, page 8]
+
+It follows that for every $k$-algebra $R$, $V(R)$ acquires a group structure,
+and these group structures depend functorially on $R$ (AG 4.42).
+
+Let $V$ be a group variety over $k$. For a point $a$ of $V$ with coordinates
+in $k$, we define $t_a : V \to V$ (\textbf{right translation} by $a$) to be
+the composite
+\[
+  \begin{array}{ccccc}
+    V & \to & V \times V & \xrightarrow{\;m\;} & V. \\
+    x & \mapsto & (x, a) & \mapsto & xa
+  \end{array}
+\]
+Thus, on points $t_a$ is $x \mapsto xa$. It is an isomorphism $V \to V$ with
+inverse $t_{\mathrm{inv}(a)}$.
+
+A group variety is automatically nonsingular: it suffices to prove this
+after $k$ has been replaced by its algebraic closure (AG, Chapter 11); as
+does any variety, it contains a nonsingular dense open subvariety $U$
+(AG, 5.18), and the translates of $U$ cover $V$.
+
+By definition, only one irreducible component of a variety can pass through
+a nonsingular point of the variety (AG 5.16). Thus a connected group variety
+is irreducible.
+
+A connected group variety is geometrically connected, i.e., remains
+connected when we extend scalars to the algebraic closure. To see this, we
+have to show that $k$ is algebraically closed in $k(V)$ (AG 11.7). Let $U$
+be any open affine neighbourhood of $e$, and let
+$R = \Gamma(U, \mathcal{O}_V)$. Then $R$ is a $k$-algebra with field of
+fractions $k(V)$, and $e$ is a homomorphism $R \to k$. If $k$ were not
+algebraically closed in $k(V)$, then there would be a field $k' \supset k$,
+$k' \ne k$, contained in $R$. But for such a field, there is no homomorphism
+$k' \to k$, which contradicts the existence of $e : R \to k$.
+
+A complete connected group variety is called an \textbf{abelian variety}.
+As we shall see, they are projective, and (fortunately) commutative. Their
+group laws will be written additively. Thus $t_a$ is now denoted
+$x \mapsto x + a$ and $e$ is usually denoted $0$.
+
+\subsection*{Rigidity}
+
+The paucity of maps between projective varieties has some interesting
+consequences.
+
+\paragraph{Theorem 1.1 (Rigidity Theorem).}
+\textit{Consider a regular map $\alpha : V \times W \to U$, and assume that
+$V$ is complete and that $V \times W$ is geometrically irreducible. If there
+are points $u_0 \in U(k)$, $v_0 \in V(k)$, and $w_0 \in W(k)$ such that}
+\[
+  \alpha(V \times \{w_0\}) = \{u_0\} = \alpha(\{v_0\} \times W)
+\]
+\textit{then $\alpha(V \times W) = \{u_0\}$.}
+
+In other words, if the two ``coordinate axes'' collapse to a point, then
+this forces the whole space to collapse to the point.
+
+\paragraph{Proof.}
+Since the hypotheses continue to hold after extending scalars from $k$ to
+$k^{\mathrm{al}}$, we can assume $k$ is algebraically closed. Note that $V$
+is connected, because otherwise $V \times_k W$ wouldn't be connected, much
+less irreducible. We need to use the following facts:
+\begin{itemize}
+\item[(i)] If $V$ is complete, then the projection map
+  $q : V \times_k W \to W$ is closed (this is the definition of being
+  complete AG 7.1).
+\item[(ii)] If $V$ is complete and connected, and $\varphi : V \to U$ is a
+  regular map from $V$ into an affine variety, then
+  $\varphi(V) = \{\text{point}\}$ (AG 7.5). Let $U_0$ be an open affine
+  neighbourhood of $u_0$.
+\end{itemize}
+% [proof continues on the next page]

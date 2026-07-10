@@ -1,0 +1,54 @@
+% source: David Mumford, "Abelian Varieties", TIFR Studies in Mathematics 5, Oxford UP, 1970
+% pdf_page: 0054
+% doc_page: 43 (Chapter II, Section 4, "Definition of abelian varieties")
+% retrieved: 2026-07-11
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi via PyMuPDF; scanned book, no text layer)
+
+% [running head: ALGEBRAIC THEORY VIA VARIETIES, page 43]
+
+% [end of the proof that n_X is surjective, from the previous page]
+It follows by induction on $n$ that for any $n > 0$ (and hence also for
+$n \le 0$), $(dn_X)_0$ is multiplication by $n$. Thus, if $p \nmid n$, $dn_X$
+is an isomorphism. If $n_X$ were not surjective, by the dimension theorem,
+$\dim_0 n_X^{-1}(0) > 0$, and we can therefore find a non-zero $t \in T$
+tangent to $n_X^{-1}(0)$ at $0$. But then, we would have $dn_X(t) = 0$
+(since $n_X^{-1}(0)$ is mapped into the single point $0$ by $n_X$), which is
+a contradiction.
+
+The following lemma, besides having other important applications, gives a
+second proof of the commutativity of $X$.
+
+\paragraph{Rigidity Lemma. (Form I.)}
+\textit{Let $X$ be a complete variety, $Y$ and $Z$ any varieties, and
+$f : X \times Y \to Z$ a morphism such that for some $y_0 \in Y$,
+$f(X \times \{y_0\})$ is a single point $z_0$ of $Z$. Then there is a
+morphism $g : Y \to Z$ such that if $p_2 : X \times Y \to Y$ is the
+projection, $f = g \circ p_2$.}
+
+\paragraph{Proof.}
+Choose any point $x_0 \in X$, and define $g : Y \to Z$ by
+$g(y) = f(x_0, y)$. Since $X \times Y$ is a variety, to show that
+$f = g \circ p_2$, it is sufficient to show that these morphisms coincide on
+some open subset of $X \times Y$. Let $U$ be an affine open neighbourhood of
+$z_0$ in $Z$, $F = Z - U$, and $G = p_2(f^{-1}(F))$; then $G$ is closed in
+$Y$ since $X$ is complete and hence $p_2$ is a closed map. Further
+$y_0 \notin G$ since $f(X \times \{y_0\}) = \{z_0\}$. Therefore
+$Y - G = V$ is a non-empty open subset of $Y$. For each $y \in V$, the
+complete variety $X \times \{y\}$ gets mapped by $f$ into the affine variety
+$U$, and hence to a single point of $U$. But this means that for any
+$x \in X$, $y \in V$, $f(x, y) = f(x_0, y) = g \circ p_2(x, y)$, and this
+proves our assertion.
+
+\paragraph{Corollary 1.}
+\textit{If $X$ and $Y$ are abelian varieties and $f : X \to Y$ is any
+morphism, $f(x) = h(x) + a$ where $h$ is a homomorphism of $X$ into $Y$ and
+$a \in Y$.}
+
+\paragraph{Proof.}
+Replacing $f$ by $f - f(0)$, we may assume $f(0) = 0$ and we have to show
+under this assumption that $f$ is a homomorphism. Consider the morphism
+$\phi : X \times X \to Y$ defined by
+$\phi(x, y) = f(x + y) - f(y) - f(x)$. Then
+$\phi(X \times \{0\}) = \phi(\{0\} \times X) = 0$, so that it follows by the
+above lemma that $\phi \equiv 0$ on $X \times X$, or what is the same, that
+$f$ is a homomorphism.

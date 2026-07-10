@@ -111,7 +111,23 @@ references:
     files:
       - { path: mumford-abelian-varieties.pdf, format: pdf }
       - { path: mumford-abelian-varieties.md, format: md }
-    topics: [abelian-varieties, dual-abelian-variety, theta]
+      - { path: mumford-abelian-varieties/tex/page-0054.tex, format: tex }
+      - { path: mumford-abelian-varieties/tex/page-0055.tex, format: tex }
+    read: >-
+      Scanned PDF, no text layer; page_offset: book page N -> PDF page N+11
+      (body). Pages 54-55 (book pp. 43-44, Section II.4) transcribed 2026-07-11
+      via vision from rendered pages (PyMuPDF render, no OCR): the RIGIDITY
+      LEMMA (Form I) with its affine-neighbourhood + closed-bad-locus proof
+      (affine open U around z_0, F = Z - U, G = p_2(f^{-1}(F)) closed since X
+      complete so p_2 is a closed map, slices over Y - G land in the affine U
+      hence collapse to points), then Corollary 1 (morphism of abelian
+      varieties = homomorphism + translation, via the defect map
+      phi(x,y) = f(x+y) - f(y) - f(x) contracting both axes), the page-44 note
+      that NO commutativity of X was used in that proof, Corollary 2
+      (commutativity), Corollary 3 (linearity of pointed Hom on complete
+      varieties), and the start of the Appendix to Section 4. Cite as
+      mumford-abelian-varieties:page-0054, mumford-abelian-varieties:page-0055.
+    topics: [abelian-varieties, dual-abelian-variety, theta, rigidity-lemma]
 
   - slug: abelian-varieties
     title: "Abelian Varieties (course notes)"
@@ -123,7 +139,25 @@ references:
     files:
       - { path: abelian-varieties.pdf, format: pdf }
       - { path: abelian-varieties.md, format: md }
-    topics: [abelian-varieties, albanese, jacobian]
+      - { path: abelian-varieties/tex/page-0014.tex, format: tex }
+      - { path: abelian-varieties/tex/page-0015.tex, format: tex }
+    read: >-
+      PDF only (no public TeX); page_offset: notes page N -> PDF page N+6.
+      Pages 14-15 (doc pp. 8-9, Chapter I Section 1) transcribed 2026-07-11 via
+      vision from rendered pages (PyMuPDF render, no OCR): Theorem 1.1
+      (RIGIDITY THEOREM: alpha : V x W -> U, V complete, V x W geometrically
+      irreducible, both coordinate axes collapsing to u_0 forces alpha
+      constant) with full proof -- facts (i) projection off a complete factor
+      is closed, (ii) a regular map from a complete connected variety into an
+      affine variety is constant (AG 7.5), the closed bad locus
+      Z = q(alpha^{-1}(U - U_0)), density of V x (W - Z) by irreducibility,
+      agreement everywhere by separatedness of U -- then Corollary 1.2
+      (regular map of abelian varieties = homomorphism o translation, via the
+      defect map phi(a,a') = alpha(a+a') - alpha(a) - alpha(a') contracting
+      both axes), Remark 1.3, Corollary 1.4 (commutativity), Corollary 1.5
+      (statement + proof start). Cite as abelian-varieties:page-0014,
+      abelian-varieties:page-0015.
+    topics: [abelian-varieties, albanese, jacobian, rigidity-lemma]
 
   - slug: atiyah-macdonald-commutative-algebra
     title: "Introduction to Commutative Algebra"

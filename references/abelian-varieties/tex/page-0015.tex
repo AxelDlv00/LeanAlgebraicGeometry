@@ -1,0 +1,75 @@
+% source: J. S. Milne, "Abelian Varieties" (course notes), v2.00, 2008, www.jmilne.org
+% pdf_page: 0015
+% doc_page: 9 (Chapter I, Section 1 — end of the proof of Theorem 1.1; Corollaries 1.2-1.5)
+% retrieved: 2026-07-11
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi via PyMuPDF)
+
+% [running head: 1. DEFINITIONS; BASIC PROPERTIES., page 9]
+
+% [continuation of the proof of Theorem 1.1 (Rigidity Theorem), from page-0014.tex]
+Because of (i), $Z \overset{\mathrm{df}}{=} q(\alpha^{-1}(U \smallsetminus U_0))$
+is closed in $W$. By definition, $Z$ consists of the second coordinates of
+points of $V \times W$ not mapping into $U_0$. Thus a point $w$ of $W$ lies
+outside $Z$ if and only $\alpha(V \times \{w\}) \subset U_0$. In particular
+$w_0$ lies outside $Z$, and so $W \smallsetminus Z$ is nonempty. As
+$V \times \{w\} (\approx V)$ is complete and $U_0$ is affine,
+$\alpha(V \times \{w\})$ must be a point whenever $w \in W \smallsetminus Z$:
+in fact, $\alpha(V \times \{w\}) = \alpha(v_0, w) = \{u_0\}$. Thus $\alpha$
+is constant on the subset $V \times (W \smallsetminus Z)$ of $V \times W$.
+As $V \times (W \smallsetminus Z)$ is nonempty and open in $V \times W$, and
+$V \times W$ is irreducible, $V \times (W \smallsetminus Z)$ is dense
+$V \times W$. As $U$ is separated, $\alpha$ must agree with the constant map
+on the whole of $V \times W$. \hfill $\square$
+
+\paragraph{Corollary 1.2.}
+\textit{Every regular map $\alpha : A \to B$ of abelian varieties is the
+composite of a homomorphism with a translation.}
+
+\paragraph{Proof.}
+The regular map $\alpha$ will send the $k$-rational point $0$ of $A$ to a
+$k$-rational point $b$ of $B$. After composing $\alpha$ with translation by
+$-b$, we may assume that $\alpha(0) = 0$. Consider the map
+\[
+  \varphi : A \times A \to B, \qquad
+  \varphi(a, a') = \alpha(a + a') - \alpha(a) - \alpha(a').
+\]
+By this we mean that $\varphi$ is the difference of the two regular maps
+\[
+  \begin{array}{ccc}
+    A \times A & \xrightarrow{\;m\;} & A \\
+    \downarrow \scriptstyle{\alpha \times \alpha} & & \downarrow \scriptstyle{\alpha} \\
+    B \times B & \xrightarrow{\;m\;} & B,
+  \end{array}
+\]
+which is a regular map. Then $\varphi(A \times 0) = 0 = \varphi(0 \times A)$
+and so $\varphi = 0$. This means that $\alpha$ is a homomorphism.
+\hfill $\square$
+
+\paragraph{Remark 1.3.}
+The corollary shows that the group structure on an abelian variety is
+uniquely determined by the choice of a zero element (as in the case of an
+elliptic curve).
+
+\paragraph{Corollary 1.4.}
+\textit{The group law on an abelian variety is commutative.}
+
+\paragraph{Proof.}
+Commutative groups are distinguished among all groups by the fact that the
+map taking an element to its inverse is a homomorphism. Since the negative
+map, $a \mapsto -a$, $A \to A$, takes the zero element to itself, the
+preceding corollary shows that it is a homomorphism. \hfill $\square$
+
+\paragraph{Corollary 1.5.}
+\textit{Let $V$ and $W$ be complete varieties over $k$ with $k$-rational
+points $v_0$ and $w_0$, and let $p$ and $q$ be the projection maps
+$V \times W \to V$ and $V \times W \to W$. Let $A$ be an abelian variety.
+Then a morphism $h : V \times W \to A$ such that $h(v_0, w_0) = 0$ can be
+written uniquely as $h = f \circ p + g \circ q$ with $f : V \to A$ and
+$g : W \to A$ morphisms such that $f(v_0) = 0$ and $g(w_0) = 0$.}
+
+\paragraph{Proof.}
+Set
+\[
+  f = h | V \times \{w_0\}, \qquad g = h | \{v_0\} \times W,
+\]
+% [proof continues on the next page]
