@@ -1,3 +1,4 @@
+import AlgebraicJacobian.Algebra.TwoLattice
 import AlgebraicJacobian.Curve.GeometricallyReduced
 import AlgebraicJacobian.Curve.Basic
 import AlgebraicJacobian.Curve.Sections
