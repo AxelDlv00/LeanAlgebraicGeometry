@@ -492,6 +492,57 @@ are shared bricks):
    descent datum along `Spec B → Spec A`; by 4 it descends to `n` on `T`, and `λ = pr^* n`
    follows from 3 again. Hence `λ = 0` in the quotient.
 
+**Ledger status (run 0027, session 0014).** Bricks 1–4 are LANDED axiom-clean: 1 =
+`Cohomology/SectionsBaseChange.lean`; 2 = `Picard/UniversalSections.lean`; 3 =
+`Picard/Separatedness.lean` (`Over.prPullback_injective`, proved for **arbitrary** `T`, not
+just affine `T` — see below) on top of `Picard/RefinementInjectivity.lean`; 4 =
+`Descent/ModuleDescent.lean` + `Descent/InvertibleModule.lean`. Blueprint:
+`sec:PicardEtale` "Separatedness I" section (12 nodes, all `\leanok`).
+
+Two structural discoveries from landing brick 3, binding for item 5:
+
+- **The anticipated "restriction bridge" `(C⊗T)|_{pr⁻¹V} ≅ C ⊗ Spec Γ(V)` is NOT needed and
+  was not built.** Instead the qcqs `pushoutSection` square of mathlib
+  (`isIso_pushoutSection_of_isQuasiSeparated_of_flat_right`) is applied directly to the
+  pullback square `(C ⊗ T).left = C ×_k T.left` with the *affine slot on the `T` side*
+  (`U_T := V` affine open of `T.left`, `U_X := ⊤ ⊆ C.left` qcqs), giving
+  `Γ(T.left, V) ≅ Γ((C⊗T).left, pr⁻¹V)` (`Over.isIso_appLE_snd`) for arbitrary `T` — flatness
+  of `T.hom` is free over a field (`Flat.of_field`). Injectivity then extends to arbitrary
+  opens `W` by sheaf separation over the affine basis (`Over.appLE_snd_injective`), which is
+  why brick 3 needs **no** affineness/quasi-separatedness hypothesis on `T`.
+- **The "fiberwise cocycle-glue" is exactly degree-1 Čech refinement injectivity**
+  (`Scheme.unitsRes_injective`, `Picard/RefinementInjectivity.lean`): a cocycle on `𝒰` whose
+  restriction to a refinement is a coboundary is already a coboundary on `𝒰` (glue the
+  comparison units `α_z·γ(i,z)⁻¹` by the sheaf axiom). Corollaries
+  `CechPic.mk_eq_one_iff` / `CechPic.mk_injective` make every triviality question in the
+  refinement colimit decidable on the representing cover — item 5 and the (C2) rigidification
+  should both lean on this rather than chasing refinements.
+
+**Item 5 plan (next actionable).** Mathlib (v4.31) HAS the ring-side Picard group:
+`CommRing.Pic R` (`Mathlib/RingTheory/PicardGroup.lean`) — invertible modules up to
+isomorphism, `CommGroup` via tensor, `Pic.mk R M`, `mk_eq_iff : Pic.mk R M = N ↔
+Nonempty (M ≃ₗ[R] N)`, invertible ⇒ finite projective, and the exactness
+`1 → Rˣ → Aˣ → (Submodule R A)ˣ → Pic R → Pic A` — so the survey line in item 4 ("exists
+nowhere in mathlib") is now half-obsolete: only the *descent* half is ours, the *group of
+classes* is mathlib's. The missing dictionary brick is therefore
+`cechPicSpecEquiv : (Spec R).CechPic ≃* CommRing.Pic R` (file candidate:
+`Picard/PicAffine.lean`): (⇐) from an invertible `R`-module `M`, choose local
+trivializations on a pointed cover by basic opens trivializing `M` (invertible ⇒ locally
+free of rank 1 on a basic-open basis) and take the transition cocycle; class
+well-definedness from `CechPic.mk_eq_one_iff`-style calculus. (⇒) from a cocycle on a
+pointed cover, the glued submodule of `∏_x Γ(𝒰(x))`-sections (equalizer form, as in
+`Descent/ModuleDescent.descended`); invertibility is Zariski-local. Then item 5 reads:
+`λ ∈ ker(relPicAlgMap C ι)` lifts to `CechPic` of `C ⊗ Spec A`; its pullback to
+`C ⊗ Spec B` is `pr^* n'` with `n' : CechPic (Spec B)` (definition of `relPic` quotient +
+brick 3's `mk`-calculus); transporting `n'` through the dictionary, the *two* base changes
+of `n'` to `B ⊗_A B` pull back equally along `pr` (both equal the `B⊗B`-restriction of the
+lift), hence are equal by brick 3 over `Spec (B ⊗_A B)`; the resulting `Module.DescentDatum`
+(coaction extracted from the equality via the dictionary — the coherence for the *comodule*
+form needs the cocycle-level data of the lift, not just the class equality; this is the one
+genuinely delicate step) descends by brick 4 to `n : CommRing.Pic A`, and `λ = pr^*
+(dictionary n)` by brick 3 again, so `λ = 0` in `relPic`. Estimated 2 sessions: one for the
+dictionary, one for the assembly.
+
 **Choice discipline (binding).** Constructions like 4's descended module and §2.6(b)'s
 uniformizers may use `Classical.choice` *internally*, provided the resulting `CechPic`/`relPic`
 **class** is proven independent of the choices (the allowed axiom set is `propext,
