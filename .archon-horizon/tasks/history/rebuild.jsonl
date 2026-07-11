@@ -1,3 +1,5 @@
 {"at": "2026-07-10T13:18:07.129751+00:00", "actor": "Axel", "field": "created", "from": "", "to": "queued", "note": "opened"}
 {"at": "2026-07-11T03:52:07.871905+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-07-11T05:00:48.617033+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
+{"at": "2026-07-11T06:07:25.147627+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-07-11T06:07:27.448057+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
