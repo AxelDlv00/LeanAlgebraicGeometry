@@ -803,6 +803,30 @@ under the derived instance. Two operational notes: (a) `JacobianData.grpObj` mus
 `lake env lean` — advisory per route rule 7; re-confirm under `lake build` when `Witness.lean`
 lands (expected no-op, the shape has no synth-depth pressure).
 
+**Lane status (run 0027, session 0006).** Landed kernel-green and axiom-clean: file 4
+(`Picard/DivisorClass.lean`, L2 — pullback compatibility deferred, everything else including
+rescale/refinement/multiplicativity invariance closed), file 10 (`Algebra/EtaleCover.lean`,
+L6 — placed under `Algebra/` as pure ring theory, no scheme imports; includes field
+cofinality, see OPEN-3 closure in §9), the algebra-map face `Picard/RelPicAlgebra.lean`
+(`overSpecMap`/`relPicAlgMap` with strict functor laws; the honest-lemma recipe applies to
+`Spec.map`-level equalities — state them at `Spec (CommRingCat.of _)` endpoints, `ext : 1`
+then `exact`), and file 11 (`Picard/PicEtAff.lean`, L6): descent classes as a
+`MonoidHom.eqLocus`, `descentMap` transport, **`descentMap_congr`** (refinement-map
+independence — the keystone; also what makes `inv_mul_cancel` and same-cover multiplication
+work), the plus carrier as a sigma-quotient with `CommGroup`, and the unit with tautological
+descent data. Elaboration notes for file 11: (i) applying `relPicAlgMap` to homs into tensor
+carriers needs the target pinned (`(B := E.Carrier ⊗[A] E.Carrier)`) — the unifier cannot
+invert `CommRing.toSemiring`-projections against `Algebra.TensorProduct.instSemiring` when
+`B` is still a metavariable; (ii) never let goals mention sigma-literal projections
+(`⟨…, …⟩.snd`): define `Mul` by `Quotient.liftOn₂` into `mk`-equalities proved via
+`mk_eq_mk_iff`, not `Quotient.map₂` against setoid literals; (iii) prove `mul_assoc`/
+`mul_comm` by re-representing all factors on one cover (`← mk_descentMap` with explicit
+inclusion maps, then `mk_mul_mk_same` + the group law) — no simp on `descentMap` nests;
+(iv) the transport calc chains are heartbeat-hungry (file runs at `maxHeartbeats 1000000`);
+a future pass could cheapen them by caching the composite-hom equalities as standalone
+lemmas. Still open in L6: functoriality of `PicEtAff` in the test algebra (base change of
+covers + descent-datum shuffle) and the Layer-2 extension (file 12).
+
 ### 7.3 Semantic-audit checklist (route rule 2)
 
 Every pinned statement gets this audit before a proof is attempted; the blueprint node cites
@@ -847,11 +871,20 @@ no Quot schemes, no general `R^i f_*` (route rule 5; recon lessons 1–2). No ge
 - **OPEN-2 (Rigidification proof scheduling).** (C2)'s statement is Wave-3 (file 14); its proof
   is Wave-4-critical-path but not Wave-3-blocking. *Close by:* L7 capacity after (C1) lands;
   if L7 finishes (C1) with slack, prove (C2) now.
-- **OPEN-3 (étale cover index).** Raw `MvPolynomial` presentations (default) vs
-  `T.AffineEtale` + `EssentiallySmall.{u}` small-model. *Close by:* if
-  directedness/base-change plumbing on raw presentations exceeds ~200 lines of fiddle, switch
-  to the small-model form (accepting `equivSmallModel`-induced opacity in computations).
-  Owner: L6.
+- **OPEN-3 (étale cover index). CLOSED (run 0027, session 0006): presentations, kernel-ideal
+  realization.** `Algebra.EtaleCover A` = `(n : ℕ, ideal : Ideal (MvPolynomial (Fin n) A),
+  étale, Spec-surjective)` — the ideal is arbitrary (finite generation is *implied* by
+  étale ⇒ finitely presented, never stored), and every operation goes through the
+  choice-based constructor `of B hB` (= `ofSurjective` at a chosen `FiniteType`
+  presentation) plus its carrier equiv `ofEquiv`. This kills the anticipated
+  relation-concatenation fiddle: directedness = `of (B ⊗[A] B')` with étale/faithfully-flat
+  instances (`Etale.baseChange` + `Etale.comp`; `FaithfullyFlat.trans` + the FF base-change
+  instance + `PrimeSpectrum.comap_surjective_of_faithfullyFlat`), base change =
+  `of (A' ⊗[A] B)`, all under 300 lines total including the **field-cofinality theorem**
+  (proved immediately via mathlib's `Algebra.Etale.iff_exists_algEquiv_prod`).
+  `Refines` is a mere-existence `Prop`, per the §4.4 choice discipline;
+  `descentMap_congr` (refinement-map independence, landed in `Picard/PicEtAff.lean`)
+  is what makes any chosen map usable.
 - **OPEN-4 (units-presheaf factoring).** Existence of the `forget₂ CommRingCat CommMonCat`
   composition path in v4.31; otherwise a bespoke 20-line functor. *Close by:* first hour of L1.
 - **OPEN-5 (`degAt` quantification).** Pinned: quantify over all `K : Type u` field points

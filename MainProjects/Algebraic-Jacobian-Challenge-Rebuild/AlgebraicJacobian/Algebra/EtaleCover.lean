@@ -177,6 +177,25 @@ noncomputable def prodInl (E E' : EtaleCover A) : E.Carrier →ₐ[A] (E.prod E'
 noncomputable def prodInr (E E' : EtaleCover A) : E'.Carrier →ₐ[A] (E.prod E').Carrier :=
   ((E.prodEquiv E').symm.toAlgHom).comp Algebra.TensorProduct.includeRight
 
+/-- Combine refinement maps out of the two factors into one out of the common
+refinement (the universal property of the fiber product of the covering spectra). -/
+noncomputable def prodLift {E E' F : EtaleCover A} (f : E.Carrier →ₐ[A] F.Carrier)
+    (g : E'.Carrier →ₐ[A] F.Carrier) : (E.prod E').Carrier →ₐ[A] F.Carrier :=
+  (Algebra.TensorProduct.lift f g fun _ _ => Commute.all _ _).comp
+    (E.prodEquiv E').toAlgHom
+
+@[simp]
+theorem prodLift_comp_prodInl {E E' F : EtaleCover A} (f : E.Carrier →ₐ[A] F.Carrier)
+    (g : E'.Carrier →ₐ[A] F.Carrier) : (prodLift f g).comp (E.prodInl E') = f := by
+  ext x
+  simp [prodLift, prodInl]
+
+@[simp]
+theorem prodLift_comp_prodInr {E E' F : EtaleCover A} (f : E.Carrier →ₐ[A] F.Carrier)
+    (g : E'.Carrier →ₐ[A] F.Carrier) : (prodLift f g).comp (E.prodInr E') = g := by
+  ext x
+  simp [prodLift, prodInr]
+
 theorem prod_refines_left (E E' : EtaleCover A) : (E.prod E').Refines E :=
   ⟨E.prodInl E'⟩
 
@@ -198,10 +217,15 @@ noncomputable def self (A : Type u) [CommRing A] : EtaleCover A :=
 noncomputable def selfEquiv (A : Type u) [CommRing A] : (self A).Carrier ≃ₐ[A] A :=
   ofEquiv A _
 
+/-- The canonical refinement map from the trivial cover to any cover (algebra side: the
+structure map of the carrier, through the trivial carrier's identification with `A`). -/
+noncomputable def fromSelf (E : EtaleCover A) : (self A).Carrier →ₐ[A] E.Carrier :=
+  (Algebra.ofId A E.Carrier).comp (selfEquiv A).toAlgHom
+
 /-- Every cover refines the trivial cover: the trivial cover is the base point of the
 refinement preorder. -/
 theorem refines_self (E : EtaleCover A) : E.Refines (self A) :=
-  ⟨(Algebra.ofId A E.Carrier).comp (selfEquiv A).toAlgHom⟩
+  ⟨E.fromSelf⟩
 
 /-! ## Base change -/
 
