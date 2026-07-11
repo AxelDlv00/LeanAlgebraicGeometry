@@ -52,12 +52,11 @@ Hypotheses: the theorems are stated with the honest hypotheses `[IsProper C.hom]
 automatic from smoothness (`Smooth.geometricallyReduced`) — see the regression checks at
 the bottom of the file.
 
-## TODO
-
-* `prPullback_injective` (injectivity of `CechPic.map (snd C T).left` for affine `T`,
-  brick 3 of design §4.4) is listed for this file by the design but depends on lane L1's
-  `CechPic` carrier (`Picard/Pic.lean`), which is being built concurrently; it is
-  deferred until that file lands.
+Brick 3 of the ledger, `Over.prPullback_injective` (injectivity of
+`CechPic.map (snd C T).left`, for **arbitrary** `T`), lives in
+`AlgebraicJacobian.Picard.Separatedness`; its section-level engine
+`Over.isIso_appLE_snd` generalizes `Over.isIso_appTop_snd_overSpec` below from
+`(T, V) = (Spec A, ⊤)` to any `T` and any affine open `V ⊆ T.left`.
 -/
 
 set_option autoImplicit false

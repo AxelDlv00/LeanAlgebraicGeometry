@@ -25,6 +25,8 @@ import AlgebraicJacobian.Picard.UnitsPresheaf
 import AlgebraicJacobian.Picard.CechH1
 import AlgebraicJacobian.Picard.UnitsCocycle
 import AlgebraicJacobian.Picard.Pic
+import AlgebraicJacobian.Picard.RefinementInjectivity
+import AlgebraicJacobian.Picard.Separatedness
 import AlgebraicJacobian.Picard.RelPic
 import AlgebraicJacobian.Picard.RelPicAlgebra
 import AlgebraicJacobian.Picard.DivisorClass
