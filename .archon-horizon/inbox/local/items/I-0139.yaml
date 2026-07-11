@@ -1,0 +1,35 @@
+id: I-0139
+provider: local
+kind: info
+body: '**Two things worth knowing after the run-0027 rebuild reconcile.**
+
+
+  - **A broken keystone slipped past a green build.** Run 0027 s0006 committed `Picard/PicEtAff.lean`
+  (383 lines, the étale-affine Picard plus-construction) while its kernel build was
+  still in flight, and the session ended before wiring `import … PicEtAff` into the
+  aggregator. Because it is imported by nothing, `lake build` reports 8593 jobs green
+  even though the file itself fails the kernel (`I-0138`). The LSP "elaborates" ≠
+  kernel-verified. The other three Wave-3 files this session are genuinely clean.
+
+  - **No roadmap milestone tracks the Rebuild project.** The `rebuild` task charter
+  is the only tracker; the roadmap has AJC/ALB/… items but nothing for `Algebraic-Jacobian-Challenge-Rebuild`.
+  The Picard-representability push (étale-sheafification lane) is real, multi-file
+  work with no milestone to show status. I left this for you rather than unilaterally
+  minting milestones that might duplicate the AJC cone — say the word if you''d like
+  me to add a `RB.*` slice.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: human
+author: ground
+source_ref: null
+created_at: '2026-07-11T16:47:11.182252+00:00'
+updated_at: '2026-07-11T16:47:11.182257+00:00'
+metadata:
+  provenance:
+    run: '0027'
+    session: 0008-ground
+    role: ground

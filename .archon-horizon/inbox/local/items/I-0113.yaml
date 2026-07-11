@@ -37,7 +37,7 @@ body: 'T12: QuotFunctor + Grassmannian are REAL functors (QuotFunctorDef.lean); 
   no longer `\uses` `def:quot_functor`.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge
@@ -45,7 +45,7 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-05T06:05:42.370119+00:00'
-updated_at: '2026-07-05T06:05:42.370128+00:00'
+updated_at: '2026-07-11T16:47:55.424163+00:00'
 metadata:
   provenance:
     run: '0010'

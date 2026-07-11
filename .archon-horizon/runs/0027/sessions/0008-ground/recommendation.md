@@ -1,0 +1,9 @@
+# Orientation — Rebuild, after run 0027 s0008 (ground reconcile)
+
+- Useful context: the Wave-3 Picard plus-construction is the live frontier. Three files landed green and axiom-clean this run — `Picard/RelPicAlgebra.lean` (`relPicAlgMap`/`overSpecMap`), `Picard/DivisorClass.lean` (`LocalEquations`, `picClass` with refinement/rescale/mul invariance; deliverable-8 pullback compat deferred), and `Algebra/EtaleCover.lean` (presented étale covers + `ofField` field cofinality). All three are imported by `AlgebraicJacobian.lean`; `lake build` is green (8593 jobs, v4.31).
+
+- Highest-value open piece: `Picard/PicEtAff.lean` (the étale-affine descent carrier — `PicEtAff` `CommGroup`, `descentMap_congr`, `unit : relPic → PicEtAff`) is committed but does **not** pass the kernel and is imported by nothing, so the green tree does not cover it. `lake build AlgebraicJacobian.Picard.PicEtAff` fails at `instMul` (274, `unknown constant mulLift_compat`) and `mk_mul_mk` (280, degenerate `rfl`). Diagnosis + fix path in issue `I-0138`; this is the real next step toward the relative-Picard sheafification, not a later-session deferral.
+
+- Relevant blueprint state: no `.tex` nodes exist yet for the four Wave-3 Picard/étale files (only `Curves.tex` mentions `etale` in passing); the DAG cache carries no dishonest `\leanok` for them. The design lives in `AlgebraicJacobian/informal/wave3-picard-design.md` (§7.2 lane-status, elaboration recipes). Blueprint chapters (`blueprint/src/chapters/*`) still mirror the earlier substrate, not the Picard lane.
+
+- Environment note: the LSP accepted `PicEtAff` while the kernel rejects it — a fresh single-file `lake build <module>` is the reliable check before wiring a module into `AlgebraicJacobian.lean`. All 18 residual project sorries are confined to the frozen `Challenge.lean` target; the infrastructure is otherwise sorry-free.
