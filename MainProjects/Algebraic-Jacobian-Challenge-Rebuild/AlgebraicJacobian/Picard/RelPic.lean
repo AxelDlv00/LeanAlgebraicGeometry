@@ -150,6 +150,83 @@ lemma relPicFunctor_map {T T' : (Over (Spec (.of k)))ᵒᵖ} (g : T ⟶ T')
     (relPicFunctor C).map g x = relPicMap C g.unop x :=
   rfl
 
+/-! ## Naturality in the curve -/
+
+variable {C} {C' C'' : Over (Spec (.of k))}
+
+/-- Pullback of Čech classes along `g ▷ T` sends classes pulled back from `T` to classes
+pulled back from `T`: well-definedness of the curve-direction map on the `H_T`-cosets. -/
+lemma picFromBase_le_comap_whiskerRight (g : C' ⟶ C) (T : Over (Spec (.of k))) :
+    picFromBase C T ≤ (picFromBase C' T).comap (CechPic.map (g ▷ T).left) := by
+  rintro _ ⟨N, rfl⟩
+  refine ⟨N, ?_⟩
+  show CechPic.map (snd C' T).left N
+      = CechPic.map (g ▷ T).left (CechPic.map (snd C T).left N)
+  rw [← MonoidHom.comp_apply, ← Scheme.CechPic.map_comp, ← Over.comp_left,
+    whiskerRight_snd]
+
+/-- Restriction of relative Picard classes along a morphism of curves `g : C' ⟶ C`,
+at a fixed test object: pull back along `g ▷ T` and descend to the quotients. -/
+noncomputable def relPicMapCurveApp (g : C' ⟶ C) (T : Over (Spec (.of k))) :
+    relPic C T →* relPic C' T :=
+  QuotientGroup.map (picFromBase C T) (picFromBase C' T)
+    (CechPic.map (g ▷ T).left) (picFromBase_le_comap_whiskerRight g T)
+
+@[simp]
+lemma relPicMapCurveApp_mk (g : C' ⟶ C) (T : Over (Spec (.of k)))
+    (L : (C ⊗ T).left.CechPic) :
+    relPicMapCurveApp g T (relPicMk C T L)
+      = relPicMk C' T (CechPic.map (g ▷ T).left L) :=
+  QuotientGroup.map_mk' _ _ _ _ L
+
+/-- Naturality of the relative Picard functor in the curve: a morphism of curves
+`g : C' ⟶ C` induces a natural transformation `Pic_{C/k} ⟶ Pic_{C'/k}`. -/
+noncomputable def relPicMapCurve (g : C' ⟶ C) :
+    relPicFunctor C ⟶ relPicFunctor C' where
+  app T := CommGrpCat.ofHom (relPicMapCurveApp g T.unop)
+  naturality T T' t := by
+    ext x
+    induction x using relPic.ind with
+    | mk L =>
+      show relPicMapCurveApp g T'.unop (relPicMap C t.unop (relPicMk C T.unop L))
+          = relPicMap C' t.unop (relPicMapCurveApp g T.unop (relPicMk C T.unop L))
+      rw [relPicMap_mk, relPicMapCurveApp_mk, relPicMapCurveApp_mk, relPicMap_mk]
+      refine congrArg (relPicMk C' T'.unop) ?_
+      rw [← MonoidHom.comp_apply, ← MonoidHom.comp_apply, ← Scheme.CechPic.map_comp,
+        ← Scheme.CechPic.map_comp, ← Over.comp_left, ← Over.comp_left, whisker_exchange]
+
+@[simp]
+lemma relPicMapCurve_app_mk (g : C' ⟶ C) (T : (Over (Spec (.of k)))ᵒᵖ)
+    (L : (C ⊗ T.unop).left.CechPic) :
+    (relPicMapCurve g).app T (relPicMk C T.unop L)
+      = relPicMk C' T.unop (CechPic.map (g ▷ T.unop).left L) :=
+  relPicMapCurveApp_mk g T.unop L
+
+/-- The curve-direction maps are strictly functorial: the identity morphism induces the
+identity transformation. -/
+lemma relPicMapCurve_id : relPicMapCurve (𝟙 C) = 𝟙 (relPicFunctor C) := by
+  ext T x
+  induction x using relPic.ind with
+  | mk L =>
+    show relPicMapCurveApp (𝟙 C) T.unop (relPicMk C T.unop L) = relPicMk C T.unop L
+    rw [relPicMapCurveApp_mk, MonoidalCategory.id_whiskerRight, Over.id_left,
+      Scheme.CechPic.map_id]
+    rfl
+
+/-- The curve-direction maps are strictly functorial: composition of curve morphisms
+goes to composition of the induced transformations (contravariantly). -/
+lemma relPicMapCurve_comp (g' : C'' ⟶ C') (g : C' ⟶ C) :
+    relPicMapCurve (g' ≫ g) = relPicMapCurve g ≫ relPicMapCurve g' := by
+  ext T x
+  induction x using relPic.ind with
+  | mk L =>
+    show relPicMapCurveApp (g' ≫ g) T.unop (relPicMk C T.unop L)
+        = relPicMapCurveApp g' T.unop (relPicMapCurveApp g T.unop (relPicMk C T.unop L))
+    rw [relPicMapCurveApp_mk, relPicMapCurveApp_mk, relPicMapCurveApp_mk]
+    refine congrArg (relPicMk C'' T.unop) ?_
+    rw [← MonoidHom.comp_apply, ← Scheme.CechPic.map_comp, ← Over.comp_left,
+      ← MonoidalCategory.comp_whiskerRight]
+
 end
 
 end AlgebraicGeometry
