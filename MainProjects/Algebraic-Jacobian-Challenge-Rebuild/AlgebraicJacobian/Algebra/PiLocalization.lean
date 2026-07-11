@@ -38,13 +38,13 @@ Everything is elementary commutative algebra; the file is deliberately scheme-fr
 shaped for mathlib.
 -/
 
-universe u
+universe u v w u₂
 
 open TensorProduct
 
 section PiExt
 
-variable {A : Type u} [CommRing A] {ι : Type} [Fintype ι] [DecidableEq ι]
+variable {A : Type u} [CommRing A] {ι : Type v} [Fintype ι] [DecidableEq ι]
 variable {S : ι → Type u} [∀ i, CommRing (S i)] [∀ i, Algebra A (S i)]
 variable {C : Type u} [CommRing C] [Algebra A C]
 
@@ -125,7 +125,7 @@ end PiExt
 
 section FaithfullyFlat
 
-variable {A : Type u} [CommRing A] {ι : Type} [Fintype ι]
+variable {A : Type u} [CommRing A] {ι : Type v} [Fintype ι]
 variable {S : ι → Type u} [∀ i, CommRing (S i)] [∀ i, Algebra A (S i)]
 
 /-- A finite product of flat modules is flat. -/
@@ -199,8 +199,8 @@ end FaithfullyFlat
 
 namespace Algebra.TensorProduct
 
-variable (A : Type u) [CommRing A] {ι κ : Type} [Fintype ι] [DecidableEq ι]
-variable (N : Type u) [CommRing N] [Algebra A N]
+variable (A : Type u) [CommRing A] {ι : Type v} {κ : Type w} [Fintype ι] [DecidableEq ι]
+variable (N : Type u₂) [CommRing N] [Algebra A N]
 variable (S : ι → Type u) [∀ i, CommRing (S i)] [∀ i, Algebra A (S i)]
 
 /-- Tensoring distributes over finite products of algebras, on the right: the `A`-algebra

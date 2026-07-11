@@ -1,0 +1,11 @@
+{
+  "name": "claude",
+  "native_subagent_id": "toolu_01Mmh2QALdzeMg7VUvCJ6ycx",
+  "parent_session": "0018-horizon-rebuild",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 0,
+    "tokens_out": 0
+  }
+}
