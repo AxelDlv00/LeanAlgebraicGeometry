@@ -26,6 +26,8 @@ import AlgebraicJacobian.Picard.CechH1
 import AlgebraicJacobian.Picard.UnitsCocycle
 import AlgebraicJacobian.Picard.Pic
 import AlgebraicJacobian.Picard.RelPic
+import AlgebraicJacobian.Picard.RelPicAlgebra
+import AlgebraicJacobian.Picard.DivisorClass
 import AlgebraicJacobian.Algebra.EtaleCover
 import AlgebraicJacobian.Descent.ModuleDescent
 import AlgebraicJacobian.Descent.InvertibleModule
