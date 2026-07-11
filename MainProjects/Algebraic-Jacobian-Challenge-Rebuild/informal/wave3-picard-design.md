@@ -791,6 +791,18 @@ signature freeze); **L9** = 17–18 (17 as soon as 12+16 *signatures* freeze; 18
 Recon lesson 8 applies to every lane: **kernel-verify every claimed closure** (`lake build` +
 `lean_verify`), never trust an LSP-green file.
 
+**L9 keystone status (run 0025, session 0002): dry-run PASSED.** With
+`F : (Over (Spec (.of k)))ᵒᵖ ⥤ CommGrpCat.{u}`, `J : Over (Spec (.of k))` and
+`rep : ((F ⋙ forget₂ CommGrpCat GrpCat) ⋙ forget GrpCat).RepresentableBy J`, all of the
+following elaborate against full Mathlib v4.31 with axioms exactly the standard three and **no
+universe or `forget`-defeq walls**: `GrpObj.ofRepresentableBy J (F ⋙ forget₂ CommGrpCat GrpCat)
+rep`; the unit formula `η[J] = rep.homEquiv.symm 1` **by `rfl`** (the `comp_ofCurve` reduction);
+`rep.uniqueUpToIso rep'` (the `baseChangeIso` vehicle); `(.mk J : Grp (Over (Spec (.of k))))`
+under the derived instance. Two operational notes: (a) `JacobianData.grpObj` must carry
+`@[implicit_reducible]` (linter requirement for defs of class type); (b) the dry-run ran under
+`lake env lean` — advisory per route rule 7; re-confirm under `lake build` when `Witness.lean`
+lands (expected no-op, the shape has no synth-depth pressure).
+
 ### 7.3 Semantic-audit checklist (route rule 2)
 
 Every pinned statement gets this audit before a proof is attempted; the blueprint node cites
