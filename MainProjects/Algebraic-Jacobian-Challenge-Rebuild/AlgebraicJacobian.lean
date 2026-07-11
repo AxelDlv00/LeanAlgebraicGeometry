@@ -19,6 +19,8 @@ import AlgebraicJacobian.Cohomology.MayerVietoris
 import AlgebraicJacobian.Cohomology.TwoCover
 import AlgebraicJacobian.Cohomology.FinitenessP1
 import AlgebraicJacobian.Cohomology.Finiteness
+import AlgebraicJacobian.Cohomology.SectionsBaseChange
+import AlgebraicJacobian.Picard.UniversalSections
 import AlgebraicJacobian.Challenge
 
 /-!
