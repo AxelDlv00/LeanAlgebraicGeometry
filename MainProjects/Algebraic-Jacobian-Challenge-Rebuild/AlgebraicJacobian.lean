@@ -35,6 +35,13 @@ import AlgebraicJacobian.Picard.PicEtAff
 import AlgebraicJacobian.Picard.PicEtAffMap
 import AlgebraicJacobian.Descent.ModuleDescent
 import AlgebraicJacobian.Descent.InvertibleModule
+import AlgebraicJacobian.Descent.UnitDescent
+import AlgebraicJacobian.Algebra.PiLocalization
+import AlgebraicJacobian.Algebra.LocalizationCocycle
+import AlgebraicJacobian.Picard.SectionsAlgebra
+import AlgebraicJacobian.Picard.FamilyCoboundary
+import AlgebraicJacobian.Picard.PicAffineCover
+import AlgebraicJacobian.Picard.PicAffine
 import AlgebraicJacobian.Challenge
 
 /-!
