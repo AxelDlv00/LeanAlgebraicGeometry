@@ -392,13 +392,49 @@ theorem pic_mul (P : 𝒰.BasicRefinement) (γ γ' : X.unitsCocycle 𝒰) :
 class is trivial. -/
 theorem class_eq_one_of_pic_eq_one (P : 𝒰.BasicRefinement) (γ : X.unitsCocycle 𝒰)
     (h : P.pic γ = 1) : γ.class = (1 : X.unitsH1 𝒰) := by
-  -- `Module.IsDescentCocycle.picClass_eq_one_iff` produces a unit `β` of the cover
-  -- algebra with `cocycleUnit (coverCocycle γ) = descentCoboundary β`;
-  -- `IsLocalization.AwayCover.exists_units_of_cocycleUnit_eq_descentCoboundary` turns it
-  -- into the index-wise relation, whose restriction to `D(r i) ⊓ D(r j)` is (after
-  -- commuting the two unit factors) the hypothesis of `unitsH1_eq_one_of_family` with
-  -- `E i := X.basicOpen (P.r i)`, `p := P.pt` and `α := MulEquiv.piUnits β`.
-  sorry
+  letI := P.faithfullyFlat
+  rw [P.pic_eq_picClass γ] at h
+  obtain ⟨β, hβ⟩ := (Module.IsDescentCocycle.picClass_eq_one_iff _).mp h
+  have hcomp := IsLocalization.AwayCover.exists_units_of_cocycleUnit_eq_descentCoboundary
+    P.r (fun i ↦ Γ(X, X.basicOpen (P.r i)))
+    (fun i j ↦ Γ(X, X.basicOpen (P.r i * P.r j))) hβ
+  -- per-index comparison units
+  set α : ∀ i : P.ι, Γ(X, X.basicOpen (P.r i))ˣ :=
+    fun i ↦ Units.map (Pi.evalMonoidHom (fun i ↦ Γ(X, X.basicOpen (P.r i))) i) β with hα
+  -- units-level, on the double overlap `D(r i * r j)`
+  have hcc : ∀ i j, P.coverCocycle γ i j
+      = X.unitsRestrict (P.mul_le_right i j) (α j)
+        * X.unitsRestrict (P.mul_le_left i j) ((α i)⁻¹) := by
+    intro i j
+    apply Units.ext
+    have := hcomp i j
+    rw [(P.inclRight_eq_basicRes i j), (P.inclLeft_eq_basicRes i j)] at this
+    exact this
+  refine unitsH1_eq_one_of_family γ P.pt (fun i ↦ X.basicOpen (P.r i)) P.basicOpen_le
+    (fun x ↦ ?_) α (fun k l ↦ ?_)
+  · exact Opens.mem_iSup.mp (P.iSup_eq.ge (trivial : x ∈ (⊤ : X.Opens)))
+  · -- restrict the comparison from `D(r k * r l)` to `D(r k) ⊓ D(r l)`
+    have e := congrArg
+      (X.unitsRestrict ((X.basicOpen_mul (P.r k) (P.r l)).ge :
+        X.basicOpen (P.r k) ⊓ X.basicOpen (P.r l) ≤ X.basicOpen (P.r k * P.r l)))
+      (hcc k l)
+    rw [coverCocycle, map_mul, unitsRestrict_unitsRestrict, unitsRestrict_unitsRestrict,
+      unitsRestrict_unitsRestrict, map_inv] at e
+    rw [show X.unitsRestrict
+          (((X.basicOpen_mul (P.r k) (P.r l)).ge).trans (P.mul_le_right k l)) (α l)
+        = X.unitsRestrict
+          (inf_le_right : X.basicOpen (P.r k) ⊓ X.basicOpen (P.r l) ≤ X.basicOpen (P.r l))
+          (α l) from rfl,
+      show X.unitsRestrict
+          (((X.basicOpen_mul (P.r k) (P.r l)).ge).trans (P.mul_le_left k l)) (α k)
+        = X.unitsRestrict
+          (inf_le_left : X.basicOpen (P.r k) ⊓ X.basicOpen (P.r l) ≤ X.basicOpen (P.r k))
+          (α k) from rfl] at e
+    rw [show X.unitsRestrict (inf_le_inf (P.basicOpen_le k) (P.basicOpen_le l))
+          (unitsEvInf γ (P.pt k) (P.pt l))
+        = X.unitsRestrict (((X.basicOpen_mul (P.r k) (P.r l)).ge).trans (P.overlap_le k l))
+          (unitsEvInf γ (P.pt k) (P.pt l)) from rfl, e]
+    rw [mul_comm, mul_assoc, inv_mul_cancel, mul_one]
 
 end pic
 
