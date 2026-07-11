@@ -197,41 +197,234 @@ component maps between localizations are canonical), hence are equal.  The forwa
 of the idempotents are computed from `piDoubleEquiv (Pi.single i 1 ⊗ₜ Pi.single j 1) =
 Pi.single (i,j) 1` and its triple analogue, plus `1 = ∑ i, Pi.single i 1`. -/
 
+private lemma piDoubleEquiv_tmul (s t : ∀ i, S i) :
+    piDoubleEquiv f S T (s ⊗ₜ[A] t)
+      = fun p : ι × ι =>
+          IsLocalization.Away.tensorEquiv' (f p.1) (f p.2) (S p.1) (S p.2) (T p.1 p.2)
+            (s p.1 ⊗ₜ[A] t p.2) :=
+  rfl
+
+private lemma piTripleEquiv_tmul (s : ∀ i, S i) (v : (∀ i, S i) ⊗[A] ∀ i, S i) :
+    piTripleEquiv f S T W (s ⊗ₜ[A] v)
+      = fun t : ι × ι × ι =>
+          IsLocalization.Away.tensorEquiv' (f t.1) (f t.2.1 * f t.2.2) (S t.1)
+            (T t.2.1 t.2.2) (W t.1 t.2.1 t.2.2) (s t.1 ⊗ₜ[A] piDoubleEquiv f S T v t.2) :=
+  rfl
+
+private lemma piDoubleEquiv_single_tmul_single (i j : ι) :
+    piDoubleEquiv f S T ((Pi.single i 1 : ∀ i, S i) ⊗ₜ[A] (Pi.single j 1 : ∀ i, S i))
+      = Pi.single (i, j) 1 := by
+  rw [piDoubleEquiv_tmul f S T]
+  funext p
+  obtain ⟨a, b⟩ := p
+  dsimp only
+  by_cases ha : a = i
+  · subst ha
+    by_cases hb : b = j
+    · subst hb
+      rw [Pi.single_eq_same, Pi.single_eq_same, ← Algebra.TensorProduct.one_def, map_one,
+        Pi.single_eq_same]
+    · rw [Pi.single_eq_of_ne hb, tmul_zero, map_zero,
+        Pi.single_eq_of_ne (fun hh => hb (congrArg Prod.snd hh))]
+  · rw [Pi.single_eq_of_ne ha, zero_tmul, map_zero,
+      Pi.single_eq_of_ne (fun hh => ha (congrArg Prod.fst hh))]
+
+private lemma piDoubleEquiv_symm_single (i j : ι) :
+    (piDoubleEquiv f S T).symm (Pi.single (i, j) 1)
+      = (Pi.single i 1 : ∀ i, S i) ⊗ₜ[A] (Pi.single j 1 : ∀ i, S i) :=
+  (AlgEquiv.symm_apply_eq _).mpr (piDoubleEquiv_single_tmul_single f S T i j).symm
+
+private lemma piDoubleEquiv_single_tmul_one (i : ι) :
+    piDoubleEquiv f S T ((Pi.single i 1 : ∀ i, S i) ⊗ₜ[A] (1 : ∀ i, S i))
+      = fun p : ι × ι => if p.1 = i then (1 : T p.1 p.2) else 0 := by
+  rw [piDoubleEquiv_tmul f S T]
+  funext p
+  obtain ⟨a, b⟩ := p
+  dsimp only
+  by_cases ha : a = i
+  · subst ha
+    rw [Pi.single_eq_same, Pi.one_apply, ← Algebra.TensorProduct.one_def, map_one, if_pos rfl]
+  · rw [Pi.single_eq_of_ne ha, zero_tmul, map_zero, if_neg ha]
+
+private lemma piDoubleEquiv_one_tmul_single (j : ι) :
+    piDoubleEquiv f S T ((1 : ∀ i, S i) ⊗ₜ[A] (Pi.single j 1 : ∀ i, S i))
+      = fun p : ι × ι => if p.2 = j then (1 : T p.1 p.2) else 0 := by
+  rw [piDoubleEquiv_tmul f S T]
+  funext p
+  obtain ⟨a, b⟩ := p
+  dsimp only
+  by_cases hb : b = j
+  · subst hb
+    rw [Pi.single_eq_same, Pi.one_apply, ← Algebra.TensorProduct.one_def, map_one, if_pos rfl]
+  · rw [Pi.single_eq_of_ne hb, tmul_zero, map_zero, if_neg hb]
+
 /-- Multiplication `B ⊗[A] B → B` becomes the diagonal restriction. -/
 lemma lmul'_piDoubleEquiv_symm (w : ∀ p : ι × ι, T p.1 p.2) :
     Algebra.TensorProduct.lmul' A (S := ∀ i, S i) ((piDoubleEquiv f S T).symm w)
       = fun i => diag f S T i (w (i, i)) := by
-  sorry
+  have key : (Algebra.TensorProduct.lmul' A (S := ∀ i, S i)).comp
+        (piDoubleEquiv f S T).symm.toAlgHom
+      = Pi.algHom _ _ fun i => (diag f S T i).comp (Pi.evalAlgHom _ _ (i, i)) := by
+    apply AlgHom.ext_of_isLocalization_pi
+      (fun p : ι × ι => Submonoid.powers (f p.1 * f p.2))
+    intro q
+    obtain ⟨i, j⟩ := q
+    change Algebra.TensorProduct.lmul' A (S := ∀ i, S i)
+        ((piDoubleEquiv f S T).symm (Pi.single (i, j) 1))
+      = fun k => diag f S T k ((Pi.single (i, j) 1 : ∀ p : ι × ι, T p.1 p.2) (k, k))
+    rw [piDoubleEquiv_symm_single f S T i j, Algebra.TensorProduct.lmul'_apply_tmul]
+    funext k
+    rw [Pi.mul_apply]
+    by_cases hk : k = i
+    · subst hk
+      by_cases hj : k = j
+      · subst hj
+        rw [Pi.single_eq_same, one_mul, Pi.single_eq_same, map_one]
+      · rw [Pi.single_eq_of_ne hj, mul_zero,
+          Pi.single_eq_of_ne (fun hh => hj (congrArg Prod.snd hh)), map_zero]
+    · rw [Pi.single_eq_of_ne hk, zero_mul,
+        Pi.single_eq_of_ne (fun hh => hk (congrArg Prod.fst hh)), map_zero]
+  exact DFunLike.congr_fun key w
 
 /-- The face `descentFace₂₃` becomes `w ↦ (t ↦ w(t₂, t₃))` restricted. -/
 lemma piTripleEquiv_descentFace₂₃ (w : ∀ p : ι × ι, T p.1 p.2) :
     piTripleEquiv f S T W (Module.descentFace₂₃ A (∀ i, S i) ((piDoubleEquiv f S T).symm w))
       = fun t : ι × ι × ι => face₂₃ f T W t.1 t.2.1 t.2.2 (w (t.2.1, t.2.2)) := by
-  sorry
+  have key : (piTripleEquiv f S T W).toAlgHom.comp
+        ((Module.descentFace₂₃ A (∀ i, S i)).comp (piDoubleEquiv f S T).symm.toAlgHom)
+      = Pi.algHom _ _ fun t : ι × ι × ι =>
+          (face₂₃ f T W t.1 t.2.1 t.2.2).comp (Pi.evalAlgHom _ _ (t.2.1, t.2.2)) := by
+    apply AlgHom.ext_of_isLocalization_pi
+      (fun p : ι × ι => Submonoid.powers (f p.1 * f p.2))
+    intro q
+    obtain ⟨i, j⟩ := q
+    change piTripleEquiv f S T W (Module.descentFace₂₃ A (∀ i, S i)
+          ((piDoubleEquiv f S T).symm (Pi.single (i, j) 1)))
+        = fun t : ι × ι × ι => face₂₃ f T W t.1 t.2.1 t.2.2
+            ((Pi.single (i, j) 1 : ∀ p : ι × ι, T p.1 p.2) (t.2.1, t.2.2))
+    rw [piDoubleEquiv_symm_single f S T i j, Module.descentFace₂₃_apply,
+      piTripleEquiv_tmul f S T W, piDoubleEquiv_single_tmul_single f S T i j]
+    funext t
+    obtain ⟨a, b, c⟩ := t
+    dsimp only
+    by_cases hb : b = i
+    · subst hb
+      by_cases hc : c = j
+      · subst hc
+        rw [Pi.single_eq_same, Pi.one_apply, ← Algebra.TensorProduct.one_def, map_one, map_one]
+      · rw [Pi.single_eq_of_ne (fun hh => hc (congrArg Prod.snd hh)), tmul_zero,
+          map_zero, map_zero]
+    · rw [Pi.single_eq_of_ne (fun hh => hb (congrArg Prod.fst hh)), tmul_zero,
+        map_zero, map_zero]
+  exact DFunLike.congr_fun key w
 
 /-- The face `descentFace₁₂` becomes `w ↦ (t ↦ w(t₁, t₂))` restricted. -/
 lemma piTripleEquiv_descentFace₁₂ (w : ∀ p : ι × ι, T p.1 p.2) :
     piTripleEquiv f S T W (Module.descentFace₁₂ A (∀ i, S i) ((piDoubleEquiv f S T).symm w))
       = fun t : ι × ι × ι => face₁₂ f T W t.1 t.2.1 t.2.2 (w (t.1, t.2.1)) := by
-  sorry
+  have key : (piTripleEquiv f S T W).toAlgHom.comp
+        ((Module.descentFace₁₂ A (∀ i, S i)).comp (piDoubleEquiv f S T).symm.toAlgHom)
+      = Pi.algHom _ _ fun t : ι × ι × ι =>
+          (face₁₂ f T W t.1 t.2.1 t.2.2).comp (Pi.evalAlgHom _ _ (t.1, t.2.1)) := by
+    apply AlgHom.ext_of_isLocalization_pi
+      (fun p : ι × ι => Submonoid.powers (f p.1 * f p.2))
+    intro q
+    obtain ⟨i, j⟩ := q
+    change piTripleEquiv f S T W (Module.descentFace₁₂ A (∀ i, S i)
+          ((piDoubleEquiv f S T).symm (Pi.single (i, j) 1)))
+        = fun t : ι × ι × ι => face₁₂ f T W t.1 t.2.1 t.2.2
+            ((Pi.single (i, j) 1 : ∀ p : ι × ι, T p.1 p.2) (t.1, t.2.1))
+    rw [piDoubleEquiv_symm_single f S T i j, Module.descentFace₁₂_tmul,
+      piTripleEquiv_tmul f S T W, piDoubleEquiv_single_tmul_one f S T j]
+    funext t
+    obtain ⟨a, b, c⟩ := t
+    dsimp only
+    by_cases ha : a = i
+    · subst ha
+      by_cases hb : b = j
+      · subst hb
+        rw [Pi.single_eq_same, if_pos rfl, ← Algebra.TensorProduct.one_def, map_one,
+          Pi.single_eq_same, map_one]
+      · rw [if_neg hb, tmul_zero, map_zero,
+          Pi.single_eq_of_ne (fun hh => hb (congrArg Prod.snd hh)), map_zero]
+    · rw [Pi.single_eq_of_ne ha, zero_tmul, map_zero,
+        Pi.single_eq_of_ne (fun hh => ha (congrArg Prod.fst hh)), map_zero]
+  exact DFunLike.congr_fun key w
 
 /-- The face `descentFace₁₃` becomes `w ↦ (t ↦ w(t₁, t₃))` restricted. -/
 lemma piTripleEquiv_descentFace₁₃ (w : ∀ p : ι × ι, T p.1 p.2) :
     piTripleEquiv f S T W (Module.descentFace₁₃ A (∀ i, S i) ((piDoubleEquiv f S T).symm w))
       = fun t : ι × ι × ι => face₁₃ f T W t.1 t.2.1 t.2.2 (w (t.1, t.2.2)) := by
-  sorry
+  have key : (piTripleEquiv f S T W).toAlgHom.comp
+        ((Module.descentFace₁₃ A (∀ i, S i)).comp (piDoubleEquiv f S T).symm.toAlgHom)
+      = Pi.algHom _ _ fun t : ι × ι × ι =>
+          (face₁₃ f T W t.1 t.2.1 t.2.2).comp (Pi.evalAlgHom _ _ (t.1, t.2.2)) := by
+    apply AlgHom.ext_of_isLocalization_pi
+      (fun p : ι × ι => Submonoid.powers (f p.1 * f p.2))
+    intro q
+    obtain ⟨i, j⟩ := q
+    change piTripleEquiv f S T W (Module.descentFace₁₃ A (∀ i, S i)
+          ((piDoubleEquiv f S T).symm (Pi.single (i, j) 1)))
+        = fun t : ι × ι × ι => face₁₃ f T W t.1 t.2.1 t.2.2
+            ((Pi.single (i, j) 1 : ∀ p : ι × ι, T p.1 p.2) (t.1, t.2.2))
+    rw [piDoubleEquiv_symm_single f S T i j, Module.descentFace₁₃_tmul,
+      piTripleEquiv_tmul f S T W, piDoubleEquiv_one_tmul_single f S T j]
+    funext t
+    obtain ⟨a, b, c⟩ := t
+    dsimp only
+    by_cases ha : a = i
+    · subst ha
+      by_cases hc : c = j
+      · subst hc
+        rw [Pi.single_eq_same, if_pos rfl, ← Algebra.TensorProduct.one_def, map_one,
+          Pi.single_eq_same, map_one]
+      · rw [if_neg hc, tmul_zero, map_zero,
+          Pi.single_eq_of_ne (fun hh => hc (congrArg Prod.snd hh)), map_zero]
+    · rw [Pi.single_eq_of_ne ha, zero_tmul, map_zero,
+        Pi.single_eq_of_ne (fun hh => ha (congrArg Prod.fst hh)), map_zero]
+  exact DFunLike.congr_fun key w
 
 /-- The inclusion `descentIncl₁ : B → B ⊗[A] B` becomes the left overlap restriction. -/
 lemma piDoubleEquiv_descentIncl₁ (s : ∀ i, S i) :
     piDoubleEquiv f S T (Module.descentIncl₁ A (∀ i, S i) s)
       = fun p : ι × ι => inclLeft f S T p.1 p.2 (s p.1) := by
-  sorry
+  have key : (piDoubleEquiv f S T).toAlgHom.comp (Module.descentIncl₁ A (∀ i, S i))
+      = Pi.algHom _ _ fun p : ι × ι =>
+          (inclLeft f S T p.1 p.2).comp (Pi.evalAlgHom _ _ p.1) := by
+    apply AlgHom.ext_of_isLocalization_pi (fun i => Submonoid.powers (f i))
+    intro i
+    change piDoubleEquiv f S T (Module.descentIncl₁ A (∀ i, S i) (Pi.single i 1))
+        = fun p : ι × ι => inclLeft f S T p.1 p.2 (Pi.single i 1 p.1)
+    rw [Module.descentIncl₁_apply, piDoubleEquiv_single_tmul_one f S T i]
+    funext p
+    obtain ⟨a, b⟩ := p
+    dsimp only
+    by_cases ha : a = i
+    · subst ha
+      rw [if_pos rfl, Pi.single_eq_same, map_one]
+    · rw [if_neg ha, Pi.single_eq_of_ne ha, map_zero]
+  exact DFunLike.congr_fun key s
 
 /-- The inclusion `descentIncl₂ : B → B ⊗[A] B` becomes the right overlap restriction. -/
 lemma piDoubleEquiv_descentIncl₂ (s : ∀ i, S i) :
     piDoubleEquiv f S T (Module.descentIncl₂ A (∀ i, S i) s)
       = fun p : ι × ι => inclRight f S T p.1 p.2 (s p.2) := by
-  sorry
+  have key : (piDoubleEquiv f S T).toAlgHom.comp (Module.descentIncl₂ A (∀ i, S i))
+      = Pi.algHom _ _ fun p : ι × ι =>
+          (inclRight f S T p.1 p.2).comp (Pi.evalAlgHom _ _ p.2) := by
+    apply AlgHom.ext_of_isLocalization_pi (fun i => Submonoid.powers (f i))
+    intro i
+    change piDoubleEquiv f S T (Module.descentIncl₂ A (∀ i, S i) (Pi.single i 1))
+        = fun p : ι × ι => inclRight f S T p.1 p.2 (Pi.single i 1 p.2)
+    rw [Module.descentIncl₂_apply, piDoubleEquiv_one_tmul_single f S T i]
+    funext p
+    obtain ⟨a, b⟩ := p
+    dsimp only
+    by_cases hb : b = i
+    · subst hb
+      rw [if_pos rfl, Pi.single_eq_same, map_one]
+    · rw [if_neg hb, Pi.single_eq_of_ne hb, map_zero]
+  exact DFunLike.congr_fun key s
 
 /-! ## The main conversion -/
 
@@ -263,7 +456,17 @@ theorem exists_units_of_cocycleUnit_eq_descentCoboundary {γ : ∀ i j, (T i j)�
   -- (`piDoubleEquiv_cocycleUnit_val`), the right side is computed by
   -- `Module.descentCoboundary_val`, `map_mul`, `piDoubleEquiv_descentIncl₂`,
   -- `piDoubleEquiv_descentIncl₁` (with `s := β.val` resp. `(β⁻¹).val`).
-  sorry
+  intro i j
+  have h2 : piDoubleEquiv f S T ((1 : ∀ i, S i) ⊗ₜ[A] β.val)
+      = fun p : ι × ι => inclRight f S T p.1 p.2 (β.val p.2) :=
+    piDoubleEquiv_descentIncl₂ f S T β.val
+  have h1 : piDoubleEquiv f S T ((β⁻¹).val ⊗ₜ[A] (1 : ∀ i, S i))
+      = fun p : ι × ι => inclLeft f S T p.1 p.2 ((β⁻¹).val p.1) :=
+    piDoubleEquiv_descentIncl₁ f S T (β⁻¹).val
+  have hval : piDoubleEquiv f S T (cocycleUnit f S T γ).val
+      = piDoubleEquiv f S T (Module.descentCoboundary A (∀ i, S i) β).val := by rw [h]
+  rw [piDoubleEquiv_cocycleUnit_val, Module.descentCoboundary_val, map_mul, h2, h1] at hval
+  exact congrFun hval (i, j)
 
 /-- Twisting a cover cocycle by an index-wise coboundary multiplies the descent unit by
 a descent coboundary. -/
@@ -279,7 +482,23 @@ theorem cocycleUnit_eq_descentCoboundary_mul {γ γ' : ∀ i j, (T i j)ˣ} (β :
   -- `Module.descentCoboundary_val` (for the unit `(Pi.unitOf S β)⁻¹`, whose value is
   -- `(1 ⊗ₜ (β⁻¹-components)) * ((β-components) ⊗ₜ 1)`), `map_mul`,
   -- `piDoubleEquiv_descentIncl₁`, `piDoubleEquiv_descentIncl₂` and `hrel`.
-  sorry
+  have h2 : piDoubleEquiv f S T ((1 : ∀ i, S i) ⊗ₜ[A] fun i => ((β i)⁻¹).val)
+      = fun p : ι × ι => inclRight f S T p.1 p.2 ((β p.2)⁻¹).val :=
+    piDoubleEquiv_descentIncl₂ f S T fun i => ((β i)⁻¹).val
+  have h1 : piDoubleEquiv f S T ((fun i => (β i).val) ⊗ₜ[A] (1 : ∀ i, S i))
+      = fun p : ι × ι => inclLeft f S T p.1 p.2 (β p.1).val :=
+    piDoubleEquiv_descentIncl₁ f S T fun i => (β i).val
+  have hco : (Module.descentCoboundary A (∀ i, S i) (Pi.unitOf S β)⁻¹).val
+      = ((1 : ∀ i, S i) ⊗ₜ[A] fun i => ((β i)⁻¹).val)
+        * ((fun i => (β i).val) ⊗ₜ[A] (1 : ∀ i, S i)) := rfl
+  apply Units.ext
+  apply (piDoubleEquiv f S T).injective
+  rw [Units.val_mul, hco, map_mul, map_mul, piDoubleEquiv_cocycleUnit_val,
+    piDoubleEquiv_cocycleUnit_val, h2, h1]
+  funext p
+  simp only [Pi.mul_apply]
+  rw [hrel p.1 p.2]
+  ring
 
 section picClass
 
@@ -322,6 +541,18 @@ noncomputable def refineAlgHom : (∀ i, S i) →ₐ[A] ∀ i', S' i' :=
     (IsLocalization.Away.algHomOfIsUnit (S := S (τ i')) (S' i') (f (τ i')) (hτ i')).comp
       (Pi.evalAlgHom _ _ (τ i'))
 
+omit [Fintype ι] [Fintype ι'] [DecidableEq ι'] in
+private lemma refineAlgHom_single (i : ι) :
+    refineAlgHom f S S' τ hτ (Pi.single i 1)
+      = fun i' => if τ i' = i then (1 : S' i') else 0 := by
+  funext i'
+  change IsLocalization.Away.algHomOfIsUnit (S := S (τ i')) (S' i') (f (τ i')) (hτ i')
+      (Pi.single i 1 (τ i')) = if τ i' = i then (1 : S' i') else 0
+  by_cases h : τ i' = i
+  · subst h
+    rw [Pi.single_eq_same, map_one, if_pos rfl]
+  · rw [Pi.single_eq_of_ne h, map_zero, if_neg h]
+
 variable (hτT : ∀ i' j', IsUnit (algebraMap A (T' i' j') (f (τ i') * f (τ j'))))
 
 /-- The refinement map on double overlaps. -/
@@ -341,7 +572,42 @@ theorem map_cocycleUnit (γ : ∀ i j, (T i j)ˣ) :
   -- `piDoubleEquiv' ∘ (map h h) ∘ (piDoubleEquiv).symm` is index-wise
   -- `refineOverlapAlgHom` by the pi-ext principle (evaluate on the idempotents
   -- `Pi.single (i,j) 1`, whose preimages are `Pi.single i 1 ⊗ₜ Pi.single j 1`).
-  sorry
+  have key : (piDoubleEquiv f' S' T').toAlgHom.comp
+        ((Algebra.TensorProduct.map (refineAlgHom f S S' τ hτ) (refineAlgHom f S S' τ hτ)).comp
+          (piDoubleEquiv f S T).symm.toAlgHom)
+      = Pi.algHom _ _ fun p' : ι' × ι' =>
+          (refineOverlapAlgHom f T T' τ hτT p'.1 p'.2).comp
+            (Pi.evalAlgHom _ _ (τ p'.1, τ p'.2)) := by
+    apply AlgHom.ext_of_isLocalization_pi
+      (fun p : ι × ι => Submonoid.powers (f p.1 * f p.2))
+    intro q
+    obtain ⟨i, j⟩ := q
+    change piDoubleEquiv f' S' T'
+        (Algebra.TensorProduct.map (refineAlgHom f S S' τ hτ) (refineAlgHom f S S' τ hτ)
+          ((piDoubleEquiv f S T).symm (Pi.single (i, j) 1)))
+      = fun p' : ι' × ι' =>
+          refineOverlapAlgHom f T T' τ hτT p'.1 p'.2
+            ((Pi.single (i, j) 1 : ∀ p : ι × ι, T p.1 p.2) (τ p'.1, τ p'.2))
+    rw [piDoubleEquiv_symm_single f S T i j, Algebra.TensorProduct.map_tmul,
+      refineAlgHom_single f S S' τ hτ i, refineAlgHom_single f S S' τ hτ j,
+      piDoubleEquiv_tmul f' S' T']
+    funext p'
+    obtain ⟨a, b⟩ := p'
+    dsimp only
+    by_cases hA : τ a = i
+    · subst hA
+      by_cases hB : τ b = j
+      · subst hB
+        rw [if_pos rfl, if_pos rfl, ← Algebra.TensorProduct.one_def, map_one,
+          Pi.single_eq_same, map_one]
+      · rw [if_neg hB, tmul_zero, map_zero,
+          Pi.single_eq_of_ne (fun hh => hB (congrArg Prod.snd hh)), map_zero]
+    · rw [if_neg hA, zero_tmul, map_zero,
+        Pi.single_eq_of_ne (fun hh => hA (congrArg Prod.fst hh)), map_zero]
+  apply Units.ext
+  apply (piDoubleEquiv f' S' T').injective
+  rw [piDoubleEquiv_cocycleUnit_val f' S' T']
+  exact DFunLike.congr_fun key (piUnit T γ).val
 
 variable (W' : ι' → ι' → ι' → Type u) [∀ i j k, CommRing (W' i j k)]
   [∀ i j k, Algebra A (W' i j k)]
