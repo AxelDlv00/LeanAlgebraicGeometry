@@ -36,12 +36,15 @@ import AlgebraicJacobian.Picard.PicEtAffMap
 import AlgebraicJacobian.Descent.ModuleDescent
 import AlgebraicJacobian.Descent.InvertibleModule
 import AlgebraicJacobian.Descent.UnitDescent
+import AlgebraicJacobian.Descent.UnitDescentMap
 import AlgebraicJacobian.Algebra.PiLocalization
 import AlgebraicJacobian.Algebra.LocalizationCocycle
+import AlgebraicJacobian.Algebra.LocalizationCocycleRefine
 import AlgebraicJacobian.Picard.SectionsAlgebra
 import AlgebraicJacobian.Picard.FamilyCoboundary
 import AlgebraicJacobian.Picard.PicAffineCover
 import AlgebraicJacobian.Picard.PicAffine
+import AlgebraicJacobian.Picard.CechPicToPic
 import AlgebraicJacobian.Challenge
 
 /-!
