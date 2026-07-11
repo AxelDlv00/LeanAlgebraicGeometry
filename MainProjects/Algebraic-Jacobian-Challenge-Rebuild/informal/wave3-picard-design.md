@@ -822,10 +822,20 @@ invert `CommRing.toSemiring`-projections against `Algebra.TensorProduct.instSemi
 `mk_eq_mk_iff`, not `Quotient.map₂` against setoid literals; (iii) prove `mul_assoc`/
 `mul_comm` by re-representing all factors on one cover (`← mk_descentMap` with explicit
 inclusion maps, then `mk_mul_mk_same` + the group law) — no simp on `descentMap` nests;
-(iv) the transport calc chains are heartbeat-hungry (file runs at `maxHeartbeats 1000000`);
-a future pass could cheapen them by caching the composite-hom equalities as standalone
-lemmas. Still open in L6: functoriality of `PicEtAff` in the test algebra (base change of
-covers + descent-datum shuffle) and the Layer-2 extension (file 12).
+(iv) the transport calc chains are heartbeat-hungry (only `mulLift_compat` needs a scoped
+4M-heartbeat budget after s0010's repair; everything else fits the default).
+
+**Lane status (run 0027, session 0010).** File 11 repaired and kernel-green (the committed
+`PicEtAff.lean` had a whnf-timeout in `mulLift_compat` hidden by the elaborator's error
+recovery — I-0138, closed) and wired into the library root.  The `descentMap_congr`
+keystone was generalized to **`relPicAlgMap_congr`** (a descent class restricts equally
+along any two `A`-algebra maps out of the cover carrier into *any* compatible test algebra),
+and the L6 functoriality item landed on top of it: `Picard/PicEtAffMap.lean` provides
+`descentBaseChange`, `PicEtAff.map` (base extension as `[Algebra A A'] [IsScalarTower k A A']`
+instances), unit naturality `map_unit`, functor laws `map_id`/`map_map` (both are instances
+of `relPicAlgMap_congr`), and the explicit-algebra-map face `mapAlg` with its laws.  All
+axiom-clean.  Still open in L6: the Layer-2 extension (file 12), now gated on file 13's
+sheaf-on-affines corollary — see the revised OPEN-1 in §9.
 
 ### 7.3 Semantic-audit checklist (route rule 2)
 
@@ -863,11 +873,29 @@ no Quot schemes, no general `R^i f_*` (route rule 5; recon lessons 1–2). No ge
 
 ## 9. Open sub-decisions
 
-- **OPEN-1 (Layer-2 vehicle).** Bespoke limit-over-affine-opens vs mathlib
-  `IsCoverDense`-based extension (`Sites/Affine.lean`). *Close by:* prototyping the two
-  statements `picEt_affine_iso` and `picEtFunctor.map`-functoriality; pick whichever lands both
-  under ~300 lines. Default on tie: bespoke limit (fewer abstraction layers to compute
-  through). Owner: L6.
+- **OPEN-1 (Layer-2 vehicle). PARTIALLY CLOSED (run 0027, session 0010): both named
+  vehicles as stated hit the same wall, and the wall is file 13's corollary — so the lane
+  order is 13 → 12.** Analysis: (i) the *bespoke limit over the affine-opens poset* of
+  `T.left` is `Type u`-small and gives `picEt_affine_iso` cheaply (`⊤` is terminal in the
+  poset of an affine `T`), but functoriality along `f : T' ⟶ T` requires evaluating a
+  family at the affine test `U' ⊆ T'.left`, whose image need not lie in **any** affine open
+  of `T.left`; the evaluation must be *glued* from a finite cover of `U'` by basic opens
+  refining `f⁻¹(affines)` — i.e. it needs exactly "the one-plus is a Zariski sheaf on
+  affines" (file 13's corollary to (C1) separatedness plus descent).  (ii) the *comma-category
+  Ran formula* (`lim` over all affine tests `(A, g : Spec A ⟶ T)`) has composition-only
+  functoriality but a `Type (u+1)` index with no small cofinal subfamily for general `T`
+  (images of affines need not factor through affine opens; fg-algebras are not cofinal
+  in all test algebras), and the presented-test smallness trick fails because
+  `Fin n`-presentations only reach fg algebras while `Γ(U)` is not fg in general.
+  (iii) mathlib v4.31's `Sites/Affine.lean` (`isCoverDense_toOver_Spec`) lives on the
+  small `P`-site (`MorphismProperty.CostructuredArrow`), and the `IsCoverDense` sheaf
+  extension would require the sheaf property on affines anyway, plus an opaque
+  `ran`-extension to compute through.  *Resolution:* land file 13's
+  "one-plus is a Zariski sheaf on affines" first, then implement Layer 2 as the bespoke
+  affine-opens limit with glue-based functoriality (choice-independence of the gluing from
+  sheaf uniqueness).  Prerequisite landed (s0010): `PicEtAff.map`/`mapAlg` functoriality in
+  the test algebra with unit naturality and functor laws (`Picard/PicEtAffMap.lean`).
+  Owner: L7 then L6.
 - **OPEN-2 (Rigidification proof scheduling).** (C2)'s statement is Wave-3 (file 14); its proof
   is Wave-4-critical-path but not Wave-3-blocking. *Close by:* L7 capacity after (C1) lands;
   if L7 finishes (C1) with slack, prove (C2) now.
