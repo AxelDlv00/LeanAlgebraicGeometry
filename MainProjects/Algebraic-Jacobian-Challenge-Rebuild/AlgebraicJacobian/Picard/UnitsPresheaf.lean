@@ -44,8 +44,12 @@ namespace Scheme
 variable {X Y Z : Scheme.{u}}
 
 /-- The units presheaf `𝒪_X^*` of a scheme `X`, on its small Zariski site: the composite
-of the structure presheaf with the units functor, valued in commutative groups. -/
-def unitsPresheaf (X : Scheme.{u}) : (X.Opens)ᵒᵖ ⥤ CommGrpCat.{u} :=
+of the structure presheaf with the units functor, valued in commutative groups.
+
+This is `abbrev` (reducible): the Čech layer constantly mixes sections typed through
+`unitsPresheaf.obj` with sections typed `Γ(X, U)ˣ`, and rewriting across that boundary
+requires the two to agree at instance transparency. -/
+abbrev unitsPresheaf (X : Scheme.{u}) : (X.Opens)ᵒᵖ ⥤ CommGrpCat.{u} :=
   X.presheaf ⋙ forget₂ CommRingCat CommMonCat ⋙ CommMonCat.units
 
 lemma unitsPresheaf_obj (U : (X.Opens)ᵒᵖ) :
@@ -68,6 +72,15 @@ lemma unitsPresheaf_map_apply {U V : (X.Opens)ᵒᵖ} (i : U ⟶ V) (u : Γ(X, u
 @[simp]
 lemma unitsPresheaf_forget₂_map_apply {U V : (X.Opens)ᵒᵖ} (i : U ⟶ V) (u : Γ(X, unop U)ˣ) :
     (X.unitsPresheaf ⋙ forget₂ CommGrpCat GrpCat).map i u
+      = Units.map (X.presheaf.map i).hom u :=
+  rfl
+
+/-- Split form of `unitsPresheaf_forget₂_map_apply`: after `Functor.comp_map` has fired,
+the restriction maps appear as `(forget₂ _ _).map (X.unitsPresheaf.map i)`. -/
+@[simp]
+lemma forget₂_map_unitsPresheaf_map_apply {U V : (X.Opens)ᵒᵖ} (i : U ⟶ V)
+    (u : Γ(X, unop U)ˣ) :
+    (forget₂ CommGrpCat GrpCat).map (X.unitsPresheaf.map i) u
       = Units.map (X.presheaf.map i).hom u :=
   rfl
 

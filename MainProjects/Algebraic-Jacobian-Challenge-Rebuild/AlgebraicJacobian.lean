@@ -21,6 +21,10 @@ import AlgebraicJacobian.Cohomology.FinitenessP1
 import AlgebraicJacobian.Cohomology.Finiteness
 import AlgebraicJacobian.Cohomology.SectionsBaseChange
 import AlgebraicJacobian.Picard.UniversalSections
+import AlgebraicJacobian.Picard.UnitsPresheaf
+import AlgebraicJacobian.Picard.CechH1
+import AlgebraicJacobian.Picard.UnitsCocycle
+import AlgebraicJacobian.Picard.Pic
 import AlgebraicJacobian.Descent.ModuleDescent
 import AlgebraicJacobian.Descent.InvertibleModule
 import AlgebraicJacobian.Challenge
