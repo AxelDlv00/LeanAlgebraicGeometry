@@ -98,7 +98,16 @@ references:
       $\ge 0$), $Q_1 = $ image of $S_{x_1}$, and the quotient is spanned by
       the finite window of monomials surviving modulo both. Cite as
       hartshorne-algebraic-geometry:page-0242,
-      hartshorne-algebraic-geometry:page-0243.
+      hartshorne-algebraic-geometry:page-0243. RE-READ 2026-07-11 (same
+      project, Cohomology.tex finiteness slice) and REUSED on
+      AlgebraicGeometry.moduleFinite_hModule_one_of_isFinite_toP1
+      (finiteness of H^1 along a finite map to P^1): the pages are the
+      ANCESTOR, not the identical statement -- they prove the P^1 case
+      (pi = id: H^1 of P^1 as the two-chart cokernel, finite/free on the
+      negative-monomial window); the blueprint node generalizes S to a
+      module finite over it via a finite morphism, with the monomial
+      bookkeeping abstracted into the two-lattice ladder of the Algebra
+      chapter (which cites the same pages).
     topics: [schemes, sheaves, cohomology, curves, divisors, projective-space, cech-cohomology, two-lattice, monomial-ladder]
 
   - slug: mumford-abelian-varieties

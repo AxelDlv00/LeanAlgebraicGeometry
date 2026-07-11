@@ -9,8 +9,10 @@ cohomology with (global) sections and proves the vanishing of degree-one cohomol
 structure sheaf on an affine open of a scheme. It then develops the Mayer--Vietoris
 \((0,1)\)-slice for a sheaf of \(R\)-modules on a site and specializes it to a scheme
 covered by two affine opens, producing an explicit description of \(H^1(X,\struct{X/k})\)
-as the cokernel of a map of section modules --- the computational input for the finiteness
-of \(H^1(C, \struct C)\) and hence for the genus of Definition~\ref{def:genus}.
+as the cokernel of a map of section modules. The chapter concludes by running the
+two-lattice ladder of Chapter~\ref{chap:Algebra} on that cokernel along a finite morphism
+to the projective line, proving the finiteness of \(H^1(C, \struct C)\) --- so that the
+genus of Definition~\ref{def:genus} is the dimension of a finite-dimensional vector space.
 
 \section{Cohomology on a site}
 
@@ -1154,3 +1156,346 @@ route bypasses.
   Apply the isomorphism of \ref{thm:TwoCover_h1CokEquiv} to both sides of
   \ref{lem:TwoCover_h1CokEquiv_delta} and use injectivity.
 \end{proof}
+
+\section{The projective line: inputs for the finiteness argument}
+
+This section collects the facts about \(\PP^1\) and about morphisms over \(\Spec k\) that
+the finiteness argument of the next section consumes. It builds on the description of
+\(\PP^1\), its standard charts \(U_0, U_1\), the chart coordinates
+\(t_{ij} = X_j/X_i \in A_{(X_i)}\), and the section-ring identifications
+\(\gamma_0, \gamma_1, \gamma_{01}\) developed in Chapter~\ref{chap:Curves}
+(Definitions~\ref{def:P1_chartOpen}, \ref{def:P1_chartCoord},
+\ref{def:P1_chartSectionsEquiv0}--\ref{def:P1_overlapSectionsEquiv}); the statements here
+are recorded in this chapter because they are private inputs of the finiteness glue rather
+than general theory of the projective line. Throughout, for a homogeneous \(f\) of positive
+degree we write \(A_{(f)} \to \Gamma(\PP^1, D_+(f))\) for the canonical map from the
+degree-zero localization to the sections over the basic open (an isomorphism).
+
+\begin{lemma}[Morphisms over the base intertwine the structure algebra maps]
+  \label{lem:appTop_map_appLE}
+  \lean{AlgebraicGeometry.Scheme.Hom.appTop_map_appLE}
+  \leanok
+  Let \(k\) be a commutative ring, let \(X, Y\) be schemes over \(\Spec k\) and let
+  \(\pi : X \to Y\) be a morphism compatible with the structure morphisms. For opens
+  \(U \subseteq Y\) and \(V \subseteq X\) with \(V \subseteq \pi^{-1}(U)\), the two
+  composite ring homomorphisms
+  \[
+    \Gamma(\Spec k, \top) \to \Gamma(Y, \top) \to \Gamma(Y, U)
+      \xrightarrow{\ \pi^\sharp\ } \Gamma(X, V)
+    \qquad\text{and}\qquad
+    \Gamma(\Spec k, \top) \to \Gamma(X, \top) \to \Gamma(X, V)
+  \]
+  agree, where the unlabeled maps are induced by the structure morphisms and by
+  restriction.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Pulling back sections along \(\pi\) commutes with restriction, so the first composite is
+  the map on sections induced by \(\pi\) composed with the structure morphism of \(Y\),
+  restricted to \(V\); by compatibility this composite of morphisms is the structure
+  morphism of \(X\).
+\end{proof}
+
+\begin{lemma}[Pulling back the structure algebra map]
+  \label{lem:appLE_overAlgebraMap}
+  \lean{AlgebraicGeometry.Scheme.Hom.appLE_overAlgebraMap}
+  \uses{def:overAlgebraMap, lem:appTop_map_appLE}
+  \leanok
+  In the situation of \ref{lem:appTop_map_appLE}, for every \(r \in k\) the map
+  \(\pi^\sharp : \Gamma(Y, U) \to \Gamma(X, V)\) sends the image of \(r\) under the
+  structure algebra map of \(Y\) (Definition~\ref{def:overAlgebraMap}) to the image of
+  \(r\) under the structure algebra map of \(X\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Evaluate the equality of ring homomorphisms of \ref{lem:appTop_map_appLE} at the section
+  corresponding to \(r\).
+\end{proof}
+
+\begin{lemma}[The basic-open models lie over the base]
+  \label{lem:P1_awayi_structureMap}
+  \lean{AlgebraicGeometry.P1.awayι_structureMap}
+  \uses{def:P1_structureMap}
+  \leanok
+  Let \(f \in k[X_0, X_1]\) be homogeneous of positive degree. The composite of the affine
+  model \(\Spec A_{(f)} \to \PP^1\) of the basic open \(D_+(f)\) with the structure
+  morphism \(\PP^1 \to \Spec k\) is the morphism induced by the algebra map
+  \(k \to A_{(f)}\). (This generalizes \ref{lem:P1_chartIota_structureMap} from the two
+  standard charts to all standard basic opens.)
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{def:P1_gradeZero}
+  As for \ref{lem:P1_chartIota_structureMap}: the canonical morphism
+  \(\Proj A \to \Spec A_0\), restricted to the affine model of a basic open, is induced by
+  the ring homomorphism \(A_0 \to A_{(f)}\), and composing with the isomorphism
+  \(k \cong A_0\) of \ref{def:P1_gradeZero} gives the claim.
+\end{proof}
+
+\begin{lemma}[The basic-open inclusion factors through its affine model]
+  \label{lem:P1_basicOpen_iota_eq}
+  \lean{AlgebraicGeometry.P1.basicOpen_ι_eq}
+  \uses{def:P1}
+  \leanok
+  Let \(f \in k[X_0, X_1]\) be homogeneous of positive degree. The inclusion
+  \(D_+(f) \to \PP^1\) is the composite of the canonical identification
+  \(D_+(f) \cong \Spec A_{(f)}\) with the affine model \(\Spec A_{(f)} \to \PP^1\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The affine model is by construction an open immersion with image \(D_+(f)\), and the
+  canonical identification is the induced isomorphism onto the image; composing the two
+  recovers the inclusion.
+\end{proof}
+
+\begin{lemma}[The structure algebra map on a basic open]
+  \label{lem:P1_structureMap_appTop_awayToSection}
+  \lean{AlgebraicGeometry.P1.structureMap_appTop_awayToSection}
+  \uses{def:P1_structureMap, lem:P1_awayi_structureMap, lem:P1_basicOpen_iota_eq}
+  \leanok
+  Let \(f \in k[X_0, X_1]\) be homogeneous of positive degree. The composite
+  \[
+    \Gamma(\Spec k, \top) \to \Gamma(\PP^1, \top) \to \Gamma\bigl(\PP^1, D_+(f)\bigr)
+  \]
+  (structure morphism on global sections, then restriction) is the composite of the
+  identification \(\Gamma(\Spec k, \top) \cong k\), the algebra map \(k \to A_{(f)}\), and
+  the canonical map \(A_{(f)} \to \Gamma(\PP^1, D_+(f))\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  By \ref{lem:P1_basicOpen_iota_eq} and \ref{lem:P1_awayi_structureMap}, the composite of
+  the inclusion \(D_+(f) \to \PP^1\) with the structure morphism is the identification
+  \(D_+(f) \cong \Spec A_{(f)}\) followed by the morphism induced by \(k \to A_{(f)}\).
+  Taking global sections of this equality of scheme morphisms, and identifying the global
+  sections of the open subscheme \(D_+(f)\) with \(\Gamma(\PP^1, D_+(f))\) --- under which
+  the map on sections induced by the identification with \(\Spec A_{(f)}\) becomes the
+  canonical map \(A_{(f)} \to \Gamma(\PP^1, D_+(f))\) --- yields the claim.
+\end{proof}
+
+\begin{lemma}[The distinguished fraction of a chart pair is the chart coordinate]
+  \label{lem:P1_isLocalizationElem_X_eq}
+  \lean{AlgebraicGeometry.P1.isLocalizationElem_X_eq}
+  \uses{def:P1_chartCoord}
+  \leanok
+  For \(i, j \in \{0,1\}\), the canonical degree-zero fraction
+  \(X_j^{\deg X_i} / X_i^{\deg X_j}\) attached to the pair \((X_i, X_j)\) of homogeneous
+  elements equals the chart coordinate \(t_{ij} = X_j / X_i \in A_{(X_i)}\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Both degrees are one, and a first power is the element itself.
+\end{proof}
+
+\begin{theorem}[The chart coordinate cuts out the overlap]
+  \label{thm:P1_basicOpen_chartCoord}
+  \lean{AlgebraicGeometry.P1.basicOpen_awayToSection_chartCoord}
+  \uses{def:P1_chartOpen, def:P1_chartCoord, lem:P1_basicOpen_iota_eq,
+    lem:P1_isLocalizationElem_X_eq}
+  \leanok
+  For \(i, j \in \{0,1\}\), regard the chart coordinate \(t_{ij} \in A_{(X_i)}\) as a
+  section of the structure sheaf over the chart \(U_i = D_+(X_i)\), via the canonical map
+  \(A_{(X_i)} \to \Gamma(\PP^1, U_i)\). Then the basic open of this section in the scheme
+  \(\PP^1\) --- the locus of \(U_i\) where it is invertible --- is the chart overlap:
+  \[
+    D(t_{ij}) \;=\; U_i \cap U_j .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Both sides are open subsets of \(U_i\) (the basic open of a section over \(U_i\) is
+  contained in \(U_i\)), so it suffices to show that they have the same preimage under the
+  identification \(U_i \cong \Spec A_{(X_i)}\), and to transport the equality forward
+  along this open immersion. No stalks are involved: everything is transported through
+  the affine model.
+
+  On the one hand, the preimage of the basic open \(D(t_{ij})\) is the basic open of
+  \(\Spec A_{(X_i)}\) at the ring element \(t_{ij}\): under the identification of an
+  affine open with the spectrum of its section ring, scheme-level basic opens of sections
+  correspond to spectrum-level basic opens of ring elements.
+
+  On the other hand, the preimage of \(U_j = D_+(X_j)\) under the affine model
+  \(\Spec A_{(X_i)} \to \PP^1\) (through which the inclusion of \(U_i\) factors,
+  \ref{lem:P1_basicOpen_iota_eq}) is the basic open at the canonical degree-zero fraction
+  attached to the pair \((X_i, X_j)\): a homogeneous prime avoiding \(X_i\) avoids
+  \(X_j\) exactly when the degree-zero fraction \(X_j/X_i\) is invertible in the
+  corresponding localization. By \ref{lem:P1_isLocalizationElem_X_eq} this fraction is
+  \(t_{ij}\), so the preimage of \(U_i \cap U_j\) is again the basic open at
+  \(t_{ij}\).
+\end{proof}
+
+\begin{lemma}[The Laurent generators as restrictions from the charts]
+  \label{lem:P1_laurent_generators}
+  \lean{AlgebraicGeometry.P1.overlapSectionsEquiv_symm_T,
+    AlgebraicGeometry.P1.overlapSectionsEquiv_symm_T_neg,
+    AlgebraicGeometry.P1.overlapSectionsEquiv_symm_algebraMap}
+  \uses{def:P1_overlapSectionsEquiv, def:P1_chartCoord}
+  \leanok
+  Under the identification
+  \(\gamma_{01} : \Gamma(\PP^1, U_0 \cap U_1) \cong k[T, T^{-1}]\) of
+  \ref{def:P1_overlapSectionsEquiv}:
+  \begin{enumerate}
+    \item \(T\) corresponds to the restriction to the overlap of the chart coordinate
+      \(t_{01}\), regarded as a section over \(U_0\);
+    \item \(T^{-1}\) corresponds to the restriction to the overlap of the chart
+      coordinate \(t_{10}\), regarded as a section over \(U_1\);
+    \item each scalar \(r \in k\) corresponds to the section over the overlap given by
+      the image of \(r\) under the algebra map \(k \to A_{(X_0X_1)}\).
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:P1_res_left, lem:P1_res_right}
+  (1) and (2): by \ref{lem:P1_res_left} (resp.\ \ref{lem:P1_res_right}), restriction from
+  the chart \(U_0\) (resp.\ \(U_1\)) to the overlap corresponds, under the
+  identifications \(\gamma_0, \gamma_1, \gamma_{01}\), to \(t \mapsto T\) (resp.\
+  \(t \mapsto T^{-1}\)); apply this to the sections corresponding to the polynomial
+  \(t\), which are the chart coordinates. (3): \(\gamma_{01}\) is built from the
+  \(k\)-algebra isomorphism \(\theta\) of \ref{def:P1_overlapAlgEquiv}, hence matches the
+  two algebra maps from \(k\).
+\end{proof}
+
+\section{Finiteness of the first cohomology}
+
+Combining the two-affine-cover cokernel bridge with the two-lattice ladder of
+Chapter~\ref{chap:Algebra} along a finite morphism to the projective line yields the
+finiteness of \(H^1\). Classically this computation goes back to the explicit \v{C}ech
+computation of the cohomology of projective space --- for \(\PP^1\) itself, the
+description of \(H^1\) as the cokernel of the two-chart restriction-difference map into
+the Laurent ring, spanned by the finitely many ``negative'' monomials --- extended to a
+curve by pushing forward along a finite morphism; the two-lattice ladder is exactly the
+abstraction of that monomial bookkeeping.
+
+\begin{theorem}[Finiteness of \(H^1\) along a finite morphism to the projective line]
+  \label{thm:moduleFinite_hModule_one_of_isFinite_toP1}
+  \lean{AlgebraicGeometry.moduleFinite_hModule_one_of_isFinite_toP1}
+  \uses{def:HModule, def:moduleKSheaf, def:P1_structureMap}
+  \leanok
+  \source{hartshorne-algebraic-geometry:page-0242, hartshorne-algebraic-geometry:page-0243}
+  Let \(k\) be a field, \(X\) a scheme over \(\Spec k\), and \(\pi : X \to \PP^1\) a
+  finite morphism over \(k\) (its composite with the structure morphism of \(\PP^1\) is
+  the structure morphism of \(X\)). Then \(H^1\bigl(X, \struct{X/k}\bigr)\) is a finite
+  \(k\)-module.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:preimage_chart_affine, lem:preimage_chart_sup, lem:finite_app_overlap,
+    lem:P1_chartOpen_inf, thm:TwoCover_h1CokEquiv, def:TwoCover_diff, def:TwoCover_H1Cok,
+    def:P1_overlapSectionsEquiv, def:P1_chartCoord, lem:P1_laurent_generators,
+    lem:appLE_overAlgebraMap, lem:P1_structureMap_appTop_awayToSection,
+    thm:P1_basicOpen_chartCoord, cor:two_lattice_loc_pow}
+  Write \(U_0, U_1\) for the standard charts of \(\PP^1\) and set
+  \(V_i = \pi^{-1}(U_i)\).
+
+  (a) \emph{The cover and the cokernel.} Since \(\pi\) is finite, hence affine, the
+  \(V_i\) are affine opens of \(X\) (\ref{lem:preimage_chart_affine}), and they cover
+  \(X\) (\ref{lem:preimage_chart_sup}). By the two-affine-cover bridge
+  \ref{thm:TwoCover_h1CokEquiv},
+  \[
+    H^1\bigl(X, \struct{X/k}\bigr) \;\cong\;
+      N \big/ \mathrm{range}(\mathrm{diff}),
+    \qquad N := \Gamma(X, V_0 \cap V_1),
+  \]
+  with \(\mathrm{diff}(s_0, s_1) = s_0|_{V_0 \cap V_1} - s_1|_{V_0 \cap V_1}\)
+  (\ref{def:TwoCover_diff}). It therefore suffices to prove that this quotient is a
+  finite \(k\)-module.
+
+  (b) \emph{The Laurent module structure.} Preimages commute with intersections, and
+  \(U_0 \cap U_1 = D_+(X_0X_1)\) (\ref{lem:P1_chartOpen_inf}), so
+  \(V_0 \cap V_1 = \pi^{-1}(U_0 \cap U_1)\). Make \(N\) an algebra over the Laurent
+  polynomial ring via the composite
+  \[
+    k[T, T^{-1}] \xrightarrow{\ \gamma_{01}^{-1}\ } \Gamma(\PP^1, U_0 \cap U_1)
+      \xrightarrow{\ \pi^\sharp\ } \Gamma\bigl(X, \pi^{-1}(U_0 \cap U_1)\bigr) = N
+  \]
+  (\ref{def:P1_overlapSectionsEquiv}). This structure is compatible with the \(k\)-module
+  structure of \(N\): a scalar \(r \in k[T,T^{-1}]\) corresponds under \(\gamma_{01}\) to
+  the image of \(r\) under the algebra map into the overlap ring
+  (\ref{lem:P1_laurent_generators}(3)), which is the structure algebra map of \(\PP^1\)
+  on \(U_0 \cap U_1\) (\ref{lem:P1_structureMap_appTop_awayToSection}), and \(\pi\) pulls
+  the structure algebra map of \(\PP^1\) back to that of \(X\)
+  (\ref{lem:appLE_overAlgebraMap}). Hence the \(k\)-module structure of \(N\) is the
+  restriction of scalars of the \(k[T,T^{-1}]\)-structure along the canonical map
+  \(k \to k[T,T^{-1}]\).
+
+  (c) \emph{Module-finiteness over the Laurent ring.} Since \(\pi\) is finite and
+  \(U_0 \cap U_1\) is an affine open of \(\PP^1\), the map
+  \(\pi^\sharp : \Gamma(\PP^1, U_0 \cap U_1) \to N\) is module-finite
+  (\ref{lem:finite_app_overlap}); composing with the isomorphism \(\gamma_{01}^{-1}\),
+  \(N\) is a finite \(k[T,T^{-1}]\)-module.
+
+  (d) \emph{The two lattices, and the range of the difference map.} Let
+  \(Q_0, Q_1 \subseteq N\) be the images of the (\(k\)-linear) restriction maps
+  \(\Gamma(X, V_0) \to N\) and \(\Gamma(X, V_1) \to N\). Then
+  \(\mathrm{range}(\mathrm{diff}) = Q_0 + Q_1\): every value
+  \(s_0| - s_1|\) of \(\mathrm{diff}\) is the sum of \(s_0| \in Q_0\) and
+  \(-(s_1|) = (-s_1)| \in Q_1\); conversely \(s_0| = \mathrm{diff}(s_0, 0) \) and
+  \(s_1| = \mathrm{diff}(0, -s_1)\) exhibit every element of \(Q_0\) and of \(Q_1\) as a
+  value of \(\mathrm{diff}\) --- the sign is absorbed because \(Q_1\) is the image of a
+  linear map.
+
+  (e) \emph{Lattice stability.} Let
+  \(\tau_0 = \pi^\sharp(t_{01}) \in \Gamma(X, V_0)\) and
+  \(\tau_1 = \pi^\sharp(t_{10}) \in \Gamma(X, V_1)\) be the pullbacks of the chart
+  coordinates, regarded as sections over the charts
+  (Definition~\ref{def:P1_chartCoord}). By \ref{lem:P1_laurent_generators}(1) and the
+  compatibility of \(\pi^\sharp\) with restriction, \(T\) acts on \(N\) as
+  multiplication by \(\tau_0|_{V_0 \cap V_1}\); symmetrically \(T^{-1}\) acts as
+  multiplication by \(\tau_1|_{V_0 \cap V_1}\) (\ref{lem:P1_laurent_generators}(2)).
+  Hence \(Q_0\) is stable under multiplication by \(T\): for \(s \in \Gamma(X, V_0)\),
+  \[
+    T \cdot s|_{V_0 \cap V_1} \;=\; \tau_0|\cdot s| \;=\; (\tau_0 s)|_{V_0 \cap V_1}
+      \;\in\; Q_0,
+  \]
+  and symmetrically \(Q_1\) is stable under multiplication by \(T^{-1}\).
+
+  (f) \emph{Absorption up to powers.} The overlap is a basic open inside each chart
+  preimage: pulling back the identity \(D(t_{ij}) = U_i \cap U_j\) of
+  \ref{thm:P1_basicOpen_chartCoord} along \(\pi\) (basic opens of sections pull back to
+  basic opens of the pulled-back sections) gives
+  \[
+    V_0 \cap V_1 = D(\tau_0) \subseteq V_0,
+    \qquad
+    V_0 \cap V_1 = D(\tau_1) \subseteq V_1 .
+  \]
+  Since \(V_0\) is affine and \(V_0 \cap V_1\) is its basic open defined by \(\tau_0\),
+  restriction identifies \(N\) with the localization of \(\Gamma(X, V_0)\) at the powers
+  of \(\tau_0\) (quasi-coherence of the structure sheaf). Hence for every \(n \in N\)
+  there are \(m \ge 0\) and \(a \in \Gamma(X, V_0)\) with
+  \(n \cdot (\tau_0|)^m = a|\), i.e.\ \(T^m \cdot n \in Q_0\). Symmetrically, every
+  \(n \in N\) satisfies \(T^{-m} \cdot n \in Q_1\) for some \(m \ge 0\).
+
+  (g) \emph{The ladder.} By (b), (c), (e) and (f), the module \(N\) over
+  \(k[T,T^{-1}]\) with the \(k\)-submodules \(Q_0, Q_1\) satisfies all hypotheses of the
+  two-lattice finiteness theorem in its localization form via powers of the generator
+  (\ref{cor:two_lattice_loc_pow}); hence \(N/(Q_0 + Q_1)\) is a finite \(k\)-module. By
+  (d) this quotient is \(N/\mathrm{range}(\mathrm{diff})\), and by (a) it is
+  \(H^1\bigl(X, \struct{X/k}\bigr)\).
+\end{proof}
+
+\begin{theorem}[Finiteness of \(H^1\) of the curve]
+  \label{thm:moduleFinite_hModule_one}
+  \lean{AlgebraicGeometry.moduleFinite_hModule_one}
+  \uses{def:HModule, def:moduleKSheaf}
+  \leanok
+  Let \(k\) be a field and \(C\) a smooth curve over \(k\) (proper, smooth of relative
+  dimension one, geometrically irreducible). Then
+  \(H^1\bigl(C, \struct{C/k}\bigr)\) is a finite \(k\)-module; equivalently, it is a
+  finite-dimensional \(k\)-vector space.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:exists_finite_toP1, thm:moduleFinite_hModule_one_of_isFinite_toP1}
+  By \ref{thm:exists_finite_toP1} there is a finite morphism \(\pi : C \to \PP^1\) over
+  \(k\); apply \ref{thm:moduleFinite_hModule_one_of_isFinite_toP1}.
+\end{proof}
+
+\begin{remark}[The genus is the dimension of a finite-dimensional space]
+  \label{rem:genus_finite}
+  \uses{def:genus, thm:moduleFinite_hModule_one}
+  \leanok
+  For a smooth curve \(C\) over \(k\), the genus of Definition~\ref{def:genus} is the
+  \(k\)-dimension of \(H^1(C, \struct C)\), which by
+  \ref{thm:moduleFinite_hModule_one} is a finite-dimensional \(k\)-vector space; the
+  genus is therefore a well-defined natural number, attained as the cardinality of any
+  basis.
+\end{remark}
