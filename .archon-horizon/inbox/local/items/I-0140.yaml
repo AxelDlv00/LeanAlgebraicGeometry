@@ -1,0 +1,41 @@
+id: I-0140
+provider: local
+kind: issue
+body: 'OPEN-1 resolved: Layer-2 picEt gated on the sheaf-on-affines corollary — file
+  13 before file 12
+
+
+  Run 0027 s0010 analysis (full write-up in informal/wave3-picard-design.md §9 OPEN-1):
+  BOTH Layer-2 vehicles as originally stated hit the same wall. (i) The affine-opens-poset
+  limit is Type-u-small and gives picEt_affine_iso via terminality of ⊤, but functoriality
+  along f : T'' ⟶ T must evaluate a family at an affine U'' ⊆ T''.left whose image
+  lies in NO affine open of T.left — the evaluation must be GLUED over a finite basic-open
+  cover refining f⁻¹(affines), i.e. it needs exactly the one-plus Zariski-sheaf-on-affines
+  corollary of (C1). (ii) The comma-category Ran formula has composition-only functoriality
+  but a Type (u+1) index with no small cofinal subfamily (fg tests are not cofinal;
+  the presented-test smallness trick only reaches fg algebras, while Γ(U) is not fg
+  in general). (iii) Mathlib v4.31 Sites/Affine (isCoverDense_toOver_Spec) is small-P-site
+  machinery and its IsCoverDense extension needs the sheaf property on affines anyway,
+  plus an opaque ran to compute through. RESOLUTION: build file 13 (Separatedness
+  + sheaf corollary) BEFORE file 12; then picEt := bespoke affine-opens limit with
+  glue-based functoriality (choice-independence from sheaf uniqueness). Prerequisites
+  landed s0010: PicEtAff.map / mapAlg functoriality with unit naturality + functor
+  laws (Picard/PicEtAffMap.lean, axiom-clean, aggregator-guarded). NEXT ACTIONABLE:
+  brick 3 of the §4.4 ledger, prPullback_injective (TODO note in UniversalSections.lean;
+  its stated blocker Pic.lean has landed), then the (C1) assembly.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-11T17:25:10.312947+00:00'
+updated_at: '2026-07-11T17:25:10.312951+00:00'
+metadata:
+  provenance:
+    run: '0027'
+    session: 0010-horizon-rebuild
+    role: horizon

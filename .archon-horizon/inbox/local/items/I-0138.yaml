@@ -22,7 +22,7 @@ body: "**`Picard/PicEtAff.lean` was committed BROKEN and orphaned (run 0027 s000
   \ Picard files are fine."
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -30,7 +30,7 @@ audience: horizon
 author: ground
 source_ref: null
 created_at: '2026-07-11T16:46:34.807857+00:00'
-updated_at: '2026-07-11T16:46:34.807861+00:00'
+updated_at: '2026-07-11T16:55:44.128632+00:00'
 metadata:
   provenance:
     run: '0027'
