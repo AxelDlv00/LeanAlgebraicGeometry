@@ -21,10 +21,13 @@ refinement.
   satisfying the descent condition on the cover `E` with carrier `B`.
 * `AlgebraicGeometry.descentMap C h`: transport of descent classes along a refinement map
   `h` of covers.
-* `AlgebraicGeometry.descentMap_congr` (**the keystone**): any two refinement maps between
-  the same covers transport descent classes identically — the pair `(h₁, h₂)` factors
-  through the double cover, where the descent condition kills the difference.  This is
-  what makes the colimit below independent of all choices.
+* `AlgebraicGeometry.relPicAlgMap_congr` (**the keystone**): a descent class restricts
+  equally along any two `A`-algebra maps out of the cover carrier — the pair `(j₁, j₂)`
+  factors through the double cover, where the descent condition kills the difference.
+  Specialized to refinement maps as `AlgebraicGeometry.descentMap_congr`, this is what
+  makes the colimit below independent of all choices; applied across base rings
+  (`Picard/PicEtAffMap.lean`), it is also what makes the plus functorial in the test
+  algebra.
 * `AlgebraicGeometry.PicEtAff C A`: the one-step plus — descent classes on some cover,
   modulo agreement on a common refinement — with its `CommGroup` structure and the
   constructor/eliminator API `PicEtAff.mk`, `PicEtAff.ind`, `PicEtAff.mk_eq_mk_iff`,
@@ -150,34 +153,42 @@ lemma descentMap_comp {E F G : Algebra.EtaleCover A} (h : E.Carrier →ₐ[A] F.
       = (h'.restrictScalars k).comp (h.restrictScalars k) from rfl]
   exact relPicAlgMap_comp C _ _ _
 
-/-- **Refinement-map independence**, the keystone of the plus construction: any two
-refinement maps between the same covers transport descent classes identically.  The pair
-`(h₁, h₂)` factors jointly through the double cover of the source, where the descent
+/-- **Generalized refinement-map independence**, the keystone of the plus construction:
+a class satisfying the descent condition restricts equally along any two `A`-algebra maps
+out of the cover carrier — into an arbitrary test algebra, not merely another cover.  The
+pair `(j₁, j₂)` factors jointly through the double cover of the source, where the descent
 condition identifies the two pullbacks. -/
-theorem descentMap_congr {E F : Algebra.EtaleCover A}
-    (h₁ h₂ : E.Carrier →ₐ[A] F.Carrier) (x : descentClasses C E) :
-    descentMap C h₁ x = descentMap C h₂ x := by
-  set H : E.Carrier ⊗[A] E.Carrier →ₐ[A] F.Carrier :=
-    Algebra.TensorProduct.lift h₁ h₂ fun _ _ => Commute.all _ _ with hH
-  have key₁ : (H.restrictScalars k).comp (doubleInl E) = h₁.restrictScalars k := by
+theorem relPicAlgMap_congr {E : Algebra.EtaleCover A} {R : Type u} [CommRing R]
+    [Algebra k R] [Algebra A R] [IsScalarTower k A R] (j₁ j₂ : E.Carrier →ₐ[A] R)
+    {x : relPic C (overSpec k E.Carrier)} (hx : x ∈ descentClasses C E) :
+    relPicAlgMap C (j₁.restrictScalars k) x = relPicAlgMap C (j₂.restrictScalars k) x := by
+  set H : E.Carrier ⊗[A] E.Carrier →ₐ[A] R :=
+    Algebra.TensorProduct.lift j₁ j₂ fun _ _ => Commute.all _ _ with hH
+  have key₁ : (H.restrictScalars k).comp (doubleInl E) = j₁.restrictScalars k := by
     ext y
     simp [hH, doubleInl]
-  have key₂ : (H.restrictScalars k).comp (doubleInr E) = h₂.restrictScalars k := by
+  have key₂ : (H.restrictScalars k).comp (doubleInr E) = j₂.restrictScalars k := by
     ext y
     simp [hH, doubleInr]
-  ext
-  rw [descentMap_coe, descentMap_coe]
-  calc relPicAlgMap C (h₁.restrictScalars k) x
+  calc relPicAlgMap C (j₁.restrictScalars k) x
       = relPicAlgMap C ((H.restrictScalars k).comp (doubleInl E)) x := by rw [key₁]
     _ = relPicAlgMap C (H.restrictScalars k) (relPicAlgMap C (doubleInl E) x) :=
         relPicAlgMap_comp C _ _ _
     _ = relPicAlgMap C (H.restrictScalars k) (relPicAlgMap C (doubleInr E) x) := by
-        have hx : relPicAlgMap (B := E.Carrier ⊗[A] E.Carrier) C (doubleInl E) x
-            = relPicAlgMap (B := E.Carrier ⊗[A] E.Carrier) C (doubleInr E) x := x.2
-        rw [hx]
+        have hx' : relPicAlgMap (B := E.Carrier ⊗[A] E.Carrier) C (doubleInl E) x
+            = relPicAlgMap (B := E.Carrier ⊗[A] E.Carrier) C (doubleInr E) x := hx
+        rw [hx']
     _ = relPicAlgMap C ((H.restrictScalars k).comp (doubleInr E)) x :=
         (relPicAlgMap_comp C _ _ _).symm
-    _ = relPicAlgMap C (h₂.restrictScalars k) x := by rw [key₂]
+    _ = relPicAlgMap C (j₂.restrictScalars k) x := by rw [key₂]
+
+/-- **Refinement-map independence**: any two refinement maps between the same covers
+transport descent classes identically — what makes the plus construction independent of
+all choices. -/
+theorem descentMap_congr {E F : Algebra.EtaleCover A}
+    (h₁ h₂ : E.Carrier →ₐ[A] F.Carrier) (x : descentClasses C E) :
+    descentMap C h₁ x = descentMap C h₂ x :=
+  Subtype.ext (relPicAlgMap_congr C h₁ h₂ x.2)
 
 /-! ## The plus construction -/
 

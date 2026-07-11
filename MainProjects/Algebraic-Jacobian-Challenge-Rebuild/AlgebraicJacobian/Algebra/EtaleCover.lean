@@ -250,6 +250,22 @@ noncomputable def baseChangeInclude (E : EtaleCover A) :
   (((E.baseChangeEquiv A').symm.toAlgHom).restrictScalars A).comp
     Algebra.TensorProduct.includeRight
 
+/-- The base change of a refinement map: `A' ⊗[A] —` on carriers, through the
+presented-carrier identifications — the functoriality of `baseChange` in the cover. -/
+noncomputable def baseChangeMap {E F : EtaleCover A} (h : E.Carrier →ₐ[A] F.Carrier) :
+    (E.baseChange A').Carrier →ₐ[A'] (F.baseChange A').Carrier :=
+  ((F.baseChangeEquiv A').symm.toAlgHom).comp
+    ((Algebra.TensorProduct.map (AlgHom.id A' A') h).comp (E.baseChangeEquiv A').toAlgHom)
+
+/-- Base change of refinement maps commutes with the canonical inclusions into the base
+change. -/
+theorem baseChangeMap_comp_baseChangeInclude {E F : EtaleCover A}
+    (h : E.Carrier →ₐ[A] F.Carrier) :
+    ((baseChangeMap A' h).restrictScalars A).comp (E.baseChangeInclude A')
+      = (F.baseChangeInclude A').comp h := by
+  ext x
+  simp [baseChangeMap, baseChangeInclude]
+
 end baseChange
 
 /-! ## Covers of a field: single-factor refinement -/
