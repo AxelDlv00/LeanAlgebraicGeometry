@@ -1,0 +1,1033 @@
+\chapter{The \'etale plus construction of the relative Picard functor}
+\label{chap:PicardEtale}
+
+For a curve \(C\) over \(k\) and an affine test scheme \(\Spec A\), the \'etale-sheafified
+relative Picard group is computed by a single \emph{plus construction}: a class is represented
+by a relative Picard class on an \'etale cover of \(\Spec A\) satisfying a descent condition,
+and two representatives are identified when they agree on a common refinement. This chapter
+constructs that plus, on affine test schemes indexed by a \(k\)-algebra \(A\); we recall from
+elsewhere in this project the ambient functor it sheafifies. For an object \(T\) of
+\(\Over(\Spec k)\) write \(\mathrm{relPic}(C,T)\) for the relative Picard group of \(C\) at
+\(T\) --- the quotient of the Picard group of \(C \otimes T\) by the subgroup of classes pulled
+back from \(T\) along the second projection --- a commutative group, with restriction
+homomorphisms \(g^{*} \colon \mathrm{relPic}(C,T) \to \mathrm{relPic}(C,T')\) for a morphism
+\(g \colon T' \to T\) of \(\Over(\Spec k)\), satisfying \((\id_T)^{*} = \id\) and
+\((g \circ h)^{*} = h^{*} \circ g^{*}\). For a commutative \(k\)-algebra \(A\), write \(\Spec A\)
+also for the object of \(\Over(\Spec k)\) it determines via the structure morphism
+\(\Spec A \to \Spec k\) induced by the \(k\)-algebra structure of \(A\); a homomorphism of
+\(k\)-algebras \(A \to A'\) induces, via \(\Spec\), a morphism \(\Spec A' \to \Spec A\) of
+\(\Over(\Spec k)\). We abbreviate \(\mathrm{relPic}(C,A) := \mathrm{relPic}(C,\Spec A)\).
+
+\section{Presented \'etale covers of an affine scheme}
+
+Throughout this section \(A\) is a commutative ring (no field or \(k\)-algebra structure is
+needed here). An \'etale cover of \(\Spec A\) in the sense consumed by the plus construction is
+a faithfully flat \'etale \(A\)-algebra; to keep the index of covers of a fixed base
+small --- which is what makes the plus construction below a legitimate colimit, rather than one
+indexed by a proper class of isomorphism types --- we realize such algebras through an explicit
+finite-variable presentation, at the cost of carrying a witness of the presentation as data.
+
+\begin{definition}[Presented \'etale cover]
+  \label{def:etale_cover}
+  \lean{Algebra.EtaleCover, Algebra.EtaleCover.Carrier}
+  \leanok
+  A \emph{presented \'etale cover} \(E\) of \(A\) consists of a natural number \(n\), an ideal
+  \(I\) of the polynomial ring \(A[x_1,\dots,x_n]\), a proof that the quotient algebra
+  \(B_E := A[x_1,\dots,x_n]/I\) is \'etale over \(A\), and a proof that the induced map of
+  spectra \(\Spec B_E \to \Spec A\) is surjective. We call \(B_E\) the \emph{carrier} of \(E\).
+  Since \'etale algebras are flat, surjectivity of \(\Spec B_E \to \Spec A\) together with
+  flatness makes \(B_E\) faithfully flat over \(A\).
+\end{definition}
+
+\begin{definition}[Presented covers from an \'etale algebra]
+  \label{def:etale_cover_of}
+  \lean{Algebra.EtaleCover.of}
+  \uses{def:etale_cover}
+  \leanok
+  Let \(B\) be an \'etale \(A\)-algebra such that \(\Spec B \to \Spec A\) is surjective. Since
+  \'etale algebras are of finite presentation, \(B\) admits a presentation as a quotient of a
+  polynomial ring in finitely many variables over \(A\); choosing one such presentation
+  produces a presented \'etale cover \(E\) of \(A\), denoted \(E = \mathrm{of}(B)\).
+\end{definition}
+
+\begin{lemma}[Carrier of a presented cover from an algebra]
+  \label{lem:etale_cover_ofEquiv}
+  \lean{Algebra.EtaleCover.ofEquiv}
+  \uses{def:etale_cover_of}
+  \leanok
+  In the situation of Definition~\ref{def:etale_cover_of}, the carrier \(B_E\) of
+  \(E = \mathrm{of}(B)\) is isomorphic to \(B\) as an \(A\)-algebra.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Immediate from the construction: \(E\) is built from a chosen presentation
+  \(A[x_1,\dots,x_n] \twoheadrightarrow B\), and the carrier of the resulting cover is the
+  quotient of \(A[x_1,\dots,x_n]\) by the kernel of that presentation, which is isomorphic to
+  \(B\) by the first isomorphism theorem for algebras.
+\end{proof}
+
+\begin{definition}[Refinement]
+  \label{def:etale_cover_refines}
+  \lean{Algebra.EtaleCover.Refines}
+  \uses{def:etale_cover}
+  \leanok
+  For presented \'etale covers \(E, E'\) of \(A\), we say \(E'\) \emph{refines} \(E\) if there
+  exists a homomorphism of \(A\)-algebras \(B_E \to B_{E'}\) (equivalently, a morphism
+  \(\Spec B_{E'} \to \Spec B_E\) over \(\Spec A\)). This is a mere existence statement: no
+  particular refinement map is remembered as data.
+\end{definition}
+
+\begin{lemma}[Refinement is a preorder]
+  \label{lem:etale_cover_refines_preorder}
+  \lean{Algebra.EtaleCover.refines_refl, Algebra.EtaleCover.Refines.trans}
+  \uses{def:etale_cover_refines}
+  \leanok
+  Every presented \'etale cover \(E\) of \(A\) refines itself, and if \(E''\) refines \(E'\)
+  and \(E'\) refines \(E\) then \(E''\) refines \(E\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Reflexivity: the identity homomorphism of \(B_E\) witnesses that \(E\) refines itself.
+  Transitivity: composing a homomorphism \(B_{E'} \to B_{E''}\) witnessing that \(E''\) refines
+  \(E'\) with a homomorphism \(B_E \to B_{E'}\) witnessing that \(E'\) refines \(E\) gives a
+  homomorphism \(B_E \to B_{E''}\) witnessing that \(E''\) refines \(E\).
+\end{proof}
+
+\begin{definition}[Common refinement]
+  \label{def:etale_cover_prod}
+  \lean{Algebra.EtaleCover.prod, Algebra.EtaleCover.prodEquiv}
+  \uses{def:etale_cover_of}
+  \leanok
+  For presented \'etale covers \(E, E'\) of \(A\), the \emph{common refinement} \(E \times E'\)
+  is the presented \'etale cover of \(A\) with carrier \(B_E \otimes_A B_{E'}\) (\'etale over
+  \(A\) because it is \'etale over the \'etale algebra \(B_E\), which is \'etale over \(A\); and
+  faithfully flat by transitivity of faithfully flat extensions), obtained by applying
+  Definition~\ref{def:etale_cover_of} to \(B_E \otimes_A B_{E'}\).
+\end{definition}
+
+\begin{definition}[Coprojections of the common refinement]
+  \label{def:etale_cover_prod_coproj}
+  \lean{Algebra.EtaleCover.prodInl, Algebra.EtaleCover.prodInr}
+  \uses{def:etale_cover_prod}
+  \leanok
+  The two canonical homomorphisms of \(A\)-algebras
+  \(B_E \to B_{E \times E'} \cong B_E \otimes_A B_{E'}\), \(b \mapsto b \otimes 1\), and
+  \(B_{E'} \to B_{E \times E'}\), \(b' \mapsto 1 \otimes b'\), transported along the carrier
+  identification of Definition~\ref{def:etale_cover_prod}.
+\end{definition}
+
+\begin{lemma}[The common refinement refines both factors]
+  \label{lem:etale_cover_prod_refines}
+  \lean{Algebra.EtaleCover.prod_refines_left, Algebra.EtaleCover.prod_refines_right}
+  \uses{def:etale_cover_prod_coproj, def:etale_cover_refines}
+  \leanok
+  \(E \times E'\) refines both \(E\) and \(E'\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The two coprojections of Definition~\ref{def:etale_cover_prod_coproj} are homomorphisms of
+  \(A\)-algebras out of \(B_E\), respectively \(B_{E'}\), witnessing the two refinements.
+\end{proof}
+
+\begin{definition}[Universal map out of the common refinement]
+  \label{def:etale_cover_prodLift}
+  \lean{Algebra.EtaleCover.prodLift}
+  \uses{def:etale_cover_prod}
+  \leanok
+  Given homomorphisms of \(A\)-algebras \(f \colon B_E \to B_F\) and \(g \colon B_{E'} \to
+  B_F\), the induced homomorphism of \(A\)-algebras \(B_{E \times E'} \to B_F\), obtained from
+  the universal property of the tensor product \(B_E \otimes_A B_{E'}\) applied to \(f\) and
+  \(g\) (whose images commute in the commutative ring \(B_F\)), transported along the carrier
+  identification of Definition~\ref{def:etale_cover_prod}.
+\end{definition}
+
+\begin{lemma}[The universal map is a common section]
+  \label{lem:etale_cover_prodLift_comp}
+  \lean{Algebra.EtaleCover.prodLift_comp_prodInl, Algebra.EtaleCover.prodLift_comp_prodInr}
+  \uses{def:etale_cover_prodLift, def:etale_cover_prod_coproj}
+  \leanok
+  In the situation of Definition~\ref{def:etale_cover_prodLift}, the induced map composed with
+  each coprojection recovers the corresponding map: the composite \(B_E \to B_{E \times E'} \to
+  B_F\) equals \(f\), and the composite \(B_{E'} \to B_{E \times E'} \to B_F\) equals \(g\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  This is the defining property of the map induced by the universal property of the tensor
+  product: on elementary tensors, \(b \otimes 1 \mapsto f(b) g(1) = f(b)\) and
+  \(1 \otimes b' \mapsto f(1) g(b') = g(b')\).
+\end{proof}
+
+\begin{theorem}[Directedness]
+  \label{thm:etale_cover_exists_refines_prod}
+  \lean{Algebra.EtaleCover.exists_refines_prod}
+  \uses{def:etale_cover_refines}
+  \leanok
+  Any two presented \'etale covers \(E, E'\) of \(A\) admit a common refinement: there is a
+  presented \'etale cover \(E''\) of \(A\) which refines both \(E\) and \(E'\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:etale_cover_prod_refines}
+  Take \(E'' = E \times E'\); it refines both factors by Lemma~\ref{lem:etale_cover_prod_refines}.
+\end{proof}
+
+\begin{definition}[The trivial cover]
+  \label{def:etale_cover_self}
+  \lean{Algebra.EtaleCover.self, Algebra.EtaleCover.selfEquiv}
+  \uses{def:etale_cover_of}
+  \leanok
+  The presented \'etale cover of \(A\) by itself, obtained by applying
+  Definition~\ref{def:etale_cover_of} to \(B = A\) (with structure morphism \(\Spec A \to
+  \Spec A\) the identity, trivially surjective). Its carrier is isomorphic to \(A\).
+\end{definition}
+
+\begin{definition}[Canonical map from the trivial cover]
+  \label{def:etale_cover_fromSelf}
+  \lean{Algebra.EtaleCover.fromSelf}
+  \uses{def:etale_cover_self}
+  \leanok
+  For a presented \'etale cover \(E\) of \(A\), the canonical homomorphism of \(A\)-algebras
+  from the carrier of the trivial cover to \(B_E\): under the identification of the carrier of
+  the trivial cover with \(A\) (Definition~\ref{def:etale_cover_self}), the structure
+  homomorphism \(A \to B_E\).
+\end{definition}
+
+\begin{lemma}[Every cover refines the trivial cover]
+  \label{lem:etale_cover_refines_self}
+  \lean{Algebra.EtaleCover.refines_self}
+  \uses{def:etale_cover_fromSelf, def:etale_cover_refines}
+  \leanok
+  Every presented \'etale cover \(E\) of \(A\) refines the trivial cover.
+\end{lemma}
+\begin{proof}
+  \leanok
+  The canonical map of Definition~\ref{def:etale_cover_fromSelf} witnesses the refinement.
+\end{proof}
+
+\begin{definition}[Base change of a cover]
+  \label{def:etale_cover_baseChange}
+  \lean{Algebra.EtaleCover.baseChange, Algebra.EtaleCover.baseChangeEquiv}
+  \uses{def:etale_cover_of}
+  \leanok
+  Let \(A'\) be a commutative \(A\)-algebra and \(E\) a presented \'etale cover of \(A\). The
+  \emph{base change} \(E_{A'}\) is the presented \'etale cover of \(A'\) with carrier
+  \(A' \otimes_A B_E\) (\'etale over \(A'\) and faithfully flat over \(A'\), both by base
+  change of the corresponding properties of \(B_E\) over \(A\)), obtained by applying
+  Definition~\ref{def:etale_cover_of} to \(A' \otimes_A B_E\).
+\end{definition}
+
+\begin{definition}[Canonical inclusion into the base change]
+  \label{def:etale_cover_baseChangeInclude}
+  \lean{Algebra.EtaleCover.baseChangeInclude}
+  \uses{def:etale_cover_baseChange}
+  \leanok
+  The canonical homomorphism of \(A\)-algebras \(\kappa_E \colon B_E \to B_{E_{A'}}\), which
+  under the carrier identification \(B_{E_{A'}} \cong A' \otimes_A B_E\) of
+  Definition~\ref{def:etale_cover_baseChange} is \(b \mapsto 1 \otimes b\).
+\end{definition}
+
+\begin{definition}[Base change of a refinement map]
+  \label{def:etale_cover_baseChangeMap}
+  \lean{Algebra.EtaleCover.baseChangeMap}
+  \uses{def:etale_cover_baseChange}
+  \leanok
+  For presented \'etale covers \(E, F\) of \(A\) and a homomorphism of \(A\)-algebras
+  \(h \colon B_E \to B_F\), the induced homomorphism of \(A'\)-algebras \(B_{E_{A'}} \to
+  B_{F_{A'}}\) which, under the carrier identifications of
+  Definition~\ref{def:etale_cover_baseChange}, is \(\id_{A'} \otimes h\).
+\end{definition}
+
+\begin{lemma}[Naturality of the canonical inclusion]
+  \label{lem:etale_cover_baseChangeMap_comp_baseChangeInclude}
+  \lean{Algebra.EtaleCover.baseChangeMap_comp_baseChangeInclude}
+  \uses{def:etale_cover_baseChangeMap, def:etale_cover_baseChangeInclude}
+  \leanok
+  For \(h \colon B_E \to B_F\) as in Definition~\ref{def:etale_cover_baseChangeMap}, the square
+  of \(A\)-algebra homomorphisms commutes: the composite \(B_E \to B_{E_{A'}} \to B_{F_{A'}}\)
+  (canonical inclusion followed by the base-changed map) equals the composite
+  \(B_E \to B_F \to B_{F_{A'}}\) (\(h\) followed by the canonical inclusion).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Both composites send \(b \in B_E\) to \(1 \otimes h(b) \in A' \otimes_A B_F\) under the
+  carrier identifications: the first computes \(b \mapsto 1 \otimes b \mapsto
+  (\id_{A'}\otimes h)(1 \otimes b) = 1 \otimes h(b)\), and the second computes
+  \(b \mapsto h(b) \mapsto 1 \otimes h(b)\).
+\end{proof}
+
+\begin{lemma}[Nontrivial carrier]
+  \label{lem:etale_cover_nontrivial_carrier}
+  \lean{Algebra.EtaleCover.nontrivial_carrier}
+  \uses{def:etale_cover}
+  \leanok
+  If \(A\) is a nontrivial ring, then the carrier \(B_E\) of any presented \'etale cover \(E\)
+  of \(A\) is nontrivial.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Since \(A\) is nontrivial, \(\Spec A\) is nonempty; since \(\Spec B_E \to \Spec A\) is
+  surjective, \(\Spec B_E\) is nonempty, and a ring with nonempty spectrum is nontrivial.
+\end{proof}
+
+\begin{theorem}[Field cofinality]
+  \label{thm:etale_cover_field_cofinality}
+  \lean{Algebra.EtaleCover.exists_finiteSeparableField_algHom}
+  \uses{def:etale_cover}
+  \leanok
+  Let \(K\) be a field and \(E\) a presented \'etale cover of \(K\). Then there exist a field
+  \(L\), finite and separable over \(K\), and a homomorphism of \(K\)-algebras
+  \(B_E \to L\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:etale_cover_nontrivial_carrier}
+  By the structure theorem for \'etale algebras over a field, \(B_E\) is isomorphic, as a
+  \(K\)-algebra, to a finite product \(\prod_{i \in I} L_i\) of finite separable field
+  extensions \(L_i\) of \(K\). By Lemma~\ref{lem:etale_cover_nontrivial_carrier}, \(B_E\) is
+  nontrivial (\(K\) being a field is nontrivial), so the product is nonempty: \(I \neq
+  \emptyset\), for the empty product is the zero ring. Choose \(i_0 \in I\) and set
+  \(L = L_{i_0}\); the composite of the structure isomorphism with the projection onto the
+  \(i_0\)-th factor is the required homomorphism \(B_E \to L\).
+\end{proof}
+
+A finite separable field extension \(L\) of a field \(K\) is automatically \'etale over \(K\):
+it is formally \'etale because it is formally unramified (separability) and formally smooth
+(finiteness plus the algebra being a field, hence regular), and it is of finite presentation
+because it is a finite-type algebra over a field which is moreover finite as a module.
+
+\begin{definition}[Field extension covers]
+  \label{def:etale_cover_ofField}
+  \lean{Algebra.EtaleCover.ofField, Algebra.EtaleCover.ofFieldEquiv}
+  \uses{def:etale_cover_of}
+  \leanok
+  Let \(K\) be a field and \(L\) a finite separable field extension of \(K\). Since \(\Spec K\)
+  is a single point, the spectrum map \(\Spec L \to \Spec K\) is trivially surjective, so
+  Definition~\ref{def:etale_cover_of} applied to \(L\) produces a presented \'etale cover of
+  \(K\) with carrier isomorphic to \(L\).
+\end{definition}
+
+\section{The algebra-indexed relative Picard functor}
+
+In this section \(k\) is a field and \(C\) is an object of \(\Over(\Spec k)\).
+
+\begin{definition}[\(\Spec\) of an algebra map, as a morphism of test objects]
+  \label{def:overSpecMap}
+  \lean{AlgebraicGeometry.Over.overSpecMap}
+  \leanok
+  For commutative \(k\)-algebras \(A, B\) and a homomorphism of \(k\)-algebras
+  \(f \colon A \to B\), the induced morphism \(\Spec B \to \Spec A\) of \(\Over(\Spec k)\):
+  \(\Spec f\), which lies over \(\Spec k\) because \(f\) is a homomorphism of \(k\)-algebras.
+\end{definition}
+
+\begin{lemma}[Functoriality of \(\Spec\) on algebra maps]
+  \label{lem:overSpecMap_functor}
+  \lean{AlgebraicGeometry.Over.overSpecMap_id, AlgebraicGeometry.Over.overSpecMap_comp}
+  \uses{def:overSpecMap}
+  \leanok
+  \(\Spec\) of the identity homomorphism of \(A\) is the identity morphism of \(\Spec A\); and
+  for homomorphisms of \(k\)-algebras \(f \colon A \to B\) and \(g \colon B \to C'\),
+  \(\Spec(g \circ f) = \Spec f \circ \Spec g\) as morphisms \(\Spec C' \to \Spec A\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \(\Spec\) is a contravariant functor from commutative rings to schemes, so it sends the
+  identity to the identity and a composite \(g \circ f\) to \(\Spec f \circ \Spec g\); the
+  morphisms of \(\Over(\Spec k)\) so obtained are equal to the corresponding morphisms of
+  schemes on their underlying data, so the identities transport.
+\end{proof}
+
+\begin{definition}[Restriction of relative Picard classes along an algebra map]
+  \label{def:relPicAlgMap}
+  \lean{AlgebraicGeometry.relPicAlgMap}
+  \uses{def:overSpecMap}
+  \leanok
+  For a homomorphism of \(k\)-algebras \(f \colon A \to B\), the induced homomorphism of groups
+  \(f^{*} \colon \mathrm{relPic}(C,A) \to \mathrm{relPic}(C,B)\): restriction of relative
+  Picard classes along the morphism \(\Spec f \colon \Spec B \to \Spec A\) of
+  Definition~\ref{def:overSpecMap}.
+\end{definition}
+
+\begin{lemma}[Functoriality in the algebra]
+  \label{lem:relPicAlgMap_functor}
+  \lean{AlgebraicGeometry.relPicAlgMap_id, AlgebraicGeometry.relPicAlgMap_comp}
+  \uses{def:relPicAlgMap, lem:overSpecMap_functor}
+  \leanok
+  For every \(k\)-algebra \(A\), \((\id_A)^{*} = \id\) on \(\mathrm{relPic}(C,A)\); and for
+  homomorphisms of \(k\)-algebras \(f \colon A \to B\) and \(g \colon B \to C'\),
+  \((g \circ f)^{*} = g^{*} \circ f^{*}\) on \(\mathrm{relPic}(C,A)\). Thus
+  \(A \mapsto \mathrm{relPic}(C,A)\), \(f \mapsto f^{*}\), is a covariant functor from
+  \(k\)-algebras to commutative groups.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Restriction of relative Picard classes along \(\Spec\) of a scheme morphism satisfies the
+  functor laws \(\id^{*} = \id\) and \((\varphi \circ \psi)^{*} = \psi^{*} \circ \varphi^{*}\)
+  in the morphism of \(\Over(\Spec k)\). Combined with
+  Lemma~\ref{lem:overSpecMap_functor}, which shows \(\Spec\) of the identity algebra map is the
+  identity morphism and \(\Spec\) of a composite \(g \circ f\) is \(\Spec f \circ \Spec g\), the
+  two claimed identities for \(f^{*} := \Spec f{}^{*}\) follow.
+\end{proof}
+
+\section{Descent classes on an \'etale cover}
+
+Throughout this section \(k\) is a field, \(C\) is an object of \(\Over(\Spec k)\), and \(A\) is
+a commutative \(k\)-algebra. For a presented \'etale cover \(E\) of \(A\)
+(Definition~\ref{def:etale_cover}) with carrier \(B_E\), the self-tensor product
+\(B_E \otimes_A B_E\) is the carrier of the common refinement \(E \times E\) of \(E\) with
+itself (Definition~\ref{def:etale_cover_prod}): it is the algebra of the \emph{double cover}
+\(\Spec(B_E \otimes_A B_E) \to \Spec B_E\), whose two projections to \(\Spec B_E\) record the
+overlap data of the cover \(E\).
+
+\begin{definition}[Coprojections of the double cover]
+  \label{def:doubleInl_doubleInr}
+  \lean{AlgebraicGeometry.doubleInl, AlgebraicGeometry.doubleInr}
+  \uses{def:etale_cover}
+  \leanok
+  For a presented \'etale cover \(E\) of \(A\), the two homomorphisms of \(k\)-algebras
+  \(B_E \to B_E \otimes_A B_E\), \(b \mapsto b \otimes 1\) and \(b \mapsto 1 \otimes b\) ---
+  homomorphisms of \(A\)-algebras, in particular of \(k\)-algebras since \(A\) is a
+  \(k\)-algebra.
+\end{definition}
+
+\begin{definition}[Descent classes]
+  \label{def:descentClasses}
+  \lean{AlgebraicGeometry.descentClasses, AlgebraicGeometry.mem_descentClasses_iff}
+  \uses{def:doubleInl_doubleInr, def:relPicAlgMap}
+  \source{kleiman-picard}
+  \leanok
+  For a presented \'etale cover \(E\) of \(A\), the subgroup
+  \(\mathrm{Desc}(C,E) \subseteq \mathrm{relPic}(C,B_E)\) of classes \(\lambda\) satisfying the
+  \emph{descent condition}: the two pullbacks of \(\lambda\) along the coprojections of the
+  double cover (Definition~\ref{def:doubleInl_doubleInr}) agree,
+  \[
+    \mathrm{Desc}(C,E) := \bigl\{\, \lambda \in \mathrm{relPic}(C,B_E) : \mathrm{inl}_E^{*}
+    \lambda = \mathrm{inr}_E^{*} \lambda \text{ in } \mathrm{relPic}(C, B_E \otimes_A B_E)
+    \,\bigr\},
+  \]
+  the equalizer of the two homomorphisms \(\mathrm{inl}_E^{*}, \mathrm{inr}_E^{*} \colon
+  \mathrm{relPic}(C,B_E) \to \mathrm{relPic}(C, B_E \otimes_A B_E)\) of
+  Definition~\ref{def:relPicAlgMap}, hence itself a subgroup.
+\end{definition}
+
+\begin{lemma}[Naturality of the descent condition]
+  \label{lem:relPicAlgMap_mem_descentClasses}
+  \lean{AlgebraicGeometry.relPicAlgMap_mem_descentClasses}
+  \uses{def:descentClasses}
+  \leanok
+  Let \(E, F\) be presented \'etale covers of \(A\) and \(h \colon B_E \to B_F\) a
+  homomorphism of \(A\)-algebras. If \(\lambda \in \mathrm{Desc}(C,E)\), then
+  \(h^{*}\lambda \in \mathrm{Desc}(C,F)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:relPicAlgMap_functor}
+  The homomorphism \(h \otimes h \colon B_E \otimes_A B_E \to B_F \otimes_A B_F\) intertwines
+  the coprojections: \(\mathrm{inl}_F \circ h = (h \otimes h) \circ \mathrm{inl}_E\) and
+  \(\mathrm{inr}_F \circ h = (h \otimes h) \circ \mathrm{inr}_E\), since both sides send
+  \(b \mapsto h(b) \otimes 1\), respectively \(b \mapsto 1 \otimes h(b)\). By functoriality
+  (Lemma~\ref{lem:relPicAlgMap_functor}),
+  \[
+    \mathrm{inl}_F^{*}(h^{*}\lambda) = (h \otimes h)^{*}(\mathrm{inl}_E^{*}\lambda)
+    = (h \otimes h)^{*}(\mathrm{inr}_E^{*}\lambda) = \mathrm{inr}_F^{*}(h^{*}\lambda),
+  \]
+  using \(\lambda \in \mathrm{Desc}(C,E)\) in the middle equality. Hence
+  \(h^{*}\lambda \in \mathrm{Desc}(C,F)\).
+\end{proof}
+
+\begin{definition}[Transport of descent classes]
+  \label{def:descentMap}
+  \lean{AlgebraicGeometry.descentMap}
+  \uses{lem:relPicAlgMap_mem_descentClasses}
+  \leanok
+  For \(h \colon B_E \to B_F\) a homomorphism of \(A\)-algebras between the carriers of two
+  presented \'etale covers of \(A\), the induced homomorphism of groups \(h_{*} \colon
+  \mathrm{Desc}(C,E) \to \mathrm{Desc}(C,F)\), \(\lambda \mapsto h^{*}\lambda\), well-defined by
+  Lemma~\ref{lem:relPicAlgMap_mem_descentClasses}.
+\end{definition}
+
+\begin{lemma}[Transport along the identity]
+  \label{lem:descentMap_id}
+  \lean{AlgebraicGeometry.descentMap_id}
+  \uses{def:descentMap}
+  \leanok
+  For every presented \'etale cover \(E\) of \(A\), transport along the identity homomorphism
+  of \(B_E\) is the identity on \(\mathrm{Desc}(C,E)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:relPicAlgMap_functor}
+  Immediate from \((\id_{B_E})^{*} = \id\) (Lemma~\ref{lem:relPicAlgMap_functor}).
+\end{proof}
+
+\begin{lemma}[Transport is functorial]
+  \label{lem:descentMap_comp}
+  \lean{AlgebraicGeometry.descentMap_comp}
+  \uses{def:descentMap}
+  \leanok
+  For homomorphisms of \(A\)-algebras \(h \colon B_E \to B_F\) and \(h' \colon B_F \to B_G\)
+  between carriers of presented \'etale covers of \(A\), transport along \(h' \circ h\) equals
+  transport along \(h'\) followed by transport along \(h\): \((h' \circ h)_{*} = h'_{*} \circ
+  h_{*}\) on \(\mathrm{Desc}(C,E)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:relPicAlgMap_functor}
+  Immediate from \((h' \circ h)^{*} = h'^{*} \circ h^{*}\) (Lemma~\ref{lem:relPicAlgMap_functor}),
+  restricted to \(\mathrm{Desc}(C,E)\).
+\end{proof}
+
+\begin{theorem}[Refinement independence, the keystone]
+  \label{thm:relPicAlgMap_congr}
+  \lean{AlgebraicGeometry.relPicAlgMap_congr}
+  \uses{def:descentClasses}
+  \leanok
+  Let \(E\) be a presented \'etale cover of \(A\) with carrier \(B = B_E\), let \(R\) be a
+  commutative \(k\)-algebra equipped with a compatible \(A\)-algebra structure (so that
+  \(k \to A \to R\) is a tower of algebras), and let \(j_1, j_2 \colon B \to R\) be two
+  homomorphisms of \(A\)-algebras. If \(\lambda \in \mathrm{Desc}(C,E)\), then
+  \(j_1^{*}\lambda = j_2^{*}\lambda\) in \(\mathrm{relPic}(C,R)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:relPicAlgMap_functor}
+  Let \(H \colon B \otimes_A B \to R\) be the homomorphism of \(A\)-algebras induced by the
+  universal property of the tensor product from the pair \((j_1, j_2)\) (their images commute
+  in the commutative ring \(R\)): \(H(b \otimes b') = j_1(b) j_2(b')\). Then
+  \(H \circ \mathrm{inl}_E = j_1\) (since \(H(b \otimes 1) = j_1(b) j_2(1) = j_1(b)\)) and
+  \(H \circ \mathrm{inr}_E = j_2\) (since \(H(1 \otimes b) = j_1(1) j_2(b) = j_2(b)\)). By
+  functoriality (Lemma~\ref{lem:relPicAlgMap_functor}),
+  \[
+    j_1^{*}\lambda = H^{*}(\mathrm{inl}_E^{*}\lambda) = H^{*}(\mathrm{inr}_E^{*}\lambda)
+    = j_2^{*}\lambda,
+  \]
+  using \(\lambda \in \mathrm{Desc}(C,E)\), i.e. \(\mathrm{inl}_E^{*}\lambda =
+  \mathrm{inr}_E^{*}\lambda\), in the middle equality.
+\end{proof}
+
+\begin{theorem}[Refinement-map independence]
+  \label{thm:descentMap_congr}
+  \lean{AlgebraicGeometry.descentMap_congr}
+  \uses{thm:relPicAlgMap_congr, def:descentMap}
+  \leanok
+  Let \(E, F\) be presented \'etale covers of \(A\) and \(h_1, h_2 \colon B_E \to B_F\) two
+  homomorphisms of \(A\)-algebras. Then \(h_{1,*} = h_{2,*}\) as maps
+  \(\mathrm{Desc}(C,E) \to \mathrm{Desc}(C,F)\): transport of a descent class along \(h_1\) and
+  along \(h_2\) always agree.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Apply Theorem~\ref{thm:relPicAlgMap_congr} with \(R = B_F\) (an \(A\)-algebra which is also a
+  \(k\)-algebra compatibly, since \(F\) is a cover of the \(k\)-algebra \(A\)), \(j_1 = h_1\),
+  \(j_2 = h_2\).
+\end{proof}
+
+\section{The one-step \'etale plus}
+
+\begin{definition}[The refinement equivalence]
+  \label{def:picEtAffSetoid}
+  \lean{AlgebraicGeometry.picEtAffSetoid}
+  \uses{thm:descentMap_congr, def:etale_cover_prod, def:etale_cover_prod_coproj}
+  \leanok
+  Consider pairs \((E,\lambda)\) with \(E\) a presented \'etale cover of \(A\) and
+  \(\lambda \in \mathrm{Desc}(C,E)\). Declare \((E,\lambda) \sim (F,\mu)\) if there exist a
+  presented \'etale cover \(G\) of \(A\) and homomorphisms of \(A\)-algebras
+  \(f \colon B_E \to B_G\), \(g \colon B_F \to B_G\) with \(f_{*}\lambda = g_{*}\mu\) in
+  \(\mathrm{Desc}(C,G)\). This is an equivalence relation.
+\end{definition}
+\begin{proof}
+  \leanok
+  \uses{lem:descentMap_comp}
+  \emph{Reflexivity.} \((E,\lambda) \sim (E,\lambda)\) via \(G = E\), \(f = g = \id_{B_E}\).
+
+  \emph{Symmetry.} If \((E,\lambda) \sim (F,\mu)\) via \((G,f,g)\), then \((F,\mu) \sim
+  (E,\lambda)\) via \((G,g,f)\).
+
+  \emph{Transitivity.} Suppose \((E,\lambda) \sim (F,\mu)\) via \((G,f,g)\), so \(f_{*}\lambda =
+  g_{*}\mu\), and \((F,\mu) \sim (H,\nu)\) via \((G',f',g')\), so \(f'_{*}\mu = g'_{*}\nu\). Use
+  the common refinement \(G \times G'\) with the maps \(\mathrm{inl}_{G,G'} \circ f \colon B_E
+  \to B_{G \times G'}\) and \(\mathrm{inr}_{G,G'} \circ g' \colon B_H \to B_{G \times G'}\).
+  Using functoriality of transport (Lemma~\ref{lem:descentMap_comp}) and refinement-map
+  independence (Theorem~\ref{thm:descentMap_congr}, applied to the two maps
+  \(\mathrm{inl}_{G,G'} \circ g\) and \(\mathrm{inr}_{G,G'} \circ f'\) out of \(B_F\)),
+  \[
+    (\mathrm{inl}_{G,G'} \circ f)_{*}\lambda = \mathrm{inl}_{G,G',*}(f_{*}\lambda) =
+    \mathrm{inl}_{G,G',*}(g_{*}\mu) = (\mathrm{inl}_{G,G'} \circ g)_{*}\mu
+  \]
+  \[
+    = (\mathrm{inr}_{G,G'} \circ f')_{*}\mu = \mathrm{inr}_{G,G',*}(f'_{*}\mu) =
+    \mathrm{inr}_{G,G',*}(g'_{*}\nu) = (\mathrm{inr}_{G,G'} \circ g')_{*}\nu,
+  \]
+  so \((E,\lambda) \sim (H,\nu)\) via \((G \times G', \mathrm{inl}_{G,G'} \circ f,
+  \mathrm{inr}_{G,G'} \circ g')\).
+\end{proof}
+
+\begin{definition}[The one-step \'etale plus]
+  \label{def:PicEtAff}
+  \lean{AlgebraicGeometry.PicEtAff}
+  \uses{def:picEtAffSetoid}
+  \source{kleiman-picard}
+  \leanok
+  The set of pairs \((E,\lambda)\) as in Definition~\ref{def:picEtAffSetoid}, modulo the
+  equivalence relation there, is denoted \(\mathrm{PicEtAff}(C,A)\): the one-step \'etale plus
+  of the relative Picard functor at \(A\). On affine test schemes this is the \'etale
+  sheafification of \(\mathrm{relPic}(C,-)\), one plus construction sufficing because that
+  presheaf is separated for the \'etale topology (established elsewhere).
+\end{definition}
+
+\begin{definition}[The plus class of a descent class]
+  \label{def:PicEtAff_mk}
+  \lean{AlgebraicGeometry.PicEtAff.mk}
+  \uses{def:PicEtAff}
+  \leanok
+  For a presented \'etale cover \(E\) of \(A\) and \(\lambda \in \mathrm{Desc}(C,E)\), write
+  \([E,\lambda] \in \mathrm{PicEtAff}(C,A)\) for the class of the pair \((E,\lambda)\).
+\end{definition}
+
+\begin{lemma}[Every plus class is so represented]
+  \label{lem:PicEtAff_ind}
+  \lean{AlgebraicGeometry.PicEtAff.ind}
+  \uses{def:PicEtAff_mk}
+  \leanok
+  Every element of \(\mathrm{PicEtAff}(C,A)\) is of the form \([E,\lambda]\) for some presented
+  \'etale cover \(E\) of \(A\) and \(\lambda \in \mathrm{Desc}(C,E)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Immediate: \(\mathrm{PicEtAff}(C,A)\) is a quotient of the set of such pairs, and every class
+  in a quotient is the class of some representative.
+\end{proof}
+
+\begin{theorem}[Equality of plus classes]
+  \label{thm:PicEtAff_mk_eq_mk_iff}
+  \lean{AlgebraicGeometry.PicEtAff.mk_eq_mk_iff}
+  \uses{def:PicEtAff_mk, def:picEtAffSetoid}
+  \leanok
+  \([E,\lambda] = [F,\mu]\) in \(\mathrm{PicEtAff}(C,A)\) if and only if there exist a presented
+  \'etale cover \(G\) of \(A\) and homomorphisms of \(A\)-algebras \(f \colon B_E \to B_G\),
+  \(g \colon B_F \to B_G\) with \(f_{*}\lambda = g_{*}\mu\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  This is exactly the defining relation of Definition~\ref{def:picEtAffSetoid}, restated as an
+  equality of classes in the quotient.
+\end{proof}
+
+\begin{lemma}[Transport to a finer cover preserves the plus class]
+  \label{lem:PicEtAff_mk_descentMap}
+  \lean{AlgebraicGeometry.PicEtAff.mk_descentMap}
+  \uses{thm:PicEtAff_mk_eq_mk_iff, def:descentMap}
+  \leanok
+  For \(h \colon B_E \to B_F\) a homomorphism of \(A\)-algebras between carriers of presented
+  \'etale covers of \(A\) and \(\lambda \in \mathrm{Desc}(C,E)\), \([F, h_{*}\lambda] =
+  [E,\lambda]\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:descentMap_id}
+  Take \(G = F\) with \(f = \id_{B_F}\) and \(g = h\) in Theorem~\ref{thm:PicEtAff_mk_eq_mk_iff}:
+  \(f_{*}(h_{*}\lambda) = h_{*}\lambda = g_{*}\lambda\) by Lemma~\ref{lem:descentMap_id}.
+\end{proof}
+
+\section{The group structure and the unit}
+
+\begin{lemma}[Transport through the universal map collapses]
+  \label{lem:PicEtAff_descentMap_prodLift}
+  \lean{AlgebraicGeometry.PicEtAff.descentMap_prodLift_inl,
+    AlgebraicGeometry.PicEtAff.descentMap_prodLift_inr}
+  \uses{lem:etale_cover_prodLift_comp, lem:descentMap_comp}
+  \leanok
+  Let \(E, F, H\) be presented \'etale covers of \(A\), \(f \colon B_E \to B_H\) and
+  \(g \colon B_F \to B_H\) homomorphisms of \(A\)-algebras, and let
+  \(\langle f,g\rangle \colon B_{E \times F} \to B_H\) be the induced map of
+  Definition~\ref{def:etale_cover_prodLift}. Then for \(\lambda \in \mathrm{Desc}(C,E)\) and
+  \(\mu \in \mathrm{Desc}(C,F)\):
+  \[
+    \langle f,g\rangle_{*}(\mathrm{inl}_{E,F,*}\lambda) = f_{*}\lambda, \qquad
+    \langle f,g\rangle_{*}(\mathrm{inr}_{E,F,*}\mu) = g_{*}\mu.
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  By functoriality of transport (Lemma~\ref{lem:descentMap_comp}), the left-hand sides equal
+  \((\langle f,g\rangle \circ \mathrm{inl}_{E,F})_{*}\lambda\), respectively
+  \((\langle f,g\rangle \circ \mathrm{inr}_{E,F})_{*}\mu\); by
+  Lemma~\ref{lem:etale_cover_prodLift_comp}, \(\langle f,g\rangle \circ \mathrm{inl}_{E,F} = f\)
+  and \(\langle f,g\rangle \circ \mathrm{inr}_{E,F} = g\).
+\end{proof}
+
+\begin{theorem}[Multiplication]
+  \label{thm:PicEtAff_mk_mul_mk}
+  \lean{AlgebraicGeometry.PicEtAff.instMul, AlgebraicGeometry.PicEtAff.mk_mul_mk}
+  \uses{lem:PicEtAff_descentMap_prodLift, thm:PicEtAff_mk_eq_mk_iff, thm:descentMap_congr,
+    def:etale_cover_prod_coproj}
+  \leanok
+  \(\mathrm{PicEtAff}(C,A)\) carries a multiplication, defined on representatives by transport
+  to a common refinement product cover: for presented \'etale covers \(E, F\) of \(A\) and
+  \(\lambda \in \mathrm{Desc}(C,E)\), \(\mu \in \mathrm{Desc}(C,F)\),
+  \[
+    [E,\lambda] \cdot [F,\mu] = \bigl[\,E \times F,\ \mathrm{inl}_{E,F,*}\lambda \cdot
+    \mathrm{inr}_{E,F,*}\mu\,\bigr].
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  It remains to check that the formula is independent of the chosen representatives, i.e. that
+  if \((E,\lambda) \sim (E',\lambda')\) via \((H,f,f')\) (so \(f_{*}\lambda = f'_{*}\lambda'\))
+  and \((F,\mu) \sim (F',\mu')\) via \((G,g,g')\) (so \(g_{*}\mu = g'_{*}\mu'\)), then the two
+  resulting products agree. Use the common refinement \(H \times G\) of \(E \times F\) and
+  \(E' \times F'\), with the maps
+  \(\langle \mathrm{inl}_{H,G} \circ f,\ \mathrm{inr}_{H,G} \circ g\rangle \colon B_{E \times F}
+  \to B_{H \times G}\) and
+  \(\langle \mathrm{inl}_{H,G} \circ f',\ \mathrm{inr}_{H,G} \circ g'\rangle \colon
+  B_{E' \times F'} \to B_{H \times G}\)
+  (Definition~\ref{def:etale_cover_prodLift}). Since transport is a homomorphism of groups
+  (Definition~\ref{def:descentMap}), transporting the product
+  \(\mathrm{inl}_{E,F,*}\lambda \cdot \mathrm{inr}_{E,F,*}\mu\) along the first map yields, by
+  Lemma~\ref{lem:PicEtAff_descentMap_prodLift} applied twice,
+  \(\mathrm{inl}_{H,G,*}(f_{*}\lambda) \cdot \mathrm{inr}_{H,G,*}(g_{*}\mu)\); transporting the
+  primed product along the second map yields
+  \(\mathrm{inl}_{H,G,*}(f'_{*}\lambda') \cdot \mathrm{inr}_{H,G,*}(g'_{*}\mu')\); these agree
+  term by term since \(f_{*}\lambda = f'_{*}\lambda'\) and \(g_{*}\mu = g'_{*}\mu'\). Hence the
+  two products transport to the same class on \(H \times G\), so by
+  Theorem~\ref{thm:PicEtAff_mk_eq_mk_iff} they define the same element of
+  \(\mathrm{PicEtAff}(C,A)\).
+\end{proof}
+
+\begin{theorem}[Multiplication of classes on the same cover]
+  \label{thm:PicEtAff_mk_mul_mk_same}
+  \lean{AlgebraicGeometry.PicEtAff.mk_mul_mk_same}
+  \uses{thm:PicEtAff_mk_mul_mk, thm:descentMap_congr, lem:PicEtAff_mk_descentMap}
+  \leanok
+  For a presented \'etale cover \(E\) of \(A\) and \(\lambda, \mu \in \mathrm{Desc}(C,E)\),
+  \([E,\lambda] \cdot [E,\mu] = [E, \lambda \mu]\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  By Theorem~\ref{thm:PicEtAff_mk_mul_mk}, \([E,\lambda][E,\mu] = [E \times E,
+  \mathrm{inl}_{E,E,*}\lambda \cdot \mathrm{inr}_{E,E,*}\mu]\). By refinement-map independence
+  (Theorem~\ref{thm:descentMap_congr}, applied to the two maps \(\mathrm{inr}_{E,E}\) and
+  \(\mathrm{inl}_{E,E}\) out of \(B_E\)), \(\mathrm{inr}_{E,E,*}\mu = \mathrm{inl}_{E,E,*}\mu\).
+  Since transport is a homomorphism of groups,
+  \(\mathrm{inl}_{E,E,*}\lambda \cdot \mathrm{inl}_{E,E,*}\mu = \mathrm{inl}_{E,E,*}(\lambda
+  \mu)\). Hence \([E,\lambda][E,\mu] = [E \times E, \mathrm{inl}_{E,E,*}(\lambda\mu)] =
+  [E,\lambda\mu]\), the last equality by Lemma~\ref{lem:PicEtAff_mk_descentMap}.
+\end{proof}
+
+\begin{definition}[Identity]
+  \label{def:PicEtAff_one}
+  \lean{AlgebraicGeometry.PicEtAff.instOne, AlgebraicGeometry.PicEtAff.one_def}
+  \uses{def:etale_cover_self, def:PicEtAff_mk}
+  \leanok
+  The identity element of \(\mathrm{PicEtAff}(C,A)\) is \(1 := [\mathrm{self}(A), 1]\), the
+  class of the identity descent datum on the trivial cover.
+\end{definition}
+
+\begin{theorem}[The identity is represented on every cover]
+  \label{thm:PicEtAff_mk_one}
+  \lean{AlgebraicGeometry.PicEtAff.mk_one}
+  \uses{def:PicEtAff_one, def:etale_cover_fromSelf, thm:PicEtAff_mk_eq_mk_iff}
+  \leanok
+  For every presented \'etale cover \(E\) of \(A\), \([E,1] = 1\) in \(\mathrm{PicEtAff}(C,A)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Apply Theorem~\ref{thm:PicEtAff_mk_eq_mk_iff} with \(G = E\), \(f = \id_{B_E}\), and \(g\)
+  the canonical map from the trivial cover (Definition~\ref{def:etale_cover_fromSelf}): since
+  transport is a homomorphism of groups, both \(f_{*}1\) and \(g_{*}1\) equal \(1\), regardless
+  of \(f\) and \(g\), so they agree.
+\end{proof}
+
+\begin{definition}[Inverse]
+  \label{def:PicEtAff_inv}
+  \lean{AlgebraicGeometry.PicEtAff.instInv, AlgebraicGeometry.PicEtAff.mk_inv}
+  \uses{def:PicEtAff_mk, def:picEtAffSetoid}
+  \leanok
+  \(\mathrm{PicEtAff}(C,A)\) carries an inversion, defined on representatives by
+  \([E,\lambda]^{-1} = [E,\lambda^{-1}]\); well-defined because if \((E,\lambda) \sim (F,\mu)\)
+  via \((G,f,g)\), so \(f_{*}\lambda = g_{*}\mu\), then applying the group homomorphism
+  \(f_{*}\), respectively \(g_{*}\), to inverses gives \(f_{*}(\lambda^{-1}) =
+  (f_{*}\lambda)^{-1} = (g_{*}\mu)^{-1} = g_{*}(\mu^{-1})\), so \((E,\lambda^{-1}) \sim
+  (F,\mu^{-1})\) via the same \((G,f,g)\).
+\end{definition}
+
+\begin{theorem}[\(\mathrm{PicEtAff}(C,A)\) is a commutative group]
+  \label{thm:PicEtAff_commGroup}
+  \lean{AlgebraicGeometry.PicEtAff.instCommGroup}
+  \uses{thm:PicEtAff_mk_mul_mk_same, thm:PicEtAff_mk_one, def:PicEtAff_inv,
+    lem:PicEtAff_ind, lem:PicEtAff_mk_descentMap, def:etale_cover_prod_coproj}
+  \leanok
+  With the multiplication of Theorem~\ref{thm:PicEtAff_mk_mul_mk}, the identity of
+  Definition~\ref{def:PicEtAff_one}, and the inversion of Definition~\ref{def:PicEtAff_inv},
+  \(\mathrm{PicEtAff}(C,A)\) is a commutative group.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By Lemma~\ref{lem:PicEtAff_ind} every element is of the form \([E,\lambda]\), so it suffices
+  to check the axioms on such representatives, re-expressing every class involved as a class on
+  one common cover by Lemma~\ref{lem:PicEtAff_mk_descentMap} (transporting a representative up
+  along a chosen refinement map does not change its plus class) and then applying
+  Theorem~\ref{thm:PicEtAff_mk_mul_mk_same} to compute products of classes living on the same
+  cover.
+
+  \emph{Associativity.} For \(a = [E,\lambda]\), \(b = [F,\mu]\), \(c = [G,\nu]\), rewrite
+  \(a\), \(b\), \(c\) as classes on the common cover \((E \times F) \times G\), transporting
+  \(\lambda\) along \(\mathrm{inl}_{E \times F, G} \circ \mathrm{inl}_{E,F}\), \(\mu\) along
+  \(\mathrm{inl}_{E \times F, G} \circ \mathrm{inr}_{E,F}\), and \(\nu\) along
+  \(\mathrm{inr}_{E \times F, G}\) (Lemma~\ref{lem:PicEtAff_mk_descentMap}); the three
+  transported representatives \(\lambda', \mu', \nu' \in \mathrm{Desc}(C, (E \times F) \times
+  G)\) now satisfy, by Theorem~\ref{thm:PicEtAff_mk_mul_mk_same}, \((ab)c = [(E \times F)
+  \times G, (\lambda'\mu')\nu']\) and \(a(bc) = [(E \times F) \times G, \lambda'(\mu'\nu')]\);
+  these agree by associativity of multiplication in the group \(\mathrm{Desc}(C,(E \times F)
+  \times G)\).
+
+  \emph{Identity.} For \(a = [E,\lambda]\), \(1 \cdot a = [\mathrm{self}(A) \times E,
+  \mathrm{inl}_{*}1 \cdot \mathrm{inr}_{*}\lambda] = [\mathrm{self}(A) \times E,
+  \mathrm{inr}_{*}\lambda] = [E,\lambda] = a\), using that transport preserves the identity and
+  Lemma~\ref{lem:PicEtAff_mk_descentMap}; similarly \(a \cdot 1 = a\).
+
+  \emph{Inverses.} For \(a = [E,\lambda]\), \(a^{-1} a = [E,\lambda^{-1}][E,\lambda] =
+  [E,\lambda^{-1}\lambda] = [E,1] = 1\), by Theorem~\ref{thm:PicEtAff_mk_mul_mk_same} and
+  Theorem~\ref{thm:PicEtAff_mk_one}.
+
+  \emph{Commutativity.} For \(a = [E,\lambda]\), \(b = [F,\mu]\), transport both to the common
+  cover \(E \times F\) via \(\mathrm{inl}_{E,F}\), respectively \(\mathrm{inr}_{E,F}\)
+  (Lemma~\ref{lem:PicEtAff_mk_descentMap}): \(a = [E \times F, \mathrm{inl}_{*}\lambda]\), \(b =
+  [E \times F, \mathrm{inr}_{*}\mu]\); by Theorem~\ref{thm:PicEtAff_mk_mul_mk_same}, \(ab = [E
+  \times F, \mathrm{inl}_{*}\lambda \cdot \mathrm{inr}_{*}\mu]\) and \(ba = [E \times F,
+  \mathrm{inr}_{*}\mu \cdot \mathrm{inl}_{*}\lambda]\), which agree because \(\mathrm{Desc}(C,E
+  \times F)\), a subgroup of the commutative group \(\mathrm{relPic}(C, B_E \otimes_A B_F)\),
+  is commutative.
+\end{proof}
+
+\begin{lemma}[Tautological descent datum]
+  \label{lem:PicEtAff_tautological_mem_descentClasses}
+  \lean{AlgebraicGeometry.PicEtAff.tautological_mem_descentClasses}
+  \uses{def:descentClasses, def:doubleInl_doubleInr}
+  \leanok
+  Let \(E\) be a presented \'etale cover of \(A\) and \(\iota_E \colon A \to B_E\) the
+  structure homomorphism. For every \(x \in \mathrm{relPic}(C,A)\), the class
+  \(\iota_E^{*}x \in \mathrm{relPic}(C,B_E)\) satisfies the descent condition:
+  \(\iota_E^{*}x \in \mathrm{Desc}(C,E)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The two composites \(\mathrm{inl}_E \circ \iota_E\) and \(\mathrm{inr}_E \circ \iota_E\), both
+  maps \(A \to B_E \otimes_A B_E\), coincide: each sends \(a \mapsto \iota_E(a) \otimes 1 = 1
+  \otimes \iota_E(a)\), the two descriptions of the structure homomorphism of the tensor
+  product \(B_E \otimes_A B_E\) over \(A\). By functoriality (Lemma~\ref{lem:relPicAlgMap_functor}),
+  \(\mathrm{inl}_E^{*}(\iota_E^{*}x) = (\mathrm{inl}_E \circ \iota_E)^{*}x = (\mathrm{inr}_E
+  \circ \iota_E)^{*}x = \mathrm{inr}_E^{*}(\iota_E^{*}x)\).
+\end{proof}
+
+\begin{definition}[The unit of the plus construction]
+  \label{def:PicEtAff_unit}
+  \lean{AlgebraicGeometry.PicEtAff.unit}
+  \uses{lem:PicEtAff_tautological_mem_descentClasses, def:etale_cover_self,
+    thm:PicEtAff_mk_one, thm:PicEtAff_mk_mul_mk_same}
+  \source{kleiman-picard}
+  \leanok
+  The homomorphism of groups \(\eta_A \colon \mathrm{relPic}(C,A) \to
+  \mathrm{PicEtAff}(C,A)\) sending \(x\) to the class \([\mathrm{self}(A), \iota^{*}x]\) of \(x\)
+  pulled back to the trivial cover with its tautological descent datum
+  (Lemma~\ref{lem:PicEtAff_tautological_mem_descentClasses}).
+\end{definition}
+\begin{proof}
+  \leanok
+  \(\eta_A\) preserves the identity: the tautological descent datum of \(1 \in
+  \mathrm{relPic}(C,A)\) is \(1 \in \mathrm{Desc}(C,\mathrm{self}(A))\) (transport preserves
+  the identity), so \(\eta_A(1) = [\mathrm{self}(A),1] = 1\) by
+  Theorem~\ref{thm:PicEtAff_mk_one}. It preserves products: the tautological descent datum of
+  \(xy\) is the product of the tautological descent data of \(x\) and \(y\) (transport is a
+  homomorphism), so \(\eta_A(xy) = [\mathrm{self}(A), \iota^{*}x \cdot \iota^{*}y] =
+  [\mathrm{self}(A),\iota^{*}x][\mathrm{self}(A),\iota^{*}y] = \eta_A(x)\eta_A(y)\) by
+  Theorem~\ref{thm:PicEtAff_mk_mul_mk_same}.
+\end{proof}
+
+\section{Functoriality in the test algebra}
+
+Throughout this section \(k\) is a field, \(C\) is an object of \(\Over(\Spec k)\), \(A\) is a
+commutative \(k\)-algebra, and \(A'\) is a commutative \(k\)-algebra additionally equipped with
+an \(A\)-algebra structure compatible with the tower \(k \to A \to A'\) (following the
+homomorphism-along-instances idiom, this exhibits a homomorphism of \(k\)-algebras \(A \to
+A'\), extracted from the tower as \(\tau \colon A \to A'\)). For a presented \'etale cover \(E\)
+of \(A\), write \(E_{A'}\) for its base change (Definition~\ref{def:etale_cover_baseChange}) and
+\(\kappa_E \colon B_E \to B_{E_{A'}}\) for the canonical inclusion
+(Definition~\ref{def:etale_cover_baseChangeInclude}).
+
+\begin{lemma}[Descent survives base change of the cover]
+  \label{lem:baseChangeInclude_mem_descentClasses}
+  \lean{AlgebraicGeometry.baseChangeInclude_mem_descentClasses}
+  \uses{def:etale_cover_baseChangeInclude, thm:relPicAlgMap_congr, def:descentClasses}
+  \leanok
+  Let \(E\) be a presented \'etale cover of \(A\) and \(\lambda \in \mathrm{Desc}(C,E)\). Then
+  \(\kappa_E^{*}\lambda \in \mathrm{Desc}(C, E_{A'})\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The two coprojections of the double cover of \(E_{A'}\)
+  (Definition~\ref{def:doubleInl_doubleInr}), composed with \(\kappa_E\), are two
+  homomorphisms of \(A\)-algebras \(B_E \to B_{E_{A'}} \otimes_{A'} B_{E_{A'}}\) (both factor
+  through the \(A\)-algebra structure of the target inherited from \(A \to A'\)): namely
+  \(\mathrm{inl} \circ \kappa_E\) and \(\mathrm{inr} \circ \kappa_E\), sending \(b \mapsto
+  (1 \otimes b) \otimes 1\), respectively \(b \mapsto 1 \otimes (1 \otimes b)\), under the
+  carrier identifications. By the keystone (Theorem~\ref{thm:relPicAlgMap_congr}), applied with
+  \(R = B_{E_{A'}} \otimes_{A'} B_{E_{A'}}\) and \(j_1 = \mathrm{inl} \circ \kappa_E\), \(j_2 =
+  \mathrm{inr} \circ \kappa_E\), the class \(\lambda \in \mathrm{Desc}(C,E)\) satisfies
+  \(j_1^{*}\lambda = j_2^{*}\lambda\); by functoriality this reads \(\mathrm{inl}^{*}
+  (\kappa_E^{*}\lambda) = \mathrm{inr}^{*}(\kappa_E^{*}\lambda)\), the descent condition for
+  \(\kappa_E^{*}\lambda\) on \(E_{A'}\).
+\end{proof}
+
+\begin{definition}[Transport along base change of the cover]
+  \label{def:descentBaseChange}
+  \lean{AlgebraicGeometry.descentBaseChange}
+  \uses{lem:baseChangeInclude_mem_descentClasses}
+  \leanok
+  The induced homomorphism of groups \(\mathrm{Desc}(C,E) \to \mathrm{Desc}(C,E_{A'})\),
+  \(\lambda \mapsto \kappa_E^{*}\lambda\).
+\end{definition}
+
+\begin{lemma}[Naturality of base-change transport]
+  \label{lem:descentMap_baseChangeMap}
+  \lean{AlgebraicGeometry.descentMap_baseChangeMap}
+  \uses{def:descentBaseChange, lem:etale_cover_baseChangeMap_comp_baseChangeInclude,
+    def:descentMap}
+  \leanok
+  Let \(E, F\) be presented \'etale covers of \(A\) and \(h \colon B_E \to B_F\) a
+  homomorphism of \(A\)-algebras. Then base-change transport commutes with refinement
+  transport: for \(\lambda \in \mathrm{Desc}(C,E)\),
+  \[
+    \mathrm{baseChangeMap}(h)_{*}\bigl(\kappa_{E}^{*}\lambda\bigr) = \kappa_{F}^{*}(h_{*}\lambda)
+  \]
+  in \(\mathrm{Desc}(C,F_{A'})\), where \(\mathrm{baseChangeMap}(h) \colon B_{E_{A'}} \to
+  B_{F_{A'}}\) is the base change of \(h\) (Definition~\ref{def:etale_cover_baseChangeMap}).
+\end{lemma}
+\begin{proof}
+  \leanok
+  By Lemma~\ref{lem:etale_cover_baseChangeMap_comp_baseChangeInclude},
+  \(\mathrm{baseChangeMap}(h) \circ \kappa_E = \kappa_F \circ h\) as homomorphisms of
+  \(A\)-algebras \(B_E \to B_{F_{A'}}\). Both sides of the claimed identity equal, by
+  functoriality of transport, the transport of \(\lambda\) along this common composite.
+\end{proof}
+
+\begin{definition}[Restriction along a base extension]
+  \label{def:PicEtAff_map}
+  \lean{AlgebraicGeometry.PicEtAff.map}
+  \uses{def:descentBaseChange, lem:descentMap_baseChangeMap, thm:PicEtAff_mk_mul_mk,
+    thm:descentMap_congr}
+  \leanok
+  The homomorphism of groups \(\tau^{*} \colon \mathrm{PicEtAff}(C,A) \to
+  \mathrm{PicEtAff}(C,A')\), \([E,\lambda] \mapsto [E_{A'}, \kappa_E^{*}\lambda]\).
+\end{definition}
+\begin{proof}
+  \leanok
+  \emph{Well-defined on plus classes.} If \((E,\lambda) \sim (F,\mu)\) via \((G,f,g)\)
+  (so \(f_{*}\lambda = g_{*}\mu\)), then base-changing gives \((E_{A'},\kappa_E^{*}\lambda) \sim
+  (F_{A'},\kappa_F^{*}\mu)\) via \((G_{A'}, \mathrm{baseChangeMap}(f),
+  \mathrm{baseChangeMap}(g))\): by Lemma~\ref{lem:descentMap_baseChangeMap},
+  \(\mathrm{baseChangeMap}(f)_{*}(\kappa_E^{*}\lambda) = \kappa_G^{*}(f_{*}\lambda) =
+  \kappa_G^{*}(g_{*}\mu) = \mathrm{baseChangeMap}(g)_{*}(\kappa_F^{*}\mu)\).
+
+  \emph{Multiplicativity.} For \(a = [E,\lambda]\), \(b = [F,\mu]\), first transport \(a\) and
+  \(b\) to the common refinement \(E \times F\) (Lemma~\ref{lem:PicEtAff_mk_descentMap}):
+  \(a = [E \times F, \mathrm{inl}_{*}\lambda]\), \(b = [E \times F, \mathrm{inr}_{*}\mu]\), so
+  \(\tau^{*}a = [(E \times F)_{A'}, \kappa_{E \times F}^{*}(\mathrm{inl}_{*}\lambda)]\) and
+  \(\tau^{*}b = [(E \times F)_{A'}, \kappa_{E \times F}^{*}(\mathrm{inr}_{*}\mu)]\); by
+  Theorem~\ref{thm:PicEtAff_mk_mul_mk_same},
+  \[
+    \tau^{*}a \cdot \tau^{*}b = \bigl[(E \times F)_{A'},\ \kappa_{E \times F}^{*}
+    (\mathrm{inl}_{*}\lambda) \cdot \kappa_{E \times F}^{*}(\mathrm{inr}_{*}\mu)\bigr].
+  \]
+  On the other hand, \(ab = [E \times F, \mathrm{inl}_{*}\lambda \cdot \mathrm{inr}_{*}\mu]\)
+  (Theorem~\ref{thm:PicEtAff_mk_mul_mk}), so, since \(\kappa_{E \times F}^{*}\) is a
+  homomorphism of groups, \(\tau^{*}(ab) = [(E \times F)_{A'}, \kappa_{E \times F}^{*}
+  (\mathrm{inl}_{*}\lambda) \cdot \kappa_{E \times F}^{*}(\mathrm{inr}_{*}\mu)]\) as well. Hence
+  \(\tau^{*}(ab) = \tau^{*}a \cdot \tau^{*}b\).
+\end{proof}
+
+\begin{theorem}[Naturality of the unit]
+  \label{thm:PicEtAff_map_unit}
+  \lean{AlgebraicGeometry.PicEtAff.map_unit}
+  \uses{def:PicEtAff_map, def:PicEtAff_unit}
+  \leanok
+  For \(x \in \mathrm{relPic}(C,A)\), \(\tau^{*}(\eta_A(x)) = \eta_{A'}(\tau^{*}x)\) in
+  \(\mathrm{PicEtAff}(C,A')\), where on the right \(\tau^{*} \colon \mathrm{relPic}(C,A) \to
+  \mathrm{relPic}(C,A')\) is restriction along the algebra map \(\tau\)
+  (Definition~\ref{def:relPicAlgMap}).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:PicEtAff_mk_descentMap, lem:PicEtAff_tautological_mem_descentClasses}
+  Let \(\sigma \colon B_{\mathrm{self}(A')} \to B_{\mathrm{self}(A)_{A'}}\) be the canonical map
+  from the trivial cover of \(A'\) (Definition~\ref{def:etale_cover_fromSelf}, for the cover
+  \(\mathrm{self}(A)_{A'}\) of \(A'\)). The two composite \(A\)-algebra homomorphisms
+  \(A \to B_{\mathrm{self}(A)_{A'}}\) given by \(\kappa_{\mathrm{self}(A)} \circ \iota_{
+  \mathrm{self}(A)}\) and by \(\sigma \circ \iota_{\mathrm{self}(A')} \circ \tau\) both equal
+  the structure homomorphism of \(B_{\mathrm{self}(A)_{A'}}\) as an \(A\)-algebra: the first,
+  because \(\kappa_{\mathrm{self}(A)}\) and \(\iota_{\mathrm{self}(A)}\) are structure
+  homomorphisms; the second, because algebra-map formation is compatible with the tower
+  \(A \to A' \to B_{\mathrm{self}(A)_{A'}}\) (the structure map of an \(A\)-algebra obtained by
+  restriction of scalars along \(A \to A'\) factors through \(A'\)). Hence the two composites
+  coincide, and by functoriality (Lemma~\ref{lem:relPicAlgMap_functor}), for \(x \in
+  \mathrm{relPic}(C,A)\),
+  \[
+    \kappa_{\mathrm{self}(A)}^{*}(\iota_{\mathrm{self}(A)}^{*}x) = \sigma^{*}\bigl(
+    \iota_{\mathrm{self}(A')}^{*}(\tau^{*}x)\bigr).
+  \]
+  The left side represents \(\tau^{*}(\eta_A(x)) = [\mathrm{self}(A)_{A'},
+  \kappa_{\mathrm{self}(A)}^{*}(\iota_{\mathrm{self}(A)}^{*}x)]\)
+  (Definition~\ref{def:PicEtAff_map} applied to the representative \([\mathrm{self}(A),
+  \iota_{\mathrm{self}(A)}^{*}x]\) of \(\eta_A(x)\)). By the displayed equality this equals
+  \([\mathrm{self}(A)_{A'}, \sigma^{*}(\iota_{\mathrm{self}(A')}^{*}(\tau^{*}x))]\), which by
+  Lemma~\ref{lem:PicEtAff_mk_descentMap} (transport along \(\sigma\)) equals
+  \([\mathrm{self}(A'), \iota_{\mathrm{self}(A')}^{*}(\tau^{*}x)] = \eta_{A'}(\tau^{*}x)\).
+\end{proof}
+
+\begin{theorem}[Restriction along the trivial extension is the identity]
+  \label{thm:PicEtAff_map_id}
+  \lean{AlgebraicGeometry.PicEtAff.map_id}
+  \uses{def:PicEtAff_map}
+  \leanok
+  When \(A' = A\) with \(\tau = \id_A\), the induced homomorphism \(\tau^{*} \colon
+  \mathrm{PicEtAff}(C,A) \to \mathrm{PicEtAff}(C,A)\) is the identity.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:PicEtAff_mk_descentMap}
+  For \([E,\lambda] \in \mathrm{PicEtAff}(C,A)\), base-changing \(E\) along \(A \to A\) gives a
+  cover with canonical inclusion \(\kappa_E \colon B_E \to B_{E_A}\) itself an \(A\)-algebra
+  refinement map, and by construction transport of \(\lambda\) along \(\kappa_E\) computes the
+  same class as \(\kappa_E^{*}\lambda\) in the sense of Definition~\ref{def:descentMap}. Hence
+  \(\tau^{*}[E,\lambda] = [E_A, \kappa_E^{*}\lambda] = [E,\lambda]\) by
+  Lemma~\ref{lem:PicEtAff_mk_descentMap}, applied to the refinement map \(\kappa_E \colon B_E
+  \to B_{E_A}\).
+\end{proof}
+
+\begin{theorem}[Restriction is transitive]
+  \label{thm:PicEtAff_map_map}
+  \lean{AlgebraicGeometry.PicEtAff.map_map}
+  \uses{def:PicEtAff_map, thm:relPicAlgMap_congr, thm:PicEtAff_mk_eq_mk_iff}
+  \leanok
+  Let \(A''\) be a commutative \(k\)-algebra with compatible algebra structures forming a tower
+  \(k \to A \to A' \to A''\). Then, writing \(\tau' \colon A' \to A''\) and \(\tau'' \colon A
+  \to A''\) for the induced maps, restriction along \(A \to A' \to A''\) equals restriction
+  along \(A \to A''\) directly:
+  \(\tau'^{*} \circ \tau^{*} = \tau''^{*}\) as homomorphisms \(\mathrm{PicEtAff}(C,A) \to
+  \mathrm{PicEtAff}(C,A'')\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Fix \([E,\lambda] \in \mathrm{PicEtAff}(C,A)\), and write \(E_{A''}\) for the direct base
+  change along \(A \to A''\) and \((E_{A'})_{A''}\) for the iterated base change along
+  \(A \to A' \to A''\). Both \(\tau'^{*}(\tau^{*}[E,\lambda])\) and \(\tau''^{*}[E,\lambda]\)
+  restrict, respectively, to classes on \((E_{A'})_{A''}\) and on \(E_{A''}\); the two
+  canonical inclusions of \(B_E\) into these two carriers, mapped further into the common
+  refinement \((E_{A'})_{A''} \times E_{A''}\) via its two coprojections
+  (Definition~\ref{def:etale_cover_prod_coproj}), are two homomorphisms of \(A\)-algebras out
+  of \(B_E\) landing in the same ring. By the keystone (Theorem~\ref{thm:relPicAlgMap_congr}),
+  since \(\lambda \in \mathrm{Desc}(C,E)\), these two composite pullbacks of \(\lambda\) agree;
+  unwinding this equality through functoriality of transport identifies the transports of
+  \(\tau'^{*}(\tau^{*}[E,\lambda])\) and \(\tau''^{*}[E,\lambda]\) to the common refinement
+  \((E_{A'})_{A''} \times E_{A''}\), so by Theorem~\ref{thm:PicEtAff_mk_eq_mk_iff},
+  \(\tau'^{*}(\tau^{*}[E,\lambda]) = \tau''^{*}[E,\lambda]\).
+\end{proof}
