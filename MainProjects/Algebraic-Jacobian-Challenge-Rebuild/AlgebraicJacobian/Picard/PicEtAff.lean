@@ -39,9 +39,6 @@ under a section = rigidification) are subsequent layers, consuming only this int
 -/
 
 set_option autoImplicit false
--- The transport calc chains unify `AlgHom` types whose instance arguments run through
--- quotient and tensor-product carriers; several are heartbeat-marginal at the default.
-set_option maxHeartbeats 1000000
 
 universe u
 
@@ -255,6 +252,9 @@ lemma descentMap_prodLift_inr {E F H : Algebra.EtaleCover A}
       = descentMap C g y := by
   rw [← descentMap_comp, Algebra.EtaleCover.prodLift_comp_prodInr]
 
+set_option maxHeartbeats 4000000 in
+-- The `rw` chain unifies `descentMap` nests whose `AlgHom` instance arguments run through
+-- quotient and tensor-product carriers; the unifications are heartbeat-hungry.
 private lemma mulLift_compat (p q p' q' : Σ E : Algebra.EtaleCover A, descentClasses C E)
     (hp : p ≈ p') (hq : q ≈ q') :
     mk C (p.1.prod q.1)
