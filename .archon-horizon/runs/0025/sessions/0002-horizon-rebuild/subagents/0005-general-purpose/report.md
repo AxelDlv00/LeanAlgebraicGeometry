@@ -1,0 +1,17 @@
+The binding design document is written at `informal/chi-ledger-design.md`. Final report:
+
+## Executive summary — χ-ledger/degree lane design (Wave-2 item 7)
+
+**Headline decisions** (all in `/home/Axel/LeanAlgebraicGeometry-Horizon/MainProjects/Algebraic-Jacobian-Challenge-Rebuild/informal/chi-ledger-design.md`):
+- **Carrier (X1):** divisor-first function-field subsheaves `𝒪(D) ⊆ K(X)` in the landed `Sheaf(Zariski, ModuleCat K)` category — confirms chi-ledger-notes option 3; six alternatives weighed and rejected (slice-Ext comparison, generalized Serre cobounding, adeles, Hilbert polynomials, π-pushforward lattices) with a decision table.
+- **deg (X2):** order-first on `CurveDivisor := Finsupp` over closed points, weighted by `[κ(x):K]` (`ℝ`/`t²+1` counterexample recorded for the unweighted pin); the route's `deg = χ − χ(𝒪)` is delivered as theorem (E-iii), which wave3 §6.1 explicitly permits.
+- **Dévissage (X3):** skyscraper SESs in whole-site Ext; the ONE new cohomological brick is `H¹(sky)=0`, proved via skyscraper-of-injective — all three mathlib ingredients grep-verified present (`stalkSkyscraperSheafAdjunction`, stalk-mono-preservation instance, `injective_of_adjoint`). **No twisted affine vanishing, no slice comparison, no MV beyond the landed structure-sheaf case anywhere**; wave3 §6.1's `F_g`-equalizer coordination note is declared MOOT.
+- **Principal divisors (X4):** notes' repartition/π-route **overturned** — `deg(div f)=0` via the multiplication iso `𝒪(D) ≅ 𝒪(D−div f)` + χ-invariance + (E-iii); works uniformly over non-closed, non-perfect fields. Classical `[L:K(s)]` route documented and rejected.
+- **(E-iv) (X5):** divisor-level via a new pure-algebra Dedekind colength formula (`finrank_K B/(f) = Σ ord·residueDeg`, PR-candidate) + flat `⊗_K K'`; `h¹` base change (genus stability) delivered separately through the landed two-cover + in-flight `SectionsBaseChange`.
+- **File plan (X7):** 11 files ≤500 lines (R1–R11), 4 immediately-parallel lanes buildable on the landed stack today; wave keystone = `chi_divisorSheaf` + `deg_divOf`; only the junction file `RiemannRoch/Degree.lean` touches L2 carriers.
+
+**Interface compliance:** (E-i)–(E-iv) delivered in the pinned shapes; two flagged deviations-in-realization (§10): (E-i)'s pushforward rank realized as a stalk-colength module (no divisor subscheme built — Stacks-anchored as semantically identical), and deg order-first. **Nothing contradicts (E-i)–(E-iv) or wave3 §6.1.** Exact coordination asks to L2 written (§3.3): ∃-form of the meromorphic bridge (5b), support/order certificate on graph/point divisors (file 5); L2's divisor notion untouched — one-way `toDivisor` bridge owned here.
+
+**OPEN items (5):** skyscraper vehicle (mathlib vs hand-rolled), order vocabulary (stalk `HeightOneSpectrum` valuation default), divisor index carrier, `SectionsBaseChange` dependency fallback, extraction-lemma home — each with closing criterion and owner.
+
+**Read:** route-decision, wave3 design (full), chi-ledger-notes, old-draft recon, 13 landed Lean modules, ~25 mathlib API sites (all by grep/read, file:line cited), Stacks Varieties §Euler-characteristics + §Degrees-on-curves (complete), stacks-algebra/divisors/sheaves anchors, papaioannou pp. 4–8, cff pp. 6, 17–19. Hartshorne: only pp. 242–243 transcribed and they are III.5, not ch. IV — so no Hartshorne IV citations (noted in reading log); vater/scheidler not read, not cited.
