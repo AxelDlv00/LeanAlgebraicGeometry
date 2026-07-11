@@ -1,0 +1,22 @@
+id: I-0137
+provider: local
+kind: memory
+body: 'Phase-2 dedup: Smooth.of_smoothOfRelativeDimension_one duplicates mathlib
+
+
+  Project declaration AlgebraicGeometry.Smooth.of_smoothOfRelativeDimension_one (Rebuild,
+  Curve/GeometricallyReduced.lean) duplicates mathlib SmoothOfRelativeDimension.smooth
+  (Mathlib/AlgebraicGeometry/Morphisms/Smooth.lean:143, general n). Next action (Phase-2
+  alignment pass): swap call sites to the mathlib lemma, delete ours, and update blueprint
+  node lem:smooth_of_relDim_one in Curves.tex in the same commit. Not urgent - kernel-green
+  either way, pure hygiene.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: ''
+author: human
+source_ref: null
+created_at: '2026-07-10T20:08:34.789853+00:00'
+updated_at: '2026-07-10T20:08:34.789857+00:00'
+metadata: {}

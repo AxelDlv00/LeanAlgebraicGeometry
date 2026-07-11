@@ -1,0 +1,121 @@
+id: rebuild
+project: Algebraic-Jacobian-Challenge-Rebuild
+objective: 'Rebuild the Jacobian-challenge formalization FROM SCRATCH in the fresh
+  project MainProjects/Algebraic-Jacobian-Challenge-Rebuild. This task objective (plus
+  its comments) is the complete charter — there is no separate goal doc. TARGET =
+  the EXTENDED challenge: every sorry-bearing declaration in AlgebraicJacobian/Challenge.lean
+  is sorry-free and axiom-clean ([propext, Classical.choice, Quot.sound]). That is
+  (i) the core eight — AlgebraicGeometry.genus; Jacobian + its instGrpObj / smoothOfRelativeDimension_genus
+  / instIsProper / instGeometricallyIrreducible instances; Jacobian.ofCurve; comp_ofCurve;
+  exists_unique_ofCurve_comp (Albanese universal property); PLUS (ii) functoriality
+  Jacobian.functor (with its map_id/map_comp laws); PLUS (iii) compatibility with
+  base change of fields: baseChangeIso (Jac(C)_L ≅ Jac(C_L)), baseChangeIso_id, baseChangeIso_comp
+  (identity + cocycle coherences), baseChange_ofCurve (Abel-Jacobi compatibility).
+  The statement scaffolding (Curve, baseChange + stability instances, baseChange.idIso/compIso,
+  Jacobian.congr) is already proved in the file and is frozen too. ALL signatures
+  in Challenge.lean are archon-protected — discharge them by building infrastructure,
+  never by weakening or restating; no new axioms and no residual sorry. KEY CONSTRAINTS:
+  (1) Rewrite everything yourself; the old draft MainProjects/Algebraic-Jacobian-Challenge
+  is READ-ONLY (the prior draft), consulted only when genuinely blocked — never copy
+  code from it. (2) Optimize for clean, GENERAL, reusable, mathlib-idiomatic infrastructure
+  and a SHORTER path to the conclusion (you may change the mathematical route). (3)
+  No Lean file over 500 lines; mathlib naming/quality; semantic-audit every signature
+  against the paper. (4) Lean file layout and blueprint chapters mirror the structure
+  of the sources; keep the dependency DAG clean. (5) Refactor the blueprint into a
+  clean MATHEMATICAL document — pure math prose, no Lean code, complete (not sketched)
+  proofs, one \lean{} anchor per node; READ each reference in references/ before citing
+  it with a \source{} anchor, keeping provenance retraceable (follow the blueprint-conventions
+  and references skills). (6) Regular progress summaries; keep README/docs current
+  (horizon-commit + task-status skills). TWO PHASES: PHASE 1 = rebuild to a green,
+  axiom-clean tree (the criterion above). PHASE 2 (only once green, without breaking
+  the Phase-1 chain or adding verification obligations) = alignment + Mathlib extraction:
+  surface names/locations of the main theorems (smoothOfRelativeDimension_genus, exists_unique_ofCurve_comp,
+  baseChangeIso) as sanity-check anchors (a short REVIEW.md or header comments), tighten
+  code<->paper correspondence (structure/comments only), and extract PR-worthy general
+  infrastructure into a separate ForMathlib/ folder. DELEGATION: you MAY use subagents
+  or a workflow, and MAY run cheaper/smaller-model agents for parts where the reasoning
+  is routine enough (blueprint prose, lemma search, templated proof steps, transcription,
+  reorganisation), reserving the strong model for keystones, route decisions, and
+  semantic audits; verify delegated work with a real lake build and never delegate
+  a frozen-signature change. SEQUENCE by cost: core eight + genus/H^1 keystone first,
+  then functoriality, then the base-change layer (cocycle coherence baseChangeIso_comp
+  is the hardest). Stay on toolchain v4.31.0 / Mathlib v4.31.0 — the full extended
+  statement is confirmed to compile there.'
+title: Rebuild the Jacobian challenge from scratch — clean, general, mathlib-idiomatic
+explanation: 'Rebuild the Jacobian-challenge formalization FROM SCRATCH in the fresh
+  project MainProjects/Algebraic-Jacobian-Challenge-Rebuild. This task objective (plus
+  its comments) is the complete charter — there is no separate goal doc. TARGET =
+  the EXTENDED challenge: every sorry-bearing declaration in AlgebraicJacobian/Challenge.lean
+  is sorry-free and axiom-clean ([propext, Classical.choice, Quot.sound]). That is
+  (i) the core eight — AlgebraicGeometry.genus; Jacobian + its instGrpObj / smoothOfRelativeDimension_genus
+  / instIsProper / instGeometricallyIrreducible instances; Jacobian.ofCurve; comp_ofCurve;
+  exists_unique_ofCurve_comp (Albanese universal property); PLUS (ii) functoriality
+  Jacobian.functor (with its map_id/map_comp laws); PLUS (iii) compatibility with
+  base change of fields: baseChangeIso (Jac(C)_L ≅ Jac(C_L)), baseChangeIso_id, baseChangeIso_comp
+  (identity + cocycle coherences), baseChange_ofCurve (Abel-Jacobi compatibility).
+  The statement scaffolding (Curve, baseChange + stability instances, baseChange.idIso/compIso,
+  Jacobian.congr) is already proved in the file and is frozen too. ALL signatures
+  in Challenge.lean are archon-protected — discharge them by building infrastructure,
+  never by weakening or restating; no new axioms and no residual sorry. KEY CONSTRAINTS:
+  (1) Rewrite everything yourself; the old draft MainProjects/Algebraic-Jacobian-Challenge
+  is READ-ONLY (the prior draft), consulted only when genuinely blocked — never copy
+  code from it. (2) Optimize for clean, GENERAL, reusable, mathlib-idiomatic infrastructure
+  and a SHORTER path to the conclusion (you may change the mathematical route). (3)
+  No Lean file over 500 lines; mathlib naming/quality; semantic-audit every signature
+  against the paper. (4) Lean file layout and blueprint chapters mirror the structure
+  of the sources; keep the dependency DAG clean. (5) Refactor the blueprint into a
+  clean MATHEMATICAL document — pure math prose, no Lean code, complete (not sketched)
+  proofs, one \lean{} anchor per node; READ each reference in references/ before citing
+  it with a \source{} anchor, keeping provenance retraceable (follow the blueprint-conventions
+  and references skills). (6) Regular progress summaries; keep README/docs current
+  (horizon-commit + task-status skills). TWO PHASES: PHASE 1 = rebuild to a green,
+  axiom-clean tree (the criterion above). PHASE 2 (only once green, without breaking
+  the Phase-1 chain or adding verification obligations) = alignment + Mathlib extraction:
+  surface names/locations of the main theorems (smoothOfRelativeDimension_genus, exists_unique_ofCurve_comp,
+  baseChangeIso) as sanity-check anchors (a short REVIEW.md or header comments), tighten
+  code<->paper correspondence (structure/comments only), and extract PR-worthy general
+  infrastructure into a separate ForMathlib/ folder. DELEGATION: you MAY use subagents
+  or a workflow, and MAY run cheaper/smaller-model agents for parts where the reasoning
+  is routine enough (blueprint prose, lemma search, templated proof steps, transcription,
+  reorganisation), reserving the strong model for keystones, route decisions, and
+  semantic audits; verify delegated work with a real lake build and never delegate
+  a frozen-signature change. SEQUENCE by cost: core eight + genus/H^1 keystone first,
+  then functoriality, then the base-change layer (cocycle coherence baseChangeIso_comp
+  is the hardest). Stay on toolchain v4.31.0 / Mathlib v4.31.0 — the full extended
+  statement is confirmed to compile there.'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+priority: normal
+status: queued
+write_set:
+  files:
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/**/*.lean
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/blueprint/src/**/*.tex
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/blueprint/src/content.tex
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/README.md
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/informal/**/*.md
+  - references/**
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+  files:
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/**/*.lean
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/blueprint/src/**/*.tex
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/blueprint/src/content.tex
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/README.md
+  - MainProjects/Algebraic-Jacobian-Challenge-Rebuild/informal/**/*.md
+  - references/**
+roadmap_refs: []
+inbox_refs: []
+artifact_refs: []
+created_at: '2026-07-10T13:18:07.123779+00:00'
+updated_at: '2026-07-10T13:18:07.123779+00:00'
+metadata:
+  updated_at: '2026-07-10T13:18:07.123779+00:00'
+  author: Axel
+  created_at: '2026-07-10T13:18:07.123779+00:00'

@@ -1,0 +1,6 @@
+# Lake build artifacts
+.lake/
+/.lake
+
+# Archon state directory
+.archon/

@@ -29,7 +29,11 @@ harnesses:
     model: claude-fable-5
     options:
       effort: ultracode
-      backend: interactive
+  horizon-opus-ultra:
+    kind: claude-code
+    model: claude-opus-4-8
+    options:
+      effort: ultracode
 github:
   enabled: true
   repo: AxelDlv00/LeanAlgebraicGeometry-Horizon
@@ -93,5 +97,8 @@ projects:
   Algebraic-Jacobian-Challenge-Rebuild:
     path: MainProjects/Algebraic-Jacobian-Challenge-Rebuild
     type: lean
+    vcs:
+      enabled: true
+      git_dir: .archon-horizon/vcs/Algebraic-Jacobian-Challenge-Rebuild.git
     build:
       command: lake build
