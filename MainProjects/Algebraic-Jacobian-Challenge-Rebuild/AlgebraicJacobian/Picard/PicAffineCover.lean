@@ -172,6 +172,20 @@ lemma diag_eq_basicRes (i : P.ι) :
       = X.basicRes _ _ (P.basicOpen_le_mul_self i) :=
   X.basicOpen_algHom_ext _ _ _
 
+lemma inclLeft_eq_basicRes (i j : P.ι) :
+    IsLocalization.AwayCover.inclLeft (A := Γ(X, ⊤)) (f := P.r)
+        (S := fun i ↦ Γ(X, X.basicOpen (P.r i)))
+        (T := fun i j ↦ Γ(X, X.basicOpen (P.r i * P.r j))) i j
+      = X.basicRes _ _ (P.mul_le_left i j) :=
+  X.basicOpen_algHom_ext _ _ _
+
+lemma inclRight_eq_basicRes (i j : P.ι) :
+    IsLocalization.AwayCover.inclRight (A := Γ(X, ⊤)) (f := P.r)
+        (S := fun i ↦ Γ(X, X.basicOpen (P.r i)))
+        (T := fun i j ↦ Γ(X, X.basicOpen (P.r i * P.r j))) i j
+      = X.basicRes _ _ (P.mul_le_right i j) :=
+  X.basicOpen_algHom_ext _ _ _
+
 lemma face₁₂_eq_basicRes (i j k : P.ι) :
     IsLocalization.AwayCover.face₁₂ (A := Γ(X, ⊤)) (f := P.r)
         (T := fun i j ↦ Γ(X, X.basicOpen (P.r i * P.r j)))
@@ -265,6 +279,18 @@ noncomputable def pic [IsAffine X] (γ : X.unitsCocycle 𝒰) : CommRing.Pic Γ(
     (T := fun i j ↦ Γ(X, X.basicOpen (P.r i * P.r j)))
     (W := fun i j k ↦ Γ(X, X.basicOpen (P.r i * (P.r j * P.r k))))
     (P.isCoverCocycle γ)).picClass
+
+/-- `pic` computes as the Picard class of the descent unit, with the faithful-flatness
+instance made explicit — the interface used to apply the abstract `picClass` calculus. -/
+lemma pic_eq_picClass [IsAffine X] (γ : X.unitsCocycle 𝒰) :
+    P.pic γ
+      = @Module.IsDescentCocycle.picClass _ _ _ _ _ P.faithfullyFlat _
+          (IsLocalization.AwayCover.isDescentCocycle_cocycleUnit (A := Γ(X, ⊤))
+            (f := P.r) (S := fun i ↦ Γ(X, X.basicOpen (P.r i)))
+            (T := fun i j ↦ Γ(X, X.basicOpen (P.r i * P.r j)))
+            (W := fun i j k ↦ Γ(X, X.basicOpen (P.r i * (P.r j * P.r k))))
+            (P.isCoverCocycle γ)) :=
+  rfl
 
 end PointedCover.BasicRefinement
 

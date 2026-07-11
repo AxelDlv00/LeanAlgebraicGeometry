@@ -40,6 +40,7 @@ a coboundary on the pointed cover itself
 -/
 
 set_option autoImplicit false
+set_option maxHeartbeats 1000000
 
 universe u
 
@@ -98,16 +99,63 @@ theorem pic_ofLE (h : 𝒱 ≤ 𝒰) (P : 𝒱.BasicRefinement) (γ : X.unitsCoc
 
 /-! ## Move 2: cohomologous cocycles -/
 
+
 /-- Cohomologous unit cocycles have the same Picard class along any basic refinement. -/
 theorem pic_eq_of_isCohomologous (P : 𝒰.BasicRefinement) {γ γ' : X.unitsCocycle 𝒰}
     (h : γ.IsCohomologous γ') : P.pic γ = P.pic γ' := by
-  -- Extract `α` with the evaluation-wise comparison
-  -- (`OneCocycle.isCohomologous_iff_evInf`), restrict to the members of `P`, and apply
-  -- `IsLocalization.AwayCover.picClass_eq_of_coboundary` with
-  -- `β i := X.unitsRestrict (P.basicOpen_le i) (α (P.pt i))`; the component relation is
-  -- the restriction of the comparison at the pair `(P.pt i, P.pt j)`, with the canonical
-  -- maps rewritten to restrictions via `Scheme.basicOpen_algHom_ext`.
-  sorry
+  letI := P.faithfullyFlat
+  obtain ⟨α, hα⟩ := (OneCocycle.isCohomologous_iff_evInf _ _).mp h
+  -- restate the comparison through the `Γ`-typed interface
+  have hα' : ∀ z w : X,
+      X.unitsRestrict (inf_le_left : 𝒰.opens z ⊓ 𝒰.opens w ≤ 𝒰.opens z) (α z)
+          * unitsEvInf γ z w
+        = unitsEvInf γ' z w
+          * X.unitsRestrict (inf_le_right : 𝒰.opens z ⊓ 𝒰.opens w ≤ 𝒰.opens w) (α w) :=
+    fun z w ↦ hα z w
+  have hrel : ∀ i j, (P.coverCocycle γ i j).val
+      = IsLocalization.AwayCover.inclLeft (A := Γ(X, ⊤)) (f := P.r)
+          (S := fun i ↦ Γ(X, X.basicOpen (P.r i)))
+          (T := fun i j ↦ Γ(X, X.basicOpen (P.r i * P.r j))) i j
+          ((X.unitsRestrict (P.basicOpen_le i) (α (P.pt i)))⁻¹ : _).val
+        * ((P.coverCocycle γ' i j).val
+          * IsLocalization.AwayCover.inclRight (A := Γ(X, ⊤)) (f := P.r)
+              (S := fun i ↦ Γ(X, X.basicOpen (P.r i)))
+              (T := fun i j ↦ Γ(X, X.basicOpen (P.r i * P.r j))) i j
+              ((((X.unitsRestrict (P.basicOpen_le j) (α (P.pt j)))⁻¹)⁻¹ : _).val)) := by
+    intro i j
+    rw [P.inclLeft_eq_basicRes, P.inclRight_eq_basicRes, inv_inv]
+    -- units-level form of the component relation
+    have e := congrArg (X.unitsRestrict (P.overlap_le i j)) (hα' (P.pt i) (P.pt j))
+    rw [map_mul, map_mul] at e
+    have key : P.coverCocycle γ i j
+        = X.unitsRestrict (P.mul_le_left i j)
+            ((X.unitsRestrict (P.basicOpen_le i) (α (P.pt i)))⁻¹)
+          * (P.coverCocycle γ' i j
+            * X.unitsRestrict (P.mul_le_right i j)
+                ((X.unitsRestrict (P.basicOpen_le j) (α (P.pt j))))) := by
+      rw [map_inv, unitsRestrict_unitsRestrict, unitsRestrict_unitsRestrict]
+      rw [coverCocycle, coverCocycle]
+      rw [show X.unitsRestrict ((P.mul_le_left i j).trans (P.basicOpen_le i)) (α (P.pt i))
+          = X.unitsRestrict (P.overlap_le i j)
+              (X.unitsRestrict (inf_le_left : 𝒰.opens (P.pt i) ⊓ 𝒰.opens (P.pt j)
+                ≤ 𝒰.opens (P.pt i)) (α (P.pt i)))
+        from (unitsRestrict_unitsRestrict _ _ _).symm,
+        show X.unitsRestrict ((P.mul_le_right i j).trans (P.basicOpen_le j)) (α (P.pt j))
+          = X.unitsRestrict (P.overlap_le i j)
+              (X.unitsRestrict (inf_le_right : 𝒰.opens (P.pt i) ⊓ 𝒰.opens (P.pt j)
+                ≤ 𝒰.opens (P.pt j)) (α (P.pt j)))
+        from (unitsRestrict_unitsRestrict _ _ _).symm]
+      rw [← e]
+      group
+    have hval := congrArg Units.val key
+    simpa only [Units.val_mul, coe_unitsRestrict_basicOpen] using hval
+  rw [P.pic_eq_picClass γ, P.pic_eq_picClass γ']
+  exact IsLocalization.AwayCover.picClass_eq_of_coboundary (A := Γ(X, ⊤)) (f := P.r)
+    (S := fun i ↦ Γ(X, X.basicOpen (P.r i)))
+    (T := fun i j ↦ Γ(X, X.basicOpen (P.r i * P.r j)))
+    (W := fun i j k ↦ Γ(X, X.basicOpen (P.r i * (P.r j * P.r k))))
+    (P.isCoverCocycle γ') (P.isCoverCocycle γ)
+    (fun i ↦ (X.unitsRestrict (P.basicOpen_le i) (α (P.pt i)))⁻¹) hrel
 
 /-! ## Move 3: change of basic refinement -/
 
