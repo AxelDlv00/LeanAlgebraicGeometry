@@ -259,6 +259,57 @@ theorem map_map (a : PicEtAff C A) : map C A'' (map C A' a) = map C A'' a := by
 
 end map_map
 
+/-! ## Restriction along an explicit algebra map
+
+The presheaf-on-algebras face of the functoriality: for consumers indexing tests by
+`k`-algebra maps (limits over affine opens, the relative-Picard comparison), the base
+extension is recovered from the map by `RingHom.toAlgebra`.  The instance-parameterized
+`PicEtAff.map` remains the preferred form whenever a scalar tower is already in scope. -/
+
+section mapAlg
+
+variable {A' : Type u} [CommRing A'] [Algebra k A']
+
+/-- Restriction of étale-plus Picard classes along an explicit `k`-algebra map of affine
+tests. -/
+def mapAlg (φ : A →ₐ[k] A') : PicEtAff C A →* PicEtAff C A' :=
+  letI : Algebra A A' := φ.toRingHom.toAlgebra
+  haveI : IsScalarTower k A A' :=
+    .of_algebraMap_eq fun a => (φ.commutes a).symm
+  map C A'
+
+/-- `mapAlg` along the identity is the identity. -/
+theorem mapAlg_id (a : PicEtAff C A) : mapAlg C (AlgHom.id k A) a = a :=
+  map_id C a
+
+/-- The unit of the plus construction is natural in the test algebra, explicit-map form. -/
+theorem mapAlg_unit (φ : A →ₐ[k] A') (x : relPic C (overSpec k A)) :
+    mapAlg C φ (unit C A x) = unit C A' (relPicAlgMap C φ x) := by
+  letI : Algebra A A' := φ.toRingHom.toAlgebra
+  haveI : IsScalarTower k A A' :=
+    .of_algebraMap_eq fun a => (φ.commutes a).symm
+  have hφ : IsScalarTower.toAlgHom k A A' = φ := AlgHom.ext fun _ => rfl
+  rw [mapAlg, map_unit, hφ]
+
+variable {A'' : Type u} [CommRing A''] [Algebra k A'']
+
+/-- `mapAlg` along a composite is the composite of the restrictions. -/
+theorem mapAlg_comp (φ : A →ₐ[k] A') (ψ : A' →ₐ[k] A'') (a : PicEtAff C A) :
+    mapAlg C (ψ.comp φ) a = mapAlg C ψ (mapAlg C φ a) :=
+  letI : Algebra A A' := φ.toRingHom.toAlgebra
+  haveI : IsScalarTower k A A' :=
+    .of_algebraMap_eq fun x => (φ.commutes x).symm
+  letI : Algebra A' A'' := ψ.toRingHom.toAlgebra
+  haveI : IsScalarTower k A' A'' :=
+    .of_algebraMap_eq fun x => (ψ.commutes x).symm
+  letI : Algebra A A'' := (ψ.comp φ).toRingHom.toAlgebra
+  haveI : IsScalarTower k A A'' :=
+    .of_algebraMap_eq fun x => ((ψ.comp φ).commutes x).symm
+  haveI : IsScalarTower A A' A'' := .of_algebraMap_eq fun _ => rfl
+  (map_map C A' A'' a).symm
+
+end mapAlg
+
 end PicEtAff
 
 end
