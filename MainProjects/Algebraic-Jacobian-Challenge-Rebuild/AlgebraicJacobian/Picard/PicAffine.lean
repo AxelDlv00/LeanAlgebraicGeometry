@@ -66,15 +66,20 @@ def ofLE {𝒰 𝒱 : X.PointedCover} (h : 𝒱 ≤ 𝒰) (P : 𝒱.BasicRefinem
   basicOpen_le i := (P.basicOpen_le i).trans (h (P.pt i))
   iSup_eq := P.iSup_eq
 
-/-- The merge of two basic refinements pointed by the **first** factor. -/
-@[simps ι pt r]
-def interFst {𝒰 𝒱 : X.PointedCover} (P : 𝒰.BasicRefinement) (Q : 𝒱.BasicRefinement) :
-    𝒰.BasicRefinement where
-  ι := P.ι × Q.ι
-  pt p := P.pt p.1
-  r p := P.r p.1 * Q.r p.2
-  basicOpen_le p := ((X.basicOpen_mul _ _).trans_le inf_le_left).trans (P.basicOpen_le p.1)
-  iSup_eq := (P.inter Q).iSup_eq
+/-- The merge of two basic refinements of the same cover, pointed by the **first**
+factor.  Defined by updating the points of `inter`, so that the index family and the
+sections are *definitionally those of `P.inter Q`*. -/
+@[simps pt]
+def interFst {𝒰 : X.PointedCover} (P Q : 𝒰.BasicRefinement) : 𝒰.BasicRefinement :=
+  { P.inter Q with
+    pt := fun p ↦ P.pt p.1
+    basicOpen_le := fun p ↦
+      ((X.basicOpen_mul _ _).trans_le inf_le_left).trans (P.basicOpen_le p.1) }
+
+@[simp]
+lemma interFst_r {𝒰 : X.PointedCover} (P Q : 𝒰.BasicRefinement) (p : P.ι × Q.ι) :
+    (P.interFst Q).r p = P.r p.1 * Q.r p.2 :=
+  rfl
 
 section pic
 
@@ -161,7 +166,7 @@ theorem pic_eq_of_isCohomologous (P : 𝒰.BasicRefinement) {γ γ' : X.unitsCoc
 
 /-- Refine-compare along the first projection: the merge pointed by `P` has the same
 Picard class as `P`. -/
-theorem pic_interFst (P : 𝒰.BasicRefinement) (Q : 𝒱.BasicRefinement)
+theorem pic_interFst (P Q : 𝒰.BasicRefinement)
     (γ : X.unitsCocycle 𝒰) : (P.interFst Q).pic γ = P.pic γ := by
   letI := P.faithfullyFlat
   letI := (P.interFst Q).faithfullyFlat
@@ -266,12 +271,59 @@ same Picard class: they differ by the index-wise coboundary of the cross evaluat
 `γ (P.pt i, Q.pt j)`. -/
 theorem pic_interFst_eq_inter (P Q : 𝒰.BasicRefinement) (γ : X.unitsCocycle 𝒰) :
     (P.interFst Q).pic γ = (P.inter Q).pic γ := by
-  -- `IsLocalization.AwayCover.picClass_eq_of_coboundary` with
-  -- `β p := X.unitsRestrict _ (unitsEvInf γ (P.pt p.1) (Q.pt p.2))`; the component
-  -- relation follows from two applications of `unitsEvInf_trans` (at
-  -- `(P.pt p.1, Q.pt p.2, Q.pt q.2)` and `(P.pt p.1, P.pt q.1, Q.pt q.2)`) restricted to
-  -- the double overlap.
-  sorry
+  letI := (P.inter Q).faithfullyFlat
+  letI := (P.interFst Q).faithfullyFlat
+  have hβle : ∀ p : P.ι × Q.ι, X.basicOpen ((P.inter Q).r p)
+      ≤ 𝒰.opens (P.pt p.1) ⊓ 𝒰.opens (Q.pt p.2) :=
+    fun p ↦ (X.basicOpen_mul _ _).trans_le
+      (inf_le_inf (P.basicOpen_le p.1) (Q.basicOpen_le p.2))
+  have hrel : ∀ p q : P.ι × Q.ι, ((P.interFst Q).coverCocycle γ p q).val
+      = IsLocalization.AwayCover.inclLeft (A := Γ(X, ⊤)) (f := (P.inter Q).r)
+          (S := fun p ↦ Γ(X, X.basicOpen ((P.inter Q).r p)))
+          (T := fun p q ↦ Γ(X, X.basicOpen ((P.inter Q).r p * (P.inter Q).r q))) p q
+          ((X.unitsRestrict (hβle p) (unitsEvInf γ (P.pt p.1) (Q.pt p.2))).val)
+        * (((P.inter Q).coverCocycle γ p q).val
+          * IsLocalization.AwayCover.inclRight (A := Γ(X, ⊤)) (f := (P.inter Q).r)
+              (S := fun p ↦ Γ(X, X.basicOpen ((P.inter Q).r p)))
+              (T := fun p q ↦ Γ(X, X.basicOpen ((P.inter Q).r p * (P.inter Q).r q))) p q
+              (((X.unitsRestrict (hβle q) (unitsEvInf γ (P.pt q.1) (Q.pt q.2)))⁻¹).val)) := by
+    intro p q
+    rw [(P.inter Q).inclLeft_eq_basicRes p q, (P.inter Q).inclRight_eq_basicRes p q]
+    have key : (P.interFst Q).coverCocycle γ p q
+        = X.unitsRestrict ((P.inter Q).mul_le_left p q)
+            (X.unitsRestrict (hβle p) (unitsEvInf γ (P.pt p.1) (Q.pt p.2)))
+          * ((P.inter Q).coverCocycle γ p q
+            * X.unitsRestrict ((P.inter Q).mul_le_right p q)
+                ((X.unitsRestrict (hβle q) (unitsEvInf γ (P.pt q.1) (Q.pt q.2)))⁻¹)) := by
+      rw [coverCocycle, coverCocycle, map_inv, unitsRestrict_unitsRestrict,
+        unitsRestrict_unitsRestrict]
+      have e₁ := congrArg (X.unitsRestrict (le_inf
+          (((P.inter Q).mul_le_left p q).trans (hβle p))
+          (((P.inter Q).mul_le_right p q).trans ((hβle q).trans inf_le_right)) :
+            X.basicOpen ((P.inter Q).r p * (P.inter Q).r q)
+              ≤ 𝒰.opens (P.pt p.1) ⊓ 𝒰.opens (Q.pt p.2) ⊓ 𝒰.opens (Q.pt q.2)))
+        (unitsEvInf_trans γ (P.pt p.1) (Q.pt p.2) (Q.pt q.2))
+      have e₂ := congrArg (X.unitsRestrict (le_inf (le_inf
+          (((P.inter Q).mul_le_left p q).trans ((hβle p).trans inf_le_left))
+          (((P.inter Q).mul_le_right p q).trans ((hβle q).trans inf_le_left)))
+          (((P.inter Q).mul_le_right p q).trans ((hβle q).trans inf_le_right)) :
+            X.basicOpen ((P.inter Q).r p * (P.inter Q).r q)
+              ≤ 𝒰.opens (P.pt p.1) ⊓ 𝒰.opens (P.pt q.1) ⊓ 𝒰.opens (Q.pt q.2)))
+        (unitsEvInf_trans γ (P.pt p.1) (P.pt q.1) (Q.pt q.2))
+      simp only [map_mul, unitsRestrict_unitsRestrict] at e₁ e₂
+      rw [← mul_assoc]
+      exact eq_mul_inv_iff_mul_eq.mpr (e₂.trans e₁.symm)
+    have hval := congrArg Units.val key
+    simpa only [Units.val_mul, coe_unitsRestrict_basicOpen] using hval
+  rw [pic_eq_picClass, pic_eq_picClass]
+  exact IsLocalization.AwayCover.picClass_eq_of_coboundary (A := Γ(X, ⊤))
+    (f := (P.inter Q).r)
+    (S := fun p ↦ Γ(X, X.basicOpen ((P.inter Q).r p)))
+    (T := fun p q ↦ Γ(X, X.basicOpen ((P.inter Q).r p * (P.inter Q).r q)))
+    (W := fun p q t ↦ Γ(X, X.basicOpen ((P.inter Q).r p
+      * ((P.inter Q).r q * (P.inter Q).r t))))
+    ((P.inter Q).isCoverCocycle γ) ((P.interFst Q).isCoverCocycle γ)
+    (fun p ↦ X.unitsRestrict (hβle p) (unitsEvInf γ (P.pt p.1) (Q.pt p.2))) hrel
 
 /-- **Any two basic refinements of the same pointed cover give the same Picard
 class.** -/
