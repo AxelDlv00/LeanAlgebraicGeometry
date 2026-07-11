@@ -163,17 +163,103 @@ theorem pic_eq_of_isCohomologous (P : 𝒰.BasicRefinement) {γ γ' : X.unitsCoc
 Picard class as `P`. -/
 theorem pic_interFst (P : 𝒰.BasicRefinement) (Q : 𝒱.BasicRefinement)
     (γ : X.unitsCocycle 𝒰) : (P.interFst Q).pic γ = P.pic γ := by
-  -- `IsLocalization.AwayCover.picClass_map_refine`-style comparison along
-  -- `τ := Prod.fst`; the points agree (`interFst.pt = P.pt ∘ Prod.fst`), so the fine
-  -- cover cocycle is on the nose the `refineOverlapAlgHom`-image of the coarse one
-  -- (canonical maps = restrictions, `Scheme.basicOpen_algHom_ext`).
-  sorry
+  letI := P.faithfullyFlat
+  letI := (P.interFst Q).faithfullyFlat
+  have hτ : ∀ p : P.ι × Q.ι,
+      IsUnit (algebraMap Γ(X, ⊤) Γ(X, X.basicOpen ((P.interFst Q).r p)) (P.r p.1)) :=
+    fun p ↦ IsLocalization.Away.isUnit_of_dvd ((P.interFst Q).r p)
+      (⟨Q.r p.2, rfl⟩ : P.r p.1 ∣ (P.interFst Q).r p)
+  have hτT : ∀ p q : P.ι × Q.ι,
+      IsUnit (algebraMap Γ(X, ⊤)
+        Γ(X, X.basicOpen ((P.interFst Q).r p * (P.interFst Q).r q))
+        (P.r p.1 * P.r q.1)) :=
+    fun p q ↦ IsLocalization.Away.isUnit_of_dvd ((P.interFst Q).r p * (P.interFst Q).r q)
+      (⟨Q.r p.2 * Q.r q.2, by simp only [interFst_r]; ring⟩ :
+        P.r p.1 * P.r q.1 ∣ (P.interFst Q).r p * (P.interFst Q).r q)
+  have hrel : ∀ p q : P.ι × Q.ι, (P.interFst Q).coverCocycle γ p q
+      = Units.map (IsLocalization.AwayCover.refineOverlapAlgHom (A := Γ(X, ⊤)) (f := P.r)
+          (T := fun i j ↦ Γ(X, X.basicOpen (P.r i * P.r j)))
+          (T' := fun p q ↦ Γ(X, X.basicOpen ((P.interFst Q).r p * (P.interFst Q).r q)))
+          Prod.fst hτT p q).toRingHom.toMonoidHom (P.coverCocycle γ p.1 q.1) := by
+    intro p q
+    have hle : X.basicOpen ((P.interFst Q).r p * (P.interFst Q).r q)
+        ≤ X.basicOpen (P.r p.1 * P.r q.1) :=
+      X.basicOpen_le_of_dvd ⟨Q.r p.2 * Q.r q.2, by simp only [interFst_r]; ring⟩
+    have hro : IsLocalization.AwayCover.refineOverlapAlgHom (A := Γ(X, ⊤)) (f := P.r)
+          (T := fun i j ↦ Γ(X, X.basicOpen (P.r i * P.r j)))
+          (T' := fun p q ↦ Γ(X, X.basicOpen ((P.interFst Q).r p * (P.interFst Q).r q)))
+          Prod.fst hτT p q
+        = X.basicRes _ _ hle :=
+      X.basicOpen_algHom_ext _ _ _
+    rw [hro]
+    have hmap : Units.map ((X.basicRes _ _ hle)).toRingHom.toMonoidHom
+          (P.coverCocycle γ p.1 q.1)
+        = X.unitsRestrict hle (P.coverCocycle γ p.1 q.1) := rfl
+    rw [hmap, coverCocycle, coverCocycle, unitsRestrict_unitsRestrict]
+    rfl
+  rw [pic_eq_picClass, pic_eq_picClass]
+  exact IsLocalization.AwayCover.picClass_map_refine (A := Γ(X, ⊤)) (f := P.r)
+    (S := fun i ↦ Γ(X, X.basicOpen (P.r i)))
+    (T := fun i j ↦ Γ(X, X.basicOpen (P.r i * P.r j)))
+    (W := fun i j k ↦ Γ(X, X.basicOpen (P.r i * (P.r j * P.r k))))
+    (f' := (P.interFst Q).r)
+    (S' := fun p ↦ Γ(X, X.basicOpen ((P.interFst Q).r p)))
+    (T' := fun p q ↦ Γ(X, X.basicOpen ((P.interFst Q).r p * (P.interFst Q).r q)))
+    Prod.fst hτ hτT
+    (W' := fun p q t ↦ Γ(X, X.basicOpen ((P.interFst Q).r p
+      * ((P.interFst Q).r q * (P.interFst Q).r t))))
+    (P.isCoverCocycle γ) ((P.interFst Q).isCoverCocycle γ) hrel
 
 /-- Refine-compare along the second projection: the merge pointed by `Q` has the same
 Picard class as `Q`. -/
 theorem pic_inter (P : 𝒰.BasicRefinement) (Q : 𝒱.BasicRefinement)
     (γ : X.unitsCocycle 𝒱) : (P.inter Q).pic γ = Q.pic γ := by
-  sorry
+  letI := Q.faithfullyFlat
+  letI := (P.inter Q).faithfullyFlat
+  have hτ : ∀ p : P.ι × Q.ι,
+      IsUnit (algebraMap Γ(X, ⊤) Γ(X, X.basicOpen ((P.inter Q).r p)) (Q.r p.2)) :=
+    fun p ↦ IsLocalization.Away.isUnit_of_dvd ((P.inter Q).r p)
+      (⟨P.r p.1, mul_comm _ _⟩ : Q.r p.2 ∣ (P.inter Q).r p)
+  have hτT : ∀ p q : P.ι × Q.ι,
+      IsUnit (algebraMap Γ(X, ⊤)
+        Γ(X, X.basicOpen ((P.inter Q).r p * (P.inter Q).r q))
+        (Q.r p.2 * Q.r q.2)) :=
+    fun p q ↦ IsLocalization.Away.isUnit_of_dvd ((P.inter Q).r p * (P.inter Q).r q)
+      (⟨P.r p.1 * P.r q.1, by simp only [inter_r]; ring⟩ :
+        Q.r p.2 * Q.r q.2 ∣ (P.inter Q).r p * (P.inter Q).r q)
+  have hrel : ∀ p q : P.ι × Q.ι, (P.inter Q).coverCocycle γ p q
+      = Units.map (IsLocalization.AwayCover.refineOverlapAlgHom (A := Γ(X, ⊤)) (f := Q.r)
+          (T := fun i j ↦ Γ(X, X.basicOpen (Q.r i * Q.r j)))
+          (T' := fun p q ↦ Γ(X, X.basicOpen ((P.inter Q).r p * (P.inter Q).r q)))
+          Prod.snd hτT p q).toRingHom.toMonoidHom (Q.coverCocycle γ p.2 q.2) := by
+    intro p q
+    have hle : X.basicOpen ((P.inter Q).r p * (P.inter Q).r q)
+        ≤ X.basicOpen (Q.r p.2 * Q.r q.2) :=
+      X.basicOpen_le_of_dvd ⟨P.r p.1 * P.r q.1, by simp only [inter_r]; ring⟩
+    have hro : IsLocalization.AwayCover.refineOverlapAlgHom (A := Γ(X, ⊤)) (f := Q.r)
+          (T := fun i j ↦ Γ(X, X.basicOpen (Q.r i * Q.r j)))
+          (T' := fun p q ↦ Γ(X, X.basicOpen ((P.inter Q).r p * (P.inter Q).r q)))
+          Prod.snd hτT p q
+        = X.basicRes _ _ hle :=
+      X.basicOpen_algHom_ext _ _ _
+    rw [hro]
+    have hmap : Units.map ((X.basicRes _ _ hle)).toRingHom.toMonoidHom
+          (Q.coverCocycle γ p.2 q.2)
+        = X.unitsRestrict hle (Q.coverCocycle γ p.2 q.2) := rfl
+    rw [hmap, coverCocycle, coverCocycle, unitsRestrict_unitsRestrict]
+    rfl
+  rw [pic_eq_picClass, pic_eq_picClass]
+  exact IsLocalization.AwayCover.picClass_map_refine (A := Γ(X, ⊤)) (f := Q.r)
+    (S := fun i ↦ Γ(X, X.basicOpen (Q.r i)))
+    (T := fun i j ↦ Γ(X, X.basicOpen (Q.r i * Q.r j)))
+    (W := fun i j k ↦ Γ(X, X.basicOpen (Q.r i * (Q.r j * Q.r k))))
+    (f' := (P.inter Q).r)
+    (S' := fun p ↦ Γ(X, X.basicOpen ((P.inter Q).r p)))
+    (T' := fun p q ↦ Γ(X, X.basicOpen ((P.inter Q).r p * (P.inter Q).r q)))
+    Prod.snd hτ hτT
+    (W' := fun p q t ↦ Γ(X, X.basicOpen ((P.inter Q).r p
+      * ((P.inter Q).r q * (P.inter Q).r t))))
+    (Q.isCoverCocycle γ) ((P.inter Q).isCoverCocycle γ) hrel
 
 /-- The two point-selections on the merge of two refinements of the same cover give the
 same Picard class: they differ by the index-wise coboundary of the cross evaluations

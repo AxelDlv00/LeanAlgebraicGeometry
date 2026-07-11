@@ -119,6 +119,11 @@ lemma basicOpen_le_mul_self (i : P.ι) :
     X.basicOpen (P.r i) ≤ X.basicOpen (P.r i * P.r i) :=
   le_of_le_of_eq (le_inf le_rfl le_rfl) (X.basicOpen_mul _ _).symm
 
+lemma _root_.AlgebraicGeometry.Scheme.basicOpen_le_of_dvd {f g : Γ(X, ⊤)} (h : f ∣ g) :
+    X.basicOpen g ≤ X.basicOpen f := by
+  obtain ⟨c, rfl⟩ := h
+  exact (X.basicOpen_mul f c).trans_le inf_le_left
+
 lemma mul_le_left (i j : P.ι) :
     X.basicOpen (P.r i * P.r j) ≤ X.basicOpen (P.r i) :=
   (X.basicOpen_mul _ _).trans_le inf_le_left
