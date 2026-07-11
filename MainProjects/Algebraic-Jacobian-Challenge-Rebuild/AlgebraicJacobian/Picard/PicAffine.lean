@@ -87,8 +87,14 @@ theorem pic_ofLE (h : 𝒱 ≤ 𝒰) (P : 𝒱.BasicRefinement) (γ : X.unitsCoc
     (P.ofLE h).pic γ = P.pic (γ.res fun x ↦ homOfLE (h x)) := by
   -- Both sides are `picClass` of `isDescentCocycle_cocycleUnit` for the same data:
   -- `coverCocycle` of the restricted cocycle is the composed restriction of the same
-  -- evaluations (`res_unitsEvInf`, `unitsRestrict_unitsRestrict`, proof irrelevance).
-  sorry
+  -- evaluations.
+  have hcc : (P.ofLE h).coverCocycle γ = P.coverCocycle (γ.res fun x ↦ homOfLE (h x)) := by
+    funext i j
+    rw [coverCocycle, coverCocycle, res_unitsEvInf h γ, unitsRestrict_unitsRestrict]
+    rfl
+  haveI := (P.ofLE h).faithfullyFlat
+  haveI := P.faithfullyFlat
+  exact Module.IsDescentCocycle.picClass_congr _ _ (congrArg _ hcc)
 
 /-! ## Move 2: cohomologous cocycles -/
 
@@ -161,18 +167,38 @@ theorem pic_congr {𝒲 : X.PointedCover} (h₁ : 𝒲 ≤ 𝒰) (h₂ : 𝒲 �
 
 /-- The Picard class of the trivial cocycle is trivial. -/
 theorem pic_one (P : 𝒰.BasicRefinement) : P.pic (1 : X.unitsCocycle 𝒰) = 1 := by
-  -- `coverCocycle 1 = 1` (evaluations of the trivial cocycle are `1`), `cocycleUnit` is
-  -- multiplicative-unital, and `Module.IsDescentCocycle.picClass_one` applies through
-  -- `picClass_congr`.
-  sorry
+  haveI := P.faithfullyFlat
+  have hcov : P.coverCocycle (1 : X.unitsCocycle 𝒰) = fun _ _ ↦ 1 := by
+    funext i j
+    rw [coverCocycle, one_unitsEvInf, map_one]
+  have hunit : IsLocalization.AwayCover.cocycleUnit P.r
+      (fun i ↦ Γ(X, X.basicOpen (P.r i))) (fun i j ↦ Γ(X, X.basicOpen (P.r i * P.r j)))
+      (P.coverCocycle (1 : X.unitsCocycle 𝒰)) = 1 := by
+    rw [hcov]
+    apply Units.ext
+    rw [IsLocalization.AwayCover.cocycleUnit_val,
+      show IsLocalization.AwayCover.piUnit
+        (fun i j ↦ Γ(X, X.basicOpen (P.r i * P.r j))) (fun _ _ ↦ 1) = 1 from Units.ext rfl]
+    exact map_one _
+  exact (Module.IsDescentCocycle.picClass_congr _ Module.IsDescentCocycle.one hunit).trans
+    Module.IsDescentCocycle.picClass_one
 
 /-- The Picard class is multiplicative in the cocycle. -/
 theorem pic_mul (P : 𝒰.BasicRefinement) (γ γ' : X.unitsCocycle 𝒰) :
     P.pic (γ * γ') = P.pic γ * P.pic γ' := by
-  -- `coverCocycle` is multiplicative (evaluations and restriction are), then
-  -- `IsLocalization.AwayCover.cocycleUnit_mul` and
-  -- `Module.IsDescentCocycle.picClass_mul` through `picClass_congr`.
-  sorry
+  haveI := P.faithfullyFlat
+  have hcov : P.coverCocycle (γ * γ')
+      = fun i j ↦ P.coverCocycle γ i j * P.coverCocycle γ' i j := by
+    funext i j
+    rw [coverCocycle, coverCocycle, coverCocycle, mul_unitsEvInf, map_mul]
+  refine (Module.IsDescentCocycle.picClass_congr _
+      ((IsLocalization.AwayCover.isDescentCocycle_cocycleUnit _ _ _ _
+          (P.isCoverCocycle γ)).mul
+        (IsLocalization.AwayCover.isDescentCocycle_cocycleUnit _ _ _ _
+          (P.isCoverCocycle γ'))) ?_).trans
+    (Module.IsDescentCocycle.picClass_mul _ _)
+  rw [hcov]
+  exact IsLocalization.AwayCover.cocycleUnit_mul P.r _ _ _ _
 
 /-! ## Triviality detection -/
 
@@ -210,7 +236,13 @@ noncomputable def toPicFun : X.CechPic → CommRing.Pic Γ(X, ⊤) :=
       rintro ⟨𝒰, a⟩ ⟨𝒱, b⟩ ⟨𝒲, h₁, h₂, e⟩
       -- The restrictions of the chosen representatives to `𝒲` are cohomologous:
       -- their `H¹` classes are `unitsRes h₁ a = unitsRes h₂ b`.
-      sorry)
+      refine BasicRefinement.pic_congr h₁ h₂ _ _ ((OneCocycle.class_eq_iff _ _).mp ?_)
+      have ha : a.out.class = a := Quot.out_eq a
+      have hb : b.out.class = b := Quot.out_eq b
+      calc (a.out.res fun x ↦ homOfLE (h₁ x)).class
+          = unitsRes h₁ a.out.class := rfl
+        _ = unitsRes h₂ b.out.class := by rw [ha, hb]; exact e
+        _ = (b.out.res fun x ↦ homOfLE (h₂ x)).class := rfl)
 
 variable {X}
 
@@ -219,7 +251,14 @@ lemma toPicFun_mk (𝒰 : X.PointedCover) (γ : X.unitsCocycle 𝒰)
     (P : 𝒰.BasicRefinement) : toPicFun X (CechPic.mk 𝒰 γ.class) = P.pic γ := by
   -- The chosen data compare to `(P, γ)` by `BasicRefinement.pic_congr` with `𝒲 := 𝒰`
   -- (the representative `Quot.out (γ.class)` is cohomologous to `γ`).
-  sorry
+  show (BasicRefinement.nonempty 𝒰).some.pic (Quot.out γ.class) = P.pic γ
+  refine BasicRefinement.pic_congr (𝒲 := 𝒰) le_rfl le_rfl _ _
+    ((OneCocycle.class_eq_iff _ _).mp ?_)
+  have hγ : (Quot.out γ.class).class = γ.class := Quot.out_eq γ.class
+  calc ((Quot.out γ.class).res fun x ↦ homOfLE ((le_rfl : 𝒰 ≤ 𝒰) x)).class
+      = unitsRes le_rfl (Quot.out γ.class).class := rfl
+    _ = unitsRes le_rfl γ.class := by rw [hγ]
+    _ = (γ.res fun x ↦ homOfLE ((le_rfl : 𝒰 ≤ 𝒰) x)).class := rfl
 
 variable (X)
 
@@ -239,8 +278,17 @@ noncomputable def toPic : X.CechPic →* CommRing.Pic Γ(X, ⊤) where
     obtain ⟨P⟩ := BasicRefinement.nonempty (𝒰 ⊓ 𝒱)
     induction a using Quot.ind with | _ γ =>
     induction b using Quot.ind with | _ δ =>
-    -- rewrite the product as a single class on `𝒰 ⊓ 𝒱` and apply `pic_mul`
-    sorry
+    rw [CechPic.mk_mul_mk_inf]
+    have hprod : (unitsRes (inf_le_left : 𝒰 ⊓ 𝒱 ≤ 𝒰) (Quot.mk _ γ)
+          * unitsRes (inf_le_right : 𝒰 ⊓ 𝒱 ≤ 𝒱) (Quot.mk _ δ) : X.unitsH1 (𝒰 ⊓ 𝒱))
+        = ((γ.res fun x ↦ homOfLE ((inf_le_left : 𝒰 ⊓ 𝒱 ≤ 𝒰) x))
+            * (δ.res fun x ↦ homOfLE ((inf_le_right : 𝒰 ⊓ 𝒱 ≤ 𝒱) x))).class := rfl
+    have h1 : (Quot.mk _ γ : X.unitsH1 𝒰) = γ.class := rfl
+    have h2 : (Quot.mk _ δ : X.unitsH1 𝒱) = δ.class := rfl
+    rw [hprod, h1, h2, toPicFun_mk _ _ P,
+      toPicFun_mk _ _ (P.ofLE inf_le_left), toPicFun_mk _ _ (P.ofLE inf_le_right),
+      BasicRefinement.pic_ofLE inf_le_left P γ, BasicRefinement.pic_ofLE inf_le_right P δ,
+      BasicRefinement.pic_mul]
 
 variable {X}
 
