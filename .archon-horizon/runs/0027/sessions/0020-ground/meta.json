@@ -1,0 +1,19 @@
+{
+  "role": "ground",
+  "round": 5,
+  "projects": [
+    "Algebraic-Jacobian-Challenge-Rebuild"
+  ],
+  "status": "ok",
+  "engine_session_id": "bc280cc3-3066-41ce-953d-aba55fd7b8fd",
+  "harness_name": "ground-default",
+  "harness_kind": "claude-code",
+  "model": "claude-opus-4-8",
+  "auth": "subscription",
+  "usage": {
+    "tokens_in": 55,
+    "tokens_out": 17083,
+    "cost_usd": 2.1222390000000004
+  },
+  "workspace_sha": "afe9b9fc439bc22f19d8592a6ef02f873a20035a"
+}
