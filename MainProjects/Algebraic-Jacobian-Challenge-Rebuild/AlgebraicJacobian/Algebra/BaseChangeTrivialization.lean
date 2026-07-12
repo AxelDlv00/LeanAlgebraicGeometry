@@ -99,14 +99,19 @@ lemma trivializationPush_trivializationPush (h' : C' →ₐ[A] C'') (h : C →�
     rw [trivializationPush_one_tmul, trivializationPush_one_tmul,
       trivializationPush_one_tmul, AlgHom.comp_apply]
 
-/-! ## Transition units -/
+/-! ## Transition units
+
+The transition unit compares two `C`-linear identifications of a module with `C`; it is
+defined for an arbitrary source module (`M ≃ₗ[C] C`), so that it also serves the
+base-changed trivializations of `AlgebraicJacobian.Algebra.TrivializationBaseChange`. -/
 
 section transitionUnit
 
-variable (t t₁ t₂ t₃ : C ⊗[A] N ≃ₗ[C] C)
+variable {M : Type u} [AddCommGroup M] [Module C M]
+variable (t t₁ t₂ t₃ : M ≃ₗ[C] C)
 
-/-- The **transition unit** between two trivializations of `N` over `C`: the unit of `C`
-by which they differ, `transitionUnit t₁ t₂ * t₁ x = t₂ x`
+/-- The **transition unit** between two `C`-linear identifications of a module with `C`:
+the unit of `C` by which they differ, `transitionUnit t₁ t₂ * t₁ x = t₂ x`
 (`transitionUnit_mul_apply`). -/
 noncomputable def transitionUnit : Cˣ where
   val := t₂ (t₁.symm 1)
@@ -124,12 +129,36 @@ lemma transitionUnit_val : (transitionUnit t₁ t₂).val = t₂ (t₁.symm 1) :
   rfl
 
 /-- The defining property of the transition unit. -/
-lemma transitionUnit_mul_apply (x : C ⊗[A] N) :
+lemma transitionUnit_mul_apply (x : M) :
     (transitionUnit t₁ t₂).val * t₁ x = t₂ x := by
   rw [transitionUnit_val, mul_comm]
   have h1 : t₁ x • t₁.symm (1 : C) = x := by
     rw [← map_smul, smul_eq_mul, mul_one, t₁.symm_apply_apply]
   rw [← smul_eq_mul, ← map_smul, h1]
+
+@[simp]
+lemma transitionUnit_self : transitionUnit t t = 1 :=
+  Units.ext (by rw [transitionUnit_val, t.apply_symm_apply, Units.val_one])
+
+/-- The telescoping identity for transition units: the Čech 1-cocycle relation. -/
+lemma transitionUnit_mul_transitionUnit :
+    transitionUnit t₂ t₃ * transitionUnit t₁ t₂ = transitionUnit t₁ t₃ :=
+  Units.ext (transitionUnit_mul_apply t₂ t₃ (t₁.symm 1))
+
+/-- Precomposition with a common identification does not change the transition unit. -/
+@[simp]
+lemma transitionUnit_trans {M' : Type u} [AddCommGroup M'] [Module C M']
+    (φ : M' ≃ₗ[C] M) :
+    transitionUnit (φ ≪≫ₗ t₁) (φ ≪≫ₗ t₂) = transitionUnit t₁ t₂ :=
+  Units.ext (by
+    rw [transitionUnit_val, transitionUnit_val, LinearEquiv.trans_symm,
+      LinearEquiv.trans_apply, LinearEquiv.trans_apply, LinearEquiv.apply_symm_apply])
+
+end transitionUnit
+
+section transitionUnitTensor
+
+variable (t t₁ t₂ t₃ : C ⊗[A] N ≃ₗ[C] C)
 
 /-- The transition unit is the unique unit conjugating the values of `t₁` on the tensors
 `1 ⊗ₜ n` into those of `t₂`. -/
@@ -148,17 +177,6 @@ lemma transitionUnit_eq_of {u : Cˣ}
   rw [t₁.apply_symm_apply, mul_one] at h1
   exact Units.ext ((transitionUnit_val t₁ t₂).trans h1.symm)
 
-@[simp]
-lemma transitionUnit_self : transitionUnit t t = 1 :=
-  transitionUnit_eq_of t t fun n ↦ by rw [Units.val_one, one_mul]
-
-/-- The telescoping identity for transition units: the Čech 1-cocycle relation. -/
-lemma transitionUnit_mul_transitionUnit :
-    transitionUnit t₂ t₃ * transitionUnit t₁ t₂ = transitionUnit t₁ t₃ :=
-  (transitionUnit_eq_of t₁ t₃ fun n ↦ by
-    rw [Units.val_mul, mul_assoc, transitionUnit_mul_apply t₁ t₂,
-      transitionUnit_mul_apply t₂ t₃]).symm
-
 /-- Transition units are compatible with pushforward of trivializations along an
 `A`-algebra map. -/
 lemma map_transitionUnit (h : C →ₐ[A] C') :
@@ -170,6 +188,6 @@ lemma map_transitionUnit (h : C →ₐ[A] C') :
     rw [trivializationPush_one_tmul, trivializationPush_one_tmul]
     exact this
 
-end transitionUnit
+end transitionUnitTensor
 
 end Module
