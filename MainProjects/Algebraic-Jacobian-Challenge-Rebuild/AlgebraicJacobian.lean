@@ -42,6 +42,7 @@ import AlgebraicJacobian.Descent.UnitDescentBaseChange
 import AlgebraicJacobian.Algebra.PiLocalization
 import AlgebraicJacobian.Algebra.LocalizationCocycle
 import AlgebraicJacobian.Algebra.LocalizationCocycleRefine
+import AlgebraicJacobian.Algebra.LocalizationCocycleBaseChange
 import AlgebraicJacobian.Picard.SectionsAlgebra
 import AlgebraicJacobian.Picard.FamilyCoboundary
 import AlgebraicJacobian.Picard.PicAffineCover
