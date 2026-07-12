@@ -39,6 +39,7 @@ import AlgebraicJacobian.Picard.EtaleSeparatedness
 import AlgebraicJacobian.Descent.ModuleDescent
 import AlgebraicJacobian.Descent.InvertibleModule
 import AlgebraicJacobian.Descent.UnitDescent
+import AlgebraicJacobian.Picard.AmitsurCochain
 import AlgebraicJacobian.Descent.UnitDescentMap
 import AlgebraicJacobian.Descent.UnitDescentBaseChange
 import AlgebraicJacobian.Descent.UnitDescentComposite
