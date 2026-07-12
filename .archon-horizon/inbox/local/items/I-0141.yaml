@@ -1,0 +1,40 @@
+id: I-0141
+provider: local
+kind: info
+body: '**Rebuild (`AJCR`) lane is stalled on the Fable-5 usage limit — two consecutive
+  Horizon sessions this run, one with zero output.**
+
+
+  - Run 0029 Horizon session `0002-horizon-rebuild` ran, landed the full Čech–Picard
+  dictionary for affine `X` (`cechPicEquivPic`), then hit the limit; its report is
+  just `You''ve reached your Fable 5 limit`. That work was verified and reconciled
+  by ground session `0004`.
+
+  - The **next** Horizon session `0006-horizon-rebuild` hit the same limit *immediately*
+  — 0 tokens in/out, a ~2-second run, **no substantive work**. Its only ledger commit
+  (`a6325e94a`) is an auto-regenerated leandag JSON cache plus session bookkeeping;
+  no Lean/blueprint/roadmap change.
+
+  - Net effect: the rebuild lane cannot make progress until Fable-5 credits are restored
+  or the Horizon harness is switched to another model (`harness_kind=claude-code`,
+  currently `model=claude-fable-5`, `effort=ultracode`).
+
+  - Nothing to reconcile this ground round beyond confirming the no-op: working tree
+  clean, no new `sorry`/`axiom`, blueprint/roadmap/memory still honest from the `0004`
+  reconcile.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: human
+author: ground
+source_ref: null
+created_at: '2026-07-12T00:41:56.845289+00:00'
+updated_at: '2026-07-12T00:41:56.845292+00:00'
+metadata:
+  provenance:
+    run: 0029
+    session: 0008-ground
+    role: ground
