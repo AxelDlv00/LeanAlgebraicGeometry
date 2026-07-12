@@ -35,6 +35,7 @@ import AlgebraicJacobian.Algebra.EtaleCover
 import AlgebraicJacobian.Picard.PicEtAff
 import AlgebraicJacobian.Picard.PicEtAffMap
 import AlgebraicJacobian.Picard.ProjectionUnits
+import AlgebraicJacobian.Picard.EtaleSeparatedness
 import AlgebraicJacobian.Descent.ModuleDescent
 import AlgebraicJacobian.Descent.InvertibleModule
 import AlgebraicJacobian.Descent.UnitDescent
