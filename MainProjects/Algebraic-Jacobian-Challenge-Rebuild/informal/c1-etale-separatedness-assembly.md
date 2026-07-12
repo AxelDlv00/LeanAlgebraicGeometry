@@ -45,7 +45,10 @@ equivalently the kernel-triviality form: for every presented étale cover `E : A
 
 ## Missing (the gap list, from read-only recon 2026-07-12)
 
-(γ) **Scheme face of dictionary naturality**: for `g : X ⟶ Y` between affine schemes, the square
+(γ) **LANDED 2026-07-12** (`Picard/CechPicToPicNaturality.lean`, kernel-green, axiom-clean):
+`Scheme.CechPic.toPic_map : toPic X (CechPic.map g L) = CommRing.Pic.mapRingHom g.appTop.hom (toPic Y L)`
+for `g : X ⟶ Y` between affine schemes, plus the `toPic_mapAlgebra` form under
+`g.appTop.hom.toAlgebra`. Original spec follows; the square
 
 ```
 CechPic Y  --toPic Y-->  Pic Γ(Y,⊤)
@@ -93,6 +96,52 @@ The delicate step decomposes into one pure-algebra brick plus scheme-side unit d
    verified after pullback, where it is a coboundary-comparison computation for the SAME
    cocycle `L` over the triple product. So coherence comes from checking upstairs, not
    from class equalities.
+
+### Refined design after full API recon (2026-07-12, second pass — supersedes the ε sketch above)
+
+Unfolding the target with the actual API: `unit C A x = 1` reduces via `mk_eq_mk_iff` +
+essential-uniqueness of maps out of `(.self A).Carrier` to: ∃ étale cover `B := E.Carrier`
+with `relPicAlgMap C (ofId A B) x = 1`. Writing `x = relPicMk L`, `X_R := (C ⊗ overSpec k R).left`,
+`p_R := (snd …).left`, this is (by `relPicMap_mk` + `mem_picFromBase_iff`, all on-the-nose
+equations): ∃ `N : CechPic (Spec B)` with `p_B^* N = (C ◁ g)^* L` in `CechPic X_B`.
+Goal: ∃ `M : CechPic (Spec A)` with `p_A^* M = L`.
+
+Brick list (each independently landable):
+
+**(ε1) Projection-units API** (`Picard/ProjectionUnits.lean`): package
+`unitsAppLE_snd_bijective` as `Over.unitsSndEquiv : Γ(T.left, V)ˣ ≃* Γ((C⊗T).left, pr⁻¹V)ˣ`
+(affine `V`) with naturality in `V` (restriction) and in `T` (pullback along `g : T' ⟶ T`
+with `IsAffineOpen (g.left ⁻¹ᵁ V)` hypothesis). Q8 recon: nothing packaged exists; every
+coherence check in ε3/ζ pushes identities through this equiv, `descend_coboundary`-style.
+
+**(ε2) Descent in stages / the splice, pure algebra** (`Descent/UnitDescentComposite.lean`):
+tower `A → B → P` (`[Algebra A B] [Algebra B P] [IsScalarTower A B P]`),
+`π : P ⊗[A] P →ₐ[A] P ⊗[B] P` the canonical collapse. Given `v : (P ⊗[A] P)ˣ` an
+`A`-descent cocycle and `u := Units.map π v` (automatically a `B`-descent cocycle — small
+lemma), with `[Module.FaithfullyFlat A B] [Module.FaithfullyFlat B P]`:
+`descended(v) ⊆ descended(u)` on the nose, and
+`B ⊗[A] descended(v) ≃ₗ[B] descended(u)` via `b ⊗ m ↦ b • m` (equivDescended idiom, exactly
+the `descendedMapEquiv`/`descendedBaseChangeEquiv` skeleton), hence
+`Pic.mapAlgebra A B (picClass v) = picClass u`. This replaces the earlier "cover cocycle +
+comparison datum" splice: the two-layer data is carried by the single unit `v`, and all
+coherence is subsumed in `IsDescentCocycle v`.
+
+**(ε3/ζ) Scheme-side assembly** (the remaining hard step, needs ε1+ε2+γ+brick 3):
+from `p_B^* N = (C◁g)^* L`, at cocycle level (mk-calculus, refinement injectivity):
+1. `q₁^* N = q₂^* N` over `Spec (B ⊗[A] B)` — brick 3 over `overSpec k (B⊗[A]B)` since both
+   sides pull back to the same `(C◁…)^* L` on `X_{B⊗B}` (CechPic.map_comp + square commutes).
+2. Construct the composite descent unit `v ∈ ((∏S) ⊗[A] (∏S))ˣ` for a basic cover `f : ι → B`
+   trivializing `N` (dictionary machinery, `TrivializingFamily`): its `⊗[B]`-collapse is the
+   Zariski cover cocycle of `N` (u_B), and its cross terms come from the comparison of the two
+   pullbacks in step 1, descended through ε1; `IsDescentCocycle v` is checked after `p`-pullback
+   (ε1 injectivity), where all terms become coboundary comparisons of the SAME cocycle rep of L.
+3. `M := cechPicEquivPic.symm (picClass v)` over `A`; the final on-the-nose equality
+   `p_A^* M = L` is checked by the `unitsRes`/`mk_eq_one_iff` calculus: `L / p_A^* M` is
+   trivialized on `X_B` with descent-unit data matching `v` by construction, and a class
+   trivialized on `X_B` whose `B⊗B`-descent unit descends (ε1) to a coboundary datum is 1 —
+   this last sub-step is the fppf analogue of `descend_coboundary` and is where ε1's
+   naturality does the work. (Alternatively organize 3 as: ker(CechPic X_A → CechPic X_B)
+   ⊆ range(p_A^*) as a standalone lemma with the same tools.)
 
 ## Sequencing
 
