@@ -148,13 +148,33 @@ Sub-brick decomposition:
   where inl/inr : B →ₐ[A] B ⊗[A] B. Proof: both sides `p_{B⊗B}`-pull back to
   `(C ◁ …)^* L` (CechPic.map_comp + snd_left_naturality + overSpecMap_comp), then
   `prPullback_injective` over `overSpec k (B ⊗[A] B)`.
-- **ζ2 (construct the composite descent unit)**: choose a `TrivializingFamily`-style basic
-  cover `f : ι → B` for (the module of) `toPic N`; build `v ∈ ((∏S) ⊗[A] (∏S))ˣ` whose
-  collapse is the Zariski cocycle unit of `N` and whose cross-terms are ζ1's comparison
-  descended through ε1; prove `IsDescentCocycle v` by checking the two conditions after
-  `p`-pullback (ε1 uniqueness/injectivity), where they are coboundary computations for one
-  cocycle representative of `L`. THE remaining design-heavy step — do a fresh Fable design
-  pass before delegating.
+- **ζ2 (construct the composite descent unit)** — REDESIGNED 2026-07-12 late (the
+  "global-unit correction" route; supersedes the family-descent sketch). KEY INSIGHT:
+  never descend cover-indexed unit families along `p` — only GLOBAL units cross `p`
+  (ε1 at `V = ⊤`, i.e. `Γ(X_R)ˣ ≅ Rˣ`, both `Spec R` sides affine so `⊤` is affine).
+  Steps:
+  - **ζ2·P (Amitsur toolkit, prerequisite brick)**: (P1) a unit 0-cochain on a pointed
+    cover with trivial coboundary glues to a global unit (𝒪ˣ sheaf gluing in the
+    `unitsCocycle` vocabulary); (P2) the three coface maps `R₂ := B⊗[A]B ⥤ R₃ := B⊗[A]B⊗[A]B`
+    (`m₁₂, m₁₃, m₂₃` as →ₐ[k], mirroring `tensorInl/tensorInr` idiom) with the simplicial
+    identities against `tensorInl/tensorInr`, and `unitsSndEquiv` specialized at `⊤`
+    (global-units descent + injectivity of `p^#` on global units).
+  - **ζ2·i (coherent witness)**: from ζ1, ANY Čech witness `θ` on a basic cover of
+    `Spec R₂` for `q₁^#ν / q₂^#ν = ∂θ` exists (affine mk-calculus / `class_eq_one_of_pic_eq_one`).
+    Its Amitsur failure `ω := m₂₃^#θ · m₁₂^#θ / m₁₃^#θ` has trivial Čech coboundary
+    (telescope of the three pulled-back defining equations), hence glues to a global unit
+    `ω ∈ R₃ˣ` (P1). Upstairs: the lift's witness `α` (from `h` via mk-calculus on `X_B`)
+    gives the canonical comparison `β := u₁^#α / u₂^#α` whose telescope over `X_{R₃}` is
+    EXACTLY 1 (pairwise cancellation); `p^#θ` and `β` cobound the same cocycle, so differ
+    by a ∂-trivial cochain ⟹ a global `ψ ∈ Γ(X_{R₂})ˣ` (P1 upstairs); `χ := ε1-descent of ψ`;
+    then `p^#(ω / δ_Am(χ)) = 1` and `p^#` is injective on global units (P2) ⟹
+    `ω = δ_Am(χ)` ⟹ `θ' := θ/χ` is an Amitsur-COHERENT witness. All Čech work on affine
+    schemes; only global units cross `p`.
+  - **ζ2·ii (pi-assembly)**: components `v_{ij} ∈ (S_i ⊗[𝔄] S_j)ˣ` from `θ'` and the
+    trivializations (note `S_i ⊗[𝔄] S_j` is the section ring of the basic open
+    `D((r_i⊗1)(1⊗r_j))` of `Spec R₂` — the pi-double decomposition over `𝔄` lands on basic
+    opens of the double), cocycle identity for `v` from θ'-coherence + c-telescoping via
+    pi-ext; `collapse v = cocycleUnit c` on the diagonal. Pure algebra + section rings.
 - **ζ3 (close)**: `M := cechPicEquivPic.symm (picClass v)` over `A`; `p_A^* M = L` via the
   mk/unitsRes calculus + ε1 (the fppf `descend_coboundary` analogue); then unfold to
   `PicEtAff.unit_injective` via `mk_eq_mk_iff` + `relPicMk` calculus (Q1/Q4 recon shapes).
