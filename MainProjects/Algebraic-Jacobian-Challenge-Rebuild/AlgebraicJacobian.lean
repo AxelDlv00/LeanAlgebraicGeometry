@@ -39,6 +39,7 @@ import AlgebraicJacobian.Descent.InvertibleModule
 import AlgebraicJacobian.Descent.UnitDescent
 import AlgebraicJacobian.Descent.UnitDescentMap
 import AlgebraicJacobian.Descent.UnitDescentBaseChange
+import AlgebraicJacobian.Descent.UnitDescentComposite
 import AlgebraicJacobian.Algebra.PiLocalization
 import AlgebraicJacobian.Algebra.LocalizationCocycle
 import AlgebraicJacobian.Algebra.LocalizationCocycleRefine
