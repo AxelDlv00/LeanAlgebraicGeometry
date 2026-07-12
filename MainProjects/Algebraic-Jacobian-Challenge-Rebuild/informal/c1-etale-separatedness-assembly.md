@@ -126,7 +126,40 @@ the `descendedMapEquiv`/`descendedBaseChangeEquiv` skeleton), hence
 comparison datum" splice: the two-layer data is carried by the single unit `v`, and all
 coherence is subsumed in `IsDescentCocycle v`.
 
-**(ε3/ζ) Scheme-side assembly** (the remaining hard step, needs ε1+ε2+γ+brick 3):
+**ε1 LANDED 2026-07-12** (`Picard/ProjectionUnits.lean`): `Over.unitsSndEquiv (hV : IsAffineOpen V) :
+Γ(T.left, V)ˣ ≃* Γ((C ⊗ T).left, (snd C T).left ⁻¹ᵁ V)ˣ` with round-trips, restriction
+naturality (`unitsSndEquiv_unitsRestrict` + symm form), test-object naturality in FULL
+generality (`unitsSndEquiv_naturality`, via `snd_left_naturality : (C ◁ g).left ≫ (snd C T).left
+= (snd C T').left ≫ g.left`), and the uniqueness lemma `unitsSndEquiv_symm_eq_of_unitsAppLE`.
+
+**ε2 LANDED 2026-07-12** (`Descent/UnitDescentComposite.lean`): `tensorCollapse`,
+`IsDescentCocycle.collapse`, `descended_le_descended_collapse` (with `.restrictScalars A`),
+`descendedCollapseEquiv : B ⊗[A] descended v ≃ₗ[B] descended (collapse v)` (instances:
+FF A B, FF B P, FF A P — discharge the third via `Module.FaithfullyFlat.trans A B P`),
+`picClass_collapse : (collapse v).picClass = Pic.mapAlgebra A B v.picClass`.
+
+**(ε3/ζ) Scheme-side assembly** (the remaining hard step, needs ε1+ε2+γ+brick 3).
+Sub-brick decomposition:
+
+- **ζ1 (class-level coherence seed, well-specified)**: for k-algebras `A → B`,
+  `L : CechPic X_A`, `N : CechPic (Spec B)` with
+  `p_B^* N = (C ◁ overSpecMap (ofId A B))^* L`, the two base changes agree:
+  `CechPic.map (Spec of inl) N = CechPic.map (Spec of inr) N` over `Spec (B ⊗[A] B)`,
+  where inl/inr : B →ₐ[A] B ⊗[A] B. Proof: both sides `p_{B⊗B}`-pull back to
+  `(C ◁ …)^* L` (CechPic.map_comp + snd_left_naturality + overSpecMap_comp), then
+  `prPullback_injective` over `overSpec k (B ⊗[A] B)`.
+- **ζ2 (construct the composite descent unit)**: choose a `TrivializingFamily`-style basic
+  cover `f : ι → B` for (the module of) `toPic N`; build `v ∈ ((∏S) ⊗[A] (∏S))ˣ` whose
+  collapse is the Zariski cocycle unit of `N` and whose cross-terms are ζ1's comparison
+  descended through ε1; prove `IsDescentCocycle v` by checking the two conditions after
+  `p`-pullback (ε1 uniqueness/injectivity), where they are coboundary computations for one
+  cocycle representative of `L`. THE remaining design-heavy step — do a fresh Fable design
+  pass before delegating.
+- **ζ3 (close)**: `M := cechPicEquivPic.symm (picClass v)` over `A`; `p_A^* M = L` via the
+  mk/unitsRes calculus + ε1 (the fppf `descend_coboundary` analogue); then unfold to
+  `PicEtAff.unit_injective` via `mk_eq_mk_iff` + `relPicMk` calculus (Q1/Q4 recon shapes).
+
+Original prose route:
 from `p_B^* N = (C◁g)^* L`, at cocycle level (mk-calculus, refinement injectivity):
 1. `q₁^* N = q₂^* N` over `Spec (B ⊗[A] B)` — brick 3 over `overSpec k (B⊗[A]B)` since both
    sides pull back to the same `(C◁…)^* L` on `X_{B⊗B}` (CechPic.map_comp + square commutes).
