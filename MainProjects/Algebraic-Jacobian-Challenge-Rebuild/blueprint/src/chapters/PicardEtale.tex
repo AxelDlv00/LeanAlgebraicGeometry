@@ -1533,3 +1533,213 @@ flat descent produces from this datum an \(A\)-module, well defined up to isomor
   Theorem~\ref{thm:cechPic_toPic_injective} (injectivity) and
   Theorem~\ref{thm:cechPic_toPic_surjective} (surjectivity), hence an isomorphism.
 \end{proof}
+
+\section{The cocycle presentation of the dictionary, and its naturality in the base}
+
+The \v Cech--Picard dictionary of the previous section passes through a \emph{cocycle}
+presentation of the descended module, algebraically equivalent to but more computable than
+the trivializing-family presentation used there: a descent \(1\)-cocycle is a single unit of
+\(B \otimes_A B\), for \(B\) the (faithfully flat) cover algebra, satisfying a normalization and
+a cocycle identity. This section records that presentation and its main structural property,
+\emph{naturality in the base ring}: the descended module, and hence its class in
+\(\operatorname{Pic}\), is compatible with base change of \(A\) along a further ring map
+\(A \to A'\). This is the algebraic counterpart of the compatibility, in the test object, of
+the functors compared by Kleiman's Comparison Theorem for the relative Picard functor.
+
+Throughout, \(A \to B\) is a homomorphism of commutative rings, exhibiting \(B\) as a
+commutative \(A\)-algebra. Write \(\mu \colon B \otimes_A B \to B\) for the multiplication
+homomorphism, \(x \otimes y \mapsto xy\), and, in the triple tensor product
+\(B \otimes_A (B \otimes_A B)\), write
+\[
+  \partial_{23}(w) := 1 \otimes w, \qquad
+  \partial_{12}(x \otimes y) := x \otimes (y \otimes 1), \qquad
+  \partial_{13}(x \otimes y) := x \otimes (1 \otimes y)
+\]
+for the three \(A\)-algebra homomorphisms \(B \otimes_A B \to B \otimes_A (B \otimes_A B)\)
+recording the three faces of the \(2\)-simplex of the cover \(B\) of \(A\).
+
+\begin{definition}[Descent \(1\)-cocycle]
+  \label{def:module_descent_cocycle}
+  \lean{Module.IsDescentCocycle}
+  \leanok
+  A \emph{descent \(1\)-cocycle} relative to \(A \to B\) is a unit \(u \in (B \otimes_A
+  B)^{\times}\) such that:
+  \begin{enumerate}
+    \item (normalization) \(\mu(u) = 1\);
+    \item (cocycle identity) \(\partial_{23}(u) \cdot \partial_{12}(u) = \partial_{13}(u)\) in
+      \(B \otimes_A (B \otimes_A B)\).
+  \end{enumerate}
+  When \(B = \prod_i A_{f_i}\) is a finite product of localizations covering \(\Spec A\), this
+  is exactly a \v Cech \(1\)-cocycle of units on the cover by the basic opens \(D(f_i)\).
+\end{definition}
+
+\begin{definition}[The descended module of a cocycle]
+  \label{def:module_descended}
+  \lean{Module.IsDescentCocycle.descended}
+  \uses{def:module_descent_cocycle}
+  \leanok
+  Let \(u\) be a descent \(1\)-cocycle relative to \(A \to B\). The \emph{descended} \(A\)-module
+  of \(u\) is the \(A\)-submodule
+  \[
+    \mathrm{descended}(u) := \{\, x \in B : u \cdot (x \otimes 1) = 1 \otimes x \,\} \subseteq B,
+  \]
+  the equalizer of the two \(A\)-linear maps \(B \to B \otimes_A B\), \(x \mapsto u \cdot (x
+  \otimes 1)\) and \(x \mapsto 1 \otimes x\); equivalently, the descended module of the descent
+  datum on the \(B\)-module \(B\) whose coaction is \(x \mapsto u \cdot (x \otimes 1)\)
+  (counitality is the normalization condition and coassociativity is the cocycle identity).
+\end{definition}
+
+\begin{definition}[The Picard class of a cocycle]
+  \label{def:module_picClass}
+  \lean{Module.IsDescentCocycle.picClass}
+  \uses{def:module_descended}
+  \leanok
+  Assume moreover that \(B\) is faithfully flat over \(A\), and let \(u\) be a descent
+  \(1\)-cocycle relative to \(A \to B\). The \emph{Picard class} of \(u\) is the class
+  \(\mathrm{picClass}(u) \in \operatorname{Pic}(A)\) of the descended module
+  \(\mathrm{descended}(u)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  \(B\), as a module over itself, is free of rank one, hence invertible, and the coaction \(x
+  \mapsto u \cdot (x \otimes 1)\) is a descent datum on \(B\) relative to \(A \to B\)
+  (Definition~\ref{def:module_descended}) whose descended module is \(\mathrm{descended}(u)\) by
+  definition. Since invertibility of modules descends along faithfully flat ring maps together
+  with a descent datum, \(\mathrm{descended}(u)\) is an invertible \(A\)-module, so it has a
+  well-defined class in \(\operatorname{Pic}(A)\).
+\end{proof}
+
+\begin{definition}[Base change of the tensor square and tensor cube of a cover]
+  \label{def:module_tensorSqBaseChange}
+  \lean{Module.tensorSqBaseChange, Module.tensorCubeBaseChange}
+  \leanok
+  Let \(A \to A'\) be a homomorphism of commutative rings and \(B\) a commutative
+  \(A\)-algebra. The \emph{base change of the tensor square} of the cover \(B\) along
+  \(A \to A'\) is the canonical \(A\)-algebra homomorphism
+  \[
+    B \otimes_A B \;\longrightarrow\; (A' \otimes_A B) \otimes_{A'} (A' \otimes_A B), \qquad
+    x \otimes y \mapsto (1 \otimes x) \otimes (1 \otimes y).
+  \]
+  Likewise, the \emph{base change of the tensor cube} is the canonical \(A\)-algebra
+  homomorphism on triple tensor products
+  \[
+    B \otimes_A (B \otimes_A B) \;\longrightarrow\; (A' \otimes_A B) \otimes_{A'} \bigl( (A'
+    \otimes_A B) \otimes_{A'} (A' \otimes_A B) \bigr), \qquad
+    x \otimes (y \otimes z) \mapsto (1 \otimes x) \otimes \bigl( (1 \otimes y) \otimes (1
+    \otimes z) \bigr).
+  \]
+\end{definition}
+
+\begin{theorem}[Base change of a descent cocycle]
+  \label{thm:module_descentCocycle_baseChange}
+  \lean{Module.IsDescentCocycle.baseChange}
+  \uses{def:module_descent_cocycle, def:module_tensorSqBaseChange}
+  \leanok
+  Let \(A \to A'\) and \(A \to B\) be homomorphisms of commutative rings and let \(u\) be a
+  descent \(1\)-cocycle relative to \(A \to B\). Then the image of \(u\) under the base-change
+  homomorphism of Definition~\ref{def:module_tensorSqBaseChange} is a descent \(1\)-cocycle
+  relative to \(A' \to A' \otimes_A B\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Write \(\varphi \colon B \otimes_A B \to (A' \otimes_A B) \otimes_{A'} (A' \otimes_A B)\) for
+  the base-change homomorphism and \(\psi\) for its analogue on triple tensor products
+  (Definition~\ref{def:module_tensorSqBaseChange}). On elementary tensors,
+  \[
+    \mu'(\varphi(x \otimes y)) = (1 \otimes x)(1 \otimes y) = 1 \otimes xy = \iota(\mu(x \otimes
+    y)),
+  \]
+  where \(\iota \colon B \to A' \otimes_A B\), \(b \mapsto 1 \otimes b\), is the canonical
+  inclusion and \(\mu'\) is the multiplication of \(A' \otimes_A B\); and, using
+  \(1 \otimes_{A'} 1 = 1\) under the identification \(A' \otimes_A B \cong A' \otimes_{A'} (A'
+  \otimes_A B)\),
+  \[
+    \partial'_{23}(\varphi(x \otimes y)) = \psi(\partial_{23}(x \otimes y)), \qquad
+    \partial'_{12}(\varphi(x \otimes y)) = \psi(\partial_{12}(x \otimes y)), \qquad
+    \partial'_{13}(\varphi(x \otimes y)) = \psi(\partial_{13}(x \otimes y)),
+  \]
+  where \(\partial'_{23}, \partial'_{12}, \partial'_{13}\) are the face maps of \(A' \to A'
+  \otimes_A B\). Both sides of each displayed identity are \(A\)-bilinear in \(x, y\), so the
+  identities extend from elementary tensors to all of \(B \otimes_A B\) by linearity.
+
+  Applying \(\mu'\) to \(\varphi(u)\) and using the first identity together with the
+  normalization \(\mu(u) = 1\) gives \(\mu'(\varphi(u)) = \iota(\mu(u)) = \iota(1) = 1\), the
+  normalization of \(\varphi(u)\). Applying \(\psi\) to the cocycle identity \(\partial_{23}(u)
+  \cdot \partial_{12}(u) = \partial_{13}(u)\) and using the remaining three identities gives
+  \[
+    \partial'_{23}(\varphi(u)) \cdot \partial'_{12}(\varphi(u)) = \psi\bigl(\partial_{23}(u)
+    \cdot \partial_{12}(u)\bigr) = \psi(\partial_{13}(u)) = \partial'_{13}(\varphi(u)),
+  \]
+  the cocycle identity for \(\varphi(u)\). Hence \(\varphi(u)\) is a descent \(1\)-cocycle
+  relative to \(A' \to A' \otimes_A B\).
+\end{proof}
+
+\begin{theorem}[Base change of the descended module]
+  \label{thm:module_descendedBaseChangeEquiv}
+  \lean{Module.descendedBaseChangeEquiv}
+  \uses{thm:module_descentCocycle_baseChange, def:module_descended}
+  \leanok
+  Let \(A \to A'\) and \(A \to B\) be homomorphisms of commutative rings with \(B\) faithfully
+  flat over \(A\), and let \(u\) be a descent \(1\)-cocycle relative to \(A \to B\), with base
+  change \(u' := \varphi(u)\) relative to \(A' \to A' \otimes_A B\)
+  (Theorem~\ref{thm:module_descentCocycle_baseChange}). Then there is a canonical isomorphism of
+  \(A'\)-modules
+  \[
+    A' \otimes_A \mathrm{descended}(u) \;\cong\; \mathrm{descended}(u').
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Write \(B' := A' \otimes_A B\); since faithful flatness is preserved by base change, \(B'\) is
+  faithfully flat over \(A'\), so \(\mathrm{descended}(u')\) is the descended module of the
+  tautological descent datum on the \(B'\)-module \(B'\) twisted by \(u'\)
+  (Definition~\ref{def:module_descended}), and by the uniqueness property of descended modules
+  it suffices to produce a \(B'\)-linear isomorphism
+  \(B' \otimes_{A'} \bigl(A' \otimes_A \mathrm{descended}(u)\bigr) \cong B'\) intertwining the
+  base change of the coaction \(x \mapsto u \cdot (x \otimes 1)\) on \(\mathrm{descended}(u)\)
+  with the coaction \(y \mapsto u' \cdot (y \otimes 1)\) on \(B'\).
+
+  Cancelling the iterated base change identifies \(B'\)-modules
+  \[
+    B' \otimes_{A'} \bigl(A' \otimes_A \mathrm{descended}(u)\bigr) \;\cong\; B' \otimes_A
+    \mathrm{descended}(u) \;\cong\; B' \otimes_B \bigl(B \otimes_A \mathrm{descended}(u)\bigr),
+  \]
+  and tensoring the descent isomorphism \(B \otimes_A \mathrm{descended}(u) \cong B\) attached to
+  \(u\) with \(B'\) over \(B\) turns the right side into \(B' \otimes_B B \cong B'\). On
+  elementary tensors, the resulting isomorphism sends \(b' \otimes (a' \otimes n)\), for
+  \(b' \in B'\), \(a' \in A'\), \(n \in \mathrm{descended}(u)\), to \((a' b') \cdot n\) (viewing
+  \(n \in \mathrm{descended}(u) \subseteq B\) inside \(B'\) via \(\iota\)); using the membership
+  identity \(u \cdot (n \otimes 1) = 1 \otimes n\), this identification carries the base-changed
+  coaction on the left to the coaction \(y \mapsto u' \cdot (y \otimes 1)\) on the right. Hence
+  the isomorphism intertwines the two coactions, and uniqueness of descended modules produces
+  the canonical isomorphism \(A' \otimes_A \mathrm{descended}(u) \cong \mathrm{descended}(u')\).
+\end{proof}
+
+\begin{theorem}[Naturality of the Picard class in the base ring]
+  \label{thm:module_picClass_baseChange}
+  \lean{Module.IsDescentCocycle.picClass_baseChange}
+  \uses{thm:module_descendedBaseChangeEquiv, def:module_picClass}
+  \source{kleiman-picard}
+  \leanok
+  Let \(A \to A'\) and \(A \to B\) be homomorphisms of commutative rings with \(B\) faithfully
+  flat over \(A\) and \(A' \otimes_A B\) faithfully flat over \(A'\), and let \(u\) be a descent
+  \(1\)-cocycle relative to \(A \to B\) with base change \(u'\) relative to \(A' \to A'
+  \otimes_A B\) (Theorem~\ref{thm:module_descentCocycle_baseChange}). Then
+  \[
+    \mathrm{picClass}(u') = \bigl[A' \otimes_A \mathrm{descended}(u)\bigr] \quad \text{in }
+    \operatorname{Pic}(A'),
+  \]
+  that is, the Picard class of the base-changed cocycle is the image of \(\mathrm{picClass}(u)\)
+  under the base-change homomorphism \(\operatorname{Pic}(A) \to \operatorname{Pic}(A')\),
+  \([N] \mapsto [A' \otimes_A N]\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  By Theorem~\ref{thm:module_descendedBaseChangeEquiv}, \(A' \otimes_A \mathrm{descended}(u)
+  \cong \mathrm{descended}(u')\) as \(A'\)-modules, so these two invertible \(A'\)-modules have
+  the same class in \(\operatorname{Pic}(A')\). The left side represents the image of
+  \(\mathrm{picClass}(u) = [\mathrm{descended}(u)]\) under the base-change homomorphism
+  \([N] \mapsto [A' \otimes_A N]\), and the right side represents \(\mathrm{picClass}(u')\) by
+  definition; hence \(\mathrm{picClass}(u') = \bigl[A' \otimes_A \mathrm{descended}(u)\bigr]\)
+  is the image of \(\mathrm{picClass}(u)\) under this homomorphism.
+\end{proof}

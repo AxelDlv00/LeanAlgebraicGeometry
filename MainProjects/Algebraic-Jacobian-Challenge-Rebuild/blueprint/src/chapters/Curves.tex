@@ -1928,3 +1928,68 @@ height-one specialization order of both spaces.
   \uses{lem:P1_overlap_affine}
   As in \ref{lem:finite_app_chart}, with the overlap affine by \ref{lem:P1_overlap_affine}.
 \end{proof}
+
+\section{An affine two-chart cover of the curve, and its stability under base change}
+
+The two standard charts of \(\PP^1\) pull back, along a finite morphism \(C \to \PP^1\), to a
+cover of the curve \(C\) by two affine opens with affine overlap. This section records that
+cover as a structure in its own right, together with its stability under base change of the
+test algebra.
+
+\begin{definition}[Affine two-chart cover]
+  \label{def:AffineTwoCover}
+  \lean{AlgebraicGeometry.Scheme.AffineTwoCover}
+  \leanok
+  Let \(Y\) be a scheme. An \emph{affine two-chart cover} of \(Y\) is a pair of affine open
+  subschemes \(V_0, V_1 \subseteq Y\) with \(V_0 \cup V_1 = Y\), whose overlap \(V_0 \cap V_1\)
+  is again affine.
+\end{definition}
+
+\begin{theorem}[Existence of an affine two-chart cover of the curve]
+  \label{thm:AffineTwoCover_nonempty_of_curve}
+  \lean{AlgebraicGeometry.Scheme.AffineTwoCover.nonempty_of_curve}
+  \uses{def:AffineTwoCover, thm:exists_finite_toP1, lem:preimage_chart_affine,
+    lem:preimage_chart_sup, lem:P1_chartOpen_inf, lem:P1_overlap_affine}
+  \leanok
+  Let \(C\) be a smooth, proper, geometrically irreducible curve over a field \(k\). Then \(C\)
+  admits an affine two-chart cover.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By Theorem~\ref{thm:exists_finite_toP1} there is a finite morphism \(\pi : C \to \PP^1\) over
+  \(k\). Take \(V_0 := \pi^{-1}(U_0)\) and \(V_1 := \pi^{-1}(U_1)\), the preimages of the two
+  standard charts of \(\PP^1\) (Definition~\ref{def:P1_chartOpen}); each is affine, since \(\pi\)
+  is finite, hence affine, and preimages of affine opens under affine morphisms are affine
+  (Lemma~\ref{lem:preimage_chart_affine}). The preimages cover \(C\)
+  (Lemma~\ref{lem:preimage_chart_sup}). For the overlap, preimage commutes with intersection, so
+  \(V_0 \cap V_1 = \pi^{-1}(U_0 \cap U_1)\); since \(U_0 \cap U_1 = D_+(X_0X_1)\)
+  (Lemma~\ref{lem:P1_chartOpen_inf}) is affine (Lemma~\ref{lem:P1_overlap_affine}), its preimage
+  \(V_0 \cap V_1\) is affine as well, again because preimages of affine opens under the affine
+  morphism \(\pi\) are affine. Hence \((V_0, V_1)\) is an affine two-chart cover of \(C\).
+\end{proof}
+
+\begin{theorem}[Base change of an affine two-chart cover]
+  \label{thm:AffineTwoCover_pullbackProd}
+  \lean{AlgebraicGeometry.Scheme.AffineTwoCover.pullbackProd}
+  \uses{def:AffineTwoCover}
+  \leanok
+  Let \(k\) be a field, \(C\) an object of \(\Over(\Spec k)\), and \(D = (V_0,V_1)\) an affine
+  two-chart cover of the underlying scheme of \(C\). Let \(R\) be a commutative \(k\)-algebra,
+  and write \(C \otimes \Spec R\) for the fibre product of \(C\) with the object \(\Spec R\) of
+  \(\Over(\Spec k)\) (the \(k\)-algebra structure of \(R\) making \(\Spec R\) an object of
+  \(\Over(\Spec k)\)), with first projection \(\mathrm{pr}_1 : C \otimes \Spec R \to C\). Then
+  \(\bigl(\mathrm{pr}_1^{-1}(V_0),\ \mathrm{pr}_1^{-1}(V_1)\bigr)\) is an affine two-chart cover
+  of \(C \otimes \Spec R\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The projection \(\mathrm{pr}_1\) is an affine morphism: it is the base change, along the
+  structure morphism of \(C\), of the structure morphism \(\Spec R \to \Spec k\) (a morphism
+  between affine schemes, hence affine), and affineness of morphisms is stable under base
+  change. Preimages of affine opens under an affine morphism are affine, so
+  \(\mathrm{pr}_1^{-1}(V_0)\) and \(\mathrm{pr}_1^{-1}(V_1)\) are affine. Preimage commutes with
+  union and with intersection, so these two preimages cover \(C \otimes \Spec R\) (since
+  \(V_0 \cup V_1 = C\)) and their overlap is \(\mathrm{pr}_1^{-1}(V_0 \cap V_1)\), the preimage
+  of the affine overlap of \(D\), hence itself affine. Thus the two preimages form an affine
+  two-chart cover of \(C \otimes \Spec R\).
+\end{proof}
