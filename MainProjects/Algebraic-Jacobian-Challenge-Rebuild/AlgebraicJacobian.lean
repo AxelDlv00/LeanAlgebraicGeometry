@@ -20,6 +20,7 @@ import AlgebraicJacobian.Cohomology.TwoCover
 import AlgebraicJacobian.Cohomology.FinitenessP1
 import AlgebraicJacobian.Cohomology.Finiteness
 import AlgebraicJacobian.Cohomology.SectionsBaseChange
+import AlgebraicJacobian.Picard.AffineTwoCover
 import AlgebraicJacobian.Picard.UniversalSections
 import AlgebraicJacobian.Picard.UnitsPresheaf
 import AlgebraicJacobian.Picard.CechH1
@@ -37,6 +38,7 @@ import AlgebraicJacobian.Descent.ModuleDescent
 import AlgebraicJacobian.Descent.InvertibleModule
 import AlgebraicJacobian.Descent.UnitDescent
 import AlgebraicJacobian.Descent.UnitDescentMap
+import AlgebraicJacobian.Descent.UnitDescentBaseChange
 import AlgebraicJacobian.Algebra.PiLocalization
 import AlgebraicJacobian.Algebra.LocalizationCocycle
 import AlgebraicJacobian.Algebra.LocalizationCocycleRefine
