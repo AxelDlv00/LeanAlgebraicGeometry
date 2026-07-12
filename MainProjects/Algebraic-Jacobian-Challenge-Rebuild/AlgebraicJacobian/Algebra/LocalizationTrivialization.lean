@@ -41,7 +41,7 @@ open TensorProduct
 
 namespace Module
 
-variable {A : Type u} [CommRing A] {ι : Type u} [Fintype ι]
+variable {A : Type u} [CommRing A] {ι : Type u} [Fintype ι] [DecidableEq ι]
 variable {S : ι → Type u} [∀ i, CommRing (S i)] [∀ i, Algebra A (S i)]
 variable {N : Type u} [AddCommGroup N] [Module A N]
 
@@ -54,7 +54,7 @@ noncomputable def piBaseChangeDistrib :
 
 @[simp]
 lemma piBaseChangeDistrib_tmul (b : ∀ i, S i) (n : N) :
-    piBaseChangeDistrib (S := S) (b ⊗ₜ n) = fun i ↦ b i ⊗ₜ n := by
+    piBaseChangeDistrib (S := S) (b ⊗ₜ[A] n) = fun i ↦ b i ⊗ₜ[A] n := by
   funext i
   simp [piBaseChangeDistrib, TensorProduct.piRight_apply]
 
@@ -68,8 +68,8 @@ private noncomputable def piTrivializationBase : N →ₗ[A] ∀ i, S i where
     simp only [Pi.add_apply, TensorProduct.tmul_add, map_add]
   map_smul' a n := by
     funext i
-    simp only [RingHom.id_apply, Pi.smul_apply, ← TensorProduct.tmul_smul,
-      map_smul_of_tower]
+    simp only [RingHom.id_apply, Pi.smul_apply, TensorProduct.tmul_smul]
+    exact LinearMapClass.map_smul_of_tower (e i) a _
 
 /-- Componentwise trivializations of `N` over a finite family of `A`-algebras assemble
 into a trivialization over the product algebra, sending `1 ⊗ₜ n` to
@@ -82,7 +82,7 @@ noncomputable def piTrivialization :
       = (fun v i ↦ e i (v i)) ∘ ⇑(piBaseChangeDistrib (S := S)) := by
     funext x
     induction x with
-    | zero => simp
+    | zero => exact funext fun i ↦ by simp
     | tmul b n =>
         funext i
         simp only [LinearMap.liftBaseChange_tmul, Function.comp_apply,
@@ -102,7 +102,7 @@ noncomputable def piTrivialization :
 @[simp]
 lemma piTrivialization_one_tmul (n : N) :
     piTrivialization e (1 ⊗ₜ n) = fun i ↦ e i (1 ⊗ₜ n) := by
-  show LinearMap.liftBaseChange (∀ i, S i) (piTrivializationBase e) (1 ⊗ₜ n) = _
+  change LinearMap.liftBaseChange (∀ i, S i) (piTrivializationBase e) (1 ⊗ₜ n) = _
   rw [LinearMap.liftBaseChange_tmul, one_smul]
   rfl
 
@@ -114,7 +114,7 @@ namespace IsLocalization.AwayCover
 
 open Module
 
-variable {A : Type u} [CommRing A] {ι : Type u} [Fintype ι] [DecidableEq ι]
+variable {A : Type u} [CommRing A] {ι : Type u}
 variable (f : ι → A)
 variable (S : ι → Type u) [∀ i, CommRing (S i)] [∀ i, Algebra A (S i)]
   [∀ i, IsLocalization.Away (f i) (S i)]
@@ -183,10 +183,12 @@ theorem isCoverCocycle_trivializationCocycle :
           (IsLocalization.algHom_subsingleton (Submonoid.powers (f k))).elim _ _]
       exact transitionUnit_mul_transitionUnit _ _ _
     have hval := congrArg Units.val key
-    simpa only [Units.val_mul, Units.coe_map, AlgHom.toRingHom_toMonoidHom_apply]
-      using hval
+    simp only [Units.val_mul, Units.coe_map] at hval
+    exact hval
 
 /-! ## The Picard class of the transition cocycle -/
+
+variable [Fintype ι] [DecidableEq ι]
 
 /-- **Descent identification for locally trivialized modules**: the Picard class of the
 descent cocycle associated with the transition cocycle of a family of trivializations of
@@ -242,7 +244,6 @@ theorem picClass_trivializationCocycle [Module.Invertible A N]
           _ = (b ⊗ₜ[A] (1 : B)) * ((1 : B) ⊗ₜ[A] s) := by rw [hkey']
           _ = b ⊗ₜ[A] ψ ((1 : B) ⊗ₜ[A] n) := by
               rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul, hs]
-              rfl
     | add x y hx hy => rw [map_add, map_add, map_add, map_add, hx, hy]
   -- uniqueness of descent identifies the descended module with `N`
   have equivN : N ≃ₗ[A] hu.descended :=

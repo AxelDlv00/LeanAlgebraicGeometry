@@ -45,6 +45,10 @@ import AlgebraicJacobian.Picard.FamilyCoboundary
 import AlgebraicJacobian.Picard.PicAffineCover
 import AlgebraicJacobian.Picard.PicAffine
 import AlgebraicJacobian.Picard.CechPicToPic
+import AlgebraicJacobian.Algebra.BaseChangeTrivialization
+import AlgebraicJacobian.Algebra.LocalizationTrivialization
+import AlgebraicJacobian.Algebra.InvertibleLocalTrivialization
+import AlgebraicJacobian.Picard.CechPicSurjective
 import AlgebraicJacobian.Challenge
 
 /-!
