@@ -40,19 +40,18 @@ With run 0030's α (`Descent/UnitDescentBaseChange.lean`) and δ (`Picard/Affine
 the **dictionary-naturality campaign is complete** and the (C1) "genuinely delicate step"
 is dissolved into landed theorems.
 
-## IN FLIGHT AT HANDOFF — CHECK FIRST
+## ζ2·P LANDED AND COMMITTED before handoff (nothing in flight)
 
-An Opus agent was building **ζ2·P (Amitsur toolkit)** when this session ended: additions
-to `Picard/EtaleSeparatedness.lean` and/or a new `Picard/AmitsurCochain.lean` —
-(P1) `exists_global_unit_of_compatible` (∂-trivial unit 0-cochain glues to a global unit),
-(P2a) `tensorFace₁₂/₁₃/₂₃ : B ⊗[A] B →ₐ[k] B ⊗[A] (B ⊗[A] B)` + coincidence lemmas of the
-six face∘inl/inr composites, (P2b) global-units descent along the projection at `V = ⊤`
-+ naturality along `overSpecMap`.
-**First action of the next session**: check the workspace ledger status
-(`git --git-dir=.archon-horizon/vcs/workspace.git --work-tree=. status --porcelain -- MainProjects/Algebraic-Jacobian-Challenge-Rebuild`)
-for uncommitted changes to those files; if present, verify (root `lake build` + `lean_verify`
-on the new declarations) and either commit or repair. If absent, re-launch ζ2·P from the
-spec in the worksheet (ζ2·P section).
+**ζ2·P (Amitsur toolkit)** landed in `Picard/AmitsurCochain.lean` (204 lines, root build
+8619 jobs, axiom-clean, committed): (P1) `Scheme.exists_global_unit_of_compatible` +
+`global_unit_ext` + `Scheme.Hom.unitsAppLE_top` (bridge to `appTop` spelling);
+(P2a) `tensorFace₁₂/₁₃/₂₃ := (Module.descentFace…).restrictScalars k` + the three
+coincidence lemmas (`tensorFace₁₂_comp_tensorInl` = face₁₃∘inl etc. — note only THREE
+distinct composites `x⊗1⊗1, 1⊗x⊗1, 1⊗1⊗x`); (P2b) `Over.unitsSndTopEquiv` (apply lemma in
+`Units.map (snd …).left.appTop.hom.toMonoidHom` form), `appTop_units_surjective/injective`,
+`unitsSndTopEquiv_naturality` along `overSpecMap φ`.
+**First action of the next session**: proceed directly to spec-and-launch **ζ2·i** (the
+coherent-witness brick) from the worksheet's "global-unit correction" design.
 
 ## Next bricks, in order (route fully designed in the worksheet)
 
