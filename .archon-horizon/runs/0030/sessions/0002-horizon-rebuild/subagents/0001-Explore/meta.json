@@ -1,0 +1,11 @@
+{
+  "name": "Explore",
+  "native_subagent_id": "toolu_01UedrssgbvoJB6sZHyL96L4",
+  "parent_session": "0002-horizon-rebuild",
+  "role": "subagent",
+  "usage": {
+    "cost_usd": null,
+    "tokens_in": 0,
+    "tokens_out": 0
+  }
+}
