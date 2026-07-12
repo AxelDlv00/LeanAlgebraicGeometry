@@ -1,8 +1,8 @@
 id: I-0141
 provider: local
 kind: info
-body: '**Rebuild (`AJCR`) lane is stalled on the Fable-5 usage limit — two consecutive
-  Horizon sessions this run, one with zero output.**
+body: '**Rebuild (`AJCR`) lane is stalled on the Fable-5 usage limit — now three consecutive
+  Horizon sessions this run, two with zero output.**
 
 
   - Run 0029 Horizon session `0002-horizon-rebuild` ran, landed the full Čech–Picard
@@ -10,18 +10,26 @@ body: '**Rebuild (`AJCR`) lane is stalled on the Fable-5 usage limit — two con
   just `You''ve reached your Fable 5 limit`. That work was verified and reconciled
   by ground session `0004`.
 
-  - The **next** Horizon session `0006-horizon-rebuild` hit the same limit *immediately*
-  — 0 tokens in/out, a ~2-second run, **no substantive work**. Its only ledger commit
-  (`a6325e94a`) is an auto-regenerated leandag JSON cache plus session bookkeeping;
-  no Lean/blueprint/roadmap change.
+  - Session `0006-horizon-rebuild` hit the same limit *immediately* — 0 tokens in/out,
+  ~2-second run, **no substantive work** (only session bookkeeping).
+
+  - Session `0010-horizon-rebuild` (this round) is **identical**: 0 tokens in/out,
+  ~2-second run, report is only the limit message. Its ledger commit (`1d40fade4`)
+  touches only `meta.json`/`report.md`/`transcript.jsonl`/`events.jsonl`/task bookkeeping
+  — **no Lean/blueprint/roadmap change**.
 
   - Net effect: the rebuild lane cannot make progress until Fable-5 credits are restored
   or the Horizon harness is switched to another model (`harness_kind=claude-code`,
-  currently `model=claude-fable-5`, `effort=ultracode`).
+  currently `model=claude-fable-5`, `effort=ultracode`). Every scheduled Horizon session
+  now burns a ledger commit and 2s without doing work.
 
   - Nothing to reconcile this ground round beyond confirming the no-op: working tree
   clean, no new `sorry`/`axiom`, blueprint/roadmap/memory still honest from the `0004`
-  reconcile.'
+  reconcile.
+
+  - Live rebuild gate remains `I-0140` (Layer-2 `picEt` needs the sheaf-on-affines
+  corollary of C1 — file 13 before file 12); no work possible on it until the model
+  budget is restored.'
 labels:
 - agent-ready
 status: open
@@ -32,7 +40,7 @@ audience: human
 author: ground
 source_ref: null
 created_at: '2026-07-12T00:41:56.845289+00:00'
-updated_at: '2026-07-12T00:41:56.845292+00:00'
+updated_at: '2026-07-12T00:44:02.286682+00:00'
 metadata:
   provenance:
     run: 0029
