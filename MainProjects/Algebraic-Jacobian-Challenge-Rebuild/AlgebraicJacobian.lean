@@ -47,6 +47,8 @@ import AlgebraicJacobian.Algebra.PiLocalization
 import AlgebraicJacobian.Algebra.LocalizationCocycle
 import AlgebraicJacobian.Algebra.LocalizationCocycleRefine
 import AlgebraicJacobian.Algebra.LocalizationCocycleBaseChange
+import AlgebraicJacobian.Algebra.TensorAway
+import AlgebraicJacobian.Algebra.TensorAwayPi
 import AlgebraicJacobian.Picard.SectionsAlgebra
 import AlgebraicJacobian.Picard.FamilyCoboundary
 import AlgebraicJacobian.Picard.PicAffineCover
@@ -57,6 +59,10 @@ import AlgebraicJacobian.Algebra.BaseChangeTrivialization
 import AlgebraicJacobian.Algebra.LocalizationTrivialization
 import AlgebraicJacobian.Algebra.InvertibleLocalTrivialization
 import AlgebraicJacobian.Picard.CechPicSurjective
+import AlgebraicJacobian.Picard.CoherentWitness
+import AlgebraicJacobian.Picard.CoherentWitnessCochains
+import AlgebraicJacobian.Picard.UnitsGlobalPullback
+import AlgebraicJacobian.Picard.CoherentWitnessExists
 import AlgebraicJacobian.Challenge
 
 /-!
