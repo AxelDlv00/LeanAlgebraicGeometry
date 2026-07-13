@@ -2914,3 +2914,727 @@ tensor, correcting an arbitrary witness by a single global unit.
   (Lemma~\ref{lem:nonempty_of_defect_eq_coboundary}), and the corrected cochain
   \(\theta_0/\chi\) is the required Amitsur-coherent \v Cech witness.
 \end{proof}
+
+\section{The simplicial degeneracies of the tensor tower}
+\label{sec:specDegeneracy}
+
+Complementing the cofaces of Definition~\ref{def:tensorFaces} and their \(\Spec\)-level
+coincidences (Lemma~\ref{lem:overSpec_whisker_face}), the composite descent unit pulls back
+along the two \emph{degeneracies} of the tensor tower: the multiplication, whose \(\Spec\)
+is the diagonal, and the first-two-positions multiplication, whose \(\Spec\) is a
+degeneracy of the triple tensor.
+
+\begin{definition}[The multiplication and the first degeneracy]
+  \label{def:tensorMul}
+  \lean{AlgebraicGeometry.tensorMul, AlgebraicGeometry.descentMul₁₂,
+    AlgebraicGeometry.tensorMul₁₂}
+  \uses{def:tensorInl_tensorInr, def:tensorFaces}
+  \leanok
+  The \emph{multiplication} is the \(k\)-algebra homomorphism
+  \[
+    \mathrm{tensorMul} \colon B \otimes_A B \to B, \qquad x \otimes y \mapsto xy ,
+  \]
+  whose \(\Spec\) is the diagonal \(\Delta \colon \Spec B \to \Spec(B \otimes_A B)\). The
+  \emph{first degeneracy} is the \(k\)-algebra homomorphism multiplying the first two tensor
+  positions,
+  \[
+    \mathrm{tensorMul}_{12} \colon B \otimes_A (B \otimes_A B) \to B \otimes_A B, \qquad
+    x \otimes (y \otimes z) \mapsto xy \otimes z ,
+  \]
+  whose \(\Spec\) is the degeneracy \(\sigma \colon \Spec(B \otimes_A B) \to
+  \Spec(B \otimes_A (B \otimes_A B))\).
+\end{definition}
+
+\begin{lemma}[Degeneracy identities at ring level]
+  \label{lem:tensorMul_simplicial}
+  \lean{AlgebraicGeometry.tensorMul_comp_tensorInl,
+    AlgebraicGeometry.tensorMul_comp_tensorInr,
+    AlgebraicGeometry.tensorMul₁₂_comp_tensorFace₂₃,
+    AlgebraicGeometry.tensorMul₁₂_comp_tensorFace₁₂,
+    AlgebraicGeometry.tensorMul₁₂_comp_tensorFace₁₃}
+  \uses{def:tensorMul, def:tensorInl_tensorInr, def:tensorFaces}
+  \leanok
+  The degeneracies satisfy the simplicial identities against the coprojections and cofaces:
+  \[
+    \mathrm{tensorMul} \circ \mathrm{tensorInl} = \mathrm{id}_B
+      = \mathrm{tensorMul} \circ \mathrm{tensorInr} ,
+  \]
+  and, on the triple tensor,
+  \[
+    \mathrm{tensorMul}_{12} \circ \mathrm{tensorFace}_{23} = \mathrm{id}, \quad
+    \mathrm{tensorMul}_{12} \circ \mathrm{tensorFace}_{13} = \mathrm{id}, \quad
+    \mathrm{tensorMul}_{12} \circ \mathrm{tensorFace}_{12}
+      = \mathrm{tensorInl} \circ \mathrm{tensorMul} .
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  Each identity is an equality of \(k\)-algebra homomorphisms, checked on a generator. For the
+  first pair, \(\mathrm{tensorMul}(\mathrm{tensorInl}\,b) = \mathrm{tensorMul}(b \otimes 1) = b\)
+  and \(\mathrm{tensorMul}(\mathrm{tensorInr}\,b) = \mathrm{tensorMul}(1 \otimes b) = b\). For
+  the degeneracy against the cofaces, compute on \(x \otimes y\): \(\mathrm{tensorMul}_{12}(1
+  \otimes (x \otimes y)) = x \otimes y\); \(\mathrm{tensorMul}_{12}(x \otimes (1 \otimes y)) =
+  x \otimes y\); and \(\mathrm{tensorMul}_{12}(x \otimes (y \otimes 1)) = xy \otimes 1 =
+  \mathrm{tensorInl}(xy) = \mathrm{tensorInl}(\mathrm{tensorMul}(x \otimes y))\).
+\end{proof}
+
+\begin{lemma}[The degeneracy coincidences at \(\Spec\) level]
+  \label{lem:overSpecMap_left_degeneracy}
+  \lean{AlgebraicGeometry.Over.overSpecMap_left_mul_inl,
+    AlgebraicGeometry.Over.overSpecMap_left_mul_inr,
+    AlgebraicGeometry.Over.overSpecMap_left_mul₁₂_face₂₃,
+    AlgebraicGeometry.Over.overSpecMap_left_mul₁₂_face₁₂,
+    AlgebraicGeometry.Over.overSpecMap_left_mul₁₂_face₁₃}
+  \uses{lem:tensorMul_simplicial, def:overSpecMap}
+  \leanok
+  Applying \(\Spec\) to Lemma~\ref{lem:tensorMul_simplicial} gives the degeneracy coincidences
+  of the affine test objects: as morphisms \(\Spec B \to \Spec B\) and
+  \(\Spec(B \otimes_A B) \to \Spec(B \otimes_A B)\),
+  \[
+    \Delta \circ q_1 = \mathrm{id}, \quad \Delta \circ q_2 = \mathrm{id}, \quad
+    \sigma \circ f_{23} = \mathrm{id}, \quad \sigma \circ f_{13} = \mathrm{id}, \quad
+    \sigma \circ f_{12} = q_1 \circ \Delta .
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  Each is the image of the corresponding ring-level identity of
+  Lemma~\ref{lem:tensorMul_simplicial} under the contravariant functor \(\Spec\) on test
+  objects (Definition~\ref{def:overSpecMap}), which turns each equal composite of algebra maps
+  into the reversed equal composite of morphisms and sends the identity algebra map to the
+  identity morphism.
+\end{proof}
+
+\section{The trivialization-corrected witness cochain}
+\label{sec:witnessCorrection}
+
+The values \(\theta_x\) of an Amitsur-coherent \v Cech witness
+(Definition~\ref{def:CoherentCechWitness}) do not by themselves glue over a basic open of the
+tensor square: their coboundary is the comparison of the two coprojection pullbacks of
+\(\gamma\). The composite descent unit corrects them by cocycle values of \(\gamma\) anchored
+at two distinguished points, after which they glue, satisfy the Amitsur cocycle identity, and
+collapse onto the Zariski cover cocycle on the diagonal. This section develops that calculus
+over abstract schemes; the concrete tensor-tower instantiation is
+Section~\ref{sec:witnessComponents}.
+
+Throughout, \(r_1, r_2 \colon Y \to Z\) are two morphisms (playing the coprojections
+\(\Spec(B \otimes_A B) \to \Spec B\)); \(\mathcal C\) is a pointed cover of \(Y\) with a unit
+\(0\)-cochain \(c\) (the witness cover and cochain); \(\mathcal N\) is a pointed cover of
+\(Z\) with a unit cocycle \(\gamma_Z\) (the trivializing cover of \(\Spec B\)); \(a, b \in Z\)
+are two points; and \(D \subseteq Y\) is an open on which \(r_1\) lands in \(\mathcal N_a\) and
+\(r_2\) in \(\mathcal N_b\).
+
+\begin{definition}[The corrected witness cochain]
+  \label{def:unitsCorrCochain}
+  \lean{AlgebraicGeometry.unitsCorrCochain}
+  \leanok
+  The \emph{corrected witness value} at a point \(y \in Y\) is the unit on
+  \(\mathcal C_y \cap D\)
+  \[
+    (\mathrm{corr}\,c)_y := r_1^{\sharp}\gamma_Z(a,\, r_1 y) \cdot (c_y)^{-1} \cdot
+      r_2^{\sharp}\gamma_Z(r_2 y,\, b) ,
+  \]
+  the two correction factors being the coprojection pullbacks of the cocycle values of
+  \(\gamma_Z\) anchored \(a \to r_1 y\) on the left and \(r_2 y \to b\) on the right, with the
+  witness entering inverted. This is the unique orientation whose coboundary cancels the
+  coboundary of \(\theta^{-1}\), and which on the diagonal — where the coherent witness is
+  \(1\) — telescopes to the cocycle value \(\gamma_Z(a, b)\).
+\end{definition}
+
+\begin{theorem}[The corrected values are \v Cech-compatible]
+  \label{thm:unitsCorrCochain_compat}
+  \lean{AlgebraicGeometry.unitsCorrCochain_compat}
+  \uses{def:unitsCorrCochain}
+  \leanok
+  Assume the witness relation for \(c\): on the overlaps of \(\mathcal C\),
+  \(c_x \cdot r_1^{\sharp}\gamma_Z(r_1 x, r_1 y) = r_2^{\sharp}\gamma_Z(r_2 x, r_2 y) \cdot c_y\).
+  Then the corrected values agree on overlaps: the restrictions of \((\mathrm{corr}\,c)_y\) and
+  \((\mathrm{corr}\,c)_{y'}\) to \((\mathcal C_y \cap D) \cap (\mathcal C_{y'} \cap D)\)
+  coincide.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Restrict all data to the overlap \(O := (\mathcal C_y \cap D) \cap (\mathcal C_{y'} \cap D)\).
+  Three relations hold on \(O\): the cocycle identity of \(\gamma_Z\) at \((a, r_1 y, r_1 y')\)
+  pulled back along \(r_1\), which expresses the left factor at \(y\) times the
+  \(r_1\)-comparison term \(r_1^{\sharp}\gamma_Z(r_1 y, r_1 y')\) as the left factor at \(y'\);
+  the witness relation for \(c\) at \((y, y')\), relating the two witness values through the
+  \(r_1\)- and \(r_2\)-comparison terms; and the cocycle identity at \((r_2 y, r_2 y', b)\)
+  pulled back along \(r_2\), which relates the two right factors symmetrically. Writing the
+  three as \(A_y Q_1 = A_{y'}\), \(t_y Q_1 = Q_2 t_{y'}\), \(Q_2 C_{y'} = C_y\) in the
+  commutative group of units on \(O\) (with \(A\) the left factors, \(t\) the witnesses, \(C\)
+  the right factors, \(Q_1, Q_2\) the comparison terms), substituting \(Q_2 = t_y Q_1 t_{y'}^{-1}\)
+  and cancelling \(t_y^{-1} t_y\) turns \(A_y t_y^{-1} C_y\) into \(A_{y'} t_{y'}^{-1} C_{y'}\),
+  which is the asserted equality of corrected values.
+\end{proof}
+
+\begin{theorem}[The corrected values glue to a unit]
+  \label{thm:exists_glued_unitsCorrCochain}
+  \lean{AlgebraicGeometry.exists_glued_unitsCorrCochain}
+  \uses{def:unitsCorrCochain, thm:unitsCorrCochain_compat, lem:units_gluing}
+  \leanok
+  Under the witness relation of Theorem~\ref{thm:unitsCorrCochain_compat}, the corrected values
+  glue to a single unit \(u \in \Gamma(Y, D)^{\times}\) whose restriction to each
+  \(\mathcal C_y \cap D\) is \((\mathrm{corr}\,c)_y\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The opens \(\{\mathcal C_y \cap D\}_{y}\) cover \(D\), since \(y \in \mathcal C_y\). The
+  corrected values agree on overlaps by Theorem~\ref{thm:unitsCorrCochain_compat}, so the sheaf
+  gluing for unit sections (Lemma~\ref{lem:units_gluing}) produces the glued unit \(u\) on
+  \(D\).
+\end{proof}
+
+\begin{theorem}[Pullback expansion of a glued corrected unit]
+  \label{thm:unitsAppLE_glued_corr}
+  \lean{AlgebraicGeometry.Scheme.Hom.unitsAppLE_glued_corr}
+  \uses{def:unitsCorrCochain, thm:exists_glued_unitsCorrCochain}
+  \leanok
+  Let \(\varphi \colon X' \to Y\) and let \(O \subseteq X'\) be an open inside
+  \(\varphi^{-1}(\mathcal C_{\varphi x} \cap D)\). Then the \(\varphi\)-pullback of a glued
+  corrected unit \(u\) expands into its three factors, the correction factors pulled back along
+  the composites \(\varphi \circ r_1\) and \(\varphi \circ r_2\):
+  \[
+    \varphi^{\sharp} u =
+      (\varphi r_1)^{\sharp}\gamma_Z(a,\, (\varphi r_1)x) \cdot
+      \bigl(\varphi^{\sharp} c_{\varphi x}\bigr)^{-1} \cdot
+      (\varphi r_2)^{\sharp}\gamma_Z((\varphi r_2)x,\, b) .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  By the defining property of \(u\) (Theorem~\ref{thm:exists_glued_unitsCorrCochain}), its
+  restriction to \(\mathcal C_{\varphi x} \cap D\) is \((\mathrm{corr}\,c)_{\varphi x}\). Pull
+  this equality back along \(\varphi\) into \(O\) and distribute the pullback over the product
+  and inverse; each point-indexed factor pulled back along \(\varphi\) then along \(r_i\)
+  becomes its pullback along the composite \(\varphi \circ r_i\), which is the displayed normal
+  form.
+\end{proof}
+
+\begin{theorem}[Coherence kills the witness along a coface section]
+  \label{thm:unitsAppLE_eq_one_of_coherent}
+  \lean{AlgebraicGeometry.unitsAppLE_eq_one_of_coherent}
+  \uses{def:CoherentCechWitness}
+  \leanok
+  Let \(g_{23}, g_{12}, g_{13} \colon T \to Y\) satisfy the Amitsur coherence relation for a
+  witness cochain \(c\) on a pointed cover \(\mathcal C\) of \(Y\):
+  \((g_{23}^{\sharp} c) \cdot (g_{12}^{\sharp} c) = g_{13}^{\sharp} c\) on the common
+  refinement of the three coface pullbacks. If \(\sigma \colon Y \to T\) and \(\delta_r \colon
+  Y \to Y\) satisfy \(\sigma \circ g_{23} = \mathrm{id}\), \(\sigma \circ g_{12} = \delta_r\)
+  and \(\sigma \circ g_{13} = \mathrm{id}\), then the \(\delta_r\)-pullback of \(c\) is
+  trivial: \(\delta_r^{\sharp} c = 1\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Pull the coherence relation at the point \(\sigma y\) back along \(\sigma\) onto a suitable
+  open. By the composite-section identities \(\sigma \circ g_{23} = \mathrm{id}\),
+  \(\sigma \circ g_{12} = \delta_r\), \(\sigma \circ g_{13} = \mathrm{id}\), the three pulled
+  back witness terms become \(c\), \(\delta_r^{\sharp} c\) and \(c\) respectively, so the
+  relation reads \(c \cdot \delta_r^{\sharp} c = c\). Cancelling the unit \(c\) gives
+  \(\delta_r^{\sharp} c = 1\).
+\end{proof}
+
+\begin{theorem}[Diagonal triviality of a coherent witness]
+  \label{thm:unitsAppLE_diag_eq_one_of_coherent}
+  \lean{AlgebraicGeometry.unitsAppLE_diag_eq_one_of_coherent}
+  \uses{thm:unitsAppLE_eq_one_of_coherent}
+  \leanok
+  Let \(\delta \colon Z \to Y\) and \(\delta_r \colon Y \to Y\) satisfy \(\delta \circ
+  \delta_r = \delta\), and suppose the \(\delta_r\)-pullback of \(c\) is trivial. Then the
+  \(\delta\)-pullback of \(c\) is trivial: \(\delta^{\sharp} c = 1\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Pull the identity \(\delta_r^{\sharp} c = 1\) (at the point \(\delta v\)) back along
+  \(\delta\); by \(\delta \circ \delta_r = \delta\) the composite \(\delta \circ \delta_r\)
+  reduces to \(\delta\), so the pullback of \(\delta_r^{\sharp} c\) along \(\delta\) is
+  \(\delta^{\sharp} c\), while the pullback of the constant \(1\) is \(1\). Hence
+  \(\delta^{\sharp} c = 1\).
+\end{proof}
+
+\begin{theorem}[The glued corrected units satisfy the Amitsur cocycle identity]
+  \label{thm:glued_corr_amitsur}
+  \lean{AlgebraicGeometry.glued_corr_amitsur}
+  \uses{def:unitsCorrCochain, thm:unitsAppLE_glued_corr}
+  \leanok
+  Let \(g_{23}, g_{12}, g_{13} \colon T \to Y\) satisfy the simplicial coincidences
+  \(g_{13} \circ r_1 = g_{12} \circ r_1\), \(g_{23} \circ r_1 = g_{12} \circ r_2\),
+  \(g_{23} \circ r_2 = g_{13} \circ r_2\), and let \(c\) be Amitsur-coherent. Let \(u_{23},
+  u_{12}, u_{13}\) be the glued corrected units for the point pairs \((b, c')\), \((a, b)\),
+  \((a, c')\) on opens \(D_{23}, D_{12}, D_{13}\). Then, on any \(D_T\) inside the three
+  preimages,
+  \[
+    g_{23}^{\sharp} u_{23} \cdot g_{12}^{\sharp} u_{12} = g_{13}^{\sharp} u_{13} .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Check the identity on each member of the cover \(\{(\mathcal C\text{-triple-overlap})_z \cap
+  D_T\}\) of \(D_T\). On such a member, expand the three pulled back glued units by
+  Theorem~\ref{thm:unitsAppLE_glued_corr}; the six correction factors, pulled back along the
+  composites \(g_{\bullet} \circ r_{\bullet}\), collapse by the three simplicial coincidences
+  onto matching cocycle values. Grouping, the left correction factor of \(u_{23}\) and the
+  right correction factor of \(u_{12}\) are the two \(\gamma_Z\)-values anchored at \(b\); by
+  the cocycle identity of \(\gamma_Z\) at \((b, \cdot, b)\) and \(\gamma_Z(b,b) = 1\) they
+  cancel, leaving the remaining correction factors as the correction factors of \(u_{13}\). The
+  three witness terms combine by the coherence relation
+  \((g_{23}^{\sharp} c)(g_{12}^{\sharp} c) = g_{13}^{\sharp} c\). What remains is exactly
+  \(g_{13}^{\sharp} u_{13}\); this is the commutative-group telescope of the paired correction
+  factors against the coherence relation.
+\end{proof}
+
+\begin{theorem}[The glued corrected unit collapses onto the cocycle value on the diagonal]
+  \label{thm:glued_corr_collapse}
+  \lean{AlgebraicGeometry.glued_corr_collapse}
+  \uses{def:unitsCorrCochain, thm:unitsAppLE_glued_corr}
+  \leanok
+  Let \(\delta \colon Z \to Y\) be a common section of \(r_1, r_2\) (\(\delta \circ r_1 =
+  \mathrm{id} = \delta \circ r_2\)) along which the witness is trivial
+  (\(\delta^{\sharp} c = 1\)). Then, on an open \(E\) with \(\delta(E) \subseteq D\) and
+  \(E \subseteq \mathcal N_a \cap \mathcal N_b\), the \(\delta\)-pullback of the glued corrected
+  unit for the pair \((a, b)\) is the restriction of the cocycle value:
+  \(\delta^{\sharp} u = \gamma_Z(a, b)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Check the identity on each member of the cover \(\{\delta^{-1}\mathcal C_{\delta v} \cap E\}\)
+  of \(E\). On such a member, expand \(\delta^{\sharp} u\) by
+  Theorem~\ref{thm:unitsAppLE_glued_corr}; since \(\delta \circ r_1 = \mathrm{id} = \delta
+  \circ r_2\), the two correction factors become \(\gamma_Z(a, \delta v)\) and
+  \(\gamma_Z(\delta v, b)\), and the witness factor is \(1\) by hypothesis. The product of the
+  two correction factors telescopes through the cocycle identity of \(\gamma_Z\) at
+  \((a, \delta v, b)\) to \(\gamma_Z(a, b)\).
+\end{proof}
+
+\section{The glued witness components on the tensor square}
+\label{sec:witnessComponents}
+
+We now instantiate the corrected-witness calculus on the tensor towers \(\Spec B \leftarrow
+\Spec(B \otimes_A B) \leftarrow \Spec(B \otimes_A (B \otimes_A B))\). Fix an
+Amitsur-coherent \v Cech witness \(\theta' \colon \mathrm{CoherentCechWitness}\) for
+\(\gamma\) (Definition~\ref{def:CoherentCechWitness}) and a \emph{finite basic refinement}
+\(P\) of the trivializing cover \(\mathcal N\): a finite family of sections \(P.r_i \in
+\Gamma(\Spec B, \top)\) whose basic opens \(D(P.r_i)\) refine \(\mathcal N\), each with a
+distinguished point \(P.\mathrm{pt}_i \in \mathcal N\). Write \(q_1, q_2\) for the
+coprojections and \(f_{12}, f_{13}, f_{23}\) for the cofaces.
+
+\begin{definition}[The double and triple basic sections]
+  \label{def:pairTripleSection}
+  \lean{AlgebraicGeometry.Over.pairSection, AlgebraicGeometry.Over.tripleSection}
+  \uses{def:tensorInl_tensorInr, def:tensorFaces}
+  \leanok
+  The \emph{double basic section} cutting out the double basic open of \(\Spec(B \otimes_A B)\)
+  is
+  \[
+    \mathrm{pairSection}(i, j) := q_1^{\sharp}(P.r_i) \cdot q_2^{\sharp}(P.r_j)
+    \in \Gamma(\Spec(B \otimes_A B), \top) ,
+  \]
+  and the \emph{triple basic section} cutting out the triple basic open of
+  \(\Spec(B \otimes_A (B \otimes_A B))\) is
+  \[
+    \mathrm{tripleSection}(i, j, l) := (f_{12} q_1)^{\sharp}(P.r_i) \cdot
+      \bigl( (f_{12} q_2)^{\sharp}(P.r_j) \cdot (f_{13} q_2)^{\sharp}(P.r_l) \bigr) ,
+  \]
+  spelled through the three canonical insertions \(f_{12} \circ q_1\), \(f_{12} \circ q_2\),
+  \(f_{13} \circ q_2\).
+\end{definition}
+
+\begin{definition}[The glued witness component]
+  \label{def:witnessBasicSection}
+  \lean{AlgebraicGeometry.Over.witnessBasicSection}
+  \uses{def:pairTripleSection, def:unitsCorrCochain, thm:exists_glued_unitsCorrCochain,
+    def:CoherentCechWitness}
+  \leanok
+  The \emph{glued witness component} \(\mathrm{witnessBasicSection}(i, j)\) is the glued unit on
+  the double basic open \(D(\mathrm{pairSection}(i, j))\) obtained from
+  Theorem~\ref{thm:exists_glued_unitsCorrCochain} applied to the coprojections \(q_1, q_2\), the
+  witness cover and cochain of \(\theta'\), the trivializing cocycle \(\gamma\), and the two
+  distinguished points \(P.\mathrm{pt}_i, P.\mathrm{pt}_j\); its restriction to each
+  \(\mathcal V_x \cap D(\mathrm{pairSection}(i, j))\) is the corrected witness value at \(x\).
+\end{definition}
+
+\begin{theorem}[Diagonal triviality of the coherent witness]
+  \label{thm:witnessAppLE_diag_eq_one}
+  \lean{AlgebraicGeometry.Over.witnessAppLE_diag_eq_one}
+  \uses{thm:unitsAppLE_diag_eq_one_of_coherent, thm:unitsAppLE_eq_one_of_coherent,
+    lem:overSpecMap_left_degeneracy, def:CoherentCechWitness}
+  \leanok
+  The witness cochain \(\theta\) of \(\theta'\) is trivial along the diagonal \(\Delta =
+  \Spec(\mathrm{tensorMul})\): the \(\Delta\)-pullback of \(\theta\) is \(1\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Apply the diagonal-triviality transport (Theorem~\ref{thm:unitsAppLE_diag_eq_one_of_coherent})
+  with \(\delta = \Delta\) and \(\delta_r = q_1 \circ \Delta\); the required identity
+  \(\Delta \circ (q_1 \circ \Delta) = \Delta\) follows from \(\Delta \circ q_1 = \mathrm{id}\)
+  (Lemma~\ref{lem:overSpecMap_left_degeneracy}). Its hypothesis — triviality of the
+  \((q_1 \circ \Delta)\)-pullback of \(\theta\) — is
+  Theorem~\ref{thm:unitsAppLE_eq_one_of_coherent} for the degeneracy \(\sigma\) against the
+  three cofaces, whose section identities \(\sigma \circ f_{23} = \mathrm{id}\),
+  \(\sigma \circ f_{12} = q_1 \circ \Delta\), \(\sigma \circ f_{13} = \mathrm{id}\) are the
+  degeneracy coincidences of Lemma~\ref{lem:overSpecMap_left_degeneracy} and whose coherence
+  hypothesis is the Amitsur coherence of \(\theta'\).
+\end{proof}
+
+\begin{theorem}[The Amitsur cocycle identity of the glued components]
+  \label{thm:witnessBasicSection_amitsur}
+  \lean{AlgebraicGeometry.Over.witnessBasicSection_amitsur}
+  \uses{def:witnessBasicSection, thm:glued_corr_amitsur, lem:overSpec_whisker_face,
+    def:pairTripleSection, def:CoherentCechWitness}
+  \leanok
+  Over the triple basic open of \(\Spec(B \otimes_A (B \otimes_A B))\), the coface pullbacks of
+  the glued witness components satisfy the Amitsur cocycle identity:
+  \[
+    f_{23}^{\sharp}\,\mathrm{witnessBasicSection}(j, l) \cdot
+      f_{12}^{\sharp}\,\mathrm{witnessBasicSection}(i, j)
+      = f_{13}^{\sharp}\,\mathrm{witnessBasicSection}(i, l) .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  This is Theorem~\ref{thm:glued_corr_amitsur} applied along the cofaces \(f_{23}, f_{12},
+  f_{13}\) and coprojections \(q_1, q_2\), for the point pairs
+  \((P.\mathrm{pt}_j, P.\mathrm{pt}_l)\), \((P.\mathrm{pt}_i, P.\mathrm{pt}_j)\),
+  \((P.\mathrm{pt}_i, P.\mathrm{pt}_l)\) on the three double basic opens. Its simplicial
+  coincidences \(f_{12} q_1 = f_{13} q_1\), \(f_{12} q_2 = f_{23} q_1\), \(f_{13} q_2 = f_{23}
+  q_2\) are the coface coincidences of Lemma~\ref{lem:overSpec_whisker_face}, and its coherence
+  input is the Amitsur coherence of \(\theta'\); the containments of the triple basic open in
+  the three coface preimages hold because \(\mathrm{tripleSection}\) is divisible by each coface
+  pullback of the relevant \(\mathrm{pairSection}\).
+\end{proof}
+
+\begin{theorem}[The diagonal collapse of the glued components]
+  \label{thm:witnessBasicSection_collapse}
+  \lean{AlgebraicGeometry.Over.witnessBasicSection_collapse}
+  \uses{def:witnessBasicSection, thm:glued_corr_collapse, thm:witnessAppLE_diag_eq_one,
+    lem:overSpecMap_left_degeneracy, def:pairTripleSection}
+  \leanok
+  The \(\Delta\)-pullback of the glued witness component onto the Zariski overlap
+  \(D(P.r_i \cdot P.r_j) \subseteq \Spec B\) is the Zariski cover cocycle value \(\gamma_{ij}\)
+  of \(P\):
+  \[
+    \Delta^{\sharp}\,\mathrm{witnessBasicSection}(i, j) = \gamma_{ij} .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  This is Theorem~\ref{thm:glued_corr_collapse} applied with the common section \(\delta =
+  \Delta\) of \(q_1, q_2\), whose identities \(\Delta \circ q_1 = \mathrm{id} = \Delta \circ
+  q_2\) are the degeneracy coincidences of Lemma~\ref{lem:overSpecMap_left_degeneracy}. Its
+  hypothesis of diagonal triviality of the witness is
+  Theorem~\ref{thm:witnessAppLE_diag_eq_one}; the point pair is \((P.\mathrm{pt}_i,
+  P.\mathrm{pt}_j)\), and the target open \(D(P.r_i \cdot P.r_j)\) lands in \(\mathcal
+  N_{P.\mathrm{pt}_i} \cap \mathcal N_{P.\mathrm{pt}_j}\) and in the \(\Delta\)-preimage of the
+  double basic open. The resulting cocycle value \(\gamma(P.\mathrm{pt}_i, P.\mathrm{pt}_j)\)
+  restricted to the overlap is, by definition, the Zariski cover cocycle \(\gamma_{ij}\) of the
+  basic refinement.
+\end{proof}
+
+\section{Section rings on basic opens as two-base localizations}
+\label{sec:witnessAway}
+
+To pass the three identities of Section~\ref{sec:witnessComponents} to the pure-algebra
+assembly of Section~\ref{sec:piAssembly}, the section rings on the basic opens of the tensor
+towers are identified with the algebraic tensor localizations. All section rings of
+\(\Spec R\) carry the canonical \(R\)-algebra structure whose structure map is the inverse of
+the global-sections isomorphism \(\Gamma\Spec\)-iso followed by restriction.
+
+\begin{theorem}[Section rings on basic opens are localizations of the ring]
+  \label{thm:isLocalization_away_sections}
+  \lean{AlgebraicGeometry.isLocalization_away_sections}
+  \leanok
+  For a commutative ring \(R\) and a global section \(g \in \Gamma(\Spec R, \top)\), the
+  section ring on the basic open \(D(g)\) is the localization of \(R\) itself away from the
+  element \(\Gamma\Spec\text{-}\mathrm{iso}(g) \in R\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The canonical \(\Gamma(\Spec R, \top)\)-algebra structure on \(\Gamma(\Spec R, D(g))\)
+  exhibits it as the localization of \(\Gamma(\Spec R, \top)\) away from \(g\). Transport this
+  along the ring isomorphism \(R \cong \Gamma(\Spec R, \top)\) given by the global-sections
+  isomorphism: the powers of \(g\) correspond to the powers of its image in \(R\), and the two
+  algebra structures agree, so \(\Gamma(\Spec R, D(g))\) is the localization of \(R\) away from
+  that image.
+\end{proof}
+
+\begin{lemma}[The localization elements of the basic sections]
+  \label{lem:GammaSpecIso_hom_pairTripleSection}
+  \lean{AlgebraicGeometry.Over.ΓSpecIso_hom_pairSection,
+    AlgebraicGeometry.Over.ΓSpecIso_hom_tripleSection}
+  \uses{def:pairTripleSection, def:tensorInl_tensorInr, def:tensorFaces}
+  \leanok
+  Write \(b_i \in B\) for the element cutting out \(D(P.r_i)\). The global-sections
+  isomorphism carries the double basic section to the two-base localization element
+  \[
+    \mathrm{pairSection}(i, j) \mapsto (b_i \otimes 1)(1 \otimes b_j)
+    \quad\text{in } B \otimes_A B ,
+  \]
+  and the triple basic section to
+  \[
+    \mathrm{tripleSection}(i, j, l) \mapsto
+      (b_i \otimes 1)\bigl(1 \otimes \bigl((b_j \otimes 1)(1 \otimes b_l)\bigr)\bigr)
+    \quad\text{in } B \otimes_A (B \otimes_A B) .
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  The global-sections isomorphism intertwines \(q_1^{\sharp}\) with \(\mathrm{tensorInl}\) and
+  \(q_2^{\sharp}\) with \(\mathrm{tensorInr}\) (its naturality against
+  \(\Spec(\mathrm{tensorInl})\), \(\Spec(\mathrm{tensorInr})\)), so it sends
+  \(q_1^{\sharp}(P.r_i)\) to \(b_i \otimes 1\) and \(q_2^{\sharp}(P.r_j)\) to \(1 \otimes b_j\);
+  multiplying gives the double element. For the triple element, apply naturality once more
+  against the cofaces \(f_{12}, f_{13}\), computing the three insertions
+  \(f_{12}^{\sharp} q_1^{\sharp}(P.r_i)\), \(f_{12}^{\sharp} q_2^{\sharp}(P.r_j)\),
+  \(f_{13}^{\sharp} q_2^{\sharp}(P.r_l)\) as \(b_i \otimes (1 \otimes 1)\),
+  \(1 \otimes (b_j \otimes 1)\), \(1 \otimes (1 \otimes b_l)\), and rearranging the product.
+\end{proof}
+
+\begin{definition}[The two-base localization identifications]
+  \label{def:pairTripleAwayEquiv}
+  \lean{AlgebraicGeometry.Over.pairAwayEquiv, AlgebraicGeometry.Over.tripleAwayEquiv}
+  \uses{def:tensorAwayEquiv, thm:isLocalization_away_sections, thm:isLocalization_away_tensor,
+    lem:GammaSpecIso_hom_pairTripleSection, def:pairTripleSection}
+  \leanok
+  Let \(S_i := \Gamma(\Spec B, D(P.r_i))\), a localization of \(B\) away from \(b_i\)
+  (Theorem~\ref{thm:isLocalization_away_sections}). The comparison of tensor localizations
+  (Definition~\ref{def:tensorAwayEquiv}) gives the two-base identifications
+  \[
+    \mathrm{pairAwayEquiv} \colon S_i \otimes_A S_j \;\xrightarrow{\ \sim\ }\;
+      \Gamma\bigl(\Spec(B \otimes_A B), D(\mathrm{pairSection}(i, j))\bigr), \qquad
+  \]
+  \[
+    \mathrm{tripleAwayEquiv} \colon S_i \otimes_A (S_j \otimes_A S_l) \;\xrightarrow{\ \sim\ }\;
+      \Gamma\bigl(\Spec(B \otimes_A (B \otimes_A B)), D(\mathrm{tripleSection}(i, j, l))\bigr) ,
+  \]
+  the target section rings being the localizations of \(B \otimes_A B\), resp.\
+  \(B \otimes_A (B \otimes_A B)\), at the two-base elements of
+  Lemma~\ref{lem:GammaSpecIso_hom_pairTripleSection}. For the triple identification the inner
+  factor \(S_j \otimes_A S_l\) is first recognized as a localization of \(B \otimes_A B\)
+  (Theorem~\ref{thm:isLocalization_away_tensor}), so that
+  \(S_i \otimes_A (S_j \otimes_A S_l)\) is a two-base localization over
+  \(B \otimes_A (B \otimes_A B)\).
+\end{definition}
+
+\section{Transport of the simplicial maps through the two-base identifications}
+\label{sec:witnessTransport}
+
+The restriction maps of the section rings along the diagonal \(\Delta\) and the three cofaces
+correspond, under the identifications of Definition~\ref{def:pairTripleAwayEquiv}, to the
+index-wise collapse and faces of the pure-algebra assembly. Each is an instance of the
+uniqueness of maps out of a localization: both composites are computed on structure-map
+images and agree there, and extensionality is invoked over \(B \otimes_A B\) — where the
+components are \(\mathrm{Away}\) localizations — never over \(A\).
+
+\begin{lemma}[The diagonal pullback is the index-wise collapse]
+  \label{lem:pairAwayEquiv_appLE_diag}
+  \lean{AlgebraicGeometry.Over.pairAwayEquiv_appLE_diag}
+  \uses{def:pairTripleAwayEquiv, def:componentCollapse, thm:isLocalization_away_tensor,
+    lem:overSpecMap_left_degeneracy}
+  \leanok
+  Under the identification \(\mathrm{pairAwayEquiv}\), the \(\Delta\)-pullback
+  \(\Gamma(D(\mathrm{pairSection}(i, j))) \to \Gamma(D(P.r_i \cdot P.r_j))\) is the index-wise
+  collapse \(\kappa_{ij} \colon S_i \otimes_A S_j \to T_{ij}\) onto the Zariski overlap ring
+  \(T_{ij} = \Gamma(\Spec B, D(P.r_i \cdot P.r_j))\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Both maps are \(A\)-algebra homomorphisms out of the localization \(S_i \otimes_A S_j\) of
+  \(B \otimes_A B\) (Theorem~\ref{thm:isLocalization_away_tensor}), so by uniqueness of maps out
+  of a localization it suffices to compare their composites with the structure map
+  \(B \otimes_A B \to S_i \otimes_A S_j\). On a structure-map image the \(\Delta\)-pullback
+  computes, through the naturality of the global-sections isomorphism against
+  \(\Spec(\mathrm{tensorMul})\) and the diagonal coincidence
+  (Lemma~\ref{lem:overSpecMap_left_degeneracy}), as the multiplication \(B \otimes_A B \to B\)
+  followed by the structure map into \(T_{ij}\); and the index-wise collapse on a structure-map
+  image is that same composite (Definition~\ref{def:componentCollapse}). The two agree, hence so
+  do the maps.
+\end{proof}
+
+\begin{lemma}[The coface pullbacks are the index-wise faces]
+  \label{lem:tripleAwayEquiv_faceA}
+  \lean{AlgebraicGeometry.Over.tripleAwayEquiv_faceA₂₃,
+    AlgebraicGeometry.Over.tripleAwayEquiv_faceA₁₂,
+    AlgebraicGeometry.Over.tripleAwayEquiv_faceA₁₃}
+  \uses{def:pairTripleAwayEquiv, def:indexwiseMaps, lem:faceA_comp_tensorMap,
+    thm:isLocalization_away_tensor, lem:overSpec_whisker_face, def:pairTripleSection}
+  \leanok
+  Under the identifications \(\mathrm{pairAwayEquiv}\) and \(\mathrm{tripleAwayEquiv}\), the
+  three coface pullbacks \(f_{23}^{\sharp}, f_{12}^{\sharp}, f_{13}^{\sharp}\) between the
+  basic-open section rings are the index-wise faces \(\mathrm{face}_{23}, \mathrm{face}_{12},
+  \mathrm{face}_{13}\) of Definition~\ref{def:indexwiseMaps}.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Fix the coface \(\bullet \in \{12, 13, 23\}\). Both \(\mathrm{tripleAwayEquiv} \circ
+  \mathrm{face}_{\bullet}\) and \(f_{\bullet}^{\sharp} \circ \mathrm{pairAwayEquiv}\) are
+  \(A\)-algebra homomorphisms out of the localization \(S_j \otimes_A S_l\) (resp.\ \(S_i
+  \otimes_A S_j\), \(S_i \otimes_A S_l\)) of \(B \otimes_A B\)
+  (Theorem~\ref{thm:isLocalization_away_tensor}), so by uniqueness of maps out of a localization
+  it suffices to compare their composites with the structure map \(B \otimes_A B \to S_\bullet
+  \otimes_A S_\bullet\). On a structure-map image the coface pullback computes, through the
+  naturality of the global-sections isomorphism and the coface coincidences
+  (Lemma~\ref{lem:overSpec_whisker_face}), as the descent coface followed by the triple
+  structure map; and the index-wise face intertwines the double and triple structure maps over
+  that same descent coface (Lemma~\ref{lem:faceA_comp_tensorMap}). The two composites agree.
+\end{proof}
+
+\section{The composite descent unit of the \'etale-separatedness assembly}
+\label{sec:witnessAssembly}
+
+Assembling the glued witness components into the composite \(A\)-descent unit yields the two
+halves of the deliverable and the headline class equation handed onward. Write \(S_i :=
+\Gamma(\Spec B, D(P.r_i))\) and \(P_{\!\bullet} := \prod_i S_i\).
+
+\begin{definition}[The witness component]
+  \label{def:witnessComponent}
+  \lean{AlgebraicGeometry.Over.witnessComponent}
+  \uses{def:witnessBasicSection, def:pairTripleAwayEquiv}
+  \leanok
+  The \emph{witness component} \(w_{ij} \in (S_i \otimes_A S_j)^{\times}\) is the glued witness
+  component \(\mathrm{witnessBasicSection}(i, j)\) transported through the two-base
+  identification \(\mathrm{pairAwayEquiv}\) (Definition~\ref{def:pairTripleAwayEquiv}).
+\end{definition}
+
+\begin{definition}[The composite descent unit of the assembly]
+  \label{def:assemblyUnit}
+  \lean{AlgebraicGeometry.Over.assemblyUnit}
+  \uses{def:witnessComponent, def:piAssemblyUnit}
+  \leanok
+  The \emph{composite descent unit} \(\mathrm{assemblyUnit} \in (P_{\!\bullet} \otimes_A
+  P_{\!\bullet})^{\times}\) is the pi-assembly (Definition~\ref{def:piAssemblyUnit}) of the
+  family of witness components \((w_{ij})\).
+\end{definition}
+
+\begin{theorem}[The witness components collapse onto the Zariski cover cocycle]
+  \label{thm:componentCollapse_witnessComponent}
+  \lean{AlgebraicGeometry.Over.componentCollapse_witnessComponent}
+  \uses{def:witnessComponent, lem:pairAwayEquiv_appLE_diag, thm:witnessBasicSection_collapse,
+    def:componentCollapse}
+  \leanok
+  The index-wise collapse of the witness component is the Zariski cover cocycle value:
+  \(\kappa_{ij}(w_{ij}) = \gamma_{ij}\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  By Lemma~\ref{lem:pairAwayEquiv_appLE_diag} the collapse \(\kappa_{ij}\) is, through
+  \(\mathrm{pairAwayEquiv}\), the \(\Delta\)-pullback; applied to the witness component it is the
+  \(\Delta\)-pullback of \(\mathrm{witnessBasicSection}(i, j)\), which is \(\gamma_{ij}\) by
+  Theorem~\ref{thm:witnessBasicSection_collapse}.
+\end{proof}
+
+\begin{theorem}[The witness components satisfy the index-wise cocycle identity]
+  \label{thm:faceA_cocycle_witnessComponent}
+  \lean{AlgebraicGeometry.Over.faceA_cocycle_witnessComponent}
+  \uses{def:witnessComponent, lem:tripleAwayEquiv_faceA, thm:witnessBasicSection_amitsur,
+    def:indexwiseMaps}
+  \leanok
+  The witness components satisfy the index-wise cocycle identity:
+  \(\mathrm{face}_{23}(w_{jl}) \cdot \mathrm{face}_{12}(w_{ij}) = \mathrm{face}_{13}(w_{il})\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Apply the injective identification \(\mathrm{tripleAwayEquiv}\). By
+  Lemma~\ref{lem:tripleAwayEquiv_faceA} it carries each index-wise face of a witness component
+  to the corresponding coface pullback of the glued component
+  \(\mathrm{witnessBasicSection}\); the transported identity is then the Amitsur cocycle
+  identity of the glued components (Theorem~\ref{thm:witnessBasicSection_amitsur}).
+\end{proof}
+
+\begin{theorem}[The assembled witness unit is an \(A\)-descent \(1\)-cocycle]
+  \label{thm:isDescentCocycle_assemblyUnit}
+  \lean{AlgebraicGeometry.Over.isDescentCocycle_assemblyUnit}
+  \uses{def:assemblyUnit, thm:isDescentCocycle_piAssemblyUnit,
+    thm:diagA_eq_one_of_componentCollapse, thm:componentCollapse_witnessComponent,
+    thm:faceA_cocycle_witnessComponent}
+  \source{kleiman-picard}
+  \leanok
+  The composite descent unit \(\mathrm{assemblyUnit}\) is an \(A\)-descent \(1\)-cocycle
+  relative to \(A \to P_{\!\bullet}\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Apply the descent-cocycle criterion for a pi-assembly
+  (Theorem~\ref{thm:isDescentCocycle_piAssemblyUnit}). Its index-wise cocycle hypothesis is
+  Theorem~\ref{thm:faceA_cocycle_witnessComponent}. Its diagonal-normalization hypothesis is
+  automatic: the witness components collapse onto the Zariski cover cocycle
+  (Theorem~\ref{thm:componentCollapse_witnessComponent}), whose diagonal is \(1\) since the
+  cover cocycle is a genuine \v Cech cocycle, so
+  Theorem~\ref{thm:diagA_eq_one_of_componentCollapse} gives \(\mathrm{diag}(w_{ii}) = 1\). This
+  is precisely the descent construction of Kleiman's separatedness argument: the assembled unit
+  \(v'_{23} v'_{12} = v'_{13}\) descends the componentwise trivializations to a single datum on
+  the base.
+\end{proof}
+
+\begin{theorem}[The collapse of the assembled unit is the descent unit of the cover cocycle]
+  \label{thm:tensorCollapse_assemblyUnit}
+  \lean{AlgebraicGeometry.Over.tensorCollapse_assemblyUnit}
+  \uses{def:assemblyUnit, thm:tensorCollapse_piAssemblyUnit,
+    thm:componentCollapse_witnessComponent, def:module_tensorCollapse}
+  \leanok
+  The collapse of the composite descent unit along the tower \(A \to \Gamma(\Spec B, \top) \to
+  P_{\!\bullet}\) is the descent unit of the Zariski cover cocycle of \(P\):
+  \[
+    \pi\bigl(\mathrm{assemblyUnit}\bigr) = \mathrm{cocycleUnit}(\gamma_{\bullet}) .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  This is the collapse identity for a pi-assembly
+  (Theorem~\ref{thm:tensorCollapse_piAssemblyUnit}), whose hypothesis — that the witness
+  components collapse onto the cover cocycle, \(\kappa_{ij}(w_{ij}) = \gamma_{ij}\) — is
+  Theorem~\ref{thm:componentCollapse_witnessComponent}; the intermediate ring of the collapse
+  tower is the scheme-side base ring \(\Gamma(\Spec B, \top)\).
+\end{proof}
+
+\begin{lemma}[Faithful flatness of the global sections of \(\Spec B\)]
+  \label{lem:faithfullyFlat_sectionsTop}
+  \lean{AlgebraicGeometry.Over.sectionsTopAlgEquiv,
+    AlgebraicGeometry.Over.faithfullyFlat_sectionsTop}
+  \leanok
+  The global-sections isomorphism is an isomorphism of \(A\)-algebras \(\Gamma(\Spec B, \top)
+  \cong B\) for the composed \(A\)-structure. Consequently, if \(A \to B\) is faithfully flat,
+  then \(A \to \Gamma(\Spec B, \top)\) is faithfully flat.
+\end{lemma}
+\begin{proof}
+  \leanok
+  The global-sections isomorphism is a ring isomorphism commuting with the two structure maps
+  from \(A\) (both send \(a\) to the image of \(a\), via restriction of \(\Gamma\Spec\)-iso),
+  hence an \(A\)-algebra isomorphism. Faithful flatness of a module transports along a linear
+  isomorphism, so faithful flatness of \(A \to B\) gives faithful flatness of \(A \to
+  \Gamma(\Spec B, \top)\).
+\end{proof}
+
+\begin{theorem}[The class equation of the composite descent unit]
+  \label{thm:mapAlgebra_picClass_assemblyUnit}
+  \lean{AlgebraicGeometry.Over.mapAlgebra_picClass_assemblyUnit}
+  \uses{thm:isDescentCocycle_assemblyUnit, thm:tensorCollapse_assemblyUnit,
+    thm:module_picClass_collapse, lem:faithfullyFlat_sectionsTop, thm:pi_tower,
+    def:module_picClass, thm:trivializingFamily_pic_cocycle}
+  \source{kleiman-picard}
+  \leanok
+  Assume \(A \to B\) is faithfully flat. Then the Picard class of the composite descent unit
+  maps, under the base-change homomorphism \(\Pic(A) \to \Pic(\Gamma(\Spec B, \top))\) along
+  \(A \to \Gamma(\Spec B, \top)\), to the Picard class of the Zariski cover cocycle of \(P\):
+  \[
+    \Pic(A \to \Gamma(\Spec B, \top))\bigl(\mathrm{picClass}(\mathrm{assemblyUnit})\bigr)
+      = \mathrm{pic}(\gamma) ,
+  \]
+  which is \([N]\) when \(\gamma\) is the trivializing cocycle of an invertible module \(N\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Set \(P_0 := \Gamma(\Spec B, \top)\). The tower \(A \to P_0 \to P_{\!\bullet}\) is faithfully
+  flat: \(A \to P_0\) by Lemma~\ref{lem:faithfullyFlat_sectionsTop}, and \(P_0 \to
+  P_{\!\bullet}\) because \(P_{\!\bullet} = \prod_i S_i\) is the product of the localizations of
+  \(P_0\) at the covering family \(P.r\) (Theorem~\ref{thm:pi_tower}); hence \(A \to
+  P_{\!\bullet}\) is faithfully flat. By naturality of the Picard class under descent in stages
+  (Theorem~\ref{thm:module_picClass_collapse}) applied to \(\mathrm{assemblyUnit}\)
+  (Theorem~\ref{thm:isDescentCocycle_assemblyUnit}), the base change to \(P_0\) of
+  \(\mathrm{picClass}(\mathrm{assemblyUnit})\) is the Picard class over \(P_0\) of the collapse
+  \(\pi(\mathrm{assemblyUnit})\). By Theorem~\ref{thm:tensorCollapse_assemblyUnit} that collapse
+  is the descent unit of the Zariski cover cocycle, whose Picard class is \(\mathrm{pic}(\gamma)\)
+  by definition (Definition~\ref{def:module_picClass}); and when \(\gamma\) trivializes an
+  invertible module \(N\), \(\mathrm{pic}(\gamma) = [N]\) by
+  Theorem~\ref{thm:trivializingFamily_pic_cocycle}. This is the invertible descended sheaf of
+  Kleiman's separatedness argument, in its \v Cech incarnation.
+\end{proof}
