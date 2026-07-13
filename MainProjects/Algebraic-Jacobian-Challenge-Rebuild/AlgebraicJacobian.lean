@@ -63,6 +63,13 @@ import AlgebraicJacobian.Picard.CoherentWitness
 import AlgebraicJacobian.Picard.CoherentWitnessCochains
 import AlgebraicJacobian.Picard.UnitsGlobalPullback
 import AlgebraicJacobian.Picard.CoherentWitnessExists
+import AlgebraicJacobian.Algebra.PiAssembly
+import AlgebraicJacobian.Picard.SpecDegeneracy
+import AlgebraicJacobian.Picard.WitnessCorrection
+import AlgebraicJacobian.Picard.WitnessComponents
+import AlgebraicJacobian.Picard.WitnessAway
+import AlgebraicJacobian.Picard.WitnessTransport
+import AlgebraicJacobian.Picard.WitnessAssembly
 import AlgebraicJacobian.Challenge
 
 /-!
