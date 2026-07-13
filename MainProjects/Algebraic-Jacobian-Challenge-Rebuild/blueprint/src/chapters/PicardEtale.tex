@@ -1743,3 +1743,629 @@ recording the three faces of the \(2\)-simplex of the cover \(B\) of \(A\).
   definition; hence \(\mathrm{picClass}(u') = \bigl[A' \otimes_A \mathrm{descended}(u)\bigr]\)
   is the image of \(\mathrm{picClass}(u)\) under this homomorphism.
 \end{proof}
+
+\section{Base change of a finite localization cover cocycle}
+\label{sec:awayCover_baseChange}
+
+Fix a homomorphism of commutative rings \(A \to A'\) and a finite family \(f \colon \iota \to
+A\).  For each index we fix localization models
+\[
+  S_i = A_{f_i}, \qquad T_{ij} = A_{f_i f_j}, \qquad W_{ijk} = A_{f_i f_j f_k},
+\]
+and the analogous \(A'\)-side models \(S'_i, T'_{ij}, W'_{ijk}\) for the pushed family
+\(f'_i := \varphi(f_i)\), where \(\varphi \colon A \to A'\) is the structure map; each primed
+model also carries the \(A\)-algebra structure of the tower \(A \to A' \to \cdot\).  This
+section transports the whole \v Cech picture of the cover \(f\) to the cover \(f'\).
+
+\begin{definition}[Base-change maps between localization models]
+  \label{def:awayCover_baseChangeMaps}
+  \lean{IsLocalization.AwayCover.mapAway, IsLocalization.AwayCover.mapOverlap,
+    IsLocalization.AwayCover.mapTriple}
+  \leanok
+  Because \(f_i\) becomes invertible in \(S'_i\) through the tower \(A \to A' \to S'_i\),
+  there is a unique \(A\)-algebra homomorphism \(S_i = A_{f_i} \to S'_i\); denote it by
+  \(\mathrm{mapAway}_i\).  Likewise, \(f_i f_j\) is invertible in \(T'_{ij}\) and
+  \(f_i f_j f_k\) in \(W'_{ijk}\), giving unique \(A\)-algebra homomorphisms
+  \[
+    \mathrm{mapOverlap}_{ij} \colon T_{ij} \to T'_{ij}, \qquad
+    \mathrm{mapTriple}_{ijk} \colon W_{ijk} \to W'_{ijk}.
+  \]
+\end{definition}
+
+\begin{theorem}[Base change of a cover cocycle]
+  \label{thm:awayCover_isCoverCocycle_baseChange}
+  \lean{IsLocalization.AwayCover.IsCoverCocycle.baseChange}
+  \uses{def:awayCover_baseChangeMaps}
+  \leanok
+  Let \(\gamma = (\gamma_{ij})\) with \(\gamma_{ij} \in T_{ij}^{\times}\) be a cover cocycle
+  for \(f\): its diagonal restrictions \(\gamma_{ii}\) map to \(1\) in \(T_{ii}\), and on
+  triple overlaps the cocycle identity
+  \(\partial_{23}\gamma_{jk} \cdot \partial_{12}\gamma_{ij} = \partial_{13}\gamma_{ik}\) holds
+  in \(W_{ijk}\).  Then the pushed family
+  \(\gamma'_{ij} := \mathrm{mapOverlap}_{ij}(\gamma_{ij}) \in (T'_{ij})^{\times}\) is a cover
+  cocycle for \(f'\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Each restriction map in the \v Cech picture — the diagonal identification \(T_{ii} \to
+  T_{ij}\) and the three face maps \(\partial_{12}, \partial_{13}, \partial_{23}\) from
+  \(T\)-overlaps to \(W\)-triples — fits into a square with its primed analogue and the maps of
+  Definition~\ref{def:awayCover_baseChangeMaps}.  Both composites in each such square are
+  \(A\)-algebra homomorphisms out of a localization of \(A\), which admits at most one such
+  homomorphism to any fixed target; hence the squares commute.  Applying the diagonal square to
+  \(\gamma_{ii}\) and using \(\gamma_{ii} \mapsto 1\) shows \(\gamma'_{ii} \mapsto 1\); applying
+  the three face squares to the cocycle identity for \(\gamma\) and using multiplicativity of
+  \(\mathrm{mapTriple}_{ijk}\) yields the cocycle identity for \(\gamma'\).  Thus \(\gamma'\) is
+  a cover cocycle for \(f'\).
+\end{proof}
+
+\begin{definition}[Base-change map of cover algebras]
+  \label{def:awayCover_piBaseChangeLift}
+  \lean{IsLocalization.AwayCover.piBaseChangeLift}
+  \uses{def:awayCover_baseChangeMaps}
+  \leanok
+  The maps \(\mathrm{mapAway}_i\) assemble into a componentwise \(A\)-algebra homomorphism
+  \(\prod_i S_i \to \prod_i S'_i\), and hence, by the universal property of base change, into a
+  canonical \(A'\)-algebra homomorphism
+  \[
+    j \colon A' \otimes_A \Bigl(\prod_i S_i\Bigr) \longrightarrow \prod_i S'_i, \qquad
+    a' \otimes s \mapsto a' \cdot \bigl(\mathrm{mapAway}_i(s_i)\bigr)_i,
+  \]
+  the \emph{base-change map of cover algebras}.
+\end{definition}
+
+\begin{theorem}[Base change of the descent unit]
+  \label{thm:awayCover_cocycleUnit_baseChange}
+  \lean{IsLocalization.AwayCover.cocycleUnit_baseChange}
+  \uses{def:awayCover_baseChangeMaps, def:awayCover_piBaseChangeLift,
+    thm:awayCover_isCoverCocycle_baseChange, def:module_tensorSqBaseChange}
+  \leanok
+  Under the canonical identification of the double product \(\prod_{i,j} T_{ij}\) with the
+  tensor square \(\bigl(\prod_i S_i\bigr) \otimes_A \bigl(\prod_i S_i\bigr)\), a cover cocycle
+  \(\gamma\) determines a descent unit \(c(\gamma) \in \bigl((\prod_i S_i) \otimes_A (\prod_i
+  S_i)\bigr)^{\times}\).  Then the image of \(c(\gamma)\) under the base change of the tensor
+  square (Definition~\ref{def:module_tensorSqBaseChange}) along \(A \to A'\), followed by the
+  tensor square of the base-change map \(j\)
+  (Definition~\ref{def:awayCover_piBaseChangeLift}), is the descent unit \(c(\gamma')\) of the
+  pushed cocycle \(\gamma'\) (Theorem~\ref{thm:awayCover_isCoverCocycle_baseChange}):
+  \[
+    (j \otimes j)\bigl(\mathrm{tensorSqBaseChange}(c(\gamma))\bigr) = c(\gamma')
+    \quad\text{in }\Bigl(\bigl(\textstyle\prod_i S'_i\bigr) \otimes_{A'} \bigl(\prod_i
+    S'_i\bigr)\Bigr)^{\times}.
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Both sides are units, so it suffices to compare their values under the identification of the
+  tensor square \(\bigl(\prod_i S'_i\bigr) \otimes_{A'} \bigl(\prod_i S'_i\bigr)\) with the
+  double product \(\prod_{i,j} T'_{ij}\).  The composite
+  \[
+    \Bigl(\prod_{i,j} T_{ij}\Bigr) \longrightarrow \bigl(\textstyle\prod_i S_i\bigr) \otimes_A
+    \bigl(\prod_i S_i\bigr) \xrightarrow{\ \mathrm{tensorSqBaseChange}\ } \bigl(\textstyle\prod_i
+    S'_i\bigr) \otimes_{A'} \bigl(\prod_i S'_i\bigr) \xrightarrow{\ j \otimes j\ }
+    \Bigl(\prod_{i,j} T'_{ij}\Bigr)
+  \]
+  is an \(A\)-algebra homomorphism out of the product of localizations \(\prod_{i,j} T_{ij}\);
+  by the pi-extensionality principle it is determined by its values on the coordinate
+  idempotents \(e_{ij}\).  A direct computation on \(e_{ij}\) — unfolding
+  \(\mathrm{tensorSqBaseChange}\), the tensor product \(j \otimes j\), and the componentwise
+  maps \(\mathrm{mapAway}\) — shows the composite agrees coordinatewise with
+  \(\bigl(\mathrm{mapOverlap}_{ij}\bigr)_{i,j}\).  Applying this identity of homomorphisms to the
+  unit representing \(\gamma\) gives, coordinatewise, \(\gamma'_{ij} =
+  \mathrm{mapOverlap}_{ij}(\gamma_{ij})\), i.e.\ the descent unit \(c(\gamma')\).
+\end{proof}
+
+\begin{theorem}[Naturality of the descent Picard class in the base ring]
+  \label{thm:awayCover_pic_baseChange}
+  \lean{IsLocalization.AwayCover.pic_baseChange}
+  \uses{thm:awayCover_cocycleUnit_baseChange, thm:awayCover_isCoverCocycle_baseChange,
+    thm:module_picClass_baseChange, def:module_picClass}
+  \source{kleiman-picard}
+  \leanok
+  Assume the localization covers are faithfully flat, \(\prod_i S_i\) over \(A\) and \(\prod_i
+  S'_i\) over \(A'\), and that \(f\) is a covering family, \(\mathrm{span}\,\{f_i\} = A\).  Then
+  the Picard class of the descended module of the pushed cocycle \(\gamma'\) is the image of the
+  Picard class of \(\gamma\) under the base-change homomorphism \(\Pic(A) \to \Pic(A')\),
+  \([N] \mapsto [A' \otimes_A N]\):
+  \[
+    \mathrm{picClass}(c(\gamma')) = \bigl[A' \otimes_A \mathrm{descended}(c(\gamma))\bigr]
+    \quad\text{in }\Pic(A').
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Since \(\mathrm{span}\,\{f_i\} = A\), the pushed family \(f'\) again spans \(A'\) (the ideal it
+  generates is the image of the unit ideal under \(A \to A'\)), so \(\prod_i (A' \otimes_A S_i)
+  \cong A' \otimes_A \prod_i S_i\) is faithfully flat over \(A'\), each factor being a
+  localization \(A'_{f'_i}\).  By Theorem~\ref{thm:awayCover_cocycleUnit_baseChange} the descent
+  unit \(c(\gamma')\) is the image of the base-changed unit
+  \(\mathrm{tensorSqBaseChange}(c(\gamma))\) under the algebra map \(j\) of cover algebras
+  (Definition~\ref{def:awayCover_piBaseChangeLift}); as the Picard class of a descent unit is
+  unchanged by transport along an algebra map of the cover, \(\mathrm{picClass}(c(\gamma'))\)
+  equals the Picard class of \(\mathrm{tensorSqBaseChange}(c(\gamma))\), which is the descent
+  unit of the base change of the module cocycle \(c(\gamma)\).  By
+  Theorem~\ref{thm:module_picClass_baseChange} this last class is \(\bigl[A' \otimes_A
+  \mathrm{descended}(c(\gamma))\bigr]\), the image of
+  \(\mathrm{picClass}(c(\gamma)) = [\mathrm{descended}(c(\gamma))]\)
+  (Definition~\ref{def:module_picClass}) under \([N] \mapsto [A' \otimes_A N]\).
+\end{proof}
+
+\section{The projection-descent equivalence for unit sections}
+\label{sec:projectionUnits}
+
+Throughout this section \(C\) is a curve — proper, geometrically irreducible and geometrically
+reduced — over a field \(k\), and \(T\) is a test object of \(\Over(\Spec k)\).  Write
+\(\mathrm{pr} \colon (C \otimes T)_{\mathrm{left}} \to T_{\mathrm{left}}\) for the second
+projection.
+
+\begin{definition}[The projection-descent equivalence for unit sections]
+  \label{def:unitsSndEquiv}
+  \lean{AlgebraicGeometry.Over.unitsSndEquiv}
+  \uses{cor:unitsAppLE_snd_bijective}
+  \leanok
+  For an affine open \(V \subseteq T_{\mathrm{left}}\), pullback of unit sections along the
+  second projection is a group isomorphism
+  \[
+    \mathrm{unitsSndEquiv} \colon \Gamma(T_{\mathrm{left}}, V)^{\times} \;\xrightarrow{\ \sim\
+    }\; \Gamma\bigl((C \otimes T)_{\mathrm{left}}, \mathrm{pr}^{-1} V\bigr)^{\times},
+  \]
+  the packaging as a multiplicative equivalence of the bijection
+  (Corollary~\ref{cor:unitsAppLE_snd_bijective}) that pullback of unit sections over an affine
+  open is bijective.  Its inverse is the \emph{descent} of a unit on the product to a unit on
+  the base.
+\end{definition}
+\begin{proof}
+  \leanok
+  Pullback of unit sections is a group homomorphism, and it is bijective over the affine open
+  \(V\) by Corollary~\ref{cor:unitsAppLE_snd_bijective}; a bijective group homomorphism is a
+  group isomorphism.
+\end{proof}
+
+\begin{lemma}[Uniqueness of the descended unit]
+  \label{lem:unitsSndEquiv_symm_eq_of_unitsAppLE}
+  \lean{AlgebraicGeometry.Over.unitsSndEquiv_symm_eq_of_unitsAppLE}
+  \uses{def:unitsSndEquiv}
+  \leanok
+  Let \(V \subseteq T_{\mathrm{left}}\) be an affine open, \(v \in \Gamma(T_{\mathrm{left}},
+  V)^{\times}\) and \(w \in \Gamma((C \otimes T)_{\mathrm{left}}, \mathrm{pr}^{-1}
+  V)^{\times}\).  If \(v\) pulls back to \(w\) along the projection, then \(v\) is the descent
+  of \(w\), that is \(v = \mathrm{unitsSndEquiv}^{-1}(w)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  By Definition~\ref{def:unitsSndEquiv}, \(\mathrm{unitsSndEquiv}(v)\) is the pullback of \(v\),
+  which by hypothesis is \(w\); applying the inverse isomorphism gives \(v =
+  \mathrm{unitsSndEquiv}^{-1}(w)\).
+\end{proof}
+
+\begin{lemma}[Naturality of the descent equivalence in the affine open]
+  \label{lem:unitsSndEquiv_unitsRestrict}
+  \lean{AlgebraicGeometry.Over.unitsSndEquiv_unitsRestrict,
+    AlgebraicGeometry.Over.unitsSndEquiv_symm_unitsRestrict}
+  \uses{def:unitsSndEquiv}
+  \leanok
+  For affine opens \(V' \subseteq V \subseteq T_{\mathrm{left}}\), pullback of unit sections
+  commutes with restriction:
+  \[
+    \mathrm{unitsSndEquiv}\bigl(v|_{V'}\bigr) = \bigl(\mathrm{unitsSndEquiv}(v)\bigr)
+    \big|_{\mathrm{pr}^{-1} V'}, \qquad v \in \Gamma(T_{\mathrm{left}}, V)^{\times},
+  \]
+  and dually the descent commutes with restriction.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Both sides are the value of \(\mathrm{pr}\) on unit sections composed with restriction; the two
+  restriction squares of the structure sheaf commute, so the pullback of the restriction equals
+  the restriction of the pullback.  Applying \(\mathrm{unitsSndEquiv}^{-1}\) and using the
+  round-trips (Definition~\ref{def:unitsSndEquiv}) gives the dual identity.
+\end{proof}
+
+\begin{lemma}[The base square of the second projection]
+  \label{lem:snd_left_naturality}
+  \lean{AlgebraicGeometry.Over.snd_left_naturality,
+    AlgebraicGeometry.Over.snd_left_preimage_naturality}
+  \leanok
+  For a morphism \(g \colon T' \to T\) of test objects, whiskering \(C \lhd g\) on the product
+  intertwines the two projections:
+  \[
+    (C \lhd g)_{\mathrm{left}} \circ (\mathrm{snd}_{C,T})_{\mathrm{left}}
+      = (\mathrm{snd}_{C,T'})_{\mathrm{left}} \circ g_{\mathrm{left}}.
+  \]
+  Consequently the two legs of this square have equal open preimages: for every open \(V
+  \subseteq T_{\mathrm{left}}\), \((C \lhd g)^{-1}\mathrm{pr}^{-1} V = \mathrm{pr}'^{-1}
+  g_{\mathrm{left}}^{-1} V\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The identity is the projection-compatibility of the cartesian monoidal structure,
+  \((C \lhd g) \circ \mathrm{snd}_{C,T} = \mathrm{snd}_{C,T'} \circ g\), transported through the
+  forgetful functor \(\Over(\Spec k) \to \mathrm{Sch}\).  Taking open preimages of \(V\) through
+  both composites and using functoriality of preimage gives the second equality.
+\end{proof}
+
+\begin{theorem}[Naturality of the descent equivalence in the test object]
+  \label{thm:unitsSndEquiv_naturality}
+  \lean{AlgebraicGeometry.Over.unitsSndEquiv_naturality}
+  \uses{def:unitsSndEquiv, lem:snd_left_naturality}
+  \leanok
+  Let \(g \colon T' \to T\) be a morphism of test objects and \(V \subseteq T_{\mathrm{left}}\)
+  an affine open whose preimage \(g_{\mathrm{left}}^{-1} V \subseteq T'_{\mathrm{left}}\) is also
+  affine.  For \(v \in \Gamma(T_{\mathrm{left}}, V)^{\times}\), descending \(v\) on \(T\) and
+  then pulling back along \(C \lhd g\) equals first pulling \(v\) back along \(g\) and then
+  descending on \(T'\); both are units over \(\mathrm{pr}'^{-1}(g_{\mathrm{left}}^{-1} V)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Unfolding both sides as pullbacks of \(v\) along the two legs of the base square of
+  Lemma~\ref{lem:snd_left_naturality}, the two composite pullbacks agree because the two legs are
+  equal morphisms and the source opens are identified by the preimage identity of that lemma.
+  The equality of pullbacks along equal morphisms then closes the goal.
+\end{proof}
+
+\section{Descent in stages for unit \(1\)-cocycles}
+\label{sec:unitDescentComposite}
+
+Let \(A \to B \to P\) be a tower of commutative rings.  This section relates \(A\)-descent
+along the composite \(A \to P\) with \(B\)-descent along \(B \to P\), the cover being factored
+through the intermediate ring \(B\).
+
+\begin{definition}[The collapse maps on tensor squares and cubes]
+  \label{def:module_tensorCollapse}
+  \lean{Module.tensorCollapse, Module.tensorCubeCollapse}
+  \leanok
+  The \emph{collapse map} is the canonical \(A\)-algebra homomorphism
+  \[
+    \pi \colon P \otimes_A P \longrightarrow P \otimes_B P, \qquad x \otimes y \mapsto x \otimes
+    y,
+  \]
+  identifying the two \(A\)-bilinear factors as \(B\)-bilinear.  Its analogue on tensor cubes is
+  the \(A\)-algebra homomorphism
+  \[
+    \pi_3 \colon P \otimes_A (P \otimes_A P) \longrightarrow P \otimes_B (P \otimes_B P), \qquad
+    x \otimes (y \otimes z) \mapsto x \otimes (y \otimes z),
+  \]
+  the receptacle for the collapse of the three face maps.
+\end{definition}
+
+\begin{theorem}[Collapse of a descent cocycle]
+  \label{thm:module_descentCocycle_collapse}
+  \lean{Module.IsDescentCocycle.collapse}
+  \uses{def:module_descent_cocycle, def:module_tensorCollapse}
+  \leanok
+  Let \(v \in (P \otimes_A P)^{\times}\) be an \(A\)-descent \(1\)-cocycle relative to \(A \to
+  P\).  Then its collapse \(\pi(v)\) is a \(B\)-descent \(1\)-cocycle relative to \(B \to P\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  On elementary tensors, the multiplication \(\mu_B\) of \(P \otimes_B P\) satisfies \(\mu_B(\pi(x
+  \otimes y)) = xy = \mu_A(x \otimes y)\), and each \(B\)-face map factors through the collapse:
+  \(\partial^B_{12}(\pi(w)) = \pi_3(\partial^A_{12}(w))\) and likewise for \(\partial_{13},
+  \partial_{23}\); both sides of each identity are \(A\)-bilinear, so the identities hold on all
+  of \(P \otimes_A P\).  Applying \(\mu_B\) to \(\pi(v)\) and using the normalization
+  \(\mu_A(v) = 1\) gives \(\mu_B(\pi(v)) = 1\); applying \(\pi_3\) to the cocycle identity
+  \(\partial^A_{23}(v) \cdot \partial^A_{12}(v) = \partial^A_{13}(v)\) and using
+  multiplicativity of \(\pi_3\) gives \(\partial^B_{23}(\pi(v)) \cdot \partial^B_{12}(\pi(v)) =
+  \partial^B_{13}(\pi(v))\).  Hence \(\pi(v)\) is a \(B\)-descent \(1\)-cocycle.
+\end{proof}
+
+\begin{lemma}[The descended module lies in the collapsed descended module]
+  \label{lem:module_descended_le_collapse}
+  \lean{Module.descended_le_descended_collapse}
+  \uses{def:module_descended, thm:module_descentCocycle_collapse}
+  \leanok
+  For an \(A\)-descent \(1\)-cocycle \(v\), the \(A\)-descended module of \(v\) is contained,
+  as a subset of \(P\), in the \(B\)-descended module of the collapse \(\pi(v)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  An element \(m \in P\) lies in the \(A\)-descended module of \(v\) iff \(v \cdot (m \otimes_A
+  1) = 1 \otimes_A m\) in \(P \otimes_A P\).  Applying the collapse \(\pi\) and using
+  \(\pi(m \otimes_A 1) = m \otimes_B 1\), \(\pi(1 \otimes_A m) = 1 \otimes_B m\) and
+  multiplicativity gives \(\pi(v) \cdot (m \otimes_B 1) = 1 \otimes_B m\), i.e.\ \(m\) lies in
+  the \(B\)-descended module of \(\pi(v)\).
+\end{proof}
+
+\begin{theorem}[Descent in stages for the descended module]
+  \label{thm:module_descendedCollapseEquiv}
+  \lean{Module.descendedCollapseEquiv}
+  \uses{thm:module_descentCocycle_collapse, def:module_descended}
+  \leanok
+  Assume \(A \to B\) and \(B \to P\) are faithfully flat (so \(A \to P\) is faithfully flat as
+  well).  For an \(A\)-descent \(1\)-cocycle \(v\), the base change to \(B\) of the
+  \(A\)-descended module of \(v\) is canonically isomorphic to the \(B\)-descended module of the
+  collapse:
+  \[
+    B \otimes_A \mathrm{descended}(v) \;\cong\; \mathrm{descended}(\pi(v))
+    \qquad (B\text{-linear}),\quad b \otimes m \mapsto b \cdot m.
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  As \(B \to P\) is faithfully flat, \(\mathrm{descended}(\pi(v))\) is recognized by the
+  uniqueness property of descended modules from any \(B\)-module \(N\) equipped with a
+  \(P\)-linear isomorphism \(P \otimes_B N \cong P\) intertwining the tautological descent datum
+  twisted by \(\pi(v)\).  Take \(N = B \otimes_A \mathrm{descended}(v)\) and the composite
+  \[
+    P \otimes_B \bigl(B \otimes_A \mathrm{descended}(v)\bigr) \;\cong\; P \otimes_A
+    \mathrm{descended}(v) \;\cong\; P,
+  \]
+  the first isomorphism cancelling the iterated base change, the second the \(A\)-descent
+  isomorphism attached to \(v\).  A computation on elementary tensors, using the membership
+  identity \(v \cdot (m \otimes_A 1) = 1 \otimes_A m\), shows this composite intertwines the
+  base change of the coaction \(x \mapsto v \cdot (x \otimes 1)\) with the coaction \(y \mapsto
+  \pi(v) \cdot (y \otimes 1)\).  Uniqueness of descended modules then yields the stated
+  isomorphism.
+\end{proof}
+
+\begin{theorem}[Naturality of the Picard class under descent in stages]
+  \label{thm:module_picClass_collapse}
+  \lean{Module.IsDescentCocycle.picClass_collapse}
+  \uses{thm:module_descendedCollapseEquiv, def:module_picClass}
+  \source{kleiman-picard}
+  \leanok
+  Under the hypotheses of Theorem~\ref{thm:module_descendedCollapseEquiv}, the Picard class over
+  \(B\) of the collapsed cocycle is the image of the Picard class over \(A\) of \(v\) under the
+  base-change homomorphism \(\Pic(A) \to \Pic(B)\):
+  \[
+    \mathrm{picClass}(\pi(v)) = \bigl[B \otimes_A \mathrm{descended}(v)\bigr] \quad\text{in }
+    \Pic(B).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  By Theorem~\ref{thm:module_descendedCollapseEquiv}, \(B \otimes_A \mathrm{descended}(v) \cong
+  \mathrm{descended}(\pi(v))\) as \(B\)-modules, so the two invertible \(B\)-modules have the
+  same class in \(\Pic(B)\).  The right side is \(\mathrm{picClass}(\pi(v))\) by definition
+  (Definition~\ref{def:module_picClass}), and the left side is the image of
+  \(\mathrm{picClass}(v) = [\mathrm{descended}(v)]\) under \([N] \mapsto [B \otimes_A N]\).
+\end{proof}
+
+\section{Naturality of the \v Cech--Picard dictionary in the affine scheme}
+\label{sec:cechPic_naturality}
+
+\begin{theorem}[Naturality of the \v Cech--Picard descent homomorphism in the affine scheme]
+  \label{thm:cechPic_toPic_map}
+  \lean{AlgebraicGeometry.Scheme.CechPic.toPic_map}
+  \uses{def:cechPic_toPic, thm:awayCover_pic_baseChange, thm:prPullback_injective}
+  \source{kleiman-picard}
+  \leanok
+  For a morphism \(g \colon X \to Y\) of affine schemes, base change of Picard classes along the
+  ring map \(g^{\#} \colon \Gamma(Y, \top) \to \Gamma(X, \top)\) intertwines the \v
+  Cech--Picard descent homomorphism (Definition~\ref{def:cechPic_toPic}) with the pullback of
+  \v Cech classes; that is, for every \(L \in Y.\mathrm{CechPic}\),
+  \[
+    \mathrm{toPic}_X(g^{*} L) = \Pic(g^{\#})\bigl(\mathrm{toPic}_Y(L)\bigr) \quad\text{in }
+    \Pic\bigl(\Gamma(X, \top)\bigr).
+  \]
+  This is the separatedness half of Kleiman, \emph{The Picard Scheme}, Theorem 2.5(1), in its
+  \v Cech incarnation.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Represent \(L\) by a unit cocycle \(\gamma\) on a pointed cover \(\mathcal U\) of \(Y\) and
+  choose a finite basic refinement \(P\) of \(\mathcal U\).  Then \(\mathrm{toPic}_Y(L)\) is the
+  Picard class descended from the cover cocycle of \(\gamma\) on the finite localization cover
+  \(P.r \colon P.\iota \to \Gamma(Y, \top)\).  Base-changing this whole \v Cech picture along
+  \(g^{\#}\) (Theorem~\ref{thm:awayCover_pic_baseChange}) computes \(\Pic(g^{\#})(\mathrm{toPic}_Y
+  L)\) as the Picard class of the pushed cover cocycle on the pushed family \(f'_i = g^{\#}(P.r_i)\),
+  whose basic opens \(X.\mathrm{basicOpen}(f'_i) = g^{-1} Y.\mathrm{basicOpen}(P.r_i)\) are the
+  pullbacks of \(P\)'s basic opens.
+
+  On the other side, \(\mathrm{toPic}_X(g^{*} L)\) is the Picard class descended from the cover
+  cocycle of \(g^{*}\gamma\) on \emph{any} finite basic refinement of the pulled-back cover
+  \(\mathcal U^{\mathrm{pb}}\).  As \(g\) need not be surjective, the pushed family \(f'\) is not
+  itself a basic refinement of \(\mathcal U^{\mathrm{pb}}\); take the product refinement \(R\)
+  indexed by \(P.\iota \times Q.\iota\), for an auxiliary basic refinement \(Q\) of \(\mathcal
+  U^{\mathrm{pb}}\), with sections \(g^{\#}(P.r_i) \cdot Q.r_j\).  The pushed cover cocycle,
+  refined to \(R\) by the first projection, differs from the cover cocycle of \(g^{*}\gamma\) on
+  \(R\) by the index-wise coboundary of the cross evaluations \(\gamma\) pulled back through
+  \(g\); two point-selections on a common refinement always differ by such a coboundary.  Since
+  the descended Picard class is unchanged by a coboundary, the two Picard classes coincide, which
+  is the asserted identity.
+\end{proof}
+
+\begin{theorem}[Algebra form of the naturality]
+  \label{thm:cechPic_toPic_mapAlgebra}
+  \lean{AlgebraicGeometry.Scheme.CechPic.toPic_mapAlgebra}
+  \uses{thm:cechPic_toPic_map}
+  \leanok
+  With \(\Gamma(X, \top)\) regarded as a \(\Gamma(Y, \top)\)-algebra through \(g^{\#}\), the
+  identity of Theorem~\ref{thm:cechPic_toPic_map} reads \(\mathrm{toPic}_X(g^{*} L) =
+  \mathrm{mapAlgebra}\bigl(\mathrm{toPic}_Y(L)\bigr)\) for the base-change homomorphism of
+  Picard groups attached to the algebra structure.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The base-change homomorphism attached to the \(\Gamma(Y, \top)\)-algebra \(\Gamma(X, \top)\)
+  is by construction \(\Pic(g^{\#})\); the statement is therefore
+  Theorem~\ref{thm:cechPic_toPic_map} rephrased.
+\end{proof}
+
+\section{The class-level coherence seed for \'etale separatedness}
+\label{sec:etaleSeparatedness}
+
+Let \(k\) be a field and \(A \to B\) a homomorphism of \(k\)-algebras, and let \(C\) be a curve
+over \(k\).  Write \(\Spec A, \Spec B\) for the corresponding test objects of \(\Over(\Spec
+k)\).  This section records the class-level coherence seed of the (C1) \'etale-separatedness
+theorem — the separatedness half of Kleiman, \emph{The Picard Scheme}, Theorem 2.5(1).
+
+\begin{definition}[The two coprojections of a double cover of a test algebra]
+  \label{def:tensorInl_tensorInr}
+  \lean{AlgebraicGeometry.tensorInl, AlgebraicGeometry.tensorInr}
+  \leanok
+  The two \emph{coprojections} of the double cover \(B \otimes_A B\) of \(B\) are the
+  \(k\)-algebra homomorphisms
+  \[
+    \mathrm{tensorInl} \colon B \to B \otimes_A B, \quad b \mapsto b \otimes 1, \qquad
+    \mathrm{tensorInr} \colon B \to B \otimes_A B, \quad b \mapsto 1 \otimes b.
+  \]
+\end{definition}
+
+\begin{lemma}[Diagonal coherence of the two coprojections]
+  \label{lem:tensorInl_comp_ofId}
+  \lean{AlgebraicGeometry.tensorInl_comp_ofId}
+  \uses{def:tensorInl_tensorInr}
+  \leanok
+  Precomposed with the base inclusion \(A \to B\), the two coprojections agree:
+  \(\mathrm{tensorInl} \circ (A \to B) = \mathrm{tensorInr} \circ (A \to B)\) as \(k\)-algebra
+  homomorphisms \(A \to B \otimes_A B\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  For \(a \in A\) with image \(\bar a \in B\), both sides send \(a\) to \(\bar a \otimes 1\)
+  respectively \(1 \otimes \bar a\); over \(A\) these are equal, \(\bar a \otimes 1 = a \cdot (1
+  \otimes 1) = 1 \otimes \bar a\), because tensoring is over \(A\).
+\end{proof}
+
+\begin{theorem}[The class-level coherence seed]
+  \label{thm:cechPicMap_tensorInl_eq_tensorInr}
+  \lean{AlgebraicGeometry.Over.cechPicMap_tensorInl_eq_tensorInr}
+  \uses{def:tensorInl_tensorInr, lem:tensorInl_comp_ofId, thm:prPullback_injective,
+    lem:snd_left_naturality, def:overSpecMap, lem:overSpecMap_functor}
+  \source{kleiman-picard}
+  \leanok
+  Let \(L\) be a \v Cech Picard class on the curve-product \(C \otimes \Spec A\) and \(N\) a \v
+  Cech Picard class on \(\Spec B\).  Suppose that over the test algebra \(A \to B\) the class
+  \(L\) restricts to the pullback of \(N\) from the base:
+  \[
+    \mathrm{pr}_B^{*} N = (C \lhd \Spec(A \to B))^{*} L.
+  \]
+  Then the two base changes of \(N\) to \(\Spec(B \otimes_A B)\) along the coprojections
+  coincide:
+  \(\Spec(\mathrm{tensorInl})^{*} N = \Spec(\mathrm{tensorInr})^{*} N\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  For each coprojection \(j \in \{\mathrm{tensorInl}, \mathrm{tensorInr}\}\), pull back
+  \(\Spec(j)^{*} N\) along the projection \(\mathrm{pr}_{B \otimes_A B}\).  Using functoriality
+  of \v Cech pullback (Lemma~\ref{lem:overSpecMap_functor}), the base square of the projection
+  (Lemma~\ref{lem:snd_left_naturality}) and the hypothesis, this equals \((C \lhd \Spec(j
+  \circ (A \to B)))^{*} L\).  By the diagonal coherence
+  (Lemma~\ref{lem:tensorInl_comp_ofId}), \(\mathrm{tensorInl} \circ (A \to B) = \mathrm{tensorInr}
+  \circ (A \to B)\), so the two composites \(\Spec(\mathrm{tensorInl})^{*} N\) and
+  \(\Spec(\mathrm{tensorInr})^{*} N\) have the same pullback along \(\mathrm{pr}_{B \otimes_A
+  B}\).  Pullback along the curve projection is injective on Picard classes
+  (Theorem~\ref{thm:prPullback_injective}), hence the two base changes agree.
+\end{proof}
+
+\section{The Amitsur toolkit for \'etale separatedness}
+\label{sec:amitsurCochain}
+
+This section collects three reusable groups of statements consumed by the coherent-witness
+step of the (C1) \'etale-separatedness assembly, all revolving around the fact that only global
+units cross the curve projection \(\mathrm{pr}\).
+
+\begin{theorem}[Global gluing of a compatible unit family]
+  \label{thm:exists_global_unit_of_compatible}
+  \lean{AlgebraicGeometry.Scheme.exists_global_unit_of_compatible,
+    AlgebraicGeometry.Scheme.global_unit_ext}
+  \uses{lem:units_gluing, lem:units_separation}
+  \leanok
+  Let \(\mathcal U\) be a pointed cover of a scheme \(X\).  A family of units \(\beta_x \in
+  \Gamma(X, \mathcal U_x)^{\times}\) whose members agree on pairwise overlaps glues to a single
+  global unit \(w \in \Gamma(X, \top)^{\times}\) restricting to each \(\beta_x\); and a global
+  unit that restricts to \(1\) on every member of a pointed cover — more precisely, two global
+  units agreeing on every member — is uniquely determined.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The members \(\mathcal U_x\) cover \(\top\) because \(x \in \mathcal U_x\).  The gluing
+  statement is the sheaf gluing for unit sections (Lemma~\ref{lem:units_gluing}) at the
+  tautological cover \(V = \top\), \(W = \mathcal U\); the uniqueness statement is the
+  separation for unit sections (Lemma~\ref{lem:units_separation}) at the same cover.
+\end{proof}
+
+\begin{definition}[The three cofaces on the triple tensor]
+  \label{def:tensorFaces}
+  \lean{AlgebraicGeometry.tensorFace₁₂, AlgebraicGeometry.tensorFace₁₃,
+    AlgebraicGeometry.tensorFace₂₃}
+  \leanok
+  Extending the coprojection idiom of Definition~\ref{def:tensorInl_tensorInr}, the three
+  \emph{cofaces} on the triple tensor are the \(k\)-algebra homomorphisms \(B \otimes_A B \to B
+  \otimes_A (B \otimes_A B)\)
+  \[
+    \mathrm{tensorFace}_{12}(x \otimes y) = x \otimes (y \otimes 1), \quad
+    \mathrm{tensorFace}_{13}(x \otimes y) = x \otimes (1 \otimes y), \quad
+    \mathrm{tensorFace}_{23}(w) = 1 \otimes w,
+  \]
+  the \(k\)-restrictions of the \(A\)-linear descent cofaces.
+\end{definition}
+
+\begin{lemma}[Simplicial coincidences of the cofaces]
+  \label{lem:tensorFace_comp}
+  \lean{AlgebraicGeometry.tensorFace₁₂_comp_tensorInl,
+    AlgebraicGeometry.tensorFace₁₂_comp_tensorInr,
+    AlgebraicGeometry.tensorFace₁₃_comp_tensorInr}
+  \uses{def:tensorFaces, def:tensorInl_tensorInr}
+  \leanok
+  The six composites \(\mathrm{tensorFace} \circ \mathrm{coprojection} \colon B \to B \otimes_A
+  (B \otimes_A B)\) collapse onto the three insertions \(x \mapsto x \otimes (1 \otimes 1)\),
+  \(x \mapsto 1 \otimes (x \otimes 1)\), \(x \mapsto 1 \otimes (1 \otimes x)\).  In particular
+  \(\mathrm{tensorFace}_{12} \circ \mathrm{tensorInl} = \mathrm{tensorFace}_{13} \circ
+  \mathrm{tensorInl}\), \(\mathrm{tensorFace}_{12} \circ \mathrm{tensorInr} =
+  \mathrm{tensorFace}_{23} \circ \mathrm{tensorInl}\), and \(\mathrm{tensorFace}_{13} \circ
+  \mathrm{tensorInr} = \mathrm{tensorFace}_{23} \circ \mathrm{tensorInr}\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Each identity is checked on a generator \(b \in B\): both sides insert \(b\) into the same
+  tensor position and fill the remaining two positions with \(1\), by the definitions of the
+  cofaces and coprojections.
+\end{proof}
+
+\begin{definition}[The top-open descent equivalence for global units]
+  \label{def:unitsSndTopEquiv}
+  \lean{AlgebraicGeometry.Over.unitsSndTopEquiv}
+  \uses{def:unitsSndEquiv}
+  \leanok
+  Specializing the projection-descent equivalence (Definition~\ref{def:unitsSndEquiv}) to the
+  affine open \(V = \top\), pullback of global units along the second projection is a group
+  isomorphism
+  \[
+    \Gamma\bigl((\Spec R)_{\mathrm{left}}, \top\bigr)^{\times} \;\xrightarrow{\ \sim\ }\;
+    \Gamma\bigl((C \otimes \Spec R)_{\mathrm{left}}, \top\bigr)^{\times}
+  \]
+  for a \(k\)-algebra \(R\); its forward map is pullback of global units along \(\mathrm{pr}\).
+\end{definition}
+\begin{proof}
+  \leanok
+  Both \((\Spec R)_{\mathrm{left}}\) and \((C \otimes \Spec R)_{\mathrm{left}}\) have affine top
+  open, and the projection preimage of \(\top\) is \(\top\); so
+  Definition~\ref{def:unitsSndEquiv} applies at \(V = \top\), and its forward map is pullback of
+  global units.
+\end{proof}
+
+\begin{theorem}[Global-unit pullback is bijective]
+  \label{thm:appTop_units_bijective}
+  \lean{AlgebraicGeometry.Over.appTop_units_surjective,
+    AlgebraicGeometry.Over.appTop_units_injective}
+  \uses{def:unitsSndTopEquiv}
+  \leanok
+  Pullback of global units along the second projection \(\mathrm{pr} \colon (C \otimes \Spec
+  R)_{\mathrm{left}} \to (\Spec R)_{\mathrm{left}}\) is bijective: every global unit on the
+  product descends to a unique global unit on the base.
+\end{theorem}
+\begin{proof}
+  \leanok
+  This is the bijectivity of the group isomorphism of
+  Definition~\ref{def:unitsSndTopEquiv}: surjectivity gives the descent of any global unit as
+  the image of the inverse isomorphism, and injectivity is separation of global units by the
+  projection.
+\end{proof}
+
+\begin{theorem}[Naturality of the top-open descent]
+  \label{thm:unitsSndTopEquiv_naturality}
+  \lean{AlgebraicGeometry.Over.unitsSndTopEquiv_naturality}
+  \uses{def:unitsSndTopEquiv, thm:unitsSndEquiv_naturality}
+  \leanok
+  For a \(k\)-algebra homomorphism \(\varphi \colon R \to R'\), descending a global unit on
+  \(\Spec R\) and pulling it back along \(C \lhd \Spec\varphi\) equals first pulling back along
+  \(\Spec\varphi\) and then descending on \(\Spec R'\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  This is the naturality of the projection-descent equivalence in the test object
+  (Theorem~\ref{thm:unitsSndEquiv_naturality}) specialized to \(V = \top\) along the morphism
+  \(\Spec\varphi\); all the opens occurring there are \(\top\) on the nose, so the general
+  naturality square applies directly.
+\end{proof}
