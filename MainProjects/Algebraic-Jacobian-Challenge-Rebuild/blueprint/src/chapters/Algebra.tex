@@ -218,3 +218,209 @@ finite module away from an element.
   (3a) and (4a) here coincide, element for element, with hypotheses (3) and (4) of
   Corollary~\ref{cor:two_lattice_loc}. The conclusion is immediate from that corollary.
 \end{proof}
+
+\section{Tensor products of localizations and the descent decompositions}
+\label{sec:tensorAway}
+
+This section collects two pieces of commutative-algebra scaffolding for the descent along a
+finite localization cover. Let \(A \to B\) be a homomorphism of commutative rings. Recall that
+for \(r \in B\), a \emph{model of the localization of \(B\) away from \(r\)} is a \(B\)-algebra
+\(S\) in which the image of \(r\) is invertible and which is universal with this property,
+so that \(S \cong B[1/r]\); we treat such a model as an \(A\)-algebra through the composite
+\(A \to B \to S\). The first part exhibits the \(A\)-tensor product of two such models as itself
+a localization; the second decomposes the tensor square and cube of a finite product of
+localizations into their pairwise and triple components.
+
+\subsection{The tensor product of two localizations}
+
+\begin{definition}[The tensor-localization algebra structure]
+  \label{def:tensorAwayAlgebra}
+  \lean{IsLocalization.Away.tensorMap, IsLocalization.Away.tensorAwayAlgebra}
+  \leanok
+  Let \(r, s \in B\), and let \(S_i, S_j\) be models of the localizations of \(B\) away from
+  \(r\), respectively \(s\). Tensoring the two structure maps \(B \to S_i\) and \(B \to S_j\)
+  over \(A\) gives an \(A\)-algebra homomorphism
+  \[
+    B \otimes_A B \longrightarrow S_i \otimes_A S_j , \qquad b \otimes b' \mapsto \bar b \otimes \bar{b'} ,
+  \]
+  whose underlying ring map endows \(S_i \otimes_A S_j\) with the structure of a
+  \((B \otimes_A B)\)-algebra.
+\end{definition}
+
+\begin{theorem}[The tensor product of two localizations is a localization of the tensor square]
+  \label{thm:isLocalization_away_tensor}
+  \lean{IsLocalization.Away.isLocalization_away_tensor}
+  \uses{def:tensorAwayAlgebra}
+  \leanok
+  With the structure of Definition~\ref{def:tensorAwayAlgebra}, \(S_i \otimes_A S_j\) is the
+  localization of \(B \otimes_A B\) away from the element
+  \((r \otimes 1)(1 \otimes s) = r \otimes s\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Factor the structure map \(B \otimes_A B \to S_i \otimes_A S_j\) through the intermediate ring
+  \(S_i \otimes_A B\). The first stage \(B \otimes_A B \to S_i \otimes_A B\) localizes only the
+  left factor: it is the base change of the localization \(B \to S_i\) at \(r\) along the ring
+  map \(B \to B \otimes_A B\), hence exhibits \(S_i \otimes_A B\) as the localization of
+  \(B \otimes_A B\) away from \(r \otimes 1\). The second stage
+  \(S_i \otimes_A B \to S_i \otimes_A S_j\) localizes the right factor: it is the base change of
+  the localization \(B \to S_j\) at \(s\) along \(B \to S_i \otimes_A B\), exhibiting
+  \(S_i \otimes_A S_j\) as the localization of \(S_i \otimes_A B\) away from \(1 \otimes s\).
+  Two successive away-localizations, first at \(r \otimes 1\) then at \(1 \otimes s\), compose
+  to the away-localization at the product \((r \otimes 1)(1 \otimes s)\); and by the
+  multiplication rule in \(B \otimes_A B\) this product equals \(r \otimes s\).
+\end{proof}
+
+\begin{definition}[Comparison with an arbitrary model]
+  \label{def:tensorAwayEquiv}
+  \lean{IsLocalization.Away.tensorAwayEquiv}
+  \uses{thm:isLocalization_away_tensor}
+  \leanok
+  Let \(T\) be any model of the localization of \(B \otimes_A B\) away from
+  \((r \otimes 1)(1 \otimes s)\). The canonical comparison of two localizations of
+  \(B \otimes_A B\) at the same element is a \((B \otimes_A B)\)-algebra isomorphism
+  \[
+    S_i \otimes_A S_j \;\xrightarrow{\ \sim\ }\; T .
+  \]
+\end{definition}
+
+\begin{lemma}[Values of the comparison isomorphism]
+  \label{lem:tensorAwayEquiv_tmul}
+  \lean{IsLocalization.Away.tensorAwayEquiv_tensorMap, IsLocalization.Away.tensorAwayEquiv_tmul}
+  \uses{def:tensorAwayEquiv}
+  \leanok
+  The comparison isomorphism sends the image of \(w \in B \otimes_A B\) under the structure map
+  to the image of \(w\) in \(T\); in particular, on a pure tensor of structure-map images it
+  sends \(\bar b_1 \otimes \bar b_2\) to the image of \(b_1 \otimes b_2\) in \(T\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Being a \((B \otimes_A B)\)-algebra homomorphism, the comparison isomorphism commutes with the
+  two structure maps, which is the first statement. The second follows because the pure tensor
+  \(\bar b_1 \otimes \bar b_2\) is the structure-map image of \(b_1 \otimes b_2\).
+\end{proof}
+
+\subsection{Decompositions of the tensor square and cube of a finite product}
+
+Throughout this subsection \(A\) is a commutative ring, \(\iota\) a finite index set, and
+\((S_i)_{i \in \iota}\) a finite family of \(A\)-algebras with product \(P := \prod_{i} S_i\).
+
+\begin{definition}[The pairwise and triple decompositions]
+  \label{def:piDoubleEquivA}
+  \lean{Algebra.TensorProduct.piDoubleEquivA, Algebra.TensorProduct.piDoubleEquivA_tmul}
+  \leanok
+  Distributing the tensor product over the finite product in each factor gives the canonical
+  \(A\)-algebra identification
+  \[
+    P \otimes_A P \;\cong\; \prod_{(i,j) \in \iota \times \iota} S_i \otimes_A S_j ,
+  \]
+  which sends a pure tensor \(s \otimes t\) to the family \((i,j) \mapsto s_i \otimes t_j\).
+\end{definition}
+
+\begin{definition}[The triple decomposition]
+  \label{def:piTripleEquivA}
+  \lean{Algebra.TensorProduct.piTripleEquivA, Algebra.TensorProduct.piTripleEquivA_tmul}
+  \uses{def:piDoubleEquivA}
+  \leanok
+  Applying the pairwise decomposition to the inner factor and distributing once more gives the
+  canonical \(A\)-algebra identification
+  \[
+    P \otimes_A (P \otimes_A P) \;\cong\;
+      \prod_{(i,j,k) \in \iota^3} S_i \otimes_A (S_j \otimes_A S_k) ,
+  \]
+  sending \(s \otimes v\) to the family \((i,j,k) \mapsto s_i \otimes (v_{(j,k)})\), where
+  \(v_{(j,k)}\) is the \((j,k)\)-component of \(v\) under the pairwise decomposition.
+\end{definition}
+
+\begin{definition}[The index-wise simplicial maps]
+  \label{def:indexwiseMaps}
+  \lean{Algebra.TensorProduct.inclLeftA, Algebra.TensorProduct.inclRightA,
+    Algebra.TensorProduct.faceA₁₂, Algebra.TensorProduct.faceA₁₃, Algebra.TensorProduct.faceA₂₃,
+    Algebra.TensorProduct.diagA}
+  \leanok
+  On the pairwise tensor components one has the index-wise simplicial maps: for indices
+  \(i, j, k\), the two \emph{inclusions} \(S_i \to S_i \otimes_A S_j\), \(x \mapsto x \otimes 1\),
+  and \(S_j \to S_i \otimes_A S_j\), \(y \mapsto 1 \otimes y\); the three \emph{faces} into the
+  triple tensor \(S_i \otimes_A (S_j \otimes_A S_k)\), hitting the positions \(\{1,2\}\),
+  \(\{1,3\}\), \(\{2,3\}\) out of \((S_i \otimes_A S_j)\), \((S_i \otimes_A S_k)\),
+  \((S_j \otimes_A S_k)\) respectively; and the \emph{diagonal}
+  \(S_i \otimes_A S_i \to S_i\), \(x \otimes y \mapsto xy\).
+\end{definition}
+
+\begin{lemma}[The descent inclusions become the index-wise inclusions]
+  \label{lem:descentIncl_transport}
+  \lean{Algebra.TensorProduct.piDoubleEquivA_descentIncl₁,
+    Algebra.TensorProduct.piDoubleEquivA_descentIncl₂}
+  \uses{def:piDoubleEquivA, def:indexwiseMaps}
+  \leanok
+  Under the pairwise decomposition, the two inclusions \(P \to P \otimes_A P\) become the
+  index-wise inclusions: \(s \otimes 1\) corresponds to the family
+  \((i,j) \mapsto s_i \otimes 1\), and \(1 \otimes s\) to \((i,j) \mapsto 1 \otimes s_j\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Evaluate at a component \((i,j)\): by the pure-tensor formula of
+  Definition~\ref{def:piDoubleEquivA}, the decomposition sends \(s \otimes 1\) to
+  \(s_i \otimes 1_j = s_i \otimes 1\), which is the first index-wise inclusion of \(s_i\), and
+  \(1 \otimes s\) to \(1 \otimes s_j\), the second index-wise inclusion of \(s_j\).
+\end{proof}
+
+\begin{lemma}[The descent faces become the index-wise faces]
+  \label{lem:descentFace_transport}
+  \lean{Algebra.TensorProduct.piTripleEquivA_descentFace₂₃,
+    Algebra.TensorProduct.piTripleEquivA_descentFace₁₂,
+    Algebra.TensorProduct.piTripleEquivA_descentFace₁₃}
+  \uses{def:piTripleEquivA, def:piDoubleEquivA, def:indexwiseMaps}
+  \leanok
+  Under the pairwise and triple decompositions, the three faces \(P \otimes_A P \to
+  P \otimes_A (P \otimes_A P)\) become the index-wise faces: the \(\{2,3\}\)-face carries a
+  family \((w_{(i,j)})\) to \((i,j,k) \mapsto \mathrm{face}_{23}(w_{(j,k)})\), and likewise the
+  \(\{1,2\}\)- and \(\{1,3\}\)-faces carry it to
+  \((i,j,k) \mapsto \mathrm{face}_{12}(w_{(i,j)})\) and
+  \((i,j,k) \mapsto \mathrm{face}_{13}(w_{(i,k)})\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Each identity is checked on generators using the pure-tensor formulas of
+  Definitions~\ref{def:piDoubleEquivA} and~\ref{def:piTripleEquivA}. For the \(\{2,3\}\)-face,
+  the source element \(1 \otimes v\) is carried to
+  \((i,j,k) \mapsto 1 \otimes (v_{(j,k)}) = \mathrm{face}_{23}(w_{(j,k)})\) directly. The
+  \(\{1,2\}\)- and \(\{1,3\}\)-faces mix the two product factors; since both sides are
+  \(A\)-algebra homomorphisms it suffices to compare them on pure tensors, where the two
+  decompositions evaluate to the stated index-wise faces.
+\end{proof}
+
+\begin{lemma}[Multiplication becomes the index-wise diagonal]
+  \label{lem:lmul_transport}
+  \lean{Algebra.TensorProduct.lmul'_piDoubleEquivA_symm}
+  \uses{def:piDoubleEquivA, def:indexwiseMaps}
+  \leanok
+  Under the pairwise decomposition, the multiplication map \(P \otimes_A P \to P\),
+  \(a \otimes b \mapsto ab\), becomes the index-wise diagonal: a family \((w_{(i,j)})\) is
+  carried to \(i \mapsto \mathrm{diag}(w_{(i,i)})\), the product of the diagonal components.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Both sides are \(A\)-algebra homomorphisms, so it suffices to compare on a pure tensor
+  \(s \otimes t\). Multiplication sends it to \(i \mapsto s_i t_i\); the decomposition sends it
+  to \((i,j) \mapsto s_i \otimes t_j\), whose diagonal \((i,i)\)-component is \(s_i \otimes t_i\),
+  and \(\mathrm{diag}(s_i \otimes t_i) = s_i t_i\). The two agree.
+\end{proof}
+
+\begin{theorem}[Faithful flatness of the composite cover tower]
+  \label{thm:pi_tower}
+  \lean{Module.FaithfullyFlat.pi_tower}
+  \leanok
+  Let \(A \to B\) be faithfully flat, let \(f \colon \iota \to B\) be a covering family — the
+  \(f_i\) generate the unit ideal of \(B\) — and let each \(S_i\) be a model of the localization
+  of \(B\) away from \(f_i\). Then \(P = \prod_i S_i\) is a faithfully flat \(A\)-algebra.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The product of the localizations at a covering family is faithfully flat over \(B\): each
+  \(B \to S_i\) is flat, being a localization, and because the \(f_i\) generate the unit ideal
+  the family jointly detects triviality, so \(B \to \prod_i S_i\) is faithfully flat. Faithful
+  flatness is preserved by composition, so composing with the faithfully flat \(A \to B\) makes
+  the tower \(A \to B \to \prod_i S_i\) faithfully flat; hence \(P\) is a faithfully flat
+  \(A\)-algebra.
+\end{proof}
