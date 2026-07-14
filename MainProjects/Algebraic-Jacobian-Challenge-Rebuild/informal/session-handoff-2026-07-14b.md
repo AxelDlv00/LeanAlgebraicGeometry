@@ -70,9 +70,11 @@ AMBER → trigger `AJCR.cech-port`; RED → plan-B (Weil Sym^g) or plan-C (old-t
 
 1. **G-D4** (graph local equations, `Picard/GraphDivisor.lean`) — Opus prover, was
    being launched at handoff time; check the ledger. χ-independent, landed infra.
-2. **G-D2 meromorphic-bridge WORKSHEET** (design-first, the degree lane's biggest risk
-   — the (C2) lesson; do not launch a prover from the recon alone). Then G-D3
-   (E-i..E-iii wiring; unblocked, but its classDeg totality consumes G-D2).
+2. **G-D2 meromorphic-bridge campaign** — the WORKSHEET IS WRITTEN and binding:
+   `informal/deg-d2-meromorphic-worksheet.md` (descoped to surjectivity + extraction;
+   the D1 decision — all cochain comparisons inside K(X)ˣ — bounds the campaign; sub-
+   bricks W1–W5 with W3 the staged heart). Launch W1 (Opus) from a spec derived from
+   it; G-D3 = W5, last.
 3. **w4-rep.datum design pass** — settle the twist-normalization question (see verdict
    above); it decides the cech-port trigger. Then the remaining cbc-lite assembly.
 4. (C2) campaign per `c2-effectivity-assembly.md`: E0 (Opus) then E1 (Fable, its own
