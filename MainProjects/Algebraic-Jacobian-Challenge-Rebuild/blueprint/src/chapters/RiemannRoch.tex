@@ -1125,3 +1125,738 @@ to vanish: the two sheaves being isomorphic, their Euler characteristics agree.
   \(\mathcal O(D)\) with \(\mathcal O(D - \mathrm{div}\, g)\), forcing their Euler characteristics to
   agree.
 \end{proof}
+
+\section{The cohomological ledger: \(h^0\), \(h^1\) and \(\chi\)}
+
+The Euler characteristic of the Riemann--Roch ledger is a numerical invariant of a sheaf of
+modules. On an arbitrary small site \((\mathcal C, J)\) with coefficients in a commutative ring
+\(R\), any sheaf \(F\) of \(R\)-modules has cohomology \(H^n(F) = \Ext^n(R_J, F)\)
+(Definition~\ref{def:HModule}); this section attaches to \(F\) its dimension counts in degrees
+\(0\) and \(1\) and their alternating combination, and records their invariance under sheaf
+isomorphism. Nothing here is scheme-specific --- the curve enters only later, where all higher
+cohomology vanishes and the truncation below is the honest Euler characteristic.
+
+\begin{definition}[Transport of cohomology along a sheaf isomorphism]
+  \label{def:HModule_mapEquiv}
+  \lean{CategoryTheory.Sheaf.HModule.mapEquiv}
+  \uses{def:HModule_map}
+  \leanok
+  Let \(F, G\) be sheaves of \(R\)-modules on \((\mathcal C, J)\) and \(e : F \cong G\) an
+  isomorphism of sheaves. For every \(n\), \(e\) induces an \(R\)-linear equivalence
+  \[
+    H^n(F) \;\cong\; H^n(G),
+  \]
+  with forward map the functorial \(H^n(e)\) of the isomorphism and inverse the functorial
+  \(H^n(e^{-1})\) of its inverse.
+\end{definition}
+\begin{proof}
+  \leanok
+  Take the forward map to be \(H^n(e)\) and the backward map \(H^n(e^{-1})\)
+  (Definition~\ref{def:HModule_map}). By functoriality of \(H^n\), their composites are
+  \(H^n(e^{-1}) \circ H^n(e) = H^n(e^{-1} \circ e) = H^n(\id_F) = \id\) and symmetrically
+  \(H^n(e) \circ H^n(e^{-1}) = \id\); so the two maps are mutually inverse \(R\)-linear
+  bijections, an \(R\)-linear equivalence.
+\end{proof}
+
+\begin{definition}[The ledger invariants \(h^0\), \(h^1\) and \(\chi\)]
+  \label{def:h0_h1_chi}
+  \lean{CategoryTheory.Sheaf.h0, CategoryTheory.Sheaf.h1, CategoryTheory.Sheaf.chi}
+  \uses{def:HModule}
+  \leanok
+  For a sheaf \(F\) of \(R\)-modules on \((\mathcal C, J)\), set
+  \[
+    h^0(F) = \dim_R H^0(F), \qquad h^1(F) = \dim_R H^1(F) \quad\in \mathbb N,
+  \]
+  the \(R\)-dimensions of the degree-zero and degree-one cohomology, and
+  \[
+    \chi(F) \;=\; h^0(F) - h^1(F) \quad\in \Z,
+  \]
+  the \emph{(truncated) Euler characteristic}. The dimensions are read by \(\finrank\), which
+  returns \(0\) on a module that is not finite-dimensional; no finiteness hypothesis is imposed
+  here, the finiteness bookkeeping being discharged downstream. On a curve, where all higher
+  cohomology vanishes, \(\chi\) is the honest Euler characteristic.
+\end{definition}
+
+\begin{theorem}[Isomorphism-invariance of the ledger]
+  \label{thm:chi_congr}
+  \lean{CategoryTheory.Sheaf.h0_congr, CategoryTheory.Sheaf.h1_congr,
+    CategoryTheory.Sheaf.chi_congr}
+  \uses{def:h0_h1_chi, def:HModule_mapEquiv}
+  \leanok
+  Isomorphic sheaves have equal ledger invariants: if \(F \cong G\) then
+  \(h^0(F) = h^0(G)\), \(h^1(F) = h^1(G)\) and \(\chi(F) = \chi(G)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  An isomorphism \(F \cong G\) induces an \(R\)-linear equivalence
+  \(H^n(F) \cong H^n(G)\) in each degree (Definition~\ref{def:HModule_mapEquiv}); linearly
+  equivalent modules have equal dimension, so \(h^0(F) = h^0(G)\) and \(h^1(F) = h^1(G)\).
+  Subtracting gives \(\chi(F) = \chi(G)\).
+\end{proof}
+
+\begin{theorem}[Degenerate ledger when \(H^1\) vanishes]
+  \label{thm:chi_eq_h0}
+  \lean{CategoryTheory.Sheaf.h1_eq_zero, CategoryTheory.Sheaf.chi_eq_h0}
+  \uses{def:h0_h1_chi}
+  \leanok
+  If \(R\) is nontrivial and \(H^1(F) = 0\), then \(h^1(F) = 0\) and
+  \(\chi(F) = h^0(F)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  A zero module has dimension \(0\) over a nontrivial ring, so \(h^1(F) = \dim_R H^1(F) = 0\);
+  substituting into \(\chi(F) = h^0(F) - h^1(F)\) gives \(\chi(F) = h^0(F)\).
+\end{proof}
+
+\section{The six-term cohomology slice of a short exact sequence}
+
+A short exact sequence \(0 \to X_1 \to X_2 \to X_3 \to 0\) of sheaves of \(R\)-modules gives a
+long exact cohomology sequence; its degree-\(\le 1\) slice
+\[
+  0 \to H^0 X_1 \to H^0 X_2 \to H^0 X_3 \xrightarrow{\ \delta\ }
+    H^1 X_1 \to H^1 X_2 \to H^1 X_3
+\]
+is the exactness input to both the finiteness bookkeeping and the additivity of \(\chi\). This
+section packages the slice --- its connecting map, its exactness, and its two ends --- and, over a
+field, the finiteness transfer and the additivity of \(\chi\) that ride on it. The additivity rests
+on the vanishing of the alternating sum of dimensions along the five-term exact sequence
+(Theorem~\ref{thm:finrank_alt_sum_exact5}).
+
+\begin{theorem}[Extension of finite dimensionality along an exact pair]
+  \label{thm:finiteDimensional_of_exact}
+  \lean{FiniteDimensional.of_exact}
+  \leanok
+  Let \(K\) be a division ring and let \(V_1 \xrightarrow{f} V_2 \xrightarrow{g} V_3\) be a pair
+  of \(K\)-linear maps, exact at \(V_2\) (\(\ker g = \operatorname{im} f\)), with \(V_1\) and
+  \(V_3\) finite-dimensional. Then \(V_2\) is finite-dimensional.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Corestrict \(g\) to its range, \(g' : V_2 \to \operatorname{im} g\); this is surjective, and the
+  pair \((f, g')\) has the same kernel of second map as \((f, g)\), so it is still exact at
+  \(V_2\). The range \(\operatorname{im} g\) is a subspace of the finite-dimensional \(V_3\), hence
+  finite-dimensional. Thus \(V_2\) sits in an exact sequence
+  \(V_1 \to V_2 \to \operatorname{im} g \to 0\) with surjective right map and finite-dimensional
+  ends: its kernel \(\operatorname{im} f\) is a quotient of the finite \(V_1\) and its coimage is
+  the finite \(\operatorname{im} g\), so \(V_2\) is finite-dimensional.
+\end{proof}
+
+\begin{definition}[The connecting homomorphism]
+  \label{def:HModule_delta}
+  \lean{CategoryTheory.Sheaf.HModule.delta}
+  \uses{def:HModule, def:constModuleSheaf}
+  \leanok
+  For a short exact sequence \(0 \to X_1 \to X_2 \to X_3 \to 0\) of sheaves of \(R\)-modules and
+  \(n_0 + 1 = n_1\), the \emph{connecting homomorphism}
+  \[
+    \delta : H^{n_0}(X_3) \longrightarrow H^{n_1}(X_1)
+  \]
+  is postcomposition of a class in \(\Ext^{n_0}(R_J, X_3)\) with the extension class
+  \(\Ext^1(X_3, X_1)\) of the sequence.
+\end{definition}
+
+\begin{theorem}[Exactness of the cohomology slice]
+  \label{thm:HModule_slice_exact}
+  \lean{CategoryTheory.Sheaf.HModule.exact_map_f_map_g,
+    CategoryTheory.Sheaf.HModule.exact_map_g_delta,
+    CategoryTheory.Sheaf.HModule.exact_delta_map_f}
+  \uses{def:HModule_map, def:HModule_delta}
+  \leanok
+  For a short exact sequence \(0 \to X_1 \to X_2 \to X_3 \to 0\) of sheaves of \(R\)-modules and
+  \(n_0 + 1 = n_1\), the cohomology sequence is exact at each of its three interior joints:
+  \[
+    H^{n}(X_1) \to H^{n}(X_2) \to H^{n}(X_3), \qquad
+    H^{n_0}(X_2) \to H^{n_0}(X_3) \xrightarrow{\delta} H^{n_1}(X_1), \qquad
+    H^{n_0}(X_3) \xrightarrow{\delta} H^{n_1}(X_1) \to H^{n_1}(X_2).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  These are the three interior slots of the long exact sequence of the covariant functor
+  \(\Ext^\bullet(R_J, -)\) applied to the short exact sequence, read elementwise. The maps
+  \(H^n(X_i \to X_j)\) are the functorial maps of Definition~\ref{def:HModule_map} and the
+  connecting map is \(\delta\) of Definition~\ref{def:HModule_delta}; the identification of the
+  covariant \(\Ext\)-sequence's maps with these is by definition of postcomposition on both
+  sides.
+\end{proof}
+
+\begin{theorem}[Left end of the slice: injectivity at \(H^0\)]
+  \label{thm:HModule_injective_map_f_zero}
+  \lean{CategoryTheory.Sheaf.HModule.injective_map_f_zero}
+  \uses{def:HModule_map}
+  \leanok
+  For a short exact sequence \(0 \to X_1 \xrightarrow{f} X_2 \to X_3 \to 0\) of sheaves of
+  \(R\)-modules, the map \(H^0(f) : H^0(X_1) \to H^0(X_2)\) is injective.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The map \(f : X_1 \to X_2\) is a monomorphism, and postcomposition with a monomorphism is
+  injective on \(\Ext^0(R_J, -) = \Hom(R_J, -)\); this is exactly injectivity of \(H^0(f)\).
+\end{proof}
+
+\begin{theorem}[Right end of the slice: surjectivity into a vanishing term]
+  \label{thm:HModule_surjective_map_f}
+  \lean{CategoryTheory.Sheaf.HModule.surjective_map_f}
+  \uses{thm:HModule_slice_exact}
+  \leanok
+  For a short exact sequence \(0 \to X_1 \xrightarrow{f} X_2 \to X_3 \to 0\) of sheaves of
+  \(R\)-modules and a degree \(n\) with \(H^n(X_3) = 0\), the map
+  \(H^n(f) : H^n(X_1) \to H^n(X_2)\) is surjective.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Exactness at \(H^n(X_2)\) (Theorem~\ref{thm:HModule_slice_exact}) identifies the image of
+  \(H^n(f)\) with the kernel of \(H^n(X_2) \to H^n(X_3)\). Since \(H^n(X_3) = 0\), that map is
+  zero and its kernel is all of \(H^n(X_2)\); hence \(H^n(f)\) is surjective.
+\end{proof}
+
+\begin{theorem}[Finiteness transfer along the slice]
+  \label{thm:HModule_finiteness_transfer}
+  \lean{CategoryTheory.Sheaf.HModule.moduleFinite_middle,
+    CategoryTheory.Sheaf.HModule.moduleFinite_left_zero,
+    CategoryTheory.Sheaf.HModule.moduleFinite_left_succ}
+  \uses{thm:finiteDimensional_of_exact, thm:HModule_slice_exact,
+    thm:HModule_injective_map_f_zero, def:HModule_delta}
+  \leanok
+  Let \(R\) be a field and \(0 \to X_1 \to X_2 \to X_3 \to 0\) a short exact sequence of sheaves
+  of \(R\)-modules, with \(n_0 + 1 = n_1\). Then:
+  \begin{enumerate}
+    \item if \(H^n(X_1)\) and \(H^n(X_3)\) are finite-dimensional, so is \(H^n(X_2)\);
+    \item if \(H^0(X_2)\) is finite-dimensional, so is \(H^0(X_1)\);
+    \item if \(H^{n_0}(X_3)\) and \(H^{n_1}(X_2)\) are finite-dimensional, so is \(H^{n_1}(X_1)\).
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  \leanok
+  (1) The sequence \(H^n(X_1) \to H^n(X_2) \to H^n(X_3)\) is exact at \(H^n(X_2)\)
+  (Theorem~\ref{thm:HModule_slice_exact}) with finite-dimensional ends, so \(H^n(X_2)\) is
+  finite-dimensional by the extension lemma \ref{thm:finiteDimensional_of_exact}. (2) The map
+  \(H^0(X_1) \to H^0(X_2)\) is injective (Theorem~\ref{thm:HModule_injective_map_f_zero}), so
+  \(H^0(X_1)\) embeds in the finite-dimensional \(H^0(X_2)\) and is finite-dimensional. (3) The
+  sequence \(H^{n_0}(X_3) \xrightarrow{\delta} H^{n_1}(X_1) \to H^{n_1}(X_2)\) is exact at
+  \(H^{n_1}(X_1)\) (Theorem~\ref{thm:HModule_slice_exact}, with \(\delta\) of
+  Definition~\ref{def:HModule_delta}) and has finite-dimensional ends, so \(H^{n_1}(X_1)\) is
+  finite-dimensional by \ref{thm:finiteDimensional_of_exact}.
+\end{proof}
+
+\begin{theorem}[Additivity of \(\chi\) along a short exact sequence]
+  \label{thm:chi_eq_add_of_shortExact}
+  \lean{CategoryTheory.Sheaf.chi_eq_add_of_shortExact}
+  \uses{thm:finrank_alt_sum_exact5, thm:HModule_injective_map_f_zero, thm:HModule_slice_exact,
+    thm:HModule_surjective_map_f, def:HModule_delta, thm:chi_eq_h0, def:h0_h1_chi}
+  \leanok
+  Let \(R\) be a field and \(0 \to X_1 \to X_2 \to X_3 \to 0\) a short exact sequence of sheaves
+  of \(R\)-modules with \(H^1(X_3) = 0\) and all of \(H^0(X_1), H^0(X_2), H^0(X_3), H^1(X_1),
+  H^1(X_2)\) finite-dimensional. Then
+  \[
+    \chi(X_2) \;=\; \chi(X_1) + \chi(X_3).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Since \(H^1(X_3) = 0\), the degree-\(\le 1\) slice truncates to the five-term sequence
+  \[
+    0 \to H^0 X_1 \to H^0 X_2 \to H^0 X_3 \xrightarrow{\delta}
+      H^1 X_1 \to H^1 X_2 \to 0,
+  \]
+  exact throughout: the left map is injective (Theorem~\ref{thm:HModule_injective_map_f_zero}),
+  the three interior joints are exact (Theorem~\ref{thm:HModule_slice_exact}), and the right map
+  is surjective because \(H^1 X_3 = 0\) (Theorem~\ref{thm:HModule_surjective_map_f}). All five
+  terms being finite-dimensional, the alternating sum of their dimensions vanishes
+  (Theorem~\ref{thm:finrank_alt_sum_exact5}):
+  \[
+    h^0 X_1 - h^0 X_2 + h^0 X_3 - h^1 X_1 + h^1 X_2 \;=\; 0 .
+  \]
+  Moreover \(h^1(X_3) = 0\) (Theorem~\ref{thm:chi_eq_h0}). Rearranging the vanishing alternating
+  sum,
+  \[
+    (h^0 X_2 - h^1 X_2) = (h^0 X_1 - h^1 X_1) + (h^0 X_3 - h^1 X_3),
+  \]
+  which is \(\chi(X_2) = \chi(X_1) + \chi(X_3)\).
+\end{proof}
+
+\section{Finiteness of the cohomology of divisor sheaves}
+
+We return to the curve bundle \(X\): integral, smooth of relative dimension one and quasi-compact
+over the field \(K\). Assume the structure sheaf, as a sheaf of \(K\)-modules, has
+finite-dimensional \(H^0\) and \(H^1\) --- the two properness inputs, taken here as standing
+hypotheses. This section proves that then \emph{every} divisor sheaf \(\mathcal O(D)\) has
+finite-dimensional \(H^0\) and \(H^1\). The engine is dévissage: a one-point induction that
+transfers finiteness through the six-term slice of the dévissage short exact sequence
+\(0 \to \mathcal O(D-x) \to \mathcal O(D) \to \mathrm{sky}_x(J) \to 0\), whose skyscraper term
+has finite cohomology.
+
+\begin{definition}[The one-point divisor]
+  \label{def:curveDivisor_single}
+  \lean{AlgebraicGeometry.Scheme.CurveDivisor.single}
+  \uses{def:curveDivisor}
+  \leanok
+  For a closed point \(x\) (a point other than the generic point \(\eta\)) and \(n \in \Z\), the
+  \emph{one-point divisor} \(n \cdot x\) is the Weil divisor supported at \(x\) with coefficient
+  \(n\).
+\end{definition}
+
+\begin{lemma}[Arithmetic of the one-point divisor]
+  \label{lem:curveDivisor_single_arith}
+  \lean{AlgebraicGeometry.Scheme.CurveDivisor.single_zero,
+    AlgebraicGeometry.Scheme.CurveDivisor.single_add,
+    AlgebraicGeometry.Scheme.CurveDivisor.nsmul_single_one,
+    AlgebraicGeometry.Scheme.CurveDivisor.deg_single'}
+  \uses{def:curveDivisor_single, lem:curveDivisor_deg_single, def:residueDeg}
+  \leanok
+  The one-point divisor at a fixed closed point \(x\) is additive in its multiplicity and
+  compatible with the group operations and the degree:
+  \[
+    0 \cdot x = 0, \qquad m \cdot x + n \cdot x = (m+n)\cdot x, \qquad
+    n \cdot (1 \cdot x) = n \cdot x \ (n \in \mathbb N), \qquad
+    \deg_K(n \cdot x) = n \cdot [\kappa(x):K].
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  The one-point divisor \(n \cdot x\) is the finitely supported function sending \(x\) to \(n\)
+  and every other point to \(0\); such functions are additive in the value and vanish at value
+  \(0\), giving the first two identities, and the third follows by induction on \(n\) from the
+  second. The degree identity is the single-point degree formula
+  (Lemma~\ref{lem:curveDivisor_deg_single}) with the residue degree
+  \([\kappa(x):K]\) of Definition~\ref{def:residueDeg}.
+\end{proof}
+
+\begin{lemma}[The dévissage twist is subtraction of a point]
+  \label{lem:devissageDivisor_sub}
+  \lean{AlgebraicGeometry.devissageDivisor_eq_sub,
+    AlgebraicGeometry.devissageDivisor_add_single}
+  \uses{def:devissageDivisor, def:curveDivisor_single}
+  \leanok
+  The dévissage twist \(D - x\) (Definition~\ref{def:devissageDivisor}) is the subtraction of the
+  one-point divisor \(1 \cdot x\):
+  \[
+    D - x = D - 1 \cdot x, \qquad (D - x) + 1\cdot x = D .
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  The twist decreases the coefficient of \(D\) at \(x\) by one and leaves the others unchanged,
+  which is exactly subtracting the one-point divisor \(1 \cdot x\); adding \(1 \cdot x\) back
+  restores the original coefficient, giving \(D\).
+\end{proof}
+
+\begin{lemma}[Degree drop along the twist]
+  \label{lem:deg_devissageDivisor}
+  \lean{AlgebraicGeometry.deg_devissageDivisor}
+  \uses{lem:devissageDivisor_sub, thm:curveDivisor_deg_hom, lem:curveDivisor_single_arith}
+  \leanok
+  The degree drops by the residue degree along the dévissage twist:
+  \[
+    \deg_K(D - x) \;=\; \deg_K D - [\kappa(x):K].
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  The degree is a homomorphism (Theorem~\ref{thm:curveDivisor_deg_hom}), so
+  \(\deg_K\bigl((D - x) + 1\cdot x\bigr) = \deg_K(D - x) + \deg_K(1 \cdot x)\); the left side is
+  \(\deg_K D\) since \((D - x) + 1 \cdot x = D\) (Lemma~\ref{lem:devissageDivisor_sub}), and
+  \(\deg_K(1 \cdot x) = [\kappa(x):K]\) (Lemma~\ref{lem:curveDivisor_single_arith}). Subtracting
+  gives the claim.
+\end{proof}
+
+\begin{theorem}[Dévissage induction on Weil divisors]
+  \label{thm:induction_devissage}
+  \lean{AlgebraicGeometry.Scheme.CurveDivisor.induction_devissage}
+  \uses{def:curveDivisor, def:devissageDivisor, lem:devissageDivisor_sub}
+  \leanok
+  Let \(P\) be a predicate on Weil divisors of \(X\) that holds for the zero divisor and, for
+  every closed point \(x\), transfers in both directions along the one-point dévissage:
+  \(P(D) \iff P(D - x)\) for all \(D\). Then \(P(D)\) holds for every \(D\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  A Weil divisor is a finitely supported \(\Z\)-family on the closed points, so it suffices to
+  prove the following single-bump induction: a predicate on such families that holds at \(0\) and
+  satisfies \(P(F + 1 \cdot x) \iff P(F)\) for every point \(x\) and family \(F\) holds
+  everywhere. First, from the \(\pm 1\)-bump equivalence one gets \(P(F + n \cdot x) \iff P(F)\)
+  for every \(n \in \Z\), by induction on \(n\): the case \(n = 0\) is trivial, and the step
+  from \(n\) to \(n \pm 1\) composes one more bump equivalence, using
+  \(F + (n\pm 1)\cdot x = (F + n\cdot x) \pm 1\cdot x\). Now argue by the finitely-supported
+  induction principle: \(P(0)\) holds by hypothesis, and adding a single generator \(b \cdot x\)
+  to a family \(F\) preserves \(P\) by the equivalence just established. Hence \(P\) holds for
+  every family, i.e.\ every Weil divisor. The hypothesis \(P(D) \iff P(D - x)\) is the bump
+  equivalence in the form \(P\bigl((D - x) + 1\cdot x\bigr) \iff P(D - x)\), using
+  \((D - x) + 1\cdot x = D\) (Lemma~\ref{lem:devissageDivisor_sub}).
+\end{proof}
+
+\begin{theorem}[Cohomology of a skyscraper is finite]
+  \label{thm:moduleFinite_skyModule}
+  \lean{AlgebraicGeometry.moduleFinite_hModule_skyModule_zero,
+    AlgebraicGeometry.moduleFinite_hModule_skyModule_one}
+  \uses{def:skyModuleGammaEquiv, thm:skyModule_h1_vanishing}
+  \leanok
+  For a point \(x \in X\) and a finite-dimensional \(K\)-module \(M\), the cohomology of the
+  skyscraper \(\mathrm{sky}_x(M)\) is finite-dimensional in degrees \(0\) and \(1\):
+  \(H^0\) is \(M\) and \(H^1\) vanishes.
+\end{theorem}
+\begin{proof}
+  \leanok
+  In degree \(0\), \(H^0(\mathrm{sky}_x(M)) \cong M\) (Definition~\ref{def:skyModuleGammaEquiv}),
+  which is finite-dimensional by hypothesis. In degree \(1\),
+  \(H^1(\mathrm{sky}_x(M)) = 0\) (Theorem~\ref{thm:skyModule_h1_vanishing}), and the zero module
+  is finite-dimensional.
+\end{proof}
+
+\begin{theorem}[Finiteness of the cohomology of every divisor sheaf]
+  \label{thm:moduleFinite_divisorSheaf}
+  \lean{AlgebraicGeometry.moduleFinite_hModule_divisorSheaf_zero,
+    AlgebraicGeometry.moduleFinite_hModule_divisorSheaf_one}
+  \uses{thm:induction_devissage, thm:divisorSheafZeroIso, thm:devissageSES_shortExact,
+    thm:moduleFinite_skyModule, cor:moduleFinite_jumpModule, thm:HModule_finiteness_transfer,
+    def:jumpModule}
+  \leanok
+  On the curve bundle \(X\), quasi-compact over \(K\), assume \(H^0(X, \struct{X/K})\) and
+  \(H^1(X, \struct{X/K})\) are finite-dimensional over \(K\). Then for every Weil divisor \(D\),
+  both \(H^0(\mathcal O(D))\) and \(H^1(\mathcal O(D))\) are finite-dimensional.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Apply the dévissage induction (Theorem~\ref{thm:induction_devissage}) to the predicate
+  ``\(H^0(\mathcal O(D))\) and \(H^1(\mathcal O(D))\) are both finite-dimensional''.
+
+  \emph{Base case.} For \(D = 0\), the identification \(\mathcal O(0) \cong \struct{X/K}\)
+  (Theorem~\ref{thm:divisorSheafZeroIso}) transports finite-dimensionality of \(H^0\) and \(H^1\)
+  from the structure sheaf, which holds by the standing hypothesis.
+
+  \emph{Step.} Fix a closed point \(x\). The dévissage short exact sequence
+  \(0 \to \mathcal O(D-x) \to \mathcal O(D) \to \mathrm{sky}_x(J) \to 0\)
+  (Theorem~\ref{thm:devissageSES_shortExact}) has third term the skyscraper on the jump module
+  \(J\) (Definition~\ref{def:jumpModule}), which is finite-dimensional
+  (Corollary~\ref{cor:moduleFinite_jumpModule}); hence \(H^0(\mathrm{sky}_x(J))\) is
+  finite-dimensional and \(H^1(\mathrm{sky}_x(J)) = 0\)
+  (Theorem~\ref{thm:moduleFinite_skyModule}). We must show the finiteness of the cohomology of
+  \(\mathcal O(D)\) is equivalent to that of \(\mathcal O(D-x)\); both directions use the
+  finiteness transfer of Theorem~\ref{thm:HModule_finiteness_transfer} for this sequence, whose
+  terms \(X_1, X_2, X_3\) are \(\mathcal O(D-x), \mathcal O(D), \mathrm{sky}_x(J)\).
+  \begin{itemize}
+    \item \emph{From \(D-x\) to \(D\).} If \(H^0, H^1\) of \(\mathcal O(D-x)\) are
+      finite-dimensional, then so are those of \(\mathcal O(D)\), by the middle-term transfer
+      (1) applied in degrees \(0\) and \(1\): the two outer terms \(\mathcal O(D-x)\) and
+      \(\mathrm{sky}_x(J)\) have finite cohomology.
+    \item \emph{From \(D\) to \(D-x\).} If \(H^0, H^1\) of \(\mathcal O(D)\) are
+      finite-dimensional, then \(H^0(\mathcal O(D-x))\) is finite-dimensional as it embeds in
+      \(H^0(\mathcal O(D))\) (left-term transfer (2)), and \(H^1(\mathcal O(D-x))\) is
+      finite-dimensional as an extension controlled by the finite \(H^0(\mathrm{sky}_x(J))\) and
+      \(H^1(\mathcal O(D))\) (left-term transfer (3)).
+  \end{itemize}
+  Both directions established, the induction concludes.
+\end{proof}
+
+\section{The \(\chi\)-ledger and the Riemann inequality}
+
+The Euler characteristic of a divisor sheaf is now computed. Under the standing finiteness
+hypotheses of the previous section, subtracting a closed point drops \(\chi\) by the residue
+degree; iterating from \(\mathcal O(0) \cong \struct{X/K}\) closes the ledger into
+\(\chi(\mathcal O(D)) = \chi(\struct{X/K}) + \deg_K D\). Two consequences follow: principal
+divisors have degree zero, and \(h^0\) grows without bound along multiples of any closed point.
+
+\begin{theorem}[The Euler characteristic of a skyscraper]
+  \label{thm:chi_skyModule}
+  \lean{AlgebraicGeometry.h0_skyModule, AlgebraicGeometry.chi_skyModule}
+  \uses{def:skyModuleGammaEquiv, thm:skyModule_h1_vanishing, def:h0_h1_chi, thm:chi_eq_h0}
+  \leanok
+  For a point \(x \in X\) and a \(K\)-module \(M\) (with \(K\) a field), the degree-zero
+  dimension and the Euler characteristic of the skyscraper are both the dimension of the value
+  module:
+  \[
+    h^0(\mathrm{sky}_x(M)) = \dim_K M, \qquad \chi(\mathrm{sky}_x(M)) = \dim_K M .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Since \(H^0(\mathrm{sky}_x(M)) \cong M\) (Definition~\ref{def:skyModuleGammaEquiv}),
+  \(h^0(\mathrm{sky}_x(M)) = \dim_K M\). The degree-one cohomology vanishes
+  (Theorem~\ref{thm:skyModule_h1_vanishing}), so
+  \(\chi(\mathrm{sky}_x(M)) = h^0(\mathrm{sky}_x(M))\) (Theorem~\ref{thm:chi_eq_h0}), which is
+  \(\dim_K M\).
+\end{proof}
+
+\begin{theorem}[The dévissage step of the \(\chi\)-ledger]
+  \label{thm:chi_step}
+  \lean{AlgebraicGeometry.chi_step}
+  \uses{thm:chi_eq_add_of_shortExact, thm:devissageSES_shortExact, thm:chi_skyModule,
+    thm:finrank_jumpModule, thm:moduleFinite_divisorSheaf, thm:moduleFinite_skyModule,
+    cor:moduleFinite_jumpModule, def:devissageDivisor}
+  \leanok
+  Under the standing finiteness hypotheses, subtracting a closed point \(x\) from a Weil divisor
+  \(D\) drops the Euler characteristic by the residue degree:
+  \[
+    \chi(\mathcal O(D)) \;=\; \chi(\mathcal O(D - x)) + [\kappa(x):K].
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Apply the additivity of \(\chi\) (Theorem~\ref{thm:chi_eq_add_of_shortExact}) to the dévissage
+  short exact sequence \(0 \to \mathcal O(D-x) \to \mathcal O(D) \to \mathrm{sky}_x(J) \to 0\)
+  (Theorem~\ref{thm:devissageSES_shortExact}). Its hypotheses hold: the skyscraper term has
+  \(H^1 = 0\) (Theorem~\ref{thm:moduleFinite_skyModule}), and all five relevant cohomology
+  modules are finite-dimensional --- those of \(\mathcal O(D-x)\) and \(\mathcal O(D)\) by
+  Theorem~\ref{thm:moduleFinite_divisorSheaf}, and \(H^0(\mathrm{sky}_x(J))\) because \(J\) is
+  finite (Corollary~\ref{cor:moduleFinite_jumpModule}). Hence
+  \(\chi(\mathcal O(D)) = \chi(\mathcal O(D-x)) + \chi(\mathrm{sky}_x(J))\). Finally
+  \(\chi(\mathrm{sky}_x(J)) = \dim_K J\) (Theorem~\ref{thm:chi_skyModule}) and
+  \(\dim_K J = [\kappa(x):K]\) (Theorem~\ref{thm:finrank_jumpModule}), giving the stated identity.
+\end{proof}
+
+\begin{theorem}[The \(\chi\)-ledger, closed]
+  \label{thm:chi_divisorSheaf}
+  \lean{AlgebraicGeometry.chi_divisorSheaf}
+  \uses{thm:induction_devissage, thm:divisorSheafZeroIso, thm:chi_congr, thm:chi_step,
+    lem:deg_devissageDivisor, thm:curveDivisor_deg_hom, lem:devissageDivisor_sub}
+  \leanok
+  Under the standing finiteness hypotheses, for every Weil divisor \(D\),
+  \[
+    \chi(\mathcal O(D)) \;=\; \chi(\struct{X/K}) + \deg_K D .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Dévissage induction (Theorem~\ref{thm:induction_devissage}) on the predicate
+  ``\(\chi(\mathcal O(D)) = \chi(\struct{X/K}) + \deg_K D\)''. For \(D = 0\):
+  \(\chi(\mathcal O(0)) = \chi(\struct{X/K})\) by isomorphism-invariance
+  (Theorem~\ref{thm:chi_congr}) along \(\mathcal O(0) \cong \struct{X/K}\)
+  (Theorem~\ref{thm:divisorSheafZeroIso}), and \(\deg_K 0 = 0\)
+  (Theorem~\ref{thm:curveDivisor_deg_hom}). For the step at a closed point \(x\), combine the
+  ledger step \(\chi(\mathcal O(D)) = \chi(\mathcal O(D-x)) + [\kappa(x):K]\)
+  (Theorem~\ref{thm:chi_step}) with the degree drop
+  \(\deg_K(D-x) = \deg_K D - [\kappa(x):K]\) (Lemma~\ref{lem:deg_devissageDivisor}): the
+  statement for \(D-x\) and the statement for \(D\) differ on both sides by \([\kappa(x):K]\), so
+  each implies the other (using \(D - x = D - 1\cdot x\),
+  Lemma~\ref{lem:devissageDivisor_sub}).
+\end{proof}
+
+\begin{theorem}[Principal divisors have degree zero]
+  \label{thm:deg_divOf}
+  \lean{AlgebraicGeometry.deg_divOf}
+  \uses{thm:mulEquivDivisorSheaf, thm:chi_congr, thm:chi_divisorSheaf, thm:curveDivisor_deg_hom}
+  \leanok
+  For a nonzero rational function \(g \in K(X)^\times\),
+  \[
+    \deg_K(\mathrm{div}\, g) \;=\; 0 .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Multiplication by \(g\) is an isomorphism of sheaves
+  \(\mathcal O(0) \cong \mathcal O(0 - \mathrm{div}\, g)\)
+  (Theorem~\ref{thm:mulEquivDivisorSheaf}), so the two sheaves have equal Euler characteristic
+  (Theorem~\ref{thm:chi_congr}). Evaluating both with the closed ledger
+  (Theorem~\ref{thm:chi_divisorSheaf}):
+  \[
+    \chi(\struct{X/K}) + \deg_K 0 \;=\; \chi(\struct{X/K}) + \deg_K(0 - \mathrm{div}\, g).
+  \]
+  Cancelling \(\chi(\struct{X/K})\) and using \(\deg_K 0 = 0\) and
+  \(\deg_K(-\mathrm{div}\, g) = -\deg_K(\mathrm{div}\, g)\)
+  (Theorem~\ref{thm:curveDivisor_deg_hom}) leaves \(-\deg_K(\mathrm{div}\, g) = 0\), i.e.\
+  \(\deg_K(\mathrm{div}\, g) = 0\).
+\end{proof}
+
+\begin{theorem}[The Riemann inequality]
+  \label{thm:riemann_inequality}
+  \lean{AlgebraicGeometry.riemann_inequality}
+  \uses{thm:chi_divisorSheaf, def:h0_h1_chi}
+  \leanok
+  Under the standing finiteness hypotheses, for every Weil divisor \(D\),
+  \[
+    \deg_K D + \chi(\struct{X/K}) \;\le\; h^0(\mathcal O(D)).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  By the closed ledger (Theorem~\ref{thm:chi_divisorSheaf}),
+  \(\chi(\mathcal O(D)) = \chi(\struct{X/K}) + \deg_K D\). On the other hand
+  \(\chi(\mathcal O(D)) = h^0(\mathcal O(D)) - h^1(\mathcal O(D)) \le h^0(\mathcal O(D))\), since
+  \(h^1 \ge 0\). Combining the two gives \(\deg_K D + \chi(\struct{X/K}) \le h^0(\mathcal O(D))\).
+\end{proof}
+
+\begin{theorem}[Unbounded growth of \(h^0\) along multiples of a point]
+  \label{thm:h0_nsmul_point_unbounded}
+  \lean{AlgebraicGeometry.h0_nsmul_point_unbounded}
+  \uses{thm:chi_divisorSheaf, lem:curveDivisor_single_arith, thm:residueDeg_pos, def:h0_h1_chi}
+  \leanok
+  Under the standing finiteness hypotheses, for every closed point \(x\) and every bound \(N\)
+  there is \(n \in \mathbb N\) with
+  \[
+    N \;\le\; h^0\bigl(\mathcal O(n \cdot x)\bigr).
+  \]
+  No rational point is needed: it suffices that \([\kappa(x):K] \ge 1\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  For each \(n\), the closed ledger (Theorem~\ref{thm:chi_divisorSheaf}) and the degree of a
+  one-point divisor (Lemma~\ref{lem:curveDivisor_single_arith}) give
+  \(\chi(\mathcal O(n\cdot x)) = \chi(\struct{X/K}) + n\,[\kappa(x):K]\). The residue degree is
+  positive, \([\kappa(x):K] \ge 1\) (Theorem~\ref{thm:residueDeg_pos}), so
+  \(\chi(\mathcal O(n\cdot x)) \ge \chi(\struct{X/K}) + n\). Since
+  \(\chi(\mathcal O(n\cdot x)) \le h^0(\mathcal O(n\cdot x))\) (as \(h^1 \ge 0\)) and
+  \(\chi(\struct{X/K}) = h^0(\struct{X/K}) - h^1(\struct{X/K}) \ge -h^1(\struct{X/K})\), we obtain
+  \[
+    h^0(\mathcal O(n\cdot x)) \;\ge\; n - h^1(\struct{X/K}).
+  \]
+  Taking \(n = N + h^1(\struct{X/K})\) yields \(h^0(\mathcal O(n\cdot x)) \ge N\).
+\end{proof}
+
+\section{Riemann--Roch on the challenge curve}
+
+Finally, instantiate the ledger on the bundled challenge curve \(C\) over the field \(k\): smooth
+of relative dimension one, proper, and geometrically irreducible. Properness supplies both
+missing ingredients --- the finiteness of \(H^1(C, \struct C)\), which is the genus, and the
+identification \(H^0(C, \struct C) \cong k\), which makes \(h^0(\struct C) = 1\). The conditional
+ledger then reads as Riemann--Roch-lite: \(\chi(\mathcal O(D)) = 1 - g(C) + \deg_k D\).
+
+\begin{definition}[The \(k\)-linear structure map on global sections]
+  \label{def:overAlgebraMapTopLinear}
+  \lean{AlgebraicGeometry.Scheme.overAlgebraMapTopLinear}
+  \uses{def:overAlgebraMap, def:moduleKSheaf}
+  \leanok
+  For a scheme \(X\) over \(\Spec k\), the structure map \(k \to \Gamma(X, \top)\) of
+  Definition~\ref{def:overAlgebraMap} is \(k\)-linear for the \(k\)-module structure it induces
+  on \(\Gamma(X, \top)\) (Definition~\ref{def:moduleKSheaf}).
+\end{definition}
+\begin{proof}
+  \leanok
+  The \(k\)-module structure on \(\Gamma(X, \top)\) is restriction of scalars along the very same
+  ring map \(k \to \Gamma(X, \top)\), so additivity and \(k\)-homogeneity of that map are the
+  defining module axioms.
+\end{proof}
+
+\begin{theorem}[The \(k\)-linear \(\Gamma(X, \top) \cong k\) seam]
+  \label{thm:overAlgebraMapTopEquiv}
+  \lean{AlgebraicGeometry.Scheme.bijective_overAlgebraMap_top,
+    AlgebraicGeometry.Scheme.overAlgebraMapTopEquiv}
+  \uses{def:overAlgebraMapTopLinear}
+  \leanok
+  Let \(X\) be a scheme over \(\Spec k\) whose structure morphism is bijective on global sections
+  (the induced map \(\Gamma(\Spec k, \struct{\Spec k}) \to \Gamma(X, \struct X)\) is bijective).
+  Then the structure map \(k \to \Gamma(X, \top)\) is a \(k\)-linear equivalence
+  \[
+    k \;\cong\; \Gamma(X, \top).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The structure map \(k \to \Gamma(X, \top)\) factors as the composite of the inverse of the
+  canonical isomorphism \(\Gamma(\Spec k, \struct{\Spec k}) \cong k\), the map on global sections
+  induced by the structure morphism, and the identity restriction \(\Gamma(X, \top) \to
+  \Gamma(X, \top)\). The first factor is bijective (an isomorphism), the last is the identity,
+  and the middle is bijective by hypothesis; hence the composite is bijective. A bijective
+  \(k\)-linear map (Definition~\ref{def:overAlgebraMapTopLinear}) is a \(k\)-linear equivalence.
+\end{proof}
+
+\begin{theorem}[\(h^0 = 1\) when global sections are constant]
+  \label{thm:h0_moduleKSheaf_bijective}
+  \lean{AlgebraicGeometry.Scheme.h0_moduleKSheaf_of_bijective,
+    AlgebraicGeometry.moduleFinite_hModule_zero_of_bijective}
+  \uses{thm:overAlgebraMapTopEquiv, def:moduleKSheafHZero, def:h0_h1_chi}
+  \leanok
+  Let \(X\) be a scheme over \(\Spec k\) whose structure morphism is bijective on global
+  sections. Then \(H^0(X, \struct{X/k})\) is one-dimensional over \(k\); in particular it is
+  finite-dimensional and \(h^0(\struct{X/k}) = 1\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Degree-zero cohomology is global sections, \(H^0(X, \struct{X/k}) \cong \Gamma(X, \top)\)
+  (Definition~\ref{def:moduleKSheafHZero}), and the seam identifies \(\Gamma(X, \top) \cong k\)
+  (Theorem~\ref{thm:overAlgebraMapTopEquiv}). Thus \(H^0(X, \struct{X/k}) \cong k\) is
+  one-dimensional, so it is finite-dimensional and \(h^0(\struct{X/k}) = \dim_k k = 1\).
+\end{proof}
+
+\begin{theorem}[Global sections of the challenge curve]
+  \label{thm:h0_moduleKSheaf_curve}
+  \lean{AlgebraicGeometry.moduleFinite_hModule_zero, AlgebraicGeometry.h0_moduleKSheaf}
+  \uses{thm:h0_moduleKSheaf_bijective, thm:sections_k}
+  \leanok
+  For the challenge curve \(C\) --- proper, smooth of relative dimension one and geometrically
+  irreducible over \(k\) --- the cohomology \(H^0(C, \struct C)\) is a one-dimensional (hence
+  finite-dimensional) \(k\)-vector space, and \(h^0(\struct C) = 1\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Being smooth, \(C\) is geometrically reduced, and together with geometric irreducibility this
+  makes \(C\) geometrically integral; being also proper, its structure morphism is bijective on
+  global sections (Theorem~\ref{thm:sections_k}). Apply
+  Theorem~\ref{thm:h0_moduleKSheaf_bijective}.
+\end{proof}
+
+\begin{theorem}[Euler characteristic of the structure sheaf of the curve]
+  \label{thm:chi_moduleKSheaf_curve}
+  \lean{AlgebraicGeometry.chi_moduleKSheaf}
+  \uses{thm:h0_moduleKSheaf_curve, def:genus, def:h0_h1_chi}
+  \leanok
+  For the challenge curve \(C\),
+  \[
+    \chi(\struct C) \;=\; 1 - g(C),
+  \]
+  where \(g(C) = \dim_k H^1(C, \struct C)\) is the genus.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By Theorem~\ref{thm:h0_moduleKSheaf_curve}, \(h^0(\struct C) = 1\). By definition of the genus
+  (Definition~\ref{def:genus}), \(h^1(\struct C) = \dim_k H^1(C, \struct C) = g(C)\). Therefore
+  \(\chi(\struct C) = h^0(\struct C) - h^1(\struct C) = 1 - g(C)\).
+\end{proof}
+
+\begin{theorem}[Riemann--Roch-lite for the challenge curve]
+  \label{thm:chi_divisorSheaf_curve}
+  \lean{AlgebraicGeometry.chi_divisorSheaf_curve}
+  \uses{thm:chi_divisorSheaf, thm:chi_moduleKSheaf_curve, thm:h0_moduleKSheaf_curve,
+    thm:moduleFinite_hModule_one}
+  \leanok
+  For every Weil divisor \(D\) on the challenge curve \(C\),
+  \[
+    \chi(\mathcal O(D)) \;=\; 1 - g(C) + \deg_k D .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The two standing finiteness hypotheses are met on the curve: \(H^0(C, \struct C)\) is
+  finite-dimensional (Theorem~\ref{thm:h0_moduleKSheaf_curve}) and \(H^1(C, \struct C)\) is
+  finite-dimensional (Theorem~\ref{thm:moduleFinite_hModule_one}). So the closed ledger applies
+  (Theorem~\ref{thm:chi_divisorSheaf}): \(\chi(\mathcal O(D)) = \chi(\struct C) + \deg_k D\).
+  Substituting \(\chi(\struct C) = 1 - g(C)\) (Theorem~\ref{thm:chi_moduleKSheaf_curve}) gives
+  the claim.
+\end{proof}
+
+\begin{theorem}[The Riemann inequality for the challenge curve]
+  \label{thm:riemann_inequality_curve}
+  \lean{AlgebraicGeometry.riemann_inequality_curve}
+  \uses{thm:riemann_inequality, thm:chi_moduleKSheaf_curve, thm:h0_moduleKSheaf_curve,
+    thm:moduleFinite_hModule_one}
+  \leanok
+  \source{papaioannou-algebraic-rr:page-0007}
+  For every Weil divisor \(D\) on the challenge curve \(C\),
+  \[
+    \deg_k D + 1 - g(C) \;\le\; h^0(\mathcal O(D)).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The standing finiteness hypotheses hold on \(C\) (Theorem~\ref{thm:h0_moduleKSheaf_curve} and
+  Theorem~\ref{thm:moduleFinite_hModule_one}), so the general inequality
+  \(\deg_k D + \chi(\struct C) \le h^0(\mathcal O(D))\) applies
+  (Theorem~\ref{thm:riemann_inequality}). Substituting \(\chi(\struct C) = 1 - g(C)\)
+  (Theorem~\ref{thm:chi_moduleKSheaf_curve}) gives the stated form. This is the classical Riemann
+  inequality \(\dim L(D) \ge \deg D + 1 - g\), read off the genus as the supremum
+  \(g = \sup_D\{\deg D - \dim L(D) + 1\}\).
+\end{proof}
+
+\begin{theorem}[Unbounded \(h^0\) along a closed point of the curve]
+  \label{thm:h0_nsmul_point_unbounded_curve}
+  \lean{AlgebraicGeometry.h0_nsmul_point_unbounded_curve}
+  \uses{thm:h0_nsmul_point_unbounded, thm:h0_moduleKSheaf_curve, thm:moduleFinite_hModule_one}
+  \leanok
+  For every closed point \(x\) of the challenge curve \(C\) and every bound \(N\), there is
+  \(n \in \mathbb N\) with \(N \le h^0(\mathcal O(n \cdot x))\). No rational point is needed.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The standing finiteness hypotheses hold on \(C\) (Theorem~\ref{thm:h0_moduleKSheaf_curve} and
+  Theorem~\ref{thm:moduleFinite_hModule_one}), so the general unboundedness
+  (Theorem~\ref{thm:h0_nsmul_point_unbounded}) applies verbatim.
+\end{proof}
