@@ -4081,3 +4081,965 @@ Kleiman's separatedness of the relative Picard functor.
   \'etale plus computes the sheafification and \(\mathrm{PicEtAff}\) is separated on the \'etale
   site of affines.
 \end{proof}
+
+
+\section{Unit sections across an open immersion}
+
+Throughout this section \(w \colon Z \to Y\) is an open immersion of schemes. Over an open
+\(V \subseteq Y\) contained in the image of \(w\), pullback of sections along \(w\) is
+bijective; this transports \emph{unit} sections between \(Y\) and \(Z\) and is the substrate
+for decomposing \v Cech Picard classes along clopen partitions.
+
+\begin{lemma}[Units over an empty open form a trivial group]
+  \label{lem:subsingleton_units_empty}
+  \lean{AlgebraicGeometry.Scheme.subsingleton_units_of_le_bot}
+  \leanok
+  For a scheme \(X\) and an open \(O \subseteq X\) with \(O \subseteq \emptyset\) (that is,
+  \(O = \emptyset\)), the unit group \(\Gamma(X, O)^{\times}\) is trivial (a subsingleton).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Since \(O = \emptyset\), the ring \(\Gamma(X, O)\) is the zero ring, in which \(0 = 1\) is the
+  only element; hence its group of units has a single element.
+\end{proof}
+
+\begin{lemma}[Sections pull back isomorphically over an open inside the image]
+  \label{lem:isIso_appLE_of_le_opensRange}
+  \lean{AlgebraicGeometry.Scheme.Hom.isIso_appLE_of_le_opensRange}
+  \leanok
+  Let \(V \subseteq Y\) be an open with \(V \subseteq \operatorname{range}(w)\). Then pullback of
+  sections along \(w\) is an isomorphism of rings
+  \(\Gamma(Y, V) \xrightarrow{\ \sim\ } \Gamma(Z, w^{-1}V)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  An open immersion \(w\) identifies \(Z\) with the open subscheme \(\operatorname{range}(w)\) of
+  \(Y\); for an open \(V\) contained in that image the comparison map on sections is the
+  restriction isomorphism of the structure sheaf between \(V\) and its homeomorphic preimage
+  \(w^{-1}V\). Hence pullback of sections over \(V\) is an isomorphism of rings.
+\end{proof}
+
+\begin{definition}[Transport of unit sections across an open immersion]
+  \label{def:unitsPreimageEquiv}
+  \lean{AlgebraicGeometry.Scheme.Hom.unitsPreimageEquiv}
+  \uses{lem:isIso_appLE_of_le_opensRange}
+  \leanok
+  For an open \(V \subseteq Y\) with \(V \subseteq \operatorname{range}(w)\), the isomorphism of
+  unit groups
+  \[
+    \Gamma(Y, V)^{\times} \xrightarrow{\ \sim\ } \Gamma(Z, w^{-1}V)^{\times}
+  \]
+  induced by pullback of sections along \(w\).
+\end{definition}
+\begin{proof}
+  \leanok
+  Pullback of sections along \(w\) is an isomorphism of rings over \(V\)
+  (Lemma~\ref{lem:isIso_appLE_of_le_opensRange}); an isomorphism of rings restricts to an
+  isomorphism of their groups of units.
+\end{proof}
+
+\section{Decomposition of the \v Cech Picard group along a clopen partition}
+
+A \emph{clopen partition} of a scheme \(Y\) is a family of open immersions
+\(w_i \colon Z_i \to Y\), \(i \in \iota\), whose ranges are pairwise disjoint
+(\(\operatorname{range}(w_i) \cap \operatorname{range}(w_j) = \emptyset\) for \(i \ne j\)) and
+cover \(Y\); each range is then open with open complement. This section proves that the \v Cech
+Picard group of \(Y\) decomposes along such a partition: separation along an arbitrary clopen
+partition, and gluing along a finite one. Throughout, \(\Pic(Y)\) is the definitional \v Cech
+Picard group recalled in Section~\ref{sec:etaleSeparatedness}, with pullback
+\(w^{*} \colon \Pic(Y) \to \Pic(Z)\) along a morphism \(w \colon Z \to Y\).
+
+\begin{theorem}[Separation of \v Cech Picard classes along a clopen partition]
+  \label{thm:cechPic_clopen_separation}
+  \lean{AlgebraicGeometry.Scheme.CechPic.eq_of_map_eq_of_clopen}
+  \uses{def:unitsPreimageEquiv, lem:subsingleton_units_empty, cor:cechPic_mk_injective}
+  \leanok
+  Let \((w_i)_{i \in \iota}\) be a clopen partition of \(Y\). Two \v Cech Picard classes
+  \(L, L' \in \Pic(Y)\) with \(w_i^{*} L = w_i^{*} L'\) for every \(i\) are equal.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:units_separation, lem:units_gluing}
+  Choose for each point \(y \in Y\) an index \(p(y)\) with \(y \in \operatorname{range}(w_{p(y)})\).
+  Represent \(L = [\mathcal U_1, a_1]\) and \(L' = [\mathcal U_2, a_2]\) and pass to the common
+  adapted pointed cover \(\mathcal V(y) := \mathcal U_1(y) \cap \mathcal U_2(y) \cap
+  \operatorname{range}(w_{p(y)})\), so that \(\mathcal V(y) \subseteq \operatorname{range}(w_{p(y)})\)
+  for every \(y\); it suffices to show the ratio cocycle \(\gamma\) representing \(L/L'\) on
+  \(\mathcal V\) is a coboundary.
+
+  \emph{Triviality on each piece.} Fix \(i\). Since \(w_i^{*}L = w_i^{*}L'\), the pullback classes
+  \(w_i^{*}[\mathcal V, a_1|_{\mathcal V}]\) and \(w_i^{*}[\mathcal V, a_2|_{\mathcal V}]\) are
+  represented on the pulled-back pointed cover \(\mathcal V^{(i)} := w_i^{-1}\mathcal V\) by the
+  pulled-back cocycles, and they agree in \(\Pic(Z_i)\); by refinement injectivity
+  (Corollary~\ref{cor:cechPic_mk_injective}) already the pulled-back ratio cocycle
+  \(w_i^{\sharp}\gamma\) is a coboundary on \(\mathcal V^{(i)}\): there are units
+  \(\alpha^{(i)}_z \in \struct{Z_i}(\mathcal V^{(i)}(z))^{\times}\) with
+  \(\alpha^{(i)}_z \cdot (w_i^{\sharp}\gamma)_{zz'} = \alpha^{(i)}_{z'}\) on the overlaps.
+
+  \emph{Gluing the piece coboundaries.} For each \(y \in Y\), let \(z_0\) be the unique point of
+  \(Z_{p(y)}\) over \(y\) (an open immersion is injective on points), and set
+  \(\beta_y := \Phi^{-1}\bigl(\alpha^{(p(y))}_{z_0}|_{w_{p(y)}^{-1}\mathcal V(y)}\bigr) \in
+  \Gamma(Y, \mathcal V(y))^{\times}\), where \(\Phi\) is the unit transport of
+  Definition~\ref{def:unitsPreimageEquiv} across \(w_{p(y)}\) (applicable since
+  \(\mathcal V(y) \subseteq \operatorname{range}(w_{p(y)})\)). The choice of index is forced: if
+  \(y \in \operatorname{range}(w_i)\) too, then \(y \in \operatorname{range}(w_i) \cap
+  \operatorname{range}(w_{p(y)})\), which is empty unless \(i = p(y)\); and the choice of preimage
+  point is forced by injectivity.
+
+  \emph{\(\beta\) cobounds \(\gamma\).} Fix \(y, y'\). If \(p(y') = p(y)\), both members lie in the
+  single piece \(Z_{p(y)}\); the coboundary relation for \(\alpha^{(p(y))}\) pulls back injectively
+  through \(w_{p(y)}\) on the overlap \(\mathcal V(y) \cap \mathcal V(y') \subseteq
+  \operatorname{range}(w_{p(y)})\) (pullback of unit sections is injective on opens inside the
+  range, Definition~\ref{def:unitsPreimageEquiv}), yielding
+  \(\beta_y \cdot \gamma_{yy'} = \beta_{y'}\) there. If \(p(y') \ne p(y)\), then
+  \(\mathcal V(y) \cap \mathcal V(y') \subseteq \operatorname{range}(w_{p(y)}) \cap
+  \operatorname{range}(w_{p(y')}) = \emptyset\), so the units over the overlap form a trivial group
+  (Lemma~\ref{lem:subsingleton_units_empty}) and the relation holds vacuously. Assembling over the
+  cover of \(\mathcal V(y) \cap \mathcal V(y')\) by these two cases and separating
+  (Lemma~\ref{lem:units_separation}; gluing across pieces uses Lemma~\ref{lem:units_gluing} in the
+  construction of \(\beta\)), \(\gamma = \delta\beta\) is a coboundary, so \(L/L' = 1\), i.e.
+  \(L = L'\).
+\end{proof}
+
+\begin{theorem}[The one-piece extension across a clopen decomposition]
+  \label{thm:cechPic_extendClass}
+  \lean{AlgebraicGeometry.Scheme.CechPic.extendClass,
+    AlgebraicGeometry.Scheme.CechPic.map_extendClass,
+    AlgebraicGeometry.Scheme.CechPic.map_extendClass_of_le_compl}
+  \uses{def:unitsPreimageEquiv, lem:subsingleton_units_empty}
+  \leanok
+  Let \(w \colon Z \to Y\) be an open immersion whose range is complemented by an open
+  \(\Omega' \subseteq Y\): \(\operatorname{range}(w) \cap \Omega' = \emptyset\) and
+  \(\operatorname{range}(w) \cup \Omega' = Y\). For every \(L_0 \in \Pic(Z)\) there is a class
+  \(\widetilde L \in \Pic(Y)\) with
+  \[
+    w^{*}\widetilde L = L_0, \qquad v^{*}\widetilde L = 1 \text{ for every } v \colon W \to Y
+    \text{ with image contained in } \Omega'.
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Represent \(L_0 = [\mathcal U_0, \gamma_0]\) by a unit cocycle on a pointed cover of \(Z\). Build
+  the \emph{extension cover} \(\mathcal E\) of \(Y\): at a point \(y \in \operatorname{range}(w)\)
+  take the \(w\)-image of the member of \(\mathcal U_0\) at the unique preimage of \(y\); at
+  \(y \notin \operatorname{range}(w)\) take \(\Omega'\) (a legitimate pointed cover, since
+  \(\operatorname{range}(w) \cup \Omega' = Y\)). Define its pair values: on range--range overlaps
+  the transported cocycle value \(\Phi^{-1}\bigl((\gamma_0)_{\cdot\cdot}\bigr)\) of
+  Definition~\ref{def:unitsPreimageEquiv} across \(w\), and \(1\) whenever either argument lies off
+  the range. These satisfy the cocycle identity: on triple overlaps of range members it is the
+  transported cocycle identity of \(\gamma_0\); every other triple overlap meets a range member and
+  a non-range member, hence lies in \(\operatorname{range}(w) \cap \Omega' = \emptyset\) and carries
+  only the trivial unit (Lemma~\ref{lem:subsingleton_units_empty}), so the identity degenerates.
+  This produces \(\widetilde L := [\mathcal E, \text{extension cocycle}] \in \Pic(Y)\).
+
+  \emph{Restriction on the piece.} The given cover \(\mathcal U_0\) refines the pullback
+  \(w^{-1}\mathcal E\) (the preimage of the image of a member is that member), and along this
+  refinement the pulled-back extension cocycle restricts to \(\gamma_0\) (its range--range values
+  are the transported \(\gamma_0\)). Hence \(w^{*}\widetilde L = [\mathcal U_0, \gamma_0] = L_0\).
+
+  \emph{Restriction off the piece.} For \(v \colon W \to Y\) with image in \(\Omega'\), every point
+  \(v(x)\) lies off \(\operatorname{range}(w)\) (else it would lie in
+  \(\operatorname{range}(w) \cap \Omega' = \emptyset\)); so every pulled-back pair value is \(1\),
+  the pulled-back cocycle is trivial, and \(v^{*}\widetilde L = 1\).
+\end{proof}
+
+\begin{theorem}[Gluing of \v Cech Picard classes along a finite clopen partition]
+  \label{thm:cechPic_clopen_gluing}
+  \lean{AlgebraicGeometry.Scheme.CechPic.exists_map_eq_of_clopen}
+  \uses{thm:cechPic_extendClass}
+  \leanok
+  Let \((w_i)_{i \in \iota}\) be a \emph{finite} clopen partition of \(Y\). Every family
+  \((L_i)_{i \in \iota}\) with \(L_i \in \Pic(Z_i)\) is the family of restrictions of a single
+  class \(M \in \Pic(Y)\): \(w_i^{*} M = L_i\) for all \(i\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  For each \(i\), set \(\Omega'_i := \bigcup_{j \ne i} \operatorname{range}(w_j)\). By pairwise
+  disjointness \(\operatorname{range}(w_i) \cap \Omega'_i = \emptyset\), and since the ranges cover
+  \(Y\), \(\operatorname{range}(w_i) \cup \Omega'_i = Y\). Let \(M_i \in \Pic(Y)\) be the one-piece
+  extension of \(L_i\) across \((w_i, \Omega'_i)\) (Theorem~\ref{thm:cechPic_extendClass}). Put
+  \(M := \prod_{i} M_i\) (finite product). For each \(i\), pullback along \(w_i\) is a homomorphism,
+  so \(w_i^{*} M = \prod_j w_i^{*} M_j\). The factor \(j = i\) is \(w_i^{*} M_i = L_i\); every factor
+  \(j \ne i\) is \(1\), because \(\operatorname{range}(w_i) \subseteq \Omega'_j\) means \(w_i\) has
+  image in the complement of the \(j\)-th piece, so \(w_i^{*}M_j = 1\)
+  (Theorem~\ref{thm:cechPic_extendClass}). Hence \(w_i^{*} M = L_i\).
+\end{proof}
+
+\section{The relative Picard group of a finite product of test algebras}
+
+Fix a field \(k\) and a curve \(C\) over \(k\). For a finite family \((B_i)_{i \in \iota}\) of
+commutative \(k\)-algebras with product \(P := \prod_i B_i\), the spectrum of \(P\) is the disjoint
+union of the spectra of the factors, clopen-partitioned by the basic opens of the coordinate
+idempotents; base-changing along the curve, the whiskered coordinate projections clopen-partition
+the curve-product. Through the clopen decomposition of the previous section this identifies the
+relative Picard group of the product test with the product of the relative Picard groups of the
+factors. Write \(e_i \in P\) for the coordinate idempotent (\(1\) in slot \(i\), \(0\) elsewhere)
+and \(\pi_i \colon P \to B_i\) for the projection.
+
+\begin{lemma}[Range of a whiskered open immersion]
+  \label{lem:range_whiskerLeft}
+  \lean{AlgebraicGeometry.Over.range_whiskerLeft}
+  \uses{thm:isPullback_whiskerLeft_snd}
+  \leanok
+  Let \(g \colon T' \to T\) be a morphism of test objects with \(g_{\mathrm{left}}\) an open
+  immersion. Then the whiskered morphism \((C \lhd g)_{\mathrm{left}}\) is an open immersion, and
+  its range is the preimage under the second projection \(\mathrm{pr} \colon (C \otimes
+  T)_{\mathrm{left}} \to T_{\mathrm{left}}\) of the range of \(g_{\mathrm{left}}\):
+  \[
+    \operatorname{range}\bigl((C \lhd g)_{\mathrm{left}}\bigr) = \mathrm{pr}^{-1}\bigl(
+    \operatorname{range}(g_{\mathrm{left}})\bigr).
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  The whiskering square with horizontal legs \((C \lhd g)_{\mathrm{left}}\), \(g_{\mathrm{left}}\)
+  and vertical legs the two second projections is a pullback of schemes
+  (Theorem~\ref{thm:isPullback_whiskerLeft_snd}). Open immersions are stable under base change, so
+  \((C \lhd g)_{\mathrm{left}}\), being the base change of \(g_{\mathrm{left}}\) along
+  \(\mathrm{pr}\), is an open immersion; and the range of the base change of an open immersion along
+  \(\mathrm{pr}\) is the \(\mathrm{pr}\)-preimage of its range.
+\end{proof}
+
+\begin{lemma}[A factor is the localization away from the coordinate idempotent]
+  \label{lem:isLocalization_away_piFactor}
+  \lean{AlgebraicGeometry.isLocalization_away_piFactor}
+  \leanok
+  For a finite product \(P = \prod_j B_j\) and an index \(i\), the projection \(\pi_i \colon P \to
+  B_i\) exhibits \(B_i\) as the localization of \(P\) away from the coordinate idempotent \(e_i\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The element \(e_i\) is idempotent, \(e_i^2 = e_i\). Two elements \(x, y \in P\) have the same
+  image in \(B_i\) iff they agree in slot \(i\), iff \(e_i x = e_i y\) (multiplication by \(e_i\)
+  zeroes every other slot). And every \(b \in B_i\) is the image of \(\mathrm{single}_i(b) \in P\).
+  By the criterion for a localization away from an idempotent, \(B_i = P[e_i^{-1}]\).
+\end{proof}
+
+\begin{lemma}[The coordinate projections clopen-partition the spectrum of a product]
+  \label{lem:opensRange_eval_clopen}
+  \lean{AlgebraicGeometry.isOpenImmersion_overSpecMap_evalAlgHom,
+    AlgebraicGeometry.opensRange_overSpecMap_evalAlgHom_disjoint,
+    AlgebraicGeometry.exists_mem_opensRange_overSpecMap_evalAlgHom}
+  \uses{lem:isLocalization_away_piFactor, def:overSpecMap}
+  \leanok
+  The morphisms \(\Spec \pi_i \colon \Spec B_i \to \Spec P\) (for the finite family
+  \((B_i)_{i \in \iota}\)) are open immersions with pairwise disjoint ranges covering \(\Spec P\):
+  the range of \(\Spec \pi_i\) is the basic open \(D(e_i)\), and \(D(e_i) \cap D(e_j) = \emptyset\)
+  for \(i \ne j\) while \(\bigcup_i D(e_i) = \Spec P\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  By Lemma~\ref{lem:isLocalization_away_piFactor}, \(\pi_i\) realizes \(B_i\) as a localization of
+  \(P\) away from \(e_i\), so \(\Spec \pi_i\) is an open immersion with range the basic open
+  \(D(e_i)\) (the spectrum of a localization away from an element is that element's basic open). For
+  \(i \ne j\), \(e_i e_j = 0\), whence \(D(e_i) \cap D(e_j) = D(e_i e_j) = D(0) = \emptyset\).
+  Finally \(\sum_i e_i = 1\); since \(\iota\) is finite, no prime of \(P\) contains all the \(e_i\)
+  (it would then contain \(1\)), so every prime lies in some \(D(e_i)\), i.e. the ranges cover.
+\end{proof}
+
+\begin{theorem}[Separation of relative Picard classes over a finite product]
+  \label{thm:relPic_pi_separation}
+  \lean{AlgebraicGeometry.relPic.eq_of_pi_proj_eq}
+  \uses{thm:cechPic_clopen_separation, thm:cechPic_clopen_gluing, lem:range_whiskerLeft,
+    lem:opensRange_eval_clopen, def:relPicAlgMap, lem:snd_left_naturality}
+  \leanok
+  For a finite family \((B_i)_{i \in \iota}\) with product \(P\), two relative Picard classes
+  \(\zeta, \zeta' \in \mathrm{relPic}(C, P)\) with \(\pi_i^{*}\zeta = \pi_i^{*}\zeta'\) in
+  \(\mathrm{relPic}(C, B_i)\) for every \(i\) are equal.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Represent \(\zeta, \zeta'\) by \v Cech Picard classes \(L, L'\) on the curve-product
+  \((C \otimes \Spec P)_{\mathrm{left}}\) (a relative Picard class is a class on the curve-product
+  modulo those pulled back from the base along \(\mathrm{pr}\)); restriction along \(\pi_i\)
+  corresponds to \v Cech pullback of the underlying class along the whiskered projection
+  \((C \lhd \Spec \pi_i)_{\mathrm{left}}\). The hypotheses give, for each \(i\), a class \(N_i\) on
+  \(\Spec B_i\) with \(\mathrm{pr}^{*}N_i = (C \lhd \Spec\pi_i)_{\mathrm{left}}^{*}(L/L')\) (the
+  restriction of \(L/L'\) to the \(i\)-th piece is pulled back from the base). Glue the \(N_i\) to a
+  single class \(M\) on \(\Spec P\) by the clopen gluing (Theorem~\ref{thm:cechPic_clopen_gluing})
+  for the coordinate partition of \(\Spec P\) (Lemma~\ref{lem:opensRange_eval_clopen}), so that
+  \(\Spec\pi_i^{*} M = N_i\).
+
+  It remains to show \(\mathrm{pr}^{*} M = L/L'\) on the curve-product; then \(\zeta = \zeta'\). The
+  whiskered coordinate projections \((C \lhd \Spec\pi_i)_{\mathrm{left}}\) form a clopen partition
+  of \((C \otimes \Spec P)_{\mathrm{left}}\): their ranges are the \(\mathrm{pr}\)-preimages of the
+  ranges of the coordinate projections (Lemma~\ref{lem:range_whiskerLeft}), which partition
+  \(\Spec P\) (Lemma~\ref{lem:opensRange_eval_clopen}). By separation along this partition
+  (Theorem~\ref{thm:cechPic_clopen_separation}) it suffices to check equal pullback along each
+  whiskered projection. Using the base square of the projection
+  (Lemma~\ref{lem:snd_left_naturality}) and functoriality of \v Cech pullback,
+  \[
+    (C \lhd \Spec\pi_i)_{\mathrm{left}}^{*}(\mathrm{pr}^{*} M)
+      = \mathrm{pr}^{*}\bigl(\Spec\pi_i^{*} M\bigr)
+      = \mathrm{pr}^{*} N_i
+      = (C \lhd \Spec\pi_i)_{\mathrm{left}}^{*}(L/L'),
+  \]
+  as required.
+\end{proof}
+
+\begin{theorem}[Gluing of relative Picard classes over a finite product]
+  \label{thm:relPic_pi_gluing}
+  \lean{AlgebraicGeometry.relPic.exists_pi_lift}
+  \uses{thm:cechPic_clopen_gluing, lem:range_whiskerLeft, lem:opensRange_eval_clopen,
+    def:relPicAlgMap}
+  \leanok
+  For a finite family \((B_i)_{i \in \iota}\) with product \(P\), every family
+  \((\xi_i)_{i \in \iota}\) with \(\xi_i \in \mathrm{relPic}(C, B_i)\) is the family of restrictions
+  of a class \(\zeta \in \mathrm{relPic}(C, P)\): \(\pi_i^{*}\zeta = \xi_i\) for all \(i\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Represent each \(\xi_i\) by a \v Cech Picard class \(L_i\) on the curve-product
+  \((C \otimes \Spec B_i)_{\mathrm{left}}\). The whiskered coordinate projections
+  \((C \lhd \Spec\pi_i)_{\mathrm{left}}\) form a clopen partition of
+  \((C \otimes \Spec P)_{\mathrm{left}}\), their ranges being the \(\mathrm{pr}\)-preimages
+  (Lemma~\ref{lem:range_whiskerLeft}) of the coordinate ranges that partition \(\Spec P\)
+  (Lemma~\ref{lem:opensRange_eval_clopen}). By the clopen gluing
+  (Theorem~\ref{thm:cechPic_clopen_gluing}) there is a class \(M\) on the curve-product with
+  \((C \lhd \Spec\pi_i)_{\mathrm{left}}^{*} M = L_i\) for all \(i\). Let \(\zeta\) be the relative
+  Picard class of \(M\). Then \(\pi_i^{*}\zeta\) is the relative Picard class of
+  \((C \lhd \Spec\pi_i)_{\mathrm{left}}^{*} M = L_i\), which is \(\xi_i\).
+\end{proof}
+
+\section{Zariski separation of the \'etale plus construction}
+
+Throughout, \(k\) is a field and \(C\) is a curve over \(k\) (proper, geometrically irreducible,
+geometrically reduced). This section proves that the affine \'etale plus \(\mathrm{PicEtAff}(C, -)\)
+is a separated presheaf for the Zariski topology of affine tests: two plus classes over \(A\)
+agreeing on a finite covering family of localizations agree. The argument is instance-free of
+\'etale separatedness; it consumes only the product decomposition of the relative Picard group.
+
+\begin{theorem}[Unfolding an equality of restricted plus classes]
+  \label{thm:PicEtAff_exists_relPicAlgMap_eq}
+  \lean{AlgebraicGeometry.PicEtAff.exists_relPicAlgMap_eq_of_mapAlg_eq}
+  \uses{thm:PicEtAff_mk_eq_mk_iff, def:PicEtAff_map, def:etale_cover_baseChange,
+    def:etale_cover_baseChangeInclude, def:relPicAlgMap, lem:relPicAlgMap_functor}
+  \leanok
+  Let \(\varphi_1 \colon A_1 \to R\) and \(\varphi_2 \colon A_2 \to R\) be homomorphisms of
+  \(k\)-algebras, \(E_1\) a presented \'etale cover of \(A_1\) and \(E_2\) of \(A_2\), and
+  \(\xi_1 \in \mathrm{Desc}(C, E_1)\), \(\xi_2 \in \mathrm{Desc}(C, E_2)\). If \(\varphi_1^{*}
+  [E_1, \xi_1] = \varphi_2^{*}[E_2, \xi_2]\) in \(\mathrm{PicEtAff}(C, R)\), then there are a
+  presented \'etale cover \(H\) of \(R\) and homomorphisms of \(k\)-algebras \(m_1 \colon B_{E_1}
+  \to B_H\), \(m_2 \colon B_{E_2} \to B_H\), semilinear over \(\varphi_1, \varphi_2\)
+  (\(m_1 \circ \iota_{E_1} = \iota_H \circ \varphi_1\) and \(m_2 \circ \iota_{E_2} = \iota_H \circ
+  \varphi_2\)), with \(m_1^{*}\xi_1 = m_2^{*}\xi_2\) in \(\mathrm{relPic}(C, B_H)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Regard \(R\) as an \(A_1\)- and \(A_2\)-algebra through \(\varphi_1, \varphi_2\). Then
+  \(\varphi_i^{*}[E_i, \xi_i] = [(E_i)_R, \kappa_{E_i}^{*}\xi_i]\) is the restriction along the base
+  extension \(A_i \to R\) of the plus class (Definition~\ref{def:PicEtAff_map}), with \((E_i)_R\)
+  the base change of \(E_i\) (Definition~\ref{def:etale_cover_baseChange}) and \(\kappa_{E_i}\) its
+  canonical inclusion (Definition~\ref{def:etale_cover_baseChangeInclude}). The hypothesis
+  \([(E_1)_R, \kappa^{*}\xi_1] = [(E_2)_R, \kappa^{*}\xi_2]\) unfolds by the presentation criterion
+  (Theorem~\ref{thm:PicEtAff_mk_eq_mk_iff}): there are a presented \'etale cover \(H\) of \(R\) and
+  homomorphisms of \(R\)-algebras \(r_i \colon B_{(E_i)_R} \to B_H\) with
+  \((r_1)_{*}(\kappa^{*}\xi_1) = (r_2)_{*}(\kappa^{*}\xi_2)\). Set \(m_i := r_i \circ \kappa_{E_i}
+  \colon B_{E_i} \to B_H\). Since \(\kappa_{E_i}\) and \(r_i\) both cover the base inclusions,
+  \(m_i \circ \iota_{E_i} = \iota_H \circ \varphi_i\); and by functoriality of restriction
+  (Lemma~\ref{lem:relPicAlgMap_functor}), \(m_i^{*}\xi_i = r_i^{*}(\kappa_{E_i}^{*}\xi_i)\), so the
+  refinement equality gives \(m_1^{*}\xi_1 = m_2^{*}\xi_2\).
+\end{proof}
+
+\begin{theorem}[A finite covering family of localizations assembles into an \'etale cover]
+  \label{thm:PicEtAff_exists_etaleCover_pi}
+  \lean{AlgebraicGeometry.PicEtAff.exists_etaleCover_pi}
+  \uses{def:etale_cover_of, lem:etale_cover_ofEquiv, def:etale_cover}
+  \leanok
+  Let \(A\) be a \(k\)-algebra and \((g_i)_{i \in \iota}\) a finite family with
+  \(\sum_i (g_i) = (1)\), and let \(S_i\) be the localization of \(A\) away from \(g_i\). Given
+  presented \'etale covers \(K_i\) of \(S_i\), the product \(\prod_i B_{K_i}\) is the carrier of a
+  presented \'etale cover \(W\) of \(A\), with an isomorphism of \(A\)-algebras \(B_W \cong
+  \prod_i B_{K_i}\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Each \(S_i\), a localization of \(A\) away from \(g_i\), is \'etale over \(A\); each \(B_{K_i}\)
+  is \'etale over \(S_i\), hence over \(A\); so the finite product \(\prod_i B_{K_i}\) is \'etale
+  over \(A\). It remains that \(\Spec(\prod_i B_{K_i}) \to \Spec A\) is surjective; then
+  \(\prod_i B_{K_i}\) is a presented \'etale cover of \(A\) (Definition~\ref{def:etale_cover_of},
+  Lemma~\ref{lem:etale_cover_ofEquiv}). Given a prime \(p\) of \(A\): since
+  \(\sum_i (g_i) = (1)\), some \(g_i \notin p\), so \(p\) lifts to \(\Spec S_i\) (the spectrum of
+  the localization away from \(g_i\) is the basic open \(D(g_i) \ni p\)); as \(K_i\) is a cover of
+  \(S_i\) it is surjective on spectra (Definition~\ref{def:etale_cover}), so \(p\) lifts further to
+  \(\Spec B_{K_i}\), and thence to \(\Spec(\prod_j B_{K_j})\) through the \(i\)-th coordinate. Hence
+  the structure map is surjective.
+\end{proof}
+
+\begin{theorem}[Zariski separation of the \'etale plus construction]
+  \label{thm:PicEtAff_eq_of_away_eq}
+  \lean{AlgebraicGeometry.PicEtAff.eq_of_away_eq}
+  \uses{thm:relPic_pi_separation, thm:PicEtAff_exists_relPicAlgMap_eq,
+    thm:PicEtAff_exists_etaleCover_pi, lem:PicEtAff_ind, thm:PicEtAff_mk_one, def:PicEtAff_map}
+  \leanok
+  Let \(A\) be a \(k\)-algebra, \((g_i)_{i \in \iota}\) a finite family with \(\sum_i (g_i) = (1)\),
+  and \(S_i\) the localization of \(A\) away from \(g_i\). Two plus classes \(x, y \in
+  \mathrm{PicEtAff}(C, A)\) with equal restrictions along every \(A \to S_i\) are equal.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Restriction is a homomorphism, so it suffices to show a class \(z\) with trivial restriction to
+  every \(S_i\) is trivial. Represent \(z = [G, \zeta]\) (Lemma~\ref{lem:PicEtAff_ind}). For each
+  \(i\), comparing the restriction of \([G, \zeta]\) with that of the trivial class
+  \([\mathrm{self}(A), 1]\) over \(S_i\) and unfolding (Theorem~\ref{thm:PicEtAff_exists_relPicAlgMap_eq}),
+  there are a presented \'etale cover \(K_i\) of \(S_i\) and a homomorphism \(m_i \colon B_G \to
+  B_{K_i}\), semilinear over \(A \to S_i\), with \(m_i^{*}\zeta = 1\) in \(\mathrm{relPic}(C,
+  B_{K_i})\). Assemble the product cover \(W\) of \(A\) from the \(K_i\)
+  (Theorem~\ref{thm:PicEtAff_exists_etaleCover_pi}), \(B_W \cong \prod_i B_{K_i}\) over \(A\). The
+  joint map \(\langle m_i \rangle \colon B_G \to \prod_i B_{K_i}\) pushes \(\zeta\) to a class whose
+  \(i\)-th factor is \(\pi_i^{*}(\langle m_i\rangle^{*}\zeta) = m_i^{*}\zeta = 1\); by the product
+  separation (Theorem~\ref{thm:relPic_pi_separation}) the pushed class is trivial in
+  \(\mathrm{relPic}(C, \prod_i B_{K_i})\), hence in \(\mathrm{relPic}(C, B_W)\) after transport
+  through the carrier isomorphism. As the joint map is an \(A\)-algebra refinement \(B_G \to B_W\),
+  \([G, \zeta] = [W, 1] = 1\) (Theorem~\ref{thm:PicEtAff_mk_one}). So \(z = 1\).
+\end{proof}
+
+\section{Restriction of relative Picard classes to an \'etale cover is injective}
+
+This section extracts the usable corollary of the (C1) \'etale-separatedness theorem for the
+Layer-2 gluing arguments. Throughout \(C\) is a curve over \(k\) (proper, geometrically irreducible,
+geometrically reduced) and \(R\) is a commutative \(k\)-algebra.
+
+\begin{theorem}[The unit represented on an arbitrary cover]
+  \label{thm:PicEtAff_unit_eq_mk}
+  \lean{AlgebraicGeometry.PicEtAff.unit_eq_mk}
+  \uses{def:PicEtAff_unit, lem:PicEtAff_tautological_mem_descentClasses, def:PicEtAff_mk,
+    def:descentMap, lem:PicEtAff_mk_descentMap, def:etale_cover_fromSelf, def:relPicAlgMap}
+  \leanok
+  For a presented \'etale cover \(E\) of \(R\) and \(z \in \mathrm{relPic}(C, R)\), the unit
+  \(\eta_R(z)\) is represented on \(E\) by the tautological descent datum of \(z\):
+  \[
+    \eta_R(z) = [E, \iota_E^{*}z], \qquad \iota_E^{*}z \in \mathrm{Desc}(C, E),
+  \]
+  where \(\iota_E \colon R \to B_E\) is the structure map.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By definition (Definition~\ref{def:PicEtAff_unit}) \(\eta_R(z) = [\mathrm{self}(R), \iota^{*}z]\)
+  with \(\iota^{*}z\) the tautological datum on the trivial cover
+  (Lemma~\ref{lem:PicEtAff_tautological_mem_descentClasses}). Transport along the canonical map
+  \(\mathrm{fromSelf} \colon B_{\mathrm{self}(R)} \to B_E\) (Definition~\ref{def:etale_cover_fromSelf})
+  carries the tautological datum on \(\mathrm{self}(R)\) to the tautological datum
+  \(\iota_E^{*}z\) on \(E\): both are the restriction of \(z\) along the structure map, by
+  functoriality of restriction, and the composite structure map \(R \to B_{\mathrm{self}(R)} \to
+  B_E\) is \(\iota_E\) (Definition~\ref{def:relPicAlgMap}). By
+  Lemma~\ref{lem:PicEtAff_mk_descentMap}, transporting a representative along a refinement map does
+  not change the plus class, so \([E, \iota_E^{*}z] = [E, \mathrm{fromSelf}_{*}(\iota^{*}z)] =
+  [\mathrm{self}(R), \iota^{*}z] = \eta_R(z)\).
+\end{proof}
+
+\begin{theorem}[Restriction to an \'etale cover is injective --- the (C1) consumable]
+  \label{thm:relPicAlgMap_injective_of_etaleCover}
+  \lean{AlgebraicGeometry.relPicAlgMap_injective_of_etaleCover}
+  \uses{thm:PicEtAff_unit_injective, thm:PicEtAff_unit_eq_mk, def:relPicAlgMap, def:PicEtAff_mk}
+  \leanok
+  For a presented \'etale cover \(E\) of \(R\), restriction of relative Picard classes along the
+  structure map \(\iota_E \colon R \to B_E\) is injective: if \(x, y \in \mathrm{relPic}(C, R)\)
+  satisfy \(\iota_E^{*}x = \iota_E^{*}y\) in \(\mathrm{relPic}(C, B_E)\), then \(x = y\). This is
+  what licenses every gluing step of the Layer-2 functor.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By the \'etale separatedness of the relative Picard functor
+  (Theorem~\ref{thm:PicEtAff_unit_injective}), the unit \(\eta_R\) is injective, so it suffices to
+  show \(\eta_R(x) = \eta_R(y)\). Represent both on \(E\) (Theorem~\ref{thm:PicEtAff_unit_eq_mk}):
+  \(\eta_R(x) = [E, \iota_E^{*}x]\) and \(\eta_R(y) = [E, \iota_E^{*}y]\). Since \(\iota_E^{*}x =
+  \iota_E^{*}y\) by hypothesis, these classes coincide, so \(\eta_R(x) = \eta_R(y)\) and hence
+  \(x = y\).
+\end{proof}
+
+\section{Zariski gluing of the \'etale plus construction}
+
+Throughout, \(C\) is a curve over \(k\) (proper, geometrically irreducible, geometrically reduced).
+This section proves the gluing half of the Zariski sheaf property of \(\mathrm{PicEtAff}(C, -)\) on
+affine tests. Its engine, the pair condition, is the single point where the Layer-2 functoriality
+consumes the (C1) \'etale separatedness.
+
+\begin{theorem}[The pair condition]
+  \label{thm:PicEtAff_pair_condition}
+  \lean{AlgebraicGeometry.PicEtAff.relPicAlgMap_tensor_eq_of_compat}
+  \uses{thm:relPicAlgMap_injective_of_etaleCover, thm:PicEtAff_exists_relPicAlgMap_eq,
+    thm:relPicAlgMap_congr, def:etale_cover_baseChange, def:relPicAlgMap}
+  \leanok
+  Let \(S_1, S_2\) be localizations of a \(k\)-algebra \(A\) away from \(g_1, g_2\), and \(T_v\) a
+  localization away from \(g_1 g_2\), with \(A\)-algebra homomorphisms \(\varphi_1 \colon S_1 \to
+  T_v\), \(\varphi_2 \colon S_2 \to T_v\). Let \(E_1\) be a presented \'etale cover of \(S_1\),
+  \(E_2\) of \(S_2\), and \(\xi_1 \in \mathrm{Desc}(C, E_1)\), \(\xi_2 \in \mathrm{Desc}(C, E_2)\).
+  If \(\varphi_1^{*}[E_1, \xi_1] = \varphi_2^{*}[E_2, \xi_2]\) in \(\mathrm{PicEtAff}(C, T_v)\), then
+  the two pullbacks of the underlying classes into the \(A\)-tensor product agree:
+  \[
+    \mathrm{inl}^{*}\xi_1 = \mathrm{inr}^{*}\xi_2 \quad\text{in } \mathrm{relPic}(C, B_{E_1}
+    \otimes_A B_{E_2}),
+  \]
+  where \(\mathrm{inl} \colon B_{E_1} \to B_{E_1} \otimes_A B_{E_2}\) and \(\mathrm{inr} \colon
+  B_{E_2} \to B_{E_1} \otimes_A B_{E_2}\) are the two coprojections.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Unfold the overlap compatibility (Theorem~\ref{thm:PicEtAff_exists_relPicAlgMap_eq}): there are a
+  presented \'etale cover \(H\) of \(T_v\) and homomorphisms \(m_1 \colon B_{E_1} \to B_H\),
+  \(m_2 \colon B_{E_2} \to B_H\), semilinear over \(\varphi_1, \varphi_2\), with \(m_1^{*}\xi_1 =
+  m_2^{*}\xi_2\) in \(\mathrm{relPic}(C, B_H)\).
+
+  In \(B_{E_1} \otimes_A B_{E_2}\), the element \(g_1 g_2\) is a unit: \(g_1\) is a unit in
+  \(B_{E_1}\) and \(g_2\) in \(B_{E_2}\) (both localized-away), and their images multiply to
+  \(g_1 g_2\). Since \(T_v\) is the localization of \(A\) away from \(g_1 g_2\), there is a unique
+  homomorphism of \(A\)-algebras \(\rho \colon T_v \to B_{E_1} \otimes_A B_{E_2}\). Base-change \(H\)
+  along \(\rho\) to a presented \'etale cover \(W := H_{B_{E_1} \otimes_A B_{E_2}}\)
+  (Definition~\ref{def:etale_cover_baseChange}), with canonical inclusion \(\theta \colon B_H \to
+  B_W\). By the (C1) consumable (Theorem~\ref{thm:relPicAlgMap_injective_of_etaleCover}), restriction
+  along the structure map \(B_{E_1} \otimes_A B_{E_2} \to B_W\) is injective; it therefore suffices
+  to show that the two sides become equal after transport into \(B_W\).
+
+  Consider the two routes \(B_{E_1} \to B_W\). The first is \(\mathrm{inl}\) followed by the
+  structure map into \(B_W\); the second is \(\theta \circ m_1\). Both are homomorphisms of
+  \(S_1\)-algebras: for the second, \(m_1\) is \(\varphi_1\)-semilinear and \(\rho \circ \varphi_1\)
+  equals the \(S_1\)-structure map \(S_1 \to B_{E_1} \otimes_A B_{E_2}\) (two homomorphisms of
+  \(A\)-algebras out of the localization \(S_1\), hence equal). By refinement independence
+  (Theorem~\ref{thm:relPicAlgMap_congr}, applied to the two \(S_1\)-algebra maps out of the cover
+  \(E_1\) of \(S_1\) and the descent class \(\xi_1\)), the two routes transport \(\xi_1\) to the
+  same class in \(\mathrm{relPic}(C, B_W)\). Symmetrically the two routes \(B_{E_2} \to B_W\)
+  (namely \(\mathrm{inr}\) into \(B_W\) and \(\theta \circ m_2\)) transport \(\xi_2\) equally. Now
+  \[
+    (\theta \circ m_1)^{*}\xi_1 = \theta^{*}(m_1^{*}\xi_1) = \theta^{*}(m_2^{*}\xi_2)
+      = (\theta \circ m_2)^{*}\xi_2 ,
+  \]
+  so, chaining the two refinement independences, the transports into \(B_W\) of
+  \(\mathrm{inl}^{*}\xi_1\) and \(\mathrm{inr}^{*}\xi_2\) agree; by injectivity,
+  \(\mathrm{inl}^{*}\xi_1 = \mathrm{inr}^{*}\xi_2\).
+\end{proof}
+
+\begin{lemma}[Restriction along an algebra isomorphism is injective]
+  \label{lem:relPicAlgMap_algEquiv_injective}
+  \lean{AlgebraicGeometry.relPicAlgMap_algEquiv_injective}
+  \uses{def:relPicAlgMap, lem:relPicAlgMap_functor}
+  \leanok
+  For an isomorphism of \(k\)-algebras \(e \colon A \xrightarrow{\ \sim\ } B\), restriction of
+  relative Picard classes along \(e\), \(e^{*} \colon \mathrm{relPic}(C, A) \to \mathrm{relPic}(C,
+  B)\), is injective.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Restriction along \(e^{-1}\) is a left inverse: \((e^{-1})^{*} \circ e^{*} = (e^{-1} \circ e)^{*}
+  = (\id_A)^{*} = \id\), by functoriality (Lemma~\ref{lem:relPicAlgMap_functor}). A map with a left
+  inverse is injective.
+\end{proof}
+
+\begin{lemma}[Computing a restricted plus class on a given cover]
+  \label{lem:PicEtAff_mapAlg_mk_eq_mk}
+  \lean{AlgebraicGeometry.PicEtAff.mapAlg_mk_eq_mk}
+  \uses{thm:PicEtAff_mk_eq_mk_iff, def:PicEtAff_map, def:etale_cover_baseChange, def:relPicAlgMap}
+  \leanok
+  Let \(\varphi \colon A_1 \to R\) be a homomorphism of \(k\)-algebras, \(E_1\) a presented \'etale
+  cover of \(A_1\), \(F\) a presented \'etale cover of \(R\), \(\xi \in \mathrm{Desc}(C, E_1)\) and
+  \(\eta \in \mathrm{Desc}(C, F)\). Suppose there is a homomorphism of \(k\)-algebras \(n \colon
+  B_{E_1} \to B_F\), semilinear over \(\varphi\) (\(n \circ \iota_{E_1} = \iota_F \circ \varphi\)),
+  with \(n^{*}\xi = \eta\) in \(\mathrm{relPic}(C, B_F)\). Then \(\varphi^{*}[E_1, \xi] = [F, \eta]\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Regard \(R\) as an \(A_1\)-algebra through \(\varphi\), so that \(\varphi^{*}[E_1, \xi] =
+  [(E_1)_R, \kappa_{E_1}^{*}\xi]\) (Definition~\ref{def:PicEtAff_map}, with \((E_1)_R\) the base
+  change, Definition~\ref{def:etale_cover_baseChange}). The semilinear map \(n\) extends uniquely to
+  an \(R\)-algebra refinement \(n_R \colon B_{(E_1)_R} \to B_F\) with \(n_R \circ \kappa_{E_1} = n\).
+  By the presentation criterion (Theorem~\ref{thm:PicEtAff_mk_eq_mk_iff}, with the common cover
+  \(F\), the map \(n_R\) out of \((E_1)_R\) and the identity out of \(F\)), \([(E_1)_R,
+  \kappa_{E_1}^{*}\xi] = [F, (n_R)_{*}(\kappa_{E_1}^{*}\xi)]\); and \((n_R)_{*}(\kappa_{E_1}^{*}\xi)
+  = n^{*}\xi = \eta\) by functoriality (Definition~\ref{def:relPicAlgMap}). Hence
+  \(\varphi^{*}[E_1, \xi] = [F, \eta]\).
+\end{proof}
+
+\begin{theorem}[Zariski gluing of the \'etale plus construction]
+  \label{thm:PicEtAff_exists_mapAlg_eq_of_compat}
+  \lean{AlgebraicGeometry.PicEtAff.exists_mapAlg_eq_of_compat}
+  \uses{thm:PicEtAff_pair_condition, thm:PicEtAff_exists_etaleCover_pi, thm:relPic_pi_gluing,
+    thm:relPic_pi_separation, lem:PicEtAff_mapAlg_mk_eq_mk, lem:relPicAlgMap_algEquiv_injective,
+    lem:PicEtAff_ind}
+  \leanok
+  Let \(A\) be a \(k\)-algebra, \((g_i)_{i \in \iota}\) a finite family with \(\sum_i (g_i) = (1)\),
+  \(S_i\) the localization of \(A\) away from \(g_i\), and \(T_{ij}\) the localization away from
+  \(g_i g_j\). A family \((x_i)_{i \in \iota}\) with \(x_i \in \mathrm{PicEtAff}(C, S_i)\),
+  compatible on the overlaps (the restrictions of \(x_i\) and \(x_j\) to \(T_{ij}\) agree for all
+  \(i, j\)), is the family of restrictions of a plus class \(z \in \mathrm{PicEtAff}(C, A)\):
+  restriction of \(z\) to \(S_i\) is \(x_i\). Together with Theorem~\ref{thm:PicEtAff_eq_of_away_eq}
+  this is the Zariski sheaf property of \(\mathrm{PicEtAff}(C, -)\) on affine tests.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Represent \(x_i = [E_i, \xi_i]\) (Lemma~\ref{lem:PicEtAff_ind}). For each \(i, j\), the overlap
+  compatibility over \(T_{ij}\) yields, by the pair condition
+  (Theorem~\ref{thm:PicEtAff_pair_condition}), \(\mathrm{inl}^{*}\xi_i = \mathrm{inr}^{*}\xi_j\) in
+  \(\mathrm{relPic}(C, B_{E_i} \otimes_A B_{E_j})\). Lift the underlying classes to the product: by
+  the product gluing (Theorem~\ref{thm:relPic_pi_gluing}) there is \(\zeta \in \mathrm{relPic}(C,
+  \prod_i B_{E_i})\) with \(\pi_i^{*}\zeta = \xi_i\). Assemble the product cover \(W\) of \(A\) from
+  the \(E_i\) (Theorem~\ref{thm:PicEtAff_exists_etaleCover_pi}), \(B_W \cong \prod_i B_{E_i}\) over
+  \(A\); transport \(\zeta\) to \(\zeta_W \in \mathrm{relPic}(C, B_W)\).
+
+  \emph{\(\zeta_W\) is a descent class on \(W\).} The descent condition \(\mathrm{inl}^{*}\zeta_W =
+  \mathrm{inr}^{*}\zeta_W\) in \(\mathrm{relPic}(C, B_W \otimes_A B_W)\) is checked through the
+  \(\pi\)-decomposition of the tensor square, \(B_W \otimes_A B_W \cong \prod_{(i, j)} B_{E_i}
+  \otimes_A B_{E_j}\): by injectivity of transport along this isomorphism
+  (Lemma~\ref{lem:relPicAlgMap_algEquiv_injective}) and product separation over the index set
+  \(\iota \times \iota\) (Theorem~\ref{thm:relPic_pi_separation}), it suffices to compare
+  components. The \((i, j)\)-component of \(\mathrm{inl}^{*}\zeta_W\) is \(\mathrm{inl}^{*}
+  (\pi_i^{*}\zeta) = \mathrm{inl}^{*}\xi_i\) and of \(\mathrm{inr}^{*}\zeta_W\) is
+  \(\mathrm{inr}^{*}(\pi_j^{*}\zeta) = \mathrm{inr}^{*}\xi_j\); these agree by the pair conditions.
+
+  \emph{The glued class.} Set \(z := [W, \zeta_W]\). Its restriction to \(S_i\) is \(x_i\): the
+  \(i\)-th projection \(B_W \cong \prod_j B_{E_j} \to B_{E_i}\) is a homomorphism semilinear over
+  \(A \to S_i\) carrying \(\zeta_W\) onto \(\pi_i^{*}\zeta = \xi_i\), so by
+  Lemma~\ref{lem:PicEtAff_mapAlg_mk_eq_mk}, \((A \to S_i)^{*}[W, \zeta_W] = [E_i, \xi_i] = x_i\).
+\end{proof}
+
+\section{The \'etale-sheafified relative Picard functor: the affine-opens limit}
+
+The frozen group-object interface forces the relative Picard functor to exist on \emph{all} of
+\(\Over(\Spec k)\), not only on affine tests. Following the resolution of the Layer-2 vehicle
+question, the extension is the \emph{bespoke affine-opens limit}: a section over a test object
+\(T\) is a compatible family of affine-level plus classes over the affine opens of
+\(T_{\mathrm{left}}\). The index poset is \(\mathrm{Type}\)-small, which is the point of the
+vehicle. Throughout, \(k\) is a field and \(C\) is a curve over \(k\).
+
+\begin{definition}[Transport of plus classes along an algebra isomorphism]
+  \label{def:PicEtAff_congr}
+  \lean{AlgebraicGeometry.PicEtAff.congr}
+  \uses{def:PicEtAff_map, thm:PicEtAff_map_map, thm:PicEtAff_map_id}
+  \leanok
+  For an isomorphism of \(k\)-algebras \(e \colon A \xrightarrow{\ \sim\ } B\), restriction of plus
+  classes along \(e\) is a group isomorphism \(\mathrm{PicEtAff}(C, A) \xrightarrow{\ \sim\ }
+  \mathrm{PicEtAff}(C, B)\), with inverse restriction along \(e^{-1}\).
+\end{definition}
+\begin{proof}
+  \leanok
+  Restriction along \(e\) and along \(e^{-1}\) are homomorphisms of groups
+  (Definition~\ref{def:PicEtAff_map}); their two composites are restriction along
+  \(e^{-1} \circ e = \id_A\) and along \(e \circ e^{-1} = \id_B\), each the identity by transitivity
+  of restriction (Theorem~\ref{thm:PicEtAff_map_map}) and its normalization at the identity
+  (Theorem~\ref{thm:PicEtAff_map_id}). Hence the two are mutually inverse.
+\end{proof}
+
+\begin{definition}[The affine identification of global sections]
+  \label{def:overSpecGammaTop}
+  \lean{AlgebraicGeometry.Over.overSpecΓTopAlgEquiv}
+  \leanok
+  For a \(k\)-algebra \(A\), the global sections of the affine test \(\Spec A\) over its top open
+  are identified with \(A\) as a \(k\)-algebra: \(\Gamma((\Spec A)_{\mathrm{left}}, \top)
+  \xrightarrow{\ \sim\ } A\), through the canonical isomorphism \(\Gamma(\Spec A, \top) \cong A\) of
+  the affine scheme.
+\end{definition}
+\begin{proof}
+  \leanok
+  The canonical isomorphism of rings \(\Gamma(\Spec A, \top) \cong A\) intertwines the two
+  \(k\)-algebra structures: the structure map of the sections and that of \(A\) both come from the
+  \(k\)-algebra structure of \(A\) through this same isomorphism. Hence it is an isomorphism of
+  \(k\)-algebras.
+\end{proof}
+
+\begin{definition}[The \'etale-sheafified relative Picard functor at a test object]
+  \label{def:picEt}
+  \lean{AlgebraicGeometry.picEtSubgroup, AlgebraicGeometry.picEt}
+  \uses{def:PicEtAff, def:PicEtAff_map}
+  \source{kleiman-picard}
+  \leanok
+  For a test object \(T\) of \(\Over(\Spec k)\), \(\mathrm{picEt}(C, T)\) is the group of
+  \emph{compatible families}: an element assigns to each affine open \(V \subseteq T_{\mathrm{left}}\)
+  a plus class \(s_V \in \mathrm{PicEtAff}(C, \Gamma(T, V))\) such that for affine opens
+  \(U \subseteq V\), the value \(s_U\) is the restriction of \(s_V\) along the section-restriction
+  homomorphism \(\Gamma(T, V) \to \Gamma(T, U)\) (Definition~\ref{def:PicEtAff_map}). Componentwise
+  product makes \(\mathrm{picEt}(C, T)\) a commutative group, a subgroup of the product
+  \(\prod_{V} \mathrm{PicEtAff}(C, \Gamma(T, V))\); evaluation at an affine open \(V\) is the
+  homomorphism \(s \mapsto s_V\). On affine tests this is the plus itself (the affine comparison,
+  Definition~\ref{def:picEtAffineEquiv}); on general tests it is the canonical Zariski-continuous
+  extension --- the realization on all test objects of the \'etale sheafification
+  \(\Pic_{(X/S)\mathrm{\acute et}}\) of the relative Picard functor.
+\end{definition}
+\begin{proof}
+  \leanok
+  The compatibility condition is closed under the componentwise group operations: the constant
+  family \(1\) is compatible (restriction preserves the identity); and if \(s, t\) are compatible,
+  so are \(s \cdot t\) and \(s^{-1}\), because restriction of plus classes is a homomorphism of
+  groups (Definition~\ref{def:PicEtAff_map}). Hence the compatible families form a subgroup of the
+  product group, which is therefore a commutative group.
+\end{proof}
+
+\begin{definition}[The affine comparison isomorphism]
+  \label{def:picEtAffineEquiv}
+  \lean{AlgebraicGeometry.picEtAffineEquiv}
+  \uses{def:picEt, def:PicEtAff_congr, def:overSpecGammaTop, def:PicEtAff_map}
+  \leanok
+  On an affine test \(\Spec A\), evaluation at the top affine open \(\top\) is a group isomorphism
+  \[
+    \mathrm{picEt}(C, \Spec A) \xrightarrow{\ \sim\ } \mathrm{PicEtAff}(C, A),
+  \]
+  transported through the identification \(\Gamma(\top) \cong A\) of
+  Definition~\ref{def:overSpecGammaTop}.
+\end{definition}
+\begin{proof}
+  \leanok
+  The affine-opens poset of \(\Spec A\) has a terminal element, the top open \(\top\) (all of
+  \(\Spec A\), an affine open containing every affine open), so a compatible family is determined by
+  its value at \(\top\). The forward map sends \(s\) to \(s_\top\) carried through \(\Gamma(\top)
+  \cong A\) (Definition~\ref{def:overSpecGammaTop}, Definition~\ref{def:PicEtAff_congr}). The
+  backward map sends \(x \in \mathrm{PicEtAff}(C, A)\) to the family whose value at \(V\) is \(x\)
+  carried to \(\Gamma(\top)\) and restricted to \(\Gamma(V)\) (Definition~\ref{def:PicEtAff_map});
+  this family is compatible because restriction is functorial (restricting from \(\top\) to \(V\)
+  and then to \(U\) is restricting to \(U\)). The two are mutually inverse: forward-then-backward
+  recovers a family \(s\) from its \(\top\)-value, since \(s_V\) is the restriction of \(s_\top\) by
+  the compatibility of \(s\) at \(V \subseteq \top\); backward-then-forward returns \(x\), since
+  restriction from \(\top\) to \(\top\) is the identity and \(\Gamma(\top) \cong A\) cancels. Both
+  maps are homomorphisms of groups, so this is a group isomorphism.
+\end{proof}
+
+\section{Functoriality by the unique-pullback-value characterization}
+
+The Layer-2 functor \(\mathrm{picEt}\) is functorial along an \emph{arbitrary} morphism
+\(f \colon T' \to T\) of test objects. The value of the restricted family at an affine open
+\(W \subseteq T'_{\mathrm{left}}\) --- whose \(f\)-image need not lie in any affine open of
+\(T_{\mathrm{left}}\) --- is glued over a finite basic-open refinement of \(W\) subordinate to the
+preimages of affine opens, using the Zariski sheaf property of the affine \'etale Picard functor.
+Throughout, \(C\) is a curve over \(k\).
+
+\begin{theorem}[Finite basic subcovers subordinate to a constraint]
+  \label{thm:exists_basic_subcover}
+  \lean{AlgebraicGeometry.Scheme.exists_basic_subcover}
+  \leanok
+  Let \(W\) be an affine open of a scheme \(X\) and \(P\) a property of opens such that every point
+  of \(W\) has an open neighbourhood inside \(W\) satisfying \(P\). Then there is a finite family of
+  sections \(r \in \Gamma(X, W)\) spanning the unit ideal whose basic opens \(D(r)\) each lie inside
+  some open satisfying \(P\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  For each \(w \in W\), choose an open \(U_0 \ni w\) with \(P(U_0)\); since the basic opens of the
+  affine \(W\) form a basis of its topology, choose \(r_w \in \Gamma(X, W)\) with \(w \in D(r_w)
+  \subseteq U_0\). The \(D(r_w)\) cover \(W\); as \(W\) is quasi-compact (being affine), finitely
+  many \(D(r_{w_1}), \dots, D(r_{w_n})\) already cover \(W\), which means the \(r_{w_j}\) span the
+  unit ideal of \(\Gamma(X, W)\). Each \(D(r_{w_j}) \subseteq U_0\) lies inside an open with \(P\).
+\end{proof}
+
+\begin{theorem}[Zariski separation of the plus over the section rings of a basic cover]
+  \label{thm:picEt_eq_of_basic_eq}
+  \lean{AlgebraicGeometry.picEt.eq_of_basic_eq}
+  \uses{thm:PicEtAff_eq_of_away_eq}
+  \leanok
+  Let \(W\) be an affine open of a test object \(T\) and \((r_i)_{i \in s}\) a finite family in
+  \(\Gamma(T, W)\) spanning the unit ideal. Two plus classes \(x, y \in \mathrm{PicEtAff}(C,
+  \Gamma(T, W))\) whose restrictions to \(\Gamma(T, D(r_i))\) agree for every \(i\) are equal.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The section ring \(\Gamma(T, D(r_i))\) of a basic open of the affine open \(W\) is the
+  localization of \(\Gamma(T, W)\) away from \(r_i\), and the \(r_i\) span the unit ideal. Apply the
+  Zariski separation of the plus construction (Theorem~\ref{thm:PicEtAff_eq_of_away_eq}) to this
+  finite covering family of localizations of \(\Gamma(T, W)\).
+\end{proof}
+
+\begin{definition}[The pullback-value property]
+  \label{def:picEt_IsPullbackValue}
+  \lean{AlgebraicGeometry.picEt.IsPullbackValue}
+  \uses{def:picEt, def:PicEtAff_map}
+  \leanok
+  Let \(f \colon T' \to T\) be a morphism of test objects, \(s \in \mathrm{picEt}(C, T)\), and
+  \(W\) an affine open of \(T'_{\mathrm{left}}\). A plus class \(v \in \mathrm{PicEtAff}(C,
+  \Gamma(T', W))\) has the \emph{pullback-value property} for \((f, s, W)\) if, for every affine
+  open \(W_0 \subseteq W\) contained in the preimage \(f^{-1}V\) of some affine open \(V\) of
+  \(T_{\mathrm{left}}\), the restriction of \(v\) to \(\Gamma(T', W_0)\) equals the pullback of
+  \(s_V\) along the section-pullback homomorphism \(\Gamma(T, V) \to \Gamma(T', W_0)\) (pullback of
+  sections along \(f\), a \(k\)-algebra map; Definition~\ref{def:PicEtAff_map}).
+\end{definition}
+
+\begin{theorem}[Choice independence]
+  \label{thm:picEt_mapAlg_appLE_eq}
+  \lean{AlgebraicGeometry.picEt.mapAlg_appLE_eq}
+  \uses{thm:picEt_eq_of_basic_eq, thm:exists_basic_subcover, def:picEt}
+  \leanok
+  Let \(f \colon T' \to T\), \(s \in \mathrm{picEt}(C, T)\), \(W_0\) an affine open of
+  \(T'_{\mathrm{left}}\), and \(V, V'\) affine opens of \(T_{\mathrm{left}}\) with \(W_0 \subseteq
+  f^{-1}V\) and \(W_0 \subseteq f^{-1}V'\). Then the pullback of \(s_V\) and the pullback of
+  \(s_{V'}\) to \(\Gamma(T', W_0)\) (along the two section-pullback maps) agree.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Refine \(W_0\) by basic opens: for each point \(w \in W_0\), the image \(f(w) \in V \cap V'\) lies
+  in an affine open \(V'' \subseteq V \cap V'\) of \(T_{\mathrm{left}}\); choose a basic open
+  \(D(r) \ni w\) of \(W_0\) with \(f(D(r)) \subseteq V''\), i.e. \(D(r) \subseteq f^{-1}V''\). By
+  Theorem~\ref{thm:exists_basic_subcover} a finite family of such \(r\) spans the unit ideal. On
+  each \(D(r)\), the pullback of \(s_V\) restricted to \(\Gamma(T', D(r))\) factors as the pullback
+  of \(s_{V''}\): using the compatibility \(s_{V''} = s_V|_{V''}\) (as \(V'' \subseteq V\)) and the
+  functoriality of section pullback and restriction, it equals the pullback of \(s_{V''}\) along
+  \(f\) from \(V''\) to \(D(r)\); likewise for \(s_{V'}\). Hence the two pullbacks agree on every
+  \(D(r)\), so by Theorem~\ref{thm:picEt_eq_of_basic_eq} they agree on \(\Gamma(T', W_0)\).
+\end{proof}
+
+\begin{theorem}[Uniqueness of the pullback value]
+  \label{thm:picEt_pullbackValue_unique}
+  \lean{AlgebraicGeometry.picEt.pullbackValue_unique}
+  \uses{def:picEt_IsPullbackValue, thm:picEt_eq_of_basic_eq, thm:exists_basic_subcover}
+  \leanok
+  For fixed \((f, s, W)\), a plus class with the pullback-value property is unique: if \(v, v'\)
+  both have the property, then \(v = v'\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Refine \(W\) by basic opens \(D(r)\) each contained in the preimage of an affine open of
+  \(T_{\mathrm{left}}\): every point of \(W\) maps into some affine open \(V\) of
+  \(T_{\mathrm{left}}\), so has a basic-open neighbourhood in \(W\) inside \(f^{-1}V\; \)by
+  Theorem~\ref{thm:exists_basic_subcover} a finite such family spans the unit ideal. On each
+  \(D(r) \subseteq f^{-1}V\), both \(v\) and \(v'\) restrict to the pullback of \(s_V\) (the
+  defining property, Definition~\ref{def:picEt_IsPullbackValue}), hence agree. By
+  Theorem~\ref{thm:picEt_eq_of_basic_eq}, \(v = v'\).
+\end{proof}
+
+\begin{theorem}[Existence of the pullback value]
+  \label{thm:picEt_exists_isPullbackValue}
+  \lean{AlgebraicGeometry.picEt.exists_isPullbackValue,
+    AlgebraicGeometry.picEt.existsUnique_isPullbackValue}
+  \uses{def:picEt_IsPullbackValue, thm:PicEtAff_exists_mapAlg_eq_of_compat,
+    thm:picEt_eq_of_basic_eq, thm:exists_basic_subcover, thm:picEt_mapAlg_appLE_eq,
+    thm:picEt_pullbackValue_unique}
+  \leanok
+  For every \(f \colon T' \to T\), \(s \in \mathrm{picEt}(C, T)\) and affine open \(W\) of
+  \(T'_{\mathrm{left}}\), there exists a unique plus class \(v \in \mathrm{PicEtAff}(C, \Gamma(T',
+  W))\) with the pullback-value property for \((f, s, W)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Choose (Theorem~\ref{thm:exists_basic_subcover}) a finite family \((r)\) in \(\Gamma(T', W)\)
+  spanning the unit ideal such that each \(D(r)\) lies in the preimage \(f^{-1}V_r\) of an affine
+  open \(V_r\) of \(T_{\mathrm{left}}\) (every point of \(W\) maps into some affine open). On
+  \(D(r)\) take the local value to be the pullback of \(s_{V_r}\) along \(f\). On an overlap
+  \(D(r) \cap D(r') = D(r r')\), the two local values agree: both restrict, through the affine
+  opens \(V_r, V_{r'}\), to the same plus class by choice independence
+  (Theorem~\ref{thm:picEt_mapAlg_appLE_eq}). The section rings \(\Gamma(T', D(r))\) are localizations
+  of \(\Gamma(T', W)\) away from the \(r\), which span the unit ideal, and the overlaps are
+  localizations away from \(r r'\); so by the Zariski gluing of the plus construction
+  (Theorem~\ref{thm:PicEtAff_exists_mapAlg_eq_of_compat}) the local values glue to a plus class
+  \(v \in \mathrm{PicEtAff}(C, \Gamma(T', W))\).
+
+  This \(v\) has the pullback-value property: for an affine \(W_0 \subseteq W\) inside \(f^{-1}V\),
+  refine \(W_0\) by basic opens \(D(q)\) each inside some \(D(r)\)
+  (Theorem~\ref{thm:exists_basic_subcover}). On \(D(q)\), \(v\) restricts through the glued datum on
+  \(D(r)\) to the pullback of \(s_{V_r}\), which by choice independence
+  (Theorem~\ref{thm:picEt_mapAlg_appLE_eq}) equals the pullback of \(s_V\); by
+  Theorem~\ref{thm:picEt_eq_of_basic_eq}, the restriction of \(v\) to \(\Gamma(T', W_0)\) equals the
+  pullback of \(s_V\). Uniqueness is Theorem~\ref{thm:picEt_pullbackValue_unique}.
+\end{proof}
+
+\begin{definition}[Restriction of \(\mathrm{picEt}\) along an arbitrary morphism]
+  \label{def:picEtMap}
+  \lean{AlgebraicGeometry.picEtMapVal, AlgebraicGeometry.picEtMap}
+  \uses{thm:picEt_exists_isPullbackValue, def:picEt}
+  \leanok
+  For a morphism \(f \colon T' \to T\) of test objects, the homomorphism of groups \(f^{*} \colon
+  \mathrm{picEt}(C, T) \to \mathrm{picEt}(C, T')\) whose value at an affine open \(W\) of
+  \(T'_{\mathrm{left}}\) is the unique plus class with the pullback-value property for \((f, s, W)\)
+  (Theorem~\ref{thm:picEt_exists_isPullbackValue}).
+\end{definition}
+\begin{proof}
+  \leanok
+  The values form a compatible family: for affine opens \(U \subseteq W\), the restriction of the
+  value at \(W\) still has the pullback-value property at \(U\) (the property is stable under
+  further restriction, by functoriality of section pullback and restriction), so by uniqueness it
+  equals the value at \(U\); thus \((W \mapsto v_W)\) is a section of \(\mathrm{picEt}(C, T')\). It
+  is a homomorphism: the pullback-value property is preserved by the componentwise group operations
+  (pullback of \(s\) is a homomorphism), so by uniqueness the value at \(s \cdot t\) is the product
+  of the values and the value at \(1\) is \(1\).
+\end{proof}
+
+\begin{theorem}[The functor laws]
+  \label{thm:picEtMap_functor_laws}
+  \lean{AlgebraicGeometry.picEtMap_id, AlgebraicGeometry.picEtMap_comp}
+  \uses{def:picEtMap, thm:picEt_exists_isPullbackValue, thm:exists_basic_subcover,
+    thm:picEt_eq_of_basic_eq, def:picEt}
+  \leanok
+  Restriction along the identity is the identity, \((\id_T)^{*} = \id\) on \(\mathrm{picEt}(C, T)\);
+  and for \(f \colon T' \to T\) and \(g \colon T'' \to T'\), restriction along the composite is the
+  composite of the restrictions, \((f \circ g)^{*} = g^{*} \circ f^{*}\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \emph{Identity.} The value of \((\id_T)^{*}s\) at an affine open \(W\) is the unique class with
+  the pullback-value property; \(s_W\) itself has it, since for \(W_0 \subseteq W\) inside
+  \(\id^{-1}V = V\) the restriction of \(s_W\) is \(s_{W_0}\), the pullback of \(s_V\) along the
+  identity (by compatibility of \(s\)). By uniqueness (Theorem~\ref{thm:picEt_exists_isPullbackValue})
+  the value is \(s_W\), so \((\id_T)^{*}s = s\).
+
+  \emph{Composite.} It suffices to show the value \((g^{*}(f^{*}s))_W\) has the pullback-value
+  property for \((f \circ g, s, W)\); uniqueness then identifies it with \(((f \circ g)^{*}s)_W\).
+  Fix an affine \(W \subseteq T''_{\mathrm{left}}\) and \(W_0 \subseteq W\) inside
+  \((f \circ g)^{-1}V\). Refine \(W_0\) by basic opens \(D(q)\) whose \(g\)-image lies in an affine
+  open \(V'' \subseteq f^{-1}V\) of \(T'_{\mathrm{left}}\)
+  (Theorem~\ref{thm:exists_basic_subcover}). On \(D(q)\): the value of \(f^{*}s\) at \(V''\) is the
+  pullback of \(s_V\) (the pullback-value property of \(f^{*}s\), as \(V'' \subseteq f^{-1}V\)), and
+  the value of \(g^{*}(f^{*}s)\) at \(D(q)\) is the pullback of \((f^{*}s)_{V''}\) along \(g\), which
+  by functoriality of section pullback equals the pullback of \(s_V\) along \(f \circ g\). By
+  Theorem~\ref{thm:picEt_eq_of_basic_eq}, the value of \(g^{*}(f^{*}s)\) at \(W\) has the
+  pullback-value property for \((f \circ g, s, W)\), as required.
+\end{proof}
+
+\begin{definition}[The \'etale-sheafified relative Picard functor]
+  \label{def:picEtFunctor}
+  \lean{AlgebraicGeometry.picEtFunctor}
+  \uses{def:picEt, def:picEtMap, thm:picEtMap_functor_laws}
+  \leanok
+  For a curve \(C\) over \(k\) (proper, geometrically irreducible, geometrically reduced), the
+  contravariant functor
+  \[
+    \mathrm{picEt}(C, -) \colon \bigl(\Over(\Spec k)\bigr)^{\mathrm{op}} \to \mathbf{CommGrp}
+  \]
+  sending a test object \(T\) to the commutative group \(\mathrm{picEt}(C, T)\)
+  (Definition~\ref{def:picEt}) and a morphism \(f\) to the restriction homomorphism \(f^{*}\)
+  (Definition~\ref{def:picEtMap}).
+\end{definition}
+\begin{proof}
+  \leanok
+  The object and morphism assignments are given by Definition~\ref{def:picEt} and
+  Definition~\ref{def:picEtMap}; the identity and composition laws of a functor are exactly the two
+  functor laws of restriction (Theorem~\ref{thm:picEtMap_functor_laws}).
+\end{proof}
+
+\begin{theorem}[Naturality of the affine comparison]
+  \label{thm:picEtAffineEquiv_naturality}
+  \lean{AlgebraicGeometry.picEtAffineEquiv_naturality}
+  \uses{def:picEtAffineEquiv, def:picEtMap, def:PicEtAff_map, def:overSpecGammaTop,
+    thm:picEt_exists_isPullbackValue}
+  \leanok
+  The affine comparison is natural in the test algebra: for a homomorphism of \(k\)-algebras
+  \(\varphi \colon A \to B\) and \(s \in \mathrm{picEt}(C, \Spec A)\), the affine comparison of
+  \((\Spec\varphi)^{*}s\) equals the restriction along \(\varphi\) of the affine comparison of
+  \(s\). Under the comparison isomorphisms (Definition~\ref{def:picEtAffineEquiv}), restriction along
+  \(\Spec\varphi\) corresponds to restriction of plus classes along \(\varphi\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Both sides are computed at the top affine opens. Since \(\top_B \subseteq (\Spec\varphi)^{-1}
+  \top_A\), the value of \((\Spec\varphi)^{*}s\) at \(\top_B\) is, by the pullback-value property
+  (Theorem~\ref{thm:picEt_exists_isPullbackValue}), the pullback of \(s_{\top_A}\) along the
+  section-pullback map \(\Gamma(\Spec A, \top) \to \Gamma(\Spec B, \top)\). Under the identifications
+  \(\Gamma(\top) \cong A\) and \(\Gamma(\top) \cong B\) (Definition~\ref{def:overSpecGammaTop}), that
+  section-pullback map corresponds to \(\varphi\). Transporting through the comparison isomorphisms
+  (Definition~\ref{def:picEtAffineEquiv}), the value corresponds to the restriction along
+  \(\varphi\) (Definition~\ref{def:PicEtAff_map}) of the affine comparison of \(s\).
+\end{proof}
+
+\begin{theorem}[Uniqueness of gluings for \(\mathrm{picEt}\)]
+  \label{thm:picEt_ext_of_le_cover}
+  \lean{AlgebraicGeometry.picEt.ext_of_le_cover}
+  \uses{def:picEt, thm:picEt_eq_of_basic_eq, thm:exists_basic_subcover}
+  \leanok
+  Two sections \(s, t \in \mathrm{picEt}(C, T)\) agreeing on every affine open subordinate to an
+  open cover of \(T_{\mathrm{left}}\) are equal: if \((O_i)_{i}\) is a family of opens covering
+  \(T_{\mathrm{left}}\) and \(s_U = t_U\) for every affine open \(U\) contained in some \(O_i\),
+  then \(s = t\). This is the separation half of the sheaf property of the Layer-2 functor.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Fix an affine open \(U\) of \(T_{\mathrm{left}}\). Refine \(U\) by basic opens \(D(r)\) each
+  contained in some \(O_i\): every point of \(U\) lies in some \(O_i\), so has a basic-open
+  neighbourhood in \(U\) inside \(O_i\); by Theorem~\ref{thm:exists_basic_subcover} a finite such
+  family spans the unit ideal. On \(D(r) \subseteq O_i\), the restriction of \(s_U\) equals
+  \(s_{D(r)} = t_{D(r)}\) (the hypothesis, as \(D(r)\) is an affine open inside \(O_i\)), which
+  equals the restriction of \(t_U\) (compatibility of \(s, t\) at \(D(r) \subseteq U\)). By
+  Theorem~\ref{thm:picEt_eq_of_basic_eq}, \(s_U = t_U\). As \(U\) was an arbitrary affine open,
+  \(s = t\).
+\end{proof}
