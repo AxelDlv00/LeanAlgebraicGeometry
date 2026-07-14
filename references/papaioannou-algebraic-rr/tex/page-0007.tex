@@ -1,0 +1,123 @@
+% source: An algebraic approach to the Riemann-Roch theorem and the arithmetic theory of function fields (Athanasios Papaioannou), http://www.fen.bilkent.edu.tr/~franz/mat/Riemann-Roch.pdf
+% pdf_page: 0007
+% retrieved: 2026-07-14
+% transcribed_by: page-transcriber (AI vision, no OCR)
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+
+% Small-caps theorem style matching the source (DEFINITION headings, italic bodies).
+\newtheoremstyle{scplain}{\topsep}{\topsep}{\itshape}{0pt}{\scshape}{.}{ }{\thmname{#1} \thmnote{#3}}
+\theoremstyle{scplain}
+\newtheorem*{definition}{Definition}
+
+% Small-caps "Proof." to match the source (standard amsthm definition with \scshape head).
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{%
+  \par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax
+  \trivlist\item[\hskip\labelsep\scshape #1\@addpunct{.}]\ignorespaces}%
+  {\popQED\endtrivlist\@endpefalse}
+\makeatother
+\renewcommand{\qedsymbol}{$\square$}
+
+% Non-standard operators used on this page (typeset upright in the source):
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\Princ}{Princ}
+\DeclareMathOperator{\Class}{Class}
+% Standard operators used: \deg, \dim, \sup. Standard amssymb symbols: \mathbb, \mathbf.
+
+\begin{document}
+
+\noindent
+We may let $v_P : \Div(\mathbb{F}) \longrightarrow \mathbb{Z}$ be defined by
+$v_P(D) = n_P$, the $P$'th coefficient of $D$. A partial ordering $\leq$ on
+$\Div(\mathbb{F})$ can be introduced by writing $D_1 \leq D_2$ if and only if
+$v_P(D_1) \leq v_P(D_2)$ for all $P \in \mathbf{P}$. A divisor $D$ is called
+\emph{effective} if it is non-negative, in the sense that $D \geq 0$. Since the
+formal sums are finite, we have a notion of \emph{degree} for divisors: if
+\[
+  D = \sum_{P \in \mathbf{P}_{\mathbb{F}}} n_P P,
+\]
+then we may define
+\[
+  \deg(D) = \sum_{p \in \mathbf{P}_{\mathbb{F}}} v_P(D) \deg(P).
+\]
+The degree map is actually a homomorphism $\Div(\mathbb{F}) \longrightarrow \mathbb{Z}$.
+
+\begin{definition}[1.7]
+Let $x \in \mathbb{F}^*$ and denote by $Z$ the set of zeroes of $x$ in
+$\mathbf{P}_{\mathbb{F}}$. Then, we define the zero divisor of $x$ to be
+\[
+  (x)_0 = \sum_{P \in Z} v_P(x) P \in \Div(\mathbb{F});
+\]
+analogously, if $N$is the set of poles of $x$, we define the pole divisor of $x$
+as $(x)_\infty = \sum_{P \in N}(-v_P(x))P$. Finally, the principal divisor of $x$
+is defined to be
+\[
+  (x) = (x)_0 - (x)_\infty = \sum_{P \in \mathbf{P}_{\mathbb{F}}} v_P(x) P.
+\]
+\end{definition}
+
+IN what follows, we will he assumption that $K$ is algebraically closed will now
+imply that a non-zero element $x \in \mathbb{F}$ is constant if and only if
+$(x) = 0$; this follows from the fact that any $z \in \mathbb{F}$ which is
+transcendental over $\mathbb{K}$ has at least one zero and one pole and
+Theorem 1.1.
+
+\begin{definition}[1.8]
+The subgroup $\Princ(\mathbb{F}) = \{(x) \mid x \in \mathbb{F}^*\}$ of
+$\Div(\mathbb{F})$ is called the group of principal divisors of
+$\mathbb{F}/\mathbb{K}$; the operation in this group is given by
+$(xy) = (x) + (y)$. The class group
+\[
+  \Class(\mathbb{F}) = \Div(\mathbb{F})/\Princ(\mathbb{F})
+\]
+is called the divisor class group; its elements are classes of the form $[D]$,
+where $D \in \Div(\mathbb{F})$ is a representative. Equality of divisor classes
+$[D] = [D']$ in $\Class(\mathbb{F})$ induces an equivalence relation $D \sim D'$ in
+$\Div(\mathbb{F})$. Therefore, $D \sim D'$ if and only if the difference $D - D'$
+is some principal divisor $(x)$.
+\end{definition}
+
+Another object we need to introduce is the following class of $K$-vector spaces.
+
+\begin{definition}[1.9]
+For a divisor $D \in \Div(\mathbb{F})$, we let
+\[
+  L(A) = \{x \in \mathbb{F}^* \mid (x) \geq -D\} \cup \{0\}.
+\]
+\end{definition}
+
+\noindent
+\emph{Explicitly, if $v_P(D) > 0$ when and only when $P \in I$, where $I$ is a
+finite subset of $\mathbf{P}_{\mathbb{F}}$ and $v_Q(D) < 0$ when and only when
+$Q \in J$, where $J$ is a finite subset of $\Div(\mathbb{F})$, then $L(D)$ contains
+all $x \in \mathbb{F}^*$ such that $x$ has zeroes of order at least $-v_Q(D)$ at
+all elements $Q \in J$ and poles of order at most $v_Q(D)$ at all elements
+$P \in I$.}
+
+It's now obvious that $L(D)$ is a $K$-vector space, and all equivalent divisors
+have isomorphic corresponding vector spaces (for this second assertion, assume
+that $D \sim D'$ and then let $\phi : L(D) \longrightarrow L(D')$ be given by
+$x \mapsto xz$, where $z$ is the fixed element of $\mathbb{F}$ such that
+$D = D' + (z)$).
+
+Our next objective will be to show that $\dim_{\mathbb{K}} L(D)$ is finite for all
+divisors $D$ of $\mathbb{F}/\mathbb{K}$. This is intimately connected with the fact
+that the \textbf{genus} of $\mathbb{F}/\mathbb{K}$, is in fact well-defined and
+finite.
+
+\begin{definition}[1.10]
+The genus $g$ of a function field $\mathbb{F}/\mathbb{K}$ is defined by
+\[
+  g = \sup\{\deg D - \dim D + 1 \mid D \in \Div(\mathbb{F})\}.
+\]
+\end{definition}
+
+\noindent
+\emph{Note that this definition is legitimate (the supremum in question exists)
+since the difference $\deg D - \dim D$ is bounded above, by the previous theorem.}
+
+\begin{center}7\end{center}
+
+\end{document}

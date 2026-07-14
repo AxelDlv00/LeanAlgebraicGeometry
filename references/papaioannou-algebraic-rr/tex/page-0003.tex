@@ -1,0 +1,122 @@
+% source: An algebraic approach to the Riemann-Roch theorem and the arithmetic theory of function fields (Athanasios Papaioannou), http://www.fen.bilkent.edu.tr/~franz/mat/Riemann-Roch.pdf
+% pdf_page: 0003
+% retrieved: 2026-07-14
+% transcribed_by: page-transcriber (AI vision, no OCR)
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+
+% Small-caps theorem style matching the source (DEFINITION/THEOREM headings, italic bodies).
+\newtheoremstyle{scplain}{\topsep}{\topsep}{\itshape}{0pt}{\scshape}{.}{ }{\thmname{#1} \thmnote{#3}}
+\theoremstyle{scplain}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{definition}{Definition}
+
+% Small-caps "Proof." to match the source (standard amsthm definition with \scshape head).
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{%
+  \par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax
+  \trivlist\item[\hskip\labelsep\scshape #1\@addpunct{.}]\ignorespaces}%
+  {\popQED\endtrivlist\@endpefalse}
+\makeatother
+\renewcommand{\qedsymbol}{$\square$}
+
+% This page uses only standard operators (\min) and standard amssymb symbols
+% (\mathbb, \mathfrak, \mathcal, \mathbf, \twoheadrightarrow); no custom operators required.
+
+\begin{document}
+
+\begin{proof}
+The claim is obvious in the cases of interest to Number Theory, namely in
+Dedekind domains, since Dedekind domain are assumed Noetherian. However, there is
+also a general proof. The second part of the proposition,
+$[\mathbb{F} : \mathbb{K}(x)] < \infty$, is trivially true since any element
+$z \in \mathbb{F}$ is transcendental over $\mathbb{K}$ if and only if
+$[\mathbb{F} : \mathbb{K}[z]] < \infty$. For the first part, we need to show that
+$x_1, x_2, \ldots, x_n$ are linearly independent over $\mathbb{K}(x)$. Assume the
+contrary; then there is a non-trivial relation
+\[
+  \sum_{i=1}^{n} a_i x_i = 0,
+\]
+in which the coefficients $a_i$ may be assumed polynomials (otherwise we just
+multiply by the least common divisor of their denominators). A further assumption
+we can make is that the $a_i$'s are relatively prime; in particular, $x$ does not
+divide all of them. If $b_i = a_i(0)$ are the constant terms of the coefficients,
+then there is a maximal $j \in \{1, 2, \ldots, n\}$ such that $b_j \neq 0$, but
+$b_i = 0$ for all $i > j$. We obtain
+\[
+  -a_j x_j = \sum_{i \neq j} x_i,
+\]
+where $a_i \in \mathcal{O}$ (since $x = x_1 \in \mathfrak{m}$) and
+$x_i \in x_j \mathfrak{m}$ for $i < j$ by the above conditions; by the
+construction of $j$ we also have $a_i = x g_i$ for $i < j$ where $g_i$ is a
+polynomial in $x$. By the previous displayed equation we have
+\[
+  -a_j = \sum_{i<j} a_i \frac{x_i}{x_j} + \sum_{i>j} \frac{x}{x_i} g_i x_i.
+\]
+All summands on the right hand side belong to $\mathfrak{m}$, and therefore so
+does $a_j$. On the other hand, $a_j = b_j + x g_j$ with
+$g_j \in \mathbb{K}[x] \subseteq \mathcal{O}$ and $x \in \mathfrak{m}$, so that
+$b_j = a_j - x g_j \in \mathfrak{m} \cap \mathbb{K}$, and this is absurd by
+theorem 1.1 (b).
+\end{proof}
+
+We now proceed with the proof of the claim.
+
+\begin{itemize}
+\item[(a)] Assume that $\mathfrak{m}$ is not principal, and let $x_1 = x$ be any
+  element of $\mathfrak{m}$. Since $\mathfrak{m} \neq x_1 \mathcal{O}$, there is
+  $x_2 \in \mathfrak{m} - x_1 \mathcal{O}$. Since $x_2 x_1^{-1} \notin \mathcal{O}$,
+  we must have $x_1 x_2^{-1} \in \mathcal{O}$ or $x_1 \in x_2 \mathcal{O}$.
+  Repeating the above argument, we obtain an infinite sequence that satisfies the
+  conditions of the above lemma, a contradiction.
+
+\item[(b)] Let $z \in \mathbb{F}$; we may even assume without loss of generality
+  that $z \in \mathcal{O}$, since otherwise $z^{-1} \in \mathcal{O}$. If $z$ is a
+  unit, then $z = z t^0$, and this representation is unique. Otherwise, there is a
+  unique maximal $m \in \mathbb{N}$, such that $z \in t^m \mathcal{O}$, hence
+  $z = u t^m$ for some $u \in \mathcal{O}$; this follows by the lemma we showed
+  above. Note that $u$ must belong to $\mathcal{O}^\times$, by the construction of
+  $m$.
+
+\item[(c)] For this third claim, note that there is $n \in \mathbb{N}$, such that
+  $n = \min\{m \mid x = u t^m, x \in \mathfrak{n}\}$. We claim that
+  $\mathfrak{n} = t^n \mathcal{O}$, and the proof of this assertion is trivial.
+\end{itemize}
+
+\begin{flushright}$\square$\end{flushright}
+
+\medskip
+The second class of objects that will be used in the proof of the Riemann-Roch
+theorem is \emph{places}. These are defined in the following
+
+\begin{definition}[1.3]
+A place $P$ of the function field $\mathbb{F}/\mathbb{K}$ is the maximal ideal of
+some valuation ring $\mathcal{O}$ of $\mathbb{F}/\mathbb{K}$. Any generator $t$ of
+$P$ is called a parameter for $P$.
+
+\indent The set of all places of $\mathbb{F}/\mathbb{K}$ will be denoted by
+$\mathbf{P}_{\mathbb{F}}$.
+\end{definition}
+
+As we shall soon see, places induce and are induced by a particular class of
+mappings, valuations:
+
+\begin{definition}[1.4]
+A valuation of a function field $\mathbb{F}/\mathbb{K}$ is a surjective
+homomorphism $v : \mathbb{F}^* \twoheadrightarrow \mathbb{Z}$, where $\mathbb{F}^*$
+denotes the multiplicative group of nonzero elements of the field $\mathbb{F}$,
+such that:
+\begin{itemize}
+\item[(a)] $v\,|_{\mathbb{K}^*} \equiv \mathbf{0}$.
+
+\item[(b)] (\textsc{Triangle Inequality}) $v(x + y) \geq \min\{v(x), v(y)\}$, for
+  any pair of $x, y \in \mathbb{F}$.
+\end{itemize}
+\indent In this context, it is convenient to formally define $v(0) = \infty$; $0$
+is the only element of $\mathbb{F}$ mapped to $\infty$.
+\end{definition}
+
+\begin{center}3\end{center}
+
+\end{document}

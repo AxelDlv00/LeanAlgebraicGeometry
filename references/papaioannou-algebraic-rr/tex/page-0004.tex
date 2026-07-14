@@ -1,0 +1,134 @@
+% source: An algebraic approach to the Riemann-Roch theorem and the arithmetic theory of function fields (Athanasios Papaioannou), http://www.fen.bilkent.edu.tr/~franz/mat/Riemann-Roch.pdf
+% pdf_page: 0004
+% retrieved: 2026-07-14
+% transcribed_by: page-transcriber (AI vision, no OCR)
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+
+% Small-caps theorem style matching the source (THEOREM headings, italic bodies).
+\newtheoremstyle{scplain}{\topsep}{\topsep}{\itshape}{0pt}{\scshape}{.}{ }{\thmname{#1} \thmnote{#3}}
+\theoremstyle{scplain}
+\newtheorem*{theorem}{Theorem}
+
+% Small-caps "Proof." to match the source (standard amsthm definition with \scshape head).
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{%
+  \par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax
+  \trivlist\item[\hskip\labelsep\scshape #1\@addpunct{.}]\ignorespaces}%
+  {\popQED\endtrivlist\@endpefalse}
+\makeatother
+\renewcommand{\qedsymbol}{$\square$}
+
+% This page uses only standard operators (\min, \deg, \ker) and standard amssymb
+% symbols (\mathbb, \mathcal, \mathbf, \xrightarrow); no custom operators required.
+% (The proof of Theorem 1.5 begins here and continues on the following page, so it
+%  carries no QED box on this page and is set with a manual small-caps "Proof." head.)
+
+\begin{document}
+
+\noindent
+In the above definition, the Triangle Inequality can be substituted by the
+following stronger version:
+
+\begin{theorem}[1.4]
+Let $v$ be a discrete valuation on $\mathbb{F}/\mathbb{K}$ and $x, y \in \mathbb{F}$
+with $v(x) \neq v(y)$. Then, $v(x + y) = \min\{v(x), v(y)\}$.
+\end{theorem}
+
+\begin{proof}
+Note that multiplication of $y \in \mathbb{F}$ by a scalar $a \in \mathbb{K}$ does
+not affect the image of $y$ under $v$, namely $v(ay) = v(y)$; in particular,
+$v(-y) = v(y)$. Now assume without loss of generality that $v(x) < v(y)$ and
+suppose that $v(x + y) \neq \min\{v(x), v(y)\} = v(x)$. Then,
+$v(x) = v((x + y) - y) > \min\{v(x + y), v(y)\} > v(x)$, a contradiction.
+\end{proof}
+
+To any place $P \in \mathbf{P}_{\mathbb{F}}$, we associate a mapping
+$v_P : \mathbb{F} \longrightarrow \mathbb{Z} \cup \{\infty\}$ by picking a prime
+element $t$ of $P$ and then letting the value of $v$ at any $x \in \mathbb{F}$ be
+$m \in \mathbb{Z} \cup \{\infty\}$, the unique integer such that $x = u t^m$, for
+some unit $u$ in $\mathbb{F}$. Since the representation of $x$ in this form is
+unique given the prime element $t$ the map would be well defined, if it were
+independent of the choice of generator $t$. But this is also true, for given some
+other prime element $t'$, there is a unit $w$ such that $t' = w t$, and it then
+becomes obvious that $x = u t^m = u' t'^m$. The only problem arises when $x = 0$,
+but in this case we let $v_P(x) = \infty$, of course. We now have to show that
+this map is in fact a valuation on $\mathbb{F}/\mathbb{K}$; the only property of
+valuations that is not immediately obvious is the Triangle Inequality. Let
+$x = u t^n, y = u' t^m \in \mathbb{F}$ and assume that $n \leq m < \infty$. Then,
+$x + y = t^n(u' + t^{m-n} u'') = t^n z$, where $z \in \mathcal{O}_P$. If $z = 0$,
+then $v_P(x + y) = \infty$, so there is nothing to prove; otherwise,
+$z = t^k u'''$, with $k \geq 0$ and
+$v_P(x + y) = n + k \geq n = \min\{v(x), v(y)\}$ and so the property holds.
+
+Conversely, to any valuation $v$ we may associate a place
+$P \in \mathbf{P}_{\mathbb{F}}$ defined as
+$P = \{z \in \mathbb{F} \mid v(z) > 0\}$; the corresponding valuation ring is
+$\mathcal{O}_P = \{z \in \mathbb{F} \mid v(z) \geq 0\}$. Also, we have
+$\mathcal{O}_P^\times = \ker v_P$, and
+$P = \{z \in \mathbb{F} \mid v_P(z) > 0\}$. We have the exact sequence
+\[
+  0 \longrightarrow \mathcal{O}_P^\times \xrightarrow{\ \iota\ } \mathbb{F}^*
+    \xrightarrow{\ v\ } \mathbb{Z} \longrightarrow 0,
+\]
+where $\iota$ and $v$ denote the obvious inclusion and valuation.
+
+The above discussion shows that the notions of \emph{valuations}, \emph{valuation
+rings} and \emph{places} of a fixed function field $\mathbb{F}/\mathbb{K}$ are
+equivalent in the following sense: let $\mathcal{A}$ be the discrete category of
+all valuations, $\mathcal{B}$ the discrete category of all valuation rings and
+$\mathcal{C}$ the discrete category of all places of $\mathbb{F}/\mathbb{K}$.
+Then, the functor $\mathcal{A} \longrightarrow \mathcal{B}$ that assigns a
+valuation to its valuation ring, and the functor
+$\mathcal{A} \longrightarrow \mathcal{C}$ that assigns a valuation to its
+corresponding place are both invertible. Thus $\mathcal{A} \simeq \mathcal{B}$ and
+$\mathcal{A} \simeq \mathcal{C}$, as categories.
+
+Let $P$ be a place of $\mathbb{F}/\mathbb{K}$, and $\mathcal{O}_P$ its valuation
+ring. Since $P$ is a maximal ideal, the residue class ring $\mathcal{O}_P/P$ is a
+field and we may define $\pi : \mathcal{O}_P \longrightarrow \mathcal{O}_P/P$ to be
+the natural projection; the domain of this homomorphism of fields can be extended
+to $\mathbb{F}$ by letting the image of $\mathbb{F} - \mathcal{O}_P$ be
+$\{\infty\}$. By theorem 1.1, we know that $\mathbb{K} \subseteq \mathcal{O}_P$ and
+$\mathbb{K} \cap P = \{0\}$, therefore $\phi$ above induces a canonical embedding
+of $\mathbb{K}$ into $\mathcal{O}_P/P$. This allows us to consider $\mathbb{K}$ as
+a subfield of $\mathcal{O}_P/P$ and repeating the construction with
+$\tilde{\mathbb{K}}$ instead of $\mathbb{K}$ yields the same result for
+$\tilde{\mathbb{K}}$. We will let $x(P) = \phi(x)$ to be the image of $x$ under
+$\phi$.
+
+The \emph{degree} of a place $P$ is merely the degree of the extension
+$\mathbb{F}_P$ over $\mathbb{K}$.
+
+We will now need a few easy facts and some definitions that will establish a
+dictionary between algebraic function fields and the function fields of Riemann
+surfaces. First, we will show the following
+
+\begin{theorem}[1.5]
+If $P$ is a place of $\mathbb{F}/\mathbb{K}$ and $x \in P^*$, then
+\[
+  \deg P \leq [\mathbb{F} : \mathbb{K}(x)] < \infty.
+\]
+\end{theorem}
+
+\medskip\noindent{\scshape Proof.} The second part of the statement is immediately
+seen to be true, as in theorem 1.1. The first part is equivalent to showing that
+given any elements $z_1, z_2, \ldots, z_n \in \mathcal{O}_P$ such that their
+classes $z_1(P), z_2(P), \ldots, z_n(P)$ are $\mathbb{K}$-independent, then
+$z_1, z_2, \ldots, z_n$ are $\mathbb{K}(x)$-independent. Assume the contrary; then
+there is some polynomial relation
+\[
+  \sum_{i=1}^{n} a_i z_i,
+\]
+where the $z_i$ are polynomials in $\mathbb{K}(x)$. Without loss of generality, we
+may assume that not all $a_i$ are divisible by $x$, and so $a_i = b_i + x g_i$,
+such that not all $b_i$ are equal to $0$. But then, applying the residue class
+homomorphism described above, we obtain
+\[
+  \sum_{i=1}^{n} b_i z_i(P) = 0,
+\]
+
+\begin{center}4\end{center}
+
+\end{document}

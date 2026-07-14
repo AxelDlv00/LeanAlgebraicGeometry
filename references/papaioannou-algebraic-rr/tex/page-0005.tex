@@ -1,0 +1,143 @@
+% source: An algebraic approach to the Riemann-Roch theorem and the arithmetic theory of function fields (Athanasios Papaioannou), http://www.fen.bilkent.edu.tr/~franz/mat/Riemann-Roch.pdf
+% pdf_page: 0005
+% retrieved: 2026-07-14
+% transcribed_by: page-transcriber (AI vision, no OCR)
+
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm}
+
+% Small-caps theorem style matching the source (DEFINITION/THEOREM/COROLLARY headings, italic bodies).
+\newtheoremstyle{scplain}{\topsep}{\topsep}{\itshape}{0pt}{\scshape}{.}{ }{\thmname{#1} \thmnote{#3}}
+\theoremstyle{scplain}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{definition}{Definition}
+\newtheorem*{corollary}{Corollary}
+
+% Small-caps "Proof." to match the source (standard amsthm definition with \scshape head).
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{%
+  \par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax
+  \trivlist\item[\hskip\labelsep\scshape #1\@addpunct{.}]\ignorespaces}%
+  {\popQED\endtrivlist\@endpefalse}
+\makeatother
+\renewcommand{\qedsymbol}{$\square$}
+
+% This page uses only standard operators (\min) and standard amssymb symbols
+% (\mathbb, \mathfrak, \mathcal, \mathbf, \varnothing, \subsetneq); no custom operators required.
+% (The top line completes the proof of Theorem 1.5 begun on the preceding page.)
+
+\begin{document}
+
+\noindent
+and this contradicts are assumption that $z_1(P), z_2(P), \ldots, z_n(P)$ are
+$\mathbb{K}$-independent.\hfill$\square$
+
+\medskip
+Stretching the analogy with the geometric case, we now proceed to define the
+meaning of \emph{zeroes} and \emph{poles} of elements of $\mathbb{F}/\mathbb{K}$.
+We have
+
+\begin{definition}[1.5]
+Let $z \in \mathbb{F}_P$ and $P \in \mathbf{P}_{\mathbb{F}}$. We call $P$ a zero of
+$z$ if and only if $v_P(z) = m > 0$; in this case $P$ is a zero of order $m$. We
+call $P$ a pole of $z$ if and only if $v_P(z) = m < 0$; in this case $P$ is a pole
+of order $-m$.
+\end{definition}
+
+Our next objective will be to show that any given element of $\mathbb{F}/\mathbb{K}$
+has at least one pole and at least one zero. This claim is not surprising, since
+intuitively $\mathbb{F}/\mathbb{K}$ is the field of meromorphic functions of the
+Riemann surface whose points are the places $P \in \mathbf{P}_{\mathbb{F}}$. We
+first prove the following
+
+\begin{theorem}[1.6]
+Let $\mathbb{F}/\mathbb{K}$ be a function field and $R$ a subring of $\mathbb{F}$
+such that $\mathbb{K} \subseteq R \subseteq \mathbb{F}$. If $\mathfrak{a}$ is a
+proper ideal of $R$, then there exists a place $P_{\mathbb{F}}$ such that
+$\mathfrak{a} \subseteq P$ and $R \subseteq \mathcal{O}_P$.
+\end{theorem}
+
+\begin{proof}
+We introduce the set $\mathcal{F} = \{S \mid S$ is a subring of $\mathbb{F}$ with
+$R \subseteq S$ and $\mathfrak{a}S \neq S\}$---by definition, $\mathfrak{a}S$ is
+the set of all finite sums of products $a_i s_i$, where $a_i \in \mathfrak{a},
+s_i \in S$ and it is an ideal of $S$. We can also order $\mathcal{F}$ by
+inclusion. By the conditions of the theorem, $\mathcal{F}$ is not empty
+($R \in \mathcal{F}$) and a typical Zorn's Lemma argument shows that $\mathcal{F}$
+has a maximal element $\mathcal{O}$, that satisfies
+$R \subseteq \mathcal{O} \subseteq \mathbb{F}$ and $\mathfrak{a}S \neq \mathcal{O}$.
+It's a standard fact that $\mathcal{O}$ will be a valuation ring of
+$\mathbb{F}/\mathbb{K}$ (c.f. Atiyah--MacDonald, chapter 5). We repeat the proof
+below.
+
+As $\mathfrak{a} \neq 0$ and $\mathfrak{a}\mathcal{O} \neq \mathcal{O}$, we have
+$\mathcal{O} \subsetneq \mathbb{F}$ and of course
+$\mathfrak{a} \subseteq \mathcal{O} - \mathcal{O}^\times$. Assume that there
+existed an element $z \in \mathbb{F}$ such that $z \notin \mathcal{O}$ and
+$z^{-1} \notin \mathcal{O}$; then $\mathfrak{a}\mathcal{O}[z] = \mathcal{O}[z]$ and
+$\mathfrak{a}\mathcal{O}[z] = \mathcal{O}[z^{-1}]$ and we may pick
+$a_0, a_1, \ldots, a_n, b_0, b_1, \ldots, b_m \in \mathfrak{a}\mathcal{O}$ such
+that
+\[
+  1 = a_n z^n + \cdots + a_1 z + a_0
+\]
+and
+\[
+  1 = b_m z^{-m} + \cdots + b_1 z^{-1} + b_0.
+\]
+We may assume without loss of generality that $m \leq n$ and then we choose
+$m, n$ to be minimal; even under this assumption, clearly $m, n \geq 1$.
+Multiplying the two relations by $1 - b_0$ and $a_n z^n$ respectively, we obtain
+\[
+  1 - b_0 = (1 - b_0)a_n z^n + \cdots + (1 - b_0)a_1 z + (1 - b_0)a_0
+\]
+and
+\[
+  0 = b_m a_n z^{n-m} + \cdots + b_1 a_n z^{n-1} + (b_0 - 1)a_n z^n.
+\]
+Adding the above equations yields
+\[
+  1 = c_{n-1} z^{n-1} + \cdots + c_1 z + c_0
+\]
+with coefficients $c_i \in \mathfrak{a}\mathcal{O}$; this is absurd by the
+minimality of $n$. Therefore, $\mathcal{O}$ is a valuation ring of
+$\mathbb{F}/\mathbb{K}$, as desired.
+\end{proof}
+
+From the above, we may draw the following corollaries
+
+\begin{corollary}[1.7]
+Let $\mathbb{F}/\mathbb{K}$ be a function field, $z \in \mathbb{F}$ transcendental
+over $\mathbb{K}$. Then $z$ has at least one zero and one pole; in particular,
+$\mathbf{P}_{\mathbb{F}} \neq \varnothing$.
+\end{corollary}
+
+\begin{proof}
+Consider the ring $R = \mathbb{K}[z]$ and the ideal $\mathfrak{a} = z\mathbb{K}[z]$.
+The previous theorem asserts that there is a place $P \in \mathbf{P}_{\mathbb{F}}$
+with $z \in P$, so that $P$ is a zero of $z$. Moreover, $z^{-1}$ has another $0$,
+$Q \in \mathbf{P}_{\mathbb{F}}$. This $Q$ will be a pole of $z$.
+\end{proof}
+
+\begin{corollary}[1.8]
+The field of constants $\tilde{\mathbb{K}}$ of $\mathbb{F}/\mathbb{K}$ is a finite
+algebraic extension of $\mathbb{K}$.
+\end{corollary}
+
+\begin{proof}
+Since $\mathbf{P}_{\mathbb{F}} \neq \varnothing$, we may pick a place
+$P \in \mathbf{P}_{\mathbb{F}}$. Since $\tilde{\mathbb{K}}$ is embedded in
+$\mathbb{F}_P$ via the residue class map
+$\mathcal{O}_P \longrightarrow \mathbb{F}_P$, it follows that
+$[\tilde{\mathbb{K}} : K] \leq [\mathbb{F}_P : \mathbb{K}] < \infty$.
+\end{proof}
+
+The previous corollary will prove useful in the subsequent treatment of divisors,
+in that it will alow us to assume that the base field is algebraically closed;
+this assumption can only be made when $\tilde{\mathbb{K}}$ is a finite extension of
+the base field $\mathbb{K}$ (since it implies that $\mathbb{F}/\tilde{\mathbb{K}}$
+is also a function field).
+
+\begin{center}5\end{center}
+
+\end{document}

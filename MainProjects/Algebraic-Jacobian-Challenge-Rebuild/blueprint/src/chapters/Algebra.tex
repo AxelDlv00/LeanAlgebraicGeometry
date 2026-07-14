@@ -719,3 +719,210 @@ unit from the evaluated generator of a trivialized invertible module.
   \otimes_{B'} B' \cong R'\).  Being an isomorphism, it is in particular a surjective
   \(R'\)-linear map, the concrete evaluation fed to Theorem~\ref{thm:isUnit_map_rTensor_generator}.
 \end{definition}
+
+\section{Additivity of dimension along exact sequences}
+\label{sec:finrank_additivity}
+
+The colength computations of the next section, and the Euler characteristic of the
+Riemann--Roch ledger, rest on the additivity of the \(k\)-dimension along exact sequences of
+finite-dimensional vector spaces. Throughout, \(k\) is a field and all vector spaces are
+finite-dimensional over \(k\); \(\dim_k\) is the dimension.
+
+\begin{theorem}[Additivity of dimension along a short exact sequence]
+  \label{thm:finrank_add_of_exact}
+  \lean{AlgebraicGeometry.finrank_add_of_exact}
+  \leanok
+  Let
+  \[
+    0 \longrightarrow A \xrightarrow{\ f\ } B \xrightarrow{\ g\ } C \longrightarrow 0
+  \]
+  be a short exact sequence of finite-dimensional \(k\)-vector spaces (\(f\) injective, \(g\)
+  surjective, and \(\ker g = \operatorname{im} f\)). Then
+  \[
+    \dim_k B \;=\; \dim_k A + \dim_k C .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The length of a module is additive along a short exact sequence: for
+  \(0 \to A \to B \to C \to 0\) one has \(\ell(B) = \ell(A) + \ell(C)\), where \(\ell\) denotes
+  the length of a composition series. For a finite-dimensional vector space over the field
+  \(k\), a composition series is a maximal flag of subspaces, so its length equals the
+  dimension: \(\ell(V) = \dim_k V\). Substituting this identity for each of \(A\), \(B\),
+  \(C\) into the length additivity gives \(\dim_k B = \dim_k A + \dim_k C\).
+\end{proof}
+
+\begin{theorem}[Vanishing of the alternating sum of dimensions along a five-term sequence]
+  \label{thm:finrank_alt_sum_exact5}
+  \lean{AlgebraicGeometry.finrank_alt_sum_eq_zero_of_exact₅}
+  \leanok
+  Let
+  \[
+    0 \longrightarrow V_1 \xrightarrow{\ f_1\ } V_2 \xrightarrow{\ f_2\ } V_3
+      \xrightarrow{\ f_3\ } V_4 \xrightarrow{\ f_4\ } V_5 \longrightarrow 0
+  \]
+  be an exact sequence of finite-dimensional \(k\)-vector spaces (\(f_1\) injective, \(f_4\)
+  surjective, and \(\ker f_{i+1} = \operatorname{im} f_i\) for \(i = 1, 2, 3\)). Then the
+  alternating sum of dimensions vanishes in \(\Z\):
+  \[
+    \dim_k V_1 - \dim_k V_2 + \dim_k V_3 - \dim_k V_4 + \dim_k V_5 \;=\; 0 .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Apply the rank--nullity theorem to each of the four maps: for every \(i\),
+  \[
+    \dim_k V_i \;=\; \dim_k(\ker f_i) + \dim_k(\operatorname{im} f_i) .
+  \]
+  Injectivity of \(f_1\) gives \(\dim_k(\ker f_1) = 0\); surjectivity of \(f_4\) gives
+  \(\dim_k(\operatorname{im} f_4) = \dim_k V_5\); and exactness at \(V_{i+1}\) rewrites the
+  kernel as the preceding range, \(\dim_k(\ker f_{i+1}) = \dim_k(\operatorname{im} f_i)\) for
+  \(i = 1, 2, 3\). Writing \(r_i = \dim_k(\operatorname{im} f_i)\), these read
+  \[
+    \dim_k V_1 = r_1,\quad
+    \dim_k V_2 = r_1 + r_2,\quad
+    \dim_k V_3 = r_2 + r_3,\quad
+    \dim_k V_4 = r_3 + \dim_k V_5 .
+  \]
+  Forming the alternating sum, every \(r_i\) and \(\dim_k V_5\) cancels:
+  \[
+    \dim_k V_1 - \dim_k V_2 + \dim_k V_3 - \dim_k V_4 + \dim_k V_5
+      = r_1 - (r_1 + r_2) + (r_2 + r_3) - (r_3 + \dim_k V_5) + \dim_k V_5 = 0 .
+  \]
+\end{proof}
+
+\section{The colength of Dedekind quotients}
+\label{sec:dedekind_colength}
+
+This section computes the \(k\)-dimension of the quotient of a Dedekind domain \(B\), finitely
+generated as a module over a base field \(k\) through a fixed \(k\)-algebra structure, by a
+nonzero ideal. The pattern is the classical dévissage: a nonzero principal ideal
+\(I = (\pi)\) has all its successive powers separated by copies of the residue quotient
+\(B/I\), so \(\dim_k(B/I^e) = e \cdot \dim_k(B/I)\); the Chinese remainder theorem then reduces
+an arbitrary ideal to its prime-power factors. Throughout, \(k\) is a field and \(B\) is a
+commutative domain with a \(k\)-algebra structure; ideals of \(B\) are written \(I\), \(P\).
+
+\begin{theorem}[One-step filtration jump]
+  \label{thm:finrank_quotSucc_jump}
+  \lean{AlgebraicGeometry.finrank_quotSucc_jump}
+  \leanok
+  Let \(I = (\pi)\) be a nonzero principal ideal of \(B\), with \(B/I\) finite-dimensional over
+  \(k\), and let \(n \ge 0\). Multiplication by \(\pi^n\) induces a \(k\)-linear isomorphism
+  \[
+    B/I \;\xrightarrow{\ \sim\ }\; I^n / I^{n+1} ,
+  \]
+  so that \(\dim_k\bigl(I^n / I^{n+1}\bigr) = \dim_k(B/I)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Since \(I = (\pi)\) is principal, \(I^n = (\pi^n)\) and \(I^{n+1} = (\pi^{n+1})\), and
+  \(I^{n+1} = I \cdot I^n\) is a \(B\)-submodule of \(I^n\). Multiplication by \(\pi^n\) is a
+  \(B\)-linear map \(\mu : B \to I^n\), surjective because every element of \(I^n = (\pi^n)\)
+  is a \(B\)-multiple of \(\pi^n\). Composing with the projection \(I^n \twoheadrightarrow
+  I^n/I^{n+1}\) yields a surjective \(B\)-linear map \(B \to I^n/I^{n+1}\). Its kernel is
+  \(I\): for \(b \in B\), \(\pi^n b \in I^{n+1} = (\pi^{n+1})\) means \(\pi^n b = \pi^{n+1} c\)
+  for some \(c\), i.e.\ \(\pi^n(b - \pi c) = 0\); as \(B\) is a domain and \(\pi^n \neq 0\)
+  (because \(I \neq 0\)), this forces \(b = \pi c \in (\pi) = I\), and conversely every element
+  of \(I\) maps into \(I^{n+1}\). Hence \(\mu\) descends to a \(B\)-linear isomorphism
+  \(B/I \cong I^n/I^{n+1}\). Restriction of scalars along \(k \to B\) makes it \(k\)-linear,
+  so the two \(k\)-vector spaces have equal dimension.
+\end{proof}
+
+\begin{theorem}[Inductive step of the colength formula]
+  \label{thm:finrank_quotient_pow_succ}
+  \lean{AlgebraicGeometry.finrank_quotient_pow_succ}
+  \uses{thm:finrank_add_of_exact, thm:finrank_quotSucc_jump}
+  \leanok
+  Let \(I\) be a nonzero principal ideal of \(B\) and \(n \ge 0\), with \(B/I^{n+1}\) and
+  \(B/I^n\) finite-dimensional over \(k\). Then
+  \[
+    \dim_k\bigl(B/I^{n+1}\bigr) \;=\; \dim_k(B/I) + \dim_k\bigl(B/I^n\bigr) .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Because \(I^{n+1} \subseteq I^n\), the identity of \(B\) induces a surjective \(k\)-linear
+  projection \(B/I^{n+1} \twoheadrightarrow B/I^n\), whose kernel is the image of \(I^n\) in
+  \(B/I^{n+1}\), namely \(I^n/I^{n+1}\). This gives a short exact sequence of
+  finite-dimensional \(k\)-vector spaces
+  \[
+    0 \longrightarrow I^n/I^{n+1} \longrightarrow B/I^{n+1} \longrightarrow B/I^n
+      \longrightarrow 0 .
+  \]
+  By \ref{thm:finrank_add_of_exact}, \(\dim_k(B/I^{n+1}) = \dim_k(I^n/I^{n+1}) +
+  \dim_k(B/I^n)\), and by the filtration jump \ref{thm:finrank_quotSucc_jump},
+  \(\dim_k(I^n/I^{n+1}) = \dim_k(B/I)\). Combining the two gives the claim.
+\end{proof}
+
+\begin{theorem}[Prime-power (DVR) colength formula]
+  \label{thm:finrank_quotient_span_pow}
+  \lean{AlgebraicGeometry.finrank_quotient_span_pow}
+  \uses{thm:finrank_quotient_pow_succ}
+  \leanok
+  Let \(I = (\pi)\) be a nonzero principal ideal of \(B\) and \(e \ge 0\), with \(B/I^e\)
+  finite-dimensional over \(k\). Then
+  \[
+    \dim_k\bigl(B/I^e\bigr) \;=\; e \cdot \dim_k(B/I) .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Induction on \(e\). For \(e = 0\), \(I^0\) is the unit ideal \((1) = B\), so \(B/I^0\) is the
+  zero module and \(\dim_k(B/I^0) = 0 = 0 \cdot \dim_k(B/I)\). For the step, assume the formula
+  for \(e = n\); each quotient \(B/I^n\) is a quotient of \(B/I^{n+1}\), hence
+  finite-dimensional, so \ref{thm:finrank_quotient_pow_succ} applies and
+  \[
+    \dim_k\bigl(B/I^{n+1}\bigr) = \dim_k(B/I) + \dim_k\bigl(B/I^n\bigr)
+      = \dim_k(B/I) + n \cdot \dim_k(B/I) = (n+1) \cdot \dim_k(B/I) .
+  \]
+\end{proof}
+
+For the remaining two results \(B\) is a Dedekind domain, so every nonzero ideal factors
+uniquely into height-one primes. For a nonzero ideal \(I\) we write its factorization as
+\(I = \prod_P P^{\,\mathrm{ord}_P(I)}\), the product over the finitely many prime factors \(P\)
+of \(I\) and \(\mathrm{ord}_P(I) \ge 1\) the multiplicity of \(P\).
+
+\begin{theorem}[Multi-prime colength via the Chinese remainder theorem]
+  \label{thm:finrank_quotient_eq_sum_factors_pow}
+  \lean{AlgebraicGeometry.finrank_quotient_eq_sum_factors_pow}
+  \leanok
+  Let \(B\) be a Dedekind domain, a \(k\)-algebra, and let \(I \neq 0\) be an ideal with each
+  prime-power quotient \(B/P^{\,\mathrm{ord}_P(I)}\) finite-dimensional over \(k\). Then
+  \[
+    \dim_k(B/I) \;=\; \sum_{P \mid I} \dim_k\bigl(B/P^{\,\mathrm{ord}_P(I)}\bigr) ,
+  \]
+  the sum ranging over the prime factors \(P\) of \(I\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The prime factors of \(I\) are pairwise coprime, so the Chinese remainder theorem gives a
+  ring isomorphism \(B/I \cong \prod_{P \mid I} B/P^{\,\mathrm{ord}_P(I)}\); since the factors
+  \(P^{\,\mathrm{ord}_P(I)}\) contain \(I\), each projection is \(k\)-linear, and the
+  isomorphism is one of \(k\)-vector spaces. The dimension of a finite product of vector spaces
+  is the sum of the dimensions of the factors, which is the stated formula.
+\end{proof}
+
+\begin{theorem}[Dedekind colength formula, ord-weighted form]
+  \label{thm:finrank_quotient_span_eq_sum_ord}
+  \lean{AlgebraicGeometry.finrank_quotient_span_eq_sum_ord}
+  \uses{thm:finrank_quotient_eq_sum_factors_pow, thm:finrank_quotient_span_pow}
+  \leanok
+  Let \(B\) be a Dedekind domain, a \(k\)-algebra, and let \(f \neq 0\) be an element whose
+  height-one prime factors \(P\) of the principal ideal \((f)\) are all principal (for instance
+  when \(B\) is a principal ideal domain), with each prime-power quotient finite-dimensional
+  over \(k\). Then
+  \[
+    \dim_k\bigl(B/(f)\bigr) \;=\; \sum_{P \mid (f)} \mathrm{ord}_P(f) \cdot \dim_k(B/P) ,
+  \]
+  where \(\mathrm{ord}_P(f) = \mathrm{ord}_P\bigl((f)\bigr)\) is the multiplicity of \(P\) in
+  the factorization of \((f)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Since \(f \neq 0\), the ideal \((f)\) is nonzero, and \ref{thm:finrank_quotient_eq_sum_factors_pow}
+  gives \(\dim_k(B/(f)) = \sum_{P \mid (f)} \dim_k(B/P^{\,\mathrm{ord}_P(f)})\). Each prime
+  factor \(P\) is a nonzero principal ideal by hypothesis, so the prime-power formula
+  \ref{thm:finrank_quotient_span_pow} applies to it and yields
+  \(\dim_k(B/P^{\,\mathrm{ord}_P(f)}) = \mathrm{ord}_P(f) \cdot \dim_k(B/P)\). Substituting into
+  the sum gives the claim.
+\end{proof}

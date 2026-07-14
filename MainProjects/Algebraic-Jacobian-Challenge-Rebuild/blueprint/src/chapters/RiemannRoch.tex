@@ -1,0 +1,371 @@
+\chapter{Closed points, divisors and skyscraper cohomology}
+\label{chap:RiemannRoch}
+
+This chapter assembles the local and divisorial foundations of the Riemann--Roch ledger of a
+smooth curve. On an integral scheme \(X\) smooth of relative dimension one over a field \(K\),
+every point other than the generic point is closed, and the stalk of the structure sheaf there
+is a discrete valuation ring; this yields, on the function field \(K(X)\), the order-of-vanishing
+valuation \(\mathrm{ord}_x\) at each closed point \(x\). Each closed point also carries a residue
+degree \([\kappa(x) : K]\), the \(K\)-dimension of its residue field. A Weil divisor is then a
+finitely supported \(\Z\)-family on the closed points, and its degree is the residue-degree
+weighted sum of its coefficients --- the correct notion over a non-closed base field. Finally, to
+each \(K\)-module \(M\) and point \(x\) is attached the skyscraper sheaf of \(K\)-modules
+concentrated at \(x\); its degree-zero cohomology recovers \(M\) and its degree-one cohomology
+vanishes, the keystone input to the local contribution of a point in the cohomological
+Riemann--Roch computation.
+
+Throughout, \(K\) is a field, \(X\) is an integral scheme smooth of relative dimension one over
+\(\Spec K\) --- the curve bundle of Chapter~\ref{chap:Curves} --- and \(\eta\) denotes its generic
+point. We write \(\struct{X,x}\) for the stalk at \(x\), \(\kappa(x)\) for its residue field,
+and \(K(X)\) for the function field (the stalk at \(\eta\)).
+
+\section{Discrete valuations at closed points}
+
+\begin{theorem}[Discrete valuation ring at a closed point of an affine Dedekind chart]
+  \label{thm:affine_dedekind_dvr_stalk}
+  \lean{AlgebraicGeometry.IsAffineOpen.isDiscreteValuationRing_stalk}
+  \leanok
+  Let \(X\) be an integral scheme, \(V \subseteq X\) an affine open whose ring of sections
+  \(\Gamma(X, V)\) is a Dedekind domain, and \(x \in V\) a point which is not the generic point
+  of \(X\). Then the stalk \(\struct{X,x}\) is a discrete valuation ring.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Under the isomorphism \(V \cong \Spec \Gamma(X, V)\) the point \(x\) corresponds to a prime
+  ideal \(\mathfrak q\) of \(\Gamma(X, V)\), and the stalk \(\struct{X,x}\) is the localization
+  of \(\Gamma(X, V)\) at \(\mathfrak q\). The prime \(\mathfrak q\) is nonzero: if
+  \(\mathfrak q = 0\) then \(x\) is the image of the generic point of \(\Spec \Gamma(X, V)\),
+  which is the generic point of the nonempty open \(V\), hence the generic point of the
+  irreducible scheme \(X\) --- contrary to hypothesis. The localization of a Dedekind domain at
+  a nonzero prime ideal is a discrete valuation ring, which is the claim.
+\end{proof}
+
+\begin{theorem}[Discrete valuation ring at a closed point of a curve]
+  \label{thm:closedpoint_dvr_stalk}
+  \lean{AlgebraicGeometry.isDiscreteValuationRing_stalk}
+  \uses{thm:affine_dedekind_dvr_stalk, thm:relDim1_dedekind_charts}
+  \leanok
+  Let \(X\) be an integral scheme smooth of relative dimension one over a field \(K\), and let
+  \(x \in X\) be a point other than the generic point. Then the stalk \(\struct{X,x}\) is a
+  discrete valuation ring.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By \ref{thm:relDim1_dedekind_charts} the point \(x\) lies in an affine open \(V\) whose ring
+  of sections \(\Gamma(X, V)\) is a Dedekind domain. Apply \ref{thm:affine_dedekind_dvr_stalk}.
+\end{proof}
+
+\begin{theorem}[Dedekind stalk at a closed point of a curve]
+  \label{thm:closedpoint_dedekind_stalk}
+  \lean{AlgebraicGeometry.isDedekindDomain_stalk}
+  \uses{thm:closedpoint_dvr_stalk}
+  \leanok
+  In the situation of \ref{thm:closedpoint_dvr_stalk}, the stalk \(\struct{X,x}\) is a Dedekind
+  domain.
+\end{theorem}
+\begin{proof}
+  \leanok
+  A discrete valuation ring is a local principal ideal domain, in particular a Dedekind domain;
+  apply this to the stalk, which is a discrete valuation ring by \ref{thm:closedpoint_dvr_stalk}.
+\end{proof}
+
+\begin{theorem}[Non-generic points of a curve are closed]
+  \label{thm:closedpoint_isClosed}
+  \lean{AlgebraicGeometry.isClosed_singleton_of_ne_genericPoint}
+  \uses{thm:relDim1_specializes, lem:height_one_closed_points}
+  \leanok
+  Let \(X\) be an integral scheme smooth of relative dimension one over a field \(K\), and let
+  \(x \in X\) be a point other than the generic point. Then the singleton \(\{x\}\) is closed.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By \ref{thm:relDim1_specializes} the specialization order of \(X\) has height one: every
+  generalization of any point is the generic point or the point itself. A scheme with
+  irreducible underlying space and height-one specialization order has all its non-generic
+  points closed (\ref{lem:height_one_closed_points}); apply this to \(x\).
+\end{proof}
+
+\begin{definition}[The order valuation at a closed point]
+  \label{def:scheme_ord}
+  \lean{AlgebraicGeometry.Scheme.ord}
+  \uses{thm:closedpoint_dvr_stalk, thm:closedpoint_dedekind_stalk}
+  \leanok
+  \source{papaioannou-algebraic-rr:page-0003}
+  For a closed point \(x\) of \(X\) (a point other than the generic point), the
+  \emph{order valuation} \(\mathrm{ord}_x\) is the discrete valuation of the function field
+  \(K(X)\) with values in \(\Z \cup \{+\infty\}\) determined by the discrete valuation ring
+  \(\struct{X,x}\): it assigns to a nonzero rational function its order of vanishing at \(x\),
+  and \(+\infty\) to \(0\).
+\end{definition}
+\begin{proof}
+  \leanok
+  The stalk \(\struct{X,x}\) is a discrete valuation ring (\ref{thm:closedpoint_dvr_stalk}),
+  hence a Dedekind domain (\ref{thm:closedpoint_dedekind_stalk}) which is not a field, so its
+  maximal ideal is a nonzero prime, i.e.\ a height-one prime of \(\struct{X,x}\). On an integral
+  scheme the function field \(K(X)\) is the fraction field of every stalk, in particular of
+  \(\struct{X,x}\); and a height-one prime of a Dedekind domain \(B\) determines a discrete
+  valuation on \(\Frac B\) --- the \(\mathfrak p\)-adic valuation counting the multiplicity of
+  \(\mathfrak p\) in the factorization of a fractional ideal. Taking \(B = \struct{X,x}\) and
+  \(\mathfrak p\) its maximal ideal gives the order valuation on \(K(X)\).
+\end{proof}
+
+\section{The residue degree}
+
+The curve \(X\) is a scheme over \(\Spec K\); as in Chapter~\ref{chap:Cohomology} the base field
+acts on the sections through the structure morphism, and the same discipline supplies the module
+structure on each residue field.
+
+\begin{definition}[The base-field algebra map on a residue field]
+  \label{def:residueOverAlgebraMap}
+  \lean{AlgebraicGeometry.Scheme.residueOverAlgebraMap}
+  \uses{def:overAlgebraMap}
+  \leanok
+  For a scheme \(X\) over \(\Spec K\) and a point \(x \in X\), the canonical ring homomorphism
+  \[
+    K \longrightarrow \kappa(x)
+  \]
+  through the structure morphism: the composite of the global algebra map
+  \(K \to \Gamma(X, \struct X)\) of \ref{def:overAlgebraMap}, the germ
+  \(\Gamma(X, \struct X) \to \struct{X,x}\) at \(x\), and the residue map
+  \(\struct{X,x} \to \kappa(x)\). By restriction of scalars along it, the residue field
+  \(\kappa(x)\) is a \(K\)-module (indeed a \(K\)-algebra); as with the module structure on the
+  structure sheaf, this is used as an explicit map rather than a global instance.
+\end{definition}
+\begin{proof}
+  \leanok
+  Each of the three maps is a ring homomorphism, and \(K \to \Gamma(X, \struct X)\) is the base
+  algebra map of \ref{def:overAlgebraMap}; their composite is the stated ring homomorphism.
+\end{proof}
+
+\begin{definition}[The residue degree]
+  \label{def:residueDeg}
+  \lean{AlgebraicGeometry.Scheme.residueDeg}
+  \uses{def:residueOverAlgebraMap}
+  \leanok
+  \source{papaioannou-algebraic-rr:page-0004}
+  For a scheme \(X\) over \(\Spec K\) and a point \(x \in X\), the \emph{residue degree} at
+  \(x\) is
+  \[
+    \deg_K(x) \;=\; [\kappa(x) : K] \;=\; \dim_K \kappa(x),
+  \]
+  the \(K\)-dimension of the residue field, taken with the \(K\)-module structure of
+  \ref{def:residueOverAlgebraMap}.
+\end{definition}
+
+\section{Weil divisors and their degree}
+
+A Weil divisor on the curve records a finite prescription of orders at closed points. Its degree
+must weight each point by its residue degree over the base field: this is the correct notion when
+\(K\) is not algebraically closed. For example, on \(\PP^1_{\mathbb{R}}\) the rational function
+\(t^2 + 1\) has a single closed zero \(x\), whose residue field is \(\mathbb{C}\), and a double
+pole at \(\infty\), with residue field \(\mathbb{R}\); the unweighted point count \(1 - 2 = -1\)
+is nonzero, whereas the residue-degree weighted degree
+\(1 \cdot [\mathbb{C} : \mathbb{R}] - 2 \cdot [\mathbb{R} : \mathbb{R}] = 2 - 2 = 0\)
+vanishes, as the degree of a principal divisor must.
+
+\begin{definition}[Weil divisors on a curve]
+  \label{def:curveDivisor}
+  \lean{AlgebraicGeometry.Scheme.CurveDivisor}
+  \uses{thm:closedpoint_isClosed}
+  \leanok
+  \source{papaioannou-algebraic-rr:page-0006}
+  For an integral scheme \(X\) with generic point \(\eta\), a \emph{Weil divisor} is a finitely
+  supported \(\Z\)-valued function on the non-generic points, i.e.\ an element of the free abelian
+  group
+  \[
+    \Div(X) \;=\; \bigl(\{ x \in X : x \neq \eta \} \to_{\mathrm{fin}} \Z\bigr)
+  \]
+  on the set of non-generic points. It carries the pointwise abelian-group structure and the
+  pointwise partial order, both independent of any base field. For the curve \(X\) the
+  non-generic points are exactly the closed points (\ref{thm:closedpoint_isClosed}), so a Weil
+  divisor is a finite formal \(\Z\)-combination of closed points.
+\end{definition}
+
+\begin{definition}[The degree of a Weil divisor]
+  \label{def:curveDivisor_deg}
+  \lean{AlgebraicGeometry.Scheme.CurveDivisor.deg}
+  \uses{def:curveDivisor, def:residueDeg}
+  \leanok
+  \source{papaioannou-algebraic-rr:page-0007}
+  For a scheme \(X\) over \(\Spec K\) and a Weil divisor \(D \in \Div(X)\), the \emph{degree} of
+  \(D\), weighted by the residue degrees over the base field, is
+  \[
+    \deg_K D \;=\; \sum_{x} D_x \cdot [\kappa(x) : K] \;\in\; \Z ,
+  \]
+  the finite sum over the support of \(D\) of the coefficients \(D_x\) times the residue degrees
+  \([\kappa(x) : K]\) of \ref{def:residueDeg}.
+\end{definition}
+
+\begin{theorem}[The degree is a group homomorphism]
+  \label{thm:curveDivisor_deg_hom}
+  \lean{AlgebraicGeometry.Scheme.CurveDivisor.deg_zero,
+    AlgebraicGeometry.Scheme.CurveDivisor.deg_add,
+    AlgebraicGeometry.Scheme.CurveDivisor.deg_neg}
+  \uses{def:curveDivisor_deg}
+  \leanok
+  \source{papaioannou-algebraic-rr:page-0007}
+  The degree map \(\deg_K : \Div(X) \to \Z\) is a homomorphism of abelian groups: it satisfies
+  \(\deg_K 0 = 0\), \(\deg_K(D + D') = \deg_K D + \deg_K D'\) and \(\deg_K(-D) = -\deg_K D\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The degree is the finitely supported sum \(D \mapsto \sum_x D_x \cdot [\kappa(x) : K]\). The
+  zero divisor has empty support, so \(\deg_K 0 = 0\). For additivity, the summand
+  \(n \mapsto n \cdot [\kappa(x) : K]\) is, at each point \(x\), additive in the coefficient
+  \(n\) and vanishes at \(n = 0\); hence the finitely supported sum of the pointwise sums
+  \((D + D')_x = D_x + D'_x\) splits as \(\sum_x D_x[\kappa(x):K] + \sum_x D'_x[\kappa(x):K]\),
+  giving \(\deg_K(D + D') = \deg_K D + \deg_K D'\). Finally, applying additivity to \(D\) and
+  \(-D\) and using \(\deg_K 0 = 0\) yields \(\deg_K(-D) = -\deg_K D\).
+\end{proof}
+
+\begin{lemma}[Degree of a single-point divisor]
+  \label{lem:curveDivisor_deg_single}
+  \lean{AlgebraicGeometry.Scheme.CurveDivisor.deg_single}
+  \uses{def:curveDivisor_deg}
+  \leanok
+  For a closed point \(x\) and an integer \(n\), the degree of the single-point divisor
+  \(n \cdot x\) is
+  \[
+    \deg_K(n \cdot x) \;=\; n \cdot [\kappa(x) : K] .
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  The divisor \(n \cdot x\) is supported at the single point \(x\) with coefficient \(n\), so the
+  defining sum of \ref{def:curveDivisor_deg} has the single term \(n \cdot [\kappa(x) : K]\)
+  (the summand vanishes at coefficient \(0\), so no other point contributes).
+\end{proof}
+
+\section{Skyscraper sheaves and the vanishing of \(H^1\)}
+
+Fix a scheme \(X\) over \(\Spec K\) and work on its small Zariski site (the poset of opens with
+open coverings), whose terminal object is the whole space \(\top = X\). For a point \(x \in X\)
+and a \(K\)-module \(M\) the skyscraper sheaf concentrates \(M\) at \(x\).
+
+\begin{definition}[The skyscraper sheaf of \(K\)-modules]
+  \label{def:skyModule}
+  \lean{AlgebraicGeometry.skyModule}
+  \leanok
+  For \(x \in X\) and a \(K\)-module \(M\), the \emph{skyscraper sheaf} \(\mathrm{sky}_x(M)\) of
+  \(K\)-modules on the small Zariski site of \(X\) is the sheaf whose sections over an open
+  \(U\) are
+  \[
+    \mathrm{sky}_x(M)(U) \;=\;
+      \begin{cases} M & x \in U, \\ 0 & x \notin U, \end{cases}
+  \]
+  with restriction between two opens containing \(x\) the identity of \(M\), and to an open
+  avoiding \(x\) the zero map. Its restriction map between any two opens that both contain \(x\)
+  is an isomorphism, and its sections over any open avoiding \(x\) are the zero module.
+\end{definition}
+
+\begin{definition}[Degree-zero cohomology of a skyscraper is its value]
+  \label{def:skyModuleGammaEquiv}
+  \lean{AlgebraicGeometry.skyModuleGammaEquiv}
+  \uses{def:skyModule, def:HModule_linearEquiv0}
+  \leanok
+  For \(x \in X\) and a \(K\)-module \(M\), there is a \(K\)-linear equivalence
+  \[
+    H^0\bigl(X, \mathrm{sky}_x(M)\bigr) \;\cong\; M .
+  \]
+\end{definition}
+\begin{proof}
+  \leanok
+  Global sections live over the terminal open \(\top = X\), which contains \(x\), so
+  \(\mathrm{sky}_x(M)(\top) = M\) by \ref{def:skyModule}. Compose with the identification of
+  degree-zero cohomology with global sections, \(H^0(F) \cong F(\top)\) of
+  \ref{def:HModule_linearEquiv0}, applied to \(F = \mathrm{sky}_x(M)\).
+\end{proof}
+
+\begin{theorem}[Global lifting along the cokernel of a skyscraper embedding]
+  \label{thm:sky_cokernel_app_top_surjective}
+  \lean{AlgebraicGeometry.cokernelπ_app_top_surjective}
+  \uses{def:skyModule, lem:sections_left_exact, lem:app_injective_of_mono}
+  \leanok
+  Let \(x \in X\), let \(M\) be a \(K\)-module, and let \(\iota : \mathrm{sky}_x(M) \to G\) be a
+  monomorphism of sheaves of \(K\)-modules. Then every global section of \(\coker \iota\) lifts
+  to a global section of \(G\): the map \(G(\top) \to (\coker \iota)(\top)\) is surjective.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Write \(\pi : G \to \coker \iota\) for the projection and let \(q \in (\coker \iota)(\top)\).
+  The proof glues corrected local lifts, the correction being an \emph{elementwise} coboundary
+  supplied by flasqueness of the skyscraper --- so no quasi-compactness or finite subcover is
+  needed. Restriction maps of a sheaf \(F\) are written \(t|_W\).
+
+  (a) \emph{Local lifts.} As an epimorphism of sheaves, \(\pi\) is locally surjective on
+  sections: for each point \(p \in X\) there is an open \(W_p \ni p\) and a section
+  \(s_p \in G(W_p)\) with \(\pi(s_p) = q|_{W_p}\). The opens \(W_p\) cover \(X\), since each
+  contains its point \(p\).
+
+  (b) \emph{The differences come from the skyscraper.} On \(W_p \cap W_{p'}\) the difference
+  \(s_p|_{W_p \cap W_{p'}} - s_{p'}|_{W_p \cap W_{p'}}\) maps to
+  \(q|_{W_p \cap W_{p'}} - q|_{W_p \cap W_{p'}} = 0\) under \(\pi\). Since \(\iota\) is a
+  monomorphism it is the kernel of its cokernel on sections (\ref{lem:sections_left_exact}), so
+  there is a unique \(a_{pp'} \in \mathrm{sky}_x(M)(W_p \cap W_{p'})\) with
+  \(\iota(a_{pp'}) = s_p - s_{p'}\) there.
+
+  (c) \emph{Cocycle identity.} On a triple overlap \(W_p \cap W_{p'} \cap W_l\),
+  \[
+    \iota(a_{pl}) = s_p - s_l = (s_p - s_{p'}) + (s_{p'} - s_l) = \iota(a_{pp'} + a_{p'l}) ,
+  \]
+  and \(\iota\) is injective on sections (\ref{lem:app_injective_of_mono}), so
+  \(a_{pl} = a_{pp'} + a_{p'l}\) there.
+
+  (d) \emph{Pivot on the support point.} Because \(\mathrm{sky}_x(M)\) is a skyscraper sheaf it
+  is \emph{flasque}: every restriction map of \(\mathrm{sky}_x(M)\) is surjective. In particular
+  the restriction \(\mathrm{sky}_x(M)(W_p) \to \mathrm{sky}_x(M)(W_p \cap W_x)\) is surjective,
+  so choose \(b_p \in \mathrm{sky}_x(M)(W_p)\) with \(b_p|_{W_p \cap W_x} = a_{px}\), where the
+  index \(x\)-th cover member \(W_x \ni x\) is the neighbourhood of the support point itself.
+
+  (e) \emph{Restriction to \(W_x\) is injective.} For every open \(A\), the restriction
+  \(\mathrm{sky}_x(M)(A) \to \mathrm{sky}_x(M)(A \cap W_x)\) is injective: if \(x \in A\) then
+  both opens contain \(x\) and the restriction is an isomorphism (\ref{def:skyModule}); if
+  \(x \notin A\) then \(\mathrm{sky}_x(M)(A) = 0\) is trivial, so any map out of it is injective.
+
+  (f) \emph{The cocycle is the coboundary of \(b\).} We claim
+  \(a_{pp'} = b_p|_{W_p \cap W_{p'}} - b_{p'}|_{W_p \cap W_{p'}}\). By (e) it suffices to check
+  this after restriction to \((W_p \cap W_{p'}) \cap W_x\). There the cocycle identity (c) with
+  \(l = x\) gives \(a_{pp'} = a_{px} - a_{p'x}\), and \(a_{px} = b_p\), \(a_{p'x} = b_{p'}\)
+  after restriction to \(\cap W_x\) by the choice in (d); hence
+  \(a_{pp'} = b_p - b_{p'}\) restricted to \((W_p \cap W_{p'}) \cap W_x\), as required.
+
+  (g) \emph{Corrected local sections glue.} Put \(t_p = s_p - \iota(b_p) \in G(W_p)\). On
+  \(W_p \cap W_{p'}\),
+  \[
+    t_p - t_{p'} = (s_p - s_{p'}) - \iota(b_p - b_{p'}) = \iota(a_{pp'}) - \iota(a_{pp'}) = 0 ,
+  \]
+  using (b) and (f). So the \(t_p\) agree on overlaps and, by the sheaf condition, glue to a
+  global section \(s \in G(\top)\) with \(s|_{W_p} = t_p\).
+
+  (h) \emph{The glued section lifts \(q\).} On each \(W_p\), since \(\pi \circ \iota = 0\),
+  \[
+    \pi(s)|_{W_p} = \pi(t_p) = \pi(s_p) - \pi(\iota(b_p)) = q|_{W_p} .
+  \]
+  Sections of the sheaf \(\coker \iota\) that agree on the cover \(\{W_p\}\) are equal, so
+  \(\pi(s) = q\). Thus \(s\) is the required lift.
+\end{proof}
+
+\begin{theorem}[Degree-one cohomology of a skyscraper vanishes]
+  \label{thm:skyModule_h1_vanishing}
+  \lean{AlgebraicGeometry.skyModule_subsingleton_hModule_one}
+  \uses{def:skyModule, def:HModule}
+  \leanok
+  For every point \(x \in X\) and every \(K\)-module \(M\),
+  \[
+    H^1\bigl(X, \mathrm{sky}_x(M)\bigr) \;=\; 0 .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:ext_one_vanishing_criterion, thm:sky_cokernel_app_top_surjective, def:constHomEquiv,
+    lem:constHomEquiv_naturality}
+  The category of sheaves of \(K\)-modules on the small Zariski site of \(X\) is Grothendieck
+  abelian, hence has enough injectives: embed \(\mathrm{sky}_x(M)\) into an injective sheaf by a
+  monomorphism \(\iota : \mathrm{sky}_x(M) \to G\). By the \(\Ext^1\)-vanishing criterion
+  \ref{lem:ext_one_vanishing_criterion} (with \(L = K_J\) the constant sheaf), it suffices to
+  lift every morphism \(K_J \to \coker \iota\) along \(\pi : G \to \coker \iota\). By
+  \ref{def:constHomEquiv} and its naturality \ref{lem:constHomEquiv_naturality}, morphisms out
+  of \(K_J\) are global sections, compatibly with postcomposition; so the required lifting is
+  exactly the surjectivity of \(G(\top) \to (\coker \iota)(\top)\), which is
+  \ref{thm:sky_cokernel_app_top_surjective}.
+\end{proof}

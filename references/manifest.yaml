@@ -329,6 +329,11 @@ references:
     status: ok
     files:
       - { path: papaioannou-algebraic-rr/papaioannou-algebraic-rr.pdf, format: pdf }
+      - { path: papaioannou-algebraic-rr/tex/page-0003.tex, format: tex }
+      - { path: papaioannou-algebraic-rr/tex/page-0004.tex, format: tex }
+      - { path: papaioannou-algebraic-rr/tex/page-0005.tex, format: tex }
+      - { path: papaioannou-algebraic-rr/tex/page-0006.tex, format: tex }
+      - { path: papaioannou-algebraic-rr/tex/page-0007.tex, format: tex }
     read: >-
       Text-extractable PDF, 15 pp. PRIMARY open surrogate for Stichtenoth GTM 254
       Ch. 1 (adele / Weil-differential proof of Riemann-Roch over an arbitrary
@@ -341,7 +346,27 @@ references:
       Lemma 1.21/1.22, Thm 1.23 dim_F Omega_F = 1, Thm 1.25 (duality / RR),
       Cor 1.28 canonical divisor W has deg 2g-2 and dim g, Cor 1.29 RR sharp for
       deg D >= 2g-1. Section 2 = Hurwitz genus formula + arithmetic theory. Cite
-      by its own Thm/Def numbers (they do NOT match Stichtenoth's).
+      by its own Thm/Def numbers (they do NOT match Stichtenoth's). PAGES 3-7
+      transcribed 2026-07-14 via AI vision (no OCR) from the rendered pages
+      (pdftoppm 300 DPI; images kept under papaioannou-algebraic-rr/pages/),
+      one self-contained LaTeX file per page under
+      papaioannou-algebraic-rr/tex/page-NNNN.tex; cite as
+      papaioannou-algebraic-rr:page-0003 ... papaioannou-algebraic-rr:page-0007
+      (printed page numbers coincide with PDF pages here; page 1 = title). Pages
+      3-4 cover VALUATIONS and PLACES -- Def 1.3 (a place P = the maximal ideal
+      of a valuation ring O of F/K, parameter t, place set P_F), Def 1.4 (a
+      valuation v : F* ->> Z, surjective homomorphism, trivial on K*, satisfying
+      the triangle inequality, v(0)=infinity), the v_P construction, and the
+      DEGREE OF A PLACE = the residue degree [F_P : K] of the residue field over
+      the constant field (Thm 1.5: deg P <= [F : K(x)] < infinity). Page 5 =
+      Def 1.5 (zeroes/poles), Thm 1.6, Cor 1.7-1.8. Pages 6-7 cover DIVISORS --
+      Div(F) is the free abelian group on the places (Def 1.6), i.e. the
+      finitely-supported Z-indexed family D = sum n_P P over P in P_F with finite
+      support; v_P : Div(F) -> Z reads off the P-coefficient; partial order and
+      effectivity; and the DEGREE HOMOMORPHISM deg(D) = sum_P v_P(D)*deg(P),
+      Div(F) -> Z, with Def 1.7-1.10 (zero/pole/principal divisors, class group
+      Class(F)=Div(F)/Princ(F), L(D), genus g=sup{deg D - dim D + 1}). Source
+      typos were transcribed verbatim (e.g. the "L(A)" misprint in Def 1.9).
     topics: [function-fields, adeles, weil-differentials, riemann-roch, genus, canonical-divisor, valuations, places, divisors, index-of-specialty]
 
   - slug: cff-curves-function-fields
