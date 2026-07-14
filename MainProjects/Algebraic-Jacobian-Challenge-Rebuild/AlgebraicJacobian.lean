@@ -70,6 +70,12 @@ import AlgebraicJacobian.Picard.WitnessComponents
 import AlgebraicJacobian.Picard.WitnessAway
 import AlgebraicJacobian.Picard.WitnessTransport
 import AlgebraicJacobian.Picard.WitnessAssembly
+import AlgebraicJacobian.Descent.AmitsurEqualizer
+import AlgebraicJacobian.Picard.SectionsDescent
+import AlgebraicJacobian.Picard.KernelDescentUnit
+import AlgebraicJacobian.Picard.DescentSectionEval
+import AlgebraicJacobian.Picard.DescentClassCocycle
+import AlgebraicJacobian.Picard.EtaleSeparatednessClose
 import AlgebraicJacobian.Challenge
 
 /-!
