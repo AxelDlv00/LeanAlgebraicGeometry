@@ -97,6 +97,11 @@ import AlgebraicJacobian.Algebra.DedekindColength
 import AlgebraicJacobian.RiemannRoch.Skyscraper
 import AlgebraicJacobian.RiemannRoch.ClosedPoint
 import AlgebraicJacobian.RiemannRoch.Divisor
+import AlgebraicJacobian.RiemannRoch.ResidueDegree
+import AlgebraicJacobian.RiemannRoch.PrincipalDivisor
+import AlgebraicJacobian.RiemannRoch.DivisorSheaf
+import AlgebraicJacobian.RiemannRoch.DivisorSheafZero
+import AlgebraicJacobian.RiemannRoch.Devissage
 import AlgebraicJacobian.Challenge
 
 /-!
