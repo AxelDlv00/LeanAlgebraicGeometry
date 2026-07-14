@@ -67,13 +67,29 @@ doc-comments go AFTER `set_option ... in`; no binders with local-notation types 
 rings); consume `picEtMap` only through the ∃!-API; term-mode congrArg/Eq.trans
 across restrictScalars/Units.map seams.
 
+## χ-ledger status (updated 2026-07-14, latest commit 7fe83d9bf8)
+
+Landed sorry-free/axiom-clean and committed: G1–G6 (foundations, a24223f65d),
+G3-residual/G4-residual/G5/G7-partial (divisor-sheaf wave, 39e6341b13), and
+**G7 CLOSED** — `devissageSES_shortExact` + `finrank_jumpModule` — plus the G8
+multiplication piece `mulEquivDivisorSheaf` (7fe83d9bf8). Root build 8667 jobs.
+**Remaining ledger frontier: G8 + G9 only.**
+- G8: `h0`/`h1`/`chi` (from the landed `HModule`), `chi_congr`; the finiteness
+  dévissage (base case `divisorSheafZeroIso` + landed `moduleFinite_hModule_one` +
+  `Γ(C,𝒪)≅k`; step from the six-term slice `covariant_sequence_exact₁'/₂'/₃'` +
+  landed `skyModule_subsingleton_hModule_one` + `finrank_alt_sum_eq_zero_of_exact₅`);
+  then `chi_step` (χ(𝒪(D))−χ(𝒪(D−x)) = residueDeg x), `chi_divisorSheaf`,
+  `chi_structureSheaf`, and `deg_divOf` (via the landed `mulEquivDivisorSheaf`).
+- G9: `riemann_inequality` χ(𝒪(D)) = 1−g+deg D (≈one line from G8) +
+  `h0_nsmul_point_unbounded` (needs the landed `residueDeg_pos`).
+
 ## Next bricks, in order
 
-1. χ-ledger continuation (running): G3-residual, G4-residual, G5, G7, G8, G9.
-2. degree/Pic⁰ interface (`AJCR.picard.degree`): consumes `picEtUnit` + the ledger;
-   recon first (the (C2) recon §2.7 lists what's missing: divisorClass, deg_divisorClass,
-   pic0Functor).
-3. (C2) effectivity campaign: needs a Fable design pass FIRST (worksheet like the (C1)
-   one) — route sketch in the C2 report; do not launch a prover on it without the
-   worksheet.
+1. χ-ledger G8 + G9 (the ONLY remaining ledger work — see status above).
+2. degree/Pic⁰ interface (`AJCR.picard.degree`): consumes `picEtUnit` (landed) + the
+   ledger; recon first (the (C2) recon §2.7 lists what's missing: divisorClass,
+   deg_divisorClass, pic0Functor).
+3. (C2) effectivity campaign: needs a design pass FIRST (worksheet like the (C1) one) —
+   route sketch in the C2 agent report / `Picard/Rigidification.lean` docstring; do not
+   launch a prover on it without the worksheet.
 4. Wave 4 early-warning brick: cohomology-and-base-change-lite recon.
