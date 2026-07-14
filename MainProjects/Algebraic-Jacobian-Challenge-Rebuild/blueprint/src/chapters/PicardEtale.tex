@@ -5161,6 +5161,91 @@ the chosen equations up to units; the next builds from it the class of a Weil di
   cover have the same class in \(\Pic(X)\), so \(\mathrm{picClass}\) is unchanged.
 \end{proof}
 
+\section{Pullback of a local-equation system}
+
+A morphism \(f \colon Y \to X\) pulls a local-equation system on \(X\) back to one on \(Y\),
+provided the pulled-back equations remain regular; on Picard classes this realizes the pullback of
+the associated invertible sheaf, \(f^{*}\struct X(D) = \struct Y(f^{*}D)\).
+
+\begin{definition}[Pullback of a local-equation system]
+  \label{def:localEquations_pullback}
+  \lean{AlgebraicGeometry.Scheme.LocalEquations.pullback,
+    AlgebraicGeometry.Scheme.LocalEquations.pullbackEqn}
+  \uses{def:localEquations, lem:localEquations_ratioUnit}
+  \leanok
+  Let \(f \colon Y \to X\) be a morphism of schemes and \(E\) a local-equation system on \(X\)
+  (\ref{def:localEquations}), adapted to a pointed cover \(\mathcal U\). Pull the cover back
+  pointwise: the pulled-back pointed cover \(f^{*}\mathcal U\) assigns to \(y \in Y\) the open
+  \(f^{-1}\mathcal U(f(y))\). The \emph{pulled-back equations} are the \(f\)-pullbacks
+  \(f^{*}\bigl(f_{f(y)}\bigr) \in \struct Y\bigl(f^{-1}\mathcal U(f(y))\bigr)\) of the equations of
+  \(E\).
+
+  These form a local-equation system \(f^{*}E\) on \(f^{*}\mathcal U\), \emph{under the additional
+  hypothesis that the pulled-back equations are regular}: that the germ of \(f^{*}(f_{f(y)})\) at
+  every point of its member is a nonzerodivisor. This regularity is not automatic --- pulling a
+  nonzerodivisor back along a non-flat morphism can produce a zerodivisor, so the naive claim
+  ``pull the equations back and stay a local-equation system'' is false in general, and the
+  hypothesis is genuinely required. (Flatness of \(f\) would be a stronger sufficient condition,
+  since flat pullback preserves nonzerodivisors; it is not assumed here.)
+\end{definition}
+\begin{proof}
+  \leanok
+  Regularity of the pulled-back equations is the added hypothesis. For the overlap condition, fix
+  \(y, y'\) and restrict the defining equation
+  \(f_{f(y)}|_{\cap} = g_{f(y)f(y')}\cdot f_{f(y')}|_{\cap}\) of \(E\)
+  (\ref{lem:localEquations_ratioUnit}) along \(f\). Since pullback of sections is a ring
+  homomorphism commuting with restriction, the two pulled-back equations differ on the overlap
+  \(f^{-1}\mathcal U(f(y)) \cap f^{-1}\mathcal U(f(y'))\) by the factor
+  \(f^{*}\bigl(g_{f(y)f(y')}\bigr)\), the \(f\)-pullback of the transition unit of \(E\). The
+  pullback of a unit section is again a unit, so this factor is a unit and the overlap condition
+  holds.
+\end{proof}
+
+\begin{lemma}[Transition data of a pullback]
+  \label{lem:localEquations_pullback_ratioUnit}
+  \lean{AlgebraicGeometry.Scheme.LocalEquations.pullback_ratioUnit,
+    AlgebraicGeometry.Scheme.LocalEquations.pullback_unitsCocycle}
+  \uses{def:localEquations_pullback, lem:localEquations_ratioUnit, def:localEquations_picClass}
+  \leanok
+  The transition units of the pulled-back system \(f^{*}E\) are the \(f\)-pullbacks of those of
+  \(E\): for all \(y, y'\),
+  \[
+    g^{f^{*}E}_{y y'} = f^{*}\bigl(g_{f(y)f(y')}\bigr).
+  \]
+  Consequently the unit \v Cech \(1\)-cocycle of \(f^{*}E\) is the \(f\)-pullback of the cocycle of
+  \(E\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The overlap ratio arising in the construction of \(f^{*}E\) (\ref{def:localEquations_pullback})
+  is \(f^{*}(g_{f(y)f(y')})\), and the transition unit of \(f^{*}E\) is the unique unit realizing
+  that ratio (\ref{lem:localEquations_ratioUnit}); the two therefore agree. Assembling over all
+  pairs, the cocycle of \(f^{*}E\) (\ref{def:localEquations_picClass}) is the entry-by-entry
+  \(f\)-pullback of the cocycle of \(E\).
+\end{proof}
+
+\begin{theorem}[The Picard class of a pullback is the pullback of the class]
+  \label{thm:localEquations_picClass_pullback}
+  \lean{AlgebraicGeometry.Scheme.LocalEquations.picClass_pullback}
+  \uses{def:localEquations_pullback, def:localEquations_picClass,
+    lem:localEquations_pullback_ratioUnit}
+  \leanok
+  For a morphism \(f \colon Y \to X\) and a local-equation system \(E\) on \(X\) with regular
+  pullback, the Picard class of \(f^{*}E\) is the pullback of the class of \(E\):
+  \[
+    \mathrm{picClass}(f^{*}E) = f^{*}\,\mathrm{picClass}(E) \quad\text{in } \Pic(Y),
+  \]
+  that is, \(\struct Y(f^{*}D) = f^{*}\struct X(D)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Both sides are represented on the pulled-back cover \(f^{*}\mathcal U\). The class of \(f^{*}E\)
+  is the class of its cocycle (\ref{def:localEquations_picClass}), and that cocycle is the
+  \(f\)-pullback of the cocycle of \(E\) (\ref{lem:localEquations_pullback_ratioUnit}); pullback of
+  Picard classes is, by definition, induced by pulling cocycles back along \(f\). Hence the class
+  of the pulled-back cocycle is the pullback \(f^{*}\) of \(\mathrm{picClass}(E)\).
+\end{proof}
+
 \section{The point divisor and the class of a Weil divisor}
 
 We return to the curve bundle \(X\) of Chapter~\ref{chap:RiemannRoch}: integral, smooth of relative

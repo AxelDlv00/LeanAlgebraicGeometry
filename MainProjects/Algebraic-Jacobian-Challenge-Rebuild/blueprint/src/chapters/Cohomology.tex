@@ -258,6 +258,58 @@ below).
   \(R[i] : R[U] \to R[V]\) (contravariant functoriality of \(\Ext^n(-, F)\)).
 \end{definition}
 
+\begin{definition}[Functoriality in the coefficient sheaf]
+  \label{def:HModule'_mapCoeff}
+  \lean{CategoryTheory.Sheaf.HModule'.mapCoeff,
+    CategoryTheory.Sheaf.HModule'.mapCoeff_id_apply,
+    CategoryTheory.Sheaf.HModule'.mapCoeff_comp_apply}
+  \uses{def:HModule'}
+  \leanok
+  A morphism of sheaves of \(R\)-modules \(f : F \to G\) induces, for every object \(U\) of
+  \(\mathcal C\) and every \(n\), an \(R\)-linear map \(H'^n(U, F) \to H'^n(U, G)\),
+  \(x \mapsto x \cdot f\): composition (Yoneda product) with the degree-zero class of \(f\), i.e.\
+  covariant functoriality of \(\Ext^n(R[U], -)\) in the coefficient variable. This is the
+  coefficient-variable analogue of the restriction \ref{def:HModule'_res} (functoriality in the
+  object of the site). The identity induces the identity, and a composite \(g \circ f\) induces the
+  composite of the induced maps.
+\end{definition}
+\begin{proof}
+  \leanok
+  Postcomposition with the degree-zero \(\Ext\)-class of \(f\) is \(R\)-linear; it sends the
+  degree-zero class of the identity to the identity operation, and by associativity of the Yoneda
+  product it turns the class of a composite into the composite of the two postcompositions.
+\end{proof}
+
+\begin{definition}[Coefficient-isomorphism transport for cohomology of an object]
+  \label{def:HModule'_congrCoeff}
+  \lean{CategoryTheory.Sheaf.HModule'.congrCoeff}
+  \uses{def:HModule'_mapCoeff}
+  \leanok
+  An isomorphism \(\alpha : F \cong G\) of coefficient sheaves of \(R\)-modules induces, for every
+  object \(U\) and every \(n\), an \(R\)-linear isomorphism \(H'^n(U, F) \cong H'^n(U, G)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  Take the induced maps of \ref{def:HModule'_mapCoeff} for \(\alpha\) and for \(\alpha^{-1}\). By
+  functoriality their two composites are the maps induced by \(\alpha^{-1}\circ\alpha = \id_F\) and
+  \(\alpha\circ\alpha^{-1} = \id_G\), which are the identity operations; hence the two induced maps
+  are mutually inverse \(R\)-linear isomorphisms.
+\end{proof}
+
+\begin{lemma}[Transport of vanishing along a coefficient isomorphism]
+  \label{lem:HModule'_subsingleton_of_congrCoeff}
+  \lean{CategoryTheory.Sheaf.HModule'.subsingleton_of_congrCoeff}
+  \uses{def:HModule'_congrCoeff}
+  \leanok
+  If \(F \cong G\) as coefficient sheaves of \(R\)-modules and \(H'^n(U, G) = 0\), then
+  \(H'^n(U, F) = 0\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The \(R\)-linear isomorphism \(H'^n(U, F) \cong H'^n(U, G)\) of \ref{def:HModule'_congrCoeff}
+  identifies \(H'^n(U, F)\) with the zero module \(H'^n(U, G)\).
+\end{proof}
+
 \begin{definition}[The free sheaf on a terminal object is the constant sheaf]
   \label{def:freeModuleSheafIsoConstModuleSheaf}
   \lean{CategoryTheory.Sheaf.freeModuleSheafIsoConstModuleSheaf}
@@ -1155,6 +1207,122 @@ route bypasses.
   \leanok
   Apply the isomorphism of \ref{thm:TwoCover_h1CokEquiv} to both sides of
   \ref{lem:TwoCover_h1CokEquiv_delta} and use injectivity.
+\end{proof}
+
+\section{Base change of the two-cover cohomology over an affine test ring}
+
+Fix a field \(k\) and an object \(C\) of \(\Over(\Spec k)\). For a commutative \(k\)-algebra \(R\)
+--- the \emph{affine test ring} --- base change produces the relative curve
+\(C_R = C \otimes \Spec R\) over \(\Spec R\); an affine two-chart cover of \(C\)
+(Section~\ref{sec:mv-in-text} and Chapter~\ref{chap:Curves}) pulls back to one of \(C_R\), and the
+two-affine-cover bridge of the previous section then computes \(H^1(C_R, \struct{C_R/R})\) as an
+explicit two-cover cokernel of \(R\)-modules. When \(C\) is a smooth curve, the degree-zero
+cohomology of the relative curve is the test ring itself, \(H^0(C_R, \struct{C_R/R}) = R\).
+
+\begin{definition}[The relative curve over the test ring]
+  \label{def:relCurve}
+  \lean{AlgebraicGeometry.relCurve, AlgebraicGeometry.relCurve.instOver}
+  \leanok
+  For \(C \in \Over(\Spec k)\) and a commutative \(k\)-algebra \(R\), the \emph{relative curve}
+  \(C_R\) is the underlying scheme of the fibre product \(C \otimes \Spec R\) of \(C\) with the
+  object \(\Spec R\) of \(\Over(\Spec k)\), regarded as a scheme over \(\Spec R\) via the second
+  projection \(\mathrm{pr}_2 : C \otimes \Spec R \to \Spec R\).
+\end{definition}
+
+\begin{definition}[The base-changed affine two-cover]
+  \label{def:relCover}
+  \lean{AlgebraicGeometry.relCover}
+  \uses{def:relCurve, def:AffineTwoCover, thm:AffineTwoCover_pullbackProd}
+  \leanok
+  Let \(D = (V_0, V_1)\) be an affine two-chart cover (\ref{def:AffineTwoCover}) of the underlying
+  scheme of \(C\). The \emph{base-changed cover} of the relative curve \(C_R\) is the pair of
+  preimages \(\bigl(\mathrm{pr}_1^{-1} V_0,\ \mathrm{pr}_1^{-1} V_1\bigr)\) of the charts of \(D\)
+  under the first projection \(\mathrm{pr}_1 : C_R \to C\); by
+  \ref{thm:AffineTwoCover_pullbackProd} it is again an affine two-chart cover, now of \(C_R\).
+\end{definition}
+
+\begin{lemma}[The base-changed charts are affine and cover the relative curve]
+  \label{lem:relCover_charts}
+  \lean{AlgebraicGeometry.relCover_isAffineOpen₀, AlgebraicGeometry.relCover_isAffineOpen₁,
+    AlgebraicGeometry.relCover_sup}
+  \uses{def:relCover}
+  \leanok
+  The two charts \(\mathrm{pr}_1^{-1} V_0\) and \(\mathrm{pr}_1^{-1} V_1\) of the base-changed cover
+  are affine open, and their union is all of \(C_R\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{thm:AffineTwoCover_pullbackProd}
+  These are the affineness of the two charts and the covering property recorded in the
+  affine-two-chart-cover structure \(\mathrm{pr}_1^{-1} D\) of \ref{thm:AffineTwoCover_pullbackProd}.
+\end{proof}
+
+\begin{lemma}[The overlap of the base-changed charts]
+  \label{lem:relCover_inf}
+  \lean{AlgebraicGeometry.relCover_inf}
+  \uses{def:relCover}
+  \leanok
+  The overlap of the two base-changed charts is the preimage of the overlap of \(D\):
+  \[
+    \mathrm{pr}_1^{-1} V_0 \cap \mathrm{pr}_1^{-1} V_1 = \mathrm{pr}_1^{-1}(V_0 \cap V_1).
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  Taking preimages under \(\mathrm{pr}_1\) commutes with intersection of opens.
+\end{proof}
+
+\begin{definition}[The relative two-cover cohomology carrier]
+  \label{def:relTwoCoverH1}
+  \lean{AlgebraicGeometry.relTwoCoverH1}
+  \uses{def:relCurve, def:relCover, def:moduleKSheaf, def:TwoCover_diff, def:TwoCover_H1Cok}
+  \leanok
+  For the structure sheaf of the relative curve \(C_R\) viewed as a sheaf of \(R\)-modules, its
+  degree-one cohomology over \(R\) is the two-cover cokernel of the base-changed cover: an
+  \(R\)-linear isomorphism
+  \[
+    H^1\bigl(C_R, \struct{C_R/R}\bigr) \;\cong\;
+      \Gamma\bigl(C_R,\ \mathrm{pr}_1^{-1}V_0 \cap \mathrm{pr}_1^{-1}V_1\bigr)\big/
+        \mathrm{range}(\mathrm{diff}),
+  \]
+  where \(\mathrm{diff}(s_0,s_1) = s_0|_\cap - s_1|_\cap\) (\ref{def:TwoCover_diff}).
+\end{definition}
+\begin{proof}
+  \leanok
+  \uses{thm:TwoCover_h1CokEquiv, lem:relCover_charts}
+  The base-changed charts are affine and cover \(C_R\) (\ref{lem:relCover_charts}), so this is the
+  two-affine-cover \(H^1\) cokernel bridge \ref{thm:TwoCover_h1CokEquiv} applied over the base ring
+  \(R\) to the scheme \(C_R\) with its base-changed cover; the affine-vanishing inputs required by
+  that bridge are exactly the affineness of the two charts.
+\end{proof}
+
+\begin{theorem}[Degree-zero cohomology of the relative curve is the test ring]
+  \label{thm:relStructureSectionsTop}
+  \lean{AlgebraicGeometry.relStructureSectionsTop}
+  \uses{def:relCurve, thm:isIso_appLE_snd}
+  \leanok
+  Let \(C\) be a smooth curve over \(k\) (proper, smooth of relative dimension one, geometrically
+  irreducible), so that \(C\) is in particular geometrically reduced. For every commutative
+  \(k\)-algebra \(R\), the degree-zero cohomology of the structure sheaf of the relative curve is
+  the test ring itself:
+  \[
+    H^0\bigl(C_R, \struct{C_R/R}\bigr) \;=\; \Gamma(C_R, \top) \;\cong\; R,
+  \]
+  the isomorphism being pullback of global sections along the second projection
+  \(\mathrm{pr}_2 : C_R \to \Spec R\). This is the degree-zero case of ``cohomology commutes with
+  base change'', universal in the test ring \(R\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{def:moduleKSheafHZero}
+  Degree-zero cohomology is global sections, \(H^0(C_R, \struct{C_R/R}) \cong \Gamma(C_R, \top)\)
+  (\ref{def:moduleKSheafHZero}, over the base ring \(R\)). Specialize the base-change isomorphism
+  \ref{thm:isIso_appLE_snd} to the test object \(T = \Spec R\) and its affine open \(V = \top\):
+  pullback along the second projection is an isomorphism
+  \(\Gamma(\Spec R, \top) \xrightarrow{\sim} \Gamma(C_R, \mathrm{pr}_2^{-1}\top) = \Gamma(C_R, \top)\)
+  (the hypotheses of \ref{thm:isIso_appLE_snd} --- \(C\) proper, geometrically irreducible and
+  geometrically reduced --- hold for a smooth curve). Composing with the identification
+  \(\Gamma(\Spec R, \top) \cong R\) gives \(\Gamma(C_R, \top) \cong R\).
 \end{proof}
 
 \section{The projective line: inputs for the finiteness argument}
