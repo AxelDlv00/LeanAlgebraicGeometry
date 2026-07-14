@@ -369,3 +369,759 @@ and a \(K\)-module \(M\) the skyscraper sheaf concentrates \(M\) at \(x\).
   exactly the surjectivity of \(G(\top) \to (\coker \iota)(\top)\), which is
   \ref{thm:sky_cokernel_app_top_surjective}.
 \end{proof}
+
+\section{Finiteness of the residue degree}
+
+Over an arbitrary base field the residue field at a closed point of the curve is a finite extension
+of \(K\); this finiteness is the arithmetic gate through which every point contributes a finite
+local term to the ledger.
+
+\begin{theorem}[Finiteness of the residue degree]
+  \label{thm:residueDeg_finite}
+  \lean{AlgebraicGeometry.Scheme.residueDeg_finite}
+  \uses{thm:relDim1_dedekind_charts, thm:affine_dedekind_dvr_stalk, def:residueOverAlgebraMap}
+  \leanok
+  \source{papaioannou-algebraic-rr:page-0004}
+  Let \(X\) be an integral scheme smooth of relative dimension one and locally of finite type over a
+  field \(K\), and let \(x\) be a non-generic (hence closed) point. Then the residue field
+  \(\kappa(x)\) is a finite \(K\)-module; equivalently the residue degree \([\kappa(x):K]\) is
+  finite.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By \ref{thm:relDim1_dedekind_charts} the point \(x\) lies in an affine open \(V\) whose ring of
+  sections \(B = \Gamma(X, V)\) is a Dedekind domain. Under \(V \cong \Spec B\) the point \(x\)
+  corresponds to a prime \(\mathfrak q\) of \(B\), which is nonzero --- otherwise \(x\) would be the
+  generic point, as in \ref{thm:affine_dedekind_dvr_stalk} --- and hence maximal, so \(B/\mathfrak q\)
+  is a field. The stalk \(\struct{X,x}\) is the localization \(B_{\mathfrak q}\), whose residue
+  field is canonically \(B/\mathfrak q\); this identification is \(K\)-linear for the residue
+  \(K\)-algebra structure of \ref{def:residueOverAlgebraMap}, so \(\kappa(x) \cong B/\mathfrak q\)
+  as \(K\)-modules. Now \(K \to B\) is of finite type (\(X\) is locally of finite type over \(K\),
+  restricted to the chart \(V\)), hence so is the quotient \(K \to B/\mathfrak q\); a finite-type
+  algebra over a field which is itself a field is a finite extension (Zariski's lemma, valid because
+  a field is a Jacobson ring). Therefore \(B/\mathfrak q \cong \kappa(x)\) is finite over \(K\).
+\end{proof}
+
+\begin{theorem}[Positivity of the residue degree]
+  \label{thm:residueDeg_pos}
+  \lean{AlgebraicGeometry.Scheme.residueDeg_pos}
+  \uses{thm:residueDeg_finite, def:residueDeg}
+  \leanok
+  In the situation of \ref{thm:residueDeg_finite}, the residue degree is positive:
+  \(0 < [\kappa(x):K]\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  By \ref{thm:residueDeg_finite} the residue field \(\kappa(x)\) is a finite \(K\)-module; being a
+  field extension of \(K\) it is nonzero and free over \(K\). A nonzero finite free module over a
+  field has strictly positive rank, so \([\kappa(x):K] = \dim_K \kappa(x) > 0\).
+\end{proof}
+
+\section{Principal divisors}
+
+A nonzero rational function on the curve has a principal divisor recording its zeros and poles with
+multiplicities. The construction rests on the \(\Z\)-valued order at each closed point and on the
+finiteness of the set of points where a given function has a zero or a pole.
+
+\begin{definition}[The order homomorphism on function-field units]
+  \label{def:scheme_ordZ}
+  \lean{AlgebraicGeometry.Scheme.ordZ}
+  \uses{def:scheme_ord}
+  \leanok
+  \source{papaioannou-algebraic-rr:page-0005}
+  For a closed point \(x\), the \emph{order homomorphism}
+  \[
+    \mathrm{ord}_x : K(X)^\times \longrightarrow \Z
+  \]
+  sends a nonzero rational function to its order of vanishing at \(x\) (\ref{def:scheme_ord}):
+  positive at a zero, negative at a pole, with a uniformizer of the discrete valuation ring
+  \(\struct{X,x}\) having order \(+1\). It is a homomorphism from the multiplicative group
+  \(K(X)^\times\) to the additive group \(\Z\).
+\end{definition}
+\begin{proof}
+  \leanok
+  The order valuation of \ref{def:scheme_ord} is a valuation of \(K(X)\), hence multiplicative on
+  nonzero elements; restricting it to units and reading its value in \(\Z\) with the classical sign
+  (a uniformizer, whose valuation generates the value group, is assigned \(+1\)) yields a group
+  homomorphism \(K(X)^\times \to \Z\).
+\end{proof}
+
+\begin{lemma}[Trivial order where a section is invertible]
+  \label{lem:ord_eq_one_of_mem_basicOpen}
+  \lean{AlgebraicGeometry.Scheme.ord_eq_one_of_mem_basicOpen}
+  \uses{def:scheme_ord, thm:closedpoint_dvr_stalk}
+  \leanok
+  Let \(s \in \Gamma(X, U)\) represent the rational function \(g = \mathrm{germ}_\eta(s)\) at the
+  generic point (with \(\eta \in U\)), and let \(x\) be a closed point of the basic open set where
+  \(s\) is invertible, i.e.\ the germ of \(s\) at \(x\) is a unit of \(\struct{X,x}\). Then
+  \(\mathrm{ord}_x g = 0\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Since \(\eta\) specializes to \(x\), the function \(g\) is the image of the germ \(\mathrm{germ}_x(s)\)
+  under the localization map \(\struct{X,x} \to K(X)\). By hypothesis this germ is a unit of the
+  discrete valuation ring \(\struct{X,x}\) (\ref{thm:closedpoint_dvr_stalk}), and a unit of the
+  valuation ring has order of vanishing \(0\); hence \(\mathrm{ord}_x g = 0\).
+\end{proof}
+
+\begin{theorem}[Finiteness of the order support]
+  \label{thm:ordZ_support_finite}
+  \lean{AlgebraicGeometry.Scheme.ordZ_support_finite}
+  \uses{lem:ord_eq_one_of_mem_basicOpen, thm:height_one_finite_closed, thm:relDim1_specializes}
+  \leanok
+  \source{papaioannou-algebraic-rr:page-0006}
+  For \(g \in K(X)^\times\), the set of closed points at which \(g\) has nonzero order,
+  \(\{ x : \mathrm{ord}_x g \neq 0 \}\), is finite. (Here \(X\) is additionally assumed
+  quasi-compact over \(K\), so that its underlying space is Noetherian.)
+\end{theorem}
+\begin{proof}
+  \leanok
+  Represent \(g\) by a section \(s\) on a nonempty open \(U \ni \eta\) (the generic point lies in
+  every nonempty open). Then \(g\) is a unit at \(\eta\), so \(\eta\) lies in the basic open set
+  \(D(s)\) where \(s\) is invertible. At every closed point of \(D(s)\) the order of \(g\) is \(0\)
+  (\ref{lem:ord_eq_one_of_mem_basicOpen}), so the locus where \(\mathrm{ord}_x g \neq 0\) is
+  contained in the complement \(X \setminus D(s)\), a closed set not containing \(\eta\). On the
+  curve --- an irreducible Noetherian space whose specialization order has height one
+  (\ref{thm:relDim1_specializes}) --- a proper closed set avoiding the generic point is finite
+  (\ref{thm:height_one_finite_closed}). Quasi-compactness over \(K\) supplies the Noetherian
+  hypothesis: finite type alone gives only a locally Noetherian space.
+\end{proof}
+
+\begin{definition}[The principal divisor of a rational function]
+  \label{def:divOf}
+  \lean{AlgebraicGeometry.Scheme.divOf}
+  \uses{def:curveDivisor, def:scheme_ordZ, thm:ordZ_support_finite}
+  \leanok
+  \source{papaioannou-algebraic-rr:page-0007}
+  For \(g \in K(X)^\times\), the \emph{principal divisor}
+  \[
+    \mathrm{div}(g) = \sum_{x} \mathrm{ord}_x(g)\, x
+  \]
+  is the Weil divisor whose coefficient at a closed point \(x\) is the order of vanishing
+  \(\mathrm{ord}_x(g)\): positive at zeros, negative at poles. It is finitely supported
+  (\ref{thm:ordZ_support_finite}), hence a well-defined element of \(\Div(X)\).
+\end{definition}
+
+\begin{theorem}[The principal divisor is a homomorphism]
+  \label{thm:divOf_hom}
+  \lean{AlgebraicGeometry.Scheme.divOf_mul, AlgebraicGeometry.Scheme.divOf_one}
+  \uses{def:divOf, def:scheme_ordZ}
+  \leanok
+  \source{papaioannou-algebraic-rr:page-0007}
+  The principal divisor is a homomorphism from \(K(X)^\times\) to \(\Div(X)\): for all
+  \(g, g' \in K(X)^\times\),
+  \[
+    \mathrm{div}(g g') = \mathrm{div}(g) + \mathrm{div}(g'), \qquad \mathrm{div}(1) = 0 .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  At each closed point \(x\) the order \(\mathrm{ord}_x\) is a homomorphism \(K(X)^\times \to \Z\)
+  (\ref{def:scheme_ordZ}), so \(\mathrm{ord}_x(g g') = \mathrm{ord}_x g + \mathrm{ord}_x g'\) and
+  \(\mathrm{ord}_x(1) = 0\). Since the coefficients of \(\mathrm{div}(g)\) are these orders
+  (\ref{def:divOf}), the two identities hold coefficientwise, hence as divisors.
+\end{proof}
+
+\section{The divisor sheaf of a Weil divisor}
+
+To a Weil divisor \(D\) is attached the sheaf \(\mathcal O(D)\) of rational functions with poles
+bounded by \(D\). Its sections over an open \(U\) are the classical Riemann--Roch space of \(D\)
+restricted to \(U\); the sheaf structure is available because on the irreducible curve a compatible
+family of such functions shares a single underlying rational function.
+
+\begin{definition}[The \(K\)-structure on the function field]
+  \label{def:functionFieldOverAlgebraMap}
+  \lean{AlgebraicGeometry.Scheme.functionFieldOverAlgebraMap}
+  \uses{def:overAlgebraMap}
+  \leanok
+  For \(X\) over \(\Spec K\), the function field \(K(X)\) carries a canonical \(K\)-algebra structure
+  through the structure morphism: the composite
+  \[
+    K \longrightarrow \Gamma(X, \struct X) \longrightarrow K(X)
+  \]
+  of the global algebra map \ref{def:overAlgebraMap} with the germ at the generic point. By
+  restriction of scalars along it, \(K(X)\) is a \(K\)-module (as with the residue field, this is
+  used as an explicit map rather than a global instance).
+\end{definition}
+
+\begin{lemma}[Integral elements have no pole]
+  \label{lem:ord_algebraMap_stalk_le_one}
+  \lean{AlgebraicGeometry.Scheme.ord_algebraMap_stalk_le_one}
+  \uses{thm:closedpoint_dvr_stalk, def:scheme_ord}
+  \leanok
+  The image in \(K(X)\) of any element of the stalk \(\struct{X,x}\) at a closed point \(x\) has no
+  pole at \(x\): its order of vanishing is \(\ge 0\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The stalk \(\struct{X,x}\) is a discrete valuation ring (\ref{thm:closedpoint_dvr_stalk}), and it
+  is exactly the valuation ring of \(\mathrm{ord}_x\) --- the order valuation is the adic valuation
+  of its maximal ideal (\ref{def:scheme_ord}). Every element of a valuation ring has nonnegative
+  order, so the image of any stalk element has \(\mathrm{ord}_x \ge 0\).
+\end{proof}
+
+\begin{lemma}[Constants have no pole]
+  \label{lem:ord_functionFieldOverAlgebraMap_le_one}
+  \lean{AlgebraicGeometry.Scheme.ord_functionFieldOverAlgebraMap_le_one}
+  \uses{lem:ord_algebraMap_stalk_le_one, def:functionFieldOverAlgebraMap}
+  \leanok
+  The image in \(K(X)\) of a constant \(r \in K\) has no pole at any closed point \(x\):
+  \(\mathrm{ord}_x(r) \ge 0\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The image of \(r\) is the germ at the generic point of the global section \(r \cdot 1\)
+  (\ref{def:functionFieldOverAlgebraMap}); its germ at \(x\) realises it as an element of the stalk
+  \(\struct{X,x}\), so it has no pole at \(x\) by \ref{lem:ord_algebraMap_stalk_le_one}.
+\end{proof}
+
+\begin{definition}[Sections of the divisor sheaf]
+  \label{def:divisorSections}
+  \lean{AlgebraicGeometry.Scheme.divisorSections}
+  \uses{def:scheme_ord, lem:ord_functionFieldOverAlgebraMap_le_one, def:curveDivisor,
+    def:functionFieldOverAlgebraMap}
+  \leanok
+  \source{papaioannou-algebraic-rr:page-0007}
+  For a Weil divisor \(D\) and a nonempty open \(U\), the sections of \(\mathcal O(D)\) over \(U\)
+  are
+  \[
+    \mathcal O(D)(U) = \{ g \in K(X) : \text{at every closed point } x \in U,\ g \text{ has pole
+      order} \le D_x \},
+  \]
+  the rational functions with poles bounded by \(D\) on \(U\); over the empty open the sections are
+  the zero module (forced by the sheaf condition, since the empty sieve covers \(\bot\)). This is a
+  \(K\)-submodule of \(K(X)\): it contains \(0\); it is closed under addition because a valuation is
+  subadditive, \(\mathrm{ord}_x(g_1 + g_2) \ge \min(\mathrm{ord}_x g_1, \mathrm{ord}_x g_2)\), so
+  the pole bound is preserved; and closed under \(K\)-scaling because constants have no poles
+  (\ref{lem:ord_functionFieldOverAlgebraMap_le_one}).
+\end{definition}
+
+\begin{lemma}[Nonempty opens of an irreducible space meet]
+  \label{lem:opens_inf_nonempty}
+  \lean{AlgebraicGeometry.Scheme.opens_inf_nonempty}
+  \leanok
+  Any two nonempty open subsets of the irreducible space \(X\) have nonempty intersection.
+\end{lemma}
+\begin{proof}
+  \leanok
+  The underlying space of the integral scheme \(X\) is irreducible, so no two nonempty opens are
+  disjoint.
+\end{proof}
+
+\begin{definition}[The divisor sheaf \(\mathcal O(D)\)]
+  \label{def:divisorSheaf}
+  \lean{AlgebraicGeometry.Scheme.divisorSheaf}
+  \uses{def:divisorSections, lem:opens_inf_nonempty}
+  \leanok
+  The presheaf \(U \mapsto \mathcal O(D)(U)\) of \ref{def:divisorSections} is a sheaf of
+  \(K\)-modules on the small Zariski site of \(X\), denoted \(\mathcal O(D)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  Restriction between nonempty opens is the inclusion of subspaces of \(K(X)\), so a section is
+  determined by its underlying rational function. Given a compatible family over a cover of \(U\):
+  any two members with nonempty domain agree as rational functions, since their domains meet
+  (\ref{lem:opens_inf_nonempty}) and they restrict equally on the overlap; hence the family shares a
+  single \(g \in K(X)\). Every closed point of \(U\) lies in some cover member, where \(g\) respects
+  the bound \(D\); so \(g \in \mathcal O(D)(U)\) and restricts to the given sections. Over the empty
+  open all sections are \(0\). Uniqueness is again the determinacy of a section by its underlying
+  rational function.
+\end{proof}
+
+\begin{theorem}[Monotone inclusion of divisor sheaves]
+  \label{thm:divisorSheafLE}
+  \lean{AlgebraicGeometry.Scheme.divisorSheafLE, AlgebraicGeometry.Scheme.divisorSheafLE_mono}
+  \uses{def:divisorSheaf, def:curveDivisor}
+  \leanok
+  For \(D \le D'\) the identity on rational functions gives a monomorphism of sheaves
+  \(\mathcal O(D) \hookrightarrow \mathcal O(D')\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  For \(D \le D'\) one has \(D_x \le D'_x\) at every closed point, so a pole of order \(\le D_x\) is
+  a fortiori a pole of order \(\le D'_x\); hence \(\mathcal O(D)(U) \subseteq \mathcal O(D')(U)\) as
+  submodules of \(K(X)\) for every \(U\). These section-wise inclusions are injective and natural in
+  \(U\), so they assemble into a morphism of sheaves \(\mathcal O(D) \hookrightarrow \mathcal O(D')\)
+  which, being injective on every section, is a monomorphism.
+\end{proof}
+
+\begin{lemma}[No pole means integral]
+  \label{lem:exists_stalk_of_ord_le_one}
+  \lean{AlgebraicGeometry.Scheme.exists_stalk_of_ord_le_one}
+  \uses{thm:closedpoint_dvr_stalk, thm:closedpoint_dedekind_stalk, def:scheme_ord}
+  \leanok
+  If a rational function \(g\) has no pole at a closed point \(x\) (order of vanishing \(\ge 0\)),
+  then \(g\) is integral at \(x\): it lies in the image of the localization map
+  \(\struct{X,x} \to K(X)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The stalk \(\struct{X,x}\) is a discrete valuation ring (\ref{thm:closedpoint_dvr_stalk}), a
+  Dedekind domain (\ref{thm:closedpoint_dedekind_stalk}) with a single nonzero prime --- its
+  maximal ideal --- whose adic valuation is \(\mathrm{ord}_x\) (\ref{def:scheme_ord}). Since
+  \(K(X)\) is the fraction field of \(\struct{X,x}\) and there is only this one valuation to test,
+  the single condition \(\mathrm{ord}_x g \ge 0\) places \(g\) in the valuation ring
+  \(\struct{X,x}\).
+\end{proof}
+
+\section{Comparison of \(\mathcal O(0)\) with the structure sheaf}
+
+The divisor sheaf of the zero divisor is the structure sheaf: a rational function with no pole
+anywhere is a global regular section, and conversely. This identification transports the Euler
+characteristic of \(\mathcal O(0)\) to that of \(\struct X\).
+
+\begin{lemma}[The germ/stalk seam]
+  \label{lem:germ_generic_eq_algebraMap_germ}
+  \lean{AlgebraicGeometry.Scheme.germ_generic_eq_algebraMap_germ}
+  \leanok
+  For a section \(s \in \Gamma(X, U)\) over an open containing both the generic point \(\eta\) and a
+  point \(x\), the germ at \(\eta\) equals the image of the germ at \(x\) under the localization map
+  \(\struct{X,x} \to K(X)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The generic point specializes to \(x\), and the germ maps of the structure sheaf are compatible
+  with the specialization map between stalks; applying this compatibility to \(s\) gives the stated
+  identity.
+\end{proof}
+
+\begin{lemma}[Regular germs have poles bounded by zero]
+  \label{lem:germGenericLinear_mem}
+  \lean{AlgebraicGeometry.Scheme.germGenericLinear_mem}
+  \uses{lem:germ_generic_eq_algebraMap_germ, lem:ord_algebraMap_stalk_le_one, def:divisorSections}
+  \leanok
+  For a section \(s \in \Gamma(X, U)\) over a nonempty open \(U\), its germ at the generic point
+  \(\mathrm{germ}_\eta(s) \in K(X)\) has poles bounded by the zero divisor on \(U\), i.e.\ lies in
+  \(\mathcal O(0)(U)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  At every closed point \(x \in U\), \(\mathrm{germ}_\eta(s)\) is the image of the germ
+  \(\mathrm{germ}_x(s) \in \struct{X,x}\) (\ref{lem:germ_generic_eq_algebraMap_germ}), hence has no
+  pole at \(x\) (\ref{lem:ord_algebraMap_stalk_le_one}). Thus it satisfies the zero-divisor bound at
+  every point of \(U\).
+\end{proof}
+
+\begin{lemma}[Local regular representatives]
+  \label{lem:exists_local_section}
+  \lean{AlgebraicGeometry.Scheme.exists_local_section}
+  \uses{lem:exists_stalk_of_ord_le_one, lem:germ_generic_eq_algebraMap_germ, def:divisorSections}
+  \leanok
+  A rational function \(g \in \mathcal O(0)(U)\) is, near every point \(x \in U\), the germ at
+  \(\eta\) of a regular section over a neighbourhood of \(x\) inside \(U\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  At \(x = \eta\), the function \(g\) is directly represented by a regular section on some
+  neighbourhood. At a closed point \(x\), the zero-divisor bound says \(g\) has no pole at \(x\), so
+  \(g\) is the image of some \(y \in \struct{X,x}\) (\ref{lem:exists_stalk_of_ord_le_one}). Represent
+  \(y\) by a regular section \(s\) on a neighbourhood \(W \ni x\) inside \(U\); then
+  \(\mathrm{germ}_\eta(s)\) is the image of \(\mathrm{germ}_x(s) = y\), which is \(g\)
+  (\ref{lem:germ_generic_eq_algebraMap_germ}).
+\end{proof}
+
+\begin{lemma}[Global representability]
+  \label{lem:exists_section_germ_eq}
+  \lean{AlgebraicGeometry.Scheme.exists_section_germ_eq}
+  \uses{lem:exists_local_section}
+  \leanok
+  Every \(g \in \mathcal O(0)(U)\) over a nonempty open \(U\) is the germ at \(\eta\) of a section
+  \(s \in \Gamma(X, U)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Cover \(U\) by the neighbourhoods \(W\) of \ref{lem:exists_local_section} carrying regular
+  sections \(s_W\) with \(\mathrm{germ}_\eta(s_W) = g\). On overlaps the \(s_W\) have equal germ at
+  \(\eta\) (which lies in every nonempty overlap of the irreducible space), and since \(X\) is
+  integral a section is determined by its germ at \(\eta\), so the \(s_W\) agree there. They
+  therefore glue to a section \(s \in \Gamma(X, U)\) with \(\mathrm{germ}_\eta(s) = g\).
+\end{proof}
+
+\begin{theorem}[\(\mathcal O(0) \cong \struct X\)]
+  \label{thm:divisorSheafZeroIso}
+  \lean{AlgebraicGeometry.Scheme.divisorSheafZeroIso}
+  \uses{lem:germGenericLinear_mem, lem:exists_section_germ_eq, def:divisorSheaf, def:moduleKSheaf}
+  \leanok
+  The divisor sheaf of the zero divisor is the structure sheaf of \(X\) as a sheaf of \(K\)-modules:
+  \[
+    \mathcal O(0) \;\cong\; \struct X .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The section-wise map \(\Gamma(X, U) \to \mathcal O(0)(U)\), \(s \mapsto \mathrm{germ}_\eta(s)\), is
+  well defined (\ref{lem:germGenericLinear_mem}) and \(K\)-linear. On a nonempty open it is
+  injective, because \(X\) is integral so a section is determined by its germ at \(\eta\), and
+  surjective by \ref{lem:exists_section_germ_eq}; over the empty open both sides are the zero module.
+  Being bijective on every open, these maps assemble into an isomorphism of sheaves of \(K\)-modules.
+  This is the identification through which \(\chi(\mathcal O(0))\) equals \(\chi(\struct X)\).
+\end{proof}
+
+\section{The dévissage complex at a closed point}
+
+Removing a single closed point from a divisor changes the divisor sheaf by a skyscraper at that
+point. The dévissage short complex makes this precise: it relates \(\mathcal O(D-x)\), \(\mathcal
+O(D)\) and a skyscraper sheaf built from the one-point jump module, the associated-graded piece of
+the pole-order filtration at \(x\).
+
+\begin{definition}[The one-point lattice]
+  \label{def:pointLattice}
+  \lean{AlgebraicGeometry.pointLattice}
+  \uses{def:scheme_ord, lem:ord_functionFieldOverAlgebraMap_le_one}
+  \leanok
+  For a closed point \(x\) and \(n \in \Z\), the \emph{one-point lattice} \(L_n\) is the
+  \(K\)-submodule of \(K(X)\) of rational functions whose pole order at \(x\) is at most \(n\)
+  (equivalently \(\mathrm{ord}_x g \ge -n\)). It is a submodule by the same argument as
+  \ref{def:divisorSections} --- the valuation is subadditive and \(K\)-multiples create no poles
+  (\ref{lem:ord_functionFieldOverAlgebraMap_le_one}) --- and \(L_m \subseteq L_n\) whenever
+  \(m \le n\).
+\end{definition}
+
+\begin{definition}[The jump module]
+  \label{def:jumpModule}
+  \lean{AlgebraicGeometry.jumpModule}
+  \uses{def:pointLattice, def:curveDivisor}
+  \leanok
+  The \emph{jump module} at \(x\) is the quotient
+  \[
+    J \;=\; L_{D_x} \big/ L_{D_x - 1},
+  \]
+  the \(K\)-space of functions with pole order \(\le D_x\) at \(x\) modulo those with pole order
+  \(\le D_x - 1\) --- the associated-graded piece of the pole-order filtration at the single point
+  \(x\).
+\end{definition}
+
+\begin{definition}[The projection to the jump module]
+  \label{def:jumpProj}
+  \lean{AlgebraicGeometry.jumpProj}
+  \uses{def:jumpModule, def:divisorSections, def:pointLattice}
+  \leanok
+  For an open \(U \ni x\), the \emph{jump projection} \(\mathrm{proj} : \mathcal O(D)(U) \to J\),
+  \(g \mapsto [g]\). It is well defined and \(K\)-linear: a section of \(\mathcal O(D)\) over \(U\)
+  has pole order \(\le D_x\) at the point \(x \in U\), so it lies in \(L_{D_x}\) and determines a
+  class in \(J\); the class depends only on the underlying rational function.
+\end{definition}
+
+\begin{definition}[The divisor minus a point]
+  \label{def:devissageDivisor}
+  \lean{AlgebraicGeometry.devissageDivisor}
+  \uses{def:curveDivisor}
+  \leanok
+  For a closed point \(x\), the divisor \(D - x\) is obtained by decreasing the coefficient of \(D\)
+  at \(x\) by one and leaving every other coefficient unchanged. Thus \((D-x)_x = D_x - 1\) and
+  \(D - x \le D\).
+\end{definition}
+
+\begin{definition}[The skyscraper projection \(\pi\)]
+  \label{def:devissagePi}
+  \lean{AlgebraicGeometry.devissageπ}
+  \uses{def:jumpProj, def:skyModule, def:divisorSheaf}
+  \leanok
+  The morphism of sheaves \(\pi : \mathcal O(D) \to \mathrm{sky}_x(J)\) sending a section \(g\) over
+  an open \(U \ni x\) to its jump class \([g] \in J\), and every section over an open avoiding \(x\)
+  to \(0\). Naturality holds because the jump projection depends only on the underlying rational
+  function, and the restriction of the skyscraper between two opens containing \(x\) is the identity
+  of \(J\).
+\end{definition}
+
+\begin{lemma}[The dévissage complex vanishes]
+  \label{lem:devissage_comp_eq_zero}
+  \lean{AlgebraicGeometry.devissage_comp_eq_zero}
+  \uses{def:devissagePi, def:devissageDivisor, thm:divisorSheafLE, def:jumpProj}
+  \leanok
+  The composite \(\mathcal O(D-x) \hookrightarrow \mathcal O(D) \xrightarrow{\ \pi\ }
+  \mathrm{sky}_x(J)\) is zero.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Over an open \(U \ni x\), a section of \(\mathcal O(D-x)\) has pole order \(\le (D-x)_x = D_x - 1\)
+  at \(x\), so it lies in \(L_{D_x - 1}\) and its jump class in \(J = L_{D_x}/L_{D_x - 1}\) vanishes.
+  Over an open avoiding \(x\) the target \(\mathrm{sky}_x(J)\) has zero sections. Hence the composite
+  is zero on every open.
+\end{proof}
+
+\begin{definition}[The dévissage short complex]
+  \label{def:devissageSES}
+  \lean{AlgebraicGeometry.devissageSES, AlgebraicGeometry.devissageSES_mono_f}
+  \uses{lem:devissage_comp_eq_zero, thm:divisorSheafLE, def:devissagePi}
+  \leanok
+  The \emph{dévissage short complex}
+  \[
+    0 \longrightarrow \mathcal O(D-x) \longrightarrow \mathcal O(D)
+      \xrightarrow{\ \pi\ } \mathrm{sky}_x(J) \longrightarrow 0
+  \]
+  of sheaves of \(K\)-modules: the left map is the inclusion \ref{thm:divisorSheafLE} for
+  \(D - x \le D\) and the right map is \(\pi\); their composite vanishes
+  (\ref{lem:devissage_comp_eq_zero}). Its left leg is a monomorphism.
+\end{definition}
+\begin{proof}
+  \leanok
+  The left leg is the inclusion of \ref{thm:divisorSheafLE}, which is a monomorphism of sheaves.
+\end{proof}
+
+\section{Short exactness of the dévissage sequence}
+
+The dévissage short complex is short exact. The monomorphism is the inclusion of
+\ref{def:devissageSES}; the epimorphism is local surjectivity of \(\pi\), which at the support point
+excises a finite bad locus to lift a jump class; middle exactness is checked on sections and
+transported to the sheaf level by reflection of limits.
+
+\begin{lemma}[Local lifting of a jump class]
+  \label{lem:devissage_local_lift}
+  \lean{AlgebraicGeometry.devissage_local_lift}
+  \uses{def:jumpModule, thm:ordZ_support_finite, def:divOf, thm:closedpoint_isClosed,
+    def:pointLattice, def:divisorSections, def:jumpProj}
+  \leanok
+  Let \(x \in U\) and let \(t\) be a section of \(\mathrm{sky}_x(J)\) over \(U\), i.e.\ a class in
+  \(J\). There is an open \(W\) with \(x \in W \subseteq U\) and a section of \(\mathcal O(D)\) over
+  \(W\) whose jump class is \(t|_W\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Choose a representative \(g \in L_{D_x}\) of the class \(t\) (the quotient
+  \(L_{D_x} \twoheadrightarrow J\) is surjective). If \(t = 0\), the zero section over \(U\) itself
+  has jump class \(0\). Otherwise \(g \neq 0\), so \(g \in K(X)^\times\). The closed points \(z\)
+  where \(g\) violates the \(D\)-bound (pole order at \(z\) exceeding \(D_z\)) form a finite set:
+  outside the support of \(\mathrm{div}(g)\) and the support of \(D\), the function \(g\) has neither
+  zero nor pole and \(D_z = 0\), so the bound holds; both supports are finite
+  (\ref{thm:ordZ_support_finite} and finiteness of a divisor's support). This bad set is a finite
+  union of closed points (\ref{thm:closedpoint_isClosed}), hence closed, and does not contain \(x\),
+  where \(g \in L_{D_x}\) already respects the bound. Let \(W = U \setminus (\text{bad set})\); then
+  \(x \in W \subseteq U\) and \(g\) satisfies the \(D\)-bound at every closed point of \(W\), so
+  \(g \in \mathcal O(D)(W)\), and by construction its jump class is \(t|_W\).
+\end{proof}
+
+\begin{theorem}[The projection is an epimorphism]
+  \label{thm:devissageSES_epi_g}
+  \lean{AlgebraicGeometry.devissageSES_epi_g}
+  \uses{lem:devissage_local_lift, def:devissagePi, def:skyModule, def:devissageSES}
+  \leanok
+  The dévissage projection \(\pi : \mathcal O(D) \to \mathrm{sky}_x(J)\) is an epimorphism of
+  sheaves.
+\end{theorem}
+\begin{proof}
+  \leanok
+  It suffices that \(\pi\) is locally surjective. Over an open avoiding \(x\) the target skyscraper
+  sections are zero, so the zero section lifts any section there; over a neighbourhood of \(x\)
+  every jump section lifts by \ref{lem:devissage_local_lift}. A locally surjective morphism of
+  sheaves of \(K\)-modules is an epimorphism.
+\end{proof}
+
+\begin{lemma}[Sectionwise middle exactness]
+  \label{lem:devissageSES_map_exact}
+  \lean{AlgebraicGeometry.devissageSES_map_exact}
+  \uses{def:jumpProj, def:pointLattice, def:devissageDivisor, thm:divisorSheafLE, def:devissagePi,
+    def:divisorSections}
+  \leanok
+  Over every open \(W\), the sequence of sections
+  \(\mathcal O(D-x)(W) \to \mathcal O(D)(W) \xrightarrow{\pi_W} \mathrm{sky}_x(J)(W)\) is exact in
+  \(K\)-modules.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Let \(s\) be a section of \(\mathcal O(D)\) over \(W\) with \(\pi_W(s) = 0\). If \(x \in W\): the
+  vanishing of \(\pi_W(s)\) means the jump class of \(s\) is zero, i.e.\ \(s\) has pole order
+  \(\le D_x - 1\) at \(x\); together with the \(D\)-bound at the other points --- where \(D\) and
+  \(D-x\) have equal coefficients --- this says \(s \in \mathcal O(D-x)(W)\). If \(x \notin W\): the
+  divisors \(D\) and \(D-x\) agree on \(W\), so \(\mathcal O(D)(W) = \mathcal O(D-x)(W)\) and \(s\)
+  already lies in the subspace. In either case \(s\) is the image of a \((D-x)\)-section under the
+  inclusion, which is the kernel of \(\pi_W\).
+\end{proof}
+
+\begin{theorem}[Middle exactness of the dévissage complex]
+  \label{thm:devissageSES_exact}
+  \lean{AlgebraicGeometry.devissageSES_exact}
+  \uses{lem:devissageSES_map_exact, def:devissageSES, def:devissagePi}
+  \leanok
+  The dévissage short complex is exact at \(\mathcal O(D)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Over each open \(W\) the sections complex is exact (\ref{lem:devissageSES_map_exact}) and its left
+  leg is injective (\ref{def:devissageSES}), so the left map realises \(\mathcal O(D-x)(W)\) as the
+  kernel of \(\pi_W\) in \(K\)-modules. The forgetful functor from sheaves to presheaves creates
+  limits, and evaluation at the opens jointly reflects them; hence these section-wise kernel forks
+  assemble into a kernel fork of sheaves, exhibiting the left map as the kernel of \(\pi\). This is
+  exactness in the middle.
+\end{proof}
+
+\begin{theorem}[The dévissage sequence is short exact]
+  \label{thm:devissageSES_shortExact}
+  \lean{AlgebraicGeometry.devissageSES_shortExact}
+  \uses{def:devissageSES, thm:devissageSES_epi_g, thm:devissageSES_exact}
+  \leanok
+  The dévissage sequence
+  \[
+    0 \longrightarrow \mathcal O(D-x) \longrightarrow \mathcal O(D)
+      \xrightarrow{\ \pi\ } \mathrm{sky}_x(J) \longrightarrow 0
+  \]
+  is a short exact sequence of sheaves of \(K\)-modules.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The left leg is a monomorphism (\ref{def:devissageSES}), the right leg \(\pi\) is an epimorphism
+  (\ref{thm:devissageSES_epi_g}), and the complex is exact in the middle
+  (\ref{thm:devissageSES_exact}); these are exactly the three certificates of a short exact
+  sequence.
+\end{proof}
+
+\section{The jump module and the residue field}
+
+The jump module at a closed point is the residue field, viewed as a \(K\)-space; its dimension is
+therefore the residue degree. This is the local input identifying the degree-zero cohomology of the
+skyscraper term with the residue degree of the point.
+
+\begin{lemma}[A uniformizer at a closed point]
+  \label{lem:uniformizer}
+  \lean{AlgebraicGeometry.uniformizer, AlgebraicGeometry.ord_uniformizer}
+  \uses{thm:closedpoint_dvr_stalk, def:scheme_ord}
+  \leanok
+  There is a rational function \(t \in K(X)\) with \(\mathrm{ord}_x t = 1\): a uniformizer of the
+  discrete valuation ring \(\struct{X,x}\) (\ref{thm:closedpoint_dvr_stalk}), a function with a
+  simple zero at \(x\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The stalk \(\struct{X,x}\) is a discrete valuation ring, so its maximal ideal has a generator
+  \(t\), a uniformizer; the adic valuation \(\mathrm{ord}_x\) (\ref{def:scheme_ord}) sends the
+  generator to \(1\), so \(\mathrm{ord}_x t = 1\).
+\end{proof}
+
+\begin{theorem}[The shift isomorphism]
+  \label{thm:shiftMap}
+  \lean{AlgebraicGeometry.shiftMap, AlgebraicGeometry.shiftMap_surjective}
+  \uses{lem:uniformizer, def:pointLattice}
+  \leanok
+  Let \(t\) be a uniformizer at \(x\). Multiplication by \(t^a\) is a \(K\)-linear isomorphism
+  \(L_a \xrightarrow{\ \sim\ } L_0\), carrying \(L_{a-1}\) onto \(L_{-1}\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Since \(\mathrm{ord}_x(t^a g) = a + \mathrm{ord}_x g\), a function \(g\) has pole order \(\le a\)
+  at \(x\) iff \(t^a g\) has pole order \(\le 0\); so multiplication by \(t^a\) maps \(L_a\) into
+  \(L_0\) (and \(L_{a-1}\) into \(L_{-1}\)), with two-sided inverse multiplication by \(t^{-a}\),
+  hence is a bijection. It is \(K\)-linear because the \(K\)-action on \(K(X)\) is multiplication in
+  the field, which commutes with multiplication by \(t^a\).
+\end{proof}
+
+\begin{theorem}[The base map to the residue field]
+  \label{thm:baseHom}
+  \lean{AlgebraicGeometry.baseHom, AlgebraicGeometry.baseHom_surjective,
+    AlgebraicGeometry.baseHom_ker}
+  \uses{lem:exists_stalk_of_ord_le_one, def:pointLattice, def:residueOverAlgebraMap,
+    thm:closedpoint_dvr_stalk}
+  \leanok
+  The residue map induces a \(K\)-linear surjection \(L_0 \twoheadrightarrow \kappa(x)\) with kernel
+  \(L_{-1}\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  A function \(g \in L_0\) has no pole at \(x\), hence is the image of a unique element of the stalk
+  \(\struct{X,x}\) (\ref{lem:exists_stalk_of_ord_le_one}); send \(g\) to the residue of that element
+  in \(\kappa(x)\). This is \(K\)-linear for the residue \(K\)-structure of
+  \ref{def:residueOverAlgebraMap} (using injectivity of \(\struct{X,x} \to K(X)\)) and surjective,
+  because the residue map \(\struct{X,x} \to \kappa(x)\) is (\ref{thm:closedpoint_dvr_stalk}). Its
+  kernel is exactly \(L_{-1}\): the residue vanishes iff the stalk preimage lies in the maximal
+  ideal, i.e.\ has strictly positive order of vanishing, i.e.\ \(g\) has pole order \(\le -1\) --- a
+  zero --- at \(x\).
+\end{proof}
+
+\begin{theorem}[The jump module is the residue field]
+  \label{thm:jumpEquivResidueField}
+  \lean{AlgebraicGeometry.jumpEquivResidueField}
+  \uses{thm:shiftMap, thm:baseHom, def:jumpModule}
+  \leanok
+  There is a \(K\)-linear isomorphism
+  \[
+    J \;=\; L_{D_x}\big/L_{D_x - 1} \;\cong\; \kappa(x).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Compose the shift isomorphism \(L_{D_x} \xrightarrow{\sim} L_0\) (\ref{thm:shiftMap},
+  multiplication by \(t^{D_x}\)) with the residue surjection \(L_0 \twoheadrightarrow \kappa(x)\)
+  (\ref{thm:baseHom}). The composite \(L_{D_x} \to \kappa(x)\) is surjective, and its kernel is the
+  preimage of \(L_{-1}\) under the shift, namely \(L_{D_x - 1}\) (the shift carries \(L_{D_x-1}\)
+  onto \(L_{-1}\)). By the first isomorphism theorem, \(J = L_{D_x}/L_{D_x-1} \cong \kappa(x)\).
+\end{proof}
+
+\begin{theorem}[Dimension of the jump module]
+  \label{thm:finrank_jumpModule}
+  \lean{AlgebraicGeometry.finrank_jumpModule}
+  \uses{thm:jumpEquivResidueField, def:residueDeg}
+  \leanok
+  The \(K\)-dimension of the jump module is the residue degree:
+  \[
+    \dim_K J \;=\; [\kappa(x):K] \;=\; \deg_K(x).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Immediate from the isomorphism \(J \cong \kappa(x)\) (\ref{thm:jumpEquivResidueField}) and the
+  definition of the residue degree as \(\dim_K \kappa(x)\) (\ref{def:residueDeg}).
+\end{proof}
+
+\begin{corollary}[The jump module is finite]
+  \label{cor:moduleFinite_jumpModule}
+  \lean{AlgebraicGeometry.moduleFinite_jumpModule}
+  \uses{thm:jumpEquivResidueField, thm:residueDeg_finite}
+  \leanok
+  The jump module \(J\) is a finite \(K\)-module.
+\end{corollary}
+\begin{proof}
+  \leanok
+  By \ref{thm:jumpEquivResidueField}, \(J \cong \kappa(x)\), which is finite over \(K\)
+  (\ref{thm:residueDeg_finite}).
+\end{proof}
+
+\section{The multiplication isomorphism}
+
+Multiplication by a nonzero rational function \(g\) identifies \(\mathcal O(D)\) with
+\(\mathcal O(D - \mathrm{div}\, g)\). This is the engine forcing the degree of a principal divisor
+to vanish: the two sheaves being isomorphic, their Euler characteristics agree.
+
+\begin{theorem}[The bound-shift]
+  \label{thm:mem_boundedSections_mul_iff}
+  \lean{AlgebraicGeometry.Scheme.mem_boundedSections_mul_iff}
+  \uses{def:divOf, def:divisorSections, def:scheme_ord}
+  \leanok
+  Let \(g \in K(X)^\times\) and \(h \in K(X)\). For any open \(U\), the product \(g h\) has poles
+  bounded by \(D - \mathrm{div}(g)\) on \(U\) if and only if \(h\) has poles bounded by \(D\) on
+  \(U\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  At each closed point \(z \in U\), the valuation is multiplicative, \(\mathrm{ord}_z(gh) =
+  \mathrm{ord}_z g + \mathrm{ord}_z h\), and \((D - \mathrm{div}\, g)_z = D_z - \mathrm{ord}_z g\)
+  since \(\mathrm{div}(g)_z = \mathrm{ord}_z g\) (\ref{def:divOf}). Hence the bound
+  \(\mathrm{ord}_z(gh) \ge -(D - \mathrm{div}\, g)_z\) reads
+  \(\mathrm{ord}_z g + \mathrm{ord}_z h \ge -D_z + \mathrm{ord}_z g\), i.e.\ \(\mathrm{ord}_z h \ge
+  -D_z\): the finite value \(\mathrm{ord}_z g\) cancels, leaving exactly the \(D\)-bound for \(h\).
+  As this equivalence holds at every closed point of \(U\), it holds for the whole section
+  (\ref{def:divisorSections}).
+\end{proof}
+
+\begin{theorem}[Multiplication isomorphism of divisor sheaves]
+  \label{thm:mulEquivDivisorSheaf}
+  \lean{AlgebraicGeometry.Scheme.mulEquivDivisorSheaf}
+  \uses{thm:mem_boundedSections_mul_iff, def:divisorSheaf, def:divOf}
+  \leanok
+  \source{papaioannou-algebraic-rr:page-0007}
+  For \(g \in K(X)^\times\) and any Weil divisor \(D\), multiplication by \(g\) is an isomorphism of
+  sheaves of \(K\)-modules
+  \[
+    \mathcal O(D) \;\cong\; \mathcal O\bigl(D - \mathrm{div}\, g\bigr).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Multiplication by the unit \(g\) is a \(K\)-linear automorphism of \(K(X)\), with inverse
+  multiplication by \(g^{-1}\). By the bound-shift \ref{thm:mem_boundedSections_mul_iff} it
+  restricts, on every nonempty open \(U\), to a bijection \(\mathcal O(D)(U) \to
+  \mathcal O(D - \mathrm{div}\, g)(U)\) (the inverse being restriction of multiplication by
+  \(g^{-1}\)), and both sides are the zero module over the empty open. Being bijective on every
+  open, these maps assemble into an isomorphism of sheaves. Together with the additivity of
+  \(\mathrm{div}\) this is the engine of \(\deg(\mathrm{div}\, g) = 0\): it identifies
+  \(\mathcal O(D)\) with \(\mathcal O(D - \mathrm{div}\, g)\), forcing their Euler characteristics to
+  agree.
+\end{proof}
