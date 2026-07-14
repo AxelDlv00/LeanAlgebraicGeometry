@@ -75,7 +75,11 @@ import AlgebraicJacobian.Picard.SectionsDescent
 import AlgebraicJacobian.Picard.KernelDescentUnit
 import AlgebraicJacobian.Picard.DescentSectionEval
 import AlgebraicJacobian.Picard.DescentClassCocycle
+import AlgebraicJacobian.Algebra.GeneratorUnit
+import AlgebraicJacobian.Picard.DescentClassRepBuild
+import AlgebraicJacobian.Picard.CechKernelGlue
 import AlgebraicJacobian.Picard.EtaleSeparatednessClose
+import AlgebraicJacobian.Picard.CechKernelLemma
 import AlgebraicJacobian.Challenge
 
 /-!

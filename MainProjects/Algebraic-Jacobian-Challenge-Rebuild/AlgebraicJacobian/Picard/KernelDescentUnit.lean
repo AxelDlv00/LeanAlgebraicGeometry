@@ -21,11 +21,10 @@ curve product, where the telescope of `β`-ratios cancels along the simplicial
 coincidences — and restricts to `1` along the diagonal, so through `ΓSpecIso` its
 avatar is a descent `1`-cocycle (`Module.IsDescentCocycle`).
 
-Main declaration: `AlgebraicGeometry.Over.exists_kernelDescentUnit`.  The planned
-kernel-lemma assembly (the open frontier recorded in
-`AlgebraicJacobian.Picard.EtaleSeparatednessClose`) consumes `w` twice: its Picard class
-over `A` is the descended class, and the recorded local form of `p₂^♯ w` makes the
-`μ`-corrected trivialization of the ratio class descend through
+Main declaration: `AlgebraicGeometry.Over.exists_kernelDescentUnit`.  The kernel-lemma
+assembly (`AlgebraicJacobian.Picard.CechKernelLemma`) consumes `w` twice: its Picard
+class over `A` is the descended class, and the recorded local form of `p₂^♯ w` makes
+the `μ`-corrected trivialization of the ratio class descend through
 `AlgebraicJacobian.Picard.SectionsDescent`.
 -/
 

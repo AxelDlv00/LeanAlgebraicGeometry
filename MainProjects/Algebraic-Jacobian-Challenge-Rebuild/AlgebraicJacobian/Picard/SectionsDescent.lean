@@ -20,10 +20,10 @@ likewise for unit sections (`Over.exists_unitsAppLE_eq`).  Pullback of sections 
 `cg` is injective over **arbitrary** opens (`Over.appLE_whiskerLeft_injective`).
 
 This is the "fppf sheaf property of `𝒪`/`𝒪ˣ` along `cg`" consumed by the final glue of
-the (C1) étale-separatedness kernel lemma (the open frontier recorded in
-`AlgebraicJacobian.Picard.EtaleSeparatednessClose`): there, a trivializing unit for a
-Čech class killed by `cg^*` is corrected until its two pullbacks agree and then
-descended through this file.
+the (C1) étale-separatedness kernel lemma (`AlgebraicJacobian.Picard.CechKernelGlue`
+and `AlgebraicJacobian.Picard.CechKernelLemma`): there, a trivializing unit for a Čech
+class killed by `cg^*` is corrected until its two pullbacks agree and then descended
+through this file.
 
 ## Route
 
