@@ -102,6 +102,9 @@ import AlgebraicJacobian.RiemannRoch.PrincipalDivisor
 import AlgebraicJacobian.RiemannRoch.DivisorSheaf
 import AlgebraicJacobian.RiemannRoch.DivisorSheafZero
 import AlgebraicJacobian.RiemannRoch.Devissage
+import AlgebraicJacobian.RiemannRoch.DevissageExact
+import AlgebraicJacobian.RiemannRoch.JumpDimension
+import AlgebraicJacobian.RiemannRoch.MulEquiv
 import AlgebraicJacobian.Challenge
 
 /-!
