@@ -105,7 +105,12 @@ import AlgebraicJacobian.RiemannRoch.Devissage
 import AlgebraicJacobian.RiemannRoch.DevissageExact
 import AlgebraicJacobian.RiemannRoch.JumpDimension
 import AlgebraicJacobian.RiemannRoch.MulEquiv
+import AlgebraicJacobian.RiemannRoch.Chi
+import AlgebraicJacobian.RiemannRoch.ChiSlice
+import AlgebraicJacobian.RiemannRoch.ChiFiniteness
+import AlgebraicJacobian.RiemannRoch.ChiLedger
 import AlgebraicJacobian.Challenge
+import AlgebraicJacobian.RiemannRoch.ChiCurve
 
 /-!
 # AlgebraicJacobian — library root
