@@ -49,29 +49,36 @@ gaps, ONE campaign-risk gap (affine H¹-vanishing for a line bundle — the exac
 already green in the cech-port contingency source), and the GREEN/AMBER/RED trigger:
 AMBER → trigger `AJCR.cech-port`; RED → plan-B (Weil Sym^g) or plan-C (old-tree FGA).
 
-## IN FLIGHT at handoff (check task notifications / ledger before assuming)
+## Both former in-flight items LANDED and committed (audited)
 
-1. **cbc-1 prover** (Opus): `Cohomology/RelativeTwoCover.lean` per w4-cbc-recon §4 —
-   relative two-cover CBC for 𝒪 + the F_g probe. Its report ends with an explicit
-   GREEN/AMBER/RED verdict — ACT ON IT (§3 of the recon says how).
-2. **deg-D1 blueprint agent** (Opus): a section continuing the LocalEquations/picClass
-   chapter. Validate `horizon blueprint` (0 dangling) before committing.
-If these landed and were committed already, the ledger will show it (project-git skill).
+1. **cbc-1 probe** (`c0c29a3d61`, `Cohomology/RelativeTwoCover.lean`, 175 lines, root
+   8674 jobs): relative two-cover scaffold + CBC-0 carrier over R + H⁰(C_R) ≅ R +
+   HModule' coefficient-iso transport. **VERDICT: GREEN on machinery, AMBER precisely
+   at G-CBC-3(ii)** (twisted affine Serre vanishing — does NOT transport from 𝒪; the
+   landed Serre engine is structure-sheaf-hardwired; port-bound to the KNOWN-GREEN
+   AffineSerreVanishing.lean in SubProjects/Cech-Cohomology). No plan-B/C signal. The
+   decision now lives in the **w4-rep.datum design pass**: if the universal twist can be
+   normalized two-cover-trivial, `congrCoeff` transport suffices and no port is needed;
+   otherwise trigger `AJCR.cech-port` as a BOUNDED port of that one statement (roadmap
+   comments on AJCR.w4-rep.cbc and AJCR.cech-port record this). Remaining cbc-lite
+   assembly (bundled CBC-1/2 for 𝒪 — R-linear threading over k-based tensor lemmas —
+   and the F_g construction itself) is bounded follow-up, deprioritized deliberately.
+2. **deg-D1 blueprint** (`03c25383b8`): 10 nodes incl. the previously-unblueprinted
+   DivisorClass foundation; flagged future slice: `mul`/`restrict` invariance nodes.
 
 ## Next bricks, in order
 
-1. Audit/commit the two in-flight items above (protocol: own no-op root build, sorry
-   census, own lean_verify on keystones, then `horizon commit` from the workspace root).
-2. Act on cbc-1's verdict (GREEN → spec `w4-rep.datum`'s next brick or the general
-   vanishing per the recon; AMBER → open the cech-port conversation; RED → plan-B/C
-   decision, record it in the roadmap comments).
-3. Degree lane: G-D4 (graph local equations) and/or the G-D2 meromorphic-bridge —
-   G-D2 is the lane's biggest risk and is WORKSHEET-FIRST (like (C2); do not launch a
-   prover from the recon alone). G-D3 (E-i..E-iii wiring) is now unblocked (χ landed).
+1. **G-D4** (graph local equations, `Picard/GraphDivisor.lean`) — Opus prover, was
+   being launched at handoff time; check the ledger. χ-independent, landed infra.
+2. **G-D2 meromorphic-bridge WORKSHEET** (design-first, the degree lane's biggest risk
+   — the (C2) lesson; do not launch a prover from the recon alone). Then G-D3
+   (E-i..E-iii wiring; unblocked, but its classDeg totality consumes G-D2).
+3. **w4-rep.datum design pass** — settle the twist-normalization question (see verdict
+   above); it decides the cech-port trigger. Then the remaining cbc-lite assembly.
 4. (C2) campaign per `c2-effectivity-assembly.md`: E0 (Opus) then E1 (Fable, its own
    spec with the full ζ2·i treatment).
-5. Blueprint per brick, roadmap statuses at milestones, task comments at campaign
-   closes.
+5. Blueprint per brick (pending: cbc-1's scaffold), roadmap statuses at milestones,
+   task comments at campaign closes.
 
 ## Session ledger (this session's commits, newest last)
 
