@@ -22,6 +22,7 @@ import AlgebraicJacobian.Cohomology.Finiteness
 import AlgebraicJacobian.Cohomology.SectionsBaseChange
 import AlgebraicJacobian.Picard.AffineTwoCover
 import AlgebraicJacobian.Picard.UniversalSections
+import AlgebraicJacobian.Cohomology.RelativeTwoCover
 import AlgebraicJacobian.Picard.UnitsPresheaf
 import AlgebraicJacobian.Picard.CechH1
 import AlgebraicJacobian.Picard.UnitsCocycle
