@@ -32,6 +32,7 @@ import AlgebraicJacobian.Picard.Separatedness
 import AlgebraicJacobian.Picard.RelPic
 import AlgebraicJacobian.Picard.RelPicAlgebra
 import AlgebraicJacobian.Picard.DivisorClass
+import AlgebraicJacobian.Picard.LocalEquationsPullback
 import AlgebraicJacobian.Picard.PointDivisor
 import AlgebraicJacobian.Algebra.EtaleCover
 import AlgebraicJacobian.Picard.PicEtAff
