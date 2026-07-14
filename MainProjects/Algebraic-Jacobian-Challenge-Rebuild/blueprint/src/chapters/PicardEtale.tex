@@ -3638,3 +3638,446 @@ halves of the deliverable and the headline class equation handed onward. Write \
   Theorem~\ref{thm:trivializingFamily_pic_cocycle}. This is the invertible descended sheaf of
   Kleiman's separatedness argument, in its \v Cech incarnation.
 \end{proof}
+
+\section{Faithfully flat descent of sections along the base change of the curve product}
+\label{sec:sectionsDescent}
+
+Fix a field \(k\), a curve \(C\) over \(k\) (proper, geometrically irreducible and geometrically
+reduced), and a tower \(k \to A \to B\) with \(A \to B\) faithfully flat. Write \(X_A := (C
+\otimes \Spec A)_{\mathrm{left}}\), \(X_B := (C \otimes \Spec B)_{\mathrm{left}}\), and
+\(\mathrm{cg} := (C \lhd \Spec(A \to B))_{\mathrm{left}} \colon X_B \to X_A\) for the base-change
+morphism of the curve product; the two coprojections \(u_1, u_2 \colon (C \otimes \Spec(B
+\otimes_A B))_{\mathrm{left}} \to X_B\) are the whiskered coprojections of \(B \otimes_A B\).
+This section proves that sections of the structure sheaf, and of its units, descend along
+\(\mathrm{cg}\): the fppf sheaf property along the whiskered base inclusion.
+
+\begin{theorem}[The base-change square of the product is a pullback]
+  \label{thm:isPullback_whiskerLeft_snd}
+  \lean{AlgebraicGeometry.Over.isPullback_whiskerLeft_snd}
+  \uses{lem:snd_left_naturality}
+  \leanok
+  For \(C, T, T'\) over \(\Spec k\) and \(g \colon T' \to T\), the square with horizontal legs
+  \((C \lhd g)_{\mathrm{left}}\) and \(g_{\mathrm{left}}\) and vertical legs the two second
+  projections is a pullback of schemes:
+  \[
+    \begin{array}{ccc}
+      (C \otimes T')_{\mathrm{left}} & \xrightarrow{(C \lhd g)_{\mathrm{left}}} &
+        (C \otimes T)_{\mathrm{left}} \\
+      \downarrow \mathrm{pr}' & & \downarrow \mathrm{pr} \\
+      T'_{\mathrm{left}} & \xrightarrow{\ g_{\mathrm{left}}\ } & T_{\mathrm{left}}.
+    \end{array}
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Paste the two cartesian squares expressing \(C \otimes T\) and \(C \otimes T'\) as products
+  over \(\Spec k\).  The first-projection triangle \((C \lhd g)_{\mathrm{left}} \circ
+  (\mathrm{fst}_{C,T})_{\mathrm{left}} = (\mathrm{fst}_{C,T'})_{\mathrm{left}}\) and the base
+  identity \(g_{\mathrm{left}} \circ T.\mathrm{hom} = T'.\mathrm{hom}\) exhibit the outer
+  rectangle over \(C \times \Spec k\) as the product square of \(C \otimes T'\); together with
+  the naturality square of the second projection (Lemma~\ref{lem:snd_left_naturality}), the
+  right-cancellation property of pullbacks gives that the second-projection square is itself a
+  pullback.
+\end{proof}
+
+\begin{theorem}[Descent of sections along the base change of the curve product]
+  \label{thm:existsUnique_appLE_eq}
+  \lean{AlgebraicGeometry.Over.existsUnique_appLE_eq}
+  \uses{thm:isPullback_whiskerLeft_snd, thm:descent_existsUnique_tmul_one,
+    def:tensorInl_tensorInr}
+  \leanok
+  Let \(U \subseteq X_A\) be an affine open. A section \(t \in \Gamma(X_B, \mathrm{cg}^{-1}U)\)
+  whose two coprojection pullbacks to \(C \otimes \Spec(B \otimes_A B)\) agree,
+  \(u_1^{*} t = u_2^{*} t\), descends uniquely along \(\mathrm{cg}\): there is a unique \(s \in
+  \Gamma(X_A, U)\) with \(\mathrm{cg}^{*} s = t\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Over the affine open \(U\), the base-change square (Theorem~\ref{thm:isPullback_whiskerLeft_snd})
+  identifies the sections of \(X_B\) over \(\mathrm{cg}^{-1}U\) with the base change \(\Gamma(X_A,
+  U) \otimes_A B\), and those of \(C \otimes \Spec(B \otimes_A B)\) with \(\Gamma(X_A, U)
+  \otimes_A (B \otimes_A B)\), the two coprojection pullbacks becoming the two faces
+  \(\id \otimes (b \mapsto b \otimes 1)\) and \(\id \otimes (b \mapsto 1 \otimes b)\)
+  (Definition~\ref{def:tensorInl_tensorInr}).  Under these identifications \(t\) corresponds to
+  an element \(x \in \Gamma(X_A, U) \otimes_A B\) with equal faces, so by the degree-zero Amitsur
+  equalizer (Theorem~\ref{thm:descent_existsUnique_tmul_one}) there is a unique \(s \in \Gamma(X_A,
+  U)\) with \(s \otimes 1 = x\); this \(s\) is the unique section with \(\mathrm{cg}^{*} s = t\).
+\end{proof}
+
+\begin{theorem}[Injectivity of pullback along the base change]
+  \label{thm:appLE_whiskerLeft_injective}
+  \lean{AlgebraicGeometry.Over.appLE_whiskerLeft_injective}
+  \uses{thm:isPullback_whiskerLeft_snd, lem:units_separation}
+  \leanok
+  For every open \(W \subseteq X_A\), pullback of sections along \(\mathrm{cg}\) is injective,
+  \(\Gamma(X_A, W) \to \Gamma(X_B, \mathrm{cg}^{-1}W)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  First over an affine open \(V\): by the base-change square
+  (Theorem~\ref{thm:isPullback_whiskerLeft_snd}) the pullback is \(s \mapsto s \otimes 1\) into
+  \(\Gamma(X_A, V) \otimes_A B\), which is injective because \(B\) is faithfully flat over
+  \(A\).  For an arbitrary open \(W\), if two sections have equal pullbacks, then their
+  restrictions to each affine open \(V \subseteq W\) have equal pullbacks (pullback commutes
+  with restriction), hence agree by the affine case; as the affine opens contained in \(W\)
+  cover \(W\), the two sections agree by separation for the structure sheaf
+  (Lemma~\ref{lem:units_separation}).
+\end{proof}
+
+\begin{theorem}[Descent of unit sections along the base change]
+  \label{thm:exists_unitsAppLE_eq}
+  \lean{AlgebraicGeometry.Over.exists_unitsAppLE_eq}
+  \uses{thm:existsUnique_appLE_eq, thm:appLE_whiskerLeft_injective}
+  \leanok
+  Let \(U \subseteq X_A\) be an affine open. A unit \(t \in \Gamma(X_B,
+  \mathrm{cg}^{-1}U)^{\times}\) whose two coprojection pullbacks agree, \(u_1^{*} t = u_2^{*}
+  t\), descends to a unit: there is \(s \in \Gamma(X_A, U)^{\times}\) with \(\mathrm{cg}^{*} s =
+  t\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Both \(t\) and \(t^{-1}\) satisfy the equalizer hypothesis, so by
+  Theorem~\ref{thm:existsUnique_appLE_eq} they descend to sections \(a, b \in \Gamma(X_A, U)\)
+  with \(\mathrm{cg}^{*} a = t\), \(\mathrm{cg}^{*} b = t^{-1}\).  The pullback of \(ab\) is \(t
+  t^{-1} = 1 = \mathrm{cg}^{*} 1\), so \(ab = 1\) by injectivity of the pullback over the affine
+  open \(U\) (Theorem~\ref{thm:appLE_whiskerLeft_injective}); likewise \(ba = 1\).  Hence \(a\)
+  is a unit and \(\mathrm{cg}^{*} a = t\).
+\end{proof}
+
+\section{The descent unit of a killed \v Cech class}
+\label{sec:kernelDescentUnit}
+
+Let \(\gamma = \mathrm{lam}\) be a unit \v Cech cocycle on a pointed cover \(\mathcal E\) of
+\(X_A\) whose base-change class \(\mathrm{cg}^{*}[\mathcal E, \mathrm{lam}]\) is trivial. Fixing
+a trivializing \(0\)-cochain of the pulled-back cocycle, this section produces a single global
+unit of \(\Spec(B \otimes_A B)\) that records, on the curve product, the coprojection ratio of
+that \(0\)-cochain and whose ring avatar is a descent \(1\)-cocycle — the algebraic seed of the
+descended line bundle.
+
+\begin{theorem}[The descent unit of a killed class]
+  \label{thm:exists_kernelDescentUnit}
+  \lean{AlgebraicGeometry.Over.exists_kernelDescentUnit}
+  \uses{thm:exists_global_unit_of_compatible, thm:appTop_units_bijective, def:tensorFaces,
+    lem:overSpecMap_left_degeneracy, def:tensorMul, def:module_descent_cocycle,
+    lem:tensorMul_simplicial}
+  \leanok
+  Let \(\mathrm{lam}\) be a unit \v Cech cocycle on a pointed cover \(\mathcal E\) of \(X_A\),
+  and let \(\beta\) be a unit \(0\)-cochain on a pointed cover \(\mathcal A\) of \(X_B\) refining
+  the base-change pullback of \(\mathcal E\), trivializing the pulled-back cocycle: on overlaps,
+  \(\beta_v \cdot (\mathrm{cg}^{\sharp}\mathrm{lam})_{vv'} = \beta_{v'}\). Then there is a global
+  unit \(w \in \Gamma(\Spec(B \otimes_A B), \top)^{\times}\) such that
+  \begin{enumerate}
+    \item on the common refinement of the two coprojection pullbacks of \(\mathcal A\), the
+      curve-product pullback of \(w\) is the ratio \(u_1^{*}\beta / u_2^{*}\beta\) of the two
+      coprojection pullbacks of \(\beta\); and
+    \item the \(\Gamma\Spec\)-avatar of \(w\) in \((B \otimes_A B)^{\times}\) is a descent
+      \(1\)-cocycle relative to \(A \to B\).
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  \leanok
+  The two coprojection pullbacks \(u_1^{*}\beta, u_2^{*}\beta\) are units over the members of
+  the common refinement \(u_1^{*}\mathcal A \cap u_2^{*}\mathcal A\), and their ratio is
+  compatible on overlaps: the coboundary hypothesis on \(\beta\), pulled back through the
+  coprojection compatibility \(u_1 \circ \mathrm{cg} = u_2 \circ \mathrm{cg}\) of the whiskered
+  faces, cancels the two \(\mathrm{lam}\)-factors and leaves the ratios agreeing on double
+  overlaps.  By gluing of unit sections (Theorem~\ref{thm:exists_global_unit_of_compatible})
+  the ratio family glues to a global section, which by surjectivity of the global-section
+  pullback (Theorem~\ref{thm:appTop_units_bijective}) is the curve-product pullback of a global
+  unit \(w\) on \(\Spec(B \otimes_A B)\); this is (1).
+
+  For (2), work upstream on \(\Spec(B \otimes_A (B \otimes_A B))\).  Applying the three Amitsur
+  cofaces (Definition~\ref{def:tensorFaces}) to the local ratio form of \(w\) and using the
+  simplicial coincidences among the coprojections, the \(\beta\)-telescope cancels exactly to
+  give the cocycle identity \((f_{23}^{\sharp} w)(f_{12}^{\sharp} w) = f_{13}^{\sharp} w\) of the
+  avatar.  The diagonal normalization \(\mu(w) = 1\) is the whiskered degeneracy of the tensor
+  diagonal (Definition~\ref{def:tensorMul}, Lemma~\ref{lem:tensorMul_simplicial},
+  Lemma~\ref{lem:overSpecMap_left_degeneracy}), under which the two coprojection pullbacks of
+  \(\beta\) coincide and their ratio is \(1\).  These are exactly the descent \(1\)-cocycle
+  conditions (Definition~\ref{def:module_descent_cocycle}) for the avatar of \(w\).
+\end{proof}
+
+\section{The \v Cech representative of a descended Picard class}
+\label{sec:descentClassRep}
+
+The descent unit \(w\) of the previous section is the descent datum of an invertible module
+\(\mathrm{descended}(w)\) over \(A\).  This section presents the \v Cech class of that module on
+\(\Spec A\), together with the trivializing units of its base change to \(\Spec B\), whose
+coprojection ratio is exactly \(w\).  Throughout, \(\mathrm{gS} := \Spec(A \to B)_{\mathrm{left}}
+\colon \Spec B \to \Spec A\) and \(q_1, q_2 \colon \Spec(B \otimes_A B) \to \Spec B\) are the two
+coprojections.
+
+\begin{definition}[The evaluation transform of a section–module tensor]
+  \label{def:evalT}
+  \lean{AlgebraicGeometry.Over.evalT}
+  \leanok
+  Let \(N\) be an \(A\)-submodule of \(B\) and \(V \subseteq \Spec A\), \(U \subseteq \Spec B\)
+  opens with \(U \subseteq \mathrm{gS}^{-1}V\).  The \emph{evaluation transform} is the
+  \(A\)-linear map
+  \[
+    \mathrm{evalT} \colon \Gamma(\Spec A, V) \otimes_A N \longrightarrow \Gamma(\Spec B, U),
+    \qquad s \otimes m \longmapsto (\mathrm{gS}^{*} s) \cdot \bigl(\Gamma\Spec^{-1} m\bigr)
+    \big|_{U},
+  \]
+  the product of the \(\mathrm{gS}\)-pullback of the section \(s\) with the restriction to
+  \(U\) of the section-avatar of \(m \in B\).  It is compatible with restriction in both opens.
+\end{definition}
+
+\begin{lemma}[The coprojection ratio of an evaluation]
+  \label{lem:evalT_ratio}
+  \lean{AlgebraicGeometry.Over.evalT_ratio}
+  \uses{def:evalT, def:tensorInl_tensorInr}
+  \leanok
+  Let \(w \in \Gamma(\Spec(B \otimes_A B), \top)^{\times}\) and suppose every \(m \in N\)
+  satisfies the descent equation of \(w\): \(1 \otimes m = \Gamma\Spec(w) \cdot (m \otimes 1)\)
+  in \(B \otimes_A B\).  Then, over any open \(O\) below both coprojection preimages of \(U\),
+  the two coprojection pullbacks of an evaluation differ by the restriction of \(w\):
+  \[
+    q_2^{*}\bigl(\mathrm{evalT}(x)\bigr) = w|_{O} \cdot q_1^{*}\bigl(\mathrm{evalT}(x)\bigr),
+    \qquad x \in \Gamma(\Spec A, V) \otimes_A N.
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  Both sides are additive in \(x\), so it suffices to treat a pure tensor \(s \otimes m\).  The
+  two coprojections send the section factor \(\mathrm{gS}^{*} s\) to the same value, the
+  pullback along the common composite \(q_1 \circ \mathrm{gS} = q_2 \circ \mathrm{gS}\); and
+  they send the module factor to the two coprojection-avatars \(\Gamma\Spec^{-1}(m \otimes 1)\)
+  and \(\Gamma\Spec^{-1}(1 \otimes m)\) (Definition~\ref{def:tensorInl_tensorInr}).  The descent
+  equation of \(w\) applied to \(m\) turns the second avatar into \(w\) times the first, and the
+  central unit \(w\) factors out, giving the stated ratio.
+\end{proof}
+
+\begin{definition}[The \v Cech representative of a descended class]
+  \label{def:DescentClassRep}
+  \lean{AlgebraicGeometry.Over.DescentClassRep}
+  \uses{def:module_descent_cocycle, def:tensorInl_tensorInr}
+  \leanok
+  Let \(w\) be a global unit of \(\Spec(B \otimes_A B)\) whose avatar is a descent
+  \(1\)-cocycle.  A \emph{\v Cech representative} of the descended class consists of a pointed
+  cover \(\mathcal C\) of \(\Spec A\), a unit \v Cech cocycle \(d\) on \(\mathcal C\), and a
+  family of trivializing units \(\mu_a \in \Gamma(\Spec B, \mathrm{gS}^{-1}\mathcal
+  C(a))^{\times}\) of the \(\mathrm{gS}\)-pullback, subject to:
+  \begin{enumerate}
+    \item (\emph{ratio}) the two coprojection pullbacks of each \(\mu_a\) differ by \(w\):
+      \(q_2^{*}\mu_a = w \cdot q_1^{*}\mu_a\) on any sub-open of the double preimage of
+      \(\mathcal C(a)\);
+    \item (\emph{transition}) on overlaps the \(\mu\)'s differ by the \(\mathrm{gS}\)-pullback
+      of the cocycle value: \(\mu_a = \mathrm{gS}^{*} d_{ab} \cdot \mu_b\) on \(\mathrm{gS}^{-1}
+      (\mathcal C(a) \cap \mathcal C(b))\).
+  \end{enumerate}
+\end{definition}
+
+\begin{theorem}[Existence of the \v Cech representative]
+  \label{thm:descentClassRep}
+  \lean{AlgebraicGeometry.Over.descentClassRep}
+  \uses{def:DescentClassRep, lem:trivializingFamily_nonempty, def:module_descended,
+    lem:evalT_ratio, thm:isUnit_map_rTensor_generator, def:descentMulEval}
+  \leanok
+  For every global unit \(w\) of \(\Spec(B \otimes_A B)\) whose avatar is a descent
+  \(1\)-cocycle, a \v Cech representative (Definition~\ref{def:DescentClassRep}) of the descended
+  class exists.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Let \(N := \mathrm{descended}(w)\) be the invertible \(A\)-module descended by the avatar of
+  \(w\) (Definition~\ref{def:module_descended}), and pass to its section-ring avatar
+  \(\Gamma(\Spec A, \top) \otimes_A N\).  Choose a trivializing family of that invertible module
+  (Lemma~\ref{lem:trivializingFamily_nonempty}): a pointed cover \(\mathcal C\) of \(\Spec A\)
+  by basic opens \(D(g_a)\) with local trivializations, giving the cover \(\mathcal C\) and its
+  cover cocycle \(d\).  On the base change to \(\Spec B\), define \(\mu_a\) as the evaluation of
+  the collapsed generator of the \(a\)-trivialization through the surjective evaluation of the
+  base-changed descent equivalence (Definition~\ref{def:descentMulEval}); this value is a unit
+  by the unit-production principle (Theorem~\ref{thm:isUnit_map_rTensor_generator}).  The ratio
+  condition is the coprojection ratio of an evaluation (Lemma~\ref{lem:evalT_ratio}), whose
+  hypothesis is the descent equation of \(w\) satisfied by the elements of \(N\).  The
+  transition condition follows because the trivializations are compatible across the cover and
+  the transition units act on the restricted generators by the cover cocycle \(d\).
+\end{proof}
+
+\section{The cobounding units on an affine chart}
+\label{sec:kernelCobounding}
+
+The trivializing \(0\)-cochain \(\beta\), the cocycle \(\mathrm{lam}\), and the trivializing
+units \(\mu\) of the representative are assembled into a single unit on the base-change pullback
+of each chart of \(X_A\), which then descends through \(\mathrm{cg}\).  These descended units are
+the cobounding \(0\)-cochain that exhibits \([\mathcal E, \mathrm{lam}]\) as pulled back from
+\(\Spec A\).
+
+\begin{theorem}[The cobounding unit at an affine chart]
+  \label{thm:exists_kernelCobounding}
+  \lean{AlgebraicGeometry.Over.exists_kernelCobounding}
+  \uses{def:DescentClassRep, thm:exists_kernelDescentUnit, thm:exists_unitsAppLE_eq,
+    lem:units_gluing}
+  \leanok
+  Keep the data \((\mathcal E, \mathrm{lam}, \beta)\) of the descent unit \(w\)
+  (Theorem~\ref{thm:exists_kernelDescentUnit}) and a \v Cech representative \((\mathcal C, d,
+  \mu)\) of the descended class (Definition~\ref{def:DescentClassRep}).  For every affine open
+  \(U \subseteq X_A\) contained in \(\mathcal E(s)\) and in \(\mathrm{pr}_A^{-1}\mathcal
+  C(\mathrm{pr}_A(s))\), there is a unit \(c \in \Gamma(X_A, U)^{\times}\) whose
+  \(\mathrm{cg}\)-pullback has, on every small enough sub-open, the glued local form
+  \[
+    (\mathrm{cg}^{*} c) = \beta_x^{-1} \cdot (\mathrm{cg}^{\sharp}\mathrm{lam}_{\mathrm{cg}(x),s})^{-1}
+      \cdot (\mathrm{pr}_B^{\sharp}\mu_{\mathrm{pr}_A(s)})^{-1}.
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  On each member of the base-change pullback of \(\mathcal E\) meeting \(\mathrm{cg}^{-1}U\),
+  form the displayed product of the inverse trivialization \(\beta_x\), the inverse
+  \(\mathrm{cg}\)-pullback of the cross-evaluation of \(\mathrm{lam}\), and the inverse
+  \(\mathrm{pr}_B\)-pullback of \(\mu\).  These local pieces agree on overlaps: the coboundary
+  relation of \(\beta\) against \(\mathrm{lam}\) and the cocycle identity of \(\mathrm{lam}\)
+  telescope the \(\beta\)- and \(\mathrm{lam}\)-factors, while the \(\mu\)-factor is independent
+  of \(x\).  By gluing of unit sections (Lemma~\ref{lem:units_gluing}) they glue to a unit \(G\)
+  on \(\mathrm{cg}^{-1}U\).  Its two coprojection pullbacks to \(C \otimes \Spec(B \otimes_A B)\)
+  agree: the local ratio form of the descent unit \(w\)
+  (Theorem~\ref{thm:exists_kernelDescentUnit}) and the ratio field of the representative
+  (Definition~\ref{def:DescentClassRep}) exactly account for the two coprojection ratios of the
+  three factors.  Since \(U\) is affine, \(G\) therefore descends to a unit \(c \in \Gamma(X_A,
+  U)^{\times}\) with \(\mathrm{cg}^{*} c = G\) (Theorem~\ref{thm:exists_unitsAppLE_eq}), which is
+  the claim.
+\end{proof}
+
+\section{The \v Cech kernel lemma and the close of \'etale separatedness}
+\label{sec:cechKernelLemma}
+
+The pieces now compose.  The kernel lemma isolates the genuinely fppf content — a \v Cech class
+killed by the cover pullback is pulled back from the base — and the class-level reduction and the
+plus unfold deliver, from it, the injectivity of the unit of the \'etale plus construction:
+Kleiman's separatedness of the relative Picard functor.
+
+\begin{theorem}[The \v Cech kernel lemma]
+  \label{thm:exists_cechPic_map_snd_of_ker_whiskerLeft}
+  \lean{AlgebraicGeometry.Over.exists_cechPic_map_snd_of_ker_whiskerLeft}
+  \uses{thm:exists_kernelDescentUnit, thm:descentClassRep, thm:exists_kernelCobounding,
+    thm:appLE_whiskerLeft_injective, lem:pointedCover_affine_refinement, thm:unitsRes_injective,
+    cor:cechPic_mk_eq_one}
+  \source{kleiman-picard}
+  \leanok
+  Let \(C\) be proper, geometrically irreducible and geometrically reduced over \(k\), and \(A
+  \to B\) faithfully flat.  Then the kernel of the base-change pullback \(\mathrm{cg}^{*} \colon
+  \Pic(X_A) \to \Pic(X_B)\) is contained in the image of the projection pullback
+  \(\mathrm{pr}_A^{*} \colon \Pic(\Spec A) \to \Pic(X_A)\): every class \(E\) on \(X_A\) with
+  \(\mathrm{cg}^{*} E = 1\) is \(\mathrm{pr}_A^{*} M_1\) for some class \(M_1\) on \(\Spec A\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Represent \(E\) by a unit cocycle \(\mathrm{lam}\) on a pointed cover \(\mathcal E\) of
+  \(X_A\).  Since \(\mathrm{cg}^{*} E = 1\), the pulled-back cocycle is a coboundary: there is a
+  trivializing \(0\)-cochain \(\beta\) on a refinement of \(\mathrm{cg}^{*}\mathcal E\) with
+  \(\beta_v \cdot (\mathrm{cg}^{\sharp}\mathrm{lam})_{vv'} = \beta_{v'}\).  Feed \((\mathcal E,
+  \mathrm{lam}, \beta)\) to the descent unit (Theorem~\ref{thm:exists_kernelDescentUnit}),
+  obtaining a global unit \(w\) whose avatar is a descent \(1\)-cocycle; take a \v Cech
+  representative \((\mathcal C, d, \mu)\) of its descended class
+  (Theorem~\ref{thm:descentClassRep}).  Refine \(\mathcal E \cap \mathrm{pr}_A^{-1}\mathcal C\)
+  to a cover \(\mathcal U\) by affine opens (Lemma~\ref{lem:pointedCover_affine_refinement}); on
+  each chart \(U = \mathcal U(s)\), the cobounding unit
+  (Theorem~\ref{thm:exists_kernelCobounding}) gives \(c_s \in \Gamma(X_A, U)^{\times}\).
+
+  It remains to check that the \(c_s\) cobound \(\mathrm{lam}\), restricted to \(\mathcal U\),
+  against the \(\mathrm{pr}_A\)-pullback of the representing cocycle \(d\); that is,
+  \[
+    c_s|_{U_s \cap U_t} \cdot \mathrm{pr}_A^{*} d_{\,\mathrm{pr}_A s,\,\mathrm{pr}_A t}
+      = \mathrm{lam}_{s t}\big|_{U_s \cap U_t} \cdot c_t|_{U_s \cap U_t}.
+  \]
+  Both sides pull back injectively along \(\mathrm{cg}\)
+  (Theorem~\ref{thm:appLE_whiskerLeft_injective}); after pullback, the glued local forms of
+  \(c_s, c_t\), the \(\mu\)-transition of the representative, and the cocycle identity of
+  \(\mathrm{lam}\) telescope to the required identity.  Hence \(\mathrm{lam}\) and
+  \(\mathrm{pr}_A^{*} d\) are cohomologous on \(\mathcal U\), so \([\mathcal U, \mathrm{lam}] =
+  \mathrm{pr}_A^{*}[\mathcal C, d]\) by refinement injectivity in degree one
+  (Theorem~\ref{thm:unitsRes_injective}, Corollary~\ref{cor:cechPic_mk_eq_one}); that is, \(E =
+  \mathrm{pr}_A^{*} M_1\) with \(M_1 = [\mathcal C, d]\).  This is the descent-datum step of
+  Kleiman's separatedness argument in its \v Cech incarnation: the trivialization \(\beta\)
+  descends the class from the faithfully flat cover to the base.
+\end{proof}
+
+\begin{theorem}[The class-level reduction]
+  \label{thm:exists_cechPic_map_snd_eq_of_ker}
+  \lean{AlgebraicGeometry.Over.exists_cechPic_map_snd_eq_of_ker}
+  \uses{thm:exists_coherentCechWitness, thm:isDescentCocycle_assemblyUnit,
+    thm:mapAlgebra_picClass_assemblyUnit, thm:cechPicEquivPic, thm:cechPic_toPic_injective,
+    thm:cechPic_toPic_map, lem:snd_left_naturality, def:module_picClass}
+  \source{kleiman-picard}
+  \leanok
+  Assume the kernel property of \(\mathrm{cg}^{*}\) (Theorem~\ref{thm:exists_cechPic_map_snd_of_ker_whiskerLeft}).
+  Let \(L\) be a \v Cech Picard class on \(X_A\) and \(N_0\) a class on \(\Spec B\) with
+  \(\mathrm{pr}_B^{*} N_0 = \mathrm{cg}^{*} L\).  Then \(L\) is pulled back from the base:
+  \(L = \mathrm{pr}_A^{*} M\) for some class \(M\) on \(\Spec A\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  From the hypothesis \(\mathrm{pr}_B^{*} N_0 = \mathrm{cg}^{*} L\), the coherent \v Cech witness
+  (Theorem~\ref{thm:exists_coherentCechWitness}) provides an Amitsur-coherent trivialization of
+  the two coprojection pullbacks of \(N_0\), and the assembly of the previous chapter builds from
+  it a composite \(A\)-descent unit whose avatar is a descent \(1\)-cocycle
+  (Theorem~\ref{thm:isDescentCocycle_assemblyUnit}).  Let \(M\) be the \v Cech class on \(\Spec
+  A\) corresponding, through the \v Cech–Picard dictionary
+  (Theorem~\ref{thm:cechPicEquivPic}), to the Picard class of the descended module
+  (Definition~\ref{def:module_picClass}) of that composite unit.  By the class equation of the
+  assembly (Theorem~\ref{thm:mapAlgebra_picClass_assemblyUnit}) and naturality of the dictionary
+  in the affine scheme (Theorem~\ref{thm:cechPic_toPic_map}), the base change \(\mathrm{gS}^{*}
+  M\) has the same descent homomorphism image as \(N_0\); since that homomorphism is injective
+  (Theorem~\ref{thm:cechPic_toPic_injective}), \(\mathrm{gS}^{*} M = N_0\) on the nose.  Then,
+  using the projection base square (Lemma~\ref{lem:snd_left_naturality}),
+  \[
+    \mathrm{cg}^{*}\bigl(\mathrm{pr}_A^{*} M\bigr) = \mathrm{pr}_B^{*}\bigl(\mathrm{gS}^{*} M\bigr)
+      = \mathrm{pr}_B^{*} N_0 = \mathrm{cg}^{*} L ,
+  \]
+  so \(L \cdot (\mathrm{pr}_A^{*} M)^{-1}\) is killed by \(\mathrm{cg}^{*}\).  The kernel
+  property yields \(M_1\) with \(\mathrm{pr}_A^{*} M_1 = L \cdot (\mathrm{pr}_A^{*} M)^{-1}\),
+  whence \(L = \mathrm{pr}_A^{*}(M \cdot M_1)\).
+\end{proof}
+
+\begin{theorem}[The plus unfold of \'etale separatedness]
+  \label{thm:PicEtAff_unit_injective_of_ker}
+  \lean{AlgebraicGeometry.PicEtAff.unit_injective_of_ker}
+  \uses{def:PicEtAff_unit, thm:PicEtAff_mk_eq_mk_iff, def:PicEtAff_one,
+    thm:exists_cechPic_map_snd_eq_of_ker, def:relPicAlgMap, def:descentClasses}
+  \leanok
+  Fix \(A\).  Suppose the kernel property of the base-change pullback holds for every tower \(A
+  \to B\) with \(A \to B\) faithfully flat.  Then the unit \(\eta_A \colon \mathrm{relPic}(C,A)
+  \to \mathrm{PicEtAff}(C,A)\) of the plus construction (Definition~\ref{def:PicEtAff_unit}) is
+  injective.
+\end{theorem}
+\begin{proof}
+  \leanok
+  As \(\eta_A\) is a group homomorphism it suffices to show its kernel is trivial.  Let \(x =
+  [\Spec A, L] \in \mathrm{relPic}(C,A)\) with \(\eta_A(x) = 1\).  Unwinding the plus-class
+  equality \([\mathrm{self}(A), \iota^{*}x] = 1\) through the presentation criterion
+  (Theorem~\ref{thm:PicEtAff_mk_eq_mk_iff}) and the essential uniqueness of \(A\)-algebra maps
+  out of \(A\), the datum reduces to a single presented \'etale cover \(A \to B_G\): the base
+  change \((\mathrm{ofId}\ A\ B_G)^{*}L\) lies in the descent-trivial subgroup of
+  \(\mathrm{relPic}(C,B_G)\) (Definition~\ref{def:relPicAlgMap},
+  Definition~\ref{def:descentClasses}).  Concretely there is a class \(N_0\) on \(\Spec B_G\)
+  with \(\mathrm{pr}_{B_G}^{*} N_0 = \mathrm{cg}^{*} L\) — the hypothesis of the reduction.  Since
+  a presented \'etale cover is in particular faithfully flat, the reduction
+  (Theorem~\ref{thm:exists_cechPic_map_snd_eq_of_ker}) pulls \(L\) back from the base, \(L =
+  \mathrm{pr}_A^{*} M\); that is exactly \(x = 1\) in \(\mathrm{relPic}(C,A)\), using the
+  normalization of the unit at the identity (Definition~\ref{def:PicEtAff_one}).
+\end{proof}
+
+\begin{theorem}[\'Etale separatedness of the relative Picard functor]
+  \label{thm:PicEtAff_unit_injective}
+  \lean{AlgebraicGeometry.PicEtAff.unit_injective}
+  \uses{thm:PicEtAff_unit_injective_of_ker, thm:exists_cechPic_map_snd_of_ker_whiskerLeft}
+  \source{kleiman-picard}
+  \leanok
+  Let \(C\) be a curve over \(k\) that is proper, geometrically irreducible and geometrically
+  reduced, and let \(A\) be any \(k\)-algebra.  Then the unit \(\eta_A \colon
+  \mathrm{relPic}(C,A) \to \mathrm{PicEtAff}(C,A)\) of the one-step \'etale plus construction is
+  injective.  Equivalently, the relative Picard functor of \(C\) is separated for the \'etale
+  topology — the separatedness half of Kleiman, \emph{The Picard Scheme}, Theorem 2.5(1).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The kernel property of the base-change pullback holds for every faithfully flat tower \(A \to
+  B\) by the \v Cech kernel lemma
+  (Theorem~\ref{thm:exists_cechPic_map_snd_of_ker_whiskerLeft}).  Feeding it to the plus unfold
+  (Theorem~\ref{thm:PicEtAff_unit_injective_of_ker}) gives the injectivity of \(\eta_A\).  This
+  is exactly Part 1 of Kleiman's comparison theorem in the \'etale case: the natural map
+  \(\Pic_{X/S} \hookrightarrow \Pic_{(X/S)\mathrm{\acute et}}\) is injective, so a single
+  \'etale plus computes the sheafification and \(\mathrm{PicEtAff}\) is separated on the \'etale
+  site of affines.
+\end{proof}

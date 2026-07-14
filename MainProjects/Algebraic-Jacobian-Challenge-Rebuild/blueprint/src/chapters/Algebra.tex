@@ -640,3 +640,82 @@ in \(T_{ij}\)).
   \iota_1(\bar x)\,\iota_2(\bar y) = \iota(x)\,\iota(y) = \iota(xy) = \iota(\mu(x \otimes y))\),
   since \(\iota_1, \iota_2\) restrict to \(\iota\) on the image of \(B\).
 \end{proof}
+
+\section{Degree-zero Amitsur descent and unit production}
+\label{sec:amitsurDescentAlgebra}
+
+This section records the two pure-algebra inputs to the faithfully flat descent that closes
+the \'etale separatedness of the relative Picard functor: the degree-zero exactness of the
+Amitsur complex, in the right-tensor form used to descend a section, and the production of a
+unit from the evaluated generator of a trivialized invertible module.
+
+\begin{theorem}[The degree-zero Amitsur equalizer]
+  \label{thm:descent_existsUnique_tmul_one}
+  \lean{Module.FaithfullyFlat.existsUnique_tmul_one_eq}
+  \leanok
+  Let \(A \to B\) be faithfully flat and \(S_0\) an \(A\)-algebra. If an element \(x \in S_0
+  \otimes_A B\) has equal images under the two coprojection faces
+  \[
+    \id_{S_0} \otimes (b \mapsto b \otimes 1), \quad \id_{S_0} \otimes (b \mapsto 1 \otimes b)
+    \;\colon\; S_0 \otimes_A B \longrightarrow S_0 \otimes_A (B \otimes_A B),
+  \]
+  then \(x = s \otimes 1\) for a unique \(s \in S_0\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  This is exactness in degree \(0\) of the Amitsur complex of the faithfully flat extension
+  \(A \to B\), applied with coefficients in \(S_0\).  Transport \(x\) through the
+  commutativity and associativity isomorphisms into the coaction encoding of the tautological
+  base-change descent datum on \(S_0\); the two coprojection faces become the two legs of that
+  coaction, so the hypothesis says exactly that the coaction difference vanishes on the
+  transported element.  Degree-zero Amitsur exactness for a faithfully flat base change then
+  produces \(s \in S_0\) whose image \(1 \otimes s\) is the transported element; applying the
+  inverse transport gives \(s \otimes 1 = x\).  Uniqueness is faithful flatness: the map \(s
+  \mapsto s \otimes 1\), \(S_0 \to S_0 \otimes_A B\), is injective when \(B\) is faithfully
+  flat over \(A\).
+\end{proof}
+
+\begin{theorem}[Unit production from an evaluated generator]
+  \label{thm:isUnit_map_rTensor_generator}
+  \lean{Module.isUnit_map_rTensor_generator}
+  \leanok
+  Let \(A \to R \to R'\) be a tower with \(R'\) also an \(A\)-algebra and \(\varphi \colon R \to
+  R'\) the ring map, carried by an \(A\)-linear avatar.  Let \(M'\) be an \(R\)-module presented
+  as trivial by an \(R\)-linear isomorphism \(t \colon M' \cong R\) together with a collapse
+  isomorphism \(c \colon M' \cong R \otimes_A M\).  Then, for every surjective \(R'\)-linear map
+  \(F \colon R' \otimes_A M \to R'\), the value
+  \[
+    F\bigl(\varphi_{*}\,c(t^{-1} 1)\bigr) \in R'
+  \]
+  of \(F\) on the \(\varphi\)-pushforward of the collapsed generator \(c(t^{-1} 1)\) is a unit.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Write \(g_0 := c(t^{-1} 1) \in R \otimes_A M\).  Since \(t\) is an isomorphism, every \(x \in
+  R \otimes_A M\) is the scalar multiple \(x = t(c^{-1} x) \cdot g_0\); that is, \(g_0\)
+  generates \(R \otimes_A M\) as an \(R\)-module.  Pushing forward along \(\varphi\): the map
+  \(\varphi_{*} \colon R \otimes_A M \to R' \otimes_A M\) is \(\varphi\)-semilinear, so every
+  \(z \in R' \otimes_A M\) is an \(R'\)-multiple of \(g := \varphi_{*} g_0\).  Indeed on a pure
+  tensor \(r' \otimes m = r' \cdot (1 \otimes m)\) and \(1 \otimes m = \varphi_{*}(1 \otimes m)
+  = \varphi_{*}\bigl(t(c^{-1}(1 \otimes m)) \cdot g_0\bigr) = \varphi\bigl(t(c^{-1}(1 \otimes
+  m))\bigr) \cdot g\), and the general element is a finite sum of such.  Now choose, by
+  surjectivity of \(F\), an element \(y\) with \(F(y) = 1\), and write \(y = c' \cdot g\) for
+  some \(c' \in R'\).  Then \(1 = F(c' \cdot g) = c' \cdot F(g)\), so \(F(g)\) is a unit.
+\end{proof}
+
+\begin{definition}[Base change of a descent equivalence]
+  \label{def:descentMulEval}
+  \lean{Module.descentMulEval}
+  \uses{thm:isUnit_map_rTensor_generator}
+  \leanok
+  Let \(A \to B' \to R'\) be a tower and \(\mathrm{dE} \colon B' \otimes_A M \cong B'\) a
+  \(B'\)-linear descent equivalence.  Its \emph{base change} is the \(R'\)-linear equivalence
+  \[
+    \mathrm{descentMulEval}(\mathrm{dE}) \colon R' \otimes_A M \;\xrightarrow{\ \sim\ }\; R',
+    \qquad r' \otimes m \longmapsto \mathrm{dE}(1 \otimes m) \cdot r',
+  \]
+  obtained by cancelling the iterated base change \(R' \otimes_{B'} (B' \otimes_A M) \cong R'
+  \otimes_A M\), applying \(\mathrm{dE}\) in the second factor, and using the right unit \(R'
+  \otimes_{B'} B' \cong R'\).  Being an isomorphism, it is in particular a surjective
+  \(R'\)-linear map, the concrete evaluation fed to Theorem~\ref{thm:isUnit_map_rTensor_generator}.
+\end{definition}
