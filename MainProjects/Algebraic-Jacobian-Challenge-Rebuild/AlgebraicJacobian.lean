@@ -80,6 +80,17 @@ import AlgebraicJacobian.Picard.DescentClassRepBuild
 import AlgebraicJacobian.Picard.CechKernelGlue
 import AlgebraicJacobian.Picard.EtaleSeparatednessClose
 import AlgebraicJacobian.Picard.CechKernelLemma
+import AlgebraicJacobian.Picard.PicEtSections
+import AlgebraicJacobian.Picard.PicEt
+import AlgebraicJacobian.Picard.RelPicCoverInjective
+import AlgebraicJacobian.Picard.OpenImmersionUnits
+import AlgebraicJacobian.Picard.CechPicClopenSep
+import AlgebraicJacobian.Picard.CechPicClopenGlue
+import AlgebraicJacobian.Picard.RelPicPi
+import AlgebraicJacobian.Picard.PicEtAffZariskiSep
+import AlgebraicJacobian.Picard.PicEtAffZariskiGlue
+import AlgebraicJacobian.Picard.PicEtMapToolkit
+import AlgebraicJacobian.Picard.PicEtMap
 import AlgebraicJacobian.Challenge
 
 /-!
