@@ -68,14 +68,20 @@ AMBER → trigger `AJCR.cech-port`; RED → plan-B (Weil Sym^g) or plan-C (old-t
 
 ## Next bricks, in order
 
-1. **G-D4 outcome: RECON-LANDED, prover correctly stopped by the feasibility gate**
-   (`informal/deg-d4-recon.md`, committed). The graph divisor is a campaign: v4.31 has
-   NO scheme-level effective-Cartier/regular-immersion/differentials API. Plan:
-   **deg-D4a** (`LocalEquations.pullback` + `picClass_pullback`, bounded, launch when a
-   prover slot frees — CAVEAT: needs a regularity/flatness side-hypothesis, the naive
-   statement is false) → **deg-D4b** (diagonal local equations via standard-smooth
-   charts — WORKSHEET-FIRST) → deg-D4c (graph from diagonal). abelElement blocks on
-   D4b, not on the deferred rank-1 certificate.
+1. **G-D4 status: recon landed (`informal/deg-d4-recon.md` — the graph divisor is a
+   campaign; v4.31 has NO scheme-level effective-Cartier/regular-immersion/
+   differentials API), and deg-D4a is LANDED (`704176f08d`,
+   `Picard/LocalEquationsPullback.lean`, root 8675 jobs): `LocalEquations.pullback`
+   under the bare regularity primitive (naive statement false; flatness corollary
+   deliberately not built — the graph's morphism isn't flat) with the FULL class law
+   `picClass_pullback` as a simp lemma.** Remaining: **deg-D4b** (diagonal local
+   equations via standard-smooth charts — WORKSHEET-FIRST, the campaign heart) →
+   deg-D4c (graph = pullback of diagonal; discharge `hreg` from the relative-divisor
+   geometry; base change via `picClass_pullback` + section naturality). abelElement
+   blocks on D4b, not on the deferred rank-1 certificate.
+   BLUEPRINT DEBT (queue for one agent): the cbc-1 scaffold
+   (`Cohomology/RelativeTwoCover.lean`) and deg-D4a (`LocalEquationsPullback.lean`)
+   are landed but not yet blueprinted.
 2. **G-D2 meromorphic-bridge campaign** — the WORKSHEET IS WRITTEN and binding:
    `informal/deg-d2-meromorphic-worksheet.md` (descoped to surjectivity + extraction;
    the D1 decision — all cochain comparisons inside K(X)ˣ — bounds the campaign; sub-
