@@ -5289,6 +5289,42 @@ inputs to the \((C2)\) comparison of the next section.
   \mathcal O_T \xrightarrow{\ \sim\ } g_\sigma^{*} L\) exists'' is exactly \(g_\sigma^{*} L = 1\).
 \end{definition}
 
+\begin{theorem}[Rigidity of automorphisms of a rigidified pair]
+  \label{thm:unitsAppTop_sectionOfPoint_bijective}
+  \lean{AlgebraicGeometry.Over.unitsAppTop_sectionOfPoint_bijective,
+    AlgebraicGeometry.Over.isIso_appTop_sectionOfPoint}
+  \uses{def:sectionOfPoint, thm:isIso_appLE_snd}
+  \leanok
+  \source{kleiman-picard}
+  Let the curve \(C\) be proper, geometrically irreducible and geometrically reduced. For every
+  point \(\sigma \colon \Spec A \to C\), pullback of global unit sections along the section of the
+  projection,
+  \[
+    g_\sigma^{\sharp} \colon \Gamma(\Spec A, \top)^{\times}
+      \;\longrightarrow\; \Gamma(X_A, \top)^{\times},
+  \]
+  is a bijection. In particular, a global unit of the curve \(X_A\) whose restriction along the
+  section is \(1\) is itself \(1\). This is the cocycle form of Kleiman's automorphism rigidity: an
+  automorphism of a rigidified pair is trivial.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Because \(C\) is proper, geometrically irreducible and geometrically reduced, the degree-zero
+  cohomology of the relative curve is the test ring itself: pullback of global sections along the
+  projection \(\mathrm{pr} = \mathrm{snd} \colon X_A \to \Spec A\) is a ring isomorphism
+  \(\Gamma(\Spec A, \top) \xrightarrow{\sim} \Gamma(X_A, \top)\)
+  (Theorem~\ref{thm:isIso_appLE_snd}, the case \(H^0(X_A, \struct{}) = A\); this is Kleiman's
+  hypothesis \(\struct S \xrightarrow{\sim} f_{*}\struct X\) holding universally in the test ring).
+  The section retracts the projection, \(\mathrm{pr} \circ g_\sigma = \id\)
+  (Definition~\ref{def:sectionOfPoint}), and pullback of sections is contravariant, so on global
+  sections \(g_\sigma^{\sharp} \circ \mathrm{pr}^{\sharp} = (\mathrm{pr} \circ g_\sigma)^{\sharp} =
+  \id\). As \(\mathrm{pr}^{\sharp}\) is an isomorphism, \(g_\sigma^{\sharp}\) is its inverse, hence
+  an isomorphism, hence bijective on the unit groups. Kleiman's argument is exactly this: an
+  automorphism \(v\) of a pair \((L, u)\) rigidified along \(\sigma\) satisfies
+  \(g_\sigma^{\sharp} v = 1\), while \(v\) lies in \(H^0(\struct{X_A}) = H^0(\struct{\Spec A})\); the
+  displayed isomorphism forces \(v = 1\).
+\end{proof}
+
 \section{The \(\sigma\)-normalized comparison cochain}
 \label{sec:normalizedComparison}
 
@@ -5489,6 +5525,330 @@ realisation of the descent equation \(u_1^{*} L = u_2^{*} L\), normalized along 
   (\ref{lem:sectionSquares}), it makes the \(\sigma\)-restriction of the corrected cochain equal
   to \(q_1^{\sharp}\rho / q_2^{\sharp}\rho\) on the nose — that is (N2). The corrected data is the
   required datum.
+\end{proof}
+
+\section{Coherence and uniqueness of the \(\sigma\)-normalized comparison}
+\label{sec:comparisonCoherence}
+
+Fix a unit \v Cech cocycle \(\gamma\) on a pointed cover \(\mathcal N\) of \(X_B\) and a
+\(\sigma\)-normalized comparison of \(\gamma\)
+(Definition~\ref{def:normalizedCechComparison}), with cover \(\mathcal W\) of \(X_{B \otimes_A B}\)
+and comparison cochain \(\theta\). We show that \(\theta\) satisfies the Amitsur cocycle identity on
+the triple base \emph{on the nose}, is unique, and is trivial on the diagonal --- the three
+inputs the per-piece descent of the next section runs on. All three are the cochain form of
+Kleiman's automorphism-rigidity argument (Lemma~\ref{thm:unitsAppTop_sectionOfPoint_bijective}):
+glue a defect to a global unit, kill its \(\sigma\)-restriction by the normalization, and apply
+rigidity at the relevant affine test.
+
+Write \(X_{B \otimes_A (B \otimes_A B)}\) for the curve over the triple base. Its three
+tensor-slot \emph{insertions} \(v_1, v_2, v_3 \colon X_{B \otimes_A (B \otimes_A B)} \to X_B\) are
+the whiskerings \(C \lhd (\Spec\ \text{of})\) of the \(A\)-algebra maps \(x \mapsto x \otimes 1
+\otimes 1\), \(x \mapsto 1 \otimes x \otimes 1\), \(x \mapsto 1 \otimes 1 \otimes x\).
+
+\begin{definition}[The Amitsur product cover and its insertions]
+  \label{def:amitsurProductCover}
+  \lean{AlgebraicGeometry.Over.amitsurProductCover, AlgebraicGeometry.Over.amitsurInsertion₁,
+    AlgebraicGeometry.Over.amitsurInsertion₂, AlgebraicGeometry.Over.amitsurInsertion₃}
+  \uses{def:amitsurCover, def:tensorInl_tensorInr, def:tensorFaces}
+  \leanok
+  For a pointed cover \(\mathcal W\) of the curve \(X_{B \otimes_A B}\), the \emph{Amitsur product
+  cover} of \(X_{B \otimes_A (B \otimes_A B)}\) is the common refinement of the three coface
+  pullbacks,
+  \[
+    w_{23}^{-1}\mathcal W \ \sqcap\ w_{12}^{-1}\mathcal W \ \sqcap\ w_{13}^{-1}\mathcal W ,
+  \]
+  the curve-product mirror of the Amitsur cover (Definition~\ref{def:amitsurCover}). The three
+  insertions \(v_1, v_2, v_3\) are the pairwise-coincident values of the six coface--coprojection
+  composites \(w_{ij} \circ u_k \colon X_{B \otimes_A (B \otimes_A B)} \to X_B\):
+  \[
+    v_1 = w_{12} \circ u_1 = w_{13} \circ u_1, \quad
+    v_2 = w_{23} \circ u_1 = w_{12} \circ u_2, \quad
+    v_3 = w_{23} \circ u_2 = w_{13} \circ u_2 .
+  \]
+\end{definition}
+\begin{proof}
+  \leanok
+  The cover is a finite intersection of pullbacks of the pointed cover \(\mathcal W\), hence a
+  pointed cover. Each of the three displayed pairs of composites coincides by the simplicial
+  identities of the tensor tower relating the cofaces \(f_{ij}\) (Definition~\ref{def:tensorFaces})
+  to the coprojections \(x \mapsto x \otimes 1\), \(x \mapsto 1 \otimes x\)
+  (Definition~\ref{def:tensorInl_tensorInr}): whiskering to the curve preserves those equalities,
+  and each \(v_i\) is the whiskered \(\Spec\) of one tensor-slot insertion.
+\end{proof}
+
+\begin{theorem}[The Amitsur defect glues to a global unit]
+  \label{thm:exists_glued_productDefect}
+  \lean{AlgebraicGeometry.Over.productDefectCochain,
+    AlgebraicGeometry.Over.exists_glued_productDefect}
+  \uses{def:amitsurProductCover, def:normalizedCechComparison, thm:exists_global_unit_of_compatible}
+  \leanok
+  Let \(\gamma\) be a unit cocycle on \(\mathcal N\) and \(\theta_0\) a comparison cochain on a
+  refinement \(\mathcal W\) satisfying \textbf{(N1)}, i.e.\ \(\theta_0\) cobounds the two
+  coprojection pullbacks of \(\gamma\). The \emph{Amitsur defect}
+  \[
+    \varepsilon \;=\; \frac{(w_{23}^{\sharp}\theta_0)\,(w_{12}^{\sharp}\theta_0)}
+      {w_{13}^{\sharp}\theta_0}
+  \]
+  --- a unit \(0\)-cochain on the Amitsur product cover --- is \v Cech-compatible, hence glues to a
+  global unit \(\bar\varepsilon \in \Gamma(X_{B \otimes_A (B \otimes_A B)}, \top)^{\times}\). No
+  geometric hypotheses are used.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Relation \textbf{(N1)} reads \(\theta_{0,x} \cdot (u_1^{\sharp}\gamma)_{xy} =
+  (u_2^{\sharp}\gamma)_{xy} \cdot \theta_{0,y}\) on overlaps. Pull it back along each of the three
+  cofaces \(w_{23}, w_{12}, w_{13}\); by Definition~\ref{def:amitsurProductCover} the
+  coface--coprojection composites appearing are exactly the three insertions, so the pulled-back
+  relations express the overlap discrepancy of each factor \(w_{ij}^{\sharp}\theta_0\) through the
+  cocycle \(\gamma\) evaluated at the insertions \(v_1, v_2, v_3\). The three insertion values are
+  common to the numerator and denominator of \(\varepsilon\); multiplying the three relations
+  telescopically, the \(\gamma\)-terms cancel and the value of \(\varepsilon\) at \(z\) agrees with
+  its value at \(z'\) on the overlap. A compatible unit family on a pointed cover glues to a global
+  unit by the sheaf axiom (Theorem~\ref{thm:exists_global_unit_of_compatible}).
+\end{proof}
+
+\begin{theorem}[Coherence of the \(\sigma\)-normalized comparison]
+  \label{thm:normalizedComparison_coherent}
+  \lean{AlgebraicGeometry.NormalizedCechComparison.coherent}
+  \uses{def:normalizedCechComparison, thm:exists_glued_productDefect, lem:sectionSquares,
+    thm:unitsAppTop_sectionOfPoint_bijective, def:module_descent_cocycle}
+  \leanok
+  \source{kleiman-picard}
+  Let the curve \(C\) be proper, geometrically irreducible and geometrically reduced. Then the
+  comparison cochain \(\theta\) of a \(\sigma\)-normalized comparison of \(\gamma\) satisfies the
+  Amitsur cocycle identity on the nose:
+  \[
+    (w_{23}^{\sharp}\theta)\,(w_{12}^{\sharp}\theta) \;=\; w_{13}^{\sharp}\theta ,
+  \]
+  in the face convention of the descent \(1\)-cocycle (Definition~\ref{def:module_descent_cocycle}).
+  No faithful flatness is required.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By \textbf{(N1)} the Amitsur defect \(\varepsilon\) of \(\theta\) glues to a global unit
+  \(\bar\varepsilon\) of \(X_{B \otimes_A (B \otimes_A B)}\)
+  (Theorem~\ref{thm:exists_glued_productDefect}). We claim its \(\sigma\)-restriction is \(1\).
+  Pull the glued identity back along the section \(s_{\mathrm{cb}}\) over the triple base: by the
+  section squares \(s_{\mathrm{cb}} \circ w_{ij} = f_{ij} \circ s_q\)
+  (Lemma~\ref{lem:sectionSquares}) the three coface pullbacks of \(\theta\) become the coface
+  pullbacks \(f_{ij}^{\sharp}\) of the \(\sigma\)-restriction of \(\theta\). Now \textbf{(N2)}
+  rewrites the \(\sigma\)-restriction of \(\theta\) as the \(\rho\)-comparison \(q_1^{\sharp}\rho /
+  q_2^{\sharp}\rho\); substituting, the three coface pullbacks become three ratios of
+  \(\rho\)-terms whose endpoints match up through the simplicial coincidences \(f_{12} \circ q_2 =
+  f_{23} \circ q_1\), \(f_{13} \circ q_1 = f_{12} \circ q_1\), \(f_{13} \circ q_2 = f_{23} \circ
+  q_2\). These telescope to \(1\); hence the \(\sigma\)-restriction of \(\bar\varepsilon\) is \(1\).
+  Finally, at the affine test \(B \otimes_A (B \otimes_A B)\), rigidity
+  (Theorem~\ref{thm:unitsAppTop_sectionOfPoint_bijective}) forces a global unit with trivial
+  \(\sigma\)-restriction to be \(1\), so \(\bar\varepsilon = 1\), i.e.\ \(\varepsilon = 1\), which is
+  the claimed identity. This is Kleiman's descent-cocycle step: the automorphism
+  \(v_{13}^{-1}v_{23}v_{12}\) of the first-projection pullback of the rigidified pair is trivial.
+\end{proof}
+
+\begin{theorem}[Uniqueness of the \(\sigma\)-normalized comparison]
+  \label{thm:normalizedComparison_unique}
+  \lean{AlgebraicGeometry.Over.normalizedComparison_unique}
+  \uses{def:normalizedCechComparison, thm:exists_global_unit_of_compatible,
+    thm:unitsAppTop_sectionOfPoint_bijective}
+  \leanok
+  \source{kleiman-picard}
+  Let the curve \(C\) be proper, geometrically irreducible and geometrically reduced. Two comparison
+  cochains \(\theta, \theta'\) on the same cover \(\mathcal W\), each satisfying \textbf{(N1)}
+  against the same cocycle \(\gamma\) and \textbf{(N2)} against the same trivializing cochain
+  \(\rho\), are equal.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The ratio \(\theta/\theta'\) has trivial coboundary: since \(\theta\) and \(\theta'\) cobound the
+  same comparison of \(\gamma\) (both satisfy \textbf{(N1)}), the overlap discrepancies of
+  \(\theta\) and \(\theta'\) coincide and cancel in the ratio. Hence \(\theta/\theta'\) is \v
+  Cech-compatible and glues to a global unit \(\chi\) of \(X_{B \otimes_A B}\)
+  (Theorem~\ref{thm:exists_global_unit_of_compatible}). Its \(\sigma\)-restriction is \(1\): by
+  \textbf{(N2)} both \(s_q^{\sharp}\theta\) and \(s_q^{\sharp}\theta'\) equal the same
+  \(\rho\)-comparison \(q_1^{\sharp}\rho / q_2^{\sharp}\rho\) on the normalization cover, so their
+  ratio restricts to \(1\). Rigidity (Theorem~\ref{thm:unitsAppTop_sectionOfPoint_bijective}) at the
+  affine test \(B \otimes_A B\) forces \(\chi = 1\); reading this pointwise gives \(\theta =
+  \theta'\).
+\end{proof}
+
+\begin{theorem}[The diagonal pullback of a witness glues to a global unit]
+  \label{thm:exists_glued_diagonalSeed}
+  \lean{AlgebraicGeometry.Over.exists_glued_diagonalSeed,
+    AlgebraicGeometry.tensorLmul'_comp_tensorInl, AlgebraicGeometry.tensorLmul'_comp_tensorInr,
+    AlgebraicGeometry.Over.whiskerLeft_lmul'_inl, AlgebraicGeometry.Over.whiskerLeft_lmul'_inr}
+  \uses{def:normalizedCechComparison, def:tensorInl_tensorInr, thm:exists_global_unit_of_compatible}
+  \leanok
+  The multiplication \(\nabla \colon B \otimes_A B \to B\) retracts both coprojections, \(\nabla
+  \circ q_1 = \id = \nabla \circ q_2\); whiskered to the curve this is \(u_1 \circ \Delta = \id =
+  u_2 \circ \Delta\), where \(\Delta \colon X_B \to X_{B \otimes_A B}\) is the diagonal (the
+  whiskered \(\Spec\) of \(\nabla\)). Consequently, for a comparison cochain \(\theta_0\) satisfying
+  \textbf{(N1)}, the diagonal pullback \(\Delta^{\sharp}\theta_0\) is \v Cech-compatible and glues to
+  a global unit \(\bar d \in \Gamma(X_B, \top)^{\times}\). No geometric hypotheses.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The retractions are the identities \(\nabla(b \otimes 1) = b\) and \(\nabla(1 \otimes b) = b\);
+  whiskering the resulting equalities of \(A\)-algebra maps to the curve gives \(u_1 \circ \Delta =
+  \id = u_2 \circ \Delta\). Pull \textbf{(N1)} back along \(\Delta\): both insertion terms of the
+  pulled relation are \(\gamma\) evaluated along \(u_1 \circ \Delta = u_2 \circ \Delta\), hence
+  coincide and cancel, leaving \(\Delta^{\sharp}\theta_0\) with matching overlap values. Gluing by
+  the sheaf axiom (Theorem~\ref{thm:exists_global_unit_of_compatible}) yields \(\bar d\).
+\end{proof}
+
+\begin{theorem}[Triviality of the comparison on the diagonal]
+  \label{thm:normalizedComparison_diagonal_eq_one}
+  \lean{AlgebraicGeometry.Over.normalizedComparison_diagonal_eq_one}
+  \uses{def:normalizedCechComparison, thm:exists_glued_diagonalSeed, lem:sectionSquares,
+    thm:unitsAppTop_sectionOfPoint_bijective}
+  \leanok
+  \source{kleiman-picard}
+  Let the curve \(C\) be proper, geometrically irreducible and geometrically reduced. The pullback
+  of the comparison cochain \(\theta\) of a \(\sigma\)-normalized comparison along the diagonal
+  \(\Delta\) of \(X_{B \otimes_A B}\) is trivial: \(\Delta^{\sharp}\theta = 1\). This is the
+  cochain source of the diagonal normalization \(\mu(u) = 1\) of the descent \(1\)-cocycle.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Glue the diagonal seed of \(\theta\) to a global unit \(\bar d\) of \(X_B\)
+  (Theorem~\ref{thm:exists_glued_diagonalSeed}). Its \(\sigma\)-restriction is \(1\): the section
+  square relating \(s_B\), \(\Delta\), the \(\Spec\) of \(\nabla\) and \(s_q\)
+  (Lemma~\ref{lem:sectionSquares}) turns it into the \(\nabla\)-pullback of the
+  \(\sigma\)-restriction of \(\theta\), which \textbf{(N2)} makes the \(\nabla\)-pullback of the
+  \(\rho\)-comparison \(q_1^{\sharp}\rho / q_2^{\sharp}\rho\); the two legs coincide on the diagonal
+  because the multiplication retracts both coprojections
+  (Theorem~\ref{thm:exists_glued_diagonalSeed}), so the comparison collapses to \(1\). Rigidity
+  (Theorem~\ref{thm:unitsAppTop_sectionOfPoint_bijective}) at the affine test \(B\) forces \(\bar d
+  = 1\); pointwise this is \(\Delta^{\sharp}\theta = 1\).
+\end{proof}
+
+\section{The per-piece descent datum}
+\label{sec:effectivityDescentDatum}
+
+The \(\sigma\)-normalized comparison is descended piece by piece over a \(\mathrm{cg}\)-saturated
+affine cover of the base curve \(X_A\). On a piece \(V\) the cover-piece ring is \(M := S \otimes_A
+B\) with \(S := \Gamma(X_A, U)\) the base-piece ring (Definition~\ref{def:pieceAlgEquiv}), and the
+descent along \(S \to M\) is governed by the piece restriction of the comparison. This section
+records the pure-algebra bridge: the identification of the descent-cocycle ring with the geometric
+double-base ring, and the extraction of a descent \(1\)-cocycle from a comparison unit in geometric
+coordinates. Throughout, \(A\) is a commutative ring, \(S\) and \(B\) are \(A\)-algebras, and \(M =
+S \otimes_A B\).
+
+\begin{definition}[The descent-cocycle ring identification]
+  \label{def:pieceDescentEquiv}
+  \lean{Algebra.TensorProduct.pieceDescentEquiv, Algebra.TensorProduct.pieceDescentTripleEquiv}
+  \uses{def:module_descent_cocycle}
+  \leanok
+  The ring \(M \otimes_S M\) in which a descent \(1\)-cocycle relative to \(S \to M\)
+  (Definition~\ref{def:module_descent_cocycle}) lives is the base change to \(S\) of the whole-cover
+  descent-cocycle ring \(B \otimes_A B\): there is an \(S\)-algebra isomorphism
+  \[
+    M \otimes_S M \;\xrightarrow{\ \sim\ }\; S \otimes_A (B \otimes_A B), \qquad
+    (s_1 \otimes b_1) \otimes (s_2 \otimes b_2) \;\longmapsto\; (s_2 s_1) \otimes (b_1 \otimes b_2),
+  \]
+  together with its triple analogue \(M \otimes_S (M \otimes_S M) \xrightarrow{\sim} S \otimes_A (B
+  \otimes_A (B \otimes_A B))\).
+\end{definition}
+\begin{proof}
+  \leanok
+  The map is the composite of the cancellation of the middle base ring, \((S \otimes_A B)
+  \otimes_S (S \otimes_A B) \cong S \otimes_A (S \otimes_A B) \cong (S \otimes_A S) \otimes_A B\)
+  contracted along \(S \otimes_A S \to S\), with the associativity isomorphism of the iterated
+  tensor product; the displayed value on pure tensors is read off from these two standard
+  isomorphisms. The triple form is obtained by applying the same identification in the inner two
+  factors and then cancelling and reassociating.
+\end{proof}
+
+\begin{lemma}[Compatibility with the multiplication and the cofaces]
+  \label{lem:pieceDescentEquiv_faces}
+  \lean{Algebra.TensorProduct.pieceDescentEquiv_lmul',
+    Algebra.TensorProduct.pieceDescentTripleEquiv_descentFace₂₃,
+    Algebra.TensorProduct.pieceDescentTripleEquiv_descentFace₁₂,
+    Algebra.TensorProduct.pieceDescentTripleEquiv_descentFace₁₃}
+  \uses{def:pieceDescentEquiv, def:module_descent_cocycle}
+  \leanok
+  Under the identification of Definition~\ref{def:pieceDescentEquiv}, the multiplication
+  \(\mu \colon M \otimes_S M \to M\) corresponds to \(\id_S \otimes \mu\) on \(S \otimes_A (B
+  \otimes_A B)\), and the three cofaces \(\partial_{23}, \partial_{12}, \partial_{13}\) of \(M
+  \otimes_S M\) correspond to \(\id_S \otimes \partial_{23}, \id_S \otimes \partial_{12}, \id_S
+  \otimes \partial_{13}\) on \(S \otimes_A (B \otimes_A (B \otimes_A B))\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Each is an identity between two \(S\)-algebra maps out of \(M \otimes_S M\); it therefore suffices
+  to check it on pure tensors, where both sides evaluate to the same element by the computation of
+  Definition~\ref{def:pieceDescentEquiv}, and to extend by bilinearity.
+\end{proof}
+
+\begin{theorem}[A coherent comparison unit is a descent \(1\)-cocycle]
+  \label{thm:isDescentCocycle_comparisonDescentUnit}
+  \lean{Module.comparisonDescentUnit, Module.isDescentCocycle_comparisonDescentUnit}
+  \uses{def:pieceDescentEquiv, lem:pieceDescentEquiv_faces, def:module_descent_cocycle}
+  \leanok
+  Let \(v \in (S \otimes_A (B \otimes_A B))^{\times}\) be a \emph{comparison unit} that is
+  diagonal-normalized, \((\id_S \otimes \mu)(v) = 1\), and satisfies the Amitsur identity through
+  the three cofaces,
+  \[
+    (\id_S \otimes \partial_{23})(v) \cdot (\id_S \otimes \partial_{12})(v) = (\id_S \otimes
+    \partial_{13})(v) .
+  \]
+  Then the unit of \(M \otimes_S M\) that corresponds to \(v\) under
+  Definition~\ref{def:pieceDescentEquiv} --- the \emph{comparison descent unit} --- is a descent
+  \(1\)-cocycle relative to \(S \to M\) (Definition~\ref{def:module_descent_cocycle}).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Transport the two hypotheses through the identification. By
+  Lemma~\ref{lem:pieceDescentEquiv_faces} the normalization \(\mu\) of the comparison descent unit
+  is carried to \((\id_S \otimes \mu)(v) = 1\), which is the normalization condition; and the
+  cocycle product \(\partial_{23} \cdot \partial_{12}\) of the comparison descent unit is carried,
+  through the triple identification, to \((\id_S \otimes \partial_{23})(v) \cdot (\id_S \otimes
+  \partial_{12})(v) = (\id_S \otimes \partial_{13})(v)\), the image of \(\partial_{13}\). As the
+  triple identification is injective, the cocycle identity holds.
+\end{proof}
+
+\begin{definition}[The descended per-piece class and its cover pullback]
+  \label{def:comparisonDescentClass}
+  \lean{Module.comparisonDescentClass, Module.mapAlgebra_comparisonDescentClass_eq_one,
+    Module.IsDescentCocycle.mapAlgebra_picClass_eq_one}
+  \uses{thm:isDescentCocycle_comparisonDescentUnit, def:module_picClass, def:module_descended}
+  \leanok
+  Assume \(A \to B\) is faithfully flat, and let \(v\) be a coherent comparison unit as in
+  Theorem~\ref{thm:isDescentCocycle_comparisonDescentUnit}. The \emph{descended per-piece class}
+  \(M_V \in \operatorname{Pic}(S)\) is the Picard class (Definition~\ref{def:module_picClass}) of the
+  descent \(1\)-cocycle of the comparison descent unit. Its image under \(\operatorname{Pic}(S) \to
+  \operatorname{Pic}(M)\) is trivial.
+\end{definition}
+\begin{proof}
+  \leanok
+  Faithful flatness passes from \(A \to B\) to \(S \to M = S \otimes_A B\) by base change, so the
+  descent \(1\)-cocycle of the comparison descent unit has a well-defined Picard class
+  (Definition~\ref{def:module_picClass}). Base change to \(M\) sends the descended module to \(M\)
+  itself: the descended module of a cocycle is, by construction, the submodule of \(M\) on which the
+  two coactions agree (Definition~\ref{def:module_descended}), and tensoring up to \(M\) recovers
+  \(M\) as a free rank-one module through the descent isomorphism. Hence the class of \(M_V\) in
+  \(\operatorname{Pic}(M)\) is that of a free module, namely \(1\).
+\end{proof}
+
+\begin{definition}[The geometric descent-cocycle ring identification]
+  \label{def:pieceDescentGeom}
+  \lean{AlgebraicGeometry.Over.pieceDescentTensorEquiv,
+    AlgebraicGeometry.Over.pieceDescentCoverEquiv}
+  \uses{def:pieceAlgEquiv, def:pieceDescentEquiv}
+  \leanok
+  For a \(\mathrm{cg}\)-saturated affine piece \(U \subseteq X_A\), with base-piece ring \(\Gamma(X_A,
+  U)\) and cover-piece ring \(\Gamma(X_B, \mathrm{cg}^{-1}U)\), the descent-cocycle ring
+  \(\Gamma(X_B, \mathrm{cg}^{-1}U) \otimes_{\Gamma(X_A, U)} \Gamma(X_B, \mathrm{cg}^{-1}U)\) is
+  identified, as a \(\Gamma(X_A, U)\)-algebra, with \(\Gamma(X_A, U) \otimes_A (B \otimes_A B)\), and
+  hence with the section ring \(\Gamma(X_{B \otimes_A B}, \mathrm{cgq}^{-1}U)\) of the curve over the
+  descent-cocycle base --- the ring on whose spectrum the piece restriction of the comparison lives.
+\end{definition}
+\begin{proof}
+  \leanok
+  Apply the piece identification \(\Gamma(X_B, \mathrm{cg}^{-1}U) \cong \Gamma(X_A, U) \otimes_A B\)
+  (Definition~\ref{def:pieceAlgEquiv}) to each tensor factor, then the algebraic descent-cocycle
+  ring identification (Definition~\ref{def:pieceDescentEquiv}) with \(S = \Gamma(X_A, U)\); this
+  gives the first identification. For the second, apply the piece identification at the test algebra
+  \(B \otimes_A B\), giving \(\Gamma(X_A, U) \otimes_A (B \otimes_A B) \cong \Gamma(X_{B \otimes_A
+  B}, \mathrm{cgq}^{-1}U)\).
 \end{proof}
 
 \section{Divisor classes from local equations}

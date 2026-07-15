@@ -2170,3 +2170,358 @@ irreducible --- transports along base change, from which integrality and the fin
   (Definition~\ref{def:classDeg}) is defined on the base-changed curve, for every field extension
   \(K/k\).
 \end{remark}
+
+\section{The fibre twist of a map to the projective line}
+
+Throughout this section \(Y\) is an integral scheme, smooth of relative dimension one and
+quasi-compact over a field \(K\), equipped with a \emph{dominant} morphism \(\pi \colon Y \to
+\PP^1\). Pulling the two standard charts of \(\PP^1\) back along \(\pi\) gives an affine two-cover
+of \(Y\); the pullback of the chart coordinate cuts out, on this cover, the divisor of a fibre of
+\(\pi\). The class of \(n\) copies of that fibre is the \emph{fibre twist} \(\Theta_n\), and the
+purpose of the section is to construct it as a class trivialised on the two-cover by construction
+and to record that its degree scales linearly in \(n\).
+
+\begin{definition}[The pinned two-cover and its coordinate]
+  \label{def:fiberCover}
+  \lean{AlgebraicGeometry.fiberCoord, AlgebraicGeometry.preimage_inf_eq_basicOpen_fiberCoord,
+    AlgebraicGeometry.isUnit_fiberCoord_res_inf, AlgebraicGeometry.fiberCover}
+  \uses{def:P1_chartOpen, def:P1_chartCoord, lem:preimage_chart_sup, lem:P1_chartOpen_inf}
+  \leanok
+  Write \(V_0 = \pi^{-1}(U_0)\) and \(V_1 = \pi^{-1}(U_1)\) for the preimages of the two standard
+  charts \(U_i = D_+(X_i)\) of \(\PP^1\) (\ref{def:P1_chartOpen}); they cover \(Y\)
+  (\ref{lem:preimage_chart_sup}). The pinned two-cover assigns to a point of \(Y\) the chart \(V_0\)
+  if the point lies in \(V_0\), and \(V_1\) otherwise. Let
+  \[
+    t_0 \;=\; \pi^{\sharp}(t_{01}) \;\in\; \Gamma(Y, V_0)
+  \]
+  be the pullback along \(\pi\) of the chart-\(0\) coordinate \(t_{01} = X_1/X_0\)
+  (\ref{def:P1_chartCoord}). Then the overlap of the two-cover is exactly the locus where \(t_0\) is
+  invertible:
+  \[
+    V_0 \cap V_1 \;=\; D(t_0),
+  \]
+  the basic open of \(t_0\); consequently the restriction of \(t_0\) to \(V_0 \cap V_1\) is a unit of
+  \(\Gamma(Y, V_0 \cap V_1)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  Since \(U_0 \cup U_1 = \PP^1\), the preimages cover \(Y\) (\ref{lem:preimage_chart_sup}), so a
+  point outside \(V_0\) lies in \(V_1\); the assignment is therefore a pointed cover. On \(\PP^1\)
+  the coordinate \(t_{01} = X_1/X_0\) is a regular function on \(U_0\) that is invertible precisely
+  where \(X_1\) also fails to vanish, that is, on \(U_0 \cap U_1 = D_+(X_0 X_1)\)
+  (\ref{lem:P1_chartOpen_inf}); in other words the basic open of \(t_{01}\) in \(U_0\) is
+  \(U_0 \cap U_1\). Forming a basic open commutes with pullback along a morphism, so the locus where
+  \(t_0 = \pi^{\sharp}(t_{01})\) is invertible is \(\pi^{-1}(U_0 \cap U_1) = V_0 \cap V_1\); that is,
+  \(V_0 \cap V_1 = D(t_0)\). By definition of the basic open a section is invertible at every point
+  of its basic open, so \(t_0\) restricts to a unit on \(V_0 \cap V_1 = D(t_0)\).
+\end{proof}
+
+\begin{definition}[The fibre divisor of \(n\cdot(\text{fibre})\)]
+  \label{def:fiberDivisor}
+  \lean{AlgebraicGeometry.fiberDivisor, AlgebraicGeometry.germ_fiberCoord_mem_nonZeroDivisors,
+    AlgebraicGeometry.genericPoint_mem_preimage_inf}
+  \uses{def:fiberCover, def:localEquations}
+  \leanok
+  For \(n \in \N\), the \emph{fibre divisor of \(n\cdot(\text{fibre of }\pi)\)} is the
+  local-equation system on the pinned two-cover (\ref{def:localEquations}) whose equation is
+  \(t_0^{\,n}\) on the chart \(V_0\) and the constant \(1\) on \(V_1\). It is a genuine system of
+  local equations: each equation is regular, and on the overlap the two equations differ by the unit
+  factor \(t_0^{\,n}\).
+\end{definition}
+\begin{proof}
+  \leanok
+  \uses{lem:germ_generic_eq_algebraMap_germ}
+  We check regularity and the overlap condition. Regularity on \(V_1\) is trivial, the equation
+  being \(1\). On \(V_0\) it suffices to show that the germ of \(t_0\) at every point \(y \in V_0\)
+  is a nonzerodivisor of the stalk \(\struct{Y,y}\), for then so is the germ of its power
+  \(t_0^{\,n}\). Since \(Y\) is integral, each stalk embeds in the function field \(K(Y)\) through
+  the localisation map, so a germ is a nonzerodivisor as soon as it is nonzero. The generic point
+  \(\eta\) lies in the overlap \(V_0 \cap V_1\): as \(\pi\) is dominant its image is dense, and the
+  \(\PP^1\)-overlap \(U_0 \cap U_1\) is a nonempty open (it is the range of an affine chart), so the
+  preimage \(V_0 \cap V_1\) is a nonempty open of the irreducible space \(Y\) and hence contains
+  \(\eta\). On \(V_0 \cap V_1 = D(t_0)\) the germ of \(t_0\) at \(\eta\) is a unit
+  (\ref{def:fiberCover}), in particular nonzero. For any \(y \in V_0\), the germ of \(t_0\) at
+  \(\eta\) is the image of the germ at \(y\) under the localisation map \(\struct{Y,y} \to K(Y)\)
+  (\ref{lem:germ_generic_eq_algebraMap_germ}); were the germ at \(y\) zero, its image --- the
+  nonzero unit germ at \(\eta\) --- would be zero, a contradiction. Hence the germ of \(t_0\) at each
+  \(y \in V_0\) is nonzero, thus a nonzerodivisor. For the overlap condition, whenever a pair of
+  cover members overlap the ratio of their equations is a unit: two \(V_0\)-members or two
+  \(V_1\)-members give ratio \(1\), while a \(V_0\)--\(V_1\) overlap lies in \(V_0 \cap V_1\), where
+  the ratio is \(t_0^{\,n}/1 = t_0^{\,n}\) (or its inverse), a unit since \(t_0\) is
+  (\ref{def:fiberCover}).
+\end{proof}
+
+\begin{definition}[The fibre twist and its power law]
+  \label{def:fiberTwist}
+  \lean{AlgebraicGeometry.fiberTwist, AlgebraicGeometry.fiberTwist_succ,
+    AlgebraicGeometry.fiberTwist_pow}
+  \uses{def:fiberDivisor, def:localEquations_picClass}
+  \leanok
+  The \emph{fibre twist} \(\Theta_n \in \Pic(Y)\) is the Picard class of the fibre divisor of
+  \(n\cdot(\text{fibre})\):
+  \[
+    \Theta_n \;=\; \struct Y(n\cdot\text{fibre}) \;=\; \mathrm{picClass}(\text{fibre divisor } n)
+  \]
+  (\ref{def:localEquations_picClass}). It obeys the power law \(\Theta_{n+1} = \Theta_n \cdot
+  \Theta_1\), with \(\Theta_0 = 1\); hence \(\Theta_n = \Theta_1^{\,n}\).
+\end{definition}
+\begin{proof}
+  \leanok
+  \uses{lem:localEquations_ratioUnit}
+  By construction \(\Theta_n\) is the class of the unit \v Cech cocycle of transition units of the
+  fibre divisor (\ref{def:localEquations_picClass}). Write \(g^{(n)}_{xy}\) for its transition unit
+  between the members at points \(x, y\), the unique unit with \(f^{(n)}_x|_{\cap} = g^{(n)}_{xy}
+  \cdot f^{(n)}_y|_{\cap}\) on the overlap (\ref{lem:localEquations_ratioUnit}), where \(f^{(n)}\)
+  denotes the fibre equation of exponent \(n\). Pointwise \(f^{(n+1)} = f^{(n)} \cdot f^{(1)}\), the
+  equation being \(t_0^{\,n+1} = t_0^{\,n}\,t_0\) on \(V_0\) and \(1 = 1\cdot 1\) on \(V_1\).
+  Restricting to an overlap and using the defining equations,
+  \[
+    g^{(n+1)}_{xy}\, f^{(n+1)}_y|_{\cap}
+      = f^{(n+1)}_x|_{\cap}
+      = f^{(n)}_x|_{\cap}\, f^{(1)}_x|_{\cap}
+      = g^{(n)}_{xy}\, g^{(1)}_{xy}\, f^{(n)}_y|_{\cap}\, f^{(1)}_y|_{\cap}
+      = g^{(n)}_{xy}\, g^{(1)}_{xy}\, f^{(n+1)}_y|_{\cap};
+  \]
+  the restriction of \(f^{(n+1)}_y\) to the overlap is a nonzerodivisor (regularity), so cancelling
+  it gives \(g^{(n+1)}_{xy} = g^{(n)}_{xy}\, g^{(1)}_{xy}\). Thus the cocycle of exponent \(n+1\) is
+  the product of those of exponents \(n\) and \(1\); passing to classes, and using that the class map
+  from unit cocycles to \(\Pic(Y)\) is multiplicative, \(\Theta_{n+1} = \Theta_n \cdot \Theta_1\).
+  The exponent-\(0\) equation is the constant \(1\), with trivial cocycle, so \(\Theta_0 = 1\).
+  Induction on \(n\) yields \(\Theta_n = \Theta_1^{\,n}\).
+\end{proof}
+
+\begin{theorem}[The degree of the fibre twist scales linearly]
+  \label{thm:classDeg_fiberTwist}
+  \lean{AlgebraicGeometry.classDeg_fiberTwist}
+  \uses{def:fiberTwist, def:classDeg, thm:classDeg_mul}
+  \leanok
+  Assume in addition that \(Y\) is smooth of relative dimension one and quasi-compact over \(K\)
+  with finite-dimensional \(H^0\) and \(H^1\), so that the degree homomorphism \(\deg_{\Pic}\) of
+  \ref{def:classDeg} is available. Then the degree of the fibre twist scales linearly in \(n\):
+  \[
+    \deg_{\Pic} \Theta_n \;=\; n \cdot \deg_{\Pic} \Theta_1 .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  By the power law \(\Theta_n = \Theta_1^{\,n}\) (\ref{def:fiberTwist}) and additivity of the class
+  degree (\ref{thm:classDeg_mul}), we argue by induction on \(n\). The base case is
+  \(\deg_{\Pic}\Theta_0 = \deg_{\Pic} 1 = 0\). For the step,
+  \[
+    \deg_{\Pic}\Theta_{n+1} = \deg_{\Pic}(\Theta_n \cdot \Theta_1)
+      = \deg_{\Pic}\Theta_n + \deg_{\Pic}\Theta_1
+      = n\cdot\deg_{\Pic}\Theta_1 + \deg_{\Pic}\Theta_1
+      = (n+1)\cdot\deg_{\Pic}\Theta_1 . \qedhere
+  \]
+\end{proof}
+
+\section{The fibre unit and the fibre Weil divisor}
+
+We now build the counterpart of the fibre twist on the side of the function field \(K(Y)\) and of
+Weil divisors. The standing hypotheses are as before, with \(Y\) in addition locally of finite
+type over \(K\); the coordinate \(t_0\), read at the generic point, becomes a unit \(u \in
+K(Y)^{\times}\), and the effective divisor of its zeros is the fibre Weil divisor \(F\). Its zeros
+lie on the fibre of \(\pi\) over the point \([1 : 0]\), the locus \(V_0 \setminus V_1\); this fibre
+is nonempty whenever \(\pi\) is surjective, in particular for a finite dominant \(\pi\).
+
+\begin{definition}[The fibre unit]
+  \label{def:fiberCoordUnit}
+  \lean{AlgebraicGeometry.fiberCoord₁, AlgebraicGeometry.fiberCoord_mul_fiberCoord₁_res,
+    AlgebraicGeometry.fiberCoordUnit}
+  \uses{def:fiberCover, def:fiberDivisor, def:P1_chartCoord, lem:P1_chartOpen_inf}
+  \leanok
+  Let \(t_1 = \pi^{\sharp}(t_{10}) \in \Gamma(Y, V_1)\) be the pullback of the chart-\(1\) coordinate
+  \(t_{10} = X_0/X_1\) (\ref{def:P1_chartCoord}), a regular section on \(V_1\). On the overlap the
+  two coordinates are mutually inverse,
+  \[
+    t_0|_{\cap} \cdot t_1|_{\cap} \;=\; 1 \qquad \text{in } \Gamma(Y, V_0 \cap V_1).
+  \]
+  Consequently the germ \(u := \mathrm{germ}_{\eta}(t_0) \in K(Y)\) is a unit of the function field,
+  the \emph{fibre unit}; its inverse is \(\mathrm{germ}_{\eta}(t_1)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  On \(\PP^1\) the two chart coordinates satisfy \(t_{01}\,t_{10} = (X_1/X_0)(X_0/X_1) = 1\) on the
+  overlap \(U_0 \cap U_1 = D_+(X_0 X_1)\) (\ref{def:P1_chartCoord}, \ref{lem:P1_chartOpen_inf}).
+  Pulling this identity back along \(\pi\)'s section map over the overlap gives \(t_0|_{\cap} \cdot
+  t_1|_{\cap} = 1\) in \(\Gamma(Y, V_0 \cap V_1)\). The generic point \(\eta\) lies in the overlap
+  (\ref{def:fiberDivisor}), so taking germs at \(\eta\) --- a ring homomorphism, compatible with
+  restriction --- yields \(\mathrm{germ}_{\eta}(t_0)\cdot \mathrm{germ}_{\eta}(t_1) = 1\) in
+  \(K(Y)\). Hence \(u = \mathrm{germ}_{\eta}(t_0)\) is invertible with inverse
+  \(\mathrm{germ}_{\eta}(t_1)\), a unit of \(K(Y)\).
+\end{proof}
+
+\begin{theorem}[The order table of the fibre unit]
+  \label{thm:fiberCoordUnit_order}
+  \lean{AlgebraicGeometry.fiberCoordUnit_coeffAt_divOf_nonneg_of_mem_chart₀,
+    AlgebraicGeometry.fiberCoordUnit_coeffAt_divOf_nonpos_of_mem_chart₁,
+    AlgebraicGeometry.one_le_fiberCoordUnit_coeffAt_divOf_of_notMem_chart₁}
+  \uses{def:fiberCoordUnit, def:fiberCover, def:divOf, def:scheme_ord, def:scheme_ordZ,
+    lem:germ_generic_eq_algebraMap_germ, lem:ord_algebraMap_stalk_le_one}
+  \leanok
+  The principal divisor \(\mathrm{div}(u)\) of the fibre unit (\ref{def:divOf}) has, at a closed
+  point \(x\), the following orders:
+  \begin{itemize}
+    \item if \(x \in V_0\), then \(\mathrm{ord}_x(u) \ge 0\) (no pole);
+    \item if \(x \in V_1\), then \(\mathrm{ord}_x(u) \le 0\) (no zero);
+    \item if \(x \in V_0\) but \(x \notin V_1\), then \(\mathrm{ord}_x(u) \ge 1\) (a genuine zero).
+  \end{itemize}
+  In particular \(u\) is a unit of the stalk \(\struct{Y,x}\) exactly on the overlap, and its zeros
+  lie on \(V_0 \setminus V_1\), the fibre of \(\pi\) over \([1 : 0]\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  For \(x \in V_0\), the value \(u = \mathrm{germ}_{\eta}(t_0)\) is the image, under the localisation
+  map \(\struct{Y,x} \to K(Y)\), of the germ of \(t_0\) at \(x\)
+  (\ref{lem:germ_generic_eq_algebraMap_germ}). The image in \(K(Y)\) of a stalk element has no pole
+  at \(x\) (\ref{lem:ord_algebraMap_stalk_le_one}), so \(\mathrm{ord}_x(u) \ge 0\).
+
+  For \(x \in V_1\), apply the same to \(u^{-1} = \mathrm{germ}_{\eta}(t_1)\) and the regular section
+  \(t_1\) on \(V_1\): \(\mathrm{ord}_x(u^{-1}) \ge 0\). As \(\mathrm{ord}_x\) is a homomorphism
+  \(K(Y)^{\times} \to \Z\) (\ref{def:scheme_ordZ}), \(\mathrm{ord}_x(u) = -\mathrm{ord}_x(u^{-1}) \le
+  0\).
+
+  For \(x \in V_0\) with \(x \notin V_1\), the germ of \(t_0\) at \(x\) is not a unit, since \(x\)
+  lies outside \(D(t_0) = V_0 \cap V_1\) (\ref{def:fiberCover}); it is nonzero, its image in \(K(Y)\)
+  being the unit \(u\). The stalk \(\struct{Y,x}\) is a discrete valuation ring (\ref{def:scheme_ord}),
+  in which a nonzero non-unit has strictly positive order; hence \(\mathrm{ord}_x(u) \ge 1\).
+\end{proof}
+
+\begin{definition}[The fibre Weil divisor]
+  \label{def:fiberWeilDivisor}
+  \lean{AlgebraicGeometry.fiberWeilDivisor, AlgebraicGeometry.fiberWeilDivisor_nonneg,
+    AlgebraicGeometry.fiberWeilDivisor_coeffAt_of_mem_chart₁,
+    AlgebraicGeometry.fiberWeilDivisor_coeffAt_of_mem_chart₀,
+    AlgebraicGeometry.fiberWeilDivisor_deg_nonneg,
+    AlgebraicGeometry.fiberWeilDivisor_ne_zero_of_notMem_chart₁,
+    AlgebraicGeometry.fiberWeilDivisor_deg_pos_of_notMem_chart₁}
+  \uses{thm:fiberCoordUnit_order, def:divOf, def:curveDivisor, def:curveDivisor_deg,
+    thm:residueDeg_pos}
+  \leanok
+  The \emph{fibre Weil divisor} \(F\) is the effective part of \(\mathrm{div}(u)\): the Weil divisor
+  (\ref{def:curveDivisor}) with coefficient \(F_x = \max(\mathrm{ord}_x(u), 0)\) at each closed point
+  \(x\). It is effective (\(F \ge 0\)); it vanishes on \(V_1\) (\(F_x = 0\) for \(x \in V_1\)); it
+  agrees with \(\mathrm{div}(u)\) on \(V_0\) (\(F_x = \mathrm{ord}_x(u)\) for \(x \in V_0\)); and its
+  degree is nonnegative. If moreover some closed point \(x_0 \in V_0\) lies outside \(V_1\) --- a
+  point of the fibre over \([1 : 0]\) --- then \(F\) is nonzero and has strictly positive degree.
+\end{definition}
+\begin{proof}
+  \leanok
+  Effectivity is immediate from \(F_x = \max(\mathrm{ord}_x(u), 0) \ge 0\). On \(V_1\) one has
+  \(\mathrm{ord}_x(u) \le 0\) (\ref{thm:fiberCoordUnit_order}), so \(F_x = \max(\mathrm{ord}_x(u), 0)
+  = 0\); on \(V_0\) one has \(\mathrm{ord}_x(u) \ge 0\), so \(F_x = \mathrm{ord}_x(u)\). The degree
+  \(\deg_K F = \sum_x F_x\,[\kappa(x):K]\) (\ref{def:curveDivisor_deg}) is a finite sum of
+  nonnegative terms, each \(F_x \ge 0\) and each residue degree nonnegative, hence \(\deg_K F \ge 0\).
+  Given a witness \(x_0 \in V_0 \setminus V_1\): there \(F_{x_0} = \mathrm{ord}_{x_0}(u) \ge 1\)
+  (\ref{thm:fiberCoordUnit_order}), so \(F \ne 0\); and the degree, again a sum of nonnegative terms,
+  is bounded below by the single term \(F_{x_0}\,[\kappa(x_0):K] \ge 1\cdot[\kappa(x_0):K] > 0\),
+  using positivity of the residue degree (\ref{thm:residueDeg_pos}). Hence \(\deg_K F > 0\).
+\end{proof}
+
+\section{The twist lattices on the two-cover}
+
+Fix a Weil divisor \(D\) on \(Y\). The twisted divisors \(D + nF\) have divisor sheaves whose
+sections over the two charts and their overlap are \(K\)-submodules of the function field \(K(Y)\).
+We record how these section lattices vary with \(n\): fixed over \(V_1\) and over the overlap,
+growing over \(V_0\); from this the two-cover denominator lattices form an increasing chain that
+exhausts the fixed overlap module \(N = \struct Y(D)(V_0 \cap V_1)\), by clearing poles at the
+finite fibre over \([1 : 0]\).
+
+\begin{theorem}[The twist leaves the lattice fixed off \(V_0\)]
+  \label{thm:divisorSections_twist_fixed}
+  \lean{AlgebraicGeometry.divisorSections_add_nsmul_fiberWeilDivisor_chart₁,
+    AlgebraicGeometry.divisorSections_add_nsmul_fiberWeilDivisor_overlap}
+  \uses{def:fiberWeilDivisor, def:divisorSections}
+  \leanok
+  For every Weil divisor \(D\) and every \(n \in \N\), the sections of \(\struct Y(D + nF)\)
+  coincide with those of \(\struct Y(D)\) over \(V_1\) and over the overlap \(V_0 \cap V_1\):
+  \[
+    \struct Y(D + nF)(V_1) = \struct Y(D)(V_1), \qquad
+    \struct Y(D + nF)(V_0 \cap V_1) = \struct Y(D)(V_0 \cap V_1).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The fibre divisor \(F\) vanishes at every point of \(V_1\) (\ref{def:fiberWeilDivisor}), so at each
+  closed point \(x \in V_1\) the coefficient of the twist is \((D + nF)_x = D_x + n F_x = D_x\). The
+  overlap \(V_0 \cap V_1\) is contained in \(V_1\), so the same equality holds there. The sections of
+  \(\struct Y(A)\) over an open \(U\) are the rational functions whose pole order at each closed point
+  of \(U\) is bounded by \(A\) (\ref{def:divisorSections}); since the bounds imposed by \(D + nF\) and
+  by \(D\) agree at every closed point of \(V_1\) (respectively of the overlap), the two section
+  modules coincide.
+\end{proof}
+
+\begin{theorem}[The twist grows the lattice over \(V_0\)]
+  \label{thm:divisorSections_twist_chart0}
+  \lean{AlgebraicGeometry.divisorSections_add_nsmul_fiberWeilDivisor_chart₀}
+  \uses{def:fiberWeilDivisor, def:fiberCoordUnit, def:divisorSections, thm:mem_boundedSections_mul_iff,
+    def:divOf}
+  \leanok
+  For every Weil divisor \(D\) and every \(n \in \N\), multiplication by \(u^{-n}\) carries
+  \(\struct Y(D)(V_0)\) isomorphically onto \(\struct Y(D + nF)(V_0)\); that is,
+  \[
+    \struct Y(D + nF)(V_0) \;=\; u^{-n}\cdot \struct Y(D)(V_0)
+  \]
+  as \(K\)-submodules of \(K(Y)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  On \(V_0\) the fibre divisor agrees with \(\mathrm{div}(u)\) (\ref{def:fiberWeilDivisor}), so at
+  each closed point \(x \in V_0\) one has \((D + nF)_x = D_x + n\,\mathrm{ord}_x(u)\). Since
+  \(\mathrm{div}(u^{-n}) = -n\,\mathrm{div}(u)\) (the principal divisor is a homomorphism,
+  \ref{def:divOf}), this reads \((D + nF)_x = D_x - \mathrm{ord}_x(u^{-n}) = \bigl(D -
+  \mathrm{div}(u^{-n})\bigr)_x\). Hence \(\struct Y(D + nF)(V_0) = \struct Y\bigl(D -
+  \mathrm{div}(u^{-n})\bigr)(V_0)\). By the bound-shift (\ref{thm:mem_boundedSections_mul_iff}) with
+  \(g = u^{-n}\), a rational function \(h\) has poles bounded by \(D\) on \(V_0\) if and only if
+  \(u^{-n} h\) has poles bounded by \(D - \mathrm{div}(u^{-n})\) on \(V_0\); equivalently,
+  multiplication by \(u^{-n}\) is a \(K\)-linear bijection from \(\struct Y(D)(V_0)\) onto
+  \(\struct Y\bigl(D - \mathrm{div}(u^{-n})\bigr)(V_0) = \struct Y(D + nF)(V_0)\). As \(F\) is
+  effective, these submodules increase with \(n\).
+\end{proof}
+
+\begin{definition}[The denominator lattice and its exhaustion]
+  \label{def:fiberLattice}
+  \lean{AlgebraicGeometry.fiberLattice, AlgebraicGeometry.fiberLattice_le_overlap,
+    AlgebraicGeometry.fiberLattice_mono, AlgebraicGeometry.iSup_fiberLattice}
+  \uses{thm:divisorSections_twist_fixed, thm:divisorSections_twist_chart0, def:fiberWeilDivisor,
+    thm:fiberCoordUnit_order, def:divisorSections, def:divOf}
+  \leanok
+  The \emph{denominator lattice} \(A_n\) of \(\struct Y(D + nF)\) is the join, inside \(K(Y)\), of the
+  section lattices over the two charts:
+  \[
+    A_n \;=\; \struct Y(D + nF)(V_0) \;+\; \struct Y(D + nF)(V_1)
+    \qquad (\text{as } K\text{-submodules of } K(Y)).
+  \]
+  It lies in the fixed ambient \(N := \struct Y(D)(V_0 \cap V_1)\), the lattices form an increasing
+  chain, and they exhaust \(N\):
+  \[
+    A_n \le N, \qquad A_n \le A_{n+1}, \qquad \bigsqcup_{n} A_n = N .
+  \]
+\end{definition}
+\begin{proof}
+  \leanok
+  \emph{Containment in \(N\).} For an inclusion of nonempty opens \(W \subseteq W'\), the section
+  module \(\struct Y(A)(W')\) is contained in \(\struct Y(A)(W)\), a bound over more points being more
+  restrictive (\ref{def:divisorSections}). Applying this to \(V_0 \cap V_1 \subseteq V_0\) and \(V_0
+  \cap V_1 \subseteq V_1\), and using \(\struct Y(D + nF)(V_0 \cap V_1) = N\)
+  (\ref{thm:divisorSections_twist_fixed}), both \(\struct Y(D + nF)(V_0)\) and \(\struct Y(D +
+  nF)(V_1)\) are contained in \(N\); hence so is their join \(A_n\).
+
+  \emph{The chain is increasing.} \(F\) is effective (\ref{def:fiberWeilDivisor}), so \(D + nF \le D +
+  (n+1)F\); the section lattice of a larger divisor contains that of a smaller one over any fixed open
+  (\ref{def:divisorSections}), over both \(V_0\) and \(V_1\), whence \(A_n \le A_{n+1}\).
+
+  \emph{Exhaustion.} The inclusion \(\bigsqcup_n A_n \le N\) is the containment just proved. For the
+  reverse, let \(s \in N\); we find \(n\) with \(s \in \struct Y(D + nF)(V_0) \subseteq A_n\). If
+  \(s = 0\) it lies in every \(A_n\). Otherwise \(s\) is a unit of \(K(Y)\), and both \(D\) and
+  \(\mathrm{div}(s)\) are supported on a finite set of closed points (\ref{def:curveDivisor},
+  \ref{def:divOf}). Consider a closed point \(x \in V_0\). If also \(x \in V_1\), then \(F_x = 0\)
+  (\ref{def:fiberWeilDivisor}) and membership \(s \in N\) gives \(-\mathrm{ord}_x(s) \le D_x = (D +
+  nF)_x\). If \(x \notin V_1\), then \(F_x \ge 1\) (\ref{thm:fiberCoordUnit_order}, via
+  \ref{def:fiberWeilDivisor}); choosing \(n\) at least the maximum, over the finitely many exceptional
+  points, of the pole deficit \(-\mathrm{ord}_x(s) - D_x\) makes \(n F_x \ge -\mathrm{ord}_x(s) -
+  D_x\), that is \(-\mathrm{ord}_x(s) \le D_x + n F_x = (D + nF)_x\); at the remaining points both
+  \(D_x\) and \(\mathrm{ord}_x(s)\) vanish and the bound is automatic. Thus for this \(n\), \(s\) has
+  poles bounded by \(D + nF\) at every closed point of \(V_0\), so \(s \in \struct Y(D + nF)(V_0)
+  \subseteq A_n \subseteq \bigsqcup_m A_m\). Hence \(N \le \bigsqcup_n A_n\), and equality holds.
+\end{proof}

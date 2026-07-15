@@ -1993,3 +1993,388 @@ test algebra.
   of the affine overlap of \(D\), hence itself affine. Thus the two preimages form an affine
   two-chart cover of \(C \otimes \Spec R\).
 \end{proof}
+
+\section{Product charts on a fibre product}
+
+Let \(X\) and \(T\) be objects of \(\Over(\Spec k)\), with the two projections
+\(\mathrm{fst} \colon X \otimes T \to X\) and \(\mathrm{snd} \colon X \otimes T \to T\)
+exhibiting the underlying scheme of the fibre product \(X \otimes T\) as
+\(X \times_{\Spec k} T\). For opens \(U\) of \(X\) and \(V\) of \(T\) this section builds the
+open \(\mathfrak W(U,V) \subseteq X \otimes T\) cut out by the two projections and, for \(U, V\)
+affine, identifies its section ring with the tensor product \(\Gamma(X,U) \otimes_k \Gamma(T,V)\).
+All \(k\)-algebra structures on section rings are those obtained by pulling back along the
+structure morphism to \(\Spec k\).
+
+\begin{definition}[The product chart]
+  \label{def:productChart}
+  \lean{AlgebraicGeometry.Over.productChart, AlgebraicGeometry.Over.isAffineOpen_productChart}
+  \leanok
+  For opens \(U\) of \(X\) and \(V\) of \(T\), the \emph{product chart} is the open
+  \[
+    \mathfrak W(U,V) \;:=\; \mathrm{fst}^{-1}(U) \cap \mathrm{snd}^{-1}(V) \;\subseteq\; X \otimes T .
+  \]
+  It is monotone in \(U\) and \(V\). If \(U\) and \(V\) are affine, then \(\mathfrak W(U,V)\) is
+  affine.
+\end{definition}
+\begin{proof}
+  \leanok
+  Monotonicity follows from monotonicity of preimages and of intersections. For affineness, the
+  two projections exhibit \(X \otimes T\) as the fibre product \(X \times_{\Spec k} T\).
+  Restricting this cartesian square to the opens \(U \subseteq X\), \(V \subseteq T\) and the
+  whole base \(\Spec k\) presents the restriction of \(X \otimes T\) to
+  \(\mathrm{fst}^{-1}(U) \cap \mathrm{snd}^{-1}(V) = \mathfrak W(U,V)\) as the fibre product
+  \(U \times_{\Spec k} V\) of the restricted schemes. When \(U\), \(V\) and the base \(\Spec k\)
+  are affine, this is a fibre product of affine schemes over an affine scheme, hence affine; so
+  \(\mathfrak W(U,V)\) is an affine open.
+\end{proof}
+
+\begin{definition}[The sections identification]
+  \label{def:productChartSections}
+  \lean{AlgebraicGeometry.Over.isPushout_productChartSections,
+    AlgebraicGeometry.Over.productChartSections,
+    AlgebraicGeometry.Over.productChartSectionsAlgEquiv,
+    AlgebraicGeometry.Over.productChartSections_tmul,
+    AlgebraicGeometry.Over.productChartSections_naturality}
+  \uses{def:productChart}
+  \leanok
+  Let \(U\) and \(V\) be affine. The square of section rings
+  \[
+    \begin{array}{ccc}
+      \Gamma(\Spec k, \struct{}) & \longrightarrow & \Gamma(X, U) \\
+      \downarrow & & \downarrow \\
+      \Gamma(T, V) & \longrightarrow & \Gamma\bigl(X \otimes T,\ \mathfrak W(U,V)\bigr)
+    \end{array}
+  \]
+  --- the top and left edges the pullbacks along the two structure morphisms to \(\Spec k\), the
+  bottom and right edges the two projection pullbacks \(\mathrm{fst}^\sharp\),
+  \(\mathrm{snd}^\sharp\) --- is a pushout of commutative rings. Since
+  \(\Gamma(\Spec k, \struct{}) = k\), it follows that there is a \(k\)-algebra isomorphism
+  \[
+    \Gamma(X, U) \otimes_k \Gamma(T, V) \;\xrightarrow{\ \sim\ }\;
+      \Gamma\bigl(X \otimes T,\ \mathfrak W(U,V)\bigr), \qquad
+      s \otimes t \;\longmapsto\; \mathrm{fst}^\sharp(s) \cdot \mathrm{snd}^\sharp(t),
+  \]
+  natural in restriction in both factors: for affine opens \(U' \subseteq U\) and
+  \(V' \subseteq V\), restricting an identified section to \(\mathfrak W(U', V')\) equals
+  identifying the section obtained by restricting the two tensor factors to \(U'\) and \(V'\).
+\end{definition}
+\begin{proof}
+  \leanok
+  The square is a pushout by the base-change theorem for the sections of a fibre product, in the
+  affine case: for a cartesian square of schemes and compatible opens over which the base and the
+  two source opens are affine, the induced square of section rings is a pushout; here the base
+  \(\Spec k\) and the opens \(U\), \(V\) are affine, and no flatness hypothesis is needed. On the
+  other hand the tensor product \(\Gamma(X,U) \otimes_k \Gamma(T,V)\) is the pushout of the span
+  \(k \to \Gamma(X,U)\), \(k \to \Gamma(T,V)\) of \(k\)-algebra structure maps. Comparing the two
+  pushouts of this common span yields the displayed \(k\)-algebra isomorphism; it sends the two
+  coprojections \(s \otimes 1\) and \(1 \otimes t\) to \(\mathrm{fst}^\sharp(s)\) and
+  \(\mathrm{snd}^\sharp(t)\), hence a pure tensor \(s \otimes t = (s \otimes 1)(1 \otimes t)\) to
+  the product \(\mathrm{fst}^\sharp(s) \cdot \mathrm{snd}^\sharp(t)\). Naturality is checked on
+  pure tensors: both sides send \(s \otimes t\) to the restriction of
+  \(\mathrm{fst}^\sharp(s) \cdot \mathrm{snd}^\sharp(t)\) to \(\mathfrak W(U',V')\), because
+  projection pullback commutes with restriction of sections.
+\end{proof}
+
+\begin{theorem}[The lift-app rule]
+  \label{thm:appLE_productChartSections}
+  \lean{AlgebraicGeometry.Over.appLE_productChartSections_tmul,
+    AlgebraicGeometry.Over.appLE_productChartSections_tmul_lift,
+    AlgebraicGeometry.Over.appLE_productChartSections_sub}
+  \uses{def:productChartSections}
+  \leanok
+  Let \(U\), \(V\) be affine and let \(q \colon Z \to X \otimes T\) be a morphism of
+  \(\Over(\Spec k)\) with components \(a := \mathrm{fst} \circ q \colon Z \to X\) and
+  \(b := \mathrm{snd} \circ q \colon Z \to T\). Then on any open \(W\) of \(Z\) contained in
+  \(q^{-1}\mathfrak W(U,V)\), in \(a^{-1}(U)\) and in \(b^{-1}(V)\), the pullback \(q^\sharp\)
+  sends the identified pure tensor and its difference shape to
+  \[
+    q^\sharp\bigl(s \otimes t\bigr) = a^\sharp(s) \cdot b^\sharp(t), \qquad
+    q^\sharp\bigl(s \otimes 1 - 1 \otimes t\bigr) = a^\sharp(s) - b^\sharp(t).
+  \]
+  In particular, for the morphism \(\langle a, b\rangle \colon Z \to X \otimes T\) into the
+  product determined by two maps \(a \colon Z \to X\), \(b \colon Z \to T\), the pullback
+  \(\langle a, b\rangle^\sharp\) sends \(s \otimes t\) to \(a^\sharp(s) \cdot b^\sharp(t)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The identification sends \(s \otimes t\) to
+  \(\mathrm{fst}^\sharp(s) \cdot \mathrm{snd}^\sharp(t)\)
+  (Definition~\ref{def:productChartSections}). Pulling back along \(q\) and using functoriality
+  of section pullback, \(q^\sharp \circ \mathrm{fst}^\sharp = (\mathrm{fst} \circ q)^\sharp = a^\sharp\)
+  and \(q^\sharp \circ \mathrm{snd}^\sharp = b^\sharp\) over the opens in question, so
+  \(q^\sharp(s \otimes t) = a^\sharp(s) \cdot b^\sharp(t)\). The difference formula follows by
+  additivity together with \(s \otimes 1 \mapsto a^\sharp(s)\), \(1 \otimes t \mapsto b^\sharp(t)\)
+  and \(a^\sharp(1) = b^\sharp(1) = 1\). For \(\langle a,b\rangle\) one has
+  \(\mathrm{fst} \circ \langle a,b\rangle = a\) and \(\mathrm{snd} \circ \langle a,b\rangle = b\),
+  so the general rule applies with \(q = \langle a, b\rangle\).
+\end{proof}
+
+\begin{lemma}[Basic open of a pure tensor]
+  \label{lem:basicOpen_productChartSections_tmul}
+  \lean{AlgebraicGeometry.Over.basicOpen_productChartSections_tmul}
+  \uses{def:productChart, def:productChartSections}
+  \leanok
+  Let \(U\), \(V\) be affine, \(s \in \Gamma(X,U)\) and \(t \in \Gamma(T,V)\). The basic open of
+  the identified pure tensor is the product chart of the two factor basic opens:
+  \[
+    D\bigl(\mathrm{fst}^\sharp(s) \cdot \mathrm{snd}^\sharp(t)\bigr)
+      \;=\; \mathfrak W\bigl(D(s),\, D(t)\bigr).
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  The basic open of a product is the intersection of the two basic opens, and the basic open of a
+  pullback \(\mathrm{fst}^\sharp(s)\) is the preimage \(\mathrm{fst}^{-1}(D(s))\) of the basic open
+  of \(s\) (likewise for \(\mathrm{snd}^\sharp(t)\)). Hence
+  \(D(\mathrm{fst}^\sharp(s) \cdot \mathrm{snd}^\sharp(t)) = \mathrm{fst}^{-1}(D(s)) \cap \mathrm{snd}^{-1}(D(t))
+  = \mathfrak W(D(s), D(t))\), using \(D(s) \subseteq U\) and \(D(t) \subseteq V\).
+\end{proof}
+
+\begin{theorem}[Sections over a basic open localize the tensor ring]
+  \label{thm:isLocalization_away_basicOpen_productChartSections}
+  \lean{AlgebraicGeometry.Over.isLocalization_away_basicOpen_productChartSections,
+    AlgebraicGeometry.Over.isAffineOpen_basicOpen_productChartSections}
+  \uses{def:productChart, def:productChartSections}
+  \leanok
+  Let \(U\), \(V\) be affine and \(x \in \Gamma(X,U) \otimes_k \Gamma(T,V)\); write \(\xi\) for
+  the section of \(\mathfrak W(U,V)\) identified with \(x\). Then the basic open
+  \(D(\xi) \subseteq \mathfrak W(U,V)\) is affine, and its section ring, regarded as a
+  \(\Gamma(X,U) \otimes_k \Gamma(T,V)\)-algebra through the identification followed by restriction
+  to \(D(\xi)\), is the localization of \(\Gamma(X,U) \otimes_k \Gamma(T,V)\) away from \(x\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The chart \(\mathfrak W(U,V)\) is affine (Definition~\ref{def:productChart}), so a basic open of
+  it is affine, and the section ring over \(D(\xi)\) is the localization of
+  \(\Gamma(X \otimes T, \mathfrak W(U,V))\) away from \(\xi\). Transporting along the ring
+  isomorphism of Definition~\ref{def:productChartSections}, which carries \(x\) to \(\xi\) and the
+  powers of \(x\) to the powers of \(\xi\), identifies this with the localization of
+  \(\Gamma(X,U) \otimes_k \Gamma(T,V)\) away from \(x\).
+\end{proof}
+
+\section{The diagonal of the curve square}
+
+Fix an object \(C\) of \(\Over(\Spec k)\) and form the fibre-product square \(C \otimes C\) with
+its two projections \(\mathrm{fst}, \mathrm{snd} \colon C \otimes C \to C\). The diagonal is the
+graph of the identity; when \(C\) is separated over \(\Spec k\) it is a closed immersion, and its
+image is the closed set along which the per-chart local equation of the next section cuts out the
+diagonal.
+
+\begin{definition}[The diagonal of the curve square]
+  \label{def:diagonal}
+  \lean{AlgebraicGeometry.Over.diagonal,
+    AlgebraicGeometry.Over.isClosedImmersion_diagonal_left,
+    AlgebraicGeometry.Over.isClosed_range_diagonal,
+    AlgebraicGeometry.Over.diagonalComplement,
+    AlgebraicGeometry.Over.coe_support_ker_diagonal,
+    AlgebraicGeometry.Over.diagonal_preimage_productChart}
+  \uses{def:productChart}
+  \leanok
+  \source{kleiman-picard}
+  The \emph{diagonal} of \(C \otimes C\) is the morphism into the product determined by the
+  identity in both components,
+  \[
+    \delta \;:=\; \langle \id_C, \id_C \rangle \colon C \longrightarrow C \otimes C, \qquad
+    \mathrm{fst} \circ \delta = \id_C, \quad \mathrm{snd} \circ \delta = \id_C .
+  \]
+  For opens \(U, V\) of \(C\) its preimage of a product chart is the intersection of the factors,
+  \(\delta^{-1}\mathfrak W(U,V) = U \cap V\). If moreover \(C\) is separated over \(\Spec k\),
+  then \(\delta\) is a closed immersion; its image \(\Delta := \delta(C)\) is closed, with open
+  complement \(\Delta^{\mathrm{c}} := (C \otimes C) \setminus \Delta\); and the support of the
+  kernel ideal sheaf of \(\delta\) is exactly \(\Delta\).
+\end{definition}
+\begin{proof}
+  \leanok
+  The morphism \(\langle \id_C, \id_C\rangle\) is the unique one with both composites equal to
+  \(\id_C\), by the universal property of the product. A point \(z\) lies in
+  \(\delta^{-1}\mathfrak W(U,V)\) iff \(\mathrm{fst}(\delta z) \in U\) and
+  \(\mathrm{snd}(\delta z) \in V\); since \(\mathrm{fst} \circ \delta = \mathrm{snd} \circ \delta = \id_C\),
+  this means \(z \in U\) and \(z \in V\), i.e. \(z \in U \cap V\).
+
+  Now assume \(C\) separated. The second projection \(\mathrm{snd} \colon C \otimes C \to C\) is
+  the base change of the structure morphism \(C \to \Spec k\) along itself, hence separated
+  because \(C\) is. The composite \(\mathrm{snd} \circ \delta = \id_C\) is a closed immersion; and
+  if a composite \(g \circ f\) is a closed immersion and \(g\) is separated, then \(f\) is a
+  closed immersion. Applying this with \(f = \delta\), \(g = \mathrm{snd}\) shows \(\delta\) is a
+  closed immersion. A closed immersion is a closed embedding, so its image \(\Delta\) is closed
+  and \(\Delta^{\mathrm{c}}\) is open. Finally, the support of the kernel ideal sheaf of a
+  quasi-compact morphism is the closure of its image; since \(\Delta\) is closed, this support
+  equals \(\Delta\).
+\end{proof}
+
+\section{The per-chart local equation of the diagonal}
+
+Fix an affine open \(U\) of \(C\) and write \(B := \Gamma(C, U)\). Suppose \(B\) carries the
+abstract \'etale-coordinate data of Definition~\ref{def:diagonalSetup} and
+Theorem~\ref{thm:exists_idempotent_lift}: a \(k[X]\)-algebra structure making \(k \to k[X] \to B\)
+a tower, an \'etale coordinate \(u \in B\) (the image of \(X\)), and an idempotent lift
+\(\mathrm{elift} \in B \otimes_k B\) whose base change to \(B \otimes_{k[X]} B\) is idempotent and
+generates the \(k[X]\)-diagonal ideal. On such a chart the diagonal of \(C \otimes C\) is, in one
+affine piece, the vanishing locus of the single diagonal equation \(u \otimes 1 - 1 \otimes u\);
+this section makes that precise and records the regularity of the equation.
+
+\begin{definition}[The diagonal member and its equation]
+  \label{def:diagonalChart}
+  \lean{AlgebraicGeometry.Over.diagonalChart,
+    AlgebraicGeometry.Over.isAffineOpen_diagonalChart,
+    AlgebraicGeometry.Over.diagonalChartEqn,
+    AlgebraicGeometry.Over.diagonal_appLE_productChartSections,
+    AlgebraicGeometry.Over.diagonal_preimage_diagonalChart}
+  \uses{def:productChart, def:productChartSections, def:diagonal, def:diagonalSetup}
+  \leanok
+  Let \(\vartheta \in \Gamma(C \otimes C, \mathfrak W(U,U))\) be the section identified with
+  \(1 - \mathrm{elift}\) (Definition~\ref{def:productChartSections}). The \emph{diagonal member}
+  attached to the chart \(U\) is the affine basic open
+  \[
+    \mathfrak D(U) \;:=\; D(\vartheta) \;\subseteq\; \mathfrak W(U,U).
+  \]
+  The \emph{diagonal equation} \(e_U \in \Gamma(C \otimes C, \mathfrak D(U))\) is the restriction
+  to \(\mathfrak D(U)\) of the section of \(\mathfrak W(U,U)\) identified with the diagonal
+  generator \(u \otimes 1 - 1 \otimes u\). Writing \(\xi_x\) for the section of
+  \(\mathfrak W(U,U)\) identified with \(x \in B \otimes_k B\), the pullback along the diagonal is
+  multiplication: over \(\delta^{-1}\mathfrak W(U,U) = U\),
+  \[
+    \delta^\sharp(\xi_x) \;=\; \mu(x) \;\in\; \Gamma(C, U), \qquad
+    \mu \colon B \otimes_k B \to B, \quad x \otimes y \mapsto xy .
+  \]
+  Consequently, if \(\mu(\mathrm{elift}) = 0\), then \(\delta^{-1}\mathfrak D(U) = U\).
+\end{definition}
+\begin{proof}
+  \leanok
+  \uses{thm:appLE_productChartSections, thm:isLocalization_away_basicOpen_productChartSections}
+  Affineness of \(\mathfrak D(U)\) is affineness of a basic open of the affine chart
+  \(\mathfrak W(U,U)\) (Theorem~\ref{thm:isLocalization_away_basicOpen_productChartSections}). For
+  the pullback formula, apply the lift-app rule (Theorem~\ref{thm:appLE_productChartSections}) to
+  \(q = \delta\), whose components are \(\mathrm{fst} \circ \delta = \mathrm{snd} \circ \delta = \id_C\):
+  on a pure tensor \(s \otimes t\) it gives
+  \(\delta^\sharp(\xi_{s \otimes t}) = \id^\sharp(s) \cdot \id^\sharp(t) = st = \mu(s \otimes t)\),
+  and both sides are additive in \(x\), so \(\delta^\sharp(\xi_x) = \mu(x)\) for every \(x\).
+  Finally, \(\mathfrak D(U) = D(\vartheta)\) and \(\vartheta = \xi_{1 - \mathrm{elift}}\), so its
+  \(\delta\)-preimage is the basic open of
+  \(\delta^\sharp(\vartheta) = \mu(1 - \mathrm{elift}) = 1 - \mu(\mathrm{elift}) = 1\) when
+  \(\mu(\mathrm{elift}) = 0\); the basic open of \(1\) is everything, whence
+  \(\delta^{-1}\mathfrak D(U) = \delta^{-1}\mathfrak W(U,U) = U \cap U = U\) using
+  \(\delta^{-1}\mathfrak W(U,U) = U\) (Definition~\ref{def:diagonal}).
+\end{proof}
+
+\begin{theorem}[The per-chart kernel of the diagonal is principal]
+  \label{thm:diagonal_ker_ideal_diagonalChart}
+  \lean{AlgebraicGeometry.Over.diagonal_ker_ideal_diagonalChart}
+  \uses{def:diagonal, def:diagonalChart}
+  \leanok
+  \source{kleiman-picard}
+  Assume \(C\) is separated over \(\Spec k\). On the diagonal member \(\mathfrak D(U)\) the kernel
+  ideal sheaf of the diagonal is principal, generated by the diagonal equation:
+  \[
+    \bigl(\ker \delta\bigr)\bigl(\mathfrak D(U)\bigr) \;=\; (e_U).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:isLocalization_away_basicOpen_productChartSections, thm:ker_map_localization_eq,
+    thm:exists_diagonalLocalization, def:diagonalSetup}
+  Because the base change of \(\mathrm{elift}\) generates the \(k[X]\)-diagonal ideal, the
+  multiplication kills it, \(\mu(\mathrm{elift}) = 0\)
+  (Theorem~\ref{thm:exists_diagonalLocalization}); hence \(\delta^{-1}\mathfrak D(U) = U\)
+  (Definition~\ref{def:diagonalChart}), and restriction of sections along this equality of opens
+  is a ring isomorphism, in particular injective. On the affine open \(\mathfrak D(U)\) the value
+  of the kernel ideal sheaf is the kernel of the section map
+  \(\delta^\sharp \colon \Gamma(C \otimes C, \mathfrak D(U)) \to \Gamma(C, U)\).
+
+  By Theorem~\ref{thm:isLocalization_away_basicOpen_productChartSections} the ring
+  \(\Gamma(C \otimes C, \mathfrak D(U))\) is the localization of \(B \otimes_k B\) away from
+  \(1 - \mathrm{elift}\), through the identification followed by restriction; write
+  \(\lambda \colon B \otimes_k B \to \Gamma(C \otimes C, \mathfrak D(U))\) for its structure map,
+  so that \(e_U = \lambda(u \otimes 1 - 1 \otimes u)\) and, by the pullback formula of
+  Definition~\ref{def:diagonalChart}, \(\delta^\sharp(\lambda(z)) = \mu(z)\big|_{U}\) for all
+  \(z \in B \otimes_k B\).
+
+  \emph{The equation lies in the kernel.} One has
+  \(\delta^\sharp(e_U) = \mu(u \otimes 1 - 1 \otimes u)\big|_{U} = 0\), because
+  \(\mu(u \otimes 1 - 1 \otimes u) = u - u = 0\) (Definition~\ref{def:diagonalSetup}); so
+  \((e_U) \subseteq (\ker \delta)(\mathfrak D(U))\).
+
+  \emph{Every kernel element is a multiple of the equation.} Let \(s\) lie in the kernel. As
+  \(\Gamma(C \otimes C, \mathfrak D(U))\) is a localization away from \(1 - \mathrm{elift}\), write
+  \(s \cdot \lambda(m) = \lambda(r)\) with \(r \in B \otimes_k B\) and \(m\) a power of
+  \(1 - \mathrm{elift}\), whose image \(\lambda(m)\) is a unit. Applying \(\delta^\sharp\),
+  \(\delta^\sharp(\lambda(r)) = \delta^\sharp(s) \cdot \delta^\sharp(\lambda(m)) = 0\); but
+  \(\delta^\sharp(\lambda(r)) = \mu(r)\big|_{U}\) and restriction along
+  \(\delta^{-1}\mathfrak D(U) = U\) is injective, so \(\mu(r) = 0\), i.e. \(r\) lies in the
+  \(k\)-diagonal ideal \(\ker \mu\). By the localized principality of the \(k\)-diagonal ideal
+  (Theorem~\ref{thm:ker_map_localization_eq}), the extension of \(\ker \mu\) along \(\lambda\) is
+  generated by \(\lambda(u \otimes 1 - 1 \otimes u) = e_U\); hence \(\lambda(r) \in (e_U)\). Since
+  \(\lambda(m)\) is a unit and \(s = \lambda(r) \cdot \lambda(m)^{-1}\), we conclude \(s \in (e_U)\).
+\end{proof}
+
+\begin{lemma}[Germs of a regular section on an affine open]
+  \label{lem:affineOpen_germ_mem_nonZeroDivisors}
+  \lean{AlgebraicGeometry.IsAffineOpen.germ_mem_nonZeroDivisors}
+  \uses{lem:flat_mem_nonZeroDivisors}
+  \leanok
+  Let \(W\) be an affine open of a scheme \(X\) and \(s \in \Gamma(X, W)\) a nonzerodivisor. Then
+  for every point \(y \in W\) the germ of \(s\) at \(y\) is a nonzerodivisor of the stalk
+  \(\struct{X, y}\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  On an affine open the stalk \(\struct{X, y}\) is the localization of \(\Gamma(X, W)\) at the
+  prime corresponding to \(y\), and the germ map is the localization map. A localization is flat,
+  so the germ map is a flat ring homomorphism, and a flat ring homomorphism carries the
+  nonzerodivisor \(s\) to a nonzerodivisor (Lemma~\ref{lem:flat_mem_nonZeroDivisors}).
+\end{proof}
+
+\begin{theorem}[Regularity of the diagonal equation]
+  \label{thm:diagonalChartEqn_regular}
+  \lean{AlgebraicGeometry.Over.diagonalChartEqn_mem_nonZeroDivisors,
+    AlgebraicGeometry.Over.germ_diagonalChartEqn_mem_nonZeroDivisors}
+  \uses{def:diagonalChart}
+  \leanok
+  Assume in addition that \(B\) is flat over \(k[X]\). Then the diagonal equation \(e_U\) is a
+  nonzerodivisor of \(\Gamma(C \otimes C, \mathfrak D(U))\), and its germ at every point of
+  \(\mathfrak D(U)\) is a nonzerodivisor of the corresponding stalk.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:diagonal_regularity_engine, lem:flat_mem_nonZeroDivisors,
+    lem:affineOpen_germ_mem_nonZeroDivisors, def:productChartSections,
+    thm:isLocalization_away_basicOpen_productChartSections}
+  With \(B\) flat over \(k[X]\), the diagonal generator \(u \otimes 1 - 1 \otimes u\) is a
+  nonzerodivisor of \(B \otimes_k B\) (Theorem~\ref{thm:diagonal_regularity_engine}). The structure
+  map \(\lambda \colon B \otimes_k B \to \Gamma(C \otimes C, \mathfrak D(U))\) factors as the ring
+  isomorphism of Definition~\ref{def:productChartSections} followed by the localization to the
+  basic open \(\mathfrak D(U)\)
+  (Theorem~\ref{thm:isLocalization_away_basicOpen_productChartSections}); both are flat, so
+  \(\lambda\) is flat. A flat ring homomorphism preserves nonzerodivisors
+  (Lemma~\ref{lem:flat_mem_nonZeroDivisors}), and \(e_U = \lambda(u \otimes 1 - 1 \otimes u)\),
+  so \(e_U\) is a nonzerodivisor. Since \(\mathfrak D(U)\) is affine
+  (Definition~\ref{def:diagonalChart}), the germ regularity follows from the section regularity by
+  Lemma~\ref{lem:affineOpen_germ_mem_nonZeroDivisors}.
+\end{proof}
+
+\begin{theorem}[The diagonal member meets the diagonal complement in a basic open]
+  \label{thm:diagonalChart_inf_diagonalComplement}
+  \lean{AlgebraicGeometry.Over.diagonalChart_inf_diagonalComplement,
+    AlgebraicGeometry.Over.isUnit_res_diagonalChartEqn}
+  \uses{def:diagonal, def:diagonalChart}
+  \leanok
+  Assume \(C\) is separated over \(\Spec k\). The overlap of the diagonal member with the diagonal
+  complement is the basic open of the diagonal equation,
+  \[
+    \mathfrak D(U) \cap \Delta^{\mathrm{c}} \;=\; D(e_U),
+  \]
+  and the restriction of \(e_U\) to this overlap is a unit.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:diagonal_ker_ideal_diagonalChart}
+  On the affine \(\mathfrak D(U)\) the kernel ideal sheaf of the diagonal is generated by \(e_U\)
+  (Theorem~\ref{thm:diagonal_ker_ideal_diagonalChart}), so the support of the kernel ideal sheaf,
+  intersected with \(\mathfrak D(U)\), is the zero locus \(V(e_U) \cap \mathfrak D(U)\). That
+  support is the diagonal \(\Delta\) (Definition~\ref{def:diagonal}), whence
+  \(\Delta \cap \mathfrak D(U) = V(e_U) \cap \mathfrak D(U)\). Taking complements inside
+  \(\mathfrak D(U)\) gives
+  \(\mathfrak D(U) \cap \Delta^{\mathrm{c}} = \mathfrak D(U) \setminus V(e_U) = D(e_U)\). A section
+  is a unit on its own basic open, so the restriction of \(e_U\) to
+  \(D(e_U) = \mathfrak D(U) \cap \Delta^{\mathrm{c}}\) is a unit.
+\end{proof}
