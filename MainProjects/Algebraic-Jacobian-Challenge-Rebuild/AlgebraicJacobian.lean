@@ -138,12 +138,16 @@ import AlgebraicJacobian.RiemannRoch.FiberTwist
 import AlgebraicJacobian.RiemannRoch.ClassCohomology
 import AlgebraicJacobian.RiemannRoch.FLVFiberToolkit
 import AlgebraicJacobian.RiemannRoch.FLVLattice
+import AlgebraicJacobian.RiemannRoch.FLVQcoh
+import AlgebraicJacobian.RiemannRoch.FLVVanishing
 import AlgebraicJacobian.Curve.BaseChangeInstances
 import AlgebraicJacobian.Algebra.DiagonalIdeal
 import AlgebraicJacobian.Algebra.DiagonalRegular
 import AlgebraicJacobian.Curve.ProductCharts
 import AlgebraicJacobian.Curve.DiagonalClosed
 import AlgebraicJacobian.Curve.DiagonalChart
+import AlgebraicJacobian.Curve.DiagonalChartData
+import AlgebraicJacobian.Curve.DiagonalEquations
 
 /-!
 # AlgebraicJacobian — library root
