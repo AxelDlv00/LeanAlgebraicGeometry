@@ -9,7 +9,11 @@ derived from `SmoothOfRelativeDimension 1`, so never add it as a hypothesis;
 against quota, so use Fable-5 SUBAGENTS liberally for the difficult tasks where Opus
 is not enough — campaign hearts, risky design worksheets, keystone provers — not just
 one or two per campaign leg. Opus still carries volume/recon/blueprint. One PROVER at
-a time regardless — the build lock is about lake/LSP races, not budget.)
+a time regardless — the build lock is about lake/LSP races, not budget.
+(3) ROADMAP ACTUALIZATION, user instruction 2026-07-15: keep the `horizon roadmap`
+tree current at EVERY milestone — statuses AND subitems (`add --parent`) when a
+campaign is designed or decomposed; it is the user's progress view. The degree lane,
+(C2), and Wave 4 now carry subitems mirroring their worksheets — maintain them.)
 
 ## What landed this session (all committed; kernel-green; independently audited)
 
