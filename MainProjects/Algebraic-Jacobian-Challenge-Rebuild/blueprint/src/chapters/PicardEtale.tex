@@ -5389,3 +5389,654 @@ extending the point classes.
   (\ref{def:curveDivisor_single}), so the defining product of \(\struct X(1 \cdot x)\)
   (\ref{def:divisorClass}) reduces to the single factor \(\struct X(x)^1 = \struct X(x)\).
 \end{proof}
+
+\section{Meromorphic presentations of \v Cech Picard classes}
+
+The remainder of this chapter carries out, at the level of \v Cech cocycles, the classical
+identification of the group of Weil divisors modulo principal equivalence with the Picard group
+of an integral curve. The device that replaces every sheaf-theoretic gluing argument is the
+\emph{generic-point embedding}: on an integral scheme every nonempty open contains the generic
+point \(\eta\), and taking germs at \(\eta\) embeds the sections over such an open into the
+function field \(K(X)\). A \v Cech Picard class can therefore be \emph{presented meromorphically}
+--- by a pointed cover, a unit cocycle on it, and one rational function per member --- after
+which every cochain comparison downstream is a literal equality of elements of the field
+\(K(X)\), never a gluing of sheaf sections.
+
+\begin{definition}[The generic-point embedding of unit sections]
+  \label{def:germGenericUnits}
+  \lean{AlgebraicGeometry.Scheme.germGenericUnits,
+    AlgebraicGeometry.Scheme.germGenericUnits_unitsRestrict,
+    AlgebraicGeometry.Scheme.germGenericUnits_injective}
+  \leanok
+  Let \(X\) be an integral scheme with generic point \(\eta\) and \(U\) an open with
+  \(\eta \in U\). Taking the germ at \(\eta\) is a homomorphism of groups
+  \[
+    \mathrm{germ}_\eta \colon \Gamma(X,U)^{\times} \longrightarrow K(X)^{\times},
+  \]
+  the \emph{generic-point embedding} of unit sections into the units of the function field. It is
+  restriction-invariant --- for \(\eta \in W \le U\) it agrees with restriction
+  \(\Gamma(X,U)^{\times} \to \Gamma(X,W)^{\times}\) followed by the embedding on \(W\) --- and, on
+  an integral scheme, injective.
+\end{definition}
+\begin{proof}
+  \leanok
+  The germ at \(\eta\) is a ring homomorphism \(\Gamma(X,U) \to K(X)\) carrying units to units, so
+  it restricts to a group homomorphism on the unit groups. Restriction-invariance is the
+  functoriality of germs along \(W \le U\). For injectivity, on an integral scheme a section over
+  a nonempty open is determined by its germ at \(\eta\) (which lies in every nonempty open); hence
+  two unit sections with the same germ at \(\eta\) are equal.
+\end{proof}
+
+\begin{lemma}[Pointed covers contain the generic point]
+  \label{lem:pointedCover_genericPoint_mem}
+  \lean{AlgebraicGeometry.Scheme.PointedCover.genericPoint_mem_opens,
+    AlgebraicGeometry.Scheme.PointedCover.genericPoint_mem_inf}
+  \leanok
+  On an irreducible scheme \(X\), every member \(\mathcal U(x)\) of a pointed cover contains the
+  generic point \(\eta\), and hence so does every pairwise overlap \(\mathcal U(x) \cap \mathcal
+  U(y)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  A pointed cover assigns to each \(x\) an open \(\mathcal U(x) \ni x\), in particular nonempty;
+  on an irreducible space the generic point lies in every nonempty open, so \(\eta \in \mathcal
+  U(x)\). Intersecting two such memberships gives \(\eta \in \mathcal U(x) \cap \mathcal U(y)\).
+\end{proof}
+
+\begin{definition}[Meromorphic presentation]
+  \label{def:meromorphicPresentation}
+  \lean{AlgebraicGeometry.Scheme.MeromorphicPresentation,
+    AlgebraicGeometry.Scheme.MeromorphicPresentation.picClass}
+  \uses{def:germGenericUnits, lem:pointedCover_genericPoint_mem}
+  \leanok
+  A \emph{meromorphic presentation} of a \v Cech Picard class on an integral scheme \(X\) consists
+  of a pointed cover \(\mathcal U\), a unit \v Cech \(1\)-cocycle \(\gamma\) on \(\mathcal U\), and
+  a family \((f_x)_x\) of units \(f_x \in K(X)^{\times}\), one per member, satisfying the
+  \emph{ratio law}
+  \[
+    f_x \cdot f_y^{-1} = \mathrm{germ}_\eta(\gamma_{xy}) \qquad \text{for every pair } x, y,
+  \]
+  where \(\gamma_{xy} \in \Gamma(X, \mathcal U(x) \cap \mathcal U(y))^{\times}\) is the cocycle
+  value. Its \emph{Picard class} is
+  \[
+    \mathrm{picClass}(P) = [\mathcal U, \gamma] \in \Pic(X).
+  \]
+\end{definition}
+\begin{proof}
+  \leanok
+  Each overlap \(\mathcal U(x) \cap \mathcal U(y)\) contains \(\eta\)
+  (\ref{lem:pointedCover_genericPoint_mem}), so the germ \(\mathrm{germ}_\eta(\gamma_{xy})\)
+  (\ref{def:germGenericUnits}) is defined and the ratio law is a condition in \(K(X)^{\times}\).
+  The Picard class is the class in the colimit \(\Pic(X)\) of the unit cocycle \(\gamma\) on
+  \(\mathcal U\).
+\end{proof}
+
+\begin{theorem}[Existence of meromorphic presentations]
+  \label{thm:exists_meromorphicPresentation}
+  \lean{AlgebraicGeometry.Scheme.exists_meromorphicPresentation}
+  \uses{def:meromorphicPresentation, def:germGenericUnits, lem:pointedCover_genericPoint_mem}
+  \leanok
+  Every \v Cech Picard class \(L \in \Pic(X)\) of an integral scheme is the class of a meromorphic
+  presentation.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Represent \(L\) by a unit \(1\)-cocycle \(\gamma\) on a pointed cover \(\mathcal U\). Use the
+  generic point itself as base index: set
+  \[
+    f_x := \mathrm{germ}_\eta(\gamma_{x\eta}) \in K(X)^{\times},
+  \]
+  the germ at \(\eta\) of the cocycle value on the pair \((x, \eta)\), whose overlap contains
+  \(\eta\) (\ref{lem:pointedCover_genericPoint_mem}). The cocycle identity for the triple
+  \((x, y, \eta)\) reads \(\gamma_{xy}\, \gamma_{y\eta} = \gamma_{x\eta}\) on the triple overlap,
+  which contains \(\eta\); applying the generic-point embedding, whose value is unchanged by the
+  restriction to the triple overlap (\ref{def:germGenericUnits}), and rearranging gives
+  \[
+    \mathrm{germ}_\eta(\gamma_{xy}) = \mathrm{germ}_\eta(\gamma_{x\eta}) \cdot
+      \mathrm{germ}_\eta(\gamma_{y\eta})^{-1} = f_x \cdot f_y^{-1},
+  \]
+  the ratio law. Thus \((\mathcal U, \gamma, f)\) is a meromorphic presentation
+  (\ref{def:meromorphicPresentation}) with class \([\mathcal U, \gamma] = L\).
+\end{proof}
+
+\begin{lemma}[The presentation of a local-equation system]
+  \label{lem:localEquations_presentation}
+  \lean{AlgebraicGeometry.Scheme.LocalEquations.presentation,
+    AlgebraicGeometry.Scheme.LocalEquations.presentation_picClass}
+  \uses{def:meromorphicPresentation, def:localEquations, lem:localEquations_ratioUnit,
+    def:localEquations_picClass}
+  \leanok
+  Let \(E\) be a local-equation system on \(X\) (\ref{def:localEquations}). The germs at \(\eta\)
+  of its regular equations, \(f_x := \mathrm{germ}_\eta(E.\mathrm{eqn}_x) \in K(X)^{\times}\), form
+  a meromorphic presentation whose cocycle is the transition-unit cocycle of \(E\) and whose class
+  is the Picard class \(\mathrm{picClass}(E)\) of \(E\) (\ref{def:localEquations_picClass}).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Each equation \(E.\mathrm{eqn}_x\) is regular, so its germ at \(\eta\) is a nonzerodivisor of the
+  field \(K(X)\), that is, a nonzero element, hence a unit \(f_x \in K(X)^{\times}\). The defining
+  equation \(E.\mathrm{eqn}_x = g_{xy} \cdot E.\mathrm{eqn}_y\) on the overlap
+  (\ref{lem:localEquations_ratioUnit}), pushed to the generic point, gives \(f_x = \mathrm{germ}_\eta(g_{xy}) \cdot f_y\),
+  i.e.\ the ratio law \(f_x \cdot f_y^{-1} = \mathrm{germ}_\eta(g_{xy})\) with the transition-unit
+  cocycle \(g\) of \(E\). The presented class is \([\mathcal U, g] = \mathrm{picClass}(E)\)
+  (\ref{def:localEquations_picClass}).
+\end{proof}
+
+\section{The divisor of a meromorphic presentation}
+
+We now specialize to the curve bundle \(X\) of Chapter~\ref{chap:RiemannRoch}: integral, smooth of
+relative dimension one and quasi-compact over the field \(K\), with generic point \(\eta\). The
+trivializing elements of a meromorphic presentation cut out a Weil divisor, read off point by
+point from their orders of vanishing.
+
+\begin{theorem}[Unit sections have trivial order]
+  \label{thm:ordZ_germGenericUnits}
+  \lean{AlgebraicGeometry.Scheme.ordZ_germGenericUnits}
+  \uses{def:germGenericUnits, def:scheme_ordZ, lem:ord_eq_one_of_mem_basicOpen}
+  \leanok
+  For an open \(U \ni \eta\), a unit section \(u \in \Gamma(X,U)^{\times}\), and a closed point
+  \(x \in U\), the germ at \(\eta\) of \(u\) has trivial order at \(x\):
+  \[
+    \mathrm{ord}_x\bigl(\mathrm{germ}_\eta(u)\bigr) = 0.
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The section \(u\) is invertible at \(x\), so \(x\) lies in the basic open set where the
+  underlying section is invertible. A rational function that is the germ at \(\eta\) of a section
+  invertible at \(x\) has order \(0\) there (\ref{lem:ord_eq_one_of_mem_basicOpen}).
+\end{proof}
+
+\begin{theorem}[Piece-independence of the order]
+  \label{thm:ordZ_elem_eq}
+  \lean{AlgebraicGeometry.Scheme.MeromorphicPresentation.ordZ_elem_eq}
+  \uses{def:meromorphicPresentation, thm:ordZ_germGenericUnits, def:scheme_ordZ}
+  \leanok
+  Let \(P\) be a meromorphic presentation and \(x\) a closed point lying in a member
+  \(\mathcal U(y)\) of its cover. Then the trivializing element \(f_y\) of that piece has the same
+  order at \(x\) as the element \(f_x\) indexed by \(x\) itself:
+  \[
+    \mathrm{ord}_x(f_y) = \mathrm{ord}_x(f_x).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  By the ratio law, \(f_x \cdot f_y^{-1} = \mathrm{germ}_\eta(\gamma_{xy})\) with \(\gamma_{xy}\) a
+  unit section over \(\mathcal U(x) \cap \mathcal U(y)\), an overlap containing the closed point
+  \(x\) (which lies in \(\mathcal U(x)\) and, by hypothesis, in \(\mathcal U(y)\)). Its germ at
+  \(\eta\) has order \(0\) at \(x\) (\ref{thm:ordZ_germGenericUnits}). Since \(\mathrm{ord}_x\) is a
+  homomorphism (\ref{def:scheme_ordZ}), \(\mathrm{ord}_x(f_x) - \mathrm{ord}_x(f_y) =
+  \mathrm{ord}_x(f_x \cdot f_y^{-1}) = 0\).
+\end{proof}
+
+\begin{theorem}[Finite support of the orders]
+  \label{thm:ordZ_elem_support_finite}
+  \lean{AlgebraicGeometry.Scheme.MeromorphicPresentation.ordZ_elem_support_finite}
+  \uses{def:meromorphicPresentation, thm:ordZ_elem_eq, thm:ordZ_support_finite}
+  \leanok
+  For a meromorphic presentation \(P\) on the quasi-compact curve, the set of closed points \(x\)
+  at which the piece-indexed element \(f_x\) has nonzero order is finite.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The curve is quasi-compact, so the members \(\mathcal U(i)\) of the cover admit a finite
+  subcover indexed by a finite set \(T\). If a closed point \(x\) has \(\mathrm{ord}_x(f_x) \neq
+  0\), choose \(i \in T\) with \(x \in \mathcal U(i)\); by piece-independence
+  (\ref{thm:ordZ_elem_eq}), \(\mathrm{ord}_x(f_x) = \mathrm{ord}_x(f_i) \neq 0\), so \(x\) lies in
+  the order support of the single rational function \(f_i\), which is finite
+  (\ref{thm:ordZ_support_finite}). Hence the whole support is contained in the finite union over
+  \(i \in T\) of these finite sets.
+\end{proof}
+
+\begin{definition}[The divisor of a presentation]
+  \label{def:presentationDivisor}
+  \lean{AlgebraicGeometry.Scheme.presentationDivisor,
+    AlgebraicGeometry.Scheme.coeffAt_presentationDivisor}
+  \uses{def:meromorphicPresentation, thm:ordZ_elem_eq, thm:ordZ_elem_support_finite,
+    def:curveDivisor, def:scheme_ordZ}
+  \leanok
+  For a meromorphic presentation \(P\) on the curve, its \emph{divisor} is the Weil divisor
+  \[
+    \mathrm{presentationDivisor}(P) = \sum_x \mathrm{ord}_x(f_x)\, x \in \Div(X),
+  \]
+  whose coefficient at each closed point \(x\) is the order at \(x\) of the piece-indexed
+  trivializing element \(f_x\).
+\end{definition}
+\begin{proof}
+  \leanok
+  The assignment \(x \mapsto \mathrm{ord}_x(f_x)\) has finite support
+  (\ref{thm:ordZ_elem_support_finite}), so it defines an element of \(\Div(X)\)
+  (\ref{def:curveDivisor}); by piece-independence (\ref{thm:ordZ_elem_eq}) the coefficient is the
+  order of the local trivialization near \(x\), whichever piece is used to read it off.
+\end{proof}
+
+\section{The calculus of meromorphic presentations}
+
+Meromorphic presentations multiply, invert, and have a unit --- pointwise on the trivializing
+elements, and, on the cocycles, by restriction to the common refinement. No group laws are
+claimed (the covers of \((P \cdot Q) \cdot R\) and \(P \cdot (Q \cdot R)\) differ by
+associativity of intersection), and none are needed: every identification is made at the level of
+the Picard class and of the divisor.
+
+\begin{definition}[The principal presentation]
+  \label{def:meromorphicPresentation_principal}
+  \lean{AlgebraicGeometry.Scheme.MeromorphicPresentation.principal}
+  \uses{def:meromorphicPresentation}
+  \leanok
+  For \(g \in K(X)^{\times}\), the \emph{principal presentation} of \(g\) is the trivial cocycle on
+  the one-member cover \(\{X\}\), trivialized by the constant \(g\) (so \(f_x = g\) for all
+  \(x\)).
+\end{definition}
+\begin{proof}
+  \leanok
+  The cocycle is trivial, and the ratio law holds because \(f_x \cdot f_y^{-1} = g \cdot g^{-1} =
+  1 = \mathrm{germ}_\eta(1)\).
+\end{proof}
+
+\begin{theorem}[Multiplicativity of the presented class]
+  \label{thm:meromorphicPresentation_picClass_hom}
+  \lean{AlgebraicGeometry.Scheme.MeromorphicPresentation.picClass_one,
+    AlgebraicGeometry.Scheme.MeromorphicPresentation.picClass_mul,
+    AlgebraicGeometry.Scheme.MeromorphicPresentation.picClass_inv,
+    AlgebraicGeometry.Scheme.MeromorphicPresentation.picClass_principal}
+  \uses{def:meromorphicPresentation, def:meromorphicPresentation_principal}
+  \leanok
+  Write \(1\) for the \emph{unit presentation} (the trivial cocycle on \(\{X\}\) with all elements
+  \(1\)), \(P \cdot Q\) for the \emph{product} on the common refinement \(\mathcal U_P \cap
+  \mathcal U_Q\) (trivializing elements multiplied pointwise, cocycles restricted and multiplied),
+  and \(P^{-1}\) for the \emph{inverse} (trivializing elements and cocycle inverted). Then the
+  presented class is multiplicative:
+  \[
+    \mathrm{picClass}(1) = 1, \quad \mathrm{picClass}(P \cdot Q) = \mathrm{picClass}(P) \cdot
+      \mathrm{picClass}(Q), \quad \mathrm{picClass}(P^{-1}) = \mathrm{picClass}(P)^{-1},
+  \]
+  and \(\mathrm{picClass}(\mathrm{principal}\, g) = 1\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The class of a presentation is the class of its cocycle. The trivial cocycle has trivial class,
+  giving \(\mathrm{picClass}(1) = 1\); the principal presentation
+  (\ref{def:meromorphicPresentation_principal}) also carries the trivial cocycle, so
+  \(\mathrm{picClass}(\mathrm{principal}\, g) = 1\). Inverting a cocycle inverts its class,
+  giving \(\mathrm{picClass}(P^{-1}) = \mathrm{picClass}(P)^{-1}\). For the product, restricting
+  each cocycle to the common refinement leaves its class unchanged, and the class of a product of
+  cocycles is the product of the classes, so \(\mathrm{picClass}(P \cdot Q) = \mathrm{picClass}(P)
+  \cdot \mathrm{picClass}(Q)\).
+\end{proof}
+
+\begin{theorem}[Additivity of the presentation divisor]
+  \label{thm:presentationDivisor_hom}
+  \lean{AlgebraicGeometry.Scheme.MeromorphicPresentation.presentationDivisor_one,
+    AlgebraicGeometry.Scheme.MeromorphicPresentation.presentationDivisor_mul,
+    AlgebraicGeometry.Scheme.MeromorphicPresentation.presentationDivisor_inv,
+    AlgebraicGeometry.Scheme.MeromorphicPresentation.presentationDivisor_principal}
+  \uses{def:presentationDivisor, def:meromorphicPresentation_principal, def:divOf}
+  \leanok
+  With the operations of \ref{thm:meromorphicPresentation_picClass_hom}, the divisor is additive:
+  \[
+    \mathrm{presentationDivisor}(1) = 0, \quad \mathrm{presentationDivisor}(P \cdot Q) =
+      \mathrm{presentationDivisor}(P) + \mathrm{presentationDivisor}(Q),
+  \]
+  \(\mathrm{presentationDivisor}(P^{-1}) = -\mathrm{presentationDivisor}(P)\), and the divisor of
+  the principal presentation of \(g\) is the principal divisor:
+  \[
+    \mathrm{presentationDivisor}(\mathrm{principal}\, g) = \mathrm{div}(g).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Compare coefficients at each closed point \(x\) (\ref{def:presentationDivisor}). The element of
+  \(1\) at \(x\) is \(1\), of order \(0\), so \(\mathrm{presentationDivisor}(1) = 0\). The element
+  of \(P \cdot Q\) at \(x\) is \(f_x \cdot f'_x\), and \(\mathrm{ord}_x\) is a homomorphism
+  (\ref{def:scheme_ordZ}), giving additivity; inversion negates the order. For the principal
+  presentation the element at \(x\) is \(g\), so the coefficient is \(\mathrm{ord}_x(g)\), the
+  coefficient of \(\mathrm{div}(g)\) (\ref{def:divOf}).
+\end{proof}
+
+\section{The class law: equal divisors give equal classes}
+
+The heart of the meromorphic bridge is that the \v Cech Picard class of a presentation depends
+only on its divisor. Its local input is that a rational function of trivial order is the germ of a
+unit section; its global mechanism is that the cohomology relating two presentations of equal
+divisor can be verified entirely inside \(K(X)^{\times}\), through the injective generic-point
+embedding --- on an integral scheme no gluing of sheaf sections is ever required.
+
+\begin{lemma}[Order matching produces a unit section]
+  \label{lem:exists_germGenericUnits_ordMatch}
+  \lean{AlgebraicGeometry.Scheme.exists_germGenericUnits_eq_of_forall_ordZ_eq_one,
+    AlgebraicGeometry.Scheme.exists_germGenericUnits_eq_mul_inv_of_forall_ordZ_eq}
+  \uses{def:germGenericUnits, def:scheme_ordZ, def:divisorSections, lem:exists_section_germ_eq}
+  \leanok
+  Let \(V\) be a nonempty open (\(\eta \in V\)). A rational function \(q \in K(X)^{\times}\) whose
+  order vanishes at every closed point of \(V\) is the germ at \(\eta\) of a unit section over
+  \(V\): there is \(u \in \Gamma(X,V)^{\times}\) with \(\mathrm{germ}_\eta(u) = q\). Consequently
+  two rational functions \(g, h \in K(X)^{\times}\) with equal order at every closed point of
+  \(V\) differ by the germ of a unit section: \(\mathrm{germ}_\eta(u) = g \cdot h^{-1}\) for some
+  \(u \in \Gamma(X,V)^{\times}\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Since \(\mathrm{ord}_x(q) = 0\) at every closed point \(x \in V\), both \(q\) and \(q^{-1}\) have
+  poles bounded by the zero divisor on \(V\), so both lie in \(\mathcal O(0)(V)\)
+  (\ref{def:divisorSections}). Each is therefore the germ at \(\eta\) of a section over \(V\)
+  (\ref{lem:exists_section_germ_eq}); let \(s, s'\) be sections with \(\mathrm{germ}_\eta(s) = q\)
+  and \(\mathrm{germ}_\eta(s') = q^{-1}\). Their product has \(\mathrm{germ}_\eta(s s') = q q^{-1}
+  = 1\), and on the integral scheme a section is determined by its germ at \(\eta\), so \(s s' =
+  1\); thus \(s\) is a unit section with \(\mathrm{germ}_\eta(s) = q\). The two-element form is
+  this applied to \(q = g \cdot h^{-1}\), whose order at each closed point of \(V\) is
+  \(\mathrm{ord}_x(g) - \mathrm{ord}_x(h) = 0\).
+\end{proof}
+
+\begin{theorem}[The class law]
+  \label{thm:picClass_eq_of_presentationDivisor_eq}
+  \lean{AlgebraicGeometry.Scheme.MeromorphicPresentation.picClass_eq_of_presentationDivisor_eq}
+  \uses{def:presentationDivisor, thm:ordZ_elem_eq, lem:exists_germGenericUnits_ordMatch,
+    def:meromorphicPresentation}
+  \leanok
+  Two meromorphic presentations with equal divisors present equal \v Cech Picard classes: if
+  \(\mathrm{presentationDivisor}(P) = \mathrm{presentationDivisor}(Q)\) then \(\mathrm{picClass}(P)
+  = \mathrm{picClass}(Q)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Equal divisors mean \(\mathrm{ord}_z(f_z) = \mathrm{ord}_z(f'_z)\) at every closed point \(z\),
+  comparing coefficients (\ref{def:presentationDivisor}). Fix a member indexed by \(x\) of the
+  common refinement \(\mathcal W := \mathcal U_P \cap \mathcal U_Q\) and a closed point \(z \in
+  \mathcal W(x)\). Piece-independence (\ref{thm:ordZ_elem_eq}) gives \(\mathrm{ord}_z(f_x) =
+  \mathrm{ord}_z(f_z)\) and \(\mathrm{ord}_z(f'_x) = \mathrm{ord}_z(f'_z)\), so \(\mathrm{ord}_z(f_x)
+  = \mathrm{ord}_z(f'_x)\): the elements \(f_x\) and \(f'_x\) have equal order at every closed
+  point of \(\mathcal W(x)\). By order matching (\ref{lem:exists_germGenericUnits_ordMatch}) there
+  is a unit section \(u_x \in \Gamma(X, \mathcal W(x))^{\times}\) with \(\mathrm{germ}_\eta(u_x) =
+  f_x \cdot (f'_x)^{-1}\).
+
+  The \(0\)-cochain \((u_x^{-1})_x\) exhibits the restricted cocycles \(\gamma|_{\mathcal W}\) and
+  \(\gamma'|_{\mathcal W}\) as cohomologous. The required coboundary identity is, on each overlap
+  \(\mathcal W(x) \cap \mathcal W(y)\), an equality of unit sections; applying the injective
+  generic-point embedding (\ref{def:germGenericUnits}) turns it into the identity
+  \[
+    \mathrm{germ}_\eta(u_x)^{-1} \cdot \bigl(f_x f_y^{-1}\bigr) = \bigl(f'_x (f'_y)^{-1}\bigr) \cdot
+      \mathrm{germ}_\eta(u_y)^{-1}
+  \]
+  in the abelian group \(K(X)^{\times}\), where \(f_x f_y^{-1}\) and \(f'_x (f'_y)^{-1}\) are the
+  germs of the restricted cocycle values by the ratio law; substituting \(\mathrm{germ}_\eta(u_x) =
+  f_x (f'_x)^{-1}\) makes both sides equal. Cohomologous cocycles on \(\mathcal W\) have the same
+  class, and restricting a cocycle to a refinement preserves its \v Cech class, so
+  \(\mathrm{picClass}(P) = [\mathcal W, \gamma|_{\mathcal W}] = [\mathcal W, \gamma'|_{\mathcal W}]
+  = \mathrm{picClass}(Q)\).
+\end{proof}
+
+\section{Extraction: equal classes differ by a principal divisor}
+
+\begin{theorem}[Extraction and the meromorphic characterization]
+  \label{thm:meromorphicPresentation_extraction}
+  \lean{AlgebraicGeometry.Scheme.MeromorphicPresentation.exists_divOf_of_picClass_eq,
+    AlgebraicGeometry.Scheme.MeromorphicPresentation.picClass_eq_iff_exists_divOf}
+  \uses{thm:picClass_eq_of_presentationDivisor_eq, thm:meromorphicPresentation_picClass_hom,
+    thm:presentationDivisor_hom, def:presentationDivisor, thm:ordZ_germGenericUnits,
+    def:meromorphicPresentation_principal, def:divOf}
+  \leanok
+  Two meromorphic presentations \(P, Q\) present the same \v Cech Picard class if and only if their
+  divisors differ by a principal divisor:
+  \[
+    \mathrm{picClass}(P) = \mathrm{picClass}(Q) \iff \mathrm{presentationDivisor}(P) -
+      \mathrm{presentationDivisor}(Q) = \mathrm{div}(g) \text{ for some } g \in K(X)^{\times}.
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  \((\Rightarrow)\) Equal classes are, on a common refinement \(\mathcal W\), cohomologous
+  cocycles: there is a \(0\)-cochain \((\alpha_x)\) of unit sections \(\alpha_x \in \Gamma(X,
+  \mathcal W(x))^{\times}\) with \(\alpha_x \cdot \gamma_{xy}|_{\mathcal W} = \gamma'_{xy}|_{\mathcal
+  W} \cdot \alpha_y\) on each overlap. Put
+  \[
+    c_x := f_x \cdot (f'_x)^{-1} \cdot \mathrm{germ}_\eta(\alpha_x) \in K(X)^{\times}.
+  \]
+  Applying the generic-point embedding to the coboundary identity and rearranging in the abelian
+  group \(K(X)^{\times}\) shows \(c_x = c_y\) for all \(x, y\); as the members cover \(X\), the
+  \(c_x\) are a single rational function \(g\). At a closed point \(z\), choosing \(x\) with \(z
+  \in \mathcal W(x)\), the germ \(\mathrm{germ}_\eta(\alpha_x)\) has order \(0\) at \(z\)
+  (\ref{thm:ordZ_germGenericUnits}), so
+  \[
+    \mathrm{ord}_z(g) = \mathrm{ord}_z(f_z) - \mathrm{ord}_z(f'_z) =
+      \mathrm{presentationDivisor}(P)_z - \mathrm{presentationDivisor}(Q)_z .
+  \]
+  Hence \(\mathrm{div}(g) = \mathrm{presentationDivisor}(P) - \mathrm{presentationDivisor}(Q)\).
+
+  \((\Leftarrow)\) If \(\mathrm{presentationDivisor}(P) - \mathrm{presentationDivisor}(Q) =
+  \mathrm{div}(g)\), then by additivity (\ref{thm:presentationDivisor_hom}) the presentation \(Q
+  \cdot \mathrm{principal}\, g\) has divisor \(\mathrm{presentationDivisor}(Q) + \mathrm{div}(g) =
+  \mathrm{presentationDivisor}(P)\); the class law (\ref{thm:picClass_eq_of_presentationDivisor_eq})
+  gives \(\mathrm{picClass}(Q \cdot \mathrm{principal}\, g) = \mathrm{picClass}(P)\), while
+  \(\mathrm{picClass}(Q \cdot \mathrm{principal}\, g) = \mathrm{picClass}(Q)\) by multiplicativity
+  and \(\mathrm{picClass}(\mathrm{principal}\, g) = 1\)
+  (\ref{thm:meromorphicPresentation_picClass_hom}). Hence \(\mathrm{picClass}(P) =
+  \mathrm{picClass}(Q)\).
+\end{proof}
+
+\section{The point presentation}
+
+To feed the class map with concrete divisors we realize each one-point divisor \(1 \cdot x\) by a
+meromorphic presentation whose defining data is tracked: its equation at \(x\) is a uniformizer
+whose germ at \(\eta\) is recorded.
+
+\begin{lemma}[A tracked point-uniformizer]
+  \label{lem:pointUniformizerData}
+  \lean{AlgebraicGeometry.Scheme.PointUniformizerData,
+    AlgebraicGeometry.Scheme.nonempty_pointUniformizerData,
+    AlgebraicGeometry.Scheme.pointUniformizerData}
+  \uses{lem:uniformizer, lem:exists_stalk_of_ord_le_one, lem:germ_generic_eq_algebraMap_germ,
+    thm:ordZ_support_finite, thm:closedpoint_isClosed, def:scheme_ordZ,
+    lem:ord_eq_one_of_mem_basicOpen}
+  \leanok
+  For a closed point \(x\) of the curve, a \emph{tracked point-uniformizer} at \(x\) is an open
+  neighbourhood \(V \ni x\) together with a section \(s \in \Gamma(X,V)\) that is regular (its
+  germs are nonzerodivisors), whose germ at \(\eta\) is a chosen uniformizer \(t\) at \(x\)
+  (\(\mathrm{ord}_x t = 1\)), and which is a unit at every point of \(V\) other than \(x\). Such
+  data exists.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Choose a uniformizer \(t \in K(X)\) at \(x\) (\ref{lem:uniformizer}), a nonzero rational function
+  with \(\mathrm{ord}_x t = 1\). Having nonnegative order at \(x\), \(t\) is integral there, so it
+  is the germ at \(\eta\) of a section \(s_0\) over a neighbourhood \(W_0 \ni x\)
+  (\ref{lem:exists_stalk_of_ord_le_one}, \ref{lem:germ_generic_eq_algebraMap_germ}). Remove from
+  \(W_0\) the finitely many closed points other than \(x\) at which \(t\) has nonzero order
+  (finite by \ref{thm:ordZ_support_finite}, and a finite union of closed points is closed by
+  \ref{thm:closedpoint_isClosed}); the result \(V := W_0 \setminus \mathrm{bad}\) is an open
+  neighbourhood of \(x\), and the restriction \(s\) of \(s_0\) to \(V\) still has germ \(t\) at
+  \(\eta\).
+
+  \emph{Regularity.} For \(y \in V\), the germ of \(s\) maps to \(t \neq 0\) under the injective
+  localization \(\struct{X,y} \to K(X)\), hence is a nonzerodivisor.
+
+  \emph{Unit away from \(x\).} Let \(y \in V\), \(y \neq x\). If \(y = \eta\), then
+  \(\mathrm{germ}_\eta(s) = t\) is a unit of the field. If \(y\) is a closed point and the germ of
+  \(s\) at \(y\) were not a unit, then \(t\) would have nonzero order at \(y\) (a section invertible
+  at a closed point has order \(0\) there, \ref{lem:ord_eq_one_of_mem_basicOpen}, contrapositively,
+  reading order through \ref{def:scheme_ordZ}); but then \(y\) is a removed point, contradicting
+  \(y \in V\). So \(s\) is a unit at \(y\).
+\end{proof}
+
+\begin{definition}[The local equations of the point divisor]
+  \label{def:pointEquations}
+  \lean{AlgebraicGeometry.Scheme.pointCover, AlgebraicGeometry.Scheme.pointEquations,
+    AlgebraicGeometry.Scheme.germGeneric_pointEqn_self}
+  \uses{lem:pointUniformizerData, def:localEquations, thm:closedpoint_isClosed}
+  \leanok
+  From a tracked point-uniformizer \(d\) at \(x\) (\ref{lem:pointUniformizerData}), the
+  \emph{point equations} of \(1 \cdot x\) are the local-equation system on the pointed cover
+  \[
+    \mathcal U(z) = \begin{cases} V & z = x, \\ X \setminus \{x\} & z \neq x, \end{cases}
+  \]
+  whose equation on the member at \(x\) is the tracked section \(s\) and whose equation on every
+  other member is the constant \(1\); the germ at \(\eta\) of the equation at \(x\) is the chosen
+  uniformizer.
+\end{definition}
+\begin{proof}
+  \leanok
+  The complement \(X \setminus \{x\}\) is open (\ref{thm:closedpoint_isClosed}) and contains every
+  \(z \neq x\), so \(\mathcal U\) is a pointed cover. Regularity holds member by member: on \(V\)
+  the germs of \(s\) are nonzerodivisors (\ref{lem:pointUniformizerData}), and the constant \(1\)
+  is a unit. For overlap ratios, a pair both at \(x\) or both away from \(x\) has equal equations,
+  ratio \(1\); a mixed pair has overlap inside \(V \setminus \{x\}\), where \(s\) is a unit
+  (\ref{lem:pointUniformizerData}), so the ratio of \(s\) and \(1\) is a unit. Thus the data is a
+  local-equation system (\ref{def:localEquations}), and the germ at \(\eta\) of the equation at
+  \(x\) is \(\mathrm{germ}_\eta(s) = t\).
+\end{proof}
+
+\begin{theorem}[The divisor of the point presentation]
+  \label{thm:presentationDivisor_pointEquations}
+  \lean{AlgebraicGeometry.Scheme.presentationDivisor_pointEquations}
+  \uses{def:pointEquations, lem:localEquations_presentation, def:presentationDivisor,
+    def:curveDivisor_single, lem:uniformizer}
+  \leanok
+  The divisor of the meromorphic presentation of the point equations at a closed point \(x\) is
+  the one-point divisor:
+  \[
+    \mathrm{presentationDivisor}\bigl((\text{point equations at } x)\text{'s presentation}\bigr) =
+      1 \cdot x .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The presentation of the point equations (\ref{lem:localEquations_presentation}) has, at each
+  closed point \(z\), trivializing element the germ at \(\eta\) of the equation at \(z\). At \(z =
+  x\) this is the uniformizer \(t\), of order \(\mathrm{ord}_x t = 1\) (\ref{lem:uniformizer}), so
+  the coefficient at \(x\) is \(1\); at \(z \neq x\) the equation is the constant \(1\), of order
+  \(0\), so the coefficient vanishes. Hence the divisor is \(1 \cdot x\)
+  (\ref{def:curveDivisor_single}, \ref{def:presentationDivisor}).
+\end{proof}
+
+\section{The \v Cech Picard class of a Weil divisor}
+
+Assembling the realization of divisors, the class law, and extraction yields the total class map
+\(D \mapsto \struct X(D)\) from Weil divisors to \v Cech Picard classes, and its kernel: the class
+map descends to an isomorphism of \(\Div(X)\) modulo principal divisors onto \(\Pic(X)\).
+
+\begin{theorem}[Realization of Weil divisors]
+  \label{thm:exists_presentationDivisor_eq}
+  \lean{AlgebraicGeometry.Scheme.exists_presentationDivisor_eq}
+  \uses{thm:presentationDivisor_pointEquations, thm:presentationDivisor_hom,
+    lem:pointUniformizerData, def:curveDivisor_single, lem:curveDivisor_single_arith}
+  \leanok
+  Every Weil divisor \(D \in \Div(X)\) on the curve is the divisor of a meromorphic presentation.
+\end{theorem}
+\begin{proof}
+  \leanok
+  First realize the one-point divisors \(n \cdot x\). For \(n \ge 0\), induct on \(n\): the divisor
+  \(0 \cdot x = 0\) is realized by the unit presentation (\(\mathrm{presentationDivisor}(1) = 0\),
+  \ref{thm:presentationDivisor_hom}), and \((n+1) \cdot x = n \cdot x + 1 \cdot x\) by the product
+  of a realization of \(n \cdot x\) with the point presentation at \(x\), using additivity
+  (\ref{thm:presentationDivisor_hom}), the point-divisor anchor
+  (\ref{thm:presentationDivisor_pointEquations}, \ref{lem:pointUniformizerData}), and the one-point
+  arithmetic (\ref{lem:curveDivisor_single_arith}). Negative multiplicities use the inverse
+  presentation, whose divisor is negated (\ref{thm:presentationDivisor_hom}). A general \(D\) is a
+  finite sum of one-point divisors (\ref{def:curveDivisor_single}), realized by the product of
+  their presentations, again by additivity.
+\end{proof}
+
+\begin{definition}[The class map and its surjectivity]
+  \label{def:curveDivisor_picClass}
+  \lean{AlgebraicGeometry.Scheme.CurveDivisor.picClass,
+    AlgebraicGeometry.Scheme.CurveDivisor.picClass_presentationDivisor,
+    AlgebraicGeometry.Scheme.CurveDivisor.exists_picClass_eq,
+    AlgebraicGeometry.Scheme.CurveDivisor.picClass_surjective}
+  \uses{thm:exists_presentationDivisor_eq, thm:picClass_eq_of_presentationDivisor_eq,
+    thm:exists_meromorphicPresentation, def:curveDivisor}
+  \leanok
+  The \emph{\v Cech Picard class} \(\struct X(D) = \mathrm{picClass}(D) \in \Pic(X)\) of a Weil
+  divisor \(D\) is the class of any meromorphic presentation whose divisor is \(D\). It is
+  well-defined, satisfies \(\mathrm{picClass}(\mathrm{presentationDivisor}(P)) = \mathrm{picClass}(P)\)
+  for every presentation \(P\), and the map \(D \mapsto \struct X(D)\) is surjective onto
+  \(\Pic(X)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  A realizing presentation exists (\ref{thm:exists_presentationDivisor_eq}). If \(P, P'\) both have
+  divisor \(D\), the class law (\ref{thm:picClass_eq_of_presentationDivisor_eq}) gives
+  \(\mathrm{picClass}(P) = \mathrm{picClass}(P')\), so \(\mathrm{picClass}(D)\) is well-defined;
+  taking \(D = \mathrm{presentationDivisor}(P)\) with the realization \(P\) itself gives
+  \(\mathrm{picClass}(\mathrm{presentationDivisor}(P)) = \mathrm{picClass}(P)\). For surjectivity,
+  every class \(L\) is presented by some \(P\) (\ref{thm:exists_meromorphicPresentation}), and then
+  \(\struct X(\mathrm{presentationDivisor}(P)) = \mathrm{picClass}(P) = L\).
+\end{proof}
+
+\begin{theorem}[The class map is a homomorphism trivial on principal divisors]
+  \label{thm:curveDivisor_picClass_hom}
+  \lean{AlgebraicGeometry.Scheme.CurveDivisor.picClass_zero,
+    AlgebraicGeometry.Scheme.CurveDivisor.picClass_add,
+    AlgebraicGeometry.Scheme.CurveDivisor.picClass_divOf}
+  \uses{def:curveDivisor_picClass, thm:presentationDivisor_hom,
+    thm:meromorphicPresentation_picClass_hom, def:divOf}
+  \leanok
+  The class map is a group homomorphism \(\Div(X) \to \Pic(X)\), trivial on principal divisors:
+  \[
+    \struct X(0) = 1, \quad \struct X(D + D') = \struct X(D) \cdot \struct X(D'), \quad \struct
+    X(\mathrm{div}\, g) = 1 \ (g \in K(X)^{\times}).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Realizing divisors by presentations and using
+  \(\mathrm{picClass}(\mathrm{presentationDivisor}(P)) = \mathrm{picClass}(P)\)
+  (\ref{def:curveDivisor_picClass}): \(\struct X(0) = \mathrm{picClass}(1) = 1\) since
+  \(\mathrm{presentationDivisor}(1) = 0\) (\ref{thm:presentationDivisor_hom},
+  \ref{thm:meromorphicPresentation_picClass_hom}). If \(P, P'\) realize \(D, D'\), then \(P \cdot
+  P'\) realizes \(D + D'\) (\ref{thm:presentationDivisor_hom}), so \(\struct X(D + D') =
+  \mathrm{picClass}(P \cdot P') = \mathrm{picClass}(P) \cdot \mathrm{picClass}(P') = \struct X(D)
+  \cdot \struct X(D')\) (\ref{thm:meromorphicPresentation_picClass_hom}). Finally
+  \(\mathrm{div}\, g = \mathrm{presentationDivisor}(\mathrm{principal}\, g)\)
+  (\ref{thm:presentationDivisor_hom}), so \(\struct X(\mathrm{div}\, g) =
+  \mathrm{picClass}(\mathrm{principal}\, g) = 1\) (\ref{thm:meromorphicPresentation_picClass_hom}).
+\end{proof}
+
+\begin{theorem}[The kernel is the principal divisors]
+  \label{thm:curveDivisor_picClass_eq_iff}
+  \lean{AlgebraicGeometry.Scheme.CurveDivisor.exists_divOf_of_picClass_eq,
+    AlgebraicGeometry.Scheme.CurveDivisor.picClass_eq_iff}
+  \uses{def:curveDivisor_picClass, thm:meromorphicPresentation_extraction,
+    thm:curveDivisor_picClass_hom, def:divOf}
+  \leanok
+  Two Weil divisors have the same \v Cech Picard class if and only if they differ by a principal
+  divisor:
+  \[
+    \struct X(D) = \struct X(D') \iff D - D' = \mathrm{div}(g) \text{ for some } g \in
+      K(X)^{\times}.
+  \]
+  Together with surjectivity (\ref{def:curveDivisor_picClass}) this identifies \(\Pic(X)\) with the
+  group of Weil divisors modulo principal divisors, the classical isomorphism
+  \(\mathrm{CaCl}(X) = \Pic(X)\) on an integral curve.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \((\Rightarrow)\) Realize \(D, D'\) by presentations \(P, P'\), so \(\mathrm{picClass}(P) =
+  \struct X(D) = \struct X(D') = \mathrm{picClass}(P')\); extraction
+  (\ref{thm:meromorphicPresentation_extraction}) yields \(g\) with
+  \(\mathrm{presentationDivisor}(P) - \mathrm{presentationDivisor}(P') = \mathrm{div}(g)\), that is
+  \(D - D' = \mathrm{div}(g)\). \((\Leftarrow)\) If \(D - D' = \mathrm{div}(g)\), then \(D = D' +
+  \mathrm{div}(g)\), so \(\struct X(D) = \struct X(D') \cdot \struct X(\mathrm{div}\, g) = \struct
+  X(D')\) by additivity and triviality on principal divisors
+  (\ref{thm:curveDivisor_picClass_hom}). Since the class map is onto \(\Pic(X)\) with fibres the
+  cosets of the subgroup of principal divisors, it descends to an isomorphism of \(\Div(X)\) modulo
+  principal divisors onto \(\Pic(X)\).
+\end{proof}
+
+\begin{theorem}[Normalization at a one-point divisor]
+  \label{thm:curveDivisor_picClass_single}
+  \lean{AlgebraicGeometry.Scheme.CurveDivisor.picClass_single}
+  \uses{def:curveDivisor_picClass, thm:presentationDivisor_pointEquations,
+    lem:localEquations_presentation, def:curveDivisor_single}
+  \leanok
+  For a closed point \(x\), the class of the one-point divisor \(1 \cdot x\) is the class of the
+  tracked point equations at \(x\):
+  \[
+    \struct X(1 \cdot x) = \mathrm{picClass}(\text{point equations at } x).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The presentation of the point equations at \(x\) has divisor \(1 \cdot x\)
+  (\ref{thm:presentationDivisor_pointEquations}), so \(\struct X(1 \cdot x)\) is its class
+  (\ref{def:curveDivisor_picClass}), which is the class of the point equations
+  (\ref{lem:localEquations_presentation}, \ref{def:curveDivisor_single}).
+\end{proof}
