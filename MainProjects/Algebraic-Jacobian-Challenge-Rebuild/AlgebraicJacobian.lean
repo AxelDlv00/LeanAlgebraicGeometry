@@ -114,6 +114,7 @@ import AlgebraicJacobian.Picard.ComparisonDefect
 import AlgebraicJacobian.Picard.ComparisonCoherence
 import AlgebraicJacobian.Picard.ComparisonUnique
 import AlgebraicJacobian.Picard.ComparisonDiagonal
+import AlgebraicJacobian.Picard.EffectivityDescentDatum
 import AlgebraicJacobian.Algebra.DedekindColength
 import AlgebraicJacobian.RiemannRoch.Skyscraper
 import AlgebraicJacobian.RiemannRoch.ClosedPoint
@@ -135,10 +136,14 @@ import AlgebraicJacobian.RiemannRoch.ChiCurve
 import AlgebraicJacobian.RiemannRoch.Degree
 import AlgebraicJacobian.RiemannRoch.FiberTwist
 import AlgebraicJacobian.RiemannRoch.ClassCohomology
+import AlgebraicJacobian.RiemannRoch.FLVFiberToolkit
+import AlgebraicJacobian.RiemannRoch.FLVLattice
 import AlgebraicJacobian.Curve.BaseChangeInstances
 import AlgebraicJacobian.Algebra.DiagonalIdeal
 import AlgebraicJacobian.Algebra.DiagonalRegular
 import AlgebraicJacobian.Curve.ProductCharts
+import AlgebraicJacobian.Curve.DiagonalClosed
+import AlgebraicJacobian.Curve.DiagonalChart
 
 /-!
 # AlgebraicJacobian — library root
