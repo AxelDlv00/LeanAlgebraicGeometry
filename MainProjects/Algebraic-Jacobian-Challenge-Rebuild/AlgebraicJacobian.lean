@@ -120,6 +120,13 @@ import AlgebraicJacobian.Picard.EffectivityPieceBridge
 import AlgebraicJacobian.Picard.EffectivityPieceClass
 import AlgebraicJacobian.Picard.EffectivityPieceDescent
 import AlgebraicJacobian.Picard.EffectivityCanonicity
+import AlgebraicJacobian.Picard.EffectivityInvertibleAvoid
+import AlgebraicJacobian.Picard.EffectivityMoving
+import AlgebraicJacobian.Picard.EffectivityTrivialization
+import AlgebraicJacobian.Picard.EffectivityTwist
+import AlgebraicJacobian.Picard.EffectivityOverlap
+import AlgebraicJacobian.Picard.EffectivitySplice
+import AlgebraicJacobian.Picard.EffectivityClose
 import AlgebraicJacobian.Algebra.DedekindColength
 import AlgebraicJacobian.RiemannRoch.Skyscraper
 import AlgebraicJacobian.RiemannRoch.ClosedPoint
