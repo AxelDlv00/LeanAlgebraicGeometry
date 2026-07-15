@@ -115,6 +115,11 @@ import AlgebraicJacobian.Picard.ComparisonCoherence
 import AlgebraicJacobian.Picard.ComparisonUnique
 import AlgebraicJacobian.Picard.ComparisonDiagonal
 import AlgebraicJacobian.Picard.EffectivityDescentDatum
+import AlgebraicJacobian.Picard.EffectivityComparisonUnit
+import AlgebraicJacobian.Picard.EffectivityPieceBridge
+import AlgebraicJacobian.Picard.EffectivityPieceClass
+import AlgebraicJacobian.Picard.EffectivityPieceDescent
+import AlgebraicJacobian.Picard.EffectivityCanonicity
 import AlgebraicJacobian.Algebra.DedekindColength
 import AlgebraicJacobian.RiemannRoch.Skyscraper
 import AlgebraicJacobian.RiemannRoch.ClosedPoint
@@ -148,6 +153,7 @@ import AlgebraicJacobian.Curve.DiagonalClosed
 import AlgebraicJacobian.Curve.DiagonalChart
 import AlgebraicJacobian.Curve.DiagonalChartData
 import AlgebraicJacobian.Curve.DiagonalEquations
+import AlgebraicJacobian.Curve.GraphDivisor
 
 /-!
 # AlgebraicJacobian — library root
