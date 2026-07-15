@@ -2525,3 +2525,178 @@ finite fibre over \([1 : 0]\).
   poles bounded by \(D + nF\) at every closed point of \(V_0\), so \(s \in \struct Y(D + nF)(V_0)
   \subseteq A_n \subseteq \bigsqcup_m A_m\). Hence \(N \le \bigsqcup_n A_n\), and equality holds.
 \end{proof}
+
+\section{Quasi-coherence of the divisor sheaves}
+
+The two-cover computation of \(H^1\) with general coefficients
+(Theorem~\ref{thm:twoCoverH1LinearEquiv}) runs on any sheaf of \(K\)-modules whose degree-one
+cohomology vanishes over each affine chart of the cover. For the divisor sheaves \(\struct X(D)\)
+this vanishing follows, exactly as for the structure sheaf, from a quasi-coherence packaging
+(Definition~\ref{def:qcohOn}). This section supplies that packaging on every open, so the twisted
+affine vanishing fires on every \(\struct X(D)\).
+
+\begin{theorem}[The divisor sheaves are quasi-coherently packaged]
+  \label{thm:divisorSheaf_qcohOn}
+  \lean{AlgebraicGeometry.Scheme.divisorSheaf.instQcohOn}
+  \uses{def:qcohOn, def:divisorSheaf, def:divisorSections, lem:ord_algebraMap_stalk_le_one,
+    lem:ord_eq_one_of_mem_basicOpen, def:divOf, def:curveDivisor}
+  \leanok
+  On the curve bundle \(X\), for every Weil divisor \(D\) the divisor sheaf \(\struct X(D)\),
+  viewed as a sheaf of \(K\)-modules, carries a quasi-coherence packaging on every open \(U\): an
+  ambient section \(r \in \Gamma(X, U)\) acts on \(\struct X(D)(W)\), \(W \le U\), by multiplication
+  with its germ at the generic point \(\eta\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  When \(\eta \notin U\) all section modules over \(W \le U\) are zero (the sheaf is guarded by the
+  generic point) and every packaging axiom is trivial. Assume \(\eta \in U\).
+
+  \emph{(P1) action.} For \(r \in \Gamma(X, U)\) the germ \(\mathrm{germ}_\eta(r)\) is integral at
+  every closed point \(x \in U\) --- its order is \(\le 1\), no pole (Lemma~\ref{lem:ord_algebraMap_stalk_le_one})
+  --- so multiplying a section of \(\struct X(D)\) by it can only improve the pole bounds: the
+  product again lies in \(\struct X(D)(W)\) (Definition~\ref{def:divisorSections}). The module laws
+  over \(\Gamma(X, U)\) and naturality under restriction hold because restriction of \(\struct
+  X(D)\)-sections is the inclusion of submodules of the function field \(K(X)\), on which the action
+  is ordinary multiplication.
+
+  \emph{(P2a) denominator clearing.} Let \(g \in \Gamma(X, U)\) and \(c \in \struct X(D)(V \cap
+  D(g))\) with \(V \cap D(g)\) nonempty. On \(D(g)\) the germ \(\mathrm{germ}_\eta(g)\) has order
+  \(0\) (Lemma~\ref{lem:ord_eq_one_of_mem_basicOpen}), while off \(D(g)\), at a zero of \(g\), it
+  has order \(\ge 1\); both \(D\) and \(\mathrm{div}(c)\) are finitely supported
+  (Definitions~\ref{def:curveDivisor}, \ref{def:divOf}). Choosing \(N\) at least the finite
+  pole-deficit budget over the exceptional points, the section \(\mathrm{germ}_\eta(g)^N \cdot c\)
+  has poles bounded by \(D\) on all of \(V\): at points of \(D(g)\) the factor is a unit and the
+  bound is inherited from the overlap, at zeros of \(g\) the \(N\)-fold vanishing clears the pole,
+  elsewhere all orders vanish. Thus \(c = (g^N \cdot e)|_{V \cap D(g)}\) with \(e =
+  \mathrm{germ}_\eta(g)^N \cdot c \in \struct X(D)(V)\).
+
+  \emph{(P2b) defect annihilation.} Restrictions between nonempty opens are injective on the
+  underlying rational functions, so a section killed on \(V \cap D(g)\) is already zero when \(V
+  \cap D(g)\) is nonempty; and when \(V \cap D(g) = \emptyset\) while \(V\) is nonempty, the germ
+  \(\mathrm{germ}_\eta(g)\) is a non-unit of the function \emph{field}, hence \(0\), so \(g\) itself
+  annihilates. Either way a power of \(g\) kills the defect.
+\end{proof}
+
+\begin{theorem}[Twisted affine vanishing for divisor sheaves]
+  \label{thm:subsingleton_hModule_divisorSheaf_one}
+  \lean{AlgebraicGeometry.IsAffineOpen.subsingleton_hModule'_divisorSheaf_one}
+  \uses{thm:divisorSheaf_qcohOn, thm:hModule1_vanishing_qcoh}
+  \leanok
+  For every affine open \(U\) of the curve bundle \(X\) and every Weil divisor \(D\), the
+  degree-one cohomology of \(U\) with coefficients in \(\struct X(D)\) vanishes: \(H'^1(U, \struct
+  X(D)) = 0\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Apply the twisted affine vanishing \ref{thm:hModule1_vanishing_qcoh} to the quasi-coherence
+  packaging of \(\struct X(D)\) on \(U\) supplied by Theorem~\ref{thm:divisorSheaf_qcohOn}.
+\end{proof}
+
+\section{Fibrewise large-twist vanishing}
+
+We now fix a dominant affine morphism \(\pi \colon Y \to \mathbb P^1\) from the curve bundle \(Y\)
+and its fibre divisor \(F = \mathrm{fiberWeilDivisor}(\pi)\) (Definition~\ref{def:fiberWeilDivisor}),
+with the affine two-cover \(V_0 = \pi^{-1}D_+(X_0)\), \(V_1 = \pi^{-1}D_+(X_1)\). The main theorem
+computes the twisted cohomology \(H^1(\struct Y(D + nF))\) as a quotient of the fixed overlap
+lattice by the fibre lattice, then runs the Noetherian stabilisation of the exhausting chain to
+conclude vanishing for all large \(n\).
+
+\begin{definition}[The fibre lattice inside the overlap, and the twisted \(H^1\)]
+  \label{def:fiberLatticeH1Equiv}
+  \lean{AlgebraicGeometry.fiberLatticeOverlap, AlgebraicGeometry.mem_fiberLatticeOverlap,
+    AlgebraicGeometry.fiberLatticeOverlap_mono, AlgebraicGeometry.iSup_fiberLatticeOverlap,
+    AlgebraicGeometry.fiberLatticeH1Equiv}
+  \uses{def:fiberLattice, thm:twoCoverH1LinearEquiv, thm:subsingleton_hModule_divisorSheaf_one,
+    thm:divisorSections_twist_fixed, def:divisorSheaf, def:TwoCover_diff}
+  \leanok
+  Write \(N = \struct Y(D)(V_0 \cap V_1)\) for the fixed ambient overlap module and \(A_n\) for the
+  denominator lattice of \(\struct Y(D + nF)\) (Definition~\ref{def:fiberLattice}). Viewed inside
+  \(N\) through the inclusion \(N \hookrightarrow K(Y)\), the lattices \(A_n\) form an increasing
+  chain of submodules \(\overline A_n \le N\) exhausting \(N\), \(\bigsqcup_n \overline A_n = N\).
+  Moreover the degree-one cohomology of the twisted sheaf is the quotient by this chain:
+  \[
+    H^1\bigl(\struct Y(D + nF)\bigr) \;\cong\; N \big/ \overline A_n \qquad (K\text{-linearly}).
+  \]
+\end{definition}
+\begin{proof}
+  \leanok
+  Containment, monotonicity and exhaustion of \(\overline A_n\) inside \(N\) are those of \(A_n\)
+  (Definition~\ref{def:fiberLattice}) read through the inclusion of \(N\), the comap of a submodule
+  along the subtype inclusion. For the isomorphism, the two-cover computation
+  (Theorem~\ref{thm:twoCoverH1LinearEquiv}) applies to \(\struct Y(D + nF)\) on the cover \(V_0,
+  V_1\): its two affine vanishing hypotheses \(H'^1(V_i, \struct Y(D + nF)) = 0\) are supplied by
+  Theorem~\ref{thm:subsingleton_hModule_divisorSheaf_one}, giving
+  \[
+    H^1\bigl(\struct Y(D + nF)\bigr) \cong \struct Y(D + nF)(V_0 \cap V_1) \big/
+      \mathrm{range}\,(\text{restriction-difference}) .
+  \]
+  The restriction-difference map (Definition~\ref{def:TwoCover_diff}) reads on underlying rational
+  functions as the literal difference in \(K(Y)\), so its range is exactly the join \(A_n = \struct
+  Y(D + nF)(V_0) + \struct Y(D + nF)(V_1)\) inside the overlap module. Finally the overlap module is
+  constant in \(n\): \(\struct Y(D + nF)(V_0 \cap V_1) = \struct Y(D)(V_0 \cap V_1) = N\)
+  (Theorem~\ref{thm:divisorSections_twist_fixed}). Substituting identifies the cokernel with \(N /
+  \overline A_n\).
+\end{proof}
+
+\begin{theorem}[Noetherian stabilisation of an exhausting chain]
+  \label{thm:eventually_eq_top_of_monotone_of_iSup_eq_top}
+  \lean{Submodule.eventually_eq_top_of_monotone_of_iSup_eq_top}
+  \leanok
+  Let \(M\) be a module over a ring \(R\) and \((A_n)_{n \in \N}\) an increasing chain of submodules
+  with \(\bigsqcup_n A_n = M\). If the quotient \(M / A_0\) is Noetherian, then the chain is
+  eventually everything: there is \(n_0\) with \(A_n = M\) for all \(n \ge n_0\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Push the chain into the Noetherian quotient \(M / A_0\): the images \(\overline{A_n} = A_n / A_0\)
+  form an increasing chain of submodules of a Noetherian module, hence stabilise at some \(n_0\),
+  \(\overline{A_n} = \overline{A_{n_0}}\) for \(n \ge n_0\). Their join is the image of \(\bigsqcup_n
+  A_n = M\), namely all of \(M / A_0\); since the stabilised value dominates every term, it equals
+  the whole quotient, \(\overline{A_{n_0}} = M / A_0\). Comapping back along the quotient map
+  \(M \to M / A_0\) and using \(A_0 \le A_n\) gives \(A_n = M\) for all \(n \ge n_0\).
+\end{proof}
+
+\begin{theorem}[Fibrewise large-twist vanishing]
+  \label{thm:subsingleton_hModule_divisorSheaf_one_of_isDominant_toP1}
+  \lean{AlgebraicGeometry.subsingleton_hModule_divisorSheaf_one_of_isDominant_toP1}
+  \uses{def:fiberLatticeH1Equiv, thm:eventually_eq_top_of_monotone_of_iSup_eq_top, def:fiberLattice,
+    thm:moduleFinite_divisorSheaf, def:fiberWeilDivisor}
+  \leanok
+  Assume \(H^0(Y, \struct{Y/K})\) and \(H^1(Y, \struct{Y/K})\) are finite-dimensional over \(K\).
+  Then for every Weil divisor \(D\) on \(Y\) there is \(n_0\) with
+  \[
+    H^1\bigl(\struct Y(D + nF)\bigr) = 0 \qquad \text{for all } n \ge n_0 ,
+  \]
+  where \(F\) is the fibre divisor of the dominant affine \(\pi \colon Y \to \mathbb P^1\). The
+  bound \(n_0\) is per-class; the argument uses no duality and no higher direct image.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Through the identification \(H^1(\struct Y(D + nF)) \cong N / \overline A_n\)
+  (Definition~\ref{def:fiberLatticeH1Equiv}) it suffices to show \(\overline A_n = N\) for all large
+  \(n\). The chain \(\overline A_n\) is increasing and exhausts \(N\) (the exhaustion of
+  Definition~\ref{def:fiberLattice}, by pole clearing at the finite fibre over \([1 : 0]\)). Its
+  base quotient \(N / \overline A_0 \cong H^1(\struct Y(D))\) is finite-dimensional: every divisor
+  sheaf has finite \(H^1\) under the standing structure-sheaf finiteness hypotheses, by dévissage
+  (Theorem~\ref{thm:moduleFinite_divisorSheaf}). A finite-dimensional \(K\)-module is Noetherian, so
+  the stabilisation Theorem~\ref{thm:eventually_eq_top_of_monotone_of_iSup_eq_top} gives \(n_0\) with
+  \(\overline A_n = N\) for \(n \ge n_0\); then \(N / \overline A_n = 0\) and the twisted \(H^1\)
+  vanishes.
+\end{proof}
+
+\begin{theorem}[Fibrewise large-twist vanishing along a finite map]
+  \label{thm:subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1}
+  \lean{AlgebraicGeometry.subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1}
+  \uses{thm:subsingleton_hModule_divisorSheaf_one_of_isDominant_toP1,
+    thm:moduleFinite_hModule_one_of_isFinite_toP1}
+  \leanok
+  Let \(\pi \colon Y \to \mathbb P^1\) be a finite dominant morphism compatible with the structure
+  morphisms, and assume \(H^0(Y, \struct{Y/K})\) is finite-dimensional. Then for every Weil divisor
+  \(D\) there is \(n_0\) with \(H^1(\struct Y(D + nF)) = 0\) for all \(n \ge n_0\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Finiteness of \(\pi\) makes \(H^1(Y, \struct{Y/K})\) finite-dimensional
+  (Theorem~\ref{thm:moduleFinite_hModule_one_of_isFinite_toP1}), discharging the remaining
+  finiteness hypothesis of Theorem~\ref{thm:subsingleton_hModule_divisorSheaf_one_of_isDominant_toP1}.
+\end{proof}

@@ -2378,3 +2378,302 @@ this section makes that precise and records the regularity of the equation.
   is a unit on its own basic open, so the restriction of \(e_U\) to
   \(D(e_U) = \mathfrak D(U) \cap \Delta^{\mathrm{c}}\) is a unit.
 \end{proof}
+
+\section{The frozen étale-coordinate chart data}
+
+The per-chart local equation of the previous section runs on any affine chart carrying the
+abstract étale-coordinate data of Definition~\ref{def:diagonalSetup}. To assemble a single
+divisor on the whole square \(C \otimes C\) we must \emph{freeze} one such chart, with its
+coordinate and idempotent lift, per point of the curve; this section makes the choice and
+records the per-chart deliverables specialised to it.
+
+\begin{definition}[The frozen chart data of a smooth curve]
+  \label{def:diagonalChartData}
+  \lean{AlgebraicGeometry.Over.exists_diagonalChartAt, AlgebraicGeometry.Over.DiagonalChartData,
+    AlgebraicGeometry.Over.diagonalChartData,
+    AlgebraicGeometry.Over.DiagonalChartData.elift,
+    AlgebraicGeometry.Over.DiagonalChartData.lmul'_elift,
+    AlgebraicGeometry.Over.DiagonalChartData.isIdempotentElem_baseChange_elift,
+    AlgebraicGeometry.Over.DiagonalChartData.ker_lmul'_eq_span_baseChange_elift}
+  \uses{def:diagonalSetup, thm:exists_diagonalLocalization}
+  \leanok
+  Let \(C\) be smooth of relative dimension one over \(\Spec k\). Then every point \(p\) of \(C\)
+  has an affine open \(U \ni p\) whose section ring \(B := \Gamma(C, U)\) carries an étale
+  \(k[X]\)-algebra structure --- an étale coordinate \(u \in B\) --- compatible with the section
+  \(k\)-algebra structure (making \(k \to k[X] \to B\) a tower).
+
+  A \emph{chart datum} for \(C\) is a choice, one per point \(p\), of such a chart
+  \(\mathrm{chart}(p) \ni p\) with its étale coordinate. On each chart the coordinate is flat,
+  formally unramified and essentially of finite type, so the packaged diagonal localisation
+  (Theorem~\ref{thm:exists_diagonalLocalization}) supplies a frozen idempotent lift
+  \(\mathrm{elift}(p) \in B \otimes_k B\) with \(\mu_k(\mathrm{elift}(p)) = 0\), whose base change
+  is idempotent and generates the \(k[X]\)-diagonal ideal.
+\end{definition}
+\begin{proof}
+  \leanok
+  Smoothness of relative dimension one over the one-point base \(\Spec k\) yields, at each \(p\), a
+  standard-smooth affine chart whose section ring is standard smooth of relative dimension one over
+  \(\Gamma(\Spec k, \top)\). Transport the base along the ring isomorphism \(k \cong \Gamma(\Spec
+  k, \top)\) --- standard-smoothness is stable under composition with a relative-dimension-zero
+  isomorphism, dispatching the base-field-versus-\(\Gamma(\Spec k)\) subtlety at the level of ring
+  homomorphisms --- to get \(\Gamma(C, U)\) standard smooth of relative dimension one over \(k\).
+  The structure theorem for standard-smooth homomorphisms produces an étale factorisation
+  \(k[X_1] \to \Gamma(C, U)\) through the one-variable polynomial ring; transporting the source
+  along \(k[X_1] \cong k[X]\) gives the étale coordinate. Étaleness entails flatness, formal
+  unramifiedness and essential finiteness, the hypotheses under which
+  Theorem~\ref{thm:exists_diagonalLocalization} produces the idempotent lift and its properties.
+  Choosing one such chart per point gives the chart datum; every point of the curve has one, so a
+  datum exists.
+\end{proof}
+
+\begin{theorem}[The frozen diagonal equation on a chart]
+  \label{thm:diagonalChartData_equation}
+  \lean{AlgebraicGeometry.Over.DiagonalChartData.chartEqn,
+    AlgebraicGeometry.Over.DiagonalChartData.ker_ideal_eq_span_chartEqn,
+    AlgebraicGeometry.Over.DiagonalChartData.germ_chartEqn_mem_nonZeroDivisors,
+    AlgebraicGeometry.Over.DiagonalChartData.chartEqn_inf_diagonalComplement,
+    AlgebraicGeometry.Over.DiagonalChartData.span_res_chartEqn,
+    AlgebraicGeometry.Over.DiagonalChartData.res_chartEqn_mem_nonZeroDivisors}
+  \uses{def:diagonalChartData, def:diagonalChart, thm:diagonal_ker_ideal_diagonalChart,
+    thm:diagonalChartEqn_regular, thm:diagonalChart_inf_diagonalComplement}
+  \leanok
+  Fix a chart datum on a separated \(C\) and a point \(p\), and write \(\mathfrak D_p\) for the
+  diagonal member \(\mathfrak D(\mathrm{chart}(p))\) and \(e_p\) for its diagonal equation
+  (Definition~\ref{def:diagonalChart}) built with the frozen coordinate. Then:
+  \begin{itemize}
+    \item the kernel ideal sheaf of the diagonal on \(\mathfrak D_p\) is principal, \((\ker
+      \delta)(\mathfrak D_p) = (e_p)\);
+    \item the germ of \(e_p\) at every point of \(\mathfrak D_p\) is a nonzerodivisor;
+    \item the diagonal member meets the diagonal complement in the basic open of the equation,
+      \(\mathfrak D_p \cap \Delta^{\mathrm c} = D(e_p)\);
+    \item for every affine open \(W \le \mathfrak D_p\), the restriction \(e_p|_W\) generates the
+      kernel ideal sheaf there, \(\mathrm{span}\{e_p|_W\} = (\ker \delta)(W)\), and \(e_p|_W\) is a
+      nonzerodivisor of \(\Gamma(C \otimes C, W)\).
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  \leanok
+  The first three are the per-chart deliverables (Theorems~\ref{thm:diagonal_ker_ideal_diagonalChart},
+  \ref{thm:diagonalChartEqn_regular}, \ref{thm:diagonalChart_inf_diagonalComplement}) read on the
+  frozen chart, whose coordinate instance is baked into the definition of \(e_p\). For the fourth,
+  the ideal sheaf of a closed subscheme is compatible with restriction to a smaller affine open, so
+  the principal generator on \(\mathfrak D_p\) restricts to a generator on \(W\): \(\mathrm{span}\{e_p|_W\}
+  = (\ker \delta)(W)\). The section regularity of \(e_p|_W\) is the propagation of germ regularity:
+  a section whose every germ is a nonzerodivisor is itself a nonzerodivisor, because sections inject
+  into the product of their germs; the germs of \(e_p|_W\) are those of \(e_p\), which are
+  nonzerodivisors.
+\end{proof}
+
+\begin{lemma}[Regular generators of a principal ideal differ by a unit]
+  \label{lem:exists_isUnit_of_span_singleton_eq}
+  \lean{AlgebraicGeometry.Over.exists_isUnit_of_span_singleton_eq}
+  \leanok
+  Let \(R\) be a commutative ring and \(a, b \in R\) with \(\mathrm{span}\{a\} = \mathrm{span}\{b\}\).
+  If \(a\) is a nonzerodivisor, then \(a\) and \(b\) differ by a unit: there is a unit \(u \in
+  R^{\times}\) with \(a = u\,b\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  From \(a \in \mathrm{span}\{b\}\) and \(b \in \mathrm{span}\{a\}\) write \(a = c\,b\) and \(b =
+  d\,a\). Substituting, \(a = c\,d\,a\), so \((1 - c\,d)\,a = 0\); as \(a\) is a nonzerodivisor this
+  forces \(c\,d = 1\), so \(c\) is a unit with inverse \(d\). Taking \(u = c\) gives \(a = u\,b\).
+\end{proof}
+
+\begin{definition}[The diagonal pointed cover and its equation]
+  \label{def:diagonalCover}
+  \lean{AlgebraicGeometry.Over.diagonalCover, AlgebraicGeometry.Over.diagonalEqn,
+    AlgebraicGeometry.Over.diagonalCover_opens_of_mem,
+    AlgebraicGeometry.Over.diagonalCover_opens_of_notMem,
+    AlgebraicGeometry.Over.diagonalEqn_res_of_mem,
+    AlgebraicGeometry.Over.diagonalEqn_of_notMem}
+  \uses{def:diagonal, def:diagonalChart, def:diagonalChartData, thm:diagonalChartData_equation}
+  \leanok
+  Fix a chart datum on a separated \(C\). The \emph{diagonal pointed cover} of \(C \otimes C\)
+  assigns to a point \(z\):
+  \[
+    \mathcal U(z) \;=\;
+      \begin{cases}
+        \mathfrak D_{\mathrm{fst}(z)} & z \in \Delta \ (\text{i.e. } z \text{ in the range of } \delta),\\
+        \Delta^{\mathrm c} & z \notin \Delta,
+      \end{cases}
+  \]
+  the diagonal member of the chart at the first projection of \(z\) on the diagonal, the complement
+  off it. The \emph{diagonal equation} is \(e_z = e_{\mathrm{fst}(z)}|_{\mathcal U(z)}\) on the
+  diagonal and \(e_z = 1\) off it.
+\end{definition}
+\begin{proof}
+  \leanok
+  Each assignment is an open containing \(z\): on the diagonal, \(z = \delta(\mathrm{fst}(z))\)
+  lies in \(\mathfrak D_{\mathrm{fst}(z)}\) because \(\delta^{-1}\mathfrak D(U) = U\) contains
+  \(\mathrm{fst}(z)\) (Definition~\ref{def:diagonalChart}, using \(\mu_k(\mathrm{elift}) = 0\), and
+  \(\mathrm{fst}(z) \in \mathrm{chart}(\mathrm{fst}(z))\)); off the diagonal, \(z \in
+  \Delta^{\mathrm c}\) by definition of the complement. The equation is well typed by restriction
+  along \(\mathcal U(z) = \mathfrak D_{\mathrm{fst}(z)}\), and its stated restriction behaviour is
+  the definition unfolded.
+\end{proof}
+
+\begin{theorem}[The diagonal as an effective divisor in local equations]
+  \label{thm:diagonalLocalEquations}
+  \lean{AlgebraicGeometry.Over.diagonalLocalEquationsOfData,
+    AlgebraicGeometry.Over.diagonalPicClassOfData,
+    AlgebraicGeometry.Over.diagonalLocalEquations, AlgebraicGeometry.Over.diagonalPicClass}
+  \uses{def:diagonalCover, thm:diagonalChartData_equation, lem:exists_isUnit_of_span_singleton_eq,
+    def:localEquations, def:localEquations_picClass, def:diagonalChartData}
+  \leanok
+  \source{kleiman-picard}
+  Let \(C\) be smooth of relative dimension one and separated over \(\Spec k\). The diagonal cover
+  and equation of Definition~\ref{def:diagonalCover} (for the frozen chart datum) form a system of
+  local equations (Definition~\ref{def:localEquations}) on \(C \otimes C\), cutting out the
+  diagonal \(\Delta\). Its Picard class is the class of the diagonal,
+  \[
+    \mathrm{diagonalPicClass}(C) \;=\; \struct{C \otimes C}(\Delta) \;\in\; \Pic(C \otimes C).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  \emph{Regularity.} On a diagonal member the equation is \(e_p\), germ-regular everywhere
+  (Theorem~\ref{thm:diagonalChartData_equation}); off the diagonal it is the constant \(1\), whose
+  germs are units, hence nonzerodivisors.
+
+  \emph{Overlap ratios are units.} Consider two cover members over points \(x, y\). If both are on
+  the diagonal, their overlap \(W = \mathcal U(x) \cap \mathcal U(y)\) is affine and contained in
+  both diagonal members; there both \(e_{\mathrm{fst}(x)}|_W\) and \(e_{\mathrm{fst}(y)}|_W\)
+  generate the same kernel ideal sheaf \((\ker \delta)(W)\)
+  (Theorem~\ref{thm:diagonalChartData_equation}), and \(e_{\mathrm{fst}(x)}|_W\) is a nonzerodivisor,
+  so by Lemma~\ref{lem:exists_isUnit_of_span_singleton_eq} the two differ by a unit. If one is on
+  the diagonal and the other off, the overlap lies in \(\mathfrak D \cap \Delta^{\mathrm c} =
+  D(e_p)\) (Theorem~\ref{thm:diagonalChartData_equation}), where \(e_p\) restricts to a unit, and
+  the off-diagonal equation is \(1\); so the ratio is a unit (or its inverse). If both are off the
+  diagonal, both equations are \(1\) and the ratio is \(1\). Thus the data is a local-equation
+  system.
+
+  Its Picard class (Definition~\ref{def:localEquations_picClass}) is by construction the class of
+  the effective divisor it cuts out, which is the diagonal \(\Delta\); that is, \(\struct{C \otimes
+  C}(\Delta)\). The diagonal is an effective (relative Cartier) divisor precisely because \(C\) is
+  smooth, matching Kleiman's criterion.
+\end{proof}
+
+\section{The graph of a curve point as an effective divisor}
+
+Fix \(C\) smooth of relative dimension one and separated over \(\Spec k\). For a test object \(T\)
+and a point \(t \colon T \to C\) (a morphism of \(\Over(\Spec k)\)), the \emph{graph}
+\(\Gamma_t \subseteq C \otimes T\) is realised as the pullback of the diagonal divisor along the
+graph lift \(\langle \mathrm{fst}, \mathrm{snd} \circ t\rangle \colon C \otimes T \to C \otimes C\).
+The pullback of the local-equation system is available once the pulled equations stay regular; this
+is the content of the section.
+
+\begin{lemma}[The graph-lift whisker square]
+  \label{lem:whiskerLeft_comp_graphLift}
+  \lean{AlgebraicGeometry.Over.whiskerLeft_comp_graphLift}
+  \leanok
+  For \(g \colon T' \to T\) and \(t \colon T \to C\), whiskering the graph lift of \(t\) by
+  \(C \lhd g\) is the graph lift of the restricted point \(g \circ t\):
+  \[
+    (C \lhd g) \circ \langle \mathrm{fst}_{C,T},\, \mathrm{snd}_{C,T} \circ t\rangle
+      \;=\; \langle \mathrm{fst}_{C,T'},\, \mathrm{snd}_{C,T'} \circ g \circ t\rangle .
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  Both sides are maps into the product \(C \otimes C\); by the universal property it suffices to
+  compare their two projections. Post-composing with \(\mathrm{fst}\): the left side gives \((C
+  \lhd g) \circ \mathrm{fst}_{C,T} = \mathrm{fst}_{C,T'}\), the right side gives
+  \(\mathrm{fst}_{C,T'}\). Post-composing with \(\mathrm{snd}\): the left side gives \((C \lhd g)
+  \circ \mathrm{snd}_{C,T} \circ t = \mathrm{snd}_{C,T'} \circ g \circ t\) (as \(\mathrm{snd} \circ
+  (C \lhd g) = g \circ \mathrm{snd}\)), matching the right side.
+\end{proof}
+
+\begin{theorem}[Regularity of the pulled-back diagonal equation]
+  \label{thm:graph_pullback_regular}
+  \lean{AlgebraicGeometry.Over.graph_pullback_regular}
+  \uses{def:diagonalCover, thm:diagonalChartData_equation, def:diagonalChart, def:productChart,
+    def:productChartSections, thm:appLE_productChartSections, thm:diagonal_regularity_engine,
+    lem:flat_mem_nonZeroDivisors, lem:affineOpen_germ_mem_nonZeroDivisors,
+    def:localEquations_pullback, def:diagonalChartData, def:diagonalSetup}
+  \leanok
+  For a chart datum on a separated \(C\) and a point \(t \colon T \to C\), the pullback of the
+  diagonal equation along the graph lift \(q = \langle \mathrm{fst}, \mathrm{snd} \circ t\rangle\)
+  is germ-regular at every point of the pullback cover.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Fix a point \(y\) of the pullback cover and a point \(z\) of its member. Off the diagonal (i.e.\
+  \(q(y) \notin \Delta\)) the diagonal equation at \(q(y)\) is \(1\), so its \(q\)-pullback is
+  \(q^{\sharp}(1) = 1\), whose germ is a unit, hence a nonzerodivisor.
+
+  On the diagonal, set \(p_0 = \mathrm{fst}(q(y))\), let \(U = \mathrm{chart}(p_0)\) with étale
+  coordinate \(u\), so the member is \(q^{-1}\mathfrak D(U)\). Choose an affine open \(V\) of \(T\)
+  with \((\mathrm{snd})(z) \in V \subseteq t^{-1}U\), and pass to the affine product chart
+  \(\mathfrak W(U, V)\) (Definition~\ref{def:productChart}) through \(z\); on the overlap \(W\) of
+  the member with \(\mathfrak W(U, V)\), the pulled equation restricts to the product-chart section
+  of \(u \otimes 1 - 1 \otimes b\), where \(b := t^{\sharp}(u) \in \Gamma(T, V)\). This is the
+  lift-app rule (Theorem~\ref{thm:appLE_productChartSections}) for \(q\), whose components are
+  \(\mathrm{fst} \circ q = \mathrm{fst}\) and \(\mathrm{snd} \circ q = \mathrm{snd} \circ t\): the
+  diagonal generator \(u \otimes 1 - 1 \otimes u\) (Definition~\ref{def:diagonalSetup}) pulls back
+  to \(\mathrm{fst}^{\sharp}(u) - (\mathrm{snd} \circ t)^{\sharp}(u) = \mathrm{fst}^{\sharp}(u) -
+  \mathrm{snd}^{\sharp}(b)\), i.e.\ the identified \(u \otimes 1 - 1 \otimes b\)
+  (Definition~\ref{def:productChartSections}).
+
+  Now \(u \otimes 1 - 1 \otimes b\) is a nonzerodivisor of \(\Gamma(C, U) \otimes_k \Gamma(T, V)\)
+  by the regularity engine (Theorem~\ref{thm:diagonal_regularity_engine}), which holds uniformly in
+  the second tensor factor \(\Gamma(T, V)\) and the element \(b\) --- no integrality of \(C \otimes
+  T\) is used. The product-chart identification is a ring isomorphism, hence flat, so it carries
+  this nonzerodivisor to a nonzerodivisor of \(\Gamma(C \otimes T, \mathfrak W(U, V))\)
+  (Lemma~\ref{lem:flat_mem_nonZeroDivisors}). Since \(\mathfrak W(U, V)\) is affine, the germ at
+  \(z\) is a nonzerodivisor (Lemma~\ref{lem:affineOpen_germ_mem_nonZeroDivisors}); matching this
+  germ to the pullback germ across the overlap \(W\) (germs are compatible with restriction) gives
+  the claim.
+\end{proof}
+
+\begin{definition}[The graph divisor and its Picard class]
+  \label{def:graphLocalEquations}
+  \lean{AlgebraicGeometry.Over.graphLocalEquations, AlgebraicGeometry.Over.graphPicClass,
+    AlgebraicGeometry.Over.graphPicClass_eq}
+  \uses{thm:diagonalLocalEquations, def:localEquations_pullback, thm:graph_pullback_regular,
+    thm:localEquations_picClass_pullback}
+  \leanok
+  \source{kleiman-picard}
+  Let \(C\) be smooth of relative dimension one and separated over \(\Spec k\), \(T\) a test object
+  and \(t \colon T \to C\) a point. The \emph{graph divisor} \(\Gamma_t \subseteq C \otimes T\) is
+  cut out by the pullback of the diagonal local-equation system
+  (Theorem~\ref{thm:diagonalLocalEquations}) along the graph lift \(\langle \mathrm{fst},
+  \mathrm{snd} \circ t\rangle\); the pullback is a local-equation system by
+  Theorem~\ref{thm:graph_pullback_regular}. Its Picard class \(\mathrm{graphPicClass}(C, t) =
+  \struct{C \otimes T}(\Gamma_t)\) is the pullback of the diagonal class:
+  \[
+    \struct{C \otimes T}(\Gamma_t)
+      \;=\; \langle \mathrm{fst}, \mathrm{snd} \circ t\rangle^{*}\,\struct{C \otimes C}(\Delta).
+  \]
+\end{definition}
+\begin{proof}
+  \leanok
+  The diagonal is a local-equation system (Theorem~\ref{thm:diagonalLocalEquations}); its pullback
+  along the graph lift is again a local-equation system by
+  Definition~\ref{def:localEquations_pullback}, whose regularity hypothesis is discharged by
+  Theorem~\ref{thm:graph_pullback_regular}. The Picard class of a pullback of a local-equation
+  system is the pullback of its Picard class (Theorem~\ref{thm:localEquations_picClass_pullback}),
+  giving the displayed identity. This is Kleiman's graph divisor \(\Gamma_t\), a relative effective
+  divisor on \(X \times T\).
+\end{proof}
+
+\begin{theorem}[Base change of the graph class]
+  \label{thm:graphLocalEquations_base_change}
+  \lean{AlgebraicGeometry.Over.graphLocalEquations_base_change}
+  \uses{def:graphLocalEquations, lem:whiskerLeft_comp_graphLift}
+  \leanok
+  For \(g \colon T' \to T\) and \(t \colon T \to C\), the class of the graph of the restricted
+  point \(g \circ t\) is the pullback of the class of the graph of \(t\) along \(C \lhd g\):
+  \[
+    \struct{C \otimes T'}(\Gamma_{g \circ t})
+      \;=\; (C \lhd g)^{*}\,\struct{C \otimes T}(\Gamma_t).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  By Definition~\ref{def:graphLocalEquations} each side is a pullback of the diagonal class
+  \(\struct{C \otimes C}(\Delta)\): the left along the graph lift of \(g \circ t\), the right along
+  the graph lift of \(t\) followed by \(C \lhd g\). Contravariant functoriality of the pullback of
+  Picard classes turns the latter into the pullback along the composite \((C \lhd g) \circ
+  \langle\mathrm{fst}, \mathrm{snd} \circ t\rangle\), which is the graph lift of \(g \circ t\) by
+  the whisker square (Lemma~\ref{lem:whiskerLeft_comp_graphLift}). Hence the two pullbacks agree.
+\end{proof}

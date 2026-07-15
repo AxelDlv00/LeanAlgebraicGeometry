@@ -5851,6 +5851,340 @@ S \otimes_A B\).
   B}, \mathrm{cgq}^{-1}U)\).
 \end{proof}
 
+\section{The per-piece comparison unit and its descended class}
+\label{sec:effectivityComparisonUnit}
+
+We continue with the \((C2)\) data: a commutative ring \(A\), an \(A\)-algebra \(B\), the curve
+\(C\) over \(\Spec k\), and the cover inclusion \(\mathrm{cg} \colon X_B \to X_A\) (the whiskering
+\(C \lhd \Spec(A \to B)\)), with \(\mathrm{cgq} \colon X_{B \otimes_A B} \to X_A\) its double, and
+\(u_1, u_2 \colon X_{B \otimes_A B} \to X_B\) the coprojections. A rigidified class \(L =
+[\gamma]\) on \(X_B\) is descended \emph{piece by piece} over \(\mathrm{cg}\)-saturated affine opens
+\(V\) of \(X_A\). This section manufactures, on each such piece equipped with a trivialization of
+\(L\), the comparison unit that the per-piece descent extraction (brick E2) consumes, and its
+descended class.
+
+\begin{definition}[A piece trivialization]
+  \label{def:pieceTrivialization}
+  \lean{AlgebraicGeometry.Over.PieceTrivialization, AlgebraicGeometry.Over.whiskerLeft_inl_comp_cover,
+    AlgebraicGeometry.Over.whiskerLeft_inr_comp_cover, AlgebraicGeometry.Over.cgqPreimage_le_inl,
+    AlgebraicGeometry.Over.cgqPreimage_le_inr}
+  \uses{def:tensorInl_tensorInr, cor:cechPic_mk_eq_one}
+  \leanok
+  A \emph{piece trivialization} of a representing cocycle \(\gamma\) on a pointed cover \(\mathcal N\)
+  of \(X_B\), over a piece \(V \subseteq X_A\), is a trivializing \(0\)-cochain \(t\) of \(\gamma\)
+  on the \(\mathrm{cg}^{-1}V\)-trimmed opens: units \(t_b \in \Gamma(X_B, \mathcal N(b) \cap
+  \mathrm{cg}^{-1}V)^{\times}\) with \(t_b \cdot \gamma_{b b'} = t_{b'}\) on the trimmed pairwise
+  overlaps. It is the cochain witness that the class \(L = [\gamma]\) is trivial on the cover piece
+  \(\mathrm{cg}^{-1}V\) (\ref{cor:cechPic_mk_eq_one}); its existence over a covering family of pieces
+  is the piece-selection input consumed by the final splice. The two coprojections both lie over the
+  cover inclusions, \(u_1 \circ \mathrm{cg} = \mathrm{cgq} = u_2 \circ \mathrm{cg}\) as maps to
+  \(X_A\), so the double piece is bounded by each coprojection preimage of the piece,
+  \(\mathrm{cgq}^{-1}V \le u_i^{-1}(\mathrm{cg}^{-1}V)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  The two coprojection identities are the whiskerings of \(q_i \circ (A \to B) = (A \to B \otimes_A
+  B)\) as \(A\)-algebra maps (Definition~\ref{def:tensorInl_tensorInr}); whiskering to the curve and
+  passing to preimages gives \(\mathrm{cgq}^{-1}V \le u_i^{-1}(\mathrm{cg}^{-1}V)\).
+\end{proof}
+
+\begin{theorem}[The trivialization-twisted witness glues to a unit]
+  \label{thm:exists_glued_unitsTrivTwist}
+  \lean{AlgebraicGeometry.unitsTrivTwistCochain, AlgebraicGeometry.unitsTrivTwistCochain_compat,
+    AlgebraicGeometry.exists_glued_unitsTrivTwist,
+    AlgebraicGeometry.Scheme.Hom.unitsAppLE_glued_trivTwist}
+  \uses{thm:exists_global_unit_of_compatible}
+  \leanok
+  Over abstract schemes, let \(r_1, r_2 \colon Y \to Z\), let \(\mathcal C\) be a pointed cover of
+  \(Y\) and \(\mathcal N\) one of \(Z\), let \(c\) be a comparison \(0\)-cochain on \(\mathcal C\)
+  and \(E\) a pair-indexed unit family on \(\mathcal N\), and let \(t\) trivialize \(E\) on the
+  \(DZ\)-trimmed opens of \(\mathcal N\), for opens \(DZ \subseteq Z\), \(DY \subseteq Y\) with
+  \(DY \le r_i^{-1}DZ\). Define the \emph{twisted value} at \(y\), on \(\mathcal C(y) \cap DY\),
+  \[
+    (c_y) \cdot \bigl(r_2^{\sharp}t\bigr)_y \cdot \bigl(r_1^{\sharp}t\bigr)_y^{-1} .
+  \]
+  If \(c\) cobounds the two pullbacks of \(E\) (the relation \(c_x \cdot (r_1^{\sharp}E)_{xy} =
+  (r_2^{\sharp}E)_{xy} \cdot c_y\)) and \(t\) satisfies the trivializing relation, then the twisted
+  values are \v Cech-compatible on the trimmed cover \(\{\mathcal C(y) \cap DY\}\) of \(DY\), hence
+  glue to a global unit \(v \in \Gamma(Y, DY)^{\times}\); and for a further map \(\varphi\) into
+  \(Y\) with \(\varphi \circ r_i = m_i\), the \(\varphi\)-pullback of \(v\) expands into the pulled
+  witness value \(\varphi^{\sharp}c\) times the two \(m_i\)-pullbacks of \(t\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Compatibility is a telescoping identity: on a pairwise overlap the coboundary relation for \(c\)
+  and the two pullbacks of the trivializing relation for \(t\) (along \(r_1\) and \(r_2\)) combine so
+  that the \(E\)-terms cancel and the twisted value at \(y\) matches that at \(y'\). A compatible
+  unit family on a pointed cover glues to a global unit by the sheaf axiom
+  (Theorem~\ref{thm:exists_global_unit_of_compatible}). The pullback expansion is the defining
+  gluing relation pulled back along \(\varphi\), with the composites \(\varphi \circ r_i = m_i\)
+  merging the two pullbacks.
+\end{proof}
+
+\begin{theorem}[The per-piece comparison unit]
+  \label{thm:pieceComparisonUnit}
+  \lean{AlgebraicGeometry.Over.pieceComparisonUnit, AlgebraicGeometry.Over.pieceComparisonUnit_spec,
+    AlgebraicGeometry.Over.pieceComparisonUnit_unique}
+  \uses{thm:exists_glued_unitsTrivTwist, def:pieceTrivialization, def:normalizedCechComparison}
+  \leanok
+  Let \(W\) be a \(\sigma\)-normalized comparison of \(\gamma\)
+  (Definition~\ref{def:normalizedCechComparison}) with comparison cochain \(\theta\), and \(T\) a
+  piece trivialization of \(\gamma\) on \(V\). The \emph{per-piece comparison unit}
+  \[
+    v_V \;\in\; \Gamma\bigl(X_{B \otimes_A B},\, \mathrm{cgq}^{-1}V\bigr)^{\times}
+  \]
+  is the global unit glued from the values \(\theta_x \cdot (u_2^{\sharp}T)(x) /
+  (u_1^{\sharp}T)(x)\) on the trimmed comparison cover: on each member it restricts to that twisted
+  witness value. It is the unique unit of the double piece with this restriction property.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Apply Theorem~\ref{thm:exists_glued_unitsTrivTwist} with \(r_1, r_2 = u_1, u_2\), comparison
+  cover \(\mathcal C = W.\mathrm{cover}\), representing cover \(\mathcal N\), comparison cochain
+  \(c = \theta\), pair family \(E = \gamma\), trimming opens \(DZ = \mathrm{cg}^{-1}V\), \(DY =
+  \mathrm{cgq}^{-1}V\), and trivialization \(t = T\): the coboundary relation for \(\theta\) is the
+  \((N1)\) witness relation of the normalized comparison, and the trivializing relation is that of
+  the piece trivialization (Definition~\ref{def:pieceTrivialization}). Gluing yields \(v_V\) and its
+  defining restriction property. Uniqueness is the separation half of the sheaf axiom: two units of
+  \(\mathrm{cgq}^{-1}V\) with the same restrictions to a cover agree.
+\end{proof}
+
+\begin{theorem}[Naturality of the section-ring identification in the algebra]
+  \label{thm:pieceRingEquiv_whiskerLeft_naturality}
+  \lean{AlgebraicGeometry.Over.pieceRingEquiv_whiskerLeft_naturality,
+    AlgebraicGeometry.Over.map_pieceEquiv_eq_pieceEquiv_whiskerLeft,
+    AlgebraicGeometry.Over.whiskerLeft_overSpecMap_comp_cover,
+    AlgebraicGeometry.Over.coverPreimage_le_whiskerLeft,
+    AlgebraicGeometry.Over.restrictScalars_comp_ofId,
+    AlgebraicGeometry.Over.pieceRingEquiv_pieceEquiv}
+  \uses{def:pieceRingEquiv, def:pieceAlgEquiv, thm:pieceRingEquiv_naturality}
+  \leanok
+  The section-ring identification \(\Gamma(X_R, \mathrm{cg}_R^{-1}V) \cong \Gamma(X_A, V)
+  \otimes_A R\) (Definition~\ref{def:pieceRingEquiv}, \(R\)-uniform) is natural in the base algebra:
+  for an \(A\)-algebra map \(j \colon R \to R'\), the whiskered map \(W_j = (C \lhd \Spec\, j) \colon
+  X_{R'} \to X_R\) lies over the cover structure maps (\(W_j \circ \mathrm{cg}_R = \mathrm{cg}_{R'}\)),
+  and pulling identified sections back along \(W_j\) is \(\id_{\Gamma(X_A, V)} \otimes j\) through the
+  identifications of the two pieces:
+  \[
+    W_j^{\sharp}\bigl(\Phi^R_V(x)\bigr) \;=\; \Phi^{R'}_V\bigl((\id \otimes j)(x)\bigr) .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Both sides are \(A\)-algebra homomorphisms out of \(\Gamma(X_A, V) \otimes_A R\), so it suffices to
+  check them on a pure tensor \(s \otimes r\), then extend by bilinearity. There the identification
+  sends \(s \otimes r\) to \(\mathrm{cg}_R^{\sharp}(s) \cdot \mathrm{pr}_R^{\sharp}(r)\)
+  (Definition~\ref{def:pieceRingEquiv}). The \(\mathrm{cg}\)-factor pulls back along \(W_j\) by the
+  composite \(W_j \circ \mathrm{cg}_R = \mathrm{cg}_{R'}\) (as \(A\)-algebra maps, \(j \circ (A \to R)
+  = (A \to R')\)), giving \(\mathrm{cg}_{R'}^{\sharp}(s)\). The projection factor pulls back along the
+  square \(W_j \circ \mathrm{pr}_R = \mathrm{pr}_{R'} \circ \Spec\, j\), and the \(\Spec\)-side factor
+  is the naturality of \(\Gamma\)-of-\(\Spec\) applied to \(j\), giving \(\mathrm{pr}_{R'}^{\sharp}(j
+  r)\). Their product is \(\Phi^{R'}_V(s \otimes j r) = \Phi^{R'}_V((\id \otimes j)(s \otimes r))\).
+  This is the algebra-variable mirror of the open-variable restriction seam
+  (Theorem~\ref{thm:pieceRingEquiv_naturality}).
+\end{proof}
+
+\begin{theorem}[Diagonal triviality of the comparison unit]
+  \label{thm:pieceComparisonUnit_diagonal_eq_one}
+  \lean{AlgebraicGeometry.Over.pieceComparisonUnit_diagonal_eq_one}
+  \uses{thm:pieceComparisonUnit, thm:normalizedComparison_diagonal_eq_one,
+    thm:exists_glued_diagonalSeed}
+  \leanok
+  \source{kleiman-picard}
+  Let \(C\) be proper, geometrically irreducible and geometrically reduced. The pullback of the
+  per-piece comparison unit \(v_V\) along the diagonal \(\Delta = (C \lhd \Spec\, \nabla) \colon X_B
+  \to X_{B \otimes_A B}\) (\(\nabla\) the multiplication of \(B \otimes_A B\)) is \(1\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Work locally on the diagonal pullback of the comparison cover. The multiplication retracts both
+  coprojections, \(\Delta \circ u_1 = \id = \Delta \circ u_2\) whiskered
+  (Theorem~\ref{thm:exists_glued_diagonalSeed}), so the pullback expansion of \(v_V\)
+  (Theorem~\ref{thm:exists_glued_unitsTrivTwist}, with \(\varphi = \Delta\) and \(m_1 = m_2 = \id\))
+  gives the diagonal witness value \(\Delta^{\sharp}\theta\) times two trivialization factors along
+  the \emph{same} insertion, which cancel. The remaining witness factor \(\Delta^{\sharp}\theta = 1\)
+  is the landed diagonal triviality of the \(\sigma\)-normalized comparison
+  (Theorem~\ref{thm:normalizedComparison_diagonal_eq_one}). So the local value is \(1\); by sheaf
+  separation the diagonal pullback of \(v_V\) is \(1\). This is the cochain form of the diagonal
+  normalization in Kleiman's descent-cocycle step.
+\end{proof}
+
+\begin{theorem}[Amitsur coherence of the comparison unit]
+  \label{thm:pieceComparisonUnit_coherent}
+  \lean{AlgebraicGeometry.Over.pieceComparisonUnit_coherent,
+    AlgebraicGeometry.Over.pieceAmitsurOpen}
+  \uses{thm:pieceComparisonUnit, thm:normalizedComparison_coherent, def:amitsurProductCover}
+  \leanok
+  \source{kleiman-picard}
+  Let \(C\) be proper, geometrically irreducible and geometrically reduced. The three coface
+  pullbacks of \(v_V\) to the triple piece \(\Gamma(X_{B \otimes_A (B \otimes_A B)},
+  \mathrm{cgcb}^{-1}V)^{\times}\) satisfy the Amitsur cocycle identity on the nose:
+  \[
+    \bigl(w_{23}^{\sharp}v_V\bigr)\bigl(w_{12}^{\sharp}v_V\bigr) \;=\; w_{13}^{\sharp}v_V .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Work locally on the trimmed Amitsur product cover of \(X_{B \otimes_A (B \otimes_A B)}\)
+  (Definition~\ref{def:amitsurProductCover}). By the pullback expansion
+  (Theorem~\ref{thm:exists_glued_unitsTrivTwist}) each coface pullback \(w_{ij}^{\sharp}v_V\) is the
+  coface pullback of the witness \(\theta\) times two insertion pullbacks of the trivialization; the
+  three tensor-slot insertions \(v_1, v_2, v_3\) are common to numerator and denominator, so the
+  trivialization factors telescope, \((T_{23}\,t_c\,t_b^{-1})(T_{12}\,t_b\,t_a^{-1}) =
+  T_{23}T_{12}\,t_c\,t_a^{-1}\). The landed coherence (Theorem~\ref{thm:normalizedComparison_coherent})
+  supplies \((w_{23}^{\sharp}\theta)(w_{12}^{\sharp}\theta) = w_{13}^{\sharp}\theta\), so the two
+  sides agree locally; by sheaf separation the identity holds globally. This is Kleiman's
+  descent-cocycle identity \(v_{13}^{-1}v_{23}v_{12} = 1\).
+\end{proof}
+
+\begin{theorem}[The transported comparison unit and its descent hypotheses]
+  \label{thm:pieceComparisonTensorUnit}
+  \lean{AlgebraicGeometry.Over.pieceComparisonTensorUnit,
+    AlgebraicGeometry.Over.pieceComparisonTensorUnit_val,
+    AlgebraicGeometry.Over.pieceComparisonTensorUnit_lmul,
+    AlgebraicGeometry.Over.pieceComparisonTensorUnit_cocycle}
+  \uses{thm:pieceComparisonUnit, thm:pieceRingEquiv_whiskerLeft_naturality,
+    thm:pieceComparisonUnit_diagonal_eq_one, thm:pieceComparisonUnit_coherent, def:pieceAlgEquiv,
+    def:pieceDescentEquiv}
+  \leanok
+  Let \(C\) be proper, geometrically irreducible and geometrically reduced. Through the section-ring
+  identification \(\Gamma(X_{B \otimes_A B}, \mathrm{cgq}^{-1}V) \cong \Gamma(X_A, V) \otimes_A (B
+  \otimes_A B)\) (Definition~\ref{def:pieceAlgEquiv}), the comparison unit \(v_V\) is a unit
+  \(\tilde v_V \in (\Gamma(X_A, V) \otimes_A (B \otimes_A B))^{\times}\) of the descent-cocycle ring.
+  It is diagonal-normalized and Amitsur-coherent through the maps of the descent \(1\)-cocycle:
+  \[
+    (\id \otimes \mu)(\tilde v_V) = 1, \qquad
+    (\id \otimes \partial_{23})(\tilde v_V)\,(\id \otimes \partial_{12})(\tilde v_V)
+      = (\id \otimes \partial_{13})(\tilde v_V) .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The whiskered maps \(\Delta\) and \(w_{ij}\) are the whiskerings of \(\Spec\) of \(\mu\) and the
+  three cofaces \(\partial_{ij}\); so by the algebra-naturality of the identification
+  (Theorem~\ref{thm:pieceRingEquiv_whiskerLeft_naturality}) the map \(\id \otimes \mu\) applied to
+  \(\tilde v_V\) equals the transport of the diagonal pullback \(\Delta^{\sharp}v_V = 1\)
+  (Theorem~\ref{thm:pieceComparisonUnit_diagonal_eq_one}), and likewise the three \(\id \otimes
+  \partial_{ij}\) applied to \(\tilde v_V\) are the transports of the three coface pullbacks of
+  \(v_V\). The cocycle identity of the coface pullbacks
+  (Theorem~\ref{thm:pieceComparisonUnit_coherent}) therefore transports to the stated identity of
+  the three \(\id \otimes \partial_{ij}\) images (Definition~\ref{def:pieceDescentEquiv}).
+\end{proof}
+
+\begin{theorem}[The descended per-piece class and its cover pullback]
+  \label{def:pieceDescentClass}
+  \lean{AlgebraicGeometry.Over.pieceDescentClass,
+    AlgebraicGeometry.Over.mapAlgebra_pieceDescentClass_eq_one}
+  \uses{thm:pieceComparisonTensorUnit, thm:isDescentCocycle_comparisonDescentUnit,
+    def:comparisonDescentClass}
+  \leanok
+  Assume in addition \(A \to B\) is faithfully flat. The \emph{descended per-piece class}
+  \[
+    M_V \;\in\; \operatorname{Pic}\bigl(\Gamma(X_A, V)\bigr)
+  \]
+  is the Picard class of the descent \(1\)-cocycle of the transported comparison unit \(\tilde v_V\),
+  whose diagonal-normalization and coherence are those of
+  Theorem~\ref{thm:pieceComparisonTensorUnit}. Its pullback to the cover-piece ring \(\Gamma(X_A, V)
+  \otimes_A B \cong \Gamma(X_B, \mathrm{cg}^{-1}V)\) is trivial.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Faithful flatness of \(A \to B\) passes to \(\Gamma(X_A, V) \to \Gamma(X_A, V) \otimes_A B\) by
+  base change, so the coherent comparison unit \(\tilde v_V\)
+  (Theorem~\ref{thm:pieceComparisonTensorUnit}) is a descent \(1\)-cocycle
+  (Theorem~\ref{thm:isDescentCocycle_comparisonDescentUnit}) with a well-defined Picard class
+  \(M_V\) (Definition~\ref{def:comparisonDescentClass}); the same definition records that its base
+  change to the cover-piece ring is the trivial class.
+\end{proof}
+
+\begin{theorem}[The piece restriction of the descending class is trivial]
+  \label{thm:cechPicMap_pieceI_eq_one}
+  \lean{AlgebraicGeometry.Scheme.Hom.pullbackUnitsCocycle_isCohomologous_one,
+    AlgebraicGeometry.Over.cechPicMap_pieceι_eq_one}
+  \uses{def:pieceTrivialization, cor:cechPic_mk_eq_one}
+  \leanok
+  The class \(L = [\gamma]\) of the \((C2)\) setting, restricted to the open subscheme
+  \(\mathrm{cg}^{-1}V\), is trivial: \(\iota^{*}L = 1\) for the open immersion \(\iota \colon
+  \mathrm{cg}^{-1}V \hookrightarrow X_B\). Together with the cover-pullback triviality of
+  \(M_V\) (Theorem~\ref{def:pieceDescentClass}), this is the recovery identity \(\mathrm{cg}^{*}M_V
+  = [L|_{\mathrm{cg}^{-1}V}]\), both sides trivial by construction.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Over abstract schemes, if \(f^{-1}(DZ) = \top\) and a \(0\)-cochain \(t\) trivializes the pair
+  values of \(\gamma\) on the \(DZ\)-trimmed opens, then the \(f\)-pullbacks of \(t\) cobound the
+  pulled cocycle \(f^{\sharp}\gamma\) against \(1\), so \(f^{\sharp}\gamma\) is cohomologous to
+  \(1\). Apply this to the open immersion \(\iota\) of the piece \(\mathrm{cg}^{-1}V\), whose
+  self-preimage is \(\top\), with \(t = T.\mathrm{triv}\) the piece trivialization
+  (Definition~\ref{def:pieceTrivialization}): the pulled cocycle is cohomologous to \(1\), hence its
+  class is trivial (\ref{cor:cechPic_mk_eq_one}).
+\end{proof}
+
+\begin{theorem}[Base-change naturality of the descent extraction]
+  \label{thm:comparisonDescentClass_mapAlgebra}
+  \lean{Module.comparisonDescentUnit_baseChange, Module.comparisonDescentClass_mapAlgebra}
+  \uses{def:comparisonDescentClass, thm:isDescentCocycle_comparisonDescentUnit,
+    thm:module_descentCocycle_baseChange, thm:module_picClass_baseChange,
+    def:module_tensorSqBaseChange, def:pieceDescentEquiv}
+  \leanok
+  Let \(S \to S'\) be a map of \(A\)-algebras and \(v\) a coherent comparison unit over \(S\). The
+  class descended over \(S'\) from the base-changed comparison \((\mathrm{algebraMap} \otimes \id)(v)\)
+  is the \(\operatorname{Pic}\)-image of the class descended over \(S\):
+  \[
+    \mathrm{comparisonDescentClass}_{S'}\bigl((\mathrm{algebraMap} \otimes \id)(v)\bigr)
+      \;=\; \operatorname{Pic.mapAlgebra}_{S \to S'}\bigl(\mathrm{comparisonDescentClass}_S(v)\bigr).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  First, the comparison descent unit of the base-changed comparison is the image of the descent unit
+  of \(v\) under the tensor-square base change along \(S \to S'\), identified through the
+  base-change cancellation on each tensor factor: this is an elementwise computation on pure
+  tensors, using the descent-cocycle ring identification (Definition~\ref{def:pieceDescentEquiv}) and
+  the tensor-square base change (Definition~\ref{def:module_tensorSqBaseChange}). Now chain the
+  descent extraction (Theorem~\ref{thm:isDescentCocycle_comparisonDescentUnit}): the \(S'\)-class is
+  the class of the base-changed descent cocycle further mapped by the cancellation
+  (\(\operatorname{picClass}\) is invariant under the mapping and under replacing a cocycle by a
+  cohomologous one), which equals the class of the base-changed cocycle
+  (Theorem~\ref{thm:module_descentCocycle_baseChange}), which in turn is the
+  \(\operatorname{mapAlgebra}\)-image of the \(S\)-class
+  (Theorem~\ref{thm:module_picClass_baseChange}).
+\end{proof}
+
+\begin{theorem}[Restriction canonicity of the descended per-piece classes]
+  \label{thm:pieceDescentClass_res}
+  \lean{AlgebraicGeometry.Over.PieceTrivialization.res, AlgebraicGeometry.Over.pieceComparisonUnit_res,
+    AlgebraicGeometry.Over.pieceComparisonTensorUnit_res,
+    AlgebraicGeometry.Over.pieceDescentClass_res}
+  \uses{def:pieceDescentClass, thm:comparisonDescentClass_mapAlgebra, thm:pieceComparisonUnit,
+    thm:pieceComparisonTensorUnit, thm:pieceRingEquiv_naturality}
+  \leanok
+  Assume \(A \to B\) faithfully flat and \(C\) proper, geometrically irreducible and geometrically
+  reduced. For affine pieces \(V' \le V\) of \(X_A\) and a piece trivialization \(T\) on \(V\): the
+  trivialization restricts to one on \(V'\), the glued comparison unit of the restricted datum is the
+  restriction of the glued unit, and the descended classes are natural in the piece,
+  \[
+    M_{V'} \;=\; \operatorname{Pic.mapAlgebra}_{\Gamma(X_A, V) \to \Gamma(X_A, V')}\,(M_V) .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The trivialization restricts by restricting each trimmed cochain value along \(\mathrm{cg}^{-1}V'
+  \le \mathrm{cg}^{-1}V\), preserving the trivializing relation. Its comparison unit is the
+  restriction of \(v_V\) by uniqueness of gluing (Theorem~\ref{thm:pieceComparisonUnit}): the
+  restriction of \(v_V\) has the defining restriction property of the restricted datum. Through the
+  section-ring identifications, this restriction is \(\mathrm{algebraMap} \otimes \id\) on the
+  descent-cocycle ring, by the open-variable restriction seam
+  (Theorem~\ref{thm:pieceRingEquiv_naturality}) applied to the transported unit
+  (Theorem~\ref{thm:pieceComparisonTensorUnit}). Hence \(\tilde v_{V'}\) is the base change of
+  \(\tilde v_V\) along \(\Gamma(X_A, V) \to \Gamma(X_A, V')\), and \(M_{V'}\) is the class of the
+  base-changed unit, which by the base-change naturality of the extraction
+  (Theorem~\ref{thm:comparisonDescentClass_mapAlgebra}) is
+  \(\operatorname{mapAlgebra}(M_V)\). On an overlap of two pieces both descend from the same global
+  \(\sigma\)-normalized comparison, so the descended classes agree through their common restriction:
+  this is what the refinement-splice consumes.
+\end{proof}
+
 \section{Divisor classes from local equations}
 
 An effective Cartier divisor \(D\) on a scheme \(X\) is cut out, near each point, by a single
