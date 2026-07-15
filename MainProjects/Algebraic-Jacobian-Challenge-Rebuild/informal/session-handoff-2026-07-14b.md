@@ -1,5 +1,14 @@
 # Session handoff — 2026-07-14 (second interactive Fable session)
 
+KERNEL-DISCIPLINE ADDITION (earned by the E1 coherence close, 2026-07-15): local-
+notation-typed binders in `variable`/`include` sections do not only make declarations
+silently vanish — they can also manifest as `whnf`/`isDefEq`/kernel timeouts on
+otherwise-fine proofs; byte-identical statements with EXPLICIT binders elaborate at
+default heartbeats. When a proof times out mysteriously near local notation, rewrite
+the binders explicit before restructuring anything else. Also reusable: make repeated
+morphism composites into opaque defs identified once each ("insertion" pattern), and
+pay nested-vs-composite preimage conversions once over abstract schemes.
+
 For the next agent continuing the `rebuild` task. Supersedes
 `session-handoff-2026-07-14.md` (whose operating model and kernel/elaboration
 discipline remain BINDING and are not repeated here — re-read its two protocol
