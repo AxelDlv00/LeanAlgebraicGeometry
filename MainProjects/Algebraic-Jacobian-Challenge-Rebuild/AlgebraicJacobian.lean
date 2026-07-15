@@ -15,6 +15,8 @@ import AlgebraicJacobian.Cohomology.ModuleKSheaf
 import AlgebraicJacobian.Cohomology.AffineCech
 import AlgebraicJacobian.Cohomology.AffineVanishing
 import AlgebraicJacobian.Cohomology.OverOpen
+import AlgebraicJacobian.Cohomology.QcohSections
+import AlgebraicJacobian.Cohomology.AffineVanishingQcoh
 import AlgebraicJacobian.Cohomology.MayerVietoris
 import AlgebraicJacobian.Cohomology.TwoCover
 import AlgebraicJacobian.Cohomology.FinitenessP1
@@ -128,6 +130,8 @@ import AlgebraicJacobian.RiemannRoch.ChiCurve
 import AlgebraicJacobian.RiemannRoch.Degree
 import AlgebraicJacobian.RiemannRoch.ClassCohomology
 import AlgebraicJacobian.Curve.BaseChangeInstances
+import AlgebraicJacobian.Algebra.DiagonalIdeal
+import AlgebraicJacobian.Algebra.DiagonalRegular
 
 /-!
 # AlgebraicJacobian — library root
