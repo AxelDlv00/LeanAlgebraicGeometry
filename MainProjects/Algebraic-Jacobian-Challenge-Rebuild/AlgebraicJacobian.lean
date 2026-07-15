@@ -34,6 +34,13 @@ import AlgebraicJacobian.Picard.RelPicAlgebra
 import AlgebraicJacobian.Picard.DivisorClass
 import AlgebraicJacobian.Picard.LocalEquationsPullback
 import AlgebraicJacobian.Picard.PointDivisor
+import AlgebraicJacobian.Picard.MeromorphicPresentation
+import AlgebraicJacobian.Picard.PresentationDivisor
+import AlgebraicJacobian.Picard.PresentationCalculus
+import AlgebraicJacobian.Picard.PresentationClassLaw
+import AlgebraicJacobian.Picard.PresentationExtraction
+import AlgebraicJacobian.Picard.PointPresentation
+import AlgebraicJacobian.Picard.DivisorClassMeromorphic
 import AlgebraicJacobian.Algebra.EtaleCover
 import AlgebraicJacobian.Picard.PicEtAff
 import AlgebraicJacobian.Picard.PicEtAffMap
