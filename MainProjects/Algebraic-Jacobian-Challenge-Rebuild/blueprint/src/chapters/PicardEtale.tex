@@ -5263,9 +5263,11 @@ extending the point classes.
     def:scheme_ordZ}
   \leanok
   For a closed point \(x\) of the curve there are an open neighbourhood \(V \ni x\) and a section
-  \(s \in \struct X(V)\) whose germ at every point \(y \in V\) is a nonzerodivisor of \(\struct
-  {X,y}\), and is moreover a unit whenever \(y \neq x\). Thus \(s\) is a uniformizer at \(x\) whose
-  only zero on \(V\) is the point \(x\) itself.
+  \(s \in \struct X(V)\) whose germ at the generic point \(\eta\) is the chosen uniformizer \(t\) at
+  \(x\), whose germ at every point \(y \in V\) is a nonzerodivisor of \(\struct{X,y}\), and is
+  moreover a unit whenever \(y \neq x\). Thus \(s\) is a uniformizer at \(x\) whose only zero on
+  \(V\) is the point \(x\) itself, and whose realization as a rational function is recorded to be
+  \(t\).
 \end{lemma}
 \begin{proof}
   \leanok
@@ -5286,7 +5288,8 @@ extending the point classes.
     V := W_0 \setminus \mathrm{bad}, \qquad x \in V
   \]
   (indeed \(x \notin \mathrm{bad}\)). Restrict \(s_0\) to \(V\) and call the result \(s\); its germ
-  at \(y \in V\) still maps to \(t\) under \(\struct{X,y} \to K(X)\).
+  at \(y \in V\) still maps to \(t\) under \(\struct{X,y} \to K(X)\). In particular at the generic
+  point the germ is exactly \(\mathrm{germ}_\eta(s) = t\), the tracked realization.
 
   \emph{Regularity.} For \(y \in V\), the germ \(\mathrm{germ}_y(s)\) maps to \(t \neq 0\) in the
   function field under the localization \(\struct{X,y} \to K(X)\); since that map is injective on
@@ -5305,7 +5308,8 @@ extending the point classes.
 
 \begin{definition}[The point divisor \(1 \cdot x\)]
   \label{def:pointDivisor}
-  \lean{AlgebraicGeometry.Scheme.pointDivisor}
+  \lean{AlgebraicGeometry.Scheme.pointDivisor,
+    AlgebraicGeometry.Scheme.germGeneric_pointDivisorEqn_self}
   \uses{def:localEquations, lem:exists_pointLocalEquation, thm:closedpoint_isClosed}
   \leanok
   For a closed point \(x\), the \emph{point divisor} \(1 \cdot x\) is the local-equation system on
@@ -5315,7 +5319,9 @@ extending the point classes.
   \]
   with \(V\) the neighbourhood of Lemma~\ref{lem:exists_pointLocalEquation}, whose equation on the
   distinguished member \(V\) is the uniformizer-section \(s\) and whose equation on every other
-  member \(X \setminus \{x\}\) is the constant \(1\).
+  member \(X \setminus \{x\}\) is the constant \(1\). Its defining data is fully accessible: in
+  particular the germ at the generic point \(\eta\) of the equation on the member at \(x\) is the
+  chosen uniformizer \(t\), which is what pins the Weil divisor these equations cut out.
 \end{definition}
 \begin{proof}
   \leanok
@@ -5329,7 +5335,8 @@ extending the point classes.
   \(1\). If exactly one of \(a, b\) equals \(x\), the overlap is contained in \(V \cap (X \setminus
   \{x\}) = V \setminus \{x\}\), where \(s\) is a unit (Lemma~\ref{lem:exists_pointLocalEquation});
   the ratio of the two equations \(s\) and \(1\) is then \(s\) or \(s^{-1}\), a unit there. Thus the
-  data is a local-equation system.
+  data is a local-equation system. The equation on the member at \(x\) is the section \(s\), whose
+  germ at \(\eta\) is the tracked uniformizer \(t\) (Lemma~\ref{lem:exists_pointLocalEquation}).
 \end{proof}
 
 \begin{definition}[The class of a Weil divisor]
@@ -6039,4 +6046,90 @@ map descends to an isomorphism of \(\Div(X)\) modulo principal divisors onto \(\
   (\ref{thm:presentationDivisor_pointEquations}), so \(\struct X(1 \cdot x)\) is its class
   (\ref{def:curveDivisor_picClass}), which is the class of the point equations
   (\ref{lem:localEquations_presentation}, \ref{def:curveDivisor_single}).
+\end{proof}
+
+\section{The point-divisor class map and the meromorphic class map coincide}
+
+The chapter carries two constructions of the divisor-to-class assignment \(D \mapsto \struct
+X(D)\). The first, \(\mathrm{divisorClass}\) (\ref{def:divisorClass}), is the finitely supported
+product of the point-divisor classes \(\struct X(x) = \mathrm{picClass}(1 \cdot x)\) read off the
+point local equations (\ref{def:pointDivisor}); the second, the anchored
+\(\mathrm{picClass}\) (\ref{def:curveDivisor_picClass}), is the class of any meromorphic
+presentation realizing \(D\). This closing section identifies them. The bridge is that the point
+local equations, whose equation at \(x\) has generic-point germ the uniformizer
+(\ref{def:pointDivisor}), present the one-point divisor \(1 \cdot x\); their two classes agree, and
+the agreement propagates from one-point divisors to all divisors by homomorphism extensionality.
+
+\begin{theorem}[The divisor of the point-divisor presentation]
+  \label{thm:presentationDivisor_pointDivisor}
+  \lean{AlgebraicGeometry.Scheme.presentationDivisor_pointDivisor}
+  \uses{def:pointDivisor, lem:localEquations_presentation, def:presentationDivisor,
+    def:curveDivisor_single, lem:uniformizer}
+  \leanok
+  The divisor of the meromorphic presentation of the point-divisor local equations at a closed
+  point \(x\) is the one-point divisor:
+  \[
+    \mathrm{presentationDivisor}\bigl((1 \cdot x)\text{'s presentation}\bigr) = 1 \cdot x .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Compare coefficients at each closed point \(z\) (\ref{def:presentationDivisor}). The presentation
+  of the point-divisor equations (\ref{lem:localEquations_presentation}) has, at \(z\), trivializing
+  element the germ at \(\eta\) of the equation at \(z\). At \(z = x\) that germ is the chosen
+  uniformizer \(t\) (\ref{def:pointDivisor}), of order \(\mathrm{ord}_x t = 1\)
+  (\ref{lem:uniformizer}), so the coefficient at \(x\) is \(1\); at \(z \neq x\) the equation is the
+  constant \(1\), of order \(0\), so the coefficient vanishes. Hence the divisor is \(1 \cdot x\)
+  (\ref{def:curveDivisor_single}).
+\end{proof}
+
+\begin{theorem}[The point-divisor class is the anchored one-point class]
+  \label{thm:pointDivisor_picClass_eq}
+  \lean{AlgebraicGeometry.Scheme.pointDivisor_picClass_eq}
+  \uses{def:pointDivisor, def:curveDivisor_single, thm:presentationDivisor_pointDivisor,
+    def:curveDivisor_picClass, lem:localEquations_presentation}
+  \leanok
+  For a closed point \(x\), the Picard class of the point-divisor local equations at \(x\) equals
+  the anchored class of the one-point divisor \(1 \cdot x\):
+  \[
+    \mathrm{picClass}(1 \cdot x) \;=\; \struct X(1 \cdot x).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The presentation of the point-divisor equations has divisor \(1 \cdot x\)
+  (\ref{thm:presentationDivisor_pointDivisor}), so the anchored class \(\struct X(1 \cdot x)\) is
+  the class of that presentation (\ref{def:curveDivisor_picClass}); and the class of the
+  presentation of a local-equation system is the Picard class of the system itself
+  (\ref{lem:localEquations_presentation}), which is \(\mathrm{picClass}(1 \cdot x)\)
+  (\ref{def:pointDivisor}). Chaining the two equalities gives \(\mathrm{picClass}(1 \cdot x) =
+  \struct X(1 \cdot x)\).
+\end{proof}
+
+\begin{theorem}[The two divisor-class maps coincide]
+  \label{thm:divisorClass_eq_picClass}
+  \lean{AlgebraicGeometry.Scheme.divisorClass_eq_picClass}
+  \uses{def:divisorClass, def:curveDivisor_picClass, thm:divisorClass_add,
+    thm:curveDivisor_picClass_hom, thm:pointDivisor_picClass_eq, def:curveDivisor_single}
+  \leanok
+  The point-product class map (\ref{def:divisorClass}) and the anchored meromorphic class map
+  (\ref{def:curveDivisor_picClass}) agree on every Weil divisor:
+  \[
+    \mathrm{divisorClass}(D) \;=\; \struct X(D), \qquad D \in \Div(X).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Both assignments are homomorphisms \(\Div(X) \to \Pic(X)\) from the additive group of divisors to
+  the multiplicative Picard group: \(\mathrm{divisorClass}\) by additivity
+  (\ref{thm:divisorClass_add}) and the anchored class map by
+  Theorem~\ref{thm:curveDivisor_picClass_hom}. Since \(\Div(X)\) is freely generated by the
+  one-point divisors (\ref{def:curveDivisor_single}), it suffices to check agreement on each
+  \(n \cdot x\). On the point-product side the defining product (\ref{def:divisorClass}) collapses
+  to the single factor \(\mathrm{divisorClass}(n \cdot x) = \mathrm{picClass}(1 \cdot x)^{n}\). On
+  the anchored side, additivity (\ref{thm:curveDivisor_picClass_hom}) gives \(\struct X(n \cdot x) =
+  \struct X(1 \cdot x)^{n}\). The two base classes are equal, \(\mathrm{picClass}(1 \cdot x) =
+  \struct X(1 \cdot x)\) (\ref{thm:pointDivisor_picClass_eq}), so their \(n\)-th powers agree and
+  \(\mathrm{divisorClass}(n \cdot x) = \struct X(n \cdot x)\). By homomorphism extensionality on the
+  generators, the two maps coincide on all of \(\Div(X)\).
 \end{proof}

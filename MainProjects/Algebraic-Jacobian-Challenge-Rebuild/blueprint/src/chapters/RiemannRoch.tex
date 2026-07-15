@@ -1860,3 +1860,156 @@ ledger then reads as Riemann--Roch-lite: \(\chi(\mathcal O(D)) = 1 - g(C) + \deg
   Theorem~\ref{thm:moduleFinite_hModule_one}), so the general unboundedness
   (Theorem~\ref{thm:h0_nsmul_point_unbounded}) applies verbatim.
 \end{proof}
+
+\section{The degree homomorphism on the \v Cech Picard group}
+
+The degree of a Weil divisor is invariant under linear equivalence, so it descends from
+\(\Div(X)\) to the \v Cech Picard group \(\Pic(X) \cong \Div(X)/\mathrm{Princ}(X)\)
+(\ref{thm:curveDivisor_picClass_eq_iff}). This section records the degree homomorphism
+\(\deg_{\Pic} : \Pic(X) \to \Z\) on classes and its interface: the normalization \(\deg_{\Pic}
+\struct X(D) = \deg_K D\), additivity, and the connection to the \(\chi\)-ledger
+\(\chi(\mathcal O(D)) = \chi(\struct{X/K}) + \deg_{\Pic}\struct X(D)\). The same linear-equivalence
+argument makes the Euler characteristic of a class well-defined, this time with no finiteness
+hypothesis at all.
+
+\begin{lemma}[Linearly equivalent divisors have equal degree]
+  \label{lem:deg_eq_deg_of_picClass_eq}
+  \lean{AlgebraicGeometry.deg_eq_deg_of_picClass_eq}
+  \uses{def:curveDivisor_deg, thm:curveDivisor_picClass_eq_iff, thm:deg_divOf,
+    thm:curveDivisor_deg_hom}
+  \leanok
+  If two Weil divisors have the same \v Cech Picard class, \(\struct X(D) = \struct X(D')\), then
+  \(\deg_K D = \deg_K D'\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Equal classes differ by a principal divisor (\ref{thm:curveDivisor_picClass_eq_iff}): there is
+  \(g \in K(X)^\times\) with \(D - D' = \mathrm{div}\, g\). Principal divisors have degree zero
+  (Theorem~\ref{thm:deg_divOf}), so \(\deg_K(D - D') = 0\); and \(\deg_K(D - D') = \deg_K D -
+  \deg_K D'\) by the degree homomorphism (Theorem~\ref{thm:curveDivisor_deg_hom}). Hence
+  \(\deg_K D = \deg_K D'\).
+\end{proof}
+
+\begin{theorem}[The Euler characteristic of a class is well-defined]
+  \label{thm:chi_divisorSheaf_eq_of_picClass_eq}
+  \lean{AlgebraicGeometry.chi_divisorSheaf_eq_of_picClass_eq}
+  \uses{def:divisorSheaf, def:h0_h1_chi, thm:curveDivisor_picClass_eq_iff,
+    thm:mulEquivDivisorSheaf, thm:chi_congr}
+  \leanok
+  If two Weil divisors have the same \v Cech Picard class, \(\struct X(D) = \struct X(D')\), then
+  their divisor sheaves have the same Euler characteristic, \(\chi(\mathcal O(D)) = \chi(\mathcal
+  O(D'))\). No finiteness hypothesis is needed.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Equal classes differ by a principal divisor (\ref{thm:curveDivisor_picClass_eq_iff}): \(D -
+  \mathrm{div}\, g = D'\) for some \(g \in K(X)^\times\). Multiplication by \(g\) is an isomorphism
+  of divisor sheaves \(\mathcal O(D) \cong \mathcal O(D - \mathrm{div}\, g) = \mathcal O(D')\)
+  (Theorem~\ref{thm:mulEquivDivisorSheaf}), and isomorphic sheaves have equal ledger invariants
+  (Theorem~\ref{thm:chi_congr}), so \(\chi(\mathcal O(D)) = \chi(\mathcal O(D'))\). The argument
+  uses only the isomorphism and its transport, never the finiteness of any cohomology.
+\end{proof}
+
+\begin{definition}[The degree homomorphism on the Picard group]
+  \label{def:classDeg}
+  \lean{AlgebraicGeometry.classDeg, AlgebraicGeometry.classDeg_picClass}
+  \uses{lem:deg_eq_deg_of_picClass_eq, def:curveDivisor_picClass, def:curveDivisor_deg}
+  \leanok
+  The degree descends to a group homomorphism
+  \[
+    \deg_{\Pic} : \Pic(X) \to \Z, \qquad \deg_{\Pic}\struct X(D) = \deg_K D
+    \quad (D \in \Div(X)),
+  \]
+  the \emph{degree of a Picard class}: the degree of any Weil divisor realizing the class. The
+  displayed normalization \(\deg_{\Pic}\struct X(D) = \deg_K D\) holds for every Weil divisor
+  \(D\), and is the defining property.
+\end{definition}
+\begin{proof}
+  \leanok
+  Every class \(L \in \Pic(X)\) is realized by a Weil divisor, \(L = \struct X(D)\)
+  (\ref{def:curveDivisor_picClass}); set \(\deg_{\Pic} L = \deg_K D\). This is independent of the
+  chosen realization: if \(\struct X(D) = \struct X(D')\) then \(\deg_K D = \deg_K D'\)
+  (Lemma~\ref{lem:deg_eq_deg_of_picClass_eq}). Applying this to a divisor's own class gives the
+  normalization \(\deg_{\Pic}\struct X(D) = \deg_K D\). It is a homomorphism: the trivial class is
+  \(\struct X(0)\), of degree \(\deg_K 0 = 0\); and for classes realized by \(D, D'\) the product
+  is \(\struct X(D)\cdot\struct X(D') = \struct X(D + D')\), whose degree is \(\deg_K(D + D') =
+  \deg_K D + \deg_K D'\) (the class map and the degree are both homomorphisms,
+  \ref{def:curveDivisor_deg}).
+\end{proof}
+
+\begin{theorem}[Additivity of the class degree]
+  \label{thm:classDeg_mul}
+  \lean{AlgebraicGeometry.classDeg_mul}
+  \uses{def:classDeg, def:curveDivisor_picClass, thm:curveDivisor_picClass_hom,
+    thm:curveDivisor_deg_hom}
+  \leanok
+  The degree of a product of Picard classes is the sum of the degrees: for \(L, L' \in \Pic(X)\),
+  \[
+    \deg_{\Pic}(L \cdot L') = \deg_{\Pic} L + \deg_{\Pic} L' .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Realize the classes by Weil divisors, \(L = \struct X(D)\) and \(L' = \struct X(D')\)
+  (\ref{def:curveDivisor_picClass}). Their product is \(L \cdot L' = \struct X(D + D')\) by
+  additivity of the class map (Theorem~\ref{thm:curveDivisor_picClass_hom}), so by the
+  normalization (\ref{def:classDeg}) and additivity of the divisor degree
+  (Theorem~\ref{thm:curveDivisor_deg_hom}),
+  \[
+    \deg_{\Pic}(L \cdot L') = \deg_K(D + D') = \deg_K D + \deg_K D' = \deg_{\Pic} L + \deg_{\Pic}
+    L'.
+  \]
+\end{proof}
+
+\begin{theorem}[The \(\chi\)-ledger in class form]
+  \label{thm:chi_divisorSheaf_classDeg}
+  \lean{AlgebraicGeometry.chi_divisorSheaf_classDeg}
+  \uses{def:classDeg, thm:chi_divisorSheaf}
+  \leanok
+  Under the standing finiteness hypotheses, for every Weil divisor \(D\),
+  \[
+    \chi(\mathcal O(D)) = \chi(\struct{X/K}) + \deg_{\Pic}\struct X(D) .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  By the normalization \(\deg_{\Pic}\struct X(D) = \deg_K D\) (\ref{def:classDeg}), the claim is the
+  closed ledger \(\chi(\mathcal O(D)) = \chi(\struct{X/K}) + \deg_K D\)
+  (Theorem~\ref{thm:chi_divisorSheaf}).
+\end{proof}
+
+\begin{theorem}[The point-product class map has the same degree]
+  \label{thm:classDeg_divisorClass}
+  \lean{AlgebraicGeometry.classDeg_divisorClass}
+  \uses{def:classDeg, def:divisorClass, thm:divisorClass_eq_picClass}
+  \leanok
+  For every Weil divisor \(D\), the degree of the point-product class equals the degree of \(D\):
+  \[
+    \deg_{\Pic}\bigl(\mathrm{divisorClass}(D)\bigr) = \deg_K D .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The point-product class map and the anchored class map coincide,
+  \(\mathrm{divisorClass}(D) = \struct X(D)\) (Theorem~\ref{thm:divisorClass_eq_picClass}), so the
+  degree of \(\mathrm{divisorClass}(D)\) is the degree of \(\struct X(D)\), which is \(\deg_K D\) by
+  the normalization (\ref{def:classDeg}).
+\end{proof}
+
+\begin{theorem}[Riemann--Roch-lite in class form on the challenge curve]
+  \label{thm:chi_divisorSheaf_classDeg_curve}
+  \lean{AlgebraicGeometry.chi_divisorSheaf_classDeg_curve}
+  \uses{def:classDeg, thm:chi_divisorSheaf_curve}
+  \leanok
+  For every Weil divisor \(D\) on the challenge curve \(C\),
+  \[
+    \chi(\mathcal O(D)) = 1 - g(C) + \deg_{\Pic}\struct X(D) .
+  \]
+  The standing finiteness hypotheses are discharged on the curve, so there is no side condition.
+\end{theorem}
+\begin{proof}
+  \leanok
+  On the curve the closed ledger reads \(\chi(\mathcal O(D)) = 1 - g(C) + \deg_k D\)
+  (Theorem~\ref{thm:chi_divisorSheaf_curve}). Substituting the normalization \(\deg_{\Pic}\struct
+  X(D) = \deg_k D\) (\ref{def:classDeg}) gives the claim.
+\end{proof}
