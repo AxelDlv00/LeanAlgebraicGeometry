@@ -8,8 +8,15 @@ derived from `SmoothOfRelativeDimension 1`, so never add it as a hypothesis;
 (2) DELEGATION UPDATE, user instruction 2026-07-15: Fable-5 usage is running low
 against quota, so use Fable-5 SUBAGENTS liberally for the difficult tasks where Opus
 is not enough — campaign hearts, risky design worksheets, keystone provers — not just
-one or two per campaign leg. Opus still carries volume/recon/blueprint. One PROVER at
-a time regardless — the build lock is about lake/LSP races, not budget.
+one or two per campaign leg. Opus still carries volume/recon/blueprint.
+CONCURRENCY UPDATE (user instruction, 2026-07-15, supersedes "one prover at a time"):
+PARALLEL PROVERS are allowed — the historical rule guarded lake-vs-LSP races during
+package materialization only. Provers iterate concurrently via the lean-lsp MCP; ONLY
+`lake` invocations serialize, via the mkdir spinlock
+`/tmp/claude-1001/ajcr-locks/lake.lock` (hold only around the build, rmdir to release,
+never steal; README in that dir). Provers get DISJOINT file scopes; the shared
+AlgebraicJacobian.lean import list uses re-read-and-reapply-your-line. Every prover
+spec must carry this protocol.
 (3) ROADMAP ACTUALIZATION, user instruction 2026-07-15: keep the `horizon roadmap`
 tree current at EVERY milestone — statuses AND subitems (`add --parent`) when a
 campaign is designed or decomposed; it is the user's progress view. The degree lane,
