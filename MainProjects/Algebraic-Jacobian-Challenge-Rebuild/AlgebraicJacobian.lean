@@ -138,6 +138,7 @@ import AlgebraicJacobian.RiemannRoch.ClassCohomology
 import AlgebraicJacobian.Curve.BaseChangeInstances
 import AlgebraicJacobian.Algebra.DiagonalIdeal
 import AlgebraicJacobian.Algebra.DiagonalRegular
+import AlgebraicJacobian.Curve.ProductCharts
 
 /-!
 # AlgebraicJacobian — library root
