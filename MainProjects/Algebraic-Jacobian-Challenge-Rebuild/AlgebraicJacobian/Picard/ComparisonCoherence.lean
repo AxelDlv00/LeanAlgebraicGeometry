@@ -6,15 +6,6 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.ComparisonDefect
 
 /-!
-# FRONTIER — NOT YET COMPILING; NOT IMPORTED FROM THE ROOT
-
-This file is the (N3) frontier of brick E1: it depends on
-`AlgebraicJacobian.Picard.ComparisonDefect`, which does not yet compile (see its
-header).  Everything in THIS file elaborated and kernel-checked successfully in the
-first (monolithic) build attempt — `sectionPullback_productDefect_eq_one` and `coherent`
-are believed sound as written; only the defect-gluing dependency is open.  Do NOT
-import this file into the root until `ComparisonDefect` compiles.
-
 # Coherence of the σ-normalized comparison ((C2) effectivity, brick E1: `lm:aut`)
 
 **(N3), the brick's point**: for a proper, geometrically irreducible and geometrically

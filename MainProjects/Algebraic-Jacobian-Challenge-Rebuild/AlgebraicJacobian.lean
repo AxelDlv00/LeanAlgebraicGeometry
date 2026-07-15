@@ -109,6 +109,11 @@ import AlgebraicJacobian.Picard.Rigidification
 import AlgebraicJacobian.Picard.EffectivityPieces
 import AlgebraicJacobian.Picard.NormalizedComparison
 import AlgebraicJacobian.Picard.NormalizedComparisonExists
+import AlgebraicJacobian.Picard.AmitsurProductCover
+import AlgebraicJacobian.Picard.ComparisonDefect
+import AlgebraicJacobian.Picard.ComparisonCoherence
+import AlgebraicJacobian.Picard.ComparisonUnique
+import AlgebraicJacobian.Picard.ComparisonDiagonal
 import AlgebraicJacobian.Algebra.DedekindColength
 import AlgebraicJacobian.RiemannRoch.Skyscraper
 import AlgebraicJacobian.RiemannRoch.ClosedPoint
