@@ -2013,3 +2013,83 @@ hypothesis at all.
   (Theorem~\ref{thm:chi_divisorSheaf_curve}). Substituting the normalization \(\deg_{\Pic}\struct
   X(D) = \deg_k D\) (\ref{def:classDeg}) gives the claim.
 \end{proof}
+
+\section{The degree homomorphism over an extension field}
+
+Everything above applies to the challenge curve \(C\) over its base field \(k\). We now record
+that the same degree apparatus is available over \emph{every} field extension \(K/k\), on the
+base-changed curve \(C_K := (C \otimes \Spec K)_{\mathrm{left}}\), regarded as a \(K\)-scheme via
+the second projection \(\mathrm{pr}_2 \colon C_K \to \Spec K\). The point is that the geometric
+half of the standing hypotheses --- proper, smooth of relative dimension one, geometrically
+irreducible --- transports along base change, from which integrality and the finiteness of
+\(H^0\) and \(H^1\) re-derive over \(K\); so the degree homomorphism \(\deg_{\Pic}\) is defined on
+\(\Pic(C_K)\) with no further input.
+
+\begin{theorem}[The base-changed curve is a smooth proper curve over \(K\)]
+  \label{thm:baseChangeCurve_bundle}
+  \uses{def:relCurve}
+  \lean{AlgebraicGeometry.instOverBaseChange, AlgebraicGeometry.baseChange_over_eq_snd_left,
+    AlgebraicGeometry.instSmoothOfRelativeDimensionSndLeft, AlgebraicGeometry.instIsProperSndLeft,
+    AlgebraicGeometry.instGeometricallyIrreducibleSndLeft,
+    AlgebraicGeometry.instSmoothOfRelativeDimensionBaseChange,
+    AlgebraicGeometry.instIsProperBaseChange, AlgebraicGeometry.instQuasiCompactBaseChange}
+  \leanok
+  Let \(K/k\) be a field extension. The base-changed curve \(C_K\), as a scheme over \(\Spec K\)
+  via the second projection, is smooth of relative dimension one, proper, quasi-compact, and
+  geometrically irreducible over \(K\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The second projection \(C_K \to \Spec K\) is the base change of the structure morphism \(C \to
+  \Spec k\) along \(\Spec K \to \Spec k\) (the curve product exhibits \(C_K\) as a fibre product,
+  as for the relative curve of Definition~\ref{def:relCurve}). Smoothness of relative dimension
+  one, properness, and geometric irreducibility are each stable under base change, so all three
+  transport from \(C/k\) to \(C_K/K\); properness gives quasi-compactness.
+\end{proof}
+
+\begin{theorem}[The base-changed curve is integral]
+  \label{thm:baseChangeCurve_integral}
+  \uses{thm:baseChangeCurve_bundle, prop:curve_integral}
+  \lean{AlgebraicGeometry.instIsIntegralBaseChange}
+  \leanok
+  For every field extension \(K/k\), the base-changed curve \(C_K\) is an integral scheme.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Being smooth, \(C_K\) is geometrically reduced over \(K\); it is geometrically irreducible over
+  \(K\) by Theorem~\ref{thm:baseChangeCurve_bundle}. A geometrically reduced and geometrically
+  irreducible scheme over a field is integral (Proposition~\ref{prop:curve_integral}). This is
+  the substance of the base change: geometric irreducibility and geometric reducedness of \(C/k\)
+  yield integrality of \(C \otimes_k K\) for \emph{every} field extension \(K\), a property the
+  bare fibre product \(C \otimes_k K\) need not have without them.
+\end{proof}
+
+\begin{theorem}[Finiteness of the cohomology of the base-changed curve]
+  \label{thm:baseChangeCurve_cohomFinite}
+  \uses{thm:baseChangeCurve_bundle, thm:h0_moduleKSheaf_curve, thm:moduleFinite_hModule_one}
+  \lean{AlgebraicGeometry.instModuleFiniteHModuleZeroBaseChange,
+    AlgebraicGeometry.instModuleFiniteHModuleOneBaseChange}
+  \leanok
+  For every field extension \(K/k\), both \(H^0(C_K, \struct{C_K/K})\) and \(H^1(C_K,
+  \struct{C_K/K})\) are finite-dimensional \(K\)-vector spaces.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By Theorem~\ref{thm:baseChangeCurve_bundle}, \(C_K\) is a smooth curve over \(K\) --- proper,
+  smooth of relative dimension one, geometrically irreducible. The curve-level finiteness results
+  therefore apply over \(K\): \(H^0\) is finite-dimensional
+  (Theorem~\ref{thm:h0_moduleKSheaf_curve}) and \(H^1\) is finite-dimensional
+  (Theorem~\ref{thm:moduleFinite_hModule_one}).
+\end{proof}
+
+\begin{remark}[The degree homomorphism over every extension field]
+  \label{rem:classDeg_baseChange}
+  \uses{thm:baseChangeCurve_bundle, thm:baseChangeCurve_integral,
+    thm:baseChangeCurve_cohomFinite, def:classDeg}
+  \leanok
+  Theorems~\ref{thm:baseChangeCurve_bundle}, \ref{thm:baseChangeCurve_integral} and
+  \ref{thm:baseChangeCurve_cohomFinite} discharge every hypothesis of the degree stack for \(C_K\)
+  over \(K\). Hence the degree homomorphism \(\deg_{\Pic} \colon \Pic(C_K) \to \Z\)
+  (Definition~\ref{def:classDeg}) is defined on the base-changed curve, for every field extension
+  \(K/k\).
+\end{remark}

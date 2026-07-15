@@ -3744,6 +3744,201 @@ This section proves that sections of the structure sheaf, and of its units, desc
   is a unit and \(\mathrm{cg}^{*} a = t\).
 \end{proof}
 
+\section{Saturated affine pieces of the base-change cover}
+\label{sec:effectivityPieces}
+
+Retain the field \(k\), the curve \(C\) over \(k\), and the tower \(k \to A \to B\) of the
+previous section, with \(X_A = (C \otimes \Spec A)_{\mathrm{left}}\), \(X_B = (C \otimes \Spec
+B)_{\mathrm{left}}\), the projections \(\mathrm{pr}_A \colon X_A \to \Spec A\), \(\mathrm{pr}_B
+\colon X_B \to \Spec B\), and the base-change morphism \(\mathrm{cg} \colon X_B \to X_A\). This
+section refines the \(\top\)-case identification \(\Gamma(X_B, \top) \cong B\)
+(Lemma~\ref{lem:faithfullyFlat_sectionsTop}) to an arbitrary affine open of \(X_A\): over such an
+open the section ring of the cover piece is the base change of the base section ring along \(A
+\to B\). Nothing here uses flatness or properness (except where explicitly assumed); these are
+the geometric pieces on which a covering-and-overlaps effectivity argument runs.
+
+\begin{theorem}[The cover inclusion is an affine morphism]
+  \label{thm:isAffineHom_cg}
+  \lean{AlgebraicGeometry.Over.isAffineHom_cg, AlgebraicGeometry.Over.isAffineOpen_cgPreimage}
+  \uses{thm:isPullback_whiskerLeft_snd}
+  \leanok
+  The base-change morphism \(\mathrm{cg} \colon X_B \to X_A\) is affine. Consequently the
+  preimage \(\mathrm{cg}^{-1}U\) of every affine open \(U \subseteq X_A\) is affine.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By the base-change square (Theorem~\ref{thm:isPullback_whiskerLeft_snd}, with \(T = \Spec A\),
+  \(T' = \Spec B\) and \(g = \Spec(A \to B)\)) the morphism \(\mathrm{cg}\) is the base change of
+  \(\Spec(A \to B) \colon \Spec B \to \Spec A\) along the projection \(\mathrm{pr}_A\). The
+  morphism \(\Spec(A \to B)\) is affine, being the spectrum of a ring homomorphism, and affine
+  morphisms are stable under base change; hence \(\mathrm{cg}\) is affine. The preimage of an
+  affine open under an affine morphism is affine.
+\end{proof}
+
+\begin{theorem}[The section rings of a saturated affine piece form a pushout square]
+  \label{thm:isPushout_cgSectionRing}
+  \uses{thm:isAffineHom_cg, thm:isPullback_whiskerLeft_snd}
+  \lean{AlgebraicGeometry.Over.isPushout_cgSections,
+    AlgebraicGeometry.Over.isPushout_cgAlgebraMap}
+  \leanok
+  Give \(\Gamma(X_A, U)\) its \(A\)-algebra structure by pullback along the projection
+  \(\mathrm{pr}_A\). For every affine open \(U \subseteq X_A\) the square of commutative rings
+  \[
+    \begin{array}{ccc}
+      A & \longrightarrow & \Gamma(X_A, U) \\
+      \downarrow & & \downarrow \mathrm{cg}^{\sharp} \\
+      B & \longrightarrow & \Gamma\bigl(X_B, \mathrm{cg}^{-1}U\bigr)
+    \end{array}
+  \]
+  --- with top and left legs the two structure maps from \(A\), right leg the pullback
+  \(\mathrm{cg}^{\sharp}\), and bottom leg the pullback along \(\mathrm{pr}_B\) --- is a pushout
+  (cocartesian). No flatness or properness is used.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The base-change square of schemes (Theorem~\ref{thm:isPullback_whiskerLeft_snd}) has one leg,
+  \(\Spec(A \to B)\), affine, and \(U\) is affine; for such a fibre square the induced square of
+  section rings over \(U\) --- with the two \(\top\)-corners \(\Gamma(\Spec A, \top)\) and
+  \(\Gamma(\Spec B, \top)\) --- is a pushout. Re-cornering along the canonical identifications
+  \(\Gamma(\Spec A, \top) \cong A\) and \(\Gamma(\Spec B, \top) \cong B\) (which intertwine the
+  structure maps, as in Lemma~\ref{lem:faithfullyFlat_sectionsTop}) replaces those two corners by
+  \(A\) and \(B\), yielding the displayed pushout.
+\end{proof}
+
+\begin{definition}[The section-ring identification]
+  \label{def:pieceRingEquiv}
+  \uses{thm:isPushout_cgSectionRing}
+  \lean{AlgebraicGeometry.Over.pieceTensorIso, AlgebraicGeometry.Over.pieceRingEquiv,
+    AlgebraicGeometry.Over.pieceRingEquiv_tmul_one, AlgebraicGeometry.Over.pieceRingEquiv_one_tmul,
+    AlgebraicGeometry.Over.pieceRingEquiv_tmul}
+  \leanok
+  For every affine open \(U \subseteq X_A\) there is a ring isomorphism
+  \[
+    \Gamma(X_A, U) \otimes_A B \;\xrightarrow{\ \sim\ }\; \Gamma\bigl(X_B, \mathrm{cg}^{-1}U\bigr),
+    \qquad s \otimes b \;\longmapsto\; \mathrm{cg}^{\sharp}(s)\cdot \mathrm{pr}_B^{\sharp}(b),
+  \]
+  the affine-open generalization of the \(\top\)-case \(\Gamma(X_B, \top) \cong B\)
+  (Lemma~\ref{lem:faithfullyFlat_sectionsTop}). In particular \(s \otimes 1 \mapsto
+  \mathrm{cg}^{\sharp}(s)\) and \(1 \otimes b \mapsto \mathrm{pr}_B^{\sharp}(b)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  The base-change tensor product \(\Gamma(X_A, U) \otimes_A B\) is the pushout of \(\Gamma(X_A, U)
+  \leftarrow A \to B\) in commutative rings. Comparing it with the pushout square of
+  Theorem~\ref{thm:isPushout_cgSectionRing}, which has the same span, yields a unique ring
+  isomorphism between the two apices; its universal property sends the image of \(\Gamma(X_A, U)\)
+  to \(\mathrm{cg}^{\sharp}(s)\) and the image of \(B\) to \(\mathrm{pr}_B^{\sharp}(b)\), hence
+  \(s \otimes b\) to their product.
+\end{proof}
+
+\begin{definition}[The identification is an isomorphism of base-piece algebras]
+  \label{def:pieceAlgEquiv}
+  \uses{def:pieceRingEquiv}
+  \lean{AlgebraicGeometry.Over.pieceCoverAlgebra, AlgebraicGeometry.Over.pieceTensorAlgEquiv,
+    AlgebraicGeometry.Over.pieceEquiv}
+  \leanok
+  Give the cover-piece ring \(\Gamma(X_B, \mathrm{cg}^{-1}U)\) its \(\Gamma(X_A,
+  U)\)-algebra structure by pullback along \(\mathrm{cg}\). Then the identification of
+  Definition~\ref{def:pieceRingEquiv} is an isomorphism of \(\Gamma(X_A, U)\)-algebras
+  \[
+    \Gamma\bigl(X_B, \mathrm{cg}^{-1}U\bigr) \;\cong\; \Gamma(X_A, U) \otimes_A B .
+  \]
+\end{definition}
+\begin{proof}
+  \leanok
+  The structure map of the \(\Gamma(X_A, U)\)-algebra \(\Gamma(X_B, \mathrm{cg}^{-1}U)\) is
+  \(s \mapsto \mathrm{cg}^{\sharp}(s)\), which the identification carries to \(s \otimes 1\)
+  (Definition~\ref{def:pieceRingEquiv}); this is the structure map of the base-change algebra
+  \(\Gamma(X_A, U) \otimes_A B\). So the ring isomorphism intertwines the two structure maps from
+  \(\Gamma(X_A, U)\), hence is an isomorphism of \(\Gamma(X_A, U)\)-algebras.
+\end{proof}
+
+\begin{theorem}[Faithful flatness of a saturated affine piece]
+  \label{thm:faithfullyFlat_pieceCover}
+  \uses{def:pieceAlgEquiv}
+  \lean{AlgebraicGeometry.Over.faithfullyFlat_pieceCover}
+  \leanok
+  Assume \(A \to B\) is faithfully flat. Then for every affine open \(U \subseteq X_A\) the
+  structure map \(\Gamma(X_A, U) \to \Gamma(X_B, \mathrm{cg}^{-1}U)\) is faithfully flat.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Faithful flatness is stable under base change, so \(\Gamma(X_A, U) \to \Gamma(X_A, U)
+  \otimes_A B\) is faithfully flat. Transporting along the isomorphism of \(\Gamma(X_A,
+  U)\)-algebras of Definition~\ref{def:pieceAlgEquiv} gives faithful flatness of \(\Gamma(X_A, U)
+  \to \Gamma(X_B, \mathrm{cg}^{-1}U)\).
+\end{proof}
+
+\begin{theorem}[Restriction naturality of the identification]
+  \label{thm:pieceRingEquiv_naturality}
+  \uses{def:pieceRingEquiv}
+  \lean{AlgebraicGeometry.Over.pieceRingEquiv_naturality}
+  \leanok
+  Let \(W \le V\) be affine opens of \(X_A\), so \(\mathrm{cg}^{-1}W \le \mathrm{cg}^{-1}V\). The
+  identification of Definition~\ref{def:pieceRingEquiv} commutes with restriction: for every \(x
+  \in \Gamma(X_A, V) \otimes_A B\),
+  \[
+    \bigl(\mathrm{cg}^{-1}W \le \mathrm{cg}^{-1}V\bigr)^{*}\bigl(\Phi_V(x)\bigr)
+      = \Phi_W\bigl((\rho^{V}_{W} \otimes \id_B)(x)\bigr),
+  \]
+  where \(\Phi_V, \Phi_W\) are the identifications over \(V, W\) and \(\rho^{V}_{W} \colon
+  \Gamma(X_A, V) \to \Gamma(X_A, W)\) is restriction (an \(A\)-algebra homomorphism).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Both sides are \(A\)-algebra homomorphisms out of \(\Gamma(X_A, V) \otimes_A B\), so it
+  suffices to check them on pure tensors \(s \otimes b\). There the left side restricts
+  \(\mathrm{cg}^{\sharp}(s)\cdot \mathrm{pr}_B^{\sharp}(b)\) and the right side is
+  \(\mathrm{cg}^{\sharp}(\rho^{V}_{W} s)\cdot \mathrm{pr}_B^{\sharp}(b)\); the two agree because
+  restriction of sections commutes with the two pullbacks \(\mathrm{cg}^{\sharp}\) and
+  \(\mathrm{pr}_B^{\sharp}\) (pullback of a section, then restrict, equals restrict, then
+  pullback).
+\end{proof}
+
+\begin{theorem}[Saturated affine opens form a basis]
+  \label{thm:exists_isAffineOpen_cg_le}
+  \uses{thm:isAffineHom_cg}
+  \lean{AlgebraicGeometry.Over.exists_isAffineOpen_cg_le}
+  \leanok
+  Every neighbourhood \(V\) of a point \(x\) of \(X_A\) contains an affine open \(W\) with \(x \in
+  W\) whose preimage \(\mathrm{cg}^{-1}W\) is again affine.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The affine opens of \(X_A\) form a basis of its topology, so there is an affine open \(W\) with
+  \(x \in W \le V\). Its preimage \(\mathrm{cg}^{-1}W\) is affine because \(\mathrm{cg}\) is an
+  affine morphism (Theorem~\ref{thm:isAffineHom_cg}).
+\end{proof}
+
+\begin{theorem}[The curve product over a proper curve is separated]
+  \label{thm:isSeparated_left}
+  \lean{AlgebraicGeometry.Over.isSeparated_left}
+  \leanok
+  Assume \(C\) is proper over \(k\). Then \(X_A = (C \otimes \Spec A)_{\mathrm{left}}\) is a
+  separated scheme.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Properness of \(C\) makes its structure morphism separated, and separatedness is stable under
+  base change, so the projection \(\mathrm{pr}_A \colon X_A \to \Spec A\) is separated; composing
+  with the affine (hence separated) morphisms \(\Spec A \to \Spec k \to \ast\) shows the structure
+  morphism of \(X_A\) is separated, i.e.\ \(X_A\) is a separated scheme.
+\end{proof}
+
+\begin{theorem}[The overlaps of the affine family are affine]
+  \label{thm:isAffineOpen_inf}
+  \uses{thm:isSeparated_left}
+  \lean{AlgebraicGeometry.Over.isAffineOpen_inf}
+  \leanok
+  Assume \(C\) is proper over \(k\). Then the affine opens of \(X_A\) are closed under
+  intersection: if \(V, W \subseteq X_A\) are affine open, so is \(V \cap W\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  A separated scheme (Theorem~\ref{thm:isSeparated_left}) has affine diagonal, and the
+  intersection of two affine opens of a scheme with affine diagonal is affine.
+\end{proof}
+
 \section{The descent unit of a killed \v Cech class}
 \label{sec:kernelDescentUnit}
 
