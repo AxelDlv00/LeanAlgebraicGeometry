@@ -104,6 +104,7 @@ import AlgebraicJacobian.Picard.PicEtMapToolkit
 import AlgebraicJacobian.Picard.PicEtMap
 import AlgebraicJacobian.Picard.PicEtUnit
 import AlgebraicJacobian.Picard.Rigidification
+import AlgebraicJacobian.Picard.EffectivityPieces
 import AlgebraicJacobian.Algebra.DedekindColength
 import AlgebraicJacobian.RiemannRoch.Skyscraper
 import AlgebraicJacobian.RiemannRoch.ClosedPoint
