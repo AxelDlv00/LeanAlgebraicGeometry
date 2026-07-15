@@ -123,6 +123,7 @@ import AlgebraicJacobian.RiemannRoch.ChiLedger
 import AlgebraicJacobian.Challenge
 import AlgebraicJacobian.RiemannRoch.ChiCurve
 import AlgebraicJacobian.RiemannRoch.Degree
+import AlgebraicJacobian.Curve.BaseChangeInstances
 
 /-!
 # AlgebraicJacobian — library root
