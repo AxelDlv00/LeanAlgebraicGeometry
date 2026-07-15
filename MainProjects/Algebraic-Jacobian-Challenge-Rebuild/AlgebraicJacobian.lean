@@ -105,6 +105,8 @@ import AlgebraicJacobian.Picard.PicEtMap
 import AlgebraicJacobian.Picard.PicEtUnit
 import AlgebraicJacobian.Picard.Rigidification
 import AlgebraicJacobian.Picard.EffectivityPieces
+import AlgebraicJacobian.Picard.NormalizedComparison
+import AlgebraicJacobian.Picard.NormalizedComparisonExists
 import AlgebraicJacobian.Algebra.DedekindColength
 import AlgebraicJacobian.RiemannRoch.Skyscraper
 import AlgebraicJacobian.RiemannRoch.ClosedPoint
@@ -124,6 +126,7 @@ import AlgebraicJacobian.RiemannRoch.ChiLedger
 import AlgebraicJacobian.Challenge
 import AlgebraicJacobian.RiemannRoch.ChiCurve
 import AlgebraicJacobian.RiemannRoch.Degree
+import AlgebraicJacobian.RiemannRoch.ClassCohomology
 import AlgebraicJacobian.Curve.BaseChangeInstances
 
 /-!
