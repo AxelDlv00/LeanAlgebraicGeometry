@@ -2014,6 +2014,83 @@ hypothesis at all.
   X(D) = \deg_k D\) (\ref{def:classDeg}) gives the claim.
 \end{proof}
 
+\section{Cohomology of a Picard class is well-defined}
+\label{sec:classCohomology}
+
+Throughout this section \(X\) is a curve bundle over a field \(K\): integral, smooth of relative
+dimension one, and quasi-compact over \(\Spec K\). The Euler characteristic of a divisor sheaf
+is a \v Cech Picard class invariant (\ref{thm:chi_divisorSheaf_eq_of_picClass_eq}); the same
+holds \emph{degree by degree} for \(h^0\) and \(h^1\), and for the vanishing and
+finite-dimensionality of the individual cohomology modules. All of these transport along one
+isomorphism of divisor sheaves, so the arguments are one line each on the ledger API.
+
+The common input is: if two Weil divisors \(D, D'\) have equal class, \([\struct X(D)] =
+[\struct X(D')]\), then the extraction lemma \ref{thm:curveDivisor_picClass_eq_iff} writes \(D -
+D' = \operatorname{div} g\) for a rational function \(g\), and multiplication by \(g\)
+(\ref{thm:mulEquivDivisorSheaf}) realises an isomorphism of sheaves of \(K\)-modules \(\struct
+X(D) \cong \struct X(D')\). Every statement below is transport along this isomorphism.
+
+\begin{theorem}[\(h^0\) and \(h^1\) are Picard-class invariants]
+  \label{thm:h0h1_divisorSheaf_class}
+  \lean{AlgebraicGeometry.h0_divisorSheaf_eq_of_picClass_eq,
+    AlgebraicGeometry.h1_divisorSheaf_eq_of_picClass_eq}
+  \uses{def:divisorSheaf, def:h0_h1_chi, thm:curveDivisor_picClass_eq_iff,
+    thm:mulEquivDivisorSheaf, thm:chi_congr}
+  \leanok
+  Let \(D, D'\) be Weil divisors on \(X\) with equal class, \([\struct X(D)] = [\struct
+  X(D')]\). Then
+  \[
+    h^0\bigl(\struct X(D)\bigr) = h^0\bigl(\struct X(D')\bigr), \qquad
+    h^1\bigl(\struct X(D)\bigr) = h^1\bigl(\struct X(D')\bigr).
+  \]
+  No finiteness hypothesis is needed. This is the witness-independence that makes a per-class
+  quantifier ``for all \(D\) with \([\struct X(D)] = \lambda\)'' well-posed.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The class isomorphism \(\struct X(D) \cong \struct X(D')\) described above induces, in each
+  fixed degree \(n\), an isomorphism of cohomology modules \(H^n(\struct X(D)) \cong
+  H^n(\struct X(D'))\); passing to dimensions (\(h^0\)-, \(h^1\)-congruence,
+  \ref{thm:chi_congr}) gives the two equalities.
+\end{proof}
+
+\begin{theorem}[Vanishing of \(H^1\) is a Picard-class invariant]
+  \label{thm:subsingleton_hModule_one_class}
+  \lean{AlgebraicGeometry.subsingleton_hModule_one_of_picClass_eq}
+  \uses{def:divisorSheaf, def:HModule, thm:curveDivisor_picClass_eq_iff,
+    thm:mulEquivDivisorSheaf, def:HModule_mapEquiv}
+  \leanok
+  Let \(D, D'\) be Weil divisors on \(X\) with \([\struct X(D)] = [\struct X(D')]\). If the
+  degree-one cohomology \(H^1(\struct X(D))\) vanishes (in the strong sense of being a
+  subsingleton), then so does \(H^1(\struct X(D'))\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The class isomorphism \(\struct X(D) \cong \struct X(D')\) induces a \(K\)-linear equivalence
+  \(H^1(\struct X(D)) \simeq H^1(\struct X(D'))\) (\ref{def:HModule_mapEquiv}), and being a
+  subsingleton transports across an equivalence. This is the form the consumers need: it
+  survives isomorphisms and does not require finite-dimensionality, unlike an equality
+  \(h^1 = 0\).
+\end{proof}
+
+\begin{theorem}[Finite-dimensionality of cohomology is a Picard-class invariant]
+  \label{thm:moduleFinite_hModule_divisorSheaf_class}
+  \lean{AlgebraicGeometry.moduleFinite_hModule_divisorSheaf_zero_of_picClass_eq,
+    AlgebraicGeometry.moduleFinite_hModule_divisorSheaf_one_of_picClass_eq}
+  \uses{def:divisorSheaf, def:HModule, thm:curveDivisor_picClass_eq_iff,
+    thm:mulEquivDivisorSheaf, def:HModule_mapEquiv}
+  \leanok
+  Let \(D, D'\) be Weil divisors on \(X\) with \([\struct X(D)] = [\struct X(D')]\). If
+  \(H^0(\struct X(D))\) (respectively \(H^1(\struct X(D))\)) is a finite-dimensional
+  \(K\)-module, then so is \(H^0(\struct X(D'))\) (respectively \(H^1(\struct X(D'))\)).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The class isomorphism \(\struct X(D) \cong \struct X(D')\) induces, in each degree, a
+  \(K\)-linear equivalence of cohomology modules (\ref{def:HModule_mapEquiv}); finite
+  dimensionality transports across a linear equivalence.
+\end{proof}
+
 \section{The degree homomorphism over an extension field}
 
 Everything above applies to the challenge curve \(C\) over its base field \(k\). We now record

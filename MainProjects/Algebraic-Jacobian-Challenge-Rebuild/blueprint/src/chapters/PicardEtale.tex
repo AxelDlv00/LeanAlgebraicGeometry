@@ -5239,6 +5239,258 @@ Throughout, \(C\) is a curve over \(k\).
   \(s = t\).
 \end{proof}
 
+\section{Rigidification along a section of the projection}
+\label{sec:rigidification}
+
+Let \(C\) be an object of \(\Over(\Spec k)\) (the curve). For a test object \(T\) in
+\(\Over(\Spec k)\), a \(T\)-point \(\sigma \colon T \to C\) determines a section of the
+projection \(\mathrm{pr} = \mathrm{snd} \colon C \otimes T \to T\); rigidifying a \v Cech Picard
+class along that section is the cocycle recast of Kleiman's \(g\)-rigidification. These are the
+inputs to the \((C2)\) comparison of the next section.
+
+\begin{definition}[The section of the projection attached to a point]
+  \label{def:sectionOfPoint}
+  \lean{AlgebraicGeometry.Over.sectionOfPoint, AlgebraicGeometry.Over.sectionOfPoint_fst,
+    AlgebraicGeometry.Over.sectionOfPoint_snd, AlgebraicGeometry.Over.sectionOfPoint_naturality}
+  \leanok
+  \source{kleiman-picard}
+  For a \(T\)-point \(\sigma \colon T \to C\), the \emph{section of the projection}
+  \(g_\sigma \colon T \to C \otimes T\) is the map \(\langle \sigma, \id_T \rangle\) into the
+  product, characterised by
+  \[
+    \mathrm{fst} \circ g_\sigma = \sigma, \qquad \mathrm{snd} \circ g_\sigma = \id_T .
+  \]
+  It is natural in the test object: for \(h \colon T' \to T\), \(h \circ g_\sigma = g_{h \circ
+  \sigma} \circ (C \lhd h)\). This is Kleiman's \(g_T\) (\emph{The Picard Scheme}, proof of
+  Theorem 2.5).
+\end{definition}
+\begin{proof}
+  \leanok
+  By the universal property of the cartesian product, \(T\)-points of \(C\) and sections of the
+  projection \(\mathrm{snd}\) are the same datum: \(\langle \sigma, \id_T\rangle\) is the unique
+  map with the two stated composites. Naturality is checked on the two projections, using
+  \(\mathrm{fst} \circ (C \lhd h) = h \circ \mathrm{fst}\) and \(\mathrm{snd} \circ (C \lhd h) =
+  \mathrm{snd}\).
+\end{proof}
+
+\begin{definition}[Rigidified \v Cech Picard class]
+  \label{def:isRigidified}
+  \lean{AlgebraicGeometry.Over.IsRigidified}
+  \uses{def:sectionOfPoint}
+  \leanok
+  \source{kleiman-picard}
+  A \v Cech Picard class \(L\) on the product \(C \otimes T\) is \emph{rigidified} along a point
+  \(\sigma \colon T \to C\) when its pullback along the section of the projection is trivial,
+  \[
+    g_\sigma^{*} L = 1 .
+  \]
+  This is the cocycle form of Kleiman's \(g\)-rigidification (\(\mathrm{df:rgd}\)): on the
+  cocycle model an isomorphism class carries no datum, so ``a trivialisation \(u \colon
+  \mathcal O_T \xrightarrow{\ \sim\ } g_\sigma^{*} L\) exists'' is exactly \(g_\sigma^{*} L = 1\).
+\end{definition}
+
+\section{The \(\sigma\)-normalized comparison cochain}
+\label{sec:normalizedComparison}
+
+We now fix a \(k\)-algebra \(A\) with a further \(A\)-algebra \(B\) (the carrier of an \'etale
+cover in the intended application) and a curve point \(\sigma \colon \Spec A \to C\).
+Write \(X_R := (C \otimes \Spec R)_{\mathrm{left}}\) for the curve over \(\Spec R\). Let
+\(q_1, q_2 \colon \Spec(B \otimes_A B) \to \Spec B\) be the coprojections
+(Definition~\ref{def:tensorInl_tensorInr}), \(u_1, u_2 \colon X_{B \otimes_A B} \to X_B\) their
+whiskerings \(C \lhd q_i\), and \(f_{12}, f_{13}, f_{23}\), \(w_{ij} = C \lhd f_{ij}\) the cofaces
+of Definition~\ref{def:tensorFaces}. Write \(s_B, s_q\) for the sections of the projection
+(Definition~\ref{def:sectionOfPoint}) attached to the base changes of \(\sigma\) to \(B\) and
+\(B \otimes_A B\), and \(p_2 \colon X_{B \otimes_A B} \to \Spec(B \otimes_A B)\) for the
+projection. Throughout, \(s^{\sharp}\) denotes pullback of unit cochains as in
+Section~\ref{sec:cochainPullback}.
+
+This section packages, and constructs with \emph{no geometric hypotheses}, a cochain-level
+realisation of the descent equation \(u_1^{*} L = u_2^{*} L\), normalized along \(\sigma\).
+
+\begin{lemma}[The section squares]
+  \label{lem:sectionSquares}
+  \lean{AlgebraicGeometry.Over.overSpecMap_comp_point,
+    AlgebraicGeometry.Over.sectionOfPoint_left_comp_whiskerLeft,
+    AlgebraicGeometry.Over.sectionOfPoint_left_comp_snd,
+    AlgebraicGeometry.Over.sectionSq_comp_inl, AlgebraicGeometry.Over.sectionSq_comp_inr,
+    AlgebraicGeometry.Over.sectionCb_comp_face₁₂, AlgebraicGeometry.Over.sectionCb_comp_face₁₃,
+    AlgebraicGeometry.Over.sectionCb_comp_face₂₃}
+  \uses{def:sectionOfPoint, def:overSpecMap, def:tensorInl_tensorInr, def:tensorFaces}
+  \leanok
+  The section of the projection is natural across the base-change coprojections and cofaces: as
+  maps of curve products,
+  \[
+    s_q \circ u_1 = q_1 \circ s_B, \quad s_q \circ u_2 = q_2 \circ s_B, \quad
+    s_{\mathrm{cb}} \circ w_{ij} = f_{ij} \circ s_q \ (ij \in \{12,13,23\}),
+  \]
+  and \(s_q\) retracts the projection, \(s_q \circ p_2 = \id\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Each square is the naturality of the section (Definition~\ref{def:sectionOfPoint}) applied to
+  the relevant \(A\)-algebra map: the coprojections \(q_i\) and cofaces \(f_{ij}\) are
+  \(\Spec\) of \(A\)-algebra homomorphisms out of \(B\) respectively \(B \otimes_A B\)
+  (Definitions~\ref{def:tensorInl_tensorInr}, \ref{def:tensorFaces}), and restricting the
+  base-changed point along such a map lands at the base-changed point over the target algebra;
+  whiskering with \(C\) and passing to the section turns this point-compatibility into the stated
+  square. The retraction is \(\mathrm{snd} \circ g_\sigma = \id\) of
+  Definition~\ref{def:sectionOfPoint}, whiskered to the curve product.
+\end{proof}
+
+\begin{lemma}[Pullback of a one-sided trivializing relation]
+  \label{lem:unitsAppLE_trivializing_rel}
+  \lean{AlgebraicGeometry.Scheme.Hom.unitsAppLE_trivializing_rel}
+  \leanok
+  Let \(\varphi \colon X \to Y\) and \(r \colon Y \to Z\). Suppose a unit \(0\)-cochain \(a\) on a
+  pointed cover of \(Y\) trivializes the pullback along \(r\) of a pair-indexed unit family \(E\):
+  for all \(y, y'\), on the overlap,
+  \[
+    a_y \cdot \bigl(r^{\sharp} E\bigr)_{y y'} = a_{y'} .
+  \]
+  Then for every \(x, x' \in X\) and every open \(O \subseteq \varphi^{-1}(\cdots)\) inside the
+  relevant overlap pullback, the pulled-back cochain \(\varphi^{\sharp} a\) trivializes the family
+  pulled back along the composite:
+  \[
+    \varphi^{\sharp}_O\, a_{\varphi x} \cdot \bigl((r\varphi)^{\sharp}_O E\bigr)_{x x'}
+      = \varphi^{\sharp}_O\, a_{\varphi x'} .
+  \]
+  This is the one-sided companion of Lemma~\ref{lem:unitsAppLE_coboundary_rel}.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Apply the pullback homomorphism \(\varphi^{\sharp}_O\) to the given relation at \(\varphi x,
+  \varphi x'\). Being a group homomorphism on units it distributes over the product; by
+  functoriality \(\varphi^{\sharp}_O(r^{\sharp} E) = (r\varphi)^{\sharp}_O E\) merges the pullback,
+  while \(\varphi^{\sharp}_O a\) is left unchanged.
+\end{proof}
+
+\begin{lemma}[Compatibility of a ratio cochain]
+  \label{lem:unitsAppLE_trivializing_ratio_compat}
+  \lean{AlgebraicGeometry.Scheme.Hom.unitsAppLE_trivializing_ratio_compat}
+  \uses{lem:unitsAppLE_coboundary_rel, lem:unitsAppLE_trivializing_rel, lem:unitsAppLE_congr_hom}
+  \leanok
+  Let \(\varphi_t \colon X \to Y_c\), \(\varphi_1, \varphi_2 \colon X \to Y_a\), \(r_1, r_2
+  \colon Y_c \to Z\), \(s_1 \colon Y_a \to Z\). Suppose a \(0\)-cochain \(c\) on \(Y_c\) cobounds
+  the comparison of a pair-indexed family \(E\) pulled back along \(r_1, r_2\)
+  (\ref{lem:unitsAppLE_coboundary_rel}), and a \(0\)-cochain \(a\) on \(Y_a\) trivializes \(E\)
+  pulled back along \(s_1\) (\ref{lem:unitsAppLE_trivializing_rel}). If the pulled-back composites
+  agree, \(\varphi_t \circ r_1 = \varphi_1 \circ s_1\) and \(\varphi_t \circ r_2 = \varphi_2
+  \circ s_1\), then the ratio cochain
+  \[
+    \varphi_t^{\sharp} c \cdot \frac{\varphi_2^{\sharp} a}{\varphi_1^{\sharp} a}
+  \]
+  on \(X\) is \v Cech-compatible: its values at \(x\) and \(x'\) agree on overlaps.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Pull the coboundary relation for \(c\) back along \(\varphi_t\)
+  (\ref{lem:unitsAppLE_coboundary_rel}) and the trivializing relation for \(a\) back along
+  \(\varphi_1\) and \(\varphi_2\) (\ref{lem:unitsAppLE_trivializing_rel}). The hypotheses
+  \(\varphi_t r_i = \varphi_i s_1\) identify the two families through
+  Lemma~\ref{lem:unitsAppLE_congr_hom}; combining the pulled-back relations, the comparison of
+  the ratio cochain at \(x\) and \(x'\) reduces to an identity of units, giving compatibility.
+\end{proof}
+
+\begin{definition}[The normalization cover]
+  \label{def:normalizationCover}
+  \lean{AlgebraicGeometry.Over.normalizationCover,
+    AlgebraicGeometry.Over.normalizationCover_le_section,
+    AlgebraicGeometry.Over.normalizationCover_le_inl,
+    AlgebraicGeometry.Over.normalizationCover_le_inr}
+  \uses{def:sectionOfPoint}
+  \leanok
+  For a pointed cover \(\mathcal N\) of the curve \(X_B\) and a pointed cover \(\mathcal W\) of
+  the curve \(X_{B \otimes_A B}\), the \emph{normalization cover} of \(\Spec(B \otimes_A B)\) is
+  \[
+    \mathcal W \text{ pulled back along } s_q, \ \text{ intersected with the two coprojection
+    pullbacks } q_1^{*}, q_2^{*} \text{ of } \mathcal N \text{ pulled back along } s_B .
+  \]
+  It is the cover on which the \(\sigma\)-normalization below is stated; it lies below \(s_q^{-1}
+  \mathcal W\) and below each \(q_i^{-1}(s_B^{-1}\mathcal N)\).
+\end{definition}
+
+\begin{definition}[The \(\sigma\)-normalized comparison datum]
+  \label{def:normalizedCechComparison}
+  \lean{AlgebraicGeometry.NormalizedCechComparison}
+  \uses{def:sectionOfPoint, def:isRigidified, def:normalizationCover}
+  \leanok
+  Fix a unit \v Cech cocycle \(\gamma\) on a pointed cover \(\mathcal N\) of \(X_B\), representing
+  a class \(L = [\gamma]\). A \emph{\(\sigma\)-normalized comparison} of \(\gamma\) packages:
+  \begin{itemize}
+    \item a trivializing \(0\)-cochain \(\rho\) of the section-pullback \(s_B^{\sharp}\gamma\) on
+      the cover \(s_B^{-1}\mathcal N\) of \(\Spec B\): \(\rho_b \cdot (s_B^{\sharp}\gamma)_{b b'} =
+      \rho_{b'}\) on overlaps — the cochain shadow of rigidification (\ref{def:isRigidified})
+      along the section over \(B\);
+    \item a pointed cover \(\mathcal W\) of \(X_{B \otimes_A B}\) refining both coprojection
+      pullbacks of \(\mathcal N\), and a comparison \(0\)-cochain \(\theta\) on it, with
+    \item \textbf{(N1)} \(\theta_x \cdot (u_1^{\sharp}\gamma)_{x y} = (u_2^{\sharp}\gamma)_{x y}
+      \cdot \theta_y\) on overlaps — \(\theta\) cobounds the two coprojection pullbacks of
+      \(\gamma\), realising \(u_1^{*} L = u_2^{*} L\) at the cochain level; and
+    \item \textbf{(N2)} \((s_q^{\sharp}\theta)_y \cdot (q_2^{\sharp}\rho)_y = (q_1^{\sharp}\rho)_y\)
+      on the normalization cover (\ref{def:normalizationCover}) — the \(\sigma\)-restriction of
+      \(\theta\) is the \(\rho\)-comparison \(q_1^{\sharp}\rho / q_2^{\sharp}\rho\).
+  \end{itemize}
+  The normalization is \(\rho\)-relative: rigidification makes \(s_B^{\sharp}\gamma\) trivial only
+  as a class, giving the trivializing cochain \(\rho\), so ``\(\sigma\)-restriction \(=1\)'' is
+  replaced by (N2). Every step is stated pointwise via unit pullback and is blind to
+  disconnectedness of \(\Spec(B \otimes_A B)\).
+\end{definition}
+
+\begin{theorem}[The \(\sigma\)-defect glues to a global unit]
+  \label{thm:exists_glued_sigmaDefect}
+  \lean{AlgebraicGeometry.Over.sigmaDefectCochain,
+    AlgebraicGeometry.Over.exists_glued_sigmaDefect}
+  \uses{def:normalizationCover, lem:sectionSquares,
+    lem:unitsAppLE_trivializing_ratio_compat, thm:exists_global_unit_of_compatible}
+  \leanok
+  Let \(\gamma\) be a unit cocycle on \(\mathcal N\), let \(\theta_0\) be a comparison cochain on
+  a refinement \(\mathcal W\) satisfying (N1), and let \(\rho\) be a trivializing cochain of
+  \(s_B^{\sharp}\gamma\). The \emph{\(\sigma\)-defect cochain}
+  \[
+    s_q^{\sharp}\theta_0 \cdot \frac{q_2^{\sharp}\rho}{q_1^{\sharp}\rho}
+  \]
+  on the normalization cover is \v Cech-compatible, hence glues to a global unit \(\delta \in
+  \Gamma(\Spec(B \otimes_A B), \top)^{\times}\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Compatibility is the ratio-compatibility Lemma~\ref{lem:unitsAppLE_trivializing_ratio_compat}
+  applied with \(\varphi_t = s_q\), \(\varphi_i = q_i\), \(r_i = u_i\), \(s_1 = s_B\): (N1) is
+  the coboundary relation for \(\theta_0\), the relation for \(\rho\) is the one-sided
+  trivialization, and the composite coincidences \(s_q \circ u_i = q_i \circ s_B\) are the
+  section squares (\ref{lem:sectionSquares}). A compatible unit family on a pointed cover glues to
+  a global unit by the sheaf axiom (\ref{thm:exists_global_unit_of_compatible}).
+\end{proof}
+
+\begin{theorem}[Existence of the \(\sigma\)-normalized comparison]
+  \label{thm:exists_normalizedCechComparison}
+  \lean{AlgebraicGeometry.Over.correctedComparison,
+    AlgebraicGeometry.Over.exists_normalizedCechComparison}
+  \uses{def:isRigidified, def:normalizedCechComparison, thm:exists_glued_sigmaDefect,
+    lem:sectionSquares, cor:cechPic_mk_eq_one}
+  \leanok
+  Let \(\gamma\) be a unit cocycle on a pointed cover \(\mathcal N\) of \(X_B\) whose class \(L =
+  [\gamma]\) is rigidified along the section over \(B\) (\ref{def:isRigidified}) and satisfies the
+  descent equation \(u_1^{*} L = u_2^{*} L\). Then a \(\sigma\)-normalized comparison of
+  \(\gamma\) exists. No properness, geometric irreducibility or reducedness, or faithful flatness
+  is required.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Rigidification gives \(g_{\sigma_B}^{*} L = 1\); on cocycles (\ref{cor:cechPic_mk_eq_one}) this
+  means the section-pullback \(s_B^{\sharp}\gamma\) is a coboundary, so a trivializing cochain
+  \(\rho\) exists on \(s_B^{-1}\mathcal N\) itself (no refinement). The descent equation
+  \(u_1^{*} L = u_2^{*} L\) means the two coprojection pullbacks of \(\gamma\) cobound on a common
+  refinement \(\mathcal W\), yielding a comparison cochain \(\theta_0\) with (N1). By
+  Theorem~\ref{thm:exists_glued_sigmaDefect} the \(\sigma\)-defect of \(\theta_0\) glues to a
+  global unit \(\delta\) of \(\Spec(B \otimes_A B)\). Correct \(\theta_0\) by dividing out the
+  projection pullback \(p_2^{\sharp}\delta\): this preserves (N1) (a global factor cancels from
+  both sides of the coboundary relation), and, because \(s_q\) retracts \(p_2\)
+  (\ref{lem:sectionSquares}), it makes the \(\sigma\)-restriction of the corrected cochain equal
+  to \(q_1^{\sharp}\rho / q_2^{\sharp}\rho\) on the nose — that is (N2). The corrected data is the
+  required datum.
+\end{proof}
+
 \section{Divisor classes from local equations}
 
 An effective Cartier divisor \(D\) on a scheme \(X\) is cut out, near each point, by a single

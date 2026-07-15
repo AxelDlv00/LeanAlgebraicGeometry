@@ -683,6 +683,151 @@ invertible, and \(g|_U\), \(s|_U\) for restrictions of sections.
   (an affine scheme is an affine open of itself).
 \end{proof}
 
+\section{Twisted affine vanishing: quasi-coherent coefficients}
+\label{sec:qcoh_vanishing}
+
+The vanishing of the previous section is stated for the structure sheaf, but Serre's argument
+only ever uses two features of \(\struct{X/k}\): that ambient sections act on sections, and that
+sections localise on affine opens. This section isolates those two features as a packaging on an
+arbitrary sheaf of \(k\)-modules and reruns the argument, obtaining degree-one vanishing on an
+affine open with those coefficients. The intended application is to line bundles trivialised on
+an affine chart, for which the packaging holds chart by chart.
+
+For a sheaf \(F\) of \(k\)-modules on the small Zariski site of \(X\) and an inclusion of opens
+\(W \subseteq V\), write \(s|_W\) (\emph{section restriction}) for the image of \(s \in F(V)\)
+under the \(k\)-linear restriction \(F(V) \to F(W)\); it is functorial in the inclusion and
+natural in \(F\).
+
+\begin{definition}[Quasi-coherence packaging on an open]
+  \label{def:qcohOn}
+  \lean{AlgebraicGeometry.Scheme.QcohOn}
+  \leanok
+  Let \(X\) be a scheme, \(U\) an open of \(X\), and \(F\) a sheaf of \(k\)-modules on the small
+  Zariski site of \(X\). A \emph{quasi-coherence packaging} of \(F\) on \(U\) is the data of:
+  \begin{itemize}
+    \item \textbf{(P1) an action} of the fixed ring \(\Gamma(X, U)\): for every open \(W \le U\)
+      a scaling operation \(r \cdot m\) of \(r \in \Gamma(X, U)\) on \(m \in F(W)\), satisfying
+      the module laws over \(\Gamma(X, U)\) (unit, associativity, and both distributivities) and
+      natural under section restriction, \((r \cdot m)|_{W'} = r \cdot (m|_{W'})\) for \(W' \le
+      W\);
+    \item \textbf{(P2) localisation on affine opens} \(V \le U\), for every \(g \in \Gamma(X,
+      U)\), in the two-lemma form of localisation away from \(g\):
+      \begin{itemize}
+        \item \emph{denominator clearing} — every \(c \in F(V \cap D(g))\) is \((g^N \cdot
+          e)|_{V \cap D(g)}\) for some \(N \ge 0\) and \(e \in F(V)\);
+        \item \emph{defect annihilation} — every \(t \in F(V)\) with \(t|_{V \cap D(g)} = 0\) is
+          killed by a power of \(g\): \(g^M \cdot t = 0\) for some \(M \ge 0\).
+      \end{itemize}
+  \end{itemize}
+  The action is by the single ring \(\Gamma(X, U)\) (not a per-open module structure), with the
+  inclusion \(W \le U\) an explicit argument.
+\end{definition}
+
+\begin{theorem}[The structure sheaf is quasi-coherently packaged]
+  \label{thm:moduleKSheaf_qcohOn}
+  \lean{AlgebraicGeometry.Scheme.moduleKSheaf.instQcohOn}
+  \uses{def:qcohOn, def:moduleKSheaf, lem:denominator_clearing, lem:section_annihilation}
+  \leanok
+  For \(X\) a scheme over \(\Spec k\), the structure sheaf \(\struct{X/k}\), viewed as a sheaf of
+  \(k\)-modules, carries a quasi-coherence packaging on every open \(U\): the action of \(r \in
+  \Gamma(X, U)\) on \(s \in \Gamma(X, W)\) is \(r|_W \cdot s\), the ordinary
+  restriction-then-multiplication.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The (P1) module laws are the ring axioms of \(\Gamma(X, W)\), and naturality under restriction
+  holds because restriction is a ring homomorphism. The two (P2) axioms, with the action spelled
+  out, are exactly denominator clearing (\ref{lem:denominator_clearing}) and annihilation
+  (\ref{lem:section_annihilation}) for the structure sheaf.
+\end{proof}
+
+\begin{theorem}[Degree-one \v{C}ech cobounding, quasi-coherent coefficients]
+  \label{thm:cech_cobounding_qcoh}
+  \lean{AlgebraicGeometry.IsAffineOpen.exists_cech_cobounding_of_qcoh}
+  \uses{def:qcohOn}
+  \leanok
+  Let \(U\) be an affine open of a scheme \(X\), covered by basic opens \(D(f_1), \dots, D(f_n)\),
+  and let \(F\) be a sheaf of \(k\)-modules with a quasi-coherence packaging on \(U\). Every
+  \v{C}ech \(1\)-cocycle \(a_{ij} \in F(D(f_i) \cap D(f_j))\) (with \(a_{il} = a_{ij} + a_{jl}\)
+  on triple overlaps) is a coboundary: there are \(b_i \in F(D(f_i))\) with \(a_{ij} = b_i|_{D(f_i)
+  \cap D(f_j)} - b_j|_{D(f_i) \cap D(f_j)}\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Verbatim the structure-sheaf argument \ref{thm:affine_open_cech_cobounding}, reading the
+  packaging axioms in place of the structure-sheaf localisation. Clear denominators with one
+  uniform exponent \(N\) (denominator clearing of the packaging), producing \(e_{ij} \in
+  F(D(f_i))\) with \(e_{ij}|_{D(f_i) \cap D(f_j)} = f_j^N \cdot a_{ij}\). The triple-overlap
+  defects \(t_{ijl} = e_{il} - e_{jl} - f_l^N \cdot a_{ij}\) vanish on the triple intersections by
+  the cocycle identity, hence are killed by a uniform power \(f_l^M\) (defect annihilation). With
+  a partition of unity \(1 = \sum_l h_l f_l^{N+M}\) of the affine \(U\), set \(b_i = \sum_l h_l
+  f_l^M \cdot e_{il}\); the assembly \(b_i - b_j = \sum_l h_l f_l^M(e_{il} - e_{jl}) = (\sum_l h_l
+  f_l^{N+M}) \cdot a_{ij} = a_{ij}\) uses only that the action distributes over restriction and
+  sums, i.e.\ the (P1) mixin.
+\end{proof}
+
+\begin{theorem}[Sections surjectivity on an affine open, quasi-coherent coefficients]
+  \label{thm:cokernel_app_surjective_qcoh}
+  \lean{AlgebraicGeometry.IsAffineOpen.cokernel_app_surjective_of_qcoh}
+  \uses{def:qcohOn, thm:cech_cobounding_qcoh, lem:sections_left_exact, lem:app_injective_of_mono}
+  \leanok
+  Let \(U\) be an affine open of a scheme \(X\), let \(F\) be a sheaf of \(k\)-modules with a
+  quasi-coherence packaging on \(U\), and let \(\iota : F \to G\) be a monomorphism of sheaves of
+  \(k\)-modules. Then every section of \(\coker \iota\) over \(U\) lifts to a section of \(G\)
+  over \(U\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Verbatim \ref{thm:cokernel_app_surjective_affine_open} with \(F\) in place of \(\struct{X/k}\).
+  Local lifts of \(q \in (\coker \iota)(U)\) exist on a finite basic cover \(D(f_i)\) of \(U\) by
+  local surjectivity of the epimorphism \(\coker\iota\)-projection and quasi-compactness. On
+  overlaps the differences of the lifts are killed by the projection, so by left-exactness of
+  sections (\ref{lem:sections_left_exact}) they come from \(F\)-sections \(a_{ij}\); these form a
+  \v{C}ech \(1\)-cocycle (\(\iota\) is injective on sections, \ref{lem:app_injective_of_mono}),
+  which cobounds by \ref{thm:cech_cobounding_qcoh}. The corrected lifts glue to a section of \(G\)
+  over \(U\) mapping to \(q\).
+\end{proof}
+
+\begin{theorem}[Twisted affine vanishing of \(H^1{}'\)]
+  \label{thm:hModule1_vanishing_qcoh}
+  \lean{AlgebraicGeometry.IsAffineOpen.subsingleton_hModule'_one_of_qcoh}
+  \uses{def:qcohOn, def:HModule', thm:cokernel_app_surjective_qcoh,
+    lem:ext_one_vanishing_criterion, def:freeModuleSheafHomEquiv}
+  \leanok
+  Let \(U\) be an affine open of a scheme \(X\) and \(F\) a sheaf of \(k\)-modules with a
+  quasi-coherence packaging on \(U\). Then the degree-one cohomology of the object \(U\) with
+  coefficients in \(F\) vanishes:
+  \[
+    H'^1(U, F) \;=\; 0 .
+  \]
+  Taking \(F = \struct{X/k}\) recovers \ref{thm:affine_open_h1_vanishing}.
+\end{theorem}
+\begin{proof}
+  \leanok
+  As in \ref{thm:affine_open_h1_vanishing}: choose a monomorphism \(\iota : F \to G\) with \(G\)
+  injective; by the \(\Ext^1\) vanishing criterion \ref{lem:ext_one_vanishing_criterion} (with
+  \(L = k[U]\) the free sheaf of \(k\)-modules on \(U\)) it suffices to lift every morphism
+  \(k[U] \to \coker \iota\) along \(G \to \coker \iota\), which by \ref{def:freeModuleSheafHomEquiv}
+  is the surjectivity of \(G(U) \to (\coker \iota)(U)\) — Theorem
+  \ref{thm:cokernel_app_surjective_qcoh}.
+\end{proof}
+
+\begin{theorem}[Twisted affine vanishing of \(H^1\)]
+  \label{thm:hModule_vanishing_qcoh}
+  \lean{AlgebraicGeometry.Scheme.subsingleton_hModule_one_of_qcoh}
+  \uses{def:qcohOn, def:HModule, thm:hModule1_vanishing_qcoh, def:HModule_linearEquivHModule'}
+  \leanok
+  Let \(X\) be an affine scheme and \(F\) a sheaf of \(k\)-modules with a quasi-coherence
+  packaging on \(\top\). Then the degree-one cohomology of the site vanishes,
+  \(H^1(X, F) = 0\). Taking \(F = \struct{X/k}\) recovers \ref{thm:affine_vanishing}.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Apply \ref{thm:hModule1_vanishing_qcoh} to the affine open \(U = \top\) (an affine scheme is an
+  affine open of itself) and transport the object-cohomology vanishing to the site cohomology
+  along the equivalence \ref{def:HModule_linearEquivHModule'}.
+\end{proof}
+
 \section{The Mayer--Vietoris \((0,1)\)-slice}
 \label{sec:mv-in-text}
 
