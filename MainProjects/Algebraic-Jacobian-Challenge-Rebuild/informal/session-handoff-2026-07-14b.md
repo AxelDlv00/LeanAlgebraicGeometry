@@ -1,5 +1,12 @@
 # Session handoff — 2026-07-14 (second interactive Fable session)
 
+COMMIT-PATH CHANGE (2026-07-15, user instruction): `horizon commit` was REMOVED in a
+CLI refactor. Commit to the ledger with RAW GIT from the workspace root:
+`git --git-dir=.archon-horizon/vcs/workspace.git --work-tree=. add <files>` then
+`commit` with `-c user.name="Archon Horizon" -c user.email="archon-horizon@local"`,
+message ending with the trailers `Archon-Commit: agent` and the Co-Authored-By line.
+Other horizon subcommands (task/roadmap/blueprint/inbox) still work.
+
 KERNEL-DISCIPLINE ADDITION (earned by the E1 coherence close, 2026-07-15): local-
 notation-typed binders in `variable`/`include` sections do not only make declarations
 silently vanish — they can also manifest as `whnf`/`isDefEq`/kernel timeouts on
