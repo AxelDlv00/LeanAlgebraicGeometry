@@ -122,6 +122,7 @@ import AlgebraicJacobian.RiemannRoch.ChiFiniteness
 import AlgebraicJacobian.RiemannRoch.ChiLedger
 import AlgebraicJacobian.Challenge
 import AlgebraicJacobian.RiemannRoch.ChiCurve
+import AlgebraicJacobian.RiemannRoch.Degree
 
 /-!
 # AlgebraicJacobian — library root
