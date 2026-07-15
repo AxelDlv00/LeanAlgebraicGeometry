@@ -92,8 +92,20 @@ AMBER → trigger `AJCR.cech-port`; RED → plan-B (Weil Sym^g) or plan-C (old-t
    the D1 decision — all cochain comparisons inside K(X)ˣ — bounds the campaign; sub-
    bricks W1–W5 with W3 the staged heart). Launch W1 (Opus) from a spec derived from
    it; G-D3 = W5, last.
-3. **w4-rep.datum design pass** — settle the twist-normalization question (see verdict
-   above); it decides the cech-port trigger. Then the remaining cbc-lite assembly.
+3. **Wave 4: the datum design pass is DONE** (`informal/w4-datum-design.md`, committed)
+   — decision: the twist normalizes (fiber twist Θ_n, two-cover-trivial by
+   construction) but the universal class does not; **AJCR.cech-port is FIRED** (roadmap
+   status pending, scope = exactly G-CBC-3(ii), re-derive along the rebuild's own Serre
+   engine with the subproject's green theorem as certificate). Revised sequence:
+   **w4-5** fiber-twist brick (zero deps, launchable in any prover slot) → **w4-1** the
+   port (Fable heart) → w4-2 cbc-lite completion ∥ **w4-4 FLV** (fibrewise large-twist
+   vanishing — the new biggest Wave-4 risk, WORKSHEET-FIRST, gates on G-D2 (S)/(X) and
+   resurrects G-D2(i) as W6) → w4-3 rigid engine → w4-6+ datum campaign (own design
+   pass; gates on pic0Functor, NOT on deg-D4b/abelElement).
+   **deg-D4b: worksheet DONE and binding** (`informal/deg-d4b-worksheet.md`) — étale-
+   factorization idempotent route (no Nakayama), hypotheses shrink to smooth₁ +
+   separated, and NOTE: this mathlib snapshot HAS Scheme.Hom.ker (the D4 recon's
+   premise is superseded). Six sub-bricks B0–B5 (B2/B4 Fable hearts).
 4. (C2) campaign per `c2-effectivity-assembly.md`: E0 (Opus) then E1 (Fable, its own
    spec with the full ζ2·i treatment).
 5. Blueprint per brick (pending: cbc-1's scaffold), roadmap statuses at milestones,

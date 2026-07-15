@@ -78,6 +78,15 @@ point.)
   launched only after W1–W4 (its totality consumes (S), its well-definedness (X), its
   values the landed χ-ledger).
 
+## AMENDMENT 2026-07-15 — W6 added (T1 partially reversed)
+
+The Wave-4 datum design pass (`informal/w4-datum-design.md`) RESURRECTS the parked
+sub-claim (i): its fibrewise large-twist vanishing route needs the sheaf-level
+identification "`divisorSheaf K D` is an invertible sheaf of class `divisorClass K D`"
+(or the precise weaker comparison its worksheet will pin). Schedule it as **W6** after
+W5 — no longer optional; its spec-writer should read w4-datum-design §4 for the exact
+consumer shape before choosing the statement.
+
 ## What this worksheet deliberately does NOT decide
 
 Whether W3's prover is Opus-with-Fable-spec or Fable end-to-end — decide from W1/W2's
