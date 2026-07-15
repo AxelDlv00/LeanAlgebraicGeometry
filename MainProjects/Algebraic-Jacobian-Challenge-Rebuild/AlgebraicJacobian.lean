@@ -41,6 +41,7 @@ import AlgebraicJacobian.Picard.PresentationClassLaw
 import AlgebraicJacobian.Picard.PresentationExtraction
 import AlgebraicJacobian.Picard.PointPresentation
 import AlgebraicJacobian.Picard.DivisorClassMeromorphic
+import AlgebraicJacobian.Picard.DivisorClassCompat
 import AlgebraicJacobian.Algebra.EtaleCover
 import AlgebraicJacobian.Picard.PicEtAff
 import AlgebraicJacobian.Picard.PicEtAffMap

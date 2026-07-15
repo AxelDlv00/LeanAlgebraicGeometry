@@ -77,16 +77,22 @@ private lemma ord_ne_one_of_notMem_basicOpen {z : X} (hz : z ≠ genericPoint X)
   exact hnu (IsLocalRing.notMem_maximalIdeal.mp h)
 
 /-- **Existence of a point local equation.** For a closed point `x`, there is an open
-neighbourhood `V ∋ x` and a section `s` over `V` whose germ is a nonzerodivisor at every point
-of `V` (regularity) and a unit at every point of `V` other than `x` (a uniformizer of
-`𝒪_{X,x}` whose only zero on `V` is `x`). -/
+neighbourhood `V ∋ x` and a section `s` over `V` whose germ at the generic point is the
+chosen uniformizer `uniformizer K hx` (the tracked germ), whose germ is a nonzerodivisor
+at every point of `V` (regularity), and a unit at every point of `V` other than `x`
+(a uniformizer of `𝒪_{X,x}` whose only zero on `V` is `x`). The germ-at-`η` conjunct is
+what pins the divisor the point equations cut out; it is latent in the geometry (the
+section is spread out *from* the uniformizer) and here recorded in the specification. -/
 private lemma exists_pointLocalEquation (K : Type u) [Field K] {X : Scheme.{u}}
     [X.Over (Spec (CommRingCat.of K))]
     [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of K))] [IsIntegral X]
     [QuasiCompact (X ↘ Spec (CommRingCat.of K))] {x : X} (hx : x ≠ genericPoint X) :
-    ∃ (V : X.Opens), x ∈ V ∧ ∃ (s : Γ(X, V)), ∀ (y : X) (hy : y ∈ V),
-      (X.presheaf.germ V y hy).hom s ∈ nonZeroDivisors (X.presheaf.stalk y) ∧
-        (y ≠ x → IsUnit ((X.presheaf.germ V y hy).hom s)) := by
+    ∃ (V : X.Opens), x ∈ V ∧ ∃ (s : Γ(X, V)),
+      (∀ (hη : genericPoint X ∈ V),
+          (X.presheaf.germ V (genericPoint X) hη).hom s = uniformizer K hx) ∧
+      ∀ (y : X) (hy : y ∈ V),
+        (X.presheaf.germ V y hy).hom s ∈ nonZeroDivisors (X.presheaf.stalk y) ∧
+          (y ≠ x → IsUnit ((X.presheaf.germ V y hy).hom s)) := by
   set f := X ↘ Spec (CommRingCat.of K) with hf
   -- a uniformizer at `x`, as a nonzero rational function
   have ht0 : uniformizer K hx ≠ 0 := uniformizer_ne_zero K hx
@@ -121,7 +127,9 @@ private lemma exists_pointLocalEquation (K : Type u) [Field K] {X : Scheme.{u}}
   set V : X.Opens := ⟨(W₀ : Set X) \ bad, W₀.2.sdiff hbad_closed⟩ with hV
   have hVW₀ : V ≤ W₀ := Set.sdiff_subset
   have hxV : x ∈ V := ⟨hxW₀, fun h => h.2 rfl⟩
-  refine ⟨V, hxV, (X.presheaf.map (homOfLE hVW₀).op).hom s₀, fun y hy => ?_⟩
+  refine ⟨V, hxV, (X.presheaf.map (homOfLE hVW₀).op).hom s₀, fun hη => ?_, fun y hy => ?_⟩
+  · -- the germ at `η` is the tracked uniformizer
+    exact (X.presheaf.germ_res_apply (homOfLE hVW₀) (genericPoint X) hη s₀).trans hgη
   -- the germ of the restricted section at `y`
   have hgy : (X.presheaf.germ V y hy).hom ((X.presheaf.map (homOfLE hVW₀).op).hom s₀)
       = (X.presheaf.germ W₀ y (hVW₀ hy)).hom s₀ :=
@@ -156,122 +164,196 @@ private lemma exists_pointLocalEquation (K : Type u) [Field K] {X : Scheme.{u}}
         · exact hyx
       exact hy.2 hybad
 
-/-! ## The point divisor and the Picard class of a Weil divisor -/
+/-! ## The point divisor and the Picard class of a Weil divisor
+
+The point divisor `1 · x` is packaged from the *tracked* data of `exists_pointLocalEquation`
+through top-level named pieces (`pointOpen`, `pointSec`, `pointDivisorCover`,
+`pointDivisorEqn`), so that its defining equations — and in particular the germ at `η` of the
+equation at `x` — are publicly accessible (`germGeneric_pointDivisorEqn_self`). This is what
+lets the compatibility bridge read off the divisor `pointDivisor` cuts out. -/
+
+section PointDivisorConstruction
+
+variable (K : Type u) [Field K] {X : Scheme.{u}}
+  [X.Over (Spec (CommRingCat.of K))]
+  [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of K))] [IsIntegral X]
+  [QuasiCompact (X ↘ Spec (CommRingCat.of K))] {x : X} (hx : x ≠ genericPoint X)
+
+/-- The chosen open neighbourhood `V ∋ x` carrying the tracked point-uniformizer section
+(`exists_pointLocalEquation`). -/
+noncomputable def pointOpen : X.Opens := (exists_pointLocalEquation K hx).choose
+
+/-- The point `x` lies in the chosen neighbourhood. -/
+lemma mem_pointOpen : x ∈ pointOpen K hx := (exists_pointLocalEquation K hx).choose_spec.1
+
+/-- The chosen spread-out uniformizer section on `pointOpen K hx`. -/
+noncomputable def pointSec : Γ(X, pointOpen K hx) :=
+  ((exists_pointLocalEquation K hx).choose_spec).2.choose
+
+/-- **The tracked germ.** The germ at the generic point of the chosen section is the chosen
+uniformizer `uniformizer K hx`. -/
+lemma germGeneric_pointSec (hη : genericPoint X ∈ pointOpen K hx) :
+    (X.presheaf.germ (pointOpen K hx) (genericPoint X) hη).hom (pointSec K hx)
+      = uniformizer K hx :=
+  ((exists_pointLocalEquation K hx).choose_spec).2.choose_spec.1 hη
+
+/-- The chosen section is regular: its germs are nonzerodivisors. -/
+lemma pointSec_regular (y : X) (hy : y ∈ pointOpen K hx) :
+    (X.presheaf.germ (pointOpen K hx) y hy).hom (pointSec K hx)
+      ∈ nonZeroDivisors (X.presheaf.stalk y) :=
+  (((exists_pointLocalEquation K hx).choose_spec).2.choose_spec.2 y hy).1
+
+/-- Away from `x`, the chosen section is a unit. -/
+lemma isUnit_germ_pointSec (y : X) (hy : y ∈ pointOpen K hx) (hyx : y ≠ x) :
+    IsUnit ((X.presheaf.germ (pointOpen K hx) y hy).hom (pointSec K hx)) :=
+  (((exists_pointLocalEquation K hx).choose_spec).2.choose_spec.2 y hy).2 hyx
+
+/-- The complement of the closed point `x`, as an open of `X`. -/
+def pointDivisorCompl : X.Opens :=
+  ⟨({x} : Set X)ᶜ,
+    (isClosed_singleton_of_ne_genericPoint (X ↘ Spec (CommRingCat.of K)) hx).isOpen_compl⟩
+
+open Classical in
+/-- The pointed cover `{V, {x}ᶜ}` of the point divisor at `x`: the piece at `x` is the
+neighbourhood of the chosen uniformizer, every other piece is the complement of `x`. -/
+noncomputable def pointDivisorCover : X.PointedCover where
+  opens y := if y = x then pointOpen K hx else pointDivisorCompl K hx
+  mem_opens y := by
+    by_cases h : y = x
+    · rw [if_pos h]; subst h; exact mem_pointOpen K hx
+    · rw [if_neg h]; exact h
+
+@[simp]
+lemma pointDivisorCover_opens_self :
+    (pointDivisorCover K hx).opens x = pointOpen K hx :=
+  if_pos rfl
+
+lemma pointDivisorCover_opens_of_ne {z : X} (hz : z ≠ x) :
+    (pointDivisorCover K hx).opens z = pointDivisorCompl K hx :=
+  if_neg hz
+
+open Classical in
+/-- The equations of the point divisor at `x`: the chosen uniformizer section on the piece at
+`x`, the constant `1` on every other piece. -/
+noncomputable def pointDivisorEqn (z : X) : Γ(X, (pointDivisorCover K hx).opens z) :=
+  if h : z = x then
+    (X.presheaf.map
+        (homOfLE (le_of_eq (by rw [h, pointDivisorCover_opens_self]))).op).hom (pointSec K hx)
+  else 1
+
+lemma pointDivisorEqn_self :
+    pointDivisorEqn K hx x
+      = (X.presheaf.map
+          (homOfLE (pointDivisorCover_opens_self K hx).le).op).hom (pointSec K hx) :=
+  dif_pos rfl
+
+lemma pointDivisorEqn_of_ne {z : X} (hz : z ≠ x) : pointDivisorEqn K hx z = 1 :=
+  dif_neg hz
+
+/-- **The tracked germ of the point equation** (the exported consequence of the strengthened
+`exists_pointLocalEquation`): the germ at the generic point of the equation at `x` is the
+chosen uniformizer. This pins the divisor `pointDivisor` cuts out. -/
+theorem germGeneric_pointDivisorEqn_self
+    (hη : genericPoint X ∈ (pointDivisorCover K hx).opens x) :
+    (X.presheaf.germ ((pointDivisorCover K hx).opens x) (genericPoint X) hη).hom
+        (pointDivisorEqn K hx x)
+      = uniformizer K hx := by
+  rw [pointDivisorEqn_self, X.presheaf.germ_res_apply]
+  exact germGeneric_pointSec K hx _
+
+omit [X.Over (Spec (CommRingCat.of K))]
+  [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of K))] [IsIntegral X] hx in
+/-- Restriction of sections composes (a local copy of the `DivisorClass` helper). -/
+private lemma pointDivisor_map_map_sec {W V U : X.Opens} (h₁ : W ≤ V) (h₂ : V ≤ U)
+    (s : Γ(X, U)) :
+    (X.presheaf.map (homOfLE h₁).op).hom ((X.presheaf.map (homOfLE h₂).op).hom s)
+      = (X.presheaf.map (homOfLE (h₁.trans h₂)).op).hom s := by
+  rw [← CommRingCat.comp_apply, ← Functor.map_comp, ← op_comp, homOfLE_comp]
 
 /-- **The point divisor `1 · x`.** The local equations of the effective divisor `1 · x` at a
-closed point `x`: on the neighbourhood `V` of `exists_pointLocalEquation` the section is the
-uniformizer, and on the complement `{x}ᶜ` it is `1`. The overlap ratio on `V \ {x}` is the
-uniformizer, a unit there. The uniformizer is chosen inside the construction; its Picard class
-is independent of the choice up to `LocalEquations.picClass_rescale`, but this brick fixes a
-choice. -/
-noncomputable def pointDivisor (K : Type u) [Field K] {X : Scheme.{u}}
+closed point `x`: on the neighbourhood `pointOpen K hx` the equation is the tracked
+uniformizer section, and on the complement `{x}ᶜ` it is `1`. The overlap ratio on `V \ {x}` is
+the uniformizer, a unit there. Unlike an existential, all defining data is publicly accessible
+(`pointDivisorEqn_self`, `pointDivisorEqn_of_ne`, `germGeneric_pointDivisorEqn_self`). -/
+noncomputable def pointDivisor : X.LocalEquations where
+  cover := pointDivisorCover K hx
+  eqn := pointDivisorEqn K hx
+  regular := by
+    intro x' y hy
+    by_cases h : x' = x
+    · subst h
+      rw [pointDivisorEqn_self, X.presheaf.germ_res_apply]
+      exact pointSec_regular K hx y _
+    · rw [pointDivisorEqn_of_ne K hx h, map_one]
+      exact one_mem _
+  ratio_isUnit := by
+    intro x' y'
+    by_cases h : x' = x <;> by_cases h' : y' = x
+    · -- both pieces at `x`: the ratio is `1`
+      subst h; subst h'
+      refine ⟨1, ?_⟩
+      rw [Units.val_one, one_mul]
+    · -- piece at `x` against a piece away from `x`: the ratio is the unit section
+      subst h
+      have hle : (pointDivisorCover K hx).opens x' ⊓ (pointDivisorCover K hx).opens y'
+          ≤ pointOpen K hx :=
+        le_trans inf_le_left (pointDivisorCover_opens_self K hx).le
+      have hne : ∀ z ∈ (pointDivisorCover K hx).opens x' ⊓ (pointDivisorCover K hx).opens y',
+          z ≠ x' := by
+        intro z hz
+        have h2 : z ∈ (pointDivisorCover K hx).opens y' := hz.2
+        rw [pointDivisorCover_opens_of_ne K hx h'] at h2
+        exact h2
+      have hunit : IsUnit ((X.presheaf.map (homOfLE hle).op).hom (pointSec K hx)) := by
+        apply X.toRingedSpace.isUnit_of_isUnit_germ
+        intro z hz
+        rw [X.presheaf.germ_res_apply]
+        exact isUnit_germ_pointSec K hx z (hle hz) (hne z hz)
+      refine ⟨hunit.unit, ?_⟩
+      rw [pointDivisorEqn_of_ne K hx h', map_one, mul_one, IsUnit.unit_spec,
+        pointDivisorEqn_self, pointDivisor_map_map_sec]
+    · -- piece away from `x` against the piece at `x`: the inverse unit
+      subst h'
+      have hle : (pointDivisorCover K hx).opens x' ⊓ (pointDivisorCover K hx).opens y'
+          ≤ pointOpen K hx :=
+        le_trans inf_le_right (pointDivisorCover_opens_self K hx).le
+      have hne : ∀ z ∈ (pointDivisorCover K hx).opens x' ⊓ (pointDivisorCover K hx).opens y',
+          z ≠ y' := by
+        intro z hz
+        have h1 : z ∈ (pointDivisorCover K hx).opens x' := hz.1
+        rw [pointDivisorCover_opens_of_ne K hx h] at h1
+        exact h1
+      have hunit : IsUnit ((X.presheaf.map (homOfLE hle).op).hom (pointSec K hx)) := by
+        apply X.toRingedSpace.isUnit_of_isUnit_germ
+        intro z hz
+        rw [X.presheaf.germ_res_apply]
+        exact isUnit_germ_pointSec K hx z (hle hz) (hne z hz)
+      refine ⟨hunit.unit⁻¹, ?_⟩
+      rw [pointDivisorEqn_of_ne K hx h, map_one, pointDivisorEqn_self,
+        pointDivisor_map_map_sec]
+      exact (Units.inv_mul_of_eq hunit.unit_spec).symm
+    · -- both pieces away from `x`: the ratio is `1`
+      refine ⟨1, ?_⟩
+      rw [pointDivisorEqn_of_ne K hx h, pointDivisorEqn_of_ne K hx h', map_one, map_one,
+        Units.val_one, mul_one]
+
+@[simp]
+lemma pointDivisor_cover (K : Type u) [Field K] {X : Scheme.{u}}
     [X.Over (Spec (CommRingCat.of K))]
     [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of K))] [IsIntegral X]
     [QuasiCompact (X ↘ Spec (CommRingCat.of K))] {x : X} (hx : x ≠ genericPoint X) :
-    X.LocalEquations := by
-  classical
-  let V : X.Opens := (exists_pointLocalEquation K hx).choose
-  have hVspec : x ∈ V ∧ ∃ s : Γ(X, V), ∀ (y : X) (hy : y ∈ V),
-      (X.presheaf.germ V y hy).hom s ∈ nonZeroDivisors (X.presheaf.stalk y) ∧
-        (y ≠ x → IsUnit ((X.presheaf.germ V y hy).hom s)) :=
-    (exists_pointLocalEquation K hx).choose_spec
-  have hxV : x ∈ V := hVspec.1
-  let s : Γ(X, V) := hVspec.2.choose
-  have hs : ∀ (y : X) (hy : y ∈ V),
-      (X.presheaf.germ V y hy).hom s ∈ nonZeroDivisors (X.presheaf.stalk y) ∧
-        (y ≠ x → IsUnit ((X.presheaf.germ V y hy).hom s)) := hVspec.2.choose_spec
-  set U : X.Opens :=
-    ⟨({x} : Set X)ᶜ, (isClosed_singleton_of_ne_genericPoint
-      (X ↘ Spec (CommRingCat.of K)) hx).isOpen_compl⟩ with hU
-  set opN : X → X.Opens := fun y => if y = x then V else U with hopN
-  have hopN_self : opN x = V := if_pos rfl
-  have hopN_ne : ∀ {y : X}, y ≠ x → opN y = U := fun {y} h => if_neg h
-  have hmem : ∀ y, y ∈ opN y := by
-    intro y
-    by_cases h : y = x
-    · subst h; rw [hopN_self]; exact hxV
-    · rw [hopN_ne h]; exact h
-  set eqN : (∀ y, Γ(X, opN y)) := fun y =>
-    if h : y = x then
-      (X.presheaf.map (homOfLE (le_of_eq ((congrArg opN h).trans hopN_self))).op).hom s
-    else (1 : Γ(X, opN y)) with heqN
-  -- `eqN x` is a restriction of the section `s`
-  have heqN_x : eqN x = (X.presheaf.map (homOfLE (le_of_eq hopN_self)).op).hom s := by
-    rw [heqN]; exact dif_pos rfl
-  -- restriction behaviour of `eqN` at `x` and away from `x`
-  have res_eqN_self : ∀ {W : X.Opens} (hW : W ≤ opN x) (hWV : W ≤ V),
-      (X.presheaf.map (homOfLE hW).op).hom (eqN x)
-        = (X.presheaf.map (homOfLE hWV).op).hom s := by
-    intro W hW hWV
-    rw [heqN_x, ← CommRingCat.comp_apply, ← Functor.map_comp, ← op_comp, homOfLE_comp]
-  have res_eqN_ne : ∀ {y : X} (hy : y ≠ x) {W : X.Opens} (hW : W ≤ opN y),
-      (X.presheaf.map (homOfLE hW).op).hom (eqN y) = 1 := by
-    intro y hy W hW
-    have : eqN y = (1 : Γ(X, opN y)) := by rw [heqN]; exact dif_neg hy
-    rw [this, map_one]
-  -- germ behaviour of `eqN` at `x`
-  have germ_eqN_self : ∀ (z : X) (hz : z ∈ opN x) (hzV : z ∈ V),
-      (X.presheaf.germ (opN x) z hz).hom (eqN x) = (X.presheaf.germ V z hzV).hom s := by
-    intro z hz hzV
-    rw [heqN_x]
-    exact X.presheaf.germ_res_apply (homOfLE (le_of_eq hopN_self)) z hz s
-  -- a restriction of `s` to a subset of `V` avoiding `x` is a unit
-  have unit_res_s : ∀ (W : X.Opens) (hWV : W ≤ V), (∀ z ∈ W, z ≠ x) →
-      IsUnit ((X.presheaf.map (homOfLE hWV).op).hom s) := by
-    intro W hWV hWx
-    apply X.toRingedSpace.isUnit_of_isUnit_germ W
-    intro z hz
-    rw [X.presheaf.germ_res_apply (homOfLE hWV) z hz s]
-    exact (hs z (hWV hz)).2 (hWx z hz)
-  -- a point of the overlap `opN x ⊓ opN y'` (with `y' ≠ x`) is not `x`
-  have overlap_ne : ∀ {a b : X} (hb : b ≠ x) (z : X),
-      z ∈ opN a ⊓ opN b → z ≠ x := by
-    intro a b hb z hz
-    have hzb : z ∈ opN b := hz.2
-    rw [hopN_ne hb] at hzb
-    exact hzb
-  have overlap_ne' : ∀ {a b : X} (ha : a ≠ x) (z : X),
-      z ∈ opN a ⊓ opN b → z ≠ x := by
-    intro a b ha z hz
-    have hza : z ∈ opN a := hz.1
-    rw [hopN_ne ha] at hza
-    exact hza
-  refine { cover := ⟨opN, hmem⟩, eqn := eqN, regular := ?_, ratio_isUnit := ?_ }
-  · -- regularity
-    intro x' y' hy'
-    by_cases hx' : x' = x
-    · subst x'
-      have hy'V : y' ∈ V := hopN_self ▸ hy'
-      rw [germ_eqN_self y' hy' hy'V]
-      exact (hs y' hy'V).1
-    · have hval : eqN x' = (1 : Γ(X, opN x')) := by rw [heqN]; exact dif_neg hx'
-      rw [hval, map_one]
-      exact one_mem _
-  · -- ratio_isUnit
-    intro x' y'
-    by_cases hx' : x' = x <;> by_cases hy' : y' = x
-    · -- both at `x`
-      subst x'; subst y'
-      refine ⟨1, ?_⟩
-      rw [Units.val_one, one_mul,
-        res_eqN_self inf_le_left (le_trans inf_le_left (le_of_eq hopN_self))]
-    · -- `x' = x`, `y' ≠ x`
-      subst x'
-      have hWV : opN x ⊓ opN y' ≤ V := le_trans inf_le_left (le_of_eq hopN_self)
-      have hunit := unit_res_s _ hWV (overlap_ne hy')
-      refine ⟨hunit.unit, ?_⟩
-      rw [res_eqN_ne hy' inf_le_right, mul_one, res_eqN_self inf_le_left hWV,
-        hunit.unit_spec]
-    · -- `x' ≠ x`, `y' = x`
-      subst y'
-      have hWV : opN x' ⊓ opN x ≤ V := le_trans inf_le_right (le_of_eq hopN_self)
-      have hunit := unit_res_s _ hWV (overlap_ne' hx')
-      refine ⟨hunit.unit⁻¹, ?_⟩
-      rw [res_eqN_ne hx' inf_le_left, res_eqN_self inf_le_right hWV]
-      exact (Units.inv_mul_of_eq hunit.unit_spec).symm
-    · -- neither at `x`
-      refine ⟨1, ?_⟩
-      rw [res_eqN_ne hx' inf_le_left, res_eqN_ne hy' inf_le_right, Units.val_one, mul_one]
+    (pointDivisor K hx).cover = pointDivisorCover K hx :=
+  rfl
+
+@[simp]
+lemma pointDivisor_eqn (K : Type u) [Field K] {X : Scheme.{u}}
+    [X.Over (Spec (CommRingCat.of K))]
+    [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of K))] [IsIntegral X]
+    [QuasiCompact (X ↘ Spec (CommRingCat.of K))] {x : X} (hx : x ≠ genericPoint X) (z : X) :
+    (pointDivisor K hx).eqn z = pointDivisorEqn K hx z :=
+  rfl
+
+end PointDivisorConstruction
 
 /-- **The Picard class of a Weil divisor.** The finitely supported product of the point-divisor
 classes to their multiplicities (an integer power in the commutative group `X.CechPic`). This
