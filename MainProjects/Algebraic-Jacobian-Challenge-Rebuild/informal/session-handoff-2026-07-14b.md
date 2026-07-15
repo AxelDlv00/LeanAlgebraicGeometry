@@ -13,7 +13,9 @@ a time regardless — the build lock is about lake/LSP races, not budget.
 (3) ROADMAP ACTUALIZATION, user instruction 2026-07-15: keep the `horizon roadmap`
 tree current at EVERY milestone — statuses AND subitems (`add --parent`) when a
 campaign is designed or decomposed; it is the user's progress view. The degree lane,
-(C2), and Wave 4 now carry subitems mirroring their worksheets — maintain them.)
+(C2), and Wave 4 now carry subitems mirroring their worksheets — maintain them.
+Titles/summaries render LaTeX + Markdown: PREFER MATHEMATICAL FORMULATION
+(e.g. $\chi(\mathcal{O}(D)) = 1 - g + \deg D$), Lean names/commits as detail.)
 
 ## What landed this session (all committed; kernel-green; independently audited)
 
