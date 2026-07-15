@@ -93,11 +93,14 @@ AMBER → trigger `AJCR.cech-port`; RED → plan-B (Weil Sym^g) or plan-C (old-t
    BLUEPRINT DEBT (queue for one agent): the cbc-1 scaffold
    (`Cohomology/RelativeTwoCover.lean`) and deg-D4a (`LocalEquationsPullback.lean`)
    are landed but not yet blueprinted.
-2. **G-D2 meromorphic-bridge campaign** — the WORKSHEET IS WRITTEN and binding:
-   `informal/deg-d2-meromorphic-worksheet.md` (descoped to surjectivity + extraction;
-   the D1 decision — all cochain comparisons inside K(X)ˣ — bounds the campaign; sub-
-   bricks W1–W5 with W3 the staged heart). Launch W1 (Opus) from a spec derived from
-   it; G-D3 = W5, last.
+2. **G-D2 meromorphic bridge: W1–W4 LANDED (fbd77da540, Fable) + deg-D1 REPAIR LANDED
+   (5d20fc70c5) + blueprinted (594dd02262).** Pic ≅ Div/principal at the cocycle level;
+   the anchored map is `CurveDivisor.picClass` (carries (S)/(X)/kernel/additivity);
+   `divisorClass_eq_picClass` bridges the legacy name. NOTE the audit finding pattern:
+   deg-D1 had sealed its point equation behind a too-weak private postcondition —
+   when a construction's defining property is discharged via `Exists.choose`, the
+   postcondition MUST record everything downstream proofs need. W5 (classDeg +
+   E-i..E-iii, Opus) was IN FLIGHT at handoff; then W6 (consumed by Wave-4 FLV).
 3. **Wave 4: the datum design pass is DONE** (`informal/w4-datum-design.md`, committed)
    — decision: the twist normalizes (fiber twist Θ_n, two-cover-trivial by
    construction) but the universal class does not; **AJCR.cech-port is FIRED** (roadmap
