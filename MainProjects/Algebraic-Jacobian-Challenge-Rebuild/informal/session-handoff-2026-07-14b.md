@@ -3,8 +3,13 @@
 For the next agent continuing the `rebuild` task. Supersedes
 `session-handoff-2026-07-14.md` (whose operating model and kernel/elaboration
 discipline remain BINDING and are not repeated here — re-read its two protocol
-sections; only one amendment: `LocallyOfFiniteType (X ↘ …)` is now a global instance
-derived from `SmoothOfRelativeDimension 1`, so never add it as a hypothesis).
+sections; two amendments: (1) `LocallyOfFiniteType (X ↘ …)` is now a global instance
+derived from `SmoothOfRelativeDimension 1`, so never add it as a hypothesis;
+(2) DELEGATION UPDATE, user instruction 2026-07-15: Fable-5 usage is running low
+against quota, so use Fable-5 SUBAGENTS liberally for the difficult tasks where Opus
+is not enough — campaign hearts, risky design worksheets, keystone provers — not just
+one or two per campaign leg. Opus still carries volume/recon/blueprint. One PROVER at
+a time regardless — the build lock is about lake/LSP races, not budget.)
 
 ## What landed this session (all committed; kernel-green; independently audited)
 
