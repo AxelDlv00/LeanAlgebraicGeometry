@@ -145,6 +145,7 @@ import AlgebraicJacobian.RiemannRoch.FLVFiberToolkit
 import AlgebraicJacobian.RiemannRoch.FLVLattice
 import AlgebraicJacobian.RiemannRoch.FLVQcoh
 import AlgebraicJacobian.RiemannRoch.FLVVanishing
+import AlgebraicJacobian.RiemannRoch.FLVClass
 import AlgebraicJacobian.Curve.BaseChangeInstances
 import AlgebraicJacobian.Algebra.DiagonalIdeal
 import AlgebraicJacobian.Algebra.DiagonalRegular
