@@ -188,6 +188,8 @@ import AlgebraicJacobian.Cohomology.RigidEngine4Twist
 import AlgebraicJacobian.Cohomology.RigidEngine4Relative
 import AlgebraicJacobian.Cohomology.RigidEngine4Engine
 import AlgebraicJacobian.Cohomology.RigidEngine4BaseChange
+import AlgebraicJacobian.Picard.DegreeZero
+import AlgebraicJacobian.Picard.Pic0Functor
 
 /-!
 # AlgebraicJacobian — library root
