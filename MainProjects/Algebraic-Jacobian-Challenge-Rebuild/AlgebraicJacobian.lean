@@ -265,6 +265,7 @@ import AlgebraicJacobian.Algebra.ABRegularCM
 import AlgebraicJacobian.Picard.FibrewiseRegular
 import AlgebraicJacobian.Picard.SectionsToDivisors
 import AlgebraicJacobian.Picard.SectionsToDivisorsClass
+import AlgebraicJacobian.Picard.LocalGenerators
 import AlgebraicJacobian.Tangent.TruncExpUnits
 import AlgebraicJacobian.Tangent.TruncExpCech
 import AlgebraicJacobian.Tangent.DualNumberBaseChange
