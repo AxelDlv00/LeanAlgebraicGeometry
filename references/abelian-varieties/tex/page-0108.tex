@@ -1,0 +1,88 @@
+% source: J. S. Milne, "Abelian Varieties" (course notes), v2.00, 2008, www.jmilne.org
+% pdf_page: 0108
+% doc_page: 102 (Chapter III, Section 5 — proof of Lemma 5.2, Proposition 5.3, Lemma 5.4)
+% retrieved: 2026-07-16
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi via pdftoppm)
+
+% [running head: CHAPTER III. JACOBIAN VARIETIES, page 102]
+
+\paragraph{Proof.}
+(a) If $Q$ is not in the support of $D$, then
+\[
+  H^1(C, \mathcal{L}(D + Q))^{\vee} = \Gamma(C, \Omega^1(-D - Q))
+\]
+can be identified with the subspace of $\Gamma(C, \Omega^1(-D))$ of
+differentials with a zero at $Q$. Clearly therefore we can take $U$ to be the
+complement of the zero set of a basis of $H^1(C, \mathcal{L}(D))$ together
+with a subset of the support of $D$.
+
+(b) Let $D_0$ be the divisor zero on $C$. Then $h^1(D_0) = g$, and on
+applying (a) repeatedly, we find that there is an open subset $U$ of $C^r$
+such that $h^1(\sum P_i) = g - r$ for all $(P_1, \dots, P_r)$ in $U$. The
+Riemann-Roch theorem now shows that
+$h^0(\sum P_i) = r + (1 - g) + (g - r) = 1$ for all $(P_1, \dots, P_r)$ in
+$U$. \hfill $\square$
+
+In proving (5.1), we can assume that $k$ is algebraically closed. If $U'$ is
+the image in $C^{(r)}$ of the set $U$ in (5.2b), then
+$f^{(r)} \colon C^{(r)}(k) \to J(k)$ is injective on $U'(k)$, and so
+$f^{(r)} \colon C^{(r)} \to W^r$ must either be birational or else purely
+inseparable of degree $> 1$. The second possibility is excluded by part (b)
+of the theorem, but before we can prove that we need another proposition.
+
+\paragraph{Proposition 5.3.}
+\textit{(a) For all $r \ge 1$, there are canonical isomorphisms}
+\[
+  \Gamma(C, \Omega^1) \xrightarrow{\;\simeq\;} \Gamma(C^r, \Omega^1)^{S_r}
+  \xrightarrow{\;\simeq\;} \Gamma(C^{(r)}, \Omega^1).
+\]
+\textit{Let $\omega \in \Gamma(C, \Omega^1)$ correspond to
+$\omega' \in \Gamma(C^{(r)}, \Omega^1)$; then for any effective divisor $D$
+of degree $r$ on $C$, $(\omega) \ge D$ if and only if $\omega'$ has a zero at
+$D$.}
+
+\textit{(b) For all $r \ge 1$, the map
+$f^{(r)*} \colon \Gamma(J, \Omega^1) \to \Gamma(C^{(r)}, \Omega^1)$ is an
+isomorphism.}
+
+A global 1-form on a product of projective varieties is a sum of global
+1-forms on the factors. Therefore
+$\Gamma(C^r, \Omega^1) = \bigoplus_i p_i^* \Gamma(C, \Omega^1)$, where the
+$p_i$ are the projection maps onto the factors, and so it is clear that the
+map $\omega \mapsto \sum p_i^* \omega$ identifies $\Gamma(C, \Omega^1)$ with
+$\Gamma(C^r, \Omega^1)^{S_r}$. Because $\pi \colon C^r \to C^{(r)}$ is
+separable,
+$\pi^* \colon \Gamma(C^{(r)}, \Omega^1) \to \Gamma(C^r, \Omega^1)$ is
+injective, and its image is obviously fixed by the action of $S_r$. The
+composite map
+\[
+  \Gamma(J, \Omega^1) \to \Gamma(C^{(r)}, \Omega^1) \hookrightarrow
+  \Gamma(C^r, \Omega^1)^{S_r} \simeq \Gamma(C, \Omega^1)
+\]
+sends $\omega$ to the element $\omega'$ of $\Gamma(C, \Omega^1)$ such that
+$f^{r*} \omega = \sum p_i^* \omega'$. As $f^r = \sum f \circ p_i$, clearly
+$\omega' = f^* \omega$, and so the composite map is $f^*$ which we know to be
+an isomorphism (2.2). This proves that both maps in the above sequence are
+isomorphisms. It also completes the proof of the proposition except for the
+second part of (a), and for this we need a combinatorial lemma.
+
+\paragraph{Lemma 5.4.}
+\textit{Let $\sigma_1, \dots, \sigma_r$ be the elementary symmetric
+polynomials in $X_1, \dots, X_r$, and let $\tau_j = \sum X_i^j \, dX_i$.
+Then}
+\[
+  \sigma_m \tau_0 - \sigma_{m-1} \tau_1 + \dots + (-1)^m \tau_m
+  = d\sigma_{m+1}, \text{ all } m \le r - 1.
+\]
+
+\paragraph{Proof.}
+Let $\sigma_m(i)$ be the $m$th elementary symmetric polynomial in the
+variables
+\[
+  X_1, \dots, X_{i-1}, X_{i+1}, \dots, X_r.
+\]
+Then
+\[
+  \sigma_{m-n} = \sigma_{m-n}(i) + X_i \sigma_{m-n-1}(i),
+\]
+% [proof continues on the next page]

@@ -1,0 +1,85 @@
+% source: J. S. Milne, "Abelian Varieties" (course notes), v2.00, 2008, www.jmilne.org
+% pdf_page: 0110
+% doc_page: 104 (Chapter III, Section 6, "The Jacobian variety as Albanese variety; autoduality" — Proposition 6.1, Corollaries 6.2, 6.3)
+% retrieved: 2026-07-16
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi via pdftoppm)
+
+% [running head: CHAPTER III. JACOBIAN VARIETIES, page 104]
+
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\Gal}{Gal}
+
+\section*{6 \quad The Jacobian variety as Albanese variety; autoduality}
+
+Throughout this section $C$ will be a complete nonsingular curve of genus
+$g > 0$ over a field $k$, and $J$ will be its Jacobian variety.
+
+\paragraph{Proposition 6.1.}
+\textit{Let $P$ be a $k$-rational point on $C$. The map
+$f^P \colon C \to J$ has the following universal property: for any map
+$\varphi \colon C \to A$ from $C$ into an abelian variety sending $P$ to $0$,
+there is a unique homomorphism $\psi \colon J \to A$ such that
+$\varphi = \psi \circ f^P$.}
+
+\paragraph{Proof.}
+Consider the map
+\[
+  (P_1, \dots, P_g) \mapsto \sum_i \psi(P_i) \colon C^g \to A.
+  % [sic: printed "\psi(P_i)"; presumably "\varphi(P_i)" is intended, since \psi is being constructed]
+\]
+Clearly this is symmetric, and so it factors through $C^{(g)}$. It therefore
+defines a rational map $\psi \colon J \to A$, which (I 3.2) shows to be a
+regular map. It is clear from the construction that $\psi \circ f^P = \varphi$
+(note that $f^P$ is the composite of
+$Q \mapsto Q + (g-1)P \colon C \to C^{(g)}$ with
+$f^{(g)} \colon C^{(g)} \to J$). In particular, $\psi$ maps $0$ to $0$, and
+(I 1.2) shows that it is therefore a homomorphism. If $\psi'$ is a second
+homomorphism such that $\psi' \circ f^P = \varphi$, then $\psi$ and $\psi'$
+agree on $f^P(C) + \dots + f^P(C)$ ($g$ copies), which is the whole of $J$.
+\hfill $\square$
+
+\paragraph{Corollary 6.2.}
+\textit{Let $\mathcal{N}$ be a divisorial correspondence between $(C, P)$ and
+$J$ such that $(1 \times f^P)^* \mathcal{N} \approx \mathcal{L}^P$; then
+$\mathcal{N} \approx \mathcal{M}^P$ (notations as in \S 2 and (1.7)).}
+
+\paragraph{Proof.}
+Because of (I 5.13), we can assume $k$ to be algebraically closed. According
+to (1.7) there is a unique map $\varphi \colon J \to J$ such that
+$\mathcal{N} \approx (1 \times \varphi)^* \mathcal{M}^P$. On points $\varphi$
+is the map sending $a \in J(k)$ to the unique $b$ such that
+$\mathcal{M}^P | C \times \{b\} \approx \mathcal{N} | C \times \{a\}$. By
+assumption,
+\[
+  \mathcal{N} | C \times \{f^P Q\}
+  \approx \mathcal{L}^P | C \times \{Q\}
+  \approx \mathcal{M}^P | C \times \{f^P Q\},
+\]
+and so $(\varphi \circ f^P)(Q) = f^P(Q)$ for all $Q$. Now (6.1) shows that
+$f$ is the identity map. % [sic: printed "$f$"; presumably "\varphi" is intended]
+\hfill $\square$
+
+\paragraph{Corollary 6.3.}
+\textit{Let $C_1$ and $C_2$ be curves over $k$ with $k$-rational points $P_1$
+and $P_2$, and let $J_1$ and $J_2$ be their Jacobians. There is a one-to-one
+correspondence between $\Hom_k(J_1, J_2)$ and the set of isomorphism classes
+of divisorial correspondences between $(C_1, P_1)$ and $(C_2, P_2)$.}
+
+\paragraph{Proof.}
+A divisorial correspondence between $(C_2, P_2)$ and $(C_1, P_1)$ gives rise
+to a morphism $(C_1, P_1) \to J_2$ (by 1.7), and this morphism gives rise to
+homomorphism $J_1 \to J_2$ (by 6.1). % [sic: printed "gives rise to homomorphism", missing "a"]
+Conversely, a homomorphism $\psi \colon J_1 \to J_2$ defines a divisorial
+correspondence $(1 \times (f^{P_1} \circ \psi))^* \mathcal{M}^{P_2}$ between
+$(C_2, P_2)$ and $(C_1, P_1)$.
+\hfill $\square$
+
+In the case that $C$ has a point $P$ rational over $k$, define
+$F \colon C \times C \to J$ to be the map
+$(P_1, P_2) \mapsto f^P(P_1) - f^P(P_2)$. One checks immediately that this is
+independent of the choice of $P$. Thus, if $P \in C(k')$ for some Galois
+extension $k'$ of $k$, and $F \colon C_{k'} \times C_{k'} \to J_{k'}$ is the
+corresponding map, then $\sigma F = F$ for all
+$\sigma \in \Gal(k'/k)$; therefore $F$ is defined over $k$ whether or not $C$
+has a $k$-rational point. Note that it is zero on the diagonal $\Delta$ of
+$C \times C$.

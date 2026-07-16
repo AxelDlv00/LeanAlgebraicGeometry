@@ -1,0 +1,87 @@
+% source: J. S. Milne, "Abelian Varieties" (course notes), v2.00, 2008, www.jmilne.org
+% pdf_page: 0109
+% doc_page: 103 (Chapter III, Section 5 — end of proofs of Lemma 5.4, Proposition 5.3 and Theorem 5.1; Corollary 5.5, Remark 5.6)
+% retrieved: 2026-07-16
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi via pdftoppm)
+
+% [running head: 5. CANONICAL MAPS, page 103]
+
+\DeclareMathOperator{\Ima}{Im}    % printed as "Im"
+\DeclareMathOperator{\Ker}{Ker}   % printed as "Ker"
+\DeclareMathOperator{\Div}{Div}   % Div^D_C, the divisor functor
+
+% [continuation of the proof of Lemma 5.4 from the previous page]
+
+and on multiplying this by $(-1)^n X_i^n$ and summing over $n$ (so that the
+successive terms cancel out) we obtain the identity
+\[
+  \sigma_m - \sigma_{m-1} X_i + \dots + (-1)^m X_i^m = \sigma_m(i).
+\]
+On multiplying this with $dX_i$ and summing, we get the required identity.
+\hfill $\square$
+
+We now complete the proof of (5.3). First let $D = rQ$. Then
+$\hat{\mathcal{O}}_Q = k[[X]]$ and
+$\hat{\mathcal{O}}_D = k[[\sigma_1, \dots, \sigma_r]]$ (see the proof of
+(3.2); by $\mathcal{O}_D$ we mean the local ring at the point $D$ on
+$C^{(r)}$). If $\omega = (a_0 + a_1 X + a_2 X^2 + \cdots) dX$, $a_i \in k$,
+when regarded as an element of $\Omega^1_{\hat{\mathcal{O}}_Q / k}$, then
+$\omega' = a_0 \tau_0 + a_1 \tau_1 + \cdots$. We know that
+$\{d\sigma_1, \dots, d\sigma_r\}$ is a basis for
+$\Omega^1_{\hat{\mathcal{O}}_D / k}$ as an $\hat{\mathcal{O}}_D$-module, but
+the lemma shows that $\tau_0, \dots, \tau_{r-1}$ is also a basis. Now
+$(\omega) \ge D$ and $\omega'(D) = 0$ are both obviously equivalent to
+$a_0 = a_1 = \dots = a_{r-1} = 0$. The proof for other divisors is similar.
+
+We finally prove the exactness of the sequence in (5.1). The injectivity of
+$(di)_D$ follows from the fact that $i \colon F \hookrightarrow C^{(r)}$ is a
+closed immersion. Moreover the sequence is a complex because $f \circ i$ is
+the constant map $x \mapsto a$. It remains to show that
+\[
+  \dim \Ima(di)_D = \dim \Ker(df^{(r)})_D.
+\]
+
+Identify $T_a(J)^{\vee}$ with $\Gamma(C, \Omega^1)$ using the isomorphisms
+arising from (2.1). Then (5.3) shows that $\omega$ is zero on the image of
+$T_D(C^{(r)})$ if and only if $(\omega) \ge D$, that is,
+$\omega \in \Gamma(C, \Omega^1(-D))$. Therefore the image of $(df^{(r)})_D$
+has dimension $g - h^0(\Omega^1(-D)) = g - h^1(D)$, and so its kernel has
+dimension $r - g + h^1(D)$. On the other hand, the image of $(di)_D$ has
+dimension $|D|$. % [sic: printed "dimension |D|", meaning the dimension of the linear system |D|]
+The Riemann-Roch theorem says precisely that these two numbers are equal, and
+so completes the proof.
+
+\paragraph{Corollary 5.5.}
+\textit{For all $r \le g$, $f^r \colon C^r \to W^r$ has degree $r!$.}
+
+\paragraph{Proof.}
+It is the composite of $\pi \colon C^r \to C^{(r)}$ and $f^{(r)}$.
+\hfill $\square$
+
+\paragraph{Remark 5.6.}
+(a) The theorem shows that $J$ is the unique abelian variety birationally
+equivalent to $C^{(g)}$. This observation is the basis of Weil's construction
+of the Jacobian. (See \S 7.)
+
+(b) The exact sequence in (5.1b) can be regarded as a geometric statement of
+the Riemann-Roch theorem (see especially the end of the proof). In fact it is
+possible to prove the Riemann-Roch theorem this way (see Mattuck and Mayer
+1963).
+
+(c) As we observed above, the fibre of
+$f^{(r)} \colon C^{(r)}(k) \to J(k)$ containing $D$ can be identified with
+the linear system $|D|$. More precisely, the fibre of the map of functors
+$C^{(r)} \to J$ is the functor $\Div_C^D$ of (3.14); therefore the fibre of
+$f^{(r)}$ containing $D$ (in the sense of algebraic spaces) is a copy of
+projective space of dimension $h^0(D) - 1$. Corollary 3.10 of Chapter I shows
+that conversely every copy of projective space in $C^{(r)}$ is contained in
+some fibre of $f^{(r)}$. Consequently, the closed points of the Jacobian can
+be identified with the set of maximal subvarieties of $C^{(r)}$ isomorphic to
+projective space.
+
+Note that for $r > 2g - 2$, $|D|$ has dimension $r - g$, and so
+$(df^{(r)})_D$ is surjective, for all $D$. Therefore $f^{(r)}$ is smooth (see
+Hartshorne 1977, III 10.4), and the fibres of $f^{(r)}$ are precisely the
+copies of $\mathbb{P}^{r-g}$ contained in $C^{(r)}$. This last observation is
+the starting point of Chow's construction of the Jacobian Chow 1954.
+% [sic: printed as "the Jacobian Chow 1954." — hyperlinked citation without parentheses]

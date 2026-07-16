@@ -92,8 +92,9 @@ theorem exists_unique_ofCurve_comp (C : Over (Spec (.of k))) [IsProper C.hom]
 ### 1.2 The pinned Milne III.6.1 route skeleton (route-decision.md §1, §3, items 16-18)
 
 Milne AV III.6.1 (READ this pass from `references/abelian-varieties.pdf`, PDF p. 110 —
-no workspace transcription covers it, see §4.4; standing hypothesis of
-III §§5-6 is **g > 0**): the symmetric sum `(P₁,…,P_g) ↦ Σ φ(Pᵢ) : C^g → A` factors
+now transcribed: `abelian-varieties:page-0110` carries the Prop 6.1 statement AND
+complete proof, part of the same-day pp. 0107–0110 transcription, see §4.4; standing
+hypothesis of III §§5-6 is **g > 0**): the symmetric sum `(P₁,…,P_g) ↦ Σ φ(Pᵢ) : C^g → A` factors
 through `C^(g)`, hence a rational map `ψ : J ⇢ A` through the birational `f^(g)`
 (Thm 5.1a); I 3.2 (= I 3.1 + Lemma 3.3, verbatim "Combine Theorem 3.1 with the next
 lemma") makes ψ regular; ψ(0)=0 + I 1.2 makes it a homomorphism; uniqueness because two
@@ -271,12 +272,13 @@ RationalMap{Precomp,Prod,FunctionField} (all drop-in, parallelizable) → CodimO
 4. **Strict generic h¹-drop (Milne 5.2a) collides with the route's Serre-duality
    deferral.** *Provenance*: the Milne III §5 proof content below was READ this pass
    (2026-07-16) from `references/abelian-varieties.pdf`, PDF pp. 107-109 (doc
-   pp. 101-103). **No workspace transcription covers it yet** — `references/
-   abelian-varieties/tex/` holds only pp. 14-15 (I §1 rigidity), the contents map
-   `references/abelian-varieties.md` is section-level, and the old-AJC blueprint's
-   SOURCE QUOTE reaches only the Thm 5.1(a) STATEMENT + preceding paragraph — so
-   transcribe PDF pp. 107-110 (the III.6.1 statement/proof skeleton on p. 110, read
-   for §1.2, is equally untranscribed) before the design pass leans on the details. Read
+   pp. 101-103). **Transcription debt REPAID same day (2026-07-16, this session):**
+   PDF pp. 107-110 (doc pp. 101-104, Milne III §5 through Prop 6.1 + Cor 6.2/6.3) are
+   now per-page LaTeX under `references/abelian-varieties/tex/` and registered in the
+   manifest — citable as `abelian-varieties:page-0107..page-0110`, with Prop 6.1's
+   statement and complete proof entirely on `page-0110`. (The old-AJC blueprint's
+   SOURCE QUOTE reached only the Thm 5.1(a) statement; the design pass can now anchor
+   the full §§5-6 details instead of relying on this recon's prose.) Read
    content: Lemma 5.2(a) (h¹(D)>0 ⟹ h¹(D+Q) = h¹(D)−1 for Q in a nonempty open
    U ⊆ C, unchanged off U) is proved via Serre duality
    `H¹(C,L(D+Q))^∨ = Γ(C,Ω¹(−D−Q))` ⊆ Γ(Ω¹(−D)); 5.2(b) (generic h⁰(ΣPᵢ)=1, r ≤ g)

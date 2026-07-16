@@ -1,0 +1,88 @@
+% source: J. S. Milne, "Abelian Varieties" (course notes), v2.00, 2008, www.jmilne.org
+% pdf_page: 0107
+% doc_page: 101 (Chapter III, end of Section 4 proof; Section 5, "The canonical maps from the symmetric powers of C to its Jacobian variety")
+% retrieved: 2026-07-16
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi via pdftoppm)
+
+% [running head: 5. CANONICAL MAPS, page 101]
+
+\DeclareMathOperator{\Div}{Div}   % Div^r_C, the divisor functor
+
+% [continuation of the proof begun on the previous page (construction of the Jacobian)]
+
+that $P^{\gamma,\gamma'}$ is representable by a variety $J^{\gamma,\gamma'}$
+such that the maps $J^{\gamma,\gamma'} \hookrightarrow J^{\gamma}$ and
+$J^{\gamma,\gamma'} \hookrightarrow J^{\gamma'}$ defined by the inclusions
+$P^{\gamma,\gamma'} \hookrightarrow P^{\gamma}$ and
+$P^{\gamma,\gamma'} \hookrightarrow P^{\gamma'}$ are open immersions.
+
+We are now ready to construct the Jacobian of $C$. Choose tuples
+$\gamma_1, \dots, \gamma_m$ of points in $C(k^{\mathrm{sep}})$ such that
+$C^{(r)} = \bigcup C^{\gamma_i}$. After extending $k$, we can assume that the
+$\gamma_i$ are tuples of $k$-rational points. Define $J$ by patching together
+the varieties $J^{\gamma_i}$ using the open immersions
+$J^{\gamma_i,\gamma_j} \hookrightarrow J^{\gamma_i}, J^{\gamma_j}$. It is easy
+to see that $J$ represents the functor $P_C^r$, and therefore also the functor
+$P_C^0$. Since the latter is a group functor, $J$ is a group variety. The
+natural transformations $\Div_C^r \to P_C^r \to P_C^0$ induce a morphism
+$C^{(r)} \to J$, which shows that $J$ is complete and is therefore an abelian
+variety. \hfill $\square$
+
+\section*{5 \quad The canonical maps from the symmetric powers of $C$ to its
+Jacobian variety}
+
+Throughout this section $C$ will be a complete nonsingular curve of genus
+$g > 0$. Assume there is a $k$-rational point $P$ on $C$, and write $f$ for
+the map $f^P$ defined in \S 2.
+
+Let $f^r$ be the map $C^r \to J$ sending $(P_1, \dots, P_r)$ to
+$f(P_1) + \dots + f(P_r)$. On points, $f^r$ is the map
+$(P_1, \dots, P_r) \mapsto [P_1 + \dots + P_r - rP]$. Clearly it is
+symmetric, and so induces a map $f^{(r)} \colon C^{(r)} \to J$. We can regard
+$f^{(r)}$ as being the map sending an effective divisor $D$ of degree $r$ on
+$C$ to the linear equivalence class of $D - rP$. The fibre of the map
+$f^{(r)} \colon C^{(r)}(k) \to J(k)$ containing $D$ can be identified with the
+space of effective divisors linearly equivalent to $D$, that is, with the
+linear system $|D|$. The image of $C^{(r)}$ in $J$ is a closed subvariety
+$W^r$ of $J$, which can also be written $W^r = f(C) + \dots + f(C)$ ($r$
+summands).
+
+\paragraph{Theorem 5.1.}
+\textit{(a) For all $r \le g$, the morphism $f^{(r)} \colon C^{(r)} \to W^r$
+is birational; in particular, $f^{(g)}$ is a birational map from $C^{(g)}$
+onto $J$.}
+
+\textit{(b) Let $D$ be an effective divisor of degree $r$ on $C$, and let $F$
+be the fibre of $f^{(r)}$ containing $D$. Then no tangent vector to $C^{(r)}$
+at $D$ maps to zero under $(df^{(r)})_D$ unless it lies in the direction of
+$F$; in other words, the sequence}
+\[
+  0 \to T_D(F) \to T_D(C^{(r)}) \to T_a(J), \quad a = f^{(r)}(D),
+\]
+\textit{is exact. In particular,
+$(df^{(r)})_D \colon T_D(C^{(r)}) \to T_a(J)$ is injective if $|D|$ has
+dimension zero.}
+
+The proof will occupy the rest of this section.
+
+For $D$ a divisor on $C$, we write $h^0(D)$ for the dimension of
+\[
+  H^0(C, \mathcal{L}(D)) = \{ f \in k(C) \mid (f) + D \ge 0 \}
+\]
+and $h^1(D)$ for the dimension of $H^1(C, \mathcal{L}(D))$. Recall that
+\[
+  h^0(D) - h^1(D) = \deg(D) + 1 - g,
+\]
+and that $H^1(C, \mathcal{L}(D))^{\vee} = H^0(C, \Omega^1(-D))$, which can be
+identified with the set of $\omega \in \Omega^1_{k(C)/k}$ whose divisor
+$(\omega) \ge D$.
+
+\paragraph{Lemma 5.2.}
+\textit{(a) Let $D$ be a divisor on $C$ such that $h^1(D) > 0$; then there is
+a nonempty open subset $U$ of $C$ such that $h^1(D + Q) = h^1(D) - 1$ for all
+points $Q$ in $U$, and $h^1(D + Q) = h^1(D)$ for $Q \notin U$.}
+
+\textit{(b) For any $r \le g$, there is an open subset $U$ of $C^r$ such that
+$h^0(\sum P_i) = 1$ for all $(P_1, \dots, P_r)$ in $U$.}
+
+% [proof continues on the next page]
