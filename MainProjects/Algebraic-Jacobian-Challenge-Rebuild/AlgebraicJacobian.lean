@@ -198,6 +198,7 @@ import AlgebraicJacobian.Picard.DegreeZero
 import AlgebraicJacobian.Picard.Pic0Functor
 import AlgebraicJacobian.Picard.DegreeSeam
 import AlgebraicJacobian.Picard.Pic0ZariskiSheaf
+import AlgebraicJacobian.Picard.ThetaShift
 
 /-!
 # AlgebraicJacobian — library root
