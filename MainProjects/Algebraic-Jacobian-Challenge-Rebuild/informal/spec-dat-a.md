@@ -245,3 +245,21 @@ generators corollary green closes the full brick.
 
 *End of spec. Binding for the DAT-A stages; deviations require re-derivation from the
 worksheet and a note in the stage commit message.*
+
+---
+
+**LANDING ADDENDUM (same day, post-close).** All four stages landed
+(`Picard/FibrewiseRegular.lean`, `SectionsToDivisors.lean`, `SectionsToDivisorsClass.lean`,
+`LocalGenerators.lean`; keystones axiom-clean). One deviation, in the sanctioned
+direction: DAT-1's stage (1e) (`Cohomology/GluedSheafClass.lean`) landed mid-flight, so
+§3's interim class carrier `cocycleClassOn` and its seam were **never built** — the
+LocalEquations construction was instead stated on the (1e) subordination interface
+(`𝒲, σ, hσ` with equations the `resHom (hσ y)`-restricted components and ratio units
+`gluedSubordUnit`), and the class law is
+`sectionLocalEquations_picClass : (…).picClass = D.cechPicClass` on the nose (via
+`cechPicClass_eq_mk`); choice/refinement naturality is the landed
+`gluedSubordCocycle_class_eq`. The A2-bundled wrapper instantiates at the canonical
+`D.pointedCover`/`D.pieceIndex`. §4's corollary landed with a coordinate-functional
+evaluation instead of the `χ`-map into the localized tensor (no localized tensor
+products are formed). The DD-1a seam in `FibrewiseRegular.lean` remains open as
+specified.*
