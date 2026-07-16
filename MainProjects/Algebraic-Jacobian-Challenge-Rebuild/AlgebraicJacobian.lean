@@ -212,6 +212,7 @@ import AlgebraicJacobian.Picard.OverSigmaExtension
 import AlgebraicJacobian.Picard.Pic0SigmaSheaf
 import AlgebraicJacobian.RiemannRoch.SectionBound
 import AlgebraicJacobian.RiemannRoch.WindowLedger
+import AlgebraicJacobian.RiemannRoch.SectionSpaces
 import AlgebraicJacobian.Algebra.PointFiberIdeal
 import AlgebraicJacobian.Curve.GraphFibre
 import AlgebraicJacobian.RiemannRoch.GraphSectionEval
@@ -221,7 +222,9 @@ import AlgebraicJacobian.Picard.AbelElement
 import AlgebraicJacobian.Albanese.RationalMapPrecomp
 import AlgebraicJacobian.Albanese.RationalMapProd
 import AlgebraicJacobian.Albanese.RationalMapFunctionField
+import AlgebraicJacobian.Albanese.DifferenceMap
 import AlgebraicJacobian.Algebra.CoheightBridge
+import AlgebraicJacobian.Algebra.StandardSmoothDimension
 
 /-!
 # AlgebraicJacobian — library root
