@@ -205,6 +205,7 @@ import AlgebraicJacobian.Picard.Pic0ZariskiSheaf
 import AlgebraicJacobian.Picard.PicEtCoverBridge
 import AlgebraicJacobian.Picard.ThetaShift
 import AlgebraicJacobian.RiemannRoch.SectionBound
+import AlgebraicJacobian.RiemannRoch.WindowLedger
 
 /-!
 # AlgebraicJacobian — library root
