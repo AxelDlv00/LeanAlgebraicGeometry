@@ -228,6 +228,7 @@ import AlgebraicJacobian.Algebra.StandardSmoothDimension
 import AlgebraicJacobian.Picard.GrassmannianChart
 import AlgebraicJacobian.Picard.GrassmannianCocycle
 import AlgebraicJacobian.Picard.GrassmannianPhi
+import AlgebraicJacobian.Algebra.SmoothPrimeRegularityStep
 
 /-!
 # AlgebraicJacobian — library root
