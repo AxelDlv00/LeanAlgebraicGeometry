@@ -218,6 +218,7 @@ import AlgebraicJacobian.RiemannRoch.WindowLedger
 import AlgebraicJacobian.RiemannRoch.SectionSpaces
 import AlgebraicJacobian.RiemannRoch.WindowLedgerF3
 import AlgebraicJacobian.RiemannRoch.BaseDivisor
+import AlgebraicJacobian.RiemannRoch.SumIntersection
 import AlgebraicJacobian.Algebra.PointFiberIdeal
 import AlgebraicJacobian.Curve.GraphFibre
 import AlgebraicJacobian.RiemannRoch.GraphSectionEval
@@ -236,6 +237,7 @@ import AlgebraicJacobian.Picard.GrassmannianCocycle
 import AlgebraicJacobian.Picard.GrassmannianPhi
 import AlgebraicJacobian.Picard.GrassmannianGlue
 import AlgebraicJacobian.Picard.GrassmannianScheme
+import AlgebraicJacobian.Picard.GrassmannianFunctor
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularityStep
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularity
 import AlgebraicJacobian.Picard.FlatCokernel
