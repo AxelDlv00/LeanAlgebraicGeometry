@@ -202,6 +202,7 @@ import AlgebraicJacobian.Cohomology.GluedSheafDatum
 import AlgebraicJacobian.Cohomology.GluedSheafModule
 import AlgebraicJacobian.Cohomology.GluedSheafEngine
 import AlgebraicJacobian.Cohomology.GluedSheafDatumBaseChange
+import AlgebraicJacobian.Cohomology.GluedSheafClass
 import AlgebraicJacobian.Cohomology.GluedSheafCongr
 import AlgebraicJacobian.Cohomology.GluedSheafFibre
 import AlgebraicJacobian.RiemannRoch.GluedDivisorSheaf
@@ -220,6 +221,7 @@ import AlgebraicJacobian.RiemannRoch.SectionSpaces
 import AlgebraicJacobian.RiemannRoch.WindowLedgerF3
 import AlgebraicJacobian.RiemannRoch.BaseDivisor
 import AlgebraicJacobian.RiemannRoch.SumIntersection
+import AlgebraicJacobian.RiemannRoch.AnnihilatorKernel
 import AlgebraicJacobian.Algebra.PointFiberIdeal
 import AlgebraicJacobian.Curve.GraphFibre
 import AlgebraicJacobian.RiemannRoch.GraphSectionEval
