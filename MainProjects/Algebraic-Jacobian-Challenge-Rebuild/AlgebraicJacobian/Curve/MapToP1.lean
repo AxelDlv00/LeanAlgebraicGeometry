@@ -31,6 +31,11 @@ existence and the basic consequences of a **finite** `k`-morphism `π : C ⟶ �
   `k`, by spreading out a transcendental rational function
   (`AlgebraicJacobian.Curve.RationalToP1`) and applying the reduction above; see its
   docstring for the proof route.
+* `AlgebraicGeometry.exists_isFinite_isDominant_toP1` — the same finite `π`, now also carrying
+  **dominance**, exported from the transcendence step of the construction
+  (`AlgebraicJacobian.Curve.RationalToP1.exists_locallyQuasiFinite_isDominant_toP1`). This is
+  the map the fibrewise-large-twist-vanishing class form consumes with no external dominance
+  hypothesis.
 -/
 
 set_option autoImplicit false
@@ -102,6 +107,26 @@ Proof route (see `informal/route-decision.md`, Wave 1 item 4):
 theorem exists_isFinite_toP1 :
     ∃ π : C.left ⟶ P1 k, IsFinite π ∧ π ≫ P1.structureMap k = C.hom :=
   exists_isFinite_toP1_of_locallyQuasiFinite (exists_locallyQuasiFinite_toP1 C.hom)
+
+/-- **Existence of a finite dominant map to the projective line.** On the smooth, proper,
+geometrically irreducible curve `C/k` there is a finite `k`-morphism `π : C ⟶ ℙ¹` which is
+moreover **dominant**.
+
+The dominance is exported from the construction itself: the transcendental spreading-out
+`AlgebraicJacobian.Curve.RationalToP1.exists_locallyQuasiFinite_isDominant_toP1` sends the
+generic point of `C` to the generic point of `ℙ¹`, whose closure is all of `ℙ¹`. Zariski's
+main theorem (`isFinite_toP1_of_locallyQuasiFinite`) upgrades the locally-quasi-finite map to
+a finite one, preserving dominance and the compatibility with the structure morphisms.
+
+This is the FLV-4 frontier witness: it lets the fibrewise-large-twist-vanishing headline and
+class form (`AlgebraicGeometry.subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1`,
+`AlgebraicGeometry.exists_subsingleton_hModule_one_of_one_le_classDeg_of_isFinite_toP1`) be
+consumed with the *constructed* `π`, with no manually supplied `IsDominant` hypothesis. -/
+theorem exists_isFinite_isDominant_toP1 :
+    ∃ π : C.left ⟶ P1 k, IsFinite π ∧ IsDominant π ∧ π ≫ P1.structureMap k = C.hom := by
+  obtain ⟨π, hqf, hdom, hcomp⟩ := exists_locallyQuasiFinite_isDominant_toP1 C.hom
+  haveI := hqf
+  exact ⟨π, isFinite_toP1_of_locallyQuasiFinite C.hom π hcomp, hdom, hcomp⟩
 
 /-! ### Preimage bookkeeping for a finite morphism to the projective line
 

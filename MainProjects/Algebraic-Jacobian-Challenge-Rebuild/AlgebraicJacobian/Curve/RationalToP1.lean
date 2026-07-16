@@ -28,9 +28,11 @@ spreads out to a `k`-morphism `π : X ⟶ ℙ¹` with finite fibers:
   curve avoiding the generic point, hence finite
   (`Scheme.finite_of_isClosed_of_notMem_genericPoint`).
 
-The main result is `AlgebraicGeometry.exists_locallyQuasiFinite_toP1`; Zariski's main
-theorem (in `AlgebraicJacobian.Curve.MapToP1`) upgrades local quasi-finiteness to
-finiteness.
+The main result is `AlgebraicGeometry.exists_locallyQuasiFinite_isDominant_toP1` (with the
+locally-quasi-finite-only projection `exists_locallyQuasiFinite_toP1` kept for the existing
+finiteness consumer); it also records that `π` is **dominant**, read off from the
+generic-point image. Zariski's main theorem (in `AlgebraicJacobian.Curve.MapToP1`) upgrades
+local quasi-finiteness to finiteness.
 -/
 
 set_option autoImplicit false
@@ -111,14 +113,16 @@ section Main
 
 variable {k : Type u} [Field k] {X : Scheme.{u}} (f : X ⟶ Spec (CommRingCat.of k))
 
-/-- **A smooth projective curve admits a locally quasi-finite morphism to `ℙ¹`.**
+/-- **A smooth projective curve admits a locally quasi-finite dominant morphism to `ℙ¹`.**
 
 For `X` integral, proper and smooth of relative dimension `1` over a field `k`, there is a
-`k`-morphism `π : X ⟶ ℙ¹` with finite fibers (hence locally quasi-finite): the spreading
-out of a rational function transcendental over `k`. -/
-theorem exists_locallyQuasiFinite_toP1 [IsIntegral X] [IsProper f]
+`k`-morphism `π : X ⟶ ℙ¹` with finite fibers (hence locally quasi-finite) which is moreover
+**dominant**: the spreading out of a rational function transcendental over `k`. Transcendence
+sends the generic point of `X` to the generic point of `ℙ¹` (`hπξ` below), and dominance is
+read off from that generic-point image. -/
+theorem exists_locallyQuasiFinite_isDominant_toP1 [IsIntegral X] [IsProper f]
     [SmoothOfRelativeDimension 1 f] :
-    ∃ π : X ⟶ P1 k, LocallyQuasiFinite π ∧ π ≫ P1.structureMap k = f := by
+    ∃ π : X ⟶ P1 k, LocallyQuasiFinite π ∧ IsDominant π ∧ π ≫ P1.structureMap k = f := by
   classical
   -- A rational function transcendental over `k`.
   obtain ⟨f₀, hf₀⟩ := SmoothOfRelativeDimension.exists_transcendental_functionField f
@@ -253,7 +257,26 @@ theorem exists_locallyQuasiFinite_toP1 [IsIntegral X] [IsProper f]
       refine Scheme.finite_of_isClosed_of_notMem_genericPoint hcurve hcl ?_
       intro hmem
       exact hy ((Set.mem_singleton_iff.mp hmem).symm.trans hπξ)
-  exact ⟨π, LocallyQuasiFinite.of_finite_preimage_singleton π hfib, hπover⟩
+  -- `π` is dominant: its range contains the generic point of `ℙ¹` (`hπξ`), which is dense.
+  have hdominant : IsDominant π := by
+    constructor
+    have hsub : {genericPoint (P1 k)} ⊆ Set.range π.base :=
+      Set.singleton_subset_iff.mpr ⟨genericPoint X, hπξ⟩
+    intro z
+    have := closure_mono hsub
+    rw [(genericPoint_spec (P1 k)).def] at this
+    exact this trivial
+  exact ⟨π, LocallyQuasiFinite.of_finite_preimage_singleton π hfib, hdominant, hπover⟩
+
+/-- **A smooth projective curve admits a locally quasi-finite morphism to `ℙ¹`.** The
+locally-quasi-finite half of `exists_locallyQuasiFinite_isDominant_toP1`, kept under its
+original name and postcondition for the existing finiteness consumer
+(`AlgebraicJacobian.Curve.MapToP1.exists_isFinite_toP1`). -/
+theorem exists_locallyQuasiFinite_toP1 [IsIntegral X] [IsProper f]
+    [SmoothOfRelativeDimension 1 f] :
+    ∃ π : X ⟶ P1 k, LocallyQuasiFinite π ∧ π ≫ P1.structureMap k = f := by
+  obtain ⟨π, hqf, _, hcomp⟩ := exists_locallyQuasiFinite_isDominant_toP1 f
+  exact ⟨π, hqf, hcomp⟩
 
 end Main
 
