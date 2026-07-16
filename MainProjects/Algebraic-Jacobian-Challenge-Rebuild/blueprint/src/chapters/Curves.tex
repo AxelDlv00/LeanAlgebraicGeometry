@@ -2720,3 +2720,262 @@ is the content of the section.
   \langle\mathrm{fst}, \mathrm{snd} \circ t\rangle\), which is the graph lift of \(g \circ t\) by
   the whisker square (Lemma~\ref{lem:whiskerLeft_comp_graphLift}). Hence the two pullbacks agree.
 \end{proof}
+
+\section{The graph square and the graph fibre}
+\label{sec:graphFibre}
+
+The graph divisor of the previous section is supported, over a field test, on a single
+point: the graph is the base change of the diagonal, and the fibre of a one-point test is
+one point. This section proves the pullback square and extracts the support statement.
+
+\begin{lemma}[The graph square commutes]
+  \label{lem:sectionOfPoint_comp_graphLift}
+  \lean{AlgebraicGeometry.Over.sectionOfPoint_comp_graphLift}
+  \uses{def:sectionOfPoint, def:diagonal}
+  \leanok
+  For a point \(t \colon T \to C\), the section of the projection followed by the graph
+  lift is the point followed by the diagonal:
+  \[
+    \langle \mathrm{fst}, \mathrm{snd} \circ t\rangle \circ g_t
+      \;=\; \Delta \circ t
+    \qquad\text{as morphisms } T \to C \otimes C .
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  Compare the two projections. Onto the first factor: \(\mathrm{fst} \circ q \circ g_t =
+  \mathrm{fst} \circ g_t = t\) and \(\mathrm{fst} \circ \Delta \circ t = t\). Onto the
+  second: \(\mathrm{snd} \circ q \circ g_t = t \circ \mathrm{snd} \circ g_t = t\) and
+  \(\mathrm{snd} \circ \Delta \circ t = t\), using the projection identities of the section
+  (Definition~\ref{def:sectionOfPoint}) and of the diagonal (Definition~\ref{def:diagonal}).
+\end{proof}
+
+\begin{theorem}[The graph square is a pullback]
+  \label{thm:isPullback_graphLift}
+  \lean{AlgebraicGeometry.Over.isPullback_graphLift}
+  \uses{lem:sectionOfPoint_comp_graphLift, lem:over_isPullback_left, def:sectionOfPoint,
+    def:diagonal}
+  \leanok
+  \source{kleiman-picard}
+  For any test object \(T\) and point \(t \colon T \to C\), the commuting square of
+  underlying schemes
+  \[
+    \begin{array}{ccc}
+      T_{\mathrm{left}} & \xrightarrow{\ t\ } & C_{\mathrm{left}} \\
+      \downarrow g_t & & \downarrow \Delta \\
+      (C \otimes T)_{\mathrm{left}} & \xrightarrow{\ q\ } & (C \otimes C)_{\mathrm{left}}
+    \end{array}
+  \]
+  (\(q = \langle\mathrm{fst}, \mathrm{snd} \circ t\rangle\) the graph lift) is a pullback:
+  the graph of \(t\) is the base change of the diagonal along the graph lift — Kleiman's
+  \(\Gamma_g = (1 \times g)^{-1}\Delta\). No separatedness or properness is used.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Two paste-cancellations on the product bridge (Lemma~\ref{lem:over_isPullback_left}).
+  First, the middle square: the square with horizontals \(q\) and \(t\) and verticals the
+  two second projections is a pullback, by right-cancellation of the product square of
+  \(C \otimes C\) against the product square of \(C \otimes T\) (whose first projection
+  factors as \(\mathrm{fst} \circ q\)). Second, the top square: the square with verticals
+  \(g_t\) and \(\Delta\) pastes with the middle square to the square with verticals
+  \(g_t \circ \mathrm{snd} = \id\) and \(\Delta \circ \mathrm{snd} = \id\), which is a
+  pullback (vertical isomorphisms); bottom-cancellation against the middle square, using
+  commutativity (Lemma~\ref{lem:sectionOfPoint_comp_graphLift}), makes the top square a
+  pullback.
+\end{proof}
+
+\begin{theorem}[The range of the section is the graph]
+  \label{thm:range_sectionOfPoint_left}
+  \lean{AlgebraicGeometry.Over.range_sectionOfPoint_left}
+  \uses{thm:isPullback_graphLift}
+  \leanok
+  For any point \(t \colon T \to C\), the topological range of the section of the
+  projection is the graph-lift preimage of the diagonal:
+  \[
+    \operatorname{range}(g_t) \;=\; q^{-1}\bigl(\operatorname{range}\Delta\bigr)
+    \quad\text{in } (C \otimes T)_{\mathrm{left}} .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  A pullback of schemes surjects onto the topological fibre product
+  (Theorem~\ref{thm:isPullback_graphLift} plus the surjectivity of scheme pullbacks onto
+  fibre products of spaces); the fibre product of \(\Delta\) and \(q\) projects onto
+  exactly the points of \((C \otimes T)_{\mathrm{left}}\) whose \(q\)-image lies in the
+  range of \(\Delta\), and the projection to \((C \otimes T)_{\mathrm{left}}\) is carried
+  by the square onto the range of \(g_t\).
+\end{proof}
+
+\begin{definition}[The graph point of a field test]
+  \label{def:graphPoint}
+  \lean{AlgebraicGeometry.Over.graphPoint,
+    AlgebraicGeometry.Over.range_sectionOfPoint_left_eq_singleton,
+    AlgebraicGeometry.Over.mem_range_diagonal_graphLift_iff,
+    AlgebraicGeometry.Over.fst_graphPoint, AlgebraicGeometry.Over.graphLift_graphPoint}
+  \uses{thm:range_sectionOfPoint_left, def:sectionOfPoint}
+  \leanok
+  Let \(K\) be a field extension of \(k\) and \(t \colon \Spec K \to C\) a field point. The
+  \emph{graph point} \(x_t \in (C \otimes \Spec K)_{\mathrm{left}}\) is the image of the
+  unique point of \(\Spec K\) under the section \(g_t\). It is the entire graph fibre:
+  \[
+    q(z) \in \operatorname{range}\Delta \iff z = x_t ,
+  \]
+  its first projection is the image point of \(t\), and \(q(x_t) = \Delta(t(\ast))\).
+\end{definition}
+\begin{proof}
+  \leanok
+  \(\Spec K\) has a single point, so
+  \(\operatorname{range}(g_t) = \{x_t\}\); by
+  Theorem~\ref{thm:range_sectionOfPoint_left} the \(q\)-preimage of the diagonal is that
+  singleton, which is the displayed equivalence. The two projection formulas follow from
+  \(\mathrm{fst} \circ g_t = t\) and the commuting graph square
+  (Definition~\ref{def:sectionOfPoint},
+  Lemma~\ref{lem:sectionOfPoint_comp_graphLift}).
+\end{proof}
+
+\section{Rational points over a separably closed field}
+\label{sec:separablyClosedPoints}
+
+Over a separably closed field \(K\) the \(K\)-rational points of a smooth curve are
+\emph{dense}: every nonempty open contains one. Over an imperfect separably closed field
+not every closed point is rational (on \(\mathbb{A}^1_K\) there are closed points with residue
+field \(K(a^{1/p})\)), so the algebraically-closed argument through closed points fails;
+what survives is density, through the standard-smooth chart, which is \'etale over the
+affine line. There is no classical source anchored here; the statements are as formalised.
+
+\begin{lemma}[A separably closed field is infinite]
+  \label{lem:sepClosed_infinite}
+  \lean{AlgebraicGeometry.SeparablyClosed.instInfiniteOfIsSepClosed}
+  \leanok
+  A separably closed field is infinite.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Suppose \(K\) had exactly \(n\) elements. The polynomial \(f = X^{n+1} - 1\) is separable
+  over \(K\): in characteristic zero this is clear, and in characteristic \(p > 0\) the
+  cardinality \(n\) is a power of \(p\), so \(n + 1 \equiv 1 \not\equiv 0 \pmod p\); hence
+  the derivative \((n+1)X^{n}\) is a nonzero monomial, sharing no root with \(f\) (a common
+  root would satisfy \(x = 0\) and \(x^{n+1} = 1\)). A separable polynomial over a separably
+  closed field splits with distinct roots, so \(K\) contains \(n + 1\) distinct roots of
+  \(f\) — more than \(n\) elements, a contradiction. (This mirrors the classical argument
+  that an algebraically closed field is infinite, with the splitting input replaced by
+  separable splitting.)
+\end{proof}
+
+\begin{definition}[Rational points of the affine line]
+  \label{def:ratPt}
+  \lean{AlgebraicGeometry.SeparablyClosed.ratPt,
+    AlgebraicGeometry.SeparablyClosed.mem_ratPt_basicOpen}
+  \leanok
+  For a field \(K\) and a value \(x \in K\), the \(K\)-rational point of
+  \(\mathbb{A}^1 = \Spec K[X]\) at \(x\): the maximal ideal \(\ker(\mathrm{ev}_x) = (X - x)\). It
+  lies in a basic open \(D(h)\) iff \(h(x) \neq 0\).
+\end{definition}
+\begin{proof}
+  \leanok
+  \(\mathrm{ev}_x\) is a surjection onto the field \(K\), so its kernel is maximal, hence
+  prime. Membership in \(D(h)\) means \(h \notin \ker(\mathrm{ev}_x)\), i.e.\
+  \(h(x) \neq 0\).
+\end{proof}
+
+\begin{lemma}[A rational base point under an \'etale algebra]
+  \label{lem:exists_ratPt_mem_range}
+  \lean{AlgebraicGeometry.SeparablyClosed.exists_ratPt_mem_range}
+  \uses{def:ratPt, lem:sepClosed_infinite}
+  \leanok
+  Let \(K\) be an infinite field and \(S \neq 0\) a \(K\)-algebra \'etale over
+  \(K[X]\). Then the image of \(\Spec S \to \mathbb{A}^1\) contains a \(K\)-rational point.
+\end{lemma}
+\begin{proof}
+  \leanok
+  \'Etale maps are flat and of finite presentation, so the image of \(\Spec S\) is open
+  (going-down plus finite presentation makes the induced map on spectra open); it is
+  nonempty since \(S \neq 0\). A nonempty open of \(\Spec K[X]\) contains a nonempty basic
+  open \(D(h)\), \(h \neq 0\). Over the infinite field \(K\) the nonzero polynomial \(h\)
+  has a non-vanishing value \(x\) (a nonzero polynomial function on an infinite field is
+  not identically zero), and \(\mathrm{ratPt}(x) \in D(h)\)
+  (Definition~\ref{def:ratPt}) lies in the image.
+\end{proof}
+
+\begin{lemma}[\'Etale algebras over a separably closed field split]
+  \label{lem:exists_algHom_to_base}
+  \lean{AlgebraicGeometry.SeparablyClosed.exists_algHom_to_base}
+  \leanok
+  A nonzero \'etale algebra \(A\) over a separably closed field \(K\) admits a \(K\)-algebra
+  homomorphism \(A \to K\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Over a separably closed field, a (formally) \'etale algebra splits as a finite product of
+  copies of \(K\); \(A \neq 0\) means the product is nonempty, and any factor projection is
+  a \(K\)-point.
+\end{proof}
+
+\begin{theorem}[The commutative-algebra core of the density theorem]
+  \label{thm:exists_algHom_of_etale_mvPoly}
+  \lean{AlgebraicGeometry.SeparablyClosed.exists_algHom_of_etale_mvPoly}
+  \uses{lem:exists_ratPt_mem_range, lem:exists_algHom_to_base, lem:sepClosed_infinite,
+    def:ratPt}
+  \leanok
+  Let \(K\) be separably closed and \(S \neq 0\) a \(K\)-algebra \'etale over \(K[X]\).
+  Then \(S\) has a \(K\)-point: a \(K\)-algebra homomorphism \(S \to K\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \(K\) is infinite (Lemma~\ref{lem:sepClosed_infinite}); pick a \(K\)-rational point
+  \(x\) of \(\mathbb{A}^1\) in the image of \(\Spec S\)
+  (Lemma~\ref{lem:exists_ratPt_mem_range}). The fibre
+  \(S_x := K \otimes_{K[X]} S\) (base change along \(\mathrm{ev}_x\)) is \'etale over \(K\)
+  (base change of \'etale is \'etale) and nonzero: a prime \(q\) of \(S\) over
+  \(\mathrm{ratPt}(x)\) yields a \(K[X]\)-algebra map \(S_x \to S/q\) — lift
+  \(K \to S/q\) through the surjection \(K[X] \twoheadrightarrow K\), whose kernel dies in
+  \(S/q\) precisely because \(q\) lies over \(\ker(\mathrm{ev}_x)\), and pair it with the
+  residue map — and \(S/q \neq 0\). By the splitting lemma
+  (Lemma~\ref{lem:exists_algHom_to_base}) the fibre has a \(K\)-point, which composes with
+  \(S \to K \otimes_{K[X]} S\), \(s \mapsto 1 \otimes s\), to a \(K\)-point of \(S\).
+\end{proof}
+
+\begin{theorem}[A nonempty smooth curve over a separably closed field has a rational point]
+  \label{thm:exists_rationalPoint_sepClosed}
+  \lean{AlgebraicGeometry.SeparablyClosed.exists_rationalPoint_of_smoothOfRelativeDimension_one}
+  \uses{thm:exists_algHom_of_etale_mvPoly, thm:standard_smooth_etale_structure}
+  \leanok
+  Let \(K\) be separably closed and \(X\) a nonempty scheme smooth of relative dimension
+  \(1\) over \(K\). Then \(X\) has a \(K\)-point over \(K\): a morphism
+  \(p \colon \Spec K \to X\) with \(p \circ f = \id\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Pick a point \(x_0 \in X\) and a standard-smooth chart \(V \ni x_0\) of relative
+  dimension \(1\). Its section ring is \'etale over a one-variable polynomial ring
+  (Theorem~\ref{thm:standard_smooth_etale_structure}), and transporting along the
+  identification \(\Gamma(\Spec K, \top) \cong K\) makes \(\Gamma(X, V)\) an \'etale
+  \(K[X]\)-algebra, nonzero since \(V \ni x_0\) is nonempty. The core
+  (Theorem~\ref{thm:exists_algHom_of_etale_mvPoly}) yields a \(K\)-algebra map
+  \(\varphi \colon \Gamma(X,V) \to K\); \(\Spec\varphi\) composed with the canonical map of
+  the affine open \(V\) is a scheme point \(\Spec K \to X\). It lies over \(K\): composing
+  with the structure morphism corresponds, on rings, to
+  \(\varphi \circ (\text{chart map } K \to \Gamma(X,V))\), which is the identity of \(K\)
+  since \(\varphi\) is a \(K\)-algebra map.
+\end{proof}
+
+\begin{theorem}[Density of rational points over a separably closed field]
+  \label{thm:exists_rationalPoint_mem}
+  \lean{AlgebraicGeometry.SeparablyClosed.exists_rationalPoint_mem,
+    AlgebraicGeometry.Over.exists_rationalPoint_mem}
+  \uses{thm:exists_rationalPoint_sepClosed}
+  \leanok
+  Let \(K\) be separably closed, \(f \colon X \to \Spec K\) smooth of relative dimension
+  \(1\), and \(W \subseteq X\) a nonempty open. Then there is a \(K\)-point
+  \(p \colon \Spec K \to X\) over \(K\) whose topological image lies in \(W\). In
+  particular, for a curve pack \(C\) over a separably closed field, every nonempty open of
+  the underlying space of \(C\) contains a rational point.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Smoothness of relative dimension \(1\) is local on the source, so the open subscheme
+  \(W\) is itself smooth of relative dimension \(1\) over \(K\), and nonempty; by
+  Theorem~\ref{thm:exists_rationalPoint_sepClosed} it has a \(K\)-point over \(K\), whose
+  composite with the open immersion \(W \to X\) is the required point of \(X\), with image
+  in \(W\).
+\end{proof}

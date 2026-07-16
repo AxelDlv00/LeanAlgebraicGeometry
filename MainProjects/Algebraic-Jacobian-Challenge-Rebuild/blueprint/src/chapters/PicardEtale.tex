@@ -18,6 +18,97 @@ also for the object of \(\Over(\Spec k)\) it determines via the structure morphi
 \(k\)-algebras \(A \to A'\) induces, via \(\Spec\), a morphism \(\Spec A' \to \Spec A\) of
 \(\Over(\Spec k)\). We abbreviate \(\mathrm{relPic}(C,A) := \mathrm{relPic}(C,\Spec A)\).
 
+\section{The relative Picard group as a quotient}
+
+The group \(\mathrm{relPic}(C,T)\) of the preamble is realised concretely as a quotient of
+the \v Cech Picard group of the product: this section records the quotient presentation and
+its exact coset relation, the calculus every later rigidification and degree statement
+cascades through.
+
+\begin{definition}[The relative Picard group]
+  \label{def:relPic}
+  \lean{AlgebraicGeometry.picFromBase, AlgebraicGeometry.mem_picFromBase_iff,
+    AlgebraicGeometry.relPic, AlgebraicGeometry.relPicMk,
+    AlgebraicGeometry.relPicMk_surjective, AlgebraicGeometry.relPicMk_eq_relPicMk_iff}
+  \leanok
+  \source{kleiman-picard}
+  Let \(C\) be an object of \(\Over(\Spec k)\) and \(T\) a test object. Write
+  \(H_T \le \Pic(C \otimes T)\) for the subgroup of \v Cech Picard classes \emph{pulled back
+  from the base}: the range of \(\mathrm{pr}_2^{*} = \mathrm{snd}^{*} \colon \Pic(T) \to
+  \Pic(C \otimes T)\), so \(L \in H_T\) iff \(L = \mathrm{snd}^{*} N\) for some
+  \(N \in \Pic(T)\). The \emph{relative Picard group} is the quotient
+  \[
+    \mathrm{relPic}(C,T) \;:=\; \Pic(C \otimes T) \,/\, H_T ,
+  \]
+  a commutative group, with surjective projection \(\pi_T \colon \Pic(C \otimes T) \to
+  \mathrm{relPic}(C,T)\). The \emph{exact coset relation} holds: \(\pi_T L = \pi_T L'\) iff
+  \(L / L' \in H_T\) — a genuine range condition, involving no choice.
+\end{definition}
+\begin{proof}
+  \leanok
+  \(H_T\) is the range of a group homomorphism, hence a subgroup, and \(\Pic(C \otimes T)\)
+  is commutative, so \(H_T\) is normal and the quotient is a commutative group with a
+  surjective projection homomorphism. The coset relation is the defining property of a
+  quotient group: two elements have equal images exactly when their ratio lies in the
+  subgroup.
+\end{proof}
+
+\begin{definition}[Restriction of relative Picard classes]
+  \label{def:relPicMap}
+  \lean{AlgebraicGeometry.picFromBase_le_comap, AlgebraicGeometry.relPicMap,
+    AlgebraicGeometry.relPicMap_mk, AlgebraicGeometry.relPicMap_id,
+    AlgebraicGeometry.relPicMap_comp, AlgebraicGeometry.relPicFunctor}
+  \uses{def:relPic}
+  \leanok
+  For a morphism \(g \colon T' \to T\) of test objects, pullback of \v Cech classes along
+  \(C \lhd g \colon C \otimes T' \to C \otimes T\) descends to the quotients: a homomorphism
+  \(g^{*} \colon \mathrm{relPic}(C,T) \to \mathrm{relPic}(C,T')\) with
+  \(g^{*}(\pi_T L) = \pi_{T'}\bigl((C \lhd g)^{*} L\bigr)\). It satisfies
+  \((\id_T)^{*} = \id\) and \((h \circ g)^{*} = g'^{*}\)-composition contravariantly, so
+  \(T \mapsto \mathrm{relPic}(C,T)\) is a presheaf of commutative groups on
+  \(\Over(\Spec k)\) — the relative Picard functor of Grothendieck--Kleiman.
+\end{definition}
+\begin{proof}
+  \leanok
+  Well-definedness on cosets: for \(L = \mathrm{snd}_T^{*} N \in H_T\),
+  \[
+    (C \lhd g)^{*}\,\mathrm{snd}_T^{*} N
+      = \bigl(\mathrm{snd}_T \circ (C \lhd g)\bigr)^{*} N
+      = (g \circ \mathrm{snd}_{T'})^{*} N
+      = \mathrm{snd}_{T'}^{*}(g^{*} N) \in H_{T'},
+  \]
+  using \(\mathrm{snd}_T \circ (C \lhd g) = g \circ \mathrm{snd}_{T'}\) (the whiskering
+  identity of the cartesian product). So the composite
+  \(\Pic(C \otimes T) \to \mathrm{relPic}(C,T')\) kills \(H_T\) and factors through the
+  quotient. The functor laws follow from
+  \(C \lhd \id = \id\) and \(C \lhd (h \circ g) = (C \lhd h) \circ (C \lhd g)\) together
+  with functoriality of pullback of \v Cech classes, checked on representatives via the
+  computation rule.
+\end{proof}
+
+\begin{lemma}[Naturality in the curve]
+  \label{lem:relPicMapCurve}
+  \lean{AlgebraicGeometry.picFromBase_le_comap_whiskerRight,
+    AlgebraicGeometry.relPicMapCurveApp, AlgebraicGeometry.relPicMapCurveApp_mk,
+    AlgebraicGeometry.relPicMapCurve, AlgebraicGeometry.relPicMapCurve_app_mk,
+    AlgebraicGeometry.relPicMapCurve_id, AlgebraicGeometry.relPicMapCurve_comp}
+  \uses{def:relPic, def:relPicMap}
+  \leanok
+  A morphism of curves \(g \colon C' \to C\) over \(\Spec k\) induces, by pullback along
+  \(g \rhd T\) on representatives, a natural transformation of relative Picard functors
+  \(\mathrm{relPic}(C,-) \to \mathrm{relPic}(C',-)\); the assignment is contravariantly
+  functorial in \(g\) on the nose.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Well-definedness on cosets: \((g \rhd T)^{*}\,\mathrm{snd}_{C,T}^{*} N =
+  \mathrm{snd}_{C',T}^{*} N\) since \(\mathrm{snd}_{C,T} \circ (g \rhd T) =
+  \mathrm{snd}_{C',T}\). Naturality against a test morphism \(t \colon T' \to T\) is the
+  exchange identity \((C' \lhd t) \circ (g \rhd T') = (g \rhd T) \circ (C \lhd t)\) of
+  whiskerings, applied to representatives. The functor laws follow from
+  \(\id \rhd T = \id\) and \((g' \circ g) \rhd T = (g \rhd T) \circ (g' \rhd T)\).
+\end{proof}
+
 \section{Presented \'etale covers of an affine scheme}
 
 Throughout this section \(A\) is a commutative ring (no field or \(k\)-algebra structure is
@@ -339,12 +430,12 @@ In this section \(k\) is a field and \(C\) is an object of \(\Over(\Spec k)\).
 \begin{definition}[Restriction of relative Picard classes along an algebra map]
   \label{def:relPicAlgMap}
   \lean{AlgebraicGeometry.relPicAlgMap}
-  \uses{def:overSpecMap}
+  \uses{def:overSpecMap, def:relPicMap}
   \leanok
   For a homomorphism of \(k\)-algebras \(f \colon A \to B\), the induced homomorphism of groups
   \(f^{*} \colon \mathrm{relPic}(C,A) \to \mathrm{relPic}(C,B)\): restriction of relative
-  Picard classes along the morphism \(\Spec f \colon \Spec B \to \Spec A\) of
-  Definition~\ref{def:overSpecMap}.
+  Picard classes (Definition~\ref{def:relPicMap}) along the morphism
+  \(\Spec f \colon \Spec B \to \Spec A\) of Definition~\ref{def:overSpecMap}.
 \end{definition}
 
 \begin{lemma}[Functoriality in the algebra]
@@ -4823,7 +4914,8 @@ consumes the (C1) \'etale separatedness.
 \begin{lemma}[Computing a restricted plus class on a given cover]
   \label{lem:PicEtAff_mapAlg_mk_eq_mk}
   \lean{AlgebraicGeometry.PicEtAff.mapAlg_mk_eq_mk}
-  \uses{thm:PicEtAff_mk_eq_mk_iff, def:PicEtAff_map, def:etale_cover_baseChange, def:relPicAlgMap}
+  \uses{thm:PicEtAff_mk_eq_mk_iff, def:PicEtAff_map, def:PicEtAff_mapAlg,
+    def:etale_cover_baseChange, def:relPicAlgMap}
   \leanok
   Let \(\varphi \colon A_1 \to R\) be a homomorphism of \(k\)-algebras, \(E_1\) a presented \'etale
   cover of \(A_1\), \(F\) a presented \'etale cover of \(R\), \(\xi \in \mathrm{Desc}(C, E_1)\) and
@@ -5325,6 +5417,150 @@ inputs to the \((C2)\) comparison of the next section.
   displayed isomorphism forces \(v = 1\).
 \end{proof}
 
+\begin{lemma}[The retraction identity]
+  \label{lem:cechPicMap_sectionOfPoint_snd}
+  \lean{AlgebraicGeometry.Over.cechPicMap_sectionOfPoint_snd}
+  \uses{def:sectionOfPoint}
+  \leanok
+  \source{kleiman-picard}
+  For a point \(\sigma \colon T \to C\), pullback of \v Cech Picard classes along the section
+  of the projection retracts pullback along the projection: for every \(N \in \Pic(T)\),
+  \[
+    g_\sigma^{*}\,\mathrm{snd}^{*} N = N .
+  \]
+  This is \(g_T^{*} f_T^{*} = 1\) in Kleiman's notation.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Pullback of \v Cech classes is contravariantly functorial, and \(\mathrm{snd} \circ
+  g_\sigma = \id_T\) (Definition~\ref{def:sectionOfPoint}), so the composite pullback is the
+  pullback along the identity, which is the identity.
+\end{proof}
+
+\begin{lemma}[Stability of rigidification under restriction]
+  \label{lem:isRigidified_cechPicMap}
+  \lean{AlgebraicGeometry.Over.isRigidified_one, AlgebraicGeometry.Over.IsRigidified.cechPicMap}
+  \uses{def:isRigidified, def:sectionOfPoint}
+  \leanok
+  The trivial class is rigidified along every point. Moreover, for \(h \colon T' \to T\) and a
+  class \(L\) on \(C \otimes T\) rigidified along \(\sigma \colon T \to C\), the pullback
+  \((C \lhd h)^{*} L\) is rigidified along the restricted point \(h \circ \sigma\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The first claim is \(g_\sigma^{*} 1 = 1\). For the second, the naturality of the section in
+  the test object (Definition~\ref{def:sectionOfPoint}) gives \(h \circ g_\sigma =
+  g_{h \circ \sigma} \circ (C \lhd h)\), so
+  \[
+    g_{h \circ \sigma}^{*} (C \lhd h)^{*} L
+      = \bigl((C \lhd h) \circ g_{h \circ \sigma}\bigr)^{*} L
+      = (g_\sigma \circ h)^{*} L
+      = h^{*} \bigl(g_\sigma^{*} L\bigr) = h^{*} 1 = 1 . \qedhere
+  \]
+\end{proof}
+
+\begin{theorem}[Kleiman's identification, injectivity: rigidified representatives are unique]
+  \label{thm:isRigidified_eq_of_relPicMk_eq}
+  \lean{AlgebraicGeometry.Over.IsRigidified.eq_of_relPicMk_eq,
+    AlgebraicGeometry.Over.IsRigidified.eq_one_of_relPicMk_eq_one}
+  \uses{def:isRigidified, lem:cechPicMap_sectionOfPoint_snd, def:relPic}
+  \leanok
+  \source{kleiman-picard}
+  Two \v Cech Picard classes on \(C \otimes T\), both rigidified along a point
+  \(\sigma \colon T \to C\), which represent the same relative Picard class, are equal on the
+  nose. In particular a rigidified representative of the identity relative class is \(1\).
+  This is the injectivity half of Kleiman's Lemma \(\mathrm{lm{:}idn}\) (rigidified pairs are
+  carried isomorphically onto \(\Pic_{X/S}(T)\)), in cocycle form.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Let \(L, L'\) be the two classes. By the exact coset relation
+  (Definition~\ref{def:relPic}) the ratio is pulled back from the base: \(L/L' =
+  \mathrm{snd}^{*} N\) for some \(N \in \Pic(T)\). Apply \(g_\sigma^{*}\): by the retraction
+  identity (Lemma~\ref{lem:cechPicMap_sectionOfPoint_snd}),
+  \[
+    N = g_\sigma^{*}\,\mathrm{snd}^{*} N = g_\sigma^{*}(L/L')
+      = g_\sigma^{*}L \,/\, g_\sigma^{*}L' = 1/1 = 1 ,
+  \]
+  using both rigidifications. Hence \(L/L' = \mathrm{snd}^{*}1 = 1\), i.e.\ \(L = L'\). The
+  special case takes \(L' = 1\), which is rigidified.
+\end{proof}
+
+\begin{theorem}[Kleiman's identification, surjectivity: existence of a rigidified representative]
+  \label{thm:relPic_exists_isRigidified_rep}
+  \lean{AlgebraicGeometry.relPic.exists_isRigidified_rep}
+  \uses{def:isRigidified, def:relPic, lem:cechPicMap_sectionOfPoint_snd}
+  \leanok
+  \source{kleiman-picard}
+  Every relative Picard class on \(C \otimes T\) has a representative rigidified along any
+  given point \(\sigma \colon T \to C\). This is the surjectivity half of Kleiman's Lemma
+  \(\mathrm{lm{:}idn}\), in cocycle form.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Let \(M\) be any \v Cech representative of the class (the projection to the quotient is
+  surjective, Definition~\ref{def:relPic}). Kleiman's identity-rigidification twist
+  \[
+    L := M \cdot \bigl(\mathrm{snd}^{*} g_\sigma^{*} M\bigr)^{-1}
+  \]
+  (\(\mathcal L := \mathcal M \otimes (f_T^{*} g_T^{*} \mathcal M)^{-1}\)) works. The twist factor is pulled
+  back from the base, so \(L\) represents the same relative class. And by the retraction
+  identity (Lemma~\ref{lem:cechPicMap_sectionOfPoint_snd}),
+  \(g_\sigma^{*} L = g_\sigma^{*} M \cdot (g_\sigma^{*} M)^{-1} = 1\), so \(L\) is
+  rigidified along \(\sigma\).
+\end{proof}
+
+\begin{theorem}[The rigidified transport keystone]
+  \label{thm:isRigidified_cechPicMap_congr}
+  \lean{AlgebraicGeometry.Over.IsRigidified.cechPicMap_congr}
+  \uses{def:isRigidified, thm:relPicAlgMap_congr, thm:isRigidified_eq_of_relPicMk_eq,
+    lem:isRigidified_cechPicMap, def:descentClasses, def:relPicMap, def:overSpecMap}
+  \leanok
+  \source{kleiman-picard}
+  Let \(A\) be a \(k\)-algebra, \(E\) a presented \'etale cover of \(A\), \(R\) an
+  \(A\)-algebra, \(\sigma \colon \Spec A \to C\) a point, and \(L\) a \v Cech Picard class on
+  \(C \otimes \Spec B_E\) such that the relative class of \(L\) is a descent class on \(E\)
+  and \(L\) is rigidified along the point of \(\Spec B_E\) induced by \(\sigma\). Then for
+  \emph{any} two \(A\)-algebra maps \(j_1, j_2 \colon B_E \to R\), the two pullbacks of \(L\)
+  agree \emph{on the nose}:
+  \[
+    (C \lhd \Spec j_1)^{*} L = (C \lhd \Spec j_2)^{*} L \quad\text{in } \Pic(C \otimes \Spec R).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The plus-construction keystone \(\mathrm{relPicAlgMap\_congr}\)
+  (Theorem~\ref{thm:relPicAlgMap_congr}) gives the equality of the two pullbacks as
+  \emph{relative} Picard classes, since the class of \(L\) is a descent class and the
+  \(j_i\) are \(A\)-algebra maps. Both pullbacks are rigidified along the point of
+  \(\Spec R\) induced by \(\sigma\): the \(j_i\) are \(A\)-algebra maps, so the induced point
+  of \(\Spec R\) restricts, along \(\Spec j_i\), the induced point of \(\Spec B_E\), and
+  rigidification is stable under restriction (Lemma~\ref{lem:isRigidified_cechPicMap}).
+  Kleiman's injectivity (Theorem~\ref{thm:isRigidified_eq_of_relPicMk_eq}) upgrades the
+  coset equality of two rigidified classes to an equality of \v Cech classes.
+\end{proof}
+
+\begin{theorem}[The descent equation of a rigidified representative holds on the nose]
+  \label{thm:isRigidified_cechPicMap_doubleInl_eq_doubleInr}
+  \lean{AlgebraicGeometry.Over.IsRigidified.cechPicMap_doubleInl_eq_doubleInr}
+  \uses{thm:isRigidified_cechPicMap_congr, def:doubleInl_doubleInr}
+  \leanok
+  \source{kleiman-picard}
+  In the situation of Theorem~\ref{thm:isRigidified_cechPicMap_congr}, the two pullbacks of
+  the rigidified representative \(L\) to the double cover \(\Spec(B_E \otimes_A B_E)\), along
+  the two coprojections, are \emph{equal \v Cech Picard classes} — not merely equal relative
+  classes. This is Kleiman's rigidified pair \((\mathcal L', u')\) having a canonical comparison on
+  the double cover, the input to the descent-datum construction in the proof of his
+  comparison theorem.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The two coprojections \(B_E \rightrightarrows B_E \otimes_A B_E\)
+  (Definition~\ref{def:doubleInl_doubleInr}) are \(A\)-algebra maps out of the cover carrier
+  into the common \(A\)-algebra \(R := B_E \otimes_A B_E\); apply the transport keystone
+  (Theorem~\ref{thm:isRigidified_cechPicMap_congr}) to them.
+\end{proof}
+
 \section{The \(\sigma\)-normalized comparison cochain}
 \label{sec:normalizedComparison}
 
@@ -5503,13 +5739,15 @@ realisation of the descent equation \(u_1^{*} L = u_2^{*} L\), normalized along 
   \lean{AlgebraicGeometry.Over.correctedComparison,
     AlgebraicGeometry.Over.exists_normalizedCechComparison}
   \uses{def:isRigidified, def:normalizedCechComparison, thm:exists_glued_sigmaDefect,
-    lem:sectionSquares, cor:cechPic_mk_eq_one}
+    lem:sectionSquares, cor:cechPic_mk_eq_one,
+    thm:isRigidified_cechPicMap_doubleInl_eq_doubleInr}
   \leanok
   Let \(\gamma\) be a unit cocycle on a pointed cover \(\mathcal N\) of \(X_B\) whose class \(L =
   [\gamma]\) is rigidified along the section over \(B\) (\ref{def:isRigidified}) and satisfies the
-  descent equation \(u_1^{*} L = u_2^{*} L\). Then a \(\sigma\)-normalized comparison of
-  \(\gamma\) exists. No properness, geometric irreducibility or reducedness, or faithful flatness
-  is required.
+  descent equation \(u_1^{*} L = u_2^{*} L\) — as holds for any rigidified representative of a
+  descent class, by Theorem~\ref{thm:isRigidified_cechPicMap_doubleInl_eq_doubleInr}. Then a
+  \(\sigma\)-normalized comparison of \(\gamma\) exists. No properness, geometric
+  irreducibility or reducedness, or faithful flatness is required.
 \end{theorem}
 \begin{proof}
   \leanok
@@ -7876,4 +8114,1343 @@ the agreement propagates from one-point divisors to all divisors by homomorphism
   \struct X(1 \cdot x)\) (\ref{thm:pointDivisor_picClass_eq}), so their \(n\)-th powers agree and
   \(\mathrm{divisorClass}(n \cdot x) = \struct X(n \cdot x)\). By homomorphism extensionality on the
   generators, the two maps coincide on all of \(\Div(X)\).
+\end{proof}
+
+\section{The unit of the \'etale sheafification}
+\label{sec:picEtUnit}
+
+The honest relative Picard functor maps into its \'etale-sheafified Layer-2 vehicle
+\(\mathrm{picEt}\) by a natural transformation — the unit of the sheafification. On an affine
+test it is the unit of the plus construction; on a general test it is assembled over the
+affine opens.
+
+\begin{definition}[Restriction of plus classes along an explicit algebra map]
+  \label{def:PicEtAff_mapAlg}
+  \lean{AlgebraicGeometry.PicEtAff.mapAlg, AlgebraicGeometry.PicEtAff.mapAlg_id,
+    AlgebraicGeometry.PicEtAff.mapAlg_comp, AlgebraicGeometry.PicEtAff.mapAlg_unit}
+  \uses{def:PicEtAff_map, thm:PicEtAff_map_id, thm:PicEtAff_map_map, thm:PicEtAff_map_unit,
+    def:PicEtAff_unit, def:relPicAlgMap}
+  \leanok
+  For an explicit homomorphism of \(k\)-algebras \(\varphi \colon A \to A'\), restriction of
+  plus classes \(\varphi^{*} \colon \mathrm{PicEtAff}(C,A) \to \mathrm{PicEtAff}(C,A')\):
+  regard \(A'\) as an \(A\)-algebra through \(\varphi\) and apply the base-extension map of
+  Definition~\ref{def:PicEtAff_map}. It satisfies \((\id_A)^{*} = \id\) and
+  \((\psi \circ \varphi)^{*} = \psi^{*} \circ \varphi^{*}\), and it is natural on units of
+  the plus construction:
+  \[
+    \varphi^{*}\bigl(\mathrm{unit}(x)\bigr) = \mathrm{unit}\bigl(\varphi^{*} x\bigr),
+    \qquad x \in \mathrm{relPic}(C,A).
+  \]
+\end{definition}
+\begin{proof}
+  \leanok
+  The scalar tower \(k \to A \to A'\) determined by \(\varphi\) makes
+  Definition~\ref{def:PicEtAff_map} applicable; the two functor laws are
+  Theorems~\ref{thm:PicEtAff_map_id} and~\ref{thm:PicEtAff_map_map} read through this tower,
+  and naturality on units is Theorem~\ref{thm:PicEtAff_map_unit}.
+\end{proof}
+
+\begin{definition}[The affine-open test objects of a test object]
+  \label{def:fromSpecAffine}
+  \lean{AlgebraicGeometry.Over.fromSpecAffine, AlgebraicGeometry.Over.fromSpecAffine_naturality,
+    AlgebraicGeometry.Over.fromSpecAffine_resAlgHom,
+    AlgebraicGeometry.Over.overSpecMap_ΓTop_fromSpecAffine_top}
+  \uses{def:overSpecMap, def:overSpecGammaTop}
+  \leanok
+  For a test object \(T\) and an affine open \(U \subseteq T_{\mathrm{left}}\), the spectrum
+  of the section ring \(\Spec \Gamma(T, U)\) is a test object over \(T\), via the canonical
+  morphism \(\Spec \Gamma(T,U) \to T\) of the affine open. This assignment is coherent:
+  \begin{enumerate}
+  \item (restriction) for \(U \le V\), the map of \(U\) factors through that of \(V\) along
+    \(\Spec\) of the section restriction \(\Gamma(T,V) \to \Gamma(T,U)\);
+  \item (naturality) for a morphism of tests \(f \colon T' \to T\) and affine opens
+    \(W \le f^{-1}V\), the square formed by \(\Spec\) of the section pullback
+    \(\Gamma(T,V) \to \Gamma(T',W)\) and the two affine-open test maps commutes;
+  \item (top of an affine test) for \(T = \Spec A\), the affine-open test object of the top
+    open, composed with \(\Spec\) of the identification \(\Gamma(\Spec A, \top) \cong A\)
+    (Definition~\ref{def:overSpecGammaTop}), is the identity of \(\Spec A\).
+  \end{enumerate}
+\end{definition}
+\begin{proof}
+  \leanok
+  The structure morphism to \(\Spec k\) is \(\Spec\) of the \(k\)-algebra structure of the
+  section ring, so the canonical morphism of the affine open lies over \(\Spec k\); this is
+  the compatibility of the affine-open inclusion with the structure morphisms. Coherences (i)
+  and (ii) are both instances of the standard identity
+  \(\Spec(f^{\sharp}_{V,W}) \circ \iota_W = \iota_V \circ f\) for the canonical maps of
+  affine opens, applied to the identity of \(T\) and to \(f\) respectively; (iii) is the
+  fact that the canonical map of the top affine open of an affine scheme is the isomorphism
+  \(\Spec \Gamma(\Spec A, \top) \cong \Spec A\), inverse to \(\Spec\) of the section
+  identification.
+\end{proof}
+
+\begin{definition}[The component of the unit at a test object]
+  \label{def:relPicToPicEt}
+  \lean{AlgebraicGeometry.relPicToPicEt, AlgebraicGeometry.relPicToPicEt_val}
+  \uses{def:picEt, def:PicEtAff_unit, def:fromSpecAffine, def:relPicMap, def:PicEtAff_mapAlg}
+  \leanok
+  For a test object \(T\), the homomorphism
+  \(\mathrm{relPic}(C,T) \to \mathrm{picEt}(C,T)\) sending a relative Picard class \(z\) to
+  the family whose value at an affine open \(U \subseteq T_{\mathrm{left}}\) is the plus unit
+  of the restriction of \(z\) along the affine-open test object of \(U\):
+  \[
+    z \;\longmapsto\;
+    \Bigl( U \mapsto \mathrm{unit}\bigl(\iota_U^{*} z\bigr) \Bigr)_{U} .
+  \]
+\end{definition}
+\begin{proof}
+  \leanok
+  The family is compatible under restriction of affine opens, as required by
+  Definition~\ref{def:picEt}: for \(U \le V\), the restriction coherence of the affine-open
+  test objects (Definition~\ref{def:fromSpecAffine}) gives \(\iota_U = \iota_V \circ
+  \Spec(\mathrm{res}_{V,U})\), so functoriality of restriction (Definition~\ref{def:relPicMap})
+  and naturality of the unit on explicit algebra maps (Definition~\ref{def:PicEtAff_mapAlg})
+  identify \(\mathrm{res}_{V,U}^{*}\,\mathrm{unit}(\iota_V^{*}z) =
+  \mathrm{unit}(\iota_U^{*}z)\). The assignment is a homomorphism because each constituent
+  map is.
+\end{proof}
+
+\begin{theorem}[Affine consistency of the unit]
+  \label{thm:picEtAffineEquiv_relPicToPicEt}
+  \lean{AlgebraicGeometry.picEtAffineEquiv_relPicToPicEt}
+  \uses{def:relPicToPicEt, def:picEtAffineEquiv, def:PicEtAff_mapAlg, def:fromSpecAffine,
+    def:relPicMap, def:PicEtAff_unit}
+  \leanok
+  On an affine test \(\Spec A\), the component of the unit collapses through the affine
+  comparison \(\mathrm{picEt}(C, \Spec A) \cong \mathrm{PicEtAff}(C, A)\)
+  (Definition~\ref{def:picEtAffineEquiv}) to the unit of the plus construction:
+  \[
+    \mathrm{picEtAffineEquiv}\bigl(\mathrm{relPicToPicEt}(z)\bigr)
+      = \mathrm{unit}(z), \qquad z \in \mathrm{relPic}(C,A).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The affine comparison evaluates the family at the top affine open and transports along the
+  section identification \(\Gamma(\Spec A, \top) \cong A\). The value there is
+  \(\mathrm{unit}(\iota_\top^{*} z)\); transporting along the identification and using
+  naturality of the unit (Definition~\ref{def:PicEtAff_mapAlg}) yields the unit of
+  \(z\) restricted along \(\Spec(\Gamma(\Spec A,\top) \cong A) \circ \iota_\top\), which is
+  the identity of \(\Spec A\) by coherence (iii) of Definition~\ref{def:fromSpecAffine}; so
+  the value is \(\mathrm{unit}(z)\) by functoriality (Definition~\ref{def:relPicMap}).
+\end{proof}
+
+\begin{theorem}[Naturality of the unit]
+  \label{thm:picEtMap_relPicToPicEt}
+  \lean{AlgebraicGeometry.picEtMap_relPicToPicEt}
+  \uses{def:relPicToPicEt, def:picEtMap, def:picEt_IsPullbackValue,
+    thm:picEt_pullbackValue_unique, def:fromSpecAffine, def:PicEtAff_mapAlg, def:relPicMap}
+  \leanok
+  Let the curve \(C\) be proper, geometrically irreducible and geometrically reduced. For a
+  morphism of test objects \(f \colon T' \to T\) and \(z \in \mathrm{relPic}(C,T)\),
+  \[
+    f^{*}\bigl(\mathrm{relPicToPicEt}(z)\bigr)
+      = \mathrm{relPicToPicEt}\bigl(f^{*} z\bigr)
+    \quad\text{in } \mathrm{picEt}(C,T').
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The restriction map of \(\mathrm{picEt}\) is characterised value-by-value by the
+  \(\exists!\)-property of Definition~\ref{def:picEt_IsPullbackValue} together with its
+  uniqueness (Theorem~\ref{thm:picEt_pullbackValue_unique}); it therefore suffices to verify
+  that the right-hand family has the characterising property of the pullback of the
+  left-hand family. Unwinding, this is the statement that for affine opens
+  \(W_0 \le W \subseteq T'_{\mathrm{left}}\) with \(W_0 \le f^{-1}V\),
+  \[
+    \mathrm{res}^{*}\,\mathrm{unit}\bigl(\iota_W^{*} f^{*} z\bigr)
+      = (f^{\sharp}_{V,W_0})^{*}\,\mathrm{unit}\bigl(\iota_V^{*} z\bigr).
+  \]
+  Both sides are units of restrictions of \(z\) (naturality of the unit,
+  Definition~\ref{def:PicEtAff_mapAlg}), and the two restrictions agree because the two
+  composites of affine-open test maps agree: \(\iota_{W_0} \circ (\text{res}) = \iota_W\) and
+  \(f \circ \iota_{W_0} = \iota_V \circ \Spec(f^{\sharp}_{V,W_0})\), the two coherences of
+  Definition~\ref{def:fromSpecAffine}.
+\end{proof}
+
+\begin{definition}[The unit of the \'etale sheafification]
+  \label{def:picEtUnit}
+  \lean{AlgebraicGeometry.picEtUnit, AlgebraicGeometry.picEtUnit_app,
+    AlgebraicGeometry.picEtAffineEquiv_picEtUnit_app}
+  \uses{def:relPicToPicEt, thm:picEtMap_relPicToPicEt, def:picEtFunctor, def:relPicMap,
+    thm:picEtAffineEquiv_relPicToPicEt}
+  \leanok
+  Let the curve \(C\) be proper, geometrically irreducible and geometrically reduced. The
+  components of Definition~\ref{def:relPicToPicEt} assemble into a natural transformation
+  \[
+    \mathrm{relPicFunctor}(C) \;\longrightarrow\; \mathrm{picEtFunctor}(C)
+  \]
+  of presheaves of commutative groups on \(\Over(\Spec k)\), whose affine components collapse
+  to the unit of the plus construction.
+\end{definition}
+\begin{proof}
+  \leanok
+  Naturality of the components is Theorem~\ref{thm:picEtMap_relPicToPicEt}; the affine
+  collapse is Theorem~\ref{thm:picEtAffineEquiv_relPicToPicEt}.
+\end{proof}
+
+\section{The degree of a plus class}
+\label{sec:degAff}
+
+The relative degree \(\mathrm{relPicDeg}\) of Definition~\ref{def:relPicDeg} reads an honest
+integer off a relative Picard class over a \emph{field}. This section descends it to the plus
+construction: a plus class over \(K\) is represented on an \'etale cover, every cover is
+refined by a single finite separable field extension (cofinality,
+Theorem~\ref{thm:etale_cover_field_cofinality}), and the \emph{zigzag} shows the field
+reading is independent of every choice.
+
+\begin{lemma}[The relative degree is additive]
+  \label{lem:relPicDeg_hom}
+  \lean{AlgebraicGeometry.relPicDeg_mul, AlgebraicGeometry.relPicDeg_one}
+  \uses{def:relPicDeg}
+  \leanok
+  For a field extension \(K\) of \(k\) and relative Picard classes
+  \(x, y \in \mathrm{relPic}(C, K)\),
+  \[
+    \mathrm{relPicDeg}_K(x \cdot y) = \mathrm{relPicDeg}_K(x) + \mathrm{relPicDeg}_K(y),
+    \qquad \mathrm{relPicDeg}_K(1) = 0 .
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  \(\mathrm{relPicDeg}_K\) is a homomorphism from the multiplicative relative Picard group to
+  \(\Z\) by construction (Definition~\ref{def:relPicDeg}); these are its two homomorphism
+  laws.
+\end{proof}
+
+\begin{theorem}[The zigzag, leg (i): one degree through any two field readings]
+  \label{thm:relPicDeg_relPicAlgMap_congr}
+  \lean{AlgebraicGeometry.relPicDeg_relPicAlgMap_congr}
+  \uses{def:relPicDeg, thm:relPicDeg_relPicAlgMap, thm:relPicAlgMap_congr,
+    thm:etale_cover_field_cofinality, def:etale_cover_prod, def:etale_cover_prod_coproj,
+    def:etale_cover_ofField, def:descentClasses, lem:relPicAlgMap_functor}
+  \leanok
+  Let \(K\) be a field extension of \(k\), \(E\) a presented \'etale cover of \(K\), and
+  \(x \in \mathrm{relPic}(C, B_E)\) a descent class on \(E\). Let \(L_1, L_2\) be finite
+  separable field extensions of \(K\) and \(j_1 \colon B_E \to L_1\),
+  \(j_2 \colon B_E \to L_2\) two \(K\)-algebra maps. Then
+  \[
+    \mathrm{relPicDeg}_{L_1}\bigl(j_1^{*} x\bigr)
+      = \mathrm{relPicDeg}_{L_2}\bigl(j_2^{*} x\bigr).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Refine the product of the two field covers \(\mathrm{ofField}(L_1) \times
+  \mathrm{ofField}(L_2)\) (Definitions~\ref{def:etale_cover_ofField},
+  \ref{def:etale_cover_prod}) to a single finite separable field extension \(M\) of \(K\)
+  (cofinality, Theorem~\ref{thm:etale_cover_field_cofinality}); composing with the
+  coprojections (Definition~\ref{def:etale_cover_prod_coproj}) yields \(K\)-algebra maps
+  \(\theta_1 \colon L_1 \to M\) and \(\theta_2 \colon L_2 \to M\). Then
+  \[
+    \mathrm{relPicDeg}_{L_1}(j_1^{*} x)
+      = \mathrm{relPicDeg}_{M}(\theta_1^{*} j_1^{*} x)
+      = \mathrm{relPicDeg}_{M}\bigl((\theta_1 j_1)^{*} x\bigr),
+  \]
+  using invariance of the relative degree under base-field transitions (E-iv-alg descended,
+  Theorem~\ref{thm:relPicDeg_relPicAlgMap}) and functoriality
+  (Lemma~\ref{lem:relPicAlgMap_functor}); likewise for the second leg. Now \(\theta_1 j_1\)
+  and \(\theta_2 j_2\) are two \(K\)-algebra maps \(B_E \to M\) out of the cover carrier, and
+  \(x\) is a descent class, so the transport-independence keystone of the plus construction
+  (Theorem~\ref{thm:relPicAlgMap_congr}) gives \((\theta_1 j_1)^{*} x = (\theta_2 j_2)^{*} x\).
+  The two degrees over \(M\) therefore agree, hence so do the original readings.
+\end{proof}
+
+\begin{theorem}[The zigzag: well-definedness of the plus-class degree]
+  \label{thm:relPicDeg_eq_of_descentMap_eq}
+  \lean{AlgebraicGeometry.relPicDeg_eq_of_descentMap_eq}
+  \uses{thm:relPicDeg_relPicAlgMap_congr, def:descentMap, thm:etale_cover_field_cofinality,
+    lem:relPicAlgMap_functor, def:descentClasses}
+  \leanok
+  Let \(E_1, E_2, G\) be presented \'etale covers of \(K\), \(x_1, x_2\) descent classes on
+  \(E_1, E_2\), and \(f \colon B_{E_1} \to B_G\), \(g \colon B_{E_2} \to B_G\) \(K\)-algebra
+  maps with \(f_{*} x_1 = g_{*} x_2\) as descent classes on \(G\) (the identification of the
+  plus-construction setoid). Then for any two field readings — finite separable field
+  extensions \(L_1, L_2\) of \(K\) with \(K\)-algebra maps \(j_1 \colon B_{E_1} \to L_1\) and
+  \(j_2 \colon B_{E_2} \to L_2\) —
+  \[
+    \mathrm{relPicDeg}_{L_1}\bigl(j_1^{*} x_1\bigr)
+      = \mathrm{relPicDeg}_{L_2}\bigl(j_2^{*} x_2\bigr).
+  \]
+  No Galois theory appears: Galois twisting of the transport is a special case of the
+  transport-independence keystone.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Refine \(G\) to a single finite separable field extension \(N\) of \(K\) by cofinality
+  (Theorem~\ref{thm:etale_cover_field_cofinality}), with refinement map
+  \(\ell \colon B_G \to N\). By leg (i) of the zigzag
+  (Theorem~\ref{thm:relPicDeg_relPicAlgMap_congr}) applied to the descent class \(x_1\) on
+  \(E_1\) and the two readings \(j_1\) and \(\ell f\),
+  \[
+    \mathrm{relPicDeg}_{L_1}(j_1^{*} x_1) = \mathrm{relPicDeg}_{N}\bigl((\ell f)^{*} x_1\bigr)
+      = \mathrm{relPicDeg}_{N}\bigl(\ell^{*} f^{*} x_1\bigr)
+  \]
+  (functoriality, Lemma~\ref{lem:relPicAlgMap_functor}). Cross over along the identification
+  \(f^{*} x_1 = g^{*} x_2\) (the underlying relative classes of \(f_{*}x_1 = g_{*}x_2\),
+  Definition~\ref{def:descentMap}) and run the same two steps backwards on the second leg:
+  \(\mathrm{relPicDeg}_{N}(\ell^{*} g^{*} x_2) = \mathrm{relPicDeg}_{N}((\ell g)^{*} x_2) =
+  \mathrm{relPicDeg}_{L_2}(j_2^{*} x_2)\), again by leg (i).
+\end{proof}
+
+\begin{definition}[The degree of a plus class]
+  \label{def:degAff}
+  \lean{AlgebraicGeometry.PicEtAff.degAff, AlgebraicGeometry.PicEtAff.degAff_mk,
+    AlgebraicGeometry.PicEtAff.degAff_mk_ofField}
+  \uses{def:PicEtAff, def:PicEtAff_mk, thm:relPicDeg_eq_of_descentMap_eq,
+    thm:relPicDeg_relPicAlgMap_congr, thm:etale_cover_field_cofinality, def:relPicDeg,
+    def:etale_cover_ofField}
+  \leanok
+  The \emph{degree} \(\deg^{+}_K \colon \mathrm{PicEtAff}(C, K) \to \Z\) of an
+  \'etale-locally trivial relative Picard class: represent the class by a descent class
+  \(x\) on a cover \(E\), refine \(E\) to a finite separable field extension \(L/K\) by
+  cofinality (Theorem~\ref{thm:etale_cover_field_cofinality}), and read
+  \(\mathrm{relPicDeg}_L\) of the transported class. The value is independent of the
+  representative and of the refinement, and it is pinned by the \emph{master equality}: for
+  every descent-class representative \((E, x)\), every finite separable field extension
+  \(L/K\) and every \(K\)-algebra map \(j \colon B_E \to L\),
+  \[
+    \deg^{+}_K [E, x] = \mathrm{relPicDeg}_L\bigl(j^{*} x\bigr).
+  \]
+  In particular, on a field-cover representative \((\mathrm{ofField}(L), y)\) the degree is
+  \(\mathrm{relPicDeg}_L\) of \(y\) transported through the carrier identification.
+\end{definition}
+\begin{proof}
+  \leanok
+  Existence of a field refinement of each cover is cofinality
+  (Theorem~\ref{thm:etale_cover_field_cofinality}). Independence of the representative is
+  exactly the zigzag (Theorem~\ref{thm:relPicDeg_eq_of_descentMap_eq}): two representatives
+  of one plus class are identified after transport to a common refinement
+  (Definition~\ref{def:PicEtAff_mk}), and the zigzag equates any two field readings of such
+  a pair — in particular the readings through the chosen refinements. The master equality is
+  leg (i) of the zigzag (Theorem~\ref{thm:relPicDeg_relPicAlgMap_congr}), comparing the
+  chosen refinement map with the given \(j\); the field-cover normalization is the master
+  equality at the carrier identification of \(\mathrm{ofField}(L)\)
+  (Definition~\ref{def:etale_cover_ofField}).
+\end{proof}
+
+\begin{theorem}[Additivity of the plus-class degree]
+  \label{thm:degAff_hom}
+  \lean{AlgebraicGeometry.PicEtAff.degAff_one, AlgebraicGeometry.PicEtAff.degAff_mul,
+    AlgebraicGeometry.PicEtAff.degAff_inv}
+  \uses{def:degAff, def:PicEtAff_one, thm:PicEtAff_mk_mul_mk, lem:PicEtAff_ind,
+    def:etale_cover_prod, def:etale_cover_prod_coproj, thm:etale_cover_field_cofinality,
+    lem:relPicDeg_hom, def:etale_cover_self, lem:relPicAlgMap_functor}
+  \leanok
+  \(\deg^{+}_K\) is a homomorphism: \(\deg^{+}_K(1) = 0\),
+  \(\deg^{+}_K(a b) = \deg^{+}_K(a) + \deg^{+}_K(b)\) and
+  \(\deg^{+}_K(a^{-1}) = -\deg^{+}_K(a)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \emph{Unit.} The trivial plus class is represented by the trivial descent class on the
+  trivial cover (Definitions~\ref{def:PicEtAff_one}, \ref{def:etale_cover_self}); its field
+  reading is \(\mathrm{relPicDeg}_K(1) = 0\) (Lemma~\ref{lem:relPicDeg_hom}), and the master
+  equality (Definition~\ref{def:degAff}) transfers this to \(\deg^{+}\).
+
+  \emph{Additivity.} Represent \(a = [E,x]\) and \(b = [F,y]\)
+  (Lemma~\ref{lem:PicEtAff_ind}); the product is represented on the product cover
+  \(E \times F\) by the product of the transported classes
+  (Theorem~\ref{thm:PicEtAff_mk_mul_mk}). Refine \(E \times F\) to a single finite separable
+  field \(L\) (Theorem~\ref{thm:etale_cover_field_cofinality}) with refinement map \(\ell\),
+  and read all three degrees there through the master equality: the reading of \(ab\) is
+  \(\mathrm{relPicDeg}_L\) of the product of the two transported classes (transport is a
+  homomorphism, Lemma~\ref{lem:relPicAlgMap_functor}), which splits as the sum by
+  Lemma~\ref{lem:relPicDeg_hom}; and the two summands are the readings of \(a\) and \(b\)
+  through \(\ell\) composed with the coprojections
+  (Definition~\ref{def:etale_cover_prod_coproj}).
+
+  \emph{Inverses.} From \(\deg^{+}(a^{-1}) + \deg^{+}(a) = \deg^{+}(1) = 0\).
+\end{proof}
+
+\begin{theorem}[The unit normalization of the plus-class degree]
+  \label{thm:degAff_unit}
+  \lean{AlgebraicGeometry.PicEtAff.degAff_unit}
+  \uses{def:degAff, def:PicEtAff_unit, def:etale_cover_self,
+    lem:PicEtAff_tautological_mem_descentClasses, lem:relPicAlgMap_functor}
+  \leanok
+  On a class in the image of the unit of the plus construction, the degree is the relative
+  degree over the base field itself:
+  \[
+    \deg^{+}_K\bigl(\mathrm{unit}(z)\bigr) = \mathrm{relPicDeg}_K(z),
+    \qquad z \in \mathrm{relPic}(C,K).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The unit represents its value by the tautological descent class of \(z\) on the trivial
+  cover (Definition~\ref{def:PicEtAff_unit},
+  Lemma~\ref{lem:PicEtAff_tautological_mem_descentClasses}), and the trivial cover is
+  refined by the field cover of \(K\) itself. The master equality
+  (Definition~\ref{def:degAff}) reads \(\mathrm{relPicDeg}_K\) of \(z\) transported along the
+  composite \(K \to B_{\mathrm{self}} \to K\), which is the identity
+  (Lemma~\ref{lem:relPicAlgMap_functor}).
+\end{proof}
+
+\section{The degree at field points and the degree-zero Picard functor}
+\label{sec:pic0}
+
+\begin{definition}[The degree of an \'etale Picard class at a field point]
+  \label{def:degAt}
+  \lean{AlgebraicGeometry.degAt}
+  \uses{def:degAff, def:picEtAffineEquiv, def:picEtMap}
+  \leanok
+  Let \(T\) be a test object, \(\lambda \in \mathrm{picEt}(C,T)\), \(K\) a field extension of
+  \(k\) and \(t \colon \Spec K \to T\) a \emph{field point} of \(T\). The \emph{degree of
+  \(\lambda\) at \(t\)} is the plus-class degree of the restriction:
+  \[
+    \deg_t(\lambda) \;:=\; \deg^{+}_K\bigl(\mathrm{picEtAffineEquiv}(t^{*}\lambda)\bigr) \in \Z ,
+  \]
+  the restriction along \(t\) (Definition~\ref{def:picEtMap}) collapsed to a plus class by
+  the affine comparison (Definition~\ref{def:picEtAffineEquiv}).
+\end{definition}
+
+\begin{lemma}[The degree at a field point is additive]
+  \label{lem:degAt_hom}
+  \lean{AlgebraicGeometry.degAt_one, AlgebraicGeometry.degAt_mul, AlgebraicGeometry.degAt_inv}
+  \uses{def:degAt, thm:degAff_hom}
+  \leanok
+  For classes \(\lambda, \mu \in \mathrm{picEt}(C,T)\) and a field point \(t\),
+  \[
+    \deg_t(1) = 0, \qquad
+    \deg_t(\lambda\mu) = \deg_t(\lambda) + \deg_t(\mu), \qquad
+    \deg_t(\lambda^{-1}) = -\deg_t(\lambda).
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  Restriction and the affine comparison are homomorphisms, and \(\deg^{+}\) is additive
+  (Theorem~\ref{thm:degAff_hom}).
+\end{proof}
+
+\begin{theorem}[Functoriality of the degree at field points]
+  \label{thm:degAt_picEtMap}
+  \lean{AlgebraicGeometry.degAt_picEtMap, AlgebraicGeometry.degAt_picEtFunctor_map}
+  \uses{def:degAt, thm:picEtMap_functor_laws}
+  \leanok
+  For \(f \colon T' \to T\), \(\lambda \in \mathrm{picEt}(C,T)\) and a field point
+  \(t' \colon \Spec K \to T'\),
+  \[
+    \deg_{t'}\bigl(f^{*}\lambda\bigr) = \deg_{f \circ t'}(\lambda).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Both sides collapse the restriction of \(\lambda\) along the same composite field point:
+  \(t'^{*}(f^{*}\lambda) = (f \circ t')^{*}\lambda\) by functoriality of restriction
+  (Theorem~\ref{thm:picEtMap_functor_laws}).
+\end{proof}
+
+\begin{definition}[The degree-zero subgroup]
+  \label{def:pic0Subgroup}
+  \lean{AlgebraicGeometry.pic0Subgroup, AlgebraicGeometry.mem_pic0Subgroup_iff}
+  \uses{def:degAt, lem:degAt_hom}
+  \leanok
+  For a test object \(T\), the subgroup
+  \[
+    \mathrm{pic}^0(C,T) \;:=\;
+    \bigl\{\, \lambda \in \mathrm{picEt}(C,T) \;:\; \deg_t(\lambda) = 0
+      \text{ for every field point } t \text{ of } T \,\bigr\}
+  \]
+  of classes of degree zero at \emph{every} field point of \(T\).
+\end{definition}
+\begin{proof}
+  \leanok
+  Closure under unit, product and inverse is Lemma~\ref{lem:degAt_hom}, pointwise in the
+  field point.
+\end{proof}
+
+\begin{definition}[The degree-zero relative Picard functor]
+  \label{def:pic0Functor}
+  \lean{AlgebraicGeometry.pic0Map, AlgebraicGeometry.pic0Map_coe,
+    AlgebraicGeometry.pic0Functor, AlgebraicGeometry.pic0Functor_obj,
+    AlgebraicGeometry.pic0Functor_map, AlgebraicGeometry.pic0Inclusion}
+  \uses{def:pic0Subgroup, thm:degAt_picEtMap, def:picEtFunctor, thm:picEtMap_functor_laws}
+  \leanok
+  The degree-zero condition is stable under restriction: for \(f \colon T' \to T\), the
+  restriction map of \(\mathrm{picEt}\) carries \(\mathrm{pic}^0(C,T)\) into
+  \(\mathrm{pic}^0(C,T')\). The functor
+  \[
+    \mathrm{Pic}^0_{C/k} \colon \Over(\Spec k)^{\mathrm{op}} \longrightarrow \mathrm{CommGrp},
+    \qquad T \mapsto \mathrm{pic}^0(C,T),
+  \]
+  with these restrictions, is the \emph{degree-zero relative Picard functor} — a subgroup
+  subfunctor of \(\mathrm{picEtFunctor}(C)\), with inclusion natural transformation
+  \(\mathrm{Pic}^0_{C/k} \to \mathrm{picEtFunctor}(C)\). This is the carrier of the
+  representability statement: the Jacobian represents \emph{this} functor.
+\end{definition}
+\begin{proof}
+  \leanok
+  Stability: for \(\lambda\) of degree zero at every field point of \(T\) and \(t'\) a field
+  point of \(T'\), functoriality (Theorem~\ref{thm:degAt_picEtMap}) gives
+  \(\deg_{t'}(f^{*}\lambda) = \deg_{f \circ t'}(\lambda) = 0\). The functor laws are
+  inherited from those of \(\mathrm{picEtFunctor}\)
+  (Theorem~\ref{thm:picEtMap_functor_laws}) on underlying classes, and the inclusion is
+  natural because the restriction of a degree-zero class \emph{is} the restriction of its
+  underlying class.
+\end{proof}
+
+\section{The degree seam at field points}
+\label{sec:degreeSeam}
+
+For a \emph{cocycle-presented} plus class on an affine test — one which is the unit image of
+an honest \v Cech Picard class — the degree at a field point collapses to the curve-level
+class degree \(\deg_{\Pic}\) of the fibre class. This seam is where the campaign's coverage
+and stratification arguments spend degree-zero-ness.
+
+\begin{theorem}[The degree seam, unit form]
+  \label{thm:degAt_of_affineEquiv_eq_unit}
+  \lean{AlgebraicGeometry.degAt_of_affineEquiv_eq_unit}
+  \uses{def:degAt, thm:picEtAffineEquiv_naturality, def:PicEtAff_mapAlg, thm:degAff_unit,
+    def:relPicAlgMap}
+  \leanok
+  Let \(A\) be a \(k\)-algebra, \(\lambda \in \mathrm{picEt}(C, \Spec A)\) a class whose
+  affine collapse is the plus unit of a relative Picard class \(z \in \mathrm{relPic}(C,A)\),
+  and \(\varphi \colon A \to K\) a \(k\)-algebra map into a field. Then the degree of
+  \(\lambda\) at the field point \(\Spec \varphi\) is the relative degree of the fibre class:
+  \[
+    \deg_{\Spec\varphi}(\lambda) = \mathrm{relPicDeg}_K\bigl(\varphi^{*} z\bigr).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The affine comparison intertwines restriction along \(\Spec\varphi\) with the explicit
+  transport \(\varphi^{*}\) of plus classes (Theorem~\ref{thm:picEtAffineEquiv_naturality}),
+  which is natural on units (Definition~\ref{def:PicEtAff_mapAlg}); so the collapse of
+  \(t^{*}\lambda\) is \(\mathrm{unit}(\varphi^{*} z)\), whose degree is
+  \(\mathrm{relPicDeg}_K(\varphi^{*} z)\) by the unit normalization
+  (Theorem~\ref{thm:degAff_unit}).
+\end{proof}
+
+\begin{theorem}[The degree seam: cocycle-presented classes]
+  \label{thm:degAt_of_affineEquiv_eq_unit_relPicMk}
+  \lean{AlgebraicGeometry.degAt_of_affineEquiv_eq_unit_relPicMk}
+  \uses{thm:degAt_of_affineEquiv_eq_unit, def:relPicMap, def:relPic, def:relPicDeg}
+  \leanok
+  In the situation of Theorem~\ref{thm:degAt_of_affineEquiv_eq_unit}, suppose
+  \(z = \pi_{\Spec A}(L)\) for an honest \v Cech Picard class \(L\) on \(C \otimes \Spec A\).
+  Then the degree at the field point is the class degree of the fibre \v Cech class:
+  \[
+    \deg_{\Spec\varphi}(\lambda)
+      = \deg_{\Pic}\Bigl( (C \lhd \Spec\varphi)^{*} L \Bigr),
+  \]
+  the pullback of \(L\) along the point.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By Theorem~\ref{thm:degAt_of_affineEquiv_eq_unit} the degree is
+  \(\mathrm{relPicDeg}_K(\varphi^{*}\pi_{\Spec A}(L))\); the restriction of a projected class
+  is the projection of the pullback (Definition~\ref{def:relPicMap}), and on projected
+  classes over a field the relative degree reads the class degree of the representative
+  (Definition~\ref{def:relPicDeg}).
+\end{proof}
+
+\begin{theorem}[Base-field constancy of the degree]
+  \label{thm:degAt_baseChange}
+  \lean{AlgebraicGeometry.degAt_of_affineEquiv_eq_unit_baseChange,
+    AlgebraicGeometry.degAt_eq_classDeg_of_affineEquiv_eq_unit_baseChange}
+  \uses{thm:degAt_of_affineEquiv_eq_unit, lem:relPicAlgMap_functor,
+    thm:relPicDeg_relPicAlgMap, def:relPicDeg, def:relPic}
+  \leanok
+  In the situation of Theorem~\ref{thm:degAt_of_affineEquiv_eq_unit}, suppose \(z\) is pulled
+  back from the base: \(z = \iota_A^{*} w\) for a class \(w \in \mathrm{relPic}(C,k)\), with
+  \(\iota_A \colon k \to A\) the structure map. Then the degree of \(\lambda\) is
+  \(\mathrm{relPicDeg}_k(w)\) at \emph{every} field point of \(\Spec A\) — independent of the
+  point. If moreover \(w = \pi(L_0)\) for a \v Cech class \(L_0\) on \(C \otimes \Spec k\),
+  the constant is \(\deg_{\Pic}(L_0)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  At a field point \(\Spec\varphi\), Theorem~\ref{thm:degAt_of_affineEquiv_eq_unit} reads
+  \(\mathrm{relPicDeg}_K(\varphi^{*}\iota_A^{*}w) =
+  \mathrm{relPicDeg}_K\bigl((\varphi\iota_A)^{*}w\bigr)\) (functoriality,
+  Lemma~\ref{lem:relPicAlgMap_functor}); invariance of the relative degree under base-field
+  transitions (Theorem~\ref{thm:relPicDeg_relPicAlgMap}) collapses this to
+  \(\mathrm{relPicDeg}_k(w)\), with no dependence on \(\varphi\). The \v Cech form reads the
+  representative through Definition~\ref{def:relPicDeg}.
+\end{proof}
+
+\begin{theorem}[The fibre degree of a degree-zero twist]
+  \label{thm:degAt_pic0_mul_pow}
+  \lean{AlgebraicGeometry.degAt_pow, AlgebraicGeometry.degAt_pic0_mul_pow}
+  \uses{lem:degAt_hom, def:pic0Subgroup}
+  \leanok
+  For any class \(\theta \in \mathrm{picEt}(C,T)\), \(m \in \N\), and a field point \(t\),
+  \(\deg_t(\theta^m) = m \cdot \deg_t(\theta)\); and for
+  \(\lambda \in \mathrm{pic}^0(C,T)\),
+  \[
+    \deg_t\bigl(\lambda \cdot \theta^{m}\bigr) = m \cdot \deg_t(\theta)
+  \]
+  on the nose — the degree-zero factor contributes nothing.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The power law is additivity (Lemma~\ref{lem:degAt_hom}) by induction on \(m\); the twist
+  law adds \(\deg_t(\lambda) = 0\) (Definition~\ref{def:pic0Subgroup}).
+\end{proof}
+
+\section{The \texorpdfstring{\(\theta\)}{theta}-family and the multiplication shift}
+\label{sec:thetaShift}
+
+Fix a \v Cech Picard class \(L_0\) on the base-changed curve
+\(C_k := (C \otimes \Spec k)_{\mathrm{left}}\). Pulling its plus class back from the base
+test along the canonical structure maps produces a family \(\theta_T\) of \'etale Picard
+classes, natural in \(T\) and of constant degree \(d_1 = \deg_{\Pic}(L_0)\) at every field
+point; multiplication by \(\theta_T^{m}\) then shifts the degree-zero functor onto the
+degree-\(m d_1\) layer.
+
+\begin{definition}[The canonical map to the base test]
+  \label{def:toBaseTest}
+  \lean{AlgebraicGeometry.toBaseTest, AlgebraicGeometry.toBaseTest_left,
+    AlgebraicGeometry.toBaseTest_naturality, AlgebraicGeometry.toBaseTest_overSpec}
+  \uses{def:overSpecMap}
+  \leanok
+  The base test \(\Spec k\) (the affine test of the \(k\)-algebra \(k\)) is terminal in
+  \(\Over(\Spec k)\) up to the identification of its structure morphism with the identity:
+  every test object \(T\) has a canonical morphism \(T \to \Spec k\) given by its structure
+  morphism, natural in \(T\) (\(f \circ (\text{canonical}) = \text{canonical}\)); on an
+  affine test \(\Spec A\) it is \(\Spec\) of the structure map \(k \to A\).
+\end{definition}
+\begin{proof}
+  \leanok
+  The structure morphism of the base test is \(\Spec\) of \(\mathrm{id}_k\), the identity;
+  hence the structure morphism of \(T\) is a morphism of \(\Over(\Spec k)\) into it.
+  Naturality is the defining triangle of morphisms of \(\Over(\Spec k)\); the affine case is
+  the compatibility of \(\Spec\) with structure maps (Definition~\ref{def:overSpecMap}).
+\end{proof}
+
+\begin{definition}[The \(\theta\)-family]
+  \label{def:thetaFamily}
+  \lean{AlgebraicGeometry.thetaBase, AlgebraicGeometry.thetaFamily,
+    AlgebraicGeometry.thetaFamily_natural}
+  \uses{def:toBaseTest, def:picEtAffineEquiv, def:PicEtAff_unit, def:relPic, def:picEtMap,
+    thm:picEtMap_functor_laws}
+  \leanok
+  For a \v Cech class \(L_0\) on \(C_k\), let
+  \(\theta_{\mathrm{base}} \in \mathrm{picEt}(C, \Spec k)\) be the affine-comparison preimage
+  of the plus unit of \(\pi(L_0)\), and for every test \(T\) set
+  \[
+    \theta_T \;:=\; (\text{canonical } T \to \Spec k)^{*}\,\theta_{\mathrm{base}}
+      \;\in\; \mathrm{picEt}(C,T).
+  \]
+  The family is natural: \(f^{*}\theta_T = \theta_{T'}\) for every \(f \colon T' \to T\) —
+  \(\theta\) pulls back to \(\theta\), so twisting by \(\theta_T^{m}\) is uniform in the
+  test.
+\end{definition}
+\begin{proof}
+  \leanok
+  Naturality: \(f^{*}\theta_T\) is the pullback of \(\theta_{\mathrm{base}}\) along the
+  composite \(f \circ (\text{canonical})\), which is the canonical map of \(T'\)
+  (Definition~\ref{def:toBaseTest}); conclude by functoriality of restriction
+  (Theorem~\ref{thm:picEtMap_functor_laws}).
+\end{proof}
+
+\begin{theorem}[The degree of the \(\theta\)-family at every field point]
+  \label{thm:degAt_thetaFamily}
+  \lean{AlgebraicGeometry.thetaFamily_overSpec_affineEquiv,
+    AlgebraicGeometry.degAt_thetaFamily, AlgebraicGeometry.degAt_thetaFamily_pow}
+  \uses{def:thetaFamily, thm:degAt_baseChange, thm:picEtAffineEquiv_naturality,
+    def:PicEtAff_mapAlg, thm:degAt_picEtMap, thm:degAt_pic0_mul_pow, def:toBaseTest,
+    def:relPicAlgMap}
+  \leanok
+  For every test \(T\), every field point \(t \colon \Spec K \to T\) and every \(m \in \N\),
+  \[
+    \deg_t(\theta_T) = \deg_{\Pic}(L_0) =: d_1,
+    \qquad
+    \deg_t\bigl(\theta_T^{\,m}\bigr) = m \, d_1 ,
+  \]
+  a base-field-invariant constant.
+\end{theorem}
+\begin{proof}
+  \leanok
+  On an affine test \(\Spec A\), the affine collapse of \(\theta_{\Spec A}\) is the plus unit
+  of the base-changed class \(\iota_A^{*}\pi(L_0)\): the canonical map is \(\Spec\iota_A\)
+  (Definition~\ref{def:toBaseTest}), the affine comparison intertwines restriction with the
+  explicit transport (Theorem~\ref{thm:picEtAffineEquiv_naturality}), and the transport is
+  natural on units (Definition~\ref{def:PicEtAff_mapAlg}). Base-field constancy
+  (Theorem~\ref{thm:degAt_baseChange}) then reads \(\deg = \deg_{\Pic}(L_0)\) at every field
+  point of \(\Spec A\). For a general test \(T\) and field point \(t\), naturality of the
+  family (Definition~\ref{def:thetaFamily}) plus functoriality of the degree
+  (Theorem~\ref{thm:degAt_picEtMap}) reduce \(\deg_t(\theta_T)\) to the degree of
+  \(\theta_{\Spec K}\) at the identity point of \(\Spec K\), covered by the affine case.
+  The power law is Theorem~\ref{thm:degAt_pic0_mul_pow}.
+\end{proof}
+
+\begin{definition}[The degree-\(d\) layer functor]
+  \label{def:picDegLayerFunctor}
+  \lean{AlgebraicGeometry.picDegLayer, AlgebraicGeometry.picDegLayerFunctor}
+  \uses{def:degAt, def:picEtFunctor, thm:degAt_picEtMap, thm:picEtMap_functor_laws}
+  \leanok
+  For \(d \in \Z\), the \emph{degree-\(d\) layer}
+  \[
+    \mathrm{pic}^{d}(C,T) \;:=\;
+    \bigl\{\, \lambda \in \mathrm{picEt}(C,T) \;:\; \deg_t(\lambda) = d
+      \text{ for every field point } t \,\bigr\},
+  \]
+  a \emph{set}-valued subfunctor \(\Over(\Spec k)^{\mathrm{op}} \to \mathrm{Set}\) of the
+  \'etale Picard functor. For \(d \neq 0\) the layer is a coset of the degree-zero subgroup,
+  not a subgroup: it carries no group structure.
+\end{definition}
+\begin{proof}
+  \leanok
+  Stability of the degree-\(d\) condition under restriction is functoriality of the degree
+  (Theorem~\ref{thm:degAt_picEtMap}); the functor laws are inherited from
+  \(\mathrm{picEtFunctor}\) (Theorem~\ref{thm:picEtMap_functor_laws}).
+\end{proof}
+
+\begin{theorem}[The multiplication-by-\(\theta^m\) natural isomorphism and the shift of a representation]
+  \label{thm:mulThetaPowNatIso}
+  \lean{AlgebraicGeometry.mulThetaPowEquiv, AlgebraicGeometry.mulThetaPowNatIso,
+    AlgebraicGeometry.representableByOfShift}
+  \uses{def:picDegLayerFunctor, def:pic0Functor, thm:degAt_pic0_mul_pow,
+    thm:degAt_thetaFamily, def:thetaFamily, lem:degAt_hom}
+  \leanok
+  For every \(m \in \N\), multiplication by \(\theta_T^{m}\) is a bijection
+  \[
+    \mathrm{pic}^0(C,T) \;\xrightarrow{\ \sim\ }\; \mathrm{pic}^{m d_1}(C,T),
+    \qquad \lambda \mapsto \lambda \cdot \theta_T^{m},
+  \]
+  natural in \(T\): an isomorphism of set-valued functors from (the underlying-set functor
+  of) \(\mathrm{Pic}^0_{C/k}\) onto the degree-\(m d_1\) layer functor. Consequently a
+  representation of the shifted layer functor by an object \(J\) transports to a
+  representation of \(\mathrm{Pic}^0_{C/k}\) (as a set-valued functor) by \(J\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Forward: \(\deg_t(\lambda\theta_T^m) = m\,\deg_t(\theta_T) = m d_1\) at every field point
+  (Theorem~\ref{thm:degAt_pic0_mul_pow}, Theorem~\ref{thm:degAt_thetaFamily}). Backward,
+  \(\mu \mapsto \mu \cdot (\theta_T^{m})^{-1}\) lands in degree zero by additivity
+  (Lemma~\ref{lem:degAt_hom}); the two maps are mutually inverse since the ambient group is
+  commutative. Naturality is naturality of the \(\theta\)-family
+  (Definition~\ref{def:thetaFamily}): restriction is a homomorphism carrying
+  \(\theta_T^{m}\) to \(\theta_{T'}^{m}\). Transport of a representation along a natural
+  isomorphism of set-valued functors is formal.
+\end{proof}
+
+\begin{definition}[The pinned \(\Theta\)-class]
+  \label{def:thetaCechClass}
+  \lean{AlgebraicGeometry.baseCurveObj, AlgebraicGeometry.thetaP1,
+    AlgebraicGeometry.isFinite_thetaP1, AlgebraicGeometry.isDominant_thetaP1,
+    AlgebraicGeometry.thetaCechClass, AlgebraicGeometry.one_le_classDeg_thetaCechClass}
+  \uses{thm:exists_finite_dominant_toP1, thm:baseChangeCurve_bundle, def:fiberTwist,
+    thm:classDeg_fiberTwist_one}
+  \leanok
+  The base-changed curve \(C_k = (C \otimes \Spec k)_{\mathrm{left}}\) is again a curve over
+  \(k\) through the second projection (Theorem~\ref{thm:baseChangeCurve_bundle}), so it
+  carries a finite dominant morphism \(\pi \colon C_k \to \PP^1\)
+  (Theorem~\ref{thm:exists_finite_dominant_toP1}). The \emph{pinned \(\Theta\)-class} is the
+  unit fiber twist
+  \[
+    \Theta \;:=\; \Theta_1(\pi) = \mathrm{fiberTwist}(\pi, 1) \in \Pic(C_k),
+  \]
+  and it satisfies \(1 \le \deg_{\Pic}(\Theta)\). It is the canonical choice of \(L_0\) for
+  the \(\theta\)-family; its degree \(d_1 := \deg_{\Pic}(\Theta) \ge 1\) is the shift
+  constant.
+\end{definition}
+\begin{proof}
+  \leanok
+  Positivity is the \(\Theta\)-positivity theorem
+  (Theorem~\ref{thm:classDeg_fiberTwist_one}) applied to the finite dominant \(\pi\) on the
+  curve \(C_k\).
+\end{proof}
+
+\section{The Zariski sheaf property of the degree-zero functor on the slice}
+\label{sec:pic0ZariskiSheaf}
+
+The functor \(\mathrm{picEt}\) satisfies the Zariski sheaf axioms for arbitrary open covers
+of arbitrary tests — separation was established as Theorem~\ref{thm:picEt_ext_of_le_cover};
+here we add gluing, and the S-lemma making the degree-zero subfunctor a subsheaf.
+
+\begin{definition}[Compatible local data on an open cover]
+  \label{def:picEt_LocalData}
+  \lean{AlgebraicGeometry.picEt.LocalData, AlgebraicGeometry.picEt.IsGlueValue}
+  \uses{def:picEt, def:PicEtAff_mapAlg}
+  \leanok
+  Let \(T\) be a test object and \((O_i)_{i \in \iota}\) an open cover of
+  \(T_{\mathrm{left}}\). \emph{Compatible local data} on the cover is a family assigning to
+  every index \(i\) and every affine open \(W \le O_i\) a plus class
+  \(v_{i,W} \in \mathrm{PicEtAff}(C, \Gamma(T,W))\), such that
+  (\emph{res}) within a member, \(v_{i,W}\) restricts to \(v_{i,W'}\) for \(W' \le W \le O_i\),
+  and (\emph{glue}) across members, \(v_{i,W} = v_{j,W}\) whenever \(W \le O_i\) and
+  \(W \le O_j\). A plus class \(z\) at an affine open \(W\) is a \emph{glue value} of the
+  data when its restriction to every affine sub-open \(W_0 \le W\) contained in some member
+  \(O_i\) equals \(v_{i,W_0}\).
+\end{definition}
+
+\begin{theorem}[Uniqueness of glue values]
+  \label{thm:picEt_glueValue_unique}
+  \lean{AlgebraicGeometry.picEt.glueValue_unique}
+  \uses{def:picEt_LocalData, thm:exists_basic_subcover, thm:picEt_eq_of_basic_eq}
+  \leanok
+  If the \(O_i\) cover \(T_{\mathrm{left}}\), then any two glue values of the same data at
+  the same affine open agree.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Choose a finite family of basic opens of \(W\) covering \(W\), each contained in some
+  member (Theorem~\ref{thm:exists_basic_subcover}, with the subordination predicate
+  ``contained in some \(O_i\)''). Two glue values restrict, on each such basic open, to the
+  same local datum; classes agreeing on a spanning family of basic opens agree
+  (Theorem~\ref{thm:picEt_eq_of_basic_eq}).
+\end{proof}
+
+\begin{theorem}[Existence of glue values]
+  \label{thm:picEt_exists_isGlueValue}
+  \lean{AlgebraicGeometry.picEt.exists_isGlueValue}
+  \uses{def:picEt_LocalData, thm:PicEtAff_exists_mapAlg_eq_of_compat,
+    thm:exists_basic_subcover, thm:picEt_eq_of_basic_eq, def:PicEtAff_mapAlg}
+  \leanok
+  Compatible local data on an open cover of \(T_{\mathrm{left}}\) has a glue value at every
+  affine open of \(T_{\mathrm{left}}\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Fix an affine open \(W\) and choose a finite basic-open refinement \((D(r))_{r \in s}\) of
+  \(W\) subordinate to the cover, with \(\sum_{r \in s}(r) = (1)\)
+  (Theorem~\ref{thm:exists_basic_subcover}). The local data restricted to the \(D(r)\) is a
+  compatible family in the sense of the affine Zariski gluing: on an overlap
+  \(D(rr') = D(r) \cap D(r')\) the two restrictions agree by (\emph{res}) within each
+  chosen member followed by (\emph{glue}) across the two members. By the affine gluing
+  theorem (Theorem~\ref{thm:PicEtAff_exists_mapAlg_eq_of_compat}) there is a plus class
+  \(z\) at \(W\) restricting to the data on each \(D(r)\).
+
+  \(z\) is a glue value: given an affine sub-open \(W_0 \le W\) with \(W_0 \le O_i\), refine
+  \(W_0\) by basic opens of \(W_0\) each of the form \(D(q) \subseteq D(r)\) for some
+  \(r \in s\) (Theorem~\ref{thm:exists_basic_subcover} again). On each such \(D(q)\), the
+  restriction of \(z\) computes through \(D(r)\) as the local datum at \(D(q)\) by
+  (\emph{res}), and the local datum at \(D(q)\) read through member \(i\) agrees with that
+  read through the member of \(r\) by (\emph{glue}). So the restrictions of \(z\) and of
+  \(v_{i,W_0}\) to a spanning family of basic opens of \(W_0\) agree, and
+  Theorem~\ref{thm:picEt_eq_of_basic_eq} concludes.
+\end{proof}
+
+\begin{theorem}[The gluing half of the Zariski sheaf property of \(\mathrm{picEt}\)]
+  \label{thm:picEt_existsUnique_glue_of_le_cover}
+  \lean{AlgebraicGeometry.picEt.glueValue, AlgebraicGeometry.picEt.glueValue_spec,
+    AlgebraicGeometry.picEt.glueValue_eq_of, AlgebraicGeometry.picEt.glueSection,
+    AlgebraicGeometry.picEt.glueSection_eq,
+    AlgebraicGeometry.picEt.existsUnique_glue_of_le_cover}
+  \uses{thm:picEt_glueValue_unique, thm:picEt_exists_isGlueValue, thm:picEt_ext_of_le_cover,
+    def:picEt, def:PicEtAff_mapAlg}
+  \leanok
+  Compatible local data on an open cover of \(T_{\mathrm{left}}\) glues to a \emph{unique}
+  section \(s \in \mathrm{picEt}(C,T)\) whose value at every affine open subordinate to a
+  member is the local datum there.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Take \(s\) to be the family of glue values (existence:
+  Theorem~\ref{thm:picEt_exists_isGlueValue}; they are unique by
+  Theorem~\ref{thm:picEt_glueValue_unique}). The family is compatible under restriction of
+  affine opens — the restriction of the glue value at \(V\) to \(U \le V\) is itself a glue
+  value at \(U\), since glue-value restrictions compose — so \(s\) is a section of
+  \(\mathrm{picEt}(C,T)\) (Definition~\ref{def:picEt}). At an affine open \(W \le O_i\), the
+  glue value restricted along \(W \le W\) is the local datum, so \(s\) extends the data.
+  Uniqueness: two such sections agree at every affine open subordinate to a member, hence
+  agree by separation (Theorem~\ref{thm:picEt_ext_of_le_cover}).
+\end{proof}
+
+\begin{theorem}[Separation of the degree-zero subfunctor]
+  \label{thm:pic0Subgroup_ext_of_le_cover}
+  \lean{AlgebraicGeometry.pic0Subgroup_ext_of_le_cover}
+  \uses{def:pic0Subgroup, thm:picEt_ext_of_le_cover}
+  \leanok
+  Two degree-zero classes on \(T\) whose values agree at every affine open subordinate to an
+  open cover of \(T_{\mathrm{left}}\) are equal.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The underlying \(\mathrm{picEt}\) classes agree by separation
+  (Theorem~\ref{thm:picEt_ext_of_le_cover}); membership in the subgroup carries no further
+  data.
+\end{proof}
+
+\begin{theorem}[The S-lemma: degree-zero membership is Zariski-local]
+  \label{thm:mem_pic0Subgroup_of_cover}
+  \lean{AlgebraicGeometry.mem_pic0Subgroup_of_cover}
+  \uses{def:pic0Subgroup, thm:degAt_picEtMap, def:picEtMap}
+  \leanok
+  Let \((f_i \colon T_i \to T)\) be a family of test morphisms whose left legs are open
+  immersions with jointly surjective ranges, and \(\lambda \in \mathrm{picEt}(C,T)\) a class
+  whose restriction \(f_i^{*}\lambda\) is degree-zero for every \(i\). Then \(\lambda\) is
+  degree-zero. This is what makes the degree-zero subfunctor a \emph{subsheaf}, not merely a
+  subfunctor, of the Zariski sheaf \(\mathrm{picEt}\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Let \(t \colon \Spec K \to T\) be a field point. Its underlying space is a single point,
+  so its topological image lies in the range of some \(f_i\); as that left leg is an open
+  immersion, \(t\) factors through it: \(t = f_i \circ t'\) for a field point \(t'\) of
+  \(T_i\) (lift along an open immersion containing the image). Then
+  \[
+    \deg_t(\lambda) = \deg_{t'}\bigl(f_i^{*}\lambda\bigr) = 0
+  \]
+  by functoriality of the degree (Theorem~\ref{thm:degAt_picEtMap}) and the hypothesis. As
+  \(t\) was arbitrary, \(\lambda \in \mathrm{pic}^0(C,T)\).
+\end{proof}
+
+\section{The morphism-form cover bridge}
+\label{sec:coverBridge}
+
+The sheaf statements of the previous section speak \emph{topological} covers — opens of
+\(T_{\mathrm{left}}\) and data at subordinate affine opens. The big-site packaging of the
+next section speaks \emph{morphism-form} covers: families \(f_i \colon T_i \to T\) of test
+morphisms with open-immersion left legs carrying sections. This section is the bridge.
+
+\begin{lemma}[The section-ring isomorphism of an open immersion of tests]
+  \label{lem:appLEAlgEquiv}
+  \lean{AlgebraicGeometry.Over.appLEAlgHom_congr_hom, AlgebraicGeometry.Over.bijective_appLEAlgHom,
+    AlgebraicGeometry.Over.appLEAlgEquiv,
+    AlgebraicGeometry.Over.appLEAlgHom_comp_appLEAlgEquiv_symm,
+    AlgebraicGeometry.PicEtAff.mapAlg_injective}
+  \uses{def:PicEtAff_mapAlg}
+  \leanok
+  Let \(f \colon T' \to T\) be a test morphism whose left leg is an open immersion, and
+  \(V \subseteq T_{\mathrm{left}}\) an open contained in its range. Then pullback of sections
+  \(\Gamma(T,V) \to \Gamma(T', f^{-1}V)\) is a \(k\)-algebra \emph{isomorphism}. Moreover
+  transport of plus classes along any bijective \(k\)-algebra map is injective.
+\end{lemma}
+\begin{proof}
+  \leanok
+  An open immersion restricts to an isomorphism from \(f^{-1}V\) onto \(V\) when
+  \(V\) lies in the range, and an isomorphism of schemes induces an isomorphism on sections;
+  the algebra structures match because \(f\) lies over \(\Spec k\). For the second claim,
+  transport along the inverse algebra isomorphism is a two-sided inverse up to the functor
+  laws of Definition~\ref{def:PicEtAff_mapAlg}, so the transport is injective.
+\end{proof}
+
+\begin{definition}[The evaluation of a morphism-form family into local data]
+  \label{def:picEt_coverValue}
+  \lean{AlgebraicGeometry.picEt.coverValue, AlgebraicGeometry.picEt.mapAlg_coverValue,
+    AlgebraicGeometry.picEt.coverValue_res, AlgebraicGeometry.picEt.overlapTest,
+    AlgebraicGeometry.picEt.overlapInclusion, AlgebraicGeometry.picEt.coverValue_glue}
+  \uses{lem:appLEAlgEquiv, def:picEt_LocalData, def:picEt, def:picEtMap,
+    def:PicEtAff_mapAlg, thm:picEt_mapAlg_appLE_eq}
+  \leanok
+  Let \((f_i \colon T_i \to T)\) have open-immersion left legs and let
+  \(x_i \in \mathrm{picEt}(C, T_i)\) be a family of sections, \emph{compatible} in the
+  morphism form: for every pair \(i, j\), every test \(Z\) and every pair of morphisms
+  \(g_i \colon Z \to T_i\), \(g_j \colon Z \to T_j\) with \(f_i g_i = f_j g_j\), the two
+  restrictions of the family to \(Z\) agree. The \emph{cover value} of the family at an
+  affine open \(W\) contained in the range of \(f_i\) is the value of \(x_i\) at the
+  preimage affine open \(f_i^{-1}W\), transported back along the section-ring isomorphism
+  (Lemma~\ref{lem:appLEAlgEquiv}). The cover values are compatible local data
+  (Definition~\ref{def:picEt_LocalData}) on the ranges \(O_i := \mathrm{range}(f_i)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  (\emph{res}) Restriction within a member commutes with the section-ring transports and
+  with the internal compatibility of the section \(x_i\), by the restriction calculus of the
+  vehicle (Theorem~\ref{thm:picEt_mapAlg_appLE_eq}) and injectivity of transport along the
+  bijective pullback (Lemma~\ref{lem:appLEAlgEquiv}).
+
+  (\emph{glue}) Fix a shared affine open \(W \le O_i \cap O_j\) and form the mediating test:
+  the open subscheme of \(T\) at \(W\), over \(\Spec k\) through the inclusion. The
+  inclusion lifts through both members (an open immersion whose range contains \(W\) admits
+  a lift of the inclusion of \(W\)), producing \(g_i, g_j\) with
+  \(f_i g_i = f_j g_j = (\text{inclusion of } W)\). The compatibility hypothesis identifies
+  the two restricted sections on the mediating test; evaluating both at its top affine open
+  and cancelling the common (bijective) evaluation map
+  (Lemma~\ref{lem:appLEAlgEquiv}) identifies the two cover values.
+\end{proof}
+
+\begin{theorem}[The sheaf property of \(\mathrm{picEt}\) in morphism-cover form]
+  \label{thm:picEt_existsUnique_of_cover}
+  \lean{AlgebraicGeometry.picEt.ext_of_cover, AlgebraicGeometry.picEt.existsUnique_of_cover}
+  \uses{def:picEt_coverValue, thm:picEt_existsUnique_glue_of_le_cover,
+    thm:picEt_ext_of_le_cover, thm:picEt_glueValue_unique, lem:appLEAlgEquiv}
+  \leanok
+  Let \((f_i \colon T_i \to T)\) have open-immersion left legs with jointly surjective
+  ranges. Then two sections of \(\mathrm{picEt}(C,T)\) agreeing after restriction to every
+  member agree; and every compatible family \((x_i)\) as in
+  Definition~\ref{def:picEt_coverValue} glues to a unique section \(s\) with
+  \(f_i^{*} s = x_i\) for all \(i\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \emph{Separation.} At an affine open subordinate to a member the values of the two
+  sections compute through the member's restriction, which agree; conclude by topological
+  separation (Theorem~\ref{thm:picEt_ext_of_le_cover}) after cancelling the bijective
+  transports (Lemma~\ref{lem:appLEAlgEquiv}).
+
+  \emph{Gluing.} The cover values of the family are compatible local data on the ranges
+  (Definition~\ref{def:picEt_coverValue}), which glue to a unique section \(s\)
+  (Theorem~\ref{thm:picEt_existsUnique_glue_of_le_cover}). That \(f_i^{*} s = x_i\) is
+  checked at every affine open \(U'\) of \(T_i\): the value of \(f_i^{*}s\) there computes
+  from the value of \(s\) at the image affine open \(f_i(U')\), which is the cover value,
+  i.e.\ the value of \(x_i\) at \(f_i^{-1}f_i(U') \supseteq U'\), and the internal
+  compatibility of \(x_i\) restricts it to \(U'\). Uniqueness follows from separation.
+\end{proof}
+
+\begin{theorem}[The sheaf property of the degree-zero functor in morphism-cover form]
+  \label{thm:pic0Subgroup_existsUnique_of_cover}
+  \lean{AlgebraicGeometry.pic0Subgroup_ext_of_cover,
+    AlgebraicGeometry.pic0Subgroup_existsUnique_of_cover}
+  \uses{thm:picEt_existsUnique_of_cover, thm:mem_pic0Subgroup_of_cover, def:pic0Functor,
+    def:pic0Subgroup}
+  \leanok
+  In the situation of Theorem~\ref{thm:picEt_existsUnique_of_cover}, a compatible family of
+  \emph{degree-zero} classes \(x_i \in \mathrm{pic}^0(C, T_i)\) glues to a unique degree-zero
+  class \(s \in \mathrm{pic}^0(C,T)\) with \(f_i^{*} s = x_i\); and two degree-zero classes
+  agreeing on every member agree.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Glue the underlying \(\mathrm{picEt}\) classes
+  (Theorem~\ref{thm:picEt_existsUnique_of_cover}); the glued class is degree-zero by the
+  S-lemma (Theorem~\ref{thm:mem_pic0Subgroup_of_cover}), since each restriction is. Both
+  uniqueness claims reduce to the underlying classes.
+\end{proof}
+
+\section{The \texorpdfstring{\(\Sigma\)}{Sigma}-extension and the big-site sheaf}
+\label{sec:sigmaExtension}
+
+A presheaf on the slice \(\Over(S)\) extends to a presheaf on the ambient category by
+summing over structure morphisms. For \(S = \Spec k\) and the degree-zero Picard functor
+this \emph{slice trick} produces the big-site carrier consumed by the local-representability
+engine, and a representation of the extension descends to one of the original functor.
+
+\begin{definition}[The canonical slice morphism of an equality]
+  \label{def:mkCongr}
+  \lean{CategoryTheory.Over.mkCongr, CategoryTheory.Over.mkCongr_left,
+    CategoryTheory.Over.mkCongr_rfl, CategoryTheory.Over.mkCongr_comp_mkCongr,
+    CategoryTheory.Over.mkCongr_comp_homMk}
+  \leanok
+  Let \(\mathcal C\) be a category, \(S\) an object, and \(a = b\) two equal morphisms
+  \(T \to S\). The identity of \(T\) is a morphism of slice objects
+  \((T, a) \to (T, b)\) in \(\Over(S)\), the \emph{canonical morphism of the equality}. It
+  satisfies: the canonical morphism of a reflexive equality is the identity; canonical
+  morphisms compose to the canonical morphism of the transitive equality; and every slice
+  morphism \(g \colon X \to (T, b)\) factors as the canonical morphism of its own
+  compatibility equation followed by the slice morphism induced by its underlying map.
+\end{definition}
+\begin{proof}
+  \leanok
+  The identity of \(T\) satisfies \(\id_T \circ b = a\) precisely because \(a = b\); the
+  three laws are immediate from composition of identities.
+\end{proof}
+
+\begin{definition}[The \(\Sigma\)-extension of a slice presheaf]
+  \label{def:sigmaExtension}
+  \lean{CategoryTheory.Over.sigmaExtensionMap, CategoryTheory.Over.sigmaExtension,
+    CategoryTheory.Over.sigmaExtension_obj, CategoryTheory.Over.sigmaExtension_map_mk,
+    CategoryTheory.Over.sigmaExtension_map_fst, CategoryTheory.Over.sigmaExtension_ext,
+    CategoryTheory.Over.sigmaExtension_snd_eq}
+  \uses{def:mkCongr}
+  \leanok
+  For a presheaf \(F\) on the slice \(\Over(S)\), the \emph{\(\Sigma\)-extension}
+  \(\widetilde F\) is the presheaf on the ambient category with
+  \[
+    \widetilde F(T) \;:=\; \coprod_{a \colon T \to S} F(T, a) ,
+  \]
+  an element being a pair \(\langle a, \xi\rangle\) of a structure morphism and a fibre
+  element. Restriction along \(g \colon T' \to T\) composes on the structure component and
+  applies \(F\) of the induced slice morphism on the fibre:
+  \(g^{*}\langle a, \xi \rangle = \langle g \circ a,\ F(g)^{*}\xi\rangle\). Two
+  \(\Sigma\)-elements over equal structure morphisms are equal iff their fibres correspond
+  under \(F\) of the canonical morphism of the equality (Definition~\ref{def:mkCongr}).
+\end{definition}
+\begin{proof}
+  \leanok
+  Functoriality: restriction along the identity composes with \(a\) to \(a\), and the
+  induced slice morphism is the identity, so \(F\) fixes the fibre. For a composite, the two
+  structure components agree by associativity, and the two fibre components correspond under
+  \(F\) of the canonical morphism, since the induced slice morphisms compose accordingly —
+  the transport calculus of Definition~\ref{def:mkCongr} mediates without any cast. The
+  final characterisation of equality of \(\Sigma\)-elements is the elimination rule of the
+  coproduct.
+\end{proof}
+
+\begin{lemma}[The amalgamation seam and the compatibility descent]
+  \label{lem:sigmaExtension_seams}
+  \lean{CategoryTheory.Over.sigmaExtension_map_mk_eq_iff,
+    CategoryTheory.Over.sigmaExtension_map_left_mk,
+    CategoryTheory.Over.map_eq_of_sigmaExtension_map_eq}
+  \uses{def:sigmaExtension, def:mkCongr}
+  \leanok
+  Let \(F\) be a presheaf on \(\Over(S)\) and \(\widetilde F\) its \(\Sigma\)-extension.
+  \begin{enumerate}
+  \item (\emph{Amalgamation seam}) For \(g \colon T' \to T\), \(a \colon T \to S\),
+    \(b \colon T' \to S\) with \(g \circ a = b\), and elements \(s \in F(T,a)\),
+    \(y \in F(T',b)\):
+    \(g^{*}\langle a, s\rangle = \langle b, y\rangle\) in \(\widetilde F(T')\) iff
+    \(s\) restricts to \(y\) along the slice morphism \((T',b) \to (T,a)\) induced by \(g\).
+  \item (\emph{Left-leg rule}) For a slice morphism \(g \colon Z \to (T,a)\) and
+    \(x \in F(T,a)\): restriction of \(\langle a, x\rangle\) along the underlying map of
+    \(g\) is \(\langle Z_{\mathrm{struct}},\, F(g)^{*}x \rangle\), the honest slice
+    restriction on the fibre.
+  \item (\emph{Compatibility descent}) If two \(\Sigma\)-elements
+    \(\langle a, x\rangle, \langle b, y\rangle\) have equal restrictions along the
+    underlying maps of a pair of slice morphisms \(g_a \colon Z \to (T,a)\),
+    \(g_b \colon Z' = Z \to (T',b)\), then \(F(g_a)^{*}x = F(g_b)^{*}y\).
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  \leanok
+  (i) After substituting the equality \(g \circ a = b\), both sides live over the same
+  structure morphism and the characterisation of equal \(\Sigma\)-elements
+  (Definition~\ref{def:sigmaExtension}) reduces the claim to the fibres, where the canonical
+  morphism of the reflexive equality acts as the identity. (ii) is (i) applied to the
+  compatibility equation of \(g\), using that the induced slice morphism of the left leg
+  \emph{is} \(g\) (Definition~\ref{def:mkCongr}, factorisation law). (iii) Combine (ii) on
+  both sides: both restrictions are \(\Sigma\)-elements over the structure morphism of
+  \(Z\), and equality of \(\Sigma\)-elements over one structure morphism gives equality of
+  fibres.
+\end{proof}
+
+\begin{theorem}[The \(\Sigma\)-descent of a representation]
+  \label{thm:representableBy_overSlice}
+  \lean{CategoryTheory.Functor.RepresentableBy.overSlice}
+  \uses{def:sigmaExtension, lem:sigmaExtension_seams}
+  \leanok
+  Let \(F\) be a presheaf on \(\Over(S)\) and suppose the \(\Sigma\)-extension
+  \(\widetilde F\) is representable by an object \(J\) of the ambient category, with
+  universal element \(\langle u_1, u_2 \rangle \in \widetilde F(J)\) (the image of
+  \(\id_J\)). Then \(F\) is representable on the slice by \((J, u_1)\), with universal
+  correspondence sending a slice morphism \(g \colon X \to (J,u_1)\) to the slice
+  restriction \(F(g)^{*} u_2\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \emph{Injectivity.} If \(F(g)^{*}u_2 = F(g')^{*}u_2\) then, by the left-leg rule
+  (Lemma~\ref{lem:sigmaExtension_seams}(ii)), the restrictions of the universal element
+  along the underlying maps of \(g\) and \(g'\) are the same \(\Sigma\)-element of
+  \(\widetilde F(X_{\mathrm{left}})\); by representability of \(\widetilde F\) the
+  underlying maps agree, hence \(g = g'\) (slice morphisms are determined by their
+  underlying maps).
+
+  \emph{Surjectivity.} Given \(\xi \in F(X)\), the \(\Sigma\)-element
+  \(\langle X_{\mathrm{struct}}, \xi\rangle\) corresponds under the representation to a map
+  \(h \colon X_{\mathrm{left}} \to J\) with
+  \(h^{*}\langle u_1, u_2\rangle = \langle X_{\mathrm{struct}}, \xi\rangle\). Comparing
+  structure components, \(h \circ u_1 = X_{\mathrm{struct}}\), so \(h\) underlies a slice
+  morphism \(g \colon X \to (J, u_1)\); comparing fibres through the amalgamation seam
+  (Lemma~\ref{lem:sigmaExtension_seams}(i)) gives \(F(g)^{*}u_2 = \xi\).
+
+  Compatibility with composition is functoriality of \(F\).
+\end{proof}
+
+\begin{definition}[The big-site carrier of the degree-zero functor]
+  \label{def:pic0SigmaFunctor}
+  \lean{AlgebraicGeometry.pic0TypeFunctor, AlgebraicGeometry.pic0TypeFunctor_obj,
+    AlgebraicGeometry.pic0TypeFunctor_map_apply, AlgebraicGeometry.pic0SigmaFunctor}
+  \uses{def:pic0Functor, def:sigmaExtension}
+  \leanok
+  Write \(\mathrm{pic}^0_{\mathrm{Set}}(C)\) for the set-valued functor underlying the
+  degree-zero relative Picard functor (Definition~\ref{def:pic0Functor}). Its
+  \(\Sigma\)-extension along the slice \(\Over(\Spec k)\),
+  \[
+    T \;\longmapsto\; \coprod_{a \colon T \to \Spec k} \mathrm{pic}^0\bigl(C, (T,a)\bigr),
+    \qquad T \in \mathrm{Sch},
+  \]
+  is a presheaf of sets on the category of schemes — the big-site carrier of the slice
+  trick.
+\end{definition}
+
+\begin{theorem}[The big-site Zariski sheaf certificate]
+  \label{thm:pic0SigmaFunctor_isSheaf}
+  \lean{AlgebraicGeometry.pic0SigmaFunctor_isSheaf, AlgebraicGeometry.pic0SigmaSheaf}
+  \uses{def:pic0SigmaFunctor, thm:pic0Subgroup_existsUnique_of_cover,
+    lem:sigmaExtension_seams, def:sigmaExtension}
+  \leanok
+  The \(\Sigma\)-extension of the degree-zero Picard functor is a sheaf for the big Zariski
+  topology on schemes.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The Zariski pretopology is generated by open covers and is stable under base change, so
+  the sheaf condition reduces to elementwise unique amalgamation over an honest open cover
+  \((\iota_i \colon U_i \to Y)\) carrying a compatible family
+  \(x_i = \langle a_i, \xi_i \rangle\) of \(\Sigma\)-elements.
+
+  \emph{Structure components.} Compatibility on pullbacks forces the \(a_i\) to agree on
+  overlaps, so they glue to a unique \(a_Y \colon Y \to \Spec k\) with
+  \(\iota_i \circ a_Y = a_i\) (gluing of scheme morphisms along an open cover).
+
+  \emph{Fibre components.} The cover members induce slice morphisms
+  \((U_i, a_i) \to (Y, a_Y)\) with open-immersion left legs and jointly surjective ranges.
+  The fibres \(\xi_i\) are a compatible family on this slice cover: by the compatibility
+  descent (Lemma~\ref{lem:sigmaExtension_seams}(iii)), the \(\Sigma\)-level compatibility of
+  the \(x_i\) descends to slice-level compatibility of the \(\xi_i\). By the morphism-form
+  sheaf property of the degree-zero functor
+  (Theorem~\ref{thm:pic0Subgroup_existsUnique_of_cover}) the \(\xi_i\) glue to a unique
+  degree-zero class \(s\) on \((Y, a_Y)\) restricting to each.
+
+  \emph{Stitching.} The \(\Sigma\)-element \(\langle a_Y, s\rangle\) restricts to each
+  \(x_i\) by the amalgamation seam (Lemma~\ref{lem:sigmaExtension_seams}(i)). Uniqueness:
+  the structure component of any amalgamation is determined by gluing of morphisms, and its
+  fibre by the separation half of
+  Theorem~\ref{thm:pic0Subgroup_existsUnique_of_cover}, again through the seam.
+\end{proof}
+
+\begin{definition}[Local representability descends to the slice]
+  \label{def:pic0RepresentableByOfCharts}
+  \lean{AlgebraicGeometry.pic0RepresentableByOfCharts}
+  \uses{thm:pic0SigmaFunctor_isSheaf, thm:representableBy_overSlice, def:pic0SigmaFunctor}
+  \leanok
+  Suppose given a family of schemes \(X_i\) with maps
+  \(f_i \colon \mathrm{yoneda}(X_i) \to \widetilde{\mathrm{pic}^0}(C)\) of big-site sheaves
+  which are relatively representable open immersions, jointly Zariski-locally surjective.
+  Then the local-representability theorem glues the \(X_i\) into a scheme \(J\)
+  representing the \(\Sigma\)-extension, and by \(\Sigma\)-descent
+  (Theorem~\ref{thm:representableBy_overSlice}) the set-valued degree-zero Picard functor is
+  representable on the slice by \(J\) placed over \(\Spec k\) via the structure component of
+  the universal element.
+\end{definition}
+\begin{proof}
+  \leanok
+  The local-representability theorem for Zariski sheaves on schemes (mathlib's
+  01JJ engine) applies to the sheaf of Theorem~\ref{thm:pic0SigmaFunctor_isSheaf} and the
+  given chart family, producing a representation of the \(\Sigma\)-extension by the glued
+  scheme; compose with Theorem~\ref{thm:representableBy_overSlice}.
+\end{proof}
+
+\section{The Abel element}
+\label{sec:abelElement}
+
+For a rational point \(P\) of the curve, the class of the diagonal minus the constant graph
+is a degree-zero family on the test \(T = C\) — the element whose image under the universal
+correspondence of the representation is the Abel map.
+
+\begin{theorem}[The unit seam at arbitrary tests]
+  \label{thm:degAt_relPicToPicEt}
+  \lean{AlgebraicGeometry.degAt_relPicToPicEt}
+  \uses{def:degAt, thm:picEtMap_relPicToPicEt, thm:picEtAffineEquiv_relPicToPicEt,
+    thm:degAff_unit, def:relPicToPicEt, def:relPicMap}
+  \leanok
+  For a test object \(T\), a relative Picard class \(z \in \mathrm{relPic}(C,T)\) and a
+  field point \(t \colon \Spec K \to T\), the degree at \(t\) of the unit image of \(z\) is
+  the relative degree of the restriction:
+  \[
+    \deg_t\bigl(\mathrm{relPicToPicEt}(z)\bigr) = \mathrm{relPicDeg}_K\bigl(t^{*} z\bigr).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Naturality of the unit (Theorem~\ref{thm:picEtMap_relPicToPicEt}) collapses the
+  restriction along \(t\) to the unit image of \(t^{*}z\) over \(\Spec K\); affine
+  consistency (Theorem~\ref{thm:picEtAffineEquiv_relPicToPicEt}) identifies its affine
+  collapse with the plus unit of \(t^{*}z\); the unit normalization of the degree
+  (Theorem~\ref{thm:degAff_unit}) reads \(\mathrm{relPicDeg}_K\).
+\end{proof}
+
+\begin{definition}[The Abel \v Cech class]
+  \label{def:abelCechClass}
+  \lean{AlgebraicGeometry.abelCechClass, AlgebraicGeometry.abelPicEt}
+  \uses{def:graphLocalEquations, def:relPicToPicEt, def:relPic}
+  \leanok
+  \source{kleiman-picard, abelian-varieties:page-0107}
+  Let \(P \colon \mathbf{1} \to C\) be a rational point of the curve (a morphism from the
+  unit test). The \emph{Abel \v Cech class} on the test \(T = C\) is
+  \[
+    \mathcal A_P \;:=\; \struct{C \otimes C}(\Delta) \cdot \struct{C \otimes C}(P \times C)^{-1}
+      \;\in\; \Pic(C \otimes C),
+  \]
+  the graph class of the identity \(\id_C\) (the diagonal) times the inverse graph class of
+  the constant point \(C \to \mathbf 1 \xrightarrow{P} C\) — both factors through the graph
+  divisor of Definition~\ref{def:graphLocalEquations}, so one degree certificate serves
+  both. The \emph{Abel class} \(\alpha_P \in \mathrm{picEt}(C, C)\) is the unit image of its
+  relative class.
+\end{definition}
+
+\begin{theorem}[The functor-point formula, \v Cech level]
+  \label{thm:cechPicMap_abelCechClass}
+  \lean{AlgebraicGeometry.cechPicMap_abelCechClass}
+  \uses{def:abelCechClass, thm:graphLocalEquations_base_change}
+  \leanok
+  For any test \(T\) and any point \(f \colon T \to C\), the pullback of the Abel \v Cech
+  class along \(C \lhd f\) is the graph-minus-constant-graph class of \(f\):
+  \[
+    (C \lhd f)^{*} \mathcal A_P
+      = \struct{C \otimes T}(\Gamma_f)\cdot\struct{C \otimes T}(\Gamma_{P_T})^{-1},
+  \]
+  where \(P_T \colon T \to \mathbf 1 \xrightarrow{P} C\) is the constant point of \(T\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Base change of the graph class (Theorem~\ref{thm:graphLocalEquations_base_change}) sends
+  \(\struct{}(\Gamma_{\id_C})\) to \(\struct{}(\Gamma_{f \circ \id}) = \struct{}(\Gamma_f)\)
+  and \(\struct{}(\Gamma_{P_C})\) to \(\struct{}(\Gamma_{f \circ P_C})\); and
+  \(f \circ P_C = P_T\) by terminality of the unit test (both factor through
+  \(\mathbf 1\)). Pullback is a homomorphism, so the product formula follows.
+\end{proof}
+
+\begin{theorem}[The degree-zero certificate of the Abel class]
+  \label{thm:degAt_abelPicEt}
+  \lean{AlgebraicGeometry.degAt_abelPicEt}
+  \uses{thm:degAt_relPicToPicEt, thm:cechPicMap_abelCechClass, thm:classDeg_graphPicClass,
+    def:relPicMap, def:relPicDeg, lem:degAt_hom}
+  \leanok
+  At every field point \(t \colon \Spec K \to C\), the Abel class has degree zero:
+  \(\deg_t(\alpha_P) = 0\). The certificate is a proved equality at every point — no
+  choice is involved.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By the unit seam (Theorem~\ref{thm:degAt_relPicToPicEt}) the degree is
+  \(\mathrm{relPicDeg}_K\) of the restriction of the relative Abel class along \(t\), which
+  the relative degree reads as \(\deg_{\Pic}\) of the fibre \v Cech class
+  (Definition~\ref{def:relPicDeg} on the projected representative,
+  Definition~\ref{def:relPicMap}). By the functor-point formula
+  (Theorem~\ref{thm:cechPicMap_abelCechClass}) at \(f := t\), the fibre class is
+  \(\struct{}(\Gamma_t) \cdot \struct{}(\Gamma_{P_{\Spec K}})^{-1}\) — the ratio of two
+  graph classes of \(K\)-points. Each has degree one by the degree-one certificate
+  (Theorem~\ref{thm:classDeg_graphPicClass}), so the degree is \(1 - 1 = 0\).
+\end{proof}
+
+\begin{definition}[The Abel element]
+  \label{def:abelElement}
+  \lean{AlgebraicGeometry.abelElement, AlgebraicGeometry.abelElement_coe}
+  \uses{def:pic0Subgroup, thm:degAt_abelPicEt, def:abelCechClass}
+  \leanok
+  \source{kleiman-picard, abelian-varieties:page-0107}
+  The \emph{Abel element} is the Abel class as an element of the degree-zero subgroup,
+  \[
+    \alpha_P \in \mathrm{pic}^0(C, C),
+  \]
+  membership being the certificate of Theorem~\ref{thm:degAt_abelPicEt}. On points it is the
+  family \(t \mapsto [\,\Gamma_t - \Gamma_P\,]\), the divisor-class form \(t \mapsto [t - P]\)
+  of the Abel map with base point \(P\).
+\end{definition}
+
+\begin{theorem}[The functor-point formula of the Abel element]
+  \label{thm:abelElement_map}
+  \lean{AlgebraicGeometry.abelPicEt_map, AlgebraicGeometry.abelElement_map}
+  \uses{def:abelElement, thm:picEtMap_relPicToPicEt, thm:cechPicMap_abelCechClass,
+    def:pic0Functor, def:relPicMap}
+  \leanok
+  For any point \(f \colon T \to C\), the restriction of the Abel element along \(f\) is the
+  unit image of the graph-minus-constant-graph class of \(f\):
+  \[
+    f^{*}\alpha_P = \mathrm{relPicToPicEt}\Bigl(\pi\bigl(
+      \struct{C \otimes T}(\Gamma_f)\cdot\struct{C\otimes T}(\Gamma_{P_T})^{-1}\bigr)\Bigr)
+    \quad\text{in } \mathrm{pic}^0(C,T).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Naturality of the unit (Theorem~\ref{thm:picEtMap_relPicToPicEt}) commutes the restriction
+  into the relative class, where it is the projection of the pullback of the Abel \v Cech
+  class (Definition~\ref{def:relPicMap}); conclude by the \v Cech-level functor-point
+  formula (Theorem~\ref{thm:cechPicMap_abelCechClass}).
+\end{proof}
+
+\begin{theorem}[The pointing law]
+  \label{thm:abelElement_map_point}
+  \lean{AlgebraicGeometry.abelElement_map_point}
+  \uses{thm:abelElement_map, def:pic0Functor}
+  \leanok
+  Restriction of the Abel element along the rational point \(P\) itself is trivial:
+  \[
+    P^{*} \alpha_P = 1 \quad\text{in } \mathrm{pic}^0(C, \mathbf 1).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  By the functor-point formula (Theorem~\ref{thm:abelElement_map}) at \(f := P\), the
+  restricted class is the unit image of
+  \(\struct{}(\Gamma_P)\cdot\struct{}(\Gamma_{P_{\mathbf 1}})^{-1}\) on
+  \(C \otimes \mathbf 1\). The constant point of the unit test is \(P\) itself
+  (terminality: the canonical map \(\mathbf 1 \to \mathbf 1\) is the identity), so the two
+  graph factors coincide and the \v Cech class is already \(1\); its unit image is \(1\).
 \end{proof}

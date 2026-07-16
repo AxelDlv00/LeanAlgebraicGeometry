@@ -2470,9 +2470,34 @@ Theorem~\ref{thm:sectionsBaseChange} (whose tensor factor is anchored at the bas
 pushout argument is re-run against the pasted square instead, with the
 \(K_1\)-algebra structure on sections carried by the second projection.
 
+\begin{lemma}[The product bridge]
+  \label{lem:over_isPullback_left}
+  \lean{AlgebraicGeometry.Over.isPullback_left}
+  \leanok
+  Let \(S\) be a scheme and \(X, T \in \Over(S)\). The underlying scheme of the
+  cartesian-monoidal product, with its two projections, is the fibre product of the
+  structure morphisms:
+  \[
+    \begin{array}{ccc}
+      (X \otimes T)_{\mathrm{left}} & \xrightarrow{\ \mathrm{fst}\ } & X_{\mathrm{left}} \\
+      \downarrow \mathrm{snd} & & \downarrow X.\mathrm{hom} \\
+      T_{\mathrm{left}} & \xrightarrow{\ T.\mathrm{hom}\ } & S
+    \end{array}
+  \]
+  is a pullback square of schemes. This is the single point where the product of the over
+  category is unfolded to a scheme-level pullback.
+\end{lemma}
+\begin{proof}
+  \leanok
+  The cartesian-monoidal product of the over category is constructed as the chosen pullback
+  of the structure morphisms, with the two projections as its legs; the square is that
+  chosen pullback square.
+\end{proof}
+
 \begin{theorem}[The pasted square of a morphism of test objects]
   \label{thm:isPullback_whiskerLeft_left}
   \lean{AlgebraicGeometry.Over.isPullback_whiskerLeft_left}
+  \uses{lem:over_isPullback_left}
   \leanok
   Let \(S\) be a scheme, \(X \in \Over(S)\), and \(t : T' \to T\) a morphism of
   \(\Over(S)\). The square

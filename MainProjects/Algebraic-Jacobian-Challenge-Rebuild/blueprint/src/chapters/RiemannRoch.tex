@@ -3392,3 +3392,792 @@ conclude vanishing for all large \(n\).
   (Theorem~\ref{thm:moduleFinite_hModule_one_of_isFinite_toP1}), discharging the remaining
   finiteness hypothesis of Theorem~\ref{thm:subsingleton_hModule_divisorSheaf_one_of_isDominant_toP1}.
 \end{proof}
+
+\section{Effective witnesses and peeling}
+\label{sec:effective_peeling}
+
+This section supplies the three remaining inputs of the uniform vanishing theorems: the
+strict positivity of the fiber divisor's degree, the realisation of every class of large
+degree by an \emph{effective} divisor, and the transport of \(H^1\)-vanishing up an
+effective divisor. Throughout, \(Y\) is integral, smooth of relative dimension one, locally
+of finite type and quasi-compact over a field \(K\), with finite-dimensional \(H^0\) and
+\(H^1\) where degrees are used.
+
+\begin{lemma}[Class arithmetic]
+  \label{lem:picClass_nsmul}
+  \lean{AlgebraicGeometry.divisorBound_le_iff, AlgebraicGeometry.picClass_nsmul,
+    AlgebraicGeometry.classDeg_pow}
+  \uses{def:curveDivisor_picClass, thm:curveDivisor_picClass_hom, def:classDeg,
+    thm:classDeg_mul, lem:classDeg_zpow}
+  \leanok
+  For a Weil divisor \(D\) and \(n \in \N\): \(\struct Y(n D) = \struct Y(D)^{n}\), and for
+  a Picard class \(L\): \(\deg_{\Pic}(L^{n}) = n \cdot \deg_{\Pic}(L)\). Moreover the
+  divisor-bound comparison at a point is the pointwise coefficient comparison in \(\Z\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Induction on \(n\) from additivity of the class map
+  (Theorem~\ref{thm:curveDivisor_picClass_hom}) and of the degree
+  (Theorem~\ref{thm:classDeg_mul}); the bound comparison unfolds the definition of the
+  valuation bound to its integer coefficient.
+\end{proof}
+
+\begin{lemma}[A point of \(\PP^1\) off the second chart]
+  \label{lem:P1_point_off_chart1}
+  \lean{AlgebraicGeometry.exists_mem_chartOpen_zero_notMem_one}
+  \uses{def:P1_chartOpen, def:P1_chartIota, lem:P1_chartIota_range, def:P1_chartCoord,
+    def:P1_awayAlgEquiv}
+  \leanok
+  For any field \(k\) there is a point of \(\PP^1_k\) lying in the chart \(D_+(X_0)\) but
+  not in \(D_+(X_1)\) — the origin \([1 : 0]\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  On the chart \(D_+(X_0) = \Spec k[X_1/X_0]\) (Definitions~\ref{def:P1_chartOpen},
+  \ref{def:P1_awayAlgEquiv}), the preimage of \(D_+(X_1)\) is the basic open of the chart
+  coordinate \(X_1/X_0\) (Definition~\ref{def:P1_chartCoord}). The chart coordinate is not
+  a unit (it corresponds to the polynomial variable), so the ideal it generates is proper
+  and is contained in a maximal ideal \(M\). The image of \(M\) under the chart embedding
+  (Definition~\ref{def:P1_chartIota}, with range \(D_+(X_0)\) by
+  Lemma~\ref{lem:P1_chartIota_range}) lies in \(D_+(X_0)\) but not in the basic open of the
+  coordinate, hence not in \(D_+(X_1)\).
+\end{proof}
+
+\begin{lemma}[A finite dominant morphism is surjective]
+  \label{lem:surjective_of_isFinite_of_isDominant}
+  \lean{AlgebraicGeometry.surjective_of_isFinite_of_isDominant}
+  \leanok
+  A finite dominant morphism of schemes is surjective.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Finite morphisms are closed maps, so the range is closed; dominance makes it dense; a
+  closed dense subset is everything.
+\end{proof}
+
+\begin{theorem}[Strict positivity of the fiber divisor's degree]
+  \label{thm:zero_lt_deg_fiberWeilDivisor}
+  \lean{AlgebraicGeometry.zero_lt_deg_fiberWeilDivisor}
+  \uses{lem:P1_point_off_chart1, lem:surjective_of_isFinite_of_isDominant,
+    def:fiberWeilDivisor, def:fiberCover}
+  \leanok
+  For a finite dominant \(\pi \colon Y \to \PP^1\), the fiber Weil divisor
+  \(F = \mathrm{fiberWeilDivisor}(\pi)\) has strictly positive degree: \(0 < \deg F\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Choose a point \(z \in D_+(X_0) \setminus D_+(X_1)\) of \(\PP^1\)
+  (Lemma~\ref{lem:P1_point_off_chart1}). By surjectivity of the finite dominant \(\pi\)
+  (Lemma~\ref{lem:surjective_of_isFinite_of_isDominant}) there is \(x_0 \in Y\) over \(z\);
+  it lies in the fiber chart \(V_0\) but not in \(V_1\), and it is not the generic point
+  (the generic point maps into the overlap). Such a point is a pole witness: the fiber
+  divisor has strictly positive coefficient at some point off \(V_1\), which forces
+  \(0 < \deg F\) (the pole-existence estimate packaged with
+  Definition~\ref{def:fiberWeilDivisor}).
+\end{proof}
+
+\begin{lemma}[An effective witness of a class of large degree]
+  \label{lem:exists_effective_of_picClass}
+  \lean{AlgebraicGeometry.exists_effective_of_picClass}
+  \uses{thm:riemann_inequality, def:h0_h1_chi, def:divisorSheaf, def:HModule_linearEquiv0,
+    def:divisorSections, def:scheme_ord, def:divOf, thm:curveDivisor_picClass_hom,
+    def:curveDivisor}
+  \leanok
+  If a Weil divisor \(W\) satisfies \(1 \le \deg W + \chi(\struct Y)\), then its Picard
+  class is realised by an \emph{effective} divisor: there is \(E \ge 0\) with
+  \(\struct Y(E) = \struct Y(W)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  By the Riemann inequality (Theorem~\ref{thm:riemann_inequality}),
+  \(h^0(\struct Y(W)) \ge \deg W + \chi(\struct Y) \ge 1\), so \(H^0(\struct Y(W))\) is
+  nontrivial. A nonzero global section is, through the degree-zero identification
+  (Definition~\ref{def:HModule_linearEquiv0}) and the section description of the divisor
+  sheaf (Definitions~\ref{def:divisorSheaf}, \ref{def:divisorSections}), a nonzero rational
+  function \(f \in K(Y)^{\times}\) with \(\mathrm{ord}_x(f) \ge -\mathrm{coeff}_x(W)\) at
+  every point (Definition~\ref{def:scheme_ord}). Set \(E := W + \mathrm{div}(f)\)
+  (Definition~\ref{def:divOf}): the order bound says exactly \(E \ge 0\) coefficientwise,
+  and principal divisors have trivial class
+  (Theorem~\ref{thm:curveDivisor_picClass_hom}), so \(\struct Y(E) = \struct Y(W)\).
+\end{proof}
+
+\begin{lemma}[Peeling one point]
+  \label{lem:peel_single}
+  \lean{AlgebraicGeometry.peel_single, AlgebraicGeometry.peel_nsmul_single}
+  \uses{def:devissageSES, thm:devissageSES_shortExact, thm:skyModule_h1_vanishing,
+    thm:HModule_surjective_map_f, lem:devissageDivisor_sub, def:curveDivisor_single,
+    def:jumpModule}
+  \leanok
+  Let \(x\) be a closed point and \(B\) a Weil divisor with
+  \(H^1(\struct Y(B)) = 0\) (i.e.\ a subsingleton). Then
+  \(H^1(\struct Y(B + x)) = 0\), and by iteration
+  \(H^1(\struct Y(B + n\,x)) = 0\) for all \(n \in \N\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Set \(D := B + x\); the d\'evissage divisor of \(D\) at \(x\) is \(B\)
+  (Lemma~\ref{lem:devissageDivisor_sub}). The d\'evissage short exact sequence
+  (Definition~\ref{def:devissageSES}, Theorem~\ref{thm:devissageSES_shortExact})
+  \(0 \to \struct Y(B) \to \struct Y(D) \to \mathrm{sky}_x \to 0\) has skyscraper cokernel,
+  whose \(H^1\) vanishes (Theorem~\ref{thm:skyModule_h1_vanishing}); the long exact
+  sequence therefore gives a surjection \(H^1(\struct Y(B)) \twoheadrightarrow
+  H^1(\struct Y(D))\) (Theorem~\ref{thm:HModule_surjective_map_f}), and a quotient of a
+  subsingleton is a subsingleton. Iterate for \(n\,x\).
+\end{proof}
+
+\begin{lemma}[Effective peeling]
+  \label{lem:peel_effective}
+  \lean{AlgebraicGeometry.peel_effective}
+  \uses{lem:peel_single, def:curveDivisor_single, def:curveDivisor}
+  \leanok
+  Let \(A\) be a Weil divisor with \(H^1(\struct Y(A)) = 0\) and \(E \ge 0\) an effective
+  divisor. Then \(H^1(\struct Y(A + E)) = 0\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Induction on the size of the (finite) support of \(E\). If the support is empty, \(E = 0\).
+  Otherwise pick \(p\) in the support, with coefficient \(b > 0\); write
+  \(E = b\,p + E'\) where \(E' = E - b\,p \ge 0\) has support one point smaller. By the
+  induction hypothesis \(H^1(\struct Y(A + E')) = 0\), and peeling the multiplicity block
+  \(b \, p\) (Lemma~\ref{lem:peel_single}) gives \(H^1(\struct Y(A + E' + b\,p)) =
+  H^1(\struct Y(A + E)) = 0\).
+\end{proof}
+
+\begin{theorem}[The class form of the fibrewise large-twist vanishing]
+  \label{thm:flv_class_form}
+  \lean{AlgebraicGeometry.exists_subsingleton_hModule_one_of_one_le_classDeg_of_isFinite_toP1}
+  \uses{thm:subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1,
+    thm:zero_lt_deg_fiberWeilDivisor, lem:exists_effective_of_picClass, lem:peel_effective,
+    thm:subsingleton_hModule_one_class, lem:picClass_nsmul, def:classDeg,
+    def:curveDivisor_picClass, thm:classDeg_mul, lem:classDeg_zpow, def:fiberWeilDivisor}
+  \leanok
+  Let \(\pi \colon Y \to \PP^1\) be finite dominant, compatible with the structure
+  morphisms, and \(l, \theta\) Picard classes with \(1 \le \deg_{\Pic}\theta\). Then there
+  is \(n_0 \in \N\) such that for all \(n \ge n_0\) and \emph{every} Weil divisor \(D\) of
+  class \(\struct Y(D) = l \cdot \theta^{n}\),
+  \[
+    H^1\bigl(\struct Y(D)\bigr) = 0 .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Realise \(l\) by a divisor \(D_0\) (Definition~\ref{def:curveDivisor_picClass}). Run the
+  fibrewise vanishing at \(D_0\)
+  (Theorem~\ref{thm:subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1}): there is
+  \(m_0\) with \(H^1(\struct Y(D_0 + m\,F)) = 0\) for all \(m \ge m_0\), \(F\) the fiber
+  divisor; fix \(m = m_0\). Let \(d' := \deg F > 0\)
+  (Theorem~\ref{thm:zero_lt_deg_fiberWeilDivisor}) and \(\varphi := \struct Y(F)\). Take
+  \(n_0 := \max(0,\, m_0 d' + 1 - \chi(\struct Y))\).
+
+  For \(n \ge n_0\), the residual class \(c := \theta^{n}\varphi^{-m_0}\) has degree
+  \(n \deg\theta - m_0 d' \ge n - m_0 d' \ge 1 - \chi(\struct Y)\)
+  (Lemma~\ref{lem:picClass_nsmul}, Theorem~\ref{thm:classDeg_mul},
+  Lemma~\ref{lem:classDeg_zpow}, using \(\deg\theta \ge 1\)). Realise \(c\) by a divisor
+  \(W\); then \(1 \le \deg W + \chi(\struct Y)\), so \(c\) has an effective witness \(E\)
+  (Lemma~\ref{lem:exists_effective_of_picClass}). The divisor \(D_0 + m_0 F + E\) has class
+  \(l \cdot \varphi^{m_0} \cdot \theta^{n}\varphi^{-m_0} = l\,\theta^{n}\); its \(H^1\)
+  vanishes by effective peeling from the base vanishing at \(D_0 + m_0 F\)
+  (Lemma~\ref{lem:peel_effective}). Finally, witness-independence
+  (Theorem~\ref{thm:subsingleton_hModule_one_class}) transports the vanishing from this one
+  witness to \emph{every} divisor \(D\) of the class \(l\,\theta^{n}\).
+\end{proof}
+
+\begin{theorem}[The rank anchor]
+  \label{thm:h0_eq_deg_add_chi}
+  \lean{AlgebraicGeometry.h0_eq_deg_add_chi_of_subsingleton_hModule_one}
+  \uses{thm:chi_eq_h0, thm:chi_divisorSheaf, def:h0_h1_chi}
+  \leanok
+  \source{abelian-varieties:page-0107}
+  For a Weil divisor \(D\) with \(H^1(\struct Y(D)) = 0\),
+  \[
+    h^0\bigl(\struct Y(D)\bigr) \;=\; \deg D + \chi(\struct Y) .
+  \]
+  (Riemann--Roch with vanishing \(h^1\); with \(\chi(\struct Y) = 1 - g\) this is the
+  classical \(h^0(D) = \deg D + 1 - g\).)
+\end{theorem}
+\begin{proof}
+  \leanok
+  Under the vanishing, \(\chi(\struct Y(D)) = h^0(\struct Y(D))\)
+  (Theorem~\ref{thm:chi_eq_h0}), and the \(\chi\)-ledger reads
+  \(\chi(\struct Y(D)) = \deg D + \chi(\struct Y)\)
+  (Theorem~\ref{thm:chi_divisorSheaf}).
+\end{proof}
+
+\section{The uniform vanishing bound}
+\label{sec:uniformVanishing}
+
+\begin{theorem}[The uniform \(H^1\)-vanishing bound]
+  \label{thm:exists_bound_subsingleton_hModule_one}
+  \lean{AlgebraicGeometry.exists_bound_subsingleton_hModule_one_of_isFinite_toP1}
+  \uses{thm:subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1,
+    thm:zero_lt_deg_fiberWeilDivisor, lem:exists_effective_of_picClass, lem:peel_effective,
+    thm:subsingleton_hModule_one_class, lem:picClass_nsmul, def:classDeg,
+    def:curveDivisor_picClass, thm:classDeg_mul, lem:classDeg_zpow, def:fiberWeilDivisor,
+    def:h0_h1_chi}
+  \leanok
+  Let \(\pi \colon Y \to \PP^1\) be finite dominant, compatible with the structure
+  morphisms. There is a single threshold \(b \in \Z\), depending only on \((Y, \pi)\), such
+  that for \emph{every} Weil divisor \(D\),
+  \[
+    b \le \deg D \implies H^1\bigl(\struct Y(D)\bigr) = 0 .
+  \]
+  Explicitly \(b = n_1 \deg F + 1 - \chi(\struct Y)\), where \(F\) is the fiber Weil
+  divisor and \(n_1\) is the fibrewise-vanishing threshold at the divisor \(0\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Run the fibrewise vanishing at \(D_0 = 0\)
+  (Theorem~\ref{thm:subsingleton_hModule_divisorSheaf_one_of_isFinite_toP1}): there is
+  \(n_1\) with \(H^1(\struct Y(n\,F)) = 0\) for all \(n \ge n_1\); fix the base twist
+  \(n_1 F\). The threshold \(b := n_1 \deg F + 1 - \chi(\struct Y)\) is legal since
+  \(0 < \deg F\) (Theorem~\ref{thm:zero_lt_deg_fiberWeilDivisor}).
+
+  Let \(D\) have \(\deg D \ge b\). The residual class
+  \(c := \struct Y(D) \cdot \struct Y(F)^{-n_1}\) has degree
+  \(\deg D - n_1\deg F \ge 1 - \chi(\struct Y)\) (Lemma~\ref{lem:picClass_nsmul},
+  Theorem~\ref{thm:classDeg_mul}, Lemma~\ref{lem:classDeg_zpow}); realise it by a divisor
+  \(W\) (Definition~\ref{def:curveDivisor_picClass}) and take an effective witness
+  \(E \ge 0\) of its class (Lemma~\ref{lem:exists_effective_of_picClass}). Then
+  \(n_1 F + E\) is in the class of \(D\). Vanishing holds at \(n_1 F\) by the base choice;
+  effective peeling (Lemma~\ref{lem:peel_effective}) transports it to \(n_1 F + E\); and
+  witness-independence (Theorem~\ref{thm:subsingleton_hModule_one_class}) upgrades it to
+  \(\struct Y(D)\) itself. Because the base twist is fixed once, the effective witness
+  absorbs the whole degree slack and \(b\) depends only on \((Y, \pi)\).
+\end{proof}
+
+\section{The degree of the fiber twist}
+\label{sec:thetaDegree}
+
+\begin{theorem}[The presentation divisor of the unit fiber divisor]
+  \label{thm:presentationDivisor_fiberDivisor_one}
+  \lean{AlgebraicGeometry.presentationDivisor_presentation_fiberDivisor_one}
+  \uses{def:fiberDivisor, def:fiberCoordUnit, thm:fiberCoordUnit_order,
+    def:fiberWeilDivisor, def:presentationDivisor, lem:localEquations_presentation,
+    def:curveDivisor, def:fiberCover}
+  \leanok
+  For a dominant \(\pi \colon Y \to \PP^1\), the presentation divisor of the meromorphic
+  presentation of the unit fiber divisor system \(\mathrm{fiberDivisor}(\pi,1)\) is the
+  fiber Weil divisor:
+  \[
+    \mathrm{presentationDivisor}\bigl(\mathrm{fiberDivisor}(\pi,1).\mathrm{presentation}\bigr)
+      \;=\; F = \mathrm{fiberWeilDivisor}(\pi) .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Compare coefficients point by point. The presentation
+  (Lemma~\ref{lem:localEquations_presentation}) of the pinned two-cover system \((t_0\)
+  on \(V_0\), \(1\) on \(V_1)\) (Definition~\ref{def:fiberDivisor}) has trivialising
+  element the fiber coordinate unit \(u = t_0\) at points of \(V_0\)
+  (Definition~\ref{def:fiberCoordUnit}) and the constant \(1\) at points off \(V_0\)
+  (which lie in \(V_1\), the two charts covering \(Y\)). At \(x \in V_0\) the coefficient
+  of the presentation divisor (Definition~\ref{def:presentationDivisor}) is
+  \(\mathrm{ord}_x(u)\), which the fiber order table identifies with the coefficient of
+  \(F = (\mathrm{div}\,u)^{+}\) at \(x\) (Theorem~\ref{thm:fiberCoordUnit_order},
+  Definition~\ref{def:fiberWeilDivisor}); at \(x \notin V_0\) both coefficients are zero —
+  the element is \(1\), and \(F\) is supported in \(V_0\)
+  (Definition~\ref{def:fiberWeilDivisor}).
+\end{proof}
+
+\begin{theorem}[\(\Theta\)-positivity of the unit fiber twist]
+  \label{thm:classDeg_fiberTwist_one}
+  \lean{AlgebraicGeometry.fiberTwist_one_eq_picClass_fiberWeilDivisor,
+    AlgebraicGeometry.classDeg_fiberTwist_one,
+    AlgebraicGeometry.zero_lt_classDeg_fiberTwist_one,
+    AlgebraicGeometry.one_le_classDeg_fiberTwist_one}
+  \uses{thm:presentationDivisor_fiberDivisor_one, lem:localEquations_presentation,
+    def:curveDivisor_picClass, def:classDeg, def:fiberTwist,
+    thm:zero_lt_deg_fiberWeilDivisor, thm:picClass_eq_of_presentationDivisor_eq}
+  \leanok
+  For a dominant \(\pi \colon Y \to \PP^1\), the unit fiber twist is the class of the fiber
+  Weil divisor, \(\Theta_1 = \struct Y(F)\), and
+  \[
+    \deg_{\Pic}(\Theta_1) = \deg F .
+  \]
+  When \(\pi\) is moreover finite, the degree is strictly positive:
+  \(1 \le \deg_{\Pic}(\Theta_1)\). (Only positivity is needed downstream; the identity
+  \(\deg \Theta_1 = \deg \pi\) is never used.)
+\end{theorem}
+\begin{proof}
+  \leanok
+  \(\Theta_1\) is the Picard class of the unit fiber divisor system
+  (Definition~\ref{def:fiberTwist}); the class of a local-equation system is the class of
+  the presentation divisor of its meromorphic presentation
+  (Lemma~\ref{lem:localEquations_presentation},
+  Theorem~\ref{thm:picClass_eq_of_presentationDivisor_eq} via the anchored class map of
+  Definition~\ref{def:curveDivisor_picClass}), which is \(F\)
+  (Theorem~\ref{thm:presentationDivisor_fiberDivisor_one}). Hence
+  \(\Theta_1 = \struct Y(F)\), and the degree of an anchored class reads the divisor degree
+  (Definition~\ref{def:classDeg}). Positivity is
+  Theorem~\ref{thm:zero_lt_deg_fiberWeilDivisor}.
+\end{proof}
+
+\begin{theorem}[The positivity constant transports across base-field transitions]
+  \label{thm:one_le_classDeg_baseFieldTransition}
+  \lean{AlgebraicGeometry.one_le_classDeg_cechPicMap_baseFieldTransition_of_one_le}
+  \uses{thm:classDeg_cechPicMap_baseFieldTransition}
+  \leanok
+  For the challenge curve \(C\) over \(k\), a base-field transition
+  \(\varphi \colon K_1 \to K_2\) of field extensions of \(k\), and a Picard class \(L\) on
+  \(C_{K_1}\) with \(1 \le \deg_{\Pic} L\): the pulled-back class on \(C_{K_2}\) retains the
+  threshold, \(1 \le \deg_{\Pic}\bigl(\pi^{*}L\bigr)\), where \(\pi\) is the base-field
+  transition of the curve.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The degree is invariant under base-field transitions
+  (Theorem~\ref{thm:classDeg_cechPicMap_baseFieldTransition}); the threshold transfers
+  verbatim.
+\end{proof}
+
+\section{Evaluation at the graph section}
+\label{sec:graphSectionEval}
+
+For a field point \(t \colon \Spec K \to C\) of the challenge curve, the section
+\(g_t\) of the projection \(C_K := (C \otimes \Spec K)_{\mathrm{left}} \to \Spec K\)
+evaluates sections of any open containing the graph point into a copy of \(K\). This is
+the residue half of the degree-one certificate.
+
+\begin{definition}[The evaluation at the graph section]
+  \label{def:graphSectionEval}
+  \lean{AlgebraicGeometry.Over.top_le_sectionOfPoint_preimage,
+    AlgebraicGeometry.graphSectionEval, AlgebraicGeometry.graphSectionEval_res}
+  \uses{def:sectionOfPoint, def:graphPoint}
+  \leanok
+  Let \(W\) be an open of \(C_K\) containing the graph point \(x_t\). The preimage of
+  \(W\) under the section \(g_t\) is all of \(\Spec K\) (a one-point space whose point maps
+  to \(x_t \in W\)), so pullback of sections along \(g_t\) defines a ring homomorphism
+  \[
+    \varepsilon_t \colon \Gamma(C_K, W) \longrightarrow \Gamma(\Spec K, \top),
+  \]
+  compatible with restriction of the open.
+\end{definition}
+
+\begin{theorem}[The evaluation splits the \(K\)-structure]
+  \label{thm:graphSectionEval_algebraMap}
+  \lean{AlgebraicGeometry.graphSectionEval_algebraMap,
+    AlgebraicGeometry.bijective_graphSectionEval_algebraMap,
+    AlgebraicGeometry.isField_sections_top_overSpec,
+    AlgebraicGeometry.surjective_graphSectionEval}
+  \uses{def:graphSectionEval, def:overSpecGammaTop, def:sectionOfPoint}
+  \leanok
+  The composite of the structure map \(K \to \Gamma(C_K, W)\) (sections carry the
+  \(K\)-structure through the second projection) with the evaluation \(\varepsilon_t\) is
+  the canonical identification \(K \cong \Gamma(\Spec K, \top)\)
+  (Definition~\ref{def:overSpecGammaTop}) — in particular it is bijective, the target is a
+  field, and \(\varepsilon_t\) is surjective.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The structure map of the sections is the pullback along the second projection
+  \(\mathrm{snd}\), pre-composed with the identification; and
+  \(g_t \circ \mathrm{snd} = \id\) (Definition~\ref{def:sectionOfPoint}), so the composite
+  pullback \(\varepsilon_t \circ \mathrm{snd}^{\sharp}\) is the pullback along the
+  identity — the canonical identification, a ring isomorphism onto
+  \(\Gamma(\Spec K, \top) \cong K\). Surjectivity of \(\varepsilon_t\) follows since
+  already the composite is surjective.
+\end{proof}
+
+\begin{theorem}[The point--evaluation dictionary]
+  \label{thm:ker_graphSectionEval_eq_primeIdealOf}
+  \lean{AlgebraicGeometry.ker_graphSectionEval_eq_primeIdealOf}
+  \uses{def:graphSectionEval, thm:graphSectionEval_algebraMap, def:graphPoint}
+  \leanok
+  On an \emph{affine} open \(W \ni x_t\), the kernel of the evaluation at the graph section
+  is the prime ideal of the graph point:
+  \[
+    \ker \varepsilon_t \;=\; \mathfrak p_{x_t} \subseteq \Gamma(C_K, W).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The stalk of \(C_K\) at \(x_t\) is the localisation of \(\Gamma(C_K, W)\) at
+  \(\mathfrak p_{x_t}\), so a section \(f\) lies in \(\mathfrak p_{x_t}\) iff its germ at
+  \(x_t\) is a non-unit. Chase germs through the section: the germ of
+  \(\varepsilon_t(f)\) at the unique point of \(\Spec K\) is the stalk map of \(g_t\)
+  applied to the germ of \(f\) at \(x_t\).
+
+  If \(\varepsilon_t(f) = 0\) but the germ of \(f\) at \(x_t\) were a unit, its image under
+  the stalk map would be a unit and also the germ of \(0\) — impossible. Conversely if
+  \(f \in \mathfrak p_{x_t}\) but \(\varepsilon_t(f) \neq 0\), then \(\varepsilon_t(f)\) is
+  a unit (the target is a field, Theorem~\ref{thm:graphSectionEval_algebraMap}), so its
+  germ is a unit; stalk maps are local ring homomorphisms, so reflecting units along the
+  stalk map of \(g_t\) makes the germ of \(f\) at \(x_t\) a unit — contradicting
+  \(f \in \mathfrak p_{x_t}\).
+\end{proof}
+
+\begin{theorem}[The quotient by the kernel is a copy of \(K\)]
+  \label{thm:finrank_quotient_ker_graphSectionEval}
+  \lean{AlgebraicGeometry.finrank_quotient_ker_graphSectionEval,
+    AlgebraicGeometry.isMaximal_ker_graphSectionEval}
+  \uses{def:graphSectionEval, thm:graphSectionEval_algebraMap}
+  \leanok
+  For any open \(W \ni x_t\), the kernel of \(\varepsilon_t\) is a maximal ideal and
+  \[
+    \dim_K \bigl(\Gamma(C_K, W) \,/\, \ker\varepsilon_t\bigr) \;=\; 1 .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  \(\varepsilon_t\) is surjective onto a field
+  (Theorem~\ref{thm:graphSectionEval_algebraMap}), so the quotient by its kernel is
+  isomorphic to that field — whence maximality — and as a \(K\)-vector space the field
+  \(\Gamma(\Spec K, \top)\) is one-dimensional: the \(K\)-structure map onto it is
+  bijective (Theorem~\ref{thm:graphSectionEval_algebraMap} again).
+\end{proof}
+
+\section{The graph chart}
+\label{sec:graphChart}
+
+The multiplicity half of the degree-one certificate: an affine chart of the fibre curve on
+which the ideal of the graph section is principal on the transported point generator.
+
+\begin{definition}[The graph chart and the graph equation]
+  \label{def:graphChart}
+  \lean{AlgebraicGeometry.graphBaseChart, AlgebraicGeometry.isAffineOpen_graphBaseChart,
+    AlgebraicGeometry.basePoint_mem_graphBaseChart,
+    AlgebraicGeometry.top_le_preimage_graphBaseChart, AlgebraicGeometry.graphCoordEval,
+    AlgebraicGeometry.graphGen, AlgebraicGeometry.graphElift, AlgebraicGeometry.graphChart,
+    AlgebraicGeometry.isAffineOpen_graphChart, AlgebraicGeometry.graphChart_le_productChart,
+    AlgebraicGeometry.graphChartEqn}
+  \uses{def:diagonalChartData, def:productChart, def:productChartSections,
+    thm:isLocalization_away_basicOpen_productChartSections, def:pointGen_pointEv}
+  \leanok
+  Let \(t \colon \Spec K \to C\) be a field point with image point \(p_0\), and let
+  \(U := \mathrm{chart}(p_0)\) be the frozen \'etale-coordinate chart of the curve at
+  \(p_0\) (Definition~\ref{def:diagonalChartData}), with coordinate \(u\), and
+  \(F := \Gamma(\Spec K, \top)\). Define:
+  \begin{itemize}
+  \item the \emph{point pullback} \(c := t^{\sharp} \colon \Gamma(C, U) \to F\) (the whole
+    of \(\Spec K\) maps into \(U\));
+  \item the \emph{point generator} \(g := u \otimes 1 - 1 \otimes c(u) \in
+    \Gamma(C,U) \otimes_k F\) (Definition~\ref{def:pointGen_pointEv});
+  \item the \emph{pushed idempotent lift} \(\tilde e_F\), the image of the frozen diagonal
+    idempotent lift under \(1 \otimes c\);
+  \item the \emph{graph chart} \(\mathfrak G := D(1 - \tilde e_F) \subseteq
+    \mathfrak W(U, \top)\), the basic open of the product chart
+    (Definitions~\ref{def:productChart}, \ref{def:productChartSections}) at the pushed
+    complementary idempotent — an affine open of \(C_K\), and a localisation of
+    \(\Gamma(C,U) \otimes_k F\) away from \(1 - \tilde e_F\)
+    (Theorem~\ref{thm:isLocalization_away_basicOpen_productChartSections});
+  \item the \emph{graph equation} \(\gamma := g|_{\mathfrak G} \in
+    \Gamma(C_K, \mathfrak G)\), the restriction of the identified point generator.
+  \end{itemize}
+\end{definition}
+
+\begin{lemma}[The tensor-level evaluation and the graph point]
+  \label{lem:graphTensorEval}
+  \lean{AlgebraicGeometry.graphTensorEval, AlgebraicGeometry.graphTensorEval_tmul,
+    AlgebraicGeometry.graphTensorEval_map, AlgebraicGeometry.graphTensorEval_graphElift,
+    AlgebraicGeometry.graphPoint_mem_productChart,
+    AlgebraicGeometry.graphSectionEval_productChartSections}
+  \uses{def:graphChart, thm:appLE_productChartSections, def:graphSectionEval,
+    def:graphPoint, def:diagonalChartData, def:pointGen_pointEv}
+  \leanok
+  Write \(\mathrm{ev} \colon \Gamma(C,U) \otimes_k F \to F\),
+  \(a \otimes \lambda \mapsto c(a)\lambda\), for the tensor-level point evaluation
+  (Definition~\ref{def:pointGen_pointEv}). Then:
+  the graph point lies in the product chart \(\mathfrak W(U, \top)\);
+  the evaluation of an identified tensor at the graph section is the tensor-level
+  evaluation,
+  \(\varepsilon_t\bigl(\mathrm{pcs}(y)\bigr) = \mathrm{ev}(y)\) for
+  \(y \in \Gamma(C,U) \otimes_k F\); and the pushed idempotent lift evaluates to zero,
+  \(\mathrm{ev}(\tilde e_F) = 0\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  \emph{Membership}: the first projection of the graph point is the image point
+  \(p_0 \in U\) (Definition~\ref{def:graphPoint}), and the second-factor condition is
+  vacuous at \(\top\). \emph{Evaluation}: on a pure tensor \(a \otimes b\), the lift-app
+  rule for the section \(g_t = \langle t, \id\rangle\)
+  (Theorem~\ref{thm:appLE_productChartSections}) computes
+  \(\varepsilon_t(\mathrm{pcs}(a \otimes b)) = t^{\sharp}(a) \cdot b = c(a)\,b =
+  \mathrm{ev}(a \otimes b)\); extend additively. \emph{Idempotent}: the tensor evaluation
+  of a second-factor push is the point pullback of the multiplication, and the frozen
+  package satisfies \(\mathrm{mul}(\tilde e) = 0\)
+  (Definition~\ref{def:diagonalChartData}), so
+  \(\mathrm{ev}(\tilde e_F) = c\bigl(\mathrm{mul}(\tilde e)\bigr) = 0\).
+\end{proof}
+
+\begin{theorem}[The graph point lies in the graph chart]
+  \label{thm:graphPoint_mem_graphChart}
+  \lean{AlgebraicGeometry.graphPoint_mem_graphChart}
+  \uses{lem:graphTensorEval, thm:ker_graphSectionEval_eq_primeIdealOf, def:graphChart,
+    thm:graphSectionEval_algebraMap}
+  \leanok
+  \(x_t \in \mathfrak G\): the pushed complementary idempotent \(1 - \tilde e_F\) does not
+  vanish at the graph point.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Suppose it vanished at \(x_t\), i.e.\ its section were a non-unit in the stalk. On the
+  affine product chart the point--evaluation dictionary
+  (Theorem~\ref{thm:ker_graphSectionEval_eq_primeIdealOf}) reads: the section lies in
+  \(\ker\varepsilon_t\). But its evaluation is
+  \(\mathrm{ev}(1 - \tilde e_F) = 1 - 0 = 1 \neq 0\) in the field \(F\)
+  (Lemma~\ref{lem:graphTensorEval}, Theorem~\ref{thm:graphSectionEval_algebraMap}) — a
+  contradiction.
+\end{proof}
+
+\begin{theorem}[The kernel presentation of the graph ideal]
+  \label{thm:ker_graphSectionEval_eq_span_graphChartEqn}
+  \lean{AlgebraicGeometry.ker_graphSectionEval_eq_span_graphChartEqn}
+  \uses{def:graphChart, lem:graphTensorEval, thm:graphPoint_mem_graphChart,
+    thm:ker_pointEv_map_localization_eq, def:diagonalChartData,
+    thm:isLocalization_away_basicOpen_productChartSections, def:graphSectionEval}
+  \leanok
+  On the graph chart, the kernel of the evaluation at the graph section is the principal
+  ideal on the graph equation:
+  \[
+    \ker\bigl(\varepsilon_t \colon \Gamma(C_K, \mathfrak G) \to F\bigr)
+      \;=\; (\gamma).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The chart sections are a localisation of the tensor ring \(\Gamma(C,U) \otimes_k F\)
+  away from \(1 - \tilde e_F\)
+  (Theorem~\ref{thm:isLocalization_away_basicOpen_productChartSections}), and on the
+  localisation the evaluation \(\varepsilon_t\) restricts, along the structure map, to the
+  tensor-level evaluation \(\mathrm{ev}\) (Lemma~\ref{lem:graphTensorEval}, compatible with
+  the restriction to the basic open). The frozen diagonal package supplies the idempotent
+  lift and the kernel presentation of the diagonal ideal
+  (Definition~\ref{def:diagonalChartData}), so the localised point-fiber keystone
+  (Theorem~\ref{thm:ker_pointEv_map_localization_eq}) computes the extension of
+  \(\ker(\mathrm{ev})\) to the chart as the principal ideal on the image of the point
+  generator — which is \(\gamma\) (Definition~\ref{def:graphChart}).
+
+  It remains to see \(\ker \varepsilon_t\) equals that extension. One inclusion is
+  \(\varepsilon_t(\gamma) = \mathrm{ev}(g) = 0\). For the other, an element
+  \(z \in \ker\varepsilon_t\) clears denominators: \(z \cdot s = \beta(b)\) with \(s\) a
+  power of \(1 - \tilde e_F\) and \(b\) in the tensor ring; \(s\) evaluates to \(1\) and
+  \(z\) to \(0\), so \(\mathrm{ev}(b) = 0\), and \(b\)'s image lies in the extension of
+  \(\ker(\mathrm{ev})\); since \(s\) is invertible in the localisation, \(z\) does too.
+\end{proof}
+
+\begin{theorem}[The colength of the graph equation is one]
+  \label{thm:finrank_quotient_span_graphChartEqn}
+  \lean{AlgebraicGeometry.finrank_quotient_span_graphChartEqn}
+  \uses{thm:ker_graphSectionEval_eq_span_graphChartEqn,
+    thm:finrank_quotient_ker_graphSectionEval}
+  \leanok
+  \[
+    \dim_K \bigl(\Gamma(C_K, \mathfrak G) \,/\, (\gamma)\bigr) \;=\; 1 .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  \((\gamma) = \ker\varepsilon_t\)
+  (Theorem~\ref{thm:ker_graphSectionEval_eq_span_graphChartEqn}), and the quotient by the
+  kernel is a copy of \(K\)
+  (Theorem~\ref{thm:finrank_quotient_ker_graphSectionEval}).
+\end{proof}
+
+\section{The degree-one certificate of the graph class}
+\label{sec:graphDegree}
+
+\begin{lemma}[The graph equation is nonzero]
+  \label{lem:graphChartEqn_ne_zero}
+  \lean{AlgebraicGeometry.graphGen_mem_nonZeroDivisors,
+    AlgebraicGeometry.graphChartEqn_ne_zero}
+  \uses{thm:diagonal_regularity_engine, def:graphChart, thm:graphSectionEval_algebraMap,
+    thm:graphPoint_mem_graphChart, def:diagonalChartData,
+    thm:isLocalization_away_basicOpen_productChartSections}
+  \leanok
+  The point generator \(g\) is a nonzerodivisor of the tensor ring
+  \(\Gamma(C,U) \otimes_k F\), and the graph equation \(\gamma \neq 0\) in
+  \(\Gamma(C_K, \mathfrak G)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The regularity engine (Theorem~\ref{thm:diagonal_regularity_engine}) makes
+  \(u \otimes 1 - 1 \otimes b\) a nonzerodivisor of \(\Gamma(C,U) \otimes_k F\), uniformly
+  in the second tensor factor and the element \(b\) — here \(b = c(u)\). If \(\gamma = 0\)
+  in the localisation, then some power \(s\) of \(1 - \tilde e_F\) satisfies \(g \cdot s = 0\)
+  in the tensor ring, so \(s = 0\) (nonzerodivisor); but then the localisation itself is
+  the zero ring, contradicting that it evaluates onto the field \(F\)
+  (Lemma~\ref{lem:graphTensorEval}, Theorem~\ref{thm:graphSectionEval_algebraMap},
+  Theorem~\ref{thm:graphPoint_mem_graphChart}), where \(1 \neq 0\).
+\end{proof}
+
+\begin{theorem}[The graph point is closed]
+  \label{thm:graphPoint_ne_genericPoint}
+  \lean{AlgebraicGeometry.graphPoint_ne_genericPoint}
+  \uses{lem:graphChartEqn_ne_zero, thm:ker_graphSectionEval_eq_span_graphChartEqn,
+    thm:ker_graphSectionEval_eq_primeIdealOf, lem:fromSpec_base_ne_genericPoint,
+    lem:primeIdealOf_fromSpec_base}
+  \leanok
+  The graph point is not the generic point of the fibre curve:
+  \(x_t \neq \eta\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  On the affine graph chart, the prime of the graph point is
+  \(\ker\varepsilon_t = (\gamma)\)
+  (Theorems~\ref{thm:ker_graphSectionEval_eq_primeIdealOf},
+  \ref{thm:ker_graphSectionEval_eq_span_graphChartEqn}), a \emph{nonzero} ideal since
+  \(\gamma \neq 0\) (Lemma~\ref{lem:graphChartEqn_ne_zero}). Points of nonzero primes of an
+  affine open are not the generic point
+  (Lemmas~\ref{lem:fromSpec_base_ne_genericPoint},
+  \ref{lem:primeIdealOf_fromSpec_base}).
+\end{proof}
+
+\begin{lemma}[The graph equation is a unit away from the graph point]
+  \label{lem:isUnit_germ_graphChartEqn_of_ne}
+  \lean{AlgebraicGeometry.isUnit_germ_graphChartEqn_of_ne}
+  \uses{thm:ker_graphSectionEval_eq_span_graphChartEqn,
+    thm:finrank_quotient_ker_graphSectionEval, thm:ker_graphSectionEval_eq_primeIdealOf,
+    lem:primeIdealOf_fromSpec_base}
+  \leanok
+  For every point \(z \in \mathfrak G\) with \(z \neq x_t\), the germ of the graph equation
+  \(\gamma\) at \(z\) is a unit.
+\end{lemma}
+\begin{proof}
+  \leanok
+  If the germ were a non-unit, \(\gamma\) would lie in the prime \(\mathfrak p_z\) of \(z\)
+  on the chart, so \((\gamma) = \mathfrak p_{x_t} \subseteq \mathfrak p_z\)
+  (Theorems~\ref{thm:ker_graphSectionEval_eq_span_graphChartEqn},
+  \ref{thm:ker_graphSectionEval_eq_primeIdealOf}); but \(\mathfrak p_{x_t}\) is maximal
+  (Theorem~\ref{thm:finrank_quotient_ker_graphSectionEval}), forcing
+  \(\mathfrak p_z = \mathfrak p_{x_t}\), hence \(z = x_t\) (points of an affine open are
+  recovered from their primes, Lemma~\ref{lem:primeIdealOf_fromSpec_base}) — contradiction.
+\end{proof}
+
+\begin{lemma}[The trivialising element away from the graph point is \(1\)]
+  \label{lem:presentationElem_graphLocalEquations_of_ne}
+  \lean{AlgebraicGeometry.presentationElem_graphLocalEquations_of_ne}
+  \uses{def:graphLocalEquations, def:graphPoint, def:diagonalCover,
+    def:localEquations_pullback, lem:localEquations_presentation}
+  \leanok
+  For \(x \neq x_t\), the trivialising element of the meromorphic presentation of the graph
+  system at \(x\) is the constant \(1\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The graph system is the pullback of the diagonal system along the graph lift \(q\)
+  (Definition~\ref{def:graphLocalEquations}). At \(x \neq x_t\), the image \(q(x)\) misses
+  the diagonal (Definition~\ref{def:graphPoint}), so the diagonal equation at \(q(x)\) is
+  the constant \(1\) (Definition~\ref{def:diagonalCover}), whose pullback
+  (Definition~\ref{def:localEquations_pullback}) is \(q^{\sharp}(1) = 1\); the presentation
+  element (Lemma~\ref{lem:localEquations_presentation}) is its germ, i.e.\ \(1\).
+\end{proof}
+
+\begin{theorem}[The overlap identity at the graph point]
+  \label{thm:presentationElem_graphLocalEquations_val}
+  \lean{AlgebraicGeometry.presentationElem_graphLocalEquations_val}
+  \uses{def:graphLocalEquations, def:graphChart, thm:appLE_productChartSections,
+    def:diagonalChartData, def:diagonalCover, def:diagonalChart,
+    def:localEquations_pullback, lem:localEquations_presentation, def:diagonalSetup,
+    def:graphPoint, lem:pointedCover_genericPoint_mem, thm:graphPoint_mem_graphChart,
+    def:productChartSections}
+  \leanok
+  The rational function trivialising the graph divisor at the graph point — the germ at the
+  generic point \(\eta\) of the pulled diagonal equation — \emph{is} the germ at \(\eta\)
+  of the graph equation:
+  \[
+    \mathrm{elem}_{x_t}\bigl(\Gamma_t\bigr)
+      \;=\; \gamma_\eta \quad\text{in } K(C_K).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Both sides restrict to the same section on the overlap
+  \(W := (\text{pullback member at } x_t) \cap \mathfrak W(U, \top)\), an open containing
+  \(\eta\); since germs at \(\eta\) are computed through any open containing it, the two
+  germs agree.
+
+  \emph{The left side on \(W\).} The pullback member at \(x_t\) carries the pulled
+  diagonal equation \(q^{\sharp}(e_{p_0})\) (Definitions~\ref{def:localEquations_pullback},
+  \ref{def:diagonalCover}), where the diagonal equation \(e_{p_0}\) on the diagonal chart
+  is the identified diagonal generator \(u \otimes 1 - 1 \otimes u\)
+  (Definitions~\ref{def:diagonalChart}, \ref{def:diagonalSetup}). The lift-app rule for
+  \(q = \langle\mathrm{fst}, \mathrm{snd}\circ t\rangle\)
+  (Theorem~\ref{thm:appLE_productChartSections}) computes its restriction to \(W\) as
+  \(\mathrm{fst}^{\sharp}(u) - (\mathrm{snd}\circ t)^{\sharp}(u)\). The argument is run at
+  a generalised image point (\(\forall p,\ \mathrm{fst}(q(x_t)) = p \Rightarrow \dots\)),
+  instantiated at \(p := t(\ast)\), so that the rewrite along
+  \(\mathrm{fst}(q(x_t)) = p_0\) never crosses the statement.
+
+  \emph{The right side on \(W\).} The graph equation is the identified point generator
+  \(u \otimes 1 - 1 \otimes c(u)\) restricted to the graph chart
+  (Definition~\ref{def:graphChart}); by the product-chart section calculus
+  (Definition~\ref{def:productChartSections}), its restriction to \(W\) is
+  \(\mathrm{fst}^{\sharp}(u) - \mathrm{snd}^{\sharp}(c(u))
+    = \mathrm{fst}^{\sharp}(u) - (\mathrm{snd} \circ t)^{\sharp}(u)\),
+  the same section. Finally \(\eta \in W\): \(W\) is a nonempty open of the irreducible
+  space \(C_K\) (it contains \(x_t\):
+  Lemma~\ref{lem:pointedCover_genericPoint_mem} for the member,
+  Theorem~\ref{thm:graphPoint_mem_graphChart} for the chart side of the overlap).
+\end{proof}
+
+\begin{theorem}[The presentation divisor of the graph is a one-point divisor]
+  \label{thm:presentationDivisor_graphLocalEquations}
+  \lean{AlgebraicGeometry.presentationDivisor_graphLocalEquations}
+  \uses{lem:presentationElem_graphLocalEquations_of_ne, thm:graphPoint_ne_genericPoint,
+    def:presentationDivisor, def:curveDivisor_single, def:scheme_ordZ,
+    lem:localEquations_presentation, def:graphLocalEquations}
+  \leanok
+  The presentation divisor of the graph system is supported at the graph point:
+  \[
+    \mathrm{presentationDivisor}\bigl(\Gamma_t\bigr)
+      \;=\; \mathrm{ord}_{x_t}\bigl(\mathrm{elem}_{x_t}\bigr) \cdot x_t ,
+  \]
+  a single-point divisor (Definition~\ref{def:curveDivisor_single}, legal since
+  \(x_t \neq \eta\) by Theorem~\ref{thm:graphPoint_ne_genericPoint}).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Compare coefficients pointwise (Definition~\ref{def:presentationDivisor}). At \(x_t\)
+  both sides read \(\mathrm{ord}_{x_t}(\mathrm{elem}_{x_t})\)
+  (Definition~\ref{def:scheme_ordZ}). At \(x \neq x_t\) the trivialising element is \(1\)
+  (Lemma~\ref{lem:presentationElem_graphLocalEquations_of_ne}), of order zero, and the
+  single-point divisor has coefficient zero there.
+\end{proof}
+
+\begin{theorem}[The graph class of a field point has degree one]
+  \label{thm:classDeg_graphPicClass}
+  \lean{AlgebraicGeometry.classDeg_graphPicClass}
+  \uses{thm:presentationDivisor_graphLocalEquations,
+    thm:presentationElem_graphLocalEquations_val,
+    thm:finrank_quotient_span_graphChartEqn, lem:isUnit_germ_graphChartEqn_of_ne,
+    thm:finrank_quotient_span_section, def:classDeg, def:curveDivisor_picClass,
+    lem:curveDivisor_single_arith, lem:localEquations_presentation,
+    thm:graphPoint_ne_genericPoint, def:graphLocalEquations,
+    thm:picClass_eq_of_presentationDivisor_eq, thm:graphPoint_mem_graphChart}
+  \leanok
+  \source{kleiman-picard}
+  For every field point \(t \colon \Spec K \to C\) of the challenge curve,
+  \[
+    \deg_{\Pic}\bigl(\struct{C_K}(\Gamma_t)\bigr) \;=\; 1 .
+  \]
+  This is the degree certificate of the Abel element: Kleiman's graph divisor
+  \(\Gamma_g = (1 \times g)^{-1}\Delta\) is a relative effective divisor of fibre degree
+  one.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The class of the graph system is the anchored class of its presentation divisor
+  (Lemma~\ref{lem:localEquations_presentation},
+  Theorem~\ref{thm:picClass_eq_of_presentationDivisor_eq},
+  Definition~\ref{def:curveDivisor_picClass}), which is the one-point divisor
+  \(m \cdot x_t\) with \(m := \mathrm{ord}_{x_t}(\mathrm{elem}_{x_t})\)
+  (Theorem~\ref{thm:presentationDivisor_graphLocalEquations}). The anchored degree of a
+  one-point divisor is \(\deg(m \cdot x_t) = m \cdot [\kappa(x_t) : K]\)
+  (Definition~\ref{def:classDeg}, Lemma~\ref{lem:curveDivisor_single_arith}).
+
+  This product collapses in one shot through the chart colength dictionary
+  (Theorem~\ref{thm:finrank_quotient_span_section}) on the graph chart, applied to the
+  rational function \(\mathrm{elem}_{x_t}\) with section representative \(\gamma\)
+  (the overlap identity, Theorem~\ref{thm:presentationElem_graphLocalEquations_val}) and
+  the singleton point set \(\{x_t\}\): the hypotheses are that \(x_t\) lies in the chart
+  (Theorem~\ref{thm:graphPoint_mem_graphChart}) and that \(\gamma\) is a unit at every
+  other closed point of the chart (Lemma~\ref{lem:isUnit_germ_graphChartEqn_of_ne}); the
+  dictionary then reads
+  \[
+    m \cdot [\kappa(x_t):K]
+      \;=\; \dim_K\bigl(\Gamma(C_K, \mathfrak G)/(\gamma)\bigr)
+      \;=\; 1
+  \]
+  by the colength computation
+  (Theorem~\ref{thm:finrank_quotient_span_graphChartEqn}).
+\end{proof}

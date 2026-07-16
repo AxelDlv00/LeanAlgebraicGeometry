@@ -1975,3 +1975,155 @@ hypothesis under which the coherence theorems of two-lattice pairs fire
   additivity, \(1 \otimes m = \sum_i p_i^R \cdot (1 \otimes z_i)\), an \(R[t]\)-linear
   combination of the claimed generators.
 \end{proof}
+
+\section{The point-fiber ideal of an \'etale-coordinatised algebra}
+\label{sec:point_fiber_ideal}
+
+The diagonal-ideal package of Section~\ref{sec:diagonal_ideal} computes the kernel of the
+multiplication \(B \otimes_{k[t]} B \to B\) after localising at the idempotent lift. Here
+the second tensor factor is specialised along a point: \(F\) a second
+\(k[t]\)-coordinatised algebra receiving \(B\) through a \(k[t]\)-algebra homomorphism
+\(c \colon B \to F\) (in the application, \(F\) is the section ring of an affine field test
+and \(c\) the pullback along a point of the curve). Everything mirrors the diagonal
+computation, with the idempotent input \emph{pushed} from the frozen diagonal package — no
+unramifiedness of \(F\) is invoked.
+
+Throughout, \(k\) is a commutative ring, \(B\) and \(F\) are \(k\)-algebras carrying
+compatible \(k[t]\)-algebra structures, \(u_B := t \cdot 1_B\) and \(u_F := t \cdot 1_F\)
+denote the coordinates, and \(c \colon B \to F\) is a \(k[t]\)-algebra homomorphism (so
+\(c(u_B) = u_F\)).
+
+\begin{definition}[The point generator and the point evaluations]
+  \label{def:pointGen_pointEv}
+  \lean{AlgebraicJacobian.Diagonal.pointGen, AlgebraicJacobian.Diagonal.map_coord,
+    AlgebraicJacobian.Diagonal.pointEv, AlgebraicJacobian.Diagonal.pointEv_tmul,
+    AlgebraicJacobian.Diagonal.pointEv_pointGen, AlgebraicJacobian.Diagonal.pointEvTwo,
+    AlgebraicJacobian.Diagonal.pointBaseChange,
+    AlgebraicJacobian.Diagonal.pointBaseChange_surjective,
+    AlgebraicJacobian.Diagonal.pointEvTwo_pointBaseChange,
+    AlgebraicJacobian.Diagonal.mapRight, AlgebraicJacobian.Diagonal.mapRight_diagGen,
+    AlgebraicJacobian.Diagonal.mapRightTwo,
+    AlgebraicJacobian.Diagonal.pointBaseChange_mapRight}
+  \uses{def:diagonalSetup}
+  \leanok
+  The \emph{point generator} is \(g := u_B \otimes 1 - 1 \otimes u_F \in B \otimes_k F\);
+  the \emph{point evaluation} is the \(k\)-algebra map
+  \(\varepsilon \colon B \otimes_k F \to F\), \(x \otimes \lambda \mapsto c(x)\lambda\),
+  which kills \(g\). Auxiliary to them: the base-change surjection
+  \(\beta \colon B \otimes_k F \to B \otimes_{k[t]} F\); the \(k[t]\)-level evaluation
+  \(\varepsilon_2 \colon B \otimes_{k[t]} F \to F\) with
+  \(\varepsilon_2 \circ \beta = \varepsilon\); and the second-factor pushes
+  \(1 \otimes c \colon B \otimes_k B \to B \otimes_k F\) and
+  \(B \otimes_{k[t]} B \to B \otimes_{k[t]} F\), which carry the diagonal generator to the
+  point generator and intertwine the two base changes.
+\end{definition}
+\begin{proof}
+  \leanok
+  \(c(u_B) = u_F\) since \(c\) is a \(k[t]\)-algebra map, so
+  \(\varepsilon(g) = c(u_B)\cdot 1 - 1 \cdot u_F = 0\), and the push of the diagonal
+  generator \(u_B \otimes 1 - 1 \otimes u_B\) (Definition~\ref{def:diagonalSetup}) is \(g\).
+  The base change is surjective because it is the identity on pure tensors; the remaining
+  identities are checked on pure tensors.
+\end{proof}
+
+\begin{theorem}[The kernel of the point base change]
+  \label{thm:ker_pointBaseChange}
+  \lean{AlgebraicJacobian.Diagonal.coord_tmul_one_point,
+    AlgebraicJacobian.Diagonal.pointBaseChange_pointGen,
+    AlgebraicJacobian.Diagonal.aeval_sub_dvd_point,
+    AlgebraicJacobian.Diagonal.algebraMap_tmul_sub_mem_span_point,
+    AlgebraicJacobian.Diagonal.pointQRight, AlgebraicJacobian.Diagonal.pointSectionMap,
+    AlgebraicJacobian.Diagonal.pointSectionMap_pointBaseChange,
+    AlgebraicJacobian.Diagonal.ker_pointBaseChange}
+  \uses{def:pointGen_pointEv, lem:diagonal_telescoping, lem:diagonal_section}
+  \leanok
+  The kernel of the base-change surjection
+  \(\beta \colon B \otimes_k F \to B \otimes_{k[t]} F\) is exactly the principal ideal on
+  the point generator: \(\ker \beta = (g)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Mirror of Theorem~\ref{thm:ker_baseChange}. \(\beta(g) = 0\) since in
+  \(B \otimes_{k[t]} F\) the two coordinates agree across the tensor (both are
+  \(t \cdot (1 \otimes 1)\)), so \((g) \subseteq \ker\beta\). Conversely the telescoping
+  identity holds in the point setting: for every \(p \in k[t]\),
+  \(p(u_B) \otimes 1 - 1 \otimes p(u_F) \in (g)\), because a difference of evaluations is
+  divisible by the difference of the points (as in Lemma~\ref{lem:diagonal_telescoping}).
+  Telescoping promotes the right inclusion \(\lambda \mapsto 1 \otimes \lambda\) into the
+  quotient \((B \otimes_k F)/(g)\) to a \(k[t]\)-algebra map, whence a section
+  \(B \otimes_{k[t]} F \to (B \otimes_k F)/(g)\) of \(\beta\) with
+  \(\mathrm{section} \circ \beta = \mathrm{quotient\ map}\) (as in
+  Lemma~\ref{lem:diagonal_section}). An element of \(\ker\beta\) is then killed by the
+  quotient map, i.e.\ lies in \((g)\).
+\end{proof}
+
+\begin{theorem}[The kernel of the \(k[t]\)-level point evaluation]
+  \label{thm:ker_pointEvTwo}
+  \lean{AlgebraicJacobian.Diagonal.pointEvTwo_mapRightTwo,
+    AlgebraicJacobian.Diagonal.tmul_sub_tmul_mem_span_mapRightTwo,
+    AlgebraicJacobian.Diagonal.ker_pointEvTwo}
+  \uses{def:pointGen_pointEv}
+  \leanok
+  Suppose the diagonal ideal is principal:
+  \(\ker\bigl(\mathrm{mul} \colon B \otimes_{k[t]} B \to B\bigr) = (e)\) for some
+  \(e \in B \otimes_{k[t]} B\). Then the kernel of the \(k[t]\)-level point evaluation is
+  the principal ideal on the push of \(e\):
+  \[
+    \ker\bigl(\varepsilon_2 \colon B \otimes_{k[t]} F \to F\bigr)
+      = \bigl((1 \otimes c)(e)\bigr).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The push kills into the kernel: \(\varepsilon_2\bigl((1 \otimes c)(z)\bigr) =
+  c(\mathrm{mul}(z))\) on pure tensors, and \(\mathrm{mul}(e) = 0\).
+
+  Conversely, the generators \(x \otimes 1 - 1 \otimes c(x)\) (\(x \in B\)) of the point
+  ideal are pushes of the diagonal-ideal elements \(x \otimes 1 - 1 \otimes x\), each a
+  multiple of \(e\) by hypothesis; hence they lie in \(((1\otimes c)(e))\). Now the section
+  trick: modulo \(((1\otimes c)(e))\), every \(z \in B \otimes_{k[t]} F\) is congruent to
+  \(1 \otimes \varepsilon_2(z)\) — on a pure tensor \(x \otimes y\), the difference
+  \(x \otimes y - 1 \otimes c(x)y = (x \otimes 1 - 1 \otimes c(x))(1 \otimes y)\) is a
+  multiple of a pushed generator. So \(\varepsilon_2(z) = 0\) forces
+  \(z \equiv 1 \otimes 0 = 0\), i.e.\ \(z \in ((1\otimes c)(e))\).
+\end{proof}
+
+\begin{theorem}[The localised point-fiber ideal]
+  \label{thm:ker_pointEv_map_localization_eq}
+  \lean{AlgebraicJacobian.Diagonal.ker_pointEv_le_sup,
+    AlgebraicJacobian.Diagonal.ker_pointEv_map_localization_eq}
+  \uses{thm:ker_pointBaseChange, thm:ker_pointEvTwo, def:pointGen_pointEv,
+    thm:exists_idempotent_lift, thm:ker_map_localization_eq}
+  \leanok
+  Let \(\tilde e \in B \otimes_k B\) be a lift of an idempotent generator of the diagonal
+  ideal: suppose \(\beta_B(\tilde e)\) is idempotent and
+  \(\ker(\mathrm{mul}) = (\beta_B(\tilde e))\), where
+  \(\beta_B \colon B \otimes_k B \to B \otimes_{k[t]} B\) is the diagonal base change (such
+  a lift exists for the \'etale coordinate by Theorem~\ref{thm:exists_idempotent_lift}).
+  Write \(\tilde e_F := (1 \otimes c)(\tilde e) \in B \otimes_k F\) for its push. Then for
+  \emph{any} localisation \(L\) of \(B \otimes_k F\) away from \(1 - \tilde e_F\),
+  \[
+    (\ker \varepsilon)\, L \;=\; \bigl(g\bigr) L ,
+  \]
+  the extension of the point-evaluation kernel is the principal ideal on the point
+  generator.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Mirror of Theorem~\ref{thm:ker_map_localization_eq}.
+
+  \emph{Containment into the sum.} \(\ker\varepsilon \subseteq (g) + (\tilde e_F)\): for
+  \(x \in \ker\varepsilon\), the image \(\beta(x)\) lies in \(\ker\varepsilon_2\)
+  (Definition~\ref{def:pointGen_pointEv}), which is principal on the pushed generator
+  (Theorem~\ref{thm:ker_pointEvTwo}, whose hypothesis holds with
+  \(e := \beta_B(\tilde e)\), the pushes intertwining by
+  Definition~\ref{def:pointGen_pointEv}); lift the factorisation through the surjection
+  \(\beta\) and correct by \(\ker\beta = (g)\) (Theorem~\ref{thm:ker_pointBaseChange}).
+
+  \emph{The pushed lift dies in the localisation.} \(\beta(\tilde e_F)\) is idempotent (the
+  push of an idempotent), so \(\tilde e_F (1 - \tilde e_F) \in \ker\beta = (g)\); in \(L\)
+  the factor \(1 - \tilde e_F\) is invertible, hence \(\tilde e_F \in (g)L\).
+
+  Combining, \((\ker\varepsilon)L \subseteq (g)L\); the reverse containment is
+  \(\varepsilon(g) = 0\) (Definition~\ref{def:pointGen_pointEv}).
+\end{proof}
