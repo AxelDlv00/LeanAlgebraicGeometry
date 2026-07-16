@@ -256,6 +256,8 @@ import AlgebraicJacobian.Picard.GrassmannianPair
 import AlgebraicJacobian.Picard.GrassmannianDiagonal
 import AlgebraicJacobian.Picard.GrassmannianSeparated
 import AlgebraicJacobian.Picard.GrassmannianTautological
+import AlgebraicJacobian.Picard.GrassmannianMatrixPoint
+import AlgebraicJacobian.Picard.GrassmannianTautologicalCocycle
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularityStep
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularity
 import AlgebraicJacobian.Picard.FlatCokernel
