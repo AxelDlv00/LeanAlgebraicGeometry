@@ -156,6 +156,7 @@ import AlgebraicJacobian.RiemannRoch.FLVLattice
 import AlgebraicJacobian.RiemannRoch.FLVQcoh
 import AlgebraicJacobian.RiemannRoch.FLVVanishing
 import AlgebraicJacobian.RiemannRoch.FLVClass
+import AlgebraicJacobian.RiemannRoch.UniformVanishing
 import AlgebraicJacobian.Curve.BaseChangeInstances
 import AlgebraicJacobian.Algebra.DiagonalIdeal
 import AlgebraicJacobian.Algebra.DiagonalRegular
@@ -190,6 +191,7 @@ import AlgebraicJacobian.Cohomology.RigidEngine4Engine
 import AlgebraicJacobian.Cohomology.RigidEngine4BaseChange
 import AlgebraicJacobian.Picard.DegreeZero
 import AlgebraicJacobian.Picard.Pic0Functor
+import AlgebraicJacobian.Picard.DegreeSeam
 
 /-!
 # AlgebraicJacobian — library root
