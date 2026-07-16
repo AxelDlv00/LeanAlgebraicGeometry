@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Algebra.LocalizedColength
+import AlgebraicJacobian.RiemannRoch.ChartPoints
 import AlgebraicJacobian.RiemannRoch.PrincipalDivisor
 import AlgebraicJacobian.RiemannRoch.ResidueDegree
 
@@ -30,7 +31,8 @@ proves the **chart colength dictionary** (`informal/deg-d5b-worksheet.md` §4 SB
 
 * points ↔ primes: `IsAffineOpen.primeIdealOf_ne_bot`, `fromSpec_base_mem`,
   `primeIdealOf_fromSpec_base`, `fromSpec_base_ne_genericPoint` — closed points of `V`
-  correspond to the nonzero primes of `B` through `fromSpec`/`primeIdealOf`.
+  correspond to the nonzero primes of `B` through `fromSpec`/`primeIdealOf` (landed in
+  `AlgebraicJacobian.RiemannRoch.ChartPoints`, split out for the 500-line discipline).
 * multiplicity ↔ order (`AlgebraicGeometry.toAdd_ordZ_eq_count_factors`): the classical
   order `ord_x(g)` of `Scheme.ordZ` equals the multiplicity of the prime of `x` in
   `factors (f)` — through the stalk-is-localization identification and the multiplicity
@@ -101,53 +103,6 @@ theorem Scheme.overAlgebraMap_finiteType
 
 end SectionsAlgebra
 
-/-! ## Points of a chart and primes of its section ring -/
-
-section PointsPrimes
-
-variable {X : Scheme.{u}} [IsIntegral X] {V : X.Opens} (hV : IsAffineOpen V)
-
-/-- **Nonzero prime at a closed point.** On an integral scheme, the prime of `Γ(X, V)` cut
-out by a non-generic point of the affine open `V` is not `⊥`.  (Public form of the
-re-derivations in `StalksDVR`/`ResidueDegree`.) -/
-theorem IsAffineOpen.primeIdealOf_ne_bot {x : X} (hx : x ∈ V) (hxg : x ≠ genericPoint X) :
-    (hV.primeIdealOf ⟨x, hx⟩).asIdeal ≠ ⊥ := by
-  haveI : Nonempty V := ⟨⟨x, hx⟩⟩
-  intro h
-  apply hxg
-  have h1 : hV.fromSpec.base (hV.primeIdealOf ⟨x, hx⟩) = x := hV.fromSpec_primeIdealOf ⟨x, hx⟩
-  have hgen : (genericPoint (Spec Γ(X, V)) : Spec Γ(X, V)) = hV.primeIdealOf ⟨x, hx⟩ := by
-    rw [genericPoint_eq_bot_of_affine]
-    exact (PrimeSpectrum.ext h).symm
-  rw [← h1, ← hgen, genericPoint_eq_of_isOpenImmersion hV.fromSpec]
-
-omit [IsIntegral X] in
-/-- The image of a point of `Spec Γ(X, V)` under `fromSpec` lies in `V`. -/
-theorem IsAffineOpen.fromSpec_base_mem (y : Spec Γ(X, V)) : hV.fromSpec.base y ∈ V := by
-  have h : hV.fromSpec.base y ∈ Set.range hV.fromSpec := ⟨y, rfl⟩
-  rwa [hV.range_fromSpec] at h
-
-/-- `primeIdealOf` is a left inverse of `fromSpec` on points: the prime of the point of a
-prime is the prime. -/
-theorem IsAffineOpen.primeIdealOf_fromSpec_base (y : Spec Γ(X, V)) :
-    hV.primeIdealOf ⟨hV.fromSpec.base y, hV.fromSpec_base_mem y⟩ = y :=
-  hV.fromSpec.isOpenEmbedding.injective
-    (hV.fromSpec_primeIdealOf ⟨hV.fromSpec.base y, hV.fromSpec_base_mem y⟩)
-
-/-- The point of a *nonzero* prime of the chart is closed (non-generic). -/
-theorem IsAffineOpen.fromSpec_base_ne_genericPoint {y : Spec Γ(X, V)}
-    (hy : y.asIdeal ≠ ⊥) : hV.fromSpec.base y ≠ genericPoint X := by
-  haveI : Nonempty V := ⟨⟨_, hV.fromSpec_base_mem y⟩⟩
-  intro h
-  apply hy
-  have hgen : y = genericPoint (Spec Γ(X, V)) :=
-    hV.fromSpec.isOpenEmbedding.injective
-      (by rw [genericPoint_eq_of_isOpenImmersion hV.fromSpec, h])
-  rw [hgen, genericPoint_eq_bot_of_affine]
-  rfl
-
-end PointsPrimes
-
 /-! ## SB-3a: every affine chart of the curve has Dedekind sections -/
 
 section DedekindSections
@@ -159,6 +114,7 @@ variable (K : Type u) [Field K] {X : Scheme.{u}} [X.Over (Spec (CommRingCat.of K
   [LocallyOfFiniteType (X ↘ Spec (CommRingCat.of K))]
   {V : X.Opens} (hV : IsAffineOpen V)
 
+include K hV in
 /-- **SB-3a: Dedekind sections on every affine chart.**  For the curve bundle `X` over `K`
 and any nonempty affine open `V` (equivalently, `η ∈ V`), the section ring `Γ(X, V)` is a
 Dedekind domain: it is a domain by integrality of `X`, Noetherian since it is of finite type
@@ -167,7 +123,6 @@ primes are the DVR stalks of the smooth curve, through
 `IsAffineOpen.primeIdealOf`/`isLocalization_stalk`.  This upgrades the landed existential
 `SmoothOfRelativeDimension.exists_isDedekindDomain_section` from *some* chart around each
 point to *every* chart. -/
-include K hV in
 theorem isDedekindDomain_section (hη : genericPoint X ∈ V) : IsDedekindDomain Γ(X, V) := by
   haveI : Nonempty V := ⟨⟨_, hη⟩⟩
   haveI : Algebra.FiniteType K Γ(X, V) := X.overAlgebraMap_finiteType K hV
@@ -189,7 +144,7 @@ theorem isDedekindDomain_section (hη : genericPoint X ∈ V) : IsDedekindDomain
     haveI : IsDomain (Localization.AtPrime (hV.primeIdealOf ⟨x, hxV⟩).asIdeal) :=
       IsLocalization.isDomain_of_le_nonZeroDivisors _
         (hV.primeIdealOf ⟨x, hxV⟩).asIdeal.primeCompl_le_nonZeroDivisors
-    exact RingEquivClass.isDiscreteValuationRing
+    exact IsDiscreteValuationRing.RingEquivClass.isDiscreteValuationRing
       (IsLocalization.algEquiv (hV.primeIdealOf ⟨x, hxV⟩).asIdeal.primeCompl
         (X.presheaf.stalk x)
         (Localization.AtPrime (hV.primeIdealOf ⟨x, hxV⟩).asIdeal))
@@ -237,6 +192,7 @@ theorem moduleFinite_quotient_primeIdealOf {x : X} (hx : x ∈ V)
       (Ideal.Quotient.mkₐ_surjective K _)
   exact finite_of_finite_type_of_isJacobsonRing K _
 
+omit [LocallyOfFiniteType (X ↘ Spec (CommRingCat.of K))] in
 /-- **The residue leg of the dictionary**: the residue of the chart at the prime of a
 closed point `x ∈ V` is the residue field of `x`, `K`-linearly —
 `finrank K (Γ(X, V) ⧸ p_x) = [κ(x) : K]`. -/
@@ -285,6 +241,33 @@ variable (K : Type u) [Field K] {X : Scheme.{u}} [X.Over (Spec (CommRingCat.of K
   [LocallyOfFiniteType (X ↘ Spec (CommRingCat.of K))]
   {V : X.Opens} (hV : IsAffineOpen V) (hη : genericPoint X ∈ V)
 
+/-- File-local duplicate of the germ/stalk seam `Scheme.germ_generic_eq_algebraMap_germ`
+(landed in `RiemannRoch/DivisorSheafZero.lean`; kept private so this file's import cone
+stays free of the divisor-sheaf chain): the germ at `η` of a chart section is the image of
+its germ at `x` along the canonical map `𝒪_{X,x} → K(X)`. -/
+private lemma germ_generic_eq_algebraMap_germ {x : X} (hx : x ∈ V) (f : Γ(X, V)) :
+    (X.presheaf.germ V (genericPoint X) hη).hom f
+      = algebraMap (X.presheaf.stalk x) X.functionField
+          ((X.presheaf.germ V x hx).hom f) := by
+  rw [RingHom.algebraMap_toAlgebra]
+  exact (X.presheaf.germ_stalkSpecializes_apply
+    hx ((genericPoint_spec X).specializes trivial) f).symm
+
+omit [LocallyOfFiniteType (X ↘ Spec (CommRingCat.of K))] in
+/-- File-local form of the landed bridge `coe_inv_ordZ` (`Picard/PresentationDivisor.lean`,
+kept private here so the RiemannRoch layer does not import the Picard layer): the inverse
+of the classical order `Scheme.ordZ` (recall the sign inversion in its definition), coerced
+into `ℤᵐ⁰`, is the mathlib valuation `Scheme.ord` of the underlying rational function. -/
+private lemma coe_inv_ordZ (g : X.functionFieldˣ) {x : X} (hx : x ≠ genericPoint X) :
+    (((Scheme.ordZ (X ↘ Spec (CommRingCat.of K)) hx g)⁻¹ : Multiplicative ℤ) :
+        WithZero (Multiplicative ℤ))
+      = Scheme.ord (X ↘ Spec (CommRingCat.of K)) hx (g : X.functionField) := by
+  rw [Scheme.ordZ]
+  simp only [MonoidHom.comp_apply, invMonoidHom_apply, inv_inv, MulEquiv.coe_toMonoidHom,
+    WithZero.coe_unitsWithZeroEquiv_eq_units_val]
+  rfl
+
+omit [LocallyOfFiniteType (X ↘ Spec (CommRingCat.of K))] in
 /-- **The multiplicity leg of the dictionary** (the worksheet's "least-trodden bridge"):
 for a closed point `x ∈ V`, a nonzero section `f` of the chart, and a unit `g` of `K(X)`
 whose value is the germ of `f` at `η`, the classical order of vanishing of `g` at `x` is
@@ -313,7 +296,7 @@ theorem toAdd_ordZ_eq_count_factors [IsDedekindDomain Γ(X, V)] {x : X} (hx : x 
           (factors (Ideal.span {f})) : ℤ)) := by
     have h1 : Scheme.ord (X ↘ Spec (CommRingCat.of K)) hxg
         = (stalkHeightOne X x).valuation X.functionField := rfl
-    rw [h1, hg, Scheme.germ_generic_eq_algebraMap_germ hη hx f,
+    rw [h1, hg, germ_generic_eq_algebraMap_germ hη hx f,
       (stalkHeightOne X x).valuation_of_algebraMap,
       intValuation_eq_exp_neg_count (stalkHeightOne X x) hgerm0,
       show (X.presheaf.germ V x hx).hom f
@@ -322,7 +305,7 @@ theorem toAdd_ordZ_eq_count_factors [IsDedekindDomain Γ(X, V)] {x : X} (hx : x 
         = IsLocalRing.maximalIdeal (X.presheaf.stalk x) from rfl,
       count_factors_span_algebraMap (X.presheaf.stalk x) hq0 hf]
   -- extract the classical order
-  have h2 := Scheme.coe_inv_ordZ K g hxg
+  have h2 := coe_inv_ordZ K g hxg
   rw [hord, WithZero.exp_eq_coe_ofAdd] at h2
   have h3 := congrArg Inv.inv (WithZero.coe_inj.mp h2)
   rw [inv_inv, ← ofAdd_neg, neg_neg] at h3
@@ -388,6 +371,7 @@ private lemma primeIdealOf_mem_factors_iff [IsDedekindDomain Γ(X, V)] {x : X} (
           hV.primeIdealOf_ne_bot hx hxg⟩ hf 1).mp h1
     omega
 
+include hV hη in
 /-- **Finiteness of the chart colength module**: `Γ(X, V) ⧸ (f)` is a finite `K`-module for
 every nonzero section `f` of the chart. -/
 theorem moduleFinite_quotient_span_section {f : Γ(X, V)} (hf : f ≠ 0) :
@@ -410,6 +394,7 @@ theorem moduleFinite_quotient_span_section {f : Γ(X, V)} (hf : f ≠ 0) :
     rwa [hq] at hfin
   exact moduleFinite_quotient_span hf
 
+include hV in
 /-- **SB-3b, the chart colength dictionary** (the heart of the fiber-degree identity): let
 `f` be a section of the affine chart `V ∋ η` of the curve bundle `X/K`, `g : K(X)ˣ` a unit
 whose value is the germ of `f` at `η`, and `S` a finite set of closed points of `V` outside
@@ -426,8 +411,9 @@ the residue leg (`finrank_quotient_primeIdealOf`). -/
 theorem finrank_quotient_span_section {f : Γ(X, V)} (g : X.functionFieldˣ)
     (hg : (g : X.functionField) = (X.presheaf.germ V (genericPoint X) hη).hom f)
     (S : Finset {x : X // x ≠ genericPoint X}) (hSV : ∀ p ∈ S, p.1 ∈ V)
-    (hout : ∀ (z : X) (hz : z ∈ V) (hzg : z ≠ genericPoint X), (⟨z, hzg⟩ : {x : X // x ≠ genericPoint X}) ∉ S →
-      IsUnit ((X.presheaf.germ V z hz).hom f)) :
+    (hout : ∀ (z : X) (hz : z ∈ V) (hzg : z ≠ genericPoint X),
+      (⟨z, hzg⟩ : {x : X // x ≠ genericPoint X}) ∉ S →
+        IsUnit ((X.presheaf.germ V z hz).hom f)) :
     (finrank K (Γ(X, V) ⧸ Ideal.span {f}) : ℤ)
       = ∑ p ∈ S, Multiplicative.toAdd (Scheme.ordZ (X ↘ Spec (CommRingCat.of K)) p.2 g)
           * (X.residueDeg K p.1 : ℤ) := by
@@ -456,11 +442,11 @@ theorem finrank_quotient_span_section {f : Γ(X, V)} (g : X.functionFieldˣ)
     (i := fun p hp _ => (hV.primeIdealOf ⟨p.1, hSV p hp⟩).asIdeal) ?_ ?_ ?_ ?_).symm
   · -- membership: nonzero terms come from vanishing points, whose primes divide `(f)`
     intro p h₁ h₂
-    rw [primeIdealOf_mem_factors_iff hV (hSV p h₁) p.2 hf hDed,
+    rw [primeIdealOf_mem_factors_iff hV (hSV p h₁) p.2 hf,
       ← not_isUnit_germ_iff_mem hV (hSV p h₁) f]
     intro hunit
     apply h₂
-    rw [toAdd_ordZ_eq_zero_of_isUnit_germ K hV hη (hSV p h₁) p.2 g hg hunit, zero_mul]
+    rw [toAdd_ordZ_eq_zero_of_isUnit_germ K hη (hSV p h₁) p.2 g hg hunit, zero_mul]
   · -- injectivity: distinct points have distinct primes
     intro p₁ h₁₁ h₁₂ p₂ h₂₁ h₂₂ heq
     have h1 := hV.fromSpec_primeIdealOf ⟨p₁.1, hSV p₁ h₁₁⟩
@@ -487,8 +473,8 @@ theorem finrank_quotient_span_section {f : Γ(X, V)} (g : X.functionFieldˣ)
     refine ⟨⟨hV.fromSpec.base y, hxg⟩, hmemS, ?_, ?_⟩
     · -- the point's term is the prime's term, which is nonzero
       rw [toAdd_ordZ_eq_count_factors K hV hη hxV hxg hf g hg,
-        finrank_quotient_primeIdealOf K hV hxV hxg, hq]
-      exact fun h0 => hPne (by rw [← h0, hq])
+        ← finrank_quotient_primeIdealOf K hV hxV hxg, hq]
+      exact hPne
     · exact congrArg PrimeSpectrum.asIdeal hq
   · -- values: the dictionary legs
     intro p h₁ h₂

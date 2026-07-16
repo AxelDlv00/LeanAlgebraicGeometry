@@ -169,6 +169,10 @@ import AlgebraicJacobian.Cohomology.RigidEngine0Toolkit
 import AlgebraicJacobian.Cohomology.RigidEngine2Nakayama
 import AlgebraicJacobian.Cohomology.RigidEngine3Rigidity
 import AlgebraicJacobian.Cohomology.RigidEngine3Duality
+import AlgebraicJacobian.Algebra.LocalizedColength
+import AlgebraicJacobian.Curve.BaseFieldTransition
+import AlgebraicJacobian.RiemannRoch.ChartPoints
+import AlgebraicJacobian.RiemannRoch.ChartColength
 
 /-!
 # AlgebraicJacobian — library root
