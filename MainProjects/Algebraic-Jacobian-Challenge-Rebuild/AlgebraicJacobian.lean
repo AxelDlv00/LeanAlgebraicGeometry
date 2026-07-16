@@ -195,6 +195,7 @@ import AlgebraicJacobian.Cohomology.RigidEngine4Engine
 import AlgebraicJacobian.Cohomology.RigidEngine4BaseChange
 import AlgebraicJacobian.Cohomology.GluedSheaf
 import AlgebraicJacobian.Cohomology.GluedAlgebra
+import AlgebraicJacobian.Cohomology.GluedBaseChangeAlgebra
 import AlgebraicJacobian.Cohomology.GluedSheafQcoh
 import AlgebraicJacobian.Cohomology.GluedSheafQcohAssembly
 import AlgebraicJacobian.Cohomology.GluedSheafPair
