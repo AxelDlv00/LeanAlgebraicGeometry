@@ -244,6 +244,8 @@ import AlgebraicJacobian.Picard.GrassmannianFunctor
 import AlgebraicJacobian.Picard.EntriesIdeal
 import AlgebraicJacobian.Picard.VanishingLocus
 import AlgebraicJacobian.Picard.GrassmannianPair
+import AlgebraicJacobian.Picard.GrassmannianDiagonal
+import AlgebraicJacobian.Picard.GrassmannianSeparated
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularityStep
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularity
 import AlgebraicJacobian.Picard.FlatCokernel
