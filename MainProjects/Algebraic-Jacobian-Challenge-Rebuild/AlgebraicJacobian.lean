@@ -193,6 +193,7 @@ import AlgebraicJacobian.Cohomology.RigidEngine4BaseChange
 import AlgebraicJacobian.Cohomology.GluedSheaf
 import AlgebraicJacobian.Cohomology.GluedAlgebra
 import AlgebraicJacobian.Cohomology.GluedSheafQcoh
+import AlgebraicJacobian.Cohomology.GluedSheafQcohAssembly
 import AlgebraicJacobian.Picard.DegreeZero
 import AlgebraicJacobian.Picard.Pic0Functor
 import AlgebraicJacobian.Picard.DegreeSeam
