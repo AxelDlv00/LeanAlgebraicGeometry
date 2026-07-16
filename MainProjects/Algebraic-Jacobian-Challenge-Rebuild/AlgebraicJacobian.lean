@@ -224,6 +224,7 @@ import AlgebraicJacobian.RiemannRoch.BaseDivisor
 import AlgebraicJacobian.RiemannRoch.SumIntersection
 import AlgebraicJacobian.RiemannRoch.AnnihilatorKernel
 import AlgebraicJacobian.RiemannRoch.BpfSpanCore
+import AlgebraicJacobian.RiemannRoch.BpfSpan
 import AlgebraicJacobian.Algebra.PointFiberIdeal
 import AlgebraicJacobian.Curve.GraphFibre
 import AlgebraicJacobian.RiemannRoch.GraphSectionEval
@@ -267,6 +268,7 @@ import AlgebraicJacobian.Picard.SectionsToDivisorsClass
 import AlgebraicJacobian.Tangent.TruncExpUnits
 import AlgebraicJacobian.Tangent.TruncExpCech
 import AlgebraicJacobian.Tangent.DualNumberBaseChange
+import AlgebraicJacobian.Tangent.TruncExpCechH1
 
 /-!
 # AlgebraicJacobian — library root
