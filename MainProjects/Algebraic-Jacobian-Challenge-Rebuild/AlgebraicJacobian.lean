@@ -206,6 +206,7 @@ import AlgebraicJacobian.Picard.DegreeSeam
 import AlgebraicJacobian.Picard.Pic0ZariskiSheaf
 import AlgebraicJacobian.Picard.PicEtCoverBridge
 import AlgebraicJacobian.Picard.ThetaShift
+import AlgebraicJacobian.Picard.OverSigmaExtension
 import AlgebraicJacobian.RiemannRoch.SectionBound
 import AlgebraicJacobian.RiemannRoch.WindowLedger
 
