@@ -201,7 +201,6 @@ import AlgebraicJacobian.Cohomology.GluedSheafPair
 import AlgebraicJacobian.Cohomology.GluedSheafDatum
 import AlgebraicJacobian.Cohomology.GluedSheafModule
 import AlgebraicJacobian.Cohomology.GluedSheafEngine
-import AlgebraicJacobian.Cohomology.GluedSheafDatumBaseChange
 import AlgebraicJacobian.Cohomology.GluedSheafCongr
 import AlgebraicJacobian.Cohomology.GluedSheafFibre
 import AlgebraicJacobian.Picard.DegreeZero
@@ -243,7 +242,6 @@ import AlgebraicJacobian.Algebra.ABFormula
 import AlgebraicJacobian.Algebra.ABRegularQuotient
 import AlgebraicJacobian.Algebra.ABRegularDomain
 import AlgebraicJacobian.Algebra.ABRegularCM
-import AlgebraicJacobian.Picard.FibrewiseRegular
 
 /-!
 # AlgebraicJacobian — library root
