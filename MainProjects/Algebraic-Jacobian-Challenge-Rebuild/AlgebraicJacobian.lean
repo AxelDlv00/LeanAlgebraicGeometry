@@ -9,6 +9,8 @@ import AlgebraicJacobian.Curve.StalksDVR
 import AlgebraicJacobian.Curve.P1Points
 import AlgebraicJacobian.Curve.RationalToP1
 import AlgebraicJacobian.Curve.MapToP1
+import AlgebraicJacobian.Curve.SeparablyClosedFibre
+import AlgebraicJacobian.Curve.SeparablyClosedPoints
 import AlgebraicJacobian.AbelianVariety.Rigidity
 import AlgebraicJacobian.AbelianVariety.RigidityCorollaries
 import AlgebraicJacobian.Cohomology.ModuleKSheaf
@@ -194,6 +196,7 @@ import AlgebraicJacobian.Cohomology.GluedSheaf
 import AlgebraicJacobian.Cohomology.GluedAlgebra
 import AlgebraicJacobian.Cohomology.GluedSheafQcoh
 import AlgebraicJacobian.Cohomology.GluedSheafQcohAssembly
+import AlgebraicJacobian.Cohomology.GluedSheafPair
 import AlgebraicJacobian.Picard.DegreeZero
 import AlgebraicJacobian.Picard.Pic0Functor
 import AlgebraicJacobian.Picard.DegreeSeam
