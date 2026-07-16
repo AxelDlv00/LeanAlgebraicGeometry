@@ -178,6 +178,7 @@ import AlgebraicJacobian.Cohomology.RigidEngineLatticeSixTerm
 import AlgebraicJacobian.Cohomology.RigidEngineLatticeModel
 import AlgebraicJacobian.Cohomology.RigidEngineLatticeModelHom
 import AlgebraicJacobian.Cohomology.RigidEngineLatticeCoherence
+import AlgebraicJacobian.Cohomology.TransitionSectionsBaseChange
 
 /-!
 # AlgebraicJacobian — library root
