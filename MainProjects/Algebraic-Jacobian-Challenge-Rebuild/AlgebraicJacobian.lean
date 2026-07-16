@@ -200,7 +200,6 @@ import AlgebraicJacobian.Cohomology.GluedSheafPair
 import AlgebraicJacobian.Cohomology.GluedSheafDatum
 import AlgebraicJacobian.Cohomology.GluedSheafModule
 import AlgebraicJacobian.Cohomology.GluedSheafEngine
-import AlgebraicJacobian.Cohomology.GluedSheafDatumBaseChange
 import AlgebraicJacobian.Cohomology.GluedSheafCongr
 import AlgebraicJacobian.Cohomology.GluedSheafFibre
 import AlgebraicJacobian.Picard.DegreeZero
@@ -225,7 +224,6 @@ import AlgebraicJacobian.Albanese.RationalMapPrecomp
 import AlgebraicJacobian.Albanese.RationalMapProd
 import AlgebraicJacobian.Albanese.RationalMapFunctionField
 import AlgebraicJacobian.Albanese.DifferenceMap
-import AlgebraicJacobian.Albanese.Milne33Substeps
 import AlgebraicJacobian.Algebra.CoheightBridge
 import AlgebraicJacobian.Algebra.StandardSmoothDimension
 import AlgebraicJacobian.Picard.GrassmannianChart
@@ -233,7 +231,6 @@ import AlgebraicJacobian.Picard.GrassmannianCocycle
 import AlgebraicJacobian.Picard.GrassmannianPhi
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularityStep
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularity
-import AlgebraicJacobian.Picard.FlatCokernel
 
 /-!
 # AlgebraicJacobian — library root
