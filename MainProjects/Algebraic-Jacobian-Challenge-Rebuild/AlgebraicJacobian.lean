@@ -210,6 +210,12 @@ import AlgebraicJacobian.Picard.OverSigmaExtension
 import AlgebraicJacobian.Picard.Pic0SigmaSheaf
 import AlgebraicJacobian.RiemannRoch.SectionBound
 import AlgebraicJacobian.RiemannRoch.WindowLedger
+import AlgebraicJacobian.Algebra.PointFiberIdeal
+import AlgebraicJacobian.Curve.GraphFibre
+import AlgebraicJacobian.RiemannRoch.GraphSectionEval
+import AlgebraicJacobian.RiemannRoch.GraphChart
+import AlgebraicJacobian.RiemannRoch.GraphDegree
+import AlgebraicJacobian.Picard.AbelElement
 
 /-!
 # AlgebraicJacobian — library root
