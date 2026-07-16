@@ -73,29 +73,43 @@ variable {J : Type u} (U : J → X.Opens) (g : ∀ i j : J, Γ(X, U i ⊓ U j)ˣ
 
 /-! ## Glued sections are determined by their covering-piece components -/
 
-/-- **Extensionality over a piece cover**: if the pieces `U (σ i)` cover `W`, two glued
-sections over `W` with equal `σ i`-components are equal. The matching relation writes
-every component locally as a multiple of a covering component, and the structure sheaf
+/-- **Extensionality over a subordinate piece cover**: for a family of opens `P i`
+below the gluing pieces `U (σ i)` and covering `W`, two glued sections over `W` whose
+`σ i`-components agree on each `W ⊓ P i` are equal. The matching relation writes every
+component locally as a multiple of a covering component, and the structure sheaf
 separates. -/
-theorem gluedSubmodule_ext {W : X.Opens} {ι : Type u} (σ : ι → J)
-    (hWcov : W ≤ ⨆ i, U (σ i)) {s t : ↥(gluedSubmodule k U g W)}
-    (hst : ∀ i : ι, s.val (σ i) = t.val (σ i)) : s = t := by
+theorem gluedSubmodule_ext {W : X.Opens} {ι : Type u} (σ : ι → J) (P : ι → X.Opens)
+    (hP : ∀ i : ι, P i ≤ U (σ i)) (hWcov : W ≤ ⨆ i, P i)
+    {s t : ↥(gluedSubmodule k U g W)}
+    (hst : ∀ i : ι,
+      X.resHom (inf_le_inf_left W (hP i) : W ⊓ P i ≤ W ⊓ U (σ i)) (s.val (σ i)) =
+      X.resHom (inf_le_inf_left W (hP i)) (t.val (σ i))) : s = t := by
   refine Subtype.ext (funext fun j => ?_)
-  have hcovj : W ⊓ U j ≤ ⨆ i, W ⊓ U j ⊓ U (σ i) := by
-    have h1 : W ⊓ U j ≤ (W ⊓ U j) ⊓ ⨆ i, U (σ i) :=
+  have hcovj : W ⊓ U j ≤ ⨆ i, W ⊓ U j ⊓ P i := by
+    have h1 : W ⊓ U j ≤ (W ⊓ U j) ⊓ ⨆ i, P i :=
       le_inf le_rfl (inf_le_left.trans hWcov)
     rwa [inf_iSup_eq] at h1
   apply TopCat.Sheaf.eq_of_locally_eq' (X := (X : TopCat)) (C := ModuleCat.{u} k)
-    (X.moduleKSheaf k) (fun i => W ⊓ U j ⊓ U (σ i)) (W ⊓ U j)
+    (X.moduleKSheaf k) (fun i => W ⊓ U j ⊓ P i) (W ⊓ U j)
     (fun i => homOfLE inf_le_left) hcovj
   intro i
-  change X.resHom (inf_le_left : W ⊓ U j ⊓ U (σ i) ≤ W ⊓ U j) (s.val j) =
-    X.resHom (inf_le_left : W ⊓ U j ⊓ U (σ i) ≤ W ⊓ U j) (t.val j)
-  have hs := (mem_gluedSubmodule_iff k U g (s.val : ∀ l : J, Γ(X, W ⊓ U l))).mp
-    s.property j (σ i)
-  have ht := (mem_gluedSubmodule_iff k U g (t.val : ∀ l : J, Γ(X, W ⊓ U l))).mp
-    t.property j (σ i)
-  rw [hs, ht, hst i]
+  change X.resHom (inf_le_left : W ⊓ U j ⊓ P i ≤ W ⊓ U j) (s.val j) =
+    X.resHom (inf_le_left : W ⊓ U j ⊓ P i ≤ W ⊓ U j) (t.val j)
+  have hs := congrArg (X.resHom (le_inf (le_inf (inf_le_left.trans inf_le_left)
+      (inf_le_left.trans inf_le_right)) (inf_le_right.trans (hP i)) :
+    W ⊓ U j ⊓ P i ≤ W ⊓ U j ⊓ U (σ i)))
+    ((mem_gluedSubmodule_iff k U g (s.val : ∀ l : J, Γ(X, W ⊓ U l))).mp
+      s.property j (σ i))
+  have ht := congrArg (X.resHom (le_inf (le_inf (inf_le_left.trans inf_le_left)
+      (inf_le_left.trans inf_le_right)) (inf_le_right.trans (hP i)) :
+    W ⊓ U j ⊓ P i ≤ W ⊓ U j ⊓ U (σ i)))
+    ((mem_gluedSubmodule_iff k U g (t.val : ∀ l : J, Γ(X, W ⊓ U l))).mp
+      t.property j (σ i))
+  have hcomp := congrArg (X.resHom (le_inf (inf_le_left.trans inf_le_left)
+      inf_le_right : W ⊓ U j ⊓ P i ≤ W ⊓ P i)) (hst i)
+  rw [map_mul] at hs ht
+  simp only [Scheme.resHom_resHom] at hs ht hcomp ⊢
+  rw [hs, ht, hcomp]
 
 /-! ## The componentwise action of a chart section ring -/
 
