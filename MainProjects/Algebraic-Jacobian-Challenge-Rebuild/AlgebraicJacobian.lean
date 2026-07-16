@@ -179,6 +179,9 @@ import AlgebraicJacobian.Cohomology.RigidEngineLatticeModel
 import AlgebraicJacobian.Cohomology.RigidEngineLatticeModelHom
 import AlgebraicJacobian.Cohomology.RigidEngineLatticeCoherence
 import AlgebraicJacobian.Cohomology.TransitionSectionsBaseChange
+import AlgebraicJacobian.RiemannRoch.DegreeBaseChange
+import AlgebraicJacobian.RiemannRoch.DegreeBaseFieldInvariance
+import AlgebraicJacobian.RiemannRoch.RelPicDegree
 
 /-!
 # AlgebraicJacobian — library root
