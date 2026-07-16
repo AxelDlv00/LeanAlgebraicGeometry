@@ -69,3 +69,40 @@ inference), `Over.graphPicClass` (= pullback of `diagonalPicClass`),
 
 ~55 commits, 2026-07-14/15, every Lean landing independently audited (own root build
 under the mutex, sorry census, own lean_verify on keystones) before its commit.
+
+## ADDENDUM 2026-07-16 (Fable quota exhausted mid-wave; state at cut)
+
+Root build **8730 jobs green**, zero sorries outside frozen Challenge.lean, tree clean,
+everything committed.
+
+**Landed since the 07-15 handoff:** the FLV dominance witness (`exists_isFinite_isDominant_toP1`
+— exported from the construction; FLV campaign has NO frontier now); rigid-engine **RE-0**
+(QcohOn⟹IsLocalizedModule bridge) + **RE-2** (Nakayama vanishing-propagation, openness of the
+vanishing locus) + **RE-3** (module-coefficient rigidity: ker commutes with ⊗ and with every
+base change; flat/projective kernel; the finite-projective dual-tensor-hom upgrade mathlib
+lacked); **w4-2** (the cocycle-glued twisted sheaf `TwistedSheaf.lean`, `RelativeSectionsLinear`,
+`RelativeH1BaseChange` — green and wired; its agent was quota-killed AT its final report, so its
+consumer notes must be re-read from the file docstrings).
+
+**Two worksheets landed and BINDING:**
+- `informal/deg-d5b-worksheet.md` (Pic⁰ leg): NO geometric shuffle needed — both degAt
+  well-definedness axes reduce to E-iv-alg (classDeg invariant under transition pullbacks) +
+  a pasted IsPullback square. Sub-bricks SB-1..7. Balloon candidate: SB-3b.
+- `informal/w4-rigid-engine-worksheet.md`: full Mumford II.5 DESCOPED — no finite-projective
+  complex; Q = H⁰ itself, finite projective with universal module-coefficient base change;
+  Noetherian quarantined to the H⁰-f.g. clause, eliminated by presentation descent (RE-5).
+  Sub-bricks RE-0..RE-5.
+
+**WIP committed but UNIMPORTED (do not wire the red ones until repaired; zero sorries in all):**
+- GREEN, compile standalone: `Cohomology/RigidEngineLattice.lean` (RE-1a pair vocabulary),
+  `Cohomology/RigidEngineLatticeSixTerm.lean`, `Curve/BaseFieldTransition.lean` (SB-1),
+  `Algebra/LocalizedColength.lean` (SB-3a).
+- RED, mid-edit: `Cohomology/RigidEngineLatticeModel.lean` (RE-1 models, 42 errors),
+  `RiemannRoch/ChartColength.lean` (SB-3b, 23 errors).
+
+**Frontier, in order:** (1) finish RE-1 (repair the models file, wire RigidEngineLattice*) →
+RE-4 (sheaf assembly; both its gates — w4-2 and RE-1 — are now down or nearly) → RE-5;
+(2) finish SB-3b (or stage around it) → SB-4/5 → SB-6/7 = degAt + pic0Functor → G-D8 abelElement
+(graph + point classes landed); (3) the Wave-4 DATUM design pass (every engine input then in
+hand) → the datum campaign → the frozen Jacobian targets; (4) blueprint debt: the C2-close pass
+landed, but RE-0/2/3, w4-2, the dominance export, and everything after are UNBLUEPRINTED.
