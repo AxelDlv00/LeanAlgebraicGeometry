@@ -182,6 +182,12 @@ import AlgebraicJacobian.Cohomology.TransitionSectionsBaseChange
 import AlgebraicJacobian.RiemannRoch.DegreeBaseChange
 import AlgebraicJacobian.RiemannRoch.DegreeBaseFieldInvariance
 import AlgebraicJacobian.RiemannRoch.RelPicDegree
+import AlgebraicJacobian.Cohomology.RigidEngine4Assembly
+import AlgebraicJacobian.Cohomology.RigidEngine4AEval
+import AlgebraicJacobian.Cohomology.RigidEngine4Twist
+import AlgebraicJacobian.Cohomology.RigidEngine4Relative
+import AlgebraicJacobian.Cohomology.RigidEngine4Engine
+import AlgebraicJacobian.Cohomology.RigidEngine4BaseChange
 
 /-!
 # AlgebraicJacobian — library root
