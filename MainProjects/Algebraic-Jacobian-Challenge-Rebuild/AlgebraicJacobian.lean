@@ -225,6 +225,9 @@ import AlgebraicJacobian.Albanese.RationalMapFunctionField
 import AlgebraicJacobian.Albanese.DifferenceMap
 import AlgebraicJacobian.Algebra.CoheightBridge
 import AlgebraicJacobian.Algebra.StandardSmoothDimension
+import AlgebraicJacobian.Picard.GrassmannianChart
+import AlgebraicJacobian.Picard.GrassmannianCocycle
+import AlgebraicJacobian.Picard.GrassmannianPhi
 
 /-!
 # AlgebraicJacobian — library root
