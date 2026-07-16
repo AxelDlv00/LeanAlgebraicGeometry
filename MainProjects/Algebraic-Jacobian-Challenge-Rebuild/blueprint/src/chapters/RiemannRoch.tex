@@ -1861,6 +1861,329 @@ ledger then reads as Riemann--Roch-lite: \(\chi(\mathcal O(D)) = 1 - g(C) + \deg
   (Theorem~\ref{thm:h0_nsmul_point_unbounded}) applies verbatim.
 \end{proof}
 
+\section{The chart colength dictionary}
+\label{sec:chart_colength}
+
+This section proves the dictionary between the algebra of an affine chart of the curve and
+the divisor data at its closed points. Let \(V\) be an affine open of \(X\) containing the
+generic point \(\eta\), and write \(B = \Gamma(X, V)\), a \(K\)-algebra through the
+structure morphism (\ref{def:overAlgebraMap}); all dimensions over \(K\) below are taken
+for that structure. Under the isomorphism \(V \cong \Spec B\), a point \(x \in V\)
+corresponds to a prime ideal \(\mathfrak p_x \subseteq B\), and conversely a prime
+\(\mathfrak q\) of \(B\) determines a point \(x_{\mathfrak q} \in V\); the first four
+lemmas record this correspondence between closed points of \(V\) and nonzero primes of
+\(B\). The section ring \(B\) is then shown to be a Dedekind domain for \emph{every}
+chart, and the colength \(\dim_K B/(f)\) of a nonzero section \(f\) is computed in
+divisor terms: the primes dividing \((f)\) are the primes of the closed points where
+\(f\) vanishes, the multiplicity of \(\mathfrak p_x\) in \((f)\) is the order of
+vanishing at \(x\) of the rational function determined by \(f\), and the residue
+\(B/\mathfrak p_x\) is the residue field \(\kappa(x)\). The engine behind the colength
+formula is the localized Dedekind colength of
+Section~\ref{sec:localized_colength}.
+
+\begin{lemma}[The point of a prime lies in the chart]
+  \label{lem:fromSpec_base_mem}
+  \lean{AlgebraicGeometry.IsAffineOpen.fromSpec_base_mem}
+  \leanok
+  Let \(X\) be a scheme and \(V\) an affine open. For every prime \(\mathfrak q\) of
+  \(B = \Gamma(X, V)\), the point \(x_{\mathfrak q}\) lies in \(V\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The canonical morphism \(\Spec B \to X\) is an open immersion with image \(V\), and
+  \(x_{\mathfrak q}\) is by definition the image of the point \(\mathfrak q\) under it.
+\end{proof}
+
+\begin{lemma}[The correspondences are mutually inverse]
+  \label{lem:primeIdealOf_fromSpec_base}
+  \lean{AlgebraicGeometry.IsAffineOpen.primeIdealOf_fromSpec_base}
+  \uses{lem:fromSpec_base_mem}
+  \leanok
+  Let \(X\) be a scheme and \(V\) an affine open. For every prime \(\mathfrak q\) of
+  \(B\),
+  \[
+    \mathfrak p_{x_{\mathfrak q}} \;=\; \mathfrak q .
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  The assignment \(x \mapsto \mathfrak p_x\) is defined so that the point of \(V\)
+  determined by \(\mathfrak p_x\) is \(x\) again; since the morphism
+  \(\Spec B \to X\) is an open immersion, it is injective on points, and the two
+  primes \(\mathfrak p_{x_{\mathfrak q}}\) and \(\mathfrak q\), having the same image
+  \(x_{\mathfrak q}\), coincide.
+\end{proof}
+
+\begin{lemma}[Nonzero prime at a non-generic point]
+  \label{lem:primeIdealOf_ne_bot}
+  \lean{AlgebraicGeometry.IsAffineOpen.primeIdealOf_ne_bot}
+  \leanok
+  Let \(X\) be an integral scheme and \(V\) an affine open. For a point \(x \in V\)
+  which is not the generic point of \(X\), the prime \(\mathfrak p_x\) is nonzero.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Suppose \(\mathfrak p_x = 0\). Since \(X\) is integral and \(V\) is a nonempty open,
+  \(B\) is a domain, so the zero ideal is the generic point of \(\Spec B\). An open
+  immersion between irreducible schemes with dense image carries the generic point to
+  the generic point, and \(V\) is dense in the irreducible \(X\); hence \(x\), the
+  image of the generic point of \(\Spec B\), is the generic point of \(X\) ---
+  contrary to hypothesis.
+\end{proof}
+
+\begin{lemma}[The point of a nonzero prime is non-generic]
+  \label{lem:fromSpec_base_ne_genericPoint}
+  \lean{AlgebraicGeometry.IsAffineOpen.fromSpec_base_ne_genericPoint}
+  \uses{lem:fromSpec_base_mem}
+  \leanok
+  Let \(X\) be an integral scheme and \(V\) an affine open. For a prime
+  \(\mathfrak q \neq 0\) of \(B\), the point \(x_{\mathfrak q}\) is not the generic
+  point of \(X\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  If \(x_{\mathfrak q}\) were the generic point of \(X\), then --- as in
+  \ref{lem:primeIdealOf_ne_bot}, the open immersion \(\Spec B \to X\) matches generic
+  points, and is injective --- the prime \(\mathfrak q\) would be the generic point of
+  \(\Spec B\), which is the zero ideal of the domain \(B\); contradiction.
+\end{proof}
+
+\begin{theorem}[Finite type of the chart sections]
+  \label{thm:overAlgebraMap_finiteType}
+  \lean{AlgebraicGeometry.Scheme.overAlgebraMap_finiteType}
+  \uses{def:overAlgebraMap}
+  \leanok
+  Let \(K\) be a commutative ring and \(X\) a scheme locally of finite type over
+  \(\Spec K\). For every affine open \(V\) of \(X\), the algebra map
+  \(K \to \Gamma(X, V)\) of \ref{def:overAlgebraMap} is of finite type.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The algebra map is the composite of the identification \(K \cong \Gamma(\Spec K)\)
+  with the map on sections \(\Gamma(\Spec K) \to \Gamma(X, V)\) induced by the
+  structure morphism between the affine opens \(V\) and \(\Spec K\). For a morphism
+  locally of finite type, the induced map between the section rings of an affine open
+  of the source contained in the preimage of an affine open of the target is a ring
+  map of finite type; apply this to \(V\) and \(\Spec K\).
+\end{proof}
+
+\begin{theorem}[Dedekind sections on every affine chart]
+  \label{thm:isDedekindDomain_section}
+  \lean{AlgebraicGeometry.isDedekindDomain_section}
+  \leanok
+  Let \(X\) be an integral scheme, smooth of relative dimension one and locally of
+  finite type over the field \(K\), and let \(V\) be an affine open containing the
+  generic point (equivalently, nonempty). Then \(B = \Gamma(X, V)\) is a Dedekind
+  domain. (This upgrades \ref{thm:relDim1_dedekind_charts}, which produces \emph{some}
+  Dedekind chart around each point, to \emph{every} affine chart.)
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:overAlgebraMap_finiteType, thm:closedpoint_dvr_stalk,
+    lem:fromSpec_base_mem, lem:primeIdealOf_fromSpec_base,
+    lem:fromSpec_base_ne_genericPoint}
+  \(B\) is a domain: \(V\) is a nonempty open of the integral scheme \(X\). \(B\) is
+  Noetherian: the algebra map \(K \to B\) is of finite type
+  (\ref{thm:overAlgebraMap_finiteType}), and a finite-type algebra over a field is
+  Noetherian by Hilbert's basis theorem. It remains to see that the localization of
+  \(B\) at each nonzero prime \(\mathfrak q\) is a discrete valuation ring; a
+  Noetherian domain, not a field, with this property is Dedekind. The point
+  \(x := x_{\mathfrak q}\) lies in \(V\) (\ref{lem:fromSpec_base_mem}) and is not the
+  generic point (\ref{lem:fromSpec_base_ne_genericPoint}), so the stalk
+  \(\struct{X,x}\) is a discrete valuation ring (\ref{thm:closedpoint_dvr_stalk}).
+  The stalk at a point of an affine open is the localization of the section ring at
+  the corresponding prime, and \(\mathfrak p_x = \mathfrak q\)
+  (\ref{lem:primeIdealOf_fromSpec_base}); hence \(B_{\mathfrak q} \cong
+  \struct{X,x}\) is a discrete valuation ring.
+\end{proof}
+
+\begin{theorem}[Finiteness of the chart residue]
+  \label{thm:moduleFinite_quotient_primeIdealOf}
+  \lean{AlgebraicGeometry.moduleFinite_quotient_primeIdealOf}
+  \uses{def:overAlgebraMap}
+  \leanok
+  Let \(X\) be as in \ref{thm:isDedekindDomain_section}, \(V\) an affine open, and
+  \(x \in V\) a point other than the generic point. Then the residue
+  \(B/\mathfrak p_x\) is a finite \(K\)-module.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:closedpoint_isClosed, thm:overAlgebraMap_finiteType}
+  The singleton \(\{x\}\) is closed in \(X\) (\ref{thm:closedpoint_isClosed}), so
+  \(x\) is a closed point of the chart \(V \cong \Spec B\) and \(\mathfrak p_x\) is a
+  maximal ideal; \(B/\mathfrak p_x\) is a field. The composite
+  \(K \to B \to B/\mathfrak p_x\) is of finite type
+  (\ref{thm:overAlgebraMap_finiteType} followed by a surjection), and a field which is
+  a finite-type algebra over a field is a finite extension (Zariski's lemma). Hence
+  \(B/\mathfrak p_x\) is a finite \(K\)-module.
+\end{proof}
+
+\begin{theorem}[The residue leg: the chart residue is the residue field]
+  \label{thm:finrank_quotient_primeIdealOf}
+  \lean{AlgebraicGeometry.finrank_quotient_primeIdealOf}
+  \uses{def:residueDeg}
+  \leanok
+  Let \(X\) be an integral scheme smooth of relative dimension one over the field
+  \(K\), \(V\) an affine open, and \(x \in V\) a point other than the generic point.
+  Then the residue of the chart at \(\mathfrak p_x\) is the residue field of \(x\),
+  \(K\)-linearly; in particular
+  \[
+    \dim_K\bigl(B/\mathfrak p_x\bigr) \;=\; [\kappa(x) : K] \;=\; \deg_K(x) .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:closedpoint_isClosed, def:residueOverAlgebraMap}
+  As in \ref{thm:moduleFinite_quotient_primeIdealOf}, \(\mathfrak p_x\) is maximal
+  (\ref{thm:closedpoint_isClosed}). The stalk \(\struct{X,x}\) is the localization of
+  \(B\) at \(\mathfrak p_x\), and the residue field of the localization of a ring at a
+  maximal ideal is the quotient by that ideal: \(\kappa(x) =
+  \struct{X,x}/\mathfrak m_x \cong B/\mathfrak p_x\), by the map induced by
+  \(B \to \struct{X,x}\). This isomorphism is \(K\)-linear: the \(K\)-structure of
+  \(\kappa(x)\) is the composite of the algebra map into the sections, the germ, and
+  the residue map (\ref{def:residueOverAlgebraMap}), and the germ of the algebra map
+  through \(V\) agrees with the germ of the global algebra map. Taking dimensions
+  gives \(\dim_K(B/\mathfrak p_x) = \dim_K \kappa(x) = \deg_K(x)\)
+  (\ref{def:residueDeg}).
+\end{proof}
+
+\begin{theorem}[The multiplicity leg: order of vanishing is the multiplicity]
+  \label{thm:toAdd_ordZ_eq_count_factors}
+  \lean{AlgebraicGeometry.toAdd_ordZ_eq_count_factors}
+  \uses{def:scheme_ordZ}
+  \leanok
+  Let \(X\) be an integral scheme smooth of relative dimension one over the field
+  \(K\), \(V\) an affine open containing the generic point \(\eta\), and assume
+  \(B = \Gamma(X, V)\) is a Dedekind domain (\ref{thm:isDedekindDomain_section}). Let
+  \(x \in V\) be a point other than \(\eta\), let \(f \in B\) be nonzero, and let
+  \(g \in K(X)^\times\) be a unit whose value is the germ of \(f\) at \(\eta\). Then
+  the order of vanishing of \(g\) at \(x\) is the multiplicity of \(\mathfrak p_x\) in
+  the prime factorization of \((f) \subseteq B\):
+  \[
+    \mathrm{ord}_x(g) \;=\; \mathrm{ord}_{\mathfrak p_x}(f) .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:primeIdealOf_ne_bot, thm:closedpoint_dvr_stalk, def:scheme_ord,
+    lem:germ_generic_eq_algebraMap_germ, lem:adic_valuation_count,
+    thm:count_factors_span_localization}
+  The prime \(\mathfrak p_x\) is nonzero (\ref{lem:primeIdealOf_ne_bot}), and the
+  stalk \(\struct{X,x}\) is the localization of \(B\) at \(\mathfrak p_x\) --- a
+  discrete valuation ring (\ref{thm:closedpoint_dvr_stalk}) with maximal ideal
+  \(\mathfrak m_x\). The germ of \(f\) at \(x\) is its image under
+  \(B \to \struct{X,x}\); it is nonzero, because on an integral scheme the germ map is
+  injective on sections and \(f \neq 0\). By the germ/stalk seam
+  (\ref{lem:germ_generic_eq_algebraMap_germ}), \(g\) --- the germ of \(f\) at
+  \(\eta\) --- is the image of the germ of \(f\) at \(x\) under
+  \(\struct{X,x} \to K(X)\).
+
+  The order valuation \(\mathrm{ord}_x\) is the \(\mathfrak m_x\)-adic valuation of
+  the discrete valuation ring \(\struct{X,x}\) (\ref{def:scheme_ord}), so its value on
+  \(g\) is the \(\mathfrak m_x\)-adic valuation of the germ of \(f\) at \(x\), which
+  is the multiplicity of \(\mathfrak m_x\) in the factorization of the principal
+  ideal generated by that germ (\ref{lem:adic_valuation_count}, applied in the
+  Dedekind domain \(\struct{X,x}\)). Finally, multiplicities are preserved by
+  localization at the prime (\ref{thm:count_factors_span_localization}, with
+  \(S = \struct{X,x}\), a Dedekind local ring which is the localization of \(B\) at
+  \(\mathfrak p_x\)):
+  \(\mathrm{ord}_{\mathfrak m_x}\bigl(f \cdot \struct{X,x}\bigr)
+  = \mathrm{ord}_{\mathfrak p_x}(f)\). Chaining the identities gives
+  \(\mathrm{ord}_x(g) = \mathrm{ord}_{\mathfrak p_x}(f)\).
+\end{proof}
+
+\begin{theorem}[Finiteness of the chart colength module]
+  \label{thm:moduleFinite_quotient_span_section}
+  \lean{AlgebraicGeometry.moduleFinite_quotient_span_section}
+  \uses{def:overAlgebraMap}
+  \leanok
+  Let \(X\) be an integral scheme, smooth of relative dimension one and locally of
+  finite type over the field \(K\), and \(V\) an affine open containing \(\eta\).
+  For every nonzero \(f \in B = \Gamma(X, V)\), the quotient \(B/(f)\) is a finite
+  \(K\)-module.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:isDedekindDomain_section, lem:prime_factor_span, lem:fromSpec_base_mem,
+    lem:primeIdealOf_fromSpec_base, lem:fromSpec_base_ne_genericPoint,
+    thm:moduleFinite_quotient_primeIdealOf, thm:moduleFinite_quotient_span}
+  \(B\) is a Dedekind domain (\ref{thm:isDedekindDomain_section}). Each prime factor
+  \(P\) of \((f)\) is a nonzero prime (\ref{lem:prime_factor_span}); its point
+  \(x_P\) lies in \(V\) (\ref{lem:fromSpec_base_mem}), is not the generic point
+  (\ref{lem:fromSpec_base_ne_genericPoint}), and satisfies
+  \(\mathfrak p_{x_P} = P\) (\ref{lem:primeIdealOf_fromSpec_base}); so the residue
+  \(B/P\) is a finite \(K\)-module by
+  \ref{thm:moduleFinite_quotient_primeIdealOf}. The finiteness of the Dedekind
+  colength module (\ref{thm:moduleFinite_quotient_span}) concludes.
+\end{proof}
+
+\begin{theorem}[The chart colength dictionary]
+  \label{thm:finrank_quotient_span_section}
+  \lean{AlgebraicGeometry.finrank_quotient_span_section}
+  \uses{def:scheme_ordZ, def:residueDeg}
+  \leanok
+  Let \(X\) be an integral scheme, smooth of relative dimension one and locally of
+  finite type over the field \(K\), and \(V\) an affine open containing \(\eta\). Let
+  \(f \in B = \Gamma(X, V)\), let \(g \in K(X)^\times\) be a unit whose value is the
+  germ of \(f\) at \(\eta\), and let \(S\) be a finite set of non-generic points of
+  \(X\), contained in \(V\), such that at every non-generic point of \(V\) outside
+  \(S\) the germ of \(f\) is a unit of the stalk. Then, in \(\Z\),
+  \[
+    \dim_K\bigl(B/(f)\bigr) \;=\;
+      \sum_{x \in S} \mathrm{ord}_x(g) \cdot \deg_K(x) .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:isDedekindDomain_section, thm:finrank_quotient_span_eq_sum_count,
+    thm:toAdd_ordZ_eq_count_factors, thm:finrank_quotient_primeIdealOf,
+    thm:moduleFinite_quotient_primeIdealOf, lem:prime_factor_span,
+    lem:primeIdealOf_ne_bot, lem:fromSpec_base_mem, lem:primeIdealOf_fromSpec_base,
+    lem:fromSpec_base_ne_genericPoint, lem:ord_eq_one_of_mem_basicOpen,
+    lem:mem_pow_iff_le_count}
+  \(B\) is a Dedekind domain (\ref{thm:isDedekindDomain_section}), and \(f \neq 0\):
+  its germ at \(\eta\) is the value of the unit \(g\). As in
+  \ref{thm:moduleFinite_quotient_span_section}, every prime factor of \((f)\) has
+  finite residue over \(K\), so the localized Dedekind colength formula
+  (\ref{thm:finrank_quotient_span_eq_sum_count}) gives
+  \[
+    \dim_K\bigl(B/(f)\bigr) \;=\;
+      \sum_{P \mid (f)} \mathrm{ord}_P(f) \cdot \dim_K(B/P) .
+  \]
+  It remains to identify the right side with the sum over \(S\). Note first that a
+  section is a non-unit at a point \(z \in V\) exactly when it lies in
+  \(\mathfrak p_z\): the stalk at \(z\) is the localization of \(B\) at
+  \(\mathfrak p_z\), where the image of an element of \(B\) is a unit precisely when
+  the element avoids the prime.
+
+  \emph{Terms of the \(S\)-sum outside the factor set vanish.} If \(x \in S\) and the
+  germ of \(f\) at \(x\) is a unit, then \(x\) lies in the basic open of \(V\) where
+  \(f\) is invertible, so \(\mathrm{ord}_x(g) = 0\)
+  (\ref{lem:ord_eq_one_of_mem_basicOpen}) and the term vanishes. Otherwise
+  \(f \in \mathfrak p_x\); then \(\mathfrak p_x\) is a prime factor of \((f)\): it is
+  nonzero (\ref{lem:primeIdealOf_ne_bot}), and membership \(f \in \mathfrak p_x =
+  \mathfrak p_x^1\) forces multiplicity \(\ge 1\)
+  (\ref{lem:mem_pow_iff_le_count}).
+
+  \emph{The assignment \(x \mapsto \mathfrak p_x\) matches the two index sets.} It is
+  injective on \(V\), the inverse being \(\mathfrak q \mapsto x_{\mathfrak q}\)
+  (\ref{lem:primeIdealOf_fromSpec_base}). It is surjective onto the prime factors:
+  a prime factor \(P\) of \((f)\) contains \(f\) (\ref{lem:prime_factor_span}), its
+  point \(x_P\) lies in \(V\) (\ref{lem:fromSpec_base_mem}), is non-generic
+  (\ref{lem:fromSpec_base_ne_genericPoint}) and satisfies \(\mathfrak p_{x_P} = P\)
+  (\ref{lem:primeIdealOf_fromSpec_base}); and \(x_P \in S\), for otherwise the
+  outside-\(S\) hypothesis would make the germ of \(f\) at \(x_P\) a unit, while
+  \(f \in P = \mathfrak p_{x_P}\).
+
+  \emph{The terms match.} For \(x \in S\) whose prime is a factor of \((f)\), the
+  multiplicity leg gives \(\mathrm{ord}_x(g) = \mathrm{ord}_{\mathfrak p_x}(f)\)
+  (\ref{thm:toAdd_ordZ_eq_count_factors}) and the residue leg gives
+  \(\dim_K(B/\mathfrak p_x) = \deg_K(x)\)
+  (\ref{thm:finrank_quotient_primeIdealOf}). Hence the sum over the prime factors of
+  \((f)\) coincides, term by term, with the sum over \(S\) of the nonzero terms, and
+  the formula follows.
+\end{proof}
+
 \section{The degree homomorphism on the \v Cech Picard group}
 
 The degree of a Weil divisor is invariant under linear equivalence, so it descends from

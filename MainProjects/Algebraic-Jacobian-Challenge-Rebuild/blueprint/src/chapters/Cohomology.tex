@@ -2442,3 +2442,767 @@ two-cover \(H^1\) is a cokernel and cokernels commute with arbitrary base change
   \(\mathrm{pr}_1^{-1}V_0 \cap \mathrm{pr}_1^{-1}V_1 \le \mathrm{pr}_1^{-1}V_0\)) is
   used.
 \end{definition}
+
+\section{Two-lattice pairs and their cohomology}
+\label{sec:two_lattice_pairs}
+
+The remaining sections of this chapter build the module-level core of the two-term
+pushforward engine. All schemes disappear: a \emph{two-lattice pair} axiomatises, in pure
+commutative algebra, exactly the data that an affine two-cover extracts from a
+quasi-coherent sheaf --- the two chart section modules, the overlap module, the two chart
+coordinates, and the two restriction maps, each exhibiting the overlap as a localization
+of its chart (the module counterpart of denominator clearing and annihilation on affine
+opens, \ref{lem:denominator_clearing} and \ref{lem:section_annihilation}). The \v{C}ech
+complex of the two-cover (\ref{def:TwoCover_diff}, \ref{def:TwoCover_H1Cok}) becomes a
+two-term complex of modules; this section studies its cohomology in degrees zero and one
+and its functoriality, the next section proves the six-term exact sequence of a short
+exact sequence of pairs, and the following two sections compute the line-bundle models on
+the two-chart projective line and deduce the coherence theorems: finiteness of \(H^1\)
+over an \emph{arbitrary} commutative base ring, and of \(H^0\) over a Noetherian one. The
+fibrewise Nakayama arguments and the split-rigidity theorems of
+Chapter~\ref{chap:Algebra} (Sections~\ref{sec:nakayama_vanishing}
+and~\ref{sec:split_rigidity}) consume the finiteness produced here.
+
+Throughout, \(R\) is a commutative ring.
+
+\begin{definition}[Two-lattice pair]
+  \label{def:twoLatticePair}
+  \lean{TwoLatticePair}
+  \leanok
+  A \emph{two-lattice pair} \(P\) over \(R\) consists of:
+  \begin{itemize}
+    \item \(R\)-modules \(M_0\), \(M_1\) (the \emph{chart lattices}) and \(N\) (the
+      \emph{overlap module});
+    \item \(R\)-linear endomorphisms \(t_0\) of \(M_0\) and \(t_1\) of \(M_1\) (the
+      \emph{coordinate actions}) and an \emph{invertible} \(R\)-linear endomorphism
+      \(u\) of \(N\);
+    \item \(R\)-linear maps \(\iota_0 : M_0 \to N\) and \(\iota_1 : M_1 \to N\) (the
+      \emph{restrictions to the overlap}) intertwining the actions:
+      \(\iota_0(t_0 x) = u(\iota_0 x)\) for all \(x \in M_0\) and
+      \(\iota_1(t_1 y) = u^{-1}(\iota_1 y)\) for all \(y \in M_1\);
+  \end{itemize}
+  subject to the localization axioms:
+  \begin{enumerate}
+    \item \emph{denominator clearing}: every \(n \in N\) admits an integer \(m \ge 0\)
+      and \(x \in M_0\) with \(u^m n = \iota_0 x\), and an integer \(m' \ge 0\) and
+      \(y \in M_1\) with \(u^{-m'} n = \iota_1 y\);
+    \item \emph{annihilation}: if \(\iota_0 x = 0\) then \(t_0^m x = 0\) for some
+      \(m \ge 0\), and if \(\iota_1 y = 0\) then \(t_1^m y = 0\) for some \(m \ge 0\).
+  \end{enumerate}
+  Regarding \(M_0\) and \(N\) as modules over the polynomial ring \(R[t]\), with \(t\)
+  acting as \(t_0\) on \(M_0\) and as \(u\) on \(N\), the three conditions ---
+  invertibility of \(u\) on \(N\), clearing, annihilation --- say precisely that
+  \(\iota_0\) exhibits \(N\) as the localization of \(M_0\) at the powers of \(t\);
+  likewise \(\iota_1\) exhibits \(N\) as the localization of \(M_1\) at the powers of
+  \(t\), for the structures through \(t_1\) and \(u^{-1}\). In the geometric application
+  \(M_0, M_1\) are the sections of a quasi-coherent sheaf on the two charts of an affine
+  two-cover, \(N\) its sections on the overlap, and \(t_0, t_1\) the two chart
+  coordinates, mutually inverse on the overlap.
+\end{definition}
+
+\begin{definition}[The two-term complex of a pair]
+  \label{def:twoLattice_diff}
+  \lean{TwoLatticePair.diff}
+  \uses{def:twoLatticePair}
+  \leanok
+  The \emph{difference map} of a two-lattice pair \(P\) is the \(R\)-linear map
+  \[
+    \delta_P : M_0 \times M_1 \longrightarrow N, \qquad
+    \delta_P(x, y) \;=\; \iota_0 x - \iota_1 y .
+  \]
+  The two-term complex \(M_0 \times M_1 \xrightarrow{\ \delta_P\ } N\) is the module
+  avatar of the two-cover \v{C}ech complex.
+\end{definition}
+
+\begin{definition}[\(H^0\) of a pair]
+  \label{def:twoLattice_H0}
+  \lean{TwoLatticePair.H0}
+  \uses{def:twoLattice_diff}
+  \leanok
+  The degree-zero cohomology of the pair \(P\) is the kernel of the difference map,
+  \[
+    H^0(P) \;=\; \ker \delta_P
+    \;=\; \{\, (x, y) \in M_0 \times M_1 : \iota_0 x = \iota_1 y \,\},
+  \]
+  an \(R\)-submodule of \(M_0 \times M_1\): the pairs of chart sections agreeing on the
+  overlap.
+\end{definition}
+
+\begin{definition}[\(H^1\) of a pair]
+  \label{def:twoLattice_H1}
+  \lean{TwoLatticePair.H1, TwoLatticePair.imageLattice, TwoLatticePair.h1Mk}
+  \uses{def:twoLatticePair}
+  \leanok
+  The \emph{image lattice} of the pair \(P\) is the \(R\)-submodule
+  \(Q(P) = \iota_0(M_0) + \iota_1(M_1) \subseteq N\), and the degree-one cohomology of
+  \(P\) is the quotient
+  \[
+    H^1(P) \;=\; N \big/ Q(P),
+  \]
+  with quotient projection \(N \twoheadrightarrow H^1(P)\), \(n \mapsto [n]\).
+\end{definition}
+
+\begin{lemma}[\(H^1\) is the cokernel of the difference map]
+  \label{lem:twoLattice_range_diff}
+  \lean{TwoLatticePair.range_diff_eq}
+  \uses{def:twoLattice_diff, def:twoLattice_H1}
+  \leanok
+  The image of \(\delta_P\) is the image lattice: \(\delta_P(M_0 \times M_1) = Q(P)\).
+  In particular \(H^1(P)\) is the cokernel of \(\delta_P\), so \(H^0(P)\) and \(H^1(P)\)
+  are the two cohomology modules of the two-term complex of \ref{def:twoLattice_diff}.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Each value \(\delta_P(x,y) = \iota_0 x - \iota_1 y\) is a difference of an element of
+  \(\iota_0(M_0)\) and an element of \(\iota_1(M_1)\), hence lies in \(Q(P)\).
+  Conversely \(\iota_0 x = \delta_P(x, 0)\) and \(\iota_1 y = \delta_P(0, -y)\), so both
+  summands of \(Q(P)\) lie in the image, and the image is a submodule.
+\end{proof}
+
+\begin{definition}[Map of two-lattice pairs]
+  \label{def:twoLattice_hom}
+  \lean{TwoLatticePair.Hom}
+  \uses{def:twoLatticePair}
+  \leanok
+  A \emph{map of two-lattice pairs} \(f : P \to P'\) is a triple of \(R\)-linear maps
+  \(f_0 : M_0 \to M_0'\), \(f_1 : M_1 \to M_1'\), \(f_N : N \to N'\) commuting with the
+  coordinate actions and the restrictions:
+  \[
+    f_0 \circ t_0 = t_0' \circ f_0, \quad
+    f_1 \circ t_1 = t_1' \circ f_1, \quad
+    f_N \circ u = u' \circ f_N, \quad
+    f_N \circ \iota_0 = \iota_0' \circ f_0, \quad
+    f_N \circ \iota_1 = \iota_1' \circ f_1 .
+  \]
+  Compatibility with the \emph{inverse} overlap action is automatic: applying the
+  \(u\)-compatibility to \(u^{-1} n\) gives \(f_N(n) = u'\bigl(f_N(u^{-1} n)\bigr)\),
+  whence \(f_N(u^{-1} n) = u'^{-1}(f_N n)\).
+\end{definition}
+
+\begin{lemma}[Naturality of the difference map]
+  \label{lem:twoLattice_diff_natural}
+  \lean{TwoLatticePair.Hom.diff_comm}
+  \uses{def:twoLattice_hom, def:twoLattice_diff}
+  \leanok
+  For a map of pairs \(f : P \to P'\) and \((x, y) \in M_0 \times M_1\),
+  \[
+    \delta_{P'}\bigl(f_0 x, f_1 y\bigr) \;=\; f_N\bigl(\delta_P(x, y)\bigr) .
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  Expand both sides:
+  \(\delta_{P'}(f_0 x, f_1 y) = \iota_0'(f_0 x) - \iota_1'(f_1 y)
+  = f_N(\iota_0 x) - f_N(\iota_1 y) = f_N(\iota_0 x - \iota_1 y)\), using the two
+  restriction compatibilities and linearity of \(f_N\).
+\end{proof}
+
+\begin{definition}[The induced map on \(H^0\)]
+  \label{def:twoLattice_h0Map}
+  \lean{TwoLatticePair.Hom.h0Map}
+  \uses{def:twoLattice_hom, def:twoLattice_H0}
+  \leanok
+  A map of pairs \(f : P \to P'\) induces an \(R\)-linear map
+  \(H^0(f) : H^0(P) \to H^0(P')\), \((x, y) \mapsto (f_0 x, f_1 y)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  \uses{lem:twoLattice_diff_natural}
+  If \(\delta_P(x,y) = 0\) then
+  \(\delta_{P'}(f_0 x, f_1 y) = f_N(\delta_P(x,y)) = 0\) by naturality
+  (\ref{lem:twoLattice_diff_natural}), so the restriction of \(f_0 \times f_1\) to
+  \(H^0(P)\) lands in \(H^0(P')\); it is \(R\)-linear as a restriction of an \(R\)-linear
+  map.
+\end{proof}
+
+\begin{definition}[The induced map on \(H^1\)]
+  \label{def:twoLattice_h1Map}
+  \lean{TwoLatticePair.Hom.h1Map}
+  \uses{def:twoLattice_hom, def:twoLattice_H1}
+  \leanok
+  A map of pairs \(f : P \to P'\) induces an \(R\)-linear map
+  \(H^1(f) : H^1(P) \to H^1(P')\), \([n] \mapsto [f_N n]\).
+\end{definition}
+\begin{proof}
+  \leanok
+  \(f_N\) carries the image lattice into the image lattice:
+  \(f_N(\iota_0 x) = \iota_0'(f_0 x)\) and \(f_N(\iota_1 y) = \iota_1'(f_1 y)\), so
+  \(f_N(Q(P)) \subseteq Q(P')\) and \(f_N\) descends to the quotients.
+\end{proof}
+
+\begin{lemma}[Right exactness of \(H^1\) in the pair]
+  \label{lem:twoLattice_h1Map_surjective}
+  \lean{TwoLatticePair.Hom.h1Map_surjective}
+  \uses{def:twoLattice_h1Map}
+  \leanok
+  If a map of pairs \(f : P \to P'\) is surjective on overlap modules, then
+  \(H^1(f) : H^1(P) \to H^1(P')\) is surjective.
+\end{lemma}
+\begin{proof}
+  \leanok
+  A class in \(H^1(P')\) is \([n']\) for some \(n' \in N'\); write \(n' = f_N(n)\) by
+  surjectivity; then \(H^1(f)[n] = [f_N n] = [n']\).
+\end{proof}
+
+\section{The six-term exact sequence of two-lattice pairs}
+\label{sec:two_lattice_sixterm}
+
+A short exact sequence of two-lattice pairs induces the entire long exact cohomology
+sequence of the two-term complexes; since a two-term complex has no cohomology beyond
+degree one, the sequence has six terms and closes on both ends:
+\[
+  0 \to H^0(P) \to H^0(P') \to H^0(P'')
+    \xrightarrow{\ \partial\ } H^1(P) \to H^1(P') \to H^1(P'') \to 0 .
+\]
+The connecting map and the six exactness statements are proved by explicit element
+chases on the two-term complexes.
+
+\begin{definition}[Short exact sequence of pairs]
+  \label{def:twoLattice_shortExact}
+  \lean{TwoLatticePair.IsShortExact}
+  \uses{def:twoLattice_hom}
+  \leanok
+  A pair of maps of two-lattice pairs \(\varphi : P \to P'\) and \(\psi : P' \to P''\)
+  is a \emph{short exact sequence} \(0 \to P \to P' \to P'' \to 0\) if it is
+  componentwise short exact: on each of the three carriers (the two chart lattices and
+  the overlap module), \(\varphi\) is injective, \(\psi\) is surjective, and the image
+  of \(\varphi\) is the kernel of \(\psi\).
+\end{definition}
+
+\begin{definition}[The connecting homomorphism]
+  \label{def:twoLattice_delta}
+  \lean{TwoLatticePair.IsShortExact.delta, TwoLatticePair.IsShortExact.delta_apply}
+  \uses{def:twoLattice_shortExact, def:twoLattice_H0, def:twoLattice_H1}
+  \leanok
+  For a short exact sequence \(0 \to P \xrightarrow{\varphi} P' \xrightarrow{\psi}
+  P'' \to 0\) of two-lattice pairs, the \emph{connecting homomorphism}
+  \[
+    \partial : H^0(P'') \longrightarrow H^1(P)
+  \]
+  is the \(R\)-linear map characterized by: whenever \(z = (z_0, z_1) \in H^0(P'')\),
+  \(e_0 \in M_0'\) and \(e_1 \in M_1'\) satisfy \(\psi_0 e_0 = z_0\) and
+  \(\psi_1 e_1 = z_1\), and \(n \in N\) satisfies
+  \(\varphi_N n = \delta_{P'}(e_0, e_1)\), then \(\partial z = [n]\).
+\end{definition}
+\begin{proof}
+  \leanok
+  \uses{lem:twoLattice_diff_natural, lem:twoLattice_range_diff}
+  \emph{Existence of the chase data.} Given \(z \in H^0(P'')\), componentwise
+  surjectivity of \(\psi\) provides lifts \(e_0, e_1\). Then
+  \(\psi_N\bigl(\delta_{P'}(e_0,e_1)\bigr) = \delta_{P''}(\psi_0 e_0, \psi_1 e_1)
+  = \delta_{P''}(z) = 0\) by naturality (\ref{lem:twoLattice_diff_natural}) and
+  \(z \in H^0(P'')\), so \(\delta_{P'}(e_0,e_1)\) lies in \(\ker \psi_N =
+  \varphi_N(N)\), and \(n\) exists; it is unique because \(\varphi_N\) is injective.
+
+  \emph{Independence of the lifts.} If \(e_0', e_1'\) is a second componentwise lift of
+  \(z\), with \(\varphi_N n' = \delta_{P'}(e_0', e_1')\), then
+  \(\psi_0(e_0' - e_0) = 0\) and \(\psi_1(e_1' - e_1) = 0\), so by componentwise
+  exactness \(e_0' - e_0 = \varphi_0 a\) and \(e_1' - e_1 = \varphi_1 b\) for some
+  \(a \in M_0\), \(b \in M_1\). Then
+  \[
+    \varphi_N(n' - n) \;=\; \delta_{P'}(\varphi_0 a, \varphi_1 b)
+    \;=\; \varphi_N\bigl(\delta_P(a, b)\bigr)
+  \]
+  by naturality, and injectivity of \(\varphi_N\) gives
+  \(n' - n = \delta_P(a,b) \in Q(P)\) (\ref{lem:twoLattice_range_diff}); hence
+  \([n'] = [n]\) in \(H^1(P)\).
+
+  \emph{Linearity.} The chase data may be chosen additively --- lifts of a sum as the
+  sum of lifts, and similarly for scalar multiples --- and \(n\) depends linearly on
+  the chosen data; since the class \([n]\) is independent of the choices, \(\partial\)
+  is \(R\)-linear.
+\end{proof}
+
+\begin{theorem}[Six-term exactness, left end]
+  \label{thm:twoLattice_h0Map_injective}
+  \lean{TwoLatticePair.IsShortExact.h0Map_injective}
+  \uses{def:twoLattice_shortExact, def:twoLattice_h0Map}
+  \leanok
+  For a short exact sequence \(0 \to P \xrightarrow{\varphi} P' \xrightarrow{\psi}
+  P'' \to 0\), the map \(H^0(\varphi) : H^0(P) \to H^0(P')\) is injective.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \(H^0(\varphi)\) acts componentwise as \((\varphi_0, \varphi_1)\), and both
+  \(\varphi_0\) and \(\varphi_1\) are injective.
+\end{proof}
+
+\begin{theorem}[Six-term exactness at \(H^0(P')\)]
+  \label{thm:twoLattice_exact_h0_middle}
+  \lean{TwoLatticePair.IsShortExact.range_h0Map_eq_ker_h0Map}
+  \uses{def:twoLattice_shortExact, def:twoLattice_h0Map}
+  \leanok
+  In the situation of \ref{thm:twoLattice_h0Map_injective}, the image of
+  \(H^0(\varphi)\) equals the kernel of \(H^0(\psi)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:twoLattice_diff_natural}
+  \(\subseteq\): \(\psi \circ \varphi\) vanishes componentwise (image of \(\varphi\)
+  inside kernel of \(\psi\)), so \(H^0(\psi) \circ H^0(\varphi) = 0\).
+  \(\supseteq\): let \((z_0, z_1) \in H^0(P')\) with \(\psi_0 z_0 = 0\) and
+  \(\psi_1 z_1 = 0\). By componentwise exactness \(z_0 = \varphi_0 a\) and
+  \(z_1 = \varphi_1 b\). The pair \((a, b)\) lies in \(H^0(P)\): by naturality
+  (\ref{lem:twoLattice_diff_natural})
+  \(\varphi_N\bigl(\delta_P(a,b)\bigr) = \delta_{P'}(z_0, z_1) = 0\), and
+  \(\varphi_N\) is injective. Then \(H^0(\varphi)(a, b) = (z_0, z_1)\).
+\end{proof}
+
+\begin{theorem}[Six-term exactness at \(H^0(P'')\)]
+  \label{thm:twoLattice_exact_h0_delta}
+  \lean{TwoLatticePair.IsShortExact.range_h0Map_eq_ker_delta}
+  \uses{def:twoLattice_delta, def:twoLattice_h0Map}
+  \leanok
+  In the situation of \ref{thm:twoLattice_h0Map_injective}, the image of
+  \(H^0(\psi)\) equals the kernel of the connecting homomorphism \(\partial\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:twoLattice_range_diff, lem:twoLattice_diff_natural}
+  \(\subseteq\): for \(z = H^0(\psi)(w)\) with \(w \in H^0(P')\), take the components
+  of \(w\) themselves as the lifts in the characterization of \(\partial\)
+  (\ref{def:twoLattice_delta}); their difference is \(\delta_{P'}(w) = 0 =
+  \varphi_N(0)\), so \(\partial z = [0] = 0\).
+  \(\supseteq\): let \(z \in H^0(P'')\) with \(\partial z = 0\); choose lifts
+  \(e_0, e_1\) and \(n\) with \(\varphi_N n = \delta_{P'}(e_0, e_1)\), so that
+  \(\partial z = [n]\). Vanishing of \([n]\) means \(n \in Q(P) =
+  \delta_P(M_0 \times M_1)\) (\ref{lem:twoLattice_range_diff}); write
+  \(n = \delta_P(a, b)\). Then \(w := (e_0 - \varphi_0 a,\, e_1 - \varphi_1 b)\)
+  satisfies
+  \(\delta_{P'}(w) = \delta_{P'}(e_0,e_1) - \varphi_N(\delta_P(a,b)) = 0\)
+  by naturality, so \(w \in H^0(P')\); and since \(\psi\circ\varphi = 0\)
+  componentwise, \(H^0(\psi)(w) = (\psi_0 e_0, \psi_1 e_1) = z\).
+\end{proof}
+
+\begin{theorem}[Six-term exactness at \(H^1(P)\)]
+  \label{thm:twoLattice_exact_delta_h1}
+  \lean{TwoLatticePair.IsShortExact.range_delta_eq_ker_h1Map}
+  \uses{def:twoLattice_delta, def:twoLattice_h1Map}
+  \leanok
+  In the situation of \ref{thm:twoLattice_h0Map_injective}, the image of the
+  connecting homomorphism \(\partial\) equals the kernel of \(H^1(\varphi)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:twoLattice_range_diff, lem:twoLattice_diff_natural}
+  \(\subseteq\): if \(\partial z = [n]\) with \(\varphi_N n = \delta_{P'}(e_0, e_1)\),
+  then \(H^1(\varphi)[n] = [\varphi_N n] = [\delta_{P'}(e_0,e_1)] = 0\), the class of
+  an element of the image lattice (\ref{lem:twoLattice_range_diff}).
+  \(\supseteq\): let \([n] \in H^1(P)\) with \(H^1(\varphi)[n] = 0\), i.e.\
+  \(\varphi_N n \in Q(P') = \delta_{P'}(M_0' \times M_1')\); write
+  \(\varphi_N n = \delta_{P'}(e_0, e_1)\). Then
+  \(z := (\psi_0 e_0, \psi_1 e_1)\) lies in \(H^0(P'')\):
+  \(\delta_{P''}(z) = \psi_N\bigl(\delta_{P'}(e_0,e_1)\bigr) = \psi_N(\varphi_N n) = 0\)
+  by naturality and \(\psi\circ\varphi = 0\). By the characterization of \(\partial\)
+  (\ref{def:twoLattice_delta}), \(\partial z = [n]\).
+\end{proof}
+
+\begin{theorem}[Six-term exactness at \(H^1(P')\)]
+  \label{thm:twoLattice_exact_h1_middle}
+  \lean{TwoLatticePair.IsShortExact.range_h1Map_eq_ker_h1Map}
+  \uses{def:twoLattice_shortExact, def:twoLattice_h1Map}
+  \leanok
+  In the situation of \ref{thm:twoLattice_h0Map_injective}, the image of
+  \(H^1(\varphi)\) equals the kernel of \(H^1(\psi)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:twoLattice_range_diff, lem:twoLattice_diff_natural}
+  \(\subseteq\): \(H^1(\psi)\bigl(H^1(\varphi)[n]\bigr) = [\psi_N(\varphi_N n)] = 0\).
+  \(\supseteq\): let \([n'] \in H^1(P')\) with \([\psi_N n'] = 0\), i.e.\
+  \(\psi_N n' \in Q(P'') = \delta_{P''}(M_0'' \times M_1'')\); write
+  \(\psi_N n' = \delta_{P''}(z_0, z_1)\) and lift \(z_0 = \psi_0 e_0\),
+  \(z_1 = \psi_1 e_1\). Then
+  \(\psi_N\bigl(n' - \delta_{P'}(e_0, e_1)\bigr) =
+  \psi_N n' - \delta_{P''}(z_0, z_1) = 0\) by naturality, so by exactness on the
+  overlap \(n' - \delta_{P'}(e_0,e_1) = \varphi_N w\) for some \(w \in N\). Since
+  \([\delta_{P'}(e_0,e_1)] = 0\) in \(H^1(P')\) (\ref{lem:twoLattice_range_diff}),
+  \([n'] = [\varphi_N w] = H^1(\varphi)[w]\).
+\end{proof}
+
+\begin{theorem}[Six-term exactness, right end]
+  \label{thm:twoLattice_h1Map_surjective_ses}
+  \lean{TwoLatticePair.IsShortExact.h1Map_surjective}
+  \uses{def:twoLattice_shortExact, def:twoLattice_h1Map}
+  \leanok
+  In the situation of \ref{thm:twoLattice_h0Map_injective}, the map
+  \(H^1(\psi) : H^1(P') \to H^1(P'')\) is surjective.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:twoLattice_h1Map_surjective}
+  \(\psi\) is surjective on overlap modules; apply the right exactness of \(H^1\) in
+  the pair (\ref{lem:twoLattice_h1Map_surjective}).
+\end{proof}
+
+\section{The line-bundle models and the finite surjection}
+\label{sec:two_lattice_models}
+
+The coherence theorems are proved by comparing an arbitrary pair with \emph{models}: the
+two-lattice pairs of the direct sums \(\bigoplus_{i} \mathcal O(m_i)\) of line bundles on
+the two-chart projective line over \(R\), whose cohomology is the classical monomial
+window. Say a two-lattice pair \(P\) has \emph{finite lattices} if \(M_0\) is a finitely
+generated module over the polynomial ring \(R[t]\), with \(t\) acting as \(t_0\), and
+likewise \(M_1\) over \(R[t]\) through \(t_1\). Every pair with finite lattices receives
+a componentwise surjection from a model --- the two-cover form of the finite free
+approximation used by Mumford in the coherence dévissage on abelian varieties, here
+terminating in one step because generation is measured over \(R[t]\) rather than over
+\(R\).
+
+\begin{definition}[The family line-bundle model]
+  \label{def:twoLattice_model}
+  \lean{TwoLatticePair.model}
+  \uses{def:twoLatticePair}
+  \leanok
+  Let \(I\) be a finite index set and \(m : I \to \Z\) a family of twists. The
+  \emph{model} \(E(m)\) is the two-lattice pair over \(R\) with chart lattices
+  \(M_0 = M_1 = (R[t])^I\), overlap module \(N = (R[t, t^{-1}])^I\), coordinate actions
+  \(t_0 = t_1 =\) componentwise multiplication by \(t\), invertible overlap action
+  \(u =\) componentwise multiplication by \(t\), and restrictions
+  \[
+    \iota_0(p)_i \;=\; p_i(t), \qquad
+    \iota_1(q)_i \;=\; t^{m_i} \cdot q_i\bigl(t^{-1}\bigr) ,
+  \]
+  the componentwise inclusion of polynomials into Laurent polynomials on the chart-0
+  side, and the twisted substitution \(t \mapsto t^{-1}\) on the chart-1 side. It is
+  the pair of the sheaf \(\bigoplus_{i \in I} \mathcal O(m_i)\) on the two standard
+  charts of the projective line over \(R\).
+\end{definition}
+\begin{proof}
+  \leanok
+  The axioms of a two-lattice pair hold. \emph{Equivariance:} on the chart-0 side,
+  multiplying a polynomial by \(t\) multiplies its Laurent image by \(t\); on the
+  chart-1 side, \(t^{m_i} \cdot (t q)(t^{-1}) = t^{m_i} \cdot t^{-1} \cdot q(t^{-1})\),
+  so \(\iota_1(t_1 q) = u^{-1}(\iota_1 q)\). \emph{Denominator clearing:} a Laurent
+  vector \(n\) has finitely many components, each with exponents bounded below, so a
+  single power \(u^M\) (componentwise multiplication by \(t^M\)) makes every component a
+  polynomial and lands \(n\) in \(\iota_0\bigl((R[t])^I\bigr)\). Symmetrically, the
+  exponents of each \(n_i\) are bounded above, say by \(D_i\); for any
+  \(M' \ge \max_i (D_i - m_i)\) with \(M' \ge 0\), every exponent of
+  \(t^{-M' - m_i}\, n_i\) is nonpositive, so there is a polynomial \(q_i\) with
+  \(q_i(t^{-1}) = t^{-M' - m_i}\, n_i\), and then
+  \(\bigl(u^{-M'} n\bigr)_i = t^{-M'} n_i = t^{m_i}\, q_i(t^{-1})\), i.e.\
+  \(u^{-M'} n = \iota_1(q)\). \emph{Annihilation:} both
+  \(\iota_0\) and \(\iota_1\) are injective --- the inclusion of polynomials is
+  injective, the substitution \(t \mapsto t^{-1}\) is an automorphism of the Laurent
+  ring, and multiplication by the unit \(t^{m_i}\) is injective --- so a section
+  vanishing on the overlap is already zero.
+\end{proof}
+
+\begin{theorem}[The monomial window: \(H^1\) of a model over any ring]
+  \label{thm:moduleFinite_h1_model}
+  \lean{TwoLatticePair.moduleFinite_h1_model}
+  \uses{def:twoLattice_model, def:twoLattice_H1}
+  \leanok
+  \source{hartshorne-algebraic-geometry:page-0242, hartshorne-algebraic-geometry:page-0243}
+  Let \(R\) be \emph{any} commutative ring, \(I\) finite and \(m : I \to \Z\). Then
+  \(H^1\bigl(E(m)\bigr)\) is a finite \(R\)-module. (It is spanned by the classes of
+  the monomials \(t^j\) in the components \(i\) with \(m_i < j < 0\) --- the classical
+  negative-monomial window of the projective line.)
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{cor:two_lattice_loc_pow}
+  Apply the two-lattice finiteness ladder (\ref{cor:two_lattice_loc_pow}) with
+  \(k = R\), the Laurent module \(N = (R[t,t^{-1}])^I\) --- finitely generated over
+  \(R[t,t^{-1}]\), being free on \(I\) --- and the \(R\)-submodules
+  \(Q_0 = \iota_0\bigl((R[t])^I\bigr)\), \(Q_1 = \iota_1\bigl((R[t])^I\bigr)\). \(Q_0\)
+  is stable under multiplication by \(t\) and \(Q_1\) under multiplication by
+  \(t^{-1}\), by the equivariance of \(\iota_0\) and \(\iota_1\)
+  (\ref{def:twoLattice_model}); and every element of \(N\) is absorbed into \(Q_0\) by
+  a large power of \(t\) and into \(Q_1\) by a large power of \(t^{-1}\), by the
+  denominator-clearing axioms verified in \ref{def:twoLattice_model}. The ladder
+  concludes that \(N/(Q_0 + Q_1) = H^1\bigl(E(m)\bigr)\) is a finite \(R\)-module.
+\end{proof}
+
+\begin{theorem}[The degree window: \(H^0\) of a model over a Noetherian ring]
+  \label{thm:moduleFinite_h0_model}
+  \lean{TwoLatticePair.moduleFinite_h0_model}
+  \uses{def:twoLattice_model, def:twoLattice_H0}
+  \leanok
+  \source{hartshorne-algebraic-geometry:page-0242, hartshorne-algebraic-geometry:page-0243}
+  Let \(R\) be a \emph{Noetherian} commutative ring, \(I\) finite and \(m : I \to \Z\).
+  Then \(H^0\bigl(E(m)\bigr)\) is a finite \(R\)-module.
+\end{theorem}
+\begin{proof}
+  \leanok
+  A class in \(H^0(E(m))\) is a pair \((p, q)\) of polynomial vectors with
+  \(p_i(t) = t^{m_i} q_i(t^{-1})\) in \(R[t,t^{-1}]\) for every \(i\). Comparing
+  coefficients: the right side has no exponent above \(m_i\) (the exponents of
+  \(q_i(t^{-1})\) are \(\le 0\)), so \(\deg p_i \le m_i\) --- in particular \(p_i = 0\)
+  when \(m_i < 0\). Moreover the first component determines the class: \(\iota_1\) is
+  injective (\ref{def:twoLattice_model}) and \(\iota_1 q = \iota_0 p\). Hence
+  \(H^0(E(m))\) embeds \(R\)-linearly into
+  \(\bigoplus_{i} \{\, p \in R[t] : \deg p \le m_i \,\}\), a finitely generated free
+  \(R\)-module (of rank \(\sum_i \max(m_i + 1, 0)\)). A submodule of a finitely
+  generated module over the Noetherian ring \(R\) is finitely generated.
+\end{proof}
+
+\begin{definition}[The Laurent action on the overlap module]
+  \label{def:twoLattice_laurentToEnd}
+  \lean{TwoLatticePair.laurentToEnd}
+  \uses{def:twoLatticePair}
+  \leanok
+  For a two-lattice pair \(P\), the \(R\)-algebra homomorphism
+  \[
+    R[t, t^{-1}] \longrightarrow \operatorname{End}_R(N), \qquad t \longmapsto u ,
+  \]
+  extending the assignment \(t^j \mapsto u^j\) (\(j \in \Z\), negative powers through
+  the inverse of \(u\)) by \(R\)-linearity. It exists because \(u\) is invertible, so
+  \(j \mapsto u^j\) is a homomorphism from \(\Z\) to the units of
+  \(\operatorname{End}_R(N)\), and the
+  Laurent ring is the monoid algebra of \(\Z\) over \(R\). We write \(g(u)\) for the
+  action of \(g \in R[t,t^{-1}]\) on \(N\).
+\end{definition}
+
+\begin{lemma}[The Laurent action intertwines the chart actions]
+  \label{lem:twoLattice_laurent_intertwine}
+  \lean{TwoLatticePair.laurentToEnd_toLaurent_ι₀,
+    TwoLatticePair.laurentToEnd_invert_toLaurent_ι₁}
+  \uses{def:twoLattice_laurentToEnd}
+  \leanok
+  For a polynomial \(g \in R[t]\), an element \(x \in M_0\) and an element
+  \(y \in M_1\),
+  \[
+    g(u)\bigl(\iota_0 x\bigr) = \iota_0\bigl(g(t_0)\, x\bigr)
+    \qquad\text{and}\qquad
+    g\bigl(u^{-1}\bigr)\bigl(\iota_1 y\bigr) = \iota_1\bigl(g(t_1)\, y\bigr) ,
+  \]
+  where \(g(t_0)\) and \(g(t_1)\) denote the evaluations of \(g\) at the coordinate
+  actions.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Both sides are additive in \(g\), so it suffices to treat a monomial
+  \(g = c\,t^k\). Iterating the equivariance \(\iota_0(t_0 x) = u(\iota_0 x)\) gives
+  \(\iota_0(t_0^k x) = u^k(\iota_0 x)\), and multiplying by \(c\) gives the chart-0
+  identity; iterating \(\iota_1(t_1 y) = u^{-1}(\iota_1 y)\) gives the chart-1
+  identity with \(u^{-k}\).
+\end{proof}
+
+\begin{definition}[The model map determined by matched generators]
+  \label{def:twoLattice_modelHom}
+  \lean{TwoLatticePair.modelHom}
+  \uses{def:twoLattice_model, def:twoLattice_hom, def:twoLattice_laurentToEnd}
+  \leanok
+  Let \(P\) be a two-lattice pair, \(I\) a finite index set, \(m : I \to \Z\), and let
+  \(a : I \to M_0\) and \(b : I \to M_1\) be families whose overlap images match up to
+  the twist:
+  \[
+    u^{m_i}\bigl(\iota_0 a_i\bigr) \;=\; \iota_1 b_i \qquad (i \in I).
+  \]
+  The \emph{model map} \(f : E(m) \to P\) is the map of pairs with components
+  \[
+    f_0(p) = \sum_{i \in I} p_i(t_0)\, a_i, \qquad
+    f_1(q) = \sum_{i \in I} q_i(t_1)\, b_i, \qquad
+    f_N(n) = \sum_{i \in I} n_i(u)\, \bigl(\iota_0 a_i\bigr) ,
+  \]
+  the polynomial actions on the generators on the charts and the Laurent action
+  (\ref{def:twoLattice_laurentToEnd}) on their overlap images.
+\end{definition}
+\begin{proof}
+  \leanok
+  \uses{lem:twoLattice_laurent_intertwine}
+  The five compatibilities of a map of pairs (\ref{def:twoLattice_hom}) hold term by
+  term. Compatibility with the coordinate actions: multiplying \(p_i\) (resp.\ \(q_i\),
+  \(n_i\)) by \(t\) multiplies \(p_i(t_0)\) (resp.\ \(q_i(t_1)\), \(n_i(u)\)) by
+  \(t_0\) (resp.\ \(t_1\), \(u\)), which is exactly the model action carried to \(P\).
+  Compatibility with \(\iota_0\): for a polynomial vector \(p\),
+  \(f_N(\iota_0 p) = \sum_i p_i(u)(\iota_0 a_i) = \sum_i \iota_0\bigl(p_i(t_0)a_i\bigr)
+  = \iota_0(f_0 p)\) by the chart-0 intertwining
+  (\ref{lem:twoLattice_laurent_intertwine}). Compatibility with \(\iota_1\): for a
+  polynomial vector \(q\), the \(i\)-th term of \(f_N(\iota_1 q)\) is
+  \(\bigl(t^{m_i} q_i(t^{-1})\bigr)(u)\,(\iota_0 a_i) =
+  q_i(u^{-1})\Bigl(u^{m_i}(\iota_0 a_i)\Bigr) = q_i(u^{-1})(\iota_1 b_i)
+  = \iota_1\bigl(q_i(t_1) b_i\bigr)\), using the matching hypothesis and the chart-1
+  intertwining; summing gives \(f_N(\iota_1 q) = \iota_1(f_1 q)\).
+\end{proof}
+
+\begin{lemma}[Models have finite lattices]
+  \label{lem:moduleFinite_aeval_model}
+  \lean{TwoLatticePair.moduleFinite_aeval_model_t₀, TwoLatticePair.moduleFinite_aeval_model_t₁}
+  \uses{def:twoLattice_model}
+  \leanok
+  The chart lattices of a model \(E(m)\) are finite: \((R[t])^I\), with \(t\) acting by
+  componentwise multiplication, is a finitely generated \(R[t]\)-module.
+\end{lemma}
+\begin{proof}
+  \leanok
+  The \(R[t]\)-module structure through the coordinate action coincides with the
+  standard one on the free module \((R[t])^I\), which is generated by the \(|I|\)
+  standard basis vectors.
+\end{proof}
+
+\begin{theorem}[The finite model surjection]
+  \label{thm:exists_hom_model_surjective}
+  \lean{TwoLatticePair.exists_hom_model_surjective}
+  \uses{def:twoLattice_modelHom}
+  \leanok
+  Let \(P\) be a two-lattice pair with finite lattices over a commutative ring \(R\).
+  Then there exist a finite index set \(I\), twists \(m : I \to \Z\), and a map of
+  pairs \(f : E(m) \to P\) surjective on the chart-0 lattice, on the chart-1 lattice,
+  \emph{and} on the overlap module.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{def:twoLatticePair, lem:twoLattice_laurent_intertwine}
+  Choose finite generating families \((a_j)_{j \in J_0}\) of \(M_0\) over \(R[t]\)
+  (acting through \(t_0\)) and \((b_j)_{j \in J_1}\) of \(M_1\) over \(R[t]\) (through
+  \(t_1\)). Match each generator across the overlap by denominator clearing
+  (\ref{def:twoLatticePair}): for \(j \in J_0\) there are \(k_j \ge 0\) and
+  \(y_j \in M_1\) with \(u^{-k_j}(\iota_0 a_j) = \iota_1 y_j\); set \(m_j = -k_j\), so
+  \(u^{m_j}(\iota_0 a_j) = \iota_1 y_j\). For \(j \in J_1\) there are \(k_j \ge 0\) and
+  \(x_j \in M_0\) with \(u^{k_j}(\iota_1 b_j) = \iota_0 x_j\); set \(m_j = -k_j\), so
+  \(u^{m_j}(\iota_0 x_j) = u^{-k_j} u^{k_j} (\iota_1 b_j) = \iota_1 b_j\). Take
+  \(I = J_0 \sqcup J_1\), with generator pairs \((a_j, y_j)\) for \(j \in J_0\) and
+  \((x_j, b_j)\) for \(j \in J_1\), and let \(f : E(m) \to P\) be the model map of
+  \ref{def:twoLattice_modelHom}.
+
+  \emph{Chart surjectivity.} Any \(x \in M_0\) is an \(R[t]\)-combination
+  \(x = \sum_{j \in J_0} g_j(t_0)\, a_j\); the vector with components \(g_j\) on
+  \(J_0\) and \(0\) on \(J_1\) maps to \(x\) under \(f_0\). Symmetrically for \(M_1\).
+
+  \emph{Overlap surjectivity.} Given \(n \in N\), clear denominators:
+  \(u^k n = \iota_0 x\) for some \(k \ge 0\), \(x \in M_0\); pick \(p\) with
+  \(f_0(p) = x\). Since \(f\) commutes with the overlap actions and their inverses and
+  with \(\iota_0\),
+  \[
+    f_N\Bigl(u_E^{-k}\bigl(\iota_0^{E} p\bigr)\Bigr)
+    \;=\; u^{-k}\bigl(\iota_0(f_0 p)\bigr)
+    \;=\; u^{-k}\bigl(u^{k} n\bigr) \;=\; n ,
+  \]
+  where \(u_E\) and \(\iota_0^E\) denote the overlap action and restriction of the
+  model.
+\end{proof}
+
+\section{The coherence theorems for two-lattice pairs}
+\label{sec:two_lattice_coherence}
+
+The two finiteness keystones of the engine: for a pair with finite lattices, \(H^1\) is
+a finite \(R\)-module over \emph{every} commutative ring \(R\), and \(H^0\) is a finite
+\(R\)-module over every \emph{Noetherian} \(R\). Noetherianity enters only through
+\(H^0\); every downstream consequence that only needs \(H^1\) --- vanishing propagation
+and the openness of the vanishing locus (Section~\ref{sec:nakayama_vanishing}) --- holds
+relative to an arbitrary base ring.
+
+\begin{definition}[The kernel pair of a map of pairs]
+  \label{def:twoLattice_kernelPair}
+  \lean{TwoLatticePair.Hom.kernelPair, TwoLatticePair.Hom.kernelPairIncl}
+  \uses{def:twoLattice_hom}
+  \leanok
+  For a map of two-lattice pairs \(f : P \to P'\), the \emph{kernel pair} \(K(f)\) is
+  the two-lattice pair with carriers \(\ker f_0 \subseteq M_0\),
+  \(\ker f_1 \subseteq M_1\), \(\ker f_N \subseteq N\), the restricted coordinate and
+  overlap actions, and the restricted maps \(\iota_0, \iota_1\); the componentwise
+  inclusions form a map of pairs \(K(f) \to P\).
+\end{definition}
+\begin{proof}
+  \leanok
+  \uses{def:twoLatticePair}
+  The kernels are stable under the actions and the restrictions because \(f\) commutes
+  with them (for the inverse overlap action, by the automatic compatibility of
+  \ref{def:twoLattice_hom}), so all the structure restricts; the annihilation axioms
+  restrict verbatim. Denominator clearing must be re-proved: let
+  \(n \in \ker f_N\). Clearing in \(P\) gives \(k \ge 0\) and \(x \in M_0\) with
+  \(u^k n = \iota_0 x\). Then
+  \(\iota_0'\bigl(f_0 x\bigr) = f_N(u^k n) = u'^k\bigl(f_N n\bigr) = 0\), so by the
+  annihilation axiom of \(P'\) there is \(j \ge 0\) with \(t_0'^j (f_0 x) = 0\), i.e.\
+  \(f_0\bigl(t_0^j x\bigr) = 0\): the element \(t_0^j x\) lies in \(\ker f_0\), and
+  \[
+    u^{j + k}\, n \;=\; u^j\bigl(\iota_0 x\bigr) \;=\; \iota_0\bigl(t_0^j x\bigr)
+  \]
+  exhibits clearing inside the kernel pair. The chart-1 side is symmetric. The
+  componentwise inclusions commute with all the structure by construction.
+\end{proof}
+
+\begin{lemma}[The kernel pair sits in a short exact sequence]
+  \label{lem:twoLattice_kernelPair_shortExact}
+  \lean{TwoLatticePair.Hom.isShortExact_kernelPairIncl}
+  \uses{def:twoLattice_kernelPair, def:twoLattice_shortExact}
+  \leanok
+  If a map of pairs \(f : P \to P'\) is surjective on all three carriers, then
+  \[
+    0 \longrightarrow K(f) \longrightarrow P \xrightarrow{\ f\ } P' \longrightarrow 0
+  \]
+  is a short exact sequence of two-lattice pairs.
+\end{lemma}
+\begin{proof}
+  \leanok
+  On each carrier, the inclusion of the kernel is injective, its image is exactly the
+  kernel of the corresponding component of \(f\), and that component is surjective by
+  hypothesis.
+\end{proof}
+
+\begin{lemma}[Kernel lattices are finite over a Noetherian ring]
+  \label{lem:moduleFinite_aeval_kernelPair}
+  \lean{TwoLatticePair.Hom.moduleFinite_aeval_kernelPair_t₀,
+    TwoLatticePair.Hom.moduleFinite_aeval_kernelPair_t₁}
+  \uses{def:twoLattice_kernelPair}
+  \leanok
+  Let \(R\) be Noetherian and let \(f : P \to P'\) be a map of pairs where \(P\) has
+  finite lattices. Then the kernel pair \(K(f)\) has finite lattices.
+\end{lemma}
+\begin{proof}
+  \leanok
+  \(\ker f_0\) is an \(R[t]\)-submodule of \(M_0\) for the structure through \(t_0\)
+  (it is stable under \(t_0\)). By Hilbert's basis theorem \(R[t]\) is Noetherian, so
+  the finitely generated \(R[t]\)-module \(M_0\) is a Noetherian module, and every
+  submodule --- in particular \(\ker f_0\) --- is finitely generated. Symmetrically
+  for \(\ker f_1\).
+\end{proof}
+
+\begin{theorem}[COH-1: coherence of \(H^1\) over any base ring]
+  \label{thm:twoLattice_coh1}
+  \lean{TwoLatticePair.moduleFinite_h1}
+  \uses{def:twoLatticePair, def:twoLattice_H1}
+  \leanok
+  Let \(R\) be \emph{any} commutative ring --- no Noetherian hypothesis --- and let
+  \(P\) be a two-lattice pair with finite lattices. Then \(H^1(P)\) is a finite
+  \(R\)-module.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:exists_hom_model_surjective, thm:moduleFinite_h1_model,
+    lem:twoLattice_h1Map_surjective}
+  Choose a finite model surjection \(f : E(m) \to P\)
+  (\ref{thm:exists_hom_model_surjective}). It is surjective on overlap modules, so
+  \(H^1(f) : H^1(E(m)) \to H^1(P)\) is surjective
+  (\ref{lem:twoLattice_h1Map_surjective}). The source is a finite \(R\)-module --- the
+  monomial window (\ref{thm:moduleFinite_h1_model}) --- and a quotient of a finite
+  module is finite.
+\end{proof}
+
+\begin{theorem}[COH-0: coherence of \(H^0\) over a Noetherian base ring]
+  \label{thm:twoLattice_coh0}
+  \lean{TwoLatticePair.moduleFinite_h0}
+  \uses{def:twoLatticePair, def:twoLattice_H0}
+  \leanok
+  Let \(R\) be a \emph{Noetherian} commutative ring and let \(P\) be a two-lattice
+  pair with finite lattices. Then \(H^0(P)\) is a finite \(R\)-module.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:exists_hom_model_surjective, def:twoLattice_kernelPair,
+    lem:twoLattice_kernelPair_shortExact, lem:moduleFinite_aeval_kernelPair,
+    lem:moduleFinite_aeval_model, def:twoLattice_delta, thm:twoLattice_exact_h0_delta,
+    thm:twoLattice_coh1, thm:moduleFinite_h0_model}
+  Choose a finite model surjection \(f : E(m) \to P\)
+  (\ref{thm:exists_hom_model_surjective}), surjective on all three carriers, and form
+  the short exact sequence \(0 \to K(f) \to E(m) \to P \to 0\) of
+  \ref{lem:twoLattice_kernelPair_shortExact}. Its connecting homomorphism
+  \(\partial : H^0(P) \to H^1(K(f))\) (\ref{def:twoLattice_delta}) has:
+  \begin{itemize}
+    \item kernel equal to the image of \(H^0(E(m)) \to H^0(P)\)
+      (\ref{thm:twoLattice_exact_h0_delta}), a quotient of the finite \(R\)-module
+      \(H^0(E(m))\) of the degree window (\ref{thm:moduleFinite_h0_model}, using that
+      \(R\) is Noetherian), hence finite;
+    \item image a submodule of \(H^1(K(f))\). The model has finite lattices
+      (\ref{lem:moduleFinite_aeval_model}), so the kernel pair has finite lattices
+      over the Noetherian \(R\) (\ref{lem:moduleFinite_aeval_kernelPair}), and COH-1
+      applied to \(K(f)\) (\ref{thm:twoLattice_coh1}) makes \(H^1(K(f))\) a finite
+      \(R\)-module; over the Noetherian \(R\) it is a Noetherian module, so the
+      submodule \(\partial\bigl(H^0(P)\bigr)\) is finite.
+  \end{itemize}
+  Thus \(H^0(P)\) is an extension of the finite module \(\partial(H^0(P))\) by the
+  finite module \(\ker \partial\), hence finite.
+\end{proof}

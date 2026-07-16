@@ -804,7 +804,7 @@ commutative domain with a \(k\)-algebra structure; ideals of \(B\) are written \
 
 \begin{theorem}[One-step filtration jump]
   \label{thm:finrank_quotSucc_jump}
-  \lean{AlgebraicGeometry.finrank_quotSucc_jump}
+  \lean{AlgebraicGeometry.finrank_quotSucc_jump, AlgebraicGeometry.quotEquivMapPow}
   \leanok
   Let \(I = (\pi)\) be a nonzero principal ideal of \(B\), with \(B/I\) finite-dimensional over
   \(k\), and let \(n \ge 0\). Multiplication by \(\pi^n\) induces a \(k\)-linear isomorphism
@@ -882,6 +882,28 @@ uniquely into height-one primes. For a nonzero ideal \(I\) we write its factoriz
 \(I = \prod_P P^{\,\mathrm{ord}_P(I)}\), the product over the finitely many prime factors \(P\)
 of \(I\) and \(\mathrm{ord}_P(I) \ge 1\) the multiplicity of \(P\).
 
+\begin{definition}[The Chinese remainder decomposition of a Dedekind quotient]
+  \label{def:quotAlgEquivPiFactors}
+  \lean{AlgebraicGeometry.quotAlgEquivPiFactors}
+  \leanok
+  Let \(B\) be a Dedekind domain, a \(k\)-algebra, and \(I \neq 0\) an ideal with prime
+  factorization \(I = \prod_{P \mid I} P^{\,\mathrm{ord}_P(I)}\). The canonical map
+  \[
+    B/I \;\xrightarrow{\ \sim\ }\; \prod_{P \mid I} B/P^{\,\mathrm{ord}_P(I)}
+  \]
+  is an isomorphism of \(k\)-algebras.
+\end{definition}
+\begin{proof}
+  \leanok
+  Distinct prime factors \(P \neq P'\) of \(I\) are nonzero primes of a Dedekind domain,
+  hence maximal, hence comaximal, and powers of comaximal ideals remain comaximal; the
+  Chinese remainder theorem therefore identifies \(B/\prod_P P^{\,\mathrm{ord}_P(I)}\)
+  with the product of the \(B/P^{\,\mathrm{ord}_P(I)}\), by the canonical map. Each
+  component of the canonical map is the quotient map
+  \(B/I \to B/P^{\,\mathrm{ord}_P(I)}\), a \(k\)-algebra homomorphism, so the
+  isomorphism is \(k\)-algebraic.
+\end{proof}
+
 \begin{theorem}[Multi-prime colength via the Chinese remainder theorem]
   \label{thm:finrank_quotient_eq_sum_factors_pow}
   \lean{AlgebraicGeometry.finrank_quotient_eq_sum_factors_pow}
@@ -895,11 +917,11 @@ of \(I\) and \(\mathrm{ord}_P(I) \ge 1\) the multiplicity of \(P\).
 \end{theorem}
 \begin{proof}
   \leanok
-  The prime factors of \(I\) are pairwise coprime, so the Chinese remainder theorem gives a
-  ring isomorphism \(B/I \cong \prod_{P \mid I} B/P^{\,\mathrm{ord}_P(I)}\); since the factors
-  \(P^{\,\mathrm{ord}_P(I)}\) contain \(I\), each projection is \(k\)-linear, and the
-  isomorphism is one of \(k\)-vector spaces. The dimension of a finite product of vector spaces
-  is the sum of the dimensions of the factors, which is the stated formula.
+  \uses{def:quotAlgEquivPiFactors}
+  The Chinese remainder decomposition \ref{def:quotAlgEquivPiFactors} identifies
+  \(B/I\) with \(\prod_{P \mid I} B/P^{\,\mathrm{ord}_P(I)}\) as \(k\)-vector spaces.
+  The dimension of a finite product of vector spaces is the sum of the dimensions of
+  the factors, which is the stated formula.
 \end{proof}
 
 \begin{theorem}[Dedekind colength formula, ord-weighted form]
@@ -925,6 +947,252 @@ of \(I\) and \(\mathrm{ord}_P(I) \ge 1\) the multiplicity of \(P\).
   \ref{thm:finrank_quotient_span_pow} applies to it and yields
   \(\dim_k(B/P^{\,\mathrm{ord}_P(f)}) = \mathrm{ord}_P(f) \cdot \dim_k(B/P)\). Substituting into
   the sum gives the claim.
+\end{proof}
+
+\section{The Dedekind colength through localization at a prime}
+\label{sec:localized_colength}
+
+The ord-weighted formula \ref{thm:finrank_quotient_span_eq_sum_ord} assumes each prime
+factor of \((f)\) is principal --- true in a principal ideal domain, but false in a
+general Dedekind domain. This section removes the principality hypothesis: each
+prime-power block \(B/P^e\) is transported to the localization of \(B\) at \(P\), a
+discrete valuation ring, where the maximal ideal \emph{is} principal and the prime-power
+formula \ref{thm:finrank_quotient_span_pow} applies. The bookkeeping needed for the
+transport --- that multiplicities of prime factors are computed by membership in prime
+powers, and are preserved by the localization --- is proved along the way. Throughout,
+\(k\) is a field; \(B\) is a domain with a \(k\)-algebra structure, Dedekind where
+stated; and for a nonzero ideal \(I \subseteq B\) of a Dedekind domain,
+\(\mathrm{ord}_P(I)\) denotes the multiplicity of the prime \(P\) in the factorization of
+\(I\), with \(\mathrm{ord}_P(f) = \mathrm{ord}_P\bigl((f)\bigr)\) for an element
+\(f \neq 0\).
+
+\begin{theorem}[Finiteness d\'evissage along principal prime powers]
+  \label{thm:moduleFinite_quotient_pow_of_isPrincipal}
+  \lean{AlgebraicGeometry.moduleFinite_quotient_pow_of_isPrincipal}
+  \leanok
+  Let \(B\) be a domain over \(k\) and \(I = (\pi)\) a nonzero principal ideal with
+  \(B/I\) finite-dimensional over \(k\). Then \(B/I^n\) is finite-dimensional over
+  \(k\) for every \(n \ge 0\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:finrank_quotSucc_jump}
+  Induction on \(n\). For \(n = 0\) the quotient \(B/I^0 = B/B\) is zero. For the step,
+  the projection \(B/I^{n+1} \twoheadrightarrow B/I^n\) is surjective with kernel
+  \(I^n/I^{n+1}\), which is \(k\)-isomorphic to \(B/I\) by the filtration jump
+  \ref{thm:finrank_quotSucc_jump}, hence finite-dimensional. Thus \(B/I^{n+1}\) is an
+  extension of the finite-dimensional \(B/I^n\) (inductive hypothesis) by the
+  finite-dimensional \(I^n/I^{n+1}\), and is finite-dimensional.
+\end{proof}
+
+\begin{lemma}[The adic valuation counts the multiplicity]
+  \label{lem:adic_valuation_count}
+  \lean{AlgebraicGeometry.intValuation_eq_exp_neg_count}
+  \leanok
+  Let \(B\) be a Dedekind domain, \(P\) a nonzero prime of \(B\), and \(f \neq 0\).
+  Then the \(P\)-adic valuation of \(f\) equals the multiplicity of \(P\) in the prime
+  factorization of the principal ideal \((f)\):
+  \[
+    v_P(f) \;=\; \mathrm{ord}_P(f) .
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  In a Dedekind domain every nonzero ideal factors uniquely into nonzero primes, and
+  the \(P\)-adic valuation of a nonzero element \(f\) is by definition the exponent of
+  \(P\) in the factorization of \((f)\). Uniqueness of the factorization identifies
+  that exponent with the number of occurrences of \(P\) in the multiset of prime
+  factors of \((f)\), which is \(\mathrm{ord}_P(f)\).
+\end{proof}
+
+\begin{lemma}[Membership in prime powers reads off the multiplicity]
+  \label{lem:mem_pow_iff_le_count}
+  \lean{AlgebraicGeometry.mem_pow_iff_le_count}
+  \uses{lem:adic_valuation_count}
+  \leanok
+  Let \(B\) be a Dedekind domain, \(P\) a nonzero prime, \(f \neq 0\) and \(n \ge 0\).
+  Then
+  \[
+    f \in P^n \quad\Longleftrightarrow\quad n \le \mathrm{ord}_P(f) .
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  Membership \(f \in P^n\) means \((f) \subseteq P^n\), and in a Dedekind domain to
+  contain is to divide, so this holds exactly when \(v_P(f) \ge n\) --- the
+  valuation-theoretic characterization of the powers of \(P\). By
+  \ref{lem:adic_valuation_count}, \(v_P(f) = \mathrm{ord}_P(f)\), giving the claim.
+\end{proof}
+
+\begin{theorem}[Multiplicities are preserved by localization at the prime]
+  \label{thm:count_factors_span_localization}
+  \lean{AlgebraicGeometry.count_factors_span_algebraMap}
+  \uses{lem:mem_pow_iff_le_count}
+  \leanok
+  Let \(B\) be a Dedekind domain, \(P\) a nonzero prime of \(B\), and \(S\) a Dedekind
+  local ring which is a localization of \(B\) at \(P\) --- for instance the
+  localization \(B_P\) itself, a discrete valuation ring. Write \(\mathfrak m\) for the
+  maximal ideal of \(S\). Then for every \(f \neq 0\) in \(B\),
+  \[
+    \mathrm{ord}_{\mathfrak m}\bigl(f \cdot S\bigr) \;=\; \mathrm{ord}_P(f) :
+  \]
+  the multiplicity of \(\mathfrak m\) in the factorization of the extended principal
+  ideal equals the multiplicity of \(P\) in the factorization of \((f)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The localization map \(B \to S\) is injective (its kernel consists of elements killed
+  by some \(s \notin P\), and \(B\) is a domain), so the image of \(f\) in \(S\) is
+  nonzero and both multiplicities are defined. Under the localization, the powers of
+  \(\mathfrak m\) contract to the powers of \(P\): \(\mathfrak m^n \cap B = P^n\)
+  (the \(P\)-primary ideal \(P^n\) is saturated with respect to the complement of
+  \(P\)). Hence for every \(n \ge 0\),
+  \[
+    f \cdot S \subseteq \mathfrak m^n
+    \quad\Longleftrightarrow\quad
+    f \in P^n .
+  \]
+  By \ref{lem:mem_pow_iff_le_count}, applied in \(S\) (a Dedekind domain, with
+  \(\mathfrak m\) its nonzero prime) and in \(B\), the left side holds exactly when
+  \(n \le \mathrm{ord}_{\mathfrak m}(f \cdot S)\) and the right side exactly when
+  \(n \le \mathrm{ord}_P(f)\). Two natural numbers with the same lower sets are equal.
+\end{proof}
+
+\begin{definition}[The localization isomorphisms, \(k\)-linearly]
+  \label{def:quotPowLinearEquiv}
+  \lean{AlgebraicGeometry.quotPowLinearEquiv, AlgebraicGeometry.residueQuotLinearEquiv}
+  \leanok
+  Let \(B\) be a \(k\)-algebra, \(P\) a maximal ideal of \(B\), and \(S\) a local
+  \(k\)-algebra which is a localization of \(B\) at \(P\) compatibly with the
+  \(k\)-structures, with maximal ideal \(\mathfrak m\). For every \(n \ge 0\) the
+  canonical ring isomorphism
+  \[
+    B/P^n \;\xrightarrow{\ \sim\ }\; S/\mathfrak m^n ,
+  \]
+  induced by the localization map, is \(k\)-linear; in particular (\(n = 1\)) the
+  residue isomorphism \(B/P \cong S/\mathfrak m\) is \(k\)-linear.
+\end{definition}
+\begin{proof}
+  \leanok
+  The composite \(B \to S \to S/\mathfrak m^n\) kills \(P^n\), and the induced map
+  \(B/P^n \to S/\mathfrak m^n\) is bijective: every element of the complement of \(P\)
+  acts invertibly on \(B/P^n\) (the ideal \(P^n\) is \(P\)-primary with \(P\) maximal,
+  so \(B/P^n\) is local with maximal ideal \(P/P^n\), and elements outside \(P\) map to
+  units), so the localization map factors through an inverse. The maps are
+  \(k\)-algebra maps because the \(k\)-structure of \(S\) is that of \(B\) composed
+  with the localization; hence the isomorphism is \(k\)-linear.
+\end{proof}
+
+\begin{theorem}[Per-prime finiteness through the localization]
+  \label{thm:moduleFinite_quotient_pow_atPrime}
+  \lean{AlgebraicGeometry.moduleFinite_quotient_pow_atPrime}
+  \uses{def:quotPowLinearEquiv}
+  \leanok
+  Let \(B\) be a Dedekind domain over \(k\), \(P\) a nonzero maximal ideal with
+  residue \(B/P\) finite-dimensional over \(k\), and \(S\) a domain over \(k\) which
+  is a localization of \(B\) at \(P\) compatibly with the \(k\)-structures. Then
+  \(B/P^n\) is finite-dimensional over \(k\) for every \(n \ge 0\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:moduleFinite_quotient_pow_of_isPrincipal}
+  The localization \(S\) of the Dedekind domain \(B\) at the nonzero prime \(P\) is a
+  discrete valuation ring; its maximal ideal \(\mathfrak m\) is nonzero and principal.
+  By \ref{def:quotPowLinearEquiv} the residue \(S/\mathfrak m \cong B/P\) is
+  finite-dimensional, so the d\'evissage
+  \ref{thm:moduleFinite_quotient_pow_of_isPrincipal}, applied in \(S\) to the nonzero
+  principal ideal \(\mathfrak m\), makes every \(S/\mathfrak m^n\) finite-dimensional;
+  transporting back along \ref{def:quotPowLinearEquiv} finishes.
+\end{proof}
+
+\begin{theorem}[The per-prime colength collapse]
+  \label{thm:finrank_quotient_pow_atPrime}
+  \lean{AlgebraicGeometry.finrank_quotient_pow_atPrime}
+  \uses{def:quotPowLinearEquiv}
+  \leanok
+  In the situation of \ref{thm:moduleFinite_quotient_pow_atPrime},
+  \[
+    \dim_k\bigl(B/P^n\bigr) \;=\; n \cdot \dim_k(B/P)
+    \qquad (n \ge 0).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:moduleFinite_quotient_pow_of_isPrincipal, thm:finrank_quotient_span_pow}
+  As in \ref{thm:moduleFinite_quotient_pow_atPrime}, \(S\) is a discrete valuation
+  ring with nonzero principal maximal ideal \(\mathfrak m\), the quotients
+  \(S/\mathfrak m^n\) are finite-dimensional
+  (\ref{thm:moduleFinite_quotient_pow_of_isPrincipal}), and the prime-power formula
+  \ref{thm:finrank_quotient_span_pow} in \(S\) gives
+  \(\dim_k(S/\mathfrak m^n) = n \cdot \dim_k(S/\mathfrak m)\). The \(k\)-linear
+  identifications \(B/P^n \cong S/\mathfrak m^n\) and \(B/P \cong S/\mathfrak m\)
+  (\ref{def:quotPowLinearEquiv}) transport this to the claim.
+\end{proof}
+
+\begin{lemma}[Prime factors of a principal ideal]
+  \label{lem:prime_factor_span}
+  \lean{AlgebraicGeometry.prime_factor_span}
+  \leanok
+  Let \(B\) be a Dedekind domain and \(f \in B\). Every prime factor \(P\) of the
+  ideal \((f)\) is a nonzero prime ideal of \(B\) containing \(f\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  A factor occurring in the prime factorization of \((f)\) is by definition a nonzero
+  prime ideal, and it divides \((f)\); in a Dedekind domain to divide is to contain,
+  so \((f) \subseteq P\), i.e.\ \(f \in P\).
+\end{proof}
+
+\begin{theorem}[Finiteness of the Dedekind colength module]
+  \label{thm:moduleFinite_quotient_span}
+  \lean{AlgebraicGeometry.moduleFinite_quotient_span}
+  \uses{def:quotAlgEquivPiFactors}
+  \leanok
+  Let \(B\) be a Dedekind domain over \(k\) and \(f \neq 0\) an element such that the
+  residue \(B/P\) is finite-dimensional over \(k\) for every prime factor \(P\) of
+  \((f)\). Then \(B/(f)\) is finite-dimensional over \(k\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:prime_factor_span, thm:moduleFinite_quotient_pow_atPrime}
+  The ideal \((f)\) is nonzero, so the Chinese remainder decomposition
+  \ref{def:quotAlgEquivPiFactors} identifies \(B/(f)\) with the finite product
+  \(\prod_{P \mid (f)} B/P^{\,\mathrm{ord}_P(f)}\). Each factor is
+  finite-dimensional: \(P\) is a nonzero prime (\ref{lem:prime_factor_span}), hence
+  maximal, with finite-dimensional residue by hypothesis, so
+  \ref{thm:moduleFinite_quotient_pow_atPrime} applies with \(S = B_P\) (a domain,
+  being a subring of the fraction field of \(B\)). A finite product of
+  finite-dimensional spaces is finite-dimensional.
+\end{proof}
+
+\begin{theorem}[Dedekind colength formula, localized form]
+  \label{thm:finrank_quotient_span_eq_sum_count}
+  \lean{AlgebraicGeometry.finrank_quotient_span_eq_sum_count}
+  \uses{thm:finrank_quotient_eq_sum_factors_pow}
+  \leanok
+  Let \(B\) be a Dedekind domain over \(k\) and \(f \neq 0\) an element such that the
+  residue \(B/P\) is finite-dimensional over \(k\) for every prime factor \(P\) of
+  \((f)\). Then
+  \[
+    \dim_k\bigl(B/(f)\bigr) \;=\;
+      \sum_{P \mid (f)} \mathrm{ord}_P(f) \cdot \dim_k(B/P) ,
+  \]
+  the sum ranging over the prime factors of \((f)\). No principality of the primes
+  \(P\) is assumed: this is the generalization of
+  \ref{thm:finrank_quotient_span_eq_sum_ord} to arbitrary Dedekind domains.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:prime_factor_span, thm:moduleFinite_quotient_pow_atPrime,
+    thm:finrank_quotient_pow_atPrime}
+  Each prime factor \(P\) of \((f)\) is nonzero (\ref{lem:prime_factor_span}), hence
+  maximal, and \ref{thm:moduleFinite_quotient_pow_atPrime} with \(S = B_P\) makes each
+  prime-power quotient \(B/P^{\,\mathrm{ord}_P(f)}\) finite-dimensional. The
+  multi-prime formula \ref{thm:finrank_quotient_eq_sum_factors_pow} then gives
+  \(\dim_k(B/(f)) = \sum_{P \mid (f)} \dim_k\bigl(B/P^{\,\mathrm{ord}_P(f)}\bigr)\),
+  and the per-prime collapse \ref{thm:finrank_quotient_pow_atPrime} (again through
+  \(S = B_P\)) evaluates each summand as
+  \(\mathrm{ord}_P(f) \cdot \dim_k(B/P)\).
 \end{proof}
 
 \section{The diagonal ideal of an \'etale-coordinatised algebra}
