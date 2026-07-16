@@ -203,6 +203,7 @@ import AlgebraicJacobian.Cohomology.GluedSheafModule
 import AlgebraicJacobian.Cohomology.GluedSheafEngine
 import AlgebraicJacobian.Cohomology.GluedSheafDatumBaseChange
 import AlgebraicJacobian.Cohomology.GluedSheafClass
+import AlgebraicJacobian.Cohomology.GluedSheafExtraction
 import AlgebraicJacobian.Cohomology.GluedSheafCongr
 import AlgebraicJacobian.Cohomology.GluedSheafFibre
 import AlgebraicJacobian.RiemannRoch.GluedDivisorSheaf
@@ -247,6 +248,7 @@ import AlgebraicJacobian.Picard.VanishingLocus
 import AlgebraicJacobian.Picard.GrassmannianPair
 import AlgebraicJacobian.Picard.GrassmannianDiagonal
 import AlgebraicJacobian.Picard.GrassmannianSeparated
+import AlgebraicJacobian.Picard.GrassmannianTautological
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularityStep
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularity
 import AlgebraicJacobian.Picard.FlatCokernel
