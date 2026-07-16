@@ -25,6 +25,9 @@ import AlgebraicJacobian.Cohomology.SectionsBaseChange
 import AlgebraicJacobian.Picard.AffineTwoCover
 import AlgebraicJacobian.Picard.UniversalSections
 import AlgebraicJacobian.Cohomology.RelativeTwoCover
+import AlgebraicJacobian.Cohomology.TwistedSheaf
+import AlgebraicJacobian.Cohomology.RelativeSectionsLinear
+import AlgebraicJacobian.Cohomology.RelativeH1BaseChange
 import AlgebraicJacobian.Picard.UnitsPresheaf
 import AlgebraicJacobian.Picard.CechH1
 import AlgebraicJacobian.Picard.UnitsCocycle
@@ -162,6 +165,10 @@ import AlgebraicJacobian.Curve.DiagonalChart
 import AlgebraicJacobian.Curve.DiagonalChartData
 import AlgebraicJacobian.Curve.DiagonalEquations
 import AlgebraicJacobian.Curve.GraphDivisor
+import AlgebraicJacobian.Cohomology.RigidEngine0Toolkit
+import AlgebraicJacobian.Cohomology.RigidEngine2Nakayama
+import AlgebraicJacobian.Cohomology.RigidEngine3Rigidity
+import AlgebraicJacobian.Cohomology.RigidEngine3Duality
 
 /-!
 # AlgebraicJacobian — library root
