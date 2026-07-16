@@ -198,8 +198,6 @@ import AlgebraicJacobian.Cohomology.GluedSheafQcoh
 import AlgebraicJacobian.Cohomology.GluedSheafQcohAssembly
 import AlgebraicJacobian.Cohomology.GluedSheafPair
 import AlgebraicJacobian.Cohomology.GluedSheafDatum
-import AlgebraicJacobian.Cohomology.GluedSheafModule
-import AlgebraicJacobian.Cohomology.GluedSheafEngine
 import AlgebraicJacobian.Picard.DegreeZero
 import AlgebraicJacobian.Picard.Pic0Functor
 import AlgebraicJacobian.Picard.DegreeSeam
