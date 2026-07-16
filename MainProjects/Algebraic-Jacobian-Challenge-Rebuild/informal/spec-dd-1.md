@@ -206,3 +206,28 @@ re-read first.
 
 *End of spec. Binding for the DD-1 stages; deviations require re-derivation from the
 worksheet and a note in the stage commit message.*
+
+## ADDENDUM (2026-07-17, same session, post-landing sweep) — ledger reconciliation
+
+- **The Tor home is now a PAIR, by commit race, with complementary content and no
+  duplication**: this lane landed the base-change half first
+  (`Picard/FlatCokernel.lean`, 357ac8e59 — kernels/regular elements commute with
+  arbitrary base change from flat cokernels); DAT-A2 landed the fibrewise⟹relative
+  half in `Picard/FibrewiseRegular.lean` (f76c0bff4 — fibrewise-regular + flat ⟹
+  regular over Noetherian, Tor-free, with `mem_nonZeroDivisors_of_forall_tmul_residueField`
+  as DD-R's bridge) marking the base-change half as a seam. RECONCILED READING: the
+  "one home" of worksheet §5 DD-1 is the pair {FlatCokernel = base-change direction,
+  FibrewiseRegular = fibrewise direction}; consumers pick by direction; neither file
+  re-proves the other's lemmas. Stage (c) of this spec consumes FlatCokernel; DD-R
+  consumes both.
+- **Stage (c)'s geometric squares partially arrive from DAT-1 (1d-ii)** (1671218d2,
+  landed): CONSUME `Scheme.Hom.appLE_resHom`, `relSectionsMap_basicOpen` (basic opens
+  of compared sections are `relCurveMap`-preimages — the `pieces` transport),
+  `relCurveMap_appLE_overAlgebraMap`, and mirror `BasicOpenCoverData.baseChange` for
+  the `Fin`-indexed cover data. The TERM identifications
+  (`B' ⊗[B] Γ(D(h_j)) ≅ Γ(D(h'_j))`, "localization commutes with base change") are the
+  announced SECOND HALF of (1d-ii) in the DAT-1 lane — stage (c) must consume, not
+  re-derive them; if that half stalls, negotiate ownership before building.
+- **Stage (d) (extraction) deferral note**: DAT-1's (1f) finisher builds the same
+  finite basic-open refinement engine (qc + span-⊤ partition witnesses); check its
+  landing before writing the extraction, and share the refinement lemmas.
