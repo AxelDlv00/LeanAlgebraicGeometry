@@ -221,6 +221,7 @@ import AlgebraicJacobian.Picard.AbelElement
 import AlgebraicJacobian.Albanese.RationalMapPrecomp
 import AlgebraicJacobian.Albanese.RationalMapProd
 import AlgebraicJacobian.Albanese.RationalMapFunctionField
+import AlgebraicJacobian.Algebra.CoheightBridge
 
 /-!
 # AlgebraicJacobian — library root
