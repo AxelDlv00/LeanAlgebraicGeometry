@@ -205,6 +205,7 @@ import AlgebraicJacobian.Cohomology.GluedSheafDatumBaseChange
 import AlgebraicJacobian.Cohomology.GluedSheafCongr
 import AlgebraicJacobian.Cohomology.GluedSheafFibre
 import AlgebraicJacobian.RiemannRoch.GluedDivisorSheaf
+import AlgebraicJacobian.RiemannRoch.W6Full
 import AlgebraicJacobian.Picard.DegreeZero
 import AlgebraicJacobian.Picard.Pic0Functor
 import AlgebraicJacobian.Picard.DegreeSeam
@@ -251,6 +252,7 @@ import AlgebraicJacobian.Algebra.ABRegularQuotient
 import AlgebraicJacobian.Algebra.ABRegularDomain
 import AlgebraicJacobian.Algebra.ABRegularCM
 import AlgebraicJacobian.Picard.FibrewiseRegular
+import AlgebraicJacobian.Picard.SectionsToDivisors
 import AlgebraicJacobian.Tangent.TruncExpUnits
 import AlgebraicJacobian.Tangent.TruncExpCech
 import AlgebraicJacobian.Tangent.DualNumberBaseChange
