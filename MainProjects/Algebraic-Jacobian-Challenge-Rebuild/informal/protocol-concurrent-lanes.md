@@ -59,7 +59,19 @@ uid-1001 tmpfs quota exhaustion (EDQUOT) bricked every Bash call machine-wide
 build temp dirs, and if Bash starts failing with quota errors, stop and report rather than
 retry-looping.
 
-## 4. The AJCR mutex is for AJCR lake invocations only
+## 4. The root import file: commit only your own lines (I-0153)
+
+`AlgebraicJacobian.lean` is edited by every lane. Committing the WHOLE file via any recipe
+sweeps siblings' uncommitted import lines into HEAD — the root then references files not yet
+in HEAD (red for fresh checkouts), and a later sibling's whole-file commit can sweep or drop
+YOUR line the same way. Before committing the root file: run
+`git --git-dir=$GD --work-tree=. diff HEAD -- <project>/AlgebraicJacobian.lean` — if lines
+other than yours differ, either (a) verify every swept import's file is already committed in
+HEAD and say so in the commit message, or (b) construct the commit from HEAD's version plus
+only your lines (apply a minimal patch to a temp checkout of the HEAD blob). Never commit a
+root file that references uncommitted files without naming that in the message.
+
+## 5. The AJCR mutex is for AJCR lake invocations only
 
 No cross-workspace use (an OpenGA-Horizon agent squatted it ~25 min for its own
 `lake cache get`, silently serializing AJCR lanes against unrelated work). Other
