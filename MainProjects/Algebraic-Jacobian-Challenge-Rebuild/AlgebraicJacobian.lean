@@ -249,6 +249,9 @@ import AlgebraicJacobian.Algebra.ABRegularQuotient
 import AlgebraicJacobian.Algebra.ABRegularDomain
 import AlgebraicJacobian.Algebra.ABRegularCM
 import AlgebraicJacobian.Picard.FibrewiseRegular
+import AlgebraicJacobian.Tangent.TruncExpUnits
+import AlgebraicJacobian.Tangent.TruncExpCech
+import AlgebraicJacobian.Tangent.DualNumberBaseChange
 
 /-!
 # AlgebraicJacobian — library root
