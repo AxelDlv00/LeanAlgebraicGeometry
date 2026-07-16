@@ -1178,3 +1178,428 @@ point of a non-integral product.
   Lemma~\ref{lem:flat_mem_nonZeroDivisors} it carries the nonzerodivisor \(X - b\) to a
   nonzerodivisor, which is \(u \otimes 1 - 1 \otimes b\).
 \end{proof}
+
+\section{Vanishing propagation via residue fields}
+\label{sec:nakayama_vanishing}
+
+Let \(R\) be a commutative ring. For a prime ideal \(\mathfrak p \subseteq R\) write
+\(R_{\mathfrak p}\) for the localisation, \(\kappa(\mathfrak p) =
+R_{\mathfrak p}/\mathfrak p R_{\mathfrak p}\) for the residue field, and
+\(M_{\mathfrak p}\) for the localisation of an \(R\)-module \(M\). The \emph{fibre} of
+\(M\) at \(\mathfrak p\) is the \(\kappa(\mathfrak p)\)-vector space
+\(M \otimes_R \kappa(\mathfrak p)\), and the \emph{support} of \(M\) is
+\(\operatorname{Supp} M = \{\mathfrak p \text{ prime} : M_{\mathfrak p} \neq 0\}\).
+This section proves that for a finitely generated module the vanishing of all fibres
+forces the module to vanish, and that the fibre-vanishing locus is open in
+\(\Spec R\). Applied with \(M = H^1\) of the relative curve
+(Chapter~\ref{chap:Cohomology}), these are the vanishing-propagation and openness steps
+of the exchange-property analysis for the Picard functor.
+
+\begin{lemma}[A module with vanishing localisations vanishes]
+  \label{lem:zero_of_forall_localization_zero}
+  \lean{AlgebraicJacobian.RigidEngine.subsingleton_of_forall_subsingleton_localizedModule}
+  \leanok
+  Let \(M\) be an \(R\)-module with \(M_{\mathfrak p} = 0\) for every prime
+  \(\mathfrak p\). Then \(M = 0\). (No finiteness hypothesis is needed.)
+\end{lemma}
+\begin{proof}
+  \leanok
+  Suppose \(m \in M\) is nonzero. Its annihilator
+  \(\operatorname{Ann}(m) = \{r \in R : rm = 0\}\) is an ideal not containing \(1\),
+  hence contained in a maximal ideal \(\mathfrak p\). If \(m/1 = 0\) in
+  \(M_{\mathfrak p}\), some \(s \notin \mathfrak p\) satisfies \(sm = 0\),
+  contradicting \(\operatorname{Ann}(m) \subseteq \mathfrak p\); so
+  \(M_{\mathfrak p} \neq 0\).
+\end{proof}
+
+\begin{lemma}[The Nakayama fibre criterion]
+  \label{lem:fibre_vanishing_iff_localization_zero}
+  \lean{AlgebraicJacobian.RigidEngine.subsingleton_residueField_tensor_iff_notMem_support}
+  \leanok
+  Let \(M\) be a finitely generated \(R\)-module and \(\mathfrak p\) a prime. Then
+  \(M \otimes_R \kappa(\mathfrak p) = 0\) if and only if \(M_{\mathfrak p} = 0\), i.e.\
+  \(\mathfrak p \notin \operatorname{Supp} M\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Localisation commutes with the tensor product and \(\kappa(\mathfrak p)\) is an
+  \(R_{\mathfrak p}\)-module, so
+  \(M \otimes_R \kappa(\mathfrak p) \cong M_{\mathfrak p} \otimes_{R_{\mathfrak p}}
+  \kappa(\mathfrak p) \cong M_{\mathfrak p}/\mathfrak p M_{\mathfrak p}\)
+  (the last identification because \(\kappa(\mathfrak p) =
+  R_{\mathfrak p}/\mathfrak p R_{\mathfrak p}\) and \(N \otimes_A A/I \cong N/IN\)).
+  If \(M_{\mathfrak p} = 0\) the fibre certainly vanishes. Conversely suppose
+  \(M_{\mathfrak p} = \mathfrak p M_{\mathfrak p}\). The module \(M_{\mathfrak p}\) is
+  finitely generated over the local ring \(R_{\mathfrak p}\) (the images of generators
+  of \(M\) generate), whose maximal ideal is \(\mathfrak p R_{\mathfrak p}\). If
+  \(M_{\mathfrak p} \neq 0\), choose generators \(x_1, \dots, x_n\) of
+  \(M_{\mathfrak p}\) with \(n \geq 1\) minimal. Expanding
+  \(x_n \in \mathfrak p M_{\mathfrak p}\) in the generators gives
+  \(x_n = \sum_{i \leq n} a_i x_i\) with all
+  \(a_i \in \mathfrak p R_{\mathfrak p}\), whence
+  \((1 - a_n) x_n = \sum_{i < n} a_i x_i\). But \(1 - a_n\) lies outside the maximal
+  ideal, so it is a unit, and \(x_n\) lies in the span of \(x_1, \dots, x_{n-1}\) ---
+  contradicting minimality. Hence \(M_{\mathfrak p} = 0\).
+\end{proof}
+
+\begin{theorem}[Vanishing propagation]
+  \label{thm:fibrewise_vanishing_propagates}
+  \lean{AlgebraicJacobian.RigidEngine.subsingleton_of_forall_subsingleton_residueField_tensor}
+  \uses{lem:fibre_vanishing_iff_localization_zero, lem:zero_of_forall_localization_zero}
+  \leanok
+  \source{kleiman-picard}
+  Let \(M\) be a finitely generated \(R\)-module with
+  \(M \otimes_R \kappa(\mathfrak p) = 0\) for every prime \(\mathfrak p\). Then
+  \(M = 0\): fibrewise vanishing over the whole base propagates to global vanishing.
+\end{theorem}
+\begin{proof}
+  \leanok
+  By \ref{lem:fibre_vanishing_iff_localization_zero} every localisation
+  \(M_{\mathfrak p}\) vanishes; by \ref{lem:zero_of_forall_localization_zero},
+  \(M = 0\).
+\end{proof}
+
+\begin{lemma}[The fibre-vanishing locus is the complement of the support]
+  \label{lem:fibre_vanishing_locus_compl_support}
+  \lean{AlgebraicJacobian.RigidEngine.setOf_subsingleton_residueField_tensor_eq_compl_support}
+  \uses{lem:fibre_vanishing_iff_localization_zero}
+  \leanok
+  For a finitely generated \(R\)-module \(M\),
+  \[
+    \{\mathfrak p \in \Spec R : M \otimes_R \kappa(\mathfrak p) = 0\}
+    \;=\; \Spec R \smallsetminus \operatorname{Supp} M .
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  A pointwise restatement of \ref{lem:fibre_vanishing_iff_localization_zero}.
+\end{proof}
+
+\begin{theorem}[Openness of the fibre-vanishing locus]
+  \label{thm:isOpen_fibre_vanishing}
+  \lean{AlgebraicJacobian.RigidEngine.isOpen_setOf_subsingleton_residueField_tensor}
+  \uses{lem:fibre_vanishing_locus_compl_support}
+  \leanok
+  \source{kleiman-picard}
+  For a finitely generated \(R\)-module \(M\), the fibre-vanishing locus
+  \(\{\mathfrak p : M \otimes_R \kappa(\mathfrak p) = 0\}\) is open in \(\Spec R\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  By \ref{lem:fibre_vanishing_locus_compl_support} the locus is the complement of
+  \(\operatorname{Supp} M\), so it suffices to prove
+  \(\operatorname{Supp} M = V(\operatorname{Ann} M)\) for \(M\) generated by
+  \(x_1, \dots, x_n\), a closed set. If
+  \(\operatorname{Ann} M \not\subseteq \mathfrak p\), pick
+  \(s \in \operatorname{Ann} M \smallsetminus \mathfrak p\): then \(s\) kills \(M\), so
+  \(M_{\mathfrak p} = 0\). Conversely if \(M_{\mathfrak p} = 0\), then each
+  \(x_i/1 = 0\) in \(M_{\mathfrak p}\), so \(s_i x_i = 0\) for some
+  \(s_i \notin \mathfrak p\); the product \(s = s_1 \cdots s_n\) lies outside the prime
+  \(\mathfrak p\) and kills every generator, so
+  \(s \in \operatorname{Ann} M \smallsetminus \mathfrak p\). Thus a prime lies off the
+  support exactly when it fails to contain \(\operatorname{Ann} M\), i.e.\
+  \(\operatorname{Supp} M = V(\operatorname{Ann} M)\). (The second computation is the
+  classical localisation step: a finitely generated module vanishing at \(\mathfrak p\)
+  vanishes on the basic open neighbourhood \(D(s)\).)
+\end{proof}
+
+\section{Split rigidity of a surjective two-term complex}
+\label{sec:split_rigidity}
+
+Throughout this section \(R\) is a commutative ring and \(\delta : A \to B\) a map of
+\(R\)-modules --- a two-term complex, with
+\(H^0 := \ker \delta\) and \(H^1 := B/\delta(A)\) its cohomology. In the intended
+application (Chapter~\ref{chap:Cohomology}) \(\delta\) is the restriction-difference map
+of an affine two-cover and \(H^1\) is degree-one cohomology; everything here is pure
+module algebra. The theme is \emph{rigidity}: once \(H^1 = 0\) --- that is, once
+\(\delta\) is surjective --- the formation of \(H^0\) behaves as if the complex were
+split. Without the surjectivity, kernels do not commute with tensor products: for
+\(\delta = p \cdot (-) : \Z \to \Z\) with \(p\) prime, \(\ker \delta = 0\), yet after
+\(\otimes\, \Z/p\) the map becomes zero and acquires the kernel \(\Z/p\).
+
+\begin{lemma}[Right-exactness of the tensor product]
+  \label{lem:tensor_right_exact}
+  \lean{rTensor_exact, lTensor_exact, LinearMap.rTensor_surjective,
+    LinearMap.lTensor_surjective}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Let \(M' \to M \to M'' \to 0\) be an exact sequence of \(R\)-modules and \(P\) any
+  \(R\)-module. Then the sequences
+  \(M' \otimes P \to M \otimes P \to M'' \otimes P \to 0\) and
+  \(P \otimes M' \to P \otimes M \to P \otimes M'' \to 0\) are exact.
+\end{lemma}
+
+\begin{lemma}[A flat cokernel keeps the kernel inclusion injective under tensoring]
+  \label{lem:lTensor_injective_of_flat}
+  \lean{LinearMap.lTensor_injective_of_exact_of_flat}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Let \(0 \to K \xrightarrow{\iota} A \xrightarrow{\delta} B \to 0\) be a short exact
+  sequence of \(R\)-modules with \(B\) flat. Then for every \(R\)-module \(P\) the map
+  \(\mathrm{id}_P \otimes \iota : P \otimes K \to P \otimes A\) is injective.
+\end{lemma}
+
+\begin{lemma}[A vanishing cokernel means surjectivity]
+  \label{lem:rigid_surjective_of_coker_zero}
+  \lean{AlgebraicJacobian.RigidEngine.surjective_of_subsingleton_quotient}
+  \leanok
+  If \(H^1 = B/\delta(A) = 0\), then \(\delta\) is surjective.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Every \(b \in B\) has class zero in the zero quotient, i.e.\ lies in \(\delta(A)\).
+\end{proof}
+
+\begin{lemma}[The cokernel of a surjective complex base-changes to zero]
+  \label{lem:rigid_coker_tensor_zero}
+  \lean{AlgebraicJacobian.RigidEngine.rTensor_surjective,
+    AlgebraicJacobian.RigidEngine.subsingleton_coker_rTensor}
+  \uses{lem:rigid_surjective_of_coker_zero}
+  \leanok
+  Let \(\delta : A \to B\) be surjective (equivalently, \(H^1 = 0\);
+  \ref{lem:rigid_surjective_of_coker_zero}). Then for every \(R\)-module \(P\) the map
+  \(\delta \otimes \mathrm{id}_P : A \otimes P \to B \otimes P\) is surjective;
+  equivalently, the cokernel of the base-changed complex vanishes for every coefficient
+  module: \(H^1\) base-changes to zero.
+\end{lemma}
+\begin{proof}
+  \leanok
+  \(B \otimes P\) is generated by the pure tensors \(b \otimes p\); writing
+  \(b = \delta(a)\) exhibits each as
+  \((\delta \otimes \mathrm{id})(a \otimes p)\). The image, a submodule containing a
+  generating set, is everything.
+\end{proof}
+
+\begin{theorem}[Base change of \(H^0\) with module coefficients]
+  \label{thm:rigid_ker_tensor}
+  \lean{AlgebraicJacobian.RigidEngine.kerRTensorToKer,
+    AlgebraicJacobian.RigidEngine.kerRTensorEquiv}
+  \uses{lem:rigid_surjective_of_coker_zero, lem:tensor_right_exact,
+    lem:lTensor_injective_of_flat}
+  \leanok
+  \source{kleiman-picard}
+  Let \(\delta : A \to B\) be surjective (equivalently \(H^1 = 0\)) with \(B\) flat, and
+  set \(K = \ker \delta\). For every \(R\)-module \(P\), the natural map
+  \(K \otimes P \to \ker(\delta \otimes \mathrm{id}_P)\) induced by the inclusion
+  \(K \subseteq A\) is an isomorphism: the formation of \(H^0\) commutes with
+  \(\otimes\, P\) for \emph{every} \(P\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Since \(\delta\) is surjective, \(0 \to K \xrightarrow{\iota} A \xrightarrow{\delta}
+  B \to 0\) is exact. The natural map is well defined:
+  \((\delta \otimes \mathrm{id}) \circ (\iota \otimes \mathrm{id}) =
+  (\delta \iota) \otimes \mathrm{id} = 0\), so \(\iota \otimes \mathrm{id}\) lands in
+  the kernel. \emph{Injectivity}: the cokernel \(B\) of \(\iota\) is flat, so
+  \(\iota \otimes \mathrm{id}_P\) remains injective
+  (\ref{lem:lTensor_injective_of_flat}), and the natural map is its corestriction.
+  \emph{Surjectivity onto the kernel}: by right-exactness
+  (\ref{lem:tensor_right_exact}) applied to the exact \(K \to A \to B \to 0\), the
+  sequence \(K \otimes P \to A \otimes P \to B \otimes P\) is exact at \(A \otimes P\);
+  an element of \(\ker(\delta \otimes \mathrm{id})\) therefore comes from
+  \(K \otimes P\). (Flatness is not used in this half.)
+\end{proof}
+
+\begin{theorem}[Base change of \(H^0\) along a ring map]
+  \label{thm:rigid_ker_baseChange}
+  \lean{AlgebraicJacobian.RigidEngine.kerBaseChangeToKer,
+    AlgebraicJacobian.RigidEngine.kerBaseChangeEquiv}
+  \uses{thm:rigid_ker_tensor}
+  \leanok
+  \source{kleiman-picard}
+  Let \(\delta : A \to B\) be surjective with \(B\) flat, and let \(R'\) be a
+  commutative \(R\)-algebra. Write \(\delta_{R'} : R' \otimes_R A \to R' \otimes_R B\)
+  for the base-changed \(R'\)-linear map. Then the natural \(R'\)-linear map
+  \[
+    R' \otimes_R \ker \delta \;\longrightarrow\; \ker \delta_{R'}
+  \]
+  is an isomorphism: the formation of \(H^0\) commutes with every base change
+  \(R \to R'\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The underlying additive map is that of \ref{thm:rigid_ker_tensor} with \(P = R'\)
+  (with the tensor factors flipped), hence bijective; and it is \(R'\)-linear because
+  it is induced by \(\mathrm{id}_{R'} \otimes \iota\), which commutes with the
+  \(R'\)-action carried by the left tensor factor.
+\end{proof}
+
+\begin{theorem}[Flatness of \(H^0\): the splitting argument]
+  \label{thm:rigid_flat_ker}
+  \lean{AlgebraicJacobian.RigidEngine.flat_ker}
+  \leanok
+  Let \(\delta : A \to B\) be surjective with \(A\) flat and \(B\) projective. Then
+  \(K = \ker \delta\) is flat.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Projectivity of \(B\) lifts \(\mathrm{id}_B\) through the surjection \(\delta\):
+  there is \(\sigma : B \to A\) with \(\delta \sigma = \mathrm{id}_B\), so the complex
+  splits. The map \(\pi := \mathrm{id}_A - \sigma\delta\) lands in \(K\)
+  (\(\delta\pi = \delta - \delta\sigma\delta = 0\)) and restricts to the identity on
+  \(K\) (if \(\delta x = 0\) then \(\pi x = x\)); moreover
+  \(A = K \oplus \sigma(B)\): every \(a\) is \(\pi a + \sigma(\delta a)\), and if
+  \(x = \sigma b \in K \cap \sigma(B)\) then \(0 = \delta x = b\), so \(x = 0\). A
+  direct summand of a flat module is flat: for an injective map \(M' \to M\), the map
+  \(K \otimes M' \to K \otimes M\) is a direct summand of the injective map
+  \(A \otimes M' \to A \otimes M\) (the tensor product distributes over direct sums),
+  hence injective. So \(K\) is flat.
+\end{proof}
+
+\begin{lemma}[Finite modules over a Noetherian ring are finitely presented]
+  \label{lem:finitePresentation_of_finite}
+  \lean{Module.finitePresentation_of_finite}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Over a Noetherian ring \(R\), every finitely generated module is finitely presented:
+  the kernel of any surjection \(R^n \to M\) is again finitely generated.
+\end{lemma}
+
+\begin{lemma}[Finitely presented flat modules are projective]
+  \label{lem:projective_of_finitePresentation}
+  \lean{Module.Flat.projective_of_finitePresentation}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  A finitely presented flat module over a commutative ring is projective.
+\end{lemma}
+
+\begin{theorem}[\(H^0\) is finite projective]
+  \label{thm:rigid_projective_ker}
+  \lean{AlgebraicJacobian.RigidEngine.projective_ker}
+  \uses{thm:rigid_flat_ker, lem:finitePresentation_of_finite,
+    lem:projective_of_finitePresentation}
+  \leanok
+  \source{kleiman-picard}
+  Let \(R\) be Noetherian and \(\delta : A \to B\) surjective with \(A\) flat, \(B\)
+  projective, and \(K = \ker \delta\) finitely generated. Then \(K\) is a finite
+  projective \(R\)-module.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \(K\) is flat (\ref{thm:rigid_flat_ker}) and finitely presented
+  (\ref{lem:finitePresentation_of_finite}); finitely presented flat modules are
+  projective (\ref{lem:projective_of_finitePresentation}).
+\end{proof}
+
+\begin{theorem}[Base change commutes with cokernels]
+  \label{thm:quot_range_baseChange}
+  \lean{LinearMap.quotRangeBaseChangeEquiv, LinearMap.quotRangeBaseChangeEquiv_tmul_mk}
+  \uses{lem:tensor_right_exact}
+  \leanok
+  Let \(f : M \to N\) be an \(R\)-linear map and \(S\) a commutative \(R\)-algebra.
+  There is an \(S\)-linear equivalence
+  \[
+    S \otimes_R \bigl(N/\mathrm{range}\, f\bigr) \;\cong\;
+      (S \otimes_R N)\big/\mathrm{range}(f_S), \qquad
+    s \otimes [n] \longmapsto [s \otimes n],
+  \]
+  where \(f_S = \mathrm{id}_S \otimes f\) is the base-changed map.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Apply \(\mathrm{id}_S \otimes -\) to the exact sequence
+  \(M \xrightarrow{f} N \xrightarrow{q} N/\mathrm{range}\, f \to 0\) (\(q\) the quotient
+  map): by right-exactness (\ref{lem:tensor_right_exact}) the sequence
+  \(S \otimes M \to S \otimes N \to S \otimes (N/\mathrm{range}\, f) \to 0\) is exact.
+  So \(\mathrm{id}_S \otimes q\) is surjective with kernel \(\mathrm{range}(f_S)\), and
+  the first isomorphism theorem gives an \(S\)-linear equivalence
+  \((S \otimes N)/\mathrm{range}(f_S) \cong S \otimes (N/\mathrm{range}\, f)\), inverse
+  to the displayed one; on classes of pure tensors it sends \([s \otimes n]\) to
+  \(s \otimes [n]\).
+\end{proof}
+
+\section{Duality for finite projective modules}
+\label{sec:finite_projective_duality}
+
+For an \(R\)-module \(M\) write \(M^{\vee} = \Hom_R(M, R)\) for its dual. The
+\emph{contraction map}
+\[
+  c_M : M^{\vee} \otimes_R N \longrightarrow \Hom_R(M, N), \qquad
+  \psi \otimes n \longmapsto \bigl(x \mapsto \psi(x)\, n\bigr)
+\]
+is natural in both variables. This section upgrades the classical fact that \(c_M\) is
+an isomorphism for finite free \(M\) to finite \emph{projective} \(M\), by a retract
+argument, and derives the duality \(M \otimes P \cong \Hom(M^{\vee}, P)\) --- the form
+in which the representing module of the exchange isomorphism is consumed
+(Chapter~\ref{chap:Cohomology}).
+
+\begin{lemma}[Contraction is an equivalence for finite free modules]
+  \label{lem:dualTensorHomEquiv_free}
+  \lean{dualTensorHomEquiv}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  For a finite free \(R\)-module \(F\) and every \(R\)-module \(N\), the contraction
+  map \(c_F : F^{\vee} \otimes N \to \Hom(F, N)\) is an isomorphism.
+\end{lemma}
+
+\begin{theorem}[Contraction is an equivalence for finite projective modules]
+  \label{thm:dualTensorHom_projective}
+  \lean{AlgebraicJacobian.RigidEngine.bijective_dualTensorHom_of_projective,
+    AlgebraicJacobian.RigidEngine.dualTensorHomEquivProjective}
+  \uses{lem:dualTensorHomEquiv_free}
+  \leanok
+  For a finite projective \(R\)-module \(M\) and every \(R\)-module \(N\), the
+  contraction map \(c_M : M^{\vee} \otimes N \to \Hom(M, N)\) is an isomorphism.
+\end{theorem}
+\begin{proof}
+  \leanok
+  A finite projective module is a retract of a finite free one: generators give a
+  surjection \(f : F := R^n \to M\), and projectivity lifts \(\mathrm{id}_M\) through
+  \(f\) to \(g : M \to F\) with \(f \circ g = \mathrm{id}_M\). Contraction is natural in
+  the module variable; concretely, on pure tensors one checks the two identities
+  \[
+    c_M \circ (g^{\vee} \otimes \mathrm{id}_N) = (- \circ g) \circ c_F,
+    \qquad
+    (- \circ f) \circ c_M = c_F \circ (f^{\vee} \otimes \mathrm{id}_N),
+  \]
+  both sides of the first sending \(\psi \otimes n\) to \(x \mapsto \psi(g x) n\), and
+  of the second to \(x \mapsto \psi(f x) n\). Define
+  \(\Phi : \Hom(M, N) \to M^{\vee} \otimes N\) by
+  \(\Phi(h) := (g^{\vee} \otimes \mathrm{id}_N)\bigl(c_F^{-1}(h \circ f)\bigr)\), using
+  \ref{lem:dualTensorHomEquiv_free}. Then
+  \(c_M(\Phi h) = c_F\bigl(c_F^{-1}(h \circ f)\bigr) \circ g = h \circ f \circ g = h\)
+  by the first identity; and
+  \(\Phi(c_M y) = (g^{\vee} \otimes \mathrm{id})\bigl((f^{\vee} \otimes \mathrm{id})
+  y\bigr) = \bigl((g^{\vee} \circ f^{\vee}) \otimes \mathrm{id}\bigr) y = y\) by the
+  second identity and \(g^{\vee} \circ f^{\vee} = (f \circ g)^{\vee} =
+  \mathrm{id}\). So \(\Phi\) is a two-sided inverse of \(c_M\).
+\end{proof}
+
+\begin{theorem}[Duality: \(M \otimes P \cong \Hom(M^{\vee}, P)\)]
+  \label{thm:tensorDualHom_projective}
+  \lean{AlgebraicJacobian.RigidEngine.tensorDualHomEquiv}
+  \uses{thm:dualTensorHom_projective}
+  \leanok
+  \source{kleiman-picard}
+  For a finite projective \(R\)-module \(M\) and every \(R\)-module \(P\), there is a
+  natural equivalence
+  \[
+    M \otimes_R P \;\cong\; \Hom_R(M^{\vee}, P) :
+  \]
+  the functor \(P \mapsto M \otimes P\) is represented, in dual-Hom form, by
+  \(M^{\vee}\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Keep \(f : F \to M\), \(g : M \to F\) with \(f g = \mathrm{id}_M\) as in the proof of
+  \ref{thm:dualTensorHom_projective}. First, \(M^{\vee}\) is again finite projective:
+  \(f^{\vee} : M^{\vee} \to F^{\vee}\) and \(g^{\vee} : F^{\vee} \to M^{\vee}\) satisfy
+  \(g^{\vee} \circ f^{\vee} = \mathrm{id}\), so \(M^{\vee}\) is a retract --- hence a
+  direct summand and a quotient --- of \(F^{\vee} \cong R^n\). Second, \(M\) is
+  reflexive: the evaluation map \(\mathrm{ev}_M : M \to M^{\vee\vee}\),
+  \(\mathrm{ev}(x)(\psi) = \psi(x)\), is an isomorphism. For finite free \(F\) this is
+  the dual-basis computation; in general, naturality
+  \(\mathrm{ev}_F \circ u = u^{\vee\vee} \circ \mathrm{ev}_M\) (for \(u : M \to F\))
+  makes \(\beta := f \circ \mathrm{ev}_F^{-1} \circ g^{\vee\vee}\) a two-sided inverse:
+  \(\beta \circ \mathrm{ev}_M = f \circ \mathrm{ev}_F^{-1} \circ \mathrm{ev}_F \circ g
+  = f g = \mathrm{id}\), and \(\mathrm{ev}_M \circ \beta = f^{\vee\vee} \circ
+  \mathrm{ev}_F \circ \mathrm{ev}_F^{-1} \circ g^{\vee\vee} = (f g)^{\vee\vee} =
+  \mathrm{id}\). Now compose:
+  \[
+    M \otimes P \;\cong\; M^{\vee\vee} \otimes P
+      = (M^{\vee})^{\vee} \otimes P \;\cong\; \Hom(M^{\vee}, P),
+  \]
+  the first map by \(\mathrm{ev}_M\), the second by
+  \ref{thm:dualTensorHom_projective} applied to the finite projective module
+  \(M^{\vee}\).
+\end{proof}

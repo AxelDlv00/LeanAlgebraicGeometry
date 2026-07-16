@@ -9,10 +9,14 @@ cohomology with (global) sections and proves the vanishing of degree-one cohomol
 structure sheaf on an affine open of a scheme. It then develops the Mayer--Vietoris
 \((0,1)\)-slice for a sheaf of \(R\)-modules on a site and specializes it to a scheme
 covered by two affine opens, producing an explicit description of \(H^1(X,\struct{X/k})\)
-as the cokernel of a map of section modules. The chapter concludes by running the
+as the cokernel of a map of section modules. It then runs the
 two-lattice ladder of Chapter~\ref{chap:Algebra} on that cokernel along a finite morphism
 to the projective line, proving the finiteness of \(H^1(C, \struct C)\) --- so that the
 genus of Definition~\ref{def:genus} is the dimension of a finite-dimensional vector space.
+The two closing sections glue a twisted sheaf out of a unit cocycle on a two-chart cover
+and prove that the two-cover \(H^1\) of the relative curve --- for the structure sheaf,
+and termwise for the twisted sheaf --- commutes with arbitrary change of the affine test
+ring.
 
 \section{Cohomology on a site}
 
@@ -826,6 +830,89 @@ natural in \(F\).
   Apply \ref{thm:hModule1_vanishing_qcoh} to the affine open \(U = \top\) (an affine scheme is an
   affine open of itself) and transport the object-cohomology vanishing to the site cohomology
   along the equivalence \ref{def:HModule_linearEquivHModule'}.
+\end{proof}
+
+The two (P2) axioms of the packaging are not merely \emph{sufficient} for Serre's argument:
+they say precisely that restriction from an affine chart to a basic open of the chart is a
+localisation of modules. The remaining nodes of this section record that bridge, which lets
+any packaged sheaf on an affine chart be read through the general theory of localised
+modules --- in particular, it is how the two-lattice description of the two-cover complex
+consumes the packaging.
+
+\begin{definition}[The chart-ring module structure on packaged sections]
+  \label{def:qcohOn_module}
+  \lean{AlgebraicGeometry.Scheme.QcohOn.moduleOfLE}
+  \uses{def:qcohOn}
+  \leanok
+  Let \(F\) carry a quasi-coherence packaging on \(U\) and let \(V \le U\). The (P1) action
+  makes the \(k\)-module \(F(V)\) a module over the chart ring \(\Gamma(X, U)\): the unit,
+  associativity and distributivity laws are the (P1) axioms, and the remaining law
+  \(0 \cdot m = 0\) follows by adding \(0 \cdot m\) to both sides of
+  \((0 + 0) \cdot m = 0 \cdot m\) and cancelling.
+\end{definition}
+
+\begin{definition}[Restriction is linear over the chart ring]
+  \label{def:qcohOn_secRes_linear}
+  \lean{AlgebraicGeometry.Scheme.QcohOn.secResₗ}
+  \uses{def:qcohOn_module}
+  \leanok
+  For opens \(V \le W \le U\), section restriction \(F(W) \to F(V)\) is
+  \(\Gamma(X, U)\)-linear for the module structures of \ref{def:qcohOn_module}: it is
+  additive, being a map of \(k\)-modules, and it commutes with the action by the (P1)
+  restriction-naturality \((r \cdot m)|_V = r \cdot (m|_V)\).
+\end{definition}
+
+\begin{theorem}[The packaging axioms are the localisation axioms]
+  \label{thm:qcohOn_isLocalizedModule}
+  \lean{AlgebraicGeometry.Scheme.QcohOn.isLocalizedModule_secResₗ}
+  \uses{def:qcohOn, def:qcohOn_module, def:qcohOn_secRes_linear}
+  \leanok
+  Let \(U\) be an affine open of a scheme \(X\), let \(F\) be a sheaf of \(k\)-modules with
+  a quasi-coherence packaging on \(U\), and let \(g \in \Gamma(X, U)\) act invertibly on
+  \(F(U \cap D(g))\) (for the module structure of \ref{def:qcohOn_module}). Then the
+  restriction map \(F(U) \to F(U \cap D(g))\) exhibits \(F(U \cap D(g))\) as the
+  localisation of the \(\Gamma(X, U)\)-module \(F(U)\) at the multiplicative set
+  \(S = \{1, g, g^2, \dots\}\) of powers of \(g\); that is:
+  \begin{enumerate}
+    \item every element of \(S\) acts invertibly on \(F(U \cap D(g))\);
+    \item every \(c \in F(U \cap D(g))\) is of the form \(g^{-N} \cdot (e|_{U \cap D(g)})\)
+      for some \(N \ge 0\) and \(e \in F(U)\);
+    \item any two sections of \(F(U)\) with equal restriction to \(U \cap D(g)\) differ by
+      an element killed by a power of \(g\).
+  \end{enumerate}
+  These three properties characterise the localisation map \(M \to S^{-1}M\) up to unique
+  isomorphism under \(F(U)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Each axiom is the term-for-term image of one piece of the packaging data. (1) Powers of
+  an invertibly-acting element act invertibly. (2) Denominator clearing on the affine open
+  \(U\) itself produces, for \(c \in F(U \cap D(g))\), an exponent \(N\) and a section
+  \(e \in F(U)\) with \(e|_{U \cap D(g)} = g^N \cdot c\); acting by the inverse of
+  \(g^N\) gives \(c = g^{-N} \cdot (e|_{U \cap D(g)})\). (3) If
+  \(x_1|_{U \cap D(g)} = x_2|_{U \cap D(g)}\) then \(x_1 - x_2\) restricts to \(0\) on
+  \(U \cap D(g)\), so defect annihilation yields \(M \ge 0\) with
+  \(g^M \cdot (x_1 - x_2) = 0\).
+\end{proof}
+
+\begin{theorem}[Sections over a basic open are the localised sections]
+  \label{thm:qcohOn_isLocalizedModule_moduleKSheaf}
+  \lean{AlgebraicGeometry.Scheme.QcohOn.isLocalizedModule_secResₗ_moduleKSheaf}
+  \uses{thm:qcohOn_isLocalizedModule, thm:moduleKSheaf_qcohOn, def:moduleKSheaf}
+  \leanok
+  Let \(X\) be a scheme over \(\Spec k\), \(U\) an affine open, and \(g \in \Gamma(X, U)\).
+  Then restriction exhibits \(\Gamma(X, U \cap D(g))\) as the localisation of
+  \(\Gamma(X, U)\) at the powers of \(g\) --- the classical
+  \(\Gamma(X, D(g)) = \Gamma(X, U)_g\), with no hypothesis on \(g\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The structure sheaf carries the packaging on \(U\) (\ref{thm:moduleKSheaf_qcohOn}), with
+  the action of \(r \in \Gamma(X, U)\) given by restriction-then-multiplication. The unit
+  hypothesis of \ref{thm:qcohOn_isLocalizedModule} is discharged for free: \(g\) restricts
+  to a unit on \(D(g)\), hence on \(U \cap D(g)\), so multiplication by
+  \(g|_{U \cap D(g)}\) --- which is the packaging action of \(g\) --- is invertible on
+  \(\Gamma(X, U \cap D(g))\). Apply \ref{thm:qcohOn_isLocalizedModule}.
 \end{proof}
 
 \section{The Mayer--Vietoris \((0,1)\)-slice}
@@ -1812,3 +1899,546 @@ abstraction of that monomial bookkeeping.
   genus is therefore a well-defined natural number, attained as the cardinality of any
   basis.
 \end{remark}
+
+\section{The cocycle-glued twisted sheaf on a two-cover}
+\label{sec:twisted_sheaf}
+
+Let \(k\) be a commutative ring and \(X\) a scheme over \(\Spec k\), its structure sheaf
+viewed as a sheaf of \(k\)-modules (\ref{def:moduleKSheaf}). Fix two opens
+\(V_0, V_1 \subseteq X\) and a \emph{unit cocycle}: an invertible section
+\(g \in \Gamma(X, V_0 \cap V_1)^{\times}\). (On a two-chart cover a \v{C}ech
+\(1\)-cocycle has a single component and the cocycle condition on triple overlaps is
+vacuous.) This section glues from \(g\) a sheaf \(F_g\) of \(k\)-modules --- for
+\(V_0 \cup V_1 = X\), the line bundle with transition function \(g\), trivialised on each
+chart --- and computes its degree-one cohomology as a two-cover cokernel, by transporting
+the quasi-coherence packaging of Section~\ref{sec:qcoh_vanishing} through the chart
+trivialisations.
+
+\begin{definition}[Transport of the packaging along a sections-level trivialisation]
+  \label{def:qcohOn_transport}
+  \lean{AlgebraicGeometry.Scheme.QcohOn.ofSectionsEquiv}
+  \uses{def:qcohOn}
+  \leanok
+  Let \(F\) and \(G\) be sheaves of \(k\)-modules on the small Zariski site of \(X\), let
+  \(U\) be an open, and suppose given \(k\)-linear equivalences
+  \(e_W : F(W) \cong G(W)\) for every open \(W \le U\), commuting with section
+  restriction. If \(G\) carries a quasi-coherence packaging on \(U\)
+  (\ref{def:qcohOn}), then so does \(F\), with the conjugated action
+  \(r \cdot m := e_W^{-1}\bigl(r \cdot e_W(m)\bigr)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  Each (P1) law for \(F\) follows by conjugating the corresponding law for \(G\) through
+  the equivalences, and naturality under restriction combines the (P1) naturality for
+  \(G\) with the compatibility of \(e\) with restriction. For (P2): given
+  \(c \in F(V \cap D(g))\) on an affine \(V \le U\), denominator clearing for \(G\)
+  applied to \(e(c)\) produces \(N\) and \(e' \in G(V)\) with
+  \(e'|_{V \cap D(g)} = g^N \cdot e(c)\); then \(e_V^{-1}(e')\) clears the denominator
+  for \(c\), since \(e\) commutes with restriction and the action is conjugated. Defect
+  annihilation transports the same way.
+\end{proof}
+
+\begin{definition}[Twisted sections of a unit cocycle]
+  \label{def:twistSections}
+  \lean{AlgebraicGeometry.twistDefect, AlgebraicGeometry.twistSubmodule}
+  \uses{def:moduleKSheaf}
+  \leanok
+  For an open \(W \subseteq X\), the \emph{defect map} of the cocycle \(g\) over \(W\) is
+  the \(k\)-linear map
+  \[
+    \Gamma(X, W \cap V_0) \times \Gamma(X, W \cap V_1) \longrightarrow
+      \Gamma(X, W \cap V_0 \cap V_1), \qquad
+    (s_0, s_1) \longmapsto s_0| - g \cdot s_1|,
+  \]
+  where both restrictions are to \(W \cap V_0 \cap V_1\) and \(g\) acts through its
+  restriction there. The module of \emph{twisted sections} \(F_g(W)\) is the kernel of
+  the defect map: the pairs \((s_0, s_1)\) that match through \(g\) on the overlap.
+\end{definition}
+
+\begin{lemma}[Twisted sections form a presheaf]
+  \label{lem:twistSections_presheaf}
+  \lean{AlgebraicGeometry.twistRes, AlgebraicGeometry.twistSubmodule_res,
+    AlgebraicGeometry.twistPresheaf}
+  \uses{def:twistSections}
+  \leanok
+  For \(W' \le W\), componentwise restriction carries \(F_g(W)\) into \(F_g(W')\), and
+  the resulting \(k\)-linear maps are functorial in the inclusion; so \(W \mapsto F_g(W)\)
+  is a presheaf of \(k\)-modules.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Restrict the matching identity \(s_0| = g \cdot s_1|\) from \(W \cap V_0 \cap V_1\) to
+  \(W' \cap V_0 \cap V_1\): restriction of the structure sheaf is a ring homomorphism
+  commuting with further restriction, so the restricted pair again matches.
+  Functoriality is functoriality of restriction in each component.
+\end{proof}
+
+\begin{theorem}[The twisted sheaf]
+  \label{thm:twistSheaf}
+  \lean{AlgebraicGeometry.isSheaf_twistPresheaf, AlgebraicGeometry.twistSheaf}
+  \uses{lem:twistSections_presheaf}
+  \leanok
+  The presheaf \(F_g\) of twisted sections is a sheaf of \(k\)-modules on the small
+  Zariski site of \(X\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Let \(\{U_i\}\) be an open cover of \(W\) and \((s_0^i, s_1^i) \in F_g(U_i)\) sections
+  agreeing on overlaps. The first components are sections of the structure sheaf over the
+  cover \(\{U_i \cap V_0\}\) of \(W \cap V_0\), compatible on its overlaps; by the sheaf
+  property of the structure sheaf they glue to a unique \(t_0 \in \Gamma(X, W \cap V_0)\),
+  and likewise the second components glue to a unique \(t_1 \in \Gamma(X, W \cap V_1)\).
+  The matching \(t_0| = g \cdot t_1|\) on \(W \cap V_0 \cap V_1\) may be checked on the
+  cover \(\{U_i \cap V_0 \cap V_1\}\), where it restricts to the matching of
+  \((s_0^i, s_1^i)\); by separation of the structure sheaf it holds on the union. So
+  \((t_0, t_1) \in F_g(W)\) restricts to every \((s_0^i, s_1^i)\), and it is the unique
+  such element because each of its components is determined by separation.
+\end{proof}
+
+\begin{definition}[Chart trivialisations of the twisted sheaf]
+  \label{def:twistTriv}
+  \lean{AlgebraicGeometry.twistTriv₀, AlgebraicGeometry.twistTriv₁}
+  \uses{def:twistSections}
+  \leanok
+  Let \(W \le V_0\) (so \(W \cap V_0 = W\) and \(W \cap V_0 \cap V_1 = W \cap V_1\)).
+  Projection to the first component is a \(k\)-linear equivalence
+  \[
+    \mathrm{triv}_0 : F_g(W) \;\cong\; \Gamma(X, W), \qquad (s_0, s_1) \mapsto s_0,
+  \]
+  with inverse \(s \mapsto (s,\ g^{-1} \cdot s|_{W \cap V_1})\). Symmetrically, for
+  \(W \le V_1\), projection to the second component is a \(k\)-linear equivalence
+  \(\mathrm{triv}_1 : F_g(W) \cong \Gamma(X, W)\) with inverse
+  \(s \mapsto (g \cdot s|_{W \cap V_0},\ s)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  For \(W \le V_0\) the matching relation of a pair \((s_0, s_1) \in F_g(W)\) reads
+  \(s_0| = g \cdot s_1\) on \(W \cap V_1\), i.e.\ \(s_1 = g^{-1} \cdot s_0|\): the second
+  component is rebuilt from the first, so projection and the displayed inverse are
+  mutually inverse; the pair \((s, g^{-1} \cdot s|)\) matches by construction. Both maps
+  are \(k\)-linear, multiplication by the fixed sections \(g^{\pm 1}\) being
+  \(k\)-linear. The second chart is symmetric.
+\end{proof}
+
+\begin{lemma}[The trivialisations commute with restriction]
+  \label{lem:twistTriv_res}
+  \lean{AlgebraicGeometry.twistTriv₀_res, AlgebraicGeometry.twistTriv₁_res}
+  \uses{def:twistTriv, lem:twistSections_presheaf}
+  \leanok
+  For \(W' \le W \le V_0\), trivialising after restricting equals restricting after
+  trivialising: \(\mathrm{triv}_0(p|_{W'}) = (\mathrm{triv}_0\, p)|_{W'}\); likewise on
+  the second chart.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Both sides are the first (resp.\ second) component of \(p\) restricted to \(W'\);
+  componentwise restriction is functorial.
+\end{proof}
+
+\begin{theorem}[The twisted sheaf is quasi-coherently packaged on each chart]
+  \label{thm:twistSheaf_qcohOn}
+  \lean{AlgebraicGeometry.twistSheaf.instQcohOn₀, AlgebraicGeometry.twistSheaf.instQcohOn₁}
+  \uses{thm:twistSheaf, def:qcohOn_transport, def:twistTriv, lem:twistTriv_res,
+    thm:moduleKSheaf_qcohOn}
+  \leanok
+  The twisted sheaf \(F_g\) carries a quasi-coherence packaging on \(V_0\) and on
+  \(V_1\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The chart trivialisations give \(k\)-linear equivalences
+  \(F_g(W) \cong \Gamma(X, W)\) for every \(W \le V_0\) (resp.\ \(W \le V_1\)),
+  compatible with restriction (\ref{lem:twistTriv_res}); the structure sheaf is packaged
+  on every open (\ref{thm:moduleKSheaf_qcohOn}); transport the packaging along the
+  trivialisation (\ref{def:qcohOn_transport}).
+\end{proof}
+
+\begin{theorem}[Twisted affine vanishing]
+  \label{thm:twistSheaf_affine_vanishing}
+  \lean{AlgebraicGeometry.subsingleton_hModule'_twistSheaf_one₀,
+    AlgebraicGeometry.subsingleton_hModule'_twistSheaf_one₁}
+  \uses{def:HModule', thm:twistSheaf_qcohOn, thm:hModule1_vanishing_qcoh}
+  \leanok
+  If \(V_0\) (resp.\ \(V_1\)) is an affine open of \(X\), then
+  \(H'^1(V_0, F_g) = 0\) (resp.\ \(H'^1(V_1, F_g) = 0\)).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The twisted affine vanishing theorem \ref{thm:hModule1_vanishing_qcoh}, applied to the
+  packaging of \ref{thm:twistSheaf_qcohOn}.
+\end{proof}
+
+\begin{definition}[The two-cover \(H^1\) carrier of the twisted sheaf]
+  \label{def:twistTwoCoverH1}
+  \lean{AlgebraicGeometry.twistTwoCoverH1}
+  \uses{thm:twistSheaf, def:twoCoverSquare, thm:twistSheaf_affine_vanishing,
+    thm:twoCoverH1LinearEquiv}
+  \leanok
+  Let \(V_0, V_1\) be affine opens with \(V_0 \cup V_1 = X\). Then the degree-one
+  cohomology of the twisted sheaf is the two-cover cokernel of twisted sections: a
+  \(k\)-linear isomorphism
+  \[
+    H^1(X, F_g) \;\cong\;
+      F_g(V_0 \cap V_1) \big/ \mathrm{range}\bigl((p_0, p_1) \mapsto
+        p_0|_{V_0 \cap V_1} - p_1|_{V_0 \cap V_1}\bigr),
+  \]
+  the restriction-difference map being that of the two-cover square
+  (\ref{def:twoCoverSquare}) with coefficients in \(F_g\). (The overlap sections
+  \(F_g(V_0 \cap V_1)\) are further identified with \(\Gamma(X, V_0 \cap V_1)\) by the
+  chart trivialisation at \(V_0 \cap V_1 \le V_0\), \ref{def:twistTriv}.)
+\end{definition}
+\begin{proof}
+  \leanok
+  The two charts are affine, so \(H'^1(V_i, F_g) = 0\)
+  (\ref{thm:twistSheaf_affine_vanishing}); apply the two-cover \(H^1\) computation with
+  general coefficients (\ref{thm:twoCoverH1LinearEquiv}) to \(F = F_g\).
+\end{proof}
+
+\begin{definition}[The relative twisted sheaf]
+  \label{def:relTwistSheaf}
+  \lean{AlgebraicGeometry.relUnitCocycle, AlgebraicGeometry.relTwistSheaf}
+  \uses{def:relCurve, def:relCover, lem:relCover_inf, def:twistSections, thm:twistSheaf}
+  \leanok
+  Let \(k\) be a field, \(C \in \Over(\Spec k)\), \(R\) a commutative \(k\)-algebra, and
+  \(D = (V_0, V_1)\) an affine two-chart cover of \(C\). A unit cocycle
+  \(g_k \in \Gamma(C, V_0 \cap V_1)^{\times}\) pulls back along the first projection to a
+  unit cocycle on the base-changed cover of the relative curve:
+  \(\mathrm{pr}_1^{\sharp}(g_k) \in
+  \Gamma\bigl(C_R,\ \mathrm{pr}_1^{-1}V_0 \cap \mathrm{pr}_1^{-1}V_1\bigr)^{\times}\)
+  (pullback of sections is a ring homomorphism, so it preserves units; the overlap of the
+  base-changed charts is the preimage of \(V_0 \cap V_1\) by \ref{lem:relCover_inf}). The
+  \emph{relative twisted sheaf} of a unit cocycle \(g\) on the base-changed cover is the
+  twisted sheaf \(F_g\) on \(C_R\), a sheaf of \(R\)-modules.
+\end{definition}
+
+\begin{definition}[The relative twisted \(H^1\) carrier]
+  \label{def:relTwistTwoCoverH1}
+  \lean{AlgebraicGeometry.relTwistTwoCoverH1}
+  \uses{def:relTwistSheaf, def:twistTwoCoverH1, lem:relCover_charts}
+  \leanok
+  In the setting of \ref{def:relTwistSheaf}, the degree-one cohomology of the relative
+  twisted sheaf is the explicit two-cover cokernel of \(R\)-modules: an \(R\)-linear
+  isomorphism
+  \[
+    H^1(C_R, F_g) \;\cong\;
+      F_g\bigl(\mathrm{pr}_1^{-1}V_0 \cap \mathrm{pr}_1^{-1}V_1\bigr) \big/
+        \mathrm{range}(\mathrm{diff}) .
+  \]
+\end{definition}
+\begin{proof}
+  \leanok
+  The base-changed charts are affine and cover \(C_R\) (\ref{lem:relCover_charts});
+  apply \ref{def:twistTwoCoverH1} over the base ring \(R\).
+\end{proof}
+
+\section{Base change of the two-term complex and of \(H^1\) on the relative curve}
+\label{sec:relative_h1_base_change}
+
+Fix a field \(k\), an object \(C \in \Over(\Spec k)\), and a homomorphism \(R \to R'\) of
+commutative \(k\)-algebras --- a change of affine test rings. This section identifies the
+sections of the relative curve as the free base change of the sections of \(C\), builds
+the comparison morphism \(C_{R'} \to C_R\), base-changes the two-term two-cover complex
+of Section~\ref{sec:mv-in-text} along \(R \to R'\) termwise, and concludes that the
+degree-one cohomology of the structure sheaf of the relative curve commutes with
+\emph{every} change of test ring --- no flatness of \(R \to R'\) is needed, because the
+two-cover \(H^1\) is a cokernel and cokernels commute with arbitrary base change
+(Chapter~\ref{chap:Algebra}).
+
+\begin{theorem}[Sections of the relative curve are the base change of sections]
+  \label{thm:sectionsBaseChange}
+  \lean{AlgebraicGeometry.Over.sectionsBaseChange, AlgebraicGeometry.Over.sectionsBaseChange_tmul}
+  \uses{def:relCurve}
+  \leanok
+  Let \(k\) be a field, \(C \in \Over(\Spec k)\), \(R\) a commutative \(k\)-algebra, and
+  \(V \subseteq C\) a quasi-compact quasi-separated open (for instance any affine open,
+  or a finite intersection or union of affine opens of a quasi-separated scheme). Write
+  \(V_R := \mathrm{pr}_1^{-1} V \subseteq C_R\). Then there is a ring isomorphism
+  \[
+    \Gamma(C, V) \otimes_k R \;\cong\; \Gamma(C_R, V_R), \qquad
+    s \otimes a \longmapsto \mathrm{pr}_1^{\sharp}(s) \cdot \mathrm{pr}_2^{\sharp}(a),
+  \]
+  where \(\mathrm{pr}_1^{\sharp}\) is pullback of sections along the first projection,
+  and \(\mathrm{pr}_2^{\sharp}(a)\) is the pullback along the second projection of the
+  global section \(a \in R = \Gamma(\Spec R, \top)\). (The \(k\)-algebra structure on
+  \(\Gamma(C, V)\) is restriction of scalars along the structure morphism.)
+\end{theorem}
+\begin{proof}
+  \leanok
+  The displayed assignment is a well-defined \(k\)-algebra map \(\chi_V\) out of the
+  tensor product: both pullbacks are \(k\)-algebra homomorphisms into the commutative
+  ring \(\Gamma(C_R, V_R)\), and the tensor product of commutative \(k\)-algebras is
+  their pushout.
+
+  \emph{Step 1: \(V\) affine.} The open \(V_R = \mathrm{pr}_1^{-1}(V)\) of the fibre
+  product \(C_R = C \times_{\Spec k} \Spec R\) is the fibre product
+  \(V \times_{\Spec k} \Spec R\) of the open subscheme \(V\), a fibre product of affine
+  schemes, hence the affine scheme \(\Spec(\Gamma(V) \otimes_k R)\): \(\Spec\) converts
+  the pushout of commutative rings into the fibre product of affine schemes. Under this
+  identification \(\chi_V\) is the canonical isomorphism.
+
+  \emph{Step 2: \(V\) quasi-compact quasi-separated.} Choose a finite affine cover
+  \(V = U_1 \cup \dots \cup U_n\) (quasi-compactness); each intersection
+  \(U_i \cap U_j\) is quasi-compact (quasi-separatedness), so it in turn has a finite
+  affine cover \(\{W^{ij}_l\}\). The sheaf axiom writes \(\Gamma(C, V)\) as the
+  equaliser of the two restriction maps between the finite products
+  \(\prod_i \Gamma(U_i)\) and \(\prod_{i,j,l} \Gamma(W^{ij}_l)\). The preimages
+  \(\mathrm{pr}_1^{-1} U_i\) form an affine cover of \(V_R\) (Step 1) whose pairwise
+  intersections are covered by the affine \(\mathrm{pr}_1^{-1} W^{ij}_l\) (preimage
+  commutes with unions and intersections), so \(\Gamma(C_R, V_R)\) is the equaliser of
+  the corresponding restriction maps for the preimage cover. Since \(R\) is a free,
+  hence flat, \(k\)-module (\(k\) is a field), the functor \(- \otimes_k R\) is exact
+  and commutes with finite products, so it carries the first equaliser diagram to an
+  equaliser diagram. The maps \(\chi\) on the terms commute with the two restriction
+  maps (pullback commutes with restriction) and are isomorphisms on the product terms by
+  Step 1; hence the induced map on equalisers, which is \(\chi_V\), is an isomorphism.
+\end{proof}
+
+\begin{definition}[Relative sections as a free \(R\)-module base change]
+  \label{def:relSectionsBaseChange}
+  \lean{AlgebraicGeometry.relPullbackSection, AlgebraicGeometry.relSectionsBaseChange,
+    AlgebraicGeometry.relSectionsBaseChange_tmul,
+    AlgebraicGeometry.Over.sectionsBaseChange_one_tmul_overAlgebraMap}
+  \uses{thm:sectionsBaseChange}
+  \leanok
+  In the setting of \ref{thm:sectionsBaseChange}, endow \(\Gamma(C_R, V_R)\) with the
+  \(R\)-module structure \(r \cdot y := \mathrm{pr}_2^{\sharp}(r) \cdot y\) given by
+  pullback along the structure morphism \(\mathrm{pr}_2 : C_R \to \Spec R\). The
+  isomorphism of \ref{thm:sectionsBaseChange}, read with the tensor factors flipped, is
+  an \(R\)-linear equivalence
+  \[
+    R \otimes_k \Gamma(C, V) \;\cong\; \Gamma(C_R, V_R), \qquad
+    a \otimes s \longmapsto \mathrm{pr}_2^{\sharp}(a) \cdot \mathrm{pr}_1^{\sharp}(s),
+  \]
+  with \(R\) acting on the left tensor factor; in particular
+  \(1 \otimes r \mapsto \mathrm{pr}_2^{\sharp}(r)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  Only \(R\)-linearity needs comment: on a pure tensor,
+  \(r \cdot (a \otimes s) = (ra) \otimes s\) maps to
+  \(\mathrm{pr}_2^{\sharp}(ra) \cdot \mathrm{pr}_1^{\sharp}(s) =
+  \mathrm{pr}_2^{\sharp}(r) \cdot \bigl(\mathrm{pr}_2^{\sharp}(a) \cdot
+  \mathrm{pr}_1^{\sharp}(s)\bigr)\), because \(\mathrm{pr}_2^{\sharp}\) is a ring
+  homomorphism --- and the right-hand side is \(r\) acting on the image.
+\end{proof}
+
+\begin{definition}[The comparison morphism of relative curves]
+  \label{def:relCurveMap}
+  \lean{AlgebraicGeometry.overSpecMap, AlgebraicGeometry.relCurveMap}
+  \uses{def:relCurve}
+  \leanok
+  Let \(\varphi : R \to R'\) be a homomorphism of commutative \(k\)-algebras. Applying
+  \(\Spec\) gives a morphism \(\Spec R' \to \Spec R\) over \(\Spec k\), and the induced
+  morphism of fibre products
+  \[
+    \rho \;=\; \mathrm{id}_C \times \Spec(\varphi) \;:\; C_{R'} \longrightarrow C_R
+  \]
+  is the \emph{comparison morphism} between the relative curves.
+\end{definition}
+
+\begin{lemma}[Projection identities of the comparison morphism]
+  \label{lem:relCurveMap_proj}
+  \lean{AlgebraicGeometry.relCurveMap_fst, AlgebraicGeometry.relCurveMap_snd,
+    AlgebraicGeometry.relCurveMap_preimage}
+  \uses{def:relCurveMap}
+  \leanok
+  The comparison morphism satisfies
+  \(\mathrm{pr}_1 \circ \rho = \mathrm{pr}_1\) and
+  \(\mathrm{pr}_2 \circ \rho = \Spec(\varphi) \circ \mathrm{pr}_2\); consequently
+  \(\rho^{-1}(V_R) = V_{R'}\) for every open \(V \subseteq C\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The first two identities are the compatibility of the induced morphism of fibre
+  products with the two projections; the third follows from the first by taking
+  preimages of \(V\).
+\end{proof}
+
+\begin{definition}[The sections comparison map]
+  \label{def:relSectionsMap}
+  \lean{AlgebraicGeometry.relSectionsMap}
+  \uses{def:relCurveMap, lem:relCurveMap_proj}
+  \leanok
+  For \(V \subseteq C\) open, pullback of sections along \(\rho\) (allowed since
+  \(\rho^{-1}(V_R) = V_{R'}\), \ref{lem:relCurveMap_proj}) is a ring homomorphism
+  \[
+    \rho^{\sharp} \;:\; \Gamma(C_R, V_R) \longrightarrow \Gamma(C_{R'}, V_{R'}) .
+  \]
+\end{definition}
+
+\begin{lemma}[Governing identities of the sections comparison map]
+  \label{lem:relSectionsMap_props}
+  \lean{AlgebraicGeometry.relSectionsMap_pullback,
+    AlgebraicGeometry.relSectionsMap_overAlgebraMap,
+    AlgebraicGeometry.relSectionsMap_smul, AlgebraicGeometry.relSectionsMap_resHom}
+  \uses{def:relSectionsMap, lem:relCurveMap_proj, def:relSectionsBaseChange}
+  \leanok
+  The sections comparison map \(\rho^{\sharp}\):
+  \begin{enumerate}
+    \item commutes with the curve pullbacks:
+      \(\rho^{\sharp}(\mathrm{pr}_1^{\sharp} s) = \mathrm{pr}_1^{\sharp} s\) for
+      \(s \in \Gamma(C, V)\);
+    \item intertwines the structure pullbacks:
+      \(\rho^{\sharp}(\mathrm{pr}_2^{\sharp} r) = \mathrm{pr}_2^{\sharp}(\varphi(r))\)
+      for \(r \in R\);
+    \item hence is semilinear along \(\varphi\):
+      \(\rho^{\sharp}(r \cdot y) = \varphi(r) \cdot \rho^{\sharp}(y)\) for the module
+      structures of \ref{def:relSectionsBaseChange};
+    \item commutes with restriction along \(W \le V\).
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  \leanok
+  (1) is pullback along \(\mathrm{pr}_1 \circ \rho = \mathrm{pr}_1\)
+  (\ref{lem:relCurveMap_proj}); (2) is pullback along
+  \(\mathrm{pr}_2 \circ \rho = \Spec(\varphi) \circ \mathrm{pr}_2\), and the pullback of
+  the global section \(r\) along \(\Spec(\varphi)\) is \(\varphi(r)\); (3) is (2)
+  together with multiplicativity of \(\rho^{\sharp}\); (4) is functoriality of pullback
+  of sections with respect to inclusions of opens.
+\end{proof}
+
+\begin{theorem}[CBC-1: termwise base change of relative sections]
+  \label{thm:relTermBaseChange}
+  \lean{AlgebraicGeometry.relTermBaseChange, AlgebraicGeometry.relTermBaseChange_tmul}
+  \uses{def:relSectionsBaseChange, lem:relSectionsMap_props}
+  \leanok
+  Let \(R \to R'\) be a homomorphism of test rings and \(V \subseteq C\) a quasi-compact
+  quasi-separated open. There is an \(R'\)-linear equivalence
+  \[
+    R' \otimes_R \Gamma(C_R, V_R) \;\cong\; \Gamma(C_{R'}, V_{R'}), \qquad
+    r' \otimes y \longmapsto r' \cdot \rho^{\sharp}(y) .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Compose the free identifications of \ref{def:relSectionsBaseChange} over \(R\) and
+  over \(R'\) with the tensor cancellation
+  \(R' \otimes_R (R \otimes_k M) \cong R' \otimes_k M\):
+  \[
+    R' \otimes_R \Gamma(C_R, V_R) \;\cong\; R' \otimes_R \bigl(R \otimes_k \Gamma(C, V)\bigr)
+      \;\cong\; R' \otimes_k \Gamma(C, V) \;\cong\; \Gamma(C_{R'}, V_{R'}) .
+  \]
+  For the formula, both sides are additive in \(y\) and \(R'\)-linear in \(r'\), so it
+  suffices to treat \(y = \mathrm{pr}_2^{\sharp}(a) \cdot \mathrm{pr}_1^{\sharp}(s)\)
+  (the images of pure tensors, which span). Chasing \(r' \otimes y\) through the
+  composite gives \(\mathrm{pr}_2^{\sharp}\bigl(r' \varphi(a)\bigr) \cdot
+  \mathrm{pr}_1^{\sharp}(s) = r' \cdot \bigl(\mathrm{pr}_2^{\sharp}(\varphi(a)) \cdot
+  \mathrm{pr}_1^{\sharp}(s)\bigr)\), which by (1) and (2) of
+  \ref{lem:relSectionsMap_props} is \(r' \cdot \rho^{\sharp}(y)\).
+\end{proof}
+
+\begin{lemma}[CBC-1: the two-cover complex base-changes]
+  \label{lem:relDiffBaseChange}
+  \lean{AlgebraicGeometry.relDiffDomBaseChange, AlgebraicGeometry.relDiffCodBaseChange,
+    AlgebraicGeometry.relDiffBaseChange, AlgebraicGeometry.relDiffBaseChange_range}
+  \uses{thm:relTermBaseChange, def:TwoCover_diff, def:relCover, lem:relCover_charts,
+    lem:relCover_inf, lem:relSectionsMap_props}
+  \leanok
+  Let \(D = (V_0, V_1)\) be an affine two-chart cover of \(C\), and write
+  \(\mathrm{diff}_R\) for the two-cover restriction-difference map
+  (\ref{def:TwoCover_diff}) of \(C_R\) with its base-changed cover
+  (\ref{def:relCover}). Under the term equivalences of \ref{thm:relTermBaseChange} ---
+  the product of the two chart equivalences on the domain, the overlap equivalence on the
+  codomain --- the base change \(\mathrm{diff}_R \otimes_R R'\) corresponds to
+  \(\mathrm{diff}_{R'}\): the evident square commutes. In particular the overlap term
+  equivalence carries \(\mathrm{range}(\mathrm{diff}_R \otimes_R R')\) onto
+  \(\mathrm{range}(\mathrm{diff}_{R'})\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Both composites are additive, so it suffices to compare them on
+  \(r' \otimes (s_0, s_1)\). Along the top and right, the result is
+  \(r' \cdot \rho^{\sharp}\bigl(s_0|_{\cap} - s_1|_{\cap}\bigr)\); along the left and
+  bottom, it is \(\mathrm{diff}_{R'}\bigl(r' \cdot \rho^{\sharp} s_0,\ r' \cdot
+  \rho^{\sharp} s_1\bigr) = \bigl(r' \cdot \rho^{\sharp} s_0\bigr)|_{\cap} -
+  \bigl(r' \cdot \rho^{\sharp} s_1\bigr)|_{\cap}\). These agree because
+  \(\rho^{\sharp}\) commutes with restriction (\ref{lem:relSectionsMap_props}(4)) and
+  the \(R'\)-action commutes with restriction (the structure pullback restricts to the
+  structure pullback). The range statement follows because the domain equivalence is
+  surjective.
+\end{proof}
+
+\begin{theorem}[CBC-2, cokernel form: the two-cover \(H^1\) carrier base-changes]
+  \label{thm:relH1CokBaseChange}
+  \lean{AlgebraicGeometry.relH1CokBaseChange, AlgebraicGeometry.relH1CokBaseChange_tmul_mk}
+  \uses{thm:quot_range_baseChange, lem:relDiffBaseChange, def:TwoCover_H1Cok}
+  \leanok
+  In the setting of \ref{lem:relDiffBaseChange} there is an \(R'\)-linear equivalence
+  \[
+    R' \otimes_R \Bigl(\Gamma\bigl(C_R, \cap\bigr)\big/\mathrm{range}(\mathrm{diff}_R)\Bigr)
+    \;\cong\;
+    \Gamma\bigl(C_{R'}, \cap\bigr)\big/\mathrm{range}(\mathrm{diff}_{R'}),
+    \qquad r' \otimes [s] \longmapsto [\,r' \cdot \rho^{\sharp} s\,],
+  \]
+  where \(\cap\) denotes the overlap of the respective base-changed covers
+  (\ref{def:TwoCover_H1Cok}). No hypothesis on \(R \to R'\) is needed.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Base change commutes with cokernels (\ref{thm:quot_range_baseChange}, with
+  \(N = \Gamma(C_R, \cap)\), \(f = \mathrm{diff}_R\), \(S = R'\)):
+  \(R' \otimes_R \bigl(N/\mathrm{range}\,f\bigr) \cong (R' \otimes_R N)/
+  \mathrm{range}(f \otimes_R R')\). Then pass along the overlap term equivalence, which
+  identifies \(\mathrm{range}(\mathrm{diff}_R \otimes_R R')\) with
+  \(\mathrm{range}(\mathrm{diff}_{R'})\) (\ref{lem:relDiffBaseChange}), hence descends to
+  the quotients. The composite sends \(r' \otimes [s]\) to
+  \([\,r' \cdot \rho^{\sharp} s\,]\) by \ref{thm:relTermBaseChange}.
+\end{proof}
+
+\begin{theorem}[CBC-2: \(H^1\) of the relative curve commutes with change of the test ring]
+  \label{thm:relH1BaseChange}
+  \lean{AlgebraicGeometry.relH1BaseChange}
+  \uses{def:relTwoCoverH1, thm:relH1CokBaseChange}
+  \leanok
+  \source{kleiman-picard}
+  For every homomorphism \(R \to R'\) of commutative \(k\)-algebras there is an
+  \(R'\)-linear equivalence
+  \[
+    R' \otimes_R H^1\bigl(C_R, \struct{C_R/R}\bigr) \;\cong\;
+      H^1\bigl(C_{R'}, \struct{C_{R'}/R'}\bigr) :
+  \]
+  degree-one cohomology of the structure sheaf of the relative curve commutes with
+  \emph{every} base change of the test ring. No flatness of \(R \to R'\) is required:
+  the two-cover \(H^1\) is the cokernel of a two-term complex whose terms base-change
+  freely, and cokernels commute with arbitrary base change.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Conjugate the cokernel equivalence of \ref{thm:relH1CokBaseChange} by the relative
+  two-cover identifications \(H^1(C_R, \struct{C_R/R}) \cong
+  \Gamma(C_R, \cap)/\mathrm{range}(\mathrm{diff}_R)\) of \ref{def:relTwoCoverH1}, over
+  \(R\) and over \(R'\).
+\end{proof}
+
+\begin{definition}[Base change of the unit cocycle]
+  \label{def:relCocycleBaseChange}
+  \lean{AlgebraicGeometry.relCocycleBaseChange}
+  \uses{def:relTwistSheaf, def:relSectionsMap, lem:relCurveMap_proj}
+  \leanok
+  For a unit cocycle \(g\) on the base-changed cover of \(C_R\), the image
+  \(\rho^{\sharp}(g)\) is a unit cocycle on the base-changed cover of \(C_{R'}\): the
+  ring homomorphism \(\rho^{\sharp}\) preserves units, and the overlaps correspond under
+  \(\rho\) (\ref{lem:relCurveMap_proj}).
+\end{definition}
+
+\begin{definition}[CBC-1 for the twisted sheaf: term equivalences]
+  \label{def:relTwistTermBaseChange}
+  \lean{AlgebraicGeometry.relTwistTermBaseChange₀, AlgebraicGeometry.relTwistTermBaseChange₁,
+    AlgebraicGeometry.relTwistOverlapBaseChange}
+  \uses{def:relTwistSheaf, def:relCocycleBaseChange, def:twistTriv, thm:relTermBaseChange,
+    lem:relDiffBaseChange}
+  \leanok
+  Let \(g\) be a unit cocycle on the base-changed cover of \(C_R\) and
+  \(g' = \rho^{\sharp}(g)\) its base change (\ref{def:relCocycleBaseChange}). For each
+  term of the twisted two-cover complex --- the two charts and their overlap --- the
+  composite of the chart trivialisation over \(R\) (\ref{def:twistTriv}), the
+  structure-sheaf term base change of \ref{thm:relTermBaseChange} (at the overlap: the
+  codomain equivalence of \ref{lem:relDiffBaseChange}), and the inverse chart
+  trivialisation over \(R'\) is an \(R'\)-linear equivalence
+  \[
+    R' \otimes_R F_g(\text{term over } R) \;\cong\; F_{g'}(\text{term over } R') .
+  \]
+  On the overlap, the first-chart trivialisation (at
+  \(\mathrm{pr}_1^{-1}V_0 \cap \mathrm{pr}_1^{-1}V_1 \le \mathrm{pr}_1^{-1}V_0\)) is
+  used.
+\end{definition}

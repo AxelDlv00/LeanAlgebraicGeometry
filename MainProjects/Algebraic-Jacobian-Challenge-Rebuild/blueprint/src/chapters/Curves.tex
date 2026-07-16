@@ -1704,14 +1704,14 @@ height-one specialization order of both spaces.
   followed by restriction of germs to \(y\) is the germ at \(y\).
 \end{proof}
 
-\begin{theorem}[A smooth projective curve maps locally quasi-finitely to the line]
-  \label{thm:exists_lqf_toP1}
-  \lean{AlgebraicGeometry.exists_locallyQuasiFinite_toP1}
+\begin{theorem}[A smooth projective curve maps locally quasi-finitely and dominantly to the line]
+  \label{thm:exists_lqf_dominant_toP1}
+  \lean{AlgebraicGeometry.exists_locallyQuasiFinite_isDominant_toP1}
   \uses{def:P1_structureMap}
   \leanok
   Let \(X\) be an integral scheme, proper and smooth of relative dimension one over the
   field \(k\). Then there is a morphism \(\pi : X \to \PP^1\) over \(k\) which is locally
-  quasi-finite.
+  quasi-finite and dominant.
 \end{theorem}
 \begin{proof}
   \leanok
@@ -1798,6 +1798,25 @@ height-one specialization order of both spaces.
 
   (h) A morphism which is locally of finite type and has finite fibers is locally
   quasi-finite; by (e) and (g), \(\pi\) is locally quasi-finite.
+
+  (i) \emph{\(\pi\) is dominant.} By (f) the image of \(\pi\) contains the generic point
+  of \(\PP^1\), whose closure is all of \(\PP^1\); so the image of \(\pi\) is dense, i.e.\
+  \(\pi\) is dominant.
+\end{proof}
+
+\begin{theorem}[A smooth projective curve maps locally quasi-finitely to the line]
+  \label{thm:exists_lqf_toP1}
+  \lean{AlgebraicGeometry.exists_locallyQuasiFinite_toP1}
+  \uses{def:P1_structureMap}
+  \leanok
+  Let \(X\) be an integral scheme, proper and smooth of relative dimension one over the
+  field \(k\). Then there is a morphism \(\pi : X \to \PP^1\) over \(k\) which is locally
+  quasi-finite.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:exists_lqf_dominant_toP1}
+  The morphism of \ref{thm:exists_lqf_dominant_toP1}, forgetting that it is dominant.
 \end{proof}
 
 \section{A finite morphism to the projective line}
@@ -1865,6 +1884,30 @@ height-one specialization order of both spaces.
   (\ref{prop:curve_integral}). By \ref{thm:exists_lqf_toP1} there is a locally quasi-finite
   morphism \(C \to \PP^1\) over \(k\), and by \ref{lem:exists_finite_of_lqf} it may be
   taken finite.
+\end{proof}
+
+\begin{theorem}[Existence of a finite dominant morphism to the projective line]
+  \label{thm:exists_finite_dominant_toP1}
+  \lean{AlgebraicGeometry.exists_isFinite_isDominant_toP1}
+  \uses{def:P1, def:P1_structureMap}
+  \leanok
+  Let \(C\) be a smooth curve over \(k\) (proper, smooth of relative dimension one,
+  geometrically irreducible). Then there exists a finite morphism \(\pi : C \to \PP^1\)
+  over \(k\) which is moreover \emph{dominant}. The dominance is part of the output of the
+  construction --- the constructed \(\pi\) sends the generic point of \(C\) to the generic
+  point of \(\PP^1\) --- and is not asserted as a formal consequence of finiteness alone.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:relDim_geometrically_reduced, prop:curve_integral, thm:exists_lqf_dominant_toP1,
+    lem:finite_toP1_of_lqf}
+  \(C\) is geometrically reduced over \(k\) (\ref{lem:relDim_geometrically_reduced}), and
+  being also geometrically irreducible, it is an integral scheme
+  (\ref{prop:curve_integral}). By \ref{thm:exists_lqf_dominant_toP1} there is a locally
+  quasi-finite \emph{dominant} morphism \(\pi : C \to \PP^1\) over \(k\), and by
+  \ref{lem:finite_toP1_of_lqf} this same morphism \(\pi\) is finite. Since the finiteness
+  upgrade concerns the very morphism already constructed, its dominance and its
+  compatibility with the structure morphisms persist unchanged.
 \end{proof}
 
 \begin{lemma}[Preimages of the charts are affine]
