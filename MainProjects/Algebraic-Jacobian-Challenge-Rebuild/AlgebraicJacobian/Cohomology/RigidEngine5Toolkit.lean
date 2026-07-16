@@ -3,7 +3,7 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import AlgebraicJacobian.Cohomology.GluedSheafBaseChange
+import AlgebraicJacobian.Cohomology.GluedSheafDatumBaseChange
 import AlgebraicJacobian.Cohomology.DescentSkeleton
 
 /-!
@@ -177,10 +177,10 @@ theorem Scheme.Hom.exists_unit_val_appLE_eq (f : X ⟶ Y) {U : Y.Opens} {U' : X.
   -- the comparison certificate
   have hφs : (f.appLE O O' hleO).hom (Y.resHom hOU σ) =
       X.resHom hO'U' ((f.appLE U U' hle).hom σ) :=
-    f.appLE_resHom hle hOU hleO hO'U' σ
+    (f.appLE_resHom hOU hle hleO hO'U' σ).symm
   have hφu : (f.appLE O O' hleO).hom (Y.resHom hOU u) =
       X.resHom hO'U' ((f.appLE U U' hle).hom u) :=
-    f.appLE_resHom hle hOU hleO hO'U' u
+    (f.appLE_resHom hOU hle hleO hO'U' u).symm
   obtain ⟨t, ht_val, ht_inv⟩ : ∃ t : Γ(X, O')ˣ,
       (t : Γ(X, O')) = (f.appLE O O' hleO).hom ((s : Γ(Y, O))) ∧
       ((t⁻¹ : Γ(X, O')ˣ) : Γ(X, O')) =
@@ -337,6 +337,20 @@ lemma pieces_inf₃_eq_basicOpen_sigma₃At (i j l : D.index) :
     (inf_le_right.trans inf_le_right)
 
 end BasicOpenCoverData
+
+/-! ## Constructor congruence -/
+
+/-- **Constructor congruence for the cocycle datum**: two data with the same cover data
+and pointwise-equal transition units are equal (the cocycle laws are proofs). This is
+the shape of the RE-5 descent certificate after the cover-data components have been
+substituted. -/
+lemma BasicOpenCocycleDatum.ext_units {cov : BasicOpenCoverData C R π}
+    {u₁ u₂ : ∀ i j : cov.index, Γ(relCurve C R, cov.pieces i ⊓ cov.pieces j)ˣ}
+    {c₁ : Scheme.IsGluingCocycle cov.pieces u₁} {c₂ : Scheme.IsGluingCocycle cov.pieces u₂}
+    (h : ∀ i j, u₁ i j = u₂ i j) :
+    (⟨cov, u₁, c₁⟩ : BasicOpenCocycleDatum C R π) = ⟨cov, u₂, c₂⟩ := by
+  obtain rfl : u₁ = u₂ := funext fun i => funext fun j => h i j
+  rfl
 
 end Chart
 
