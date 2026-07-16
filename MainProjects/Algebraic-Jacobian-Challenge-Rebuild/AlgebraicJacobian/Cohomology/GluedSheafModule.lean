@@ -162,6 +162,20 @@ noncomputable def gluedPieceEquiv (hc : Scheme.IsGluingCocycle U g)
     left_inv := (gluedTriv k hc (σ i) (hP i)).left_inv
     right_inv := (gluedTriv k hc (σ i) (hP i)).right_inv }
 
+@[simp]
+lemma gluedPieceEquiv_apply (hc : Scheme.IsGluingCocycle U g)
+    (hP : ∀ i : ι, X.basicOpen (h i) ≤ U (σ i)) (i : ι)
+    (m : ↥(gluedSubmodule k U g (X.basicOpen (h i)))) :
+    gluedPieceEquiv k U g hc hP i m = gluedTriv k hc (σ i) (hP i) m :=
+  rfl
+
+@[simp]
+lemma gluedPieceEquiv_symm_apply (hc : Scheme.IsGluingCocycle U g)
+    (hP : ∀ i : ι, X.basicOpen (h i) ≤ U (σ i)) (i : ι)
+    (t : Γ(X, X.basicOpen (h i))) :
+    (gluedPieceEquiv k U g hc hP i).symm t = (gluedTriv k hc (σ i) (hP i)).symm t :=
+  rfl
+
 /-- **The piece `Aᵢ`-action restricted along `A → Aᵢ` is the chart action**: for
 `r : Γ(X, V)`, the `Aᵢ`-scalar `X.resHom … r` acts on `Mᵢ` as the componentwise chart
 action `gluedQsmul`. -/

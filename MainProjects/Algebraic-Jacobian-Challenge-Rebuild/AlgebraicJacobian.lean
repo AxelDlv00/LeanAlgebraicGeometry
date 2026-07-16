@@ -204,6 +204,7 @@ import AlgebraicJacobian.Cohomology.GluedSheafModule
 import AlgebraicJacobian.Cohomology.GluedSheafEngine
 import AlgebraicJacobian.Cohomology.GluedSheafDatumBaseChange
 import AlgebraicJacobian.Cohomology.GluedSheafClass
+import AlgebraicJacobian.Cohomology.GluedSheafTermBaseChange
 import AlgebraicJacobian.Cohomology.GluedSheafExtraction
 import AlgebraicJacobian.Cohomology.GluedSheafCongr
 import AlgebraicJacobian.Cohomology.GluedSheafFibre
