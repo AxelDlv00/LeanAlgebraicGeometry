@@ -182,6 +182,7 @@ import AlgebraicJacobian.Cohomology.RigidEngineLatticeCoherence
 import AlgebraicJacobian.Cohomology.TransitionSectionsBaseChange
 import AlgebraicJacobian.RiemannRoch.DegreeBaseChange
 import AlgebraicJacobian.RiemannRoch.DegreeBaseFieldInvariance
+import AlgebraicJacobian.RiemannRoch.ThetaDegree
 import AlgebraicJacobian.RiemannRoch.RelPicDegree
 import AlgebraicJacobian.Cohomology.RigidEngine4Assembly
 import AlgebraicJacobian.Cohomology.RigidEngine4AEval
