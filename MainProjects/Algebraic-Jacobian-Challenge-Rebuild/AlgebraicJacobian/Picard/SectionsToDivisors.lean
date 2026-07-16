@@ -210,7 +210,10 @@ attribute [local instance] Scheme.overModule
 
 variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
 variable {B : Type u} [CommRing B] [Algebra k B]
-variable {π : C.left ⟶ P1 k} [IsFinite π]
+
+section AffineHom
+
+variable {π : C.left ⟶ P1 k} [IsAffineHom π]
 variable (D : BasicOpenCocycleDatum C B π)
 
 /-- The `j`-th **component** of a global section of the datum's glued sheaf, as a
@@ -226,6 +229,11 @@ theorem isAffineOpen_pieces (j : D.index) : IsAffineOpen (D.pieces j) := by
   cases j with
   | inl j₀ => exact (relCover_isAffineOpen₀ C B (fiberTwoCover π)).basicOpen (D.h₀ j₀)
   | inr j₁ => exact (relCover_isAffineOpen₁ C B (fiberTwoCover π)).basicOpen (D.h₁ j₁)
+
+end AffineHom
+
+variable {π : C.left ⟶ P1 k} [IsFinite π]
+variable (D : BasicOpenCocycleDatum C B π)
 
 /-- **DAT-A2 on the datum, section-ring form**: a fibrewise-regular component of a
 global section of the DAT-1 glued sheaf is a nonzerodivisor of its piece ring
