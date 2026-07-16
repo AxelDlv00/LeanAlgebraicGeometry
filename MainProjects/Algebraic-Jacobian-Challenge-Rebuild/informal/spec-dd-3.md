@@ -1,12 +1,16 @@
-# DD-3 port spec — the Grassmannian in the small submodule spelling
+# DD-3 port spec — the Grassmannian in the small submodule spelling — FINAL
 
-*2026-07-16, Fable prover-architect. BINDING parent: `informal/dat-d-worksheet.md`
-(§2.2 the D2 spelling + the port table, §5 DD-3, §6 risks 3/6/8, Discipline rule 5).
-Route map (READ-ONLY): `SubProjects/GR-Quot-Closure/AlgebraicJacobian/Picard/
-GrassmannianCells.lean` + `GrassmannianQuot.lean` — port statements and architecture,
-never copy proofs blind, never import. Elaboration probe run this pass
-(scratchpad `ProbeDD3.lean`, `lake env lean` green): every spelling below elaborates
-against the pinned mathlib (v4.31.0, rev `fabf563a`).*
+*2026-07-16, Fable prover-architect; FINALIZED 2026-07-17 by the successor lane after
+the predecessor's quota kill (ledger `8e2c5de6c` preserved this as a draft). BINDING
+parent: `informal/dat-d-worksheet.md` (§2.2 the D2 spelling + the port table, §5 DD-3,
+§6 risks 3/6/8, Discipline rule 5). Route map (READ-ONLY):
+`SubProjects/GR-Quot-Closure/AlgebraicJacobian/Picard/GrassmannianCells.lean` +
+`GrassmannianQuot.lean` — port statements and architecture, never copy proofs blind,
+never import. Elaboration probe run by the draft pass (scratchpad `ProbeDD3.lean`,
+`lake env lean` green); the successor lane RE-VERIFIED every mathlib claim below by
+direct source read against the pinned mathlib (v4.31.0) — see the FINALIZATION
+CORRECTIONS list at the end. The DD-F probe verdict landed GREEN in the meantime
+(`9d0662ebc`): the primary route stands, the consumption map of §1 is unchanged.*
 
 ## 0. THE DECISIVE SEARCH FIND (supersedes half of the planned 3b)
 
@@ -32,8 +36,10 @@ the scheme, representability. That remains this port's work (3a/3d/3e/3c).
 **Consequences.** (i) The D2 carrier is CONSUMED from mathlib, not defined:
 no project-owned subtype, no instance-home question (the two certificate fields are
 `attribute [instance]` in mathlib; `rankAtStalk_eq` bridges to the worksheet's honest
-fibre finrank via `Module.rankAtStalk_eq : rankAtStalk M p = finrank κ(p) (Fiber p M)`
-— probe P5). (ii) 3b shrinks from L to S–M: only the affine-opens VEHICLE at general
+fibre finrank via `Module.rankAtStalk_eq_finrank_tensorProduct :
+rankAtStalk M p = finrank κ(p) (κ(p) ⊗[R] M)` — `FreeLocus.lean:282`, name corrected at
+finalization; the free case `rankAtStalk_eq_finrank_of_free` (`:254`) is the gift that
+certifies the tautological chart point, whose quotient is free of rank `d`). (ii) 3b shrinks from L to S–M: only the affine-opens VEHICLE at general
 tests remains project work. (iii) Orientation: mathlib writes the ambient as
 `R ⊗[k'] H` (`TensorProduct k' R H`, algebra factor LEFT — the only orientation with a
 mathlib `Module R`-instance). The worksheet's `H ⊗ R` is realized as `R ⊗[k'] H`;
@@ -111,10 +117,17 @@ Generic Grassmannian parameters `(d r : ℕ)` (the campaign sets `d := g`,
 - **Glue data** (3a): mathlib `AlgebraicGeometry.Scheme.GlueData`
   (`Gluing.lean:91`), fields exactly as GRQ `:1141` (index
   `{I : Finset (Fin r) // I.card = d}`); `grScheme k d r := (glueData k d r).glued`.
-  **Structure morphism** (new vs GRQ — over ℤ they used terminality): glue
-  `fun I => Spec.map (ofHom (algebraMap k R^I))` over `(glueData).openCover` via
-  `Scheme.Cover.glueMorphisms`; compatibility reduces on `V (I,J) = Spec R^I_J` to
-  "the transitions lie over `k`" — automatic from the AlgHom architecture.
+  **Structure morphism** (new vs GRQ — over ℤ they used terminality): descend
+  `fun I => Spec.map (ofHom (algebraMap k R^I))` through the glued scheme's own
+  colimit universal property, `Multicoequalizer.desc (glueData k d r).diagram`
+  (REFINED at finalization from the draft's `Scheme.Cover.glueMorphisms`, whose
+  compatibility is pullback-shaped; the multicoequalizer compatibility is the bare
+  triangle `chartIncl I J ≫ s I = (chartTransition I J ≫ chartIncl J I) ≫ s J`, which
+  reduces by `Spec.map`/`chartTransition_comp_chartIncl` to the ring identity
+  "`θ̃_{I,J}` lies over `k`" — automatic from the AlgHom architecture). Triangle lemma
+  `ι_grStructMap` from `Multicoequalizer.π_desc` (`GlueData.ι` IS the multicoequalizer
+  `π`, `CategoryTheory/GlueData.lean:168`). `Scheme.OpenCover.glueMorphisms`
+  (`Gluing.lean:439`) remains the fallback spelling if the desc route fights.
   Export `grOver k d r : Over (Spec (.of k))`.
 - **Separatedness** (3d): `diagonalRingMap` as GRQ `:1202` but with
   `Algebra.TensorProduct.lift` over `k` (`R^I ⊗[k] R^J →ₐ[k] R^I_J`), surjectivity
@@ -215,11 +228,50 @@ Keystones get `lean_verify`, axioms exactly `[propext, Classical.choice, Quot.so
 `transitionMap_self`, `cocycleCondition`, `cocyclePhiId`, `grScheme`+`glueData`
 (defs — verify their `_fac`/cocycle theorems), `grStructMap` triangle lemma,
 `entriesIdeal` universal property, `isClosedImmersion` of the vanishing locus,
-`isSeparated_grStructMap`, `grPoint` naturality. Lake mutex
-`flock /tmp/claude-1001/ajcr-locks/lake.lock` on EVERY lake invocation. Files ≤ 500
-lines. GRQ `set_option maxHeartbeats`-raises are legitimate to mirror where the same
+`isSeparated_grStructMap`, `grPoint` naturality. Lake mutex on EVERY lake invocation
+— the **mkdir DIRECTORY lock** of `informal/protocol-concurrent-lanes.md` §2
+(acquire by `mkdir /tmp/claude-1001/ajcr-locks/lake.lock`, release by `rmdir`; a plain
+FILE at that path is by definition stale — the draft said `flock` here, which is the
+EXACT protocol violation that deadlocked the 07-16 fleet; corrected at finalization).
+Ledger commits by the private-index+CAS recipe of that protocol (§1), verified with
+`show --stat HEAD`. Files ≤ 500 lines. GRQ `set_option maxHeartbeats`-raises are legitimate to mirror where the same
 instance-diamond cost appears (they are elaboration cost, not kernel raises); the
 07-14 rule "restructure, don't raise" applies to KERNEL deterministic timeouts.
 Windows/numerics: none appear in DD-3 (nothing to route through DD-0).
 
 Roadmap: `AJCR.w4-rep.datum.dat-d.dd3` updated at every landed stage.
+
+## 6. FINALIZATION CORRECTIONS (2026-07-17, successor lane — what changed vs the draft)
+
+Every mathlib claim of §0/§2 re-verified by direct source read this pass:
+`Module.Grassmannian` + `map`/`map_id`/`map_comp`/`functor`
+(`RingTheory/Grassmannian.lean:68–192`, orientation `A ⊗[R] M` confirmed, ext lemma
+`:84`, instance attributes `:73`); `Scheme.GlueData` (`Gluing.lean:91`),
+`OpenCover.glueMorphisms`/`ι_glueMorphisms` (`:439,:462`);
+`IsClosedImmersion.spec_of_surjective` (`Morphisms/ClosedImmersion.lean:99`, quotient
+instance `:113–115`); `IsLocalization.liftAlgHom` (`Localization/Basic.lean:202`, with
+`coe_liftAlgHom` bridging to `IsLocalization.lift`, so the `Away.lift`-style rewriting
+kit still fires at the function level; no `Away.liftAlgHom` exists — a small
+powers-units helper is needed); `IsLocalization.algHom_ext` (`:670`);
+`MvPolynomial.algHom_ext` (`Algebra/MvPolynomial/Basic.lean:437`);
+`Module.Finite.exists_comp_eq_id_of_projective` (`Finiteness/Projective.lean:30`);
+`openCoverOfLeftRight` (`Pullbacks.lean:547`); `rankAtStalk` kit (`FreeLocus.lean:187`,
+`:245,:254,:282,:326`). Corrections:
+
+1. **(3c) audit section**: the draft's warning said it might be unfinished — it was in
+   fact complete; the verdict was RE-DERIVED this pass against worksheet §3.4/§4.2/§5
+   and STANDS as written (§1). The DD-F GREEN verdict does not alter it: DD-R still
+   builds `divRep` on `DivScheme` itself and consumes only (3a)+(3b)+(3e)+(3c-i,ii).
+2. **Probe P5 name**: `Module.rankAtStalk_eq` does not exist; the fibre-finrank bridge
+   is `rankAtStalk_eq_finrank_tensorProduct` (`FreeLocus.lean:282`); free-case gift
+   `rankAtStalk_eq_finrank_of_free` (`:254`) added for the tautological point.
+3. **Structure morphism route**: `Multicoequalizer.desc` on the glue-data diagram
+   (triangle-shaped compatibility, no pullbacks) replaces `Cover.glueMorphisms` as
+   primary; the latter demoted to fallback. §2 updated in place.
+4. **Lake mutex**: the draft prescribed `flock` — corrected to the BINDING mkdir
+   directory lock of `protocol-concurrent-lanes.md` §2; ledger commits via
+   private-index+CAS (§1 of the protocol).
+5. **House-pattern names confirmed** for 3b against the tree: local instance
+   `Over.sectionsAlgebra`, restrictions `Over.resAlgHom T h : Γ(V) →ₐ[k] Γ(U)` for
+   `h : U ≤ V` with `resAlgHom_comp`/`resAlgHom_rfl`, affine collapse via
+   `Over.overSpecΓTopAlgEquiv` + top affine open (`PicEt.lean` / `PicEtSections.lean`).
