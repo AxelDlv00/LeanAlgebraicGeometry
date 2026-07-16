@@ -571,6 +571,27 @@ and architecture, never copy proofs blind, never import.
 
 ---
 
+## ADDENDUM (2026-07-16, same day, post-landing sweep) — sibling spellings now pinned
+
+Two Stage-0 siblings landed after this worksheet's main pass; their spellings are now
+BINDING consumption points for the DD-bricks (replacing the generic "DAT-0b"/"DAT-5"
+references above):
+
+- **DAT-0b = `RiemannRoch/ThetaDegree.lean`**: `classDeg_fiberTwist_one` (`:142`),
+  `zero_lt_classDeg_fiberTwist_one` (`:150`), `one_le_classDeg_fiberTwist_one` (`:158`)
+  — DD-0's ledger constant `δ` and its positivity come from HERE, no re-derivation;
+  `fiberTwist_one_eq_picClass_fiberWeilDivisor` (`:132`) is the Θ-class ↔ `picClass F`
+  identification DD-4 uses to state the `H_A` spaces on `divisorSheaf (A • F)` while the
+  engine works on the twist cocycle (the W6-lite transport seam); the base-field leg
+  (`:180`) is DAT-B/G territory, not DAT-D's.
+- **DAT-5 = `Picard/ThetaShift.lean`**: the natural family `thetaFamily` (`:104`,
+  naturality `:111`), `degAt_thetaFamily(_pow)` (`:136,:149`), and the Type-valued
+  degree layer `picDegLayer`/`picDegLayerFunctor` (`:162,:170` — the parent §5.6 coset
+  discipline honoured). The §4.2 Abel-map consumption row is hereby sharpened: DAT-C's
+  chart functors out of `DivScheme g` land in `picDegLayerFunctor d` via
+  `LocalEquations.picClass` of the universal family; DAT-D exports the class datum,
+  DAT-C composes with the DAT-5 shift.
+
 *End of worksheet. Deliverable of record for the DAT-D WORKSHEET-FIRST mandate (parent
 §4 DAT-D, §5 risks 1/7); BINDING for the DD-brick specs; Stage B may start proving.
 The §3.5 mechanism ruling, the §3.6(a) counterexample, the DD-F probe gate, and the
