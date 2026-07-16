@@ -1871,3 +1871,107 @@ in which the representing module of the exchange isomorphism is consumed
   \ref{thm:dualTensorHom_projective} applied to the finite projective module
   \(M^{\vee}\).
 \end{proof}
+
+\section{Transport of kernels and of chart-lattice finiteness}
+\label{sec:aeval_transport}
+
+Two small transport toolkits consumed by the sheaf-level assembly of the rigid engine
+(Chapter~\ref{chap:Cohomology}). For an endomorphism \(e\) of an \(S\)-module \(M\),
+write \(M_e\) for \(M\) viewed as an \(S[t]\)-module with \(t\) acting through \(e\) ---
+the \emph{chart lattice} of \(e\); ``\(M_e\) is finite over \(S[t]\)'' is the finiteness
+hypothesis under which the coherence theorems of two-lattice pairs fire
+(\ref{thm:twoLattice_coh1}, \ref{thm:twoLattice_coh0}).
+
+\begin{lemma}[Kernel and surjectivity transport along a commuting square]
+  \label{lem:kerCongr}
+  \lean{AlgebraicJacobian.RigidEngine.kerCongr,
+    AlgebraicJacobian.RigidEngine.kerCongr_apply_coe,
+    AlgebraicJacobian.RigidEngine.surjective_congr}
+  \leanok
+  Let \(\delta : A \to B\) and \(\delta' : A' \to B'\) be \(S\)-linear maps and
+  \(e_1 : A \cong A'\), \(e_2 : B \cong B'\) \(S\)-linear equivalences with
+  \(e_2 \circ \delta = \delta' \circ e_1\). Then \(e_1\) restricts to an \(S\)-linear
+  equivalence \(\ker \delta \cong \ker \delta'\), and \(\delta\) is surjective if and
+  only if \(\delta'\) is.
+\end{lemma}
+\begin{proof}
+  \leanok
+  If \(\delta a = 0\) then \(\delta'(e_1 a) = e_2(\delta a) = 0\), so \(e_1\) maps
+  \(\ker\delta\) into \(\ker\delta'\); symmetrically \(e_1^{-1}\) maps
+  \(\ker\delta'\) into \(\ker\delta\), using \(\delta = e_2^{-1} \circ \delta' \circ
+  e_1\). The two restrictions are mutually inverse and \(S\)-linear. For surjectivity:
+  given \(b' \in B'\), pick \(a\) with \(\delta a = e_2^{-1} b'\); then
+  \(\delta'(e_1 a) = e_2(\delta a) = b'\); the converse is symmetric.
+\end{proof}
+
+\begin{lemma}[Chart-lattice transport along an equivariant equivalence]
+  \label{lem:aevalCongr}
+  \lean{AlgebraicJacobian.RigidEngine.aevalCongr,
+    AlgebraicJacobian.RigidEngine.moduleFinite_aeval'_of_linearEquiv}
+  \leanok
+  Let \(e, e'\) be endomorphisms of the \(S\)-modules \(M, M'\) and
+  \(\varphi : M \cong M'\) an \(S\)-linear equivalence intertwining them,
+  \(\varphi \circ e = e' \circ \varphi\). Then \(\varphi\) is an isomorphism of
+  \(S[t]\)-modules \(M_e \cong M'_{e'}\); in particular, if \(M_e\) is a finite
+  \(S[t]\)-module then so is \(M'_{e'}\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The \(S[t]\)-action on \(M_e\) is generated over the \(S\)-action by the action of
+  \(t\), which is \(e\); an \(S\)-linear map intertwining \(e\) with \(e'\) therefore
+  commutes with the action of every polynomial, i.e.\ is \(S[t]\)-linear. Being
+  bijective, \(\varphi\) is an \(S[t]\)-isomorphism, and finiteness transports along it
+  (the image of a finite generating set generates).
+\end{proof}
+
+\begin{lemma}[Chart-lattice finiteness from a finite ring map]
+  \label{lem:moduleFinite_aeval_ringHom}
+  \lean{AlgebraicJacobian.RigidEngine.aeval_apply_of_ringHom,
+    AlgebraicJacobian.RigidEngine.moduleFinite_aeval'_of_ringHom_finite}
+  \leanok
+  Let \(k\) be a commutative ring, \(A\) a commutative ring which is also a
+  \(k\)-module, and \(\varphi : k[t] \to A\) a \emph{finite} ring homomorphism. Let
+  \(e\) be a \(k\)-linear endomorphism of \(A\) acting as multiplication by
+  \(\varphi(t)\), and suppose the \(k\)-scalar action is multiplication by the constants,
+  \(c \bullet a = \varphi(c) \cdot a\). Then the polynomial action of \(p \in k[t]\) on
+  \(A_e\) is multiplication by \(\varphi(p)\), and \(A_e\) is a finite \(k[t]\)-module.
+\end{lemma}
+\begin{proof}
+  \leanok
+  For the action formula, induct on the monomials of \(p\): the action of \(c\,t^n\) on
+  \(a\) is \(c \bullet e^n(a) = \varphi(c)\,\varphi(t)^n\, a = \varphi(c\,t^n)\, a\),
+  using that \(e^n\) is multiplication by \(\varphi(t)^n\); sums of monomials act by
+  sums. Consequently the \(k[t]\)-module \(A_e\) is exactly \(A\) viewed as a
+  \(k[t]\)-module through \(\varphi\), which is finite by hypothesis: a finite
+  generating set of \(A\) over \(k[t]\) through \(\varphi\) generates \(A_e\).
+\end{proof}
+
+\begin{theorem}[Base change of chart-lattice finiteness]
+  \label{thm:moduleFinite_aeval_baseChange}
+  \lean{AlgebraicJacobian.RigidEngine.aeval_baseChange_map_apply_one_tmul,
+    AlgebraicJacobian.RigidEngine.moduleFinite_aeval'_baseChange}
+  \leanok
+  Let \(k\) be a commutative ring, \(R\) a commutative \(k\)-algebra, \(M\) a
+  \(k\)-module and \(e\) a \(k\)-linear endomorphism of \(M\). If \(M_e\) is a finite
+  \(k[t]\)-module, then \((R \otimes_k M)_{\mathrm{id} \otimes e}\) is a finite
+  \(R[t]\)-module.
+\end{theorem}
+\begin{proof}
+  \leanok
+  First, base change of the polynomial action on pure tensors: for \(p \in k[t]\) and
+  \(m \in M\),
+  \[
+    \bigl(p^R\bigr) \cdot \bigl(1 \otimes m\bigr) \;=\; 1 \otimes (p \cdot m),
+  \]
+  where \(p^R \in R[t]\) is \(p\) with coefficients pushed into \(R\) --- by induction on
+  monomials, since \((\mathrm{id} \otimes e)^n (1 \otimes m) = 1 \otimes e^n(m)\) and
+  the \(k\)-scalars pass through the tensor sign. Now let \(z_1, \dots, z_r\) generate
+  \(M_e\) over \(k[t]\); we claim the \(1 \otimes z_i\) generate
+  \((R \otimes_k M)_{\mathrm{id}\otimes e}\) over \(R[t]\). Every element of
+  \(R \otimes_k M\) is a finite sum of tensors \(r \otimes m\), and
+  \(r \otimes m = (r\,t^0) \cdot (1 \otimes m)\) with \(r\,t^0 \in R[t]\) acting as the
+  constant \(r\); so it suffices to reach the \(1 \otimes m\). Write
+  \(m = \sum_i p_i \cdot z_i\) with \(p_i \in k[t]\); then by the displayed formula and
+  additivity, \(1 \otimes m = \sum_i p_i^R \cdot (1 \otimes z_i)\), an \(R[t]\)-linear
+  combination of the claimed generators.
+\end{proof}

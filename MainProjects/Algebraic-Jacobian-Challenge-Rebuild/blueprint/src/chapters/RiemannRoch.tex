@@ -2494,6 +2494,375 @@ irreducible --- transports along base change, from which integrality and the fin
   \(K/k\).
 \end{remark}
 
+\section{Invariance of the degree under the base-field transition}
+\label{sec:degree_base_field_invariance}
+
+Let \(k\) be the base field of the challenge curve \(C\) (proper, smooth of relative
+dimension one, geometrically irreducible), and let \(\varphi : K_1 \to K_2\) be a
+\(k\)-algebra homomorphism between field extensions of \(k\), with base-field transition
+\(\pi : C_{K_2} \to C_{K_1}\)
+(Chapter~\ref{chap:Cohomology}, Section~\ref{sec:base_field_transition}). Both ends carry
+the full degree apparatus (\ref{rem:classDeg_baseChange}). This section proves that the
+degree of a \v Cech Picard class is invariant under the transition,
+\[
+  \deg_{\Pic}\bigl(\pi^{*}L\bigr) \;=\; \deg_{\Pic}(L)
+  \qquad \bigl(L \in \Pic(C_{K_1})\bigr),
+\]
+and descends the degree to the relative Picard group over a field. The invariance is the
+algebraic form of the classical fact that the degree of a divisor does not change under
+extension of the base field: a closed point \(x'\) of \(C_{K_1}\) pulls back to the fibre
+divisor \(\pi^{*}(x') = \sum_{x'' \mapsto x'} e_{x''} \cdot x''\), and the multiplicities
+and residue degrees rebalance so that
+\(\sum e_{x''}\,[\kappa(x'') : K_2] = [\kappa(x') : K_1]\) --- the \emph{fiber-degree
+identity} proved below by comparing the colength of one chart algebra at both ends of
+the transition.
+
+\begin{lemma}[The degree of a power of a class]
+  \label{lem:classDeg_zpow}
+  \lean{AlgebraicGeometry.classDeg_zpow}
+  \uses{def:classDeg, thm:classDeg_mul}
+  \leanok
+  Under the standing hypotheses of \ref{def:classDeg}, for every class \(L\) and every
+  integer \(n \in \Z\),
+  \[
+    \deg_{\Pic}\bigl(L^{\,n}\bigr) \;=\; n \cdot \deg_{\Pic}(L).
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  The trivial class has degree zero: \(1 = \struct X(0)\) and \(\deg_K 0 = 0\)
+  (\ref{def:classDeg}). By additivity (\ref{thm:classDeg_mul}),
+  \(\deg_{\Pic}(L) + \deg_{\Pic}(L^{-1}) = \deg_{\Pic}(1) = 0\), so inversion negates
+  the degree. Induct on \(n\) in both directions from \(n = 0\), using additivity at
+  each step.
+\end{proof}
+
+\begin{theorem}[The fiber-degree identity]
+  \label{thm:sum_ordZ_residueDeg_baseFieldTransition}
+  \lean{AlgebraicGeometry.sum_ordZ_residueDeg_baseFieldTransition}
+  \uses{def:scheme_ordZ, def:residueDeg, lem:baseFieldTransition_genericPoint,
+    def:functionFieldMap}
+  \leanok
+  Let \(V\) be an affine chart of \(C_{K_1}\) containing the generic point, let
+  \(t \in \Gamma(C_{K_1}, V)\) be a section whose germ at \(\eta\) is the value of a
+  unit \(g \in K(C_{K_1})^{\times}\) and which is a unit at every point of \(V\) other
+  than a fixed non-generic point \(x' \in V\), and let \(S\) be a finite set of
+  non-generic points of \(C_{K_2}\), contained in \(\pi^{-1}V\), outside which the
+  pulled-back section \(\pi^{\sharp}t\) is a unit on \(\pi^{-1}V\). Then, in \(\Z\),
+  \[
+    \sum_{x'' \in S} \mathrm{ord}_{x''}\bigl(\pi^{\sharp}g\bigr) \cdot
+      \bigl[\kappa(x'') : K_2\bigr]
+    \;=\; \mathrm{ord}_{x'}(g) \cdot \bigl[\kappa(x') : K_1\bigr].
+  \]
+  (Mathematically, the left side is the sum over the fibre of \(x'\): the hypotheses
+  force \(S\) to exhaust the non-unit locus of \(\pi^{\sharp}t\) on the chart, which is
+  contained in \(\pi^{-1}(x')\) since unit germs pull back to unit germs; points of
+  \(S\) outside that locus contribute order zero. The statement is parameterised by
+  such a finite \(S\) exactly so that the consumer may take for \(S\) the support of a
+  divisor already in hand.)
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:finrank_quotient_span_section, def:transitionSectionsBaseChange,
+    lem:transitionSectionsBaseChange_tmul, lem:baseFieldTransition_flat_affine_surjective,
+    lem:functionFieldMap_germ, thm:baseChangeCurve_integral, thm:baseChangeCurve_bundle}
+  Write \(B_1 = \Gamma(C_{K_1}, V)\) and
+  \(B_2 = \Gamma(C_{K_2}, \pi^{-1}V)\). The chart \(\pi^{-1}V\) is affine (the
+  transition is an affine morphism,
+  \ref{lem:baseFieldTransition_flat_affine_surjective}) and contains the generic point
+  of \(C_{K_2}\) (the transition matches generic points,
+  \ref{lem:baseFieldTransition_genericPoint}); both curves carry the standing bundle
+  hypotheses over their fields (\ref{thm:baseChangeCurve_bundle},
+  \ref{thm:baseChangeCurve_integral}). By germ naturality
+  (\ref{lem:functionFieldMap_germ}), the germ of \(\pi^{\sharp}t\) at the generic point
+  of \(C_{K_2}\) is the value of the unit \(\pi^{\sharp}g\).
+
+  \emph{The two colength dictionaries.} The chart colength dictionary
+  (\ref{thm:finrank_quotient_span_section}) applies at both ends. Over \(K_2\), with
+  the finite set \(S\) (whose members lie in \(\pi^{-1}V\), and outside which
+  \(\pi^{\sharp}t\) is a unit, by hypothesis):
+  \[
+    \dim_{K_2}\bigl(B_2/(\pi^{\sharp}t)\bigr)
+      \;=\; \sum_{x'' \in S} \mathrm{ord}_{x''}\bigl(\pi^{\sharp}g\bigr)
+        \cdot \bigl[\kappa(x'') : K_2\bigr].
+  \]
+  Over \(K_1\), with the singleton \(S = \{x'\}\) (the section \(t\) is a unit at every
+  other point of \(V\), by hypothesis):
+  \[
+    \dim_{K_1}\bigl(B_1/(t)\bigr)
+      \;=\; \mathrm{ord}_{x'}(g) \cdot \bigl[\kappa(x') : K_1\bigr].
+  \]
+
+  \emph{The colength bridge.} Regard \(K_2\) as a \(K_1\)-algebra through \(\varphi\).
+  The sections base change (\ref{def:transitionSectionsBaseChange}) is a ring
+  isomorphism \(B_1 \otimes_{K_1} K_2 \cong B_2\) carrying \(t \otimes 1\) to
+  \(\pi^{\sharp}t\) (\ref{lem:transitionSectionsBaseChange_tmul}) and commuting with
+  the \(K_2\)-structures, hence carrying the principal ideal \((t \otimes 1)\) onto
+  \((\pi^{\sharp}t)\) and inducing a \(K_2\)-linear isomorphism of the quotients. By
+  right-exactness of the tensor product, tensoring the exact sequence
+  \(B_1 \xrightarrow{\,\cdot t\,} B_1 \to B_1/(t) \to 0\) with \(K_2\) gives
+  \(\bigl(B_1/(t)\bigr) \otimes_{K_1} K_2 \cong
+  \bigl(B_1 \otimes_{K_1} K_2\bigr)/(t \otimes 1)\). Chaining,
+  \[
+    \bigl(B_1/(t)\bigr) \otimes_{K_1} K_2 \;\cong\; B_2/(\pi^{\sharp}t)
+    \quad (K_2\text{-linearly}),
+  \]
+  and since extension of scalars along a field extension preserves dimension,
+  \[
+    \dim_{K_2}\bigl(B_2/(\pi^{\sharp}t)\bigr)
+      \;=\; \dim_{K_2}\Bigl(\bigl(B_1/(t)\bigr) \otimes_{K_1} K_2\Bigr)
+      \;=\; \dim_{K_1}\bigl(B_1/(t)\bigr).
+  \]
+  Chaining the three displays gives the identity.
+\end{proof}
+
+\begin{lemma}[Pulled local equations are regular on integral schemes]
+  \label{lem:pullbackEqn_regular}
+  \lean{AlgebraicGeometry.Scheme.LocalEquations.pullbackEqn_germ_mem_nonZeroDivisors}
+  \uses{def:localEquations_pullback, def:localEquations, lem:functionFieldMap_germ}
+  \leanok
+  Let \(f : Y \to X\) be a morphism of \emph{integral} schemes with
+  \(f(\eta_Y) = \eta_X\), and let \(E\) be a local-equation system on \(X\). Then the
+  pulled-back equations of \(E\) (\ref{def:localEquations_pullback}) are automatically
+  regular: their germs at every point are nonzerodivisors. No flatness of \(f\) is
+  needed --- integrality of both schemes discharges the regularity hypothesis of the
+  pullback construction. (For the base-field transition this is strictly more general
+  than the flat-pullback route: flatness of \(\pi\) is never consumed.)
+\end{lemma}
+\begin{proof}
+  \leanok
+  Fix a pulled equation \(f^{\sharp}(e)\), \(e\) an equation of \(E\) on a member
+  \(U\), and a point \(z\) of \(f^{-1}U\). The stalks of an integral scheme are
+  domains, so it suffices to show the germ of \(f^{\sharp}(e)\) at \(z\) is nonzero.
+  Suppose it were zero. On an integral scheme, a section of a nonempty open is
+  determined by its germ at any one point (the restriction maps between nonempty opens
+  and the germ maps are injective, all sections embedding in the function field), so
+  \(f^{\sharp}(e) = 0\), and in particular its germ at \(\eta_Y\) vanishes. But by
+  germ naturality (\ref{lem:functionFieldMap_germ}) that germ is the image under the
+  \emph{injective} function-field map of the germ of \(e\) at \(\eta_X\), which is a
+  nonzerodivisor of the field \(K(X)\) by regularity of \(E\)
+  (\ref{def:localEquations}), i.e.\ nonzero. Contradiction.
+\end{proof}
+
+\begin{definition}[The pulled tracked point system]
+  \label{def:pointTransitionEquations}
+  \lean{AlgebraicGeometry.pointTransitionEquations,
+    AlgebraicGeometry.pointTransitionEquations_eqn,
+    AlgebraicGeometry.pointTransitionUnit, AlgebraicGeometry.coe_pointTransitionUnit}
+  \uses{def:pointEquations, lem:pointUniformizerData, def:localEquations_pullback,
+    lem:pullbackEqn_regular, lem:baseFieldTransition_genericPoint, def:functionFieldMap,
+    lem:uniformizer, thm:baseChangeCurve_integral}
+  \leanok
+  Let \(x'\) be a non-generic point of \(C_{K_1}\), with tracked point equations at
+  \(x'\) (\ref{def:pointEquations}, from the tracked uniformizer data of
+  \ref{lem:pointUniformizerData}). The \emph{pulled tracked point system} is the
+  pullback of this local-equation system along the transition \(\pi\)
+  (\ref{def:localEquations_pullback}), with regularity discharged by integrality of
+  both curves (\ref{lem:pullbackEqn_regular}, \ref{thm:baseChangeCurve_integral},
+  generic points matching by \ref{lem:baseFieldTransition_genericPoint}). Its
+  \emph{trivialising unit} is the pullback
+  \(\pi^{\sharp}(t) \in K(C_{K_2})^{\times}\) of the chosen uniformizer \(t\) at
+  \(x'\) (\ref{lem:uniformizer}, \ref{def:functionFieldMap}).
+\end{definition}
+
+\begin{lemma}[The trivialising elements of the pulled point presentation]
+  \label{lem:pointTransitionEquations_elem}
+  \lean{AlgebraicGeometry.pointTransitionEquations_presentation_elem_of_ne,
+    AlgebraicGeometry.pointTransitionEquations_presentation_elem_of_eq}
+  \uses{def:pointTransitionEquations, lem:localEquations_presentation,
+    def:pointEquations, lem:functionFieldMap_germ}
+  \leanok
+  The meromorphic presentation (\ref{lem:localEquations_presentation}) of the pulled
+  tracked point system has trivialising elements
+  \[
+    f_z \;=\;
+    \begin{cases}
+      \pi^{\sharp}(t), & \pi(z) = x', \\
+      1, & \pi(z) \neq x',
+    \end{cases}
+  \]
+  at each point \(z\) of \(C_{K_2}\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The trivialising element at \(z\) is the germ at \(\eta_{C_{K_2}}\) of the pulled
+  equation indexed by \(z\), which is the \(\pi\)-pullback of the equation of the
+  point system at \(\pi(z)\) (\ref{def:pointTransitionEquations}). If
+  \(\pi(z) \neq x'\), that equation is the constant \(1\)
+  (\ref{def:pointEquations}), and \(1\) pulls back to \(1\), with germ \(1\). If
+  \(\pi(z) = x'\), the equation is the tracked section \(s\), whose germ at
+  \(\eta_{C_{K_1}}\) is the chosen uniformizer \(t\) (\ref{def:pointEquations});
+  by germ naturality (\ref{lem:functionFieldMap_germ}) the germ at
+  \(\eta_{C_{K_2}}\) of \(\pi^{\sharp}s\) is \(\pi^{\sharp}(t)\).
+\end{proof}
+
+\begin{theorem}[E-iv: the degree is invariant under the base-field transition]
+  \label{thm:classDeg_cechPicMap_baseFieldTransition}
+  \lean{AlgebraicGeometry.classDeg_cechPicMap_baseFieldTransition}
+  \uses{def:classDeg, thm:baseChangeCurve_bundle, thm:baseChangeCurve_integral,
+    thm:baseChangeCurve_cohomFinite, def:overSpecMap}
+  \leanok
+  For every \(k\)-algebra homomorphism \(\varphi : K_1 \to K_2\) of field extensions of
+  \(k\) and every \v Cech Picard class \(L\) on \(C_{K_1}\),
+  \[
+    \deg_{\Pic}\bigl(\pi^{*}L\bigr) \;=\; \deg_{\Pic}(L),
+  \]
+  where \(\pi^{*} : \Pic(C_{K_1}) \to \Pic(C_{K_2})\) is pullback of \v Cech Picard
+  classes along the base-field transition. No finiteness or separability of the
+  extensions is assumed.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{def:curveDivisor_picClass, thm:curveDivisor_picClass_hom, lem:classDeg_zpow,
+    thm:curveDivisor_picClass_single, thm:localEquations_picClass_pullback,
+    def:pointTransitionEquations, lem:pointTransitionEquations_elem,
+    lem:localEquations_presentation, def:presentationDivisor, def:curveDivisor_single,
+    lem:curveDivisor_single_arith, thm:sum_ordZ_residueDeg_baseFieldTransition,
+    lem:uniformizer, lem:pointUniformizerData, thm:ordZ_germGenericUnits,
+    lem:baseFieldTransition_genericPoint, def:scheme_ordZ, def:residueDeg}
+  \emph{Reduction to a one-point divisor.} The class map
+  \(\Div(C_{K_1}) \to \Pic(C_{K_1})\) is surjective (\ref{def:curveDivisor_picClass}),
+  so \(L = \struct{C_{K_1}}(D)\) for a Weil divisor \(D\), a finite \(\Z\)-combination of
+  one-point divisors. Both sides of the claimed identity are additive in \(L\): the
+  class map and the pullback \(\pi^{*}\) are homomorphisms
+  (\ref{thm:curveDivisor_picClass_hom}) and \(\deg_{\Pic}\) is additive with
+  \(\deg_{\Pic}(L^n) = n\deg_{\Pic}(L)\) (\ref{lem:classDeg_zpow}). It therefore
+  suffices to prove the identity for \(L = \struct{C_{K_1}}(1 \cdot x')\), \(x'\) a
+  non-generic point.
+
+  \emph{The pulled point class as a divisor class.} The one-point class is the class
+  of the tracked point equations at \(x'\)
+  (\ref{thm:curveDivisor_picClass_single}). Pulling back a local-equation system
+  computes the pullback of its class (\ref{thm:localEquations_picClass_pullback},
+  with regularity discharged as in \ref{def:pointTransitionEquations}), so
+  \(\pi^{*}L\) is the Picard class of the pulled tracked point system; and the class
+  of any local-equation system is the class of the divisor of its presentation
+  (\ref{lem:localEquations_presentation}, \ref{def:curveDivisor_picClass}). Writing
+  \(D''\) for the presentation divisor of the pulled system
+  (\ref{def:presentationDivisor}), the normalization of \ref{def:classDeg} turns both
+  sides into divisor degrees:
+  \[
+    \deg_{\Pic}\bigl(\pi^{*}L\bigr) = \deg_{K_2}\bigl(D''\bigr), \qquad
+    \deg_{\Pic}(L) = \deg_{K_1}\bigl(1 \cdot x'\bigr) = \bigl[\kappa(x') : K_1\bigr]
+  \]
+  (\ref{lem:curveDivisor_single_arith}).
+
+  \emph{The degree of the pulled point divisor.} The coefficient of \(D''\) at a point
+  \(z\) is the order at \(z\) of the trivialising element \(f_z\)
+  (\ref{def:presentationDivisor}). Off the fibre of \(x'\) the element is \(1\)
+  (\ref{lem:pointTransitionEquations_elem}), of order zero; so \(D''\) is supported in
+  the finite set \(S := \mathrm{supp}(D'') \subseteq \pi^{-1}(x')\), and
+  \[
+    \deg_{K_2}(D'') \;=\; \sum_{z \in S}
+      \mathrm{ord}_z\bigl(\pi^{\sharp}t\bigr) \cdot \bigl[\kappa(z) : K_2\bigr],
+  \]
+  the coefficient on the fibre being the order of \(\pi^{\sharp}(t)\)
+  (\ref{lem:pointTransitionEquations_elem}).
+
+  \emph{Closing with the fiber-degree identity.} Choose an affine chart
+  \(V \ni x'\) inside the tracked neighbourhood of the uniformizer data (affine opens
+  form a basis), containing the generic point, and restrict the tracked section
+  \(s\) to it; the restriction still has germ \(t\) at \(\eta\) and is still a unit at
+  every point of \(V\) other than \(x'\) (\ref{lem:pointUniformizerData}). The
+  hypotheses of the fiber-degree identity
+  (\ref{thm:sum_ordZ_residueDeg_baseFieldTransition}) hold with this chart, the unit
+  \(g = t\), and the finite set \(S\): its members lie in
+  \(\pi^{-1}V\) (they lie in the fibre of \(x' \in V\)), and at a point \(z\) of
+  \(\pi^{-1}V\) outside \(S\) the pulled section is a unit --- off the fibre because
+  \(s\) is a unit at \(\pi(z) \neq x'\) and unit germs pull back to unit germs; on the
+  fibre because a non-unit germ at \(z\) would give
+  \(\mathrm{ord}_z(\pi^{\sharp}t) \neq 0\) (a rational function that is the generic
+  germ of a section non-invertible at \(z\) has nontrivial order there --- the
+  contrapositive of \ref{thm:ordZ_germGenericUnits}, through the discrete valuation of
+  the stalk at \(z\)), putting \(z\) in the support \(S\). The identity gives
+  \[
+    \sum_{z \in S} \mathrm{ord}_z\bigl(\pi^{\sharp}t\bigr) \cdot
+      \bigl[\kappa(z) : K_2\bigr]
+    \;=\; \mathrm{ord}_{x'}(t) \cdot \bigl[\kappa(x') : K_1\bigr]
+    \;=\; \bigl[\kappa(x') : K_1\bigr],
+  \]
+  the uniformizer having order one (\ref{lem:uniformizer}). Chaining the displays
+  proves the one-point case, and with it the theorem.
+\end{proof}
+
+\begin{lemma}[The degree vanishes on classes from the base field]
+  \label{lem:classDeg_picFromBase}
+  \lean{AlgebraicGeometry.classDeg_eq_zero_of_mem_picFromBase}
+  \uses{def:classDeg}
+  \leanok
+  Let \(K/k\) be a field extension. Every \v Cech Picard class on \(C_K\) pulled back
+  from \(\Spec K\) along the second projection is trivial; in particular its degree is
+  zero.
+\end{lemma}
+\begin{proof}
+  \leanok
+  The underlying space of \(\Spec K\) is a single point, and the \v Cech Picard group
+  of a scheme with one-point underlying space is trivial: every member of a pointed
+  cover is an open containing the point, hence the whole space, so a unit cocycle
+  \((g_{xy})\) lives on the cover all of whose members and overlaps are the total
+  space; fixing a base point \(x_0\) and setting \(b_x := g_{x x_0}\), the cocycle
+  identity gives \(g_{xy} = g_{x x_0}\, g_{x_0 y} = b_x\, b_y^{-1}\), a coboundary. So
+  the pulled-back class is the pullback of the trivial class, which is trivial, of
+  degree \(\deg_{\Pic}(1) = 0\) (\ref{def:classDeg}).
+\end{proof}
+
+\begin{definition}[The degree on the relative Picard group over a field]
+  \label{def:relPicDeg}
+  \lean{AlgebraicGeometry.relPicDeg, AlgebraicGeometry.relPicDeg_relPicMk}
+  \uses{lem:classDeg_picFromBase, def:classDeg}
+  \leanok
+  For a field extension \(K/k\), recall the relative Picard group
+  \(\mathrm{relPic}(C, \Spec K) = \Pic(C_K) \big/ (\text{classes from } \Spec K)\)
+  (the quotient recalled at the head of Chapter~\ref{chap:PicardEtale}). The degree
+  homomorphism kills the classes from the base
+  (\ref{lem:classDeg_picFromBase}), so it descends along the quotient projection to
+  the \emph{relative degree}
+  \[
+    \deg_{\mathrm{rel}} : \mathrm{relPic}(C, \Spec K) \longrightarrow \Z,
+    \qquad \deg_{\mathrm{rel}}\bigl([L]\bigr) = \deg_{\Pic}(L),
+  \]
+  a homomorphism of groups; the displayed anchor holds for every
+  \(L \in \Pic(C_K)\).
+\end{definition}
+\begin{proof}
+  \leanok
+  A group homomorphism trivial on a subgroup factors uniquely through the quotient by
+  it; the anchor is the factorization identity.
+\end{proof}
+
+\begin{theorem}[E-iv descends to the relative Picard group]
+  \label{thm:relPicDeg_relPicAlgMap}
+  \lean{AlgebraicGeometry.relPicDeg_relPicAlgMap}
+  \uses{def:relPicDeg, def:relPicAlgMap, thm:classDeg_cechPicMap_baseFieldTransition}
+  \leanok
+  For every \(k\)-algebra homomorphism \(\varphi : K_1 \to K_2\) of field extensions
+  of \(k\) and every relative Picard class \(x \in \mathrm{relPic}(C, \Spec K_1)\),
+  \[
+    \deg_{\mathrm{rel}}\bigl(\varphi^{*}x\bigr) \;=\; \deg_{\mathrm{rel}}(x),
+  \]
+  where \(\varphi^{*}\) is restriction of relative Picard classes along
+  \(\Spec\varphi\) (\ref{def:relPicAlgMap}): the degree of a relative Picard class
+  does not depend on the field over which it is presented. This is the
+  well-definedness core of the degree of an \'etale-locally-trivial class: a class
+  defined over \(K_1\) and read over the larger field \(K_2\) has the same degree ---
+  its points split, but order times residue degree rebalances exactly
+  (\ref{thm:sum_ordZ_residueDeg_baseFieldTransition}).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Represent \(x = [L]\) with \(L \in \Pic(C_{K_1})\). Restriction along
+  \(\Spec\varphi\) is induced on the quotients by pullback along the whiskered
+  transition (\ref{def:relPicAlgMap}), so \(\varphi^{*}[L] = [\pi^{*}L]\). By the
+  anchor of \ref{def:relPicDeg} and the invariance
+  (\ref{thm:classDeg_cechPicMap_baseFieldTransition}),
+  \[
+    \deg_{\mathrm{rel}}\bigl(\varphi^{*}[L]\bigr)
+      = \deg_{\Pic}\bigl(\pi^{*}L\bigr)
+      = \deg_{\Pic}(L)
+      = \deg_{\mathrm{rel}}\bigl([L]\bigr). \qedhere
+  \]
+\end{proof}
+
 \section{The fibre twist of a map to the projective line}
 
 Throughout this section \(Y\) is an integral scheme, smooth of relative dimension one and

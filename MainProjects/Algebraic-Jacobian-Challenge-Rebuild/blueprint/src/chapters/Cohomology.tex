@@ -2443,6 +2443,370 @@ two-cover \(H^1\) is a cokernel and cokernels commute with arbitrary base change
   used.
 \end{definition}
 
+\section{The base-field transition and its sections base change}
+\label{sec:base_field_transition}
+
+Fix a field \(k\) and an object \(C \in \Over(\Spec k)\). For a field extension \(K/k\)
+write \(C_K := (C \otimes \Spec K)_{\mathrm{left}}\) for the base-changed curve, a scheme
+over \(\Spec K\) through the second projection. A \(k\)-algebra homomorphism
+\(\varphi : K_1 \to K_2\) between field extensions of \(k\) induces the
+\emph{base-field transition}
+\[
+  \pi \;=\; \bigl(C \lhd \Spec(\varphi)\bigr)_{\mathrm{left}} \;:\; C_{K_2}
+  \longrightarrow C_{K_1},
+\]
+the whiskering of \(C\) with \(\Spec\varphi\) between the test objects
+(\ref{def:overSpecMap}). This section provides the transition's geometric toolkit and
+identifies the sections of \(C_{K_2}\) over the preimage of an affine open with the base
+change of the sections of \(C_{K_1}\).
+
+A design point governs everything that follows: the ``base-field shuffle''
+\(C_{K_1} \otimes_{K_1} K_2 \cong C_{K_2}\) is \emph{never constructed as an isomorphism
+of schemes}. All statements are made against the transition square below, which exhibits
+\(\pi\) as a base change of \(\Spec\varphi\) directly. In particular, the sections base
+change of this section is deliberately \emph{not} obtained by instantiating
+Theorem~\ref{thm:sectionsBaseChange} (whose tensor factor is anchored at the base field
+\(k\)) over the base \(K_1\) and transporting along a shuffle isomorphism --- the short
+pushout argument is re-run against the pasted square instead, with the
+\(K_1\)-algebra structure on sections carried by the second projection.
+
+\begin{theorem}[The pasted square of a morphism of test objects]
+  \label{thm:isPullback_whiskerLeft_left}
+  \lean{AlgebraicGeometry.Over.isPullback_whiskerLeft_left}
+  \leanok
+  Let \(S\) be a scheme, \(X \in \Over(S)\), and \(t : T' \to T\) a morphism of
+  \(\Over(S)\). The square
+  \[
+    \begin{array}{ccc}
+      (X \otimes T')_{\mathrm{left}} & \xrightarrow{(X \lhd t)_{\mathrm{left}}} &
+        (X \otimes T)_{\mathrm{left}} \\
+      \downarrow \mathrm{pr}_2' & & \downarrow \mathrm{pr}_2 \\
+      T'_{\mathrm{left}} & \xrightarrow{\ t_{\mathrm{left}}\ } & T_{\mathrm{left}}
+    \end{array}
+  \]
+  (verticals the second projections) is a pullback of schemes. This generalises the
+  base-change square of the product (\ref{thm:isPullback_whiskerLeft_snd}) from the base
+  \(\Spec k\) to an arbitrary base \(S\); it is stated for an arbitrary morphism of test
+  objects so that later campaigns can re-instantiate it without re-proving.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Paste the two cartesian squares expressing \(X \otimes T\) and \(X \otimes T'\) as
+  products over \(S\). The first-projection triangle
+  \((X \lhd t)_{\mathrm{left}} \circ \mathrm{fst} = \mathrm{fst}'\) and the base identity
+  \(t_{\mathrm{left}} \circ (T.\mathrm{hom}) = T'.\mathrm{hom}\) exhibit the outer
+  rectangle over \(X_{\mathrm{left}} \times S\) as the product square of
+  \(X \otimes T'\); the right-cancellation property of pullback squares applied to the
+  product square of \(X \otimes T\) then makes the displayed square a pullback.
+\end{proof}
+
+\begin{theorem}[The base-field transition square]
+  \label{thm:isPullback_baseFieldTransition}
+  \lean{AlgebraicGeometry.isPullback_baseFieldTransition}
+  \uses{thm:isPullback_whiskerLeft_left, def:overSpecMap}
+  \leanok
+  Let \(k\) be a commutative ring, \(C \in \Over(\Spec k)\), and
+  \(\varphi : K_1 \to K_2\) a \(k\)-algebra homomorphism. The square
+  \[
+    \begin{array}{ccc}
+      C_{K_2} & \xrightarrow{\ \pi\ } & C_{K_1} \\
+      \downarrow \mathrm{pr}_2 & & \downarrow \mathrm{pr}_2 \\
+      \Spec K_2 & \xrightarrow{\Spec \varphi} & \Spec K_1
+    \end{array}
+  \]
+  is a pullback of schemes: the base-field transition is the base change of
+  \(\Spec\varphi\) along the second projection of the \(K_1\)-curve.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Instantiate the pasted square (\ref{thm:isPullback_whiskerLeft_left}) at the morphism
+  of test objects \(\Spec\varphi : \Spec K_2 \to \Spec K_1\) over \(\Spec k\)
+  (\ref{def:overSpecMap}).
+\end{proof}
+
+\begin{lemma}[The transition is flat, affine and surjective]
+  \label{lem:baseFieldTransition_flat_affine_surjective}
+  \lean{AlgebraicGeometry.flat_specMap_algHom, AlgebraicGeometry.surjective_specMap_algHom,
+    AlgebraicGeometry.flat_baseFieldTransition,
+    AlgebraicGeometry.isAffineHom_baseFieldTransition,
+    AlgebraicGeometry.surjective_baseFieldTransition}
+  \uses{thm:isPullback_baseFieldTransition}
+  \leanok
+  Let \(K_1\) be a field and \(K_2\) a nonzero commutative ring. Then
+  \(\Spec\varphi : \Spec K_2 \to \Spec K_1\) is flat and surjective, and it is affine
+  since both schemes are affine. Consequently, for field extensions \(K_1, K_2\) of
+  \(k\), the base-field transition \(\pi : C_{K_2} \to C_{K_1}\) is flat, affine and
+  surjective.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Flatness of \(\Spec\varphi\) is flatness of \(K_2\) as a \(K_1\)-module, and every
+  module over a field is flat (free). Surjectivity: \(\Spec K_1\) is a one-point space
+  and \(\Spec K_2\) is nonempty (as \(K_2 \neq 0\)), so the unique point is hit. Each of
+  the three properties --- flatness, affineness, surjectivity --- is stable under base
+  change of schemes, and the transition square
+  (\ref{thm:isPullback_baseFieldTransition}) exhibits \(\pi\) as a base change of
+  \(\Spec\varphi\); so all three transport to \(\pi\).
+\end{proof}
+
+\begin{lemma}[Generic points under surjective morphisms]
+  \label{lem:genericPoint_eq_of_surjective}
+  \lean{AlgebraicGeometry.genericPoint_eq_of_surjective}
+  \leanok
+  A surjective morphism \(f : X \to Y\) of schemes with irreducible underlying spaces
+  maps the generic point to the generic point: \(f(\eta_X) = \eta_Y\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Choose \(z \in X\) with \(f(z) = \eta_Y\). The generic point \(\eta_X\) specialises to
+  every point of \(X\), in particular \(\eta_X \rightsquigarrow z\); applying the
+  continuous map \(f\) gives \(f(\eta_X) \rightsquigarrow \eta_Y\). Conversely
+  \(\eta_Y\) specialises to every point of \(Y\), so
+  \(\eta_Y \rightsquigarrow f(\eta_X)\). The underlying space of a scheme is sober,
+  hence \(T_0\), so the two specialisations force \(f(\eta_X) = \eta_Y\).
+\end{proof}
+
+\begin{lemma}[The transition matches generic points]
+  \label{lem:baseFieldTransition_genericPoint}
+  \lean{AlgebraicGeometry.baseFieldTransition_genericPoint}
+  \uses{lem:genericPoint_eq_of_surjective, lem:baseFieldTransition_flat_affine_surjective,
+    thm:baseChangeCurve_integral}
+  \leanok
+  Let \(C\) be smooth of relative dimension one and geometrically irreducible over the
+  field \(k\), and let \(K_1, K_2\) be field extensions of \(k\). Then the base-field
+  transition satisfies \(\pi(\eta_{C_{K_2}}) = \eta_{C_{K_1}}\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Both base-changed curves are integral (\ref{thm:baseChangeCurve_integral}), in
+  particular irreducible, and \(\pi\) is surjective
+  (\ref{lem:baseFieldTransition_flat_affine_surjective}); apply
+  \ref{lem:genericPoint_eq_of_surjective}.
+\end{proof}
+
+\begin{definition}[Pullback of rational functions]
+  \label{def:functionFieldMap}
+  \lean{AlgebraicGeometry.Scheme.Hom.functionFieldMap,
+    AlgebraicGeometry.Scheme.Hom.functionFieldMapUnits,
+    AlgebraicGeometry.Scheme.Hom.coe_functionFieldMapUnits}
+  \leanok
+  Let \(f : X \to Y\) be a morphism of schemes with irreducible underlying spaces such
+  that \(f(\eta_X) = \eta_Y\). The \emph{function-field map}
+  \[
+    f^{\sharp} : K(Y) \longrightarrow K(X)
+  \]
+  is the stalk map of \(f\) at \(\eta_X\), preceded by the canonical identification of
+  the stalk of \(Y\) at \(f(\eta_X)\) with the stalk at \(\eta_Y\). It induces a group
+  homomorphism \(K(Y)^{\times} \to K(X)^{\times}\) on units. For the base-field
+  transition (with \ref{lem:baseFieldTransition_genericPoint} matching the generic
+  points) this is the pullback of rational functions
+  \(\pi^{\sharp} : K(C_{K_1}) \to K(C_{K_2})\).
+\end{definition}
+
+\begin{lemma}[Germ naturality and injectivity of the function-field map]
+  \label{lem:functionFieldMap_germ}
+  \lean{AlgebraicGeometry.Scheme.Hom.functionFieldMap_germ,
+    AlgebraicGeometry.Scheme.Hom.functionFieldMap_injective}
+  \uses{def:functionFieldMap}
+  \leanok
+  In the setting of \ref{def:functionFieldMap}: for an open \(U \subseteq Y\) containing
+  \(\eta_Y\) and a section \(s \in \Gamma(Y, U)\),
+  \[
+    f^{\sharp}\bigl(\mathrm{germ}_{\eta_Y}(s)\bigr)
+      \;=\; \mathrm{germ}_{\eta_X}\bigl(f^{\sharp}s\bigr)
+      \qquad \text{in } K(X),
+  \]
+  where \(f^{\sharp}s \in \Gamma(X, f^{-1}U)\) is the pullback of the section (note
+  \(\eta_X \in f^{-1}U\) since \(f(\eta_X) = \eta_Y \in U\)). If moreover \(X\) and
+  \(Y\) are integral, the function-field map is injective.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Germ naturality: the stalk identification carries \(\mathrm{germ}_{\eta_Y}(s)\) to the
+  germ of \(s\) at the point \(f(\eta_X) \in U\), and the stalk map of \(f\) at a point
+  sends the germ of a section to the germ of its pullback --- the defining compatibility
+  of the stalk map with germs. Injectivity: on integral schemes both function fields are
+  fields, and a ring homomorphism out of a field is injective.
+\end{proof}
+
+\begin{theorem}[Base change of sections along the transition, pushout form]
+  \label{thm:isPushout_transitionSections}
+  \lean{AlgebraicGeometry.Over.isPushout_transitionSections_of_isAffineOpen}
+  \uses{thm:isPullback_baseFieldTransition}
+  \leanok
+  Let \(K_1, K_2\) be field extensions of \(k\), \(\varphi : K_1 \to K_2\) a
+  \(k\)-algebra homomorphism, and \(V \subseteq C_{K_1}\) an \emph{affine} open. The
+  square of section rings
+  \[
+    \begin{array}{ccc}
+      \Gamma(\Spec K_1, \top) & \xrightarrow{\ \mathrm{pr}_2^{\sharp}\ } &
+        \Gamma(C_{K_1}, V) \\
+      \downarrow (\Spec\varphi)^{\sharp} & & \downarrow \pi^{\sharp} \\
+      \Gamma(\Spec K_2, \top) & \xrightarrow{\ \mathrm{pr}_2^{\sharp}\ } &
+        \Gamma\bigl(C_{K_2},\, \pi^{-1}V\bigr)
+    \end{array}
+  \]
+  is a pushout of commutative rings. No flatness enters in the affine case.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Restrict the transition square (\ref{thm:isPullback_baseFieldTransition}) over the
+  affine opens: \(\pi^{-1}V\) is the fibre product \(V \times_{\Spec K_1} \Spec K_2\) of
+  the open subscheme \(V\), a fibre product of affine schemes, hence affine with
+  \(\Gamma(\pi^{-1}V) = \Gamma(V) \otimes_{\Gamma(\Spec K_1)} \Gamma(\Spec K_2)\):
+  \(\Spec\) converts pushouts of commutative rings into fibre products of affine
+  schemes. The four maps of the displayed square are the section-level maps of that
+  restricted square, so the square is the tensor-product pushout.
+\end{proof}
+
+\begin{definition}[The second-projection algebra structure on sections]
+  \label{def:baseChangeSectionsAlgebra}
+  \lean{AlgebraicGeometry.baseChangeBundle, AlgebraicGeometry.baseChangeSectionsAlgebra,
+    AlgebraicGeometry.ofHom_algebraMap_baseChangeSections}
+  \uses{thm:baseChangeCurve_bundle}
+  \leanok
+  Let \(K/k\) be a field extension and \(V \subseteq C_K\) an open. The base-changed
+  curve, bundled over \(\Spec K\) by its second projection
+  (\ref{thm:baseChangeCurve_bundle}), endows \(\Gamma(C_K, V)\) with a \(K\)-algebra
+  structure: the structure map is the pullback of global sections of \(\Spec K\) along
+  \(\mathrm{pr}_2\), followed by restriction to \(V\),
+  \[
+    K \;=\; \Gamma(\Spec K, \top) \xrightarrow{\ \mathrm{pr}_2^{\sharp}\ }
+      \Gamma(C_K, V).
+  \]
+  All \(K\)-linear statements about sections of \(C_K\) below refer to this structure.
+\end{definition}
+
+\begin{lemma}[Restriction of sections is \(K\)-algebraic]
+  \label{lem:baseChangeResAlgHom}
+  \lean{AlgebraicGeometry.ofHom_algebraMap_baseChangeSections_comp_res,
+    AlgebraicGeometry.baseChangeResAlgHom, AlgebraicGeometry.baseChangeResAlgHom_apply}
+  \uses{def:baseChangeSectionsAlgebra}
+  \leanok
+  For opens \(W \le V\) of \(C_K\), the structure maps of
+  \ref{def:baseChangeSectionsAlgebra} intertwine restriction --- restricting the
+  pullback of a constant is the pullback of the constant --- so restriction
+  \(\Gamma(C_K, V) \to \Gamma(C_K, W)\) is a homomorphism of \(K\)-algebras.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Both maps \(K \to \Gamma(C_K, W)\) --- structure map of \(W\), and structure map of
+  \(V\) followed by restriction --- are the pullback of global sections of \(\Spec K\)
+  along \(\mathrm{pr}_2\) restricted to \(W\), since pullback of sections commutes with
+  restriction. A ring homomorphism commuting with the structure maps is a map of
+  \(K\)-algebras.
+\end{proof}
+
+\begin{theorem}[The algebra-corner pushout square]
+  \label{thm:isPushout_algebraMap_transitionSections}
+  \lean{AlgebraicGeometry.Over.isPushout_algebraMap_transitionSections}
+  \uses{thm:isPushout_transitionSections, def:baseChangeSectionsAlgebra}
+  \leanok
+  In the setting of \ref{thm:isPushout_transitionSections}, the square
+  \[
+    \begin{array}{ccc}
+      K_1 & \longrightarrow & \Gamma(C_{K_1}, V) \\
+      \downarrow \varphi & & \downarrow \pi^{\sharp} \\
+      K_2 & \longrightarrow & \Gamma\bigl(C_{K_2},\, \pi^{-1}V\bigr)
+    \end{array}
+  \]
+  --- top and bottom the structure maps of the second-projection algebra structures
+  (\ref{def:baseChangeSectionsAlgebra}), left the homomorphism \(\varphi\) itself --- is
+  a pushout of commutative rings. It is stated for an arbitrary \(k\)-algebra
+  homomorphism \(\varphi\); no \(K_1\)-algebra structure on \(K_2\) is chosen.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Identify the corners \(\Gamma(\Spec K_i, \top) = K_i\) of the pushout square of
+  \ref{thm:isPushout_transitionSections} by the canonical isomorphisms. Under these, the
+  left edge \((\Spec\varphi)^{\sharp}\) becomes \(\varphi\) (naturality of the
+  identification in the ring), and the two horizontal edges become the structure maps of
+  \ref{def:baseChangeSectionsAlgebra}. A square isomorphic to a pushout square is a
+  pushout square.
+\end{proof}
+
+\begin{definition}[Sections base change along the base-field transition]
+  \label{def:transitionSectionsBaseChange}
+  \lean{AlgebraicGeometry.Over.transitionSectionsBaseChangeIso,
+    AlgebraicGeometry.Over.transitionSectionsBaseChange}
+  \uses{thm:isPushout_algebraMap_transitionSections, def:baseChangeSectionsAlgebra}
+  \leanok
+  Let \(K_1 \subseteq K_2\) be a tower of field extensions of \(k\) (that is, a
+  \(K_1\)-algebra structure on \(K_2\) compatible with the \(k\)-structures), with
+  \(\varphi\) the inclusion, and let \(V \subseteq C_{K_1}\) be an affine open. There is
+  an isomorphism of rings
+  \[
+    \Gamma(C_{K_1}, V) \otimes_{K_1} K_2 \;\cong\;
+      \Gamma\bigl(C_{K_2},\, \pi^{-1}V\bigr),
+  \]
+  the \(K_1\)-module structure on \(\Gamma(C_{K_1}, V)\) being the second-projection one
+  (\ref{def:baseChangeSectionsAlgebra}).
+\end{definition}
+\begin{proof}
+  \leanok
+  The tensor product \(\Gamma(C_{K_1}, V) \otimes_{K_1} K_2\) with its two canonical
+  maps is a pushout of the same span \(K_1 \to \Gamma(C_{K_1}, V)\), \(K_1 \to K_2\)
+  --- the tensor product of commutative algebras is their pushout --- as the square of
+  \ref{thm:isPushout_algebraMap_transitionSections}. Two pushouts of one span are
+  canonically isomorphic under the corners.
+\end{proof}
+
+\begin{lemma}[The base change on pure tensors]
+  \label{lem:transitionSectionsBaseChange_tmul}
+  \lean{AlgebraicGeometry.Over.transitionSectionsBaseChange_tmul_one,
+    AlgebraicGeometry.Over.transitionSectionsBaseChange_one_tmul,
+    AlgebraicGeometry.Over.transitionSectionsBaseChange_tmul}
+  \uses{def:transitionSectionsBaseChange}
+  \leanok
+  The isomorphism of \ref{def:transitionSectionsBaseChange} sends
+  \[
+    s \otimes 1 \longmapsto \pi^{\sharp}(s), \qquad
+    1 \otimes a \longmapsto \mathrm{pr}_2^{\sharp}(a), \qquad
+    s \otimes a \longmapsto \pi^{\sharp}(s) \cdot \mathrm{pr}_2^{\sharp}(a),
+  \]
+  for \(s \in \Gamma(C_{K_1}, V)\) and \(a \in K_2\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The comparison isomorphism of two pushouts of one span commutes with the two
+  coprojections. On the tensor-product side the coprojections are \(s \mapsto s \otimes
+  1\) and \(a \mapsto 1 \otimes a\); on the sections side they are \(\pi^{\sharp}\) and
+  \(\mathrm{pr}_2^{\sharp}\) (\ref{thm:isPushout_algebraMap_transitionSections}). This
+  gives the first two rules, and the third follows since \(s \otimes a = (s \otimes 1)
+  \cdot (1 \otimes a)\) and the comparison is a ring homomorphism.
+\end{proof}
+
+\begin{lemma}[Naturality of the base change in the open]
+  \label{lem:transitionSectionsBaseChange_naturality}
+  \lean{AlgebraicGeometry.Over.transitionSectionsBaseChange_naturality}
+  \uses{def:transitionSectionsBaseChange, lem:transitionSectionsBaseChange_tmul,
+    lem:baseChangeResAlgHom}
+  \leanok
+  For affine opens \(W \le V\) of \(C_{K_1}\), restricting the base-changed section is
+  base-changing the restriction: the square
+  \[
+    \begin{array}{ccc}
+      \Gamma(C_{K_1}, V) \otimes_{K_1} K_2 & \cong &
+        \Gamma\bigl(C_{K_2},\, \pi^{-1}V\bigr) \\
+      \downarrow \mathrm{res} \otimes \mathrm{id} & & \downarrow \mathrm{res} \\
+      \Gamma(C_{K_1}, W) \otimes_{K_1} K_2 & \cong &
+        \Gamma\bigl(C_{K_2},\, \pi^{-1}W\bigr)
+    \end{array}
+  \]
+  commutes, the left vertical being the (\(K_1\)-algebraic,
+  \ref{lem:baseChangeResAlgHom}) restriction tensored with the identity of \(K_2\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Both composites are additive, so it suffices to compare them on a pure tensor
+  \(s \otimes a\). By \ref{lem:transitionSectionsBaseChange_tmul} the top-right composite
+  gives \(\bigl(\pi^{\sharp}(s) \cdot \mathrm{pr}_2^{\sharp}(a)\bigr)|_{\pi^{-1}W} =
+  \pi^{\sharp}(s)|_{\pi^{-1}W} \cdot \mathrm{pr}_2^{\sharp}(a)|_{\pi^{-1}W}\)
+  (restriction is a ring homomorphism), while the left-bottom composite gives
+  \(\pi^{\sharp}(s|_W) \cdot \mathrm{pr}_2^{\sharp}(a)\) read over \(\pi^{-1}W\). These
+  agree because pullback of sections commutes with restriction on both factors.
+\end{proof}
+
 \section{Two-lattice pairs and their cohomology}
 \label{sec:two_lattice_pairs}
 
@@ -3205,4 +3569,1011 @@ relative to an arbitrary base ring.
   \end{itemize}
   Thus \(H^0(P)\) is an extension of the finite module \(\partial(H^0(P))\) by the
   finite module \(\ker \partial\), hence finite.
+\end{proof}
+
+\section{The rigid engine on a packaged two-cover}
+\label{sec:rigid_engine_assembly}
+
+This section assembles the module-level rigid engine --- the coherence theorems of
+two-lattice pairs (\ref{thm:twoLattice_coh1}, \ref{thm:twoLattice_coh0}), the fibrewise
+Nakayama propagation (Section~\ref{sec:nakayama_vanishing}) and the split rigidity
+(Section~\ref{sec:split_rigidity}) --- at the level of sheaves. For a sheaf \(F\) of
+\(R\)-modules on the small Zariski site of a scheme \(X\), packaged quasi-coherently
+(\ref{def:qcohOn}) on both charts of an affine two-cover \(U_0 \cup U_1 = X\), a small
+amount of coordinate data produces a two-lattice pair whose cohomology \emph{is} the
+cohomology of the site with coefficients in \(F\); firing the engine on the pair yields
+the curve-lite form of Kleiman's theorem on the module \(\mathcal Q\): vanishing of the
+degree-one fibres forces \(H^1 = 0\) and makes \(H^0\) finite projective, with formation
+of \(H^0\) commuting with all coefficients.
+
+The degree-one carrier is the landed two-cover cokernel
+(\ref{thm:twoCoverH1LinearEquiv}); the missing degree-zero carrier --- the kernel twin of
+the cokernel bridge --- is built first.
+
+\begin{theorem}[The Mayer--Vietoris degree-zero kernel bridge]
+  \label{thm:sectionsKerEquiv}
+  \lean{CategoryTheory.GrothendieckTopology.MayerVietorisSquare.sectionsToKerModuleDiff,
+    CategoryTheory.GrothendieckTopology.MayerVietorisSquare.sectionsToKerModuleDiff_coe,
+    CategoryTheory.GrothendieckTopology.MayerVietorisSquare.sectionsKerEquiv,
+    CategoryTheory.GrothendieckTopology.MayerVietorisSquare.sectionsKerEquiv_apply_coe}
+  \uses{def:moduleDiff, lem:mv_exact_degree0}
+  \leanok
+  For a Mayer--Vietoris square \(S\) and a sheaf \(F\) of \(R\)-modules, the pair of
+  restrictions, corestricted to the kernel of the restriction-difference map
+  (\ref{def:moduleDiff}), is an \(R\)-linear equivalence
+  \[
+    F(X_4) \;\cong\; \ker\bigl(\mathrm{moduleDiff} : F(X_2) \times F(X_3) \to
+      F(X_1)\bigr),
+    \qquad s \longmapsto \bigl(s|_{X_2},\, s|_{X_3}\bigr).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The map lands in the kernel and is injective and surjective onto it by degree-zero
+  exactness (\ref{lem:mv_exact_degree0}): injectivity is the separation half of the
+  sheaf condition of the square, surjectivity onto the kernel is the gluing half.
+  Linearity is linearity of the two restrictions.
+\end{proof}
+
+\begin{theorem}[The two-cover \(H^0\) kernel bridge]
+  \label{thm:twoCoverH0LinearEquiv}
+  \lean{AlgebraicGeometry.Scheme.twoCoverH0LinearEquiv}
+  \uses{thm:sectionsKerEquiv, def:twoCoverSquare, def:HModule_linearEquivHModule',
+    def:HModule'_linearEquiv0}
+  \leanok
+  Let \(X\) be a scheme, \(U_0 \cup U_1 = X\) a two-cover by opens, and \(F\) \emph{any}
+  sheaf of \(R\)-modules on the small Zariski site. Then degree-zero cohomology of the
+  site is the kernel of the two-cover restriction-difference map: an \(R\)-linear
+  equivalence
+  \[
+    H^0(X, F) \;\cong\;
+      \ker\Bigl(F(U_0) \times F(U_1) \longrightarrow F(U_0 \cap U_1)\Bigr).
+  \]
+  No affineness is needed: degree-zero exactness is the sheaf condition alone.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Identify \(H^0(X, F)\) with \(H'^0(\top, F) = F(\top)\)
+  (\ref{def:HModule_linearEquivHModule'}, \ref{def:HModule'_linearEquiv0}), then apply
+  the kernel bridge \ref{thm:sectionsKerEquiv} to the two-cover square
+  (\ref{def:twoCoverSquare}), whose restriction-difference map is exactly the displayed
+  one.
+\end{proof}
+
+\begin{definition}[The two-cover pair data of a packaged sheaf]
+  \label{def:twoCoverPairData}
+  \lean{AlgebraicGeometry.Scheme.TwoCoverPairData}
+  \uses{def:qcohOn}
+  \leanok
+  Let \(F\) be a sheaf of \(R\)-modules on the small Zariski site of \(X\), packaged
+  quasi-coherently (\ref{def:qcohOn}) on two opens \(U_0, U_1\). \emph{Two-cover pair
+  data} for \(F\) consists of chart coordinates \(g_0 \in \Gamma(X, U_0)\),
+  \(g_1 \in \Gamma(X, U_1)\) such that:
+  \begin{itemize}
+    \item the overlap is the basic open of either coordinate:
+      \(U_0 \cap U_1 = D(g_0) = D(g_1)\);
+    \item the packaged actions of \(g_0\) and of \(g_1\) commute with the \(R\)-scalars
+      on sections of every open \(W \le U_i\);
+    \item on the overlap the two packaged actions are mutually inverse (the relation
+      \(g_0\, g_1 = 1\), expressed on the actions: acting by \(g_0\) and then by
+      \(g_1\), in either order, is the identity of \(F(U_0 \cap U_1)\)).
+  \end{itemize}
+\end{definition}
+
+\begin{definition}[The two-lattice pair of a packaged sheaf]
+  \label{def:twoCoverPairData_pair}
+  \lean{AlgebraicGeometry.Scheme.TwoCoverPairData.end₀,
+    AlgebraicGeometry.Scheme.TwoCoverPairData.end₁,
+    AlgebraicGeometry.Scheme.TwoCoverPairData.end₀_apply,
+    AlgebraicGeometry.Scheme.TwoCoverPairData.end₁_apply,
+    AlgebraicGeometry.Scheme.TwoCoverPairData.end₀_pow_apply,
+    AlgebraicGeometry.Scheme.TwoCoverPairData.end₁_pow_apply,
+    AlgebraicGeometry.Scheme.TwoCoverPairData.pair,
+    AlgebraicGeometry.Scheme.TwoCoverPairData.pair_diff,
+    AlgebraicGeometry.Scheme.TwoCoverPairData.pair_t₀,
+    AlgebraicGeometry.Scheme.TwoCoverPairData.pair_t₁}
+  \uses{def:twoCoverPairData, def:twoLatticePair, def:qcohOn_module,
+    def:qcohOn_secRes_linear, thm:qcohOn_isLocalizedModule, def:twoCoverSquare,
+    def:moduleDiff}
+  \leanok
+  Let \(U_0, U_1\) be \emph{affine} opens and \(d\) two-cover pair data for a packaged
+  sheaf \(F\). Then the data
+  \[
+    M_0 = F(U_0), \quad M_1 = F(U_1), \quad N = F(U_0 \cap U_1),
+  \]
+  with coordinate actions the packaged actions of \(g_0, g_1\) (made \(R\)-linear
+  endomorphisms by the \(R\)-linearity field of \(d\)), overlap automorphism the action
+  of \(g_0\) on \(N\) (invertible with inverse the action of \(g_1\), by the
+  mutual-inverse field), and restrictions \(\iota_0, \iota_1\) the section restrictions
+  to the overlap, is a two-lattice pair (\ref{def:twoLatticePair}) over \(R\). Its
+  difference map is the Mayer--Vietoris restriction-difference map of the two-cover
+  square with coefficients in \(F\), on the nose.
+\end{definition}
+\begin{proof}
+  \leanok
+  The intertwining laws \(\iota_i(g_i \cdot x) = g_i \cdot \iota_i(x)\) are the
+  (P1) naturality of the packaged action under restriction. The localization axioms are
+  the (P2) axioms of the packaging, transported to the overlap along the identification
+  \(U_0 \cap U_1 = U_i \cap D(g_i)\): denominator clearing for the pair asks that every
+  \(n \in N\) admit \(m \ge 0\) and \(x \in M_i\) with \(g_i^m \cdot n =
+  \iota_i(x)\), which is (P2) denominator clearing on the affine open \(U_i\); and
+  annihilation for the pair asks that \(\iota_i(x) = 0\) force \(g_i^m \cdot x = 0\),
+  which is (P2) defect annihilation --- exactly the three-axiom match by which the
+  packaging exhibits the overlap sections as the localization of the chart sections
+  (\ref{thm:qcohOn_isLocalizedModule}). Powers of the action are the actions of powers
+  (by (P1) associativity), which is used implicitly throughout. The difference map
+  \((x, y) \mapsto \iota_0 x - \iota_1 y\) is by construction the
+  restriction-difference map of \ref{def:moduleDiff} for the two-cover square
+  (\ref{def:twoCoverSquare}).
+\end{proof}
+
+\begin{definition}[The cohomology carriers of the pair]
+  \label{def:twoCoverPair_h0h1}
+  \lean{AlgebraicGeometry.Scheme.TwoCoverPairData.h0Equiv,
+    AlgebraicGeometry.Scheme.TwoCoverPairData.h1Equiv}
+  \uses{def:twoCoverPairData_pair, thm:twoCoverH0LinearEquiv,
+    thm:twoCoverH1LinearEquiv, thm:hModule1_vanishing_qcoh, def:twoLattice_H0,
+    def:twoLattice_H1, lem:twoLattice_range_diff}
+  \leanok
+  Let \(U_0, U_1\) be affine opens with \(U_0 \cup U_1 = X\) and \(d\) two-cover pair
+  data for the packaged sheaf \(F\), with pair \(P\)
+  (\ref{def:twoCoverPairData_pair}). There are \(R\)-linear equivalences
+  \[
+    H^0(X, F) \;\cong\; H^0(P), \qquad H^1(X, F) \;\cong\; H^1(P) :
+  \]
+  the cohomology of the site with coefficients in \(F\) is the cohomology of the
+  two-term complex of the pair.
+\end{definition}
+\begin{proof}
+  \leanok
+  Degree zero: the kernel bridge (\ref{thm:twoCoverH0LinearEquiv}) lands in the kernel
+  of the restriction-difference map, which is the kernel of the pair's difference map
+  since the two maps are equal (\ref{def:twoCoverPairData_pair}), i.e.\ \(H^0(P)\)
+  (\ref{def:twoLattice_H0}). Degree one: the packaging on the two affine charts gives
+  the twisted affine vanishing \(H'^1(U_i, F) = 0\)
+  (\ref{thm:hModule1_vanishing_qcoh}), so the two-cover computation
+  (\ref{thm:twoCoverH1LinearEquiv}) identifies \(H^1(X, F)\) with the cokernel of the
+  restriction-difference map; and the cokernel of the pair's difference map is
+  \(H^1(P)\) (\ref{lem:twoLattice_range_diff}, \ref{def:twoLattice_H1}).
+\end{proof}
+
+\begin{lemma}[Vanishing of \(H^1\) of the pair makes the differential surjective]
+  \label{lem:twoCoverPair_surjective_diff}
+  \lean{AlgebraicGeometry.Scheme.TwoCoverPairData.surjective_diff}
+  \uses{def:twoCoverPairData_pair, lem:twoLattice_range_diff,
+    lem:rigid_surjective_of_coker_zero}
+  \leanok
+  If \(H^1\) of the pair of \ref{def:twoCoverPairData_pair} is trivial (a
+  subsingleton), then the difference map \(\delta : F(U_0) \times F(U_1) \to
+  F(U_0 \cap U_1)\) is surjective.
+\end{lemma}
+\begin{proof}
+  \leanok
+  \(H^1\) of the pair is the cokernel of \(\delta\) (\ref{lem:twoLattice_range_diff}),
+  and a map with trivial cokernel is surjective
+  (\ref{lem:rigid_surjective_of_coker_zero}).
+\end{proof}
+
+\begin{theorem}[The rigid engine, sheaf level]
+  \label{thm:twoCoverPair_rigidEngine}
+  \lean{AlgebraicGeometry.Scheme.TwoCoverPairData.rigidEngine}
+  \uses{def:twoCoverPair_h0h1, def:twoCoverPairData_pair}
+  \leanok
+  \source{kleiman-picard}
+  Let \(R\) be Noetherian, \(U_0, U_1\) affine opens covering \(X\), and \(d\)
+  two-cover pair data for the packaged sheaf \(F\) whose pair \(P\) has finite lattices
+  (the chart sections \(F(U_i)\) are finite over \(R[t]\) through the coordinate
+  actions). Assume the section modules are tame: \(F(U_0) \times F(U_1)\) is a flat
+  \(R\)-module and \(F(U_0 \cap U_1)\) is a projective \(R\)-module (in the intended
+  applications all three are free). If every residue-field fibre of \(H^1\) of the pair
+  vanishes,
+  \[
+    H^1(P) \otimes_R \kappa(\mathfrak p) = 0 \quad \text{for every prime }
+      \mathfrak p \subseteq R,
+  \]
+  then
+  \[
+    H^1(X, F) = 0, \qquad \text{and } H^0(X, F) \text{ is a finite projective }
+      R\text{-module}.
+  \]
+  This is the curve-lite form of Kleiman's criterion for the module \(\mathcal Q\):
+  vanishing of the degree-one cohomology of the fibres ((v) of the source) forces the
+  representing module to be free/projective ((i)) --- here delivered on a two-chart
+  cover with the two-term \v Cech complex playing the role of the pushforward. The
+  fibre hypothesis is deliberately consumed in this \emph{complex} form (fibres of
+  \(H^1\) of the pair); its sheaf-level discharge --- identifying the fibre of the
+  complex with the cohomology of a fibre sheaf --- is a seam of a later campaign and is
+  not part of this statement.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:twoLattice_coh1, thm:twoLattice_coh0, thm:fibrewise_vanishing_propagates,
+    lem:twoCoverPair_surjective_diff, thm:rigid_projective_ker}
+  \(H^1(P)\) is a finite \(R\)-module by COH-1 (\ref{thm:twoLattice_coh1}), so the
+  fibrewise vanishing hypothesis propagates to \(H^1(P) = 0\) by Nakayama
+  (\ref{thm:fibrewise_vanishing_propagates}), and along the degree-one carrier
+  (\ref{def:twoCoverPair_h0h1}) this gives \(H^1(X, F) = 0\). The differential is then
+  surjective (\ref{lem:twoCoverPair_surjective_diff}). \(H^0(P) = \ker\delta\) is
+  finite over the Noetherian \(R\) by COH-0 (\ref{thm:twoLattice_coh0}), and the split
+  rigidity of a surjective two-term complex with flat domain and projective codomain
+  makes the finite kernel projective (\ref{thm:rigid_projective_ker}). Transport both
+  along the degree-zero carrier (\ref{def:twoCoverPair_h0h1}).
+\end{proof}
+
+\begin{theorem}[The openness export]
+  \label{thm:twoCoverPair_isOpen_vanishing}
+  \lean{AlgebraicGeometry.Scheme.TwoCoverPairData.rigidEngine_isOpen_vanishing}
+  \uses{def:twoCoverPairData_pair, thm:twoLattice_coh1, thm:isOpen_fibre_vanishing}
+  \leanok
+  \source{kleiman-picard}
+  In the setting of \ref{def:twoCoverPairData_pair}, with finite lattices but \emph{no}
+  Noetherian hypothesis on \(R\), the fibrewise-vanishing locus
+  \[
+    \bigl\{\, \mathfrak p \in \Spec R :
+      H^1(P) \otimes_R \kappa(\mathfrak p) = 0 \,\bigr\}
+  \]
+  is open in \(\Spec R\). (In the source the analogous openness is obtained from
+  Serre's finiteness theorem over a Noetherian base; here it falls out of the coherence
+  of \(H^1\) over an arbitrary base ring, Noetherian-free.)
+\end{theorem}
+\begin{proof}
+  \leanok
+  \(H^1(P)\) is a finite \(R\)-module over any commutative \(R\)
+  (\ref{thm:twoLattice_coh1}); for a finite module the fibrewise-vanishing locus is the
+  complement of the support, which is closed (\ref{thm:isOpen_fibre_vanishing}).
+\end{proof}
+
+\begin{definition}[The module-coefficient clause]
+  \label{def:twoCoverPair_h0TensorEquiv}
+  \lean{AlgebraicGeometry.Scheme.TwoCoverPairData.h0TensorEquiv}
+  \uses{def:twoCoverPair_h0h1, lem:twoCoverPair_surjective_diff, thm:rigid_ker_tensor}
+  \leanok
+  \source{kleiman-picard}
+  In the setting of \ref{def:twoCoverPair_h0h1}, assume \(H^1(P)\) is trivial and the
+  overlap module \(F(U_0 \cap U_1)\) is flat over \(R\). Then for \emph{every}
+  \(R\)-module \(P'\) there is an \(R\)-linear equivalence
+  \[
+    H^0(X, F) \otimes_R P' \;\cong\;
+      \ker\bigl(\delta \otimes_R P'\bigr) :
+  \]
+  formation of \(H^0\) commutes with all module coefficients. This is the two-chart
+  form of the isomorphism (eq.\ Q of the source)
+  \(\mathrm{Hom}(\mathcal Q, \mathcal N) \cong f_*(\mathcal F \otimes f^*\mathcal N)\)
+  in its right-exact regime: on the vanishing locus the functor
+  \(P' \mapsto \ker(\delta \otimes P')\) is represented by \(H^0\).
+\end{definition}
+\begin{proof}
+  \leanok
+  The differential is surjective (\ref{lem:twoCoverPair_surjective_diff}) with flat
+  codomain, so the kernel-tensor rigidity (\ref{thm:rigid_ker_tensor}) gives
+  \(\ker(\delta) \otimes P' \cong \ker(\delta \otimes P')\); compose with the
+  degree-zero carrier (\ref{def:twoCoverPair_h0h1}) tensored with \(P'\).
+\end{proof}
+
+\begin{definition}[The ring-map clause, abstract half]
+  \label{def:twoCoverPair_h0BaseChangeEquiv}
+  \lean{AlgebraicGeometry.Scheme.TwoCoverPairData.h0BaseChangeEquiv}
+  \uses{def:twoCoverPair_h0h1, lem:twoCoverPair_surjective_diff, thm:rigid_ker_baseChange}
+  \leanok
+  In the setting of \ref{def:twoCoverPair_h0TensorEquiv}, for every commutative
+  \(R\)-algebra \(R'\) there is an \(R'\)-\emph{linear} equivalence
+  \[
+    R' \otimes_R H^0(X, F) \;\cong\; \ker\bigl(\delta \otimes_R R'\bigr),
+  \]
+  the module-coefficient clause upgraded to carry the \(R'\)-structure. Reaching
+  \(H^0\) of a base-changed \emph{sheaf} on the nose is a separate step: it threads
+  this equivalence through term identifications of the base-changed complex
+  (\ref{def:relTwistH0BaseChange} below, for the relative twisted sheaf).
+\end{definition}
+\begin{proof}
+  \leanok
+  As in \ref{def:twoCoverPair_h0TensorEquiv}, with the \(R'\)-linear kernel base-change
+  form of the rigidity (\ref{thm:rigid_ker_baseChange}) in place of the module form.
+\end{proof}
+
+\section{The pair data of the twisted sheaf}
+\label{sec:twist_pair_data}
+
+The Layer-2 discharge of the pair data for the cocycle-glued twisted sheaf \(F_g\) of
+Section~\ref{sec:twisted_sheaf}, generic in the base ring \(k\): every field of
+\ref{def:twoCoverPairData} reduces, through the chart trivialisations, to section
+algebra in the structure sheaf.
+
+\begin{definition}[Multiplication by a section as an endomorphism]
+  \label{def:mulSectionEnd}
+  \lean{AlgebraicGeometry.Scheme.mulSectionEnd, AlgebraicGeometry.Scheme.mulSectionEnd_apply}
+  \uses{def:moduleKSheaf}
+  \leanok
+  Let \(X\) be a scheme over \(\Spec k\) and \(U\) an open. Multiplication by a fixed
+  section \(c \in \Gamma(X, U)\) is a \(k\)-linear endomorphism of \(\Gamma(X, U)\)
+  (for the \(k\)-structure through the structure morphism, \ref{def:moduleKSheaf}):
+  the comparison endomorphism through which the twisted pair's coordinate actions are
+  identified with honest section multiplication.
+\end{definition}
+
+\begin{lemma}[The packaged action of the twisted sheaf, and its \(k\)-linearity]
+  \label{lem:twistSheaf_qsmul_eq}
+  \lean{AlgebraicGeometry.twistSheaf_qsmul₀_eq, AlgebraicGeometry.twistSheaf_qsmul₁_eq,
+    AlgebraicGeometry.twistSheaf_smul_qsmul₀, AlgebraicGeometry.twistSheaf_smul_qsmul₁}
+  \uses{thm:twistSheaf_qcohOn, def:twistTriv, def:qcohOn_transport}
+  \leanok
+  Fix opens \(V_0, V_1\) and a unit cocycle \(g\), with twisted sheaf \(F_g\). For
+  \(W \le V_i\), the packaged action (\ref{thm:twistSheaf_qcohOn}) of
+  \(r \in \Gamma(X, V_i)\) on \(F_g(W)\) is
+  trivialise--multiply--untrivialise:
+  \[
+    r \cdot m \;=\; \mathrm{triv}_i^{-1}\bigl(r|_W \cdot \mathrm{triv}_i(m)\bigr),
+  \]
+  and it commutes with the \(k\)-scalars.
+\end{lemma}
+\begin{proof}
+  \leanok
+  The packaging of \(F_g\) on the chart \(V_i\) is by definition the transport
+  (\ref{def:qcohOn_transport}) of the structure-sheaf packaging along the chart
+  trivialisation (\ref{def:twistTriv}), whose action is exactly the displayed conjugate;
+  the first claim is definitional. For \(k\)-linearity: multiplication of sections
+  commutes with the \(k\)-scalars (both are multiplications in a commutative ring), and
+  the trivialisations are \(k\)-linear, so the conjugate commutes with the scalars too.
+\end{proof}
+
+\begin{lemma}[The two trivialisations differ by the cocycle on the overlap]
+  \label{lem:twistTriv_inf_eq}
+  \lean{AlgebraicGeometry.twistTriv₀_inf_eq, AlgebraicGeometry.twistTriv₁_inf_eq}
+  \uses{def:twistTriv, def:twistSections}
+  \leanok
+  On the overlap sections \(F_g(V_0 \cap V_1)\),
+  \[
+    \mathrm{triv}_0(p) \;=\; g \cdot \mathrm{triv}_1(p), \qquad
+    \mathrm{triv}_1(p) \;=\; g^{-1} \cdot \mathrm{triv}_0(p).
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  A twisted section \(p = (s_0, s_1)\) over \(V_0 \cap V_1\) satisfies the matching
+  relation \(s_0| = g \cdot s_1|\) on \((V_0 \cap V_1) \cap V_0 \cap V_1 = V_0 \cap
+  V_1\) (\ref{def:twistSections}); the two trivialisations are the two components
+  (\ref{def:twistTriv}), so the relation reads \(\mathrm{triv}_0(p) = g \cdot
+  \mathrm{triv}_1(p)\). Multiply by \(g^{-1}\) for the second form.
+\end{proof}
+
+\begin{lemma}[The mutual-inverse law of the coordinate actions]
+  \label{lem:twistSheaf_qsmul_inverse}
+  \lean{AlgebraicGeometry.twistSheaf_qsmul₀_qsmul₁, AlgebraicGeometry.twistSheaf_qsmul₁_qsmul₀}
+  \uses{lem:twistSheaf_qsmul_eq, lem:twistTriv_inf_eq}
+  \leanok
+  Let \(r_0 \in \Gamma(X, V_0)\), \(r_1 \in \Gamma(X, V_1)\) satisfy
+  \(r_0|_{\cap} \cdot r_1|_{\cap} = 1\) on the overlap. Then the packaged actions of
+  \(r_0\) and \(r_1\) on \(F_g(V_0 \cap V_1)\) are mutually inverse.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Compute the composite on \(m\) through the chart-0 trivialisation. Acting by \(r_1\)
+  is \(\mathrm{triv}_1^{-1}(r_1| \cdot \mathrm{triv}_1(m))\)
+  (\ref{lem:twistSheaf_qsmul_eq}); by \ref{lem:twistTriv_inf_eq} its chart-0
+  trivialisation is \(g \cdot r_1| \cdot g^{-1} \cdot \mathrm{triv}_0(m)
+  = r_1| \cdot \mathrm{triv}_0(m)\) (the ring is commutative). Acting then by \(r_0\)
+  multiplies by \(r_0|\), giving \(r_0|\, r_1| \cdot \mathrm{triv}_0(m) =
+  \mathrm{triv}_0(m)\); untrivialising returns \(m\). The other order is symmetric,
+  through the chart-1 trivialisation.
+\end{proof}
+
+\begin{definition}[The pair data of the twisted sheaf]
+  \label{def:twistPairData}
+  \lean{AlgebraicGeometry.twistPairData}
+  \uses{def:twoCoverPairData, thm:twistSheaf_qcohOn, lem:twistSheaf_qsmul_eq,
+    lem:twistSheaf_qsmul_inverse}
+  \leanok
+  Let \(r_0 \in \Gamma(X, V_0)\) and \(r_1 \in \Gamma(X, V_1)\) satisfy
+  \(V_0 \cap V_1 = D(r_0) = D(r_1)\) and \(r_0|_{\cap} \cdot r_1|_{\cap} = 1\). Then
+  \((r_0, r_1)\) is two-cover pair data (\ref{def:twoCoverPairData}) for the twisted
+  sheaf \(F_g\) on \((V_0, V_1)\): the basic-open identifications are the hypotheses,
+  \(k\)-linearity of the packaged actions is \ref{lem:twistSheaf_qsmul_eq}, and the
+  mutual-inverse law is \ref{lem:twistSheaf_qsmul_inverse}.
+\end{definition}
+
+\begin{theorem}[Chart-lattice finiteness of the twisted pair]
+  \label{thm:moduleFinite_aeval_twistPair}
+  \lean{AlgebraicGeometry.moduleFinite_aeval'_twistPair_t₀,
+    AlgebraicGeometry.moduleFinite_aeval'_twistPair_t₁}
+  \uses{def:twistPairData, def:twoCoverPairData_pair, def:mulSectionEnd, def:twistTriv,
+    lem:aevalCongr}
+  \leanok
+  In the setting of \ref{def:twistPairData} with \(V_0, V_1\) affine: if the chart
+  sections \(\Gamma(X, V_i)\) are finite over \(k[t]\) with \(t\) acting as
+  multiplication by \(r_i\) (\ref{def:mulSectionEnd}), then the pair of the twisted
+  sheaf (\ref{def:twoCoverPairData_pair}) has finite lattices.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The chart trivialisation \(\mathrm{triv}_i : F_g(V_i) \cong \Gamma(X, V_i)\)
+  (\ref{def:twistTriv}) intertwines the pair's coordinate action --- which is
+  trivialise--multiply--untrivialise (\ref{lem:twistSheaf_qsmul_eq}) --- with
+  multiplication by \(r_i\). Chart-lattice finiteness transports along an equivariant
+  equivalence (\ref{lem:aevalCongr}).
+\end{proof}
+
+\begin{theorem}[Freeness of the twisted section modules]
+  \label{thm:free_twistSheafSections}
+  \lean{AlgebraicGeometry.free_twistSheafSections₀, AlgebraicGeometry.free_twistSheafSections₁}
+  \uses{def:twistTriv}
+  \leanok
+  For \(W \le V_i\), if \(\Gamma(X, W)\) is a free \(k\)-module then so is
+  \(F_g(W)\): transport a basis along the chart trivialisation
+  (\ref{def:twistTriv}).
+\end{theorem}
+\begin{proof}
+  \leanok
+  A module equivalent to a free module is free.
+\end{proof}
+
+\section{The pinned relative cover: coordinates, finiteness and freeness}
+\label{sec:relative_cover_coordinates}
+
+The geometric half of the engine's Layer-2 discharge: the pinned affine two-cover of the
+curve --- the chart preimages of a finite morphism \(\pi\) to \(\PP^1\) --- carries
+polynomial chart algebras through which the finiteness of \(\pi\) becomes chart-lattice
+finiteness, first over the field \(k\) and then, by base change, over every test ring
+\(R\). Throughout, \(k\) is a field and \(\pi : Y \to \PP^1\) an affine morphism (finite
+where stated).
+
+\begin{definition}[The pinned affine two-cover]
+  \label{def:fiberTwoCover}
+  \lean{AlgebraicGeometry.fiberTwoCover, AlgebraicGeometry.fiberTwoCover_V₀,
+    AlgebraicGeometry.fiberTwoCover_V₁}
+  \uses{def:AffineTwoCover, lem:preimage_chart_affine, lem:preimage_chart_sup,
+    def:fiberCover, lem:P1_chartOpen_inf}
+  \leanok
+  For an affine morphism \(\pi : Y \to \PP^1\), the chart preimages
+  \(V_0 = \pi^{-1}D_+(X_0)\), \(V_1 = \pi^{-1}D_+(X_1)\) form an \emph{affine two-cover}
+  of \(Y\) (\ref{def:AffineTwoCover}): both charts are affine
+  (\ref{lem:preimage_chart_affine}), they cover \(Y\)
+  (\ref{lem:preimage_chart_sup}), and the overlap
+  \(V_0 \cap V_1 = \pi^{-1}D_+(X_0 X_1)\) (\ref{lem:P1_chartOpen_inf}) is affine, being
+  the preimage of an affine open under an affine morphism. This is the cover of
+  \ref{def:fiberCover}, upgraded with the affineness of the overlap; the whole engine
+  runs on it and on its base change.
+\end{definition}
+
+\begin{theorem}[The overlap is the basic open of the chart-1 coordinate]
+  \label{thm:preimage_inf_eq_basicOpen_fiberCoord1}
+  \lean{AlgebraicGeometry.preimage_inf_eq_basicOpen_fiberCoord₁}
+  \uses{def:fiberCover, def:fiberCoordUnit, thm:P1_basicOpen_chartCoord}
+  \leanok
+  \(V_0 \cap V_1 = D(t_1)\), where \(t_1 = \pi^{\sharp}(X_0/X_1) \in \Gamma(Y, V_1)\)
+  is the pulled-back chart-1 coordinate (\ref{def:fiberCoordUnit}) --- the chart-1 twin
+  of the identification \(V_0 \cap V_1 = D(t_0)\) of \ref{def:fiberCover}.
+\end{theorem}
+\begin{proof}
+  \leanok
+  On \(\PP^1\) the basic open of the chart-1 coordinate \(X_0/X_1\) in \(D_+(X_1)\) is
+  the chart overlap (\ref{thm:P1_basicOpen_chartCoord}); basic opens commute with
+  pullback of sections, so applying \(\pi^{-1}\) gives
+  \(V_1 \cap V_0 = D\bigl(\pi^{\sharp}(X_0/X_1)\bigr)\).
+\end{proof}
+
+\begin{definition}[The chart polynomial algebras]
+  \label{def:fiberPolyHom}
+  \lean{AlgebraicGeometry.fiberPolyHom₀, AlgebraicGeometry.fiberPolyHom₁,
+    AlgebraicGeometry.fiberPolyHom₀_X, AlgebraicGeometry.fiberPolyHom₁_X}
+  \uses{def:P1_chartSectionsEquiv0, def:P1_chartSectionsEquiv1, def:fiberCover,
+    def:fiberCoordUnit}
+  \leanok
+  The \emph{chart-\(i\) polynomial algebra} is the ring homomorphism
+  \[
+    k[t] \;\cong\; \Gamma\bigl(\PP^1, D_+(X_i)\bigr)
+      \xrightarrow{\ \pi^{\sharp}\ } \Gamma(Y, V_i),
+  \]
+  the chart identification (\ref{def:P1_chartSectionsEquiv0},
+  \ref{def:P1_chartSectionsEquiv1}) followed by pullback along \(\pi\). It sends \(t\)
+  to the pulled-back chart coordinate: \(t \mapsto t_0 = \pi^{\sharp}(X_1/X_0)\) on
+  chart \(0\) (\ref{def:fiberCover}) and \(t \mapsto t_1 = \pi^{\sharp}(X_0/X_1)\) on
+  chart \(1\) (\ref{def:fiberCoordUnit}).
+\end{definition}
+\begin{proof}
+  \leanok
+  Only the values at \(t\) need comment: the chart identification matches \(t\) with
+  the chart coordinate \(X_{1-i}/X_i \in \Gamma(\PP^1, D_+(X_i))\), whose pullback is
+  \(t_i\) by definition.
+\end{proof}
+
+\begin{theorem}[E-i: the chart polynomial algebras are finite ring maps]
+  \label{thm:fiberPolyHom_finite}
+  \lean{AlgebraicGeometry.fiberPolyHom₀_finite, AlgebraicGeometry.fiberPolyHom₁_finite}
+  \uses{def:fiberPolyHom, lem:finite_app_chart}
+  \leanok
+  If \(\pi\) is finite, both chart polynomial algebras
+  \(k[t] \to \Gamma(Y, V_i)\) are finite ring homomorphisms.
+\end{theorem}
+\begin{proof}
+  \leanok
+  For a finite morphism, the induced map on sections over an affine chart of the target
+  is a finite ring map (\ref{lem:finite_app_chart}); precomposing with the ring
+  isomorphism \(k[t] \cong \Gamma(\PP^1, D_+(X_i))\) preserves finiteness.
+\end{proof}
+
+\begin{theorem}[Scalar compatibility of the chart polynomial algebras]
+  \label{thm:fiberPolyHom_algebraMap}
+  \lean{AlgebraicGeometry.fiberPolyHom₀_algebraMap, AlgebraicGeometry.fiberPolyHom₁_algebraMap}
+  \uses{def:fiberPolyHom, lem:P1_structureMap_appTop_awayToSection,
+    lem:appLE_overAlgebraMap, def:overAlgebraMap}
+  \leanok
+  Let \(Y = C\) be the challenge curve and suppose \(\pi\) factors the structure
+  morphism, \(\pi \circ (\text{structure map of } \PP^1) = (C \to \Spec k)\). Then the
+  chart polynomial algebras carry constants to the structure algebra map
+  (\ref{def:overAlgebraMap}): for \(c \in k\),
+  \[
+    \text{fiberPolyHom}_i(c) \;=\; \text{the image of } c \text{ under }
+      k \to \Gamma(C, V_i).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The chart identification carries the constant \(c \in k[t]\) to the restriction to
+  \(D_+(X_i)\) of the structure algebra map of \(\PP^1\)
+  (\ref{lem:P1_structureMap_appTop_awayToSection}). Pullback along \(\pi\) carries the
+  structure algebra map of \(\PP^1\) to that of \(C\), because \(\pi\) commutes with
+  the two structure morphisms (\ref{lem:appLE_overAlgebraMap}, applied to the
+  factorization hypothesis).
+\end{proof}
+
+\begin{theorem}[E-i in chart-lattice form, field level]
+  \label{thm:moduleFinite_aeval_fiberCoord}
+  \lean{AlgebraicGeometry.moduleFinite_aeval'_mulLeft_fiberCoord₀,
+    AlgebraicGeometry.moduleFinite_aeval'_mulLeft_fiberCoord₁}
+  \uses{thm:fiberPolyHom_finite, thm:fiberPolyHom_algebraMap, lem:moduleFinite_aeval_ringHom}
+  \leanok
+  In the setting of \ref{thm:fiberPolyHom_algebraMap} with \(\pi\) finite: the chart
+  sections \(\Gamma(C, V_i)\) are finite over \(k[t]\), with \(t\) acting as
+  multiplication by the pulled-back chart coordinate \(t_i\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Apply the finite-ring-map criterion (\ref{lem:moduleFinite_aeval_ringHom}) to the
+  chart polynomial algebra: it is finite (\ref{thm:fiberPolyHom_finite}), sends \(t\)
+  to \(t_i\) (\ref{def:fiberPolyHom}), and sends constants to the structure algebra
+  map, which is the \(k\)-scalar action on sections
+  (\ref{thm:fiberPolyHom_algebraMap}).
+\end{proof}
+
+\begin{definition}[The relative chart coordinates]
+  \label{def:relFiberCoord}
+  \lean{AlgebraicGeometry.relFiberCoord₀, AlgebraicGeometry.relFiberCoord₁,
+    AlgebraicGeometry.relPullbackSection_mul}
+  \uses{def:relSectionsBaseChange, def:relCover, def:fiberTwoCover, def:fiberCover,
+    def:fiberCoordUnit}
+  \leanok
+  Let \(R\) be a commutative \(k\)-algebra and consider the base-changed pinned cover
+  \(V_i^R = \mathrm{pr}_1^{-1} V_i\) of the relative curve \(C_R\)
+  (\ref{def:relCover}, \ref{def:fiberTwoCover}). The \emph{relative chart coordinates}
+  are the pullbacks along the first projection,
+  \[
+    t_0^R \;=\; \mathrm{pr}_1^{\sharp}(t_0) \in \Gamma(C_R, V_0^R), \qquad
+    t_1^R \;=\; \mathrm{pr}_1^{\sharp}(t_1) \in \Gamma(C_R, V_1^R)
+  \]
+  (\ref{def:relSectionsBaseChange}); pullback of sections is multiplicative.
+\end{definition}
+
+\begin{theorem}[The relative overlap identifications]
+  \label{thm:relCover_inf_eq_basicOpen}
+  \lean{AlgebraicGeometry.relCover_fiberTwoCover_inf_eq_basicOpen₀,
+    AlgebraicGeometry.relCover_fiberTwoCover_inf_eq_basicOpen₁}
+  \uses{def:relFiberCoord, lem:relCover_inf, def:fiberCover,
+    thm:preimage_inf_eq_basicOpen_fiberCoord1}
+  \leanok
+  On the base-changed pinned cover,
+  \[
+    V_0^R \cap V_1^R \;=\; D(t_0^R) \;=\; D(t_1^R).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  The overlap of the base-changed cover is the preimage of the overlap
+  (\ref{lem:relCover_inf}); the overlap downstairs is \(D(t_0) = D(t_1)\)
+  (\ref{def:fiberCover}, \ref{thm:preimage_inf_eq_basicOpen_fiberCoord1}); and basic
+  opens commute with pullback of sections along \(\mathrm{pr}_1\).
+\end{proof}
+
+\begin{theorem}[The relative coordinates are mutually inverse on the overlap]
+  \label{thm:relFiberCoord_mul}
+  \lean{AlgebraicGeometry.relFiberCoord_mul}
+  \uses{def:relFiberCoord, def:fiberCoordUnit, lem:relCover_inf}
+  \leanok
+  \(t_0^R|_{\cap} \cdot t_1^R|_{\cap} = 1\) in
+  \(\Gamma\bigl(C_R,\ V_0^R \cap V_1^R\bigr)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The identity \(t_0|_{\cap} \cdot t_1|_{\cap} = 1\) holds downstairs
+  (\ref{def:fiberCoordUnit}); pull it back along \(\mathrm{pr}_1^{\sharp}\) over the
+  overlap, a ring homomorphism commuting with restriction, using
+  \(\mathrm{pr}_1^{-1}(V_0 \cap V_1) = V_0^R \cap V_1^R\) (\ref{lem:relCover_inf}).
+\end{proof}
+
+\begin{theorem}[The relative E-i: chart-lattice finiteness over the test ring]
+  \label{thm:moduleFinite_aeval_relFiberCoord}
+  \lean{AlgebraicGeometry.moduleFinite_aeval'_mulSectionEnd_relFiberCoord₀,
+    AlgebraicGeometry.moduleFinite_aeval'_mulSectionEnd_relFiberCoord₁}
+  \uses{thm:moduleFinite_aeval_fiberCoord, thm:moduleFinite_aeval_baseChange,
+    lem:aevalCongr, def:relSectionsBaseChange, def:relFiberCoord, def:mulSectionEnd}
+  \leanok
+  In the setting of \ref{thm:moduleFinite_aeval_fiberCoord}, for every commutative
+  \(k\)-algebra \(R\): the relative chart sections \(\Gamma(C_R, V_i^R)\) are finite
+  over \(R[t]\), with \(t\) acting as multiplication by the relative coordinate
+  \(t_i^R\) (\ref{def:mulSectionEnd}).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The field-level chart lattice is finite over \(k[t]\)
+  (\ref{thm:moduleFinite_aeval_fiberCoord}); its base change to \(R\) is finite over
+  \(R[t]\) (\ref{thm:moduleFinite_aeval_baseChange}). The sections base change
+  \(R \otimes_k \Gamma(C, V_i) \cong \Gamma(C_R, V_i^R)\)
+  (\ref{def:relSectionsBaseChange}) intertwines the base-changed multiplication
+  endomorphism \(\mathrm{id} \otimes (t_i \cdot)\) with multiplication by \(t_i^R\):
+  on pure tensors, \(a \otimes t_i s \mapsto \mathrm{pr}_2^{\sharp}(a)\,
+  \mathrm{pr}_1^{\sharp}(t_i s) = t_i^R \cdot \bigl(\mathrm{pr}_2^{\sharp}(a)\,
+  \mathrm{pr}_1^{\sharp}(s)\bigr)\), since \(\mathrm{pr}_1^{\sharp}\) is multiplicative
+  (\ref{def:relFiberCoord}). Chart-lattice finiteness transports along the equivariant
+  equivalence (\ref{lem:aevalCongr}).
+\end{proof}
+
+\begin{theorem}[Freeness of the relative section modules]
+  \label{thm:free_relSections}
+  \lean{AlgebraicGeometry.free_relSections}
+  \uses{def:relSectionsBaseChange}
+  \leanok
+  For every quasi-compact quasi-separated open \(V \subseteq C\) and every commutative
+  \(k\)-algebra \(R\), the \(R\)-module \(\Gamma(C_R, \mathrm{pr}_1^{-1}V)\) is free:
+  a \(k\)-basis of \(\Gamma(C, V)\) becomes an \(R\)-basis through the sections base
+  change (\ref{def:relSectionsBaseChange}). This feeds the flatness and projectivity
+  hypotheses of the engine: all three section modules of the pinned relative cover are
+  free.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \(\Gamma(C, V)\) is a free \(k\)-module (\(k\) is a field), so
+  \(R \otimes_k \Gamma(C, V)\) is a free \(R\)-module, and freeness transports along
+  the \(R\)-linear equivalence of \ref{def:relSectionsBaseChange}.
+\end{proof}
+
+\section{The rigid engine on the relative twisted sheaf}
+\label{sec:rel_twist_rigid_engine}
+
+The keystones: the engine of Section~\ref{sec:rigid_engine_assembly} fired on the
+relative twisted sheaf \(F_g\) on the base change of the pinned cover, with every
+hypothesis discharged from the preceding two sections --- and the base-change clause
+threaded, through the term identifications of Section~\ref{sec:relative_h1_base_change},
+onto \(H^0\) of the base-changed sheaf on the nose.
+
+One staging note, recorded here because it is the honest state of the statements: the
+engine's vanishing hypothesis is consumed in \emph{complex form} --- vanishing of the
+residue-field fibres of \(H^1\) of the two-lattice pair of \(F_g\). Its sheaf-level
+discharge (identifying the glued fibre sheaf with the divisor sheaf of a witness and
+citing the fibrewise large-twist vanishing of Chapter~\ref{chap:RiemannRoch}), and the
+rank export \(\dim_{\kappa(\mathfrak p)} H^0 \otimes \kappa(\mathfrak p) = \deg +
+\chi\), are deliberately staged behind a later seam and are \emph{not} claimed by the
+statements below; consumers supply the fibre hypothesis.
+
+Throughout: \(k\) a field, \(C\) the challenge curve, \(\pi : C \to \PP^1\) finite,
+\(R\) a commutative \(k\)-algebra, and \(g\) a unit cocycle on the overlap of the
+base-changed pinned cover \((V_0^R, V_1^R)\) of \(C_R\), with relative twisted sheaf
+\(F_g\) (\ref{def:relTwistSheaf}).
+
+\begin{definition}[The pair data of the relative twisted sheaf]
+  \label{def:relTwistPairData}
+  \lean{AlgebraicGeometry.relTwistSheaf.instQcohOn₀,
+    AlgebraicGeometry.relTwistSheaf.instQcohOn₁, AlgebraicGeometry.relTwistPairData}
+  \uses{def:relTwistSheaf, def:twistPairData, thm:twistSheaf_qcohOn, def:relFiberCoord,
+    thm:relCover_inf_eq_basicOpen, thm:relFiberCoord_mul, def:fiberTwoCover}
+  \leanok
+  The relative twisted sheaf is packaged quasi-coherently on both base-changed charts
+  (\ref{thm:twistSheaf_qcohOn}, read on the cover of \(C_R\)), and the relative chart
+  coordinates \((t_0^R, t_1^R)\) satisfy the two hypotheses of \ref{def:twistPairData}
+  on the base-changed pinned cover: the overlap-as-basic-open identifications
+  (\ref{thm:relCover_inf_eq_basicOpen}) and the mutual-inverse relation
+  (\ref{thm:relFiberCoord_mul}). This yields the two-cover pair data of \(F_g\), and
+  with it the two-lattice pair of the relative twisted sheaf that the engine consumes.
+\end{definition}
+
+\begin{theorem}[Chart-lattice finiteness of the relative twisted pair]
+  \label{thm:moduleFinite_aeval_relTwistPair}
+  \lean{AlgebraicGeometry.moduleFinite_aeval'_relTwistPair_t₀,
+    AlgebraicGeometry.moduleFinite_aeval'_relTwistPair_t₁}
+  \uses{def:relTwistPairData, thm:moduleFinite_aeval_twistPair,
+    thm:moduleFinite_aeval_relFiberCoord}
+  \leanok
+  If \(R\) acts through the structure factorization of \(\pi\) (the hypothesis of
+  \ref{thm:fiberPolyHom_algebraMap}), the pair of the relative twisted sheaf
+  (\ref{def:relTwistPairData}) has finite lattices over \(R[t]\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The relative E-i gives finiteness of the structure-sheaf chart lattices at the
+  relative coordinates (\ref{thm:moduleFinite_aeval_relFiberCoord}); the twisted pair's
+  lattices are trivialisation-transports of these
+  (\ref{thm:moduleFinite_aeval_twistPair}).
+\end{proof}
+
+\begin{theorem}[Freeness of the twisted section modules on the pinned relative cover]
+  \label{thm:free_relTwistSections}
+  \lean{AlgebraicGeometry.free_relTwistSections₀, AlgebraicGeometry.free_relTwistSections₁,
+    AlgebraicGeometry.free_relTwistSectionsOverlap}
+  \uses{thm:free_relSections, thm:free_twistSheafSections, def:fiberTwoCover,
+    def:relTwistPairData}
+  \leanok
+  The three section modules of the pair of the relative twisted sheaf --- the two
+  charts and the overlap --- are free \(R\)-modules.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The charts and the overlap of the pinned cover are affine
+  (\ref{def:fiberTwoCover}), in particular quasi-compact and quasi-separated, so the
+  structure-sheaf sections of their base changes are free
+  (\ref{thm:free_relSections}); the twisted sections are trivialisation-equivalent to
+  them (\ref{thm:free_twistSheafSections}).
+\end{proof}
+
+\begin{theorem}[The rigid engine on the relative twisted sheaf]
+  \label{thm:relTwistRigidEngine}
+  \lean{AlgebraicGeometry.relTwistRigidEngine}
+  \uses{thm:twoCoverPair_rigidEngine, def:relTwistPairData,
+    thm:moduleFinite_aeval_relTwistPair, thm:free_relTwistSections, lem:relCover_charts}
+  \leanok
+  \source{kleiman-picard}
+  Let \(R\) be Noetherian. If every residue-field fibre of \(H^1\) of the pair of
+  \(F_g\) vanishes,
+  \[
+    H^1(\text{pair}) \otimes_R \kappa(\mathfrak p) = 0 \quad \text{for every prime }
+      \mathfrak p \subseteq R,
+  \]
+  then
+  \[
+    H^1\bigl(C_R, F_g\bigr) = 0, \qquad \text{and } H^0\bigl(C_R, F_g\bigr)
+      \text{ is a finite projective } R\text{-module}.
+  \]
+  Every other hypothesis of the abstract engine is discharged: this is the curve-lite
+  Kleiman criterion, (v)\,\(\Rightarrow\)\,(i), on the relative twisted sheaf. The
+  fibre hypothesis remains in complex form (see the staging note at the head of this
+  section).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The base-changed pinned cover is an affine two-cover of \(C_R\)
+  (\ref{lem:relCover_charts}); the pair data is \ref{def:relTwistPairData}; the chart
+  lattices are finite (\ref{thm:moduleFinite_aeval_relTwistPair}); the section modules
+  are free (\ref{thm:free_relTwistSections}), so the product of the chart modules is
+  flat and the overlap module is projective. Fire the sheaf-level engine
+  (\ref{thm:twoCoverPair_rigidEngine}).
+\end{proof}
+
+\begin{lemma}[Fibrewise vanishing propagates to the pair]
+  \label{lem:relTwist_subsingleton_pairH1}
+  \lean{AlgebraicGeometry.relTwist_subsingleton_pairH1}
+  \uses{thm:moduleFinite_aeval_relTwistPair, thm:twoLattice_coh1,
+    thm:fibrewise_vanishing_propagates}
+  \leanok
+  With no Noetherian hypothesis on \(R\): if every residue-field fibre of \(H^1\) of
+  the pair of \(F_g\) vanishes, then \(H^1\) of the pair vanishes. (Consumers holding
+  the fibrewise hypothesis use this to feed the two clauses below, which are stated on
+  the vanishing locus.)
+\end{lemma}
+\begin{proof}
+  \leanok
+  \(H^1\) of the pair is a finite \(R\)-module by COH-1
+  (\ref{thm:twoLattice_coh1}, with the finite lattices of
+  \ref{thm:moduleFinite_aeval_relTwistPair}); fibrewise vanishing of a finite module
+  propagates by Nakayama (\ref{thm:fibrewise_vanishing_propagates}).
+\end{proof}
+
+\begin{theorem}[The openness export on the relative twisted sheaf]
+  \label{thm:relTwistRigidEngine_isOpen}
+  \lean{AlgebraicGeometry.relTwistRigidEngine_isOpen_vanishing}
+  \uses{thm:twoCoverPair_isOpen_vanishing, thm:moduleFinite_aeval_relTwistPair}
+  \leanok
+  \source{kleiman-picard}
+  With no Noetherian hypothesis on \(R\), the fibrewise-vanishing locus
+  \(\{\mathfrak p \in \Spec R : H^1(\text{pair of } F_g) \otimes_R
+  \kappa(\mathfrak p) = 0\}\) is open in \(\Spec R\) --- the strata over which the
+  engine fires.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The openness export of the abstract engine
+  (\ref{thm:twoCoverPair_isOpen_vanishing}), with the finite lattices of
+  \ref{thm:moduleFinite_aeval_relTwistPair}.
+\end{proof}
+
+\begin{definition}[The module-coefficient clause on the relative twisted sheaf]
+  \label{def:relTwistH0TensorEquiv}
+  \lean{AlgebraicGeometry.relTwistH0TensorEquiv}
+  \uses{def:twoCoverPair_h0TensorEquiv, thm:free_relTwistSections, def:relTwistPairData}
+  \leanok
+  \source{kleiman-picard}
+  On the vanishing locus (\(H^1\) of the pair of \(F_g\) trivial), for every
+  \(R\)-module \(P\) there is an \(R\)-linear equivalence
+  \[
+    H^0\bigl(C_R, F_g\bigr) \otimes_R P \;\cong\;
+      \ker\bigl(\delta_{F_g} \otimes_R P\bigr),
+  \]
+  \(\delta_{F_g}\) the twisted two-cover differential: formation of the twisted
+  \(H^0\) commutes with all module coefficients (the curve-lite eq.\ Q).
+\end{definition}
+\begin{proof}
+  \leanok
+  The abstract module-coefficient clause (\ref{def:twoCoverPair_h0TensorEquiv}), the
+  flatness of the overlap module coming from its freeness
+  (\ref{thm:free_relTwistSections}).
+\end{proof}
+
+\begin{definition}[The ring-map clause on the relative twisted sheaf, abstract half]
+  \label{def:relTwistH0BaseChangeEquiv}
+  \lean{AlgebraicGeometry.relTwistH0BaseChangeEquiv}
+  \uses{def:twoCoverPair_h0BaseChangeEquiv, thm:free_relTwistSections, def:relTwistPairData}
+  \leanok
+  On the vanishing locus, for every commutative \(R\)-algebra \(R'\) there is an
+  \(R'\)-linear equivalence
+  \[
+    R' \otimes_R H^0\bigl(C_R, F_g\bigr) \;\cong\;
+      \ker\bigl(\delta_{F_g} \otimes_R R'\bigr).
+  \]
+\end{definition}
+\begin{proof}
+  \leanok
+  The abstract ring-map clause (\ref{def:twoCoverPair_h0BaseChangeEquiv}), with
+  flatness of the overlap module from freeness (\ref{thm:free_relTwistSections}).
+\end{proof}
+
+\begin{lemma}[The twisted differential in trivialised coordinates]
+  \label{lem:twistTriv_pairDiff}
+  \lean{AlgebraicGeometry.twistTriv₀_pairDiff}
+  \uses{def:twistTriv, lem:twistTriv_res, lem:twistTriv_inf_eq}
+  \leanok
+  For any twisted sheaf \(F_g\) on opens \(V_0, V_1\): under the chart-0
+  trivialisation of the overlap, the twisted restriction-difference map
+  \((p_0, p_1) \mapsto p_0|_{\cap} - p_1|_{\cap}\) becomes
+  \[
+    (s_0, s_1) \longmapsto s_0|_{\cap} - g \cdot s_1|_{\cap},
+    \qquad s_i = \mathrm{triv}_i(p_i) :
+  \]
+  the defect-map shape of \ref{def:twistSections}, with the cocycle carrying the
+  chart-1 term across.
+\end{lemma}
+\begin{proof}
+  \leanok
+  The trivialisations commute with restriction (\ref{lem:twistTriv_res}), so
+  \(\mathrm{triv}_0(p_0|_{\cap}) = s_0|_{\cap}\); and on the overlap the chart-0
+  trivialisation of \(p_1|_{\cap}\) is \(g\) times its chart-1 trivialisation
+  (\ref{lem:twistTriv_inf_eq}), which is \(s_1|_{\cap}\), again by
+  \ref{lem:twistTriv_res}. Subtract.
+\end{proof}
+
+\begin{definition}[CBC-1 for the twisted complex, assembled]
+  \label{def:relTwistDomBaseChange}
+  \lean{AlgebraicGeometry.relTwistDomBaseChange,
+    AlgebraicGeometry.twistTriv₀_relTwistTermBaseChange₀,
+    AlgebraicGeometry.twistTriv₁_relTwistTermBaseChange₁,
+    AlgebraicGeometry.twistTriv₀_relTwistOverlapBaseChange}
+  \uses{def:relTwistTermBaseChange, thm:relTermBaseChange, def:relSectionsMap,
+    def:twistTriv, lem:relDiffBaseChange}
+  \leanok
+  Let \(R \to R'\) be a homomorphism of commutative \(k\)-algebras, \(D\) an affine
+  two-chart cover of \(C\), \(g\) a unit cocycle on the base-changed cover of \(C_R\)
+  and \(g' = \rho^{\sharp}(g)\) its base change. The product of the two chart term
+  equivalences of \ref{def:relTwistTermBaseChange} is an \(R'\)-linear equivalence
+  \[
+    R' \otimes_R \bigl(F_g(V_0^R) \times F_g(V_1^R)\bigr) \;\cong\;
+      F_{g'}(V_0^{R'}) \times F_{g'}(V_1^{R'}),
+  \]
+  the degree-zero term of the twisted complex base-changed. In trivialised coordinates
+  each term equivalence computes, on a pure tensor \(r' \otimes p\), as
+  \(r' \cdot \rho^{\sharp}\bigl(\mathrm{triv}(p)\bigr)\) --- the structure-sheaf term
+  base change of \ref{thm:relTermBaseChange} (at the overlap, the codomain equivalence
+  of \ref{lem:relDiffBaseChange}) read through the trivialisations.
+\end{definition}
+\begin{proof}
+  \leanok
+  Each twisted term equivalence is by construction
+  (\ref{def:relTwistTermBaseChange}) the conjugate of the corresponding
+  structure-sheaf term equivalence by the chart trivialisations over \(R\) and
+  \(R'\); the displayed formula on pure tensors is the formula of
+  \ref{thm:relTermBaseChange} for the structure sheaf, conjugated. The product of two
+  \(R'\)-linear equivalences is one.
+\end{proof}
+
+\begin{theorem}[The twisted \(\delta\)-naturality square]
+  \label{thm:relTwistDiffBaseChange}
+  \lean{AlgebraicGeometry.relTwistDiff, AlgebraicGeometry.relTwistDiff_apply,
+    AlgebraicGeometry.relTwistPair_diff, AlgebraicGeometry.relTwistDiffBaseChange,
+    AlgebraicGeometry.relTwistPairDiffBaseChange}
+  \uses{lem:twistTriv_pairDiff, def:relTwistDomBaseChange, def:relCocycleBaseChange,
+    lem:relSectionsMap_props, def:relTwistTermBaseChange, def:relTwistSheaf}
+  \leanok
+  In the setting of \ref{def:relTwistDomBaseChange}, write \(\delta_g\) for the
+  twisted restriction-difference map over \(R\) and \(\delta_{g'}\) for the one over
+  \(R'\). Under the CBC-1 term identifications --- the domain equivalence of
+  \ref{def:relTwistDomBaseChange} and the overlap equivalence of
+  \ref{def:relTwistTermBaseChange} --- the base change of the twisted differential is
+  carried to the twisted differential of the base-changed cocycle:
+  \[
+    \mathrm{overlap}\circ\bigl(\delta_g \otimes_R R'\bigr)
+      \;=\; \delta_{g'} \circ \mathrm{dom} .
+  \]
+  This is the cocycle-conjugated analogue of the untwisted \(\delta\)-naturality
+  (\ref{lem:relDiffBaseChange}); on the pinned cover, \(\delta_g\) is on the nose the
+  differential of the pair of the relative twisted sheaf, so the square also reads on
+  the pairs.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Both composites are additive, so compare them on \(r' \otimes (p_0, p_1)\). Read
+  everything in chart-0 trivialised coordinates. By \ref{lem:twistTriv_pairDiff} the
+  twisted differential is \((s_0, s_1) \mapsto s_0|_{\cap} - g \cdot s_1|_{\cap}\), so
+  along the top and right the tensor goes to
+  \[
+    r' \cdot \rho^{\sharp}\bigl(s_0|_{\cap}\bigr)
+      - r' \cdot \rho^{\sharp}(g)\,\rho^{\sharp}\bigl(s_1|_{\cap}\bigr),
+  \]
+  by \ref{def:relTwistDomBaseChange} and multiplicativity of \(\rho^{\sharp}\). Along
+  the left and bottom it goes to
+  \(\bigl(r' \cdot \rho^{\sharp}s_0\bigr)\big|_{\cap} - g' \cdot \bigl(r' \cdot
+  \rho^{\sharp}s_1\bigr)\big|_{\cap}\), where \(g' = \rho^{\sharp}(g)\)
+  (\ref{def:relCocycleBaseChange}). The two agree because \(\rho^{\sharp}\) commutes
+  with restriction (\ref{lem:relSectionsMap_props}), the \(R'\)-action commutes with
+  restriction, and the \(g'\)-factor commutes with the \(R'\)-scalar (commutative
+  ring). The pair form on the pinned cover is the same identity, the pair's
+  differential being definitionally the twisted restriction-difference map.
+\end{proof}
+
+\begin{theorem}[\(H^1\) of the twisted sheaf vanishes after base change]
+  \label{thm:relTwist_h1_baseChange}
+  \lean{AlgebraicGeometry.relTwist_surjective_diff_baseChange,
+    AlgebraicGeometry.relTwist_subsingleton_h1_baseChange}
+  \uses{thm:relTwistDiffBaseChange, lem:twoCoverPair_surjective_diff, lem:kerCongr,
+    def:twoCoverPair_h0h1, lem:twoLattice_range_diff, def:relTwistPairData}
+  \leanok
+  On the vanishing locus (\(H^1\) of the pair of \(F_g\) over \(R\) trivial), for
+  every homomorphism \(R \to R'\) of commutative \(k\)-algebras: the twisted
+  differential over \(R'\) at the base-changed cocycle \(g'\) is surjective, and
+  \[
+    H^1\bigl(C_{R'},\, F_{g'}\bigr) \;=\; 0 .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Over \(R\) the twisted differential is surjective
+  (\ref{lem:twoCoverPair_surjective_diff}); tensoring with \(R'\) preserves
+  surjectivity (right exactness), and surjectivity transports across the
+  \(\delta\)-naturality square (\ref{thm:relTwistDiffBaseChange}) by
+  \ref{lem:kerCongr}. So \(\delta_{g'}\) is surjective; hence \(H^1\) of the pair of
+  \(F_{g'}\) --- its cokernel (\ref{lem:twoLattice_range_diff}) --- is trivial, and
+  the degree-one carrier over \(R'\) (\ref{def:twoCoverPair_h0h1}, for the pair data
+  of \(F_{g'}\), \ref{def:relTwistPairData}) transports the vanishing to
+  \(H^1(C_{R'}, F_{g'})\).
+\end{proof}
+
+\begin{definition}[\(H^0\) base change on the nose]
+  \label{def:relTwistH0BaseChange}
+  \lean{AlgebraicGeometry.relTwistH0BaseChange}
+  \uses{def:relTwistH0BaseChangeEquiv, lem:kerCongr, thm:relTwistDiffBaseChange,
+    def:twoCoverPair_h0h1, def:relTwistPairData}
+  \leanok
+  \source{kleiman-picard}
+  On the vanishing locus, for every homomorphism \(R \to R'\) of commutative
+  \(k\)-algebras there is an \(R'\)-linear equivalence
+  \[
+    R' \otimes_R H^0\bigl(C_R, F_g\bigr) \;\cong\;
+      H^0\bigl(C_{R'},\, F_{g'}\bigr), \qquad g' = \rho^{\sharp}(g) :
+  \]
+  formation of the twisted \(H^0\) commutes on the nose with every change of the test
+  ring --- the curve-lite form of Kleiman's clause (iii) at ring maps.
+\end{definition}
+\begin{proof}
+  \leanok
+  Compose three equivalences: the abstract ring-map clause
+  \(R' \otimes_R H^0(C_R, F_g) \cong \ker(\delta_g \otimes_R R')\)
+  (\ref{def:relTwistH0BaseChangeEquiv}); the kernel transport
+  \(\ker(\delta_g \otimes_R R') \cong \ker(\delta_{g'})\) along the twisted
+  \(\delta\)-naturality square (\ref{lem:kerCongr},
+  \ref{thm:relTwistDiffBaseChange}); and the inverse of the degree-zero carrier of the
+  pair of \(F_{g'}\) (\ref{def:twoCoverPair_h0h1}, \ref{def:relTwistPairData}),
+  \(\ker(\delta_{g'}) \cong H^0(C_{R'}, F_{g'})\).
 \end{proof}
