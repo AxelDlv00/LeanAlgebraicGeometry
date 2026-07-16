@@ -48,7 +48,7 @@ variable (R : Type u) [CommRing R] (ι : Type v) [Fintype ι] (m : ι → ℤ)
 
 private lemma toLaurent_apply_coe (p : R[X]) (n : ℕ) :
     (Polynomial.toLaurent p) ((n : ℤ)) = p.coeff n := by
-  rw [Polynomial.toLaurent_apply, Finsupp.mapDomain_apply Int.natCast_injective,
+  rw [Polynomial.toLaurent_apply, Finsupp.mapDomain_apply Nat.cast_injective,
     Polynomial.toFinsupp_apply]
 
 private lemma toLaurent_apply_neg (p : R[X]) {k : ℤ} (hk : k < 0) :
@@ -62,31 +62,36 @@ private lemma toLaurent_apply_neg (p : R[X]) {k : ℤ} (hk : k < 0) :
 
 /-- (Implementation) The chart coordinate action of the model: componentwise
 multiplication by `X`. -/
-private def modelT : Module.End R (ι → R[X]) :=
+private noncomputable def modelT : Module.End R (ι → R[X]) :=
   Algebra.lsmul R R (ι → R[X]) (X : R[X])
 
+omit [Fintype ι] in
 private lemma modelT_apply (p : ι → R[X]) (i : ι) : modelT R ι p i = X * p i := rfl
 
 /-- (Implementation) The invertible overlap action of the model: componentwise
 multiplication by `T`, with inverse multiplication by `T⁻¹`. -/
-private def modelTN : (Module.End R (ι → R[T;T⁻¹]))ˣ where
+private noncomputable def modelTN : (Module.End R (ι → R[T;T⁻¹]))ˣ where
   val := Algebra.lsmul R R (ι → R[T;T⁻¹]) (T 1 : R[T;T⁻¹])
   inv := Algebra.lsmul R R (ι → R[T;T⁻¹]) (T (-1) : R[T;T⁻¹])
   val_inv := by rw [← map_mul, ← T_add, add_neg_cancel, T_zero, map_one]
   inv_val := by rw [← map_mul, ← T_add, neg_add_cancel, T_zero, map_one]
 
+omit [Fintype ι] in
 private lemma modelTN_val_apply (n : ι → R[T;T⁻¹]) (i : ι) :
     (modelTN R ι).val n i = T 1 * n i := rfl
 
+omit [Fintype ι] in
 private lemma modelTN_inv_apply (n : ι → R[T;T⁻¹]) (i : ι) :
     (modelTN R ι).inv n i = T (-1) * n i := rfl
 
+omit [Fintype ι] in
 private lemma modelTN_val_pow_apply (M : ℕ) (n : ι → R[T;T⁻¹]) (i : ι) :
     (((modelTN R ι).val ^ M) n) i = (T (M : ℤ) : R[T;T⁻¹]) * n i := by
   have hval : (modelTN R ι).val = Algebra.lsmul R R (ι → R[T;T⁻¹]) (T 1 : R[T;T⁻¹]) := rfl
   rw [hval, ← map_pow, T_pow, mul_one]
   rfl
 
+omit [Fintype ι] in
 private lemma modelTN_inv_pow_apply (M : ℕ) (n : ι → R[T;T⁻¹]) (i : ι) :
     (((modelTN R ι).inv ^ M) n) i = (T (-(M : ℤ)) : R[T;T⁻¹]) * n i := by
   have hinv : (modelTN R ι).inv = Algebra.lsmul R R (ι → R[T;T⁻¹]) (T (-1) : R[T;T⁻¹]) := rfl
@@ -95,19 +100,21 @@ private lemma modelTN_inv_pow_apply (M : ℕ) (n : ι → R[T;T⁻¹]) (i : ι) 
 
 /-- (Implementation) The chart-0 localization map of the model: componentwise
 `toLaurent`. -/
-private def modelI0 : (ι → R[X]) →ₗ[R] (ι → R[T;T⁻¹]) :=
+private noncomputable def modelI0 : (ι → R[X]) →ₗ[R] (ι → R[T;T⁻¹]) :=
   LinearMap.pi fun i => Polynomial.toLaurentAlg.toLinearMap ∘ₗ LinearMap.proj i
 
+omit [Fintype ι] in
 private lemma modelI0_apply (p : ι → R[X]) (i : ι) :
     modelI0 R ι p i = Polynomial.toLaurent (p i) := rfl
 
 /-- (Implementation) The chart-1 localization map of the model: componentwise
 `q ↦ T^(m i) · q(T⁻¹)`, the twisted gluing. -/
-private def modelI1 : (ι → R[X]) →ₗ[R] (ι → R[T;T⁻¹]) :=
+private noncomputable def modelI1 : (ι → R[X]) →ₗ[R] (ι → R[T;T⁻¹]) :=
   LinearMap.pi fun i =>
-    Algebra.lsmul R R R[T;T⁻¹] (T (m i)) ∘ₗ (invert (R := R)).toLinearMap ∘ₗ
+    Algebra.lsmul R R R[T;T⁻¹] ((T (m i) : R[T;T⁻¹])) ∘ₗ (invert (R := R)).toLinearMap ∘ₗ
       Polynomial.toLaurentAlg.toLinearMap ∘ₗ LinearMap.proj i
 
+omit [Fintype ι] in
 private lemma modelI1_apply (q : ι → R[X]) (i : ι) :
     modelI1 R ι m q i = T (m i) * invert (Polynomial.toLaurent (q i)) := rfl
 
@@ -117,7 +124,7 @@ private lemma modelI1_apply (q : ι → R[X]) (i : ι) :
 line, as a two-lattice pair over `R`: chart lattices `ι → R[X]`, overlap module
 `ι → R[T;T⁻¹]`, componentwise coordinate actions, chart-0 gluing `toLaurent` and chart-1
 gluing `q ↦ T^(m i) · q(T⁻¹)`. -/
-def model : TwoLatticePair R (ι → R[X]) (ι → R[X]) (ι → R[T;T⁻¹]) where
+noncomputable def model : TwoLatticePair R (ι → R[X]) (ι → R[X]) (ι → R[T;T⁻¹]) where
   t₀ := modelT R ι
   t₁ := modelT R ι
   tN := modelTN R ι
@@ -159,6 +166,7 @@ def model : TwoLatticePair R (ι → R[X]) (ι → R[X]) (ι → R[T;T⁻¹]) wh
       LaurentPolynomial.involutive_invert (n i), he,
       show (-(M : ℤ)) = m i + (-((M : ℤ) + m i - k i)) + (-(k i)) from by ring,
       T_add, T_add]
+    simp only [invert_T]
     ring
   ann₀ := fun p hp => ⟨0, by
     funext i
@@ -212,7 +220,7 @@ lemma ι₁_model_injective : Function.Injective (model R ι m).ι₁ := by
   funext i
   have hc := congrFun h i
   rw [model_ι₁_apply, model_ι₁_apply] at hc
-  have h2 := (isUnit_T (m := R) (m i)).mul_left_cancel hc
+  have h2 := (isUnit_T (R := R) (m i)).mul_left_cancel hc
   exact Polynomial.toLaurent_injective ((invert (R := R)).injective h2)
 
 /-! ### The window computation, degree 1: `H¹` finiteness over any ring -/
@@ -237,7 +245,7 @@ theorem moduleFinite_h1_model : Module.Finite R (model R ι m).H1 := by
     rw [← hx]
     funext i
     rw [model_tN_val_pow_apply]
-    show (T (mm : ℤ) : R[T;T⁻¹]) * n i = ((T 1 : R[T;T⁻¹]) ^ mm) * n i
+    change (T (mm : ℤ) : R[T;T⁻¹]) * n i = ((T 1 : R[T;T⁻¹]) ^ mm) * n i
     rw [T_pow, mul_one]
   have hloc₁ : ∀ n : ι → R[T;T⁻¹], ∃ mm : ℕ,
       ((T (-1) : R[T;T⁻¹]) ^ mm) • n ∈ LinearMap.range (model R ι m).ι₁ := by
@@ -247,7 +255,7 @@ theorem moduleFinite_h1_model : Module.Finite R (model R ι m).H1 := by
     rw [← hy]
     funext i
     rw [model_tN_inv_pow_apply]
-    show (T (-(mm : ℤ)) : R[T;T⁻¹]) * n i = ((T (-1) : R[T;T⁻¹]) ^ mm) * n i
+    change (T (-(mm : ℤ)) : R[T;T⁻¹]) * n i = ((T (-1) : R[T;T⁻¹]) ^ mm) * n i
     rw [T_pow, mul_neg_one]
   exact LaurentPolynomial.moduleFinite_quotient_sup_of_exists_pow_smul_mem
     hstab₀ hstab₁ hloc₀ hloc₁

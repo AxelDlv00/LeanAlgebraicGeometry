@@ -173,6 +173,11 @@ import AlgebraicJacobian.Algebra.LocalizedColength
 import AlgebraicJacobian.Curve.BaseFieldTransition
 import AlgebraicJacobian.RiemannRoch.ChartPoints
 import AlgebraicJacobian.RiemannRoch.ChartColength
+import AlgebraicJacobian.Cohomology.RigidEngineLattice
+import AlgebraicJacobian.Cohomology.RigidEngineLatticeSixTerm
+import AlgebraicJacobian.Cohomology.RigidEngineLatticeModel
+import AlgebraicJacobian.Cohomology.RigidEngineLatticeModelHom
+import AlgebraicJacobian.Cohomology.RigidEngineLatticeCoherence
 
 /-!
 # AlgebraicJacobian — library root
