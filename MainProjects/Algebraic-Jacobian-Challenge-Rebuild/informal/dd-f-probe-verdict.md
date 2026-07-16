@@ -1,8 +1,8 @@
 # DD-F probe verdict — P-fib persistence (RECON/probe)
 
 *Date 2026-07-16. Lane DD-F (the P-fib persistence heart), DAT-D campaign.
-Status: IN PROGRESS. Author: Fable probe agent (continuation after two
-session-limit deaths; no prior on-disk state).*
+Status: **COMPLETE — VERDICT GREEN**. Author: Fable probe agent (continuation
+after two session-limit deaths; no prior on-disk state).*
 
 BINDING references: `informal/dat-d-worksheet.md` §3.2–3.3 (P-fib, F1–F4),
 §5 DD-F probe gate, §6 risk 1; addendum commit 5ee7fd62c (DAT-0b/DAT-5
@@ -192,6 +192,17 @@ None mathematical. Lean-infrastructure inventory for the DD-F formalization
 
 Total estimate: L→XL staged, mechanical; no step needs banned machinery, no
 scheme appears (P-fib stays field-level module algebra, discipline (4) met).
+
+Grounding pass on the inventory (grep-verified this probe): `divisorSheaf`
+sections ARE rational functions with pole bounds (`divisorSections`,
+`RiemannRoch/DivisorSheaf.lean:324–331`), so brick 2's multiplication is
+honest function-field multiplication + one ord-inequality lemma; inclusion
+transports for `D ≤ D'` already exist (`divisorPresheafLE`, :339); the
+`H⁰ ↔` sections bridge is `HModule.linearEquiv₀`
+(`Cohomology/ModuleKSheaf.lean:152`); brick 3's chart-level quotient
+vocabulary is `ChartColength.lean` (`finrank_quotient_span_section` :411,
+Dedekind charts :126, `toAdd_ordZ_eq_count_factors` :278); the rank anchor is
+`FLVClass.lean:412`. The estimates above stand.
 
 ## Remainder
 
