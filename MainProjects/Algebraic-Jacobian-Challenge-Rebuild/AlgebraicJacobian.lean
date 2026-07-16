@@ -193,6 +193,7 @@ import AlgebraicJacobian.Cohomology.RigidEngine4BaseChange
 import AlgebraicJacobian.Picard.DegreeZero
 import AlgebraicJacobian.Picard.Pic0Functor
 import AlgebraicJacobian.Picard.DegreeSeam
+import AlgebraicJacobian.Picard.Pic0ZariskiSheaf
 
 /-!
 # AlgebraicJacobian — library root

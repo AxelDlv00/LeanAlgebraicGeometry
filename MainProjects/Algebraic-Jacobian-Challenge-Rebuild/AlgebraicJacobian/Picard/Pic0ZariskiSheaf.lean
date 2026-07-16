@@ -252,4 +252,56 @@ theorem existsUnique_glue_of_le_cover :
 
 end picEt
 
+/-! ## Separation for the degree-zero subfunctor -/
+
+variable [SmoothOfRelativeDimension 1 C.hom]
+
+omit [GeometricallyReduced C.hom] in
+/-- **Separation for `pic0`**: two degree-zero classes agreeing on the affine opens
+subordinate to an open cover of `T.left` agree — immediate from the separation of
+`picEt`, since `pic0Subgroup` is a subgroup. -/
+theorem pic0Subgroup_ext_of_le_cover {T : Over (Spec (.of k))} {ι' : Type*}
+    (O : ι' → T.left.Opens) (hcov : ∀ p : T.left, ∃ i, p ∈ O i)
+    {s t : pic0Subgroup C T}
+    (h : ∀ (U : T.left.affineOpens) (i : ι'), U.1 ≤ O i →
+      (s : picEt C T).1 U = (t : picEt C T).1 U) : s = t :=
+  Subtype.ext (picEt.ext_of_le_cover C O hcov h)
+
+/-! ## The S-lemma: degree-zero membership is Zariski-local -/
+
+/-- **The S-lemma** (degree-zero is Zariski-local): a class whose restriction to each
+member of an open-immersion cover of the test is degree-zero is itself degree-zero.  A
+field point of `T` factors through some cover member (its image is a single point,
+contained in a member's range), where its degree is read; this is what makes the
+degree-zero subfunctor a *sub*sheaf, not merely a subfunctor of the sheaf `picEt`. -/
+theorem mem_pic0Subgroup_of_cover {T : Over (Spec (.of k))} {ι : Type*}
+    {T' : ι → Over (Spec (.of k))} (f : ∀ i, T' i ⟶ T)
+    [∀ i, IsOpenImmersion (f i).left]
+    (hcov : ∀ p : T.left, ∃ i, p ∈ (f i).left.opensRange)
+    {lam : picEt C T} (hloc : ∀ i, picEtMap C (f i) lam ∈ pic0Subgroup C (T' i)) :
+    lam ∈ pic0Subgroup C T := by
+  rw [mem_pic0Subgroup_iff]
+  intro K _ _ t
+  haveI : Nonempty ↥(overSpec k K).left := inferInstanceAs (Nonempty ↥(Spec (.of K)))
+  haveI : Subsingleton ↥(overSpec k K).left :=
+    inferInstanceAs (Subsingleton ↥(Spec (.of K)))
+  -- the field point has a single-point image; pick a cover member containing it
+  obtain ⟨i, hi⟩ := hcov (t.left.base (Classical.arbitrary _))
+  have hrange : Set.range t.left.base ⊆ Set.range (f i).left.base := by
+    rintro _ ⟨p, rfl⟩
+    rw [Subsingleton.elim p (Classical.arbitrary _)]
+    obtain ⟨x, hx⟩ := hi
+    exact ⟨x, hx⟩
+  -- factor `t` through the cover member `f i`
+  set g := IsOpenImmersion.lift (f i).left t.left hrange with hg
+  have hfac : g ≫ (f i).left = t.left := IsOpenImmersion.lift_fac _ _ hrange
+  set t' : overSpec k K ⟶ T' i := Over.homMk g (by
+    rw [← Over.w (f i), ← Category.assoc, hfac]; exact Over.w t) with ht'
+  have htt : t = t' ≫ f i := by
+    ext : 1
+    rw [Over.comp_left]
+    exact hfac.symm
+  rw [htt, ← degAt_picEtMap (f i) lam t']
+  exact (mem_pic0Subgroup_iff.mp (hloc i)) K t'
+
 end AlgebraicGeometry
