@@ -1,0 +1,68 @@
+% source: David Mumford, "Abelian Varieties", TIFR Studies in Mathematics 5, Oxford UP, 1970
+% pdf_page: 0062
+% doc_page: 51 (Chapter II, Section 5, "Cohomology and base change")
+% retrieved: 2026-07-11
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi; scanned book, no text layer)
+
+% requires: amsmath (\xrightarrow), amssymb (\mathfrak), mathrsfs (\mathscr)
+
+\DeclareMathOperator{\coker}{coker}
+
+% [running head: ALGEBRAIC THEORY VIA VARIETIES, page 51]
+
+% [conclusion of the statement of Corollary 2, begun on the previous page:
+%  conditions (i) and (ii) and the supplementary assertion]
+
+\textit{(i) $y \longmapsto \dim_{k(y)} H^p(X_y, \mathscr{F}_y)$ is a constant
+function,}
+
+\textit{(ii) $R^p f_*(\mathscr{F})$ is a locally free sheaf $\mathscr{E}$ on
+$Y$, and for all $y \in Y$, the natural map}
+\[
+  \mathscr{E} \otimes_{\mathcal{O}_Y} k(y) \longrightarrow H^p(X_y, \mathscr{F}_y)
+\]
+\textit{is an isomorphism.}
+
+\textit{If these conditions are fulfilled, we have further that}
+\[
+  R^{p-1} f_*(\mathscr{F}) \otimes_{\mathcal{O}_Y} k(y) \longrightarrow
+  H^{p-1}(X_y, \mathscr{F}_y)
+\]
+\textit{is an isomorphism for all $y \in Y$.}
+
+\paragraph{Proof.}
+Again assume $Y$ affine, $K^{\cdot}$ as in the proposition.
+(ii) $\Rightarrow$ (i) is obvious. To prove (i) $\Rightarrow$ (ii), we need
+two lemmas.
+
+\paragraph{Lemma 1.}
+\textit{If $Y$ is reduced and $\mathscr{F}$ a coherent sheaf on $Y$ such that
+$\dim_{k(y)}[\mathscr{F} \otimes_{\mathcal{O}_Y} k(y)] = r$, all $y \in Y$,
+then $\mathscr{F}$ is locally free of rank $r$ on $Y$.}
+
+\paragraph{Proof.}
+For any $y \in Y$, let $\sigma_1, \ldots, \sigma_r \in \mathscr{F}_y$ lift
+generators of $\mathscr{F}_y \otimes k(y)$. Since
+$\sigma_1, \ldots, \sigma_r$ are extendable to sections in a neighborhood of
+$y$, we have a homomorphism
+$\sigma : \mathcal{O}_Y^r|_V \to \mathscr{F}|_V$ defined in a neighborhood
+$V$ of $y$. Then $\sigma$ is surjective on the stalks at $y$, by Nakayama's
+lemma, so $\coker(\sigma)$ is zero at $y$ and hence in a neighborhood of $y$.
+Thus, we may assume $\sigma$ to be surjective. Then by assumption, for every
+$y' \in V$, the map
+\[
+  \sigma \otimes k(y') : k(y')^r \to \mathscr{F}_{y'} \otimes_{\mathcal{O}_{y'}} k(y')
+\]
+is an isomorphism. Thus, if $\mathfrak{D}$ is the kernel of $\sigma$, we have
+$\mathfrak{D}_{y'} \subset \mathfrak{M}_{y'}\, \mathcal{O}_{y'}^r$ for each
+$y' \in V$. Since $Y$ is reduced, this means that $\mathfrak{D} = (0)$. Thus
+$\sigma$ is an isomorphism.
+
+We apply this in the following
+
+\paragraph{Lemma 2.}
+\textit{Let $Y$ be a reduced, noetherian affine scheme, and let}
+\[
+  \mathscr{F} \xrightarrow{\ \phi\ } \mathfrak{D}
+\]
+% [statement of Lemma 2 continues on the next page]

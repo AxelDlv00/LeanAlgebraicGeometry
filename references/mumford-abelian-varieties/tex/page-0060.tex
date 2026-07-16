@@ -1,0 +1,64 @@
+% source: David Mumford, "Abelian Varieties", TIFR Studies in Mathematics 5, Oxford UP, 1970
+% pdf_page: 0060
+% doc_page: 49 (Chapter II, Section 5, "Cohomology and base change")
+% retrieved: 2026-07-11
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi; scanned book, no text layer)
+
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Ker}{Ker}
+
+% [running head: ALGEBRAIC THEORY VIA VARIETIES, page 49]
+
+% [end of the proof of Lemma 1, from the previous page]
+then $0 \to K^0 = L^0 \to L^1 \to L^2 \to \cdots \to L^{n+1} \to 0$ is exact
+and the modules $L^i$ are flat for $i \geq 1$, hence $K^0$ is $A$-flat.
+
+Applying the lemma to our case, we have a complex $K^{\cdot}$, and a
+homomorphism $K^{\cdot} \to C^{\cdot}$ such that
+\[
+  H^p(K^{\cdot}) \xrightarrow{\ \sim\ } H^p(C^{\cdot})
+    \cong H^p(X, \mathcal{F}), \text{ all } p.
+\]
+Note that $K^0$ is $A$-projective, since it is $A$-flat and finitely
+generated over a noetherian $A$. It remains to check that for all
+$A$-algebras $B$,
+$H^p(K^{\cdot} \otimes_A B) \to H^p(C^{\cdot} \otimes_A B)$ is an
+isomorphism too. This is a consequence of
+
+\paragraph{Lemma 2.}
+\textit{Let $C^{\cdot}$, $K^{\cdot}$ be any finite complexes of flat
+$A$-modules, and let $C^{\cdot} \to K^{\cdot}$ be a homomorphism of
+complexes inducing isomorphisms
+$H^p(C^{\cdot}) \xrightarrow{\ \sim\ } H^p(K^{\cdot})$ for all $p$. Then for
+every $A$-algebra $B$, the maps
+$H^p(C^{\cdot} \otimes_A B) \xrightarrow{\ \sim\ }
+ H^p(K^{\cdot} \otimes_A B)$ are isomorphisms.}
+
+\paragraph{Proof.}
+Construct the `mapping cylinder' $L^{\cdot}$ exactly as in the proof of
+Lemma 1. As before, we see that $L^{\cdot}$ is an exact finite complex of
+flat $A$-modules. Then it is easy to see that all the modules
+$Z^p = \Ker(L^p \xrightarrow{\ \partial^p\ } L^{p+1})$ are flat too, hence
+\[
+  0 \longrightarrow Z^p \longrightarrow L^p \longrightarrow Z^{p+1}
+    \longrightarrow 0
+\]
+is a short exact sequence of flat $A$-modules. Therefore
+\[
+  0 \longrightarrow Z^p \otimes_A B \longrightarrow L^p \otimes_A B
+    \longrightarrow Z^{p+1} \otimes_A B \longrightarrow 0
+\]
+is exact, from which it follows that $L^{\cdot} \otimes_A B$ is exact. But
+now $L^{\cdot} \otimes_A B$ is the mapping cylinder of the map
+$K^{\cdot} \otimes_A B \to C^{\cdot} \otimes_A B$. So using the cohomology
+sequence in reverse, it follows that
+$H^p(K^{\cdot} \otimes_A B) \to H^p(C^{\cdot} \otimes_A B)$ are
+isomorphisms.
+
+For any morphism $f : X \to Y$ and $y \in Y$, we denote by $X_y$ the fiber
+over $y$ of $f$ (i.e., the fiber product $X \times_Y \Spec k(y)$, considered
+as a scheme over $k(y)$), and for $\mathcal{F}$ quasi-coherent on $X$, we
+denote by $\mathcal{F}_y$ the sheaf
+$\mathcal{F} \otimes_{\mathcal{O}_Y} k(y)$ on $X_y$.
+
+We have then the following important corollary.

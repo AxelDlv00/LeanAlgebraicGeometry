@@ -1,0 +1,73 @@
+% source: David Mumford, "Abelian Varieties", TIFR Studies in Mathematics 5, Oxford UP, 1970
+% pdf_page: 0063
+% doc_page: 52 (Chapter II, Section 5, "Cohomology and base change")
+% retrieved: 2026-07-11
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi; scanned book, no text layer)
+
+% requires: amsmath (bmatrix, \text, \xrightarrow), amssymb (\mathfrak), mathrsfs (\mathscr)
+
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Spec}{Spec}
+
+% [running head: ABELIAN VARIETIES, page 52]
+
+% [continuation of the statement of Lemma 2 from the previous page]
+\textit{be a homomorphism of coherent locally free $\mathcal{O}_Y$-sheaves.
+If $\dim_{k(y)}[\Ima(\phi \otimes k(y))]$ is locally constant, then there are
+splittings:}
+\[
+  \mathscr{F} \simeq \mathscr{F}_1 \oplus \mathscr{F}_2
+\]
+\[
+  \mathfrak{D} \simeq \mathfrak{D}_1 \oplus \mathfrak{D}_2
+\]
+\textit{such that $\phi|_{\mathscr{F}_1} = (0)$,
+$\Ima(\phi) \subset \mathfrak{D}_1$, and
+$\phi : \mathscr{F}_2 \to \mathfrak{D}_1$ is an isomorphism, i.e.}
+\[
+  \phi =
+  \begin{bmatrix}
+    0 & \text{isom.} \\
+    0 & 0
+  \end{bmatrix}
+\]
+
+\paragraph{Proof.}
+By Lemma 1, $\mathfrak{D}/\phi(\mathscr{F})$ is locally free. If
+$Y = \Spec(A)$, $M = \Gamma(Y, \mathscr{F})$, $N = \Gamma(Y, \mathfrak{D})$,
+then this means that $N/\phi(M)$ is $A$-projective. Therefore $N$ splits into
+the direct sum of $\phi(M)$ and a second submodule isomorphic to
+$N/\phi(M)$. Or, in sheaves, $\mathfrak{D} \simeq \mathfrak{D}_1 \oplus \mathfrak{D}_2$,
+where $\mathfrak{D}_1 = \Ima(\phi)$. Moreover, this shows that $\phi(M)$ is
+$A$-projective, too, so $M$ splits into the direct sum of $\Ker(\phi)$ and a
+second submodule isomorphic to $\phi(M)$. Or, in sheaves,
+$\mathscr{F} \simeq \mathscr{F}_1 \oplus \mathscr{F}_2$, where
+$\phi(\mathscr{F}_1) = (0)$,
+$\phi : \mathscr{F}_2 \xrightarrow{\ \sim\ } \mathfrak{D}_1$.
+
+Now assume (i) holds. Let $K^{\cdot}$ be the complex given by the theorem.
+As in the proof of Corollary 1, $\dim[\Ima(d^{p-1} \otimes k(y))]$
+% [in the print the first "k(y)" is smudged and reads like "h(y)"; clearly k(y) as in the parallel expression on the next line]
+and $\dim[\Ima(d^p \otimes k(y))]$ are locally constant. By Lemma 2, applied
+first to $d_p : K^p \to K^{p+1}$, and second to
+$d_{p-1} : K^{p-1} \to \Ker(d_p)$, we get splittings into projective modules:
+\[
+  \begin{array}{ccccc}
+    Z_{p-1} \oplus K'_{p-1} & & B_p \oplus H_p \oplus K'_p & & B_{p+1} \oplus K'_{p+1} \\
+    \| & & \| & & \| \\
+    K_{p-1} & \longrightarrow & K_p & \longrightarrow & K_{p+1}
+  \end{array}
+\]
+where $Z_{p-1} = \Ker(d_{p-1})$, $d_{p-1} : K'_{p-1} \to B_p$ is an
+isomorphism, $B_p \oplus H_p = \Ker(d_p)$, and $d_p : K'_p \to B_{p+1}$ is an
+isomorphism. It follows immediately that
+\[
+  H^p(K^{\cdot} \otimes_A B) \simeq H_p \otimes_A B \simeq
+  H^p(K^{\cdot}) \otimes_A B, \text{ all } B
+\]
+and
+$H^{p-1}(K^{\cdot} \otimes_A B) \simeq
+ Z_{p-1} \otimes_A B / \Ima(d_{p-2} \otimes B) \simeq
+ H^{p-1}(K^{\cdot}) \otimes_A B$,
+all $B$. This proves (ii).

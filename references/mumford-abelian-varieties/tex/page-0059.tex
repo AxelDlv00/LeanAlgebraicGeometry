@@ -1,0 +1,60 @@
+% source: David Mumford, "Abelian Varieties", TIFR Studies in Mathematics 5, Oxford UP, 1970
+% pdf_page: 0059
+% doc_page: 48 (Chapter II, Section 5, "Cohomology and base change")
+% retrieved: 2026-07-11
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi; scanned book, no text layer)
+
+\DeclareMathOperator{\Ker}{Ker}
+
+% [running head: ABELIAN VARIETIES, page 48]
+
+% [continuation of the proof of Lemma 1 from the previous page]
+over $A$ ($A$ being noetherian), we can find a finitely generated free
+module ${K'}^m$ and a surjection $\partial' : {K'}^m \to B^{m+1}$. Further,
+since $H^m(C^{\cdot})$ is a finitely generated $A$-module, we can find a
+surjection ${K''}^m \xrightarrow{\ \lambda\ } H^m(C^{\cdot})$ with ${K''}^m$
+finitely generated and free. Let $\mu : {K''}^m \to Z^m(C^{\cdot})$ be any
+lift of $\lambda$, and $\phi''_m : {K''}^m \to C^m$ the composite of $\mu$
+with the inclusion $Z^m(C^{\cdot}) \to C^m$. We then put
+$K^m = {K'}^m \oplus {K''}^m$, and define $\partial^m : K^m \to K^{m+1}$ by
+putting it equal to zero on ${K''}^m$ and equal to $\partial'$ on ${K'}^m$.
+Since $\phi_{m+1} \circ \partial'({K'}^m) \subset \partial C^m$, we can find
+$\phi'_m : {K'}^m \to C^m$ such that
+$\partial \circ \phi'_m = \phi_{m+1} \circ \partial'$. We then define
+$\phi_m : K^m \to C^m$ as being equal to $\phi'_m$ on ${K'}^m$ and
+$\phi''_m$ on ${K''}^m$. The conditions (i)-(iii) are evidently fulfilled
+with $m$ instead of $m + 1$.
+
+Suppose then that $m = -1$, that is, that $\{K^p, \phi_p, \partial^p\}$ have
+been defined for $p \geq 0$ satisfying (i)-(iii). We then replace $K^0$ by
+$K^0 / \ker \partial^0 \cap \Ker \phi_0$, and we take
+$\phi_0 : K^0 \to C^0$ and $\partial^0 : K^0 \to K^1$ to be the induced
+mappings. Putting $K^p = 0$ for $p < 0$, we get a complex
+\[
+  0 \to K^0 \to K^1 \to K^2 \to K^3 \to \cdots \to K^n \to 0
+\]
+and a homomorphism $\phi : K^{\cdot} \to C^{\cdot}$ which by construction
+induces isomorphisms in cohomology. We have only to check that $K^0$ is
+$A$-flat when all the $C^p$ are $A$-flat. Consider the `mapping cylinder'
+complex $L$ defined by $L^p = K^p \oplus C^{p-1}$ for $p \in \mathbf{Z}$,
+and $\partial : L^p \to L^{p+1}$ defined by
+$\partial(x, 0) = (\partial x, \phi(x))$,
+$\partial(0, y) = (0, -\partial y)$. If ${C'}^{\cdot}$ is the complex
+obtained from $C^{\cdot}$ by shifting degrees by one (and making a sign
+change in $\partial$), ${C'}^p = C^{p-1}$, we have an exact sequence of
+complexes $0 \to {C'}^{\cdot} \to L^{\cdot} \to K^{\cdot} \to 0$, and hence
+an exact cohomology sequence
+\[
+\begin{array}{ccccccccc}
+ & & H^{p}(C^{\cdot}) & & & & & & H^{p+1}(C^{\cdot}) \\
+ & & \| & & & & & & \| \\
+H^{p}(K^{\cdot}) & \longrightarrow & H^{p+1}({C'}^{\cdot}) & \longrightarrow
+  & H^{p+1}(L^{\cdot}) & \longrightarrow & H^{p+1}(K^{\cdot})
+  & \longrightarrow & H^{p+2}({C'}^{\cdot})
+\end{array}
+\]
+and one sees from the definition that the cohomology maps
+$H^p(K^{\cdot}) \to H^{p+1}({C'}^{\cdot}) \cong H^p(C^{\cdot})$ are the ones
+induced by $\phi : K^{\cdot} \to C^{\cdot}$. Since these are all
+isomorphisms, $H^p(L^{\cdot}) = (0)$ for all $p \in \mathbf{Z}$. But
+% [proof continues on the next page]

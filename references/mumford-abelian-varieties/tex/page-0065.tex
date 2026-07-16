@@ -1,0 +1,68 @@
+% source: David Mumford, "Abelian Varieties", TIFR Studies in Mathematics 5, Oxford UP, 1970
+% pdf_page: 0065
+% doc_page: 54 (Chapter II, Section 5, "Cohomology and base change")
+% retrieved: 2026-07-11
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi; scanned book, no text layer)
+
+% requires: amsmath (\xrightarrow, \text), mathrsfs (\mathscr)
+
+\DeclareMathOperator{\Spec}{Spec}
+
+% [running head: ABELIAN VARIETIES, page 54]
+
+% [conclusion of the statement of Corollary 5, begun on the previous page]
+\[
+  H^p(X \times_Y \Spec B, \mathscr{F} \otimes_A B) \simeq
+  H^p(X, \mathscr{F}) \otimes_A B.
+\]
+
+\paragraph{Proof.}
+This follows immediately, from the fact that for $B$ flat over $A$, and
+\textit{any} complex $K^{\cdot}$,
+\[
+  H^p(K^{\cdot} \otimes_A B) \simeq H^p(K^{\cdot}) \otimes_A B.
+\]
+
+\paragraph{Corollary 6. (Seesaw Theorem---provisional form).}
+\textit{Let $X$ be a complete variety, $T$ any variety and $L$ a line bundle
+on $X \times T$. Then the set}
+\[
+  T_1 = \{ t \in T \mid L|_{X \times \{t\}} \text{ is trivial on } X \times \{t\} \}
+\]
+\textit{is closed in $T$, and if on $X \times T_1$,
+$p_2 : X \times T_1 \to T_1$ is the projection, then
+$L|_{X \times T_1} \simeq p_2^* M$ for some line bundle $M$ on $T_1$.}
+
+\paragraph{Proof.}
+We first make the remark that a line bundle $M$ on a complete variety $X$ is
+trivial if and only if $\dim H^0(X, \underline{M}) > 0$ and
+$\dim H^0(X, \underline{M}^{-1}) > 0$ where $\underline{M}$ denotes the sheaf
+of sections of $M$. In fact, the necessity of these conditions is clear.
+Suppose conversely that they hold. The first implies the existence of a
+non-zero homomorphism $\mathcal{O}_X \xrightarrow{\ \sigma\ } \underline{M}$,
+and the second implies a non-zero homomorphism
+$\mathcal{O}_X \to \underline{M}^{-1}$, hence on dualizing, a non-zero
+homomorphism $\underline{M} \xrightarrow{\ \tau\ } \mathcal{O}_X$. Hence
+$\tau(\sigma(1))$ is a non-zero section of $\mathcal{O}_X$, and since $X$ is
+complete and connected, $\tau(\sigma(1))$ is a non-zero scalar. This implies
+that $\tau \circ \sigma$ is an isomorphism, hence $\sigma$ and $\tau$ are
+isomorphisms.
+
+It follows that $T_1$ is the set of points $t$ of $T$ such that
+$\dim H^0(X \times \{t\}, \underline{L} \mid X \times \{t\}) > 0$
+\textit{and}
+$\dim H^0(X \times \{t\}, \underline{L}^{-1} \mid X \times \{t\}) > 0$, and
+it follows from Corollary 1 that $T_1$ is closed. Replacing $T$ by $T_1$ (so
+$T$ is now merely a reduced scheme of finite type over $k$) and $L$ by its
+restriction to $X \times T_1$, we may assume that $L \mid X \times \{t\}$ is
+trivial for each $t \in T$. Hence
+$\dim H^0(X \times \{t\}, L \mid X \times \{t\}) = 1$ for all $t \in T$, so
+that by Corollary 2, $p_{2*}(\underline{L}) = \underline{M}$ is an invertible
+sheaf on $T$ and
+\[
+  \underline{M} \otimes_{\mathcal{O}_T} (kt) \leftarrow
+  H^0(X \times \{t\}, \underline{L} \mid X \times \{t\})
+\]
+% [sic: "(kt)" as printed, evidently a misprint for "k(t)"; the arrow points
+%  leftward in the print]
+% [proof continues on the next page]

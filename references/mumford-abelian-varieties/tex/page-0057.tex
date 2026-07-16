@@ -1,0 +1,57 @@
+% source: David Mumford, "Abelian Varieties", TIFR Studies in Mathematics 5, Oxford UP, 1970
+% pdf_page: 0057
+% doc_page: 46 (Chapter II, Section 5, "Cohomology and base change")
+% retrieved: 2026-07-11
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi; scanned book, no text layer)
+
+\DeclareMathOperator{\Spec}{Spec}
+
+% [running head: ABELIAN VARIETIES, page 46]
+
+\paragraph{5. Cohomology and base change.}
+At this point, we have to digress to prove a theorem of Grothendieck on the
+behavior of cohomology groups of a family of vector bundles $E_y$ on a family
+of varieties $X_y$, parametrized by points $y \in Y$ where $X_y$ is assumed
+to be a flat family of varieties. An important consequence of this result is
+the semicontinuity of the dimensions of the cohomology groups of the $E_y$.
+
+We assume the following basic result.
+
+\paragraph{Theorem.}
+\textit{If $f : X \to Y$ is a proper morphism of locally noetherian
+preschemes and $\mathcal{F}$ a coherent sheaf of $\mathcal{O}_X$-modules on
+$X$, for all $p \geq 0$ the direct image sheaves $R^p f_*(\mathcal{F})$ are
+coherent sheaves of $\mathcal{O}_Y$-modules.}
+
+We recall the following definition. If $f : X \to Y$ is a morphism of
+preschemes and $\mathcal{F}$ a quasicoherent sheaf on $X$, $\mathcal{F}$ is
+said to be \textit{flat over $Y$} or \textit{$f$-flat} if for each
+$x \in X$, $\mathcal{F}_x$ (for its natural structure of
+$\mathcal{O}_{Y, f(x)}$-module) is $\mathcal{O}_{Y, f(x)}$-flat. It is easily
+shown that this condition is equivalent to requiring that for $U \subset X$,
+$V \subset Y$ with $U$ and $V$ affine open, and $f(U) \subset V$,
+$\mathcal{F}(U)$ is a flat $\mathcal{O}_Y(V)$-module.
+
+The main result of this section is the following
+
+\paragraph{Theorem.}
+\textit{Let $f : X \to Y$ be a proper morphism of noetherian schemes with
+$Y = \Spec A$ affine, and $\mathcal{F}$ a coherent sheaf on $X$, flat over
+$Y$. There is a finite complex
+$K^{\cdot} : 0 \to K^0 \to K^1 \to \cdots \to K^n \to 0$
+of finitely generated projective $A$-modules and an isomorphism of functors}
+\[
+  H^p(X \times_Y \Spec B, \mathcal{F} \otimes_A B)
+    \cong H^p(K^{\cdot} \otimes_A B), \quad (p \geq 0)
+\]
+\textit{on the category of $A$-algebras $B$.}
+
+\paragraph{Proof.}
+Choose a finite affine covering $\mathfrak{A} = \{U_i\}_{i \in I}$ of $X$ by
+affine open subsets. Then the \v{C}ech complex
+$C^{\cdot} = C^{\cdot}(\mathfrak{A}, \mathcal{F})
+  = \oplus\, C^p(\mathfrak{A}, \mathcal{F})$
+of alternating \v{C}ech cochains on $\mathfrak{A}$ with coefficients in
+$\mathcal{F}$ is a finite complex of $A$-flat modules, whose cohomologies are
+isomorphic to the cohomology groups $H^p(X, \mathcal{F})$.
+% [proof continues on the next page]

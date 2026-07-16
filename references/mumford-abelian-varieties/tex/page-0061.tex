@@ -1,0 +1,65 @@
+% source: David Mumford, "Abelian Varieties", TIFR Studies in Mathematics 5, Oxford UP, 1970
+% pdf_page: 0061
+% doc_page: 50 (Chapter II, Section 5, "Cohomology and base change")
+% retrieved: 2026-07-11
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi; scanned book, no text layer)
+
+\DeclareMathOperator{\Image}{Im}
+
+% [running head: ABELIAN VARIETIES, page 50]
+
+% [this Corollary is printed unnumbered; later proofs (pp. 52, 54) refer to it as Corollary 1]
+\paragraph{Corollary.}
+\textit{Let $X$, $Y$, $f$ and $\mathcal{F}$ be as in the theorem (except
+that $Y$ need not be affine). Then we have:}
+\begin{itemize}
+  \item[(a)] \textit{For each $p \geq 0$, the function $Y \to \mathbf{Z}$
+    defined by \\
+    $y \longmapsto \dim_{k(y)} H^p(X_y, \mathcal{F}_y)$ is upper
+    semicontinuous on $Y$.}
+  \item[(b)] \textit{The function $Y \to \mathbf{Z}$ defined by}
+    \[
+      y \to \chi(\mathcal{F}_y)
+        = \sum_{p=0}^{\infty} (-1)^p \dim_{k(y)} H^p(X_y, \mathcal{F}_y)
+    \]
+    \textit{is locally constant on $Y$.}
+\end{itemize}
+
+\paragraph{Proof.}
+The problem being local on $Y$, we may assume $Y$ affine. Let $K^{\cdot}$ be
+a complex as in the proposition; by further localization, we may assume
+$K^{\cdot}$ to be a free complex. Denote by $d^p : K^p \to K^{p+1}$ the
+coboundary of $K$. We then have
+\[
+\begin{aligned}
+  \dim_{k(y)} H^p(X_y, \mathcal{F}_y)
+    &= \dim_{k(y)}[\ker(d^p \otimes_A k(y))] - {} \\
+    &\qquad\qquad - \dim_{k(y)}[\Image(d^{p-1} \otimes_A k(y))] \\
+    &= \dim_{k(y)}[K^p \otimes k(y)]
+       - \dim_{k(y)}[\Image(d^p \otimes k(y))] - {} \\
+    &\qquad\qquad - \dim_{k(y)}[\Image(d^{p-1} \otimes k(y))].
+       \qquad (*)
+\end{aligned}
+\]
+The first term being constant on $Y$, (b) follows on taking alternating sum
+of $(*)$ over all $p$. We assert that for any $p \geq 0$, the function
+$\rho_p(y) = \dim_{k(y)}[\Image(d^p \otimes k(y))]$ is lower
+semi-continuous on $Y$. In fact, if $r$ is any integer $\geq 0$, and
+$d^p_r : \Lambda^r K^p \to \Lambda^r K^{p+1}$ is the map induced by $d^p$,
+\[
+  \{\, y \in Y \mid \rho_p(y) < r \,\}
+    = \{\, y \in Y \mid d^p_r \otimes k(y) = 0 \,\},
+\]
+and this set is closed since $d^p_r$ is a homomorphism of free finitely
+generated modules, and hence is described by a matrix in $A$, and the above
+set is the set of common zeros of all entries of the matrix. This proves
+(a).
+
+Moreover, the theorem gives the following criterion for putting together
+the cohomology groups of $\mathcal{F}$ along the fibres of $f$ into a
+vector bundle on $Y$.
+
+\paragraph{Corollary 2.}
+\textit{Let $X$, $Y$, $f$ and $\mathcal{F}$ be as above. Assume $Y$ is
+reduced and connected. Then for all $p$ the following are equivalent:}
+% [statement of Corollary 2 continues on the next page]

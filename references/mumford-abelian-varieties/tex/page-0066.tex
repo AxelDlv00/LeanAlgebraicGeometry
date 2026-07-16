@@ -1,0 +1,75 @@
+% source: David Mumford, "Abelian Varieties", TIFR Studies in Mathematics 5, Oxford UP, 1970
+% pdf_page: 0066
+% doc_page: 55 (Chapter II, end of Section 5 "Cohomology and base change";
+%           beginning of Section 6, "The theorem of the cube: I")
+% retrieved: 2026-07-11
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi; scanned book, no text layer)
+
+% requires: amsmath, amssymb
+
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Pic}{Pic}
+
+% [running head: ALGEBRAIC THEORY VIA VARIETIES, page 55]
+
+% [conclusion of the proof of Corollary 6 (Seesaw Theorem---provisional form)
+%  from the previous page]
+is an isomorphism. It clearly follows from the triviality of
+$L \mid X \times \{t\}$ that the natural map
+$p_2^*(\underline{M}) \to \underline{L}$ is an isomorphism. Since
+$\underline{M}$ is the sheaf of sections of $M$, then $p_2^* M \simeq L$.
+
+\section*{6. The theorem of the cube: I}
+
+\paragraph{Theorem.}
+\textit{Let $X$, $Y$ be complete varieties, $Z$ any variety and $x_0$, $y_0$
+and $z_0$ base points on $X$, $Y$, and $Z$, respectively. If $L$ is any line
+bundle on $X \times Y \times Z$ whose restrictions to each of
+$\{x_0\} \times Y \times Z$, $X \times \{y_0\} \times Z$ and
+$X \times Y \times \{z_0\}$ are trivial, $L$ is trivial.}
+
+\paragraph{Remark.}
+Let $T$ be a contravariant functor on the category of
+% [the print shows a stray prime after this first "T"; the functor is called T throughout]
+complete varieties into the category $\underline{\mathrm{Ab}}$ of abelian
+groups. Let $X_0, \ldots, X_n$ be any system of complete varieties, $x_i^0$ a
+base point of $X_i$, and let
+$\pi_i : X_0 \times \ldots \times X_n \to
+ X_0 \times \ldots \times \hat{X}_i \times \ldots \times X_n$
+($\hat{X}_i$ indicating the omission of the $i$-th factor $X_i$) be the
+projection map, and
+$\sigma_i : X_0 \times \ldots \times \hat{X}_i \times \ldots \times X_n \to
+ X_0 \times \ldots \times X_n$
+the `inclusion' defined by
+\[
+  \sigma_i(x_0, \ldots, x_{i-1}, x_{i+1}, \ldots, x_n) =
+  (x_0, \ldots, x_{i-1}, x_i^0, x_{i+1}, \ldots, x_n).
+\]
+Consider the homomorphisms
+\[
+  \alpha_T^n : \prod_{i=0}^{n}
+  T(X_0 \times \ldots \times \hat{X}_i \times \ldots \times X_n) \to
+  T(X_0 \times \ldots \times X_n),
+\]
+\[
+  \beta_T^n : T(X_0 \times \ldots \times X_n) \to \prod_{i=1}^{n}
+  T(X_0 \times \ldots \times \hat{X}_i \times \ldots \times X_n)
+\]
+defined by
+\[
+  \alpha_T^n(\xi_0, \ldots, \xi_n) = \sum_0^n \pi_i^*(\xi_i), \quad
+  \beta_T^n(\eta) = (\sigma_0^*(\eta), \sigma_2^*(\eta), \ldots, \sigma_n^*(\eta)).
+\]
+% [sic: the components of beta are printed with subscripts 0, 2, ..., n,
+%  while the product defining its target runs over i = 1, ..., n]
+One then proves by an easy induction on $n$ that we have a natural splitting
+$T(X_0 \times \ldots \times X_n) = \Ima \alpha \oplus \Ker \beta$. The
+functor $T$ is said to be of \textit{order} $n$ (\textit{linear} if $n = 1$,
+\textit{quadratic} if $n = 2$, etc.) if $\alpha$ is surjective, or
+equivalently $\beta$ is injective. (Note that the definition of $\alpha$ is
+independent of base points.)
+
+Thus, the above theorem (when $Z$ is also assumed complete) may be
+paraphrased as saying that the functor $\Pic X$ is a quadratic functor on the
+category of complete varieties.

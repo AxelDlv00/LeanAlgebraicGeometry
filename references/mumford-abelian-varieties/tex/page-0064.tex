@@ -1,0 +1,72 @@
+% source: David Mumford, "Abelian Varieties", TIFR Studies in Mathematics 5, Oxford UP, 1970
+% pdf_page: 0064
+% doc_page: 53 (Chapter II, Section 5, "Cohomology and base change")
+% retrieved: 2026-07-11
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi; scanned book, no text layer)
+
+% requires: amsmath (\xrightarrow), mathrsfs (\mathscr)
+
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\Ker}{Ker}
+\DeclareMathOperator{\Spec}{Spec}
+
+% [running head: ALGEBRAIC THEORY VIA VARIETIES, page 53]
+
+\paragraph{Corollary 3.}
+\textit{Let $X$, $Y$, $f$ and $\mathscr{F}$ be as above (unlike Corollary 2,
+$Y$ need not be reduced). Assume for some $p$ that
+$H^p(X_y, \mathscr{F}_y) = (0)$, all $y \in Y$. Then the natural map}
+\[
+  R^{p-1} f_*(\mathscr{F}) \otimes_{\mathcal{O}_Y} k(y) \to
+  H^{p-1}(X_y, \mathscr{F}_y)
+\]
+\textit{is an isomorphism for all $y \in Y$.}
+
+\paragraph{Proof.}
+Again assume $Y = \Spec(A)$, $K^{\cdot}$ as in the theorem. For all
+$y \in Y$, we know that
+\[
+  K^{p-1} \otimes k(y) \xrightarrow{\ d^{p-1}\ } K^p \otimes k(y)
+  \xrightarrow{\ d^p\ } K^{p+1} \otimes k(y)
+\]
+is exact. Split the vector space $K^p \otimes k(y)$ into
+$\overline{W}_1 \oplus \overline{W}_2$, where $\overline{W}_1 = $ Image of
+$K^{p-1} \otimes k(y)$, and $\overline{W}_2$ is mapped injectively to
+$K^{p+1} \otimes k(y)$. To prove the corollary at $y$, we can replace $A$ by
+any localization $A_f$, ($f \in A$, $f(y) \neq 0$). If we do this for a
+suitable $f$, we may assume that $K^p$ itself splits into a direct sum of
+free modules $W_1 \oplus W_2$ such that (a) $\overline{W}_i = W_i \otimes k(y)$,
+and (b) $W_1 \subset \Ima(d^{p-1})$. To do this, just lift a basis of
+$\overline{W}_1$ to any elements in the image of $d^{p-1}$, and lift a basis
+of $\overline{W}_2$ arbitrarily. But then since
+$W_2 \otimes k(y) \to K^{p+1} \otimes k(y)$ is injective, it follows that
+$W_2 \to K^{p+1}$ is also injective if $A$ is replaced again by a suitable
+localization $A_f$. But then $\Ima(d^{p-1}) \cap W_2 = (0)$, hence
+$W_1 = \Ima(d^{p-1})$. Since $W_1$ is a projective module the surjection
+$K^{p-1} \to W_1 \to 0$ splits, and
+$K^{p-1} \simeq \Ker(d^{p-1}) \oplus W_1$. It follows that we have exact
+sequences
+\[
+  K^{p-2} \longrightarrow \Ker(d^{p-1}) \longrightarrow
+  H^{p-1}(X, \mathscr{F}) \longrightarrow 0
+\]
+\[
+  K^{p-2} \otimes k(y) \longrightarrow \Ker(d^{p-1}) \otimes k(y)
+  \longrightarrow H^{p-1}(X_y, \mathscr{F}_y) \longrightarrow 0.
+\]
+Therefore
+$H^{p-1}(X_y, \mathscr{F}_y) \simeq H^{p-1}(X, \mathscr{F}) \otimes k(y)$ as
+required.
+
+\paragraph{Corollary 4.}
+\textit{Let $X$, $Y$, and $\mathscr{F}$ be as above. If
+$R^k f_*(\mathscr{F}) = (0)$ for $k > k_0$, then
+$H^k(X_y, \mathscr{F}_y) = (0)$ for all $y \in Y$, and for $k > k_0$.}
+
+\paragraph{Proof.}
+Use Corollary 3 and decreasing induction on $k_0$.
+
+\paragraph{Corollary 5.}
+\textit{Let $X$, $Y$, $f$ and $\mathscr{F}$ be as above. Then if $B$ is a
+flat $A$-algebra,}
+% [statement of Corollary 5 continues on the next page]

@@ -1,0 +1,67 @@
+% source: David Mumford, "Abelian Varieties", TIFR Studies in Mathematics 5, Oxford UP, 1970
+% pdf_page: 0058
+% doc_page: 47 (Chapter II, Section 5, "Cohomology and base change")
+% retrieved: 2026-07-11
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi; scanned book, no text layer)
+
+\DeclareMathOperator{\Spec}{Spec}
+
+% [running head: ALGEBRAIC THEORY VIA VARIETIES, page 47]
+
+% [continuation of the proof of the main theorem from the previous page]
+Moreover, for all $A$-algebras $B$, $\{U_i \times_Y \Spec B\}$ is an affine
+covering of $X \times_Y \Spec(B)$, and
+$C^p(\mathfrak{A}, \mathcal{F}) \otimes_A B$ is the module of \v{C}ech
+$p$-cochains of $\mathcal{F} \otimes_A B$ for this covering. Therefore
+\[
+  H^p(X \times_Y \Spec B, \mathcal{F} \otimes_A B)
+    \cong H^p(C^{\cdot} \otimes_A B)
+\]
+for all $B$, and, in fact, functorially in $B$.
+
+We need the following basic lemma
+
+\paragraph{Lemma 1.}
+\textit{Let $C^{\cdot}$ be a complex of $A$-modules ($A$ any noetherian ring)
+such that the $H^i(C^{\cdot})$ are finitely generated $A$-modules and such
+that $C^p \neq (0)$ only if $0 \leq p \leq n$. Then there exists a complex
+$K^{\cdot}$ of finitely generated $A$-modules such that $K^p \neq (0)$ only
+if $0 \leq p \leq n$ and $K^p$ is free if $1 \leq p \leq n$ and a
+homomorphism of complexes $\phi : K^{\cdot} \to C^{\cdot}$ such that $\phi$
+induces isomorphisms
+$H^i(K^{\cdot}) \xrightarrow{\ \sim\ } H^i(C^{\cdot})$, all $i$. Moreover if
+the $C^p$ are $A$-flat, then $K^0$ will be $A$-flat too.}
+
+\paragraph{Proof.}
+We define, by descending induction on $m$, diagrams:
+\[
+\begin{array}{ccccccccc}
+ & & K^{m} & \xrightarrow{\ \partial^{m}\ } & K^{m+1}
+   & \xrightarrow{\ \partial^{m+1}\ } & K^{m+2} & \longrightarrow & \cdots \\[4pt]
+ & & \big\downarrow{\scriptstyle \phi_{m}} & & \big\downarrow{\scriptstyle \phi_{m+1}}
+   & & \big\downarrow{\scriptstyle \phi_{m+2}} & & \\[4pt]
+\cdots \longrightarrow & C^{m-1} \longrightarrow & C^{m}
+   & \xrightarrow[\ \partial^{m}\ ]{} & C^{m+1}
+   & \xrightarrow[\ \partial^{m+1}\ ]{} & C^{m+2} & \longrightarrow & \cdots
+\end{array}
+\]
+Put $K^p = 0$ for $p > n$. Suppose we have defined
+$(K^p, \phi_p, \partial^p)$ for $p \geq m + 1$ such that the following
+conditions hold:
+\begin{itemize}
+  \item[(i)] $\partial^p \phi_p = \phi_{p+1} \partial^p$, $(p \geq m + 1)$.
+  \item[(ii)] $\partial^{p+1} \circ \partial^p = 0$, $(p \geq m + 1)$.
+  \item[(iii)] The $\phi^p$ induces isomorphisms in cohomology
+    $H^q(K^{\cdot}) \xrightarrow{\ \sim\ } H^q(C^{\cdot})$ for
+    $q \geq m + 2$, and a surjection
+    $\ker \partial^{m+1} \to H^{m+1}(C^{\cdot})$.
+  \item[(iv)] The $K^p$ are $A$-free and finitely generated,
+    $(p \geq m + 1)$.
+\end{itemize}
+We then construct $K^m$, $\partial^m$ and $\phi_m$ so as to satisfy
+(i)-(iii) with $m + 1$ replaced by $m$.
+
+Suppose first that $m \geq 0$. Let $B^{m+1}$ be the kernel of the
+homomorphism $\ker \partial^{m+1} \to H^{m+1}(C^{\cdot})$. Since $B^{m+1}$
+is finitely generated
+% [proof continues on the next page]
