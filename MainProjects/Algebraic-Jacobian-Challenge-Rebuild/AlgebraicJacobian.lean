@@ -201,6 +201,7 @@ import AlgebraicJacobian.Cohomology.GluedSheafDatum
 import AlgebraicJacobian.Cohomology.GluedSheafModule
 import AlgebraicJacobian.Cohomology.GluedSheafEngine
 import AlgebraicJacobian.Cohomology.GluedSheafCongr
+import AlgebraicJacobian.Cohomology.GluedSheafFibre
 import AlgebraicJacobian.Picard.DegreeZero
 import AlgebraicJacobian.Picard.Pic0Functor
 import AlgebraicJacobian.Picard.DegreeSeam
@@ -217,6 +218,9 @@ import AlgebraicJacobian.RiemannRoch.GraphSectionEval
 import AlgebraicJacobian.RiemannRoch.GraphChart
 import AlgebraicJacobian.RiemannRoch.GraphDegree
 import AlgebraicJacobian.Picard.AbelElement
+import AlgebraicJacobian.Albanese.RationalMapPrecomp
+import AlgebraicJacobian.Albanese.RationalMapProd
+import AlgebraicJacobian.Albanese.RationalMapFunctionField
 
 /-!
 # AlgebraicJacobian — library root
