@@ -201,6 +201,7 @@ import AlgebraicJacobian.Cohomology.GluedSheafPair
 import AlgebraicJacobian.Cohomology.GluedSheafDatum
 import AlgebraicJacobian.Cohomology.GluedSheafModule
 import AlgebraicJacobian.Cohomology.GluedSheafEngine
+import AlgebraicJacobian.Cohomology.GluedSheafDatumBaseChange
 import AlgebraicJacobian.Cohomology.GluedSheafCongr
 import AlgebraicJacobian.Cohomology.GluedSheafFibre
 import AlgebraicJacobian.Picard.DegreeZero
@@ -215,6 +216,7 @@ import AlgebraicJacobian.RiemannRoch.SectionBound
 import AlgebraicJacobian.RiemannRoch.WindowLedger
 import AlgebraicJacobian.RiemannRoch.SectionSpaces
 import AlgebraicJacobian.RiemannRoch.WindowLedgerF3
+import AlgebraicJacobian.RiemannRoch.BaseDivisor
 import AlgebraicJacobian.Algebra.PointFiberIdeal
 import AlgebraicJacobian.Curve.GraphFibre
 import AlgebraicJacobian.RiemannRoch.GraphSectionEval
@@ -231,9 +233,12 @@ import AlgebraicJacobian.Algebra.StandardSmoothDimension
 import AlgebraicJacobian.Picard.GrassmannianChart
 import AlgebraicJacobian.Picard.GrassmannianCocycle
 import AlgebraicJacobian.Picard.GrassmannianPhi
+import AlgebraicJacobian.Picard.GrassmannianGlue
+import AlgebraicJacobian.Picard.GrassmannianScheme
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularityStep
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularity
 import AlgebraicJacobian.Picard.FlatCokernel
+import AlgebraicJacobian.Picard.DivisorFamily
 import AlgebraicJacobian.Algebra.ABDepth
 import AlgebraicJacobian.Algebra.ABDepthExt
 import AlgebraicJacobian.Algebra.ABDepthSES
@@ -242,6 +247,7 @@ import AlgebraicJacobian.Algebra.ABFormula
 import AlgebraicJacobian.Algebra.ABRegularQuotient
 import AlgebraicJacobian.Algebra.ABRegularDomain
 import AlgebraicJacobian.Algebra.ABRegularCM
+import AlgebraicJacobian.Picard.FibrewiseRegular
 
 /-!
 # AlgebraicJacobian — library root
