@@ -91,13 +91,18 @@ cascades through.
   \lean{AlgebraicGeometry.picFromBase_le_comap_whiskerRight,
     AlgebraicGeometry.relPicMapCurveApp, AlgebraicGeometry.relPicMapCurveApp_mk,
     AlgebraicGeometry.relPicMapCurve, AlgebraicGeometry.relPicMapCurve_app_mk,
-    AlgebraicGeometry.relPicMapCurve_id, AlgebraicGeometry.relPicMapCurve_comp}
-  \uses{def:relPic, def:relPicMap}
+    AlgebraicGeometry.relPicMapCurve_id, AlgebraicGeometry.relPicMapCurve_comp,
+    AlgebraicGeometry.relPicMapCurveApp_id, AlgebraicGeometry.relPicMapCurveApp_comp,
+    AlgebraicGeometry.relPicMap_relPicMapCurveApp,
+    AlgebraicGeometry.relPicAlgMap_relPicMapCurveApp}
+  \uses{def:relPic, def:relPicMap, def:relPicAlgMap}
   \leanok
   A morphism of curves \(g \colon C' \to C\) over \(\Spec k\) induces, by pullback along
   \(g \rhd T\) on representatives, a natural transformation of relative Picard functors
   \(\mathrm{relPic}(C,-) \to \mathrm{relPic}(C',-)\); the assignment is contravariantly
-  functorial in \(g\) on the nose.
+  functorial in \(g\) on the nose. In particular, at every test object the transports
+  satisfy the functor laws, and they commute with restriction along any test morphism ---
+  in particular along \(\Spec f\) for a \(k\)-algebra map \(f\) of affine tests.
 \end{lemma}
 \begin{proof}
   \leanok
@@ -107,6 +112,33 @@ cascades through.
   exchange identity \((C' \lhd t) \circ (g \rhd T') = (g \rhd T) \circ (C \lhd t)\) of
   whiskerings, applied to representatives. The functor laws follow from
   \(\id \rhd T = \id\) and \((g' \circ g) \rhd T = (g \rhd T) \circ (g' \rhd T)\).
+\end{proof}
+
+\begin{lemma}[Constant curve morphisms kill relative Picard classes]
+  \label{lem:relPicMapCurveConstant}
+  \lean{AlgebraicGeometry.cechPicMap_toUnit_whiskerRight_mem_picFromBase,
+    AlgebraicGeometry.relPicMapCurveApp_toUnit_comp}
+  \uses{def:relPic, lem:relPicMapCurve}
+  \leanok
+  Let \(g \colon C' \to C\) be a morphism of curve bundles over \(\Spec k\) that factors
+  through the terminal object \(\Spec k\) of \(\Over(\Spec k)\). Then for every test
+  object \(T\) the induced map \(\mathrm{relPic}(C,T) \to \mathrm{relPic}(C',T)\) is
+  trivial.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Write \(g = e \circ u\) with \(u \colon C' \to \Spec k\) the unique morphism to the
+  terminal object and \(e \colon \Spec k \to C\). Pullback along \(g \rhd T\) then factors
+  through pullback along \(u \rhd T \colon C' \otimes T \to \Spec k \otimes T\), so it
+  suffices to show that every Picard class on \(\Spec k \otimes T\) pulls back along
+  \(u \rhd T\) into the subgroup \(H_T\) of classes pulled back from \(T\). The second
+  projection \(\mathrm{snd} \colon \Spec k \otimes T \to T\) is the left unitor, hence an
+  isomorphism, so an arbitrary class \(X\) on \(\Spec k \otimes T\) is
+  \(\mathrm{snd}^{*} N\) for \(N := (\mathrm{snd}^{-1})^{*} X\). Since
+  \(\mathrm{snd} \circ (u \rhd T) = \mathrm{snd}_{C',T}\), we get
+  \((u \rhd T)^{*} X = (u \rhd T)^{*}\,\mathrm{snd}^{*} N = \mathrm{snd}_{C',T}^{*} N \in
+  H_T\). Every pulled-back class therefore lies in \(H_T\) and dies in the quotient
+  \(\mathrm{relPic}(C',T)\).
 \end{proof}
 
 \section{Presented \'etale covers of an affine scheme}
