@@ -3,7 +3,7 @@ Copyright (c) 2026 The AlgebraicJacobian authors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
-import AlgebraicJacobian.RiemannRoch.DegreeBaseFieldInvariance
+import AlgebraicJacobian.RiemannRoch.DegreeIsoTransport
 import AlgebraicJacobian.RiemannRoch.DegreePullbackFiber
 
 /-!
@@ -46,145 +46,13 @@ variable (K : Type u) [Field K] {X Y : Scheme.{u}}
   [SmoothOfRelativeDimension 1 (Y ↘ Spec (CommRingCat.of K))] [IsIntegral Y]
   [QuasiCompact (Y ↘ Spec (CommRingCat.of K))]
 
-/-! ## The pulled tracked point system -/
+/-! ## The pulled tracked point system
 
-/-- **The pulled tracked point system** (EV-4 step 3): the pullback along `f` of the
-tracked point equations of the closed point `x'` of `Y`, with regularity discharged by
-integrality of both curves (`pullbackEqn_germ_mem_nonZeroDivisors`). -/
-noncomputable def pointPullbackEquations (f : X ⟶ Y)
-    (hf : f.base (genericPoint X) = genericPoint Y)
-    {x' : Y} (hx' : x' ≠ genericPoint Y) : X.LocalEquations :=
-  (Scheme.pointEquations K hx' (Scheme.pointUniformizerData K hx')).pullback f
-    (Scheme.LocalEquations.pullbackEqn_germ_mem_nonZeroDivisors f hf
-      (Scheme.pointEquations K hx' (Scheme.pointUniformizerData K hx')))
-
-omit [X.Over (Spec (CommRingCat.of K))]
-  [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of K))]
-  [QuasiCompact (X ↘ Spec (CommRingCat.of K))] in
-@[simp]
-lemma pointPullbackEquations_eqn (f : X ⟶ Y)
-    (hf : f.base (genericPoint X) = genericPoint Y)
-    {x' : Y} (hx' : x' ≠ genericPoint Y) (z : X) :
-    (pointPullbackEquations K f hf hx').eqn z
-      = Scheme.LocalEquations.pullbackEqn f
-          (Scheme.pointEquations K hx' (Scheme.pointUniformizerData K hx')) z :=
-  rfl
-
-/-- **The trivializing unit of the pulled point system**: the pullback `f^♯` of the
-chosen uniformizer at `x'`, as a unit of `K(X)`. -/
-noncomputable def pointPullbackUnit (f : X ⟶ Y)
-    (hf : f.base (genericPoint X) = genericPoint Y)
-    {x' : Y} (hx' : x' ≠ genericPoint Y) : X.functionFieldˣ :=
-  f.functionFieldMapUnits hf
-    (Units.mk0 (uniformizer K hx') (uniformizer_ne_zero K hx'))
-
-omit [X.Over (Spec (CommRingCat.of K))]
-  [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of K))]
-  [QuasiCompact (X ↘ Spec (CommRingCat.of K))]
-  [QuasiCompact (Y ↘ Spec (CommRingCat.of K))] in
-lemma coe_pointPullbackUnit (f : X ⟶ Y)
-    (hf : f.base (genericPoint X) = genericPoint Y)
-    {x' : Y} (hx' : x' ≠ genericPoint Y) :
-    (pointPullbackUnit K f hf hx' : X.functionField)
-      = (f.functionFieldMap hf).hom (uniformizer K hx') :=
-  rfl
-
-omit [QuasiCompact (Y ↘ Spec (CommRingCat.of K))] in
-/-- Index-generalized form of `germGeneric_pointEqn_self`. -/
-private lemma germGeneric_pointEqn_of_eq {x' : Y} (hx' : x' ≠ genericPoint Y)
-    (d : Scheme.PointUniformizerData K hx') {w : Y} (hw : w = x')
-    (hη : genericPoint Y ∈ (Scheme.pointCover K hx' d).opens w) :
-    (Y.presheaf.germ ((Scheme.pointCover K hx' d).opens w)
-        (genericPoint Y) hη).hom (Scheme.pointEqn K hx' d w)
-      = uniformizer K hx' := by
-  subst hw
-  exact Scheme.germGeneric_pointEqn_self K hx' d hη
-
-omit [X.Over (Spec (CommRingCat.of K))]
-  [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of K))]
-  [QuasiCompact (X ↘ Spec (CommRingCat.of K))] in
-/-- Off the fiber of `x'`, the trivializing element of the pulled presentation is
-`1`. -/
-lemma pointPullbackEquations_presentation_elem_of_ne (f : X ⟶ Y)
-    (hf : f.base (genericPoint X) = genericPoint Y)
-    {x' : Y} (hx' : x' ≠ genericPoint Y) {z : X} (hz : f.base z ≠ x') :
-    (pointPullbackEquations K f hf hx').presentation.elem z = 1 := by
-  have hηy : genericPoint X ∈ f ⁻¹ᵁ
-      (Scheme.pointEquations K hx' (Scheme.pointUniformizerData K hx')).cover.opens
-        (f.base z) := by
-    change f.base (genericPoint X)
-      ∈ (Scheme.pointEquations K hx' (Scheme.pointUniformizerData K hx')).cover.opens
-        (f.base z)
-    rw [hf]
-    exact (Scheme.pointEquations K hx'
-      (Scheme.pointUniformizerData K hx')).cover.genericPoint_mem_opens _
-  have h1 : Scheme.LocalEquations.pullbackEqn f
-      (Scheme.pointEquations K hx' (Scheme.pointUniformizerData K hx')) z = 1 := by
-    have h2 : (Scheme.pointEquations K hx' (Scheme.pointUniformizerData K hx')).eqn
-        (f.base z) = 1 := by
-      rw [Scheme.pointEquations_eqn]
-      exact Scheme.pointEqn_of_ne K hx' (Scheme.pointUniformizerData K hx') hz
-    change (f.appLE _ _ le_rfl).hom
-      ((Scheme.pointEquations K hx' (Scheme.pointUniformizerData K hx')).eqn
-        (f.base z)) = 1
-    rw [h2]
-    exact map_one _
-  refine Units.ext ?_
-  have hval0 : ((pointPullbackEquations K f hf hx').presentation.elem z :
-      X.functionField)
-      = (X.presheaf.germ
-          (f ⁻¹ᵁ (Scheme.pointEquations K hx'
-            (Scheme.pointUniformizerData K hx')).cover.opens (f.base z))
-          (genericPoint X) hηy).hom
-        (Scheme.LocalEquations.pullbackEqn f
-          (Scheme.pointEquations K hx' (Scheme.pointUniformizerData K hx')) z) := rfl
-  rw [hval0, h1, Units.val_one]
-  exact map_one _
-
-omit [X.Over (Spec (CommRingCat.of K))]
-  [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of K))]
-  [QuasiCompact (X ↘ Spec (CommRingCat.of K))] in
-/-- On the fiber of `x'`, the trivializing element of the pulled presentation is the
-pulled-back uniformizer `f^♯(t)` (EV-4 step 4, the fiber coefficient). -/
-lemma pointPullbackEquations_presentation_elem_of_eq (f : X ⟶ Y)
-    (hf : f.base (genericPoint X) = genericPoint Y)
-    {x' : Y} (hx' : x' ≠ genericPoint Y) {z : X} (hz : f.base z = x') :
-    (pointPullbackEquations K f hf hx').presentation.elem z
-      = pointPullbackUnit K f hf hx' := by
-  have hηy : genericPoint X ∈ f ⁻¹ᵁ
-      (Scheme.pointEquations K hx' (Scheme.pointUniformizerData K hx')).cover.opens
-        (f.base z) := by
-    change f.base (genericPoint X)
-      ∈ (Scheme.pointEquations K hx' (Scheme.pointUniformizerData K hx')).cover.opens
-        (f.base z)
-    rw [hf]
-    exact (Scheme.pointEquations K hx'
-      (Scheme.pointUniformizerData K hx')).cover.genericPoint_mem_opens _
-  refine Units.ext ?_
-  have hval0 : ((pointPullbackEquations K f hf hx').presentation.elem z :
-      X.functionField)
-      = (X.presheaf.germ
-          (f ⁻¹ᵁ (Scheme.pointEquations K hx'
-            (Scheme.pointUniformizerData K hx')).cover.opens (f.base z))
-          (genericPoint X) hηy).hom
-        (Scheme.LocalEquations.pullbackEqn f
-          (Scheme.pointEquations K hx' (Scheme.pointUniformizerData K hx')) z) := rfl
-  have happ : Scheme.LocalEquations.pullbackEqn f
-      (Scheme.pointEquations K hx' (Scheme.pointUniformizerData K hx')) z
-      = (f.app _).hom
-        ((Scheme.pointEquations K hx' (Scheme.pointUniformizerData K hx')).eqn
-          (f.base z)) :=
-    congr($(Scheme.Hom.appLE_eq_app f).hom
-      ((Scheme.pointEquations K hx' (Scheme.pointUniformizerData K hx')).eqn
-        (f.base z)))
-  rw [hval0, coe_pointPullbackUnit, happ,
-    ← f.functionFieldMap_germ hf _
-      ((Scheme.pointEquations K hx'
-        (Scheme.pointUniformizerData K hx')).cover.genericPoint_mem_opens _) hηy
-      ((Scheme.pointEquations K hx' (Scheme.pointUniformizerData K hx')).eqn
-        (f.base z))]
-  exact congrArg _
-    (germGeneric_pointEqn_of_eq K hx' (Scheme.pointUniformizerData K hx') hz _)
+The pulled tracked point equations along a generic-to-generic morphism, their
+trivializing unit `f^♯(uniformizer)` and the on/off-fiber presentation elements are
+the landed W7-B3 plumbing (`RiemannRoch/DegreeIsoTransport.lean`): `pointPullbackEquations`,
+`pointPullbackUnit`, `pointPullbackEquations_presentation_elem_of_eq`/`_of_ne` — stated
+there for arbitrary `f` precisely so this campaign can consume them. -/
 
 /-! ## Order at a non-unit point (file-local copy of the deg-D1 lemma) -/
 
