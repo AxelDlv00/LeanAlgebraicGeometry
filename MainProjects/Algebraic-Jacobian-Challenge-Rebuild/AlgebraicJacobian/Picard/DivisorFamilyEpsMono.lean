@@ -315,17 +315,66 @@ theorem exists_map_divFamEps_ne_zero (g : ℕ) (G : CertifiedDivisorFamily C K �
     (G.certified.isThetaPaired _) hcarve hO hχ N hNwin hNnorm hNdeg hNrank hdict
   exact exists_mem_ne_zero_of_window_normalization g hχ N hNnorm hNdeg _ hdeg hΦwin
 
-/-- **Mono-ness of `ε` at the field level** (DD-4 Task 6, worksheet §2.3.4): two
-certified divisor families of degree `g` over the field `K` whose `ε`-windows `K_M(d)`
-agree — equality of the FIRST components alone — are equal in `DivFam`.  Both family
-divisors are effective of degree `g` (DDR-2's pinch) and are presented as the base
-divisor of the common window section space through the dictionary
-(`eq_of_divisorSections_window_eq`), so they coincide; `divFamDivisor_injective` (the
-landed DD-1c converse dictionary) closes the setoid equality.
+/-- **The divisor-level core of Task-6 mono-ness** (the shape DDR-8's fibrewise step
+consumes at a residue field): two certified families whose `ε`-windows `K_M(d)` agree —
+FIRST components alone — cut the SAME divisor.  Both family divisors are effective of
+degree `g` (DDR-2's pinch) and are presented as the base divisor of the common window
+section space through the dictionary (`eq_of_divisorSections_window_eq`), a function of
+that space alone.
 
 The dictionary `Φ` and the window pack `N, …` are SHARED between the two families (one
 embedding level, one reading); `hsurj`/`hcarve`/`hΦwin` are per-family.  The Θ-pairing
 input is not threaded — it fires from each family's certificate. -/
+theorem divFamDivisor_eq_of_divFamEps_fst_eq (g : ℕ)
+    (G G' : CertifiedDivisorFamily C K π g)
+    (hsurj : Function.Surjective
+      (G.adaptation.thetaGluedEval (windowM_choice π hπ g)))
+    (hsurj' : Function.Surjective
+      (G'.adaptation.thetaGluedEval (windowM_choice π hπ g)))
+    (hcarve : ∀ a : ↥(divisorSections k
+        (windowS_choice π hπ g • fiberWeilDivisor π) ⊤),
+      Grassmannian.carvePairArrow (windowShiftMul hπ g a)
+        (divFamEps hπ g (DivFam.mk G)).1 (divFamEps hπ g (DivFam.mk G)).2 = 0)
+    (hcarve' : ∀ a : ↥(divisorSections k
+        (windowS_choice π hπ g • fiberWeilDivisor π) ⊤),
+      Grassmannian.carvePairArrow (windowShiftMul hπ g a)
+        (divFamEps hπ g (DivFam.mk G')).1 (divFamEps hπ g (DivFam.mk G')).2 = 0)
+    (hO : Sheaf.h0 ((relCurve C K).moduleKSheaf K) = 1)
+    (hχ : Sheaf.chi ((relCurve C K).moduleKSheaf K) = 1 - (g : ℤ))
+    (N : (relCurve C K).CurveDivisor)
+    (hNwin : Subsingleton (Sheaf.HModule ((relCurve C K).divisorSheaf K N) 1))
+    (hNnorm : ∀ D' : (relCurve C K).CurveDivisor,
+      CurveDivisor.deg K D' ≤ 2 * (g : ℤ) →
+      Subsingleton (Sheaf.HModule ((relCurve C K).divisorSheaf K (N - D')) 1))
+    (hNdeg : 2 * (g : ℤ) ≤ CurveDivisor.deg K N)
+    (hNrank : Sheaf.h0 ((relCurve C K).divisorSheaf K N)
+      = Sheaf.h0 (C.left.divisorSheaf k
+          (windowM_choice π hπ g • fiberWeilDivisor π)))
+    (Φ : (K ⊗[k] ↥(divisorSections k
+        (windowM_choice π hπ g • fiberWeilDivisor π) ⊤)) →ₗ[K]
+        (relCurve C K).functionField)
+    (hΦinj : Function.Injective Φ)
+    (hΦwin : Submodule.map Φ ((divFamEps hπ g (DivFam.mk G)).1)
+      = divisorSections K (N - divFamDivisor (DivFam.mk G)) ⊤)
+    (hΦwin' : Submodule.map Φ ((divFamEps hπ g (DivFam.mk G')).1)
+      = divisorSections K (N - divFamDivisor (DivFam.mk G')) ⊤)
+    (h : (divFamEps hπ g (DivFam.mk G)).1 = (divFamEps hπ g (DivFam.mk G')).1) :
+    divFamDivisor (DivFam.mk G) = divFamDivisor (DivFam.mk G') := by
+  have hdict := h0_eq_finrank_of_map_eq hΦinj hΦwin
+  have hdict' := h0_eq_finrank_of_map_eq hΦinj hΦwin'
+  have hdeg := deg_divFamDivisor_of_carve hπ g G hsurj
+    (G.certified.isThetaPaired _) hcarve hO hχ N hNwin hNnorm hNdeg hNrank hdict
+  have hdeg' := deg_divFamDivisor_of_carve hπ g G' hsurj'
+    (G'.certified.isThetaPaired _) hcarve' hO hχ N hNwin hNnorm hNdeg hNrank hdict'
+  refine eq_of_divisorSections_window_eq g hO hχ N hNnorm hNdeg _ _
+    (zero_le_divFamDivisor _) hdeg (zero_le_divFamDivisor _) hdeg' ?_
+  rw [← hΦwin, ← hΦwin', h]
+
+/-- **Mono-ness of `ε` at the field level** (DD-4 Task 6, worksheet §2.3.4): two
+certified divisor families of degree `g` over the field `K` whose `ε`-windows `K_M(d)`
+agree — equality of the FIRST components alone — are equal in `DivFam`.  The divisors
+coincide (`divFamDivisor_eq_of_divFamEps_fst_eq`); `divFamDivisor_injective` (the
+landed DD-1c converse dictionary) closes the setoid equality. -/
 theorem eq_of_divFamEps_fst_eq (g : ℕ) (G G' : CertifiedDivisorFamily C K π g)
     (hsurj : Function.Surjective
       (G.adaptation.thetaGluedEval (windowM_choice π hπ g)))
@@ -359,17 +408,10 @@ theorem eq_of_divFamEps_fst_eq (g : ℕ) (G G' : CertifiedDivisorFamily C K π g
     (hΦwin' : Submodule.map Φ ((divFamEps hπ g (DivFam.mk G')).1)
       = divisorSections K (N - divFamDivisor (DivFam.mk G')) ⊤)
     (h : (divFamEps hπ g (DivFam.mk G)).1 = (divFamEps hπ g (DivFam.mk G')).1) :
-    DivFam.mk G = DivFam.mk G' := by
-  have hdict := h0_eq_finrank_of_map_eq hΦinj hΦwin
-  have hdict' := h0_eq_finrank_of_map_eq hΦinj hΦwin'
-  have hdeg := deg_divFamDivisor_of_carve hπ g G hsurj
-    (G.certified.isThetaPaired _) hcarve hO hχ N hNwin hNnorm hNdeg hNrank hdict
-  have hdeg' := deg_divFamDivisor_of_carve hπ g G' hsurj'
-    (G'.certified.isThetaPaired _) hcarve' hO hχ N hNwin hNnorm hNdeg hNrank hdict'
-  refine divFamDivisor_injective
-    (eq_of_divisorSections_window_eq g hO hχ N hNnorm hNdeg _ _
-      (zero_le_divFamDivisor _) hdeg (zero_le_divFamDivisor _) hdeg' ?_)
-  rw [← hΦwin, ← hΦwin', h]
+    DivFam.mk G = DivFam.mk G' :=
+  divFamDivisor_injective
+    (divFamDivisor_eq_of_divFamEps_fst_eq hπ g G G' hsurj hsurj' hcarve hcarve'
+      hO hχ N hNwin hNnorm hNdeg hNrank Φ hΦinj hΦwin hΦwin' h)
 
 /-- **Mono-ness of `ε` at the field level, full-pair form**: two certified families with
 equal `ε`-pairs are equal in `DivFam` — the first components already suffice
