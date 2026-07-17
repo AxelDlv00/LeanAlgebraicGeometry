@@ -1,8 +1,15 @@
 # Wave-7 worksheet — functoriality + base change of fields (`AJCR.w7-functor`)
 
-**DRAFT — pending orchestrator ratification.** Nothing below is binding: every D-item is a
-*recommendation + evidence* (precedent: `w5-t4-worksheet.md`, ratified by addendum). The
-orchestrator ratifies §6's points; deviations after ratification go back through the
+**RATIFIED — BINDING (orchestrator, 2026-07-17 night session).** All D-item
+recommendations below are adopted as written: D1 per-curve explicit datum arguments (the
+`d`/`dL`/`dM` convention, "no data at unnamed curves", field-uniform family recorded as
+the verified fallback), D2 the eight baseChangeIso brick cuts (θ CommGrpCat-valued; the
+F-2/B-2 shared transport core sits one level below curve-morphism indexing), D3 the
+sequencing (F-1 ∥ B-1 ∥ B-3 ∥ E-v worksheet first; K-cluster mathematics iso-grade and
+never E-v-gated), D4 the GrpObj.ext route for the mapGrp coherence, and the two
+campaign scopes (E-v worksheet-first per §EV with EV-2 flagged hardest; F-transport
+discipline clauses binding). One rider executed at ratification: Fleet A asked via inbox
+to confirm the DAT-J producer stays base-field-generic. Deviations go back through the
 orchestrator.
 
 *Design pass, 2026-07-17, lane w7-design. Evidence base: `informal/w7-recon.md` (read in
