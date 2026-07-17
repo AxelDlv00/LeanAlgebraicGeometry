@@ -64,4 +64,42 @@ noncomputable def JacobianData.baseChange (d : JacobianData C)
     exact MorphismProperty.baseChange_obj (Spec.map (CommRingCat.ofHom (algebraMap k L))) d.J
       inferInstance
 
+/-! ## A general lemma: object isos intertwining two group-valued representations -/
+
+section GeneralLemma
+
+universe w u₁
+
+open CartesianMonoidalCategory MonObj
+
+/-- **The `IsMonHom` seam** (the one small general lemma the B-6b packaging needs): if an
+object isomorphism `e : X ≅ X'` intertwines the universal `homEquiv`s of two representability
+data `α`, `α'` for the *same* presheaf of monoids `F`, then `e.hom` is a morphism of the
+induced `MonObj.ofRepresentableBy` monoid-object structures.  Proved elementwise through the
+universal bijections, never diagram-chasing in `Mon _`/`Grp _` (R3 discipline). -/
+theorem isMonHom_hom_of_representableBy {D : Type u₁} [Category.{w} D]
+    [CartesianMonoidalCategory D] (F : Dᵒᵖ ⥤ MonCat.{w}) {X X' : D}
+    (α : (F ⋙ CategoryTheory.forget _).RepresentableBy X)
+    (α' : (F ⋙ CategoryTheory.forget _).RepresentableBy X')
+    (e : X ≅ X')
+    (h : ∀ {T : D} (f : T ⟶ X), α'.homEquiv (f ≫ e.hom) = α.homEquiv f) :
+    letI := MonObj.ofRepresentableBy X F α
+    letI := MonObj.ofRepresentableBy X' F α'
+    IsMonHom e.hom := by
+  letI := MonObj.ofRepresentableBy X F α
+  letI := MonObj.ofRepresentableBy X' F α'
+  constructor
+  · apply α'.homEquiv.injective
+    rw [h]
+    simp only [MonObj.ofRepresentableBy_one, Functor.RepresentableBy.homEquiv']
+    rw [Equiv.apply_symm_apply, Equiv.apply_symm_apply]
+  · have key : ∀ {T : D} (f : T ⟶ X), α'.homEquiv' (f ≫ e.hom) = α.homEquiv' f := fun f => h f
+    apply α'.homEquiv'.injective
+    rw [key, MonObj.ofRepresentableBy_mul, Equiv.apply_symm_apply, α'.homEquiv'_comp,
+      MonObj.ofRepresentableBy_mul, Equiv.apply_symm_apply, map_mul, ← α'.homEquiv'_comp,
+      ← α'.homEquiv'_comp, CartesianMonoidalCategory.tensorHom_fst,
+      CartesianMonoidalCategory.tensorHom_snd, key, key]
+
+end GeneralLemma
+
 end AlgebraicGeometry
