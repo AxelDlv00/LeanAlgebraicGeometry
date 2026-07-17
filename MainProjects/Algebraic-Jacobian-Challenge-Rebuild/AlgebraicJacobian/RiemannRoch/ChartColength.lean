@@ -327,7 +327,7 @@ variable (K : Type u) [Field K] {X : Scheme.{u}} [X.Over (Spec (CommRingCat.of K
 omit [IsIntegral X] in
 /-- A section is a non-unit at `x` exactly when it lies in the prime of `x`: the
 stalk-is-localization form of `mem_basicOpen`. -/
-private lemma not_isUnit_germ_iff_mem {x : X} (hx : x ∈ V) (f : Γ(X, V)) :
+lemma not_isUnit_germ_iff_mem {x : X} (hx : x ∈ V) (f : Γ(X, V)) :
     ¬ IsUnit ((X.presheaf.germ V x hx).hom f)
       ↔ f ∈ (hV.primeIdealOf ⟨x, hx⟩).asIdeal := by
   letI : Algebra Γ(X, V) (X.presheaf.stalk x) := X.presheaf.algebra_section_stalk ⟨x, hx⟩
@@ -341,7 +341,7 @@ private lemma not_isUnit_germ_iff_mem {x : X} (hx : x ∈ V) (f : Γ(X, V)) :
 
 omit [LocallyOfFiniteType (X ↘ Spec (CommRingCat.of K))] in
 /-- Where the section is a unit, the order vanishes. -/
-private lemma toAdd_ordZ_eq_zero_of_isUnit_germ {x : X} (hx : x ∈ V)
+lemma toAdd_ordZ_eq_zero_of_isUnit_germ {x : X} (hx : x ∈ V)
     (hxg : x ≠ genericPoint X) {f : Γ(X, V)} (g : X.functionFieldˣ)
     (hg : (g : X.functionField) = (X.presheaf.germ V (genericPoint X) hη).hom f)
     (hunit : IsUnit ((X.presheaf.germ V x hx).hom f)) :
@@ -354,7 +354,7 @@ private lemma toAdd_ordZ_eq_zero_of_isUnit_germ {x : X} (hx : x ∈ V)
 
 /-- Membership of the prime of a closed point in the factor set of `(f)` is the vanishing
 of `f` at the point. -/
-private lemma primeIdealOf_mem_factors_iff [IsDedekindDomain Γ(X, V)] {x : X} (hx : x ∈ V)
+lemma primeIdealOf_mem_factors_iff [IsDedekindDomain Γ(X, V)] {x : X} (hx : x ∈ V)
     (hxg : x ≠ genericPoint X) {f : Γ(X, V)} (hf : f ≠ 0) :
     (hV.primeIdealOf ⟨x, hx⟩).asIdeal ∈ (factors (Ideal.span {f})).toFinset
       ↔ f ∈ (hV.primeIdealOf ⟨x, hx⟩).asIdeal := by
