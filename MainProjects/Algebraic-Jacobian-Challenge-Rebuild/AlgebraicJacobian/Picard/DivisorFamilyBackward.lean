@@ -44,6 +44,20 @@ namespace LocalEquations
 
 variable {X : Scheme.{u}} [IsIntegral X]
 
+/-- **The trivial (unit) local-equation system**: the constant equation `1` on the top cover.
+Its equations are regular (`1` is a nonzerodivisor) and pairwise unit-related (ratio `1`); it cuts
+out the *zero* divisor and is the base case of the point-product realization of an effective
+divisor. -/
+noncomputable def unitEquations : X.LocalEquations where
+  cover := ⊤
+  eqn _ := 1
+  regular _ y _ := by rw [map_one]; exact one_mem _
+  ratio_isUnit _ _ := ⟨1, by simp⟩
+
+omit [IsIntegral X] in
+@[simp]
+lemma unitEquations_eqn (x : X) : (unitEquations : X.LocalEquations).eqn x = 1 := rfl
+
 /-- **The trivializing element of a product presentation is the product of the trivializing
 elements.** The equation of `d.mul d'` at `x` is, by definition, the product of the restrictions
 of `d`'s and `d'`'s equations to the common refinement, so its germ at `η` — the trivializing
@@ -77,6 +91,78 @@ theorem presentationDivisor_mul (d d' : X.LocalEquations) :
   refine CurveDivisor.ext_coeffAt fun x hx => ?_
   rw [coeffAt_presentationDivisor, mul_presentation_elem, map_mul, toAdd_mul,
     CurveDivisor.coeffAt_add, coeffAt_presentationDivisor, coeffAt_presentationDivisor]
+
+/-- The trivial local-equation system cuts out the zero divisor: its trivializing element is the
+field unit `1` at every point, whose order of vanishing is `0`. -/
+@[simp]
+theorem presentationDivisor_unitEquations :
+    presentationDivisor K (unitEquations : X.LocalEquations).presentation = 0 := by
+  refine CurveDivisor.ext_coeffAt fun x hx => ?_
+  rw [coeffAt_presentationDivisor]
+  have hone : (unitEquations : X.LocalEquations).presentation.elem x = 1 := by
+    refine Units.ext ?_
+    rw [presentation_elem_val, Units.val_one, unitEquations_eqn, map_one]
+  rw [hone, map_one, toAdd_one, CurveDivisor.coeffAt_zero]
+
+/-- **Realization of an effective divisor by explicit local equations** (`informal/spec-dd-1.md`
+§3 (f), the DD-1c backward realization core, `hsurj` half 1): every *effective* Weil divisor `D`
+on the curve is the divisor of an explicit local-equation system — a product of tracked
+point-uniformizer equations (`Scheme.pointEquations`), one factor per unit of multiplicity at each
+support point. The `LocalEquations`-level companion of `exists_presentationDivisor_eq` (which lands
+a `MeromorphicPresentation`); effectivity is what keeps the construction inside the regular
+`LocalEquations` (no inverse factors, which would introduce poles).
+
+The point-uniformizer products (`presentationDivisor_pointEquations` gives `single hx 1` per
+factor) add up to `D` through the additivity lemma `presentationDivisor_mul`; the trivial system
+`unitEquations` is the empty product (the zero divisor). This supplies the anchor equations `eqns`
+of a certified family realizing `D`; the certified support-separated adaptation is the remaining
+`hsurj` obligation. -/
+theorem exists_localEquations_presentationDivisor_eq (D : X.CurveDivisor) (hD : 0 ≤ D) :
+    ∃ E : X.LocalEquations, presentationDivisor K E.presentation = D := by
+  classical
+  -- a one-point divisor with nonnegative multiplicity, by induction on the multiplicity
+  have hsingle : ∀ (x : X) (hx : x ≠ genericPoint X) (n : ℕ),
+      ∃ E : X.LocalEquations,
+        presentationDivisor K E.presentation = CurveDivisor.single hx (n : ℤ) := by
+    intro x hx n
+    induction n with
+    | zero =>
+      exact ⟨unitEquations, by
+        rw [presentationDivisor_unitEquations, Nat.cast_zero, CurveDivisor.single_zero]⟩
+    | succ n ih =>
+      obtain ⟨E, hE⟩ := ih
+      refine ⟨(pointEquations K hx (pointUniformizerData K hx)).mul E, ?_⟩
+      rw [presentationDivisor_mul, presentationDivisor_pointEquations, hE,
+        CurveDivisor.single_add]
+      congr 1
+      push_cast
+      ring
+  -- the general effective case, by induction on the finitely supported function
+  have hmain : ∀ D : X.CurveDivisor, 0 ≤ D →
+      ∃ E : X.LocalEquations, presentationDivisor K E.presentation = D := by
+    intro D
+    induction D using Finsupp.induction with
+    | zero => intro _; exact ⟨unitEquations, presentationDivisor_unitEquations K⟩
+    | single_add p b f hpf hb ih =>
+      intro hle
+      have hfp : f p = 0 := Finsupp.notMem_support_iff.mp hpf
+      have hbnn : 0 ≤ b := by
+        have h := Finsupp.le_def.mp hle p
+        rw [Finsupp.add_apply, Finsupp.single_eq_same, hfp, add_zero] at h
+        exact h
+      have hfnn : (0 : X.CurveDivisor) ≤ f := by
+        refine Finsupp.le_def.mpr fun q => ?_
+        rcases eq_or_ne q p with rfl | hq
+        · rw [hfp]; exact le_rfl
+        · have h := Finsupp.le_def.mp hle q
+          rw [Finsupp.add_apply, Finsupp.single_eq_of_ne hq, zero_add] at h
+          exact h
+      obtain ⟨E, hE⟩ := ih hfnn
+      obtain ⟨F, hF⟩ := hsingle p.1 p.2 b.toNat
+      refine ⟨F.mul E, ?_⟩
+      rw [presentationDivisor_mul, hF, hE, Int.toNat_of_nonneg hbnn]
+      rfl
+  exact hmain D hD
 
 end LocalEquations
 
