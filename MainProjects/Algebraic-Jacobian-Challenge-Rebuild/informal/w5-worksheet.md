@@ -122,3 +122,29 @@ WORKSHEET-FIRST — everything else launches as S/M bricks tonight.
 Launch order tonight: {data+x1+x2}, {x3}, {t2} in wave A; {t1}, {t4-probe} wave A/B;
 {t3}, {p2+p3+g1 conditional package} wave B/C as slots free; worksheets for t4/s1/s3
 before any code on them; p1 only after DD freeze (orchestrator gate).
+
+## §3 ADDENDUM (2026-07-17, post-Wave-A): three-fleet division + T4 ratification
+
+Wave-A landings: x3 (H1BaseFieldInvariance) and t2 (Tangent/TruncExp* — 4 files) are
+DONE; the t4 probe returned and `w5-t4-worksheet.md` is RATIFIED: **route (ii)**
+(kernel-level cancellation over k, uniform in K/k; no henselian machinery — square-zero
+`FormallyEtale` lifting + the étale-over-a-field structure theorem + the landed
+`Descent/` module-Amitsur exactness), and **t3 is re-scoped to T4-b**
+(`ker(relPic C (A[ε]) → relPic C A) ≃+ H¹(C,𝒪) ⊗[k] A`, natural in `A` = finite
+products of fields).
+
+Division of labor from here (three sessions):
+- **Fleet A** (unchanged): the Wave-4 datum campaign (AJCR.w4-rep.datum.*, re5, their
+  file lanes).
+- **Fleet B** (this orchestrator): Wave-6 ports (`Albanese/`, `Algebra/`), W5 interface
+  lanes — data/x1/x2 (`Picard/JacobianData.lean`, `AbelianVariety/GroupSeparated.lean`,
+  `AbelianVariety/Translation.lean`), x3 (landed), p1/p2/p3/g1
+  (`AbelianVariety/AbelSource.lean`, gated), blueprint upkeep, DAT-G/fork gates.
+- **Fleet C** (the Wave-5 smoothness session): the T/S cluster ONLY — roadmap
+  AJCR.w5-av.{t1,t3,t4,t5,s1,s2,s3}; files = `Tangent/` (additive coexistence with the
+  landed TruncExp*; T1 port files per D7) + new `AbelianVariety/Smooth*.lean` /
+  `AbelianVariety/GeomReduced*.lean` when S-cluster code starts (declare every new file
+  in a roadmap comment before creating it). Gates: T5 and every datum-phrased statement
+  wait for `Picard/JacobianData.lean` (Fleet B, in flight tonight); S1/S3 remain
+  WORKSHEET-FIRST (S3's worksheet consumes the R3 appendix §5 of the t4 worksheet —
+  the `CodescendsAlong` brick recipe).

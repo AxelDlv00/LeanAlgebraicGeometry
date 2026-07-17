@@ -1,6 +1,11 @@
 # W5-T4 worksheet — the étale-plus/Zariski kernel crossing at `k[ε]` (risk R1)
 
-**DRAFT — pending orchestrator ratification.**
+**RATIFIED — BINDING (orchestrator, 2026-07-17 night session).** Route (ii) is adopted
+as recommended below; route (i) remains the documented fallback. The pending t3 brick
+(AJCR.w5-av.t3) is RE-SCOPED to T4-b (the coefficient-natural ε-kernel over finite
+products of fields) — the roadmap item carries the amendment. The whole T/S cluster
+(t1, t3/T4-b, t4-a..e, t5, s1, s2, s3) is assigned to the dedicated Wave-5 smoothness
+session (third fleet); see `w5-worksheet.md` §3 addendum for the division of labor.
 
 *Produced 2026-07-17 by the read-only design-probe lane w5-t4-probe (AJCR.w5-av.t4), per
 w5-worksheet §1 D4 ("T4 WORKSHEET-FIRST") and w5-recon §3.1 G-W5-T4 / §5 R1 / §5 R3. No
