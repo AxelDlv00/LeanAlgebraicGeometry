@@ -306,6 +306,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyPullbackGlued
 import AlgebraicJacobian.Picard.DivisorFamilyPullbackMap
 import AlgebraicJacobian.Picard.DivisorFamilyMapAlg
 import AlgebraicJacobian.Picard.DivisorFamilyZariskiSep
+import AlgebraicJacobian.Picard.DivisorFamilyVehicle
 import AlgebraicJacobian.Picard.DivisorStalkIdeal
 import AlgebraicJacobian.Picard.DivisorFamilyTheta
 import AlgebraicJacobian.Picard.DivisorFamilyWindow
