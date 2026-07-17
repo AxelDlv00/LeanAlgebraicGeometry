@@ -228,6 +228,8 @@ import AlgebraicJacobian.Picard.Pic0SigmaSheaf
 import AlgebraicJacobian.RiemannRoch.SectionBound
 import AlgebraicJacobian.RiemannRoch.WindowLedger
 import AlgebraicJacobian.RiemannRoch.SectionSpaces
+import AlgebraicJacobian.RiemannRoch.ThetaSections
+import AlgebraicJacobian.RiemannRoch.ThetaSectionsIso
 import AlgebraicJacobian.RiemannRoch.WindowLedgerF3
 import AlgebraicJacobian.RiemannRoch.BaseDivisor
 import AlgebraicJacobian.RiemannRoch.SumIntersection
