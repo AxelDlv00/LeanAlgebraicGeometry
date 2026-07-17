@@ -268,6 +268,7 @@ import AlgebraicJacobian.Albanese.Milne33RowSection
 import AlgebraicJacobian.Albanese.Milne33Pullback
 import AlgebraicJacobian.Albanese.Milne33CMEquidim
 import AlgebraicJacobian.Albanese.Milne33KernelGen
+import AlgebraicJacobian.Albanese.Milne33TransportLocal
 import AlgebraicJacobian.Albanese.PolePurityLocal
 import AlgebraicJacobian.Albanese.PolePurity
 import AlgebraicJacobian.Algebra.CoheightBridge
