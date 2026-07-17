@@ -38,6 +38,43 @@ open Module (finrank)
 
 namespace AlgebraicGeometry
 
+/-! ## A unit-germ ↔ trivial-order dictionary on the curve bundle
+
+Reusable core: on the curve bundle `X/K`, a section `f` over an open `U ∋ η` is a unit at a
+closed point `z ∈ U` exactly when the order at `z` of its germ at `η` is trivial. Both
+directions of the private `ChartColength` machinery, packaged as a public equivalence through
+the DVR valuation of the stalk. -/
+
+namespace Scheme
+
+variable (K : Type u) [Field K] {X : Scheme.{u}} [X.Over (Spec (CommRingCat.of K))]
+  [SmoothOfRelativeDimension 1 (X ↘ Spec (CommRingCat.of K))] [IsIntegral X]
+
+/-- **Unit germ ↔ trivial order.** For a section `f` over an open `U ∋ η` whose germ at `η` is
+the field unit `g`, the germ of `f` at a closed point `z ∈ U` is a unit of the stalk exactly
+when the order of `g` at `z` is trivial (`ordZ = 1`). -/
+theorem isUnit_germ_iff_ordZ_eq_one {U : X.Opens} (hη : genericPoint X ∈ U)
+    (f : Γ(X, U)) (g : X.functionFieldˣ)
+    (hg : (g : X.functionField) = (X.presheaf.germ U (genericPoint X) hη).hom f)
+    {z : X} (hz : z ∈ U) (hzg : z ≠ genericPoint X) :
+    IsUnit ((X.presheaf.germ U z hz).hom f)
+      ↔ Scheme.ordZ (X ↘ Spec (CommRingCat.of K)) hzg g = 1 := by
+  rw [Scheme.ordZ_eq_one_iff]
+  letI := isDiscreteValuationRing_stalk (X ↘ Spec (CommRingCat.of K)) hzg
+  letI := isDedekindDomain_stalk (X ↘ Spec (CommRingCat.of K)) hzg
+  have hord : Scheme.ord (X ↘ Spec (CommRingCat.of K)) hzg
+      = (stalkHeightOne X z).valuation X.functionField := rfl
+  have hgs : (X.presheaf.germ U (genericPoint X) hη).hom f
+      = algebraMap (X.presheaf.stalk z) X.functionField
+          ((X.presheaf.germ U z hz).hom f) := by
+    rw [RingHom.algebraMap_toAlgebra]
+    exact (X.presheaf.germ_stalkSpecializes_apply hz
+      ((genericPoint_spec X).specializes trivial) f).symm
+  rw [hg, hgs, hord, IsDedekindDomain.HeightOneSpectrum.valuation_eq_one_iff_notMem]
+  exact (IsLocalRing.notMem_maximalIdeal).symm
+
+end Scheme
+
 attribute [local instance] Scheme.overModule Scheme.overSectionsAlgebra
 
 variable {k : Type u} [Field k] {C : Over (Spec (.of k))}
@@ -91,5 +128,49 @@ theorem finrank_glued_eq_sum_of_separated
   exact Module.finrank_pi_fintype K
 
 end DivisorAdaptation
+
+/-! ## The per-piece degree reading and the support-separated assembly -/
+
+section Degree
+
+variable [IsIntegral (relCurve C K)]
+  [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))]
+
+namespace DivisorAdaptation
+
+variable {d : (relCurve C K).LocalEquations} (A : DivisorAdaptation C K π d)
+
+/-- **The divisor coefficient is read off any piece.** At a closed point `z` of a piece
+`D(h_j)`, the order of vanishing of the piece equation `f_j` (any field unit `g_j` presenting
+its germ at `η`) equals the coefficient of the presentation divisor `D = div(d)` at `z`: the
+piece equation refines `d`'s equation up to a unit section (trivial order) and orders read off
+any piece agree (`MeromorphicPresentation.ordZ_elem_eq`). -/
+lemma coeffAt_eq_toAdd_ordZ_eqn (j : A.index) {z : relCurve C K}
+    (hz : z ∈ A.pieces j) (hzg : z ≠ genericPoint (relCurve C K))
+    (gⱼ : (relCurve C K).functionFieldˣ)
+    (hgⱼ : (gⱼ : (relCurve C K).functionField)
+      = ((relCurve C K).presheaf.germ (A.pieces j) (genericPoint (relCurve C K))
+          (Scheme.genericPoint_mem_of_nonempty ⟨z, hz⟩)).hom (A.eqn j)) :
+    Multiplicative.toAdd (Scheme.ordZ (relCurve C K ↘ Spec (CommRingCat.of K)) hzg gⱼ)
+      = coeffAt hzg (Scheme.presentationDivisor K d.presentation) := by
+  have hηj : genericPoint (relCurve C K) ∈ A.pieces j :=
+    Scheme.genericPoint_mem_of_nonempty ⟨z, hz⟩
+  have hval : (gⱼ : (relCurve C K).functionField)
+      = (Scheme.germGenericUnits hηj (A.unit j) : (relCurve C K).functionField)
+        * (d.presentation.elem (A.pt j) : (relCurve C K).functionField) := by
+    rw [hgⱼ, A.eqn_eq j, map_mul, Scheme.germGenericUnits_val,
+      Scheme.LocalEquations.presentation_elem_val,
+      (relCurve C K).presheaf.germ_res_apply (homOfLE (A.piece_le j))
+        (genericPoint (relCurve C K)) hηj (d.eqn (A.pt j))]
+  have hunit : gⱼ = Scheme.germGenericUnits hηj (A.unit j) * d.presentation.elem (A.pt j) :=
+    Units.ext hval
+  rw [Scheme.coeffAt_presentationDivisor, hunit, map_mul,
+    Scheme.ordZ_germGenericUnits K hηj (A.unit j) hzg hz, one_mul,
+    d.presentation.ordZ_elem_eq K hzg (A.piece_le j hz)]
+
+end DivisorAdaptation
+
+end Degree
 
 end AlgebraicGeometry
