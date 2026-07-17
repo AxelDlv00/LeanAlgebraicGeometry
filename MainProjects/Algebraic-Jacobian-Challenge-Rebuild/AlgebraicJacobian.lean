@@ -290,6 +290,7 @@ import AlgebraicJacobian.Picard.DivSchemeFamilyUniv
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularityStep
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularity
 import AlgebraicJacobian.Picard.FlatCokernel
+import AlgebraicJacobian.Picard.InvertibleModuleTransfer
 import AlgebraicJacobian.Picard.DivisorFamily
 import AlgebraicJacobian.Picard.DivisorFamilyExtraction
 import AlgebraicJacobian.Picard.DivisorFamilyField
@@ -306,6 +307,8 @@ import AlgebraicJacobian.Picard.DivisorStalkIdeal
 import AlgebraicJacobian.Picard.DivisorFamilyTheta
 import AlgebraicJacobian.Picard.DivisorFamilyWindow
 import AlgebraicJacobian.Picard.DivisorFamilyThetaSurj
+import AlgebraicJacobian.Picard.DivisorFamilyThetaRank
+import AlgebraicJacobian.Picard.DivisorFamilyThetaSections
 import AlgebraicJacobian.Picard.DivisorThetaDatum
 import AlgebraicJacobian.Picard.DivisorThetaBridge
 import AlgebraicJacobian.Picard.DivisorThetaTrivializeZero
