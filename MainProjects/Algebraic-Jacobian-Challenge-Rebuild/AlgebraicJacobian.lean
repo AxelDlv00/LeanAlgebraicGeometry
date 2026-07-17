@@ -244,6 +244,8 @@ import AlgebraicJacobian.Albanese.RationalMapProd
 import AlgebraicJacobian.Albanese.RationalMapFunctionField
 import AlgebraicJacobian.Albanese.DifferenceMap
 import AlgebraicJacobian.Albanese.Milne33Substeps
+import AlgebraicJacobian.Albanese.PolePurityLocal
+import AlgebraicJacobian.Albanese.PolePurity
 import AlgebraicJacobian.Algebra.CoheightBridge
 import AlgebraicJacobian.Algebra.StandardSmoothDimension
 import AlgebraicJacobian.Picard.GrassmannianChart
