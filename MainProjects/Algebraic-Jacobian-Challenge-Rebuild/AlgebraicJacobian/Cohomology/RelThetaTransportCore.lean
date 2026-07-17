@@ -387,6 +387,74 @@ theorem subsingleton_relThetaPairH1
     (thetaFieldH1PairEquiv C π n).toEquiv.subsingleton_congr.mp h
   (fieldToRelH1 C π n).toEquiv.subsingleton_congr.mp inferInstance
 
+/-- The product of the two chart collapses, as a `k`-linear equivalence. -/
+noncomputable def twistCollapseDomEquiv :
+    (↥(twistSubmodule k (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n)
+          (fiberChart₀ π)) ×
+        ↥(twistSubmodule k (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n)
+          (fiberChart₁ π))) ≃ₗ[k]
+      (↥(twistSubmodule k (relCover C k (fiberTwoCover π)).V₀
+            (relCover C k (fiberTwoCover π)).V₁ (relThetaCocycle C k π n)
+            (relCover C k (fiberTwoCover π)).V₀) ×
+        ↥(twistSubmodule k (relCover C k (fiberTwoCover π)).V₀
+            (relCover C k (fiberTwoCover π)).V₁ (relThetaCocycle C k π n)
+            (relCover C k (fiberTwoCover π)).V₁)) :=
+  LinearEquiv.ofLinear (twistCollapseDom C π n)
+    ((twistCollapse₀ C π n).symm.toLinearMap.prodMap
+      (twistCollapse₁ C π n).symm.toLinearMap)
+    (by ext p <;>
+      simp only [twistCollapseDom, LinearMap.comp_apply, LinearMap.prodMap_apply,
+        LinearMap.id_apply, LinearEquiv.coe_coe, LinearEquiv.apply_symm_apply])
+    (by ext p <;>
+      simp only [twistCollapseDom, LinearMap.comp_apply, LinearMap.prodMap_apply,
+        LinearMap.id_apply, LinearEquiv.coe_coe, LinearEquiv.symm_apply_apply])
+
+/-- **(b) The `H⁰` identification**: the degree-zero cohomology of the relative theta twist
+on `relCurve C k` is `k`-linearly the degree-zero cohomology of `thetaTwistSheaf π n` on
+`C.left`. -/
+noncomputable def relThetaH0FieldEquiv :
+    Sheaf.HModule (relThetaTwistSheaf C k π n) 0 ≃ₗ[k]
+      Sheaf.HModule (thetaTwistSheaf π n) 0 :=
+  (relThetaH0PairEquiv C π n).trans
+    ((AlgebraicJacobian.RigidEngine.kerCongr (thetaFieldPair C π n).diff
+        (relTwistPair C k π (relThetaCocycle C k π n)).diff
+        (twistCollapseDomEquiv C π n) (twistCollapseN C π n)
+        (twistCollapseN_diff C π n)).symm.trans
+      (thetaFieldH0PairEquiv C π n).symm)
+
 end TwistCollapse
+
+/-! ## The composed export for DD-4's ε construction -/
+
+section Export
+
+variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
+variable (π : C.left ⟶ P1 k) [IsFinite π] (n : ℕ)
+variable (R : Type u) [CommRing R] [Algebra k R]
+
+noncomputable local instance instOverCleftExport : C.left.Over (Spec (.of k)) := ⟨C.hom⟩
+
+variable [SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k))] [IsIntegral C.left]
+  [LocallyOfFiniteType (C.left ↘ Spec (.of k))] [QuasiCompact (C.left ↘ Spec (.of k))]
+  [IsDominant π]
+
+/-- **(d) The composed export DD-4 consumes**: on the `H¹`-vanishing locus, the degree-zero
+cohomology of the relative theta twist over the affine test ring `R` is, `R`-linearly, the
+free base change of the field-level divisor sections `H_A = divisorSections k (n·F) ⊤`:
+
+`H⁰(relThetaTwistSheaf C R π n) ≃ₗ[R] R ⊗[k] divisorSections k (n • fiberWeilDivisor π) ⊤`.
+
+This is the landed on-the-nose base change `relThetaTwistH0BaseChange` composed with the
+base-field-transported `H⁰` identification (b) and Task 1's `thetaTwistH0Equiv`, tensored up
+to `R`.  The `ε` lane of DD-4 consumes this spelling verbatim (`K = k` here). -/
+noncomputable def relThetaTwistH0BaseChangeDivisor
+    (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π n)).H1) :
+    Sheaf.HModule (relThetaTwistSheaf C R π n) 0 ≃ₗ[R]
+      R ⊗[k] ↥(Scheme.divisorSections k (n • fiberWeilDivisor π) ⊤) :=
+  (relThetaTwistH0BaseChange C R π n hH1).symm.trans
+    (LinearEquiv.baseChange k R _ _
+      ((relThetaH0FieldEquiv C π n).trans (thetaTwistH0Equiv k π n)))
+
+end Export
 
 end AlgebraicGeometry
