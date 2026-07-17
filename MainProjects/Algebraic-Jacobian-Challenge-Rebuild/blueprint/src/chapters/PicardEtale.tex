@@ -9822,6 +9822,264 @@ with base change \(C_L := \sigma^{*}C\) over \(L\) (\ref{def:baseChange}).
   exchange.
 \end{proof}
 
+\section{The base-field comparison of the degree-zero Picard functor}
+\label{sec:pic0Theta}
+
+Fix a field embedding \(k \to L\), write \(\sigma \colon \Spec L \to \Spec k\) for the
+induced morphism and \(\sigma_{!}\) for the postcomposition functor
+\(\Over(\Spec L) \to \Over(\Spec k)\), and let \(C_L\) denote the base change of the
+curve \(C\) along \(k \to L\).  The base-field shuffle of the plus construction
+(Definition~\ref{def:PicEtAff_baseFieldShuffle}) extends from affine tests to all test
+objects, respects the degree, and assembles into a natural isomorphism \(\theta\)
+between the degree-zero Picard functor of \(C_L\) and the pullback of that of \(C\)
+along \(\sigma_{!}\).
+
+\begin{lemma}[The section-ring scalar tower of a pushed test]
+  \label{lem:isScalarTower_sections_map}
+  \lean{AlgebraicGeometry.Over.ofHom_algebraMap_sections_map,
+    AlgebraicGeometry.Over.isScalarTower_sections_map}
+  \uses{def:baseChange}
+  \leanok
+  Let \(T\) be a test object of \(\Over(\Spec L)\) and \(U \subseteq T_{\mathrm{left}}\)
+  an open.  The section ring \(\Gamma(T, U)\) carries an \(L\)-algebra structure
+  through the structure morphism of \(T\), and a \(k\)-algebra structure through the
+  structure morphism of the pushed test \(\sigma_{!}T\) (the same scheme, viewed over
+  \(\Spec k\) through \(\sigma\)).  These form a scalar tower: the \(k\)-structure map
+  is the composite of \(k \to L\) with the \(L\)-structure map.
+\end{lemma}
+\begin{proof}
+  \leanok
+  The structure morphism of \(\sigma_{!}T\) is the composite of that of \(T\) with
+  \(\sigma\), so its action on sections over \(U\) factors as
+  \(\Gamma(\Spec k, \top) \to \Gamma(\Spec L, \top) \to \Gamma(T, U)\).  Under the
+  canonical identifications \(\Gamma(\Spec k, \top) \cong k\) and
+  \(\Gamma(\Spec L, \top) \cong L\), the first map is the embedding \(k \to L\) and
+  the second is the \(L\)-structure map of \(\Gamma(T, U)\).
+\end{proof}
+
+\begin{definition}[The componentwise lift of the base-field shuffle]
+  \label{def:picEtCrossBase}
+  \lean{AlgebraicGeometry.sectionShuffle, AlgebraicGeometry.mapAlg_sectionShuffle,
+    AlgebraicGeometry.mapAlg_sectionShuffle_symm,
+    AlgebraicGeometry.Over.resAlgHom_map_restrictScalars,
+    AlgebraicGeometry.picEtCrossBase, AlgebraicGeometry.picEtCrossBase_val,
+    AlgebraicGeometry.picEtCrossBaseInv, AlgebraicGeometry.picEtCrossBaseInv_val,
+    AlgebraicGeometry.picEtCrossBaseEquiv,
+    AlgebraicGeometry.picEtCrossBaseEquiv_apply,
+    AlgebraicGeometry.picEtCrossBaseEquiv_symm_apply}
+  \uses{def:picEt, def:PicEtAff_baseFieldShuffle, lem:isScalarTower_sections_map,
+    def:baseChange}
+  \leanok
+  Let \(T\) be a test object of \(\Over(\Spec L)\).  The underlying schemes of \(T\)
+  and \(\sigma_{!}T\) coincide, so their affine opens and section rings are literally
+  shared, and by the scalar tower of
+  Lemma~\ref{lem:isScalarTower_sections_map} each section ring \(\Gamma(T, U)\) is a
+  legal test algebra for the base-field shuffle.  Applying the shuffle
+  \(\mathrm{Sh}_{\Gamma(T,U)}\) of Definition~\ref{def:PicEtAff_baseFieldShuffle}
+  componentwise to a compatible family defines a group isomorphism
+  \[
+    \mathrm{picEt}(C, \sigma_{!}T) \;\cong\; \mathrm{picEt}(C_L, T),
+  \]
+  the \emph{componentwise lift} of the shuffle.
+\end{definition}
+\begin{proof}
+  \leanok
+  A family transported componentwise remains compatible: the shuffle commutes with
+  restriction of sections, since restriction along \(U \subseteq V\) is the same ring
+  homomorphism \(\Gamma(T, V) \to \Gamma(T, U)\) for the two base structures, and the
+  shuffle satisfies the restriction square of
+  Theorem~\ref{thm:PicEtAff_baseFieldShuffle_laws} at it.  Componentwise application
+  of a group isomorphism preserves products, and the two directions are componentwise
+  inverse, so the lift is a group isomorphism.
+  \uses{thm:PicEtAff_baseFieldShuffle_laws}
+\end{proof}
+
+\begin{theorem}[Naturality of the componentwise lift in the test object]
+  \label{thm:picEtMap_picEtCrossBase}
+  \lean{AlgebraicGeometry.Over.appLEAlgHom_map_restrictScalars,
+    AlgebraicGeometry.appLE_sectionShuffle,
+    AlgebraicGeometry.picEtMap_picEtCrossBase,
+    AlgebraicGeometry.picEtMap_picEtCrossBaseInv}
+  \uses{def:picEtCrossBase, def:picEtMap}
+  \leanok
+  For a morphism \(f \colon T' \to T\) of test objects of \(\Over(\Spec L)\),
+  restriction along \(f\) commutes with the componentwise lift:
+  restricting a class of \(\mathrm{picEt}(C, \sigma_{!}T)\) along
+  \(\sigma_{!}f\) and lifting equals lifting and restricting along \(f\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The value at an affine open \(W \subseteq T'\) of a restricted family is
+  characterized by the pullback property of Definition~\ref{def:picEtMap}: on every
+  affine sub-open of \(W\) contained in the preimage of an affine open \(V\) of the
+  target, it restricts to the pullback of the family value at \(V\).  The lift of the
+  \(\sigma_{!}f\)-restriction satisfies this property for \(f\): pullback of sections
+  along \(f\) and along \(\sigma_{!}f\) are the same ring homomorphism, and the
+  shuffle commutes with both restriction and pullback of sections
+  (Theorem~\ref{thm:PicEtAff_baseFieldShuffle_laws} at the section rings, through the
+  tower of Lemma~\ref{lem:isScalarTower_sections_map}).  Uniqueness of the
+  characterized value concludes.
+  \uses{thm:PicEtAff_baseFieldShuffle_laws, lem:isScalarTower_sections_map}
+\end{proof}
+
+\begin{theorem}[The affine face of the componentwise lift]
+  \label{thm:picEtAffineEquiv_picEtCrossBase}
+  \lean{AlgebraicGeometry.overSpecΓTop_map_restrictScalars,
+    AlgebraicGeometry.picEtAffineEquiv_picEtCrossBase}
+  \uses{def:picEtCrossBase, def:picEtAffineEquiv, def:mapOverSpecIso, def:picEtMap}
+  \leanok
+  Let \(A\) be an algebra in a scalar tower \(k \to L \to A\).  Under the affine
+  comparisons of Definition~\ref{def:picEtAffineEquiv} on the two sides, the
+  componentwise lift at the affine test \(\Spec A\) over \(L\) is the base-field
+  shuffle \(\mathrm{Sh}_A\) itself, the pushed side being read through the affine
+  matching \(\sigma_{!}(\Spec A / L) \cong (\Spec A / k)\) of
+  Definition~\ref{def:mapOverSpecIso}.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Evaluate both sides at the top affine open.  On the lifted side the value is the
+  shuffle of the value of the original family at the top open, transported into \(A\)
+  by the \(L\)-comparison \(\Gamma(\Spec A, \top) \cong A\); by the restriction square
+  of the shuffle this is \(\mathrm{Sh}_A\) applied to the transport of the original
+  value along the \(k\)-restriction of that comparison.  On the pushed side, the
+  restriction along the affine matching has value the pullback of the original value
+  along the identity carrier, transported by the \(k\)-comparison; the two composite
+  transports \(\Gamma((\Spec A/L)_{\mathrm{left}}, \top) \to A\) agree, both being the
+  canonical identification.
+  \uses{thm:PicEtAff_baseFieldShuffle_laws}
+\end{proof}
+
+\begin{theorem}[Degree invariance of the base-field shuffle at a field]
+  \label{thm:degAff_baseFieldShuffle}
+  \lean{AlgebraicGeometry.degAff_baseFieldShuffle}
+  \uses{def:degAff, def:PicEtAff_baseFieldShuffle, def:baseChange}
+  \leanok
+  Let \(K\) be a field in a scalar tower \(k \to L \to K\).  For every plus class
+  \(x \in \mathrm{PicEtAff}(C, K)\),
+  \[
+    \deg_K\bigl(\mathrm{Sh}_K(x)\bigr) \;=\; \deg_K(x),
+  \]
+  where the left degree is that of the base-changed curve \(C_L\) over the base field
+  \(L\) and the right one that of \(C\) over \(k\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Represent \(x\) by a descent class \(y\) on an \'etale cover \(E\) of \(\Spec K\);
+  then \(\mathrm{Sh}_K(x)\) is represented on the same cover by the relative Picard
+  shuffle of \(y\) (Theorem~\ref{thm:PicEtAff_baseFieldShuffle_relPic}).  Choose a
+  finite separable field extension \(M/K\) refining \(E\) through some
+  \(j \colon E \to M\), and endow \(M\) with the composite \(k\)- and \(L\)-structures
+  of the tower \(k \to L \to K \to M\).  By the master equality of the plus-class
+  degree (Definition~\ref{def:degAff}) both sides are read at \((M, j)\): the left
+  side is \(\mathrm{relPicDeg}_M\) of the transport along \(j\) over \(L\) of the
+  shuffled class, which by the naturality square of the relative Picard shuffle
+  (Theorem~\ref{thm:relPicCrossBase_relPicAlgMap}) is the shuffle at \(M\) of the
+  transport along \(j\) over \(k\) of \(y\); by the degree invariance of the relative
+  Picard shuffle at the field \(M\)
+  (Theorem~\ref{thm:relPicDeg_relPicCrossBase}) this reads the same integer as the
+  transport itself, which is the right side.
+  \uses{thm:PicEtAff_baseFieldShuffle_relPic, thm:relPicCrossBase_relPicAlgMap,
+    thm:relPicDeg_relPicCrossBase}
+\end{proof}
+
+\begin{theorem}[The degree matching at pushed field points]
+  \label{thm:degAt_pushFieldPoint_picEtCrossBase}
+  \lean{AlgebraicGeometry.degAt_pushFieldPoint_picEtCrossBase}
+  \uses{def:degAt, def:pushFieldPoint, def:picEtCrossBase}
+  \leanok
+  Let \(T\) be a test object of \(\Over(\Spec L)\) and
+  \(\lambda \in \mathrm{picEt}(C, \sigma_{!}T)\).  For every field \(K\) in a scalar
+  tower \(k \to L \to K\) and every \(L\)-field-point \(s\) of \(T\),
+  \[
+    \deg_{\mathrm{push}(s)}(\lambda)
+      \;=\; \deg_{s}\bigl(\mathrm{lift}(\lambda)\bigr),
+  \]
+  where \(\mathrm{lift}(\lambda) \in \mathrm{picEt}(C_L, T)\) is the componentwise
+  lift of \(\lambda\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The pushed point factors as the affine matching followed by \(\sigma_{!}s\), so the
+  left side is the degree at \(K\) of the restriction of \(\lambda\) along
+  \(\sigma_{!}s\), read through the affine matching and the \(k\)-side affine
+  comparison.  By naturality of the lift
+  (Theorem~\ref{thm:picEtMap_picEtCrossBase}) the restriction of
+  \(\mathrm{lift}(\lambda)\) along \(s\) is the lift of the restriction of \(\lambda\)
+  along \(\sigma_{!}s\); by the affine face
+  (Theorem~\ref{thm:picEtAffineEquiv_picEtCrossBase}) its reading under the
+  \(L\)-side affine comparison is the shuffle \(\mathrm{Sh}_K\) of the \(k\)-side
+  reading.  The shuffle preserves the degree at the field \(K\)
+  (Theorem~\ref{thm:degAff_baseFieldShuffle}), so the two sides agree.
+  \uses{thm:picEtMap_picEtCrossBase, thm:picEtAffineEquiv_picEtCrossBase,
+    thm:degAff_baseFieldShuffle, def:picEtAffineEquiv}
+\end{proof}
+
+\begin{theorem}[The componentwise lift restricts to the degree-zero subgroups]
+  \label{thm:mem_pic0Subgroup_picEtCrossBase_iff}
+  \lean{AlgebraicGeometry.mem_pic0Subgroup_picEtCrossBase_iff}
+  \uses{def:pic0Subgroup, def:picEtCrossBase,
+    thm:mem_pic0Subgroup_iff_of_degAt_pushFieldPoint_eq}
+  \leanok
+  A class \(\lambda \in \mathrm{picEt}(C, \sigma_{!}T)\) is of degree zero at every
+  field point if and only if its componentwise lift
+  \(\mathrm{lift}(\lambda) \in \mathrm{picEt}(C_L, T)\) is.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The pair \((\lambda, \mathrm{lift}(\lambda))\) matches in degree at every pushed
+  field-point pair (Theorem~\ref{thm:degAt_pushFieldPoint_picEtCrossBase}), so the
+  simultaneous-vanishing criterion
+  (Theorem~\ref{thm:mem_pic0Subgroup_iff_of_degAt_pushFieldPoint_eq}) applies.
+  \uses{thm:degAt_pushFieldPoint_picEtCrossBase}
+\end{proof}
+
+\begin{definition}[\(\theta\): the base-field comparison of the degree-zero Picard
+    functor]
+  \label{def:pic0Theta}
+  \lean{AlgebraicGeometry.pic0CrossBaseEquiv,
+    AlgebraicGeometry.pic0CrossBaseEquiv_apply_coe,
+    AlgebraicGeometry.pic0CrossBaseEquiv_symm_apply_coe,
+    AlgebraicGeometry.pic0Theta, AlgebraicGeometry.pic0Theta_hom_app,
+    AlgebraicGeometry.pic0Theta_inv_app}
+  \uses{def:pic0Functor, def:picEtCrossBase,
+    thm:mem_pic0Subgroup_picEtCrossBase_iff}
+  \leanok
+  The componentwise lift restricts to the degree-zero subgroups
+  (Theorem~\ref{thm:mem_pic0Subgroup_picEtCrossBase_iff}) and so induces, for each
+  test object \(T\) of \(\Over(\Spec L)\), a group isomorphism
+  \[
+    \theta_T \colon \mathrm{pic}^0(C_L, T) \;\cong\; \mathrm{pic}^0(C, \sigma_{!}T).
+  \]
+  These are the components of a natural isomorphism of commutative-group-valued
+  functors
+  \[
+    \theta \colon \mathrm{pic}^0_{C_L/L}
+      \;\cong\; \sigma_{!}^{\mathrm{op}} \circ \mathrm{pic}^0_{C/k}
+  \]
+  on \(\Over(\Spec L)^{\mathrm{op}}\).
+\end{definition}
+\begin{proof}
+  \leanok
+  Naturality in \(T\) is the naturality of the componentwise lift in the test object
+  (Theorem~\ref{thm:picEtMap_picEtCrossBase}), restricted to the degree-zero
+  subgroups, whose restriction maps are those of the ambient \'etale Picard groups.
+  \uses{thm:picEtMap_picEtCrossBase}
+\end{proof}
+
+\begin{definition}[The set-valued form of \(\theta\)]
+  \label{def:pic0ThetaType}
+  \lean{AlgebraicGeometry.pic0ThetaType, AlgebraicGeometry.pic0ThetaType_hom_app,
+    AlgebraicGeometry.pic0ThetaType_inv_app}
+  \uses{def:pic0Theta, def:pic0SigmaFunctor}
+  \leanok
+  Composing \(\theta\) with the forgetful functor from commutative groups to sets
+  yields the natural isomorphism
+  \(\mathrm{pic}^0_{\mathrm{Set}}(C_L) \cong
+    \sigma_{!}^{\mathrm{op}} \circ \mathrm{pic}^0_{\mathrm{Set}}(C)\)
+  of the set-valued degree-zero functors of
+  Definition~\ref{def:pic0SigmaFunctor}, with the same components as \(\theta\).
+\end{definition}
+
 \section{The \texorpdfstring{\(\theta\)}{theta}-family and the multiplication shift}
 \label{sec:thetaShift}
 
