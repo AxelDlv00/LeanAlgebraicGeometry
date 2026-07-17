@@ -215,6 +215,7 @@ import AlgebraicJacobian.RiemannRoch.GluedDivisorSheaf
 import AlgebraicJacobian.RiemannRoch.W6Full
 import AlgebraicJacobian.Picard.DegreeZero
 import AlgebraicJacobian.Picard.Pic0Functor
+import AlgebraicJacobian.Picard.JacobianData
 import AlgebraicJacobian.Picard.DegreeSeam
 import AlgebraicJacobian.Picard.Pic0ZariskiSheaf
 import AlgebraicJacobian.Picard.PicEtCoverBridge
