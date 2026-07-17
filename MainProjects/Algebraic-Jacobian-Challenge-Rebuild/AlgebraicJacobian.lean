@@ -337,6 +337,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyThetaRank
 import AlgebraicJacobian.Picard.DivisorFamilyThetaSections
 import AlgebraicJacobian.Algebra.MonicReverseInverse
 import AlgebraicJacobian.Picard.DivisorThetaPairing
+import AlgebraicJacobian.Picard.DivSchemeEps
 import AlgebraicJacobian.RiemannRoch.CarveDegreePinch
 import AlgebraicJacobian.RiemannRoch.CarveDegree
 import AlgebraicJacobian.RiemannRoch.WindowFieldTransport
