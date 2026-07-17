@@ -391,6 +391,7 @@ import AlgebraicJacobian.Picard.SupportTube
 import AlgebraicJacobian.Picard.PicEtCrossBase
 import AlgebraicJacobian.Picard.Pic0ThetaAssembly
 import AlgebraicJacobian.Picard.JacobianDataBaseChange
+import AlgebraicJacobian.Picard.JacobianDataBaseChangeAbel
 
 /-!
 # AlgebraicJacobian — library root
