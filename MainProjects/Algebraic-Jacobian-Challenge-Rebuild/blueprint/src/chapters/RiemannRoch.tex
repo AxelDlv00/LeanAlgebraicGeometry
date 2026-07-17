@@ -2863,6 +2863,308 @@ the transition.
   \]
 \end{proof}
 
+\section{Invariance of the degree under isomorphisms}
+\label{sec:degree_iso_invariance}
+
+The base-field invariance has a lighter sibling over a \emph{single} field: the degree
+of a \v Cech Picard class is invariant under pullback along an isomorphism of curve
+bundles over one field \(K\). The proof is the ladder of
+Section~\ref{sec:degree_base_field_invariance} with the transition replaced by the
+isomorphism, and every leg degenerates: the fibre of a closed point is a single point,
+the coefficient of the pulled point divisor there is \(+1\) --- the maximal-adic
+multiplicity transports along the stalk isomorphism, with no colength computation ---
+and the residue degree transports along the induced isomorphism of residue fields.
+
+Throughout this section \(K\) is a field and \(X\) is a curve bundle over \(K\) ---
+integral, smooth of relative dimension one and quasi-compact over \(\Spec K\) --- with
+generic point \(\eta_X\); the hypotheses on the second scheme \(W\) are stated per
+node.
+
+\begin{lemma}[Naturality of the algebra map on sections]
+  \label{lem:overAlgebraMap_app}
+  \lean{AlgebraicGeometry.overAlgebraMap_app}
+  \uses{def:overAlgebraMap}
+  \leanok
+  Let \(W, X\) be schemes over \(\Spec K\) and \(f : W \to X\) a morphism of schemes
+  over \(\Spec K\). For every open \(U \subseteq X\) and every scalar \(a \in K\), the
+  pullback of sections along \(f\) carries the canonical image of \(a\) in
+  \(\Gamma(X, U)\) (\ref{def:overAlgebraMap}) to the canonical image of \(a\) in
+  \(\Gamma(W, f^{-1}U)\):
+  \[
+    f^{\sharp}\bigl(\iota^{X}_{U}(a)\bigr) \;=\; \iota^{W}_{f^{-1}U}(a),
+  \]
+  where \(\iota\) denotes the algebra map on sections.
+\end{lemma}
+\begin{proof}
+  \leanok
+  The algebra map into \(\Gamma(X, U)\) is the composite of the map induced on global
+  sections by the structure morphism of \(X\) with restriction to \(U\)
+  (\ref{def:overAlgebraMap}). Pullback along \(f\) commutes with restriction
+  (naturality of \(f^{\sharp}\)), so \(f^{\sharp}(\iota^{X}_{U}(a))\) is the
+  restriction to \(f^{-1}U\) of \(f^{\sharp}(\iota^{X}_{X}(a))\). And \(f\) lies over
+  \(\Spec K\): the structure morphism of \(X\) composed with \(f\) is the structure
+  morphism of \(W\), so on global sections \(f^{\sharp} \circ \iota^{X}_{X} =
+  \iota^{W}_{W}\). Restricting to \(f^{-1}U\) gives the claim.
+\end{proof}
+
+\begin{lemma}[Residue degrees transport along an isomorphism]
+  \label{lem:residueDeg_eq_of_isIso}
+  \lean{AlgebraicGeometry.residueDeg_eq_of_isIso}
+  \uses{def:residueDeg, def:residueOverAlgebraMap}
+  \leanok
+  Let \(W, X\) be schemes over \(\Spec K\) and \(f : W \to X\) an isomorphism of
+  schemes over \(\Spec K\). Then for every point \(z\) of \(W\),
+  \[
+    [\kappa(z) : K] \;=\; [\kappa(f(z)) : K].
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:overAlgebraMap_app, def:overAlgebraMap}
+  The stalk map of \(f\) at \(z\) is an isomorphism of local rings
+  \(\struct{X, f(z)} \to \struct{W, z}\), and a ring isomorphism of local rings carries
+  the maximal ideal onto the maximal ideal (units correspond to units in both
+  directions, and the maximal ideal of a local ring is the set of non-units); it
+  therefore induces a ring isomorphism of residue fields
+  \(r : \kappa(f(z)) \to \kappa(z)\).
+
+  The isomorphism \(r\) intertwines the two \(K\)-structures
+  (\ref{def:residueOverAlgebraMap}): the \(K\)-structure of a residue field is the
+  composite of the algebra map on global sections, the germ, and the residue map. By
+  naturality of the algebra map on sections (\ref{lem:overAlgebraMap_app}, at the full
+  open) followed by the defining compatibility of the stalk map with germs, the stalk
+  map of \(f\) carries the germ at \(f(z)\) of the canonical image of \(a \in K\) to
+  the germ at \(z\) of its canonical image; passing to the residues, \(r\) carries the
+  canonical image of \(a\) in \(\kappa(f(z))\) to its canonical image in
+  \(\kappa(z)\).
+
+  An additive bijection between two \(K\)-vector spaces which is multiplicative and
+  matches the two canonical copies of \(K\) is \(K\)-linear: \(r(a \cdot m) =
+  r(\bar a\, m) = r(\bar a)\, r(m) = \bar a\, r(m) = a \cdot r(m)\). So \(r\) is a
+  \(K\)-linear equivalence, and the \(K\)-dimensions of \(\kappa(f(z))\) and
+  \(\kappa(z)\) agree (\ref{def:residueDeg}).
+\end{proof}
+
+\begin{definition}[The pulled tracked point system along a generic-to-generic morphism]
+  \label{def:pointPullbackEquations}
+  \lean{AlgebraicGeometry.pointPullbackEquations, AlgebraicGeometry.pointPullbackUnit,
+    AlgebraicGeometry.coe_pointPullbackUnit}
+  \uses{def:pointEquations, lem:pointUniformizerData, def:localEquations_pullback,
+    lem:pullbackEqn_regular, def:functionFieldMap, lem:uniformizer}
+  \leanok
+  Let \(x'\) be a non-generic point of \(X\), with tracked point equations at \(x'\)
+  (\ref{def:pointEquations}, from the tracked uniformizer data of
+  \ref{lem:pointUniformizerData}), and let \(W\) be an integral scheme over \(\Spec K\)
+  and \(f : W \to X\) a morphism with \(f(\eta_W) = \eta_X\). The \emph{pulled tracked
+  point system} is the pullback of this local-equation system along \(f\)
+  (\ref{def:localEquations_pullback}), with regularity discharged by integrality of
+  both schemes (\ref{lem:pullbackEqn_regular}). Its \emph{trivialising unit} is the
+  pullback \(f^{\sharp}(t) \in K(W)^{\times}\) of the chosen uniformizer \(t\) at
+  \(x'\) (\ref{lem:uniformizer}, \ref{def:functionFieldMap}). This is the construction
+  of the pulled tracked point system of the base-field transition
+  (\ref{def:pointTransitionEquations}), for an arbitrary morphism mapping generic
+  point to generic point.
+\end{definition}
+
+\begin{lemma}[The trivialising elements of the generic pulled point presentation]
+  \label{lem:pointPullbackEquations_elem}
+  \lean{AlgebraicGeometry.pointPullbackEquations_presentation_elem_of_ne,
+    AlgebraicGeometry.pointPullbackEquations_presentation_elem_of_eq}
+  \uses{def:pointPullbackEquations, lem:localEquations_presentation,
+    def:pointEquations, lem:functionFieldMap_germ}
+  \leanok
+  In the situation of \ref{def:pointPullbackEquations}, the meromorphic presentation
+  (\ref{lem:localEquations_presentation}) of the pulled tracked point system has
+  trivialising elements
+  \[
+    f_z \;=\;
+    \begin{cases}
+      f^{\sharp}(t), & f(z) = x', \\
+      1, & f(z) \neq x',
+    \end{cases}
+  \]
+  at each point \(z\) of \(W\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The trivialising element at \(z\) is the germ at \(\eta_W\) of the pulled equation
+  indexed by \(z\), which is the \(f\)-pullback of the equation of the point system at
+  \(f(z)\) (\ref{def:pointPullbackEquations}). If \(f(z) \neq x'\), that equation is
+  the constant \(1\) (\ref{def:pointEquations}), and \(1\) pulls back to \(1\), with
+  germ \(1\). If \(f(z) = x'\), the equation is the tracked section \(s\), whose germ
+  at \(\eta_X\) is the chosen uniformizer \(t\) (\ref{def:pointEquations}); by germ
+  naturality (\ref{lem:functionFieldMap_germ}) the germ at \(\eta_W\) of
+  \(f^{\sharp}s\) is \(f^{\sharp}(t)\).
+\end{proof}
+
+\begin{lemma}[The pulled uniformizer has order one at the preimage point]
+  \label{lem:ordZ_pointPullbackUnit}
+  \lean{AlgebraicGeometry.ordZ_pointPullbackUnit}
+  \uses{def:pointPullbackEquations, def:scheme_ordZ, lem:uniformizer,
+    lem:pointUniformizerData}
+  \leanok
+  Let \(W\) be a further curve bundle over \(K\) --- integral and smooth of relative
+  dimension one over \(\Spec K\) --- and let \(f : W \to X\) be an isomorphism of
+  schemes with \(f(\eta_W) = \eta_X\). Let \(x'\) be a non-generic point of \(X\) and
+  \(z\) a non-generic point of \(W\) with \(f(z) = x'\). Then the trivialising unit of
+  the pulled tracked point system has order one at \(z\):
+  \[
+    \mathrm{ord}_z\bigl(f^{\sharp}(t)\bigr) \;=\; 1.
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:functionFieldMap_germ, lem:germ_generic_eq_algebraMap_germ,
+    thm:closedpoint_dvr_stalk, thm:closedpoint_dedekind_stalk, def:scheme_ord,
+    lem:adic_valuation_count, lem:mem_pow_iff_le_count}
+  Let \(s\) be the tracked section of the uniformizer data at \(x'\), on its tracked
+  neighbourhood \(V \ni x'\), with \(\mathrm{germ}_{\eta_X}(s) = t\)
+  (\ref{lem:pointUniformizerData}); write \(c \in \struct{X,x'}\) for the germ of
+  \(s\) at \(x'\), a nonzerodivisor of the stalk by regularity of the tracked data,
+  hence nonzero.
+
+  \emph{Both orders are adic multiplicities of matched stalk elements.} The order
+  valuation at a closed point is the maximal-adic valuation of the stalk, a discrete
+  valuation ring and a Dedekind domain (\ref{def:scheme_ord},
+  \ref{thm:closedpoint_dvr_stalk}, \ref{thm:closedpoint_dedekind_stalk}); its value on
+  a rational function which is the image of a nonzero germ under the localization of
+  the stalk into the function field is the multiplicity of the maximal ideal in the
+  prime factorization of the principal ideal generated by that germ
+  (\ref{lem:adic_valuation_count}, applied in the local Dedekind stalk). The
+  uniformizer \(t\) is such an image: \(t\) is the image of \(c\) under
+  \(\struct{X,x'} \to K(X)\) (\ref{lem:germ_generic_eq_algebraMap_germ}), so
+  \(\mathrm{ord}_{x'}(t)\) is the multiplicity of \(\mathfrak m_{x'}\) in the
+  factorization of \((c)\). On the other side, by germ naturality
+  (\ref{lem:functionFieldMap_germ}) the pullback \(f^{\sharp}(t)\) is the germ at
+  \(\eta_W\) of the pulled section \(f^{\sharp}(s)\) on \(f^{-1}V \ni z\), which in
+  turn is the image under \(\struct{W,z} \to K(W)\) of the germ of \(f^{\sharp}(s)\)
+  at \(z\) (\ref{lem:germ_generic_eq_algebraMap_germ} again); and that germ is the
+  image of \(c\) under the stalk map \(\struct{X,x'} \to \struct{W,z}\) of \(f\) at
+  \(z\) --- the defining compatibility of the stalk map with germs. So
+  \(\mathrm{ord}_z(f^{\sharp}t)\) is the multiplicity of \(\mathfrak m_z\) in the
+  factorization of the principal ideal generated by the image of \(c\).
+
+  \emph{The multiplicity is an isomorphism invariant.} Since \(f\) is an isomorphism,
+  its stalk map at \(z\) is a ring isomorphism \(e : \struct{X,x'} \to \struct{W,z}\)
+  of local Dedekind domains. It carries the maximal ideal onto the maximal ideal
+  (units correspond to units in both directions), hence carries
+  \(\mathfrak m_{x'}^{\,n}\) onto \(\mathfrak m_z^{\,n}\) for every \(n\), so
+  \(c \in \mathfrak m_{x'}^{\,n}\) if and only if \(e(c) \in \mathfrak m_z^{\,n}\).
+  Membership in the powers of the maximal ideal characterizes the multiplicity
+  (\ref{lem:mem_pow_iff_le_count}, applied in each stalk with the maximal ideal as the
+  prime), so the two multiplicities agree.
+
+  Chaining, \(\mathrm{ord}_z(f^{\sharp}t) = \mathrm{ord}_{x'}(t) = 1\), the
+  uniformizer having order one (\ref{lem:uniformizer}).
+\end{proof}
+
+\begin{theorem}[The degree is invariant under isomorphisms: scheme form]
+  \label{thm:classDeg_cechPicMap_of_isIso}
+  \lean{AlgebraicGeometry.classDeg_cechPicMap_of_isIso}
+  \uses{def:classDeg}
+  \leanok
+  Let \(W\) and \(X\) both be curve bundles over the field \(K\) --- integral, smooth
+  of relative dimension one and quasi-compact over \(\Spec K\) --- with \(H^0\) and
+  \(H^1\) of their structure sheaves finite-dimensional over \(K\), and let
+  \(f : W \to X\) be an isomorphism of schemes over \(\Spec K\). Then for every \v Cech
+  Picard class \(L\) on \(X\),
+  \[
+    \deg_{\Pic}\bigl(f^{*}L\bigr) \;=\; \deg_{\Pic}(L).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:genericPoint_eq_of_surjective, def:curveDivisor_picClass,
+    thm:curveDivisor_picClass_hom, thm:classDeg_mul, lem:classDeg_zpow,
+    thm:curveDivisor_picClass_single, thm:localEquations_picClass_pullback,
+    def:pointPullbackEquations, lem:pointPullbackEquations_elem,
+    lem:ordZ_pointPullbackUnit, lem:residueDeg_eq_of_isIso,
+    lem:localEquations_presentation, def:presentationDivisor, def:curveDivisor_single,
+    lem:curveDivisor_single_arith, def:scheme_ordZ, def:residueDeg}
+  This is the ladder of the base-field invariance
+  (\ref{thm:classDeg_cechPicMap_baseFieldTransition}) with the transition replaced by
+  the isomorphism \(f\), every leg degenerate. As an isomorphism, \(f\) is a
+  homeomorphism on underlying spaces --- in particular injective and surjective on
+  points --- and both spaces are irreducible, so it matches the generic points:
+  \(f(\eta_W) = \eta_X\) (\ref{lem:genericPoint_eq_of_surjective}).
+
+  \emph{Reduction to a one-point divisor.} The class map
+  \(\Div(X) \to \Pic(X)\) is surjective (\ref{def:curveDivisor_picClass}), so
+  \(L = \struct{X}(D)\) for a Weil divisor \(D\), a finite \(\Z\)-combination of
+  one-point divisors. Both sides of the claimed identity are additive in \(L\): the
+  class map and the pullback \(f^{*}\) are homomorphisms
+  (\ref{thm:curveDivisor_picClass_hom}) and \(\deg_{\Pic}\) is additive with
+  \(\deg_{\Pic}(L^n) = n \deg_{\Pic}(L)\) (\ref{thm:classDeg_mul},
+  \ref{lem:classDeg_zpow}). It therefore suffices to prove the identity for
+  \(L = \struct{X}(1 \cdot x')\), \(x'\) a non-generic point.
+
+  \emph{The pulled point class as a divisor class.} The one-point class is the class
+  of the tracked point equations at \(x'\)
+  (\ref{thm:curveDivisor_picClass_single}). Pulling back a local-equation system
+  computes the pullback of its class (\ref{thm:localEquations_picClass_pullback}, with
+  regularity discharged as in \ref{def:pointPullbackEquations}), so \(f^{*}L\) is the
+  Picard class of the pulled tracked point system; and the class of any local-equation
+  system is the class of the divisor of its presentation
+  (\ref{lem:localEquations_presentation}, \ref{def:curveDivisor_picClass}). Writing
+  \(D''\) for the presentation divisor of the pulled system
+  (\ref{def:presentationDivisor}), the normalization of \ref{def:classDeg} turns both
+  sides into divisor degrees:
+  \[
+    \deg_{\Pic}\bigl(f^{*}L\bigr) = \deg_{K}\bigl(D''\bigr), \qquad
+    \deg_{\Pic}(L) = \deg_{K}\bigl(1 \cdot x'\bigr) = \bigl[\kappa(x') : K\bigr]
+  \]
+  (\ref{lem:curveDivisor_single_arith}).
+
+  \emph{The pulled point divisor is a single point.} The coefficient of \(D''\) at a
+  non-generic point \(z\) of \(W\) is the order at \(z\) of the trivialising element
+  \(f_z\) (\ref{def:presentationDivisor}). Since \(f\) is injective on points, the
+  only point of \(W\) mapping to \(x'\) is \(z_0 := f^{-1}(x')\), which is
+  non-generic: its image \(x'\) differs from \(\eta_X = f(\eta_W)\). At \(z \neq
+  z_0\), \(f(z) \neq x'\) and the trivialising element is \(1\)
+  (\ref{lem:pointPullbackEquations_elem}), of order zero; at \(z_0\) the element is
+  the pulled uniformizer \(f^{\sharp}(t)\) (\ref{lem:pointPullbackEquations_elem}), of
+  order \(1\) (\ref{lem:ordZ_pointPullbackUnit}). Hence \(D'' = 1 \cdot z_0\)
+  (\ref{def:curveDivisor_single}), of degree
+  \(\deg_{K}(D'') = [\kappa(z_0) : K]\) (\ref{lem:curveDivisor_single_arith}).
+
+  \emph{Closing with the residue transport.} By
+  \ref{lem:residueDeg_eq_of_isIso},
+  \([\kappa(z_0) : K] = [\kappa(f(z_0)) : K] = [\kappa(x') : K]\). Chaining the
+  displays proves the one-point case, and with it the theorem.
+\end{proof}
+
+\begin{theorem}[The degree is invariant under isomorphisms of curve bundles]
+  \label{thm:classDeg_map_iso}
+  \lean{AlgebraicGeometry.classDeg_map_iso}
+  \uses{def:classDeg, thm:smooth_geometrically_reduced, prop:curve_integral,
+    thm:h0_moduleKSheaf_curve, thm:moduleFinite_hModule_one}
+  \leanok
+  Let \(K\) be a field and \(X, Y\) objects of \(\Over(\Spec K)\) which are proper,
+  smooth of relative dimension one and geometrically irreducible over \(K\). Then for
+  every isomorphism \(e : X \cong Y\) of \(\Over(\Spec K)\) and every \v Cech Picard
+  class \(L\) on the underlying scheme of \(Y\),
+  \[
+    \deg_{\Pic}\bigl(e^{*}L\bigr) \;=\; \deg_{\Pic}(L),
+  \]
+  where \(e^{*}\) is pullback of \v Cech Picard classes along the underlying
+  isomorphism of schemes.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:classDeg_cechPicMap_of_isIso, thm:smooth_geometrically_reduced,
+    prop:curve_integral, thm:h0_moduleKSheaf_curve, thm:moduleFinite_hModule_one}
+  The hypotheses of the scheme form are discharged on both bundles by the curve pack:
+  smoothness gives geometric reducedness (\ref{thm:smooth_geometrically_reduced}),
+  which together with geometric irreducibility gives integrality
+  (\ref{prop:curve_integral}); properness includes quasi-compactness; and \(H^0\) and
+  \(H^1\) of the structure sheaf are finite-dimensional over \(K\)
+  (\ref{thm:h0_moduleKSheaf_curve}, \ref{thm:moduleFinite_hModule_one}). The
+  underlying morphism of \(e\) is an isomorphism of schemes over \(\Spec K\): the
+  forgetful functor preserves isomorphisms, and every morphism of \(\Over(\Spec K)\)
+  commutes with the structure morphisms. Apply
+  \ref{thm:classDeg_cechPicMap_of_isIso} to it and to \(L\).
+\end{proof}
+
 \section{The fibre twist of a map to the projective line}
 
 Throughout this section \(Y\) is an integral scheme, smooth of relative dimension one and

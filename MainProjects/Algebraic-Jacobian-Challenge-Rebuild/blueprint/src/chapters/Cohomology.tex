@@ -2549,6 +2549,179 @@ pushout argument is re-run against the pasted square instead, with the
   (\ref{def:overSpecMap}).
 \end{proof}
 
+The pasted square above compares two tests over one base. The next squares cross a
+morphism of \emph{bases} \(f : S' \to S\): the slice product of the base change
+\(f^{*}X\) with a test over \(S'\) agrees, as a scheme, with the slice product of \(X\)
+itself with the test pushed forward to \(S\). Throughout, \(f^{*}X \in \Over(S')\)
+denotes the base change of \(X \in \Over(S)\) along \(f\) --- its underlying scheme is
+the fibre product \(X_{\mathrm{left}} \times_S S'\), its structure morphism the second
+projection --- and \(f_{!}T \in \Over(S)\) denotes a test \(T \in \Over(S')\) regarded
+over \(S\) through \(f\): the same underlying scheme, with structure morphism
+\(f \circ T.\mathrm{hom}\).
+
+\begin{theorem}[The cross-base pasted square]
+  \label{thm:over_isPullback_crossBase}
+  \lean{AlgebraicGeometry.Over.isPullback_crossBase}
+  \uses{lem:over_isPullback_left}
+  \leanok
+  Let \(f : S' \to S\) be a morphism of schemes, \(X \in \Over(S)\), and
+  \(T \in \Over(S')\). The square
+  \[
+    \begin{array}{ccc}
+      (f^{*}X \otimes T)_{\mathrm{left}} &
+        \xrightarrow{\ \mathrm{pr}_1 \circ\, \mathrm{fst}\ } & X_{\mathrm{left}} \\
+      \downarrow \mathrm{snd} & & \downarrow X.\mathrm{hom} \\
+      T_{\mathrm{left}} & \xrightarrow{\ f \circ T.\mathrm{hom}\ } & S
+    \end{array}
+  \]
+  is a pullback of schemes; here the top edge is the first slice projection
+  \(\mathrm{fst} : (f^{*}X \otimes T)_{\mathrm{left}} \to (f^{*}X)_{\mathrm{left}}
+  = X_{\mathrm{left}} \times_S S'\) followed by the first projection of the fibre
+  product, and the bottom edge \(f \circ T.\mathrm{hom}\) is the structure morphism of
+  \(f_{!}T\). Thus the slice product \(f^{*}X \otimes T\), formed over \(S'\), is at the
+  same time a pullback of the \emph{cross-base} cospan
+  \(X_{\mathrm{left}} \to S \leftarrow T_{\mathrm{left}}\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Paste horizontally the slice-product square of \(f^{*}X\) and \(T\) over \(S'\)
+  (\ref{lem:over_isPullback_left}) --- horizontals \(\mathrm{fst}\) and
+  \(T.\mathrm{hom}\), verticals \(\mathrm{snd}\) and the structure morphism of
+  \(f^{*}X\) --- with the defining base-change square of \(f^{*}X\),
+  \[
+    \begin{array}{ccc}
+      X_{\mathrm{left}} \times_S S' & \xrightarrow{\ \mathrm{pr}_1\ } &
+        X_{\mathrm{left}} \\
+      \downarrow \mathrm{pr}_2 & & \downarrow X.\mathrm{hom} \\
+      S' & \xrightarrow{\ f\ } & S
+    \end{array}
+  \]
+  whose left vertical \(\mathrm{pr}_2\) \emph{is} that structure morphism. The two
+  pullback squares share this middle edge, and a horizontal paste of two pullback
+  squares is a pullback; the outer rectangle is the displayed square, its top the
+  composite \(\mathrm{pr}_1 \circ \mathrm{fst}\) and its bottom the composite
+  \(f \circ T.\mathrm{hom}\).
+\end{proof}
+
+\begin{definition}[The cross-base comparison isomorphism]
+  \label{def:crossBaseIso}
+  \lean{AlgebraicGeometry.Over.crossBaseIso}
+  \uses{thm:over_isPullback_crossBase, lem:over_isPullback_left}
+  \leanok
+  In the situation of \ref{thm:over_isPullback_crossBase}, the \emph{cross-base
+  comparison isomorphism} is the isomorphism of schemes
+  \[
+    (f^{*}X \otimes T)_{\mathrm{left}} \;\cong\; (X \otimes f_{!}T)_{\mathrm{left}}
+  \]
+  identifying the two pullbacks of the common cospan
+  \(X_{\mathrm{left}} \to S \leftarrow T_{\mathrm{left}}\): the left-hand side by the
+  cross-base pasted square (\ref{thm:over_isPullback_crossBase}), the right-hand side
+  by the product bridge for \(X\) and \(f_{!}T\) over \(S\)
+  (\ref{lem:over_isPullback_left}). It is compatible with the projections: composed
+  with the first projection of the right-hand side it is the top edge
+  \(\mathrm{pr}_1 \circ \mathrm{fst}\) of the pasted square, and composed with the
+  second projection it is \(\mathrm{snd}\).
+\end{definition}
+\begin{proof}
+  \leanok
+  Two pullbacks of one cospan are canonically isomorphic: each limiting cone factors
+  uniquely through the other, and the two factorizations compose to endomorphisms of
+  limiting cones commuting with the projections, hence to the identities. The stated
+  projection compatibilities are the defining property of the factorization.
+\end{proof}
+
+\begin{theorem}[Naturality of the cross-base isomorphism in the test]
+  \label{thm:crossBaseIso_naturality}
+  \lean{AlgebraicGeometry.Over.crossBaseIso_naturality}
+  \uses{def:crossBaseIso, lem:over_isPullback_left}
+  \leanok
+  For a morphism \(t : T' \to T\) of \(\Over(S')\), the comparison isomorphisms of
+  \ref{def:crossBaseIso} intertwine the two whiskered morphisms: the square
+  \[
+    \begin{array}{ccc}
+      (f^{*}X \otimes T')_{\mathrm{left}} &
+        \xrightarrow{(f^{*}X \lhd t)_{\mathrm{left}}} &
+        (f^{*}X \otimes T)_{\mathrm{left}} \\
+      \downarrow \cong & & \downarrow \cong \\
+      (X \otimes f_{!}T')_{\mathrm{left}} &
+        \xrightarrow{(X \lhd f_{!}t)_{\mathrm{left}}} &
+        (X \otimes f_{!}T)_{\mathrm{left}}
+    \end{array}
+  \]
+  commutes, where \(f_{!}t\) is \(t\) regarded as a morphism \(f_{!}T' \to f_{!}T\)
+  over \(S\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Two morphisms into the pullback \((X \otimes f_{!}T)_{\mathrm{left}}\)
+  (\ref{lem:over_isPullback_left}) are equal once they agree after composing with both
+  projections. With the first projection: whiskering leaves the first factor untouched,
+  and the comparison isomorphisms identify the first projections with the top edges of
+  the pasted squares (\ref{def:crossBaseIso}), so both composites equal the top edge
+  \(\mathrm{pr}_1 \circ \mathrm{fst}'\) of the square of \(T'\). With the second
+  projection: whiskering acts on the second factor by \(t\) --- whose underlying
+  morphism of schemes is also that of \(f_{!}t\) --- and the comparison isomorphisms
+  identify the second projections, so both composites equal
+  \(t_{\mathrm{left}} \circ \mathrm{snd}'\). Hence the square commutes.
+\end{proof}
+
+\begin{theorem}[The cross-base square at a base-changed curve]
+  \label{thm:crossBase_baseChange}
+  \lean{AlgebraicGeometry.isPullback_crossBase, AlgebraicGeometry.crossBaseIso,
+    AlgebraicGeometry.crossBaseIso_naturality}
+  \uses{thm:over_isPullback_crossBase, def:crossBaseIso, thm:crossBaseIso_naturality,
+    def:baseChange}
+  \leanok
+  Let \(k \to L\) be a field extension, \(\sigma : \Spec L \to \Spec k\) the induced
+  morphism of spectra, and \(C \in \Over(\Spec k)\), with base change
+  \(\sigma^{*}C \in \Over(\Spec L)\) along \(L/k\) (\ref{def:baseChange}). Then for
+  every test object \(T \in \Over(\Spec L)\): the slice product
+  \((\sigma^{*}C \otimes T)_{\mathrm{left}}\), formed over \(\Spec L\), is a pullback
+  of \(C.\mathrm{hom}\) against the structure morphism of \(\sigma_{!}T\), and the
+  comparison isomorphism of schemes
+  \[
+    (\sigma^{*}C \otimes T)_{\mathrm{left}} \;\cong\;
+      (C \otimes \sigma_{!}T)_{\mathrm{left}}
+  \]
+  is natural in \(T\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Base change along \(L/k\) is the slice pullback along \(\sigma\)
+  (\ref{def:baseChange}), so this is \ref{thm:over_isPullback_crossBase},
+  \ref{def:crossBaseIso} and \ref{thm:crossBaseIso_naturality} instantiated at
+  \(f = \sigma\) and \(X = C\).
+\end{proof}
+
+\begin{definition}[Pushing an affine test down a field extension]
+  \label{def:mapOverSpecIso}
+  \lean{AlgebraicGeometry.mapOverSpecIso}
+  \leanok
+  Let \(k \to L\) be a field extension, \(\sigma : \Spec L \to \Spec k\) the induced
+  morphism, and \(A\) an \(L\)-algebra whose \(k\)-algebra structure is the restriction
+  through \(L\) (a scalar tower \(k \to L \to A\)). Write \(\Spec A / \Spec F\) for the
+  affine test attached to an \(F\)-algebra \(A\): the object \(\Spec A\) of
+  \(\Over(\Spec F)\) with structure morphism \(\Spec\) of the algebra map. Then pushing
+  the affine test of \(A\) over \(L\) forward along \(\sigma\) gives the affine test of
+  \(A\) over \(k\): there is an isomorphism
+  \[
+    \sigma_{!}\bigl(\Spec A / \Spec L\bigr) \;\cong\; \Spec A / \Spec k
+    \quad \text{in } \Over(\Spec k),
+  \]
+  whose underlying morphism of schemes is the identity of \(\Spec A\).
+\end{definition}
+\begin{proof}
+  \leanok
+  The push-forward keeps the underlying scheme \(\Spec A\) and composes the structure
+  morphism with \(\sigma\). The algebra map \(k \to A\) is the composite
+  \(k \to L \to A\) (the tower identity), so by contravariant functoriality of
+  \(\Spec\) the composed structure morphism
+  \(\sigma \circ \Spec(L \to A)\) is \(\Spec\) of the algebra map \(k \to A\) --- which
+  is exactly the structure morphism of the affine test of \(A\) over \(k\). Hence the
+  identity of \(\Spec A\) is an isomorphism between the two objects of
+  \(\Over(\Spec k)\).
+\end{proof}
+
 \begin{lemma}[The transition is flat, affine and surjective]
   \label{lem:baseFieldTransition_flat_affine_surjective}
   \lean{AlgebraicGeometry.flat_specMap_algHom, AlgebraicGeometry.surjective_specMap_algHom,
