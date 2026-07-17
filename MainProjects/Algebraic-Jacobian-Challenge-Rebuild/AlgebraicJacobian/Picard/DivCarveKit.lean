@@ -237,6 +237,27 @@ end CarvePair
 
 section KillsDetermined
 
+/-- An ideal is killed by a ring map iff the map factors (uniquely) through the
+quotient: the representing property of `Spec (R ⧸ I) → Spec R`, at the level of ring
+maps (the `entriesIdeal_le_ker_iff_factors` argument, for an arbitrary ideal). -/
+theorem ideal_le_ker_iff_factors {R : Type u} [CommRing R] (I : Ideal R) {S : Type u}
+    [CommRing S] (f : R →+* S) :
+    I ≤ RingHom.ker f ↔
+      ∃! g : R ⧸ I →+* S, g.comp (Ideal.Quotient.mk I) = f := by
+  constructor
+  · intro h
+    have hker : ∀ a ∈ I, f a = 0 := fun x hx => RingHom.mem_ker.mp (h hx)
+    refine ⟨Ideal.Quotient.lift I f hker,
+      RingHom.ext fun x => Ideal.Quotient.lift_mk I f hker, ?_⟩
+    intro g hg
+    refine RingHom.ext fun y => ?_
+    obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective y
+    rw [show g (Ideal.Quotient.mk I x) = (g.comp (Ideal.Quotient.mk I)) x from rfl, hg]
+    exact (Ideal.Quotient.lift_mk I f hker).symm
+  · rintro ⟨g, hg, -⟩ x hx
+    rw [RingHom.mem_ker, ← hg, RingHom.comp_apply,
+      Ideal.Quotient.eq_zero_iff_mem.mpr hx, map_zero]
+
 /-- **Two ideals killed by the same test algebras are equal** (the quotient trick): if
 for every algebra `S`, `I` dies in `S` iff `J` dies in `S`, then `I = J`.  The bridge
 between `entriesIdeal` spellings of the same closed condition. -/
