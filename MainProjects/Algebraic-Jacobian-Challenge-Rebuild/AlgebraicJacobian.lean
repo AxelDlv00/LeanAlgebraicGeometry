@@ -217,6 +217,7 @@ import AlgebraicJacobian.Picard.DegreeZero
 import AlgebraicJacobian.Picard.Pic0Functor
 import AlgebraicJacobian.Picard.JacobianData
 import AlgebraicJacobian.AbelianVariety.GroupSeparated
+import AlgebraicJacobian.AbelianVariety.Translation
 import AlgebraicJacobian.Picard.DegreeSeam
 import AlgebraicJacobian.Picard.Pic0ZariskiSheaf
 import AlgebraicJacobian.Picard.PicEtCoverBridge
