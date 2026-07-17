@@ -373,6 +373,7 @@ import AlgebraicJacobian.Picard.PicEtAffBaseFieldShuffle
 import AlgebraicJacobian.Picard.Pic0Pullback
 import AlgebraicJacobian.Picard.Pic0PullbackGrp
 import AlgebraicJacobian.Picard.SlicingFlat
+import AlgebraicJacobian.Picard.SupportTube
 
 /-!
 # AlgebraicJacobian — library root
