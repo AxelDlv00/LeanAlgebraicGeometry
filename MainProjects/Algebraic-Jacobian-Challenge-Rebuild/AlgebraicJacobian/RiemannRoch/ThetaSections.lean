@@ -48,6 +48,14 @@ open Scheme
 
 attribute [local instance] Scheme.functionFieldOverModule Scheme.overModule
 
+/-- Germs at a point commute with `resHom`: the germ of a restricted section is the germ
+of the section (the two-cover mirror of the `GluedDivisorSheaf` helper). -/
+private lemma germ_resHom {Y : Scheme.{u}} {V W : Y.Opens} (h : W ≤ V) (x : Y) (hx : x ∈ W)
+    (t : Γ(Y, V)) :
+    (Y.presheaf.germ W x hx).hom (Y.resHom h t) =
+      (Y.presheaf.germ V x (h hx)).hom t :=
+  Y.presheaf.germ_res_apply (homOfLE h) x hx t
+
 /-! ## The theta transition unit -/
 
 section Unit
@@ -74,7 +82,7 @@ lemma thetaUnit_val : (thetaUnit π : Γ(Y, fiberChart₀ π ⊓ fiberChart₁ �
 
 /-- **The engine-side spelling of `𝒪(Θⁿ)`**: the cocycle-glued twisted sheaf of the
 `n`-th power of the theta transition unit on the pinned two-cover. -/
-noncomputable def thetaTwistSheaf (n : ℕ) :
+noncomputable def thetaTwistSheaf [Y.Over (Spec (CommRingCat.of K))] (n : ℕ) :
     Sheaf (Opens.grothendieckTopology (Y : TopCat)) (ModuleCat.{u} K) :=
   twistSheaf K (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n)
 
@@ -90,6 +98,10 @@ variable (K : Type u) [Field K] {Y : Scheme.{u}} [Y.Over (Spec (CommRingCat.of K
   [QuasiCompact (Y ↘ Spec (CommRingCat.of K))]
   (π : Y ⟶ P1 K) [IsDominant π] (n : ℕ)
 
+omit [Y.Over (Spec (CommRingCat.of K))]
+  [SmoothOfRelativeDimension 1 (Y ↘ Spec (CommRingCat.of K))]
+  [LocallyOfFiniteType (Y ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (Y ↘ Spec (CommRingCat.of K))] in
 /-- The germ at `η` of the theta unit is the fiber unit `u`. -/
 lemma germ_thetaUnit_val :
     (Y.presheaf.germ (fiberChart₀ π ⊓ fiberChart₁ π) (genericPoint Y)
@@ -98,6 +110,10 @@ lemma germ_thetaUnit_val :
   rw [thetaUnit_val, Y.presheaf.germ_res_apply]
   rfl
 
+omit [Y.Over (Spec (CommRingCat.of K))]
+  [SmoothOfRelativeDimension 1 (Y ↘ Spec (CommRingCat.of K))]
+  [LocallyOfFiniteType (Y ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (Y ↘ Spec (CommRingCat.of K))] in
 /-- The germ at `η` of the `n`-th power of the theta unit is `uⁿ`. -/
 lemma germ_thetaUnit_pow_val :
     (Y.presheaf.germ (fiberChart₀ π ⊓ fiberChart₁ π) (genericPoint Y)
@@ -117,6 +133,9 @@ noncomputable def thetaVal {W : Y.Opens} (hηW : genericPoint Y ∈ W)
     (Y.presheaf.germ (W ⊓ fiberChart₀ π) (genericPoint Y)
       ⟨hηW, (genericPoint_mem_preimage_inf π).1⟩).hom p.val.1
 
+omit [SmoothOfRelativeDimension 1 (Y ↘ Spec (CommRingCat.of K))]
+  [LocallyOfFiniteType (Y ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (Y ↘ Spec (CommRingCat.of K))] in
 /-- **The value read on the second chart**: the matching relation pushed to `η` cancels
 the `uⁿ` factor, so `thetaVal p = germ_η p.2`. -/
 lemma thetaVal_eq_germ_snd {W : Y.Opens} (hηW : genericPoint Y ∈ W)
@@ -130,28 +149,14 @@ lemma thetaVal_eq_germ_snd {W : Y.Opens} (hηW : genericPoint Y ∈ W)
     (thetaUnit π ^ n) p.val).mp p.property
   have hg := congrArg
     (Y.presheaf.germ (W ⊓ fiberChart₀ π ⊓ fiberChart₁ π) (genericPoint Y) hηT).hom hmatch
-  rw [map_mul] at hg
-  -- identify the three germs
-  rw [show Y.resHom (inf_le_left : W ⊓ fiberChart₀ π ⊓ fiberChart₁ π ≤ W ⊓ fiberChart₀ π)
-        p.val.1
-      = (Y.presheaf.map (homOfLE (inf_le_left : W ⊓ fiberChart₀ π ⊓ fiberChart₁ π ≤
-          W ⊓ fiberChart₀ π)).op).hom p.val.1 from rfl] at hg
-  rw [Y.presheaf.germ_res_apply] at hg
-  have hcoc : (Y.presheaf.germ (W ⊓ fiberChart₀ π ⊓ fiberChart₁ π) (genericPoint Y)
-      hηT).hom (Y.resHom (inf_le_right.trans (le_of_eq rfl) |>.trans le_rfl |>.trans
-        (le_refl _) |>.trans (le_refl _) : W ⊓ fiberChart₀ π ⊓ fiberChart₁ π ≤ _)
-        ((thetaUnit π ^ n : Γ(Y, fiberChart₀ π ⊓ fiberChart₁ π)ˣ) : Γ(Y, _))) =
-      ((fiberCoordUnit π ^ n : Y.functionFieldˣ) : Y.functionField) := by
-    rw [show Y.resHom _ ((thetaUnit π ^ n : Γ(Y, fiberChart₀ π ⊓ fiberChart₁ π)ˣ) :
-          Γ(Y, fiberChart₀ π ⊓ fiberChart₁ π))
-        = (Y.presheaf.map (homOfLE (le_inf (inf_le_left.trans inf_le_right)
-            inf_le_right : W ⊓ fiberChart₀ π ⊓ fiberChart₁ π ≤
-              fiberChart₀ π ⊓ fiberChart₁ π)).op).hom
-            ((thetaUnit π ^ n : Γ(Y, fiberChart₀ π ⊓ fiberChart₁ π)ˣ) : Γ(Y, _))
-      from rfl]
-    rw [Y.presheaf.germ_res_apply]
-    exact germ_thetaUnit_pow_val K π n
-  sorry
+  -- identify the three germs: `s₀`, `g^n ↦ uⁿ`, and `s₁`, all through `germ_resHom`
+  rw [map_mul, germ_resHom, germ_resHom, germ_resHom, germ_thetaUnit_pow_val K π n] at hg
+  -- `thetaVal = u⁻ⁿ · germ_η s₀`; substitute `germ_η s₀ = uⁿ · germ_η s₁` and cancel
+  change (((fiberCoordUnit π ^ n)⁻¹ : Y.functionFieldˣ) : Y.functionField) *
+      (Y.presheaf.germ (W ⊓ fiberChart₀ π) (genericPoint Y)
+        ⟨hηW, (genericPoint_mem_preimage_inf π).1⟩).hom p.val.1 =
+      (Y.presheaf.germ (W ⊓ fiberChart₁ π) (genericPoint Y) _).hom p.val.2
+  rw [hg, ← mul_assoc, Units.inv_mul, one_mul]
 
 end Value
 
