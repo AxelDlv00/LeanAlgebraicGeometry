@@ -293,6 +293,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyFieldEquiv
 import AlgebraicJacobian.Picard.DivisorFamilyBackward
 import AlgebraicJacobian.Picard.DivisorFamilyPullback
 import AlgebraicJacobian.Picard.DivisorFamilyPullbackOverlap
+import AlgebraicJacobian.Picard.DivisorFamilyPullbackCert
 import AlgebraicJacobian.Picard.DivisorStalkIdeal
 import AlgebraicJacobian.Picard.DivisorFamilyTheta
 import AlgebraicJacobian.Picard.DivisorFamilyWindow
