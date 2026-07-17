@@ -185,6 +185,7 @@ import AlgebraicJacobian.Cohomology.RigidEngineLatticeCoherence
 import AlgebraicJacobian.Cohomology.TransitionSectionsBaseChange
 import AlgebraicJacobian.RiemannRoch.DegreeBaseChange
 import AlgebraicJacobian.RiemannRoch.DegreeBaseFieldInvariance
+import AlgebraicJacobian.RiemannRoch.DegreePullbackDictionary
 import AlgebraicJacobian.RiemannRoch.ThetaDegree
 import AlgebraicJacobian.RiemannRoch.RelPicDegree
 import AlgebraicJacobian.Cohomology.RigidEngine4Assembly
@@ -252,6 +253,7 @@ import AlgebraicJacobian.Albanese.RationalMapFunctionField
 import AlgebraicJacobian.Albanese.DifferenceMap
 import AlgebraicJacobian.Albanese.Milne33Substeps
 import AlgebraicJacobian.Albanese.Milne33Rows
+import AlgebraicJacobian.Albanese.Milne33Diagonal
 import AlgebraicJacobian.Albanese.PolePurityLocal
 import AlgebraicJacobian.Albanese.PolePurity
 import AlgebraicJacobian.Algebra.CoheightBridge
