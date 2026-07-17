@@ -2722,6 +2722,142 @@ over \(S\) through \(f\): the same underlying scheme, with structure morphism
   \(\Over(\Spec k)\).
 \end{proof}
 
+The cross-base comparison and the affine matching combine at an affine test: for an
+algebra \(A\) in a scalar tower \(k \to L \to A\), the base-changed curve tensored with
+the affine test of \(A\) over \(L\) and the original curve tensored with the affine test
+of \(A\) over \(k\) have canonically isomorphic underlying schemes --- a
+\emph{same-carrier} comparison, compatible with the two projections onto the common
+carrier \(\Spec A\) and natural in \(A\).
+
+\begin{definition}[The same-carrier comparison at an affine test]
+  \label{def:crossBaseAffineIso}
+  \lean{AlgebraicGeometry.crossBaseAffineIso, AlgebraicGeometry.crossBaseAffineIso_hom}
+  \uses{thm:crossBase_baseChange, def:mapOverSpecIso, def:baseChange}
+  \leanok
+  Let \(k \to L\) be a field extension, \(\sigma : \Spec L \to \Spec k\) the induced
+  morphism, \(C \in \Over(\Spec k)\) with base change \(\sigma^{*}C \in \Over(\Spec L)\)
+  (\ref{def:baseChange}), and \(A\) an algebra in a scalar tower \(k \to L \to A\). The
+  \emph{same-carrier comparison} is the isomorphism of schemes
+  \[
+    \bigl(\sigma^{*}C \otimes (\Spec A/\Spec L)\bigr)_{\mathrm{left}}
+      \;\cong\; \bigl(C \otimes (\Spec A/\Spec k)\bigr)_{\mathrm{left}}
+  \]
+  (the left slice product formed over \(\Spec L\), the right one over \(\Spec k\))
+  defined as the composite of the cross-base comparison at the test
+  \(T = \Spec A/\Spec L\) (\ref{thm:crossBase_baseChange}),
+  \[
+    \bigl(\sigma^{*}C \otimes (\Spec A/\Spec L)\bigr)_{\mathrm{left}} \;\cong\;
+    \bigl(C \otimes \sigma_{!}(\Spec A/\Spec L)\bigr)_{\mathrm{left}},
+  \]
+  with the underlying morphism of \(C\) whiskered with the affine matching
+  \(\sigma_{!}(\Spec A/\Spec L) \cong \Spec A/\Spec k\) (\ref{def:mapOverSpecIso}).
+\end{definition}
+\begin{proof}
+  \leanok
+  Both factors are isomorphisms of schemes: the first by
+  \ref{thm:crossBase_baseChange}; the second because whiskering with \(C\) is a functor
+  on \(\Over(\Spec k)\) and taking underlying schemes is a functor to schemes, and
+  functors carry the isomorphism of \ref{def:mapOverSpecIso} to an isomorphism. The
+  composite of the two is therefore an isomorphism, and by construction its underlying
+  morphism is the composite of the underlying morphisms of the two factors.
+\end{proof}
+
+\begin{lemma}[The same-carrier comparison lies over \(\Spec A\)]
+  \label{lem:crossBaseAffineIso_snd}
+  \lean{AlgebraicGeometry.crossBaseAffineIso_hom_snd,
+    AlgebraicGeometry.crossBaseAffineIso_inv_snd}
+  \uses{def:crossBaseAffineIso, def:crossBaseIso, def:mapOverSpecIso}
+  \leanok
+  Both slice products of \ref{def:crossBaseAffineIso} project onto the same scheme
+  \(\Spec A\) by their second projections, and the same-carrier comparison \(c\)
+  commutes with them:
+  \[
+    \mathrm{snd}_{k} \circ c \;=\; \mathrm{snd}_{L},
+    \qquad
+    \mathrm{snd}_{L} \circ c^{-1} \;=\; \mathrm{snd}_{k},
+  \]
+  where \(\mathrm{snd}_{L}\) and \(\mathrm{snd}_{k}\) denote the underlying morphisms of
+  the second projections of \(\sigma^{*}C \otimes (\Spec A/\Spec L)\) and of
+  \(C \otimes (\Spec A/\Spec k)\). In particular \(c\) is an isomorphism of schemes over
+  \(\Spec A\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Write \(c = w \circ b\) with \(b\) the cross-base comparison and \(w\) the whiskered
+  affine matching (\ref{def:crossBaseAffineIso}). Whiskering acts on the second factor
+  by the whiskered morphism: \(\mathrm{snd}_{k} \circ w\) is the underlying morphism of
+  the affine matching composed with the second projection of
+  \(C \otimes \sigma_{!}(\Spec A/\Spec L)\), and the underlying morphism of the affine
+  matching is the identity of \(\Spec A\) (\ref{def:mapOverSpecIso}). The cross-base
+  comparison identifies the second projections (\ref{def:crossBaseIso}): the second
+  projection of \(C \otimes \sigma_{!}(\Spec A/\Spec L)\) composed with \(b\) is
+  \(\mathrm{snd}_{L}\). Chaining, \(\mathrm{snd}_{k} \circ c = \mathrm{snd}_{L}\);
+  composing this identity with \(c^{-1}\) on the right gives
+  \(\mathrm{snd}_{L} \circ c^{-1} = \mathrm{snd}_{k}\). Finally, the two second
+  projections are the structure morphisms of the two products regarded over
+  \(\Spec A\), so \(c\) is an isomorphism over \(\Spec A\).
+\end{proof}
+
+\begin{theorem}[Naturality of the same-carrier comparison in the algebra]
+  \label{thm:crossBaseAffineIso_naturality}
+  \lean{AlgebraicGeometry.crossBaseAffineIso_naturality}
+  \uses{def:crossBaseAffineIso, thm:crossBase_baseChange, thm:crossBaseIso_naturality,
+    def:mapOverSpecIso, def:overSpecMap}
+  \leanok
+  Let \(A, B\) be algebras in scalar towers \(k \to L \to A\), \(k \to L \to B\) and
+  \(f : A \to B\) a homomorphism of \(L\)-algebras; through the towers, \(f\) is then
+  also a homomorphism of \(k\)-algebras. Writing \(c_A, c_B\) for the same-carrier
+  comparisons (\ref{def:crossBaseAffineIso}) and \(\Spec_L f : \Spec B/\Spec L \to
+  \Spec A/\Spec L\), \(\Spec_k f : \Spec B/\Spec k \to \Spec A/\Spec k\) for the
+  morphisms of affine tests induced by \(f\) over the two bases (\ref{def:overSpecMap}),
+  the square
+  \[
+    \begin{array}{ccc}
+      \bigl(\sigma^{*}C \otimes (\Spec B/\Spec L)\bigr)_{\mathrm{left}} &
+        \xrightarrow{\ c_B\ } &
+        \bigl(C \otimes (\Spec B/\Spec k)\bigr)_{\mathrm{left}} \\
+      \downarrow (\sigma^{*}C \lhd \Spec_L f)_{\mathrm{left}} & &
+        \downarrow (C \lhd \Spec_k f)_{\mathrm{left}} \\
+      \bigl(\sigma^{*}C \otimes (\Spec A/\Spec L)\bigr)_{\mathrm{left}} &
+        \xrightarrow{\ c_A\ } &
+        \bigl(C \otimes (\Spec A/\Spec k)\bigr)_{\mathrm{left}}
+    \end{array}
+  \]
+  commutes.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \emph{The affine matchings intertwine the two \(\Spec f\).} The push-forward
+  \(\sigma_{!}(\Spec_L f)\) and the morphism \(\Spec_k f\) have the same underlying
+  morphism of schemes \(\Spec f\), and the affine matchings
+  \(\mathrm{match}_A, \mathrm{match}_B\) have underlying morphism the identity of the
+  respective carrier (\ref{def:mapOverSpecIso}). Hence the two composites
+  \(\mathrm{match}_A \circ \sigma_{!}(\Spec_L f)\) and
+  \(\Spec_k f \circ \mathrm{match}_B\), both morphisms
+  \(\sigma_{!}(\Spec B/\Spec L) \to \Spec A/\Spec k\) of \(\Over(\Spec k)\), have equal
+  underlying morphisms \(\Spec f\); morphisms of a slice category with equal underlying
+  morphisms are equal, so the matchings intertwine \(\sigma_{!}(\Spec_L f)\) with
+  \(\Spec_k f\).
+
+  \emph{Pasting.} Factor \(c_A = w_A \circ b_A\) and \(c_B = w_B \circ b_B\) as in
+  \ref{def:crossBaseAffineIso}. Whiskering with \(C\) and passing to underlying schemes
+  is functorial, so the intertwining above whiskers to
+  \((C \lhd \Spec_k f)_{\mathrm{left}} \circ w_B
+    = w_A \circ \bigl(C \lhd \sigma_{!}(\Spec_L f)\bigr)_{\mathrm{left}}\).
+  Naturality of the cross-base comparison in the test
+  (\ref{thm:crossBaseIso_naturality}, at the frozen instantiation of
+  \ref{thm:crossBase_baseChange}) applied to \(\Spec_L f\) gives
+  \(\bigl(C \lhd \sigma_{!}(\Spec_L f)\bigr)_{\mathrm{left}} \circ b_B
+    = b_A \circ (\sigma^{*}C \lhd \Spec_L f)_{\mathrm{left}}\).
+  Chaining,
+  \[
+    (C \lhd \Spec_k f)_{\mathrm{left}} \circ c_B
+      = w_A \circ \bigl(C \lhd \sigma_{!}(\Spec_L f)\bigr)_{\mathrm{left}} \circ b_B
+      = w_A \circ b_A \circ (\sigma^{*}C \lhd \Spec_L f)_{\mathrm{left}}
+      = c_A \circ (\sigma^{*}C \lhd \Spec_L f)_{\mathrm{left}} . \qedhere
+  \]
+\end{proof}
+
 \begin{lemma}[The transition is flat, affine and surjective]
   \label{lem:baseFieldTransition_flat_affine_surjective}
   \lean{AlgebraicGeometry.flat_specMap_algHom, AlgebraicGeometry.surjective_specMap_algHom,

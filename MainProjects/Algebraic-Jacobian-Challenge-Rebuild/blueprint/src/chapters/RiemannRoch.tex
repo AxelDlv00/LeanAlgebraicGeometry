@@ -3165,6 +3165,97 @@ node.
   \ref{thm:classDeg_cechPicMap_of_isIso} to it and to \(L\).
 \end{proof}
 
+\section{The degree seam of the same-carrier comparison}
+\label{sec:degree_crossBase_seam}
+
+The base-field shuffle of the relative Picard group at an affine test
+(Section~\ref{sec:relPicCrossBase}) reads one class on two presentations of one fiber:
+at a \emph{field} test \(K\) in a scalar tower \(k \to L \to K\), the fiber of the
+\(k\)-curve at \(K\) and the fiber of the base-changed \(L\)-curve at \(K\) are
+identified by the same-carrier comparison (\ref{def:crossBaseAffineIso}), an
+isomorphism of schemes over \(\Spec K\). This section shows that the degree over
+\(K\) reads the same integer on the two presentations --- the invariance under
+isomorphisms of Section~\ref{sec:degree_iso_invariance} fired at the comparison.
+
+Throughout, \(C\) is the challenge curve over \(k\) --- proper, smooth of relative
+dimension one and geometrically irreducible --- and \(k \to L \to K\) is a scalar
+tower of fields, with \(\sigma : \Spec L \to \Spec k\) the induced morphism and
+\(C_L := \sigma^{*}C\) the base-changed curve over \(L\) (\ref{def:baseChange}). We
+write \(\Spec K/\Spec F\) for the affine test of \(K\) over a field \(F\), and
+\(\mathrm{relPic}_L(C_L, K)\) for the relative Picard group of \(C_L\) at the affine
+test of \(K\) over \(L\), as in Section~\ref{sec:relPicCrossBase}.
+
+\begin{theorem}[Degree invariance along the same-carrier comparison]
+  \label{thm:classDeg_cechPicMap_crossBaseAffineIso}
+  \lean{AlgebraicGeometry.classDeg_cechPicMap_crossBaseAffineIso}
+  \uses{def:classDeg, thm:classDeg_cechPicMap_of_isIso, def:crossBaseAffineIso,
+    lem:crossBaseAffineIso_snd, thm:baseChangeCurve_bundle,
+    thm:baseChangeCurve_integral, thm:baseChangeCurve_cohomFinite, def:baseChange}
+  \leanok
+  Let \(c : \bigl(C_L \otimes (\Spec K/\Spec L)\bigr)_{\mathrm{left}} \to
+  \bigl(C \otimes (\Spec K/\Spec k)\bigr)_{\mathrm{left}}\) be the same-carrier
+  comparison at the field test \(K\) (\ref{def:crossBaseAffineIso}). Then for every
+  \v Cech Picard class \(\Lambda\) on the fiber
+  \(C_K = \bigl(C \otimes (\Spec K/\Spec k)\bigr)_{\mathrm{left}}\),
+  \[
+    \deg_{\Pic}\bigl(c^{*}\Lambda\bigr) \;=\; \deg_{\Pic}(\Lambda),
+  \]
+  both degrees taken over \(K\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The two fibers satisfy every hypothesis of the scheme-form invariance engine. For
+  the \(k\)-side fiber \(C_K\): it is smooth of relative dimension one and
+  quasi-compact over \(K\) through the second projection, and integral, with \(H^0\)
+  and \(H^1\) of its structure sheaf finite-dimensional over \(K\)
+  (\ref{thm:baseChangeCurve_bundle}, \ref{thm:baseChangeCurve_integral},
+  \ref{thm:baseChangeCurve_cohomFinite}, at the extension \(K/k\)). For the
+  \(L\)-side fiber: the base-changed curve \(C_L\) is itself proper, smooth of
+  relative dimension one and geometrically irreducible over \(L\) --- its underlying
+  data is the fiber of \(C\) at \(L\) with the second projection
+  (\ref{def:baseChange}, \ref{thm:baseChangeCurve_bundle} at the extension
+  \(L/k\)) --- so the same three theorems, applied over the base field \(L\) to the
+  curve \(C_L\) at the extension \(K/L\), give the identical package for
+  \(\bigl(C_L \otimes (\Spec K/\Spec L)\bigr)_{\mathrm{left}}\) over \(K\).
+
+  The comparison \(c\) is an isomorphism of schemes commuting with the two second
+  projections (\ref{lem:crossBaseAffineIso_snd}), which are the structure morphisms
+  of the two fibers over \(\Spec K\); so \(c\) is an isomorphism of curve bundles
+  over \(\Spec K\). Apply the scheme-form invariance
+  (\ref{thm:classDeg_cechPicMap_of_isIso}) to \(c\) and \(\Lambda\).
+\end{proof}
+
+\begin{theorem}[The relative degree is invariant under the base-field shuffle]
+  \label{thm:relPicDeg_relPicCrossBase}
+  \lean{AlgebraicGeometry.relPicDeg_relPicCrossBase}
+  \uses{def:relPicDeg, def:relPicCrossBase,
+    thm:classDeg_cechPicMap_crossBaseAffineIso}
+  \leanok
+  Let \(\mathrm{sh}_K : \mathrm{relPic}(C, \Spec K) \to \mathrm{relPic}_L(C_L, K)\)
+  be the base-field shuffle at the field test \(K\) (\ref{def:relPicCrossBase}), and
+  let the relative degree on the target be that of Definition~\ref{def:relPicDeg}
+  applied over the base field \(L\) to the curve \(C_L\) at the extension \(K/L\)
+  (its hypotheses discharged as in
+  \ref{thm:classDeg_cechPicMap_crossBaseAffineIso}). Then for every relative Picard
+  class \(x \in \mathrm{relPic}(C, \Spec K)\),
+  \[
+    \deg_{\mathrm{rel}}\bigl(\mathrm{sh}_K(x)\bigr) \;=\; \deg_{\mathrm{rel}}(x) :
+  \]
+  a relative Picard class of the \(k\)-curve at the field test \(K\) and its shuffled
+  presentation on the base-changed curve read the same integer.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Represent \(x = \pi(\Lambda)\) with \(\Lambda \in \Pic(C_K)\), the projection being
+  surjective. The shuffle computes on cosets:
+  \(\mathrm{sh}_K(x) = \pi(c^{*}\Lambda)\) (\ref{def:relPicCrossBase}). The anchor of
+  Definition~\ref{def:relPicDeg}, on each side, reads the relative degree off the
+  representative:
+  \(\deg_{\mathrm{rel}}\bigl(\mathrm{sh}_K(x)\bigr) = \deg_{\Pic}(c^{*}\Lambda)\) and
+  \(\deg_{\mathrm{rel}}(x) = \deg_{\Pic}(\Lambda)\). These agree by
+  \ref{thm:classDeg_cechPicMap_crossBaseAffineIso}.
+\end{proof}
+
 \section{Multiplicativity of the degree under a finite morphism}
 \label{sec:degree_pullback}
 
