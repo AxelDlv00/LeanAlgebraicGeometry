@@ -283,6 +283,7 @@ import AlgebraicJacobian.Picard.GrassmannianChartFrame
 import AlgebraicJacobian.Picard.DivCarveKit
 import AlgebraicJacobian.Picard.DivCarvePairChart
 import AlgebraicJacobian.Picard.DivCarveLocus
+import AlgebraicJacobian.Picard.DivScheme
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularityStep
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularity
 import AlgebraicJacobian.Picard.FlatCokernel
