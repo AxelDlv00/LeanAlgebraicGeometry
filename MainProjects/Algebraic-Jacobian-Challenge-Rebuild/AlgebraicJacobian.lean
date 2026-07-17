@@ -280,6 +280,8 @@ import AlgebraicJacobian.Picard.GrassmannianTautological
 import AlgebraicJacobian.Picard.GrassmannianMatrixPoint
 import AlgebraicJacobian.Picard.GrassmannianTautologicalCocycle
 import AlgebraicJacobian.Picard.GrassmannianChartFrame
+import AlgebraicJacobian.Picard.DivCarveKit
+import AlgebraicJacobian.Picard.DivCarvePairChart
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularityStep
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularity
 import AlgebraicJacobian.Picard.FlatCokernel
