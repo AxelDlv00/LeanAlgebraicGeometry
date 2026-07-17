@@ -270,6 +270,7 @@ import AlgebraicJacobian.Albanese.Milne33CMEquidim
 import AlgebraicJacobian.Albanese.Milne33KernelGen
 import AlgebraicJacobian.Albanese.Milne33TransportLocal
 import AlgebraicJacobian.Albanese.Milne33Transport
+import AlgebraicJacobian.Albanese.Milne33
 import AlgebraicJacobian.Albanese.PolePurityLocal
 import AlgebraicJacobian.Albanese.PolePurity
 import AlgebraicJacobian.Algebra.CoheightBridge
