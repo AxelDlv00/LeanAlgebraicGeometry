@@ -298,6 +298,7 @@ import AlgebraicJacobian.Picard.DivisorStalkIdeal
 import AlgebraicJacobian.Picard.DivisorFamilyTheta
 import AlgebraicJacobian.Picard.DivisorFamilyWindow
 import AlgebraicJacobian.Picard.DivisorFamilyThetaSurj
+import AlgebraicJacobian.Picard.DivisorThetaDatum
 import AlgebraicJacobian.Algebra.ABDepth
 import AlgebraicJacobian.Algebra.ABDepthExt
 import AlgebraicJacobian.Algebra.ABDepthSES
