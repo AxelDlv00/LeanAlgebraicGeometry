@@ -242,6 +242,7 @@ import AlgebraicJacobian.Cohomology.RelThetaTransport
 import AlgebraicJacobian.Cohomology.RelThetaTransportCore
 import AlgebraicJacobian.RiemannRoch.WindowLedgerF3
 import AlgebraicJacobian.RiemannRoch.BaseDivisor
+import AlgebraicJacobian.RiemannRoch.BaseDivisorSpan
 import AlgebraicJacobian.RiemannRoch.SumIntersection
 import AlgebraicJacobian.RiemannRoch.AnnihilatorKernel
 import AlgebraicJacobian.RiemannRoch.BpfSpanCore
