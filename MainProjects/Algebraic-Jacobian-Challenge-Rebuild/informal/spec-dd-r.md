@@ -364,3 +364,44 @@ stays read-only route map; (5) DDR-4 probe-first (§4).
 *End of spec. The §1 and §2 verdicts are the deliverable of record for the two DD-R
 gate adjudications; the DAT-B boundary flag and the `grPoint` deferral are to be echoed
 on the roadmap by the orchestrator.*
+
+---
+
+## ADDENDUM 1 (2026-07-17, late evening) — DDR-9 restated against `DivFamZar` (BINDING; consumes I-0213 / spec-dd-2 Addendum 2)
+
+The DD-2 adjudication I-0213 (spec-dd-2 Addendum 2, commit c9aaf2c94) proves the
+globally-certified `DivFam` is not a Zariski sheaf (diagonal-over-`Γ(C∖pt)`
+counterexample; Z-clopen principle) — the §3 item 8 statement
+`divRep : (divFunctor g).RepresentableBy (DivScheme g)` as pinned against the
+globally-certified functor is **unprovable** and is hereby RESTATED:
+
+1. **The functor.** `divRep` is stated against DD-2's S6 functor over
+   **`DivFamZar g`** values (`IsLocallyCertified` carrier, DivEq quotient — DD-2's
+   pinned vocabulary `IsLocallyCertified` / `DivFamZar` / `DivFam.toZar` /
+   `mapAlgZar` / `DivFamZar.exists_glue_of_away_compat` / `eq_of_away_eq`,
+   consumed VERBATIM; no parallel coinage, I-0190/I-0196 discipline). The S6
+   spelling freeze remains a two-lane coordination point (spec-dd-2 §6): the DD-R
+   lane must sign off before S6 freezes.
+2. **What is UNAFFECTED (adjudicated in I-0213 itself):** DDR-1 through DDR-8.
+   The universal family of DDR-3/4 is honestly certified over each `Z(♦)`-chart
+   ring, hence locally certified a fortiori (`DivFam.toZar` after `mapAlg`); all
+   field-level material (DDR-2 pinch, DDR-8's fibrewise inputs, DD-4 ε/mono)
+   operates where `DivFamZar K ≅ DivFam K` (trivial cover). No landed DD-R
+   statement changes.
+3. **The homEquiv directions, restated shape.** Forward (T-point → family):
+   pullback of the universal certified family along the chart atlas, exported to
+   `DivFamZar` via `mapAlgZar`-compatible `toZar` — the chart-atlas
+   ill-definedness noted in I-0213 is cured because local certifiability only
+   requires the atlas-preimage base cover. Backward (family → T-point):
+   classify each local certified part by DDR-6, glue the classifying morphisms
+   over the base cover by scheme-morphism Zariski descent, uniqueness by DDR-7
+   `divScheme_hom_ext` + DD-2 `eq_of_away_eq`; the two laws then check locally
+   (per certified part), where the DDR-8 mono and the §3 item 8 routes apply
+   unchanged.
+4. **Gating update.** DDR-9 now additionally gates on DD-2's **S5b + S6**
+   (DivFamZar + the Zar vehicle) landing with frozen names. The `divRepAff`
+   staging rule (§4) stands: if S6 trails, land the affine-level RepresentableBy
+   against `DivFamZar` on affine tests first.
+
+*Filed by the DD-R orchestrator lane; roadmap comment + I-0213 acknowledgement
+posted in the same pass.*
