@@ -284,6 +284,9 @@ import AlgebraicJacobian.Picard.DivCarveKit
 import AlgebraicJacobian.Picard.DivCarvePairChart
 import AlgebraicJacobian.Picard.DivCarveLocus
 import AlgebraicJacobian.Picard.DivScheme
+import AlgebraicJacobian.Picard.DivSchemeFamily
+import AlgebraicJacobian.Picard.DivSchemeFamilySide
+import AlgebraicJacobian.Picard.DivSchemeFamilyUniv
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularityStep
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularity
 import AlgebraicJacobian.Picard.FlatCokernel
