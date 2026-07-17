@@ -305,6 +305,7 @@ import AlgebraicJacobian.Tangent.TruncExpCech
 import AlgebraicJacobian.Tangent.DualNumberBaseChange
 import AlgebraicJacobian.Tangent.TruncExpCechH1
 import AlgebraicJacobian.Picard.RelPicCurveMap
+import AlgebraicJacobian.Curve.CrossBaseSquare
 
 /-!
 # AlgebraicJacobian — library root
