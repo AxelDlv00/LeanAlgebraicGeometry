@@ -277,6 +277,7 @@ import AlgebraicJacobian.Picard.FlatCokernel
 import AlgebraicJacobian.Picard.DivisorFamily
 import AlgebraicJacobian.Picard.DivisorFamilyExtraction
 import AlgebraicJacobian.Picard.DivisorFamilyField
+import AlgebraicJacobian.Picard.DivisorFamilyFieldDegree
 import AlgebraicJacobian.Algebra.ABDepth
 import AlgebraicJacobian.Algebra.ABDepthExt
 import AlgebraicJacobian.Algebra.ABDepthSES
