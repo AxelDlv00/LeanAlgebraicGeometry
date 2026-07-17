@@ -296,3 +296,25 @@ only (protocol §4); files ≤ 500 lines.
 
 *End of spec. Binding for the DD-2 stages; deviations require re-derivation from the
 worksheet and a note in the stage commit message.*
+
+## ADDENDUM (2026-07-17, same day, post-S5) — §5 route correction: the certificate wall
+
+S5 landed the divisor-assembly heart (`awayGluedEquations`, chart restrictions, the
+conditional keystone `exists_glue_of_away_compat_of_certifiedRep`; commit 1758fad90)
+but ADJUDICATED §5's route steps 2/4 as **mathematically false**: (c1) fails for
+denominator-cleared pieces. Counterexample of record (GlueClass module docstring):
+`R = k[u]`, cover `(u, 1−u)`, zero-section divisor — the cleared piece `D(ũ)` has
+colength `R_u`, not `Module.Finite R`, and the cross-localizations equally fail, so
+the localization-span descent gifts' hypotheses are unsatisfiable. General principle
+(third sighting today, after the pt-seam adjudication's refinement-instability): **a
+piece carries an `R`-finite-projective colength iff its divisor trace is clopen in
+`Z`** (`Z` finite over the affine base). The keystone remains TRUE; what is missing is
+the **certificate brick**: extraction of a certified adaptation over `R` for an
+away-locally-certified glued system, via the `W`-as-algebra route — canonical
+idempotents of the finite projective section algebra of `Z` (glued by the
+module-localization sheaf sequence), CRT-separated chart generators, packet-swallowing
+basic-open pieces. This brick discharges `hcert` and upgrades the conditional keystone
+to the pinned `DivFam.exists_glue_of_away_compat`. It shares its substrate with
+DDR-4's engine bridge (spec-dd-r §7 risk 1) — SPEC IT IN COORDINATION with the DD-R
+lane (one home; inbox before freezing). S6 remains as specced but consumes the
+conditional keystone until the brick lands.
