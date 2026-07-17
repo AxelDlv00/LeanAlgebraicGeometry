@@ -112,4 +112,42 @@ lemma baseChange_inf_le_preimage (i j : D.index) :
 
 end FinCoverData
 
+/-! ## The chart-ring base change, as an algebra equivalence
+
+`relTermBaseChange` is the `R'`-linear base change of chart sections; on the chart charts
+it is in fact multiplicative (the underlying map `r' ⊗ y ↦ r' • relSectionsMap y` is a
+ring homomorphism because `relSectionsMap` is), so it promotes to an `R'`-algebra
+equivalence. This is the ring-level input to the piece-level term identification (the
+away-localization base change of `IsLocalization.Away.tensorProductEquivTMulRight`). -/
+
+/-- **The chart-ring base change**, as an `R'`-algebra equivalence
+`R' ⊗[R] Γ(C_R, V_R) ≃ₐ[R'] Γ(C_{R'}, V_{R'})`: the promotion of the `R'`-linear
+`relTermBaseChange` (multiplicative because `relSectionsMap` is a ring homomorphism). -/
+noncomputable def relTermBaseChangeAlg (V : C.left.Opens)
+    (hV : IsCompact (V : Set C.left)) (hV' : IsQuasiSeparated (V : Set C.left)) :
+    R' ⊗[R] Γ(relCurve C R, (fst C (overSpec k R)).left ⁻¹ᵁ V) ≃ₐ[R']
+      Γ(relCurve C R', (fst C (overSpec k R')).left ⁻¹ᵁ V) :=
+  AlgEquiv.ofLinearEquiv (relTermBaseChange C R R' V hV hV')
+    (by
+      rw [Algebra.TensorProduct.one_def, relTermBaseChange_tmul, one_smul, map_one])
+    (by
+      intro x y
+      induction x with
+      | zero => rw [zero_mul, map_zero, zero_mul]
+      | add x₁ x₂ hx₁ hx₂ => rw [add_mul, map_add, hx₁, hx₂, map_add, add_mul]
+      | tmul a s =>
+        induction y with
+        | zero => rw [mul_zero, map_zero, mul_zero]
+        | add y₁ y₂ hy₁ hy₂ => rw [mul_add, map_add, hy₁, hy₂, map_add, mul_add]
+        | tmul b t =>
+          rw [Algebra.TensorProduct.tmul_mul_tmul, relTermBaseChange_tmul,
+            relTermBaseChange_tmul, relTermBaseChange_tmul, map_mul, smul_mul_smul_comm])
+
+@[simp]
+lemma relTermBaseChangeAlg_tmul (V : C.left.Opens)
+    (hV : IsCompact (V : Set C.left)) (hV' : IsQuasiSeparated (V : Set C.left))
+    (r' : R') (y : Γ(relCurve C R, (fst C (overSpec k R)).left ⁻¹ᵁ V)) :
+    relTermBaseChangeAlg (R := R) R' V hV hV' (r' ⊗ₜ y) = r' • relSectionsMap C R R' V y :=
+  relTermBaseChange_tmul C R R' hV hV' r' y
+
 end AlgebraicGeometry
