@@ -239,11 +239,11 @@ theorem rank_kaehlerDifferential_localization_eq_relativeDimension
         (S := S) n] at hrank
   simpa using hrank
 
-/-- **Stage 6.B substrate (Stacks 02JK, RHS of the conormal iso).** Iter-198
+/-- **Stage 6.B substrate (Stacks 00RU, RHS of the conormal iso).** Iter-198
 Lane COE axiom-clean substrate helper: under the Stage 5a + 5b hypotheses
 (`Ω[Sₘ⁄R]` is `Sₘ`-free with `Sₘ`-rank `n`), the residue-field base-change
 `κ(mₘ) ⊗_{Sₘ} Ω[Sₘ⁄R]` has `κ(mₘ)`-dimension `n`. This is the *right-hand
-side* of the Stacks-02JK cotangent iso
+side* of the Stacks-00RU cotangent iso
 `κ(mₘ) ⊗_{Sₘ} Ω[Sₘ⁄R] ≃ mₘ/mₘ²` (the iso itself is the missing Mathlib
 bridge for sub-lemma 6.B); combined with the bridge it gives
 `Module.finrank κ (CotangentSpace Sₘ) = n`, the cotangent input of the
@@ -268,12 +268,12 @@ private theorem finrank_residueField_tensor_kaehlerDifferential_of_free_rank_eq
   rw [Module.finrank_baseChange]
   exact Module.finrank_eq_of_rank_eq hrank
 
-/-- **Stage 6.B substrate (Stacks 02JK, LHS-RHS bridge): formally-smooth residue
+/-- **Stage 6.B substrate (Stacks 00RU, LHS-RHS bridge): formally-smooth residue
 gives the cotangent iso.** Iter-199 Lane COE axiom-clean closed-point-style
 helper: assuming the source ring `Sₘ` is formally smooth over `R`, its residue
 field `κ = ResidueField Sₘ` is formally smooth over `R`, and `Ω[κ⁄R]` is
 subsingleton (the three hypotheses combine to model the closed-point case of
-Stacks 02JK over an algebraically closed base, where `κ = R` makes both FS
+Stacks 00RU over an algebraically closed base, where `κ = R` makes both FS
 and `Ω[κ⁄R] = 0` automatic), the canonical Mathlib map
 `KaehlerDifferential.kerCotangentToTensor R Sₘ κ`
 is an `Sₘ`-linear equivalence between
@@ -281,7 +281,7 @@ is an `Sₘ`-linear equivalence between
 and `κ ⊗_Sₘ Ω[Sₘ⁄R]` (the residue-field base-change of the Kähler
 differentials).
 
-This is the closed-point case of the Stacks-02JK cotangent ↔ Kähler iso
+This is the closed-point case of the Stacks-00RU cotangent ↔ Kähler iso
 (sub-gap (ii.A) of the Stage 6 chain in `isRegularLocalRing_stalk_of_smooth`).
 The proof is the 3-step recipe from `analogies/coe-stacks02jk.md`:
 
@@ -299,7 +299,7 @@ The `kerCotangentToTensor` map's domain is
 `(RingHom.ker (algebraMap Sₘ κ)).Cotangent`, which equals
 `(IsLocalRing.maximalIdeal Sₘ).Cotangent = IsLocalRing.CotangentSpace Sₘ` since
 `κ = Sₘ / maximalIdeal Sₘ`; the equivalence is therefore the
-Stacks 02JK closed-point cotangent iso
+Stacks 00RU closed-point cotangent iso
 `m/m² ≃ₗ[Sₘ] κ ⊗_Sₘ Ω[Sₘ⁄R]`.
 
 Axiom-clean: composes
@@ -348,7 +348,7 @@ private noncomputable def
   exact LinearEquiv.ofBijective _ ⟨hInj, hSurjMap⟩
 
 /-- **Stage 6.B substrate (iter-199), maximal-ideal-domain repackaging.** The
-same Stacks-02JK closed-point cotangent iso as
+same Stacks-00RU closed-point cotangent iso as
 `cotangent_iso_residue_tensor_kaehler_of_formallySmooth_residue` above, but
 restated with `(IsLocalRing.maximalIdeal Sₘ).Cotangent` (the canonical
 `Sₘ/m = κ`-module side of `IsLocalRing.CotangentSpace Sₘ`) as the domain
@@ -432,7 +432,7 @@ Closed-point-friendly bundled variant of
 typeclass hypotheses `Algebra.FormallySmooth R (ResidueField Sₘ)` and
 `Subsingleton (Ω[ResidueField Sₘ⁄R])` with the single hypothesis that
 `algebraMap R (ResidueField Sₘ)` is bijective. This is the precise hypothesis
-the closed-point case of Stacks 02JK consumes: at a `k̄`-rational closed
+the closed-point case of Stacks 00RU consumes: at a `k̄`-rational closed
 point of a smooth `k̄`-algebra, the residue map `k̄ → κ` is the identity
 (Nullstellensatz), hence bijective.
 

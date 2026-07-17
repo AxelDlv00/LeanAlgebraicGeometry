@@ -90,7 +90,7 @@ every `Algebra.IsStandardSmooth R S` instance can be promoted to
 This closes the iter-193 "sub-gap (i): relative-dimension determination"
 identified in the docstring of `isRegularLocalRing_stalk_of_smooth` below.
 The remaining Stage 6 gap is solely (ii) the Stacks-00OE smooth-algebra
-Krull-dimension formula plus the Stacks-02JK cotangent-Kähler bridge over a
+Krull-dimension formula plus the Stacks-00RU cotangent-Kähler bridge over a
 field.
 
 Axiom-clean: a 4-line unpacking of `Algebra.IsStandardSmooth.out` via
