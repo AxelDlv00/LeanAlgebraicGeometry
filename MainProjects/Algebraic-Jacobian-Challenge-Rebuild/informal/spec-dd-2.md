@@ -318,3 +318,61 @@ to the pinned `DivFam.exists_glue_of_away_compat`. It shares its substrate with
 DDR-4's engine bridge (spec-dd-r §7 risk 1) — SPEC IT IN COORDINATION with the DD-R
 lane (one home; inbox before freezing). S6 remains as specced but consumes the
 conditional keystone until the brick lands.
+
+## ADDENDUM 2 (2026-07-17, evening) — the D1 pin's global certificate is WRONG; the
+locally-certified repair (BINDING for the remaining DD-2 stages; overturns part of
+worksheet §1.1 (D1) with the re-derivation below; inbox adjudication filed)
+
+**The counterexample (campaign-central, unavoidable).** Let `W := C \ {pt}` with `pt`
+a closed point off `π⁻¹(0) ∪ π⁻¹(∞)` (affine: complement of a point on a projective
+curve), `R := Γ(W)`, and `d :=` the DIAGONAL section `Δ : W → C × W = C_R` as a
+degree-1 relative effective divisor (the campaign's own graph-divisor construction,
+`AJCR.picard.degree.graph`). For ANY piece `P` inside one pinned chart, the `Z`-trace
+of `P` is `Δ(U_P)` with `U_P ⊆ Spec R` a PROPER open (the diagonal leaves each chart:
+`W` meets both `C \ V₀ ≠ ∅` and `C \ V₁ ≠ ∅`), and `(c1)` forces `Γ(Z ∩ P) = O(U_P)`
+to be `R`-finite, i.e. `U_P` clopen in the CONNECTED `Spec R` — so `U_P = ∅`. Hence
+the pieces cannot cover `Z`: **no certified adaptation of `d` exists at all**, while
+`d` restricted to a small basic-open cover of `Spec R` (confining the diagonal to one
+chart per part, by continuity) is certifiable part-by-part. Consequences:
+
+1. `hcert` of the S5 conditional keystone is UNSATISFIABLE in general — the
+   "certificate brick" of Addendum 1 (W-idempotents) cannot discharge it (here
+   `W(Z) ≅ R` has no nontrivial idempotents; the packet is connected and straddles
+   the charts). Addendum 1's brick plan is WITHDRAWN.
+2. The globally-certified `DivFam` is NOT a Zariski sheaf on affine tests
+   (separation holds — S4; gluing fails — the diagonal glues from certifiable
+   parts). Hence the currently-pinned `divFunctor` is **representable by no scheme**,
+   and DDR-9's `divRep` as stated against it is unprovable. (Independently: the
+   forward homEquiv "pull the universal family" is ill-defined for test maps not
+   landing in a single chart atlas member — same phenomenon.)
+
+**Worksheet re-derivation.** Kleiman `df:red`/`lm:ctn` demand flatness of the divisor
+subscheme — a Zariski-LOCAL condition on the base. The D1 pin's global chart-wise
+certificate `(c1)` accidentally strengthened this to "the divisor never crosses the
+chart seam", which is not divisor-theoretic content. The faithful pin is
+**locally-certified**:
+
+```
+IsLocallyCertified (n) (d : (relCurve C R).LocalEquations) : Prop :=
+  ∃ (m : ℕ) (g : Fin m → R), Ideal.span (Set.range g) = ⊤ ∧
+    ∀ i, ∃ G : CertifiedDivisorFamily C (Localization.Away (g i)) π n,
+      DivEq G.eqns (d.pullback (relCurveMap C R (Localization.Away (g i))) hreg)
+-- hreg free along open immersions (S5 Kit); DivEq-form (not adaptation-of-pulled-d
+-- on the nose) for transport robustness.
+
+DivFamZar n R := {d // IsLocallyCertified n d} / (DivEq on the carrier)
+```
+
+`CertifiedDivisorFamily`/`DivFam` remain THE building block (all DD-4/DD-R/field
+material unaffected — they operate at certified/chart/field level, where the two
+notions agree: over a field the trivial cover collapses `DivFamZar K ≅ DivFam K`).
+New stage S5b (this lane): `DivFamZar` + `DivFam.toZar` + `picClass` descent + total
+`mapAlgZar` (cover pullback: `φ(g)` spans ⊤; parts transport by the landed total
+`mapAlg` + S2 coherence) + `eq_of_away_eq` (verbatim from S4's DivEq-level engine) +
+**the pinned keystone `DivFamZar.exists_glue_of_away_compat` — now TRUE**: divisor
+assembly = S5's `awayGluedEquations`; local certifiability of the glue = the
+composite cover `(g_i · h̃_{i,l})` (numerator-cleared local covers times the base
+cover; span-⊤ by the classical power argument) with parts certified via `mapAlg` of
+the local certified parts + S5's chart-restriction `DivEq`. S6 packages `divFunctor`
+over `DivFamZar` (vehicle mirrored from S3 with `DivFamZar` values). DDR-9 must
+restate `divRep` against the Zar functor — inbox row for the DD-R lane.
