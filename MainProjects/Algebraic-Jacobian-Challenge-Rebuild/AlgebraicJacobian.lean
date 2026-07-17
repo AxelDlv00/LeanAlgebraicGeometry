@@ -328,6 +328,10 @@ import AlgebraicJacobian.Picard.DivisorFamilyZar
 import AlgebraicJacobian.Picard.DivisorFamilyZarMapAlg
 import AlgebraicJacobian.Picard.DivisorFamilyZarGlueKit
 import AlgebraicJacobian.Picard.DivisorFamilyZarGlue
+import AlgebraicJacobian.Picard.DivisorFamilyZarVehicle
+import AlgebraicJacobian.Picard.DivisorFamilyZarMapKit
+import AlgebraicJacobian.Picard.DivisorFamilyZarMap
+import AlgebraicJacobian.Picard.DivisorFamilyZarSheaf
 import AlgebraicJacobian.Picard.DivisorFamilyVehicle
 import AlgebraicJacobian.Picard.DivisorStalkIdeal
 import AlgebraicJacobian.Picard.DivisorFamilyTheta
