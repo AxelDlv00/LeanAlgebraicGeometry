@@ -290,6 +290,8 @@ import AlgebraicJacobian.Picard.DivisorFamilyFieldDegree
 import AlgebraicJacobian.Picard.DivisorFamilyFieldEquiv
 import AlgebraicJacobian.Picard.DivisorFamilyBackward
 import AlgebraicJacobian.Picard.DivisorFamilyPullback
+import AlgebraicJacobian.Picard.DivisorStalkIdeal
+import AlgebraicJacobian.Picard.DivisorFamilyTheta
 import AlgebraicJacobian.Algebra.ABDepth
 import AlgebraicJacobian.Algebra.ABDepthExt
 import AlgebraicJacobian.Algebra.ABDepthSES
