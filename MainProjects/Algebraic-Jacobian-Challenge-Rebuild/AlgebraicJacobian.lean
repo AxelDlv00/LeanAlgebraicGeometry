@@ -310,6 +310,7 @@ import AlgebraicJacobian.Tangent.DualNumberBaseChange
 import AlgebraicJacobian.Tangent.TruncExpCechH1
 import AlgebraicJacobian.Picard.RelPicCurveMap
 import AlgebraicJacobian.Curve.CrossBaseSquare
+import AlgebraicJacobian.Curve.CurveMorphismDichotomy
 
 /-!
 # AlgebraicJacobian — library root
