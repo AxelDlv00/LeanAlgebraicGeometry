@@ -14,7 +14,7 @@ old in-tree Albanese draft; every file is re-kernel-verified in this tree).
 
 * `RingTheory.Module.depth` — the `I`-depth of an `R`-module `M`: the supremum in
   `ℕ∞` of lengths of `M`-regular sequences contained in `I`, with the convention
-  `depth = ⊤` when `I • M = M` (Stacks tag 00LF).
+  `depth = ⊤` when `I • M = M` (Stacks tag 00LI).
 * `Module.projectiveDimension` — the projective dimension of an `R`-module,
   re-exporting the categorical `CategoryTheory.projectiveDimension` of
   `ModuleCat.of R M`.
@@ -32,9 +32,9 @@ the Cohen–Macaulay / regular-local chapter (`ABRegularQuotient`,
 
 ## References
 
-Stacks Project tags 00LF (definition-depth), 00LP (lemma-depth-ext), 00LE
-(lemma-depth-in-ses), 090V (proposition-Auslander–Buchsbaum), 00N4
-(definition-local-ring-CM), 00OD (lemma-regular-ring-CM), 00NP
+Stacks Project tags 00LI (definition-depth), 00LW (lemma-depth-ext), 00LX
+(lemma-depth-in-ses), 090V (proposition-Auslander–Buchsbaum), 00N8
+(definition-local-ring-CM), 00NQ (lemma-regular-ring-CM), 00NP
 (lemma-regular-domain). Matsumura, *Commutative Ring Theory*, Theorem 19.1.
 Auslander–Buchsbaum, "Homological dimension in local rings", 1957.
 -/
@@ -56,7 +56,7 @@ lengths of `M`-regular sequences contained in `I` (provided `IM ≠ M`; if
 `IM = M` we set `depth_I(M) = ∞`). Mathlib at the pin exposes the
 regular-sequence predicate `RingTheory.Sequence.IsRegular`
 (`Mathlib.RingTheory.Regular.RegularSequence`) but not the resulting numeric
-depth function — that is the gap this declaration fills (Stacks tag 00LF). -/
+depth function — that is the gap this declaration fills (Stacks tag 00LI). -/
 
 /-- The **`I`-depth** of an `R`-module `M`: the supremum (in `ℕ∞`) of lengths of
 `M`-regular sequences contained in the ideal `I`.
@@ -64,7 +64,7 @@ depth function — that is the gap this declaration fills (Stacks tag 00LF). -/
 When `IM = M` (the "trivial-quotient" case, e.g. `M = 0` or `I = R`) the
 supremum is taken to be `⊤` by convention. When `(R, 𝔪)` is local one usually
 calls `depth (IsLocalRing.maximalIdeal R) M` simply *the depth* of `M`
-(Stacks tag 00LF). -/
+(Stacks tag 00LI). -/
 noncomputable def depth {R : Type u} [CommRing R] (_I : Ideal R)
     (_M : Type v) [AddCommGroup _M] [Module R _M] : ℕ∞ :=
   open Classical in

@@ -30,7 +30,7 @@ re-kernel-verified here.
   `Ω[K⁄k] ≃ K ⊗_F Ω[F⁄k]`, and `Ω[F⁄k]` is the localised module of
   `Ω[k[s]⁄k]`, free with basis `{d xᵢ}`.
 * `finrank_cotangentSpace_add_finrank_kaehler_residueField` (**Lemma D**): the
-  conormal (Stacks `02JK`) dimension count at an arbitrary prime: for a local
+  conormal (Stacks `00RU`) dimension count at an arbitrary prime: for a local
   algebra `Sₘ` formally smooth over `R` with formally smooth residue field
   `κ` and `Ω[Sₘ⁄R]` free of rank `n`,
   `dim_κ (m/m²) + dim_κ Ω[κ⁄R] = n`. The retraction from
@@ -139,7 +139,7 @@ section LemmaD
 
 open KaehlerDifferential IsLocalRing
 
-/-- **Lemma D: the conormal (Stacks 02JK) dimension identity at an arbitrary
+/-- **Lemma D: the conormal (Stacks 00RU) dimension identity at an arbitrary
 prime.** For a local algebra `Sₘ` formally smooth over `R`, with residue field
 `κ` also formally smooth over `R` (automatic over a perfect base field) and
 Kähler differentials free of rank `n`,

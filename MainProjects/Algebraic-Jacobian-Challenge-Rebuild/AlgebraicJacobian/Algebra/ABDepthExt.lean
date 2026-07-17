@@ -6,17 +6,17 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Algebra.ABDepth
 
 /-!
-# Depth via the Ext characterisation (Stacks 00LP)
+# Depth via the Ext characterisation (Stacks 00LW)
 
 Second file of the Auslander–Buchsbaum package. For a Noetherian local ring
 `(R, 𝔪)` with residue field `κ = R/𝔪` and a nonzero finite `R`-module `M`, the
 depth of `M` equals the smallest index `i` at which `Ext^i_R(κ, M)` is nonzero
-(Stacks tag 00LP).
+(Stacks tag 00LW).
 
 * `RingTheory.Module.ext_smul_eq_zero_of_mem_annihilator` — `x ∈ Ann(N)` kills
   the `R`-action on `Ext^i_R(N, M)`.
 * `RingTheory.Module.depth_eq_smallest_ext_index` — the depth-bound form of
-  Stacks 00LP: `n ≤ depth 𝔪 M ↔ ∀ i < n, Ext^i_R(κ, M) = 0`.
+  Stacks 00LW: `n ≤ depth 𝔪 M ↔ ∀ i < n, Ext^i_R(κ, M) = 0`.
 
 The characterisation is stated via the depth-bound `↔` Ext-vanishing-below —
 logically equivalent to "`depth M` is the smallest `i` with `Ext^i(κ, M) ≠ 0`"
@@ -42,7 +42,7 @@ Proof: `x • e = (mk₀ (x • 𝟙_N)).comp e (zero_add i)` (by R-linearity:
 `x • 𝟙_N : N ⟶ N` is the zero map, so `mk₀ (x • 𝟙_N) = mk₀ 0 = 0`
 (`mk₀_zero`), and `0.comp e = 0` (`zero_comp`).
 
-This is the precise statement of the Stacks-00LP "`x ∈ 𝔪` annihilates
+This is the precise statement of the Stacks-00LW "`x ∈ 𝔪` annihilates
 `Ext^*(κ, -)`" trick, lifted to the more general `x ∈ Ann(N)` form so it covers
 both `N = κ` and `N = R/(x_1,…,x_k)`. It is reused by the matrix-collapse
 argument of `ABSyzygy`. -/
@@ -114,7 +114,7 @@ theorem depth_eq_smallest_ext_index
     -- RHS: `∀ i < 0, …` is vacuous since no `i` satisfies `i < 0`.
     exact ⟨fun _ i hi _ => absurd hi (Nat.not_lt_zero i), fun _ => bot_le⟩
   | succ n ih =>
-    -- The Stacks 00LP inductive step. The blueprint sketch is:
+    -- The Stacks 00LW inductive step. The blueprint sketch is:
     --
     -- (⇒) Assume `(n+1 : ℕ∞) ≤ depth M`. Then `Nontrivial M` rules out
     --     `𝔪 • ⊤ = ⊤` (Nakayama), so `depth M` is the supremum and we can

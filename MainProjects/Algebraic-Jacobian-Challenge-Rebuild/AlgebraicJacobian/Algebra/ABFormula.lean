@@ -18,7 +18,7 @@ of finite projective dimension over a Noetherian local ring `(R, 𝔪)`,
 * `RingTheory.auslander_buchsbaum_formula_succ_pd` — the `pd_R(M) = k + 1` case,
   proved by Nat-induction on `k` (generalising `M`) along minimal surjections
   `R^n ↠ M`: the inductive step combines the syzygy descent of `ABSyzygy` with
-  the two Stacks-00LE inequalities; the base case `pd M = 1` is the
+  the two Stacks-00LX inequalities; the base case `pd M = 1` is the
   matrix-collapse argument on the free kernel `ker f ≅ R^k ↪ R^n` (whose matrix
   entries lie in `𝔪` by minimality).
 -/
@@ -42,7 +42,7 @@ Noetherian local ring `(R, 𝔪)`, the **Auslander–Buchsbaum formula** reads
 minimal resolutions), the proof formalised here inducts on `pd_R(M)` along
 minimal surjections `R^n ↠ M`: the inductive step applies the induction
 hypothesis to the syzygy `ker f` (with `pd(ker f) = pd(M) - 1` exactly, by the
-descent/ascent bridges of `ABSyzygy`) and combines the two Stacks-00LE
+descent/ascent bridges of `ABSyzygy`) and combines the two Stacks-00LX
 inequalities arithmetically; the base case `pd M = 1` is a matrix-collapse
 argument on the free kernel. -/
 
@@ -152,7 +152,7 @@ Proof by Nat-induction on `k`, generalising `M`:
 
 * **Inductive step `pd M = k + 2`.** For a minimal surjection `f : R^n ↠ M`,
   `pd (ker f) = k + 1` exactly (`projectiveDimension_ker_eq_of_surjection`);
-  the induction hypothesis on `ker f` plus the two Stacks-00LE inequalities
+  the induction hypothesis on `ker f` plus the two Stacks-00LX inequalities
   (`depth_ses_ineqs_of_surjection_finite_localRing`) combine arithmetically via
   `enat_ab_inductive_combine`. -/
 lemma auslander_buchsbaum_formula_succ_pd

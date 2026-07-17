@@ -22,10 +22,10 @@ proof of the formula (`ABFormula`) consumes.
   `HasProjectiveDimensionLT`, and syzygy descent/ascent along the kernel SES
   `0 → ker f → R^n → M → 0`.
 * `RingTheory.Module.depth_ses_ineqs_of_surjection_finite_localRing` — the two
-  Stacks-00LE inequalities on the kernel SES, after identifying
+  Stacks-00LX inequalities on the kernel SES, after identifying
   `depth(R^n) = depth(R)`.
 * `RingTheory.Module.exists_ne_zero_ext_of_depth_eq` — a nonzero class in
-  `Ext^D(κ, M)` when `depth M = D` (the converse read-off of Stacks 00LP).
+  `Ext^D(κ, M)` when `depth M = D` (the converse read-off of Stacks 00LW).
 * `RingTheory.Module.ext_comp_mk₀_ofHom_eq_zero_of_entries_mem_annihilator` —
   the matrix-collapse on Ext: a map `A : R^m →ₗ R^n` with all entries in
   `Ann_R N` induces the zero postcomposition on `Ext^p(N, -)`.
@@ -217,7 +217,7 @@ lemma hasProjectiveDimensionLT_succ_of_hasProjectiveDimensionLT_ker
 
 /-! ### Both `depth_of_short_exact` inequalities for the SES `0 → ker f → R^n → M → 0`
 
-Packages parts (2) and (3) of Stacks 00LE applied to the kernel SES of a
+Packages parts (2) and (3) of Stacks 00LX applied to the kernel SES of a
 surjection `f : R^n ↠ M` from a finite free module of rank `n ≥ 1` over a
 Noetherian local ring, after identifying `depth(R^n) = depth(R)` via
 `depth_pi_const_eq_depth_of_nonempty`. These are precisely the two inequalities
@@ -365,7 +365,7 @@ Push through `ofHom`, `mk₀`, and `Ext.comp` using `ofHom_sum / mk₀_sum / com
 plus `ofHom_smul / mk₀_smul / comp_smul`. Each summand becomes
 `A_{i,j} • (e.comp (mk₀ (ofHom (elemMap _ _ i j))))`, where the scalar `A_{i,j}`
 lies in `Ann_R N`. The existing `ext_smul_eq_zero_of_mem_annihilator` (Stacks
-00LP fragment) makes each such scalar action zero. Hence the total sum is zero.
+00LW fragment) makes each such scalar action zero. Hence the total sum is zero.
 (Non-private: reused by the base case of `ABFormula`.) -/
 lemma ext_comp_mk₀_ofHom_eq_zero_of_entries_mem_annihilator
     {R : Type u} [CommRing R]

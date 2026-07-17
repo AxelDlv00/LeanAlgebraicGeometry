@@ -6,13 +6,13 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Algebra.ABFormula
 
 /-!
-# Cohen–Macaulay local rings and regular quotients (Stacks 00N4, 00NU-prep)
+# Cohen–Macaulay local rings and regular quotients (Stacks 00N8, 00NU-prep)
 
 Sixth file of the Auslander–Buchsbaum package.
 
 * `RingTheory.CohenMacaulay` — the Cohen–Macaulay predicate for a Noetherian
   local ring, `depth(R) = ringKrullDim R`, packaged as a `Prop`-valued class
-  (Stacks tag 00N4). Mathlib at the pin has no Cohen–Macaulay predicate; this
+  (Stacks tag 00N8). Mathlib at the pin has no Cohen–Macaulay predicate; this
   is the gap-fill.
 * `RingTheory.CohenMacaulay.finrank_cotangentSpace_quot_span_singleton_succ` —
   the cotangent dim-drop: for `x ∈ 𝔪 \ 𝔪²` over a Noetherian local ring,
@@ -27,7 +27,7 @@ Sixth file of the Auslander–Buchsbaum package.
   to be a non-zero-divisor).
 
 These are the inputs for `ABRegularDomain` (Stacks 00NP: regular local rings
-are domains) and `ABRegularCM` (Stacks 00OD: regular local rings are
+are domains) and `ABRegularCM` (Stacks 00NQ: regular local rings are
 Cohen–Macaulay).
 -/
 
@@ -47,11 +47,11 @@ namespace RingTheory
 /-! ## Cohen–Macaulay local rings
 
 A Noetherian local ring `(R, 𝔪)` is **Cohen–Macaulay** if its depth equals
-its Krull dimension (Stacks tag 00N4). Mathlib at the pin has neither the
+its Krull dimension (Stacks tag 00N8). Mathlib at the pin has neither the
 predicate nor the class — this is the gap-fill. -/
 
 /-- A Noetherian local ring `(R, 𝔪)` is **Cohen–Macaulay** if its depth
-equals its Krull dimension: `depth(R) = dim R` (Stacks tag 00N4).
+equals its Krull dimension: `depth(R) = dim R` (Stacks tag 00N8).
 
 Encoded as a `Prop`-valued type class so downstream consumers can write
 `[CohenMacaulay R]` and use Cohen–Macaulay as a hypothesis. -/
@@ -64,7 +64,7 @@ class CohenMacaulay (R : Type u) [CommRing R] [IsLocalRing R]
 
 /-! ## Towards "regular local rings are Cohen–Macaulay"
 
-Every regular Noetherian local ring is Cohen–Macaulay (Stacks tag 00OD;
+Every regular Noetherian local ring is Cohen–Macaulay (Stacks tag 00NQ;
 `ABRegularCM`). The proof picks a minimal generating set `x_1, …, x_d` of `𝔪`
 (where `d = dim R`), uses that `R` is a domain (Stacks 00NP; `ABRegularDomain`)
 to start an `R`-regular sequence, and inducts on dimension — each

@@ -6,13 +6,13 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Algebra.ABDepthExt
 
 /-!
-# Depth on short exact sequences and depth transport (Stacks 00LE)
+# Depth on short exact sequences and depth transport (Stacks 00LX)
 
 Third file of the Auslander–Buchsbaum package.
 
 * `RingTheory.Module.depth_of_short_exact` — the three crosswise depth
   inequalities on a short exact sequence `0 → N' → N → N'' → 0` of nonzero
-  finite modules over a Noetherian local ring (Stacks tag 00LE), each a direct
+  finite modules over a Noetherian local ring (Stacks tag 00LX), each a direct
   read-off of the long exact `Ext^*(κ, -)` sequence and the depth-via-Ext
   characterisation of `ABDepthExt`.
 * `RingTheory.Module.depth_eq_of_linearEquiv` — depth is invariant under
@@ -44,7 +44,7 @@ namespace Module
 
 For a short exact sequence `0 → N' → N → N'' → 0` of nonzero finite modules
 over a Noetherian local ring, the three modules' depths satisfy three
-crosswise inequalities (Stacks tag 00LE), each a direct read-off of the
+crosswise inequalities (Stacks tag 00LX), each a direct read-off of the
 long exact `Ext^*(κ, -)` sequence and the depth-via-Ext characterisation
 of `ABDepthExt`. -/
 

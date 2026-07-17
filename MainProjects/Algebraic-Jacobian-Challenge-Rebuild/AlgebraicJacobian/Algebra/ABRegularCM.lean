@@ -6,7 +6,7 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Algebra.ABRegularDomain
 
 /-!
-# Regular local rings are Cohen–Macaulay (Stacks 00OD)
+# Regular local rings are Cohen–Macaulay (Stacks 00NQ)
 
 Final file of the Auslander–Buchsbaum package.
 
@@ -17,7 +17,7 @@ Final file of the Auslander–Buchsbaum package.
   `R/(x)` of `ABRegularQuotient`, with `isDomain_of_regularLocal` providing the
   non-zero-divisors.
 * `RingTheory.CohenMacaulay.of_regular` — every regular Noetherian local ring
-  is Cohen–Macaulay (Stacks tag 00OD), as an instance: `depth(R) ≥ dim R` from
+  is Cohen–Macaulay (Stacks tag 00NQ), as an instance: `depth(R) ≥ dim R` from
   the regular sequence above, `depth(R) ≤ dim R` from
   `ringKrullDim_add_length_eq_ringKrullDim_of_isRegular`.
 
@@ -44,7 +44,7 @@ namespace CohenMacaulay
 /-! ### Length-bound on regular sequences
 
 For a Noetherian local ring `R`, every `R`-regular sequence has length at most
-`ringKrullDim R`. This is the **upper bound** half of Stacks 00OD: it is the
+`ringKrullDim R`. This is the **upper bound** half of Stacks 00NQ: it is the
 specialisation of the equality
 `ringKrullDim (R / ofList rs) + rs.length = ringKrullDim R`
 (`ringKrullDim_add_length_eq_ringKrullDim_of_isRegular`) to the observation that
@@ -90,7 +90,7 @@ private lemma exists_isSMulRegular_notMemSq_of_regularLocal_succ
   haveI : Module.IsTorsionFree R R := inferInstance
   exact ⟨x, hxMem, hxNotSq, IsSMulRegular.of_ne_zero hx_ne_zero⟩
 
-/-- **Stacks 00OD inductive substrate.**
+/-- **Stacks 00NQ inductive substrate.**
 For a regular local ring `(R, 𝔪)` of Krull dimension `k + 1`, there exists
 `x ∈ 𝔪` that is `R`-regular (a non-zero-divisor on `R`) such that the quotient
 `R ⧸ Ideal.span {x}` is again a regular local ring of Krull dimension `k`
@@ -190,7 +190,7 @@ private lemma exists_isSMulRegular_quotient_isRegularLocal_succ
       rw [hspan_R'_eq_k, hR'_dim]
   exact ⟨hRegLR, hspan_R'_eq_k⟩
 
-/-- Packages the inductive step of Stacks 00OD: given a regular local ring `R`
+/-- Packages the inductive step of Stacks 00NQ: given a regular local ring `R`
 of dimension `k + 1`, plus the inductive hypothesis at dimension `k`
 (universally quantified in the ring), produce a regular sequence of length
 `k + 1` in the maximal ideal of `R`. Assembly path:
