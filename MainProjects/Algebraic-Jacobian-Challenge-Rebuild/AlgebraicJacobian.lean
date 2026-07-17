@@ -315,6 +315,9 @@ import AlgebraicJacobian.Picard.DivisorFamilyPullbackGlued
 import AlgebraicJacobian.Picard.DivisorFamilyPullbackMap
 import AlgebraicJacobian.Picard.DivisorFamilyMapAlg
 import AlgebraicJacobian.Picard.DivisorFamilyZariskiSep
+import AlgebraicJacobian.Picard.DivisorFamilyZariskiGlueKit
+import AlgebraicJacobian.Picard.DivisorFamilyZariskiGlue
+import AlgebraicJacobian.Picard.DivisorFamilyZariskiGlueClass
 import AlgebraicJacobian.Picard.DivisorFamilyVehicle
 import AlgebraicJacobian.Picard.DivisorStalkIdeal
 import AlgebraicJacobian.Picard.DivisorFamilyTheta
