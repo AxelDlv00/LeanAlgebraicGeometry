@@ -21,7 +21,7 @@ algebra-side stages:
   `exists_isStandardSmooth_at_of_smooth`).
 * **Stages 4–5** — Kähler differentials of a standard-smooth algebra are
   free, of rank the relative dimension, and both transport through
-  localisation (Stacks `02JK`).
+  localisation (Stacks `00RT`).
 * **Stage 6.A/6.B** — the closed-point cotangent computation: under a
   bijective residue map `k → κ(m)` the cotangent space `m/m²` of the
   localisation has `κ`-finrank the relative dimension
@@ -71,7 +71,7 @@ The Mathlib gap "smooth over `\bar k` ⟹ stalk is a regular local ring"
   `AlgebraicGeometry.Smooth.exists_isStandardSmooth`).
 * **Stage 3** — the polynomial generators of the standard smooth
   presentation form a regular sequence after localising at any prime
-  (Stacks `02JK`/`07BV`; Mathlib gap as of `b80f227`).
+  (Stacks `00RT`/`07BV`; Mathlib gap as of `b80f227`).
 * **Stage 4** — a Noetherian local ring whose maximal ideal is generated
   by a regular sequence of length equal to its Krull dimension is a
   regular local ring (`IsRegularLocalRing.of_regularSequence`; Stacks
@@ -83,7 +83,7 @@ historically a single scoped `sorry` inside the main theorem
 (no `sorry`) via the Serre-free arbitrary-prime route of
 `Albanese/SmoothPrimeRegularity.lean` (conormal identity + Kähler-trdeg
 identification + polynomial-ring trdeg–height inequality), which needs
-neither Stacks `00OF` nor the `02JK`/`00OE` regular-sequence chain. -/
+neither Stacks `00OF` nor the `00RT`/`00OE` regular-sequence chain. -/
 
 /-- **Stage 1 (Stacks 00TT, smooth ⟹ flat at stalk).** For a smooth
 morphism `X.hom : X.left ⟶ Spec (.of k̄)` with `k̄` algebraically closed,
@@ -138,7 +138,7 @@ Axiom-clean: composition of `exists_isStandardSmooth_at_of_smooth` +
 This is the iter-192 Lane M↓ HARD BAR new axiom-clean helper: it packages the
 "smooth ⟹ stalk is localisation of a standard-smooth Γ(Spec, U)-algebra"
 content as a standalone declaration that downstream Stages 4-5 (the genuine
-Stacks 02JK + 00OE Mathlib-gap chain) can consume directly. -/
+Stacks 00RT + 00OE Mathlib-gap chain) can consume directly. -/
 private theorem exists_algebra_isStandardSmooth_section_stalk_isLocalization_of_smooth
     {kbar : Type u} [Field kbar] [IsAlgClosed kbar]
     (X : Over (Spec (.of kbar)))
@@ -179,7 +179,7 @@ theorem module_free_kaehlerDifferential_of_isStandardSmooth
       (R := R) (S := S)).mp ‹_›
   exact Module.Free.of_basis b
 
-/-- **Stage 5a (Stacks 02JK, freeness transports through localisation, algebra-side).**
+/-- **Stage 5a (Stacks 00RT, freeness transports through localisation, algebra-side).**
 Iter-193 Lane M↓ axiom-clean substrate helper: for an `R`-algebra `S` whose Kähler
 differentials `Ω[S⁄R]` are `S`-free (e.g.\ when `S` is `R`-standard smooth via
 `module_free_kaehlerDifferential_of_isStandardSmooth`), the localisation `Sₘ` at any
@@ -205,7 +205,7 @@ theorem module_free_kaehlerDifferential_localization
     (M := Ω[S⁄R]) (Mₛ := Ω[Sₘ⁄R])
     (KaehlerDifferential.map R R S Sₘ)
 
-/-- **Stage 5b (Stacks 02JK + 00T7, rank computation through localisation, algebra-side).**
+/-- **Stage 5b (Stacks 00RT + 00T7, rank computation through localisation, algebra-side).**
 Iter-193 Lane M↓ axiom-clean substrate helper: for an `R`-algebra `S` that is
 `IsStandardSmoothOfRelativeDimension n` over `R` and a localisation `Sₘ` at any
 submonoid `M` (with `Sₘ` non-trivial), the `Sₘ`-rank of `Ω[Sₘ⁄R]` equals `n`. This
