@@ -243,6 +243,7 @@ import AlgebraicJacobian.RiemannRoch.ThetaSectionsIso
 import AlgebraicJacobian.Cohomology.RelThetaTwist
 import AlgebraicJacobian.Cohomology.RelThetaTransport
 import AlgebraicJacobian.Cohomology.RelThetaTransportCore
+import AlgebraicJacobian.Cohomology.RelCurveCollapse
 import AlgebraicJacobian.RiemannRoch.WindowLedgerF3
 import AlgebraicJacobian.RiemannRoch.BaseDivisor
 import AlgebraicJacobian.RiemannRoch.BaseDivisorSpan
@@ -333,6 +334,7 @@ import AlgebraicJacobian.Algebra.MonicReverseInverse
 import AlgebraicJacobian.Picard.DivisorThetaPairing
 import AlgebraicJacobian.RiemannRoch.CarveDegreePinch
 import AlgebraicJacobian.RiemannRoch.CarveDegree
+import AlgebraicJacobian.RiemannRoch.WindowFieldTransport
 import AlgebraicJacobian.Picard.DivisorFamilyEpsMono
 import AlgebraicJacobian.Picard.DivisorThetaDatum
 import AlgebraicJacobian.Picard.DivisorThetaBridge
