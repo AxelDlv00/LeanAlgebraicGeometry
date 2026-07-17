@@ -213,6 +213,8 @@ import AlgebraicJacobian.Cohomology.GluedSheafH0BaseChange
 import AlgebraicJacobian.Cohomology.GluedSheafExtraction
 import AlgebraicJacobian.Cohomology.GluedSheafCongr
 import AlgebraicJacobian.Cohomology.GluedSheafFibre
+import AlgebraicJacobian.Cohomology.GluedSheafSubord
+import AlgebraicJacobian.Cohomology.GluedSheafDatumFibre
 import AlgebraicJacobian.Cohomology.DescentSkeleton
 import AlgebraicJacobian.Cohomology.RigidEngine5Toolkit
 import AlgebraicJacobian.Cohomology.DatumDescent
@@ -316,6 +318,7 @@ import AlgebraicJacobian.Picard.DivisorThetaTrivializeZero
 import AlgebraicJacobian.Picard.DivisorThetaTrivializeOne
 import AlgebraicJacobian.Picard.DivisorThetaGlue
 import AlgebraicJacobian.Picard.DivisorThetaSurjectivity
+import AlgebraicJacobian.Picard.DivisorThetaFibre
 import AlgebraicJacobian.Algebra.ABDepth
 import AlgebraicJacobian.Algebra.ABDepthExt
 import AlgebraicJacobian.Algebra.ABDepthSES
