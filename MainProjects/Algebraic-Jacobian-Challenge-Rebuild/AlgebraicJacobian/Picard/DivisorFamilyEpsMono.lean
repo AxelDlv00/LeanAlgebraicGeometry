@@ -127,6 +127,35 @@ theorem baseDivisor_window_normalization (g : ℕ)
   rw [Scheme.coeffAt_baseDivisor K hne hx, hT]
   exact baseDivisorAt_window_normalization g hO hχ N hNnorm hNdeg D hD0 hdeg hx
 
+omit [LocallyOfFiniteType (Y ↘ Spec (CommRingCat.of K))] in
+/-- **The window section space is nonzero** (discharges the `hne` slot of
+`baseDivisor_window_normalization` from the pack itself): under the pinch pack, the
+window `H⁰(𝒪(N − D))` of an effective degree-`g` divisor has
+`h⁰ = deg N − 2g + 1 ≥ 1`, so any submodule equal to it has a nonzero element. -/
+theorem exists_mem_ne_zero_of_window_normalization (g : ℕ)
+    (hχ : Sheaf.chi (Y.moduleKSheaf K) = 1 - (g : ℤ))
+    (N : Y.CurveDivisor)
+    (hNnorm : ∀ D' : Y.CurveDivisor, CurveDivisor.deg K D' ≤ 2 * (g : ℤ) →
+      Subsingleton (Sheaf.HModule (Y.divisorSheaf K (N - D')) 1))
+    (hNdeg : 2 * (g : ℤ) ≤ CurveDivisor.deg K N)
+    (D : Y.CurveDivisor) (hdeg : CurveDivisor.deg K D = (g : ℤ))
+    {T : Submodule K Y.functionField} (hT : T = divisorSections K (N - D) ⊤) :
+    ∃ f ∈ T, f ≠ 0 := by
+  have hgnn : (0 : ℤ) ≤ (g : ℤ) := Int.natCast_nonneg g
+  have hg2 : CurveDivisor.deg K D ≤ 2 * (g : ℤ) := by omega
+  have hrank : (Sheaf.h0 (Y.divisorSheaf K (N - D)) : ℤ)
+      = CurveDivisor.deg K N - CurveDivisor.deg K D
+        + Sheaf.chi (Y.moduleKSheaf K) := by
+    rw [h0_eq_deg_add_chi_of_subsingleton_hModule_one _ (hNnorm D hg2),
+      Scheme.CurveDivisor.deg_sub' K]
+  rw [hχ, hdeg] at hrank
+  have hfr : Module.finrank K ↥T = Sheaf.h0 (Y.divisorSheaf K (N - D)) := by
+    rw [hT]
+    exact finrank_divisorSections_top K _
+  refine Submodule.exists_mem_ne_zero_of_ne_bot (fun hbot => ?_)
+  rw [hbot, finrank_bot] at hfr
+  omega
+
 /-- **Uniqueness of an effective degree-`g` divisor from its window section space** (the
 field-level heart of Task 6, family-free): under the pinch pack, two effective
 degree-`g` divisors with the same window section space `H⁰(𝒪(N − ·))` coincide — both
@@ -251,6 +280,40 @@ theorem baseDivisor_map_divFamEps (g : ℕ) (G : CertifiedDivisorFamily C K π g
     (G.certified.isThetaPaired _) hcarve hO hχ N hNwin hNnorm hNdeg hNrank hdict
   exact baseDivisor_window_normalization g hO hχ N hNnorm hNdeg _
     (zero_le_divFamDivisor _) hdeg hΦwin hne
+
+omit [LocallyOfFiniteType (relCurve C K ↘ Spec (CommRingCat.of K))] in
+/-- **The `ε`-window's image is nonzero** (the family form of
+`exists_mem_ne_zero_of_window_normalization`; discharges the `hne` slot of
+`baseDivisor_map_divFamEps` from the pack itself). -/
+theorem exists_map_divFamEps_ne_zero (g : ℕ) (G : CertifiedDivisorFamily C K π g)
+    (hsurj : Function.Surjective
+      (G.adaptation.thetaGluedEval (windowM_choice π hπ g)))
+    (hcarve : ∀ a : ↥(divisorSections k
+        (windowS_choice π hπ g • fiberWeilDivisor π) ⊤),
+      Grassmannian.carvePairArrow (windowShiftMul hπ g a)
+        (divFamEps hπ g (DivFam.mk G)).1 (divFamEps hπ g (DivFam.mk G)).2 = 0)
+    (hO : Sheaf.h0 ((relCurve C K).moduleKSheaf K) = 1)
+    (hχ : Sheaf.chi ((relCurve C K).moduleKSheaf K) = 1 - (g : ℤ))
+    (N : (relCurve C K).CurveDivisor)
+    (hNwin : Subsingleton (Sheaf.HModule ((relCurve C K).divisorSheaf K N) 1))
+    (hNnorm : ∀ D' : (relCurve C K).CurveDivisor,
+      CurveDivisor.deg K D' ≤ 2 * (g : ℤ) →
+      Subsingleton (Sheaf.HModule ((relCurve C K).divisorSheaf K (N - D')) 1))
+    (hNdeg : 2 * (g : ℤ) ≤ CurveDivisor.deg K N)
+    (hNrank : Sheaf.h0 ((relCurve C K).divisorSheaf K N)
+      = Sheaf.h0 (C.left.divisorSheaf k
+          (windowM_choice π hπ g • fiberWeilDivisor π)))
+    (Φ : (K ⊗[k] ↥(divisorSections k
+        (windowM_choice π hπ g • fiberWeilDivisor π) ⊤)) →ₗ[K]
+        (relCurve C K).functionField)
+    (hΦinj : Function.Injective Φ)
+    (hΦwin : Submodule.map Φ ((divFamEps hπ g (DivFam.mk G)).1)
+      = divisorSections K (N - divFamDivisor (DivFam.mk G)) ⊤) :
+    ∃ f ∈ Submodule.map Φ ((divFamEps hπ g (DivFam.mk G)).1), f ≠ 0 := by
+  have hdict := h0_eq_finrank_of_map_eq hΦinj hΦwin
+  have hdeg := deg_divFamDivisor_of_carve hπ g G hsurj
+    (G.certified.isThetaPaired _) hcarve hO hχ N hNwin hNnorm hNdeg hNrank hdict
+  exact exists_mem_ne_zero_of_window_normalization g hχ N hNnorm hNdeg _ hdeg hΦwin
 
 /-- **Mono-ness of `ε` at the field level** (DD-4 Task 6, worksheet §2.3.4): two
 certified divisor families of degree `g` over the field `K` whose `ε`-windows `K_M(d)`
