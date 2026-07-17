@@ -4602,3 +4602,252 @@ base-changed pinned cover \((V_0^R, V_1^R)\) of \(C_R\), with relative twisted s
   pair of \(F_{g'}\) (\ref{def:twoCoverPair_h0h1}, \ref{def:relTwistPairData}),
   \(\ker(\delta_{g'}) \cong H^0(C_{R'}, F_{g'})\).
 \end{proof}
+
+\section{Base-field invariance of \(H^0\), \(H^1\) and the genus}
+\label{sec:h1_base_field_invariance}
+
+Fix a field \(k\) and an object \(C \in \Over(\Spec k)\). Section
+\ref{sec:relative_h1_base_change} base-changed the two-cover complex along a
+homomorphism \(R \to R'\) of test rings; this section runs the same mechanism once more
+with the \emph{absolute} curve as source, for an arbitrary commutative \(k\)-algebra
+\(R\): the two-term \v{C}ech complex of an affine two-cover of \(C\) base-changes
+termwise by the free identification \ref{def:relSectionsBaseChange}, and \(H^1\), being
+its cokernel, commutes with any base change by right-exactness. Specialised to a field
+extension \(R = K\), this yields \(H^i(C, \struct C) \otimes_k K \cong
+H^i(C_K, \struct{C_K})\) for \(i = 0, 1\) and the base-field invariance of the genus.
+No flatness, semicontinuity or exchange argument is used.
+
+\begin{lemma}[Pullback of sections commutes with restriction]
+  \label{lem:relPullbackSection_resHom}
+  \lean{AlgebraicGeometry.relPullbackSection_resHom}
+  \uses{def:relSectionsBaseChange}
+  \leanok
+  Let \(R\) be a commutative \(k\)-algebra and \(W \leq V\) opens of \(C\). For a
+  section \(s \in \Gamma(C, V)\), restricting on \(C\) and then pulling back along the
+  first projection \(\mathrm{pr}_1 : C_R \to C\) agrees with pulling back and then
+  restricting on the relative curve:
+  \[
+    \mathrm{pr}_1^{\sharp}\bigl(s|_W\bigr)
+      = \bigl(\mathrm{pr}_1^{\sharp} s\bigr)\big|_{\mathrm{pr}_1^{-1} W}.
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  Both sides are the image of \(s\) under the map of sections induced by
+  \(\mathrm{pr}_1\) from \(V\) to \(\mathrm{pr}_1^{-1}W \subseteq \mathrm{pr}_1^{-1}V\):
+  pullback along a morphism of schemes is compatible with restriction on source and
+  target.
+\end{proof}
+
+\begin{definition}[Termwise base change of the two-cover complex of the curve]
+  \label{def:curveDiffTermsBaseChange}
+  \lean{AlgebraicGeometry.curveDiffDomBaseChange, AlgebraicGeometry.curveDiffCodBaseChange,
+    AlgebraicGeometry.curveDiffCodBaseChange_tmul}
+  \uses{def:relSectionsBaseChange, def:relCover, lem:relCover_inf, def:AffineTwoCover}
+  \leanok
+  Let \(D = (V_0, V_1)\) be an affine two-cover of \(C\) and \(R\) a commutative
+  \(k\)-algebra. The two terms of the two-cover complex of \(C\) base-change freely by
+  \ref{def:relSectionsBaseChange}: an \(R\)-linear equivalence
+  \[
+    R \otimes_k \bigl(\Gamma(C, V_0) \times \Gamma(C, V_1)\bigr)
+    \;\cong\;
+    \Gamma(C_R, V_0^R) \times \Gamma(C_R, V_1^R)
+  \]
+  on the degree-zero term (product of the two chart identifications; the charts are
+  affine, hence qcqs), and
+  \[
+    R \otimes_k \Gamma(C, V_0 \cap V_1) \;\cong\; \Gamma(C_R, V_0^R \cap V_1^R)
+  \]
+  on the overlap term (the overlap of affines is qcqs, and
+  \(V_0^R \cap V_1^R = \mathrm{pr}_1^{-1}(V_0 \cap V_1)\) by \ref{lem:relCover_inf}),
+  where \(V_i^R = \mathrm{pr}_1^{-1} V_i\). On a pure tensor the overlap identification
+  is \(a \otimes s \mapsto a \cdot \mathrm{pr}_1^\sharp(s)\).
+\end{definition}
+
+\begin{theorem}[The base-changed difference map is the relative difference map]
+  \label{thm:curveDiffBaseChange}
+  \lean{AlgebraicGeometry.curveDiffBaseChange, AlgebraicGeometry.curveDiffBaseChange_range}
+  \uses{def:curveDiffTermsBaseChange, def:TwoCover_diff, lem:relPullbackSection_resHom}
+  \leanok
+  Under the two term equivalences of \ref{def:curveDiffTermsBaseChange}, the base
+  change \(\mathrm{id}_R \otimes \mathrm{diff}\) of the two-cover
+  restriction-difference map of \(C\) (\ref{def:TwoCover_diff}) is carried to the
+  restriction-difference map of the relative curve \(C_R\) with its base-changed cover.
+  In particular the overlap-term equivalence maps
+  \(\mathrm{range}(\mathrm{id}_R \otimes \mathrm{diff})\) onto
+  \(\mathrm{range}(\mathrm{diff}_R)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Both sides are \(R\)-linear, so it suffices to check on a pure tensor
+  \(a \otimes (s_0, s_1)\). The left leg gives
+  \(a \cdot \mathrm{pr}_1^\sharp\bigl(s_0|_\cap - s_1|_\cap\bigr)\). The right leg
+  first sends \(a \otimes (s_0, s_1)\) to
+  \((a \cdot \mathrm{pr}_1^\sharp s_0,\, a \cdot \mathrm{pr}_1^\sharp s_1)\), then takes
+  the difference of restrictions on \(C_R\). By
+  \ref{lem:relPullbackSection_resHom}, \(\mathrm{pr}_1^\sharp(s_i|_\cap) =
+  (\mathrm{pr}_1^\sharp s_i)|_{\cap_R}\); restriction on \(C_R\) is \(R\)-linear (the
+  \(R\)-action is pullback of constants along \(\mathrm{pr}_2\), itself compatible with
+  restriction), so the right leg gives
+  \(a \cdot \bigl((\mathrm{pr}_1^\sharp s_0)|_{\cap_R} -
+  (\mathrm{pr}_1^\sharp s_1)|_{\cap_R}\bigr)\), the same element. The range statement
+  follows since both term equivalences are surjective.
+\end{proof}
+
+\begin{theorem}[Base change of the two-cover \(H^1\) cokernel of the curve]
+  \label{thm:curveH1CokBaseChange}
+  \lean{AlgebraicGeometry.curveH1CokBaseChange, AlgebraicGeometry.curveH1CokBaseChange_tmul_mk}
+  \uses{thm:quot_range_baseChange, thm:curveDiffBaseChange, def:TwoCover_H1Cok}
+  \leanok
+  For every commutative \(k\)-algebra \(R\) there is an \(R\)-linear equivalence
+  \[
+    R \otimes_k \mathrm{H1Cok}(C; V_0, V_1) \;\cong\;
+      \mathrm{H1Cok}(C_R; V_0^R, V_1^R),
+  \]
+  sending \(a \otimes [s]\) to \([a \cdot \mathrm{pr}_1^\sharp(s)]\). No flatness of
+  \(R\) is needed.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \(\mathrm{H1Cok}\) is the cokernel of \(\mathrm{diff}\) (\ref{def:TwoCover_H1Cok}),
+  and base change commutes with cokernels (\ref{thm:quot_range_baseChange}):
+  \(R \otimes_k \mathrm{H1Cok}(C) \cong (R \otimes_k \Gamma(C, V_0 \cap V_1)) /
+  \mathrm{range}(\mathrm{id}_R \otimes \mathrm{diff})\). Now transport along the
+  overlap-term equivalence of \ref{def:curveDiffTermsBaseChange}, which by
+  \ref{thm:curveDiffBaseChange} carries the range of
+  \(\mathrm{id}_R \otimes \mathrm{diff}\) onto the range of the relative difference
+  map; the induced map of quotients is the displayed equivalence, and its effect on the
+  class of a pure tensor is read off the overlap identification.
+\end{proof}
+
+\begin{theorem}[Cohomology commutes with base change in degree one, from the absolute
+  curve]
+  \label{thm:curveH1BaseChange}
+  \lean{AlgebraicGeometry.curveH1BaseChange}
+  \uses{thm:TwoCover_h1CokEquiv, thm:curveH1CokBaseChange, def:relTwoCoverH1,
+    def:moduleKSheaf, def:HModule}
+  \leanok
+  Let \(D\) be an affine two-cover of \(C\) and \(R\) a commutative \(k\)-algebra.
+  There is an \(R\)-linear equivalence
+  \[
+    R \otimes_k H^1\bigl(C, \struct{C}\bigr) \;\cong\;
+      H^1\bigl(C_R, \struct{C_R}\bigr)
+  \]
+  on the cohomology carriers.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Compose: the base change of the absolute cokernel bridge
+  \(H^1(C, \struct C) \cong \mathrm{H1Cok}(C)\) (\ref{thm:TwoCover_h1CokEquiv},
+  tensored with \(R\)); the cokernel base change
+  \(R \otimes_k \mathrm{H1Cok}(C) \cong \mathrm{H1Cok}(C_R)\)
+  (\ref{thm:curveH1CokBaseChange}); and the inverse of the relative cokernel bridge
+  \(H^1(C_R, \struct{C_R}) \cong \mathrm{H1Cok}(C_R)\) (\ref{def:relTwoCoverH1}).
+\end{proof}
+
+\begin{definition}[A pinned affine two-cover of the challenge curve]
+  \label{def:curveCover}
+  \lean{AlgebraicGeometry.curveCover}
+  \uses{thm:AffineTwoCover_nonempty_of_curve}
+  \leanok
+  For the challenge curve \(C\) (proper, smooth of relative dimension one,
+  geometrically irreducible over \(k\)), fix once and for all an affine two-chart cover
+  of \(C\), which exists by \ref{thm:AffineTwoCover_nonempty_of_curve}; all base-change
+  equivalences below are built on this one cover.
+\end{definition}
+
+\begin{theorem}[Cohomology commutes with base change in degree zero]
+  \label{thm:curveH0BaseChange}
+  \lean{AlgebraicGeometry.curveH0BaseChange}
+  \uses{def:moduleKSheafHZero, def:relSectionsBaseChange}
+  \leanok
+  Let \(C\) be the challenge curve and \(R\) a commutative \(k\)-algebra. There is an
+  \(R\)-linear equivalence
+  \[
+    R \otimes_k H^0\bigl(C, \struct C\bigr) \;\cong\; H^0\bigl(C_R, \struct{C_R}\bigr).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Both carriers are global sections (\ref{def:moduleKSheafHZero}, over \(k\) and over
+  \(R\)). The total space \(\top \subseteq C\) is quasi-compact (\(C\) is proper over a
+  field) and quasi-separated, so the free sections base change
+  \ref{def:relSectionsBaseChange} applies at \(V = \top\):
+  \(R \otimes_k \Gamma(C, \top) \cong \Gamma(C_R, \top)\). Conjugating by the two
+  degree-zero identifications gives the claim.
+\end{proof}
+
+\begin{theorem}[\(H^1\) base-field invariance]
+  \label{thm:h1BaseFieldEquiv}
+  \lean{AlgebraicGeometry.h1BaseFieldEquiv}
+  \uses{thm:curveH1BaseChange, def:curveCover, thm:baseChangeCurve_bundle}
+  \leanok
+  \source{kleiman-picard}
+  Let \(C\) be the challenge curve over \(k\) and \(K/k\) a field extension. Then
+  \[
+    H^1\bigl(C, \struct C\bigr) \otimes_k K \;\cong\; H^1\bigl(C_K, \struct{C_K}\bigr)
+  \]
+  as \(K\)-vector spaces, where \(C_K\) is the base-changed curve regarded over
+  \(\Spec K\) (\ref{thm:baseChangeCurve_bundle}).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Specialise \ref{thm:curveH1BaseChange} to the algebra \(R = K\) and the pinned cover
+  of \ref{def:curveCover}; the relative curve \(C_K\) over \(\Spec K\) is the
+  base-changed curve of \ref{thm:baseChangeCurve_bundle}.
+\end{proof}
+
+\begin{theorem}[\(H^0\) base-field invariance]
+  \label{thm:h0BaseFieldEquiv}
+  \lean{AlgebraicGeometry.h0BaseFieldEquiv}
+  \uses{thm:curveH0BaseChange, thm:baseChangeCurve_bundle}
+  \leanok
+  In the setting of \ref{thm:h1BaseFieldEquiv},
+  \(H^0(C, \struct C) \otimes_k K \cong H^0(C_K, \struct{C_K})\) as \(K\)-vector
+  spaces.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Specialise \ref{thm:curveH0BaseChange} to \(R = K\).
+\end{proof}
+
+\begin{theorem}[The scalar identities of base-field invariance]
+  \label{thm:finrank_h1_baseField}
+  \lean{AlgebraicGeometry.finrank_h1_baseField, AlgebraicGeometry.finrank_h0_baseField,
+    AlgebraicGeometry.finrank_h1_baseField_eq_genus}
+  \uses{thm:h1BaseFieldEquiv, thm:h0BaseFieldEquiv, def:genus}
+  \leanok
+  For the challenge curve \(C\) over \(k\) and any field extension \(K/k\),
+  \[
+    \dim_K H^1\bigl(C_K, \struct{C_K}\bigr) = \dim_k H^1\bigl(C, \struct C\bigr)
+      = \genus(C),
+    \qquad
+    \dim_K H^0\bigl(C_K, \struct{C_K}\bigr) = \dim_k H^0\bigl(C, \struct C\bigr).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Extension of scalars multiplies no dimensions:
+  \(\dim_K(V \otimes_k K) = \dim_k V\) for any \(k\)-vector space \(V\). Apply this
+  across the equivalences of \ref{thm:h1BaseFieldEquiv} and \ref{thm:h0BaseFieldEquiv};
+  the \(\genus(C)\) identification is Definition~\ref{def:genus}.
+\end{proof}
+
+\begin{theorem}[Base-field invariance of the genus]
+  \label{thm:genus_baseField}
+  \lean{AlgebraicGeometry.genus_baseField}
+  \uses{thm:finrank_h1_baseField, thm:baseChangeCurve_bundle, def:genus}
+  \leanok
+  Let \(C\) be the challenge curve over \(k\) and \(K/k\) a field extension. The
+  base-changed curve \(C_K\), a legal challenge curve over \(K\)
+  (\ref{thm:baseChangeCurve_bundle}), satisfies
+  \[
+    \genus(C_K) = \genus(C).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  By Definition~\ref{def:genus} applied over \(K\),
+  \(\genus(C_K) = \dim_K H^1(C_K, \struct{C_K})\), which equals \(\genus(C)\) by
+  \ref{thm:finrank_h1_baseField}.
+\end{proof}

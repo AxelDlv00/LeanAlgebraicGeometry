@@ -2979,3 +2979,400 @@ affine line. There is no classical source anchored here; the statements are as f
   composite with the open immersion \(W \to X\) is the required point of \(X\), with image
   in \(W\).
 \end{proof}
+
+\section{Coheight and the Krull dimension of stalks}
+\label{sec:coheight_stalk}
+
+For a point \(z\) of a topological space, the \emph{coheight} of \(z\) is the supremum
+of the lengths of strictly increasing chains starting at \(z\) in the specialisation
+preorder (\(y \leq z\) iff \(z\) specialises to \(y\), i.e.\ \(y \in \overline{\{z\}}\));
+on a scheme it measures the codimension of the closure of \(z\). This section identifies
+it with the Krull dimension of the stalk.
+
+\begin{lemma}[Coheight is local on opens]
+  \label{lem:coheight_open_embedding}
+  \lean{Order.coheight_eq_of_isOpenEmbedding}
+  \leanok
+  Let \(X\) be a topological space, \(U \subseteq X\) an open subset and \(z \in U\).
+  The coheight of \(z\) computed in \(X\) (for the specialisation preorder) equals the
+  coheight of \(z\) computed in the subspace \(U\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  (\(\geq\)) The inclusion \(U \to X\) is continuous, hence monotone for the
+  specialisation preorders, and injective; a strictly increasing chain in \(U\) starting
+  at \(z\) therefore maps to one in \(X\) of the same length (strictness is preserved:
+  if the images were comparable both ways they would be equal).
+
+  (\(\leq\)) Conversely, let \(z = p_0 < p_1 < \dots < p_n\) be a chain in \(X\)
+  starting at \(z\). Each \(p_i\) is a generisation of \(z\): \(z \in
+  \overline{\{p_i\}}\). Since \(U\) is open and \(z \in U\), every generisation of a
+  point of \(U\) lies in \(U\) (an open set containing a point of the closure of
+  \(\{p_i\}\) meets \(\{p_i\}\)), so all \(p_i \in U\). The specialisation preorder of
+  the subspace \(U\) agrees with that of \(X\) on points of \(U\) when \(U\) is open, so
+  the chain lives in \(U\) with the same strict inequalities and the same length.
+\end{proof}
+
+\begin{lemma}[Coheight in an affine scheme is the height of the prime]
+  \label{lem:coheight_spec_height}
+  \lean{Order.coheight_spec_eq_height_primeSpectrum}
+  \leanok
+  Let \(R\) be a commutative ring and \(p\) a point of \(\Spec R\), with corresponding
+  prime ideal \(\mathfrak p\). The coheight of \(p\) in the specialisation preorder of
+  \(\Spec R\) equals the height of \(\mathfrak p\) (the supremum of lengths of chains of
+  primes descending from \(\mathfrak p\)).
+\end{lemma}
+\begin{proof}
+  \leanok
+  In \(\Spec R\), a point \(q\) specialises to \(p\) exactly when
+  \(\mathfrak p \supseteq \mathfrak q\); so the specialisation preorder on
+  \(\Spec R\) is the opposite of the inclusion order on primes, and the order
+  isomorphism \(\Spec R \cong (\text{primes of } R)^{\mathrm{op}}\) converts coheight at
+  \(p\) into height at \(\mathfrak p\) (chains going up from \(p\) in the
+  specialisation preorder are chains of primes going down from \(\mathfrak p\)).
+\end{proof}
+
+\begin{theorem}[Stalk dimension equals coheight]
+  \label{thm:stalk_dim_coheight}
+  \lean{AlgebraicGeometry.Scheme.ringKrullDim_stalk_eq_coheight}
+  \uses{lem:coheight_open_embedding, lem:coheight_spec_height}
+  \leanok
+  Let \(X\) be a scheme and \(z \in X\) a point. Then the Krull dimension of the stalk
+  \(\struct{X,z}\) equals the coheight of \(z\) in the underlying topological space of
+  \(X\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Choose an affine open \(U \ni z\), say \(U \cong \Spec A\) with
+  \(A = \Gamma(X, U)\), and let \(\mathfrak p\) be the prime of \(A\) corresponding to
+  \(z\). The stalk \(\struct{X,z}\) is the localisation \(A_{\mathfrak p}\), whose Krull
+  dimension is the height of \(\mathfrak p\) (primes of the localisation are the primes
+  of \(A\) contained in \(\mathfrak p\)). By \ref{lem:coheight_open_embedding}, the
+  coheight of \(z\) in \(X\) equals its coheight in \(U\); the isomorphism
+  \(U \cong \Spec A\) is a homeomorphism, hence an isomorphism of specialisation
+  preorders, so this equals the coheight of \(\mathfrak p\) in \(\Spec A\), which is the
+  height of \(\mathfrak p\) by \ref{lem:coheight_spec_height}. Chaining the equalities
+  gives \(\dim \struct{X,z} = \mathrm{coheight}(z)\).
+\end{proof}
+
+\begin{lemma}[Codimension-one points have one-dimensional stalks]
+  \label{lem:stalk_dimLE_one}
+  \lean{AlgebraicGeometry.Scheme.ringKrullDimLE_of_coheight_eq_one}
+  \uses{thm:stalk_dim_coheight}
+  \leanok
+  Let \(X\) be a scheme and \(z \in X\) with \(\mathrm{coheight}(z) = 1\). Then the
+  stalk \(\struct{X,z}\) has Krull dimension \(\leq 1\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  By \ref{thm:stalk_dim_coheight}, \(\dim \struct{X,z} = \mathrm{coheight}(z) = 1\).
+\end{proof}
+
+\section{The dimension of a standard-smooth algebra at a maximal ideal}
+\label{sec:standard_smooth_dimension}
+
+This section proves the dimension half of the smooth-implies-regular pipeline at closed
+points: for a standard-smooth algebra of relative dimension \(n\) over a field, every
+maximal ideal has height at least \(n\).
+
+\begin{theorem}[Maximal ideals of polynomial rings have full height]
+  \label{thm:mvpoly_maximal_height}
+  \lean{MvPolynomial.height_eq_natCard_of_isMaximal}
+  \leanok
+  Let \(k\) be a field, \(\iota\) a finite index type, and \(M\) a maximal ideal of the
+  polynomial ring \(k[x_i : i \in \iota]\). Then the height of \(M\) is \(\#\iota\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Induct on the finite type \(\iota\) (along equivalences, the empty type, and adding
+  one variable). Heights are invariant under ring isomorphisms, which handles transport
+  along an equivalence \(\iota \cong \iota'\). If \(\iota\) is empty the ring is the
+  field \(k\), of Krull dimension \(0\), so every maximal ideal has height \(0 =
+  \#\iota\). For \(\iota = \{*\} \sqcup \alpha\), identify
+  \(k[x_i : i \in \iota] \cong R[X]\) with \(R = k[x_i : i \in \alpha]\), and let
+  \(M \subseteq R[X]\) be maximal. The ring \(R\), a finitely generated algebra over a
+  field, is a Jacobson ring, so the contraction \(\mathfrak p = M \cap R\) is again
+  \emph{maximal}. For a maximal ideal of \(R[X]\) lying over a maximal ideal
+  \(\mathfrak p\) of a Noetherian ring one has the height formula
+  \(\mathrm{ht}(M) = \mathrm{ht}(\mathfrak p) + 1\) (the fibre
+  \(R[X] \otimes_R R/\mathfrak p = (R/\mathfrak p)[X]\) is a principal ideal domain over
+  the field \(R/\mathfrak p\), and \(M\) generates a nonzero --- because maximal ---
+  prime there). By the inductive hypothesis \(\mathrm{ht}(\mathfrak p) = \#\alpha\), so
+  \(\mathrm{ht}(M) = \#\alpha + 1 = \#\iota\).
+\end{proof}
+
+\begin{theorem}[Height lower bound at maximal ideals of standard-smooth algebras]
+  \label{thm:standard_smooth_height_lower}
+  \lean{Algebra.IsStandardSmoothOfRelativeDimension.natCast_le_height_of_isMaximal}
+  \uses{thm:mvpoly_maximal_height}
+  \leanok
+  \source{stacks-project}
+  Let \(k\) be a field and \(S\) a standard-smooth \(k\)-algebra of relative dimension
+  \(n\). Then every maximal ideal \(\mathfrak m \subseteq S\) has
+  \(\mathrm{ht}(\mathfrak m) \geq n\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Choose a submersive presentation \(S = P/\ker\), where
+  \(P = k[x_i : i \in \iota]\) is a polynomial ring on \(\#\iota\) generators, the
+  kernel of \(P \twoheadrightarrow S\) is generated by \(\#\sigma\) relations, and
+  \(n = \#\iota - \#\sigma\) (with \(\#\sigma \leq \#\iota\)). The pullback
+  \(M \subseteq P\) of \(\mathfrak m\) is a maximal ideal (the quotient map is
+  surjective), of height \(\#\iota\) by \ref{thm:mvpoly_maximal_height}, and it contains
+  the kernel. Krull's height theorem, in the relative form
+  \(\mathrm{ht}(M) \leq \mathrm{ht}(M/\ker) + \mu(\ker)\) for a prime containing an
+  ideal generated by \(\mu(\ker)\) elements, gives
+  \[
+    \#\iota = \mathrm{ht}(M) \leq \mathrm{ht}(\mathfrak m) + \#\sigma
+  \]
+  (the first isomorphism theorem identifies \(M/\ker\) with \(\mathfrak m\), and heights
+  are preserved by this identification). Subtracting \(\#\sigma\) yields
+  \(n = \#\iota - \#\sigma \leq \mathrm{ht}(\mathfrak m)\).
+\end{proof}
+
+\begin{lemma}[Localised form of the height lower bound]
+  \label{lem:standard_smooth_dim_lower_localized}
+  \lean{Algebra.IsStandardSmoothOfRelativeDimension.le_ringKrullDim_of_isLocalization_atPrime}
+  \uses{thm:standard_smooth_height_lower}
+  \leanok
+  In the setting of \ref{thm:standard_smooth_height_lower}, for any localisation
+  \(S_{\mathfrak m}\) of \(S\) at a maximal ideal \(\mathfrak m\),
+  \(\dim S_{\mathfrak m} \geq n\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The Krull dimension of the localisation at a prime is the height of that prime
+  (primes of \(S_{\mathfrak m}\) are the primes of \(S\) contained in
+  \(\mathfrak m\)); apply \ref{thm:standard_smooth_height_lower}.
+\end{proof}
+
+\begin{lemma}[Regularity from the cotangent upper bound]
+  \label{lem:regular_of_cotangent_le_dim}
+  \lean{IsRegularLocalRing.of_finrank_cotangentSpace_le_ringKrullDim}
+  \leanok
+  Let \((A, \mathfrak m)\) be a Noetherian local ring with
+  \(\dim_\kappa \mathfrak m/\mathfrak m^2 \leq \dim A\). Then \(A\) is a regular local
+  ring.
+\end{lemma}
+\begin{proof}
+  \leanok
+  By Nakayama, \(\dim_\kappa \mathfrak m/\mathfrak m^2\) is the minimal number
+  \(\mu(\mathfrak m)\) of generators of \(\mathfrak m\), and Krull's height theorem
+  gives the reverse inequality \(\dim A \leq \mu(\mathfrak m)\) in any Noetherian local
+  ring. So the hypothesis forces equality, which is the definition of regularity.
+\end{proof}
+
+\section{The trdeg--height inequality and smooth-prime regularity}
+\label{sec:smooth_prime_regularity}
+
+This section closes the smooth-implies-regular pipeline at \emph{arbitrary} primes of a
+standard-smooth algebra over a perfect field, with no recourse to Serre's homological
+characterisation of regularity (and hence no need for the theorem that localisations of
+regular local rings are regular): the cotangent dimension at a prime is computed
+directly from the conormal sequence, and matched against a transcendence-degree/height
+inequality proved by induction on the number of variables.
+
+\begin{lemma}[One-variable step of the trdeg--height inequality]
+  \label{lem:polynomial_step_height_trdeg}
+  \lean{Polynomial.step_height_trdeg_of_isPrime}
+  \leanok
+  \source{stacks-project}
+  Let \(k\) be a field, \(R\) a Noetherian \(k\)-algebra, \(P \subseteq R[X]\) a prime
+  ideal and \(\mathfrak p = P \cap R\). Then one of the following holds:
+  \begin{enumerate}
+    \item \(\mathrm{ht}(\mathfrak p) + 1 \leq \mathrm{ht}(P)\) and
+      \(\mathrm{trdeg}_k(R/\mathfrak p) \leq \mathrm{trdeg}_k(R[X]/P)\); or
+    \item \(\mathrm{ht}(P) = \mathrm{ht}(\mathfrak p)\) and
+      \(\mathrm{trdeg}_k(R/\mathfrak p) + 1 \leq \mathrm{trdeg}_k(R[X]/P)\).
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  \leanok
+  Write \(A = R/\mathfrak p\), a domain. The extension \(R \to R[X]\) is free, hence
+  flat, hence has the going-down property, so the dimension formula for a prime lying
+  over \(\mathfrak p\) applies (Stacks 00ON):
+  \(\mathrm{ht}(P) = \mathrm{ht}(\mathfrak p) + \mathrm{ht}(\bar P)\), where
+  \(\bar P\) is the image of \(P\) in the fibre ring
+  \(R[X]/\mathfrak p R[X] \cong A[X]\) --- a prime \(Q \subseteq A[X]\) contracting to
+  \((0)\) in \(A\) (because \(P \cap R = \mathfrak p\)).
+
+  \emph{Case \(Q = (0)\).} Then \(\mathrm{ht}(P) = \mathrm{ht}(\mathfrak p)\), and
+  \(R[X]/P \cong A[X]/Q = A[X]\) as \(k\)-algebras. Adjoining a variable to the domain
+  \(A\) raises the transcendence degree by one
+  (\(\mathrm{trdeg}_k A[X] \geq \mathrm{trdeg}_k A + \mathrm{trdeg}_A A[X]
+  = \mathrm{trdeg}_k A + 1\)), giving case (2).
+
+  \emph{Case \(Q \neq (0)\).} Then \((0) \subsetneq Q\) is a chain of primes in
+  \(A[X]\), so \(\mathrm{ht}(Q) \geq 1\) and
+  \(\mathrm{ht}(P) \geq \mathrm{ht}(\mathfrak p) + 1\). Moreover \(Q\) contracts to
+  \((0)\) in \(A\), so the composite \(A \to A[X] \to A[X]/Q \cong R[X]/P\) is
+  injective, whence
+  \(\mathrm{trdeg}_k(A) \leq \mathrm{trdeg}_k(R[X]/P)\), giving case (1).
+\end{proof}
+
+\begin{theorem}[The trdeg--height inequality in polynomial rings]
+  \label{thm:trdeg_height_polynomial}
+  \lean{MvPolynomial.exists_le_trdeg_and_natCard_le_height_add}
+  \uses{lem:polynomial_step_height_trdeg}
+  \leanok
+  Let \(k\) be a field, \(\iota\) a finite index type, and \(P\) a prime ideal of
+  \(k[x_i : i \in \iota]\). Then there is a natural number \(d\) with
+  \[
+    d \leq \mathrm{trdeg}_k\bigl(k[x_i : i \in \iota]/P\bigr)
+    \quad\text{and}\quad
+    \#\iota \leq \mathrm{ht}(P) + d.
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Induct on the finite type \(\iota\) (along equivalences, the empty type, and adding
+  one variable); heights and transcendence degrees are invariant under \(k\)-algebra
+  isomorphisms, which handles equivalences. For \(\iota\) empty take \(d = 0\). For
+  \(\iota = \{*\} \sqcup \alpha\), identify the ring with \(R[X]\),
+  \(R = k[x_i : i \in \alpha]\), and let \(\mathfrak p = P \cap R\); by the inductive
+  hypothesis pick \(d\) with \(d \leq \mathrm{trdeg}_k(R/\mathfrak p)\) and
+  \(\#\alpha \leq \mathrm{ht}(\mathfrak p) + d\). Apply
+  \ref{lem:polynomial_step_height_trdeg}. In case (1) (height jump) keep the witness
+  \(d\):
+  \(d \leq \mathrm{trdeg}_k(R/\mathfrak p) \leq \mathrm{trdeg}_k(R[X]/P)\) and
+  \(\#\iota = \#\alpha + 1 \leq \mathrm{ht}(\mathfrak p) + 1 + d \leq
+  \mathrm{ht}(P) + d\). In case (2) (transcendence jump) take \(d + 1\):
+  \(d + 1 \leq \mathrm{trdeg}_k(R/\mathfrak p) + 1 \leq \mathrm{trdeg}_k(R[X]/P)\) and
+  \(\#\iota = \#\alpha + 1 \leq \mathrm{ht}(\mathfrak p) + d + 1 = \mathrm{ht}(P) +
+  (d + 1)\).
+\end{proof}
+
+\begin{theorem}[The trdeg--height inequality for standard-smooth algebras]
+  \label{thm:trdeg_height_standard_smooth}
+  \lean{Algebra.IsStandardSmoothOfRelativeDimension.exists_le_trdeg_and_natCast_le_height_add}
+  \uses{thm:trdeg_height_polynomial}
+  \leanok
+  Let \(k\) be a field and \(S\) a standard-smooth \(k\)-algebra of relative dimension
+  \(n\). For every prime ideal \(\mathfrak q \subseteq S\) there is a natural number
+  \(d\) with
+  \[
+    d \leq \mathrm{trdeg}_k(S/\mathfrak q)
+    \quad\text{and}\quad
+    n \leq \mathrm{ht}(\mathfrak q) + d.
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  As in \ref{thm:standard_smooth_height_lower}: choose a submersive presentation
+  \(P = k[x_i : i \in \iota] \twoheadrightarrow S\) with kernel generated by
+  \(\#\sigma\) relations and \(n = \#\iota - \#\sigma\). Let \(M \subseteq P\) be the
+  pullback of \(\mathfrak q\), a prime containing the kernel. By
+  \ref{thm:trdeg_height_polynomial} pick \(d\) with \(d \leq \mathrm{trdeg}_k(P/M)\) and
+  \(\#\iota \leq \mathrm{ht}(M) + d\). The induced map \(P/M \to S/\mathfrak q\) is an
+  injective \(k\)-algebra map (indeed an isomorphism by the first isomorphism theorem),
+  so \(d \leq \mathrm{trdeg}_k(S/\mathfrak q)\). Krull's height theorem bounds the
+  height defect by the number of relations,
+  \(\mathrm{ht}(M) \leq \mathrm{ht}(\mathfrak q) + \#\sigma\), so
+  \(\#\iota \leq \mathrm{ht}(\mathfrak q) + \#\sigma + d\) and
+  \(n = \#\iota - \#\sigma \leq \mathrm{ht}(\mathfrak q) + d\).
+\end{proof}
+
+\begin{theorem}[K\"ahler rank equals transcendence degree over a perfect field]
+  \label{thm:kaehler_rank_trdeg}
+  \lean{Algebra.rank_kaehlerDifferential_eq_trdeg}
+  \leanok
+  Let \(k\) be a perfect field and \(K\) a field extension of \(k\) that is essentially
+  of finite type. Then
+  \[
+    \dim_K \Omega_{K/k} = \mathrm{trdeg}_k(K).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Since \(k\) is perfect and \(K\) essentially of finite type over \(k\), \(K\) admits a
+  \emph{separating} transcendence basis \(s \subseteq K\): a transcendence basis such
+  that \(K\) is separable algebraic over the intermediate field \(F = k(s)\). A
+  separable algebraic extension is formally \'etale, so base change along \(F \to K\)
+  identifies \(\Omega_{K/k} \cong K \otimes_F \Omega_{F/k}\); in particular
+  \(\dim_K \Omega_{K/k} = \dim_F \Omega_{F/k}\). The field \(F\) is \(k\)-isomorphic to
+  the fraction field of the polynomial ring \(k[x_i : i \in s]\), and K\"ahler
+  differentials localise: \(\Omega_{F/k}\) is the localisation of the free module
+  \(\Omega_{k[x_i]/k}\) with basis \(\{dx_i : i \in s\}\), hence is \(F\)-free on
+  \(\{dx_i\}\). Therefore
+  \(\dim_F \Omega_{F/k} = \#s = \mathrm{trdeg}_k(K)\), the last equality because \(s\)
+  is a transcendence basis.
+\end{proof}
+
+\begin{theorem}[The conormal dimension identity]
+  \label{thm:conormal_dim_identity}
+  \lean{finrank_cotangentSpace_add_finrank_kaehler_residueField}
+  \leanok
+  \source{stacks-project}
+  Let \(R\) be a commutative ring and \((S, \mathfrak m)\) a local \(R\)-algebra that is
+  formally smooth over \(R\), whose residue field \(\kappa = S/\mathfrak m\) is also
+  formally smooth over \(R\), and whose K\"ahler differentials \(\Omega_{S/R}\) are
+  \(S\)-free of rank \(n \in \mathbb{N}\). Then
+  \[
+    \dim_\kappa \mathfrak m/\mathfrak m^2 + \dim_\kappa \Omega_{\kappa/R} = n.
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Consider the conormal (second fundamental) exact sequence of the surjection
+  \(S \twoheadrightarrow \kappa\) with kernel \(\mathfrak m\) (Stacks 00RU):
+  \[
+    \mathfrak m/\mathfrak m^2 \xrightarrow{\ c\ }
+      \kappa \otimes_S \Omega_{S/R} \longrightarrow \Omega_{\kappa/R} \longrightarrow 0,
+    \qquad c(\bar f) = df \otimes 1.
+  \]
+  Because \(\kappa\) is formally smooth over \(R\), the surjection
+  \(S \twoheadrightarrow \kappa\) admits enough infinitesimal liftings to \emph{split}
+  the conormal map: \(c\) is (split) injective. All three terms are
+  \(\kappa\)-vector spaces and the middle has dimension
+  \(\dim_\kappa (\kappa \otimes_S \Omega_{S/R}) = n\) (base change of a free rank-\(n\)
+  module). The map onto \(\Omega_{\kappa/R}\) is surjective with kernel exactly the
+  image of \(c\), which has dimension \(\dim_\kappa \mathfrak m/\mathfrak m^2\) by
+  injectivity; rank--nullity gives the identity. (Finite-dimensionality of all terms
+  follows from that of the middle term.)
+\end{proof}
+
+\begin{theorem}[Smooth-prime regularity over a perfect field]
+  \label{thm:smooth_prime_regularity}
+  \lean{isRegularLocalRing_of_isLocalization_atPrime_of_isStandardSmooth_of_perfectField}
+  \uses{thm:trdeg_height_standard_smooth, thm:kaehler_rank_trdeg,
+    thm:conormal_dim_identity, lem:regular_of_cotangent_le_dim}
+  \leanok
+  \source{stacks-project}
+  Let \(k\) be a perfect field (for instance an algebraically closed field) and \(S\) a
+  nonzero standard-smooth \(k\)-algebra. For every prime ideal
+  \(\mathfrak q \subseteq S\), every localisation \(S_{\mathfrak q}\) of \(S\) at
+  \(\mathfrak q\) is a regular local ring.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \(S\) is of finite type over \(k\), hence Noetherian, and so is the localisation
+  \(A := S_{\mathfrak q}\), a local ring with maximal ideal \(\mathfrak m\) and residue
+  field \(\kappa\). Fix \(n\) with \(S\) standard smooth of relative dimension \(n\)
+  over \(k\).
+
+  \emph{The K\"ahler package at \(A\).} \(\Omega_{S/k}\) is \(S\)-free of rank \(n\)
+  (standard smoothness), and K\"ahler differentials localise, so \(\Omega_{A/k}\) is
+  \(A\)-free of rank \(n\). Localisations of (formally) smooth algebras are formally
+  smooth, so \(A\) is formally smooth over \(k\); and \(\kappa\), a field extension of
+  the perfect field \(k\) essentially of finite type, is formally smooth over \(k\) as
+  well. The conormal identity \ref{thm:conormal_dim_identity} thus gives
+  \[
+    \dim_\kappa \mathfrak m/\mathfrak m^2 \;=\; n - \dim_\kappa \Omega_{\kappa/k}.
+  \]
+
+  \emph{The dimension count.} By \ref{thm:kaehler_rank_trdeg},
+  \(\dim_\kappa \Omega_{\kappa/k} = \mathrm{trdeg}_k(\kappa)\). By
+  \ref{thm:trdeg_height_standard_smooth} there is \(d\) with
+  \(d \leq \mathrm{trdeg}_k(S/\mathfrak q)\) and
+  \(n \leq \mathrm{ht}(\mathfrak q) + d\); and \(S/\mathfrak q\) embeds into \(\kappa\)
+  as \(k\)-algebras (localisation at \(\mathfrak q\) followed by reduction is injective
+  on \(S/\mathfrak q\)), so
+  \(d \leq \mathrm{trdeg}_k(\kappa) = \dim_\kappa \Omega_{\kappa/k}\). Combining,
+  \[
+    \dim_\kappa \mathfrak m/\mathfrak m^2
+      = n - \dim_\kappa \Omega_{\kappa/k}
+      \leq \bigl(\mathrm{ht}(\mathfrak q) + d\bigr) - \dim_\kappa \Omega_{\kappa/k}
+      \leq \mathrm{ht}(\mathfrak q) = \dim A.
+  \]
+  By \ref{lem:regular_of_cotangent_le_dim}, \(A\) is a regular local ring.
+\end{proof}

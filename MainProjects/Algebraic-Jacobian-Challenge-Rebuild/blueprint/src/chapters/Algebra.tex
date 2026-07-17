@@ -2127,3 +2127,740 @@ denote the coordinates, and \(c \colon B \to F\) is a \(k[t]\)-algebra homomorph
   Combining, \((\ker\varepsilon)L \subseteq (g)L\); the reverse containment is
   \(\varepsilon(g) = 0\) (Definition~\ref{def:pointGen_pointEv}).
 \end{proof}
+
+\section{Depth and the Auslander--Buchsbaum formula}
+\label{sec:auslander_buchsbaum}
+
+This section develops the depth theory of finite modules over a Noetherian local ring
+--- the numerical depth, its characterisation by the vanishing of
+\(\Ext^{\bullet}(\kappa, -)\), and its behaviour in short exact sequences --- and proves
+the Auslander--Buchsbaum formula
+\(\mathrm{pd}_R(M) + \mathrm{depth}(M) = \mathrm{depth}(R)\).
+
+\begin{definition}[Depth of a module]
+  \label{def:depth}
+  \lean{RingTheory.Module.depth}
+  \leanok
+  \source{stacks-project}
+  Let \(R\) be a commutative ring, \(I \subseteq R\) an ideal and \(M\) an \(R\)-module.
+  An \emph{\(M\)-regular sequence} is a finite sequence \(x_1, \dots, x_n \in R\) such
+  that each \(x_i\) is a non-zero-divisor on \(M/(x_1, \dots, x_{i-1})M\) and
+  \((x_1, \dots, x_n)M \neq M\). The \emph{\(I\)-depth} of \(M\) is the element
+  \(\mathrm{depth}_I(M)\) of \(\{0, 1, 2, \dots, \infty\}\) defined by:
+  \begin{enumerate}
+    \item if \(IM = M\), then \(\mathrm{depth}_I(M) = \infty\);
+    \item otherwise, \(\mathrm{depth}_I(M)\) is the supremum of the lengths of
+      \(M\)-regular sequences contained in \(I\) (the supremum of the empty set
+      being \(0\)).
+  \end{enumerate}
+  When \((R, \mathfrak m)\) is local, \(\mathrm{depth}(M) := \mathrm{depth}_{\mathfrak m}(M)\)
+  is called simply the \emph{depth} of \(M\).
+\end{definition}
+
+\begin{definition}[Projective dimension]
+  \label{def:projectiveDimension}
+  \lean{Module.projectiveDimension}
+  \leanok
+  For a ring \(R\) and an \(R\)-module \(M\), the \emph{projective dimension}
+  \(\mathrm{pd}_R(M) \in \{-\infty\} \cup \{0, 1, 2, \dots, \infty\}\) is the categorical
+  projective dimension of \(M\) in the abelian category of \(R\)-modules: the infimum of
+  the \(n\) such that \(\Ext^i(M, -) = 0\) for all \(i > n\), equivalently the smallest
+  length of a projective resolution of \(M\); it is \(-\infty\) exactly when \(M = 0\).
+\end{definition}
+
+\begin{lemma}[The covariant long exact sequence of \(\Ext\)]
+  \label{lem:ext_covariant_les}
+  \lean{CategoryTheory.Abelian.Ext.covariant_sequence_exact₁,
+    CategoryTheory.Abelian.Ext.covariant_sequence_exact₂,
+    CategoryTheory.Abelian.Ext.covariant_sequence_exact₃,
+    CategoryTheory.Abelian.Ext.postcomp_mk₀_injective_of_mono}
+  \uses{lem:ext_contravariant_les}
+  \mathlibok
+  \textit{Provided by Mathlib.}
+  Let \(0 \to A \xrightarrow{f} B \xrightarrow{g} C \to 0\) be a short exact sequence in
+  an abelian category with \(\Ext\)-groups, with extension class
+  \(\delta \in \Ext^1(C, A)\) (\ref{lem:ext_contravariant_les}), and let \(Y\) be any
+  object. For every \(n \geq 0\) the sequence of abelian groups
+  \[
+    \Ext^n(Y, A) \xrightarrow{f_*} \Ext^n(Y, B) \xrightarrow{g_*} \Ext^n(Y, C)
+      \xrightarrow{(-) \cdot \delta} \Ext^{n+1}(Y, A) \xrightarrow{f_*} \Ext^{n+1}(Y, B)
+  \]
+  is exact at each inner term, where \(f_*, g_*\) are postcomposition (covariant
+  functoriality of \(\Ext(Y, -)\)) and \((-) \cdot \delta\) is the Yoneda product with
+  the extension class. Moreover, if \(f : A \to B\) is a monomorphism then
+  postcomposition \(f_* : \Ext^0(Y, A) \to \Ext^0(Y, B)\) is injective (in degree zero
+  \(\Ext^0 = \Hom\), and postcomposition with a mono is injective on \(\Hom\)).
+\end{lemma}
+
+\begin{lemma}[Annihilator elements kill \(\Ext\)]
+  \label{lem:ext_annihilator_smul}
+  \lean{RingTheory.Module.ext_smul_eq_zero_of_mem_annihilator}
+  \leanok
+  Let \(R\) be a commutative ring, \(N, M\) two \(R\)-modules, \(i \geq 0\), and
+  \(x \in \mathrm{Ann}_R(N)\). Then \(x\) annihilates \(\Ext^i_R(N, M)\): for every
+  class \(e \in \Ext^i_R(N, M)\) we have \(x \cdot e = 0\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The \(R\)-action on \(\Ext^i_R(N, M)\) can be computed through the first argument: by
+  \(R\)-bilinearity of the Yoneda composition and functoriality,
+  \(x \cdot e = (x \cdot \mathrm{id}_N)^*(e)\), the precomposition of \(e\) with the
+  endomorphism ``multiplication by \(x\)'' of \(N\). Since \(x \in \mathrm{Ann}_R(N)\),
+  the endomorphism \(x \cdot \mathrm{id}_N\) is the zero map of \(N\), and
+  precomposition with the zero morphism is the zero map on \(\Ext\). Hence
+  \(x \cdot e = 0\).
+\end{proof}
+
+\begin{theorem}[Depth via \(\Ext\)]
+  \label{thm:depth_ext}
+  \lean{RingTheory.Module.depth_eq_smallest_ext_index}
+  \uses{def:depth, lem:ext_annihilator_smul, lem:ext_covariant_les}
+  \leanok
+  \source{stacks-project}
+  Let \((R, \mathfrak m)\) be a Noetherian local ring with residue field
+  \(\kappa = R/\mathfrak m\) and let \(M\) be a nonzero finite \(R\)-module. For every
+  \(n \in \mathbb{N}\),
+  \[
+    n \leq \mathrm{depth}(M)
+    \iff
+    \Ext^i_R(\kappa, M) = 0 \text{ for all } i < n.
+  \]
+  Equivalently, \(\mathrm{depth}(M)\) is the smallest \(i\) such that
+  \(\Ext^i_R(\kappa, M) \neq 0\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  First note two facts used repeatedly. (a) Since \(M\) is nonzero and finite,
+  Nakayama's lemma rules out \(\mathfrak m M = M\), so \(\mathrm{depth}(M)\) is the
+  supremum of Definition~\ref{def:depth}; moreover, for the same reason, any
+  \emph{prefix} of an \(M\)-regular sequence contained in \(\mathfrak m\) is again
+  \(M\)-regular (weak regularity passes to prefixes, and the nondegeneracy condition
+  \((x_1,\dots,x_j)M \neq M\) holds because \((x_1,\dots,x_j) \subseteq \mathfrak m\) and
+  \(\mathfrak m M \neq M\)). So if \(n < \mathrm{depth}(M)\) there is an \(M\)-regular
+  sequence in \(\mathfrak m\) of length exactly \(n\). (b) \(\mathrm{Ann}_R(\kappa) =
+  \mathfrak m\), so every \(x \in \mathfrak m\) annihilates every \(\Ext^i(\kappa, -)\)
+  by \ref{lem:ext_annihilator_smul}.
+
+  We induct on \(n\), generalising \(M\). The case \(n = 0\) is trivial (both sides
+  always hold). Assume the statement for \(n\) and all nonzero finite modules.
+
+  (\(\Rightarrow\)) Let \(n + 1 \leq \mathrm{depth}(M)\). By (a) extract an
+  \(M\)-regular sequence \(x, x_1, \dots, x_n\) of length \(n+1\) in \(\mathfrak m\).
+  Then \(x\) is a non-zero-divisor on \(M\), the quotient \(M/xM\) is nonzero (Nakayama,
+  \(x \in \mathfrak m\)) and finite, and \(x_1, \dots, x_n\) is \((M/xM)\)-regular, so
+  \(n \leq \mathrm{depth}(M/xM)\); by the inductive hypothesis
+  \(\Ext^j(\kappa, M/xM) = 0\) for all \(j < n\). Now fix \(i \leq n\) and consider the
+  short exact sequence \(0 \to M \xrightarrow{x} M \to M/xM \to 0\). If \(i = 0\):
+  postcomposition with the monomorphism \(x : M \to M\) is injective on
+  \(\Ext^0(\kappa, M)\) (\ref{lem:ext_covariant_les}) and coincides with the action of
+  \(x\), which is zero by (b); hence \(\Ext^0(\kappa, M) = 0\). If \(i = j + 1\) with
+  \(j < n\): in the covariant long exact sequence (\ref{lem:ext_covariant_les})
+  \[
+    \Ext^{j}(\kappa, M/xM) \xrightarrow{\ \delta\ } \Ext^{j+1}(\kappa, M)
+      \xrightarrow{\ x_*\ } \Ext^{j+1}(\kappa, M),
+  \]
+  the map \(x_*\) (postcomposition with multiplication by \(x\)) is the action of \(x\),
+  hence zero by (b); exactness makes \(\delta\) surjective, and its source vanishes, so
+  \(\Ext^{j+1}(\kappa, M) = 0\).
+
+  (\(\Leftarrow\)) Suppose \(\Ext^i(\kappa, M) = 0\) for all \(i \leq n\). From
+  \(\Ext^0(\kappa, M) = \Hom_R(\kappa, M) = 0\) it follows that some
+  \(x \in \mathfrak m = \mathrm{Ann}_R(\kappa)\) is a non-zero-divisor on \(M\) (for a
+  finite module over a Noetherian ring, if every element of \(\mathrm{Ann}(\kappa)\)
+  were a zero-divisor on \(M\), then \(\mathfrak m\) would be contained in an associated
+  prime of \(M\), producing a nonzero map \(\kappa \to M\)). The quotient \(M/xM\) is
+  nonzero (Nakayama) and finite. For \(j < n\), the segment
+  \[
+    \Ext^{j}(\kappa, M) \longrightarrow \Ext^{j}(\kappa, M/xM)
+      \xrightarrow{\ \delta\ } \Ext^{j+1}(\kappa, M)
+  \]
+  of the covariant long exact sequence (\ref{lem:ext_covariant_les}) has both outer
+  terms zero (\(j < n\) and \(j + 1 \leq n\)), so \(\Ext^{j}(\kappa, M/xM) = 0\). By the
+  inductive hypothesis \(n \leq \mathrm{depth}(M/xM)\); by (a) pick an
+  \((M/xM)\)-regular sequence \(x_1, \dots, x_n\) of length \(n\) in \(\mathfrak m\).
+  Then \(x, x_1, \dots, x_n\) is an \(M\)-regular sequence of length \(n+1\) in
+  \(\mathfrak m\), whence \(n + 1 \leq \mathrm{depth}(M)\).
+
+  Finally, the two formulations are equivalent: the displayed equivalence for all \(n\)
+  says exactly that \(\mathrm{depth}(M)\) is the least index with nonvanishing
+  \(\Ext(\kappa, M)\).
+\end{proof}
+
+\begin{theorem}[Depth in short exact sequences]
+  \label{thm:depth_ses}
+  \lean{RingTheory.Module.depth_of_short_exact}
+  \uses{thm:depth_ext, lem:ext_covariant_les}
+  \leanok
+  \source{stacks-project}
+  Let \((R, \mathfrak m)\) be a Noetherian local ring and
+  \(0 \to N' \to N \to N'' \to 0\) a short exact sequence of nonzero finite
+  \(R\)-modules. Then, with truncated subtraction in \(\{0, 1, \dots, \infty\}\),
+  \begin{enumerate}
+    \item \(\mathrm{depth}(N) \geq \min\{\mathrm{depth}(N'), \mathrm{depth}(N'')\}\),
+    \item \(\mathrm{depth}(N'') \geq \min\{\mathrm{depth}(N), \mathrm{depth}(N') - 1\}\),
+    \item \(\mathrm{depth}(N') \geq \min\{\mathrm{depth}(N), \mathrm{depth}(N'') + 1\}\).
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  \leanok
+  Write \(\kappa = R/\mathfrak m\). In each case it suffices, by \ref{thm:depth_ext}, to
+  fix a natural number \(a\) below the right-hand side and prove
+  \(\Ext^i(\kappa, -) = 0\) of the middle-named module for all \(i < a\); all three are
+  read off the covariant long exact sequence of \(\Ext(\kappa, -)\)
+  (\ref{lem:ext_covariant_les}) applied to the given short exact sequence, using
+  \ref{thm:depth_ext} to convert the depth bounds on the other two modules into
+  \(\Ext\)-vanishing.
+
+  (1) For \(i < a \leq \min\{\mathrm{depth}(N'), \mathrm{depth}(N'')\}\): in
+  \(\Ext^i(\kappa, N') \to \Ext^i(\kappa, N) \to \Ext^i(\kappa, N'')\), the outer terms
+  vanish, so by exactness at the middle every class of \(\Ext^i(\kappa, N)\) lifts to
+  \(\Ext^i(\kappa, N') = 0\).
+
+  (2) For \(i < a \leq \min\{\mathrm{depth}(N), \mathrm{depth}(N') - 1\}\): in
+  \(\Ext^i(\kappa, N) \to \Ext^i(\kappa, N'') \xrightarrow{\delta}
+  \Ext^{i+1}(\kappa, N')\), the first term vanishes since \(i < \mathrm{depth}(N)\) and
+  the last since \(i + 1 < \mathrm{depth}(N')\) (from \(i + 1 \leq a \leq
+  \mathrm{depth}(N') - 1\)); exactness at the middle gives
+  \(\Ext^i(\kappa, N'') = 0\).
+
+  (3) For \(i < a \leq \min\{\mathrm{depth}(N), \mathrm{depth}(N'') + 1\}\): if
+  \(i = 0\), postcomposition \(\Ext^0(\kappa, N') \to \Ext^0(\kappa, N)\) with the
+  monomorphism \(N' \to N\) is injective (\ref{lem:ext_covariant_les}) and lands in
+  \(\Ext^0(\kappa, N) = 0\). If \(i = j + 1\), then \(j < \mathrm{depth}(N'')\) (from
+  \(j + 2 \leq a \leq \mathrm{depth}(N'') + 1\)), and in
+  \(\Ext^{j}(\kappa, N'') \xrightarrow{\delta} \Ext^{j+1}(\kappa, N') \to
+  \Ext^{j+1}(\kappa, N)\) the outer terms vanish, so
+  \(\Ext^{j+1}(\kappa, N') = 0\).
+\end{proof}
+
+\begin{lemma}[Depth is invariant under linear equivalence]
+  \label{lem:depth_linearEquiv}
+  \lean{RingTheory.Module.depth_eq_of_linearEquiv}
+  \uses{def:depth}
+  \leanok
+  Let \(R\) be a commutative ring, \(I \subseteq R\) an ideal, and \(e : M \cong M'\) an
+  \(R\)-linear equivalence of \(R\)-modules. Then
+  \(\mathrm{depth}_I(M) = \mathrm{depth}_I(M')\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The condition \(IM = M\) transfers along \(e\) (the image of \(IM\) under \(e\) is
+  \(IM'\), and \(e\) is surjective), so the two depths land in the same branch of
+  Definition~\ref{def:depth}. In the supremum branch, a sequence \(x_1, \dots, x_n\) is
+  \(M\)-regular if and only if it is \(M'\)-regular: \(e\) intertwines the
+  multiplication maps and induces equivalences on the successive quotients
+  \(M/(x_1, \dots, x_j)M \cong M'/(x_1, \dots, x_j)M'\), so non-zero-divisor conditions
+  and the nondegeneracy condition match term by term. Hence the two suprema agree.
+\end{proof}
+
+\begin{lemma}[Ideal action on a finite power is componentwise]
+  \label{lem:ideal_smul_top_pi}
+  \lean{RingTheory.Module.ideal_smul_top_pi_const}
+  \leanok
+  Let \(R\) be a commutative ring, \(I \subseteq R\) an ideal, \(M\) an \(R\)-module and
+  \(\iota\) a finite index type. Inside the product module \(\iota \to M\),
+  \[
+    I \cdot (\iota \to M) \;=\; \{\, f : \iota \to M \mid f(i) \in IM
+      \text{ for all } i \,\}.
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  \(\subseteq\): a generator \(a \cdot f\) with \(a \in I\) has every component
+  \(a \cdot f(i) \in IM\), and the right-hand side is closed under sums.
+  \(\supseteq\): a function \(f\) with all components in \(IM\) decomposes as the finite
+  sum \(f = \sum_i \delta_i(f(i))\) of its one-hot components, where
+  \(\delta_i : M \to (\iota \to M)\) places a value in slot \(i\) and zero elsewhere;
+  each \(\delta_i\) is \(R\)-linear, so it carries \(IM\) into
+  \(I \cdot (\iota \to M)\).
+\end{proof}
+
+\begin{lemma}[Depth of a finite power]
+  \label{lem:depth_pi_const}
+  \lean{RingTheory.Module.depth_pi_const_eq_depth_of_nonempty}
+  \uses{def:depth, lem:ideal_smul_top_pi, lem:depth_linearEquiv}
+  \leanok
+  Let \(R\) be a commutative ring, \(I \subseteq R\) an ideal, \(M\) an \(R\)-module and
+  \(\iota\) a nonempty finite index type. Then
+  \(\mathrm{depth}_I(\iota \to M) = \mathrm{depth}_I(M)\). In particular
+  \(\mathrm{depth}_I(R^k) = \mathrm{depth}_I(R)\) for \(k \geq 1\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The side condition agrees on both sides: by \ref{lem:ideal_smul_top_pi},
+  \(I \cdot (\iota \to M) = \iota \to M\) forces \(IM = M\) (evaluate a one-hot function
+  at its slot) and conversely (componentwise). It remains to see that a sequence
+  \(x_1, \dots, x_n \in R\) is \((\iota \to M)\)-regular iff it is \(M\)-regular; then
+  the two suprema of Definition~\ref{def:depth} coincide. Induct on the sequence. For
+  the empty sequence, the nondegeneracy conditions \((\,)\cdot(\iota \to M) \neq
+  \iota \to M\), i.e. \(\iota \to M \neq 0\), and \(M \neq 0\) agree since \(\iota\) is
+  nonempty. For \(x, x_1, \dots, x_n\): multiplication by \(x\) on \(\iota \to M\) is
+  componentwise, so \(x\) is a non-zero-divisor on \(\iota \to M\) iff it is one on
+  \(M\) (\(\iota\) nonempty for the converse); and by \ref{lem:ideal_smul_top_pi} at the
+  ideal \((x)\) there is an \(R\)-linear equivalence
+  \((\iota \to M)/x(\iota \to M) \cong (\iota \to M/xM)\) (a quotient of a finite
+  product by a componentwise submodule is the product of the quotients), so by
+  transport of regular sequences along linear equivalences (as in
+  \ref{lem:depth_linearEquiv}) and the inductive hypothesis applied to \(M/xM\), the
+  tails match as well.
+\end{proof}
+
+\begin{lemma}[Minimal surjections from a free module]
+  \label{lem:minimal_surjection}
+  \lean{RingTheory.Module.exists_minimalSurjection_finite_localRing}
+  \leanok
+  Let \((R, \mathfrak m)\) be a local ring with residue field \(\kappa\) and \(M\) a
+  finite \(R\)-module. There exist \(n = \dim_\kappa(\kappa \otimes_R M)\) and a
+  surjective \(R\)-linear map \(f : R^n \to M\) with
+  \(\ker f \subseteq \mathfrak m \cdot R^n\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Choose a \(\kappa\)-basis \(b_1, \dots, b_n\) of \(\kappa \otimes_R M = M/\mathfrak m M\)
+  and lift each \(b_i\) to \(m_i \in M\) along the surjection
+  \(M \to \kappa \otimes_R M\), \(m \mapsto 1 \otimes m\). Let \(f : R^n \to M\) send
+  the \(i\)-th standard basis vector to \(m_i\), so
+  \(f(x) = \sum_i x_i m_i\). The images \(1 \otimes m_i = b_i\) span
+  \(\kappa \otimes_R M\), so by Nakayama's lemma the \(m_i\) generate \(M\): \(f\) is
+  surjective. If \(f(x) = 0\), applying \(1 \otimes -\) gives
+  \(\sum_i \bar{x_i}\, b_i = 0\) in \(\kappa \otimes_R M\); linear independence of the
+  \(b_i\) forces every \(\bar{x_i} = 0\), i.e.\ every \(x_i \in \mathfrak m\), so
+  \(x \in \mathfrak m \cdot R^n\).
+\end{proof}
+
+\begin{lemma}[From the dimension equation to the vanishing bound]
+  \label{lem:pd_lt_of_pd_eq}
+  \lean{RingTheory.Module.hasProjectiveDimensionLT_succ_of_projectiveDimension_eq}
+  \uses{def:projectiveDimension}
+  \leanok
+  Let \(R\) be a ring, \(M\) an \(R\)-module and \(n \in \mathbb{N}\) with
+  \(\mathrm{pd}_R(M) = n\). Then \(M\) has projective dimension \(< n + 1\), i.e.\
+  \(\Ext^i_R(M, -) = 0\) for all \(i \geq n + 1\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Immediate from Definition~\ref{def:projectiveDimension}: the projective dimension is
+  the infimum of the bounds \(m\) with \(\Ext^i(M,-) = 0\) for \(i > m\), and it equals
+  \(n < n+1\).
+\end{proof}
+
+\begin{lemma}[Syzygy descent]
+  \label{lem:syzygy_descent}
+  \lean{RingTheory.Module.hasProjectiveDimensionLT_ker_of_surjection}
+  \uses{lem:ext_covariant_les, lem:ext_contravariant_les}
+  \leanok
+  Let \(R\) be a commutative ring, \(f : R^n \to M\) a surjective \(R\)-linear map, and
+  \(k \in \mathbb{N}\). If \(M\) has projective dimension \(< k + 2\), then
+  \(K = \ker f\) has projective dimension \(< k + 1\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Consider the short exact sequence \(0 \to K \to R^n \to M \to 0\) and any test module
+  \(Y\). For \(i \geq k + 1\), the contravariant long exact sequence
+  (\ref{lem:ext_contravariant_les}) contains the exact segment
+  \[
+    \Ext^i(R^n, Y) \longrightarrow \Ext^i(K, Y) \longrightarrow \Ext^{i+1}(M, Y).
+  \]
+  The first term vanishes because \(R^n\) is free, hence projective, and \(i \geq 1\);
+  the last vanishes because \(i + 1 \geq k + 2\) and \(M\) has projective dimension
+  \(< k+2\). Hence \(\Ext^i(K, Y) = 0\) for all \(i \geq k+1\) and all \(Y\).
+\end{proof}
+
+\begin{lemma}[Syzygy ascent]
+  \label{lem:syzygy_ascent}
+  \lean{RingTheory.Module.hasProjectiveDimensionLT_succ_of_hasProjectiveDimensionLT_ker}
+  \uses{lem:ext_contravariant_les}
+  \leanok
+  Let \(R\) be a commutative ring, \(f : R^n \to M\) a surjective \(R\)-linear map, and
+  \(k \in \mathbb{N}\). If \(K = \ker f\) has projective dimension \(< k + 1\), then
+  \(M\) has projective dimension \(< k + 2\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  For a test module \(Y\) and \(i \geq k + 2\), the contravariant long exact sequence
+  (\ref{lem:ext_contravariant_les}) for \(0 \to K \to R^n \to M \to 0\) contains
+  \[
+    \Ext^{i-1}(K, Y) \xrightarrow{\ \delta\ } \Ext^{i}(M, Y) \longrightarrow
+      \Ext^{i}(R^n, Y).
+  \]
+  The first term vanishes because \(i - 1 \geq k + 1\), the last because \(R^n\) is
+  projective and \(i \geq 1\). Hence \(\Ext^i(M, Y) = 0\).
+\end{proof}
+
+\begin{lemma}[The two depth inequalities of the kernel sequence]
+  \label{lem:depth_ses_kernel}
+  \lean{RingTheory.Module.depth_ses_ineqs_of_surjection_finite_localRing}
+  \uses{thm:depth_ses, lem:depth_pi_const}
+  \leanok
+  Let \((R, \mathfrak m)\) be a Noetherian local ring, \(M\) a nonzero finite
+  \(R\)-module, \(n \geq 1\), and \(f : R^n \to M\) a surjective \(R\)-linear map with
+  nonzero kernel \(K\). Then
+  \[
+    \min\{\mathrm{depth}(R),\, \mathrm{depth}(K) - 1\} \leq \mathrm{depth}(M)
+    \quad\text{and}\quad
+    \min\{\mathrm{depth}(R),\, \mathrm{depth}(M) + 1\} \leq \mathrm{depth}(K).
+  \]
+\end{lemma}
+\begin{proof}
+  \leanok
+  \(K\) is finite (a submodule of a finite module over a Noetherian ring), so parts (2)
+  and (3) of \ref{thm:depth_ses} apply to \(0 \to K \to R^n \to M \to 0\); substitute
+  \(\mathrm{depth}(R^n) = \mathrm{depth}(R)\) from \ref{lem:depth_pi_const}
+  (\(n \geq 1\)).
+\end{proof}
+
+\begin{lemma}[A nonzero class at the depth index]
+  \label{lem:ext_nonzero_at_depth}
+  \lean{RingTheory.Module.exists_ne_zero_ext_of_depth_eq}
+  \uses{thm:depth_ext}
+  \leanok
+  Let \((R, \mathfrak m)\) be a Noetherian local ring with residue field \(\kappa\) and
+  \(M\) a nonzero finite \(R\)-module with \(\mathrm{depth}(M) = D \in \mathbb{N}\).
+  Then \(\Ext^D_R(\kappa, M) \neq 0\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  By \ref{thm:depth_ext}, \(\Ext^i(\kappa, M) = 0\) for all \(i < D\), while
+  \(D + 1 \leq \mathrm{depth}(M)\) fails, so the vanishing of all \(\Ext^i(\kappa, M)\)
+  with \(i < D + 1\) fails; the failure can only occur at \(i = D\).
+\end{proof}
+
+\begin{lemma}[Matrix collapse on \(\Ext\)]
+  \label{lem:ext_matrix_collapse}
+  \lean{RingTheory.Module.ext_comp_mk₀_ofHom_eq_zero_of_entries_mem_annihilator}
+  \uses{lem:ext_annihilator_smul}
+  \leanok
+  Let \(R\) be a commutative ring, \(N\) an \(R\)-module, and
+  \(A : R^m \to R^n\) an \(R\)-linear map all of whose matrix entries
+  \(a_{ij} = (A e_j)_i\) lie in \(\mathrm{Ann}_R(N)\). Then for every \(p \geq 0\) the
+  postcomposition map \(A_* : \Ext^p_R(N, R^m) \to \Ext^p_R(N, R^n)\) is zero.
+\end{lemma}
+\begin{proof}
+  \leanok
+  Write \(A = \sum_{i,j} a_{ij}\, E_{ij}\), where \(E_{ij} : R^m \to R^n\) is the
+  elementary map sending \(e_j\) to \(e_i\) and the other basis vectors to \(0\)
+  (evaluate both sides on each \(e_j\)). Postcomposition on \(\Ext^p(N, -)\) is additive
+  and \(R\)-linear in the map, so for \(e \in \Ext^p(N, R^m)\),
+  \(A_*(e) = \sum_{i,j} a_{ij} \cdot (E_{ij})_*(e)\); each summand is the action of
+  \(a_{ij} \in \mathrm{Ann}_R(N)\) on a class of \(\Ext^p(N, R^n)\), hence zero by
+  \ref{lem:ext_annihilator_smul}.
+\end{proof}
+
+\begin{theorem}[Auslander--Buchsbaum, positive projective dimension]
+  \label{thm:auslander_buchsbaum_succ}
+  \lean{RingTheory.auslander_buchsbaum_formula_succ_pd}
+  \uses{lem:minimal_surjection, lem:pd_lt_of_pd_eq, lem:syzygy_descent,
+    lem:syzygy_ascent, lem:depth_ses_kernel, lem:ext_nonzero_at_depth,
+    lem:ext_matrix_collapse, lem:ext_covariant_les, thm:depth_ext, thm:depth_ses,
+    lem:depth_pi_const, lem:ideal_smul_top_pi, lem:depth_linearEquiv}
+  \leanok
+  \source{stacks-project}
+  Let \((R, \mathfrak m)\) be a Noetherian local ring and \(M\) a nonzero finite
+  \(R\)-module with \(\mathrm{pd}_R(M) = k + 1\) for some \(k \in \mathbb{N}\). Then
+  \[
+    (k + 1) + \mathrm{depth}(M) = \mathrm{depth}(R).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Induct on \(k\), generalising \(M\).
+
+  \emph{Base case \(\mathrm{pd}_R(M) = 1\).} Take a minimal surjection
+  \(f : R^n \twoheadrightarrow M\) with \(K = \ker f \subseteq \mathfrak m \cdot R^n\)
+  (\ref{lem:minimal_surjection}); \(n \geq 1\) since \(M \neq 0\). By
+  \ref{lem:pd_lt_of_pd_eq} and \ref{lem:syzygy_descent} (at \(k = 0\)), \(K\) has
+  projective dimension \(< 1\), i.e.\ \(K\) is projective; it is finite (Noetherian) and
+  \(R\) is local, so \(K\) is free. \(K \neq 0\): otherwise \(f\) is an isomorphism,
+  \(M\) is free and \(\mathrm{pd}_R(M) = 0 \neq 1\). Fix an isomorphism
+  \(K \cong R^{k'}\) with \(k' \geq 1\) and let \(A : R^{k'} \to R^n\) be the composite
+  inclusion. Every matrix entry of \(A\) lies in \(\mathfrak m\): the columns of \(A\)
+  lie in \(K \subseteq \mathfrak m \cdot R^n\), which is componentwise
+  \(\mathfrak m\)-valued by \ref{lem:ideal_smul_top_pi}; and
+  \(\mathfrak m = \mathrm{Ann}_R(\kappa)\) for the residue field \(\kappa\).
+
+  \(\geq\): part (2) of \ref{thm:depth_ses} applied to
+  \(0 \to R^{k'} \xrightarrow{A} R^n \to M \to 0\), with
+  \(\mathrm{depth}(R^{k'}) = \mathrm{depth}(R^n) = \mathrm{depth}(R)\)
+  (\ref{lem:depth_pi_const}), gives
+  \(\mathrm{depth}(M) \geq \min\{\mathrm{depth}(R), \mathrm{depth}(R) - 1\}
+  = \mathrm{depth}(R) - 1\), i.e.\
+  \(\mathrm{depth}(R) \leq 1 + \mathrm{depth}(M)\).
+
+  \(\leq\): if \(\mathrm{depth}(R) = \infty\) there is nothing to prove beyond the
+  \(\geq\) direction forcing \(\mathrm{depth}(M) = \infty\); so let
+  \(\mathrm{depth}(R) = D < \infty\). Pick a nonzero class
+  \(\alpha \in \Ext^D(\kappa, R^{k'})\) (\ref{lem:ext_nonzero_at_depth}, using
+  \(\mathrm{depth}(R^{k'}) = D\)). By \ref{lem:ext_matrix_collapse},
+  \(A_*\alpha = 0\). If \(D = 0\), postcomposition with the monomorphism \(A\) is
+  injective on \(\Ext^0\) (\ref{lem:ext_covariant_les}), contradicting
+  \(\alpha \neq 0\); so \(D = D' + 1\). The covariant long exact sequence
+  (\ref{lem:ext_covariant_les}) contains
+  \[
+    \Ext^{D'}(\kappa, M) \xrightarrow{\ \delta\ } \Ext^{D}(\kappa, R^{k'})
+      \xrightarrow{\ A_*\ } \Ext^{D}(\kappa, R^n),
+  \]
+  so \(\alpha = \delta(\beta)\) for some \(\beta \in \Ext^{D'}(\kappa, M)\), and
+  \(\beta \neq 0\). Hence \(\Ext^{D'}(\kappa, M) \neq 0\), so
+  \(\mathrm{depth}(M) \leq D'\) by \ref{thm:depth_ext}, i.e.\
+  \(1 + \mathrm{depth}(M) \leq D = \mathrm{depth}(R)\). Together:
+  \(1 + \mathrm{depth}(M) = \mathrm{depth}(R)\).
+
+  \emph{Inductive step \(\mathrm{pd}_R(M) = k + 2\).} Take a minimal surjection
+  \(f : R^n \twoheadrightarrow M\) (\ref{lem:minimal_surjection}), \(n \geq 1\), and set
+  \(K = \ker f\). Then \(\mathrm{pd}_R(K) = k + 1\) exactly: \(\leq\) by
+  \ref{lem:pd_lt_of_pd_eq} and \ref{lem:syzygy_descent}; and if \(K\) had projective
+  dimension \(< k + 1\), then \ref{lem:syzygy_ascent} would give
+  \(\mathrm{pd}_R(M) < k + 2\), a contradiction. In particular \(K \neq 0\) (the zero
+  module has projective dimension \(-\infty\)), and \(K\) is finite. The inductive
+  hypothesis applied to \(K\) gives
+  \((k + 1) + \mathrm{depth}(K) = \mathrm{depth}(R)\), and \ref{lem:depth_ses_kernel}
+  gives the two inequalities
+  \(\min\{\mathrm{depth}(R), \mathrm{depth}(K) - 1\} \leq \mathrm{depth}(M)\) and
+  \(\min\{\mathrm{depth}(R), \mathrm{depth}(M) + 1\} \leq \mathrm{depth}(K)\).
+
+  It remains to combine these in \(\{0, 1, \dots, \infty\}\). If
+  \(\mathrm{depth}(K) = \infty\), the hypothesis forces
+  \(\mathrm{depth}(R) = \infty\), the first inequality forces
+  \(\mathrm{depth}(M) = \infty\), and both sides of the claim are \(\infty\). If
+  \(\mathrm{depth}(K) = K_0 < \infty\) and \(\mathrm{depth}(M) = \infty\), the second
+  inequality reads \(\min\{(k+1) + K_0, \infty\} = (k+1) + K_0 \leq K_0\), impossible
+  since \(k + 1 \geq 1\). So both are finite, say \(\mathrm{depth}(M) = M_0\), and
+  \(\mathrm{depth}(R) = (k+1) + K_0 > K_0 - 1\); the first inequality then reads
+  \(K_0 - 1 \leq M_0\). In the second inequality the minimum cannot be
+  \(\mathrm{depth}(R)\), since \((k+1) + K_0 \leq K_0\) is impossible; so it reads
+  \(M_0 + 1 \leq K_0\). Hence \(M_0 = K_0 - 1\) with \(K_0 \geq 1\), and
+  \((k + 2) + M_0 = (k + 1) + K_0 = \mathrm{depth}(R)\).
+\end{proof}
+
+\begin{theorem}[The Auslander--Buchsbaum formula]
+  \label{thm:auslander_buchsbaum}
+  \lean{RingTheory.auslander_buchsbaum_formula}
+  \uses{thm:auslander_buchsbaum_succ, lem:depth_pi_const, lem:depth_linearEquiv,
+    def:projectiveDimension}
+  \leanok
+  \source{stacks-project}
+  Let \((R, \mathfrak m)\) be a Noetherian local ring and \(M\) a nonzero finite
+  \(R\)-module of finite projective dimension \(\mathrm{pd}_R(M) = n \in \mathbb{N}\).
+  Then
+  \[
+    \mathrm{pd}_R(M) + \mathrm{depth}(M) = \mathrm{depth}(R).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  If \(n = 0\), then \(M\) is projective (Definition~\ref{def:projectiveDimension}),
+  finite over the local Noetherian ring \(R\), hence free: \(M \cong R^{k}\) with
+  \(k = \mathrm{rank}\, M \geq 1\) (as \(M \neq 0\)). By \ref{lem:depth_linearEquiv} and
+  \ref{lem:depth_pi_const}, \(\mathrm{depth}(M) = \mathrm{depth}(R^k) =
+  \mathrm{depth}(R)\), which is the formula with \(n = 0\). If \(n = k + 1\), this is
+  \ref{thm:auslander_buchsbaum_succ}.
+\end{proof}
+
+\section{Cohen--Macaulay and regular local rings}
+\label{sec:regular_cm}
+
+This section defines the Cohen--Macaulay condition for a Noetherian local ring and
+proves the two classical structure theorems for regular local rings: a regular local
+ring is a domain, and a regular system of parameters is a regular sequence --- so
+regular local rings are Cohen--Macaulay. Throughout, for a Noetherian local ring
+\((R, \mathfrak m)\) we write \(\mu(\mathfrak m)\) for the minimal number of generators
+of \(\mathfrak m\), which by Nakayama's lemma equals
+\(\dim_\kappa \mathfrak m/\mathfrak m^2\), the dimension of the cotangent space; recall
+that \(R\) is \emph{regular} when \(\mu(\mathfrak m) = \dim R\), the Krull dimension
+(and that \(\dim R \leq \mu(\mathfrak m)\) always, by Krull's height theorem).
+
+\begin{definition}[Cohen--Macaulay local ring]
+  \label{def:cohen_macaulay}
+  \lean{RingTheory.CohenMacaulay}
+  \uses{def:depth}
+  \leanok
+  \source{stacks-project}
+  A Noetherian local ring \((R, \mathfrak m)\) is \emph{Cohen--Macaulay} if
+  \(\mathrm{depth}(R) = \dim R\), its depth (Definition~\ref{def:depth}) equals its
+  Krull dimension.
+\end{definition}
+
+\begin{theorem}[Cotangent dimension drop]
+  \label{thm:cotangent_dim_drop}
+  \lean{RingTheory.CohenMacaulay.finrank_cotangentSpace_quot_span_singleton_succ}
+  \leanok
+  Let \((R, \mathfrak m)\) be a Noetherian local ring and
+  \(x \in \mathfrak m \setminus \mathfrak m^2\). Write \(\mathfrak m'\) for the maximal
+  ideal of the local ring \(R/(x)\). Then
+  \[
+    \dim_{\kappa'} \mathfrak m'/\mathfrak m'^2 + 1
+      \;=\; \dim_{\kappa} \mathfrak m/\mathfrak m^2,
+  \]
+  where \(\kappa, \kappa'\) are the residue fields; equivalently
+  \(\mu(\mathfrak m') + 1 = \mu(\mathfrak m)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  By Nakayama both sides may be computed as minimal generator counts, so we prove
+  \(\mu(\mathfrak m') + 1 = \mu(\mathfrak m)\), by two inequalities.
+
+  \(\leq\) (Steinitz exchange): let \(V = \{v_1, \dots, v_d\}\) be a generating set of
+  \(\mathfrak m\) with \(d = \mu(\mathfrak m)\); note \(d \geq 1\), since \(d = 0\)
+  would give \(\mathfrak m = 0\) and \(x \in \mathfrak m^2\). Write
+  \(x = \sum_i c_i v_i\). If every \(c_i \in \mathfrak m\), then
+  \(x \in \mathfrak m \cdot \mathfrak m = \mathfrak m^2\), a contradiction; so some
+  \(c_{i_0}\) is a unit, and
+  \(v_{i_0} = c_{i_0}^{-1}\bigl(x - \sum_{i \neq i_0} c_i v_i\bigr)\) lies in the span
+  of \((V \setminus \{v_{i_0}\}) \cup \{x\}\). Hence
+  \((V \setminus \{v_{i_0}\}) \cup \{x\}\) still generates \(\mathfrak m\); its image in
+  \(R/(x)\) generates \(\mathfrak m' = \mathfrak m/(x)\), and the image of \(x\) is
+  zero, so the \(d - 1\) images of \(V \setminus \{v_{i_0}\}\) generate
+  \(\mathfrak m'\): \(\mu(\mathfrak m') \leq d - 1\).
+
+  \(\geq\) (lift and cons): let \(T\) be a generating set of \(\mathfrak m'\) of size
+  \(\mu(\mathfrak m')\) and lift each element along the surjection
+  \(R \twoheadrightarrow R/(x)\) to \(\widetilde T \subseteq \mathfrak m\) (the
+  preimage of \(\mathfrak m'\) is \(\mathfrak m\), the unique maximal ideal). Since
+  \(\mathfrak m\) is the preimage of \(\mathfrak m' = (\text{image of } \widetilde T)\)
+  and the kernel of the surjection is \((x)\), we get
+  \(\mathfrak m = (\widetilde T) + (x)\), so \(\widetilde T \cup \{x\}\) generates
+  \(\mathfrak m\): \(\mu(\mathfrak m) \leq \mu(\mathfrak m') + 1\).
+\end{proof}
+
+\begin{lemma}[The Nakayama witness \(x \in \mathfrak m \setminus \mathfrak m^2\)]
+  \label{lem:notMemSq_witness}
+  \lean{RingTheory.CohenMacaulay.exists_notMemSq_of_spanFinrank_pos}
+  \leanok
+  Let \((R, \mathfrak m)\) be a Noetherian local ring with \(\mu(\mathfrak m) \geq 1\).
+  Then there exists \(x \in \mathfrak m\) with \(x \notin \mathfrak m^2\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Otherwise \(\mathfrak m \subseteq \mathfrak m^2 = \mathfrak m \cdot \mathfrak m\);
+  since \(\mathfrak m\) is finitely generated (Noetherian) and contained in the
+  Jacobson radical, Nakayama's lemma gives \(\mathfrak m = 0\), so
+  \(\mu(\mathfrak m) = 0\) --- a contradiction.
+\end{proof}
+
+\begin{lemma}[The regular quotient step]
+  \label{lem:regular_quotient}
+  \lean{RingTheory.CohenMacaulay.regularLocal_quotient_isRegularLocal_of_notMemSq}
+  \uses{thm:cotangent_dim_drop, lem:notMemSq_witness}
+  \leanok
+  Let \(R\) be a regular local Noetherian ring with \(\mu(\mathfrak m) = k + 1\) and let
+  \(x \in \mathfrak m \setminus \mathfrak m^2\). Then \(R/(x)\) is a nonzero regular
+  local Noetherian ring with \(\mu(\mathfrak m') = k\), where \(\mathfrak m'\) is its
+  maximal ideal. (No non-zero-divisor hypothesis on \(x\) is made.)
+\end{lemma}
+\begin{proof}
+  \leanok
+  Since \(x \in \mathfrak m\) is a nonunit, \((x) \neq R\) and \(R/(x)\) is a nonzero
+  local Noetherian ring. By \ref{thm:cotangent_dim_drop},
+  \(\mu(\mathfrak m') = k\). For the Krull dimension: since \(x\) lies in the Jacobson
+  radical of \(R\), quotienting by the single element \(x\) can drop the dimension by at
+  most one, \(\dim R \leq \dim R/(x) + 1\) (the general bound
+  \(\dim R \leq \dim R/(S) + \#S\) for a subset \(S\) of the Jacobson radical, which
+  does \emph{not} require \(x\) to be a non-zero-divisor). Regularity of \(R\) gives
+  \(\dim R = \mu(\mathfrak m) = k + 1\), so \(\dim R/(x) \geq k\); Krull's height
+  theorem gives \(\dim R/(x) \leq \mu(\mathfrak m') = k\). Hence
+  \(\dim R/(x) = k = \mu(\mathfrak m')\) and \(R/(x)\) is regular.
+\end{proof}
+
+\begin{theorem}[Regular local rings are domains]
+  \label{thm:regular_isDomain}
+  \lean{RingTheory.CohenMacaulay.isDomain_of_regularLocal}
+  \uses{lem:notMemSq_witness, lem:regular_quotient}
+  \leanok
+  \source{stacks-project}
+  Every regular local Noetherian ring is an integral domain.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Strong induction on \(d = \mu(\mathfrak m)\), generalising the ring.
+
+  \emph{Base case \(d = 0\).} Then \(\mathfrak m = 0\), so \(R\) is a field, hence a
+  domain.
+
+  \emph{Inductive step \(d = k + 1\).} Pick \(x \in \mathfrak m \setminus \mathfrak m^2\)
+  (\ref{lem:notMemSq_witness}). By \ref{lem:regular_quotient}, \(R/(x)\) is regular
+  local with \(\mu = k\), hence a domain by the inductive hypothesis; so \((x)\) is a
+  prime ideal. Choose a minimal prime \(\mathfrak p \subseteq (x)\) of \(R\) (every
+  prime contains a minimal prime).
+
+  \emph{Case \(x \notin \mathfrak p\).} For \(y \in \mathfrak p \subseteq (x)\) write
+  \(y = xz\); since \(\mathfrak p\) is prime and \(x \notin \mathfrak p\), we get
+  \(z \in \mathfrak p\). Hence \(\mathfrak p = x\,\mathfrak p\) with
+  \(x\) in the Jacobson radical and \(\mathfrak p\) finitely generated; Nakayama's lemma
+  gives \(\mathfrak p = 0\). A minimal prime equal to \((0)\) means \((0)\) is prime, so
+  \(R\) is a domain.
+
+  \emph{Case \(x \in \mathfrak p\).} Then \((x) \subseteq \mathfrak p \subseteq (x)\),
+  so \((x)\) itself is a minimal prime of \(R\). We refute this. \(R\) is Noetherian, so
+  it has only finitely many minimal primes. The maximal ideal \(\mathfrak m\) is
+  contained in none of the ideals \(\mathfrak m^2, \mathfrak q_1, \dots, \mathfrak q_r\)
+  (\(\mathfrak q_i\) the minimal primes): containment in \(\mathfrak m^2\) would give
+  \(\mathfrak m = 0\) by Nakayama, contradicting \(d \geq 1\); and
+  \(\mathfrak m \subseteq \mathfrak q_i\) would force \(\mathfrak q_i = \mathfrak m\)
+  (primes of a local ring lie in \(\mathfrak m\)), making \(\mathfrak m\) a minimal
+  prime, so \(\dim R = 0\) --- but \(\dim R = \mu(\mathfrak m) = k + 1 \geq 1\) by
+  regularity. By prime avoidance (with the single non-prime member \(\mathfrak m^2\)
+  allowed), \(\mathfrak m \not\subseteq \mathfrak m^2 \cup \mathfrak q_1 \cup \dots \cup
+  \mathfrak q_r\); pick \(x'\) in \(\mathfrak m\) outside this union. Then
+  \(x' \in \mathfrak m \setminus \mathfrak m^2\) avoids every minimal prime. Run the
+  preceding two paragraphs with \(x'\) in place of \(x\): \(R/(x')\) is a domain by
+  \ref{lem:regular_quotient} and the inductive hypothesis, so \((x')\) is prime; a
+  minimal prime \(\mathfrak p' \subseteq (x')\) cannot contain \(x'\), so the previous
+  case applies and shows \(\mathfrak p' = 0\) and \(R\) is a domain. But in a domain the
+  only minimal prime is \((0)\), so the minimal prime \((x)\) equals \((0)\), giving
+  \(x = 0 \in \mathfrak m^2\) --- contradicting \(x \notin \mathfrak m^2\).
+\end{proof}
+
+\begin{theorem}[A regular system of parameters is a regular sequence]
+  \label{thm:regular_system_isRegular}
+  \lean{RingTheory.CohenMacaulay.exists_isRegular_of_regularLocal}
+  \uses{lem:notMemSq_witness, thm:regular_isDomain, lem:regular_quotient}
+  \leanok
+  Let \(R\) be a regular local Noetherian ring. Then there is an \(R\)-regular sequence
+  contained in \(\mathfrak m\) of length \(\mu(\mathfrak m) = \dim R\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  Induct on \(d = \mu(\mathfrak m)\), generalising the ring. For \(d = 0\) take the
+  empty sequence (\(R \neq 0\), so it is vacuously \(R\)-regular). For \(d = k + 1\):
+  pick \(x \in \mathfrak m \setminus \mathfrak m^2\) (\ref{lem:notMemSq_witness}); then
+  \(x \neq 0\) (zero lies in \(\mathfrak m^2\)) and \(R\) is a domain
+  (\ref{thm:regular_isDomain}), so \(x\) is a non-zero-divisor on \(R\). By
+  \ref{lem:regular_quotient}, \(R/(x)\) is regular local with
+  \(\mu(\mathfrak m') = k\), so by the inductive hypothesis there is an
+  \(R/(x)\)-regular sequence \(\bar y_1, \dots, \bar y_k\) in \(\mathfrak m'\). Lift
+  each \(\bar y_i\) to \(y_i \in \mathfrak m\) (the preimage of \(\mathfrak m'\) is
+  \(\mathfrak m\)). Regularity of a sequence on the \(R\)-module \(R/xR\) is computed
+  through the images of its entries in \(R/(x)\), so \(y_1, \dots, y_k\) is a regular
+  sequence on the \(R\)-module \(R/xR\); consing, \(x, y_1, \dots, y_k\) is an
+  \(R\)-regular sequence of length \(k + 1\) in \(\mathfrak m\).
+\end{proof}
+
+\begin{theorem}[Regular local rings are Cohen--Macaulay]
+  \label{thm:regular_is_CM}
+  \lean{RingTheory.CohenMacaulay.of_regular}
+  \uses{def:cohen_macaulay, def:depth, thm:regular_system_isRegular}
+  \leanok
+  \source{stacks-project}
+  Every regular local Noetherian ring \(R\) is Cohen--Macaulay:
+  \(\mathrm{depth}(R) = \dim R\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  The side condition of Definition~\ref{def:depth} is in the supremum branch:
+  \(\mathfrak m \cdot R = \mathfrak m \neq R\).
+
+  \emph{Lower bound.} By \ref{thm:regular_system_isRegular} there is an \(R\)-regular
+  sequence in \(\mathfrak m\) of length \(\mu(\mathfrak m) = \dim R\), so
+  \(\mathrm{depth}(R) \geq \dim R\).
+
+  \emph{Upper bound.} Every \(R\)-regular sequence \(x_1, \dots, x_\ell\) (in any
+  ideal) satisfies \(\ell \leq \dim R\): for a Noetherian local ring, quotienting by a
+  regular sequence drops the Krull dimension by exactly its length,
+  \(\dim R/(x_1, \dots, x_\ell) + \ell = \dim R\), and the quotient is nonzero (the
+  nondegeneracy condition \((x_1, \dots, x_\ell)R \neq R\)), so its dimension is
+  \(\geq 0\). Hence the supremum defining \(\mathrm{depth}(R)\) is at most
+  \(\dim R\).
+
+  Therefore \(\mathrm{depth}(R) = \dim R = \mu(\mathfrak m)\), and \(R\) is
+  Cohen--Macaulay (Definition~\ref{def:cohen_macaulay}).
+\end{proof}
