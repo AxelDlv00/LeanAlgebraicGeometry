@@ -280,6 +280,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyExtraction
 import AlgebraicJacobian.Picard.DivisorFamilyField
 import AlgebraicJacobian.Picard.DivisorFamilyFieldDegree
 import AlgebraicJacobian.Picard.DivisorFamilyFieldEquiv
+import AlgebraicJacobian.Picard.DivisorFamilyBackward
 import AlgebraicJacobian.Picard.DivisorFamilyPullback
 import AlgebraicJacobian.Algebra.ABDepth
 import AlgebraicJacobian.Algebra.ABDepthExt
