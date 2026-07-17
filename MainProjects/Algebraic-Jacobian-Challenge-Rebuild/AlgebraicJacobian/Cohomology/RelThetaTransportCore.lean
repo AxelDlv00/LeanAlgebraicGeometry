@@ -101,6 +101,26 @@ lemma presheafCongr_resHom {X : Scheme.{u}} [X.Over (Spec (.of k))] {U U' V : X.
   change X.resHom (le_of_eq h.symm) (X.resHom h₁ s) = X.resHom h₂ s
   rw [Scheme.resHom_resHom]
 
+/-- The open-equality transport is the restriction ring map, hence multiplicative. -/
+lemma presheafCongr_mul {X : Scheme.{u}} [X.Over (Spec (.of k))] {U U' : X.Opens}
+    (h : U = U') (a b : Γ(X, U)) :
+    presheafCongr (k := k) h (a * b) =
+      presheafCongr (k := k) h a * presheafCongr (k := k) h b := by
+  rw [presheafCongr, LinearEquiv.ofLinear_apply, LinearEquiv.ofLinear_apply,
+    LinearEquiv.ofLinear_apply]
+  change X.resHom (le_of_eq h.symm) (a * b) =
+    X.resHom (le_of_eq h.symm) a * X.resHom (le_of_eq h.symm) b
+  rw [map_mul]
+
+/-- The section collapse is multiplicative (it is the section pullback). -/
+lemma sectionsCollapse_mul (V : C.left.Opens)
+    (hV : IsCompact (V : Set C.left)) (hV' : IsQuasiSeparated (V : Set C.left))
+    (a b : Γ(C.left, V)) :
+    sectionsCollapse C V hV hV' (a * b) =
+      sectionsCollapse C V hV hV' a * sectionsCollapse C V hV hV' b := by
+  rw [sectionsCollapse_apply, sectionsCollapse_apply, sectionsCollapse_apply,
+    relPullbackSection_mul]
+
 end SectionsCollapse
 
 /-! ## The twisted section modules collapse across the pinned charts -/
@@ -213,6 +233,38 @@ lemma sectionsCollapse_resHom {W V : C.left.Opens} (hWV : W ≤ V)
         (sectionsCollapse C V hV hV' s) := by
   rw [sectionsCollapse_apply, sectionsCollapse_apply, relPullbackSection_resHom']
 
+/-- **The relative theta cocycle is the collapse of `thetaUnit π ^ n`**: the section value
+of `relThetaCocycle C k π n` is the overlap collapse of the field-level cocycle. -/
+lemma relThetaCocycle_val_eq :
+    ((relThetaCocycle C k π n :
+        Γ(relCurve C k, (relCover C k (fiberTwoCover π)).V₀ ⊓
+          (relCover C k (fiberTwoCover π)).V₁)ˣ) :
+        Γ(relCurve C k, (relCover C k (fiberTwoCover π)).V₀ ⊓
+          (relCover C k (fiberTwoCover π)).V₁)) =
+      (@presheafCongr k _ (relCurve C k) (relCurve.instOver C k) _ _
+          (relCover_inf C k (fiberTwoCover π)).symm)
+        (sectionsCollapse C (fiberChart₀ π ⊓ fiberChart₁ π)
+          (fiberTwoCover π).isAffineOpen_inf.isCompact
+          (fiberTwoCover π).isAffineOpen_inf.isQuasiSeparated
+          ((thetaUnit π ^ n :
+            Γ(C.left, fiberChart₀ π ⊓ fiberChart₁ π)ˣ) :
+            Γ(C.left, fiberChart₀ π ⊓ fiberChart₁ π))) := by
+  rw [sectionsCollapse_apply, presheafCongr, LinearEquiv.ofLinear_apply]
+  change (((fst C (overSpec k k)).left.appLE (fiberChart₀ π ⊓ fiberChart₁ π)
+      ((relCover C k (fiberTwoCover π)).V₀ ⊓ (relCover C k (fiberTwoCover π)).V₁)
+      (le_of_eq (relCover_inf C k (fiberTwoCover π)))).hom
+        ((thetaUnit π ^ n : Γ(C.left, fiberChart₀ π ⊓ fiberChart₁ π)ˣ) : Γ(C.left, _))) =
+    ((relCurve C k).presheaf.map (homOfLE
+        (le_of_eq (relCover_inf C k (fiberTwoCover π)))).op).hom
+      (((fst C (overSpec k k)).left.appLE (fiberChart₀ π ⊓ fiberChart₁ π)
+        ((fst C (overSpec k k)).left ⁻¹ᵁ (fiberChart₀ π ⊓ fiberChart₁ π)) le_rfl).hom
+        ((thetaUnit π ^ n : Γ(C.left, fiberChart₀ π ⊓ fiberChart₁ π)ˣ) : Γ(C.left, _)))
+  exact (congr($(Scheme.Hom.appLE_map (fst C (overSpec k k)).left
+    (le_rfl : (fst C (overSpec k k)).left ⁻¹ᵁ (fiberChart₀ π ⊓ fiberChart₁ π) ≤
+      (fst C (overSpec k k)).left ⁻¹ᵁ (fiberChart₀ π ⊓ fiberChart₁ π))
+    (homOfLE (le_of_eq (relCover_inf C k (fiberTwoCover π)))).op).hom
+      ((thetaUnit π ^ n : Γ(C.left, fiberChart₀ π ⊓ fiberChart₁ π)ˣ) : Γ(C.left, _)))).symm
+
 /-- **Chart-0 leg of the Čech differential square**: the collapse commutes with the
 restriction of the chart-0 lattice into the overlap. -/
 lemma twistCollapseN_twistRes_left
@@ -232,6 +284,30 @@ lemma twistCollapseN_twistRes_left
       (isAffineOpen_preimage_chartOpen π 0).isCompact
       (isAffineOpen_preimage_chartOpen π 0).isQuasiSeparated]
   · exact presheafCongr_resHom _ _ _ _
+  all_goals exact le_refl _
+
+/-- **Chart-1 leg of the Čech differential square**: the collapse commutes with the
+restriction of the chart-1 lattice into the overlap (the cocycle-twisted leg). -/
+lemma twistCollapseN_twistRes_right
+    (y : ↥(twistSubmodule k (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n)
+      (fiberChart₁ π))) :
+    twistCollapseN C π n (twistRes k (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n)
+        (inf_le_right : fiberChart₀ π ⊓ fiberChart₁ π ≤ fiberChart₁ π) y) =
+      twistRes k (relCover C k (fiberTwoCover π)).V₀ (relCover C k (fiberTwoCover π)).V₁
+        (relThetaCocycle C k π n) inf_le_right (twistCollapse₁ C π n y) := by
+  apply (twistTriv₀ k (relCover C k (fiberTwoCover π)).V₀
+    (relCover C k (fiberTwoCover π)).V₁ (relThetaCocycle C k π n) inf_le_left).injective
+  rw [twistTriv₀_twistCollapseN, twistTriv₀_inf_eq, twistTriv₀_inf_eq, twistTriv₁_res,
+    twistTriv₁_res, twistTriv₁_twistCollapse₁, sectionsCollapse_mul, presheafCongr_mul,
+    ← relThetaCocycle_val_eq,
+    sectionsCollapse_resHom C
+      (inf_le_right : fiberChart₀ π ⊓ fiberChart₁ π ≤ fiberChart₁ π)
+      (fiberTwoCover π).isAffineOpen_inf.isCompact
+      (fiberTwoCover π).isAffineOpen_inf.isQuasiSeparated
+      (isAffineOpen_preimage_chartOpen π 1).isCompact
+      (isAffineOpen_preimage_chartOpen π 1).isQuasiSeparated]
+  · congr 1
+    exact presheafCongr_resHom _ _ _ _
   all_goals exact le_refl _
 
 end TwistCollapse
