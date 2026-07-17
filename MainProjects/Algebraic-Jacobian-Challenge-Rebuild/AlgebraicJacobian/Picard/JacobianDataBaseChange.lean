@@ -22,6 +22,17 @@ the resulting canonical isomorphism as the datum-level input of the frozen `base
   Type form of θ (`Picard/Pic0ThetaAssembly.lean`).  The two construction certificates
   transport by `MorphismProperty.baseChange_obj` (the frozen file's own pattern).
 
+* `AlgebraicGeometry.grpObjObj_baseChange_eq` (**W7-B6a**): the group-object structure that the
+  base-change functor transports onto `(baseChange k L).obj d.J` (`Functor.grpObjObj`) equals the
+  one carried by the transported datum `d.baseChange L`.  Reduced by `GrpObj.ext` to a `MonObj`
+  equality closed by the `monObjObj_eq_ofRepresentableBy` bridge and the general transport lemma
+  `monObj_ofRepresentableBy_eq_of_iso`.
+
+* `AlgebraicGeometry.baseChangeIsoOfData` (**W7-B6b**): the datum-level base-change isomorphism
+  `(baseChange k L).mapGrp.obj (.mk d.J) ≅ .mk dL.J` for any Jacobian data `d`, `dL`, assembled from
+  B-6a, `Grp.mkIso`, and the seam lemma `isMonHom_hom_of_representableBy`.  This is the datum-level
+  input consumed (definitionally) by the frozen `AlgebraicGeometry.baseChangeIso`.
+
 This file is the SOLE OWNER of the R-W7-4 instance-keying seams at the frozen spelling.
 -/
 
@@ -141,5 +152,106 @@ theorem monObjObj_eq_ofRepresentableBy {C₁ : Type u₁} {D₁ : Type u₂}
       Category.assoc, adj.counit_naturality, Category.assoc]
 
 end MonObjBridge
+
+/-! ## A general lemma: `MonObj.ofRepresentableBy` transports along presheaf-of-monoid isos -/
+
+section OfRepTransport
+
+universe w u₁
+
+open CartesianMonoidalCategory MonObj
+
+/-- **`MonObj.ofRepresentableBy` is invariant under transport of the representing datum along a
+presheaf-of-monoids isomorphism** (the reusable half of B-6a): if `Φ : F ≅ F'` is an isomorphism of
+presheaves of monoids whose forgetful action intertwines the universal `homEquiv`s of two
+representability data `α`, `α'` for a common representing object `X`, then the two induced
+`MonObj X` structures coincide.  Proved elementwise through `homEquiv`'s injectivity and the
+component multiplicativity of `Φ.hom`, never diagram-chasing in `Mon _` (the R3 term-mode
+discipline). -/
+theorem monObj_ofRepresentableBy_eq_of_iso {D : Type u₁} [Category.{w} D]
+    [CartesianMonoidalCategory D] {F F' : Dᵒᵖ ⥤ MonCat.{w}} (Φ : F ≅ F') {X : D}
+    (α : (F ⋙ CategoryTheory.forget _).RepresentableBy X)
+    (α' : (F' ⋙ CategoryTheory.forget _).RepresentableBy X)
+    (h : ∀ {T : D} (g : T ⟶ X), α'.homEquiv g = Φ.hom.app (op T) (α.homEquiv g)) :
+    MonObj.ofRepresentableBy X F α = MonObj.ofRepresentableBy X F' α' := by
+  refine MonObj.ext _ _ ?_
+  simp only [MonObj.ofRepresentableBy_mul, Functor.RepresentableBy.homEquiv']
+  apply α'.homEquiv.injective
+  rw [Equiv.apply_symm_apply, h, Equiv.apply_symm_apply, map_mul, ← h, ← h]
+
+end OfRepTransport
+
+/-! ## B-6a / B-6b: the `mapGrp` group structure and the datum-level base-change isomorphism -/
+
+section BaseChangeIso
+
+open CartesianMonoidalCategory MonObj
+
+/-- **W7-B6a — the `mapGrp` group structure agrees with the transported representation**: the group
+object structure that the base-change functor transports onto `(baseChange k L).obj d.J`
+(`Functor.grpObjObj`) equals the one carried by the B-5 transported datum `d.baseChange L`
+(`GrpObj.ofRepresentableBy` of `pic0Functor C_L`).  Via `GrpObj.ext` the obligation is the
+underlying `MonObj` equality; the `monObjObj_eq_ofRepresentableBy` bridge rewrites the `mapGrp`
+side to the `Over.mapPullbackAdj σ` adjunction representation, and
+`monObj_ofRepresentableBy_eq_of_iso` transports that along the monoid-presheaf iso
+`θ⁻¹ ∘ (Yoneda of d.rep)` — whose forgetful action is `d`'s Type form of θ verbatim, so the
+intertwining hypothesis is closed by `rfl`. -/
+theorem grpObjObj_baseChange_eq (d : JacobianData C) (L : Type u) [Field L] [Algebra k L] :
+    letI := d.grpObj
+    Functor.grpObjObj (F := AlgebraicGeometry.baseChange k L) (G := d.J)
+      = (d.baseChange L).grpObj := by
+  letI := d.grpObj
+  refine GrpObj.ext _ _ ?_
+  refine (monObjObj_eq_ofRepresentableBy
+    (Over.mapPullbackAdj (Spec.map (CommRingCat.ofHom (algebraMap k L)))) d.J).trans ?_
+  exact monObj_ofRepresentableBy_eq_of_iso
+    (Functor.isoWhiskerLeft (Over.map (Spec.map (CommRingCat.ofHom (algebraMap k L)))).op
+        (yonedaMonObjIsoOfRepresentableBy d.J
+          (pic0Functor C ⋙ forget₂ CommGrpCat GrpCat ⋙ forget₂ GrpCat MonCat) d.rep)
+      ≪≫ (Functor.isoWhiskerRight (pic0Theta k L C)
+          (forget₂ CommGrpCat GrpCat ⋙ forget₂ GrpCat MonCat)).symm)
+    ((Over.mapPullbackAdj (Spec.map (CommRingCat.ofHom (algebraMap k L)))).representableBy d.J)
+    (d.baseChange L).rep
+    (fun {T} g => rfl)
+
+/-- **W7-B6b — the datum-level base-change isomorphism**: for any two Jacobian data `d` on `C` and
+`dL` on `C_L = (baseChange k L).obj C`, the base-changed group scheme
+`(baseChange k L).mapGrp.obj (Grp.mk d.J)` is isomorphic, as a group object over `L`, to
+`Grp.mk dL.J`.  B-6a rewrites the `mapGrp` group structure to the transported datum's (via
+`eqToIso`), and `Grp.mkIso` on the representing-object isomorphism
+`(d.baseChange L).uniqueUpToIso dL` closes it, its `one`/`mul` compatibilities supplied by the
+seam lemma
+`isMonHom_hom_of_representableBy` fed with `homEquiv_uniqueUpToIso_hom`.  This is the datum-level
+input consumed (definitionally, since `Jacobian C := (jacobianData C).J`) by the frozen
+`AlgebraicGeometry.baseChangeIso`. -/
+noncomputable def baseChangeIsoOfData (d : JacobianData C) {L : Type u} [Field L] [Algebra k L]
+    (dL : JacobianData ((AlgebraicGeometry.baseChange k L).obj C)) :
+    letI := d.grpObj
+    letI := dL.grpObj
+    (AlgebraicGeometry.baseChange k L).mapGrp.obj (.mk d.J) ≅ .mk dL.J :=
+  letI := d.grpObj
+  letI := dL.grpObj
+  letI := (d.baseChange L).grpObj
+  haveI him :
+      letI := MonObj.ofRepresentableBy (d.baseChange L).J
+        ((pic0Functor ((AlgebraicGeometry.baseChange k L).obj C) ⋙ forget₂ CommGrpCat GrpCat)
+          ⋙ forget₂ GrpCat MonCat) (d.baseChange L).rep
+      letI := MonObj.ofRepresentableBy dL.J
+        ((pic0Functor ((AlgebraicGeometry.baseChange k L).obj C) ⋙ forget₂ CommGrpCat GrpCat)
+          ⋙ forget₂ GrpCat MonCat) dL.rep
+      IsMonHom ((d.baseChange L).uniqueUpToIso dL).hom :=
+    isMonHom_hom_of_representableBy
+      ((pic0Functor ((AlgebraicGeometry.baseChange k L).obj C) ⋙ forget₂ CommGrpCat GrpCat)
+        ⋙ forget₂ GrpCat MonCat)
+      (d.baseChange L).rep dL.rep ((d.baseChange L).uniqueUpToIso dL)
+      (JacobianData.homEquiv_uniqueUpToIso_hom (d.baseChange L) dL)
+  eqToIso (congrArg
+      (fun gg => ({ X := (AlgebraicGeometry.baseChange k L).obj d.J, grp := gg } :
+        Grp (Over (Spec (.of L)))))
+      (grpObjObj_baseChange_eq d L))
+    ≪≫ (Grp.mkIso ((d.baseChange L).uniqueUpToIso dL) him.one_hom him.mul_hom :
+      (Grp.mk (d.baseChange L).J : Grp (Over (Spec (.of L)))) ≅ .mk dL.J)
+
+end BaseChangeIso
 
 end AlgebraicGeometry
