@@ -1613,6 +1613,140 @@ Throughout this section \(k\) is a field, \(D, E\) are objects of \(\Over(\Spec 
   whisker family.
 \end{proof}
 
+\section{The base-field shuffle of the plus}
+\label{sec:PicEtAffBaseFieldShuffle}
+
+Throughout this section \(k \to L\) is a field extension, \(C\) is an object of
+\(\Over(\Spec k)\) with base change \(C_L \in \Over(\Spec L)\) (\ref{def:baseChange}),
+and \(A\) is an algebra in a scalar tower \(k \to L \to A\). The presented \'etale
+covers of \(A\) (Definition~\ref{def:etale_cover}) do not mention the base field, so the
+plus groups \(\mathrm{PicEtAff}(C, A)\) (formed over \(k\)) and
+\(\mathrm{PicEtAff}(C_L, A)\) (formed over \(L\)) are indexed by the \emph{same} covers.
+This section transports one to the other along the same-carrier comparison
+\(c_B \colon C_L \otimes \Spec B \to C \otimes \Spec B\) of
+Definition~\ref{def:crossBaseAffineIso} (Chapter~\ref{chap:Cohomology}), by
+instantiating the transport core of Definition~\ref{def:relPicTransportFamily} in both
+directions.
+
+\begin{definition}[The base-field shuffle of the plus]
+  \label{def:PicEtAff_baseFieldShuffle}
+  \lean{AlgebraicGeometry.crossBaseAffineIso_inv_naturality,
+    AlgebraicGeometry.crossBaseTransportFamily,
+    AlgebraicGeometry.crossBaseTransportFamilyInv,
+    AlgebraicGeometry.crossBaseTransportFamily_hom,
+    AlgebraicGeometry.crossBaseTransportFamilyInv_hom,
+    AlgebraicGeometry.PicEtAff.baseFieldShuffle,
+    AlgebraicGeometry.PicEtAff.baseFieldShuffle_apply,
+    AlgebraicGeometry.PicEtAff.baseFieldShuffle_symm_apply,
+    AlgebraicGeometry.PicEtAff.baseFieldShuffle_mk,
+    AlgebraicGeometry.PicEtAff.baseFieldShuffle_symm_mk}
+  \uses{def:relPicTransportFamily, def:PicEtAffTransport, thm:PicEtAffTransport_inverse,
+    def:crossBaseAffineIso, def:baseChange}
+  \leanok
+  The same-carrier comparisons \(B \mapsto c_B\) and \(B \mapsto c_B^{-1}\) are transport
+  families in the sense of Definition~\ref{def:relPicTransportFamily} — from \(C_L\) to
+  \(C\) with \((k_D, k_E, k_T) = (L, k, L)\), and from \(C\) to \(C_L\) with
+  \((k_D, k_E, k_T) = (k, L, L)\), respectively. The induced transports of the plus
+  (Definition~\ref{def:PicEtAffTransport}) are mutually inverse, and the resulting
+  isomorphism of groups is the \emph{base-field shuffle}
+  \[
+    \mathrm{Sh}_A \colon \mathrm{PicEtAff}(C, A) \xrightarrow{\ \cong\ }
+      \mathrm{PicEtAff}(C_L, A),
+    \qquad [F, \lambda] \longmapsto [F, c_{B_F}^{*}\lambda],
+  \]
+  transporting each descent-class representative on its own cover; its inverse is
+  \([F, \mu] \mapsto [F, (c_{B_F}^{-1})^{*}\mu]\).
+\end{definition}
+\begin{proof}
+  \leanok
+  \uses{lem:crossBaseAffineIso_snd, thm:crossBaseAffineIso_naturality}
+  Projection compatibility of both families is the compatibility of the comparison with
+  the two second projections onto the shared \(\Spec B\)
+  (\ref{lem:crossBaseAffineIso_snd}). Naturality of the forward family against a map
+  \(f \colon B \to B'\) of test algebras that is \(L\)-linear (hence \(k\)-linear through
+  the towers) is the naturality square of the comparison
+  (\ref{thm:crossBaseAffineIso_naturality}); naturality of the backward family follows by
+  composing that square with \(c_{B'}^{-1}\) on the left and \(c_B^{-1}\) on the right.
+  The two families are pointwise mutually inverse, so the induced transports of the plus
+  are mutually inverse isomorphisms by Theorem~\ref{thm:PicEtAffTransport_inverse}.
+\end{proof}
+
+\begin{theorem}[The shuffle restricts the relative Picard shuffle cover-wise]
+  \label{thm:PicEtAff_baseFieldShuffle_relPic}
+  \lean{AlgebraicGeometry.crossBaseTransportFamily_relPicHom,
+    AlgebraicGeometry.crossBaseTransportFamilyInv_relPicHom,
+    AlgebraicGeometry.PicEtAff.crossBaseTransportFamily_descentHom_coe,
+    AlgebraicGeometry.PicEtAff.crossBaseTransportFamilyInv_descentHom_coe}
+  \uses{def:PicEtAff_baseFieldShuffle, def:relPicCrossBase, def:relPicTransport}
+  \leanok
+  The relative Picard transports induced by the two families of
+  Definition~\ref{def:PicEtAff_baseFieldShuffle} are the base-field shuffle
+  \(\mathrm{sh}\) of relative Picard classes and its inverse
+  (Definition~\ref{def:relPicCrossBase}): for every presented \'etale cover \(F\) of
+  \(A\) with carrier \(B_F\) and every descent class
+  \(\lambda \in \mathrm{Desc}(C, F)\),
+  \(c_{B_F}^{*}\lambda = \mathrm{sh}_{B_F}(\lambda)\) in
+  \(\mathrm{relPic}_L(C_L, B_F)\), and symmetrically
+  \((c_{B_F}^{-1})^{*}\mu = \mathrm{sh}'_{B_F}(\mu)\) for
+  \(\mu \in \mathrm{Desc}(C_L, F)\). In particular every statement about the relative
+  Picard shuffle — notably its degree invariance at field tests — applies verbatim to
+  the descent-class representatives of the plus shuffle.
+\end{theorem}
+\begin{proof}
+  \leanok
+  Both transports are defined as descent of pullback along the same morphism \(c_{B_F}\)
+  (resp.\ \(c_{B_F}^{-1}\)) of the same product carriers to the same quotients
+  (Definition~\ref{def:relPicTransport} at the comparison family, and
+  Definition~\ref{def:relPicCrossBase}); they agree on every coset by their shared
+  computation rule.
+\end{proof}
+
+\begin{theorem}[Laws of the base-field shuffle]
+  \label{thm:PicEtAff_baseFieldShuffle_laws}
+  \lean{AlgebraicGeometry.PicEtAff.baseFieldShuffle_mk_eq_mk,
+    AlgebraicGeometry.PicEtAff.baseFieldShuffle_symm_mk_eq_mk,
+    AlgebraicGeometry.PicEtAff.baseFieldShuffle_unit,
+    AlgebraicGeometry.PicEtAff.baseFieldShuffle_symm_unit,
+    AlgebraicGeometry.PicEtAff.map_baseFieldShuffle,
+    AlgebraicGeometry.PicEtAff.map_baseFieldShuffle_symm,
+    AlgebraicGeometry.PicEtAff.mapAlg_baseFieldShuffle,
+    AlgebraicGeometry.PicEtAff.mapAlg_baseFieldShuffle_symm}
+  \uses{def:PicEtAff_baseFieldShuffle, def:PicEtAff_unit, def:PicEtAff_map,
+    thm:PicEtAff_baseFieldShuffle_relPic}
+  \leanok
+  The base-field shuffle transports identifications of representatives: if
+  \((F, \lambda)\) and \((F', \lambda')\) represent the same class of
+  \(\mathrm{PicEtAff}(C, A)\), then \((F, c_{B_F}^{*}\lambda)\) and
+  \((F', c_{B_{F'}}^{*}\lambda')\) represent the same class of
+  \(\mathrm{PicEtAff}(C_L, A)\), and symmetrically for the inverse. It is compatible
+  with the units of the two plus constructions,
+  \(\mathrm{Sh}_A \circ \eta_A = \eta_A \circ \mathrm{sh}_A\) and
+  \(\mathrm{Sh}_A^{-1} \circ \eta_A = \eta_A \circ \mathrm{sh}'_A\), and it commutes
+  with restriction of the test: for every homomorphism \(\tau \colon A \to A'\) of
+  algebras in scalar towers \(k \to L \to A\), \(k \to L \to A'\) that is \(L\)-linear
+  (hence \(k\)-linear),
+  \(\tau^{*} \circ \mathrm{Sh}_A = \mathrm{Sh}_{A'} \circ \tau^{*}\) and
+  \(\tau^{*} \circ \mathrm{Sh}_A^{-1} = \mathrm{Sh}_A^{-1} \circ \tau^{*}\), where the
+  restrictions are formed over \(L\) on the \(C_L\)-side and over \(k\) on the
+  \(C\)-side.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:PicEtAffTransport_unit, thm:PicEtAffTransport_map,
+    thm:relPicCrossBase_relPicAlgMap}
+  Transport of identifications holds because the shuffle is well defined on the plus and
+  computes cover-wise on representatives
+  (Definition~\ref{def:PicEtAff_baseFieldShuffle}): apply \(\mathrm{Sh}_A\) to the equal
+  classes and read off the representatives. Unit compatibility is
+  Theorem~\ref{thm:PicEtAffTransport_unit} at the two comparison families, with the
+  relative Picard transports identified by
+  Theorem~\ref{thm:PicEtAff_baseFieldShuffle_relPic}. The restriction squares are
+  Theorem~\ref{thm:PicEtAffTransport_map} at the two families, applied to \(\tau\)
+  regarded simultaneously as a \(k\)- and an \(L\)-algebra map; on relative Picard
+  representatives they restrict to the naturality square of the relative Picard shuffle
+  (\ref{thm:relPicCrossBase_relPicAlgMap}).
+\end{proof}
+
 \section{Separatedness I: pullback along the projection is injective}
 
 The plus construction of the preceding sections is a legitimate computation of the \'etale
