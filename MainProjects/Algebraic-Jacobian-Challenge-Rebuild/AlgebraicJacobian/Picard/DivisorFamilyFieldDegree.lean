@@ -250,7 +250,134 @@ lemma finrank_colength_eq_sum (j : A.index) :
       Nat.cast_zero,
       Finset.filter_false_of_mem fun p _ hp => by simpa using hbot hp, Finset.sum_empty]
 
+/-- Where a piece equation `f_j` is a unit at a closed point `z ∈ D(h_j)`, the divisor coefficient
+there vanishes: the order of `f_j` at `z` is trivial (`isUnit_germ_iff_ordZ_eq_one`), and that order
+is the coefficient (`coeffAt_eq_toAdd_ordZ_eqn`). -/
+lemma coeffAt_eq_zero_of_isUnit_germ (j : A.index) {z : relCurve C K} (hz : z ∈ A.pieces j)
+    (hzg : z ≠ genericPoint (relCurve C K))
+    (hu : IsUnit (((relCurve C K).presheaf.germ (A.pieces j) z hz).hom (A.eqn j))) :
+    coeffAt hzg (Scheme.presentationDivisor K d.presentation) = 0 := by
+  have hηj : genericPoint (relCurve C K) ∈ A.pieces j :=
+    Scheme.genericPoint_mem_of_nonempty ⟨z, hz⟩
+  have hne : ((relCurve C K).presheaf.germ (A.pieces j) (genericPoint (relCurve C K)) hηj).hom
+      (A.eqn j) ≠ 0 :=
+    mem_nonZeroDivisors_iff_ne_zero.mp (A.eqn_regular j (genericPoint (relCurve C K)) hηj)
+  set gⱼ : (relCurve C K).functionFieldˣ := Units.mk0 _ hne with hgⱼdef
+  have hg : (gⱼ : (relCurve C K).functionField)
+      = ((relCurve C K).presheaf.germ (A.pieces j) (genericPoint (relCurve C K)) hηj).hom
+          (A.eqn j) := rfl
+  have hord : Scheme.ordZ (relCurve C K ↘ Spec (CommRingCat.of K)) hzg gⱼ = 1 :=
+    (Scheme.isUnit_germ_iff_ordZ_eq_one K hηj (A.eqn j) gⱼ hg hz hzg).mp hu
+  have h1 := A.coeffAt_eq_toAdd_ordZ_eqn j hz hzg gⱼ hg
+  rw [hord, toAdd_one] at h1
+  exact h1.symm
+
+omit [IsIntegral (relCurve C K)]
+  [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))] in
+/-- **Overlap vanishing from separation.** If each piece equation is a unit at every point of each
+overlap (the support-separation hypothesis), the overlap colength modules vanish: the restricted
+equation is a unit section (`isUnit_of_isUnit_germ`), so the overlap ideal is the unit ideal. This
+supplies the input to `finrank_glued_eq_sum_of_separated`. -/
+lemma subsingleton_ovlColength_of_sep
+    (hsep : ∀ i j : A.index, i ≠ j → ∀ (z : relCurve C K) (hzi : z ∈ A.pieces i),
+      z ∈ A.pieces j → IsUnit (((relCurve C K).presheaf.germ (A.pieces i) z hzi).hom (A.eqn i)))
+    (i j : A.index) (hij : i ≠ j) : Subsingleton (A.ovlColength i j) := by
+  have hunit : IsUnit (relResAlgHom C K
+      (inf_le_left : A.pieces i ⊓ A.pieces j ≤ A.pieces i) (A.eqn i)) := by
+    rw [relResAlgHom_apply]
+    apply (relCurve C K).toRingedSpace.isUnit_of_isUnit_germ
+    intro z hz
+    rw [(relCurve C K).presheaf.germ_res_apply]
+    exact hsep i j hij z hz.1 hz.2
+  have htop : A.ovlIdeal i j = ⊤ :=
+    Ideal.eq_top_of_isUnit_mem _ (Ideal.subset_span (Set.mem_insert _ _)) hunit
+  exact (Ideal.Quotient.subsingleton_iff).mpr htop
+
+open scoped Classical in
+/-- **The colength↔degree identity, support-separated case** (`informal/spec-dd-1.md` §3 (f), the
+DD-1c degree half). For a certified divisor adaptation over the field `K` whose pieces are
+*support-separated* (each piece equation `f_i` is a unit at every point of every overlap), the
+degree of the presentation divisor equals the `K`-dimension of the glued equalizer `W(d)`:
+
+`deg K D = finrank K W(d)`.
+
+Assembly: separation collapses the equalizer to the product of chart-local colengths
+(`finrank_glued_eq_sum_of_separated` via `subsingleton_ovlColength_of_sep`); each colength reads the
+local degree (`finrank_colength_eq_sum`); and, because the pieces cover the curve (`relCover_sup`,
+`cover₀`/`cover₁`) with each supported point in a *unique* piece (separation forces the coefficient
+to vanish on overlaps), the double sum over pieces collapses to the full-support degree sum. -/
+theorem deg_presentationDivisor_eq_finrank_glued
+    (hsep : ∀ i j : A.index, i ≠ j → ∀ (z : relCurve C K) (hzi : z ∈ A.pieces i),
+      z ∈ A.pieces j → IsUnit (((relCurve C K).presheaf.germ (A.pieces i) z hzi).hom (A.eqn i)))
+    (hfin : ∀ j : A.index, Module.Finite K (A.colength j)) :
+    Scheme.CurveDivisor.deg K (Scheme.presentationDivisor K d.presentation)
+      = (finrank K A.Glued : ℤ) := by
+  classical
+  have hW : (finrank K A.Glued : ℤ) = ∑ j : A.index, (finrank K (A.colength j) : ℤ) := by
+    rw [A.finrank_glued_eq_sum_of_separated hfin
+      (fun i j hij => A.subsingleton_ovlColength_of_sep hsep i j hij), Nat.cast_sum]
+  -- the inner collapse: each supported point lies in a unique piece
+  have hinner : ∀ p ∈ (Scheme.presentationDivisor K d.presentation).support,
+      (∑ j : A.index, if p.1 ∈ A.pieces j then
+        coeffAt p.2 (Scheme.presentationDivisor K d.presentation)
+          * ((relCurve C K).residueDeg K p.1 : ℤ) else 0)
+        = coeffAt p.2 (Scheme.presentationDivisor K d.presentation)
+          * ((relCurve C K).residueDeg K p.1 : ℤ) := by
+    intro p hp
+    obtain ⟨j₀, hj₀⟩ : ∃ j : A.index, p.1 ∈ A.pieces j := by
+      have hle : (⊤ : (relCurve C K).Opens) ≤ ⨆ j : A.index, A.pieces j := by
+        rw [← relCover_sup C K (fiberTwoCover π)]
+        exact sup_le (A.cover₀.trans (iSup_le fun j => le_iSup (fun i => A.pieces i) (Sum.inl j)))
+          (A.cover₁.trans (iSup_le fun j => le_iSup (fun i => A.pieces i) (Sum.inr j)))
+      exact TopologicalSpace.Opens.mem_iSup.mp (hle (TopologicalSpace.Opens.mem_top p.1))
+    have huniq : ∀ b : A.index, p.1 ∈ A.pieces b → b = j₀ := by
+      intro b hb
+      by_contra hbne
+      exact (Finsupp.mem_support_iff.mp hp)
+        (A.coeffAt_eq_zero_of_isUnit_germ b hb p.2 (hsep b j₀ hbne p.1 hb hj₀))
+    rw [Finset.sum_eq_single j₀ (fun b _ hbne => if_neg fun hb => hbne (huniq b hb))
+      (fun h => absurd (Finset.mem_univ j₀) h), if_pos hj₀]
+  calc Scheme.CurveDivisor.deg K (Scheme.presentationDivisor K d.presentation)
+      = ∑ p ∈ (Scheme.presentationDivisor K d.presentation).support,
+          coeffAt p.2 (Scheme.presentationDivisor K d.presentation)
+            * ((relCurve C K).residueDeg K p.1 : ℤ) :=
+        Finset.sum_congr rfl fun p _ => rfl
+    _ = ∑ p ∈ (Scheme.presentationDivisor K d.presentation).support,
+          ∑ j : A.index, if p.1 ∈ A.pieces j then
+            coeffAt p.2 (Scheme.presentationDivisor K d.presentation)
+              * ((relCurve C K).residueDeg K p.1 : ℤ) else 0 :=
+        Finset.sum_congr rfl fun p hp => (hinner p hp).symm
+    _ = ∑ j : A.index, ∑ p ∈ (Scheme.presentationDivisor K d.presentation).support.filter
+          (fun p => p.1 ∈ A.pieces j),
+            coeffAt p.2 (Scheme.presentationDivisor K d.presentation)
+              * ((relCurve C K).residueDeg K p.1 : ℤ) := by
+        rw [Finset.sum_comm]; simp_rw [Finset.sum_filter]
+    _ = ∑ j : A.index, (finrank K (A.colength j) : ℤ) :=
+        Finset.sum_congr rfl fun j _ => (A.finrank_colength_eq_sum j).symm
+    _ = (finrank K A.Glued : ℤ) := hW.symm
+
 end DivisorAdaptation
+
+variable {n : ℕ}
+
+open scoped Classical in
+/-- **The degree of a support-separated certified family is its rank** (`informal/spec-dd-1.md` §3
+(f)): combining the geometric colength↔degree identity
+(`DivisorAdaptation.deg_presentationDivisor_eq_finrank_glued`) with the field half of the
+certificate (`DivisorAdaptation.IsCertified.finrank_glued`, `finrank K W(d) = n`), the forward
+divisor of a certified family with a support-separated adaptation has degree exactly `n`. This is
+the identity the DD-1c backward map consumes (its adaptations isolate the support points, so they
+are support-separated by construction). -/
+theorem deg_divFamDivisor_of_separated {F : CertifiedDivisorFamily C K π n}
+    (hsep : ∀ i j : F.adaptation.index, i ≠ j → ∀ (z : relCurve C K)
+      (hzi : z ∈ F.adaptation.pieces i), z ∈ F.adaptation.pieces j →
+      IsUnit (((relCurve C K).presheaf.germ (F.adaptation.pieces i) z hzi).hom
+        (F.adaptation.eqn i))) :
+    Scheme.CurveDivisor.deg K (divFamDivisor (DivFam.mk F)) = (n : ℤ) := by
+  rw [divFamDivisor_mk,
+    F.adaptation.deg_presentationDivisor_eq_finrank_glued hsep F.certified.finite_colength,
+    F.certified.finrank_glued]
 
 end Degree
 
