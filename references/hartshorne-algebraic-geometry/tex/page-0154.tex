@@ -1,0 +1,77 @@
+% source: Robin Hartshorne, "Algebraic Geometry", GTM 52 (1977)
+% pdf_page: 0154
+% doc_page: 137 (Chapter II, Section 6, "Divisors")
+% retrieved: 2026-07-17
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi via pdftoppm)
+
+% running head: 6 Divisors / p. 137
+
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\Cl}{Cl}
+
+% Proof of Proposition (II, 6.7); the statement is on the previous page (doc p. 136).
+\begin{proof}
+(i) $\Rightarrow$ (ii) follows from (4.9).
+
+(ii) $\Rightarrow$ (iii). If $X$ is complete, then every discrete valuation
+ring of $K/k$ has a unique center on $X$ (Ex.\ 4.5). Since the local rings of
+$X$ at the closed points are all discrete valuation rings, this implies that
+the closed points of $X$ are in 1-1 correspondence with the discrete
+valuation rings of $K/k$, namely the points of $C_K$. Thus it is clear that
+$X \cong t(C_K)$.
+
+(iii) $\Rightarrow$ (i) follows from (I, 6.9).
+\end{proof}
+
+\begin{proposition}[6.8]
+Let $X$ be a complete nonsingular curve over $k$, let $Y$ be any curve over
+$k$, and let $f\colon X \to Y$ be a morphism. Then either (1) $f(X) =$ a
+point, or (2) $f(X) = Y$. In case (2), $K(X)$ is a finite extension field of
+$K(Y)$, $f$ is a finite morphism, and $Y$ is also complete.
+\end{proposition}
+
+\begin{proof}
+Since $X$ is complete, $f(X)$ must be closed in $Y$, and proper over
+$\Spec k$ (Ex.\ 4.4). On the other hand, $f(X)$ is irreducible. Thus either
+(1) $f(X) = pt$, or (2) $f(X) = Y$, and in case (2), $Y$ is also complete.
+
+In case (2), $f$ is dominant, so it induces an inclusion $K(Y) \subseteq
+K(X)$ of function fields. Since both fields are finitely generated extension
+fields of transcendence degree 1 of $k$, $K(X)$ must be a finite algebraic
+extension of $K(Y)$. To show that $f$ is a finite morphism, let $V = \Spec B$
+be any open affine subset of $Y$. Let $A$ be the integral closure of $B$ in
+$K(X)$. Then $A$ is a finite $B$-module (I, 3.9A), and $\Spec A$ is
+isomorphic to an open subset $U$ of $X$ (I, 6.7). Clearly $U = f^{-1}V$, so
+this shows that $f$ is a finite morphism.
+\end{proof}
+
+\begin{definition}
+If $f\colon X \to Y$ is a finite morphism of curves, we define the
+\emph{degree} of $f$ to be the degree of the field extension
+$[K(X)\colon K(Y)]$.
+\end{definition}
+
+Now we come to the study of divisors on curves. If $X$ is a nonsingular
+curve, then $X$ satisfies the condition $(*)$ used above, so we can talk
+about divisors on $X$. A prime divisor is just a closed point, so an
+arbitrary divisor can be written $D = \sum n_i P_i$, where the $P_i$ are
+closed points, and $n_i \in \mathbf{Z}$. We define the \emph{degree} of $D$
+to be $\sum n_i$.
+
+\begin{definition}
+If $f\colon X \to Y$ is a finite morphism of nonsingular curves, we define a
+homomorphism $f^*\colon \Div Y \to \Div X$ as follows. For any point
+$Q \in Y$, let $t \in \mathcal{O}_Q$ be a \emph{local parameter} at $Q$,
+i.e., $t$ is an element of $K(Y)$ with $v_Q(t) = 1$, where $v_Q$ is the
+valuation corresponding to the discrete valuation ring $\mathcal{O}_Q$. We
+define $f^*Q = \sum_{f(P) = Q} v_P(t) \cdot P$. Since $f$ is a finite
+morphism, this is a finite sum, so we get a divisor on $X$. Note that $f^*Q$
+is independent of the choice of the local parameter $t$. Indeed, if $t'$ is
+another local parameter at $Q$, then $t' = ut$ where $u$ is a unit in
+$\mathcal{O}_Q$. For any point $P \in X$ with $f(P) = Q$, $u$ will be a unit
+in $\mathcal{O}_P$, so $v_P(t) = v_P(t')$. We extend the definition by
+linearity to all divisors on $Y$. One sees easily that $f^*$ preserves
+linear equivalence, so it induces a homomorphism
+$f^*\colon \Cl Y \to \Cl X$.
+\end{definition}

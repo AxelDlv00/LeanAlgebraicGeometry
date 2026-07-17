@@ -1,0 +1,81 @@
+% source: Robin Hartshorne, "Algebraic Geometry", GTM 52 (1977)
+% pdf_page: 0155
+% doc_page: 138 (Chapter II, Section 6, "Divisors")
+% retrieved: 2026-07-17
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi via pdftoppm)
+
+% running head: II Schemes / p. 138
+
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\Cl}{Cl}
+
+\begin{proposition}[6.9]
+Let $f\colon X \to Y$ be a finite morphism of nonsingular curves. Then for
+any divisor $D$ on $Y$ we have $\deg f^*D = \deg f \cdot \deg D$.
+\end{proposition}
+
+\begin{proof}
+It will be sufficient to show that for any closed point $Q \in Y$ we have
+$\deg f^*Q = \deg f$. Let $V = \Spec B$ be an open affine subset of $Y$
+containing $Q$. Let $A$ be the integral closure of $B$ in $K(X)$. Then, as
+in the proof of (6.8), $U = \Spec A$ is the open subset $f^{-1}V$ of $X$.
+Let $\mathfrak{m}_Q$ be the maximal ideal of $Q$ in $B$. We localize both
+$B$ and $A$ with respect to the multiplicative system
+$S = B - \mathfrak{m}_Q$, and we obtain a ring extension
+$\mathcal{O}_Q \hookrightarrow A'$, where $A'$ is a finitely generated
+$\mathcal{O}_Q$-module. Now $A'$ is torsion-free, and has rank equal to
+$r = [K(X)\colon K(Y)]$, so $A'$ is a free $\mathcal{O}_Q$-module of rank
+$r = \deg f$. If $t$ is a local parameter at $Q$, it follows that $A'/tA'$
+is a $k$-vector space of dimension $r$.
+
+On the other hand, the points $P_i$ of $X$ such that $f(P_i) = Q$ are in
+1-1 correspondence with the maximal ideals $\mathfrak{m}_i$ of $A'$, and for
+each $i$, $A'_{\mathfrak{m}_i} = \mathcal{O}_{P_i}$. Clearly
+$tA' = \bigcap_i (tA'_{\mathfrak{m}_i} \cap A')$, so by the Chinese
+remainder theorem,
+\[
+  \dim_k A'/tA' = \sum_i \dim_k A'/(tA'_{\mathfrak{m}_i} \cap A').
+\]
+But
+\[
+  A'/(tA'_{\mathfrak{m}_i} \cap A') \cong
+  A'_{\mathfrak{m}_i}/tA'_{\mathfrak{m}_i} =
+  \mathcal{O}_{P_i}/t\mathcal{O}_{P_i},
+\]
+so the dimensions in the sum above are just equal to $v_{P_i}(t)$. But
+$f^*Q = \sum v_{P_i}(t) \cdot P_i$, so we have shown that
+$\deg f^*Q = \deg f$ as required.
+\end{proof}
+
+\begin{corollary}[6.10]
+A principal divisor on a complete nonsingular curve $X$ has degree zero.
+Consequently the degree function induces a surjective homomorphism
+$\deg\colon \Cl X \to \mathbf{Z}$.
+\end{corollary}
+
+\begin{proof}
+Let $f \in K(X)^*$. If $f \in k$, then $(f) = 0$, so there is nothing to
+prove. If $f \notin k$, then the inclusion of fields
+$k(f) \subseteq K(X)$ induces a finite morphism
+$\varphi\colon X \to \mathbf{P}^1$. It is a morphism by (I, 6.12), and it is
+finite by (6.8). Now $(f) = \varphi^*(\{0\} - \{\infty\})$. Since
+$\{0\} - \{\infty\}$ is a divisor of degree 0 on $\mathbf{P}^1$, we conclude
+that $(f)$ has degree 0 on $X$.
+
+Thus the degree of a divisor on $X$ depends only on its linear equivalence
+class, and we obtain a homomorphism $\Cl X \to \mathbf{Z}$ as stated. It is
+surjective, because the degree of a single point is 1.
+\end{proof}
+
+\begin{example}[6.10.1]
+A complete nonsingular curve $X$ is rational if and only if there exist two
+distinct points $P,Q \in X$ with $P \sim Q$. Recall that \emph{rational}
+means birational to $\mathbf{P}^1$. If $X$ is rational, then in fact it is
+isomorphic to $\mathbf{P}^1$ by (6.7). And on $\mathbf{P}^1$ we have already
+seen that any two points are linearly equivalent (6.4). Conversely, suppose
+$X$ has two points $P \neq Q$ with $P \sim Q$. Then there is a rational
+function $f \in K(X)$ with $(f) = P - Q$. Consider the morphism
+$\varphi\colon X \to \mathbf{P}^1$ determined by $f$ as in the proof of
+(6.10). We have $\varphi^*(\{0\}) = P$, so $\varphi$ must be a morphism of
+degree 1. In other words, $\varphi$ is birational, so $X$ is rational.
+\end{example}

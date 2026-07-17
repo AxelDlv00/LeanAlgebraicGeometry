@@ -1,0 +1,70 @@
+% source: Robin Hartshorne, "Algebraic Geometry", GTM 52 (1977)
+% pdf_page: 0316
+% doc_page: 299 (Chapter IV, Section 2, "Hurwitz's Theorem")
+% retrieved: 2026-07-17
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi via pdftoppm)
+
+% running head: 2 Hurwitz's Theorem / p. 299
+
+\DeclareMathOperator{\Div}{Div}
+\DeclareMathOperator{\Pic}{Pic}
+% \mathscr (script L, as printed for invertible sheaves) requires mathrsfs.
+
+% Last exercise of the Section 1 exercises (continued from the previous page's
+% exercise list).
+\begin{exercise}[1.10]
+Let $X$ be an integral projective scheme of dimension 1 over $k$, which is
+locally complete intersection, and has $p_a = 1$. Fix a point
+$P_0 \in X_{\mathrm{reg}}$. Imitate (1.3.7) to show that the map
+$P \to \mathscr{L}(P - P_0)$ gives a one-to-one correspondence between the
+points of $X_{\mathrm{reg}}$ and the elements of the group $\Pic X$. This
+generalizes (II, 6.11.4) and (II, Ex.\ 6.7).
+\end{exercise}
+
+\section*{2 Hurwitz's Theorem}
+
+In this section we consider a finite morphism of curves $f\colon X \to Y$,
+and study the relation between their canonical divisors. The resulting
+formula involving the genus of $X$, the genus of $Y$, and the number of
+ramification points is called Hurwitz's theorem.
+
+Recall that the \emph{degree} of a finite morphism $f\colon X \to Y$ of
+curves is defined to be the degree $[K(X)\colon K(Y)]$ of the extension of
+function fields (II, \S 6).
+
+For any point $P \in X$ we define the \emph{ramification index} $e_P$ as
+follows. Let $Q = f(P)$, let $t \in \mathcal{O}_Q$ be a local parameter at
+$Q$, consider $t$ as an element of $\mathcal{O}_P$ via the natural map
+$f^\#\colon \mathcal{O}_Q \to \mathcal{O}_P$, and define
+\[
+  e_P = v_P(t),
+\]
+where $v_P$ is the valuation associated to the valuation ring
+$\mathcal{O}_P$. If $e_P > 1$ we say $f$ is \emph{ramified} at $P$, and that
+$Q$ is a \emph{branch point} of $f$ (Fig.\ 13). If $e_P = 1$, we say $f$ is
+\emph{unramified} at $P$. This definition is consistent with the earlier
+definition of unramified (III, Ex.\ 10.3) since our groundfield $k$ is
+algebraically closed, and so $k(P) = k(Q)$ for any point $P$ of $X$. In
+particular, if $f$ is unramified everywhere, it is \'etale, because in any
+case it is flat by (III, 9.7).
+
+% Figure: a wavy curve (labeled X) drawn vertically at left, with a point P
+% marked at a local extremum where a dashed horizontal line is tangent to the
+% curve; a short horizontal arrow labeled f points right to a vertical line
+% (labeled Y) carrying a point Q at the level of the dashed line.
+% Caption:
+% Figure 13. A finite morphism of curves.
+
+If $\operatorname{char} k = 0$, or if $\operatorname{char} k = p$, and $p$
+does not divide $e_P$, we say that the ramification is \emph{tame}. If $p$
+does divide $e_P$, it is \emph{wild}.
+
+Recall that we have defined a homomorphism
+$f^*\colon \Div Y \to \Div X$ of the groups of divisors, by setting
+\[
+  f^*(Q) = \sum_{P \to Q} e_P \cdot P
+\]
+for any point $Q$ of $Y$, and extending by linearity (II, \S 6). If $D$ is a
+divisor on $Y$, then $f^*(\mathscr{L}(D)) \cong \mathscr{L}(f^*D)$
+(II, Ex.\ 6.8), so that this $f^*$ on divisors is compatible with the
+homomorphism $f^*\colon \Pic Y \to \Pic X$ on invertible sheaves.

@@ -78,8 +78,11 @@ references:
     files:
       - { path: hartshorne-algebraic-geometry.pdf, format: pdf }
       - { path: hartshorne-algebraic-geometry.md, format: md }
+      - { path: hartshorne-algebraic-geometry/tex/page-0154.tex, format: tex }
+      - { path: hartshorne-algebraic-geometry/tex/page-0155.tex, format: tex }
       - { path: hartshorne-algebraic-geometry/tex/page-0242.tex, format: tex }
       - { path: hartshorne-algebraic-geometry/tex/page-0243.tex, format: tex }
+      - { path: hartshorne-algebraic-geometry/tex/page-0316.tex, format: tex }
     read: >-
       PDF; blueprints cite e.g. II Ex 5.17. NOTE: some blueprints cite the
       stale alias references/hartshorne-ag.md which does not exist -- use
@@ -108,7 +111,65 @@ references:
       module finite over it via a finite morphism, with the monomial
       bookkeeping abstracted into the two-lattice ladder of the Algebra
       chapter (which cites the same pages).
-    topics: [schemes, sheaves, cohomology, curves, divisors, projective-space, cech-cohomology, two-lattice, monomial-ladder]
+      PAGES 154-155 AND 316 (printed pp. 137-138 and 299; page_offset: printed
+      page N -> PDF page N+17, re-verified on the printed page numbers this
+      pass) transcribed 2026-07-17 via vision from rendered pages (pdftoppm
+      200dpi, no OCR), one self-contained LaTeX file per page under
+      hartshorne-algebraic-geometry/tex/ (Wave-7 E-v gate: the classical
+      degree-of-pullback statement, w7-ev-worksheet.md section 4). Statement
+      map -- p. 137 (page-0154), II.6 "Divisors": tail of the proof of
+      Proposition 6.7 ((i)=>(ii) by (4.9); closed points of a complete
+      nonsingular curve in 1-1 correspondence with the DVRs of K/k, X ~=
+      t(C_K); (iii)=>(i) by (I, 6.9)); PROPOSITION II.6.8 (X complete
+      nonsingular curve over k, Y any curve, f : X -> Y a morphism => either
+      (1) f(X) = a point, or (2) f(X) = Y; in case (2), K(X) is a finite
+      extension field of K(Y), f is a FINITE morphism, and Y is also
+      complete) with full proof (integral closure A of B in K(X) is a finite
+      B-module (I, 3.9A), Spec A ~= open U of X (I, 6.7), U = f^{-1}V);
+      DEFINITION of the degree of a finite morphism of curves =
+      [K(X):K(Y)]; the divisors-on-curves paragraph (D = sum n_i P_i,
+      deg D = sum n_i); DEFINITION of f^* : Div Y -> Div X via a local
+      parameter t at Q (t in K(Y), v_Q(t) = 1): f^*Q = sum_{f(P)=Q}
+      v_P(t) . P -- a finite sum since f is finite -- WELL-DEFINED
+      (independent of t: t' = ut with u a unit in O_Q, hence a unit in each
+      O_P, so v_P(t) = v_P(t')), extended by linearity; f^* preserves linear
+      equivalence, inducing f^* : Cl Y -> Cl X. p. 138 (page-0155):
+      PROPOSITION II.6.9 (f : X -> Y finite morphism of nonsingular curves
+      => for any divisor D on Y, deg f^*D = deg f . deg D) with full proof
+      (reduce to D = Q closed point; localize B and its integral closure A
+      at S = B - m_Q to get O_Q -> A' finitely generated, torsion-free of
+      rank r = [K(X):K(Y)], hence A' free of rank r = deg f and dim_k A'/tA'
+      = r for t a local parameter; the P_i over Q correspond 1-1 to the
+      maximal ideals m_i of A' with A'_{m_i} = O_{P_i}; tA' = intersect_i
+      (tA'_{m_i} cap A') and the Chinese remainder theorem splits dim_k
+      A'/tA' = sum_i dim_k A'/(tA'_{m_i} cap A') with each summand
+      = dim_k O_{P_i}/tO_{P_i} = v_{P_i}(t), and f^*Q = sum v_{P_i}(t).P_i);
+      COROLLARY II.6.10 (a principal divisor on a complete nonsingular curve
+      has degree zero; deg : Cl X -> Z surjective) with proof (f not in k
+      gives phi : X -> P^1, a morphism by (I, 6.12), finite by (6.8), and
+      (f) = phi^*({0} - {infty})); EXAMPLE 6.10.1 (X rational iff there are
+      two distinct points P ~ Q). p. 299 (page-0316), IV.2 "Hurwitz's
+      Theorem" opening: Exercise 1.10 tail; recall deg f = [K(X):K(Y)]
+      (II, section 6); DEFINITION of the ramification index e_P = v_P(t)
+      via f^# : O_Q -> O_P; ramified/branch point/unramified (consistent
+      with (III, Ex. 10.3) since k algebraically closed; unramified
+      everywhere => etale, flat by (III, 9.7)); tame/wild; Figure 13;
+      recall f^*(Q) = sum_{P -> Q} e_P . P (II, section 6) and the
+      compatibility f^*(L(D)) ~= L(f^*D) -- printed citation is
+      "(II, Ex. 6.8)" -- making f^* on divisors compatible with
+      f^* : Pic Y -> Pic X. CHAPTER-IV ALTERNATE for the degree statement
+      ("II.6.9/IV"): there is NO separately numbered Chapter-IV degree
+      proposition; IV.2 recalls the II.6 machinery on printed p. 299
+      (transcribed as page-0316) and degree multiplicativity is consumed in
+      the proof of COROLLARY IV.2.4 (Hurwitz: 2g(X) - 2 = n(2g(Y) - 2)
+      + deg R, n = deg f), printed p. 301 = PDF page 318, whose proof cites
+      "f^* multiplies degrees by n (II, 6.9)" verbatim (located this pass,
+      NOT transcribed -- named follow-up if IV.2.3/IV.2.4 text is ever
+      needed; PROPOSITION IV.2.3 K_X ~ f^*K_Y + R sits on the same printed
+      p. 301). Cite as hartshorne-algebraic-geometry:page-0154,
+      hartshorne-algebraic-geometry:page-0155,
+      hartshorne-algebraic-geometry:page-0316.
+    topics: [schemes, sheaves, cohomology, curves, divisors, projective-space, cech-cohomology, two-lattice, monomial-ladder, finite-morphism, degree-of-divisor, pullback-of-divisors, ramification, hurwitz]
 
   - slug: mumford-abelian-varieties
     title: "Abelian Varieties"
