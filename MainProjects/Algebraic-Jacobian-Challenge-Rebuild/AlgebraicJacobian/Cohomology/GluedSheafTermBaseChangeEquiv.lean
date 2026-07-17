@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Cohomology.GluedSheafTermBaseChange
+import AlgebraicJacobian.Cohomology.RelativeH1BaseChange
 
 /-!
 # Chart-term base change of the glued sheaf, on the nose (DAT-1, stage 1d-ii, terms —
@@ -298,8 +299,172 @@ theorem termBaseChange_bijective
     exact termPieceLocalized B' D V σ h hVaff hVaff' hq hq' hP (hmem gg).choose
   refine IsLocalizedModule.bijective_of_comp_eq
     (Submonoid.powers (gg.1 :
-      Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V))) _ _ _ ?_
+      Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V)))
+    (TensorProduct.map
+      ((Algebra.linearMap Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V)
+        Γ(relCurve C B', (relCurve C B').basicOpen
+          (termFamily B' V h (hmem gg).choose))).restrictScalars
+            Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V))
+      (Scheme.QcohOn.secResₗ (F := D.sheaf)
+        ((relCurve C B).basicOpen_le (h (hmem gg).choose))
+        (le_refl ((fst C (overSpec k B)).left ⁻¹ᵁ V))))
+    (((Scheme.QcohOn.secResₗ (F := (D.baseChange B').sheaf)
+        ((relCurve C B').basicOpen_le (termFamily B' V h (hmem gg).choose))
+        (le_refl ((fst C (overSpec k B')).left ⁻¹ᵁ V))).restrictScalars
+          Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V)) ∘ₗ
+      ((LinearMap.liftBaseChange Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V)
+        (sectionsMapₗ B' D V hq hq')).restrictScalars
+          Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V)))
+    _ ?_
   exact LinearMap.ext fun x => IsLocalizedModule.map_apply _ _ _ _ x
+
+set_option maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- **The on-the-nose chart-term base change** (stage 1d-ii): on a pinned chart `V`
+carrying a finite subordinate trivializing basic-open family, the glued sections of the
+base-changed datum are, `B'`-linearly, the base change of the glued sections,
+
+`B' ⊗[B] F_D(V_B) ≃ₗ[B'] F_{D'}(V_{B'})`.
+
+Assembled from `IsBaseChange.tensorProduct_mk_one` (base change in stages, along the
+landed chart-ring comparison `relTermBaseChange`) and the bijective comparison
+`termBaseChange_bijective`: the chart-ring `A' = Γ(V_{B'})` is the base change of
+`A = Γ(V_B)` along `B → B'`, so `B' ⊗[B] F(V_B) ≃ A' ⊗[A] F(V_B)`, and the latter is
+`F'(V_{B'})` by `termBaseChange_bijective`. -/
+noncomputable def termBaseChange
+    (hV : IsCompact (V : Set C.left)) (hV' : IsQuasiSeparated (V : Set C.left))
+    (hVaff : IsAffineOpen ((fst C (overSpec k B)).left ⁻¹ᵁ V))
+    (hVaff' : IsAffineOpen ((fst C (overSpec k B')).left ⁻¹ᵁ V))
+    (hq : ∀ {W : (relCurve C B).Opens} (hW : W ≤ (fst C (overSpec k B)).left ⁻¹ᵁ V)
+      (r : Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V))
+      (s : ↥(gluedSubmodule B D.pieces D.unit W)),
+      Scheme.QcohOn.qsmul (F := D.sheaf) hW r s = gluedQsmul B D.pieces D.unit hW r s)
+    (hq' : ∀ {W : (relCurve C B').Opens}
+      (hW : W ≤ (fst C (overSpec k B')).left ⁻¹ᵁ V)
+      (r : Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V))
+      (s : ↥(gluedSubmodule B' (D.baseChange B').pieces (D.baseChange B').unit W)),
+      Scheme.QcohOn.qsmul (F := (D.baseChange B').sheaf) hW r s =
+        gluedQsmul B' (D.baseChange B').pieces (D.baseChange B').unit hW r s)
+    (hP : ∀ i : ι, (relCurve C B).basicOpen (h i) ≤ D.pieces (σ i))
+    (hspan : Ideal.span (Set.range h) = ⊤) :
+    B' ⊗[B] (D.sheaf.obj.obj (op ((fst C (overSpec k B)).left ⁻¹ᵁ V))) ≃ₗ[B']
+      ((D.baseChange B').sheaf.obj.obj
+        (op ((fst C (overSpec k B')).left ⁻¹ᵁ V))) :=
+  letI := Scheme.QcohOn.moduleOfLE (F := D.sheaf)
+    (le_refl ((fst C (overSpec k B)).left ⁻¹ᵁ V))
+  letI := Scheme.QcohOn.moduleOfLE (F := (D.baseChange B').sheaf)
+    (le_refl ((fst C (overSpec k B')).left ⁻¹ᵁ V))
+  letI algBA : Algebra B Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V) :=
+    ((relCurve C B).overAlgebraMap B ((fst C (overSpec k B)).left ⁻¹ᵁ V)).toAlgebra
+  letI algB'A' : Algebra B' Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V) :=
+    ((relCurve C B').overAlgebraMap B' ((fst C (overSpec k B')).left ⁻¹ᵁ V)).toAlgebra
+  letI algAA' : Algebra Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V)
+      Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V) :=
+    (relSectionsMap C B B' V).toAlgebra
+  letI algBA' : Algebra B Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V) :=
+    ((algebraMap B' Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V)).comp
+      (algebraMap B B')).toAlgebra
+  letI : Module Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V)
+      ((D.baseChange B').sheaf.obj.obj (op ((fst C (overSpec k B')).left ⁻¹ᵁ V))) :=
+    Module.compHom _ (relSectionsMap C B B' V)
+  haveI : IsScalarTower Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V)
+      Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V)
+      ((D.baseChange B').sheaf.obj.obj (op ((fst C (overSpec k B')).left ⁻¹ᵁ V))) :=
+    IsScalarTower.of_algebraMap_smul fun _ _ => rfl
+  haveI : IsScalarTower B B'
+      Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V) :=
+    IsScalarTower.of_algebraMap_eq' rfl
+  haveI : IsScalarTower B Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V)
+      Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V) :=
+    IsScalarTower.of_algebraMap_eq fun b =>
+      (relSectionsMap_overAlgebraMap C B B' V b).symm
+  haveI : IsScalarTower B Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V)
+      (D.sheaf.obj.obj (op ((fst C (overSpec k B)).left ⁻¹ᵁ V))) :=
+    isScalarTower_coeff B D.pieces D.unit hq (le_refl _)
+  haveI : IsScalarTower B'
+      Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V)
+      ((D.baseChange B').sheaf.obj.obj
+        (op ((fst C (overSpec k B')).left ⁻¹ᵁ V))) :=
+    isScalarTower_coeff B' (D.baseChange B').pieces (D.baseChange B').unit hq'
+      (le_refl _)
+  letI hA : IsBaseChange B' ((IsScalarTower.toAlgHom B
+      Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V)
+      Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V)).toLinearMap) :=
+    IsBaseChange.of_equiv (relTermBaseChange C B B' V hV hV') fun x => by
+      rw [relTermBaseChange_tmul, one_smul]; rfl
+  (IsBaseChange.tensorProduct_mk_one hA).equiv.trans
+    ((LinearEquiv.ofBijective
+      (LinearMap.liftBaseChange Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V)
+        (sectionsMapₗ B' D V hq hq'))
+      (termBaseChange_bijective B' D V σ h hVaff hVaff' hq hq' hP hspan)).restrictScalars
+        B')
+
+set_option maxHeartbeats 1600000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- **The chart-term base change on a pure tensor**: `b' ⊗ s` goes to the `B'`-action of
+`b'` on the compared section `sectionsMap s` — the m-chart mirror of the 2-chart
+`relTwistTermBaseChange₀/₁` tmul rules (the DAT-3 (a)-step and RE-5 transport interface). -/
+theorem termBaseChange_tmul
+    (hV : IsCompact (V : Set C.left)) (hV' : IsQuasiSeparated (V : Set C.left))
+    (hVaff : IsAffineOpen ((fst C (overSpec k B)).left ⁻¹ᵁ V))
+    (hVaff' : IsAffineOpen ((fst C (overSpec k B')).left ⁻¹ᵁ V))
+    (hq : ∀ {W : (relCurve C B).Opens} (hW : W ≤ (fst C (overSpec k B)).left ⁻¹ᵁ V)
+      (r : Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V))
+      (s : ↥(gluedSubmodule B D.pieces D.unit W)),
+      Scheme.QcohOn.qsmul (F := D.sheaf) hW r s = gluedQsmul B D.pieces D.unit hW r s)
+    (hq' : ∀ {W : (relCurve C B').Opens}
+      (hW : W ≤ (fst C (overSpec k B')).left ⁻¹ᵁ V)
+      (r : Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V))
+      (s : ↥(gluedSubmodule B' (D.baseChange B').pieces (D.baseChange B').unit W)),
+      Scheme.QcohOn.qsmul (F := (D.baseChange B').sheaf) hW r s =
+        gluedQsmul B' (D.baseChange B').pieces (D.baseChange B').unit hW r s)
+    (hP : ∀ i : ι, (relCurve C B).basicOpen (h i) ≤ D.pieces (σ i))
+    (hspan : Ideal.span (Set.range h) = ⊤)
+    (b' : B') (s : D.sheaf.obj.obj (op ((fst C (overSpec k B)).left ⁻¹ᵁ V))) :
+    termBaseChange B' D V σ h hV hV' hVaff hVaff' hq hq' hP hspan (b' ⊗ₜ[B] s) =
+      b' • D.sectionsMap B' (le_preimage_chart B' V) s := by
+  letI := Scheme.QcohOn.moduleOfLE (F := D.sheaf)
+    (le_refl ((fst C (overSpec k B)).left ⁻¹ᵁ V))
+  letI := Scheme.QcohOn.moduleOfLE (F := (D.baseChange B').sheaf)
+    (le_refl ((fst C (overSpec k B')).left ⁻¹ᵁ V))
+  letI algBA : Algebra B Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V) :=
+    ((relCurve C B).overAlgebraMap B ((fst C (overSpec k B)).left ⁻¹ᵁ V)).toAlgebra
+  letI algB'A' : Algebra B' Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V) :=
+    ((relCurve C B').overAlgebraMap B' ((fst C (overSpec k B')).left ⁻¹ᵁ V)).toAlgebra
+  letI algAA' : Algebra Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V)
+      Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V) :=
+    (relSectionsMap C B B' V).toAlgebra
+  letI algBA' : Algebra B Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V) :=
+    ((algebraMap B' Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V)).comp
+      (algebraMap B B')).toAlgebra
+  letI : Module Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V)
+      ((D.baseChange B').sheaf.obj.obj (op ((fst C (overSpec k B')).left ⁻¹ᵁ V))) :=
+    Module.compHom _ (relSectionsMap C B B' V)
+  haveI : IsScalarTower Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V)
+      Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V)
+      ((D.baseChange B').sheaf.obj.obj (op ((fst C (overSpec k B')).left ⁻¹ᵁ V))) :=
+    IsScalarTower.of_algebraMap_smul fun _ _ => rfl
+  haveI : IsScalarTower B B'
+      Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V) :=
+    IsScalarTower.of_algebraMap_eq' rfl
+  haveI : IsScalarTower B Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V)
+      Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V) :=
+    IsScalarTower.of_algebraMap_eq fun b =>
+      (relSectionsMap_overAlgebraMap C B B' V b).symm
+  haveI : IsScalarTower B Γ(relCurve C B, (fst C (overSpec k B)).left ⁻¹ᵁ V)
+      (D.sheaf.obj.obj (op ((fst C (overSpec k B)).left ⁻¹ᵁ V))) :=
+    isScalarTower_coeff B D.pieces D.unit hq (le_refl _)
+  haveI : IsScalarTower B'
+      Γ(relCurve C B', (fst C (overSpec k B')).left ⁻¹ᵁ V)
+      ((D.baseChange B').sheaf.obj.obj
+        (op ((fst C (overSpec k B')).left ⁻¹ᵁ V))) :=
+    isScalarTower_coeff B' (D.baseChange B').pieces (D.baseChange B').unit hq'
+      (le_refl _)
+  simp only [termBaseChange, LinearEquiv.trans_apply, IsBaseChange.equiv_tmul,
+    LinearMap.restrictScalars_apply, TensorProduct.mk_apply, map_smul,
+    LinearEquiv.restrictScalars_apply, LinearEquiv.ofBijective_apply,
+    LinearMap.liftBaseChange_tmul, one_smul]
+  rfl
 
 end Assembly
 

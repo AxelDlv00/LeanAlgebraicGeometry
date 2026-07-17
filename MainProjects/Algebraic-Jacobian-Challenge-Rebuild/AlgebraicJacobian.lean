@@ -205,6 +205,7 @@ import AlgebraicJacobian.Cohomology.GluedSheafEngine
 import AlgebraicJacobian.Cohomology.GluedSheafDatumBaseChange
 import AlgebraicJacobian.Cohomology.GluedSheafClass
 import AlgebraicJacobian.Cohomology.GluedSheafTermBaseChange
+import AlgebraicJacobian.Cohomology.GluedSheafTermBaseChangeEquiv
 import AlgebraicJacobian.Cohomology.GluedSheafExtraction
 import AlgebraicJacobian.Cohomology.GluedSheafCongr
 import AlgebraicJacobian.Cohomology.GluedSheafFibre
@@ -281,6 +282,14 @@ import AlgebraicJacobian.Algebra.ABFormula
 import AlgebraicJacobian.Algebra.ABRegularQuotient
 import AlgebraicJacobian.Algebra.ABRegularDomain
 import AlgebraicJacobian.Algebra.ABRegularCM
+import AlgebraicJacobian.Albanese.CodimOneIndeterminacy
+import AlgebraicJacobian.Albanese.CodimOneStalkRegularity
+import AlgebraicJacobian.Albanese.CodimOneSmoothReduced
+import AlgebraicJacobian.Albanese.CodimOneMatsumura
+import AlgebraicJacobian.Albanese.CodimOneDVRStalk
+import AlgebraicJacobian.Albanese.CodimOneMilne31
+import AlgebraicJacobian.Albanese.CodimOneExtensionUnique
+import AlgebraicJacobian.Albanese.Thm32RationalMapExtension
 import AlgebraicJacobian.Picard.FibrewiseRegular
 import AlgebraicJacobian.Picard.SectionsToDivisors
 import AlgebraicJacobian.Picard.SectionsToDivisorsClass
