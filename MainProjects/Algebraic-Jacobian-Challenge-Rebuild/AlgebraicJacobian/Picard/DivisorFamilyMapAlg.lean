@@ -28,9 +28,12 @@ point-free (the `DivEq` spelling), so it pulls back along arbitrary morphisms th
   `DivFam C R π n → DivFam C R' π n` on representatives and on classes
   (`Quotient.lift`, descent by `divEq_pullback`), with the Abel-hook class law
   `DivFam.picClass_mapAlg` (`𝒪(f*D) = f*𝒪(D)`).
-
-The functor laws `mapAlg_id`/`mapAlg_comp` (`informal/spec-dd-2.md` §2, functor-laws
-rows) are the follow-on stage's brick and are not in this file yet.
+* `DivFam.mapAlg_id`, `DivFam.mapAlg_comp` — **the functor laws** (spec §2, functor-laws
+  rows): base change along the identity tower is the identity, and base change composes
+  over a tower `R → R' → R''`. Representative level:
+  `Scheme.LocalEquations.divEq_pullback_id`/`divEq_pullback_pullback` (unit `1`), fed by
+  the comparison identities `relCurveMap_id`/`relCurveMap_comp` (with the instance-based
+  `overSpecMap_id`/`overSpecMap_comp`), landed here for the S3 vehicle.
 -/
 
 set_option autoImplicit false
@@ -107,6 +110,48 @@ theorem divEq_pullback {X Y : Scheme.{u}} (f : Y ⟶ X) {d₁ d₂ : X.LocalEqua
   rw [map_mul] at key
   refine hres₁.trans (e₁.symm.trans (key.trans (congrArg₂ (· * ·) rfl
     (e₂.trans hres₂.symm))))
+
+/-- **Pullback along the identity preserves the divisor**: a system pulled back along a
+morphism (propositionally) equal to `𝟙 X` is `DivEq` to the original, with unit `1` —
+the pulled equation collapses to the restricted equation once `appLE` at the identity
+becomes restriction. Representative input of the functor law `DivFam.mapAlg_id`. -/
+theorem divEq_pullback_id {X : Scheme.{u}} {f : X ⟶ X} (hf : f = 𝟙 X)
+    (E : X.LocalEquations) (hreg) :
+    DivEq (E.pullback f hreg) E := by
+  subst hf
+  refine ⟨E.cover.pullback (𝟙 X), fun y => le_rfl, fun y => le_of_eq rfl,
+    fun y => ⟨1, ?_⟩⟩
+  rw [Units.val_one, one_mul]
+  -- `appLE` at the identity is restriction, definitionally; the collapse lemma
+  -- `pullbackEqn_res` is then the whole clause.
+  exact pullbackEqn_res (𝟙 X) E y le_rfl
+
+/-- **Pullback of a divisor composes**: pulling back in two stages along `g` then `f` is
+`DivEq` to pulling back along a morphism (propositionally) equal to the composite
+`g ≫ f`, with unit `1` — the two covers agree (preimage of preimage is preimage of the
+composite) and the equations agree on the nose (`Scheme.Hom.appLE_comp_appLE`).
+Representative input of the functor law `DivFam.mapAlg_comp`. -/
+theorem divEq_pullback_pullback {X Y Z : Scheme.{u}} {f : Y ⟶ X} {g : Z ⟶ Y} {h : Z ⟶ X}
+    (hgf : g ≫ f = h) (E : X.LocalEquations) (hreg₁) (hreg₂) (hreg₃) :
+    DivEq ((E.pullback f hreg₁).pullback g hreg₂) (E.pullback h hreg₃) := by
+  subst hgf
+  have hcov : ∀ z : Z, ((E.cover.pullback f).pullback g).opens z ≤
+      (E.cover.pullback (g ≫ f)).opens z := fun z =>
+    le_of_eq (by
+      rw [Scheme.PointedCover.pullback_opens, Scheme.PointedCover.pullback_opens,
+        Scheme.PointedCover.pullback_opens, Scheme.Hom.comp_preimage,
+        Scheme.Hom.comp_apply])
+  refine ⟨(E.cover.pullback f).pullback g, fun z => le_rfl, hcov, fun z => ⟨1, ?_⟩⟩
+  rw [Units.val_one, one_mul]
+  -- the two-stage pulled equation is `appLE ≫ appLE` of the base equation, which is
+  -- `appLE` of the composite (`Scheme.Hom.appLE_comp_appLE`); both restriction
+  -- collapses are `pullbackEqn_res`
+  have h2 := congr(($(Scheme.Hom.appLE_comp_appLE g f
+    (E.cover.opens (f.base (g.base z))) ((E.cover.pullback f).opens (g.base z))
+    (((E.cover.pullback f).pullback g).opens z) le_rfl le_rfl)).hom
+      (E.eqn (f.base (g.base z))))
+  exact (pullbackEqn_res g (E.pullback f hreg₁) z le_rfl).trans
+    (h2.trans (pullbackEqn_res (g ≫ f) E z (hcov z)).symm)
 
 end Scheme.LocalEquations
 
@@ -246,5 +291,67 @@ lemma DivFam.picClass_mapAlg (F : DivFam C R π n) :
   induction F using Quotient.inductionOn with
   | h F =>
       exact F.adaptation.picClass_pulledEquations R' F.certified.projective_colength
+
+/-! ## The functor laws (`informal/spec-dd-2.md` §2, functor-laws rows) -/
+
+/-- The base comparison of the identity tower is the identity: `Spec` of
+`algebraMap R R = id` in `Over (Spec k)` (the instance-based `overSpecMap` companion of
+`Over.overSpecMap_id`). -/
+lemma overSpecMap_id : overSpecMap (k := k) R R = 𝟙 (overSpec k R) := by
+  ext : 1
+  rw [overSpecMap_left, Algebra.algebraMap_self, CommRingCat.ofHom_id, Spec.map_id,
+    Over.id_left]
+  rfl
+
+/-- **The relative-curve comparison of the identity tower is the identity**:
+`relCurveMap C R R = 𝟙 (relCurve C R)`. -/
+lemma relCurveMap_id : relCurveMap C R R = 𝟙 (relCurve C R) := by
+  rw [relCurveMap, overSpecMap_id, MonoidalCategory.whiskerLeft_id, Over.id_left]
+  rfl
+
+/-- **The identity functor law of the divisor-functor map** (`informal/spec-dd-2.md` §2):
+base change along the identity tower `R = R` is the identity on divisor classes. At the
+representative level the equations pulled along `relCurveMap C R R = 𝟙` are `DivEq` to
+the originals (`divEq_pullback_id`), with unit `1`. -/
+lemma DivFam.mapAlg_id (F : DivFam C R π n) : DivFam.mapAlg R n F = F := by
+  induction F using Quotient.inductionOn with
+  | h F =>
+      exact DivFam.mk_eq_mk_iff.mpr
+        (Scheme.LocalEquations.divEq_pullback_id (relCurveMap_id) F.eqns _)
+
+variable (R'' : Type u) [CommRing R''] [Algebra k R''] [Algebra R R''] [Algebra R' R'']
+variable [IsScalarTower k R R''] [IsScalarTower k R' R''] [IsScalarTower R R' R'']
+
+/-- The base comparisons compose over a tower `R → R' → R''`: `Spec` of the tower
+identity `algebraMap R R'' = algebraMap R' R'' ∘ algebraMap R R'` in `Over (Spec k)`
+(the instance-based `overSpecMap` companion of `Over.overSpecMap_comp`). -/
+lemma overSpecMap_comp :
+    overSpecMap (k := k) R' R'' ≫ overSpecMap (k := k) R R' =
+      overSpecMap (k := k) R R'' := by
+  ext : 1
+  rw [Over.comp_left, overSpecMap_left, overSpecMap_left, overSpecMap_left,
+    ← Spec.map_comp, ← CommRingCat.ofHom_comp, ← IsScalarTower.algebraMap_eq R R' R'']
+
+/-- **The relative-curve comparisons compose over a tower** `R → R' → R''` (the
+comparison-composition fact of the DAT-1 (1d) plumbing, landed here for the functor
+laws): `relCurveMap C R' R'' ≫ relCurveMap C R R' = relCurveMap C R R''`. -/
+lemma relCurveMap_comp :
+    relCurveMap C R' R'' ≫ relCurveMap C R R' = relCurveMap C R R'' := by
+  rw [relCurveMap, relCurveMap, relCurveMap, ← Over.comp_left,
+    ← MonoidalCategory.whiskerLeft_comp, overSpecMap_comp]
+
+/-- **The composition functor law of the divisor-functor map** (`informal/spec-dd-2.md`
+§2): base change composes over a tower `R → R' → R''`,
+`mapAlg R'' ∘ mapAlg R' = mapAlg R''`. At the representative level the two pulled
+systems have equal covers and `appLE`-composite equations
+(`divEq_pullback_pullback` at `relCurveMap_comp`), with unit `1`. This is the
+compatibility input of the stage-S3 vehicle (`informal/spec-dd-2.md` §3). -/
+lemma DivFam.mapAlg_comp (F : DivFam C R π n) :
+    DivFam.mapAlg R'' n (DivFam.mapAlg R' n F) = DivFam.mapAlg R'' n F := by
+  induction F using Quotient.inductionOn with
+  | h F =>
+      exact DivFam.mk_eq_mk_iff.mpr
+        (Scheme.LocalEquations.divEq_pullback_pullback
+          (relCurveMap_comp (R' := R') (R'' := R'')) F.eqns _ _ _)
 
 end AlgebraicGeometry
