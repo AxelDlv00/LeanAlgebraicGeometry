@@ -224,6 +224,7 @@ import AlgebraicJacobian.RiemannRoch.GluedDivisorSheaf
 import AlgebraicJacobian.RiemannRoch.W6Full
 import AlgebraicJacobian.Picard.DegreeZero
 import AlgebraicJacobian.Picard.Pic0Functor
+import AlgebraicJacobian.Picard.PicEtCurveMap
 import AlgebraicJacobian.Picard.JacobianData
 import AlgebraicJacobian.AbelianVariety.GroupSeparated
 import AlgebraicJacobian.AbelianVariety.Translation
