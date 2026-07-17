@@ -261,6 +261,7 @@ import AlgebraicJacobian.Picard.GrassmannianGlue
 import AlgebraicJacobian.Picard.GrassmannianScheme
 import AlgebraicJacobian.Picard.GrassmannianFunctor
 import AlgebraicJacobian.Picard.EntriesIdeal
+import AlgebraicJacobian.RiemannRoch.SectionMul
 import AlgebraicJacobian.Picard.VanishingLocus
 import AlgebraicJacobian.Picard.GrassmannianPair
 import AlgebraicJacobian.Picard.GrassmannianDiagonal
