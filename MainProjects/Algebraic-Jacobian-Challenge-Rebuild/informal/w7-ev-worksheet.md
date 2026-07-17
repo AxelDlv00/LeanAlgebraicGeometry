@@ -1,6 +1,16 @@
 # E-v campaign worksheet — degree multiplicativity under pullback (`AJCR.w7-functor.ev`)
 
-**DRAFT — pending orchestrator ratification.**
+**RATIFIED — BINDING (orchestrator, 2026-07-17 night session).** All §6 ratification
+points adopted as recommended: the EV-main statement pin (Over-form, finrank along
+`functionFieldMap`, multiplicativity decoupled from the dichotomy), the EV-2 route
+through `Algebra.IsAlgebraic.finrank_of_isFractionRing` (integral-closure chain =
+fallback), the EV-1d closed-immersion factorization route (class-level dodge =
+fallback-of-fallback), the two-lane launch plan (Lane A dichotomy ∥ Lane B
+multiplicativity), and the file split. TWO RIDERS: (1) any de-privatization in the
+landed `RiemannRoch/ChartColength.lean` must be a minimal-diff SEPARATE commit touching
+only visibility, with the SB-3b owner named in the message; (2) the Hartshorne
+transcription gate resolves by queueing a reference-retriever task, never by citing
+unread pages. Deviations go back through the orchestrator.
 
 *Design-probe lane w7-ev-worksheet, 2026-07-17. Skeleton: the ratified `w7-worksheet.md`
 §2.1 (EV-1a..EV-4) and its risk R-W7-1, both read in full this session. Evidence:
