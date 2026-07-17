@@ -158,6 +158,144 @@ lemma thetaVal_eq_germ_snd {W : Y.Opens} (hηW : genericPoint Y ∈ W)
       (Y.presheaf.germ (W ⊓ fiberChart₁ π) (genericPoint Y) _).hom p.val.2
   rw [hg, ← mul_assoc, Units.inv_mul, one_mul]
 
+/-! ## The pole bound of a twisted value -/
+
+private lemma divOf_pow (w : Y.functionFieldˣ) (m : ℕ) :
+    Scheme.divOf (Y ↘ Spec (CommRingCat.of K)) (w ^ m)
+      = m • Scheme.divOf (Y ↘ Spec (CommRingCat.of K)) w := by
+  induction m with
+  | zero => rw [pow_zero, Scheme.divOf_one, zero_smul]
+  | succ m ih => rw [pow_succ, Scheme.divOf_mul, ih, succ_nsmul]
+
+private lemma coeffAt_nsmul (m : ℕ) (D : Y.CurveDivisor) {z : Y} (hz : z ≠ genericPoint Y) :
+    coeffAt hz (m • D) = m • coeffAt hz D := by
+  induction m with
+  | zero => rw [zero_smul, zero_smul, CurveDivisor.coeffAt_zero]
+  | succ m ih => rw [succ_nsmul, succ_nsmul, CurveDivisor.coeffAt_add, ih]
+
+/-- **On the chart `V₀` the order of `u⁻ⁿ` is exactly the pole bound of `n·F`**: the fiber
+divisor agrees with `div u` there (`fiberWeilDivisor_coeffAt_of_mem_chart₀`) and
+`divOf(uⁿ) = n • div u`. This is the two-chart mirror of `ord_elem_inv`. -/
+private lemma ord_thetaCoeff_eq_divisorBound {z : Y} (hz : z ≠ genericPoint Y)
+    (hzV₀ : z ∈ fiberChart₀ π) :
+    Scheme.ord (Y ↘ Spec (CommRingCat.of K)) hz
+        (((fiberCoordUnit π ^ n)⁻¹ : Y.functionFieldˣ) : Y.functionField)
+      = divisorBound (n • fiberWeilDivisor π) hz := by
+  have hinv : Scheme.divOf (Y ↘ Spec (CommRingCat.of K)) (fiberCoordUnit π ^ n)⁻¹
+      = - Scheme.divOf (Y ↘ Spec (CommRingCat.of K)) (fiberCoordUnit π ^ n) := by
+    rw [eq_neg_iff_add_eq_zero, ← Scheme.divOf_mul, inv_mul_cancel, Scheme.divOf_one]
+  have hcoeff : coeffAt hz (- Scheme.divOf (Y ↘ Spec (CommRingCat.of K))
+        (fiberCoordUnit π ^ n)⁻¹) = coeffAt hz (n • fiberWeilDivisor π) := by
+    rw [CurveDivisor.coeffAt_neg, hinv, CurveDivisor.coeffAt_neg, neg_neg, divOf_pow,
+      coeffAt_nsmul, coeffAt_nsmul, fiberWeilDivisor_coeffAt_of_mem_chart₀ π hz hzV₀]
+  rw [ord_val_eq K ((fiberCoordUnit π ^ n)⁻¹) hz, divisorBound_eq_coeffAt,
+    divisorBound_eq_coeffAt, hcoeff]
+
+/-- **The pole bound of the twisted value**: the value of a twisted section lies in
+`𝒪(n·F)(W)`. Read on the chart containing the point: on `V₁` the fiber divisor vanishes
+and the value is integral (`thetaVal = germ_η s₁`); on `V₀` the `u⁻ⁿ` factor realizes the
+allowed pole `n·F` exactly. -/
+lemma thetaVal_mem {W : Y.Opens} (hηW : genericPoint Y ∈ W)
+    (p : ↥(twistSubmodule K (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n) W)) :
+    thetaVal K π n hηW p ∈ divisorSections K (n • fiberWeilDivisor π) W := by
+  rw [mem_divisorSections_of_nonempty K ⟨genericPoint Y, hηW⟩]
+  intro z hz hzW
+  have hsup : fiberChart₀ π ⊔ fiberChart₁ π = ⊤ := preimage_chartOpen_sup π
+  have hmem : (z : Y) ∈ (fiberChart₀ π : Set Y) ∪ (fiberChart₁ π : Set Y) := by
+    rw [← Opens.coe_sup, hsup, Opens.coe_top]; exact Set.mem_univ z
+  rcases hmem with hzV₀ | hzV₁
+  · -- chart 0: `thetaVal = u⁻ⁿ · germ_η s₀`, pole exactly `n·F`
+    have hval : thetaVal K π n hηW p =
+        (((fiberCoordUnit π ^ n)⁻¹ : Y.functionFieldˣ) : Y.functionField) *
+          (Y.presheaf.germ (W ⊓ fiberChart₀ π) (genericPoint Y)
+            ⟨hηW, (genericPoint_mem_preimage_inf π).1⟩).hom p.val.1 := rfl
+    have hgerm : Scheme.ord (Y ↘ Spec (CommRingCat.of K)) hz
+        ((Y.presheaf.germ (W ⊓ fiberChart₀ π) (genericPoint Y)
+          ⟨hηW, (genericPoint_mem_preimage_inf π).1⟩).hom p.val.1) ≤ 1 := by
+      rw [germ_generic_eq_algebraMap_germ
+        (show genericPoint Y ∈ W ⊓ fiberChart₀ π from
+          ⟨hηW, (genericPoint_mem_preimage_inf π).1⟩)
+        (show z ∈ W ⊓ fiberChart₀ π from ⟨hzW, hzV₀⟩) p.val.1]
+      exact ord_algebraMap_stalk_le_one K hz _
+    calc Scheme.ord (Y ↘ Spec (CommRingCat.of K)) hz (thetaVal K π n hηW p)
+        = Scheme.ord (Y ↘ Spec (CommRingCat.of K)) hz
+            (((fiberCoordUnit π ^ n)⁻¹ : Y.functionFieldˣ) : Y.functionField) *
+          Scheme.ord (Y ↘ Spec (CommRingCat.of K)) hz
+            ((Y.presheaf.germ (W ⊓ fiberChart₀ π) (genericPoint Y)
+              ⟨hηW, (genericPoint_mem_preimage_inf π).1⟩).hom p.val.1) := by
+          rw [hval, map_mul]
+      _ ≤ Scheme.ord (Y ↘ Spec (CommRingCat.of K)) hz
+            (((fiberCoordUnit π ^ n)⁻¹ : Y.functionFieldˣ) : Y.functionField) * 1 :=
+          mul_le_mul_right hgerm _
+      _ = divisorBound (n • fiberWeilDivisor π) hz := by
+          rw [mul_one, ord_thetaCoeff_eq_divisorBound K π n hz hzV₀]
+  · -- chart 1: `thetaVal = germ_η s₁`; `F` vanishes on `V₁`, so `n·F` imposes no pole
+    have hb : divisorBound (n • fiberWeilDivisor π) hz = 1 := by
+      rw [divisorBound_eq_coeffAt, coeffAt_nsmul,
+        fiberWeilDivisor_coeffAt_of_mem_chart₁ π hz hzV₁, smul_zero, ofAdd_zero,
+        WithZero.coe_one]
+    rw [thetaVal_eq_germ_snd K π n hηW p,
+      germ_generic_eq_algebraMap_germ
+        (show genericPoint Y ∈ W ⊓ fiberChart₁ π from
+          ⟨hηW, (genericPoint_mem_preimage_inf π).2⟩)
+        (show z ∈ W ⊓ fiberChart₁ π from ⟨hzW, hzV₁⟩) p.val.2, hb]
+    exact ord_algebraMap_stalk_le_one K hz _
+
+/-! ## The section-wise map and its injectivity -/
+
+/-- **The section-wise `K`-linear map `Θⁿ(W) → 𝒪(n·F)(W)`** for a nonempty open:
+`p ↦ (uⁿ)⁻¹ · germ_η p₀` (the chart-0 reading of the twisted value). -/
+noncomputable def thetaToDivisorApp {W : Y.Opens} (hηW : genericPoint Y ∈ W) :
+    ↥(twistSubmodule K (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n) W) →ₗ[K]
+      ↥(divisorSections K (n • fiberWeilDivisor π) W) :=
+  LinearMap.codRestrict (divisorSections K (n • fiberWeilDivisor π) W)
+    ((Scheme.mulLinear K
+        (((fiberCoordUnit π ^ n)⁻¹ : Y.functionFieldˣ) : Y.functionField)).comp
+      ((germGenericLinear K (show genericPoint Y ∈ W ⊓ fiberChart₀ π from
+          ⟨hηW, (genericPoint_mem_preimage_inf π).1⟩)).comp
+        ((LinearMap.fst K _ _).comp
+          (twistSubmodule K (fiberChart₀ π) (fiberChart₁ π)
+            (thetaUnit π ^ n) W).subtype)))
+    (fun p => thetaVal_mem K π n hηW p)
+
+lemma thetaToDivisorApp_coe {W : Y.Opens} (hηW : genericPoint Y ∈ W)
+    (p : ↥(twistSubmodule K (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n) W)) :
+    ((thetaToDivisorApp K π n hηW p :
+      divisorSections K (n • fiberWeilDivisor π) W) : Y.functionField) =
+      thetaVal K π n hηW p :=
+  rfl
+
+/-- The section-wise map is injective: the value determines both component germs at `η`
+(chart-0 through the definition, chart-1 through `thetaVal_eq_germ_snd`), and germs at `η`
+determine sections on the integral `Y`. -/
+lemma thetaToDivisorApp_injective {W : Y.Opens} (hηW : genericPoint Y ∈ W) :
+    Function.Injective (thetaToDivisorApp K π n hηW) := by
+  intro a b hab
+  have hval : thetaVal K π n hηW a = thetaVal K π n hηW b := by
+    have := congrArg
+      (fun t : ↥(divisorSections K (n • fiberWeilDivisor π) W) => (t : Y.functionField)) hab
+    rwa [thetaToDivisorApp_coe, thetaToDivisorApp_coe] at this
+  refine Subtype.ext (Prod.ext ?_ ?_)
+  · have ha : (((fiberCoordUnit π ^ n)⁻¹ : Y.functionFieldˣ) : Y.functionField) *
+          (Y.presheaf.germ (W ⊓ fiberChart₀ π) (genericPoint Y)
+            ⟨hηW, (genericPoint_mem_preimage_inf π).1⟩).hom a.val.1 =
+        (((fiberCoordUnit π ^ n)⁻¹ : Y.functionFieldˣ) : Y.functionField) *
+          (Y.presheaf.germ (W ⊓ fiberChart₀ π) (genericPoint Y)
+            ⟨hηW, (genericPoint_mem_preimage_inf π).1⟩).hom b.val.1 := hval
+    exact germ_injective_of_isIntegral Y (genericPoint Y)
+      (show genericPoint Y ∈ W ⊓ fiberChart₀ π from
+        ⟨hηW, (genericPoint_mem_preimage_inf π).1⟩)
+      (mul_left_cancel₀ (Units.ne_zero ((fiberCoordUnit π ^ n)⁻¹)) ha)
+  · have hgerm : (Y.presheaf.germ (W ⊓ fiberChart₁ π) (genericPoint Y)
+        ⟨hηW, (genericPoint_mem_preimage_inf π).2⟩).hom a.val.2 =
+      (Y.presheaf.germ (W ⊓ fiberChart₁ π) (genericPoint Y)
+        ⟨hηW, (genericPoint_mem_preimage_inf π).2⟩).hom b.val.2 :=
+      (thetaVal_eq_germ_snd K π n hηW a).symm.trans
+        (hval.trans (thetaVal_eq_germ_snd K π n hηW b))
+    exact germ_injective_of_isIntegral Y (genericPoint Y)
+      (show genericPoint Y ∈ W ⊓ fiberChart₁ π from
+        ⟨hηW, (genericPoint_mem_preimage_inf π).2⟩) hgerm
+
 end Value
 
 end AlgebraicGeometry
