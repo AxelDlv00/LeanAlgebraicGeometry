@@ -317,6 +317,8 @@ import AlgebraicJacobian.Picard.DivisorFamilyWindow
 import AlgebraicJacobian.Picard.DivisorFamilyThetaSurj
 import AlgebraicJacobian.Picard.DivisorFamilyThetaRank
 import AlgebraicJacobian.Picard.DivisorFamilyThetaSections
+import AlgebraicJacobian.RiemannRoch.CarveDegreePinch
+import AlgebraicJacobian.RiemannRoch.CarveDegree
 import AlgebraicJacobian.Picard.DivisorThetaDatum
 import AlgebraicJacobian.Picard.DivisorThetaBridge
 import AlgebraicJacobian.Picard.DivisorThetaTrivializeZero
@@ -353,6 +355,7 @@ import AlgebraicJacobian.Curve.CrossBaseSquare
 import AlgebraicJacobian.RiemannRoch.DegreeIsoTransport
 import AlgebraicJacobian.RiemannRoch.ClassDegMapIso
 import AlgebraicJacobian.Curve.CurveMorphismDichotomy
+import AlgebraicJacobian.Picard.Pic0Theta
 
 /-!
 # AlgebraicJacobian — library root
