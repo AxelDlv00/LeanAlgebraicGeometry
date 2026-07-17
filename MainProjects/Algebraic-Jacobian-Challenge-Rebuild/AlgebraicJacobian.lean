@@ -369,6 +369,8 @@ import AlgebraicJacobian.RiemannRoch.ClassDegMapIso
 import AlgebraicJacobian.Curve.CurveMorphismDichotomy
 import AlgebraicJacobian.Picard.Pic0Theta
 import AlgebraicJacobian.Picard.PicEtAffBaseFieldShuffle
+import AlgebraicJacobian.Picard.Pic0Pullback
+import AlgebraicJacobian.Picard.Pic0PullbackGrp
 
 /-!
 # AlgebraicJacobian — library root
