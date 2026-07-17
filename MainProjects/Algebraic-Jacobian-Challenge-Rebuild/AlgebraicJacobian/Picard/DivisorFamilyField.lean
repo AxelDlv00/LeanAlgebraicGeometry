@@ -141,6 +141,23 @@ lemma coeffAt_divFamDivisor (F : CertifiedDivisorFamily C K π n) {x : relCurve 
           (F.eqns.presentation.elem x)) := by
   rw [divFamDivisor_mk, Scheme.coeffAt_presentationDivisor]
 
+omit [IsIntegral (relCurve C K)]
+  [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))] in
+/-- **The field half of the degree identity.** Over a field every module is free, so the
+constant fibre rank `rankAtStalk` of the glued colength module equals its `K`-dimension: a
+certificate of degree `n` forces `finrank K W(d) = n`. The remaining (geometric) half of
+`deg K (divFamDivisor F) = n` is the colength↔degree identity `finrank K W(d) = deg`, the
+support-splitting CRT across the glued equalizer. -/
+theorem DivisorAdaptation.IsCertified.finrank_glued
+    {d : (relCurve C K).LocalEquations} {A : DivisorAdaptation C K π d}
+    (hc : A.IsCertified n) : Module.finrank K A.Glued = n := by
+  haveI : Module.Free K A.Glued := Module.Free.of_divisionRing K A.Glued
+  have h := congrFun (Module.rankAtStalk_eq_finrank_of_free (R := K) (M := A.Glued))
+    (⊥ : PrimeSpectrum K)
+  rw [hc.rankAtStalk_glued ⊥] at h
+  simpa using h.symm
+
 /-- **The divisor of a family is effective**: the anchor equations are genuine sections of the
 structure sheaf, integral at every closed point. -/
 theorem zero_le_divFamDivisor (F : DivFam C K π n) : 0 ≤ divFamDivisor F := by
