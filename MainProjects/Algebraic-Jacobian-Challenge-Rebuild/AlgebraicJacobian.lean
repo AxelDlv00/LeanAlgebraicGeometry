@@ -290,6 +290,14 @@ import AlgebraicJacobian.Albanese.CodimOneDVRStalk
 import AlgebraicJacobian.Albanese.CodimOneMilne31
 import AlgebraicJacobian.Albanese.CodimOneExtensionUnique
 import AlgebraicJacobian.Albanese.Thm32RationalMapExtension
+import AlgebraicJacobian.Albanese.CodimOneIndeterminacy
+import AlgebraicJacobian.Albanese.CodimOneStalkRegularity
+import AlgebraicJacobian.Albanese.CodimOneSmoothReduced
+import AlgebraicJacobian.Albanese.CodimOneMatsumura
+import AlgebraicJacobian.Albanese.CodimOneDVRStalk
+import AlgebraicJacobian.Albanese.CodimOneMilne31
+import AlgebraicJacobian.Albanese.CodimOneExtensionUnique
+import AlgebraicJacobian.Albanese.Thm32RationalMapExtension
 import AlgebraicJacobian.Picard.FibrewiseRegular
 import AlgebraicJacobian.Picard.SectionsToDivisors
 import AlgebraicJacobian.Picard.SectionsToDivisorsClass
