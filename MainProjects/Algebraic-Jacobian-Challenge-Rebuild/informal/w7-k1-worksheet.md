@@ -1,11 +1,26 @@
 # K-1 worksheet — the θ-cocycle coherence (`AJCR.w7-functor.k1`)
 
-**DRAFT — PENDING ORCHESTRATOR RATIFICATION.** Decisions-first, machine-probed. This is
-the worksheet the ratified `w7-worksheet.md` §D3/§3 mandates before any K-cluster code
-lane launches; it also discharges the R-W7-6 provability audit named there (the "one
-pinned universal element" rule for `baseChangeIso_id`/`_comp`/`baseChange_ofCurve`
-against the F-6 construction). It pins the **datum-level θ-cocycle** — NOT the frozen
-`baseChangeIso_id`/`_comp` closures, which run LAST (after DAT-J + F-6).
+**RATIFIED 2026-07-17 22:40 by the interactive orchestrator (Opus).** Decisions-first,
+machine-probed. This is the worksheet the ratified `w7-worksheet.md` §D3/§3 mandates
+before any K-cluster code lane launches; it also discharges the R-W7-6 provability audit
+named there (the "one pinned universal element" rule for
+`baseChangeIso_id`/`_comp`/`baseChange_ofCurve` against the F-6 construction). It pins the
+**datum-level θ-cocycle** — NOT the frozen `baseChangeIso_id`/`_comp` closures, which run
+LAST (after DAT-J + F-6).
+
+**Ratification (all five §5 points accepted):** (1) the two headline equalities are pinned
+in bundled `CommGrpCat`-natiso form (§1.1/§1.2, both probed green), RHSs through the frozen
+`baseChange.idIso`/`compIso` vehicles, proved by the Leg-1..4 component reduction — never a
+`Grp(Over)` chase. (2) Route + sizes accepted: Leg 1–3 [S]/[S]/[S-M], Leg 4 [M] the tower
+atom, with the `.symm`/inv reorientation bail authorized if Leg 3 balloons. (3) A-1 RIDES
+this worksheet as a spec, but its CODE is GATED on B-56's B-6b `baseChangeIsoOfData` — the
+§3 statement re-pins against B-6b's committed signature at code time (R-K1-3). (4) File map
+accepted: `Picard/Pic0ThetaCocycle.lean` (K-1a+K-1b, launchable NOW — all inputs committed),
+`Picard/JacobianDataBaseChangeAbel.lean` (A-1, after B-6b). (5) The R-W7-6 audit verdict is
+accepted: the frozen closures are provable from {K-1a, K-1b, F-6's
+`homEquiv_comp_pullbackHom`, B-6b's `baseChangeIsoOfData`} — no additional universal element
+needed. LAUNCH SEQUENCING: K-1 (θ-cocycle) launches immediately (θ + `pic0PullbackNat` +
+mathlib, all in HEAD); A-1 launches when B-6b lands.
 
 *Design-probe lane w7-k1-worksheet, 2026-07-17 (relaunched; runs on Opus 4.8). Evidence
 base, read in full this session: the ratified `w7-worksheet.md` (D3's K-1 paragraph, D4,
