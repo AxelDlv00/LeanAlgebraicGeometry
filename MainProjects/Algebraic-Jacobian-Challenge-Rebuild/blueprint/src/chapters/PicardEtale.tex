@@ -9080,6 +9080,149 @@ reading is independent of every choice.
   underlying class.
 \end{proof}
 
+\section{Functoriality of the \'etale-sheafified Picard functor in the curve}
+
+Throughout this section \(k\) is a field and \(D, E, F\) are objects of
+\(\Over(\Spec k)\); for the statements involving restriction along arbitrary morphisms
+of test objects the curves are in addition proper, geometrically irreducible and
+geometrically reduced over \(k\).
+
+\begin{definition}[Curve-direction transport of the limit]
+  \label{def:picEtPullback}
+  \lean{AlgebraicGeometry.picEtPullback, AlgebraicGeometry.picEtPullback_val}
+  \uses{def:picEt, def:PicEtAff_curveMap, def:PicEtAff_mapAlg}
+  \leanok
+  Let \(g \colon D \to E\) be a morphism of \(\Over(\Spec k)\) and \(T\) a test object.
+  For a compatible family \(s = (s_U)_U \in \mathrm{picEt}(E, T)\) over the affine opens
+  of \(T\), the componentwise transported family
+  \[
+    g^{*} s := \bigl( g^{*}(s_U) \bigr)_{U},
+  \]
+  each component transported by the affine curve transport
+  \(g^{*} \colon \mathrm{PicEtAff}(E, \Gamma(T, U)) \to
+  \mathrm{PicEtAff}(D, \Gamma(T, U))\) of Definition~\ref{def:PicEtAff_curveMap}, is
+  again compatible, and the assignment
+  \(g^{*} \colon \mathrm{picEt}(E, T) \to \mathrm{picEt}(D, T)\) is a group
+  homomorphism.
+\end{definition}
+\begin{proof}
+  \leanok
+  \uses{thm:PicEtAff_curveMap_laws}
+  Compatibility: for affine opens \(U \subseteq V\) of \(T\), the restriction of the
+  transported value is
+  \(\mathrm{res}^V_U\bigl(g^{*}(s_V)\bigr) = g^{*}\bigl(\mathrm{res}^V_U(s_V)\bigr)
+  = g^{*}(s_U)\), by the bilateral restriction square of
+  Theorem~\ref{thm:PicEtAff_curveMap_laws} applied to the \(k\)-algebra map
+  \(\mathrm{res}^V_U\). The homomorphism property holds componentwise.
+\end{proof}
+
+\begin{theorem}[Functor laws and affine compatibility]
+  \label{thm:picEtPullback_laws}
+  \lean{AlgebraicGeometry.picEtPullback_id, AlgebraicGeometry.picEtPullback_comp,
+    AlgebraicGeometry.picEtAffineEquiv_picEtPullback,
+    AlgebraicGeometry.picEtPullback_picEtAffineEquiv_symm}
+  \uses{def:picEtPullback, def:picEtAffineEquiv}
+  \leanok
+  The curve-direction transport of the limit is contravariantly functorial in the curve:
+  \(\id_E^{*} = \id\), and \((g' \circ g)^{*} = g^{*} \circ g'^{*}\) for
+  \(g \colon D \to E\) and \(g' \colon E \to F\). At an affine test \(\Spec A\) it
+  agrees with the affine curve transport under the affine comparison of
+  Definition~\ref{def:picEtAffineEquiv}:
+  \[
+    \mathrm{picEtAffineEquiv}_{D,A} \circ g^{*}
+      = g^{*} \circ \mathrm{picEtAffineEquiv}_{E,A},
+  \]
+  and likewise with the inverse comparisons.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:PicEtAff_curveMap_laws}
+  The functor laws hold componentwise by Theorem~\ref{thm:PicEtAff_curveMap_laws}. For
+  the affine compatibility: both sides evaluate the family at the top affine open and
+  transport, and the \(\Gamma\)--\(\Spec\) identification of the test algebra is a
+  \(k\)-algebra map, so it commutes with the curve transport by the bilateral
+  restriction square. The inverse form follows because both comparisons are
+  isomorphisms.
+\end{proof}
+
+\begin{theorem}[Naturality of the curve transport in the test object]
+  \label{thm:picEtMap_picEtPullback}
+  \lean{AlgebraicGeometry.picEtMap_picEtPullback}
+  \uses{def:picEtPullback, def:picEtMap, def:picEt_IsPullbackValue,
+    thm:picEt_pullbackValue_unique}
+  \leanok
+  Let \(D, E\) be proper, geometrically irreducible and geometrically reduced over
+  \(k\), let \(g \colon D \to E\), and let \(f \colon T' \to T\) be an arbitrary
+  morphism of test objects. Then restriction commutes with the curve transport:
+  \[
+    f^{*} \circ g^{*} = g^{*} \circ f^{*}
+    \colon \mathrm{picEt}(E, T) \longrightarrow \mathrm{picEt}(D, T').
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:PicEtAff_curveMap_laws}
+  The value of the restricted family \(f^{*}\) at each affine open of \(T'\) is
+  characterized uniquely by its pullback property
+  (Theorem~\ref{thm:picEt_pullbackValue_unique}), so it suffices to show that the curve
+  transport of the glued value for \(s\) has the pullback property for the transported
+  family \(g^{*}s\). On every affine sub-open lying in the preimage of an affine open
+  \(V\) of \(T\), the required identity is obtained from the pullback property of the
+  glued value for \(s\) by applying \(g^{*}\) and commuting it past the two restriction
+  \(k\)-algebra maps by the bilateral square of
+  Theorem~\ref{thm:PicEtAff_curveMap_laws}.
+\end{proof}
+
+\begin{definition}[The bundled curve-direction natural transformation]
+  \label{def:picEtPullbackNat}
+  \lean{AlgebraicGeometry.picEtPullbackNat, AlgebraicGeometry.picEtPullbackNat_app,
+    AlgebraicGeometry.picEtPullbackNat_id, AlgebraicGeometry.picEtPullbackNat_comp}
+  \uses{def:picEtFunctor, def:picEtPullback, thm:picEtMap_picEtPullback}
+  \leanok
+  For \(D, E\) proper, geometrically irreducible and geometrically reduced over \(k\)
+  and \(g \colon D \to E\), the componentwise transports assemble into a natural
+  transformation
+  \[
+    g^{*} \colon \mathrm{picEtFunctor}(E) \longrightarrow \mathrm{picEtFunctor}(D)
+  \]
+  of \(\mathrm{CommGrp}\)-valued functors on the test category, with
+  \(\id_E^{*}\) the identity transformation and
+  \((g' \circ g)^{*} = g^{*} \circ g'^{*}\).
+\end{definition}
+\begin{proof}
+  \leanok
+  \uses{thm:picEtPullback_laws}
+  Naturality is Theorem~\ref{thm:picEtMap_picEtPullback}; the identity and composition
+  laws are the pointwise laws of Theorem~\ref{thm:picEtPullback_laws} at each test
+  object.
+\end{proof}
+
+\begin{theorem}[Degree of a pulled-back class at a field point]
+  \label{thm:degAt_picEtPullback}
+  \lean{AlgebraicGeometry.degAt_picEtPullback}
+  \uses{def:degAt, thm:picEtMap_picEtPullback, thm:picEtPullback_laws}
+  \leanok
+  Let \(D\) be smooth of relative dimension \(1\), proper and geometrically irreducible
+  over \(k\), let \(E\) be proper, geometrically irreducible and geometrically reduced
+  over \(k\), let \(g \colon D \to E\), let \(\lambda \in \mathrm{picEt}(E, T)\), and
+  let \(t \colon \Spec K \to T\) be a field point of the test object. Then the degree
+  of the pulled-back class at \(t\) is the degree of the affine curve transport of the
+  collapsed restriction of \(\lambda\):
+  \[
+    \deg_{t}\bigl(g^{*}\lambda\bigr)
+      = \deg\Bigl( g^{*}\bigl(\mathrm{picEtAffineEquiv}_{E,K}(t^{*}\lambda)\bigr) \Bigr).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  By definition, \(\deg_t(g^{*}\lambda)\) is the degree of the plus class obtained by
+  restricting \(g^{*}\lambda\) along \(t\) and collapsing by the affine comparison.
+  Restriction along \(t\) commutes with the curve transport
+  (Theorem~\ref{thm:picEtMap_picEtPullback}), and at the affine test \(\Spec K\) the
+  transport is the affine curve transport under the comparison
+  (Theorem~\ref{thm:picEtPullback_laws}).
+\end{proof}
+
 \section{The degree seam at field points}
 \label{sec:degreeSeam}
 
