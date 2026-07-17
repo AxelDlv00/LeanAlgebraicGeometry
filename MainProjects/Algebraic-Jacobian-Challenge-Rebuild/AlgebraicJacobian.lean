@@ -234,6 +234,8 @@ import AlgebraicJacobian.RiemannRoch.SectionSpaces
 import AlgebraicJacobian.RiemannRoch.ThetaSections
 import AlgebraicJacobian.RiemannRoch.ThetaSectionsIso
 import AlgebraicJacobian.Cohomology.RelThetaTwist
+import AlgebraicJacobian.Cohomology.RelThetaTransport
+import AlgebraicJacobian.Cohomology.RelThetaTransportCore
 import AlgebraicJacobian.RiemannRoch.WindowLedgerF3
 import AlgebraicJacobian.RiemannRoch.BaseDivisor
 import AlgebraicJacobian.RiemannRoch.SumIntersection
