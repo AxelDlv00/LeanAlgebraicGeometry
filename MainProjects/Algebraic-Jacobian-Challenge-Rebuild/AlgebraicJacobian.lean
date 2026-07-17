@@ -390,6 +390,7 @@ import AlgebraicJacobian.Picard.SlicingFlat
 import AlgebraicJacobian.Picard.SupportTube
 import AlgebraicJacobian.Picard.PicEtCrossBase
 import AlgebraicJacobian.Picard.Pic0ThetaAssembly
+import AlgebraicJacobian.Picard.JacobianDataBaseChange
 
 /-!
 # AlgebraicJacobian — library root
