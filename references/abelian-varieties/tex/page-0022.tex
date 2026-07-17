@@ -1,0 +1,88 @@
+% source: J. S. Milne, "Abelian Varieties" (course notes), v2.00, 2008, www.jmilne.org
+% pdf_page: 0022
+% doc_page: 16 (Chapter I, Section 3 — "Rational maps."; Theorem 3.1 and the start of its proof)
+% retrieved: 2026-07-17
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi via pdftoppm)
+
+% [running head: CHAPTER I. ABELIAN VARIETIES: GEOMETRY, page 16]
+
+% (no non-standard operators on this page; rational-map dashed arrows rendered with \dashrightarrow from amssymb)
+
+\subsection*{Rational maps.}
+
+We first discuss the general theory of rational maps.
+
+Let $V$ and $W$ be varieties over $k$, and consider pairs $(U, \varphi_U)$
+where $U$ is a dense open subset of $V$ and $\varphi_U$ is a regular map
+$U \to W$. Two such pairs $(U, \varphi_U)$ and $(U', \varphi_{U'})$ are said
+to be \textbf{equivalent} if $\varphi_U$ and $\varphi_{U'}$ agree on
+$U \cap U'$. An equivalence class of pairs is called a \textbf{rational map}
+$\varphi \colon V \dashrightarrow W$. A rational map $\varphi$ is said to be
+\textbf{defined} at a point $v$ of $V$ if $v \in U$ for some
+$(U, \varphi_U) \in \varphi$. The set $U_1$ of $v$ at which $\varphi$ is
+defined is open, and there is a regular map $\varphi_1 \colon U_1 \to W$ such
+that $(U_1, \varphi_1) \in \varphi$ --- clearly,
+$U_1 = \bigcup_{(U, \varphi_U) \in \varphi} U$ and we can define $\varphi_1$
+to be the regular map such that $\varphi_1 | U = \varphi_U$ for all
+$(U, \varphi_U) \in \varphi$.
+
+The following examples illustrate the major reasons why a rational map
+$V \dashrightarrow W$ may fail to extend to a regular map on the whole of
+$V$.
+
+\begin{itemize}
+\item[(a)] Let $W$ be a proper open subset of $V$; then the rational map
+  $V \dashrightarrow W$ represented by $\mathrm{id} \colon W \to W$ will not
+  extend to $V$. To obviate this problem, we should take $W$ to be complete.
+\item[(b)] Let $C$ be the cuspidal plane cubic curve $Y^2 = X^3$. The
+  regular map $\mathbb{A}^1 \to C$, $t \mapsto (t^2, t^3)$, defines an
+  isomorphism $\mathbb{A}^1 \smallsetminus \{0\} \to C \smallsetminus \{0\}$.
+  The inverse of this isomorphism represents a rational map
+  $C \dashrightarrow \mathbb{A}^1$ which does not extend to a regular map on
+  $C$ because the map on function fields doesn't send the local ring at
+  $0 \in \mathbb{A}^1$ into the local ring at $0 \in C$. Roughly speaking, a
+  regular map can only map a singularity to a worse singularity. To obviate
+  this problem, we should take $V$ to be nonsingular (in fact, nonsingular
+  is no more helpful than normal).
+\item[(c)] Let $P$ be a point on a nonsingular surface $V$. It is possible
+  to ``blow-up'' $P$ and obtain a surface $W$ and a morphism
+  $\alpha \colon W \to V$ which restricts to an isomorphism
+  $W \smallsetminus \alpha^{-1}(P) \to V \smallsetminus P$ but for which
+  $\alpha^{-1}(P)$ is the projective line of ``directions'' through $P$. The
+  inverse of the restriction of $\alpha$ to
+  $W \smallsetminus \alpha^{-1}(P)$ represents a rational map
+  $V \dashrightarrow W$ which does not extend to all $V$, even when $V$ and
+  $W$ are complete --- roughly speaking, there is no preferred direction
+  through $P$, and hence no obvious choice for the image of $P$.
+\end{itemize}
+
+In view of these examples, the next theorem is best possible.
+
+\paragraph{Theorem 3.1.}
+\textit{A rational map $\varphi \colon V \dashrightarrow W$ from a normal
+variety $V$ to a complete variety $W$ is defined on an open subset $U$ of
+$V$ whose complement $V \smallsetminus U$ has codimension $\ge 2$.}
+
+\paragraph{Proof.}
+Assume first that $V$ is a curve. Thus we are given a nonsingular curve $V$
+and a regular map $\varphi \colon U \to W$ from an open subset of $V$ which
+we want to extend to $V$. Consider the maps
+\[
+  \begin{array}{ccc}
+      &            & V \\
+      & \nearrow   & \Big\uparrow \text{project} \\
+    U & \;\lhook\joinrel\xrightarrow{\;u \mapsto (u, \varphi(u))\;}\;
+        & Z \subset V \times W \\
+      & \underset{\varphi}{\searrow}
+        & \Big\downarrow \text{project} \\
+      &            & W.
+  \end{array}
+\]
+% [diagram: hooked horizontal arrow U ↪ Z ⊂ V × W labelled "u ↦ (u, φ(u))";
+%  unlabelled diagonal arrow U → V; diagonal arrow U → W labelled φ;
+%  vertical arrows Z → V (upward) and Z → W (downward), each labelled "project"]
+Let $U'$ be the image of $U$ in $V \times W$, and let $Z$ be its closure.
+The image of $Z$ in $V$ is closed (because $W$ is complete), and contains
+$U$ (the composite $U \to V$ is the given inclusion), and so $Z$ maps onto
+$V$. The maps $U \to U' \to U$ are isomorphisms. Therefore,
+% [proof of Theorem 3.1 continues on the next page]

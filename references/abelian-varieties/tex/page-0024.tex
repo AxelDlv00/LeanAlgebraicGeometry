@@ -1,0 +1,91 @@
+% source: J. S. Milne, "Abelian Varieties" (course notes), v2.00, 2008, www.jmilne.org
+% pdf_page: 0024
+% doc_page: 18 (Chapter I, Section 3 — end of the proof of Lemma 3.3; Theorem 3.4; Lemmas 3.5 and 3.6 with proofs)
+% retrieved: 2026-07-17
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi via pdftoppm)
+
+% [running head: CHAPTER I. ABELIAN VARIETIES: GEOMETRY, page 18]
+
+\DeclareMathOperator{\Image}{Im}        % Im(φ*), image
+\DeclareMathOperator{\divisor}{div}     % div(f), divisor of a rational function
+\DeclareMathOperator{\Tgt}{Tgt}         % Tgt_P(V), tangent space at P
+
+% [continuation of the proof of Lemma 3.3 begun on the previous page]
+
+with $\divisor(f)_0$ and $\divisor(f)_{\infty}$ effective divisors --- note
+that $\divisor(f)_{\infty} = \divisor(f^{-1})_0$. Then
+\[
+  \mathcal{O}_{V \times V, (x,x)} = \{ f \in k(V \times V) \mid
+    \divisor(f)_{\infty} \text{ does not contain } (x, x) \} \cup \{0\}.
+\]
+Suppose $\phi$ is not defined at $x$.
+% [sic: printed with a straight phi "$\phi$" here; presumably "$\varphi$", the rational map of Lemma 3.3, is intended]
+Then for some $f \in \Image(\varphi^*)$, $(x, x) \in \divisor(f)_{\infty}$,
+% [sic: printed "Im(φ*)" with a lowercase varphi; presumably "Im(Φ*)" is intended — Φ* is the map defined on the previous page]
+and clearly $\Phi$ is not defined at the points
+$(y, y) \in \Delta \cap \divisor(f)_{\infty}$. This is a subset of pure
+codimension one in $\Delta$ (AG 9.2), and when we identify it with a subset
+of $V$, it is a subset of $V$ of codimension one passing through $x$ on
+which $\varphi$ is not defined. \hfill $\square$
+
+\paragraph{Theorem 3.4.}
+\textit{Let $\alpha \colon V \times W \to A$ be a morphism from a product of
+nonsingular varieties into an abelian variety, and assume that $V \times W$
+is geometrically irreducible. If}
+\[
+  \alpha(V \times \{w_0\}) = \{a_0\} = \alpha(\{v_0\} \times W)
+\]
+\textit{for some $a_0 \in A(k)$, $v_0 \in V(k)$, $w_0 \in W(k)$, then}
+\[
+  \alpha(V \times W) = \{a_0\}.
+\]
+
+If $V$ (or $W$) is complete, this is a special case of the Rigidity Theorem
+(Theorem 1.1). For the general case, we need two lemmas.
+
+\paragraph{Lemma 3.5.}
+\textit{(a) Every nonsingular curve $V$ can be realized as an open subset of
+a complete nonsingular curve $C$.}
+
+\textit{(b) Let $C$ be a curve; then there is a nonsingular curve $C'$ and a
+regular map $C' \to C$ that is an isomorphism over the set of nonsingular
+points of $C$.}
+
+\paragraph{Proof (Sketch)}
+(a) Let $K = k(V)$. Take $C$ to be the set of discrete valuation rings in
+$K$ containing $k$ with the topology for which the finite sets and the whole
+set are closed. For each open subset $U$ of $C$, define
+\[
+  \Gamma(U, \mathcal{O}_C) = \bigcap \{ R \mid R \in C \}.
+\]
+% [sic: printed "R ∈ C"; presumably "R ∈ U" is intended]
+The ringed space $(C, \mathcal{O}_C)$ is a nonsingular curve, and the map
+$V \to C$ sending a point $x$ of $V$ to $\mathcal{O}_{V.x}$ is regular.
+% [sic: printed subscript "O_{V.x}" with a period; presumably "O_{V,x}" is intended]
+
+(b) Take $C'$ to be the normalization of $C$. \hfill $\square$
+
+\paragraph{Lemma 3.6.}
+\textit{Let $V$ be an irreducible variety over an algebraically closed
+field, and let $P$ be a nonsingular point on $V$. Then the union of the
+irreducible curves passing through $P$ and nonsingular at $P$ is dense in
+$V$.}
+
+\paragraph{Proof.}
+By induction, it suffices to show that the union of the irreducible
+subvarieties of codimension 1 passing $P$ and nonsingular at $P$ is dense in
+$V$.
+% [sic: printed "passing P"; presumably "passing through P" is intended]
+We can assume $V$ to be affine, and that $V$ is embedded in affine space.
+For $H$ a hyperplane passing through $P$ but not containing $\Tgt_P(V)$,
+$V \cap H$ is nonsingular at $P$. Let $V_H$ be the irreducible component of
+$V \cap H$ passing through $P$, regarded as a subvariety of $V$, and let $Z$
+be a closed subset of $V$ containing all $V_H$. Let $C_P(Z)$ be the tangent
+cone to $Z$ at $P$ (see AG, Chapter 5). Clearly,
+\[
+  \Tgt_P(V) \cap H = \Tgt_P(V_H) = C_P(V_H) \subset C_P(Z) \subset C_P(V)
+    = \Tgt_P(V),
+\]
+and it follows that $C_P(Z) = \Tgt_P(V)$. As
+$\dim C_P(Z) = \dim(Z)$ (AG 5.40 et seqq.), this implies that $Z = V$
+(AG 2.26). \hfill $\square$

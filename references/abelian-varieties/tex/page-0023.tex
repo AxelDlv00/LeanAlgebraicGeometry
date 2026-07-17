@@ -1,0 +1,90 @@
+% source: J. S. Milne, "Abelian Varieties" (course notes), v2.00, 2008, www.jmilne.org
+% pdf_page: 0023
+% doc_page: 17 (Chapter I, Section 3 — end of the proof of Theorem 3.1; "Rational maps into abelian varieties.": Theorem 3.2, Lemma 3.3 and the start of its proof)
+% retrieved: 2026-07-17
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi via pdftoppm)
+
+% [running head: 3. RATIONAL MAPS INTO ABELIAN VARIETIES, page 17]
+
+\DeclareMathOperator{\Spec}{Spec}       % Spec(k(V)), Spec(O_Z)
+\DeclareMathOperator{\Image}{Im}        % Im(O_{G,e}), image
+\DeclareMathOperator{\divisor}{div}     % div(f), divisor of a rational function
+
+% [continuation of the proof of Theorem 3.1 begun on the previous page]
+
+$Z \to V$ is a surjective map from a complete curve onto a nonsingular
+complete curve that is an isomorphism on open subsets. Such a map must be an
+isomorphism (complete nonsingular curves are determined by their function
+fields). The restriction of the projection map $V \times W \to W$ to $Z$
+($\simeq V$) is the extension of $\varphi$ to $V$ we are seeking.
+
+The general case can be reduced to the one-dimensional case (using schemes).
+Let $U$ be the largest subset on which $\varphi$ is defined, and suppose
+that $V \smallsetminus U$ has codimension 1. Then there is a prime divisor
+$Z$ in $V \smallsetminus U$. Because $V$ is normal, its associated local
+ring is a discrete valuation ring $\mathcal{O}_Z$ with field of fractions
+$k(V)$. The map $\varphi$ defines a morphism of schemes
+$\Spec(k(V)) \to W$, which the valuative criterion of properness
+(Hartshorne 1977, II 4.7) shows extends to a morphism
+$\Spec(\mathcal{O}_Z) \to W$. This implies that $\varphi$ has a
+representative defined on an open subset that meets $Z$ in a nonempty set,
+which is a contradiction. \hfill $\square$
+
+\subsection*{Rational maps into abelian varieties.}
+
+\paragraph{Theorem 3.2.}
+\textit{A rational map $\alpha \colon V \dashrightarrow A$ from a
+nonsingular variety to an abelian variety is defined on the whole of $V$.}
+
+\paragraph{Proof.}
+Combine Theorem 3.1 with the next lemma. \hfill $\square$
+
+\paragraph{Lemma 3.3.}
+\textit{Let $\varphi \colon V \dashrightarrow G$ be a rational map from a
+nonsingular variety to a group variety. Then either $\varphi$ is defined on
+all of $V$ or the points where it is not defined form a closed subset of
+pure codimension $1$ in $V$ (i.e., a finite union of prime divisors).}
+
+\paragraph{Proof.}
+Define a rational map
+\[
+  \Phi \colon V \times V \dashrightarrow G, \ (x, y) \mapsto
+    \varphi(x) \cdot \varphi(y)^{-1}.
+\]
+More precisely, if $(U, \varphi_U)$ represents $\varphi$, then $\Phi$ is the
+rational map represented by
+\[
+  U \times U \xrightarrow{\;\varphi_U \times \varphi_U\;} G \times G
+    \xrightarrow{\;\mathrm{id} \times \mathrm{inv}\;} G
+    \xrightarrow{\;m\;} G.
+\]
+% [sic: printed "G × G --(id×inv)--> G --(m)--> G"; presumably the middle
+%  term should be "G × G", i.e. id × inv : G × G → G × G followed by
+%  m : G × G → G]
+Clearly $\Phi$ is defined at a diagonal point $(x, x)$ if $\varphi$ is
+defined at $x$, and then $\Phi(x, x) = e$. Conversely, if $\Phi$ is defined
+at $(x, x)$, then it is defined on an open neighbourhood of $(x, x)$; in
+particular, there will be an open subset $U$ of $V$ such that $\Phi$ is
+defined on $\{x\} \times U$. After possible replacing $U$ by a smaller open
+subset (not necessarily containing $x$), $\varphi$ will be defined on $U$.
+% [sic: printed "After possible replacing"; presumably "After possibly replacing" is intended]
+For $u \in U$, the formula
+\[
+  \varphi(x) = \Phi(x, u) \cdot \varphi(u)
+\]
+defines $\varphi$ at $x$. Thus $\varphi$ is defined at $x$ if and only if
+$\Phi$ is defined at $(x, x)$. The rational map $\Phi$ defines a map
+\[
+  \Phi^* \colon \mathcal{O}_{G,e} \to k(V \times V).
+\]
+Since $\Phi$ sends $(x, x)$ to $e$ if it is defined there, it follows that
+$\Phi$ is defined at $(x, x)$ if and only if
+\[
+  \Image(\mathcal{O}_{G,e}) \subset \mathcal{O}_{V \times V, (x,x)}.
+\]
+Now $V \times V$ is nonsingular, and so we have a good theory of divisors
+(AG, Chapter 12). For a nonzero rational function $f$ on $V \times V$, write
+\[
+  \divisor(f) = \divisor(f)_0 - \divisor(f)_{\infty},
+\]
+% [proof of Lemma 3.3 continues on the next page]

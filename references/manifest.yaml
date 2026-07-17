@@ -223,6 +223,10 @@ references:
       - { path: abelian-varieties.md, format: md }
       - { path: abelian-varieties/tex/page-0014.tex, format: tex }
       - { path: abelian-varieties/tex/page-0015.tex, format: tex }
+      - { path: abelian-varieties/tex/page-0021.tex, format: tex }
+      - { path: abelian-varieties/tex/page-0022.tex, format: tex }
+      - { path: abelian-varieties/tex/page-0023.tex, format: tex }
+      - { path: abelian-varieties/tex/page-0024.tex, format: tex }
       - { path: abelian-varieties/tex/page-0107.tex, format: tex }
       - { path: abelian-varieties/tex/page-0108.tex, format: tex }
       - { path: abelian-varieties/tex/page-0109.tex, format: tex }
@@ -270,7 +274,44 @@ references:
       preserved with [sic] notes (psi-for-phi in the 6.1 proof display,
       "f is the identity" for phi in 6.2's proof). Cite as
       abelian-varieties:page-0107 .. page-0110.
-    topics: [abelian-varieties, albanese, jacobian, rigidity-lemma, symmetric-power, riemann-roch, autoduality]
+      PAGES 21-24 (doc pp. 15-18, Chapter I Section 3 "Rational Maps Into
+      Abelian Varieties") transcribed 2026-07-17 via vision from rendered
+      pages (pdftoppm 200dpi, no OCR), offset +6 re-verified on the printed
+      page numbers. Statement map -- p. 15 (page-0021): tail of Section 2
+      (dual torus V*/L*, Exercise 2.11 Weil pairing, Riemann form ->
+      polarization lambda_E with degree/principal, Exercises 2.12-2.13,
+      simple tori, End(E) tensor Q / Albert classification, Notes
+      paragraph); Section 3 heading + "Throughout this section, all
+      varieties will be irreducible". p. 16 (page-0022): "Rational maps."
+      definitions (equivalent pairs, rational map, defined at a point);
+      examples (a)-(c) of non-extending rational maps; THEOREM 3.1
+      statement (a rational map from a NORMAL variety to a complete variety
+      is defined on an open whose complement has codimension >= 2 -- the
+      printed hypothesis is normal, not nonsingular); proof begun (curve
+      case via the closure Z of the graph in V x W). p. 17 (page-0023):
+      proof of 3.1 completed (general case: prime divisor Z in V - U gives
+      a DVR O_Z, valuative criterion of properness, Hartshorne 1977 II
+      4.7); subsection "Rational maps into abelian varieties."; THEOREM 3.2
+      (a rational map from a nonsingular variety to an abelian variety is
+      defined on the whole of V) with its one-line proof (combine 3.1 with
+      the next lemma); LEMMA 3.3 statement (indeterminacy locus of a
+      rational map from a nonsingular variety to a group variety is empty
+      or pure codimension 1) and proof begun (difference map Phi(x,y) =
+      phi(x).phi(y)^{-1}, phi defined at x iff Phi defined at (x,x),
+      Phi^*: O_{G,e} -> k(V x V), div(f) = div(f)_0 - div(f)_infty on the
+      nonsingular V x V). p. 18 (page-0024): proof of Lemma 3.3 completed
+      (div(f)_infty cuts the diagonal in pure codimension one); THEOREM 3.4
+      statement only (rigidity without completeness: alpha : V x W -> A
+      with both coordinate axes collapsing is constant; its proof lies
+      beyond this window); LEMMA 3.5 (every nonsingular curve is open in a
+      complete nonsingular curve; normalization) with PROOF (SKETCH); LEMMA
+      3.6 (union of the irreducible curves through a nonsingular point P
+      and nonsingular at P is dense) with full tangent-cone proof. Print
+      misprints preserved with [sic] notes (e.g. "every polarizable tori"
+      p. 15, the "G x G -> G" middle term in the id x inv chain p. 17,
+      "Suppose phi"/"Im(phi^*)" for Phi on p. 18). Cite as
+      abelian-varieties:page-0021 .. page-0024.
+    topics: [abelian-varieties, albanese, jacobian, rigidity-lemma, symmetric-power, riemann-roch, autoduality, rational-maps]
 
   - slug: atiyah-macdonald-commutative-algebra
     title: "Introduction to Commutative Algebra"

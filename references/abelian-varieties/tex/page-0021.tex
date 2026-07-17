@@ -1,0 +1,79 @@
+% source: J. S. Milne, "Abelian Varieties" (course notes), v2.00, 2008, www.jmilne.org
+% pdf_page: 0021
+% doc_page: 15 (Chapter I, end of Section 2 "Abelian Varieties over the Complex Numbers" — dual torus, Weil pairing, polarizations, Notes; start of Section 3 "Rational Maps Into Abelian Varieties")
+% retrieved: 2026-07-17
+% transcribed_by: claude-fable-5 (vision, rendered at 200dpi via pdftoppm)
+
+% [running head: 3. RATIONAL MAPS INTO ABELIAN VARIETIES, page 15]
+
+\DeclareMathOperator{\End}{End}     % End(E), End(X), endomorphism algebra
+\DeclareMathOperator{\Image}{Im}    % Im f(L), imaginary part
+
+% [continuation of Section 2 (complex tori) from the previous page]
+
+Let $X = V/L$. Then
+\[
+  V^* = \{ f \colon V \to \mathbb{C} \mid f(\alpha v) = \bar{\alpha} f(v),
+    \quad f(v + v') = f(v) + f(v') \}
+\]
+is a complex vector space of the same dimension as $V$. Define
+\[
+  L^* = \{ f \in V^* \mid \Image f(L) \subset \mathbb{Z} \}.
+\]
+Then $L^*$ is a lattice in $V^*$, and
+$X^{\vee} \overset{\text{df}}{=} V^*/L^*$ is a polarizable complex torus,
+called the \textbf{dual torus}.
+
+\paragraph{Exercise 2.11.}
+If $X = V/L$, then $X_m$, the subgroup of $X$ of elements killed by $m$, is
+$m^{-1}L/L$. Show that there is a canonical pairing
+\[
+  X_m \times (X^{\vee})_m \to \mathbb{Z}/m\mathbb{Z}.
+\]
+This is the \textbf{Weil pairing}.
+
+A Riemann form on $E$ on $X$ defines a homomorphism
+% [sic: printed "A Riemann form on E on X"; presumably "A Riemann form E on X" is intended]
+$\lambda_E \colon X \to X^{\vee}$ as follows: let $H$ be the associated
+Hermitian form, and let $\lambda_E$ be the map defined by
+\[
+  v \mapsto H(v, \cdot) \colon V \to V^*.
+\]
+Then $\lambda_E$ is an isogeny, and we call such a map $\lambda_E$ a
+\textbf{polarization}. The \textbf{degree} of the polarization is the order
+of the kernel. The polarization is said to be \textbf{principal} if it is of
+degree 1.
+
+\paragraph{Exercise 2.12.}
+Show that every polarizable tori is isogenous to a principally polarized
+torus.
+% [sic: printed "every polarizable tori"; presumably "every polarizable torus" is intended]
+
+A polarizable complex torus is \textbf{simple} if it does not contain a
+nonzero proper polarizable subtorus $X'$.
+
+\paragraph{Exercise 2.13.}
+Show that every polarizable torus is isogenous to a direct sum of simple
+polarizable tori.
+
+Let $E$ be an elliptic curve over $\mathbb{Q}$. Then
+$\End(E) \otimes \mathbb{Q}$ is either $\mathbb{Q}$ or a quadratic imaginary
+extension of $\mathbb{Q}$. For a simple polarizable torus,
+$D = \End(X) \otimes \mathbb{Q}$ is a division algebra over a field and the
+polarization defines a positive involution ${}^{\dagger}$ on $D$. The pairs
+$(D, {}^{\dagger})$ that arise from a simple abelian variety have been
+classified (A.A. Albert).
+
+\subsection*{Notes}
+
+There is a concise treatment of complex abelian varieties in Chapter I of
+Mumford 1970, and a more leisurely account in Murty 1993. The classic
+account is Siegel 1948. Siegel first develops the theory of complex
+functions in several variables. See also his books, Topics in Complex
+Function Theory. There is a very complete modern account in Birkenhake and
+Lange 2004
+% [sic: the paragraph ends "Birkenhake and Lange 2004" with no final period in the printed text]
+
+\section*{3 \quad Rational Maps Into Abelian Varieties}
+
+Throughout this section, all varieties will be irreducible.
