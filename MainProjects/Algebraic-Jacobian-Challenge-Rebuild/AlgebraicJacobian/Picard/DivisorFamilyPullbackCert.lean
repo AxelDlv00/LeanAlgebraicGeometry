@@ -181,14 +181,17 @@ noncomputable def pulledToOvlRight (i j : A.index) :
         Ideal.subset_span (Set.mem_insert_of_mem _ rfl)
       rw [Ideal.Quotient.mkₐ_eq_mk, Ideal.Quotient.eq_zero_iff_mem.mpr hmem, zero_mul])
 
-/-- The left overlap-restriction maps on residue classes (`liftₐ` over `mk`). -/
-lemma toOvlLeft_mk (i j : A.index) (t : Γ(relCurve C R, A.pieces i)) :
+/-- The left overlap-restriction maps on residue classes (`liftₐ` over `mk`).
+`private`: the public copy lives in `DivisorFamilyTheta` (same-day concurrent coinage,
+the I-0190 pattern — the join collision surfaced at the first full root build). -/
+private lemma toOvlLeft_mk (i j : A.index) (t : Γ(relCurve C R, A.pieces i)) :
     A.toOvlLeft i j (Ideal.Quotient.mk (Ideal.span {A.eqn i}) t) =
       Ideal.Quotient.mk (A.ovlIdeal i j) (relResAlgHom C R inf_le_left t) :=
   rfl
 
-/-- The right overlap-restriction maps on residue classes. -/
-lemma toOvlRight_mk (i j : A.index) (t : Γ(relCurve C R, A.pieces j)) :
+/-- The right overlap-restriction maps on residue classes. `private`: see
+`toOvlLeft_mk`. -/
+private lemma toOvlRight_mk (i j : A.index) (t : Γ(relCurve C R, A.pieces j)) :
     A.toOvlRight i j (Ideal.Quotient.mk (Ideal.span {A.eqn j}) t) =
       Ideal.Quotient.mk (A.ovlIdeal i j) (relResAlgHom C R inf_le_right t) :=
   rfl

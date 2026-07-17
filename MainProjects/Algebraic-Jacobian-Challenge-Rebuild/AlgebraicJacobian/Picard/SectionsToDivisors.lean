@@ -129,8 +129,11 @@ attribute [local instance] Scheme.overModule
 
 /-- **Piece flatness**: if the section ring of an affine open `V` is a flat `k`-module
 (`Scheme.overModule`), then so is the section ring of every basic open `D(h) ⊆ V` —
-the tower `k → Γ(V) → Γ(D(h))` with `Γ(D(h))` a localization of `Γ(V)`. -/
-theorem flat_sections_basicOpen {V : X.Opens} (hV : IsAffineOpen V) (h : Γ(X, V))
+the tower `k → Γ(V) → Γ(D(h))` with `Γ(D(h))` a localization of `Γ(V)`.
+`private`: the public copy (same content, binder order `hV hflat f`) lives in
+`DivSchemeFamilySide` — same-day concurrent coinage (the I-0190 pattern), collision
+surfaced at the first full root build; external consumers use that copy. -/
+private theorem flat_sections_basicOpen {V : X.Opens} (hV : IsAffineOpen V) (h : Γ(X, V))
     (hflat : Module.Flat k Γ(X, V)) :
     Module.Flat k Γ(X, X.basicOpen h) := by
   letI : Algebra k Γ(X, V) := (X.overAlgebraMap k V).toAlgebra
