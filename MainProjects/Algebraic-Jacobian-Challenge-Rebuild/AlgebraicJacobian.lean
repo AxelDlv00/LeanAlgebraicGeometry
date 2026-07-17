@@ -314,6 +314,7 @@ import AlgebraicJacobian.Tangent.DualNumberBaseChange
 import AlgebraicJacobian.Tangent.TruncExpCechH1
 import AlgebraicJacobian.Picard.RelPicCurveMap
 import AlgebraicJacobian.Curve.CrossBaseSquare
+import AlgebraicJacobian.RiemannRoch.DegreeIsoTransport
 import AlgebraicJacobian.RiemannRoch.ClassDegMapIso
 import AlgebraicJacobian.Curve.CurveMorphismDichotomy
 
