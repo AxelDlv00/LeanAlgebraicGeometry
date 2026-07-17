@@ -173,6 +173,97 @@ lemma datumDomBaseChange_tmul (b' : B')
   rw [datumDomBaseChange, LinearEquiv.trans_apply, TensorProduct.prodRight_tmul]
   rfl
 
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 800000 in
+/-- **The δ-naturality square** (the glued analogue of `relTwistDiffBaseChange`): the base
+change of the datum's Čech differential over `B` is carried to the datum's Čech differential
+over `B'` under the term identifications. There is no cocycle conjugation — the componentwise
+restrictions commute with `sectionsMap` through `gluedRes_sectionsMap`. -/
+theorem datumDiffBaseChange
+    (x : B' ⊗[B] ((D.sheaf.obj.obj (op (relCover C B (fiberTwoCover π)).V₀)) ×
+      (D.sheaf.obj.obj (op (relCover C B (fiberTwoCover π)).V₁)))) :
+    D.termBaseChangeInf B' (((datumPair D).diff).baseChange B' x) =
+      (datumPair (D.baseChange B')).diff (D.datumDomBaseChange B' x) := by
+  induction x using TensorProduct.induction_on with
+  | zero => simp only [map_zero]
+  | add a b ha hb => simp only [map_add, ha, hb]
+  | tmul b' p =>
+    have hbc : ((datumPair D).diff).baseChange B' (b' ⊗ₜ[B] p) =
+        b' ⊗ₜ[B] (datumPair D).diff p := LinearMap.baseChange_tmul _ _ _
+    rw [hbc]
+    simp only [D.datumDomBaseChange_tmul B', TwoLatticePair.diff_apply,
+      D.termBaseChange₀_tmul B', D.termBaseChange₁_tmul B']
+    rw [TensorProduct.tmul_sub, map_sub, D.termBaseChangeInf_tmul B',
+      D.termBaseChangeInf_tmul B', map_smul, map_smul]
+    congr 1
+    · congr 1
+      exact (D.gluedRes_sectionsMap B'
+        (inf_le_left : (relCover C B (fiberTwoCover π)).V₀ ⊓
+          (relCover C B (fiberTwoCover π)).V₁ ≤ (relCover C B (fiberTwoCover π)).V₀)
+        (le_preimage_chart B' (fiberTwoCover π).V₀)
+        (le_preimage_chart B' ((fiberTwoCover π).V₀ ⊓ (fiberTwoCover π).V₁))
+        (inf_le_left : (relCover C B' (fiberTwoCover π)).V₀ ⊓
+          (relCover C B' (fiberTwoCover π)).V₁ ≤ (relCover C B' (fiberTwoCover π)).V₀)
+        p.1).symm
+    · congr 1
+      exact (D.gluedRes_sectionsMap B'
+        (inf_le_right : (relCover C B (fiberTwoCover π)).V₀ ⊓
+          (relCover C B (fiberTwoCover π)).V₁ ≤ (relCover C B (fiberTwoCover π)).V₁)
+        (le_preimage_chart B' (fiberTwoCover π).V₁)
+        (le_preimage_chart B' ((fiberTwoCover π).V₀ ⊓ (fiberTwoCover π).V₁))
+        (inf_le_right : (relCover C B' (fiberTwoCover π)).V₀ ⊓
+          (relCover C B' (fiberTwoCover π)).V₁ ≤ (relCover C B' (fiberTwoCover π)).V₁)
+        p.2).symm
+
+/-! ## The on-the-nose H⁰ base change and H¹ vanishing -/
+
+open AlgebraicJacobian
+
+/-- **`H⁰` base change on the nose** (DAT-1 (1d-ii) tail; the RE-5/DAT-B transport interface):
+on the vanishing locus, for every ring map `B → B'`,
+
+`B' ⊗[B] H⁰(C_B, F_D) ≃ₗ[B'] H⁰(C_{B'}, F_{D'})`
+
+with `D' = D.baseChange B'` — the abstract kernel clause `datumH0BaseChangeEquiv` threaded
+through the term identifications by the δ-naturality square `datumDiffBaseChange`. -/
+noncomputable def datumH0BaseChange (hH1 : Subsingleton (datumPair D).H1) :
+    B' ⊗[B] (Sheaf.HModule D.sheaf 0) ≃ₗ[B']
+      Sheaf.HModule (D.baseChange B').sheaf 0 :=
+  (datumH0BaseChangeEquiv D hH1 B').trans
+    ((RigidEngine.kerCongr ((datumPair D).diff.baseChange B')
+        ((datumPair (D.baseChange B')).diff)
+        (D.datumDomBaseChange B') (D.termBaseChangeInf B')
+        (fun x => D.datumDiffBaseChange B' x)).trans
+      ((D.baseChange B').pairData.h0Equiv
+        (relCover_isAffineOpen₀ C B' (fiberTwoCover π))
+        (relCover_isAffineOpen₁ C B' (fiberTwoCover π))
+        (relCover_sup C B' (fiberTwoCover π))).symm)
+
+/-- **`H¹` vanishes after base change** on the vanishing locus: the base-changed Čech
+differential is surjective (right-exactness of `B' ⊗[B] -` plus the δ-square), so `H¹` of the
+base-changed datum sheaf vanishes. -/
+theorem datum_subsingleton_h1_baseChange (hH1 : Subsingleton (datumPair D).H1) :
+    Subsingleton (Sheaf.HModule (D.baseChange B').sheaf 1) := by
+  have hsurj : Function.Surjective (datumPair D).diff :=
+    D.pairData.surjective_diff (relCover_isAffineOpen₀ C B (fiberTwoCover π))
+      (relCover_isAffineOpen₁ C B (fiberTwoCover π)) hH1
+  have hbc : Function.Surjective ((datumPair D).diff.baseChange B') := by
+    rw [LinearMap.baseChange_eq_ltensor]
+    exact LinearMap.lTensor_surjective B' hsurj
+  have hsurj' : Function.Surjective (datumPair (D.baseChange B')).diff :=
+    RigidEngine.surjective_congr _ _ (D.datumDomBaseChange B') (D.termBaseChangeInf B')
+      (fun x => D.datumDiffBaseChange B' x) hbc
+  haveI : Subsingleton (datumPair (D.baseChange B')).H1 := by
+    have h : (datumPair (D.baseChange B')).imageLattice = ⊤ := by
+      rw [← (datumPair (D.baseChange B')).range_diff_eq, LinearMap.range_eq_top]
+      exact hsurj'
+    rw [TwoLatticePair.H1, h]
+    infer_instance
+  exact ((D.baseChange B').pairData.h1Equiv
+    (relCover_isAffineOpen₀ C B' (fiberTwoCover π))
+    (relCover_isAffineOpen₁ C B' (fiberTwoCover π))
+    (relCover_sup C B' (fiberTwoCover π))).toEquiv.subsingleton
+
 end BasicOpenCocycleDatum
 
 end AlgebraicGeometry
