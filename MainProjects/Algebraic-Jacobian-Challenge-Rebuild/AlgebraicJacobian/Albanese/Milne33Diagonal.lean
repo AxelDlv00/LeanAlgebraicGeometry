@@ -76,6 +76,15 @@ lemma diff_toPartialMap_hom_comp_hom
     Scheme.RationalMap.isOver_iff.mpr (differenceRationalMap_compHom_over f hover)
   exact (Scheme.PartialMap.isOver_iff (S := Spec (.of kbar))).mp inferInstance
 
+omit [Smooth X.hom] [GrpObj G] [LocallyOfFiniteType G.hom] in
+/-- Composing any morphism into the diagonal gives the pair morphism: the
+arbitrary-test generalisation of the `k̄`-point collision lemma `comp_selfDiag`. -/
+lemma comp_selfDiag_eq_lift {T : Scheme.{u}} (p : T ⟶ X.left) :
+    p ≫ selfDiag X = pullback.lift p p rfl := by
+  apply pullback.hom_ext
+  · rw [Category.assoc, selfDiag_fst, Category.comp_id, pullback.lift_fst]
+  · rw [Category.assoc, selfDiag_snd, Category.comp_id, pullback.lift_snd]
+
 /-! ## §2. The evaluation formula on pairs inside `Dom f × Dom f` -/
 
 section Evaluation
@@ -209,6 +218,138 @@ theorem comp_toPartialMap_hom_eq_diff
       morphismRestrict_ι, ← Category.assoc, ← Category.assoc, hqP, pullback.lift_snd]
 
 end Evaluation
+
+/-! ## §3. Diagonal triviality: `Φ(x, x) = e` -/
+
+section Diagonal
+
+variable (f : X.left.RationalMap G.left) (hover : f.compHom G.hom = X.hom.toRationalMap)
+variable [IsIntegral (pullback X.hom X.hom)] [IsReduced X.left] [G.left.IsSeparated]
+variable [IsSeparated G.hom]
+
+omit [IsSeparated G.hom] in
+/-- The explicit pairing representative's domain is contained in the domain of
+the maximal representative of the difference map. -/
+lemma diffPairingRep_domain_le :
+    (diffPairingRep f hover).domain
+      ≤ (differenceRationalMap f hover).toPartialMap.domain := by
+  refine (Scheme.PartialMap.le_domain_toRationalMap (diffPairingRep f hover)).trans ?_
+  rw [diffPairingRep_toRationalMap f hover]
+  exact le_rfl
+
+omit [Smooth X.hom] [GrpObj G] [LocallyOfFiniteType G.hom]
+  [IsIntegral (pullback X.hom X.hom)] [IsSeparated G.hom] in
+/-- The domain inclusion of `f` composed with the diagonal, written as the
+pair morphism through the trivial coordinates. -/
+lemma domainι_comp_selfDiag :
+    f.toPartialMap.domain.ι ≫ selfDiag X
+      = pullback.lift (𝟙 _ ≫ f.toPartialMap.domain.ι) (𝟙 _ ≫ f.toPartialMap.domain.ι)
+          rfl := by
+  rw [comp_selfDiag_eq_lift]
+  exact pullback.hom_ext
+    (by rw [pullback.lift_fst, pullback.lift_fst, Category.id_comp])
+    (by rw [pullback.lift_snd, pullback.lift_snd, Category.id_comp])
+
+omit [IsSeparated G.hom] in
+/-- The diagonal maps the domain of `f` pointwise into the domain of the maximal
+representative of the difference map (substep 1 through the pairing). -/
+lemma selfDiag_base_mem_domain (z : ↥X.left) (hz : z ∈ f.toPartialMap.domain) :
+    (selfDiag X).base z ∈ (differenceRationalMap f hover).toPartialMap.domain := by
+  refine diffPairingRep_domain_le f hover ?_
+  rw [diffPairingRep_domain, TopologicalSpace.Opens.mem_inf]
+  constructor
+  · rw [Scheme.PartialMap.precomp_domain]
+    change (pullback.fst X.hom X.hom).base ((selfDiag X).base z) ∈ f.toPartialMap.domain
+    rw [show (pullback.fst X.hom X.hom).base ((selfDiag X).base z)
+        = ((selfDiag X ≫ pullback.fst X.hom X.hom).base) z from rfl, selfDiag_fst]
+    exact hz
+  · rw [Scheme.PartialMap.precomp_domain]
+    change (pullback.snd X.hom X.hom).base ((selfDiag X).base z) ∈ f.toPartialMap.domain
+    rw [show (pullback.snd X.hom X.hom).base ((selfDiag X).base z)
+        = ((selfDiag X ≫ pullback.snd X.hom X.hom).base) z from rfl, selfDiag_snd]
+    exact hz
+
+/-- **Diagonal triviality, morphism level.** Any factorisation `dj` of the
+diagonal `Dom f₀ ⟶ X ×_{k̄} X` through the domain of the maximal representative
+`Φ₀` composes with `Φ₀` to the constant unit morphism:
+`Φ(x, x) = f(x)·f(x)⁻¹ = e` (Milne, *Abelian Varieties*, §I.3 p. 17). -/
+theorem selfDiag_comp_toPartialMap_hom
+    (dj : (↑f.toPartialMap.domain : Scheme.{u}) ⟶
+      ↑(differenceRationalMap f hover).toPartialMap.domain)
+    (hdj : dj ≫ (differenceRationalMap f hover).toPartialMap.domain.ι
+      = f.toPartialMap.domain.ι ≫ selfDiag X) :
+    dj ≫ (differenceRationalMap f hover).toPartialMap.hom
+      = f.toPartialMap.domain.ι ≫ X.hom ≫ grpObjUnitPoint G := by
+  have hj : dj ≫ (differenceRationalMap f hover).toPartialMap.domain.ι
+      = pullback.lift (𝟙 _ ≫ f.toPartialMap.domain.ι) (𝟙 _ ≫ f.toPartialMap.domain.ι)
+          rfl := by
+    rw [hdj, domainι_comp_selfDiag]
+  have heval := comp_toPartialMap_hom_eq_diff f hover (𝟙 _) (𝟙 _) rfl dj hj
+  rw [heval, pullback_lift_diff_self G (f.toPartialMap.domain.ι ≫ X.hom)
+    (𝟙 _ ≫ f.toPartialMap.hom)
+    (by rw [Category.id_comp, toPartialMap_hom_comp_hom f hover]), Category.assoc]
+
+/-- **Diagonal triviality, pointwise.** At any diagonal point `δ(z)` with
+`z ∈ Dom f` at which the maximal representative of the difference map is
+defined, its value is the unit point `e`. -/
+theorem toPartialMap_hom_base_selfDiag_eq
+    (z : ↥X.left) (hz : z ∈ f.toPartialMap.domain)
+    (hδz : (selfDiag X).base z ∈ (differenceRationalMap f hover).toPartialMap.domain) :
+    (differenceRationalMap f hover).toPartialMap.hom.base ⟨(selfDiag X).base z, hδz⟩
+      = (grpObjUnitPoint G).base (X.hom.base z) := by
+  -- Factor the diagonal through the domain of the maximal representative.
+  have hr : Set.range (f.toPartialMap.domain.ι ≫ selfDiag X).base
+      ⊆ Set.range (differenceRationalMap f hover).toPartialMap.domain.ι.base := by
+    rw [Scheme.Opens.range_ι]
+    rintro _ ⟨t, rfl⟩
+    exact selfDiag_base_mem_domain f hover (f.toPartialMap.domain.ι.base t) t.2
+  set dj := IsOpenImmersion.lift
+      (differenceRationalMap f hover).toPartialMap.domain.ι
+      (f.toPartialMap.domain.ι ≫ selfDiag X) hr with hdjdef
+  have hdj : dj ≫ (differenceRationalMap f hover).toPartialMap.domain.ι
+      = f.toPartialMap.domain.ι ≫ selfDiag X := IsOpenImmersion.lift_fac _ _ _
+  have hmor := selfDiag_comp_toPartialMap_hom f hover dj hdj
+  -- Identify the image of the point `z` under `dj`.
+  have hdjz : dj.base ⟨z, hz⟩ = ⟨(selfDiag X).base z, hδz⟩ := by
+    apply Subtype.ext
+    have h1 : (dj ≫ (differenceRationalMap f hover).toPartialMap.domain.ι).base ⟨z, hz⟩
+        = (f.toPartialMap.domain.ι ≫ selfDiag X).base ⟨z, hz⟩ := by rw [hdj]
+    exact h1
+  calc (differenceRationalMap f hover).toPartialMap.hom.base ⟨(selfDiag X).base z, hδz⟩
+      = (differenceRationalMap f hover).toPartialMap.hom.base (dj.base ⟨z, hz⟩) := by
+        rw [hdjz]
+    _ = (dj ≫ (differenceRationalMap f hover).toPartialMap.hom).base ⟨z, hz⟩ := rfl
+    _ = (f.toPartialMap.domain.ι ≫ X.hom ≫ grpObjUnitPoint G).base ⟨z, hz⟩ := by
+        rw [hmor]
+    _ = (grpObjUnitPoint G).base (X.hom.base z) := rfl
+
+/-! ## §4. The generic image specialises to the unit point -/
+
+/-- **The unit point anchors the generic image.** If a point `P` of the domain
+of `Φ₀` specialises to a diagonal point `δ(z)` with `z ∈ Dom f`, then the value
+`Φ₀(P)` specialises to the unit point `e`. Applied to `P := η_{X ×_{k̄} X}`,
+this is the anchor `γ := Φ(η) ⤳ e` for the substep-3 germ pullback at `e`
+(spec D4): no image-closure subgroup machinery is needed. -/
+theorem toPartialMap_hom_base_specializes_unit
+    (z : ↥X.left) (hz : z ∈ f.toPartialMap.domain)
+    (P : ↥(pullback X.hom X.hom))
+    (hP : P ∈ (differenceRationalMap f hover).toPartialMap.domain)
+    (hPδ : P ⤳ (selfDiag X).base z) :
+    (differenceRationalMap f hover).toPartialMap.hom.base ⟨P, hP⟩
+      ⤳ (grpObjUnitPoint G).base (X.hom.base z) := by
+  have hδz : (selfDiag X).base z ∈ (differenceRationalMap f hover).toPartialMap.domain :=
+    selfDiag_base_mem_domain f hover z hz
+  -- Transfer the specialisation into the open subscheme `Dom Φ₀`.
+  have hsub : (⟨P, hP⟩ : ↥(differenceRationalMap f hover).toPartialMap.domain)
+      ⤳ ⟨(selfDiag X).base z, hδz⟩ := by
+    rw [subtype_specializes_iff]
+    exact hPδ
+  -- Push forward along the continuous map `Φ₀` and rewrite the target value.
+  have hmap := hsub.map
+    (differenceRationalMap f hover).toPartialMap.hom.base.hom.continuous
+  rwa [toPartialMap_hom_base_selfDiag_eq f hover z hz hδz] at hmap
+
+end Diagonal
 
 end Scheme.RationalMap
 
