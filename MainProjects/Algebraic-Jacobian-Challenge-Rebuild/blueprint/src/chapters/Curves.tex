@@ -1259,6 +1259,162 @@ field.
   \Gamma(X, V)\)), so by injectivity of the germ map \(P(f_0) \neq 0\).
 \end{proof}
 
+\section{The curve-morphism dichotomy}
+\label{sec:curve_morphism_dichotomy}
+
+A morphism from a complete nonsingular curve to a curve is either constant or a finite
+surjection. This section proves the bundle form of that dichotomy for the proper smooth
+geometrically irreducible curve bundles of the challenge, together with its two general
+ingredients: a morphism between proper bundles is itself proper, and a morphism whose
+set-range is a single closed point factors through the spectrum of the residue field of
+that point.
+
+\begin{theorem}[Morphisms of proper bundles are proper]
+  \label{thm:overHom_isProper}
+  \lean{AlgebraicGeometry.isProper_left, AlgebraicGeometry.locallyOfFiniteType_left,
+    AlgebraicGeometry.quasiCompact_left}
+  \leanok
+  Let \(S\) be a scheme and \(D, E\) schemes over \(S\), with \(D \to S\) proper and
+  \(E \to S\) separated. Then every morphism \(h : D \to E\) over \(S\) is proper; in
+  particular \(h\) is locally of finite type and quasi-compact.
+\end{theorem}
+\begin{proof}
+  \leanok
+  The composite of \(h\) with the structure morphism \(E \to S\) is the structure
+  morphism \(D \to S\), which is proper. Properness cancels along separated morphisms:
+  if \(g \circ f\) is proper and \(g\) is separated, then \(f\) is proper --- \(f\)
+  factors as its graph \((\mathrm{id}, f)\), a closed immersion because it is a base
+  change of the diagonal of the separated \(g\), followed by a projection which is a
+  base change of the proper \(g \circ f\); closed immersions are proper, and properness
+  is stable under base change and composition. Apply this with \(f = h\) and \(g\) the
+  structure morphism of \(E\). Properness comprises finite type, so \(h\) is locally of
+  finite type; and \(h\) is universally closed, hence quasi-compact (the preimage of a
+  quasi-compact open under a universally closed morphism is quasi-compact).
+\end{proof}
+
+\begin{lemma}[The kernel comparison at a one-point range]
+  \label{lem:ker_fromSpecResidueField_le}
+  \lean{AlgebraicGeometry.Scheme.Hom.ker_fromSpecResidueField_le}
+  \leanok
+  Let \(f : X \to Y\) be a quasi-compact morphism of schemes with \(X\) reduced whose
+  set-range is a single point \(y\): \(f(X) = \{y\}\). Then the kernel ideal sheaf of
+  the canonical morphism \(\Spec \kappa(y) \to Y\) is contained in the kernel ideal
+  sheaf of \(f\): for every open \(U \subseteq Y\), every section \(s \in \Gamma(Y, U)\)
+  pulling back to \(0\) on \(\Spec \kappa(y)\) pulls back to \(0\) in
+  \(\Gamma(X, f^{-1}U)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Let \(s \in \Gamma(Y, U)\) pull back to \(0\) on \(\Spec \kappa(y)\). First,
+  \(y \notin D(s)\), the basic open of \(s\): the point \(y\) lies in the range of
+  \(\Spec \kappa(y) \to Y\), and if its preimage point lay in the preimage of \(D(s)\),
+  that preimage --- the basic open of the pulled-back section, i.e.\ of \(0\) --- would
+  be nonempty, which is absurd. Since the range of \(f\) is \(\{y\}\) and \(y \notin
+  D(s)\), the preimage \(f^{-1}D(s)\) is empty. But \(f^{-1}D(s)\) is the basic open of
+  the pulled-back section \(f^{\sharp}s \in \Gamma(X, f^{-1}U)\), so \(f^{\sharp}s\)
+  has empty basic open: its image in every stalk of \(X\) lies in the maximal ideal, so
+  on each affine chart it lies in every prime ideal, i.e.\ it is nilpotent. On the
+  reduced scheme \(X\) it is therefore \(0\).
+\end{proof}
+
+\begin{theorem}[Factorization through the residue field of a closed point]
+  \label{thm:hom_factors_fromSpecResidueField}
+  \lean{AlgebraicGeometry.Scheme.Hom.exists_comp_fromSpecResidueField_eq}
+  \uses{lem:ker_fromSpecResidueField_le}
+  \leanok
+  Let \(f : X \to Y\) be a quasi-compact morphism of schemes with \(X\) reduced whose
+  set-range is a single \emph{closed} point \(y\): \(\{y\}\) is closed and
+  \(f(X) = \{y\}\). Then \(f\) factors through the canonical morphism from the spectrum
+  of the residue field: there is a morphism \(q : X \to \Spec \kappa(y)\) with
+  \[
+    f \;=\; \bigl(\Spec \kappa(y) \to Y\bigr) \circ q .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Since \(\{y\}\) is closed, the canonical morphism \(\Spec \kappa(y) \to Y\) is a
+  closed immersion (it presents the reduced induced structure on the closed set
+  \(\{y\}\): a singleton is irreducible, its reduced subscheme is the spectrum of a
+  field, namely the residue field of its point). A morphism factors through a closed
+  immersion --- necessarily uniquely --- exactly when the kernel ideal sheaf of the
+  immersion is contained in its own kernel ideal sheaf; this containment is
+  \ref{lem:ker_fromSpecResidueField_le}.
+\end{proof}
+
+\begin{theorem}[Proper closed subsets of the curve bundle are finite]
+  \label{thm:curve_finite_closed}
+  \lean{AlgebraicGeometry.finite_of_isClosed_of_notMem_genericPoint_curve}
+  \leanok
+  Let \(K\) be a field and \(X\) an integral scheme, smooth of relative dimension one
+  over \(\Spec K\), whose underlying space is quasi-compact. Then every closed subset
+  \(Z \subseteq X\) not containing the generic point is finite.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:height_one_finite_closed, thm:relDim1_specializes}
+  The underlying space of \(X\) is irreducible, and its specialization order has height
+  one: every generalization of a point is the generic point or the point itself
+  (\ref{thm:relDim1_specializes}). The space is moreover Noetherian: \(X\) is locally of
+  finite type over the field \(K\) (smoothness of relative dimension one includes local
+  finite presentation), so each affine chart is the spectrum of a finitely generated
+  \(K\)-algebra --- a Noetherian ring by the Hilbert basis theorem --- and a
+  quasi-compact space covered by finitely many Noetherian opens is Noetherian. Apply
+  the finiteness of proper closed subsets (\ref{thm:height_one_finite_closed}).
+\end{proof}
+
+\begin{theorem}[The curve-morphism dichotomy]
+  \label{thm:curveHom_isFinite_or_constant}
+  \lean{AlgebraicGeometry.curveHom_isFinite_or_constant}
+  \leanok
+  \source{hartshorne-algebraic-geometry:page-0154}
+  Let \(K\) be a field and let \(D, E\) be objects of \(\Over(\Spec K)\), both proper,
+  smooth of relative dimension one and geometrically irreducible over \(K\). Then every
+  morphism \(h : D \to E\) of \(\Over(\Spec K)\) satisfies at least one of the
+  following: either (1) \(h\) is surjective and finite, or (2) there is a point \(x\)
+  of \(E\) with \(\{x\}\) closed and \(h(D) = \{x\}\). The two cases may overlap: when
+  the space of \(E\) is a single point, both hold.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:overHom_isProper, thm:curve_finite_closed, thm:closedpoint_isClosed,
+    lem:genericPoint_eq_of_surjective, thm:smooth_geometrically_reduced,
+    prop:curve_integral, lem:irreducible_of_geomirred}
+  Both bundles are integral schemes: smoothness gives geometric reducedness
+  (\ref{thm:smooth_geometrically_reduced}), which together with geometric
+  irreducibility gives integrality (\ref{prop:curve_integral}); in particular the
+  underlying spaces are irreducible (\ref{lem:irreducible_of_geomirred}) and sober,
+  with generic points \(\eta_D\), \(\eta_E\).
+
+  \emph{The image is the closure of a point.} By \ref{thm:overHom_isProper} the
+  underlying morphism of \(h\) is proper, hence a closed map, so the set-range
+  \(h(D)\) is closed in \(E\); and it is irreducible, being the continuous image of
+  the irreducible space \(D\). A nonempty irreducible closed subset of a sober space is
+  the closure of a unique point: \(h(D) = \overline{\{\zeta\}}\).
+
+  \emph{Case \(\zeta \neq \eta_E\).} The singleton \(\{\zeta\}\) is closed
+  (\ref{thm:closedpoint_isClosed}), so \(h(D) = \overline{\{\zeta\}} = \{\zeta\}\), and
+  case (2) holds with \(x = \zeta\).
+
+  \emph{Case \(\zeta = \eta_E\).} Then \(h(D) = \overline{\{\eta_E\}} = E\), so \(h\)
+  is surjective; and a surjection matches the generic points, \(h(\eta_D) = \eta_E\)
+  (\ref{lem:genericPoint_eq_of_surjective}).
+
+  Suppose first that some point \(z \neq \eta_D\) also maps to \(\eta_E\). Then
+  \(\{z\}\) is closed in \(D\) (\ref{thm:closedpoint_isClosed}), and \(h\), a closed
+  map, carries it to the closed set \(\{\eta_E\}\). A closed subset containing the
+  generic point of an irreducible space is the whole space, so \(E\) has the single
+  point \(\eta_E\); since the range is all of \(E = \{\eta_E\}\), case (2) holds with
+  \(x = \eta_E\) --- this is the overlap of the two cases.
+
+  Otherwise the fiber of \(\eta_E\) is exactly \(\{\eta_D\}\), and every fiber of
+  \(h\) is finite: the fiber over a point \(y \neq \eta_E\) is closed --- \(\{y\}\) is
+  closed by \ref{thm:closedpoint_isClosed} --- and avoids \(\eta_D\), whose image is
+  \(\eta_E\); so it is finite by \ref{thm:curve_finite_closed}. Since \(h\) is locally
+  of finite type and quasi-compact (\ref{thm:overHom_isProper}), finiteness of all
+  fibers makes it locally quasi-finite; and a proper, locally quasi-finite morphism is
+  finite, by Zariski's main theorem. So case (1) holds.
+\end{proof}
+
 \section{The topology of the projective line and morphisms into it}
 
 Two groups of results about \(\PP^1\) feed the construction of the finite morphism from

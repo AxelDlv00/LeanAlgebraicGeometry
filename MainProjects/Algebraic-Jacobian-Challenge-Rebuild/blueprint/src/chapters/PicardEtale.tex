@@ -141,6 +141,57 @@ cascades through.
   \(\mathrm{relPic}(C',T)\).
 \end{proof}
 
+At the \v Cech level the constant-morphism collapse is sharper than
+Lemma~\ref{lem:relPicMapCurveConstant}: a morphism of bundles whose set-range is a
+single closed point kills every \v Cech Picard class outright --- before passing to any
+quotient --- because it factors through the spectrum of a residue field, whose \v Cech
+Picard group is trivial.
+
+\begin{theorem}[Morphisms factoring through a residue field kill \v Cech classes]
+  \label{thm:cechPicMap_eq_one_of_factorization}
+  \lean{AlgebraicGeometry.cechPicMap_eq_one_of_factorization}
+  \leanok
+  Let \(K\) be a field, \(D, E\) objects of \(\Over(\Spec K)\), and \(h : D \to E\) a
+  morphism of \(\Over(\Spec K)\) whose underlying morphism factors as
+  \(D \to \Spec \kappa(x) \to E\) through the canonical morphism from the spectrum of
+  the residue field of a point \(x\) of \(E\). Then for every \v Cech Picard class
+  \(L \in \Pic(E)\),
+  \[
+    h^{*}L \;=\; 1 .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  Write the factorization as \(h = \iota \circ q\) with
+  \(q : D \to \Spec \kappa(x)\) and \(\iota : \Spec \kappa(x) \to E\). Pullback of
+  \v Cech Picard classes is functorial, so \(h^{*}L = q^{*}(\iota^{*}L)\). The
+  underlying space of \(\Spec \kappa(x)\) is a single point (the spectrum of a field),
+  and the \v Cech Picard group of a scheme whose space has at most one point is
+  trivial: any two members of a pointed cover coincide as opens --- each is determined
+  by whether it is empty, and members contain their base points --- so every unit
+  \v Cech \(1\)-cocycle lives on a cover by a single open, where it is a coboundary.
+  Hence \(\iota^{*}L = 1\), and \(q^{*}\), a homomorphism, gives
+  \(h^{*}L = q^{*}(1) = 1\).
+\end{proof}
+
+\begin{corollary}[Morphisms with one-point range kill \v Cech classes]
+  \label{cor:cechPicMap_eq_one_of_range_eq_singleton}
+  \lean{AlgebraicGeometry.cechPicMap_eq_one_of_range_eq_singleton}
+  \uses{thm:cechPicMap_eq_one_of_factorization, thm:hom_factors_fromSpecResidueField}
+  \leanok
+  Let \(K\) be a field, \(D, E\) objects of \(\Over(\Spec K)\) with \(D\) reduced, and
+  \(h : D \to E\) a morphism of \(\Over(\Spec K)\) whose underlying morphism is
+  quasi-compact and whose set-range is a single closed point \(x\) of \(E\). Then
+  \(h^{*}L = 1\) for every \v Cech Picard class \(L \in \Pic(E)\).
+\end{corollary}
+\begin{proof}
+  \leanok
+  By the factorization through the residue field of a closed point
+  (\ref{thm:hom_factors_fromSpecResidueField}), the underlying morphism of \(h\)
+  factors as \(D \to \Spec \kappa(x) \to E\). Apply
+  \ref{thm:cechPicMap_eq_one_of_factorization}.
+\end{proof}
+
 \section{Presented \'etale covers of an affine scheme}
 
 Throughout this section \(A\) is a commutative ring (no field or \(k\)-algebra structure is

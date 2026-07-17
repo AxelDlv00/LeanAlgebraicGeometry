@@ -3165,6 +3165,436 @@ node.
   \ref{thm:classDeg_cechPicMap_of_isIso} to it and to \(L\).
 \end{proof}
 
+\section{Multiplicativity of the degree under a finite morphism}
+\label{sec:degree_pullback}
+
+The invariance ladders of the two preceding sections generalize to the classical
+multiplicativity of the degree: pulling back a \v Cech Picard class along a finite
+morphism \(f : X \to Y\) of curve bundles over one field \(K\) multiplies its degree by
+\(n = [K(X) : K(Y)]\), the degree of the induced extension of function fields. This is
+Hartshorne's \(\deg f^{*}D = \deg f \cdot \deg D\) for complete nonsingular curves, in
+bundle form. The proof is again the ladder of
+Section~\ref{sec:degree_base_field_invariance}, with two new algebraic inputs on a
+Dedekind chart pair: the \emph{generic-rank dictionary} identifying \(n\) with the rank
+of the chart extension, and the \emph{fiber-degree identity}
+\(\sum_z e_z f_z = n\) over each closed point, which replaces the colength bridge of the
+base-field transition.
+
+Throughout, \(X\) and \(Y\) carry the hypotheses stated per node; \(\eta_X, \eta_Y\)
+denote the generic points.
+
+\begin{definition}[The chart square of a dominant morphism]
+  \label{def:pullbackSectionsAlgebra}
+  \lean{AlgebraicGeometry.Scheme.Hom.pullbackSectionsAlgebra,
+    AlgebraicGeometry.Scheme.Hom.algebraMap_pullbackSectionsAlgebra,
+    AlgebraicGeometry.Scheme.Hom.functionFieldAlgebra,
+    AlgebraicGeometry.Scheme.Hom.algebraMap_functionFieldAlgebra,
+    AlgebraicGeometry.Scheme.Hom.pullbackSectionsFunctionFieldAlgebra,
+    AlgebraicGeometry.Scheme.Hom.isScalarTower_pullbackSections_functionField,
+    AlgebraicGeometry.Scheme.Hom.isScalarTower_functionFieldAlgebra}
+  \uses{def:functionFieldMap}
+  \leanok
+  Let \(f : X \to Y\) be a morphism of schemes and \(V \subseteq Y\) an open. Pullback
+  of sections along \(f\) makes \(\Gamma(X, f^{-1}V)\) an algebra over
+  \(\Gamma(Y, V)\), the \emph{chart extension} of \(f\) at \(V\). If moreover \(X\) and
+  \(Y\) are integral with \(f(\eta_X) = \eta_Y \in V\), the function-field map
+  (\ref{def:functionFieldMap}) makes \(K(X)\) an algebra over \(K(Y)\), and the chart
+  extension followed by the germ at \(\eta_X\) makes \(K(X)\) an algebra over
+  \(\Gamma(Y, V)\); these structures fit in a commuting square
+  \[
+    \begin{array}{ccc}
+      \Gamma(Y, V) & \longrightarrow & \Gamma(X, f^{-1}V) \\
+      \downarrow & & \downarrow \\
+      K(Y) & \longrightarrow & K(X)
+    \end{array}
+  \]
+  whose vertical maps are the germs at the generic points.
+\end{definition}
+\begin{proof}
+  \leanok
+  \uses{lem:functionFieldMap_germ}
+  Note first \(\eta_X \in f^{-1}V\), since \(f(\eta_X) = \eta_Y \in V\). The
+  right-then-down composite of the square is the chart extension followed by the germ
+  at \(\eta_X\); the down-then-right composite is the germ at \(\eta_Y\) followed by
+  the function-field map. They agree by germ naturality
+  (\ref{lem:functionFieldMap_germ}): the germ at \(\eta_X\) of a pulled-back section is
+  the function-field image of the germ of the section at \(\eta_Y\).
+\end{proof}
+
+\begin{lemma}[Module finiteness of the chart extension]
+  \label{lem:moduleFinite_pullbackSections}
+  \lean{AlgebraicGeometry.Scheme.Hom.moduleFinite_pullbackSections}
+  \uses{def:pullbackSectionsAlgebra}
+  \leanok
+  Let \(f : X \to Y\) be a finite morphism of schemes and \(V \subseteq Y\) an affine
+  open. Then \(\Gamma(X, f^{-1}V)\) is a finite module over \(\Gamma(Y, V)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  Finiteness of a morphism is affine-local on the target, so the chart extension
+  \(\Gamma(Y, V) \to \Gamma(X, f^{-1}V)\) is an integral ring map and of finite type.
+  An integral ring map of finite type is module-finite: each of the finitely many
+  algebra generators is integral, so the image algebra is generated as a module by the
+  finitely many monomials in the generators of degree below the degrees of their
+  integral equations.
+\end{proof}
+
+\begin{lemma}[Injectivity of the chart extension]
+  \label{lem:faithfulSMul_pullbackSections}
+  \lean{AlgebraicGeometry.Scheme.Hom.faithfulSMul_pullbackSections}
+  \uses{def:pullbackSectionsAlgebra}
+  \leanok
+  Let \(f : X \to Y\) be a morphism of integral schemes with \(f(\eta_X) = \eta_Y\),
+  and let \(V \subseteq Y\) be an open containing \(\eta_Y\). Then the chart extension
+  \(\Gamma(Y, V) \to \Gamma(X, f^{-1}V)\) is injective.
+\end{lemma}
+\begin{proof}
+  \leanok
+  \uses{lem:functionFieldMap_germ}
+  Let \(a, b \in \Gamma(Y, V)\) have equal pullbacks. Taking germs at \(\eta_X\) and
+  applying germ naturality (\ref{lem:functionFieldMap_germ}), the function-field map
+  \(K(Y) \to K(X)\) takes the germs of \(a\) and \(b\) at \(\eta_Y\) to equal values;
+  the function-field map is injective (\ref{lem:functionFieldMap_germ}), so the germs
+  of \(a\) and \(b\) at \(\eta_Y\) agree; and on an integral scheme the germ map at the
+  generic point is injective on sections of a nonempty open, so \(a = b\).
+\end{proof}
+
+\begin{theorem}[The generic-rank dictionary]
+  \label{thm:finrank_functionField_eq_finrank_pullbackSections}
+  \lean{AlgebraicGeometry.Scheme.Hom.finrank_functionField_eq_finrank_pullbackSections}
+  \uses{def:pullbackSectionsAlgebra}
+  \leanok
+  \source{hartshorne-algebraic-geometry:page-0154, hartshorne-algebraic-geometry:page-0155}
+  Let \(f : X \to Y\) be a finite morphism of integral schemes with
+  \(f(\eta_X) = \eta_Y\), and let \(V \subseteq Y\) be an affine open containing
+  \(\eta_Y\). Then the degree of the function-field extension equals the rank of the
+  chart extension:
+  \[
+    \bigl[K(X) : K(Y)\bigr]
+      \;=\; \operatorname{rank}_{\Gamma(Y, V)} \Gamma(X, f^{-1}V),
+  \]
+  the rank of the finite torsion-free module \(\Gamma(X, f^{-1}V)\) over the domain
+  \(\Gamma(Y, V)\) being the maximal number of linearly independent elements.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:moduleFinite_pullbackSections, lem:faithfulSMul_pullbackSections}
+  Write \(B = \Gamma(Y, V)\) and \(A = \Gamma(X, f^{-1}V)\), domains, since nonempty
+  opens of integral schemes have integral section rings; \(A\) is a finite \(B\)-module
+  (\ref{lem:moduleFinite_pullbackSections}) and \(B \to A\) is injective
+  (\ref{lem:faithfulSMul_pullbackSections}). The germ maps at the generic points
+  identify \(K(Y)\) with the fraction field of \(B\) and \(K(X)\) with the fraction
+  field of \(A\) --- on an integral scheme, the function field is the fraction field of
+  the sections on any nonempty affine open --- and under these identifications the
+  square of \ref{def:pullbackSectionsAlgebra} commutes, so the extension
+  \(K(Y) \subseteq K(X)\) is obtained from \(B \subseteq A\) by passing to fractions.
+
+  Let \(S = B \setminus \{0\}\), a multiplicative set of nonzerodivisors of \(A\) (its
+  image avoids \(0\) by injectivity, and \(A\) is a domain). The localization
+  \(S^{-1}A = K(Y) \otimes_B A\) is a finite-dimensional \(K(Y)\)-algebra, and it is a
+  domain, being a subring of \(K(X)\); a finite-dimensional algebra over a field which
+  is a domain is a field (multiplication by a nonzero element is injective, hence
+  surjective, by dimension). A field lying between \(A\) and its fraction field
+  contains the inverse of every nonzero element of \(A\), so \(S^{-1}A = K(X)\).
+
+  Finally, rank passes to fractions: a family of elements of \(A\) is linearly
+  independent over \(B\) if and only if it is linearly independent over \(K(Y)\) in
+  \(S^{-1}A\) --- one direction clears denominators, the other restricts scalars ---
+  so the rank of \(A\) over \(B\) is the dimension of \(S^{-1}A = K(X)\) over
+  \(K(Y)\).
+\end{proof}
+
+\begin{theorem}[The fiber-degree identity for a finite morphism]
+  \label{thm:sum_ordZ_residueDeg_of_isFinite}
+  \lean{AlgebraicGeometry.sum_ordZ_residueDeg_of_isFinite}
+  \uses{def:scheme_ordZ, def:residueDeg, def:functionFieldMap,
+    def:pullbackSectionsAlgebra}
+  \leanok
+  \source{hartshorne-algebraic-geometry:page-0155}
+  Let \(K\) be a field, \(X\) and \(Y\) integral schemes smooth of relative dimension
+  one over \(\Spec K\), and \(f : X \to Y\) a finite morphism over \(\Spec K\) with
+  \(f(\eta_X) = \eta_Y\). Let \(V \ni \eta_Y\) be an affine chart of \(Y\), let
+  \(t \in \Gamma(Y, V)\) be a section whose germ at \(\eta_Y\) is the value of a unit
+  \(g \in K(Y)^{\times}\), let \(y \in V\) be a non-generic point with
+  \(\mathrm{ord}_y(g) = 1\) at which the tracked section is normalized, \(t\) being a
+  unit at every point of \(V\) other than \(y\); and let \(S\) be a finite set of
+  non-generic points of \(X\), contained in \(f^{-1}V\), outside which the pulled
+  section \(f^{\sharp}t\) is a unit on \(f^{-1}V\). Then, in \(\Z\),
+  \[
+    \sum_{z \in S} \mathrm{ord}_z\bigl(f^{\sharp}g\bigr)
+      \cdot \bigl[\kappa(z) : K\bigr]
+    \;=\; \bigl[K(X) : K(Y)\bigr] \cdot \bigl[\kappa(y) : K\bigr].
+  \]
+  (The hypotheses force \(S\) to exhaust the non-unit locus of \(f^{\sharp}t\), which
+  is contained in the fiber \(f^{-1}(y)\); members of \(S\) outside that locus
+  contribute order zero. The statement is parameterised by such a finite \(S\) so that
+  the consumer may take for \(S\) the support of a divisor already in hand.)
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:isDedekindDomain_section, lem:moduleFinite_pullbackSections,
+    lem:faithfulSMul_pullbackSections,
+    thm:finrank_functionField_eq_finrank_pullbackSections,
+    thm:toAdd_ordZ_eq_count_factors, thm:finrank_quotient_primeIdealOf,
+    lem:prime_factor_span, lem:primeIdealOf_ne_bot, lem:primeIdealOf_fromSpec_base,
+    lem:fromSpec_base_mem, lem:fromSpec_base_ne_genericPoint, lem:appLE_overAlgebraMap,
+    thm:residueDeg_pos, lem:functionFieldMap_germ}
+  Write \(B = \Gamma(Y, V)\) and \(A = \Gamma(X, f^{-1}V)\). The chart \(f^{-1}V\) is
+  affine (finite morphisms are affine) and contains \(\eta_X\), so both \(B\) and \(A\)
+  are Dedekind domains (\ref{thm:isDedekindDomain_section}); \(A\) is a finite
+  \(B\)-module (\ref{lem:moduleFinite_pullbackSections}) along the injective chart
+  extension (\ref{lem:faithfulSMul_pullbackSections}), hence torsion-free --- \(A\) is
+  a domain on which the nonzero elements of \(B\) act injectively. The chart extension
+  commutes with the two \(K\)-algebra structures, since \(f\) lies over \(\Spec K\)
+  (\ref{lem:appLE_overAlgebraMap}). By germ naturality
+  (\ref{lem:functionFieldMap_germ}), the germ of \(f^{\sharp}t\) at \(\eta_X\) is the
+  value of the unit \(f^{\sharp}g\). Under \(V \cong \Spec B\), a point \(z\) of the
+  chart corresponds to a prime with the germ of a section at \(z\) becoming its image
+  in the localization at that prime; so \emph{a section lies in the prime of \(z\) if
+  and only if its germ at \(z\) is a non-unit}. We use this dictionary on both charts
+  (\ref{lem:fromSpec_base_mem}, \ref{lem:primeIdealOf_fromSpec_base}).
+
+  \emph{The tracked section cuts out the tracked prime.} The point \(y\) corresponds
+  to a nonzero prime \(\mathfrak p\) of \(B\) (\ref{lem:primeIdealOf_ne_bot}), maximal
+  since nonzero primes of a Dedekind domain are maximal. In the Dedekind domain \(B\)
+  the nonzero ideal \((t)\) factors into primes. Every prime factor \(\mathfrak P\) of
+  \((t)\) contains \(t\) (\ref{lem:prime_factor_span}), so at the point of \(V\)
+  corresponding to \(\mathfrak P\) the germ of \(t\) is a non-unit; by the unit
+  hypothesis that point is \(y\), so \(\mathfrak P = \mathfrak p\). The multiplicity
+  of \(\mathfrak p\) in \((t)\) is \(\mathrm{ord}_y(g) = 1\)
+  (\ref{thm:toAdd_ordZ_eq_count_factors}), so \((t) = \mathfrak p\). Extending along
+  \(B \to A\), which carries \(t\) to \(f^{\sharp}t\),
+  \[
+    \bigl(f^{\sharp}t\bigr) \;=\; \mathfrak p A \;\neq\; 0 .
+  \]
+
+  \emph{Each term is \(e \cdot f\) times \([\kappa(y):K]\).} Let \(z \in S\) contribute
+  a nonzero term; then the germ of \(f^{\sharp}t\) at \(z\) is a non-unit --- a unit
+  germ at \(z\) forces \(\mathrm{ord}_z(f^{\sharp}g) = 0\)
+  (\ref{thm:toAdd_ordZ_eq_count_factors}: the order is the multiplicity of the prime of
+  \(z\) in \((f^{\sharp}t)\), and a unit generates an ideal not contained in that
+  prime; concretely, \(f^{\sharp}t \notin \mathfrak q_z\)). So the nonzero prime
+  \(\mathfrak q = \mathfrak q_z\) of \(A\) at \(z\) (\ref{lem:primeIdealOf_ne_bot})
+  contains \(f^{\sharp}t\), hence \(\mathfrak q \supseteq \mathfrak p A\), hence
+  \(\mathfrak q \cap B \supseteq \mathfrak p\); maximality of \(\mathfrak p\) gives
+  \(\mathfrak q \cap B = \mathfrak p\): the prime \(\mathfrak q\) \emph{lies over}
+  \(\mathfrak p\). Write \(e_{\mathfrak q}\) for the multiplicity of \(\mathfrak q\) in
+  the factorization of \(\mathfrak p A\) (the ramification index) and
+  \(f_{\mathfrak q} = \dim_{B/\mathfrak p} A/\mathfrak q\) (the inertia degree). Then:
+  \[
+    \mathrm{ord}_z\bigl(f^{\sharp}g\bigr)
+      = \text{multiplicity of } \mathfrak q \text{ in } \bigl(f^{\sharp}t\bigr)
+      = e_{\mathfrak q}
+    \quad (\ref{thm:toAdd_ordZ_eq_count_factors}),
+  \]
+  and, using the residue leg \([\kappa(z) : K] = \dim_K A/\mathfrak q\) on both charts
+  (\ref{thm:finrank_quotient_primeIdealOf}) and the tower
+  \(K \to B/\mathfrak p \to A/\mathfrak q\) --- whose \(K\)-structures match by
+  \ref{lem:appLE_overAlgebraMap} ---
+  \[
+    \bigl[\kappa(z) : K\bigr] = \dim_K A/\mathfrak q
+      = f_{\mathfrak q} \cdot \dim_K B/\mathfrak p
+      = f_{\mathfrak q} \cdot \bigl[\kappa(y) : K\bigr].
+  \]
+
+  \emph{Reindexing the sum over the primes over \(\mathfrak p\).} The assignment
+  \(z \mapsto \mathfrak q_z\) is a bijection from the members of \(S\) with nonzero
+  term onto the primes of \(A\) over \(\mathfrak p\): it is injective because the
+  points--primes correspondence on the chart is
+  (\ref{lem:primeIdealOf_fromSpec_base}); and every prime \(\mathfrak q\) over
+  \(\mathfrak p\) arises --- it is nonzero (its contraction is \(\mathfrak p \neq 0\)),
+  so it corresponds to a non-generic point \(z\) of \(f^{-1}V\)
+  (\ref{lem:fromSpec_base_mem}, \ref{lem:fromSpec_base_ne_genericPoint}) at which
+  \(f^{\sharp}t \in \mathfrak p A \subseteq \mathfrak q\) is a non-unit germ, so
+  \(z \in S\) by the exhaustion hypothesis, with term
+  \(e_{\mathfrak q} \cdot f_{\mathfrak q} \cdot [\kappa(y):K] \neq 0\), the
+  ramification index being at least \(1\) and the residue degree positive
+  (\ref{thm:residueDeg_pos}). Members of \(S\) with zero term contribute nothing.
+  Hence
+  \[
+    \sum_{z \in S} \mathrm{ord}_z\bigl(f^{\sharp}g\bigr) \cdot
+      \bigl[\kappa(z) : K\bigr]
+    \;=\; \Bigl(\sum_{\mathfrak q \mid \mathfrak p}
+      e_{\mathfrak q} f_{\mathfrak q}\Bigr) \cdot \bigl[\kappa(y) : K\bigr].
+  \]
+
+  \emph{The fundamental identity \(\sum e f = n\).} Localize at \(\mathfrak p\): over
+  the discrete valuation ring \(B_{\mathfrak p}\) the module \(A_{\mathfrak p}\) is
+  finite and torsion-free, hence free, of rank
+  \(r = \operatorname{rank}_B A\) (rank is preserved by localization). Thus
+  \(A_{\mathfrak p}/\mathfrak p A_{\mathfrak p}\) is an \(r\)-dimensional vector space
+  over \(B/\mathfrak p\). It is an Artinian ring whose primes are the (finitely many)
+  primes of \(A\) over \(\mathfrak p\), so it is the product of its localizations at
+  them; the localization at \(\mathfrak q\) is
+  \(A_{\mathfrak q}/\mathfrak p A_{\mathfrak q}\), and in the discrete valuation ring
+  \(A_{\mathfrak q}\) we have \(\mathfrak p A_{\mathfrak q} =
+  \mathfrak q^{e_{\mathfrak q}} A_{\mathfrak q}\), whose quotient filtration
+  \(A_{\mathfrak q} \supseteq \mathfrak q A_{\mathfrak q} \supseteq \cdots \supseteq
+  \mathfrak q^{e_{\mathfrak q}} A_{\mathfrak q}\) has \(e_{\mathfrak q}\) successive
+  quotients, each one-dimensional over \(\kappa(\mathfrak q) = A/\mathfrak q\), hence
+  of dimension \(f_{\mathfrak q}\) over \(B/\mathfrak p\). Summing dimensions,
+  \(\sum_{\mathfrak q \mid \mathfrak p} e_{\mathfrak q} f_{\mathfrak q} = r\). By the
+  generic-rank dictionary
+  (\ref{thm:finrank_functionField_eq_finrank_pullbackSections}),
+  \(r = [K(X) : K(Y)]\). Chaining the displays gives the identity.
+\end{proof}
+
+\begin{theorem}[Degree multiplicativity under pullback: scheme form]
+  \label{thm:classDeg_cechPicMap_eq_finrank_mul}
+  \lean{AlgebraicGeometry.classDeg_cechPicMap_eq_finrank_mul}
+  \uses{def:classDeg, def:pullbackSectionsAlgebra}
+  \leanok
+  \source{hartshorne-algebraic-geometry:page-0155}
+  Let \(X\) and \(Y\) be curve bundles over the field \(K\) --- integral, smooth of
+  relative dimension one and quasi-compact over \(\Spec K\) --- with \(H^0\) and
+  \(H^1\) of their structure sheaves finite-dimensional over \(K\), and let
+  \(f : X \to Y\) be a finite morphism over \(\Spec K\) with \(f(\eta_X) = \eta_Y\).
+  Then for every \v Cech Picard class \(L\) on \(Y\),
+  \[
+    \deg_{\Pic}\bigl(f^{*}L\bigr)
+      \;=\; \bigl[K(X) : K(Y)\bigr] \cdot \deg_{\Pic}(L).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{def:curveDivisor_picClass, thm:curveDivisor_picClass_hom, thm:classDeg_mul,
+    lem:classDeg_zpow, thm:curveDivisor_picClass_single,
+    thm:localEquations_picClass_pullback, def:pointPullbackEquations,
+    lem:pointPullbackEquations_elem, lem:localEquations_presentation,
+    def:presentationDivisor, def:curveDivisor_single, lem:curveDivisor_single_arith,
+    thm:sum_ordZ_residueDeg_of_isFinite, lem:uniformizer, lem:pointUniformizerData,
+    thm:ordZ_germGenericUnits, def:scheme_ordZ, def:residueDeg}
+  Write \(n = [K(X) : K(Y)]\).
+
+  \emph{Reduction to a one-point divisor.} The class map
+  \(\Div(Y) \to \Pic(Y)\) is surjective (\ref{def:curveDivisor_picClass}), so
+  \(L = \struct{Y}(D)\) for a Weil divisor \(D\), a finite \(\Z\)-combination of
+  one-point divisors. Both sides of the claimed identity are additive in \(L\): the
+  class map and the pullback \(f^{*}\) are homomorphisms
+  (\ref{thm:curveDivisor_picClass_hom}) and \(\deg_{\Pic}\) is additive with
+  \(\deg_{\Pic}(L^m) = m \deg_{\Pic}(L)\) (\ref{thm:classDeg_mul},
+  \ref{lem:classDeg_zpow}). It therefore suffices to prove the identity for
+  \(L = \struct{Y}(1 \cdot x')\), \(x'\) a non-generic point of \(Y\).
+
+  \emph{The pulled point class as a divisor class.} The one-point class is the class
+  of the tracked point equations at \(x'\) (\ref{thm:curveDivisor_picClass_single}).
+  Pulling back a local-equation system computes the pullback of its class
+  (\ref{thm:localEquations_picClass_pullback}, with regularity discharged as in
+  \ref{def:pointPullbackEquations}), so \(f^{*}L\) is the Picard class of the pulled
+  tracked point system along \(f\) (\ref{def:pointPullbackEquations}, for the
+  generic-to-generic morphism \(f\)); and the class of any local-equation system is
+  the class of the divisor of its presentation
+  (\ref{lem:localEquations_presentation}, \ref{def:curveDivisor_picClass}). Writing
+  \(D''\) for the presentation divisor of the pulled system
+  (\ref{def:presentationDivisor}), the normalization of \ref{def:classDeg} turns both
+  sides into divisor degrees:
+  \[
+    \deg_{\Pic}\bigl(f^{*}L\bigr) = \deg_{K}\bigl(D''\bigr), \qquad
+    \deg_{\Pic}(L) = \deg_{K}\bigl(1 \cdot x'\bigr) = \bigl[\kappa(x') : K\bigr]
+  \]
+  (\ref{lem:curveDivisor_single_arith}).
+
+  \emph{The degree of the pulled point divisor.} The coefficient of \(D''\) at a
+  non-generic point \(z\) of \(X\) is the order at \(z\) of the trivialising element
+  \(f_z\) (\ref{def:presentationDivisor}). Off the fiber of \(x'\) the element is
+  \(1\) (\ref{lem:pointPullbackEquations_elem}), of order zero; so \(D''\) is
+  supported in the finite set \(S := \mathrm{supp}(D'') \subseteq f^{-1}(x')\), and on
+  the fiber the element is the pulled uniformizer
+  (\ref{lem:pointPullbackEquations_elem}), so
+  \[
+    \deg_{K}(D'') \;=\; \sum_{z \in S}
+      \mathrm{ord}_z\bigl(f^{\sharp}t\bigr) \cdot \bigl[\kappa(z) : K\bigr].
+  \]
+
+  \emph{Closing with the fiber-degree identity.} Choose an affine chart
+  \(V \ni x'\) inside the tracked neighbourhood of the uniformizer data (affine opens
+  form a basis), containing the generic point (a nonempty open of an irreducible
+  space), and restrict the tracked section \(s\) to it; the restriction still has germ
+  \(t\) at \(\eta_Y\) and is still a unit at every point of \(V\) other than \(x'\)
+  (\ref{lem:pointUniformizerData}), and \(\mathrm{ord}_{x'}(t) = 1\)
+  (\ref{lem:uniformizer}). The hypotheses of the fiber-degree identity
+  (\ref{thm:sum_ordZ_residueDeg_of_isFinite}) hold with this chart, the unit
+  \(g = t\), and the finite set \(S\): its members lie in \(f^{-1}V\) (they lie in the
+  fiber of \(x' \in V\)), and at a non-generic point \(z\) of \(f^{-1}V\) outside
+  \(S\) the pulled section is a unit --- off the fiber because \(s\) is a unit at
+  \(f(z) \neq x'\) and unit germs pull back to unit germs; on the fiber because a
+  non-unit germ at \(z\) would give \(\mathrm{ord}_z(f^{\sharp}t) \neq 0\) (a rational
+  function which is the generic germ of a section non-invertible at \(z\) has
+  nontrivial order there --- the contrapositive of \ref{thm:ordZ_germGenericUnits},
+  through the discrete valuation of the stalk at \(z\)), putting \(z\) in the support
+  \(S\). The identity gives
+  \[
+    \sum_{z \in S} \mathrm{ord}_z\bigl(f^{\sharp}t\bigr) \cdot
+      \bigl[\kappa(z) : K\bigr]
+    \;=\; n \cdot \bigl[\kappa(x') : K\bigr].
+  \]
+  Chaining the displays proves the one-point case, and with it the theorem.
+\end{proof}
+
+\begin{theorem}[Degree multiplicativity under pullback of curve bundles]
+  \label{thm:classDeg_cechPicMap_of_isFinite}
+  \lean{AlgebraicGeometry.classDeg_cechPicMap_of_isFinite}
+  \uses{def:classDeg, def:pullbackSectionsAlgebra}
+  \leanok
+  \source{hartshorne-algebraic-geometry:page-0155}
+  Let \(K\) be a field and \(D, E\) objects of \(\Over(\Spec K)\) which are proper,
+  smooth of relative dimension one and geometrically irreducible over \(K\), and let
+  \(h : D \to E\) be a morphism of \(\Over(\Spec K)\) whose underlying morphism is
+  surjective and finite. Then for every \v Cech Picard class \(L\) on the underlying
+  scheme of \(E\),
+  \[
+    \deg_{\Pic}\bigl(h^{*}L\bigr)
+      \;=\; \bigl[K(D) : K(E)\bigr] \cdot \deg_{\Pic}(L).
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:classDeg_cechPicMap_eq_finrank_mul, thm:smooth_geometrically_reduced,
+    prop:curve_integral, thm:h0_moduleKSheaf_curve, thm:moduleFinite_hModule_one,
+    lem:genericPoint_eq_of_surjective}
+  The hypotheses of the scheme form are discharged on both bundles by the curve pack:
+  smoothness gives geometric reducedness (\ref{thm:smooth_geometrically_reduced}),
+  which together with geometric irreducibility gives integrality
+  (\ref{prop:curve_integral}); properness includes quasi-compactness; and \(H^0\) and
+  \(H^1\) of the structure sheaves are finite-dimensional over \(K\)
+  (\ref{thm:h0_moduleKSheaf_curve}, \ref{thm:moduleFinite_hModule_one}). The
+  underlying morphism of \(h\) lies over \(\Spec K\) (every morphism of
+  \(\Over(\Spec K)\) commutes with the structure morphisms) and, being surjective,
+  matches the generic points (\ref{lem:genericPoint_eq_of_surjective}). Apply
+  \ref{thm:classDeg_cechPicMap_eq_finrank_mul}.
+\end{proof}
+
+\begin{theorem}[The constant leg: pullbacks along one-point morphisms have degree zero]
+  \label{thm:classDeg_cechPicMap_eq_zero_of_range_eq_singleton}
+  \lean{AlgebraicGeometry.classDeg_cechPicMap_eq_zero_of_range_eq_singleton}
+  \uses{def:classDeg}
+  \leanok
+  Let \(K\) be a field, \(D\) an object of \(\Over(\Spec K)\) which is proper, smooth
+  of relative dimension one and geometrically irreducible over \(K\), and \(E\) an
+  object of \(\Over(\Spec K)\) with proper structure morphism. Let \(h : D \to E\) be
+  a morphism of \(\Over(\Spec K)\) whose set-range is a single closed point \(x\) of
+  \(E\). Then for every \v Cech Picard class \(L\) on the underlying scheme of \(E\),
+  \[
+    \deg_{\Pic}\bigl(h^{*}L\bigr) \;=\; 0 .
+  \]
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{cor:cechPicMap_eq_one_of_range_eq_singleton, thm:overHom_isProper,
+    thm:smooth_geometrically_reduced, prop:curve_integral, thm:h0_moduleKSheaf_curve,
+    thm:moduleFinite_hModule_one}
+  The bundle \(D\) is integral (\ref{thm:smooth_geometrically_reduced},
+  \ref{prop:curve_integral}), in particular reduced, and its \(H^0\) and \(H^1\) are
+  finite-dimensional over \(K\) (\ref{thm:h0_moduleKSheaf_curve},
+  \ref{thm:moduleFinite_hModule_one}), so the degree homomorphism of
+  \ref{def:classDeg} is available on \(D\). The underlying morphism of \(h\) is proper
+  (\ref{thm:overHom_isProper}: the structure morphism of \(D\) is proper and that of
+  \(E\) is separated, properness including separatedness), in particular
+  quasi-compact. By \ref{cor:cechPicMap_eq_one_of_range_eq_singleton},
+  \(h^{*}L = 1\); and the degree of the trivial class is zero, \(\deg_{\Pic}\) being a
+  homomorphism (\ref{def:classDeg}).
+\end{proof}
+
 \section{The fibre twist of a map to the projective line}
 
 Throughout this section \(Y\) is an integral scheme, smooth of relative dimension one and
