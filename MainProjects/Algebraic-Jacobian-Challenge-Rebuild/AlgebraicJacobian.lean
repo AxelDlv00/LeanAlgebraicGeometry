@@ -323,6 +323,11 @@ import AlgebraicJacobian.Picard.DivisorFamilyZariskiSep
 import AlgebraicJacobian.Picard.DivisorFamilyZariskiGlueKit
 import AlgebraicJacobian.Picard.DivisorFamilyZariskiGlue
 import AlgebraicJacobian.Picard.DivisorFamilyZariskiGlueClass
+import AlgebraicJacobian.Picard.DivisorFamilyZarKit
+import AlgebraicJacobian.Picard.DivisorFamilyZar
+import AlgebraicJacobian.Picard.DivisorFamilyZarMapAlg
+import AlgebraicJacobian.Picard.DivisorFamilyZarGlueKit
+import AlgebraicJacobian.Picard.DivisorFamilyZarGlue
 import AlgebraicJacobian.Picard.DivisorFamilyVehicle
 import AlgebraicJacobian.Picard.DivisorStalkIdeal
 import AlgebraicJacobian.Picard.DivisorFamilyTheta
