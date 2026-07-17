@@ -197,6 +197,32 @@ theorem existsUnique_eqn_mul_eq (i : A.index) {W : (relCurve C R).Opens}
   rw [mul_comm] at hc
   exact ⟨c, hc, fun y hy => A.eqn_res_cancel i hW (hy.trans hc.symm)⟩
 
+/-- **The cofactor of a section vanishing along `d`** over the (restricted) equation of a
+piece: the unique `c` with `f_i · c = s`. -/
+noncomputable def eqnDiv (i : A.index) {W : (relCurve C R).Opens}
+    (hW : W ≤ A.pieces i) (s : Γ(relCurve C R, W))
+    (hs : ∀ (z : relCurve C R) (hz : z ∈ W),
+      ((relCurve C R).presheaf.germ W z hz).hom s ∈ d.stalkIdeal z) :
+    Γ(relCurve C R, W) :=
+  (A.existsUnique_eqn_mul_eq i hW hs).choose
+
+/-- The defining equation of the cofactor. -/
+lemma eqn_mul_eqnDiv (i : A.index) {W : (relCurve C R).Opens}
+    (hW : W ≤ A.pieces i) (s : Γ(relCurve C R, W))
+    (hs : ∀ (z : relCurve C R) (hz : z ∈ W),
+      ((relCurve C R).presheaf.germ W z hz).hom s ∈ d.stalkIdeal z) :
+    (relCurve C R).resHom hW (A.eqn i) * A.eqnDiv i hW s hs = s :=
+  (A.existsUnique_eqn_mul_eq i hW hs).choose_spec.1
+
+/-- Uniqueness of the cofactor. -/
+lemma eqnDiv_unique (i : A.index) {W : (relCurve C R).Opens}
+    (hW : W ≤ A.pieces i) {s c : Γ(relCurve C R, W)}
+    (hs : ∀ (z : relCurve C R) (hz : z ∈ W),
+      ((relCurve C R).presheaf.germ W z hz).hom s ∈ d.stalkIdeal z)
+    (hc : (relCurve C R).resHom hW (A.eqn i) * c = s) :
+    c = A.eqnDiv i hW s hs :=
+  (A.existsUnique_eqn_mul_eq i hW hs).choose_spec.2 c hc
+
 /-! ## The ratio units `f_j / f_i` -/
 
 /-- The restriction of the second equation to a piece overlap vanishes along `d`
@@ -388,6 +414,28 @@ lemma thetaIdealDatum_pieces_inr (i : ULift.{u} (Fin A.m₁)) :
 lemma thetaIdealDatum_pieces (i : (A.thetaIdealDatum a).index) :
     (A.thetaIdealDatum a).pieces i = A.pieces (A.lowerIndex a i) := by
   rcases i with i | i <;> rfl
+
+@[simp]
+lemma thetaIdealDatum_unit_inl_inl (i j : ULift.{u} (Fin A.m₀)) :
+    (A.thetaIdealDatum a).unit (Sum.inl i) (Sum.inl j)
+      = A.thetaIdealUnit a (Sum.inl i.down) (Sum.inl j.down) := rfl
+
+@[simp]
+lemma thetaIdealDatum_unit_inl_inr (i : ULift.{u} (Fin A.m₀))
+    (j : ULift.{u} (Fin A.m₁)) :
+    (A.thetaIdealDatum a).unit (Sum.inl i) (Sum.inr j)
+      = A.thetaIdealUnit a (Sum.inl i.down) (Sum.inr j.down) := rfl
+
+@[simp]
+lemma thetaIdealDatum_unit_inr_inl (i : ULift.{u} (Fin A.m₁))
+    (j : ULift.{u} (Fin A.m₀)) :
+    (A.thetaIdealDatum a).unit (Sum.inr i) (Sum.inl j)
+      = A.thetaIdealUnit a (Sum.inr i.down) (Sum.inl j.down) := rfl
+
+@[simp]
+lemma thetaIdealDatum_unit_inr_inr (i j : ULift.{u} (Fin A.m₁)) :
+    (A.thetaIdealDatum a).unit (Sum.inr i) (Sum.inr j)
+      = A.thetaIdealUnit a (Sum.inr i.down) (Sum.inr j.down) := rfl
 
 end DivisorAdaptation
 
