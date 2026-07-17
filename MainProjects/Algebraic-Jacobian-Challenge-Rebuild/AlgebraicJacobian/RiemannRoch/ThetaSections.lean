@@ -296,6 +296,97 @@ lemma thetaToDivisorApp_injective {W : Y.Opens} (hηW : genericPoint Y ∈ W) :
       (show genericPoint Y ∈ W ⊓ fiberChart₁ π from
         ⟨hηW, (genericPoint_mem_preimage_inf π).2⟩) hgerm
 
+/-! ## The section-wise map is surjective -/
+
+/-- On the chart `V₀` the pole bound of `n·F` coincides with that of `div(uⁿ)`. -/
+private lemma divisorBound_nsmul_eq_divOf_pow {z : Y} (hz : z ≠ genericPoint Y)
+    (hzV₀ : z ∈ fiberChart₀ π) :
+    divisorBound (n • fiberWeilDivisor π) hz =
+      divisorBound (Scheme.divOf (Y ↘ Spec (CommRingCat.of K)) (fiberCoordUnit π ^ n)) hz := by
+  rw [divisorBound_eq_coeffAt, divisorBound_eq_coeffAt, divOf_pow, coeffAt_nsmul,
+    coeffAt_nsmul, fiberWeilDivisor_coeffAt_of_mem_chart₀ π hz hzV₀]
+
+/-- **Chart-0 trivialization**: for `h ∈ 𝒪(n·F)(W)`, the product `uⁿ · h` is integral on
+`W ⊓ V₀` — the pole of `h` is cancelled by the zero of `uⁿ` (the `mem_boundedSections_mul_iff`
+mechanism, on `V₀` where `n·F = div(uⁿ)`). -/
+lemma thetaElem_mul_mem_zero₀ {W : Y.Opens} (hηW : genericPoint Y ∈ W)
+    {h : Y.functionField} (hh : h ∈ divisorSections K (n • fiberWeilDivisor π) W) :
+    ((fiberCoordUnit π ^ n : Y.functionFieldˣ) : Y.functionField) * h ∈
+      divisorSections K (0 : Y.CurveDivisor) (W ⊓ fiberChart₀ π) := by
+  have hne : ((W ⊓ fiberChart₀ π : Y.Opens) : Set Y).Nonempty :=
+    ⟨genericPoint Y, hηW, (genericPoint_mem_preimage_inf π).1⟩
+  rw [divisorSections_of_nonempty K hne]
+  have hmem : h ∈ boundedSections K
+      (Scheme.divOf (Y ↘ Spec (CommRingCat.of K)) (fiberCoordUnit π ^ n))
+      (W ⊓ fiberChart₀ π) := by
+    rw [mem_boundedSections]
+    intro z hz hzWx
+    rw [← divisorBound_nsmul_eq_divOf_pow K π n hz hzWx.2]
+    exact (mem_divisorSections_of_nonempty K ⟨genericPoint Y, hηW⟩).mp hh z hz hzWx.1
+  have hkey := (mem_boundedSections_mul_iff K (fiberCoordUnit π ^ n)
+    (Scheme.divOf (Y ↘ Spec (CommRingCat.of K)) (fiberCoordUnit π ^ n)) h).mpr hmem
+  rwa [sub_self] at hkey
+
+/-- **Chart-1 trivialization**: `h ∈ 𝒪(n·F)(W)` is already integral on `W ⊓ V₁`, since the
+fiber divisor vanishes there. -/
+lemma thetaElem_mul_mem_zero₁ {W : Y.Opens} (hηW : genericPoint Y ∈ W)
+    {h : Y.functionField} (hh : h ∈ divisorSections K (n • fiberWeilDivisor π) W) :
+    h ∈ divisorSections K (0 : Y.CurveDivisor) (W ⊓ fiberChart₁ π) := by
+  have hne : ((W ⊓ fiberChart₁ π : Y.Opens) : Set Y).Nonempty :=
+    ⟨genericPoint Y, hηW, (genericPoint_mem_preimage_inf π).2⟩
+  rw [mem_divisorSections_of_nonempty K hne]
+  intro z hz hzWx
+  rw [divisorBound_zero]
+  have hb : divisorBound (n • fiberWeilDivisor π) hz = 1 := by
+    rw [divisorBound_eq_coeffAt, coeffAt_nsmul,
+      fiberWeilDivisor_coeffAt_of_mem_chart₁ π hz hzWx.2, smul_zero, ofAdd_zero, WithZero.coe_one]
+  rw [← hb]
+  exact (mem_divisorSections_of_nonempty K ⟨genericPoint Y, hηW⟩).mp hh z hz hzWx.1
+
+/-- The section-wise map is surjective: a bounded rational function `h` is trivialized on
+each chart (`uⁿ·h` on `V₀`, `h` on `V₁`, both integral, hence genuine sections by the
+`𝒪(0) ≅ 𝒪_Y` engine), and the resulting pair matches through the cocycle `uⁿ`. -/
+lemma thetaToDivisorApp_surjective {W : Y.Opens} (hηW : genericPoint Y ∈ W) :
+    Function.Surjective (thetaToDivisorApp K π n hηW) := by
+  intro t
+  obtain ⟨s₀, hs₀⟩ := exists_section_germ_eq K
+    (show genericPoint Y ∈ W ⊓ fiberChart₀ π from ⟨hηW, (genericPoint_mem_preimage_inf π).1⟩)
+    (thetaElem_mul_mem_zero₀ K π n hηW t.property)
+  obtain ⟨s₁, hs₁⟩ := exists_section_germ_eq K
+    (show genericPoint Y ∈ W ⊓ fiberChart₁ π from ⟨hηW, (genericPoint_mem_preimage_inf π).2⟩)
+    (thetaElem_mul_mem_zero₁ K π n hηW t.property)
+  have hmatch : ((s₀, s₁) : Γ(Y, W ⊓ fiberChart₀ π) × Γ(Y, W ⊓ fiberChart₁ π)) ∈
+      twistSubmodule K (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n) W := by
+    rw [mem_twistSubmodule_iff]
+    apply germ_injective_of_isIntegral Y (genericPoint Y)
+      (show genericPoint Y ∈ W ⊓ fiberChart₀ π ⊓ fiberChart₁ π from
+        ⟨⟨hηW, (genericPoint_mem_preimage_inf π).1⟩, (genericPoint_mem_preimage_inf π).2⟩)
+    rw [map_mul, germ_resHom, germ_resHom, germ_resHom, germ_thetaUnit_pow_val K π n, hs₀, hs₁]
+  refine ⟨⟨(s₀, s₁), hmatch⟩, ?_⟩
+  apply Subtype.ext
+  rw [thetaToDivisorApp_coe]
+  change (((fiberCoordUnit π ^ n)⁻¹ : Y.functionFieldˣ) : Y.functionField) *
+      (Y.presheaf.germ (W ⊓ fiberChart₀ π) (genericPoint Y)
+        ⟨hηW, (genericPoint_mem_preimage_inf π).1⟩).hom s₀ = (t : Y.functionField)
+  rw [hs₀, ← mul_assoc, Units.inv_mul, one_mul]
+
+/-- The section-wise map is bijective on every nonempty open. -/
+lemma thetaToDivisorApp_bijective {W : Y.Opens} (hηW : genericPoint Y ∈ W) :
+    Function.Bijective (thetaToDivisorApp K π n hηW) :=
+  ⟨thetaToDivisorApp_injective K π n hηW, thetaToDivisorApp_surjective K π n hηW⟩
+
+omit [SmoothOfRelativeDimension 1 (Y ↘ Spec (CommRingCat.of K))]
+  [LocallyOfFiniteType (Y ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (Y ↘ Spec (CommRingCat.of K))] in
+/-- Restriction does not move the value of a twisted section. -/
+lemma thetaVal_res {W' W : Y.Opens} (h : W' ≤ W) (hηW' : genericPoint Y ∈ W')
+    (p : ↥(twistSubmodule K (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n) W)) :
+    thetaVal K π n hηW'
+        (twistRes K (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n) h p) =
+      thetaVal K π n (h hηW') p := by
+  unfold thetaVal
+  rw [twistRes_coe_fst, germ_resHom]
+
 end Value
 
 end AlgebraicGeometry
