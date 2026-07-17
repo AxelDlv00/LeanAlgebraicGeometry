@@ -9357,6 +9357,164 @@ geometrically reduced over \(k\).
   (Theorem~\ref{thm:picEtPullback_laws}).
 \end{proof}
 
+\section{Degree-zero preservation under the curve transport}
+
+Throughout this section \(k\) is a field, \(D\) and \(E\) (and, where a composite
+appears, \(F\)) are curve bundles over \(k\) — objects of \(\Over(\Spec k)\), proper,
+smooth of relative dimension one and geometrically irreducible over \(k\) — and
+\(g \colon D \to E\) is an arbitrary morphism of \(\Over(\Spec k)\). Pullback along
+\(g\) preserves degree zero. The degree control is obtained \emph{over each field
+independently}: over a field extension \(L\) of \(k\) the base-changed morphism is
+finite surjective or constant, and in either case a degree-zero class pulls back to a
+degree-zero class — the multiplier of the finite case is never compared across
+different fields.
+
+\begin{theorem}[Pullback preserves degree zero on every fibre]
+  \label{thm:classDeg_cechPicMap_whiskerRight_eq_zero}
+  \lean{AlgebraicGeometry.classDeg_cechPicMap_whiskerRight_eq_zero}
+  \uses{def:classDeg, thm:baseChangeCurve_bundle}
+  \leanok
+  Let \(L\) be a field extension of \(k\) and let \(\Lambda\) be a \v Cech Picard class
+  on the fibre \((E \otimes \Spec L)_{\mathrm{left}}\) with
+  \(\deg_{\Pic}(\Lambda) = 0\). Then the pullback of \(\Lambda\) along the whisker
+  \((g \rhd \Spec L) \colon (D \otimes \Spec L)_{\mathrm{left}} \to
+  (E \otimes \Spec L)_{\mathrm{left}}\) satisfies
+  \(\deg_{\Pic}\bigl((g \rhd \Spec L)^{*}\Lambda\bigr) = 0\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:curveHom_isFinite_or_constant, thm:classDeg_cechPicMap_eq_finrank_mul,
+    cor:cechPicMap_eq_one_of_range_eq_singleton, thm:overHom_isProper,
+    lem:genericPoint_eq_of_surjective}
+  Both fibres \(D_L := (D \otimes \Spec L)_{\mathrm{left}}\) and \(E_L\) are proper,
+  smooth of relative dimension one and geometrically irreducible over \(L\) via their
+  second projections (Theorem~\ref{thm:baseChangeCurve_bundle}), and the whisker
+  commutes with the second projections, so it is a morphism of curve bundles over
+  \(L\). By the dichotomy (Theorem~\ref{thm:curveHom_isFinite_or_constant}) it is
+  either finite and surjective, or constant with a single closed point as set-range.
+  In the finite surjective case the generic points match
+  (Lemma~\ref{lem:genericPoint_eq_of_surjective}) and degree multiplicativity
+  (Theorem~\ref{thm:classDeg_cechPicMap_eq_finrank_mul}) gives
+  \(\deg_{\Pic}\bigl((g \rhd \Spec L)^{*}\Lambda\bigr)
+    = \bigl[L(D_L) : L(E_L)\bigr] \cdot \deg_{\Pic}(\Lambda) = 0\).
+  In the constant case the whisker is proper (Theorem~\ref{thm:overHom_isProper}), in
+  particular quasi-compact, so the pulled-back class is already trivial
+  (Corollary~\ref{cor:cechPicMap_eq_one_of_range_eq_singleton}), of degree zero.
+\end{proof}
+
+\begin{theorem}[Relative-degree-zero preservation]
+  \label{thm:relPicDeg_relPicMapCurveApp_eq_zero}
+  \lean{AlgebraicGeometry.relPicDeg_relPicMapCurveApp_eq_zero}
+  \uses{def:relPicDeg, lem:relPicMapCurve}
+  \leanok
+  Let \(L\) be a field extension of \(k\) and \(y \in \mathrm{relPic}(E, \Spec L)\) a
+  relative Picard class with \(\mathrm{relPicDeg}_L(y) = 0\). Then the curve transport
+  satisfies \(\mathrm{relPicDeg}_L\bigl(g^{*}y\bigr) = 0\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:classDeg_cechPicMap_whiskerRight_eq_zero}
+  Choose a representative \v Cech class \(\Lambda\) of \(y\); then
+  \((g \rhd \Spec L)^{*}\Lambda\) represents \(g^{*}y\)
+  (Lemma~\ref{lem:relPicMapCurve}), and the relative degree reads the class degree of
+  any representative (Definition~\ref{def:relPicDeg}). Conclude by
+  Theorem~\ref{thm:classDeg_cechPicMap_whiskerRight_eq_zero}.
+\end{proof}
+
+\begin{theorem}[The affine curve transport preserves degree zero]
+  \label{thm:degAff_curveMap_eq_zero}
+  \lean{AlgebraicGeometry.PicEtAff.degAff_curveMap_eq_zero}
+  \uses{def:degAff, def:PicEtAff_curveMap}
+  \leanok
+  Let \(K\) be a field extension of \(k\) and \(a \in \mathrm{PicEtAff}(E, K)\) a plus
+  class with \(\deg^{+}_K(a) = 0\). Then \(\deg^{+}_K\bigl(g^{*}a\bigr) = 0\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:etale_cover_field_cofinality, thm:PicEtAff_curveMap_laws,
+    lem:relPicMapCurve, thm:relPicDeg_relPicMapCurveApp_eq_zero}
+  Write \(a\) as the class of a descent-class representative \(x\) on an \'etale cover
+  \(U\) of \(K\), so that \(g^{*}a\) is the class of the cover-wise transport
+  \(g^{*}x\) on the same cover (Theorem~\ref{thm:PicEtAff_curveMap_laws}). Choose a
+  finite separable field refinement \(j \colon B_U \to L\) of the cover
+  (Theorem~\ref{thm:etale_cover_field_cofinality}). By the master equality of the plus
+  degree (Definition~\ref{def:degAff}),
+  \(\deg^{+}_K(a) = \mathrm{relPicDeg}_L\bigl(j^{*}x\bigr)\) and
+  \(\deg^{+}_K(g^{*}a) = \mathrm{relPicDeg}_L\bigl(j^{*}(g^{*}x)\bigr)\). The
+  transports along \(j\) and along the curve morphism commute
+  (Lemma~\ref{lem:relPicMapCurve}), so the latter equals
+  \(\mathrm{relPicDeg}_L\bigl(g^{*}(j^{*}x)\bigr)\), which vanishes by
+  Theorem~\ref{thm:relPicDeg_relPicMapCurveApp_eq_zero} applied over \(L\) to the class
+  \(j^{*}x\), of relative degree \(\deg^{+}_K(a) = 0\).
+\end{proof}
+
+\begin{definition}[Curve transport of the degree-zero functor]
+  \label{def:pic0Pullback}
+  \lean{AlgebraicGeometry.pic0Pullback, AlgebraicGeometry.pic0Pullback_coe}
+  \uses{def:pic0Subgroup, def:picEtPullback, def:degAt}
+  \leanok
+  For a test object \(T\), the curve transport of Definition~\ref{def:picEtPullback}
+  restricts to the degree-zero subgroups: a group homomorphism
+  \(g^{*} \colon \mathrm{pic}^0(E, T) \to \mathrm{pic}^0(D, T)\) whose underlying map
+  of \'etale Picard classes is the curve transport.
+\end{definition}
+\begin{proof}
+  \leanok
+  \uses{thm:degAt_picEtPullback, thm:degAff_curveMap_eq_zero}
+  Let \(\lambda \in \mathrm{pic}^0(E,T)\) and let \(t \colon \Spec K \to T\) be a field
+  point of the test object. The degree of \(g^{*}\lambda\) at \(t\) is the plus degree
+  of the affine curve transport of the collapsed restriction \(t^{*}\lambda\)
+  (Theorem~\ref{thm:degAt_picEtPullback}); the collapsed restriction has plus degree
+  \(\deg_t(\lambda) = 0\) (Definition~\ref{def:degAt}), so the transport has degree
+  zero (Theorem~\ref{thm:degAff_curveMap_eq_zero}, applied over the field \(K\) of the
+  point itself). Hence \(g^{*}\lambda\) has degree zero at every field point of \(T\).
+\end{proof}
+
+\begin{theorem}[Naturality and functor laws of the degree-zero transport]
+  \label{thm:pic0Pullback_laws}
+  \lean{AlgebraicGeometry.pic0Map_pic0Pullback, AlgebraicGeometry.pic0Pullback_id,
+    AlgebraicGeometry.pic0Pullback_comp}
+  \uses{def:pic0Pullback, def:pic0Functor}
+  \leanok
+  The degree-zero curve transport commutes with restriction along an arbitrary
+  morphism of test objects \(f \colon T' \to T\),
+  \(f^{*} \circ g^{*} = g^{*} \circ f^{*}\); it is the identity for \(g = \id_E\); and
+  \((g' \circ g)^{*} = g^{*} \circ g'^{*}\) for composable curve morphisms
+  \(g \colon D \to E\), \(g' \colon E \to F\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{thm:picEtMap_picEtPullback, thm:picEtPullback_laws}
+  Membership in the degree-zero subgroup is a property of the underlying class, and
+  all three equalities hold on underlying classes: naturality is
+  Theorem~\ref{thm:picEtMap_picEtPullback}, and the functor laws are
+  Theorem~\ref{thm:picEtPullback_laws}.
+\end{proof}
+
+\begin{definition}[The bundled degree-zero curve transport]
+  \label{def:pic0PullbackNat}
+  \lean{AlgebraicGeometry.pic0PullbackNat, AlgebraicGeometry.pic0PullbackNat_app,
+    AlgebraicGeometry.pic0PullbackNat_id, AlgebraicGeometry.pic0PullbackNat_comp,
+    AlgebraicGeometry.pic0PullbackNat_inclusion}
+  \uses{def:pic0Functor, def:pic0Pullback, def:picEtPullbackNat}
+  \leanok
+  The degree-zero curve transports assemble into a natural transformation
+  \[
+    g^{*} \colon \mathrm{Pic}^0_{E/k} \longrightarrow \mathrm{Pic}^0_{D/k}
+  \]
+  of \(\mathrm{CommGrp}\)-valued functors on the test category, with \(\id_E^{*}\) the
+  identity transformation and \((g' \circ g)^{*} = g^{*} \circ g'^{*}\), compatibly
+  with the inclusions into the \'etale-sheafified relative Picard functors and their
+  curve transport (Definition~\ref{def:picEtPullbackNat}).
+\end{definition}
+\begin{proof}
+  \leanok
+  \uses{thm:pic0Pullback_laws}
+  Naturality and the two functor laws are Theorem~\ref{thm:pic0Pullback_laws} at each
+  test object; the inclusion square commutes because the transport of a degree-zero
+  class is, by construction, the transport of its underlying class.
+\end{proof}
+
 \section{The degree seam at field points}
 \label{sec:degreeSeam}
 
