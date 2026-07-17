@@ -23,7 +23,9 @@ certificates base-change (`AlgebraicJacobian.Picard.FlatCokernel`).
 
 * `AlgebraicGeometry.FinCoverData` — the `Fin`-indexed basic-open cover data (`Type u`;
   DAT-1's `BasicOpenCoverData` shape is `Type (u+1)`, unusable inside a functor value).
-* `AlgebraicGeometry.DivisorAdaptation` — the adaptation: equations + refinement witness.
+* `AlgebraicGeometry.DivisorAdaptation` — the adaptation: equations + the pointwise
+  refinement-up-to-units clause `eqn_rel` (point-free, so it pulls back along arbitrary
+  morphisms), with the anchored constructor `DivisorAdaptation.ofAnchors`.
 * `DivisorAdaptation.gluedSubmodule` — the glued colength module
   `W(d) = ker (δ⁻ − δ⁺) ⊆ Π_j Γ(D(h_j))/(f_j)`, with the equalizer description
   `mem_gluedSubmodule_iff` (the worksheet's `eq(∏_j ⇉ ∏_{j,j'})`).
@@ -224,40 +226,106 @@ lemma relResAlgHom_apply {W V : (relCurve C R).Opens} (h : W ≤ V) (s : Γ(relC
 
 /-- **The finite chart adaptation of a local-equation system** (worksheet §1.1 (D1)):
 basic-open cover data of the two pinned charts, equations `f_j` on the pieces, and the
-refinement witness — each piece sits inside a member of `d.cover` and `f_j` agrees with
-`d`'s equation there up to a unit. Regularity of the `f_j` is DERIVED
-(`DivisorAdaptation.eqn_regular`), not stored. -/
+pointwise refinement clause `eqn_rel` — on the overlap of each piece with any member of
+`d.cover`, `f_j` agrees with `d`'s equation up to a unit. Regularity of the `f_j` is
+DERIVED (`DivisorAdaptation.eqn_regular`), not stored. -/
 structure DivisorAdaptation [IsAffineHom π] (d : (relCurve C R).LocalEquations) :
     Type u extends FinCoverData C R π where
   /-- The equation on the piece `D(h_j)`. -/
   eqn : ∀ j : toFinCoverData.index, Γ(relCurve C R, toFinCoverData.pieces j)
-  /-- The refinement witness: a base point of `d.cover` for each piece. -/
-  pt : toFinCoverData.index → relCurve C R
-  /-- Each piece sits inside the corresponding member of `d.cover`. -/
-  piece_le : ∀ j, toFinCoverData.pieces j ≤ d.cover.opens (pt j)
-  /-- The comparison unit between `f_j` and `d`'s equation. -/
-  unit : ∀ j, Γ(relCurve C R, toFinCoverData.pieces j)ˣ
-  /-- The equations refine `d`'s equations up to the units. -/
-  eqn_eq : ∀ j, eqn j = (unit j : Γ(relCurve C R, toFinCoverData.pieces j))
-    * ((relCurve C R).presheaf.map (homOfLE (piece_le j)).op).hom (d.eqn (pt j))
+  /-- The equations refine `d` pointwise up to units: on the overlap of each piece with
+  any member of `d`'s cover, `f_j` and `d`'s equation differ by a unit. Point-free (the
+  `DivEq` spelling), so it pulls back along arbitrary morphisms — the resolution of the
+  DD-1 pt-transport seam (`informal/spec-dd-2.md` §1a). The quantifier ranges over ALL
+  `y`: the empty overlap carries the zero ring, where the clause is trivial. -/
+  eqn_rel : ∀ (j : toFinCoverData.index) (y : relCurve C R),
+    ∃ u : Γ(relCurve C R, toFinCoverData.pieces j ⊓ d.cover.opens y)ˣ,
+      ((relCurve C R).presheaf.map (homOfLE inf_le_left).op).hom (eqn j)
+        = (u : Γ(relCurve C R, toFinCoverData.pieces j ⊓ d.cover.opens y))
+          * ((relCurve C R).presheaf.map (homOfLE inf_le_right).op).hom (d.eqn y)
 
 namespace DivisorAdaptation
 
 variable {C R π} [IsAffineHom π] {d : (relCurve C R).LocalEquations}
 variable (A : DivisorAdaptation C R π d)
 
-/-- The adaptation's equations are regular: unit times a restriction of a regular
-equation of `d` (the `rescale`/`restrict` regularity computation of
-`Picard/DivisorClass`). -/
+/-- **The compatibility constructor from anchored refinement data** (the pre-DD-2 field
+layout): a base point `pt j` of `d.cover` per piece with `pieces j ≤ d.cover.opens (pt j)`
+and a comparison unit `eqn j = unit j · res (d.eqn (pt j))`. The pointwise clause
+`eqn_rel` is derived by rewriting `d.eqn (pt j)` into `d.eqn y` through the transition
+unit `d.ratioUnit (pt j) y` on the overlap (the `DivEq.trans` calc pattern). -/
+def ofAnchors (D : FinCoverData C R π)
+    (eqn : ∀ j : D.index, Γ(relCurve C R, D.pieces j))
+    (pt : D.index → relCurve C R)
+    (piece_le : ∀ j, D.pieces j ≤ d.cover.opens (pt j))
+    (unit : ∀ j, Γ(relCurve C R, D.pieces j)ˣ)
+    (eqn_eq : ∀ j, eqn j = (unit j : Γ(relCurve C R, D.pieces j))
+      * ((relCurve C R).presheaf.map (homOfLE (piece_le j)).op).hom (d.eqn (pt j))) :
+    DivisorAdaptation C R π d where
+  toFinCoverData := D
+  eqn := eqn
+  eqn_rel := fun j y => by
+    have hWle : D.pieces j ⊓ d.cover.opens y
+        ≤ d.cover.opens (pt j) ⊓ d.cover.opens y :=
+      inf_le_inf (piece_le j) le_rfl
+    have E1 := congrArg ((relCurve C R).presheaf.map (homOfLE
+      (inf_le_left : D.pieces j ⊓ d.cover.opens y ≤ D.pieces j)).op).hom (eqn_eq j)
+    rw [map_mul, Scheme.LocalEquations.res_res] at E1
+    have E2 := congrArg ((relCurve C R).presheaf.map (homOfLE hWle).op).hom
+      (d.eqn_restrict_eq (pt j) y)
+    rw [map_mul, Scheme.LocalEquations.res_res, Scheme.LocalEquations.res_res] at E2
+    refine ⟨(relCurve C R).unitsRestrict inf_le_left (unit j)
+      * (relCurve C R).unitsRestrict hWle (d.ratioUnit (pt j) y), ?_⟩
+    rw [Units.val_mul]
+    calc ((relCurve C R).presheaf.map (homOfLE inf_le_left).op).hom (eqn j)
+        = ((relCurve C R).unitsRestrict inf_le_left (unit j)).val
+          * ((relCurve C R).presheaf.map (homOfLE
+              ((inf_le_left : D.pieces j ⊓ d.cover.opens y ≤ D.pieces j).trans
+                (piece_le j))).op).hom (d.eqn (pt j)) := by
+          rw [show ((relCurve C R).unitsRestrict (inf_le_left :
+              D.pieces j ⊓ d.cover.opens y ≤ D.pieces j) (unit j)).val
+              = ((relCurve C R).presheaf.map (homOfLE (inf_le_left :
+                  D.pieces j ⊓ d.cover.opens y ≤ D.pieces j)).op).hom (unit j).val
+            from rfl]
+          exact E1
+      _ = ((relCurve C R).unitsRestrict inf_le_left (unit j)).val
+          * (((relCurve C R).unitsRestrict hWle (d.ratioUnit (pt j) y)).val
+            * ((relCurve C R).presheaf.map (homOfLE (hWle.trans
+                (inf_le_right : d.cover.opens (pt j) ⊓ d.cover.opens y
+                  ≤ d.cover.opens y))).op).hom (d.eqn y)) := by
+          rw [show ((relCurve C R).unitsRestrict hWle (d.ratioUnit (pt j) y)).val
+              = ((relCurve C R).presheaf.map
+                  (homOfLE hWle).op).hom (d.ratioUnit (pt j) y).val from rfl]
+          rw [E2]
+      _ = ((relCurve C R).unitsRestrict inf_le_left (unit j)).val
+          * ((relCurve C R).unitsRestrict hWle (d.ratioUnit (pt j) y)).val
+          * ((relCurve C R).presheaf.map (homOfLE
+              (inf_le_right : D.pieces j ⊓ d.cover.opens y
+                ≤ d.cover.opens y)).op).hom (d.eqn y) := by
+          rw [mul_assoc]
+
+/-- The adaptation's equations are regular: at `z ∈ D(h_j)` the pointwise clause
+`eqn_rel j z` presents the germ of `f_j` as a unit germ times the germ of `d`'s regular
+equation at the member of `z` itself. -/
 theorem eqn_regular (j : A.index) (z : relCurve C R) (hz : z ∈ A.pieces j) :
     ((relCurve C R).presheaf.germ (A.pieces j) z hz).hom (A.eqn j)
       ∈ nonZeroDivisors ((relCurve C R).presheaf.stalk z) := by
-  rw [A.eqn_eq j, map_mul]
-  refine mul_mem ?_ ?_
-  · exact ((A.unit j).isUnit.map
-      ((relCurve C R).presheaf.germ (A.pieces j) z hz).hom).mem_nonZeroDivisors
-  · rw [TopCat.Presheaf.germ_res_apply]
-    exact d.regular (A.pt j) z (A.piece_le j hz)
+  obtain ⟨u, hu⟩ := A.eqn_rel j z
+  have hzW : z ∈ A.pieces j ⊓ d.cover.opens z := ⟨hz, d.cover.mem_opens z⟩
+  have hgerm : ((relCurve C R).presheaf.germ (A.pieces j) z hz).hom (A.eqn j)
+      = ((relCurve C R).presheaf.germ (A.pieces j ⊓ d.cover.opens z) z hzW).hom
+          (u : Γ(relCurve C R, A.pieces j ⊓ d.cover.opens z))
+        * ((relCurve C R).presheaf.germ (d.cover.opens z) z
+            (d.cover.mem_opens z)).hom (d.eqn z) := by
+    have h := congrArg ((relCurve C R).presheaf.germ
+      (A.pieces j ⊓ d.cover.opens z) z hzW).hom hu
+    rw [map_mul, TopCat.Presheaf.germ_res_apply, TopCat.Presheaf.germ_res_apply] at h
+    exact h
+  rw [hgerm]
+  exact mul_mem
+    ((u.isUnit.map ((relCurve C R).presheaf.germ
+      (A.pieces j ⊓ d.cover.opens z) z hzW).hom).mem_nonZeroDivisors)
+    (d.regular z z (d.cover.mem_opens z))
 
 /-! ### The colength modules and the glued equalizer -/
 

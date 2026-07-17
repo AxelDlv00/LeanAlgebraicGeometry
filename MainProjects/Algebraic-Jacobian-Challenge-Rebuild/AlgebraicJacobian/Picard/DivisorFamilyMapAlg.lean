@@ -6,36 +6,31 @@ Authors: The AlgebraicJacobian Contributors
 import AlgebraicJacobian.Picard.DivisorFamilyPullbackMap
 
 /-!
-# Base change of certified divisor families and `DivFam.mapAlg` (DD-1 stage (c) close)
+# Base change of certified divisor families and `DivFam.mapAlg` (DD-2 stage S2)
 
-The base-changed divisor adaptation and the divisor-functor map on classes
-(`informal/spec-dd-1.md` §3 stage (c), final rows).
+The base-changed divisor adaptation and the divisor-functor map on classes along an
+ARBITRARY test change `R → R'` (`informal/spec-dd-2.md` §2) — the resolution of the
+DD-1 pt-transport seam: the carrier's pointwise refinement clause `eqn_rel` is
+point-free (the `DivEq` spelling), so it pulls back along arbitrary morphisms through
+`Scheme.Hom.unitsAppLE`, with no surjectivity hypothesis on the comparison
+`relCurveMap C R R'`.
 
-The refinement witness `pt`/`piece_le` of a `DivisorAdaptation` indexes the members of
-the pulled pointed cover by points of the relative curve over `R'`; transporting it
-therefore requires a point above each base point `A.pt j` — the **pt-transport seam**:
-
-* `DivisorAdaptation.BaseChangeWitness` — the required lift data (a point of
-  `relCurve C R'` above each `A.pt j`), with `BaseChangeWitness.ofSurjective`
-  discharging it whenever the comparison `relCurveMap C R R'` is surjective on points
-  (e.g. along faithfully flat test maps — the DD-2 covers).
-* `DivisorAdaptation.ofWitness` — **the base-changed adaptation**: base-changed cover
-  data, pulled equations, the witness's refinement, units through the piece comparison.
-* `DivisorAdaptation.isCertified_ofWitness` — **certified base change**: the transported
+* `Scheme.LocalEquations.divEq_pullback` — divisor equality is stable under pullback
+  (common refinement and units pull back), so the map descends to classes.
+* `DivisorAdaptation.pullback` — **the base-changed adaptation**: base-changed cover
+  data carrying the pulled equations; `eqn_rel` transports clause-for-clause through
+  `unitsAppLE` (the `divEq_pullback` pattern).
+* `DivisorAdaptation.isCertified_pullback` — **certified base change**: the transported
   certificate, assembling the (c1)–(c4) clause transports of
   `DivisorFamilyPullbackCert`/`DivisorFamilyPullbackGlued` (all fields are
   definitionally the pulled apparatus).
-* `Scheme.LocalEquations.divEq_pullback` — divisor equality is stable under pullback
-  (common refinement and units pull back), so the map descends to classes:
-* `DivFam.mapAlgOfSurjective` — the divisor-functor map `DivFam C R π n → DivFam C R' π n`
-  along a test change with surjective comparison, with the Abel-hook class law
-  `picClass_mapAlgOfSurjective` (`𝒪(f*D) = f*𝒪(D)`).
+* `CertifiedDivisorFamily.mapAlg`, `DivFam.mapAlg` — **the divisor-functor map**
+  `DivFam C R π n → DivFam C R' π n` on representatives and on classes
+  (`Quotient.lift`, descent by `divEq_pullback`), with the Abel-hook class law
+  `DivFam.picClass_mapAlg` (`𝒪(f*D) = f*𝒪(D)`).
 
-The unconditional `DivFam.mapAlg` (arbitrary test maps) is exactly the pt-transport
-seam: for a non-surjective comparison a piece can be nonempty while its base point has
-empty fibre, and the frozen carrier has no member of the pulled cover containing it.
-Recorded as the open DD-1 seam; consumers with flat covers (DD-2) are served by the
-surjective case.
+The functor laws `mapAlg_id`/`mapAlg_comp` (`informal/spec-dd-2.md` §2, functor-laws
+rows) are the follow-on stage's brick and are not in this file yet.
 -/
 
 set_option autoImplicit false
@@ -124,103 +119,86 @@ namespace DivisorAdaptation
 
 variable {d : (relCurve C R).LocalEquations} (A : DivisorAdaptation C R π d)
 
-/-! ## The refinement witness and the base-changed adaptation -/
+/-! ## The base-changed adaptation -/
 
-/-- **The pt-transport witness**: a point of the relative curve over `R'` above each
-refinement base point of the adaptation. This is the DD-1 pt-transport seam: the pulled
-pointed cover indexes its members by points of `relCurve C R'`, so the base-changed
-adaptation needs a point above each `A.pt j`. -/
-structure BaseChangeWitness : Type u where
-  /-- A point above each refinement base point. -/
-  pt : A.index → relCurve C R'
-  /-- The points lie above the adaptation's base points. -/
-  base_pt : ∀ j, (relCurveMap C R R').base (pt j) = A.pt j
-
-/-- A surjective comparison (e.g. along a faithfully flat test map) yields a witness. -/
-noncomputable def BaseChangeWitness.ofSurjective
-    (hsurj : Function.Surjective (relCurveMap C R R').base) :
-    A.BaseChangeWitness R' where
-  pt j := (hsurj (A.pt j)).choose
-  base_pt j := (hsurj (A.pt j)).choose_spec
-
-/-- The base-changed pieces refine the pulled cover through the witness: the piece is
-the preimage of a piece contained in the member at the base point, which is the member
-at the witness point. -/
-lemma witness_piece_le (hproj : ∀ j, Module.Projective R (A.colength j))
-    (w : A.BaseChangeWitness R') (j : A.index) :
-    (A.toFinCoverData.baseChange R').pieces j ≤
-      (A.pulledEquations R' hproj).cover.opens (w.pt j) := by
-  have h1 : (A.toFinCoverData.baseChange R').pieces j =
-      relCurveMap C R R' ⁻¹ᵁ A.pieces j :=
-    A.toFinCoverData.pieces_baseChange R' j
-  have h2 : relCurveMap C R R' ⁻¹ᵁ A.pieces j ≤
-      relCurveMap C R R' ⁻¹ᵁ d.cover.opens ((relCurveMap C R R').base (w.pt j)) := by
-    rw [w.base_pt j]
-    exact Scheme.Hom.preimage_mono _ (A.piece_le j)
-  rw [h1]
-  exact h2
-
-/-- **The base-changed divisor adaptation**, given a refinement witness: the
-base-changed cover data carrying the pulled equations, refining the pulled system
-through the witness, with comparison units the piece comparisons of the units. -/
-noncomputable def ofWitness (hproj : ∀ j, Module.Projective R (A.colength j))
-    (w : A.BaseChangeWitness R') :
+/-- **The base-changed divisor adaptation** along an ARBITRARY test change (the DD-2
+resolution of the DD-1 pt-transport seam, `informal/spec-dd-2.md` §2): the base-changed
+cover data carrying the pulled equations. The pointwise refinement clause `eqn_rel`
+transports clause-for-clause: the target overlap is the `relCurveMap`-preimage of the
+source overlap, and the source clause pulls through `Scheme.Hom.unitsAppLE` — the
+`divEq_pullback` pattern. -/
+noncomputable def pullback (hproj : ∀ j, Module.Projective R (A.colength j)) :
     DivisorAdaptation C R' π (A.pulledEquations R' hproj) where
   toFinCoverData := A.toFinCoverData.baseChange R'
   eqn := A.pulledEqn R'
-  pt := w.pt
-  piece_le := A.witness_piece_le R' hproj w
-  unit := fun j =>
-    Units.map (A.toFinCoverData.piecesMap R' j).toMonoidHom (A.unit j)
-  eqn_eq := fun j => by
-    have hle₁ : (A.toFinCoverData.baseChange R').pieces j ≤
-        relCurveMap C R R' ⁻¹ᵁ d.cover.opens (A.pt j) :=
-      (A.toFinCoverData.baseChange_pieces_le_preimage R' j).trans
-        (Scheme.Hom.preimage_mono _ (A.piece_le j))
-    -- LHS: the pulled equation is the pulled unit times `appLE` of `d`'s equation
-    have hLHS : A.pulledEqn R' j =
-        (Units.map (A.toFinCoverData.piecesMap R' j).toMonoidHom (A.unit j) :
-            Γ(relCurve C R', (A.toFinCoverData.baseChange R').pieces j)ˣ)
-          * ((relCurveMap C R R').appLE (d.cover.opens (A.pt j))
-              ((A.toFinCoverData.baseChange R').pieces j) hle₁).hom (d.eqn (A.pt j)) := by
-      have hmap : A.pulledEqn R' j =
-          A.toFinCoverData.piecesMap R' j
-            ((A.unit j : Γ(relCurve C R, A.pieces j))
-              * ((relCurve C R).presheaf.map (homOfLE (A.piece_le j)).op).hom
-                (d.eqn (A.pt j))) := by
-        rw [← A.eqn_eq j]
-        rfl
-      have hcol := congr(($(Scheme.Hom.map_appLE (relCurveMap C R R')
-        (A.toFinCoverData.baseChange_pieces_le_preimage R' j)
-        (homOfLE (A.piece_le j)).op)).hom (d.eqn (A.pt j)))
-      rw [hmap, map_mul]
-      exact congrArg₂ (· * ·) rfl hcol
-    -- RHS: the restriction of the pulled system's equation at the witness point is the
-    -- same `appLE`, with the base point swapped along the witness
-    have hRHS : ((relCurve C R').presheaf.map
-        (homOfLE (A.witness_piece_le R' hproj w j)).op).hom
-        ((A.pulledEquations R' hproj).eqn (w.pt j)) =
-        ((relCurveMap C R R').appLE (d.cover.opens (A.pt j))
-          ((A.toFinCoverData.baseChange R').pieces j) hle₁).hom (d.eqn (A.pt j)) := by
-      have hres := Scheme.LocalEquations.pullbackEqn_res (relCurveMap C R R') d (w.pt j)
-        (A.witness_piece_le R' hproj w j)
-      have heqn : (A.pulledEquations R' hproj).eqn (w.pt j) =
-          Scheme.LocalEquations.pullbackEqn (relCurveMap C R R') d (w.pt j) := rfl
-      rw [heqn]
-      exact hres.trans (Scheme.LocalEquations.appLE_eqn_congr (relCurveMap C R R') d
-        (w.base_pt j) _ hle₁)
-    rw [hRHS]
-    exact hLHS
+  eqn_rel := fun j y' => by
+    obtain ⟨u, hu⟩ := A.eqn_rel j ((relCurveMap C R R').base y')
+    have hle₁ : (A.toFinCoverData.baseChange R').pieces j ⊓
+        (A.pulledEquations R' hproj).cover.opens y' ≤
+        relCurveMap C R R' ⁻¹ᵁ A.pieces j :=
+      inf_le_left.trans (A.toFinCoverData.baseChange_pieces_le_preimage R' j)
+    have hle₂ : (A.toFinCoverData.baseChange R').pieces j ⊓
+        (A.pulledEquations R' hproj).cover.opens y' ≤
+        relCurveMap C R R' ⁻¹ᵁ d.cover.opens ((relCurveMap C R R').base y') :=
+      inf_le_right
+    have hle : (A.toFinCoverData.baseChange R').pieces j ⊓
+        (A.pulledEquations R' hproj).cover.opens y' ≤
+        relCurveMap C R R' ⁻¹ᵁ
+          (A.pieces j ⊓ d.cover.opens ((relCurveMap C R R').base y')) :=
+      (relCurveMap C R R').le_preimage_inf hle₁ hle₂
+    refine ⟨(relCurveMap C R R').unitsAppLE
+      (A.pieces j ⊓ d.cover.opens ((relCurveMap C R R').base y'))
+      ((A.toFinCoverData.baseChange R').pieces j ⊓
+        (A.pulledEquations R' hproj).cover.opens y') hle u, ?_⟩
+    -- LHS: the restricted pulled equation collapses to `appLE` of the piece equation
+    have hres₁ : ((relCurve C R').presheaf.map (homOfLE (inf_le_left :
+        (A.toFinCoverData.baseChange R').pieces j ⊓
+          (A.pulledEquations R' hproj).cover.opens y' ≤
+          (A.toFinCoverData.baseChange R').pieces j)).op).hom (A.pulledEqn R' j) =
+        ((relCurveMap C R R').appLE (A.pieces j)
+          ((A.toFinCoverData.baseChange R').pieces j ⊓
+            (A.pulledEquations R' hproj).cover.opens y') hle₁).hom (A.eqn j) := by
+      rw [show A.pulledEqn R' j = ((relCurveMap C R R').appLE (A.pieces j)
+          ((A.toFinCoverData.baseChange R').pieces j)
+          (A.toFinCoverData.baseChange_pieces_le_preimage R' j)).hom (A.eqn j) from rfl,
+        ← CommRingCat.comp_apply, Scheme.Hom.appLE_map]
+    -- RHS: the restricted pulled system equation collapses to `appLE` of `d`'s equation
+    have hres₂ : ((relCurve C R').presheaf.map (homOfLE (inf_le_right :
+        (A.toFinCoverData.baseChange R').pieces j ⊓
+          (A.pulledEquations R' hproj).cover.opens y' ≤
+          (A.pulledEquations R' hproj).cover.opens y')).op).hom
+        ((A.pulledEquations R' hproj).eqn y') =
+        ((relCurveMap C R R').appLE (d.cover.opens ((relCurveMap C R R').base y'))
+          ((A.toFinCoverData.baseChange R').pieces j ⊓
+            (A.pulledEquations R' hproj).cover.opens y') hle₂).hom
+          (d.eqn ((relCurveMap C R R').base y')) :=
+      Scheme.LocalEquations.pullbackEqn_res (relCurveMap C R R') d y' _
+    -- the pre-restriction collapse on both sides
+    have e₁ := congr(($(Scheme.Hom.map_appLE (relCurveMap C R R') hle
+      (homOfLE (inf_le_left : A.pieces j ⊓
+        d.cover.opens ((relCurveMap C R R').base y') ≤ A.pieces j)).op)).hom (A.eqn j))
+    have e₂ := congr(($(Scheme.Hom.map_appLE (relCurveMap C R R') hle
+      (homOfLE (inf_le_right : A.pieces j ⊓
+        d.cover.opens ((relCurveMap C R R').base y') ≤
+        d.cover.opens ((relCurveMap C R R').base y'))).op)).hom
+      (d.eqn ((relCurveMap C R R').base y')))
+    -- transport the unit relation through `appLE`
+    have key := congrArg ((relCurveMap C R R').appLE
+      (A.pieces j ⊓ d.cover.opens ((relCurveMap C R R').base y'))
+      ((A.toFinCoverData.baseChange R').pieces j ⊓
+        (A.pulledEquations R' hproj).cover.opens y') hle).hom hu
+    rw [map_mul] at key
+    exact hres₁.trans (e₁.symm.trans (key.trans (congrArg₂ (· * ·) rfl
+      (e₂.trans hres₂.symm))))
 
 /-! ## Certified base change -/
 
 /-- **Certified base change**: the base-changed adaptation carries the transported
 certificate — every clause is the corresponding pulled-apparatus transport of
-`DivisorFamilyPullbackCert`/`DivisorFamilyPullbackGlued` (all fields of `ofWitness` are
+`DivisorFamilyPullbackCert`/`DivisorFamilyPullbackGlued` (all fields of `pullback` are
 definitionally the pulled apparatus). -/
-theorem isCertified_ofWitness {n : ℕ} (hc : A.IsCertified n)
-    (w : A.BaseChangeWitness R') :
-    (A.ofWitness R' hc.projective_colength w).IsCertified n := by
+theorem isCertified_pullback {n : ℕ} (hc : A.IsCertified n) :
+    (A.pullback R' hc.projective_colength).IsCertified n := by
   haveI hc3 : Module.Flat R (A.chartProd ⧸ A.gluedSubmodule) := hc.flat_coker_incl
   haveI hc4 : Module.Flat R
       (A.ovlProd ⧸ LinearMap.range (A.deltaLeft - A.deltaRight)) := hc.flat_coker_diff
@@ -238,43 +216,32 @@ end DivisorAdaptation
 
 variable (n : ℕ)
 
-/-- **Base change of a certified divisor family** along a test change with surjective
-comparison: pulled equations, base-changed adaptation through the surjectivity witness,
-transported certificate. -/
-noncomputable def CertifiedDivisorFamily.baseChangeOfSurjective
-    (F : CertifiedDivisorFamily C R π n)
-    (hsurj : Function.Surjective (relCurveMap C R R').base) :
+/-- **Base change of a certified divisor family** along an arbitrary test change:
+pulled equations, base-changed adaptation, transported certificate. -/
+noncomputable def CertifiedDivisorFamily.mapAlg (F : CertifiedDivisorFamily C R π n) :
     CertifiedDivisorFamily C R' π n where
   eqns := F.adaptation.pulledEquations R' F.certified.projective_colength
-  adaptation := F.adaptation.ofWitness R' F.certified.projective_colength
-    (DivisorAdaptation.BaseChangeWitness.ofSurjective R' F.adaptation hsurj)
-  certified := F.adaptation.isCertified_ofWitness R' F.certified _
+  adaptation := F.adaptation.pullback R' F.certified.projective_colength
+  certified := F.adaptation.isCertified_pullback R' F.certified
 
-/-- **The divisor-functor map on classes** along a test change with surjective
-comparison (`informal/spec-dd-1.md` §3 stage (c), the `mapAlg` row; the unconditional
-case is the recorded pt-transport seam). Well defined by `divEq_pullback`. -/
-noncomputable def DivFam.mapAlgOfSurjective
-    (hsurj : Function.Surjective (relCurveMap C R R').base) :
-    DivFam C R π n → DivFam C R' π n :=
+/-- **The divisor-functor map on classes** along an ARBITRARY test change
+(`informal/spec-dd-2.md` §2 — the total `mapAlg` closing the DD-1 pt-transport seam).
+Well defined by `divEq_pullback`. -/
+noncomputable def DivFam.mapAlg : DivFam C R π n → DivFam C R' π n :=
   Quotient.lift
-    (fun F : CertifiedDivisorFamily C R π n =>
-      DivFam.mk (F.baseChangeOfSurjective R' n hsurj))
+    (fun F : CertifiedDivisorFamily C R π n => DivFam.mk (F.mapAlg R' n))
     (fun _ _ hFG => DivFam.mk_eq_mk_iff.mpr
       (Scheme.LocalEquations.divEq_pullback (relCurveMap C R R') hFG _ _))
 
 @[simp]
-lemma DivFam.mapAlgOfSurjective_mk
-    (hsurj : Function.Surjective (relCurveMap C R R').base)
-    (F : CertifiedDivisorFamily C R π n) :
-    DivFam.mapAlgOfSurjective R' n hsurj (DivFam.mk F) =
-      DivFam.mk (F.baseChangeOfSurjective R' n hsurj) :=
+lemma DivFam.mapAlg_mk (F : CertifiedDivisorFamily C R π n) :
+    DivFam.mapAlg R' n (DivFam.mk F) = DivFam.mk (F.mapAlg R' n) :=
   rfl
 
 /-- **The Abel-hook class law**: the divisor-functor map intertwines the Picard classes
 with the Čech-Picard pullback, `𝒪(f*D) = f*𝒪(D)`. -/
-lemma DivFam.picClass_mapAlgOfSurjective
-    (hsurj : Function.Surjective (relCurveMap C R R').base) (F : DivFam C R π n) :
-    (DivFam.mapAlgOfSurjective R' n hsurj F).picClass =
+lemma DivFam.picClass_mapAlg (F : DivFam C R π n) :
+    (DivFam.mapAlg R' n F).picClass =
       Scheme.CechPic.map (relCurveMap C R R') F.picClass := by
   induction F using Quotient.inductionOn with
   | h F =>

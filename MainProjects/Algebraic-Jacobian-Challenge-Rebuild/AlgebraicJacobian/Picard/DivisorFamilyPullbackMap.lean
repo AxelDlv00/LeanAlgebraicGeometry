@@ -27,7 +27,7 @@ germ seam `IsAffineOpen.germ_mem_nonZeroDivisors`.
 * `DivisorAdaptation.germ_pullbackEqn_mem_nonZeroDivisors` — **the `hreg` discharge**:
   germs of the pulled equations of `d` are nonzerodivisors at every point (each point
   lies in a piece; there the pulled equation differs from the pulled piece equation by
-  a stalk unit, through the adaptation unit and the transition unit of `d`).
+  a stalk unit, through the pointwise clause `eqn_rel` of the adaptation).
 * `DivisorAdaptation.pulledEquations` — the pulled local-equation system on
   `relCurve C R'`.
 -/
@@ -141,13 +141,21 @@ namespace DivisorAdaptation
 
 variable {d : (relCurve C R).LocalEquations} (A : DivisorAdaptation C R π d)
 
-/-- The adaptation's equations are section-level regular: units times restrictions of
-the regular equations of `d` (`LocalEquations.eqn_restrict_mem_nonZeroDivisors`). -/
+/-- The adaptation's equations are section-level regular: their germs are
+nonzerodivisors at every point (`DivisorAdaptation.eqn_regular`), and sections of a
+sheaf inject into the product of their germs. -/
 theorem eqn_mem_nonZeroDivisors (j : A.index) :
     A.eqn j ∈ nonZeroDivisors Γ(relCurve C R, A.pieces j) := by
-  rw [A.eqn_eq j]
-  exact mul_mem (A.unit j).isUnit.mem_nonZeroDivisors
-    (d.eqn_restrict_mem_nonZeroDivisors (A.pt j) (A.piece_le j))
+  rw [mem_nonZeroDivisors_iff_right]
+  intro t ht
+  apply TopCat.Presheaf.section_ext (relCurve C R).sheaf (A.pieces j) t 0
+  intro z hz
+  rw [map_zero]
+  have key : ((relCurve C R).presheaf.germ (A.pieces j) z hz).hom t
+      * ((relCurve C R).presheaf.germ (A.pieces j) z hz).hom (A.eqn j) = 0 := by
+    rw [← map_mul, ht, map_zero]
+  exact (mul_left_mem_nonZeroDivisors_eq_zero_iff (A.eqn_regular j z hz)).mp
+    (by rw [mul_comm] at key; exact key)
 
 /-- **The pulled equations are section-level regular** (Kleiman `lm:ctn` (i)⟹(iii) made
 cheap; no hypothesis on `R'`): the colength `Γ(D(h_j))⧸(f_j)` is projective hence flat
@@ -190,10 +198,9 @@ theorem germ_pullbackEqn_mem_nonZeroDivisors
   have hfzj : (relCurveMap C R R').base z ∈ A.pieces j := hzj'
   have hfzy : (relCurveMap C R R').base z ∈ d.cover.opens ((relCurveMap C R R').base y) :=
     hz
-  have hfzx : (relCurveMap C R R').base z ∈ d.cover.opens (A.pt j) := A.piece_le j hfzj
   have hfzW : (relCurveMap C R R').base z ∈
-      d.cover.opens (A.pt j) ⊓ d.cover.opens ((relCurveMap C R R').base y) :=
-    ⟨hfzx, hfzy⟩
+      A.pieces j ⊓ d.cover.opens ((relCurveMap C R R').base y) :=
+    ⟨hfzj, hfzy⟩
   -- the regular germ of the pulled piece equation
   have hF : ((relCurve C R').presheaf.germ
       ((A.toFinCoverData.baseChange R').pieces j) z hzj).hom (A.pulledEqn R' j) ∈
@@ -223,27 +230,23 @@ theorem germ_pullbackEqn_mem_nonZeroDivisors
       rw [← this]
       rfl
     rw [hres, happ]
-  -- decompose the germ of the piece equation through the units of the adaptation and
-  -- the transition unit of `d`
+  -- decompose the germ of the piece equation through the pointwise unit clause of the
+  -- adaptation at the base point of `y`
+  obtain ⟨u, hu⟩ := A.eqn_rel j ((relCurveMap C R R').base y)
   have hdecomp : ((relCurve C R).presheaf.germ (A.pieces j)
       ((relCurveMap C R R').base z) hfzj).hom (A.eqn j) =
-      ((relCurve C R).presheaf.germ (A.pieces j)
-          ((relCurveMap C R R').base z) hfzj).hom (A.unit j) *
-        (((relCurve C R).presheaf.germ
-            (d.cover.opens (A.pt j) ⊓ d.cover.opens ((relCurveMap C R R').base y))
-            ((relCurveMap C R R').base z) hfzW).hom
-          (d.ratioUnit (A.pt j) ((relCurveMap C R R').base y)) *
-          ((relCurve C R).presheaf.germ
-            (d.cover.opens ((relCurveMap C R R').base y))
-            ((relCurveMap C R R').base z) hfzy).hom
-            (d.eqn ((relCurveMap C R R').base y))) := by
-    rw [A.eqn_eq j, map_mul]
-    congr 1
-    rw [TopCat.Presheaf.germ_res_apply]
+      ((relCurve C R).presheaf.germ
+          (A.pieces j ⊓ d.cover.opens ((relCurveMap C R R').base y))
+          ((relCurveMap C R R').base z) hfzW).hom
+        (u : Γ(relCurve C R,
+          A.pieces j ⊓ d.cover.opens ((relCurveMap C R R').base y))) *
+        ((relCurve C R).presheaf.germ
+          (d.cover.opens ((relCurveMap C R R').base y))
+          ((relCurveMap C R R').base z) hfzy).hom
+          (d.eqn ((relCurveMap C R R').base y)) := by
     have hkey := congrArg ((relCurve C R).presheaf.germ
-        (d.cover.opens (A.pt j) ⊓ d.cover.opens ((relCurveMap C R R').base y))
-        ((relCurveMap C R R').base z) hfzW).hom
-      (d.eqn_restrict_eq (A.pt j) ((relCurveMap C R R').base y))
+        (A.pieces j ⊓ d.cover.opens ((relCurveMap C R R').base y))
+        ((relCurveMap C R R').base z) hfzW).hom hu
     rw [map_mul, TopCat.Presheaf.germ_res_apply, TopCat.Presheaf.germ_res_apply] at hkey
     exact hkey
   -- the goal germ is the stalk image of the germ of `d.eqn (f.base y)`
@@ -270,44 +273,37 @@ theorem germ_pullbackEqn_mem_nonZeroDivisors
       (d.cover.opens ((relCurveMap C R R').base y)) z hfzy
       (d.eqn ((relCurveMap C R R').base y))).symm
   -- assemble: the pulled piece equation's germ is a unit multiple of the goal germ
-  have hunit₁ : IsUnit (((relCurveMap C R R').stalkMap z).hom
-      (((relCurve C R).presheaf.germ (A.pieces j)
-        ((relCurveMap C R R').base z) hfzj).hom (A.unit j))) :=
-    ((A.unit j).isUnit.map ((relCurve C R).presheaf.germ (A.pieces j)
-      ((relCurveMap C R R').base z) hfzj).hom).map
-      ((relCurveMap C R R').stalkMap z).hom
-  have hunit₂ : IsUnit (((relCurveMap C R R').stalkMap z).hom
+  have hunit : IsUnit (((relCurveMap C R R').stalkMap z).hom
       (((relCurve C R).presheaf.germ
-        (d.cover.opens (A.pt j) ⊓ d.cover.opens ((relCurveMap C R R').base y))
+        (A.pieces j ⊓ d.cover.opens ((relCurveMap C R R').base y))
         ((relCurveMap C R R').base z) hfzW).hom
-        (d.ratioUnit (A.pt j) ((relCurveMap C R R').base y)))) :=
-    ((d.ratioUnit (A.pt j) ((relCurveMap C R R').base y)).isUnit.map
-      ((relCurve C R).presheaf.germ
-        (d.cover.opens (A.pt j) ⊓ d.cover.opens ((relCurveMap C R R').base y))
-        ((relCurveMap C R R').base z) hfzW).hom).map
+        (u : Γ(relCurve C R,
+          A.pieces j ⊓ d.cover.opens ((relCurveMap C R R').base y))))) :=
+    (u.isUnit.map ((relCurve C R).presheaf.germ
+      (A.pieces j ⊓ d.cover.opens ((relCurveMap C R R').base y))
+      ((relCurveMap C R R').base z) hfzW).hom).map
       ((relCurveMap C R R').stalkMap z).hom
   have hkey : ((relCurve C R').presheaf.germ
       ((A.toFinCoverData.baseChange R').pieces j) z hzj).hom (A.pulledEqn R' j) =
-      (hunit₁.unit * hunit₂.unit : ((relCurve C R').presheaf.stalk z)ˣ) *
+      (hunit.unit : ((relCurve C R').presheaf.stalk z)ˣ) *
         (((relCurveMap C R R').stalkMap z).hom
           (((relCurve C R).presheaf.germ
             (d.cover.opens ((relCurveMap C R R').base y))
             ((relCurveMap C R R').base z) hfzy).hom
             (d.eqn ((relCurveMap C R R').base y)))) := by
-    rw [hgermF, hdecomp, map_mul, map_mul]
-    rw [Units.val_mul, IsUnit.unit_spec, IsUnit.unit_spec, mul_assoc]
+    rw [hgermF, hdecomp, map_mul, IsUnit.unit_spec]
   rw [hgermG]
   have hSM : ((relCurveMap C R R').stalkMap z).hom
       (((relCurve C R).presheaf.germ
         (d.cover.opens ((relCurveMap C R R').base y))
         ((relCurveMap C R R').base z) hfzy).hom
         (d.eqn ((relCurveMap C R R').base y))) =
-      ↑(hunit₁.unit * hunit₂.unit)⁻¹ *
+      ↑hunit.unit⁻¹ *
         ((relCurve C R').presheaf.germ
           ((A.toFinCoverData.baseChange R').pieces j) z hzj).hom (A.pulledEqn R' j) := by
     rw [hkey, ← mul_assoc, Units.inv_mul, one_mul]
   rw [hSM]
-  exact mul_mem (hunit₁.unit * hunit₂.unit)⁻¹.isUnit.mem_nonZeroDivisors hF
+  exact mul_mem hunit.unit⁻¹.isUnit.mem_nonZeroDivisors hF
 
 /-- **The pulled local-equation system** on the relative curve over `R'`: `d` pulls back
 along the relative-curve comparison, with regularity discharged by the certificate's

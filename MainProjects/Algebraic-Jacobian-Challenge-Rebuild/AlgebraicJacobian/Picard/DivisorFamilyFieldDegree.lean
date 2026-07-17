@@ -156,8 +156,8 @@ lemma isAffineOpen_pieces (j : A.index) : IsAffineOpen (A.pieces j) := by
 /-- **The divisor coefficient is read off any piece.** At a closed point `z` of a piece
 `D(h_j)`, the order of vanishing of the piece equation `f_j` (any field unit `g_j` presenting
 its germ at `η`) equals the coefficient of the presentation divisor `D = div(d)` at `z`: the
-piece equation refines `d`'s equation up to a unit section (trivial order) and orders read off
-any piece agree (`MeromorphicPresentation.ordZ_elem_eq`). -/
+pointwise clause `eqn_rel j z` presents `f_j` as a unit section (trivial order) times `d`'s
+equation at the member of `z` itself, whose order is the coefficient by definition. -/
 lemma coeffAt_eq_toAdd_ordZ_eqn (j : A.index) {z : relCurve C K}
     (hz : z ∈ A.pieces j) (hzg : z ≠ genericPoint (relCurve C K))
     (gⱼ : (relCurve C K).functionFieldˣ)
@@ -168,18 +168,22 @@ lemma coeffAt_eq_toAdd_ordZ_eqn (j : A.index) {z : relCurve C K}
       = coeffAt hzg (Scheme.presentationDivisor K d.presentation) := by
   have hηj : genericPoint (relCurve C K) ∈ A.pieces j :=
     Scheme.genericPoint_mem_of_nonempty ⟨z, hz⟩
+  obtain ⟨u, hu⟩ := A.eqn_rel j z
+  have hηW : genericPoint (relCurve C K) ∈ A.pieces j ⊓ d.cover.opens z :=
+    ⟨hηj, d.cover.genericPoint_mem_opens z⟩
+  have hzW : z ∈ A.pieces j ⊓ d.cover.opens z := ⟨hz, d.cover.mem_opens z⟩
   have hval : (gⱼ : (relCurve C K).functionField)
-      = (Scheme.germGenericUnits hηj (A.unit j) : (relCurve C K).functionField)
-        * (d.presentation.elem (A.pt j) : (relCurve C K).functionField) := by
-    rw [hgⱼ, A.eqn_eq j, map_mul, Scheme.germGenericUnits_val,
-      Scheme.LocalEquations.presentation_elem_val,
-      (relCurve C K).presheaf.germ_res_apply (homOfLE (A.piece_le j))
-        (genericPoint (relCurve C K)) hηj (d.eqn (A.pt j))]
-  have hunit : gⱼ = Scheme.germGenericUnits hηj (A.unit j) * d.presentation.elem (A.pt j) :=
+      = (Scheme.germGenericUnits hηW u : (relCurve C K).functionField)
+        * (d.presentation.elem z : (relCurve C K).functionField) := by
+    have h := congrArg ((relCurve C K).presheaf.germ
+      (A.pieces j ⊓ d.cover.opens z) (genericPoint (relCurve C K)) hηW).hom hu
+    rw [map_mul, TopCat.Presheaf.germ_res_apply, TopCat.Presheaf.germ_res_apply] at h
+    rw [hgⱼ, Scheme.germGenericUnits_val, Scheme.LocalEquations.presentation_elem_val]
+    exact h
+  have hunit : gⱼ = Scheme.germGenericUnits hηW u * d.presentation.elem z :=
     Units.ext hval
   rw [Scheme.coeffAt_presentationDivisor, hunit, map_mul,
-    Scheme.ordZ_germGenericUnits K hηj (A.unit j) hzg hz, one_mul,
-    d.presentation.ordZ_elem_eq K hzg (A.piece_le j hz)]
+    Scheme.ordZ_germGenericUnits K hηW u hzg hzW, one_mul]
 
 open scoped Classical in
 /-- **The per-piece degree reading.** The `K`-dimension of the chart-local colength module

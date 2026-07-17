@@ -77,12 +77,8 @@ theorem exists_divisorAdaptation (d : (relCurve C R).LocalEquations) :
     rintro (j | j)
     · exact hsub₀ (e₀ j)
     · exact hsub₁ (e₁ j)
-  exact ⟨{
-    toFinCoverData := D
-    pt := pt
-    piece_le := hle
-    eqn := fun j => ((relCurve C R).presheaf.map (homOfLE (hle j)).op).hom (d.eqn (pt j))
-    unit := fun _ => 1
-    eqn_eq := fun _ => by rw [Units.val_one, one_mul] }⟩
+  exact ⟨DivisorAdaptation.ofAnchors D
+    (fun j => ((relCurve C R).presheaf.map (homOfLE (hle j)).op).hom (d.eqn (pt j)))
+    pt hle (fun _ => 1) (fun _ => by rw [Units.val_one, one_mul])⟩
 
 end AlgebraicGeometry

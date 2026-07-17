@@ -317,16 +317,26 @@ lemma thetaGluedEval_coe (x : relThetaSections C R π a) :
 /-! ## The kernel bridge: left exactness of the section sequence -/
 
 /-- **The germ of an adaptation equation spans the stalk ideal of the family**: through
-the comparison unit and the refinement witness, `germ_z f_j` and `germ_z (d.eqn)` are
-associated at every `z` in the piece. -/
+the pointwise clause `eqn_rel j z` at the point `z` itself, `germ_z f_j` and
+`germ_z (d.eqn z)` are associated at every `z` in the piece. -/
 theorem germ_eqn_span_eq_stalkIdeal (j : A.index) {z : relCurve C R}
     (hz : z ∈ A.pieces j) :
     Ideal.span {((relCurve C R).presheaf.germ (A.pieces j) z hz).hom (A.eqn j)}
       = d.stalkIdeal z := by
-  rw [A.eqn_eq j, map_mul, TopCat.Presheaf.germ_res_apply,
-    Ideal.span_singleton_mul_left_unit ((A.unit j).isUnit.map
-      ((relCurve C R).presheaf.germ (A.pieces j) z hz).hom)]
-  exact d.germ_eqn_span_eq (A.pt j) z (A.piece_le j hz)
+  obtain ⟨u, hu⟩ := A.eqn_rel j z
+  have hzW : z ∈ A.pieces j ⊓ d.cover.opens z := ⟨hz, d.cover.mem_opens z⟩
+  have hgerm : ((relCurve C R).presheaf.germ (A.pieces j) z hz).hom (A.eqn j)
+      = ((relCurve C R).presheaf.germ (A.pieces j ⊓ d.cover.opens z) z hzW).hom
+          (u : Γ(relCurve C R, A.pieces j ⊓ d.cover.opens z))
+        * ((relCurve C R).presheaf.germ (d.cover.opens z) z
+            (d.cover.mem_opens z)).hom (d.eqn z) := by
+    have h := congrArg ((relCurve C R).presheaf.germ
+      (A.pieces j ⊓ d.cover.opens z) z hzW).hom hu
+    rw [map_mul, TopCat.Presheaf.germ_res_apply, TopCat.Presheaf.germ_res_apply] at h
+    exact h
+  rw [hgerm, Ideal.span_singleton_mul_left_unit (u.isUnit.map
+    ((relCurve C R).presheaf.germ (A.pieces j ⊓ d.cover.opens z) z hzW).hom)]
+  exact d.germ_eqn_span_eq z z (d.cover.mem_opens z)
 
 /-- The kernel of the corestricted evaluation is the kernel of the evaluation. -/
 lemma ker_thetaGluedEval_eq_ker :
