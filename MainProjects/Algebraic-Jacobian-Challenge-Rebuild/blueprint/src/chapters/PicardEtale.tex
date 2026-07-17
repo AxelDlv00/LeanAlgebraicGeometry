@@ -1344,6 +1344,275 @@ of \(A\), write \(E_{A'}\) for its base change (Definition~\ref{def:etale_cover_
   \(\tau'^{*}(\tau^{*}[E,\lambda]) = \tau''^{*}[E,\lambda]\).
 \end{proof}
 
+\section{The transport core: comparing the plus across curves and base fields}
+
+Throughout this section \(k_D\), \(k_E\) and \(k_T\) are fields, with \(k_T\) an extension
+of both \(k_D\) and \(k_E\); \(D\) is an object of \(\Over(\Spec k_D)\) and \(E\) an object
+of \(\Over(\Spec k_E)\). A \emph{test algebra} is a commutative \(k_T\)-algebra \(B\),
+regarded as a \(k_D\)- and \(k_E\)-algebra through the two embeddings; every construction
+performed on test algebras below (\'etale covers and their carriers, products, double
+covers, base changes along maps of test algebras) again yields test algebras. The two
+consumers of this section are the curve-direction functoriality of the plus (the case
+\(k_D = k_E = k_T\), treated at the end) and the base-field shuffle
+\(\mathrm{PicEtAff}(C, A) \simeq \mathrm{PicEtAff}(C_L, A)\) (the cases
+\(\{k_D, k_E\} = \{k, L\}\), \(k_T = L\)).
+
+\begin{definition}[Transport family]
+  \label{def:relPicTransportFamily}
+  \lean{AlgebraicGeometry.RelPicTransportFamily}
+  \leanok
+  A \emph{transport family} from \(D\) to \(E\) assigns to every test algebra \(B\) a
+  morphism
+  \[
+    h_B \colon D \otimes \Spec B \longrightarrow E \otimes \Spec B
+  \]
+  of the underlying schemes of the two product bundles (the product on the left taken over
+  \(\Spec k_D\), on the right over \(\Spec k_E\)), such that:
+  \begin{enumerate}
+  \item \emph{(projection compatibility)} \(\mathrm{snd}_E \circ h_B = \mathrm{snd}_D\) as
+    morphisms to the shared scheme \(\Spec B\);
+  \item \emph{(naturality)} for every homomorphism \(f \colon B \to B'\) of test algebras
+    that is simultaneously \(k_D\)-linear and \(k_E\)-linear,
+    \((E \lhd \Spec f) \circ h_{B'} = h_B \circ (D \lhd \Spec f)\) as morphisms
+    \(D \otimes \Spec B' \to E \otimes \Spec B\).
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}[Relative Picard transport]
+  \label{def:relPicTransport}
+  \lean{AlgebraicGeometry.RelPicTransportFamily.picFromBase_le_comap_hom,
+    AlgebraicGeometry.RelPicTransportFamily.relPicHom,
+    AlgebraicGeometry.RelPicTransportFamily.relPicHom_mk}
+  \uses{def:relPicTransportFamily, def:relPic}
+  \leanok
+  Let \(h\) be a transport family from \(D\) to \(E\). For a test algebra \(B\), the
+  homomorphism of groups
+  \(h_B^{*} \colon \mathrm{relPic}(E, \Spec B) \to \mathrm{relPic}(D, \Spec B)\) induced by
+  pullback of \v Cech Picard classes along \(h_B\) on representatives.
+\end{definition}
+\begin{proof}
+  \leanok
+  Well-definedness on the cosets: if \(X = \mathrm{snd}_E^{*} N\) is pulled back from
+  \(\Spec B\), then \(h_B^{*} X = h_B^{*}\, \mathrm{snd}_E^{*} N = \mathrm{snd}_D^{*} N\)
+  by projection compatibility, so \(h_B^{*}\) carries the subgroup \(H\) of classes pulled
+  back from the test into the corresponding subgroup on the \(D\)-side and descends to the
+  quotients.
+\end{proof}
+
+\begin{lemma}[Bilateral naturality of the relative Picard transport]
+  \label{lem:relPicTransport_naturality}
+  \lean{AlgebraicGeometry.RelPicTransportFamily.relPicAlgMap_relPicHom}
+  \uses{def:relPicTransport, def:relPicAlgMap}
+  \leanok
+  Let \(h\) be a transport family from \(D\) to \(E\) and \(f \colon B \to B'\) a
+  homomorphism of test algebras that is both \(k_D\)- and \(k_E\)-linear. Then
+  \(f^{*} \circ h_B^{*} = h_{B'}^{*} \circ f^{*}\) as maps
+  \(\mathrm{relPic}(E, \Spec B) \to \mathrm{relPic}(D, \Spec B')\), where the outer
+  restrictions are taken along \(f\) over \(k_D\) and over \(k_E\) respectively.
+\end{lemma}
+\begin{proof}
+  \leanok
+  On a representative \v Cech class the two sides pull back along
+  \(h_B \circ (D \lhd \Spec f)\) and \((E \lhd \Spec f) \circ h_{B'}\) respectively, and
+  these morphisms are equal by the naturality axiom of the family; conclude by
+  functoriality of pullback of \v Cech classes and the computation rules of both
+  transports.
+\end{proof}
+
+\begin{lemma}[Pointwise-inverse families invert the transport]
+  \label{lem:relPicTransport_inverse}
+  \lean{AlgebraicGeometry.RelPicTransportFamily.relPicHom_relPicHom}
+  \uses{def:relPicTransport}
+  \leanok
+  Let \(h\) be a transport family from \(D\) to \(E\) and \(h'\) a transport family from
+  \(E\) to \(D\) such that \(h_B \circ h'_B = \id\) on \(E \otimes \Spec B\) for a test
+  algebra \(B\). Then \(h'^{*}_B \circ h_B^{*} = \id\) on
+  \(\mathrm{relPic}(E, \Spec B)\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  On a representative, the round trip pulls back along \(h_B \circ h'_B = \id\), and
+  pullback along the identity is the identity.
+\end{proof}
+
+\begin{lemma}[Descent classes transport]
+  \label{lem:relPicTransport_descent}
+  \lean{AlgebraicGeometry.RelPicTransportFamily.relPicHom_mem_descentClasses,
+    AlgebraicGeometry.RelPicTransportFamily.descentHom,
+    AlgebraicGeometry.RelPicTransportFamily.descentHom_coe,
+    AlgebraicGeometry.RelPicTransportFamily.descentHom_descentMap}
+  \uses{def:descentClasses, def:descentMap, lem:relPicTransport_naturality}
+  \leanok
+  Let \(h\) be a transport family from \(D\) to \(E\), \(A\) a test algebra and \(F\) a
+  presented \'etale cover of \(A\) with carrier \(B_F\). Then
+  \(h_{B_F}^{*}\bigl(\mathrm{Desc}(E, F)\bigr) \subseteq \mathrm{Desc}(D, F)\), and the
+  induced homomorphism of groups
+  \(h_F^{*} \colon \mathrm{Desc}(E, F) \to \mathrm{Desc}(D, F)\) commutes with refinement
+  transport: \(h_{G}^{*}(r_{*}\lambda) = r_{*}(h_F^{*}\lambda)\) for every refinement map
+  \(r \colon B_F \to B_G\) of covers of \(A\).
+\end{lemma}
+\begin{proof}
+  \leanok
+  The two coprojections \(B_F \rightrightarrows B_F \otimes_A B_F\) into the double cover
+  are homomorphisms of test algebras linear over both base fields, so by
+  Lemma~\ref{lem:relPicTransport_naturality} the descent condition
+  (equal pullbacks along the two coprojections) is preserved by \(h_{B_F}^{*}\).
+  Refinement transport is restriction along the refinement map, which is again linear over
+  both base fields, so the commutation is a second instance of
+  Lemma~\ref{lem:relPicTransport_naturality}.
+\end{proof}
+
+\begin{definition}[Transport of the plus]
+  \label{def:PicEtAffTransport}
+  \lean{AlgebraicGeometry.RelPicTransportFamily.picEtAffHom,
+    AlgebraicGeometry.RelPicTransportFamily.picEtAffHom_mk}
+  \uses{def:PicEtAff, def:PicEtAff_mk, thm:PicEtAff_mk_eq_mk_iff, thm:PicEtAff_mk_mul_mk,
+    lem:relPicTransport_descent}
+  \leanok
+  Let \(h\) be a transport family from \(D\) to \(E\) and \(A\) a test algebra. The
+  homomorphism of groups
+  \(h^{*} \colon \mathrm{PicEtAff}(E, A) \to \mathrm{PicEtAff}(D, A)\),
+  \([F, \lambda] \mapsto [F, h_F^{*}\lambda]\), over the literally shared index of
+  presented \'etale covers of \(A\).
+\end{definition}
+\begin{proof}
+  \leanok
+  \emph{Well-defined.} If \((F, \lambda) \sim (F', \mu)\) via a common refinement
+  \((G, r, r')\), so that \(r_{*}\lambda = r'_{*}\mu\) in \(\mathrm{Desc}(E, G)\), then
+  applying \(h_G^{*}\) and commuting it past the two refinement transports
+  (Lemma~\ref{lem:relPicTransport_descent}) gives
+  \(r_{*}(h_F^{*}\lambda) = r'_{*}(h_{F'}^{*}\mu)\), i.e.\
+  \((F, h_F^{*}\lambda) \sim (F', h_{F'}^{*}\mu)\).
+
+  \emph{Multiplicative.} For \(a = [F, \lambda]\) and \(b = [F', \mu]\), the product is
+  represented on the product cover \(F \times F'\) by
+  \(\mathrm{inl}_{*}\lambda \cdot \mathrm{inr}_{*}\mu\)
+  (Theorem~\ref{thm:PicEtAff_mk_mul_mk}); since \(h_{F \times F'}^{*}\) is a homomorphism
+  of groups commuting with the two coprojection transports
+  (Lemma~\ref{lem:relPicTransport_descent}), its value on this representative is
+  \(\mathrm{inl}_{*}(h_F^{*}\lambda) \cdot \mathrm{inr}_{*}(h_{F'}^{*}\mu)\), which
+  represents \(h^{*}a \cdot h^{*}b\) (Theorem~\ref{thm:PicEtAff_mk_mul_mk} again).
+\end{proof}
+
+\begin{theorem}[The transport is compatible with the unit]
+  \label{thm:PicEtAffTransport_unit}
+  \lean{AlgebraicGeometry.RelPicTransportFamily.picEtAffHom_unit}
+  \uses{def:PicEtAffTransport, def:PicEtAff_unit}
+  \leanok
+  For \(x \in \mathrm{relPic}(E, \Spec A)\),
+  \(h^{*}(\eta_A(x)) = \eta_A(h_A^{*} x)\) in \(\mathrm{PicEtAff}(D, A)\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:relPicTransport_naturality}
+  Both sides are represented on the trivial cover \(\mathrm{self}(A)\); the representatives
+  are the pullbacks of \(x\) along the two composites of \(h\) with the structure map
+  \(A \to B_{\mathrm{self}(A)}\), which agree by the bilateral naturality square
+  (Lemma~\ref{lem:relPicTransport_naturality}) applied to the structure map, a
+  homomorphism of test algebras linear over both base fields.
+\end{proof}
+
+\begin{theorem}[The transport is compatible with restriction of the test]
+  \label{thm:PicEtAffTransport_map}
+  \lean{AlgebraicGeometry.RelPicTransportFamily.map_picEtAffHom,
+    AlgebraicGeometry.RelPicTransportFamily.mapAlg_picEtAffHom}
+  \uses{def:PicEtAffTransport, def:PicEtAff_map}
+  \leanok
+  Let \(\tau \colon A \to A'\) be a homomorphism of test algebras linear over both base
+  fields. Then \(\tau^{*} \circ h^{*} = h^{*} \circ \tau^{*}\) as maps
+  \(\mathrm{PicEtAff}(E, A) \to \mathrm{PicEtAff}(D, A')\).
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:relPicTransport_naturality, lem:relPicTransport_descent}
+  On a representative \([F, \lambda]\), both sides are represented on the base-changed
+  cover \(F_{A'}\): one by transporting \(\lambda\) along the canonical inclusion
+  \(\kappa_F \colon B_F \to B_{F_{A'}}\) and then applying the family transport, the other
+  in the opposite order. The canonical inclusion is a homomorphism of test algebras linear
+  over both base fields, so the two representatives agree by
+  Lemma~\ref{lem:relPicTransport_naturality}.
+\end{proof}
+
+\begin{theorem}[Pointwise-inverse families invert the transport of the plus]
+  \label{thm:PicEtAffTransport_inverse}
+  \lean{AlgebraicGeometry.RelPicTransportFamily.picEtAffHom_picEtAffHom}
+  \uses{def:PicEtAffTransport, lem:relPicTransport_inverse}
+  \leanok
+  Let \(h\) be a transport family from \(D\) to \(E\) and \(h'\) a transport family from
+  \(E\) to \(D\) with \(h_B \circ h'_B = \id\) for every test algebra \(B\). Then
+  \(h'^{*} \circ h^{*} = \id\) on \(\mathrm{PicEtAff}(E, A)\) for every test algebra
+  \(A\). In particular a pair of transport families that are pointwise mutually inverse
+  induces an isomorphism of the plus groups.
+\end{theorem}
+\begin{proof}
+  \leanok
+  On a representative \([F, \lambda]\), the round trip transports \(\lambda\) by
+  \(h'^{*}_{B_F} \circ h_{B_F}^{*} = \id\) (Lemma~\ref{lem:relPicTransport_inverse}) on the
+  same cover \(F\).
+\end{proof}
+
+\section{Functoriality of the plus in the curve}
+
+Throughout this section \(k\) is a field, \(D, E\) are objects of \(\Over(\Spec k)\), and
+\(A\) is a commutative \(k\)-algebra.
+
+\begin{definition}[Curve-direction transport of the plus]
+  \label{def:PicEtAff_curveMap}
+  \lean{AlgebraicGeometry.curveTransportFamily,
+    AlgebraicGeometry.curveTransportFamily_hom,
+    AlgebraicGeometry.curveTransportFamily_relPicHom,
+    AlgebraicGeometry.PicEtAff.curveMap,
+    AlgebraicGeometry.PicEtAff.curveMap_mk,
+    AlgebraicGeometry.PicEtAff.curveTransportFamily_descentHom_coe,
+    AlgebraicGeometry.PicEtAff.curveMap_mk_eq_mk}
+  \uses{def:relPicTransportFamily, def:PicEtAffTransport, lem:relPicMapCurve}
+  \leanok
+  Let \(g \colon D \to E\) be a morphism of \(\Over(\Spec k)\). The assignment
+  \(B \mapsto g \rhd \Spec B\) is a transport family from \(D\) to \(E\) in the sense of
+  Definition~\ref{def:relPicTransportFamily} (with \(k_D = k_E = k_T = k\)); its induced
+  relative Picard transport is the curve-direction transport of
+  Lemma~\ref{lem:relPicMapCurve}, and the induced homomorphism of the plus groups is
+  denoted
+  \[
+    g^{*} \colon \mathrm{PicEtAff}(E, A) \longrightarrow \mathrm{PicEtAff}(D, A),
+    \qquad [F, \lambda] \longmapsto [F, (g \rhd \Spec B_F)^{*}\lambda],
+  \]
+  transporting each descent-class representative on its own cover.
+\end{definition}
+\begin{proof}
+  \leanok
+  Projection compatibility is the whiskering identity
+  \(\mathrm{snd}_E \circ (g \rhd T) = \mathrm{snd}_D\); naturality against \(\Spec f\) for
+  a \(k\)-algebra map \(f\) is the exchange identity
+  \((E \lhd \Spec f) \circ (g \rhd \Spec B') = (g \rhd \Spec B) \circ (D \lhd \Spec f)\)
+  of whiskerings.
+\end{proof}
+
+\begin{theorem}[Laws of the curve-direction transport]
+  \label{thm:PicEtAff_curveMap_laws}
+  \lean{AlgebraicGeometry.PicEtAff.curveMap_id,
+    AlgebraicGeometry.PicEtAff.curveMap_comp,
+    AlgebraicGeometry.PicEtAff.curveMap_unit,
+    AlgebraicGeometry.PicEtAff.map_curveMap,
+    AlgebraicGeometry.PicEtAff.mapAlg_curveMap}
+  \uses{def:PicEtAff_curveMap, def:PicEtAff_unit, def:PicEtAff_map}
+  \leanok
+  The curve-direction transport of the plus is contravariantly functorial in the curve:
+  \(\id_E^{*} = \id\), and \((g' \circ g)^{*} = g^{*} \circ g'^{*}\) for
+  \(g \colon D \to E\) and \(g' \colon E \to F\). It is compatible with the unit of the
+  plus, \(g^{*} \circ \eta_A = \eta_A \circ (g \rhd \Spec A)^{*}\), and it commutes with
+  restriction along any base extension and along any \(k\)-algebra map of affine tests.
+\end{theorem}
+\begin{proof}
+  \leanok
+  \uses{lem:relPicMapCurve, thm:PicEtAffTransport_unit, thm:PicEtAffTransport_map}
+  The functor laws hold on each descent-class representative by the pointwise functor laws
+  of the relative Picard curve transport (Lemma~\ref{lem:relPicMapCurve}), since the cover
+  index is untouched. Unit compatibility is Theorem~\ref{thm:PicEtAffTransport_unit} and
+  the restriction squares are Theorem~\ref{thm:PicEtAffTransport_map}, both applied to the
+  whisker family.
+\end{proof}
+
 \section{Separatedness I: pullback along the projection is injective}
 
 The plus construction of the preceding sections is a legitimate computation of the \'etale
