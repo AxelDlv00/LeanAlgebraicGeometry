@@ -133,6 +133,14 @@ variable (π : C.left ⟶ P1 k) [IsFinite π] (n : ℕ)
 noncomputable local instance (priority := 50) instOverCleftCore :
     C.left.Over (Spec (.of k)) := ⟨C.hom⟩
 
+noncomputable local instance instQcohThetaField₀' :
+    Scheme.QcohOn (thetaTwistSheaf π n) (fiberChart₀ π) :=
+  twistSheaf.instQcohOn₀ k (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n)
+
+noncomputable local instance instQcohThetaField₁' :
+    Scheme.QcohOn (thetaTwistSheaf π n) (fiberChart₁ π) :=
+  twistSheaf.instQcohOn₁ k (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n)
+
 attribute [local instance 10000] relCurve.instOver
 
 /-- **Chart-0 collapse of twisted sections**: the field twisted sections of `𝒪(Θⁿ)` over
@@ -309,6 +317,75 @@ lemma twistCollapseN_twistRes_right
   · congr 1
     exact presheafCongr_resHom _ _ _ _
   all_goals exact le_refl _
+
+/-! ### The Čech differential square and the `H⁰`/`H¹` identifications -/
+
+/-- **The Čech differential square**: the overlap collapse intertwines the two-cover Čech
+differential of the field pair with that of the relative pair, through the two chart
+collapses. -/
+lemma twistCollapseN_diff
+    (z : (thetaTwistSheaf π n).obj.obj (op (fiberChart₀ π)) ×
+      (thetaTwistSheaf π n).obj.obj (op (fiberChart₁ π))) :
+    twistCollapseN C π n ((thetaFieldPair C π n).diff z) =
+      (relTwistPair C k π (relThetaCocycle C k π n)).diff
+        (twistCollapse₀ C π n z.1, twistCollapse₁ C π n z.2) := by
+  rw [TwoLatticePair.diff_apply, TwoLatticePair.diff_apply, map_sub]
+  congr 1
+  · exact twistCollapseN_twistRes_left C π n z.1
+  · exact twistCollapseN_twistRes_right C π n z.2
+
+/-- The product of the two chart collapses, as a `k`-linear map of the domains of the two
+Čech differentials. -/
+noncomputable def twistCollapseDom :
+    (↥(twistSubmodule k (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n)
+          (fiberChart₀ π)) ×
+        ↥(twistSubmodule k (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n)
+          (fiberChart₁ π))) →ₗ[k]
+      (↥(twistSubmodule k (relCover C k (fiberTwoCover π)).V₀
+            (relCover C k (fiberTwoCover π)).V₁ (relThetaCocycle C k π n)
+            (relCover C k (fiberTwoCover π)).V₀) ×
+        ↥(twistSubmodule k (relCover C k (fiberTwoCover π)).V₀
+            (relCover C k (fiberTwoCover π)).V₁ (relThetaCocycle C k π n)
+            (relCover C k (fiberTwoCover π)).V₁)) :=
+  (twistCollapse₀ C π n).toLinearMap.prodMap (twistCollapse₁ C π n).toLinearMap
+
+lemma twistCollapseDom_range : LinearMap.range (twistCollapseDom C π n) = ⊤ := by
+  rw [twistCollapseDom, LinearMap.range_prodMap, LinearEquiv.range, LinearEquiv.range,
+    Submodule.prod_top]
+
+/-- The Čech differential square in range form: the overlap collapse carries the range of
+the field differential onto the range of the relative differential. -/
+lemma twistCollapseN_range_diff :
+    Submodule.map (twistCollapseN C π n).toLinearMap
+        (LinearMap.range (thetaFieldPair C π n).diff) =
+      LinearMap.range (relTwistPair C k π (relThetaCocycle C k π n)).diff := by
+  have hcomp : (twistCollapseN C π n).toLinearMap.comp (thetaFieldPair C π n).diff =
+      (relTwistPair C k π (relThetaCocycle C k π n)).diff.comp (twistCollapseDom C π n) :=
+    LinearMap.ext fun z => twistCollapseN_diff C π n z
+  rw [← LinearMap.range_comp, hcomp,
+    LinearMap.range_comp_of_range_eq_top _ (twistCollapseDom_range C π n)]
+
+/-- **`H¹` collapse**: the two-lattice-pair `H¹` of `𝒪(Θⁿ)` on `C.left` is `k`-linearly the
+`H¹` of the relative pair of `relThetaTwistSheaf C k π n` on `relCurve C k`. -/
+noncomputable def fieldToRelH1 :
+    (thetaFieldPair C π n).H1 ≃ₗ[k]
+      (relTwistPair C k π (relThetaCocycle C k π n)).H1 :=
+  (Submodule.quotEquivOfEq _ _ (thetaFieldPair C π n).range_diff_eq.symm).trans
+    ((Submodule.Quotient.equiv _ _ (twistCollapseN C π n)
+        (twistCollapseN_range_diff C π n)).trans
+      (Submodule.quotEquivOfEq _ _
+        (relTwistPair C k π (relThetaCocycle C k π n)).range_diff_eq))
+
+/-- **(c) The `H¹` subsingleton transport**: if `H¹(𝒪(Θⁿ)) = H¹(thetaTwistSheaf π n)`
+vanishes (as DAT-0a's `UniformVanishing` + `ThetaSectionsIso` supply through the ledger),
+then the `hH1` hypothesis of the landed keystone `relThetaTwistH0BaseChange` is discharged:
+`Subsingleton (relTwistPair C k π (relThetaCocycle C k π n)).H1`. -/
+theorem subsingleton_relThetaPairH1
+    (h : Subsingleton (Sheaf.HModule (thetaTwistSheaf π n) 1)) :
+    Subsingleton (relTwistPair C k π (relThetaCocycle C k π n)).H1 :=
+  haveI : Subsingleton (thetaFieldPair C π n).H1 :=
+    (thetaFieldH1PairEquiv C π n).toEquiv.subsingleton_congr.mp h
+  (fieldToRelH1 C π n).toEquiv.subsingleton_congr.mp inferInstance
 
 end TwistCollapse
 
