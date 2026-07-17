@@ -52,7 +52,7 @@ projective `A`-module, then `P` is projective as an `R`-module.  The `A`-splitti
 and `P →₀ A` is a projective `R`-module (a direct sum of copies of `A`, through
 `finsuppLequivDFinsupp`). -/
 theorem Module.Projective.trans {R : Type u} [CommRing R] (A : Type v) [CommRing A]
-    [Algebra R A] {P : Type*} [AddCommGroup P] [Module A P] [Module R P]
+    [Algebra R A] {P : Type*} [AddCommMonoid P] [Module A P] [Module R P]
     [IsScalarTower R A P] [Module.Projective R A] [Module.Projective A P] :
     Module.Projective R P := by
   classical
@@ -220,7 +220,10 @@ end TensorProduct
 namespace Module.Invertible
 
 variable {R : Type u} [CommRing R] {A : Type u} [CommRing A] [Algebra R A]
-variable {M : Type u} [AddCommGroup M] [Module R M] [Module A M] [IsScalarTower R A M]
+
+section Transfer
+
+variable {M : Type u} [AddCommMonoid M] [Module R M] [Module A M] [IsScalarTower R A M]
 
 /-- **Finiteness transfer**: an invertible module over a module-finite `R`-algebra is a
 finite `R`-module. -/
@@ -234,10 +237,13 @@ theorem projective_trans [Module.Projective R A] [Module.Invertible A M] :
     Module.Projective R M :=
   Module.Projective.trans A
 
+end Transfer
+
 section Rank
 
 attribute [local instance] Algebra.TensorProduct.rightAlgebra
 
+variable {M : Type u} [AddCommGroup M] [Module R M] [Module A M] [IsScalarTower R A M]
 variable [Module.Finite R A] [Module.Projective R A] [Module.Invertible A M]
 
 omit [Module.Projective R A] [Module.Invertible A M] in
