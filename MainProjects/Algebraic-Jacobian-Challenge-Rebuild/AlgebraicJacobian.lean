@@ -331,6 +331,7 @@ import AlgebraicJacobian.Algebra.MonicReverseInverse
 import AlgebraicJacobian.Picard.DivisorThetaPairing
 import AlgebraicJacobian.RiemannRoch.CarveDegreePinch
 import AlgebraicJacobian.RiemannRoch.CarveDegree
+import AlgebraicJacobian.Picard.DivisorFamilyEpsMono
 import AlgebraicJacobian.Picard.DivisorThetaDatum
 import AlgebraicJacobian.Picard.DivisorThetaBridge
 import AlgebraicJacobian.Picard.DivisorThetaTrivializeZero
