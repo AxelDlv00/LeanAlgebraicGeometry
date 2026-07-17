@@ -259,6 +259,7 @@ import AlgebraicJacobian.Albanese.Milne33Substeps
 import AlgebraicJacobian.Albanese.Milne33Rows
 import AlgebraicJacobian.Albanese.Milne33Diagonal
 import AlgebraicJacobian.Albanese.Milne33RowSection
+import AlgebraicJacobian.Albanese.Milne33Pullback
 import AlgebraicJacobian.Albanese.PolePurityLocal
 import AlgebraicJacobian.Albanese.PolePurity
 import AlgebraicJacobian.Algebra.CoheightBridge
