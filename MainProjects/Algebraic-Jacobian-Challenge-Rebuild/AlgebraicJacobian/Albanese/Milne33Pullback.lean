@@ -5,6 +5,7 @@ Authors: Christian Merten
 -/
 import Mathlib
 import AlgebraicJacobian.Albanese.RationalMapFunctionField
+import AlgebraicJacobian.Albanese.PolePurity
 
 /-!
 # Milne Lemma 3.3, Substep 3: the spreading criterion for rational-map domains
@@ -28,6 +29,16 @@ Supporting API:
   morphisms of a partial map are compatible with specialisation inside the
   domain; this is what re-anchors the spread-out morphism at the generic
   point.
+
+§2 corestriction (`mem_domain_of_forall_germ_mem_range`): if every section of
+an affine open `V ∋ γ = F(η_Y)` has generic germ pullback `Λ s ∈ K(Y)` in the
+range of `𝒪_{Y,P} ⟶ K(Y)`, then `P ∈ Dom F`. §3 is the easy converse
+(`germ_stalkPullback_mem_range_of_mem_domain`, via the germ pullback
+`Scheme.PartialMap.germPullback` at a point of definition), and §4 the
+assembly-facing pole corollary
+(`exists_germ_stalkPullback_notMem_range_of_notMem_domain`): where `F` is
+undefined, some `Λ s` has a pole at a coheight-one specialisation (landed 4a
+pole-divisor purity).
 
 Blueprint reference: `lem:milne_codim1_indeterminacy` (Milne, *Abelian
 Varieties*, §I.3 Lemma 3.3, pp. 17–18; `abelian-varieties:page-0023/0024`).
@@ -287,5 +298,136 @@ theorem Scheme.RationalMap.mem_domain_of_forall_germ_mem_range
               (IsAffineOpen.fromSpecStalk_eq_fromSpecStalk hU' hPU'))
   exact Scheme.RationalMap.mem_domain_of_fromSpecStalk qY qZ F P
     (Spec.map α ≫ hV.fromSpec) hcomp hgen
+
+/-! ## §3. The converse: definedness gives germ-range membership (3-easy)
+
+If a representative `g` of `F` is defined at `Q` with value `g(Q) ∈ V`, the
+generic germ pullback of every section of `V` is regular at `Q`: it factors
+through `𝒪_{Y,Q}` by the germ-at-the-value pullback of `g` at `Q`. -/
+
+/-- The germ pullback of a partial map at a point `Q` of its domain: the germ
+of a section of `V ∋ g(Q)` at the value `g(Q)`, pulled back through the stalk
+map of `g` and the stalk isomorphism of the domain inclusion. This is the
+`𝒪_{Y,Q}`-valued corestriction of the generic germ pullback `Λ`
+(see `germ_stalkPullback_mem_range_of_mem_domain`). -/
+noncomputable def Scheme.PartialMap.germPullback
+    {Y Z : Scheme.{u}} (g : Y.PartialMap Z) {V : Z.Opens} {Q : ↥Y}
+    (hQg : Q ∈ g.domain) (hQV : g.hom.base ⟨Q, hQg⟩ ∈ V) :
+    Γ(Z, V) ⟶ Y.presheaf.stalk Q :=
+  -- the inverse stalk map is bound at its natural type first: elaborating it
+  -- directly inside the composite stalls the `IsIso` instance under the
+  -- expected-type unification `ι(⟨Q, hQg⟩) ≡ Q`
+  let ν : (g.domain.toScheme).presheaf.stalk ⟨Q, hQg⟩ ⟶
+      Y.presheaf.stalk (g.domain.ι.base ⟨Q, hQg⟩) :=
+    inv (g.domain.ι.stalkMap ⟨Q, hQg⟩)
+  Z.presheaf.germ V (g.hom.base ⟨Q, hQg⟩) hQV ≫ g.hom.stalkMap ⟨Q, hQg⟩ ≫ ν
+
+/-- `Spec` of the germ pullback of `g` at `Q`, composed into the target through
+the affine open `V`, is the stalk-to-scheme morphism `Spec 𝒪_{Y,Q} ⟶ Z` of the
+partial map `g` at `Q`. -/
+lemma Scheme.PartialMap.specMap_germPullback_fromSpec
+    {Y Z : Scheme.{u}} (g : Y.PartialMap Z) {V : Z.Opens} (hV : IsAffineOpen V)
+    {Q : ↥Y} (hQg : Q ∈ g.domain) (hQV : g.hom.base ⟨Q, hQg⟩ ∈ V) :
+    Spec.map (g.germPullback hQg hQV) ≫ hV.fromSpec = g.fromSpecStalkOfMem hQg := by
+  change Spec.map (Z.presheaf.germ V (g.hom.base ⟨Q, hQg⟩) hQV ≫ g.hom.stalkMap ⟨Q, hQg⟩
+      ≫ inv (g.domain.ι.stalkMap ⟨Q, hQg⟩)) ≫ hV.fromSpec
+    = g.fromSpecStalkOfMem hQg
+  rw [Spec.map_comp, Spec.map_comp, Category.assoc, Category.assoc,
+    show Spec.map (Z.presheaf.germ V (g.hom.base ⟨Q, hQg⟩) hQV) ≫ hV.fromSpec
+      = hV.fromSpecStalk hQV from rfl,
+    IsAffineOpen.fromSpecStalk_eq_fromSpecStalk hV hQV,
+    Scheme.SpecMap_stalkMap_fromSpecStalk, ← Category.assoc]
+  rfl
+
+/-- **The corestriction identity.** The germ pullback of `g` at a domain point
+`Q` with `g(Q) ∈ V`, composed with the canonical `𝒪_{Y,Q} ⟶ K(Y)`, is the
+generic germ pullback `Λ` of the rational map represented by `g`. -/
+lemma Scheme.PartialMap.germPullback_stalkSpecializes
+    {Y Z : Scheme.{u}} [IsIntegral Y] (g : Y.PartialMap Z)
+    {V : Z.Opens} (hV : IsAffineOpen V)
+    {Q : ↥Y} (hQg : Q ∈ g.domain) (hQV : g.hom.base ⟨Q, hQg⟩ ∈ V)
+    (hγV : g.toRationalMap.fromFunctionField (closedPoint Y.functionField) ∈ V) :
+    g.germPullback hQg hQV
+        ≫ Y.presheaf.stalkSpecializes (genericPoint_specializes Q)
+      = Z.presheaf.germ V
+          (g.toRationalMap.fromFunctionField (closedPoint Y.functionField)) hγV
+        ≫ g.toRationalMap.stalkPullback := by
+  have hηg : genericPoint ↥Y ∈ g.domain :=
+    (genericPoint_specializes _).mem_open g.domain.2
+      g.dense_domain.nonempty.choose_spec
+  apply Spec.map_injective
+  rw [← cancel_mono hV.fromSpec, Spec.map_comp, Category.assoc,
+    Scheme.PartialMap.specMap_germPullback_fromSpec g hV hQg hQV,
+    Scheme.PartialMap.fromSpecStalkOfMem_specializes g (genericPoint_specializes Q)
+      hQg hηg,
+    Scheme.RationalMap.specMap_germ_stalkPullback_fromSpec g.toRationalMap hV hγV,
+    Scheme.RationalMap.fromFunctionField_toRationalMap]
+
+/-- **Definedness gives germ-range membership (Milne 3.3, substep 3-easy).**
+If a representative `g` of the rational map `F : Y ⤏ Z` is defined at `Q` with
+value `g(Q) ∈ V`, then the generic germ pullback `Λ s ∈ K(Y)` of every section
+`s ∈ Γ(Z, V)` lies in the image of `𝒪_{Y,Q} ⟶ K(Y)` — namely, `Λ s` is the
+image of the germ pullback of `s` at `g(Q)`. Consumed by the 4b-transport at
+`Q = δ(z)` with value `Φ₀(δ(z)) = e ∈ V` (spec D5(d)). -/
+theorem Scheme.RationalMap.germ_stalkPullback_mem_range_of_mem_domain
+    {Y Z : Scheme.{u}} [IsIntegral Y] (F : Y.RationalMap Z)
+    {V : Z.Opens} (hV : IsAffineOpen V)
+    (hγV : F.fromFunctionField (closedPoint Y.functionField) ∈ V)
+    (g : Y.PartialMap Z) (hg : g.toRationalMap = F)
+    {Q : ↥Y} (hQg : Q ∈ g.domain) (hQV : g.hom.base ⟨Q, hQg⟩ ∈ V)
+    (s : Γ(Z, V)) :
+    (Z.presheaf.germ V (F.fromFunctionField (closedPoint Y.functionField)) hγV
+        ≫ F.stalkPullback) s
+      ∈ (algebraMap (Y.presheaf.stalk Q) Y.functionField).range := by
+  subst hg
+  have hspec : Y.presheaf.stalkSpecializes (genericPoint_specializes Q)
+      = CommRingCat.ofHom (algebraMap (Y.presheaf.stalk Q) Y.functionField) := by
+    rw [RingHom.algebraMap_toAlgebra, CommRingCat.ofHom_hom]
+  refine RingHom.mem_range.mpr ⟨g.germPullback hQg hQV s, ?_⟩
+  calc algebraMap (Y.presheaf.stalk Q) Y.functionField (g.germPullback hQg hQV s)
+      = (g.germPullback hQg hQV
+          ≫ Y.presheaf.stalkSpecializes (genericPoint_specializes Q)) s := by
+        rw [hspec, CommRingCat.comp_apply, CommRingCat.ofHom_apply]
+    _ = (Z.presheaf.germ V
+            (g.toRationalMap.fromFunctionField (closedPoint Y.functionField)) hγV
+          ≫ g.toRationalMap.stalkPullback) s := by
+        rw [Scheme.PartialMap.germPullback_stalkSpecializes g hV hQg hQV hγV]
+
+/-! ## §4. The pole corollary
+
+The assembly-facing contrapositive: if `F` is undefined at `P`, some section
+of `V` has generic germ pullback with a pole at a coheight-one point
+specialising to `P` (landed 4a pole-divisor purity). -/
+
+/-- **The pole-existence corollary (substep 3 + landed 4a).** Let `F : Y ⤏ Z`
+be a rational map over an affine base with `Y` integral, locally Noetherian
+and with regular stalks, `Z` locally of finite type over the base, and `V` an
+affine open of `Z` containing the generic image. If `F` is **not** defined at
+`P`, then some section `s ∈ Γ(Z, V)` has generic germ pullback `Λ s ∈ K(Y)`
+that is non-regular at a coheight-one point `w ⤳ P`. -/
+theorem Scheme.RationalMap.exists_germ_stalkPullback_notMem_range_of_notMem_domain
+    {Y Z S : Scheme.{u}} [IsIntegral Y] [IsAffine S] [IsLocallyNoetherian Y]
+    (hreg : ∀ y : ↥Y, IsRegularLocalRing (Y.presheaf.stalk y))
+    (qY : Y ⟶ S) (qZ : Z ⟶ S) [LocallyOfFiniteType qZ] (F : Y.RationalMap Z)
+    (hFover : F.fromFunctionField ≫ qZ
+      = Y.fromSpecStalk (genericPoint ↥Y) ≫ qY)
+    {V : Z.Opens} (hV : IsAffineOpen V)
+    (hγV : F.fromFunctionField (closedPoint Y.functionField) ∈ V)
+    (P : ↥Y) (hP : P ∉ F.domain) :
+    ∃ s : Γ(Z, V), ∃ w : ↥Y, w ⤳ P ∧ Order.coheight w = 1 ∧
+      (Z.presheaf.germ V (F.fromFunctionField (closedPoint Y.functionField)) hγV
+          ≫ F.stalkPullback) s
+        ∉ (algebraMap (Y.presheaf.stalk w) Y.functionField).range := by
+  have hne : ¬ ∀ s : Γ(Z, V),
+      (Z.presheaf.germ V (F.fromFunctionField (closedPoint Y.functionField)) hγV
+          ≫ F.stalkPullback) s
+        ∈ (algebraMap (Y.presheaf.stalk P) Y.functionField).range := fun H =>
+    hP (Scheme.RationalMap.mem_domain_of_forall_germ_mem_range qY qZ F hFover
+      hV hγV P H)
+  push Not at hne
+  obtain ⟨s, hs⟩ := hne
+  obtain ⟨w, hwP, hcw, hw⟩ :=
+    Scheme.exists_specializes_coheight_eq_one_of_notMem_stalk_range Y hreg P _ hs
+  exact ⟨s, w, hwP, hcw, hw⟩
 
 end AlgebraicGeometry
