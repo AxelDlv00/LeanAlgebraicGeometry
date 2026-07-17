@@ -152,6 +152,57 @@ noncomputable def twistCollapseN :
         (twistTriv₀ k (relCover C k (fiberTwoCover π)).V₀
           (relCover C k (fiberTwoCover π)).V₁ (relThetaCocycle C k π n) inf_le_left).symm))
 
+/-! ### Triv-naturality of the collapse maps -/
+
+/-- Applying the chart-0 trivialization on the relative side to the chart-0 collapse is the
+section collapse of the chart-0 trivialization on the field side. -/
+lemma twistTriv₀_twistCollapse₀ (x) :
+    twistTriv₀ k (relCover C k (fiberTwoCover π)).V₀ (relCover C k (fiberTwoCover π)).V₁
+        (relThetaCocycle C k π n) (le_refl _) (twistCollapse₀ C π n x) =
+      sectionsCollapse C (fiberChart₀ π)
+        (isAffineOpen_preimage_chartOpen π 0).isCompact
+        (isAffineOpen_preimage_chartOpen π 0).isQuasiSeparated
+        (twistTriv₀ k (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n) (le_refl _) x) := by
+  rw [twistCollapse₀]
+  simp only [LinearEquiv.trans_apply]
+  exact LinearEquiv.apply_symm_apply _ _
+
+/-- Chart-1 analogue of `twistTriv₀_twistCollapse₀`. -/
+lemma twistTriv₁_twistCollapse₁ (y) :
+    twistTriv₁ k (relCover C k (fiberTwoCover π)).V₀ (relCover C k (fiberTwoCover π)).V₁
+        (relThetaCocycle C k π n) (le_refl _) (twistCollapse₁ C π n y) =
+      sectionsCollapse C (fiberChart₁ π)
+        (isAffineOpen_preimage_chartOpen π 1).isCompact
+        (isAffineOpen_preimage_chartOpen π 1).isQuasiSeparated
+        (twistTriv₁ k (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n) (le_refl _) y) := by
+  rw [twistCollapse₁]
+  simp only [LinearEquiv.trans_apply]
+  exact LinearEquiv.apply_symm_apply _ _
+
+/-- Overlap analogue: through the chart-0 trivialization on the overlap. -/
+lemma twistTriv₀_twistCollapseN (q) :
+    twistTriv₀ k (relCover C k (fiberTwoCover π)).V₀ (relCover C k (fiberTwoCover π)).V₁
+        (relThetaCocycle C k π n) inf_le_left (twistCollapseN C π n q) =
+      (@presheafCongr k _ (relCurve C k) (relCurve.instOver C k) _ _
+          (relCover_inf C k (fiberTwoCover π)).symm)
+        (sectionsCollapse C (fiberChart₀ π ⊓ fiberChart₁ π)
+          (fiberTwoCover π).isAffineOpen_inf.isCompact
+          (fiberTwoCover π).isAffineOpen_inf.isQuasiSeparated
+          (twistTriv₀ k (fiberChart₀ π) (fiberChart₁ π) (thetaUnit π ^ n) inf_le_left q)) := by
+  rw [twistCollapseN]
+  simp only [LinearEquiv.trans_apply]
+  exact LinearEquiv.apply_symm_apply _ _
+
+/-- The section collapse commutes with restriction. -/
+lemma sectionsCollapse_resHom {W V : C.left.Opens} (hWV : W ≤ V)
+    (hW : IsCompact (W : Set C.left)) (hW' : IsQuasiSeparated (W : Set C.left))
+    (hV : IsCompact (V : Set C.left)) (hV' : IsQuasiSeparated (V : Set C.left))
+    (s : Γ(C.left, V)) :
+    sectionsCollapse C W hW hW' (C.left.resHom hWV s) =
+      (relCurve C k).resHom (Scheme.Hom.preimage_mono (fst C (overSpec k k)).left hWV)
+        (sectionsCollapse C V hV hV' s) := by
+  rw [sectionsCollapse_apply, sectionsCollapse_apply, relPullbackSection_resHom']
+
 end TwistCollapse
 
 end AlgebraicGeometry
