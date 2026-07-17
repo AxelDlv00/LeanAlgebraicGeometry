@@ -308,6 +308,7 @@ import AlgebraicJacobian.Picard.DivisorThetaBridge
 import AlgebraicJacobian.Picard.DivisorThetaTrivializeZero
 import AlgebraicJacobian.Picard.DivisorThetaTrivializeOne
 import AlgebraicJacobian.Picard.DivisorThetaGlue
+import AlgebraicJacobian.Picard.DivisorThetaSurjectivity
 import AlgebraicJacobian.Algebra.ABDepth
 import AlgebraicJacobian.Algebra.ABDepthExt
 import AlgebraicJacobian.Algebra.ABDepthSES
