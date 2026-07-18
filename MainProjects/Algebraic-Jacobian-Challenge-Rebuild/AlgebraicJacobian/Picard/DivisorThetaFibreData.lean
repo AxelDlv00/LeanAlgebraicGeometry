@@ -9,6 +9,7 @@ import AlgebraicJacobian.Picard.DivisorThetaFibre
 import AlgebraicJacobian.Picard.DivisorFamilyMapAlg
 import AlgebraicJacobian.RiemannRoch.WindowFieldTransport
 import AlgebraicJacobian.Picard.DivisorFamilyField
+import AlgebraicJacobian.Picard.DivisorFamilyFieldCRT
 import AlgebraicJacobian.Cohomology.H1BaseFieldInvariance
 
 /-!
@@ -23,19 +24,18 @@ The witness-production half of the theta-ideal fibre story (the residual named a
 * `subsingleton_h1_windowTransportDivisor_sub` — the transported normalization at ANY
   exponent `a ≥ M`: `H¹(𝒪(N(a) − D')) = 0` for `deg D' ≤ 2g` (the `hNnorm` engine of
   the N-pack, with the `a·δ ≥ M·δ` slack; covers both campaign windows `M`, `M+s`).
-* `DivisorAdaptation.IsCertified.fibrewise_h1` — **the G-1 keystone**: for a certified
-  adaptation over any test ring, at any window `a ≥ M`, the engine's fibrewise
+* `DivisorAdaptation.IsCertified.fibrewise_h1` — **the G-1 keystone, UNCONDITIONAL**: for
+  a certified adaptation over any test ring, at any window `a ≥ M`, the engine's fibrewise
   hypothesis `∀ p, Subsingleton (H¹(pair (Θᵃ − d)) ⊗ κ(p))` holds — witnessed at each
   prime by `N(a) − d_p` where `d_p` is the fibre divisor of the pulled-back family.
-  The one OPEN input is threaded as the named hypothesis `hdeg`: the fibre degree law
-  `deg κ(p) d_p = g` — exactly the general colength↔degree identity flagged open at
-  `Picard/DivisorFamilyField.lean:147-151` (the support-separated case is landed at
-  `deg_divFamDivisor_of_separated`; the general CRT/Mayer–Vietoris identity is the
-  residual brick).  Everything else — the class leg (G-0a + naturality + the landed
-  base-change laws) and the `H¹` leg (N-pack normalization) — is discharged.
+  The class leg is G-0a + theta-chart naturality + the landed base-change laws; the `H¹`
+  leg is the N-pack normalization; and the fibre degree law `deg κ(p) d_p = g` — formerly
+  the named `hdeg` seam — is the general colength↔degree identity, landed at
+  `DivisorAdaptation.IsCertified.deg_presentationDivisor_pulledEquations`
+  (`Picard/DivisorFamilyFieldCRT.lean`; certificates base-change, and the glued colength
+  is the divisor degree by the stalk-CRT decomposition).
 * `DivisorAdaptation.IsCertified.thetaGluedEval_surjective` — the `hsurj` corollary:
-  right exactness of the twisted section sequence for certified families, modulo the
-  same named `hdeg` seam.
+  right exactness of the twisted section sequence for certified families, unconditional.
 -/
 
 set_option autoImplicit false
@@ -187,20 +187,19 @@ private lemma picClass_neg {K : Type u} [Field K] {X : Scheme.{u}}
   exact eq_inv_of_mul_eq_one_left h.symm
 
 /-- **The G-1 keystone — the fibrewise `H¹`-data of a certified adaptation**
-(`informal/spec-w4-gates.md` §G-1 pin): for a certified divisor adaptation over any
-test ring and any window exponent `a ≥ M` with ledger `H¹`-input, the rigid engine's
-complex-form fibrewise hypothesis
+(`informal/spec-w4-gates.md` §G-1 pin), UNCONDITIONAL: for a certified divisor adaptation
+over any test ring and any window exponent `a ≥ M` with ledger `H¹`-input, the rigid
+engine's complex-form fibrewise hypothesis
 
 `Subsingleton (H¹(pair (Θᵃ − d)) ⊗[R] κ(p))`
 
 holds at every prime — witnessed by `N(a) − d_p`, where `N(a)` is the transported
 window divisor and `d_p` the fibre divisor of the pulled-back family.  The class leg
 is the G-0a class law + theta-chart naturality + the landed base-change laws; the
-`H¹` leg is the transported normalization.  The ONE open input is the named
-hypothesis `hdeg` — the fibre degree law `deg κ(p) d_p = g`, exactly the general
-colength↔degree identity flagged open at `Picard/DivisorFamilyField.lean:147-151`
-(certificates bound `finrank κ W(d_p) = g`; the CRT/Mayer–Vietoris bridge from the
-glued colength to the divisor degree is the residual brick). -/
+`H¹` leg is the transported normalization; and the fibre degree law `deg κ(p) d_p = g`
+(formerly the named `hdeg` seam) is the landed general colength↔degree identity
+`IsCertified.deg_presentationDivisor_pulledEquations`
+(`Picard/DivisorFamilyFieldCRT.lean`). -/
 theorem DivisorAdaptation.IsCertified.fibrewise_h1 {R : Type u} [CommRing R]
     [Algebra k R] {d : (relCurve C R).LocalEquations} {A : DivisorAdaptation C R π d}
     {g : ℕ} (hc : A.IsCertified g)
@@ -208,14 +207,15 @@ theorem DivisorAdaptation.IsCertified.fibrewise_h1 {R : Type u} [CommRing R]
     (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
     {a : ℕ} (ha1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
     (hMa : windowM_choice π hπ g ≤ a)
-    (hdeg : ∀ p : PrimeSpectrum R,
-      Scheme.CurveDivisor.deg p.asIdeal.ResidueField
-        (Scheme.presentationDivisor p.asIdeal.ResidueField
-          ((A.pulledEquations p.asIdeal.ResidueField
-            hc.projective_colength).presentation)) = (g : ℤ))
     (p : PrimeSpectrum R) :
     Subsingleton ((datumPair (A.thetaIdealDatum a)).H1 ⊗[R]
       p.asIdeal.ResidueField) := by
+  have hdeg : ∀ q : PrimeSpectrum R,
+      Scheme.CurveDivisor.deg q.asIdeal.ResidueField
+        (Scheme.presentationDivisor q.asIdeal.ResidueField
+          ((A.pulledEquations q.asIdeal.ResidueField
+            hc.projective_colength).presentation)) = (g : ℤ) :=
+    fun q => hc.deg_presentationDivisor_pulledEquations
   refine A.thetaIdealDatum_hfib_of_witness a (fun q => ?_) p
   refine ⟨windowTransportDivisor C q.asIdeal.ResidueField π a
     - Scheme.presentationDivisor q.asIdeal.ResidueField
@@ -266,23 +266,18 @@ theorem DivisorAdaptation.IsCertified.fibrewise_h1 {R : Type u} [CommRing R]
 
 /-- **The `hsurj` corollary of G-1**: right exactness of the Θ-twisted section
 sequence for a certified adaptation, at any window `a ≥ M` with ledger `H¹`-input,
-modulo the same named fibre-degree seam `hdeg`.  Composes the keystone with the landed
-engine `thetaGluedEval_surjective`. -/
+UNCONDITIONAL.  Composes the keystone with the landed engine
+`thetaGluedEval_surjective`. -/
 theorem DivisorAdaptation.IsCertified.thetaGluedEval_surjective {R : Type u}
     [CommRing R] [Algebra k R] {d : (relCurve C R).LocalEquations}
     {A : DivisorAdaptation C R π d} {g : ℕ} (hc : A.IsCertified g)
     (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
     (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
     {a : ℕ} (ha1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
-    (hMa : windowM_choice π hπ g ≤ a)
-    (hdeg : ∀ p : PrimeSpectrum R,
-      Scheme.CurveDivisor.deg p.asIdeal.ResidueField
-        (Scheme.presentationDivisor p.asIdeal.ResidueField
-          ((A.pulledEquations p.asIdeal.ResidueField
-            hc.projective_colength).presentation)) = (g : ℤ)) :
+    (hMa : windowM_choice π hπ g ≤ a) :
     Function.Surjective (A.thetaGluedEval a) :=
   DivisorAdaptation.thetaGluedEval_surjective hπ
-    (fun p => hc.fibrewise_h1 (C := C) (π := π) hπ hO hχ ha1 hMa hdeg p)
+    (fun p => hc.fibrewise_h1 (C := C) (π := π) hπ hO hχ ha1 hMa p)
 
 end Keystone
 

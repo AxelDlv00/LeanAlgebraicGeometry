@@ -179,6 +179,7 @@ import AlgebraicJacobian.Algebra.LocalizedColength
 import AlgebraicJacobian.Curve.BaseFieldTransition
 import AlgebraicJacobian.RiemannRoch.ChartPoints
 import AlgebraicJacobian.RiemannRoch.ChartColength
+import AlgebraicJacobian.RiemannRoch.StalkColength
 import AlgebraicJacobian.Cohomology.RigidEngineLattice
 import AlgebraicJacobian.Cohomology.RigidEngineLatticeSixTerm
 import AlgebraicJacobian.Cohomology.RigidEngineLatticeModel
@@ -311,6 +312,8 @@ import AlgebraicJacobian.Picard.DivisorFamily
 import AlgebraicJacobian.Picard.DivisorFamilyExtraction
 import AlgebraicJacobian.Picard.DivisorFamilyField
 import AlgebraicJacobian.Picard.DivisorFamilyFieldDegree
+import AlgebraicJacobian.Picard.DivisorFamilyStalkEval
+import AlgebraicJacobian.Picard.DivisorFamilyFieldCRT
 import AlgebraicJacobian.Picard.DivisorFamilyFieldDictionary
 import AlgebraicJacobian.Picard.DivisorFamilyFieldDictionaryCore
 import AlgebraicJacobian.Picard.DivisorFamilyFieldEquiv
