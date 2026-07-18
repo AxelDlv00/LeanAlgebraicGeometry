@@ -360,6 +360,8 @@ import AlgebraicJacobian.Picard.DivisorThetaGlue
 import AlgebraicJacobian.Picard.DivisorThetaSurjectivity
 import AlgebraicJacobian.Picard.DivisorThetaFibre
 import AlgebraicJacobian.Picard.DivSchemeFibreH1
+import AlgebraicJacobian.Picard.ThetaChartClassNaturality
+import AlgebraicJacobian.Picard.DivisorThetaFibreData
 import AlgebraicJacobian.Algebra.ABDepth
 import AlgebraicJacobian.Algebra.ABDepthExt
 import AlgebraicJacobian.Algebra.ABDepthSES
