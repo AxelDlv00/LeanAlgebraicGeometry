@@ -156,3 +156,77 @@ axioms exactly `[propext, Classical.choice, Quot.sound]`; files ≤ 500 L; root-
 edits HEAD-blob + own line). Memory discipline this session: ONE heavy lane at a time;
 `LEAN_NUM_THREADS=1` builds; check `free -g` before opening a second worker; the lake
 mutex is the mkdir directory protocol of `informal/protocol-concurrent-lanes.md` §2.
+
+---
+
+## ADDENDUM 1 (same session, post-recon) — two more bricks; the honest full map to `divRepAff`
+
+Deep surface extraction (two read-only lanes, file:line verified) corrects the §"Consumption
+map" optimism: G-1/2/3 + salvage + S6b do NOT suffice. Two more bricks:
+
+## G-4. The universal-family slice (forward heart; spec-dd-r §3 items 3–5 completion)
+
+What actually stands over `DivCarveChartRing k A B g r₁ r₂ b₁ b₂ i j` (Noetherian,
+`DivSchemeFamilyUniv.lean:55,:60`): the universal PAIR (`divUniversalFst:72`/`Snd:79`)
+with the carve after every base change (`divUniversal_carve:106`) and in every
+residue-field fibre (`divUniversal_carve_residueField:135`). What does NOT stand:
+
+1. **The seed constructor**: no `ThetaGeneratorSeed` over `R_Z` is built from the
+   universal pair. Route: P-fib at each fibre (`existsUnique_effective_divisor_of_carve`,
+   certificate-free, fed by `divUniversal_carve_residueField`) gives the fibre divisor +
+   window exactness; achiever choice (`exists_coeffAt_eq_baseDivisorAt`) + Nakayama
+   neighbourhood (`exists_fibrewise_tmul_ne_zero_of_projective`) produce the seed data;
+   `ThetaGeneratorSeed.isGenerator_of_fibre_ne_zero` (`DivSchemeSeed.lean:188`) fires
+   `IsGenerator`; then `localEquations`/`divisorAdaptation` (`DivSchemeFamily.lean:349,:367`).
+2. **The DDR-4 certificate discharge**: `(univ adaptation).IsCertified g` — the engine
+   machinery (`DivSchemeCertificate*.lean`) is landed but threaded on the fibrewise
+   h¹-data `hfib`; here `hfib` comes CERTIFICATE-FREE from P-fib on the carve pair
+   (fibre windows exact ⟹ fibre H¹ of the theta-ideal datum vanishes) — the designed
+   anti-circular order (spec-dd-r §3 item 4 NOTE). Distinct from G-1 (which derives
+   `hfib` FROM a certificate, for arbitrary certified families).
+3. **DDR-5's `hle₂` boundary**: `ThetaGeneratorSeed.divFamEps_certifiedFamily`
+   (`DivSchemeEps.lean:309`) threads `hle₂` (second-window containment, fibrewise
+   exactness upgraded to relative divisibility) — open, and `DivSchemeEpsUniv` (its
+   instantiation at the universal pair, named in the DivSchemeEps docstring) does not
+   exist.
+
+Deliverable: `Picard/DivSchemeEpsUniv.lean` (+ a seed file if 500L forces a split) with
+keystones `divUniversalFamily : CertifiedDivisorFamily C (DivCarveChartRing …) π g` and
+`divFamEps_divUniversalFamily : divFamEps hπ g (DivFam.mk (divUniversalFamily …)) =
+(⟨kernel of baseChangeMkQ (pairTautFst)⟩, ⟨…Snd…⟩)`-shaped (the ε-projection identity at
+the universal point). Size L→XL — THE riskiest remaining brick (inherits spec-dd-r §7
+risk 1). Worksheet-first if the seam fights; Fable pen.
+
+## G-5. Frame-locus cover + morphism stitch (backward assembly)
+
+DDR-7 hom-ext EXISTS committed (`divScheme_hom_ext`, `DivScheme.lean:172`;
+`grPair_hom_ext_of_frame`, `DivCarvePairChart.lean:404`) — spec-dd-r §4's "DDR-7
+launchable" row is DONE, not open. The two genuinely missing backward pieces:
+
+1. **(load-bearing) The ε frame cover**: for a divisor family over affine `S` with
+   finite-projective ε-certificates, a span-⊤ family `{f_i}` of `S` with chart maps
+   `w_i : R_{I,J} →ₐ[k] S_{f_i}` realizing `divClassifyAff`'s `hw₁/hw₂` on each piece.
+   Substrate: `Module.freeLocus` / `Module.FinitePresentation.exists_free_localizedModule_powers`
+   (mathlib), `matrixPoint_factors_chart_iff` (`GrassmannianChartFrame.lean:271`),
+   `map_matrixPoint` (`GrassmannianMatrixPoint.lean:199`); rank-1 packaging precedent
+   `CechPicSurjective.nonempty:71`. Consumes G-2 at localizations (`divFamEps_mapAlg_awayMap`)
+   to present the restricted family's ε as the restricted certificate.
+2. **(transcription) The stitch**: `openCoverOfIsOpenCover` + `Scheme.Cover.glueMorphisms` /
+   `ι_glueMorphisms` / `Cover.hom_ext` over the frame cover, overlap agreement by
+   `divScheme_hom_ext` + G-2 — the exact `grPointOfRankQuotient` pattern
+   (GR-Quot `GrassmannianQuot.lean:4984`, NOT in the Rebuild import graph; transcribe,
+   do not import).
+
+Deliverable: `Picard/DivSchemeClassifyGlobal.lean`, keystone
+`divClassify : (F : DivFam C S π g) → (hcarve …) → ∃! v : Spec S ⟶ DivScheme …` (frame
+data no longer input). Size M→L.
+
+## The corrected full map
+
+`divRepAff` = salvage(A) + S6b(B) + G-1 + G-2 + G-3 + G-4 + G-5, then the assembly file
+(forward = mapAlg of `divUniversalFamily` along chart points + toZar + Zar-glue;
+backward = `divClassify`; Law 1 = `DivSchemeEpsUniv` + G-2 + DDR-8(hbridge from G-1+G-3);
+Law 2 = `divScheme_hom_ext` chart-locally). DD-2's `ext_of_le_cover` /
+`existsUnique_glue_of_le_cover` + `divFunctor` then lift to full `divRep` (DDR-9 final).
+Lane order under the memory constraint: A→B commits first; then G-3 (field-level,
+lightest) ∥ G-1; then G-2; then G-4 (heart, Fable pen); then G-5; then assembly.
