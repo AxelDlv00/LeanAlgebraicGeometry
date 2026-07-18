@@ -296,6 +296,8 @@ import AlgebraicJacobian.Picard.GrassmannianChartFrame
 import AlgebraicJacobian.Picard.DivCarveKit
 import AlgebraicJacobian.Picard.DivCarvePairChart
 import AlgebraicJacobian.Picard.DivCarveLocus
+import AlgebraicJacobian.Picard.GrassmannianChartCompare
+import AlgebraicJacobian.Picard.GrassmannianPairCompare
 import AlgebraicJacobian.Picard.DivScheme
 import AlgebraicJacobian.Picard.DivSchemeFamily
 import AlgebraicJacobian.Picard.DivSchemeFamilySide
@@ -377,6 +379,8 @@ import AlgebraicJacobian.Picard.DivisorThetaFibreData
 import AlgebraicJacobian.Picard.DivisorFamilyWindowBaseChange
 import AlgebraicJacobian.Picard.DivisorFamilyWindowTriangle
 import AlgebraicJacobian.Picard.DivisorFamilyEpsNaturality
+import AlgebraicJacobian.Picard.DivSchemeFrameKit
+import AlgebraicJacobian.Picard.DivSchemeFrameCover
 import AlgebraicJacobian.Algebra.ABDepth
 import AlgebraicJacobian.Algebra.ABDepthExt
 import AlgebraicJacobian.Algebra.ABDepthSES
