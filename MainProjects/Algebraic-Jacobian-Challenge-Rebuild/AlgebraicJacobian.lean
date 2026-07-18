@@ -353,6 +353,7 @@ import AlgebraicJacobian.Picard.DivSchemeClassifyBridge
 import AlgebraicJacobian.Picard.DivSchemeClassifyBridgeIff
 import AlgebraicJacobian.Picard.DivSchemeClassifyAff
 import AlgebraicJacobian.Picard.DivSchemeMono
+import AlgebraicJacobian.Picard.DivSchemeMonoBridge
 import AlgebraicJacobian.RiemannRoch.CarveDegreePinch
 import AlgebraicJacobian.RiemannRoch.CarveDegree
 import AlgebraicJacobian.RiemannRoch.WindowFieldTransport
