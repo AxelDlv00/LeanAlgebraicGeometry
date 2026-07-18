@@ -311,6 +311,8 @@ import AlgebraicJacobian.Picard.DivisorFamily
 import AlgebraicJacobian.Picard.DivisorFamilyExtraction
 import AlgebraicJacobian.Picard.DivisorFamilyField
 import AlgebraicJacobian.Picard.DivisorFamilyFieldDegree
+import AlgebraicJacobian.Picard.DivisorFamilyFieldDictionary
+import AlgebraicJacobian.Picard.DivisorFamilyFieldDictionaryCore
 import AlgebraicJacobian.Picard.DivisorFamilyFieldEquiv
 import AlgebraicJacobian.Picard.DivisorFamilyBackward
 import AlgebraicJacobian.Picard.DivisorFamilyPullback
