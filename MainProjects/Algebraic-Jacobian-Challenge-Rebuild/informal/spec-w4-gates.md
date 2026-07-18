@@ -230,3 +230,29 @@ Law 2 = `divScheme_hom_ext` chart-locally). DD-2's `ext_of_le_cover` /
 `existsUnique_glue_of_le_cover` + `divFunctor` then lift to full `divRep` (DDR-9 final).
 Lane order under the memory constraint: A→B commits first; then G-3 (field-level,
 lightest) ∥ G-1; then G-2; then G-4 (heart, Fable pen); then G-5; then assembly.
+
+---
+
+## ADDENDUM 2 (2026-07-18/19 night) — scoreboard after the first lane wave
+
+| brick | status | commits / notes |
+|---|---|---|
+| Salvage DDR-6/7 (divClassifyAff) | **LANDED** | split 4-way + the abstract-instance memory repair (equivFun_map_symm_comp_comp; >58GB → 19s) |
+| Salvage DDR-8 (mono, hbridge form) | **LANDED** | + route correction below |
+| S6b divFunctor | **LANDED** | spelling (A), picDegLayerFunctor pattern |
+| G-1 hfib/hsurj from certificate | **LANDED, unconditional** | 79636ab2c / ce4a54d67 / 03019a051; I-0228 |
+| hdeg (field colength=degree) | **LANDED, hypothesis-free** | 03019a051 — StalkColength + StalkEval + FieldCRT; deg_divFamDivisor unconditional; I-0179's MV wall dissolved; I-0230 |
+| G-2 ε-naturality (Task 7) | **LANDED, unconditional** | ac728f40f / 20b980125; the crux triangle resHom_relThetaWindowEquiv_cancelBaseChange proven; orientation = ker_baseChangeMkQ normal form; I-0232 |
+| G-3 Φ dictionary | **LANDED, full image identification** | f476f577e; all six EpsMono threadings dischargeable; I-0229 |
+| DDR-8 mono, seam-free | **LANDED** | divFam_divEq_of_eps_eq_total (ANY commutative test ring) 47678048a / 827a7c95e / 6b174da61; I-0231 route correction (fibrewise→relative is FALSE, t vs t+ε over k[ε]; R-level window recovery is the mechanism), I-0235 |
+| P-fib-N (G-4 opener) | **LANDED, full existsUnique** | b84ebab7b; interface corrected to vanishing-threshold pack (hvan/hβS/hβN); I-0233 |
+| G-5 files 1–4 (frame cover) | in flight | lane running |
+| windowS budget (I-0234) | **PENDING — next structural step** | strengthen windowS_exists b+2g → b+3g (monotone, proofs unaffected, values shift ⟹ full Picard rebuild); bundle with the stale-doc pass (DivisorFamilyField:36/147, FieldEquiv:44, DivSchemeMono:50-73 dead route, GluedSheafFibre:28, DivisorFamilyPullback:21) in ONE rebuild window |
+| G-4 seed/cert/EpsUniv | pending | gated on windowS strengthening; worksheet + PFibPackLedger discharge template ready |
+| G-5 files 5–6 (stitch, divClassify) | pending | after files 1–4 |
+| DDR-9 divRepAff + divRep | pending | all mono/functor/naturality inputs now standing |
+
+Lane-efficiency notes for successors: the abstract-instance repair pattern and the three
+recorded elaboration gotchas (I-0230 Finset-filter subtype naming, I-0232 set-poisoning +
+semireducible rw targets) have each saved multi-GB/multi-minute elaborations; read them
+before writing heavy proofs.
