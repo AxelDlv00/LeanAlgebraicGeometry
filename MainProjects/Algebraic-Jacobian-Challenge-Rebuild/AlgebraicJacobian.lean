@@ -355,6 +355,9 @@ import AlgebraicJacobian.Picard.DivSchemeClassifyAff
 import AlgebraicJacobian.Picard.DivSchemeMono
 import AlgebraicJacobian.Picard.DivSchemeMonoBridge
 import AlgebraicJacobian.Picard.DivSchemeMonoBridgeField
+import AlgebraicJacobian.Picard.DivSchemeMonoBridgeRel
+import AlgebraicJacobian.Picard.DivSchemeMonoBridgeRelKit
+import AlgebraicJacobian.Picard.DivSchemeMonoBridgeRelWindow
 import AlgebraicJacobian.RiemannRoch.CarveDegreePinch
 import AlgebraicJacobian.RiemannRoch.PFibPack
 import AlgebraicJacobian.RiemannRoch.PFibPackLedger
