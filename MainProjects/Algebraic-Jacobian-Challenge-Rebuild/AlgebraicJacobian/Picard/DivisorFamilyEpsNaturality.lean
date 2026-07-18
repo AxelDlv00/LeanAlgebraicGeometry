@@ -243,6 +243,7 @@ variable (a : ℕ)
 set_option maxHeartbeats 1000000 in
 -- Mixed `relCurve`/twist spellings force heavy defeq checks (`respectTransparency false`).
 set_option synthInstance.maxHeartbeats 400000 in
+set_option linter.unusedSectionVars false in
 /-- **The `⊇` (formal) half of G-2**: the pushed-forward window submodule lands inside
 the window of the pulled-back system — equations pull back to equations.  Elementwise:
 the compared window vector's chart components have all germs in the pulled stalk

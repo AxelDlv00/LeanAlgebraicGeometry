@@ -86,9 +86,9 @@ variable {R : Type u} [CommRing R]
 variable [HasWeakSheafify J (Type u)] [HasSheafify J (ModuleCat.{u} R)]
 variable {T : C} (hT : IsTerminal T) (F : Sheaf J (ModuleCat.{u} R))
 
-omit [HasWeakSheafify J (Type u)] in
 set_option maxHeartbeats 800000 in
 -- The `Ext`-level unfoldings through the sheafified free/constant sheaves are heavy.
+omit [HasWeakSheafify J (Type u)] in
 /-- **The two degree-zero identifications agree**: reading a degree-zero class through
 the terminal-object comparison `HModule.linearEquivHModule'` and the free-sheaf
 identification `HModule'.linearEquiv₀` is the constant-sheaf identification
