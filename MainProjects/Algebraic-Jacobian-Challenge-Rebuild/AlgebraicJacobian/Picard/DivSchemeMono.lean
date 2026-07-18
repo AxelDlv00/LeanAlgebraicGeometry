@@ -47,11 +47,16 @@ This file lands the **argument assembled on those inputs**, in two layers.
   the **relative window→stalk-ideal mono** as a threaded named hypothesis `hbridge` — the
   one genuinely gated seam (see below).
 
-## The threaded seam (`hbridge`)
+## The threaded seam (`hbridge`) — DISCHARGED; the route below is DEAD
 
 `hbridge` promises: equal ε-windows over `R` force equal stalk ideals of the two
-equation systems at every point of `relCurve C R`.  This is the relative-level mono
-content, and it is the colon-Tor discharge of the fibrewise field mono:
+equation systems at every point of `relCurve C R`.  It is DISCHARGED seam-free in
+`AlgebraicJacobian.Picard.DivSchemeMonoBridgeRel` (`divFam_divEq_of_eps_eq_total`,
+any commutative test ring) — but NOT by the route sketched below, which is
+mathematically FALSE at its fibrewise→relative step (`t` vs `t+ε` over `k[ε]`: equal
+stalk ideals in every fibre, distinct relative stalk ideals; I-0231).  The landed
+mechanism consumes the ε-equality at the `R`-level via window recovery
+(`CertifiedDivisorFamily.windowGen`).  The original sketch, kept for the record:
 
 * fibrewise (residue field `κ(p)`, `p ∈ Spec R`, `R` Noetherian) the field mono
   `divFamDivisor_eq_of_divFamEps_fst_eq` (I-0214, `Picard/DivisorFamilyEpsMono.lean`)

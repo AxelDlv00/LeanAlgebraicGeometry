@@ -18,7 +18,8 @@ Along a test-ring change `R → R'` (a `k`-algebra map, packaged as `[Algebra R 
 the geometric half of that pullback — the cover data and adaptation push forward through
 the sections comparison `relSectionsMap` (`Scheme.Hom.appLE`), pieces to pieces
 (`relSectionsMap_basicOpen`), partitions by `map_sum`/`map_mul`/`map_one` — and prepares
-the certificate transport that turns it into `DivFam.mapAlg`.
+the certificate transport that turns it into `DivFam.mapAlg` — which is LANDED in
+`AlgebraicJacobian.Picard.DivisorFamilyMapAlg` (this file remains its geometric feeder).
 
 * `AlgebraicGeometry.FinCoverData.baseChange` — the `Fin`-indexed cover data pushes
   forward: generators/partition coefficients go through `relSectionsMap`, the partition

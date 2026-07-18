@@ -25,10 +25,14 @@ a fibre `p` of the test ring `B`, for the pinned cocycle datum
   **Seam (recorded, BINDING note)**: the second half of step (a) — identifying
   `range (diff.baseChange κ(p))` inside the fibre datum's own overlap module through
   the m-chart term identifications (the mirrors of `relTwistTermBaseChange₀/₁`,
-  `relTwistOverlapBaseChange`) — is DAT-1 stage (1d-ii), owned by the DAT-1 finisher
-  lane and not yet landed at this writing. The statements here are deliberately phrased
-  against the abstract base-changed complex so that the finisher's clauses plug in
-  without restating anything.
+  `relTwistOverlapBaseChange`) — is DAT-1 stage (1d-ii). The residue-field
+  comparison this file used to await is LANDED:
+  `BasicOpenCocycleDatum.subsingleton_h1_residueField_tensor_of_witness`
+  (`AlgebraicJacobian.Cohomology.GluedSheafDatumFibre`) with its theta-ideal
+  instantiation `thetaIdealDatum_hfib_of_witness`
+  (`AlgebraicJacobian.Picard.DivisorThetaFibre`). The statements here are deliberately
+  phrased against the abstract base-changed complex so those clauses plug in without
+  restating anything.
 
 * **(b)** — `datumH1Equiv`: the degree-one cohomology of the datum's glued sheaf is
   `H¹` of the datum pair, `Sheaf.HModule D.sheaf 1 ≃ₗ[B] (datumPair D).H1` — the landed

@@ -26,7 +26,9 @@ per window used by the P-fib route (§3.3).
   is existential). This file is the **only** consumer of DAT-0a directly (risk 7): if
   DAT-0a's packaging shifts, only `windowBound`/`windowBound_spec` change.
 * `windowδ π : ℤ` — the twist degree `δ = classDeg (Θ) = deg F ≥ 1` (DAT-0b).
-* `windowS_choice π hπ g : ℕ` — the multiplier step `s`, least with `(s − 1)·δ ≥ b + 2g`.
+* `windowS_choice π hπ g : ℕ` — the multiplier step `s`, least with `(s − 1)·δ ≥ b + 3g`
+  (strengthened from `2g` for the P-fib-N tower budget, I-0234; the historical `2g` fact
+  survives as `windowS_spec`).
 * `windowM_choice π hπ g : ℕ` — the embedding exponent `M`, least with
   `M·δ ≥ b + 2g + (g + 2)·(s + 1)·δ`.
 
@@ -135,8 +137,8 @@ theorem deg_fiberWeilDivisor_windowδ :
 /-! ## The multiplier step `s` and the embedding exponent `M` -/
 
 private theorem windowS_exists (g : ℕ) :
-    ∃ s : ℕ, windowBound π hπ + 2 * (g : ℤ) ≤ ((s : ℤ) - 1) * windowδ π := by
-  set T : ℤ := windowBound π hπ + 2 * (g : ℤ) with hT
+    ∃ s : ℕ, windowBound π hπ + 3 * (g : ℤ) ≤ ((s : ℤ) - 1) * windowδ π := by
+  set T : ℤ := windowBound π hπ + 3 * (g : ℤ) with hT
   refine ⟨T.toNat + 1, ?_⟩
   have hδ : 1 ≤ windowδ π := one_le_windowδ π
   have h1 : ((T.toNat : ℤ)) ≤ (T.toNat : ℤ) * windowδ π :=
@@ -145,15 +147,25 @@ private theorem windowS_exists (g : ℕ) :
   have h3 : (((T.toNat + 1 : ℕ) : ℤ) - 1) = (T.toNat : ℤ) := by push_cast; ring
   rw [h3]; linarith
 
-/-- **The multiplier step `s`** — least `s` with `(s − 1)·δ ≥ b + 2g` (worksheet §2.1).
-Used by F3 (graded surjectivity of `H_s` onto the `P`-level algebra). -/
+/-- **The multiplier step `s`** — least `s` with `(s − 1)·δ ≥ b + 3g` (worksheet §2.1,
+budget strengthened `2g → 3g` for the P-fib-N tower discharge at residue fields,
+I-0234). Used by F3 (graded surjectivity of `H_s` onto the `P`-level algebra). -/
 noncomputable def windowS_choice (g : ℕ) : ℕ := Nat.find (windowS_exists π hπ g)
 
-/-- **The defining inequality of `s`**: `(s − 1)·δ ≥ b + 2g`. F3's `A_P`-surjectivity
-window. -/
-theorem windowS_spec (g : ℕ) :
-    windowBound π hπ + 2 * (g : ℤ) ≤ ((windowS_choice π hπ g : ℤ) - 1) * windowδ π :=
+/-- **The strengthened defining inequality of `s`**: `(s − 1)·δ ≥ b + 3g` — the
+P-fib-N tower budget `hβS` at `κ(p)` (I-0234). -/
+theorem windowS_spec_three (g : ℕ) :
+    windowBound π hπ + 3 * (g : ℤ) ≤ ((windowS_choice π hπ g : ℤ) - 1) * windowδ π :=
   Nat.find_spec (windowS_exists π hπ g)
+
+/-- **The original defining inequality of `s`**: `(s − 1)·δ ≥ b + 2g` — kept in its
+historical shape so every pre-I-0234 consumer is byte-compatible; strictly weaker than
+`windowS_spec_three`. F3's `A_P`-surjectivity window. -/
+theorem windowS_spec (g : ℕ) :
+    windowBound π hπ + 2 * (g : ℤ) ≤ ((windowS_choice π hπ g : ℤ) - 1) * windowδ π := by
+  have h := windowS_spec_three π hπ g
+  have hg : (0 : ℤ) ≤ (g : ℤ) := Int.natCast_nonneg _
+  linarith
 
 private theorem windowM_exists (g : ℕ) :
     ∃ M : ℕ, windowBound π hπ + 2 * (g : ℤ)

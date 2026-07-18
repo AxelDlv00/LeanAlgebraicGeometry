@@ -33,8 +33,9 @@ the two facts that make it land in the effective divisors:
 * `AlgebraicGeometry.divFamDivisor` — the descent to the setoid quotient `DivFam C K π n`, with
   `divFamDivisor_mk`, `coeffAt_divFamDivisor`, and effectivity `zero_le_divFamDivisor`.
 
-The degree computation `deg K (divFamDivisor F) = n` (the colength↔degree identity across the
-glued equalizer) and the backward map are the remaining stages of DD-1c.
+The degree computation `deg K (divFamDivisor F) = n` is LANDED (hypothesis-free) as
+`deg_divFamDivisor` in `AlgebraicJacobian.Picard.DivisorFamilyFieldCRT` (the stalk-eval
+CRT across the glued equalizer, I-0230); the backward map remains the open DD-1c stage.
 -/
 
 set_option autoImplicit false
@@ -146,9 +147,10 @@ omit [IsIntegral (relCurve C K)]
   [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))] in
 /-- **The field half of the degree identity.** Over a field every module is free, so the
 constant fibre rank `rankAtStalk` of the glued colength module equals its `K`-dimension: a
-certificate of degree `n` forces `finrank K W(d) = n`. The remaining (geometric) half of
-`deg K (divFamDivisor F) = n` is the colength↔degree identity `finrank K W(d) = deg`, the
-support-splitting CRT across the glued equalizer. -/
+certificate of degree `n` forces `finrank K W(d) = n`. The geometric half —
+the colength↔degree identity `finrank K W(d) = deg` — is LANDED in
+`AlgebraicJacobian.Picard.DivisorFamilyFieldCRT` (`DivisorAdaptation.deg_presentationDivisor`,
+adaptation-independent, I-0230). -/
 theorem DivisorAdaptation.IsCertified.finrank_glued
     {d : (relCurve C K).LocalEquations} {A : DivisorAdaptation C K π d}
     (hc : A.IsCertified n) : Module.finrank K A.Glued = n := by

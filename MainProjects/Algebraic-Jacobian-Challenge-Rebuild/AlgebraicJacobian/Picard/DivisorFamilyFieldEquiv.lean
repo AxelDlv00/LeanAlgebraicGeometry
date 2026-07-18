@@ -45,12 +45,11 @@ frozen `divFamFieldEquiv` from the two remaining, precisely-named gaps.
 The full `divFamFieldEquiv` needs **exactly two** further inputs, and neither is the second
 inverse law (that is landed here as `divFamDivisor_injective`):
 
-1. `hdeg` — general MV forward-degree `deg (divFamDivisor F) = n`. This is genuinely the
-   general Mayer–Vietoris/overlap inclusion–exclusion wall (I-0179): the support-separated
-   identity `deg_divFamDivisor_of_separated` constrains `finrank W(A'')` of a *fresh*
-   separated adaptation, not `finrank W(A)` of `F`'s original adaptation, so the certificate
-   `finrank W(A) = n` does not connect to `deg` without adaptation-independence of the glued
-   rank — the XL. Needed even to *land* the forward map in `{D // deg = n}`.
+1. `hdeg` — LANDED (2026-07-18, I-0230): `deg_divFamDivisor` in
+   `AlgebraicJacobian.Picard.DivisorFamilyFieldCRT` proves the forward degree
+   unconditionally; the glued colength is adaptation-independent
+   (`DivisorAdaptation.deg_presentationDivisor`), dissolving the I-0179 MV wall this
+   paragraph used to describe.
 2. `hsurj` — the backward realization (a support-separated certified family per effective
    degree-`n` divisor, via `PointPresentation.pointEquations` products). Large but **does
    not** need general MV: its certificate's `finrank W = deg D = n` is the *separated*
