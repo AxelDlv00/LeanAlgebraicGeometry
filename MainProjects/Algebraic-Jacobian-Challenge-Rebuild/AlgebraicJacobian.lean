@@ -332,6 +332,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyZarVehicle
 import AlgebraicJacobian.Picard.DivisorFamilyZarMapKit
 import AlgebraicJacobian.Picard.DivisorFamilyZarMap
 import AlgebraicJacobian.Picard.DivisorFamilyZarSheaf
+import AlgebraicJacobian.Picard.DivisorFamilyZarFunctor
 import AlgebraicJacobian.Picard.DivisorFamilyVehicle
 import AlgebraicJacobian.Picard.DivisorStalkIdeal
 import AlgebraicJacobian.Picard.DivisorFamilyTheta
@@ -342,6 +343,11 @@ import AlgebraicJacobian.Picard.DivisorFamilyThetaSections
 import AlgebraicJacobian.Algebra.MonicReverseInverse
 import AlgebraicJacobian.Picard.DivisorThetaPairing
 import AlgebraicJacobian.Picard.DivSchemeEps
+import AlgebraicJacobian.Picard.DivSchemeClassify
+import AlgebraicJacobian.Picard.DivSchemeClassifyBridge
+import AlgebraicJacobian.Picard.DivSchemeClassifyBridgeIff
+import AlgebraicJacobian.Picard.DivSchemeClassifyAff
+import AlgebraicJacobian.Picard.DivSchemeMono
 import AlgebraicJacobian.RiemannRoch.CarveDegreePinch
 import AlgebraicJacobian.RiemannRoch.CarveDegree
 import AlgebraicJacobian.RiemannRoch.WindowFieldTransport
