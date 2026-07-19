@@ -390,6 +390,7 @@ import AlgebraicJacobian.Picard.DivSchemeFrameCover
 import AlgebraicJacobian.Picard.DivSchemeClassifyLocal
 import AlgebraicJacobian.Picard.DivSchemeClassifyGlobal
 import AlgebraicJacobian.Picard.DivRepClassifyZarKit
+import AlgebraicJacobian.Picard.DivRepClassifyZarCompat
 import AlgebraicJacobian.Algebra.ABDepth
 import AlgebraicJacobian.Algebra.ABDepthExt
 import AlgebraicJacobian.Algebra.ABDepthSES
