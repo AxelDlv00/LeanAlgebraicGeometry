@@ -473,6 +473,7 @@ import AlgebraicJacobian.Picard.DivSchemeRedesignJFlat
 import AlgebraicJacobian.Picard.DivSchemeRedesignHsub
 import AlgebraicJacobian.Picard.DivSchemeRedesignHinjChart
 import AlgebraicJacobian.Picard.DivSchemeRedesignCarvePin
+import AlgebraicJacobian.Picard.DivSchemeRedesignReadingBridge
 import AlgebraicJacobian.Picard.DivSchemeRedesignAchiever
 import AlgebraicJacobian.Picard.DivSchemeRedesignFibreCut
 import AlgebraicJacobian.Picard.DivSchemeRedesignSeed
