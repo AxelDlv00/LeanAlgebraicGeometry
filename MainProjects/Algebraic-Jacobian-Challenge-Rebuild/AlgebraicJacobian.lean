@@ -299,6 +299,7 @@ import AlgebraicJacobian.Picard.DivCarveLocus
 import AlgebraicJacobian.Picard.GrassmannianChartCompare
 import AlgebraicJacobian.Picard.GrassmannianPairCompare
 import AlgebraicJacobian.Picard.DivScheme
+import AlgebraicJacobian.Picard.DivSchemeKeyChart
 import AlgebraicJacobian.Picard.DivSchemeFamily
 import AlgebraicJacobian.Picard.DivSchemeFamilySide
 import AlgebraicJacobian.Picard.DivSchemeFamilyUniv
