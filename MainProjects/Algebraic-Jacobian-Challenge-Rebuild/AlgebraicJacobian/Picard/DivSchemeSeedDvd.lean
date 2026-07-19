@@ -64,6 +64,20 @@ noncomputable def sideColengthSubmodule (z : relCurve C R) :
     Submodule R (Γ(relCurve C R, D.piece z) ⧸ Ideal.span {D.eqn z}) :=
   Submodule.map (D.kColengthMap z) K
 
+set_option synthInstance.maxHeartbeats 400000 in
+-- the colength `Γ(D(h z)) ⧸ (eqn z)` is the heavy relCurve section-ring quotient; deriving
+-- its `IsNoetherian` module instance re-elaborates that type past the default budget
+/-- **Link 1** (`N` finite): the side-component submodule `N z` is a finite `R`-module as
+soon as the ambient colength `Γ(D(h z)) ⧸ (eqn z)` is finite over `R` (the
+`SupportTubeFinite` output, I-0244) and `R` is Noetherian — a submodule of a finite module
+over a Noetherian ring is finite.  Discharges the `hfin` hypothesis of the reduction. -/
+theorem sideColengthSubmodule_finite [IsNoetherianRing R] (z : relCurve C R)
+    [Module.Finite R (Γ(relCurve C R, D.piece z) ⧸ Ideal.span {D.eqn z})] :
+    Module.Finite R (D.sideColengthSubmodule z) := by
+  haveI : _root_.IsNoetherian R (Γ(relCurve C R, D.piece z) ⧸ Ideal.span {D.eqn z}) :=
+    isNoetherian_of_isNoetherianRing_of_finite R _
+  exact Module.Finite.iff_fg.mpr (_root_.IsNoetherian.noetherian (D.sideColengthSubmodule z))
+
 lemma mk_relThetaResSide_mem_sideColengthSubmodule (z : relCurve C R)
     {ψ : relThetaSections C R π a} (hψ : ψ ∈ K) :
     Ideal.Quotient.mk (Ideal.span {D.eqn z})
