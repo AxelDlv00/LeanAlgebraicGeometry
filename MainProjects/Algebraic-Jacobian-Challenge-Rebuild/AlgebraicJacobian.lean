@@ -303,6 +303,7 @@ import AlgebraicJacobian.Picard.DivSchemeKeyChart
 import AlgebraicJacobian.Picard.DivSchemeFamily
 import AlgebraicJacobian.Picard.DivSchemeFamilySide
 import AlgebraicJacobian.Picard.DivSchemeFamilyUniv
+import AlgebraicJacobian.Picard.DivSchemeAtlasFactor
 import AlgebraicJacobian.Picard.DivSchemeSeedFibre
 import AlgebraicJacobian.Picard.DivSchemeSeed
 import AlgebraicJacobian.Picard.DivSchemeSeedUniv
