@@ -437,6 +437,7 @@ import AlgebraicJacobian.Picard.JacobianDataBaseChange
 import AlgebraicJacobian.Picard.JacobianDataBaseChangeAbel
 import AlgebraicJacobian.Picard.DivSchemeQProj
 import AlgebraicJacobian.Picard.DivisorDatumInverse
+import AlgebraicJacobian.RiemannRoch.CoverageDrop
 
 /-!
 # AlgebraicJacobian — library root
