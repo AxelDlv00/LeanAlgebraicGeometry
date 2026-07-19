@@ -18,22 +18,16 @@ The Lean-verified sound entry point
 (`hspan`, `hfield`) are the carve's rank-`g` content (a sibling lane).  This file builds
 the **four cheap ones**, each a committed keystone the assembly lane feeds individually:
 
-* `seedUniv_hfib` — the fibre-nonvanishing clause: the compared chart component of the
-  seed section is fibrewise nonzero wherever its piece meets the fibre.  Built from
-  `seedUniv_sec_h_windowCompare` (`Picard/DivSchemeSeedUnivGen.lean`) +
-  `relPinnedSectionsMap_relThetaResSide_windowEquiv_ne_zero`
-  (`Picard/DivSchemeSeedUnivFields.lean`) + the **no-leak**
+* `seedUniv_hfib` — the fibre-nonvanishing clause, from `seedUniv_sec_h_windowCompare` +
+  `relPinnedSectionsMap_relThetaResSide_windowEquiv_ne_zero` + the **no-leak**
   (`notMem_of_basicOpen_relPinnedSectionsMap_algebraMap_ne_bot`): a nonempty fibre of
-  `D(relPinnedSectionsMap κ(p) (algebraMap f))` forces `f ∉ p`, via the naturality of the
-  sections-comparison map over `algebraMap` (`relSectionsMap_overAlgebraMap`) and the
-  residue-field kernel (`Ideal.algebraMap_residueField_eq_zero`).
+  `D(relPinnedSectionsMap κ(p) (algebraMap f))` forces `f ∉ p`, via naturality of the
+  sections-comparison map over `algebraMap` and the residue-field kernel.
 * `seedUniv_hcolFlat` — each ambient colength `Γ(D(h z)) ⧸ (eqn z)` is `R_Z`-flat, from the
-  slicing criterion `Module.Flat.quotient_span_singleton_of_forall_tmul_residueField`
-  (`Picard/SlicingFlat.lean`) fed by the seed's fibre-regularity
-  (`relPinned_tmul_one_mem_nonZeroDivisors`, i.e. `hfib`).
-* `seedUniv_hreg` — the germ of `eqn z` is a nonzerodivisor in every stalk of the piece,
-  the germ-regularity law from the seed's fibre-regularity (replicating the
-  `germ_eqn_mem_nonZeroDivisors` law with the fibre-regularity supplied by `hfib`, without
+  slicing criterion `Module.Flat.quotient_span_singleton_of_forall_tmul_residueField` fed by
+  the seed's fibre-regularity (`relPinned_tmul_one_mem_nonZeroDivisors`, i.e. `hfib`).
+* `seedUniv_hreg` — the germ of `eqn z` is a stalk nonzerodivisor, the germ-regularity law
+  from the seed's fibre-regularity (`germ_eqn_mem_nonZeroDivisors_of_fibre_regular`, without
   the circular `IsGenerator`).
 -/
 
