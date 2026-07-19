@@ -238,6 +238,7 @@ import AlgebraicJacobian.Picard.ThetaShift
 import AlgebraicJacobian.Picard.OverSigmaExtension
 import AlgebraicJacobian.Picard.Pic0SigmaSheaf
 import AlgebraicJacobian.Picard.PicRepColimitCompat
+import AlgebraicJacobian.Picard.PicRepColimitResidual
 import AlgebraicJacobian.Picard.PicRepDatum
 import AlgebraicJacobian.RiemannRoch.SectionBound
 import AlgebraicJacobian.RiemannRoch.WindowLedger
