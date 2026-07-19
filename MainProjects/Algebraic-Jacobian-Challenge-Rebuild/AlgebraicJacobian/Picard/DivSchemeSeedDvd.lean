@@ -110,6 +110,42 @@ theorem dvd_of_forall_subsingleton_tmul_residueField
     ((relCurve C R).presheaf.germ (D.piece z) y hy).hom (D.sideColengthSubmodule z)
     (hfib z y hy) (D.mk_relThetaResSide_mem_sideColengthSubmodule z hψ)
 
+/-- **The `hdvd` wall, crispest form**: the seed satisfies its divisibility clause given
+exactly the two carve-specific fibre facts (plus the landed finiteness and regularity):
+
+* `hflat` — the colength quotient `(Γ(D(h z)) ⧸ (eqn z)) ⧸ N z` is `R`-flat (the carve's
+  flat rank-`g` structure, `SlicingFlatKernel`);
+* `hfield` — every element of `N z` dies in the residue-field fibre at the base point
+  (`x ⊗ₜ 1 = 0`), i.e. the `K`-side components are divisible by the fibre equation `e_p`
+  (the `d_p` fibre achiever, `exists_coeffAt_eq_baseDivisorAt`).
+
+Composes the reduction with the flat-cokernel link-2 half
+`subsingleton_tmul_residueField_of_flat_quotient`: `hflat` + `hfield` build the honest
+module fibre `N z ⊗ κ(p) = 0` at every base point, which the reduction turns into `dvd`.
+This is the single remaining wall of the divisor-first `hdvd`, isolated to the carve's own
+fibre geometry. -/
+theorem dvd_of_flat_quotient_of_field_vanishing [IsNoetherianRing R]
+    (hreg : ∀ (z : relCurve C R) (y : relCurve C R) (hy : y ∈ D.piece z),
+      ((relCurve C R).presheaf.germ (D.piece z) y hy).hom (D.eqn z)
+        ∈ nonZeroDivisors ((relCurve C R).presheaf.stalk y))
+    (hfin : ∀ z : relCurve C R, Module.Finite R (D.sideColengthSubmodule z))
+    (hflat : ∀ z : relCurve C R,
+      Module.Flat R ((Γ(relCurve C R, D.piece z) ⧸ Ideal.span {D.eqn z})
+        ⧸ D.sideColengthSubmodule z))
+    (hfield : ∀ (z : relCurve C R) (y : relCurve C R) (hy : y ∈ D.piece z)
+        (x : ↥(D.sideColengthSubmodule z)),
+        ((x : Γ(relCurve C R, D.piece z) ⧸ Ideal.span {D.eqn z}) ⊗ₜ[R]
+            (1 : (basePrime (R := R)
+              ((relCurve C R).presheaf.germ (D.piece z) y hy).hom).asIdeal.ResidueField))
+          = 0) :
+    ∀ (z : relCurve C R) ⦃ψ : relThetaSections C R π a⦄, ψ ∈ K →
+      relThetaResSide a (D.side z) (D.piece_le z) ψ ∈ Ideal.span {D.eqn z} :=
+  D.dvd_of_forall_subsingleton_tmul_residueField hreg hfin (fun z y hy => by
+    haveI := hflat z
+    exact _root_.subsingleton_tmul_residueField_of_flat_quotient (D.sideColengthSubmodule z)
+      (basePrime (R := R) ((relCurve C R).presheaf.germ (D.piece z) y hy).hom)
+      (fun x => hfield z y hy x))
+
 end ThetaGeneratorSeed
 
 end AlgebraicGeometry
