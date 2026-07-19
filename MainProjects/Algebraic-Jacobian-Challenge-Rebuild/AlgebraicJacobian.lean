@@ -441,6 +441,7 @@ import AlgebraicJacobian.Picard.DivisorDatumInverse
 import AlgebraicJacobian.RiemannRoch.CoverageDrop
 import AlgebraicJacobian.Curve.SepPointsDenseKit
 import AlgebraicJacobian.Curve.SepPointsDense
+import AlgebraicJacobian.Picard.DivisorFamilyFieldSurj
 import AlgebraicJacobian.RiemannRoch.EffectiveUniqueness
 import AlgebraicJacobian.Picard.DivSchemeAbel
 
