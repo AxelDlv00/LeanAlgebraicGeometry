@@ -434,6 +434,7 @@ import AlgebraicJacobian.Picard.PicEtCrossBase
 import AlgebraicJacobian.Picard.Pic0ThetaAssembly
 import AlgebraicJacobian.Picard.JacobianDataBaseChange
 import AlgebraicJacobian.Picard.JacobianDataBaseChangeAbel
+import AlgebraicJacobian.Picard.DivSchemeQProj
 
 /-!
 # AlgebraicJacobian — library root
