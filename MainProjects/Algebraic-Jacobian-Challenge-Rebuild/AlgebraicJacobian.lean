@@ -445,6 +445,7 @@ import AlgebraicJacobian.Curve.SepPointsDense
 import AlgebraicJacobian.Picard.DivisorFamilyFieldSurj
 import AlgebraicJacobian.RiemannRoch.EffectiveUniqueness
 import AlgebraicJacobian.Picard.DivSchemeAbel
+import AlgebraicJacobian.Picard.DivisorFamilyH1Locus
 
 /-!
 # AlgebraicJacobian — library root
