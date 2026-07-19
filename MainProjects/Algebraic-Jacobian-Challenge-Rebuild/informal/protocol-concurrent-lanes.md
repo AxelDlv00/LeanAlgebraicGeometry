@@ -43,14 +43,33 @@ path, and every mkdir-acquire loop then spins forever (this deadlocked all lanes
 ```bash
 LOCK=/tmp/claude-1001/ajcr-locks/lake.lock
 while ! mkdir "$LOCK" 2>/dev/null; do
-  if [ -f "$LOCK" ]; then echo "STALE: plain file at $LOCK (protocol violation) — remove it" >&2; break; fi
+  # (a) plain FILE at the path = a flock protocol-violation; reap immediately.
+  if [ -f "$LOCK" ]; then echo "STALE: plain file at $LOCK (flock violation) — removing" >&2; rm -f "$LOCK"; continue; fi
+  # (b) orphaned DIRECTORY from a crashed build (rmdir never ran). Reap on proof of death:
+  if [ -d "$LOCK" ]; then
+    holder=$(cat "$LOCK/pid" 2>/dev/null)
+    if [ -n "$holder" ] && ! kill -0 "$holder" 2>/dev/null; then
+      echo "STALE: holder pid $holder dead — reaping" >&2; rm -rf "$LOCK"; continue
+    fi
+    # No pidfile (old-cohort holder): reap only if NO live lake build AND the dir is >15 min old.
+    if [ -z "$holder" ] && ! pgrep -f 'lake build AlgebraicJacobian' >/dev/null 2>&1 \
+       && [ $(( $(date +%s) - $(stat -c %Y "$LOCK" 2>/dev/null || date +%s) )) -gt 900 ]; then
+      echo "STALE: no live build, lock >15min old — reaping" >&2; rm -rf "$LOCK"; continue
+    fi
+  fi
   sleep 10
 done
-# … lake build … ; rmdir "$LOCK"
+echo $$ > "$LOCK/pid" 2>/dev/null      # record holder so a later reaper can prove liveness via kill -0
+# … lake build … ; rm -rf "$LOCK"      # release (rm -rf, not rmdir — the pidfile makes the dir non-empty)
 ```
 
-A plain FILE at the lock path is by definition stale (mkdir creates directories) — detect
-it immediately, report, and remove; do not wait on it.
+Two stale shapes, both now handled above (do NOT just `sleep` forever on either):
+- A plain FILE at the lock path is by definition stale (mkdir makes directories) — reap immediately.
+- An orphaned DIRECTORY from a build that crashed before `rm -rf` (the 2026-07-19 C4 incident,
+  I-0257): the OLD acquire loop only checked for a file, so it spun forever on this. Writing
+  `$$` into `$LOCK/pid` on acquire lets the next lane prove the holder is dead (`kill -0`) and reap
+  safely; the no-pidfile branch (a holder from before this fix) falls back to "no live build + >15min".
+  Never reap a directory whose pidfile names a LIVE pid — that is a real build in progress.
 
 ## 3. /tmp quota with >3 lanes
 
