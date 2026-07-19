@@ -195,4 +195,129 @@ theorem exists_achiever_relThetaWindowEquiv_mem_divUniversalSeedK
 
 end Achiever
 
+/-! ## The seed-prime instantiation: the relative achiever cutting `d_p` at every `κ(p)` -/
+
+section SeedPrime
+
+variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
+  [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]
+variable {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
+
+noncomputable local instance instOverCleftAchieverSeedPrime : C.left.Over (Spec (.of k)) :=
+  ⟨C.hom⟩
+
+variable [SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k))] [IsIntegral C.left]
+  [LocallyOfFiniteType (C.left ↘ Spec (.of k))] [QuasiCompact (C.left ↘ Spec (.of k))]
+variable [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0)]
+  [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1)]
+variable (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k))
+variable (g r₁ r₂ : ℕ)
+variable (b₁ : Module.Basis (Fin r₁) k
+  ↥(Scheme.divisorSections k (windowM_choice π hπ g • fiberWeilDivisor π) ⊤))
+variable (b₂ : Module.Basis (Fin r₂) k
+  ↥(Scheme.divisorSections k ((windowS_choice π hπ g • fiberWeilDivisor π)
+    + (windowM_choice π hπ g • fiberWeilDivisor π)) ⊤))
+variable (i : (glueData k g r₁).J) (j : (glueData k g r₂).J)
+
+noncomputable local instance instIsIntegralRelCurveAchieverSeedPrime (L : Type u) [Field L]
+    [Algebra k L] : IsIntegral (relCurve C L) := instIsIntegralBaseChange C L
+
+noncomputable local instance instSmoothRelCurveAchieverSeedPrime (L : Type u) [Field L]
+    [Algebra k L] :
+    SmoothOfRelativeDimension 1 (relCurve C L ↘ Spec (CommRingCat.of L)) :=
+  instSmoothOfRelativeDimensionBaseChange C L
+
+noncomputable local instance instQCRelCurveAchieverSeedPrime (L : Type u) [Field L]
+    [Algebra k L] : QuasiCompact (relCurve C L ↘ Spec (CommRingCat.of L)) :=
+  instQuasiCompactBaseChange C L
+
+noncomputable local instance instLFTRelCurveAchieverSeedPrime (L : Type u) [Field L]
+    [Algebra k L] : LocallyOfFiniteType (relCurve C L ↘ Spec (CommRingCat.of L)) :=
+  haveI : Smooth (relCurve C L ↘ Spec (CommRingCat.of L)) :=
+    SmoothOfRelativeDimension.smooth 1 _
+  inferInstance
+
+noncomputable local instance instFinH0RelCurveAchieverSeedPrime (L : Type u) [Field L]
+    [Algebra k L] : Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 0) :=
+  instModuleFiniteHModuleZeroBaseChange C L
+
+noncomputable local instance instFinH1RelCurveAchieverSeedPrime (L : Type u) [Field L]
+    [Algebra k L] : Module.Finite L (Sheaf.HModule ((relCurve C L).moduleKSheaf L) 1) :=
+  instModuleFiniteHModuleOneBaseChange C L
+
+set_option maxHeartbeats 2400000 in
+-- the seed-base residue-field tower `k → R_{I,J} → R_Z → κ(p)` drives the five `κ(p)`
+-- tower instances of the achiever core past the defaults (the recorded escape hatch)
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxSynthPendingDepth 8 in
+set_option maxRecDepth 8000 in
+set_option linter.unusedSectionVars false in
+/-- **The seed-prime relative achiever** (redesign brick 2, the deliverable the revised
+`seedUniv.sec` consumes, `informal/spec-dd4-redesign.md` §1.2): at every prime `p` of the
+seed base ring `R_Z`, for any closed point `z` of the fibre curve `relCurve C κ(p)` (with
+`divUniversalFibreKM … κ(p)` nonzero), some universal window vector `x` has
+
+* its window image `relThetaWindowEquiv … x` in `divUniversalSeedK` (a relative seed
+  section);
+* a non-vanishing fibre comparison `windowCompare R_Z κ(p) x ≠ 0`;
+* a `Φ`-read that **achieves `d_p` at `z`** — cuts exactly the fibre base divisor:
+  `((N − d_p) + div Φ(windowCompare R_Z κ(p) x))_z = bd(divUniversalFibreKM)_z`,
+  minimal vanishing at `z`, the order equal to the base-divisor order.
+
+This is exactly what the old `windowCompare ≠ 0` section lacked (I-0288): the reading is
+not merely non-zero but a *relative achiever* at `z`, so `z` is never an extra zero and
+I-0288's razor `hle` holds at `z`.  Instantiates the general achiever lift at `K := κ(p)`,
+`A := N − d_p`, discharging the pole-bound hypothesis by the fibre-divisor window equality
+`divUniversalSeedFibreDivisor_spec`. -/
+theorem exists_relThetaWindowEquiv_mem_divUniversalSeedK_achieves_seedPrime
+    (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    (p : PrimeSpectrum (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+      (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j))
+    (hne : divUniversalFibreKM C hπ g r₁ r₂ b₁ i j p.asIdeal.ResidueField ≠ ⊥)
+    {z : ↥(relCurve C p.asIdeal.ResidueField)}
+    (hz : z ≠ genericPoint (relCurve C p.asIdeal.ResidueField)) :
+    ∃ x ∈ (divUniversalFstWindow C π hπ g r₁ r₂ b₁ b₂ i j).toSubmodule,
+      relThetaWindowEquiv C
+          (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+            (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+          π (windowM_choice π hπ g) (relThetaPairH1_windowM C π hπ g) x
+        ∈ divUniversalSeedK C π hπ g r₁ r₂ b₁ b₂ i j ∧
+      windowCompare
+          (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+            (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+          p.asIdeal.ResidueField x ≠ 0 ∧
+      ∃ hr : divFamPhi C p.asIdeal.ResidueField π (windowM_choice π hπ g)
+          (relThetaPairH1_windowM C π hπ g)
+          (windowCompare
+            (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+              (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+            p.asIdeal.ResidueField x) ≠ 0,
+        coeffAt hz ((windowN C p.asIdeal.ResidueField hπ g
+              - divUniversalSeedFibreDivisor C hπ g r₁ r₂ b₁ b₂ i j hO hχ p)
+            + Scheme.divOf (relCurve C p.asIdeal.ResidueField
+                ↘ Spec (CommRingCat.of p.asIdeal.ResidueField))
+                (Units.mk0 (divFamPhi C p.asIdeal.ResidueField π (windowM_choice π hπ g)
+                    (relThetaPairH1_windowM C π hπ g)
+                    (windowCompare
+                      (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+                        (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+                      p.asIdeal.ResidueField x)) hr))
+          = (Scheme.baseDivisorAt p.asIdeal.ResidueField
+              (divUniversalFibreKM C hπ g r₁ r₂ b₁ i j p.asIdeal.ResidueField)
+              (windowN C p.asIdeal.ResidueField hπ g
+                - divUniversalSeedFibreDivisor C hπ g r₁ r₂ b₁ b₂ i j hO hχ p)
+              ⟨z, hz⟩ : ℤ) := by
+  -- the fibre window is exactly `H⁰(𝒪(N − d_p))` at `κ(p)` (the fibre-divisor equality)
+  have hA : divUniversalFibreKM C hπ g r₁ r₂ b₁ i j p.asIdeal.ResidueField
+      ≤ Scheme.divisorSections p.asIdeal.ResidueField
+          (windowN C p.asIdeal.ResidueField hπ g
+            - divUniversalSeedFibreDivisor C hπ g r₁ r₂ b₁ b₂ i j hO hχ p) ⊤ :=
+    le_of_eq (divUniversalSeedFibreDivisor_spec C hπ g r₁ r₂ b₁ b₂ i j hO hχ p).2.2.1
+  -- apply the general achiever lift at `K := κ(p)`, `A := N − d_p`
+  exact exists_achiever_relThetaWindowEquiv_mem_divUniversalSeedK
+    C hπ g r₁ r₂ b₁ b₂ i j p.asIdeal.ResidueField hA hne hz
+
+end SeedPrime
+
 end AlgebraicGeometry
