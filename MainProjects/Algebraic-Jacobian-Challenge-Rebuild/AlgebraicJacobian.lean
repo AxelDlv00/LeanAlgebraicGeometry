@@ -311,6 +311,7 @@ import AlgebraicJacobian.Picard.DivSchemeFamilyUniv
 import AlgebraicJacobian.Picard.DivSchemeAtlasFactor
 import AlgebraicJacobian.Picard.DivSchemeSeedFibre
 import AlgebraicJacobian.Picard.DivSchemeSeed
+import AlgebraicJacobian.Picard.DivSchemeSeedDvd
 import AlgebraicJacobian.Picard.DivSchemeSeedUniv
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivFibre
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivAssemble
