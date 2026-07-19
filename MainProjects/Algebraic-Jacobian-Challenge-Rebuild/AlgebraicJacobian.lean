@@ -314,6 +314,7 @@ import AlgebraicJacobian.Picard.DivSchemeSeedUnivAssembleKappa
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivRes
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivRead
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivFields
+import AlgebraicJacobian.Picard.DivSchemeSeedUnivBridge
 import AlgebraicJacobian.Picard.DivSchemeCertificate
 import AlgebraicJacobian.Picard.DivSchemeCertificateEngine
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularityStep
