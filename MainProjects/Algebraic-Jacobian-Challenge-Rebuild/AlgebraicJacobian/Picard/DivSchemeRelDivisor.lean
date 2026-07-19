@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: The AlgebraicJacobian Contributors
 -/
 import Mathlib.RingTheory.LocalRing.Module
+import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
 import Mathlib.RingTheory.Support
 import Mathlib.RingTheory.Ideal.Quotient.Operations
 
@@ -204,5 +205,45 @@ theorem mem_span_singleton_map_of_subsingleton_tmul_residueField {e : S}
     exists_notMem_forall_pow_mul_mem_span_of_subsingleton_tmul_residueField N p hfib
   obtain ⟨n, hn⟩ := H x hx
   exact mem_span_singleton_map_of_isUnit_map_algebraMap φ (hφ f hf) hn
+
+/-! ### The stalk (local-ring) form — the germ discharges `hφ` automatically
+
+At a scheme stalk the germ `φ : Γ(piece) → 𝒪_y` lands in a **local ring**, and the honest
+base point of `y` is the contraction of the maximal ideal along the base structure map
+`R → Γ(piece) → 𝒪_y` (`basePrime`).  For that prime the germwise-descent hypothesis `hφ`
+holds *by definition of a local ring* — a base element outside the base point is precisely
+one whose germ escapes the maximal ideal, hence a unit.  So the divisor-first `hdvd`'s
+germ obligation reduces to a **single** honest input: the fibre-vanishing `hfib` at the
+base point (link 2, `N ⊗ κ(basePrime φ) = 0`).  No structure-map geometry is needed for the
+descent — the local ring supplies it. -/
+
+/-- **The base point of a local-ring-valued hom**: the contraction of the maximal ideal
+along the base map `R → S → B`.  For a stalk germ `φ = germ_y`, this is the image of `y`
+under the base structure morphism to `Spec R`. -/
+noncomputable def basePrime {B : Type*} [CommRing B] [IsLocalRing B] (φ : S →+* B) :
+    PrimeSpectrum R :=
+  ⟨Ideal.comap (φ.comp (algebraMap R S)) (IsLocalRing.maximalIdeal B), inferInstance⟩
+
+/-- A base element lies outside the base point iff its image under `φ ∘ algebraMap` is a
+unit — the local-ring characterization that discharges the germwise descent hypothesis. -/
+@[simp] lemma notMem_basePrime_iff {B : Type*} [CommRing B] [IsLocalRing B] (φ : S →+* B)
+    {f : R} : f ∉ (basePrime (R := R) φ).asIdeal ↔ IsUnit (φ (algebraMap R S f)) := by
+  rw [← IsLocalRing.notMem_maximalIdeal]
+  exact not_congr (by rw [basePrime]; rfl)
+
+/-- **The stalk form of the link-2+3 consumer** (the direct germ input to the divisor-first
+`hdvd`): for a **local-ring**-valued hom `φ : S →+* B` (a scheme stalk germ), a finite
+submodule `N ≤ S ⧸ (e)`, and the fibre-vanishing `hfib` at the base point `basePrime φ`
+(link 2), every representative `x` of `N` satisfies `φ x ∈ (φ e)`.  The germwise-descent
+hypothesis is discharged automatically by `notMem_basePrime_iff`, so the *only* remaining
+obligation is `hfib` — exactly the honest wall. -/
+theorem mem_span_singleton_map_of_subsingleton_tmul_residueField_localRing {e : S}
+    {B : Type*} [CommRing B] [IsLocalRing B] (φ : S →+* B)
+    (N : Submodule R (S ⧸ Ideal.span {e})) [Module.Finite R N]
+    (hfib : Subsingleton (↥N ⊗[R] (basePrime (R := R) φ).asIdeal.ResidueField))
+    {x : S} (hx : Ideal.Quotient.mk (Ideal.span {e}) x ∈ N) :
+    φ x ∈ Ideal.span {φ e} :=
+  mem_span_singleton_map_of_subsingleton_tmul_residueField N (basePrime (R := R) φ) hfib φ
+    (fun _ hf => (notMem_basePrime_iff (R := R) φ).mp hf) hx
 
 end IdealForm
