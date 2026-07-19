@@ -466,6 +466,7 @@ import AlgebraicJacobian.Picard.DivSchemeSeedUnivClose
 import AlgebraicJacobian.Picard.DivSchemeUnivFibreKerSpan
 import AlgebraicJacobian.Picard.DivSchemeUnivFibreWindow
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivFacts
+import AlgebraicJacobian.Picard.DivSchemeSeedUnivColFin
 
 /-!
 # AlgebraicJacobian — library root
