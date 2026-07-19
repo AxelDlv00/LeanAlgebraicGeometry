@@ -7,6 +7,7 @@ import Mathlib.RingTheory.LocalRing.Module
 import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
 import Mathlib.RingTheory.Support
 import Mathlib.RingTheory.Ideal.Quotient.Operations
+import Mathlib.RingTheory.Flat.Equalizer
 
 /-!
 # DD-4 RelDivisor (Route 2) — the relative-local base-point-free Nakayama neighbourhood
@@ -247,3 +248,75 @@ theorem mem_span_singleton_map_of_subsingleton_tmul_residueField_localRing {e : 
     (fun _ hf => (notMem_basePrime_iff (R := R) φ).mp hf) hx
 
 end IdealForm
+
+/-! ## Link 2 — the flat-cokernel half (module fibre from field vanishing)
+
+The honest link-2 hypothesis of the divisor-first `hdvd` is the *module* fibre
+`N ⊗ κ(p) = 0` (I-0231-safe — it correctly fails for the bad `t+ε` section).  This section
+reduces that module-fibre vanishing to two inputs it separates cleanly:
+
+* **flatness** of the colength quotient `M ⧸ N` over `R` (the carve's flat rank-`g`
+  structure, `SlicingFlatKernel` / `FlatCokernel`), and
+* **field-level vanishing** — every element of `N` dies in the *scheme* fibre `M ⊗ κ(p)`
+  (the `d_p` fibre achiever: the `K`-components vanish along `d_p`, which `e_p` cuts).
+
+Flatness lifts the scheme-fibre vanishing to the module fibre: `N.subtype ⊗ A` is injective
+when `M ⧸ N` is flat (mathlib's purity gift `lTensor_injective_of_exact_of_flat` on the
+short exact sequence `0 → N → M → M ⧸ N → 0`), and the field-level vanishing makes that
+injective map the zero map, forcing `N ⊗ A = 0`.  This is the FlatCokernel half of link 2;
+the remaining honest content is the field-level achiever divisibility. -/
+
+section FlatFibre
+
+open scoped TensorProduct
+
+variable {R : Type u} [CommRing R]
+
+/-- **Flat-cokernel module-fibre vanishing.** If the quotient `M ⧸ P` is `R`-flat and every
+element of `P` dies in the fibre `M ⊗ A` (`x ⊗ₜ a = 0` for all `x ∈ P`, `a ∈ A`), then
+`P ⊗ A` itself vanishes.  Flatness makes `P.subtype ⊗ A` injective, and the field-level
+vanishing makes it the zero map. -/
+theorem subsingleton_tmul_of_flat_quotient {M : Type*} [AddCommGroup M] [Module R M]
+    (P : Submodule R M) [Module.Flat R (M ⧸ P)] {A : Type*} [AddCommGroup A] [Module R A]
+    (h : ∀ (x : P) (a : A), (x : M) ⊗ₜ[R] a = (0 : M ⊗[R] A)) :
+    Subsingleton (↥P ⊗[R] A) := by
+  have hinj : Function.Injective (LinearMap.lTensor A P.subtype) :=
+    LinearMap.lTensor_injective_of_exact_of_flat P.mkQ (Submodule.mkQ_surjective _)
+      P.subtype (Submodule.injective_subtype _) (LinearMap.exact_subtype_mkQ P) A
+  have hz : ∀ u : A ⊗[R] ↥P, (LinearMap.lTensor A P.subtype) u = 0 := by
+    intro u
+    induction u using TensorProduct.induction_on with
+    | zero => simp
+    | tmul a x =>
+        rw [LinearMap.lTensor_tmul, Submodule.subtype_apply,
+          show a ⊗ₜ[R] (x : M) = TensorProduct.comm R M A ((x : M) ⊗ₜ[R] a) from
+            (TensorProduct.comm_tmul R M A (x : M) a).symm, h x a, map_zero]
+    | add u v hu hv => rw [map_add, hu, hv, add_zero]
+  haveI : Subsingleton (A ⊗[R] ↥P) := ⟨fun s t => hinj (by rw [hz s, hz t])⟩
+  exact (TensorProduct.comm R (↥P) A).toEquiv.subsingleton
+
+/-- **Link 2 in residue-field form** (the exact `hfib` the `hdvd` reduction consumes): a
+submodule `P ≤ M` with `M ⧸ P` flat over `R`, whose elements die in the residue-field fibre
+`M ⊗ κ(p)` (`x ⊗ₜ 1 = 0` — the `d_p` achiever's field-level divisibility), has
+`P ⊗ κ(p) = 0`.  The single pure-tensor `x ⊗ₜ 1 = 0` propagates to `x ⊗ₜ a = 0` for every
+`a ∈ κ(p)` through the residue field's own scalar action on the base change. -/
+theorem subsingleton_tmul_residueField_of_flat_quotient {M : Type*} [AddCommGroup M]
+    [Module R M] (P : Submodule R M) [Module.Flat R (M ⧸ P)] (p : PrimeSpectrum R)
+    (h : ∀ x : P, (x : M) ⊗ₜ[R] (1 : p.asIdeal.ResidueField)
+      = (0 : M ⊗[R] p.asIdeal.ResidueField)) :
+    Subsingleton (↥P ⊗[R] p.asIdeal.ResidueField) :=
+  subsingleton_tmul_of_flat_quotient P (fun x a => by
+    rw [show (x : M) ⊗ₜ[R] a
+          = (TensorProduct.comm R p.asIdeal.ResidueField M) (a ⊗ₜ[R] (x : M)) from
+        (TensorProduct.comm_tmul R p.asIdeal.ResidueField M a (x : M)).symm]
+    have haz : (a ⊗ₜ[R] (x : M) : p.asIdeal.ResidueField ⊗[R] M) = 0 := by
+      rw [show (a ⊗ₜ[R] (x : M) : p.asIdeal.ResidueField ⊗[R] M)
+            = a • ((1 : p.asIdeal.ResidueField) ⊗ₜ[R] (x : M)) by
+          rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]]
+      have h1' : (1 : p.asIdeal.ResidueField) ⊗ₜ[R] (x : M) = 0 := by
+        have hc := congrArg (TensorProduct.comm R M p.asIdeal.ResidueField) (h x)
+        rwa [TensorProduct.comm_tmul, map_zero] at hc
+      rw [h1', smul_zero]
+    rw [haz, map_zero])
+
+end FlatFibre
