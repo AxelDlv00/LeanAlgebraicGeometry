@@ -308,6 +308,7 @@ import AlgebraicJacobian.Picard.DivSchemeSeedFibre
 import AlgebraicJacobian.Picard.DivSchemeSeed
 import AlgebraicJacobian.Picard.DivSchemeSeedUniv
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivFibre
+import AlgebraicJacobian.Picard.DivSchemeSeedUnivAssemble
 import AlgebraicJacobian.Picard.DivSchemeCertificate
 import AlgebraicJacobian.Picard.DivSchemeCertificateEngine
 import AlgebraicJacobian.Algebra.SmoothPrimeRegularityStep
