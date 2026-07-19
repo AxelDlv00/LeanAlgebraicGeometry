@@ -129,6 +129,45 @@ lemma mk_tmul_one_eq_zero_iff_pinnedPieceSectionsMap_mem (b : Bool)
     map_eq_zero_iff _ (pinnedPieceQuotBaseChangeAlg R' b h E).injective,
     ← LinearEquiv.map_eq_zero_iff (TensorProduct.comm R _ R'), TensorProduct.comm_tmul]
 
+/-! ## The `hfield` reduction: to per-generator fibre divisibility -/
+
+variable (D : ThetaGeneratorSeed C R π a K)
+
+set_option maxHeartbeats 1600000 in
+-- the `D.piece z` ↔ `(relCurve C R).basicOpen (D.h z)` defeq over the heavy relCurve
+-- section-ring colength drives the transport application past the default budget
+set_option synthInstance.maxHeartbeats 400000 in
+/-- **`hfield` reduced to fibre divisibility**: if every `K`-side component of the seed
+`D`, restricted to the base-changed piece `D(h z')` at each base prime `p`, is divisible by
+the base-changed equation `eqn z'`, then the `hfield` clause of
+`isGenerator_of_fibrewise_ker_span_of_field_vanishing` holds — every element of the
+`K`-side-component submodule `N z` dies in the residue-field fibre.  The transport is
+`mk_tmul_one_eq_zero_iff_pinnedPieceSectionsMap_mem`; the residual honest content is the
+`hdiv` fibre-divisibility (the `d_p` achiever, for the universal seed). -/
+theorem hfield_of_forall_pinnedPieceSectionsMap_mem
+    (hdiv : ∀ (z : relCurve C R) (p : PrimeSpectrum R) ⦃ψ : relThetaSections C R π a⦄,
+      ψ ∈ K →
+      pinnedPieceSectionsMap p.asIdeal.ResidueField (D.side z) (D.h z)
+          (relThetaResSide a (D.side z) (D.piece_le z) ψ)
+        ∈ Ideal.span {pinnedPieceSectionsMap p.asIdeal.ResidueField (D.side z) (D.h z)
+          (D.eqn z)}) :
+    ∀ (z : relCurve C R) (y : relCurve C R) (hy : y ∈ D.piece z)
+        (x : ↥(D.sideColengthSubmodule z)),
+        ((x : Γ(relCurve C R, D.piece z) ⧸ Ideal.span {D.eqn z}) ⊗ₜ[R]
+            (1 : (basePrime (R := R)
+              ((relCurve C R).presheaf.germ (D.piece z) y hy).hom).asIdeal.ResidueField))
+          = 0 := by
+  intro z y hy x
+  obtain ⟨ψ, hψK, hψx⟩ := x.2
+  have hmk : (x : Γ(relCurve C R, D.piece z) ⧸ Ideal.span {D.eqn z})
+      = Ideal.Quotient.mk (Ideal.span {D.eqn z})
+          (relThetaResSide a (D.side z) (D.piece_le z) ψ) := hψx.symm
+  rw [hmk]
+  refine (mk_tmul_one_eq_zero_iff_pinnedPieceSectionsMap_mem _ (D.side z) (D.h z)
+    {D.eqn z} (relThetaResSide a (D.side z) (D.piece_le z) ψ)).mpr ?_
+  rw [Set.image_singleton]
+  exact hdiv z _ hψK
+
 end ThetaGeneratorSeed
 
 end AlgebraicGeometry
