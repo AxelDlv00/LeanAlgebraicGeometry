@@ -447,6 +447,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyFieldSurj
 import AlgebraicJacobian.RiemannRoch.EffectiveUniqueness
 import AlgebraicJacobian.Picard.DivSchemeAbel
 import AlgebraicJacobian.Picard.DivisorFamilyH1Locus
+import AlgebraicJacobian.Picard.DivisorDatumRankOne
 import AlgebraicJacobian.Picard.Pic0ChartLocusOpen
 
 /-!
