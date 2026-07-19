@@ -9,9 +9,8 @@ import AlgebraicJacobian.RiemannRoch.CarveDegree
 /-!
 # DDR-9.0 kit — the theta presentation of a divisor section and its multiplicativity
 
-Support layer for the carve discharge `divFamEps_carve`
-(`AlgebraicJacobian.Picard.DivSchemeEpsCarve`, `informal/w4-ddr9-worksheet.md` §2.0),
-split out for the 500-line cap.  Bottom up:
+Support layer for the carve discharge `divFamEps_carve` (`Picard/DivSchemeEpsCarve.lean`,
+`informal/w4-ddr9-worksheet.md` §2.0), split out for the 500-line cap.  Bottom up:
 
 * `AlgebraicGeometry.thetaSectionPair` — the global twisted-pair presentation of a
   divisor section `h ∈ H_n = H⁰(𝒪(n·F))` on `C.left`, with germ-at-η reading
@@ -19,13 +18,12 @@ split out for the 500-line cap.  Bottom up:
   `u^{M+s} = u^M·u^s` (`pow_add`) at the generic germ.
 * `AlgebraicGeometry.relThetaFieldSection` — the `k`-level relative theta section of a
   divisor section on `relCurve C k` (no `H¹` input), identified with the section
-  collapse of `thetaSectionPair` through the `H⁰`-carrier val computation
-  (`TwoCoverPairData.h0Equiv_val`) and the kernel transport of the base-field
-  collapse; hence the `k`-level multiplicativity
+  collapse of `thetaSectionPair` through `TwoCoverPairData.h0Equiv_val` and the kernel
+  transport of the base-field collapse; hence the `k`-level multiplicativity
   (`resHom_relThetaFieldSection_windowShiftMul_fst/_snd`).
 * `AlgebraicGeometry.resHom_relThetaWindowEquiv_one_tmul_fst/_snd` — **the pure-tensor
   value of the window identification** over any test ring `S`: on `1 ⊗ h` it reads as
-  the `k → S` sections comparison of `relThetaFieldSection` (the landed
+  the `k → S` sections comparison of `relThetaFieldSection` (the
   `DivisorFamilyWindowTriangle` computation re-derived in consumable form).
 -/
 
