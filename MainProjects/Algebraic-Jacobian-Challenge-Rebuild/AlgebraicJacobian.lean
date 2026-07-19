@@ -456,6 +456,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyH1Locus
 import AlgebraicJacobian.Picard.DivisorDatumRankOne
 import AlgebraicJacobian.Picard.DivisorFamilyMonoH1
 import AlgebraicJacobian.Picard.Pic0ChartLocusOpen
+import AlgebraicJacobian.Picard.Pic0ChartLocusFibreField
 
 /-!
 # AlgebraicJacobian — library root
