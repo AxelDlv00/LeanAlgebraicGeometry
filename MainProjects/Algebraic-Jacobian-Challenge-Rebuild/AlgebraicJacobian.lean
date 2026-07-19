@@ -471,6 +471,7 @@ import AlgebraicJacobian.Picard.DivSchemeSeedUnivColFin
 import AlgebraicJacobian.Picard.DivSchemeUnivFibreHinj
 import AlgebraicJacobian.Picard.DivSchemeRedesignJFlat
 import AlgebraicJacobian.Picard.DivSchemeRedesignHsub
+import AlgebraicJacobian.Picard.DivSchemeRedesignHinjChart
 import AlgebraicJacobian.Picard.DivSchemeRedesignAchiever
 import AlgebraicJacobian.Picard.DivSchemeRedesignFibreCut
 import AlgebraicJacobian.Picard.DivSchemeRedesignSeed
