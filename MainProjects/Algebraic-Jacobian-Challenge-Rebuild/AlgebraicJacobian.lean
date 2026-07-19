@@ -53,6 +53,7 @@ import AlgebraicJacobian.Picard.DivisorClassCompat
 import AlgebraicJacobian.Algebra.EtaleCover
 import AlgebraicJacobian.Picard.PicEtAff
 import AlgebraicJacobian.Picard.PicEtAffMap
+import AlgebraicJacobian.Picard.PicEtAffFieldCollapse
 import AlgebraicJacobian.Picard.PicEtAffTransport
 import AlgebraicJacobian.Picard.PicEtAffCurveMap
 import AlgebraicJacobian.Picard.ProjectionUnits
