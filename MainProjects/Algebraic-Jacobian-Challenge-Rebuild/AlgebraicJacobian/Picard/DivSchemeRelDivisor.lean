@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import Mathlib.RingTheory.LocalRing.Module
 import Mathlib.RingTheory.Support
+import Mathlib.RingTheory.Ideal.Quotient.Operations
 
 /-!
 # DD-4 RelDivisor (Route 2) — the relative-local base-point-free Nakayama neighbourhood
@@ -87,3 +88,64 @@ theorem exists_subsingleton_away_of_tmul_residueField [Module.Finite R M]
     ((TensorProduct.comm R M p.asIdeal.ResidueField).symm.toEquiv.subsingleton)
 
 end Module
+
+/-! ## The ideal-membership form of the Nakayama neighbourhood (the `hdvd` algebraic core)
+
+The landed engine `Module.exists_subsingleton_away_of_tmul_residueField` produces a basic
+open `D(f)` of the base on which a finite module localizes to zero.  The divisor-first
+`hdvd` (`spec-dd4-seam` §1.1/§2.3) consumes this as concrete `Ideal.span` membership: on
+the colength `S ⧸ (e)` (the piece sections `S = Γ(D(h z))` modulo the local equation
+`e = eqn z`), a submodule `N` — the image of the `K_univ`-side components — that localizes
+to zero away from `f` forces every representative `x` of `N` to satisfy
+`algebraMap f^n · x ∈ (e)`.  At a point of the base `D(f)` this inverts `f` in the stalk,
+delivering the germ-level `dvd` membership fed to `Scheme.mem_span_singleton_of_forall_germ`
+(`Picard/DivisorStalkIdeal.lean:79`).  Pure algebra, certificate-free.
+
+**I-0231 / `k[ε]` guard.** `N` is the *module* image `(J + (e)) ⧸ (e)`, and the
+`N ⊗ κ(p) = 0` hypothesis of the assembled form below is the honest module-fibre condition
+— it fails for the bad section `e = t+ε` (where `N = (ε)` has `N ⊗_{k[ε]} k ≅ k ≠ 0`), so
+the engine correctly refuses it; it is *never* fibrewise vanishing. -/
+
+section IdealForm
+
+open scoped TensorProduct
+
+variable {R : Type u} [CommRing R] {S : Type v} [CommRing S] [Algebra R S]
+
+/-- **Localize-away ⟹ ideal membership up to a power of the base element.** If a submodule
+`N` of the colength `S ⧸ (e)` localizes to zero away from `f : R`, then every `x : S` whose
+class lies in `N` satisfies `algebraMap R S (f ^ n) * x ∈ (e)` for some `n` — the concrete
+Nakayama-neighbourhood form the divisor-first `hdvd` consumes. -/
+theorem exists_pow_mul_mem_span_of_subsingleton_localizedAway {f : R} {e : S}
+    {N : Submodule R (S ⧸ Ideal.span {e})}
+    (hN : Subsingleton (LocalizedModule.Away f N))
+    {x : S} (hx : Ideal.Quotient.mk (Ideal.span {e}) x ∈ N) :
+    ∃ n : ℕ, algebraMap R S (f ^ n) * x ∈ Ideal.span {e} := by
+  obtain ⟨r, hr, hrx⟩ := LocalizedModule.subsingleton_iff.mp hN
+    (⟨Ideal.Quotient.mk (Ideal.span {e}) x, hx⟩ : N)
+  obtain ⟨n, rfl⟩ := hr
+  refine ⟨n, ?_⟩
+  have hcoe : (f ^ n) • Ideal.Quotient.mk (Ideal.span {e}) x = 0 := by
+    have h := congrArg (Subtype.val) hrx
+    simpa using h
+  rw [← Ideal.Quotient.eq_zero_iff_mem,
+    show algebraMap R S (f ^ n) * x = (f ^ n) • x from (Algebra.smul_def _ _).symm,
+    ← Ideal.Quotient.mkₐ_eq_mk R (Ideal.span {e}), map_smul, Ideal.Quotient.mkₐ_eq_mk]
+  exact hcoe
+
+/-- **The assembled Nakayama neighbourhood in ideal form.** For a submodule `N` of the
+colength `S ⧸ (e)`, finite over the base `R`, whose residue-field fibre at a prime `p`
+vanishes, some `f ∉ p` witnesses a basic open `D(f)` on which every representative of `N`
+lies in `(e)` after a power multiple.  Composes the landed finite-module engine
+`Module.exists_subsingleton_away_of_tmul_residueField` with the ideal-membership form above
+— the algebraic heart of the divisor-first `hdvd` at a seed-base prime `p`. -/
+theorem exists_notMem_forall_pow_mul_mem_span_of_subsingleton_tmul_residueField {e : S}
+    (N : Submodule R (S ⧸ Ideal.span {e})) [Module.Finite R N]
+    (p : PrimeSpectrum R)
+    (hfib : Subsingleton (↥N ⊗[R] p.asIdeal.ResidueField)) :
+    ∃ f ∉ p.asIdeal, ∀ x : S, Ideal.Quotient.mk (Ideal.span {e}) x ∈ N →
+      ∃ n : ℕ, algebraMap R S (f ^ n) * x ∈ Ideal.span {e} := by
+  obtain ⟨f, hf, hsub⟩ := Module.exists_subsingleton_away_of_tmul_residueField p hfib
+  exact ⟨f, hf, fun x hx => exists_pow_mul_mem_span_of_subsingleton_localizedAway hsub hx⟩
+
+end IdealForm
