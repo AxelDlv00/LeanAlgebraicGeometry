@@ -148,4 +148,61 @@ theorem exists_notMem_forall_pow_mul_mem_span_of_subsingleton_tmul_residueField 
   obtain ⟨f, hf, hsub⟩ := Module.exists_subsingleton_away_of_tmul_residueField p hfib
   exact ⟨f, hf, fun x hx => exists_pow_mul_mem_span_of_subsingleton_localizedAway hsub hx⟩
 
+/-! ### Link 3 — the ring-hom unit descent (base→curve threading)
+
+The Nakayama-neighbourhood core produces, per seed-base prime `p`, an `f ∉ p` and a
+power-multiple membership `algebraMap R S (f^n) · x ∈ (e)`.  The divisor-first `hdvd`
+consumes this **germwise**: at a point `y` of the piece lying over `p`, the germ map
+`φ = germ_y : Γ(piece) → 𝒪_y` inverts `f` (since `f ∉ p` and the stalk is local over the
+base point `p`), so the power `f^n` disappears and `φ x ∈ (φ e)` — the honest
+"base unit descent" of `spec-dd4-seam` §"base→curve threading".  These two lemmas are the
+pure-algebra content of that step (the geometric input is only *"`φ` inverts everything
+outside `p`"*, discharged at the stalk by the local structure map). -/
+
+/-- **Ring-hom unit descent.** If a ring hom `φ : S →+* B` sends `algebraMap R S f` to a
+unit, then a power-multiple membership `algebraMap R S (f^n) · x ∈ (e)` descends to
+`φ x ∈ (φ e)` — the power of `f` is inverted by `φ`.  The germwise step of the
+divisor-first `hdvd`: at a stalk over a base point avoiding `f`, the germ inverts `f`. -/
+theorem mem_span_singleton_map_of_isUnit_map_algebraMap
+    {B : Type*} [CommRing B] (φ : S →+* B) {f : R} {e x : S} {n : ℕ}
+    (hunit : IsUnit (φ (algebraMap R S f)))
+    (hx : algebraMap R S (f ^ n) * x ∈ Ideal.span {e}) :
+    φ x ∈ Ideal.span {φ e} := by
+  obtain ⟨c, hc⟩ := Ideal.mem_span_singleton.mp hx
+  have hφ : φ (algebraMap R S f) ^ n * φ x = φ e * φ c := by
+    have := congrArg φ hc
+    simpa [map_mul, map_pow] using this
+  rw [Ideal.mem_span_singleton]
+  obtain ⟨w, hw⟩ := hunit.pow n
+  refine ⟨(↑w⁻¹ : B) * φ c, ?_⟩
+  have hwx : (↑w : B) * φ x = φ e * φ c := by rw [hw]; exact hφ
+  calc φ x = (↑w⁻¹ : B) * ((↑w : B) * φ x) := by rw [← mul_assoc, Units.inv_mul, one_mul]
+    _ = (↑w⁻¹ : B) * (φ e * φ c) := by rw [hwx]
+    _ = φ e * ((↑w⁻¹ : B) * φ c) := by ring
+
+/-- **The link-2+3 consumer** (the per-point content of the divisor-first `hdvd`): for a
+finite submodule `N` of the colength `S ⧸ (e)` whose residue-field fibre at a prime `p`
+vanishes (`hfib` — link 2), and a ring hom `φ : S →+* B` that **inverts every base element
+outside `p`** (`hφ` — satisfied by the germ at a stalk over the base point `p`, link 3),
+every representative `x` of `N` satisfies `φ x ∈ (φ e)`.
+
+Composes the Nakayama-neighbourhood core
+`exists_notMem_forall_pow_mul_mem_span_of_subsingleton_tmul_residueField` (which chooses the
+`f ∉ p`) with the ring-hom unit descent `mem_span_singleton_map_of_isUnit_map_algebraMap`.
+This is the clean seam that isolates the honest wall — the fibre-vanishing hypothesis
+`hfib` (`N ⊗ κ(p) = 0`, produced by the `d_p` achiever + flat-cokernel lift) — from the
+routine germwise descent. -/
+theorem mem_span_singleton_map_of_subsingleton_tmul_residueField {e : S}
+    (N : Submodule R (S ⧸ Ideal.span {e})) [Module.Finite R N]
+    (p : PrimeSpectrum R)
+    (hfib : Subsingleton (↥N ⊗[R] p.asIdeal.ResidueField))
+    {B : Type*} [CommRing B] (φ : S →+* B)
+    (hφ : ∀ f ∉ p.asIdeal, IsUnit (φ (algebraMap R S f)))
+    {x : S} (hx : Ideal.Quotient.mk (Ideal.span {e}) x ∈ N) :
+    φ x ∈ Ideal.span {φ e} := by
+  obtain ⟨f, hf, H⟩ :=
+    exists_notMem_forall_pow_mul_mem_span_of_subsingleton_tmul_residueField N p hfib
+  obtain ⟨n, hn⟩ := H x hx
+  exact mem_span_singleton_map_of_isUnit_map_algebraMap φ (hφ f hf) hn
+
 end IdealForm
