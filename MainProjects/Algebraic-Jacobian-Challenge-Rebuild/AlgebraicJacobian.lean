@@ -429,6 +429,7 @@ import AlgebraicJacobian.Picard.Pic0PullbackGrp
 import AlgebraicJacobian.Picard.SlicingFlat
 import AlgebraicJacobian.Picard.SlicingFlatKernel
 import AlgebraicJacobian.Picard.SupportTube
+import AlgebraicJacobian.Picard.SupportTubeFinite
 import AlgebraicJacobian.Picard.PicEtCrossBase
 import AlgebraicJacobian.Picard.Pic0ThetaAssembly
 import AlgebraicJacobian.Picard.JacobianDataBaseChange
