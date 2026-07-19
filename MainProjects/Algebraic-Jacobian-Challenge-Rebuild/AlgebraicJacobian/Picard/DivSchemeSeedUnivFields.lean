@@ -232,6 +232,53 @@ theorem exists_forall_windowCompare_ne_zero
   exact ⟨f, hf, fun q hq h0 =>
     hfq q hq ((tmul_one_eq_zero_iff_windowCompare _ q.asIdeal.ResidueField x).mpr h0)⟩
 
+/-! ## The `hfib`-body producer (I-0247 the hfib route) -/
+
+set_option maxHeartbeats 1200000 in
+-- the seed-base residue-field tower `k → R_Z → κ(p)` and the fibre-curve reading bridge
+-- drive the `relThetaWindowEquiv`/`relPinnedSectionsMap` defeq past the defaults
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxSynthPendingDepth 8 in
+set_option linter.unusedSectionVars false in
+/-- **The seed `hfib`-body producer** (I-0247, the hfib route): for a seed section of the
+window-equivalence form `relThetaWindowEquiv … x`, the compared side component is nonzero
+on any pinned chart of the fibre curve at `κ(p)` whose basic sub-open (the piece witness)
+is nonempty, as soon as the fibre comparison `windowCompare … x` is nonzero — exactly the
+nonvanishing clause of `ThetaGeneratorSeed.isGenerator_of_fibre_ne_zero`.  Composes the
+reading bridge `relPinnedSectionsMap_relThetaResSide_ne_zero` (a window vector with
+nonzero fibre comparison has nonzero compared side component on a nonempty pinned chart)
+with the derivation of chart-nonemptiness from the piece-witness `basicOpen u ≠ ⊥`. -/
+theorem relPinnedSectionsMap_relThetaResSide_windowEquiv_ne_zero
+    (a : ℕ) (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
+    (p : PrimeSpectrum (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+      (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)) (b : Bool)
+    (x : TensorProduct k
+        (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+          (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+        ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤))
+    (hx : windowCompare
+        (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+          (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+        p.asIdeal.ResidueField x ≠ 0)
+    (u : Γ(relCurve C p.asIdeal.ResidueField,
+      relPinnedChart C p.asIdeal.ResidueField π b))
+    (hne : (relCurve C p.asIdeal.ResidueField).basicOpen u ≠ ⊥) :
+    relPinnedSectionsMap C
+        (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+          (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+        p.asIdeal.ResidueField π b
+        (relThetaResSide a b le_rfl
+          (relThetaWindowEquiv C
+            (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+              (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+            π a hH1 x)) ≠ 0 :=
+  relPinnedSectionsMap_relThetaResSide_ne_zero C
+    (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+      (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+    p.asIdeal.ResidueField π a hH1 b hx
+    (fun heq => hne (le_bot_iff.mp
+      (heq ▸ (relCurve C p.asIdeal.ResidueField).basicOpen_le u)))
+
 end SeedFibreDivisor
 
 end AlgebraicGeometry
