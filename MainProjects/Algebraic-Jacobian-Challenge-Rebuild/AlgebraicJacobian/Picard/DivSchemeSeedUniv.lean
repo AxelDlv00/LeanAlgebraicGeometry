@@ -5,52 +5,37 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivSchemeFamilyUniv
 import AlgebraicJacobian.Picard.DivSchemeFrameKit
-import AlgebraicJacobian.Picard.DivisorFamilyWindow
+import AlgebraicJacobian.RiemannRoch.WindowFieldTransport
 
 /-!
 # G-4 — the universal seed windows `K_univ`/`K'_univ` (`informal/w4-g4-worksheet.md` §1.2)
 
-The submodule layer of the universal theta generator seed: over each `Z(♦)`-chart ring
-`R_Z = DivCarveChartRing k A B g r₁ r₂ b₁ b₂ i j` at the campaign windows
-`A = s·F`, `B = M·F` (`s = windowS_choice`, `M = windowM_choice`), the tautological
-carve pair of `Picard/DivSchemeFamilyUniv` is transported into the pinned window
-ambients `H_M`, `H_{M+s}` and pushed through the window identification
-`relThetaWindowEquiv` — producing exactly the submodule parameter `K` that the DDR-5
-ε-projection identity (`ThetaGeneratorSeed.divFamEps_certifiedFamily`,
-`Picard/DivSchemeEps.lean`) consumes for a seed at the universal point.
+Over each `Z(♦)`-chart ring `R_Z = DivCarveChartRing k A B g r₁ r₂ b₁ b₂ i j` at the
+campaign windows `A = s·F`, `B = M·F`, the tautological carve pair of
+`Picard/DivSchemeFamilyUniv` is transported into the pinned window ambients `H_M`,
+`H_{M+s}` and pushed through `relThetaWindowEquiv` — exactly the submodule parameter of
+the DDR-5 ε-projection identity (`ThetaGeneratorSeed.divFamEps_certifiedFamily`).  The
+worksheet's `grPointCongr` is the LANDED `Grassmannian.congrAmbient`
+(`Picard/DivSchemeFrameKit.lean`, K1/K4) — only instantiated here.
 
-The worksheet's `grPointCongr` helper is the LANDED `Grassmannian.congrAmbient`
-(`Picard/DivSchemeFrameKit.lean`, K1), with naturality `map_congrAmbient` (K4); this
-file only instantiates it.
-
-* `AlgebraicGeometry.Grassmannian.projective_submodule_of_projective_quotient` — a
-  submodule with projective quotient of a projective module is projective (the
-  `quotRetract` splitting; the projectivity companion of the landed
-  `finite_submodule_of_projective_quotient`).
-* `AlgebraicGeometry.Grassmannian.finrank_ker_baseChangeMkQ_add_of_field` — **the fibre
-  corank law**: at any field point `L` of the base ring, the fibre of a Grassmannian
-  point (the kernel of `baseChangeMkQ L`) has `finrank + g = dim_k H` — the `hKMrank`
-  shape of the P-fib-N pack at every residue field.
-* `AlgebraicGeometry.divUniversalFstWindow` / `divUniversalSndWindow` — the universal
-  pair transported to the window ambients through the DD-4 boundary bases
-  (`congrAmbient` along `b₁.equivFun.symm`, resp. `b₂.equivFun.symm` composed with the
-  `add_nsmul` window regluing `seedWindowShiftEquiv` — the same spelling as
-  `windowShiftMul`, `RiemannRoch/CarveDegree.lean`).
-* `AlgebraicGeometry.divUniversalSeedK` / `divUniversalSeedK'` — **`K_univ`/`K'_univ`**:
-  the images of the transported points under the window identification — the seed
-  submodule parameters at the universal point, in the exact spelling of
-  `ThetaGeneratorSeed.divFamEps_certifiedFamily` (`K = map relThetaWindowEquiv
-  x₁.toSubmodule`); `divUniversalSeedK_eq_map`/`divUniversalSeedK'_eq_map` unfold them
-  to the worksheet §1.2 composites.
-* `AlgebraicGeometry.finite_divUniversalSeedK`(`'`) /
-  `projective_divUniversalSeedK`(`'`) — **`K_univ` is finite projective over `R_Z`,
-  certificate-free**: the ambient quotient of the Grassmannian point is projective, so
-  the point's submodule is a retract of the free ambient, and `K_univ` is its image
-  under a linear equivalence.  This is what makes the achiever lift of the seed
-  construction (worksheet §1.5) anti-circular.
-
-The fibre instantiation (the P-fib-N firing at every prime of the chart ring) is
-`AlgebraicJacobian.Picard.DivSchemeSeedUnivFibre`.
+* `Grassmannian.projective_submodule_of_projective_quotient` — projective-quotient
+  submodules of a projective module are projective (the `quotRetract` splitting);
+* `Grassmannian.finrank_ker_baseChangeMkQ_add_of_field` — **the fibre corank law**:
+  `finrank(ker (baseChangeMkQ L)) + g = dim_k H` at any field point `L` — the
+  `hKMrank` shape of the P-fib-N pack at every residue field;
+* `divUniversalFstWindow`/`divUniversalSndWindow` — the universal pair in the window
+  ambients (`congrAmbient` along `b₁.equivFun.symm`, resp. `b₂.equivFun.symm` composed
+  with the `add_nsmul` regluing `seedWindowShiftEquiv`, the `windowShiftMul` spelling);
+* `divUniversalSeedK`/`divUniversalSeedK'` — **`K_univ`/`K'_univ`**, with the §1.2
+  composite spellings (`divUniversalSeedK_eq_map`/`divUniversalSeedK'_eq_map`) and the
+  certificate-free finite projectivity (`finite_`/`projective_divUniversalSeedK`(`'`))
+  — the anti-circularity licence of the seed's achiever lift (worksheet §1.5);
+* `picClass_windowTransportDivisor_add`, `windowMSShiftUnit`,
+  `map_mulLinear_windowMSShiftUnit` — **the shifted-window alignment**: the transported
+  window class is exponent-additive, so `windowTransportDivisor (M+s)` and
+  `windowN + windowS` differ by the principal divisor of an alignment unit translating
+  the section spaces — the `K'`-side bridge to the fibre keystone of
+  `AlgebraicJacobian.Picard.DivSchemeSeedUnivFibre`.
 -/
 
 set_option autoImplicit false
@@ -383,5 +368,134 @@ theorem projective_divUniversalSeedK' :
       (divUniversalSeedK'Equiv C π hπ g r₁ r₂ b₁ b₂ i j))
 
 end SeedUniv
+
+/-! ## The shifted-window alignment: `windowTransportDivisor (M+s)` vs `N + S`
+
+The fibre keystone (`Picard/DivSchemeSeedUnivFibre.lean`) concludes at the divisor sum
+`windowN + windowS`, while the `Φ`-image of the second universal window lives at the
+transported `(M+s)`-window.  The two differ by a principal divisor — the transported
+window class is exponent-additive — and the alignment unit translates the section
+spaces. -/
+
+section WindowAlign
+
+open Limits MonoidalCategory CartesianMonoidalCategory
+
+attribute [local instance] Scheme.overModule Scheme.functionFieldOverModule
+
+variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
+  [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]
+variable (K : Type u) [Field K] [Algebra k K]
+variable {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
+variable [IsIntegral C.left]
+
+noncomputable local instance instOverCleftSeedAlign : C.left.Over (Spec (.of k)) :=
+  ⟨C.hom⟩
+
+variable [SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k))]
+  [LocallyOfFiniteType (C.left ↘ Spec (.of k))] [QuasiCompact (C.left ↘ Spec (.of k))]
+  [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0)]
+  [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1)]
+variable (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k))
+variable [IsIntegral (relCurve C K)]
+  [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [LocallyOfFiniteType (relCurve C K ↘ Spec (CommRingCat.of K))]
+variable [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 0)]
+  [Module.Finite K (Sheaf.HModule ((relCurve C K).moduleKSheaf K) 1)]
+
+set_option maxSynthPendingDepth 8 in
+set_option synthInstance.maxHeartbeats 800000 in
+-- (The two-field instance towers of the collapse class law exceed the default limits;
+-- the recorded `WindowFieldTransport` escape hatch.)
+set_option linter.unusedSectionVars false in
+/-- **Exponent additivity of the transported window class**: the classes of the
+transported window divisors multiply across exponents — every one is the pullback of
+the fiber twist `Θⁿ = Θ¹ⁿ` through the collapse and the base change
+(`cechPicClass_thetaChartDatum` + `fiberTwist_pow`, `CechPic.map` a monoid map). -/
+theorem picClass_windowTransportDivisor_add (a b : ℕ) :
+    CurveDivisor.picClass K (windowTransportDivisor C K π (a + b))
+      = CurveDivisor.picClass K (windowTransportDivisor C K π a)
+        * CurveDivisor.picClass K (windowTransportDivisor C K π b) := by
+  haveI : IsIntegral (relCurve C k) := instIsIntegralBaseChange C k
+  haveI : SmoothOfRelativeDimension 1 (relCurve C k ↘ Spec (CommRingCat.of k)) :=
+    instSmoothOfRelativeDimensionBaseChange C k
+  haveI : QuasiCompact (relCurve C k ↘ Spec (CommRingCat.of k)) :=
+    instQuasiCompactBaseChange C k
+  haveI : Module.Finite k (Sheaf.HModule ((relCurve C k).moduleKSheaf k) 0) :=
+    instModuleFiniteHModuleZeroBaseChange C k
+  haveI : Module.Finite k (Sheaf.HModule ((relCurve C k).moduleKSheaf k) 1) :=
+    instModuleFiniteHModuleOneBaseChange C k
+  have key : ∀ n : ℕ, CurveDivisor.picClass K (windowTransportDivisor C K π n)
+      = Scheme.CechPic.map (relCurveMap C k K)
+          (Scheme.CechPic.map (fst C (overSpec k k)).left (fiberTwist π 1 ^ n)) := by
+    intro n
+    -- equation-haves + `.trans`, never `rw`, across the `relCurve`/product spelling
+    -- (the recorded I-0232 (b) instance-transparency hazard)
+    have h1 : CurveDivisor.picClass K (windowTransportDivisor C K π n)
+        = (windowTransportDatum C K π n).cechPicClass :=
+      picClass_windowTransportDivisor C K π n
+    have h2 : (windowTransportDatum C K π n).cechPicClass
+        = Scheme.CechPic.map (relCurveMap C k K)
+            (thetaChartDatum C k π n).cechPicClass :=
+      BasicOpenCocycleDatum.cechPicClass_baseChange K (thetaChartDatum C k π n)
+    have h3 : (thetaChartDatum C k π n).cechPicClass
+        = Scheme.CechPic.map (fst C (overSpec k k)).left (fiberTwist π 1 ^ n) :=
+      (cechPicClass_thetaChartDatum C π n).trans
+        (congrArg (fun t => Scheme.CechPic.map (fst C (overSpec k k)).left t)
+          (fiberTwist_pow π n))
+    exact h1.trans (h2.trans
+      (congrArg (fun c => Scheme.CechPic.map (relCurveMap C k K) c) h3))
+  rw [key (a + b), key a, key b, pow_add, map_mul, map_mul]
+
+/-- The transported shifted window shares its class with the divisor sum `N + S` of the
+fibre keystone. -/
+theorem picClass_windowTransport_add_eq (g : ℕ) :
+    CurveDivisor.picClass K (windowTransportDivisor C K π
+        (windowM_choice π hπ g + windowS_choice π hπ g))
+      = CurveDivisor.picClass K
+          (windowN C K hπ g
+            + windowTransportDivisor C K π (windowS_choice π hπ g)) := by
+  rw [Scheme.CurveDivisor.picClass_add, picClass_windowTransportDivisor_add C K]
+  rfl
+
+/-- **The shifted-window alignment unit** `w`: a rational function with
+`div w = windowTransportDivisor (M+s) − (N + S)` (extraction (X) on the class
+agreement).  Multiplication by `w` translates the `Φ`-image of the second universal
+window onto the fibre keystone's `N + S` side. -/
+noncomputable def windowMSShiftUnit (g : ℕ) : (relCurve C K).functionFieldˣ :=
+  (Scheme.CurveDivisor.exists_divOf_of_picClass_eq K
+    (picClass_windowTransport_add_eq C K hπ g)).choose
+
+lemma divOf_windowMSShiftUnit (g : ℕ) :
+    windowTransportDivisor C K π (windowM_choice π hπ g + windowS_choice π hπ g)
+        - (windowN C K hπ g + windowTransportDivisor C K π (windowS_choice π hπ g))
+      = Scheme.divOf (relCurve C K ↘ Spec (CommRingCat.of K))
+          (windowMSShiftUnit C K hπ g) :=
+  (Scheme.CurveDivisor.exists_divOf_of_picClass_eq K
+    (picClass_windowTransport_add_eq C K hπ g)).choose_spec
+
+/-- **The shifted-window section translation**: multiplication by the alignment unit
+carries `H⁰(𝒪(windowTransportDivisor (M+s) − D))` exactly onto `H⁰(𝒪(N + S − D))` for
+every divisor `D` — the `K'`-side bridge between the `Φ`-image of the second universal
+window and the fibre keystone's second input. -/
+theorem map_mulLinear_windowMSShiftUnit (g : ℕ) (D : (relCurve C K).CurveDivisor) :
+    Submodule.map
+        (Scheme.mulLinear K ((windowMSShiftUnit C K hπ g :
+          (relCurve C K).functionFieldˣ) : (relCurve C K).functionField))
+        (Scheme.divisorSections K (windowTransportDivisor C K π
+          (windowM_choice π hπ g + windowS_choice π hπ g) - D) ⊤)
+      = Scheme.divisorSections K
+          (windowN C K hπ g
+            + windowTransportDivisor C K π (windowS_choice π hπ g) - D) ⊤ := by
+  rw [map_mulLinear_divisorSections_top K
+    (Units.ne_zero (windowMSShiftUnit C K hπ g)) _]
+  congr 1
+  rw [show Units.mk0 _ (Units.ne_zero (windowMSShiftUnit C K hπ g))
+      = windowMSShiftUnit C K hπ g from Units.ext rfl,
+    ← divOf_windowMSShiftUnit C K hπ g]
+  abel
+
+end WindowAlign
 
 end AlgebraicGeometry

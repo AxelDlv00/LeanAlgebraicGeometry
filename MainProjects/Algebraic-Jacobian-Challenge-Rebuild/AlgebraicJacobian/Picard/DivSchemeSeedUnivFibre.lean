@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.RiemannRoch.PFibPack
 import AlgebraicJacobian.RiemannRoch.WindowFieldTransport
+import AlgebraicJacobian.Picard.DivisorFamilyFieldDictionary
 
 /-!
 # G-4 — the fibre P-fib-N firing at the transported windows (worksheet §1.5, I-0233/I-0234)
@@ -59,6 +60,7 @@ set_option maxSynthPendingDepth 3
 universe u
 
 open CategoryTheory Limits Opposite TopologicalSpace
+open scoped TensorProduct
 
 attribute [local instance] AlgebraicGeometry.Scheme.functionFieldOverModule
   AlgebraicGeometry.Scheme.overModule
@@ -358,5 +360,92 @@ theorem existsUnique_effective_divisor_of_carve_windowN (g : ℕ)
       KM hKM hKMrank K' hK' hK'rank hcarve
 
 end Keystone
+/-! ## The Φ-side interface (G-3 dictionary addenda for the seed bridge) -/
+
+section PhiInterface
+
+variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
+variable (K : Type u) [Field K] [Algebra k K]
+variable (π : C.left ⟶ P1 k) [IsFinite π]
+
+noncomputable local instance instOverCleftSUFP : C.left.Over (Spec (.of k)) := ⟨C.hom⟩
+
+variable [SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k))] [IsIntegral C.left]
+  [LocallyOfFiniteType (C.left ↘ Spec (.of k))] [QuasiCompact (C.left ↘ Spec (.of k))]
+  [IsDominant π]
+variable (a : ℕ)
+variable [IsIntegral (relCurve C K)]
+  [SmoothOfRelativeDimension 1 (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [QuasiCompact (relCurve C K ↘ Spec (CommRingCat.of K))]
+  [LocallyOfFiniteType (relCurve C K ↘ Spec (CommRingCat.of K))]
+
+/-- **The full-window image dictionary**: `Φ` carries the whole free window `K ⊗[k] H_a`
+exactly onto `H⁰(𝒪(N(a)))` at the transported window divisor — the `d`-free companion
+of `map_divFamPhi_divisorWindow`, giving both the pole-bound side (`hKM`/`hK'`) and the
+multiplier surjectivity (`hcarve`'s `h`-side) of the seed's P-fib-N inputs. -/
+theorem map_divFamPhi_top
+    (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1) :
+    Submodule.map (divFamPhi C K π a hH1) ⊤
+      = Scheme.divisorSections K (windowTransportDivisor C K π a) ⊤ := by
+  have h1 : Submodule.map (relThetaWindowEquiv C K π a hH1).toLinearMap
+      (⊤ : Submodule K (K ⊗[k]
+        ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤))) = ⊤ := by
+    rw [Submodule.map_top, LinearMap.range_eq_top]
+    exact (relThetaWindowEquiv C K π a hH1).surjective
+  have h2 : Submodule.map (thetaFieldRead C K π a) ⊤
+      = Scheme.divisorSections K (thetaFieldDivisor C K π a) ⊤ := by
+    refine le_antisymm ?_ ?_
+    · rintro _ ⟨s, -, rfl⟩
+      exact thetaFieldRead_mem C K π a s
+    · intro f hf
+      obtain ⟨s, hs⟩ := exists_thetaFieldRead_eq C K π a hf
+      exact ⟨s, trivial, hs⟩
+  have hmk : Units.mk0
+      ((thetaFieldShiftUnit C K π a : (relCurve C K).functionFieldˣ) :
+        (relCurve C K).functionField)
+      (Units.ne_zero (thetaFieldShiftUnit C K π a)) = thetaFieldShiftUnit C K π a :=
+    Units.ext rfl
+  simp only [divFamPhi]
+  rw [Submodule.map_comp, Submodule.map_comp, h1, h2,
+    map_mulLinear_divisorSections_top K
+      (Units.ne_zero (thetaFieldShiftUnit C K π a)) _]
+  congr 1
+  rw [hmk, ← divOf_thetaFieldShiftUnit C K π a]
+  abel
+
+/-- Every `Φ`-value satisfies the transported pole bound — the `hKM`/`hK'` inclusion
+side of the seed's P-fib-N inputs. -/
+theorem divFamPhi_apply_mem
+    (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
+    (x : K ⊗[k] ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤)) :
+    divFamPhi C K π a hH1 x
+      ∈ Scheme.divisorSections K (windowTransportDivisor C K π a) ⊤ :=
+  map_divFamPhi_top C K π a hH1 ▸ Submodule.mem_map_of_mem trivial
+
+/-- **`Φ`-surjectivity onto the transported window sections** — the multiplier-side
+realization of the seed's `hcarve` (every `h ∈ H⁰(𝒪(S))` is a `Φ`-value). -/
+theorem exists_divFamPhi_eq
+    (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
+    {f : (relCurve C K).functionField}
+    (hf : f ∈ Scheme.divisorSections K (windowTransportDivisor C K π a) ⊤) :
+    ∃ x, divFamPhi C K π a hH1 x = f := by
+  rw [← map_divFamPhi_top C K π a hH1] at hf
+  obtain ⟨x, -, hx⟩ := hf
+  exact ⟨x, hx⟩
+
+omit [LocallyOfFiniteType (relCurve C K ↘ Spec (CommRingCat.of K))] in
+/-- **`Φ` preserves dimensions**: the image of a submodule under the injective
+dictionary has the same `K`-dimension — the `hKMrank`/`hK'rank` transport of the seed's
+P-fib-N inputs (composed with the fibre corank law
+`finrank_ker_baseChangeMkQ_add_of_field`). -/
+theorem finrank_map_divFamPhi
+    (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
+    (N : Submodule K (K ⊗[k] ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤))) :
+    Module.finrank K ↥(Submodule.map (divFamPhi C K π a hH1) N)
+      = Module.finrank K ↥N :=
+  (LinearEquiv.finrank_eq (Submodule.equivMapOfInjective _
+    (divFamPhi_injective C K π a hH1) N)).symm
+
+end PhiInterface
 
 end AlgebraicGeometry
