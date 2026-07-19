@@ -463,6 +463,7 @@ import AlgebraicJacobian.Picard.Pic0ChartLocusOpen
 import AlgebraicJacobian.Picard.Pic0ChartLocusFibreField
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivGen
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivClose
+import AlgebraicJacobian.Picard.DivSchemeUnivFibreKerSpan
 
 /-!
 # AlgebraicJacobian — library root
