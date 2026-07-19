@@ -5,6 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivSchemeSeed
 import AlgebraicJacobian.Picard.DivSchemeRelDivisor
+import AlgebraicJacobian.Picard.SlicingFlatKernel
 
 /-!
 # DD-4 — the `hdvd` reduction: divisibility from fibre vanishing (links 1+3 assembled)
@@ -145,6 +146,71 @@ theorem dvd_of_flat_quotient_of_field_vanishing [IsNoetherianRing R]
     exact _root_.subsingleton_tmul_residueField_of_flat_quotient (D.sideColengthSubmodule z)
       (basePrime (R := R) ((relCurve C R).presheaf.germ (D.piece z) y hy).hom)
       (fun x => hfield z y hy x))
+
+set_option maxHeartbeats 800000 in
+-- deriving the colength `IsNoetherian`/`Module.Finite` instances re-elaborates the heavy
+-- relCurve section-ring quotient type past the default budget (as in
+-- `sideColengthSubmodule_finite`)
+set_option synthInstance.maxHeartbeats 400000 in
+/-- **The `hdvd` wall, fibre-kernel form** (the sharpened single obligation, replacing the
+per-point flat-quotient input of `dvd_of_flat_quotient_of_field_vanishing` by the more
+primitive fibrewise-kernel data): the seed satisfies its divisibility clause given
+
+* `hcolFin`/`hcolFlat` — each colength `Γ(D(h z)) ⧸ (eqn z)` is **finite and flat** over
+  `R` (the slicing criterion
+  `Module.Flat.quotient_span_singleton_of_forall_tmul_residueField` from the seed's
+  fibre-regularity + the `SupportTube` finiteness — both landed, per piece);
+* `hspan` — **the fibrewise-kernel-spanning law**: at every base prime `p` the fibre
+  kernel of the `K`-side-component map `K → Γ(D(h z)) ⧸ (eqn z)` is spanned by the base
+  change of its global kernel (the fibrewise carve `divUniversal_carve_residueField`;
+  exactly the certificate-clause-(c4) input);
+* `hfield` — every `K`-side component dies in the ambient residue-field fibre
+  (`x ⊗ₜ 1 = 0`), i.e. is divisible by the fibre equation `e_p` (the `d_p` achiever
+  `exists_coeffAt_eq_baseDivisorAt`, transported by `pieceQuotBaseChangeAlg`).
+
+`hspan` (with `K` finite and the colength finite/flat) yields the per-point flatness of
+`(Γ(D(h z)) ⧸ (eqn z)) ⧸ N z` through the flattening keystone (c4)
+`Module.Flat.quotient_range_of_forall_ker_rTensor_residueField_le` — `N z` is the range of
+the `K`-side-component map — and that flatness plus `hfield` is exactly the input of
+`dvd_of_flat_quotient_of_field_vanishing`.  This isolates the divisor-first `hdvd` to the
+single fibrewise-kernel obligation `hspan`: **no glued↔per-point flatness bridge**, and,
+contra the module-fibre "supply `hfib` directly" route, the flatness the `k[ε]` trap
+demands (needed to turn `hfield` into `Subsingleton (N z ⊗ κ(p))`) is supplied here by
+`hspan` + `hcolFlat`, never by `hfield` alone. -/
+theorem dvd_of_fibrewise_ker_span_of_field_vanishing [IsNoetherianRing R]
+    [Module.Finite R ↥K]
+    (hreg : ∀ (z : relCurve C R) (y : relCurve C R) (hy : y ∈ D.piece z),
+      ((relCurve C R).presheaf.germ (D.piece z) y hy).hom (D.eqn z)
+        ∈ nonZeroDivisors ((relCurve C R).presheaf.stalk y))
+    (hcolFin : ∀ z : relCurve C R,
+      Module.Finite R (Γ(relCurve C R, D.piece z) ⧸ Ideal.span {D.eqn z}))
+    (hcolFlat : ∀ z : relCurve C R,
+      Module.Flat R (Γ(relCurve C R, D.piece z) ⧸ Ideal.span {D.eqn z}))
+    (hspan : ∀ (z : relCurve C R) (p : PrimeSpectrum R),
+      LinearMap.ker (((D.kColengthMap z).comp K.subtype).rTensor p.asIdeal.ResidueField)
+        ≤ LinearMap.range
+          ((LinearMap.ker ((D.kColengthMap z).comp K.subtype)).subtype.rTensor
+            p.asIdeal.ResidueField))
+    (hfield : ∀ (z : relCurve C R) (y : relCurve C R) (hy : y ∈ D.piece z)
+        (x : ↥(D.sideColengthSubmodule z)),
+        ((x : Γ(relCurve C R, D.piece z) ⧸ Ideal.span {D.eqn z}) ⊗ₜ[R]
+            (1 : (basePrime (R := R)
+              ((relCurve C R).presheaf.germ (D.piece z) y hy).hom).asIdeal.ResidueField))
+          = 0) :
+    ∀ (z : relCurve C R) ⦃ψ : relThetaSections C R π a⦄, ψ ∈ K →
+      relThetaResSide a (D.side z) (D.piece_le z) ψ ∈ Ideal.span {D.eqn z} := by
+  refine D.dvd_of_flat_quotient_of_field_vanishing hreg
+    (fun z => by haveI := hcolFin z; exact D.sideColengthSubmodule_finite z)
+    (fun z => ?_) hfield
+  haveI := hcolFin z
+  haveI := hcolFlat z
+  have hrange : D.sideColengthSubmodule z
+      = LinearMap.range ((D.kColengthMap z).comp K.subtype) := by
+    rw [LinearMap.range_comp, Submodule.range_subtype]; rfl
+  rw [hrange]
+  exact Module.Flat.quotient_range_of_forall_ker_rTensor_residueField_le
+    ((D.kColengthMap z).comp K.subtype)
+    (LinearMap.ker ((D.kColengthMap z).comp K.subtype)) le_rfl (hspan z)
 
 end ThetaGeneratorSeed
 
