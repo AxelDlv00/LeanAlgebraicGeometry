@@ -38,9 +38,12 @@ drawn from — `ε` of the constructed family returns the tautological pair.
   containment is the named DDR-5 boundary (fibrewise second-window exactness →
   relative, the W2/DDR-4 fan-in; spec §3 item 5 with risk 5's nonreduced guard).
 
-The universal instantiation — the tautological pair of `Picard/DivSchemeFamilyUniv`
-transported to the pinned window ambients (the W1 ambient-transport kit) — is in
-`AlgebraicJacobian.Picard.DivSchemeEpsUniv`.
+The universal instantiation is the G-4 chain (`informal/w4-g4-worksheet.md`), in
+progress: the tautological pair transported to the pinned window ambients — the seed
+submodules `K_univ`/`K'_univ` — is LANDED in
+`AlgebraicJacobian.Picard.DivSchemeSeedUniv` (with the fibre P-fib-N keystone in
+`AlgebraicJacobian.Picard.DivSchemeSeedUnivFibre`); the certificate discharge and the
+final `DivSchemeEpsUniv` consumer of this file's keystone are the remaining bricks.
 
 All statements are conditional on the DDR-3 `IsGenerator` boundary and the DDR-4
 certificate exactly as `Picard/DivSchemeCertificate*` are — nothing here assumes the
@@ -304,8 +307,8 @@ at the embedding window `M` is the tautological pair `(x₁, x₂)`.  The first-
 containment is DDR-3's `le_vanishingSubmodule`; the second-window containment `hle₂`
 is the named DDR-5 boundary (fibrewise second-window exactness upgraded to relative
 divisibility — the W2/DDR-4 fan-in; a fibrewise statement does NOT suffice over
-nonreduced chart rings, spec risk 5).  Instantiated at the universal carve pair in
-`AlgebraicJacobian.Picard.DivSchemeEpsUniv`. -/
+nonreduced chart rings, spec risk 5).  The universal carve-pair instantiation is the
+in-progress G-4 chain rooted at `AlgebraicJacobian.Picard.DivSchemeSeedUniv`. -/
 theorem ThetaGeneratorSeed.divFamEps_certifiedFamily
     (x₁ : Grassmannian.grFunctorAff k
       (↥(Scheme.divisorSections k (windowM_choice π hπ g • fiberWeilDivisor π) ⊤)) g R)
