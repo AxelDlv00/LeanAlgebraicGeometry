@@ -305,6 +305,56 @@ noncomputable def seedUniv :
   sec_mem := fun z =>
     (exists_seedPoint C hπ g r₁ r₂ b₁ b₂ i j hO hχ z).choose_spec.choose_spec.choose_spec.2.2.1
 
+set_option maxHeartbeats 2400000 in
+-- the `rfl` for `seedUniv.sec`/`seedUniv.h` unfolds the seed structure literal over the
+-- huge `DivCarveChartRing`/window types past the defaults (recorded hatch)
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxSynthPendingDepth 8 in
+set_option maxRecDepth 8000 in
+include hO hχ in
+/-- **The `seedUniv` fibre-regularity coherence** (the `hfib` bridge for the DDR-3
+assembly): at every point `z`, `seedUniv.sec z = relThetaWindowEquiv … x` and
+`seedUniv.h z = algebraMap … f` for a window vector `x ∈ divUniversalFstWindow` and a base
+element `f` whose fibre comparison `windowCompare … x` is nonzero at every prime of `D(f)`.
+Composed with `relPinnedSectionsMap_relThetaResSide_windowEquiv_ne_zero` (and the no-leak
+that a nonempty fibre of `D(algebraMap f)` forces `f ∉ q`), this discharges the
+fibre-regularity `hfib` clause of `isGenerator_of_fibre_ne_zero`. -/
+theorem seedUniv_sec_h_windowCompare
+    (z : relCurve C (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+      (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)) :
+    ∃ (x : TensorProduct k
+        (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+          (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+        ↥(Scheme.divisorSections k (windowM_choice π hπ g • fiberWeilDivisor π) ⊤))
+      (f : DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+        (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j),
+      x ∈ (divUniversalFstWindow C π hπ g r₁ r₂ b₁ b₂ i j).toSubmodule ∧
+      (seedUniv C hπ g r₁ r₂ b₁ b₂ i j hO hχ).sec z
+        = relThetaWindowEquiv C
+            (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+              (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+            π (windowM_choice π hπ g) (relThetaPairH1_windowM C π hπ g) x ∧
+      (seedUniv C hπ g r₁ r₂ b₁ b₂ i j hO hχ).h z
+        = algebraMap (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+              (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+            Γ(relCurve C (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+                (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j),
+              relPinnedChart C (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+                (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j) π
+                ((seedUniv C hπ g r₁ r₂ b₁ b₂ i j hO hχ).side z)) f ∧
+      ∀ q : PrimeSpectrum (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+          (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j),
+        f ∉ q.asIdeal →
+        windowCompare
+            (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+              (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+            q.asIdeal.ResidueField x ≠ 0 :=
+  ⟨(exists_seedPoint C hπ g r₁ r₂ b₁ b₂ i j hO hχ z).choose_spec.choose,
+    (exists_seedPoint C hπ g r₁ r₂ b₁ b₂ i j hO hχ z).choose_spec.choose_spec.choose,
+    (exists_seedPoint C hπ g r₁ r₂ b₁ b₂ i j hO hχ z).choose_spec.choose_spec.choose_spec.1,
+    rfl, rfl,
+    (exists_seedPoint C hπ g r₁ r₂ b₁ b₂ i j hO hχ z).choose_spec.choose_spec.choose_spec.2.2.2⟩
+
 end SeedGen
 
 end AlgebraicGeometry
