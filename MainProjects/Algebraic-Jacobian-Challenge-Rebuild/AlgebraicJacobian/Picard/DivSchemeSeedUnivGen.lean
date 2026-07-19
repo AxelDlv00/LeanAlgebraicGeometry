@@ -71,6 +71,25 @@ theorem exists_mem_relPinnedChart (z : relCurve C R) :
 
 end Cover
 
+/-! ## The base→curve basic-open shrink -/
+
+section Shrink
+
+/-- **The base→curve basic-open shrink** (the geometric core of I-0278 sub-lemma (c)): for
+a scheme `X` over `Spec R` and a point `z ∈ U`, the pullback `algebraMap R Γ(X,U) f` of a
+base element `f` outside the base point of `z` (the contraction of the maximal ideal of the
+stalk, `basePrime` of the germ) cuts a basic open still containing `z`.  Directly:
+`z ∈ D(algebraMap f)` iff the germ of `algebraMap f` is a unit (`mem_basicOpen`), which is
+exactly `f ∉ basePrime(germ_z)` (`notMem_basePrime_iff`). -/
+theorem mem_basicOpen_algebraMap_of_notMem_basePrime {R : Type u} [CommRing R]
+    {X : Scheme.{u}} [X.Over (Spec (.of R))] {U : X.Opens} {z : X} (hz : z ∈ U) (f : R)
+    (hf : f ∉ (basePrime (R := R) (X.presheaf.germ U z hz).hom).asIdeal) :
+    z ∈ X.basicOpen (algebraMap R Γ(X, U) f) := by
+  rw [X.mem_basicOpen (algebraMap R Γ(X, U) f) z hz]
+  exact (notMem_basePrime_iff _).mp hf
+
+end Shrink
+
 /-! ## The seed-prime context: fibre-window nonvanishing, `sec`, and the shrink -/
 
 section SeedGen
@@ -182,6 +201,109 @@ theorem exists_sec_windowCompare_ne_zero_seedPrime
     exists_mem_ne_zero_divUniversalFibreKM_seedPrime C hπ g r₁ r₂ b₁ b₂ i j hO hχ p
   exact exists_relThetaWindowEquiv_mem_divUniversalSeedK_windowCompare_ne_zero_seedPrime
     C hπ g r₁ r₂ b₁ b₂ i j p hf_mem hf_ne
+
+set_option maxHeartbeats 2400000 in
+-- the seed-base residue-field tower drives the `windowCompare`/`relThetaWindowEquiv` and
+-- `basePrime` germ defeq past the defaults (the `divUniversal_carve_residueField` hatch)
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxSynthPendingDepth 8 in
+set_option maxRecDepth 8000 in
+include hO hχ in
+/-- **(c) The pointwise seed data** (I-0278 sub-lemma (c), the base→curve shrink threaded
+onto the seed section): at every point `z` of the relative curve `C_R_Z`, a pinned chart
+side `b`, a universal window vector `x`, and a base element `f` such that
+
+* `x ∈ divUniversalFstWindow` and its window image lies in `K_univ` (`sec_mem`);
+* the base-open pullback `algebraMap f` cuts a basic open still containing `z`
+  (`mem_basicOpen`, from the shrink `mem_basicOpen_algebraMap_of_notMem_basePrime` at the
+  base point `p = basePrime(germ_z)`);
+* `windowCompare … x` survives at every prime of `D(f)` (`hsurvive`, the base-locus
+  keeper `exists_forall_windowCompare_ne_zero`).
+
+The side/section/base-open of `seedUniv`; `hsurvive` (with `sec = relThetaWindowEquiv … x`
+and `h = algebraMap f`) is the fibre-regularity coherence the `hfib` clause consumes. -/
+theorem exists_seedPoint
+    (z : relCurve C (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+      (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)) :
+    ∃ (b : Bool)
+      (x : TensorProduct k
+        (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+          (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+        ↥(Scheme.divisorSections k (windowM_choice π hπ g • fiberWeilDivisor π) ⊤))
+      (f : DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+        (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j),
+      x ∈ (divUniversalFstWindow C π hπ g r₁ r₂ b₁ b₂ i j).toSubmodule ∧
+      z ∈ (relCurve C (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+          (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)).basicOpen
+        (algebraMap (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+            (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+          Γ(relCurve C (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+              (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j),
+            relPinnedChart C (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+              (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j) π b) f) ∧
+      relThetaWindowEquiv C
+          (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+            (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+          π (windowM_choice π hπ g) (relThetaPairH1_windowM C π hπ g) x
+        ∈ divUniversalSeedK C π hπ g r₁ r₂ b₁ b₂ i j ∧
+      ∀ q : PrimeSpectrum (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+          (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j),
+        f ∉ q.asIdeal →
+        windowCompare
+            (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+              (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+            q.asIdeal.ResidueField x ≠ 0 := by
+  obtain ⟨b, hzb⟩ := exists_mem_relPinnedChart (C := C) (π := π) z
+  set p : PrimeSpectrum (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+      (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j) :=
+    basePrime (R := DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+        (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+      ((relCurve C _).presheaf.germ (relPinnedChart C _ π b) z hzb).hom with hp
+  obtain ⟨x, hx_mem, hx_ne, hsec_mem⟩ :=
+    exists_sec_windowCompare_ne_zero_seedPrime C hπ g r₁ r₂ b₁ b₂ i j hO hχ p
+  obtain ⟨f, hf_notMem, hf_survive⟩ :=
+    exists_forall_windowCompare_ne_zero C hπ g r₁ r₂ b₁ b₂ i j x p hx_ne
+  exact ⟨b, x, f, hx_mem,
+    mem_basicOpen_algebraMap_of_notMem_basePrime hzb f hf_notMem, hsec_mem, hf_survive⟩
+
+set_option maxHeartbeats 2400000 in
+-- the seed structure fields carry the huge `DivCarveChartRing`/`relThetaSections`/window
+-- types; the field-dependency substitution re-elaborates them (recorded hatch)
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxSynthPendingDepth 8 in
+set_option maxRecDepth 8000 in
+include hO hχ in
+/-- **`seedUniv`** (I-0278): the universal theta generator seed over the `Z(♦)`-chart ring
+`R_Z` at the embedding window `K_univ = divUniversalSeedK`.  Assembled pointwise by
+`Classical.choose` on `exists_seedPoint`: the side is the covering chart, the base-open is
+the base→curve pullback `algebraMap f` of the `windowCompare`-surviving base element, and
+the section is the window image `relThetaWindowEquiv … x` (in `K_univ` by the seed-prime
+bridge).  This is the seed the DDR-3 assembly (`isGenerator_of_fibre_ne_zero` → the local
+divisor) consumes. -/
+noncomputable def seedUniv :
+    ThetaGeneratorSeed C
+      (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+        (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+      π (windowM_choice π hπ g) (divUniversalSeedK C π hπ g r₁ r₂ b₁ b₂ i j) where
+  side := fun z => (exists_seedPoint C hπ g r₁ r₂ b₁ b₂ i j hO hχ z).choose
+  h := fun z => algebraMap
+      (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+        (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+      Γ(relCurve C (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+          (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j),
+        relPinnedChart C (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+          (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j) π
+          (exists_seedPoint C hπ g r₁ r₂ b₁ b₂ i j hO hχ z).choose)
+      (exists_seedPoint C hπ g r₁ r₂ b₁ b₂ i j hO hχ z).choose_spec.choose_spec.choose
+  mem_basicOpen := fun z =>
+    (exists_seedPoint C hπ g r₁ r₂ b₁ b₂ i j hO hχ z).choose_spec.choose_spec.choose_spec.2.1
+  sec := fun z => relThetaWindowEquiv C
+      (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+        (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+      π (windowM_choice π hπ g) (relThetaPairH1_windowM C π hπ g)
+      (exists_seedPoint C hπ g r₁ r₂ b₁ b₂ i j hO hχ z).choose_spec.choose
+  sec_mem := fun z =>
+    (exists_seedPoint C hπ g r₁ r₂ b₁ b₂ i j hO hχ z).choose_spec.choose_spec.choose_spec.2.2.1
 
 end SeedGen
 
