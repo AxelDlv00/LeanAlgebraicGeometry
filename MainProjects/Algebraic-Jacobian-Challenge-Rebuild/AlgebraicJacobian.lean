@@ -382,6 +382,7 @@ import AlgebraicJacobian.Picard.DivisorFamilyEpsNaturality
 import AlgebraicJacobian.Picard.DivSchemeFrameKit
 import AlgebraicJacobian.Picard.DivSchemeFrameCover
 import AlgebraicJacobian.Picard.DivSchemeClassifyLocal
+import AlgebraicJacobian.Picard.DivSchemeClassifyGlobal
 import AlgebraicJacobian.Algebra.ABDepth
 import AlgebraicJacobian.Algebra.ABDepthExt
 import AlgebraicJacobian.Algebra.ABDepthSES
