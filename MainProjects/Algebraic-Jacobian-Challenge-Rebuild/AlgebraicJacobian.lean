@@ -380,6 +380,8 @@ import AlgebraicJacobian.Picard.DivisorThetaFibreData
 import AlgebraicJacobian.Picard.DivisorFamilyWindowBaseChange
 import AlgebraicJacobian.Picard.DivisorFamilyWindowTriangle
 import AlgebraicJacobian.Picard.DivisorFamilyEpsNaturality
+import AlgebraicJacobian.Picard.DivSchemeEpsCarveKit
+import AlgebraicJacobian.Picard.DivSchemeEpsCarve
 import AlgebraicJacobian.Picard.DivSchemeFrameKit
 import AlgebraicJacobian.Picard.DivSchemeFrameCover
 import AlgebraicJacobian.Picard.DivSchemeClassifyLocal
