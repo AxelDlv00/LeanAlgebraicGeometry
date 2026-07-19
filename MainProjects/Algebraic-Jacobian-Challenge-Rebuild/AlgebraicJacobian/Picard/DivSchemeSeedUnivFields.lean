@@ -183,6 +183,55 @@ theorem divUniversalSeedFibreDivisor_unique
     C hπ g r₁ r₂ b₁ b₂ i j hO hχ p).unique ⟨h0D, hdeg, hKM, hK'⟩
     (divUniversalSeedFibreDivisor_spec C hπ g r₁ r₂ b₁ b₂ i j hO hχ p)
 
+/-! ## The window-level Nakayama neighbourhood (I-0247 step (c)) -/
+
+set_option maxHeartbeats 2400000 in
+-- the seed-base residue-field tower `k → R_{I,J} → R_Z → κ(p)` drives the `windowCompare`
+-- defeq and the base-changed basis instance chain past the defaults; the huge chart-ring
+-- type is re-elaborated at each `⊗ₜ`/`windowCompare` occurrence (recorded hatch)
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxSynthPendingDepth 8 in
+set_option linter.unusedSectionVars false in
+/-- **The fibre-nonvanishing neighbourhood of a window vector** (I-0247 step (c), the
+`Module.exists_forall_tmul_residueField_ne_zero` step transported to the `windowCompare`
+spelling): if the fibre comparison of a window vector `x` is nonzero at a seed-base prime
+`p`, then some coordinate `f ∉ p` of `x` (in the free window `R_Z ⊗[k] H_M`, basis
+`b₁.baseChange`) survives, and the fibre comparison stays nonzero at **every** prime of
+`D(f)`.  This is the base-locus source of the seed's `hfib` clause — the reading bridge
+`relPinnedSectionsMap_relThetaResSide_ne_zero` consumes exactly `windowCompare … ≠ 0`. -/
+theorem exists_forall_windowCompare_ne_zero
+    (x : TensorProduct k
+        (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+          (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+        ↥(Scheme.divisorSections k (windowM_choice π hπ g • fiberWeilDivisor π) ⊤))
+    (p : PrimeSpectrum (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+        (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j))
+    (hx : windowCompare
+        (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+          (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+        p.asIdeal.ResidueField x ≠ 0) :
+    ∃ f, f ∉ p.asIdeal ∧
+      ∀ q : PrimeSpectrum (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+          (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j),
+        f ∉ q.asIdeal →
+        windowCompare
+            (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+              (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+            q.asIdeal.ResidueField x ≠ 0 := by
+  have hx' : (x ⊗ₜ[DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+        (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j]
+        (1 : p.asIdeal.ResidueField)) ≠ 0 :=
+    fun h => hx ((tmul_one_eq_zero_iff_windowCompare _ p.asIdeal.ResidueField x).mp h)
+  -- the free window `R_Z ⊗[k] H_M` has the `R_Z`-basis `b₁.baseChange` (reindexed to
+  -- `Type u` by `ULift`, the universe of `Module.exists_forall_tmul_residueField_ne_zero`)
+  obtain ⟨f, hf, hfq⟩ := Module.exists_forall_tmul_residueField_ne_zero
+    ((Module.Basis.baseChange
+      (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+        (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j) b₁).reindex
+      Equiv.ulift.symm) x p hx'
+  exact ⟨f, hf, fun q hq h0 =>
+    hfq q hq ((tmul_one_eq_zero_iff_windowCompare _ q.asIdeal.ResidueField x).mpr h0)⟩
+
 end SeedFibreDivisor
 
 end AlgebraicGeometry
