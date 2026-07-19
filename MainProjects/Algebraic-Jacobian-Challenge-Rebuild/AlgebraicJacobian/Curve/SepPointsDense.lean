@@ -127,7 +127,7 @@ private lemma gammaSpecIso_appLE_sectionsBaseChange (p : Spec (.of k) ⟶ C.left
           ((fst C (overSpec k L)).left ⁻¹ᵁ U) ⊤ hqle =
         (Spec.map (CommRingCat.ofHom (algebraMap k L)) ≫ p).appLE U ⊤ hcle := by
       rw [Scheme.Hom.appLE_comp_appLE]
-      exact Scheme.Hom.appLE_congr_hom (Over.rationalPointBaseChange_fst C L p hp) _
+      exact Scheme.Hom.appLE_congr_hom_kit (Over.rationalPointBaseChange_fst C L p hp) _
     have h2 : p.appLE U ⊤ hple ≫
         (Spec.map (CommRingCat.ofHom (algebraMap k L))).appLE ⊤ ⊤
           (Scheme.Hom.preimage_top (Spec.map (CommRingCat.ofHom (algebraMap k L)))).ge =
@@ -174,7 +174,7 @@ private lemma gammaSpecIso_appLE_sectionsBaseChange (p : Spec (.of k) ⟶ C.left
         Scheme.Hom.appLE (𝟙 (Spec (.of L))) ⊤ ⊤
           (Scheme.Hom.preimage_top (𝟙 (Spec (.of L)))).ge := by
       rw [Scheme.Hom.appLE_comp_appLE]
-      exact Scheme.Hom.appLE_congr_hom (Over.rationalPointBaseChange_snd C L p hp) _
+      exact Scheme.Hom.appLE_congr_hom_kit (Over.rationalPointBaseChange_snd C L p hp) _
     have e3a : (Over.rationalPointBaseChange C L p hp).appLE
           ((fst C (overSpec k L)).left ⁻¹ᵁ U) ⊤ hqle
           ((snd C (overSpec k L)).left.appLE ⊤

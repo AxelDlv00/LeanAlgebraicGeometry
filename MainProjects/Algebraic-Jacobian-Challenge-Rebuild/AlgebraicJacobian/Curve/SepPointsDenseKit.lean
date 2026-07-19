@@ -29,7 +29,7 @@ keystone in `Curve/SepPointsDense.lean`):
   rational point, as a `k`-algebra map `Γ(C.left, U) →ₐ[k] k` (with the
   `Over.sectionsAlgebra` structure), nonvanishing on the section of a basic open
   containing the point (`rationalPointEval_ne_zero_of_mem_basicOpen`).
-* the generic `appLE` transports `Scheme.Hom.appLE_congr_hom` / `id_appLE_apply` and
+* the generic `appLE` transports `Scheme.Hom.appLE_congr_hom_kit` / `id_appLE_apply` and
   the one-point-spectrum inclusion `top_le_preimage_of_closedPoint_mem` — the
   equation-`have` discipline pieces (I-0232(b)/I-0238(d)).
 -/
@@ -147,8 +147,11 @@ section Eval
 variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
 
 /-- `appLE` is invariant under an equality of morphisms (the inclusion witness is
-proof-irrelevant); public form of the `RelativeSectionsLinear` private helper. -/
-lemma Scheme.Hom.appLE_congr_hom {X Y : Scheme.{u}} {f g : X ⟶ Y} (h : f = g)
+proof-irrelevant); public form of the `RelativeSectionsLinear` private helper.  Named
+`_kit` to avoid a full-root collision with the established
+`AlgebraicGeometry.Scheme.Hom.appLE_congr_hom` in `Picard/PicEtSections`, which has a
+different argument convention (explicit `V U e e'`). -/
+lemma Scheme.Hom.appLE_congr_hom_kit {X Y : Scheme.{u}} {f g : X ⟶ Y} (h : f = g)
     {U : Y.Opens} {W : X.Opens} (e : W ≤ f ⁻¹ᵁ U) :
     f.appLE U W e = g.appLE U W (h ▸ e) := by
   subst h; rfl
@@ -194,7 +197,7 @@ noncomputable def Over.rationalPointEval (p : Spec (.of k) ⟶ C.left)
         Scheme.Hom.appLE (𝟙 (Spec (.of k))) ⊤ ⊤
           (Scheme.Hom.preimage_top (𝟙 (Spec (.of k)))).ge := by
       rw [Scheme.Hom.appLE_comp_appLE]
-      exact Scheme.Hom.appLE_congr_hom hp _
+      exact Scheme.Hom.appLE_congr_hom_kit hp _
     have h2 : p.appLE U ⊤ hple
         (C.hom.appLE ⊤ U (le_top.trans (Scheme.Hom.preimage_top C.hom).ge)
           ((Scheme.ΓSpecIso (.of k)).inv r)) =
