@@ -168,6 +168,53 @@ theorem hfield_of_forall_pinnedPieceSectionsMap_mem
   rw [Set.image_singleton]
   exact hdiv z _ hψK
 
+/-! ## The `hspan` reduction: to fibre injectivity of the induced map -/
+
+set_option maxHeartbeats 1600000 in
+-- the heavy relCurve section-ring colength drives the `rTensor` factorisation defeq past
+-- the default budget
+set_option synthInstance.maxHeartbeats 400000 in
+/-- **`hspan` reduced to induced-map fibre injectivity**: the fibrewise-kernel-spanning law
+`hspan` of `isGenerator_of_fibrewise_ker_span_of_field_vanishing` follows from injectivity,
+at every base prime, of the residue-fibre of the map `K ⧸ ker f_z → colength z` **induced**
+by the `K`-side-component map `f_z = kColengthMap z ∘ K.subtype` (`f_z` with its kernel
+divided out).  The `≥` inclusion of the fibre kernel is automatic (right-exactness of
+`− ⊗ κ(p)` on the sequence `ker f_z ↪ K ↠ K ⧸ ker f_z`, `rTensor_exact`); the `≤`
+inclusion `hspan` is exactly this induced-map fibre injectivity `hinj`.
+
+This is the *sound* replacement of the false `FibreInjective` route: `FibreInjective`
+asked `f_z ⊗ κ(p)` itself to be injective (false — `f_z` always kills the seed section),
+whereas the induced map `K ⧸ ker f_z → colength z` divides that kernel out first, so its
+fibre injectivity is the genuine carve rank-`g` content (`divUniversal_carve_residueField`),
+never contradicted by the seed section. -/
+theorem hspan_of_forall_liftQ_rTensor_injective
+    (hinj : ∀ (z : relCurve C R) (p : PrimeSpectrum R),
+      Function.Injective
+        (((LinearMap.ker ((D.kColengthMap z).comp K.subtype)).liftQ
+            ((D.kColengthMap z).comp K.subtype) le_rfl).rTensor p.asIdeal.ResidueField)) :
+    ∀ (z : relCurve C R) (p : PrimeSpectrum R),
+      LinearMap.ker (((D.kColengthMap z).comp K.subtype).rTensor p.asIdeal.ResidueField)
+        ≤ LinearMap.range
+          ((LinearMap.ker ((D.kColengthMap z).comp K.subtype)).subtype.rTensor
+            p.asIdeal.ResidueField) := by
+  intro z p u hu
+  set f := (D.kColengthMap z).comp K.subtype with hf
+  set L := LinearMap.ker f with hL
+  have hcomp : f.rTensor p.asIdeal.ResidueField
+      = (L.liftQ f le_rfl).rTensor p.asIdeal.ResidueField ∘ₗ
+          L.mkQ.rTensor p.asIdeal.ResidueField := by
+    rw [← LinearMap.rTensor_comp, Submodule.liftQ_mkQ]
+  have h0 : L.mkQ.rTensor p.asIdeal.ResidueField u = 0 := by
+    apply hinj z p
+    rw [map_zero]
+    have hu0 := LinearMap.mem_ker.mp hu
+    rw [hcomp, LinearMap.comp_apply] at hu0
+    exact hu0
+  have hex := rTensor_exact (R := R) p.asIdeal.ResidueField
+    (LinearMap.exact_subtype_mkQ L) (Submodule.mkQ_surjective L)
+  rw [← LinearMap.exact_iff.mp hex, LinearMap.mem_ker]
+  exact h0
+
 end ThetaGeneratorSeed
 
 end AlgebraicGeometry
