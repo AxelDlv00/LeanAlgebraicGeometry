@@ -472,6 +472,7 @@ import AlgebraicJacobian.Picard.DivSchemeUnivFibreHinj
 import AlgebraicJacobian.Picard.DivSchemeRedesignJFlat
 import AlgebraicJacobian.Picard.DivSchemeRedesignAchiever
 import AlgebraicJacobian.Picard.DivSchemeRedesignFibreCut
+import AlgebraicJacobian.Picard.DivSchemeRedesignSeed
 
 /-!
 # AlgebraicJacobian — library root
