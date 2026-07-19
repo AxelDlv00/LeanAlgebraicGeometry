@@ -174,4 +174,74 @@ end ThetaGeneratorSeed
 
 end Seed
 
+/-! ## `hcolFin` at `seedUniv`, reduced to the topological fibre no-leak -/
+
+section SeedUnivColFin
+
+variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
+  [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]
+variable {π : C.left ⟶ P1 k} [IsFinite π] [IsDominant π]
+
+noncomputable local instance instOverCleftColFin : C.left.Over (Spec (.of k)) := ⟨C.hom⟩
+
+variable [SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k))] [IsIntegral C.left]
+  [LocallyOfFiniteType (C.left ↘ Spec (.of k))] [QuasiCompact (C.left ↘ Spec (.of k))]
+variable [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0)]
+  [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1)]
+variable (hπ : π ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k))
+variable (g r₁ r₂ : ℕ)
+variable (b₁ : Module.Basis (Fin r₁) k
+  ↥(Scheme.divisorSections k (windowM_choice π hπ g • fiberWeilDivisor π) ⊤))
+variable (b₂ : Module.Basis (Fin r₂) k
+  ↥(Scheme.divisorSections k ((windowS_choice π hπ g • fiberWeilDivisor π)
+    + (windowM_choice π hπ g • fiberWeilDivisor π)) ⊤))
+variable (i : (glueData k g r₁).J) (j : (glueData k g r₂).J)
+variable (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+  (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+
+set_option maxHeartbeats 2400000 in
+-- the seed structure fields carry the huge `DivCarveChartRing`/window/`relThetaSections`
+-- types; the colength quotient over the `κ(p)` tower re-elaborates them (recorded hatch)
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxSynthPendingDepth 8 in
+set_option maxRecDepth 8000 in
+include hO hχ in
+/-- **`hcolFin` at `seedUniv`, reduced to the topological fibre no-leak** (I-0283 residual):
+the ambient colength `Γ(D(h z)) ⧸ (eqn z)` at `seedUniv` is a finite `R_Z`-module as soon
+as, on every piece, the closure of the trace `piece z \ D(eqn z)` of the seed-equation
+vanishing locus stays inside the piece.  This is exactly the `hcolFin` hypothesis of
+`isGenerator_of_fibrewise_ker_span_of_field_vanishing` at `seedUniv`, with all the
+instance plumbing discharged: the pieces are affine (`isAffineOpen_piece`) and the
+structure morphism `relCurve C R_Z ↘ Spec R_Z` is universally closed and locally of finite
+type (the properness licence `instIsProperRelCurveHom`).  Anti-circular: the abstract
+engine consumes no `DivisorAdaptation`.  The single residual is the pure topological
+no-leak `hnoleak`, the topological shadow of `d_p`'s finite fibre support combined with the
+seed's `h z` piece choice (`D(h z)` contains the whole fibre branch, I-0280). -/
+theorem seedUniv_hcolFin_of_forall_closure_subset
+    (hnoleak : ∀ z : relCurve C (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+        (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j),
+      closure (((seedUniv C hπ g r₁ r₂ b₁ b₂ i j hO hχ).piece z :
+            Set (relCurve C (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+              (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j))) \
+          ((relCurve C (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+              (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)).basicOpen
+            ((seedUniv C hπ g r₁ r₂ b₁ b₂ i j hO hχ).eqn z) :
+            Set (relCurve C (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+              (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j))))
+        ⊆ ((seedUniv C hπ g r₁ r₂ b₁ b₂ i j hO hχ).piece z :
+            Set (relCurve C (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+              (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)))) :
+    ∀ z : relCurve C (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+        (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j),
+      Module.Finite
+        (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+          (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
+        (Γ(relCurve C (DivCarveChartRing k (windowS_choice π hπ g • fiberWeilDivisor π)
+              (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j),
+            (seedUniv C hπ g r₁ r₂ b₁ b₂ i j hO hχ).piece z)
+          ⧸ Ideal.span {(seedUniv C hπ g r₁ r₂ b₁ b₂ i j hO hχ).eqn z}) :=
+  (seedUniv C hπ g r₁ r₂ b₁ b₂ i j hO hχ).hcolFin_of_forall_closure_subset hnoleak
+
+end SeedUnivColFin
+
 end AlgebraicGeometry
