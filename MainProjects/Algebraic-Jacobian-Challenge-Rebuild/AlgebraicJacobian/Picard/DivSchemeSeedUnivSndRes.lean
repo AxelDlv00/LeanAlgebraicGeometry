@@ -102,7 +102,8 @@ theorem divUniversalSndWindow_toSubmodule_eq_span :
       (b₂.equivFun.symm.trans (seedWindowShiftEquiv C π hπ g))
       (divUniversalSnd k (windowS_choice π hπ g • fiberWeilDivisor π)
         (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j)
-  rw [h0, divUniversalSnd_toSubmodule_eq_span_aux C hπ g r₁ r₂ b₁ b₂ i j,
+  rw [h0, divUniversalSnd_toSubmodule_eq_span_aux
+      (C := C) (π := π) hπ g r₁ r₂ b₁ b₂ i j,
     Submodule.map_span, ← Set.image_comp]
   rfl
 

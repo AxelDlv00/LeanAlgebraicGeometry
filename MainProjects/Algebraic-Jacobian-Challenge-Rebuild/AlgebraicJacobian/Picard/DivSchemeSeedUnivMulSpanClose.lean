@@ -17,8 +17,11 @@ universal second window.
 -/
 
 set_option autoImplicit false
+set_option quotPrecheck false
 set_option backward.isDefEq.respectTransparency false
 set_option maxSynthPendingDepth 8
+set_option maxHeartbeats 1600000
+set_option synthInstance.maxHeartbeats 200000
 
 universe u
 
@@ -54,36 +57,46 @@ local notation "RZ" => DivCarveChartRing k
   (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ b₂ i j
 local notation "K₂" => ↥(divUniversalSndWindow C π hπ g r₁ r₂ b₁ b₂ i j).toSubmodule
 
+/-- The residue-fibre premise can equivalently be written with the usual
+`baseChange` (left-tensor) orientation. -/
+theorem universalMulMapToSnd_rTensor_surjective_iff_baseChange
+    (K : Type u) [CommRing K] [Algebra RZ K] :
+    Function.Surjective
+        ((universalMulMapToSnd (hπ := hπ) g r₁ r₂ b₁ b₂ i j).rTensor K) ↔
+      Function.Surjective
+        ((universalMulMapToSnd (hπ := hπ) g r₁ r₂ b₁ b₂ i j).baseChange K) := by
+  rw [LinearMap.baseChange_eq_ltensor, LinearMap.lTensor_surj_iff_rTensor_surj]
+
 /-- Residue-field surjectivity of the universal product map persists over the
 whole carve-chart ring. -/
 theorem universalMulMapToSnd_surjective_of_forall_fibre
     (hfib : ∀ p : PrimeSpectrum RZ,
       Function.Surjective
-        ((universalMulMapToSnd C π hπ g r₁ r₂ b₁ b₂ i j).rTensor
+        ((universalMulMapToSnd (hπ := hπ) g r₁ r₂ b₁ b₂ i j).rTensor
           p.asIdeal.ResidueField)) :
-    Function.Surjective (universalMulMapToSnd C π hπ g r₁ r₂ b₁ b₂ i j) := by
-  letI := finite_universalMulSource C π hπ g r₁ r₂ b₁ b₂ i j
+    Function.Surjective (universalMulMapToSnd (hπ := hπ) g r₁ r₂ b₁ b₂ i j) := by
+  letI := finite_universalMulSource (hπ := hπ) g r₁ r₂ b₁ b₂ i j
   letI := (divUniversalSndWindow C π hπ g r₁ r₂ b₁ b₂ i j).finite_quotient
   letI := (divUniversalSndWindow C π hπ g r₁ r₂ b₁ b₂ i j).projective_quotient
   letI : Module.Finite RZ K₂ :=
     finite_submodule_of_projective_quotient
       (divUniversalSndWindow C π hπ g r₁ r₂ b₁ b₂ i j).toSubmodule
   exact AlgebraicJacobian.RigidEngine.surjective_of_forall_rTensor_residueField_surjective
-    (universalMulMapToSnd C π hπ g r₁ r₂ b₁ b₂ i j) hfib
+    (universalMulMapToSnd (hπ := hπ) g r₁ r₂ b₁ b₂ i j) hfib
 
 /-- The relative persistence conclusion: fibrewise spanning makes the finite
 universal multiplication span equal the universal second window. -/
 theorem universalMulSpan_eq_divUniversalSndWindow_of_forall_fibre
     (hfib : ∀ p : PrimeSpectrum RZ,
       Function.Surjective
-        ((universalMulMapToSnd C π hπ g r₁ r₂ b₁ b₂ i j).rTensor
+        ((universalMulMapToSnd (hπ := hπ) g r₁ r₂ b₁ b₂ i j).rTensor
           p.asIdeal.ResidueField)) :
-    universalMulSpan C π hπ g r₁ r₂ b₁ b₂ i j
+    universalMulSpan (hπ := hπ) g r₁ r₂ b₁ b₂ i j
       = (divUniversalSndWindow C π hπ g r₁ r₂ b₁ b₂ i j).toSubmodule := by
-  refine le_antisymm (universalMulSpan_le C π hπ g r₁ r₂ b₁ b₂ i j) ?_
+  refine le_antisymm (universalMulSpan_le (hπ := hπ) g r₁ r₂ b₁ b₂ i j) ?_
   intro x hx
   obtain ⟨v, hv⟩ :=
-    universalMulMapToSnd_surjective_of_forall_fibre C π hπ g r₁ r₂ b₁ b₂ i j hfib
+    universalMulMapToSnd_surjective_of_forall_fibre (hπ := hπ) g r₁ r₂ b₁ b₂ i j hfib
       ⟨x, hx⟩
   rw [universalMulSpan]
   exact LinearMap.mem_range.mpr ⟨v, congrArg Subtype.val hv⟩

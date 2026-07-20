@@ -18,8 +18,11 @@ the companion theorem below.
 -/
 
 set_option autoImplicit false
+set_option quotPrecheck false
 set_option backward.isDefEq.respectTransparency false
 set_option maxSynthPendingDepth 8
+set_option maxHeartbeats 1600000
+set_option synthInstance.maxHeartbeats 200000
 
 universe u
 
@@ -65,10 +68,11 @@ local notation "K₂" => ↥(divUniversalSndWindow C π hπ g r₁ r₂ b₁ b�
 /-! ## The finite source and its multiplication map -/
 
 /-- A finite free-indexed source for the universal multiplication span. -/
-noncomputable def universalMulSource : Type u := Fin (Module.finrank k HS) → K₁
+noncomputable abbrev universalMulSource : Type u := Fin (Module.finrank k HS) → K₁
 
 /-- The sum of all multiplier-basis translates of the first universal window. -/
-noncomputable def universalMulMap : universalMulSource C π hπ g r₁ r₂ b₁ b₂ i j →ₗ[RZ]
+noncomputable def universalMulMap :
+    universalMulSource (hπ := hπ) g r₁ r₂ b₁ b₂ i j →ₗ[RZ]
     RZ ⊗[k] HMS :=
   ∑ t : Fin (Module.finrank k HS),
     (LinearMap.baseChange RZ (windowShiftMul hπ g ((Module.finBasis k HS) t))).comp
@@ -78,10 +82,11 @@ noncomputable def universalMulMap : universalMulSource C π hπ g r₁ r₂ b₁
 /-- The relative submodule spanned by all products of a multiplier-window
 basis vector with the universal first window. -/
 noncomputable def universalMulSpan : Submodule RZ (RZ ⊗[k] HMS) :=
-  LinearMap.range (universalMulMap C π hπ g r₁ r₂ b₁ b₂ i j)
+  LinearMap.range (universalMulMap (hπ := hπ) g r₁ r₂ b₁ b₂ i j)
 
 theorem finite_universalMulSource :
-    Module.Finite RZ (universalMulSource C π hπ g r₁ r₂ b₁ b₂ i j) := by
+    Module.Finite RZ
+      (universalMulSource (hπ := hπ) g r₁ r₂ b₁ b₂ i j) := by
   letI := (divUniversalFstWindow C π hπ g r₁ r₂ b₁ b₂ i j).finite_quotient
   letI := (divUniversalFstWindow C π hπ g r₁ r₂ b₁ b₂ i j).projective_quotient
   letI : Module.Finite RZ K₁ :=
@@ -126,7 +131,10 @@ theorem universal_window_carve (a : HS) :
   have hμ : e₂.toLinearMap ∘ₗ μ ∘ₗ e₁.symm.toLinearMap = windowShiftMul hπ g a := by
     refine LinearMap.ext fun v => ?_
     simp [e₁, e₂, μ, divCarveMul, windowShiftMul, LinearMap.comp_apply]
-  have hcoord := universal_coordinate_carve C π hπ g r₁ r₂ b₁ b₂ i j a
+    apply Subtype.ext
+    rfl
+  have hcoord := universal_coordinate_carve
+    (C := C) (π := π) (hπ := hπ) g r₁ r₂ b₁ b₂ i j a
   have htransport :=
     (Grassmannian.carvePairArrow_map_baseChange_eq_zero_iff e₁ e₂ μ
       (divUniversalFst k (windowS_choice π hπ g • fiberWeilDivisor π)
@@ -139,37 +147,40 @@ theorem universal_window_carve (a : HS) :
 /-! ## The span containment -/
 
 theorem universalMulMap_range_le :
-    LinearMap.range (universalMulMap C π hπ g r₁ r₂ b₁ b₂ i j) ≤
+    LinearMap.range
+        (universalMulMap (hπ := hπ) g r₁ r₂ b₁ b₂ i j) ≤
       (divUniversalSndWindow C π hπ g r₁ r₂ b₁ b₂ i j).toSubmodule := by
-  rw [LinearMap.range_le_iff]
-  intro v
+  rintro _ ⟨v, rfl⟩
   rw [universalMulMap]
+  rw [LinearMap.sum_apply]
   apply Submodule.sum_mem
   intro t ht
   have hcarve := carvePairArrow_eq_zero_iff (R := RZ)
     (windowShiftMul hπ g ((Module.finBasis k HS) t))
     (divUniversalFstWindow C π hπ g r₁ r₂ b₁ b₂ i j).toSubmodule
     (divUniversalSndWindow C π hπ g r₁ r₂ b₁ b₂ i j).toSubmodule |>.mp
-    (universal_window_carve C π hπ g r₁ r₂ b₁ b₂ i j ((Module.finBasis k HS) t))
+    (universal_window_carve
+      (C := C) (π := π) (hπ := hπ) g r₁ r₂ b₁ b₂ i j ((Module.finBasis k HS) t))
   exact hcarve (v t).1 (v t).2
 
 theorem universalMulSpan_le :
-    universalMulSpan C π hπ g r₁ r₂ b₁ b₂ i j ≤
+    universalMulSpan (hπ := hπ) g r₁ r₂ b₁ b₂ i j ≤
       (divUniversalSndWindow C π hπ g r₁ r₂ b₁ b₂ i j).toSubmodule := by
-  exact universalMulMap_range_le C π hπ g r₁ r₂ b₁ b₂ i j
+  exact universalMulMap_range_le (hπ := hπ) g r₁ r₂ b₁ b₂ i j
 
 /-- The product map corestricted to the universal second window.  Its residue-
 field surjectivity is the only remaining input needed by
 `RigidEngine.surjective_of_forall_rTensor_residueField_surjective`. -/
 noncomputable def universalMulMapToSnd :
-    universalMulSource C π hπ g r₁ r₂ b₁ b₂ i j →ₗ[RZ] K₂ :=
-  (universalMulMap C π hπ g r₁ r₂ b₁ b₂ i j).codRestrict _ fun v =>
-    universalMulMap_range_le C π hπ g r₁ r₂ b₁ b₂ i j
+    universalMulSource (hπ := hπ) g r₁ r₂ b₁ b₂ i j →ₗ[RZ] K₂ :=
+  (universalMulMap (hπ := hπ) g r₁ r₂ b₁ b₂ i j).codRestrict _ fun v =>
+    universalMulMap_range_le (hπ := hπ) g r₁ r₂ b₁ b₂ i j
       (LinearMap.mem_range_self _ v)
 
 theorem finite_universalMulSpan :
-    Module.Finite RZ ↥(universalMulSpan C π hπ g r₁ r₂ b₁ b₂ i j) := by
-  letI := finite_universalMulSource C π hπ g r₁ r₂ b₁ b₂ i j
+    Module.Finite RZ
+      ↥(universalMulSpan (hπ := hπ) g r₁ r₂ b₁ b₂ i j) := by
+  letI := finite_universalMulSource (hπ := hπ) g r₁ r₂ b₁ b₂ i j
   infer_instance
 
 end AlgebraicGeometry
