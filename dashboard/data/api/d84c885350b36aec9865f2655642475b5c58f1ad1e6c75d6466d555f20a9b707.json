@@ -1,1 +1,1 @@
-{"markdown": "", "recommendation": ""}
+{"markdown": "`pushforwardBaseChangeMap` is only consumed by the two dead theorems; I'll keep the (sorry-free) def and delete the theorems. Let me check the blueprint nodes first:", "recommendation": ""}

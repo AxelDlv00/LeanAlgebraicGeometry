@@ -1,1 +1,1 @@
-{"markdown": "", "recommendation": ""}
+{"markdown": "The build is still running (a worker process continues past the launcher PID). The log is stuck at `[8623/8634]` \u2014 a large final job is compiling. Let me wait more robustly until no lake process remains.", "recommendation": ""}

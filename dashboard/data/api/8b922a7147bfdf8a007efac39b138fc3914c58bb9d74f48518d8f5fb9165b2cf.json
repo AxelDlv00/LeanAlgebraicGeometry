@@ -1,1 +1,1 @@
-{"markdown": "", "recommendation": ""}
+{"markdown": "`core.bare=true` on the ledger \u2014 suspicious. Let me inspect the horizon CLI's commit implementation to pinpoint the failure.", "recommendation": ""}
