@@ -35,7 +35,7 @@ open scoped TensorProduct
 
 namespace AlgebraicGeometry
 
-open Scheme Grassmannian
+open Scheme Grassmannian ThetaGeneratorSeed
 
 attribute [local instance] Scheme.overModule Scheme.overSectionsAlgebra
   Scheme.functionFieldOverModule
@@ -97,84 +97,42 @@ noncomputable local instance instFinH1RelCurvePointwise (L : Type u) [Field L]
 
 local notation "RZ" => seedChartRing C hπ g r₁ r₂ b₁ b₂ i j
 
-/-! ## Payload and the total-point bridge -/
+/-! ## The total-point achiever -/
 
-/-- The full fibre-achiever payload at a seed-base prime.
-
-This is an abbreviation (rather than a second copy of the long existential) so downstream
-proofs can `obtain ⟨x, hx, hmem, hcmp, hr, hach⟩` directly while the exact payload remains
-definitionally identical to `exists_relThetaWindowEquiv_mem_divUniversalSeedK_achieves_seedPrime`.
--/
-abbrev pointwiseAchieverPayload
-    (p : PrimeSpectrum RZ)
-    (hne : divUniversalFibreKM C hπ g r₁ r₂ b₁ i j p.asIdeal.ResidueField ≠ ⊥)
-    {w : relCurve C p.asIdeal.ResidueField}
-    (hw : w ≠ genericPoint (relCurve C p.asIdeal.ResidueField)) : Prop :=
-  exists_relThetaWindowEquiv_mem_divUniversalSeedK_achieves_seedPrime
-    C hπ g r₁ r₂ b₁ b₂ i j hO hχ p hne hw
-
--- Reconstructing the native tower `k → RZ → κ(p)` while elaborating the achiever payload
+-- Reconstructing the native tower `k → RZ → κ(p)` while elaborating the fibre window
 -- exceeds the default instance and recursion budgets.
 set_option maxHeartbeats 2400000 in
 set_option synthInstance.maxHeartbeats 800000 in
 set_option maxRecDepth 8000 in
-/-- At a total point whose canonical residue-field lift is non-generic in its fibre, the
-universal vector and all relative-achiever data are obtained by applying the landed
-seed-prime achiever at `p := relCurveBasePoint C RZ z` and
-`z_fib := relCurveResiduePoint C RZ z`.
-
-The nonzero-fibre-window hypothesis is discharged from the existing Riemann--Roch
-nonvanishing theorem `exists_mem_ne_zero_divUniversalFibreKM_seedPrime`.
--/
-theorem exists_pointwise_achiever_at_totalPoint
-    (z : relCurve C RZ)
-    (hzfib : relCurveResiduePoint C RZ z ≠
-      genericPoint (relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField)) :
-    ∃ hne : divUniversalFibreKM C hπ g r₁ r₂ b₁ i j
-        (relCurveBasePoint C RZ z).asIdeal.ResidueField ≠ ⊥,
-      pointwiseAchieverPayload C hπ g r₁ r₂ b₁ b₂ i j hO hχ
-        (relCurveBasePoint C RZ z) hne hzfib := by
+/-- The universal first fibre window at the base point of `z` is nonzero. -/
+noncomputable def pointwiseFibreWindowNonzero
+    (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    (z : relCurve C RZ) :
+    divUniversalFibreKM C hπ g r₁ r₂ b₁ i j
+      (relCurveBasePoint C RZ z).asIdeal.ResidueField ≠ ⊥ := by
   obtain ⟨f, hf, hf0⟩ :=
     exists_mem_ne_zero_divUniversalFibreKM_seedPrime C hπ g r₁ r₂ b₁ b₂ i j hO hχ
       (relCurveBasePoint C RZ z)
-  let hne : divUniversalFibreKM C hπ g r₁ r₂ b₁ i j
-      (relCurveBasePoint C RZ z).asIdeal.ResidueField ≠ ⊥ := by
-    intro hbot
-    apply hf0
-    rw [hbot, Submodule.mem_bot] at hf
-    exact hf
-  exact ⟨hne, exists_relThetaWindowEquiv_mem_divUniversalSeedK_achieves_seedPrime
-    C hπ g r₁ r₂ b₁ b₂ i j hO hχ (relCurveBasePoint C RZ z) hne hzfib⟩
+  intro hbot
+  apply hf0
+  rw [hbot, Submodule.mem_bot] at hf
+  exact hf
 
--- The dichotomy retains the full dependent achiever payload in its non-generic branch, so
--- elaboration rebuilds the same residue-field tower as the main theorem.
+-- The achiever theorem reconstructs the same residue-field tower and large window types.
 set_option maxHeartbeats 2400000 in
 set_option synthInstance.maxHeartbeats 800000 in
 set_option maxRecDepth 8000 in
-/-- Every total point admits the sound two-way case split needed by a pointwise seed
-construction: either its canonical fibre point is non-generic and carries the full achiever
-payload, or it is the generic point of that fibre.  The second branch is genuine (vertical
-fibre generic points occur), so it is exposed rather than hidden behind an unprovable
-closedness claim.
--/
-theorem exists_pointwise_achiever_or_fibre_generic
-    (z : relCurve C RZ) :
-    (∃ hzfib : relCurveResiduePoint C RZ z ≠
-        genericPoint (relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField),
-      ∃ hne : divUniversalFibreKM C hπ g r₁ r₂ b₁ i j
-          (relCurveBasePoint C RZ z).asIdeal.ResidueField ≠ ⊥,
-        pointwiseAchieverPayload C hπ g r₁ r₂ b₁ b₂ i j hO hχ
-          (relCurveBasePoint C RZ z) hne hzfib) ∨
-      relCurveResiduePoint C RZ z =
-        genericPoint (relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField) := by
-  by_cases hzf : relCurveResiduePoint C RZ z ≠
-      genericPoint (relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField)
-  · left
-    obtain ⟨hne, hdata⟩ :=
-      exists_pointwise_achiever_at_totalPoint C hπ g r₁ r₂ b₁ b₂ i j hO hχ z hzf
-    exact ⟨hzf, hne, hdata⟩
-  · right
-    exact Classical.not_not.mp hzf
+/-- At a non-generic residue-fibre point, choose the full landed achiever witness. -/
+noncomputable def pointwiseAchiever
+    (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
+    (z : relCurve C RZ)
+    (hzfib : relCurveResiduePoint C RZ z ≠
+      genericPoint (relCurve C (relCurveBasePoint C RZ z).asIdeal.ResidueField)) :=
+  exists_relThetaWindowEquiv_mem_divUniversalSeedK_achieves_seedPrime
+    C hπ g r₁ r₂ b₁ b₂ i j hO hχ (relCurveBasePoint C RZ z)
+      (pointwiseFibreWindowNonzero C hπ g r₁ r₂ b₁ b₂ i j hO hχ z) hzfib
 
 end SeedContext
 
