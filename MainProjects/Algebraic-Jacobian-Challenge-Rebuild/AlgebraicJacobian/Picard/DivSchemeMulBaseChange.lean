@@ -16,7 +16,7 @@ the geometric source from obscuring the actual finite-product calculation.
 set_option autoImplicit false
 set_option quotPrecheck false
 
-universe u
+universe u v
 
 open scoped TensorProduct
 
@@ -25,12 +25,13 @@ namespace AlgebraicGeometry
 variable {R K M N : Type u} [CommRing R] [CommRing K] [Algebra R K]
 variable [AddCommMonoid M] [Module R M]
 variable [AddCommMonoid N] [Module R N]
-variable {ι : Type u} [Fintype ι] [DecidableEq ι]
+variable {ι : Type v} [Fintype ι]
 
 /-- The sum of component maps on a finite product. -/
 noncomputable def finiteComponentSum (f : ι → M →ₗ[R] N) :
-    (ι → M) →ₗ[R] N :=
-  ∑ t : ι, (f t).comp (LinearMap.proj t)
+    (ι → M) →ₗ[R] N := by
+  classical
+  exact ∑ t : ι, (f t).comp (LinearMap.proj t)
 
 /-- Base change commutes with a finite component sum, after tensoring the
 product source into its component fibres with `TensorProduct.piRightHom`. -/
@@ -41,14 +42,16 @@ theorem baseChange_finiteComponentSum (f : ι → M →ₗ[R] N) :
           ((LinearMap.proj t) :
             (ι → (K ⊗[R] M)) →ₗ[K] (K ⊗[R] M))) ∘ₗ
         TensorProduct.piRightHom R K K (fun _ : ι => M) := by
+  classical
   apply LinearMap.ext
   intro x
   induction x using TensorProduct.induction_on with
   | zero => simp
   | add x y hx hy => simp [hx, hy, Finset.sum_add_distrib]
   | tmul a v =>
-      simp [finiteComponentSum, LinearMap.comp_apply, LinearMap.sum_apply,
-        LinearMap.baseChange_tmul]
+      simp only [LinearMap.baseChange_tmul, TensorProduct.piRightHom_tmul,
+        finiteComponentSum, LinearMap.sum_apply, LinearMap.comp_apply,
+        LinearMap.proj_apply]
       rw [TensorProduct.tmul_sum]
 
 /-- Surjectivity of the component sum implies surjectivity of the base-changed
@@ -62,6 +65,7 @@ theorem surjective_baseChange_finiteComponentSum
           ((LinearMap.proj t) :
             (ι → (K ⊗[R] M)) →ₗ[K] (K ⊗[R] M)))) :
     Function.Surjective (LinearMap.baseChange K (finiteComponentSum f)) := by
+  classical
   intro y
   obtain ⟨w, hw⟩ := hsurj y
   let e := TensorProduct.piRight R K K (fun _ : ι => M)
