@@ -479,6 +479,7 @@ import AlgebraicJacobian.Picard.DivSchemeRedesignCarvePinFibreKM
 import AlgebraicJacobian.Picard.DivSchemeRedesignHsubChart
 import AlgebraicJacobian.Picard.DivSchemeRedesignHsubChartPin
 import AlgebraicJacobian.Picard.DivSchemeRedesignCascade
+import AlgebraicJacobian.Picard.DivSchemeRedesignFreeFlat
 import AlgebraicJacobian.Picard.DivSchemeRedesignAchiever
 import AlgebraicJacobian.Picard.DivSchemeRedesignFibreCut
 import AlgebraicJacobian.Picard.DivSchemeRedesignSeed
