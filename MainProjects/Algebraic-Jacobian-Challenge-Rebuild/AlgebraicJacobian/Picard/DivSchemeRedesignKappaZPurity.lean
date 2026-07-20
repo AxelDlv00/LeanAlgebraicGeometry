@@ -88,6 +88,17 @@ theorem chartColengthModule_subtype_rTensor_injective_of_flat_chartIdeal_quotien
   rw [← hEq]
   exact hinjImage
 
+/-- The same sharp-fibre injectivity with the standard semantic name for the premise:
+`Ideal.Pure J` means precisely that `B ⧸ J` is flat as a `B`-module. -/
+theorem chartColengthModule_subtype_rTensor_injective_of_pure_chartIdeal
+    (K : Submodule R (relThetaSections C R π a)) (b : Bool)
+    (s : relThetaSections C R π a) (hs : s ∈ K)
+    [Ideal.Pure (chartReadIdeal K b)]
+    (p : PrimeSpectrum Γ(relCurve C R, relPinnedChart C R π b)) :
+    Function.Injective
+      ((chartColengthModule K b s).subtype.rTensor p.asIdeal.ResidueField) :=
+  chartColengthModule_subtype_rTensor_injective_of_flat_chartIdeal_quotient K b s hs p
+
 end ThetaGeneratorSeed
 
 end AlgebraicGeometry
