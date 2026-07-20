@@ -5,7 +5,6 @@ Authors: The AlgebraicJacobian Contributors
 -/
 import AlgebraicJacobian.Picard.DivSchemeRedesignKappaZFibre
 import AlgebraicJacobian.Picard.DivSchemeRedesignRangeFlatBridge
-import AlgebraicJacobian.Picard.DivSchemeRedesignIdealPurity
 import AlgebraicJacobian.Picard.DivSchemeRedesignChartReadIdeal
 
 /-!
