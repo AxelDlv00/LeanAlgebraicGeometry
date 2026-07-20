@@ -95,6 +95,7 @@ noncomputable def divRepPullAt
     (omega : ChartRing i j →ₐ[k] S) : DivFamZar C S pi g :=
   DivFamZar.mapAlgHom omega (DivFam.mk (U i j)).toZar
 
+set_option linter.unusedSectionVars false in
 @[simp]
 theorem divRepPullAt_id
     (U : ∀ (i : (glueData k g r1).J) (j : (glueData k g r2).J),
@@ -104,6 +105,7 @@ theorem divRepPullAt_id
       = (DivFam.mk (U i j)).toZar :=
   DivFamZar.mapAlgHom_id _
 
+set_option linter.unusedSectionVars false in
 /-- Pulling a chart family through two algebra maps is the same as pulling it through
 their composite.  This is the algebraic part of F5 naturality. -/
 theorem divRepPullAt_comp
@@ -134,6 +136,7 @@ def IsCompatible
       divRepPullAt (hpi := hpi) g r1 r2 b1 b2 U i j omega
         = divRepPullAt (hpi := hpi) g r1 r2 b1 b2 U i' j' omega'
 
+set_option linter.unusedSectionVars false in
 /-- Compatibility may be applied when both chart presentations are identified with a
 common morphism.  This is the form used on overlaps of an atlas factorization. -/
 theorem pullAt_eq_of_eq_common
@@ -194,14 +197,17 @@ noncomputable def equiv
 theorem equiv_apply
     (D : DivRepAffinePullback hpi g hO hchi r1 r2 b1 b2)
     (S : Type u) [CommRing S] [Algebra k S] (v : overSpec k S ⟶ DivOver) :
-    D.equiv S v = D.pull S v :=
+    equiv (hpi := hpi) (g := g) (hO := hO) (hchi := hchi) (r1 := r1) (r2 := r2)
+        (b1 := b1) (b2 := b2) D S v = D.pull S v :=
   rfl
 
 @[simp]
 theorem equiv_symm_apply
     (D : DivRepAffinePullback hpi g hO hchi r1 r2 b1 b2)
     (S : Type u) [CommRing S] [Algebra k S] (F : DivFamZar C S pi g) :
-    (D.equiv S).symm F = divRepClassifyZar hpi g hO hchi r1 r2 b1 b2 S F :=
+    (equiv (hpi := hpi) (g := g) (hO := hO) (hchi := hchi) (r1 := r1) (r2 := r2)
+      (b1 := b1) (b2 := b2) D S).symm F
+      = divRepClassifyZar hpi g hO hchi r1 r2 b1 b2 S F :=
   rfl
 
 /-- Naturality of the assembled affine equivalence, in the frozen DDR-9 spelling. -/
@@ -210,8 +216,11 @@ theorem equiv_naturality
     {A B : Type u} [CommRing A] [Algebra k A]
     [CommRing B] [Algebra k B] (phi : A →ₐ[k] B)
     (v : overSpec k A ⟶ DivOver) :
-    D.equiv B (Over.overSpecMap phi ≫ v)
-      = DivFamZar.mapAlgHom phi (D.equiv A v) :=
+    equiv (hpi := hpi) (g := g) (hO := hO) (hchi := hchi) (r1 := r1) (r2 := r2)
+        (b1 := b1) (b2 := b2) D B (Over.overSpecMap phi ≫ v)
+      = DivFamZar.mapAlgHom phi
+          (equiv (hpi := hpi) (g := g) (hO := hO) (hchi := hchi) (r1 := r1) (r2 := r2)
+            (b1 := b1) (b2 := b2) D A v) :=
   D.pull_naturality phi v
 
 end DivRepAffinePullback
