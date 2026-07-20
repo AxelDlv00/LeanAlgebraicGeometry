@@ -120,6 +120,38 @@ theorem seedUnivRDN_of_forall_germ_mem_span
     (seedUniv_mem_chart C hπ g r₁ r₂ b₁ b₂ i j hO hχ z)
     (hgerm z)
 
+set_option maxHeartbeats 2400000 in
+set_option synthInstance.maxHeartbeats 800000 in
+set_option maxSynthPendingDepth 8 in
+set_option maxRecDepth 8000 in
+/-- **`SeedUnivRDN` from the sharp point fibre.**  The support criterion can also be fed
+directly by the single-point tensor
+`chartColengthModule K_univ ... ⊗_{Γ(V)} κ(z)`.  This is deliberately independent of the
+fibre-to-total germ transport: it records the exact module-theoretic insertion point for a
+future residue-field proof, with `κ(z)` taken from the chart point prime itself (never from
+the comapped base prime). -/
+theorem seedUnivRDN_of_forall_kappaZ_tensor_subsingleton
+    (hfib : ∀ (z : relCurve C (seedChartRing C hπ g r₁ r₂ b₁ b₂ i j)),
+      Subsingleton (↥(chartColengthModule
+          (divUniversalSeedK C π hπ g r₁ r₂ b₁ b₂ i j)
+          ((seedUniv C hπ g r₁ r₂ b₁ b₂ i j hO hχ).side z)
+          ((seedUniv C hπ g r₁ r₂ b₁ b₂ i j hO hχ).sec z)) ⊗[
+            Γ(relCurve C (seedChartRing C hπ g r₁ r₂ b₁ b₂ i j),
+              relPinnedChart C (seedChartRing C hπ g r₁ r₂ b₁ b₂ i j) π
+                ((seedUniv C hπ g r₁ r₂ b₁ b₂ i j hO hχ).side z))]
+          ((isAffineOpen_relPinnedChart C (seedChartRing C hπ g r₁ r₂ b₁ b₂ i j) π
+              ((seedUniv C hπ g r₁ r₂ b₁ b₂ i j hO hχ).side z)).primeIdealOf
+            ⟨z, seedUniv_mem_chart C hπ g r₁ r₂ b₁ b₂ i j hO hχ z⟩).asIdeal.ResidueField)) :
+    SeedUnivRDN C hπ g r₁ r₂ b₁ b₂ i j hO hχ := by
+  intro z
+  haveI := finite_divUniversalSeedK C π hπ g r₁ r₂ b₁ b₂ i j
+  exact notMem_support_chartColengthModule_of_subsingleton_tmul_residueField_kappaZ
+    (divUniversalSeedK C π hπ g r₁ r₂ b₁ b₂ i j)
+    ((seedUniv C hπ g r₁ r₂ b₁ b₂ i j hO hχ).side z)
+    ((seedUniv C hπ g r₁ r₂ b₁ b₂ i j hO hχ).sec z)
+    (seedUniv_mem_chart C hπ g r₁ r₂ b₁ b₂ i j hO hχ z)
+    (hfib z)
+
 end SeedUnivRDNAssembly
 
 end ThetaGeneratorSeed
