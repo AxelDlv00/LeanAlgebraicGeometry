@@ -78,4 +78,15 @@ theorem range_eq_top_of_forall_rTensor_residueField_surjective
   LinearMap.range_eq_top.mpr
     (surjective_of_forall_rTensor_residueField_surjective φ hfib)
 
+/-- A finite submodule whose inclusion is fibrewise surjective is the whole
+ambient module. -/
+theorem submodule_eq_top_of_forall_rTensor_residueField_surjective
+    {X : Type u} [AddCommGroup X] [Module R X] [Module.Finite R X]
+    (P : Submodule R X) [Module.Finite R ↥P]
+    (hfib : ∀ p : PrimeSpectrum R,
+      Function.Surjective (P.subtype.rTensor p.asIdeal.ResidueField)) :
+    P = ⊤ := by
+  rw [← P.range_subtype]
+  exact range_eq_top_of_forall_rTensor_residueField_surjective P.subtype hfib
+
 end AlgebraicJacobian.RigidEngine
