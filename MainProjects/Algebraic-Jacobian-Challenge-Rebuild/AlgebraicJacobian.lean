@@ -487,6 +487,7 @@ import AlgebraicJacobian.Picard.DivSchemeRedesignFibreCut
 import AlgebraicJacobian.Picard.DivSchemeRedesignSeed
 import AlgebraicJacobian.Picard.DivSchemeRedesignRDNChart
 import AlgebraicJacobian.Picard.DivSchemeRedesignSeedUniv
+import AlgebraicJacobian.Picard.DivSchemeRedesignSeedFinish
 
 /-!
 # AlgebraicJacobian — library root
