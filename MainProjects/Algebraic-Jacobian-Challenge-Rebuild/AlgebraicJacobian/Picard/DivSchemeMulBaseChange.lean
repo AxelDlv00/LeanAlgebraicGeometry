@@ -51,4 +51,32 @@ theorem baseChange_finiteComponentSum (f : ι → M →ₗ[R] N) :
         LinearMap.baseChange_tmul]
       rw [TensorProduct.tmul_sum]
 
+/-- Surjectivity of the component sum implies surjectivity of the base-changed
+sum.  The finite-product equivalence supplies the preimage in the tensor
+product source. -/
+theorem surjective_baseChange_finiteComponentSum
+    (f : ι → M →ₗ[R] N)
+    (hsurj : Function.Surjective
+      (∑ t : ι,
+        (LinearMap.baseChange K (f t)).comp
+          ((LinearMap.proj t) :
+            (ι → (K ⊗[R] M)) →ₗ[K] (K ⊗[R] M)))) :
+    Function.Surjective (LinearMap.baseChange K (finiteComponentSum f)) := by
+  intro y
+  obtain ⟨w, hw⟩ := hsurj y
+  let e := TensorProduct.piRight R K K (fun _ : ι => M)
+  refine ⟨e.symm w, ?_⟩
+  rw [baseChange_finiteComponentSum]
+  change
+    (∑ t : ι,
+      (LinearMap.baseChange K (f t)).comp
+        ((LinearMap.proj t) :
+          (ι → (K ⊗[R] M)) →ₗ[K] (K ⊗[R] M)))
+      (TensorProduct.piRightHom R K K (fun _ : ι => M) (e.symm w)) = y
+  have he : TensorProduct.piRightHom R K K (fun _ : ι => M) (e.symm w) = w := by
+    change e (e.symm w) = w
+    exact e.apply_symm_apply w
+  rw [he]
+  simpa only [LinearMap.coe_sum, LinearMap.coe_comp, Function.comp_apply] using hw
+
 end AlgebraicGeometry
