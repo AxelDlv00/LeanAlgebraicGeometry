@@ -490,6 +490,7 @@ import AlgebraicJacobian.Picard.DivSchemeRedesignSeedUniv
 import AlgebraicJacobian.Picard.DivSchemeRedesignSeedFinish
 import AlgebraicJacobian.Picard.DivSchemeRedesignKappaZ
 import AlgebraicJacobian.Picard.DivSchemeRedesignKappaZSeed
+import AlgebraicJacobian.Picard.DivSchemeRedesignGermDvd
 
 /-!
 # AlgebraicJacobian — library root
