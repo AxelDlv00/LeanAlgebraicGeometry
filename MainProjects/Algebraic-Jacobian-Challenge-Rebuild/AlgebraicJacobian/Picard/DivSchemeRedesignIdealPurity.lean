@@ -57,6 +57,14 @@ theorem subtype_lTensor_injective_of_flat_quotient
   rw [LinearMap.exact_iff, restrictScalars_ker_quotient]
   exact (Submodule.range_subtype _).symm
 
+/-- The same purity statement in the right-tensor orientation. -/
+theorem subtype_rTensor_injective_of_flat_quotient
+    (J : Ideal B) [Module.Flat R (B ⧸ J)]
+    (A : Type u) [AddCommGroup A] [Module R A] :
+    Function.Injective ((J.restrictScalars R).subtype.rTensor A) := by
+  exact ((J.restrictScalars R).subtype.lTensor_inj_iff_rTensor_inj A).mp
+    (subtype_lTensor_injective_of_flat_quotient (R := R) (B := B) J A)
+
 end IdealPurity
 
 end AlgebraicGeometry
