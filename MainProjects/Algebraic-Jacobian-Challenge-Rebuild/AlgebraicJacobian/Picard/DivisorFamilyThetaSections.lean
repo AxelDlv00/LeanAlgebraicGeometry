@@ -198,6 +198,68 @@ lemma resHom_relFiberCoordOnePow :
             (fiberCoord₁ π ^ a)
   rw [key]
 
+/-! ## The canonical global theta sections -/
+
+/-- The canonical global relative theta section `(t₀ᵃ, 1)`.  Its first component is
+the chart-0 coordinate power and its second component is the constant section `1`. -/
+noncomputable def relThetaSectionFst : relThetaSections C R π a := by
+  refine ⟨((relCurve C R).resHom inf_le_right (relFiberCoordPow C R π a), 1), ?_⟩
+  rw [mem_twistSubmodule_iff]
+  have key := congrArg
+    ((relCurve C R).resHom
+      (le_inf (inf_le_left.trans inf_le_right) inf_le_right :
+        ⊤ ⊓ (relCover C R (fiberTwoCover π)).V₀ ⊓
+            (relCover C R (fiberTwoCover π)).V₁ ≤
+          (relCover C R (fiberTwoCover π)).V₀ ⊓
+            (relCover C R (fiberTwoCover π)).V₁))
+    (resHom_relFiberCoordPow C R π a)
+  simpa only [Scheme.resHom_resHom, map_one, mul_one] using key
+
+/-- The canonical global relative theta section `(1, t₁ᵃ)`.  Its first component is
+the constant section `1` and its second component is the chart-1 coordinate power. -/
+noncomputable def relThetaSectionSnd : relThetaSections C R π a := by
+  refine ⟨(1, (relCurve C R).resHom inf_le_right (relFiberCoordOnePow C R π a)), ?_⟩
+  rw [mem_twistSubmodule_iff]
+  have key := congrArg
+    ((relCurve C R).resHom
+      (le_inf (inf_le_left.trans inf_le_right) inf_le_right :
+        ⊤ ⊓ (relCover C R (fiberTwoCover π)).V₀ ⊓
+            (relCover C R (fiberTwoCover π)).V₁ ≤
+          (relCover C R (fiberTwoCover π)).V₀ ⊓
+            (relCover C R (fiberTwoCover π)).V₁))
+    (resHom_relFiberCoordOnePow C R π a)
+  rw [map_one]
+  simp only [Scheme.resHom_resHom] at key ⊢
+  rw [key, ← map_mul, Units.mul_inv, map_one]
+
+@[simp]
+lemma relThetaSectionFst_val_fst :
+    (relThetaSectionFst C R π a).val.1 =
+      (relCurve C R).resHom inf_le_right (relFiberCoordPow C R π a) := rfl
+
+@[simp]
+lemma relThetaSectionFst_val_snd : (relThetaSectionFst C R π a).val.2 = 1 := rfl
+
+@[simp]
+lemma relThetaSectionSnd_val_fst : (relThetaSectionSnd C R π a).val.1 = 1 := rfl
+
+@[simp]
+lemma relThetaSectionSnd_val_snd :
+    (relThetaSectionSnd C R π a).val.2 =
+      (relCurve C R).resHom inf_le_right (relFiberCoordOnePow C R π a) := rfl
+
+/-- The section `(1, t₁ᵃ)` reads as `1` on the first pinned chart. -/
+@[simp]
+lemma relThetaResFst_relThetaSectionSnd :
+    relThetaResFst a (le_inf le_top le_rfl) (relThetaSectionSnd C R π a) = 1 := by
+  rw [relThetaResFst_apply, relThetaSectionSnd_val_fst, map_one]
+
+/-- The section `(t₀ᵃ, 1)` reads as `1` on the second pinned chart. -/
+@[simp]
+lemma relThetaResSnd_relThetaSectionFst :
+    relThetaResSnd a (le_inf le_top le_rfl) (relThetaSectionFst C R π a) = 1 := by
+  rw [relThetaResSnd_apply, relThetaSectionFst_val_snd, map_one]
+
 end ThetaSections
 
 namespace DivisorAdaptation
