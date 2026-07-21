@@ -27,8 +27,7 @@ limit with the genuine chart-reading quotient, remain the geometric saturation s
 -/
 
 set_option autoImplicit false
-set_option maxHeartbeats 1600000
-set_option synthInstance.maxHeartbeats 400000
+set_option backward.isDefEq.respectTransparency false
 set_option maxSynthPendingDepth 8
 set_option maxRecDepth 8000
 
@@ -94,6 +93,8 @@ noncomputable def divUniversalHighWindowThetaEquiv (n : Nat) :
     (divUniversalHighWindowExponent (C := C) (pi := pi) hpi g n)
     (relThetaPairH1_windowM_add_mulS C pi hpi g n)
 
+set_option synthInstance.maxHeartbeats 400000 in
+-- The dependent carve-chart tensor instance exceeds the default synthesis budget.
 /-- Every high-window ambient is finite over the carve-chart ring. -/
 theorem finite_divUniversalHighWindowAmbient (n : Nat) :
     Module.Finite RZ
@@ -101,6 +102,8 @@ theorem finite_divUniversalHighWindowAmbient (n : Nat) :
         (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2) (i := i) (j := j) n) := by
   infer_instance
 
+set_option synthInstance.maxHeartbeats 400000 in
+-- The dependent carve-chart tensor instance exceeds the default synthesis budget.
 /-- Every high-window ambient is free over the carve-chart ring. -/
 theorem free_divUniversalHighWindowAmbient (n : Nat) :
     Module.Free RZ
@@ -108,6 +111,8 @@ theorem free_divUniversalHighWindowAmbient (n : Nat) :
         (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2) (i := i) (j := j) n) := by
   infer_instance
 
+set_option synthInstance.maxHeartbeats 400000 in
+-- Reusing the finite-dimensional base-change basis requires the larger chart budget.
 /-- Every high-window ambient is projective over the carve-chart ring. -/
 theorem projective_divUniversalHighWindowAmbient (n : Nat) :
     Module.Projective RZ
@@ -140,6 +145,8 @@ abbrev divUniversalHighWindowQuotient (n : Nat)
     (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2) (i := i) (j := j) n ⧸
       x.toSubmodule
 
+set_option maxHeartbeats 1600000 in
+-- Unfolding the dependent high-window ambient and Grassmannian quotient is expensive.
 /-- A high-window stage has finite quotient. -/
 theorem finite_divUniversalHighWindowQuotient (n : Nat)
     (x : DivUniversalHighWindowStage (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j n) :
@@ -148,6 +155,8 @@ theorem finite_divUniversalHighWindowQuotient (n : Nat)
         hpi g r1 r2 b1 b2 i j n x) :=
   x.finite_quotient
 
+set_option maxHeartbeats 1600000 in
+-- Unfolding the dependent high-window ambient and Grassmannian quotient is expensive.
 /-- A high-window stage has projective quotient. -/
 theorem projective_divUniversalHighWindowQuotient (n : Nat)
     (x : DivUniversalHighWindowStage (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j n) :
@@ -156,6 +165,8 @@ theorem projective_divUniversalHighWindowQuotient (n : Nat)
         hpi g r1 r2 b1 b2 i j n x) :=
   x.projective_quotient
 
+set_option maxHeartbeats 1600000 in
+-- The projective-to-flat transport re-elaborates the dependent quotient type.
 /-- A high-window stage has flat quotient. -/
 theorem flat_divUniversalHighWindowQuotient (n : Nat)
     (x : DivUniversalHighWindowStage (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j n) :
@@ -177,6 +188,8 @@ noncomputable def divUniversalHighWindowThetaSubmodule (n : Nat)
       hpi g r1 r2 b1 b2 i j n).toLinearMap
     x.toSubmodule
 
+set_option maxHeartbeats 1600000 in
+-- Both sides unfold the relative-theta transport over the dependent carve-chart ring.
 /-- Quotient comparison after reading a high-window stage as relative theta sections. -/
 noncomputable def divUniversalHighWindowThetaQuotientEquiv (n : Nat)
     (x : DivUniversalHighWindowStage (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j n) :
@@ -190,6 +203,8 @@ noncomputable def divUniversalHighWindowThetaQuotientEquiv (n : Nat)
     (divUniversalHighWindowThetaEquiv (C := C) (pi := pi)
       hpi g r1 r2 b1 b2 i j n) rfl
 
+set_option maxHeartbeats 1600000 in
+-- Transporting finiteness re-elaborates the dependent theta quotient equivalence.
 /-- The relative-theta quotient of a stage is finite. -/
 theorem finite_divUniversalHighWindowThetaQuotient (n : Nat)
     (x : DivUniversalHighWindowStage (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j n) :
@@ -204,6 +219,8 @@ theorem finite_divUniversalHighWindowThetaQuotient (n : Nat)
     (divUniversalHighWindowThetaQuotientEquiv (C := C) (pi := pi)
       hpi g r1 r2 b1 b2 i j n x)
 
+set_option maxHeartbeats 1600000 in
+-- Transporting projectivity re-elaborates the dependent theta quotient equivalence.
 /-- The relative-theta quotient of a stage is projective. -/
 theorem projective_divUniversalHighWindowThetaQuotient (n : Nat)
     (x : DivUniversalHighWindowStage (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j n) :
@@ -218,6 +235,8 @@ theorem projective_divUniversalHighWindowThetaQuotient (n : Nat)
     (divUniversalHighWindowThetaQuotientEquiv (C := C) (pi := pi)
       hpi g r1 r2 b1 b2 i j n x)
 
+set_option maxHeartbeats 1600000 in
+-- The projective-to-flat transport re-elaborates the dependent theta quotient.
 /-- The relative-theta quotient of a stage is flat. -/
 theorem flat_divUniversalHighWindowThetaQuotient (n : Nat)
     (x : DivUniversalHighWindowStage (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j n) :
