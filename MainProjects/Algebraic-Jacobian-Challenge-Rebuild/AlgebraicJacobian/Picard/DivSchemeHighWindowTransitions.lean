@@ -297,6 +297,17 @@ theorem iterateSuccessor_read
       rw [iterateSuccessor_succ, LinearMap.comp_apply, hread]
       exact ih
 
+theorem iterateSuccessor_mem
+    (K : (n : Nat) → Submodule R (G n))
+    (hK : ∀ n (x : G n), x ∈ K n → step n x ∈ K (n + 1))
+    (n d : Nat) (x : G n) (hx : x ∈ K n) :
+    iterateSuccessor G step n d x ∈ K (n + d) := by
+  induction d with
+  | zero => exact hx
+  | succ d ih =>
+      rw [iterateSuccessor_succ, LinearMap.comp_apply]
+      exact hK (n + d) _ ih
+
 /-- The map between arbitrary comparable indices obtained by iterating the
 successor maps and transporting along `i + (j-i) = j`. -/
 noncomputable def transitionOfLE (i j : Nat) (h : i ≤ j) :
@@ -311,6 +322,17 @@ theorem transitionOfLE_self (i : Nat) (x : G i) :
     LinearEquiv.coe_ofEq_apply]
   rfl
 
+theorem transitionOfLE_read
+    (read : ∀ n, G n → B)
+    (hread : ∀ n (x : G n), read (n + 1) (step n x) = read n x)
+    (i j : Nat) (h : i ≤ j) (x : G i) :
+    read j (transitionOfLE G step i j h x) = read i x := by
+  unfold transitionOfLE
+  simp only [LinearMap.comp_apply, LinearEquiv.coe_coe,
+    LinearEquiv.coe_ofEq_apply]
+  simpa only [Nat.add_sub_of_le h] using
+    iterateSuccessor_read G step read hread i (j - i) x
+
 theorem transitionOfLE_map_map (i j l : Nat) (hij : i ≤ j) (hjl : j ≤ l)
     (x : G i) :
     transitionOfLE G step j l hjl
@@ -322,6 +344,25 @@ theorem transitionOfLE_map_map (i j l : Nat) (hij : i ≤ j) (hjl : j ≤ l)
   rw [← iterateSuccessor_add G step i (j - i) (l - j)]
   congr 2
   omega
+
+theorem transitionOfLE_mem
+    (K : (n : Nat) → Submodule R (G n))
+    (hK : ∀ n (x : G n), x ∈ K n → step n x ∈ K (n + 1))
+    (i j : Nat) (h : i ≤ j) (x : G i) (hx : x ∈ K i) :
+    transitionOfLE G step i j h x ∈ K j := by
+  unfold transitionOfLE
+  simp only [LinearMap.comp_apply, LinearEquiv.coe_coe,
+    LinearEquiv.coe_ofEq_apply]
+  simpa only [Nat.add_sub_of_le h] using
+    iterateSuccessor_mem G step K hK i (j - i) x hx
+
+theorem map_transitionOfLE_le
+    (K : (n : Nat) → Submodule R (G n))
+    (hK : ∀ n (x : G n), x ∈ K n → step n x ∈ K (n + 1))
+    (i j : Nat) (h : i ≤ j) :
+    Submodule.map (transitionOfLE G step i j h) (K i) ≤ K j := by
+  rintro _ ⟨x, hx, rfl⟩
+  exact transitionOfLE_mem G step K hK i j h x hx
 
 noncomputable instance directedSystem_transitionOfLE :
     DirectedSystem G (transitionOfLE G step · · ·) where
