@@ -448,6 +448,141 @@ theorem exists_divUniversalHighWindowShiftedChartRead_eq
     hpi g r1 r2 b1 b2 i j side n y, ?_⟩
   rw [divUniversalHighWindowRelationTransition_chartRead, hy]
 
+/-! ## Conditional shifted colimit interface -/
+
+variable {B : Type u} [CommRing B] [Algebra RZ B]
+
+set_option maxHeartbeats 1600000 in
+-- The generic varying-ambient colimit theorem re-elaborates all dependent stages.
+/-- The shifted quotient colimit is flat once the finite-stage quotients are flat
+and the explicit read-kernel saturation condition is supplied. -/
+theorem flat_shifted_highWindow_relation_quotient_of_saturation
+    (side : Bool)
+    (read : ∀ n, G (n + 1) →ₗ[RZ] B) (J : Ideal B)
+    (hreadK : ∀ n,
+      divUniversalHighWindowRelation (C := C) (pi := pi)
+          hpi g r1 r2 b1 b2 i j (n + 1) ≤
+        LinearMap.ker
+          ((Ideal.Quotient.mkₐ RZ J).toLinearMap.comp (read n)))
+    (hread : ∀ n m (h : n ≤ m) (x : G (n + 1)),
+      read m
+          (divUniversalHighWindowShiftedRelationTransitionOfLE
+            (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n m h x) =
+        read n x)
+    (hcover : ∀ b : B, ∃ n : Nat, ∃ x : G (n + 1), read n x = b)
+    (hsaturation : ∀ n (x : G (n + 1)), read n x ∈ J →
+      ∃ m : Nat, ∃ h : n ≤ m,
+        divUniversalHighWindowShiftedRelationTransitionOfLE
+          (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n m h x ∈
+        divUniversalHighWindowRelation (C := C) (pi := pi)
+          hpi g r1 r2 b1 b2 i j (m + 1))
+    [∀ n, Module.Flat RZ
+      (G (n + 1) ⧸ divUniversalHighWindowRelation (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j (n + 1))] :
+    Module.Flat RZ (B ⧸ J) := by
+  exact Submodule.flat_quotient_of_directLimit
+    (f := divUniversalHighWindowShiftedRelationTransitionOfLE
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side)
+    (K := fun n => divUniversalHighWindowRelation (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j (n + 1))
+    (hK := fun n m h =>
+      map_divUniversalHighWindowShiftedRelationTransitionOfLE_relation_le
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n m h)
+    read J hreadK hread hcover hsaturation
+
+/-- All shifted relation stages have the same pinned-chart reading ideal as
+stage one. -/
+theorem divUniversalHighWindowRelationReadIdeal_shifted_eq
+    (side : Bool) (n : Nat) :
+    divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j (n + 1) side =
+      divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j 1 side := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+      rw [show n.succ + 1 = n + 2 by omega,
+        divUniversalHighWindowRelationReadIdeal_succ_succ_eq
+          (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j n side, ih]
+
+/-- Every shifted relation section reads into the fixed stage-one chart ideal. -/
+theorem divUniversalHighWindowShiftedRelation_read_mem_stageOneIdeal
+    (side : Bool) (n : Nat)
+    (x : G (n + 1))
+    (hx : x ∈ divUniversalHighWindowRelation (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j (n + 1)) :
+    divUniversalHighWindowChartRead (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j (n + 1) side x ∈
+      divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j 1 side := by
+  have hmem : divUniversalHighWindowChartRead (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j (n + 1) side x ∈
+      divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j (n + 1) side := by
+    rw [divUniversalHighWindowRelationReadIdeal_eq_submodule]
+    exact Ideal.subset_span ⟨x, hx, rfl⟩
+  rw [divUniversalHighWindowRelationReadIdeal_shifted_eq
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n] at hmem
+  exact hmem
+
+/-- The concrete kernel hypothesis for the fixed stage-one chart ideal. -/
+theorem divUniversalHighWindowShiftedRelation_read_ker_stageOneIdeal
+    (side : Bool) (n : Nat) :
+    divUniversalHighWindowRelation (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j (n + 1) ≤
+      LinearMap.ker
+        ((Ideal.Quotient.mkₐ RZ
+          (divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
+            hpi g r1 r2 b1 b2 i j 1 side)).toLinearMap.comp
+          (divUniversalHighWindowChartRead (C := C) (pi := pi)
+            hpi g r1 r2 b1 b2 i j (n + 1) side)) := by
+  intro x hx
+  apply LinearMap.mem_ker.mpr
+  apply Ideal.Quotient.eq_zero_iff_mem.mpr
+  exact divUniversalHighWindowShiftedRelation_read_mem_stageOneIdeal
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n x hx
+
+set_option maxHeartbeats 1600000 in
+-- The concrete chart specialization re-elaborates the dependent stage family.
+/-- Concrete chart form: after stage-one shifting, only bounded-stage flatness
+and eventual saturation remain in the colimit flatness criterion. -/
+theorem flat_shifted_highWindow_chart_quotient_of_saturation
+    (hb : 0 < windowBound pi hpi) (side : Bool)
+    (hsaturation : ∀ n (x : G (n + 1)),
+      divUniversalHighWindowChartRead (C := C) (pi := pi)
+          hpi g r1 r2 b1 b2 i j (n + 1) side x ∈
+        divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
+          hpi g r1 r2 b1 b2 i j 1 side →
+      ∃ m : Nat, ∃ h : n ≤ m,
+        divUniversalHighWindowShiftedRelationTransitionOfLE
+          (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n m h x ∈
+        divUniversalHighWindowRelation (C := C) (pi := pi)
+          hpi g r1 r2 b1 b2 i j (m + 1))
+    [∀ n, Module.Flat RZ
+      (G (n + 1) ⧸ divUniversalHighWindowRelation (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j (n + 1))] :
+    Module.Flat RZ
+      (Γ(relCurve C RZ, relPinnedChart C RZ pi side) ⧸
+        divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
+          hpi g r1 r2 b1 b2 i j 1 side) := by
+  apply flat_shifted_highWindow_relation_quotient_of_saturation
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side
+    (read := fun n => divUniversalHighWindowChartRead (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j (n + 1) side)
+    (J := divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j 1 side)
+    (hreadK := fun n => divUniversalHighWindowShiftedRelation_read_ker_stageOneIdeal
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n)
+    (hread := fun n m h x =>
+      divUniversalHighWindowShiftedRelationTransitionOfLE_chartRead
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n m h x)
+    (hcover := by
+      intro b
+      obtain ⟨n, x, hx⟩ := exists_divUniversalHighWindowShiftedChartRead_eq
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hb side b
+      exact ⟨n, x, hx⟩)
+    hsaturation
+
 end HighWindowTransitionRelation
 
 end AlgebraicGeometry
