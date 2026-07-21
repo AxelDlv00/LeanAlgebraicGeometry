@@ -197,6 +197,30 @@ lemma specMap_quotient_mk_fromSpec_over (I : Ideal Γ(X, V)) :
   rw [h1, ← Spec.map_comp, halg]
 
 include hV in
+/-- **Ideal-valued support finiteness.**  If the closed subscheme cut out by an
+arbitrary ideal `I` on an affine open `V` has closed image in the proper ambient
+scheme, then its coordinate ring is finite over the base.  This is the
+non-principal form needed for chart-reading ideals; the proof is the same
+universally-closed affine-morphism argument as the principal engine below. -/
+theorem finite_quotient_of_isClosed
+    [UniversallyClosed (X ↘ Spec (CommRingCat.of R))]
+    [LocallyOfFiniteType (X ↘ Spec (CommRingCat.of R))]
+    (I : Ideal Γ(X, V))
+    (hclosed : IsClosed (X.zeroLocus (I : Set Γ(X, V)) ∩ (V : Set X))) :
+    Module.Finite R (Γ(X, V) ⧸ I) := by
+  haveI hci : IsClosedImmersion
+      (Spec.map (CommRingCat.ofHom (Ideal.Quotient.mk I)) ≫ hV.fromSpec) :=
+    IsClosedImmersion.of_isPreimmersion _
+      ((hV.range_specMap_quotient_mk_fromSpec I) ▸ hclosed)
+  have hfin : IsFinite ((Spec.map (CommRingCat.ofHom (Ideal.Quotient.mk I)) ≫
+      hV.fromSpec) ≫ (X ↘ Spec (CommRingCat.of R))) := by
+    rw [IsFinite.iff_isIntegralHom_and_locallyOfFiniteType,
+      IsIntegralHom.iff_universallyClosed_and_isAffineHom]
+    exact ⟨⟨inferInstance, inferInstance⟩, inferInstance⟩
+  rw [Category.assoc, hV.specMap_quotient_mk_fromSpec_over] at hfin
+  exact RingHom.finite_algebraMap.mp ((IsFinite.SpecMap_iff _).mp hfin)
+
+include hV in
 /-- **The abstract (c1)-finiteness engine** (Kleiman's finiteness of the divisor
 subscheme, chart-local form): for an affine open `V` of a scheme `X` over `Spec R`
 whose structure morphism is universally closed and locally of finite type, and a
