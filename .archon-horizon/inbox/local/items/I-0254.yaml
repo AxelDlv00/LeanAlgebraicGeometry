@@ -1,0 +1,126 @@
+id: I-0254
+provider: local
+kind: info
+body: 'G-4 SEED gap-3 PARTIAL: d_p keystone + windowCompare neighbourhood + hfib-body
+  producer LANDED (Picard/DivSchemeSeedUnivFields.lean); achiever-lift -> sec / hdvd
+  / seedUniv REMAIN
+
+
+  All three landed in Picard/DivSchemeSeedUnivFields.lean (replaced the probe), axiom-clean
+  [propext, Classical.choice, Quot.sound], single-module LEAN_NUM_THREADS=1 lake build
+  GREEN (8755 jobs) under the mkdir lock, zero sorries, zero warnings in file. Commits:
+  e3a73f446 (Brick 1), ea23d5262 (Brick 2), 42bb429d (Brick 3) -- each root-wired
+  (HEAD-blob + only my import line after DivSchemeSeedUnivRead; sibling lines left
+  uncommitted per concurrent-lane protocol S4).
+
+
+  LANDED KEYSTONES (verbatim):
+
+
+  - existsUnique_effective_divisor_divUniversalFibre_seedPrime (hO hchi) (p : PrimeSpectrum
+  (DivCarveChartRing ...)) : EXISTS-UNIQUE D : (relCurve C p.asIdeal.ResidueField).CurveDivisor,
+  0 <= D AND deg kappa(p) D = g AND divUniversalFibreKM ... kappa(p) = H0(O(windowN
+  - D)) AND divUniversalFibreK'' ... kappa(p) = H0(O(windowN + windowS - D)). THE
+  d_q AT EVERY SEED-BASE PRIME (not only PairChartRing primes): every residue field
+  kappa(p) of R_Z = DivCarveChartRing kills the carve ideal over the pair chart ring
+  via divCarveIdeal_le_ker_of_tower (DivSchemeFamilyUniv:86) through the canonical
+  tower R_{I,J} -> R_Z -> kappa(p), so the AssembleKappa keystone existsUnique_effective_divisor_divUniversalFibre
+  fires. Extraction: divUniversalSeedFibreDivisor (def) + _spec + _unique. This is
+  the I-0247 step (a) achiever input.
+
+
+  - exists_forall_windowCompare_ne_zero (x : R_Z (x)_k H_M) (p) (hx : windowCompare
+  R_Z kappa(p) x != 0) : EXISTS f, f notin p.asIdeal AND forall q, f notin q.asIdeal
+  -> windowCompare R_Z kappa(q) x != 0. The window-level Nakayama neighbourhood (I-0247
+  step c): Module.exists_forall_tmul_residueField_ne_zero (DivSchemeSeed:264) at the
+  base-changed basis Module.Basis.baseChange R_Z b1 REINDEXED to Type u by Equiv.ulift.symm,
+  transported to windowCompare via tmul_one_eq_zero_iff_windowCompare (DivSchemeSeedUnivRes:145).
+
+
+  - relPinnedSectionsMap_relThetaResSide_windowEquiv_ne_zero (a) (hH1 : Subsingleton
+  (relTwistPair ...).H1) (p) (b : Bool) (x) (hx : windowCompare R_Z kappa(p) x !=
+  0) (u : Gamma(relCurve C kappa(p), relPinnedChart b)) (hne : basicOpen u != bot)
+  : relPinnedSectionsMap C R_Z kappa(p) pi b (relThetaResSide a b le_rfl (relThetaWindowEquiv
+  C R_Z pi a hH1 x)) != 0. THE hfib ROUTE: the predecessor reading bridge relPinnedSectionsMap_relThetaResSide_ne_zero
+  (DivSchemeSeedUnivRead) packaged as the EXACT nonvanishing clause of ThetaGeneratorSeed.isGenerator_of_fibre_ne_zero
+  (DivSchemeSeed:188-197), with chart-nonemptiness derived from the piece-witness
+  basicOpen u != bot via (relCurve C kappa(p)).basicOpen_le.
+
+
+  SEAM STATUS (I-0247 step 1/b): the seam divUniversalFibreKM_eq_span (DivSchemeSeedUnivRes:376,
+  predecessor) is ALREADY LANDED -- divUniversalFibreKM = K-span of {divFamPhi(windowCompare
+  x) : x in divUniversalFstWindow}, with elementwise forward divFamPhi_windowCompare_mem_divUniversalFibreKM
+  (:423). BUT (Explore verdict, memory-worthy): there is NO single lemma bridging
+  divUniversalSeedK (x) kappa(p) (thetaFieldRead dictionary) to divUniversalFibreKM
+  (divFamPhi dictionary) -- the two fibre-read dictionaries (thetaFieldRead vs divFamPhi)
+  are not bridged by one lemma. The achiever lift (step b) still needs that bridge.
+
+
+  REMAINING WALLS (dependency order for the next seed lane):
+
+
+  (A) achiever-lift -> sec (I-0247 step a/b): Scheme.exists_coeffAt_eq_baseDivisorAt
+  (BaseDivisor:143-154) at T := divUniversalFibreKM ... kappa(p), A := windowN, at
+  the fibre image point of z, applied to d_p (spec = divUniversalSeedFibreDivisor_spec)
+  -> f in divUniversalFibreKM, f != 0. Then lift f through K_univ ->> K_univ (x) kappa(p)
+  (finite/projective_divUniversalSeedK landed) to sec z in divUniversalSeedK. WALL:
+  the missing thetaFieldRead<->divFamPhi fibre-read bridge + divUniversalFibreKM_eq_span
+  surjectivity to realize f by a window vector x with sec z := relThetaWindowEquiv
+  C R_Z pi windowM (relThetaPairH1_windowM) x. Then windowCompare x != 0 at the achiever
+  fibre feeds Brick 2 -> Brick 3 -> hfib.
+
+
+  (B) side z / h z + THE NO-LEAK DISCHARGE (I-0244 BINDING for CertUniv): fire finite_colength_of_forall_fibre_closure_subset
+  (SupportTubeFinite, keystone (4)) with hfib : forall s : Spec R_Z, base^{-1}{s}
+  INTER closure(d.supportLocus INTER pieces j) SUBSET pieces j. d_p effective of degree
+  g => finite fibre support of pairwise-incomparable closed points; choose h z so
+  D(h z) contains the WHOLE fibre branch of d_p it cuts and clears the other support
+  points. The Brick-2 coordinate f (base locus {f != 0}) intersected with the pinned
+  chart is the natural h z; the Nakayama-neighbourhood shrink is where the no-leak
+  clause is discharged (record it in the piece-selection step). CertUniv fires keystone
+  (4) per piece, output Module.Finite R_Z (colength j).
+
+
+  (C) hdvd (I-0247 step d): SlicingFlat regular-element cancellation ONLY -- Algebra.TensorProduct.includeRight_mem_nonZeroDivisors_of_forall_tmul_residueField
+  (SlicingFlat:356-366) and Module.Flat.mem_smul_top_of_apply_mem_smul_top (SlicingFlat:79).
+  NEVER fibrewise->relative (I-0231 BINDING: fibrewise stalk-ideal equality does NOT
+  imply relative; consume the eps-window at R-level). The I-0231 unit-trick / flat-colength
+  cancellation is the R_Z-level discharge shape.
+
+
+  (D) seedUniv + isGenerator (I-0247 step e): seedUniv := ThetaGeneratorSeed.mk {side,
+  h, mem_basicOpen, sec := achiever-lift, sec_mem : sec z in divUniversalSeedK}; isGenerator_seedUniv
+  := ThetaGeneratorSeed.isGenerator_of_fibre_ne_zero hdvd hfib, where hfib comes from
+  Brick 3 (its x := the window preimage of sec z) and hdvd from (C). NO M+s mirror
+  needed: divFamEps_certifiedFamily (DivSchemeEps:309-330) takes ONE seed D at windowM
+  (K := divUniversalSeedK, i.e. Submodule.map (relThetaWindowEquiv ...).toLinearMap
+  x1.toSubmodule at x1 := divUniversalFstWindow) plus a SEPARATE hle2 hypothesis.
+
+
+  LEAN GOTCHAS (memory-worthy):
+
+  (a) DivCarveChartRing = abbrev PairChartRing / divCarveIdeal (quotient) => Algebra/IsScalarTower
+  (PairChartRing -> R_Z) are GLOBAL instances; the divUniversalFibre keystones fire
+  at kappa(p) for p : PrimeSpectrum R_Z with the maxSynthPendingDepth 8 + synthInstance.maxHeartbeats
+  800000 hatch (the k -> R_{I,J} -> R_Z -> kappa(p) tower).
+
+  (b) Module.exists_forall_tmul_residueField_ne_zero fixes ι : Type u but Fin r1 :
+  Type 0 -> REINDEX the base-changed basis by Equiv.ulift.symm (Module.Basis.baseChange
+  R_Z b1).reindex Equiv.ulift.symm; passing the non-reindexed basis gives a whnf HEARTBEAT
+  LOOP, not a clean universe error.
+
+  (c) The window-level lemmas re-elaborate the huge DivCarveChartRing type at each
+  (x)t / windowCompare occurrence; the neighbourhood lemma needs cumulative maxHeartbeats
+  2400000 (not a single heavy whnf) -- statement elaborates fine, proof accumulates.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-19T11:42:09.059128+00:00'
+updated_at: '2026-07-20T03:15:10.473113+00:00'
+metadata: {}

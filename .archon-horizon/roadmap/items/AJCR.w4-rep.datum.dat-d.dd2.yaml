@@ -1,0 +1,28 @@
+id: AJCR.w4-rep.datum.dat-d.dd2
+title: 'DD-2: divFunctor is a Zariski sheaf (separation from equation rigidity + certificate
+  locality; DAT-2 pattern)'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'DD-2: divFam functoriality + Zariski sheaf (spec informal/spec-dd-2.md +
+  2 addenda). COMPLETE except S6b packaging: S1 surgery/total mapAlg (19c79359); S2
+  laws (9aeae7d7); S4 separation (8f657e77); S3 vehicle (25c5887f); S5 gluing heart
+  (1758fad9); ADJUDICATION I-0213 (global-certificate pin wrong, diagonal counterexample;
+  DivFamZar repair); S5b DivFamZar + UNCONDITIONAL gluing keystone (4cabd11c); S6a
+  general-test map + sheaf statements at arbitrary tests (2bd1b78f, full root green
+  8951). REMAINING: S6b divFunctor packaging (one screen; DD-R co-sign requested,
+  I-0214-adjacent note; recommendation = picEtFunctor pattern, Functor.RepresentableBy
+  for divRep). DDR-9 must state divRep against DivFamZar.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-16T08:26:32.965428+00:00'
+  parent: AJCR.w4-rep.datum.dat-d
+  updated_at: '2026-07-19T02:56:09.879725+00:00'

@@ -1,0 +1,85 @@
+id: I-0297
+provider: local
+kind: info
+body: "carve pin steps 2-3 → hsub BUILD — the section→functionField identification\
+  \ (the piece I-0296 says steps 2-3 consume) LANDED + committed, concretely down\
+  \ to divUniversalFibreKM; hsub_chart / hinj_chart NOT landed (residual = the native-κ(p)\
+  \ rTensor connection + corank pin, the genuine XL wall, unchanged).\n\nTwo new files,\
+  \ both cheap general-K leaf builds OUTSIDE the κ(p) instance minefield (like the\
+  \ I-0296 germ bridge itself). Single-module LEAN_NUM_THREADS=1 lake build GREEN\
+  \ under the mkdir lock (8789 / 8791 jobs; my leaves 7.7s / 53s). All 3 keystones\
+  \ lean_verify axiom-clean [propext, Classical.choice, Quot.sound]; zero sorries;\
+  \ zero new warnings in my files (pre-existing maxHeartbeat/setOption warnings in\
+  \ GluedSheafH0BaseChange/DivSchemeFamilyUniv/DivisorFamilyThetaSections unchanged).\
+  \ Root: HEAD-blob + only my line each (protocol §4 — sibling PicEtCrossBaseGraph\
+  \ add + Hinj/Achiever/FibreCut/Seed removals in working tree NOT swept; show --stat\
+  \ = my 2 paths, root +1 each).\n\n=== COMMITS (this lane) ===\n- 432d2d50d  DD-4\
+  \ submodule germ bridge (Φ-form): chart reading of the window seed = unit × divFamPhi\
+  \ image\n- 2b34edc26  DD-4 carve pin step 2(a): chart reading of the fibre seed\
+  \ = unit × divUniversalFibreKM\n\n=== KEY MOVE (make-or-break, MEMORY-WORTHY) ===\n\
+  The germ bridge (I-0296) outputs the reading in thetaFieldRead form; the carve corank\
+  \ object divUniversalFibreKM is in divFamPhi form. The dictionary factorization\
+  \ divFamPhi = mulLinear(thetaFieldShiftUnit) ∘ thetaFieldRead ∘ relThetaWindowEquiv\
+  \ (DivisorFamilyFieldDictionary:286) bridges them EXACTLY — no pointwise base-change\
+  \ naturality square needed. Threading it (Submodule.map_comp + the group identity\
+  \ on the two units) folds germGenericLinear(range chartReadMap) onto mulLinear(u)·(map\
+  \ divFamPhi W), and divUniversalFibreKM_eq_span (Res:376) folds map divFamPhi (span(windowCompare\
+  \ '' fstWindow)) onto divUniversalFibreKM on the nose. Both stay over a GENERAL\
+  \ field K of the tower (towers are HYPOTHESES), so cheap leaf builds — the residue-field\
+  \ synthesis only bites when K := κ(p) is instantiated. Threaded unit = u₀ · thetaFieldShiftUnit⁻¹\
+  \ (germ-bridge unit corrected by the Φ shift unit).\n\n=== KEYSTONES (VERBATIM;\
+  \ ns AlgebraicGeometry.ThetaGeneratorSeed) ===\n(1) exists_unit_map_germGenericLinear_range_chartReadMap_relThetaWindowEquiv\
+  \ (vars {k}[Field k](C)(K)[Field K][Algebra k K](π)[IsFinite π][IsDominant π] base+relCurve-C-K\
+  \ Smooth/QC/LFT/IsIntegral inst; (a)) (b : Bool)(hηV : genericPoint (relCurve C\
+  \ K) ∈ relPinnedChart C K π b)(hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle\
+  \ C k π a)).H1)(W : Submodule K (K ⊗[k] ↥(divisorSections k (a • fiberWeilDivisor\
+  \ π) ⊤))) : ∃ u : (relCurve C K).functionFieldˣ, Submodule.map (germGenericLinear\
+  \ K hηV) (LinearMap.range (chartReadMap (Submodule.map (relThetaWindowEquiv C K\
+  \ π a hH1).toLinearMap W) b)) = Submodule.map (mulLinear K ↑u) (Submodule.map (divFamPhi\
+  \ C K π a hH1) W)\n    — THE Φ-FORM GERM BRIDGE. Proof: exists_unit_map_germGenericLinear_range_chartReadMap\
+  \ (I-0296) + Submodule.map_comp folding thetaFieldRead∘relThetaWindowEquiv + divFamPhi\
+  \ def + a units 'group' identity. maxHeartbeats 800000.\n(2) map_divFamPhi_divUniversalFibreSeedW\
+  \ (seed vars: full campaign context C[Smooth/Proper/GeomIrred]hπ,g,r₁,r₂,b₁,b₂,i,j,K\
+  \ with the PairChart/DivCarve towers) : Submodule.map (divFamPhi C K π (windowM_choice\
+  \ π hπ g) (relThetaPairH1_windowM C π hπ g)) (divUniversalFibreSeedW …) = divUniversalFibreKM\
+  \ C hπ g r₁ r₂ b₁ i j K   where divUniversalFibreSeedW := Submodule.span K (windowCompare\
+  \ R_Z K '' divUniversalFstWindow.toSubmodule). Proof: Submodule.map_span + Set.image_comp\
+  \ + divUniversalFibreKM_eq_span. maxHeartbeats 1M, maxRecDepth 8000.\n(3) exists_unit_map_germGenericLinear_range_chartReadMap_divUniversalFibreKM\
+  \ (same seed vars) (b : Bool)(hηV : genericPoint (relCurve C K) ∈ relPinnedChart\
+  \ C K π b) : ∃ u : (relCurve C K).functionFieldˣ, Submodule.map (germGenericLinear\
+  \ K hηV) (LinearMap.range (chartReadMap (Submodule.map (relThetaWindowEquiv C K\
+  \ π (windowM_choice π hπ g) (relThetaPairH1_windowM C π hπ g)).toLinearMap (divUniversalFibreSeedW\
+  \ …)) b)) = Submodule.map (mulLinear K ↑u) (divUniversalFibreKM C hπ g r₁ r₂ b₁\
+  \ i j K)\n    — CARVE PIN STEP 2(a): the fibre-seed chart reading's germ = unit\
+  \ × the corank-g fibre window. Proof: (1) at W_κ .trans (2). W_κ is EXACTLY the\
+  \ compared window step 1 (relPinnedTermBaseChangeAlg_reading_windowEquiv, 9b68eb676)\
+  \ produces from f_V ⊗ κ(p).\n\n=== hsub_chart / hinj_chart STATUS: NOT LANDED. Residual\
+  \ = the native-κ(p) rTensor connection + corank pin ===\nRemaining (the XL wall,\
+  \ needs the native k→R_Z→κ(p) tower per I-0295, term-mode, 2M heartbeats):\n(i)\
+  \ connect chartReadMap divUniversalSeedK b over R_Z, BASE-CHANGED to κ(p), with\
+  \ the fibre-seed chart reading chartReadMap (map relThetaWindowEquiv W_κ) b over\
+  \ κ(p): step 1 relPinnedTermBaseChangeAlg_reading_windowEquiv (element-level, LANDED)\
+  \ + the chart-level colength/base transport relPinnedQuotBaseChangeAlg (HinjChart,\
+  \ LANDED) identify f_V⊗κ(p)'s range with the fibre-seed range at K:=κ(p) — this\
+  \ is where the residue-field towers must be wired NATIVELY (I-0295 verdict: they\
+  \ synthesize, budget bump only).\n(ii) germGenericLinear is INJECTIVE (integral\
+  \ scheme) and mulLinear u injective ⟹ finrank(range fibre-seed chartReadMap) = finrank\
+  \ divUniversalFibreKM = h0(windowN) − g (finrank_divUniversalFibreKM_add, AssembleKappa:207)\
+  \ — a CONSTANT fibre dim ⟹ (range chartReadMap divUniversalSeedK ⊗ κ(p)) ↪ Γ(V)⊗κ(p),\
+  \ i.e. hsub_chart, via the constant-rank/flat criterion (or liftQ_rTensor_residueField_injective,\
+  \ SlicingFlatKernel:234, on hspan_chart).\n(iii) hinj_chart from hsub_chart via\
+  \ forall_chartRead_range_subtype_rTensor_injective_iff (HinjChart, 895d7d8aa); then\
+  \ chart-level hsub. Steps 2(a) keystone (3) is the germ-side identification (i)+(ii)\
+  \ consume: threaded unit is harmless for finrank/injectivity."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: agent
+source_ref: null
+created_at: '2026-07-19T23:21:24.461572+00:00'
+updated_at: '2026-07-19T23:21:24.461584+00:00'
+metadata: {}

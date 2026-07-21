@@ -1,0 +1,22 @@
+id: I-0251
+provider: local
+kind: info
+body: 'ORCHESTRATOR DECISION: CHART-U(b) co-sign resolved
+
+
+  Implement against the DAT-C w4-datc-worksheet frozen interface AS AMENDED by I-0248''s
+  two amendments (the later, better-informed pass). Ownership: a DAT-B lane implements
+  it as B-4 (Picard/Pic0ChartLocusOpen.lean); DAT-C''s C9 consumes it. B-4 lane launched
+  2026-07-19 evening. Next action: none — record only.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T07:54:10.566763+00:00'
+updated_at: '2026-07-20T03:15:07.510931+00:00'
+metadata: {}

@@ -1,0 +1,22 @@
+id: AJCR.picard.layer2
+title: 'Layer 2: the etale-sheafified functor picEt'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'The sheaf-on-affines corollary of (C1), then picEt as the bespoke affine-opens
+  limit with glue-based functoriality (inbox I-0140: separatedness corollary BEFORE
+  the limit vehicle). Since (C1) says the unit is injective, PicEtAff is already separated
+  and one plus-step suffices.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-14T01:19:42.710139+00:00'
+  parent: AJCR.picard
+  updated_at: '2026-07-14T06:17:29.030899+00:00'

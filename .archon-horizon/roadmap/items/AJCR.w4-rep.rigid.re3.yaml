@@ -1,0 +1,20 @@
+id: AJCR.w4-rep.rigid.re3
+title: 'RE-3: split/flat rigidity — $H^0 \otimes_R P \cong \ker(\delta \otimes P)$
+  for every module $P$ once $H^1 = 0$; kernel flat, finite projective over Noetherian
+  $R$; finite-projective duality'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T03:38:48.123643+00:00'
+  parent: AJCR.w4-rep.rigid

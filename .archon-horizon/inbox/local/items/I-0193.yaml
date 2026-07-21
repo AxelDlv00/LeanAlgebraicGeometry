@@ -1,0 +1,102 @@
+id: I-0193
+provider: local
+kind: memory
+body: 'DDR-1 LANDED (chart layer + global DivScheme) + DDR-7 LANDED - lane report
+  (commits 30ac47b504, ae0984c26b, 9809ade22c; root wired per protocol section 4,
+  all keystones axiom-clean [propext, Classical.choice, Quot.sound], no sorries).
+
+
+  LANDED FILES (4 new, all <=500 lines; the 500-cap forced DDR-1 across two files
+  and the kit across two - noted in commit messages):
+
+  1. Picard/DivCarveKit.lean - module kit: quotRetract/finite_submodule_of_projective_quotient
+  (projective-quotient submodules are finite retracts); ker_baseChange_mkQ (ker (mkQ
+  x S) = Km.baseChange S - split exactness under base change); carvePairArrow (generic
+  (diamond) arrow mkQ . (mu x R) . incl; carveArrow of SectionMul is the instance
+  mu := sectionMulBilin, rfl-bridge carveArrow_eq_carvePairArrow in DivCarveLocus);
+  baseChange_carvePairArrow_eq_zero_iff (L1 carve transport: base-changed arrow vanishes
+  iff arrow of the Grassmannian.map-pushed pair vanishes; mechanism = splitting +
+  cancelBaseChange naturality); ideal_le_ker_iff_factors, ideal_eq_of_forall_le_ker_iff
+  (kills-determined ideals).
+
+  2. Picard/DivCarvePairChart.lean - Gr-side: map_chartTautologicalPoint_eq_of_specMap_iota_eq
+  (two chart maps presenting the same morphism to grScheme pull tautological points
+  back equally = scheme-level GL-cocycle, via landed pullbackIotaIso legs + map_transitionPreMap_chartTautologicalPoint;
+  NO new gluing); PairChartRing/pairChartMap (affine pair atlas of grPair, open immersion)
+  + pairChartMap_fst/snd leg lemmas; pair-chart compatibility both factors; DDR-7
+  hom-ext: algHom_ext_of_map_chartTautologicalPoint_eq (GL factor is identity on the
+  I-minor => MvPolynomial.algHom_ext) + grPair_hom_ext_of_frame.
+
+  3. Picard/DivCarveLocus.lean - DDR-1 chart layer: pairTautFst/Snd (tautological
+  pair over R^I (x)[k] R^J); carveIdeal (generic multiplier family) = sup of entriesIdeals
+  of carve arrows; KEYSTONES carveIdeal_le_ker_iff (kills iff (diamond) tensor S holds),
+  carveIdeal_le_ker_iff_carve_map (iff carve holds for the PULLED-BACK pair - L1),
+  carveIdeal_le_ker_iff_factors; carveLocus/carveLocusIota (closed immersion)/carveLocusToGrPair;
+  IsNoetherianRing (PairChartRing) via MvPolynomial.algebraTensorAlgEquiv (DDR-3 licence)
+  + QuasiCompact; carveIdeal_le_ker_of_specMap_pairChartMap_eq = THE GLUING COMPATIBILITY
+  (carve ideals of two charts presenting one test morphism have matching kill-sets;
+  L1 both ways + GL-cocycle). Campaign spellings: divCarveMul (sectionMulBilin conjugated
+  by DD-4 boundary bases b1 : Basis (Fin r1) k H0(B), b2 : Basis (Fin r2) k H0(A+B)
+  - COORDINATE ambients per spec-dd-r section 3 preamble), divCarveArrow, divCarveIdeal,
+  divCarveLocus + keystone restatements.
+
+  4. Picard/DivScheme.lean - DDR-1 global: carveIdealSheaf := inf over pair atlas
+  of (carveLocusToGrPair).ker (mathlib IdealSheafData); carveScheme/carveSchemeIota
+  (closed immersion via mathlib subschemeIota instance)/carveSchemeOver; carveScheme_exists_factor_of_le_ker
+  (chart test killing chart ideal factors through the immersion; uniqueness by mono);
+  carveIdealSheaf_le_ker_of_factors; carveScheme_hom_ext; campaign DivScheme/divSchemeIota/divSchemeOver/divScheme_exists_factor_of_le_ker/divScheme_hom_ext.
+
+
+  STILL OPEN (the one DDR-1 gap): ''KeyChart'' - carveIdealSheaf.ideal (pairChartOpen
+  i j) = comap of carveIdeal i j along the chart Gamma-iso. Its <= half is the self-term
+  computation ker ((q c).app U_c) = I_c (appIso/appLE bookkeeping); its >= half is:
+  for s in I_c-transported, (q c'').app U_c s = 0 in Gamma(Z_c'', preimage U_c), via
+  X.IsSheaf.section_ext + basic opens D(t) <= preimage (isBasis_basicOpen, Z affine)
+  + IsOpenImmersion.lift (pairChartMap c) (basicOpenIncl >> q c'') (range condition)
+  + Spec.preimage + over-k extraction (compose with grPairStructMap; need small lemma
+  pairChartMap_structMap : pairChartMap >> grPairStructMap = Spec.map (algebraMap
+  k R_c), provable from pairChartMap_fst + iota_grStructMap) + the LANDED compat theorem
+  carveIdeal_le_ker_of_specMap_pairChartMap_eq. Mathlib route markers: Scheme.Hom.ker_apply
+  [QuasiCompact - landed instance], IsOpenImmersion.GammaIsoTop / appIso / lift_app,
+  ker_ideal_of_isPullback_of_isOpenImmersion + IsOpenImmersion.isPullback (alternative
+  pullback-square route; range condition = the pair-overlap D(P^I_I'' (x) P^J_J'')
+  identification, NOT yet landed). Consumers not blocked: DDR-3/4/5 are chart-local
+  (spec section 4 order) and consume DivCarveLocus only; KeyChart is needed by DDR-6''s
+  converse direction (factor => kills ideal) and by exactness-of-atlas statements.
+
+
+  HAZARDS for successors: (1) ULift/glueData.J motive pollution - rw with goals containing
+  i.down or pullbackIotaIso/chartIncl-typed terms fails with ''motive is not type-correct''
+  at instances transparency; USE TERM-MODE (congrArg/Eq.trans/calc-with-explicit-legs)
+  instead of rw for these, and fill pullback.fst/snd underscores explicitly in calc
+  RHS (Trans Eq Eq ?m failures). (2) TC could not synthesize IsOpenImmersion ((grPairCover).f
+  (i,j)) nor use haveI := map_prop through the abbrev; the working form is exact @IsOpenImmersion.comp
+  _ _ _ f g inferInstance h1. (3) Basis is Module.Basis in this mathlib; divisorSections
+  is AlgebraicGeometry.Scheme.divisorSections (open Scheme). (4) MvPolynomial.algebraTensorAlgEquiv
+  needs sigma given explicitly or TC hunts HopfAlgebra instances to timeout. (5) Grassmannian
+  quotient instances (finite/projective) fire automatically off N.toSubmodule; domain
+  finiteness comes from the kit retract lemma. (6) map_toSubmodule/baseChangeMkQ letI-instance
+  dance: state lemmas over [Algebra R S][IsScalarTower k R S] instance args and instantiate
+  with w.toAlgebra + IsScalarTower.of_algebraMap_eq'' w.comp_algebraMap.symm - proof-irrelevant
+  tower, data-relevant Algebra must be the same w.toAlgebra term.
+
+
+  NOTES FOR DDR-3 (next on critical path): the chart rings of DivScheme are PairChartRing
+  k g r1 g r2 i j / carveIdeal (Noetherian instance landed); the universal pair over
+  a chart is (pairTautFst/Snd) pushed to the quotient ring via Module.Grassmannian.map
+  along the quotient algebra map, and the carve holds there by carveIdeal_le_ker_iff_carve_map
+  applied at S := the quotient (kills = mk_ker). The coordinate-to-section seam is
+  divCarveMul/b1/b2 (DD-4 boundary); sectionMulBilin enters via carveArrow_eq_carvePairArrow
+  (rfl).'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: DD-R DDR-1/DDR-7 lane (Fable)
+source_ref: null
+created_at: '2026-07-17T05:50:57.269518+00:00'
+updated_at: '2026-07-20T03:16:19.566982+00:00'
+metadata: {}

@@ -1,0 +1,31 @@
+id: AJCR.w4-rep.datum.dat-d.dd1
+title: 'DD-1: the divisor-functor pin — certified families (LocalEquations + finite
+  chart adaptation + colength certificate), setoid, certified pullback, field dictionary'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'DD-1 divisor-functor pin. LANDED: Stage 1 spec+probe (831c6fbef, addendum
+  committed); stage (a) Tor home Picard/FlatCokernel.lean (357ac8e59) — kernel/regular-element
+  base change from flat cokernels, keystones axiom-clean; stage (b) carrier Picard/DivisorFamily.lean
+  (12ce9db22) — DivEq setoid + picClass descent, Fin-indexed adaptation, W(d)=ker(deltaL-deltaR)
+  with equalizer description, IsCertified (c1)-(c4), DivFam : Type u + DivFam.picClass.
+  OPEN: (c) certified pullback/mapAlg — blocked-by-design on DAT-1 (1d-ii) second-half
+  term identifications (consume, don''t re-derive; hreg then fires via FlatCokernel
+  L2 + stalk-localization seam); (d) extraction — share (1f) finisher''s refinement
+  engine; (e) vehicle; (f) field dictionary (statement frozen in spec §3(f)). Tor
+  home = complementary PAIR with DAT-A2''s FibrewiseRegular (reconciled in spec addendum).
+  Certificate deviation (c3)/(c4) is the probe''s main finding — DD-R must discharge
+  them on Z(diamond), recorded seam.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-16T08:26:31.774814+00:00'
+  parent: AJCR.w4-rep.datum.dat-d
+  updated_at: '2026-07-19T02:56:08.639436+00:00'

@@ -1,0 +1,83 @@
+id: I-0182
+provider: local
+kind: memory
+body: "DD-1c (f) INVERSE-LAW ADJUDICATION — VERDICT (2026-07-17, Opus prover). Follow-on\
+  \ to I-0179/I-0171/I-0167 (all KEPT OPEN as machinery maps). Commit d4d87e30, Picard/DivisorFamilyFieldEquiv.lean\
+  \ (214 lines, root-wired, own closure green 8644 jobs, keystones lean_verify axiom-clean\
+  \ [propext,Classical.choice,Quot.sound]).\n\nWHAT LANDED (3 declarations):\n- Scheme.divEq_of_presentationDivisor_eq\
+  \ : the CONVERSE of the landed presentationDivisor_eq_of_divEq. Two LocalEquations\
+  \ on the curve with the SAME Weil divisor are DivEq. Proof: on the common refinement\
+  \ d1.cover ⊓ d2.cover, at each point x the ratio r = elem1 x / elem2 x has ordZ\
+  \ = 1 at every closed point z of the overlap (equal orders read the equal divisor\
+  \ coefficient off any piece: MeromorphicPresentation.ordZ_elem_eq + coeffAt_presentationDivisor\
+  \ + toAdd injective), so r and r-inv are both O(0)-sections (RiemannRoch.DivisorSheafZero.exists_section_germ_eq),\
+  \ i.e. r is a unit section (germ_injective_of_isIntegral) rescaling d2.eqn x to\
+  \ d1.eqn x. Gives the full characterization DivEq d1 d2 <-> presentationDivisor\
+  \ d1 = presentationDivisor d2.\n- divFamDivisor_injective : the forward map divFamDivisor\
+  \ is INJECTIVE on DivFam, UNCONDITIONALLY. Two families with equal divisor are DivEq\
+  \ (above), hence equal in the setoid.\n- divFamFieldEquivOfDegOfSurj : the equiv\
+  \ DivFam ~ {D // 0<=D and deg K D = n} assembled from two named hypotheses (sorry-free,\
+  \ conditional).\n\nTHE VERDICT (decides task 2 — outcome (b), NOT (a), NOT (c)-blanket):\
+  \ The SECOND inverse law divFamOfDivisor (divFamDivisor F) = F does NOT need general\
+  \ MV. It IS divFamDivisor_injective (landed): once the backward map exists, both\
+  \ sides of the law present the same divisor, so injectivity forces them equal. The\
+  \ full divFamFieldEquiv needs EXACTLY TWO further inputs, neither of which is the\
+  \ second law:\n  (1) hdeg = general-MV forward-degree deg(divFamDivisor F) = n for\
+  \ an ARBITRARY certified family. This is the honest Mayer-Vietoris wall of I-0179\
+  \ (the separated identity deg_divFamDivisor_of_separated constrains finrank W(A'')\
+  \ of a FRESH separated adaptation, not finrank W(A) of F's own adaptation; connecting\
+  \ them = adaptation-independence of the glued rank = the XL). Needed even to LAND\
+  \ the forward map in the deg-n subtype. STILL UNFUNDED.\n  (2) hsurj = backward\
+  \ realization: every effective deg-n divisor is divFamDivisor of some certified\
+  \ family, via PointPresentation.pointEquations products + a support-separating adaptation.\
+  \ LARGE but needs NO general MV: the constructed adaptation is support-separated\
+  \ so its certificate rank finrank W = deg D = n comes FOR FREE from deg_divFamDivisor_of_separated\
+  \ with deg D = n an input hypothesis. This = task 1's backward map divFamOfDivisor\
+  \ + first inverse law divFamDivisor_divFamOfDivisor. NOT landed this session (multi-file\
+  \ construction: LocalEquations product realizing D, support-separated adaptation\
+  \ isolating support points in the two PINNED charts, finiteness of colengths, certificate\
+  \ (c1)-(c4); (c3)/(c4) free over field).\n\nFOR THE DD-R SPEC (consumes this dictionary):\
+  \ You do NOT need to fund the general-MV brick (1) if you consume the ONE-SIDED\
+  \ dictionary. If P-fib supplies a UNIQUE effective deg-n divisor D (its uniqueness),\
+  \ then hsurj's family for D feeds divFamOfDivisor and the one law divFamDivisor(family)=D\
+  \ round-trips through the divisor; because divFamDivisor is MONO (divFamDivisor_injective,\
+  \ landed), its section is determined, so the second inverse law is not separately\
+  \ required. Provided epsilon (DD-4) is mono, family equality is testable after epsilon.\
+  \ => DD-R can consume {backward map (hsurj, fundable) + divFamDivisor_injective\
+  \ (landed)} and skip general MV.\n\nNEXT LANE (to reach full equiv): build hsurj\
+  \ = the backward map divFamOfDivisor (task 1). Machinery: pointEquations (PointPresentation.lean:255)\
+  \ products via LocalEquations.mul (DivisorClass.lean:333) with presentationDivisor\
+  \ additivity; support-separated adaptation isolating each support point (refine\
+  \ exists_divisorAdaptation to make pieces contain <=1 support point); certificate\
+  \ via finrank_glued_eq_sum_of_separated + finrank_colength_eq_sum (finiteness of\
+  \ colength is the extra obligation), rankAtStalk=finrank over field, (c3)/(c4) trivial.\
+  \ Then plug divFamOfDivisor + first law into divFamFieldEquivOfDegOfSurj hdeg hsurj.\
+  \ hdeg (general MV) remains the sole XL.\n\nagent-ready\n\n=== UPDATE (2026-07-17,\
+  \ Opus hsurj prover — see follow-on I-0186) ===\nhsurj STAGES 1-2 LANDED in Picard/DivisorFamilyBackward.lean\
+  \ (green 8649 jobs, axiom-clean): (1) Scheme.LocalEquations.presentationDivisor_mul\
+  \ (LocalEquations-level divisor additivity along d.mul d', commit 87d787e49); (2)\
+  \ exists_localEquations_presentationDivisor_eq (every effective D is presentationDivisor\
+  \ of an explicit point-uniformizer-product LocalEquations, commit b2a85c0b6) — the\
+  \ eqns half of hsurj.\n\nCORRECTION to the \"hsurj needs NO general MV\" claim above:\
+  \ the support-separated backward construction is OBSTRUCTED for divisors with support\
+  \ in the chart overlap. The two pinned charts V0=pi^-1(chart0), V1=pi^-1(chart1)\
+  \ overlap (V0 inf V1 = pi^-1(Gm) nonempty affine), and a DivisorAdaptation structurally\
+  \ covers BOTH charts (FinCoverData.partition0/1 => cover0/cover1). So a support\
+  \ point z in V0 inf V1 is in a chart-0 AND a chart-1 piece; both equations vanish\
+  \ at z (coeffAt_eq_toAdd_ordZ_eqn), so the cross-chart ovlColength is NOT subsingleton\
+  \ and deg_divFamDivisor_of_separated's hsep is UNSATISFIABLE. This is the Cech H0\
+  \ overlap correction (prod colength overcounts overlap points); the true finrank\
+  \ W needs the general MV = the hdeg wall. => general hsurj SHARES hdeg's MV obligation;\
+  \ only OFF-overlap divisors (supp subset (V0\\V1) union (V1\\V0)) are MV-free. DD-R's\
+  \ one-sided dictionary is MV-free only if P-fib's D avoids pi^-1(Gm). Full details\
+  \ + revised strategy in I-0186."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T02:51:13.760137+00:00'
+updated_at: '2026-07-17T03:29:55.000199+00:00'
+metadata: {}

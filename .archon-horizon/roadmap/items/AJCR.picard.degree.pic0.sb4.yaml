@@ -1,0 +1,20 @@
+id: AJCR.picard.degree.pic0.sb4
+title: 'SB-4: the fiber-degree identity $(\dagger)$ — $\sum_{x'' \mapsto x} \mathrm{ord}_{x''}(\pi^\sharp
+  t)\,[\kappa(x''):K_2] = [\kappa(x):K_1]$'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T03:39:09.830598+00:00'
+  parent: AJCR.picard.degree.pic0
+  updated_at: '2026-07-16T05:38:03.142618+00:00'

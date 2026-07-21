@@ -1,0 +1,69 @@
+id: I-0245
+provider: local
+kind: info
+body: 'DD-Q divQProj bundle LANDED
+
+
+  DD-Q (dat-d-worksheet §4.1 + §4.2 export rows) LANDED, commit 0091f382311. New file
+  Picard/DivSchemeQProj.lean (258 L), root wired with only my import line (sibling
+  PicEtCrossBaseGraph line left uncommitted in working tree, untouched). Kernel-checked
+  single-module green, zero sorries, zero warnings; keystones divQProj, isSeparated_divScheme,
+  compactSpace_divScheme, isSeparated_carveScheme, isSeparated_grPair, compactSpace_grPair
+  all axiom-clean [propext, Classical.choice, Quot.sound].
+
+
+  BUNDLE CONTENTS (verbatim). GrPair data (namespace AlgebraicGeometry.Grassmannian,
+  vars k d1 r1 d2 r2): instance isAffine_grPairCover_X (ij : (grPairCover k d1 r1
+  d2 r2).I0) : IsAffine ((grPairCover ..).X ij) — with the landed finite_grPairCover_index
+  this is the §4.1 finite affine frame atlas; instance compactSpace_grPair : CompactSpace
+  (grPair ..) (qc FREE from the finite atlas, per §4.1 no image argument); theorem
+  quasiCompact_grPairStructMap : QuasiCompact (grPairStructMap ..); theorem locallyOfFiniteType_grPairStructMap
+  : LocallyOfFiniteType (grPairStructMap ..); theorem isSeparated_grPairStructMap
+  : IsSeparated (grPairStructMap ..) (DD-3 isSeparated_grStructMap through pullback.fst
+  base-change + comp); theorem isSeparated_grPair : (grPair ..).IsSeparated. Generic
+  carve level (vars k g r1 r2 mu): quasiCompact_carveSchemeOverHom / locallyOfFiniteType_carveSchemeOverHom
+  / isSeparated_carveSchemeOverHom on (carveSchemeOver k g r1 r2 mu).hom; instance
+  compactSpace_carveScheme; theorem isSeparated_carveScheme. Campaign spellings (DivScheme.lean
+  Curve vars): instance quasiCompact_divSchemeOverHom : QuasiCompact (divSchemeOver
+  k A B g r1 r2 b1 b2).hom; instance compactSpace_divScheme : CompactSpace (DivScheme
+  ..); instance locallyOfFiniteType_divSchemeOverHom; instance isSeparated_divSchemeOverHom;
+  instance isSeparated_divScheme : (DivScheme ..).IsSeparated. Bundle: structure DivQProjBundle
+  : Prop (9 fields: isClosedImmersion_i = the landed isClosedImmersion_divSchemeι,
+  finite_atlasIndex, isAffine_atlas, quasiCompact/locallyOfFiniteType/isSeparated_pairStructMap,
+  quasiCompact/locallyOfFiniteType/isSeparated_hom) + theorem divQProj : DivQProjBundle
+  k A B g r1 r2 b1 b2.
+
+
+  CONSUMER CITATIONS (§4.2 rows): DAT-glue cites locallyOfFiniteType_divSchemeOverHom
+  (the lft certificate of the 01JJ chart family); Wave-5 cites quasiCompact_divSchemeOverHom
+  + compactSpace_divScheme (qc inputs toward AbelSourceData.isProper) and gets isSeparated_divSchemeOverHom
+  + locallyOfFiniteType_divSchemeOverHom as the further IsProper constituents; DAT-G
+  cites divQProj (the single bundle, with the §4.1 boundary note).
+
+
+  BOUNDARY FINDINGS (§4.1, recorded not built): (1) Plücker projectivity NOT delivered,
+  per the binding boundary — nothing in the bundle is an ample bundle. (2) Sharper
+  finding for Wave-5: AbelSourceData.isProper needs IsProper D.hom = qc + lft + separated
+  + UNIVERSALLY CLOSED; this bundle delivers the first three, but universal closedness
+  of grPair (hence of DivScheme, properness of Div^g) is NOT in DD-3 exports and NOT
+  here — it is properness-of-the-Grassmannian territory (valuative/Plücker-adjacent),
+  i.e. the P1 producer brick of AbelSource.lean must source universal closedness elsewhere
+  (a NEW brick to negotiate per the §4.1 rule; flag on the Wave-5/P1 worksheet, not
+  silently absorbed).
+
+
+  REMAINS of DD-Q: only the blueprint-nodes half (house-rule anchors, P-fib on Kleiman
+  th:LinSys/sb:Q only where genuinely matching, ex:DivC for degree components) — explicitly
+  gated on divRep landing, not this lane. Geometry half complete.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T06:20:30.991400+00:00'
+updated_at: '2026-07-20T03:14:58.795992+00:00'
+metadata: {}

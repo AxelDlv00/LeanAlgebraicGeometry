@@ -1,0 +1,66 @@
+id: I-0302
+provider: local
+kind: info
+body: "RD-N -> ann-cutter -> seedUniv' BUILD: step 1 LANDED (unconditional chart flat);\
+  \ RD-N proper is the remaining geometric wall (concrete N z + stalk bridge + kappa(p)->kappa(z)\
+  \ flat transport), pinned for next lane.\n\n=== COMMIT (this lane) ===\n- 683de581f\
+  \  DD-4 redesign RD-N step 1: unconditional chart-level J-flat at the seed. New\
+  \ file Picard/DivSchemeRedesignRDN.lean (112 L). Single-module LEAN_NUM_THREADS=1\
+  \ lake build GREEN under the mkdir lock (8797 jobs; my module 75s). Root: HEAD-blob\
+  \ + only my import line (protocol §4 — sibling PicEtCrossBaseGraph add + Hinj/Achiever/FibreCut/Seed\
+  \ working-tree removals NOT swept; show --stat = my 2 paths, root +1). Zero sorries,\
+  \ zero warnings in my file.\n\n=== KEYSTONE (VERBATIM; namespace AlgebraicGeometry.ThetaGeneratorSeed)\
+  \ ===\ntheorem flat_chart_colength_divUniversalSeedK (b : Bool) (hχ : Sheaf.chi\
+  \ (C.left.moduleKSheaf k) = 1 - (g : ℤ)) : Module.Flat (seedChartRing C hπ g r₁\
+  \ r₂ b₁ b₂ i j) (Γ(relCurve C (seedChartRing ...), relPinnedChart C (seedChartRing\
+  \ ...) π b) ⧸ LinearMap.range (chartReadMap (divUniversalSeedK C π hπ g r₁ r₂ b₁\
+  \ b₂ i j) b))\nlean_verify axiom-clean [propext, Classical.choice, Quot.sound].\
+  \ This is I-0289 build step 1: threads the landed hη discharge (genericPoint_mem_relPinnedChart,\
+  \ I-0300) into the carve pin hsub_chart (I-0299) making it unconditional bar hχ,\
+  \ then feeds the free-codomain chart flat forall_flat_colength_quotient_of_hsub_free\
+  \ (I-0301). So the chart-level J-flat now FIRES gated ONLY on the campaign genus\
+  \ condition hχ. Closes the I-0300/I-0301 residual 'once hchi supplied, hsub_chart\
+  \ unconditional so the flat fires'.\n\n=== hχ IS A THREADED HYPOTHESIS, NOT DISCHARGEABLE\
+  \ ===\nhχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - g is over the BASE field k —\
+  \ the campaign definition of the genus g (a hypothesis on C), NOT derivable in-tree.\
+  \ It is threaded identically through the achiever and hsub_chart. chi_relCurve_baseField\
+  \ (used inside R1) converts base-field χ to fibre χ; that base-change step is landed.\n\
+  \n=== RD-N (step 2) — THE REMAINING WALL, precisely reduced ===\nTarget: hV.primeIdealOf\
+  \ z ∉ Module.support Γ(V) (N z), feeding the LANDED ann-cutter IsAffineOpen.exists_mem_basicOpen_forall_smul_eq_zero\
+  \ (FibreCut, I-0292). REDUCTION: mathlib has Module.mem_support_iff_nontrivial_residueField_tensorProduct\
+  \ [Module.Finite R M] (p) : p ∈ support R M ↔ Nontrivial (κ(p) ⊗ M). So z∉supp(N\
+  \ z) ⟺ Subsingleton (κ(primeIdealOf z) ⊗_Γ(V) N z) — the Nakayama half is ALREADY\
+  \ in mathlib; NO new abstract CA lemma needed. Remaining content is GEOMETRIC, 4\
+  \ pieces:\n (2a) Define N z at CHART level = (range(chartReadMap K b)=J)/⟨read sec\
+  \ z⟩ as a Γ(V)-module + its Module.Finite Γ(V) (SupportTubeFinite finite_colength_of_...\
+  \ :215/:263, chart V not piece).\n (2b) kappa(p)->kappa(z) flat transport: achiever\
+  \ (I-0291) gives read(sec z) generates J in the BASE-prime fibre κ(p); R_Z-flatness\
+  \ of J (from flat_chart_colength_divUniversalSeedK via SES 0->J->Γ(V)->Γ(V)/J->0,\
+  \ Γ(V) free ⟹ J flat) lifts base-fibre generation to the CURVE-point fibre κ(z),\
+  \ i.e. proves Subsingleton(κ(z)⊗N z). This is the I-0231 k[ε] guard discharged by\
+  \ the flat. THE genuine XL content.\n (2c) stalk bridge: identify (primeIdealOf\
+  \ z).asIdeal.ResidueField with the SCHEME residue field at z via hV.isLocalization_stalk\
+  \ (grep — NOT yet used in-tree; fresh wiring).\n\n=== DOWNSTREAM READY TO CONSUME\
+  \ RD-N (all landed) ===\nann-cutter engine + DIRECT hdvd (FibreCut, I-0292, 1682735d8);\
+  \ isGenerator_of_ann_cutter (Seed, I-0292, e82a876cd) = isGenerator_of_fibre_ne_zero(hdvd\
+  \ from hann)(hfib); flat_chart_colength_divUniversalSeedK (THIS lane) feeding (2b).\
+  \ Once RD-N lands z∉supp(N z): concrete seedUniv' VALUE (sec:=achiever I-0291, h:=ann-cutter,\
+  \ side/mem_basicOpen from exists_mem_relPinnedChart, mirror DivSchemeSeedUnivGen.lean),\
+  \ isGenerator_seedUniv':=isGenerator_of_ann_cutter, then certificate (non-circular)\
+  \ -> divUniversalFamily:=divFamEps_certifiedFamily (DDR9-U U1) -> divRep.\n\n===\
+  \ ANTI-CIRCULARITY preserved ===\nCertificate-FREE. Order hsub_chart(landed)->hη(landed)->flat(LANDED\
+  \ chart, unconditional bar hχ, THIS lane)->RD-N(next)->seedUniv'->certificate->U1.\
+  \ flat_chart_colength_divUniversalSeedK consumes NO IsGenerator/IsCertified/RD-N/seedUniv'/h\
+  \ z."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-20T04:00:33.598910+00:00'
+updated_at: '2026-07-20T04:00:33.598919+00:00'
+metadata: {}

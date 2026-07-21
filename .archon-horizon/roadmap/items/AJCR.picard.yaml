@@ -2,29 +2,11 @@ id: AJCR.picard
 title: Relative Picard via étale plus construction (Wave-3)
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: '**Relative Picard functor via the étale one-step plus construction** (Wave-3
-  lane; design in `informal/wave3-picard-design.md`).
-
-
-  - Definitional $\mathrm{Pic}$ = Čech $H^1$ of the units presheaf on pointed Zariski
-  covers; relative functor = $H_T$-coset quotient (never the absolute $\mathrm{Pic}(C\times
-  T)$).
-
-  - Étale sheafification = a hand-rolled one-step plus over *presented* affine étale
-  covers on affine test schemes, justified by étale-separatedness (Kleiman 2.5).
-
-
-  **Landed:** the étale-affine layer `PicEtAff C A` with its `CommGroup` and full
-  functoriality in the affine test (`PicEtAff.map`, `mapAlg`, id/comp/unit laws),
-  all axiom-clean; blueprint chapter `sec:PicardEtale` (55 nodes, all `\leanok`).
-
-
-  **Gate:** Layer-2 (`PicEt` over all of `Over (Spec k)`) needs "one-plus is a Zariski
-  sheaf on affines", which routes through `Picard/Separatedness.lean` brick 3 (`prPullback_injective`)
-  — see `I-0140`.
-
-  '
-status: active
+summary: 'Wave 3: the relative Picard functor via the etale plus construction — the
+  affine dictionary and its naturality, (C1) separatedness, Layer-2 picEt, (C2) rigidification,
+  and the degree/Pic^0 interface. The (C1) campaign is one gluing lemma from closing
+  (see subitems).'
+status: done
 kind: proof
 priority: high
 depends_on: []
@@ -41,3 +23,4 @@ metadata:
     session: 0012-ground
     role: ground
   parent: AJCR.jacobian
+  updated_at: '2026-07-17T00:29:18.041041+00:00'

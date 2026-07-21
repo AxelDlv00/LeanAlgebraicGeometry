@@ -1,0 +1,43 @@
+id: I-0225
+provider: local
+kind: info
+body: "W7-B6 COMPLETE (lane w7-b6-finish): B-6a + B-6b landed, unblocking A-1 and\
+  \ the frozen DAT-J discharge. Commits: e30e066a1 (Lean), 60d75888e (blueprint).\
+  \ File Picard/JacobianDataBaseChange.lean (now 231L, still <500), root-wired already.\n\
+  \nCOMMITTED SIGNATURE (frozen, additive-only):\n  AlgebraicGeometry.baseChangeIsoOfData\n\
+  \    {k : Type u} [Field k] {C : Over (Spec (.of k))}\n    [SmoothOfRelativeDimension\
+  \ 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom]\n    (d : JacobianData\
+  \ C) {L : Type u} [Field L] [Algebra k L]\n    (dL : JacobianData ((baseChange k\
+  \ L).obj C)) :\n      letI := d.grpObj; letI := dL.grpObj;\n      (baseChange k\
+  \ L).mapGrp.obj (.mk d.J) ≅ .mk dL.J\n  NOTE: L is IMPLICIT (inferred from dLs type).\
+  \ All axiom-clean [propext,Classical.choice,Quot.sound].\n\n  Also landed: AlgebraicGeometry.grpObjObj_baseChange_eq\
+  \ (d) (L) : grpObjObj (baseChange k L) d.J = (d.baseChange L).grpObj (B-6a), and\
+  \ the reusable general lemma AlgebraicGeometry.monObj_ofRepresentableBy_eq_of_iso.\n\
+  \nFROZEN DAT-J RECIPE CONFIRMED HOLDS VERBATIM: baseChangeIso k L C := baseChangeIsoOfData\
+  \ (jacobianData C) (jacobianData C_L). Since L is implicit it is inferred from jacobianData\
+  \ C_L : JacobianData ((baseChange k L).obj C), so no extra L argument is needed\
+  \ — the I-0223 recipe is exact. It is definitional against the frozen Jacobian/instGrpObj\
+  \ provided instGrpObj = (jacobianData _).grpObj and Jacobian _ = (jacobianData _).J\
+  \ (the D1 base-field-generic producer watch item — DAT-J/DAT-G to confirm).\n\n\
+  FOR A-1 (baseChange_ofCurve): baseChangeIso is now buildable; ofCurve := rep.homEquiv.symm\
+  \ (abelElement P) transports via graphLocalEquations_base_change as planned. The\
+  \ two coherence sorries baseChangeIso_id / baseChangeIso_comp remain for the DAT-J/coherence\
+  \ lane; baseChangeIsoOfData gives only the datum-level iso, not the id/comp coherences.\n\
+  \nBlueprint: new section in Jacobian.tex — def:jacobianData_baseChange (B-5, retroactive),\
+  \ lem:grpObjObj_baseChange_eq (B-6a), def:baseChangeIsoOfData (B-6b); all \\leanok.\
+  \ thm:baseChangeIso in BaseChange.tex should gain \\uses{def:baseChangeIsoOfData}\
+  \ when its sorry is discharged (left to the DAT-J lane to avoid a blueprint collision\
+  \ with A-1)."
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-17T16:40:34.019393+00:00'
+updated_at: '2026-07-20T03:14:34.568325+00:00'
+metadata:
+  agent: w7-b6-finish

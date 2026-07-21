@@ -1,0 +1,5 @@
+{"at": "2026-07-17T07:55:57.860198+00:00", "actor": "human", "field": "created", "from": "", "to": "pending", "note": "opened"}
+{"at": "2026-07-17T08:41:12.353321+00:00", "actor": "human", "field": "status", "from": "pending", "to": "blocked", "note": ""}
+{"at": "2026-07-17T08:41:12.353505+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "summary updated"}
+{"at": "2026-07-17T13:43:03.149424+00:00", "actor": "human", "field": "status", "from": "blocked", "to": "done", "note": ""}
+{"at": "2026-07-17T13:43:03.149620+00:00", "actor": "human", "field": "edited", "from": "", "to": "", "note": "summary updated"}

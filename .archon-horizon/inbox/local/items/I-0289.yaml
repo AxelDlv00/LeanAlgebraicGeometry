@@ -1,0 +1,77 @@
+id: I-0289
+provider: local
+kind: info
+body: 'DD-4 redesign feasibility: HARD-BUT-BUILDABLE (sound, unblockable, ~2 XL +
+  3 L + 2 M bricks, multi-week; NO impossibility). Worksheet informal/spec-dd4-redesign.md,
+  commit 6e35e7ea3d48d9361353d0ed6fcbaf15e0cb236d.
+
+
+  === THE DECISIVE ANSWER (task Q1b: does a carve-direct NON-seed relDivisor dissolve
+  the achiever-lift?) ===
+
+  The achiever-lift (I-0258) dissolves EITHER WAY, so skipping the seed buys nothing
+  and costs more. KEEP THE SEED; redesign (sec z, h z). A fully carve-direct non-seed
+  CertifiedDivisorFamily (build base ideal J as a Module.Invertible line bundle over
+  Gamma(relCurve), read off LocalEquations.eqn) IS possible but strictly HARDER: it
+  needs THREE bridges ABSENT in mathlib+in-tree — (i) R-flat + fibrewise-invertible
+  => invertible, (ii) rank-1 projective => Module.Invertible (mathlib has NO converse),
+  (iii) invertible ideal => single local generator J.Gamma_f = span{eqn}. All three
+  are Gamma-LOCAL (curve-local), whereas every landed engine (SlicingFlatKernel, SupportTubeFinite,
+  the carve) is R_Z-FIBREWISE. The seed route reaches the SAME local generator via
+  R_Z-fibrewise flatness + a one-point stalk Nakayama, reusing maximal landed surface.
+
+
+  === WHY THE ACHIEVER-LIFT IS NOT ACTUALLY A WALL (dissolves I-0258/I-0288 (A)) ===
+
+  sec z = a relative achiever AT z, built by lifting a kappa(p)-fibre achiever THROUGH
+  the SURJECTION read (x) kappa(p) : K_univ (x) kappa(p) ->> H0(N - d_p) (divUniversalFibreKM_eq_span,
+  DivSchemeSeedUnivRes:376) + exists_coeffAt_eq_baseDivisorAt (BaseDivisor:143). I-0258
+  is TRUE (a single window vector need not reduce to a CHOSEN f_p) but IRRELEVANT:
+  we need SOME achiever, and the surjection hits every element of the window. A clean
+  lift, not the non-liftable step the history feared.
+
+
+  === THE FIBRE-CUTTER (dissolves I-0288 (B)) ===
+
+  h z is NOT algebraMap f (base-only; makes D(h) the WHOLE fibre chart, exactly why
+  I-0288 hle failed). Instead h z in ann(N z), N z := J/(read sec z) finite over R_Z
+  (SupportTubeFinite, I-0244), at z not in supp(N z). ann(N z) elements are GENUINE
+  fibre-cutters. NOTE: probe found NO fibre-cutter over general R exists in-tree —
+  only PointDivisor over a FIELD base (PointDivisor:190/278); ann(N z) is the in-tree
+  route to a relative cutter.
+
+
+  === THE ONE GENUINE WALL + SIZES ===
+
+  RD-N (relative-local-BPF stalk Nakayama, size L): read(sec z) generates J at stalk
+  O_z from fibre generation + J R_Z-FLAT. Flatness load-bearing (J cap pGamma = pJ,
+  no Tor_1) — WITHOUT it the k[eps] trap (I-0231) fires. Then hdvd on D(h z) is DIRECT
+  (feed simpler isGenerator_of_fibre_ne_zero, DivSchemeSeed:188, NOT the fibrewise-ker-span
+  capstone). Prerequisite (size XL, largest lane): J R_Z-flat via SlicingFlatKernel
+  c4 (:296) on the reading map read, fed by divUniversal_carve_residueField (FamilyUniv:135)
+  — I-0284 hspan content, cleaner (no chosen eqn z). Then no-leak from proper support
+  (I-0285 reduction), certificate non-circular (dvd holds), divUniversalFamily :=
+  divFamEps_certifiedFamily (DivSchemeEps:312) = DDR9-U U1.
+
+
+  File plan (anti-circular, dvd BEFORE certificate): (1) J-flat XL -> (2) achiever
+  M -> (3) RD-N/hdvd L -> (4) seed/isGenerator M -> (5) no-leak L -> (6) certificate
+  L -> (7) U1 L.
+
+
+  Fallback if (1)/(3) wall: the fully carve-direct non-seed family (needs the 3 absent
+  Gamma-local bridges) or Sym^g/Hilbert plan-B. Supersedes I-0268 spec-dd4-seam.md
+  whose relDivisor routed through seedUniv.localEquations (I-0272).'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: agent
+source_ref: null
+created_at: '2026-07-19T19:58:11.251458+00:00'
+updated_at: '2026-07-19T19:58:11.251468+00:00'
+metadata:
+  agent: dd4-redesign-feasibility-lane

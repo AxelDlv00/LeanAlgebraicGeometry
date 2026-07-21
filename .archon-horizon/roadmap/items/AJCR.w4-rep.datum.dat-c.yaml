@@ -1,0 +1,20 @@
+id: AJCR.w4-rep.datum.dat-c
+title: 'DAT-C: the $\Sigma$-charts — the $h^1$-vanishing open of $\mathrm{Div}^g$-lite,
+  canonical-section normalization ($h^0 = 1$), mono chart functors, open fibre products'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T06:42:08.321387+00:00'
+  parent: AJCR.w4-rep.datum
+  updated_at: '2026-07-19T11:06:26.223834+00:00'

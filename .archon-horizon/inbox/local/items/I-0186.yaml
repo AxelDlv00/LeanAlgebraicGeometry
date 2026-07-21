@@ -1,0 +1,92 @@
+id: I-0186
+provider: local
+kind: memory
+body: 'DD-1c (f) hsurj lane — STAGES 1-2 LANDED + a BLOCKING OBSTRUCTION for stages
+  3-5 (2026-07-17, Opus hsurj prover). Follow-on to I-0182/I-0179/I-0171/I-0167. New
+  file Picard/DivisorFamilyBackward.lean (root-wired, green 8649 jobs, keystones lean_verify
+  axiom-clean [propext,Classical.choice,Quot.sound]).
+
+
+  LANDED (two committed green stages, the "eqns" half of hsurj):
+
+  - Stage 1 (commit 87d787e49): Scheme.LocalEquations.mul_presentation_elem + Scheme.LocalEquations.presentationDivisor_mul.
+  The Weil divisor of the pointwise product d.mul d'' is the SUM: presentationDivisor
+  K (d.mul d'').presentation = presentationDivisor K d.presentation + presentationDivisor
+  K d''.presentation. Proof: the product presentation''s trivializing elem is the
+  product of elems (germ_res_apply + map_mul), and ordZ is a group hom so orders/coeffs
+  add. LocalEquations-level companion of the landed MeromorphicPresentation.presentationDivisor_mul.
+
+  - Stage 2 (commit b2a85c0b6): Scheme.LocalEquations.unitEquations (trivial system,
+  presentationDivisor = 0) + Scheme.LocalEquations.exists_localEquations_presentationDivisor_eq:
+  every EFFECTIVE divisor D (0<=D) is presentationDivisor K E.presentation for an
+  explicit LocalEquations E (a mul-product of tracked point-uniformizer pointEquations,
+  one factor per unit of multiplicity, via stage-1 additivity + presentationDivisor_pointEquations;
+  Finsupp.induction over the support with effectivity propagated). LocalEquations-level
+  companion of exists_presentationDivisor_eq (which only gives a MeromorphicPresentation);
+  effectivity is what keeps it regular (no inverse/pole factors). This gives the anchor
+  equations F.eqns of a family realizing D.
+
+
+  THE OBSTRUCTION (why stages 3-5 — the certified support-separated adaptation + divFamOfDivisor
+  — are NOT MV-free for general D, correcting I-0182/I-0179): The two pinned charts
+  of relCurve are V0 = pi^-1(P1 chart0), V1 = pi^-1(P1 chart1); they OVERLAP, V0 inf
+  V1 = pi^-1(Gm) is a nonempty affine open (AffineTwoCover.pullbackProd; P1 charts
+  overlap on Gm). A DivisorAdaptation structurally covers BOTH charts: FinCoverData.partition0/1
+  (sum a_j h_j = 1) force V0 <= sup(chart-0 pieces) and V1 <= sup(chart-1 pieces)
+  (FinCoverData.cover0/cover1). So any closed point z in V0 inf V1 lies in some chart-0
+  piece (inl a) AND some chart-1 piece (inr b). If z in supp(D), then BOTH piece equations
+  vanish at z to order coeffAt_z(D) != 0 — every adaptation equation refines d and
+  reads D''s coefficient at every point of its piece (DivisorAdaptation.coeffAt_eq_toAdd_ordZ_eqn)
+  — so neither is a unit at z and the overlap ideal (eqn_inl_a, eqn_inr_b) is contained
+  in the maximal ideal m_z != top. Hence ovlColength (inl a)(inr b) is NOT subsingleton,
+  and the support-separation hypothesis hsep of deg_divFamDivisor_of_separated / subsingleton_ovlColength_of_sep
+  is UNSATISFIABLE for any D whose support meets V0 inf V1.
+
+
+  Mathematically this is exactly the Cech H0 overlap correction: for z in the overlap,
+  prod_j colength OVERCOUNTS z''s local degree (once per chart), so the separated
+  formula finrank W = sum colength gives the WRONG (too-large) degree; the true finrank
+  W = sum colength - overlap correction = the general Mayer-Vietoris (= the hdeg wall).
+  CONCLUSION: hsurj for a GENERAL effective deg-n divisor is NOT free of the general-MV
+  wall — it needs it precisely for overlap-support divisors, sharing hdeg''s obligation.
+  The support-separated backward construction only realizes divisors supported OFF
+  the overlap: supp(D) subset (V0 minus V1) union (V1 minus V0); those DO round-trip
+  MV-free (the off-chart pieces have unit equations, cross-chart overlaps are trivially
+  separated, and within one affine chart finitely many support points can be isolated
+  by basic opens).
+
+
+  REVISED STRATEGY / what remains:
+
+  1. The MV-free hsurj is achievable ONLY for off-overlap divisors. To close it needs:
+  (a) the point-separation-within-one-affine-chart infrastructure (given finitely
+  many closed pts in an affine, a basic-open refinement of d.cover isolating each
+  in a unique piece with the others'' pieces avoiding them) — NEW infra, medium; plus
+  (b) finite-colength + the field-trivial certificate (c3/c4 free, rank via deg_divFamDivisor_of_separated).
+  Stages 1-2 already supply the eqns.
+
+  2. For DD-R''s one-sided dictionary (I-0182): still MV-free IFF P-fib''s unique
+  effective deg-n divisor D can be arranged/normalized to be supported OFF the chart
+  overlap. If P-fib''s D always avoids pi^-1(Gm) (e.g. supported at a fixed rational
+  point at infinity), hsurj-for-D + divFamDivisor_injective (landed) closes it MV-free.
+  Otherwise the field dictionary genuinely needs the general-MV wall for BOTH directions
+  — recommend the human/DD-R spec confirm P-fib''s support location.
+
+  3. The general (all-D) field dictionary equiv divFamFieldEquivOfDegOfSurj needs
+  the general MV (hdeg) regardless — it is now the sole XL for BOTH hdeg and general
+  hsurj.
+
+
+  agent-ready'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-17T03:29:29.798284+00:00'
+updated_at: '2026-07-17T03:29:29.798295+00:00'
+metadata: {}

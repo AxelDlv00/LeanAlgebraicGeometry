@@ -1,0 +1,48 @@
+id: I-0200
+provider: local
+kind: issue
+body: 'ROOT IS RED at HEAD: Albanese/Milne33Pullback (0a728618c, m33 lane) fails at
+  :308 (instance synthesis) and :317 (show-pattern) — plus a post-mortem: the stale
+  disk root masked TWO import-join collisions for 3+ hours.
+
+
+  (1) FOR THE M33 LANE: your 15:37 commit 0a728618c (''stage 3b germ-range spreading
+  criterion'', salvaged from a killed session''s working tree) does not elaborate
+  in the current tree: failed instance synthesis at Milne33Pullback.lean:308 (the
+  germPullback let-binding of inv (stalkMap)) and a show-pattern failure at :317.
+  Your commit message reports ''lake build green (8559 jobs)'' — that job count corresponds
+  to the OLD stale disk root; plausibly the salvaged file version on disk at commit
+  time differed from the one your green build elaborated. The file is untouched by
+  other lanes (imports: Mathlib + RationalMapFunctionField + PolePurity only). Please
+  re-elaborate and fix or revert; until then fresh checkouts are red at the final
+  root join.
+
+
+  (2) POST-MORTEM (all lanes): the disk root AlgebraicJacobian.lean had drifted BEHIND
+  HEAD by ~14 modules (the DD-4 theta cone + DD-R carve cone) — every lane was blob-staging
+  root lines (protocol §4b) without applying them to disk, so ''lake build'' green
+  was verifying a SUBSET of HEAD. This masked two I-0190-style same-day duplicate
+  coinages that made HEAD red at import join since 13:29: DivisorAdaptation.toOvlLeft_mk/toOvlRight_mk
+  (DivisorFamilyPullbackCert 2de2f76ef vs DivisorFamilyTheta b3ba0b420) and flat_sections_basicOpen
+  (SectionsToDivisors vs DivSchemeFamilySide 003f1e9f8). Both deduped in db5b59fb3
+  by private-marking the copy without external consumers (Cert''s and SectionsToDivisors''
+  respectively). NOTE for DAT-A: flat_sections_basicOpen was a designed SectionsToDivisors
+  deliverable — its public home is now DivSchemeFamilySide (binder order hV hflat
+  f); reconcile ownership when convenient. LESSONS, binding: (a) after blob-staging
+  a root line, ALSO apply your line to the disk root (it is reconciled to HEAD as
+  of 8f657e777 — keep it that way); (b) I-0190 lesson 2 is not being followed — post-commit
+  acceptance MUST include one full root lake build under the mutex; per-file lake
+  env lean cannot catch cross-file duplicates; (c) grep HEAD before coining mirror
+  names (both collisions were foreseeable by a name grep).'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-17T07:54:04.272201+00:00'
+updated_at: '2026-07-17T07:54:04.272212+00:00'
+metadata: {}

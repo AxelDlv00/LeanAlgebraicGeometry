@@ -1,0 +1,54 @@
+id: I-0234
+provider: local
+kind: issue
+body: 'P-fib-N consumer seam (found by the PFibPack lane, I-0233): the DD-0 multiplier
+  budget windowS_spec is ONE g SHORT for discharging the pack''s tower budget hβS
+  at a residue field. Binding for the G-4 seed lane (DivSchemeSeedUniv) and the DD-0
+  owner.
+
+
+  THE SEAM: at κ(p) the vanishing threshold hvan (∀ W, β ≤ deg W → H¹=0) can only
+  be produced from transported witnesses: peeling (subsingleton_hModule_one_of_witness)
+  from a transported a-exponent window gives β = a·δ + g (χ_κ = 1 − g via genus_baseField),
+  with base-level input requiring b ≤ a·δ (windowBound_spec at k). Minimal such a
+  has a·δ ≤ b + δ − 1. The pack''s tower budget hβS demands β + 2g ≤ s·δ, i.e. a·δ
+  + 3g ≤ s·δ; worst case needs b + δ + 3g − 1 ≤ s·δ. But windowS_spec only guarantees
+  b + 2g ≤ (s−1)·δ, i.e. s·δ ≥ b + δ + 2g — short by g − 1. For g ≥ 2 the discharge
+  FAILS with the current ledger constant. (The alternative hvan source — the bridge
+  subsingleton_hModule_one_of_normalization on subsingleton_h1_windowN_sub — gives
+  β = M·δ − 2g, which fails hβS by a mile since M ≫ s. The descent budget hβN is NOT
+  affected: windowM_spec''s (g+2)(s+1)·δ slack absorbs β ≈ b + δ + g comfortably.)
+
+
+  RECOMMENDED FIX (safe, mechanical, but full-rebuild-expensive): strengthen WindowLedger.windowS_exists
+  / windowS_choice from ''least s with (s−1)·δ ≥ b + 2g'' to ''least s with (s−1)·δ
+  ≥ b + 3g''. This is a monotone strengthening: windowS_spec consumers receive a stronger
+  fact, every downstream theorem goes through the spec (DAT-D discipline rule 1 —
+  no numeric bounds downstream), so proofs are unaffected; only the VALUES of windowS_choice/windowM_choice
+  shift, forcing a full downstream rebuild (Picard tower incl. the 800k-heartbeat
+  files). Then a := least with a·δ ≥ b gives a·δ + 3g ≤ b + δ − 1 + 3g ≤ (s−1)·δ +
+  δ − 1 < s·δ. NOT done by this lane: sibling lane running + OOM discipline made a
+  full rebuild inappropriate this session.
+
+
+  ALTERNATIVE (no ledger change): transport a vanishing statement sharper than witness-peeling
+  to κ(p) — e.g. a fibre Serre-type bound H¹=0 for deg ≥ 2g−1 — but no project vocabulary
+  exists for this; the ledger amendment is far cheaper.
+
+
+  CHECK ALSO: the a-exponent witness transport needs windowTransportDivisor + its
+  H¹ fact at ARBITRARY a with b ≤ a·δ (WindowFieldTransport is written per-exponent;
+  verify relThetaPairH1/datum transport genericity in a — if it is pinned to exponents
+  M/s/M+s, the minimal-a witness needs a small generalization pass there too).'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-18T14:36:43.673182+00:00'
+updated_at: '2026-07-18T14:36:43.673194+00:00'
+metadata: {}

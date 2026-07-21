@@ -1,0 +1,107 @@
+id: I-0204
+provider: local
+kind: memory
+body: 'DDR-2 LANDED (the certified-degree pinch, spec-dd-r §3 item 2 + §1(ii)) — lane
+  report 2026-07-17 (Fable prover). Commits 63ce0820c (files) + root wiring; lake
+  build green 8685 jobs; all keystones lean_verify axiom-clean [propext, Classical.choice,
+  Quot.sound]; no sorries.
+
+
+  LANDED (2 new files, root-wired):
+
+  1. RiemannRoch/CarveDegreePinch.lean (308 L, pure Riemann-Roch, pi-FREE): the pinch
+  mechanism against an ABSTRACT embedding level N : Y.CurveDivisor carrying the transported
+  DD-0 window facts — hNwin : Subsingleton H1(O(N)); hNnorm : forall D'', deg D''
+  <= 2g -> Subsingleton H1(O(N − D'')); hNdeg : 2g <= deg N. Keystones: deg_eq_genus_of_window_corank
+  (corank g of H0(N−D) in H0(N) => deg D = g; section bound h0_divisorSheaf_le_max_of_h0_one
+  caps deg <= 2g since h0(N−D) = deg N + 1 − 2g >= 1, then exact normalization window
+  + rank anchor h0_eq_deg_add_chi_of_subsingleton_hModule_one read the degree); baseDivisorAt_window_normalization
+  (abstract-N transcription of PFib baseDivisorAt_normalization — recovery of an effective
+  deg-g divisor as base divisor of its window; THE DDR-8 HOOK); h0_window_sub_single_lt
+  (strict drop). Ledger form deg_eq_genus_of_normalization_corank: at the pack own
+  constants the three N-hypotheses ARE window_embedding / window_normalization / two_mul_genus_le_M_mul_windowδ.
+
+  2. RiemannRoch/CarveDegree.lean (262 L): §3 field corank — DivisorAdaptation.IsCertified.finrank_divisorWindow_add
+  : finrank K K_a(d) + n = finrank K (K ⊗[k] H_a), from windowQuotEquiv (hsurj) +
+  rankAtStalk_thetaGlued (hpair) + Module.Free.of_divisionRing collapse; finrank_tensor_divisorSections
+  : finrank K (K ⊗[k] H_a) = h0_k(O(a·F)) (Module.finrank_baseChange + finrank_divisorSections_top).
+  §4 pinned deliverables: deg_divFamDivisor_of_carve, baseDivisor_eq_divFamDivisor_of_carve,
+  + windowShiftMul (the H_M -> H_{M+s} carve multiplier; ε-pair carve spelling = Grassmannian.carvePairArrow
+  (windowShiftMul hπ g a) ε₁ ε₂ = 0).
+
+
+  KEY ARCHITECTURAL FINDING (binding for DDR-8/DD-4 fibrewise work): the fibrewise
+  pinch CANNOT be stated at the K-level ledger names — windowM_choice π_K hπ_K g ≠
+  windowM_choice π hπ g in general (windowBound is a Classical.choose PER FIELD, and
+  ε/divFamEps pins the k-level constants). Hence the abstract-N design: the fibre
+  embedding window enters as a divisor N on relCurve C K with the transported window
+  facts; ledger names discharge them at the BASE field and the DD-4/I-0175 transport
+  seam moves them across k -> K. This makes spec-dd-r risk 2 ("fibrewise window constants")
+  precise.
+
+
+  THREADED HYPOTHESES of deg_divFamDivisor_of_carve (exact spellings; G : CertifiedDivisorFamily
+  C K π g over field K, [Algebra k K], certificate G.certified : IsCertified g supplied
+  by G):
+
+  - hsurj : Function.Surjective (G.adaptation.thetaGluedEval (windowM_choice π hπ
+  g)) — discharged by thetaGluedEval_surjective (Picard/DivisorThetaSurjectivity.lean,
+  hπ + complex hfib; hfib seam advanced to per-fibre witness divisors in 27942edf2)
+  or _of_subsingleton_h1.
+
+  - hpair : G.adaptation.IsThetaPaired (windowM_choice π hπ g) — the I-0199 residual
+  (Koszul partition on the colength scheme); NOT free at fields.
+
+  - N, hNwin, hNnorm, hNdeg (spellings above, on relCurve C K) + hNrank : h0_K(O(N))
+  = h0_k(O(M·F)) — the base-field window transport (I-0175 seam + flat base change;
+  at K = k modulo the unbuilt relCurve C k ≅ C.left unitor these are ledger names).
+
+  - hdict : Sheaf.h0 ((relCurve C K).divisorSheaf K (N − divFamDivisor (DivFam.mk
+  G))) = Module.finrank K ((divFamEps hπ g (DivFam.mk G)).1) — THE SECTIONS DICTIONARY
+  at the field point (DD-4 Task 5 field content: mem_divisorWindow_iff germ-vanishing
+  in stalkIdeal read as ordZ pole bounds + the Θ^a ↔ O(a·F_K) bridge at K). GENUINELY
+  OPEN — the main un-landed input; owner: DD-4 field content / DDR-8 boundary.
+
+  - hO/hχ at (relCurve C K).moduleKSheaf K (PFib-shaped curve constants; fibre-curve
+  instance kit discharges).
+
+  - hcarve (ε-pair carve) — pinned per spec but NOT consumed by the pinch (recorded
+  in docstring; linter silenced for that binder only). Fan-in from the universal family:
+  divUniversal_carve_residueField + ε-identification (DDR-5) + basis conjugation against
+  divCarveMul coordinates.
+
+
+  OPEN (not this lane): hdict (sections dictionary), hpair, hfib-at-fibre-degree,
+  the N-pack transport lemmas, relCurve C k ≅ C.left unitor.
+
+
+  HAZARDS (new): (a) omit [..] in must precede the docstring, not sit between docstring
+  and theorem; (b) unusedVariables linter DOES flag unused named theorem hypotheses
+  — hcarve kept by scoped set_option linter.unusedVariables false in; (c) mathlib
+  names: LinearEquiv.ofEq (not Submodule.equivOfEq), Module.finrank_baseChange (needs
+  Module.Free k H_a — free over field), Submodule.finrank_quotient_add_finrank; (d)
+  carvePairArrow lives in namespace AlgebraicGeometry.Grassmannian; (e) none of the
+  instance-heavy hazard zones (κ(q) towers, maxSynthPendingDepth) were needed — statements
+  stay at finrank/h0 granularity, no unfolding across the overModule seam.
+
+
+  DDR-8 CONSUMPTION: fibrewise route = deg_divFamDivisor_of_carve (deg = g) + baseDivisorAt_window_normalization
+  at the same N-pack (both families present bd of the M-window; then coeffAt_eq_toAdd_ordZ_eqn
+  ratio-unit route). DDR-9/DAT-B: the field instance of the window-route divFamOfDivisor
+  can consume deg_eq_genus_of_window_corank directly.
+
+
+  agent-ready'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-17T08:38:17.093514+00:00'
+updated_at: '2026-07-20T03:16:31.598543+00:00'
+metadata:
+  agent: ddr2-carve-degree-fable

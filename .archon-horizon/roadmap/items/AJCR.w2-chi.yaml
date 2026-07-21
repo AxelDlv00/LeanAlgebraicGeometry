@@ -1,0 +1,25 @@
+id: AJCR.w2-chi
+title: 'Wave 2b: Euler-characteristic ledger (Riemann-Roch-lite)'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'The chi-ledger for line bundles on the curve, DIVISOR-FIRST per the binding
+  design (informal/chi-ledger-design.md, reconfirmed by informal/zeta-w2b-chi-recon.md):
+  skyscraper devissage 0 -> O(D-x) -> O(D) -> skyscraper_x -> 0 with the six-term
+  (0,1)-slice on the landed HModule carrier, chi additivity in the divisor, chi(O(D))
+  = 1 - g + deg D, and the h^0 bounds Waves 4-5 consume. The rejected twisted-two-cover
+  alternative is recorded in chi-ledger-notes.md; it would need a twisted affine-vanishing
+  slice that does not exist.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-14T01:19:17.265991+00:00'
+  parent: AJCR.jacobian
+  updated_at: '2026-07-14T14:05:33.901398+00:00'

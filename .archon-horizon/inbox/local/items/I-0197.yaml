@@ -1,0 +1,109 @@
+id: I-0197
+provider: local
+kind: memory
+body: 'DD-4 Task 4 residual (a) session 2026-07-17 (Fable prover) — RIGHT EXACTNESS
+  of the section sequence LANDED down to the engine''s fibrewise hypothesis. ROUTE
+  CHOSEN: ENGINE (datum) route, per I-0192 item 1 — the bespoke two-chart MV route
+  was evaluated and REJECTED because (i) the relative H1(O(Theta^a - d)) = 0 input
+  has no non-engine source over a general test ring anyway, and (ii) the datum construction
+  + section bridges are exactly the gluedSubmodule<->engine-Cech-H0 mechanism DDR-4
+  needs (I-0191 spec 4). Commits b2f7584a8, (part of) 4562b9f5c, then post-resume
+  two commits ending with DivisorThetaSurjectivity.lean.
+
+
+  LANDED (7 files, all root-wired by HEAD-blob+own-line, kernel-green, per-stage keystones
+  lean_verify axiom-clean [propext, Classical.choice, Quot.sound]):
+
+  - Picard/DivisorFamilyThetaSurj.lean (336 L): the ASSEMBLY — thetaGluedEval_surjective_of_liftsOnChart_of_correction:
+  surjectivity of thetaGluedEval from (L0)/(L1) LiftsOnChart0/1 (chart lifting) +
+  relThetaOverlapCorrection (theta-twisted overlap splitting of sections vanishing
+  along d germwise). Pure landed-tool bookkeeping (mem_span_singleton_of_forall_germ,
+  germ_eqn_span_eq_stalkIdeal, germ_mem_stalkIdeal_of_mem_ovlIdeal).
+
+  - Picard/DivisorThetaDatum.lean (466 L): eqn_res_cancel + existsUnique_eqn_mul_eq
+  + eqnDiv (division by the adaptation equation on any open below a piece — THE trivialization
+  workhorse); eqnRatio (ratio units f_j/f_i by cofactor uniqueness) + cocycle laws;
+  thetaOvlUnit cocycle laws (8 chart cases); thetaIdealUnit = eqnRatio * thetaOvlUnit;
+  thetaIdealDatum : BasicOpenCocycleDatum C R pi presenting O(Theta^a - d) (ULift''ed
+  indices: IsGluingCocycle/BasicOpenCoverData pin Type u, FinCoverData is Type 0 —
+  cocycle laws proven as plain forall-lemmas at the Type-0 index, assembled casewise)
+  => engine QcohOn packagings + pairData attach FOR FREE.
+
+  - Picard/DivisorThetaBridge.lean (297 L): glued_matching_res, glued_cross (f_i s_i
+  = theta^a (f_j s_j)), glued_same0/1, gluedSections_ext0/1 (chart determination by
+  regularity + theta-unit cancellation).
+
+  - Picard/DivisorThetaTrivializeZero/One.lean (436+381 L): idealToGlued0/1 (vanishing
+  section over W <= Vc divides into a glued section; other chart carries theta^{-/+a};
+  4 matching cases each via eqn_res_cancel + linear_combination) + eqn_mul_idealToGlued
+  spec (general-O form).
+
+  - Picard/DivisorThetaGlue.lean (497 L): gluedComp0/1 (component retyping across
+  the ULift-datum/adaptation instance seam), gluedToIdeal0/1 (sheaf-glue the piece
+  pictures f_i s_i; res_/unique/germ_mem), sub/secRes-naturality/roundtrips (all by
+  gluing uniqueness), gluedToIdeal0_eq_theta_mul_gluedToIdeal1 (double-cover sheaf-ext
+  + glued_cross).
+
+  - Picard/DivisorThetaSurjectivity.lean (497 L): liftsOnChart0/1 hold UNCONDITIONALLY
+  (Serre affine vanishing exists_cech_cobounding_of_qcoh on the datum sheaf; cocycle
+  condition by gluedSections_ext + eqn cancellation); relThetaOverlapCorrection_of_subsingleton_h1
+  (H1(datumPair thetaIdealDatum)=0 => splitting, via Submodule.Quotient.subsingleton_iff
+  + range_diff_eq); KEYSTONES: thetaGluedEval_surjective_of_subsingleton_h1 and thetaGluedEval_surjective
+  (hpi + complex-form hfib, via datum_subsingleton_pairH1 — Noetherian-FREE). These
+  plug verbatim into DivisorFamilyWindow''s windowQuotEquiv/divisorWindowGr hsurj
+  slot.
+
+
+  STILL OPEN (the residual of the residual): discharge hfib : forall p, Subsingleton
+  ((datumPair (A.thetaIdealDatum a)).H1 tensor kappa(p)) from DAT-0a at fibre degree
+  a*delta - deg d >= b. This is EXACTLY the W6-full fibre-restriction seam (I-0158
+  open item: coker((datumPair D).diff.baseChange kappa(p)) ~ (datumPair (D.baseChange
+  phi)).H1, 1d-ii second half; then fibre datum''s glued sheaf = divisorSheaf of an
+  honest fibre divisor via W6 picClass tools + base-FIELD invariance of the uniform
+  bound H1BaseFieldInvariance + degree arithmetic). Everything else in Task 4(a) is
+  closed. RE-5''s BasicOpenCocycleDatum.baseChange (GluedSheafBaseChange, I-0155)
+  applies verbatim to thetaIdealDatum for that seam.
+
+
+  DDR-4 REUSE: thetaIdealDatum is the template for building a BasicOpenCocycleDatum
+  from ANY locally-principal ideal apparatus with ratio units; existsUnique_eqn_mul_eq/eqnDiv
+  + idealToGlued/gluedToIdeal + gluedSections_ext ARE the gluedSubmodule-equalizer<->engine-Cech-H0
+  bridge mechanism DDR-4''s certificate transport needs (anti-circular route). At
+  a=0 the same files give the UNTWISTED ideal sheaf O(-d) datum (thetaOvlUnit = 1).
+
+
+  HAZARDS (new, beyond I-0192): (a) IsGluingCocycle/BasicOpenCoverData/gluedInclCoc/gluedInclSnd
+  all pin index : Type u — Fin-indexed apparatus must ULift and prove laws as plain
+  lemmas at Type 0, assembling casewise (whnf-timeout if the datum''s mul_res exact
+  uses underscores — pass indices explicitly). (b) The ULift-datum/adaptation pieces
+  seam: NEVER rw a unit/component dictionary inside a goal (kabstract ''target not
+  type-correct at instances transparency''); instead state the WHOLE equation as a
+  have in ONE consistent spelling and close by exact (defeq bridges the spellings)
+  — this pattern (key-have + eqn_res_cancel + linear_combination) closed all 8 trivialization
+  matching cases. (c) ring/linear_combination atoms are compared at reducible transparency:
+  a def-wrapper (gluedComp0) is a DIFFERENT atom from .val (Sum.inl (ULift.up i))
+  — spell certificates with the raw .val form. (d) higher-order unification cannot
+  infer F from a section of F.obj.obj: pass (F := (A.thetaIdealDatum a).sheaf) explicitly
+  to exists_cech_cobounding_of_qcoh. (e) Submodule.Quotient.subsingleton_iff is the
+  H1-subsingleton -> imageLattice = top bridge.
+
+
+  BUILD-TREE NOTE: the DD-2 carrier surgery went in-flight on disk near session end
+  (DivisorFamily.lean modified; DivisorFamilyTheta.lean:326 germ_eqn_span_eq_stalkIdeal
+  broken on disk — the site DD-2 owns re-deriving). HEAD is consistent and all my
+  commits are HEAD-based; my final file was kernel-checked (lake env lean exit 0 +
+  LSP zero diagnostics) against HEAD-state oleans immediately before the invalidation,
+  but the final-file #print axioms run was blocked by the missing oleans — re-run
+  #print axioms on DivisorThetaSurjectivity''s 5 exports after DD-2 lands (expected
+  [propext, Classical.choice, Quot.sound]; every ingredient verified axiom-clean per
+  stage).'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T06:53:17.413831+00:00'
+updated_at: '2026-07-20T03:16:22.990856+00:00'
+metadata: {}

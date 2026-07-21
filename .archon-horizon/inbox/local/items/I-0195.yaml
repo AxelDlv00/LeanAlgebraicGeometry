@@ -1,0 +1,64 @@
+id: I-0195
+provider: local
+kind: memory
+body: 'DD-1 PT-TRANSPORT SEAM ADJUDICATED (2026-07-17, Fable design lane; follow-on
+  to I-0194) — VERDICT: option (b), the carrier weakening. BINDING spec: informal/spec-dd1-pt-seam.md
+  (committed; evidence file:line, pinned Lean-ready spellings elaboration-probed GREEN
+  this pass).
+
+
+  VERDICT: replace DivisorAdaptation''s four witness fields pt/piece_le/unit/eqn_eq
+  (DivisorFamily.lean:235-242) by ONE pointwise-local Prop field eqn_germ_eq (forall
+  j z hz, exists x hx (u : stalk-z unit), germ(eqn j) = u * germ(d.eqn x)) — exact
+  binding signature in spec §5a. Escape (c) W-refinement invariance REJECTED as primary
+  (honest content is DDR-4/hdeg-grade L-XL: refined-colength finiteness = support-tube;
+  glued refinement invariance = I-0179''s XL flavour; and it conjugates every base
+  change by refinement isos, killing the exact-defeq discipline). Consumer reshaping
+  unviable. (a) mapAlgOfSurjective stays, serves exactly DD-2''s flat covers.
+
+
+  DECISIVE ROW: mathlib Functor.RepresentableBy.homEquiv_comp quantifies over ALL
+  morphisms of the test category (verified by #print) — DDR-9''s naturality is over
+  arbitrary k-algebra maps; and the stage-(e) vehicle''s OWN compat field is mapAlg
+  along Over.resAlgHom (open immersion, non-surjective; PicEt.lean:91-98 pattern)
+  — so the vehicle OBJECT does not exist under (a). DD-4 Task 7 + DAT-C 01JJ rows
+  likewise arbitrary. The seam must close unconditionally.
+
+
+  MIGRATION COST (spec §3/§6): witness fields consumed at exactly 8 sites in 6 files
+  — DivisorFamily.lean (carrier + eqn_regular, S, probe-written), PullbackMap:146-310
+  (eqn_mem_nonZeroDivisors via new S helper mem_nonZeroDivisors_of_forall_germ [section_ext,
+  already in-tree] + germ_pullbackEqn rework, M), FieldDegree:161-182 (coeffAt_eq_toAdd_ordZ_eqn
+  via landed isUnit_germ_iff_ordZ_eq_one, S-M), Theta:322-329 (germ_eqn_span_eq_stalkIdeal,
+  S — gets SIMPLER), Extraction:74-86 (route through new mkOfWitness, S), MapAlg (rewrite
+  to unconditional baseChange/DivFam.mapAlg/picClass_mapAlg, M; BaseChangeWitness/ofSurjective/mapAlgOfSurjective
+  have ZERO consumers — deletable). ALL derived-lemma STATEMENTS unchanged => zero
+  downstream edits; Theta*/Field*/Backward/Window/Pullback*/DivCarve* rebuild only.
+  Transport mechanism (no choice, no surjectivity): pulled member at x'' := z'' itself
+  + stalkMap of the pointwise unit + ratioUnit(x, f z'') germwise — all three mechanisms
+  landed (PullbackMap hgermF/hgermG :205-271, DivisorClass ratioUnit:155).
+
+
+  EXECUTION WINDOW (spec §7, BINDING): NO carrier edit until (w1) DD-4 Task-4 lane
+  lands in-flight DivisorThetaGlue.lean + DivisorThetaTrivializeOne.lean (untracked
+  on disk this pass; they do NOT touch witness fields) AND (w2) DDR-3''s DivSchemeFamily.lean
+  lands or is confirmed unstarted (absent this pass; DDR-3 constructs the STRONG witness
+  anyway — should build through mkOfWitness''s argument list to be flip-proof). Then
+  two commits, single lane, freeze on Picard/DivisorFamily*: commit 1 non-breaking
+  (eqn_germ_eq as DERIVED lemma with the byte-exact future signature + rework rows
+  3-6 to consume only it), commit 2 atomic flip (field swap + mkOfWitness + Extraction
+  + MapAlg rewrite), root lake build under the mutex + keystones axiom-clean before
+  CAS. Fallbacks: F1 transport walls => flip lands anyway, surjective path via mkOfWitness,
+  unconditional mapAlg trails S-M; F2 flip walls => revert commit 2, fund (c) with
+  the recorded brick statement. OUT OF SCOPE (unblocked, not delivered): mapAlg id/comp
+  laws (relCurveMap functoriality), stage-(e) vehicle file, DD-1b corollary.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T06:16:28.924979+00:00'
+updated_at: '2026-07-17T06:16:28.924989+00:00'
+metadata: {}

@@ -1,0 +1,32 @@
+id: AJCR.w4-rep.datum.dat-p
+title: 'DAT-P: every nonempty open of the curve over a separably closed field has
+  a rational point'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'DAT-P DONE: over a separably closed field $K$, every nonempty open of a
+  curve smooth of relative dimension 1 contains a $K$-rational point (density form).
+  Keystone `AlgebraicGeometry.SeparablyClosed.exists_rationalPoint_mem` (+ `Over.exists_rationalPoint_mem`
+  for the standing pack): for $f:X\to\operatorname{Spec}K$ with `[SmoothOfRelativeDimension
+  1 f]` and nonempty open $W$, a $K$-point $p:\operatorname{Spec}K\to X$ over $K$
+  has image in $W$. Route (worksheet §4): standard-smooth chart is étale over $\mathbb{A}^1$;
+  over the infinite $K$ a rational base point lies under the chart; the fibre is a
+  nonzero étale $K$-algebra, split into copies of $K$ (`equivPiOfIsSepClosed`). NOTE
+  §5 risk 4 retired: the alg-closed "every closed point rational" brick FAILS over
+  imperfect sep-closed $K$; smoothness+density is essential. Files `Curve/SeparablyClosedFibre.lean`
+  (ring core), `Curve/SeparablyClosedPoints.lean` (scheme keystone); axioms exactly
+  [propext, Classical.choice, Quot.sound]. Consumer: DAT-B P4(c) $h^0$-drop with $k^s$-level
+  points.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T06:41:45.308397+00:00'
+  parent: AJCR.w4-rep.datum
+  updated_at: '2026-07-16T08:25:42.340850+00:00'

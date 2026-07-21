@@ -1,0 +1,41 @@
+id: I-0262
+provider: local
+kind: info
+body: "DAT-J DJ-0 CompactImageQc LANDED\n\nFile: AlgebraicJacobian/Picard/CompactImageQc.lean\
+  \ (65 L, 2 theorems). Commit 6f30f24effc6347b583e91a57eea5e08c5992cdf. Build clean\
+  \ (LEAN_NUM_THREADS=1 single-module, no warnings); both keystones lean_verify axioms\
+  \ exactly [propext, Classical.choice, Quot.sound]. mathlib-only cone (imports only\
+  \ Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact + .UnderlyingMap) — Challenge-FREE\
+  \ per worksheet risk 1.\n\nKEYSTONES (verbatim, namespace AlgebraicGeometry, variable\
+  \ {X Y Z : Scheme.{u}}):\n  theorem compactSpace_of_surjective (f : X ⟶ Y) [CompactSpace\
+  \ X]\n      (hf : Function.Surjective f.base) : CompactSpace Y :=\n    hf.compactSpace\
+  \ f.continuous\n  theorem quasiCompact_of_surjective (f : X ⟶ Y) (g : Y ⟶ Z) [IsAffine\
+  \ Z]\n      [CompactSpace X] (hf : Function.Surjective f.base) : QuasiCompact g\
+  \ :=\n    haveI : CompactSpace Y := compactSpace_of_surjective f hf\n    HasAffineProperty.iff_of_isAffine.mpr\
+  \ ‹_›\n\nDID MATHLIB ALREADY HAVE IT? The TOPOLOGICAL CORE yes — Function.Surjective.compactSpace\
+  \ (Mathlib/Topology/Compactness/Compact.lean:964: continuous surjective image of\
+  \ a CompactSpace is a CompactSpace). DJ-0 is NOT that lemma; it is the two-line\
+  \ scheme-morphism packaging of it (via Scheme.Hom.continuous / the coe f = f.base\
+  \ CoeFun) PLUS the QuasiCompact-over-affine-base corollary (via HasAffineProperty.iff_of_isAffine,\
+  \ the DivSchemeQProj.lean:88 pattern). No pre-existing scheme-level wrapper found\
+  \ (grepped mathlib QuasiCompact/UnderlyingMap + project).\n\nWHAT DJ-1 CONSUMES:\
+  \ quasiCompact_of_surjective, instantiated X := DivScheme g (CompactSpace via DD-Q\
+  \ compactSpace_divScheme, DivSchemeQProj.lean:194), f := abel (= rep.homEquiv.symm\
+  \ of the fiberTwist-shifted universal class; DJ-1 must supply Function.Surjective\
+  \ abel.left.base via exists_effective_of_picClass — Challenge-free), g := J.hom,\
+  \ Z := Spec (.of k) (IsAffine). Output QuasiCompact J.hom = the JacobianData.quasiCompact\
+  \ field. Note: hypothesis is spelled Function.Surjective f.base; DJ-1's [Surjective\
+  \ abel.left] converts via .surj (= Scheme.Hom.surjective). compactSpace_of_surjective\
+  \ alone is reusable if DJ-1 prefers CompactSpace J.left first."
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T12:45:59.985358+00:00'
+updated_at: '2026-07-20T03:15:19.140099+00:00'
+metadata: {}

@@ -1,0 +1,20 @@
+id: AJCR.w6-albanese.port-ratmap
+title: 'Port: rational-map machinery — precomp, relative prod, function-field pullback,
+  difference map \(\Phi(x,y) = \varphi(x)\varphi(y)^{-1}\), Milne-3.3 substeps 2-easy/4b'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-16T17:13:54.258057+00:00'
+  parent: AJCR.w6-albanese
+  updated_at: '2026-07-17T00:33:49.789180+00:00'

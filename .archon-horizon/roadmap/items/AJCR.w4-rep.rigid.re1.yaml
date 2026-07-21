@@ -1,0 +1,20 @@
+id: AJCR.w4-rep.rigid.re1
+title: 'RE-1: two-lattice coherence — $H^1$ finite over any $R$, $H^0$ finite over
+  Noetherian $R$, by one finite surjection from $\bigoplus_i \mathcal{O}(m_i)$ models'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T03:38:46.783189+00:00'
+  parent: AJCR.w4-rep.rigid
+  updated_at: '2026-07-16T04:06:27.610482+00:00'

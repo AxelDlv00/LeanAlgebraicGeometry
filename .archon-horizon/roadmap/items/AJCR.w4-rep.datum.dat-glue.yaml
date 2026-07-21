@@ -1,0 +1,19 @@
+id: AJCR.w4-rep.datum.dat-glue
+title: 'DAT-glue: the 01JJ RepresentableBy assembly over $k^\prime$ (slice trick DAT-6),
+  with the locally-of-finite-type certificate'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T06:42:09.784174+00:00'
+  parent: AJCR.w4-rep.datum

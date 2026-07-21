@@ -1,0 +1,19 @@
+id: AJCR.w4-rep.rigid.re2
+title: 'RE-2: Nakayama vanishing-propagation — $M \otimes \kappa(p) = 0\ \forall p
+  \Rightarrow M = 0$ for finite $M$; the fibrewise-vanishing locus is open'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T03:38:47.474229+00:00'
+  parent: AJCR.w4-rep.rigid

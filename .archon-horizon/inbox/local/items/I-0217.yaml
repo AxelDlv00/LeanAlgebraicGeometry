@@ -1,0 +1,35 @@
+id: I-0217
+provider: local
+kind: info
+body: 'w6-m33 CLOSED: Milne 3.3 proved, Milne33Indeterminacy discharged (axiom-clean)
+
+
+  Session 5 (2026-07-17 evening) finished the campaign. (1) Fourth run''s uncommitted
+  Milne33TransportLocal.lean skeleton salvaged: SS1 coheight strictness + SS4 Jacobson
+  locally-closed kept; SS2 Krull count rebuilt (skeleton bugs: ''namespace _root_.X.Y''
+  inside another namespace silently mangles name resolution - never use it; hzero
+  contracted primes at the wrong quotient level; Ideal.mk_ker motive rewrite whnf-timeout);
+  house header + trimmed imports; commit 2183b8d3e. (2) TransportLocal SS3.5: ringKrullDim_le_one_of_minimalPrimes_of_surjective
+  (pure-algebra transported codim count: KernelGen + IsLocalization.height_map_of_disjoint
+  + map_under/under_maximalIdeal prime correspondence + the D5(c) Krull count). (3)
+  Milne33Transport.lean (391L): chart image-point lemma for closed immersions (SpecMap_appLE_fromSpec
+  + comap_map_of_surjective), Milne-free transport kernel (chart diagonal ideal ker(app
+  >> germ_x0), minimal prime over d + q_w, stalkCongr re-anchoring of the diagonal
+  stalk surjection), assembled D5 exists_notMem_domain_specializes_coheight_eq_one.
+  (4) Milne33.lean (211L): D6 component reduction in a Noetherian affine window (noetherianSpace_of_isAffineOpen,
+  finite_irreducibleComponents, isIrreducible_iff_sUnion_isClosed, Jacobson selection);
+  KEYSTONE indeterminacy_pure_codim_one_into_grpScheme : Milne33Indeterminacy f, lean_verify
+  [propext, Classical.choice, Quot.sound]. All lake-green; root wired (own lines only,
+  private-index CAS). NEXT: consumers pass h33 := indeterminacy_pure_codim_one_into_grpScheme
+  f hover to Thm32RationalMapExtension.extend_to_av; binders IsIntegral/IsReduced/IrreducibleSpace
+  are explicit instance-args, all inferrable in the AV context.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T13:49:25.642880+00:00'
+updated_at: '2026-07-20T03:14:30.305080+00:00'
+metadata: {}

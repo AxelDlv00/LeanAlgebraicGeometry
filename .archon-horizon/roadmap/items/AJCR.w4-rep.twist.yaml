@@ -1,0 +1,25 @@
+id: AJCR.w4-rep.twist
+title: The fiber twist $\Theta_n = \pi^* \mathcal{O}_{\mathbb{P}^1}(n)$ is two-cover-trivial
+  by construction
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'DONE: $\Theta_n = [(t_0^n \text{ on } V_0,\ 1 \text{ on } V_1)]$ on the
+  pinned two-cover — two-cover-trivial BY CONSTRUCTION ($V_0 \cap V_1 = D(t_0)$, transition
+  cocycle $t_0^n$ a unit there); $\Theta_n = \Theta_1^n$ and $\mathrm{classDeg}\,\Theta_n
+  = n \cdot \mathrm{classDeg}\,\Theta_1$; regularity from dominance of $\pi$ on the
+  integral curve. Frontiered: $\deg \Theta_1 = \deg \pi$ (the deferred pushforward-rank
+  reading).'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-15T01:51:41.753397+00:00'
+  parent: AJCR.w4-rep
+  updated_at: '2026-07-15T09:54:26.420232+00:00'

@@ -1,0 +1,22 @@
+id: AJCR.w1-substrate
+title: 'Wave 1: curve substrate and the genus'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Smooth proper curves over a field: geometrically reduced/integral, global
+  sections = k, Laurent charts on P^1 and a finite map C -> P^1 (unramified-over-Dedekind
+  + spreading out + ZMT). Sheaf cohomology valued in k-modules with affine H^1-vanishing,
+  the Mayer-Vietoris (0,1)-slice and the two-affine-cover cokernel bridge; the two-lattice
+  ladder gives dim_k H^1(C,O_C) < infinity, so genus is defined and correct (axiom-clean).'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-14T01:19:16.137927+00:00'
+  parent: AJCR.jacobian

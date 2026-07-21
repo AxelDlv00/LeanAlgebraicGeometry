@@ -1,0 +1,20 @@
+id: AJCR.w7-functor.f6
+title: 'F-6: functor packaging — pic0Pullback + the pinned probe-C functor.map construction
+  (Picard/Pic0Pullback.lean); gates F-3 + EV-4 (done) + D1'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: human
+  created_at: '2026-07-17T07:55:56.298280+00:00'
+  parent: AJCR.w7-functor
+  updated_at: '2026-07-17T13:18:01.761465+00:00'

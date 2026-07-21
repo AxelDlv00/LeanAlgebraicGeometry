@@ -1,0 +1,20 @@
+id: AJCR.w4-rep.datum.dat-g
+title: 'DAT-G (worksheet-first): finite-Galois/Speiser descent of the datum — $\Gamma$-semilinear
+  chart action, $\mathrm{pic}^0(C,T) \cong (\mathrm{pic}^0(C_{k^\prime},T_{k^\prime}))^\Gamma$
+  through rigidified pairs only'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T06:42:10.505491+00:00'
+  parent: AJCR.w4-rep.datum

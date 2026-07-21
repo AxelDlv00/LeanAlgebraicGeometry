@@ -1,0 +1,100 @@
+id: I-0250
+provider: local
+kind: info
+body: 'DAT-B B1+B2+B3 LANDED
+
+
+  All three cold-launchable rows of informal/w4-datb-worksheet.md landed, committed,
+  root-wired (private-index CAS, HEAD-blob + only-my-lines root per protocol §4).
+  Zero sorries; every keystone axiom-clean [propext, Classical.choice, Quot.sound];
+  single-module LEAN_NUM_THREADS=1 lake builds green under the mkdir lock (8621 /
+  8581 / 8789 jobs); zero warnings in my files (build-log warnings are pre-existing
+  replays). Commits: B-1 0b4f14cb28b, B-2 7e32755a5b1, B-3 6c87aaa3856.
+
+
+  B-1 RiemannRoch/CoverageDrop.lean (301 L, worksheet §1.4 COV-2). KEYSTONE (verbatim):
+  theorem exists_effective_sub_h0_eq_one (g : ℕ) (hχ : Sheaf.chi (Y.moduleKSheaf K)
+  = 1 - (g : ℤ)) (P : Set Y) (hdense : ∀ U : Y.Opens, (U : Set Y).Nonempty → (P ∩
+  U).Nonempty) (hPcl : ∀ x ∈ P, x ≠ genericPoint Y) (hPdeg : ∀ x ∈ P, Y.residueDeg
+  K x = 1) (W : Y.CurveDivisor) (e : ℕ) (hdeg : CurveDivisor.deg K W = (g : ℤ) + e)
+  (h1 : Subsingleton (Sheaf.HModule (Y.divisorSheaf K W) 1)) : ∃ S : Y.CurveDivisor,
+  0 ≤ S ∧ CurveDivisor.deg K S = (e : ℤ) ∧ (∀ (x : Y) (hx : x ≠ genericPoint Y), coeffAt
+  hx S ≠ 0 → x ∈ P) ∧ Sheaf.h0 (Y.divisorSheaf K (W - S)) = 1 ∧ Subsingleton (Sheaf.HModule
+  (Y.divisorSheaf K (W - S)) 1). Steps exported separately for B-5 reuse: exists_admissible_nonbase_point
+  (base locus inside the finite closed support of the DD-F baseDivisor; achiever realizes
+  exact order outside) and h0_sub_single_of_rational_nonbase (the exact drop: h0(W−x)+1
+  = h0(W) AND h1(W−x)=0, proper-submodule count vs the chi-ledger at residueDeg 1).
+  DEVIATIONS: (a) the worksheet standing hO (h0(O)=1) is NOT needed and not threaded
+  — only hχ; (b) oracle spelling: hPcl (x ≠ genericPoint) added alongside residueDeg=1
+  (the generic point cannot be ruled out of an abstract P), support clause spelled
+  ∀ x hx, coeffAt hx S ≠ 0 → x ∈ P.
+
+
+  B-2 Curve/SepPointsDenseKit.lean (263 L) + Curve/SepPointsDense.lean (378 L, worksheet
+  §1.5 COV-3; 500L cap forced the Kit split, I-0239 precedent). KEYSTONE (verbatim):
+  theorem Over.dense_baseChange_rationalPoints [IsSepClosed k] [SmoothOfRelativeDimension
+  1 C.hom] [IsIntegral C.left] (W : (relCurve C L).Opens) (hW : (W : Set (relCurve
+  C L)).Nonempty) : ∃ (p : Spec (.of k) ⟶ C.left) (hp : p ≫ C.hom = 𝟙 (Spec (.of k))),
+  (Over.rationalPointBaseChange C L p hp).base (IsLocalRing.closedPoint L) ∈ W. Kit:
+  Over.rationalPointBaseChange (the pairing ⟨str ≫ p, 𝟙⟩, I-0243 named-def pattern)
+  with triangles rationalPointBaseChange_fst (q ≫ fst.left = Spec.map (ofHom (algebraMap
+  k L)) ≫ p) and rationalPointBaseChange_snd (q ≫ snd.left = 𝟙 — THE RATIONALITY CERTIFICATE);
+  tensorPointEval + repr_tensorPointEval + exists_algHom_tensorPointEval_ne_zero (the
+  Module.Basis.baseChange linear-independence heart); Over.rationalPointEval (+_ne_zero_of_mem_basicOpen);
+  public generic helpers Scheme.Hom.appLE_congr_hom, Scheme.id_appLE(_apply), top_le_preimage_of_closedPoint_mem.
+  DEVIATION: the def codomain is the PRODUCT spelling (C ⊗ overSpec k L).left (definitionally
+  relCurve C L) — required: mixed relCurve/product spellings block appLE_comp_appLE
+  pattern-matching (unifier cannot cross the semireducible relCurve at reducible transparency);
+  the keystone is still stated at (relCurve C L).Opens, membership crosses by defeq.
+
+
+  B-3 Picard/DivisorFamilyFieldSurj.lean (241 L, worksheet §1.7 COV-4). KEYSTONES
+  (verbatim): theorem exists_divFam_divFamDivisor_eq (D : (relCurve C K).CurveDivisor)
+  (hD : 0 ≤ D) (hdeg : Scheme.CurveDivisor.deg K D = (n : ℤ)) : ∃ F : DivFam C K π
+  n, divFamDivisor F = D; noncomputable def divFamFieldEquiv : DivFam C K π n ≃ {D
+  : (relCurve C K).CurveDivisor // 0 ≤ D ∧ Scheme.CurveDivisor.deg K D = (n : ℤ)}
+  — THE FIELD DICTIONARY IS NOW UNCONDITIONAL (hdeg = I-0230 deg_divFamDivisor, hsurj
+  = this file; the stale docstrings of DivisorFamilyField/FieldEquiv can be updated
+  by a doc pass). Plus DivisorAdaptation.moduleFinite_colength and DivisorAdaptation.isCertified_of_deg
+  (ANY adaptation over a field with deg(div d) = n is certified), and the §3.3 export:
+  noncomputable def effectiveDivisorClassifyZar (D) (hD : 0 ≤ D) (hdeg : deg K D =
+  (g : ℤ)) : overSpec k K ⟶ divSchemeOver k (windowS_choice π hπ g • fiberWeilDivisor
+  π) (windowM_choice π hπ g • fiberWeilDivisor π) g r₁ r₂ b₁ (b₂.map (windowShiftEquiv
+  hπ g).symm) with effectiveDivisorClassifyZar_spec (∃ F, divFamDivisor F = D ∧ point
+  = divRepClassifyZar … F.toZar). BINDING DEVIATION (worksheet §1.7 / risk 5 SUPERSEDED):
+  the support-separated adaptation route was NOT built — full support-separation is
+  mathematically unachievable whenever a support point lies in the chart overlap V₀
+  ⊓ V₁ (each chart partition forces its pieces to cover the whole chart, so such a
+  point sits in one piece of EACH chart, and eqn germs at support points are non-units);
+  the landed unconditional CRT identity DivisorAdaptation.deg_presentationDivisor
+  (I-0230) makes separation unnecessary — the plain extraction adaptation (exists_divisorAdaptation)
+  certifies. deg_divFamDivisor_of_separated is NOT consumed.
+
+
+  NOTES FOR B-4/B-5 SUCCESSORS: (1) B-5 oracle instantiation: P := the set of base-changed
+  rational points; hdense := Over.dense_baseChange_rationalPoints; the residueDeg
+  = 1 and ≠ genericPoint clauses are NOT landed — extract them from rationalPointBaseChange_snd
+  (the point is a section of the relCurve structure map over Spec L; residue-field
+  maps compose to the identity along a section, both field maps are injective, hence
+  κ(z_p) ≅ L; compatibility with Scheme.residueFieldOverModule needs a small germ/residue
+  naturality chase — a bounded new brick, budget it in B-5). (2) B-1 consumes the
+  oracle at the fibre curve Y := relCurve C L with hχ from h0_relCurve_baseField/chi_relCurve_baseField
+  (I-0247, public). (3) Lean gotchas confirmed: the relCurve-vs-product spelling blocks
+  rw/appLE matching (fix: single product spelling + equation-haves consumed by exact
+  / DFunLike.congr_fun (congrArg CommRingCat.Hom.hom _) per I-0238(d)); Basis is Module.Basis
+  in this mathlib; algebraMap_self_apply is rfl; Module.finrank_zero_iff needs [Module.Finite]+torsion-free
+  (fields fine); isClosed_biUnion_finset for finite closed unions. (4) The co-sign
+  note for CHART-U (worksheet §1.6) is still awaiting the DAT-C acknowledgment — B-4
+  untouched per lane brief.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T07:52:44.259275+00:00'
+updated_at: '2026-07-20T03:15:06.027340+00:00'
+metadata: {}

@@ -1,0 +1,73 @@
+id: I-0235
+provider: local
+kind: info
+body: 'DDR-8 hwin-closer lane LANDED (commit 6b174da61): the hwin seam of Picard/DivSchemeMonoBridge.lean
+  is DISCHARGED over ANY commutative test ring — THE RELATIVE MONO IS NOW SEAM-FREE.
+  Pin: divFam_divEq_of_eps_eq_total (Picard/DivSchemeMonoBridgeRel.lean): equal eps-pairs
+  => equal in DivFam, threading ONLY heps + the base-field normalizations hOk/hchik
+  (no Noetherian hypothesis, no hcarve, no hsurj, no fibrewise mono). All keystones
+  axiom-clean [propext, Classical.choice, Quot.sound]; FULL ROOT lake build GREEN
+  8978 jobs; zero sorries; three new files, each <=500L (Kit 257, RelWindow 306, Rel
+  427).
+
+
+  ROUTE (exactly I-0231 recipe, section-level, no new scheme theory, no Nakayama,
+  no fibre POINTS at all): at z with s := comap of m_z, (i) field generation stalkIdeal_le_span_windowGerm_of_field
+  at kappa(s) := s.ResidueField for G.mapAlg kappa(s) (hOK/hchiK re-derived via the
+  chi_relCurve_of_chi pattern + h0_moduleKSheaf at baseChangeBundle; the DivisorThetaFibreData
+  local-instance pack reused verbatim); (ii) G-2 divFamEps_mapAlg turns the kappa(s)-window
+  germ set into windowBaseChange of the R-window; (iii) the transfer is done on SECTIONS
+  of the certified pieces, NOT on stalks of a fibre point: (a) span_twistGermSet_le_map_germ_fst/snd
+  (DivSchemeMonoBridgeRelWindow) — window germs at any point of a piece are germs
+  of piece-restricted matching components up to the cocycle-unit germ; (b) IsAffineOpen.mem_of_germ_mem_map
+  (DivSchemeMonoBridgeRelKit; general-purpose: germ-membership in an ideal extension
+  at EVERY point of an affine open => section-level membership, via the colon ideal
+  at a maximal prime + mathlib isLocalization_stalk-prime + fromSpec, no primeIdealOf-inverse
+  juggling) gives pulledEqn in span(piecesMap-image of R-window piece restrictions)
+  in Gamma(fibre piece); (c) the crux triangle at the pieces span_resFst/resSnd_windowBaseChange_le
+  (resHom_relThetaWindowEquiv_cancelBaseChange_fst/snd composed with pieceSectionsMap_algebraMap
+  = the piece-level naturality); (d) descend through pieceTermBaseChange (Ideal.apply_mem_of_equiv_iff)
+  and the fibre-descent kit exists_smul_mem_sup_map_of_one_tmul_mem_map: ker(B ->
+  kappa(s)(x)_R B) = s-saturation (cancelBaseChange R (R/s) kappa kappa B + TensorProduct.isBaseChange/isLocalizedModule_iff_isBaseChange
+  torsion + quotTensorEquivQuotSMul; denominators cleared by IsLocalization.surj on
+  Frac(R/s) inside a span_induction — no Finset juggling); (e) t not in s => germ
+  of t is a UNIT of O_z, and the landed unit trick stalkIdeal_eq_of_le_sup_map consumes
+  hwin as threaded.
+
+
+  REUSABLE infra: IsAffineOpen.mem_of_germ_mem_map + the two Kit algebra lemmas are
+  mathlib-general (any CommRing R, prime s, any R-algebra B; the Kit imports only
+  mathlib); FinCoverData.windowRes (window piece restriction, the quotient-free thetaPieceEval)
+  may serve DDR-9/G-5.
+
+
+  LEAN GOTCHAS (memory-worthy): (a) Scheme.twistGermSet/T-set arguments against metavar-laden
+  expected types do NOT accept the Submodule-to-Set coe — pass (A := ...) (V0 := ...)
+  (V1 := ...) (gc := ...) explicitly; (b) omit-by-TYPE clauses unify up to defeq and
+  can omit the WRONG instance (SmoothOfRelativeDimension 1 C.hom vs (C.left structure
+  map) are defeq through the Over instance!) — name the instance variables and omit
+  by name; (c) calc with a multi-line application head misparses (type expected /
+  expected :=) — use term-mode .trans chains; (d) Submodule.span_induction via refine
+  leaves beta-redex motives that block simp/rw — state a beta-reduced have-main first
+  and close via induction ... using Submodule.span_induction with; (e) germ-set membership
+  witnesses cross (le_inf le_top pieces_le) hz proof-args by proof irrelevance with
+  plain exact.
+
+
+  DDR-9 consumes: divFam_divEq_of_eps_eq_total (the mono input of representability);
+  over fields divFam_divEq_of_eps_eq_of_field remains the unconditional field form.
+  Doc pass may now update the DivSchemeMono.lean:50-73 header route note: the fibrewise
+  route is dead (I-0231 counterexample); the landed route is window recovery + fibre
+  clearance.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: agent
+source_ref: null
+created_at: '2026-07-18T14:54:58.412221+00:00'
+updated_at: '2026-07-20T03:14:44.513758+00:00'
+metadata: {}

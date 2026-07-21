@@ -1,0 +1,33 @@
+id: AJCR.w4-rep.datum.dat5
+title: 'DAT-5: the shift $\varepsilon^+$ — the natural family $\theta_T$ and the Type-valued
+  multiplication iso $\mathrm{pic}^0 \cong \mathrm{pic}^{d}$-layer'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'DAT-5 LANDED (Picard/ThetaShift.lean, ledger e6aecef9d). The ε⁺ shift packaged:
+  θ_T := thetaFamily C L₀ T ∈ picEt C T, the image of a base Čech class L₀ on C_k=(C⊗overSpec
+  k k).left pulled back along toBaseTest T : T ⟶ overSpec k k — natural (thetaFamily_natural:
+  θ pulls back to θ). degAt_thetaFamily: degAt θ_T t = classDeg k L₀ = d₁ at every
+  field point via DAT-4''s degAt_eq_classDeg_of_affineEquiv_eq_unit_baseChange on
+  the affine collapse; degAt_thetaFamily_pow gives m·d₁. The degree-d layer pic^d
+  is a Type-valued SUBTYPE functor picDegLayerFunctor (a coset, no group structure
+  — §5 risk 6 respected). mulThetaPowNatIso: (pic0Functor ⋙ forget₂ CommGrpCat GrpCat)
+  ⋙ forget GrpCat ≅ picDegLayerFunctor C (m·d₁), the mult-by-θ_T^m natural iso (group
+  structure only on the pic0 side); representableByOfShift transports a RepresentableBy
+  datum for the shifted layer to one for pic0 via RepresentableBy.ofIso — the ε⁺ shift
+  DAT-J consumes. DAT-0b consumed concretely: thetaCechClass C := fiberTwist π 1 on
+  C_k, one_le_classDeg_thetaCechClass: 1 ≤ d₁. 277 lines, module kernel-green under
+  mutex, 7 keystones axiom-clean [propext, Classical.choice, Quot.sound], zero sorries.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T06:41:43.922043+00:00'
+  parent: AJCR.w4-rep.datum
+  updated_at: '2026-07-16T08:20:48.588775+00:00'

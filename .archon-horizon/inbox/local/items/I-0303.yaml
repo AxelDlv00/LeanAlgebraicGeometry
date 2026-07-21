@@ -1,0 +1,84 @@
+id: I-0303
+provider: local
+kind: info
+body: "RD-N proper -> seedUniv' BUILD: landed 2a (concrete chart-level N z + ann->hdvd\
+  \ bridge, reusable finiteness) + the concrete seedUniv' + isGenerator_seedUniv'\
+  \ GATED on RD-N (SeedUnivRDN) + hfib. RD-N proper (z not-in supp) itself NOT closed\
+  \ -- the remaining geometric wall (I-0302 2b/2c), now precisely reduced and threaded\
+  \ as the hypothesis seedUniv' consumes. Both files single-module LEAN_NUM_THREADS=1\
+  \ lake build GREEN under the mkdir lock (RDNChart 10s / SeedUniv 288s, 8789/8798\
+  \ jobs). All keystones lean_verify axiom-clean [propext, Classical.choice, Quot.sound];\
+  \ zero sorries; zero warnings in my files. Root: HEAD-blob + only my import line\
+  \ each (protocol 4); sibling PicEtCrossBaseGraph add + RDN/Achiever/FibreCut/Seed/UnivFibreHinj\
+  \ working-tree removals NOT swept; show --stat = my paths + root +1.\n\n=== COMMITS\
+  \ (this lane) ===\n- afede9ef5  DD-4 redesign RD-N step 2a: concrete chart-level\
+  \ colength N z + ann->hdvd bridge. New file Picard/DivSchemeRedesignRDNChart.lean\
+  \ (186 L).\n- 64f1c02a2  DD-4 redesign: concrete seedUniv' + isGenerator_seedUniv'\
+  \ (gated on RD-N). New file Picard/DivSchemeRedesignSeedUniv.lean (228 L).\n\n===\
+  \ KEYSTONES (VERBATIM) ===\n\n(REUSABLE FINITENESS, mathlib-only, Picard/DivSchemeRedesignRDNChart.lean)\n\
+  theorem Module.Finite.span_range_of_finite_isScalarTower {R S M N : Type*} [CommRing\
+  \ R] [CommRing S] [Algebra R S] [AddCommGroup M] [Module R M] [Module.Finite R M]\
+  \ [AddCommGroup N] [Module R N] [Module S N] [IsScalarTower R S N] (f : M ->l[R]\
+  \ N) : Module.Finite S (Submodule.span S (Set.range f))\n\n(THE CONCRETE N z, ns\
+  \ AlgebraicGeometry.ThetaGeneratorSeed)\nnoncomputable def chartColengthModule (K\
+  \ : Submodule R (relThetaSections C R pi a)) (b : Bool) (s : relThetaSections C\
+  \ R pi a) : Submodule Gamma(V) (Gamma(V) / Ideal.span {relThetaResSide a b le_rfl\
+  \ s}) := Submodule.span _ (Set.range ((Ideal.Quotient.mka R (Ideal.span {relThetaResSide\
+  \ a b le_rfl s})).toLinearMap.comp (chartReadMap K b)))    [V = relPinnedChart C\
+  \ R pi b]\nchartColengthModule_finite : Module.Finite Gamma(V) (chartColengthModule\
+  \ K b s)   [via the finiteness keystone, K finite over R]\n\n(THE ann->hdvd BRIDGE)\n\
+  theorem forall_mul_read_mem_span_of_forall_smul_eq_zero (K)(b)(s) {h : Gamma(V)}\
+  \ (hann : forall n : (chartColengthModule K b s), h . n = 0) : forall psi in K,\
+  \ h * relThetaResSide a b le_rfl psi in Ideal.span {relThetaResSide a b le_rfl s}\n\
+  \n(THE ann-cutter SEED-SHAPED, from RD-N)\ntheorem exists_h_mem_basicOpen_forall_mul_read_mem_span\
+  \ (K)(b)(s)[Module.Finite R K] {z} (hz : z in relPinnedChart C R pi b) (hsupp :\
+  \ (isAffineOpen_relPinnedChart C R pi b).primeIdealOf <z,hz> not-in Module.support\
+  \ Gamma(V) (chartColengthModule K b s)) : exists h : Gamma(V), z in (relCurve C\
+  \ R).basicOpen h and (forall psi in K, h * relThetaResSide a b le_rfl psi in Ideal.span\
+  \ {relThetaResSide a b le_rfl s})\n\n(THE CONCRETE seedUniv', ns AlgebraicGeometry.ThetaGeneratorSeed,\
+  \ Picard/DivSchemeRedesignSeedUniv.lean)\nnoncomputable def seedUniv' (hrdn : SeedUnivRDN\
+  \ C hpi g r1 r2 b1 b2 i j hO hchi) : ThetaGeneratorSeed C (seedChartRing ...) pi\
+  \ (windowM_choice pi hpi g) (divUniversalSeedK ...)   -- side/sec/sec_mem := landed\
+  \ seedUniv's (relative achiever); h := ann-based fibre-cutter from RD-N (exists_seedUniv'_h).\n\
+  \n(THE REDESIGNED FINALE)\ntheorem isGenerator_seedUniv' (hrdn : SeedUnivRDN ...)\
+  \ (hfib : <the isGenerator_of_ann_cutter hfib for seedUniv' hrdn>) : (seedUniv'\
+  \ ... hrdn).IsGenerator := isGenerator_of_ann_cutter (seedUniv' ... hrdn) (fun z\
+  \ _psi hpsi => (exists_seedUniv'_h ... hrdn z).choose_spec.2 hpsi) hfib   -- DIRECT\
+  \ hdvd (hann) DISCHARGED from the ann-cutter via the 2a bridge; hfib threaded.\n\
+  \n=== WHAT LANDED vs RESIDUAL ===\nLANDED: 2a (concrete N z over Gamma(V) + Module.Finite\
+  \ + ann->hdvd bridge + ann-cutter existence, all reusable); seedUniv' VALUE (I-0292\
+  \ residual 1); isGenerator_seedUniv' reduced to exactly two honest inputs -- SeedUnivRDN\
+  \ (RD-N) and hfib -- with hann DISCHARGED (not threaded).\n\nRESIDUAL = RD-N proper\
+  \ (close SeedUnivRDN), the I-0302 2b/2c wall, now precisely reduced:\n  SeedUnivRDN\
+  \ z := primeIdealOf z not-in Module.support Gamma(V) (seedUnivColength z);  seedUnivColength\
+  \ z := chartColengthModule divUniversalSeedK (seedUniv.side z) (seedUniv.sec z).\n\
+  \  (2b) Subsingleton(kappa(p) tensor N z) via subsingleton_tmul_residueField_of_flat_quotient\
+  \ (RelDivisor:303, LANDED) fed by (i) flat_chart_colength_divUniversalSeedK (683de581f,\
+  \ chart J-flat over R_Z gated on hchi) and (ii) the achiever field-vanishing read(sec\
+  \ z) tensor 1 = 0 from ..._achieves_seedPrime coeffAt=baseDivisorAt (I-0291) --\
+  \ the genuine XL content (achiever d_p divisibility wiring).\n  (2c) stalk bridge:\
+  \ primeIdealOf z (of Gamma(V)) not-in support  <-  germ_z(read psi) in <germ_z(read\
+  \ s)>  via Module.notMem_support_iff + LocalizedModule.subsingleton_iff + hV.isLocalization_stalk\
+  \ (generators localize to 0; clear denominators from germ membership). The germ\
+  \ membership is produced by the LANDED mem_span_singleton_map_of_subsingleton_tmul_residueField_localRing\
+  \ (RelDivisor:241, phi := germ_z) fed by (2b).\n  hfib: the achiever's fibrewise-nonzero\
+  \ reading on the cutter neighbourhood (analogue of seedUniv_hfib with the ann-cutter\
+  \ in the premise; NOT dischargeable from seedUniv_hfib -- that needs h=algebraMap\
+  \ f). Threaded for now; the honest \"no-leak\" fact.\n\n=== DOWNSTREAM (certificate\
+  \ + U1) ===\nOnce SeedUnivRDN + hfib discharged, isGenerator_seedUniv' is unconditional\
+  \ bar hchi/hO -> certificate (non-circular, dvd holds) -> divUniversalFamily :=\
+  \ divFamEps_certifiedFamily (DDR9-U U1) -> divRep. Anti-circularity preserved: certificate-FREE,\
+  \ IsCertified-FREE; order flat(landed)->RD-N(gated)->seedUniv'(here)->isGenerator(here)->certificate->U1."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-20T04:57:18.324770+00:00'
+updated_at: '2026-07-20T04:57:18.324781+00:00'
+metadata:
+  agent: rdn-seeduniv-lane

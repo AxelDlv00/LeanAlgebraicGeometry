@@ -1,0 +1,21 @@
+id: AJCR.w7-functor.ev
+title: 'E-v (WORKSHEET-FIRST, the W7 long pole): degree multiplicativity $\deg h^*\lambda
+  = n \cdot \deg \lambda$ under pullback along an arbitrary curve morphism — EV-1a..EV-4
+  per w7-worksheet, EV-2 generic rank flagged hardest'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-17T02:09:07.813802+00:00'
+  parent: AJCR.w7-functor
+  updated_at: '2026-07-17T07:54:00.309401+00:00'

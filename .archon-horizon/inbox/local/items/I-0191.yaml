@@ -1,0 +1,62 @@
+id: I-0191
+provider: local
+kind: memory
+body: 'DD-R SPEC LANDED (informal/spec-dd-r.md, commit 8c12b88cb) — the two gate ADJUDICATIONS
+  decided, evidence file:line in the spec.
+
+
+  VERDICT A (I-0186 item 2 x I-0182): the off-overlap normalization is mathematically
+  UNAVAILABLE — P-fib''s divisor is the modulus itself (existsUnique_effective_divisor_of_carve,
+  RiemannRoch/PFib.lean:241, D := baseDivisor of the GIVEN window, :282, pinned pointwise
+  by baseDivisorAt_normalization :127); as the Z(diamond)-point varies D ranges over
+  ALL effective deg-g divisors including g*x for x in pi^-1(Gm); no translation/rescale
+  exists. BUT DD-R consumes NEITHER hsurj NOR hdeg: the recover direction is pullback
+  of a UNIVERSAL certified family built by local generators from the universal carve
+  pair (worksheet 3.4.1) — divFamOfDivisor appears nowhere; the only degree identity
+  needed is fibrewise FOR CARVE-CERTIFIED FAMILIES and closes MV-free by the certified-degree
+  pinch (corank g [DD-4 Task 5] + SectionBound:248 => deg <= 2g + exact rank_normalization
+  WindowLedger:396 => deg = g). I-0182''s one-sided-dictionary route is SUPERSEDED
+  for DD-R. The hsurj/overlap obstruction MIGRATES TO DAT-B''s coverage row (binding
+  boundary flag in spec 1); designed relief recorded: DD-R''s field instance gives
+  a window-route divFamOfDivisor for ALL D (certificate from the second window, no
+  support separation) — I-0186 stages 3-5 potentially moot for DAT-B. hdeg stays the
+  sole XL, UNFUNDED and UNCONSUMED. Fallback if DDR-4/DDR-8 wall: matrix-chart AMBER
+  (worksheet 3.6(d)), NOT general MV (it would not unblock the relative bricks).
+
+
+  VERDICT B (I-0159 trailing (ii)): CHART-LOCAL SUFFICES — glued grPoint : (T -> grOver)
+  -> grFunctor value is NOT consumed by DD-R, stays deferred. Family->hom is the GRQ
+  grPointOfRankQuotient pattern (GrassmannianQuot.lean:4984, functor-value->scheme-map
+  gluing) on the LANDED chart kit: matrixPoint_factors_chart_iff (GrassmannianChartFrame.lean:271),
+  chartTautologicalPoint (GrassmannianTautological.lean:110), GL-cocycle compat (GrassmannianTautologicalCocycle.lean:110)
+  — note I-0159 trailing (i) AND (iii) are ALREADY LANDED. Hom->family pulls back
+  the universal DIVISOR family; the gluing weight sits on the divisor side (DD-1(c)
+  mapAlg + DD-1(e) vehicle + DD-2), needed anyway for divFunctor to be a functor (PicEtMap
+  precedent) — grPoint would be pure duplication. Residual mandatory DD-3 work: ZERO.
+  DD-R owns two S-M plumbing bricks (chart-locus cover + hom-ext).
+
+
+  BRICKS (spec 4): DDR-1 carve locus/DivScheme/iota [L, launchable NOW] || DDR-7 hom-ext
+  [S-M, NOW] -> DDR-3 local generators [L] -> DDR-4 certificate transport [L-XL, THE
+  seam, Fable-held, probe-first] -> {DDR-2 degree pinch [S-M], DDR-5 eps-projection
+  [M], DDR-6 classify [M-L]} -> DDR-8 relative mono [L] -> DDR-9 divRep assembly [M-L].
+  Gates: DD-4 Tasks 4-7 + base-field-transport seam gate DDR-2/5/6; DD-1(c) mapAlg
+  + DD-2 gate only DDR-9 (divRepAff first if DD-2 trails). RISKIEST: DDR-4''s bridge
+  between DD-1''s gluedSubmodule equalizer and the engine Cech H0 of the constructed
+  glued sheaf (anti-circular route: fibrewise P-fib -> relTwistRigidEngine -> certificate;
+  support tube licensed by standing IsProper C.hom). Trap recorded: fibrewise containment
+  does NOT imply relative containment over nonreduced bases (k[eps] counterexample)
+  — all relative containments routed through colon-Tor or rank arithmetic.
+
+
+  agent-ready'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T04:16:11.316664+00:00'
+updated_at: '2026-07-17T04:16:11.316675+00:00'
+metadata: {}

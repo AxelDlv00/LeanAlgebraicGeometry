@@ -1,0 +1,23 @@
+id: AJCR.w4-rep.datum.dat-d.dd0
+title: 'DD-0: the section bound h⁰ ≤ deg+1 and the window ledger (named constants
+  s, M; every window lemma through DAT-0a)'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: Peeling induction on the landed slice SES for the bound; ledger constants
+  s (least with (s−1)δ ≥ b+2g) and M (least with Mδ ≥ b+2g+(g+2)(s+1)δ) with one h¹=0
+  lemma per window used in P-fib's lanes. Downstream bricks consume windows ONLY through
+  ledger names.
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-16T08:26:30.541871+00:00'
+  parent: AJCR.w4-rep.datum.dat-d
+  updated_at: '2026-07-16T16:58:07.401058+00:00'

@@ -1,0 +1,30 @@
+id: AJCR.w4-rep.datum.dat-a
+title: 'DAT-A: sections $\mapsto$ divisor families — fibrewise-nonzero $H^0$-elements
+  give LocalEquations with the right class (incl. the lm:ctn regularity half)'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'CLOSED (3rd launch, Fable, 2026-07-17): spec informal/spec-dat-a.md + 4
+  stages landed and wired, root green. A2 core = Picard/FibrewiseRegular.lean (THE
+  shared lm:ctn-lite Tor home; Tor-free Noetherian-induction proof; DD-1a''s base-change
+  half has a marked seam there — do not duplicate). A2 geo = Picard/SectionsToDivisors.lean
+  (germ transport, the NAMED field-level slice case Scheme.germ_mem_nonZeroDivisors_of_ne_zero,
+  piece flatness, datum components regular). A = Picard/SectionsToDivisorsClass.lean:
+  sectionLocalEquations on the (1e) subordination interface, ratio units EXACTLY the
+  transition units, CLASS LAW sectionLocalEquations_picClass = D.cechPicClass (consumes
+  the finisher''s (1e) landed mid-flight — no seam). Generators corollary = Picard/LocalGenerators.lean
+  (Module.exists_fibrewise_tmul_ne_zero_of_projective, DAT-B/DD-R verbatim). All keystones
+  lean_verify axiom-clean [propext, Classical.choice, Quot.sound].'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T06:41:44.625112+00:00'
+  parent: AJCR.w4-rep.datum
+  updated_at: '2026-07-16T18:24:35.682900+00:00'

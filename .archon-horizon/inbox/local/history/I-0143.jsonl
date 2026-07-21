@@ -1,0 +1,4 @@
+{"at": "2026-07-15T10:12:02.353996+00:00", "actor": "human", "field": "created", "from": "", "to": "open", "note": "opened"}
+{"at": "2026-07-16T13:50:28.645868+00:00", "actor": "system", "field": "body", "from": "", "to": "", "note": "description edited"}
+{"at": "2026-07-16T13:50:38.880704+00:00", "actor": "system", "field": "status", "from": "open", "to": "closed", "note": ""}
+{"at": "2026-07-16T13:50:40.249866+00:00", "actor": "system", "field": "status", "from": "closed", "to": "archived", "note": ""}

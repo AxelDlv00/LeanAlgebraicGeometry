@@ -1,0 +1,24 @@
+id: AJCR.w4-rep.datum.dat-d.ddf
+title: 'DD-F: P-fib, the persistence heart — F1 normalization, F2 P-adic lane model,
+  F3 lane-rigidity endgame (THE open step, probe-gated), F4 uniqueness'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Field-level module algebra ONLY (a scheme appearing is the stop signal).
+  BINDING probe gate: first deep spend of the campaign; GREEN = F3 closed; AMBER =
+  switch to the DD-Φ matrix-chart fallback (orchestrator decision); RED = plan-B Sym^g,
+  orchestrator-only. The §3.6(a) pencil counterexample is recorded so the probe attacks
+  the right statement.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-16T08:26:36.659387+00:00'
+  parent: AJCR.w4-rep.datum.dat-d
+  updated_at: '2026-07-16T18:32:38.383404+00:00'

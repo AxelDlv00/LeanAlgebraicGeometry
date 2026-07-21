@@ -1,0 +1,51 @@
+id: I-0171
+provider: local
+kind: memory
+body: 'DD-1c (f) field-dictionary lane — PARTIAL LANDING (2026-07-17, Opus prover),
+  follow-on to I-0167. File Picard/DivisorFamilyField.lean (169 lines, green, axiom-clean).
+  Commits 86d249f92 (forward+effectivity), 5adba2564 (field half of degree).
+
+
+  LANDED (per I-0167 machinery map):
+
+  - forward map divFamDivisor + keystone presentationDivisor_eq_of_divEq (DivEq-invariance,
+  the finer separate lemma I-0167 flagged) + coeffAt_divFamDivisor.
+
+  - effectivity zero_le_divFamDivisor via ord_algebraMap_stalk_le_one + ord_val_eq_ordZ
+  (I-0167''s per-point toAdd(ordZ)>=0, DID NOT need the Dedekind-chart reduction after
+  all — the germ_generic_eq_algebraMap_germ + valuation_le_one route is shorter).
+
+  - DivisorAdaptation.IsCertified.finrank_glued: certificate over field => finrank
+  K W(d) = n (rankAtStalk_eq_finrank_of_free + Free.of_divisionRing). This is the
+  FIELD half of degree=n.
+
+
+  THE WALL (I-0167 step iii, geometric half): deg K (presentationDivisor) = finrank
+  K W(d). I-0167 pointed at finrank_quotient_span_section (ChartColength:411) + ''support-splitting
+  CRT across the equalizer''. Confirmed shape: finrank_quotient_span_section gives
+  PER-CHART colength = Sum toAdd(ordZ)*residueDeg (single affine chart V containing
+  eta + single equation f). But W(d) is the EQUALIZER over m0+m1 basic-open pieces;
+  bridging needs ''equalizer of Gamma over cover = global sections of structure sheaf
+  O_D'' + finrank(O_D)=deg. The codebase''s GluedDivisorSheaf/gluedDivisorSheafIso
+  and W6Full handle the LINE BUNDLE O(D) (its H0 = Riemann-Roch space), NOT the STRUCTURE
+  sheaf O_D of the finite subscheme. So the CRT/Mayer-Vietoris for the structure sheaf
+  is genuinely new infrastructure (XL). RECOMMEND: next lane build (1) O_D structure-sheaf
+  equalizer<->finrank identity per chart via finrank_quotient_span_section, (2) Mayer-Vietoris
+  finrank additivity across the 2-chart cover with overlap correction (support-separated
+  case first: W = Prod colength, no correction — this also unlocks backward map iv).
+
+
+  BLOCKED on the same wall: (iv) backward map (pointEquations products + support-separating
+  adaptation — certificate rankAtStalk=n needs finrank(W)=deg even when W=Prod colength)
+  and (v) inverse laws (RefinementInjectivity pattern). Full divFamFieldEquiv assembles
+  only after the geometric half. I-0167 KEPT OPEN (still the machinery map for iv/v).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T01:22:27.140343+00:00'
+updated_at: '2026-07-17T01:22:27.140353+00:00'
+metadata: {}

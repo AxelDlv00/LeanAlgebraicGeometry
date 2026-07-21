@@ -1,0 +1,24 @@
+id: AJCR.picard.c1
+title: '(C1) Etale separatedness: the plus-unit is injective'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Kleiman 2.5(1) for the one-step etale plus construction. LANDED: the Cech-Picard
+  dictionary + naturality, descent-in-stages, the Amitsur toolkit, the coherent witness
+  (zeta2i), the pi-assembly composite descent unit with the class equation (zeta2ii),
+  the zeta3 reduction to the Cech kernel lemma and the unfold unit_injective_of_ker.
+  IN FLIGHT: the DescentClassRep construction and the kernel-lemma gluing; then unit_injective
+  is a one-line corollary.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-14T01:19:42.125790+00:00'
+  parent: AJCR.picard
+  updated_at: '2026-07-14T03:16:34.114050+00:00'

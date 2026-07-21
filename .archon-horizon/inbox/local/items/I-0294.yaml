@@ -1,0 +1,75 @@
+id: I-0294
+provider: local
+kind: info
+body: "hinj_chart carve rank-g BUILD — chart-level h z-FREE plumbing LANDED; the carve\
+  \ pin proper (hinj_chart itself) NOT landed (the genuine XL wall unchanged: the\
+  \ SlicingFlatKernel corank-g pin needs the function-field Riemann-Roch count via\
+  \ divUniversalFibreKM + the residue-field k-tower wiring, an instance-explosion\
+  \ minefield per I-0255).\n\nNew file Picard/DivSchemeRedesignHinjChart.lean (237\
+  \ L). Single-module LEAN_NUM_THREADS=1 lake build GREEN under the mkdir lock (8787\
+  \ jobs, my module 13s). All 3 keystones lean_verify axiom-clean [propext, Classical.choice,\
+  \ Quot.sound]; zero sorries; zero new warnings (the maxHeartbeat/setOption warnings\
+  \ are pre-existing in GluedSheafH0BaseChange/DivSchemeFamilyUniv/DivisorFamilyThetaSections).\
+  \ Full-root stays GREEN (leaf file). Root: HEAD-blob + only my line (protocol s4\
+  \ — sibling PicEtCrossBaseGraph add + Hinj/Achiever/FibreCut/Seed removals in working\
+  \ tree NOT swept; show --stat = my 2 paths, root +1).\n\n=== COMMIT (this lane)\
+  \ ===\n- 895d7d8aa  DD-4 hinj_chart: chart-level carve-pin plumbing — colength base-change\
+  \ transport + hsub<=>hinj at the chart reading map (h z-free)\n\n=== KEYSTONES (VERBATIM;\
+  \ namespace AlgebraicGeometry.ThetaGeneratorSeed) ===\n\n(1) THE chart-level colength\
+  \ base-change transport (whole chart V, le_rfl; whole-chart analogue of pinnedPieceQuotBaseChangeAlg,\
+  \ built on relTermBaseChangeAlg, NO basic-open localization):\n  relPinnedQuotBaseChangeAlg\
+  \ (C R R' pi)(b : Bool)(E : Set Gamma(relCurve C R, relPinnedChart C R pi b)) :\
+  \ R' (X)[R] (Gamma(relCurve C R, relPinnedChart C R pi b) / Ideal.span E) =A[R']\
+  \ Gamma(relCurve C R', relPinnedChart C R' pi b) / Ideal.span (relPinnedSectionsMap\
+  \ C R R' pi b '' E)\n  + relPinnedTermBaseChangeAlg / _one_tmul (1(X)s |-> relPinnedSectionsMap\
+  \ s) / relPinnedQuotBaseChangeAlg_one_tmul_mk\n  + mk_tmul_one_eq_zero_iff_relPinnedSectionsMap_mem\
+  \ (b)(E)(s) : ([s] (X)t 1 = 0) <=> relPinnedSectionsMap s in Ideal.span (relPinnedSectionsMap\
+  \ '' E) — the chart-level fibre-vanishing clause, whole-chart analogue of the KerSpan\
+  \ piece-level one.\n\n(2) THE generic (level-agnostic) fibre-injectivity equivalence\
+  \ — the pure linear algebra behind hsub<=>hinj at ANY level, reusable:\n  liftQ_rTensor_injective_iff_range_subtype_rTensor_injective\
+  \ {R0}[CommRing R0]{M N}[mods](f : M ->l[R0] N)(p : PrimeSpectrum R0) : Function.Injective\
+  \ (((LinearMap.ker f).liftQ f le_rfl).rTensor p.asIdeal.ResidueField) <=> Function.Injective\
+  \ ((LinearMap.range f).subtype.rTensor p.asIdeal.ResidueField)\n  Proof: fbar corestricts\
+  \ to ebar : M/ker f =L range f; fbar(X)k = (range f).subtype(X)k comp (ebar(X)k),\
+  \ ebar(X)k bijective; Function.Injective.of_comp_iff'.\n\n(3) THE chart instantiation\
+  \ at the reading map (h z-FREE): chartReadMap K b := (relThetaResSide a b le_rfl).comp\
+  \ K.subtype (reads K into the whole pinned chart Gamma(V); its range is N_V = <read\
+  \ psi : psi in K>).\n  forall_chartRead_range_subtype_rTensor_injective_iff (K)(b)\
+  \ : (forall p, Injective ((range (chartReadMap K b)).subtype.rTensor kappa(p)))\
+  \ <=> (forall p, Injective (((ker (chartReadMap K b)).liftQ (chartReadMap K b) le_rfl).rTensor\
+  \ kappa(p)))\n  — hsub_chart <=> hinj_chart at the chart level, h z-FREE (le_rfl).\
+  \ The carve lane targets EITHER; discharging one discharges the other, and the piece-level\
+  \ hsub follows by localizing to D(h z) sub V.\n\n=== RESIDUAL — the carve pin proper,\
+  \ UNCHANGED difficulty (XL) ===\nThe chart-level statement + the hsub<=>hinj closed\
+  \ loop + the colength base-change transport are now LANDED h z-free. To discharge\
+  \ hinj_chart itself at the universal seed (K = divUniversalSeedK, R = R_Z = DivCarveChartRing):\n\
+  \  hinj_chart : forall (b)(p), Injective (((ker (chartReadMap divUniversalSeedK\
+  \ b)).liftQ ... le_rfl).rTensor kappa(p)).\nRoute (unchanged): move f_V (X) kappa(p)\
+  \ to compared-window fibre readings via the LANDED chart triangle relPinnedSectionsMap_relThetaResSide_windowEquiv\
+  \ (Read:203) composed with my relPinnedTermBaseChangeAlg at R'=kappa(p); identify\
+  \ ker(f_V(X)kappa) with the second window divUniversalSeedK' via ker_baseChangeMkQ_eq_span_windowCompare\
+  \ (Res:207) + divUniversal_carve_residueField (FamilyUniv:135, carvePairArrow=0)\
+  \ + baseChange_carvePairArrow_eq_zero_iff/ker_baseChange_mkQ (DivCarveKit:190/91);\
+  \ the base kernel spans the fibre kernel by the SlicingFlatKernel corank-g pin,\
+  \ which needs the CONSTANT fibre dimension g via finrank_divUniversalFibreKM_add\
+  \ (AssembleKappa:207) — the function-field window divUniversalFibreKM identification\
+  \ (divUniversalFibreKM_eq_span, Res:376).\nGOTCHA (verified, MEMORY-WORTHY): applying\
+  \ the chart triangle / windowCompare at kappa(p) over a GENERAL test ring needs\
+  \ [Algebra k kappa(p)][IsScalarTower k R kappa(p)] — the I-0255 residue-field k-tower\
+  \ minefield (RingHom.toAlgebra composite letI => whnf NON-termination even at 1e6\
+  \ heartbeats). The carve-pin lane must wire these towers NATIVELY (NOT via toAlgebra\
+  \ composites). NEXT LANE: build the fibre-reading bridge (chartReadMap.rTensor kappa(p)\
+  \ transported by relPinnedTermBaseChangeAlg = relThetaResSide of Theta_kappa(windowCompare))\
+  \ with native kappa(p) towers, then wire the carve + corank."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: agent
+source_ref: null
+created_at: '2026-07-19T21:57:55.776110+00:00'
+updated_at: '2026-07-19T21:57:55.776119+00:00'
+metadata: {}

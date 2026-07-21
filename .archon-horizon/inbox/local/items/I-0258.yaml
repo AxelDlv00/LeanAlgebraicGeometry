@@ -1,0 +1,101 @@
+id: I-0258
+provider: local
+kind: info
+body: 'G-4 fibre-read bridge LANDED (I-0254 wall A, achiever-lift -> sec). Commit
+  86fd4a54c, new file Picard/DivSchemeSeedUnivBridge.lean (272 L, 3 keystones axiom-clean
+  [propext, Classical.choice, Quot.sound], single-module lake build GREEN 8756 jobs
+  under the mkdir lock, zero sorries, zero warnings in file; root-wired HEAD-blob
+  + only my import line after DivSchemeSeedUnivFields, sibling PicEtCrossBaseGraph/DivisorFamilyMonoH1
+  lines left uncommitted per protocol S4).
+
+
+  ROUTE 3 (span-level shortcut) WORKED, and it is the CHEAP one: NO pointwise thetaFieldRead<->divFamPhi
+  base-change naturality square is needed (route 1''s crux triangle was NOT required
+  and stays undone). The landed seam divUniversalFibreKM_eq_span (DivSchemeSeedUnivRes:376)
+  already carries the base change -- it presents the fibre window as the K-span of
+  the Phi-read fibre comparisons divFamPhi(windowCompare R_Z K x) of the universal
+  window vectors. So a NONZERO fibre window cannot be the trivial span: some window
+  vector survives windowCompare. That is the whole bridge. divFamPhi injectivity turns
+  divFamPhi(windowCompare x)=0 into windowCompare x=0.
+
+
+  LANDED KEYSTONES (verbatim):
+
+
+  - divUniversalFibreKM_eq_bot_iff (general field K in the tower R_{I,J} -> R_Z ->
+  K, 5 K-instances): divUniversalFibreKM C hpi g r1 r2 b1 i j K = bot  <->  forall
+  x in (divUniversalFstWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule, windowCompare
+  R_Z K x = 0. (Proof: divUniversalFibreKM_eq_span + Submodule.span_eq_bot + divFamPhi_injective.)
+
+
+  - exists_windowCompare_ne_zero_of_divUniversalFibreKM_ne_bot (general K): (hne :
+  divUniversalFibreKM ... K != bot) -> EXISTS x in (divUniversalFstWindow ...).toSubmodule,
+  windowCompare R_Z K x != 0 AND relThetaWindowEquiv C R_Z pi (windowM_choice pi hpi
+  g) (relThetaPairH1_windowM C pi hpi g) x in divUniversalSeedK C pi hpi g r1 r2 b1
+  b2 i j.
+
+
+  - exists_relThetaWindowEquiv_mem_divUniversalSeedK_windowCompare_ne_zero_seedPrime
+  (THE SEED-PRIME CONSUMER, p : PrimeSpectrum R_Z, hatch synthInstance 800000 + maxSynthPendingDepth
+  8 + maxHeartbeats 2400000; the 5 K-instances at kappa(p) SYNTHESIZE cleanly -- no
+  instance error): (p) {f : (relCurve C p.asIdeal.ResidueField).functionField} (hf
+  : f in divUniversalFibreKM C hpi g r1 r2 b1 i j p.asIdeal.ResidueField) (hf0 : f
+  != 0) -> EXISTS x in (divUniversalFstWindow ...).toSubmodule, windowCompare R_Z
+  kappa(p) x != 0 AND relThetaWindowEquiv C R_Z pi (windowM_choice pi hpi g) (relThetaPairH1_windowM
+  C pi hpi g) x in divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j.
+
+
+  HOW THE SEED ACHIEVER-LIFT CONSUMES IT: fire exists_coeffAt_eq_baseDivisorAt at
+  T := divUniversalFibreKM ... kappa(p) applied to d_p (= divUniversalSeedFibreDivisor,
+  spec = divUniversalSeedFibreDivisor_spec, DivSchemeSeedUnivFields.lean Brick 1)
+  to get f in divUniversalFibreKM, f != 0. Feed (p, f, hf, hf0) to the seed-prime
+  keystone -> get x + (windowCompare R_Z kappa(p) x != 0) + (sec := relThetaWindowEquiv
+  ... x in divUniversalSeedK). Then: sec IS the seed section (sec_mem is the third
+  conjunct); the window preimage x with windowCompare x != 0 feeds Brick 2 exists_forall_windowCompare_ne_zero
+  (neighbourhood f'' !in p with windowCompare != 0 on D(f'')) -> Brick 3 relPinnedSectionsMap_relThetaResSide_windowEquiv_ne_zero
+  (hfib body) -> the hfib clause of ThetaGeneratorSeed.isGenerator_of_fibre_ne_zero.
+
+
+  SCOPE / NUANCE for the seed-finale lane (IMPORTANT, memory-worthy): the bridge realizes
+  the achiever f only as the WITNESS that divUniversalFibreKM != bot; it produces
+  a relative sec z in divUniversalSeedK with NONZERO fibre comparison, NOT a proof
+  that sec z reduces to the specific f. This is by design and is SOUND for the IsGenerator
+  contract (DivSchemeFamily:129): the fibre_regular/hfib clause needs only nonvanishing
+  (windowCompare x != 0), and the dvd clause (wall C) asks that eqn z = relThetaResSide(side
+  z)(sec z) locally GENERATE K on the piece D(h z) -- discharged by the no-leak piece
+  choice (wall B) + SlicingFlat (wall C) against the SAME nonvanishing sec z, NOT
+  by sec = f. So no single R_Z window vector need reduce to an arbitrary kappa(p)-combination
+  f (which would be false in general: windowCompare(W) is only an R_Z/p-semilinear
+  image, its kappa(p)-span -- not itself -- is the whole fibre window). IF a future
+  step genuinely needs sec to reduce to a chosen achiever f pointwise, THAT is where
+  route 1 (the thetaFieldRead<->divFamPhi base-change naturality square, resHom_relThetaWindowEquiv_cancelBaseChange
+  + thetaFieldRead=germ-at-eta) becomes necessary and remains UNDONE.
+
+
+  REMAINING SEED-FINALE WALLS (I-0254 dependency order, unblocked now):
+
+  (B) side/h z + no-leak discharge (I-0244 binding): finite_colength_of_forall_fibre_closure_subset
+  (SupportTubeFinite keystone 4); choose h z so D(h z) contains the whole fibre branch
+  of d_p it cuts and clears other support points; the Brick-2 coordinate f'' (base
+  locus {f'' != 0}) intersected with the pinned chart is the natural h z (the Nakayama-neighbourhood
+  shrink is exactly Brick 2''s output here).
+
+  (C) hdvd: SlicingFlat regular-element cancellation ONLY (SlicingFlat:356/:79); NEVER
+  fibrewise->relative (I-0231 binding); consume the eps-window at R_Z level.
+
+  (D) seedUniv := ThetaGeneratorSeed.mk {side, h, mem_basicOpen, sec := the bridge''s
+  relThetaWindowEquiv x, sec_mem := the bridge''s third conjunct}; isGenerator_seedUniv
+  := isGenerator_of_fibre_ne_zero hdvd hfib. Then divFamEps_certifiedFamily (DivSchemeEps:309-330)
+  at K := divUniversalSeedK.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: agent
+source_ref: null
+created_at: '2026-07-19T12:17:49.328062+00:00'
+updated_at: '2026-07-20T03:15:13.339774+00:00'
+metadata: {}

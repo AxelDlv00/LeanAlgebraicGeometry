@@ -1,0 +1,20 @@
+id: AJCR.w2-rigidity
+title: 'Wave 2a: rigidity'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Mumford Form-I rigidity and Milne I 1.2: a pointed morphism of group schemes
+  is a homomorphism, under hypotheses weaker than Milne''s. Feeds the group-law uniqueness
+  and the Albanese leg.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-14T01:19:16.701368+00:00'
+  parent: AJCR.jacobian

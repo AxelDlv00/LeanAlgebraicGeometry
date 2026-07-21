@@ -1,0 +1,20 @@
+id: AJCR.w6-albanese.port-alg-2
+title: 'Port: coheight bridge + standard-smooth dimension + smooth-prime regularity
+  (Serre-free 00TT route, perfect fields)'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-16T17:13:53.462812+00:00'
+  parent: AJCR.w6-albanese
+  updated_at: '2026-07-16T17:36:26.420055+00:00'

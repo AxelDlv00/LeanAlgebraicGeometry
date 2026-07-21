@@ -1,0 +1,95 @@
+id: I-0255
+provider: local
+kind: info
+body: 'DAT-B B-5 partial — the SHARED plus-class collapse lemma LANDED; coverage core
+  (COV-1) blocked at the C9/divRep boundary.
+
+
+  FILE: MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/PicEtAffFieldCollapse.lean
+  (111 L). Commit c295fb0c3 (private-index CAS; root = HEAD blob + only my line, protocol
+  s4 — sibling PicEtCrossBaseGraph line NOT swept). Zero sorries; both keystones axiom-clean
+  [propext, Classical.choice, Quot.sound]; single-module LEAN_NUM_THREADS=1 lake green
+  under mkdir lock (8629 jobs); zero warnings in my file.
+
+
+  SHARED PLUS-CLASS COLLAPSE LEMMA (the name B-4 consumes) — KEYSTONE 1 (verbatim):
+
+  theorem PicEtAff.map_mk_eq_unit_of_algHom {K L : Type u} [Field K] [Algebra k K]
+  [Field L] [Algebra k L] [Algebra K L] [IsScalarTower k K L] {E : Algebra.EtaleCover
+  K} (x : descentClasses C E) (l : E.Carrier -a[K] L) : PicEtAff.map C L (PicEtAff.mk
+  C E x) = PicEtAff.unit C L (relPicAlgMap C (l.restrictScalars k) (x : relPic C (overSpec
+  k E.Carrier)))
+
+  Context: {k}[Field k](C : Over (Spec (.of k))) ONLY — NO hypotheses on C.hom (pure
+  plus construction). Proof: map_mk reads the L-restriction as mk(E.baseChange L)(descentBaseChange
+  x); unit_eq_mk reads the target unit on the same cover; the descent/cocycle condition
+  relPicAlgMap_congr (baseChangeInclude vs ofId comp l, through descentBaseChange_coe)
+  identifies the two descent classes. The honest class is relPicAlgMap l x, EXACTLY
+  the degAff_mk honest class (DegreeZero.lean:273).
+
+
+  KEYSTONE 2 (verbatim, Cech form the degree seam + exists_cechPicClass_eq consume):
+
+  theorem PicEtAff.map_mk_eq_unit_relPicMk_of_algHom {K L : Type u} [Field K] [Algebra
+  k K] [Field L] [Algebra k L] [Algebra K L] [IsScalarTower k K L] {E : Algebra.EtaleCover
+  K} (x : descentClasses C E) (l : E.Carrier -a[K] L) : exists M : (C (X) overSpec
+  k L).left.CechPic, PicEtAff.map C L (PicEtAff.mk C E x) = PicEtAff.unit C L (relPicMk
+  C (overSpec k L) M)
+
+  Proof: relPicMk_surjective on the honest class + keystone 1.
+
+
+  HOW B-4 / B-5 CONSUME IT: write the fibre plus class as mk E x (PicEtAff.ind / picEtAffineEquiv);
+  field cofinality Algebra.EtaleCover.exists_finiteSeparableField_algHom (EtaleCover.lean:287)
+  gives L finite separable + l : E.Carrier -a[K] L; apply keystone 1/2. The L/K/k
+  tower is a CLEAN instance hypothesis (campaign-idiomatic, cf DivSchemeSeed.lean:73).
+  Well-definedness across splittings = E-iv-alg + ClassCohomology:111 (not re-derived
+  here).
+
+
+  NEW WALL / GOTCHA (verified this pass, MEMORY-WORTHY for B-4/B-5/B-6): the I-0236
+  two-level-tower diamond is a GENUINE whnf NON-TERMINATION (not merely slow — still
+  times out at 1,000,000 heartbeats). Instantiating L with a RingHom.toAlgebra composite
+  letI (letI : Algebra k L := ((algebraMap K L).comp (algebraMap k K)).toAlgebra,
+  the DegreeZero.lean:339 pattern) EXPLODES the moment PicEtAff.map C L unfolds the
+  base-changed etale carrier (a MvPolynomial-quotient). This is why the collapse is
+  stated with the tower as CLEAN hypotheses and NOT bundled as an existential over-instances
+  of a cofinality-produced L. degAff_mul survives the same composite letI only because
+  degAff never forms map/baseChange. CONSEQUENCE: B-5 coverage step 1 and B-4 link-2
+  (etale-carrier image transport) MUST supply the fibre extension L via a NATIVE k-algebra
+  tower (residue-field-based instances), never a composite letI, or they hit this
+  wall. respectTransparency false + maxSynthPendingDepth 3 do NOT fix it.
+
+
+  C9 / divRep BOUNDARY (where B-5 stops, per worksheet): chartLocus is still UNDEFINED
+  (DAT-C C9 unshipped, confirmed I-0252). Therefore COV-1 pic0_chartLocus_cover CANNOT
+  YET BE STATED. Its target predicate is the witness/h1=0 form of Pic0ChartLocusOpen
+  keystone isOpen_setOf_exists_witness_h1_vanishing (9469ecd63). Restated pointwise
+  it still needs: (a) chartLocus (C9); (b) the fibre-restriction of the pic0 class
+  to kappa(t) then to the separable L (my collapse keystones — but see the diamond
+  wall: the restriction forces a fibre-field k-tower that must be native); (c) the
+  degree/choose-m/kill-h1/greedy-drop(B-1)/density(B-2)/package chain. Pins for the
+  coverage core: degAt_pic0_mul_pow (DegreeSeam:145), degAt_chartValue (C5), exists_bound_subsingleton_hModule_one_of_isFinite_toP1
+  at L (UniformVanishing:71), exists_effective_sub_h0_eq_one (B-1, CoverageDrop),
+  Over.dense_baseChange_rationalPoints (B-2). B-6 (IsLocallySurjective instance) unchanged
+  — still divRep-gated.
+
+
+  DEVIATIONS vs worksheet s1.2 step 1: (1) the collapse is stated as map_mk_eq_unit_of_algHom
+  (explicit l + clean tower) rather than an existential-bundled restriction — forced
+  by the diamond wall; the exists-over-instances form is mathematically fine but un-elaborable
+  with a composite letI. (2) The picEtAffineEquiv/PicEtAff.mk read (worksheet step-1
+  preamble) is left to the consumer; the collapse operates on a PicEtAff C K element
+  directly.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T11:52:39.030589+00:00'
+updated_at: '2026-07-19T11:52:39.030600+00:00'
+metadata: {}

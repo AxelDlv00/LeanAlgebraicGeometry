@@ -1,0 +1,50 @@
+id: I-0246
+provider: local
+kind: info
+body: 'DAT-C worksheet pinned (w4-datc-worksheet)
+
+
+  DAT-C worksheet pinned: informal/w4-datc-worksheet.md (design lane, no Lean edited).
+  VERDICT: DAT-C is ~3/4 transcription against a tree far ahead of the roadmap node
+  — DAT-6 incl. the 01JJ seam (pic0RepresentableByOfCharts, Pic0SigmaSheaf:161), DAT-2,
+  RE-5 (DatumDescent:514/547), extraction GLOBAL (GluedSheafExtraction:301), the DD-1c
+  field dictionary incl. the ''open'' CRT degree law (FieldCRT:376 — w4-g4''s warning
+  is STALE), C1+C2 (unit_injective_of_ker, unitEquiv_of_section), G-0a (DivSchemeFibreH1:354),
+  DD-Q + JacobianData are ALL LANDED. Two honest new-work bricks: CERT-Sigma (certificate
+  production for canonical-section families; all abstract engines landed this week
+  — SlicingFlatKernel I-0240, SupportTubeFinite I-0244, SupportTube:313/329; fibre
+  inputs deg-g+h0=1 all landed; (c3)/(c4) hspan pattern to be SHARED with G-4 CertUniv
+  — one mechanism) and CHART-U(b) (chart-membership openness at arbitrary plus classes;
+  steps 1-3 landed, the etale-image descent step is the only unlanded link; interface
+  frozen, co-sign with DAT-B). Six named gaps pinned as bricks (GAP-1 datum inverse/divisorDatum,
+  GAP-2 field h0=1 effective uniqueness, GAP-3 datum-H0 rank-1 export, GAP-4 CERT-Sigma,
+  GAP-5 IsOpenImmersion divCarveChartToDivScheme, GAP-6 the fibre-h1 iff dictionary).
+  KEY DESIGN DECISIONS: V is defined from the TAUTOLOGICAL family univFam := divRep.homEquiv
+  (id) — kills the chart-overlap seam, makes V x_Div T literally the pullback condition
+  (the binding dat-d 4.2 row is a bounded transcription the day F7 lands); membership
+  predicate is the fibre-WITNESS form (the GluedSheafDatumFibre:169 hwit shape), class-intrinsic;
+  the canonical section of the divisor datum is THE EQUATION SYSTEM ITSELF (inverse
+  datum of thetaIdealDatum 0) — cut-back is DivEq by pure refinement, definitionally;
+  mono via invertible-H0 rescaling (I-0231-safe), with the relPic BASE-TWIST coset
+  handled Zariski-locally (recorded Hilbert-90-class hazard); one openness mechanism
+  audited (every open = datumRigidEngine_isOpen_vanishing). LAUNCHABILITY: 9-row file
+  plan (C0-C9); SIX rows launchable cold pre-divRep TODAY: C0 DivisorDatumInverse,
+  C1 DivisorFamilyH1Locus, C2 DivisorDatumRankOne, C3 EffectiveUniqueness (RiemannRoch),
+  C4 DivisorFamilyMonoH1, C5 DivSchemeAbel (Abel layer fully landed vocabulary: picClass
+  -> relPicMk -> relPicToPicEt, degree ledger to picDegLayerFunctor g). C6/C7 gate
+  on divRep F7; C8 CERT-Sigma statement-launchable, heart pattern-gated on CertUniv;
+  C9 gates on CHART-U(b). Risks ranked: CERT-Sigma > CHART-U(b) > mono class plumbing
+  (need ONE assembled relPicToPicEt-injective wrapper — flagged as the only unverified-assembly
+  consumption) > elaboration weight > divRep slippage (insulated).'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T06:37:28.873691+00:00'
+updated_at: '2026-07-20T03:15:00.208471+00:00'
+metadata: {}

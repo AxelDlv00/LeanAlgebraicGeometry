@@ -1,0 +1,21 @@
+id: AJCR.w4-rep.datum.dat3
+title: 'DAT-3 (W6-full): $\mathrm{glued}(P) \cong \mathcal{O}(\mathrm{presentationDivisor}\,P)$
+  at fibres — unlocks the hfib discharge and the rank export $\mathrm{rank}\,Q = d_m
+  + 1 - g$'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T06:41:42.530584+00:00'
+  parent: AJCR.w4-rep.datum
+  updated_at: '2026-07-16T18:02:36.124332+00:00'

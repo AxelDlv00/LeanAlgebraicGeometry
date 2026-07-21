@@ -1,0 +1,69 @@
+id: I-0268
+provider: local
+kind: info
+body: 'DD-4 relative-achiever seam: route decision (worksheet informal/spec-dd4-seam.md,
+  commit 460bc270a).
+
+
+  RECOMMENDED: Route 2 — DIVISOR-FIRST. Construct the relative effective Cartier divisor
+  d over R_Z DIRECTLY from the universal carve''s flat rank-g quotient (SlicingFlatKernel,
+  I-0240), which makes hdvd AUTOMATIC, then feed the LANDED seed finale (isGenerator_of_fibre_ne_zero
+  DivSchemeSeed:188 + divFamEps_certifiedFamily DivSchemeEps:309) and close dvd via
+  the germ closer (mem_span_singleton_of_forall_germ, DivisorStalkIdeal:79). The section
+  source shifts from lift-then-hope to read-off-a-divisor: (side,h,sec) are read off
+  d, K=divUniversalSeedK unchanged, seed struct + finale consumed VERBATIM. DDR9-U
+  interface (U1 divUniversalFamily, U2 e-identity via le_vanishingSubmodule, U3 derivable)
+  met unchanged.
+
+
+  I-0231-SAFETY (why Route 1 is FALSE, not just hard): dvd = (f=0) where f: K_univ
+  -> B/(eqn z) is psi |-> [relThetaResSide psi]. MODULE-LEVEL counterexample: over
+  k[eps], f = (mul-eps): k[eps]->k[eps] has f tensor kappa = 0 at the only prime yet
+  f != 0 (t vs t+eps promoted; B/(eqn)=k[eps] is flat). So f tensor kappa(p)=0 for-all
+  p does NOT give dvd even with flat colength; the naturality triangle controls only
+  f tensor kappa at ONE fibre, so Route 1 (even with resHom_relThetaWindowEquiv_cancelBaseChange
+  o thetaFieldRead = germ-at-eta) cannot supply dvd. Triangle OFF critical path, stays
+  undone. I-0264 Nakayama S3 (Q tensor kappa=0 module form) strictly stronger than
+  fibre-achiever (Q tensor kappa != image(J tensor kappa)) and correctly FAILS for
+  t+eps. Divisor-first dodges it: eqn z is THE generator of the flat Cartier ideal
+  I_d (order exactly d), Cartier for free on the smooth relative curve (rel dim 1),
+  dvd via RD2 + germ closer.
+
+
+  SETTLED: (a) H0(N-d_p) NOT 1-dim — dim = h0(N)-g (PFibPack:380 hKMrank, :386 KM=H0(N-D);
+  fibre DivSchemeSeedUnivFields:152-155), deg N >= 2g (PFibPack:374) makes h0(N) >>
+  g+1. P-fib uniqueness = uniqueness of the DIVISOR d_p, not the achiever section.
+  (b) flatness/const-deg-g = SlicingFlatKernel keystones 2/3/4/7 (I-0240) from fibre
+  spanning (divUniversal_carve_residueField FamilyUniv:135); certifies d flat once
+  built + discharges cert c2/c3/c4; NOT a route to dvd. (c) naturality square not
+  needed on Route 2.
+
+
+  FALSE/CIRCULAR CONFIRMED: DDR-8 relative window-gen circular for dvd (windowGen/stalkIdeal_le_span_windowGerm
+  take CertifiedDivisorFamily DivSchemeMonoBridgeRel:154/:334; dvd is INPUT to cert,
+  banner DivSchemeCertificateEngine:34-36). SlicingFlat regular-cancellation (SlicingFlat:356/:79)
+  discharges fibre_regular NOT dvd. I-0267 cert-circularity (colength needs divisorAdaptation
+  hD consuming dvd) DISSOLVES once d is divisor-first.
+
+
+  PLAN: Picard/DivSchemeRelDivisor.lean (NEW crux: RD1 relDivisor as relative Cartier
+  LocalEquations, RD2 le_vanishingSubmodule=>dvd, RD3 fibre law + flat/deg-g; relative-local-BPF
+  Nakayama lemma) size L, the SINGLE wall, gated only on landed engines (SlicingFlatKernel,
+  SupportTubeFinite, P-fib-N, germ closer). Then seed extend (M) -> CertUniv (L, non-circular)
+  -> EpsUniv/divUniversalFamily (L). Probe-first the flat=>module-fibre-zero=scheme-fibre-zero
+  step. Fallback if RelDiv walls: Route 3 (CertifiedDivisorFamily direct, skip seed,
+  still needs relDivisor). No probe lemma landed (settled by citation; DESIGN lane).
+  Commit 460bc270a.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T13:28:16.754565+00:00'
+updated_at: '2026-07-20T03:15:27.662829+00:00'
+metadata:
+  agent: dd4-seam-design-lane

@@ -1,0 +1,64 @@
+id: I-0298
+provider: local
+kind: info
+body: "heavy κ(p) declaration → hsub_chart BUILD — SOURCE-RANK half LANDED at κ(p);\
+  \ hsub_chart NOT yet landed (sole residual = the RANGE-side transport, now cleanly\
+  \ isolated).\n\nNATIVE κ(p) TOWER COMPILES over R_Z: confirmed. The seed base-change\
+  \ finrank over κ(p)=p.asIdeal.ResidueField elaborates + proves under the I-0295\
+  \ budgets (maxHeartbeats 4M for the heavy seed equiv, 2.4M for the N-side; synthInstance\
+  \ 800000, maxSynthPendingDepth 8, maxRecDepth 8000). Single-module LEAN_NUM_THREADS=1\
+  \ lake build GREEN under the mkdir lock (8715 jobs; my module 180s). Keystone lean_verify\
+  \ axiom-clean [propext, Classical.choice, Quot.sound]; zero sorries; zero warnings\
+  \ in my file. Root: HEAD-blob + only my line (protocol §4 — sibling PicEtCrossBaseGraph\
+  \ add + Hinj/Achiever/FibreCut/Seed removals NOT swept; show --stat = my 2 paths,\
+  \ root +1).\n\n=== COMMIT (this lane) ===\n- 0d1939295  DD-4 carve pin hsub_chart:\
+  \ κ(p) source rank — K_univ ⊗ κ(p) has constant fibre dim r₁−g\n\n=== KEYSTONE (VERBATIM;\
+  \ ns AlgebraicGeometry.ThetaGeneratorSeed; seed vars C {π} hπ g r₁ r₂ b₁ b₂ i j;\
+  \ seedChartRing' = R_Z = DivCarveChartRing) ===\nfinrank_baseChange_divUniversalSeedK_add\
+  \ (p : PrimeSpectrum (seedChartRing' …)) :\n  Module.finrank p.asIdeal.ResidueField\
+  \ (p.asIdeal.ResidueField ⊗[seedChartRing' …] ↥(divUniversalSeedK C π hπ g r₁ r₂\
+  \ b₁ b₂ i j)) + g = Module.finrank k (Fin r₁ → k)\n  — SOURCE half of the constant-rank\
+  \ pin: κ(p) ⊗ K_univ has CONSTANT fibre dim r₁−g at every prime p of R_Z. Proof:\
+  \ K_univ is R_Z-linearly the tautological subbundle divUniversalFst (divUniversalFstWindowEquiv.trans\
+  \ divUniversalSeedKEquiv, base-changed), whose κ(p)-fibre is ker(baseChangeMkQ κ(p)\
+  \ N) (N.subtype split-injective via quotRetract + ker_baseChangeMkQ_eq_map_baseChange),\
+  \ pinned r₁−g by finrank_ker_baseChangeMkQ_add_of_field. Split into private finrank_baseChange_divUniversalSeedK_eq\
+  \ (heavy seed equiv, 4M, isolates the relThetaSections type) + private finrank_baseChange_divUniversalFst_toSubmodule_add\
+  \ (light, over Fin r₁→k).\n\n=== hsub_chart STATUS: NOT LANDED. Residual = RANGE-side\
+  \ transport + injective assembly ===\nFull pin: at each p, f_V⊗κ(p) (f_V = chartReadMap\
+  \ divUniversalSeedK b : ↥K_univ →ₗ[R_Z] Γ(V)) is INJECTIVE ⟺ rank-nullity finrank(source⊗κ)\
+  \ = finrank(range(f_V⊗κ)) + finrank(ker). SOURCE = r₁−g LANDED. Need RANGE = r₁−g,\
+  \ then ker=0 ⟹ inj ⟹ hsub_chart (forall_chartRead_range_subtype_rTensor_injective_iff,\
+  \ HinjChart).\n(R1) RANGE transport (THE wall): finrank(range(f_V⊗κ(p))) = r₁−g.\
+  \ germGenericLinear (inj, integral fibre) ∘ β(=relPinnedTermBaseChangeAlg C R_Z\
+  \ κ(p) π b) ∘ comm sends range(f_V⊗κ) to map germGenericLinear (range(chartReadMap\
+  \ (map relThetaWindowEquiv W_κ) b)) = map mulLinear u divUniversalFibreKM [LANDED\
+  \ germ bridge exists_unit_map_germGenericLinear_range_chartReadMap_divUniversalFibreKM,\
+  \ CarvePinFibreKM], finrank = finrank(divUniversalFibreKM) = r₁−g [finrank_divUniversalFibreKM_add].\
+  \ MISSING = lifting step-1 (relPinnedTermBaseChangeAlg_reading_windowEquiv, element-level\
+  \ LANDED) to SUBMODULE/range level: map (β∘comm) (range(f_V⊗κ)) = range(chartReadMap\
+  \ (map relThetaWindowEquiv divUniversalFibreSeedW) b). Must be TERM-MODE (I-0295\
+  \ GOTCHA: no rw/ext unfolding under κ(p) tower on relCurve types).\n(R2) INJECTIVE\
+  \ assembly (tractable, isolates R1). MEMORY-WORTHY INSTANCE INSIGHT: the framework\
+  \ consumes .rTensor κ(p) INJECTIVITY, and M ⊗[R_Z] κ(p) (RIGHT tensor, from .rTensor)\
+  \ has NO default κ(p)-module instance — only LEFT κ(p) ⊗[R_Z] M is a natural κ(p)-space\
+  \ (verified: 'failed to synthesize Module A (M ⊗[R] A)'). So do finrank/rank-nullity\
+  \ on the LEFT tensor (LinearMap.baseChange κ f_V, κ-linear), then transfer to .rTensor\
+  \ via TensorProduct.comm — comm is an R_Z-iso so it preserves INJECTIVITY (no κ-linear\
+  \ comm needed). Building blocks verified compiling: LinearMap.finrank_range_add_finrank_ker;\
+  \ Submodule.finrank_eq_zero (ker finrank 0 ⟹ ⊥); factorization f_V = (range f_V).subtype\
+  \ ∘ₗ f_V.rangeRestrict for f_V⊗κ inj ⟹ (range f_V).subtype⊗κ inj. My landed source-rank\
+  \ is LEFT-tensor, ready for this. Anti-circularity preserved (certificate-FREE,\
+  \ h z-FREE, le_rfl)."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: agent
+source_ref: null
+created_at: '2026-07-20T00:22:30.162357+00:00'
+updated_at: '2026-07-20T00:22:30.162367+00:00'
+metadata: {}

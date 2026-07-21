@@ -1,0 +1,61 @@
+id: I-0143
+provider: local
+kind: issue
+body: 'Rigidification / lm:idn keystone is landed Lean but unnoded upstream of E1
+
+
+  While noding the (C2) E1 bricks I added `sec:rigidification` + `sec:normalizedComparison`
+  to `PicardEtale.tex`, with two small prerequisite defs `def:sectionOfPoint` (Kleiman
+  $g_T$) and `def:isRigidified` (Kleiman `df:rgd`, both `\\source{kleiman-picard}`).
+
+
+  **Gap.** The existence theorem `thm:exists_normalizedCechComparison` takes the on-the-nose
+  descent equation $u_1^*L = u_2^*L$ as a **prose hypothesis**. In the Lean (`Picard/NormalizedComparisonExists.lean`)
+  that hypothesis is supplied by `Over.IsRigidified.cechPicMap_doubleInl_eq_doubleInr`
+  (`Picard/Rigidification.lean`), which is landed and axiom-clean but has **no blueprint
+  node**. Noding it would turn E1''s `hdesc` from a bare hypothesis into a derived
+  `\\uses` edge.
+
+
+  **Why I did not node it now:** its proof cascades through Kleiman `lm:idn` (`IsRigidified.eq_of_relPicMk_eq`,
+  `.cechPicMap_congr`, `relPic.exists_isRigidified_rep`) and the relative-Picard **quotient
+  machinery** (`relPicMk`, `relPicMk_eq_relPicMk_iff`, `mem_picFromBase_iff`), none
+  of which are noded — out of scope for the four E1/cech/W6/diagonal bricks. `lm:aut`
+  (`unitsAppTop_sectionOfPoint_bijective`) is likewise landed-unnoded; its only consumer
+  is the frontier coherence file (N3), which is deliberately unimported.
+
+
+  **Next action for Horizon:** node the `Rigidification.lean` keystones (G0/G1/lm:idn/descent-equation,
+  optionally lm:aut) plus the relPic quotient machinery, then add `\\uses` from `thm:exists_normalizedCechComparison`
+  to the descent-equation node. Validation currently clean (`horizon blueprint`: parse
+  ok, 0 dangling).
+
+
+  ---
+
+
+  **RESOLVED (blueprint slice, ledger commit 8771acd2f).** The full request is noded:
+  (a) Rigidification keystones — lem:cechPicMap_sectionOfPoint_snd (G0 retraction),
+  lem:isRigidified_cechPicMap, thm:isRigidified_eq_of_relPicMk_eq + thm:relPic_exists_isRigidified_rep
+  (lm:idn both halves, \source{kleiman-picard} read against the tex), thm:isRigidified_cechPicMap_congr,
+  and thm:isRigidified_cechPicMap_doubleInl_eq_doubleInr (the descent-equation keystone);
+  lm:aut was already noded (thm:unitsAppTop_sectionOfPoint_bijective) — left as is,
+  its N3 consumer note unchanged. (b) The relPic quotient machinery: def:relPic (picFromBase/mem_picFromBase_iff/relPicMk/relPicMk_eq_relPicMk_iff),
+  def:relPicMap, lem:relPicMapCurve; def:relPicAlgMap now \uses def:relPicMap. (c)
+  thm:exists_normalizedCechComparison now carries the \uses edge to the descent-equation
+  node, with prose noting hdesc is discharged for rigidified representatives of descent
+  classes. DAG validated: 979 nodes, 2526 edges, 0 dangling. No comment subcommand
+  exists in this CLI, so the resolution is recorded here; completing and archiving.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-15T10:12:02.105200+00:00'
+updated_at: '2026-07-16T13:50:39.995378+00:00'
+metadata:
+  agent: blueprint-reviewer

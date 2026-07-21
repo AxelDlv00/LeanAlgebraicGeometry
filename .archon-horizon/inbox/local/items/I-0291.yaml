@@ -1,0 +1,92 @@
+id: I-0291
+provider: local
+kind: info
+body: "redesign brick 2 achiever BUILD COMPLETE — the relative achiever EXISTENCE\
+  \ landed (both keystones green, axiom-clean, committed). New file Picard/DivSchemeRedesignAchiever.lean\
+  \ (323 L), root-wired (HEAD-blob + only my import line after DivSchemeRedesignJFlat;\
+  \ sibling PicEtCrossBaseGraph and DivSchemeUnivFibreHinj working-tree root lines\
+  \ NOT swept). Single-module LEAN_NUM_THREADS=1 lake build GREEN under the mkdir\
+  \ lock (8758 jobs, my module 152s). Zero sorries, zero warnings in my file. Both\
+  \ keystones axiom-clean [propext, Classical.choice, Quot.sound].\n\n=== THE ACHIEVER-LIFT\
+  \ OBSTRUCTION IS DISSOLVED (I-0258/0288) ===\nNot by a rigid reduction, but exactly\
+  \ as I-0289 predicted: the SURJECTION lift. divUniversalFibreKM_eq_span presents\
+  \ the fibre window as the K-span of the readings Phi(windowCompare R_Z K x); Scheme.exists_achiever_of_span\
+  \ (BaseDivisorSpan.lean — the ultrametric span-minimality keystone) locates an achiever\
+  \ AMONG the readings. So one relative seed section's fibre reading is a genuine\
+  \ achiever at z — I-0258's \"single window vector need not reduce to a CHOSEN f_p\"\
+  \ is true but irrelevant. No new base-change naturality square was needed; the span\
+  \ law carries the base change.\n\n=== LANDED KEYSTONES (VERBATIM — what the seedUniv\
+  \ revision consumes for sec z) ===\n\nCommit ab14a53d0 (general field K of the tower\
+  \ R_{I,J} -> R_Z -> K):\n- exists_achiever_relThetaWindowEquiv_mem_divUniversalSeedK\n\
+  \    {A : (relCurve C K).CurveDivisor}\n    (hA : divUniversalFibreKM C hπ g r₁\
+  \ r₂ b₁ i j K ≤ Scheme.divisorSections K A ⊤)\n    (hne : divUniversalFibreKM C\
+  \ hπ g r₁ r₂ b₁ i j K ≠ ⊥)\n    {z : relCurve C K} (hz : z ≠ genericPoint (relCurve\
+  \ C K)) :\n    ∃ x ∈ (divUniversalFstWindow C π hπ g r₁ r₂ b₁ b₂ i j).toSubmodule,\n\
+  \      relThetaWindowEquiv C R_Z π (windowM_choice π hπ g) (relThetaPairH1_windowM\
+  \ C π hπ g) x\n        ∈ divUniversalSeedK C π hπ g r₁ r₂ b₁ b₂ i j ∧\n      windowCompare\
+  \ R_Z K x ≠ 0 ∧\n      ∃ hr : divFamPhi C K π (windowM_choice π hπ g) (relThetaPairH1_windowM\
+  \ C π hπ g) (windowCompare R_Z K x) ≠ 0,\n        coeffAt hz (A + Scheme.divOf (relCurve\
+  \ C K ↘ Spec (CommRingCat.of K))\n            (Units.mk0 (divFamPhi C K π (windowM_choice\
+  \ π hπ g) (relThetaPairH1_windowM C π hπ g) (windowCompare R_Z K x)) hr))\n    \
+  \      = (Scheme.baseDivisorAt K (divUniversalFibreKM C hπ g r₁ r₂ b₁ i j K) A ⟨z,\
+  \ hz⟩ : ℤ)\n  (R_Z = DivCarveChartRing k (windowS_choice…•fiberWeilDivisor π) (windowM_choice…•fiberWeilDivisor\
+  \ π) g r₁ r₂ b₁ b₂ i j.)\n\nCommit 4166521b9 (seed-prime instantiation at K := κ(p),\
+  \ A := N − d_p — THE deliverable):\n- exists_relThetaWindowEquiv_mem_divUniversalSeedK_achieves_seedPrime\n\
+  \    (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)\n    (hχ : Sheaf.chi (C.left.moduleKSheaf\
+  \ k) = 1 - (g : ℤ))\n    (p : PrimeSpectrum R_Z)\n    (hne : divUniversalFibreKM\
+  \ C hπ g r₁ r₂ b₁ i j p.asIdeal.ResidueField ≠ ⊥)\n    {z : relCurve C p.asIdeal.ResidueField}\
+  \ (hz : z ≠ genericPoint (relCurve C p.asIdeal.ResidueField)) :\n    ∃ x ∈ (divUniversalFstWindow\
+  \ C π hπ g r₁ r₂ b₁ b₂ i j).toSubmodule,\n      relThetaWindowEquiv C R_Z π (windowM_choice\
+  \ π hπ g) (relThetaPairH1_windowM C π hπ g) x\n        ∈ divUniversalSeedK C π hπ\
+  \ g r₁ r₂ b₁ b₂ i j ∧\n      windowCompare R_Z p.asIdeal.ResidueField x ≠ 0 ∧\n\
+  \      ∃ hr : divFamPhi C p.asIdeal.ResidueField π (windowM_choice π hπ g) (relThetaPairH1_windowM\
+  \ C π hπ g)\n          (windowCompare R_Z p.asIdeal.ResidueField x) ≠ 0,\n     \
+  \   coeffAt hz ((windowN C p.asIdeal.ResidueField hπ g\n              - divUniversalSeedFibreDivisor\
+  \ C hπ g r₁ r₂ b₁ b₂ i j hO hχ p)\n            + Scheme.divOf (relCurve C p.asIdeal.ResidueField\
+  \ ↘ Spec (CommRingCat.of p.asIdeal.ResidueField))\n                (Units.mk0 (divFamPhi\
+  \ C p.asIdeal.ResidueField π (windowM_choice π hπ g) (relThetaPairH1_windowM C π\
+  \ hπ g)\n                    (windowCompare R_Z p.asIdeal.ResidueField x)) hr))\n\
+  \          = (Scheme.baseDivisorAt p.asIdeal.ResidueField (divUniversalFibreKM C\
+  \ hπ g r₁ r₂ b₁ i j p.asIdeal.ResidueField)\n              (windowN C p.asIdeal.ResidueField\
+  \ hπ g - divUniversalSeedFibreDivisor C hπ g r₁ r₂ b₁ b₂ i j hO hχ p) ⟨z, hz⟩ :\
+  \ ℤ)\n\n=== HOW THE seedUniv REVISION CONSUMES IT (sec z) ===\nsec z := relThetaWindowEquiv\
+  \ C R_Z π (windowM_choice π hπ g) (relThetaPairH1_windowM C π hπ g) x, which lies\
+  \ in divUniversalSeedK (2nd component). It is BOTH:\n (a) fibrewise nonzero — windowCompare\
+  \ R_Z κ(p) x ≠ 0 (3rd component) — feeds Brick 2 (exists_forall_windowCompare_ne_zero)\
+  \ -> Brick 3 (relPinnedSectionsMap_relThetaResSide_windowEquiv_ne_zero) -> the seed's\
+  \ hfib clause, EXACTLY as the old DivSchemeSeedUnivBridge sec did; AND\n (b) a RELATIVE\
+  \ ACHIEVER at z — its κ(p)-fibre reading Phi(windowCompare R_Z κ(p) x) cuts EXACTLY\
+  \ d_p: ((N − d_p) + div reading)_z = baseDivisorAt(divUniversalFibreKM)_z (4th component),\
+  \ i.e. minimal vanishing at z (ord = base-divisor order). z is NOT an extra zero.\
+  \ This is EXACTLY what the old windowCompare≠0 sec LACKED (I-0288 fact 3); it discharges\
+  \ the I-0288 hle razor AT z.\nSo the revised seedUniv.sec = this x's window image,\
+  \ and the achiever equation is the new content the ann-based h z (brick 3) then\
+  \ extends across D(h z) by excluding the OTHER extra zeros.\n\n=== RESIDUAL (for\
+  \ the seedUniv-revision / brick-3 follow-up) ===\n1. hne (divUniversalFibreKM κ(p)\
+  \ ≠ ⊥) is a HYPOTHESIS (matches the DivSchemeSeedUnivBridge seed-prime pattern which\
+  \ took f≠0). Trivial to discharge: finrank_divUniversalFibreKM_add (AssembleKappa:207)\
+  \ gives finrank + g = h0(O(windowN)); with two_mul_genus_le_deg_windowN + subsingleton_h1_windowN\
+  \ (RR) h0 = degN+1−g ≥ g+1 > g so finrank ≥ 1, ≠ ⊥. The seedUniv revision already\
+  \ produces a nonzero fibre element (RR), so it supplies hne directly. NOT derived\
+  \ here to keep the lane focused on the achiever lift.\n2. The achiever equation\
+  \ holds at the SINGLE point z (per-point, matching BaseDivisor:143). Extending it\
+  \ across the whole piece D(h z) is brick 3 (RD-N read_sec_generates_stalk + h z\
+  \ ∈ ann(N z)), the SIBLING lane — not this one.\n3. The general-field keystone is\
+  \ A-parametric (any pole bound); the seed-prime one pins A := N − d_p. Both consume\
+  \ Scheme.exists_achiever_of_span (BaseDivisorSpan) + divUniversalFibreKM_eq_span\
+  \ (Res:376) + divUniversalSeedFibreDivisor_spec (Fields:146). New import edge into\
+  \ Picard: RiemannRoch.BaseDivisorSpan.\n\nCommits: ab14a53d0 (core general-field\
+  \ lift), 4166521b9 (seed-prime d_p achiever). Both on refs/heads/main; touch only\
+  \ Picard/DivSchemeRedesignAchiever.lean + (ab14a53d0) the root import line."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T20:40:58.548388+00:00'
+updated_at: '2026-07-19T20:40:58.548398+00:00'
+metadata: {}

@@ -1,0 +1,29 @@
+id: I-0218
+provider: local
+kind: memory
+body: 'Model switch mid-run 2026-07-17 ~22:20: Fable 5 usage exhausted, fleet moved
+  to Opus 4.8
+
+
+  The horizon-fable5 harness''s Fable-5 budget was exhausted around 22:15 (three lanes
+  — B-56, K-1 worksheet, m33-blueprint — died simultaneously during orientation on
+  ''You''ve reached your Fable 5 limit''). The interactive orchestrator switched to
+  Opus 4.8 (1M context) and relaunched all three. CONVENTION CHANGE for Opus-authored
+  commits: the private-index+CAS commit trailer is now ''Co-Authored-By: Claude Opus
+  4.8 (1M context) <noreply@anthropic.com>'' instead of the protocol doc''s literal
+  ''Claude Fable 5'' — this is a deliberate honesty fix, the ''Archon-Commit: agent''
+  provenance trailer and everything else in protocol-concurrent-lanes.md §1 is unchanged.
+  The ledger therefore has a Fable-5→Opus trailer boundary around commit 6f279d7ca
+  (last Fable-authored) / the 22:20 relaunch. Do not ''correct'' older Fable-5 trailers.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T14:21:56.144332+00:00'
+updated_at: '2026-07-17T14:21:56.144342+00:00'
+metadata: {}

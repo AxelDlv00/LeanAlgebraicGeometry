@@ -1,0 +1,25 @@
+id: AJCR.w6-albanese
+title: 'Wave 6: Abel-Jacobi and the Albanese universal property'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Port layer COMPLETE (2026-07-17 night, ~6.5k lines, zero sorries): depth/Auslander–Buchsbaum/CM
+  package, Serre-free smooth-prime regularity, pole purity, rational-map machinery
+  (precomp/prod/function-field/difference map/Milne-3.3 substeps), Milne 3.1 codim-≥2
+  extension, and extend_to_av (Milne I 3.2) with Milne 3.3 threaded as the explicit
+  hypothesis Milne33Indeterminacy. In flight: m33 (the 3.3 proof — 2-hard, substep
+  3, assembly). Open after m33: the Sym-fork (gated on DD freeze), Milne 5.2(a) birationality
+  leg, $\bar{k}\to k$ descent, genus 0.'
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-14T01:20:13.014900+00:00'
+  parent: AJCR.jacobian
+  updated_at: '2026-07-17T01:31:00.506922+00:00'

@@ -1,0 +1,51 @@
+id: I-0167
+provider: local
+kind: memory
+body: 'DD-1 (dat-d.dd1) session status (2026-07-17, Opus prover). LANDED: stage (d)
+  extraction — Picard/DivisorFamilyExtraction.lean, keystone exists_divisorAdaptation
+  (every LocalEquations on relCurve C R refines to a DivisorAdaptation, no certificate),
+  commit 21031e483, module green (8645 jobs), axiom-clean [propext, Classical.choice,
+  Quot.sound]. Consumes the landed DAT-1 (1f) engine IsAffineOpen.exists_finite_basicOpen_refinement
+  + relCover_isAffineOpen₀/₁; reindexes each chart family to Fin via Fintype.equivFin
+  (Equiv.sum_comp for the partition).
+
+
+  BLOCKED: stages (c) certified pullback + mapAlg and (e) vehicle both depend on DivFam.mapAlg,
+  whose CERTIFICATE transport (c2) needs DAT-1 (1d-ii) part-2 termBaseChange (the
+  term identification B''⊗[B]Γ(D(h_j))≅Γ(D(h''_j))). That is STILL an unverified/unwired
+  WIP draft (Cohomology/GluedSheafTermBaseChangeEquiv.lean, last touched by WIP commit
+  6c8bc5fd6). Take (c) the moment its termBaseChange lands green; do NOT duplicate
+  it. (c) skeleton: geometric adaptation pullback (appLE_resHom / relSectionsMap_basicOpen
+  / relCurveMap_appLE_overAlgebraMap, all part-1 landed 7dec94f49) + LocalEquations.pullback
+  with hreg from FlatCokernel.includeRight_mem_nonZeroDivisors_of_flat_coker; certificate
+  transport (c1) f.p.+Flat.baseChange, (c2) FlatCokernel.tensorKer_bijective_of_flat_coker
+  + rankAtStalk_baseChange, (c3)/(c4) Flat.baseChange. (e) vehicle = verbatim PicEt.lean:46-140
+  pattern (picEtSubgroup→divFamSubtype over T.left.affineOpens, compat via mapAlg
+  (Over.resAlgHom T h)) + divFamAffineEquiv.
+
+
+  (f) field dictionary divFamFieldEquiv : DivFam n K ≃ {D:CurveDivisor // 0≤D ∧ deg
+  K D = n} — the heaviest stage (spec allows it to trail as its own lane). MACHINERY
+  MAP for the next lane: forward = presentationDivisor K (F.eqns.presentation) [MeromorphicPresentation.lean:198
+  LocalEquations.presentation; PresentationDivisor.lean:186 presentationDivisor; coeffAt
+  = toAdd(ordZ(germ_η eqn))]; effectivity 0≤D via per-point toAdd(ordZ)≥0 [ChartColength.lean:278
+  toAdd_ordZ_eq_count_factors gives a nonneg Multiset count; needs Dedekind chart
+  reduction + germGeneric_eqn_ne_zero]; degree=n via ChartColength.lean:411 finrank_quotient_span_section
+  + support-splitting CRT across the equalizer relating rankAtStalk(Glued)=n to deg;
+  DivEq-invariance of presentationDivisor is a SEPARATE lemma (finer than the landed
+  picClass-invariance — different divisors share a class). backward = PointPresentation.lean:255
+  pointEquations products + support-separating adaptation (isolate support points
+  so overlap colengths vanish, W=Π colength, certificate by finrank count, (c3)/(c4)
+  free over a field); inverse laws via ordZ-reading (RefinementInjectivity pattern).
+  Also see the landed meromorphic bridge DivisorClassMeromorphic.lean (CurveDivisor.picClass,
+  exists_presentationDivisor_eq) and RiemannRoch/GluedDivisorSheaf.lean (divisorBound_presentationDivisor).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T00:49:26.195065+00:00'
+updated_at: '2026-07-17T00:49:26.195076+00:00'
+metadata: {}

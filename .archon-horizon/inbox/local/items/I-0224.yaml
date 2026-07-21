@@ -1,0 +1,55 @@
+id: I-0224
+provider: local
+kind: info
+body: "[agent-ready] K-1 (AJCR.w7-functor.k1) theta-cocycle: PARTIAL — reduction +\
+  \ reduction-key GREEN, both keystone atoms OPEN. NOT committed/wired/noded (2 sorries\
+  \ -> zero-sorry rule).\n\nFILE (on disk, uncommitted, unwired, safe — 2 documented\
+  \ sorries so cannot break any build): MainProjects/Algebraic-Jacobian-Challenge-Rebuild/AlgebraicJacobian/Picard/Pic0ThetaCocycle.lean.\
+  \ Contains all worksheet-pinned defs (eCurveId/mIdsigma/sigmakkCollapse/cocycleIdRHS,\
+  \ eCurve/sigmaMapCompIso/alphaOp/cocycleRHS — worksheet §1.1/§1.2 exactly), a GREEN\
+  \ reusable key RelPicTransportFamily.picEtAffHom_congr, and the full green Leg-1..3\
+  \ reduction of pic0Theta_id ending at the atom sorry, plus inline PLANs at each\
+  \ sorry.\n\nKEYSTONES (elaborate green, pinned per worksheet): pic0Theta_id : pic0Theta\
+  \ k k C = cocycleIdRHS k C ; pic0Theta_comp : pic0Theta k M C = cocycleRHS k L M\
+  \ C.\n\nGREEN & REUSABLE:\n(a) Leg-1..3 reduction collapses ALL functor-cat/op/whiskering/leftUnitor/associator\
+  \ bookkeeping to the underlying picEt class by a SINGLE defeq 'change' (R-W7-3 fear\
+  \ discharged; NO Grp(Over) chase, NO reorientation bail needed). Pattern: apply\
+  \ Iso.ext; ext T lam; refine Subtype.ext ?_; change <picEt composite>; refine picEt.ext\
+  \ fun W => ?_; rw [picEtCrossBaseInv_val, picEtMap_val].\n(b) RelPicTransportFamily.picEtAffHom_congr\
+  \ (GREEN): equal family hom fields => equal picEtAffHom (via PicEtAff.ind + picEtAffHom_mk\
+  \ + descentHom_coe + relPic.ind + relPicHom_mk). KEY: both baseFieldShuffle (crossBaseTransportFamily/Inv)\
+  \ and curveMap (curveTransportFamily) ARE picEtAffHoms, so each atom reduces to\
+  \ a SCHEME-MORPHISM identity.\n\nREMAINING (the whole [M] cost — a full-Opus fork\
+  \ with 381k tokens did NOT close it; do NOT re-delegate to a context-inheriting\
+  \ fork, they meta-loop): the Leg-4 atom for each keystone = 'base-field shuffle\
+  \ = curve base-change transport', a scheme-morphism identity on product carriers,\
+  \ provable by (Over.isPullback_left _ _).hom_ext matching fst/snd:\n - K-1a: (crossBaseAffineIso\
+  \ k k C B).inv = ((baseChange.idIso k).app C).inv triangleright overSpec k B).left.\
+  \ snd via crossBaseAffineIso_inv_snd + whiskerRight_snd; fst via whiskerRight_fst\
+  \ (mathlib Cartesian/Basic.lean:297) + Over.crossBaseIso_hom_fst + baseChange.idIso\
+  \ = eqToIso _ trans Over.pullbackId. PLUS the mIdsigma picEtMap carrier-reindex:\
+  \ ((mIdsigma k).hom.app T).left = 1 (Over.map preserves .left) so picEtMap C (mIdsigma.hom.app\
+  \ T) is identity — collapse via picEtMapVal_eq_mapAlg (V:=W, preimage <= from carrier\
+  \ id). Spelling: letI ascribed at T.left via Over.isScalarTower_sections_map; seam\
+  \ crossings term-mode (I-0216 notes 1-2).\n - K-1b: derive Leg-1..3 mirror of K-1a\
+  \ first (same 'change' route; RHS collapses through pic0Functor_map+pic0Map_coe\
+  \ / pic0PullbackNat_app+pic0Pullback_coe / pic0Theta_hom_app+pic0CrossBaseEquiv_apply_coe\
+  \ / isoWhiskerLeft/Right + associator + NatIso.op). Then tower scheme identity:\
+  \ crossBaseAffineIso k M vs k->L,L->M composite + baseChange.compIso = eqToIso _\
+  \ trans Over.pullbackComp. Reorientation bail authorized (§2) if op bookkeeping\
+  \ balloons.\n\nON COMPLETION: lean_verify both axiom-clean [propext, Classical.choice,\
+  \ Quot.sound]; commit; wire root import after AlgebraicJacobian.lean:392 (HEAD-blob\
+  \ + own line, protocol §4); add 2 blueprint nodes after def:pic0ThetaType (PicardEtale.tex:10081)\
+  \ — draft at scratchpad k1-blueprint-draft.tex; set AJCR.w7-functor.k1 done. A-1\
+  \ (baseChange_ofCurve_data) remains SEPARATE + gated on B-56 B-6b baseChangeIsoOfData\
+  \ (not in HEAD; re-pin per R-K1-3)."
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T16:11:11.798784+00:00'
+updated_at: '2026-07-17T16:11:11.798795+00:00'
+metadata: {}

@@ -1,0 +1,51 @@
+id: I-0205
+provider: local
+kind: issue
+body: 'W7-B4b (theta assembly) BLOCKED on B-2 (PicEtAff.baseFieldShuffle) — precise
+  blocker from the w7-b4 lane (B-4a landed green, 4d716896f; root build green 8917
+  jobs).
+
+
+  The ratified B-4b row (w7-worksheet §D2) assembles theta : pic0Functor C_L ≅ (Over.map
+  σ).op ⋙ pic0Functor C by pushing B-2 through the affine-opens limit (picEtAffineEquiv
+  the only licensed seam) and restricting degree-0 via B-4a. Every component of theta
+  at a test T is, componentwise over affine opens U ⊆ T.left, exactly the B-2 shuffle
+  PicEtAff C Γ(U) ≃* PicEtAff C_L Γ(U) — there is NO route to the picEt carrier that
+  avoids it (the R-W7-9 affine-test fallback IS the B-2 statement modulo picEtAffineEquiv).
+  B-2 (roadmap AJCR.w7-functor.b2, file Picard/PicEtAffBaseFieldShuffle.lean) has
+  not started and is itself gated on the F-2 lane''s D2-ii core (Picard/PicEtAffCurveMap.lean,
+  in flight). Per my launch mandate I am not re-cutting the ratified bricks; B-4b
+  needs a lane after B-2 lands.
+
+
+  WHAT B-4a ALREADY PROVIDES (Picard/Pic0Theta.lean), so B-2 + B-4b(final) are pure
+  plumbing: (1) the relPic layer of the shuffle at arbitrary towers k -> L -> A: crossBaseAffineIso
+  + hom_snd/inv_snd + naturality vs Over.overSpecMap (f over L vs f.restrictScalars
+  k over k), relPicCrossBase/relPicCrossBaseEquiv, and the relPicAlgMap square relPicCrossBase_relPicAlgMap
+  — B-2''s descentMap/mk transport should instantiate THESE, not re-derive CechPic-level
+  squares; (2) the degree seam relPicDeg_relPicCrossBase (relPicDeg K invariance,
+  via B-3''s engine; deg-d5b D1: route ALL cross-presentation degree facts through
+  it + E-iv-alg); (3) the R5 field-point kit (pushFieldPoint/fieldPointAlgebra/isScalarTower_fieldPointAlgebra/liftFieldPoint,
+  HEq-free round trips) and the pic0 restriction engine mem_pic0Subgroup_iff_of_degAt_pushFieldPoint_eq:
+  theta''s degree-0 restriction reduces to the single degAt matching ''degAt lam (pushFieldPoint
+  k s) = degAt lamL s'', which B-4b discharges by degAff_mk (both sides read on a
+  common finite separable refinement M/K) + relPicCrossBase_relPicAlgMap naturality
+  + relPicDeg_relPicCrossBase at M.
+
+
+  B-4b remainder once B-2 lands: (i) componentwise lift of the shuffle through picEtAffineEquiv
+  over the affine-opens limit, natural in T; (ii) CommGrpCat packaging = D2-i; (iii)
+  pic0 restriction by the B-4a engine; (iv) Type form by forget2 ⋙ forget whiskering
+  against pic0TypeFunctor. Estimated M, no new mathematics. Pic0Theta.lean is at 494/500
+  lines — B-4b should go in a NEW file (declare the name in a roadmap comment before
+  creating, per lane protocol); suggested Picard/Pic0ThetaAssembly.lean.'
+labels:
+- agent-ready
+status: closed
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T08:38:54.339498+00:00'
+updated_at: '2026-07-17T13:43:51.592078+00:00'
+metadata: {}

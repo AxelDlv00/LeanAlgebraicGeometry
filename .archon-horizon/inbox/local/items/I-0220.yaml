@@ -1,0 +1,40 @@
+id: I-0220
+provider: local
+kind: issue
+body: 'HOUSE-RULE VIOLATION: Cohomology/RelCurveCollapse.lean is 752 lines (limit
+  500; rebuild charter constraint (3), worksheet Discipline, spec-dd-r Discipline
+  clause).
+
+
+  Landed at 2c16d3329 by the window-transport lane, which was killed by credit exhaustion
+  immediately after committing and could not do the split it would normally have done
+  (its sibling files respect the rule: WindowFieldTransport.lean 400 L).
+
+
+  NOT urgent, NOT a correctness problem — the file is green and kernel-covered (via
+  5b95cba0c''s 8696-job root build) and its keystones are axiom-clean. But it must
+  be split before Phase 2 (the Mathlib-extraction/alignment phase explicitly re-checks
+  structure).
+
+
+  SUGGESTED SPLIT (clean seams, from the module''s own structure): (a) the datum +
+  its 4-case gluing law (thetaChartDatum + laws) -> RelCurveCollapse.lean; (b) the
+  sheaf collapse (thetaChartDatumSheafIso, componentwise glued/twist equiv) -> RelCurveCollapseSheaf.lean;
+  (c) the class law (cechPicClass_thetaChartDatum, thetaFiberPullback, the fiberDivisor_ratioUnit_*
+  computation) + the H1 seam -> RelCurveCollapseClass.lean. Statement-preserving;
+  no proof changes; root gains two import lines.
+
+
+  OWNER: any janitor/hygiene pass or the next lane that edits the file. Do NOT split
+  while sibling lanes are consuming it mid-flight without checking horizon ps / live-lane
+  state first.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T14:24:36.525300+00:00'
+updated_at: '2026-07-17T14:24:36.525311+00:00'
+metadata: {}

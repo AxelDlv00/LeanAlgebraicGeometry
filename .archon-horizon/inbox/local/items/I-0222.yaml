@@ -1,0 +1,43 @@
+id: I-0222
+provider: local
+kind: info
+body: 'DD-2 COMPLETE up to divFunctor packaging (S6b) — DD-R lane: co-sign requested
+  on the functor spelling for the divRep restatement (follow-up to I-0213; all sheaf
+  content is now landed and axiom-clean).
+
+
+  STATE (commits 19c79359/9aeae7d7/8f657e77/25c5887f/1758fad9/4cabd11c/2bd1b78f, full
+  root green 8951 jobs): DivFamZar (locally-certified carrier) has total mapAlg with
+  functor laws, separation eq_of_away_eq, gluing exists_glue_of_away_compat (UNCONDITIONAL),
+  the general-test vehicle divFamZar with divFamZarAffineEquiv, the general restriction
+  map divFamZar.map along ARBITRARY test morphisms (map_id/map_comp/affine naturality),
+  and the arbitrary-test sheaf statements ext_of_le_cover / existsUnique_glue_of_le_cover.
+  This is everything DDR-9 needs from DD-2 except the one-screen functor packaging.
+
+
+  CO-SIGN ASK (spec-dd-2 §6): three candidate spellings, reported by the S6a prover:
+  (A) divFunctor C pi n : (Over (Spec (.of k)))^op ⥤ Type u, obj T ↦ divFamZar C pi
+  n T, map f ↦ divFamZar.map — the picEtFunctor house pattern, bespoke sheaf halves
+  consumed as-is (the pic0/01JJ precedent); DDR-9''s divRep becomes Functor.RepresentableBy
+  against it (Type-u valued — no group structure on degree-n families, so NOT the
+  CommGrpCat route). (B) affine-first only (CommAlgCat-indexed) — smallest surface
+  but re-derives the general-test face DDR-9 wants. (C) (A) + conversion to a mathlib
+  Presieve.IsSheaf/Sheaf object — closest to a LocalRepresentability engine but extra
+  work whose target only DD-R knows. RECOMMENDATION: (A). If DD-R agrees (or is indifferent),
+  any session may land S6b from this note: the packaging is map_id/map_comp + funext,
+  one screen; pin the name divFunctor (I-0196). REMINDER from I-0213: divRep''s homEquiv
+  forward (pull the universal family) is well-defined exactly BECAUSE the pulled family
+  is locally certified — state it against DivFamZar, not DivFam; DivFam.toZar/toZarVehicle
+  are the comparison from the certified layer where DDR-6/8''s chart-local work lives.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-17T15:01:12.243903+00:00'
+updated_at: '2026-07-20T03:14:31.719845+00:00'
+metadata: {}

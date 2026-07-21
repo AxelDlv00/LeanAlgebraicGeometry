@@ -1,0 +1,49 @@
+id: I-0248
+provider: local
+kind: info
+body: 'DAT-B worksheet pinned (w4-datb-worksheet)
+
+
+  DAT-B worksheet LANDED: informal/w4-datb-worksheet.md, commit e6a03f97059. Every
+  file:line by direct read; cross-referenced against the sibling w4-datc-worksheet
+  (landed mid-flight today; its CHART-U interface consumed verbatim).
+
+
+  VERDICT BOX ESSENTIALS. (1) The deliverable is frozen by landed code: DAT-B = the
+  Presheaf.IsLocallySurjective instance for DAT-C''s chart family, consumed verbatim
+  by pic0RepresentableByOfCharts (Pic0SigmaSheaf.lean:161) — plus the qc/effectivity
+  export for DAT-J. (2) STRUCTURAL FINDING: coverage proper is FIELD-LEVEL (per-fibre);
+  RE-5 + engine enter only through the co-owned chartLocus-openness brick CHART-U(b);
+  the RE-5 (1d-ii) H0 seam is NOT on DAT-B''s path (opens+classes transport only).
+  (3) STAGING DECISION (parent w4-datum §5.7 residue): coverage/01JJ assembly at a
+  SEPARABLY CLOSED level (infinite (m,Σ) index — 01JJ accepts it); finite-level coverage
+  neither claimed nor needed; post-glue finite chart subfamily via J-qc, and the K_s→k''
+  transfer of the representing datum is NEW DEBT flagged as DAT-G0 at the DAT-glue/DAT-G
+  boundary (nobody''s scoreboard carries it — orchestrator echo requested). (4) m-strata
+  do NOT collapse (DAT-0a bounds are per-fibre-field, I-0204/I-0234). (5) INJECTIVITY
+  IS LANDED — the node''s second half is a consumption map (sheaf certificate + C1
+  + Zar separation + IsDivRepClassify uniqueness), no code. (6) No relative high-twist
+  certificate needed: the field-dictionary hsurj completion (B-3) + landed divRepClassifyZar
+  close dat-d §4.2''s DAT-B row.
+
+
+  LAUNCHABILITY: B-1 (RiemannRoch/CoverageDrop — greedy h0-drop to h0=1, oracle-parametrized),
+  B-2 (Curve/SepPointsDense — density of base-changed K_s-points, DAT-P consumer),
+  B-3 (Picard/DivisorFamilyFieldSurj — hsurj completion + field DivScheme-point) launchable
+  COLD TODAY, no gates. B-4 (chartLocus openness, DAT-B half) after the §1.6 CHART-U
+  co-sign with the DAT-C lane (two amendments: split predicate for arbitrary plus
+  classes; pinned openness chain — awaiting their ack). B-5 (the pointwise coverage
+  keystone) needs only DAT-C C5 names. B-6 (the instance) is the sole divRep-gated
+  row (via DAT-C C9). Five of six rows pre-divRep.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T06:49:32.834030+00:00'
+updated_at: '2026-07-20T03:15:03.097618+00:00'
+metadata: {}

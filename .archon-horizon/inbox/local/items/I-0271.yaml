@@ -1,0 +1,70 @@
+id: I-0271
+provider: local
+kind: info
+body: "DAT-G0 mountain multisession-deferred — SIZE VERDICT: NOT a one-session proof\
+  \ (independently confirms I-0263/I-0266/I-0270). Pic0PreservesFilteredBaseColimit\
+  \ is NOT discharged; NO new Lean landed this session (no honest cheap green piece\
+  \ — the qcqs->affine reduction is itself part of the hard core, and a skeleton would\
+  \ need sorries; sibling critical-path lane RD1 holds context so no risky build attempted).\
+  \ This note re-pins the analytic core as a precise decomposition with goal shapes\
+  \ + avatars so a post-divRep lane can resume cold.\n\n=== IS Pic0PreservesFilteredBaseColimit\
+  \ DISCHARGED? NO. === Unchanged pinned M-L residual in Picard/PicRepColimitCompat.lean\
+  \ (c9df8d479). The delta substrate (PicRepColimitResidual ad6cd964f / PicRepColimitMountain\
+  \ 3c034b6e1) and the reduction are landed; only this theorem remains.\n\n=== WHY\
+  \ MULTI-SESSION (structural, from direct read of the object tower) === Target 'PreservesColimit\
+  \ S.op (pic0TypeFunctor C)' = the canonical map colim_i pic0Subgroup C (S.obj i)\
+  \ -> pic0Subgroup C (lim S) is bijective. pic0TypeFunctor unfolds through a 5-deep\
+  \ tower, EACH layer of which must be spread across the filtered colimit lim S =\
+  \ colim over Jᵒᵖ, with ZERO in-tree scaffolding for any spreading:\n - pic0Subgroup\
+  \ C T = {lam ∈ picEt C T | ∀ K field/k, ∀ t:overSpec k K⟶T, degAt lam t = 0}  (Pic0Functor.lean:107)\n\
+  \ - picEt C T = picEtSubgroup ⊆ Π U:T.left.affineOpens, PicEtAff C Γ(T.left,U),\
+  \ compatible families  (PicEt.lean:91,105)\n - PicEtAff C A = Quotient (Σ E:EtaleCover\
+  \ A, descentClasses C E) mod common refinement  (PicEtAff.lean:198,218)\n - descentClasses\
+  \ C E ⊆ relPic C (overSpec k E.Carrier) with relPicAlgMap(doubleInl)x = relPicAlgMap(doubleInr)x\
+  \  (PicEtAff.lean:76)\n - relPic C T = (C ⊗ T).left.CechPic ⧸ picFromBase C T  (RelPic.lean:63);\
+  \ CechPic = Cech H1 (line bundles)\n - EtaleCover A = presented étale MvPoly(Fin\
+  \ n)A/ideal, étale + Spec-surjective  (Algebra/EtaleCover.lean:64)\n\n=== DECOMPOSED\
+  \ PIN (7 sub-theorems, avatars attached; all divRep-free, ride C/k fp) ===\nM1 Étale-cover\
+  \ spreading (L): EtaleCover(colim A_i) descends to a finite stage — fg ideal lifts\
+  \ via MvPolynomial(Fin n) colimit, étaleness spreads (Algebra.Etale + FinitePresentation\
+  \ limit-stability, NOT a one-liner), Spec-surjectivity spreads. Avatars CommRingCat.preservesColimit_coyoneda_of_finitePresentation\
+  \ (Ring/FinitePresentation.lean:144) + RingHom.EssFiniteType.exists_eq_comp_ι_app_of_isColimit\
+  \ (AffineTransitionLimit.lean).\nM2 Relative-Picard / line-bundle spreading — THE\
+  \ SUMMIT (XL): spread a Cech Picard class (invertible sheaf) on C×_k Spec(colim\
+  \ B_i)=colim(C×_k Spec B_i) mod base to a finite stage; existence+uniqueness of\
+  \ the line bundle. This is the genuine EGA IV.8 Pic-commutes-with-cofiltered-limits\
+  \ theorem, NO in-tree scaffolding. Avatars Scheme.exists_π_app_comp_eq_of_locallyOfFinitePresentation\
+  \ (AffineTransitionLimit.lean:1177) + exists_hom_hom_comp_eq_comp_of_locallyOfFiniteType\
+  \ (:686), riding LocallyOfFiniteType (relCurve C L ↘ Spec L) (DivSchemeSeedUnivFields.lean:81).\n\
+  M3 Descent-condition spreading (M): the doubleInl/doubleInr equality over E⊗_A E\
+  \ spreads (rides M2 uniqueness over E⊗E).\nM4 Plus-quotient bijectivity (L): colim_i\
+  \ PicEtAff C A_i -> PicEtAff C A bijective — surjective from M1+M2+M3 finite-stage\
+  \ representative; injective from spreading the common refinement (M1) + agreement\
+  \ (M2). Threads the Setoid/common-refinement through the colimit.\nM5 Degree-zero\
+  \ compatibility (M): pic0Subgroup carrier ∀K field ∀t, degAt lam t=0 is stage-stable\
+  \ — field points of Spec(colim A_i) factor through finite stages; degAff base-changes\
+  \ compatibly.\nM6 qcqs->affine reduction (L): the Prop quantifies over ALL qcqs\
+  \ S (affine transition maps), not just affine stages; picEt C (lim S) is the affine-opens\
+  \ limit — spread each affine open + section of lim S to a finite stage via Scheme.exists_isOpenCover_and_isAffine\
+  \ (:1078) + exists_isAffineOpen_preimage_eq (:1058), reduce to M4.\nM7 Assembly\
+  \ to PreservesColimit (M): wire M4/M5/M6 into IsColimit of the mapped cocone (Types\
+  \ colimit + bijective comparison).\nTotal ≈ one XL summit (M2) + 3×L + 3×M, ~5-10\
+  \ new files, many hundreds to ~2k lines, several sessions. Recommend defer to post-divRep\
+  \ as planned.\n\n=== VERIFICATION THIS SESSION === All named mathlib avatars confirmed\
+  \ present at cited lines (Ring/FinitePresentation.lean:144; AffineTransitionLimit.lean:686/1058/1078/1177;\
+  \ EssFiniteType in AffineTransitionLimit+Ring/FinitePresentation). fp ride confirmed\
+  \ in-tree (DivSchemeSeedUnivFields.lean:55,81). Confirmed NO existing in-tree colimit/spreading\
+  \ lemma for PicEtAff/relPic/CechPic/EtaleCover (grep) — nothing shortcuts M2. No\
+  \ files created, no commits, no build (RD1 lock respected)."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T14:04:57.863287+00:00'
+updated_at: '2026-07-19T14:04:57.863298+00:00'
+metadata: {}

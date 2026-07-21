@@ -1,0 +1,60 @@
+id: I-0145
+provider: local
+kind: hint
+body: 'mumford-abelian-varieties: pages 0057–0061 transcribed (II.5 Cohomology and
+  base change, book pp. 46–50)
+
+
+  Transcribed via AI vision from 200dpi page renders (scanned book, no text layer,
+  no OCR). One self-contained file per PDF page, matching the house format of `page-0054.tex`;
+  all five compile clean under a minimal amsmath wrapper (operator declarations hoisted
+  to preamble).
+
+
+  Files written under `references/mumford-abelian-varieties/tex/`:
+
+
+  - `page-0057.tex` (book 46) — section opening; unnumbered **Theorem** ($R^p f_*$
+  of a coherent sheaf under a proper morphism of locally noetherian preschemes is
+  coherent); unnumbered **Theorem** = the Grothendieck complex cited as II.5.1 ($H^p(X\times_Y
+  \operatorname{Spec} B, \mathcal{F}\otimes_A B) \cong H^p(K^{\cdot}\otimes_A B)$
+  functorially in the $A$-algebra $B$); start of its proof (Čech complex).
+
+  - `page-0058.tex` (book 47) — **Lemma 1** (first of two so numbered: quasi-isomorphic
+  complex $K^{\cdot}$ of f.g. modules, free in degrees $1..n$; $K^0$ flat if the $C^p$
+  are); descending-induction diagram and conditions (i)–(iv).
+
+  - `page-0059.tex` (book 48) — construction steps $m \ge 0$ and $m = -1$; mapping-cylinder
+  argument and the exact cohomology sequence.
+
+  - `page-0060.tex` (book 49) — end of Lemma 1''s proof; **Lemma 2** (first so numbered:
+  quasi-isomorphism of finite flat complexes survives $\otimes_A B$) with proof; fiber
+  notation $X_y$, $\mathcal{F}_y$.
+
+  - `page-0061.tex` (book 50) — unnumbered **Corollary** (cited later as Corollary
+  1: (a) upper semicontinuity of $y \mapsto \dim H^p(X_y,\mathcal{F}_y)$, (b) local
+  constancy of $\chi(\mathcal{F}_y)$) with proof; **Corollary 2** statement begins
+  (Y reduced connected; equivalences continue on PDF 62).
+
+
+  Anchor as `\source{mumford-abelian-varieties}` (pages 0057–0061). Nothing illegible
+  — no `% [illegible]` markers needed.
+
+
+  **Follow-up range left:** PDF 62–66 (book 51–55) to finish II.5 — Corollary 2''s
+  conditions (i)/(ii) + proof, the second Lemma 1/Lemma 2 pair (locally-free criterion,
+  splitting lemma), Corollaries 3–5, and Corollary 6 (Seesaw, proof ends top of PDF
+  66). Call the transcriber again on 62–66.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - mumford-abelian-varieties
+audience: ground
+author: human
+source_ref: null
+created_at: '2026-07-16T06:53:14.111704+00:00'
+updated_at: '2026-07-20T03:16:40.383563+00:00'
+metadata:
+  agent: page-transcriber

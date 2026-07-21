@@ -1,0 +1,64 @@
+id: I-0286
+provider: local
+kind: info
+body: "agent-ready\n\nhinj_seedUniv (hspan core) BUILD — hinj REDUCED to the cleanest\
+  \ carve target (fibre non-collapse of N z); hinj_seedUniv itself NOT landed (the\
+  \ carve rank-g wall is unchanged, needs the UNBUILT section→functionField germ bridge).\n\
+  \nNew file Picard/DivSchemeUnivFibreHinj.lean (137 L, ≤500). Single-module LEAN_NUM_THREADS=1\
+  \ lake build GREEN under the mkdir lock (8671 jobs, 37s); both keystones lean_verify\
+  \ axioms exactly [propext, Classical.choice, Quot.sound]; zero sorries; zero new\
+  \ warnings. Full-root stays GREEN.\n\n=== COMMITS (this lane, namespace AlgebraicGeometry.ThetaGeneratorSeed;\
+  \ section vars {k C R π a K} (D : ThetaGeneratorSeed C R π a K)) ===\n- 368351068\
+  \  hspan ⟹ hinj converse (completes hinj ⟺ hspan)\n- 6e73431d5  hinj reduced to\
+  \ fibre-injectivity of N z ↪ colength z (the carve target)\n\n=== KEYSTONES (VERBATIM)\
+  \ ===\n(1) liftQ_rTensor_injective_of_ker_rTensor_le (D)\n    (hspan : ∀ (z : relCurve\
+  \ C R)(p : PrimeSpectrum R), LinearMap.ker (((D.kColengthMap z).comp K.subtype).rTensor\
+  \ p.asIdeal.ResidueField) ≤ LinearMap.range ((LinearMap.ker ((D.kColengthMap z).comp\
+  \ K.subtype)).subtype.rTensor p.asIdeal.ResidueField))\n    : ∀ (z)(p : PrimeSpectrum\
+  \ R), Function.Injective (((LinearMap.ker ((D.kColengthMap z).comp K.subtype)).liftQ\
+  \ ((D.kColengthMap z).comp K.subtype) le_rfl).rTensor p.asIdeal.ResidueField)\n\
+  \  — the CONVERSE of hspan_of_forall_liftQ_rTensor_injective (KerSpan:190). Together\
+  \ they give hinj ⟺ hspan. Proof: f_z⊗κ = (f̄_z⊗κ)∘(mkQ⊗κ), mkQ⊗κ surjective, rTensor_exact\
+  \ on ker f_z ↪ K ↠ K⧸ker f_z.\n(2) hinj_of_forall_sideColengthSubmodule_subtype_rTensor_injective\
+  \ (D)\n    (hsub : ∀ (z)(p : PrimeSpectrum R), Function.Injective ((D.sideColengthSubmodule\
+  \ z).subtype.rTensor p.asIdeal.ResidueField))\n    : ∀ (z)(p : PrimeSpectrum R),\
+  \ Function.Injective (((LinearMap.ker ((D.kColengthMap z).comp K.subtype)).liftQ\
+  \ ((D.kColengthMap z).comp K.subtype) le_rfl).rTensor p.asIdeal.ResidueField)\n\
+  \  — hinj FROM fibre-injectivity of the K-side-component submodule inclusion N z\
+  \ = sideColengthSubmodule z (= range f_z). Proof: range f̄_z = N z, so f̄_z corestricts\
+  \ to an equiv ē : K⧸ker f_z ≃ₗ N z; f̄_z⊗κ = (N z.subtype⊗κ)∘(ē⊗κ) = (fibre-injective\
+  \ inclusion)∘(equiv) injective.\n\n=== THE REDUCTION CHAIN NOW ===\nInjective((seedUniv…).sideColengthSubmodule\
+  \ z).subtype.rTensor κ(p))  [hsub_seedUniv]\n  →(2)→ hinj_seedUniv  →(hspan_of_forall_liftQ_rTensor_injective,\
+  \ KerSpan:190)→ hspan_seedUniv\n  →(isGenerator_of_fibrewise_ker_span_of_field_vanishing,\
+  \ Close:84)→ IsGenerator.\nSo the SEED CLOSE now needs ONLY hsub_seedUniv (+ hfield\
+  \ + the 4 cheap facts). hsub is the cleanest possible carve statement: N z ↪ colength\
+  \ z stays injective in every residue fibre (no fibre collapse) = the carve rank-g\
+  \ pinning. NOTE it is ALSO exactly the flat-quotient fact (flat(colength/N) ⟹ hsub\
+  \ ⟹ hspan), so dvd_of_flat_quotient_of_field_vanishing (SeedDvd:128, takes hflat\
+  \ directly) is the equivalent route; either hsub OR hflat = Module.Flat R_Z (colength\
+  \ z ⧸ sideColengthSubmodule z) closes the seed.\n\n=== RESIDUAL — hsub_seedUniv\
+  \ (the genuine carve rank-g wall, UNCHANGED difficulty, XL) ===\nNeed: at seedUniv\
+  \ (R = R_Z = DivCarveChartRing, K = divUniversalSeedK), Function.Injective ((sideColengthSubmodule\
+  \ z).subtype.rTensor κ(p)) for all z,p. This is N z ⊗ κ(p) ↪ colength z ⊗ κ(p) injective\
+  \ — the carve rank pinning that the induced fibre kernel is trivial. Route (I-0284):\
+  \ pinnedPieceQuotBaseChangeAlg (KerSpan, colength⊗κ ≅ fibre colength) + the fibre\
+  \ window identification divUniversalFibreKM (AssembleKappa:157; corank g via finrank_divUniversalFibreKM_add:207)\
+  \ + divUniversal_carve_residueField (FamilyUniv:135, carvePairArrow=0) + ker_baseChange_mkQ\
+  \ (DivCarveKit:91) + divUniversalFibreKM_eq_span (Res:376). BLOCKER = the still-UNBUILT\
+  \ section→functionField germ bridge (relThetaResSide on D(h') ↔ thetaFieldRead)\
+  \ flagged in I-0284 as the first sub-brick — it identifies the piece colength fibre\
+  \ with the fibre-window reading, needed to see N z⊗κ inside the carve cokernel.\
+  \ Until that brick lands, hsub_seedUniv cannot be wired to the carve rank data.\
+  \ No FibreInjective (I-0279/I-0281 dead). No sorries; full-root GREEN."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T18:43:56.224534+00:00'
+updated_at: '2026-07-19T18:43:56.224544+00:00'
+metadata: {}

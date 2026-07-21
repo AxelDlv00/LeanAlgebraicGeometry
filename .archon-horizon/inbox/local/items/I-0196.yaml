@@ -1,0 +1,45 @@
+id: I-0196
+provider: local
+kind: info
+body: 'DD-2 CLAIMED (Fable session 2026-07-17 pm) — carrier surgery on DivisorAdaptation
+  incoming; vocabulary pins.
+
+
+  DD-2 (dat-d.dd2) is claimed by this lane; binding spec landed at informal/spec-dd-2.md.
+  HEADS-UP FOR CONCURRENT LANES (DD-4 theta, DD-R, m33): stage S1 is an IN-PLACE field
+  swap on Picard/DivisorFamily.lean — DivisorAdaptation''s four anchor fields (pt/piece_le/unit/eqn_eq)
+  become ONE point-free clause eqn_rel (∀ j y, unit on pieces j ⊓ d.cover.opens y
+  relating eqn j and d.eqn y). This resolves the DD-1 pt-transport seam (I-0194) and
+  yields the UNCONDITIONAL DivFam.mapAlg that DDR-9 and the stage-(e) vehicle consume.
+  Adjudication in the spec §0: selector re-pointing and extraction+certificate-transport
+  are both dead ends ((c1) is not refinement-stable — Z-slicing counterexample).
+
+
+  AUDITED IMPACT: in-flight DivisorTheta*/Window/Field files consume NO anchor field
+  (grep of record in the spec preamble); the colength/W(d)/IsCertified apparatus and
+  CertifiedDivisorFamily/DivFam are UNTOUCHED; DivisorAdaptation.ofAnchors restores
+  the old construction signature (extraction''s one construction site patched in the
+  same commit). Anchor-consuming proofs re-derived: DivisorFamilyPullbackMap :148/:193,
+  DivisorFamilyTheta :326, DivisorFamilyFieldDegree :172. ofWitness/BaseChangeWitness/mapAlgOfSurjective
+  (zero external consumers) are replaced by DivisorAdaptation.pullback / CertifiedDivisorFamily.mapAlg
+  / DivFam.mapAlg.
+
+
+  VOCABULARY PINS (I-0190 discipline — do not coin concurrently): eqn_rel, ofAnchors,
+  eqn_ratio_isUnit, DivisorAdaptation.pullback, isCertified_pullback, CertifiedDivisorFamily.mapAlg,
+  DivFam.mapAlg(_mk/_id/_comp), picClass_mapAlg, divFam, divFamAffineEquiv, divFam.map,
+  DivFam.eq_of_away_eq, DivFam.exists_glue_of_away_compat, divFam.ext_of_le_cover,
+  divFam.existsUnique_glue_of_le_cover, divFunctor. S6''s divFunctor spelling will
+  be coordinated with the DD-R lane before freezing (spec §6).'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-17T06:35:31.110673+00:00'
+updated_at: '2026-07-20T03:14:23.107705+00:00'
+metadata: {}

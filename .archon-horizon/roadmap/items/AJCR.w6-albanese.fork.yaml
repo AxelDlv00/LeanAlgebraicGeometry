@@ -1,0 +1,19 @@
+id: AJCR.w6-albanese.fork
+title: 'Design fork (GATED on DD shapes freeze): \(C^{(g)}\) native vs \(\mathrm{Div}^g\)-lite
+  rework for Milne S1/S3/S4'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: blocked
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-16T17:13:57.457531+00:00'
+  parent: AJCR.w6-albanese

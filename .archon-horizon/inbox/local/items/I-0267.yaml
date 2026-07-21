@@ -1,0 +1,100 @@
+id: I-0267
+provider: local
+kind: info
+body: 'hdvd assembly -> seed: BLOCKED (verified mismatch). NO Lean written, NO sorries,
+  nothing committed. The two landed engines are CORRECT and root-wired, but they are
+  NOT the blocker; the blocker is upstream and is the thetaFieldRead<->divFamPhi fibre-read
+  bridge (route 1) / a relatively-BPF sec source (route 2) — both orchestrator-reserved
+  and UNBUILT.
+
+
+  ENGINES CONFIRMED LANDED + SIGNATURES MATCH (verbatim spot-checks):
+
+  - S1 SupportTubeFinite (root-wired L441): DivisorAdaptation.finite_colength_of_forall_fibre_closure_subset
+  (j) (hfib: forall s:Spec R, base^{-1}{s} INTER closure(supportLocus INTER pieces
+  j) SUBSET pieces j) : Module.Finite R (A.colength j). Plus abstract engine IsAffineOpen.finite_quotient_span_singleton_of_isClosed
+  (g)(hclosed: IsClosed(V minus D(g))) : Module.Finite R (Gamma(V)/span{g}). Leak
+  kit present (supportLeak / supportLeak_eq_empty_of_forall_fibre).
+
+  - S2 SlicingFlatKernel (root-wired L439): keystones over [IsNoetherianRing R][Finite
+  M][Finite N][Flat N] for f:M->l N, L<=ker f, hspan: forall p, ker(f.rTensor kappa
+  p) <= range(L.subtype.rTensor kappa p). c3 quotient_ker flat, c4 quotient_range
+  flat, eq_ker, projective_quotient, rankAtStalk. All present as documented (I-0240).
+
+
+  WHY THEY DO NOT CLOSE hdvd (the precise mismatch the orchestrator asked to check
+  in step 3):
+
+  Every route to hdvd reduces to producing certificate-free RELATIVE divisor/generator
+  structure at the SECTION level (eqn z cuts d_p relatively / is an achiever). All
+  landed carve+fibre data (divUniversal_carve_residueField, PFibPack existsUnique_effective_divisor_of_carve_pack,
+  divUniversalSeedFibreDivisor d_p) is FIELD/FIBRE-level and lives in the divFamPhi
+  window dictionary; the seed sections live in the thetaFieldRead dictionary. These
+  two are NOT bridged pointwise. DivSchemeSeedUnivBridge.lean''s OWN docstring states
+  this: it works around the missing ''thetaFieldRead<->divFamPhi reading bridge, which
+  the Explore sweep flagged as unbridged'' at the SPAN level, which suffices for hfib
+  (nonvanishing) only — it produces sec z with windowCompare != 0, NOT sec z reducing
+  to the achiever f. I-0231 is exactly this: a merely-nonvanishing sec (t+eps) makes
+  dvd FALSE; dvd needs sec to cut EXACTLY d_p (achiever).
+
+
+  Each Nakayama-route step is blocked on that same bridge:
+
+  - S3 (honest Q tensor kappa(p)=0): needs eqn z fibre to GENERATE H0(N-d_p), i.e.
+  eqn z fibre = achiever cutting exactly d_p. Bridge only gives sec z fibre in H0(N-d_p)
+  (may have extra zeros). Fibrewise-image-zero alone is the I-0231-false statement;
+  honest Q tensor kappa=0 additionally needs B/J'' flat (S2).
+
+  - S2 hspan MISMATCH: S2 needs f:M->N between FINITE modules; the seed map is K ->
+  colength B/(eqn z). Discharging hspan (fibre-kernel spanned by relative elements
+  L<=ker) needs a SECTION-level relative-kernel submodule whose fibres match the carve;
+  the carve is only on Grassmannian.baseChangeMkQ kernels of pairTaut over the pair-chart
+  ring (map deltaL-deltaR), a DIFFERENT map. Bridging = the missing fibre-read bridge.
+  Also N=B piece ring is NOT finite over R (only colength B/(eqn) is, via S1).
+
+  - S1 colength: A.colength j needs a DivisorAdaptation; the seed''s only one is D.divisorAdaptation
+  hD which CONSUMES hD.IsGenerator (dvd) => CIRCULAR. Abstract engine avoids the adaptation
+  but needs IsClosed(piece minus D(eqn z)) = no-leak of eqn z''s zero-locus, which
+  needs connecting eqn z''s fibre zeros to d_p (bridge) + wall-B choice.
+
+  - Germ route (Scheme.mem_span_singleton_of_forall_germ, the genuine non-circular
+  pattern used by res_mem_span_eqn_inl_of_forall_germ): reduces dvd to forall y in
+  piece, germ(res psi) in span{germ(eqn z)} = germ in d.stalkIdeal y. But d.stalkIdeal
+  for the SEED = span{germ eqn} only via D.localEquations hD / D.divisorAdaptation
+  hD, needing dvd. CIRCULAR.
+
+
+  STATUS: hfib LANDED (DivSchemeSeedUnivBridge 3 keystones + Fields brick 1-3). hdvd
+  NOT started (cannot construct achiever sec without route 1). seedUniv/isGenerator_seedUniv
+  NOT constructible (need hdvd). isGenerator_of_fibre_ne_zero (DivSchemeSeed:188)
+  consumer is ready and correct.
+
+
+  USEFUL NON-CIRCULAR HANDOFF for whoever builds route 1: once a relative divisor
+  d over R with local eqn = eqn z exists and K<=H0(Theta^a - d) is shown (le_vanishingSubmodule
+  shape), dvd closes cleanly via Scheme.mem_span_singleton_of_forall_germ (DivisorStalkIdeal:79)
+  + germ-NZD of eqn z (germ_eqn_mem_nonZeroDivisors, fibre_regular-only) + germ_eqn_span_eq_stalkIdeal
+  — exactly the res_mem_span_eqn_inl_of_forall_germ pattern. The missing input is
+  the RELATIVE d itself (bridge/route-2), not the glue.
+
+
+  RECOMMENDATION (matches I-0260/I-0264 orchestrator lever): route 1 (build thetaFieldRead<->divFamPhi
+  fibre-read naturality square: resHom_relThetaWindowEquiv_cancelBaseChange composed
+  with thetaFieldRead=germ-at-eta, realizing achiever f as a window vector so sec
+  z cuts exactly d_p) OR route 2 (change section source to relatively BPF by construction).
+  CertUniv consumes hdvd downstream at DivSchemeFamily:228/229 (exists_ratioUnit)
+  and :390 (le_vanishingSubmodule); it also needs (D.divisorAdaptation hD).IsCertified
+  g for divFamEps_certifiedFamily (DivSchemeEps:312).'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-19T13:08:13.443758+00:00'
+updated_at: '2026-07-20T03:15:26.246483+00:00'
+metadata:
+  agent: hdvd-assembly-lane

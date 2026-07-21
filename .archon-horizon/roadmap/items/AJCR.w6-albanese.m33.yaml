@@ -1,0 +1,20 @@
+id: AJCR.w6-albanese.m33
+title: 'Milne Lemma 3.3 [RG]: substep 2-hard (diagonal), substep 3 (\(\mathcal{O}_{G,e}\)-pullback
+  bridge), assembly — discharges the port-ext hypothesis'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-16T17:13:56.668881+00:00'
+  parent: AJCR.w6-albanese
+  updated_at: '2026-07-17T13:49:08.849715+00:00'

@@ -1,0 +1,47 @@
+id: I-0209
+provider: local
+kind: memory
+body: 'THE Z-CLOPEN CERTIFICATE PRINCIPLE (DD-1/DD-2 lanes, 2026-07-17 — three independent
+  sightings in one day; treat as a standing design constraint for every DAT-D brick).
+
+
+  A DivisorAdaptation piece carries an R-finite-projective colength — clause (c1)
+  of IsCertified — IFF the piece''s trace on the divisor scheme Z = V(D) (finite flat
+  over Spec R) is CLOPEN in Z. Any construction that slices Z along the base (basic-open
+  refinement of pieces, denominator-cleared pieces from a localization cover, Z-blind
+  extraction) produces section rings like R_u that are NOT finite over R, and the
+  certificate is unrecoverable — the localization-span descent lemmas'' hypotheses
+  are FALSE, not merely hard. Canonical counterexample: R = k[u], zero-section divisor,
+  cleared piece D(u-tilde): colength = R_u.
+
+
+  Consequences adjudicated today: (1) the DD-1 pt-transport seam could NOT be fixed
+  by extraction + certificate transport (certificates are not refinement-stable) —
+  fixed instead by the S1 carrier surgery (point-free eqn_rel, total mapAlg, commit
+  19c79359); (2) DD-2 S5''s glued adaptation could NOT take its certificate from denominator-cleared
+  pieces (spec-dd-2 section-5 route corrected in the addendum) — the gluing keystone
+  landed CONDITIONAL on hcert (exists_glue_of_away_compat_of_certifiedRep, commit
+  1758fad90).
+
+
+  THE MISSING BRICK (next in the DD-2 lane; coordinate with DD-R before speccing —
+  same substrate as DDR-4''s engine bridge, spec-dd-r section-7 risk 1): W-as-algebra
+  extraction — the glued colength W(d) of a certified family is a finite projective
+  R-ALGEBRA (= Gamma(Z)); its canonical idempotents (glued via the module-localization
+  sheaf sequence over the away cover) split Z into packets; CRT-separated chart generators
+  give packet-swallowing basic-open pieces whose traces are clopen; that adaptation
+  carries the certificate and discharges hcert, upgrading the conditional keystone
+  to the pinned DivFam.exists_glue_of_away_compat. Only then can S6 deliver divFunctor
+  at full strength for DDR-9.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-17T09:48:15.292906+00:00'
+updated_at: '2026-07-17T09:48:15.292916+00:00'
+metadata: {}

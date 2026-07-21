@@ -1,0 +1,103 @@
+id: I-0198
+provider: local
+kind: memory
+body: 'DDR-3 LANDED (relative local-generator construction, spec-dd-r §3 item 3) —
+  lane report (commits 003f1e9f8 core, 3881fe99c univ anchor, fb3d7706f root wiring;
+  all keystones kernel-checked axiom-clean [propext, Classical.choice, Quot.sound];
+  no sorries).
+
+
+  LANDED FILES (3 new, all ≤510 lines, root-wired at HEAD):
+
+  1. Picard/DivSchemeFamilySide.lean (216 L) — infrastructure: flat_sections_basicOpen
+  (K-flatness of Γ descends to basic opens: isLocalization_basicOpen + IsLocalization.flat
+  + Module.Flat.trans; tower by overAlgebraMap_apply_res); sections_mem_nonZeroDivisors_of_forall_germ;
+  exists_unit_mul_of_mutual_dvd (mutual divisibility vs germwise-regular section =>
+  unit ratio — THE ratio engine); relPinnedChart : Bool → Opens (V₀ᴿ/V₁ᴿ) + isAffineOpen_/flat_sections_relPinnedChart
+  (free base change via free_relSections); relThetaResSide (Bool-packaged relThetaResFst/Snd,
+  simp lemmas relThetaResSide_false/true) + resHom_relThetaResSide; relThetaSideUnit
+  (1/θ/θ⁻¹/1) + relThetaResSide_matching.
+
+  2. Picard/DivSchemeFamily.lean (503 L) — ThetaGeneratorSeed C R π a K (fields side/h/mem_basicOpen/sec/sec_mem;
+  derived piece, mem_piece, piece_le, isAffineOpen_piece, flat_sections_piece, eqn
+  := side component of sec z on piece z) + IsGenerator (dvd: eqn z generates K·O on
+  piece z — the Kleiman (ii)⟹(iii) Nakayama output; fibre_regular: eqn z ⊗ 1 nonzerodivisor
+  in Γ(basicOpen f) ⊗[R] κ(p) for ALL f : Γ(piece z), p — the P-fib input; ONE named
+  boundary for the DD-4 transport seam per spec §7 risk 2). Engines [IsNoetherianRing
+  R]: res_eqn_mem_nonZeroDivisors + germ_eqn_mem_nonZeroDivisors ((iii)⟹(i) via Module.Flat.mem_nonZeroDivisors_of_forall_tmul_residueField
+  at basic sub-opens; germ argument shrinks a stalk zerodivisor relation to a basic
+  open via exists_germ_eq + germ_eq + IsAffineOpen.exists_basicOpen_le); exists_ratioUnit
+  (crosswise dvd + theta matching + regularity). DELIVERABLE: D.localEquations hD
+  : LocalEquations (relCurve C R) + D.divisorAdaptation hD : DivisorAdaptation C R
+  π (D.localEquations hD) — built ONLY through exists_divisorAdaptation (statement
+  surgery-stable; NO anchor field pt/piece_le/unit/eqn_eq consumed — DD-2 freeze respected).
+  Laws: localEquations_eqn/_cover_opens (rfl), stalkIdeal_localEquations (rfl), germ_relThetaResSide_mem_span,
+  le_vanishingSubmodule (K ≤ (D.localEquations hD).vanishingSubmodule R V₀ᴿ V₁ᴿ (relThetaCocycle
+  C R π a) — K ⊆ H⁰(Θᵃ−d), the DDR-5 containment half).
+
+  3. Picard/DivSchemeFamilyUniv.lean (152 L) — DivCarveChartRing (R_Z = PairChartRing/divCarveIdeal,
+  abbrev) + instance isNoetherianRing_divCarveChartRing (THE DDR-3/4 licence); divCarveChartMk
+  (mkₐ k); divUniversalFst/Snd (Grassmannian.map of pairTautFst/Snd); divCarveIdeal_le_ker_of_tower;
+  divUniversal_carve (over ANY S with [Algebra Pair S][IsScalarTower k Pair S][Algebra
+  R_Z S][IsScalarTower Pair R_Z S] the pulled pair satisfies (♦) — instance-arg spelling
+  per I-0193 hazard 6, instantiate with w.toAlgebra); divUniversal_carve_residueField
+  (FIBREWISE CARVE at every prime q ⊇ I_♦ OF THE PAIR CHART RING at κ(q) — canonical
+  instances).
+
+
+  STILL OPEN (the gated seed-provider brick, feeds D + hD): construct ThetaGeneratorSeed
+  + IsGenerator for the universal window K over each R_Z. Needs: (i) K := window image
+  of the universal pair in relThetaSections via relThetaWindowEquiv/divisorWindow
+  (DD-4 boundary bases b₁ b₂ + base-field-transport seam, I-0175/I-0192); (ii) P-fib
+  at κ(p) achiever (exists_coeffAt_eq_baseDivisorAt; lift to a PURE element: min of
+  ord_x over pure images = min over fibre since κ(p)-scalars are global units, ultrametric);
+  (iii) Nakayama neighbourhood exists_fibrewise_tmul_ne_zero_of_projective; (iv) fibre-sections
+  identification Γ(basicOpen f)⊗[R]κ(p) ≅ Γ(fibre basic open) (relSectionsMap_basicOpen
+  + GluedSheafTermBaseChange kit) + fibre-curve integrality (Curve/BaseChangeInstances
+  at field κ(p)) to discharge fibre_regular (nonzero in a domain-localization; zero-ring
+  case trivial since nonZeroDivisors of the zero ring is everything).
+
+
+  HAZARDS for successors: (1) mem_nonZeroDivisors_iff is a CONJUNCTION in this mathlib
+  — use mem_nonZeroDivisors_iff_right / mul_right_mem_nonZeroDivisors_eq_zero_iff.
+  (2) Units.eq_inv_mul_iff_mul_eq works in rw but NOT as a dotted term (.mpr → ''unknown
+  constant'') — wrap in by rw + exact. (3) lake env lean APPLIES the lakefile leanOptions
+  (maxSynthPendingDepth 3) while raw lean/LSP/lean_run_code do NOT — κ(q).ResidueField
+  tower synthesis needs in-file set_option maxSynthPendingDepth 8 + synthInstance.maxHeartbeats
+  800000 (escape hatch used in DivSchemeFamilyUniv; diagnosed this session — LSP-green
+  ≠ lake-env-lean-green for instance-heavy statements). (4) fibrewise statements at
+  primes p of the QUOTIENT DivCarveChartRing diverge at whnf (>1M heartbeats, canonical
+  instance chains over the huge carve ideal) — state them at primes q of the PAIR
+  chart ring with hq : divCarveIdeal ≤ q.asIdeal (the landed stable spelling); consumers
+  convert via comap mk. (5) residue-field algebra structures over quotients are CANONICAL
+  (IsLocalRing.ResidueField.algebra via Localization+Quotient chains) — hand-rolled
+  letI (…).comp(…).toAlgebra composites create diamonds and BREAK tower synthesis;
+  only letI w.toAlgebra when matching the Grassmannian.map seam. (6) Free R Γ(V₀ᴿ)
+  needs haveI with explicit type ascription (TC will not unify the relCover defeq).
+  (7) ''set W := piece z ⊓ piece z'''' produced motive-not-type-correct rewrite failures
+  (the recorded set-hazard) — spell opens out. (8) ToType vs Γ retyping after exists_germ_eq:
+  obtain then rebind (I-0192 hazard confirmed live).
+
+
+  DDR-4 HANDOFF: given K : Submodule R_Z (relThetaSections C R_Z π a), D : ThetaGeneratorSeed
+  C R_Z π a K, hD : D.IsGenerator (from the seed-provider brick above), [IsNoetherianRing
+  R_Z] (landed instance): the family is d := D.localEquations hD, adaptation A :=
+  D.divisorAdaptation hD; germ-regularity law = germ_eqn_mem_nonZeroDivisors; fibrewise
+  coeff-achievement enters as the seed''s dvd + fibre_regular clauses (the achiever/ord
+  content lives in the provider, one boundary); K ≤ d.vanishingSubmodule = the ε-containment
+  ready for DDR-5; the certificate is DDR-4''s OUTPUT (nothing here assumes IsCertified
+  — anti-circularity respected). Universal pair inputs: divUniversalFst/Snd + divUniversal_carve(_residueField).
+  Verification note: the two family files were kernel-checked against the pre-DD-2-surgery
+  olean set; consumed interface confirmed byte-stable at post-S1 HEAD (exists_divisorAdaptation,
+  relThetaRes*, DivisorAdaptation type) — first post-surgery root build will recheck
+  wholesale.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T07:25:22.463357+00:00'
+updated_at: '2026-07-20T03:16:24.455304+00:00'
+metadata: {}

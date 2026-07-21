@@ -1,0 +1,81 @@
+id: I-0304
+provider: local
+kind: info
+body: "SEED FINISH: RD-N step 2c stalk-support bridge LANDED (commit 83ed7461); RD-N\
+  \ proper + hfib + certificate + U1 NOT closed — both remaining walls are XL (achiever\
+  \ fibre-divisibility + hfib achiever wiring), precisely reduced.\n\n=== COMMIT (this\
+  \ lane) ===\n- 83ed7461918b46885bff65762d9151bb95c98b61  DD-4 redesign RD-N step\
+  \ 2c: the stalk support bridge. New file Picard/DivSchemeRedesignSeedFinish.lean\
+  \ (160 L). Single-module LEAN_NUM_THREADS=1 lake build GREEN under the mkdir lock\
+  \ (8790 jobs, 36s). Zero sorries/warnings in my file. Root: HEAD-blob + only my\
+  \ import line after DivSchemeRedesignSeedUniv (protocol 4; sibling working-tree\
+  \ root lines NOT swept; show --stat = my 2 paths, root +1). CAS OK.\n\n=== KEYSTONE\
+  \ (VERBATIM, axiom-clean [propext, Classical.choice, Quot.sound]) ===\n(ns AlgebraicGeometry.ThetaGeneratorSeed)\n\
+  noncomputable def chartColengthModuleBase (K : Submodule R (relThetaSections C R\
+  \ π a)) (b : Bool) (s : relThetaSections C R π a) : Submodule R (Γ(relCurve C R,\
+  \ relPinnedChart C R π b) ⧸ Ideal.span {relThetaResSide a b le_rfl s}) := LinearMap.range\
+  \ ((Ideal.Quotient.mkₐ R (Ideal.span {relThetaResSide a b le_rfl s})).toLinearMap.comp\
+  \ (chartReadMap K b))   -- the FINITE R-form of N z (Module.Finite.range; instance\
+  \ chartColengthModuleBase_finite)\n\ntheorem notMem_support_chartColengthModule_of_subsingleton_tmul_residueField\
+  \ (K) (b) (s) [Module.Finite R ↥K] {z} (hz : z ∈ relPinnedChart C R π b) (hfib :\
+  \ Subsingleton (↥(chartColengthModuleBase K b s) ⊗[R] (PrimeSpectrum.comap (algebraMap\
+  \ R Γ(V)) ((isAffineOpen_relPinnedChart C R π b).primeIdealOf ⟨z,hz⟩)).asIdeal.ResidueField))\
+  \ : (isAffineOpen_relPinnedChart C R π b).primeIdealOf ⟨z,hz⟩ ∉ Module.support Γ(V)\
+  \ ↥(chartColengthModule K b s)\n\n=== WHAT THIS DOES (2c, general R — reusable)\
+  \ ===\nReduces RD-N proper (primeIdealOf z ∉ supp Γ(V) (chartColengthModule K b\
+  \ s)) to ONE base-fibre vanishing Subsingleton(chartColengthModuleBase K b s ⊗_R\
+  \ κ(p)) at p = comap(algebraMap R Γ(V))(primeIdealOf z). Route is PURE mathlib finite-module\
+  \ support theory — NO isLocalization_stalk/germ detour: fibre-vanish ⟹ p ∉ supp_R\
+  \ N_R ⟹ (Module.support_eq_zeroLocus, N_R finite over R) Ann_R(N_R) ⊄ p ⟹ a killer\
+  \ r0 ∈ Ann, r0 ∉ p, so algebraMap r0 ∉ primeIdealOf z (def of comap) annihilates\
+  \ every reading [read ψ] hence the whole Γ(V)-span N z (Module.notMem_support_iff').\
+  \ NB the landed DivSchemeRelDivisor germ machinery (link 2+3) is NOT needed for\
+  \ 2c — this annihilator route is shorter.\n\n=== RESIDUAL WALL 1 — RD-N field-vanishing\
+  \ (2b), XL, NOT closed ===\nThe bridge's hfib input Subsingleton(chartColengthModuleBase\
+  \ K b s ⊗ κ(p)) is the honest wall. TWO genuine sub-gaps found by reading sources\
+  \ (both XL, ~multi-week per I-0289):\n (a) FLAT-TRANSPORT GAP: subsingleton_tmul_residueField_of_flat_quotient\
+  \ (RelDivisor:303) needs Module.Flat R ((Γ(V)⧸⟨read s⟩)⧸N_RZ). This = Γ(V)/(Γ(V)·read\
+  \ s + range(chartReadMap)). The LANDED chart flat (flat_chart_colength_divUniversalSeedK,\
+  \ I-0302) is Γ(V)/range(chartReadMap) — DIFFERS by Γ(V)·read s vs R·read s (range\
+  \ is only the R-span). range(chartReadMap) is an R-submodule NOT a Γ(V)-ideal, so\
+  \ the double-quotient does NOT collapse to the chart flat. The chart flat does NOT\
+  \ directly give the needed flat.\n (b) ACHIEVER FIBRE-DIVISIBILITY: field-vanishing\
+  \ = [read ψ] ⊗ 1 = 0 for all ψ ∈ K = read ψ ∈ ⟨read s⟩ over the WHOLE fibre chart\
+  \ κ(p) (GLOBAL). The achiever (I-0291 exists_relThetaWindowEquiv_..._achieves_seedPrime,\
+  \ coeffAt=baseDivisorAt) gives achievement at a SINGLE fibre point z, NOT global\
+  \ divisibility. The OLD path (hfield_of_forall_pinnedPieceSectionsMap_mem, UnivFibreKerSpan:147)\
+  \ ALSO only REDUCED hfield to this same hdiv fibre-divisibility, never discharged\
+  \ it — so this is the genuine never-closed wall, unchanged by the redesign. Extra:\
+  \ the achiever is NOT yet wired into seedUniv.sec (current sec = exists_seedPoint\
+  \ OLD, DivSchemeSeedUnivGen:283), so even the single-point property is unavailable\
+  \ for the current sec.\n\n=== RESIDUAL WALL 2 — hfib, XL, NOT closed ===\nisGenerator_seedUniv'\
+  \ still needs hfib: under premise basicOpen(read(ann-cutter h z)) ≠ ⊥ at κ(p), conclude\
+  \ read(sec z) ≠ 0. Reduces (via relPinnedSectionsMap_relThetaResSide_windowEquiv_ne_zero,\
+  \ Fields:251) to windowCompare R_Z κ(p) x_z ≠ 0. The OLD seedUniv_hfib (Facts:300)\
+  \ got this from h z = algebraMap f + notMem_of_basicOpen_..._algebraMap_ne_bot ⟹\
+  \ f ∉ p. For seedUniv' h z = ann-cutter (NOT algebraMap f) the premise does NOT\
+  \ give f ∉ p; the OLD survival witness f (exists_seedPoint) does not connect to\
+  \ the ann-cutter neighbourhood. Needs either the achiever wired into sec z (uniform\
+  \ fibre nonvanishing) or a new D(ann-cutter)-nonempty ⟹ f∉p argument. BLOCKED same\
+  \ as wall 1's achiever-wiring.\n\n=== NEXT (for the follow-up lane) ===\n1. Wire\
+  \ the I-0291 achiever into seedUniv.sec (replace exists_seedPoint), giving windowCompare\
+  \ uniform ⟹ discharges hfib (wall 2) directly.\n2. Close wall 1: needs (a) the RIGHT\
+  \ flat Module.Flat R ((Γ(V)⧸⟨read s⟩)⧸N_RZ) (NOT the chart flat) AND (b) achiever\
+  \ single-point ⟹ global fibre divisibility (the genuine XL, the P-fib d_p content).\
+  \ Then feed my bridge notMem_support_chartColengthModule_of_subsingleton_tmul_residueField\
+  \ to get SeedUnivRDN, ⟹ unconditional isGenerator_seedUniv' ⟹ certificate ⟹ U1=divUniversalFamily=divFamEps_certifiedFamily\
+  \ (DDR9-U). Certificate (DivSchemeCertificateEngine) + U1 (DivSchemeEps:312) NOT\
+  \ reached this lane (blocked on unconditional isGenerator)."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-20T05:33:32.889125+00:00'
+updated_at: '2026-07-20T05:33:32.889134+00:00'
+metadata:
+  agent: seed-finish-lane

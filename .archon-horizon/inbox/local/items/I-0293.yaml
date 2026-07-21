@@ -1,0 +1,65 @@
+id: I-0293
+provider: local
+kind: info
+body: "hsub carve rank-g BUILD — landed the missing converse (hinj ⟹ hsub) completing\
+  \ hsub ⟺ hinj ⟺ hspan; established the anti-circularity blocker precisely. Full\
+  \ hsub does NOT land this session (genuine multi-week XL + a real cycle at the piece\
+  \ level + the unbuilt germ bridge). New file Picard/DivSchemeRedesignHsub.lean (179\
+  \ L). Single-module LEAN_NUM_THREADS=1 lake build GREEN under the mkdir lock (8673\
+  \ jobs, my module 41s, peak RSS 6.8 GB). Both keystones lean_verify axiom-clean.\
+  \ Root: HEAD-blob + own line only (sibling PicEtCrossBaseGraph add + Hinj/Achiever/FibreCut/Seed\
+  \ removals in working tree NOT swept; show --stat = my 2 paths, root +1). Zero sorries\
+  \ (Challenge.lean sorries pre-existing).\n\n=== COMMIT (this lane) ===\n- c7020ea4b\
+  \  DD-4 hsub: carve fibre non-collapse ⟺ induced-map fibre injectivity (hinj ⟹ hsub)\n\
+  \n=== KEYSTONES (VERBATIM; namespace AlgebraicGeometry.ThetaGeneratorSeed; vars\
+  \ {k C R π a K} (D : ThetaGeneratorSeed C R π a K)) ===\n(1) hsub_of_forall_liftQ_rTensor_injective\
+  \ (D)\n    (hinj : ∀ (z : relCurve C R)(p : PrimeSpectrum R), Function.Injective\
+  \ (((LinearMap.ker ((D.kColengthMap z).comp K.subtype)).liftQ ((D.kColengthMap z).comp\
+  \ K.subtype) le_rfl).rTensor p.asIdeal.ResidueField))\n    : ∀ (z)(p), Function.Injective\
+  \ ((D.sideColengthSubmodule z).subtype.rTensor p.asIdeal.ResidueField)\n  — the\
+  \ MISSING CONVERSE: hsub (the exact statement forall_flat_colength_quotient_of_hsub\
+  \ + RD-N consume) FROM the induced-map fibre injectivity hinj. Proof: fbar corestricts\
+  \ to ē : K⧸ker f_z ≃ N z, fbar⊗κ = (N.subtype⊗κ)∘(ē⊗κ), ē⊗κ surjective; element\
+  \ chase.\n(2) forall_sideColengthSubmodule_subtype_rTensor_injective_iff (D) : hsub\
+  \ ⟺ hinj (packaged from (1) + landed hinj_of_forall_sideColengthSubmodule_subtype_rTensor_injective).\n\
+  \nEffect: hsub ⟺ hinj ⟺ hspan is a closed loop. The carve rank-g pin may target\
+  \ the cleanest of the three (f̄_z, image = fibre window divUniversalFibreKM, corank\
+  \ g) and still discharge hsub.\n\n=== ANTI-CIRCULARITY FINDING (BINDING — why the\
+  \ wall stood across I-0284/0286/0290/0292) ===\nA GENUINE DEFINITIONAL CYCLE at\
+  \ the PIECE level. hsub/hinj/hspan mention D.piece z = basicOpen(D.h z) (via kColengthMap)\
+  \ and D.eqn z = read(D.sec z). At the concrete redesigned seedUniv', D.h z is the\
+  \ ann-cutter (DivSchemeRedesignFibreCut), produced by RD-N, which consumes brick-1's\
+  \ Flat(colength z ⧸ N z) = forall_flat_colength_quotient_of_hsub, which consumes\
+  \ hsub — so hsub(seedUniv') cannot even be WRITTEN before h z is defined, and h\
+  \ z needs RD-N needs the flat needs hsub. Therefore the piece-level hsub in DivSchemeRedesignJFlat.lean\
+  \ CANNOT be instantiated non-circularly at seedUniv'. RESOLUTION (h z-free, matches\
+  \ I-0289 file-plan + I-0292 pt 3): the carve wiring of hsub must be CHART-level\
+  \ — over V = relPinnedChart (side z), le_rfl, base ideal J = ⟨read ψ : ψ∈K⟩, colength\
+  \ Γ(V)⧸J, N_V = J-image — which is what RD-N's J-flatness input (iii) actually needs,\
+  \ and which the universal carve (divUniversal_carve_residueField, itself h z-free)\
+  \ supplies. The piece-level statement then follows by localizing to D(h z) ⊆ V AFTER\
+  \ h z is chosen. The pure-linear-algebra equivalences (this file + Hinj) hold at\
+  \ either level; only the carve pin hinj is residual and must be stated chart-level.\n\
+  \n=== RESIDUAL — the genuine XL carve pin, UNCHANGED difficulty ===\nhinj_chart\
+  \ / hsub_chart: at chart V, (K⧸ker read_V) ⊗ κ(p) → (Γ(V)⧸J) ⊗ κ(p) injective because\
+  \ image = divUniversalFibreKM (corank g via finrank_divUniversalFibreKM_add, AssembleKappa:207)\
+  \ and the reading is an ISO onto it (rank pin from divUniversal_carve_residueField,\
+  \ FamilyUniv:135, transported by ker_baseChange_mkQ + baseChange_carvePairArrow_eq_zero_iff,\
+  \ DivCarveKit:91/190). BLOCKER unchanged: the section→functionField germ bridge\
+  \ (relThetaResSide over V ↔ thetaFieldRead / divFamPhi) is UNBUILT — needed to see\
+  \ N_V ⊗ κ inside the carve cokernel. Building it at the CHART level (le_rfl) is\
+  \ cleaner than at D(h') and sidesteps the cycle. NEXT LANE: reformulate reading-map/base-ideal/colength/N\
+  \ at the chart (le_rfl), then wire the carve via the germ bridge."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-19T21:28:10.024636+00:00'
+updated_at: '2026-07-19T21:28:10.024646+00:00'
+metadata:
+  agent: hsub-carve-rankg-lane

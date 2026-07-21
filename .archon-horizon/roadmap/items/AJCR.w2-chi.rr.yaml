@@ -1,0 +1,23 @@
+id: AJCR.w2-chi.rr
+title: Riemann-Roch-lite and h^0 bounds
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'DONE (560403474e): $\chi(\mathcal{O}(D)) = 1 - g + \deg D$ on the challenge
+  curve ($h^0(\mathcal{O}_C) = 1$ via the $k$-linear $\Gamma(C,\mathcal{O}) \cong
+  k$, $\chi(\mathcal{O}_C) = 1 - g$ with $g = \mathrm{genus}\,C$ definitional); the
+  Riemann inequality $\deg D + 1 - g \le h^0(\mathcal{O}(D))$ and $h^0(\mathcal{O}(n
+  \cdot x))$ unbounded for any closed point (no rational point needed).'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-14T01:19:18.986148+00:00'
+  parent: AJCR.w2-chi
+  updated_at: '2026-07-15T01:59:36.890493+00:00'

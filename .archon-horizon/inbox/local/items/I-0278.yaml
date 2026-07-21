@@ -1,0 +1,89 @@
+id: I-0278
+provider: local
+kind: info
+body: "SEED CLOSE: hspan+wiring+seedUniv — DEEP PROBE, no source commit (no content-free/redundant\
+  \ commit made; both remaining walls are size-L/XL geometry). Handoff = f03d855fb\
+  \ (unchanged, green single-module per I-0277).\n\nVERDICT: hspan NOT proved; seedUniv,\
+  \ hdvd, isGenerator_seedUniv, relDivisor, RD3 all NOT built. This lane thoroughly\
+  \ re-mapped the architecture and found NO cheap self-contained on-critical-path\
+  \ lemma to land; the abstract machinery is fully landed and the two remaining walls\
+  \ are genuine geometry.\n\n=== FINDING 1: hspan is a REFORMULATION of the flat-quotient\
+  \ input, and is BYPASSABLE ===\nFor the seed map f := (D.kColengthMap z).comp K.subtype\
+  \ : K -> colength z, the capstone's hspan is EQUIVALENT to Module.Flat R (colength\
+  \ z / N z) (both directions are the SlicingFlatKernel equivalence: hspan -> Flat\
+  \ via the c4 keystone :296; Flat -> hspan via Tor1=0 base-change injectivity of\
+  \ (N z).subtype). So I-0277's dvd_of_fibrewise_ker_span_of_field_vanishing (hspan-form)\
+  \ buys nothing over the ALSO-LANDED dvd_of_flat_quotient_of_field_vanishing (DivSchemeSeedDvd.lean:128,\
+  \ flat-form).\n=> CLEANEST ROUTE TO hdvd (skip hspan entirely): prove Flat R (colength\
+  \ z / N z) DIRECTLY via the landed engine Module.Flat.quotient_range_of_forall_rTensor_residueField_injective\
+  \ (SlicingFlatKernel.lean:192) applied to a carve fibre-INJECTIVE lift psi_z : P\
+  \ -> colength z (range psi_z = N z, psi_z (x) kappa(p) injective for all p), then\
+  \ feed dvd_of_flat_quotient_of_field_vanishing with hfield. NO new abstract lemma\
+  \ is needed.\n\n=== FINDING 2: the \"shared hspan lemma\" resolves to the LANDED\
+  \ engine + shared METHODOLOGY ===\nThe shared abstract content is already the SlicingFlatKernel\
+  \ FibrewiseInjective engine (:192 gives Flat(N/range psi) from psi fibre-injective)\
+  \ and keystones (:284/:296/:448). There is NO further abstract lemma to factor into\
+  \ Picard/DivSchemeUnivFibreKerSpan.lean: both consumers (seed hdvd and RD3 CertUniv\
+  \ c3/c4) reduce their flat-cokernel clauses to the SAME engine, each supplying its\
+  \ OWN carve fibre-injective lift. Genuine content is per-consumer geometry (fibre-injectivity),\
+  \ not shared algebra. RD3/CertUniv: fibre-injective lift for deltaLeft-deltaRight\
+  \ (DivisorFamily.lean:404) -> engine -> IsCertified (c3) flat_coker_incl / (c4)\
+  \ flat_coker_diff (DivisorFamily.lean:437-441). Same methodology, different map.\n\
+  \n=== THE GENUINE REMAINING CONTENT (the \"remaining G-4 layer\", DivSchemeSeedUnivFibre\
+  \ docstring L51-53) ===\nThe carve fibre-injective lift psi_z. All ingredients landed\
+  \ but UNASSEMBLED:\n- fibre window identification divUniversalFibreKM = H0(N - d_p)\
+  \ at every seed prime (DivSchemeSeedUnivAssembleKappa.lean:157; seed-prime spec\
+  \ divUniversalSeedFibreDivisor_spec DivSchemeSeedUnivFields.lean:146; d_p = divUniversalSeedFibreDivisor\
+  \ :133);\n- colength base-change kappa(p) (x) colength z ~= fibre colength via pieceQuotBaseChangeAlg\
+  \ (DivisorFamilyPullback.lean:384, _one_tmul_mk :396) at V=fiberChart0/1, h=D.h\
+  \ z, E={D.eqn z} -- LANDED ENGINE, unbuilt wiring, tied to the fibre equation e_p\
+  \ of d_p.\nSize-L->XL geometry; entangled with seedUniv (kColengthMap z needs a\
+  \ concrete D).\n\n=== FINDING 3: seedUniv is POINTWISE-constructible via classical\
+  \ choice ===\nThetaGeneratorSeed's 5 fields (side, h, mem_basicOpen, sec, sec_mem;\
+  \ structure at DivSchemeFamily.lean:74) are per-point functions of z with NO global-consistency\
+  \ requirement. So seedUniv = a pointwise choice construction. It reduces to 3 UNBUILT\
+  \ geometric sub-lemmas (none in-tree):\n  (a) two-chart cover: every z : relCurve\
+  \ C R_Z lies in relPinnedChart C R_Z pi b for some b : Bool  =>  side z. (NOT in-tree.)\n\
+  \  (b) sec z: at p := basePrime(germ z), fibre window divUniversalFibreKM ne bot\
+  \ (achiever f ne 0 from divUniversalSeedFibreDivisor_spec) -> the LANDED seed-prime\
+  \ bridge exists_relThetaWindowEquiv_mem_divUniversalSeedK_windowCompare_ne_zero_seedPrime\
+  \ (DivSchemeSeedUnivBridge.lean:250) gives sec := relThetaWindowEquiv ... x in K\
+  \ + windowCompare ne 0.\n  (c) h z (the base->curve SHRINK): from exists_forall_windowCompare_ne_zero\
+  \ (DivSchemeSeedUnivFields.lean:202) get base element f notin p with windowCompare-survival\
+  \ on all of D(f); take h z := algebraMap-pullback of f to relPinnedChart(side z);\
+  \ z in basicOpen(h z) follows from IsUnit(germ_z (algebraMap R_Z Gamma f)) via notMem_basePrime_iff\
+  \ (DivSchemeRelDivisor.lean:230) + mem_basicOpen. (NOT in-tree; the \"size-L shrink\
+  \ threading\".)\nBuilding seedUniv (a)+(b)+(c) UNBLOCKS everything downstream: makes\
+  \ hcolFlat (SlicingFlat.lean:317), hcolFin (SupportTube), hreg, hfield, and psi_z\
+  \ all STATABLE/provable at the seed.\n\n=== KEYSTONES (verbatim, both LANDED --\
+  \ the direct targets) ===\n- ThetaGeneratorSeed.dvd_of_flat_quotient_of_field_vanishing\
+  \ (DivSchemeSeedDvd.lean:128): [IsNoetherianRing R] hreg hfin (hflat: forall z,\
+  \ Module.Flat R ((Gamma(D(h z))/(eqn z)) / N z)) hfield -> the seed dvd clause.\
+  \ <== flat-form entry point; target hflat directly, skip hspan.\n- Module.Flat.quotient_range_of_forall_rTensor_residueField_injective\
+  \ (SlicingFlatKernel.lean:192): [Finite R P][Finite R N][Flat R N] (psi : P ->L\
+  \ N) (forall p, Injective (psi.rTensor kappa(p))) -> Module.Flat R (N / range psi).\
+  \ <== engine giving hflat from carve fibre-injectivity.\n- ker_baseChange_mkQ (DivCarveKit.lean:91):\
+  \ projective-quotient submodule N: ker(baseChange S N.mkQ) = N.baseChange S <==\
+  \ base-change-kernel commutation, the common Grassmannian ancestor.\n\n=== NEXT-LANE\
+  \ ORDER ===\n(1) two-chart cover + base->curve basicOpen shrink -> build seedUniv\
+  \ (pointwise choice). (2) hcolFlat/hcolFin/hreg/hfield wiring at seedUniv (all landed\
+  \ producers). (3) carve fibre-injective psi_z (divUniversalFibreKM=H0(N-d_p) + pieceQuotBaseChangeAlg\
+  \ colength base-change tied to e_p) -> Flat(colength/N z) via engine :192. (4) dvd_of_flat_quotient_of_field_vanishing\
+  \ -> hdvd -> isGenerator_of_fibre_ne_zero (DivSchemeSeed.lean:188, hfib from Bricks\
+  \ 2/3) -> relDivisor := seedUniv.localEquations (DivSchemeFamily.lean:349). (5)\
+  \ RD3/CertUniv: same engine on deltaLeft-deltaRight.\n\ncommit hashes: none this\
+  \ lane. Residual = seedUniv shrink threading (a/c) + carve fibre-injective psi_z\
+  \ (the remaining G-4 layer). No sorries introduced; no architecture change; full-root\
+  \ state unchanged (green)."
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-19T16:03:54.614370+00:00'
+updated_at: '2026-07-20T03:15:39.060705+00:00'
+metadata: {}

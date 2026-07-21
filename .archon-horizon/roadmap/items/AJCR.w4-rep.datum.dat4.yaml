@@ -1,0 +1,35 @@
+id: AJCR.w4-rep.datum.dat4
+title: 'DAT-4: the degree seam — $\mathrm{degAt}$ of a cocycle class at a fibre $=
+  \mathrm{classDeg}_{\kappa(p)}$ of the fibre cocycle; where degree-zero-ness is spent'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'DAT-4 landed (Picard/DegreeSeam.lean, 155 lines; root build 8753 jobs green;
+  6 keystones axiom-clean [propext, Classical.choice, Quot.sound]; zero sorries).
+  The degree seam: for a plus class on overSpec k A whose affine collapse (picEtAffineEquiv)
+  is the plus unit of a relative Picard class z, degAt at the field point Over.overSpecMap
+  φ collapses via picEtAffineEquiv_naturality → mapAlg_unit → degAff_unit to relPicDeg
+  K (relPicAlgMap C φ z) (degAt_of_affineEquiv_eq_unit). Keystone degAt_of_affineEquiv_eq_unit_relPicMk:
+  for z = relPicMk L, this equals classDeg κ(p) of the fibre Čech class CechPic.map
+  L along the point (relPicMap_mk + relPicDeg_relPicMk) — where strata/coverage spend
+  degree-zero-ness. Base-field constancy (DAT-5 input): a class pulled back from overSpec
+  k k has degAt = relPicDeg k / classDeg k of the base class at EVERY field point
+  (relPicAlgMap_comp + E-iv-alg relPicDeg_relPicAlgMap) — degAt_of_affineEquiv_eq_unit_baseChange
+  / _classDeg_…, the mechanism for degAt θ_T = d₁. Fibre degree of λ·θ^m for λ ∈ pic0Subgroup
+  is m·degAt θ on the nose (degAt_pow, degAt_pic0_mul_pow) — FLV threshold + rank
+  normalization rank Q = d_m+1−g feed. Consumers: DAT-5 (ε⁺ shift) calls the base-change
+  corollary; strata degrees / FLV thresholds / rank normalization call degAt_pic0_mul_pow.
+  Blueprint node pending (batched pass).'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T06:41:43.228232+00:00'
+  parent: AJCR.w4-rep.datum
+  updated_at: '2026-07-16T07:22:49.831224+00:00'

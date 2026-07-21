@@ -2,10 +2,8 @@ workspace:
   name: JacobianChallenge
   state_dir: .archon-horizon
   rounds: 8
-  ground_agent:
-    harness: ground-default
   horizon_agent:
-    harness: horizon-fable5
+    harness: codex
   scheduler:
     max_parallel_sessions: 5
 external_libraries:
@@ -34,6 +32,11 @@ harnesses:
     model: claude-opus-4-8
     options:
       effort: ultracode
+  codex:
+    kind: codex
+    model: gpt-5.6-sol
+    options:
+      effort: ultra
 github:
   enabled: true
   repo: AxelDlv00/LeanAlgebraicGeometry-Horizon

@@ -1,0 +1,73 @@
+id: I-0236
+provider: local
+kind: info
+body: 'G-5 files 1-4 LANDED: the ε frame-locus cover and its chart maps (w4-g5-worksheet
+  §1+§2, stated in divClassifyAff''s hw₁/hw₂ shapes)
+
+
+  Commit d0c2ee700 (files + root wire, private-index CAS); lake build green (full
+  root); keystones axiom-clean [propext, Classical.choice, Quot.sound]; zero sorries;
+  four new files (cover 501L, rest ≤450L): Picard/GrassmannianChartCompare.lean (W1
+  specMap_ι_eq_of_map_chartTautologicalPoint_eq + awayLiftAlgHom), Picard/GrassmannianPairCompare.lean
+  (W2: core specMap_pairChartMap_eq_of_map_includeLR_eq + pairTaut wrapper specMap_pairChartMap_eq_of_map_pairTaut_eq),
+  Picard/DivSchemeFrameKit.lean (K1 congrAmbient/congrAmbientQuotEquiv + K4 map_congrAmbient
+  + baseChange_map_submodule; K2 exists_matrixPoint_eq_of_free; K5 exists_isUnit_det_submatrix_of_mul_eq_one
+  + exists_det_submatrix_notMem_of_mul_eq_one; K3 exists_away_free/_pair + free_baseChange_away_mul;
+  K6 exists_away_isUnit_of_notMem), Picard/DivSchemeFrameCover.lean (keystone divFamEps_exists_frameCover
+  + the window layer).
+
+
+  FOR THE STITCH LANE (files 5-6, worksheet §3-§4): the keystone already folds worksheet
+  §2 in — per piece t you get (i, j, w : PairChartRing →ₐ[k] Localization.Away (f
+  t)) with hw₁/hw₂ EXACTLY divClassifyAff''s hypothesis shapes at (T := Away (f t),
+  F_T := DivFam.mapAlg T g F); verified by an end-to-end consumption stub (divClassifyAff
+  fires verbatim). Remaining for file 5: only hcarve_mapAlg (worksheet §2 bottom:
+  baseChange_carvePairArrow_eq_zero_iff.mp + the G-2 rewrite — the spelling bridge
+  is DivFam.window_mapAlg below). File 6: W3 overlap agreement via W2 over the abstract
+  overlap ring B (no Noetherian anywhere in my layer) + glueMorphisms + §4 divClassify.
+
+
+  REUSABLE EXPORTS (public, in DivSchemeFrameCover): DivFam.window_mapAlg (G-2 at
+  ANY ledger window a ≥ M, generic base ring — the exact shape W3/§4''s double-overlap
+  legs need), DivFam.finite/projective/rankAtStalk_window_quotient (the ε quotient
+  certificates at any base), divFamWindowGr (the packaged ε Grassmannian point over
+  any test change) + divFamWindowGrQuotEquiv + map_divFamWindowGr (tower transport
+  along a structure-compatible AlgHom of away-localizations).
+
+
+  DEVIATIONS from the worksheet (strengthenings): (1) G-1 unconditional (I-0230) ⇒
+  NO hfib slots threaded; keystone takes only hπ + genus (hO, hχ); stated at DivFam
+  class level directly (no representative-level worker form — worksheet risk 3 moot).
+  (2) §1.2 and §2 merged: the keystone IS the hw₁/hw₂ form (worksheet''s S-level intermediate
+  never stated). (3) K5 k-free: minor selection at a prime via FractionRing (T⧸q),
+  no residue-field k-algebra packaging; K5''s GRQ linear-independence transcription
+  unchanged. (4) The toAlgebra-vs-instance seam: mathlib Grassmannian.map''s f.toAlgebra
+  letI never meets an ambient instance — S→T legs go through windowBaseChangeGr (instance
+  form), and the only Grassmannian.map along a ring map with structure is the tower
+  Away h → Away u where the algebra is OUR β.toAlgebra letI (map_divFamWindowGr: ker_baseChangeMkQ_eq_map_baseChange
+  in the letI + G-2 both legs + DivFam.mapAlg_comp). Orientation exactly the I-0232
+  pin; no transport lemma needed.
+
+
+  LEAN GOTCHAS (memory-worthy): (a) `p̃` (p + combining tilde U+0303) is NOT a valid
+  identifier — parser dies with bare ''expected token''. (b) Proof-only section variables
+  (hπ hO hχ hMa) silently DROP from statements — `include ... in` per declaration;
+  forgetting it shifts explicit-arg positions and cascades weird ''expected ℕ'' errors.
+  (c) rw on pullbackιIso/glueData-index composites fails with instance-transparency
+  motive errors ("not type-correct under instances") — term-mode congrArg/Category.assoc/.trans
+  chains (the DivCarvePairChart forward-proof pattern) go through. (d) awayToAwayRight
+  tower instances: proving IsScalarTower S (Away h) (Away (h*s)) pointwise via awayToAwayRight_eq
+  blows isDefEq (>200k heartbeats, Localization quotient unfolding); of_algebraMap_eq''
+  + rw [RingHom.algebraMap_toAlgebra] + (IsLocalization.Away.lift_comp h _).symm is
+  instant.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-18T15:42:22.304665+00:00'
+updated_at: '2026-07-20T03:14:45.935529+00:00'
+metadata:
+  agent: g5-frame-cover-lane

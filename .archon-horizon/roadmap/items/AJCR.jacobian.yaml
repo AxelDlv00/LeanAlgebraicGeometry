@@ -2,20 +2,15 @@ id: AJCR.jacobian
 title: Jacobian = abelian variety (rebuild north star)
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: '**North star of the clean rebuild** (`Algebraic-Jacobian-Challenge-Rebuild`,
-  mirrors `AJC.jacobian`). For a smooth proper geometrically-irreducible curve $C/k$,
-  the Jacobian is an abelian variety representing the degree-$0$ relative Picard functor
-  with the Abel–Jacobi / Albanese property:
-
-  $$\mathrm{Pic}^{0}_{C/k}\ \text{representable},\qquad \dim_{k}\mathrm{Pic}^{0}_{C/k}=g,\qquad
-  \forall\,(C,P)\to A\ \exists!\ \mathrm{Pic}^{0}\to A.$$
-
-  Target pinned in `Challenge.lean` (`Jacobian`, `instGrpObj`, `ofCurve`, `comp_ofCurve`),
-  currently a `⟨sorry⟩` scaffold. The rebuild re-derives the whole cone from scratch
-  on mathlib v4.31; substrate is largely landed (238/259 blueprint nodes proved).
-
-  '
-status: pending
+summary: 'North star: the EXTENDED challenge in Challenge.lean — genus (done), Jacobian
+  with its group/smoothness/properness/irreducibility instances, Abel-Jacobi and the
+  Albanese universal property, Jacobian.functor, and field base change with cocycle
+  coherence. Route fixed in informal/route-decision.md: J := Pic^0 of the etale-sheafified
+  Picard functor, curve-specialised Kleiman (no Quot schemes), Albanese via Milne
+  III 6.1. Wave order: W1 substrate (done) -> W2a rigidity (done) -> W3 Picard functor
+  (active, (C1) nearly closed) -> W2b chi-ledger -> W4 representability -> W5 abelian
+  variety -> W6 Albanese -> W7 functoriality/base change.'
+status: active
 kind: proof
 priority: high
 depends_on: []
@@ -31,3 +26,4 @@ metadata:
     run: '0027'
     session: 0012-ground
     role: ground
+  updated_at: '2026-07-15T01:51:52.701477+00:00'

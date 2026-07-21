@@ -1,0 +1,26 @@
+id: AJCR.w7-functor.b4
+title: 'B-4a+B-4b: theta — same-K iso via crossBaseIso∘mapOverSpecIso feeding classDeg_map_iso,
+  then the theta twist (Picard/Pic0Theta.lean); gates B-1/B-3 (done)'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'B-4a+B-4b: theta COMPLETE. B-4a (Pic0Theta.lean, 4d716896f): same-$K$ comparison
+  + relPic shuffle layer + degree seam $\mathrm{relPicDeg}_K$-invariance + R5 field-point
+  matching + pic0 restriction engine. B-4b (PicEtCrossBase.lean 25e797e2c + Pic0ThetaAssembly.lean
+  3a1c9f1f4, root 434302503, blueprint 1364e4b74): $\theta : \mathrm{Pic}^0_{C_L/L}
+  \cong \sigma_!^{\mathrm{op}} \circ \mathrm{Pic}^0_{C/k}$ in CommGrpCat (ratified
+  D2-i) + Type form by whiskering; degree engine $\deg_K(\mathrm{Sh}_K x) = \deg_K
+  x$ at all tower fields.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: human
+  created_at: '2026-07-17T07:55:57.743213+00:00'
+  parent: AJCR.w7-functor
+  updated_at: '2026-07-17T13:43:03.149714+00:00'

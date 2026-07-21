@@ -1,0 +1,100 @@
+id: I-0300
+provider: local
+kind: info
+body: 'seed cascade hη+flat+RD-N BUILD — hη LANDED (hsub_chart now unconditional bar
+  hχ); flat-wiring + RD-N precisely BLOCKED on a free-codomain flattening generalization
+  (analysis below). New file Picard/DivSchemeRedesignCascade.lean. Single-module LEAN_NUM_THREADS=1
+  lake build GREEN under the mkdir lock (8794 jobs; module 6.4s). Both keystones lean_verify
+  axiom-clean [propext, Classical.choice, Quot.sound]; zero sorries; zero warnings
+  in my file. Root: HEAD-blob + only my import line (protocol §4 — sibling PicEtCrossBaseGraph
+  add + Hinj/Achiever/FibreCut/Seed removals NOT swept; show --stat = my 2 paths,
+  root +1).
+
+
+  === COMMIT (this lane) ===
+
+  - 1a180a921  DD-4 seed cascade: discharge hη (pinned chart contains the generic
+  point)
+
+
+  === KEYSTONES (VERBATIM; namespace AlgebraicGeometry) ===
+
+
+  (hη DELIVERABLE) genericPoint_mem_relPinnedChart (C : Over (Spec (.of k))) [SmoothOfRelativeDimension
+  1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] [IsIntegral C.left] (π
+  : C.left ⟶ P1 k) [IsFinite π] [IsDominant π] (b : Bool) (L : Type u) [Field L] [Algebra
+  k L] : genericPoint (relCurve C L) ∈ relPinnedChart C L π b. — EXACTLY the hη threaded
+  through hsub_chart (DivSchemeRedesignHsubChartPin); apply `fun p => genericPoint_mem_relPinnedChart
+  C π b p.asIdeal.ResidueField` to make hsub_chart unconditional bar hχ. Proof: relPinnedChart
+  C L π b = p1 preimage of (fiberTwoCover π).V_b under p1 = (fst C (overSpec k L)).left
+  (pullbackProd); p1 surjective; relCurve C L integral ⟹ genericPoint_eq_of_surjective
+  sends η to genericPoint C.left ∈ both base charts (genericPoint_mem_preimage_inf,
+  π dominant). Needs the parametric local instance instIsIntegralRelCurveCascade (mirrors
+  instIsIntegralRelCurveHsub) so genericPoint/IrreducibleSpace of relCurve C L exist
+  at STATEMENT elaboration. GOTCHA: relCurve is a non-reducible def, so the IsIntegral
+  instance keyed on (C⊗overSpec k L).left does NOT auto-give IrreducibleSpace of relCurve
+  C L — restate the instance on relCurve C L.
+
+
+  (REUSABLE) surjective_fst_left_overSpec (C) (L : Type u) [Field L] [Algebra k L]
+  : Surjective (fst C (overSpec k L)).left — first-projection twin of Over.surjective_snd_left
+  (Separatedness:200). = MorphismProperty.of_isPullback (P := @Surjective) (Over.isPullback_left
+  C (overSpec k L)).flip (surjective_specMap_algHom (Algebra.ofId k L)).
+
+
+  === ANTI-CIRCULAR ORDERING USED ===
+
+  Certificate-FREE, h z-FREE, hχ-threaded. hη is pure geometry, consumes NO IsGenerator/IsCertified/flat/seedUniv′.
+  Preserves I-0289 order: hsub_chart (landed) → hη (landed here) → flat → RD-N → seedUniv′
+  → certificate → U1.
+
+
+  === FLAT-WIRING BLOCKER (step 2) — PRECISELY CHARACTERIZED (sharpens I-0293 germ-bridge)
+  ===
+
+  JFlat forall_flat_colength_quotient_of_hsub is PIECE-level (D.sideColengthSubmodule
+  z on D.piece z); hsub_chart is CHART-level (range (chartReadMap divUniversalSeedK
+  b) ⊆ Γ(V); chartReadMap : ↥K →ₗ Γ(relCurve C R, relPinnedChart C R π b), HinjChart:207).
+  Both routes blocked: (A) chart→piece localize (I-0299 resid2) needs h z ⟹ AFTER
+  RD-N ⟹ circular. (B) chart-level flat directly (what I-0293 says RD-N needs): the
+  flattening keystones (SlicingFlatKernel c3 Module.Flat.quotient_ker_… / c4 Module.Flat.quotient_range_…)
+  ALL require [Module.Finite R N] on the CODOMAIN; at chart level N = Γ(V) is Module.Free
+  R Γ(V) (flat_sections_relPinnedChart via free_relSections) but INFINITE-rank, NOT
+  finite. Math still holds via N FREE (localization of free is free ⟹ LocalizedModule
+  N free WITHOUT finiteness, unlike free_of_flat_of_isLocalRing; and range(chartReadMap)
+  ≅ divUniversalSeedK⧸ker is a quotient of the FINITE divUniversalSeedK). NEEDED:
+  free-codomain generalization of Module.Projective.of_forall_rTensor_residueField_injective
+  / quotient_range_… dropping [Module.Finite R N], keeping [Module.Free R N]. BLOCKER:
+  helper injective_lTensor_residueField_localizedMap is PRIVATE in SlicingFlatKernel.lean,
+  and editing that core file forces a full downstream rebuild — so the generalization
+  must be a NEW file re-deriving the local-splitting heart for a free (poss. infinite)
+  codomain (via IsLocalRing.split_injective_iff_lTensor_residueField_injective + free-localization).
+  Honest size-M/L next lane, NOT a one-liner.
+
+
+  === RD-N (step 3) — BLOCKED ON step 2 ===
+
+  RD-N (read_sec generates J at stalk 𝒪_z ⟺ hV.primeIdealOf z ∉ Module.support Γ(chart)(N
+  z)) rides on brick-1 flat (the k[ε] guard I-0231) + the achiever (landed I-0291)
+  + Nakayama; consumes the step-2 flat. Then FibreCut (I-0292) takes z∉supp(N z) +
+  DIRECT hdvd; isGenerator_of_ann_cutter (Seed I-0292) assembles seedUniv′.IsGenerator.
+
+
+  === RESIDUAL toward seedUniv′/certificate/U1 ===
+
+  seedUniv′ VALUE (sec := achiever exists_relThetaWindowEquiv_…_achieves_seedPrime;
+  h := ann-cutter) needs per z RD-N (z∉supp(N z)). Then certificate (dvd holds, non-circular)
+  → divUniversalFamily := divFamEps_certifiedFamily (DDR9-U U1). All gated on the
+  free-codomain chart-level flat (step 2) as the single next build.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-20T02:57:48.024590+00:00'
+updated_at: '2026-07-20T02:57:48.024599+00:00'
+metadata: {}

@@ -1,0 +1,20 @@
+id: AJCR.picard.degree.pic0.sb5
+title: 'SB-5: E-iv-alg — $\mathrm{classDeg}_{K_2}(\pi^* L) = \mathrm{classDeg}_{K_1}(L)$;
+  $\mathrm{CechPic}(\mathrm{Spec}\,K)$ trivial and $\mathrm{relPicDeg}$ descends'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T03:39:10.514195+00:00'
+  parent: AJCR.picard.degree.pic0
+  updated_at: '2026-07-16T05:38:04.447147+00:00'

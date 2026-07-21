@@ -1,0 +1,19 @@
+id: AJCR.w5-av.t4
+title: 'T4 (WORKSHEET-FIRST, risk R1): the étale-plus/Zariski kernel crossing at \(k[\varepsilon]\)
+  — probe tonight'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-16T17:13:45.485310+00:00'
+  parent: AJCR.w5-av

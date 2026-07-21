@@ -1,0 +1,20 @@
+id: AJCR.picard.degree.pic0.sb3
+title: 'SB-3: the chart colength dictionary — $\Gamma(X,V)$ Dedekind for every affine
+  chart; $\dim_K \Gamma(X,V)/(f) = \sum_x \mathrm{ord}_x(f)\,[\kappa(x):K]$'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T03:39:09.018063+00:00'
+  parent: AJCR.picard.degree.pic0
+  updated_at: '2026-07-16T04:01:27.983415+00:00'

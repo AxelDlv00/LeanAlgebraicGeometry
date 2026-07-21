@@ -1,0 +1,53 @@
+id: I-0146
+provider: local
+kind: hint
+body: '[temporary] mumford-abelian-varieties: pages 0062-0066 transcribed
+
+
+  Transcribed PDF pages 62-66 (book pp. 51-55) of Mumford, *Abelian Varieties*, covering
+  the rest of section II.5 "Cohomology and base change" and the start of II.6, by
+  AI vision on 200dpi page renders (no OCR; the scan has no text layer). One self-contained
+  file per page:
+
+
+  - `references/mumford-abelian-varieties/tex/page-0062.tex` — anchor `\source{mumford-abelian-varieties:page-0062}`:
+  conditions (i)/(ii) + supplement of Corollary 2, its proof opening, **Lemma 1**
+  (reduced $Y$, fibrewise-constant $\dim[\mathscr{F}\otimes k(y)]=r$ $\Rightarrow$
+  $\mathscr{F}$ locally free of rank $r$) with proof, start of **Lemma 2** (the splitting
+  lemma; second pair of Lemma 1/2 in the section).
+
+  - `page-0063.tex` — anchor `\source{mumford-abelian-varieties:page-0063}`: rest
+  of Lemma 2 ($\phi = \begin{bmatrix} 0 & \text{isom.}\\ 0 & 0\end{bmatrix}$) with
+  proof, and the splitting $K_{p-1}\to K_p \to K_{p+1}$ into projectives finishing
+  (i) $\Rightarrow$ (ii) of Corollary 2.
+
+  - `page-0064.tex` — anchor `\source{mumford-abelian-varieties:page-0064}`: **Corollary
+  3** ($H^p(X_y,\mathscr{F}_y)=0$ $\Rightarrow$ base-change iso in degree $p-1$) with
+  proof, **Corollary 4**, start of **Corollary 5** (flat base change).
+
+  - `page-0065.tex` — anchor `\source{mumford-abelian-varieties:page-0065}`: end of
+  Corollary 5, **Corollary 6 (Seesaw Theorem — provisional form)** with most of its
+  proof.
+
+  - `page-0066.tex` — anchor `\source{mumford-abelian-varieties:page-0066}`: last
+  3 lines of the Corollary 6 proof (end of II.5), then the start of **II.6 "The theorem
+  of the cube: I"** (theorem of the cube + the order-$n$ functor remark).
+
+
+  Notes: nothing illegible; two print quirks transcribed with `% [sic]` comments —
+  book p. 52 prints a smudged `k(y)` that reads like `h(y)`, and p. 54''s last display
+  prints `(kt)` for $k(t)$ with a left-pointing arrow. Mumford''s target sheaf in
+  Lemma 2 / kernel in Lemma 1''s proof is Fraktur $\mathfrak{D}$ (verified at high
+  zoom). No follow-up range: this completes II.5 (pages 57-61 were the scouted earlier
+  part of the section; only 62-66 were requested here).'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: ''
+author: human
+source_ref: null
+created_at: '2026-07-16T06:53:52.788582+00:00'
+updated_at: '2026-07-20T03:16:41.782785+00:00'
+metadata:
+  agent: page-transcriber

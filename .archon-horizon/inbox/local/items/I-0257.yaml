@@ -1,0 +1,81 @@
+id: I-0257
+provider: local
+kind: info
+body: "DAT-C C4 PARTIAL — Nakayama local-basis companion + local-rescaling corollary\
+  \ + N4 LANDED (the mono-engine module heart); N5 relative-uniqueness + the §3.2\
+  \ chart mono (base-twist coset) DEFERRED with pinned seams.\n\nCommit fc34504941498bfe8ed925f1bb61c511e96a5874\
+  \ (parent 22cd53efb). AlgebraicJacobian/Picard/DivisorFamilyMonoH1.lean, 195 L.\
+  \ Private-index CAS; root = HEAD blob + only my import line (sibling PicEtCrossBaseGraph\
+  \ uncommitted line NOT swept, protocol §4b). Single-module LEAN_NUM_THREADS=1 lake\
+  \ build GREEN under the mkdir lock (8866 jobs, 10s). Zero sorries; zero new warnings.\
+  \ lean_verify: all three keystones axiom-clean [propext, Classical.choice, Quot.sound].\n\
+  \nKEYSTONES (verbatim):\n\n- Module.exists_notMem_bijective_toSpanSingleton {B Q}\
+  \ [CommRing B] [AddCommGroup Q] [Module B Q] [Module.Finite B Q] [Module.Projective\
+  \ B Q] (p : PrimeSpectrum B) (hrank : Module.rankAtStalk Q p = 1) (q : Q) (hq :\
+  \ (q ⊗ₜ[B] (1 : p.asIdeal.ResidueField) : Q ⊗[B] p.asIdeal.ResidueField) ≠ 0) :\
+  \ ∃ f : B, f ∉ p.asIdeal ∧ Function.Bijective (LocalizedModule.map (Submonoid.powers\
+  \ f) (LinearMap.toSpanSingleton B Q q))\n  — THE DEFERRED GAP-3 companion (I-0253\
+  \ (4)): a GIVEN fibrewise-nonzero element of a rank-1 finite projective module is\
+  \ a Zariski-local BASIS. Over the local stalk Rₚ, Qₚ is free rank 1 (free_of_flat_of_isLocalRing);\
+  \ basisUnique b; fibre nonzeroness transported via (LocalizedModule.equivTensorProduct).lTensor\
+  \ ∘ AlgebraTensorModule.cancelBaseChange (κ⊗Rₚ Qₚ ≅ κ⊗B Q, 1⊗mkq↦1⊗q) pins coord\
+  \ c to a unit; mkq spans; Module.Invertible Rₚ Qₚ (nonempty_linearEquiv_of_finrank_eq_one\
+  \ + Invertible.congr) + Module.Invertible.bijective_of_surjective ⟹ bijection; Module.FinitePresentation.exists_notMem_bijective\
+  \ spreads to D(f). Stalk map identified with toSpanSingleton over Rₚ via IsLocalizedModule.ext.\n\
+  \n- Module.exists_notMem_smul_eq_of_tmul_ne_zero (same hyps + q' : Q) : ∃ f ∉ p.asIdeal,\
+  \ ∃ a : Localization.Away f, (LocalizedModule.mk q' 1 : LocalizedModule.Away f Q)\
+  \ = a • LocalizedModule.mk q 1\n  — local-rescaling corollary (N5 engine input):\
+  \ a second element lies in the B_f-span of the local basis.\n\n- AlgebraicGeometry.CertifiedDivisorFamily.picClass_sectionLocalEquationsOfFibrewiseRegular\
+  \ [IsNoetherianRing S] (G : CertifiedDivisorFamily C S π n) (s : ↥(gluedSubmodule\
+  \ S G.adaptation.divisorDatum.pieces G.adaptation.divisorDatum.unit ⊤)) (hfib :\
+  \ ∀ j p, Function.Injective ((Scheme.mulSectionEnd S (G.adaptation.divisorDatum.component\
+  \ s j)).rTensor p.asIdeal.ResidueField)) : (G.adaptation.divisorDatum.sectionLocalEquationsOfFibrewiseRegular\
+  \ s hfib).picClass = G.eqns.picClass\n  — N4 (DAT-A on the nose): any fibrewise-regular\
+  \ section of D_G cuts a LocalEquations family of Čech class G.eqns.picClass. (sectionLocalEquationsOfFibrewiseRegular_picClass\
+  \ + C0 cechPicClass_divisorDatum.)\n\nDEVIATIONS: (1) Companion output is the bijective\
+  \ form matching mathlib v4.31 exists_notMem_bijective. (2) The \"a is a UNIT when\
+  \ q' is fibrewise nonzero on D(f)\" strengthening is NOT built (easy addendum).\
+  \ (3) mathlib v4.31 has NO \"rank-1 finite projective ⟹ Module.Invertible\" theorem;\
+  \ I obtain Module.Invertible only at the local stalk Rₚ (free rank 1 ⟹ invertible),\
+  \ sufficient for the stalk step.\n\nN5 (relative DivEq uniqueness) — NOT LANDED,\
+  \ SEAM PINNED: given fibrewise-nonzero σ,σ' ∈ H⁰(D_G) (generators at every prime\
+  \ — C2 exists_fibrewise_generator_divisorDatum), cover Spec S by companion D(f_i),\
+  \ get σ'=a_i·σ (corollary) with a_i∈(S_{f_i})ˣ (STRENGTHEN corollary: fibrewise-nonzero\
+  \ ⟹ in no prime ⟹ unit), rescale ⟹ DivEq (DivisorFamily.lean:73 DivEq = common-refinement+pointwise-unit;\
+  \ DivisorClass rescale/picClass_rescale :413/:450 — need divEq_rescale, not present),\
+  \ globalize via DivFamZar.eq_of_away_eq (ZarMapAlg:240)/divEq_of_divEq_pullback\
+  \ (ZariskiSep:141). HARD SEAM: identify the H⁰-module element (Sheaf.HModule D_G.sheaf\
+  \ 0, where N1/N3 rank/generator live) with the gluedSubmodule ⊤ section (where canonSection\
+  \ lives) and turn \"σ'=a·σ as module elements\" into \"component(σ')=algebraMap(a)·component(σ)\"\
+  \ ⟹ rescale. Not chased this session.\n\n§3.2 CHART MONO (base-twist coset, the\
+  \ flagged Hilbert-90 hazard) — NOT LANDED. chartValue F=chartValue F' ⟹ abelDiv\
+  \ F=abelDiv F' ⟹ (C1 PicEtAff.unit_injective_of_ker, EtaleSeparatednessClose:193\
+  \ — consume ONE assembled wrapper; assembled relPicToPicEt-injective form may not\
+  \ exist ⟹ C4 S-brick, risk-3) relPicMk agree ⟹ Čech classes differ by p*N, N∈Pic(Spec\
+  \ S) ⟹ Zariski-localize where N trivializes (GluedSheafCongr gluedSheafCongr/gluedCongrEquiv\
+  \ :168/:110, subsingleton_hModule_gluedSheaf_congr:175) ⟹ transported canonSection\
+  \ is fibrewise-nonzero section of D_F ⟹ N5 ⟹ globalize. Unit scalars in Sˣ via Over.universalSections\
+  \ (UniversalSections:123). Pinned, not landed.\n\nFOR C6+ SUCCESSORS: (i) companion\
+  \ is pure Module theory — reusable for any invertible-H⁰ local basis. (ii) N4 gives\
+  \ class of any section-cut family = G.eqns.picClass. (iii) C2 rankAtStalk_divisorDatum_eq_one\
+  \ supplies rank-1-at-every-prime. (iv) build the corollary's twin \"fibrewise-nonzero\
+  \ scalar in Localization.Away f ⟹ unit\".\n\nGOTCHA (PROTOCOL GAP, memory-worthy):\
+  \ the mkdir lock /tmp/claude-1001/ajcr-locks/lake.lock was left as an ORPHANED DIRECTORY\
+  \ by a sibling (DivSchemeSeedUnivBridge build finished ~20:06, no rmdir — crash/kill\
+  \ before release). Protocol §2 stale-detection ONLY handles a plain FILE, NOT an\
+  \ orphaned directory with no live lake process ⟹ acquire loops spin forever. I reaped\
+  \ it after confirming no `lake build AlgebraicJacobian` alive AND dir static >6\
+  \ min. Recommend the acquire loop also reap a DIRECTORY lock when pgrep finds no\
+  \ live AJCR lake build and the dir mtime is stale."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T12:17:43.980990+00:00'
+updated_at: '2026-07-19T12:17:43.980999+00:00'
+metadata: {}

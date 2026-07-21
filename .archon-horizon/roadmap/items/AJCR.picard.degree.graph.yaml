@@ -1,0 +1,27 @@
+id: AJCR.picard.degree.graph
+title: The diagonal $\Delta \subset C \times C$ and graphs $\Gamma_t$ as effective
+  divisors
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Binding worksheet deg-d4b-worksheet.md: on each standard-smooth chart the
+  étale factorization $k[u] \to B$ makes the diagonal ideal of $B \otimes_k B$ equal
+  to $(u \otimes 1 - 1 \otimes u)$ after localizing away from the unramifiedness idempotent;
+  regularity is monic + flat base change, uniform in an arbitrary second factor —
+  which is how $\Gamma_t = (\mathrm{fst}, t \circ \mathrm{snd})^{-1}\Delta$ (D4c)
+  discharges the pullback regularity on the non-integral $C \otimes T$. Hypotheses
+  only smoothness of relative dimension 1 + separatedness. Sub-bricks B0–B5. $\deg
+  \mathcal{O}(\Gamma_t) = 1$ (the rank-1 certificate) deferred to the interface leg.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-15T01:51:20.884213+00:00'
+  parent: AJCR.picard.degree
+  updated_at: '2026-07-15T13:04:02.539992+00:00'

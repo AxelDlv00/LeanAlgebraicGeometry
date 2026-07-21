@@ -1,0 +1,116 @@
+id: I-0210
+provider: local
+kind: memory
+body: 'DDR-3 SEED-PROVIDER lane session 2026-07-17 (Fable prover, I-0198 OPEN item)
+  — the GEOMETRIC HALF of the seed provider LANDED (3 new files, commits 84821bb5c
+  + ffc552294 + a2211c433, all root-wired HEAD-blob+own-line, lake env lean green
+  under lakefile options, keystones lean_verify axiom-clean [propext, Classical.choice,
+  Quot.sound], no sorries). The IsGenerator discharge is now reduced to ONE named
+  boundary: produce per-point chart data (side, piece generator, sec in K) with dvd
+  + fibrewise chart nonvanishing.
+
+
+  LANDED:
+
+  - RiemannRoch/BaseDivisorSpan.lean (287 L) — ACHIEVER PURITY (route item (ii), the
+  flagged pure-tensor-minimality risk: CLOSED). divOf_functionFieldOverAlgebraMap
+  (constants have divisor zero), divOf_smul (div is K-scalar-invariant), min_coeffAt_divOf_le_add
+  (the valuation ultrametric in coeffAt/divOf form via ord_val_eq + divisorBound_le_divisorBound_iff),
+  exists_coeffAt_divOf_le_sum (finite-sum form), KEYSTONE Scheme.exists_achiever_of_span:
+  for T = span K S <= H0(O(A)) the base multiplicity bd(T)_x is achieved by an element
+  of S itself. Consume at kappa(p) with S := the pure images (K tensor kappa(p) is
+  the kappa(p)-span of the pure images psi tensor 1).
+
+  - Picard/DivSchemeSeedFibre.lean (446 L) — FIBRE COMPARISON + REGULARITY (route
+  item (iv)). relBasicPull (fibre pullback on D(g) of a chart; restriction naturality
+  via Scheme.Hom.appLE_resHom; overAlgebraMap compatibility); relChartFibreMul/relBasicFibreMul
+  (multiplication comparisons Gamma tensor[R] R'' ->+* Gamma''); relChartFibreMul_bijective
+  (pure-tensor agreement with landed relTermBaseChange); KEYSTONE relBasicFibreMul_injective
+  (denominator clearing via IsAffineOpen.exists_pow_mul_eq_resHom/_eq_zero + chart
+  bijectivity + unit power); sections_mem_nonZeroDivisors_of_ne_zero_of_isIntegral;
+  isIntegral_relCurve_of_field (inferInstanceAs onto Curve/BaseChangeInstances product
+  spelling); KEYSTONES tmul_one_mem_nonZeroDivisors_of_relBasicPull + relBasicPull_resHom_ne_zero_of_relSectionsMap_ne_zero
+  — exactly the IsGenerator.fibre_regular discharge shape at any field fibre L.
+
+  - Picard/DivSchemeSeed.lean (280 L) — THE ASSEMBLY (fibre_regular: CLOSED). relPinnedSectionsMap
+  (Bool-uniform fibre comparison, match-def so each branch is concrete-defeq); relPinned_tmul_one_mem_nonZeroDivisors
+  (side-uniform keystone); tmul_one_mem_nonZeroDivisors_of_eq (transport across opens
+  equality, subst + resHom_refl); ThetaGeneratorSeed.basicOpen_eq_basicOpen_mul (D(f)
+  = D(h z * u) denominator clearing; congrArg chains, NO rw into dependent positions);
+  KEYSTONE ThetaGeneratorSeed.isGenerator_of_fibre_ne_zero: dvd clause + (forall z
+  p, fibre piece nonempty -> relPinnedSectionsMap of the chart component of sec z
+  nonzero) => D.IsGenerator. Plus Module.mem_ideal_smul_top_iff_repr + Module.exists_forall_tmul_residueField_ne_zero
+  (ELEMENT-KEEPING free-module fibre-nonvanishing neighbourhood via basis coordinates
+  — on the free window ambient R tensor[k] H_a the CHOSEN achiever survives on a coordinate
+  basic open; replaces exists_fibrewise_tmul_ne_zero_of_projective in the choice step,
+  which keeps only SOME section).
+
+
+  STILL OPEN (the choice half; two bricks, ordered):
+
+  (W1, the universal window K): define K := image under relThetaWindowEquiv (hH1 :=
+  relThetaPairH1_windowM, ledger) of divUniversalFst pushed across the b1-basis iso
+  (Fin r1 -> k) ~ H_M; K finite (DivCarveKit retract kit) and K tensor kappa(q) injects
+  into kappa(q) tensor H_M (flat quotient). Purely definitional given landed pieces
+  — NOT reached this session (budget; two usage-limit kills).
+
+  (W2, the per-point choice at kappa(q) — THE remaining seam): instantiate P-fib at
+  the pair-chart primes q >= I_diamond (divUniversal_carve_residueField is the carve
+  input) and turn its window equalities into (a) the dvd clause and (b) the chart-nonvanishing
+  input of isGenerator_of_fibre_ne_zero. Needs the DD-4 base-field dictionary AT kappa(q):
+  image of K tensor kappa(q) inside the fibre-curve function field = divisorSections
+  kappa(q) window (kappa(q) analogue of RelThetaTransportCore + theta<->divisor-sheaf
+  bridge), carve multiplication matched with sectionMul at kappa(q) (divCarveMul is
+  b1/b2-conjugated — undo the coordinate ambient at the fibre). Then: exists_achiever_of_span
+  (LANDED) picks the PURE achiever sec z; exists_forall_tmul_residueField_ne_zero
+  (LANDED) shrinks the piece over the base; small side-component-nonvanishing-from-global-fibre-nonvanishing
+  argument (integrality/overlap density) feeds isGenerator_of_fibre_ne_zero.
+
+
+  ROUTE CORRECTION FLAG (dvd clause — for the W2 designer, IMPORTANT): I-0198''s route
+  note (achiever + Nakayama neighbourhood + fibre sections + integrality) discharges
+  fibre_regular and the choice, but the DVD clause (eqn z generates K.O on a neighbourhood)
+  is Kleiman (ii)=>(iii), whose proof CONSUMES flatness of the colength B/I at the
+  stalk (kleiman-picard.tex 1786-1799: I tensor k -> B tensor k injective BECAUSE
+  C = B/I is A-flat). Fibrewise ord-minimality at the single fibre under z does NOT
+  give stalk divisibility over a general chart ring: a horizontal extra zero of eqn
+  through z is excluded exactly by the relative-divisor property being constructed,
+  and spec-dd-r risk 5''s k[eps] pattern kills naive fibrewise=>relative divisibility.
+  Honest sources for the missing input, per worksheet 3.4 item 2: the AMBIENT projectivity
+  ((H tensor R)/K finite projective — the flag''s second window) or colon-Tor divisibility
+  against ALL generization fibres. Recommend: spec the dvd production as its own brick
+  COORDINATED WITH DDR-4 (same ambient-splitting substrate as the certificate; cf.
+  I-0209''s W-as-algebra note from DD-2 S5) rather than forcing the pointwise route.
+
+
+  HAZARDS (new, beyond inherited I-0198 list): (1) doc-comment must come AFTER set_option
+  ... in (else parse error). (2) precedence: g ^ m tensor-t 1 parses as g ^ (m tensor-t
+  1) — parenthesize (g ^ m). (3) rw into basicOpen-calculus goals hits motive-not-type-correct
+  + the spurious instances-transparency note (I-0201 (b) confirmed) — use congrArg
+  chains/Eq.trans in Opens equalities whose members appear in section types. (4) Nonempty
+  for component_integral/map_injective_of_isIntegral: haveI : Nonempty U := anonymous-constructor
+  with U : Opens (SetLike CoeSort); Set-coe spellings do not unify. (5) leading-dot
+  method call on a new line parses as application — use full names. (6) Basis.sum_repr
+  needs Fintype; use Finsupp.linearCombination_apply + Basis.linearCombination_repr
+  for arbitrary index. (7) push_neg deprecated (use not_forall.mp / push Not). (8)
+  lakefile synthInstance default (20000) far below tensor-section-ring needs — every
+  tensor-bearing decl needs a scoped raise; LSP does not surface this (I-0198#3 confirmed
+  twice).
+
+
+  DDR-4 FAN-IN: once W1+W2 land, isGenerator_of_fibre_ne_zero + the landed DivSchemeFamily
+  engines give D.localEquations hD + D.divisorAdaptation hD + germ_eqn_mem_nonZeroDivisors
+  + le_vanishingSubmodule over each R_Z unconditionally — the exact inputs of I-0198''s
+  DDR-4 HANDOFF paragraph. Until W2, DDR-4 can proceed CONDITIONALLY on a (ThetaGeneratorSeed,
+  IsGenerator) argument pair — the interface is stable and its discharge is one named
+  boundary (isGenerator_of_fibre_ne_zero''s two hypotheses).'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T12:51:06.439202+00:00'
+updated_at: '2026-07-20T03:16:33.035372+00:00'
+metadata: {}

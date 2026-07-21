@@ -1,0 +1,69 @@
+id: I-0296
+provider: local
+kind: info
+body: "submodule bridge + carve pin steps 2-3 BUILD — THE SUBMODULE GERM BRIDGE (step\
+  \ 1', the named crux) LANDED + committed; hinj_chart / hsub_chart NOT landed (steps\
+  \ 2-3 = the heavy kappa(p) base-change assembly, unchanged difficulty).\n\nNew file\
+  \ Picard/DivSchemeRedesignReadingBridge.lean (143 L). Full-root single-module LEAN_NUM_THREADS=1\
+  \ lake build GREEN under the mkdir lock (8788 jobs, my leaf module 6.9s). All 3\
+  \ keystones lean_verify axiom-clean [propext, Classical.choice, Quot.sound]; zero\
+  \ sorries; zero new warnings in my file. Root: HEAD-blob + only my line (protocol\
+  \ s4 — sibling PicEtCrossBaseGraph add + DivSchemeUnivFibreHinj/Achiever/FibreCut/Seed\
+  \ removals NOT swept; show --stat = my 2 paths, root +1).\n\n=== COMMIT (this lane)\
+  \ ===\n- 1a99fc598  DD-4 submodule germ bridge: chart reading = unit x thetaFieldRead\
+  \ (kappa-linear submodule identification)\n\n=== KEY DECISION (make-or-break, MEMORY-WORTHY)\
+  \ ===\nThe submodule bridge is built over a GENERAL field K on the fibre curve relCurve\
+  \ C K — it needs NO kappa(p) tower at this level (the tower enters only when the\
+  \ bridge is base-changed inside steps 2-3). So the crux is a CHEAP leaf build (6.9s),\
+  \ entirely outside the I-0255/kappa(p) instance minefield. The reading of a chart\
+  \ section into the function field is mathlib's Scheme.germGenericLinear K hη (s\
+  \ |-> germ_η s, already K-linear) — no new reading map needed. The elem trivializing\
+  \ factor is 1 at η (thetaFieldPresentation_elem_genericPoint), so the only surviving\
+  \ factor is the chart-transition unit from exists_unit_germ_relThetaResSide_eq.\n\
+  \nGOTCHA (verified): the recipe's literal 'range = divUniversalFibreKM' is off by\
+  \ a GLOBAL function-field unit — germGenericLinear ∘ relThetaResSide = u · thetaFieldRead,\
+  \ while divFamPhi = shiftUnit · thetaFieldRead ∘ windowEquiv, so range reads to\
+  \ (u·shiftUnit⁻¹)·divUniversalFibreKM, NOT equal on the nose. Harmless for corank/injectivity\
+  \ (unit mult is a linear iso), but steps 2-3 must thread the unit, not expect literal\
+  \ equality.\n\n=== KEYSTONES (VERBATIM; ns AlgebraicGeometry.ThetaGeneratorSeed;\
+  \ vars {k}[Field k] C (K)[Field K][Algebra k K] (π)[IsFinite π] (a) [IsIntegral\
+  \ (relCurve C K)][Smooth 1][QC]) ===\n(1) exists_unit_germGenericLinear_relThetaResSide_eq\
+  \ (b : Bool) {V} (hV : V ≤ relPinnedChart C K π b) (hηV : genericPoint (relCurve\
+  \ C K) ∈ V) : ∃ u : (relCurve C K).functionFieldˣ, ∀ s : relThetaSections C K π\
+  \ a, Scheme.germGenericLinear K hηV (relThetaResSide a b hV s) = (u : functionField)\
+  \ * thetaFieldRead C K π a s\n    — THE READING IDENTIFICATION (equality upgrade\
+  \ of germ_relThetaResSide_dvd_iff_ord_le). Proof: exists_unit_germ_relThetaResSide_eq\
+  \ (chart-transition unit w) + algebraMap_germ_thetaFieldGluedEquiv_eq at η + germ_generic_eq_algebraMap_germ\
+  \ (x=η) + elem_genericPoint=1; u := w.\n(2) exists_unit_germGenericLinear_comp_relThetaResSide\
+  \ (b) (hηV) : ∃ u, (germGenericLinear K hηV).comp (relThetaResSide a b le_rfl) =\
+  \ (Scheme.mulLinear K ↑u).comp (thetaFieldRead C K π a)  — LinearMap form.\n(3)\
+  \ exists_unit_map_germGenericLinear_range_chartReadMap (b) (hηV : genericPoint ∈\
+  \ relPinnedChart C K π b) (W : Submodule K (relThetaSections C K π a)) : ∃ u : (relCurve\
+  \ C K).functionFieldˣ, Submodule.map (Scheme.germGenericLinear K hηV) (LinearMap.range\
+  \ (chartReadMap W b)) = Submodule.map (Scheme.mulLinear K ↑u) (Submodule.map (thetaFieldRead\
+  \ C K π a) W)\n    — THE SUBMODULE BRIDGE: N_V = range(chartReadMap W b), read into\
+  \ the function field, is u·thetaFieldRead(W). Proof: (2) + chartReadMap = relThetaResSide.comp\
+  \ W.subtype + Submodule.map_comp.\n\n=== hinj_chart / hsub_chart STATUS: NOT LANDED.\
+  \ Residual = steps 2-3 (heavy kappa(p) base-change) ===\nStep 2 (ker ↔ 2nd window):\
+  \ base-change chartReadMap divUniversalSeedK over R_Z to κ(p) (native tower, 2M\
+  \ heartbeats, TERM MODE — I-0295 verdict), then ker(f_V ⊗ κ(p)) = span windowCompare\
+  \ via ker_baseChangeMkQ_eq_span_windowCompare (Res:207) + divUniversal_carve_residueField\
+  \ (FamilyUniv:135, carvePairArrow=0). CarvePin step-1 relPinnedTermBaseChangeAlg_reading_windowEquiv\
+  \ (9b68eb676) is the element-level entry point.\nStep 3 (corank-g ⟹ inj): finrank_divUniversalFibreKM_add\
+  \ (AssembleKappa:207) + liftQ_rTensor_residueField_injective (SlicingFlatKernel:234,\
+  \ still private) ⟹ hinj_chart ⟸ hspan_chart; then hinj_chart via forall_chartRead_range_subtype_rTensor_injective_iff\
+  \ (HinjChart, 895d7d8aa) ⟹ chart-level hsub. My keystone (3) supplies the section→functionField\
+  \ identification these need (thread the global unit per the gotcha), consumed via\
+  \ divUniversalFibreKM_eq_span (Res:376)."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T22:51:55.612893+00:00'
+updated_at: '2026-07-19T22:51:55.612905+00:00'
+metadata: {}

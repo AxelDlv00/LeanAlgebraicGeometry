@@ -1,0 +1,52 @@
+id: I-0149
+provider: local
+kind: issue
+body: '**Concurrency incidents from the 2026-07-16 evening continuation wave (5 parallel
+  lanes) — protocol fixes recommended**
+
+
+  1. **Shared-index commit race (SERIOUS, caused transient data loss in HEAD).** All
+  lanes commit through one `workspace.git` index; G-D8''s `6197c9676` interleaved
+  with DAT-1''s commits and recorded spurious DELETIONS of DAT-1''s two freshly-committed
+  files (862 lines vanished from HEAD; byte-identical restore in `a640fef5b`). **Recommended
+  house protocol for concurrent lanes:** commit via a private index — `GIT_INDEX_FILE=$(mktemp)`
+  + `read-tree HEAD` + add only your paths + `write-tree`/`commit-tree` + compare-and-swap
+  `update-ref` (G-D8''s final commit used exactly this and it was clean) — and always
+  verify `git show --stat HEAD` afterward touches only intended paths.
+
+
+  2. **Stale mutex FILE deadlock.** An agent killed by the 15:18 session limit left
+  `/tmp/claude-1001/ajcr-locks/lake.lock` as a 0-byte FILE; the documented mkdir acquire
+  spins forever against a file, so every lane deadlocked at its build step until the
+  human deleted it (~19:10). Recommendation: the acquire loop should detect a lock
+  that is a plain FILE (protocol violation by definition — mkdir creates directories)
+  and report it as stale immediately rather than waiting.
+
+
+  3. **/tmp quota outage (~19:00–19:20).** uid-1001 tmpfs quota exhaustion (EDQUOT)
+  bricked every Bash call machine-wide, mid-build for several lanes; recovered after
+  human cleanup. Watch /tmp usage when >3 lanes run concurrently.
+
+
+  4. **Foreign-workspace mutex abuse.** An OpenGA-Horizon (Evans) agent held the AJCR
+  lock path for its own `lake cache get` for ~25 min. The AJCR mutex is for AJCR lake
+  invocations only; cross-workspace squatting silently serializes our lanes against
+  unrelated work.
+
+
+  Context: incidents observed and worked around by the five continuation lanes (DD-0,
+  DAT-1, G-D8 closed; DAT-6, DD-F in flight); full details in the lane reports quoted
+  in the respective commit messages.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-16T11:50:54.126023+00:00'
+updated_at: '2026-07-16T12:42:08.853882+00:00'
+metadata:
+  agent: parallel-session

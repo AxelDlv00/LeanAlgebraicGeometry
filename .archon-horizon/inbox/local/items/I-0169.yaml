@@ -1,0 +1,28 @@
+id: I-0169
+provider: local
+kind: memory
+body: 'Source-anchor debt: Mumford tangent-space pages not transcribed
+
+
+  The W5 tangent bricks (Tangent/*.lean) cite Mumford AV II.4 for the tangent-space-of-a-functor
+  / epsilon -> a*epsilon scaling, but the transcribed mumford-abelian-varieties pages
+  are only 0054/0055 (II.4 rigidity) and 0057-0066 (II.5 cohomology and base change)
+  - checked 2026-07-17. The blueprint Tangent chapter therefore anchors on kleiman-picard
+  only (thm:tgtsp read in kleiman-picard-src/kleiman-picard.tex: truncated exponential
+  sequence, mu_a scaling, H1 base-field square - all verified). Next action if a Mumford
+  anchor is wanted: locate the exact pages (likely the II.4 appendix region or the
+  Pic tangent computation) and run page-transcriber (max 5 pages/call), then add mumford-abelian-varieties:page-NNNN
+  to def:truncExpUnit / def:mumford_scaling / thm:h1_truncExp_kernel.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-17T01:01:25.869114+00:00'
+updated_at: '2026-07-17T01:01:25.869126+00:00'
+metadata:
+  agent: blueprint

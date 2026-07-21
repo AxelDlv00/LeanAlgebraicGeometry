@@ -1,0 +1,26 @@
+id: AJCR.picard.degree.pic0
+title: The degree at field points and $\mathrm{Pic}^0 = \ker(\deg)$; the Abel element
+  $[\mathcal{O}(\Gamma_t - P_T)]$
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'WORKSHEET DONE (deg-d5b-worksheet.md, binding): $\deg_t$ needs NO geometric
+  shuffle — both well-definedness axes reduce to E-iv-alg, $\mathrm{classDeg}_{K_2}((C
+  \triangleleft \varphi)^* L) = \mathrm{classDeg}_{K_1} L$ along transition maps,
+  plus a pasted IsPullback square; E-iv pinned divisor-level (single-point + flat
+  colength). Seven sub-bricks SB-1..7 ending in $\deg_t$ and $\mathrm{Pic}^0 = \ker(\deg)$
+  on the frozen carrier; balloon candidate = SB-3b (multiplicity ↔ ord dictionary
+  on a chart). Then abelElement (graph + point classes landed).'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-15T01:51:21.505384+00:00'
+  parent: AJCR.picard.degree
+  updated_at: '2026-07-16T12:38:21.370182+00:00'

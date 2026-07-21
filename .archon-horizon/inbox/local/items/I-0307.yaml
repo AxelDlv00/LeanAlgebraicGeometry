@@ -1,0 +1,65 @@
+id: I-0307
+provider: local
+kind: info
+body: "germ divisibility from achiever + hfib BUILD: fibre-order piece (1) LANDED;\
+  \ SeedUnivRDN + unconditional isGenerator NOT landed (blocked on a seedUniv.sec\
+  \ revision + the total-stalk base change, both larger than the task framing).\n\n\
+  === COMMITTED (this lane, refs/heads/main) ===\n- d1b3185468a5241ddda7d9d8ed5a802a3be5fb69\
+  \  fibre-order germ divisibility from the achiever (I-0287 hle WALL). New file Picard/DivSchemeRedesignGermDvd.lean\
+  \ (178 L). Single-module LEAN_NUM_THREADS=1 lake GREEN (8788 jobs, my module 9.5s,\
+  \ peak 6.8 GB). Zero sorries/warnings. Root: HEAD-blob + only my import line (sibling\
+  \ PicEtCrossBaseGraph add + Hinj/RDN redesign-block working-tree root REMOVALS not\
+  \ swept).\n\n=== KEYSTONE (VERBATIM, ns AlgebraicGeometry; axiom-clean [propext,\
+  \ Classical.choice, Quot.sound]) ===\ntheorem germ_relThetaResSide_windowEquiv_dvd_of_achiever\n\
+  \    (hH1 : Subsingleton (relTwistPair C k pi (relThetaCocycle C k pi a)).H1)\n\
+  \    {A : (relCurve C K).CurveDivisor} {T : Submodule K (relCurve C K).functionField}\n\
+  \    (hTA : T <= Scheme.divisorSections K A top)\n    (v_sec v_psi : K tensor[k]\
+  \ (Scheme.divisorSections k (a . fiberWeilDivisor pi) top))\n    (hsec_ne : divFamPhi\
+  \ C K pi a hH1 v_sec != 0) (hpsi_ne : divFamPhi C K pi a hH1 v_psi != 0)\n    (hpsi_mem\
+  \ : divFamPhi C K pi a hH1 v_psi in T)\n    (b : Bool) {V} (hV : V <= relPinnedChart\
+  \ C K pi b) {z} (hzV : z in V) (hzg : z != genericPoint (relCurve C K))\n    (hach\
+  \ : coeffAt hzg (A + Scheme.divOf _ (Units.mk0 (divFamPhi C K pi a hH1 v_sec) hsec_ne))\
+  \ = (Scheme.baseDivisorAt K T A <z,hzg> : Z)) :\n    germ V z hzV (relThetaResSide\
+  \ a b hV (relThetaWindowEquiv C K pi a hH1 v_sec))\n      DVD germ V z hzV (relThetaResSide\
+  \ a b hV (relThetaWindowEquiv C K pi a hH1 v_psi))\n-- proof: baseDivisorAt_le_coeffAt\
+  \ (achiever = inf <= psi) => coeffAt(A+div Phi_sec) <= coeffAt(A+div Phi_psi);\n\
+  --   dictionary Phi = mulLinear(thetaFieldShiftUnit) . thetaFieldRead . relThetaWindowEquiv\
+  \ (shift unit cancels via divOf_mul);\n--   ord_le_ord_of_coeffAt_divOf_le (ord\
+  \ = divisorBound(-div .), anti-monotone) => ord(read psi) <= ord(read sec);\n--\
+  \   germ_relThetaResSide_dvd_iff_ord_le.mpr. Over a GENERAL field K (no kappa(p)\
+  \ tower).\n\n=== TWO ARCHITECTURAL FINDINGS the task framing MISSED (read before\
+  \ continuing) ===\n1. seedUnivRDN_of_forall_germ_mem_span (KappaZSeed) consumes\
+  \ germ divisibility with sec z = (seedUniv ...).sec z, and the CURRENT seedUniv.sec\
+  \ (DivSchemeSeedUnivGen:283, via exists_seedPoint) is the OLD windowCompare!=0 section,\
+  \ NOT the achiever. My lemma proves divisibility for an ACHIEVER section. So closing\
+  \ SeedUnivRDN via the achiever route REQUIRES FIRST revising seedUniv.sec to be\
+  \ exists_relThetaWindowEquiv_..._achieves_seedPrime (I-0291). The task said 'the\
+  \ achiever sec z' as if done; it is NOT. This revision ripples through seedUniv/seedUniv'/seedUnivColength/seedUniv_hfib/hcolFlat.\n\
+  2. The genuine wall is piece (2) the total-stalk base change: my lemma is over the\
+  \ FIBRE curve relCurve C K (K field, stalk is a DVR). The target germ is over the\
+  \ TOTAL space relCurve C R_Z, whose stalk O_z is NOT a DVR (R_Z a ring). Bridging\
+  \ germ_z/R_Z <-> fibre germ/kappa(p) at the single point z (O_z tensor kappa(p)\
+  \ = fibre stalk + Nakayama via the structural curve flat) is the heavy relCurve-over-R_Z\
+  \ <-> over-kappa(p) plumbing, NOT built. My lemma is exactly its fibre input.\n\n\
+  === hfib (piece 3) ALSO blocked on finding 1 ===\nseedUniv'.h is the ann-cutter,\
+  \ so the OLD seedUniv_hfib (which used h = algebraMap f => f notin p => windowCompare!=0)\
+  \ does NOT transfer: the ann-cutter basicOpen-nonempty over kappa(p) does not give\
+  \ f notin p. hfib for seedUniv' needs windowCompare R_Z kappa(p) x != 0 at ARBITRARY\
+  \ p, which only the achiever sec (uniform) supplies => same seedUniv.sec revision.\n\
+  \n=== RESIDUAL toward certificate + U1 ===\nOrder now: fibre-order (LANDED) -> [seedUniv.sec\
+  \ := achiever revision] -> [total-stalk base change piece 2] -> SeedUnivRDN -> [hfib\
+  \ via achiever] -> unconditional isGenerator_seedUniv' -> certificate -> U1 -> divRep.\
+  \ Anti-circularity preserved: certificate-free, IsCertified-free, single-point over\
+  \ general K."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-20T07:00:32.674826+00:00'
+updated_at: '2026-07-20T07:00:32.674837+00:00'
+metadata: {}

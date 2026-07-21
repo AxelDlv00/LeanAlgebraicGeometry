@@ -1,0 +1,96 @@
+id: I-0214
+provider: local
+kind: memory
+body: 'DD-4 Task 6 LANDED: mono-ness of the embedding eps at the field level (roadmap
+  AJCR.w4-rep.datum.dat-d.dd4) — session 2026-07-17 (Fable prover lane). NEW FILE
+  Picard/DivisorFamilyEpsMono.lean (458 L, root-wired HEAD-blob+own-line), commits
+  f187281f6 + 2 increments; lake env lean exit 0 (lakefile options); ALL 10 declarations
+  lean_verify axiom-clean [propext, Classical.choice, Quot.sound]; file warning-free;
+  no sorries.
+
+
+  MECHANISM (I-0192 Task-6 note + spec-dd-r §3 items 7-8, executed): the eps-window
+  K_M(d) reads through the sections dictionary as H0(O(N − D_F)) ⊆ K(Y); DDR-2 pinch
+  (deg_divFamDivisor_of_carve) gives deg D_F = g; the abstract-N recovery (baseDivisorAt_window_normalization,
+  DDR-2) presents D_F as the base divisor of that section space — a function of the
+  section space ALONE — so equal windows force equal divisors; divFamDivisor_injective
+  (I-0182) closes the setoid equality. First components suffice.
+
+
+  LANDED DECLARATIONS. §1 generic (abstract curve Y over any field K, CarveDegreePinch
+  pack — serves DDR-8 fibrewise at kappa(p) directly): h0_eq_finrank_of_map_eq (injective
+  K-linear Phi into functionField carrying E onto divisorSections K A top gives h0(O(A))
+  = finrank K E — DERIVES DDR-2 hdict from the submodule dictionary, hdict no longer
+  separately threaded); baseDivisor_window_normalization (T = H0(O(N−D)), 0 <= D,
+  deg D = g => baseDivisor K T N hne = D, assembled DDR-8 hook); exists_mem_ne_zero_of_window_normalization
+  (hne discharge: h0 = deg N − 2g + 1 >= 1); eq_of_divisorSections_window_eq (UNIQUENESS
+  of an effective deg-g divisor from its window section space — the family-free fibrewise
+  uniqueness core). §2 family (relCurve C K, K/k any field ext): baseDivisorAt_map_divFamEps
+  (pointwise bd(Phi(K_M(d)))_x = (divFamDivisor F)_x — the DDR-8 fibrewise shape);
+  baseDivisor_map_divFamEps (assembled bd(Phi(K_M(d))) = divFamDivisor (mk G)); exists_map_divFamEps_ne_zero;
+  divFamDivisor_eq_of_divFamEps_fst_eq (DIVISOR-LEVEL CORE: equal eps first components
+  => equal divFamDivisor — the exact fibre-divisor equality DDR-8 relative ratio-unit
+  route consumes at kappa(p)); KEYSTONES eq_of_divFamEps_fst_eq / eq_of_divFamEps_eq
+  (=> DivFam.mk G = DivFam.mk G-prime).
+
+
+  THREADED (spellings byte-matched to I-0204/CarveDegree; named dischargers): (1)
+  hsurj = Function.Surjective (G.adaptation.thetaGluedEval (windowM_choice pi hpi
+  g)) — discharger thetaGluedEval_surjective (Picard/DivisorThetaSurjectivity.lean),
+  gated on hfib (W6-full fibre-restriction seam, I-0197). (2) hcarve (eps-pair carve
+  via carvePairArrow (windowShiftMul hpi g a)) — pinned per spec, consumed only as
+  an argument to deg_divFamDivisor_of_carve; discharge at the universal family = divUniversal_carve_residueField
+  + DDR-5 eps-identification. (3) N/hNwin/hNnorm/hNdeg/hNrank — the I-0204 N-pack
+  verbatim; discharger = the window-transport lane (RelCurveCollapse-style, in flight;
+  at K = k ledger names window_embedding/window_normalization/two_mul_genus_le_M_mul_windowdelta
+  modulo the relCurve C k = C.left unitor). (4) hO/hchi at (relCurve C K).moduleKSheaf
+  K — fibre-curve instance kit. NOT THREADED (dropped vs DDR-2): hpair — fires from
+  the certificate (G.certified.isThetaPaired, I-0211); hdict — derived (h0_eq_finrank_of_map_eq).
+
+
+  THE ONE NEW SEAM (Phi/hPhiinj/hPhiwin — the sections dictionary, SUBMODULE form;
+  GENUINELY OPEN, owner DD-4 field content / DDR-8 boundary; strictly refines I-0204
+  hdict): Phi : (K ⊗[k] H_M) →l[K] (relCurve C K).functionField injective, with per-family
+  Submodule.map Phi ((divFamEps hpi g (DivFam.mk G)).1) = divisorSections K (N − divFamDivisor
+  (DivFam.mk G)) top. Phi and N are SHARED between families (one embedding level,
+  one reading); hPhiwin per family. Expected discharge route: relThetaWindowEquiv
+  (window → relThetaSections) + Theta^M ↔ O(M·F_K) bridge at K (thetaIdealDatum at
+  d = 0 / picClass tools) + mem_divisorWindow_iff germ-vanishing in stalkIdeal read
+  as ordZ pole bounds (isUnit_germ_iff_ordZ_eq_one + coeffAt_eq_toAdd_ordZ_eqn dictionary,
+  I-0179 cores) with N := the transported M·F divisor — then hPhiwin IS the statement
+  K_M(d) = H0(N − D_F) inside H0(N) ⊆ K(Y). Same content as DDR-4 gluedEquivVanishing
+  (K_a(d) ≃ ThetaIdealSections, I-0203) pushed into the function field; recommend
+  fusing with the kappa(q) dictionary W2 needs (I-0210).
+
+
+  DDR-8 CONSUMPTION NOTES: (a) fibrewise at kappa(p): §1 lemmas are Y-generic — instantiate
+  at the fibre curve; §2 lemmas are K-generic — instantiate K := kappa(p) with the
+  N-pack transported to the fibre (I-0204 abstract-N design; window constants stay
+  at BASE M = windowM_choice pi hpi g). (b) the relative mono divFam_divEq_of_eps_eq
+  should: per prime get fibre-divisor equality from divFamDivisor_eq_of_divFamEps_fst_eq
+  (NOT the setoid keystone — DivEq at kappa(p) is not what the ratio-unit route wants),
+  then coeffAt_eq_toAdd_ordZ_eqn ratio units + colon-Tor divisibility both ways +
+  residue nonvanishing => relative unit => DivEq (spec §3 item 7). (c) hne slots discharge
+  from the pack (exists_map_divFamEps_ne_zero / exists_mem_ne_zero_of_window_normalization)
+  — thread nothing extra.
+
+
+  HAZARDS: none new. Confirmed live: I-0198 (3) LSP-green vs lake-env-lean (re-checked:
+  this file green under both); unusedSectionVars linter fires on omit-able instances
+  (omit [LocallyOfFiniteType ...] in, BEFORE the docstring per I-0204 hazard (a));
+  the deg_divFamDivisor_of_carve call chain needs no instance-heavy zones (statements
+  stay at finrank/h0/baseDivisorAt granularity — no overModule seam unfolding anywhere
+  in the file).'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T13:31:14.660338+00:00'
+updated_at: '2026-07-20T03:16:36.057102+00:00'
+metadata:
+  agent: dd4-task6-eps-mono-fable

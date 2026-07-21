@@ -1,0 +1,83 @@
+id: I-0295
+provider: local
+kind: info
+body: "carve pin hinj_chart BUILD — STEP 1 (window transport at kappa(p)) LANDED +\
+  \ committed; k-tower verdict DECISIVE (native works); hinj_chart itself NOT landed\
+  \ (steps 2/3 gated on the UNBUILT section->functionField submodule germ bridge,\
+  \ triple-confirmed).\n\nNew file Picard/DivSchemeRedesignCarvePin.lean (107 L).\
+  \ Single-module LEAN_NUM_THREADS=1 lake build GREEN under the mkdir lock (8788 jobs,\
+  \ my module 121s). Keystone lean_verify axiom-clean [propext, Classical.choice,\
+  \ Quot.sound]; zero sorries; zero new warnings in my file (pre-existing maxHeartbeat/setOption\
+  \ warnings in GluedSheafH0BaseChange/DivSchemeFamilyUniv/DivisorFamilyThetaSections\
+  \ unchanged). Root: HEAD-blob + only my line (protocol s4 — sibling PicEtCrossBaseGraph\
+  \ add + Hinj/Achiever/FibreCut/Seed removals in working tree NOT swept; show --stat\
+  \ = my 2 paths, root +1). Full-root stays GREEN (leaf file).\n\n=== COMMIT (this\
+  \ lane) ===\n- 9b68eb676  DD-4 carve pin step 1: window transport at kappa(p) —\
+  \ reading of a relative window section base-changes to the fibre window reading\
+  \ of the compared vector (native k->R_Z->kappa(p) tower)\n\n=== K-TOWER VERDICT\
+  \ (make-or-break — RESOLVED, MEMORY-WORTHY) ===\nNATIVE towers WORK at kappa(p)\
+  \ over R_Z = DivCarveChartRing (the QUOTIENT carve chart ring), for p : PrimeSpectrum\
+  \ R_Z directly — NO need to restructure to PairChartRing primes q. The instances\
+  \ [Algebra k kappa(p)] / [IsScalarTower k R_Z kappa(p)] synthesize WITHOUT a composite\
+  \ RingHom.toAlgebra letI (kappa(p) is R_Z's own residue field; R_Z is a k-algebra\
+  \ by the quotient instance). This is NOT the I-0255 non-termination: it TERMINATES,\
+  \ it was only a BUDGET issue. Per-declaration escalation that works: set_option\
+  \ maxHeartbeats 2000000 / synthInstance.maxHeartbeats 800000 / maxSynthPendingDepth\
+  \ 8. Probe: the chart triangle relPinnedSectionsMap_relThetaResSide_windowEquiv\
+  \ states + elaborates green at K=kappa(p) over R=R_Z under those budgets. This unblocks\
+  \ the ENTIRE route over R_Z primes.\nGOTCHA (new, MEMORY-WORTHY): a term-level composition\
+  \ (Eq.trans of landed lemmas) elaborates fine under the tower, but any tactic forcing\
+  \ isDefEq/whnf on the giant relCurve types (e.g. rw to unfold chartReadMap, or a\
+  \ show) TIMES OUT even at 2000000 heartbeats. Keep step assembly as term-mode .trans\
+  \ / exact of pre-proven lemmas; avoid unfolding defs under the kappa(p) tower.\n\
+  \n=== KEYSTONE (VERBATIM; namespace AlgebraicGeometry.ThetaGeneratorSeed; seed context\
+  \ vars {k}(C)(pi)... (hpi)(g r1 r2)(b1 b2)(i j); seedChartRing := DivCarveChartRing\
+  \ k (windowS_choice) (windowM_choice) g r1 r2 b1 b2 i j = R_Z) ===\nrelPinnedTermBaseChangeAlg_reading_windowEquiv\
+  \ (p : PrimeSpectrum R_Z)(b : Bool)(x : R_Z (X)[k] H0(windowM.F)) :\n  relPinnedTermBaseChangeAlg\
+  \ C R_Z kappa(p) pi b (1 (X) relThetaResSide (windowM_choice) b le_rfl (relThetaWindowEquiv\
+  \ C R_Z pi (windowM_choice) (relThetaPairH1_windowM) x))\n    = relThetaResSide\
+  \ (windowM_choice) b le_rfl (relThetaWindowEquiv C kappa(p) pi (windowM_choice)\
+  \ (relThetaPairH1_windowM) (windowCompare R_Z kappa(p) x))\nProof: (relPinnedTermBaseChangeAlg_one_tmul).trans\
+  \ (relPinnedSectionsMap_relThetaResSide_windowEquiv). This is I-0294 step 1 at the\
+  \ universal seed: f_V (X) kappa(p) moves to compared-window fibre readings.\n\n\
+  === hinj_chart STATUS: NOT LANDED. The genuine XL wall = the section->functionField\
+  \ SUBMODULE germ bridge (UNBUILT, triple-confirmed) ===\nSteps 2 (ker(f_V(X)kappa(p))\
+  \ <-> 2nd window via ker_baseChangeMkQ_eq_span_windowCompare + divUniversal_carve_residueField)\
+  \ and 3 (corank-g pin via finrank_divUniversalFibreKM_add + SlicingFlatKernel) BOTH\
+  \ require identifying the FIBRE READING IMAGE range(f_V (X) kappa(p)) — a kappa-subspace\
+  \ of the fibre CHART sections Gamma(V_kappa), read via relThetaResSide — with divUniversalFibreKM\
+  \ — a kappa-subspace of the fibre FUNCTION FIELD, read via divFamPhi/thetaFieldRead\
+  \ (divUniversalFibreKM_eq_span, Res:376). That relThetaResSide<->divFamPhi identification\
+  \ AT THE SUBMODULE/INJECTIVE level is UNBUILT. Only germ-DIVISIBILITY exists (germ_relThetaResSide_dvd_iff_ord_le,\
+  \ DivSchemeUnivFibreHdiv), which is the hdiv/hfield side, NOT a submodule iso. Confirmed\
+  \ unbuilt by: I-0293 residual, I-0284 residual, AND DivSchemeRedesignJFlat.lean:54-66's\
+  \ own docstring (needs the section->functionField germ bridge relThetaResSide on\
+  \ D(h') <-> thetaFieldRead identifying the piece colength fibre with the fibre-window\
+  \ reading, I-0286 residual). NOTE: brick-1's (c4) flat (forall_flat_colength_quotient_of_hsub/hspan,\
+  \ JFlat) is CONDITIONAL on hsub/hspan (hypotheses) — it is DOWNSTREAM of hinj_chart,\
+  \ NOT a source (I-0240: hspan NOT deducible from flatness). So hinj_chart is the\
+  \ genuine upstream carve obligation and cannot be shortcut through the landed flat.\n\
+  \n=== RESIDUAL — NEXT LANE ===\nBuild the section->functionField SUBMODULE germ\
+  \ bridge over the fibre curve relCurve C kappa(p): identify Submodule.map (relThetaResSide\
+  \ (windowM) b le_rfl) (fibre reading of divUniversalSeedK) with a divFamPhi/thetaFieldRead\
+  \ image, upgrading germ_relThetaResSide_dvd_iff_ord_le (germ divisibility) to a\
+  \ kappa-linear submodule identification. Then: step 2 = ker(f_V(X)kappa) = span\
+  \ of windowCompare (ker_baseChangeMkQ_eq_span_windowCompare, Res:207) transported\
+  \ by the carve (divUniversal_carve_residueField, FamilyUniv:135; carvePairArrow=0);\
+  \ step 3 = corank-g count (finrank_divUniversalFibreKM_add, AssembleKappa:207) +\
+  \ the private reduction pattern liftQ_rTensor_residueField_injective (SlicingFlatKernel:234,\
+  \ hinj_chart <== hspan_chart). All 3 steps state green at kappa(p) over R_Z under\
+  \ the maxHeartbeats 2000000 / synthInstance 800000 / depth 8 budgets (verdict above).\
+  \ Step 1 (this lane) is the entry point."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-19T22:27:15.524208+00:00'
+updated_at: '2026-07-19T22:27:15.524218+00:00'
+metadata: {}

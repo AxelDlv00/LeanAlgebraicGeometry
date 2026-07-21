@@ -1,0 +1,25 @@
+id: I-0157
+provider: local
+kind: memory
+body: 'AJCR shared-root wiring: never ''git add'' the disk AlgebraicJacobian.lean
+
+
+  Incident 2026-07-17 (lanes w5-x3 / w6-alg): ''git add'' of the DISK root file stages
+  every sibling lane''s in-flight import lines into HEAD (b20b29a01 carried 9 uncommitted
+  lines; 9d57367a7 had to land its files against them; 15f6d4209 then over-corrected
+  and dropped a sibling line that 0075f0a17 had deliberately restored). CORRECT recipe
+  for wiring one import line: take HEAD''s root blob (git cat-file blob HEAD:<root>),
+  insert ONLY your line, hash-object -w + update-index --cacheinfo in your private
+  index — never add the disk root wholesale, and never delete sibling in-flight lines
+  from HEAD''s root (fleet convention per ca740d810/0075f0a17: a root line may precede
+  its file; the owner lands the file against it).'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-16T17:53:48.631041+00:00'
+updated_at: '2026-07-16T17:53:48.631050+00:00'
+metadata: {}

@@ -1,0 +1,20 @@
+id: AJCR.w4-rep.datum.dat0
+title: 'DAT-0: normalizations — P5-uniform $\exists b,\ b \le \deg D \Rightarrow H^1(\mathcal{O}(D))
+  = 0$; $\Theta$-positivity $1 \le \mathrm{classDeg}\,\Theta$'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T06:41:40.523810+00:00'
+  parent: AJCR.w4-rep.datum
+  updated_at: '2026-07-16T07:32:09.048515+00:00'

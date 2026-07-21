@@ -1,0 +1,26 @@
+id: AJCR.picard.c2.rigid
+title: 'Rigidification along a section: $\sigma^* L = 1$, lm:idn, lm:aut, and the
+  unit $\mathrm{relPic} \to \mathrm{Pic}^{\mathrm{ét}}$'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: LANDED (8cd9ab33f). Every relative class has a rigidified representative
+  $L \cdot (p^* \sigma^* L)^{-1}$ and rigidified representatives of equal classes
+  are equal on the nose (lm:idn both directions); a rigidified representative of a
+  descent class satisfies its descent equation $u_1^* L = u_2^* L$ as an honest equality
+  in $\mathrm{Pic}(C_{B \otimes_A B})$; pullback of global units along the section
+  of the projection is bijective (lm:aut); and the sheafification unit $\mathrm{relPicFunctor}
+  \to \mathrm{picEtFunctor}$ in full.
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-15T01:51:39.737373+00:00'
+  parent: AJCR.picard.c2
+  updated_at: '2026-07-15T01:59:33.682513+00:00'

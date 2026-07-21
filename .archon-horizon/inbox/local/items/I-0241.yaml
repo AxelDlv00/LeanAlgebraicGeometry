@@ -1,0 +1,122 @@
+id: I-0241
+provider: local
+kind: info
+body: 'G-4 SeedUniv LANDED (K_univ/K''_univ + fibre P-fib-N keystone + Phi/alignment
+  interface)
+
+
+  G-4 SeedUniv PARTIAL LAND (commits 596c82e90 + ba6a87692): K_univ/K''_univ + the
+  fibre P-fib-N keystone + the Phi/alignment interface. New files Picard/DivSchemeSeedUniv.lean
+  (~500L) + Picard/DivSchemeSeedUnivFibre.lean (~455L), root-wired (HEAD blob + only
+  these two lines). All keystones axiom-clean [propext, Classical.choice, Quot.sound];
+  single-module lake builds green under the mkdir lock; zero sorries.
+
+
+  NAME MAPPING (worksheet par. 1.2): grPointCongr is NOT coined — it LANDED as Grassmannian.congrAmbient
+  (+ congrAmbient_toSubmodule, naturality map_congrAmbient) in Picard/DivSchemeFrameKit.lean
+  (G-5 K1/K4, I-0236). Use those.
+
+
+  LANDED KEYSTONES (verbatim):
+
+  - Grassmannian.projective_submodule_of_projective_quotient (N : Submodule R M) [Module.Projective
+  R M] [Module.Projective R (M/N)] : Module.Projective R N — quotRetract splitting.
+
+  - Grassmannian.finrank_ker_baseChangeMkQ_add_of_field (x : grFunctorAff k H g T)
+  (L field over k,T; IsScalarTower k T L) : finrank L (ker (Module.Grassmannian.baseChangeMkQ
+  L x.toSubmodule)) + g = finrank k H — the hKMrank shape at every residue field (stay
+  on the pair chart ring: instantiate at x := pairTautFst/Snd, L := kappa(q); finrank
+  k (Fin r -> k) = r).
+
+  - divUniversalFstWindow C pi hpi g r1 r2 b1 b2 i j : grFunctorAff k H_M g R_Z :=
+  congrAmbient b1.equivFun.symm (divUniversalFst ...); divUniversalSndWindow := congrAmbient
+  (b2.equivFun.symm.trans (seedWindowShiftEquiv C pi hpi g)) (divUniversalSnd ...)
+  where seedWindowShiftEquiv is the add_nsmul window regluing H0(sF+MF)=H0((M+s)F)
+  (the windowShiftMul spelling). Campaign instantiation A := windowS_choice*F, B :=
+  windowM_choice*F throughout; R_Z := DivCarveChartRing k A B g r1 r2 b1 b2 i j.
+
+  - divUniversalSeedK / divUniversalSeedK'' := Submodule.map (relThetaWindowEquiv
+  C R_Z pi M/(M+s) (relThetaPairH1_windowM/MS C pi hpi g)).toLinearMap (divUniversal{Fst,Snd}Window
+  ...).toSubmodule — DEFEQ the seed submodule parameter of ThetaGeneratorSeed.divFamEps_certifiedFamily
+  at x1 := divUniversalFstWindow, x2 := divUniversalSndWindow. Worksheet par-1.2 composite
+  spellings: divUniversalSeedK_eq_map / divUniversalSeedK''_eq_map.
+
+  - finite_divUniversalSeedK('') / projective_divUniversalSeedK('') : K_univ/K''_univ
+  finite projective over R_Z CERTIFICATE-FREE (via LinearEquiv.ofSubmodules transports
+  + the retract lemma) — the achiever-lift anti-circularity licence.
+
+  - windowA_choice pi hpi := least a with windowBound <= a*windowdelta (windowA_spec;
+  minimality windowA_mul_lt : a<>0 -> a*delta < b + delta; windowA_ne_zero at 0<b);
+  window_embedding_windowA (H1(O(aF))=0 at the ledger field); the I-0234 budgets windowA_add_three_mul_genus_le_S_mul
+  (a*delta+3g <= s*delta, USES windowS_spec_three) and windowA_add_three_mul_genus_add_S_le_M_mul
+  (a*delta+3g+s*delta <= M*delta), both under (hb : 0 < windowBound pi hpi).
+
+  - windowS C K hpi g := windowTransportDivisor C K pi (windowS_choice pi hpi g);
+  deg_windowS = s*delta; subsingleton_h1_windowS; h0_windowS (= h0_k(O(sF)) under
+  hchi/hchiK — the Phi_s dim count).
+
+  - subsingleton_h1_of_windowA_le_deg (g) (hchiK) (W) (hW : a*delta + g <= deg K W)
+  : Subsingleton H1(O(W)) — hvan at K, witness peeling at the transported a-window.
+
+  - KEYSTONE existsUnique_effective_divisor_of_carve_windowN (g hO hchi hOK hchiK)
+  (KM <= divisorSections K (windowN C K hpi g) T, finrank KM + g = h0(O(windowN)))
+  (K'' <= divisorSections K (windowN + windowS) T, rank likewise) (hcarve : forall
+  h in H0(O(windowS)), forall f in KM, h*f in K'') : ExistsUnique D, 0 <= D and deg
+  K D = g and KM = H0(O(windowN - D)) and K'' = H0(O(windowN + windowS - D)). Fires
+  existsUnique_effective_divisor_of_carve_pack with beta := a*delta+g; the degenerate
+  branch windowBound <= 0 (g=0, where s-minimality is not public) is closed INSIDE
+  the keystone (D=0 via eq_zero_of_deg_le_zero) — consumers never see the split.
+
+  - Phi addenda (in SeedUnivFibre): map_divFamPhi_top (Phi(K (x) H_a) = H0(O(windowTransportDivisor
+  a)) — d-free image dictionary), divFamPhi_apply_mem, exists_divFamPhi_eq (multiplier
+  surjectivity), finrank_map_divFamPhi (dimension preservation).
+
+  - WindowAlign (in SeedUniv): picClass_windowTransportDivisor_add (exponent additivity
+  of the transported class; proof = collapse class law + fiberTwist_pow + CechPic.map
+  monoid, TERM-MODE trans/congrArg across the relCurve/product spelling — rw fails,
+  I-0232(b)); windowMSShiftUnit C K hpi g with divOf_windowMSShiftUnit (div w = transport(M+s)
+  - (windowN + windowS)); map_mulLinear_windowMSShiftUnit (mulLinear w : H0(O(transport(M+s)
+  - D)) = H0(O(windowN + windowS - D)) for every D) — the K''-side bridge between
+  the Phi-image at exponent M+s and the keystone''s N+S.
+
+
+  PHI ROUTE (the recorded decision): route (a)-shaped. Carve conversion pinned as:
+  fibre kernels at kappa(q) (ker baseChangeMkQ over the PAIR CHART RING, the divUniversal_carve_residueField
+  spelling) -> b1/b2-congr into H-ambients (image under baseChange of equivFun.symm;
+  sectionMulBilin conjugation = divCarveMul definition) -> Phi := divFamPhi. The REMAINING
+  multiplicativity input: relThetaWindowEquiv_sectionMul_fst/snd (sibling F1 lane,
+  Picard/DivSchemeEpsCarve.lean — WORKING-TREE ONLY at my session end, NOT in HEAD;
+  check before importing) at R := kappa(q), composed with a thetaFieldRead germ computation:
+  gluedVal_eq_elem_inv_mul at x := genericPoint + germ_thetaFieldGluedEquiv_fst/snd
+  (case on eta in V0) + elem multiplicativity across exponents (ofCocycle elem = germ_eta
+  of subordinated cocycle; pow_add of the theta unit). KEY SIMPLIFICATION: the per-exponent
+  shift units w(a) (thetaFieldShiftUnit) need NOT cohere on the nose — at the SUBMODULE
+  level the K''-side is translated by windowMSShiftUnit whose divisor equals the coherence
+  discrepancy''s divisor, and a leftover global constant does not move submodules.
+  So the hcarve bridge needs read-multiplicativity only up to K*-scalars.
+
+
+  WHAT CERTUNIV/THE NEXT SEED LANE SHOULD KNOW: (i) hKMrank at kappa(q) = finrank_ker_baseChangeMkQ_add_of_field
+  + finrank_map_divFamPhi + h0_windowN (landed) + Module.finrank_eq_card_basis b1
+  (r1 = dim H_M) + finrank_divisorSections_top; K''-side mirror with h0 of transport(M+s)
+  via h0_eq_deg_add_chi + deg_windowTransportDivisor + the alignment unit. (ii) hOK/hchiK
+  at kappa(q): h0_moduleKSheaf/chi_moduleKSheaf (ChiCurve:135/148) at baseChangeBundle
+  + genus_baseField (H1BaseFieldInvariance:373) + the GluedSheafDatumFibre:180-190
+  haveI pattern (instIsIntegralBaseChange etc.). (iii) The seed fields (side/h/sec/dvd)
+  and isGenerator_seedUniv are UNTOUCHED — worksheet par-1.5 pipeline: achiever exists_coeffAt_eq_baseDivisorAt,
+  lift through K_univ (projectivity now landed), Nakayama via Module.exists_forall_tmul_residueField_ne_zero
+  (DivSchemeSeed:264), dvd via SlicingFlat:356/79 (NEVER fibrewise->relative, I-0231
+  binding). (iv) Docstring fix bundled in commit 1: DivSchemeEps.lean now points at
+  the G-4 chain (GluedSheafFibre was already fixed by 894bfab).'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T03:05:39.716524+00:00'
+updated_at: '2026-07-20T03:14:53.094751+00:00'
+metadata: {}

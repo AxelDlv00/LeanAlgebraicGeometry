@@ -1,0 +1,92 @@
+id: I-0299
+provider: local
+kind: info
+body: 'R1+R2 → hsub_chart BUILD — CARVE PIN COMPLETE. hsub_chart LANDED + committed
+  (modulo two threaded hypotheses hη/hχ). New file Picard/DivSchemeRedesignHsubChartPin.lean
+  (443 L). Single-module LEAN_NUM_THREADS=1 lake build GREEN under the mkdir lock
+  (8793 jobs; module 583s). All keystones lean_verify axiom-clean [propext, Classical.choice,
+  Quot.sound]; zero sorries; zero warnings in my file. Root: HEAD-blob + only my import
+  line (protocol §4 — sibling PicEtCrossBaseGraph add + Hinj/Achiever/FibreCut/Seed
+  removals NOT swept; show --stat = my paths, root +1).
+
+
+  === COMMITS (this lane) ===
+
+  - eccfb87a3  DD-4 carve pin: R1 range-side finrank + R2 baseChange→rTensor injectivity
+  core
+
+  - e36063241  DD-4 carve pin COMPLETE: hsub_chart — the constant-rank fibre non-collapse
+  at κ(p)
+
+
+  === KEYSTONES (VERBATIM; ns AlgebraicGeometry.ThetaGeneratorSeed) ===
+
+  (R1 ★, the isolated wall) map_relPinnedTermBaseChangeAlg_range_baseChange_chartReadMap
+  (b:Bool) : Submodule.map (relPinnedTermBaseChangeAlg C (seedChartRing …) K π b).toLinearMap
+  (LinearMap.range (LinearMap.baseChange K (chartReadMap (divUniversalSeedK …) b)))
+  = LinearMap.range (chartReadMap (Submodule.map (relThetaWindowEquiv C K π (windowM_choice
+  π hπ g) …).toLinearMap (divUniversalFibreSeedW … K)) b). — lifts the element-level
+  window transport to the range/submodule level over a GENERAL field K of the k→R_{I,J}→R_Z
+  tower (cheap leaf, no κ(p) synthesis). Proof: conv_lhs/conv_rhs LOCALIZED rewrites
+  (range_baseChange, Submodule.baseChange_eq_span, map_span, image_comp) reduce BOTH
+  sides to span K over ↑divUniversalFstWindow.toSubmodule, matched pointwise by relPinnedTermBaseChangeAlg_reading_windowEquiv_field
+  (general-K step 1). GOTCHA that walled earlier lanes: a non-localized rw scans the
+  LHS `range(baseChange f_V)` and forces whnf on the giant K⊗Γ type → use conv_lhs/conv_rhs.
+  BUDGET 1.6M.
+
+  (R1) finrank_range_baseChange_chartReadMap_divUniversalSeedK_add (b) (hηV : genericPoint
+  (relCurve C K) ∈ relPinnedChart C K π b) (hχ : Sheaf.chi (C.left.moduleKSheaf k)
+  = 1 - g) : finrank K (range (baseChange K (chartReadMap (divUniversalSeedK …) b)))
+  + g = finrank k (Fin r₁ → k). Proof: ★ through the finrank-preserving β=relPinnedTermBaseChangeAlg
+  (via finrank_map_of_injective — provide β.injective as an explicit `have`, NOT inline,
+  to avoid whnf on the `match b` in β), then germ bridge (germGenericLinear + mulLinear
+  u injective) onto divUniversalFibreKM, finrank_divUniversalFibreKM_add, h0(windowN)=r₁.
+  BUDGET 4M.
+
+  (R2 core, field/ring-generic, reusable) rTensor_injective_of_baseChange_injective
+  (A) (g) (h : Injective (baseChange A g)) : Injective (g.rTensor A) [via TensorProduct.comm];
+  range_subtype_rTensor_injective_of_baseChange_injective (A) (f) (h : Injective (baseChange
+  A f)) : Injective ((range f).subtype.rTensor A) [rangeRestrict factorization]; injective_of_finrank_range_eq
+  (f) (finrank(range f)=finrank M)[FiniteDimensional] : Injective f [rank-nullity].
+  + helpers range_baseChange, finrank_map_of_injective, range_chartReadMap.
+
+  (DELIVERABLE) hsub_chart (b) (hχ) (hη : ∀ p, genericPoint (relCurve C κ(p)) ∈ relPinnedChart
+  C κ(p) π b) : ∀ p : PrimeSpectrum R_Z, Function.Injective ((LinearMap.range (chartReadMap
+  (divUniversalSeedK …) b)).subtype.rTensor p.asIdeal.ResidueField). Proof: source
+  rank (finrank_baseChange_divUniversalSeedK_add, landed) = range rank (R1) ⟹ Nat.add_right_cancel
+  ⟹ finrank(range)=finrank(source) ⟹ injective_of_finrank_range_eq ⟹ baseChange κ(p)
+  f_V injective ⟹ transfer. INSTANCE INSIGHT CONFIRMED (I-0298): the composite pair-chart
+  residue tower Algebra(PairChartRing) κ(p) builds cleanly INLINE via letI ((algebraMap
+  R_Z κ(p)).comp (algebraMap PairChartRing R_Z)).toAlgebra + IsScalarTower.of_algebraMap_eq''
+  rfl (PairChartRing→R_Z→κ(p)) + IsScalarTower.of_algebraMap_eq (k→PairChartRing→κ(p))
+  — R1 instantiates at K:=κ(p) with NO non-termination (2M budget). Module.Finite.base_change
+  for FiniteDimensional κ(p). BUDGET 2M.
+
+
+  === RESIDUAL (for the NEXT lane) ===
+
+  1. hη discharge: prove genericPoint (relCurve C L) ∈ relPinnedChart C L π b for
+  the carve side b (a nonemptiness fact about relCover.V_b at every field ext; NO
+  unconditional landed lemma exists — DivSchemeSeedUnivAssemble case-splits on η∈V₀
+  vs mem_V₁_of_notMem_V₀). Once discharged, hsub_chart is unconditional (bar hχ =
+  the genus condition chi=1-g, campaign-provided).
+
+  2. chart→piece hsub: localize hsub_chart (chart-level, le_rfl, V) to the piece D(h
+  z) ⊆ V AFTER h z chosen, giving piece-level hsub (D.sideColengthSubmodule z .subtype.rTensor
+  κ(p) injective) that forall_flat_colength_quotient_of_hsub (JFlat) consumes → brick-1
+  flat → RD-N → seedUniv'' → certificate → U1 → divRep. This is the I-0295 ''later
+  lane''.
+
+  Anti-circularity preserved (certificate-FREE, h z-FREE, le_rfl; threads no IsGenerator/IsCertified/seedUniv'').'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-20T02:18:49.731842+00:00'
+updated_at: '2026-07-20T02:18:49.731851+00:00'
+metadata: {}

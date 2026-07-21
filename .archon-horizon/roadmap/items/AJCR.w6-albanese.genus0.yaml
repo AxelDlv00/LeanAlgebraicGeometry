@@ -1,0 +1,19 @@
+id: AJCR.w6-albanese.genus0
+title: 'S11: the \(g = 0\) case — \(\mathrm{Jacobian}\ C \cong \mathbf{1}\) + Milne
+  I 3.9 (rational maps \(\mathbb{P}^1 \dashrightarrow A\) constant)'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: blocked
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-16T17:13:59.100829+00:00'
+  parent: AJCR.w6-albanese

@@ -1,0 +1,20 @@
+id: AJCR.w5-av.p2
+title: 'P2: \(\mathrm{UniversallyClosed}\ d.J.\mathrm{hom}\) from any AbelSourceData
+  (route P-B, of_comp_surjective)'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-16T17:13:50.246793+00:00'
+  parent: AJCR.w5-av
+  updated_at: '2026-07-17T01:20:15.101219+00:00'

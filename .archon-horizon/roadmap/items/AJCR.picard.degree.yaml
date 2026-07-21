@@ -1,0 +1,21 @@
+id: AJCR.picard.degree
+title: Degree and the Pic^0 subfunctor
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: The degree map on picEt via the chi-ledger (degree = chi(L) - chi(O)), its
+  additivity and base-change invariance, and Pic^0 as the degree-zero subfunctor (design
+  section 6). Consumes Wave 2b.
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-14T01:19:43.867751+00:00'
+  parent: AJCR.picard
+  updated_at: '2026-07-16T12:38:22.153777+00:00'

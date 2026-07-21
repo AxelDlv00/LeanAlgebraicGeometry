@@ -1,0 +1,60 @@
+id: I-0287
+provider: local
+kind: info
+body: "hdiv_seedUniv (hfield core) BUILD — germ-bridge + fibre-divisibility reduction\
+  \ LANDED (2 sub-bricks); hdiv_seedUniv itself NOT landed (honest BPF/achiever wall,\
+  \ precisely isolated).\n\nNew file Picard/DivSchemeUnivFibreHdiv.lean (230 L). Single-module\
+  \ lake build GREEN (8786 jobs, LEAN_NUM_THREADS=1); both keystones lean_verify axiom-clean\
+  \ [propext, Classical.choice, Quot.sound]; zero sorries; warning-free. Root-wired\
+  \ HEAD-blob + own line only (sibling PicEtCrossBaseGraph add + Hinj removal NOT\
+  \ swept).\n\n=== COMMIT (this lane) ===\n- 15d9eb465  piece-reading germ bridge\
+  \ + fibre divisibility reduction (new file 230 L + root line)\n\n=== KEYSTONES (VERBATIM,\
+  \ ns AlgebraicGeometry; vars {k} C K [Field K] π a + [IsIntegral (relCurve C K)]\
+  \ [Smooth 1] [QC]) ===\n(1) germ_relThetaResSide_dvd_iff_ord_le (s t : relThetaSections\
+  \ C K π a) (b : Bool) {V} (hV : V <= relPinnedChart C K π b) {z} (hzV : z in V)\
+  \ (hzg : z != genericPoint (relCurve C K)) :\n      germ V z hzV (relThetaResSide\
+  \ a b hV t) DVD germ V z hzV (relThetaResSide a b hV s)\n        <-> Scheme.ord\
+  \ (relCurve C K -> Spec K) hzg (thetaFieldRead C K π a s) <= Scheme.ord ... hzg\
+  \ (thetaFieldRead C K π a t)\n    — THE GERM BRIDGE (I-0284 first sub-brick): piece\
+  \ side-component germ = thetaFieldRead in dvd form; chart-transition unit (theta\
+  \ cocycle) + trivializing elem_z BOTH cancel in the dvd. Helpers algebraMap_germ_thetaFieldGluedEquiv_eq,\
+  \ exists_unit_germ_relThetaResSide_eq.\n(2) relThetaResSide_mem_span_of_forall_ord_le\
+  \ (s t) (b) (h : Γ(relCurve C K, relPinnedChart C K π b)) (hE : rel a b (basicOpen_le\
+  \ h) t in nonZeroDivisors Γ(D(h))) (hle : forall w != η in D(h), ord(thetaFieldRead\
+  \ s) <= ord(thetaFieldRead t)) :\n      rel a b (basicOpen_le h) s in Ideal.span\
+  \ {rel a b (basicOpen_le h) t}\n    — THE REDUCTION: piece-ring dvd from pointwise\
+  \ order, via Scheme.mem_span_singleton_of_forall_germ (DivisorStalkIdeal:79) + germ\
+  \ bridge at closed pts + unit at η (functionField field). hE germ-regularity: IsAffineOpen.germ_mem_nonZeroDivisors\
+  \ (SectionsToDivisors:98, y EXPLICIT — NOT the DiagonalChart:126 y-implicit dup).\n\
+  \n=== WIRING to hdiv_seedUniv (K=κ(p), D=seedUniv) ===\nψ in divUniversalSeedK =>\
+  \ ψ = relThetaWindowEquiv_{R_Z} x_ψ (x_ψ in divUniversalFstWindow). Brick pinnedPieceSectionsMap_relThetaResSide_windowEquiv\
+  \ rewrites reading(ψ), reading(eqn) into rel a b (basicOpen_le h') (Θ_κ(p)(windowCompare\
+  \ x_ψ / x_sec)), h'=relPinnedSectionsMap κ(p) b (D.h z). Feed reduction with s:=Θ(windowCompare\
+  \ x_ψ), t:=Θ(windowCompare x_sec). Then seedUniv.hfield_of_forall_pinnedPieceSectionsMap_mem\
+  \ hdiv_seedUniv (KerSpan:147). Residual = 2 hyps of the reduction:\n  (hE) reading(eqn)\
+  \ piece-nonzerodivisor: from thetaFieldRead(Θ x_sec)!=0 + integral. CHEAP.\n  (hle)\
+  \ THE WALL: ord(read Θ x_ψ) <= ord(read Θ x_sec) at every closed w in D(h'). shiftUnit\
+  \ cancels => equiv ord(divFamPhi x_ψ) <= ord(divFamPhi x_sec). Upper: divFamPhi(windowCompare\
+  \ x_ψ) in divUniversalFibreKM = H⁰(windowN − d_p) (divFamPhi_windowCompare_mem Res:423\
+  \ + divUniversalSeedFibreDivisor_spec Fields:146) => ord <= divisorBound(windowN\
+  \ − d_p)_w ALL w. Lower (WALL): ord(divFamPhi x_sec)_w = divisorBound(windowN−d_p)_w\
+  \ for w in D(h') = seed section reading ACHIEVES d_p on the fibre piece / its extra\
+  \ zeros AVOID D(h'). seedUniv.sec is NOT the global achiever; intended lever = no-leak\
+  \ notMem_of_basicOpen_relPinnedSectionsMap_algebraMap_ne_bot (Facts:258, PRIVATE\
+  \ — re-export/re-derive) giving f !in p, but the fibre-piece section-zero-avoidance\
+  \ is not yet bridged from it. The XL BPF/achiever content of I-0282/I-0284; reduction\
+  \ now isolates it to this ONE pointwise ord inequality.\n\n=== STATE ===\nGerm bridge\
+  \ + reduction GENERIC over any field K — reusable for BOTH cores (hinj can consume\
+  \ the germ bridge). hcolFin still open (I-0283). Full-root GREEN. No sorries."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T19:16:08.088216+00:00'
+updated_at: '2026-07-19T19:16:08.088227+00:00'
+metadata: {}

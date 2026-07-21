@@ -1,0 +1,20 @@
+id: AJCR.w4-rep.datum.dat-d
+title: 'DAT-D (worksheet-first): $\mathrm{Div}^g$-lite representability — degree-$g$
+  divisor families in a ported Grassmannian at the uniform twist; the locally-closed
+  carving'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T06:42:07.577029+00:00'
+  parent: AJCR.w4-rep.datum

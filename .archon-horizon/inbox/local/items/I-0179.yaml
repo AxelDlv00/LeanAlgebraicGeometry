@@ -1,0 +1,58 @@
+id: I-0179
+provider: local
+kind: memory
+body: 'DD-1c (f) THE WALL (I-0171) FALLS for the support-separated case (2026-07-17,
+  Opus prover). Follow-on to I-0171/I-0167 (both KEPT OPEN as machinery maps for the
+  remaining stages).
+
+
+  LANDED: Picard/DivisorFamilyFieldDegree.lean (NEW, root-wired, green 8863 jobs,
+  keystones lean_verify axiom-clean [propext,Classical.choice,Quot.sound]). Commits
+  4861d8a27 (stage1 MV additivity), 526dd6ff2 (stage2a dictionary+per-piece coeff),
+  25536cd39 (stage2b per-piece finrank), 14c2dca9d (stage3 assembly + deg=n), fb62d9144
+  (root wire).
+
+
+  The colength<->degree identity I-0171 flagged as THE WALL, closed for the support-separated
+  case (each piece equation f_i a unit on every overlap):
+
+  - DivisorAdaptation.deg_presentationDivisor_eq_finrank_glued: deg K (presentationDivisor
+  d) = finrank K W(d).
+
+  - deg_divFamDivisor_of_separated: deg K (divFamDivisor (mk F)) = n (adds the field
+  half IsCertified.finrank_glued). THIS unlocks step (iv): backward-map adaptations
+  are support-separated by construction (pointEquations products isolate support points).
+
+
+  REUSABLE CORES (public): Scheme.isUnit_germ_iff_ordZ_eq_one (unit germ <-> trivial
+  order, via DVR valuation_eq_one_iff_notMem -- packages the PRIVATE ChartColength
+  lemmas); DivisorAdaptation.coeffAt_eq_toAdd_ordZ_eqn (order of any piece eqn = coeffAt
+  divisor, via ordZ_germGenericUnits + ordZ_elem_eq); finrank_glued_eq_sum_of_separated
+  (equalizer = product Pi_j colength when overlaps subsingleton, finrank_pi_fintype);
+  finrank_colength_eq_sum (per-piece finrank = local degree via finrank_quotient_span_section,
+  empty pieces=0); coeffAt_eq_zero_of_isUnit_germ; subsingleton_ovlColength_of_sep
+  (overlap ideal = top via isUnit_of_isUnit_germ). Separation hypothesis ''each f_i
+  a unit on overlaps'' both implies Subsingleton(ovlColength) AND gives support-point
+  uniqueness (avoids prime/affine-overlap machinery).
+
+
+  STILL OPEN (the (f) endgame): (1) GENERAL forward case deg K (divFamDivisor F) =
+  n for an ARBITRARY certified adaptation -- needs honest Mayer-Vietoris overlap inclusion-exclusion.
+  NOTE (checked this session): the refine-to-separated shortcut does NOT close it
+  -- deg D = finrank W(A'') for a constructed separated A'' is circular (deg D = deg
+  D); getting = n still needs deg D = finrank W(A) for the ORIGINAL arbitrary A, i.e.
+  genuine general MV. This is the remaining XL. (2) backward map (iv): build a support-separated
+  CertifiedDivisorFamily from an effective divisor via PointPresentation.pointEquations
+  products; its degree check is now deg_divFamDivisor_of_separated. (3) inverse laws
+  (v) + assembling divFamFieldEquiv (RefinementInjectivity). divFamFieldEquiv NOT
+  yet assembled.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-17T02:17:02.343160+00:00'
+updated_at: '2026-07-17T02:17:02.343171+00:00'
+metadata: {}

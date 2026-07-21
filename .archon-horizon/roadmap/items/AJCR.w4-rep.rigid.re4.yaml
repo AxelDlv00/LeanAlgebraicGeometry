@@ -1,0 +1,20 @@
+id: AJCR.w4-rep.rigid.re4
+title: 'RE-4: sheaf assembly — on the fibrewise-vanishing locus $H^1(C_R, F) = 0$,
+  $Q := H^0(C_R, F)$ finite projective, formation commuting with every base change'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T03:38:48.861756+00:00'
+  parent: AJCR.w4-rep.rigid
+  updated_at: '2026-07-16T06:03:06.713557+00:00'

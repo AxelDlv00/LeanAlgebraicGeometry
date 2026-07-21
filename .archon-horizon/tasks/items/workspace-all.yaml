@@ -1,0 +1,49 @@
+id: workspace-all
+project: Albanese
+objective: ''
+title: Workspace-wide task
+explanation: ''
+projects:
+- Albanese
+- Algebraic-Jacobian-Challenge
+- Algebraic-Jacobian-Challenge-Rebuild
+- Cech-Cohomology
+- GR-Quot-Closure
+- Line-Bundle-Comparison-Iso
+- MR0555258-Compactifying-Picard
+- Picard-IdentityComponent
+priority: normal
+status: queued
+write_set:
+  files: []
+  projects:
+  - Albanese
+  - Algebraic-Jacobian-Challenge
+  - Algebraic-Jacobian-Challenge-Rebuild
+  - Cech-Cohomology
+  - GR-Quot-Closure
+  - Line-Bundle-Comparison-Iso
+  - MR0555258-Compactifying-Picard
+  - Picard-IdentityComponent
+  declarations: []
+  blueprint_nodes: []
+  workspace: false
+scope:
+  projects:
+  - Albanese
+  - Algebraic-Jacobian-Challenge
+  - Algebraic-Jacobian-Challenge-Rebuild
+  - Cech-Cohomology
+  - GR-Quot-Closure
+  - Line-Bundle-Comparison-Iso
+  - MR0555258-Compactifying-Picard
+  - Picard-IdentityComponent
+roadmap_refs: []
+inbox_refs: []
+artifact_refs: []
+created_at: '2026-07-16T16:58:09.573344+00:00'
+updated_at: '2026-07-16T16:58:09.573345+00:00'
+metadata:
+  ad_hoc: true
+  run_targets:
+  - .

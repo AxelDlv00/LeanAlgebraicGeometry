@@ -1,0 +1,49 @@
+id: I-0280
+provider: local
+kind: info
+body: "seedUniv BUILD — FULLY BUILT AND COMMITTED (not a probe). New file Picard/DivSchemeSeedUnivGen.lean,\
+  \ single-module lake build GREEN (8758 jobs, 142s, LEAN_NUM_THREADS=1), all keystones\
+  \ lean_verify axiom-clean [propext, Classical.choice, Quot.sound], zero sorries,\
+  \ warning-free. Root-wired HEAD-blob + own line only (sibling PicEtCrossBaseGraph\
+  \ line NOT swept). No OOM (24 GB free after).\n\n=== COMMITS (this lane) ===\n-\
+  \ bc12e03cd  (a) two-chart cover\n- 42cd0ed91  (b) fibre-window nonvanishing + seed\
+  \ section\n- 8540e043f  (c) base->curve shrink + exists_seedPoint + seedUniv VALUE\n\
+  - f72684083  seedUniv fibre-regularity coherence (hfib bridge)\n\n=== SUB-LEMMAS\
+  \ + seedUniv (all GREEN) ===\n(a) exists_mem_relPinnedChart (z : relCurve C R) :\
+  \ ∃ b : Bool, z ∈ relPinnedChart C R π b  — from relCover_sup. General (any R).\n\
+  \n(b) exists_mem_ne_zero_divUniversalFibreKM_seedPrime (p) : ∃ f ∈ divUniversalFibreKM\
+  \ C hπ g r₁ r₂ b₁ i j p.asIdeal.ResidueField, f ≠ 0  — via finrank_divUniversalFibreKM_add\
+  \ + RR: h⁰(N)=deg N+1−g ≥ g+1 > g (two_mul_genus_le_deg_windowN), dim = h⁰(N)−g\
+  \ ≥ 1.\n    exists_sec_windowCompare_ne_zero_seedPrime (p) : ∃ x ∈ divUniversalFstWindow.toSubmodule,\
+  \ windowCompare R_Z κ(p) x ≠ 0 ∧ relThetaWindowEquiv … x ∈ divUniversalSeedK  —\
+  \ nonvanishing + landed seed-prime bridge.\n\n(c) mem_basicOpen_algebraMap_of_notMem_basePrime\
+  \ {X/Spec R} (hz : z ∈ U) (f) (hf : f ∉ (basePrime (germ_z).hom).asIdeal) : z ∈\
+  \ X.basicOpen (algebraMap R Γ(X,U) f)  — shrink core (mem_basicOpen + notMem_basePrime_iff).\
+  \ General.\n    exists_seedPoint (z) : ∃ b x f, x ∈ divUniversalFstWindow.toSubmodule\
+  \ ∧ z ∈ D(algebraMap f over relPinnedChart b) ∧ relThetaWindowEquiv … x ∈ divUniversalSeedK\
+  \ ∧ (∀ q, f ∉ q.asIdeal → windowCompare R_Z κ(q) x ≠ 0)  — threads (a)+(b)+(c) at\
+  \ p := basePrime(germ_z).\n\nseedUniv : ThetaGeneratorSeed C R_Z π (windowM_choice\
+  \ π hπ g) (divUniversalSeedK C π hπ g r₁ r₂ b₁ b₂ i j)  — 5 pointwise fields via\
+  \ Classical.choose on exists_seedPoint. R_Z = DivCarveChartRing k (windowS_choice·F)\
+  \ (windowM_choice·F) g r₁ r₂ b₁ b₂ i j; needs hO (h0=1) hχ (chi=1−g).\n\nBONUS seedUniv_sec_h_windowCompare\
+  \ (z) : ∃ x f, x ∈ divUniversalFstWindow.toSubmodule ∧ seedUniv.sec z = relThetaWindowEquiv\
+  \ … x ∧ seedUniv.h z = algebraMap … f ∧ (∀ q, f ∉ q.asIdeal → windowCompare R_Z\
+  \ κ(q) x ≠ 0)  — exposes choice coherence for the sibling's fibre-regularity hfib.\n\
+  \n=== RESIDUAL (assembly lane, NOT this lane) ===\n1. no-leak: basicOpen(relPinnedSectionsMap\
+  \ κ(q) (seedUniv.h z)) ≠ ⊥ ⟹ f ∉ q; then seedUniv_sec_h_windowCompare + relPinnedSectionsMap_relThetaResSide_windowEquiv_ne_zero\
+  \ (Fields:251) ⟹ hfib of isGenerator_of_fibre_ne_zero (DivSchemeSeed:188).\n2. hdvd\
+  \ via sibling ψ_z / dvd_of_flat_quotient_of_field_vanishing (e67d18926) + hcolFlat/hcolFin/hfield\
+  \ wiring at seedUniv.\n3. relDivisor := seedUniv.localEquations … (DivSchemeFamily:349)\
+  \ once IsGenerator assembled.\n\nseedUniv + its 3 sub-lemmas DONE and consumable."
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T16:55:02.658450+00:00'
+updated_at: '2026-07-20T03:15:41.923371+00:00'
+metadata: {}

@@ -1,0 +1,21 @@
+id: AJCR.w4-rep.datum.dat-b
+title: 'DAT-B: coverage + injectivity — every $\mathrm{pic}^0$ point is Zariski-locally
+  a chart point (RE-5 descent + engine + DAT-P points); injectivity from the separatedness
+  lane'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T06:42:09.039287+00:00'
+  parent: AJCR.w4-rep.datum
+  updated_at: '2026-07-19T11:06:27.514203+00:00'

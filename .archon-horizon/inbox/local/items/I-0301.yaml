@@ -1,0 +1,110 @@
+id: I-0301
+provider: local
+kind: info
+body: 'free-codomain chart flat BUILD — LANDED (unblocks RD-N). The free-codomain
+  generalization of the SlicingFlatKernel (c4) keystone is built, committed, axiom-clean,
+  and instantiated at the chart reading map consuming the landed hsub_chart. Single-module
+  LEAN_NUM_THREADS=1 lake builds GREEN under the mkdir lock (FreeFlat 2167 jobs 8.2s;
+  FreeFlatChart 8789 jobs 8.3s). All keystones lean_verify axiom-clean [propext, Classical.choice,
+  Quot.sound]; zero sorries; zero warnings in my files. Root: HEAD-blob + only my
+  import line each (protocol §4 — sibling PicEtCrossBaseGraph add + Hinj/Achiever/FibreCut/Seed
+  removals NOT swept; show --stat = my paths, root +1).
+
+
+  === COMMITS (this lane) ===
+
+  - 2ed3e7d50  DD-4 free-codomain flat: (c4) cokernel flatness for infinite-rank free
+  codomain
+
+  - d101ec62e  DD-4 chart-level free flat: Gamma(V)/N_V flat from hsub_chart
+
+
+  === KEYSTONES (VERBATIM) ===
+
+
+  (THE FREE-CODOMAIN (c4) KEYSTONE — the blocker of I-0300 dissolved; pure mathlib,
+  Picard/DivSchemeRedesignFreeFlat.lean)
+
+  theorem Module.Flat.quotient_range_of_forall_rTensor_residueField_injective_free
+  {R : Type u} [CommRing R] {M : Type v} {N : Type w} [AddCommGroup M] [Module R M]
+  [AddCommGroup N] [Module R N] [Module.Finite R M] [Module.Free R N] (psi : M ->l[R]
+  N) (hfib : forall p : PrimeSpectrum R, Function.Injective (psi.rTensor p.asIdeal.ResidueField))
+  : Module.Flat R (N / LinearMap.range psi). — DROPS [Module.Finite R N] of SlicingFlatKernel:296,
+  keeps only [Module.Free R N] (INFINITE rank OK). Route: flat_of_localized_maximal
+  -> at each maximal J, LocalizedModule N is free (Module.free_of_isLocalizedModule)
+  -> local heart.
+
+
+  (THE LOCAL HEART — mirrors mathlib free_of_lTensor_residueField_injective but Flat
+  conclusion + free non-finite codomain)
+
+  theorem Module.Flat.of_lTensor_residueField_injective_of_free {R} [CommRing R] [IsLocalRing
+  R] {M N Q} [Module.Finite R M] [Module.Free R N] (f : M ->l N) (g : N ->l Q) (hg
+  : Surjective g) (hfg : Exact f g) (hf : Injective (f.lTensor kappa)) : Module.Flat
+  R Q. Proof: range f f.g. -> sits in a finite free direct summand F (exists_finite_free_summand_of_fg)
+  -> f factors through F -> mathlib IsLocalRing.split_injective_iff_lTensor_residueField_injective
+  on M->F gives a split -> f split-injective into free N -> N/range f is a retract
+  of N (Module.Flat.of_retract) -> transport Q = N/range f.
+
+
+  (REUSABLE INFRASTRUCTURE) exists_finite_free_summand_of_fg {R M} [Module.Free R
+  M] {L : Submodule R M} (hL : L.FG) : exists (F : Submodule R M) (pr : M ->l F),
+  Module.Finite R F AND Module.Free R F AND L <= F AND pr comp F.subtype = id. — an
+  f.g. submodule of a free module sits in a finite free direct summand with an explicit
+  retraction (basis-coordinate projection). The mathematical content surviving the
+  loss of finiteness of N.
+
+  (re-derived private helpers residueFieldLocEquiv / residueFieldLocEquiv_map / injective_lTensor_residueField_localizedMap
+  — the local-splitting fibre-transport core of SlicingFlatKernel re-derived in the
+  NEW file so usable with [Module.Free] not [Module.Finite]; the landed SlicingFlatKernel.lean
+  was NOT touched.)
+
+
+  (THE CHART DELIVERABLE — Picard/DivSchemeRedesignFreeFlatChart.lean, ns AlgebraicGeometry.ThetaGeneratorSeed)
+
+  theorem forall_flat_colength_quotient_of_hsub_free (K : Submodule R (relThetaSections
+  C R pi a)) (b : Bool) [Module.Finite R K] (hsub_chart : forall p : PrimeSpectrum
+  R, Function.Injective ((LinearMap.range (chartReadMap K b)).subtype.rTensor p.asIdeal.ResidueField))
+  : Module.Flat R (Gamma(relCurve C R, relPinnedChart C R pi b) / LinearMap.range
+  (chartReadMap K b)). — the CHART-level analogue of JFlat forall_flat_colength_quotient_of_hsub,
+  consuming the LANDED hsub_chart (HsubChartPin, I-0299) VERBATIM. Applies the free
+  keystone to (range (chartReadMap K b)).subtype: its range is N_V (Submodule.range_subtype),
+  its residue-fibre injectivity IS hsub_chart. Free codomain via free_sections_relPinnedChart
+  (Free companion of flat_sections_relPinnedChart).
+
+
+  === ANTI-CIRCULARITY (preserved) ===
+
+  Certificate-FREE, h z-FREE, le_rfl. Pure-algebra criterion consumes NO project geometry
+  (mathlib-only imports). Chart deliverable consumes only chartReadMap + hsub_chart;
+  NO IsGenerator/IsCertified/RD-N/seedUniv''. Preserves I-0289 order: hsub_chart (landed)
+  -> hη (landed) -> flat (LANDED HERE, chart level) -> RD-N -> seedUniv'' -> certificate
+  -> U1.
+
+
+  === RESIDUAL toward RD-N ===
+
+  1. PIECE-level hflat: localize forall_flat_colength_quotient_of_hsub_free (chart
+  level, V, le_rfl) to D(h z) subset V AFTER h z chosen, giving the piece-level Module.Flat
+  R ((Gamma(D(h z))/(eqn z)) / N z) that RD-N consumes (I-0299 residual 2). NOW UNBLOCKED
+  — the flat criterion no longer needs [Module.Finite] on the codomain.
+
+  2. hsub_chart still threaded on hchi (genus chi=1-g, campaign-provided) and hη (landed
+  I-0300); once hchi supplied, hsub_chart is unconditional so forall_flat_colength_quotient_of_hsub_free
+  fires.
+
+  Then RD-N -> FibreCut -> ann-cutter -> seedUniv''.IsGenerator -> certificate ->
+  U1 -> divRep.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-20T03:39:21.618378+00:00'
+updated_at: '2026-07-20T03:39:21.618389+00:00'
+metadata:
+  agent: freeflat-lane

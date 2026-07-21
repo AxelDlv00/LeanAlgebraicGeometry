@@ -1,0 +1,94 @@
+id: I-0192
+provider: local
+kind: memory
+body: 'DD-4 Tasks 4+5 session 2026-07-17 (Fable prover) — the exact-sequence definitional
+  layer + the embedding eps (submodule form) LANDED; the two Task-4 hearts precisely
+  walled. Follow-on to I-0175 (Tasks 2+3) and the base-field-transport landing (RelThetaTransportCore).
+
+
+  LANDED (green, root-wired, lake env lean clean, keystones lean_verify axiom-clean
+  [propext, Classical.choice, Quot.sound]; commits b3ba0b420 + f2702e1b4):
+
+  - Picard/DivisorStalkIdeal.lean (261 L): Scheme.LocalEquations.stalkIdeal (cover-independent
+  germ ideal I_D at each point; germ_eqn_span_eq = any covering member''s eqn germ
+  spans it; stalkIdeal_eq_of_divEq); Scheme.mem_span_singleton_of_forall_germ (stalk-locality
+  of membership in a REGULAR principal ideal: local cofactors unique by regularity,
+  glued by X.sheaf.existsUnique_gluing'' — pure sheaf tools, NO Spec/localization
+  dictionary); Scheme.restriction_mem_nonZeroDivisors; LocalEquations.vanishingSubmodule
+  k V0 V1 g : Submodule k (twistSubmodule ... top) = the pairs whose germs lie in
+  stalkIdeal everywhere (= H0(O(Theta^a − d)) in kernel spelling) + vanishingSubmodule_eq_of_divEq
+  (SETOID-READINESS: adaptation-free, DivEq-invariant).
+
+  - Picard/DivisorFamilyTheta.lean (417 L): FinCoverData.thetaOvlUnit (4-case twisting
+  unit: 1 same-chart, relThetaCocycle resp. inverse cross-chart); DivisorAdaptation.thetaDeltaRight/thetaGluedSubmodule
+  = W(d)^{Theta^a} (kernel of deltaLeft − thetaDeltaRight, FlatCokernel shape) + mem_thetaGluedSubmodule_iff;
+  relThetaSections C R pi a (global twisted pairs) with relThetaResFst/Snd (hand-rolled
+  R-linear component extraction across the overModule/overSectionsAlgebra seam) and
+  relThetaSections_matching; DivisorAdaptation.thetaEval/thetaEval_mem/thetaGluedEval
+  : H0(O(Theta^a)) ->l[R] W(d)^{Theta^a}; KERNEL BRIDGE ker_thetaGluedEval : ker =
+  d.vanishingSubmodule (Task-4 LEFT exactness; kernel adaptation-independent).
+
+  - Picard/DivisorFamilyWindow.lean (277 L): relThetaWindowEquiv : R (x)[k] H_a =l[R]
+  relThetaSections (relThetaTwistH0BaseChangeDivisor.symm.trans HModule.linearEquiv0
+  — NOTE: NO TensorProduct.comm needed, transport already lands in grFunctorAff orientation
+  R (x)[k] H); divisorWindow d hH1 = K_a(d) (comap of vanishingSubmodule; divEq-invariant)
+  => DivFam.window (Quotient.lift, simp window_mk) — eps''s components TOTAL and setoid-descended;
+  windowCarve/ker_windowCarve (0 -> K_a(d) -> R(x)H_a -> W^Theta exact left), windowQuotEquiv
+  ((R(x)H_a)/K_a(d) = W(d)^{Theta^a} GIVEN hsurj), divisorWindowGr (conditional point
+  of grFunctorAff k H_a n R from hsurj + Module.Finite/Projective + rankAtStalk=n
+  of W^Theta; transports via Module.Finite.equiv/Projective.of_equiv/rankAtStalk_eq_of_equiv);
+  relThetaPairH1_windowM/_windowMS (H1 inputs DISCHARGED from ledger: window_embedding(_shift)
+  -> subsingleton_hModule_thetaTwistSheaf_one_iff -> subsingleton_relThetaPairH1);
+  divFamEps hpi g F = (K_M(d), K_{M+s}(d)).
+
+
+  STILL OPEN (the two Task-4 hearts; everything downstream is already shaped to consume
+  them):
+
+  (1) SURJECTIVITY of thetaGluedEval (right exactness). Honest route: build O(Theta^a
+  − d) as a BasicOpenCocycleDatum (transition units = f_i/f_j ratio units, theta-twisted
+  cross-chart), fire datumRigidEngine; but the datum engine''s hfib is consumed in
+  COMPLEX form and its DAT-0a discharge at fibre degree a·delta − deg d >= b gates
+  on the W6-full/fibre-restriction seam (GluedSheafEngine staging note). Alternative
+  bespoke route: chart-level gluing of colength lifts (qcoh affine H1 on the piece
+  cover of each affine pinned chart) + overlap correction needing exactly H1(Theta^a
+  − d) = 0 relative. Either is its own M-L brick.
+
+  (2) THE TWISTED CERTIFICATE ((c2)-transport): W(d)^{Theta^a} finite projective of
+  rankAtStalk g. NOT formal from (c2): no global iso W^Theta = W (Pic of the divisor
+  scheme D can be nontrivial; the twisted delta is NOT an automorphism composed with
+  the untwisted delta — checked). Honest math: W and W^Theta are both modules over
+  the R-algebra A_D := gluedSubmodule (equalizer of ALGEBRA maps); W^Theta is an invertible
+  A_D-module; ranks agree because A_D is finite over R so localizations at primes
+  of R are semilocal, where Pic vanishes. This is a self-contained M-L commutative-algebra
+  brick (no scheme theory).
+
+  HAZARDS/NOTES: (a) LinearMap composition across the twistSubmodule (overModule)
+  / colength (overSectionsAlgebra) instance seam FAILS at instances transparency if
+  done with comp of ambient maps — hand-roll the junction map comparing both smuls
+  through overAlgebraMap (relThetaResFst pattern); same for retyping ToType (X.sheaf.obj.obj
+  (op V)) vs Gamma(X,V): bind through an obtain <c1, _> : exists c1 : Gamma(X,V),
+  ... (HMul instance search cannot see the defeq). (b) germ lemmas: mathlib germ_exist
+  is now exists_germ_eq; exists_le_germ_eq gives the section on a sub-open of a GIVEN
+  nbhd directly; Opens-category arrows are Subsingleton — use Subsingleton.elim to
+  normalize before res_res rewrites. (c) Ideal.span_singleton_eq_span_singleton needs
+  IsDomain (stalks are NOT domains for general R) — use span_singleton_le_span_singleton
+  both ways or Ideal.span_singleton_mul_left_unit. (d) root lake build from disk currently
+  red in sibling-owned DivisorFamilyPullback.lean:328 (their in-flight edit, not ours).
+
+  FOR TASK 6 (mono): consume DivFam.window/divFamEps + mem_divisorWindow_iff (kernel
+  spelling: x in K_a(d) iff its window image vanishes along d germwise) — fibrewise
+  this is exactly the H0(MF − D) reading PFib expects. FOR TASK 7 (naturality): divisorWindow
+  is comap along relThetaWindowEquiv of a germ condition; naturality in R should go
+  through relThetaCocycle_baseChange + the engine''s base-change clause; all defs
+  are R-generic and public.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T04:47:43.933351+00:00'
+updated_at: '2026-07-20T03:15:59.317107+00:00'
+metadata: {}

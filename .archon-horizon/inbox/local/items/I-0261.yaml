@@ -1,0 +1,69 @@
+id: I-0261
+provider: local
+kind: info
+body: 'DAT-J worksheet pinned (informal/w4-datj-worksheet.md, commit 50505192187)
+
+
+  VERDICT. The JacobianData INTERFACE that DAT-J ''assembles into'' is ALREADY LANDED
+  end-to-end — the structure (JacobianData.lean:87-100), grpObj/homEquiv/uniqueUpToIso
+  consumer API (:113-144), the eta-defeq smoke tests (:167-182, machine-checked),
+  the FULL Wave-7 base-change transport (JacobianDataBaseChange.lean:59/199/227) and
+  the Abel-Jacobi compat (JacobianDataBaseChangeAbel.lean, axiom-clean modulo the
+  externalised W7-K1 hCore). Like DAT-glue''s 01JJ engine, the receptacle exists;
+  DAT-J does not build it.
+
+
+  DAT-J OWNS EXACTLY THREE (all bounded, NO XL): (1) the producer jacobianData C :
+  JacobianData C — a 4-field packaging; J/rep/lft come verbatim from DAT-G''s k-level
+  descent (the PicRepDatum k k C shape = JacobianData-minus-qc, defeq rep-field machine-checked
+  PicRepDatum.lean:144). (2) the quasiCompact field via the Abel image (M brick).
+  (3) the definitional discharge of the frozen Jacobian/instGrpObj (S).
+
+
+  QC MECHANISM (the LIGHT half). |J| = image of the qc DivScheme (compactSpace_divScheme,
+  DivSchemeQProj.lean:194, DD-Q LANDED) under the Abel morphism rep.homEquiv.symm;
+  image of compact is compact. Surjectivity from effectivity (exists_effective_of_picClass
+  FLVClass.lean:208) + fiberTwist shift (FiberTwist.lean:301, no rational point).
+  The abstract ''compact surjective image => qc'' lemma (DJ-0) is launchable NOW.
+
+
+  THE PROPERNESS/UNIVERSAL-CLOSEDNESS BOUNDARY. JacobianData stores ONLY lft + quasiCompact
+  (JacobianData.lean:96-100). Separatedness of J is off-datum (JacobianData.isSeparated,
+  LANDED). Properness is WAVE-5''s, via AbelSourceData + isProper_of_abelSource (AbelSource.lean:126,
+  done-conditional) whose producer P1 needs the source Div^g to be PROPER (universal
+  closedness) — NOT delivered by DD-Q (DivSchemeQProj.lean:44-51, I-0245), a NEW brick,
+  gate w5-av.p1 BLOCKED. So: DAT-J''s qc = LIGHT (compact source, landed); Wave-5''s
+  properness = HEAVY (proper source, unbuilt). Same Abel morphism, different source
+  strength. DAT-J must NEVER route qc through AbelSourceData.
+
+
+  NODE #1 RISK (found this pass, structural). Jacobian/instGrpObj are DEF sorries
+  (Challenge.lean:96/107), so the discharge MUST edit Challenge.lean, which must then
+  import the producer => the producer''s cone must be Challenge-FREE. But riemann_inequality_curve
+  (ChiCurve.lean:183) is genus-spelled and ChiCurve imports Challenge (verified :11).
+  So the qc surjectivity MUST use the Challenge-free exists_effective_of_picClass
+  (FLVClass, verified Challenge-free), never riemann_inequality_curve. A single ChiCurve
+  import in the producer cone cycles at discharge.
+
+
+  LAUNCHABILITY. Pre-divRep: DJ-0 (compact-image qc lemma) + the DJ-2/DJ-IN packaging
+  statements (typed vs landed structs) — cold today. Post-DAT-G (divRep+coverage+DAT-glue/DAT-G0
+  gated): the qc surjectivity proof, the producer proof, the discharge. Bonus: jacobianData
+  C also unblocks Jacobian.functor (kit LANDED, Pic0PullbackGrp.lean) and four Wave-7
+  declarations for free.
+
+
+  The ε+ shift is NOT on DAT-J''s mainline — chartValue already lands in pic0 (DivSchemeAbel.lean:382);
+  representableByOfShift is a fallback tool only. DAT-J does no shifting.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T12:34:18.582977+00:00'
+updated_at: '2026-07-20T03:15:17.727440+00:00'
+metadata: {}

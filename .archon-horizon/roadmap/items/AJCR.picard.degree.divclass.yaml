@@ -1,0 +1,27 @@
+id: AJCR.picard.degree.divclass
+title: 'The divisor class map $\mathrm{div} \mapsto [\mathcal{O}(D)]$: points, totality,
+  pullback'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'LANDED + REPAIRED (058d3f180a, 704176f08d, 5d20fc70c5). The point divisor
+  $1\cdot x$ as local equations with the defining property now PUBLIC (germ$_\eta$
+  of the equation $=$ the uniformizer at $x$); the total $\mathrm{divisorClass}_K
+  : \mathrm{Div}(X) \to \mathrm{Pic}(X)$ with $[\mathcal{O}(D+D^{\prime})] = [\mathcal{O}(D)]\cdot[\mathcal{O}(D^{\prime})]$;
+  the pullback calculus $[f^*E] = f^*[E]$ under the honest regularity hypothesis;
+  and the collapse $\mathrm{divisorClass}_K = \mathrm{CurveDivisor.picClass}_K$ —
+  the map now carries the bridge interface (surjectivity, extraction, $\ker = $ principal
+  divisors) by rewriting.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-15T01:51:19.540434+00:00'
+  parent: AJCR.picard.degree
+  updated_at: '2026-07-15T03:06:25.576751+00:00'

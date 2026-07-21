@@ -1,0 +1,19 @@
+id: AJCR.w4-rep.datum.dat-j
+title: 'DAT-J: JacobianData assembly — quasi-compactness via the Abel image of $\mathrm{Div}^g$-lite;
+  discharge of the frozen $\mathrm{Jacobian}$ and $\mathrm{instGrpObj}$'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: pending
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T06:42:11.223347+00:00'
+  parent: AJCR.w4-rep.datum

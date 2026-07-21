@@ -1,0 +1,22 @@
+id: AJCR.w2-chi.carrier
+title: Cohomology and divisor substrate (landed)
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: The general-coefficient two-cover H^1 equivalence, structure-sheaf affine
+  vanishing, Mayer-Vietoris slice, DVR/valuation stalks and closed-locus finiteness
+  — the divisor-first design's assumed substrate, verified intact 2026-07-14. NOT
+  the twisted carrier (that route is moot).
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-14T01:19:17.827440+00:00'
+  parent: AJCR.w2-chi
+  updated_at: '2026-07-14T03:56:19.189332+00:00'

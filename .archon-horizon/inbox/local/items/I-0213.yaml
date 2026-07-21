@@ -1,0 +1,56 @@
+id: I-0213
+provider: local
+kind: issue
+body: 'ADJUDICATION — the DAT-D functor pin''s global certificate is WRONG: currently-pinned
+  divFunctor is representable by NO scheme; the locally-certified repair is frozen
+  (spec-dd-2 Addendum 2). DD-R lane: DDR-9 must restate divRep against DivFamZar.
+  Supersedes the ''certificate brick'' plan inside I-0209 (the Z-clopen PRINCIPLE
+  there stays valid — it is exactly what powers this counterexample).
+
+
+  THE COUNTEREXAMPLE (campaign-central): R = Γ(C minus a point off the 0/infinity
+  fibers); d = the DIAGONAL section of C_R (the campaign''s own graph-divisor, AJCR.picard.degree.graph),
+  a degree-1 relative effective divisor. Every piece P inside one pinned chart has
+  Z-trace = Delta(U_P) with U_P a PROPER open of the CONNECTED Spec R, and (c1) forces
+  U_P clopen, hence empty — NO globally certified adaptation of d exists, while d
+  IS certifiable over each member of a small basic-open cover of Spec R (the diagonal
+  locally stays in one chart). Therefore: (1) certified families over a base cover
+  can glue to a non-certifiable family — the S5 conditional keystone''s hcert is UNSATISFIABLE
+  in general and the W-idempotent brick cannot fix it (here W = R, no idempotents);
+  (2) DivFam (globally certified) satisfies separation but NOT gluing — it is not
+  a Zariski sheaf, so no scheme represents the pinned divFunctor, and DDR-9''s divRep
+  as currently stated is unprovable. Independently, the divRep forward map ''pull
+  the universal family'' is ill-defined for test maps not landing in one chart member
+  — same phenomenon from the other side.
+
+
+  THE REPAIR (faithful to Kleiman df:red/lm:ctn, where divisor-flatness is Zariski-LOCAL
+  on the base): the functor value is the LOCALLY-certified quotient DivFamZar n R
+  := {d : LocalEquations // IsLocallyCertified n d}/DivEq, with IsLocallyCertified
+  = exists finite span-top (g : Fin m -> R) and per-i a CertifiedDivisorFamily over
+  Localization.Away (g i) whose eqns are DivEq to the pulled d (hreg free along open
+  immersions — S5 Kit). CertifiedDivisorFamily/DivFam remain THE building block; over
+  a field the two notions agree (trivial cover), so ALL DD-4 (epsilon/windows/mono),
+  DD-1c field dictionary, DAT-B field-level material is UNAFFECTED. With the repair
+  the pinned keystone DivFamZar.exists_glue_of_away_compat becomes TRUE with already-landed
+  ingredients (S5 awayGluedEquations + chart restrictions + composite covers + total
+  mapAlg). IMPACT ROWS: DD-R/DDR-9 — restate divRep homEquiv against the DivFamZar
+  vehicle (the universal family pulls back to a LOCALLY certified family along arbitrary
+  test maps: maps into the chart atlas are local — this is exactly why the repair
+  also FIXES the forward map); DDR-6/8 chart-local work unaffected; DD-4 unaffected;
+  DAT-C consumes chart-level data unaffected. Implementation: S5b (DivFamZar + keystone)
+  in flight in this lane; S6 (divFunctor packaging) follows on DivFamZar. Vocabulary
+  pins added: IsLocallyCertified, DivFamZar, DivFam.toZar, DivFamZar.mapAlg, DivFamZar.picClass,
+  DivFamZar.eq_of_away_eq, DivFamZar.exists_glue_of_away_compat.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-17T13:26:54.838199+00:00'
+updated_at: '2026-07-17T13:34:18.836627+00:00'
+metadata: {}

@@ -1,0 +1,23 @@
+id: AJCR.w7-functor
+title: 'Wave 7: functoriality and base change of fields'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Jacobian.functor with map_id/map_comp, baseChangeIso (Jac(C)_L = Jac(C_L))
+  with the identity and cocycle coherences baseChangeIso_id/baseChangeIso_comp, and
+  baseChange_ofCurve. Cheap by design: the etale-sheafified functor pin makes both
+  functoriality and base change definitional at the functor level; the work is transporting
+  the representability datum.'
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-14T01:20:13.613938+00:00'
+  parent: AJCR.jacobian
+  updated_at: '2026-07-17T02:09:04.506654+00:00'

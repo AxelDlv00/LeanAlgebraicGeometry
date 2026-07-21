@@ -1,0 +1,23 @@
+id: AJCR.w2-chi.ledger
+title: chi additivity along point twists
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'DONE (560403474e): $\chi(\mathcal{O}(D)) = \chi(\mathcal{O}(D - x)) + \deg_K
+  \kappa(x)$ on the nose against the dévissage sequence $0 \to \mathcal{O}(D-x) \to
+  \mathcal{O}(D) \to \mathrm{sky}_x(J) \to 0$, via the six-term Ext slice and $h^0(\mathrm{sky})
+  = [\kappa(x):K]$, $h^1(\mathrm{sky}) = 0$; hence $\chi(\mathcal{O}(D)) = \chi(\mathcal{O})
+  + \deg D$ and $\deg \mathrm{div}(g) = 0$.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-14T01:19:18.392606+00:00'
+  parent: AJCR.w2-chi
+  updated_at: '2026-07-15T01:59:36.246085+00:00'

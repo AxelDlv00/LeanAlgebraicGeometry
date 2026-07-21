@@ -1,0 +1,55 @@
+id: I-0175
+provider: local
+kind: memory
+body: 'DD-4 continuation (Tasks 2-7) session 2026-07-17 (Opus) — LANDED Tasks 2+3,
+  corrects I-0173.
+
+
+  LANDED (green, root-wired, keystones axiom-clean [propext, Classical.choice, Quot.sound]):
+
+  - Cohomology/RelThetaTwist.lean (Task 2): relThetaCocycle := relUnitCocycle C R
+  (fiberTwoCover pi) (thetaUnit pi ^ n); relThetaTwistSheaf := relTwistSheaf C R (fiberTwoCover
+  pi) (relThetaCocycle ...); relThetaCocycle_baseChange (relCocycleBaseChange of relThetaCocycle
+  over k = relThetaCocycle over R, from relSectionsMap_pullback); relThetaTwistH0BaseChange
+  (hH1 : Subsingleton (relTwistPair C k pi (relThetaCocycle C k pi n)).H1) : R (x)[k]
+  H0(relThetaTwistSheaf C k pi n) 0 =~L[R] H0(relThetaTwistSheaf C R pi n) 0 == relTwistH0BaseChange
+  at base ring k, threaded onto relThetaTwistSheaf C R via Sheaf.HModule.mapEquiv
+  (eqToIso ...).
+
+  - RiemannRoch/SectionMul.lean (Task 3): sectionMulBilin/sectionMul (K-bilinear H0(A)xH0(B)->H0(A+B)
+  from mul_mem_divisorSections_top), relSectionMul (baseChange R sectionMul = mu(x)R),
+  relSectionMulRight, carveArrow (K''.mkQ o rmul_a o Km.subtype), carveArrow_baseChange_eq_zero_iff
+  := Grassmannian.baseChange_eq_zero_iff (carve arrow) S (needs [Module.Finite R Km]
+  [Module.Finite/Projective R quotient]).
+
+
+  CORRECTION TO I-0173: audit''s ''relTwistH0BaseChange o thetaTwistH0Equiv gives
+  H_A(x)R'' is NOT a one-liner. relThetaTwistSheaf C k lives on relCurve C k = (C
+  (x) overSpec k k).left; thetaTwistH0Equiv/H_A (Task 1) lives on C.left. DIFFERENT
+  schemes. overSpec k k terminal-like (Picard/ThetaShift overSpecSelf_hom:68, toBaseTest:73),
+  so relCurve C k =~ C.left via right unitor, but NO such iso is built and transporting
+  the pinned-cover+theta-cocycle+twist-sheaf+H0/H1 package across it to identify H0(relThetaTwistSheaf
+  C k pi n) =~ H_A (+ the H1 subsingleton) is UNBUILT (M-L). This BASE-FIELD-TRANSPORT
+  SEAM gates Tasks 4-7: eps needs K_A(d) in R(x)[k]H_A (grFunctorAff ambient). relThetaTwistH0BaseChange
+  delivers the correct engine content R(x)_k H0(C_k)=~H0(C_R); residual gap to ''(x)H_A''
+  is exactly this seam.
+
+
+  STILL OPEN: Task 4 (exact section seq 0->H0(O(Theta^M-d))->H_M(x)R->W(d)^Theta^M->0
+  via engine at cert + DivFam gluedSubmodule/IsCertified), Task 5 (eps into grFunctorAff
+  pair; base-field seam + TensorProduct.comm orientation + corank-g from Task4), Task
+  6 (mono via PFib baseDivisorAt_normalization:127 + divFamDivisor; DD-1 divFamFieldEquiv
+  backward/degree in flight), Task 7 (naturality via Module.Grassmannian.map; DD-1
+  mapAlg maybe blocked). NEXT UNBLOCKER: build the base-field-transport brick (relCurve
+  C k =~ C.left, twist-sheaf transport) as its own M-L sub-brick.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-17T01:56:01.508466+00:00'
+updated_at: '2026-07-20T03:15:53.452776+00:00'
+metadata:
+  agent: dd4-tasks-2-7-opus

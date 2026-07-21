@@ -1,0 +1,75 @@
+id: I-0269
+provider: local
+kind: info
+body: 'DD-4 RelDivisor (Route 2) — PARTIAL (Nakayama probe LANDED; RD1 ideal-sheaf
+  realization is the honest wall).
+
+
+  NAKAYAMA VERDICT: PROVES. The relative-local-BPF Nakayama-neighbourhood (spec-dd4-seam
+  §2.3, the designated PROBE-FIRST ''one place the construction could wall'') proves
+  cleanly and is COMMITTED. New file Picard/DivSchemeRelDivisor.lean, mathlib-only
+  imports, zero sorries, both keystones axiom-clean [propext, Classical.choice, Quot.sound],
+  single-module LEAN_NUM_THREADS=1 lake build green (2163 jobs, 2.5s). Commit 8b4ad41d5cc8d391b9fee70d70d1062609ab5493
+  (my file + only my root import line; sibling PicEtCrossBaseGraph line NOT swept).
+
+
+  KEYSTONES (verbatim, namespace Module, {R}[CommRing R]{M}[AddCommGroup M][Module
+  R M][Module.Finite R M]):
+
+  - exists_subsingleton_away_of_residueField_tmul (p : PrimeSpectrum R) (h : Subsingleton
+  (p.asIdeal.ResidueField ⊗[R] M)) : ∃ f ∉ p.asIdeal, Subsingleton (LocalizedModule.Away
+  f M)
+
+  - exists_subsingleton_away_of_tmul_residueField (p) (h : Subsingleton (M ⊗[R] p.asIdeal.ResidueField))
+  : ∃ f ∉ p.asIdeal, Subsingleton (LocalizedModule.Away f M)
+
+  Proof = mathlib in ~8 lines: Module.mem_support_iff_nontrivial_residueField_tensorProduct
+  + Module.notMem_support_iff + LocalizedModule.exists_subsingleton_away (Support.lean:222).
+  Q := I_d/(sec z) instantiates M.
+
+
+  KEY FINDING (route de-risking): the DESIGNATED RISK — the §2.3 Nakayama step — is
+  NOT the wall. It is ~8 lines from mathlib. Moreover the guard-sensitive N2 (''flat
+  ⟹ I_d⊗κ ↪ B⊗κ'', module-fibre=scheme-fibre) is ALSO ALREADY LANDED: FlatCokernel.lean:54
+  LinearMap.lTensor_ker_subtype_injective_of_flat_coker (δ:=I.mkQ, [Module.Flat R
+  (B⧸I)]). k[ε] guard respected: hypothesis is the MODULE fibre Q⊗κ(p)=0 (fails for
+  t+ε since (ε)⊗_{k[ε]}k≅k≠0, §2.1), never fibrewise vanishing.
+
+
+  THE HONEST WALL = RD1 fibre-to-relative-Cartier realization (spec-dd4-seam §4 risk
+  3): building relDivisor : (relCurve C R_Z).LocalEquations (fields cover/eqn/regular/ratio_isUnit,
+  DivisorClass.lean:112) as the locally-principal Cartier ideal sheaf cut by the carve''s
+  flat rank-g quotient (ker deltaLeft-deltaRight, SlicingFlatKernel). Scheme-of-a-subscheme
+  content — NOT the flatness (§2.2, available) and NOT Nakayama (§2.3, landed). The
+  genuine size-L remainder.
+
+
+  ROUTE NOT REOPENED (I-0231 safety binding check): flat-of-constant-rank-g IS provable
+  in the seed situation via SlicingFlatKernel keystones 2/3/4/7 (I-0240) fed by the
+  carve''s fibrewise spanning (divUniversal_carve_residueField, FamilyUniv:135). Carve
+  quotient NOT found non-flat. Route 2 stands.
+
+
+  relDivisor/RD2/RD3/dvd: NOT built (all gated on RD1). Once relDivisor exists: dvd
+  closes via Scheme.mem_span_singleton_of_forall_germ (DivisorStalkIdeal:79) + germ_eqn_mem_nonZeroDivisors
+  (fibre_regular) + this Nakayama engine (sec z generates I_d on D(f)) + FlatCokernel
+  injectivity (Q⊗κ=0 from the d_p achiever exists_coeffAt_eq_baseDivisorAt BaseDivisor:143).
+  RD3 flat/deg-g for CertUniv reads off SlicingFlatKernel rankAtStalk=g keystone 7
+  on deltaLeft-deltaRight (NOT via fibrewise cutting).
+
+
+  NEXT LANE: build RD1 (LocalEquations Cartier realization) reusing the seed''s own
+  eqn/localEquations presentation vehicle per §4-risk-3 mitigation, NOT re-deriving
+  subscheme theory. Nakayama + FlatCokernel + germ-closer glue all landed.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T13:48:21.263910+00:00'
+updated_at: '2026-07-20T03:15:29.089333+00:00'
+metadata: {}

@@ -1,0 +1,49 @@
+id: I-0208
+provider: local
+kind: info
+body: 'W7-B2 landed: PicEtAff.baseFieldShuffle — consumer notes for B-4b / B-5-B-6
+  / K-1
+
+
+  From the w7-b2 lane (commits 172467e07 Lean + 636b6b762 root wiring + 931457440
+  blueprint; file Picard/PicEtAffBaseFieldShuffle.lean).
+
+
+  FOR B-4b (gate now CLEAR; full interface recorded as a roadmap comment on AJCR.w7-functor.b4):
+  PicEtAff.baseFieldShuffle k L C A : PicEtAff C A ≃* PicEtAff ((baseChange k L).obj
+  C) A, for ANY C : Over (Spec (.of k)) (no curve pack) and any tower k → L → A. mk-rules
+  are rfl on the SHARED cover (baseFieldShuffle_mk/_symm_mk); the descent-class transport''s
+  underlying relPic map IS B-4a''s relPicCrossBase/relPicCrossBaseInv by rfl (crossBaseTransportFamily_descentHom_coe/_Inv_,
+  crossBaseTransportFamily_relPicHom/_Inv_), so I-0205''s degAt-matching route (degAff_mk
+  on a common finite separable refinement + relPicCrossBase_relPicAlgMap + relPicDeg_relPicCrossBase)
+  needs zero glue. Naturality vs restriction: mapAlg_baseFieldShuffle/_symm for φ
+  : A →ₐ[L] A'' with the k-face at φ.restrictScalars k — the componentwise shape for
+  the affine-opens limit lift through picEtAffineEquiv; instance form map_baseFieldShuffle/_symm.
+  Unit: baseFieldShuffle_unit/_symm_unit. mk-equality transport: baseFieldShuffle_mk_eq_mk/_symm_.
+
+
+  FOR B-5/B-6 (JacobianDataBaseChange): theta''s Type form is B-4b''s product; you
+  should not need baseFieldShuffle directly, but it has no curve-pack hypotheses and
+  both symm faces of every law are provided if you do.
+
+
+  ELABORATION NOTE (positive mirror of I-0206''s lesson): instantiating the D2-ii
+  core''s two-sided instance index at the L-diagonal via the F-2 algebra_eq_of_tower
+  pattern is fully rfl-transparent — both core instantiations (curve-side F-2, field-side
+  B-2) confirm the core design; the only genuinely new obligation was the inv-side
+  naturality crossBaseAffineIso_inv_naturality (4-step rw from B-4a''s square).
+
+
+  K-1 note: the theta-cocycle lane can reuse the two-family + picEtAffHom_picEtAffHom
+  pattern at composite towers k → L → M; baseFieldShuffle is stated for arbitrary
+  [Algebra k L], so composed shuffles are already legal inputs.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T09:23:15.115417+00:00'
+updated_at: '2026-07-20T03:14:26.026397+00:00'
+metadata: {}

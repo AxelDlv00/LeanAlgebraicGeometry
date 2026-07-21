@@ -1,0 +1,26 @@
+id: AJCR.picard.degree.bridge
+title: 'Meromorphic bridge: $\mathrm{divisorClass}$ is surjective and $[D]=[D^{\prime}]
+  \Rightarrow D-D^{\prime} = \mathrm{div}(f)$'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'W1–W6 DONE (fbd77da540, 5d20fc70c5, 96db79e961, W6-lite committed): $\mathrm{Pic}(X)
+  \cong \mathrm{Div}(X)/\mathrm{principal}$ at the cocycle level; $\mathrm{classDeg}
+  : \mathrm{Pic}(X) \to \mathbb{Z}$ with E-i..E-iii and $\chi = 1 - g + \mathrm{classDeg}$
+  on the curve; and W6-lite — $h^0/h^1(\mathcal{O}(D))$ depend only on $[\mathcal{O}(D)]$,
+  with Subsingleton-$H^1$ and finiteness transports (finiteness-free, on landed API
+  — the predicted collapse). W6-full (engine-sheaf identification) is owned by the
+  Wave-4 datum seam. THE BRIDGE SUB-LANE IS CLOSED.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-15T01:51:20.194462+00:00'
+  parent: AJCR.picard.degree
+  updated_at: '2026-07-15T09:24:52.208670+00:00'

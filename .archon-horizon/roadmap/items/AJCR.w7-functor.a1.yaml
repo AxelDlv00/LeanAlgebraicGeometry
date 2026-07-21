@@ -1,0 +1,22 @@
+id: AJCR.w7-functor.a1
+title: 'A-1: baseChange_ofCurve datum-level after the B-cluster (abelElement landed);
+  frozen closure after DAT-J'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'A-1 datum-level: reduction to the Leg-4 core LANDED (commit ea4ed5c97, Picard/JacobianDataBaseChangeAbel.lean,
+  axiom-clean); accessor re-pinned .hom.hom.hom (L implicit). REMAINING: hCore, the
+  shuffle-on-graph identity. Frozen closure after DAT-J.'
+status: active
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: human
+  created_at: '2026-07-17T07:56:00.238639+00:00'
+  parent: AJCR.w7-functor
+  updated_at: '2026-07-17T17:24:43.261696+00:00'

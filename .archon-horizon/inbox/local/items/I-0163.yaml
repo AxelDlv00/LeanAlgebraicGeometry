@@ -1,0 +1,25 @@
+id: I-0163
+provider: local
+kind: memory
+body: 'Lean pattern: ''set x := e'' + external lemma outputs = syntactic atom mismatch
+  (omega/rw fail)
+
+
+  When a proof does ''set Fd := fiberWeilDivisor π'' and then invokes external lemmas
+  (rank_normalization etc.), the lemma outputs carry the UNFOLDED spelling while set-folded
+  context carries Fd — defeq but syntactically distinct, so omega/rw silently lose
+  hypotheses (they atomize by syntax). Robust fix used throughout DD-F''s PFib.lean:
+  wrap each external application in a ''have h : <set-spelled statement> := <application>''
+  — the have coerces by defeq and downstream syntactic tools see consistent atoms.
+  Also: CurveDivisor.deg_single only rw-matches the Finsupp.single spelling; bind
+  it through a defeq ''have'' at CurveDivisor.single first.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-16T18:33:34.387549+00:00'
+updated_at: '2026-07-16T18:33:34.387560+00:00'
+metadata: {}

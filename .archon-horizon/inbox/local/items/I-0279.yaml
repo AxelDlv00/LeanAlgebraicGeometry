@@ -1,0 +1,78 @@
+id: I-0279
+provider: local
+kind: info
+body: 'ψ_z fibre-injective + Flat BUILD — LANDED the full injective-route bridge chain
+  (commit e67d18926); geometric FibreInjective proof gated on sibling seedUniv.
+
+
+  New file Picard/DivSchemeUnivFibreKerInj.lean (163 L). Single-module lake build
+  GREEN (8667 jobs, 8.5s), zero sorries, no new warnings; all keystones axiom-clean
+  [propext, Classical.choice, Quot.sound]. Root: HEAD blob + only my import line (sibling
+  PicEtCrossBaseGraph line NOT swept, preserved in working tree).
+
+
+  === KEYSTONES (verbatim) — namespace AlgebraicGeometry.ThetaGeneratorSeed, D : ThetaGeneratorSeed
+  C R π a K ===
+
+  - def FibreInjective (z : relCurve C R) : Prop := ∀ p : PrimeSpectrum R, Function.Injective
+  (((D.kColengthMap z).comp K.subtype).rTensor p.asIdeal.ResidueField)   [the ψ_z
+  fibre-injective STATEMENT: f_z = kColengthMap z ∘ K.subtype injective on every κ(p)
+  fibre]
+
+  - theorem flat_colength_quotient (z) [Module.Finite R ↥K] [Module.Finite R (Γ(D(h
+  z))⧸(eqn z))] [Module.Flat R (Γ(D(h z))⧸(eqn z))] (hinj : D.FibreInjective z) :
+  Module.Flat R ((Γ(D(h z))⧸(eqn z)) ⧸ D.sideColengthSubmodule z)   [ψ_z ⟹ Flat(colength/N
+  z) via engine Module.Flat.quotient_range_of_forall_rTensor_residueField_injective
+  (SlicingFlatKernel:192); N z = sideColengthSubmodule z = range f_z]
+
+  - theorem forall_flat_colength_quotient [IsNoetherianRing R] [Module.Finite R ↥K]
+  (hcolFin)(hcolFlat)(hinj : ∀ z, D.FibreInjective z) : ∀ z, Module.Flat R ((Γ(D(h
+  z))⧸(eqn z)) ⧸ D.sideColengthSubmodule z)   [the ∀z hflat package]
+
+  - theorem dvd_of_fibreInjective_of_field_vanishing [IsNoetherianRing R] [Module.Finite
+  R ↥K] (hreg)(hcolFin)(hcolFlat)(hinj : ∀ z, D.FibreInjective z)(hfield) : ∀ z ⦃ψ⦄,
+  ψ ∈ K → relThetaResSide a (D.side z) (D.piece_le z) ψ ∈ Ideal.span {D.eqn z}   [full
+  hdvd on the injective route, feeding dvd_of_flat_quotient_of_field_vanishing (DivSchemeSeedDvd:128);
+  NO hspan, NO glued↔per-point bridge]
+
+
+  === Flat(colength/N z): LANDED as a PRODUCER (needs FibreInjective z as input) ===
+
+  flat_colength_quotient / forall_flat_colength_quotient give Module.Flat R (colength
+  z ⧸ N z) from D.FibreInjective z + landed hcolFin/hcolFlat/[Finite R ↥K]. This IS
+  I-0278 FINDING 1''s cleanest route (hspan bypassed). NOT yet proved: FibreInjective
+  z itself (the geometric hinj).
+
+
+  === Shared with RD3/CertUniv ===
+
+  Confirmed I-0278 FINDING 2: no further ABSTRACT lemma to factor. Shared piece =
+  the SlicingFlatKernel FibrewiseInjective engine :192 (∀ ψ: fibre-injective ⟹ Flat(N⧸range
+  ψ)). RD3 IsCertified flat_coker_incl/flat_coker_diff (DivisorFamily.lean:437-441)
+  consume the SAME engine on deltaLeft−deltaRight. Documented in file docstring; no
+  redundant RD3 lemma written.
+
+
+  === RESIDUAL (gated on sibling seedUniv, NOT in HEAD) ===
+
+  Proving FibreInjective z = the size-XL geometry: identify divUniversalFibreKM =
+  H⁰(N−d_p) (DivSchemeSeedUnivAssembleKappa:157, DivSchemeSeedUnivFields:133/146)
+  transported via colength base-change pieceQuotBaseChangeAlg (DivisorFamilyPullback:384/396)
+  tied to fibre equation e_p. Producer divUniversal_carve_residueField (DivSchemeFamilyUniv:135)
+  is on the PairChartRing/Grassmannian side (pairTautFst/Snd baseChangeMkQ kernels
+  at κ(q)); bridging to kColengthMap needs the CONCRETE seedUniv D to instantiate
+  kColengthMap z / d_p / e_p — not stateable at the seed without seedUniv. Once seedUniv
+  lands: instantiate hinj, feed forall_flat_colength_quotient / dvd_of_fibreInjective_of_field_vanishing
+  → hdvd.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T16:19:05.780202+00:00'
+updated_at: '2026-07-20T03:15:40.502558+00:00'
+metadata: {}

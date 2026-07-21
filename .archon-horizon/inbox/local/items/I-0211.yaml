@@ -1,0 +1,89 @@
+id: I-0211
+provider: local
+kind: memory
+body: 'DD-4 Task 4 PAIRING RESIDUAL DISCHARGED (I-0199''s OPEN item; the last input
+  to the rank leg) — session 2026-07-17 (Fable prover lane). Commits 4af96f3e4 (pure
+  algebra) + 27c6a3ebe (geometry + root wiring), both verified show-stat-clean; root
+  lake build green (8930 jobs); all keystones lean_verify axiom-clean [propext, Classical.choice,
+  Quot.sound]; both files warning-free.
+
+
+  LANDED:
+
+  - Algebra/MonicReverseInverse.lean (79 L, PURE algebra, mathlib-PR-worthy, SHARED
+  SUBSTRATE — see ownership note): Polynomial.Monic.mul_aeval_neg_divX_reverse (reciprocal-witness
+  identity: s*w=1 + p monic + aeval w p = 0 ==> s * aeval s (-(p.reverse.divX)) =
+  1; witness polynomial UNIFORM in p — mathlib''s eval2_reverse_eq_zero_iff at Invertible
+  w := (s,..) + X_mul_divX_add + coeff_zero_reverse do all the work); exists_monic_forall_aeval_eq_zero
+  (ONE monic annihilator for finitely many integral elements across DIFFERENT R-algebras;
+  product of chosen equations + Finset.prod_eq_zero).
+
+  - Picard/DivisorThetaPairing.lean (379 L): IsThetaPaired a holds for EVERY a from
+  clause (c1) on the chart-1 pieces alone. ROUTE (new — not I-0199 route 1''s qcoh
+  brick, which turned out UNNECESSARY): colength finiteness over R ==> t1-image integral
+  in every chart-1 colength ==> one monic p kills all ==> on cross overlaps t0*t1=1
+  reads p backwards: global chart-0 gauge H := aeval t0 (-(p.reverse.divX)) with mk(res(t0*H))
+  = 1 in EVERY cross-overlap colength, both orders (mk_ovlIdeal_coord_mul_aeval_eq_one).
+  Manufactured inverse-twisted sections u'' = (H^a; 1), v'' = (1-(t0*H)^a; 0) (thetaInvSectionFst/Snd,
+  memberships from the gauge identity; the (inl,inr) case is left_inv_eq_right_inv
+  against the theta unit) + partition sigma*u'' + tau*v'' = 1 (thetaSection_pairing,
+  componentwise BY CONSTRUCTION) ==> isThetaPaired_of_sectionWitness. KEYSTONES: isThetaPaired_of_coordInverse
+  (gauge boundary), isThetaPaired_of_finite_colength (hfin : forall j1, Module.Finite
+  R (colength (inr j1)) — only the INFINITY-side finiteness matters), IsCertified.isThetaPaired,
+  and certificate-only transports IsCertified.finite_thetaGlued / projective_thetaGlued
+  / rankAtStalk_thetaGlued (W(d)^{Theta^a} fin proj rank n over R, no side hypotheses
+  beyond IsCertified).
+
+
+  WHY THE DEAD-END LIST DIDN''T CATCH THIS: I-0199 (a) rejected manufactured sections
+  restricted from the CURVE (diagonal t0^c;t1^d multipliers). The gauge H exists only
+  mod the colength ideals (char-poly coefficients of the finite colength), i.e. it
+  IS the affine-D''''-trivialization — realized by Cayley-Hamilton instead of sheaf
+  localization. The recorded ''two-chart Cech H1 of the D''''-supported inverse twist''
+  is killed concretely: integrality of t1 = polynomial division at the infinity packet.
+
+
+  DOWNSTREAM NOW FIRES: (1) DD-4 Task 4 rank leg CLOSED: divisorWindowGr''s hfin/hproj/hrank
+  slots take hc.finite_thetaGlued a / hc.projective_thetaGlued a / (fun p => hc.rankAtStalk_thetaGlued
+  a p) — no hpair threading needed anywhere anymore. (2) DDR-2 (RiemannRoch/CarveDegree.lean):
+  every THREADED hpair slot (hpair : A.IsThetaPaired a at lines ~113/185/229, incl.
+  windowM_choice instantiations) discharges as G.certified.isThetaPaired _ from the
+  family''s own certificate field. (3) Task 4''s remaining gate is ONLY hsurj/hfib
+  (I-0201''s witness bricks E/D1/D2).
+
+
+  SHARED-SUBSTRATE OWNERSHIP (I-0209 coordination, per DD-2''s W-as-algebra hcert
+  spec): Algebra/MonicReverseInverse.lean is the NEUTRAL shared home — DD-2''s hcert
+  brick should consume exists_monic_forall_aeval_eq_zero (uniform annihilators for
+  CRT/packet separation of chart generators) and may add idempotent-extraction lemmas
+  THERE (file has 420 L headroom) or in a sibling Algebra/ file; the geometry side
+  (gluedSubalgebra, thetaSpan/InvSpan, thetaInvSection*, all of DivisorThetaPairing.lean)
+  is DD-4/theta-lane vocabulary — do NOT respell it for hcert; A_D-as-algebra remains
+  DivisorAdaptation.gluedSubalgebra (I-0199). Nothing in this landing touches DD-2''s
+  pinned S5 names (awayGluedEquations, exists_glue_of_away_compat*, GlueClass).
+
+
+  HAZARDS (new): (a) AlgebraicGeometry.IsIntegral (schemes) SHADOWS _root_.IsIntegral
+  inside the namespace — qualify both the Prop and IsIntegral.of_finite with _root_.
+  (b) simp only [relFiberCoordPow] unfolds into an instances-transparency-ill-typed
+  target (CommRingCat.Hom.hom exposure) where rw [<- map_pow] then fails pattern-matching
+  — prove coordinate-power collapses by a defeq calc step against the appLE spelling
+  ((map_pow _ _ _).symm) + closing rfl; never unfold. (c) The four-case membership
+  rw chains of ThetaSections style work verbatim for the INVERSE twist with simp only
+  [Pi.inv_apply] inserted before the thetaOvlUnit case lemma + inv_one/inv_inv; Units.mul_inv/inv_mul
+  close the unit collapses. (d) synthInstance.maxHeartbeats 80000 was NOT needed in
+  this file (only maxSynthPendingDepth 3 in-file, avoiding the setOption linter warning
+  the sibling theta files carry).'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-17T12:53:37.481923+00:00'
+updated_at: '2026-07-20T03:16:34.451156+00:00'
+metadata:
+  agent: dd4-theta-pairing-fable

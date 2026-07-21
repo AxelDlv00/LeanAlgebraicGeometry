@@ -1,0 +1,64 @@
+id: I-0232
+provider: local
+kind: info
+body: 'G-2 LANDED unconditional: divFamEps_mapAlg + divFamEps_mapAlg_awayMap (DD-4
+  Task 7, spec-w4-gates §G-2)
+
+
+  Commits ac728f40f (crux triangle) + 794940-tree keystone commit + root wire; lake
+  build green (8973 jobs, full root incl. sibling working-tree files); keystones axiom-clean
+  [propext, Classical.choice, Quot.sound]; zero sorries; three new files all ≤500L:
+  Picard/DivisorFamilyWindowBaseChange.lean, Picard/DivisorFamilyWindowTriangle.lean,
+  Picard/DivisorFamilyEpsNaturality.lean.
+
+
+  THE ORIENTATION SEAM (pinned once, exactly the w4-g5 §2(e) consumer shape): windowBaseChange
+  R'' N := Submodule.map (AlgebraTensorModule.cancelBaseChange k R R'' R'' H).toLinearMap
+  (N.baseChange R'') — DEFINITIONALLY the RHS of ker_baseChangeMkQ_eq_map_baseChange
+  (DivCarveKit:168), and windowBaseChange_eq_ker_baseChangeMkQ converts to the Module.Grassmannian.map
+  kernel spelling with no transport lemma. G-5/DDR-9 can consume verbatim: divFamEps_mapAlg
+  (instance form [Algebra R R''] [IsScalarTower k R R''], matches DivFam.mapAlg) for
+  §3.2 W3 + §4; divFamEps_mapAlg_awayMap (IsLocalization.Away pack) for §2 step (e).
+  NO NOETHERIAN HYPOTHESES on either ring — the ⊆ half never touches the engine over
+  R'' (only the transported certificate + windowQuotEquiv + DDR-5 rank engine), so
+  W3''s abstract overlap ring B needs nothing. Only extra inputs: hO (h⁰=1), hχ (χ=1−g)
+  — the standing G-1 genus normalization.
+
+
+  Route of record: (1) the crux triangle resHom_relThetaWindowEquiv_cancelBaseChange_fst/snd
+  — relThetaWindowEquiv over R'' of cancelBaseChange(1 ⊗ₜ x) is relSectionsMap of
+  the R-level identification, chart-componentwise; proved by computing the rigid engine
+  H⁰ base change on pure tensors (resHom_relTwistH0BaseChange_one_tmul_fst/snd) through
+  two NEW general facts: HModule.linearEquiv₀_linearEquivHModule'' (the two degree-zero
+  section identifications of a site agree at a terminal object; needed a universe-polymorphic
+  Ext.linearEquiv₀_mk₀_comp — the OverOpen one fixes obj=hom universe and CANNOT apply
+  to sheaf categories, memory-worthy) and TwoCoverPairData.h0Equiv_val (H⁰-carrier
+  = pair of chart restrictions of the global section), plus the tower law relSectionsMap_relSectionsMap.
+  (2) ⊇ windowBaseChange_divisorWindow_le by germ/stalkMap transport (germ_appLE_apply
+  + stalkMap_mem_stalkIdeal_pullback). (3) ⊆ divisorWindow_pulledEquations_eq: windowBaseChangeGr
+  (Grassmannian point via baseChangeMkQEquiv on the ambient tower, no toAlgebra letI)
+  + divisorWindow_eq_of_le_of_isCertified (DivSchemeEps) with hsurj from IsCertified.thetaGluedEval_surjective
+  (G-1, I-0230) at both rings and the (c2)-twisted clauses (DivisorThetaPairing) —
+  the spec §G-2 rank-arithmetic route, exactly as pinned; the split-kernel fallback
+  was not needed.
+
+
+  LEAN GOTCHAS (memory-worthy): (a) `set D := fiberTwoCover π` in a proof poisons
+  later lemma applications — unification of D-rewritten hypothesis types vs fiberTwoCover-spelled
+  lemma statements walks into AffineTwoCover/pullbackProd structurally and blows 2M-heartbeat
+  whnf; removing the set fixed two "impossible" timeouts instantly. (b) rw-in-goal
+  across the relCurve/product semireducible spellings creates instance-transparency-type-incorrect
+  targets ("(relCurve C R).presheaf.obj mismatch"); refine/trans/congrArg chains and
+  equation-haves with exact-defeq are the reliable pattern. (c) HModule/relTwistSheaf-typed
+  statements: avoid subtype type-ascriptions on sheaf-carrier elements (whnf bombs);
+  route through a named def (relTwistSectionsEquiv₀) whose codomain is the subtype.'
+labels:
+- agent-ready
+status: archived
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-18T14:05:56.740516+00:00'
+updated_at: '2026-07-20T03:14:41.675208+00:00'
+metadata: {}

@@ -1,0 +1,25 @@
+id: AJCR.w4-rep.rigid
+title: 'Rigid engine (curve-lite Kleiman 3.10): $H^1(C_R,L) = 0$ on the vanishing
+  locus and $Q = H^0$ finite projective, $\forall N:\ H^0 \otimes_R N$ on the nose'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'WORKSHEET DONE (w4-rigid-engine-worksheet.md, binding): full II.5 descoped
+  — no finite-projective complex is built; $Q = H^0$ itself, finite projective on
+  the fibrewise-vanishing locus with universal module-coefficient base change; finiteness
+  from the landed $\pi$-lattice structure, Noetherian quarantined to the $H^0$-f.g.
+  clause and eliminated by presentation descent (the cocycle descends to a f.g. subalgebra,
+  the curve constant over $k$). RE-0..RE-5; Fable heart RE-1 (two-lattice coherence).'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-16T02:15:22.872238+00:00'
+  parent: AJCR.w4-rep
+  updated_at: '2026-07-16T18:52:47.934155+00:00'

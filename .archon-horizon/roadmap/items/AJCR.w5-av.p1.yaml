@@ -1,0 +1,19 @@
+id: AJCR.w5-av.p1
+title: 'P1 (CROSS-WAVE GATE: DD shapes freeze): AbelSourceData discharge — proper
+  \(\mathrm{Div}^d\)-source + Abel morphism via rep.homEquiv'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: blocked
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-16T17:13:49.433840+00:00'
+  parent: AJCR.w5-av

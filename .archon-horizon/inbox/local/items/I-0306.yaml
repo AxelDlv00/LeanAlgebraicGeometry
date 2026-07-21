@@ -1,0 +1,90 @@
+id: I-0306
+provider: local
+kind: info
+body: "κ(z) pivot: RD-N reduction chain BUILT & COMMITTED end-to-end (SeedUnivRDN\
+  \ reduced to sharp single-point germ-divisibility, off the dead κ(p) branch). isGenerator_seedUniv'\
+  \ still gated on SeedUnivRDN+hfib — remaining wall is the achiever→germ base change\
+  \ (fibre-DVR content) + hfib achiever-sec wiring.\n\n=== COMMITS (this lane, all\
+  \ on refs/heads/main) ===\n- 7e561ab2a  step 1 (XS): the κ(z) restatement. New file\
+  \ Picard/DivSchemeRedesignKappaZ.lean.\n- 283fc77ac  step 2(iii) core: localized\
+  \ reading-divisibility reduction (same file).\n- 84d44590c  isLocalization_stalk\
+  \ germ bridge + germ-level RD-N reduction (same file).\n- eb28a8dbb  assembly: SeedUnivRDN\
+  \ from seed-level germ divisibility. New file Picard/DivSchemeRedesignKappaZSeed.lean.\n\
+  All single-module LEAN_NUM_THREADS=1 lake GREEN under the mkdir lock (KappaZ 27s,\
+  \ KappaZSeed 80s). Zero sorries/warnings in my files. Root: HEAD-blob + only my\
+  \ import lines (protocol §4; sibling PicEtCrossBaseGraph/Hinj-removal working-tree\
+  \ root edits NOT swept). All keystones lean_verify axiom-clean [propext, Classical.choice,\
+  \ Quot.sound].\n\n=== KEYSTONES (VERBATIM, ns AlgebraicGeometry[.ThetaGeneratorSeed])\
+  \ ===\n\n(step 1 — the κ(z) restatement; replaces the dead 2c bridge's κ(p) target)\n\
+  theorem notMem_support_chartColengthModule_of_subsingleton_tmul_residueField_kappaZ\n\
+  \  (K : Submodule R (relThetaSections C R π a)) (b : Bool) (s : relThetaSections\
+  \ C R π a)\n  [Module.Finite R ↥K] {z : relCurve C R} (hz : z ∈ relPinnedChart C\
+  \ R π b)\n  (hfib : Subsingleton (↥(chartColengthModule K b s) ⊗[Γ(relCurve C R,\
+  \ relPinnedChart C R π b)]\n    ((isAffineOpen_relPinnedChart C R π b).primeIdealOf\
+  \ ⟨z, hz⟩).asIdeal.ResidueField)) :\n  (isAffineOpen_relPinnedChart C R π b).primeIdealOf\
+  \ ⟨z, hz⟩ ∉\n    Module.support Γ(relCurve C R, relPinnedChart C R π b) ↥(chartColengthModule\
+  \ K b s)\n-- proof: Module.mem_support_iff_nontrivial_residueField_tensorProduct\
+  \ at pz OVER Γ(V)\n--        (chartColengthModule_finite, I-0303) + not_nontrivial_iff_subsingleton\
+  \ + TensorProduct.comm.\n--        NO comap to R (that was the fatal 2c error).\
+  \ κ(pz) = the fibre κ(z). Single-point.\n\n(step 2 iii — the fibre→stalk reduction,\
+  \ pure module algebra)\ntheorem notMem_support_chartColengthModule_of_forall_exists_notMem_mul_read_mem_span\n\
+  \  (K) (b) (s) [Module.Finite R ↥K] {z} (hz : z ∈ relPinnedChart C R π b)\n  (hgen\
+  \ : ∀ ⦃ψ⦄, ψ ∈ K → ∃ r ∉ ((isAffineOpen_relPinnedChart C R π b).primeIdealOf ⟨z,hz⟩).asIdeal,\n\
+  \    r * relThetaResSide a b le_rfl ψ ∈ Ideal.span {relThetaResSide a b le_rfl s})\
+  \ :\n  (isAffineOpen_relPinnedChart C R π b).primeIdealOf ⟨z,hz⟩ ∉\n    Module.support\
+  \ Γ(V) ↥(chartColengthModule K b s)\n-- proof: Module.notMem_support_iff' (∀m ∃r∉pz,\
+  \ r•m=0) over the Γ(V)-span generators via\n--        submodule closure (pz prime\
+  \ for +, 1∉pz for 0).\n\n(the isLocalization_stalk bridge — reusable, scheme-general)\n\
+  theorem IsAffineOpen.exists_notMem_primeIdealOf_mul_mem_span_singleton_of_germ_mem_span\n\
+  \  {X : Scheme} {U : X.Opens} (hU : IsAffineOpen U) {z : X} (hz : z ∈ U) {b x :\
+  \ Γ(X, U)}\n  (h : (X.presheaf.germ U z hz).hom x ∈ Ideal.span {(X.presheaf.germ\
+  \ U z hz).hom b}) :\n  ∃ r ∉ (hU.primeIdealOf ⟨z,hz⟩).asIdeal, r * x ∈ Ideal.span\
+  \ {b}\n-- proof: stalk = Localization.AtPrime (isLocalization_stalk, germ = algebraMap\
+  \ via\n--        stalk_open_algebraMap); IsLocalization.surj clears the denominator,\
+  \ map_eq_zero_iff\n--        kills the kernel. This is the fresh isLocalization_stalk\
+  \ wiring I-0302/I-0305 flagged.\n\n(germ-level RD-N reduction — cleanest achiever\
+  \ target)\ntheorem notMem_support_chartColengthModule_of_forall_germ_mem_span\n\
+  \  (K)(b)(s)[Module.Finite R ↥K]{z}(hz : z ∈ relPinnedChart C R π b)\n  (hgerm :\
+  \ ∀ ⦃ψ⦄, ψ ∈ K → (germ_z).hom (relThetaResSide a b le_rfl ψ)\n      ∈ Ideal.span\
+  \ {(germ_z).hom (relThetaResSide a b le_rfl s)}) :\n  primeIdealOf ⟨z,hz⟩ ∉ Module.support\
+  \ Γ(V) ↥(chartColengthModule K b s)\n-- = bridge ∘ step-2(iii).\n\n(the ASSEMBLY\
+  \ — SeedUnivRDN discharged from seed-level germ divisibility)\ntheorem seedUnivRDN_of_forall_germ_mem_span\n\
+  \  (hgerm : ∀ z, ∀ ⦃ψ⦄, ψ ∈ divUniversalSeedK … →\n    germ_z(relThetaResSide (windowM_choice\
+  \ π hπ g) (seedUniv.side z) le_rfl ψ)\n      ∈ Ideal.span {germ_z(relThetaResSide\
+  \ … (seedUniv.side z) le_rfl (seedUniv.sec z))}) :\n  SeedUnivRDN C hπ g r₁ r₂ b₁\
+  \ b₂ i j hO hχ\n-- proof: per-z notMem_support_…_forall_germ_mem_span at K:=divUniversalSeedK\
+  \ (finite_divUniversalSeedK);\n--        seedUnivColength ⇔ chartColengthModule\
+  \ defeq closes it.\n\n=== WHAT LANDED vs RESIDUAL ===\nLANDED (κ(z) pivot reduction\
+  \ chain, complete & committed): SeedUnivRDN is now reduced —\nunconditionally bar\
+  \ one honest premise — to the SINGLE-POINT seed-level germ divisibility\n`∀z ∀ψ∈K_univ,\
+  \ germ_z(read ψ) ∈ ⟨germ_z(read sec z)⟩`. The dead κ(p) 2c bridge is NOT consumed\n\
+  (left intact per I-0305). The degree obstruction (I-0305 §2) never applies: everything\
+  \ is κ(z)\nsingle-point.\n\nRESIDUAL (the genuine remaining geometric wall — step\
+  \ 2(ii), NOT built):\n1. The germ-divisibility premise itself: from the achiever\
+  \ (I-0291\n   exists_relThetaWindowEquiv_…_achieves_seedPrime, coeffAt=baseDivisorAt\
+  \ at z) prove\n   germ_z(read ψ) ∈ ⟨germ_z(read sec z)⟩. Content = fibre-DVR order\
+  \ comparison\n   (germ_relThetaResSide_dvd_iff_ord_le, DivSchemeUnivFibreHdiv, over\
+  \ κ(p)) + the total-space\n   germ_z (over R_Z) ↔ fibre germ (over κ(p)) BASE CHANGE.\
+  \ This is the fresh, heavy, multi-piece\n   scheme plumbing I-0302 §2c / I-0305\
+  \ §route step 2(i)/(ii) flagged (isLocalization_stalk\n   base-change + reading\
+  \ base change). The single-point isLocalization_stalk half is now landed\n   (the\
+  \ bridge above); the fibre↔total germ identification remains.\n2. hfib (I-0305 M):\
+  \ still needs the I-0291 achiever wired into seedUniv.sec (current sec = OLD\n \
+  \  exists_seedPoint, DivSchemeSeedUnivGen:283) to get uniform windowCompare≠0; NOT\
+  \ built here.\n\nDOWNSTREAM: once (1)+(2) land ⇒ SeedUnivRDN + hfib discharged ⇒\
+  \ isGenerator_seedUniv'\nunconditional (bar hχ/hO) ⇒ certificate (non-circular)\
+  \ ⇒ U1 = divUniversalFamily ⇒ divRep.\nAnti-circularity preserved: certificate-FREE,\
+  \ IsCertified-FREE, single-point throughout."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-20T06:30:17.179974+00:00'
+updated_at: '2026-07-20T06:30:17.179987+00:00'
+metadata:
+  agent: kappa-z-pivot-lane

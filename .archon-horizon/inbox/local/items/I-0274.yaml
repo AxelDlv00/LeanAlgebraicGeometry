@@ -1,0 +1,106 @@
+id: I-0274
+provider: local
+kind: info
+body: 'hdvd close -> seed: links 1+3 LANDED, hdvd REDUCED to the single carve-fibre
+  wall (link 2 flat+field); seedUniv/relDivisor NOT built
+
+
+  DID LINK 2 (N(x)kappa=0) PROVE? Partially: the FLAT-COKERNEL HALF proved; the carve-specific
+  content (flatness of colength/N + field-level d_p achiever divisibility) is the
+  standing wall. hdvd itself NOT closed but REDUCED to exactly those two carve facts.
+
+
+  LANDED THIS LANE (6 commits, each single-module build green, axiom-clean [propext,
+  Classical.choice, Quot.sound] via lake env lean #print axioms; extends Picard/DivSchemeRelDivisor.lean
+  + new Picard/DivSchemeSeedDvd.lean, root import line added HEAD-blob+own-line, sibling
+  PicEtCrossBaseGraph NOT swept):
+
+
+  LINK 3 (base->curve unit descent) FULLY LANDED (commits 8834d7fb, c7d26de). VERBATIM
+  (DivSchemeRelDivisor.lean, {R}[CommRing R]{S}[CommRing S][Algebra R S]):
+
+  - mem_span_singleton_map_of_isUnit_map_algebraMap (phi : S ->+* B)(hunit : IsUnit
+  (phi (algebraMap R S f)))(hx : algebraMap R S (f^n) * x in span{e}) : phi x in span{phi
+  e}
+
+  - mem_span_singleton_map_of_subsingleton_tmul_residueField (N)(p)(hfib : Subsingleton
+  (N (x) kappa(p)))(phi)(hphi : forall f notin p, IsUnit (phi (algebraMap R S f))){x}(hx
+  : mk x in N) : phi x in span{phi e}
+
+  - basePrime (phi : S ->+* B)[IsLocalRing B] : PrimeSpectrum R := comap (phi o algebraMap)
+  (maximalIdeal B)
+
+  - notMem_basePrime_iff : f notin basePrime phi <-> IsUnit (phi (algebraMap R S f))
+
+  - mem_span_singleton_map_of_subsingleton_tmul_residueField_localRing (phi)[IsLocalRing
+  B](N)(hfib : Subsingleton (N (x) kappa(basePrime phi)))(hx) : phi x in span{phi
+  e}  -- germ discharges hphi automatically at a stalk
+
+
+  LINK 1 (N finite) LANDED (commit d5a39c6d, DivSchemeSeedDvd.lean):
+
+  - sideColengthSubmodule_finite [IsNoetherianRing R][Module.Finite R (Gamma(piece
+  z)/(eqn z))] : Module.Finite R (sideColengthSubmodule z)  -- submodule of finite/(Noetherian)
+
+
+  LINK 2 FLAT-COKERNEL HALF LANDED (commit e9c146a8, DivSchemeRelDivisor.lean):
+
+  - subsingleton_tmul_of_flat_quotient (P : Submodule R M)[Module.Flat R (M/P)](h
+  : forall x a, (x:M)(x)a = 0) : Subsingleton (P (x) A)  -- lTensor_injective_of_exact_of_flat
+  + field vanishing = zero map
+
+  - subsingleton_tmul_residueField_of_flat_quotient (P)[Module.Flat R (M/P)](p)(h
+  : forall x, (x:M)(x)1 = 0 in M(x)kappa(p)) : Subsingleton (P (x) kappa(p))  -- a=1
+  propagates to all a via residue-field scalar action; I-0231-safe (module fibre)
+
+
+  HDVD REDUCTION + CAPSTONE LANDED (commits 673df429, d8cdf48f, DivSchemeSeedDvd.lean,
+  AlgebraicGeometry.ThetaGeneratorSeed namespace):
+
+  - sideColengthSubmodule z (= N z) := Submodule.map (kColengthMap z) K : the honest
+  image of the K-side components in the colength Gamma(D(h z))/(eqn z). hdvd at z
+  <=> N z = 0.
+
+  - dvd_of_forall_subsingleton_tmul_residueField (hreg : germ eqn regular)(hfin :
+  N z finite)(hfib : forall z y hy, Subsingleton (N z (x) kappa(basePrime germ_y)))
+  : the dvd clause. Via germ closer Scheme.mem_span_singleton_of_forall_germ + the
+  local-ring stalk consumer.
+
+  - dvd_of_flat_quotient_of_field_vanishing (hreg)(hfin)(hflat : forall z, Module.Flat
+  R ((colength z)/(N z)))(hfield : forall z y hy (x:N z), (x:colength z)(x)(1:kappa(basePrime
+  germ_y)) = 0) : the dvd clause. THE CRISPEST WALL STATEMENT.
+
+
+  CONSUMES-NEXT (to close hdvd -> isGenerator_seedUniv -> relDivisor): supply to dvd_of_flat_quotient_of_field_vanishing
+  the two carve facts at seedUniv: (hflat) the carve flat rank-g quotient (SlicingFlatKernel
+  keystones 3/4/7 give (colength)/(N) flat over R_Z); (hfield) the d_p fibre achiever
+  (exists_coeffAt_eq_baseDivisorAt BaseDivisor:143 at kappa(p), d_p = divUniversalSeedFibreDivisor
+  SeedUnivFields:133) shows every K-side-component (x) 1 = 0 in the fibre colength
+  = Gamma(fibre piece)/(e_p) [needs the base-change-of-sections identification colength(x)kappa(p)
+  = fibre colength]. hreg = the seed fibre_regular route (isGenerator_of_fibre_ne_zero);
+  hfin = SupportTubeFinite colength-finiteness. Then seedUniv := {side/sec from DivSchemeSeedUnivBridge
+  windowCompare selection, h from the shrink, sec_mem}; isGenerator_seedUniv := isGenerator_of_fibre_ne_zero
+  (dvd_of_flat_quotient_of_field_vanishing ...) hfib_ne; relDivisor := seedUniv.localEquations
+  isGenerator_seedUniv (DivSchemeFamily:349). RD3 for CertUniv still reads SlicingFlatKernel
+  rankAtStalk=g on deltaLeft-deltaRight.
+
+
+  RESIDUAL / WALL: link 2 remaining = the two carve facts (flat colength/N + field-level
+  achiever divisibility incl. the colength(x)kappa(p) = fibre colength base-change
+  identification). This is the honest size-L fibre-comparison content; the module-fibre
+  form is I-0231-safe (correctly fails for t+eps). Route 2 stands. Commits: 8834d7fb
+  c7d26de 673df429 d5a39c6d e9c146a8 d8cdf48f (parent 516957916). Also filed I-0273:
+  pre-existing aggregator appLE_congr_hom duplicate collision (not this lane; individual
+  modules green).'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-19T14:56:57.664477+00:00'
+updated_at: '2026-07-20T03:15:33.332200+00:00'
+metadata: {}

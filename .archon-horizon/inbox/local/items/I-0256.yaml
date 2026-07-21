@@ -1,0 +1,67 @@
+id: I-0256
+provider: local
+kind: info
+body: 'DAT-glue worksheet pinned (w4-datglue-worksheet), commit 22cd53efb9e4
+
+
+  VERDICT. The ''01JJ RepresentableBy assembly over k'' (slice trick DAT-6)'' of the
+  roadmap title is MECHANICALLY ALREADY LANDED: pic0RepresentableByOfCharts (Pic0SigmaSheaf.lean:161-169),
+  the big-site sheaf (pic0SigmaFunctor_isSheaf :90, pic0SigmaSheaf :147), the whole
+  slice trick (OverSigmaExtension sigmaExtension :125 / overSlice :235), mathlib 01JJ
+  (representableBy :192) and the DD-Q lft substrate (DivSchemeQProj locallyOfFiniteType_divSchemeOverHom
+  :199) are all in the tree. Firing them is a ONE-LINE application gated only on DAT-C
+  C9 (f/hf) + DAT-B B-6 (IsLocallySurjective).
+
+
+  THE ROADMAP TITLE IS MISLEADING IN ONE WORD: ''over k''''. The DAT-B staging finding
+  (I-0248) proved coverage is honest ONLY at a separably closed K_s, so the 01JJ output
+  is a representation at K_s, NOT k''. ''over k'''' names a SECOND, genuinely-new-mathematics
+  step: DAT-G0, the K_s->k'' finite-level transfer (spread out the finite chart subfamily
+  obtained via J-qc + descend the sheaf-iso). That is DAT-glue''s ONE mountain and
+  the real content of the node.
+
+
+  DAT-G0 OWNERSHIP DECISION: DAT-glue OWNS DAT-G0 (not DAT-G). Reasons: (1) DAT-glue''s
+  charter deliverable was always ''output PicRepDatum k'''' and DAT-G0 IS the honest
+  content of that once the path runs through K_s; (2) DAT-G is FINITE Galois/Speiser
+  descent k''->k (finite group action) - the K_s->k'' transfer is a spreading-out/filtered-colimit
+  argument, NOT finite Galois descent, so folding it into DAT-G would pollute its
+  clean interface and move the frozen PicRepDatum k'' handoff; (3) DAT-G0 operates
+  on the glue data DAT-glue just produced. It is worksheet-first INSIDE DAT-glue:
+  the spec skeleton (PicRepDatum + picRepDatum_of_Ks_transfer) is frozen in the worksheet
+  so DAT-G can be co-signed against PicRepDatum k'' TODAY.
+
+
+  Two datum-worksheet risks discharged: risk-6 (pic^d-coset spelling) - chartValue
+  absorbs the theta^-m shift so glue output is pic0 DIRECTLY (representableByOfShift
+  NOT consumed at glue time); risk-7 (per-chart-vs-glued lft) - per-chart DD-Q lft
+  -> locality-on-source on the glued J. Properness/universal-closedness NOT delivered
+  by DD-Q (Wave-5''s problem, JacobianData stores only lft+qc).
+
+
+  LAUNCHABILITY: pre-divRep, launchable NOW: DG-0 (PicRepDatum struct + statements)
+  and the DG-3 (DAT-G0) mini-spec + DAT-G co-sign - all touch only landed API. Post-divRep
+  (the assembly proper): DG-1 (1-line 01JJ application + glued-lft), DG-2 (J-qc +
+  finite subfamily + k'' choice), DG-3 (DAT-G0, L->XL), DG-4 (packaging) - the day
+  DAT-C C9 + DAT-B B-6 land (both gated on divRep F5-F7, NOT landed; backward half
+  divRepClassifyZar landed I-0243).
+
+
+  RISKS: 1. DAT-G0 (spreading-out + fpqc-locality of representability, no landed avatar;
+  fallback = limit-existence along k''->K_s, RE-5 style, interface-changing so orchestrator-owned).
+  2. divRep gate through C9+B-6. 3. J-qc/finite-subfamily sequencing (verified no
+  circularity - image argument is direct). 4. tower-diamond wall I-0255 (K_s/k'' towers
+  MUST be native k-algebra instances, never composite letI). Every consumed name file:line-verified
+  by direct read.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T12:06:53.602261+00:00'
+updated_at: '2026-07-20T03:15:11.905429+00:00'
+metadata: {}

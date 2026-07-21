@@ -1,0 +1,68 @@
+id: I-0259
+provider: local
+kind: info
+body: "DAT-G0 mini-spec + DG-0 PicRepDatum LANDED\n\nCOMMITS: spec informal/spec-datg0.md\
+  \ = 01a7284ef ; DG-0 AlgebraicJacobian/Picard/PicRepDatum.lean (+root import) =\
+  \ f3b91685b. Both private-index CAS; DG-0 builds green (8693 jobs), zero sorries,\
+  \ homEquiv_comp axiom-clean [propext, Classical.choice, Quot.sound]; root committed\
+  \ as HEAD-blob + only my line (a sibling's uncommitted PicEtCrossBaseGraph working-tree\
+  \ line was NOT swept, protocol §4).\n\n=== DAT-G0 FEASIBILITY VERDICT: PROVABLE-IN-TREE\
+  \ (L), route-pinned, ONE probe outstanding — NOT the orchestrator fallback ===\n\
+  The hard mathlib search DOWNGRADES the worksheet's 'L->XL, no landed avatar' to\
+  \ L. Mathlib holds the hearts (SlicingFlatKernel/SupportTubeFinite precedent — CHECK-before-XL\
+  \ paid off):\n - scheme-level EGA IV.8 spreading: AffineTransitionLimit.lean (stacks\
+  \ 01YT/01Z2-01ZC) — spread schemes/morphisms/covers/affineness/lft/lfp to a finite\
+  \ stage. exists_hom_hom_comp_eq_comp_of_locallyOfFiniteType (:686, 01ZC), exists_pi_app_comp_eq_of_locallyOfFinitePresentation\
+  \ (:1177), exists_isAffine_of_isLimit (:1036).\n - ring-level EGA IV.8: Algebra/Category/Ring/FinitePresentation.lean\
+  \ — FinitePresentation <=> Hom_R(S,-) preserves filtered colimits; a hom from f.p.\
+  \ S to colim F factors through a stage (:81); two homs agreeing at colim agree at\
+  \ a stage (:45). THIS is the RingHom.FinitePresentation + filtered-colimit substrate\
+  \ the search asked for. LANDED.\n - fpqc/fppf subcanonical + flat descent of properties:\
+  \ Sites/Fpqc.lean, Morphisms/{FlatDescent,LocalFlatDescent,Descent}.lean. LANDED\
+  \ (fallback substrate).\n - K_s = filtered colimit of finite separable subextensions:\
+  \ IntermediateField directed iSup (Adjoin/Basic.lean:114,124,201) + isSeparable_iSup\
+  \ (SeparableClosure.lean:256) + IsSepClosed. LANDED substrate.\n - representability-along-colimit\
+  \ avatar: corepresentableByCompCoyonedaObjOfIsColimit (PartialAdjoint.lean:154).\n\
+  \nBRICKS (sized): DG-G0.delta (K_s=colim k'', S) ; DG-G0.alpha (finite chart family\
+  \ + glue base-changed from k', M — manifest chart-naturality primary, AffineTransitionLimit\
+  \ spreading fallback) ; DG-G0.beta (descend the representing iso K_s->k', L — THE\
+  \ mountain) ; DG-G0.gamma (carry lft, S) ; DG-G0.epsilon (choose/enlarge finite\
+  \ stage k', S). Net: one L + one M + three S. The XL balloon collapses to sub-brick\
+  \ beta1.\n\nTHE SOLE AVATAR-LESS BRICK = beta1: 'does pic0SigmaSheaf commute with\
+  \ the filtered colimit K_s=colim k'' of the base field?' Its shadow is CommRingCat.preservesColimit_coyoneda_of_finitePresentation.\
+  \ Settled by ONE pre-divRep, divRep-FREE PROBE (spec §4.3) — touches only landed\
+  \ pic0 API + mathlib colimit lemmas, ~1 focused session. EXPECTED YES (EGA IV.8.5\
+  \ shape). If YES: primary route §4.1 closes with landed machinery, NO fpqc descent\
+  \ of pic0 needed. If NO: fallback ladder — (1) fpqc descent of the iso (needs pic0\
+  \ an fpqc sheaf, heavy new brick), else (2) limit-existence Nonempty (RE-5, worksheet\
+  \ §5.1) = ORCHESTRATOR-OWNED interface change (weakens the producer to Nonempty),\
+  \ take only if probe returns NO.\n\n=== PicRepDatum SHAPE (VERBATIM, the frozen\
+  \ DAT-glue -> DAT-G handoff DAT-G co-signs against) ===\nstructure PicRepDatum (k\
+  \ k' : Type u) [Field k] [Field k'] [Algebra k k']\n    (C' : Over (Spec (.of k')))\
+  \ [IsProper C'.hom]\n    [SmoothOfRelativeDimension 1 C'.hom] [GeometricallyIrreducible\
+  \ C'.hom] :\n    Type (u + 1) where\n  J   : Over (Spec (.of k'))\n  rep : (pic0TypeFunctor\
+  \ C').RepresentableBy J\n  lft : LocallyOfFiniteType J.hom\nAccessors: homEquiv\
+  \ : (T ⟶ d.J) ≃ pic0Subgroup C' T ; homEquiv_comp (naturality vs pic0Map) ; uniqueUpToIso.\
+  \ Machine-checked defeq note: (pic0TypeFunctor C').RepresentableBy J IS JacobianData.rep's\
+  \ field type — so the raw 01JJ output pic0RepresentableByOfCharts lands here with\
+  \ NO massage, and k'=k transports into a JacobianData with no transport lemma.\n\
+  \nBINDER DEVIATION (recorded in file + spec §1): k is EXPLICIT (PicRepDatum k k'\
+  \ C'), NOT the worksheet §3.3 ambient {k}. Forced by elaboration: unlike JacobianData\
+  \ C (C pins k), here C' pins only k' and k occurs solely in [Algebra k k'], so PicRepDatum\
+  \ k' C' leaves k a stuck metavariable (Algebra ?m k'). Math/fields/instances unchanged.\
+  \ DAT-G co-signs against PicRepDatum k k' C'.\n\nFrozen for DAT-G TODAY; DG-1..DG-4\
+  \ (assembly + DAT-G0 proof) remain divRep-gated (C9+B-6, F5-F7), but DG-0, the index\
+  \ bricks (delta/epsilon), AND the beta1 probe are divRep-FREE and launchable now."
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-19T12:26:19.725402+00:00'
+updated_at: '2026-07-20T03:15:14.754507+00:00'
+metadata:
+  agent: AJCR.w4-rep.datum.dat-glue

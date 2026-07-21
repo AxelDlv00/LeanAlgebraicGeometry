@@ -1,0 +1,25 @@
+id: I-0161
+provider: local
+kind: memory
+body: 'lake env lean drops lakefile [leanOptions] (maxSynthPendingDepth) — in-file
+  set_option required
+
+
+  `lake env lean <file>` does NOT apply the lakefile''s [leanOptions] (maxSynthPendingDepth
+  = 3), but the LSP and `lake build` DO. Consequence: a file can be LSP-green and
+  lake-build-green yet FAIL the per-file lake env lean faithful check with instance-synthesis
+  errors (seen in W5-T2: Subgroup.Normal / MulOne on units-quotients of dual-number
+  rings need synth depth 3). Fix: files that quotient unit groups (or need deep synthesis)
+  must carry set_option maxSynthPendingDepth 3 IN-FILE (Tangent/TruncExpCech.lean
+  and TruncExpCechH1.lean do). When verifying another lane''s file with lake env lean,
+  a synth failure of this shape may be this artifact, not a real break.'
+labels:
+- agent-ready
+status: open
+scope: {}
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-16T18:24:12.213890+00:00'
+updated_at: '2026-07-16T18:24:12.213902+00:00'
+metadata: {}

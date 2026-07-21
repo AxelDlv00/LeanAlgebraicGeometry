@@ -1,0 +1,88 @@
+id: I-0288
+provider: local
+kind: info
+body: "BPF/no-leak crux (G-4 seed / DD-4 seam): NO-REDESIGN. The current seedUniv\
+  \ section/piece choice CANNOT support the hfield lower bound (hle) or the hcolFin\
+  \ no-leak. DESIGN ESCALATION (seedUniv.sec + seedUniv.h in DivSchemeSeedUnivGen.lean\
+  \ need revision). No Lean written, no sorries, nothing committed — verdict is analytic,\
+  \ grounded entirely in LANDED lemmas (same discipline as I-0260). The germ bridge\
+  \ (I-0287) did NOT dissolve the wall; it sharpened/moved it but it persists, rooted\
+  \ in the same sec defect as I-0258/I-0260.\n\n=== THE DECISIVE OBSTRUCTION (3 verified\
+  \ facts force NO) ===\n\n(1) The fibre window is HIGH-DIMENSIONAL, never 1-dim.\
+  \ dim_kappa(p) divUniversalFibreKM = h0(O(N)) - g = deg N + 1 - 2g (finrank_divUniversalFibreKM_add,\
+  \ AssembleKappa:207, + h0=degN+1-g via subsingleton_h1_windowN). deg N = M*delta\
+  \ with M*delta >= b + 2g + (g+2)(s+1)delta (windowM_spec WindowLedger:189 + deg_windowN\
+  \ WindowFieldTransport:319). Since delta>=1 and (g+2)(s+1)delta>=2, dim >= 2 robustly\
+  \ (typically much more). So the \"1-dim => trivial span\" YES-escape is CLOSED:\
+  \ readings of K_univ span the whole >=2-dim window (divUniversalFibreKM_eq_span,\
+  \ Res:376), so read(sec) (one element) must DIVIDE a >=2-dim family of readings\
+  \ on D(h').\n\n(2) seedUniv.h z = algebraMap f is a BASE-RING pullback (Gen:289,\
+  \ f in R_Z from exists_forall_windowCompare_ne_zero). By relPinnedSectionsMap_algebraMap_eq\
+  \ (Facts:212), base-change to kappa(p) gives algebraMap(f mod p); for f not-in p\
+  \ (i.e. p in D(f), incl. basePrime(germ_z) and its whole D(f)-nbhd) f mod p != 0\
+  \ is a UNIT in the field kappa(p), so its basicOpen is top. Hence D(h') = the ENTIRE\
+  \ pinned fibre chart over kappa(p). ZERO FIBREWISE SHRINK ROOM — the YES-branch\
+  \ escape (\"extra vanishing avoidable by shrinking h z\") is STRUCTURALLY IMPOSSIBLE\
+  \ for h z = algebraMap f: it shrinks the base only, never the fibre.\n\n(3) The\
+  \ germ-bridge residual hle (relThetaResSide_mem_span_of_forall_ord_le, DivSchemeUnivFibreHdiv.lean:203-211)\
+  \ needs, with s:=Theta(windowCompare x_psi), t:=Theta(windowCompare x_sec):  for\
+  \ every closed w in D(h'), ord(read psi)_w <= ord(read sec)_w. Upper bound available:\
+  \ ord(read psi)_w <= B_w := divisorBound(windowN - d_p)_w for ALL w (divFamPhi_windowCompare_mem,\
+  \ Res:423 + divUniversalSeedFibreDivisor_spec, Fields:146). So hle <=> read(sec)\
+  \ ACHIEVES the ceiling ord(read sec)_w = B_w at EVERY w of D(h') = the whole chart.\
+  \ But seedUniv.sec z = relThetaWindowEquiv x carries ONLY windowCompare(kappa(p),x)\
+  \ != 0 (Gen:300, exists_sec_windowCompare_ne_zero_seedPrime) = \"read(sec) != 0\
+  \ as a fibre section\", NO minimal-vanishing/achiever data. A generic nonzero element\
+  \ of H0(windowN - d_p) has deg(windowN - d_p) = deg N - g > 0 EXTRA zeros (moving\
+  \ part) landing generically INSIDE the chart. At any extra-zero w0, ord(read sec)_{w0}\
+  \ < B_{w0} while some psi (readings span the window) hits B_{w0} => hle FAILS. windowCompare!=0\
+  \ does not even prevent an extra zero AT z itself.\n\n=== SAME defect kills hcolFin\
+  \ (no-leak) ===\npiece z = D(h z), eqn z = read(sec) (Family:93,113). no-leak =\
+  \ closure(piece cap V(read sec)) subset piece. With h = base pullback, piece = chart\
+  \ cap phi^-1(D(f)) (whole fibre over D(f)); read(sec)'s relative zero locus leaks\
+  \ to special fibres over boundary of D(f) — EXACTLY I-0285's toy counterexample\
+  \ (P1/k[t], {x=t}, piece D(t): trace leaks to (0,0) not in piece, colength k[t,1/t]\
+  \ not R-finite). windowCompare!=0 (fibrewise nonvanishing) is insufficient, as I-0285\
+  \ already found. hfield and hcolFin share the root cause.\n\n=== WHY the germ bridge\
+  \ (I-0287) did NOT save it ===\nIt reduced the RELATIVE hfield to a FIBREWISE ord\
+  \ inequality — genuine progress that sidesteps I-0260's \"fibrewise-does-not-lift-to-relative\"\
+  \ objection (that content now lives in the flatness/carve clauses hcolFlat/hspan).\
+  \ But the fibrewise inequality STILL demands read(sec) be a fibre BPF-achiever,\
+  \ and because D(h')=whole chart it means achievement on the ENTIRE chart. The wall\
+  \ moved (relative-generation -> fibrewise-achievement-on-the-whole-chart) but persists.\n\
+  \n=== WHAT seedUniv MUST BECOME (the redesign, orchestrator matter) ===\nBOTH pointwise\
+  \ fields need revision (currently sec=windowCompare!=0 lift, h=algebraMap base-pullback):\n\
+  \ (A) sec z := a RELATIVE ACHIEVER in K_univ=divUniversalSeedK whose kappa(p)-fibre\
+  \ reading achieves the base divisor bd=d_p at z (field-level per-point achiever\
+  \ exists_coeffAt_eq_baseDivisorAt, BaseDivisor:143, LIFTED to a relative R_Z-section\
+  \ inside K_univ) — so z is NOT an extra zero. This achiever-lift is I-0258's flagged\
+  \ generally-NON-liftable step (a single R_Z window vector need not reduce to a chosen\
+  \ kappa(p)-combination f; windowCompare(W) is only an R_Z/p-semilinear image whose\
+  \ kappa(p)-span, not itself, is the window). It is the DD-4 base-field-transport\
+  \ / relative-BPF seam I-0260 recommended (DivSchemeFamily:44); FIELD-level BPF infra\
+  \ (BpfSpan, BaseDivisorSpan) has NO relative/R_Z version.\n (B) h z := a genuine\
+  \ CURVE section cutting a fibre-neighbourhood of z (NOT algebraMap of a base element),\
+  \ so D(h') shrinks in the fibre to a punctured nbhd of z that excludes read(sec)'s\
+  \ OTHER extra zeros. Only then does read(sec) meet B_w on all of D(h'), giving hle;\
+  \ and V(eqn z)=d_p's branch through z becomes proper/contained, giving hcolFin.\n\
+  \n=== STATUS ===\nhdiv_seedUniv / seedUniv_hfield / hnoleak_seedUniv: NONE present\
+  \ (grep-confirmed absent), NONE landed — correctly so; a bridge-sec seed would BAKE\
+  \ IN a sec for which hle/hcolFin are unprovable. Germ bridge (15d9eb465) + shared\
+  \ brick (2b6b00cf5) + hcolFin reduction (4ec2a0d60/819f9dbc2) remain valid and forward-compatible\
+  \ — they consume WHATEVER sec the redesign produces. The ONE pointwise residual\
+  \ (hle at every closed w of D(h')) is now razor-isolated; discharged the instant\
+  \ seedUniv.sec becomes a relative achiever and seedUniv.h a fibre-cutter. Verdict:\
+  \ the seed does NOT close with the current construction. Escalate the achiever-lift\
+  \ / relative-BPF seam."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: horizon
+source_ref: null
+created_at: '2026-07-19T19:32:43.233376+00:00'
+updated_at: '2026-07-19T19:32:43.233386+00:00'
+metadata: {}

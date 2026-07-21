@@ -1,0 +1,37 @@
+id: I-0212
+provider: local
+kind: info
+body: 'W7-F6 landed: the frozen functor''s datum-level layer is ready for DAT-J
+
+
+  For the DAT-J assembly (Fleet A) and the K-1 worksheet lane: F-6 is complete at
+  the datum level (commits 2a925515f + 11ab343be + af343eb2b root-wired, blueprint
+  cea2e6e25). The frozen Jacobian.functor fields of Challenge.lean discharge by PURE
+  INSTANTIATION once jacobianData exists: map f := JacobianData.pullbackHom (jacobianData
+  _) (jacobianData _) f.unop — pullbackHom dX dY (g : X ⟶ Y) : Grp.mk dY.J ⟶ Grp.mk
+  dX.J under letI := d.grpObj activations, so for f : X ⟶ Y in (Curve k)ᵒᵖ the datum
+  slots are (at source of f.unop, at target of f.unop); map_id := pullbackHom_id (jacobianData
+  _) (D1 repeated-datum shape, same datum both slots); map_comp f g := pullbackHom_comp
+  (jacobianData _) ×3 g.unop f.unop. The VALUE is pinned for the K-1/R-W7-6 audit
+  by JacobianData.homEquiv_comp_pullbackHom: dX.homEquiv (f ≫ (pullbackHom dX dY g).hom.hom)
+  = pic0Pullback g T (dY.homEquiv f); pic0Pullback''s underlying class map is picEtPullback
+  (coe-rfl). Files: Picard/Pic0Pullback.lean (EV-cor chain + pic0PullbackNat), Picard/Pic0PullbackGrp.lean
+  (Grp packaging; split pre-declared on roadmap f6). Reusable proof note for B-6a/K-1
+  (R3 friction): prove equalities of yonedaGrp-conjugates as standalone haves at the
+  yonedaGrpObj level and feed the map_injective goal by exact — after rw [Functor.map_comp/map_id,
+  map_preimage] the goal composes at yonedaGrp.obj (Grp.mk d.J), defeq-but-not-syntactic
+  to yonedaGrpObj d.J, and simp (Iso.inv_hom_id_assoc) silently fails there; also
+  qualify CategoryTheory.Functor.map_id (bare Functor.map_id resolves to the control-functor
+  lemma).'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-17T13:18:49.130445+00:00'
+updated_at: '2026-07-20T03:14:27.461877+00:00'
+metadata: {}

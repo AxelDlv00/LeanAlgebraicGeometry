@@ -1,0 +1,107 @@
+id: I-0272
+provider: local
+kind: info
+body: 'DD-4 RD1 relDivisor — PARTIAL (LocalEquations realization SHAPE confirmed;
+  hdvd algebraic core LANDED; the relative-geometry hdvd assembly is the standing
+  size-L wall).
+
+
+  REALIZATION SHAPE VERDICT (ETA-critical, from exact signatures): the LocalEquations
+  realization PROVES conditionally. The presentation vehicle is LANDED and GENERIC
+  — relDivisor := seedUniv.localEquations (isGenerator_of_fibre_ne_zero hdvd hfib)
+  typechecks BY CONSTRUCTION:
+
+  - ThetaGeneratorSeed.localEquations (DivSchemeFamily.lean:349) builds (relCurve
+  C R_Z).LocalEquations from a seed + IsGenerator (cover=pieces, eqn=side components,
+  regular=germ_eqn_mem_nonZeroDivisors, ratio_isUnit=exists_ratioUnit) — all GENERIC,
+  no chart-ring types.
+
+  - isGenerator_of_fibre_ne_zero (DivSchemeSeed.lean:188) takes hdvd (= the exact
+  IsGenerator.dvd clause) + hfib (fibre-nonvanishing) -> IsGenerator; fibre_regular
+  discharged inside from hfib.
+
+  So RD1 = { build seedUniv : ThetaGeneratorSeed C R_Z pi M K_univ (side/h/sec, sec_mem)
+  ; prove hdvd ; prove hfib }. NO independent I_d object exists in-tree — the divisor
+  IS presented via local generators eqn z, so hdvd (every K_univ side-component in
+  span{eqn z} on the piece) IS the defining generation property. "Circularity Route
+  2 dissolves" = hdvd via carve/Nakayama, not fibre-read.
+
+
+  THREE OBLIGATIONS:
+
+  - hfib: LANDED INFRA — exists_forall_windowCompare_ne_zero + relPinnedSectionsMap_relThetaResSide_windowEquiv_ne_zero
+  (DivSchemeSeedUnivFields.lean:202/:251) produce exactly the hfib body + base-locus
+  survival.
+
+  - seedUniv (side/h/sec): NOT built (gated on the hdvd Nakayama shrink choosing h
+  z).
+
+  - hdvd: THE SINGLE WALL. NOT proven. Chain mapped below.
+
+
+  LANDED THIS LANE (commit 516957916, extends Picard/DivSchemeRelDivisor.lean; mathlib-only
+  imports; single-module lake build green 2163 jobs 3.1s; both keystones axiom-clean
+  [propext, Classical.choice, Quot.sound]; zero warnings): the IDEAL-MEMBERSHIP FORM
+  of the landed Nakayama engine — the pure-algebra heart of hdvd. VERBATIM ({R}[CommRing
+  R]{S}[CommRing S][Algebra R S]):
+
+  - exists_pow_mul_mem_span_of_subsingleton_localizedAway {f : R}{e : S}{N : Submodule
+  R (S / Ideal.span {e})} (hN : Subsingleton (LocalizedModule.Away f N)) {x : S} (hx
+  : Ideal.Quotient.mk (Ideal.span {e}) x in N) : exists n, algebraMap R S (f^n) *
+  x in Ideal.span {e}
+
+  - exists_notMem_forall_pow_mul_mem_span_of_subsingleton_tmul_residueField (N : Submodule
+  R (S / Ideal.span {e})) [Module.Finite R N] (p : PrimeSpectrum R) (hfib : Subsingleton
+  (N ⊗[R] p.asIdeal.ResidueField)) : exists f notin p.asIdeal, forall x, mk x in N
+  -> exists n, algebraMap R S (f^n) * x in span{e}
+
+  N instantiates the image of the K_univ-side-components ideal J in the colength A.colength
+  j = Gamma(piece)/(eqn) (DivisorFamily.lean:334, EXACTLY S/(e)); the second lemma
+  composes the landed Module.exists_subsingleton_away_of_tmul_residueField (8b4ad41d5)
+  with the first. k[eps] guard respected: hypothesis is the MODULE fibre N⊗κ(p)=0
+  (fails for e=t+eps where N=(eps), N⊗_{k[eps]}k≅k≠0), never fibrewise vanishing.
+
+
+  REMAINING hdvd WALL (relative-geometry assembly, size-L, OOM-class carve types):
+
+  (1) N finite over R_Z: N ≤ Gamma(piece)/(eqn), R_Z-finite via SupportTubeFinite
+  (I-0244) + Noetherian ⟹ N finite (inferInstance).
+
+  (2) N ⊗ κ(p) = 0 [HARDEST]: fibre achiever f_p of EXACT order d_p (exists_coeffAt_eq_baseDivisorAt
+  BaseDivisor.lean:143; d_p = divUniversalSeedFibreDivisor DivSchemeSeedUnivFields.lean:133)
+  generates the fibre K-ideal; module-fibre=scheme-fibre via FlatCokernel.lean:54
+  lTensor_ker_subtype_injective_of_flat_coker. Needs the concrete "N⊗κ(p) = fibre
+  K-components mod e_p = 0".
+
+  (3) base->curve threading: with f (notin p) from the assembled lemma, choose h z
+  so piece D(h z) lies over D(f) in Spec R_Z ⟹ algebraMap R_Z Gamma(piece) f is a
+  UNIT there ⟹ descend algebraMap(f^n)*x in (eqn) to x in (eqn) = hdvd on D(h z).
+  This is the seedUniv side/h/sec selection + the standard structure-map basicOpen
+  shrink; NOT yet built. (mem_span_singleton_of_forall_germ DivisorStalkIdeal.lean:79
+  is the germwise alternative to the unit-descent.)
+
+
+  SEED-EXTEND CONSUMES: seedUniv := {side,h,sec,sec_mem} from (2)/(3); isGenerator_seedUniv
+  := isGenerator_of_fibre_ne_zero hdvd hfib. CertUniv CONSUMES (RD3, DOWNSTREAM of
+  relDivisor): flat/deg-g via SlicingFlatKernel keystones 3/4/7 (Module.Flat.quotient_ker_of_forall_ker_rTensor_residueField_le
+  :284, Module.rankAtStalk_ker_eq_of_forall_finrank_eq :448) on deltaLeft-deltaRight
+  of the adaptation (DivisorFamily.lean:404) fed by divUniversal_carve_residueField
+  (FamilyUniv:135).
+
+
+  ROUTE 2 STANDS (I-0231 binding check): flat rank-g never from fibrewise cutting;
+  hdvd core routed through the MODULE fibre N⊗κ(p)=0. No non-flatness found. Residual
+  = the relative-geometry hdvd assembly (2)+(3), the honest size-L remainder; next
+  lane builds it on commit 516957916.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T14:12:30.980076+00:00'
+updated_at: '2026-07-20T03:15:31.902980+00:00'
+metadata: {}

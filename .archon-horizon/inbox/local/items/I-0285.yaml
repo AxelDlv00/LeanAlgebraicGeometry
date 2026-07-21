@@ -1,0 +1,60 @@
+id: I-0285
+provider: local
+kind: info
+body: "hcolFin closed-trace BUILD — REDUCTION landed (engine + all instances discharged),\
+  \ single topological residual. New file Picard/DivSchemeSeedUnivColFin.lean (247\
+  \ L), single-module lake build GREEN (52s, LEAN_NUM_THREADS=1), 3 keystones lean_verify\
+  \ axiom-clean [propext, Classical.choice, Quot.sound], zero sorries, warning-free.\
+  \ Root: HEAD-blob + own line only (sibling PicEtCrossBaseGraph line NOT swept).\n\
+  \n=== COMMITS (this lane) ===\n- 4ec2a0d60  closed-trace reduction infra: topology\
+  \ + abstract-engine wrapper + generic seed reduction\n- 819f9dbc2  seedUniv_hcolFin_of_forall_closure_subset\
+  \ (hcolFin at seedUniv reduced to the no-leak)\n\n=== KEYSTONES (namespace AlgebraicGeometry)\
+  \ ===\n- isClosed_sdiff_basicOpen_of_closure_subset {X}{V:X.Opens}(g:Γ(X,V)) (hcl\
+  \ : closure ((V:Set)\\(X.basicOpen g:Set)) ⊆ (V:Set)) : IsClosed ((V:Set)\\(X.basicOpen\
+  \ g:Set))  — plus _of_forall_fibre (φ:X⟶S) fibrewise spelling. The other inclusion\
+  \ closure ⊆ (D g)ᶜ is automatic.\n- IsAffineOpen.finite_quotient_span_singleton_of_closure_subset\
+  \ : the abstract engine (SupportTubeFinite:215) in closure-subset spelling. ANTI-CIRCULAR:\
+  \ uses no DivisorAdaptation.\n- ThetaGeneratorSeed.hcolFin_of_forall_closure_subset\
+  \ / _of_forall_fibre (D)(hnoleak) : ∀ z, Module.Finite R (Γ(relCurve C R, D.piece\
+  \ z) ⧸ Ideal.span {D.eqn z})  — the exact hcolFin hypothesis shape of isGenerator_of_fibrewise_ker_span_of_field_vanishing,\
+  \ for ANY seed, from the pure topological no-leak. (needs [UniversallyClosed]+[LocallyOfFiniteType]\
+  \ on relCurve C R ↘ Spec R.)\n- seedUniv_hcolFin_of_forall_closure_subset (VERBATIM\
+  \ the assembly feed) : (hnoleak : ∀ z, closure ((seedUniv…).piece z \\ D((seedUniv…).eqn\
+  \ z)) ⊆ (seedUniv…).piece z) → ∀ z, Module.Finite R_Z (Γ(relCurve C R_Z,(seedUniv…).piece\
+  \ z) ⧸ Ideal.span {(seedUniv…).eqn z}).  ALL instance plumbing discharged (UniversallyClosed+LocallyOfFiniteType\
+  \ fire from instIsProperRelCurveHom under [IsProper C.hom]).\n\n=== hcolFin STATUS:\
+  \ reduced, NOT yet landed ===\nhcolFin at seedUniv = seedUniv_hcolFin_of_forall_closure_subset\
+  \ applied to the SINGLE residual\n  hnoleak_seedUniv : ∀ z, closure ((seedUniv…).piece\
+  \ z \\ D(eqn z)) ⊆ (seedUniv…).piece z\n(equivalently the fibrewise no-leak ∀ z\
+  \ s, φ⁻¹{s} ∩ closure(piece z \\ D(eqn z)) ⊆ piece z, via _of_forall_fibre). piece\
+  \ z \\ D(eqn z) = piece z ∩ V(sec z) (V(sec z) = the seed section's zero-locus,\
+  \ closed); the trace is closed iff its closure stays in the piece.\n\n=== FINDING\
+  \ (the no-leak is genuine geometry, NOT free) ===\nThe no-leak's discharge needs\
+  \ the seed section's relative divisor V(eqn z) to be PROPER over the WHOLE base\
+  \ R_Z and CONTAINED in the piece (a dominant-piece / fibrewise-no-leak containment).\
+  \  Fibrewise-NONVANISHING (all the f-choice exists_forall_windowCompare_ne_zero\
+  \ gives: windowCompare ≠ 0 on D(f), piece z = chart ∩ φ⁻¹(D(f))) is INSUFFICIENT.\
+  \  Toy counterexample confirming the subtlety: trivial P¹ family over R=k[t], section\
+  \ cutting {x=t}, piece over D(t) — colength k[t,1/t] is NOT R-finite and the trace\
+  \ leaks to the base point (t=0,x=0)∉piece.  So hcolFin genuinely requires the seed\
+  \ design's containment (I-0280's 'D(h z) contains the whole fibre branch of d_p'),\
+  \ which is currently only PROSE — no landed Lean lemma expresses V(eqn z) ⊆ piece\
+  \ z or the fibrewise no-leak.  NEXT LANE: prove hnoleak_seedUniv (best route: establish\
+  \ V(eqn z) ⊆ piece z as a closed containment from the seed's h z / d_p design, then\
+  \ closure is trivial) and feed seedUniv_hcolFin_of_forall_closure_subset.  No DivisorAdaptation\
+  \ (anti-circular).\n\nAssembly unchanged: isGenerator_of_fibrewise_ker_span_of_field_vanishing\
+  \ D hreg hcolFin hcolFlat hspan hfield hfib — hreg/hcolFlat/hfib landed (I-0283);\
+  \ hspan/hfield sibling; hcolFin = seedUniv_hcolFin_of_forall_closure_subset ∘ hnoleak_seedUniv\
+  \ (residual)."
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-19T18:35:20.413128+00:00'
+updated_at: '2026-07-19T18:35:20.413138+00:00'
+metadata: {}

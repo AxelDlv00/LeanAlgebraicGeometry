@@ -1,0 +1,76 @@
+id: I-0305
+provider: local
+kind: info
+body: 'DD-4 field-vanishing feasibility: ARCHITECTURAL (bounded)
+
+
+  VERDICT. The landed kappa(p)-base-fibre reduction chain is a DEAD END: it demands
+  GLOBAL fibre divisibility (read psi in <read sec z> over the whole kappa(p)-fibre
+  chart), which is FALSE by degree count. But the seed''s sharp support condition
+  is TRUE and reachable via a DIFFERENT single-point kappa(z) reduction the landed
+  machinery does not deliver. Fix is bounded (~L), but a genuine pivot, not a patch
+  of the current path.
+
+
+  GAP (b) crux -- does the achiever cut d_p GLOBALLY? NO, only at z. read sec z is
+  one section of the base-point-free, dim>=2 complete system divUniversalFibreKM =
+  H0(N - d_p) (Fields:152-155; deg d_p = g, Fields:150). Its zero divisor E = (N -
+  d_p) + div(read sec z) is effective of degree deg N - g >= 2 > 0. The achiever is
+  a PER-POINT sInf witness (BaseDivisor:143-154, Nat.sInf_mem) pinning E only at z;
+  at other points only the lower bound holds (BaseDivisor:128-139). Since dim T =
+  deg N + 1 - 2g >= 2 (AssembleKappa:207-210), a closed argument (E<=B would force
+  dim T = 1) shows read sec z MUST have a genuine extra zero w != z where a different
+  reading (the achiever at w) has strictly smaller order, so read sec z does NOT divide
+  it. <read sec z> strictly-inside the divisor ideal; global divisibility FAILS. This
+  is exactly I-0288''s wall, now closed by the degree identity.
+
+
+  WHY the landed machinery cannot consume it: the 2c bridge (SeedFinish:115-156),
+  germ lemma (RelDivisor:241-248) and flat lemma (RelDivisor:303-320) ALL comap/basePrime
+  the point to the base prime p:Spec R and reduce to Subsingleton(N (x) kappa(p))
+  = readings dying over the WHOLE kappa(p)-fibre = the false global condition. The
+  SHARP z not-in supp N z is iff-equivalent (mem_support_iff_nontrivial_residueField_tensorProduct
+  applied at pz over Gamma(V); N z already Module.Finite Gamma(V) via chartColengthModule_finite,
+  I-0303) to the SINGLE-POINT Subsingleton(N z (x)_Gamma(V) kappa(z)), which the achiever''s
+  single-point local generation at z CAN feed. The 2c bridge discarded the Gamma(V)-finiteness
+  and re-derived a weaker R-finiteness purely to comap to R -- the fatal step.
+
+
+  GAP (a) size: NON-mundane (needed flat is Flat R (Gamma(V)/(range + Gamma(V).read
+  s)); the Gamma(V).read s term is a non-finite R-submodule, so the free-codomain
+  keystone -- which needs a finite R source -- does not re-instantiate; quotient-of-flat
+  is not flat). BUT MOOT: the flat lemma still consumes the same false global kappa(p)
+  vanishing, so gap (a) sits downstream of the dead branch and never needs resolving
+  on the current path.
+
+
+  ROUTE (recommended): (1) XS -- swap the reduction to mem_support_iff at pz over
+  Gamma(V), target Subsingleton(N z (x) kappa(z)); (2) L -- the relative one-point
+  stalk Nakayama I-0289 originally scoped but never built: base-change identification
+  of N z''s fibre at z with the kappa(p)-fibre colength at z (I-0302 2c''s flagged
+  isLocalization_stalk wiring) + achiever local-gen + a fibre->stalk flat lift (structural
+  curve flat flat_sections_relPinnedChart, NOT the gap-(a) ideal-quotient flat). Single-point
+  throughout, so the degree obstruction never fires. Plus (M) wire the achiever''s
+  uniform windowCompare != 0 into seedUniv.sec for hfib (residual wall 2). Reject
+  the carve-direct non-seed alternative (I-0289 Q1b: 3 absent Gamma-local bridges,
+  strictly harder, does not dodge this wall).
+
+
+  Net: NOT finishable by pushing the current kappa(p) path (it ends in a false statement).
+  Finishable by the bounded kappa(z) pivot (XS + L + M). The math is standard curve
+  geometry (single-point local generation), not new theory.
+
+
+  Worksheet informal/spec-dd4-fieldvanishing.md, commit 4963603d62871a1ed9061212dcb560c0162b2318.'
+labels:
+- agent-ready
+status: open
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: human
+source_ref: null
+created_at: '2026-07-20T05:52:01.429527+00:00'
+updated_at: '2026-07-20T05:52:01.429540+00:00'
+metadata: {}

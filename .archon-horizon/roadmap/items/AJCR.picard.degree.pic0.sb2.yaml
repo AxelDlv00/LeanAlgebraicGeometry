@@ -1,0 +1,20 @@
+id: AJCR.picard.degree.pic0.sb2
+title: 'SB-2: sections base change along the transition — $\Gamma(C_{K_1}, V) \otimes_{K_1}
+  K_2 \cong \Gamma(C_{K_2}, \pi^{-1}V)$ for affine $V$'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: ''
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T03:39:08.244873+00:00'
+  parent: AJCR.picard.degree.pic0
+  updated_at: '2026-07-16T04:23:02.579257+00:00'

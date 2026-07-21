@@ -1,0 +1,86 @@
+id: I-0242
+provider: local
+kind: info
+body: 'F3 DivSchemeAtlasFactor LANDED
+
+
+  DDR-9.F1 (w4-ddr9 SS3.3, both deliverables) LANDED. Commit a32c54b9b6d (private-index
+  CAS; committed root = HEAD blob + only my import line via hash-object/cacheinfo;
+  sibling PicEtCrossBaseGraph line left uncommitted in working tree, as I-0238 left
+  it). New file Picard/DivSchemeAtlasFactor.lean, 395 lines; zero sorries; ALL SIX
+  new declarations axiom-clean [propext, Classical.choice, Quot.sound] (unicode names
+  checked via lake env lean per I-0238 gotcha g); single-module LEAN_NUM_THREADS=1
+  lake build green (8614 jobs, my module 19s) under the mkdir lock; no new warnings
+  (the two in the log are pre-existing replays from RelPic/DivSchemeFamilyUniv).
+
+
+  KEYSTONES (verbatim):
+
+  (1) noncomputable def divCarveChartToDivScheme (i j) : Spec (CommRingCat.of (DivCarveChartRing
+  k A B g r1 r2 b1 b2 i j)) -> DivScheme k A B g r1 r2 b1 b2 — the factor of Spec.map
+  divCarveChartMk >> pairChartMap through divSchemeIota, with defining triangle divCarveChartToDivScheme_divSchemeIota
+  : divCarveChartToDivScheme i j >> divSchemeIota = Spec.map (ofHom (divCarveChartMk
+  ...).toRingHom) >> pairChartMap i j. Kill law = Ideal.mk_ker.ge (the quotient self-kill;
+  = divCarveIdeal_le_ker_of_tower at the chart ring itself); definition by choose
+  of carveScheme_exists_factor_of_le_ker, triangle = choose_spec.
+
+  (2) theorem divScheme_exists_chartFactor (S) [CommRing S] [Algebra k S] (v : overSpec
+  k S -> divSchemeOver ...) : exists (m : Nat) (f : Fin m -> S), Ideal.span (Set.range
+  f) = top AND forall t, exists i j (omega : DivCarveChartRing ... i j ->a[k] Localization.Away
+  (f t)), Spec.map (ofHom omega.toRingHom) >> divCarveChartToDivScheme i j = Spec.map
+  (ofHom (algebraMap S (Away (f t)))) >> v.left — the SS3.3 statement verbatim.
+
+
+  STRUCTURE: generic layer at ANY multiplier mu (carveLocusToCarveScheme, carveLocusToCarveScheme_carveSchemeIota,
+  carveScheme_exists_chartFactor — source of the atlas map is definitionally carveLocus
+  mu i j, triangle composite = carveLocusToGrPair), campaign spellings are one-line
+  instantiations at divCarveMul. F5 can consume either level; the generic keystone
+  is stated at carveSchemeOver so any other carve campaign reuses it.
+
+
+  ROUTE (SS3.3 verbatim, no deviations): u := v.left >> carveSchemeIota; pair-chart
+  opens cover grPair via grPairCover.exists_eq + grPairPatchIso conjugation (Iso.hom_inv_id_assoc
+  against the DEFINITIONAL pairChartMap = patchIso.inv >> cover.f, Prod-eta bridges
+  the I0 index); per point a basic open D(x) inside u^{-1}(chart range) by PrimeSpectrum.isTopologicalBasis_basic_opens.exists_subset_of_mem_open
+  + isOpenEmbedding.isOpen_range; finitely many by isCompact_univ.elim_finite_subcover,
+  span = top via zeroLocus_empty_iff_eq_top + zeroLocus_span + Finset.equivFin bookkeeping;
+  per piece: range condition from Away.algebraMap_isUnit (units escape primes), IsOpenImmersion.lift
+  + Spec.preimage packaged IMMEDIATELY as obtain (w'', hw'' : Spec.map alpha >> u
+  = Spec.map w'' >> pairChartMap) — the I-0238 subst-friendly shape; k-structure by
+  Spec.map_injective calc against pairChartMap_grPairStructMap + Over.w + IsScalarTower.algebraMap_eq
+  k S (Away x); kill: c in I_diamond pulled to the chart-open section via inv (pairChartGamma)
+  + KeyChart .ge, killed as a section by carveIdealSheaf_le_ker_of_factors + Scheme.Hom.ideal_ker_le
+  (NOTE: ideal_ker_le needs NO QuasiCompact, dodging the u-quasicompactness question
+  entirely), localized through appLE_comp_appLE + appLE_eq_app, read off by the chart-sections
+  workhorse GammaSpecIso_hom_appLE_of_eq_specMap_pairChartMap; descend Ideal.Quotient.lifta
+  + lifta_comp; conclude by carveScheme_hom_ext (closed-immersion mono).
+
+
+  LEAN GOTCHAS (confirming the lists): (a) I-0235(c) struck EXACTLY as recorded —
+  a calc whose head is a multi-line application misparses (calc step LHS became ''true
+  : Bool''); the have-chain with DFunLike.congr_arg closed it verbatim. (b) comp_apply
+  for scheme points is Scheme.Hom.comp_apply (namespace Hom, NOT Scheme.comp_apply).
+  (c) All PrimeSpectrum-vs-Spec-carrier defeq crossings (basicOpen membership, elim_finite_subcover,
+  u q application at q : PrimeSpectrum S) went through with ONE show-ascription (Set
+  (PrimeSpectrum S)); no congr% needed. (d) Iso.hom_inv_id_assoc + Prod-eta closes
+  the patchIso conjugation with zero rw on cover-indexed goals. (e) congrArg (fun
+  m => m z) on a Scheme-hom equality elaborates fine (coe under lambda). (f) horizon
+  inbox add has no --title option; title folded into body line 1.
+
+
+  REMAINS (not this file''s scope): F5 = Picard/DivRepPull.lean (forward composite,
+  w4-ddr9 SS3.4) still gated on G-4 (DDR9-U interface); F5 consumes divScheme_exists_chartFactor
+  + divSchemeOverHomMk directly. F4 (backward at Zar layer) unblocked by G5 (I-0237)
+  + F1 (I-0239), independent of this file.'
+labels:
+- agent-ready
+status: archived
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+audience: horizon
+author: agent
+source_ref: null
+created_at: '2026-07-19T03:06:04.307210+00:00'
+updated_at: '2026-07-20T03:14:54.522265+00:00'
+metadata: {}

@@ -1,0 +1,31 @@
+id: AJCR.w4-rep.datum.dat1
+title: 'DAT-1: the m-chart glued constructor — sheaf of a basic-open cocycle datum,
+  QcohOn on the pinned charts, engine + on-the-nose base change + class law'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'Stages (1a),(1b),(1d-i datum half) LANDED green+committed: gluedSheaf (m-chart
+  Pi-matching carrier, sheaf condition, piece trivializations, cross-piece comparison;
+  Cohomology/GluedSheaf.lean), QcohOn via componentwise action + partition-localization
+  (P2) under the subordinate basic-open family interface (GluedSheafQcoh/GluedSheafQcohAssembly),
+  gluedPairData (GluedSheafPair), module-algebra transports (GluedAlgebra: Projective.of_free_algebra,
+  moduleFinite_aeval''_of_smul_finite), and the pinned worksheet-3.2 BasicOpenCocycleDatum
+  with QcohOn instances on $V_0^B, V_1^B$ AND the overlap + pairData at $t_0^B, t_1^B$
+  (GluedSheafDatum). In flight: (1c) chart-module finiteness/flat/projective (GluedSheafModule,
+  prover running) then the engine keystones (1d-i close). Remaining: (1d-ii) on-the-nose
+  base change (balloon 3), (1e) class law, (1f) extraction.
+
+  '
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: ground
+  created_at: '2026-07-16T06:41:41.196892+00:00'
+  parent: AJCR.w4-rep.datum
+  updated_at: '2026-07-17T02:08:35.559008+00:00'

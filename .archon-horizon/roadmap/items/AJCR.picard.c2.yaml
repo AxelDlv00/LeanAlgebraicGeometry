@@ -1,0 +1,21 @@
+id: AJCR.picard.c2
+title: '(C2) Rigidified classes: the plus-construction is a sheaf'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'The rigidification/effectivity statement completing the Kleiman comparison:
+  sections of picEt over a test scheme are honest line-bundle classes after rigidification
+  along the marked point.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-14T01:19:43.277671+00:00'
+  parent: AJCR.picard
+  updated_at: '2026-07-15T14:59:15.914215+00:00'

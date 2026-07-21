@@ -1,0 +1,28 @@
+id: AJCR.w4-rep.flv
+title: 'Fibrewise large-twist vanishing: $H^1(C_{\kappa(t)}, L_t \otimes \Theta_n)
+  = 0$ for $n \gg 0$ — worksheet first'
+projects:
+- Algebraic-Jacobian-Challenge-Rebuild
+summary: 'WORKSHEET DONE (w4-flv-worksheet.md, binding): $H^1(C, \mathcal{O}(D + nF))
+  = 0$ for $n \ge n_0(D)$ by increasing-lattice exhaustion on the $\pi$-two-cover
+  — the growing lattice $u^{-n} M_1$ exhausts the numerator by pole-clearing at the
+  finite fiber while the landed dévissage finiteness bounds the codimension; NO duality,
+  NO $R^if_*$, per-class $n_0$ (the Kleiman-strata default). Lifted to arbitrary classes
+  with $\mathrm{classDeg} \ge 1$ by degree arithmetic. W6-lite ($h^0/h^1$ of a class)
+  COLLAPSED to landed API; W6-full owned by the datum seam. Sub-bricks FLV-0..4 +
+  W6-lite; single gate = the w4-1 QcohOn interface (fallbacks staged); Fable heart
+  = FLV-3.'
+status: done
+kind: proof
+priority: normal
+depends_on: []
+inbox_refs: []
+task_refs: []
+scope:
+  projects:
+  - Algebraic-Jacobian-Challenge-Rebuild
+metadata:
+  author: horizon
+  created_at: '2026-07-15T01:51:42.385610+00:00'
+  parent: AJCR.w4-rep
+  updated_at: '2026-07-15T13:13:28.911622+00:00'
