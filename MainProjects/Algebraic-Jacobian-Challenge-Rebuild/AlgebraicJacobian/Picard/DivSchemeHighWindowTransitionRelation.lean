@@ -5,7 +5,7 @@ Authors: The AlgebraicJacobian Contributors
 -/
 
 import AlgebraicJacobian.Picard.DivSchemeHighWindowTransitions
-import AlgebraicJacobian.Picard.DivSchemeHighWindowRelationRead
+import AlgebraicJacobian.Picard.DivSchemeHighWindowRelationReadSuccessor
 
 /-!
 # Relation compatibility for high-window transitions
@@ -21,6 +21,7 @@ does not use residue fibres or a saturation hypothesis.
 -/
 
 set_option autoImplicit false
+set_option quotPrecheck false
 set_option backward.isDefEq.respectTransparency false
 set_option maxSynthPendingDepth 8
 set_option maxRecDepth 8000
@@ -76,7 +77,7 @@ local notation "G" n => divUniversalHighWindowAmbient (C := C) (pi := pi)
 
 /-- Multiplication into the next high window, linear in the multiplier. -/
 noncomputable def divUniversalHighWindowShiftMulLinear (n : Nat) :
-    HS →ₗ[k] (H n →ₗ[k] H (n + 1)) :=
+    HS →ₗ[k] ((H n) →ₗ[k] (H (n + 1))) :=
   (LinearMap.llcomp k _ _ _
     (divUniversalHighWindowSuccEquiv (C := C) (pi := pi) hpi g n).toLinearMap).comp
       (sectionMulBilin k
@@ -89,20 +90,32 @@ theorem divUniversalHighWindowShiftMulLinear_apply (n : Nat) (a : HS) :
     divUniversalHighWindowShiftMulLinear (C := C) (pi := pi) hpi g n a =
       divUniversalHighWindowShiftMul (C := C) (pi := pi) hpi g n a := rfl
 
+set_option maxHeartbeats 1600000 in
+-- Base change over the dependent high-window ambient needs extended reduction.
+set_option synthInstance.maxHeartbeats 1200000 in
+-- The base-change typeclass graph is dependent on both window stages.
 /-- The scalar-extended transition attached to a base-field multiplier. -/
 noncomputable def divUniversalHighWindowBaseMultiplierTransition
-    (n : Nat) (a : HS) : G n →ₗ[RZ] G (n + 1) :=
+    (n : Nat) (a : HS) : (G n) →ₗ[RZ] (G (n + 1)) :=
   LinearMap.baseChange RZ
     (divUniversalHighWindowShiftMulLinear (C := C) (pi := pi) hpi g n a)
 
+set_option maxHeartbeats 4800000 in
+-- The tensor-lifted multiplier carries both dependent high-window stages.
+set_option synthInstance.maxHeartbeats 1200000 in
+-- The lift also re-elaborates the base-change homomorphism.
 /-- Multiplication by an arbitrary scalar-extended multiplier, linear in that
 multiplier. -/
 noncomputable def divUniversalHighWindowTensorMultiplierTransition (n : Nat) :
-    (RZ ⊗[k] HS) →ₗ[RZ] (G n →ₗ[RZ] G (n + 1)) :=
+    (RZ ⊗[k] HS) →ₗ[RZ] ((G n) →ₗ[RZ] (G (n + 1))) :=
   LinearMap.liftBaseChange RZ
     ((LinearMap.baseChangeHom k RZ (H n) (H (n + 1))).comp
       (divUniversalHighWindowShiftMulLinear (C := C) (pi := pi) hpi g n))
 
+set_option maxHeartbeats 4800000 in
+-- Tensor scalar-action reduction traverses both dependent stages.
+set_option synthInstance.maxHeartbeats 1200000 in
+-- Tensor scalar-action inference traverses the dependent ambient modules.
 @[simp]
 theorem divUniversalHighWindowTensorMultiplierTransition_tmul
     (n : Nat) (r : RZ) (a : HS) :
@@ -112,10 +125,13 @@ theorem divUniversalHighWindowTensorMultiplierTransition_tmul
         hpi g r1 r2 b1 b2 i j n a := by
   rw [divUniversalHighWindowTensorMultiplierTransition,
     LinearMap.liftBaseChange_tmul, LinearMap.comp_apply,
+    LinearMap.baseChangeHom_apply,
     divUniversalHighWindowBaseMultiplierTransition]
 
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 4800000 in
 -- The finite dependent source and high-window ambient require extended reduction.
+set_option synthInstance.maxHeartbeats 1200000 in
+-- Basis coordinates require dependent module and zero-map instances.
 /-- A transition by one multiplier-basis vector lands in the finite successor span. -/
 theorem divUniversalHighWindowBaseMultiplierTransition_finBasis_mem_mulSpan
     (n : Nat) (K : Submodule RZ (G n))
@@ -134,12 +150,16 @@ theorem divUniversalHighWindowBaseMultiplierTransition_finBasis_mem_mulSpan
     rfl
   · intro s _ hst
     rw [Pi.single_eq_of_ne hst, map_zero]
+    exact (LinearMap.baseChange RZ
+      (divUniversalHighWindowShiftMul (C := C) (pi := pi) hpi g n
+        ((Module.finBasis k HS) s))).map_zero
   · intro ht
     exact (ht (Finset.mem_univ t)).elim
 
-set_option maxHeartbeats 1600000 in
+set_option maxHeartbeats 4800000 in
 -- Basis expansion traverses scalar extension of a dependent family of linear maps.
-set_option synthInstance.maxHeartbeats 400000 in
+set_option synthInstance.maxHeartbeats 1200000 in
+-- The composite base-change map elaborates the full dependent ambient family.
 /-- Every base-field multiplier transition lands in the finite successor span. -/
 theorem divUniversalHighWindowBaseMultiplierTransition_mem_mulSpan
     (n : Nat) (K : Submodule RZ (G n)) (a : HS)
@@ -157,9 +177,18 @@ theorem divUniversalHighWindowBaseMultiplierTransition_mem_mulSpan
         ∑ t, (basis.repr a t) •
           divUniversalHighWindowBaseMultiplierTransition (C := C) (pi := pi)
             hpi g r1 r2 b1 b2 i j n (basis t) x := by
-    rw [divUniversalHighWindowBaseMultiplierTransition, ha, map_sum, map_smul]
-    simp only [LinearMap.baseChange_add, LinearMap.baseChange_smul,
-      LinearMap.sum_apply, LinearMap.smul_apply]
+    let T : HS →ₗ[k] ((G n) →ₗ[RZ] (G (n + 1))) :=
+      (LinearMap.baseChangeHom k RZ (H n) (H (n + 1))).comp
+        (divUniversalHighWindowShiftMulLinear (C := C) (pi := pi) hpi g n)
+    change
+      (T a) x =
+        ∑ t, (basis.repr a t) •
+          (T (basis t)) x
+    conv_lhs => rw [ha]
+    rw [map_sum, LinearMap.sum_apply]
+    apply Finset.sum_congr rfl
+    intro t _
+    rw [map_smul, LinearMap.smul_apply]
   rw [htransition]
   apply Submodule.sum_mem
   intro t _
@@ -171,6 +200,8 @@ theorem divUniversalHighWindowBaseMultiplierTransition_mem_mulSpan
 
 set_option maxHeartbeats 1600000 in
 -- Tensor induction elaborates the dependent transition codomain at every constructor.
+set_option synthInstance.maxHeartbeats 1200000 in
+-- Tensor induction also resolves scalar and zero-map instances at each branch.
 /-- Every scalar-extended multiplier transition lands in the finite successor span. -/
 theorem divUniversalHighWindowTensorMultiplierTransition_mem_mulSpan
     (n : Nat) (K : Submodule RZ (G n)) (z : RZ ⊗[k] HS)
@@ -222,7 +253,8 @@ theorem divUniversalHighWindowTensorMultiplierTransition_chartRead
         divUniversalHighWindowShiftMul_chartRead]
       have htmul : (r ⊗ₜ a : RZ ⊗[k] HS) = r • ((1 : RZ) ⊗ₜ a) := by
         rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
-      rw [htmul, map_smul, map_smul]
+      rw [htmul, map_smul, map_smul,
+        divUniversalHighWindowMultiplierChartRead]
       rw [Scheme.overModule_smul_def, Scheme.overModule_smul_def]
       ring
 
@@ -245,12 +277,16 @@ theorem divUniversalHighWindowSideMultiplierTensor_theta (side : Bool) :
 
 /-- The relation-compatible selected-side successor transition. -/
 noncomputable def divUniversalHighWindowRelationTransition
-    (side : Bool) (n : Nat) : G n →ₗ[RZ] G (n + 1) :=
+    (side : Bool) (n : Nat) : (G n) →ₗ[RZ] (G (n + 1)) :=
   divUniversalHighWindowTensorMultiplierTransition (C := C) (pi := pi)
     hpi g r1 r2 b1 b2 i j n
       (divUniversalHighWindowSideMultiplierTensor (C := C) (pi := pi)
         hpi g r1 r2 b1 b2 i j side)
 
+set_option maxHeartbeats 1600000 in
+-- The concrete side transition unfolds the dependent tensor chart formula.
+set_option synthInstance.maxHeartbeats 1200000 in
+-- The side-unit theta equivalence drives a large instance graph.
 @[simp]
 theorem divUniversalHighWindowRelationTransition_chartRead
     (side : Bool) (n : Nat) (x : G n) :
@@ -347,14 +383,23 @@ theorem map_divUniversalHighWindowRelationTransition_relation_succ_le
 
 /-! ## The shifted relation-preserving directed system -/
 
+set_option maxHeartbeats 1600000 in
+-- Reindexing the shifted dependent ambient needs extended definitional reduction.
+set_option synthInstance.maxHeartbeats 1200000 in
+-- The generic transition kit specializes through the full high-window family.
 /-- Arbitrary comparable-index transition on the shifted family `G'(n)=G(n+1)`. -/
 noncomputable def divUniversalHighWindowShiftedRelationTransitionOfLE
-    (side : Bool) (n m : Nat) (h : n ≤ m) : G (n + 1) →ₗ[RZ] G (m + 1) :=
+    (side : Bool) (n m : Nat) (h : n ≤ m) :
+      (G (n + 1)) →ₗ[RZ] (G (m + 1)) :=
   HighWindowTransitionKit.transitionOfLE
     (fun q => G (q + 1))
     (fun q => divUniversalHighWindowRelationTransition (C := C) (pi := pi)
       hpi g r1 r2 b1 b2 i j side (q + 1)) n m h
 
+set_option maxHeartbeats 1600000 in
+-- The directed-system instance re-elaborates the shifted dependent family.
+set_option synthInstance.maxHeartbeats 1200000 in
+-- The generic coherence proof traverses all successor maps.
 noncomputable instance directedSystem_divUniversalHighWindowShiftedRelationTransition
     (side : Bool) :
     DirectedSystem (fun n => G (n + 1))
@@ -365,10 +410,14 @@ noncomputable instance directedSystem_divUniversalHighWindowShiftedRelationTrans
     (fun q => divUniversalHighWindowRelationTransition (C := C) (pi := pi)
       hpi g r1 r2 b1 b2 i j side (q + 1))
 
+set_option maxHeartbeats 1600000 in
+-- Read invariance specializes the iterated transition to dependent chart maps.
+set_option synthInstance.maxHeartbeats 1200000 in
+-- Every shifted stage carries the full carve-chart module graph.
 /-- The shifted arbitrary-index transition preserves pinned-chart readings. -/
 @[simp]
 theorem divUniversalHighWindowShiftedRelationTransitionOfLE_chartRead
-    (side : Bool) (n m : Nat) (h : n ≤ m) (x : G (n + 1)) :
+    (side : Bool) (n m : Nat) (h : n ≤ m) (x : G(n + 1)) :
     divUniversalHighWindowChartRead (C := C) (pi := pi)
         hpi g r1 r2 b1 b2 i j (m + 1) side
         (divUniversalHighWindowShiftedRelationTransitionOfLE
@@ -376,15 +425,19 @@ theorem divUniversalHighWindowShiftedRelationTransitionOfLE_chartRead
       divUniversalHighWindowChartRead (C := C) (pi := pi)
         hpi g r1 r2 b1 b2 i j (n + 1) side x := by
   exact HighWindowTransitionKit.transitionOfLE_read
-    (G := fun q => G (q + 1))
-    (step := fun q => divUniversalHighWindowRelationTransition (C := C) (pi := pi)
+    (fun q => G (q + 1))
+    (fun q => divUniversalHighWindowRelationTransition (C := C) (pi := pi)
       hpi g r1 r2 b1 b2 i j side (q + 1))
-    (read := fun q => divUniversalHighWindowChartRead (C := C) (pi := pi)
+    (fun q => divUniversalHighWindowChartRead (C := C) (pi := pi)
       hpi g r1 r2 b1 b2 i j (q + 1) side)
     (fun q y => divUniversalHighWindowRelationTransition_chartRead
       (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side (q + 1) y)
     n m h x
 
+set_option maxHeartbeats 1600000 in
+-- Relation preservation elaborates the dependent submodule family at each stage.
+set_option synthInstance.maxHeartbeats 1200000 in
+-- The generic transition lemma resolves the shifted module instances repeatedly.
 /-- The shifted arbitrary-index transition preserves the recursive relation modules. -/
 theorem map_divUniversalHighWindowShiftedRelationTransitionOfLE_relation_le
     (side : Bool) (n m : Nat) (h : n ≤ m) :
@@ -396,192 +449,14 @@ theorem map_divUniversalHighWindowShiftedRelationTransitionOfLE_relation_le
       divUniversalHighWindowRelation (C := C) (pi := pi)
         hpi g r1 r2 b1 b2 i j (m + 1) := by
   exact HighWindowTransitionKit.map_transitionOfLE_le
-    (G := fun q => G (q + 1))
-    (step := fun q => divUniversalHighWindowRelationTransition (C := C) (pi := pi)
+    (fun q => G (q + 1))
+    (fun q => divUniversalHighWindowRelationTransition (C := C) (pi := pi)
       hpi g r1 r2 b1 b2 i j side (q + 1))
-    (K := fun q => divUniversalHighWindowRelation (C := C) (pi := pi)
+    (fun q => divUniversalHighWindowRelation (C := C) (pi := pi)
       hpi g r1 r2 b1 b2 i j (q + 1))
     (fun q y hy => map_divUniversalHighWindowRelationTransition_relation_succ_le
       (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j q side ⟨y, hy, rfl⟩)
     n m h
-
-/-- The quotient transition on the shifted recursive relation family. -/
-noncomputable def divUniversalHighWindowShiftedRelationQuotientTransition
-    (side : Bool) (n m : Nat) (h : n ≤ m) :
-    (G (n + 1) ⧸ divUniversalHighWindowRelation (C := C) (pi := pi)
-      hpi g r1 r2 b1 b2 i j (n + 1)) →ₗ[RZ]
-    (G (m + 1) ⧸ divUniversalHighWindowRelation (C := C) (pi := pi)
-      hpi g r1 r2 b1 b2 i j (m + 1)) :=
-  Submodule.directedQuotientMapOfCompatible
-    (f := divUniversalHighWindowShiftedRelationTransitionOfLE
-      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side)
-    (K := fun q => divUniversalHighWindowRelation (C := C) (pi := pi)
-      hpi g r1 r2 b1 b2 i j (q + 1))
-    (hK := fun q r hr =>
-      map_divUniversalHighWindowShiftedRelationTransitionOfLE_relation_le
-        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side q r hr)
-    n m h
-
-@[simp]
-theorem divUniversalHighWindowShiftedRelationQuotientTransition_mk
-    (side : Bool) (n m : Nat) (h : n ≤ m) (x : G (n + 1)) :
-    divUniversalHighWindowShiftedRelationQuotientTransition
-        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n m h
-      (Submodule.Quotient.mk x) =
-      Submodule.Quotient.mk
-        (divUniversalHighWindowShiftedRelationTransitionOfLE
-          (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n m h x) := by
-  rw [divUniversalHighWindowShiftedRelationQuotientTransition,
-    Submodule.directedQuotientMapOfCompatible_mk]
-
-/-- The shifted high-window ambients still exhaust either pinned chart: shift an
-arbitrary exhaustion witness once using the read-invariant relation transition. -/
-theorem exists_divUniversalHighWindowShiftedChartRead_eq
-    (hb : 0 < windowBound pi hpi) (side : Bool)
-    (x : Γ(relCurve C RZ, relPinnedChart C RZ pi side)) :
-    ∃ n : Nat, ∃ y : G (n + 1),
-      divUniversalHighWindowChartRead (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j (n + 1) side y = x := by
-  obtain ⟨n, y, hy⟩ := exists_divUniversalHighWindowChartRead_eq
-    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hb side x
-  refine ⟨n, divUniversalHighWindowRelationTransition (C := C) (pi := pi)
-    hpi g r1 r2 b1 b2 i j side n y, ?_⟩
-  rw [divUniversalHighWindowRelationTransition_chartRead, hy]
-
-/-! ## Conditional shifted colimit interface -/
-
-variable {B : Type u} [CommRing B] [Algebra RZ B]
-
-set_option maxHeartbeats 1600000 in
--- The generic varying-ambient colimit theorem re-elaborates all dependent stages.
-/-- The shifted quotient colimit is flat once the finite-stage quotients are flat
-and the explicit read-kernel saturation condition is supplied. -/
-theorem flat_shifted_highWindow_relation_quotient_of_saturation
-    (side : Bool)
-    (read : ∀ n, G (n + 1) →ₗ[RZ] B) (J : Ideal B)
-    (hreadK : ∀ n,
-      divUniversalHighWindowRelation (C := C) (pi := pi)
-          hpi g r1 r2 b1 b2 i j (n + 1) ≤
-        LinearMap.ker
-          ((Ideal.Quotient.mkₐ RZ J).toLinearMap.comp (read n)))
-    (hread : ∀ n m (h : n ≤ m) (x : G (n + 1)),
-      read m
-          (divUniversalHighWindowShiftedRelationTransitionOfLE
-            (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n m h x) =
-        read n x)
-    (hcover : ∀ b : B, ∃ n : Nat, ∃ x : G (n + 1), read n x = b)
-    (hsaturation : ∀ n (x : G (n + 1)), read n x ∈ J →
-      ∃ m : Nat, ∃ h : n ≤ m,
-        divUniversalHighWindowShiftedRelationTransitionOfLE
-          (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n m h x ∈
-        divUniversalHighWindowRelation (C := C) (pi := pi)
-          hpi g r1 r2 b1 b2 i j (m + 1))
-    [∀ n, Module.Flat RZ
-      (G (n + 1) ⧸ divUniversalHighWindowRelation (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j (n + 1))] :
-    Module.Flat RZ (B ⧸ J) := by
-  exact Submodule.flat_quotient_of_directLimit
-    (f := divUniversalHighWindowShiftedRelationTransitionOfLE
-      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side)
-    (K := fun n => divUniversalHighWindowRelation (C := C) (pi := pi)
-      hpi g r1 r2 b1 b2 i j (n + 1))
-    (hK := fun n m h =>
-      map_divUniversalHighWindowShiftedRelationTransitionOfLE_relation_le
-        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n m h)
-    read J hreadK hread hcover hsaturation
-
-/-- All shifted relation stages have the same pinned-chart reading ideal as
-stage one. -/
-theorem divUniversalHighWindowRelationReadIdeal_shifted_eq
-    (side : Bool) (n : Nat) :
-    divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j (n + 1) side =
-      divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j 1 side := by
-  induction n with
-  | zero => rfl
-  | succ n ih =>
-      rw [show n.succ + 1 = n + 2 by omega,
-        divUniversalHighWindowRelationReadIdeal_succ_succ_eq
-          (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j n side, ih]
-
-/-- Every shifted relation section reads into the fixed stage-one chart ideal. -/
-theorem divUniversalHighWindowShiftedRelation_read_mem_stageOneIdeal
-    (side : Bool) (n : Nat)
-    (x : G (n + 1))
-    (hx : x ∈ divUniversalHighWindowRelation (C := C) (pi := pi)
-      hpi g r1 r2 b1 b2 i j (n + 1)) :
-    divUniversalHighWindowChartRead (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j (n + 1) side x ∈
-      divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j 1 side := by
-  have hmem : divUniversalHighWindowChartRead (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j (n + 1) side x ∈
-      divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j (n + 1) side := by
-    rw [divUniversalHighWindowRelationReadIdeal_eq_submodule]
-    exact Ideal.subset_span ⟨x, hx, rfl⟩
-  rw [divUniversalHighWindowRelationReadIdeal_shifted_eq
-    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n] at hmem
-  exact hmem
-
-/-- The concrete kernel hypothesis for the fixed stage-one chart ideal. -/
-theorem divUniversalHighWindowShiftedRelation_read_ker_stageOneIdeal
-    (side : Bool) (n : Nat) :
-    divUniversalHighWindowRelation (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j (n + 1) ≤
-      LinearMap.ker
-        ((Ideal.Quotient.mkₐ RZ
-          (divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
-            hpi g r1 r2 b1 b2 i j 1 side)).toLinearMap.comp
-          (divUniversalHighWindowChartRead (C := C) (pi := pi)
-            hpi g r1 r2 b1 b2 i j (n + 1) side)) := by
-  intro x hx
-  apply LinearMap.mem_ker.mpr
-  apply Ideal.Quotient.eq_zero_iff_mem.mpr
-  exact divUniversalHighWindowShiftedRelation_read_mem_stageOneIdeal
-    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n x hx
-
-set_option maxHeartbeats 1600000 in
--- The concrete chart specialization re-elaborates the dependent stage family.
-/-- Concrete chart form: after stage-one shifting, only bounded-stage flatness
-and eventual saturation remain in the colimit flatness criterion. -/
-theorem flat_shifted_highWindow_chart_quotient_of_saturation
-    (hb : 0 < windowBound pi hpi) (side : Bool)
-    (hsaturation : ∀ n (x : G (n + 1)),
-      divUniversalHighWindowChartRead (C := C) (pi := pi)
-          hpi g r1 r2 b1 b2 i j (n + 1) side x ∈
-        divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
-          hpi g r1 r2 b1 b2 i j 1 side →
-      ∃ m : Nat, ∃ h : n ≤ m,
-        divUniversalHighWindowShiftedRelationTransitionOfLE
-          (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n m h x ∈
-        divUniversalHighWindowRelation (C := C) (pi := pi)
-          hpi g r1 r2 b1 b2 i j (m + 1))
-    [∀ n, Module.Flat RZ
-      (G (n + 1) ⧸ divUniversalHighWindowRelation (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j (n + 1))] :
-    Module.Flat RZ
-      (Γ(relCurve C RZ, relPinnedChart C RZ pi side) ⧸
-        divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
-          hpi g r1 r2 b1 b2 i j 1 side) := by
-  apply flat_shifted_highWindow_relation_quotient_of_saturation
-    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side
-    (read := fun n => divUniversalHighWindowChartRead (C := C) (pi := pi)
-      hpi g r1 r2 b1 b2 i j (n + 1) side)
-    (J := divUniversalHighWindowRelationReadIdeal (C := C) (pi := pi)
-      hpi g r1 r2 b1 b2 i j 1 side)
-    (hreadK := fun n => divUniversalHighWindowShiftedRelation_read_ker_stageOneIdeal
-      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n)
-    (hread := fun n m h x =>
-      divUniversalHighWindowShiftedRelationTransitionOfLE_chartRead
-        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n m h x)
-    (hcover := by
-      intro b
-      obtain ⟨n, x, hx⟩ := exists_divUniversalHighWindowShiftedChartRead_eq
-        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hb side b
-      exact ⟨n, x, hx⟩)
-    hsaturation
 
 end HighWindowTransitionRelation
 
