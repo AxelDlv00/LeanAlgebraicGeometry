@@ -3,14 +3,15 @@ title: 'DD-R: the relative endgame — Z(♦), local generators via lm:ctn/Nakay
   inherited from the ambient summand, inverse laws, divRep'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'LANDED: residue-field multiplication conjugacy, relative second-window persistence/surjectivity,
-  multiplier-window unit generation, equality of the genuine first/second chart-reading
-  ideals, and a reusable fibre-to-stalk Nakayama bridge (assuming base-flat B/J).
-  REMAINING XL gate: prove the relative truncation/saturation theorem identifying
-  the finite projective window quotient with the genuine chart quotient, or directly
-  prove base flatness of the genuine second-window chart quotient. Finite-window projectivity
-  and ideal equality do not imply this flatness. After that gate: close the pointwise
-  seed RD-N closed branch, then certificate/U1/U2 and affine/global divRep assembly.'
+summary: 'LANDED: residue-field multiplication conjugacy, relative second-window persistence
+  and surjectivity, multiplier-window unit generation, equality of the genuine first
+  and second chart-reading ideals, a reusable fibre-to-stalk Nakayama bridge assuming
+  base-flat B/J, and an axiom-free flatness theorem for directed limits. The pointwise
+  seed layer isolates the generic residue-fibre RD-N branch. REMAINING XL gate: construct
+  all sufficiently high projective window stages and identify the genuine chart quotient
+  with their directed limit by relative saturation and dehomogenization, or prove
+  genuine chart-quotient flatness directly. Then close the non-generic RD-N branch,
+  certificate/U1/U2, and affine/global divRep assembly.'
 status: active
 kind: proof
 priority: normal
@@ -24,4 +25,4 @@ metadata:
   author: horizon
   created_at: '2026-07-16T08:26:37.867341+00:00'
   parent: AJCR.w4-rep.datum.dat-d
-  updated_at: '2026-07-21T07:50:48.522322+00:00'
+  updated_at: '2026-07-21T08:15:54.475643+00:00'

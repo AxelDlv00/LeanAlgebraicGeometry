@@ -2,11 +2,11 @@ id: AJCR.w4-rep.datum
 title: The pinned RepresentableBy datum
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: The pinned datum is structurally prepared. DD-R has advanced through residue-field
-  conjugacy, second-window persistence, genuine reading-ideal equality, and the fibre-to-stalk
-  bridge. The remaining blocker is the relative truncation/saturation theorem (equivalently
-  RZ-flatness of the genuine chart quotient); downstream glue, descent, and JacobianData
-  remain gated.
+summary: 'Structurally prepared: finite-window conjugacy, persistence, ideal equality,
+  fibre-to-stalk bridge, and directed-limit flatness are landed. The active XL blocker
+  is the relative saturation/dehomogenization theorem or an equivalent proof of flatness
+  for the genuine chart quotient. Downstream pointwise RD-N closure, certificate,
+  and divRep assembly remain gated on that theorem.'
 status: active
 kind: proof
 priority: normal
@@ -20,4 +20,4 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:11.833612+00:00'
   parent: AJCR.w4-rep
-  updated_at: '2026-07-21T07:48:55.540430+00:00'
+  updated_at: '2026-07-21T08:15:55.348600+00:00'
