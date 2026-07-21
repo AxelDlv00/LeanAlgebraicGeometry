@@ -3,16 +3,19 @@ title: 'DD-R: the relative endgame — Z(♦), local generators via lm:ctn/Nakay
   inherited from the ambient summand, inverse laws, divRep'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'LANDED: residue-field multiplication conjugacy, relative second-window persistence
-  and surjectivity, multiplier-window unit generation, equality of the genuine first
-  and second chart-reading ideals, a reusable fibre-to-stalk Nakayama bridge assuming
-  base-flat B/J, axiom-free directed-limit flatness, the pointwise generic RD-N branch,
-  and a conditional closed-RD-N reduction. REMAINING XL gate: construct all sufficiently
-  high projective window stages and identify the genuine chart quotient with their
-  directed limit by relative saturation and dehomogenization, or prove genuine chart-quotient
-  flatness directly; separately prove PointwiseSeedFibreContainment, the denominator-cleared
-  residue-fibre-to-total-stalk transport. Then certificate/U1/U2 and affine/global
-  divRep assembly.'
+summary: 'LANDED: residue-field multiplication conjugacy; relative second-window persistence
+  and surjectivity; multiplier-window unit generation; equality of the genuine first
+  and second chart-reading ideals; the fibre-to-stalk Nakayama bridge; directed-limit
+  flatness; generic RD-N; denominator-cleared PointwiseSeedFibreContainment; and the
+  closed-RD-N theorem conditional only on genuine chart-quotient flatness. HIGH-WINDOW
+  ROUTE STARTED: H1 vanishes at every M+n*S stage. REMAINING XL GATE: construct the
+  relative high-window quotient stages with persistence/projectivity and identify
+  each genuine chart quotient with their directed limit by saturation and dehomogenization,
+  or prove that quotient flatness directly. Then instantiate the certificate (finite/regular
+  chart colengths, finite-flat overlaps, fibre kernel spanning and dimension), discharge
+  U1/U2, package the universal family, and finish affine/global divRep assembly. Old
+  Grassmannian, Zariski descent, and flattening infrastructure is reusable, but old
+  Quot/Pic representability endpoints remain sorry-backed and do not close this gate.'
 status: active
 kind: proof
 priority: normal
@@ -26,4 +29,4 @@ metadata:
   author: horizon
   created_at: '2026-07-16T08:26:37.867341+00:00'
   parent: AJCR.w4-rep.datum.dat-d
-  updated_at: '2026-07-21T09:01:28.590864+00:00'
+  updated_at: '2026-07-21T12:57:43.585077+00:00'
