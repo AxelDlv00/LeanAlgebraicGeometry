@@ -2,11 +2,11 @@ id: AJCR.w4-rep
 title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Wave remains open. The DD-R finite-window layer, local fibre-to-stalk bridge,
-  directed-limit flatness leg, and pointwise generic RD-N branch are now formalized.
-  Full representability still requires the genuine chart quotient flatness/saturation
-  theorem, then the closed RD-N branch and the certificate, affine, and global divRep
-  assembly.
+summary: Wave remains open. The DD-R finite-window layer, local Nakayama bridge, directed-limit
+  flatness leg, pointwise generic branch, and conditional closed-RD-N reduction are
+  formalized. Full representability still requires genuine chart quotient saturation/flatness
+  and the residue-fibre-to-total-stalk transport, then certificate, affine, and global
+  divRep assembly.
 status: active
 kind: proof
 priority: normal
@@ -20,4 +20,4 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:10.654781+00:00'
   parent: AJCR.jacobian
-  updated_at: '2026-07-21T08:15:56.122857+00:00'
+  updated_at: '2026-07-21T09:01:30.218134+00:00'
