@@ -405,6 +405,35 @@ theorem map_divUniversalHighWindowShiftedRelationTransitionOfLE_relation_le
       (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j q side ⟨y, hy, rfl⟩)
     n m h
 
+/-- The quotient transition on the shifted recursive relation family. -/
+noncomputable def divUniversalHighWindowShiftedRelationQuotientTransition
+    (side : Bool) (n m : Nat) (h : n ≤ m) :
+    (G (n + 1) ⧸ divUniversalHighWindowRelation (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j (n + 1)) →ₗ[RZ]
+    (G (m + 1) ⧸ divUniversalHighWindowRelation (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j (m + 1)) :=
+  Submodule.directedQuotientMapOfCompatible
+    (f := divUniversalHighWindowShiftedRelationTransitionOfLE
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side)
+    (K := fun q => divUniversalHighWindowRelation (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j (q + 1))
+    (hK := fun q r hr =>
+      map_divUniversalHighWindowShiftedRelationTransitionOfLE_relation_le
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side q r hr)
+    n m h
+
+@[simp]
+theorem divUniversalHighWindowShiftedRelationQuotientTransition_mk
+    (side : Bool) (n m : Nat) (h : n ≤ m) (x : G (n + 1)) :
+    divUniversalHighWindowShiftedRelationQuotientTransition
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n m h
+      (Submodule.Quotient.mk x) =
+      Submodule.Quotient.mk
+        (divUniversalHighWindowShiftedRelationTransitionOfLE
+          (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n m h x) := by
+  rw [divUniversalHighWindowShiftedRelationQuotientTransition,
+    Submodule.directedQuotientMapOfCompatible_mk]
+
 /-- The shifted high-window ambients still exhaust either pinned chart: shift an
 arbitrary exhaustion witness once using the read-invariant relation transition. -/
 theorem exists_divUniversalHighWindowShiftedChartRead_eq
