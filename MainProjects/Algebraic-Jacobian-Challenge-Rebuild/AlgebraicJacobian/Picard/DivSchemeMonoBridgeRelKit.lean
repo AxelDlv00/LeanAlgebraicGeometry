@@ -253,19 +253,20 @@ theorem exists_notMem_mul_mem_sup_map_of_fibre_local
     (e : s.ResidueField ⊗[R] B ≃ₐ[s.ResidueField] B')
     (q' : Ideal B') [q'.IsPrime]
     (hq : ∀ b : B,
-      e ((1 : s.ResidueField) ⊗ₜ[R] b) ∈ q' ↔ b ∈ q)
+      e.toLinearMap ((1 : s.ResidueField) ⊗ₜ[R] b) ∈ q' ↔ b ∈ q)
     {a b : B}
     (hlocal : ∃ d : B', d ∉ q' ∧
-      d * e ((1 : s.ResidueField) ⊗ₜ[R] a) ∈
-        Ideal.span {e ((1 : s.ResidueField) ⊗ₜ[R] b)}) :
+      d * e.toLinearMap ((1 : s.ResidueField) ⊗ₜ[R] a) ∈
+        Ideal.span {e.toLinearMap ((1 : s.ResidueField) ⊗ₜ[R] b)}) :
     ∃ r : B, r ∉ q ∧
       r * a ∈ Ideal.span {b} ⊔
         Ideal.map (algebraMap R B) (Ideal.comap (algebraMap R B) q) := by
   have hqprime : q.IsPrime := inferInstance
   have hq'prime : q'.IsPrime := inferInstance
   have hscalar (t : R) :
-      e ((1 : s.ResidueField) ⊗ₜ[R] algebraMap R B t) =
+      e.toLinearMap ((1 : s.ResidueField) ⊗ₜ[R] algebraMap R B t) =
         algebraMap s.ResidueField B' (algebraMap R s.ResidueField t) := by
+    change e ((1 : s.ResidueField) ⊗ₜ[R] algebraMap R B t) = _
     calc
       e ((1 : s.ResidueField) ⊗ₜ[R] algebraMap R B t) =
           e ((1 : s.ResidueField) ⊗ₜ[R] (t • (1 : B))) := by
@@ -304,10 +305,12 @@ theorem exists_notMem_mul_mem_sup_map_of_fibre_local
       algebraMap s.ResidueField B' (algebraMap R s.ResidueField t) * d := by
     rw [← htc, ← IsScalarTower.algebraMap_smul s.ResidueField t (e.symm d),
       map_smul, Algebra.smul_def, e.apply_symm_apply]
+  have htcLinear : e.toLinearMap ((1 : s.ResidueField) ⊗ₜ[R] c) =
+      algebraMap s.ResidueField B' (algebraMap R s.ResidueField t) * d := htc'
   have hcq : c ∉ q := by
     intro hc
-    have hmem : e ((1 : s.ResidueField) ⊗ₜ[R] c) ∈ q' := (hq c).2 hc
-    rw [htc'] at hmem
+    have hmem : e.toLinearMap ((1 : s.ResidueField) ⊗ₜ[R] c) ∈ q' := (hq c).2 hc
+    rw [htcLinear] at hmem
     rcases hq'prime.mem_or_mem hmem with ht' | hd'
     · have htK : algebraMap R s.ResidueField t ≠ 0 := fun hzero =>
           ht (Ideal.algebraMap_residueField_eq_zero.mp hzero)
@@ -321,6 +324,8 @@ theorem exists_notMem_mul_mem_sup_map_of_fibre_local
     · exact hdq hd'
   obtain ⟨d', hd'⟩ := Ideal.mem_span_singleton.mp hda
   obtain ⟨d'', rfl⟩ := e.surjective d'
+  change d * e ((1 : s.ResidueField) ⊗ₜ[R] a) =
+    e ((1 : s.ResidueField) ⊗ₜ[R] b) * e d'' at hd'
   have hfibre : (1 : s.ResidueField) ⊗ₜ[R] (c * a) ∈
       Ideal.map (Algebra.TensorProduct.includeRight
         (R := R) (A := s.ResidueField) (B := B)) (Ideal.span {b}) := by
