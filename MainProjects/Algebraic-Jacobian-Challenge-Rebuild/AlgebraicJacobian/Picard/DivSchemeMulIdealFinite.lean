@@ -19,13 +19,13 @@ the reverse inclusion.
 
 set_option autoImplicit false
 
-universe u
+universe u v
 
 namespace AlgebraicGeometry
 
 namespace IdealPurity
 
-variable {R B K K' ι : Type u}
+variable {R B K K' : Type u} {ι : Type v}
 variable [CommRing R] [CommRing B] [Algebra R B]
 variable [AddCommGroup K] [Module R K]
 variable [AddCommGroup K'] [Module R K']
