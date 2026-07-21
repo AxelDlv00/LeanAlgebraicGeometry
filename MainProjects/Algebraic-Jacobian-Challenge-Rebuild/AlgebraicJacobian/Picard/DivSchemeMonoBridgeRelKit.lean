@@ -50,6 +50,47 @@ section FibreDescent
 variable {R : Type u} [CommRing R] (s : Ideal R) [s.IsPrime]
 variable {B : Type u} [CommRing B] [Algebra R B]
 
+/-- Every element of the residue-field fibre is, after multiplication by a base
+denominator outside the prime, a pure tensor with left factor `1`. -/
+theorem exists_notMem_smul_eq_one_tmul
+    (x : s.ResidueField ⊗[R] B) :
+    ∃ r : R, r ∉ s ∧ ∃ b : B,
+      r • x = (1 : s.ResidueField) ⊗ₜ[R] b := by
+  have hsprime : s.IsPrime := inferInstance
+  induction x using TensorProduct.induction_on with
+  | zero =>
+      exact ⟨1, s.primeCompl.one_mem, 0, by simp⟩
+  | tmul c b =>
+      obtain ⟨y, rfl⟩ := IsLocalRing.residue_surjective c
+      obtain ⟨⟨a, t⟩, rfl⟩ := IsLocalization.mk'_surjective s.primeCompl y
+      refine ⟨t, t.2, a • b, ?_⟩
+      have ht : (t : R) • (IsLocalRing.residue (Localization.AtPrime s)
+            (IsLocalization.mk' (Localization.AtPrime s) a t)) =
+          algebraMap R s.ResidueField a := by
+        rw [Algebra.smul_def,
+          IsScalarTower.algebraMap_apply R (Localization.AtPrime s) s.ResidueField,
+          IsLocalRing.ResidueField.algebraMap_eq, ← map_mul, IsLocalization.mk'_spec',
+          ← IsLocalRing.ResidueField.algebraMap_eq, ← IsScalarTower.algebraMap_apply]
+      calc
+        (t : R) • (IsLocalRing.residue (Localization.AtPrime s)
+              (IsLocalization.mk' (Localization.AtPrime s) a t) ⊗ₜ[R] b) =
+            ((t : R) • IsLocalRing.residue (Localization.AtPrime s)
+              (IsLocalization.mk' (Localization.AtPrime s) a t)) ⊗ₜ[R] b := by
+                rw [TensorProduct.smul_tmul']
+        _ = (algebraMap R s.ResidueField a) ⊗ₜ[R] b := by rw [ht]
+        _ = (a • (1 : s.ResidueField)) ⊗ₜ[R] b := by
+              rw [Algebra.algebraMap_eq_smul_one]
+        _ = (1 : s.ResidueField) ⊗ₜ[R] (a • b) := TensorProduct.smul_tmul a 1 b
+  | add x y hx hy =>
+      obtain ⟨rx, hrx, bx, hbx⟩ := hx
+      obtain ⟨ry, hry, by', hby⟩ := hy
+      refine ⟨rx * ry, fun hmem => (hsprime.mem_or_mem hmem).elim hrx hry,
+        ry • bx + rx • by', ?_⟩
+      rw [TensorProduct.tmul_add, smul_add]
+      congr 1
+      · rw [mul_comm, mul_smul, hbx, TensorProduct.tmul_smul]
+      · rw [mul_smul, hby, TensorProduct.tmul_smul]
+
 /-- **The kernel of the residue-field fibre map is the `s`-saturation** (pure algebra,
 any `R`-algebra `B`): if `1 ⊗ b` vanishes in `κ(s) ⊗[R] B`, then `t • b ∈ s·B` for some
 `t ∉ s`.  Factor through `(R⧸s) ⊗[R] B`: the outer tensor with `κ(s) = Frac(R⧸s)` is a
@@ -201,6 +242,117 @@ theorem exists_smul_mem_sup_map_of_one_tmul_mem_map {I : Ideal B} {f : B}
     refine I'.add_mem (I'.smul_of_tower_mem t' hb) ?_
     rw [Ideal.smul_top_eq_map] at hmem
     exact Ideal.mem_sup_right hmem
+
+/-- Descend principal ideal membership which holds only locally at a point of the
+residue-field fibre.  The first denominator is a fibre-chart element; clearing it to a
+pure tensor and then applying `exists_smul_mem_sup_map_of_one_tmul_mem_map` produces one
+total-space denominator outside `q`. -/
+theorem exists_notMem_mul_mem_sup_map_of_fibre_local
+    (q : Ideal B) [q.IsPrime]
+    {B' : Type u} [CommRing B'] [Algebra s.ResidueField B']
+    (e : s.ResidueField ⊗[R] B ≃ₐ[s.ResidueField] B')
+    (q' : Ideal B') [q'.IsPrime]
+    (hq : ∀ b : B,
+      e ((1 : s.ResidueField) ⊗ₜ[R] b) ∈ q' ↔ b ∈ q)
+    {a b : B}
+    (hlocal : ∃ d : B', d ∉ q' ∧
+      d * e ((1 : s.ResidueField) ⊗ₜ[R] a) ∈
+        Ideal.span {e ((1 : s.ResidueField) ⊗ₜ[R] b)}) :
+    ∃ r : B, r ∉ q ∧
+      r * a ∈ Ideal.span {b} ⊔
+        Ideal.map (algebraMap R B) (Ideal.comap (algebraMap R B) q) := by
+  have hqprime : q.IsPrime := inferInstance
+  have hq'prime : q'.IsPrime := inferInstance
+  have hscalar (t : R) :
+      e ((1 : s.ResidueField) ⊗ₜ[R] algebraMap R B t) =
+        algebraMap s.ResidueField B' (algebraMap R s.ResidueField t) := by
+    calc
+      e ((1 : s.ResidueField) ⊗ₜ[R] algebraMap R B t) =
+          e ((1 : s.ResidueField) ⊗ₜ[R] (t • (1 : B))) := by
+            rw [Algebra.smul_def, mul_one]
+      _ = e ((t • (1 : s.ResidueField)) ⊗ₜ[R] (1 : B)) := by
+            rw [TensorProduct.smul_tmul]
+      _ = e (algebraMap s.ResidueField (s.ResidueField ⊗[R] B)
+            (algebraMap R s.ResidueField t)) := by
+            rw [Algebra.smul_def, mul_one]
+            rfl
+      _ = algebraMap s.ResidueField B' (algebraMap R s.ResidueField t) := e.commutes _
+  have hsq : s = Ideal.comap (algebraMap R B) q := by
+    ext t
+    constructor
+    · intro ht
+      apply (hq (algebraMap R B t)).1
+      rw [hscalar, Ideal.algebraMap_residueField_eq_zero.mpr ht]
+      simp
+    · intro ht
+      have ht' : algebraMap s.ResidueField B' (algebraMap R s.ResidueField t) ∈ q' := by
+        rw [← hscalar]
+        exact (hq (algebraMap R B t)).2 ht
+      by_contra hts
+      have huK : IsUnit (algebraMap R s.ResidueField t) :=
+        (isUnit_iff_ne_zero).2 fun hzero =>
+          hts (Ideal.algebraMap_residueField_eq_zero.mp hzero)
+      obtain ⟨u, hu⟩ := huK.map (algebraMap s.ResidueField B')
+      have hone : (1 : B') ∈ q' := by
+        rw [← u.inv_mul]
+        exact q'.mul_mem_left (↑u⁻¹) (hu ▸ ht')
+      exact hq'prime.ne_top ((Ideal.eq_top_iff_one q').mpr hone)
+  obtain ⟨d, hdq, hda⟩ := hlocal
+  obtain ⟨t, ht, c, htc⟩ :=
+    exists_notMem_smul_eq_one_tmul s (e.symm d)
+  have htc' : e ((1 : s.ResidueField) ⊗ₜ[R] c) =
+      algebraMap s.ResidueField B' (algebraMap R s.ResidueField t) * d := by
+    rw [← htc, ← IsScalarTower.algebraMap_smul s.ResidueField t (e.symm d),
+      map_smul, Algebra.smul_def, e.apply_symm_apply]
+  have hcq : c ∉ q := by
+    intro hc
+    have hmem : e ((1 : s.ResidueField) ⊗ₜ[R] c) ∈ q' := (hq c).2 hc
+    rw [htc'] at hmem
+    rcases hq'prime.mem_or_mem hmem with ht' | hd'
+    · have htK : algebraMap R s.ResidueField t ≠ 0 := fun hzero =>
+          ht (Ideal.algebraMap_residueField_eq_zero.mp hzero)
+      have huK : IsUnit (algebraMap R s.ResidueField t) :=
+        (isUnit_iff_ne_zero).2 htK
+      obtain ⟨u, hu⟩ := huK.map (algebraMap s.ResidueField B')
+      have hone : (1 : B') ∈ q' := by
+        rw [← u.inv_mul]
+        exact q'.mul_mem_left (↑u⁻¹) (hu ▸ ht')
+      exact hq'prime.ne_top ((Ideal.eq_top_iff_one q').mpr hone)
+    · exact hdq hd'
+  obtain ⟨d', hd'⟩ := Ideal.mem_span_singleton.mp hda
+  obtain ⟨d'', rfl⟩ := e.surjective d'
+  have hfibre : (1 : s.ResidueField) ⊗ₜ[R] (c * a) ∈
+      Ideal.map (Algebra.TensorProduct.includeRight
+        (R := R) (A := s.ResidueField) (B := B)) (Ideal.span {b}) := by
+    rw [Ideal.map_span, Set.image_singleton, Ideal.mem_span_singleton]
+    refine ⟨(algebraMap s.ResidueField (s.ResidueField ⊗[R] B)
+        (algebraMap R s.ResidueField t)) * d'', e.injective ?_⟩
+    simp only [map_mul, Algebra.TensorProduct.includeRight_apply]
+    calc
+      e ((1 : s.ResidueField) ⊗ₜ[R] (c * a)) =
+          e ((1 : s.ResidueField) ⊗ₜ[R] c) *
+            e ((1 : s.ResidueField) ⊗ₜ[R] a) := by
+              rw [← map_mul, Algebra.TensorProduct.tmul_mul_tmul, one_mul]
+      _ = (algebraMap s.ResidueField B' (algebraMap R s.ResidueField t) * d) *
+            e ((1 : s.ResidueField) ⊗ₜ[R] a) := by rw [htc']
+      _ = algebraMap s.ResidueField B' (algebraMap R s.ResidueField t) *
+            (e ((1 : s.ResidueField) ⊗ₜ[R] b) * e d'') := by
+              rw [mul_assoc, hd']
+      _ = e ((1 : s.ResidueField) ⊗ₜ[R] b) *
+            (e (algebraMap s.ResidueField (s.ResidueField ⊗[R] B)
+              (algebraMap R s.ResidueField t)) * e d'') := by
+                rw [e.commutes]
+                ring
+  obtain ⟨t', ht', htca⟩ :=
+    exists_smul_mem_sup_map_of_one_tmul_mem_map s hfibre
+  refine ⟨algebraMap R B t' * c, ?_, ?_⟩
+  · intro hmem
+    rcases hqprime.mem_or_mem hmem with htq | hcq'
+    · exact ht' (by
+        rw [hsq]
+        exact htq)
+    · exact hcq hcq'
+  · simpa only [Algebra.smul_def, mul_assoc, hsq] using htca
 
 end FibreDescent
 
