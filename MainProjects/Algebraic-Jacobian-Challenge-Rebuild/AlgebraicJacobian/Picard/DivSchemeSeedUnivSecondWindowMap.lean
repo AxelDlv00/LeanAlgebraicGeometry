@@ -100,10 +100,10 @@ local notation "HS" => Scheme.divisorSections K (windowS C K hπ g) ⊤
 local notation "KM" => divUniversalFibreKM C hπ g r₁ r₂ b₁ i j K
 local notation "KMS" => divUniversalFibreK' C hπ g r₁ r₂ b₂ i j K
 
-/-- The concrete finite multiplication map onto the second universal fibre
-window, under the positive ledger bound. -/
 set_option maxHeartbeats 1600000 in
 -- The transported window types and function-field dictionaries require the campaign budget.
+/-- The concrete finite multiplication map onto the second universal fibre
+window, under the positive ledger bound. -/
 noncomputable def divUniversalFibreMulMap
     (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
     (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))
@@ -117,9 +117,9 @@ noncomputable def divUniversalFibreMulMap
     (divUniversalFibre_mulSpan_eq_of_windowBound_pos
       C hπ g r₁ r₂ b₁ b₂ i j K hO hχ hker hb)
 
-/-- The finite field-level universal multiplication map is surjective. -/
 set_option maxHeartbeats 1600000 in
 -- Re-elaboration of the concrete map repeats the transported window dictionaries.
+/-- The finite field-level universal multiplication map is surjective. -/
 theorem divUniversalFibreMulMap_surjective
     (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
     (hχ : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : ℤ))

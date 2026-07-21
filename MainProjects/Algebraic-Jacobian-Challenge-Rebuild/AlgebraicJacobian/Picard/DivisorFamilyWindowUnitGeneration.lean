@@ -20,7 +20,7 @@ that the corresponding chart readings of that basis generate `1`.
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
-universe u
+universe u v
 
 open CategoryTheory Limits TopologicalSpace Opposite
 open scoped TensorProduct
@@ -34,7 +34,7 @@ attribute [local instance 10000] relCurve.instOver
 
 section Basis
 
-variable {k R M B ι : Type u} [Field k] [CommRing R] [Algebra k R]
+variable {k R M B : Type u} {ι : Type v} [Field k] [CommRing R] [Algebra k R]
 variable [AddCommGroup M] [Module k M] [CommRing B] [Algebra R B]
 variable [Fintype ι]
 
@@ -83,7 +83,7 @@ noncomputable def relThetaWindowChartRead
 
 /-- The readings of any finite basis of a theta window generate `1` on either pinned
 chart after scalar extension. -/
-theorem exists_basis_relThetaWindowChartRead_mul_eq_one {ι : Type u} [Fintype ι]
+theorem exists_basis_relThetaWindowChartRead_mul_eq_one {ι : Type v} [Fintype ι]
     (basis : Module.Basis ι k
       ↥(Scheme.divisorSections k (a • fiberWeilDivisor π) ⊤))
     (hH1 : Subsingleton (relTwistPair C k π (relThetaCocycle C k π a)).H1)
