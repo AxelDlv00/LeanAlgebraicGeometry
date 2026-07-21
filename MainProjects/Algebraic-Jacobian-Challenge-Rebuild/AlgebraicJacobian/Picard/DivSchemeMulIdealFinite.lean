@@ -71,9 +71,9 @@ theorem span_range_read_le_of_finite_unit_generation
   have hsingle : r' (μ (Pi.single t k)) = m t * r k := by
     rw [hread]
     rw [Finset.sum_eq_single t
-      (fun x _ hxt => by simp [Pi.single_apply, hxt])
+      (fun x _ hxt => by simp [hxt])
       (fun h => absurd (Finset.mem_univ t) h)]
-    simp [Pi.single_apply]
+    simp
   rw [mul_assoc, ← hsingle]
   exact Ideal.mul_mem_left _ _ (Ideal.subset_span
     ⟨μ (Pi.single t k), rfl⟩)
