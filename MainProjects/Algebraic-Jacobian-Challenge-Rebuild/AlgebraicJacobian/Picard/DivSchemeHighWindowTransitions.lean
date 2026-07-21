@@ -103,150 +103,6 @@ theorem relThetaResSide_relThetaSideTransition (side : Bool) (p s : Nat)
 
 end RelativeTransition
 
-section HighWindowTransition
-
-variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
-  [hSmoothC : SmoothOfRelativeDimension 1 C.hom] [hProperC : IsProper C.hom]
-  [hGeometricallyIrreducibleC : GeometricallyIrreducible C.hom]
-variable {pi : C.left ⟶ P1 k} [IsFinite pi] [IsDominant pi]
-
-noncomputable local instance instOverCleftHighWindowTransition :
-    C.left.Over (Spec (.of k)) := ⟨C.hom⟩
-
-variable [SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k))] [IsIntegral C.left]
-  [LocallyOfFiniteType (C.left ↘ Spec (.of k))]
-  [QuasiCompact (C.left ↘ Spec (.of k))]
-variable [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0)]
-  [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1)]
-variable (hpi : pi ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k))
-variable (g r1 r2 : Nat)
-variable (b1 : Module.Basis (Fin r1) k
-  ↥(Scheme.divisorSections k (windowM_choice pi hpi g • fiberWeilDivisor pi) ⊤))
-variable (b2 : Module.Basis (Fin r2) k
-  ↥(Scheme.divisorSections k ((windowS_choice pi hpi g • fiberWeilDivisor pi)
-    + (windowM_choice pi hpi g • fiberWeilDivisor pi)) ⊤))
-variable (i : (glueData k g r1).J) (j : (glueData k g r2).J)
-
-local notation "RZ" => DivCarveChartRing k
-  (windowS_choice pi hpi g • fiberWeilDivisor pi)
-  (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1 b2 i j
-local notation "E" n => divUniversalHighWindowExponent (C := C) (pi := pi) hpi g n
-local notation "G" n => divUniversalHighWindowAmbient (C := C) (pi := pi)
-  (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
-  (i := i) (j := j) n
-
-/-- Reindex a relative theta section from exponent `s + Eₙ` to `Eₙ₊₁`. -/
-noncomputable def divUniversalHighWindowRelativeSuccEquiv (n : Nat) :
-    relThetaSections C RZ pi
-        (windowS_choice pi hpi g + E n) ≃ₗ[RZ]
-      relThetaSections C RZ pi (E (n + 1)) :=
-  LinearEquiv.ofEq _ _ (congrArg (relThetaSections C RZ pi)
-    (divUniversalHighWindowExponent_succ (C := C) (pi := pi) hpi g n))
-
-/-- The side-dependent relative transition, given by multiplication by the
-canonical section with selected-side reading `1`. -/
-noncomputable def divUniversalHighWindowRelativeTransition (side : Bool) (n : Nat) :
-    relThetaSections C RZ pi (E n) →ₗ[RZ]
-      relThetaSections C RZ pi (E (n + 1)) :=
-  (divUniversalHighWindowRelativeSuccEquiv (C := C) (pi := pi)
-      hpi g r1 r2 b1 b2 i j n).toLinearMap.comp
-    (relThetaSideTransition C RZ pi side (E n)
-      (windowS_choice pi hpi g))
-
-@[simp]
-theorem divUniversalHighWindowRelativeTransition_read (side : Bool) (n : Nat)
-    (x : relThetaSections C RZ pi (E n)) :
-    relThetaResSide (E (n + 1)) side le_rfl
-      (divUniversalHighWindowRelativeTransition (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j side n x) =
-      relThetaResSide (E n) side le_rfl x := by
-  rw [divUniversalHighWindowRelativeTransition, LinearMap.comp_apply,
-    LinearEquiv.coe_coe, LinearEquiv.coe_ofEq_apply]
-  simpa only [divUniversalHighWindowExponent_succ] using
-    (relThetaResSide_relThetaSideTransition C RZ pi side (E n)
-      (windowS_choice pi hpi g) x)
-
-/-- The ambient transition obtained by conjugating the relative transition by
-the high-window theta equivalences. -/
-noncomputable def divUniversalHighWindowTransition (side : Bool) (n : Nat) :
-    G n →ₗ[RZ] G (n + 1) :=
-  (divUniversalHighWindowThetaEquiv (C := C) (pi := pi)
-      hpi g r1 r2 b1 b2 i j (n + 1)).symm.toLinearMap.comp
-    ((divUniversalHighWindowRelativeTransition (C := C) (pi := pi)
-      hpi g r1 r2 b1 b2 i j side n).comp
-      (divUniversalHighWindowThetaEquiv (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j n).toLinearMap)
-
-@[simp]
-theorem divUniversalHighWindowChartRead_transition (side : Bool) (n : Nat)
-    (x : G n) :
-    divUniversalHighWindowChartRead (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j (n + 1) side
-      (divUniversalHighWindowTransition (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j side n x) =
-      divUniversalHighWindowChartRead (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j n side x := by
-  change relThetaResSide (E (n + 1)) side le_rfl
-      ((divUniversalHighWindowThetaEquiv (C := C) (pi := pi)
-          hpi g r1 r2 b1 b2 i j (n + 1))
-        ((divUniversalHighWindowThetaEquiv (C := C) (pi := pi)
-          hpi g r1 r2 b1 b2 i j (n + 1)).symm
-          ((divUniversalHighWindowRelativeTransition (C := C) (pi := pi)
-            hpi g r1 r2 b1 b2 i j side n)
-            ((divUniversalHighWindowThetaEquiv (C := C) (pi := pi)
-              hpi g r1 r2 b1 b2 i j n) x))) = _
-  rw [LinearEquiv.apply_symm_apply]
-  exact divUniversalHighWindowRelativeTransition_read
-    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side n
-    ((divUniversalHighWindowThetaEquiv (C := C) (pi := pi)
-      hpi g r1 r2 b1 b2 i j n) x)
-
-@[simp]
-theorem divUniversalHighWindowChartRead_transition_two (side : Bool) (n : Nat)
-    (x : G n) :
-    divUniversalHighWindowChartRead (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j (n + 1 + 1) side
-      (divUniversalHighWindowTransition (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j side (n + 1)
-        (divUniversalHighWindowTransition (C := C) (pi := pi)
-          hpi g r1 r2 b1 b2 i j side n x)) =
-      divUniversalHighWindowChartRead (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j n side x := by
-  rw [divUniversalHighWindowChartRead_transition,
-    divUniversalHighWindowChartRead_transition]
-
-/-- A successor quotient map is available as soon as the chosen side transition
-preserves the relation submodules.  The latter inclusion is the explicit
-relative-saturation obligation, so it is kept as an input rather than hidden
-behind an instance. -/
-noncomputable def divUniversalHighWindowSuccessorQuotientMap
-    (K : (q : Nat) → Submodule RZ (G q)) (side : Bool) (n : Nat)
-    (hK : Submodule.map
-        (divUniversalHighWindowTransition (C := C) (pi := pi)
-          hpi g r1 r2 b1 b2 i j side n)
-        (K n) ≤ K (n + 1)) :
-    (G n ⧸ K n) →ₗ[RZ] (G (n + 1) ⧸ K (n + 1)) :=
-  (K n).mapQ (K (n + 1))
-    (divUniversalHighWindowTransition (C := C) (pi := pi)
-      hpi g r1 r2 b1 b2 i j side n) hK
-
-@[simp]
-theorem divUniversalHighWindowSuccessorQuotientMap_mk
-    (K : (q : Nat) → Submodule RZ (G q)) (side : Bool) (n : Nat)
-    (hK : Submodule.map
-        (divUniversalHighWindowTransition (C := C) (pi := pi)
-          hpi g r1 r2 b1 b2 i j side n)
-        (K n) ≤ K (n + 1)) (x : G n) :
-    divUniversalHighWindowSuccessorQuotientMap
-        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K side n hK
-      (Submodule.Quotient.mk x) =
-      Submodule.Quotient.mk
-        (divUniversalHighWindowTransition (C := C) (pi := pi)
-          hpi g r1 r2 b1 b2 i j side n x) := by
-  rw [divUniversalHighWindowSuccessorQuotientMap, Submodule.mapQ_apply]
-
-end HighWindowTransition
-
 namespace HighWindowTransitionKit
 
 section IteratedSuccessor
@@ -257,9 +113,29 @@ variable (G : Nat → Type u) [∀ n, AddCommMonoid (G n)]
 variable (step : ∀ n, G n →ₗ[R] G (n + 1))
 variable {B : Type u}
 
+/-- Transport along an equality of indices in an arbitrary family of modules. -/
+def reindex (i j : Nat) (h : i = j) : G i ≃ₗ[R] G j := by
+  subst j
+  exact LinearEquiv.refl R (G i)
+
+@[simp]
+theorem reindex_self (i : Nat) (h : i = i) :
+    reindex (R := R) G i i h = LinearEquiv.refl R (G i) := by
+  have hproof : h = rfl := Subsingleton.elim _ _
+  rw [hproof]
+  rfl
+
+/-- Transport commutes with one successor map. -/
+theorem step_comp_reindex (a j : Nat) (h : a = j) :
+    (step j).comp (reindex (R := R) G a j h).toLinearMap =
+      (reindex (R := R) G (a + 1) (j + 1)
+        (congrArg Nat.succ h)).toLinearMap.comp (step a) := by
+  subst j
+  simp [reindex]
+
 /-- Iteration of a successor-indexed family of linear maps. -/
 def iterateSuccessor : (n d : Nat) → G n →ₗ[R] G (n + d)
-  | n, 0 => LinearMap.id
+  | _, 0 => LinearMap.id
   | n, d + 1 => (step (n + d)).comp (iterateSuccessor n d)
 
 @[simp]
@@ -271,90 +147,105 @@ theorem iterateSuccessor_succ (n d : Nat) :
     iterateSuccessor G step n (d + 1) =
       (step (n + d)).comp (iterateSuccessor G step n d) := rfl
 
-theorem iterateSuccessor_add (n d e : Nat) :
-    iterateSuccessor G step n (d + e) =
-      (iterateSuccessor G step (n + d) e).comp
-        (iterateSuccessor G step n d) := by
-  induction e with
-  | zero =>
-      simp [LinearMap.comp_id]
-  | succ e ih =>
-      rw [Nat.add_succ, iterateSuccessor_succ, iterateSuccessor_succ,
-        ih, LinearMap.comp_assoc]
-      congr 1
-      apply LinearMap.ext
-      intro x
-      rfl
+/-- Reindexing an iterated successor map is independent of the chosen equal
+distance expression. -/
+theorem reindexedIterate_congr (i j d e : Nat) (hde : d = e)
+    (hd : i + d = j) (he : i + e = j) (x : G i) :
+    reindex (R := R) G (i + d) j hd (iterateSuccessor G step i d x) =
+      reindex (R := R) G (i + e) j he (iterateSuccessor G step i e x) := by
+  subst e
+  have hproof : hd = he := Subsingleton.elim _ _
+  rw [hproof]
 
-theorem iterateSuccessor_read
-    (read : ∀ n, G n → B)
-    (hread : ∀ n (x : G n), read (n + 1) (step n x) = read n x)
-    (n d : Nat) (x : G n) :
-    read (n + d) (iterateSuccessor G step n d x) = read n x := by
-  induction d with
-  | zero => rfl
-  | succ d ih =>
-      rw [iterateSuccessor_succ, LinearMap.comp_apply, hread]
-      exact ih
-
-theorem iterateSuccessor_mem
-    (K : (n : Nat) → Submodule R (G n))
-    (hK : ∀ n (x : G n), x ∈ K n → step n x ∈ K (n + 1))
-    (n d : Nat) (x : G n) (hx : x ∈ K n) :
-    iterateSuccessor G step n d x ∈ K (n + d) := by
-  induction d with
-  | zero => exact hx
-  | succ d ih =>
-      rw [iterateSuccessor_succ, LinearMap.comp_apply]
-      exact hK (n + d) _ ih
-
-/-- The map between arbitrary comparable indices obtained by iterating the
-successor maps and transporting along `i + (j-i) = j`. -/
-noncomputable def transitionOfLE (i j : Nat) (h : i ≤ j) :
-    G i →ₗ[R] G j :=
-  (LinearEquiv.ofEq _ _ (congrArg G (Nat.add_sub_of_le h))).toLinearMap.comp
+/-- The transition between arbitrary comparable indices, obtained by iterating
+successor maps through the distance and transporting to the target index. -/
+noncomputable def transitionOfLE (i j : Nat) (h : i ≤ j) : G i →ₗ[R] G j :=
+  (reindex (R := R) G (i + (j - i)) j (Nat.add_sub_of_le h)).toLinearMap.comp
     (iterateSuccessor G step i (j - i))
 
 @[simp]
 theorem transitionOfLE_self (i : Nat) (x : G i) :
     transitionOfLE G step i i le_rfl x = x := by
-  rw [transitionOfLE, Nat.sub_self, LinearMap.comp_apply,
-    LinearEquiv.coe_ofEq_apply]
-  rfl
+  unfold transitionOfLE
+  rw [LinearMap.comp_apply]
+  calc
+    _ = reindex (R := R) G (i + 0) i (Nat.add_zero i)
+        (iterateSuccessor G step i 0 x) :=
+      reindexedIterate_congr (R := R) G step i i (i - i) 0
+        (Nat.sub_self i) (Nat.add_sub_of_le le_rfl) (Nat.add_zero i) x
+    _ = x := by
+      change reindex (R := R) G i i _ x = x
+      rw [reindex_self, LinearEquiv.refl_apply]
+
+/-- Extending the target by one composes the transition with its successor map. -/
+theorem transitionOfLE_succ (i j : Nat) (h : i ≤ j) :
+    transitionOfLE G step i (j + 1) (Nat.le.step h) =
+      (step j).comp (transitionOfLE G step i j h) := by
+  apply LinearMap.ext
+  intro x
+  have hdist : j + 1 - i = (j - i) + 1 := by omega
+  have htarget : i + ((j - i) + 1) = j + 1 := by omega
+  have hnatural := LinearMap.congr_fun
+    (step_comp_reindex (R := R) G step (i + (j - i)) j
+      (Nat.add_sub_of_le h))
+    (iterateSuccessor G step i (j - i) x)
+  unfold transitionOfLE
+  simp only [LinearMap.comp_apply]
+  calc
+    _ = reindex (R := R) G (i + ((j - i) + 1)) (j + 1) htarget
+        (iterateSuccessor G step i ((j - i) + 1) x) :=
+      reindexedIterate_congr (R := R) G step i (j + 1)
+        (j + 1 - i) ((j - i) + 1) hdist
+        (Nat.add_sub_of_le (Nat.le.step h)) htarget x
+    _ = _ := by
+      change reindex (R := R) G (i + (j - i) + 1) (j + 1) _
+          (step (i + (j - i))
+            (iterateSuccessor G step i (j - i) x)) =
+        step j
+          (reindex (R := R) G (i + (j - i)) j _
+            (iterateSuccessor G step i (j - i) x))
+      exact hnatural.symm
 
 theorem transitionOfLE_read
     (read : ∀ n, G n → B)
     (hread : ∀ n (x : G n), read (n + 1) (step n x) = read n x)
     (i j : Nat) (h : i ≤ j) (x : G i) :
     read j (transitionOfLE G step i j h x) = read i x := by
-  unfold transitionOfLE
-  simp only [LinearMap.comp_apply, LinearEquiv.coe_coe,
-    LinearEquiv.coe_ofEq_apply]
-  simpa only [Nat.add_sub_of_le h] using
-    iterateSuccessor_read G step read hread i (j - i) x
+  induction h with
+  | refl =>
+      rw [transitionOfLE_self]
+  | @step m h ih =>
+      rw [transitionOfLE_succ G step i m h, LinearMap.comp_apply, hread]
+      exact ih
 
 theorem transitionOfLE_map_map (i j l : Nat) (hij : i ≤ j) (hjl : j ≤ l)
     (x : G i) :
     transitionOfLE G step j l hjl
         (transitionOfLE G step i j hij x) =
       transitionOfLE G step i l (hij.trans hjl) x := by
-  unfold transitionOfLE
-  simp only [LinearMap.comp_apply, LinearEquiv.coe_coe,
-    LinearEquiv.coe_ofEq_apply]
-  rw [← iterateSuccessor_add G step i (j - i) (l - j)]
-  congr 2
-  omega
+  induction hjl with
+  | refl =>
+      have hproof : hij.trans Nat.le.refl = hij := Subsingleton.elim _ _
+      rw [hproof, transitionOfLE_self]
+  | @step m hjl ih =>
+      rw [transitionOfLE_succ G step j m hjl, LinearMap.comp_apply, ih]
+      have hproof :
+          hij.trans (Nat.le.step hjl) = Nat.le.step (hij.trans hjl) :=
+        Subsingleton.elim _ _
+      rw [hproof, transitionOfLE_succ G step i m (hij.trans hjl),
+        LinearMap.comp_apply]
 
 theorem transitionOfLE_mem
     (K : (n : Nat) → Submodule R (G n))
     (hK : ∀ n (x : G n), x ∈ K n → step n x ∈ K (n + 1))
     (i j : Nat) (h : i ≤ j) (x : G i) (hx : x ∈ K i) :
     transitionOfLE G step i j h x ∈ K j := by
-  unfold transitionOfLE
-  simp only [LinearMap.comp_apply, LinearEquiv.coe_coe,
-    LinearEquiv.coe_ofEq_apply]
-  simpa only [Nat.add_sub_of_le h] using
-    iterateSuccessor_mem G step K hK i (j - i) x hx
+  induction h with
+  | refl =>
+      simpa only [transitionOfLE_self] using hx
+  | @step m h ih =>
+      rw [transitionOfLE_succ G step i m h, LinearMap.comp_apply]
+      exact hK m _ ih
 
 theorem map_transitionOfLE_le
     (K : (n : Nat) → Submodule R (G n))
@@ -372,85 +263,5 @@ noncomputable instance directedSystem_transitionOfLE :
 end IteratedSuccessor
 
 end HighWindowTransitionKit
-
-section HighWindowDirectedSystem
-
-variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
-  [hSmoothC : SmoothOfRelativeDimension 1 C.hom] [hProperC : IsProper C.hom]
-  [hGeometricallyIrreducibleC : GeometricallyIrreducible C.hom]
-variable {pi : C.left ⟶ P1 k} [IsFinite pi] [IsDominant pi]
-
-noncomputable local instance instOverCleftHighWindowDirectedSystem :
-    C.left.Over (Spec (.of k)) := ⟨C.hom⟩
-
-variable [SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k))] [IsIntegral C.left]
-  [LocallyOfFiniteType (C.left ↘ Spec (.of k))]
-  [QuasiCompact (C.left ↘ Spec (.of k))]
-variable [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0)]
-  [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1)]
-variable (hpi : pi ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k))
-variable (g r1 r2 : Nat)
-variable (b1 : Module.Basis (Fin r1) k
-  ↥(Scheme.divisorSections k (windowM_choice pi hpi g • fiberWeilDivisor pi) ⊤))
-variable (b2 : Module.Basis (Fin r2) k
-  ↥(Scheme.divisorSections k ((windowS_choice pi hpi g • fiberWeilDivisor pi)
-    + (windowM_choice pi hpi g • fiberWeilDivisor pi)) ⊤))
-variable (i : (glueData k g r1).J) (j : (glueData k g r2).J)
-
-local notation "RZ" => DivCarveChartRing k
-  (windowS_choice pi hpi g • fiberWeilDivisor pi)
-  (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1 b2 i j
-local notation "G" n => divUniversalHighWindowAmbient (C := C) (pi := pi)
-  (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
-  (i := i) (j := j) n
-
-/-- The transition between any two comparable high-window ambients. -/
-noncomputable def divUniversalHighWindowTransitionOfLE (side : Bool)
-    (n m : Nat) (h : n ≤ m) : G n →ₗ[RZ] G m :=
-  HighWindowTransitionKit.transitionOfLE
-    (fun q => divUniversalHighWindowAmbient (C := C) (pi := pi)
-      (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
-      (i := i) (j := j) q)
-    (fun q => divUniversalHighWindowTransition (C := C) (pi := pi)
-      hpi g r1 r2 b1 b2 i j side q) n m h
-
-noncomputable instance directedSystem_divUniversalHighWindowTransition (side : Bool) :
-    DirectedSystem (fun n => G n)
-      (divUniversalHighWindowTransitionOfLE (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j side · · ·) :=
-  HighWindowTransitionKit.directedSystem_transitionOfLE
-    (fun q => divUniversalHighWindowAmbient (C := C) (pi := pi)
-      (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
-      (i := i) (j := j) q)
-    (fun q => divUniversalHighWindowTransition (C := C) (pi := pi)
-      hpi g r1 r2 b1 b2 i j side q)
-
-/-- Every iterated transition leaves the selected pinned-chart reading fixed. -/
-@[simp]
-theorem divUniversalHighWindowChartRead_transitionOfLE (side : Bool)
-    (n m : Nat) (h : n ≤ m) (x : G n) :
-    divUniversalHighWindowChartRead (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j m side
-      (divUniversalHighWindowTransitionOfLE (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j side n m h x) =
-      divUniversalHighWindowChartRead (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j n side x := by
-  unfold divUniversalHighWindowTransitionOfLE
-  simp only [LinearMap.comp_apply, LinearEquiv.coe_coe,
-    LinearEquiv.coe_ofEq_apply]
-  simpa only [Nat.add_sub_of_le h] using
-    (HighWindowTransitionKit.iterateSuccessor_read
-      (G := fun q => divUniversalHighWindowAmbient (C := C) (pi := pi)
-        (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
-        (i := i) (j := j) q)
-      (step := fun q => divUniversalHighWindowTransition (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j side q)
-      (read := fun q => divUniversalHighWindowChartRead (C := C) (pi := pi)
-        hpi g r1 r2 b1 b2 i j q side)
-      (hread := fun q y => divUniversalHighWindowChartRead_transition
-        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side q y)
-      n (m - n) x)
-
-end HighWindowDirectedSystem
 
 end AlgebraicGeometry
