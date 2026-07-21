@@ -3,16 +3,11 @@ title: 'DD-R: the relative endgame — Z(♦), local generators via lm:ctn/Nakay
   inherited from the ambient summand, inverse laws, divRep'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'divRep endgame. Audit 2026-07-20 corrected I-0308: the landed first-window
-  flatness concerns the R-linear range P, not the genuine chart ideal J=B·P, so achiever
-  fibre divisibility plus a total-stalk lift does NOT close RD-N. Correct critical
-  path: second-window persistence (prove K_prime = H_s·K relatively from P-fib on
-  every residue field + finite Nakayama) → ideal-level purity/local principality →
-  SeedUnivRDN → unconditional isGenerator → certificate/U1 → F5-F7 → divRep. Guard
-  example and exact evidence are in the newest I-0308/ddr comments. Valid new infrastructure:
-  residue-point lift abac842cc, sharp κ(z) consumer ca7c437d4, chartReadIdeal e0a718b0c,
-  fibre-surjectivity globalization b67d9b09/77e1f3bd. Draft Quot/FGA route remains
-  typed-sorry dependent.'
+summary: 'Critical path: prove the residue-field base-change conjugacy for the universal
+  multiplication map, globalize second-window persistence, then prove purity/local
+  principality of the genuine chart ideal J = B*P. Only after that can SeedUnivRDN,
+  the certificate, and divRep be instantiated; the old R-linear flatness shortcut
+  is invalid.'
 status: active
 kind: proof
 priority: normal
@@ -26,4 +21,4 @@ metadata:
   author: horizon
   created_at: '2026-07-16T08:26:37.867341+00:00'
   parent: AJCR.w4-rep.datum.dat-d
-  updated_at: '2026-07-20T08:24:04.354569+00:00'
+  updated_at: '2026-07-21T02:12:51.274472+00:00'

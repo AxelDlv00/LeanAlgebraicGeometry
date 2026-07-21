@@ -2,11 +2,10 @@ id: AJCR.w4-rep.cbc
 title: Cohomology and base change, curve-lite
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'The relative two-cover Cech carrier over an affine test ring: formation
-  of H^0/H^1 of a line bundle on C x Spec R commutes with base change in the range
-  the datum needs. The second and last planned extension of the rebuild''s Cech lane
-  — relative in the test ring, still no higher direct images.'
-status: active
+summary: Relative H¹/H⁰ base-change and the twisted two-cover carrier are implemented
+  and verified. The remaining roadmap references are stale integration bookkeeping,
+  not an open mathematical lane.
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -19,4 +18,4 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:11.243583+00:00'
   parent: AJCR.w4-rep
-  updated_at: '2026-07-15T01:51:43.022792+00:00'
+  updated_at: '2026-07-21T02:12:22.892342+00:00'

@@ -3,7 +3,8 @@ title: 'DAT-J: JacobianData assembly — quasi-compactness via the Abel image of
   discharge of the frozen $\mathrm{Jacobian}$ and $\mathrm{instGrpObj}$'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ''
+summary: DJ-0 compact-image qc is landed. DJ-1 Abel-image qc, DJ-2 JacobianData packaging,
+  and the frozen Jacobian declarations remain gated on DAT-G/divRep.
 status: pending
 kind: proof
 priority: normal
@@ -17,3 +18,4 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:11.223347+00:00'
   parent: AJCR.w4-rep.datum
+  updated_at: '2026-07-21T02:12:53.427413+00:00'

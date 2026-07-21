@@ -4,7 +4,9 @@ title: 'DAT-B: coverage + injectivity — every $\mathrm{pic}^0$ point is Zarisk
   lane'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ''
+summary: Coverage-drop, separably-closed points, divisor-family field surjectivity,
+  local chart openness, and fibre-field invariance are landed. Remaining B5/B6/chart-locus
+  packaging is divRep/C9-gated and primarily assembly.
 status: active
 kind: proof
 priority: normal
@@ -18,4 +20,4 @@ metadata:
   author: ground
   created_at: '2026-07-16T06:42:09.039287+00:00'
   parent: AJCR.w4-rep.datum
-  updated_at: '2026-07-19T11:06:27.514203+00:00'
+  updated_at: '2026-07-21T02:12:48.354491+00:00'

@@ -3,7 +3,9 @@ title: 'DD-Q: the divQProj quasi-projectivity bundle + consumer export lemmas + 
   DAT-D blueprint nodes'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: ''
+summary: The divQProj geometry and qc/lft/separated bundle are landed. Keep this open
+  for the remaining DAT-D blueprint and consumer-export nodes, which are gated on
+  divRep.
 status: active
 kind: proof
 priority: normal
@@ -17,4 +19,4 @@ metadata:
   author: horizon
   created_at: '2026-07-16T08:26:39.088704+00:00'
   parent: AJCR.w4-rep.datum.dat-d
-  updated_at: '2026-07-19T11:06:28.794190+00:00'
+  updated_at: '2026-07-21T02:12:50.535855+00:00'

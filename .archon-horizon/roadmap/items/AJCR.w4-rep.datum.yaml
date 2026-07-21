@@ -2,8 +2,9 @@ id: AJCR.w4-rep.datum
 title: The pinned RepresentableBy datum
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Assemble the representing scheme from the large-degree twist charts and glue;
-  produce RepresentableBy picEt and pin the universal object.
+summary: The pinned datum is structurally prepared. DAT-D/divRep is the current blocker;
+  the downstream glue, descent, and JacobianData rows are intentionally gated rather
+  than complete.
 status: active
 kind: proof
 priority: normal
@@ -17,4 +18,4 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:11.833612+00:00'
   parent: AJCR.w4-rep
-  updated_at: '2026-07-16T06:41:39.839590+00:00'
+  updated_at: '2026-07-21T02:12:47.638801+00:00'
