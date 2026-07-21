@@ -3,11 +3,14 @@ title: 'DD-R: the relative endgame — Z(♦), local generators via lm:ctn/Nakay
   inherited from the ambient summand, inverse laws, divRep'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'Critical path: prove the residue-field base-change conjugacy for the universal
-  multiplication map, globalize second-window persistence, then prove purity/local
-  principality of the genuine chart ideal J = B*P. Only after that can SeedUnivRDN,
-  the certificate, and divRep be instantiated; the old R-linear flatness shortcut
-  is invalid.'
+summary: 'LANDED: residue-field multiplication conjugacy, relative second-window persistence/surjectivity,
+  multiplier-window unit generation, equality of the genuine first/second chart-reading
+  ideals, and a reusable fibre-to-stalk Nakayama bridge (assuming base-flat B/J).
+  REMAINING XL gate: prove the relative truncation/saturation theorem identifying
+  the finite projective window quotient with the genuine chart quotient, or directly
+  prove base flatness of the genuine second-window chart quotient. Finite-window projectivity
+  and ideal equality do not imply this flatness. After that gate: close the pointwise
+  seed RD-N closed branch, then certificate/U1/U2 and affine/global divRep assembly.'
 status: active
 kind: proof
 priority: normal
@@ -21,4 +24,4 @@ metadata:
   author: horizon
   created_at: '2026-07-16T08:26:37.867341+00:00'
   parent: AJCR.w4-rep.datum.dat-d
-  updated_at: '2026-07-21T02:12:51.274472+00:00'
+  updated_at: '2026-07-21T07:50:48.522322+00:00'
