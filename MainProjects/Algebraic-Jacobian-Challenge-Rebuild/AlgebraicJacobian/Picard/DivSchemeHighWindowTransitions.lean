@@ -220,7 +220,7 @@ preserves the relation submodules.  The latter inclusion is the explicit
 relative-saturation obligation, so it is kept as an input rather than hidden
 behind an instance. -/
 noncomputable def divUniversalHighWindowSuccessorQuotientMap
-    (K : Nat → Submodule RZ (G ·)) (side : Bool) (n : Nat)
+    (K : (q : Nat) → Submodule RZ (G q)) (side : Bool) (n : Nat)
     (hK : Submodule.map
         (divUniversalHighWindowTransition (C := C) (pi := pi)
           hpi g r1 r2 b1 b2 i j side n)
@@ -232,7 +232,7 @@ noncomputable def divUniversalHighWindowSuccessorQuotientMap
 
 @[simp]
 theorem divUniversalHighWindowSuccessorQuotientMap_mk
-    (K : Nat → Submodule RZ (G ·)) (side : Bool) (n : Nat)
+    (K : (q : Nat) → Submodule RZ (G q)) (side : Bool) (n : Nat)
     (hK : Submodule.map
         (divUniversalHighWindowTransition (C := C) (pi := pi)
           hpi g r1 r2 b1 b2 i j side n)
@@ -246,5 +246,170 @@ theorem divUniversalHighWindowSuccessorQuotientMap_mk
   rw [divUniversalHighWindowSuccessorQuotientMap, Submodule.mapQ_apply]
 
 end HighWindowTransition
+
+namespace HighWindowTransitionKit
+
+section IteratedSuccessor
+
+variable {R : Type u} [Semiring R]
+variable (G : Nat → Type u) [∀ n, AddCommMonoid (G n)]
+  [∀ n, Module R (G n)]
+variable (step : ∀ n, G n →ₗ[R] G (n + 1))
+variable {B : Type u}
+
+/-- Iteration of a successor-indexed family of linear maps. -/
+def iterateSuccessor : (n d : Nat) → G n →ₗ[R] G (n + d)
+  | n, 0 => LinearMap.id
+  | n, d + 1 => (step (n + d)).comp (iterateSuccessor n d)
+
+@[simp]
+theorem iterateSuccessor_zero (n : Nat) :
+    iterateSuccessor G step n 0 = LinearMap.id := rfl
+
+@[simp]
+theorem iterateSuccessor_succ (n d : Nat) :
+    iterateSuccessor G step n (d + 1) =
+      (step (n + d)).comp (iterateSuccessor G step n d) := rfl
+
+theorem iterateSuccessor_add (n d e : Nat) :
+    iterateSuccessor G step n (d + e) =
+      (iterateSuccessor G step (n + d) e).comp
+        (iterateSuccessor G step n d) := by
+  induction e with
+  | zero =>
+      simp [LinearMap.comp_id]
+  | succ e ih =>
+      rw [Nat.add_succ, iterateSuccessor_succ, iterateSuccessor_succ,
+        ih, LinearMap.comp_assoc]
+      congr 1
+      apply LinearMap.ext
+      intro x
+      rfl
+
+theorem iterateSuccessor_read
+    (read : ∀ n, G n → B)
+    (hread : ∀ n (x : G n), read (n + 1) (step n x) = read n x)
+    (n d : Nat) (x : G n) :
+    read (n + d) (iterateSuccessor G step n d x) = read n x := by
+  induction d with
+  | zero => rfl
+  | succ d ih =>
+      rw [iterateSuccessor_succ, LinearMap.comp_apply, hread]
+      exact ih
+
+/-- The map between arbitrary comparable indices obtained by iterating the
+successor maps and transporting along `i + (j-i) = j`. -/
+noncomputable def transitionOfLE (i j : Nat) (h : i ≤ j) :
+    G i →ₗ[R] G j :=
+  (LinearEquiv.ofEq _ _ (congrArg G (Nat.add_sub_of_le h))).toLinearMap.comp
+    (iterateSuccessor G step i (j - i))
+
+@[simp]
+theorem transitionOfLE_self (i : Nat) (x : G i) :
+    transitionOfLE G step i i le_rfl x = x := by
+  rw [transitionOfLE, Nat.sub_self, LinearMap.comp_apply,
+    LinearEquiv.coe_ofEq_apply]
+  rfl
+
+theorem transitionOfLE_map_map (i j l : Nat) (hij : i ≤ j) (hjl : j ≤ l)
+    (x : G i) :
+    transitionOfLE G step j l hjl
+        (transitionOfLE G step i j hij x) =
+      transitionOfLE G step i l (hij.trans hjl) x := by
+  unfold transitionOfLE
+  simp only [LinearMap.comp_apply, LinearEquiv.coe_coe,
+    LinearEquiv.coe_ofEq_apply]
+  rw [← iterateSuccessor_add G step i (j - i) (l - j)]
+  congr 2
+  omega
+
+noncomputable instance directedSystem_transitionOfLE :
+    DirectedSystem G (transitionOfLE G step · · ·) where
+  map_self i x := transitionOfLE_self G step i x
+  map_map k j i hij hjk x := transitionOfLE_map_map G step i j k hij hjk x
+
+end IteratedSuccessor
+
+end HighWindowTransitionKit
+
+section HighWindowDirectedSystem
+
+variable {k : Type u} [Field k] (C : Over (Spec (.of k)))
+  [hSmoothC : SmoothOfRelativeDimension 1 C.hom] [hProperC : IsProper C.hom]
+  [hGeometricallyIrreducibleC : GeometricallyIrreducible C.hom]
+variable {pi : C.left ⟶ P1 k} [IsFinite pi] [IsDominant pi]
+
+noncomputable local instance instOverCleftHighWindowDirectedSystem :
+    C.left.Over (Spec (.of k)) := ⟨C.hom⟩
+
+variable [SmoothOfRelativeDimension 1 (C.left ↘ Spec (.of k))] [IsIntegral C.left]
+  [LocallyOfFiniteType (C.left ↘ Spec (.of k))]
+  [QuasiCompact (C.left ↘ Spec (.of k))]
+variable [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 0)]
+  [Module.Finite k (Sheaf.HModule (C.left.moduleKSheaf k) 1)]
+variable (hpi : pi ≫ P1.structureMap k = C.left ↘ Spec (CommRingCat.of k))
+variable (g r1 r2 : Nat)
+variable (b1 : Module.Basis (Fin r1) k
+  ↥(Scheme.divisorSections k (windowM_choice pi hpi g • fiberWeilDivisor pi) ⊤))
+variable (b2 : Module.Basis (Fin r2) k
+  ↥(Scheme.divisorSections k ((windowS_choice pi hpi g • fiberWeilDivisor pi)
+    + (windowM_choice pi hpi g • fiberWeilDivisor pi)) ⊤))
+variable (i : (glueData k g r1).J) (j : (glueData k g r2).J)
+
+local notation "RZ" => DivCarveChartRing k
+  (windowS_choice pi hpi g • fiberWeilDivisor pi)
+  (windowM_choice pi hpi g • fiberWeilDivisor pi) g r1 r2 b1 b2 i j
+local notation "G" n => divUniversalHighWindowAmbient (C := C) (pi := pi)
+  (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+  (i := i) (j := j) n
+
+/-- The transition between any two comparable high-window ambients. -/
+noncomputable def divUniversalHighWindowTransitionOfLE (side : Bool)
+    (n m : Nat) (h : n ≤ m) : G n →ₗ[RZ] G m :=
+  HighWindowTransitionKit.transitionOfLE
+    (fun q => divUniversalHighWindowAmbient (C := C) (pi := pi)
+      (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+      (i := i) (j := j) q)
+    (fun q => divUniversalHighWindowTransition (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j side q) n m h
+
+noncomputable instance directedSystem_divUniversalHighWindowTransition (side : Bool) :
+    DirectedSystem (fun n => G n)
+      (divUniversalHighWindowTransitionOfLE (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j side · · ·) :=
+  HighWindowTransitionKit.directedSystem_transitionOfLE
+    (fun q => divUniversalHighWindowAmbient (C := C) (pi := pi)
+      (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+      (i := i) (j := j) q)
+    (fun q => divUniversalHighWindowTransition (C := C) (pi := pi)
+      hpi g r1 r2 b1 b2 i j side q)
+
+/-- Every iterated transition leaves the selected pinned-chart reading fixed. -/
+@[simp]
+theorem divUniversalHighWindowChartRead_transitionOfLE (side : Bool)
+    (n m : Nat) (h : n ≤ m) (x : G n) :
+    divUniversalHighWindowChartRead (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j m side
+      (divUniversalHighWindowTransitionOfLE (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j side n m h x) =
+      divUniversalHighWindowChartRead (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j n side x := by
+  unfold divUniversalHighWindowTransitionOfLE
+  simp only [LinearMap.comp_apply, LinearEquiv.coe_coe,
+    LinearEquiv.coe_ofEq_apply]
+  simpa only [Nat.add_sub_of_le h] using
+    (HighWindowTransitionKit.iterateSuccessor_read
+      (G := fun q => divUniversalHighWindowAmbient (C := C) (pi := pi)
+        (hpi := hpi) (g := g) (r1 := r1) (r2 := r2) (b1 := b1) (b2 := b2)
+        (i := i) (j := j) q)
+      (step := fun q => divUniversalHighWindowTransition (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j side q)
+      (read := fun q => divUniversalHighWindowChartRead (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j q side)
+      (hread := fun q y => divUniversalHighWindowChartRead_transition
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side q y)
+      n (m - n) x)
+
+end HighWindowDirectedSystem
 
 end AlgebraicGeometry
