@@ -76,6 +76,7 @@ abbrev divUniversalHighWindowRelationQuotient (n : Nat) : Type u :=
       hpi g r1 r2 b1 b2 i j n
 
 set_option maxHeartbeats 1600000 in
+-- The fully expanded high-window source and fibre kernel exceed the default elaboration budget.
 /-- The precise relative persistence condition on a proposed syzygy module for one
 successor multiplication presentation. -/
 def DivUniversalHighWindowSyzygySpans (n : Nat)
@@ -95,7 +96,9 @@ def DivUniversalHighWindowSyzygySpans (n : Nat)
         LinearMap.range (L.subtype.rTensor p.asIdeal.ResidueField)
 
 set_option maxHeartbeats 1600000 in
+-- The dependent high-window multiplication presentation exceeds the default elaboration budget.
 set_option synthInstance.maxHeartbeats 400000 in
+-- Synthesizing finiteness and flatness through the dependent source needs additional search time.
 /-- A successor high-window quotient is flat once a finite relative syzygy module
 generates the complete kernel on every residue-field fibre. -/
 theorem flat_divUniversalHighWindowMulSpanQuotient_of_syzygies (n : Nat)
@@ -124,7 +127,9 @@ theorem flat_divUniversalHighWindowMulSpanQuotient_of_syzygies (n : Nat)
       hpi g r1 r2 b1 b2 i j n K) L hL.1 hL.2
 
 set_option maxHeartbeats 1600000 in
+-- The dependent high-window quotient type exceeds the default elaboration budget.
 set_option synthInstance.maxHeartbeats 400000 in
+-- Projectivity synthesis unfolds the finite-presentation instances for this quotient.
 /-- Over the Noetherian carve-chart ring, the flat successor quotient supplied by the
 syzygy criterion is finite projective. -/
 theorem projective_divUniversalHighWindowMulSpanQuotient_of_syzygies (n : Nat)
@@ -158,7 +163,9 @@ theorem projective_divUniversalHighWindowMulSpanQuotient_of_syzygies (n : Nat)
   exact Module.Flat.projective_of_finitePresentation
 
 set_option maxHeartbeats 1600000 in
+-- Rewriting the recursive high-window stage to its multiplication span is elaboration-heavy.
 set_option synthInstance.maxHeartbeats 400000 in
+-- The recursive finite-submodule instance requires additional synthesis time.
 /-- Recursive form of the syzygy criterion: it proves flatness at stage `n + 2`. -/
 theorem flat_divUniversalHighWindowRelationQuotient_succ_succ_of_syzygies (n : Nat)
     (L : Submodule RZ
@@ -188,6 +195,7 @@ theorem flat_divUniversalHighWindowRelationQuotient_succ_succ_of_syzygies (n : N
         hpi g r1 r2 b1 b2 i j (n + 1)) L hL
 
 set_option maxHeartbeats 1600000 in
+-- Comparing the two expanded stage-zero quotient types exceeds the default budget.
 /-- Quotient transport from relation stage zero to the first Grassmannian point. -/
 noncomputable def divUniversalHighWindowRelationZeroQuotientEquiv :
     divUniversalHighWindowRelationQuotient (C := C) (pi := pi)
@@ -210,6 +218,7 @@ noncomputable def divUniversalHighWindowRelationZeroQuotientEquiv :
         hpi g r1 r2 b1 b2 i j)
 
 set_option maxHeartbeats 1600000 in
+-- Comparing the two expanded stage-one quotient types exceeds the default budget.
 /-- Quotient transport from relation stage one to the second Grassmannian point. -/
 noncomputable def divUniversalHighWindowRelationOneQuotientEquiv
     (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
@@ -235,6 +244,7 @@ noncomputable def divUniversalHighWindowRelationOneQuotientEquiv
         (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi hb)
 
 set_option maxHeartbeats 1600000 in
+-- Elaborating the expanded quotient equivalence exceeds the default budget.
 /-- The relation quotient at stage zero is the first Grassmannian quotient. -/
 theorem projective_divUniversalHighWindowRelationQuotient_zero :
     Module.Projective RZ
@@ -245,6 +255,7 @@ theorem projective_divUniversalHighWindowRelationQuotient_zero :
       (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j).symm
 
 set_option maxHeartbeats 1600000 in
+-- Synthesizing flatness through the expanded stage-zero quotient exceeds the default budget.
 /-- The relation quotient at stage zero is flat. -/
 theorem flat_divUniversalHighWindowRelationQuotient_zero :
     Module.Flat RZ
@@ -255,6 +266,7 @@ theorem flat_divUniversalHighWindowRelationQuotient_zero :
   exact Module.Flat.of_projective
 
 set_option maxHeartbeats 1600000 in
+-- Elaborating the expanded stage-one quotient equivalence exceeds the default budget.
 /-- The relation quotient at stage one is the second Grassmannian quotient. -/
 theorem projective_divUniversalHighWindowRelationQuotient_one
     (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
@@ -268,6 +280,7 @@ theorem projective_divUniversalHighWindowRelationQuotient_one
       (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi hb).symm
 
 set_option maxHeartbeats 1600000 in
+-- Synthesizing flatness through the expanded stage-one quotient exceeds the default budget.
 /-- The relation quotient at stage one is flat. -/
 theorem flat_divUniversalHighWindowRelationQuotient_one
     (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
