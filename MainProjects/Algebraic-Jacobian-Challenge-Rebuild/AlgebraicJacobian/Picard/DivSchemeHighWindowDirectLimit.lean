@@ -110,7 +110,10 @@ theorem quotientReadMap_compat (i j : ι) (hij : i ≤ j) (y : G i ⧸ K i) :
     rw [directedQuotientMapOfCompatible_mk, quotientReadMap_mk,
       quotientReadMap_mk, hread]
 
-variable [DecidableEq ι] [Nonempty ι] [IsDirectedOrder ι]
+variable [Nonempty ι] [IsDirectedOrder ι]
+
+noncomputable local instance instDecidableEqVaryingAmbient : DecidableEq ι :=
+  Classical.decEq ι
 
 include hreadK hread in
 /-- The map from the direct limit of bounded quotients to the fixed ideal quotient. -/
@@ -237,9 +240,11 @@ noncomputable def divUniversalHighWindowChartRead (n : Nat) (side : Bool) :
     (divUniversalHighWindowThetaEquiv (C := C) (pi := pi)
       hpi g r1 r2 b1 b2 i j n).toLinearMap
 
-omit hSmoothC hProperC hGeometricallyIrreducibleC in
 set_option maxHeartbeats 800000 in
+-- Expanding the high-window theta equivalence exceeds the default elaboration budget.
 set_option synthInstance.maxHeartbeats 400000 in
+-- The relative theta restriction map requires additional instance-synthesis time.
+omit hSmoothC hProperC hGeometricallyIrreducibleC in
 /-- Every pinned-chart section is read from one of the finite high-window ambients. -/
 theorem exists_divUniversalHighWindowChartRead_eq
     (hb : 0 < windowBound pi hpi) (side : Bool)
