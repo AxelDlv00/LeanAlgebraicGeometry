@@ -142,7 +142,7 @@ private lemma thetaVal_thetaSectionPair
 
 omit [IsFinite π] in
 /-- **The chart-0 germ of the pair presentation**: `germ_η (pair₀) = uⁿ · h`. -/
-private lemma germ_thetaSectionPair_fst
+lemma germ_thetaSectionPair_fst
     (h : ↥(divisorSections k (n • fiberWeilDivisor π) ⊤)) :
     (C.left.presheaf.germ (⊤ ⊓ fiberChart₀ π) (genericPoint C.left)
         ⟨trivial, (genericPoint_mem_preimage_inf π).1⟩).hom
@@ -158,7 +158,7 @@ private lemma germ_thetaSectionPair_fst
 
 omit [IsFinite π] in
 /-- **The chart-1 germ of the pair presentation**: `germ_η (pair₁) = h`. -/
-private lemma germ_thetaSectionPair_snd
+lemma germ_thetaSectionPair_snd
     (h : ↥(divisorSections k (n • fiberWeilDivisor π) ⊤)) :
     (C.left.presheaf.germ (⊤ ⊓ fiberChart₁ π) (genericPoint C.left)
         ⟨trivial, (genericPoint_mem_preimage_inf π).2⟩).hom
@@ -352,7 +352,7 @@ set_option synthInstance.maxHeartbeats 400000 in
 /-- **The `k`-level section reads as the collapsed field pair, chart 0**: the restricted
 first component of `relThetaFieldSection` is the section collapse of the restricted
 first component of `thetaSectionPair`. -/
-private lemma resHom_relThetaFieldSection_fst
+lemma resHom_relThetaFieldSection_fst
     (h : ↥(divisorSections k (n • fiberWeilDivisor π) ⊤)) :
     (relCurve C k).resHom (le_inf le_top le_rfl) ((relThetaFieldSection C π n h).val.1)
       = sectionsCollapse C (fiberChart₀ π)
@@ -370,7 +370,7 @@ set_option maxHeartbeats 1000000 in
 -- Mixed `relCurve`/twist spellings force heavy defeq checks (`respectTransparency false`).
 set_option synthInstance.maxHeartbeats 400000 in
 /-- **The `k`-level section reads as the collapsed field pair, chart 1** (mirror). -/
-private lemma resHom_relThetaFieldSection_snd
+lemma resHom_relThetaFieldSection_snd
     (h : ↥(divisorSections k (n • fiberWeilDivisor π) ⊤)) :
     (relCurve C k).resHom (le_inf le_top le_rfl) ((relThetaFieldSection C π n h).val.2)
       = sectionsCollapse C (fiberChart₁ π)
