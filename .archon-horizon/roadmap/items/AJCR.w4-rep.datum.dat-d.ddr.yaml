@@ -3,19 +3,20 @@ title: 'DD-R: the relative endgame — Z(♦), local generators via lm:ctn/Nakay
   inherited from the ambient summand, inverse laws, divRep'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'LANDED: residue-field multiplication conjugacy; relative second-window persistence
-  and surjectivity; multiplier-window unit generation; equality of the genuine first
-  and second chart-reading ideals; the fibre-to-stalk Nakayama bridge; directed-limit
-  flatness; generic RD-N; denominator-cleared PointwiseSeedFibreContainment; and the
-  closed-RD-N theorem conditional only on genuine chart-quotient flatness. HIGH-WINDOW
-  ROUTE STARTED: H1 vanishes at every M+n*S stage. REMAINING XL GATE: construct the
-  relative high-window quotient stages with persistence/projectivity and identify
-  each genuine chart quotient with their directed limit by saturation and dehomogenization,
-  or prove that quotient flatness directly. Then instantiate the certificate (finite/regular
-  chart colengths, finite-flat overlaps, fibre kernel spanning and dimension), discharge
-  U1/U2, package the universal family, and finish affine/global divRep assembly. Old
-  Grassmannian, Zariski descent, and flattening infrastructure is reusable, but old
-  Quot/Pic representability endpoints remain sorry-backed and do not close this gate.'
+summary: 'LANDED: finite-window conjugacy/persistence and chart-ideal equality; fibre-to-stalk
+  Nakayama transport; pointwise generic and conditional closed RD-N; generic directed-limit
+  quotient-flatness algebra; H1 vanishing and residue-field multiplication persistence
+  at every M+n*S window; finite/free/projective high-window ambients and generic Grassmannian
+  quotient stages; the finite recursive relation tower agreeing with the first two
+  universal windows; cofinal exhaustion of both pinned-chart section rings by high
+  theta windows; arbitrary-ideal support finiteness; and chart quotient finite-presentation/flattening
+  inputs. REMAINING XL GATE: prove nonreduced relative persistence/projectivity for
+  the recursive relation quotients and identify their directed union with chartReadIdeal,
+  or replace/refine RZ by universal flattening strata and reassemble the carve atlas
+  there. Then instantiate the certificate, discharge U1/U2, package the universal
+  family, and finish affine/global divRep. Old Grassmannian/descent/identity-base
+  flattening code is reusable; the old Quot/Pic endpoint remains sorry-backed and
+  contains no missing saturation theorem.'
 status: active
 kind: proof
 priority: normal
@@ -29,4 +30,4 @@ metadata:
   author: horizon
   created_at: '2026-07-16T08:26:37.867341+00:00'
   parent: AJCR.w4-rep.datum.dat-d
-  updated_at: '2026-07-21T12:57:43.585077+00:00'
+  updated_at: '2026-07-21T14:59:16.665132+00:00'
