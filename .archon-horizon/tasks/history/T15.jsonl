@@ -9,3 +9,4 @@
 {"at": "2026-07-09T09:09:58.122361+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
 {"at": "2026-07-09T10:49:31.818707+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}
 {"at": "2026-07-09T10:57:06.492478+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-07-22T10:02:57.032305+00:00", "actor": "horizon", "field": "status", "from": "running", "to": "queued", "note": ""}
