@@ -67,7 +67,7 @@ body: "redesign seedUniv revision + fibre-cutter BUILD — the ann-based fibre-c
   \ chart-level sideColengthSubmodule analog (over the chart V, le_rfl, not the piece)."
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -75,5 +75,5 @@ audience: horizon
 author: agent
 source_ref: null
 created_at: '2026-07-19T21:08:45.670521+00:00'
-updated_at: '2026-07-19T21:08:45.670532+00:00'
+updated_at: '2026-07-22T10:03:48.061526+00:00'
 metadata: {}

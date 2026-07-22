@@ -71,7 +71,7 @@ body: "carve pin hinj_chart BUILD — STEP 1 (window transport at kappa(p)) LAND
   \ Step 1 (this lane) is the entry point."
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -79,5 +79,5 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-19T22:27:15.524208+00:00'
-updated_at: '2026-07-19T22:27:15.524218+00:00'
+updated_at: '2026-07-22T10:03:55.154024+00:00'
 metadata: {}

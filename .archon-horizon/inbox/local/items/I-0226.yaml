@@ -35,7 +35,7 @@ body: "W7-A1 PARTIAL (lane w7-a1, Opus 4.8, commit ea4ed5c97): datum-level baseC
   \ remain Fleet A."
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -43,5 +43,5 @@ audience: horizon
 author: human
 source_ref: null
 created_at: '2026-07-17T17:25:05.037586+00:00'
-updated_at: '2026-07-17T17:25:05.037599+00:00'
+updated_at: '2026-07-22T10:03:22.253803+00:00'
 metadata: {}

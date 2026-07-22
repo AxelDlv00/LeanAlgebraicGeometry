@@ -23,11 +23,11 @@ body: 'DAT-A closed: Tor home fixed + consumer spellings
   mathlib v4.31.0 (search verdict in informal/spec-dat-a.md §0).'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: human
 source_ref: null
 created_at: '2026-07-16T18:25:33.133359+00:00'
-updated_at: '2026-07-16T18:25:33.133370+00:00'
+updated_at: '2026-07-22T10:04:13.910117+00:00'
 metadata: {}

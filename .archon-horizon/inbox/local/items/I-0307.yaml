@@ -53,7 +53,7 @@ body: "germ divisibility from achiever + hfib BUILD: fibre-order piece (1) LANDE
   \ general K."
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -61,5 +61,5 @@ audience: horizon
 author: human
 source_ref: null
 created_at: '2026-07-20T07:00:32.674826+00:00'
-updated_at: '2026-07-20T07:00:32.674837+00:00'
+updated_at: '2026-07-22T10:04:10.542382+00:00'
 metadata: {}

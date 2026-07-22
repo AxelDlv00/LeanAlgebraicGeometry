@@ -48,7 +48,7 @@ body: "hcolFin closed-trace BUILD — REDUCTION landed (engine + all instances d
   \ (residual)."
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -56,5 +56,5 @@ audience: horizon
 author: human
 source_ref: null
 created_at: '2026-07-19T18:35:20.413128+00:00'
-updated_at: '2026-07-19T18:35:20.413138+00:00'
+updated_at: '2026-07-22T10:03:31.731102+00:00'
 metadata: {}

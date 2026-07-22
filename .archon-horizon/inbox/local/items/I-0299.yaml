@@ -80,7 +80,7 @@ body: 'R1+R2 → hsub_chart BUILD — CARVE PIN COMPLETE. hsub_chart LANDED + co
   Anti-circularity preserved (certificate-FREE, h z-FREE, le_rfl; threads no IsGenerator/IsCertified/seedUniv'').'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -88,5 +88,5 @@ audience: horizon
 author: human
 source_ref: null
 created_at: '2026-07-20T02:18:49.731842+00:00'
-updated_at: '2026-07-20T02:18:49.731851+00:00'
+updated_at: '2026-07-22T10:04:01.710295+00:00'
 metadata: {}

@@ -52,7 +52,7 @@ body: "heavy κ(p) declaration → hsub_chart BUILD — SOURCE-RANK half LANDED 
   \ h z-FREE, le_rfl)."
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -60,5 +60,5 @@ audience: horizon
 author: agent
 source_ref: null
 created_at: '2026-07-20T00:22:30.162357+00:00'
-updated_at: '2026-07-20T00:22:30.162367+00:00'
+updated_at: '2026-07-22T10:04:00.114929+00:00'
 metadata: {}

@@ -97,7 +97,7 @@ body: 'free-codomain chart flat BUILD — LANDED (unblocks RD-N). The free-codom
   U1 -> divRep.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -105,6 +105,6 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-20T03:39:21.618378+00:00'
-updated_at: '2026-07-20T03:39:21.618389+00:00'
+updated_at: '2026-07-22T10:04:04.885413+00:00'
 metadata:
   agent: freeflat-lane
