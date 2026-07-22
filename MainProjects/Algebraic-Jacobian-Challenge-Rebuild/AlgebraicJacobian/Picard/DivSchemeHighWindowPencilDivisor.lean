@@ -184,4 +184,172 @@ theorem Scheme.ker_finiteMulMap_eq_range_finiteMulKoszulBoundary_of_divisor_penc
     obtain ⟨z, hz0, hz1⟩ := exists_divisorSections_pencil_relation A B w hinfEq y hy'
     exact ⟨z, by simpa [a] using hz0, by simpa [a] using hz1⟩
 
+/-! ## An arbitrary basepoint-free pair -/
+
+/-- Two arbitrary nonzero rational sections span a divisor window when their
+translated source divisors have the required supremum. -/
+theorem exists_divisorSections_pair_decomposition
+    (A B : X.CurveDivisor) (v0 v1 : X.functionFieldˣ)
+    (hsup : (B - Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v0) ⊔
+        (B - Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v1) = A)
+    (h0 : Subsingleton (Sheaf.HModule (X.divisorSheaf K
+      (B - Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v0)) 1))
+    (h1 : Subsingleton (Sheaf.HModule (X.divisorSheaf K
+      (B - Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v1)) 1))
+    (hinf : Subsingleton (Sheaf.HModule (X.divisorSheaf K
+      ((B - Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v0) ⊓
+        (B - Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v1))) 1))
+    (hsupH : Subsingleton (Sheaf.HModule (X.divisorSheaf K
+      ((B - Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v0) ⊔
+        (B - Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v1))) 1))
+    (x : divisorSections K A ⊤) :
+    ∃ z : Fin 2 → divisorSections K B ⊤,
+      (x : X.functionField) =
+        (v0 : X.functionField) * (z 0 : X.functionField) +
+          (v1 : X.functionField) * (z 1 : X.functionField) := by
+  let D0 := Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v0
+  let D1 := Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v1
+  have hmap0 : Submodule.map (Scheme.mulLinear K (v0 : X.functionField))
+      (divisorSections K B ⊤) = divisorSections K (B - D0) ⊤ := by
+    rw [map_mulLinear_divisorSections_top K (Units.ne_zero v0) B]
+    have hmk : Units.mk0 (v0 : X.functionField) (Units.ne_zero v0) = v0 := Units.ext rfl
+    rw [hmk]
+  have hmap1 : Submodule.map (Scheme.mulLinear K (v1 : X.functionField))
+      (divisorSections K B ⊤) = divisorSections K (B - D1) ⊤ := by
+    rw [map_mulLinear_divisorSections_top K (Units.ne_zero v1) B]
+    have hmk : Units.mk0 (v1 : X.functionField) (Units.ne_zero v1) = v1 := Units.ext rfl
+    rw [hmk]
+  have hsections :
+      Submodule.map (Scheme.mulLinear K (v0 : X.functionField))
+          (divisorSections K B ⊤) ⊔
+        Submodule.map (Scheme.mulLinear K (v1 : X.functionField))
+          (divisorSections K B ⊤) = divisorSections K A ⊤ := by
+    rw [hmap0, hmap1, divisorSections_sup K (B - D0) (B - D1) h0 h1 hinf hsupH,
+      hsup]
+  have hx : (x : X.functionField) ∈
+      Submodule.map (Scheme.mulLinear K (v0 : X.functionField))
+          (divisorSections K B ⊤) ⊔
+        Submodule.map (Scheme.mulLinear K (v1 : X.functionField))
+          (divisorSections K B ⊤) := by
+    rw [hsections]
+    exact x.property
+  obtain ⟨a, ha, b, hb, hab⟩ := Submodule.mem_sup.mp hx
+  obtain ⟨z0, hz0, rfl⟩ := ha
+  obtain ⟨z1, hz1, rfl⟩ := hb
+  let z : Fin 2 → divisorSections K B ⊤ := fun q =>
+    if q = 0 then ⟨z0, hz0⟩ else ⟨z1, hz1⟩
+  refine ⟨z, ?_⟩
+  simpa [z, Scheme.mulLinear_apply] using hab.symm
+
+omit [Module.Finite K (Sheaf.HModule (X.moduleKSheaf K) 0)]
+  [Module.Finite K (Sheaf.HModule (X.moduleKSheaf K) 1)] in
+private theorem mem_divisorSections_add_divOf_of_mul_mem
+    (A : X.CurveDivisor) (v : X.functionFieldˣ) (z : X.functionField)
+    (hz : (v : X.functionField) * z ∈ divisorSections K A ⊤) :
+    z ∈ divisorSections K
+      (A + Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v) ⊤ := by
+  let D := Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v
+  have hmap : Submodule.map (Scheme.mulLinear K (v : X.functionField))
+      (divisorSections K (A + D) ⊤) = divisorSections K A ⊤ := by
+    rw [map_mulLinear_divisorSections_top K (Units.ne_zero v)]
+    have hmk : Units.mk0 (v : X.functionField) (Units.ne_zero v) = v := Units.ext rfl
+    rw [hmk]
+    change divisorSections K (A + D - D) ⊤ = divisorSections K A ⊤
+    congr 2
+    abel
+  have hzmap : (v : X.functionField) * z ∈
+      Submodule.map (Scheme.mulLinear K (v : X.functionField))
+        (divisorSections K (A + D) ⊤) := by
+    rw [hmap]
+    exact hz
+  obtain ⟨t, ht, htz⟩ := hzmap
+  have : t = z := by
+    change (v : X.functionField) * t = (v : X.functionField) * z at htz
+    exact mul_left_cancel₀ (Units.ne_zero v) htz
+  rwa [this] at ht
+
+omit [Module.Finite K (Sheaf.HModule (X.moduleKSheaf K) 0)]
+  [Module.Finite K (Sheaf.HModule (X.moduleKSheaf K) 1)] in
+/-- The two-term relation of arbitrary nonzero rational sections is generated
+from the intersection of their translated target divisors. -/
+theorem exists_divisorSections_pair_relation
+    (A B : X.CurveDivisor) (v0 v1 : X.functionFieldˣ)
+    (hinf : (A + Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v0) ⊓
+        (A + Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v1) = B)
+    (y : Fin 2 → divisorSections K A ⊤)
+    (hy : (v0 : X.functionField) * (y 0 : X.functionField) +
+      (v1 : X.functionField) * (y 1 : X.functionField) = 0) :
+    ∃ z : divisorSections K B ⊤,
+      (y 0 : X.functionField) = (v1 : X.functionField) * (z : X.functionField) ∧
+      (y 1 : X.functionField) = -(v0 : X.functionField) * (z : X.functionField) := by
+  let z0 : X.functionField := (v1⁻¹ : X.functionFieldˣ) * (y 0 : X.functionField)
+  have hv1z : (v1 : X.functionField) * z0 = (y 0 : X.functionField) := by
+    simp only [z0, Units.val_inv_eq_inv_val]
+    field_simp
+  have hv0z : (v0 : X.functionField) * z0 = -(y 1 : X.functionField) := by
+    simp only [z0, Units.val_inv_eq_inv_val]
+    have hv1 : (v1 : X.functionField) ≠ 0 := Units.ne_zero v1
+    field_simp
+    linear_combination hy
+  have hz0 : z0 ∈ divisorSections K
+      (A + Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v0) ⊤ :=
+    mem_divisorSections_add_divOf_of_mul_mem A v0 z0 (by
+      rw [hv0z]
+      exact (divisorSections K A ⊤).neg_mem (y 1).property)
+  have hz1 : z0 ∈ divisorSections K
+      (A + Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v1) ⊤ :=
+    mem_divisorSections_add_divOf_of_mul_mem A v1 z0 (by
+      rw [hv1z]
+      exact (y 0).property)
+  have hzB : z0 ∈ divisorSections K B ⊤ := by
+    have hz : z0 ∈
+        divisorSections K (A + Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v0) ⊤ ⊓
+          divisorSections K (A + Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v1) ⊤ :=
+      Submodule.mem_inf.mpr ⟨hz0, hz1⟩
+    rw [divisorSections_inf K, hinf] at hz
+    exact hz
+  refine ⟨⟨z0, hzB⟩, hv1z.symm, ?_⟩
+  change (y 1 : X.functionField) = -(v0 : X.functionField) * z0
+  linear_combination hv0z
+
+/-- Full finite-basis exactness from an arbitrary basepoint-free divisor pair. -/
+theorem Scheme.ker_finiteMulMap_eq_range_finiteMulKoszulBoundary_of_divisor_pair
+    (U : Submodule K X.functionField) (b : Module.Basis ι K U)
+    (A B : X.CurveDivisor) (v0 v1 : X.functionFieldˣ)
+    (hv0 : (v0 : X.functionField) ∈ U) (hv1 : (v1 : X.functionField) ∈ U)
+    (hmul : ∀ (i : ι) (z : divisorSections K B ⊤),
+      (b i : X.functionField) * (z : X.functionField) ∈ divisorSections K A ⊤)
+    (hsup : (B - Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v0) ⊔
+        (B - Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v1) = A)
+    (hinfEq : (A + Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v0) ⊓
+        (A + Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v1) = B)
+    (h0 : Subsingleton (Sheaf.HModule (X.divisorSheaf K
+      (B - Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v0)) 1))
+    (h1 : Subsingleton (Sheaf.HModule (X.divisorSheaf K
+      (B - Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v1)) 1))
+    (hinf : Subsingleton (Sheaf.HModule (X.divisorSheaf K
+      ((B - Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v0) ⊓
+        (B - Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v1))) 1))
+    (hsupH : Subsingleton (Sheaf.HModule (X.divisorSheaf K
+      ((B - Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v0) ⊔
+        (B - Scheme.divOf (X ↘ Spec (CommRingCat.of K)) v1))) 1)) :
+    LinearMap.ker (Scheme.finiteMulMap U (divisorSections K A ⊤) b) =
+      LinearMap.range (Scheme.finiteMulKoszulBoundary U
+        (divisorSections K B ⊤) (divisorSections K A ⊤) b hmul) := by
+  let a : Fin 2 → U := fun q => if q = 0 then ⟨v0, hv0⟩ else ⟨v1, hv1⟩
+  apply Scheme.ker_finiteMulMap_eq_range_finiteMulKoszulBoundary_of_pencil
+    U (divisorSections K B ⊤) (divisorSections K A ⊤) b hmul a
+  · intro x
+    obtain ⟨z, hz⟩ := exists_divisorSections_pair_decomposition
+      A B v0 v1 hsup h0 h1 hinf hsupH x
+    refine ⟨z, ?_⟩
+    simpa [a, Fin.sum_univ_two] using hz
+  · intro y hy
+    have hy' : (v0 : X.functionField) * (y 0 : X.functionField) +
+        (v1 : X.functionField) * (y 1 : X.functionField) = 0 := by
+      simpa [a, Fin.sum_univ_two] using hy
+    obtain ⟨z, hz0, hz1⟩ := exists_divisorSections_pair_relation
+      A B v0 v1 hinfEq y hy'
+    exact ⟨z, by simpa [a] using hz0, by simpa [a] using hz1⟩
+
 end AlgebraicGeometry
