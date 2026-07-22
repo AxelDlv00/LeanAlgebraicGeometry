@@ -190,6 +190,45 @@ private theorem thetaFieldPencilSnd_mem :
       Scheme.divisorSections K (thetaFieldDivisor C K π a) ⊤ := by
   exact thetaFieldRead_mem C K π a (relThetaSectionSnd C K π a)
 
+omit [IsDominant π] [IsIntegral C.left] in
+private theorem thetaFieldShiftUnit_mul_mem_windowTransport
+    (r : (relCurve C K).functionFieldˣ)
+    (hr : (r : (relCurve C K).functionField) ∈
+      Scheme.divisorSections K (thetaFieldDivisor C K π a) ⊤) :
+    ((thetaFieldShiftUnit C K π a * r : (relCurve C K).functionFieldˣ) :
+        (relCurve C K).functionField) ∈
+      Scheme.divisorSections K (windowTransportDivisor C K π a) ⊤ := by
+  rw [mem_divisorSections_top_iff K
+    (Units.ne_zero (thetaFieldShiftUnit C K π a * r))]
+  have hmk : Units.mk0
+      (((thetaFieldShiftUnit C K π a * r : (relCurve C K).functionFieldˣ) :
+        (relCurve C K).functionField))
+      (Units.ne_zero (thetaFieldShiftUnit C K π a * r)) =
+        thetaFieldShiftUnit C K π a * r := Units.ext rfl
+  rw [hmk, Scheme.divOf_mul, ← divOf_thetaFieldShiftUnit C K π a]
+  rw [mem_divisorSections_top_iff K (Units.ne_zero r)] at hr
+  have hmkr : Units.mk0 (r : (relCurve C K).functionField) (Units.ne_zero r) = r :=
+    Units.ext rfl
+  rw [hmkr] at hr
+  convert hr using 1
+  abel_nf
+
+/-- The shifted reading of `(t₀ᵃ,1)` lies in the transported divisor window. -/
+theorem windowTransportPencilFst_mem :
+    ((thetaFieldShiftUnit C K π a * thetaFieldPencilFstUnit C K π a :
+        (relCurve C K).functionFieldˣ) : (relCurve C K).functionField) ∈
+      Scheme.divisorSections K (windowTransportDivisor C K π a) ⊤ :=
+  thetaFieldShiftUnit_mul_mem_windowTransport C K π a
+    (thetaFieldPencilFstUnit C K π a) (thetaFieldPencilFst_mem C K π a)
+
+/-- The shifted reading of `(1,t₁ᵃ)` lies in the transported divisor window. -/
+theorem windowTransportPencilSnd_mem :
+    ((thetaFieldShiftUnit C K π a * thetaFieldPencilSndUnit C K π a :
+        (relCurve C K).functionFieldˣ) : (relCurve C K).functionField) ∈
+      Scheme.divisorSections K (windowTransportDivisor C K π a) ⊤ :=
+  thetaFieldShiftUnit_mul_mem_windowTransport C K π a
+    (thetaFieldPencilSndUnit C K π a) (thetaFieldPencilSnd_mem C K π a)
+
 private theorem coeffAt_thetaFieldPencilFst_eq_zero {z : relCurve C K}
     (hzg : z ≠ genericPoint (relCurve C K))
     (hz0 : z ∉ (relCover C K (fiberTwoCover π)).V₀) :
