@@ -130,6 +130,90 @@ theorem range_finiteKoszulBoundary_le_ker_finiteComponentSum
     (finiteComponentSum_comp_finiteKoszulBoundary_eq_zero row step hcomm) z
   simpa only [LinearMap.comp_apply, LinearMap.zero_apply] using hz
 
+/-! ## Scalar extension of the boundary -/
+
+section BaseChange
+
+variable {S : Type u} [CommRing S] [Algebra R S]
+
+/-- Scalar extension of the finite Koszul boundary commutes with the canonical
+finite-product tensor equivalences.  This is the bridge that identifies the
+base-changed relative boundary with the boundary formed directly in a fibre.
+-/
+theorem piRightHom_comp_baseChange_finiteKoszulBoundary
+    (step : ι → L →ₗ[R] M) :
+    (TensorProduct.piRightHom R S S (fun _ : ι => M)).comp
+        (LinearMap.baseChange S (finiteKoszulBoundary step)) =
+      (finiteKoszulBoundary (fun i => LinearMap.baseChange S (step i))).comp
+        (TensorProduct.piRightHom R S S (fun _ : ι × ι => L)) := by
+  classical
+  apply LinearMap.ext
+  intro x
+  induction x using TensorProduct.induction_on with
+  | zero => simp
+  | add x y hx hy =>
+      simpa only [map_add, LinearMap.comp_apply] using congrArg₂ (· + ·) hx hy
+  | tmul a z =>
+      ext i
+      simp only [LinearMap.comp_apply, LinearMap.baseChange_tmul,
+        TensorProduct.piRightHom_tmul, finiteKoszulBoundary_apply]
+      rw [TensorProduct.tmul_sum]
+      apply Finset.sum_congr rfl
+      intro j hj
+      rw [TensorProduct.tmul_sub]
+
+/-- After transporting the target finite product, the range of the
+base-changed boundary is exactly the range of the fibrewise boundary. -/
+theorem range_piRightHom_comp_baseChange_finiteKoszulBoundary
+    (step : ι → L →ₗ[R] M) :
+    LinearMap.range
+        ((TensorProduct.piRightHom R S S (fun _ : ι => M)).comp
+          (LinearMap.baseChange S (finiteKoszulBoundary step))) =
+      LinearMap.range
+        (finiteKoszulBoundary (fun i => LinearMap.baseChange S (step i))) := by
+  classical
+  rw [piRightHom_comp_baseChange_finiteKoszulBoundary]
+  apply le_antisymm
+  · rintro _ ⟨z, rfl⟩
+    exact LinearMap.mem_range_self _ _
+  · rintro _ ⟨z, rfl⟩
+    let e := TensorProduct.piRight R S S (fun _ : ι × ι => L)
+    refine ⟨e.symm z, ?_⟩
+    simp only [LinearMap.comp_apply]
+    have he : TensorProduct.piRightHom R S S (fun _ : ι × ι => L) (e.symm z) = z := by
+      change e (e.symm z) = z
+      exact e.apply_symm_apply z
+    rw [he]
+
+end BaseChange
+
+/-! ## A finite-dimensional equality criterion -/
+
+section Finrank
+
+variable {k₀ A V W : Type u} [Field k₀]
+variable [AddCommGroup A] [Module k₀ A]
+variable [AddCommGroup V] [Module k₀ V] [FiniteDimensional k₀ V]
+variable [AddCommGroup W] [Module k₀ W]
+
+/-- Over a field, the easy inclusion `range κ ≤ ker μ` is an equality as soon
+as the Koszul range has at least the dimension of the multiplication kernel.
+Thus the reverse syzygy theorem is reduced to its genuine Gotzmann rank input.
+-/
+theorem ker_finiteComponentSum_eq_range_finiteKoszulBoundary_of_finrank_le
+    (row : ι → V →ₗ[k₀] W) (step : ι → A →ₗ[k₀] V)
+    (hcomm : ∀ (i j : ι) (z : A),
+      row i (step j z) = row j (step i z))
+    (hfin : Module.finrank k₀ (LinearMap.ker (finiteComponentSum row)) ≤
+      Module.finrank k₀ (LinearMap.range (finiteKoszulBoundary step))) :
+    LinearMap.ker (finiteComponentSum row) =
+      LinearMap.range (finiteKoszulBoundary step) := by
+  symm
+  exact Submodule.eq_of_le_of_finrank_le
+    (range_finiteKoszulBoundary_le_ker_finiteComponentSum row step hcomm) hfin
+
+end Finrank
+
 /-! ## The multiplication-window specialization -/
 
 attribute [local instance] Scheme.overModule Scheme.functionFieldOverModule
@@ -205,6 +289,23 @@ theorem Scheme.range_finiteMulKoszulBoundary_le_ker_finiteMulMap
           (b j : X.functionField) *
               ((b i : X.functionField) * (z : X.functionField))
       ring)
+
+/-- A finite-dimensional rank lower bound upgrades the multiplication
+Koszul inclusion to the exact kernel presentation.  This is the direct
+consumer interface for a fieldwise Gotzmann dimension calculation. -/
+theorem Scheme.ker_finiteMulMap_eq_range_finiteMulKoszulBoundary_of_finrank_le
+    (U L T : Submodule K X.functionField) (b : Module.Basis ι K U)
+    (hmul : ∀ (i : ι) (z : L),
+      (b i : X.functionField) * (z : X.functionField) ∈ T)
+    [FiniteDimensional K T]
+    (hfin : Module.finrank K (LinearMap.ker (Scheme.finiteMulMap U T b)) ≤
+      Module.finrank K
+        (LinearMap.range (Scheme.finiteMulKoszulBoundary U L T b hmul))) :
+    LinearMap.ker (Scheme.finiteMulMap U T b) =
+      LinearMap.range (Scheme.finiteMulKoszulBoundary U L T b hmul) := by
+  symm
+  exact Submodule.eq_of_le_of_finrank_le
+    (Scheme.range_finiteMulKoszulBoundary_le_ker_finiteMulMap U L T b hmul) hfin
 
 /-- The same composition identity after corestricting the product map to a
 specified multiplication span. -/
