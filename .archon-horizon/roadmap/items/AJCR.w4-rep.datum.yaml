@@ -2,13 +2,14 @@ id: AJCR.w4-rep.datum
 title: The pinned RepresentableBy datum
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'The pinned datum is structurally prepared through finite-window persistence,
-  fibre-to-stalk transport, pointwise generic/closed RD-N reductions, high-window
-  ambient interfaces, recursive finite relations, and cofinal chart exhaustion. The
-  active XL gate is no longer containment transport: it is scheme-theoretic saturation
-  and flatness over the nonreduced chart ring, either by relative high-window projectivity
-  plus directed-union identification or by universal flattening strata. Certificate
-  and divRep assembly remain gated on that choice.'
+summary: The pinned representability datum remains active. DAT-D/DD-R now includes
+  the direct high-window relation and quotient system, stable chart-read ideals, the
+  concrete colimit criterion, canonical-syzygy obstruction analysis, and arbitrary-ring
+  zero-read killing along transitions. The remaining saturation work is coefficient
+  action plus ideal-span assembly. The remaining scheme-theoretic gate is nonreduced
+  flatness of all shifted finite quotients, requiring a relative Koszul/Gotzmann theorem
+  or a genuine flattening-strata route rebuild. Certificate and divRep assembly remain
+  downstream.
 status: active
 kind: proof
 priority: normal
@@ -22,4 +23,4 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:11.833612+00:00'
   parent: AJCR.w4-rep
-  updated_at: '2026-07-21T14:58:49.841435+00:00'
+  updated_at: '2026-07-21T23:08:13.797519+00:00'

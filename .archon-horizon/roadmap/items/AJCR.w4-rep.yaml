@@ -2,14 +2,13 @@ id: AJCR.w4-rep
 title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: Wave remains open. DD-R now has fibre-to-stalk transport, all-window fibre
-  persistence and H1 vanishing, projective ambient/high-stage interfaces, a finite
-  recursive relation tower, cofinal pinned-chart section exhaustion, generic directed-limit
-  quotient algebra, and flattening-input packaging. The exact remaining gate is relative
-  projectivity/flatness over nonreduced bases for the recursive relation quotients
-  plus equality of their directed union with each genuine chartReadIdeal, or replacement
-  of the carve charts by universal flattening strata. Then certificate, U1/U2, and
-  affine/global divRep assembly remain.
+summary: 'Representability remains active. DD-R now has the complete direct high-window
+  system through quotient colimits, plus a canonical-syzygy audit and nilpotent-safe
+  eventual killing for zero chart reads. Coefficient saturation is being completed
+  from a two-coordinate recurrence and pure-window multiplication spans. The final
+  substantive gate is nonreduced finite-stage flatness: a relative high-window Koszul/Gotzmann
+  theorem, or alternatively a full rebuild over universal flattening strata. Certificate,
+  U1/U2, universal-family, affine/global divRep, and datum assembly remain downstream.'
 status: active
 kind: proof
 priority: normal
@@ -23,4 +22,4 @@ metadata:
   author: horizon
   created_at: '2026-07-14T01:20:10.654781+00:00'
   parent: AJCR.jacobian
-  updated_at: '2026-07-21T14:58:37.820279+00:00'
+  updated_at: '2026-07-21T23:07:57.101562+00:00'

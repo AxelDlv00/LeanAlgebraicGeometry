@@ -6,5 +6,6 @@
   "task_id": null,
   "projects": [],
   "started_at": "2026-07-21T01:20:14.446554+00:00",
+  "workspace_base_sha": "eda0b045835c834edfe90e1caa48162856530726",
   "status": "running"
 }

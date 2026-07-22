@@ -3,20 +3,18 @@ title: 'DD-R: the relative endgame — Z(♦), local generators via lm:ctn/Nakay
   inherited from the ambient summand, inverse laws, divRep'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'LANDED: finite-window conjugacy/persistence and chart-ideal equality; fibre-to-stalk
-  Nakayama transport; pointwise generic and conditional closed RD-N; generic directed-limit
-  quotient-flatness algebra; H1 vanishing and residue-field multiplication persistence
-  at every M+n*S window; finite/free/projective high-window ambients and generic Grassmannian
-  quotient stages; the finite recursive relation tower agreeing with the first two
-  universal windows; cofinal exhaustion of both pinned-chart section rings by high
-  theta windows; arbitrary-ideal support finiteness; and chart quotient finite-presentation/flattening
-  inputs. REMAINING XL GATE: prove nonreduced relative persistence/projectivity for
-  the recursive relation quotients and identify their directed union with chartReadIdeal,
-  or replace/refine RZ by universal flattening strata and reassemble the carve atlas
-  there. Then instantiate the certificate, discharge U1/U2, package the universal
-  family, and finish affine/global divRep. Old Grassmannian/descent/identity-base
-  flattening code is reusable; the old Quot/Pic endpoint remains sorry-backed and
-  contains no missing saturation theorem.'
+summary: 'LANDED: fibre-to-stalk transport; all-window residue-field persistence and
+  H1 vanishing; finite/projective high-window ambients; recursive relations; cofinal
+  pinned-chart exhaustion; compatible relation and quotient transitions; stage-zero
+  anchoring and stable chart-read ideals; the concrete shifted-colimit flatness criterion;
+  the canonical-syzygy equivalence showing actual-kernel base change is not a shortcut;
+  and nilpotent-safe eventual killing of every zero chart read. IN PROGRESS: two-coordinate
+  recurrence, pure-window multiplication span, coefficient action, and ideal-span
+  assembly for full saturation. REMAINING XL GATE: prove all shifted finite relation
+  quotients flat over arbitrary nonreduced RZ via a genuine relative high-window Koszul/Gotzmann
+  theorem, or rebuild the representing base using universal flattening strata. Then
+  instantiate the certificate, discharge U1/U2, package the universal family, and
+  finish affine/global divRep.'
 status: active
 kind: proof
 priority: normal
@@ -30,4 +28,4 @@ metadata:
   author: horizon
   created_at: '2026-07-16T08:26:37.867341+00:00'
   parent: AJCR.w4-rep.datum.dat-d
-  updated_at: '2026-07-21T14:59:16.665132+00:00'
+  updated_at: '2026-07-21T23:08:32.161253+00:00'
