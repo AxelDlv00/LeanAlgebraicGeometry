@@ -130,6 +130,28 @@ theorem divUniversalHighWindowAmbientCancelEquiv_baseChange
     (TensorProduct.AlgebraTensorModule.lTensor_comp_cancelBaseChange
       k RZ K f) x).symm
 
+set_option maxHeartbeats 1600000 in
+/-- Named-wrapper specialization of cancellation naturality for one campaign
+successor multiplication map. -/
+theorem divUniversalHighWindowAmbientCancelEquiv_shiftMul
+    (n : Nat) (a : HS) (x : K ⊗[RZ] Amb[n]) :
+    divUniversalHighWindowAmbientCancelEquiv (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j K (n + 1)
+        (LinearMap.baseChange K
+          (LinearMap.baseChange RZ
+            (divUniversalHighWindowShiftMul
+              (C := C) (pi := pi) hpi g n a)) x) =
+      LinearMap.baseChange K
+        (divUniversalHighWindowShiftMul
+          (C := C) (pi := pi) hpi g n a)
+        (divUniversalHighWindowAmbientCancelEquiv (C := C) (pi := pi)
+          hpi g r1 r2 b1 b2 i j K n x) := by
+  simpa only [divUniversalHighWindowAmbientCancelEquiv] using
+    (divUniversalHighWindowAmbientCancelEquiv_baseChange
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K
+      (divUniversalHighWindowShiftMul
+        (C := C) (pi := pi) hpi g n a) x)
+
 set_option maxHeartbeats 1200000 in
 set_option synthInstance.maxHeartbeats 600000 in
 /-- The `Phi` dictionary as an equivalence from the scalar-extended `n`-th
@@ -170,6 +192,20 @@ noncomputable def divUniversalHighWindowAmbientFibreEquiv (n : Nat) :
   (divUniversalHighWindowAmbientCancelEquiv (C := C) (pi := pi)
       hpi g r1 r2 b1 b2 i j K n).trans
     (divUniversalHighWindowPhiEquiv (C := C) (pi := pi) hpi g K n)
+
+set_option maxHeartbeats 1200000 in
+/-- The ambient fibre equivalence is `Phi` after cancelling the two-step
+scalar extension. -/
+@[simp]
+theorem divUniversalHighWindowAmbientFibreEquiv_apply
+    (n : Nat) (x : K ⊗[RZ] Amb[n]) :
+    (divUniversalHighWindowAmbientFibreEquiv (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j K n x : (relCurve C K).functionField) =
+      divFamPhi C K pi exp[n]
+        (relThetaPairH1_windowM_add_mulS C pi hpi g n)
+        (divUniversalHighWindowAmbientCancelEquiv (C := C) (pi := pi)
+          hpi g r1 r2 b1 b2 i j K n x) :=
+  rfl
 
 set_option maxHeartbeats 2000000 in
 set_option maxRecDepth 16000 in
@@ -362,6 +398,22 @@ theorem map_mulLinear_divUniversalHighWindowClosedCoherenceUnit (n : Nat)
       (C := C) (pi := pi) hpi g K n]
   abel
 
+/-- Top-window form of the closed-unit translation. -/
+theorem map_mulLinear_divUniversalHighWindowClosedCoherenceUnit_top (n : Nat) :
+    Submodule.map
+        (Scheme.mulLinear K
+          ((divUniversalHighWindowClosedCoherenceUnit
+            (C := C) (pi := pi) hpi g K n :
+              (relCurve C K).functionFieldˣ) :
+            (relCurve C K).functionField))
+        (Scheme.divisorSections K
+          (windowTransportDivisor C K pi exp[n]) ⊤) =
+      Scheme.divisorSections K
+        (windowN C K hpi g + n • windowS C K hpi g) ⊤ := by
+  have h := map_mulLinear_divUniversalHighWindowClosedCoherenceUnit
+    (C := C) (pi := pi) hpi g K n 0
+  rwa [sub_zero, sub_zero] at h
+
 set_option maxHeartbeats 2000000 in
 /-- Arbitrary-divisor closed normalization as a linear equivalence. -/
 noncomputable def divUniversalHighWindowClosedCoherenceDivisorEquiv (n : Nat)
@@ -419,10 +471,46 @@ noncomputable def divUniversalHighWindowClosedCoherenceTopEquiv (n : Nat) :
       (windowTransportDivisor C K pi exp[n]) ⊤) ≃ₗ[K]
     ↥(Scheme.divisorSections K
       (windowN C K hpi g + n • windowS C K hpi g) ⊤) := by
-  let E := divUniversalHighWindowClosedCoherenceDivisorEquiv
-    (C := C) (pi := pi) hpi g K n 0
-  rw [sub_zero, sub_zero] at E
-  exact E
+  let source := Scheme.divisorSections K
+    (windowTransportDivisor C K pi exp[n]) ⊤
+  let target := Scheme.divisorSections K
+    (windowN C K hpi g + n • windowS C K hpi g) ⊤
+  let mul := Scheme.mulLinear K
+    ((divUniversalHighWindowClosedCoherenceUnit
+      (C := C) (pi := pi) hpi g K n :
+        (relCurve C K).functionFieldˣ) : (relCurve C K).functionField)
+  let f := (mul.comp source.subtype).codRestrict target (fun x => by
+    have hx : mul x ∈ Submodule.map mul source :=
+      Submodule.mem_map_of_mem x.property
+    rw [map_mulLinear_divUniversalHighWindowClosedCoherenceUnit_top
+      (C := C) (pi := pi) hpi g K n] at hx
+    exact hx)
+  refine LinearEquiv.ofBijective f ⟨?_, ?_⟩
+  · intro x y hxy
+    apply Subtype.ext
+    apply mul_left_cancel₀
+      (Units.ne_zero (divUniversalHighWindowClosedCoherenceUnit
+        (C := C) (pi := pi) hpi g K n))
+    exact congrArg Subtype.val hxy
+  · intro y
+    have hy : (y : (relCurve C K).functionField) ∈ Submodule.map mul source := by
+      rw [map_mulLinear_divUniversalHighWindowClosedCoherenceUnit_top
+        (C := C) (pi := pi) hpi g K n]
+      exact y.property
+    obtain ⟨x, hx, hxy⟩ := hy
+    exact ⟨⟨x, hx⟩, Subtype.ext hxy⟩
+
+@[simp]
+theorem divUniversalHighWindowClosedCoherenceTopEquiv_apply (n : Nat)
+    (x : ↥(Scheme.divisorSections K
+      (windowTransportDivisor C K pi exp[n]) ⊤)) :
+    (divUniversalHighWindowClosedCoherenceTopEquiv
+        (C := C) (pi := pi) hpi g K n x :
+      (relCurve C K).functionField) =
+    ((divUniversalHighWindowClosedCoherenceUnit
+      (C := C) (pi := pi) hpi g K n :
+        (relCurve C K).functionFieldˣ) : (relCurve C K).functionField) * x :=
+  rfl
 
 set_option maxHeartbeats 2000000 in
 /-- The fully normalized high-window ambient comparison, with literal target
@@ -435,6 +523,23 @@ noncomputable def divUniversalHighWindowClosedAmbientFibreEquiv (n : Nat) :
     hpi g r1 r2 b1 b2 i j K n).trans
       (divUniversalHighWindowClosedCoherenceTopEquiv
         (C := C) (pi := pi) hpi g K n)
+
+set_option maxHeartbeats 1600000 in
+/-- Evaluation of the fully normalized ambient comparison. -/
+@[simp]
+theorem divUniversalHighWindowClosedAmbientFibreEquiv_apply
+    (n : Nat) (x : K ⊗[RZ] Amb[n]) :
+    (divUniversalHighWindowClosedAmbientFibreEquiv
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K n x :
+      (relCurve C K).functionField) =
+    ((divUniversalHighWindowClosedCoherenceUnit
+      (C := C) (pi := pi) hpi g K n :
+        (relCurve C K).functionFieldˣ) : (relCurve C K).functionField) *
+      divFamPhi C K pi exp[n]
+        (relThetaPairH1_windowM_add_mulS C pi hpi g n)
+        (divUniversalHighWindowAmbientCancelEquiv (C := C) (pi := pi)
+          hpi g r1 r2 b1 b2 i j K n x) :=
+  rfl
 
 /-! ## The normalized successor multiplication square -/
 
@@ -517,6 +622,99 @@ theorem divUniversalHighWindowClosedPhi_mul
           divFamPhi C K pi exp[n]
             (relThetaPairH1_windowM_add_mulS C pi hpi g n) x) := by rw [← hprod]
     _ = _ := by ring
+
+set_option maxHeartbeats 1600000 in
+/-- `Phi` is invariant under reindexing a window along an equality of
+exponents.  Stating the equality with variable endpoints makes the dependent
+transport of the `H¹` witnesses explicit and reusable. -/
+theorem divFamPhi_baseChange_divisorWindowExponentEquiv
+    {p q : Nat} (h : p = q)
+    (hp : Subsingleton
+      (relTwistPair C k pi (relThetaCocycle C k pi p)).H1)
+    (hq : Subsingleton
+      (relTwistPair C k pi (relThetaCocycle C k pi q)).H1)
+    (x : K ⊗[k] ↥(divisorSections k (p • fiberWeilDivisor pi) ⊤)) :
+    divFamPhi C K pi q hq
+        (LinearMap.baseChange K
+          (divisorWindowExponentEquiv (C := C) (pi := pi) h).toLinearMap x) =
+      divFamPhi C K pi p hp x := by
+  subst q
+  have hH1 : hq = hp := Subsingleton.elim _ _
+  rw [hH1]
+  have heq :
+      (divisorWindowExponentEquiv (C := C) (pi := pi)
+        (rfl : p = p)).toLinearMap = LinearMap.id := by
+    apply LinearMap.ext
+    intro y
+    rfl
+  rw [heq, LinearMap.baseChange_id, LinearMap.id_apply]
+
+set_option maxHeartbeats 2400000 in
+/-- Reindexing the generic `(S + (M+n*S))` product window to campaign stage
+`n+1` does not change its `Phi` reading. -/
+theorem divFamPhi_baseChange_divUniversalHighWindowShiftMul
+    (n : Nat)
+    (hsum : Subsingleton
+      (relTwistPair C k pi (relThetaCocycle C k pi
+        (windowS_choice pi hpi g + exp[n]))).H1)
+    (a : HS) (x : K ⊗[k] HW[n]) :
+    divFamPhi C K pi exp[n + 1]
+        (relThetaPairH1_windowM_add_mulS C pi hpi g (n + 1))
+        (LinearMap.baseChange K
+          (divUniversalHighWindowShiftMul
+            (C := C) (pi := pi) hpi g n a) x) =
+      divFamPhi C K pi (windowS_choice pi hpi g + exp[n]) hsum
+        (LinearMap.baseChange K
+          (thetaWindowMul (C := C) (pi := pi)
+            (windowS_choice pi hpi g) exp[n] a) x) := by
+  rw [divUniversalHighWindowShiftMul_eq, LinearMap.baseChange_comp,
+    LinearMap.comp_apply]
+  simpa only [divUniversalHighWindowSuccExponentEquiv] using
+    (divFamPhi_baseChange_divisorWindowExponentEquiv
+      (C := C) (pi := pi) K
+      (divUniversalHighWindowExponent_succ
+        (C := C) (pi := pi) hpi g n)
+      hsum (relThetaPairH1_windowM_add_mulS C pi hpi g (n + 1))
+      (LinearMap.baseChange K
+        (thetaWindowMul (C := C) (pi := pi)
+          (windowS_choice pi hpi g) exp[n] a) x))
+
+set_option maxHeartbeats 4000000 in
+set_option synthInstance.maxHeartbeats 1000000 in
+set_option maxRecDepth 20000 in
+/-- The normalized multiplication square on the actual carve-chart ambient
+after residue-field base change.  This is the `hconj` seam used to transport
+the recursive high-window image relation to the literal fibre windows. -/
+theorem divUniversalHighWindowClosedAmbientFibreEquiv_shiftMul
+    (n : Nat) (a : HS) (x : K ⊗[RZ] Amb[n]) :
+    (divUniversalHighWindowClosedAmbientFibreEquiv
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K (n + 1)
+        (LinearMap.baseChange K
+          (LinearMap.baseChange RZ
+            (divUniversalHighWindowShiftMul
+              (C := C) (pi := pi) hpi g n a)) x) :
+      (relCurve C K).functionField) =
+    (divUniversalMultiplierFibreEquiv (π := pi) C hpi g K
+        (1 ⊗ₜ[k] a) : (relCurve C K).functionField) *
+      (divUniversalHighWindowClosedAmbientFibreEquiv
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K n x :
+          (relCurve C K).functionField) := by
+  let hsum : Subsingleton
+      (relTwistPair C k pi (relThetaCocycle C k pi
+        (windowS_choice pi hpi g + exp[n]))).H1 := by
+    rw [divUniversalHighWindowExponent_succ
+      (C := C) (pi := pi) hpi g n]
+    exact relThetaPairH1_windowM_add_mulS C pi hpi g (n + 1)
+  rw [divUniversalHighWindowClosedAmbientFibreEquiv_apply,
+    divUniversalMultiplierFibreEquiv_apply,
+    divUniversalHighWindowClosedAmbientFibreEquiv_apply]
+  rw [divUniversalHighWindowAmbientCancelEquiv_shiftMul]
+  rw [divFamPhi_baseChange_divUniversalHighWindowShiftMul
+    (C := C) (pi := pi) hpi g K n hsum a]
+  exact divUniversalHighWindowClosedPhi_mul
+    (C := C) (pi := pi) hpi g K n hsum a
+      (divUniversalHighWindowAmbientCancelEquiv (C := C) (pi := pi)
+        hpi g r1 r2 b1 b2 i j K n x)
 
 end HighWindowFibreNormalization
 
