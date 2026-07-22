@@ -142,4 +142,97 @@ theorem ker_finiteComponentSum_eq_range_finiteKoszulBoundary_of_pencil
       row step c hcomm hspan hpencil
   · exact range_finiteKoszulBoundary_le_ker_finiteComponentSum row step hcomm
 
+/-! ## Multiplication by a basis of function-field subspaces -/
+
+attribute [local instance] Scheme.overModule Scheme.functionFieldOverModule
+
+variable {K : Type u} [Field K]
+variable {X : Scheme.{u}} [X.Over (Spec (CommRingCat.of K))] [IsIntegral X]
+
+private theorem Scheme.sum_repr_mul
+    (U : Submodule K X.functionField) (b : Module.Basis ι K U)
+    (a : U) (z : X.functionField) :
+    (∑ i, (b.repr a i) • ((b i : X.functionField) * z)) =
+      (a : X.functionField) * z := by
+  have hterm : ∀ i,
+      (b.repr a i) • ((b i : X.functionField) * z) =
+        ((b.repr a i) • (b i : X.functionField)) * z := by
+    intro i
+    rw [Scheme.functionFieldOverModule_smul_def,
+      Scheme.functionFieldOverModule_smul_def]
+    ring
+  simp_rw [hterm]
+  rw [← Finset.sum_mul]
+  congr 1
+  calc
+    (∑ i, (b.repr a i) • (b i : X.functionField)) =
+        ((∑ i, (b.repr a i) • b i : U) : X.functionField) := by
+      symm
+      exact Submodule.coe_sum U (fun i => (b.repr a i) • b i) Finset.univ
+    _ = a := by rw [b.sum_repr]
+
+/-- Function-field multiplication form of the pencil reduction.  Two
+distinguished sections of `U` are expressed in the arbitrary basis `b`; no
+basis replacement is required. -/
+theorem Scheme.ker_finiteMulMap_eq_range_finiteMulKoszulBoundary_of_pencil
+    (U L T : Submodule K X.functionField) (b : Module.Basis ι K U)
+    (hmul : ∀ (i : ι) (z : L),
+      (b i : X.functionField) * (z : X.functionField) ∈ T)
+    (a : Fin 2 → U)
+    (hspan : ∀ x : T, ∃ z : Fin 2 → L,
+      (x : X.functionField) =
+        ∑ q, (a q : X.functionField) * (z q : X.functionField))
+    (hpencil : ∀ y : Fin 2 → T,
+      (∑ q, (a q : X.functionField) * (y q : X.functionField)) = 0 →
+        ∃ z : L,
+          (y 0 : X.functionField) =
+              (a 1 : X.functionField) * (z : X.functionField) ∧
+          (y 1 : X.functionField) =
+              -(a 0 : X.functionField) * (z : X.functionField)) :
+    LinearMap.ker (Scheme.finiteMulMap U T b) =
+      LinearMap.range (Scheme.finiteMulKoszulBoundary U L T b hmul) := by
+  classical
+  let row : ι → T →ₗ[K] X.functionField := fun i =>
+    (Scheme.mulLinear K (b i : X.functionField)).comp T.subtype
+  let step : ι → L →ₗ[K] T := fun i => Scheme.finiteMulStepTo U L T b hmul i
+  let c : Fin 2 → ι → K := fun q => b.repr (a q)
+  change LinearMap.ker (finiteComponentSum row) =
+    LinearMap.range (finiteKoszulBoundary step)
+  apply ker_finiteComponentSum_eq_range_finiteKoszulBoundary_of_pencil
+    row step c
+  · intro i j z
+    change
+      (b i : X.functionField) * ((b j : X.functionField) * (z : X.functionField)) =
+        (b j : X.functionField) * ((b i : X.functionField) * (z : X.functionField))
+    ring
+  · intro x
+    obtain ⟨z, hz⟩ := hspan x
+    refine ⟨z, ?_⟩
+    apply Subtype.ext
+    simp only [step, c, Submodule.coe_sum, Submodule.coe_smul,
+      Scheme.finiteMulStepTo_apply]
+    rw [hz]
+    apply Finset.sum_congr rfl
+    intro q hq
+    exact (Scheme.sum_repr_mul U b (a q) (z q : X.functionField)).symm
+  · intro y hy
+    have hy' : (∑ q, (a q : X.functionField) * (y q : X.functionField)) = 0 := by
+      rw [← hy]
+      apply Finset.sum_congr rfl
+      intro q hq
+      simpa only [row, c, LinearMap.comp_apply, Submodule.subtype_apply,
+        Scheme.mulLinear_apply] using
+        (Scheme.sum_repr_mul U b (a q) (y q : X.functionField)).symm
+    obtain ⟨z, hz0, hz1⟩ := hpencil y hy'
+    refine ⟨z, ?_, ?_⟩
+    · apply Subtype.ext
+      simpa only [step, c, Submodule.coe_sum, Submodule.coe_smul,
+        Scheme.finiteMulStepTo_apply] using
+        hz0.trans (Scheme.sum_repr_mul U b (a 1) (z : X.functionField)).symm
+    · apply Subtype.ext
+      simp only [step, c, Submodule.coe_neg, Submodule.coe_sum, Submodule.coe_smul,
+        Scheme.finiteMulStepTo_apply]
+      rw [Scheme.sum_repr_mul]
+      simpa only [neg_mul] using hz1
+
 end AlgebraicGeometry
