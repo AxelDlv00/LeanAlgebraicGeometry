@@ -1,0 +1,16 @@
+---
+author: sync
+content_type: lemma
+created: '2026-07-16T21:33:27'
+decl: AlgebraicGeometry.Over.productChart_le_fst_preimage
+docstring: The product chart lies in the first-projection preimage of its first factor.
+file: AlgebraicJacobian/Curve/ProductCharts.lean
+generated: lean
+lean_status: lean_ok
+title: AlgebraicGeometry.Over.productChart_le_fst_preimage
+type: lean
+updated: '2026-07-16T21:33:27'
+---
+lemma productChart_le_fst_preimage (U : X.left.Opens) (V : T.left.Opens) :
+    productChart X T U V ≤ (fst X T).left ⁻¹ᵁ U :=
+  inf_le_left

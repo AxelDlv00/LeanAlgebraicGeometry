@@ -35,6 +35,7 @@ variable {π : C.left ⟶ P1 k} [IsFinite π] {a : ℕ}
 namespace ThetaGeneratorSeed
 
 set_option maxHeartbeats 2400000 in
+-- The chart section-ring/support instance chain re-elaborates the finite-module witness.
 set_option synthInstance.maxHeartbeats 800000 in
 set_option maxRecDepth 8000 in
 /-- **Exact single-point XS equivalence.**  For a point `z` in the pinned affine chart

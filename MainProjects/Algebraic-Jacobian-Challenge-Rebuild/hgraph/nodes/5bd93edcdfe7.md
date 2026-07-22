@@ -1,0 +1,17 @@
+---
+author: sync
+content_type: lemma
+created: '2026-07-17T16:57:13'
+decl: AlgebraicGeometry.FinCoverData.val_unitsRestrict
+docstring: The value of a restricted unit.
+file: AlgebraicJacobian/Picard/DivisorThetaDatum.lean
+generated: lean
+lean_status: lean_ok
+title: AlgebraicGeometry.FinCoverData.val_unitsRestrict
+type: lean
+updated: '2026-07-17T16:57:13'
+---
+private lemma val_unitsRestrict {W U : (relCurve C R).Opens} (h : W ≤ U)
+    (u : Γ(relCurve C R, U)ˣ) :
+    (((relCurve C R).unitsRestrict h u : Γ(relCurve C R, W)ˣ) : Γ(relCurve C R, W))
+      = (relCurve C R).resHom h (u : Γ(relCurve C R, U)) := rfl

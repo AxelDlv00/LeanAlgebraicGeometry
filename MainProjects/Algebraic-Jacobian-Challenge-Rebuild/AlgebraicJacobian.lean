@@ -443,6 +443,7 @@ import AlgebraicJacobian.Picard.SlicingFlatKernel
 import AlgebraicJacobian.Picard.SupportTube
 import AlgebraicJacobian.Picard.SupportTubeFinite
 import AlgebraicJacobian.Picard.PicEtCrossBase
+import AlgebraicJacobian.Picard.PicEtCrossBaseGraph
 import AlgebraicJacobian.Picard.Pic0ThetaAssembly
 import AlgebraicJacobian.Picard.JacobianDataBaseChange
 import AlgebraicJacobian.Picard.JacobianDataBaseChangeAbel
@@ -468,7 +469,6 @@ import AlgebraicJacobian.Picard.DivSchemeUnivFibreWindow
 import AlgebraicJacobian.Picard.DivSchemeUnivFibreHdiv
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivFacts
 import AlgebraicJacobian.Picard.DivSchemeSeedUnivColFin
-import AlgebraicJacobian.Picard.DivSchemeUnivFibreHinj
 import AlgebraicJacobian.Picard.DivSchemeRedesignJFlat
 import AlgebraicJacobian.Picard.DivSchemeRedesignHsub
 import AlgebraicJacobian.Picard.DivSchemeRedesignHinjChart
@@ -481,16 +481,6 @@ import AlgebraicJacobian.Picard.DivSchemeRedesignHsubChartPin
 import AlgebraicJacobian.Picard.DivSchemeRedesignCascade
 import AlgebraicJacobian.Picard.DivSchemeRedesignFreeFlat
 import AlgebraicJacobian.Picard.DivSchemeRedesignFreeFlatChart
-import AlgebraicJacobian.Picard.DivSchemeRedesignRDN
-import AlgebraicJacobian.Picard.DivSchemeRedesignAchiever
-import AlgebraicJacobian.Picard.DivSchemeRedesignFibreCut
-import AlgebraicJacobian.Picard.DivSchemeRedesignSeed
-import AlgebraicJacobian.Picard.DivSchemeRedesignRDNChart
-import AlgebraicJacobian.Picard.DivSchemeRedesignSeedUniv
-import AlgebraicJacobian.Picard.DivSchemeRedesignSeedFinish
-import AlgebraicJacobian.Picard.DivSchemeRedesignKappaZ
-import AlgebraicJacobian.Picard.DivSchemeRedesignKappaZSeed
-import AlgebraicJacobian.Picard.DivSchemeRedesignGermDvd
 
 /-!
 # AlgebraicJacobian — library root
