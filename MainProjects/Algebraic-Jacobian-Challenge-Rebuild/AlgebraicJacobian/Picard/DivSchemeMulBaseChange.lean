@@ -33,6 +33,22 @@ noncomputable def finiteComponentSum (f : ι → M →ₗ[R] N) :
   classical
   exact ∑ t : ι, (f t).comp (LinearMap.proj t)
 
+/-- A finite component sum evaluated on a vector supported in one coordinate
+is that component map. -/
+@[simp]
+theorem finiteComponentSum_piSingle [DecidableEq ι]
+    (f : ι → M →ₗ[R] N) (i : ι) (x : M) :
+    finiteComponentSum f (Pi.single i x) = f i x := by
+  classical
+  rw [finiteComponentSum, LinearMap.sum_apply]
+  simp only [LinearMap.comp_apply, LinearMap.proj_apply]
+  rw [Finset.sum_eq_single i]
+  · rw [Pi.single_eq_same]
+  · intro j _ hji
+    rw [Pi.single_eq_of_ne hji, map_zero]
+  · intro hi
+    exact (hi (Finset.mem_univ i)).elim
+
 /-- Base change commutes with a finite component sum, after tensoring the
 product source into its component fibres with `TensorProduct.piRightHom`. -/
 theorem baseChange_finiteComponentSum (f : ι → M →ₗ[R] N) :
