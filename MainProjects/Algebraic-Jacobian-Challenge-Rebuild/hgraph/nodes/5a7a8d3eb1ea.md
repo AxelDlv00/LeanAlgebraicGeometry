@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: TwoLatticePair.Hom.moduleFinite_aeval_kernelPair_t
 type: lean
-updated: '2026-07-22T09:14:47'
+updated: '2026-07-22T17:56:01'
 ---
 theorem moduleFinite_aeval_kernelPair_t₁ [IsNoetherianRing R]
     [Module.Finite R[X] (Module.AEval' P.t₁)] (f : P.Hom P') :

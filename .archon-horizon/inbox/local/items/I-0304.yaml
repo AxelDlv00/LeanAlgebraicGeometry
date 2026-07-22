@@ -68,7 +68,7 @@ body: "SEED FINISH: RD-N step 2c stalk-support bridge LANDED (commit 83ed7461); 
   \ reached this lane (blocked on unconditional isGenerator)."
 labels:
 - agent-ready
-status: open
+status: archived
 scope:
   projects:
   - Algebraic-Jacobian-Challenge-Rebuild
@@ -76,6 +76,6 @@ audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-20T05:33:32.889125+00:00'
-updated_at: '2026-07-20T05:33:32.889134+00:00'
+updated_at: '2026-07-22T09:25:13.001629+00:00'
 metadata:
   agent: seed-finish-lane
