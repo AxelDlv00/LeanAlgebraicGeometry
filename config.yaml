@@ -9,6 +9,7 @@ workspace:
 external_libraries:
 - name: mathlib
   rev: v4.31.0
+  path: .lake-packages/mathlib
 references:
   transcription: null
 harnesses:
