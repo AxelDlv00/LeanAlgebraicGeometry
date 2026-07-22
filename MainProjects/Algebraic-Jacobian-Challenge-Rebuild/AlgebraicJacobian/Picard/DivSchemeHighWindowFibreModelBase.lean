@@ -161,6 +161,7 @@ private theorem range_eq_comap_of_equiv_coe
 /-! ## The two seed reading squares -/
 
 set_option maxHeartbeats 2400000 in
+-- The nested closed normalization and two scalar extensions are expensive to elaborate.
 /-- Read the scalar extension of the first seed relation through the closed
 stage-zero normalization. -/
 private noncomputable def divUniversalHighWindowClosedFstRead :
@@ -176,6 +177,7 @@ private noncomputable def divUniversalHighWindowClosedFstRead :
             ((divUniversalFstWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule).subtype)))
 
 set_option maxHeartbeats 2400000 in
+-- The nested closed normalization and two scalar extensions are expensive to elaborate.
 /-- Read the scalar extension of the second seed relation through the closed
 stage-one normalization. -/
 private noncomputable def divUniversalHighWindowClosedSndRead :
@@ -191,6 +193,7 @@ private noncomputable def divUniversalHighWindowClosedSndRead :
             ((divUniversalSndWindow C pi hpi g r1 r2 b1 b2 i j).toSubmodule).subtype)))
 
 set_option maxHeartbeats 4000000 in
+-- Tensor induction repeatedly expands the closed stage-zero normalization and seed read.
 set_option synthInstance.maxHeartbeats 1000000 in
 /-- Closed stage-zero normalization agrees with the original first-window
 fibre-reading equivalence. -/
@@ -217,6 +220,51 @@ private theorem divUniversalHighWindowClosedFstRead_eq :
         apply LinearMap.ext
         intro y
         rfl
+      have hunit :
+          divUniversalHighWindowClosedCoherenceUnit
+              (C := C) (pi := pi) hpi g K 0 = 1 := by
+        rw [divUniversalHighWindowClosedCoherenceUnit]
+        simp only [pow_zero, mul_one]
+        rw [← hzero, mul_inv_cancel]
+      have hcancel :
+          divUniversalHighWindowAmbientCancelEquiv
+              (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K 0
+              (1 ⊗ₜ[RZ]
+                (LinearMap.baseChange RZ
+                  (divUniversalHighWindowZeroEquiv
+                    (C := C) (pi := pi) hpi g).toLinearMap x.1)) =
+            LinearMap.baseChange K
+              (divUniversalHighWindowZeroEquiv
+                (C := C) (pi := pi) hpi g).toLinearMap
+              (windowCompare RZ K x.1) := by
+        calc
+          _ = divUniversalHighWindowAmbientCancelEquiv
+                (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K 0
+                (LinearMap.baseChange K
+                  (LinearMap.baseChange RZ
+                    (divUniversalHighWindowZeroEquiv
+                      (C := C) (pi := pi) hpi g).toLinearMap)
+                  (1 ⊗ₜ[RZ] x.1)) := by
+              rw [LinearMap.baseChange_tmul]
+          _ = LinearMap.baseChange K
+                (divUniversalHighWindowZeroEquiv
+                  (C := C) (pi := pi) hpi g).toLinearMap
+                (TensorProduct.AlgebraTensorModule.cancelBaseChange k RZ K K
+                  ↥(Scheme.divisorSections k
+                    (windowM_choice pi hpi g • fiberWeilDivisor pi) ⊤)
+                  (1 ⊗ₜ[RZ] x.1)) := by
+              simpa only [divUniversalHighWindowAmbientCancelEquiv] using
+                divUniversalHighWindowAmbientCancelEquiv_baseChange
+                  (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K
+                  (divUniversalHighWindowZeroEquiv
+                    (C := C) (pi := pi) hpi g).toLinearMap
+                  (1 ⊗ₜ[RZ] x.1)
+          _ = _ := by
+              rw [← windowCompare_eq_cancelBaseChange
+                (k := k)
+                (H := ↥(Scheme.divisorSections k
+                  (windowM_choice pi hpi g • fiberWeilDivisor pi) ⊤))
+                RZ K x.1]
       have hcore :
           divUniversalHighWindowClosedFstRead
               C hpi g r1 r2 b1 b2 i j K (1 ⊗ₜ[RZ] x) =
@@ -246,19 +294,12 @@ private theorem divUniversalHighWindowClosedFstRead_eq :
                 (LinearMap.baseChange RZ
                   (divUniversalHighWindowZeroEquiv
                     (C := C) (pi := pi) hpi g).toLinearMap x.1)),
-          ← windowCompare_eq_cancelBaseChange
-            (k := k)
-            (H := divUniversalHighWindowSections
-              (C := C) (pi := pi) hpi g 0)
-            RZ K
-            (LinearMap.baseChange RZ
-              (divUniversalHighWindowZeroEquiv
-                (C := C) (pi := pi) hpi g).toLinearMap x.1),
+          hcancel,
           divUniversalFstFibreReadEquiv_one_tmul
             (π := pi) C hpi g r1 r2 b1 b2 i j K x,
-          windowCompare_baseChange, hmap]
-        rw [divUniversalHighWindowClosedCoherenceUnit]
-        simp only [pow_zero, mul_one, mul_inv_cancel, Units.val_one, one_mul]
+          hmap]
+        rw [hunit]
+        simp only [Units.val_one, one_mul]
         exact divFamPhi_baseChange_divisorWindowExponentEquiv
           (C := C) (pi := pi) K hzero
           (relThetaPairH1_windowM C pi hpi g)
@@ -268,6 +309,7 @@ private theorem divUniversalHighWindowClosedFstRead_eq :
       simpa only [map_smul] using congrArg (fun y => c • y) hcore
 
 set_option maxHeartbeats 4000000 in
+-- Tensor induction repeatedly expands the closed stage-one normalization and seed read.
 set_option synthInstance.maxHeartbeats 1000000 in
 /-- Closed stage-one normalization agrees with the coherence-adjusted
 second-window fibre-reading equivalence. -/
@@ -294,6 +336,46 @@ private theorem divUniversalHighWindowClosedSndRead_eq :
         apply LinearMap.ext
         intro y
         rfl
+      have hcancel :
+          divUniversalHighWindowAmbientCancelEquiv
+              (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K 1
+              (1 ⊗ₜ[RZ]
+                (LinearMap.baseChange RZ
+                  (divUniversalHighWindowOneEquiv
+                    (C := C) (pi := pi) hpi g).toLinearMap x.1)) =
+            LinearMap.baseChange K
+              (divUniversalHighWindowOneEquiv
+                (C := C) (pi := pi) hpi g).toLinearMap
+              (windowCompare RZ K x.1) := by
+        calc
+          _ = divUniversalHighWindowAmbientCancelEquiv
+                (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K 1
+                (LinearMap.baseChange K
+                  (LinearMap.baseChange RZ
+                    (divUniversalHighWindowOneEquiv
+                      (C := C) (pi := pi) hpi g).toLinearMap)
+                  (1 ⊗ₜ[RZ] x.1)) := by
+              rw [LinearMap.baseChange_tmul]
+          _ = LinearMap.baseChange K
+                (divUniversalHighWindowOneEquiv
+                  (C := C) (pi := pi) hpi g).toLinearMap
+                (TensorProduct.AlgebraTensorModule.cancelBaseChange k RZ K K
+                  ↥(Scheme.divisorSections k
+                    ((windowM_choice pi hpi g + windowS_choice pi hpi g) •
+                      fiberWeilDivisor pi) ⊤)
+                  (1 ⊗ₜ[RZ] x.1)) := by
+              simpa only [divUniversalHighWindowAmbientCancelEquiv] using
+                divUniversalHighWindowAmbientCancelEquiv_baseChange
+                  (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j K
+                  (divUniversalHighWindowOneEquiv
+                    (C := C) (pi := pi) hpi g).toLinearMap
+                  (1 ⊗ₜ[RZ] x.1)
+          _ = _ := by
+              rw [← windowCompare_eq_cancelBaseChange
+                (k := k)
+                (H := ↥(Scheme.divisorSections k
+                  ((windowM_choice pi hpi g + windowS_choice pi hpi g) •
+                    fiberWeilDivisor pi) ⊤)) RZ K x.1]
       have hcore :
           divUniversalHighWindowClosedSndRead
               C hpi g r1 r2 b1 b2 i j K (1 ⊗ₜ[RZ] x) =
@@ -323,29 +405,28 @@ private theorem divUniversalHighWindowClosedSndRead_eq :
                 (LinearMap.baseChange RZ
                   (divUniversalHighWindowOneEquiv
                     (C := C) (pi := pi) hpi g).toLinearMap x.1)),
-          ← windowCompare_eq_cancelBaseChange
-            (k := k)
-            (H := divUniversalHighWindowSections
-              (C := C) (pi := pi) hpi g 1)
-            RZ K
-            (LinearMap.baseChange RZ
-              (divUniversalHighWindowOneEquiv
-                (C := C) (pi := pi) hpi g).toLinearMap x.1),
+          hcancel,
           divUniversalSndFibreReadEquiv_one_tmul
             (π := pi) C hpi g r1 r2 b1 b2 i j K x,
           divUniversalHighWindowClosedCoherenceUnit_one,
-          windowCompare_baseChange, hmap]
-        exact divFamPhi_baseChange_divisorWindowExponentEquiv
-          (C := C) (pi := pi) K hone
-          (relThetaPairH1_windowMS C pi hpi g)
-          (relThetaPairH1_windowM_add_mulS C pi hpi g 1)
-          (windowCompare RZ K x.1)
+          hmap]
+        exact congrArg
+          (fun y : (relCurve C K).functionField =>
+            ((msCoherenceUnit C K hpi g :
+              (relCurve C K).functionFieldˣ) :
+              (relCurve C K).functionField) * y)
+          (divFamPhi_baseChange_divisorWindowExponentEquiv
+            (C := C) (pi := pi) K hone
+            (relThetaPairH1_windowMS C pi hpi g)
+            (relThetaPairH1_windowM_add_mulS C pi hpi g 1)
+            (windowCompare RZ K x.1))
       rw [TensorProduct.tmul_eq_smul_one_tmul]
       simpa only [map_smul] using congrArg (fun y => c • y) hcore
 
 /-! ## Field-valued image base cases -/
 
 set_option maxHeartbeats 4000000 in
+-- The stage-zero range comparison unfolds two nested base changes and ambient transports.
 set_option synthInstance.maxHeartbeats 1000000 in
 /-- The recursively defined relation has the canonical divisor-window image at
 stage zero. -/
@@ -384,6 +465,7 @@ theorem divUniversalHighWindowFibreImage_zero :
       C hpi g r1 r2 b1 b2 i j K)
 
 set_option maxHeartbeats 4000000 in
+-- The stage-one range comparison unfolds two nested base changes and ambient transports.
 set_option synthInstance.maxHeartbeats 1000000 in
 /-- The recursively defined relation has the canonical divisor-window image at
 stage one. -/
@@ -427,6 +509,7 @@ theorem divUniversalHighWindowFibreImage_one
 /-! ## Residue-prime model base cases -/
 
 set_option maxHeartbeats 4000000 in
+-- Residue-field specialization expands the complete carve-chart scalar tower.
 set_option synthInstance.maxHeartbeats 1000000 in
 /-- Every residue field sees the canonical stage-zero fibre image. -/
 theorem divUniversalHighWindowFibreModel_zero :
@@ -441,6 +524,7 @@ theorem divUniversalHighWindowFibreModel_zero :
         g r1 r2 b1 b2 i j p.asIdeal.ResidueField)
 
 set_option maxHeartbeats 4000000 in
+-- Residue-field specialization expands the complete carve-chart scalar tower.
 set_option synthInstance.maxHeartbeats 1000000 in
 /-- Every residue field sees the canonical stage-one fibre image. -/
 theorem divUniversalHighWindowFibreModel_one
