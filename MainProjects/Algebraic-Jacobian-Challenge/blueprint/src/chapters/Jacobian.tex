@@ -15,8 +15,8 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   Let \(P \in C(k)\).  An abelian variety \(J\) together with a pointed
   morphism \(\iota_P \colon C \to J\) is an \emph{Albanese object} for
   \((C,P)\) if every pointed morphism \(f \colon C \to A\) to an abelian
-  variety factors uniquely through \(\iota_P\): there is a unique group-scheme
-  homomorphism \(g \colon J \to A\) such that
+  variety factors uniquely through \(\iota_P\): there is a unique morphism of
+  \(k\)-schemes \(g \colon J \to A\) such that
   \[
     P \circ \iota_P = \eta_J,
     \qquad
@@ -57,7 +57,7 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   \uses{def:IsAlbanese, def:IsAlbanese_ofCurve}
   \lean{AlgebraicGeometry.IsAlbanese.exists_unique_ofCurve_comp}
   Every pointed morphism \(f \colon C \to A\) to an abelian variety factors
-  uniquely as \(f=\iota_P\circ g\) through a group-scheme homomorphism
+  uniquely as \(f=\iota_P\circ g\) through a morphism of \(k\)-schemes
   \(g \colon J \to A\).
 \end{lemma}
 
@@ -68,7 +68,7 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   \lean{AlgebraicGeometry.IsAlbanese.unique}
   If \((J_1,\iota_1)\) and \((J_2,\iota_2)\) are Albanese objects for
   \((C,P)\), there is a unique morphism \(e \colon J_1\to J_2\) satisfying
-  \(\iota_2=\iota_1\circ e\), and this morphism is an isomorphism.
+  \(\iota_2=\iota_1\circ e\).
 \end{theorem}
 
 \begin{proof}\leanok
@@ -76,9 +76,9 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
   \(e \colon J_1\to J_2\); that of \(J_2\) applied to \(\iota_1\) gives
   \(e' \colon J_2\to J_1\).  Both \(e\circ e'\) and the identity of \(J_1\)
   factor \(\iota_1\) through itself, so uniqueness gives
-  \(e\circ e'=\mathrm{id}_{J_1}\).  Similarly
-  \(e'\circ e=\mathrm{id}_{J_2}\).  Thus \(e\) is an isomorphism, and its
-  uniqueness is the original universal-property uniqueness.
+  \(e\circ e'=\mathrm{id}_{J_1}\); similarly
+  \(e'\circ e=\mathrm{id}_{J_2}\).  The original universal property gives the
+  required uniqueness of \(e\).
 \end{proof}
 
 \begin{remark}
@@ -234,10 +234,13 @@ variety of dimension \(g(C)\); when \(g(C)=0\), it is \(\Spec k\).
 \section{The Albanese property of \(\Pic^0\)}
 \label{sec:Jacobian_routeA4_albaneseUP}
 
-\begin{theorem}\leanok
+\begin{theorem}
 [Albanese universal property of \(\Pic^0_{C/k}\)]
   \label{thm:albanese_universal_property_northstar}
-  \uses{thm:rational_map_to_av_extends, lem:av_regular_map_is_hom,
+  \uses{lem:abel_jacobi_morphism, lem:symmetric_product_av_map,
+    lem:symmetric_product_to_jacobian, lem:descent_through_birational_sigma,
+    lem:albanese_eq_iff_symmetricPower_eq, thm:rational_map_to_av_extends,
+    thm:rigidity_lemma, lem:av_regular_map_is_hom,
     lem:hom_additivity_over_product}
   \lean{AlgebraicGeometry.Scheme.Pic.albaneseUP}
   Fix \(P\in C(k)\), put \(J=\Pic^0_{C/k}\), and let
