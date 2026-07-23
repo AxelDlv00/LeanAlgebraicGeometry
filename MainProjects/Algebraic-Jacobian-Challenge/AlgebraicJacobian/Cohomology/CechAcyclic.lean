@@ -871,13 +871,14 @@ lemma isLocalizedModule_comp_away
 
 end AwayComparison
 
-/-! ## Project-local Mathlib supplement — base-change composite localisation (route B1, change-of-ring)
+/-! ## Base-change composite localisation
 
 The general-affine-open seed (Stacks 02KG over an arbitrary affine `V = ⨆ᵢ D(gᵢ)`, NOT a single
 `D(f)`) is proved by change of base to `S = Γ(V)`, where the cover family `ḡᵢ = algebraMap R S gᵢ`
-DOES span the unit ideal.  The transport back to `R` needs, per Čech multi-index `σ`, the fact that
-the composite `M → M ⊗_R S → (M ⊗_R S)_{ḡσ}` (base change to `S`, then localise at `ḡσ`) presents the
-localised tensor as the localisation `M_{gσ}` of `M` at `powers gσ` over `R`.  This is the algebraic
+DOES span the unit ideal.  The transport back to `R` needs, per Čech multi-index `σ`, the fact
+that the composite `M → M ⊗_R S → (M ⊗_R S)_{ḡσ}` (base change to `S`, then localise at `ḡσ`)
+presents the localised tensor as the localisation `M_{gσ}` of `M` at `powers gσ` over `R`.
+This is the algebraic
 analogue of `AwayComparison.isLocalizedModule_comp_away`, but with the FIRST leg a base change
 (`IsBaseChange S`) rather than a localisation: `M → M_S` is not a localisation of `M` (S is not a
 localisation of `R`).  The single geometric input — that the localised ring is simultaneously an
@@ -886,8 +887,9 @@ localisation of `R`).  The single geometric input — that the localised ring is
 /-- **Base-change composite is a localisation.**  Let `bc : M →ₗ[R] MS` exhibit `MS` as the base
 change of `M` to an `R`-algebra `S` (`IsBaseChange S bc`), and let `gN : MS →ₗ[S] N` localise `MS`
 at `powers (algebraMap R S a)` over `S`, with localised ring `Aloc`.  If `Aloc` is moreover an
-`R`-localisation at `powers a` (the geometric input, encoding `D(a) ⊆ Spec S` when `S = Γ(V)`), then
-the `R`-linear composite `gN ∘ bc : M →ₗ[R] N` exhibits `N` as the localisation of `M` at `powers a`.
+`R`-localisation at `powers a` (the geometric input, encoding `D(a) ⊆ Spec S` when
+`S = Γ(V)`), then the `R`-linear composite `gN ∘ bc : M →ₗ[R] N` exhibits `N` as the
+localisation of `M` at `powers a`.
 
 Pure base-change algebra: `IsBaseChange` is transitive (`IsBaseChange.comp`), and
 `isLocalizedModule_iff_isBaseChange` converts both directions.  This is the route-B1 replacement for
@@ -1282,23 +1284,23 @@ lemma dDiff_exact_of_localizationAway [Finite ι] (f : R)
 
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
--- raised: like `dDiff_exact_of_localizationAway`, the change-of-ring ladder repeatedly synthesises
--- `AddMonoidHomClass`/base-change instances over the `dCoeff`-abbreviated `LocalizedModule` carriers.
+-- The change-of-ring ladder repeatedly synthesizes `AddMonoidHomClass` and base-change
+-- instances over the `dCoeff`-abbreviated `LocalizedModule` carriers.
 set_option synthInstance.maxHeartbeats 800000 in
 /-- **Route-B1 positive-degree exactness of the un-localised section Čech module complex `D•` over a
 cover of a *general affine open* `V = ⨆ᵢ D(sᵢ)`** (`lem:affine_cech_vanishing_general_seed`, module
 core).  The cover family `s = g` need NOT span the unit ideal of `R`, and `V` need NOT be a single
-distinguished `D(f)`; only the images `sᵢ ↦ S = Γ(V)` span the unit ideal of `S` (`hspan`).  Then the
-complex `∏_σ M_{s_σ}` is exact in positive degrees.
+distinguished `D(f)`; only the images `sᵢ ↦ S = Γ(V)` span the unit ideal of `S` (`hspan`).
+Then the complex `∏_σ M_{s_σ}` is exact in positive degrees.
 
-Route B1 (change of ring to `S = Γ(V)` via algebraic base change `M ⊗_R S`): instantiate `dDiff_exact`
-over `S` with the module `M_S = M ⊗_R S` and the spanning family `s̄ = algebraMap R S ∘ s`, then transport
-the resulting positive-degree exactness back to the `R`-side along the degreewise additive isomorphisms
-`M_{s_σ} ≅ (M_S)_{s̄_σ}` (`isLocalizedModule_baseChange_away` + the universal `IsLocalizedModule.iso`),
-which intertwine the alternating-sum localisation differentials.  The geometric input — that the
-localisation `(M_S)_{s̄_σ}`'s ring is simultaneously an `R`-localisation at `powers (s_σ)`, encoding
-`D(s_σ) ⊆ V` — is supplied per Čech multi-index `σ` by the `hloc` family (discharged at the wrapper
-from `IsAffineOpen V` via `IsAffineOpen.isLocalization_of_eq_basicOpen`). -/
+Change the ring to `S = Γ(V)` via algebraic base change `M ⊗_R S`: instantiate
+`dDiff_exact` over `S` with the module `M_S = M ⊗_R S` and the spanning family
+`s̄ = algebraMap R S ∘ s`, then transport positive-degree exactness back to the `R`-side
+along the degreewise additive isomorphisms `M_{s_σ} ≅ (M_S)_{s̄_σ}`.  These isomorphisms
+come from `isLocalizedModule_baseChange_away` and the universal `IsLocalizedModule.iso`,
+and intertwine the alternating-sum localisation differentials.  The geometric input that
+the ring of `(M_S)_{s̄_σ}` is also an `R`-localisation at `powers (s_σ)` is supplied by the
+`hloc` family. -/
 lemma dDiff_exact_of_affineCover [Finite ι]
     (S : Type u) [CommRing S] [Algebra R S]
     (hspan : Ideal.span (Set.range (fun i => algebraMap R S (s i))) = ⊤)
@@ -1320,7 +1322,8 @@ lemma dDiff_exact_of_affineCover [Finite ι]
   -- the composite localisation structure map `M → M_S → (M_S)_{s_σ}` localises `M` at `s_σ`.
   have inst_comp : ∀ {n : ℕ} (σ : Fin (n + 1) → ι),
       IsLocalizedModule (Submonoid.powers (sprod s σ))
-        ((LocalizedModule.mkLinearMap (Submonoid.powers (sprod gS σ)) MS).restrictScalars R ∘ₗ bc) := by
+        ((LocalizedModule.mkLinearMap
+          (Submonoid.powers (sprod gS σ)) MS).restrictScalars R ∘ₗ bc) := by
     intro n σ
     haveI hL : IsLocalization (Submonoid.powers (algebraMap R S (sprod s σ)))
         (Localization (Submonoid.powers (sprod gS σ))) := by
@@ -1401,7 +1404,7 @@ lemma dDiff_exact_of_affineCover [Finite ι]
 
 end SectionCechModule
 
-/-! ## Project-local Mathlib supplement — quasi-coherent sections as away localisations (L1, step (b))
+/-! ## Quasi-coherent sections as away localisations
 
 The categorical→module bridge needs the section-identification of
 `def:qcoh_sections_localized`: over a basic open `D(g)` the sections of a
@@ -2009,20 +2012,21 @@ theorem sectionCech_homology_exact_of_localizationAway {R : CommRingCat.{u}} (M 
   obtain ⟨q, rfl⟩ : ∃ q, p = q + 1 := ⟨p - 1, by omega⟩
   exact sectionCech_isZero_homology_of_objD_exact _ _ q (sectionCechAbExact_loc M s f hmem hspan q)
 
-/-- **Cover of a general affine open: {\v C}ech vanishing for the tilde sheaf — change-of-base form**
-(`lem:affine_cech_vanishing_general_seed`, Stacks 02KG over an arbitrary affine open).  For a finite
-family `s : ι → R` whose distinguished opens `D(sᵢ)` cover a *general affine open* `V = ⨆ᵢ D(sᵢ)` of
-`Spec R` (not necessarily a single `D(f)`), the positive-degree section {\v C}ech cohomology of the
-tilde sheaf `~M` over `{D(sᵢ)}` vanishes — provided the change-of-base certificate `(S, hspan, hloc)`:
-an `R`-algebra `S` (in practice `S = Γ(V, 𝒪)`) in which the images `sᵢ ↦ S` span the unit ideal
-(`hspan`), together with the per-{\v C}ech-multi-index localisation datum `hloc` (encoding `D(s_σ) ⊆ V`,
+/-- **Cover of a general affine open: {\v C}ech vanishing for the tilde sheaf,
+change-of-base form** (`lem:affine_cech_vanishing_general_seed`, Stacks 02KG over an arbitrary
+affine open).  For a finite family `s : ι → R` whose distinguished opens `D(sᵢ)` cover a
+*general affine open* `V = ⨆ᵢ D(sᵢ)` of `Spec R` (not necessarily a single `D(f)`), the
+positive-degree section {\v C}ech cohomology of the tilde sheaf `~M` over `{D(sᵢ)}` vanishes,
+provided the change-of-base certificate `(S, hspan, hloc)`: an `R`-algebra `S` (in practice
+`S = Γ(V, 𝒪)`) in which the images `sᵢ ↦ S` span the unit ideal (`hspan`), together with the
+per-{\v C}ech-multi-index localisation datum `hloc` (encoding `D(s_σ) ⊆ V`,
 so that the `S`-localisation `(M⊗_R S)_{s̄_σ}` is an `R`-localisation of `M` at `powers (s_σ)`).
 
-This is the route-B1 analogue of `sectionCech_homology_exact_of_localizationAway`: the `D(f)` case takes
-`S = Localization.Away f`, where `hspan` is `affine_cover_span_localizationAway` and `hloc` is automatic
-(`Localization.Away` of an `R`-element is already an `R`-localisation); the general affine `V` needs the
-genuine `S = Γ(V)` and the geometric `hloc`.  Both are discharged at the call site from `IsAffineOpen V`
-via `IsAffineOpen.isLocalization_of_eq_basicOpen`. -/
+This is the change-of-base analogue of `sectionCech_homology_exact_of_localizationAway`: the
+`D(f)` case takes `S = Localization.Away f`, where `hspan` is
+`affine_cover_span_localizationAway` and `hloc` is automatic.  A general affine `V` needs
+the genuine `S = Γ(V)` and the geometric `hloc`, discharged at the call site from
+`IsAffineOpen V` via `IsAffineOpen.isLocalization_of_eq_basicOpen`. -/
 theorem sectionCech_homology_exact_of_affineCover {R : CommRingCat.{u}} (M : ModuleCat.{u} R)
     {ι : Type u} [Finite ι] (s : ι → R)
     (S : Type u) [CommRing S] [Algebra R S]
@@ -2041,9 +2045,10 @@ end AlgebraicGeometry
 
 /-! ## Project-local Mathlib supplement — general-affine-open seed (geometric assembly)
 
-The final geometric wrapper `sectionCech_homology_exact_of_affineOpen` discharges the change-of-base
-data `(S, hspan, hloc)` of `sectionCech_homology_exact_of_affineCover` from `IsAffineOpen V`, with
-`S := Γ(V, 𝒪)`.  The section-restriction algebra `Algebra Γ(V) Γ(D a)` is NOT a synthesizable instance
+The final geometric wrapper `sectionCech_homology_exact_of_affineOpen` discharges the
+change-of-base data `(S, hspan, hloc)` of `sectionCech_homology_exact_of_affineCover` from
+`IsAffineOpen V`, with `S := Γ(V, 𝒪)`.  The section-restriction algebra
+`Algebra Γ(V) Γ(D a)` is NOT a synthesizable instance
 (it depends on the inclusion `D a ⟶ V`); it is provided explicitly as the `.toAlgebra` of the
 restriction map — the same one `IsAffineOpen.isLocalization_of_eq_basicOpen` constructs — and the
 scalar tower `R → Γ(V) → Γ(D a)` is `rfl`-definitional. -/
@@ -2052,10 +2057,11 @@ namespace AlgebraicGeometry
 
 open AlgebraicTopology Scheme.Modules
 
-/-- **Basic open of a restricted global section** (geometric brick for the general-affine seed).  For
-the affine scheme `Spec R`, an open `V`, and `a : R`, the basic open of the restriction
-`algebraMap R Γ(V) a` of the global section `a` to `V` is `V ⊓ D(a)`.  The restriction factors through
-`Γ(⊤)` *definitionally* (`algebraMap R Γ(V) a = (Spec R).presheaf.map _ (algebraMap R Γ(⊤) a)`, `rfl`),
+/-- **Basic open of a restricted global section** (geometric brick for the general-affine
+seed).  For the affine scheme `Spec R`, an open `V`, and `a : R`, the basic open of the
+restriction `algebraMap R Γ(V) a` of the global section `a` to `V` is `V ⊓ D(a)`.  The
+restriction factors through `Γ(⊤)` definitionally:
+`algebraMap R Γ(V) a = (Spec R).presheaf.map _ (algebraMap R Γ(⊤) a)`.
 so `Scheme.basicOpen_res` gives `V ⊓ (Spec R).basicOpen (a : Γ(⊤))` and `basicOpen_eq_of_affine`
 identifies `(Spec R).basicOpen (a : Γ(⊤)) = D(a)`.  (Avoids the `Algebra Γ(⊤) Γ(V)` scoped instance,
 which is shadowed in this file's open-context.)  Project-local: supplies both the spanning datum
@@ -2070,18 +2076,21 @@ private lemma basicOpen_algMap_section {R : CommRingCat.{u}} (V : (Spec R).Opens
             (algebraMap ↥R ↥((Spec R).presheaf.obj (Opposite.op ⊤)) a) from rfl,
       (Spec R).basicOpen_res, key]
 
-/-- **Cover of a general affine open: {\v C}ech vanishing for the tilde sheaf** (Stacks 02KG,
-`lemma-cech-cohomology-quasi-coherent-trivial`, generalised from `D(f)` to an arbitrary affine open).
+/-- **Cover of a general affine open: {\v C}ech vanishing for the tilde sheaf** (Stacks
+02KG, `lemma-cech-cohomology-quasi-coherent-trivial`, generalised from `D(f)` to an
+arbitrary affine open).
 Let `s : ι → R` be a finite family whose distinguished opens `D(sᵢ)` cover an **affine** open
-`V = ⨆ᵢ D(sᵢ)` of `Spec R` (`hV : IsAffineOpen V`; `V` need NOT be a single `D(f)`).  Then the section
-{\v C}ech complex of the tilde sheaf `~M` over `{D(sᵢ)}` has vanishing homology in all positive degrees.
+`V = ⨆ᵢ D(sᵢ)` of `Spec R` (`hV : IsAffineOpen V`; `V` need NOT be a single `D(f)`).
+Then the section {\v C}ech complex of the tilde sheaf `~M` over `{D(sᵢ)}` has vanishing
+homology in all positive degrees.
 
 This is the residual `htilde` of the enlarged (general-affine) 02KG cone — the seed
 `affine_cech_vanishing_qcoh_general_of_tildeVanishing` consumes exactly this shape.  Discharged by
 `sectionCech_homology_exact_of_affineCover` with `S := Γ(V)`: the spanning datum `hspan` is
-`IsAffineOpen.iSup_basicOpen_eq_self_iff` (the `D(sᵢ)` cover `V`), and the per-{\v C}ech-multi-index
-localisation datum `hloc` comes from `IsAffineOpen.isLocalization_of_eq_basicOpen` (each `D(s_σ) ⊆ V`)
-transported across the `R`-algebra iso `Γ(D(s_σ)) ≃ₐ[R] Localization (powers (s̄_σ))`. -/
+`IsAffineOpen.iSup_basicOpen_eq_self_iff` (the `D(sᵢ)` cover `V`), and the
+per-{\v C}ech-multi-index localisation datum `hloc` comes from
+`IsAffineOpen.isLocalization_of_eq_basicOpen` (each `D(s_σ) ⊆ V`) transported across the
+`R`-algebra iso `Γ(D(s_σ)) ≃ₐ[R] Localization (powers (s̄_σ))`. -/
 theorem sectionCech_homology_exact_of_affineOpen {R : CommRingCat.{u}} (M : ModuleCat.{u} R)
     {ι : Type u} [Finite ι] (s : ι → R)
     (hV : IsAffineOpen (X := Spec R) (⨆ i, PrimeSpectrum.basicOpen (s i)))
@@ -2095,7 +2104,8 @@ theorem sectionCech_homology_exact_of_affineOpen {R : CommRingCat.{u}} (M : Modu
     rw [← hV.iSup_basicOpen_eq_self_iff, iSup_range']
     simp_rw [basicOpen_algMap_section V]
     rw [← inf_iSup_eq, ← hVdef, inf_idem]
-  -- per Čech multi-index `σ`: the `S`-localisation at `s̄_σ` is an `R`-localisation at `powers (s_σ)`.
+  -- Per Čech multi-index, the `S`-localisation at `s̄_σ` is an `R`-localisation at
+  -- `powers (s_σ)`.
   have hloc : ∀ {n : ℕ} (σ : Fin (n + 1) → ι),
       IsLocalization (Submonoid.powers (CechLocalized.sprod s σ))
         (Localization (Submonoid.powers (algebraMap ↥R
