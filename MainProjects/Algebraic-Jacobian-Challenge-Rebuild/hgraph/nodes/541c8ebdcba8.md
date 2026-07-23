@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.TwoCoverPairData.pair_t
 type: lean
-updated: '2026-07-23T15:01:46'
+updated: '2026-07-23T15:22:56'
 ---
 lemma pair_t₁ : (dat.pair hU₀ hU₁).t₁ = dat.end₁ (le_refl U₁) := rfl
 

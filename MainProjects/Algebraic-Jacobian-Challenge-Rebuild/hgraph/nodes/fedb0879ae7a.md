@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Over.pieceAmitsurOpen_le_w
 type: lean
-updated: '2026-07-23T15:01:46'
+updated: '2026-07-23T15:22:57'
 ---
 lemma pieceAmitsurOpen_le_w₁₃_piece (𝒲 : (Xq).PointedCover) (V : (XA).Opens)
     (z : Xcb) :
