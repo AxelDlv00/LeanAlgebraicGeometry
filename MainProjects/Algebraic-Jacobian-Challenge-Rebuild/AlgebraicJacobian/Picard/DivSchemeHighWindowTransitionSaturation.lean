@@ -479,5 +479,37 @@ theorem exists_divUniversalHighWindowShiftedRelationTransitionOfLE_mem_relation_
   rw [map_sub, hmapx, hmapy, sub_add_cancel] at hsum
   exact ⟨m, hnm, hsum⟩
 
+/-! ## The genuine chart-ideal flatness consumer -/
+
+set_option maxHeartbeats 2400000 in
+-- The wrapper only specializes the already-proved direct-limit criterion and
+-- rewrites the stabilized stage-one ideal to the original seed ideal.
+set_option synthInstance.maxHeartbeats 800000 in
+/-- Once every finite high-window quotient is flat, the shifted colimit is flat
+over the actual chart-reading ideal of the first universal seed.
+
+This is deliberately conditional on finite-stage flatness.  In particular, it
+does not identify the linear range of the reading map with the algebra ideal,
+and it does not use Nakayama to manufacture flatness. -/
+theorem flat_chartReadIdeal_divUniversalSeedK_of_all_stage
+    (hO : Sheaf.h0 (C.left.moduleKSheaf k) = 1)
+    (hchi : Sheaf.chi (C.left.moduleKSheaf k) = 1 - (g : Int))
+    (hb : 0 < windowBound pi hpi)
+    [hflat : ∀ n, Module.Flat RZ
+      ((G(n + 1)) ⧸ K(n + 1))] :
+    Module.Flat RZ
+      (B ⧸ ThetaGeneratorSeed.chartReadIdeal
+        (divUniversalSeedK C pi hpi g r1 r2 b1 b2 i j) side) := by
+  have hcolim := flat_shifted_highWindow_chart_quotient_of_saturation
+    (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hb side
+    (fun n x hx =>
+      exists_divUniversalHighWindowShiftedRelationTransitionOfLE_mem_relation_of_mem_readIdeal
+        (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j side hb n x hx)
+  rw [divUniversalHighWindowRelationReadIdeal_one_eq_chartReadIdeal
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi hb side,
+    chartReadIdeal_divUniversalSeedK'_eq_divUniversalSeedK
+      (C := C) (pi := pi) hpi g r1 r2 b1 b2 i j hO hchi hb side] at hcolim
+  exact hcolim
+
 end HighWindowTransitionSaturation
 end AlgebraicGeometry

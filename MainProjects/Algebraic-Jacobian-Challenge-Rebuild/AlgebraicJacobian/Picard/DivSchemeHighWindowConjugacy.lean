@@ -48,7 +48,7 @@ theorem ker_baseChange_le_range_baseChange_of_conjugate
     (f : M →ₗ[R] N) (d : P →ₗ[R] M)
     (f' : M' →ₗ[S] N') (d' : P' →ₗ[S] M')
     (eM : (S ⊗[R] M) ≃ₗ[S] M')
-    (eN : (S ⊗[R] N) ≃ₗ[S] N')
+    (eN : (S ⊗[R] N) →ₗ[S] N')
     (eP : (S ⊗[R] P) ≃ₗ[S] P')
     (hf : ∀ x : S ⊗[R] M,
       eN (LinearMap.baseChange S f x) = f' (eM x))
@@ -75,7 +75,7 @@ theorem liftQ_baseChange_injective_of_conjugate_boundary
     (f : M →ₗ[R] N) (d : P →ₗ[R] M) (hfd : f.comp d = 0)
     (f' : M' →ₗ[S] N') (d' : P' →ₗ[S] M')
     (eM : (S ⊗[R] M) ≃ₗ[S] M')
-    (eN : (S ⊗[R] N) ≃ₗ[S] N')
+    (eN : (S ⊗[R] N) →ₗ[S] N')
     (eP : (S ⊗[R] P) ≃ₗ[S] P')
     (hf : ∀ x : S ⊗[R] M,
       eN (LinearMap.baseChange S f x) = f' (eM x))
@@ -87,6 +87,27 @@ theorem liftQ_baseChange_injective_of_conjugate_boundary
   exact liftQ_baseChange_injective_of_boundary f d hfd S
     (ker_baseChange_le_range_baseChange_of_conjugate
       f d f' d' eM eN eP hf hd hker)
+
+/-- The conjugate-boundary criterion in the right-tensor spelling used by the
+high-window syzygy predicate. -/
+theorem liftQ_rTensor_injective_of_conjugate_boundary
+    (f : M →ₗ[R] N) (d : P →ₗ[R] M) (hfd : f.comp d = 0)
+    (f' : M' →ₗ[S] N') (d' : P' →ₗ[S] M')
+    (eM : (S ⊗[R] M) ≃ₗ[S] M')
+    (eN : (S ⊗[R] N) →ₗ[S] N')
+    (eP : (S ⊗[R] P) ≃ₗ[S] P')
+    (hf : ∀ x : S ⊗[R] M,
+      eN (LinearMap.baseChange S f x) = f' (eM x))
+    (hd : ∀ y : S ⊗[R] P,
+      eM (LinearMap.baseChange S d y) = d' (eP y))
+    (hker : LinearMap.ker f' ≤ LinearMap.range d') :
+    Function.Injective
+      (((LinearMap.ker f).liftQ f le_rfl).rTensor S) := by
+  apply (LinearMap.lTensor_inj_iff_rTensor_inj
+    (M := S) (f := (LinearMap.ker f).liftQ f le_rfl)).mp
+  rw [← LinearMap.baseChange_eq_ltensor]
+  exact liftQ_baseChange_injective_of_conjugate_boundary
+    f d hfd f' d' eM eN eP hf hd hker
 
 end Conjugacy
 

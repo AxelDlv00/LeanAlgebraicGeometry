@@ -101,6 +101,8 @@ noncomputable def divUniversalFibreHighWindowInAmbientEquiv (n : Nat) :
     (divUniversalFibreHighWindow_le_closedAmbient
       C hpi g r1 r2 b1 b2 i j K hO hchi hker n)
 
+set_option maxHeartbeats 3200000 in
+-- Reducing the nested subtype equivalence requires a larger kernel-checking budget.
 /-- The in-ambient equivalence does not change the underlying function-field
 element. -/
 @[simp]
