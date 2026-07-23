@@ -1,1 +1,1 @@
-{"markdown": "The imported module is now built; the language server still retains the failed import state, so one final short restart is necessary before editing the field-level consumer.", "recommendation": ""}
+{"markdown": "The wrapper\u2019s proof is fine structurally; the file simply did not import the named all-prime fibre-model predicate because earlier lemmas only used single-field images. I\u2019m adding that explicit import, then refreshing its small definition module.", "recommendation": ""}
