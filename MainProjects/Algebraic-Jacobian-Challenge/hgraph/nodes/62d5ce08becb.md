@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1290
 title: Trivial self-braiding of an invertible sheaf
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 Let \(\mathcal{L}\) be an invertible sheaf (\cref{def:isInvertible}) on a scheme
   \(X\). Then the braiding of \(\mathcal{L}\) with itself is the identity:

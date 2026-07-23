@@ -9,7 +9,7 @@ lean_status: empty
 order: 1736
 title: rmk:thm32_role_of_ab
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 \textbf{Where Auslander--Buchsbaum enters.} The combination above relies on
   \cref{thm:codim_one_extension}, which is itself proved in

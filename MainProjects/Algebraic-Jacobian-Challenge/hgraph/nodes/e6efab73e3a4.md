@@ -29,7 +29,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechComplex_hom_identification
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 noncomputable def cechComplex_hom_identification (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
     (F : X.PresheafOfModules) :

@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 169
 title: '{\v C}ech complex of a quasi-coherent sheaf'
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Source: Stacks Project, Cohomology of Schemes,
   \texttt{lemma-cech-cohomology-quasi-coherent-trivial} (standard-cover {\v C}ech

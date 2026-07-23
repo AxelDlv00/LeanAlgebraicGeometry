@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 422
 title: Localised base change is a localisation away
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Project-local infrastructure, assembled from Mathlib base-change primitives.}
   Let \(\varphi : R \to S\) be a ring map, \(M\) an \(R\)-module, and \(g \in R\) with image

@@ -10,6 +10,6 @@ lean_status: lean_ok
 order: 80
 title: Exactness on a two-affine cover
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:13'
 ---
 The sequence of \cref{def:Scheme_AffineCoverMVSquare_HModule_prime_sequence} is exact.

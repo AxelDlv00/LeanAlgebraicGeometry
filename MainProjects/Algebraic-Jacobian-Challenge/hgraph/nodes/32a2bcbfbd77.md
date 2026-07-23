@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1046
 title: Intersection of homogeneous submodules is homogeneous
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:14'
 ---
 If \(p, q \subseteq M\) are homogeneous submodules
   (\cref{lem:submodule_isHomogeneous_mathlib}) then so is their intersection \(p

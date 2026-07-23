@@ -11,7 +11,7 @@ mathlib_name:
 order: 444
 title: Over-map functors are continuous
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Provided by Mathlib.}
   For a Grothendieck topology \(J\) on \(\mathcal{C}\) and a morphism \(f : X \to X'\) in

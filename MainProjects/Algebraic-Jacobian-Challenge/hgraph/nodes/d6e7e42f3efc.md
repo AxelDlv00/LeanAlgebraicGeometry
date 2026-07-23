@@ -32,7 +32,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.qcohRestriction_eq_comparison
 type: lean
-updated: '2026-07-16T21:14:25'
+updated: '2026-07-24T03:02:09'
 ---
 lemma qcohRestriction_eq_comparison {R : CommRingCat.{u}} (M : ModuleCat.{u} R) {a b : R}
     (i : (PrimeSpectrum.basicOpen b : (Spec R).Opens) ⟶ PrimeSpectrum.basicOpen a)

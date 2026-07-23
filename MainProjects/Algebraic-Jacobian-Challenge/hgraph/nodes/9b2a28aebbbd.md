@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.coprodToProd_isIso_option
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 private theorem coprodToProd_isIso_option (F : X.Modules) {α : Type u}
     (ih : ∀ (legs : α → Over X), IsIso (coprodToProdMap F legs))
@@ -42,7 +42,7 @@ private theorem coprodToProd_isIso_option (F : X.Modules) {α : Type u}
   -- check — matching each projection via the per-leg push–pull coherence
   -- (`pushPull_binary_leg_coherence` for the `none`/`some` inclusions) — is the residual.
   have hcanon : coprodToProdMap F legs = refIso.hom := by
-    show coprodToProdMap F legs =
+    change coprodToProdMap F legs =
       (pushPullObjCongr F (overSigmaOptionIso legs) ≪≫
         pushPull_binary_coprod_prod F (legs none)
           (Over.mk (Limits.Sigma.desc (fun a => (ls a).hom))) ≪≫

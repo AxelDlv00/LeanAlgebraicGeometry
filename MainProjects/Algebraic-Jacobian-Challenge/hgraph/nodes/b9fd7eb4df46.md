@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Hom.module_finite_top_of_bijective_appTop
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 theorem Hom.module_finite_top_of_bijective_appTop {X S : Scheme.{u}} (p : X ⟶ S)
     (hbij : Function.Bijective (p.appTop).hom) :

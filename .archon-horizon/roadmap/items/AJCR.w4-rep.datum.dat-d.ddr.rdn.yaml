@@ -2,10 +2,13 @@ id: AJCR.w4-rep.datum.dat-d.ddr.rdn
 title: 'DD-R RD-N: ideal purity and local principal generation via flatness and Nakayama'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'After the quotient bridge, prove the closed residue-fibre branch: fibre
-  containment plus flatness of B/J gives J_z=(s) by the finite-module Nakayama argument,
-  then closes SeedUnivRDN and the unconditional isGenerator consumer.'
-status: pending
+summary: 'POINTWISE RD-N LANDED. Flatness of the genuine two chart-reading quotients
+  now gives the closed residue-fibre branch, and the existing generic/non-generic
+  split proves PointwiseSeedRDN at every total point. Remaining: package the ann-cutter
+  seed into the unconditional IsGenerator/certificate route (or reconcile it with
+  the older SeedUnivRDN interface); fibre nonvanishing on the chosen cutter is the
+  next adapter.'
+status: active
 kind: proof
 priority: normal
 depends_on: []
@@ -27,3 +30,4 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
+  updated_at: '2026-07-23T18:33:00.905798+00:00'

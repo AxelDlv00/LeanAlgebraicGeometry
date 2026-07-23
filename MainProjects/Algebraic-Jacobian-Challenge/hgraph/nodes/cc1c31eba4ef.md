@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1816
 title: The unnormalized coface differential is the alternating coface sum
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 For a cosimplicial object \(Y\) in a preadditive category and \(n \ge
   0\), the degree-\(n\) differential of the associated (unnormalized)

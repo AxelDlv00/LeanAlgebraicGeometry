@@ -9,7 +9,7 @@ lean_status: empty
 order: 1531
 title: Existence carrier for the relative-divisor functor
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 The predicate \(\mathrm{HasDivFunctor}(C)\) asserts that the category of presheaves
   of types on \((\Sch/k)^{op}\) admits at least one object intended to be the

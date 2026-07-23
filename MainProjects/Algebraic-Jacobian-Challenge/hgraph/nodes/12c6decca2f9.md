@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1171
 title: The transition units of the Serre twist
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:14'
 ---
 In the degree-zero part of the localization
   \(\mathbb{Z}[X_i : i \in n]_{X_i X_j}\), the fraction

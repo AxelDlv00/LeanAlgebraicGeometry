@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1327
 title: Index-equality transport of twisted-section components
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 Let \(\mathcal{F}\) be a sheaf of \(\mathcal{O}_X\)-modules, \(\mathcal{L}\) a sheaf
   of \(\mathcal{O}_X\)-modules, and let \(h : i = j\) be an equality of natural

@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.IsAffineOpen.dCoeffModuleSectionsLinearEquiv_mk_one
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 @[simp] lemma IsAffineOpen.dCoeffModuleSectionsLinearEquiv_mk_one (hU : IsAffineOpen U)
     (M : X.Modules) [M.IsQuasicoherent] {ι : Type*} (g : ι → Γ(X, U))

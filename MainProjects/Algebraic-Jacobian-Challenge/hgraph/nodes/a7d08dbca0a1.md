@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1233
 title: Adjunction-unit base linear map at a section
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:14'
 ---
 Given a morphism \(g : Y \to X\) of schemes, a sheaf of
   \(\mathcal{O}_X\)-modules \(\mathcal{N}\), and an open \(V \subseteq X\),

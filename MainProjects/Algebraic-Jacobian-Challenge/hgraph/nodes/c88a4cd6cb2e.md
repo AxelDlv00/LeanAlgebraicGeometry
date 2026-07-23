@@ -24,7 +24,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.pullback_isLocallyFreeOfRank
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:10'
 ---
 lemma pullback_isLocallyFreeOfRank {T' T : Scheme.{u}} (φ : T' ⟶ T) {M : T.Modules}
     {d : ℕ} (h : SheafOfModules.IsLocallyFreeOfRank M d) :

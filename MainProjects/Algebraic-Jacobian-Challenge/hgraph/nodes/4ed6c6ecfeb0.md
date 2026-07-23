@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.isIso_snd_app_of_isAffineOpen
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 theorem isIso_snd_app_of_isAffineOpen (C : Over (Spec (CommRingCat.of k)))
     [IsProper C.hom] [GeometricallyIntegral C.hom]

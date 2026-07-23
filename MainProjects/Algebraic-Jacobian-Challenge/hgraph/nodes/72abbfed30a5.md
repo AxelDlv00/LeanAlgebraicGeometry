@@ -11,7 +11,7 @@ mathlib_name:
 order: 482
 title: Flat extension of scalars is left-exact
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Provided by Mathlib (\texttt{Mathlib.Algebra.Category.ModuleCat.Descent}).}
   If \(A \to B\) is a flat ring homomorphism then the extension-of-scalars functor

@@ -13,38 +13,35 @@ docstring: '**Route-B1 positive-degree exactness of the un-localised section Če
   NOT be a single
 
   distinguished `D(f)`; only the images `sᵢ ↦ S = Γ(V)` span the unit ideal of `S`
-  (`hspan`).  Then the
+  (`hspan`).
 
-  complex `∏_σ M_{s_σ}` is exact in positive degrees.
+  Then the complex `∏_σ M_{s_σ}` is exact in positive degrees.
 
 
-  Route B1 (change of ring to `S = Γ(V)` via algebraic base change `M ⊗_R S`): instantiate
-  `dDiff_exact`
+  Change the ring to `S = Γ(V)` via algebraic base change `M ⊗_R S`: instantiate
 
-  over `S` with the module `M_S = M ⊗_R S` and the spanning family `s̄ = algebraMap
-  R S ∘ s`, then transport
+  `dDiff_exact` over `S` with the module `M_S = M ⊗_R S` and the spanning family
 
-  the resulting positive-degree exactness back to the `R`-side along the degreewise
-  additive isomorphisms
+  `s̄ = algebraMap R S ∘ s`, then transport positive-degree exactness back to the
+  `R`-side
 
-  `M_{s_σ} ≅ (M_S)_{s̄_σ}` (`isLocalizedModule_baseChange_away` + the universal `IsLocalizedModule.iso`),
+  along the degreewise additive isomorphisms `M_{s_σ} ≅ (M_S)_{s̄_σ}`.  These isomorphisms
 
-  which intertwine the alternating-sum localisation differentials.  The geometric
-  input — that the
+  come from `isLocalizedModule_baseChange_away` and the universal `IsLocalizedModule.iso`,
 
-  localisation `(M_S)_{s̄_σ}`''s ring is simultaneously an `R`-localisation at `powers
-  (s_σ)`, encoding
+  and intertwine the alternating-sum localisation differentials.  The geometric input
+  that
 
-  `D(s_σ) ⊆ V` — is supplied per Čech multi-index `σ` by the `hloc` family (discharged
-  at the wrapper
+  the ring of `(M_S)_{s̄_σ}` is also an `R`-localisation at `powers (s_σ)` is supplied
+  by the
 
-  from `IsAffineOpen V` via `IsAffineOpen.isLocalization_of_eq_basicOpen`).'
+  `hloc` family.'
 file: AlgebraicJacobian/Cohomology/CechAcyclic.lean
 generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.SectionCechModule.dDiff_exact_of_affineCover
 type: lean
-updated: '2026-07-16T21:14:25'
+updated: '2026-07-24T03:02:09'
 ---
 lemma dDiff_exact_of_affineCover [Finite ι]
     (S : Type u) [CommRing S] [Algebra R S]
@@ -67,7 +64,8 @@ lemma dDiff_exact_of_affineCover [Finite ι]
   -- the composite localisation structure map `M → M_S → (M_S)_{s_σ}` localises `M` at `s_σ`.
   have inst_comp : ∀ {n : ℕ} (σ : Fin (n + 1) → ι),
       IsLocalizedModule (Submonoid.powers (sprod s σ))
-        ((LocalizedModule.mkLinearMap (Submonoid.powers (sprod gS σ)) MS).restrictScalars R ∘ₗ bc) := by
+        ((LocalizedModule.mkLinearMap
+          (Submonoid.powers (sprod gS σ)) MS).restrictScalars R ∘ₗ bc) := by
     intro n σ
     haveI hL : IsLocalization (Submonoid.powers (algebraMap R S (sprod s σ)))
         (Localization (Submonoid.powers (sprod gS σ))) := by
@@ -148,7 +146,7 @@ lemma dDiff_exact_of_affineCover [Finite ι]
 
 end SectionCechModule
 
-/-! ## Project-local Mathlib supplement — quasi-coherent sections as away localisations (L1, step (b))
+/-! ## Quasi-coherent sections as away localisations
 
 The categorical→module bridge needs the section-identification of
 `def:qcoh_sections_localized`: over a basic open `D(g)` the sections of a

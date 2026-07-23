@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 537
 title: Cartesian-monoidal collapse identity
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 Let \(X\), \(Y\) be objects over \(\bar k\) and fix a \(\bar k\)-point \(x_0\) of \(X\).
   Post-composing the second projection \(p_2 \colon X \times Y \to Y\) with the slice section

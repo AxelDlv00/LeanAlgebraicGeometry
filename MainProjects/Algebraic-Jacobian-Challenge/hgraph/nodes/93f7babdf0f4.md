@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1688
 title: Coheight-to-Krull-dim bridge for a scheme point
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 Let \(X\) be a scheme and let \(z \in X\) be any point. Then
   \[

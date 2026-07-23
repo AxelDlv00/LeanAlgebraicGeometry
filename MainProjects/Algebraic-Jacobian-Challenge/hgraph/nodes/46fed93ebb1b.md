@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1352
 title: The pre-hom sends \(P^J_I\) to a unit
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 \textit{Source: [Nitsure], \S 1.}
   The pre-localisation hom \(\tilde\theta_{I,J}\) (\cref{def:gr_transition_pre})

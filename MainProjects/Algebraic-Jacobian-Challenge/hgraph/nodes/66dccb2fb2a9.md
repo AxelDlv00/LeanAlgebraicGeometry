@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Module.Finite.of_addEquiv_semilinear
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 theorem Module.Finite.of_addEquiv_semilinear {R S : Type u} [Semiring R] [Semiring S]
     {M N : Type u} [AddCommMonoid M] [Module R M] [AddCommMonoid N] [Module S N]

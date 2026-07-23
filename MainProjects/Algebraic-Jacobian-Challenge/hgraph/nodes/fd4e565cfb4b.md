@@ -11,7 +11,7 @@ mathlib_name:
 order: 242
 title: The tilde--\(\Gamma\) counit
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Provided by Mathlib.}
   For a ring \(R\) and an \(\mathcal{O}_{\operatorname{Spec} R}\)-module \(\mathcal{F}\), the

@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.coverSectionModule
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 abbrev coverSectionModule (V : TopologicalSpace.Opens ↥X) :
     ModuleCat (X.ringCatSheaf.obj.obj (Opposite.op V)) :=

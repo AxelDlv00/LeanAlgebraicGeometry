@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 384
 title: Canonical augmentation of the section {\v C}ech complex over \(V\)
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Project-local.}
   Fix an open \(V \subseteq X\). The \emph{canonical augmentation}

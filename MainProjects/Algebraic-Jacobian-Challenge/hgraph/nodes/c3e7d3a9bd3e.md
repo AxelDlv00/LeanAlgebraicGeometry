@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.interLegHom_interProj
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 lemma interLegHom_interProj (𝒰 : X.OpenCover) {p : ℕ} (σ' : Fin (p + 2) → 𝒰.I₀)
     (k : Fin (p + 2)) (l : Fin (p + 1)) :

@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.glueTripleFactorIso
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:10'
 ---
 noncomputable def glueTripleFactorIso (D : Scheme.GlueData.{0}) (i p q : D.J)
     (N : (D.V (p, q)).Modules) :

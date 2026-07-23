@@ -11,7 +11,7 @@ mathlib_name:
 order: 1159
 title: Representability predicate
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Provided by Mathlib.}
   Let \(\mathcal{C}\) be a category and \(F : \mathcal{C}^{op} \to \mathbf{Set}\)

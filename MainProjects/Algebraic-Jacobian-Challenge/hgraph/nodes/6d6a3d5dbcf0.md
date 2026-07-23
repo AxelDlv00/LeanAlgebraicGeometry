@@ -9,7 +9,7 @@ lean_status: sorry
 order: 1854
 title: 'N14b: the local step quotient injects into the single-point quotient'
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 Under the hypotheses of \Cref{thm:adelic_local_step_identity}, the
   inclusion \(\Gamma(U, \struct{C}(D')) \subseteq \mathfrak G_P^{\ge

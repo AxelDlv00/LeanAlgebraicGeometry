@@ -14,7 +14,7 @@ mathlib_name:
 order: 219
 title: Covariant Ext long exact sequence of a short exact sequence
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Provided by Mathlib
   (\texttt{Mathlib.Algebra.Homology.DerivedCategory.Ext.ExactSequences}).}

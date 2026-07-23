@@ -3,13 +3,12 @@ title: 'DD-R: the relative endgame — Z(♦), local generators via lm:ctn/Nakay
   inherited from the ambient summand, inverse laws, divRep'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: 'LANDED: high-window foundations, recursive relation/quotient transitions,
-  field-fibre Koszul exactness, seed relation-fibre models at stages 0 and 1, and
-  coefficient/ideal-span chart-read saturation. ACTIVE: the simultaneous relative
-  bridge induction transporting field exactness to all-stage fibre models and successor
-  finite flat/projective quotients over nonreduced carve rings. PENDING: the genuine
-  chart quotient bridge, the mutually exclusive flattening/Hilbert fallback, RD-N
-  and local purity, certificate/U1/U2, divRep, and the final datum tail.'
+summary: 'LANDED: the complete high-window foundation, saturation, relative Koszul
+  boundary conjugacy, all-stage canonical fibre models, finite projective/flat relation
+  quotients over nonreduced carve rings, genuine chart-quotient flatness, and pointwise
+  RD-N. ACTIVE: export the remaining quotient compatibility if needed and turn the
+  pointwise ann-cutter into the unconditional generator/certificate interface. DOWNSTREAM:
+  U1/U2, divRep, universal family, and datum assembly.'
 status: active
 kind: proof
 priority: normal
@@ -23,4 +22,4 @@ metadata:
   author: horizon
   created_at: '2026-07-16T08:26:37.867341+00:00'
   parent: AJCR.w4-rep.datum.dat-d
-  updated_at: '2026-07-23T01:59:45.641432+00:00'
+  updated_at: '2026-07-23T18:33:01.706545+00:00'

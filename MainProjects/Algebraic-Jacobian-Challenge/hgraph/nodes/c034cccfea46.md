@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.freeYonedaEval_iso_of_le
 type: lean
-updated: '2026-07-23T22:59:53'
+updated: '2026-07-24T03:02:09'
 ---
 noncomputable def freeYonedaEval_iso_of_le {W V : TopologicalSpace.Opens ↥X} (h : V ≤ W) :
     (PresheafOfModules.evaluation X.ringCatSheaf.obj (Opposite.op V)).obj (freeYoneda.obj W)

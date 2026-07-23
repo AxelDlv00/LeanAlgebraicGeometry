@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.homEquiv_comp_pushforwardCongr
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:10'
 ---
 lemma homEquiv_comp_pushforwardCongr {V X : Scheme.{u}} {e e' : V ⟶ X} (h : e = e')
     {W : X.Modules} {N : V.Modules} (y : (Scheme.Modules.pullback e).obj W ⟶ N) :

@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechEngineD_comp_augFam
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 lemma cechEngineD_comp_augFam (V : TopologicalSpace.Opens ↥X) :
     cechEngineDFam U V 0 ≫ cechEngineAug0Fam U V = 0 := by

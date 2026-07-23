@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.ZariskiDescent.isSheafFor_opens
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 lemma isSheafFor_opens (T : Scheme.{0}) {κ : Type} (W : κ → T.Opens)
     (hW : ⨆ k, W k = ⊤) :

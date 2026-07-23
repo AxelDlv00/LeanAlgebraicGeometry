@@ -9,7 +9,7 @@ lean_status: empty
 order: 202
 title: The prepend homotopy contracts the augmented evaluated complex, by transport
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Source: Stacks Project, Cohomology, \texttt{lemma-homology-complex}
   (the contracting identity).}

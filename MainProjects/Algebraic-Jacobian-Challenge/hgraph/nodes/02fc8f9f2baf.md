@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: PresheafOfModules.InternalHom.restrictionMap_add
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 lemma restrictionMap_add {U V : C} (g : V ⟶ U)
     {M N : PresheafOfModules.{u} (R ⋙ forget₂ CommRingCat RingCat)}

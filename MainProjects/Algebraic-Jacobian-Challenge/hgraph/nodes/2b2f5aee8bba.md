@@ -14,7 +14,7 @@ mathlib_name:
 order: 150
 title: Long exact homology sequence of a short exact sequence of complexes
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Provided by Mathlib.}
   Let \(\mathcal{C}\) be an abelian category and let

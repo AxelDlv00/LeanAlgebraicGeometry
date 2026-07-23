@@ -10,7 +10,7 @@ order: 995
 ref: nitsure-hilbert-quot
 title: "Unique factorization through the rank-\\(e\\) stratum of the\n  base"
 type: tex
-updated: '2026-07-20T12:01:07'
+updated: '2026-07-24T03:02:14'
 ---
 Let \(S\) be locally noetherian, \(\F\) a finitely presented
   \(\OO_S\)-module, and \(\varphi : T \to S\) a morphism such that

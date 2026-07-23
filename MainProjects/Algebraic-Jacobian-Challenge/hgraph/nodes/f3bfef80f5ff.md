@@ -9,7 +9,7 @@ lean_status: empty
 order: 586
 title: The base-change descent is an isomorphism
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 The colimit descent map
   \(\underline{\Spec}_T(g^*\mathcal{A}) \to T \times_X \underline{\Spec}_X(\mathcal{A})\)

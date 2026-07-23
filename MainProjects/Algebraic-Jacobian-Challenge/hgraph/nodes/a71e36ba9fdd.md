@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1288
 title: Left-unit constraint for the tensor-power comparison
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:14'
 ---
 For a sheaf of modules \(\mathcal{L}\) and \(n \in \mathbb{N}\), the degree-\((0,n)\)
   comparison isomorphism \(\mu_{0,n}\) (\cref{lem:sheafTensorPow_add}) is the left

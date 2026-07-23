@@ -9,7 +9,7 @@ lean_status: empty
 order: 1682
 title: Weil-divisor characterisation of the codim-1 extension obstruction
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 \textit{Source: Hartshorne, II.6, pp.~130--131 (valuation \(v_Y\) and the order map).}
   Let \(X\) be a nonsingular variety over \(\bar k\), let \(Y\) be a variety over \(\bar k\),

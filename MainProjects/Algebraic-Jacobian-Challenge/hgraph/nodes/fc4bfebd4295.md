@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.chi_le_ell
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:13'
 ---
 theorem chi_le_ell (D : X.WeilDivisor) : chi k U₀ U₁ D ≤ (ell k D : ℤ) := by
   have : (0 : ℤ) ≤ (h1dim k U₀ U₁ D : ℤ) := Int.natCast_nonneg _

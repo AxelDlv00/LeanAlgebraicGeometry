@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: HomologicalComplex.HomologySequence.quasiIso_
 type: lean
-updated: '2026-07-16T21:14:25'
+updated: '2026-07-24T03:02:09'
 ---
 lemma quasiIso_τ₂ (h₁ : QuasiIso φ.τ₁) (h₃ : QuasiIso φ.τ₃)
     (hbMono : ∀ i, (∀ k, ¬ c.Rel k i) → Mono (φ.τ₂.f i))

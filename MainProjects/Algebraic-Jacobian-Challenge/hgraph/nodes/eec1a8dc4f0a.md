@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 847
 title: Functor image of the threefold interchange
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:14'
 ---
 For a functor \(F : C \to D\) out of a monoidal category, the \(F\)-image of the
   threefold tensor/composition interchange (\cref{lem:tensorhom_comp3}) splits as the

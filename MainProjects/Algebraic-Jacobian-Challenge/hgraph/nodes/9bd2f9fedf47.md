@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.SemilinearAction.finrank_invariants
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 theorem finrank_invariants [IsSemilinear K L V] :
     Module.finrank K (invariants K L V) = Module.finrank L V := by

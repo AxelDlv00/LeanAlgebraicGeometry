@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.glueData_bridge_src
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:10'
 ---
 theorem glueData_bridge_src (D : Scheme.GlueData.{u}) (i j k : D.J) :
     pullback.fst (D.f i j) (D.f i k) ≫ D.f i j

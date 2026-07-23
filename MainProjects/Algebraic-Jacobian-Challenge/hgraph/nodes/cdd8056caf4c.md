@@ -27,7 +27,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.injective_cech_acyclicFam
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 theorem injective_cech_acyclicFam (I : X.Modules) [Injective I] (p : ℕ) (hp : 0 < p) :
     IsZero ((sectionCechComplex U

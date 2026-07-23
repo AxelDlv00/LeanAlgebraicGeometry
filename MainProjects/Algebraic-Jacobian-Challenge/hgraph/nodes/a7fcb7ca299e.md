@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 691
 title: The internal hom is a sheaf; the sheaf-level dual
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Source: [Stacks Project], ``Modules on Ringed Spaces'', \S Internal Hom
   (tag area 01CM).}

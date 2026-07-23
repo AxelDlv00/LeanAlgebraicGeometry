@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1802
 title: The principal-divisor map is a group homomorphism
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 \textit{Source: Hartshorne, II.6, p.~131 (group-homomorphism remark).}
   Let \(X\) satisfy \((*)\). The principal-divisor map

@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.tautologicalQuotientComponent
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 noncomputable def tautologicalQuotientComponent (d r : ℕ) (I : (theGlueData d r).J) :
     SheafOfModules.free (R := (scheme d r).ringCatSheaf) (Fin r) ⟶

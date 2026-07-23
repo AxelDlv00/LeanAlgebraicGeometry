@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.opensRange_le_chartLocus_tautological
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 lemma opensRange_le_chartLocus_tautological (d r : ℕ) (I : (theGlueData d r).J) :
     Scheme.Hom.opensRange ((theGlueData d r).ι I)

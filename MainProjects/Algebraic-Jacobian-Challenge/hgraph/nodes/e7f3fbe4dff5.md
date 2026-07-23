@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.braiding_canonical_self_eq_id_of_isInvertible
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 private lemma braiding_canonical_self_eq_id_of_isInvertible (L : X.Modules) [IsInvertibleGr L] :
     (β_ L L).hom = 𝟙 (L ⊗ L) := by

@@ -22,7 +22,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.coverCechNerveOverAug
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 noncomputable def coverCechNerveOverAug (𝒰 : X.OpenCover) :
     SimplicialObject.Augmented (Over X) :=

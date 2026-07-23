@@ -9,7 +9,7 @@ lean_status: empty
 order: 1733
 title: Cohen--Macaulay local ring
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 \textit{Source: [Stacks Project], tag 00N4 (definition-local-ring-CM).}
   A Noetherian local ring \((R, \mathfrak{m})\) is called \emph{Cohen--Macaulay} if

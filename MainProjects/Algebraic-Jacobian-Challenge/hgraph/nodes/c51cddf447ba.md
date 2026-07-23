@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.exists_pointRank_le
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 theorem exists_pointRank_le [IsNoetherian S] (F : S.Modules)
     [F.IsFinitePresentation] : ∃ N : ℕ, ∀ s : S, pointRank S F s ≤ N := by

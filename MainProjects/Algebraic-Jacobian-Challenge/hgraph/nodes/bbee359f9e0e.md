@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pushPull_binary_coprod_prod
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 noncomputable def pushPull_binary_coprod_prod (F : X.Modules) (Y₀ Y₁ : Over X) :
     pushPullObj F (Over.mk (Limits.coprod.desc Y₀.hom Y₁.hom)) ≅
@@ -41,11 +41,13 @@ noncomputable def pushPull_binary_coprod_prod (F : X.Modules) (Y₀ Y₁ : Over 
   -- (defeq to the `pushPullObj F (Over.mk Y₀.hom)` produced by `pushPullCoprodLegIso`); the
   -- syntactic pin is essential so the `Category.assoc`/`prod.map_fst` rewrites below can match
   -- the trailing `prod.fst` on `pushPullObj F Y₀ ⨯ pushPullObj F Y₁`.
-  set idiso₀ : (pushforward q).obj ((pushforward Limits.coprod.inl).obj (M.restrict Limits.coprod.inl))
-      ≅ pushPullObj F Y₀ :=
+  set idiso₀ :
+      (pushforward q).obj ((pushforward Limits.coprod.inl).obj
+        (M.restrict Limits.coprod.inl)) ≅ pushPullObj F Y₀ :=
     pushPullCoprodLegIso q Limits.coprod.inl Y₀.hom wInl F with hidiso0
-  set idiso₁ : (pushforward q).obj ((pushforward Limits.coprod.inr).obj (M.restrict Limits.coprod.inr))
-      ≅ pushPullObj F Y₁ :=
+  set idiso₁ :
+      (pushforward q).obj ((pushforward Limits.coprod.inr).obj
+        (M.restrict Limits.coprod.inr)) ≅ pushPullObj F Y₁ :=
     pushPullCoprodLegIso q Limits.coprod.inr Y₁.hom wInr F with hidiso1
   have hcoh0 : pushPullMap F overInl
       = (pushforward q).map ((Scheme.Modules.restrictAdjunction Limits.coprod.inl).unit.app M)
@@ -66,7 +68,7 @@ noncomputable def pushPull_binary_coprod_prod (F : X.Modules) (Y₀ Y₁ : Over 
   have hcmp : Limits.prod.lift (pushPullMap F overInl) (pushPullMap F overInr) = chainIso.hom := by
     rw [hcoh0, hcoh1, hchain, Iso.trans_hom, Iso.trans_hom, Functor.mapIso_hom, asIso_hom,
       Limits.prod.mapIso_hom, Limits.PreservesLimitPair.iso_hom]
-    show Limits.prod.lift _ _ =
+    change Limits.prod.lift _ _ =
       (pushforward q).map (coprodDecompMap M) ≫
         Limits.prod.lift ((pushforward q).map Limits.prod.fst) ((pushforward q).map Limits.prod.snd)
           ≫ Limits.prod.map idiso₀.hom idiso₁.hom

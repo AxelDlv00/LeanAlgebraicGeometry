@@ -46,7 +46,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.PicScheme.degree
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 noncomputable def degree {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

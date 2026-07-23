@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjTwist.exists_form_of_awayCompatible
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 lemma exists_form_of_awayCompatible [Nonempty n₀] (m : ℕ)
     (a : ∀ i, Away (homogeneousSubmodule n₀ (ULift.{0} ℤ)) (X i))

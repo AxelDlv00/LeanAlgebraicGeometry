@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjTwist.glue_cover_condition
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 lemma glue_cover_condition (i j : n) :
     (glueData n).t i j ≫ (glueData n).f j i ≫ (basicOpenCover n).f j

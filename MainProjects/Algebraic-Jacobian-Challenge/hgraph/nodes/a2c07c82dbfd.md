@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.coverArrowOverSigmaIso
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 noncomputable def coverArrowOverSigmaIso (𝒰 : X.OpenCover) :
     (∐ fun i : 𝒰.I₀ => Over.mk (𝒰.f i)) ≅ Over.mk (Sigma.desc 𝒰.f) :=

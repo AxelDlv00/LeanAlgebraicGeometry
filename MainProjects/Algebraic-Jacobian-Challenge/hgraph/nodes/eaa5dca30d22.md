@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: PresheafOfModules.restrictScalarsMonoidalOfBijective
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 noncomputable def restrictScalarsMonoidalOfBijective
     (α : R ⋙ forget₂ CommRingCat RingCat ⟶ S ⋙ forget₂ CommRingCat RingCat)

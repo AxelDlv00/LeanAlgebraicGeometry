@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 706
 title: Section equivalence for the dual of the unit
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 For a presheaf of modules over a base ring presheaf \(R_0\) and an object \(X\), the
   \(R_0(X)\)-linear equivalence

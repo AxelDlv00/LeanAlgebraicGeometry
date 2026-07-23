@@ -9,7 +9,7 @@ lean_status: empty
 order: 556
 title: rem:IsAlbanese_unique_iso
 type: tex
-updated: '2026-07-23T22:02:07'
+updated: '2026-07-24T03:02:14'
 ---
 Consequently the Albanese object is unique up to a unique isomorphism
   compatible with the universal morphism.

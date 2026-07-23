@@ -24,7 +24,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.counit_assoc_tail_id
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 private lemma counit_assoc_tail_id {M : Type*} [Category M] [MonoidalCategory M]
     {A A' B B' C C' Z : M} (eA : A' ≅ A) (eB : B' ≅ B) (eC : C' ≅ C)

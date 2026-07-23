@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1581
 title: Dual-number points at a fixed point
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 Let \(k\) be a field, \(X\) a scheme, and \(x \in X\). The
   dual-number points of \(X\) at \(x\) — morphisms

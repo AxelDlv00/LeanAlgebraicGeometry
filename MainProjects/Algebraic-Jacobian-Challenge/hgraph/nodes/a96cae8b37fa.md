@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1182
 title: Structural consequences of projectivity
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:14'
 ---
 A projective morphism carrying a line bundle is locally of finite type,
   separated, and universally closed.

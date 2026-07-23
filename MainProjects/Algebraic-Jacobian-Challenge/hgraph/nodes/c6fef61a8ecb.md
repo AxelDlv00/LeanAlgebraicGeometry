@@ -10,7 +10,7 @@ lean_status: empty
 order: 92
 title: Finite rank via the \(X_4\) corner, abstract sheaf form
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:13'
 ---
 Let \(S\) be a two-affine cover of \(X\) and \(\mathcal F\) a sheaf of \(k\)-modules. Then
   \[

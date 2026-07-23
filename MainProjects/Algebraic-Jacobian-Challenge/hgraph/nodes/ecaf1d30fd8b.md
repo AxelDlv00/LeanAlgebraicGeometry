@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1526
 title: Smooth-proper quotient of \'etale sheaves
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 \textit{Source: [Kleiman], ``The Picard scheme'', \S 4, Lem.~4.9.}
   Let \(\alpha : Z \to P\) be a morphism of \'etale sheaves on \((\Sch/k)\).

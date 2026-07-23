@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ideal_annihilator_le_annihilator_sheafTensorObj
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 theorem ideal_annihilator_le_annihilator_sheafTensorObj
     {X : Scheme.{u}} (A B : X.Modules) (U : X.affineOpens) :

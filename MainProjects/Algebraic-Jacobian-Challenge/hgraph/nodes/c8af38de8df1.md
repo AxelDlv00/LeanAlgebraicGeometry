@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: PresheafOfModules.InternalHom.termRingMap
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 noncomputable def termRingMap (Y : Cᵒᵖ) : R.obj (Opposite.op T) ⟶ R.obj Y :=
   R.map (hT.from Y.unop).op

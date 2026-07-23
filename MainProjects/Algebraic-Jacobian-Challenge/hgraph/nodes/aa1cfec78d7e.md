@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.MatrixPresentation.fiberRank_le
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 theorem fiberRank_le (P : MatrixPresentation R M e m) (p : Ideal R)
     [p.IsPrime] : p.fiberRank M ≤ e := by

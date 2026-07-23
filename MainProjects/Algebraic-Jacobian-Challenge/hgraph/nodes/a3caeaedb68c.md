@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 540
 title: 'Dense-open agreement: the geometric heart of the Rigidity Lemma'
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Source: Mumford, Abelian Varieties, Ch.~II \S4, Rigidity Lemma (Form~I), p.~43 (the
   dense-open construction is the body of that proof).}

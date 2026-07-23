@@ -11,7 +11,7 @@ mathlib_name:
 order: 1289
 title: Self-braiding of an invertible module is trivial (affine)
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 \textit{Provided by Mathlib (\texttt{Mathlib.RingTheory.PicardGroup}).}
   Let \(R\) be a commutative ring and \(M\) an invertible \(R\)-module

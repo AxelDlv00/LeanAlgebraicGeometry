@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.GradedModule.subquotient_hilbertSeries_rational
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:10'
 ---
 lemma subquotient_hilbertSeries_rational :
     ∀ {r : ℕ} (D : SubquotientDatum ℳ r), IsRatHilb (SubquotientDatum.hilb ℳ D) r := by

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: Module.MatrixPresentation.relMatrix_mem_entryIdeal
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 lemma relMatrix_mem_entryIdeal (P : MatrixPresentation R M e m)
     (i : Fin e) (j : Fin m) : P.relMatrix i j ∈ P.entryIdeal :=

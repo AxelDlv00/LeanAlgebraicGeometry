@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1454
 title: Overlap compatibility of the restriction morphisms
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 The \((i,j)\)-component of the descent-equalizer condition, transposed to the
   pullback level, states that over the overlap \(V_{ij}\) the two restriction

@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 830
 title: Naturality of the terminal ring map
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:14'
 ---
 The restriction map \(R(g) : R(X) \to R(Y)\) along \(g : X \to Y\) carries
   \(\mathtt{termRingMap}_X\,f\) to \(\mathtt{termRingMap}_Y\,f\), so the images of a

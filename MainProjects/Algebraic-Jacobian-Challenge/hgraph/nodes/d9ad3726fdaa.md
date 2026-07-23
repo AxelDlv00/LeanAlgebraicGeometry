@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1865
 title: 'N16b: the Riemann inequality from a telescoped \(\chi\)'
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 Given \(\chi(D) = \chi(0) + \deg D\) (the telescoped Euler
   characteristic of \Cref{thm:adelic_chi_eq_chi_zero_add_degree}),

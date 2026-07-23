@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1276
 title: Symmetric monoidal structure on sheaves of modules by transport
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:14'
 ---
 For a scheme \(X\), the category \(X.\Modules\) of sheaves of
   \(\mathcal{O}_X\)-modules carries a symmetric monoidal structure obtained by

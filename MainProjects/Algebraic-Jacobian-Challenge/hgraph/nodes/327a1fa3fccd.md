@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.AffineCoverMVSquare.pairProj_snd
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:13'
 ---
 lemma AffineCoverMVSquare.pairProj_snd :
     S.pairProj F ≫ ModuleCat.ofHom (LinearMap.snd k _ _)

@@ -2,11 +2,10 @@ id: AJCR.w4-rep.datum.dat-d.ddr.flattening-fallback
 title: 'DD-R fallback: universal flattening strata or the affine Hilbert algebra chart'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: MUTUALLY EXCLUSIVE FALLBACK. If the direct relative Koszul/Gotzmann bridge
-  cannot be proved, rebuild the representing base through universal flattening strata
-  or the Stacks-style finite-free quotient-algebra chart. Keep pending while the direct
-  route is active.
-status: pending
+summary: NOT NEEDED. The direct relative Koszul/Gotzmann route now proves all-stage
+  finite projectivity and flatness over arbitrary nonreduced carve rings, so no universal
+  flattening-stratum or affine Hilbert-chart rebuild is required.
+status: rejected
 kind: proof
 priority: normal
 depends_on: []
@@ -28,3 +27,4 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
+  updated_at: '2026-07-23T18:32:58.613894+00:00'

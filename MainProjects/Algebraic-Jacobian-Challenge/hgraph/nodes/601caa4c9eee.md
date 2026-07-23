@@ -9,7 +9,7 @@ lean_status: empty
 order: 579
 title: Base change of the relative spectrum
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Source: [Stacks Project], tag 01LS (lemma-spec-base-change +
   lemma-spec-properties).}

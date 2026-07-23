@@ -10,7 +10,7 @@ order: 1863
 ref: papaioannou-algebraic-rr, cff-curves-function-fields
 title: '\(\chi\)-KEYSTONE: \(\chi(D) = \deg D + 1 - g\)'
 type: tex
-updated: '2026-07-20T12:01:07'
+updated: '2026-07-24T03:02:15'
 ---
 The Euler characteristic \(\chi(D) = \ell(D) - i(D)\) is additive in the
   degree:

@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: DualNumber.unitsFst_truncExpUnit
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 theorem unitsFst_truncExpUnit (b : R) : unitsFst (truncExpUnit b) = 1 :=
   Units.ext (by simp)

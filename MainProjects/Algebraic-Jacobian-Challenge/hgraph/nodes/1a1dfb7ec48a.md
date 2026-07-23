@@ -9,7 +9,7 @@ lean_status: sorry
 order: 541
 title: 'Bridge~2: slice-constancy on a saturated open mapping into an affine'
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Source: Mumford, Abelian Varieties, Ch.~II \S4, Rigidity Lemma (Form~I), p.~43 (the
   ``for each \(y \in V\), the complete slice maps into the affine, hence to a single point'' step).}

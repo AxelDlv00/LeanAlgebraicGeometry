@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.ZariskiDescent.classify_homEquiv_symm
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 lemma classify_homEquiv_symm {Y : ∀ i, Over (U i).toScheme}
     (R : ∀ i, ((Over.map (U i).ι).op ⋙ F).RepresentableBy (Y i))

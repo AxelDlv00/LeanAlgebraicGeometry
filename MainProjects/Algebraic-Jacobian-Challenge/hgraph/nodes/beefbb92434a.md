@@ -9,7 +9,7 @@ lean_status: empty
 order: 470
 title: '{\v C}ech bicomplex of an injective resolution'
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Source: Stacks Project, Cohomology, Tag 03OW
   (\texttt{lemma-cech-spectral-sequence}); the bicomplex is the explicit model of the

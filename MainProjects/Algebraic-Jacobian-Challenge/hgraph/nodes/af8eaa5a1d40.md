@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.hModuleOne_linearEquiv_cechCohomology_curve
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:13'
 ---
 noncomputable def hModuleOne_linearEquiv_cechCohomology_curve
     {k : Type u} [Field k] (C : Over (Spec (CommRingCat.of k)))

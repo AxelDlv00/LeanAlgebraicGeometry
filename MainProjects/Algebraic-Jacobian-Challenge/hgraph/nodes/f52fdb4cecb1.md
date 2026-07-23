@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1066
 title: A constant acts as a scalar
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:14'
 ---
 In the polynomial-module structure (\cref{def:graded_polyModule}), \((C\,c) \cdot m =
   c \cdot m\) for all \(c \in \kappa\), \(m \in M\). Immediate from

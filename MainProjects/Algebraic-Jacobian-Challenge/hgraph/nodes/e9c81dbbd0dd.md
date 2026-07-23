@@ -10,7 +10,7 @@ order: 1868
 ref: papaioannou-algebraic-rr, cff-curves-function-fields, vater-weil-differentials
 title: 'Serre duality: \(i(D) = \ell(K_C - D)\)'
 type: tex
-updated: '2026-07-20T12:01:07'
+updated: '2026-07-24T03:02:15'
 ---
 For a canonical divisor \(K_C = \operatorname{div}\omega\) of a nonzero
   Weil differential \(\omega\), the map \(x \mapsto x\omega\) induces a

@@ -10,7 +10,9 @@ docstring: '**Differential comm-square of the engine identification.** The degre
   engine
 
   differential `cechEngineDFam`.  This is the single comm-square upgrading the degreewise
-  object iso to
+  object
+
+  iso to
 
   the chain iso `cechFreeEvalEngineIsoFam`.'
 file: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean
@@ -18,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechFreeEvalEngine_commFam
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 private lemma cechFreeEvalEngine_commFam
     (V : TopologicalSpace.Opens ↥X) (p : ℕ) :

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.ZariskiDescent.restrictHom
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 noncomputable def restrictHom {V T : Scheme.{0}} (b : V ⟶ T) (a : T ⟶ S) (i : ι) :
     Over.mk (preRes U (b ≫ a) i) ⟶ Over.mk (preRes U a i) :=

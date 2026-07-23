@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1416
 title: Uniqueness half of the valuative criterion
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 The structure morphism \(\pi : \mathrm{Gr}(r,d) \to \Spec \mathbb{Z}\)
   (\cref{def:gr_to_specZ}) satisfies the \emph{uniqueness} part of the valuative

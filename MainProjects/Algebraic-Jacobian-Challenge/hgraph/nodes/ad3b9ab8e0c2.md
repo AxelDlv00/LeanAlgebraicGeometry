@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.FreeCechEngine.combHomotopy_zero
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 @[simp] lemma combHomotopy_zero (r : ι) :
     combHomotopy (M := M) (n := n) r 0 = 0 := by

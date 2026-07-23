@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1724
 title: Zero cotangent dimension forces a field
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 For a Noetherian local ring \(R\) with \(\text{spanFinrank}(\mathfrak m) = 0\), the maximal
   ideal collapses to \(0\), so \(R\) is a field and hence an integral domain. This is the

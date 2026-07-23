@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1040
 title: Degree-raising endomorphism
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:14'
 ---
 Let \(M = \bigoplus_n \mathcal{M}_n\) be an internally graded \(\kappa\)-module. A
   \(\kappa\)-linear endomorphism \(x : M \to M\) \emph{raises degree by one} when it

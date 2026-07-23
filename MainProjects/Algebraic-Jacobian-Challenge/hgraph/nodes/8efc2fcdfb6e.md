@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.rigidity_snd_lift
 type: lean
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:13'
 ---
 theorem rigidity_snd_lift
     {X Y : Over (Spec (.of kbar))}

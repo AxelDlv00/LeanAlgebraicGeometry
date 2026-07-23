@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.ZariskiDescent.GluedPoint.res
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 noncomputable def GluedPoint.res {V T : Scheme.{0}} (b : V ⟶ T)
     (p : GluedPoint F Y R T) : GluedPoint F Y R V where

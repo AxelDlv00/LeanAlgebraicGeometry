@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Grassmannian.representable_of_iso_free
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 theorem representable_of_iso_free {V : S.Modules} {r : ℕ}
     (e : V ≅ SheafOfModules.free (R := S.ringCatSheaf) (Fin r)) {d : ℕ}

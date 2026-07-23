@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.scalarEnd_pullback_iso
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 lemma scalarEnd_pullback_iso {T S : Scheme.{0}} (p : T ⟶ S) (a : Γ(S, ⊤)) :
     (pullback p).map (scalarEnd a)

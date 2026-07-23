@@ -11,7 +11,7 @@ mathlib_name:
 order: 147
 title: Right-derived functor via an injective resolution
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:13'
 ---
 \textit{Provided by Mathlib.}
   Let \(\mathcal{A}\) be an abelian category with enough injectives,

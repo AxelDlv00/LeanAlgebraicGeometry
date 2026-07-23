@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.coherentSheafFlat_id_of_charts
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 theorem coherentSheafFlat_id_of_charts (G : T.Modules) [G.IsQuasicoherent]
     {ι : Type u} (Wc : ι → T.Opens) (hWc : ∀ j, IsAffineOpen (Wc j))

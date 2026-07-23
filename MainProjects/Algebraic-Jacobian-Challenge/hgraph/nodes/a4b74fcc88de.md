@@ -10,7 +10,7 @@ order: 944
 ref: nitsure-hilbert-quot
 title: "Flat everywhere-rank-\\(e\\) modules have vanishing relation\n  matrix"
 type: tex
-updated: '2026-07-20T12:01:07'
+updated: '2026-07-24T03:02:14'
 ---
 Let \(M\) carry a matrix presentation \((\psi, \pi)\) by \(e\) generators.
   If \(M\) is flat and \(M_{\mathfrak p}\) has rank \(e\) over

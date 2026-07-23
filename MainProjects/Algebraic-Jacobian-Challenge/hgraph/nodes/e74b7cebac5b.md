@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1425
 title: E4 --- the filler and its two triangles
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 \textit{Source: [Nitsure], \S 1.}
   The morphism

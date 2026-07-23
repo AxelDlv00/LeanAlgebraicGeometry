@@ -9,7 +9,7 @@ lean_status: empty
 order: 1696
 title: Depth drops by one under a regular element
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 \textit{Source: [Stacks Project], tag 00LL (\texttt{lemma-depth-drops-by-one}).}
 

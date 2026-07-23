@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Functor.gHomologyZeroIso
 type: lean
-updated: '2026-07-16T21:14:25'
+updated: '2026-07-24T03:02:09'
 ---
 noncomputable def Functor.gHomologyZeroIso (G : 𝒜 ⥤ ℬ) [G.Additive]
     [Limits.PreservesFiniteLimits G] (K : CochainComplex 𝒜 ℕ) :

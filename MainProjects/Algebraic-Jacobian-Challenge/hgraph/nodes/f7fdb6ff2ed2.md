@@ -31,7 +31,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.isLocalizedModule_basicOpen_of_isCompact
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 theorem isLocalizedModule_basicOpen_of_isCompact
     (M : X.Modules) [M.IsQuasicoherent] {W : X.Opens}

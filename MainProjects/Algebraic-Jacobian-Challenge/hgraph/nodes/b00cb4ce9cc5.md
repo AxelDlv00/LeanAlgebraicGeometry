@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.RationalMap.precomp
 type: lean
-updated: '2026-07-16T21:14:25'
+updated: '2026-07-24T03:02:09'
 ---
 noncomputable def RationalMap.precomp (f : X ⤏ Y) (p : W ⟶ X) (hp : IsOpenMap p.base) :
     W ⤏ Y :=

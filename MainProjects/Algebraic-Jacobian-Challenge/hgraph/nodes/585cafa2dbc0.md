@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.smulIter_zero_right
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 lemma smulIter_zero_right (F L : X.Modules) (s : sectionDeg L 1) (U : X.Opens)
     (N : ℕ) {j : ℕ} :

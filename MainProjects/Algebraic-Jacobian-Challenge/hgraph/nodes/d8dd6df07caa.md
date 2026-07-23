@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1308
 title: Associator through the section multiplication
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 Let \(\mathcal{A}, \mathcal{B}, \mathcal{C}\) be sheaves of
   \(\mathcal{O}_X\)-modules and \(a \in \Gamma(X,\mathcal{A})\),

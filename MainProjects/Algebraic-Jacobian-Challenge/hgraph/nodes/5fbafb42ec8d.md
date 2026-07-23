@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.SectionCechModule.comp_succAbove_one
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 lemma comp_succAbove_one {α : Type*} (σ : Fin 2 → α) :
     σ ∘ (1 : Fin 2).succAbove = fun _ : Fin 1 => σ 0 := by

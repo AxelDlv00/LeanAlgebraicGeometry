@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 240
 title: Affine structure theorem from a global presentation
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Source: Stacks Project, Schemes, Tag 01I8, \texttt{lemma-quasi-coherent-affine}.}
   Let \(X = \operatorname{Spec} R\) and let \(\mathcal{F}\) be an \(\mathcal{O}_X\)-module that admits

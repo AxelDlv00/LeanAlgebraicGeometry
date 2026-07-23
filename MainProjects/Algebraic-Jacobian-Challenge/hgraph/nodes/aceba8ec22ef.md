@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1104
 title: The slice-to-geometric isomorphism in pullback form (gap1, C, step 4')
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{The pullback packaging of the slice-touching bridge; the form consumed by the P1 transport.}
   With \(X\) and \(U \subseteq X\) as above and \(M\) a sheaf of modules on \(X\), the transport of the

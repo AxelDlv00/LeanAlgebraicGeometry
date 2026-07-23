@@ -10,6 +10,6 @@ lean_status: lean_ok
 order: 100
 title: Top-supremum transport from comparison data, abstract sheaf form
 type: tex
-updated: '2026-07-23T22:02:07'
+updated: '2026-07-24T03:02:13'
 ---
 If \(\mathfrak U\) is \v{C}ech-acyclic for \(\mathcal F\), has \v{C}ech-to-derived comparison data, and satisfies \(\bigsqcup_i\mathfrak U_i=\top\), then \(H^n(X,\mathcal F)=0\) for \(n\geq1\).

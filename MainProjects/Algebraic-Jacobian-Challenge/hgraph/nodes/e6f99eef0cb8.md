@@ -10,7 +10,7 @@ order: 661
 title: Sheafification kills the \(\mathtt{pullbackComp}\) hom--inv pair (D3$'$ residual
   brick)
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 Let \(h : Z \to Y\) and \(f : Y \to X\) be composable, write
   \(\mathtt{PrPbComp} = \mathtt{PresheafOfModules.pullbackComp}\,\varphi'_f\,\varphi'_h\) for the

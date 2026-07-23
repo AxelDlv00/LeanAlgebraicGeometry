@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1789
 title: Degree of a divisor on a curve over \(\bar k\)
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 \textit{Source: Hartshorne, II.6, p.~137 (definition of degree on a
   nonsingular curve).}

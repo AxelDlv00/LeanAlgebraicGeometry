@@ -24,7 +24,7 @@ generated: lean
 lean_status: lean_ok
 title: PresheafOfModules.isLocallyInjective_of_injective_stalk
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 theorem isLocallyInjective_of_injective_stalk
     {F G : TopCat.Presheaf A Z} (T : F ⟶ G)

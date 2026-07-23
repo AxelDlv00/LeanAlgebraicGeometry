@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 575
 title: Relative spectrum exists
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Source: [Stacks Project], tag 01LQ (lemma-glue-relative-spec);
   cf.\ [Hartshorne], II~Ex.~5.17(a).}

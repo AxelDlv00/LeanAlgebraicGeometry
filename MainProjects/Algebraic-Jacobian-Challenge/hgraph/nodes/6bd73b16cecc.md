@@ -8,7 +8,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjectiveSpace.over_terminal_comp
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 lemma over_terminal_comp :
     (ℙ(n; S) ↘ S) ≫ terminal.from S = toProjInt n S ≫ terminal.from (Proj 𝒫[n]) :=

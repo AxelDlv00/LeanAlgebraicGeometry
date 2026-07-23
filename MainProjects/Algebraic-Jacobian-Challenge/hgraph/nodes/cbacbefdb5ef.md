@@ -10,7 +10,7 @@ order: 1867
 ref: vater-weil-differentials, papaioannou-algebraic-rr
 title: Residue pairing on the cover cohomology
 type: tex
-updated: '2026-07-20T12:01:07'
+updated: '2026-07-24T03:02:15'
 ---
 Let \(\Omega_K\) be the space of Weil differentials of \(K/k\)
   (\(k\)-linear forms on the adeles vanishing on some

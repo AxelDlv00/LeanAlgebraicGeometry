@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjTwist.formFamily
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 def formFamily (m : ℕ) (F : homogeneousSubmodule n₀ (ULift.{0} ℤ) m) :
     ∀ i, Γ((Scheme.Modules.pushforward ((glueData n₀).ι i)).obj

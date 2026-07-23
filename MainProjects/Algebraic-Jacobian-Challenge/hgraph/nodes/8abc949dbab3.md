@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1558
 title: Connected components are open on a Noetherian space
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 Let \(\alpha\) be a Noetherian topological space and \(x \in \alpha\). Then
   the connected component \(\connComp(x)\) of \(x\) is open in \(\alpha\).

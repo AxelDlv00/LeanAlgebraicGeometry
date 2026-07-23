@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.LocallyFreeQuotient.congrModule_rel
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 lemma congrModule_rel {V V' : S.Modules} (g : V ≅ V') {d : ℕ} {T : Over S}
     {x y : LocallyFreeQuotient V d T} (h : x.Rel y) :

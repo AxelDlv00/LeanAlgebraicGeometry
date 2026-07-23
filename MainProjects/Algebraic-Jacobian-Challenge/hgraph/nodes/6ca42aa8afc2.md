@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 684
 title: Abelian-group instance on the relative Picard quotient via \(\Scheme.\mathtt{Modules}.\mathtt{tensorObj}\)
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Source: [Kleiman], ``The Picard scheme'', \S 2,
   Defs.~df:aPf + df:Pfs (the target category is the category of abelian

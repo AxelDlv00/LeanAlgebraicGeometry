@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.glueTripleBaseChangeIso_hom_app_app
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:10'
 ---
 lemma glueTripleBaseChangeIso_hom_app_app (D : Scheme.GlueData.{0}) (i p q : D.J)
     (N : (D.V (p, q)).Modules) (V : (D.U i).Opens) :

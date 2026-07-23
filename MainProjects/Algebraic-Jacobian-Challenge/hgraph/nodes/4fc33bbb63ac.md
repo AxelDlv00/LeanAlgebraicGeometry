@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.diagonalRingMap_right
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:10'
 ---
 theorem diagonalRingMap_right (d r : ℕ) (I J : Finset (Fin r)) (hI : I.card = d)
     (hJ : J.card = d) (b : MvPolynomial (Fin d × {q : Fin r // q ∉ J}) ℤ) :

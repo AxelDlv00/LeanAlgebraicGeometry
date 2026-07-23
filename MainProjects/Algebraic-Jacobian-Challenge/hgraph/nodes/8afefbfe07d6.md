@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.inv_telescope
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 private lemma inv_telescope {C : Type*} [Category C] {w x y z t : C}
     (A : w ⟶ x) (A' : x ⟶ w) (B : x ⟶ y) (B' : y ⟶ x) (Cc : y ⟶ z) (C' : z ⟶ y) (g : w ⟶ t)

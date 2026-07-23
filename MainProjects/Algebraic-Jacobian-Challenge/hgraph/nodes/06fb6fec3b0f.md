@@ -28,7 +28,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.existence_chart_kpoint_eq
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 theorem existence_chart_kpoint_eq (d r : ℕ) {K : Type} [Field K] (I J : (theGlueData d r).J)
     (f : MvPolynomial (Fin d × {q : Fin r // q ∉ I.1}) ℤ →+* K)

@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjTwist.triple_range_le
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 lemma triple_range_le (i j k : n) :
     Set.range (pullback.fst ((glueData n).f i j) ((glueData n).f i k) ≫

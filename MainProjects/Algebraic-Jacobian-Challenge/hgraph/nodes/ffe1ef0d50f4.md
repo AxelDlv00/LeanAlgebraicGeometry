@@ -36,7 +36,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.snd_left_isClosedMap
 type: lean
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:13'
 ---
 theorem snd_left_isClosedMap
     {X Y : Over (Spec (.of kbar))} [IsProper X.hom] :

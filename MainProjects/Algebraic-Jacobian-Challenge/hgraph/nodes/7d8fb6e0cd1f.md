@@ -32,7 +32,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.tildePreservesFiniteLimits_of_toPresheaf
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 theorem tildePreservesFiniteLimits_of_toPresheaf
     (H : PreservesFiniteLimits

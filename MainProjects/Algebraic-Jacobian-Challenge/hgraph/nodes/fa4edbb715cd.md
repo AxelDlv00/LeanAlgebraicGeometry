@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.RationalMap.hom_ext_of_toRationalMap_eq
 type: lean
-updated: '2026-07-16T21:14:25'
+updated: '2026-07-24T03:02:09'
 ---
 theorem hom_ext_of_toRationalMap_eq {X Y : Scheme.{u}} [IsReduced X]
     [Y.IsSeparated] {g₁ g₂ : X ⟶ Y}

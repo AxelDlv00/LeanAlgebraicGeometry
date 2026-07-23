@@ -47,7 +47,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.picardJacobianWitness
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 noncomputable def picardJacobianWitness (C : Over (Spec (.of k)))
     [SmoothOfRelativeDimension 1 C.hom] [IsProper C.hom] [GeometricallyIrreducible C.hom] :

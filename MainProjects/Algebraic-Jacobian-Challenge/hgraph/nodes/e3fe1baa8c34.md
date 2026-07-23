@@ -10,7 +10,7 @@ generated: lean
 lean_status: lean_ok
 title: DualNumber.unitsFst_map_mapRingHom
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 theorem unitsFst_map_mapRingHom (f : R →+* S) (u : (R[ε])ˣ) :
     unitsFst (Units.map (mapRingHom f).toMonoidHom u)

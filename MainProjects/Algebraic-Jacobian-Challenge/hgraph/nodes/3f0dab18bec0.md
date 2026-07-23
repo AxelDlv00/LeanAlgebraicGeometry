@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pushforward_mapHomologicalComplex_cechComplexOnX
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 noncomputable def pushforward_mapHomologicalComplex_cechComplexOnX
     (f : X ⟶ S) (𝒰 : X.OpenCover) (F : X.Modules) :

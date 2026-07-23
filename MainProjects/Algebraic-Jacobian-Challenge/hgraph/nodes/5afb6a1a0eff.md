@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1713
 title: A nonzero \(\text{Ext}\) class at the depth index
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 For a nonzero finite \(R\)-module \(M\) over a Noetherian local ring \((R, \mathfrak m)\)
   with \(\text{depth}(M) = D\) finite, there is a nonzero element of

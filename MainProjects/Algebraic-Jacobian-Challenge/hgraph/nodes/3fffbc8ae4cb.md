@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.homCechSectionIsoAppFam
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 noncomputable def homCechSectionIsoAppFam (F : X.PresheafOfModules) (n : SimplexCategory) :
     (homCechCosimplicialFam U F).obj n ≅ (sectionCechCosimplicial U F).obj n :=

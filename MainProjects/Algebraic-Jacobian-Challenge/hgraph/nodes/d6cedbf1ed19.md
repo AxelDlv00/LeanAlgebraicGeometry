@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.universalMatrix_map_chartMorphism
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 lemma universalMatrix_map_chartMorphism {T : Scheme.{0}} (d r : ℕ) (x : RankQuotient r d T)
     (I : Finset (Fin r)) (hI : I.card = d) :

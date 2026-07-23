@@ -11,7 +11,7 @@ mathlib_name:
 order: 233
 title: An epimorphism of sheaves is locally surjective
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Provided by Mathlib.}
   A morphism of sheaves (of abelian groups, valued in a suitable category) is an epimorphism in the

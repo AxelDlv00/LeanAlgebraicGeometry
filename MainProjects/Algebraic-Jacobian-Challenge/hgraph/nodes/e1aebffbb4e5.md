@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.opensEquivOfIso
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 noncomputable def opensEquivOfIso : TopologicalSpace.Opens X ≌ TopologicalSpace.Opens Y :=
   Opens.mapMapIso (Scheme.forgetToTop.mapIso φ).symm

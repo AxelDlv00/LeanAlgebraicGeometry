@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.mapHC_augment_iso
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 noncomputable def mapHC_augment_iso {V₁ V₂ : Type*} [Category V₁] [Category V₂]
     [Preadditive V₁] [Preadditive V₂] (Φ : V₁ ⥤ V₂) (hΦ : Φ.Additive)

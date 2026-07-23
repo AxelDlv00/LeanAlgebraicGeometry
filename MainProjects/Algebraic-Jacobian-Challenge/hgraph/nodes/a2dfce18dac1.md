@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.isIso_pullbackTensorMap_unitPair_of_isIso_sheafifyEta
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 lemma isIso_pullbackTensorMap_unitPair_of_isIso_sheafifyEta {X Y : Scheme.{u}} (f : Y ⟶ X)
     (h : letI φ' : (X.presheaf ⋙ forget₂ CommRingCat RingCat) ⟶

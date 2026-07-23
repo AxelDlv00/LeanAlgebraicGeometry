@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.precomp_eq_of_eq
 type: lean
-updated: '2026-07-24T01:02:13'
+updated: '2026-07-24T03:02:09'
 ---
 private lemma precomp_eq_of_eq {C : Type*} [Category C] {W Y Z : C}
     (e : W ⟶ Y) {f g : Y ⟶ Z} (h : f = g) : e ≫ f = e ≫ g :=

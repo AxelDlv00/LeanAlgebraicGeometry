@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1413
 title: The structure morphism is quasi-compact
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 The structure morphism \(\pi : \mathrm{Gr}(r,d) \to \Spec \mathbb{Z}\)
   (\cref{def:gr_to_specZ}) is quasi-compact.

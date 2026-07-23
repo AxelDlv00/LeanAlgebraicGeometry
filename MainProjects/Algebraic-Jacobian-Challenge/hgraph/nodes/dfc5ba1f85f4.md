@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.existence_chart_factorization
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:10'
 ---
 theorem existence_chart_factorization (d r : ℕ) {K : Type} [Field K]
     (i₁ : Spec (CommRingCat.of K) ⟶ scheme d r) :

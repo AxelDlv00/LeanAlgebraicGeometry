@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.tensorObjWhiskerLeftIso_eq
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 private lemma tensorObjWhiskerLeftIso_eq (F : X.Modules) {G G' : X.Modules} (e : G ≅ G') :
     tensorObjWhiskerLeftIso F e

@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechFreeComplexAug_f_zero
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 lemma cechFreeComplexAug_f_zero (𝒰 : X.OpenCover) [Finite 𝒰.I₀] :
     (cechFreeComplexAug 𝒰).f 0 = Limits.factorThruImage (cechFreeAug 𝒰) := by

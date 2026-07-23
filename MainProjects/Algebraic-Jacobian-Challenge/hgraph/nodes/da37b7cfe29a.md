@@ -9,7 +9,7 @@ lean_status: empty
 order: 139
 title: Re-imposing \(\mathcal{O}_{S'}\)-linearity
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:13'
 ---
 The abelian-group sheaf morphism \(\underline{e}\) of
   Lemma~\ref{lem:pushforwardPullbackBaseChange_abHom} underlies a morphism of

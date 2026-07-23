@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry._root_.Module.Flat.of_isPushout
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:10'
 ---
 theorem _root_.Module.Flat.of_isPushout [h : Algebra.IsPushout R S A B]
     {N : Type v} [AddCommGroup N] [Module A N] [Module B N] [Module S N]

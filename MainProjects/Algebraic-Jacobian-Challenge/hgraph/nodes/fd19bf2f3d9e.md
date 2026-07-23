@@ -10,7 +10,7 @@ lean_status: empty
 order: 91
 title: \(X_4\) corner bridge, curve form
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:13'
 ---
 Let \(C\) be a scheme over \(\Spec k\) and \(S\) a two-affine cover of \(C\). There is a \(k\)-linear isomorphism
   \[

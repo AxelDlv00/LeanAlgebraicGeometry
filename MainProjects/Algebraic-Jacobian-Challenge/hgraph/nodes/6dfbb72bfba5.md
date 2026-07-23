@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.isEquivariantAlgHom_iff_specMap
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 lemma isEquivariantAlgHom_iff_specMap (φ : A →ₐ[L] L ⊗[K] B) :
     IsEquivariantAlgHom K L A B φ ↔

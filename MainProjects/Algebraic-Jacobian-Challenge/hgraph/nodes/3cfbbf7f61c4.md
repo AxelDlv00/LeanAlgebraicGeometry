@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.C_mul_T_eq_smul
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:13'
 ---
 lemma C_mul_T_eq_smul (a : R) (n : ℤ) :
     (C a * T n : LaurentPolynomial R) = a • T n := by

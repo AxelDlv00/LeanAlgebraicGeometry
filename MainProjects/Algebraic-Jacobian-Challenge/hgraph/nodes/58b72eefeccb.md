@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.exists_finset_forall_mem_span_pow_mul
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:13'
 ---
 theorem exists_finset_forall_mem_span_pow_mul
     {φ : R →+* A} (hφ : ∀ c : k, φ (algebraMap k R c) = algebraMap k A c)

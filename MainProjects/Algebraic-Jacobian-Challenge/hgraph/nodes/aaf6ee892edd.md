@@ -26,7 +26,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pushforward_spec_tilde_iso
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 noncomputable def pushforward_spec_tilde_iso {R R' : CommRingCat.{u}}
     (φ : R ⟶ R') (M : ModuleCat.{u} R') :

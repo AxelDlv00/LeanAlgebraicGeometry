@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1170
 title: Base change of relative projective space
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:14'
 ---
 For every morphism \(g : S' \to S\) the canonical square
   \[

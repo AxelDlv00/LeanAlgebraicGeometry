@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.CechLocalized.cech_hcomm
 type: lean
-updated: '2026-07-16T21:14:25'
+updated: '2026-07-24T03:02:09'
 ---
 lemma cech_hcomm {m : ℕ} (σ : Fin (m + 2) → ι) (j : Fin (m + 2)) (i : Fin (m + 1))
     (z : cechCoeff s M r ((σ ∘ j.succAbove) ∘ i.succAbove)) :

@@ -40,7 +40,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.GenericFreeness.genericallyFree_quotient_prime_of_fibre_dim_le
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 theorem genericallyFree_quotient_prime_of_fibre_dim_le (n : ℕ) :
     ∀ (A E : Type u) [CommRing A] [IsDomain A] [IsNoetherianRing A]

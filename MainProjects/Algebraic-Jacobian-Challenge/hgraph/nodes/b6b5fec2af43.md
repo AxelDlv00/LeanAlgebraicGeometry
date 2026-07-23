@@ -30,7 +30,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Pic0.pointedDualNumberPoints_equiv_picScheme
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 theorem pointedDualNumberPoints_equiv_picScheme {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

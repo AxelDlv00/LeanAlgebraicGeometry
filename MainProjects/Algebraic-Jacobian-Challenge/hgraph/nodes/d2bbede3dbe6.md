@@ -11,7 +11,7 @@ mathlib_name:
 order: 400
 title: The identity arrow is terminal in the slice category
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Provided by Mathlib.}
   For an object \(S\) of a category, \(\operatorname{Over.mk}(\mathrm{id}_S)\) is a terminal object

@@ -9,7 +9,7 @@ lean_status: empty
 order: 903
 title: rem:coh_flat_pullback
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:14'
 ---
 The condition is stable under base change: for any morphism \(g : S' \to S\),
   pulling back along the cartesian square

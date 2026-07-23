@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 620
 title: \'Etale sheafification of the relative Picard presheaf
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Source: [Kleiman], ``The Picard scheme'', \S 2,
   Def.~df:Pfs (the \'etale-sheaf notation \(\Pic_{(X/S)\et}\)) and the

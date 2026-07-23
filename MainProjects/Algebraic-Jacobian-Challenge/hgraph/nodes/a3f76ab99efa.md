@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.DivFamily.ClassHasFiberDeg
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 def ClassHasFiberDeg {T : Over S} (d : ℕ)
     (z : Quotient (DivFamily.setoid π T)) : Prop :=

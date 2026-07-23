@@ -45,7 +45,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.trivialisation_telescope_assemble
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 lemma trivialisation_telescope_assemble {C : Type*} [Category C]
     {O0 O1 O2 O3 O4 O5 P0 P1 P2 P3 P4 P5 : C}

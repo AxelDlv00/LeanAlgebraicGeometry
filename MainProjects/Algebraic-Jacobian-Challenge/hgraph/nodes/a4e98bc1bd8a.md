@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Pic0.finiteDimensional_cotangentSpace_of_locallyOfFiniteType
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 theorem finiteDimensional_cotangentSpace_of_locallyOfFiniteType {k : Type u} [Field k]
     (X : Over (Spec (.of k))) [LocallyOfFiniteType X.hom] (x : X.left) :

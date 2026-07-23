@@ -9,7 +9,7 @@ lean_status: empty
 order: 140
 title: The global base-change natural isomorphism \(e\)
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:13'
 ---
 The morphism \(e^{\mathrm{lin}}\) of
   Lemma~\ref{lem:pushforwardPullbackBaseChange_linHom} is an isomorphism, and the

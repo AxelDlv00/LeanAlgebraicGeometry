@@ -10,7 +10,7 @@ order: 1124
 ref: stacks-project
 title: Finitely presented modules have finite sections on every affine open
 type: tex
-updated: '2026-07-20T12:01:07'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Source: Stacks~\href{https://stacks.math.columbia.edu/tag/01PC}{01PC}
   (finite-type half).}

@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.pushforwardExtAddEquiv
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 noncomputable def Scheme.Modules.pushforwardExtAddEquiv {X Y : Scheme.{u}} (φ : X ≅ Y)
     [EnoughInjectives X.Modules] (A B : X.Modules) (n : ℕ) :

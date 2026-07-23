@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.tensorHom_comp3
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 lemma tensorHom_comp3 {C : Type*} [Category C] [MonoidalCategory C]
     {a₀ a₁ a₂ a₃ b₀ b₁ b₂ b₃ : C} (a : a₀ ⟶ a₁) (b : a₁ ⟶ a₂) (c : a₂ ⟶ a₃)

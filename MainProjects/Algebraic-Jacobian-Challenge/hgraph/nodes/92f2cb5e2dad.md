@@ -9,7 +9,7 @@ lean_status: sorry
 order: 366
 title: Push--pull on a finite coproduct of legs is the product of the leg push--pulls
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 Let \((\mathrm{legs} : \iota \to \operatorname{Over} X)\) be a finite family of objects of
   the slice category over a scheme \(X\) (\(\iota\) finite), and form the coproduct

@@ -9,7 +9,7 @@ lean_status: sorry
 order: 1211
 title: Representability of the Quot functor
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Source: [Nitsure], \S 5, Theorem (Grothendieck), Theorem
   (Altman--Kleiman) (FGA Explained Ch.~5); cf.\ Grothendieck, FGA TDTE-IV.}

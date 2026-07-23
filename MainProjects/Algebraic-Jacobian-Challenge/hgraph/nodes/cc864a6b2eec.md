@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1758
 title: Codim-\(1\) cycle group / Weil divisor group of a scheme
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 \textit{Source: Hartshorne, II.6, p.~130 (Weil divisor group).}
   Let \(X\) be a Noetherian integral separated scheme that is regular in

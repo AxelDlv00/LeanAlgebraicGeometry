@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1217
 title: Injectivity along a finite cover, by flat base change
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:14'
 ---
 Let \(A \to B\) be a flat homomorphism of commutative rings, let \(M\) be
   an \(A\)-module and \(P\) a \(B\)-module, and let \((M_i)_{i \in \iota}\),

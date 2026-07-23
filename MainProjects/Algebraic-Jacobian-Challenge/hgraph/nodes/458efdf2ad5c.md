@@ -15,7 +15,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.isAffineOpen_preimage_of_isFinite
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:13'
 ---
 theorem isAffineOpen_preimage_of_isFinite {X Y : Scheme.{u}} (π : X ⟶ Y) [IsFinite π]
     {V : Y.Opens} (hV : IsAffineOpen V) : IsAffineOpen (π ⁻¹ᵁ V) :=

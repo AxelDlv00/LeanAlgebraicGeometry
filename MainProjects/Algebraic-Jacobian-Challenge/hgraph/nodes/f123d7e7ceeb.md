@@ -11,7 +11,7 @@ mathlib_name:
 order: 1376
 title: \(\Spec\) of an away-localisation is an open immersion
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 \textit{Provided by Mathlib.}
   Let \(R\) be a commutative ring and \(f \in R\). The morphism

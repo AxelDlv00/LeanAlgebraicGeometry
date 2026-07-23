@@ -35,7 +35,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.section_localization_hfr_basicOpen
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 theorem section_localization_hfr_basicOpen {R : CommRingCat.{u}}
     (M : (Spec R).Modules) (q : M.QuasicoherentData) (f s : R) (i : q.I)

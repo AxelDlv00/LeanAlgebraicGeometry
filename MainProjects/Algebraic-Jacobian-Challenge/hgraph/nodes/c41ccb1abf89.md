@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 304
 title: '{\v C}ech cohomology transports along an isomorphism of coefficients'
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Project-local transport lemma.}
   Let \(U : \iota \to \mathrm{Opens}(X)\) be an index family and let \(e : \mathcal{F} \cong

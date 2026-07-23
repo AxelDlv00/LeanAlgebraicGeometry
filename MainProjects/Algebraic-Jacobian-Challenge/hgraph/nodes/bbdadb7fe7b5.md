@@ -11,7 +11,7 @@ mathlib_name:
 order: 1318
 title: External-direct-sum graded module
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 \textit{Provided by Mathlib (\texttt{Mathlib.Algebra.Module.GradedModule}).}
   Let \(A : \mathbb{N} \to \mathrm{Type}\) carry a graded semiring structure as

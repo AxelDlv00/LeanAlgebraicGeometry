@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.GradedModule.coker_isHomogeneous
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:10'
 ---
 lemma coker_isHomogeneous {x : M →ₗ[κ] M} (hx : RaisesDegree ℳ x)
     {N N' : Submodule κ M} (hN : N.IsHomogeneous ℳ) (hN' : N'.IsHomogeneous ℳ) :

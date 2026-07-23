@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1492
 title: Rectangular matrix homomorphism of free sheaves
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 Let \(S\) be a scheme, \(d, r \in \mathbb{N}\), and
   \(M \in \operatorname{Mat}_{d \times r}(\Gamma(S, \mathcal{O}_S))\) a rectangular matrix

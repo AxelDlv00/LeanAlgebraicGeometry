@@ -9,7 +9,7 @@ lean_status: empty
 order: 1541
 title: 'Carrier: \(\Pic_{C/k}\) is locally of finite type'
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 The predicate \(\mathrm{PicSchemeLocallyOfFiniteType}(C)\) asserts that the
   structural morphism of the Picard scheme \(\Pic_{C/k}\) of

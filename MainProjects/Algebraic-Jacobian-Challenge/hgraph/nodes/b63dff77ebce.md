@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.ProjTwist.serreTwistGlued
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 def serreTwistGlued (m : ℕ) : (glueData n₀).glued.Modules :=
   Scheme.Modules.glue (glueData n₀)

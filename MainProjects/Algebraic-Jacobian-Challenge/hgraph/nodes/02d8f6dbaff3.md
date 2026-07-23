@@ -29,7 +29,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.PicScheme.abelKernelBaseChangeIso
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 private noncomputable def abelKernelBaseChangeIso {k : Type u} [Field k]
     (C : Over (Spec (.of k)))

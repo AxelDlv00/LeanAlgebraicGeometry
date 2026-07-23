@@ -36,7 +36,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.TwoChart.fg_ker_cechDiff_of_laurent
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 theorem fg_ker_cechDiff_of_laurent {A C₀ C₁ C₀₁ M₀ M₁ V : Type*} [CommRing A]
     [CommRing C₀] [CommRing C₁] [CommRing C₀₁]

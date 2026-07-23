@@ -12,13 +12,14 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechEngineComplexAug
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 noncomputable def cechEngineComplexAug (𝒰 : X.OpenCover) (V : TopologicalSpace.Opens ↥X) :
     cechEngineComplex 𝒰 V ⟶ (ChainComplex.single₀ _).obj (coverSectionModule V) :=
   ((cechEngineComplex 𝒰 V).toSingle₀Equiv (coverSectionModule V)).symm
     ⟨cechEngineAug0 𝒰 V, by
-      rw [show (cechEngineComplex 𝒰 V).d 1 0 = cechEngineD 𝒰 V 0 from ChainComplex.of_d (cechEngineX 𝒰 V) (cechEngineD 𝒰 V) 0]
+      rw [show (cechEngineComplex 𝒰 V).d 1 0 = cechEngineD 𝒰 V 0 from
+        ChainComplex.of_d (cechEngineX 𝒰 V) (cechEngineD 𝒰 V) 0]
       exact cechEngineD_comp_aug 𝒰 V⟩
 
 /-! ## Project-local Mathlib supplement — degree-`0` splitting and engine quasi-isomorphism -/

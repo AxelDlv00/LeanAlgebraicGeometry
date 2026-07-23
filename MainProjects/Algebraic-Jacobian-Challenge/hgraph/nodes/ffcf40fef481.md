@@ -43,7 +43,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.section_localization_hfr_aux_general
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 theorem section_localization_hfr_aux_general {X : Scheme.{u}} {S : CommRingCat.{u}}
     (M : X.Modules) (j : Spec S ⟶ X) [IsOpenImmersion j]

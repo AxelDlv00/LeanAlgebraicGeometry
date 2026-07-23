@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.prodOpens_le_of_forall_exists
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:13'
 ---
 theorem prodOpens_le_of_forall_exists {m m' : ℕ} {j : Fin m → ι} {x : Fin m' → ι}
     (h : ∀ a, ∃ b, x b = j a) :

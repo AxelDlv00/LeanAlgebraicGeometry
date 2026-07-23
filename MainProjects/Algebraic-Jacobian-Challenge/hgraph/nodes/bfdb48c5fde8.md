@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: DualNumber.scaleRingHom_zero
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 theorem scaleRingHom_zero :
     scaleRingHom (0 : R) = (algebraMap R R[ε]).comp (fstRingHom (R := R)) :=

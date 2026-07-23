@@ -23,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pushforward_iso_qcoh_of_slice_qcoh
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 lemma pushforward_iso_qcoh_of_slice_qcoh {X Y : Scheme.{u}} (φ : X ≅ Y) (H : X.Modules)
     (q : SheafOfModules.QuasicoherentData.{u, u, u, u} H)

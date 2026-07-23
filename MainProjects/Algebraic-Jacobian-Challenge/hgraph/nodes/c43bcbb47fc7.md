@@ -11,7 +11,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.ChartsCover.exists_finite_charts
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 theorem ChartsCover.exists_finite_charts (hcov : ChartsCover G e)
     (U : X.affineOpens) :

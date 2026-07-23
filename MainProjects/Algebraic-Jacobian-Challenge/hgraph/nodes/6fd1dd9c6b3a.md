@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.GradedModule.inf_isHomogeneous
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:10'
 ---
 lemma inf_isHomogeneous {p q : Submodule κ M} (hp : p.IsHomogeneous ℳ)
     (hq : q.IsHomogeneous ℳ) : (p ⊓ q).IsHomogeneous ℳ := by

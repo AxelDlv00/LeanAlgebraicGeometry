@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.map_alternatingCofaceMapComplex_objD
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 theorem map_alternatingCofaceMapComplex_objD (F : C ⥤ D) [F.Additive]
     (Y : CosimplicialObject C) (i : ℕ) :

@@ -28,7 +28,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.gradedModule_hilbertSeries_rational
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:10'
 ---
 lemma gradedModule_hilbertSeries_rational {κ M : Type*} [Field κ] [AddCommGroup M] [Module κ M]
     (ℳ : ℕ → Submodule κ M) [DirectSum.Decomposition ℳ] [∀ n, FiniteDimensional κ ↥(ℳ n)]

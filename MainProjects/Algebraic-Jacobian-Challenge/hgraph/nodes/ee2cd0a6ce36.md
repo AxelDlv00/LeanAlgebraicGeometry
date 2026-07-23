@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 327
 title: '{\v C}ech augmentation map'
 type: tex
-updated: '2026-07-16T21:14:29'
+updated: '2026-07-24T03:02:14'
 ---
 \textit{Project-local.}
   The \emph{{\v C}ech augmentation} is the morphism \(\varepsilon : \mathcal{F} \to \mathcal{C}^0\) of

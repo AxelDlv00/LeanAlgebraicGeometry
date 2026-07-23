@@ -3,11 +3,11 @@ title: 'DD-R relative bridge induction: all-stage fibre models and successor quo
   flatness'
 projects:
 - Algebraic-Jacobian-Challenge-Rebuild
-summary: CURRENT FOCUS. Starting from the proved stage-zero and stage-one fibre models,
-  carry a simultaneous induction that conjugates the field Koszul equality into DivUniversalHighWindowSyzygySpans,
-  then derives flat/projective successor relation quotients and the next relation-fibre
-  model. This is the nonreduced relative Koszul/Gotzmann capstone.
-status: active
+summary: LANDED. Relative Koszul boundary conjugacy, all-prime kernel syzygies, and
+  simultaneous induction from stages zero and one prove every relation quotient finite
+  projective/flat and every relation stage the canonical residue-prime fibre model.
+  Endpoints are in DivSchemeHighWindowRelationKoszulConjugacy and DivSchemeHighWindowFibreModelInduction.
+status: done
 kind: proof
 priority: normal
 depends_on: []
@@ -29,4 +29,4 @@ metadata:
     task_title: 'Wave 4: representability of Pic^0 (curve-specialised Kleiman)'
     projects: Algebraic-Jacobian-Challenge-Rebuild
   parent: AJCR.w4-rep.datum.dat-d.ddr
-  updated_at: '2026-07-23T01:58:45.067827+00:00'
+  updated_at: '2026-07-23T18:32:57.098333+00:00'

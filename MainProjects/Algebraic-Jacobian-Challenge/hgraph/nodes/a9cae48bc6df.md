@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.coprodToProdMap_comp_
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 private lemma coprodToProdMap_comp_π {ι : Type*} (F : X.Modules) (legs : ι → Over X)
     [HasCoproduct (fun i => (legs i).left)] [HasProduct (fun i => pushPullObj F (legs i))]

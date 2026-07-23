@@ -13,7 +13,9 @@ docstring: '**Degree-`0` augmentation comm-square (engine identification).** Eva
   analogue of
 
   `cechFreeEvalEngine_commFam` and the key bridge for the nonempty quasi-isomorphism:
-  it identifies the
+  it
+
+  identifies the
 
   evaluated free augmentation with the engine augmentation.'
 file: AlgebraicJacobian/Cohomology/FreePresheafComplex.lean
@@ -21,7 +23,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechFreeAug_eval_eqFam
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 private lemma cechFreeAug_eval_eqFam
     (V : TopologicalSpace.Opens ↥X) :

@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.InjectiveResolution.mono_horseshoe
 type: lean
-updated: '2026-07-16T21:14:25'
+updated: '2026-07-24T03:02:09'
 ---
 lemma mono_horseshoeβ : Mono (horseshoeβ hses I_A I_C) := by
   haveI := hses.mono_f

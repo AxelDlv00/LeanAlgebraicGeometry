@@ -21,7 +21,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.isIso_unit_schematicSupport
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 theorem isIso_unit_schematicSupportι
     {Y : Scheme.{u}} (F : Y.Modules) [F.IsQuasicoherent] :

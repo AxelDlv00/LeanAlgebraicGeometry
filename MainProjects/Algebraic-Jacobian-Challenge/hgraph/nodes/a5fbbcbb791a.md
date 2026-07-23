@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Adelic.mul_mem_span_range_pow
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:13'
 ---
 theorem mul_mem_span_range_pow {k A : Type*} [CommRing k] [CommRing A] [Algebra k A]
     (x : A) {a b : A}

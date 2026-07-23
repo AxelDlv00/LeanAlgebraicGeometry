@@ -14,7 +14,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.constMap
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 noncomputable def constMap (C : Over (Spec (CommRingCat.of k))) :
     CommRingCat.of k ⟶ Γ(C.left, ⊤) :=

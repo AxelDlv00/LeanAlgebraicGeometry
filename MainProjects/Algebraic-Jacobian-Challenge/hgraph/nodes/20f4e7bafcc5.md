@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.rhoU_comp
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:09'
 ---
 theorem rhoU_comp {X : Scheme.{u}} {U V : X.Opens} (h : V ≤ U) :
     ((X.ringCatSheaf.obj.map (homOfLE h).op).hom).comp (rhoU X U) = rhoU X V := by

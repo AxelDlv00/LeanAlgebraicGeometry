@@ -31,7 +31,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.HModule'_zero_sectionsLinearEquiv_naturality
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 lemma HModule'_zero_sectionsLinearEquiv_naturality
     (F : Sheaf J (ModuleCat.{u} k)) {U V : C} (g : V ⟶ U) (x : HModule' k F 0 U) :

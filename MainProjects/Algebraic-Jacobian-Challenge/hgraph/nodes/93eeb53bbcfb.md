@@ -17,7 +17,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.QuotFamily.pullbackAlong
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 noncomputable def pullbackAlong [L.IsQuasicoherent] {T T' : Over S} (ψ : T' ⟶ T)
     (x : QuotFamily π L E Φ T) : QuotFamily π L E Φ T' where

@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1568
 title: The identity component of the Picard scheme
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 \textit{Source: [Kleiman], ``The Picard scheme'', \S 5, opening +
   Prp.~5.3.}

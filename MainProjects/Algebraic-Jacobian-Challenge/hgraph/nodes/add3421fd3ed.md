@@ -9,7 +9,7 @@ lean_status: lean_ok
 order: 1777
 title: Order is invariant under restriction to an open chart
 type: tex
-updated: '2026-07-16T21:14:30'
+updated: '2026-07-24T03:02:15'
 ---
 Under \([\texttt{IsIntegral}\,X]\,[\texttt{IsLocallyNoetherian}\,X]\,
   [\texttt{IsRegularInCodimensionOne}\,X]\), for a nonempty integral

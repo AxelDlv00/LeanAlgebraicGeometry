@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.toModuleKSheaf.algebraMap_eq_kToSection
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 lemma algebraMap_eq_kToSection (C : Over (Spec (CommRingCat.of k)))
     (U : (TopologicalSpace.Opens C.left.toTopCat)ᵒᵖ) :

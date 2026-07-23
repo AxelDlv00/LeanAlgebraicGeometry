@@ -37,7 +37,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.pushPull_transport_cancel
 type: lean
-updated: '2026-07-23T22:32:05'
+updated: '2026-07-24T03:02:09'
 ---
 lemma pushPull_transport_cancel {Y₁ Y₂ : Scheme.{u}}
     (gl : Y₂ ⟶ Y₁) (p₁ : Y₁ ⟶ X) (p₂ : Y₂ ⟶ X)

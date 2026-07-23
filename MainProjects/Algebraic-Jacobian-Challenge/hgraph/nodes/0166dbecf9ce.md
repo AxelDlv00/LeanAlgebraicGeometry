@@ -27,7 +27,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.tensorObjAssoc_eta_factor
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 private lemma tensorObjAssoc_eta_factor (A B C : X.Modules) :
     (MonoidalCategory.whiskerRight (C := MonoidalPresheaf X)

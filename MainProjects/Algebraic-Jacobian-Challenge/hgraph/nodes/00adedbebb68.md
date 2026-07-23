@@ -14,7 +14,7 @@ generated: lean
 lean_status: sorry
 title: AlgebraicGeometry.Scheme.PicSharp.relNeg
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 private noncomputable def relNeg {S C T : Scheme.{u}} {πC : C ⟶ S} {πT : T ⟶ S} :
     Quotient (RelPicPresheaf.preimage_subgroup πC πT) →

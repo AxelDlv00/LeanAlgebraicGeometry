@@ -25,7 +25,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.affine_tildeVanishing
 type: lean
-updated: '2026-07-16T21:14:25'
+updated: '2026-07-24T03:02:09'
 ---
 private theorem affine_tildeVanishing {R : CommRingCat.{u}} (F : (Spec R).Modules)
     (n : ℕ) (g : Fin n → R) (f : R)

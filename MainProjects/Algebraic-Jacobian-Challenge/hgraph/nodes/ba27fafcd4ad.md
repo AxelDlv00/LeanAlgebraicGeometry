@@ -9,7 +9,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicJacobian.GaloisDescent.SemilinearGalAction.orbit
 type: lean
-updated: '2026-07-16T21:14:26'
+updated: '2026-07-24T03:02:10'
 ---
 def orbit (ρ : SemilinearGalAction K L X f) (x : X) : Set X :=
   Set.range fun γ : L ≃ₐ[K] L => (ρ.act γ).hom.base x

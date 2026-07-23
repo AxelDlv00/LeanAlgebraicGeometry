@@ -19,7 +19,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.moduleCat_braiding_self_hom_eq_id
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 private lemma moduleCat_braiding_self_hom_eq_id {R : Type u} [CommRing R]
     (M : ModuleCat.{u} R) (hM : Module.Invertible R M) :

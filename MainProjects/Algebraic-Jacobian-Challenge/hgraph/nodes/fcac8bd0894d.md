@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Grassmannian.presentedMatrix_tautological
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:11'
 ---
 lemma presentedMatrix_tautological (d r : ℕ) (I : (theGlueData d r).J) :
     presentedMatrix (tautologicalRankQuotient d r) ((theGlueData d r).ι I) I.1 I.2

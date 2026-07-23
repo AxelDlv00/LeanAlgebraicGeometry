@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.ZariskiDescent.map_map
 type: lean
-updated: '2026-07-16T21:14:28'
+updated: '2026-07-24T03:02:12'
 ---
 lemma map_map {A B C : Over S} (f : A ⟶ B) (g : B ⟶ C) (x : F.obj (op C)) :
     F.map f.op (F.map g.op x) = F.map (f ≫ g).op x := by

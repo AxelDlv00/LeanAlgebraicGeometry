@@ -16,7 +16,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.Modules.appLE_congr_mor
 type: lean
-updated: '2026-07-16T21:14:27'
+updated: '2026-07-24T03:02:10'
 ---
 lemma appLE_congr_mor {A B : Scheme.{u}} {f g : A ⟶ B} (h : f = g) (U : B.Opens)
     (W : A.Opens) (e : W ≤ f ⁻¹ᵁ U) (e' : W ≤ g ⁻¹ᵁ U) :
