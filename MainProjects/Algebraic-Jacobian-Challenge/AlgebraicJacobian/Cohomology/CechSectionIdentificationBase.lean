@@ -30,14 +30,6 @@ This file is the shared "Sub-brick A" chain that
 
 The result is consumed by `CechAugmentedResolution.lean` to close the residual `hSec`.
 
-
-
-SIGNATURE FIX (iter-067): `cechSection_complex_iso` and `cechSection_contractible` no longer take
-the augmentation `ε`/`hε` as free parameters (the scaffold form was false for a non-canonical
-`ε`, and the consumer `hSec` in `CechAugmentedResolution.lean` calls them with no `ε`).  Both now
-share the canonical augmentation `sectionCechAugV`/`sectionCechAugV_comp_d`, so the consumer glue
-`isZero_homology_of_iso_homotopy_id_zero` matches their common `D'`.
-
 Blueprint: §Sub-brick A decomposition, `Cohomology_CechHigherDirectImage.tex`,
 lemmas `lem:cech_backbone_left_sigma` through `lem:cechSection_contractible`.
 -/
@@ -65,7 +57,7 @@ noncomputable def widePullback_overX_isLimit {C : Type*} [Category C] {S : C}
     IsLimit (Fan.mk (C := Over S) (f := fun k => Over.mk (g k))
       (Over.mk (WidePullback.base g))
       (fun k => Over.homMk (WidePullback.π g k) (WidePullback.π_arrow g k))) :=
-  mkFanLimit _
+  Fan.IsLimit.mk _
     (fun s => Over.homMk
       (WidePullback.lift s.pt.hom (fun k => (s.proj k).left) (fun k => Over.w (s.proj k)))
       (WidePullback.lift_base _ _ _ _))
@@ -108,7 +100,7 @@ noncomputable def overSigmaDescIsColimit {C : Type*} [Category C] {S : C} {ι : 
     {Z : ι → C} (f : (i : ι) → Z i ⟶ S) [HasCoproduct Z] :
     IsColimit (overSigmaDescCofan f) := by
   haveI : HasCoproduct (fun i => (Over.mk (f i)).left) := (inferInstanceAs (HasCoproduct Z))
-  refine mkCofanColimit _
+  refine Cofan.IsColimit.mk _
     (fun t => Over.homMk (Limits.Sigma.desc (fun i => (t.inj i).left)) ?_)
     (fun t j => ?_) (fun t m hm => ?_)
   · change Limits.Sigma.desc (fun i => (t.inj i).left) ≫ t.pt.hom = Limits.Sigma.desc f
@@ -116,7 +108,7 @@ noncomputable def overSigmaDescIsColimit {C : Type*} [Category C] {S : C} {ι : 
     rw [Limits.Sigma.ι_desc_assoc, Over.w]
     exact (Limits.Sigma.ι_desc f i).symm
   · apply Over.OverMorphism.ext
-    simp only [overSigmaDescCofan, Cofan.mk_ι_app, Over.homMk_left]
+    simp only [overSigmaDescCofan]
     exact Limits.Sigma.ι_desc _ _
   · apply Over.OverMorphism.ext
     refine Limits.Sigma.hom_ext _ _ (fun i => ?_)
@@ -144,7 +136,7 @@ induction of `widePullback_coproduct_iso`.  Project-local. -/
 noncomputable def prodFinSuccIso {C : Type*} [Category C] [HasFiniteProducts C] {n : ℕ}
     (X : Fin (n + 1) → C) :
     (∏ᶜ X) ≅ X 0 ⨯ (∏ᶜ fun i : Fin n => X i.succ) := by
-  refine (productIsProduct X).conePointUniqueUpToIso (mkFanLimit
+  refine (productIsProduct X).conePointUniqueUpToIso (Fan.IsLimit.mk
     (Fan.mk (X 0 ⨯ (∏ᶜ fun i : Fin n => X i.succ))
       (fun j => Fin.cases prod.fst (fun i => prod.snd ≫ Pi.π (fun i : Fin n => X i.succ) i) j))
     (fun s => prod.lift (s.proj 0) (Pi.lift (fun i : Fin n => s.proj i.succ)))
@@ -205,13 +197,15 @@ noncomputable def coproduct_fibrePower_reindex {C : Type*} [Category C] {ι : Ty
 /-- Base case of the wide-fibre-power decomposition (`p = 0`): the `1`-fold wide fibre power of the
 descent map `∐ᵢ Z i ⟶ S` over `S` is, in `Over S`, the coproduct over `σ : Fin 1 → ι` of the
 `1`-fold fibre powers (here written as products in the slice).  Pure reindexing — no extensivity
-needed — chaining `widePullback_overX_eq_prod`, `productUniqueIso` (over `Fin 1`), `overSigmaDescIso`
-and the coproduct reindex along `(Fin 1 → ι) ≃ ι`.  Blueprint `lem:coproduct_distrib_fibrePower_zero`.
+needed — chaining `widePullback_overX_eq_prod`, `productUniqueIso` (over `Fin 1`),
+`overSigmaDescIso`, and the coproduct reindex along `(Fin 1 → ι) ≃ ι`.  Blueprint
+`lem:coproduct_distrib_fibrePower_zero`.
 
-Note: the σ-component is the slice product `∏ᶜ fun k => Over.mk (f (σ k))`, which is identified with
-the wide fibre power `Over.mk (WidePullback.base (fun k => f (σ k)))` via `widePullback_overX_eq_prod`
-at the assembly site.  This is the project's chosen (slice-product) normal form for the components,
-which minimizes the `HasWidePullback` instance bookkeeping in the induction. -/
+Note: the σ-component is the slice product `∏ᶜ fun k => Over.mk (f (σ k))`, which is
+identified with the wide fibre power `Over.mk (WidePullback.base (fun k => f (σ k)))` via
+`widePullback_overX_eq_prod` at the assembly site.  This is the project's chosen
+(slice-product) normal form for the components, which minimizes the `HasWidePullback` instance
+bookkeeping in the induction. -/
 noncomputable def widePullback_coproduct_iso_zero {C : Type*} [Category C] [HasPullbacks C]
     {S : C} {ι : Type*} [Finite ι] {Z : ι → C} (f : (i : ι) → Z i ⟶ S)
     [HasFiniteWidePullbacks C] [HasFiniteCoproducts C]
@@ -230,7 +224,8 @@ noncomputable def widePullback_coproduct_iso_zero {C : Type*} [Category C] [HasP
 argument: `∐ᵢ pullback (gᵢ) b ≅ pullback (Sigma.desc g) b`.  Derived from the project's
 `prod_coproduct_distrib` (coproduct-second form) by conjugating with `pullbackSymmetry`.
 Project-local: consumed by `overProd_coproduct_distrib`'s structure-map compatibility. -/
-noncomputable def coprodFirst_distrib {C : Type*} [Category C] [HasPullbacks C] [FinitaryPreExtensive C] {ι : Type} [Finite ι] {S : C}
+noncomputable def coprodFirst_distrib {C : Type*} [Category C] [HasPullbacks C]
+    [FinitaryPreExtensive C] {ι : Type} [Finite ι] {S : C}
     (B : C) (b : B ⟶ S) {Y : ι → C} (g : (i : ι) → Y i ⟶ S) :
     (∐ fun i => pullback (g i) b) ≅ pullback (Limits.Sigma.desc g) b :=
   asIso (Limits.Sigma.map (fun i => (pullbackSymmetry (g i) b).hom)) ≪≫
@@ -240,20 +235,25 @@ noncomputable def coprodFirst_distrib {C : Type*} [Category C] [HasPullbacks C] 
 /-- `prod_coproduct_distrib` is compatible with the first projection to the base of `a`:
 its hom followed by `pullback.fst` is the descent of the per-summand `pullback.fst`. Project-local
 compatibility lemma used to verify the structure-map condition of `overProd_coproduct_distrib`. -/
-lemma pcd_hom_fst {C : Type*} [Category C] [HasPullbacks C] [FinitaryPreExtensive C] {ι : Type} [Finite ι] {S : C} (A : C) (a : A ⟶ S) {Y : ι → C} (g : (i : ι) → Y i ⟶ S) :
+lemma pcd_hom_fst {C : Type*} [Category C] [HasPullbacks C]
+    [FinitaryPreExtensive C] {ι : Type} [Finite ι] {S : C} (A : C) (a : A ⟶ S)
+    {Y : ι → C} (g : (i : ι) → Y i ⟶ S) :
     (prod_coproduct_distrib A a g).hom ≫ pullback.fst a (Limits.Sigma.desc g)
       = Limits.Sigma.desc (fun i => pullback.fst a (g i)) := by
   refine Limits.Sigma.hom_ext _ _ (fun i => ?_)
   rw [Limits.Sigma.ι_desc]
   have hstep : (prod_coproduct_distrib A a g).hom
-      = (Limits.Sigma.map (fun i => (pullbackLeftPullbackSndIso a (Limits.Sigma.desc g) (Sigma.ι Y i) ≪≫
+      = (Limits.Sigma.map (fun i =>
+          (pullbackLeftPullbackSndIso a (Limits.Sigma.desc g) (Sigma.ι Y i) ≪≫
             pullback.congrHom rfl (by rw [Limits.Sigma.ι_desc])).inv)) ≫
-          Limits.Sigma.desc (fun i => pullback.fst (pullback.snd a (Limits.Sigma.desc g)) (Sigma.ι Y i)) := by
+        Limits.Sigma.desc (fun i =>
+          pullback.fst (pullback.snd a (Limits.Sigma.desc g)) (Sigma.ι Y i)) := by
     simp only [prod_coproduct_distrib, Iso.trans_hom, Iso.symm_hom, asIso_hom]
     congr 1
   rw [hstep]
   simp only [Category.assoc, Limits.Sigma.ι_map_assoc, Limits.Sigma.ι_desc_assoc]
-  simp
+  simp only [Iso.trans_inv, pullback.congrHom_inv, Category.assoc,
+    pullbackLeftPullbackSndIso_inv_fst]
   simp only [pullback.map]
   rw [pullback.lift_fst]
   simp
@@ -261,28 +261,35 @@ lemma pcd_hom_fst {C : Type*} [Category C] [HasPullbacks C] [FinitaryPreExtensiv
 /-- `prod_coproduct_distrib` compatibility with the second projection (the coproduct side):
 its hom followed by `pullback.snd` descends to the per-summand `pullback.snd ≫ Sigma.ι`.
 Project-local compatibility lemma for `overProd_coproduct_distrib`. -/
-lemma pcd_hom_snd {C : Type*} [Category C] [HasPullbacks C] [FinitaryPreExtensive C] {ι : Type} [Finite ι] {S : C} (A : C) (a : A ⟶ S) {Y : ι → C} (g : (i : ι) → Y i ⟶ S) :
+lemma pcd_hom_snd {C : Type*} [Category C] [HasPullbacks C]
+    [FinitaryPreExtensive C] {ι : Type} [Finite ι] {S : C} (A : C) (a : A ⟶ S)
+    {Y : ι → C} (g : (i : ι) → Y i ⟶ S) :
     (prod_coproduct_distrib A a g).hom ≫ pullback.snd a (Limits.Sigma.desc g)
       = Limits.Sigma.desc (fun i => pullback.snd a (g i) ≫ Sigma.ι Y i) := by
   refine Limits.Sigma.hom_ext _ _ (fun i => ?_)
   rw [Limits.Sigma.ι_desc]
   have hstep : (prod_coproduct_distrib A a g).hom
-      = (Limits.Sigma.map (fun i => (pullbackLeftPullbackSndIso a (Limits.Sigma.desc g) (Sigma.ι Y i) ≪≫
+      = (Limits.Sigma.map (fun i =>
+          (pullbackLeftPullbackSndIso a (Limits.Sigma.desc g) (Sigma.ι Y i) ≪≫
             pullback.congrHom rfl (by rw [Limits.Sigma.ι_desc])).inv)) ≫
-          Limits.Sigma.desc (fun i => pullback.fst (pullback.snd a (Limits.Sigma.desc g)) (Sigma.ι Y i)) := by
+        Limits.Sigma.desc (fun i =>
+          pullback.fst (pullback.snd a (Limits.Sigma.desc g)) (Sigma.ι Y i)) := by
     simp only [prod_coproduct_distrib, Iso.trans_hom, Iso.symm_hom, asIso_hom]
     congr 1
   rw [hstep]
   simp only [Category.assoc, Limits.Sigma.ι_map_assoc, Limits.Sigma.ι_desc_assoc]
   rw [pullback.condition]
-  simp
+  simp only [Iso.trans_inv, pullback.congrHom_inv, Category.assoc,
+    pullbackLeftPullbackSndIso_inv_snd_snd_assoc]
   simp only [pullback.map]
   rw [pullback.lift_snd_assoc]
   simp
 
 /-- `coprodFirst_distrib` compatibility with `pullback.fst` (the coproduct side): descends to the
 per-summand `pullback.fst ≫ Sigma.ι`.  Project-local, used in `overProd_coproduct_distrib`. -/
-lemma cf_hom_fst {C : Type*} [Category C] [HasPullbacks C] [FinitaryPreExtensive C] {ι : Type} [Finite ι] {S : C} (B : C) (b : B ⟶ S) {Y : ι → C} (g : (i : ι) → Y i ⟶ S) :
+lemma cf_hom_fst {C : Type*} [Category C] [HasPullbacks C]
+    [FinitaryPreExtensive C] {ι : Type} [Finite ι] {S : C} (B : C) (b : B ⟶ S)
+    {Y : ι → C} (g : (i : ι) → Y i ⟶ S) :
     (coprodFirst_distrib B b g).hom ≫ pullback.fst (Limits.Sigma.desc g) b
       = Limits.Sigma.desc (fun i => pullback.fst (g i) b ≫ Sigma.ι Y i) := by
   rw [coprodFirst_distrib]
@@ -292,7 +299,8 @@ lemma cf_hom_fst {C : Type*} [Category C] [HasPullbacks C] [FinitaryPreExtensive
   rw [← Category.assoc, Limits.Sigma.ι_map, Category.assoc, Limits.Sigma.ι_desc,
     ← Category.assoc, pullbackSymmetry_hom_comp_snd, Limits.Sigma.ι_desc]
 
-private lemma overSigma_hom_eq {C : Type*} [Category C] [HasPullbacks C] {S : C} {ι : Type} [Finite ι] [HasFiniteCoproducts C]
+private lemma overSigma_hom_eq {C : Type*} [Category C] [HasPullbacks C] {S : C}
+    {ι : Type} [Finite ι] [HasFiniteCoproducts C]
     (A : ι → Over S) :
     (∐ A).hom = (PreservesCoproduct.iso (Over.forget S) A).hom ≫
       Limits.Sigma.desc (fun i => (A i).hom) := by
@@ -303,16 +311,18 @@ private lemma overSigma_hom_eq {C : Type*} [Category C] [HasPullbacks C] {S : C}
   rw [PreservesCoproduct.inv_hom]
   refine Limits.Sigma.hom_ext _ _ (fun i => ?_)
   rw [ι_comp_sigmaComparison_assoc]
-  show (Sigma.ι A i).left ≫ (∐ A).hom = _
+  change (Sigma.ι A i).left ≫ (∐ A).hom = _
   rw [Limits.Sigma.ι_desc]
   exact Over.w (Sigma.ι A i)
 
 /-- One-sided distributivity of the binary product over a finite coproduct in the slice category
 `Over S` of a finitary pre-extensive category: `(∐ᵢ Aᵢ) ⨯ B ≅ ∐ᵢ (Aᵢ ⨯ B)`.  Built via
 `Over.isoMk` from the `C`-level `prod_coproduct_distrib`, threading `Over.prodLeftIsoPullback`
-and the coproduct-preservation of `Over.forget`.  This is the slice-product distributivity the
-inductive step of `widePullback_coproduct_iso` consumes (blueprint `lem:overProd_coproduct_distrib`). -/
-noncomputable def overProd_coproduct_distrib {C : Type*} [Category C] [HasPullbacks C] [FinitaryPreExtensive C] {ι : Type} [Finite ι] [HasFiniteCoproducts C]
+and the coproduct-preservation of `Over.forget`.  This is the slice-product distributivity
+consumed by the inductive step of `widePullback_coproduct_iso` (blueprint
+`lem:overProd_coproduct_distrib`). -/
+noncomputable def overProd_coproduct_distrib {C : Type*} [Category C] [HasPullbacks C]
+    [FinitaryPreExtensive C] {ι : Type} [Finite ι] [HasFiniteCoproducts C]
     {S : C} [HasBinaryProducts (Over S)] (A : ι → Over S) (B : Over S) :
     (∐ A) ⨯ B ≅ ∐ fun i => A i ⨯ B := by
   set pA := PreservesCoproduct.iso (Over.forget S) A with hpA
@@ -370,11 +380,9 @@ noncomputable def overProd_coproduct_distrib_right {C : Type*} [Category C] [Has
   Limits.prod.braiding A (∐ Y) ≪≫ overProd_coproduct_distrib Y A ≪≫
     Limits.Sigma.mapIso (fun i => Limits.prod.braiding (Y i) A)
 
--- The inductive step chains six iso layers (`widePullback_overX_eq_prod`, `prodFinSuccIso`,
--- two distributivity isos, the reindex), whose combined `whnf` over the nested fibre powers
--- exceeds the default heartbeat budget.
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
+-- The six iso layers force `whnf` over nested fibre powers beyond the default budget.
 /-- Coproduct distributes over the `(p+1)`-fold wide fibre power of the cover map `∐ᵢ Zᵢ ⟶ S`,
 in slice-product normal form (blueprint `lem:coproduct_distrib_fibrePower`). -/
 noncomputable def widePullback_coproduct_iso {C : Type*} [Category C] [HasPullbacks C]
@@ -510,7 +518,7 @@ is the coproduct of the member arrows.  Proved directly from the coproduct unive
 `Scheme` (each leg is `Over.homMk (Sigma.ι …)`).  Project-local. -/
 noncomputable def coverArrowOverIsColimit (𝒰 : X.OpenCover) :
     IsColimit (coverArrowOverCofan 𝒰) := by
-  refine mkCofanColimit _
+  refine Cofan.IsColimit.mk _
     (fun t => Over.homMk (Sigma.desc (fun i => (t.inj i).left)) ?_)
     (fun t j => ?_) (fun t m hm => ?_)
   · change Sigma.desc (fun i => (t.inj i).left) ≫ t.pt.hom = Sigma.desc 𝒰.f
@@ -518,7 +526,7 @@ noncomputable def coverArrowOverIsColimit (𝒰 : X.OpenCover) :
     rw [Sigma.ι_desc_assoc, Over.w]
     exact (Sigma.ι_desc 𝒰.f i).symm
   · apply Over.OverMorphism.ext
-    simp only [coverArrowOverCofan, Cofan.mk_ι_app, Over.homMk_left]
+    simp only [coverArrowOverCofan]
     exact Sigma.ι_desc _ _
   · apply Over.OverMorphism.ext
     refine Sigma.hom_ext _ _ (fun i => ?_)
@@ -602,35 +610,8 @@ noncomputable def coverInterProdIso (𝒰 : X.OpenCover) {p : ℕ} (σ : Fin (p 
   exact IsOpenImmersion.lift_fac (Scheme.Opens.ι (coverInterOpen 𝒰 σ))
     (WidePullback.base (fun k : Fin (p + 1) => 𝒰.f (σ k))) _
 
-/- Planner strategy:
-Goal: `(coverCechNerveOver 𝒰).obj (op [p]) ≅ ∐ fun σ => Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ))`
-in `Over X`.
-
-Route:
-(a) UNPACK `coverCechNerveOver`: it is `Over.lift (coverCechNerve 𝒰).left (coverCechNerve 𝒰).hom`,
-    so the degree-`p` object is `Over.mk ((coverCechNerve 𝒰).hom.app (mk p))`.
-    The underlying scheme is `(coverCechNerve 𝒰).left.obj (op (mk p))` — the `(p+1)`-fold
-    fibre power of `coverArrow 𝒰 = Arrow.mk (Sigma.desc 𝒰.f)` over `X`.
-
-(b) DISTRIBUTE: coproducts distribute over finite fibre products in `Scheme`
-    (`Sigma.fiberProduct_sigma` or similar Mathlib anchor):
-    `(∐ᵢ Uᵢ) ×_X ⋯ ×_X (∐ᵢ Uᵢ) ≅ ∐_σ (U_{σ 0} ×_X ⋯ ×_X U_{σ p})`
-    for `σ : Fin(p+1) → 𝒰.I₀`.
-
-(c) INTERSECT: each factor `U_{σ 0} ×_X ⋯ ×_X U_{σ p}` is the scheme-level intersection
-    (fibre product of open immersions over `X`), which is the open subscheme
-    `coverInterOpen 𝒰 σ` with structure map `Scheme.Opens.ι (coverInterOpen 𝒰 σ)`.
-
-(d) IDENTIFY: the structure map of the `σ`-component is the open immersion `j_σ`, and the
-    universal map out of the coproduct is `Sigma.desc (fun σ => j_σ)`, making the LHS
-    equal to `∐_σ Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ))` as an `Over X` object.
-
-Key Mathlib anchors:
-- `Scheme.pullback_openCover_iSup` or sigma-fibre-product distribution in `Scheme`
-- `Scheme.IsOpenImmersion.isPullback` (open immersions are pullback-stable)
-- `ColimitCocone` machinery for the coproduct in `Over X`
-
-Difficulty: MEDIUM — geometric bookkeeping, not sheaf theory. -/
+/-- In degree `p`, the Čech nerve of a finite cover is the coproduct of the iterated
+intersections indexed by maps `Fin (p + 1) → 𝒰.I₀`. -/
 noncomputable def cechBackbone_left_sigma (𝒰 : X.OpenCover) [Finite 𝒰.I₀] (p : ℕ) :
     (coverCechNerveOver 𝒰).obj (Opposite.op (SimplexCategory.mk p)) ≅
     ∐ fun σ : Fin (p + 1) → 𝒰.I₀ =>
@@ -662,8 +643,9 @@ noncomputable def cechBackbone_left_sigma (𝒰 : X.OpenCover) [Finite 𝒰.I₀
 
 /-- A morphism in `X.Modules` is an isomorphism as soon as its image under the forgetful functor
 `Scheme.Modules.toPresheaf` to presheaves of abelian groups is one.  `toPresheaf` reflects
-isomorphisms (it factors through fully faithful functors), so this is immediate.  Project-local L1
-reflection wrapper for the Stub-2 disjoint-union chain (blueprint `lem:isIso_modules_of_toPresheaf`). -/
+isomorphisms (it factors through fully faithful functors), so this is immediate.  Project-local
+L1 reflection wrapper for the Stub-2 disjoint-union chain (blueprint
+`lem:isIso_modules_of_toPresheaf`). -/
 theorem isIso_modules_of_toPresheaf {M N : X.Modules} (φ : M ⟶ N)
     [IsIso ((Scheme.Modules.toPresheaf X).map φ)] : IsIso φ :=
   isIso_of_reflects_iso φ (Scheme.Modules.toPresheaf X)
@@ -755,13 +737,13 @@ private theorem isIso_coprodDecompMap (M : (A ⨿ B).Modules) :
       (⟨M.presheaf, M.isSheaf⟩ : TopCat.Sheaf Ab _) W₀ W₁ h₂
     refine L.ofIsoLimit (Cone.ext (M.presheaf.mapIso (eqToIso (congrArg Opposite.op h₁))) ?_)
     rintro ⟨(_ | _)⟩
-    · show M.presheaf.map (homOfLE le_sup_left).op
+    · change M.presheaf.map (homOfLE le_sup_left).op
         = M.presheaf.map (eqToHom (congrArg Opposite.op h₁)) ≫ u₀.app U
       rw [hleg₀, show (homOfLE (le_sup_left : W₀ ≤ W₀ ⊔ W₁)).op
             = eqToHom (congrArg Opposite.op h₁) ≫ (homOfLE (ι₀.image_preimage_le U)).op
           from Subsingleton.elim _ _, M.presheaf.map_comp]
       rfl
-    · show M.presheaf.map (homOfLE le_sup_right).op
+    · change M.presheaf.map (homOfLE le_sup_right).op
         = M.presheaf.map (eqToHom (congrArg Opposite.op h₁)) ≫ u₁.app U
       rw [hleg₁, show (homOfLE (le_sup_right : W₁ ≤ W₀ ⊔ W₁)).op
             = eqToHom (congrArg Opposite.op h₁) ≫ (homOfLE (ι₁.image_preimage_le U)).op
@@ -785,8 +767,9 @@ private theorem isIso_coprodDecompMap (M : (A ⨿ B).Modules) :
 
 The binary disjoint-cover decomposition `isIso_coprodDecompMap` is upgraded to a statement about
 the push–pull object `pushPullObj F (Over.mk q)` (`q = coprod.desc pA pB`).  The single substantive
-node is the per-leg coherence `pushPull_binary_leg_coherence` (★): the contravariant push–pull map of
-the over-inclusion `Over.homMk c : Over.mk pC ⟶ Over.mk q` is, up to the canonical leg iso
+node is the per-leg coherence `pushPull_binary_leg_coherence` (★): the contravariant
+push–pull map of the over-inclusion `Over.homMk c : Over.mk pC ⟶ Over.mk q` is, up to the
+canonical leg iso
 `pushPullCoprodLegIso`, the pushforward of the disjoint-cover restriction unit.  This lets the
 canonical comparison `prod.lift (pushPullMap F overInl) (pushPullMap F overInr)` be matched against
 the manifestly-iso chain through `coprodDecompMap`. -/
@@ -806,9 +789,8 @@ noncomputable def pushPullCoprodLegIso {C : Scheme.{u}} (q : (A ⨿ B) ⟶ X)
       (Scheme.Modules.pullbackCongr wC).app F)) ≪≫
   eqToIso (congrArg (fun p => (pushforward p).obj ((Scheme.Modules.pullback pC).obj F)) wC)
 
--- The final `congr 1` discharges the proof-irrelevant `eqToHom` over-triangle transports against
--- concrete pushforward/pullback objects, whose `whnf` exceeds the default heartbeat budget.
 set_option maxHeartbeats 800000 in
+-- The final `congr 1` unfolds proof-irrelevant transports beyond the default budget.
 /-- (★) Per-leg coherence: the push–pull map of the over-inclusion `Over.homMk c : Over.mk pC ⟶
 Over.mk q` is, through the canonical leg iso, the pushforward of the disjoint-cover restriction unit
 `(restrictAdjunction c).unit`.  This is the bridge that converts the canonical comparison map
@@ -859,11 +841,13 @@ noncomputable def pushPull_binary_coprod_prod (F : X.Modules) (Y₀ Y₁ : Over 
   -- (defeq to the `pushPullObj F (Over.mk Y₀.hom)` produced by `pushPullCoprodLegIso`); the
   -- syntactic pin is essential so the `Category.assoc`/`prod.map_fst` rewrites below can match
   -- the trailing `prod.fst` on `pushPullObj F Y₀ ⨯ pushPullObj F Y₁`.
-  set idiso₀ : (pushforward q).obj ((pushforward Limits.coprod.inl).obj (M.restrict Limits.coprod.inl))
-      ≅ pushPullObj F Y₀ :=
+  set idiso₀ :
+      (pushforward q).obj ((pushforward Limits.coprod.inl).obj
+        (M.restrict Limits.coprod.inl)) ≅ pushPullObj F Y₀ :=
     pushPullCoprodLegIso q Limits.coprod.inl Y₀.hom wInl F with hidiso0
-  set idiso₁ : (pushforward q).obj ((pushforward Limits.coprod.inr).obj (M.restrict Limits.coprod.inr))
-      ≅ pushPullObj F Y₁ :=
+  set idiso₁ :
+      (pushforward q).obj ((pushforward Limits.coprod.inr).obj
+        (M.restrict Limits.coprod.inr)) ≅ pushPullObj F Y₁ :=
     pushPullCoprodLegIso q Limits.coprod.inr Y₁.hom wInr F with hidiso1
   have hcoh0 : pushPullMap F overInl
       = (pushforward q).map ((Scheme.Modules.restrictAdjunction Limits.coprod.inl).unit.app M)
@@ -884,7 +868,7 @@ noncomputable def pushPull_binary_coprod_prod (F : X.Modules) (Y₀ Y₁ : Over 
   have hcmp : Limits.prod.lift (pushPullMap F overInl) (pushPullMap F overInr) = chainIso.hom := by
     rw [hcoh0, hcoh1, hchain, Iso.trans_hom, Iso.trans_hom, Functor.mapIso_hom, asIso_hom,
       Limits.prod.mapIso_hom, Limits.PreservesLimitPair.iso_hom]
-    show Limits.prod.lift _ _ =
+    change Limits.prod.lift _ _ =
       (pushforward q).map (coprodDecompMap M) ≫
         Limits.prod.lift ((pushforward q).map Limits.prod.fst) ((pushforward q).map Limits.prod.snd)
           ≫ Limits.prod.map idiso₀.hom idiso₁.hom
@@ -941,15 +925,16 @@ noncomputable def overSigmaOptionIso {α : Type*} (legs : Option α → Over X)
   Over.isoMk (sigmaOptionIso (fun o => (legs o).left)) (by
     refine Limits.Sigma.hom_ext _ _ (fun o => ?_)
     rcases o with _ | a
-    · -- none-case: `erw` (higher transparency) unfolds `sigmaOptionIso.hom = Sigma.desc …` for the
-      -- `Sigma.ι_desc` match that plain `simp` misses post-v4.31.0; the residual is `coprod.inl_desc`
+    · -- none-case: `erw` (higher transparency) unfolds `sigmaOptionIso.hom = Sigma.desc …`
+      -- for the `Sigma.ι_desc` match that plain `simp` misses post-v4.31.0; the residual is
+      -- `coprod.inl_desc`
       -- up to defeq (`Option.rec … none = coprod.inl`, `(Over.mk _).hom = coprod.desc …`).
       erw [Limits.Sigma.ι_desc_assoc, Limits.Sigma.ι_desc]
       exact Limits.coprod.inl_desc _ _
     · -- some-case: same reduction, then reshape to clean form (dodging the `(Over.mk _).hom`
       -- transparency wall) and finish with `coprod.inr_desc` + the inner `Sigma.ι_desc`.
       erw [Limits.Sigma.ι_desc_assoc, Limits.Sigma.ι_desc]
-      show (Limits.Sigma.ι (fun a : α => (legs (some a)).left) a ≫ Limits.coprod.inr) ≫
+      change (Limits.Sigma.ι (fun a : α => (legs (some a)).left) a ≫ Limits.coprod.inr) ≫
           Limits.coprod.desc (legs none).hom
             (Limits.Sigma.desc fun a : α => (legs (some a)).hom) = (legs (some a)).hom
       rw [Category.assoc, Limits.coprod.inr_desc, Limits.Sigma.ι_desc])
@@ -1031,7 +1016,8 @@ private theorem pushPull_coprod_prod_empty (F : X.Modules) (legs : PEmpty.{u + 1
     refine (CategoryTheory.Functor.map_isZero (Scheme.Modules.pushforward _) ?_).isTerminal
     -- The base scheme `∐ PEmpty` is the initial scheme, hence has empty carrier; every sheaf of
     -- modules over it is a zero object.
-    haveI : IsEmpty ↥((Over.mk (Limits.Sigma.desc fun i : PEmpty.{u + 1} => (legs i).hom)).left) := by
+    haveI : IsEmpty
+        ↥((Over.mk (Limits.Sigma.desc fun i : PEmpty.{u + 1} => (legs i).hom)).left) := by
       rw [← AlgebraicGeometry.isInitial_iff_isEmpty]
       exact ⟨Limits.isColimitEquivIsInitialOfIsEmpty Scheme _
         (Limits.colimit.isColimit (Discrete.functor (fun i : PEmpty.{u + 1} => (legs i).left)))⟩
@@ -1064,7 +1050,7 @@ private theorem coprodToProd_isIso_of_equiv (F : X.Modules) {α β : Type u} (e 
       ≅ Over.mk (Limits.Sigma.desc (fun b => (legs b).hom)) := Over.isoMk u hw
   -- `pushPullMap F mIso.hom` is the inverse leg of `pushPullObjCongr`, hence an isomorphism.
   haveI : IsIso (pushPullMap F mIso.hom) := by
-    show IsIso ((pushPullObjCongr F mIso).inv)
+    change IsIso ((pushPullObjCongr F mIso).inv)
     infer_instance
   -- Target product reindex (via `whiskerEquiv`, keeping a clean lambda codomain so the projections
   -- match the canonical comparisons): `∏_α (pushPull (legs∘e)) ≅ ∏_β (pushPull legs)`.
@@ -1075,7 +1061,7 @@ private theorem coprodToProd_isIso_of_equiv (F : X.Modules) {α β : Type u} (e 
   -- transported back across the target reindex equals the slice-transported `α`-comparison.
   have key : coprodToProdMap F legs ≫ prodIso.inv
       = pushPullMap F mIso.hom ≫ coprodToProdMap F (fun a => legs (e a)) := by
-    show coprodToProdMap F legs ≫
+    change coprodToProdMap F legs ≫
         (Pi.whiskerEquiv (f := fun a => pushPullObj F (legs (e a)))
           (g := fun b => pushPullObj F (legs b)) e (fun a => Iso.refl _)).inv = _
     refine Limits.Pi.hom_ext _ _ (fun a => ?_)
@@ -1120,9 +1106,9 @@ private lemma piOptionIso_inv_π_some {C : Type*} [Category C] {α : Type*} (W :
       = Limits.prod.snd ≫ Limits.Pi.π (fun a : α => W (some a)) a := by
   simp only [piOptionIso, Limits.Pi.lift_π]
 
--- The `erw` projection/fold steps run `whnf` on push–pull composites, exceeding the default budget.
 set_option backward.isDefEq.respectTransparency false in
 set_option maxHeartbeats 1600000 in
+-- The `erw` projection/fold steps unfold push-pull composites beyond the default budget.
 /-- `Option`-adjoining step of the finite induction: given the result for `α`, deduce it for
 `Option α`, via the slice `Option`-coproduct split (`overSigmaOptionIso`), the binary
 decomposition (`pushPull_binary_coprod_prod`), the induction hypothesis, and the dual
@@ -1150,7 +1136,7 @@ private theorem coprodToProd_isIso_option (F : X.Modules) {α : Type u}
   -- check — matching each projection via the per-leg push–pull coherence
   -- (`pushPull_binary_leg_coherence` for the `none`/`some` inclusions) — is the residual.
   have hcanon : coprodToProdMap F legs = refIso.hom := by
-    show coprodToProdMap F legs =
+    change coprodToProdMap F legs =
       (pushPullObjCongr F (overSigmaOptionIso legs) ≪≫
         pushPull_binary_coprod_prod F (legs none)
           (Over.mk (Limits.Sigma.desc (fun a => (ls a).hom))) ≪≫
@@ -1207,7 +1193,8 @@ private theorem isIso_coprodToProdMap (F : X.Modules) {ι : Type u} [Finite ι]
     exact coprodToProd_isIso_option F ih legs
 
 /-- Push–pull on a finite coproduct of legs is the product of the per-leg push–pulls, in
-canonical `Pi.lift`-of-push–pull-maps form.  Project-local (blueprint `lem:pushPull_coprod_prod`). -/
+canonical `Pi.lift`-of-push–pull-maps form.  Project-local (blueprint
+`lem:pushPull_coprod_prod`). -/
 noncomputable def pushPull_coprod_prod (F : X.Modules) {ι : Type u} [Finite ι]
     (legs : ι → Over X) :
     pushPullObj F (Over.mk (Limits.Sigma.desc (fun i => (legs i).hom))) ≅
@@ -1215,50 +1202,10 @@ noncomputable def pushPull_coprod_prod (F : X.Modules) {ι : Type u} [Finite ι]
   haveI := isIso_coprodToProdMap F legs
   asIso (coprodToProdMap F legs)
 
-/- Planner strategy:
-Goal: `pushPullObj F Y_p ≅ ∏_σ pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))` in `X.Modules`.
-where `Y_p = (coverCechNerveOver 𝒰).obj (op (mk p))`.
-
-This is THE new-infra leaf. The key observation is that, although the opens `U_σ ⊆ X` OVERLAP
-inside `X`, they are DISJOINT as components of the coproduct scheme `Y_p = ∐_σ U_σ`.
-
-Route:
-(a) TRANSPORT via `cechBackbone_left_sigma`: by the iso from Stub 1, we may work with the
-    coproduct `∐_σ Over.mk j_σ` instead of `Y_p`.
-
-(b) BUILD comparison map:
-    `pushPullObj F Y_p ⟶ ∏_σ pushPullObj F (Over.mk j_σ)`
-    from the projections `pushPullMap F (ι_σ) : pushPullObj F Y_p ⟶ pushPullObj F (Over.mk j_σ)`
-    induced by the coproduct inclusions `ι_σ : Over.mk j_σ ⟶ Y_p` (going backwards via
-    the pushPullFunctor, which is contravariant on `Over X`).
-
-(c) CHECK iso via `Scheme.Modules.toPresheaf`:
-    The forgetful functor `Scheme.Modules.toPresheaf = SheafOfModules.forget ⋙
-    PresheafOfModules.toPresheaf ...` is faithful, reflects isos, and preserves limits
-    (`Sheaf.lean:75–78`). So it suffices to verify the comparison is an iso at the
-    `Ab`-presheaf level.
-
-(d) PRESHEAF-LEVEL ISO: on `Ab`-presheaves, this is the indexed disjoint-union decomposition.
-    Since the components of `∐_σ U_σ` are disjoint in the coproduct topology:
-    * Iterate the binary `TopCat.Sheaf.isProductOfDisjoint` (Lean name: same) over the
-      finite index set `{σ : Fin(p+1) → 𝒰.I₀}`.
-    * Or use `Scheme.coprodPresheafObjIso` (sections over a binary coproduct scheme = product)
-      as the binary building block and iterate.
-    The result: for any open `W` in `Y_p`, `(q_p^* F).val.obj (op W) ≅ ∏_σ (j_σ^* F).val.obj (op (W_σ))`
-    where `W_σ = (ι_σ)⁻¹W` is the trace on the σ-component.
-
-(e) TRANSPORT back through `toPresheaf` to get the iso in `X.Modules`.
-
-Key Mathlib anchors:
-- `TopCat.Sheaf.isProductOfDisjoint` (Topology/Sheaves/SheafCondition/PairwiseIntersections.lean)
-- `Scheme.coprodPresheafObjIso` (AlgebraicGeometry/Limits.lean)
-- `SheafOfModules.forget` faithfulness and iso-reflection (`Sheaf.lean:75–78`)
-
-Difficulty: HARD (genuine new sheaf infra — the single new-infra leaf of the chain). -/
--- Instance synthesis for the three chained `pushPullObjCongr`/`pushPull_coprod_prod` isos over the
--- Čech backbone (`HasProduct`/`HasCoproduct` on the `Fin (p+1) → 𝒰.I₀`-indexed slice families)
--- exceeds the default `synthInstance` budget; bump it for this assembly.
 set_option synthInstance.maxHeartbeats 800000 in
+-- The three chained isos synthesize finite products and coproducts beyond the default budget.
+/-- Push–pull along the degree-`p` Čech backbone is the product of push–pull along the
+intersection opens indexed by `Fin (p + 1) → 𝒰.I₀`. -/
 noncomputable def pushPull_sigma_iso (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
     (F : X.Modules) (p : ℕ) :
     pushPullObj F ((coverCechNerveOver 𝒰).obj (Opposite.op (SimplexCategory.mk p))) ≅
@@ -1414,7 +1361,7 @@ noncomputable def pushPull_eval_prod_iso (𝒰 : X.OpenCover) [Finite 𝒰.I₀]
         pushPullObj F (Over.mk (Scheme.Opens.ι (coverInterOpen 𝒰 σ)))) ≪≫
     Limits.Pi.mapIso (fun σ => pushPull_leg_sections 𝒰 F σ V)
 
-/-! ## Stub 5 — Complex-level iso: evaluated augmented Čech section complex ≅ augmented concrete complex -/
+/-! ## Stub 5 — Complex-level Čech iso -/
 
 /-- The concrete (non-augmented) section Čech complex over `V` for the restricted cover.
 Used as the base for the augmented complex in `cechSection_complex_iso` and
