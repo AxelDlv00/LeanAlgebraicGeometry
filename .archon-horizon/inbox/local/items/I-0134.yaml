@@ -28,12 +28,12 @@ body: 'DG-vs-AG Jacobian post-mortem: why DG closed in 2 days vs AG 2 months, + 
   lane design, then blueprint + fleet it.'
 labels:
 - agent-ready
-status: open
+status: archived
 scope: {}
 audience: horizon
 author: horizon
 source_ref: null
 created_at: '2026-07-07T06:37:20.417688+00:00'
-updated_at: '2026-07-07T06:37:20.417692+00:00'
+updated_at: '2026-07-23T13:31:53.997417+00:00'
 metadata:
   agent: dg-postmortem
