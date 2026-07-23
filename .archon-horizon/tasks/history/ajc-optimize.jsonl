@@ -1,1 +1,5 @@
 {"at": "2026-07-23T04:11:40.594393+00:00", "actor": "Axel", "field": "created", "from": "", "to": "queued", "note": "opened"}
+{"at": "2026-07-23T04:13:27.769970+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-07-23T06:51:02.216448+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "re-queued on resume: its Horizon session was interrupted mid-run"}
+{"at": "2026-07-23T06:51:17.659525+00:00", "actor": "system", "field": "status", "from": "queued", "to": "running", "note": "started by Horizon run"}
+{"at": "2026-07-23T07:22:00.795820+00:00", "actor": "system", "field": "status", "from": "running", "to": "queued", "note": "Horizon session ended without the agent recording a terminal status; returned to queued"}

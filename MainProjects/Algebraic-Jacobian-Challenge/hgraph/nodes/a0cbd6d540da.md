@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechEngineD_
 type: lean
-updated: '2026-07-23T12:02:28'
+updated: '2026-07-23T15:01:53'
 ---
 lemma cechEngineD_ιFam (V : TopologicalSpace.Opens ↥X) (p : ℕ)
     (σ : Fin (p + 2) → {i : ι // V ≤ U i}) :

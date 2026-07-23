@@ -13,7 +13,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.Scheme.AffineCoverMVSquare.ker_cechD12_
 type: lean
-updated: '2026-07-23T12:02:30'
+updated: '2026-07-23T15:01:53'
 ---
 lemma AffineCoverMVSquare.ker_cechD12_π_off_diag
     (h10 : (∏ᶜ ((FormalCoproduct.mk _ S.coverFamily).obj ∘ ![⟨0⟩, ⟨1⟩, ⟨0⟩])
