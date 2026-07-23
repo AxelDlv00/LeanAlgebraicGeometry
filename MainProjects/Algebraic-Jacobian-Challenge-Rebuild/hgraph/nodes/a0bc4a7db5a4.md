@@ -12,7 +12,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.thetaElem_mul_mem_zero
 type: lean
-updated: '2026-07-24T03:32:07'
+updated: '2026-07-24T03:34:21'
 ---
 lemma thetaElem_mul_mem_zero₁ {W : Y.Opens} (hηW : genericPoint Y ∈ W)
     {h : Y.functionField} (hh : h ∈ divisorSections K (n • fiberWeilDivisor π) W) :

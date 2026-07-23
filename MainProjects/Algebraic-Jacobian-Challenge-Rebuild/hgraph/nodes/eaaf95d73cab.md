@@ -18,7 +18,7 @@ generated: lean
 lean_status: lean_ok
 title: CategoryTheory.Abelian.Ext.linearEquiv
 type: lean
-updated: '2026-07-24T03:32:06'
+updated: '2026-07-24T03:34:21'
 ---
 private lemma Abelian.Ext.linearEquiv₀_mk₀_comp' {X Y Z : D} (f : X ⟶ Y)
     (x : Abelian.Ext Y Z 0) :
