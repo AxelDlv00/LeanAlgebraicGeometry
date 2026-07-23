@@ -1,16 +1,29 @@
 id: T2
 project: Algebraic-Jacobian-Challenge
-objective: 'Close the flat base change route (Stacks 02KH, Čech separated case).\n\nFor
-  a flat morphism g, prove:\n  g^* R^i f_* F ≅ R^i f''_* (g''^* F).\n\nExactly three
-  direct Lean obligations remain in CechHigherDirectImageUnconditional.lean:\n\n-
-  pullback_preservesFiniteLimits: flat pullback of sheaves of modules is left exact.\n-
-  cech_pushforward_baseChange_natIso.naturality: compatibility of the degreewise affine
-  base-change isomorphisms with cosimplicial maps.\n- twisted_cech_nerve_iso.naturality:
-  compatibility of the per-intersection pullback identifications with cosimplicial
-  maps.\n\nThe degreewise components and the final Čech-complex assembly are already
-  present. Do not restart the retired bareBC/affineBaseChange_pushforward_iso route.\n\nDone
-  when those three sorries are removed, the focused module build is green with no
-  new axioms, and roadmap item AJC.fbc can advance.'
+objective: 'Close the flat base change route (Stacks 02KH, Cech separated case).
+
+
+  For a flat morphism g, prove that flat pullback commutes with higher direct image.
+
+
+  Exactly three direct Lean obligations remain in CechHigherDirectImageUnconditional.lean:
+
+
+  - pullback_preservesFiniteLimits: flat pullback of sheaves of modules is left exact.
+
+  - cech_pushforward_baseChange_natIso.naturality: compatibility of the degreewise
+  affine base-change isomorphisms with cosimplicial maps.
+
+  - twisted_cech_nerve_iso.naturality: compatibility of the per-intersection pullback
+  identifications with cosimplicial maps.
+
+
+  The degreewise components and the final Cech-complex assembly are already present.
+  Do not restart the retired bareBC/affineBaseChange_pushforward_iso route.
+
+
+  Done when those three sorries are removed, the focused module build is green with
+  no new axioms, and roadmap item AJC.fbc can advance.'
 title: Prove the FBC lemma — flat base change (Stacks 02KH)
 explanation: ''
 projects:
@@ -36,6 +49,6 @@ roadmap_refs: []
 inbox_refs: []
 artifact_refs: []
 created_at: '2026-07-01T10:07:41.756410+00:00'
-updated_at: '2026-07-23T15:40:23.330636+00:00'
+updated_at: '2026-07-23T15:46:55.046951+00:00'
 metadata:
   author: human
