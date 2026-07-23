@@ -20,7 +20,7 @@ generated: lean
 lean_status: lean_ok
 title: AlgebraicGeometry.cechFreeEvalEngine_X_inv_hom_
 type: lean
-updated: '2026-07-23T15:31:56'
+updated: '2026-07-23T16:01:58'
 ---
 private lemma cechFreeEvalEngine_X_inv_hom_ιFam
     (V : TopologicalSpace.Opens ↥X) (p : ℕ) (σ : Fin (p + 1) → ι)
