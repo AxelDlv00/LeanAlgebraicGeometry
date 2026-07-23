@@ -3,8 +3,14 @@ Copyright (c) 2026 Christian Merten. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Christian Merten
 -/
-import Mathlib
-import AlgebraicJacobian.Cohomology.CechHigherDirectImage
+import Mathlib.Algebra.Category.ModuleCat.Presheaf.Colimits
+import Mathlib.Algebra.Homology.QuasiIso
+import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
+import Mathlib.Algebra.Homology.ShortComplex.PreservesHomology
+import Mathlib.Algebra.Homology.SingleHomology
+import Mathlib.LinearAlgebra.Finsupp.Pi
+import Mathlib.Tactic.Abel
+import Mathlib.Tactic.Ring
 import AlgebraicJacobian.Cohomology.PresheafCech
 
 /-!
@@ -620,7 +626,7 @@ noncomputable def freeYonedaEval_iso_of_le {W V : TopologicalSpace.Opens ↥X} (
       ≅ ModuleCat.of (X.ringCatSheaf.obj.obj (Opposite.op V))
           (X.ringCatSheaf.obj.obj (Opposite.op V)) :=
   haveI : Unique (V ⟶ W) := ⟨⟨homOfLE h⟩, fun _ => Subsingleton.elim _ _⟩
-  (Finsupp.LinearEquiv.finsuppUnique _ _ (V ⟶ W)).toModuleIso
+  (Finsupp.uniqueLinearEquiv _ _ (homOfLE h)).toModuleIso
 
 /-- A coproduct of zero objects is a zero object: every coproduct injection out of a zero
 object is zero, so the identity of the coproduct is zero. -/
@@ -985,9 +991,10 @@ lemma freeYonedaEval_iso_of_le_hom_eq_aug {W V : TopologicalSpace.Opens ↥X} (h
   have hL : (ConcreteCategory.hom (freeYonedaEval_iso_of_le h).hom) (ModuleCat.freeMk g)
       = (1 : X.ringCatSheaf.obj.obj (Opposite.op V)) := by
     simp only [freeYonedaEval_iso_of_le, LinearEquiv.toModuleIso_hom]
-    change (Finsupp.LinearEquiv.finsuppUnique _ _ (V ⟶ W)) (ModuleCat.freeMk g) = 1
-    rw [Finsupp.LinearEquiv.finsuppUnique_apply]
-    simp only [ModuleCat.freeMk, Unique.eq_default g, Finsupp.single_eq_same]
+    change (Finsupp.uniqueLinearEquiv _ _ (homOfLE h)) (ModuleCat.freeMk g) = 1
+    rw [Finsupp.uniqueLinearEquiv_apply]
+    simp only [ModuleCat.freeMk, Unique.eq_default g,
+      Unique.eq_default (homOfLE h), Finsupp.single_eq_same]
   exact hL.trans (freeYonedaAug_app_freeMk (g : V ⟶ W)).symm
 
 /-- **Naturality of the per-summand identification `freeYonedaEval_iso_of_le`.** For
@@ -2353,5 +2360,3 @@ end FamilyParameterized
 
 
 end AlgebraicGeometry
-
-

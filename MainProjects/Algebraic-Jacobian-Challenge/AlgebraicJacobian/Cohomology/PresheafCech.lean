@@ -3,7 +3,8 @@ Copyright (c) 2026 Christian Merten. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Christian Merten
 -/
-import Mathlib
+import Mathlib.Algebra.Category.ModuleCat.Presheaf.Free
+import Mathlib.CategoryTheory.Preadditive.Injective.Basic
 import AlgebraicJacobian.Cohomology.CechHigherDirectImage
 
 /-!
@@ -319,7 +320,7 @@ noncomputable def sectionCechCosimplicial {ι : Type u} (U : ι → TopologicalS
   map_comp {l m n} f g := by
     apply Pi.hom_ext
     intro σ
-    simp only [Pi.lift_π, Category.assoc, SimplexCategory.comp_toOrderHom, OrderHom.comp_coe]
+    simp only [Pi.lift_π, Category.assoc, SimplexCategory.comp_toOrderHom]
     rw [← Category.assoc, Pi.lift_π, Category.assoc, ← Functor.map_comp]
     congr 1
 

@@ -3,9 +3,22 @@ Copyright (c) 2026 Christian Merten. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Christian Merten
 -/
-import Mathlib
-import AlgebraicJacobian.Cohomology.CechHigherDirectImage
+import Mathlib.Algebra.Homology.ShortComplex.Ab
+import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
+import Mathlib.AlgebraicGeometry.Modules.Tilde
+import Mathlib.RingTheory.LocalProperties.Exactness
+import Mathlib.RingTheory.TensorProduct.IsBaseChangePi
+import Mathlib.Tactic.Abel
+import Mathlib.Tactic.Ring
 import AlgebraicJacobian.Cohomology.PresheafCech
+
+/-!
+# Acyclicity of the Čech complex on affine schemes
+
+This file proves the constant-coefficient contraction and localization results
+used to identify the positive-degree homology of an affine Čech complex with
+zero.
+-/
 
 universe u
 
@@ -637,9 +650,8 @@ noncomputable def cechPrepend (m : ℕ) (σ : Fin m → ι) :
   (AwayComparison.comparison (M := M)
     (LocalizedModule.mkLinearMap (Submonoid.powers (s r * sprod s (Fin.cons r σ))) M)
     (LocalizedModule.mkLinearMap (Submonoid.powers (s r * sprod s σ)) M)
-    (by
-      change AwayComparison.Inverts (s r * sprod s (Fin.cons r σ))
-        (LocalizedModule (Submonoid.powers (s r * sprod s σ)) M)
+    (show AwayComparison.Inverts (s r * sprod s (Fin.cons r σ))
+        (LocalizedModule (Submonoid.powers (s r * sprod s σ)) M) from by
       have h : s r * sprod s (Fin.cons r σ) = s r * (s r * sprod s σ) := by
         rw [sprod_cons]
       rw [h]
