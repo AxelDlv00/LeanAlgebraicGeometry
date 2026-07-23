@@ -42,6 +42,14 @@ github:
   enabled: true
   repo: AxelDlv00/LeanAlgebraicGeometry-Horizon
 projects:
+  Algebraic-Jacobian-Challenge-Rebuild:
+    path: MainProjects/Algebraic-Jacobian-Challenge-Rebuild
+    type: lean
+    vcs:
+      enabled: true
+      git_dir: .archon-horizon/vcs/Algebraic-Jacobian-Challenge-Rebuild.git
+    build:
+      command: lake build
   Algebraic-Jacobian-Challenge:
     path: MainProjects/Algebraic-Jacobian-Challenge
     type: lean
@@ -96,13 +104,5 @@ projects:
     vcs:
       enabled: true
       git_dir: .archon-horizon/vcs/Picard-IdentityComponent.git
-    build:
-      command: lake build
-  Algebraic-Jacobian-Challenge-Rebuild:
-    path: MainProjects/Algebraic-Jacobian-Challenge-Rebuild
-    type: lean
-    vcs:
-      enabled: true
-      git_dir: .archon-horizon/vcs/Algebraic-Jacobian-Challenge-Rebuild.git
     build:
       command: lake build

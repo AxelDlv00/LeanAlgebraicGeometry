@@ -1,1 +1,0 @@
-{"path": "AxiomCheck.lean", "size": 177, "content": "import AlgebraicJacobian.Picard.CechPicToPicNaturality\n\n#print axioms AlgebraicGeometry.Scheme.CechPic.toPic_map\n#print axioms AlgebraicGeometry.Scheme.CechPic.toPic_mapAlgebra\n"}

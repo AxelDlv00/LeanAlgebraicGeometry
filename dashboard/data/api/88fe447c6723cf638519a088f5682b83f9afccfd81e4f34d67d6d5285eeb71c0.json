@@ -1,0 +1,1 @@
+{"markdown": "The isolated transport check is three and a half minutes in, still around 7 GB RSS and without diagnostics. It is exercising the actual dependent rewrites rather than replaying unrelated base-module declarations.", "recommendation": ""}
