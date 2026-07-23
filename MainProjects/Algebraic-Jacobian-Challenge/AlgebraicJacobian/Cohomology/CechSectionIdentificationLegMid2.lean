@@ -6,18 +6,15 @@ Authors: Christian Merten
 import AlgebraicJacobian.Cohomology.CechSectionIdentificationLegMid1
 
 /-!
-# Sub-brick A — LegMid2: restrict-FIP chain (part A)
+# Restriction identities for the Čech section comparison
 
-`pushPull_leg_coherence` (private), `unit_pushforward_rFIP_inv`,
-`restrict_unit_comp`, `inner_beta_chain`.
-
-Split from `CechSectionIdentificationLeg` to keep per-file heartbeat budget under 10 min.
-Depends on `CechSectionIdentificationLegMid1`.
+These lemmas identify push-pull maps along open immersions with
+restriction-adjunction units and describe how those units compose.
 -/
 
 universe u
 
-open CategoryTheory Limits Opposite
+open CategoryTheory Opposite
 
 namespace AlgebraicGeometry
 
@@ -25,8 +22,9 @@ open Scheme.Modules
 
 variable {X : Scheme.{u}}
 set_option maxHeartbeats 800000 in
-/-- Per-leg coherence (replica of the Base `private pushPull_binary_leg_coherence` for a
-general ambient open immersion): the push–pull map of an over-morphism `Over.homMk c` is,
+-- The final definitional equality unfolds proof-irrelevant transports beyond
+-- the default heartbeat budget.
+/-- For a general ambient open immersion, the push–pull map of an over-morphism `Over.homMk c` is,
 through the canonical leg iso, the pushforward of the restriction unit. -/
 private lemma pushPull_leg_coherence {A C' : Scheme.{u}} (q : A ⟶ X)
     (c : C' ⟶ A) [IsOpenImmersion c] (pC : C' ⟶ X) (wC : c ≫ q = pC) (F : X.Modules) :
@@ -57,9 +55,6 @@ private lemma pushPull_leg_coherence {A C' : Scheme.{u}} (q : A ⟶ X)
 /-! ### Restrict-world unit calculus for the per-leg face (Steps 0–3′ of
 `lem:pushPull_interLegHom_sections`) -/
 
-set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1600000 in
-set_option synthInstance.maxHeartbeats 400000 in
 /-- Step 0: the pullback-pushforward adjunction unit, post-composed with the pushforward of
 the `restrictFunctorIsoPullback` inverse component, is the restriction-adjunction unit. -/
 lemma unit_pushforward_rFIP_inv {W₁ W₂ : Scheme.{u}} (j : W₁ ⟶ W₂) [IsOpenImmersion j]
@@ -102,9 +97,6 @@ lemma unit_pushforward_rFIP_inv {W₁ W₂ : Scheme.{u}} (j : W₁ ⟶ W₂) [Is
         (congrArg (fun w => (Scheme.Modules.restrictAdjunction j).unit.app N ≫ w) h2).trans
           (Category.comp_id _)
 
-set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1600000 in
-set_option synthInstance.maxHeartbeats 400000 in
 /-- Step 1 (K5): the iterated restriction-adjunction units compose, through the
 `restrictFunctorComp` identification, to the unit of the composite open immersion. -/
 lemma restrict_unit_comp {A C' : Scheme.{u}} (q : A ⟶ X) [IsOpenImmersion q]
@@ -129,9 +121,6 @@ lemma restrict_unit_comp {A C' : Scheme.{u}} (q : A ⟶ X) [IsOpenImmersion q]
       (Subsingleton.elim _ _)
   exact key
 
-set_option backward.isDefEq.respectTransparency false in
-set_option maxHeartbeats 1600000 in
-set_option synthInstance.maxHeartbeats 400000 in
 /-- The β-chain collapse in the middle scheme: the pullback-pushforward unit followed by the
 pushforward of the restrict-world conjugates is the restriction unit (with the
 `restrictFunctorComp` tail kept). -/
