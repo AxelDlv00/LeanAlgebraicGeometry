@@ -10,7 +10,7 @@
   isomorphisms must be proved natural in the Cech nerve.  The Cech comparison
   itself is complete, but its cold build remains the main performance hotspot.
 
-- **Jacobian frontier.** The project has 24 direct `sorry` sites.  They are now
+- **Jacobian frontier.** The project has 23 direct `sorry` sites.  They are now
   organized under the nested `AJC.jacobian` roadmap: Picard representability
   (Serre finiteness, tensor pullback, and Quot), the structure of `Pic^0`, the
   Albanese extension/factorization, and the final Jacobian witness.
